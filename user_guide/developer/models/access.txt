@@ -1,0 +1,19 @@
+|---------------------------------------------------------------
+| ACCESS MODEL
+|
+| System Version: 1.0
+|---------------------------------------------------------------
+
+get_role_data()
+
+Parameters		=>	a player's role ID
+Returns			=>	a string of page IDs
+Description		=>	grabs a comma separated list from the database of page IDs the user is allowed to see
+
+==========
+
+get_pages()
+
+Parameters		=>	a comma separated string of page IDs (usually from Access_model::get_role_data())
+Returns			=>	an array of pages and access levels
+Description		=>	loops through the page IDs and retrieves the page URLs and access levels

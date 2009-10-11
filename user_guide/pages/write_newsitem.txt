@@ -1,0 +1,25 @@
+|---------------------------------------------------------------
+| WRITE - NEWS ITEM
+|
+| System Version: 1.0
+|---------------------------------------------------------------
+
+News items are the best way to contact all players with information about a mission, a website update, a new player joining, or any other event that the game master believes the entire crew should know about. News items can be public or private. Public news items can be seen by anyone who visits the site. Private news items require a user to be logged in to Nova in order to see and read them.
+
+News items consist of a subject, a category, content, and any tags you want to put on your news item for it to be easily found in a search later on. You can only post a news item as your main character.
+
+Nova does not restrict access to news categories. Doing so would have drastically limited the extensibility of the news item feature. All crew will have access to all news categories. This also significantly decreases the needed complexity of the user access control system for writing a news item.
+
+The email players will receive has the author, the subject and the message. If someone has chosen not to receive email notifications of news items and will have to manually look through news items the next time they login to Nova. All crew will receive both public and private news items.
+
+In order to write a news item, a user needs write/newsitem privileges.
+
+SAVING POSTS
+==========
+
+News items can be saved so that you can work on them for a little while then come back to it later on. In order to save a news item, you only need to open a new news item and you can click Save. Your saved news items will show up in your list of saved entries.
+
+DELETING POSTS
+==========
+
+You can only delete a news item from the write pages if it's in the saved status. If you decide you don't want to do a news item that you've already saved, just click Delete and it will be deleted. After deleting the saved news item, you will be redirected to the Admin Control Panel after 5 seconds.

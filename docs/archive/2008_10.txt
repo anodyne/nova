@@ -1,0 +1,217 @@
+2008.10.31
+
+* updates to the main stylesheets
+* updated posts model with search method
+* updated logs model with search method
+* updated news model with search method
+* updated basic install data
+
+* added tags to personal logs and news items
+* added search documentation page
+
+* finalized search/index
+* finalized search/results
+
+==========
+
+2008.10.29
+
+* updated the install and update templates to match the rest of the application
+* updated the update controller
+* updated the install controller
+* updated some images
+* updated the application config file
+
+* removed the login button from the main controller
+
+==========
+
+2008.10.27
+
+* fixed bug in CI 1.7 where adding a primary key in the forge would cause problems
+
+==========
+
+2008.10.24
+
+* upgraded to CI 1.7.0
+
+* updated install fields with new session database schema
+
+* removed DB2_session library
+* removed MY_session library
+
+==========
+
+2008.10.22
+
+* added utility helper
+
+* updated main template to output memory usage during development
+* updated the backup sql method in the update controller
+
+==========
+
+2008.10.21
+
+* updated the personnel controller
+* updated the character model with a new method
+* updated default/css/main.css
+* updated sim controller with new date format code
+* udpated main controller with new date format code
+* updated view file to build the date in the controller
+
+* added the personnel_viewlogs view file
+* added date_format to globals install data
+* added PHP/JS files to _global/main/js
+
+==========
+
+2008.10.20
+
+* updated sg1 install data
+* updated the bajoran data
+* updated the cardassian data
+* updated the klingon data
+* updated update controller (sql backup working!)
+
+* added sga install data
+* added the backups directory in assets
+
+==========
+
+2008.10.15
+
+* updated characters model to include rank in get_character_name
+* updated personal logs model to pull activated personal logs
+* updated install data file to include another personal log and new global keys
+* updated system version information
+* updated sub menu styles
+
+* removed system data from install data file
+
+* added sim_listlogs view file
+* added sim_listposts view file
+
+* finalized sim/listlogs
+* finalized sim/listposts
+
+==========
+
+2008.10.14
+
+* added user guide folder
+* added user guide doc for rss feeds
+* added rss config option for number of entries
+* added version variables to application config file
+* added nova config file to replace application config file
+
+* updated rss config options
+* updated main template file to use the system constant for application name
+* updated auto-load to use nova config and remove the dashboard library (for now)
+
+* removed system table from schema
+
+==========
+
+2008.10.13
+
+* fixed some errors in the ENT install file
+
+* updated TOS install file
+* updated MOV install file
+* updated database schema
+* updated _backup_sql method to backup old database files
+* updated update controller
+* udpated update template
+* updated update stylesheets
+
+* added bio javascript file
+
+==========
+
+2008.10.10
+
+* added realm to sim type list
+* added global emails folder
+* added private email method in main controller
+
+==========
+
+2008.10.09
+
+* added bio views
+* added rss templates
+* added missions model
+
+* updated personnel/bio
+* updated language files
+* updated feed controller
+* updated application config
+* updated template config
+* updated rss_model
+* updated update controller
+* updated install fields
+
+* finalized sim/awards
+* finalized feed/posts
+* finalized feed/logs
+* finalized feed/news
+
+==========
+
+2008.10.07
+
+* updated character model to have character awards sorted by date desc
+* updated language file
+
+* added personnel_viewawards.js
+
+* finalized personnel/viewawards
+
+==========
+
+2008.10.06
+
+* updated wiki controller
+* updated rss controller
+* updated controller layout
+* updated personnel controller
+* udpated sim controller
+* updated main controller
+
+* added site and site_base controllers
+* added write and write_base controllers
+* added manage and manage_base controllers
+* added messages and messages_base controllers
+* added report and report_base controllers
+* added archive controller
+* added user and user_base controllers
+* added awards asset folder
+* added views and js files for awards
+* added awards model
+
+* finalized sim/awards
+
+==========
+
+2008.10.03
+
+* added asset location helper
+* added ranks model method for retrieving rank set extension
+* added user panel library
+* added user panel base library
+
+* finalized personnel/coc
+
+==========
+
+2008.10.02
+
+* added method to the characters model to grab the COC
+* added personnel_coc view
+* added personnel_coc javascript file
+
+* updated language file
+* updated personnel controller
+* updated text stylesheet with align right style

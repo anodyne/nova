@@ -1,0 +1,147 @@
+|---------------------------------------------------------------
+| CHANGES FROM SMS
+|
+| System Version: 1.0
+|---------------------------------------------------------------
+
+* SYSTEM CORE
+	- All new system core provided by CodeIgniter
+    - Dynamic web location variable
+    - Normalized the database for greater speed and extensibility
+    - Better database collation and character set
+    - Added SimplePie for RSS management
+    - Updated to jQuery 1.3.2 (up from version 1.2.6)
+    - Updated to jQuery UI 1.7.2 (up from version 1.0)
+    - Removed MagpieRSS
+    - Removed phpSniff (browser detection)
+	
+* NOVA CORE
+    - Nova is completely internationalized, meaning it can be translated by adding a few files
+    - Far greater extensibility ... create new pages or modifying existing ones without ever touching core files
+    - Better admin control panel menus ... the active section moves to the top of the menu for easy access
+    - Nearly all page headers are stored in the database, allowing admins to change them quickly and easily
+    - Added support for multiple genres
+    - Added dynamic forms that can be updated from the control panel (join/bio, specs and tour)
+    - Added RSS feeds for mission posts, personal logs and news items
+    - Added HTML emails to the system
+    - Added support for timezones and daylight savings time for more accurate dates throughout the system
+    - Added the ability to change the date format used throughout the system
+    - Added player preferences for which emails are sent to the player
+    - Added the ability to turn system email off
+    - Moved over to buttons instead of image buttons for better accessibility
+    - Moved to a role-based system of user access control
+    - Removed personalized menu and added a user panel with a user's links, characters and important information
+    - Removed all references to "globals" and replaced with "settings" (fixes a growing SMS bug with server security settings)
+    - Removed all PHP short tags in favor of standard tags
+    
+* GENERAL
+	- More flexible license
+	- More documentation
+	- More tutorials
+	
+* TEMPLATES
+    - Overhauled the templates to allow for a single file instead of multiple files
+    - Templates include simple variables to tell Nova where to put different components
+    - Separated the styles for different sections of a skin (main, admin, login, wiki)
+    - Seamless Substitution which allows developers to override Nova's default images, Javascript and view files with their own
+    - Added the ability to theme the login page
+    - Added the ability to separately theme different sections of the system
+    - Added the ability to give a skin a name
+    - Removed tons of system code from the templates
+
+* INSTALLATION
+    - Better install process
+    - Better server verification tool
+    - Using built in database library to create easier to understand and maintain install files
+    - Added the ability to set some of the system defaults during install
+    - Added feedback so users know when the system is working
+    - Added some basic checks during installation if a step completed successfully or not, giving admins a quick idea if something is wrong instead of having problems come out over the course of several days
+
+* LOGIN
+    - Added feature that, after resetting a password, when you login, Nova prompts you to change your password
+    - Remember me feature that will store login information for up to 2 weeks and perform autologins
+    - Updated password encryption from MD5 to SHA1 (more secure)
+    - Overhauled the reset password option to use a security question
+    - Smarter login process knows if your email is wrong or if your password is wrong
+    - The system will lock out users who have 3 failed login attempts for 30 minutes to protect from brute force password hacking attempts
+    - Removed the use of a username, everything is done with an email address and password
+
+* THE MAIN SECTION
+    - Added an AJAX event to the join page that pulls position description in and displays it under the position dropdown menu once an item has been selected
+    - Credits page now pulls author information about the selected skin and ranks automatically
+
+* THE PERSONNEL SECTION
+    - Separated character and player accounts
+    - View Awards lists OOC awards separately, meaning that no matter what character is used, OOC awards stay with the player
+    - Added the ability to post as NPCs
+    - Added the ability to have multiple playing characters
+    - Added player bio that contains all information about a given player (only available to logged in users)
+    - Added a View Awards page that lists all awards a character has been given
+    - Character bios now only display the last 5 awards given
+    - Chain of command can now include NPCs
+    - Removed player information from the bio pages
+	
+* THE SIM SECTION
+    - Cleaned up the view post pages
+    - Made sure that if something is blank, it isn't displayed on the view pages
+    - Added the ability to have a gallery of mission images
+    - Added the ability to add comments to a post, log or news item
+    - Added a page to view the details of an award, including how many times it's been given and who's received that award
+    - Added pagination to pages that list personal logs and mission posts
+    - Moved mission summaries into the mission information page
+    - Changed list logs and list posts page to pull all items, not just the last 25
+    - Deck listing allows changing the order and names of decks
+
+* ADMIN CONTROL PANEL
+	- Added Who's Online listing
+	- Added player statistics to the ACP
+	
+* PRIVATE MESSAGING
+	- Added the ability to send PMs to multiple people simultaneously
+	- Added the ability to reply to all recipients of a PM
+	- Added the ability to forward a PM to other people
+	
+* WRITING
+    - Added a Writing Control Panel
+    - Added a My Recent Posts tab to the Writing Control Panel
+    - Added a All Recent Posts tab to the Writing Control Panel
+    - Added the ability to do a mission post with every member of the crew
+    - Added ability to post as any character associated with your account, including NPCs
+    - Added a tags field for keywords about an entry
+    - Renamed Post section to Write
+    - Combined the mission post and joint mission post pages
+    - Moved Saved Post notification to the Writing Control Panel
+    - Removed the 8 character limitation on joint posts
+    - Removed restricted access to news categories
+    - Removed the Add Post pages
+    - Removed the tag field
+	
+* SITE MANAGEMENT
+    - Simplified site settings
+    - Added the ability to set the large awards images directory
+    - Added the ability to not use large awards images
+    - Added user-created messages whose message keys can be inserted into PHP variables
+    - Added drag and drop functionality for re-ordering the chain of command
+    - Added the ability to see a list of who has a certain access role
+    - New interface for the messages page
+    - When changing sim type, Nova will turn off menu items marked as being for the old sim type and turn on items marked as being for the new sim type
+    - When deleting a rank set from the database, Nova will make sure that any players using that rank set will be updated to one of the admin's choosing. Additionally, if the rank set being deleted is the default rank set, it will also change the system default at the same time.
+    
+* DATA MANAGEMENT
+    - Added a simple slider and counter to change open slots for a position
+    - Updated positions page to only show the position name and open positions and hide everything else for better organization
+    - When creating a mission with a status of current, Nova automatically sets the start time
+    - When changing a mission with a status of current to a status of completed, Nova automatically sets the end time
+    
+* CHARACTER MANAGEMENT
+    - Integrated AJAX on the chain of command page for a better user experience
+    - Added drag and drop functionality for re-ordering the chain of command
+    
+* USER MANAGEMENT
+    - New interface for user account that includes tabs and keeps any items only admins can see in a hidden tab
+    - Moved moderation flags to the user account instead of its own page
+    - Added preferences page for allowing players to set their email preferences
+    
+* REPORTING
+    - Added moderation report
+    - Added application report

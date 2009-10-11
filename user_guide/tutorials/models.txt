@@ -1,0 +1,85 @@
+|---------------------------------------------------------------
+| TUTORIAL #1: WHAT IS A MODEL?
+|---------------------------------------------------------------
+
+Models are PHP classes that are designed to work with information in your database. In Nova, models allow you to create, retrieve, update, and delete information from the data. In Nova, we have chosen to use CodeIgniter's Active Record database functions for ease of use. Active Record makes building database queries easier and faster. In addition, if Nova was to ever be able to function on multiple database types, using Active Record would ensure that none of the queries would have to be re-written for new database syntax; Active Record takes care of that for us.
+
+Models are stored in the application/models folder. To allow for extensibility, we have created a folder called base where we store all of the base models, and then we extend them in the root folder. We'll use the awards model as an example. In application/models/base/awards_model_base.php, we have our basic methods for accessing awards information, updating awards, creating new awards, and deleting awards.
+
+LOADING A MODEL
+
+Before a model can be used in a controller, it must first be loaded. By default, Nova auto-loads the settings and messages models for use anywhere in the system. This means that you do not need to load either of those models in your own pages since the system loads them automatically. All other models have to be loaded manually with the following code:
+
+$this->load->model('awards_model');
+
+You would then use the model by referencing it in your controller method:
+
+$award = $this->awards_model->get_award($id);
+
+You can alternatively assign your model to a different object name by specifying it in the second paramter, like so:
+
+$this->load->model('awards_model', 'awards');
+$award = $this->awards->get_award($id);
+
+|---------------------------------------------------------------
+| TUTORIAL #2: CREATING A NEW MODEL METHOD
+|---------------------------------------------------------------
+
+Inevitably, you will come across a situation where the model methods included with Nova just don't do what you want. In those instances, you should create a new model method. It's important that you never try to update an existing model method. Doing so may break parts of the system that use that model method. Fortunately, models, like controllers, were thought of with extensibility in mind, so adding a new method is easy.
+
+The first place to look to see if there's a model method that you can use is in application/models/base. If, in the specific model file (usually, each model will interact with one database table) you can't find something, you can open the model file in the application/models folder. It's important that you don't edit anything in the models/base folder! This includes adding your own methods to the base models. We've made the models extendable so that you can add your own model methods to Nova, and when an update comes around, you don't lose your model in the process of updating.
+
+The model files have everything you need to get started, you simply have to add the method and your calls to the database. Let's say we want to retrieve the award name (and just the award name) from the database for a given award ID. We can do this easily with the following code:
+
+function get_award_name($id = '')
+{
+    $this->db->from('awards');
+    $this->db->where('award_id', $id);
+
+    $query = $this->db->get();
+
+    return $query;
+}
+
+That method will return an object that has every piece of data about the award whose ID we passed in as the first parameter. That's all well and good, but we don't want everything, we just want the name. So let's narrow down what our method is returning.
+
+function get_award_name($id = '')
+{
+    $this->db->from('awards');
+    $this->db->where('award_id', $id);
+
+    $query = $this->db->get();
+
+    if ($query->num_rows() > 0)
+    {
+        $row = $query->row();
+
+        return $row->award_name;
+    }
+
+    return FALSE;
+}
+
+Now, let's break down exactly what's happening in this method. First, we're building our query using CodeIgniter's Active Record library. If we wanted to, we could do a select before the from, but if we don't, it won't hurt anything. Then, we add a where clause. By default, if you don't specify an operator, it uses equal. If you want to use another operator, you'd just need to add it to the end of the first parameter, like so:
+
+$this->db->where('award_id >', $id);
+
+The final query that Nova will produce from this is SELECT * FROM nova_awards WHERE award_id = 1. (That assumes that the ID passed in to the method in the controller is 1.) We assign the get method to our variable and the query is run automatically. After the query has run, it sends back an object with all the information and data returned from the query. To avoid errors, we want to first check to make sure there are actually records being returned. Active Record has a handy object method called num_rows() that will return the number of rows being returned. If that number is greater than zero, we're going to keep going, otherwise, the method will return FALSE. Assuming we have one row being returned, we'll assign the first row in the object to its own variable, then return the variable we want. You'll notice that he second part of the $row variable (the award_name) lines up with the field we're pulling from the database. Now, using the code below will assign the name of the award to the variable $award.
+
+$award = $this->awards->get_award_name(1);
+
+That, in a nutshell, is how you would create your own model methods. Take a look at all the different model methods Nova uses to get a better idea for the kinds of things you can do. Also, make sure to check out the following links for more information about Active Record and CodeIgniter's Database class:
+
+http://codeigniter.com/user_guide/database/index.html
+http://codeigniter.com/user_guide/database/active_record.html
+
+|---------------------------------------------------------------
+| TUTORIAL #3: CHANGING AN EXISTING MODEL METHOD
+|---------------------------------------------------------------
+
+
+
+|---------------------------------------------------------------
+| TUTORIAL #4: CREATING A NEW MODEL
+|---------------------------------------------------------------
+

@@ -1,0 +1,11 @@
+|---------------------------------------------------------------
+| MANAGEMENT - MISSIONS
+|
+| System Version: 1.0
+|---------------------------------------------------------------
+
+Mission images can only be stored in ./application/assets/images/missions
+
+When managing a mission, all you need to put in for the image is the actual image name and extension
+
+If you change status from upcoming to current, Nova will automatically set the mission start time. If you change status from current to completed, Nova will automatically set the mission end time.

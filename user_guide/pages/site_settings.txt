@@ -1,0 +1,50 @@
+|---------------------------------------------------------------
+| SITE MANAGEMENT - SETTINGS
+|
+| System Version: 1.0
+|---------------------------------------------------------------
+
+Site Settings is where admins can update the various settings that control parts of Nova. In addition, Nova allows admins to create their own settings whose keys can be used in user-created pages or extended pages. User-created settings can be updated from the User-Created Settings tab which is visible if at least one user-created setting exists. More information about user-created settings can be found below.
+
+NOVA SETTINGS
+==========
+
+sim_name				=> The name of the sim (i.e. USS Enterprise NCC-1701)
+sim_year				=> The year the sim plays in
+sim_type				=> The type of sim it is
+
+allowed_chars_playing	=> The number of playing characters a single user can be associated with
+allowed_chars_npc		=> The number of NPCs a single user can be associated with
+maintenance				=> Whether maintenance mode is turned on or off. When active, maintenance mode only allows system administrators to log in.
+date_format				=> The format that dates are displayed in
+timezone				=> The timezone of the site
+daylight_savings		=> For US sims, this will set whether daylight savings time is active
+updates					=> Which updates admins are notified of
+
+system_email			=> Whether system email is turned on or off
+email_subject			=> The subject line used on all emails sent from the system
+default_email_name		=> The name used by Nova when there is no from email name set
+default_email_address	=> The email address used by Nova when there is no from email address set
+
+theme_main				=> The theme used by the main section
+theme_admin				=> The theme used by the admin section
+theme_wiki				=> The theme used by the wiki
+theme_login				=> The theme used by the login page
+display_rank			=> The rank set that displays on the site
+bio_num_awards			=> The number of awards that display a player's awards section of their player bio
+award_image_large		=> The folder large award images come from. To set Nova up to not use large award image, set this to a blank field.
+list_logs_num			=> The number of personal logs shown in the listing
+list_posts_num			=> The number of mission posts shown in the listing
+manifest_defaults		=> The default display options for the manifest
+show_news				=> Whether news is shown on the main page or not
+post_count_format		=> The format posts are counted with
+use_sample_post			=> Whether the join form will contain a sample post field
+use_mission_notes		=> Whether or not to use the system's mission notes
+
+
+USER-CREATED SETTINGS
+==========
+
+In addition, Nova allows admins to create their own system settings. Why? With Nova's extensible nature, there are bound to be situations where a new page is created and an admin wants to be able to update something right from the Site Settings page. User-created settings allow admins to create their own settings and then programmatically put them into their pages and update them right from the Site Settings page with all the other system settings.
+
+The Site Settings page has a link near the top of the page for managing user-created settings. From that page, admins can create, edit and delete their settings. A setting is made up of a key, a value and a label. The key is a short and simple series of words with no spaces that Nova uses to reference the setting from the database. The value is the value of the setting. The label is the label that will be printed next to the setting on the Site Settings page as well as in the list of user-created settings. User-created settings can only use a simple form input field. Nova does not have the ability to set dropdown menus or radio buttons for user-created settings.

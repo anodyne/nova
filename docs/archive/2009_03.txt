@@ -1,0 +1,334 @@
+03.31.2009
+
+* added site/bioform doc
+* added site/tourform doc
+* added the march 2009 archive doc
+
+* updated DS9 genre data to match BSG character count
+* updated ENT genre data to match BSG character count
+* updated TOS genre data to match BSG character count
+* updated MOV genre data to match BSG character count
+* updated controllers to put methods in alphabetical order after the index method
+* updated language files
+* updated main and sim controllers with new flash message code
+
+==========
+
+03.30.2009
+
+* updated language files with some new keys
+* updated site/tourform to do all the update/create/delete actions
+* updated the flash language file to be more dynamic and reduce the overall line count
+* updated site, write, messages, and manage controllers with new flash message code
+
+* added tour form views
+* added tour form js view
+* added some methods to the tour model for doing tour forms
+
+* fixed bug in site/bioform where deleting a select field would leave orphan data in the values table
+* fixed typo in the edit bio field values facebox window
+* fixed bug in characters model where there was no check for valid data coming back in get_character_name
+
+==========
+
+03.27.2009
+
+* updated ajax/add_bio_field to correct alignment issue with the submit button
+* updated site/bioform to pass field ID to the view
+* updated site/bioform js view to reference the delete ajax view
+* updated the language files with new language keys
+* updated the add action on site/bioform to add blank data for added fields
+* updated install file to include the new access field in the menu items
+* updated menu library to check for access levels
+* updated site/bioform to allow for adding and editing bio field values
+
+* added ajax/del_bio_field
+* added method to the characters model for retrieving a single field's details
+* added method to add blank data to the characters_data table on creation of a field
+* added method to update bio fields
+* added menu_access field to the menu items table
+* added ajax/save_bio_field_value
+* added site_bioform_one view for handling single editing
+* added site_bioform_all view for handling all items
+
+* removed site_bioform in favor of using 2 views
+
+==========
+
+03.26.2009
+
+* removed unnecessary class on the character bio tabs
+* removed unnecessary class on the player bio tabs
+* removed nicEdit
+
+* added icon for adding a tab
+* added icon for editing a tab
+* added icon for deleting a tab
+* added facebox language file
+* added site/biotabs doc
+* added site/biosections doc
+* added manage/coc doc
+
+* updated language files to add some keys
+* updated characters model for get_tabs() method to accept a display parameter
+* updated the credits doc
+* updated the site/biotabs js view
+* updated site/biotabs to be fully functional
+* updated install data with new access pages
+* updated the install/remove redirect from 5 seconds to 15 seconds
+* updated site/biotabs to let an admin select the new tab all orphan sections will be associated with
+* updated files that reference facebox_ and modal_ language keys to reference fbx_
+* updated site/biosections to be fully functional
+
+* fixed broken tabs on character bio page
+* fixed broken tabs on player bio page
+
+==========
+
+03.25.2009
+
+* added circle loader GIF for manage/coc
+* added empty_coc method to the characters model
+
+* updated the language files with new keys
+* updated ajax/save_coc to fire the save method
+* updated ajax/create_coc_entry to fire the create method
+* updated ajax/delete_coc to fire the delete method
+* updated the basic install data with an updated rev number (700)
+
+==========
+
+03.24.2009
+
+* updated main/viewnews with better code for comment image
+* updated sim/viewlog with better code for comment image
+* updated sim/viewpost with better code for comment image
+* updated the credits doc
+* updated language files with new keys
+* updated site/bioform to allow adding bio fields
+* updated manage/coc to use sortable plugin
+* updated ajax controller with a save_coc method
+* updated coc js view with proper code for flash messages
+
+* added new add comment icon
+* added new add form field icon
+* added site_biotabs view
+* added site_biotabs js view
+* added site_biosections view
+* added site_biosections js view
+* added method to add bio field to the characters model
+* added method to add bio field values to the characters model
+* added ui.sortable
+* added manage_coc view
+* added manage_coc js view
+
+* removed old add comment icon
+* removed the selected field from the characters_fields table
+
+* fixed bug on the join form where any select menu after a normal input would retain the data from the normal input
+
+==========
+
+03.23.2009
+
+* updated jquery ui to version 1.7.1
+* updated plugin info table
+* updated site/usersettings with ability to edit and delete user-created settings
+* updated language files with some new keys
+* updated site/settings with manifest defaults
+* updated site/settings to notify the user that turning system email off will affect the entire system
+* updated site/settings doc
+
+* fixed IE bug with facebox script
+
+* added some model methods to the settings model for updating, deleting and retrieving settings
+
+==========
+
+03.20.2009
+
+* updated admin template main stylesheet to tweak the new main menu presentation
+* updated site/usersettings to allow adding settings
+* updated language files with new keys
+* updated site/messages to not allow a message with a dupliate key to be created
+* updated messages model to allow get_message to return FALSE if there is no message with that key
+* updated settings model to allow adding a setting
+* updated the system_versions table with an updated revision for M4 (669)
+* updated install genre files to remove rank table's department class field
+
+* added add_user_setting ajax view
+* added edit_user_setting ajax view
+* added del_user_setting ajax view
+
+==========
+
+03.19.2009
+
+* added gear icon
+* added user settings view
+* added user settings js view
+* added info_post_count_format ajax view
+* added install date field to the system info table
+* added a catalogue_themes table to the schema
+
+* updated access pages and roles in basic install data
+* updated ajax controller with info method for what the post count format is
+* updated site/settings doc file with information about user-created setting fields
+* updated site/settings to allow for editing user-created settings
+* updated main language with some new keys
+* updated the catalogue_skins schema with the theme table addition
+* updated the admin template with a new presentation for the menu items
+
+* fixed bug in BSG data where rank catalogues had duplicated data
+
+==========
+
+03.18.2009
+
+* updated the main language file with some new keys
+* updated ajax controller with method for showing info
+* updated location helper to get the large award image directory
+* updated sim controller to use new award_location parameter
+* updated the credits doc
+* updated the flash language file with some new keys
+* updated site/rolepages to allow for adding and deleting of role pages
+
+* added method to system model for pulling ranks from the rank catalogue
+* added help icon
+* added info_award_image_large ajax view
+* added site/settings doc
+* added new methods to the access model for deleting and creating access pages
+* added some ajax views for role page management
+
+* removed awards doc (wasn't needed any more)
+* removed site/index view file (we're not doing a site/index page any more)
+
+==========
+
+03.17.2009
+
+* updated the flash language file with some keys
+* updated the main language file with some new keys
+* updated the site controller to update the database
+* updated site and messages controllers to use main and secondary buttons
+* updated admin stylesheet to use main and secondary buttons
+
+* added images for main and secondary buttons
+
+==========
+
+03.13.2009
+
+* updated install schema with labels for setting items (will only be populated for user items)
+* updated site/settings with more values
+* updated the system model with a method to pull the skins
+
+==========
+
+03.11.2009
+
+* fixed bug in location helper with wrong variable names
+
+* updated the skins tutorial about the anatomy of a theme
+
+==========
+
+03.10.2009
+
+* added a tutorial about seamless substitution
+
+==========
+
+03.09.2009
+
+* updated the admin forms stylesheet to add TR heights
+* updated basic install data with user created setting initial value
+* updated the site messages doc
+* updated view, js and img location helpers to look in _base_override after the skin
+
+* added user_created field to the settings table
+* added model method to grab all settings
+* added site_settings view
+* added site_settings js view
+* added _base_override
+
+==========
+
+03.06.2009
+
+* updated admin template to put main menu at the top of the page
+* updated admin controllers to write the main menu region
+* updated the template config file to have a main menu region for the admin template
+* updated the menu graphics for the admin template
+* updated site messages to allow editing
+* updated to jQuery UI 1.7
+
+* fixed bug in messages model where query object wasn't being returned
+
+* added edit site messages ajax view
+
+==========
+
+03.05.2009
+
+* fixed bug in menu library where unnecessary spacers were added
+* fixed bug with missing close icon on facebox
+
+* updated the messages model to pull only un-protected messages in get_all_messages()
+* updated basic install data with updates to the messages table schema
+* updated language files and started to clean them up
+* updated lots of pages with new language keys
+* updated site controller with some site messages work
+* updated applications model with database optimization
+
+* added label and protected fields to the messages table
+* added site_messages view
+* added site_messages js view
+* added the site messages doc
+
+* removed some unused files
+
+==========
+
+03.04.2009
+
+* fixed bug in chain of command page where rank was displayed twice
+
+* updated menu library with lots of menu changes
+* updated install files with lots of changes to the menus and menu data
+* updated the admin template
+* updated the controllers with the menu updates
+* updated rev number
+
+* added some methods to the menu model
+* added site_index and site_rolepages views
+
+* removed the nav_main from the admin template
+
+==========
+
+03.02.2009
+
+* updated the to do list
+* updated the check_email method to return the player ID or to return FALSE
+* updated main/join doc
+* updated main/css/forms.css to remove rounded borders on form elements
+* updated main/css/main.css to remove unused line of code
+* updated step 4 of the install to auto populate the email subject field based on what goes in the sim name field
+
+* fixed bug on join page where click agree throws a CI error
+* fixed bug in auth library where display_rank wasn't being put into the session
+
+* added install step 4 js view
+
+==========
+
+03.01.2009
+
+* updated the login layout
+* updated the login view files for the new layout
+* updated the user panel for milestone release
+* updated the version info
+* updated player info for milestone release
+* updated version info from M3 to M4
+* updated head_logo to M4 version

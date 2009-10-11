@@ -1,0 +1,19 @@
+|---------------------------------------------------------------
+| SIM - MISSIONS
+|
+| System Version: 1.0
+|---------------------------------------------------------------
+
+The missions page gives a user an overview of the missions your game is currently running, has run in the past and will be running in the future. There are two ways to access missions in Nova. A user can view an individual mission or all missions.
+
+ALL MISSIONS
+==========
+
+By default, when you go to the missions page, Nova will display all the missions broken up into 3 tabs: Current Mission(s), Upcoming Missions and Completed Missions. Each tab has a list of missions that contains a title, post count and description. Clicking on the title will take you to that individual mission page. If no missions are found in that category, a simple No Missions Found notice is displayed.
+
+INDIVIDUAL MISSION
+==========
+
+Viewing an individual mission will give an overview of all the information about that given mission. The page title will be the mission title with a quick link below that to go back to all the missions. The main mission image is displayed below the title. Nova allows multiple images to be associated with a mission. If that is the case, clicking on the mission image will open the gallery in a lightbox. Below the image are 3 tabs with all the information about a mission: Basic Info, Posts and Summary.
+
+The basic information tab shows the mission's current status (current, completed, upcoming), the description, the start date (if set) and the end date (if set). The posts section shows the last 25 mission posts in that mission with links to read each post as well as the authors. Finally, the summary tab shows the current mission summary as written by the game master. If there is no mission summary a simple notification message will let the user know that.

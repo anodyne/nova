@@ -1,0 +1,60 @@
+|---------------------------------------------------------------
+| USER ACCESS CONTROL
+|
+| System Version: 1.0
+|---------------------------------------------------------------
+
+GENERAL
+==========
+
+
+
+ACCESS LEVELS
+==========
+
+admin/index				Can access the admin control panel
+
+messages/index			Can access all private messaging features
+
+write/index				Can access the writing control panel
+write/missionpost		Can post mission entries
+write/personallog		Can post personal logs
+write/newsitem			Can post news items
+
+site/messages			Can create, edit and delete site messages
+site/settings			Can create, edit and delete user-created settings and update all other site settings
+site/menus				Can create, edit and delete menu items and categories
+site/roles				Can create, edit and delete roles, role pages and role page categories
+site/bioform			Can create, edit and delete anything associated with the bio form (the form, sections, tabs, etc.)
+site/catalogueranks		Can create, edit and delete rank catalogue items
+site/catalogueskins		Can create, edit and delete skin catalogue items
+site/specsform			Can create, edit and delete anything associated with the specs form
+site/tourform			Can create, edit and delete anything associated with the tour form
+
+manage/awards			Can create, edit and delete awards
+manage/decks			Can create, edit and delete anything with the deck listing
+manage/depts			Can create, edit and delete departments
+manage/missions			Can create, edit and delete missions
+manage/positions		Can create, edit and delete positions
+manage/ranks			Can create, edit and delete ranks
+manage/specs			Can update the specs
+manage/comments			Can activate, remove and edit all comments
+manage/posts{1}			Can update their own posts
+manage/posts{2}			Can update and delete all posts
+manage/logs{1}			Can update their own logs
+manage/logs{2}			Can update and delete all logs
+manage/news{1}			Can update their own news items
+manage/news{2}			Can update and delete all news items
+
+characters/npc{1}		Can create, edit and delete NPCs only in the department of their first position and only at or below their rank
+characters/npc{2}		Can create, edit and delete NPCs in the departments of both their positions and only at or below their rank
+characters/npc{3}		Can create, edit and delete NPCs in any department and at any rank
+characters/bio{1}		Can edit their own biography only except for rank and position
+characters/bio{2}		Can edit their own biography (no rank or position) and any NPC (rank and position for NPCs in their access range)
+characters/bio{3}		Can edit all portions of their own biography as well as the biographies of every NPC and playing character
+characters/index		Can manage all playing characters and approve/reject them
+
+user/account{1}			Can edit their own account (no moderation flags, active status)
+user/account{2}			Can edit anyone's account (no limitations)
+user/nominate{1}		Can nominate people for awards
+user/nominate{2}		Can nominate people for awards and approve pending awards

@@ -1,0 +1,183 @@
+2009.09.30
+
+* removed an unused field from the database schema
+
+* updated the comments in the ftp config file
+
+==========
+
+2009.09.29
+
+* updated the language files
+* updated the ajax controller with some new language code
+* updated the ajax view files with some new language code
+* updated the constants config file with some better spacing
+* updated the basic install data
+* updated the update controller
+
+* added the update/run/1 view file
+* added the update/run/2 view file
+* added the assets/update/update_060.php file
+
+* removed the assets/update/update_010.php file
+
+==========
+
+2009.09.28
+
+* updated the add/approve ajax controller with some new language code
+* updated the add/approve ajax view files with some new language code
+* updated the MY_date_helper to fix some excess commenting
+* updated the language files
+* updated the system components table in the install data files
+
+* removed the report/progress view file
+* removed the report/progress js view file
+* removed the chart javascript and css files
+
+==========
+
+2009.09.25
+
+* updated writing a personal log to update the last_post field in the characters table
+* updated writing a mission post to update the last_post field in the characters table
+* updated writing a mission post to set the post_authors_players field in the characters table
+* updated the database schema to add a post_authors_players field to the characters table
+* updated the database schema to add a last_post field to the characters table
+* updated the news model with a method for counting character news items
+* updated the posts model with a method for counting player posts
+* updated the language files
+* updated managing a mission to update the post_authors_players field in the characters table
+* updated the basic install data
+* updated report/activity to show post counts for the posting requirement timeframe and the last 30 days
+* updated the admin display stylesheet with a minor style
+
+* added report/posting view file
+* added report/posting js view file
+* added the jquery quicksearch plugin
+
+==========
+
+2009.09.24
+
+* added report/viewapp view file
+* added report/viewapp js view file
+
+* updated the language files
+* updated the report controller with a way to view application details
+* updated the applications model with a method for pulling a single application
+
+==========
+
+2009.09.22
+
+* updated the language files
+* updated the characters controller to use proper tenses for updating the applications table
+* updated the applications model with methods for getting applications and counting applications
+* updated the report controller with an application report
+
+* added report/applications view file
+* added report/applications js view file
+
+==========
+
+2009.09.17
+
+* updated the acp panel with a system update tab
+* updated the language files
+* updated the report controller with a sim progress page
+
+* added the sim/progress view file
+
+==========
+
+2009.09.16
+
+* updated the MY_date_helper with more commenting on timespan_short
+* updated the report controller with the milestones report
+* updated the language files
+* updated the install data
+* updated panel 1 to link to site options instead of user preferences (which doesn't exist)
+
+* added report/milestones view file
+* added report/milestones js view file
+* added icon-yellow.png
+* added report/awardnominations view file
+* added report/awardnominations js view file
+
+==========
+
+2009.09.11
+
+* updated the core to CI 1.7.2
+* updated the system components table with CI 1.7.2 version
+* updated the 404 error page based on the CI upgrade
+
+==========
+
+2009.09.10
+
+* updated the language files
+* updated update/index
+
+* added view files for update/main
+
+==========
+
+2009.09.09
+
+* updated the update template
+* updated the update skin images
+* updated the update skin stylesheets
+* updated the ui.tabs stylesheets for all skins to change selected tabs to have a pointer cursor
+
+* added update/index js view
+
+==========
+
+2009.09.08
+
+* updated the language files
+* updated the reports controller with the moderation report
+
+* added report/moderation view file
+* added report/moderation js view file
+* added icon-green.png
+* added icon-red.png
+
+==========
+
+2009.09.04
+
+* updated the icon used in the write control panel for unread JP changes from mail-unread to icon-green-small
+
+==========
+
+2009.09.03
+
+* added report/activity view file
+* added report/activity js view file
+* added MY_date_helper
+
+* updated the language files
+* updated the report controller with the activity method
+
+==========
+
+2009.09.02
+
+* added BSG ranks to assets/common for the time being (will be removed for release)
+* added changes doc
+* added august 2009 archive changelog
+* added jquery ui accordion plugin
+* added method to the system model for getting all system versions
+* added jquery.visualize script and stylesheet
+* added excanvas script
+* added method to the system model for getting all system components
+
+* updated loa report to not show end date if the person is still on loa
+* updated database schema to store major, minor and update versions in the system_versions table
+* updated the version constants for more consistency
+* updated default templates not to use the nova version number in the footer
+* updated role data
+* updated the language files

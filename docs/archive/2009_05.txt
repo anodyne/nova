@@ -1,0 +1,300 @@
+05.29.2009
+
+* added method to missions model for adding a mission
+* added add mission ajax view
+* added add.png to the admin base images directory
+
+* updated manage/missions to allow adding a mission
+* updated ajax/add_mission for the facebox component of adding a mission
+* updated the install controller, template file and theme
+
+* fixed bug in chain of command page where, under certain circumstances, not everyone would appear in the COC
+* fixed error on the chain of command page when adding an NPC that doesn't have a player associated with it
+
+==========
+
+05.28.2009
+
+* updated auth library to pass the URI through flashdata to the admin error page
+* updated language files
+* updated admin controller error method to accept the URI from the auth library
+
+==========
+
+05.27.2009
+
+* updated user access levels doc
+* updated the missions model with update and delete methods
+* updated the manage/missions doc
+* updated language files
+* updated basic install data
+
+* removed datepicker from missions management
+
+==========
+
+05.22.2009
+
+* updated babylon 5 genre file
+* updated manage controller and view file
+
+* fixed a couple typos in the ds9 genre file
+
+==========
+
+05.21.2009
+
+* added whos_online method to the utility helper
+* added the datepicker js file
+* added the datepicker css file
+
+* updated the admin index view file with the acp panel
+* updated the admin index js view file with the acp panel
+* updated default/admin/css/main.css with styles for the acp panel
+* updated admin controller with label array
+* updated admin index view with labels instead of hard-coded lang variables
+* updated the language files
+* updated the basic install file with more access pages, role information and menu items
+* updated the missions page to use a datepicker (experimental)
+
+==========
+
+05.20.2009
+
+* updated babylon 5 genre file with ranks from Rycon
+* updated the credits doc
+* updated the positions model
+* updated the form helper to allow passing department type and position display to the position dropdown
+* updated basic install data
+* updated the stylesheets with a medium-large class for inputs
+* updated the language files
+* updated the awards model to have a simplified check for display parameter
+* updated the awards model to have add, update and delete methods
+* updated manage controller to allow management of awards
+* updated ajax controller to allow adding an award
+
+* fixed bug where sub-departments could be reassigned to have a sub-department parent
+
+* added manage/awards view
+* added manage/awards js view
+* added add_award ajax view
+* added base_lang file to help with making language files extensible
+
+==========
+
+05.19.2009
+
+* updated the form helper to add a parameter to exclude an item from the dept dropdown menu
+* updated the form helper to allow for a blank option at the beginning of the dept dropdown
+* updated the language files
+* updated the ajax/del_dept method and view
+* updated the departments model
+* updated js view file for the ACP
+* updated ranks model to hold the rankcat model methods too
+* updated errors doc
+* updated the install controller with some minor changes
+* updated genre install files with classes
+
+* added manage ranks view file
+* added manage ranks js view file
+* added manage ranks doc
+
+==========
+
+05.18.2009
+
+* updated notes with some stuff about jquery charting solutions (potentially for the progress report)
+* updated controllers with a comment about where user methods should go
+* updated archive controller to extend the base
+* updated class used by the admin flash page
+* updated the default/css/display.css file to fix a bug with flash messages
+* updated the admin/css/display.css file to fix a bug with flash messages
+* updated the language files
+
+* added base archive controller
+* added form_dropdown_dept helper
+
+* removed the flash_gray image from default/main/images
+* removed the flash_gray image from admin/main/images
+
+==========
+
+05.15.2009
+
+* updated manage/positions js view to pull the department ID
+* updated the positions model with an add_position method
+* updated manage/positions to insert data into the database
+* updated the ajax/add_position controller method and view
+* updated basic install data with some new menu items, new access items, and role updates
+* updated the form helper to use the new get_dept model method
+* updated the install files and moved the depts, positions and ranks into install_fields
+* updated install controller to not try and pull table info from the genre files
+* updated the depts model with an update_dept method and a delete_dept method
+* updated the flash components to use new classes
+* updated the page head and subheads to use a different class
+* updated the basic install data to include lightness and redmond
+
+* fixed bug in the manage/positions page where the position type wasn't being populated properly
+
+* added manage departments view file
+* added manage departments js view file
+* added lightness skin
+* added redmond skin
+
+* removed bvd skin
+
+==========
+
+05.14.2009
+
+* updated deck listing page with new language code
+* updated positions page with new language code
+* updated default/admin/css/display.css with a new info class
+* updated the language files
+
+==========
+
+05.13.2009
+
+* updated main stylesheet with main/sec button styles
+* updated main controller and views with new language code
+* updated main controller constructor to use the auth library for checking logged in status instead of the session
+* updated search controller and views with new language code
+* updated search controller constructor to use the auth library for checking logged in status
+* updated get_authors() model method to use existing code and do some sanity checking
+* updated the notes at the top of the language files
+
+* added main/sec button images to the main section
+
+==========
+
+05.12.2009
+
+* updated manage/positions to exclude deleted items from the update array
+* updated the models to put the database utility in the right place
+* updated the language files
+* updated the view files with new language code
+* updated the controllers with new language code
+* updated department model with some more logic
+* updated manage/positions to pull the departments in the right order
+
+==========
+
+05.11.2009
+
+* updated manage/positions to include the rest of the position info
+* updated manage/positions to allow for updating the database
+* updated the language files
+* updated the install files to include a fourth position type (other)
+
+==========
+
+05.09.2009
+
+* fixed bug in news model where method was returning non-existent field
+* fixed bugs in feed controller where news and logs were throwing errors
+* fixed bug in main controller where p was used as a class identifier instead of player
+
+==========
+
+05.08.2009
+
+* removed some unnecessary doc and user guide files
+* removed get_position_details (merged with get_position)
+* removed get_position_name (merged with get_position)
+
+* added manage/missions doc
+* added manage/tour doc
+* added htaccess.txt doc
+
+* updated the milestones doc
+* updated auth library with a debug message and a ci instance in the constructor
+* updated menu library with a debug message and a ci instance in the constructor
+* updated user_panel library with a debug message and a ci instance in the constructor
+* updated the test controller
+* updated the main controller with the new position method for dynamically pulling object items
+* updated the personnel controller with the new position method for dynamically pulling object items
+* updated the ajax controller with the new position method for dynamically pulling object items
+* updated the system info table with an updated rev number for M4 (963)
+
+==========
+
+05.07.2009
+
+* added jquery ui default theme (with UITheme scope) to the assets/js directory
+
+* updated characters/coc with ui theme scope
+* updated site/bioform_one with ui theme scope
+* updated site/specsform_one with ui theme scope
+* updated site/tourform_one with ui theme scope
+* updated the ui library stylesheets
+* updated install template with ui theme scope
+* updated install stylesheets to use new images and text colors for the progress bar
+* updated the basic install file with a new menu items and some updates to the access roles/pages
+* updated the head main and admin include files to check for the existence of some stylesheets in the skin
+* updated the head login and wiki include files
+* updated js views with better zebra table code
+
+* removed the old ui library images
+* removed the ui override stylesheet from default/admin
+* removed an errant ui library image from default/admin
+
+==========
+
+05.06.2009
+
+* added method to the players model to get the online players
+* added method to the ajax controller for online timespan info
+* added info_online_timespan ajax view
+
+* updated the language files
+* updated the site settings page to be able to update the online timespan
+* updated the settings table schema to insert the online timespan record on install
+* updated MY_form_helper to make form_button work in IE7
+* updated the test controller
+* updated admin index view to add who's online listing
+* updated the changes to sms doc
+
+==========
+
+05.05.2009
+
+* added error doc to track errors that need to be looked in to
+* added a default value to is_working_url helper
+
+* updated check_memory helper to have a 2nd parameter for handling memory usage
+* updated comments in the site controller
+
+==========
+
+05.04.2009
+
+* updated schema to change theme to skin section
+* updated site controller to change theme to skin section
+* updated site cotnroller to combine skin and skin section pages
+* updated ajax views to reflect new schema changes to catalogues
+* updated system model to reflect new schema changes to catalogues
+* updated the language files
+* updated controllers with new setting skin_ code
+* updated the admin forms stylesheet with a new col width class
+* updated section 1 of the skins tutorial
+
+==========
+
+05.01.2009
+
+* updated menu ajax items to build the category field as a dropdown menu instead of an input field
+* updated the menu model method to use the menu category order instead of global_group
+* updated the order of the access pages in the basic install data to make it easier to add pages for now
+* updated the language files
+* updated site controller to pass new images to the skins and themes views
+
+* removed the global_group item from the schema and basic data
+
+* added april 2009 archived changelog
+* added icon for display prefs
+* added manage_simtypes view file
+* added manage_simtypes js view
+* added manage_missions view file
+* added manage_missions js view
+* added a method to the Auth library for pulling the access level

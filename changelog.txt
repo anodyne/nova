@@ -1,0 +1,30 @@
+2009.10.02
+
+* updated the sms config file with more upgrade options
+* updated the sms config file with a password field
+* updated the upgrade controller to upgrade the specs data (step 11)
+
+* added upgrade/step/11 view and js view files
+
+==========
+
+2009.10.01
+
+* added the september 2009 archive file
+* added upgrade/step/2 view and js view files
+* added upgrade/step/3 view and js view files
+* added upgrade/step/4 view and js view files
+* added upgrade/step/5 view and js view files
+* added upgrade/step/6 view and js view files
+* added upgrade/step/7 view and js view files
+* added upgrade/step/8 view and js view files
+
+* updated the sms config file to pull the database information out
+* updated the sms config file to add news items as an upgrade option
+* updated the upgrade controller to create nova db tables (step 2)
+* updated the upgrade controller to insert basic nova data (step 3)
+* updated the upgrade controller to insert genre data (step 4)
+* updated the upgrade controller to upgrade sms site globals (step 5)
+* updated the upgrade controller to upgrade the awards (step 6)
+* updated the upgrade controller to upgrade the missions (step 7)
+* updated the language files

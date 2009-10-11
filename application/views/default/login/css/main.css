@@ -1,0 +1,130 @@
+/*
+|---------------------------------------------------------------
+| STYLESHEET - MAIN
+|---------------------------------------------------------------
+|
+| File: _base/install/css/main.css
+| Author: David VanScott [davidv@anodyne-productions.com]
+| Version: 1.0
+|
+| Main stylesheet used by the install script
+|
+*/
+
+/*
+|---------------------------------------------------------------
+| STYLESHEET INCLUDES
+|---------------------------------------------------------------
+| Pulls in the other stylesheets used by the theme
+|
+| reset		=> resets the styles
+| forms     => forms, buttons, and tables
+| text      => fonts and links
+| display	=> various display styles
+| ui.theme	=> override stylesheet for jQuery UI
+*/
+@import url('reset.css');
+@import url('forms.css');
+@import url('text.css');
+@import url('display.css');
+
+/*
+|---------------------------------------------------------------
+| MASTER BODY STYLES
+|---------------------------------------------------------------
+| Master font size, family, and color are controlled from here
+*/
+body {
+	margin: 0;
+	padding: 0;
+	
+	background: #ccc url('../images/body-bg.png') repeat-x 0 0;
+	color: #444;
+	font: 75%/1.5 "lucida grande", verdana, arial, sans-serif;
+	text-align: center;
+}
+
+/*
+|---------------------------------------------------------------
+| WRAPPER STYLES
+|---------------------------------------------------------------
+| The wrapper controls the width and centering of the layout
+*/
+.wrapper {
+	width: 650px;
+	margin: 4em auto;
+	
+	text-align: left;
+	border: 1px solid #333;
+	background: #fcfdfd;
+	
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+}
+
+/*
+|---------------------------------------------------------------
+| HEAD STYLES
+|---------------------------------------------------------------
+|
+| The head layer
+*/
+#head {
+	margin: 0;
+	padding: 0 .1em 0 .5em;
+	height: 80px;
+	line-height: 75px;
+	
+	background: #222 url('../images/head_bg.jpg') repeat-x top left;
+	color: #ddd;
+	font-size: 250%;
+	font-weight: bold;
+}
+
+.logo {
+	float: right;
+	padding: 48px 0 0 0;
+	line-height: 1 !important;
+}
+
+/*
+|---------------------------------------------------------------
+| BODY STYLES
+|---------------------------------------------------------------
+| The body layer contains the sub-nav and content layers
+|
+| .nav-sub => sub navigation
+| .content => main page content
+*/
+#body { text-align: left; }
+
+.content {
+	line-height: 1.4;
+	padding: 1em 0;
+	width: 90%;
+	margin: 0 auto;
+	
+	text-align: center;
+}
+
+/*
+|---------------------------------------------------------------
+| FOOTER STYLES
+|---------------------------------------------------------------
+*/
+#footer {
+	margin: 1.5em 0 0 0;
+	padding: .5em 0;
+	clear: both;
+	
+	text-align: center;
+	font-size: 85%;
+	color: #999;
+	background: #f1f1f1;
+	border-top: 1px solid #e1e1e1;
+	
+	-moz-border-radius-bottomleft: 4px;
+	-moz-border-radius-bottomright: 4px;
+	-webkit-border-bottom-left-radius: 4px;
+	-webkit-border-bottom-right-radius: 4px;
+}

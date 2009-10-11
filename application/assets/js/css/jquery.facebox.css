@@ -1,0 +1,130 @@
+#facebox {
+    position: absolute;
+    left: 50%;
+    z-index: 100;
+    text-align: left;
+    margin-left: -375px;
+	
+	text-align: left;
+    color: #fff;
+}
+
+#facebox .popup {
+    position: relative;
+    width: 750px;
+}
+
+#facebox .hud_body {
+	width: 750px;
+    margin: 0 auto;
+    
+    -moz-border-radius: 4px;
+    -webkit-border-radius: 4px;
+    
+    background: #3a3a3a;
+    border: 1px solid #555;
+}
+
+#facebox .hud_title {
+    height: 22px;
+    line-height: 22px;
+    
+    text-align: center;
+    font-weight: bold;
+    font-size: 110%;
+    border-bottom: 1px solid #252525;
+}
+
+#facebox .hud_content { padding: 0 10px 10px 10px; }
+
+#facebox .close_image {
+    float: left;
+    margin: 4px 0 0 7px;
+    height: 13px;
+    width: 13px;
+    
+    border: none;
+    background: transparent url('../images/facebox-close.png') no-repeat top left;
+}
+
+#facebox .loading { text-align: center; }
+
+#facebox .image { text-align: center; }
+
+#facebox img {
+	border: 0;
+	margin: 0;
+}
+
+#facebox_overlay {
+	position: fixed;
+	top: 0px;
+	left: 0px;
+	height:100%;
+	width:100%;
+}
+
+.facebox_hide { z-index:-100; }
+
+.facebox_overlayBG {
+	z-index: 99;
+	
+	background-color: #000;
+}
+
+/*
+|---------------------------------------------------------------
+| TABLES IN THE FACEBOX
+|---------------------------------------------------------------
+*/
+
+textarea.hud,
+input.hud,
+select.hud {
+	background: #3a3a3a;
+	border: 1px solid #555;
+	color: #eee;
+}
+
+textarea.hud:focus,
+input.hud:focus,
+select.hud:focus {
+	background: #3c3c3c;
+	color: #eee;
+}
+
+/*
+|---------------------------------------------------------------
+| BUTTONS
+|---------------------------------------------------------------
+*/
+
+#facebox button.hud_button {
+	height: 20px;
+	padding: 0 10px 1px 10px;
+	min-width: 90px;
+	
+	-moz-border-radius: 14px;
+	-webkit-border-radius: 14px;
+	
+	border: 1px solid #aaa;
+	background: #353235 url('../images/facebox-button-bg.jpg') repeat-x top left;
+	font-weight: bold;
+	color: #eee;
+	outline: 0;
+	font-size: 90%;
+}
+#facebox button.button:hover { border: 1px solid #ccc; }
+
+input.hud_button {
+	height: 20px;
+	padding: 0 10px;
+	min-width: 90px;
+	
+	border: 1px solid #aaa;
+	background: #353235;
+	font-weight: bold;
+	font-size: 120%;
+	color: #eee;
+}
+input.button:hover { border: 1px solid #ccc; }

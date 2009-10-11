@@ -1,0 +1,280 @@
+2008.07.28
+
+* updated language file with new error message
+* updated admin constructor to check for access
+* updated menu library to pull menu items from the database
+* updated menu model to correctly pull data
+
+* added menu item data
+* added nav controller for testing out navigation stuff
+
+==========
+
+2008.07.25
+
+* updated the API some main navigation work
+* updated special layout work
+
+* added menu_main_group for the main navigation
+
+==========
+
+2008.07.24
+
+* added special layout file to work on new default layout
+
+==========
+
+2008.07.23
+
+* updated install data assets to use new multi-dimensional arrays
+* updated uninstall method to pull all and drop all tables with DBPREFIX instead of what's in the fields asset
+* updated user panel class and all associated things to dashboard_panels
+
+* added positions model
+* added ranks model
+* added departments model
+
+==========
+
+2008.07.22
+
+* added database_field method to update for adding database fields to the database
+* added global view for database_field method
+* added simpler is_sysadmin method to the players model
+* added DB2_Session to application library just in case we need it
+* added main update stylesheet
+* added update layout file
+* added (at least tried to) code for fancy form buttons
+
+* updated basic data asset to use multi-dimensional arrays (started)
+* updated ds9 data asset with test data
+* updated step 3 of the installation to actually take data
+* updated install step views to allow install to go on to step 3
+* updated install stylesheet to spread the width of layout
+* updated notes doc with information about installation (db collation)
+* updated language file to put visual breaks in
+
+==========
+
+2008.07.21
+
+* added MY_* controllers to help with extending the application core
+* added js folders to all the views
+* added button js code asset files
+* added shade and button shape image files to the default main theme
+
+* updated head assets to remove page specific code and add fancybox
+* updated API document
+* updated the admin_index view file to remove the shadowbox JS code
+* updated the search_index view file to remove some JS code
+* updated main forms stylesheet with button styles
+
+==========
+
+2008.07.18
+
+* updated autoload config to pull in the session library automatically
+* updated controllers to NOT manually load the session library
+* updated include head files to use user panel jQuery code
+* updated main layout to check for the existence of a session to show the user panel
+* updated install basic data to include the default user panel wells
+* updated panel stylesheet
+* updated user panel library to start to output data
+
+==========
+
+2008.07.17
+
+* added constant for DB Prefix
+* added forms.css to install layout
+* added user panel to the main layout
+* added panel.css file to the main CSS directory
+* added user panel library
+
+* updated system model to accurately search for system tables
+* updated autoload config file to NOT load the session stuff automatically (major reinstall problems if it is)
+* updated the controllers to load the session library
+* updated system installed error in the app language file
+* updated install stylesheet to include error, warning, and success classes
+* updated install remove data view to accept errors and login
+
+* fixed bug where system data wouldn't be inserted because of the install check (moved the install check to step 1)
+
+* removed include of database config file in the check_install_status() method (not needed anymore)
+
+* moved user panel JS to include_head_main.php asset
+
+==========
+
+2008.07.16
+
+* updated login controller to fix bug where wrong error message was being thrown
+* updated globals model method get_config_items() to get_globals()
+* updated controllers to reflect globals model change
+* updated some TODOs
+* updated the verify method for installation
+* updated install index to accept error messages
+* updated install process to check whether or not the system is installed before starting to install
+
+* added install error message to the language file
+* added check_install_status() method to system model
+* added an error class to the install stylesheet
+
+==========
+
+2008.07.15
+
+* updated the API document with the image location info
+* updated install controller to use APPPATH instead of a custom include path
+* updated update controller to use APPPATH instead of a custom include path
+* updated the verify_login_adv method of the players model
+* updated login controller to do advanced credential checking
+* updated login error in the language file
+
+* added check_email() method to the players model
+* added check_password() method to the players model
+
+* removed verify_login_adv() method from players model
+
+==========
+
+2008.07.14
+
+* updated debug helper to include option for printing out object data
+* updated logout() method to redirect to the login page
+* updated app_lang with new login failure codes
+* updated login_index view with new login failure code for maintenance mode
+* updated spacing in application config file
+* updated to jQuery UI 1.5.2
+* updated system components install data to reflect the jQuery UI change
+
+* removed success() method from login controller ... not used
+
+* moved warning above database connection variables as none of the variables should be changed
+
+* added API document with references for all the new and extended helpers
+
+==========
+
+2008.07.09
+
+* added application.php config file
+* added debug helper
+* added app_lang.php language file
+
+* updated config file autoload to pull application instead of sol
+* updated location helper
+* updated MY_html_helper
+* updated MY_language_helper
+* updated global views to use new lang_output helper
+* updated controllers to point to new language file
+
+* removed sol.php config file
+* removed sol_lang.php language file
+
+==========
+
+2008.07.08
+
+* added session debugging code to admin_index view
+
+* updated login controller to set the session data (not working properly)
+
+* fixed a syntax error in the players controller (commented out)
+* fixed bug in admin controller where login wouldn't pass someone on to the admin_index page
+
+==========
+
+2008.07.07
+
+* updated login page to use a table for the login boxes
+* updated login forms.css for cell label and cell spacer
+* updated language file with login instructions
+* updated install layout file
+* updated the installation verification method
+
+* added MY_html_helper with a table_row_spacer function to build table spacers
+* added to the coc table to the installation
+* added new TODO for final step of installation
+* added main installation stylesheet
+* added sim_name to config table
+* added some test jQuery code to the search index
+
+* removed views/global/install/css/install.css
+
+==========
+
+2008.07.03
+
+* added main search page (still lots of jQuery to do here)
+* added some elements to the language array
+* added tables stylesheet to the main theme
+
+* updated search controller for development
+* updated forms stylesheet
+
+==========
+
+2008.07.02
+
+* updated login controller to use error codes
+* updated lang_header to accept a class as a paramater
+* updated some of the language variables
+* updated news model to pull comments and a count of all comments for a particular news item
+* updated default stylesheets (admin, login, main) to use some less muted colors
+* updated all the config files to clean up the location comment at the bottom of the file
+* updated all the install asset files to not allow direct script access
+
+* added the login error codes to the language file
+* added logic to the login_index view to display the errors
+* added session check in the admin constructor to make sure only authenticated users get in
+* added comments to news items
+* added news categories functions to the news model
+* added link back to main site from the install center
+* added link to install center from main site
+* added tour decks table
+* added comment blocks to the update files
+
+* fixed errors with default/layout_login
+* fixed feed display on admin/index
+* fixed some TODOs
+
+* removed the news categories model
+* removed the css directories for admin, main, wiki, and login since they won't be used
+
+==========
+
+2008.07.01
+
+* moved install and update assets into their own sub-directories
+* moved simplepie to the application instead of keeping it in the core
+
+* updated install controller to point to new assets
+* updated codeigniter to new tagged version of 1.6.3 because of the language helper addition
+* updated native session library to use NGSession
+* updated system_components to add NGSession and Layout Library
+* updated jquery ui to version 1.5.1
+* updated shadowbox to version 2.0-rc1
+* updated version array to include all the milestones
+* updated MY_language_helper to use lang_header() instead of header()
+* updated some view files with the new lang_header() helper
+* updated update controller with new paths
+* updated update controller with code for running and verifying the update
+* updated default skin to use greens instead of reds
+* updated assets/update/update_versions.php to be assets/update/versions.php
+
+* added the rest of the install tables to the fields page (commented out until schema is finished)
+* added MY_language_helper which extends the core helper to include a header (H1, H2, etc.) function
+* added shadowbox-classic skin to js directory
+* added shadowbox-lang to js directory
+* added sms2 update file
+* added update_first_launch method to the players model
+* added check to update the first launch status for a player if it's equal to 1
+* added get_current_version method to system model to grab current database version
+
+* removed shadowbox.css from js/css directory
+* removed welcome.php from controllers directory
+
+* fixed CI error with duplicate constant (CI_VERSION was already defined in the core)
+* fixed some TODOs

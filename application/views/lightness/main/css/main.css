@@ -1,0 +1,224 @@
+/*
+|---------------------------------------------------------------
+| STYLESHEET - MAIN
+|---------------------------------------------------------------
+|
+| File: default/main/css/main.css
+| Author: David VanScott [davidv@anodyne-productions.com]
+| Version: 1.0
+|
+| Main stylesheet used by the default/main theme
+|
+*/
+
+/*
+|---------------------------------------------------------------
+| STYLESHEET INCLUDES
+|---------------------------------------------------------------
+| Pulls in the other stylesheets used by the theme
+|
+| reset		=> reset stylesheet
+| display   => misc display elements (comments, OL/UL, etc.)
+| forms     => forms, buttons, and tables
+| text      => fonts and links
+| ui.tabs   => tabbed interfaces
+| panel		=> user panel
+*/
+@import url('reset.css');
+@import url('display.css');
+@import url('forms.css');
+@import url('text.css');
+@import url('ui.tabs.css');
+@import url('panel.css');
+
+/*
+|---------------------------------------------------------------
+| MASTER BODY STYLES
+|---------------------------------------------------------------
+| Master font size, family, and color are controlled from here
+*/
+body {
+	margin: 0;
+	padding: 0;
+	
+	background: #fff;
+	color: #363636;
+	font: 75%/1.5 "lucida grande", verdana, arial, sans-serif;
+	text-align: center;
+}
+
+/*
+|---------------------------------------------------------------
+| WRAPPER STYLES
+|---------------------------------------------------------------
+| The wrapper controls the width and centering of the layout
+*/
+.wrapper {
+	min-width: 960px;
+	max-width: 1280px;
+	padding: 0 60px;
+	margin: 0 auto;
+	
+	text-align: left;
+}
+
+/*
+|---------------------------------------------------------------
+| HEAD STYLES
+|---------------------------------------------------------------
+*/
+#head {
+	margin: 0;
+	padding: 0;
+	height: 80px;
+	
+	background: #1a1a1a url('../images/head_bg.jpg') no-repeat top left;
+	color: #eee;
+}
+#head .head_content {
+	padding: 12px 0 0 0;
+	
+	font-weight: bold;
+}
+
+/*
+|---------------------------------------------------------------
+| MENU STYLES
+|---------------------------------------------------------------
+*/
+#menu {
+	height: 30px;
+	line-height: 30px;
+	margin: 20px 0;
+	float: right;
+	
+	background: #f6a828 url('../images/menu-bg.jpg') repeat-x top left;
+	border: 1px solid #e78f08;
+	font-size: 95%;
+	
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+}
+#menu .nav-main {}
+#menu .nav-main ul {
+	margin: 0 5px;
+	padding: 0;
+	
+	list-style-type: none;
+}
+#menu .nav-main ul li {
+	float: left;
+	margin: 0 2px 0 0;
+	padding: 0;
+}
+#menu .nav-main ul li a {
+	display: block;
+	
+	text-decoration: none;
+	color: #fff;
+	font-weight: bold;
+	border-left: 1px solid transparent;
+	border-right: 1px solid transparent;
+	border-bottom: none;
+}
+#menu .nav-main ul li a span { padding: 12px; }
+#menu .nav-main ul li a:hover,
+#menu .nav-main ul li a.active {
+	background: #fdf5ce url('../images/menu-over-bg.jpg') repeat-x top left;
+	border-left: 1px solid #fbcb09;
+	border-right: 1px solid #fbcb09;
+	border-bottom: 1px solid #e78f08;
+	color: #c77405;
+}
+
+/*
+|---------------------------------------------------------------
+| BODY STYLES
+|---------------------------------------------------------------
+| The body layer contains the sub-nav and content layers
+|
+| .nav-sub => sub navigation
+| .content => main page content
+*/
+#body { margin: 1em 0 2em 0; }
+
+.nav-sub {
+	float: right;
+	width: 160px;
+	margin: 0 0 10px 0;
+	
+	text-align: right;
+	background: #f6f6f6;
+	font-size: 92%;
+	border: 1px solid #ccc;
+	
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+}
+.nav-sub ul {
+	margin: 0;
+	padding: 0;
+	
+	list-style: none;
+}
+.nav-sub ul li {
+	padding: 0;
+	margin: 0;
+	line-height: 2;
+}
+.nav-sub ul li a {
+	display: block;
+	
+	text-decoration: none;
+	color: #1c94c4;
+	border-top: 1px solid transparent;
+	border-bottom: 1px solid transparent;
+	font-weight: bold;
+}
+.nav-sub ul li a:hover {
+	color: #c77405;
+	background: #fdf5ce;
+	border-top: 1px solid #fbcb09;
+	border-bottom: 1px solid #fbcb09;
+}
+.nav-sub ul li:first-child a:hover {
+	border-top: 1px solid transparent;
+	
+	-moz-border-radius-topleft: 4px;
+	-moz-border-radius-topright: 4px;
+	-webkit-border-radius-top-left: 4px;
+	-webkit-border-radius-top-right: 4px;
+}
+.nav-sub ul li:last-child a:hover {
+	border-bottom: 1px solid transparent;
+	
+	-moz-border-radius-bottomleft: 4px;
+	-moz-border-radius-bottomright: 4px;
+	-webkit-border-radius-bottom-left: 4px;
+	-webkit-border-radius-bottom-right: 4px;
+}
+.nav-sub ul li a span { padding: 2px 7px; }
+.nav-sub ul li.spacer { border: none; }
+
+.content {
+	margin-right: 210px;
+	line-height: 1.4;
+}
+
+/*
+|---------------------------------------------------------------
+| FOOTER STYLES
+|---------------------------------------------------------------
+*/
+#footer {
+	margin: 2em auto;
+	padding: 2em 0;
+	clear: both;
+	line-height: 1.4;
+	width: 50%;
+	
+	text-align: center;
+	font-size: 90%;
+	border-top: 1px solid #eee;
+	color: #999;
+}

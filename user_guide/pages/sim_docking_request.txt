@@ -1,0 +1,9 @@
+|---------------------------------------------------------------
+| SIM - DOCKING REQUEST FORM
+|
+| System Version: 1.0
+|---------------------------------------------------------------
+
+Nova includes a simple docking request form for RPGs that may allow docking or joining with their sim. Currently, this functionality is not database driven and will not be made that way until Anodyne releases Nova version 1.1. In the meantime, we've created a simple for people to submit to the game master to request permission to dock with the RPG.
+
+WARNING! If system email is turned off, this form cannot be delivered to the game master(s). Because of this, when system email is turned off, the submit button on the page is disabled to prevent the form from being sent.

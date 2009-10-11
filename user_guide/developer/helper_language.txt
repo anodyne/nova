@@ -1,0 +1,33 @@
+|---------------------------------------------------------------
+| MY_LANGUAGE HELPER
+|---------------------------------------------------------------
+|
+| The Language helper has been extended to include a function for 
+| printing out text in the proper language. (The second parameter 
+| defaults to a paragraph tag.) 
+|
+| lang_output($language_line, $header_type, $class)
+|
+
+@ param 	string (default = empty string)
+@ param		string (default = p) {optional}
+@ param		string (default = empty string) {optional}
+
+@ autoload	yes
+@ notes		will not translate a string of text fed to the function,
+			will only pull the language line from the application
+			language file for the loaded language
+
+@ return 	string (language output)
+
+EXAMPLE:
+
+<?=lang_output('header_credits', 'h1');?>
+<?=lang_output('error_maintenance', 'h3', 'error');?>
+<?=lang_output('lorem');?>
+
+OUTPUT:
+
+<h1>Site Credits</h1>
+<h3 class="error">System is in Maintenance Mode!</h3>
+<p>Lorem ipsum dolor,...</p>

@@ -1,0 +1,381 @@
+06.30.2009
+
+* updated head logo files with m5 branding
+* updated install files with m5 info in the system info table
+* updated the system version in the config file
+
+==========
+
+06.29.2009
+
+* added award-add.png
+* added tour-add.png
+* added tour-edit.png
+* added tour-delete.png
+* added tour.png
+
+* updated awards page to use the award image
+* updated tour page to use the tour images
+* updated the add links in the manage section to be more consistent
+* updated personal logs to respect moderation status when posting
+* updated text email view files to fix some issues
+* updated the language files
+* updated the players model to adjust for mission post author string
+
+* fixed bug where posts, logs and news items posted from a saved state wouldn't send emails out
+
+==========
+
+06.25.2009
+
+* updated login stylesheets to match changes to the view files
+* updated deck listing to use the UITheme identifier and stop pulling in the ui theme file since it's already pulled in
+* updated admin display stylesheet to fix missing image being pulled in for the sortable list
+* updated admin display stylesheet to add a special class for borders
+* updated the skin catalogue view to provide better separation between skins
+* updated the skin catalogue page to show a message if not everything has a default
+* updated the skin catalogue page to not allow deleting a skin if sections are still in that skin
+* updated the language files
+* updated comments page to show the full content of pending comments instead of just the first 25 words
+* updated log management page to hide the pending tab from users with level 1 access
+* updated log management page to not allow level 1 access users to get to a log if it's pending
+* updated news management page to hide the pending tab from users with level 1 access
+* updated news management page to not allow level 1 access users to get to a news item if it's pending
+* updated post management page to hide the pending tab from users with level 1 access
+* updated post management page to not allow level 1 access users to get to a post if it's pending
+
+* fixed bug where skins couldn't be edited or deleted
+* fixed a typo on adding a new skin section
+
+* added write-post-view image
+* added write-log-view image
+* added write-news-view image
+
+==========
+
+06.24.2009
+
+* updated sim controller with new language code
+* updated view files and stylesheets to move to dash delimited classes instead of underscore
+* updated all locations where button_ was still being used instead of actions_
+* updated the missions model with a more generic get_mission method
+* updated the language files
+* updated the install controller to check for failures
+* updated the auth library with a method for setting library variables
+* updated the ajax view files with the new cell-label class
+
+==========
+
+06.23.2009
+
+* removed nimitz install data file
+* removed some unused images from the lightness theme
+* removed manage_activate view file
+* removed manage_activate js view file
+* removed sim_ranks view file (no longer used)
+
+* updated dev install data file with more missions and more mission posts
+* updated the write controller to make sure that a flash status and message exist even if there's a problem
+* updated the language files
+* updated the styles for main and sec buttons of the lightness theme
+* updated the manage controller to remove the activation page
+* updated the posts management page to allow approving posts
+* updated the log management page to allow approving personal logs
+* updated the news management page to allow approving news items
+* updated view specs page to show edit link if they're allowed to edit
+* updated view tour page to show edit link if they're allowed to edit
+* updated view missions page to show edit link if they're allowed to edit
+* updated view awards page to show edit link if they're allowed to edit
+* updated view decks page to show edit link if they're allowed to edit
+* updated view departments page to show edit link if they're allowed to edit
+* updated view credits page to show edit link if they're allowed to edit
+* updated view character page to show edit link if they're allowed to edit
+* updated view player page to show edit link if they're allowed to edit
+* updated view post page to show edit link if they're allowed to edit
+* updated login template to be more in line with the skin
+* updated install data with a new rev number (1210)
+
+* fixed bug in the post management pages where the paginator was off on page numbers for the tabs that weren't active
+* fixed bug in step 3 where both ajax loaders fire after the second event is triggered
+
+* added some images for the lightness theme
+* added write-post-approve image
+* added write-log-approve image
+* added write-news-approve image
+
+==========
+
+06.22.2009
+
+* updated the posts model
+* updated the logs model
+* updated the news model
+* updated the basic install data to put more mission posts in to the basic install
+* updated the install controller to check which install file to use
+* updated the instal_data_basic file to remove anything that won't be in for release
+* updated comments and entry areas for post management to have pagination links at the top of the paginated area
+
+* fixed bug where pagination didn't work on the manage posts page
+* fixed bug where pagination didn't work on the manage logs page
+* fixed bug where pagination didn't work on the manage news page
+* fixed bug on stats page with division by zero errors
+* fixed bug on awards page where view file wasn't being pulled in
+
+* added new constant to the nova config file for determining dev/basic install file
+* added the install_data_dev file
+
+==========
+
+06.19.2009
+
+* updated the verification page to use a hard-coded table instead of the CI table class mess
+* updated the verification method to clean up a lot of shady code
+* updated the install template to correct a padding issue with the logo
+* updated the install stylesheets
+* updated the step 3 process to use ajax for position descriptions
+* updated the language files
+
+* removed the blank rank record since it was causing issues with the rank dropdowns
+
+* added method to the ajax controller for pulling rank image
+* added small ajax loading graphic for the install section
+
+==========
+
+06.18.2009
+
+* updated doctypes to xhtml 1.1
+* updated the install stylesheets
+* updated the loader graphic for the install section to match the background color
+* updated the language files
+* updated the template files for lightness and redmond
+* updated the install controller with a tour page
+* updated some of the install pages with links back to the install center
+* updated the login head logo to make it more legible
+
+* added the install tour view file
+* added the flash view file to the install section
+
+* fixed an error on the login page
+
+==========
+
+06.17.2009
+
+* updated the personnel controller with language code updates
+* updated the language files
+* updated the personnel section view files to not use font80 class and use fontSmall instead
+* updated auth library to check login attempts
+* updated the main index page to check login attempts and provide input to the user
+* updated the system model with login attempt methods
+* updated the awards model with a method to count received awards for either a character or player
+* updated character bio pages to show posts, logs and awards links only if some exist
+
+* added login attempts table to the schema
+
+==========
+
+06.16.2009
+
+* updated the language files
+* updated the personnel controller with language code updates (halfway through player method)
+
+==========
+
+06.15.2009
+
+* added approve ajax view file
+* added manage_activate js view file
+* added manage_activate view file
+
+* fixed bug with subtabs that cut off longer text
+
+* updated the language files
+* updated manage/comments to allow approving pending comments
+* updated basic install file with more page headers and some role page changes
+
+==========
+
+06.12.2009
+
+* removed old cupertino UI theme images
+
+* added new cupertino UI theme images
+* added edit_comment ajax view file
+
+* updated jquery ui js files to version 1.7.2
+* updated jquery ui css files to version 1.7.2
+* updated system info table to reflect update to jquery ui 1.7.2
+* updated posts model with method for updating post comments
+* updated logs model with method for updating log comments
+* updated news model with method for updating news comments
+* updated manage/comments to be able to edit the content of comments
+
+==========
+
+06.10.2009
+
+* added comment-approve.png to _base/admin/images
+
+* updated manage/comments to show approve icon if the status is pending
+* updated manage/comments to not use post type access
+
+==========
+
+06.09.2009
+
+* fixed bug in IE where dashboard trigger spread the width of the container
+
+* updated admin ui tabs stylesheet to include sub tab styles
+* updated posts model
+* updated logs model
+* updated news model
+
+* added manage_comments js view file
+* added manage_comments view file
+* added comments-edit.png to _base/admin/images
+* added comments-delete.png to _base/admin/images
+* added del_comment ajax view file
+
+==========
+
+06.08.2009
+
+* fixed typo on step 4 of the install process
+
+* updated the lightness main template file
+* updated the redmond main template file
+* updated the tour model with methods to add, edit and delete tour items
+* updated the language files
+* updated user panel library to show the writing entries item all the time and use different icons
+
+* added add_tour_item ajax view
+* added edit_tour_item ajax view
+* added del_tour_item ajax view
+* added icon-yellow.png
+
+==========
+
+06.05.2009
+
+* fixed typo in headers install data
+* fixed bug with edit link in view log
+
+* added manage news edit view file
+* added manage news categories view file
+* added manage news categories js view file
+* added site sim types view file
+* added site sim types js view file
+* added icon-add.png to _base/admin/images
+* added icon-delete.png to _base/admin/images
+* added icon-edit.png to _base/admin/images
+
+* updated the language files
+* updated the news schema to include a last updated field
+* updated the view news page to include a link to edit the news item if the user has permission to
+* updated main controller with new language code
+* updated search controller with new language code
+* updated login controller with new language code
+* updated the login template file
+* updated the system model with methods for sim type management
+* updated the site controller with a method for sim type management
+* updated the tour model
+
+==========
+
+06.04.2009
+
+* updated some of the page titles
+* updated the posts model
+* updated the language files
+* updated the personal logs model
+* updated the view log page to have an icon to edit the log if the user has the proper permissions
+* updated the post management page to allowing editing
+* updated the log management page to allowing deleting and editing
+
+* fixed a bug in the mission post page where a prompt wasn't shown for posting and deleting
+* fixed a bug in the personal log page where a prompt wasn't shown for posting and deleting
+* fixed a bug in the news item page where a prompt wasn't shown for posting and deleting
+
+* added a last updated field to the personal logs database schema
+* added a last updated field to the mission posts database schema
+* added write-log-edit.png to main/images
+* added write-post-edit.png to main/images
+* added write-news-edit.png to main/images
+* added the posts edit view file
+* added the logs edit view file
+* added the logs js view file
+* added the news js view file
+
+==========
+
+06.03.2009
+
+* added write-post-edit.png
+* added write-post-delete.png
+* added write-log-edit.png
+* added write-log-delete.png
+* added write-news-edit.png
+* added write-news-delete.png
+* added manage_posts_ajax view
+* added manage_posts view
+* added manage_posts js view
+* added del_post ajax view
+* added manage_logs_ajax view
+* added manage_logs view
+* added manage_news_ajax view
+* added manage_news view
+
+* removed manage_postsall view
+* removed manage_postsall js view
+
+* updated the manage/posts method to handle pagination
+* updated the manage controller to have an entries_ajax private method (which isn't true ajax, but someday it will be)
+* updated the posts model with a generic get_post method
+* updated the sim and write controllers to use the new posts method
+* updated the language files
+* updated the babylone 5 genre file with info from rycon
+
+* fixed a bug in sim/listposts where only the first author is displayed
+
+==========
+
+06.02.2009
+
+* updated write controller to fix the button_ to action_ language stuff
+* updated posts model with new method for counting unattended saved posts
+* updated user panel library with workflow method
+* updated the admin panel stylesheet
+* updated the main panel stylesheet
+* updated the head include files (admin and main) for the new panel stuff
+* updated the template files
+* updated the template config file with a new region
+
+* added userpanel_workflow ajax view
+* added icon-green.png
+* added icon-gray.png
+* added panel handle background image
+
+==========
+
+06.01.2009
+
+* added the may archive file
+* added the posting requirement ajax view
+
+* updated the panel jquery code to be more dynamic
+* updated the panel with some new sections
+* updated the styles for the panel
+* updated the auth library with new methods for grabbing the sysadmin, webmaster and game master tags
+* updated the players model with a general method to pull player info
+* updated the players model with a method to pull all players
+* updated the basic install data with the posting requirement stuff
+* updated the site settings page with the posting requirement stuff
+* updated panel and admin controller to do the activity panel
+* updated the language files
+* updated panel and admin controller to do the milestones panel
+* updated js view to make sure that the processing loader is shown when clicking on the install link
+* updated the admin head include file to remove calling the equal heights plugin
+* updated the system info table with an updated rev number (1081)
+
+* removed jquery equal heights plugin

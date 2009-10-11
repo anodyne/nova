@@ -1,0 +1,1 @@
+<?php echo form_dropdown('', $fields);?>

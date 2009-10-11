@@ -1,0 +1,262 @@
+2008.11.29
+
+* added application table to the install file
+* added method to grabbing the position name
+* added model for accessing the applications table
+
+* updated main/join to put in code for inserting into the applications table
+* updated viewposts to be able to view character or player posts
+* updated viewlogs to be able to view character or player logs
+
+* finalized personnel/viewposts
+* finalized personnel/viewlogs
+
+* fixed PHP fatal error in positions model
+* fixed bug in player bio where posting links pointed to a wrong URI segment
+
+==========
+
+2008.11.28
+
+* fixed bug in player bios where empty fields would be shown
+* fixed bug in player bios where inactive characters wouldn't display
+* fixed incorrect link on the player bios
+* fixed some display issues on the manifest
+
+* added ability to view player's awards (and all their characters)
+* added a TODO in the install controller
+
+* updated the language files
+
+* finalized personnel/player
+* finalized personnel/viewawards
+
+==========
+
+2008.11.26
+
+* updated coc view file to be more consistent
+* updated personnel/player
+* updated language files
+* updated method in the posts model that pulls a character's posts to accept an array
+
+* added method to awards model to get all of a player's awards
+* added award data to personnel/player
+* added post averages to personnel/player
+* added mission post list to personnel/player
+* added bio field to players table
+* added mods directory to the install directory for installing and uninstalling MODs
+* added mods table to the install fields file
+* added bio field to player bio view
+* added personal log list to personnel/player
+
+* fixed bug in sim/awards where the wrong js file was being called
+
+* started working on a way to install MODs
+
+==========
+
+2008.11.25
+
+* updated ui tabs stylesheet to use ems for font size
+* updated install data with instant message data
+* updated the player bio view with logic to hide some of the fields if they're empty
+* updated the language files with some new labels
+
+* removed old layout library file for main section
+* removed old layout library file for install section
+* removed old layout library file for update section
+
+* added model method to get characters based on player id
+* added model method to get post count for a set of characters
+* added model method to get log count for a set of characters
+
+==========
+
+2008.11.24
+
+* updated news items doc
+* updated news model to pull character info instead of player info
+* updated main/news to look for character names instead of player names
+* updated default/main/css text sizes
+* updated main/credits to pull in skin and rank credits
+* updated permanent credits in the install data
+* updated error view to use the text helpers
+
+* fixed table100 class to use a 12pt font instead of 10
+
+* added text developer doc
+* added model methods to system model for getting rank and skin info
+* added some commenting to the search controller
+* added a new font class to handle 80% fonts inside tables (fontSmall uses 1em)
+
+* cleaned up MAIN view files to be consistent
+* cleaned up SEARCH view files to be consistent
+* started to clean up PERSONNEL view files to be consistent
+
+* removed unused images in _global/main/img
+
+==========
+
+2008.11.21
+
+* updated sim/viewpost to show the post info at the top of the page
+* updated access library
+* updated all js view files to have a _js.php suffix
+* updated controllers with new _js suffix for js views
+
+* fixed double paragraph tags in sim_viewpost view file
+
+* removed search js view as we're no longer using it
+
+* added reset stylesheet
+
+* started working on better font control
+
+==========
+
+2008.11.20
+
+* started work on sim/stats
+
+* updated personnel/player with character info
+* updated DS9, ENT, and BSG genre install files with better rank short names
+
+* added sim_stats view
+* added sim_stats_js view
+* added redirect on player page if the session logic isn't met
+* added timespan to join, last login, and last post
+* added link to player bio from the character bios
+
+==========
+
+2008.11.19
+
+* updated sim/missions
+* updated language files
+* updated mission view files
+* updated default/css/main
+* updated sim/viewpost
+
+* added model method to count mission posts
+* added model method to parse out mission authors
+* added global key for determining the way to count posts
+* added test mission images
+* added mission documentation page
+
+* fixed bug in sim/listposts where errors were thrown if a mission didn't exist
+
+* finalized sim/listposts
+* finalized sim/missions
+
+==========
+
+2008.11.18
+
+* updated sim/missions
+* updated language files
+* updated missions model
+
+* added sim_missions_one view file
+
+==========
+
+2008.11.17
+
+* updated display stylesheet
+* updated text stylesheet
+* updated news model
+* updated main/viewnews
+* updated main_viewnews view
+* updated main_viewnews js view
+* updated main_index js view
+* updated depts view to look for sub groups
+* updated sim/departments to look for sub groups
+* updated depts model to only pull parent = 0 depts
+* updated mission views
+
+* removed tables stylesheet
+
+* added contact message to the messages table
+* added margin and padding styles for ULs and OLs
+* added method to depts model to grab sub groups
+
+* finalized main/viewnews
+* finalized sim/index
+* finalized main/index
+
+==========
+
+2008.11.12
+
+* removed unused javascript, css, and image files
+
+* updated nicEdit
+* updated debug helper documentation
+* updated utility helper documentation
+* updated player bio method
+* updated language helper to trap for there being no element passed to text_output
+* updated install file to make sure there's enough room for putting date of birth
+
+* added helper and library documentation files
+* added player bio view
+* added player bio js file
+* added labels language file
+
+==========
+
+2008.11.11
+
+* added jqModal
+* added jqModal css
+* added jqDnR
+* added modal window close icon (need a new one)
+* added modal_lang
+
+* updated system components on install to reflect new plugins
+* updated main head include file
+* updated main/viewnews JS file with new code
+* updated main_base controller
+* updated contact method and view file
+
+==========
+
+2008.11.10
+
+* updated js include files to point to the new js directory
+* updated text_output function in language helper to use nl2br
+
+* fixed bug where contact header wasn't displaying
+
+* finalized main/news
+* finalized main/credits
+
+==========
+
+2008.11.09
+
+* moved js directory from the root to the assets directory
+
+==========
+
+2008.11.07
+
+* added text output function to the language helper
+* added rank location function to the location helper
+
+* updated personnel controller with rank location helper
+* updated logic for determining combadge image on personnel/coc
+
+==========
+
+2008.11.06
+
+* moved Template to the core
+
+* added extended Template library
+
+==========
+
+2008.11.01
+
+* updated personnel section to use character bio instead of bio

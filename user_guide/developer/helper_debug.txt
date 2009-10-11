@@ -1,0 +1,35 @@
+|---------------------------------------------------------------
+| HELPERS - DEBUG
+|
+| System Version: 1.0
+|---------------------------------------------------------------
+
+The Debug helper is a new helper that's been created just for Nova that aids in debugging variables throughout controllers, models, and libraries. The Debug helper is not auto-loaded and will need to be manually loaded in your controller's method.
+
+// -------------------------------------------------------------
+
+print_var($variable)
+
+Returns the output of the variable passed in to the function
+
+@access		public
+@param		variable/array/object (default = empty string)
+@return		string
+
+@autoload	no
+@notes		Might cause header errors due to outputting content earlier than expected
+
+EXAMPLE
+
+$foo = array('a', 'b', 'c');
+print_var($foo);
+
+RETURNS
+
+Array(
+	[0] => a
+	[1] => b
+	[2] => c
+)
+
+// -------------------------------------------------------------

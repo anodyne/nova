@@ -1,0 +1,424 @@
+2009.02.27
+
+* updated list posts and list logs to show how many records it's display out of the total number of entries
+* updated post, log, and news count methods to take into account status
+* updated admin/index with the notifications
+* updated the location helper to clean up the awards_location function
+* updated the awards page with the updated awards_location helper
+* updated sim/awards doc
+* updated sim/dockingrequest flash message if system email is off
+* updated main/contact doc to reflect form being disabled if system email is off
+* updated all the docs to remove most references to SMS
+* updated all the docs to remove some unnecessary formatting
+
+* added a language key to the language file
+* added a count method to the private messages model for counting unread PMs
+* added sim/dockingrequest doc
+* added sim/decks doc
+* added sim/departments doc
+* added sim/specs doc
+* added sim/tour doc
+
+==========
+
+2009.02.26
+
+* updated the list posts page to add table headers
+* updated the list logs page to add table headers
+* updated the sim/listposts doc file
+* updated the number of logs to show on the list logs page
+* updated the changes_sms doc
+* updated install step 4 to update my links after creating the player and character
+
+* added a language key to the language file
+* added a sim/listlogs doc file
+* added a sim/stats doc file
+* added a pending state for player status
+* added the pagination library to sim/listlogs
+* added the pagination library to sim/listposts
+* added a count method for all personal logs
+* added a count method for all mission posts
+* added method to the system model to update my links
+
+* removed some commented code in the stats page
+* removed some doc files
+
+==========
+
+2009.02.25
+
+* updated some of the documentation
+* updated view awards page to separate out of character awards into their own section
+* updated write control panel to put the view more posts links at the bottom of the sections
+* updated admin control panel based on poll results so far
+* updated admin controller with entry and comment counts
+* updated main controller with email for pending comment
+* updated sim controller with email for pending comment
+* updated main_viewnews, sim_viewlog and sim_viewpost docs to reflect comment moderation
+
+* added changes to sms doc
+* added timezone to player creation step during install
+* added methods to the posts, logs and news models for counting player comments
+* added email views for pending comments
+* added a skins tutorial doc
+
+==========
+
+2009.02.24
+
+* updated the admin layout
+* updated install data and took out the add post links
+* updated admin layout images
+* updated the players model to include comments in moderation
+* updated post comments schema
+* updated post, log, and news models to look for activated comments
+* updated view post doc
+* updated view news doc
+
+* added comment moderation
+* added method to players model for getting all email address with a certain access
+* added view log doc
+
+==========
+
+2009.02.23
+
+* added personnel documentation
+* added some sim documentation
+* added manage comments access pages to the install data
+* added is_working_url function to the URL helper
+
+* fixed bugs in personnel controller with fatal errors
+
+* updated Auth library and put my links into the session
+* updated User Panel library and pulled my links out of the library
+* updated comments schema with status for moderated commenting
+* updated players schema with moderated commenting fields
+* updated user access control docs
+
+==========
+
+2009.02.19
+
+* updated messages controller to only need messages/index permissions to get to all PM features
+* updated the messages docs to mention the access level needed for messaging features
+* updated the write docs to mention access levels needed
+* updated the default/admin/css/display.css stylesheet with the notes style
+* updated the extending series of tutorials
+
+* removed unnecessary pages from access_pages
+* removed access_levels.txt
+
+* added user_access_control.txt
+* added write/index to access pages
+* added mission notes to write/missionpost
+
+==========
+
+2009.02.18
+
+* added write/index doc
+* added write_index view
+* added write_index_js view
+* added log.png to admin/images
+* added post.png to admin/images
+* added news.png to admin/images
+* added limit to the get_character_posts method
+* added limit to the get_character_logs method
+* added some methods to the news model for retrieving news items
+* added some methods to the logs model for retrieving logs
+* added some methods to the posts model for retrieving posts
+* added some email language keys
+* added the email views
+
+* updated write/missionentry doc
+* updated Auth::check_access() with a parameter to set redirect or not
+* updated Auth::check_access() to be able to pass a URI as the first parameter
+* updated the basic install data with some updates to the write controller
+* updated the write controller with email code
+* updated the install controller with internationalization updates
+* updated the update controller with internationalization updates
+* updated the install template with internationalization updates
+* updated the update template with internationalization updates
+
+* fixed bug in personnel/player where we were trying to pull all posts and logs
+* fixed bug in players model where we were referencing a variable that didn't exist
+* fixed bug where panel variable was crossing names with admin pages
+
+==========
+
+2009.02.17
+
+* updated controllers to load player and character models in the constructors
+* updated Auth and User_panel libraries to make sure we aren't loading resources redundantly
+* updated the post model
+* updated the characters model
+* updated the language file with some new keys
+* updated the players model
+* updated M3 rev in the system_info table
+* updated the write docs
+
+* removed livequery as the functionality was incorporated into jquery 1.3.x
+
+* added mission entry js view
+* added method to the missions model to get all current missions
+
+==========
+
+2009.02.16
+
+* updated language file to correct a key that was too specific
+* updated the news views to reflect the change to the language file
+* updated news and news comments with new schema for characters and players
+* updated news views to reflect schema changes
+* updated head include files and templates with new jquery file name
+* updated panel_1 of the user panel
+* updated default/main template with new user panel code
+* updated controllers with user panel code
+* updated template config file with user panel variables
+* updated controllers with consistent model renaming pattern
+* updated Auth library to maintain consistent model renaming pattern
+
+* added write news js view
+* added jquery.js
+* added method to the players model for checking post moderation
+* added keys to the email language file for the news item emails
+* added method to the news model for grabbing news category name
+* added email views for news items
+* added userpanel_panel1
+* added userpanel_panel2
+
+* fixed bug where errors were printed on listing of personal logs (schema change)
+
+* removed jquery-1.3.1.min.js
+* removed userpanel_index
+
+==========
+
+2009.02.13
+
+* updated personal logs model to use new log author schema
+* updated sim/viewlog with new log schema changes
+* updated personnel/player with new log schema changes
+* updated Auth library to update the last login time
+* updated messages/_email to make sure template was being parsed into a variable instead of output to the browser
+* updated write/_email to send an email to the crew after posting a personal log
+* updated player preferences master list
+* updated the controllers doc
+* updated the user panels with temporary links to logout and main/index (admin only)
+* updated install/step/1 to update the character set and collation of the database before installation
+
+* added separate fields to the log comments table for author_player and author_character
+* added method to the players model to update the last login time
+* added method to get players' email addresses with parameters to narrow by preference
+* added email views for sending a personal log
+* added method to the system model for altering the character set and collation of the database before installation
+
+* fixed bug in player view where we were checking if a variable was set instead of if it was an array
+
+* moved email language stuff into its own language file
+
+==========
+
+2009.02.12
+
+* added access model doc
+* added applications model doc
+* added archive model doc
+* added login_index doc
+* added login_resetpassword doc
+* added personal log js view
+
+* removed an unused method from the access model
+* removed dashboard models
+* removed an unused method from the characters model
+
+* updated get_player_awards() method to ignore the limit if the method parameter for the limit is zero
+* updated awards model doc
+* updated the name of a model method to be more consistent and changed its reference in the controller
+* updated depts model to use department_GENRE table name
+* updated positions model to use position_GENRE table name
+* updated ranks model to use ranks_GENRE table name
+* updated genre install files to put GENRE at the end instead of the beginning of the table name
+* updated main/index to use character rank in news listing
+* updated language file with some new keys
+* updated personal logs model to do inserts, updates, and deletes
+
+* fixed bug in genre install files which caused a database error to be returned
+
+==========
+
+2009.02.11
+
+* fixed bug where private message could be sent even if there was no recipient specified
+
+* updated language file with new key for flash error about no private message recipients
+* updated messages_write doc to reflect change to no recipient error
+* updated admin head include file with user panel trigger code
+* updated main head include file with user panel trigger code
+* updated system components to bump jquery ui to 1.6-rc6
+
+* added message indicating to users they need to turn Javascript on to use all of Nova's features
+* added the start of a user panel
+* added user panel stylesheet to admin
+* added user panel stylesheet to main
+* added upgrade controller (will use the update template)
+* added write menu items
+* added menu section table
+* added the accordian js file
+* added the accordian css file
+
+==========
+
+2009.02.10
+
+* updated notes doc
+* updated email config file
+* updated controllers that use the email class to use $this->email->mailtype instead of $this->config->item('mailtype')
+* updated messages/index to use checkboxes and clicking on the checkbox in the header selects all on that tab
+* updated the language file with some new keys
+* updated stylesheets to use background image on IE buttons
+* updated messages/index to allow for removing unwanted PMs from the inbox/outbox
+* updated the todo document
+* updated the basic install data with the latest rev (r443)
+* updated the archive model
+* updated the update template
+* updated the template config file
+* updated the access pages data
+* updated the access roles data
+* updated write/index to redirect to write/missionentry
+* updated characters model with method to get all characters
+
+* removed email config file from autoload
+
+* added a pmto_display in the privmsgs_to table
+* added some new methods to the private messages model for handling updates to PMs
+* added some files for the update changes
+* added the write documentation files
+
+==========
+
+2009.02.09
+
+* updated the install stylesheets
+* updated the uninstall view
+* updated the readme
+* updated the installation center view
+* updated the install language file
+* updated the verification table
+* updated messages controller to allow for reply all to PMs
+* updated login stylesheets with fix to the webkit border radius syntax
+
+* added messages/index doc
+* added messages/write doc
+* added messages/read doc
+
+==========
+
+2009.02.08
+
+* added js view for install/remove
+* added automatic redirect on success of install/remove
+* added links to reply, reply all, and forward on messages/read
+
+* updated js view for messages/index to set the tab if a third URI parameter exists
+* updated messages controller to pull the right sub nav
+* updated messages controller to pull the right main nav
+* updated admin controller to pull the right main nav
+* updated the menu items table to have admin main nav and messages sub nav
+* updated install template to use jquery 1.3.1
+* updated admin main stylesheet to style the subnavs like the unauthenticated system
+* updated the controllers doc
+* updated border radius declarations that specify a single corner so webkit obeys
+* updated mail images
+* updated credits
+* updated language file with some new keys
+
+* removed jon's email address from the basic install data
+* removed security question and answer from the players' basic install data
+
+* fixed bug in replying to a PM - array_key_exists returns TRUE/FALSE not the key
+* fixed bug where we were trying to get email addresses for a character when we were dealing with player IDs
+* fixed bug where single equal operator was setting a value in the get_email_address model
+
+==========
+
+2009.02.06
+
+* updated the players model
+* updated the messages_read view
+* updated the language file with some new language keys
+* updated language file to use write instead of compose for private messages
+* updated admin landing page
+* updated private message pages to use write instead of compose
+* updated basic install data with change from compose to write in access pages table
+* updated language file with some abbreviations
+* updated language file with another error message
+
+* added a method to the private messages model for retrieving recipients
+* added the mail icons
+* added messages_write
+* added ability to forward a private message to someone else
+* added ability to reply to a private message
+
+* removed messages_compose
+
+==========
+
+2009.02.05
+
+* added login_index js file that sets focus in the first input box
+* added a recipients field to the private messages table
+* added player recipient field to privmsgs_to table
+* added some new methods to the private messages model
+* added the messages_read view
+* added a new method to the players model to get the main character of the player ID
+
+* updated base login controller to pull in js file on login/index
+* updated base main controller to set email subjects properly
+* updated base sim controller to set email subjects properly
+* updated base login controller to set email subjects properly
+* updated basic install data to move the admin menu item closer to the end
+* updated base main controller to make sure system wasn't sending emails if system email is off
+* updated the controllers doc
+
+* removed recipients field from privmsgs
+
+==========
+
+2009.02.04
+
+* updated security answer field to be 40 characters only to accept sha1() hashes
+* updated login controller to search for an identical match for the security answer
+* updated language variables for reset flash messages
+* updated test data with new security question answer
+* updated login controller to disallow resetting passwords if system email is turned off
+* updated messages controller to send an email out when a new private message is submitted
+* updated messages/compose to capture both player ID and character ID
+* updated language file
+
+* added security question setup to install step 3
+* added the flash message background images to the admin theme
+* added player and character fields to privmsgs
+* added views for private messages inbox
+* added model method to get the items for the inbox
+* added unread icon
+* added compose icon
+* added field for pm author display (let's authors clear out their sent messages tab)
+
+==========
+
+2009.02.03
+
+* updated the facebox scripts to use jquery prefix
+* updated the facebox images to use facebox- prefix instead of hud_
+* updated messages controller to allow for composing of a new PM
+* updated the main theme stylesheet for better disabled buttons
+* updated the systemwide email shutoff messages
+
+* added live query
+* added views for private message composition
+* added private messages model
+* added player pref for email PMs
+* added a flash view for the admin template
+* added a missing image

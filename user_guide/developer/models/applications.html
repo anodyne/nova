@@ -1,0 +1,118 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<title>Nova Project Documentation Template</title>
+		
+		<style type='text/css' media='all'>@import url('../../userguide.css');</style>
+		<link rel='stylesheet' type='text/css' media='all' href='../../userguide.css' />
+		
+		<meta http-equiv='expires' content='-1' />
+		<meta http-equiv= 'pragma' content='no-cache' />
+		<meta name='robots' content='all' />
+	</head>
+
+	<body>
+		<!-- START NAVIGATION -->
+		<div id="nav"><div id="nav_inner"></div></div>
+		<div id="nav2"><a name="top">&nbsp;</a></div>
+		<div id="masthead">
+			<table cellpadding="0" cellspacing="0" border="0" style="width:100%">
+				<tr>
+					<td><h1>Nova</h1></td>
+					<td id="breadcrumb_right"><!-- <a href="#">Right Breadcrumb</a> --></td>
+				</tr>
+			</table>
+		</div>
+		<!-- END NAVIGATION -->
+		
+		<!-- START BREADCRUMB -->
+		<table cellpadding="0" cellspacing="0" border="0" style="width:100%">
+			<tr>
+				<td id="breadcrumb">
+					<a href="http://example.com/">Project Home</a> &nbsp;&#8250;&nbsp;
+					<a href="/user_guide">User Guide Home</a> &nbsp;&#8250;&nbsp;
+					Applications Model
+				</td>
+				<td id="searchbox">
+					<!-- <form method="get" action="http://www.google.com/search">
+						<input type="hidden" name="as_sitesearch" id="as_sitesearch" value="example.com/user_guide/" />
+							Search Project User Guide&nbsp;
+						<input type="text" class="input" style="width:200px;" name="q" id="q" size="31" maxlength="255" value="" />
+						<input type="submit" class="submit" name="sa" value="Go" />
+					</form> -->
+				</td>
+			</tr>
+		</table>
+		<!-- END BREADCRUMB -->
+		
+		<br clear="all" />
+		
+		<!-- START CONTENT -->
+		<div id="content">
+			<h1>Applications Model</h1>
+			
+			<p>The Applications model provides access to the applications database table and storing, editing and retrieving application records.</p>
+			
+			<h2>Loading this Model</h2>
+
+			<p>This model is loaded using the following code:</p>
+			
+			<code>$this->load->model('applications_model', 'apps');</code>
+
+			<p>The following methods are available:</p>
+			
+			<h2>insert_application()</h2>
+			
+			<p>Insert an application into the database for the sake of record-keeping. This action happens by default with every application received by the system.</p>
+			
+			<h4>Parameters</h4>
+			
+			<br /><table cellpadding="0" cellspacing="1" border="0" style="width:100%" class="tableborder">
+				<tr>
+					<th>Parameter</th>
+					<th>Default Value</th>
+					<th>Options</th>
+					<th>Description</th>
+				</tr>
+				<tr>
+					<td class="td"><strong>data</strong></td>
+					<td class="td"><em>None</em></td>
+					<td class="td"><em>None</em></td>
+					<td class="td">An array or object of data to insert into the database</td>
+				</tr>
+			</table>
+			
+			<h4>Return</h4>
+			
+			<p>The method will return the number of affected rows. In a normal case, this will be 1. If no rows are returned, then the query has failed.</p>
+			
+			<h4>Example</h4>
+			
+			<code>
+				$app_array = array(<br />
+				&nbsp;&nbsp;&nbsp;&nbsp;'app_email' => $email,<br />
+				&nbsp;&nbsp;&nbsp;&nbsp;'app_player_name' => $real_name,<br />
+				&nbsp;&nbsp;&nbsp;&nbsp;'app_character_name' => $first_name .' '. $middle_name .' '. $last_name .' '. $suffix,<br />
+				&nbsp;&nbsp;&nbsp;&nbsp;'app_position' => $this->pos->get_position_name($position),<br />
+				&nbsp;&nbsp;&nbsp;&nbsp;'app_date' => now()<br />
+				);<br /><br />
+				
+				$apps = $this->apps->insert_application($app_array);
+			</code>
+		</div>
+		<!-- END CONTENT -->
+		
+		
+		<div id="footer">
+		<p>
+		Previous Topic:&nbsp;&nbsp;<a href="#">Previous Class</a>
+		&nbsp;&nbsp;&nbsp;&middot;&nbsp;&nbsp;
+		<a href="#top">Top of Page</a>&nbsp;&nbsp;&nbsp;&middot;&nbsp;&nbsp;
+		<a href="#">User Guide Home</a>&nbsp;&nbsp;&nbsp;&middot;&nbsp;&nbsp;
+		Next Topic:&nbsp;&nbsp;<a href="#">Next Class</a>
+		</p>
+		<p><a href="http://codeigniter.com">CodeIgniter</a> &nbsp;&middot;&nbsp; Copyright &#169; 2006-2008 &nbsp;&middot;&nbsp; <a href="http://ellislab.com/">Ellislab, Inc.</a></p>
+		</div>
+	</body>
+</html>

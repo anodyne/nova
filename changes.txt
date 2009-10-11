@@ -1,0 +1,66 @@
+CONTROLLERS
+* [base/report_base.php] made sure LOA report doesn't populate the end date variable if there is no end date specified yet
+* [base/report_base.php] versions report
+* [base/report_base.php] moderation report
+* [base/write_base.php] changed unread saved post icon from mail-unread to icon-green-small
+
+MODELS
++ [base/system_model_base.php] added get_all_system_versions method
++ [base/system_model_base.php] added get_all_system_components method
+
+VIEWS
+* [_base/template_update.php] updated the update template
+* [_base/update/css] updated the update template css files
+* [_base/update/images] updated the update template images
+* [_base/admin/pages/report_loa.php] made sure LOA report doesn't show the end date if there is no end date specified yet
+* [default/template_admin.php] updated template to not use nova version number in the footer
+* [default/template_main.php] updated template to not use nova version number in the footer
+* [default/template_login.php] updated template to not use nova version number in the footer
+* [_base/update/pages/update_index.php] updated the update/index view file
+
++ [_base/admin/pages/report_system.php] added report/versions view file
++ [_base/admin/pages/report_activity.php] added report/activity view file
++ [_base/admin/pages/report_moderation.php] added report/moderation view file
++ [_base/admin/js/report_system_js.php] added report/versions js view file
++ [_base/admin/js/report_progress_js.php] added report/progress js view file
++ [_base/admin/js/report_activity_js.php] added report/activity js view file
++ [_base/admin/js/report_moderation_js.php] added report/moderation js view file
++ [_base/update/js/update_index_js.php] added update/index js view file
+
+LIBRARIES
+
+HELPERS
++ [MY_date_helper.php] added MY_date_helper
+
+LANGUAGES
++ [english/headers_titles_lang.php] added head_report_system item
++ [english/headers_titles_lang.php] added head_report_activity item
++ [english/headers_titles_lang.php] added head_report_moderation item
++ [english/base_lang.php] added labels_files item
++ [english/base_lang.php] added labels_version item
++ [english/base_lang.php] added labels_database item
++ [english/base_lang.php] added labels_components item
++ [english/base_lang.php] added labels_codeigniter item
++ [english/base_lang.php] added labels_than item
++ [english/base_lang.php] added actions_moderated item
++ [english/text_lang.php] added text_moderation_report item
+
+ASSETS
++ [common/bsg/common/ranks] added BSG ranks (will be removed before release)
++ [js/css] added ui.accordion.css
++ [js/css] added jquery.visualize.css
++ [js] added ui.accordion.js
++ [js] added excanvas.js
++ [js] added jquery.visualize.js
+
+* [install/data_*.php] updated menu item data with report menu items
+* [install/data_*.php] updated role pages data with report items
+* [install/data_*.php] updated system version data
+* [install/data_*.php] updated role data
+* [install/data_*.php] updated system component data
+* [include_head_admin.php] updated lazy loading for accordion
+* [install/fields.php] updated the schema to store major, minor and update versions in the system version table
+
+CONFIG
+* [constants.php] updated version constants to be VERSION_* for consistency
+* [template.php] updated the update regions to match the install regions

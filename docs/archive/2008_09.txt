@@ -1,0 +1,96 @@
+2008.09.30
+
+* updated DS9 install file to use captain instead of marine captain
+* updated ENT install file to use captain instead of maco captain
+* updated application version to M2
+* updated head logo to say M2
+* updated sim_base controller to start and finalize items
+
+* added table for character sections (breaking the bio and join pages up)
+* added field to character_fields for the section the field is a part of
+* added basic data for character sections
+
+* finalized sim/index
+
+==========
+
+2008.09.29
+
+* added redirect method to Template library
+* added redirect variable to main template file
+* added a license document
+
+* updated menu library
+* updated menu items in basic install
+* updated nova m1 logo
+
+==========
+
+09.26.2008
+
+* updated globals to use new flexible setup
+* updated controllers to use new globals schema
+
+==========
+
+2008.09.25
+
+* updated schema to use a more flexible site messages setup
+* updated install fields and install data to reflect schema changes
+* updated main and sim message to use new schema
+* updated messages_model to use new schema
+
+==========
+
+2008.09.24
+
+* removed all dates and authors from headers to avoid potential SVN conflicts
+
+* added _base controllers
+
+* removed APP_ controllers
+
+=========
+
+2008.09.09
+
+* finalized main/credits
+
+* updated location helper to stop having to explicitly state the fourth param
+* updated main/contact with email code
+* updated language files
+
+* added flash message view
+* added flash message styles
+* added flash message language file
+* added main_contact view
+
+==========
+
+2008.09.04
+
+* updated ROM install data (now complete)
+* updated access model to use a single method
+* updated access library to pull access level in one fell swoop
+* updated install controller to load install language file
+* updated app_lang to call in error_lang
+
+* added ROM ranks and common assets
+* added error_lang and install_lang files
+
+==========
+
+2008.09.03
+
+* updated ROM install data (need position descriptions and open defaults)
+* updated DS9 install data (only TODOs left)
+* updated preview site text
+
+* deleted assets/css
+* deleted assets/js
+
+==========
+
+2008.09.02
+
+* updated BL5 and SGA install data

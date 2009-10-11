@@ -1,0 +1,7 @@
+|---------------------------------------------------------------
+| MANAGEMENT - RANKS
+|
+| System Version: 1.0
+|---------------------------------------------------------------
+
+If a user has permission to view site/catalogueranks, they'll see not only active rank sets, but also in development sets to preview. All others will see only active rank sets.

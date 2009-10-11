@@ -1,0 +1,88 @@
+/*
+|---------------------------------------------------------------
+| STYLESHEET - TEXT
+|---------------------------------------------------------------
+|
+| File: _base/install/css/text.css
+| Author: David VanScott [davidv@anodyne-productions.com]
+| Version: 1.0
+|
+| Stylesheet that controls text and link styles for the default
+| main theme
+|
+*/
+
+/*
+|---------------------------------------------------------------
+| HEADING STYLES
+|---------------------------------------------------------------
+*/
+h1, h2, h3, h4, p { margin: 8px 0; }
+
+h1 { font-size: 200%; }
+h2 { font-size: 150%; }
+h3 { font-size: 133%; }
+h4 { font-size: 117%; }
+
+p {
+	font-size: 100%;
+	line-height: 1.5;
+	padding: 0 0 8px 0;
+}
+
+/*
+|---------------------------------------------------------------
+| SPECIAL FONT SIZE CLASSES
+|---------------------------------------------------------------
+*/
+.fontLarge	{ font-size: 133%; }
+.fontMedium	{ font-size: 117%; }
+.fontNormal { font-size: 100%; }
+.fontSmall	{ font-size: 92%; }
+
+/*
+|---------------------------------------------------------------
+| SPECIAL FONT PRESENTATION CLASSES
+|---------------------------------------------------------------
+*/
+.nobold	{ font-weight: normal; }
+.bold	{ font-weight: bold; }
+.italic	{ font-style: italic; }
+
+.align_right { text-align: right; }
+
+.uppercase { text-transform: uppercase; }
+.lowercase { text-transform: lowercase; }
+
+/*
+|---------------------------------------------------------------
+| FONT COLOR CLASSES
+|---------------------------------------------------------------
+*/
+.page-head {
+	width: 50%;
+	
+	color: #72a7cf;
+	border-bottom: 1px solid #ddd;
+}
+.page-subhead	{ color: #666; }
+
+.red { color: #c00; }
+
+/*
+|---------------------------------------------------------------
+| LINKS
+|---------------------------------------------------------------
+*/
+a {
+	text-decoration: none; 
+	color: #0070a3;
+	outline: 0;
+	border-bottom: 1px solid transparent;
+}
+a:hover {
+	color: #74b2e2;
+	border-bottom: 1px solid;
+}
+
+a.image { border: none; }

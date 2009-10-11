@@ -1,0 +1,53 @@
+|---------------------------------------------------------------
+| HELPERS - UTILITY
+|
+| System Version: 1.0
+|---------------------------------------------------------------
+
+The Utility helper is one that's been created just for Nova that aids in some of the smaller utility operations throughout the system. There are 2 functions in this helper that can be used. The Utility helper is not auto-loaded and will need to be manually loaded in your controller's method.
+
+// -------------------------------------------------------------
+
+file_size($data)
+
+Returns the size (in megabytes) of a given number that is passed to the function.
+
+@access		public
+@param		integer
+@return		string
+
+@autoload	no
+
+EXAMPLE
+
+file_size(1024000);
+
+RETURNS
+
+1.00
+
+// -------------------------------------------------------------
+
+check_memory($data)
+
+Returns a TRUE/FALSE value about whether the number is able to be run given the amount of memory available on the server.
+
+@access		public
+@param		integer
+@return		boolean
+
+@autoload	no
+
+EXAMPLE
+
+check_memory(1.00);
+
+RETURNS
+
+(If the parameter plus Nova's memory consumption is less than the server's memory limit)
+TRUE
+
+(If the parameter plus Nova's memory consumption is higher than the server's memory limit)
+FALSE
+
+// -------------------------------------------------------------

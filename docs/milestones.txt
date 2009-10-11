@@ -1,0 +1,303 @@
+|---------------------------------------------------------------
+| MILESTONE 5
+|---------------------------------------------------------------
+|
+| Version: 0.5.0
+|
+| The target of M5 is building the management tools that GMs and
+| users will use to edit users and characters.
+
+* Core
+	- continue upgrade path through jQuery 1.3.x
+	- continue upgrade path through jQuery UI 1.7.x
+	
+* Characters Controller
+	- chain of command
+	- character bio
+	- create character
+	- manage characters
+	- activate characters
+	- activate award nominations
+	
+* User Controller
+	- user account
+	- email preferences
+	- user bio
+	- site options
+	- request LOA
+	- award nominations
+	- link characters to user account
+
+* Documentation (continuing)
+
+* Tutorials (continuing)
+
+* Installation
+
+* Bug fixes from M4
+
+* Nova site updates
+
+|---------------------------------------------------------------
+| MILESTONE 4
+|---------------------------------------------------------------
+|
+| Version: 0.4.0
+|
+| The target of M4 is building the management tools that GMs and
+| users will use to edit the system. This will include fleshing
+| out a lot of pieces and access control work.
+
+* Core
+	- continue upgrade path through jQuery 1.3.x
+	- continue upgrade path through jQuery UI 1.7.x
+	
+* Site Controller
+	- site settings (updating and creating)
+	- site messages & titles (updating and creating)
+	- bio/join form (fields, sections and tabs)
+	- tour form (fields)
+	- specs form (fields and sections)
+	- menu items
+	- roles
+	- role pages
+	- rank catalogue
+	- skin catalogue
+
+* Manage Controller
+	- positions
+	- decks
+	- specs
+	- departments
+	- ranks
+
+* Characters Controller
+	- chain of command
+
+* Documentation (continuing)
+
+* Tutorials (continuing)
+
+* Installation
+
+* Bug fixes from M3
+
+* Nova site updates
+
+* Nova documentation site
+
+|---------------------------------------------------------------
+| MILESTONE 3
+|---------------------------------------------------------------
+|
+| Version: 0.3.0
+|
+| The target of M3 is building some of the most important
+| components of Nova: posting, logging in, user access control,
+| and private messaging.
+
+* Core
+	- upgraded to CodeIgniter 1.7.1
+	- upgraded to jQuery 1.3.2
+
+* Login
+	- logging in
+	- logging out
+	- resetting password
+	- setting session
+	- remember me feature
+	
+* User Access Control
+
+* Admin Control Panel
+
+* User Panel
+
+* Main
+	- finished view news item w/ authentication
+    
+* Personnel
+	- finished view player bio w/ authentication
+    
+* Sim
+	- finished view log w/ authentication
+	- finished view post w/ authentication
+    
+* Write
+	- mission post
+	- personal logs
+	- news item
+	- writing control panel
+	
+* Messages
+	- inbox
+	- sent messages
+	- compose message
+	- read message
+
+* Documentation (continuing)
+
+* Installation (continuing genre work)
+	
+* Bug fixes from M2
+
+* Nova site updates
+
+|---------------------------------------------------------------
+| MILESTONE 2
+|---------------------------------------------------------------
+|
+| Version: 0.2.0
+|
+| The target of M2 is completing the un-authenticated system. This 
+| includes, but is not limited to the below components.
+
+* Core
+	- upgrade to CI 1.7 when it comes out (this is a M2 blocker)
+
+* Main
+    - contact page
+    - join page
+    - credits page
+    - view news item
+    - list news (including categories)
+    - index page
+    
+* Personnel
+    - manifest
+        @ playing characters
+        @ non-playing characters
+        @ open positions
+        @ previous characters
+    - chain of command
+    - view character bio
+    - view player bio
+    - view awards
+    - view posts and logs
+    
+* Sim
+    - stats
+    - specs (fields and data generated out of the database)
+    - tour
+    - deck layout
+    - view log
+    - view post
+    - missions
+    - list posts
+    - list logs
+    - awards
+    - departments (includes positions)
+    - index page
+    - docking request form
+    
+* Search
+    - basic search
+    - search results
+    
+* RSS Feeds
+	- mission posts
+	- personal logs
+	- news items
+
+* Documentation (continuing)
+
+* Installation (continuing genre work)
+    - additional steps finished
+        @ player account
+        @ character information
+        @ global options
+    
+* Nova site updates
+
+|---------------------------------------------------------------
+| MILESTONE 1
+|---------------------------------------------------------------
+|
+| Version: 0.1.0
+|
+| The target of Nova M1 has been to get the integral pieces of the
+| new framework into place so the rest of the development can build
+| on the framework. The below components were completed and are
+| present in M1.
+
+* Framework
+    - javascript pieces in place
+        @ jquery
+        @ jquery ui
+            + ui core
+            + ui tabs
+        @ fancybox (likely going to be removed)
+        @ system menus
+            + hoverIntent
+            + supersubs
+            + superfish
+        @ other
+            + lazyload
+            + facebox
+            + simple modal
+            + autocomplete
+    - asset files
+        @ install files
+        @ update files
+        @ head include files
+        @ genre data
+        	+ images
+        	+ ranks
+    - configuration files
+    - application flow
+    - helpers
+        @ building form elements from the database
+        @ output for debugging
+        @ help with location of images, JS files, and view files
+        @ extended form helper for buttons
+        @ extended html helper with table row spacer
+        @ extended language helper with language output
+    - libraries
+        @ access library for determining access level and taking appropriate action
+        @ dashboard library for determining, parsing, and printing dashboard panels
+        @ menu library for pulling, parsing, and printing system menus
+        @ extended session library that stores session data in the database (DB2_Session)
+        @ simplepie for parsing RSS feeds (version.xml)
+        @ template library for using a single template file and inserting content into the template
+    - models
+    - controller structure and method template
+    - globals available throughout the application
+    - internationalization
+    - system automatically redirects to installation if nova isn't installed
+    - system maintenance mode (only sys admins can login when system is in maintenance mode)
+    
+* Installation
+    - the system will install everything it needs to run
+    - the system will insert basic test data into most tables for unit testing for different
+      pieces of the system
+    - the system will insert the genre data based on whatever is found in the config/application.php
+      configuration file (the only genres available at this time are DS9, BSG, ENT, ROM and CRD, more
+      genres will be added as development continues)
+    - uninstall script (requires authentication)
+      
+* Skinning Structure
+    - ability for different skins
+    - ability for different themes in each skin
+    - seamless substitution
+        @ system will determine where it should pull the view files from
+        @ system will determine where it should pull the images from (excludes stylesheet references)
+        @ system will determine where it should pull the javascript files from
+        	+ this might be changing depending on what we need for AJAX requests
+
+* 3rd Party Development
+    - controllers set up to be extended without touching the application core
+    	@ login, install, and update are not extended for obvious reasons
+
+* Documentation
+    - skinning docs
+    - 3rd party development docs
+    - coding guidelines
+    - nova launch plans
+    - nova page descriptions
+    - API doc
+    
+* Nova website
+    - http://nova.anodyne-productions.com/
+    - provides a "one-stop shop" place to find information about nova development
+    - includes the milestones and what's been accomplished
+    - includes basic information on the next milestone
