@@ -1,6 +1,0 @@
-awards_model			awards
-characters_model		char
-players_model			player
-ranks_model				ranks
-positions_model			pos
-depts_model				dept

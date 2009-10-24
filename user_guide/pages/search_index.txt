@@ -1,9 +1,0 @@
-|---------------------------------------------------------------
-| SYSTEM SEARCH
-|
-| System Version: 1.0
-|---------------------------------------------------------------
-
-Nova brings an end to the frustrating days of searching through mission after mission to find the right post with system wide search.  You can search for a mission post, personal log or news item by its title, content, or any tags that have been added.
-
-From the search page, you must first select the type of post you want to search for. You can choose Mission Post, Personal Log or News Item. Next, you need to select what to search in. Currently, you can search within the title, content, or tags. Finally, type in what you are looking for then click Search. If Nova finds something matching your search, it'll display those items in a list. Clicking on one of those items will open it. If Nova can't find anything matching your search, you will be notified of that and have the option of going back to the search page to start over.

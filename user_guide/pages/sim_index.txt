@@ -1,7 +1,0 @@
-|---------------------------------------------------------------
-| SIM - INDEX
-|
-| System Version: 1.0
-|---------------------------------------------------------------
-
-The sim index page provides a place to put a brief message about your sim for visitors who are interested in knowing more about your game. The message can be updated from the Site Messages page.
