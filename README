@@ -1,35 +1,5 @@
 Nova RPG Management System
 
-Version 0.6.0
+Current Milestone: 6
 
-There are a few things everyone should know about the Nova milestones:
-
-1. The Nova license is in full effect.  Don't try to get around it.
-
-2. The CodeIgniter license is in full effect.  Don't try to get around it.
-
-3. We offer no support for Nova.  If you can't get it installed, that's not our problem at this point.  When we release it, we'll offer full support.  Until that time, you're on your own with that kind of stuff.  If you post a support request on the forums it will be deleted.
-
-4. If you find a bug, post it in the Nova Bugs forum.
-
-5. If you have a question about skinning or how to do something, post it in the Nova General Discussion or Nova Development forums.
-
-6. There is no ability to upgrade from SMS 2 yet.
-
-7. Any other questions should be posted to the Nova forums.
-
-8. Only BSG ranks come with the system, so if you change the genre in the application/config/nova.php file, you won't have rank images on the manifest.
-
-Clean Install
-
-1. Set up your database.  It can be a new database or an existing one.  Nova uses a table prefix, so it can go right in there with SMS or any other database content.
-
-2. Open application/config/database.php and set up your connection variables.
-
-3. Open application/config/nova.php and set up your genre.
-
-4. Upload Nova to your server (can be a local server or a live server).
-
-5. Navigate to the location on the server where you uploaded Nova.  You will be automatically redirected to the installation center.
-
-6. Go through the prompts to install the system.
+Last Update: 2009.10.24
