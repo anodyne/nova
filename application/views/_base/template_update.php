@@ -7,7 +7,7 @@
 | File: application/views/_base/template_update.php
 | Skin Version: 1.0
 |
-| Main layout file used by the update system
+| Main layout file used by the update and upgrade systems
 |
 */
 
@@ -71,8 +71,7 @@ echo "<?xml version='1.0' encoding='UTF-8'?>\r\n";
 		<!-- FOOTER -->
 		<div id="footer">
 			Powered by <strong><?php echo APP_NAME;?></strong><br />
-			Elapsed Time: {elapsed_time} seconds<br />
-			Memory Usage: {memory_usage}
+			&copy; Anodyne Productions, <?php echo date('Y');?>
 		</div>
 		
 		<script type="text/javascript" src="<?php echo base_url() . APPFOLDER .'/assets/js/jquery.js';?>"></script>

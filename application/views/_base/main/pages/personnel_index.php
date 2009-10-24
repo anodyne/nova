@@ -42,7 +42,7 @@
 								<?php $display = ''; ?>
 							<?php endif; ?>
 					
-							<tr class="fontSmall <?php echo $char['crew_type'] . $display;?>">
+							<tr class="fontSmall hidden <?php echo $char['crew_type'] . $display;?>">
 								<td class="col_15"></td>
 								<td colspan="2" class="bold col_260"><?php echo $pos['name'];?></td>
 								<td class="col_150 align_center"><?php echo img($char['rank_img']);?></td>
@@ -93,7 +93,7 @@
 										<?php $display = ''; ?>
 									<?php endif; ?>
 							
-									<tr class="fontSmall <?php echo $char['crew_type'] . $display;?>">
+									<tr class="fontSmall hidden <?php echo $char['crew_type'] . $display;?>">
 										<td class="col_15"></td>
 										<td class="col_15"></td>
 										<td class="bold col_245"><?php echo $spos['name'];?></td>

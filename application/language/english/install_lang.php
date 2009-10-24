@@ -71,6 +71,12 @@ $lang['install_remove_success'] = 'All system data has been cleared! You are fre
 $lang['install_remove_button_clear'] = 'Clear Data';
 
 /*
+ * Verify
+ */
+$lang['install_verify_title'] = 'Verify Server Requirements';
+$lang['install_verify_text'] = 'Below are the results of the server verification test. If any of the items below have failed, you will not be able to upgrade SMS to Nova. If any of the items below are listed as warnings, you should talk to your host about getting those items upgraded, but you will still be able to use Nova even if those warnings exist.';
+
+/*
  * Readme
  */
 $lang['install_readme_title'] = 'Readme';
@@ -81,6 +87,8 @@ $lang['install_label_site'] = 'Proceed to Site '. RARROW;
 $lang['install_label_on'] = 'On';
 $lang['install_label_off'] = 'Off';
 $lang['install_label_submit'] = 'Submit';
+$lang['install_label_login'] = 'Login Now';
+$lang['install_label_begin'] = 'Begin Upgrade';
 
 /*
  * Step 1
@@ -184,22 +192,36 @@ $lang['verify_content_failure'] = 'We' . RSQUO . 're sorry, but your server cann
 
 $lang['verify_link_success'] = 'Go to step 1 '. RARROW;
 
-$lang['verify_table_component'] = 'Component';
-$lang['verify_table_required'] = 'Required';
-$lang['verify_table_actual'] = 'Actual';
-$lang['verify_table_recommended'] = 'Recommended';
+$lang['verify_component'] = 'Component';
+$lang['verify_required'] = 'Required';
+$lang['verify_actual'] = 'Actual';
+$lang['verify_result'] = 'Result';
 
-$lang['verify_table_php'] = 'PHP';
-$lang['verify_table_db'] = 'Database Platform';
-$lang['verify_table_db_ver'] = 'Database Version';
-$lang['verify_table_mem_limit'] = 'Memory Limit';
-$lang['verify_table_reg_globals'] = 'Register Globals';
+$lang['verify_php'] = 'PHP';
+$lang['verify_db'] = 'Database Platform';
+$lang['verify_db_ver'] = 'Database Version';
+$lang['verify_mem'] = 'Memory Limit';
+$lang['verify_regglobals'] = 'Register Globals';
+
+$lang['verify_success'] = '<span class="bold green">Success</span>';
+$lang['verify_failure'] = '<span class="bold red">Failed</span>';
+$lang['verify_warning'] = '<span class="bold orange">Warning</span>';
+
+$lang['verify_off'] = 'Off';
+$lang['verify_on'] = 'On';
 
 /*
 |---------------------------------------------------------------
 | UPDATE
 |---------------------------------------------------------------
 */
+
+/*
+ * Verify
+ */
+$lang['upd_verify_title'] = 'Verify Server Requirements';
+$lang['upd_verify_back'] = LARROW .' Back to Update Center';
+$lang['upd_verify_text'] = 'Below are the results of the server verification test. If any of the items below have failed, you will not be able to upgrade SMS to Nova. If any of the items below are listed as warnings, you should talk to your host about getting those items upgraded, but you will still be able to use Nova even if those warnings exist.';
 
 $lang['update_not_installed'] = 'You have not installed Nova and cannot update the system until it is installed!';
 
@@ -253,13 +275,43 @@ $lang['install_label_off'] = 'off';
 |---------------------------------------------------------------
 */
 
-$lang['upgrade_index_title'] = 'Upgrade Center';
+/*
+ * Index
+ */
+$lang['upg_index_title'] = 'Upgrade Center';
 
-$lang['upgrade_index_head'] = 'Upgrade Center';
+$lang['upg_status_1'] = 'Nova is already installed in this database! In order to continue, you will need to change your database prefix variable, uninstall Nova, or use another database.';
+$lang['upg_status_2'] = 'You are running a version of SMS that is not supported for upgrade to Nova. You must be running SMS 2.6.0 or higher in order to upgrade. Please update SMS then try again.';
+$lang['upg_status_3'] = 'We could not find an copy of SMS installed on this database. In order to upgrade, you must be running SMS 2.6.0 or higher.';
+$lang['upg_status_4'] = 'You are using a genre other than the DS9 genre. This upgrade process only supports upgrading to the DS9 genre. Please change your genre in the Nova config file and try again.';
 
-$lang['upgrade_status_1'] = 'Nova is already installed in this database! In order to continue, you will need to change your database prefix variable, uninstall Nova, or use another database.';
-$lang['upgrade_status_2'] = 'You are running a version of SMS that is not supported for upgrade to Nova. You must be running SMS 2.6.0 or higher in order to upgrade. Please update SMS then try again.';
-$lang['upgrade_status_3'] = 'We could not find an copy of SMS installed on this database. In order to upgrade, you must be running SMS 2.6.0 or higher.';
+$lang['upg_index'] = "<h2>Welcome to the Nova Upgrade Center!</h2><p>We know you're excited to start using Nova, but before you jump right in and start upgrading, make sure you read through everything very carefully. Nova is the product of years of work and as a result, a lot of things are different from SMS. The upgrade process should cover everything but to ensure everything is upgraded properly the first time, you should read our <a href='http://docs.anodyne-productions.com/index.php/nova/overview/upgrade' target='_blank'>upgrade guide</a> in the user guide. We realize this is a long document, but it has information crucial to properly upgrading SMS to Nova, so make sure you take the time to read it before beginning.</p><h4>Before Beginning</h4><p>There are a couple things you need to do before you even start the upgrade process.</p><ol class='decimal'><li>Set up your database connection file located at <strong>application/config/database.php</strong></li><li>Make sure you're using the DS9 genre (the upgrade will only work for the DS9 genre)</li><li>Make sure you've set up your SMS config preferences, upgrade password and upgrade email address located in <strong>application/config/sms.php</strong></li></ol><p>It's very important that you take the above steps before beginning otherwise you could be missing all the management tools or have errors throughout the upgrade process.</p><h4>Let's Get Started!</h4><p>Step 1 will attempt to automatically back up your SMS database before beginning the upgrade. If you have a large database and your server memory limit isn't high enough or your server doesn't support writing files to directories, you may not be able to complete the backup, but if it doesn't work, you can manually backup your database before starting. We <strong>strongly</strong> encourage you to have a backup before upgrading.</p>";
+
+/*
+ * Errors
+ */
+$lang['upg_error_title'] = 'Upgrade Error!';
+$lang['upg_error_1'] = 'The version of SMS you are running is not compatible with this upgrade script. You must be running SMS %s in order to upgrade. Please update SMS to version %s and try again.';
+$lang['upg_error_2'] = 'No version of SMS can be found in this database. In order to upgrade, you must have SMS installed in this database. Please verify your database connection settings and try again.';
+$lang['upg_error_3'] = 'Nova is already installed and the upgrade script cannot run. Please verify your database connection settings and try again.';
+$lang['upg_error_4'] = 'You can only upgrade Nova with the DS9 genre. Your genre is currently set to %s. Please change your genre in the application/config/nova.php file and try again.';
+
+/*
+ * Verify
+ */
+$lang['upg_verify_title'] = 'Verify Server Requirements';
+$lang['upg_verify_back'] = LARROW .' Back to Upgrade Center';
+$lang['upg_verify_text'] = 'Below are the results of the server verification test. If any of the items below have failed, you will not be able to upgrade SMS to Nova. If any of the items below are listed as warnings, you should talk to your host about getting those items upgraded, but you will still be able to use Nova even if those warnings exist.';
+
+/*
+ * Step 1
+ */
+$lang['upg_step1_title'] = 'Step 1 - Backup Database';
+$lang['upg_step1_label'] = 'Step 1: Backup Database';
+$lang['upg_step1_success'] = 'You have successfully backed up your SMS database and can continue with the upgrade process. The next step will create the database tables Nova needs to run. Click <strong>Next Step</strong> to continue.';
+$lang['upg_step1_failure'] = "There was a problem backing up your SMS database. This can be caused by a variety issues, but is most likely caused by your host not allowing files to be written to the server. Please manually backup your SMS database then click <strong>Next Step</strong> to continue.";
+$lang['upg_step1_nofields'] = "The upgrade cannot continue because there are no SMS tables in this database!";
+$lang['upg_step1_memory'] = "Your server does not have a sufficient memory capacity to initiate an automatic backup of your SMS database. Please manually backup your SMS database then click <strong>Next Step</strong> to continue.";
 
 /*
  * Step 2
@@ -290,9 +342,9 @@ $lang['upg_step4_failure'] = 'There was a problem inserting all of the genre dat
  */
 $lang['upg_step5_title'] = 'Step 5 - Upgrade Site Globals';
 $lang['upg_step5_label'] = 'Step 5: Upgrade Site Globals';
-$lang['upg_step5_success'] = 'You have successfully upgraded SMS\' site globals to the new Nova settings format. The next step will upgrade your awards table and data to the new Nova format. This may take a few minutes depending on how many awards you have! Click <strong>Next Step</strong> to continue.';
-$lang['upg_step5_failure'] = 'There was a problem upgrading your SMS site globals to the new Nova settings format. You can continue with the upgrade and update the items once Nova is installed. This may take a few minutes depending on how many awards you have! Click <strong>Next Step</strong> if you want to continue.';
-$lang['upg_step5_noupgrade'] = 'You have selected not to upgrade your SMS site globals. Please continue to the next step where we will upgrade your awards table and data to the new Nova format. This may take a few minutes depending on how many awards you have! Click <strong>Next Step</strong> to continue.';
+$lang['upg_step5_success'] = 'You have successfully upgraded SMS\' site globals and messages to the new Nova settings format. The next step will upgrade your awards table and data to the new Nova format. This may take a few minutes depending on how many awards you have! Click <strong>Next Step</strong> to continue.';
+$lang['upg_step5_failure'] = 'There was a problem upgrading your SMS site globals and messages to the new Nova settings format. You can continue with the upgrade and update the items once Nova is installed. This may take a few minutes depending on how many awards you have! Click <strong>Next Step</strong> if you want to continue.';
+$lang['upg_step5_noupgrade'] = 'You have selected not to upgrade your SMS site globals and messages. Please continue to the next step where we will upgrade your awards table and data to the new Nova format. This may take a few minutes depending on how many awards you have! Click <strong>Next Step</strong> to continue.';
 
 /*
  * Step 6
@@ -306,8 +358,8 @@ $lang['upg_step6_noupgrade'] = 'You have selected not to upgrade your awards. Pl
 /*
  * Step 7
  */
-$lang['upg_step7_title'] = 'Step 7 - Upgrade News Items';
-$lang['upg_step7_label'] = 'Step 7: Upgrade News Items';
+$lang['upg_step7_title'] = 'Step 7 - Upgrade Missions';
+$lang['upg_step7_label'] = 'Step 7: Upgrade Missions';
 $lang['upg_step7_success'] = 'You have successfully upgraded the missions to the new Nova format. The next step will upgrade your news and news category tables and data to the new Nova format. This may take a few minutes depending on how many news items you have! Click <strong>Next Step</strong> to continue.';
 $lang['upg_step7_failure'] = 'There was a problem upgrading your missions to the new Nova format. This can be caused by having made previous changes to the table, causing problems with the upgrade script. You can continue with the upgrade, but you will have to manually add your missions at a later date and it will likely cause problems with your posts as well. Click <strong>Next Step</strong> if you want to continue.';
 $lang['upg_step7_noupgrade'] = 'You have selected not to upgrade your missions. Please continue to the next step where we will upgrade your news and news category tables and data to the new Nova format. This may take a few minutes depending on how many news items you have! Click <strong>Next Step</strong> to continue.';
@@ -322,6 +374,24 @@ $lang['upg_step8_failure'] = 'There was a problem upgrading your news items to t
 $lang['upg_step8_noupgrade'] = 'You have selected not to upgrade your news items. Please continue to the next step where we will upgrade your personal logs to the new Nova format. This may take a few minutes depending on how many personal logs you have! Click <strong>Next Step</strong> to continue.';
 
 /*
+ * Step 9
+ */
+$lang['upg_step9_title'] = 'Step 9 - Upgrade Personal Logs';
+$lang['upg_step9_label'] = 'Step 9: Upgrade Personal Logs';
+$lang['upg_step9_success'] = 'You have successfully upgraded the personal logs to the new Nova format. The next step will upgrade your mission posts to the new Nova format. This may take a few minutes depending on how many mission posts you have! Click <strong>Next Step</strong> to continue.';
+$lang['upg_step9_failure'] = 'There was a problem upgrading your personal logs to the new Nova format. This can be caused by having made previous changes to the table, causing problems with the upgrade script. You can continue with the upgrade, but you will have to manually add your personal logs at a later date. Click <strong>Next Step</strong> if you want to continue.';
+$lang['upg_step9_noupgrade'] = 'You have selected not to upgrade your personal logs. Please continue to the next step where we will upgrade your mission posts to the new Nova format. This may take a few minutes depending on how many mission posts you have! Click <strong>Next Step</strong> to continue.';
+
+/*
+ * Step 10
+ */
+$lang['upg_step10_title'] = 'Step 10 - Upgrade Mission Posts';
+$lang['upg_step10_label'] = 'Step 10: Upgrade Mission Posts';
+$lang['upg_step10_success'] = 'You have successfully upgraded the mission posts to the new Nova format. The next step will upgrade your specifications to the new Nova format. Click <strong>Next Step</strong> to continue.';
+$lang['upg_step10_failure'] = 'There was a problem upgrading all of your mission posts to the new Nova format. This can be caused by having made previous changes to the table, causing problems with the upgrade script. You can continue with the upgrade, but you will have to manually add your mission posts at a later date. Click <strong>Next Step</strong> if you want to continue.';
+$lang['upg_step10_noupgrade'] = 'You have selected not to upgrade your mission posts. Please continue to the next step where we will upgrade your specifications to the new Nova format. Click <strong>Next Step</strong> to continue.';
+
+/*
  * Step 11
  */
 $lang['upg_step11_title'] = 'Step 11 - Upgrade Specifications';
@@ -329,6 +399,30 @@ $lang['upg_step11_label'] = 'Step 11: Upgrade Specifications';
 $lang['upg_step11_success'] = 'You have successfully upgraded the specifications to the new Nova format. The next step will upgrade your tour items to the new Nova format. This may take a few minutes depending on how many tour items you have! Click <strong>Next Step</strong> to continue.';
 $lang['upg_step11_failure'] = 'There was a problem upgrading all of your specifications to the new Nova format. This can be caused by having made previous changes to the table, causing problems with the upgrade script. You can continue with the upgrade, but you will have to manually add your specifications at a later date. Click <strong>Next Step</strong> if you want to continue.';
 $lang['upg_step11_noupgrade'] = 'You have selected not to upgrade your specifications. Please continue to the next step where we will upgrade your tour items to the new Nova format. This may take a few minutes depending on how many tour items you have! Click <strong>Next Step</strong> to continue.';
+
+/*
+ * Step 12
+ */
+$lang['upg_step12_title'] = 'Step 12 - Upgrade Tour Items';
+$lang['upg_step12_label'] = 'Step 12: Upgrade Tour Items';
+$lang['upg_step12_success'] = 'You have successfully upgraded the tour items to the new Nova format. The next step will upgrade your characters and players to the new Nova format. This will take a few minutes! Click <strong>Next Step</strong> to continue.';
+$lang['upg_step12_failure'] = 'There was a problem upgrading all of your tour items to the new Nova format. This can be caused by having made previous changes to the table, causing problems with the upgrade script. You can continue with the upgrade, but you will have to manually add your tour items at a later date. Click <strong>Next Step</strong> if you want to continue.';
+$lang['upg_step12_noupgrade'] = 'You have selected not to upgrade your tour items. Please continue to the next step where we will upgrade your characters and players to the new Nova format. This will take a few minutes! Click <strong>Next Step</strong> to continue.';
+
+/*
+ * Step 13
+ */
+$lang['upg_step13_title'] = 'Step 13 - Upgrade Characters';
+$lang['upg_step13_label'] = 'Step 13: Upgrade Characters';
+$lang['upg_step13_success'] = 'You have successfully upgraded the characters and players to the new Nova format. All players will login to the system using the password set in the SMS config file. The next step will do some final clean up work across the database and will take a few minutes to complete. Click <strong>Next Step</strong> to continue.';
+$lang['upg_step13_failure'] = 'There was a problem upgrading all of your characters and players to the new Nova format. This can be caused by having made previous changes to the table, causing problems with the upgrade script. You can continue with the upgrade, but you will have to manually add your characters and players at a later date. You will need to add your player record in the database manually before you will be able to login. Click <strong>Next Step</strong> if you want to continue.';
+
+/*
+ * Step 14
+ */
+$lang['upg_step14_title'] = 'Step 14 - Finalize';
+$lang['upg_step14_label'] = 'Step 14: Finalize';
+$lang['upg_step14_success'] = "You have successfully upgraded SMS to Nova. You can now login using your email address and the password you set in the SMS config file. Once you've logged in, you'll be able to make changes to the system. All other players will login to the system using the password set in the SMS config file. Click <strong>Login</strong> to continue.";
 
 /*
 |---------------------------------------------------------------

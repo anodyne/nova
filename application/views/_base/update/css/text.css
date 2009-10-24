@@ -67,7 +67,11 @@ p {
 }
 .page-subhead	{ color: #666; }
 
-.red { color: #c00; }
+.gray   { color: #777; }
+.red    { color: #c00; }
+.orange { color: #e99e1c; }
+.green  { color: #008000; }
+.blue	{ color: #3baae3; }
 
 /*
 |---------------------------------------------------------------

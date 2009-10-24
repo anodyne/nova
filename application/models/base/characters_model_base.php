@@ -27,315 +27,6 @@ class Characters_model_base extends Model {
 	|---------------------------------------------------------------
 	*/
 	
-	function get_character($id = '', $return = '')
-	{
-		$query = $this->db->get_where('characters', array('charid' => $id));
-		
-		$row = ($query->num_rows() > 0) ? $query->row() : FALSE;
-		
-		if (!empty($return) && $row !== FALSE)
-		{
-			if (!is_array($return))
-			{
-				return $row->$return;
-			}
-			else
-			{
-				$array = array();
-				
-				foreach ($return as $r)
-				{
-					$array[$r] = $row->$r;
-				}
-				
-				return $array;
-			}
-		}
-		
-		return $row;
-	}
-
-	function get_character_info($id = '')
-	{
-		$query = $this->db->get_where('characters', array('charid' => $id));
-		
-		return $query;
-	}
-	
-	function get_player_id($character = '')
-	{
-		$query = $this->db->get_where('characters', array('charid' => $character));
-		$row = $query->row();
-		
-		return $row->player;
-	}
-	
-	function get_player_characters($player = '', $type = 'active', $return = 'object')
-	{
-		$this->db->from('characters');
-		$this->db->where('player', $player);
-		
-		if (!empty($type))
-		{
-			$this->db->where('crew_type', $type);
-		}
-		
-		$query = $this->db->get();
-		
-		if ($return == 'object')
-		{
-			return $query;
-		}
-		else
-		{
-			if ($query->num_rows() > 0)
-			{
-				foreach ($query->result() as $row)
-				{
-					$array[] = $row->charid;
-				}
-				
-				return $array;
-			}
-		}
-		
-		return FALSE;
-	}
-	
-	function get_character_name($character = '', $rank = FALSE, $short_rank = FALSE)
-	{
-		$this->db->from('characters');
-		
-		if ($rank == TRUE)
-		{
-			$this->db->join('ranks_'. GENRE, 'ranks_'. GENRE .'.rank_id = characters.rank');
-		}
-		
-		$this->db->where('charid', $character);
-		
-		$query = $this->db->get();
-		
-		if ($query->num_rows() > 0)
-		{
-			$item = $query->row();
-		
-			$array['rank'] = ($rank == TRUE) ? $item->rank_name : FALSE;
-			$array['rank'] = ($short_rank == TRUE) ? $item->rank_short_name : $array['rank'];
-			$array['first_name'] = $item->first_name;
-			$array['last_name'] = $item->last_name;
-			$array['suffix'] = $item->suffix;
-		
-			foreach ($array as $key => $value)
-			{
-				if (empty($value))
-				{
-					unset($array[$key]);
-				}
-			}
-		
-			$string = implode(' ', $array);
-		
-			return $string;
-		}
-		
-		return FALSE;
-	}
-	
-	function get_authors($character = '', $rank = TRUE)
-	{
-		$characters = explode(',', $character);
-		$characters_final = array();
-		
-		foreach ($characters as $key)
-		{
-			$name = $this->get_character_name($key, TRUE);
-			
-			if ($name !== FALSE)
-			{
-				$characters_final[] = $name;
-			}
-		}
-		
-		if (count($characters_final) > 0)
-		{
-			$character_string = implode(' &amp; ', $characters_final);
-		
-			return $character_string;
-		}
-		
-		return FALSE;
-	}
-	
-	function get_coc()
-	{
-		$this->db->from('coc');
-		$this->db->join('characters', 'characters.charid = coc.coc_crew');
-		$this->db->join('positions_'. GENRE, 'positions_'. GENRE .'.pos_id = characters.position_1');
-		$this->db->join('ranks_'. GENRE, 'ranks_'. GENRE .'.rank_id = characters.rank');
-		$this->db->order_by('coc_order', 'asc');
-		
-		$query = $this->db->get();
-		
-		return $query;
-	}
-	
-	function get_bio_sections()
-	{
-		$this->db->from('characters_sections');
-		$this->db->order_by('section_tab', 'asc');
-		$this->db->order_by('section_order', 'asc');
-		
-		$query = $this->db->get();
-		
-		return $query;
-	}
-	
-	function get_bio_section_details($id = '')
-	{
-		$query = $this->db->get_where('characters_sections', array('section_id' => $id));
-		
-		return $query;
-	}
-	
-	function get_bio_fields($section = '', $type = '')
-	{
-		$this->db->from('characters_fields');
-		
-		if (!empty($section))
-		{
-			$this->db->where('field_section', $section);
-		}
-		
-		if (!empty($type))
-		{
-			$this->db->where('field_type', $type);
-		}
-		
-		$this->db->where('field_display', 'y');
-		$this->db->order_by('field_order', 'asc');
-		
-		$query = $this->db->get();
-		
-		return $query;
-	}
-	
-	function get_bio_field_details($id = '')
-	{
-		$query = $this->db->get_where('characters_fields', array('field_id' => $id));
-		
-		return $query;
-	}
-	
-	function get_bio_values($field = '')
-	{
-		$this->db->from('characters_values');
-		$this->db->where('value_field', $field);
-		$this->db->order_by('value_order', 'asc');
-		
-		$query = $this->db->get();
-		
-		return $query;
-	}
-	
-	function get_bio_field_value_details($id = '')
-	{
-		$query = $this->db->get_where('characters_values', array('value_id' => $id));
-		
-		return $query;
-	}
-	
-	function get_field_data($field = '', $character = '')
-	{
-		$this->db->from('characters_data');
-		$this->db->where('data_char', $character);
-		$this->db->where('data_field', $field);
-		
-		$query = $this->db->get();
-		
-		return $query;
-	}
-	
-	function get_bio_tabs($display = 'y')
-	{
-		$this->db->from('characters_tabs');
-		
-		if (!empty($display))
-		{
-			$this->db->where('tab_display', 'y');
-		}
-		
-		$this->db->order_by('tab_order', 'asc');
-		
-		$query = $this->db->get();
-		
-		return $query;
-	}
-	
-	function get_bio_tab_details($id = '')
-	{
-		$query = $this->db->get_where('characters_tabs', array('tab_id' => $id));
-		
-		return $query;
-	}
-	
-	function get_characters_for_position($position = '')
-	{
-		$this->db->from('characters');
-		$this->db->where('crew_type !=', 'pending');
-		$this->db->where('position_1', $position);
-		$this->db->or_where('position_2', $position);
-		
-		$query = $this->db->get();
-		
-		return $query;
-	}
-	
-	function get_rank_history($player = '')
-	{
-		$this->db->from('characters_promotions');
-		$this->db->where('prom_player', $player);
-		$this->db->order_by('prom_date', 'desc');
-		
-		$query = $this->db->get();
-		
-		return $query;
-	}
-	
-	function get_character_emails($data = '')
-	{
-		if (!is_array($data))
-		{
-			$data = explode(',', $data);
-		}
-		
-		$array = array();
-		
-		foreach ($data as $item)
-		{
-			$this->db->select('player');
-			$this->db->from('characters');
-			$this->db->where('charid', $item);
-			
-			$query = $this->db->get();
-			
-			if ($query->num_rows() > 0)
-			{
-				$row = $query->row();
-				
-				$query2 = $this->db->get_where('players', array('player_id' => $row->player));
-				
-				if ($query2->num_rows() > 0)
-				{
-					$player = $query2->row();
-					
-					$array[$player->player_id] = $player->email;
-				}
-			}
-		}
-		
-		return $array;
-	}
-	
 	function get_all_characters($status = 'active', $order = '')
 	{
 		$this->db->from('characters');
@@ -392,21 +83,242 @@ class Characters_model_base extends Model {
 		return $query;
 	}
 	
-	function get_character_type($id = '')
+	function get_authors($character = '', $rank = TRUE)
+	{
+		$characters = explode(',', $character);
+		$characters_final = array();
+		
+		foreach ($characters as $key)
+		{
+			$name = $this->get_character_name($key, TRUE);
+			
+			if ($name !== FALSE)
+			{
+				$characters_final[] = $name;
+			}
+		}
+		
+		if (count($characters_final) > 0)
+		{
+			$character_string = implode(' &amp; ', $characters_final);
+		
+			return $character_string;
+		}
+		
+		return FALSE;
+	}
+	
+	function get_bio_fields($section = '', $type = '')
+	{
+		$this->db->from('characters_fields');
+		
+		if (!empty($section))
+		{
+			$this->db->where('field_section', $section);
+		}
+		
+		if (!empty($type))
+		{
+			$this->db->where('field_type', $type);
+		}
+		
+		$this->db->where('field_display', 'y');
+		$this->db->order_by('field_order', 'asc');
+		
+		$query = $this->db->get();
+		
+		return $query;
+	}
+	
+	function get_bio_field_details($id = '')
+	{
+		$query = $this->db->get_where('characters_fields', array('field_id' => $id));
+		
+		return $query;
+	}
+	
+	function get_bio_field_value_details($id = '')
+	{
+		$query = $this->db->get_where('characters_values', array('value_id' => $id));
+		
+		return $query;
+	}
+	
+	function get_bio_sections()
+	{
+		$this->db->from('characters_sections');
+		$this->db->order_by('section_tab', 'asc');
+		$this->db->order_by('section_order', 'asc');
+		
+		$query = $this->db->get();
+		
+		return $query;
+	}
+	
+	function get_bio_section_details($id = '')
+	{
+		$query = $this->db->get_where('characters_sections', array('section_id' => $id));
+		
+		return $query;
+	}
+	
+	function get_bio_tab_details($id = '')
+	{
+		$query = $this->db->get_where('characters_tabs', array('tab_id' => $id));
+		
+		return $query;
+	}
+	
+	function get_bio_tabs($display = 'y')
+	{
+		$this->db->from('characters_tabs');
+		
+		if (!empty($display))
+		{
+			$this->db->where('tab_display', 'y');
+		}
+		
+		$this->db->order_by('tab_order', 'asc');
+		
+		$query = $this->db->get();
+		
+		return $query;
+	}
+	
+	function get_bio_values($field = '')
+	{
+		$this->db->from('characters_values');
+		$this->db->where('value_field', $field);
+		$this->db->order_by('value_order', 'asc');
+		
+		$query = $this->db->get();
+		
+		return $query;
+	}
+	
+	function get_character($id = '', $return = '')
+	{
+		$query = $this->db->get_where('characters', array('charid' => $id));
+		
+		$row = ($query->num_rows() > 0) ? $query->row() : FALSE;
+		
+		if (!empty($return) && $row !== FALSE)
+		{
+			if (!is_array($return))
+			{
+				return $row->$return;
+			}
+			else
+			{
+				$array = array();
+				
+				foreach ($return as $r)
+				{
+					$array[$r] = $row->$r;
+				}
+				
+				return $array;
+			}
+		}
+		
+		return $row;
+	}
+	
+	function get_character_emails($data = '')
+	{
+		if (!is_array($data))
+		{
+			$data = explode(',', $data);
+		}
+		
+		$array = array();
+		
+		foreach ($data as $item)
+		{
+			$this->db->select('player');
+			$this->db->from('characters');
+			$this->db->where('charid', $item);
+			
+			$query = $this->db->get();
+			
+			if ($query->num_rows() > 0)
+			{
+				$row = $query->row();
+				
+				$query2 = $this->db->get_where('players', array('player_id' => $row->player));
+				
+				if ($query2->num_rows() > 0)
+				{
+					$player = $query2->row();
+					
+					$array[$player->player_id] = $player->email;
+				}
+			}
+		}
+		
+		return $array;
+	}
+	
+	function get_character_name($character = '', $rank = FALSE, $short_rank = FALSE)
 	{
 		$this->db->from('characters');
-		$this->db->where('charid', $id);
+		
+		if ($rank == TRUE)
+		{
+			$this->db->join('ranks_'. GENRE, 'ranks_'. GENRE .'.rank_id = characters.rank');
+		}
+		
+		$this->db->where('charid', $character);
 		
 		$query = $this->db->get();
 		
 		if ($query->num_rows() > 0)
 		{
-			$row = $query->row();
-			
-			return $row->crew_type;
+			$item = $query->row();
+		
+			$array['rank'] = ($rank == TRUE) ? $item->rank_name : FALSE;
+			$array['rank'] = ($short_rank == TRUE) ? $item->rank_short_name : $array['rank'];
+			$array['first_name'] = $item->first_name;
+			$array['last_name'] = $item->last_name;
+			$array['suffix'] = $item->suffix;
+		
+			foreach ($array as $key => $value)
+			{
+				if (empty($value))
+				{
+					unset($array[$key]);
+				}
+			}
+		
+			$string = implode(' ', $array);
+		
+			return $string;
 		}
 		
 		return FALSE;
+	}
+	
+	function get_characters_for_position($position = '', $order = '')
+	{
+		$this->db->from('characters');
+		$this->db->where('crew_type !=', 'pending');
+		$this->db->where('position_1', $position);
+		$this->db->or_where('position_2', $position);
+		
+		if (!empty($order))
+		{
+			if (is_array($order))
+			{
+				foreach ($order as $field => $order)
+				{
+					$this->db->order_by($field, $order);
+				}
+			}
+		}
+		
+		$query = $this->db->get();
+		
+		return $query;
 	}
 	
 	function get_characters_minus_player($player = '')
@@ -414,6 +326,97 @@ class Characters_model_base extends Model {
 		$this->db->from('characters');
 		$this->db->where('player >', '');
 		$this->db->where('player !=', $player);
+		
+		$query = $this->db->get();
+		
+		return $query;
+	}
+	
+	function get_coc()
+	{
+		$this->db->from('coc');
+		$this->db->join('characters', 'characters.charid = coc.coc_crew');
+		$this->db->join('positions_'. GENRE, 'positions_'. GENRE .'.pos_id = characters.position_1');
+		$this->db->join('ranks_'. GENRE, 'ranks_'. GENRE .'.rank_id = characters.rank');
+		$this->db->order_by('coc_order', 'asc');
+		
+		$query = $this->db->get();
+		
+		return $query;
+	}
+	
+	function get_field_data($field = '', $character = '')
+	{
+		$this->db->from('characters_data');
+		$this->db->where('data_char', $character);
+		$this->db->where('data_field', $field);
+		
+		$query = $this->db->get();
+		
+		return $query;
+	}
+	
+	function get_player_characters($player = '', $type = 'active', $return = 'object')
+	{
+		$this->db->from('characters');
+		$this->db->where('player', $player);
+		
+		if (!empty($type))
+		{
+			switch ($type)
+			{
+				case 'active':
+				default:
+					$string = "`crew_type` = 'active'";
+					break;
+					
+				case 'inactive':
+					$string = "`crew_type` = 'inactive'";
+					break;
+					
+				case 'pending':
+					$string = "`crew_type` = 'pending'";
+					break;
+					
+				case 'npc':
+					$string = "`crew_type` = 'npc'";
+					break;
+					
+				case 'active_npc':
+					$string = "`crew_type` = 'active' OR `crew_type` = 'npc'";
+					break;
+			}
+			
+			$this->db->where("($string)", NULL);
+		}
+		
+		$query = $this->db->get();
+		
+		if ($return == 'object')
+		{
+			return $query;
+		}
+		else
+		{
+			if ($query->num_rows() > 0)
+			{
+				foreach ($query->result() as $row)
+				{
+					$array[] = $row->charid;
+				}
+				
+				return $array;
+			}
+		}
+		
+		return FALSE;
+	}
+	
+	function get_rank_history($player = '')
+	{
+		$this->db->from('characters_promotions');
+		$this->db->where('prom_player', $player);
+		$this->db->order_by('prom_date', 'desc');
 		
 		$query = $this->db->get();
 		
@@ -434,7 +437,10 @@ class Characters_model_base extends Model {
 		{
 			if ($timeframe == 'current')
 			{
-				$this->db->where('crew_type', $type);
+				if (!empty($type))
+				{
+					$this->db->where('crew_type', $type);
+				}
 			}
 			elseif ($timeframe == 'previous')
 			{
@@ -452,7 +458,10 @@ class Characters_model_base extends Model {
 		}
 		else
 		{
-			$this->db->where('crew_type', $type);
+			if (!empty($type))
+			{
+				$this->db->where('crew_type', $type);
+			}
 		}
 		
 		$query = $this->db->get();
@@ -466,12 +475,51 @@ class Characters_model_base extends Model {
 	|---------------------------------------------------------------
 	*/
 	
-	function create_coc_entry($data = '')
+	function add_bio_field($data = '')
 	{
-		$query = $this->db->insert('coc', $data);
+		$query = $this->db->insert('characters_fields', $data);
 		
 		/* optimize the table */
-		$this->dbutil->optimize_table('coc');
+		$this->dbutil->optimize_table('characters_fields');
+		
+		return $query;
+	}
+	
+	function add_bio_field_data($data = '')
+	{
+		$query = $this->db->insert('characters_data', $data);
+		
+		$this->dbutil->optimize_table('characters_data');
+		
+		return $query;
+	}
+	
+	function add_bio_field_value($data = '')
+	{
+		$query = $this->db->insert('characters_values', $data);
+		
+		/* optimize the table */
+		$this->dbutil->optimize_table('characters_values');
+		
+		return $query;
+	}
+	
+	function add_bio_sec($data = '')
+	{
+		$query = $this->db->insert('characters_sections', $data);
+		
+		/* optimize the table */
+		$this->dbutil->optimize_table('characters_sections');
+		
+		return $query;
+	}
+	
+	function add_bio_tab($data = '')
+	{
+		$query = $this->db->insert('characters_tabs', $data);
+		
+		/* optimize the table */
+		$this->dbutil->optimize_table('characters_tabs');
 		
 		return $query;
 	}
@@ -525,51 +573,12 @@ class Characters_model_base extends Model {
 		return $query;
 	}
 	
-	function add_bio_field($data = '')
+	function create_coc_entry($data = '')
 	{
-		$query = $this->db->insert('characters_fields', $data);
+		$query = $this->db->insert('coc', $data);
 		
 		/* optimize the table */
-		$this->dbutil->optimize_table('characters_fields');
-		
-		return $query;
-	}
-	
-	function add_bio_field_value($data = '')
-	{
-		$query = $this->db->insert('characters_values', $data);
-		
-		/* optimize the table */
-		$this->dbutil->optimize_table('characters_values');
-		
-		return $query;
-	}
-	
-	function add_bio_field_data($data = '')
-	{
-		$query = $this->db->insert('characters_data', $data);
-		
-		$this->dbutil->optimize_table('characters_data');
-		
-		return $query;
-	}
-	
-	function add_bio_tab($data = '')
-	{
-		$query = $this->db->insert('characters_tabs', $data);
-		
-		/* optimize the table */
-		$this->dbutil->optimize_table('characters_tabs');
-		
-		return $query;
-	}
-	
-	function add_bio_sec($data = '')
-	{
-		$query = $this->db->insert('characters_sections', $data);
-		
-		/* optimize the table */
-		$this->dbutil->optimize_table('characters_sections');
+		$this->dbutil->optimize_table('coc');
 		
 		return $query;
 	}
@@ -580,20 +589,38 @@ class Characters_model_base extends Model {
 	|---------------------------------------------------------------
 	*/
 	
-	function empty_coc()
+	function delete_bio_field($id = '')
 	{
-		$query = $this->db->truncate('coc');
+		$query = $this->db->delete('characters_fields', array('field_id' => $id));
 		
-		$this->dbutil->optimize_table('coc');
+		$this->dbutil->optimize_table('characters_fields');
 		
 		return $query;
 	}
 	
-	function delete_coc_entry($id = '')
+	function delete_bio_field_value($id = '')
 	{
-		$query = $this->db->delete('coc', array('coc_crew' => $id));
+		$query = $this->db->delete('characters_values', array('value_id' => $id));
 		
-		$this->dbutil->optimize_table('coc');
+		$this->dbutil->optimize_table('characters_values');
+		
+		return $query;
+	}
+	
+	function delete_bio_section($id = '')
+	{
+		$query = $this->db->delete('characters_sections', array('section_id' => $id));
+		
+		$this->dbutil->optimize_table('characters_sections');
+		
+		return $query;
+	}
+	
+	function delete_bio_tab($id = '')
+	{
+		$query = $this->db->delete('characters_tabs', array('tab_id' => $id));
+		
+		$this->dbutil->optimize_table('characters_tabs');
 		
 		return $query;
 	}
@@ -625,38 +652,20 @@ class Characters_model_base extends Model {
 		return $query;
 	}
 	
-	function delete_bio_field($id = '')
+	function delete_coc_entry($id = '')
 	{
-		$query = $this->db->delete('characters_fields', array('field_id' => $id));
+		$query = $this->db->delete('coc', array('coc_crew' => $id));
 		
-		$this->dbutil->optimize_table('characters_fields');
+		$this->dbutil->optimize_table('coc');
 		
 		return $query;
 	}
 	
-	function delete_bio_field_value($id = '')
+	function empty_coc()
 	{
-		$query = $this->db->delete('characters_values', array('value_id' => $id));
+		$query = $this->db->truncate('coc');
 		
-		$this->dbutil->optimize_table('characters_values');
-		
-		return $query;
-	}
-	
-	function delete_bio_tab($id = '')
-	{
-		$query = $this->db->delete('characters_tabs', array('tab_id' => $id));
-		
-		$this->dbutil->optimize_table('characters_tabs');
-		
-		return $query;
-	}
-	
-	function delete_bio_section($id = '')
-	{
-		$query = $this->db->delete('characters_sections', array('section_id' => $id));
-		
-		$this->dbutil->optimize_table('characters_sections');
+		$this->dbutil->optimize_table('coc');
 		
 		return $query;
 	}
@@ -666,26 +675,6 @@ class Characters_model_base extends Model {
 	| UPDATE METHODS
 	|---------------------------------------------------------------
 	*/
-	
-	function update_bio_tab($id = '', $data = '')
-	{
-		$this->db->where('tab_id', $id);
-		$query = $this->db->update('characters_tabs', $data);
-		
-		$this->dbutil->optimize_table('characters_tabs');
-		
-		return $query;
-	}
-	
-	function update_bio_section($id = '', $data = '')
-	{
-		$this->db->where('section_id', $id);
-		$query = $this->db->update('characters_sections', $data);
-		
-		$this->dbutil->optimize_table('characters_sections');
-		
-		return $query;
-	}
 	
 	function update_bio_field($id = '', $data = '')
 	{
@@ -703,6 +692,26 @@ class Characters_model_base extends Model {
 		$query = $this->db->update('characters_values', $data);
 		
 		$this->dbutil->optimize_table('characters_values');
+		
+		return $query;
+	}
+	
+	function update_bio_section($id = '', $data = '')
+	{
+		$this->db->where('section_id', $id);
+		$query = $this->db->update('characters_sections', $data);
+		
+		$this->dbutil->optimize_table('characters_sections');
+		
+		return $query;
+	}
+	
+	function update_bio_tab($id = '', $data = '')
+	{
+		$this->db->where('tab_id', $id);
+		$query = $this->db->update('characters_tabs', $data);
+		
+		$this->dbutil->optimize_table('characters_tabs');
 		
 		return $query;
 	}
@@ -738,18 +747,6 @@ class Characters_model_base extends Model {
 		return $query;
 	}
 	
-	function update_section_tabs($old_id = '', $new_id = '')
-	{
-		$data = array('section_tab' => $new_id);
-		
-		$this->db->where('section_tab', $old_id);
-		$query = $this->db->update('characters_sections', $data);
-		
-		$this->dbutil->optimize_table('characters_sections');
-		
-		return $query;
-	}
-	
 	function update_field_sections($old_id = '', $new_id = '')
 	{
 		$data = array('field_section' => $new_id);
@@ -758,6 +755,18 @@ class Characters_model_base extends Model {
 		$query = $this->db->update('characters_fields', $data);
 		
 		$this->dbutil->optimize_table('characters_fields');
+		
+		return $query;
+	}
+	
+	function update_section_tabs($old_id = '', $new_id = '')
+	{
+		$data = array('section_tab' => $new_id);
+		
+		$this->db->where('section_tab', $old_id);
+		$query = $this->db->update('characters_sections', $data);
+		
+		$this->dbutil->optimize_table('characters_sections');
 		
 		return $query;
 	}

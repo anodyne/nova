@@ -14,7 +14,7 @@
 class Site_base extends Controller {
 
 	/* set the variables */
-	var $settings;
+	var $options;
 	var $skin;
 	var $rank;
 	var $timezone;
@@ -55,15 +55,15 @@ class Site_base extends Controller {
 		);
 		
 		/* grab the settings */
-		$this->settings = $this->settings_model->get_settings($settings_array);
+		$this->options = $this->settings->get_settings($settings_array);
 		
 		/* set the variables */
-		$this->skin = $this->settings['skin_admin'];
-		$this->rank = $this->settings['display_rank'];
-		$this->timezone = $this->settings['timezone'];
-		$this->dst = $this->settings['daylight_savings'];
+		$this->skin = $this->options['skin_admin'];
+		$this->rank = $this->options['display_rank'];
+		$this->timezone = $this->options['timezone'];
+		$this->dst = $this->options['daylight_savings'];
 		
-		if ($this->session->userdata('player_id') === TRUE)
+		if ($this->auth->is_logged_in() === TRUE)
 		{ /* if there's a session, set the variables appropriately */
 			$this->skin = $this->session->userdata('skin_admin');
 			$this->rank = $this->session->userdata('display_rank');
@@ -85,7 +85,7 @@ class Site_base extends Controller {
 		$this->template->write('panel_2', $this->user_panel->panel_2(), TRUE);
 		$this->template->write('panel_3', $this->user_panel->panel_3(), TRUE);
 		$this->template->write('panel_workflow', $this->user_panel->panel_workflow(), TRUE);
-		$this->template->write('title', $this->settings['sim_name'] . ' :: ');
+		$this->template->write('title', $this->options['sim_name'] . ' :: ');
 	}
 
 	function index()
@@ -1122,10 +1122,10 @@ class Site_base extends Controller {
 					
 					$item = $this->ranks->get_rankcat($old_id, 'rankcat_id');
 					
-					if ($item->rankcat_location == $this->settings['display_rank'])
+					if ($item->rankcat_location == $this->options['display_rank'])
 					{
 						$setting_data = array('setting_value' => $new);
-						$update_settings = $this->settings_model->update_setting('display_rank', $setting_data);
+						$update_settings = $this->settings->update_setting('display_rank', $setting_data);
 					}
 						
 					$player_data = array('display_rank' => $new);
@@ -1514,7 +1514,7 @@ class Site_base extends Controller {
 							$old_skin = $this->input->post('old_skin', TRUE);
 							
 							/* get the current skin for the section we're playing with */
-							$theme = $this->settings_model->get_setting('skin_'. $section);
+							$theme = $this->settings->get_setting('skin_'. $section);
 							
 							/*
 							 * if the skin location of the theme we're deleting is the same as the
@@ -1524,7 +1524,7 @@ class Site_base extends Controller {
 							if ($old_skin == $theme)
 							{
 								$setting_data = array('setting_value' => $new_skin);
-								$update_settings = $this->settings_model->update_setting('skin_'. $section, $setting_data);
+								$update_settings = $this->settings->update_setting('skin_'. $section, $setting_data);
 							}
 							
 							/* set the player data */					
@@ -2314,7 +2314,7 @@ class Site_base extends Controller {
 					}
 					else
 					{
-						$check = $this->messages_model->get_message($key);
+						$check = $this->msgs->get_message($key);
 						
 						if ($check === FALSE)
 						{
@@ -2329,7 +2329,7 @@ class Site_base extends Controller {
 							);
 							
 							/* insert the record */
-							$insert = $this->messages_model->insert_new_message($insert_array);
+							$insert = $this->msgs->insert_new_message($insert_array);
 							
 							if ($insert > 0)
 							{
@@ -2377,7 +2377,7 @@ class Site_base extends Controller {
 					$id = $this->input->post('id', TRUE);
 				
 					/* insert the record */
-					$delete = $this->messages_model->delete_message($id);
+					$delete = $this->msgs->delete_message($id);
 					
 					if ($delete > 0)
 					{
@@ -2445,7 +2445,7 @@ class Site_base extends Controller {
 						);
 						
 						/* insert the record */
-						$update = $this->messages_model->update_message($update_array, $old_key);
+						$update = $this->msgs->update_message($update_array, $old_key);
 						
 						if ($update > 0)
 						{
@@ -2503,7 +2503,7 @@ class Site_base extends Controller {
 		}
 		
 		/* grab all the messages */
-		$messages = $this->messages_model->get_all_messages();
+		$messages = $this->msgs->get_all_messages();
 		
 		if ($messages->num_rows() > 0)
 		{
@@ -3454,11 +3454,11 @@ class Site_base extends Controller {
 					$update_array['setting_value'] = $this->input->xss_clean($value);
 					
 					/* run the update query */
-					$update = $this->settings_model->update_setting($key, $update_array);
+					$update = $this->settings->update_setting($key, $update_array);
 					
 					if ($key == 'timezone' && $value != $this->timezone)
 					{ /* make sure if the timezone has changed that it's updated */
-						$this->timezone = $this->settings_model->get_setting('timezone');
+						$this->timezone = $this->settings->get_setting('timezone');
 					}
 				}
 			}
@@ -3505,7 +3505,7 @@ class Site_base extends Controller {
 		}
 		
 		/* grab all settings */
-		$settings = $this->settings_model->get_all_settings();
+		$settings = $this->settings->get_all_settings();
 		
 		if ($settings->num_rows() > 0)
 		{
@@ -3552,7 +3552,7 @@ class Site_base extends Controller {
 			);
 			
 			/* get the sim types */
-			$type = $this->settings_model->get_sim_types();
+			$type = $this->settings->get_sim_types();
 			
 			if ($type->num_rows() > 0)
 			{
@@ -3788,7 +3788,7 @@ class Site_base extends Controller {
 		*/
 		
 		/* grab all settings */
-		$user = $this->settings_model->get_all_settings('y');
+		$user = $this->settings->get_all_settings('y');
 		
 		if ($user->num_rows() > 0)
 		{
@@ -5283,7 +5283,7 @@ class Site_base extends Controller {
 					}
 					else
 					{
-						$check = $this->settings_model->get_setting($key);
+						$check = $this->settings->get_setting($key);
 						
 						if ($check === FALSE)
 						{
@@ -5294,7 +5294,7 @@ class Site_base extends Controller {
 							);
 							
 							/* insert the record */
-							$insert = $this->settings_model->add_new_setting($insert_array);
+							$insert = $this->settings->add_new_setting($insert_array);
 							
 							if ($insert > 0)
 							{
@@ -5341,7 +5341,7 @@ class Site_base extends Controller {
 				case 'delete':
 					$id = $this->input->post('id', TRUE);
 					
-					$get = $this->settings_model->get_setting_details($id, 'setting_id');
+					$get = $this->settings->get_setting_details($id, 'setting_id');
 					
 					if ($get->num_rows() > 0)
 					{
@@ -5350,7 +5350,7 @@ class Site_base extends Controller {
 						if ($item->setting_user_created == 'y')
 						{
 							/* insert the record */
-							$delete = $this->settings_model->delete_setting($id);
+							$delete = $this->settings->delete_setting($id);
 							
 							if ($delete > 0)
 							{
@@ -5413,7 +5413,7 @@ class Site_base extends Controller {
 					}
 					else
 					{
-						$get = $this->settings_model->get_setting_details($id, 'setting_id');
+						$get = $this->settings->get_setting_details($id, 'setting_id');
 					
 						if ($get->num_rows() > 0)
 						{
@@ -5428,7 +5428,7 @@ class Site_base extends Controller {
 								);
 								
 								/* insert the record */
-								$update = $this->settings_model->update_setting($key, $update_array);
+								$update = $this->settings->update_setting($key, $update_array);
 								
 								if ($update > 0)
 								{
@@ -5471,7 +5471,7 @@ class Site_base extends Controller {
 		}
 		
 		/* grab all settings */
-		$settings = $this->settings_model->get_all_settings('y');
+		$settings = $this->settings->get_all_settings('y');
 		
 		if ($settings->num_rows() > 0)
 		{

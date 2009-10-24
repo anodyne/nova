@@ -15,7 +15,7 @@
 
 class Update_base extends Controller {
 	
-	var $settings;
+	var $options;
 	var $version;
 	
 	function Update_base()
@@ -46,7 +46,7 @@ class Update_base extends Controller {
 		);
 		
 		/* grab the settings */
-		$this->settings = $this->settings_model->get_settings($settings_array);
+		$this->options = $this->settings->get_settings($settings_array);
 		
 		/* write the common elements to the template */
 		$this->template->write('title', APP_NAME .' :: ');
@@ -194,7 +194,7 @@ class Update_base extends Controller {
 			/* get the items from the feed */
 			$items = $this->simplepie->get_items();
 			
-			$type = $this->settings['updates'];
+			$type = $this->options['updates'];
 			
 			foreach ($items as $i)
 			{ /* loop through and figure out what we should be displaying */
@@ -449,63 +449,26 @@ class Update_base extends Controller {
 	
 	function verify()
 	{
-		/* allowed database platforms */
-		$allowed_db = array('mysql', 'mysqli');
+		/* load the resources */
+		$this->load->helper('utility');
 		
-		/* database versions */
-		$db_versions = array(
-			'mysql' => '4.1+',
-			'mysqli' => '-'
-		);
-		
-		/* requirement values for failure */
-		$required['php']	= (phpversion() < '4.3.2') ? FALSE : TRUE;
-		$required['db']		= ((!in_array($this->db->platform(), $allowed_db))) ? FALSE : TRUE;
-		$required['db_ver']	= (($this->db->platform() == 'mysql' && $this->db->version() < '4.1')) ? FALSE : TRUE;
-		
-		$data['allowed_db_string'] = implode(', ', $allowed_db);
-		$data['dbver'] = $db_versions[$this->db->platform()];
-		$data['regglobals'] = (ini_get('register_globals') == '') ? lang('install_label_off') : lang('install_label_on');
-		
-		/* set the variables to use */
-		$header = (array_search(FALSE, $required)) ? 'verify_header_failure' : 'verify_header_success';
-		$verify_content = (array_search(FALSE, $required)) ? 'verify_content_failure' : 'verify_content_success';
-		
-		$flash['status'] = (array_search(FALSE, $required)) ? 'error' : 'success';
-		$flash['message'] = lang_output($header);
-		
-		/* set the content used by the view */
-		$data['content'] = lang($verify_content);
-		$data['link'] = (array_search(FALSE, $required)) ? FALSE : anchor('install/step/1', lang('verify_link_success'), array('class' => 'bold fontMedium'));
+		/* load the verification data */
+		$data['table'] = verify_server();
 		
 		$data['label'] = array(
-			'back' => lang('install_label_back'),
-			'step1' => (array_search(FALSE, $required)) ? FALSE : '&nbsp;&nbsp; &middot; &nbsp;&nbsp;'. anchor('install/step/1', lang('verify_link_success'), array('class' => 'bold fontMedium')),
-			'header_comp' => lang('verify_table_component'),
-			'header_req' => lang('verify_table_required'),
-			'header_rec' => lang('verify_table_recommended'),
-			'header_actual' => lang('verify_table_actual'),
-			'php' => lang('verify_table_php'),
-			'db' => lang('verify_table_db'),
-			'dbver' => lang('verify_table_db_ver'),
-			'mem' => lang('verify_table_mem_limit'),
-			'regglobals' => lang('verify_table_reg_globals'),
-			'on' => lang('install_label_on'),
-			'off' => lang('install_label_off')
+			'back' => lang('upd_verify_back'),
+			'text' => lang('upd_verify_text')
 		);
 		
 		/* figure out where the view file should be coming from */
-		$view_loc = view_location('verify', '_base', 'install');
-		$js_loc = js_location('verify_js', '_base', 'install');
+		$view_loc = view_location('update_verify', '_base', 'update');
 		
 		/* set the title */
-		$this->template->write('title', lang('install_index_title'));
-		$this->template->write('label', 'Verify Server Requirements');
-		$this->template->write_view('flash_message', '_base/install/pages/flash', $flash);
+		$this->template->write('title', lang('upd_verify_title'));
+		$this->template->write('label', lang('upd_verify_title'));
 				
 		/* write the data to the template */
 		$this->template->write_view('content', $view_loc, $data);
-		$this->template->write_view('javascript', $js_loc);
 		
 		/* render the template */
 		$this->template->render();

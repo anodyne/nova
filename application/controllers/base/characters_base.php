@@ -14,7 +14,7 @@
 class Characters_base extends Controller {
 
 	/* set the variables */
-	var $settings;
+	var $options;
 	var $skin;
 	var $rank;
 	var $timezone;
@@ -56,13 +56,13 @@ class Characters_base extends Controller {
 		);
 		
 		/* grab the settings */
-		$this->settings = $this->settings_model->get_settings($settings_array);
+		$this->options = $this->settings->get_settings($settings_array);
 		
 		/* set the variables */
-		$this->skin = $this->settings['skin_admin'];
-		$this->rank = $this->settings['display_rank'];
-		$this->timezone = $this->settings['timezone'];
-		$this->dst = $this->settings['daylight_savings'];
+		$this->skin = $this->options['skin_admin'];
+		$this->rank = $this->options['display_rank'];
+		$this->timezone = $this->options['timezone'];
+		$this->dst = $this->options['daylight_savings'];
 		
 		if ($this->auth->is_logged_in() === TRUE)
 		{ /* if there's a session, set the variables appropriately */
@@ -86,7 +86,7 @@ class Characters_base extends Controller {
 		$this->template->write('panel_2', $this->user_panel->panel_2(), TRUE);
 		$this->template->write('panel_3', $this->user_panel->panel_3(), TRUE);
 		$this->template->write('panel_workflow', $this->user_panel->panel_workflow(), TRUE);
-		$this->template->write('title', $this->settings['sim_name'] . ' :: ');
+		$this->template->write('title', $this->options['sim_name'] . ' :: ');
 	}
 
 	function index()
@@ -222,13 +222,22 @@ class Characters_base extends Controller {
 							'rank' => $this->input->post('rank', TRUE),
 							'crew_type' => 'active',
 							'date_activate' => (empty($info->date_activate)) ? now() : $info->date_activate,
-							'player' => ($count >= $this->settings['allowed_chars_playing']) ? NULL : $info->player, 
+							'player' => ($count >= $this->options['allowed_chars_playing']) ? NULL : $info->player, 
 						);
 						
 						$update = $this->char->update_character($id, $c_update);
 						
+						/* grab the info about the position */
+						$pos = $this->pos->get_position($c_update['position_1']);
+						
+						/* make sure we're setting the new pos_open field */
+						$position_update = array('pos_open' => ($pos->pos_open == 0) ? 0 : ($pos->pos_open -1));
+						
+						/* update the number of open slots for the position */
+						$pos_update = $this->pos->update_position($c_update['position_1'], $position_update);
+						
 						/* grab the message */
-						$message = $this->messages_model->get_message('accept_message');
+						$message = $this->msgs->get_message('accept_message');
 						
 						/* set the arguments for the message */
 						$args = array(
@@ -236,7 +245,7 @@ class Characters_base extends Controller {
 							'character' => $this->char->get_character_name($id),
 							'position' => $this->pos->get_position($c_update['position_1'], 'pos_name'),
 							'rank' => $this->ranks->get_rank($c_update['rank'], 'rank_name'),
-							'ship' => $this->settings['sim_name']
+							'ship' => $this->options['sim_name']
 						);
 						
 						/* parse the message with the args */
@@ -280,7 +289,7 @@ class Characters_base extends Controller {
 								'character' => $args['character']
 							);
 							
-							$email = ($this->settings['system_email'] == 'on') ? $this->_email('accept', $email_data) : FALSE;
+							$email = ($this->options['system_email'] == 'on') ? $this->_email('accept', $email_data) : FALSE;
 						}
 						else
 						{
@@ -307,14 +316,14 @@ class Characters_base extends Controller {
 						}
 						
 						/* grab the message */
-						$message = $this->messages_model->get_message('reject_message');
+						$message = $this->msgs->get_message('reject_message');
 						
 						/* set the arguments for the message */
 						$args = array(
 							'name' => (!empty($player->name)) ? $player->name : $player->email,
 							'character' => $this->char->get_character_name($id),
 							'position' => $this->pos->get_position($info->position_1, 'pos_name'),
-							'ship' => $this->settings['sim_name']
+							'ship' => $this->options['sim_name']
 						);
 						
 						/* parse the message with the args */
@@ -347,7 +356,7 @@ class Characters_base extends Controller {
 								'character' => $args['character']
 							);
 							
-							$email = ($this->settings['system_email'] == 'on') ? $this->_email('reject', $email_data) : FALSE;
+							$email = ($this->options['system_email'] == 'on') ? $this->_email('reject', $email_data) : FALSE;
 						}
 						else
 						{
@@ -660,7 +669,7 @@ class Characters_base extends Controller {
 					$data['character']['awards'][$c->awardrec_id]['id'] = $c->awardrec_id;
 					$data['character']['awards'][$c->awardrec_id]['award'] = $award['award_name'];
 					$data['character']['awards'][$c->awardrec_id]['reason'] = $c->awardrec_reason;
-					$data['character']['awards'][$c->awardrec_id]['date'] = mdate($this->settings['date_format'], $date);
+					$data['character']['awards'][$c->awardrec_id]['date'] = mdate($this->options['date_format'], $date);
 					$data['character']['awards'][$c->awardrec_id]['image'] = array(
 						'src' => asset_location('images/awards', $award['award_image']),
 						'alt' => '',
@@ -686,7 +695,7 @@ class Characters_base extends Controller {
 						$data['player']['awards'][$p->awardrec_id]['id'] = $p->awardrec_id;
 						$data['player']['awards'][$p->awardrec_id]['award'] = $p->award_name;
 						$data['player']['awards'][$p->awardrec_id]['reason'] = $p->awardrec_reason;
-						$data['player']['awards'][$p->awardrec_id]['date'] = mdate($this->settings['date_format'], $date);
+						$data['player']['awards'][$p->awardrec_id]['date'] = mdate($this->options['date_format'], $date);
 						$data['player']['awards'][$p->awardrec_id]['image'] = array(
 							'src' => asset_location('images/awards', $p->award_image),
 							'alt' => '',
@@ -1321,7 +1330,7 @@ class Characters_base extends Controller {
 					);
 					
 					/* execute the email method */
-					$email_gm = ($this->settings['system_email'] == 'on') ? $this->_email('pending', $gm_data) : FALSE;
+					$email_gm = ($this->options['system_email'] == 'on') ? $this->_email('pending', $gm_data) : FALSE;
 				}
 					
 				$message = sprintf(
@@ -1770,7 +1779,7 @@ class Characters_base extends Controller {
 				$this->email->from($data['email'], $data['name']);
 				$this->email->to($data['email']);
 				$this->email->cc($cc);
-				$this->email->subject($this->settings['email_subject'] .' '. $email_data['email_subject']);
+				$this->email->subject($this->options['email_subject'] .' '. $email_data['email_subject']);
 				$this->email->message($message);
 				
 				break;
@@ -1791,7 +1800,7 @@ class Characters_base extends Controller {
 				$this->email->from($data['email'], $data['name']);
 				$this->email->to($data['email']);
 				$this->email->cc($cc);
-				$this->email->subject($this->settings['email_subject'] .' '. $email_data['email_subject']);
+				$this->email->subject($this->options['email_subject'] .' '. $email_data['email_subject']);
 				$this->email->message($message);
 				
 				break;
@@ -1826,8 +1835,7 @@ class Characters_base extends Controller {
 				);
 				
 				/* build the character data array */
-				$character_data = $this->char->get_character_info($data['id']);
-				$c_data = $character_data->row();
+				$c_data = $this->char->get_character($data['id']);
 				
 				$email_data['character'] = array(
 					array(
@@ -1886,7 +1894,7 @@ class Characters_base extends Controller {
 				/* set the parameters for sending the email */
 				$this->email->from($data['email'], $data['name']);
 				$this->email->to($to);
-				$this->email->subject($this->settings['email_subject'] .' '. $email_data['email_subject']);
+				$this->email->subject($this->options['email_subject'] .' '. $email_data['email_subject']);
 				$this->email->message($message);
 				
 				break;

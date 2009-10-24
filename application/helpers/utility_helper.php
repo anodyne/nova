@@ -50,13 +50,13 @@ if ( ! function_exists('file_size'))
  */	
 if ( ! function_exists('check_memory'))
 {
-	function check_memory($data = '', $usage = 3)
+	function check_memory($data = '', $usage = 4)
 	{
 		/* get the memory limit and pop the M off the end */
 		$mem = ini_get('memory_limit');
 		$mem = str_replace('M', '', $mem);
 		
-		/* nova consumes about 3MB of memory, so add that to the database size */
+		/* add what nova uses to the database size */
 		$sys = $data + $usage;
 		
 		if ($sys >= $mem)
@@ -199,6 +199,261 @@ if ( ! function_exists('is_valid_email'))
 		}
 		
 		return FALSE;
+	}
+}
+
+// ------------------------------------------------------------------------
+
+/**
+ * Backup Database
+ *
+ * Back up the SQL database (only works with MySQL)
+ *
+ * @access	public
+ * @param	string
+ * @param	string (download/save)
+ * @param	string
+ * @return	boolean (true/false)
+ */	
+if ( ! function_exists('backup_database'))
+{
+	function backup_database($prefix = '', $action = 'download', $name = 'sms_backup')
+	{
+		/* create an instance */
+		$ci =& get_instance();
+		
+		/* load the utility class */
+		$ci->load->dbutil();
+		
+		/* get an array of the tables */
+		$fields = $ci->db->list_tables();
+		
+		/* get the length of the prefix */
+		$length = strlen($prefix);
+		
+		/* go through all the tables to find out if its part of the system or not */
+		foreach ($fields as $key => $value)
+		{
+			if (substr($value, 0, $length) != $prefix)
+			{
+				unset($fields[$key]);
+			}
+		}
+		
+		if (count($fields) > 0)
+		{
+			/* preferences for the backup */
+			$prefs = array(
+				'tables'		=> $fields,
+				'format'		=> 'zip',
+				'filename'		=> $name .'.sql'
+			);
+			
+			/* backup the database and assign it to a variable */
+			$backup =& $ci->dbutil->backup($prefs);
+			
+			if ($action == 'download')
+			{
+				/* load the download helper and send the file to the desktop */
+				$ci->load->helper('download');
+				force_download($name .'.zip', $backup);
+			}
+			elseif ($action == 'save')
+			{
+				/* load the file helper and write the file to the server */
+				$ci->load->helper('file');
+				write_file(APPPATH .'assets/backups/'. $name .'.zip', $backup);
+			}
+			
+			return TRUE;
+		}
+		
+		return FALSE;
+	}
+}
+
+// ------------------------------------------------------------------------
+
+/**
+ * SMS Position Dictionary
+ */	
+if ( ! function_exists('sms_position_translation'))
+{
+	function sms_position_translation($id = '')
+	{
+		$positions = array(
+			1	=> 1,
+			2	=> 2,
+			3	=> 3,
+			4	=> 4,
+			5	=> 5,
+			6	=> 7,
+			7	=> 8,
+			8	=> 9,
+			9	=> 12,
+			10	=> 13,
+			11	=> 14,
+			12	=> 15,
+			13	=> 16,
+			14	=> 17,
+			15	=> 18,
+			16	=> 19,
+			17	=> 20,
+			18	=> 21,
+			19	=> 22,
+			20	=> 23,
+			21	=> 24,
+			22	=> 25,
+			23	=> 26,
+			24	=> 27,
+			25	=> 29,
+			26	=> 30,
+			27	=> 31,
+			28	=> 32,
+			29	=> 33,
+			30	=> 34,
+			31	=> 35,
+			32	=> 36,
+			33	=> 37,
+			34	=> 28,
+			35	=> 38,
+			36	=> 39,
+			37	=> 40,
+			38	=> 42,
+			39	=> 43,
+			40	=> 44,
+			41	=> 45,
+			42	=> 46,
+			43	=> 47,
+			44	=> 48,
+			45	=> 49,
+			46	=> 51,
+			47	=> 54,
+			48	=> 55,
+			49	=> 56,
+			50	=> 57,
+			51	=> 58,
+			52	=> 59,
+			53	=> 60,
+			54	=> 61,
+			55	=> 62,
+			56	=> 63,
+			57	=> 64,
+			58	=> 65,
+			59	=> 68,
+			60	=> 69,
+			61	=> 70,
+			62	=> 71,
+			63	=> 72,
+			64	=> 73,
+			65	=> 74,
+			66	=> 76,
+			67	=> 78
+		);
+		
+		if (!array_key_exists($id, $positions))
+		{
+			return 0;
+		}
+		
+		return $positions[$id];
+	}
+}
+
+// ------------------------------------------------------------------------
+
+/**
+ * Server Verification
+ *
+ * Verify the server can run Nova
+ *
+ * @access	public
+ * @return	array
+ */	
+if ( ! function_exists('verify_server'))
+{
+	function verify_server()
+	{
+		/* get an instance of CI */
+		$ci =& get_instance();
+		
+		/* load the resources */
+		$ci->load->library('table');
+		$ci->lang->load('install');
+		
+		/* build the specs array */
+		$specs = array(
+			'php' => array(
+				'req'	=> '4.3.2',
+				'act'	=> phpversion()),
+			'db' => array(
+				'req'	=> array('mysql', 'mysqli'),
+				'act'	=> $ci->db->platform()),
+			'dbver' => array(
+				'req'	=> array('mysql' => '4.1', 'mysqli' => '-'),
+				'act'	=> $ci->db->version()),
+			'regglobals' => array(
+				'req'	=> lang('verify_off'),
+				'act'	=> (ini_get('register_globals') == 1) ? lang('verify_on') : lang('verify_off')),
+			'mem' => array(
+				'req'	=> 8,
+				'act'	=> substr(ini_get('memory_limit'), 0, -1)),
+		);
+		
+		/* set the final result array */
+		$final = array(
+			'php' => ($specs['php']['act'] < $specs['php']['req']) ? lang('verify_failure') : lang('verify_success'),
+			'db' => (!in_array($specs['db']['act'], $specs['db']['req'])) ? lang('verify_failure') : lang('verify_success'),
+			'dbver' => ($specs['dbver']['act'] < $specs['dbver']['req'][$specs['db']['act']]) ? lang('verify_failure') : lang('verify_success'),
+			'regglobals' => ($specs['regglobals']['act'] != $specs['regglobals']['req']) ? lang('verify_warning') : lang('verify_success'),
+			'mem' => ($specs['mem']['act'] < $specs['mem']['req']) ? lang('verify_warning') : lang('verify_success')
+		);
+		
+		/* set the table template */
+		$tmpl = array (
+			'table_open'          => '<table class="table100 fontMedium">',
+
+			'heading_row_start'   => '<tr class="fontMedium">',
+			'heading_row_end'     => '</tr>',
+			'heading_cell_start'  => '<th>',
+			'heading_cell_end'    => '</th>',
+
+			'row_start'           => '<tr>',
+			'row_end'             => '</tr>',
+			'cell_start'          => '<td>',
+			'cell_end'            => '</td>',
+
+			'row_alt_start'       => '<tr class="alt">',
+			'row_alt_end'         => '</tr>',
+			'cell_alt_start'      => '<td>',
+			'cell_alt_end'        => '</td>',
+
+			'table_close'         => '</table>'
+		);
+		
+		/* apply the template */
+		$ci->table->set_template($tmpl);
+		
+		/* set the heading */
+		$heading = array(
+			lang('verify_component'),
+			lang('verify_required'),
+			lang('verify_actual'),
+			lang('verify_result')
+		);
+		
+		$ci->table->set_heading($heading);
+		
+		/* set the data */
+		$ci->table->add_row(lang('verify_php'), $specs['php']['req'], $specs['php']['act'], $final['php']);
+		$ci->table->add_row(lang('verify_db'), implode(', ', $specs['db']['req']), $specs['db']['act'], $final['db']);
+		$ci->table->add_row(lang('verify_db_ver'), implode(', ', $specs['dbver']['req']), $specs['dbver']['act'], $final['dbver']);
+		$ci->table->add_row(lang('verify_regglobals'), $specs['regglobals']['req'], $specs['regglobals']['act'], $final['regglobals']);
+		$ci->table->add_row(lang('verify_mem'), $specs['mem']['req'] .'M', $specs['mem']['act'] .'M', $final['mem']);
+		
+		$retval = $ci->table->generate();
+		
+		return $retval;
 	}
 }
 

@@ -14,7 +14,7 @@
 class Personnel_base extends Controller {
 
 	/* set the variables */
-	var $settings;
+	var $options;
 	var $skin;
 	var $rank;
 	var $timezone;
@@ -55,15 +55,15 @@ class Personnel_base extends Controller {
 		);
 		
 		/* grab the settings */
-		$this->settings = $this->settings_model->get_settings($settings_array);
+		$this->options = $this->settings->get_settings($settings_array);
 		
 		/* set the variables */
-		$this->skin = $this->settings['skin_main'];
-		$this->rank = $this->settings['display_rank'];
-		$this->timezone = $this->settings['timezone'];
-		$this->dst = $this->settings['daylight_savings'];
+		$this->skin = $this->options['skin_main'];
+		$this->rank = $this->options['display_rank'];
+		$this->timezone = $this->options['timezone'];
+		$this->dst = $this->options['daylight_savings'];
 		
-		if ($this->session->userdata('player_id') !== FALSE)
+		if ($this->auth->is_logged_in() === TRUE)
 		{ /* if there's a session, set the variables appropriately */
 			$this->skin = $this->session->userdata('skin_main');
 			$this->rank = $this->session->userdata('display_rank');
@@ -80,7 +80,7 @@ class Personnel_base extends Controller {
 		/* write the common elements to the template */
 		$this->template->write('nav_main', $this->menu->build('main', 'main'), TRUE);
 		$this->template->write('nav_sub', $this->menu->build('sub', 'personnel'), TRUE);
-		$this->template->write('title', $this->settings['sim_name'] . ' :: ');
+		$this->template->write('title', $this->options['sim_name'] . ' :: ');
 		
 		if ($this->session->userdata('player_id') !== FALSE)
 		{
@@ -147,8 +147,13 @@ class Personnel_base extends Controller {
 								$data['depts'][$dept]['sub'][$a]['pos'][$b]['open'] = $pos->pos_open;
 								$data['depts'][$dept]['sub'][$a]['pos'][$b]['blank_img'] = $blank_img;
 								
+								$order = array(
+									'position_1' => 'desc',
+									'position_2' => 'desc',
+									'rank' => 'asc'
+								);
 								/* get any characters in a position in a sub dept */
-								$characters = $this->char->get_characters_for_position($pos->pos_id);
+								$characters = $this->char->get_characters_for_position($pos->pos_id, $order);
 						
 								if ($characters->num_rows() > 0)
 								{
@@ -232,8 +237,14 @@ class Personnel_base extends Controller {
 						$data['depts'][$dept]['pos'][$b]['open'] = $pos->pos_open;
 						$data['depts'][$dept]['pos'][$b]['blank_img'] = $blank_img;
 						
+						$order = array(
+							'position_1' => 'desc',
+							'position_2' => 'desc',
+							'rank' => 'asc'
+						);
+						
 						/* get any characters in a position in the dept */
-						$characters = $this->char->get_characters_for_position($pos->pos_id);
+						$characters = $this->char->get_characters_for_position($pos->pos_id, $order);
 						
 						if ($characters->num_rows() > 0)
 						{
@@ -306,7 +317,7 @@ class Personnel_base extends Controller {
 		/* set the javascript data */
 		$js_data = array(
 			'display' => $this->uri->rsegment(3),
-			'manifest_defaults' => $this->settings['manifest_defaults']);
+			'manifest_defaults' => $this->options['manifest_defaults']);
 		
 		/* set the data being sent to the view */
 		$data['display'] = $this->uri->rsegment(3, 'crew');
@@ -443,12 +454,10 @@ class Personnel_base extends Controller {
 		$id = $this->uri->segment(3, FALSE, TRUE);
 		
 		/* grab the character info */
-		$details = $this->char->get_character_info($id);
+		$character = $this->char->get_character($id);
 		
-		if ($details->num_rows() > 0)
+		if ($character !== FALSE)
 		{
-			$character = $details->row();
-			
 			$data['postcount'] = $this->posts->count_character_posts($id);
 			$data['logcount'] = $this->logs->count_character_logs($id);
 			$data['awardcount'] = $this->awards->count_character_awards($id);
@@ -475,7 +484,7 @@ class Personnel_base extends Controller {
 			/* set the character info */
 			$data['character_info'] = array(
 				array(
-					'label' => lang('labels_name'),
+					'label' => ucfirst(lang('labels_name')),
 					'value' => $name),
 				array(
 					'label' => ucfirst(lang('global_position')),
@@ -638,19 +647,13 @@ class Personnel_base extends Controller {
 		}
 		
 		$data['label'] = array(
-			'edit' => '[ '. ucwords(lang('actions_edit') .' '.
-				lang('global_character')) .' ]',
-			'edit_form' => '[ '. ucwords(lang('actions_edit') .' '.
-				lang('labels_biography') .' '. lang('labels_form')) .' ]',
-			'view_all_posts' => ucwords(
-				lang('actions_viewall') .' '.
-				lang('global_posts') .' '. RARROW),
-			'view_all_logs' => ucwords(
-				lang('actions_viewall') .' '.
-				lang('global_personallogs') .' '. RARROW),
-			'view_all_awards' => ucwords(
-				lang('actions_viewall') .' '.
-				lang('global_awards') .' '. RARROW),
+			'edit' => '[ '. ucwords(lang('actions_edit') .' '. lang('global_character')) .' ]',
+			'edit_form' => '[ '. ucwords(lang('actions_edit') .' '. lang('labels_biography') .' '. 
+				lang('labels_form')) .' ]',
+			'gallery' => lang('open_gallery'),
+			'view_all_posts' => ucwords(lang('actions_viewall') .' '. lang('global_posts') .' '. RARROW),
+			'view_all_logs' => ucwords(lang('actions_viewall') .' '. lang('global_personallogs') .' '. RARROW),
+			'view_all_awards' => ucwords(lang('actions_viewall') .' '. lang('global_awards') .' '. RARROW),
 			'view_player' => ucwords(lang('actions_view') .' '. lang('global_player') .' '.
 				lang('labels_info') .' '. RARROW),
 		);
@@ -692,7 +695,7 @@ class Personnel_base extends Controller {
 		$rankhistory = $this->char->get_rank_history($player);
 		
 		/* set the datestring */
-		$datestring = $this->settings['date_format'];
+		$datestring = $this->options['date_format'];
 		
 		if ($info->num_rows() > 0)
 		{
@@ -903,7 +906,7 @@ class Personnel_base extends Controller {
 			}
 			
 			/* set the title */
-			$this->template->write('title', $this->messages_model->get_message('personnel_player_title') . $row->name);
+			$this->template->write('title', $this->msgs->get_message('personnel_player_title') . $row->name);
 		}
 		else
 		{
@@ -1032,7 +1035,7 @@ class Personnel_base extends Controller {
 					if ($awards->num_rows() > 0)
 					{
 						$i = 1;
-						$datestring = $this->settings['date_format'];
+						$datestring = $this->options['date_format'];
 
 						foreach ($awards->result() as $row)
 						{
@@ -1109,13 +1112,10 @@ class Personnel_base extends Controller {
 			
 			case 'c':
 				/* run the model methods */
-				$char_check = $this->char->get_character_info($id);
+				$char_row = $this->char->get_character($id);
 
-				if ($char_check->num_rows() > 0)
+				if ($char_row !== FALSE)
 				{
-					/* drop the object into a variable */
-					$char_row = $char_check->row();
-					
 					/* get the awards info */
 					$awards = $this->awards->get_awards_for_id($id);
 					
@@ -1125,7 +1125,7 @@ class Personnel_base extends Controller {
 					if ($awards->num_rows() > 0)
 					{
 						$i = 1;
-						$datestring = $this->settings['date_format'];
+						$datestring = $this->options['date_format'];
 
 						foreach ($awards->result() as $row)
 						{
@@ -1257,7 +1257,7 @@ class Personnel_base extends Controller {
 						
 						if ($logs->num_rows() > 0)
 						{ /* if there is 1 or more posts */
-							$datestring = $this->settings['date_format'];
+							$datestring = $this->options['date_format'];
 
 							foreach ($logs->result() as $log)
 							{ /* loop through the posts */
@@ -1297,15 +1297,15 @@ class Personnel_base extends Controller {
 				
 			case 'c':
 				/* run the model methods */
-				$char_check = $this->char->get_character_info($id);
+				$char_check = $this->char->get_character($id);
 
-				if ($char_check->num_rows() > 0)
+				if ($char_check !== FALSE)
 				{ /* if there is a character, run the method and continue */
 					$logs = $this->logs->get_character_logs($id);
 
 					if ($logs->num_rows() > 0)
 					{ /* if there is a log, continue */
-						$datestring = $this->settings['date_format'];
+						$datestring = $this->options['date_format'];
 
 						foreach ($logs->result() as $log)
 						{
@@ -1318,7 +1318,7 @@ class Personnel_base extends Controller {
 						}
 
 						/* other data used by the template */
-						$data['header'] = $this->messages_model->get_message('personnel_logs_title') . $this->char->get_character_name($id);
+						$data['header'] = $this->msgs->get_message('personnel_logs_title') . $this->char->get_character_name($id);
 						$data['charid'] = $id;
 
 						/* figure out where the view should be coming from */
@@ -1422,7 +1422,7 @@ class Personnel_base extends Controller {
 						
 						if ($posts->num_rows() > 0)
 						{ /* if there is 1 or more posts */
-							$datestring = $this->settings['date_format'];
+							$datestring = $this->options['date_format'];
 
 							foreach ($posts->result() as $post)
 							{ /* loop through the posts */
@@ -1463,15 +1463,15 @@ class Personnel_base extends Controller {
 				
 			case 'c':
 				/* run the model methods */
-				$char_check = $this->char->get_character_info($id);
+				$char_check = $this->char->get_character($id);
 
-				if ($char_check->num_rows() > 0)
+				if ($char_check !== FALSE)
 				{ /* if there is a character, run the method and continue */
 					$posts = $this->posts->get_character_posts($id);
 
 					if ($posts->num_rows() > 0)
 					{ /* if there is a log, continue */
-						$datestring = $this->settings['date_format'];
+						$datestring = $this->options['date_format'];
 
 						foreach ($posts->result() as $post)
 						{
@@ -1485,7 +1485,7 @@ class Personnel_base extends Controller {
 						}
 
 						/* other data used by the template */
-						$data['header'] = $this->messages_model->get_message('personnel_posts_title') . $this->char->get_character_name($id);
+						$data['header'] = $this->msgs->get_message('personnel_posts_title') . $this->char->get_character_name($id);
 						$data['charid'] = $id;
 
 						/* figure out where the view should be coming from */

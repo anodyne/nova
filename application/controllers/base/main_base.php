@@ -14,7 +14,7 @@
 class Main_base extends Controller {
 	
 	/* set the variables */
-	var $settings;
+	var $options;
 	var $skin;
 	var $rank;
 	var $timezone;
@@ -60,13 +60,13 @@ class Main_base extends Controller {
 		);
 		
 		/* grab the settings */
-		$this->settings = $this->settings_model->get_settings($settings_array);
+		$this->options = $this->settings->get_settings($settings_array);
 		
 		/* set the variables */
-		$this->skin = $this->settings['skin_main'];
-		$this->rank = $this->settings['display_rank'];
-		$this->timezone = $this->settings['timezone'];
-		$this->dst = $this->settings['daylight_savings'];
+		$this->skin = $this->options['skin_main'];
+		$this->rank = $this->options['display_rank'];
+		$this->timezone = $this->options['timezone'];
+		$this->dst = $this->options['daylight_savings'];
 		
 		if ($this->auth->is_logged_in() === TRUE)
 		{
@@ -85,7 +85,7 @@ class Main_base extends Controller {
 		/* write the common elements to the template */
 		$this->template->write('nav_main', $this->menu->build('main', 'main'), TRUE);
 		$this->template->write('nav_sub', $this->menu->build('sub', 'main'), TRUE);
-		$this->template->write('title', $this->settings['sim_name'] . ' :: ');
+		$this->template->write('title', $this->options['sim_name'] . ' :: ');
 		
 		if ($this->auth->is_logged_in() === TRUE)
 		{
@@ -105,10 +105,10 @@ class Main_base extends Controller {
 		/* run any model or lib methods */
 		$news = $this->news->get_news_items(5, $this->session->userdata('player_id'));
 		
-		if ($news->num_rows() > 0 && $this->settings['show_news'] == 'y')
+		if ($news->num_rows() > 0 && $this->options['show_news'] == 'y')
 		{
 			$i = 1;
-			$datestring = $this->settings['date_format']; /* set the datestring */
+			$datestring = $this->options['date_format']; /* set the datestring */
 			
 			foreach ($news->result() as $row)
 			{ /* populate the news item data */
@@ -126,8 +126,8 @@ class Main_base extends Controller {
 		}
 		
 		/* header and welcome message */
-		$data['header'] = $this->messages_model->get_message('welcome_head');
-		$data['msg_welcome'] = $this->messages_model->get_message('welcome_msg');
+		$data['header'] = $this->msgs->get_message('welcome_head');
+		$data['msg_welcome'] = $this->msgs->get_message('welcome_msg');
 		
 		/* labels */
 		$data['label'] = array(
@@ -152,7 +152,7 @@ class Main_base extends Controller {
 	
 	function contact()
 	{
-		if ($this->settings['system_email'] == 'off')
+		if ($this->options['system_email'] == 'off')
 		{
 			$flash['status'] = 'info';
 			$flash['message'] = lang_output('flash_system_email_off_disabled');
@@ -195,7 +195,7 @@ class Main_base extends Controller {
 			else
 			{
 				/* execute the email method */
-				$email = ($this->settings['system_email'] == 'on') ? $this->_email('contact', $array) : FALSE;
+				$email = ($this->options['system_email'] == 'on') ? $this->_email('contact', $array) : FALSE;
 				
 				if ($email === FALSE)
 				{
@@ -228,7 +228,7 @@ class Main_base extends Controller {
 		
 		/*set the title, header and content variables */
 		$data['header'] = ucwords(lang('actions_contact') .' '. lang('labels_us'));
-		$data['msg'] = $this->messages_model->get_message('contact');
+		$data['msg'] = $this->msgs->get_message('contact');
 		
 		$data['button'] = array(
 			'submit' => array(
@@ -236,7 +236,7 @@ class Main_base extends Controller {
 				'class' => 'button-main',
 				'name' => 'submit',
 				'value' => 'submit',
-				'disabled' => ($this->settings['system_email'] == 'off') ? 'disabled' : '',
+				'disabled' => ($this->options['system_email'] == 'off') ? 'disabled' : '',
 				'content' => ucwords(lang('actions_submit'))),
 		);
 		
@@ -293,8 +293,8 @@ class Main_base extends Controller {
 		
 		/* data used by the view */
 		$data['header'] = ucwords(lang('labels_site') .' '. lang('labels_credits'));
-		$data['msg_credits'] = $this->messages_model->get_message('credits');
-		$data['msg_credits_perm'] = $this->messages_model->get_message('credits_perm');
+		$data['msg_credits'] = $this->msgs->get_message('credits');
+		$data['msg_credits_perm'] = $this->msgs->get_message('credits_perm');
 		$data['msg_credits_perm'].= "\r\n\r\n". $skin_info->skin_credits;
 		$data['msg_credits_perm'].= "\r\n\r\n". $rank_info;
 		
@@ -471,7 +471,7 @@ class Main_base extends Controller {
 					);
 					
 					/* execute the email method */
-					$email_user = ($this->settings['system_email'] == 'on') ? $this->_email('join_player', $user_data) : FALSE;
+					$email_user = ($this->options['system_email'] == 'on') ? $this->_email('join_player', $user_data) : FALSE;
 					
 					$gm_data = array(
 						'email' => $email,
@@ -481,7 +481,7 @@ class Main_base extends Controller {
 					);
 					
 					/* execute the email method */
-					$email_gm = ($this->settings['system_email'] == 'on') ? $this->_email('join_gm', $gm_data) : FALSE;
+					$email_gm = ($this->options['system_email'] == 'on') ? $this->_email('join_gm', $gm_data) : FALSE;
 					
 					$message = sprintf(
 						lang('flash_success'),
@@ -498,7 +498,7 @@ class Main_base extends Controller {
 			/* write everything to the template */
 			$this->template->write_view('flash_message', '_base/main/pages/flash', $flash);
 		}
-		elseif ($this->settings['system_email'] == 'off')
+		elseif ($this->options['system_email'] == 'off')
 		{
 			$flash['status'] = 'info';
 			$flash['message'] = lang_output('flash_system_email_off');
@@ -509,7 +509,7 @@ class Main_base extends Controller {
 		
 		if ($agree == FALSE && $submit == FALSE)
 		{ /* if they try to come straight to the join page, make them agree */
-			$data['msg'] = $this->messages_model->get_message('join_disclaimer');
+			$data['msg'] = $this->msgs->get_message('join_disclaimer');
 			
 			if ($this->uri->segment(3) != FALSE)
 			{
@@ -636,7 +636,7 @@ class Main_base extends Controller {
 			);
 			
 			/* get the sample post question */
-			$data['sample_post_msg'] = $this->messages_model->get_message('join_post');
+			$data['sample_post_msg'] = $this->msgs->get_message('join_post');
 			
 			$data['label'] = array(
 				'player_info' => ucwords(lang('global_player') .' '. lang('labels_information')),
@@ -746,7 +746,7 @@ class Main_base extends Controller {
 		if ($news->num_rows() > 0)
 		{ /* loop through the news data and assign them to variables */
 			$i = 1;
-			$datestring = $this->settings['date_format'];
+			$datestring = $this->options['date_format'];
 			
 			foreach ($news->result() as $row)
 			{
@@ -837,7 +837,7 @@ class Main_base extends Controller {
 							'comment' => $comment_text);
 						
 						/* send the email */
-						$email = ($this->settings['system_email'] == 'on') ? $this->_email('news_comment_pending', $email_data) : FALSE;
+						$email = ($this->options['system_email'] == 'on') ? $this->_email('news_comment_pending', $email_data) : FALSE;
 					}
 					else
 					{
@@ -856,7 +856,7 @@ class Main_base extends Controller {
 								'comment' => $comment_text);
 							
 							/* send the email */
-							$email = ($this->settings['system_email'] == 'on') ? $this->_email('news_comment', $email_data) : FALSE;
+							$email = ($this->options['system_email'] == 'on') ? $this->_email('news_comment', $email_data) : FALSE;
 						}
 					}
 				}
@@ -888,7 +888,7 @@ class Main_base extends Controller {
 		$comments = $this->news->get_news_comments($id);
 		
 		/* set the date format */
-		$datestring = $this->settings['date_format'];
+		$datestring = $this->options['date_format'];
 		
 		if ($query->num_rows() > 0)
 		{
@@ -1100,7 +1100,7 @@ class Main_base extends Controller {
 				/* set the parameters for sending the email */
 				$this->email->from($data['email'], $data['name']);
 				$this->email->to($to);
-				$this->email->subject($this->settings['email_subject'] .' '. $data['subject']);
+				$this->email->subject($this->options['email_subject'] .' '. $data['subject']);
 				$this->email->message($message);
 				
 				break;
@@ -1139,7 +1139,7 @@ class Main_base extends Controller {
 				/* set the parameters for sending the email */
 				$this->email->from($from, $name);
 				$this->email->to($to);
-				$this->email->subject($this->settings['email_subject'] .' '. $email_data['email_subject']);
+				$this->email->subject($this->options['email_subject'] .' '. $email_data['email_subject']);
 				$this->email->message($message);
 				
 				break;
@@ -1180,7 +1180,7 @@ class Main_base extends Controller {
 				/* set the parameters for sending the email */
 				$this->email->from($from, $name);
 				$this->email->to($to);
-				$this->email->subject($this->settings['email_subject'] .' '. $email_data['email_subject']);
+				$this->email->subject($this->options['email_subject'] .' '. $email_data['email_subject']);
 				$this->email->message($message);
 				
 				break;
@@ -1189,7 +1189,7 @@ class Main_base extends Controller {
 				/* set the content */	
 				$content = sprintf(
 					lang('email_content_join_player'),
-					$this->settings['sim_name'],
+					$this->options['sim_name'],
 					$data['email'],
 					$data['password']
 				);
@@ -1197,7 +1197,7 @@ class Main_base extends Controller {
 				/* create the array passing the data to the email */
 				$email_data = array(
 					'email_subject' => lang('email_subject_join_player'),
-					'email_from' => ucfirst(lang('time_from')) .': '. $this->settings['default_email_name'] .' - '. $this->settings['default_email_address'],
+					'email_from' => ucfirst(lang('time_from')) .': '. $this->options['default_email_name'] .' - '. $this->options['default_email_address'],
 					'email_content' => ($this->email->mailtype == 'html') ? nl2br($content) : $content 
 				);
 				
@@ -1208,9 +1208,9 @@ class Main_base extends Controller {
 				$message = $this->parser->parse($em_loc, $email_data, TRUE);
 				
 				/* set the parameters for sending the email */
-				$this->email->from($this->settings['default_email_address'], $this->settings['default_email_name']);
+				$this->email->from($this->options['default_email_address'], $this->options['default_email_name']);
 				$this->email->to($data['email']);
-				$this->email->subject($this->settings['email_subject'] .' '. $email_data['email_subject']);
+				$this->email->subject($this->options['email_subject'] .' '. $email_data['email_subject']);
 				$this->email->message($message);
 				
 				break;
@@ -1245,8 +1245,7 @@ class Main_base extends Controller {
 				);
 				
 				/* build the character data array */
-				$character_data = $this->char->get_character_info($data['id']);
-				$c_data = $character_data->row();
+				$c_data = $this->char->get_character($data['id']);
 				
 				$email_data['character'] = array(
 					array(
@@ -1305,7 +1304,7 @@ class Main_base extends Controller {
 				/* set the parameters for sending the email */
 				$this->email->from($data['email'], $data['name']);
 				$this->email->to($to);
-				$this->email->subject($this->settings['email_subject'] .' '. $email_data['email_subject']);
+				$this->email->subject($this->options['email_subject'] .' '. $email_data['email_subject']);
 				$this->email->message($message);
 				
 				break;

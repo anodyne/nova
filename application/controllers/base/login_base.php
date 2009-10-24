@@ -14,7 +14,7 @@
 class Login_base extends Controller {
 	
 	/* set the variables */
-	var $settings;
+	var $options;
 	var $skin;
 	var $rank;
 	var $timezone;
@@ -52,13 +52,13 @@ class Login_base extends Controller {
 		);
 		
 		/* grab the settings */
-		$this->settings = $this->settings_model->get_settings($settings_array);
+		$this->options = $this->settings->get_settings($settings_array);
 		
 		/* set the variables */
-		$this->skin = $this->settings['skin_login'];
-		$this->rank = $this->settings['display_rank'];
-		$this->timezone = $this->settings['timezone'];
-		$this->dst = $this->settings['daylight_savings'];
+		$this->skin = $this->options['skin_login'];
+		$this->rank = $this->options['display_rank'];
+		$this->timezone = $this->options['timezone'];
+		$this->dst = $this->options['daylight_savings'];
 		
 		if ($this->session->userdata('player_id') === TRUE)
 		{ /* if there's a session, set the variables appropriately */
@@ -73,7 +73,7 @@ class Login_base extends Controller {
 		$this->template->set_master_template($this->skin .'/template_login.php');
 		
 		/* write the common elements to the template */
-		$this->template->write('title', $this->settings['sim_name'] . ' :: ');
+		$this->template->write('title', $this->options['sim_name'] . ' :: ');
 		
 		/* set and load the language file needed */
 		$this->lang->load('app', $this->session->userdata('language'));
@@ -95,7 +95,7 @@ class Login_base extends Controller {
 		$data['header'] = lang('head_login_index');
 		$data['instructions'] = lang('login_instructions');
 		
-		if ($this->settings['maintenance'] == 'on')
+		if ($this->options['maintenance'] == 'on')
 		{
 			$flash['status'] = 'info';
 			$flash['message'] = lang_output('error_login_5');
@@ -104,9 +104,23 @@ class Login_base extends Controller {
 			$this->template->write_view('flash_message', '_base/login/pages/flash', $flash);
 		}
 		
+		/* set the number of attempts to zero to start */
+		$attempt_num = 0;
+		
+		/* grab the email from flashdata if it's there */
+		$email_flash = $this->session->flashdata('email');
+		
+		/* if there's something in the flashdata, let's check how many times they've tried */
+		if ($email_flash !== FALSE)
+		{
+			$attempt_num = $this->sys->count_login_attempts($email_flash);
+		}
+		
+		/* get their last login attempt */
 		$attempt = $this->sys->get_last_login_attempt($this->input->ip_address(), 'login_ip');
 		
-		if ($attempt !== FALSE)
+		/* make sure we only show this error if they've reached the allowed login attempts */
+		if ($attempt !== FALSE && $attempt_num >= $this->auth->allowed_login_attempts)
 		{
 			$timeframe = now() - $attempt->login_time;
 			$timeframe_mins = $timeframe / 60;
@@ -213,11 +227,13 @@ class Login_base extends Controller {
 		
 		if ($login > 0)
 		{ /* if there is a value greater than zero, redirect to the error page */
+			$this->session->set_flashdata('email', $email);
+			
 			redirect('login/index/error/'. $login, 'refresh');
 		}
 		
 		/* figure out where the view should be coming from */
-		$view_loc = view_location('login_success', $this->settings['skin_login'], 'login');
+		$view_loc = view_location('login_success', $this->options['skin_login'], 'login');
 		
 		/* set the header and message variables */
 		$data['header'] = lang('head_login_success');
@@ -270,7 +286,7 @@ class Login_base extends Controller {
 			4 - more than 1 account w/ email address
 		*/
 		
-		if ($this->settings['system_email'] == 'off')
+		if ($this->options['system_email'] == 'off')
 		{ /* make sure the form can't be submitted if system email is off */
 			$flash['status'] = 'info';
 			$flash['message'] = lang_output('flash_system_email_off_disabled');
@@ -381,7 +397,7 @@ class Login_base extends Controller {
 			'answer' => ucfirst(lang('labels_answer'))
 		);
 		
-		if ($this->settings['system_email'] == 'off')
+		if ($this->options['system_email'] == 'off')
 		{
 			$data['button_submit']['disabled'] = 'yes';
 		}
@@ -432,7 +448,7 @@ class Login_base extends Controller {
 				/* set the parameters for sending the email */
 				$this->email->from($data['email'], $data['name']);
 				$this->email->to($data['email']);
-				$this->email->subject($this->settings['email_subject'] .' '. $email_data['email_subject']);
+				$this->email->subject($this->options['email_subject'] .' '. $email_data['email_subject']);
 				$this->email->message($message);
 				
 				break;
@@ -486,7 +502,7 @@ class Login_base extends Controller {
 		);
 		
 		/* send the email */
-		$email = ($this->settings['system_email'] == 'on') ? $this->_email('reset', $data) : FALSE;
+		$email = ($this->options['system_email'] == 'on') ? $this->_email('reset', $data) : FALSE;
 		
 		return $update;
 	}

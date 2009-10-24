@@ -11,7 +11,7 @@
 		<tr>
 			<td class="cell_label"><?php echo $label['sysemail'];?></td>
 			<td class="cell_spacer"></td>
-			<td><?php echo form_dropdown('s_system_email', $email_v, $this->settings_model->get_setting('system_email'));?></td>
+			<td><?php echo form_dropdown('s_system_email', $email_v, $this->options_model->get_setting('system_email'));?></td>
 		</tr>
 		<?php echo table_row_spacer(3, 5);?>
 		<tr>
@@ -23,7 +23,7 @@
 		<tr>
 			<td class="cell_label"><?php echo $label['updates'];?></td>
 			<td class="cell_spacer"></td>
-			<td><?php echo form_dropdown('s_updates', $updates_v, $this->settings_model->get_setting('updates'));?></td>
+			<td><?php echo form_dropdown('s_updates', $updates_v, $this->options_model->get_setting('updates'));?></td>
 		</tr>
 		<?php echo table_row_spacer(3, 5);?>
 		<tr>
@@ -41,7 +41,7 @@
 		<tr>
 			<td class="cell_label"><?php echo $label['dates'];?></td>
 			<td class="cell_spacer"></td>
-			<td><?php echo form_dropdown('s_date_format', $dates_v, $this->settings_model->get_setting('date_format'));?></td>
+			<td><?php echo form_dropdown('s_date_format', $dates_v, $this->options_model->get_setting('date_format'));?></td>
 		</tr>
 		
 		<?php echo table_row_spacer(3, 15);?>

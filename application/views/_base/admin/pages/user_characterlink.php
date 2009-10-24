@@ -73,7 +73,7 @@
 							</td>
 							<td class="cell-spacer"></td>
 							<td class="col_30">
-								<?php if ($count_active < $this->settings['allowed_chars_playing']): ?>
+								<?php if ($count_active < $this->options['allowed_chars_playing']): ?>
 									<?php echo anchor('user/characterlink/'. $player .'/add/'. $key, img($images['add']), array('class' => 'image'));?>
 								<?php endif;?>
 							</td>
@@ -98,7 +98,7 @@
 							</td>
 							<td class="cell-spacer"></td>
 							<td class="col_30">
-								<?php if ($count_npc < $this->settings['allowed_chars_npc']): ?>
+								<?php if ($count_npc < $this->options['allowed_chars_npc']): ?>
 									<?php echo anchor('user/characterlink/'. $player .'/add/'. $key, img($images['add']), array('class' => 'image'));?>
 								<?php endif;?>
 							</td>

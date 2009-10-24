@@ -12,16 +12,16 @@
 		<tr>
 			<th class="fontTiny"><?php echo $label['days'];?></th>
 			
-			<th class="fontTiny nobold"><?php echo $this->settings['posting_requirement'];?></th>
+			<th class="fontTiny nobold"><?php echo $this->options['posting_requirement'];?></th>
 			<th class="fontTiny nobold">30</th>
 			
-			<th class="fontTiny nobold"><?php echo $this->settings['posting_requirement'];?></th>
+			<th class="fontTiny nobold"><?php echo $this->options['posting_requirement'];?></th>
 			<th class="fontTiny nobold">30</th>
 			
-			<th class="fontTiny nobold"><?php echo $this->settings['posting_requirement'];?></th>
+			<th class="fontTiny nobold"><?php echo $this->options['posting_requirement'];?></th>
 			<th class="fontTiny nobold">30</th>
 			
-			<th class="fontTiny nobold"><?php echo $this->settings['posting_requirement'];?></th>
+			<th class="fontTiny nobold"><?php echo $this->options['posting_requirement'];?></th>
 			<th class="fontTiny nobold">30</th>
 		</tr>
 	</thead>

@@ -13,10 +13,10 @@
 */
 
 ?><style type="text/css">
-			<?php if (!is_file(APPPATH .'views/'. $current_skin .'/main/css/jquery.lightbox.css')): ?>
-				<?php $lightbox_css = base_url() . APPFOLDER .'/assets/js/css/jquery.lightbox.css';?>
+			<?php if (!is_file(APPPATH .'views/'. $current_skin .'/main/css/jquery.colorbox.css')): ?>
+				<?php $colorbox_css = base_url() . APPFOLDER .'/assets/js/css/jquery.colorbox.css';?>
 			<?php else: ?>
-				<?php $lightbox_css = base_url() . APPFOLDER .'/views/'. $current_skin .'/main/css/jquery.lightbox.css';?>
+				<?php $colorbox_css = base_url() . APPFOLDER .'/views/'. $current_skin .'/main/css/jquery.colorbox.css';?>
 			<?php endif;?>
 			
 			<?php if (!is_file(APPPATH .'views/'. $current_skin .'/main/css/jquery.facebox.css')): ?>
@@ -44,10 +44,10 @@
 		<script type="text/javascript">
 			$(document).ready(function(){
 				$.lazy({					
-					src: '<?php echo base_url() . APPFOLDER .'/assets/js/jquery.lightbox.js';?>',
-					name: 'lightBox',
+					src: '<?php echo base_url() . APPFOLDER .'/assets/js/jquery.colorbox-min.js';?>',
+					name: 'colorbox',
 					dependencies: {
-						css: ['<?php echo $lightbox_css;?>']
+						css: ['<?php echo $colorbox_css;?>']
 					},
 					cache: true
 				});

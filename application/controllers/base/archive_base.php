@@ -14,7 +14,7 @@
 class Archive_base extends Controller {
 
 	/* set the variables */
-	var $settings;
+	var $options;
 	var $skin;
 	var $rank;
 	var $timezone;
@@ -60,13 +60,13 @@ class Archive_base extends Controller {
 		);
 		
 		/* grab the settings */
-		$this->settings = $this->settings_model->get_settings($settings_array);
+		$this->options = $this->settings->get_settings($settings_array);
 		
 		/* set the variables */
-		$this->skin = $this->settings['skin_main'];
-		$this->rank = $this->settings['display_rank'];
-		$this->timezone = $this->settings['timezone'];
-		$this->dst = $this->settings['daylight_savings'];
+		$this->skin = $this->options['skin_main'];
+		$this->rank = $this->options['display_rank'];
+		$this->timezone = $this->options['timezone'];
+		$this->dst = $this->options['daylight_savings'];
 		
 		if ($this->auth->is_logged_in() === TRUE)
 		{
@@ -76,13 +76,16 @@ class Archive_base extends Controller {
 			$this->dst = $this->session->userdata('dst');
 		}
 		
+		/* set and load the language file needed */
+		$this->lang->load('app', $this->session->userdata('language'));
+		
 		/* set the template */
 		$this->template->set_master_template($this->skin . '/template_main.php');
 		
 		/* write the common elements to the template */
 		$this->template->write('nav_main', $this->menu->build('main', 'main'), TRUE);
 		$this->template->write('nav_sub', $this->menu->build('sub', 'main'), TRUE);
-		$this->template->write('title', $this->settings['sim_name'] . ' :: ');
+		$this->template->write('title', $this->options['sim_name'] . ' :: ');
 		
 		if ($this->auth->is_logged_in() === TRUE)
 		{
@@ -90,38 +93,130 @@ class Archive_base extends Controller {
 			$this->template->write('panel_1', $this->user_panel->panel_1(), TRUE);
 			$this->template->write('panel_2', $this->user_panel->panel_2(), TRUE);
 			$this->template->write('panel_3', $this->user_panel->panel_3(), TRUE);
+			$this->template->write('panel_workflow', $this->user_panel->panel_workflow(), TRUE);
 		}
-		
-		/* set and load the language file needed */
-		$this->lang->load('app', $this->session->userdata('language'));
 	}
 
 	function index()
 	{
+		/* load the resources */
+		$this->load->model('archive_model', 'arc');
+		
+		/* run the methods */
+		$sms = $this->arc->get_sms_version();
+		
+		if ($sms === FALSE)
+		{
+			$data['message'] = 'SMS is not installed in this database and the archive feature cannot be used!';
+		}
+		else
+		{
+			$data['message'] = "Please select what you would like to view:\r\n\r\n";
+			$data['message'].= anchor('archive/database', 'Database Entries') ."\r\n";
+			$data['message'].= anchor('archive/decks', 'Deck Listing');
+		}
+		
+		$data['header'] = 'SMS Archives';
+		
 		/* figure out where the view should be coming from */
-		$view_loc = view_location('wiki_index', $this->skin, 'wiki', APPPATH);
+		$view_loc = view_location('archive_index', $this->skin, 'main');
 		
 		/* write the data to the template */
-		$this->template->write('title', lang('title_wiki_index'));
+		$this->template->write('title', 'SMS Archives');
 		$this->template->write_view('content', $view_loc, $data);
 		
 		/* render the template */
 		$this->template->render();
 	}
 	
-	function character()
+	function database()
 	{
-		# code...
+		/* load the resources */
+		$this->load->model('archive_model', 'arc');
+		
+		/* set the variables */
+		$id = $this->uri->segment(3, FALSE, TRUE);
+		
+		if ($id === FALSE)
+		{
+			/* run the methods */
+			$entries = $this->arc->get_all_db_entries();
+			
+			if ($entries->num_rows() > 0)
+			{
+				foreach ($entries->result() as $e)
+				{
+					$data['entries'][$e->dbid] = array(
+						'title' => $e->dbTitle,
+						'desc' => $e->dbDesc,
+						'type' => $e->dbType
+					);
+				}
+			}
+			
+			$data['header'] = 'Archives - Database Entries';
+		}
+		else
+		{
+			/* run the methods */
+			$entry = $this->arc->get_db_entry($id);
+			
+			if ($entry->num_rows() > 0)
+			{
+				$e = $entry->row();
+				
+				$data['entry'] = array(
+					'title' => $e->dbTitle,
+					'desc' => $e->dbDesc,
+					'content' => $e->dbContent
+				);
+			}
+			
+			$data['header'] = 'Archives - Database Entry - '. $e->dbTitle;
+		}
+		
+		/* figure out where the view should be coming from */
+		$view_loc = view_location('archive_database', $this->skin, 'main');
+		$js_loc = js_location('archive_database_js', $this->skin, 'main');
+		
+		/* write the data to the template */
+		$this->template->write('title', $data['header']);
+		$this->template->write_view('content', $view_loc, $data);
+		$this->template->write_view('javascript', $js_loc);
+		
+		/* render the template */
+		$this->template->render();
 	}
 	
-	function siteglobals()
+	function decks()
 	{
-		# code...
-	}
-	
-	function specs()
-	{
-		# code...
+		/* load the resources */
+		$this->load->model('archive_model', 'arc');
+		
+		/* run the methods */
+		$decks = $this->arc->get_deck_listing();
+		
+		if ($decks->num_rows() > 0)
+		{
+			foreach ($decks->result() as $d)
+			{
+				$data['decks'][$d->deckid] = $d->deckContent;
+			}
+		}
+		
+		$data['header'] = 'Archives - Deck Listing';
+		
+		/* figure out where the view should be coming from */
+		$view_loc = view_location('archive_decks', $this->skin, 'main');
+		$js_loc = js_location('archive_decks_js', $this->skin, 'main');
+		
+		/* write the data to the template */
+		$this->template->write('title', 'Archives - Deck Listing');
+		$this->template->write_view('content', $view_loc, $data);
+		$this->template->write_view('javascript', $js_loc);
+		
+		/* render the template */
+		$this->template->render();
 	}
 }
 

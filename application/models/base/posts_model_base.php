@@ -132,27 +132,41 @@ class Posts_model_base extends Model {
 		return $query;
 	}
 	
-	function get_character_posts($id = '', $limit = 0)
+	function get_character_posts($character = '', $limit = 0)
 	{
 		$this->db->from('posts');
 		$this->db->where('post_status', 'activated');
 		
-		if (is_array($id))
+		if (is_array($character))
 		{
 			/* make sure the keys are set up right */
-			$id = array_values($id);
+			$character = array_values($character);
 			
-			$this->db->like('post_authors', $id[0]);
+			/* count the items in the array */
+			$count = count($character);
 			
-			$count = count($id);
-			for ($i=1; $i < $count; $i++)
-			{ 
-				$this->db->or_like('post_authors', $id[$i]);
+			/* set the initial string */
+			$string = "";
+			
+			for ($i=0; $i < $count; $i++)
+			{
+				if ($i > 0)
+				{
+					$or = " OR ";
+				}
+				else
+				{
+					$or = "";
+				}
+				
+				$string.= $or . "(post_authors LIKE '%,$character[$i]' OR post_authors LIKE '$character[$i],%' OR post_authors = $character[$i])";
 			}
+			
+			$this->db->where("($string)", NULL);
 		}
 		else
 		{
-			$this->db->like('post_authors', $id);
+			$this->db->like('post_authors', $character);
 		}
 		
 		$this->db->order_by('post_date', 'desc');
@@ -314,7 +328,7 @@ class Posts_model_base extends Model {
 						$or = "";
 					}
 					
-					$string.= $or . "post_authors LIKE '%$id[$i]%'";
+					$string.= $or . "(post_authors LIKE '%,$id[$i]' OR post_authors LIKE '$id[$i],%' OR post_authors = $id[$i])";
 				}
 				
 				$this->db->where("($string)", NULL);
@@ -418,7 +432,7 @@ class Posts_model_base extends Model {
 					$or = "";
 				}
 				
-				$string.= $or . "post_authors LIKE '%$character[$i]%'";
+				$string.= $or . "(post_authors LIKE '%,$character[$i]' OR post_authors LIKE '$character[$i],%' OR post_authors = $character[$i])";
 			}
 			
 			$this->db->where("($string)", NULL);
@@ -529,7 +543,10 @@ class Posts_model_base extends Model {
 			$this->db->where('post_mission', $mission);
 		}
 		
-		$this->db->where('post_status', $status);
+		if (!empty($status))
+		{
+			$this->db->where('post_status', $status);
+		}
 		
 		return $this->db->count_all_results();
 	}

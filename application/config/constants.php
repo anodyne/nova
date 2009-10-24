@@ -68,6 +68,8 @@ define('APP_VERSION_MAJOR',		0);
 define('APP_VERSION_MINOR',		6);
 define('APP_VERSION_UPDATE',	0);
 
+define('SMS_UPGRADE_VERSION',	'2.6.9');
+
 # TODO: remove this before final release
 define('APP_DATA_SRC',			'dev'); /* options for data source are dev and basic */
 

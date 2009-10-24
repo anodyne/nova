@@ -15,7 +15,7 @@
 class Upload_base extends Controller {
 
 	/* set the variables */
-	var $settings;
+	var $options;
 	var $skin;
 	var $rank;
 	var $timezone;
@@ -56,13 +56,13 @@ class Upload_base extends Controller {
 		);
 		
 		/* grab the settings */
-		$this->settings = $this->settings_model->get_settings($settings_array);
+		$this->options = $this->settings->get_settings($settings_array);
 		
 		/* set the variables */
-		$this->skin = $this->settings['skin_admin'];
-		$this->rank = $this->settings['display_rank'];
-		$this->timezone = $this->settings['timezone'];
-		$this->dst = $this->settings['daylight_savings'];
+		$this->skin = $this->options['skin_admin'];
+		$this->rank = $this->options['display_rank'];
+		$this->timezone = $this->options['timezone'];
+		$this->dst = $this->options['daylight_savings'];
 		
 		if ($this->auth->is_logged_in() === TRUE)
 		{ /* if there's a session, set the variables appropriately */
@@ -86,7 +86,7 @@ class Upload_base extends Controller {
 		$this->template->write('panel_2', $this->user_panel->panel_2(), TRUE);
 		$this->template->write('panel_3', $this->user_panel->panel_3(), TRUE);
 		$this->template->write('panel_workflow', $this->user_panel->panel_workflow(), TRUE);
-		$this->template->write('title', $this->settings['sim_name'] . ' :: ');
+		$this->template->write('title', $this->options['sim_name'] . ' :: ');
 	}
 
 	function index()
@@ -338,7 +338,7 @@ class Upload_base extends Controller {
 					'id' => $d->upload_id,
 					'is_file' => (!is_file(APPPATH .'assets/'. $location .'/'. $d->upload_filename)) ? FALSE : TRUE,
 					'player' => (empty($player['name'])) ? $player['email'] : $player['name'],
-					'date' => mdate($this->settings['date_format'], $date),
+					'date' => mdate($this->options['date_format'], $date),
 				);
 			}
 		}

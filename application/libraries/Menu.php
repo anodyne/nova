@@ -39,15 +39,15 @@ class Menu {
     
 	function Menu()
 	{
-		/* get an instance of CI */
-		$this->ci =& get_instance();
-		
 		/* log the debug message */
 		log_message('debug', 'Menu Library Initialized');
 	}
 	
 	function build($type = '', $cat = '')
 	{
+		/* get an instance of CI */
+		$this->ci =& get_instance();
+		
 		$this->type = $type;
 		$this->cat = $cat;
 		
@@ -71,6 +71,9 @@ class Menu {
 	
 	function _build_main()
 	{
+		/* get an instance of CI */
+		$this->ci =& get_instance();
+		
 		/* load the session library and assign the player id */
 		$this->ci->load->library('session');
 		$player_id = $this->ci->session->userdata('player_id');
@@ -151,6 +154,9 @@ class Menu {
 	
 	function _build_sub()
 	{
+		/* get an instance of CI */
+		$this->ci =& get_instance();
+		
 		/* load the session library and assign the player id */
 		$this->ci->load->library('session');
 		$player_id = $this->ci->session->userdata('player_id');
@@ -196,6 +202,9 @@ class Menu {
 	
 	function _build_sub_admin()
 	{
+		/* get an instance of CI */
+		$this->ci =& get_instance();
+		
 		/* load the menu model */
 		$this->ci->load->model('menu_model');
 		

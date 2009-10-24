@@ -14,7 +14,7 @@
 class Messages_base extends Controller {
 
 	/* set the variables */
-	var $settings;
+	var $options;
 	var $skin;
 	var $rank;
 	var $timezone;
@@ -56,15 +56,15 @@ class Messages_base extends Controller {
 		);
 		
 		/* grab the settings */
-		$this->settings = $this->settings_model->get_settings($settings_array);
+		$this->options = $this->settings->get_settings($settings_array);
 		
 		/* set the variables */
-		$this->skin = $this->settings['skin_admin'];
-		$this->rank = $this->settings['display_rank'];
-		$this->timezone = $this->settings['timezone'];
-		$this->dst = $this->settings['daylight_savings'];
+		$this->skin = $this->options['skin_admin'];
+		$this->rank = $this->options['display_rank'];
+		$this->timezone = $this->options['timezone'];
+		$this->dst = $this->options['daylight_savings'];
 		
-		if ($this->session->userdata('player_id') === TRUE)
+		if ($this->auth->is_logged_in() === TRUE)
 		{ /* if there's a session, set the variables appropriately */
 			$this->skin = $this->session->userdata('skin_admin');
 			$this->rank = $this->session->userdata('display_rank');
@@ -86,7 +86,7 @@ class Messages_base extends Controller {
 		$this->template->write('panel_2', $this->user_panel->panel_2(), TRUE);
 		$this->template->write('panel_3', $this->user_panel->panel_3(), TRUE);
 		$this->template->write('panel_workflow', $this->user_panel->panel_workflow(), TRUE);
-		$this->template->write('title', $this->settings['sim_name'] . ' :: ');
+		$this->template->write('title', $this->options['sim_name'] . ' :: ');
 	}
 
 	function index()
@@ -245,7 +245,7 @@ class Messages_base extends Controller {
 		
 		if ($inbox->num_rows() > 0)
 		{
-			$datestring = $this->settings['date_format'];
+			$datestring = $this->options['date_format'];
 			$data['inbox_check_all'] = array(
 				'name' => 'inbox_check_all',
 				'id' => 'inbox_check_all'
@@ -272,7 +272,7 @@ class Messages_base extends Controller {
 		if ($outbox->num_rows() > 0)
 		{
 			/* set the date format */
-			$datestring = $this->settings['date_format'];
+			$datestring = $this->options['date_format'];
 			$data['outbox_check_all'] = array(
 				'name' => 'outbox_check_all',
 				'id' => 'outbox_check_all'
@@ -362,7 +362,7 @@ class Messages_base extends Controller {
 			$recips = $this->pm->get_message_recipients($row->privmsgs_id);
 			
 			/* set the date format */
-			$datestring = $this->settings['date_format'];
+			$datestring = $this->options['date_format'];
 			
 			/* the person trying to view must either be the author or a recipient of the PM */
 			if ($row->privmsgs_author_player == $this->session->userdata('player_id') ||
@@ -455,7 +455,7 @@ class Messages_base extends Controller {
 		/* load the models */
 		$this->load->model('privmsgs_model', 'pm');
 		
-		if ($this->settings['system_email'] == 'off')
+		if ($this->options['system_email'] == 'off')
 		{
 			$flash['status'] = 'info';
 			$flash['message'] = lang_output('flash_system_email_off');
@@ -560,7 +560,7 @@ class Messages_base extends Controller {
 					);
 					
 					/* send the email */
-					$email = ($this->settings['system_email'] == 'on') ? $this->_email($email_data) : FALSE;
+					$email = ($this->options['system_email'] == 'on') ? $this->_email($email_data) : FALSE;
 				}
 				else
 				{
@@ -659,7 +659,7 @@ class Messages_base extends Controller {
 				/* set the data for the previous PM */
 				$data['previous'] = array(
 					'from' => $this->char->get_character_name($row->privmsgs_author_character),
-					'date' => mdate($this->settings['date_format'], $date),
+					'date' => mdate($this->options['date_format'], $date),
 					'content' => $row->privmsgs_content
 				);
 				
@@ -701,7 +701,7 @@ class Messages_base extends Controller {
 				/* set the data for the previous PM */
 				$data['previous'] = array(
 					'from' => $this->char->get_character_name($row->privmsgs_author_character),
-					'date' => mdate($this->settings['date_format'], $date),
+					'date' => mdate($this->options['date_format'], $date),
 					'content' => $row->privmsgs_content
 				);
 				
@@ -731,7 +731,7 @@ class Messages_base extends Controller {
 				$data['inputs']['message']['value'].= $this->char->get_character_name($row->privmsgs_author_character, TRUE);
 				$data['inputs']['message']['value'].= "\r\n". ucfirst(lang('labels_to')) .': '. $to;
 				$data['inputs']['message']['value'].= "\r\n". ucfirst(lang('labels_on')) .' ';
-				$data['inputs']['message']['value'].= mdate($this->settings['date_format'], $date);
+				$data['inputs']['message']['value'].= mdate($this->options['date_format'], $date);
 				$data['inputs']['message']['value'].= "\r\n\r\n". $row->privmsgs_content;
 				
 				/* set the subject value */
@@ -816,7 +816,7 @@ class Messages_base extends Controller {
 		/* set some variables */
 		$from_name = $this->char->get_character_name($data['author'], TRUE, TRUE);
 		$from_email = $this->player->get_email_address('character', $data['author']);
-		$subject = $this->settings['email_subject'] .' '. lang('email_subject_private_message') .' - '. $data['subject'];
+		$subject = $this->options['email_subject'] .' '. lang('email_subject_private_message') .' - '. $data['subject'];
 		$to_names = implode(', ', $array);
 		
 		/* set the content */

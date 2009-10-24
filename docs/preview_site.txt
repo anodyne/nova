@@ -2,49 +2,57 @@ M1
 ====
 
 Objective -
-In a word, foundation. Nova's first development was all about laying the foundation for everything that will come. For the first time in Anodyne history, we aren't using a home-brewed framework for our popular RPG management software (formerly the SIMM Management System). Instead, we've turned to a small company called EllisLab and their PHP framework CodeIgniter. The advantages to using CodeIgniter are extensive, but the short explanation is that CodeIgniter will allow the development team to re-build our RPG management tool with less effort than we would have had to have used otherwise. In the process, we're able to offer some very cool new features that we could only have dreamed about before!
+In a word, foundation. Nova’s first development milestone was all about laying the foundation for everything that will come. For the first time in Anodyne history, we aren’t using a home-brewed framework for our popular RPG management software (formerly the SIMM Management System). Instead, we’ve turned to a small company called EllisLab and their PHP framework CodeIgniter. The advantages to using CodeIgniter are extensive, but the short explanation is that CI will allow the development team to re-build our RPG management tool with less effort than we would have had to have used otherwise. In the process, we’re able to offer some very cool new features that we could only have dreamed about before!
 
-Goal #1 for the milestone was to get CodeIgniter in place and all the various pieces ticking like a Swiss watch. These pieces include internationalization, helpers, models, libraries, controllers, and basic templating; all are essential pieces that come together to help make Nova what it will be. Goal #2 was documentation. One of the biggest failings of SMS was the lack of clear documentation about every little piece of the system. That's changing with Nova. Goal #3 was Nova assets and installation. SMS was always developed by building things through phpMyAdmin and then trying to work backwards at the end to build the installation and update files. It mostly worked, but it had holes. This time around though, we focused on getting this part of the process down cold (including a new uninstall feature). Finally, goal #4 was this preview site. Never before has Anodyne provided such a resource and it should help people keep tabs on how Nova's coming along and what they expect when it's finally released.
+Goal #1 for the milestone was to get CI in place and all the various pieces ticking like a Swiss watch. These pieces include internationalization, helpers, models, libraries, controllers, and basic templating; all are essential pieces that come together to help make Nova what it will be. Goal #2 was documentation. One of the biggest failings of SMS was the lack of clear documentation about every little piece of the system. That’s changing with Nova. Goal #3 was Nova assets and installation. SMS was always developed by building things through phpMyAdmin and then trying to work backwards at the end to build the installation and update files. It mostly worked, but it had holes. This time around though, we focused on getting this part of the process down cold (including a new uninstall feature). Finally, goal #4 was this preview site. Never before has Anodyne provided such a resource and it should help people keep tabs on how Nova’s coming along and what they expect when it’s finally released.
 
-Start Date - 2008.06.04 (repository creation)
-End Date -
+Start Date – 04 June 2008
+End Date – 29 September 2008
 
 Development Report -
-Nova M1 went off (mostly) without a hitch. Admittedly, CodeIgniter it pretty easy to set up on a server, so it was more a matter of setting up the project and sitting down to familiarize ourselves with the framework. Once we were more comfortable, we dove in and started to customize it to exactly what we needed. It started with a new models, then some 3rd party libraries, then our own libraries, and finally our own helpers (and even extending a few of CI's default helpers). Nova is internationalized, meaning that it's relatively easy to translate it to other languages. (Once we get to the end of development, we'll make a big push to get Nova translated to as many languages as possible.) Documentation has been started and work will continue on that for a long time yet. We can install Nova with one of 3 genres (DS9, Enterprise, or Battlestar Galactica). In addition, we have some basic data in the system to make sure everything's working. Finally, you're looking at the fourth goal! All in all, this was a very successful start to the project. Wade Christie will be joining the development team from here on out, so welcome to Wade!
+Nova M1 went off (mostly) without a hitch. Admittedly, CodeIgniter is pretty easy to set up on a server, so it was more a matter of setting up the project and sitting down to familiarize ourselves with the framework. Once we were more comfortable, we dove in and started to customize it to exactly what we needed. It started with a few models, then some 3rd party libraries, then our own libraries, and finally our own helpers (and even extending a few of CI’s default helpers). Nova is internationalized, meaning that it’s relatively easy to translate it to other languages. (Once we get to the end of development, we’ll make a big push to get Nova translated to as many languages as possible.) Documentation has been started and work will continue on that for a long time yet. We can install Nova with one of 5 genres (DS9, Enterprise, Romulan, Cardassian, or Battlestar Galactica). In addition, we have some basic data in the system to make sure everything’s working. Finally, you’re looking at the fourth goal! All in all, this was a very successful start to the project.
 
-Stats -
-SMS 2.6.2 stats
-CodeIgniter stats (files, lines of code)
-Nova stats (files, lines of code)
+Files -	587 (SMS) / 380 (Nova)
+Lines of Code - 38,549 (SMS) / 21,635 (Nova)
+Database Tables - 26 (SMS) / 42 (Nova)
 
 Where To From Here? -
-Milestone 2! The high level overview is pretty simple: code the entire un-authenticated system. (That means everything that isn't hidden behind the login and access control system.) There are certainly going to be some challenges in this milestone, but when all is said and done, a huge chunk of the system will be finished. By the end of M2, we'll be displaying character data out of the database, mission posts, personal logs, news items (and all three's comments), the join form, specs page, and the list goes on. Of course, there won't be any way to edit the data outside of going into phpMyAdmin, but being able to display the data is half the battle! We're also going to continue building clear and concise documentation that will help people understand Nova from top to bottom. It's our goal to post the documentation we have at the conclusion of M2 and build on it as the milestones continue. While we're not going to wave the new documentation around, we're certainly going to let people get in there and look it over so they know what to expect when Nova lands.
+Milestone 2! The high level overview is pretty simple: code the entire un-authenticated system. (That means everything that isn’t hidden behind the login and access control system.) There are certainly going to be some challenges in this milestone, but when all is said and done, a huge chunk of the system will be finished. By the end of M2, we’ll be displaying character data out of the database, mission posts, personal logs, news items (and all three’s comments), the join form, specs page, and the list goes on. Of course, there won’t be any way to edit the data outside of going into phpMyAdmin, but being able to display the data is half the battle! We’re also going to continue building clear and concise documentation that will help people understand Nova from top to bottom. It’s our goal to post the documentation we have at the conclusion of M2 and build on it as the milestones continue. While we’re not going to wave the new documentation around, we’re certainly going to let people get in there and look it over so they know what to expect when Nova lands.
 
-Oh, and one more thing, it's our goal to post a preview of Nova M2 on this site at the end of the milestone. No guarantees, but we're gonna try to make it happen.
+Oh, and one more thing, it’s our goal to post a preview of Nova M2 on this site at the end of the milestone. No guarantees, but we’re gonna try to make it happen.
 
 ====
 M2
 ====
 
 Objective -
-What's the phrase ... a journey of 1000 miles begins with a single step? That's the one. M1 set the foundation, put us on the path, but now we've gotta make the first step down the path, and believe me, it's a long road, but we've gotta start somewhere. Milestone 2's main focus is the un-authenticated system, or in layman's terms, everything you can see when you're not logged in. We're focusing on 4 sections during M2: main, personnel, search, and sim. Hardcore users of SMS will notice that 2 sections are missing, the ship and the database. That's actually being done on purpose. First, we're dropping the Database feature and we'll be spending a lot of time (an entire milestone in fact ... 7 for those who are curious) a mini-wiki that'll replace the Database. With the mini-wiki in place, it'll be the game master's responsibility to put some of that ship/starbase content in the wiki, like ship history, et al. That means that M2 will focus on the main section, the personnel section, and the sim section.
+What’s the phrase ... a journey of 1000 miles begins with a single step? That’s the one. M1 set the foundation, put us on the path, but now we’ve gotta make the first step down the path, and believe me, it’s a long road, but we’ve gotta start somewhere. Milestone 2’s main focus is the un-authenticated system, or in layman’s terms, everything you can see when you’re not logged in. We’re focusing on 4 sections during M2: main, personnel, search, and sim. Hardcore users of SMS will notice that 2 sections are missing, the ship and the database. That’s actually being done on purpose. First, we’re dropping the Database feature and we’ll be spending a lot of time (an entire milestone in fact ... 7 for those who are curious) a mini-wiki that’ll replace the Database. With the mini-wiki in place, it’ll be the game master’s responsibility to put some of that ship/starbase content in the wiki, like ship history, et al. That means that M2 will focus on the main section, the personnel section, and the sim section.
 
-There's not much in the way of new features coming out of this section. We have to re-build everything from scrath, but that's not necessarily a bad thing. The main section is almost completely unchanged: index, news, viewing a news item, contact page, site credits, and the join page (it's been moved to the main section from the personnel section). I think the biggest thing to talk about with the main section is the fact that the join page will be built out of the database, meaning that supplemental fields can be added to the join field and will be emailed to the game master (it's not really realistic to allow people to add stuff to the characters table on the fly). This feature will extend to the docking request form and specs. Obviously the specs stuff will be a lot more extensive.
+There’s not much in the way of new features coming out of this section. We have to re-build everything from scratch, but that’s not necessarily a bad thing. The main section is almost completely unchanged: index, news, viewing a news item, contact page, site credits, and the join page (it’s been moved to the main section from the personnel section). I think the biggest thing to talk about with the main section is the fact that the join page will be built out of the database, meaning that supplemental fields can be added to the join field and will be emailed to the game master (it’s not really realistic to allow people to add stuff to the characters table on the fly). This feature will extend to the docking request form and specs. Obviously the specs stuff will be a lot more extensive.
 
-The personnel section is, like the main section, almost identical to what's in SMS 2: a manifest, chain of command, viewing a bio, viewing a person's posts and logs as well as a page to view someone's awards. There's a fundamental flaw in the implementation of SMS 2's awards display in bios, namely that some players may garner a lot of awards. In SMS 2, we help that issue by hiding the awards by default, but if someone has 50 awards, that'll stretch a ways down the page. In Nova, we're fixing that by allowing admins to set how many awards are shown on the bios. By default, it'll show the last 10 awards a character has received with a link to go to their full list. It should be a pretty big step forward. On top of that, because we've de-coupled the characters and players, and just recently the awards and characters as well, there's a really cool feature to do with OOC awards. In SMS 2, if a player did something that received an OOC award, the award was but in their bio, but if they changed characters, they lost that award. Not any more though. If an OOC award is given, it'll be shown on every character bio that player's account is tied to. No more having to transfer awards. Should be a great step forward!
+The personnel section is, like the main section, almost identical to what’s in SMS 2: a manifest, chain of command, viewing a bio, viewing a person’s posts and logs as well as a page to view someone’s awards. There’s a fundamental flaw in the implementation of SMS 2’s awards display in bios, namely that some players may garner a lot of awards. In SMS 2, we help that issue by hiding the awards by default, but if someone has 50 awards, that’ll stretch a ways down the page. In Nova, we’re fixing that by allowing admins to set how many awards are shown on the bios. By default, it’ll show the last 10 awards a character has received with a link to go to their full list. It should be a pretty big step forward. On top of that, because we’ve de-coupled the characters and players, and just recently the awards and characters as well, there’s a really cool feature to do with OOC awards. In SMS 2, if a player did something that received an OOC award, the award was put in their bio, but if they changed characters, they lost that award. Not any more though. If an OOC award is given, it’ll be shown on every character bio that player’s account is tied to. No more having to transfer awards. Should be a great step forward!
 
-The sim section has almost no new things. We've already mentioned the stuff about the specs being built on the fly and the game master being able to add fields to it on the fly. It should be a really good system that provides a lot more flexibility, especially as we're offering more than one genre now. One enhancement in regards to awards is that now, on top of just getting a list of the available awards, each award will have its own page with a list of all the people who have won that award in the past. Just another little thing to add to a pretty simple feature.
+The sim section has almost no new things. We’ve already mentioned the stuff about the specs being built on the fly and the game master being able to add fields to it on the fly. It should be a really good system that provides a lot more flexibility, especially as we’re offering more than one genre now. One enhancement in regards to awards is that now, on top of just getting a list of the available awards, each award will have its own page with a list of all the people who have won that award in the past. Just another little thing to add to a pretty simple feature.
 
-Finally, we're adding a huge new feature that should've been in SMS 2 from the start: search. It's probably going to be the most challenging part of M2, but in the end, it'll be worth it. Users will be able to search by a lot of different things like tags, title, content, comments, and author. In addition to searching mission posts, users will be able to search through personal logs, news items, and wiki articles. It should be a really awesome feature that'll make it even easier to find what you're looking for on the site!
+Finally, we’re adding a huge new feature that should’ve been in SMS 2 from the start: search. It’s probably going to be the most challenging part of M2, but in the end, it’ll be worth it. Users will be able to search by a lot of different things like tags, title, content, comments, and author. In addition to searching mission posts, users will be able to search through personal logs, news items, and even wiki articles (when the time comes). It should be a really awesome feature that’ll make it even easier to find what you’re looking for on the site!
 
-Start Date - 
-End Date -
+Start Date – 29 September 2008
+End Date – 13 January 2009 
 
 Development Report -
+*  System wide search is now available. At this point, it's very basic. You can search mission posts, personal logs, and news items. Within those, you can search their titles, content, and tags. There are currently no plans to add an advanced search feature until we've had the opportunity to see how people are using the search feature and what kind of advanced functionality they might want.
+* Originally, there were some controllers which we weren't going to allow to be extended. However, after carefully considering that decision, I've changed my mind and every controller has been set up to be extended. Also, for the sake of clarity, I've moved all the "base" controllers into an aptly named directory called base. Anodyne will only ever update controllers in the base directory, meaning that controllers and controller methods can be extended without worrying about having to make a lot of changes when an update comes out.
+* Nova has a kick-ass feature now: automatic backup. Before Nova tries to upgrade you from SMS or run an update, it'll backup your database and put the zip archive on your server. It's an awesome feature, however, in order to fully take advantage of the feature, we're recommending that you be on a server that has at least a memory limit of 32M. More information about system requirements versus recommendations will be released as we get closer to the beta phase.
 
 Stats -
+535 Files
+49,439 Lines
+42 Database Tables
 
 Where To From Here? -
+So where do we go from here? Well, it isn’t where we originally thought. The original plan was to move on to data management, but after taking some time to think about it, we’ve shifted our thinking. Our first task will still be authentication, user access control, and a stab at a remember me feature, but after that, we’ll turn our attention to writing/saving posts and private messages. The biggest reason for this is how we want to do posts. It’s important for us to know exactly how we’re handling some of those pieces before we worry about managing them. So really, the only change we’ve made is swapping M3 and M4.
+
+In addition to working on those pieces, there are a few loose ends to be tied up with M2 in relation to authentication. Mainly, pieces that can’t be done until full authentication and sessions are implemented. Once they are, the un-authenticated side of things will officially be complete. In addition, we’re still plugging away at documentation as well, though I’m definitely very pleased with what we have so far (you can see it on the Anodyne forums). Finally, we’ll be looking to keep working on genres, the installation center, and a first stab at a basic upgrade script for SMS. All in all, there’s a lot to do, but we’ve made good progress so far!
 
 ====
 M3
@@ -57,8 +65,8 @@ So we have authentication, but let’s face it, that’s kind of boring. What about 
 
 Finally, writing. It’s arguably one of the most important parts of the system, because why are you playing an RPG? To write of course! There isn’t a lot changing, but we are focusing in on some issues with the current way things work. I don’t want to give away too many details because we haven’t even sat down to try and get this stuff written. Once we have something to tell, we’ll let everyone know what’s changed.
 
-Start Date - 13 January 2009
-End Date - 01 March 2009
+Start Date – 13 January 2009
+End Date – 01 March 2009 
 
 Development Report -
 *  Users are now able to login to Nova using the email address and password they set up during the installation. We have completely removed usernames from authentication. In addition, we’ve added a Remember Me feature that will keep a user logged in for 2 weeks. In addition, we have rewritten the Reset Password feature to use a password reset question. In the future, admins will be able to add questions to the list. For security purposes, the answers are hashed meaning that they have to be typed in exactly as they were first entered.
@@ -90,7 +98,7 @@ M4
 ====
 
 Objective -
-We're inching closer! In M4, our target is to take on site and data management. It sounds pretty vague, but essentially, it means building the functionality that allows game masters and users to manage the site and all the data (mission posts, personal logs, departments, ranks, positions, awards, etc.). There really aren't any ground breaking features coming in M4, it's mainly just getting the management hooked up. However, completion of M4 pretty much marks the halfway point of Nova's development!
+We’re inching closer! In M4, our target is to take on site and data management. It sounds pretty vague, but essentially, it means building the functionality that allows game masters and users to manage the site and all the data (mission posts, personal logs, departments, ranks, positions, awards, etc.). There really aren’t any ground breaking features coming in M4, it’s mainly just getting the management hooked up. However, completion of M4 pretty much marks the halfway point of Nova’s development!
 
 There are bound to be some major challenges here, namely finding the most intuitive way to allow game masters to edit our dynamic forms, but in the end, Nova will have more flexibility than anything SMS could ever dream of offering.
 
@@ -116,7 +124,7 @@ Moving forward, we'll continue to make updates to the documentation and provide 
 
 Stats -
 949 Files
-89,000 Lines
+89,834 Lines
 54 Database Tables
 
 Where To From Here? -
@@ -129,11 +137,72 @@ M5
 ====
 
 Objective -
-On to the good stuff! M5's focus will be entirely on characters and users, the last major piece of the puzzle. With these pieces completed, the workload left on Nova will reduce significantly.
+On to the good stuff! M5’s focus will be entirely on characters and users, the last major piece of the puzzle. With these pieces completed, the workload left on Nova will reduce significantly.
 
-When addressing character management, there's a lot more than just editing a bio that needs to be taken in to account (though bio management is a big part of it). We already have the chain of command management page done, but admins need to be able to create characters and NPCs and activate characters while non-admins with the proper permissions should be able to create NPCs and even create a playing character that will await approval for linking to their account.
+When addressing character management, there’s a lot more than just editing a bio that needs to be taken in to account (though bio management is a big part of it). We already have the chain of command management page done, but admins need to be able to create characters and NPCs and activate characters while non-admins with the proper permissions should be able to create NPCs and even create a playing character that will await approval for linking to their account.
 
-User management is an even more daunting task considering the fact that Nova allows multiple characters to be associated with a user account. Admins need to be able to link and unlink characters from users as well as management tools for handling situations where a user has more character attached to their account than they're allowed to have. Add to that things change status requests, award nominations and account management and you can quickly see why M5 is still a challenging piece of the puzzle.
+User management is an even more daunting task considering the fact that Nova allows multiple characters to be associated with a user account. Admins need to be able to link and unlink characters from users as well as management tools for handling situations where a user has more character attached to their account than they’re allowed to have. Add to that things change status requests, award nominations and account management and you can quickly see why M5 is still a challenging piece of the puzzle.
+
+Start Date - 01 July 2009
+End Date - 31 August 2009
+
+Development Report -
+The best word to describe M5 would probably have to be straightforward. At this point, we're really rolling and there aren't a lot of issues coming up that really give us pause. If there's a problem, at this point we probably have seen it coming for a few weeks, maybe even months, and are ready to address it. All the stuff we thought would be really tricky a few months ago went off without a hitch. For the first time in the year Nova's been under development, we can finally say that Nova is almost complete.
+
+While we still wouldn't recommend using Nova on a day-to-day basis (mainly because of a lack of support), it's more possible than ever now that you can manage characters and players right through the system now. Create a character, delete them, accept them, reject them and much more! If you need to do something to a character or player, you can do it in Nova now, including linking characters to players.
+
+Stats -
+?? Files
+?? Lines
+56 Database Tables
+
+Where To From Here? -
+As we inch closer to the end, Milestone 6 is the first of two milestones that'll cap off the entire system. Phase 1 of M6 is all about reporting and building out the reports from SMS into Nova (as well as a few new reports as well). Once reports are finished, we'll turn our attention to the stuff people are most curious about: upgrading. The short answer is yes, you will be able to upgrade from SMS to Nova, but how much of your data can be moved is another question altogether. Be sure to keep an eye on the blog for more information about upgrading. Finally, the last thing we'll address is updating from one version of Nova to another and making it easy to keep up with Nova releases.
+
+====
+M6
+====
+
+Objective -
+Here we go! This is what you would call the home stretch. We're down to report, upgrading, updating and the mini wiki. Arguably though, M6 could be the toughest of the milestones all because of having to work out the details of upgrading from SMS to Nova. Every time we do development like this, we swear that the upgrade script is going to be developed along with the product, but then it never does. So again, we're in the boat of having to take everyone's data from SMS and put it into Nova (a completely different format), do it without losing anything, and do it as simply and easily as possible. It's a daunting task to be sure, but we're up to it!
+
+Other things we'll need to address in M6 are the reports based on data the system collects and updating from one version of Nova to the next. Each of those poses their own challenges, but by far, the biggest beast to tackle is upgrading.
+
+Start Date - 01 September 2009
+End Date - 
+
+Development Report -
+
+
+Stats -
+?? Files
+?? Lines
+56 Database Tables
+
+Where To From Here? -
+
+====
+Thresher (M7)
+====
+
+Objective -
+I never thought I'd be able to say this, but six down and one to go. Probably one of the most ambitious features we've ever undertaken, Milestone 7, also known as Thresher, is an integrated mini wiki that works seamlessly with Nova to give you and your players a place to colloborate and share information. It'll work similar to what you've come to know and love about wikis with history and categories and collaboration, but we're also tapping in to Nova's access control system and providing easy ways to manage categories and pages. We're excited for the first build of this milestone to roll out to let people use this feature and start to flesh out the last leg of Nova's development.
+
+Start Date - 
+End Date - 
+
+Development Report -
+
+
+Stats -
+?? Files
+?? Lines
+56 Database Tables
+
+Where To From Here? -
+Absolutely nowhere.
+
+It's an incredible feeling to be able to say that development of Nova is finished. Over the coming months, we'll continue to push builds of Nova out the door and let people hammer away on it while we make performance tweaks, flesh out the user guide, squash bugs and get ready for the biggest product launch in Anodyne's history. Mark your calendars, because on March 1st, we're going to be making a major announcement on anodyne-productions.com that you won't want to miss!
 
 ====
 FEATURES - CORE

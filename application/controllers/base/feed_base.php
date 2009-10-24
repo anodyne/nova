@@ -15,7 +15,7 @@
 class Feed_base extends Controller {
 	
 	var $head;
-	var $settings;
+	var $options;
 	
 	function Feed_base()
 	{
@@ -28,11 +28,11 @@ class Feed_base extends Controller {
 		$settings_array = array('sim_name');
 		
 		/* grab the settings */
-		$this->settings = $this->settings_model->get_settings($settings_array);
+		$this->options = $this->settings->get_settings($settings_array);
 		
 		/* set the head variables */
 		$this->head['rss_encoding']			= $this->config->item('rss_encoding');
-		$this->head['rss_feed_name']		= $this->settings['sim_name'];
+		$this->head['rss_feed_name']		= $this->options['sim_name'];
 		$this->head['rss_feed_url']			= site_url();
 		$this->head['rss_feed_desc']		= $this->config->item('rss_description');
 		$this->head['rss_feed_lang']		= $this->config->item('rss_feed_lang');

@@ -8,13 +8,13 @@
 <?php if (isset($images['main_img'])): ?>
 	<div id="gallery">
 		<?php echo text_output($label['opengallery'], 'p', 'fontSmall gray bold');?>
-		<a href="<?php echo base_url() . $images['main_img']['src'];?>" class="image" title="<?php echo $images['main_img']['alt'];?>">
+		<a href="<?php echo base_url() . $images['main_img']['src'];?>" class="image" rel="gallery">
 			<?php echo img($images['main_img']);?>
 		</a>
 		<div class="hidden">
 			<?php if (count($images['image_array']) > 0): ?>
 				<?php foreach ($images['image_array'] as $image): ?>
-					<a href="<?php echo base_url() . $image['src'];?>" class="image" title="<?php echo $image['alt'];?>"><?php echo img($image);?></a>
+					<a href="<?php echo base_url() . $image['src'];?>" class="image" rel="gallery"><?php echo img($image);?></a>
 				<?php endforeach; ?>
 			<?php endif; ?>
 		</div><br />

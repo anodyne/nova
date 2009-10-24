@@ -277,7 +277,7 @@ class Personallogs_model_base extends Model {
 			foreach ($character as $value)
 			{
 				$this->db->where('log_status', $status);
-				$this->db->like('log_author_character', $value);
+				$this->db->where('log_author_character', $value);
 				$this->db->from('personallogs');
 				
 				$count += $this->db->count_all_results();
@@ -286,7 +286,7 @@ class Personallogs_model_base extends Model {
 		else
 		{
 			$this->db->where('log_status', $status);
-			$this->db->like('log_author_character', $character);
+			$this->db->where('log_author_character', $character);
 			$this->db->from('personallogs');
 			
 			$count += $this->db->count_all_results();
@@ -342,7 +342,11 @@ class Personallogs_model_base extends Model {
 	function count_all_logs($status = 'activated')
 	{
 		$this->db->from('personallogs');
-		$this->db->where('log_status', $status);
+		
+		if (!empty($status))
+		{
+			$this->db->where('log_status', $status);
+		}
 		
 		return $this->db->count_all_results();
 	}
@@ -410,9 +414,9 @@ class Personallogs_model_base extends Model {
 	|---------------------------------------------------------------
 	*/
 	
-	function update_log($id = '', $data = '')
+	function update_log($id = '', $data = '', $identifier = 'log_id')
 	{
-		$this->db->where('log_id', $id);
+		$this->db->where($identifier, $id);
 		$query = $this->db->update('personallogs', $data);
 		
 		$this->dbutil->optimize_table('personallogs');

@@ -324,15 +324,29 @@ class News_model_base extends Model {
 	|---------------------------------------------------------------
 	*/
 	
-	function count_character_news($id = '', $status = 'activated')
+	function count_character_news($character = '', $status = 'activated')
 	{
 		$count = 0;
 		
-		$this->db->from('news');
-		$this->db->where('news_status', $status);
-		$this->db->where('news_author_character', $id);
+		if (is_array($character))
+		{
+			foreach ($character as $value)
+			{
+				$this->db->where('news_status', $status);
+				$this->db->where('news_author_character', $value);
+				$this->db->from('news');
+				
+				$count += $this->db->count_all_results();
+			}
+		}
+		else
+		{
+			$this->db->where('news_status', $status);
+			$this->db->where('news_author_character', $character);
+			$this->db->from('news');
 			
-		$count = $this->db->count_all_results();
+			$count += $this->db->count_all_results();
+		}
 		
 		return $count;
 	}
@@ -379,7 +393,11 @@ class News_model_base extends Model {
 	function count_all_news($status = 'activated')
 	{
 		$this->db->from('news');
-		$this->db->where('news_status', $status);
+		
+		if (!empty($status))
+		{
+			$this->db->where('news_status', $status);
+		}
 		
 		return $this->db->count_all_results();
 	}
@@ -456,9 +474,9 @@ class News_model_base extends Model {
 	|---------------------------------------------------------------
 	*/
 	
-	function update_news_item($id = '', $data = '')
+	function update_news_item($id = '', $data = '', $identifier = 'news_id')
 	{
-		$this->db->where('news_id', $id);
+		$this->db->where($identifier, $id);
 		$query = $this->db->update('news', $data);
 		
 		$this->dbutil->optimize_table('news');

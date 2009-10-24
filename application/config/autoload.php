@@ -114,7 +114,7 @@ $autoload['language'] = array();
 |
 */
 
-$autoload['model'] = array('settings_model', 'messages_model');
+$autoload['model'] = array('settings_model' => 'settings', 'messages_model' => 'msgs');
 
 
 /*

@@ -14,7 +14,7 @@
 class Admin_base extends Controller {
 
 	/* set the variables */
-	var $settings;
+	var $options;
 	var $skin;
 	var $rank;
 	var $timezone;
@@ -59,15 +59,15 @@ class Admin_base extends Controller {
 		);
 		
 		/* grab the settings */
-		$this->settings = $this->settings_model->get_settings($settings_array);
+		$this->options = $this->settings->get_settings($settings_array);
 		
 		/* set the variables */
-		$this->skin = $this->settings['skin_admin'];
-		$this->rank = $this->settings['display_rank'];
-		$this->timezone = $this->settings['timezone'];
-		$this->dst = $this->settings['daylight_savings'];
+		$this->skin = $this->options['skin_admin'];
+		$this->rank = $this->options['display_rank'];
+		$this->timezone = $this->options['timezone'];
+		$this->dst = $this->options['daylight_savings'];
 		
-		if ($this->session->userdata('player_id') === TRUE)
+		if ($this->auth->is_logged_in() === TRUE)
 		{ /* if there's a session, set the variables appropriately */
 			$this->skin = $this->session->userdata('skin_admin');
 			$this->rank = $this->session->userdata('display_rank');
@@ -89,7 +89,7 @@ class Admin_base extends Controller {
 		$this->template->write('panel_2', $this->user_panel->panel_2(), TRUE);
 		$this->template->write('panel_3', $this->user_panel->panel_3(), TRUE);
 		$this->template->write('panel_workflow', $this->user_panel->panel_workflow(), TRUE);
-		$this->template->write('title', $this->settings['sim_name'] . ' :: ');
+		$this->template->write('title', $this->options['sim_name'] . ' :: ');
 	}
 
 	function index()
@@ -105,6 +105,59 @@ class Admin_base extends Controller {
 		/* load the helpers */
 		$this->load->helper('utility');
 		
+		if (isset($_POST['submit']))
+		{
+			$action = $this->input->post('action', TRUE);
+			
+			if ($action == 'password_change')
+			{
+				$password = $this->input->post('password', TRUE);
+				$user = $this->input->post('user', TRUE);
+				
+				/* make sure the person submitting the form is the person logged in */
+				if ($user == $this->session->userdata('player_id'))
+				{
+					$update_array = array(
+						'password' => sha1($password),
+						'password_reset' => 0,
+						'last_update' => now()
+					);
+					
+					$update = $this->player->update_player($user, $update_array);
+					
+					if ($update > 0)
+					{
+						$message = sprintf(
+							lang('flash_success'),
+							ucfirst(lang('labels_password')),
+							lang('actions_updated'),
+							''
+						);
+
+						$flash['status'] = 'success';
+						$flash['message'] = text_output($message);
+					}
+					else
+					{
+						$message = sprintf(
+							lang('flash_failure'),
+							ucfirst(lang('labels_password')),
+							lang('actions_updated'),
+							''
+						);
+
+						$flash['status'] = 'error';
+						$flash['message'] = text_output($message);
+					}
+					
+					/* write everything to the template */
+					$this->template->write_view('flash_message', '_base/admin/pages/flash', $flash);
+				}
+			}
+			
+			$update = FALSE;
+		}
+		
 		/*
 		|---------------------------------------------------------------
 		| STATS
@@ -116,11 +169,11 @@ class Admin_base extends Controller {
 			'comments' => $this->posts->count_player_post_comments($this->session->userdata('player_id'))
 		);
 		$data['logs'] = array(
-			'entries' => $this->logs->count_player_logs($this->session->userdata('player_id')),
+			'entries' => $this->logs->count_character_logs($this->session->userdata('characters')),
 			'comments' => $this->logs->count_player_log_comments($this->session->userdata('player_id'))
 		);
 		$data['news'] = array(
-			'entries' => $this->news->count_player_news($this->session->userdata('player_id')),
+			'entries' => $this->news->count_character_news($this->session->userdata('characters')),
 			'comments' => $this->news->count_player_news_comments($this->session->userdata('player_id'))
 		);
 		
@@ -163,7 +216,7 @@ class Admin_base extends Controller {
 		$all = $this->player->get_players();
 		
 		$now = now();
-		$threshold = $now - ($this->settings['posting_requirement'] * 86400);
+		$threshold = $now - ($this->options['posting_requirement'] * 86400);
 		
 		if ($all->num_rows() > 0)
 		{
@@ -246,10 +299,10 @@ class Admin_base extends Controller {
 		*/
 		
 		/* set the datestring */
-		$datestring = $this->settings['date_format'];
+		$datestring = $this->options['date_format'];
 		
 		/* grab the data */		
-		$posts_all = $this->posts->get_post_list('', 'desc', 10);
+		$posts_all = $this->posts->get_post_list('', 'desc', 10, '', 'activated');
 		$logs_all = $this->logs->get_log_list(10);
 		$news_all = $this->news->get_news_items(10, $this->session->userdata('player_id'));
 		
@@ -340,7 +393,7 @@ class Admin_base extends Controller {
 			
 			foreach ($items as $i)
 			{ /* loop through and figure out what we should be displaying */
-				$type = $this->settings['updates'];
+				$type = $this->options['updates'];
 				
 				switch ($type)
 				{

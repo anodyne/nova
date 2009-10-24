@@ -465,11 +465,15 @@ class System_model_base extends Model {
 		return $query;
 	}
 	
-	function update_my_links()
+	function update_my_links($status = 'active')
 	{
 		$update = array('my_links' => '69');
 		
-		$this->db->where('status', 'active');
+		if (!empty($status))
+		{
+			$this->db->where('status', 'active');
+		}
+		
 		$query = $this->db->update('players', $update);
 		
 		/* optimize the table */

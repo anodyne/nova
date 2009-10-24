@@ -13,13 +13,14 @@
 
 <?php if (isset($character['image']['src'])): ?>
 	<div class="bio_main_image" id="gallery">
-		<a href="<?php echo base_url() . $character['image']['src'];?>" class="image" title="<?php echo $character['image']['alt'];?>">
+		<div class="fontTiny gray"><?php echo $label['gallery'];?></div><br />
+		<a href="<?php echo base_url() . $character['image']['src'];?>" class="image" rel="gallery">
 			<?php echo img($character['image']);?>
 		</a>
 		<div class="hidden">
 			<?php if (count($character['image_array']) > 1): ?>
 				<?php foreach ($character['image_array'] as $image): ?>
-					<a href="<?php echo base_url() . $image['src'];?>" class="image" title="<?php echo $image['alt'];?>"><?php echo img($image);?></a>
+					<a href="<?php echo base_url() . $image['src'];?>" class="image" rel="gallery"><?php echo img($image);?></a>
 				<?php endforeach; ?>
 			<?php endif; ?>
 		</div>

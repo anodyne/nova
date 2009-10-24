@@ -292,6 +292,9 @@ class Install_base extends Controller {
 	
 	function step()
 	{
+		/* change the time limit to make sure we don't return any fatal errors */
+		set_time_limit(0);
+		
 		/* load the resources */
 		$this->load->model('system_model', 'sys');
 		$this->load->dbforge();
@@ -556,6 +559,7 @@ class Install_base extends Controller {
 				$this->load->model('characters_model', 'char');
 				$this->load->model('positions_model', 'pos');
 				$this->load->model('system_model', 'sys');
+				$this->load->model('ranks_model', 'ranks');
 				
 				if ($submit != FALSE)
 				{
@@ -574,7 +578,11 @@ class Install_base extends Controller {
 						'join_date'			=> now(),
 						'security_question'	=> $this->input->post('security_question', TRUE),
 						'security_answer'	=> sha1($this->input->post('security_answer', TRUE)),
-						'timezone'			=> $this->input->post('timezones', TRUE)
+						'timezone'			=> $this->input->post('timezones', TRUE),
+						'skin_main'			=> $this->sys->get_skinsec_default('main'),
+						'skin_admin'		=> $this->sys->get_skinsec_default('admin'),
+						'skin_wiki'			=> $this->sys->get_skinsec_default('wiki'),
+						'display_rank'		=> $this->ranks->get_rank_default()
 					);
 					
 					/* insert the player data */
@@ -667,11 +675,11 @@ class Install_base extends Controller {
 						'value' => ''),
 					'num_chars' => array(
 						'name' => 's_allowed_chars_playing',
-						'value' => $this->settings_model->get_setting('allowed_chars_playing'),
+						'value' => $this->settings->get_setting('allowed_chars_playing'),
 						'class' => 'small'),
 					'num_npc' => array(
 						'name' => 's_allowed_chars_npc',
-						'value' => $this->settings_model->get_setting('allowed_chars_npc'),
+						'value' => $this->settings->get_setting('allowed_chars_npc'),
 						'class' => 'small'),
 				);
 				
@@ -733,7 +741,7 @@ class Install_base extends Controller {
 							$field = substr_replace($key, '', 0, 2);
 							$array = array('setting_value' => $value);
 							
-							$update += $this->settings_model->update_setting($field, $array);
+							$update += $this->settings->update_setting($field, $array);
 						}
 					}
 				}
@@ -799,63 +807,26 @@ class Install_base extends Controller {
 	
 	function verify()
 	{
-		/* allowed database platforms */
-		$allowed_db = array('mysql', 'mysqli');
+		/* load the resources */
+		$this->load->helper('utility');
 		
-		/* database versions */
-		$db_versions = array(
-			'mysql' => '4.1+',
-			'mysqli' => '-'
-		);
-		
-		/* requirement values for failure */
-		$required['php']	= (phpversion() < '4.3.2') ? FALSE : TRUE;
-		$required['db']		= ((!in_array($this->db->platform(), $allowed_db))) ? FALSE : TRUE;
-		$required['db_ver']	= (($this->db->platform() == 'mysql' && $this->db->version() < '4.1')) ? FALSE : TRUE;
-		
-		$data['allowed_db_string'] = implode(', ', $allowed_db);
-		$data['dbver'] = $db_versions[$this->db->platform()];
-		$data['regglobals'] = (ini_get('register_globals') == '') ? lang('install_label_off') : lang('install_label_on');
-		
-		/* set the variables to use */
-		$header = (array_search(FALSE, $required)) ? 'verify_header_failure' : 'verify_header_success';
-		$verify_content = (array_search(FALSE, $required)) ? 'verify_content_failure' : 'verify_content_success';
-		
-		$flash['status'] = (array_search(FALSE, $required)) ? 'error' : 'success';
-		$flash['message'] = lang_output($header);
-		
-		/* set the content used by the view */
-		$data['content'] = lang($verify_content);
-		$data['link'] = (array_search(FALSE, $required)) ? FALSE : anchor('install/step/1', lang('verify_link_success'), array('class' => 'bold fontMedium'));
+		/* load the verification data */
+		$data['table'] = verify_server();
 		
 		$data['label'] = array(
 			'back' => lang('install_label_back'),
-			'step1' => (array_search(FALSE, $required)) ? FALSE : '&nbsp;&nbsp; &middot; &nbsp;&nbsp;'. anchor('install/step/1', lang('verify_link_success'), array('class' => 'bold fontMedium')),
-			'header_comp' => lang('verify_table_component'),
-			'header_req' => lang('verify_table_required'),
-			'header_rec' => lang('verify_table_recommended'),
-			'header_actual' => lang('verify_table_actual'),
-			'php' => lang('verify_table_php'),
-			'db' => lang('verify_table_db'),
-			'dbver' => lang('verify_table_db_ver'),
-			'mem' => lang('verify_table_mem_limit'),
-			'regglobals' => lang('verify_table_reg_globals'),
-			'on' => lang('install_label_on'),
-			'off' => lang('install_label_off')
+			'text' => lang('install_verify_text')
 		);
 		
 		/* figure out where the view file should be coming from */
 		$view_loc = view_location('verify', '_base', 'install');
-		$js_loc = js_location('verify_js', '_base', 'install');
 		
 		/* set the title */
-		$this->template->write('title', lang('install_index_title'));
-		$this->template->write('label', 'Verify Server Requirements');
-		$this->template->write_view('flash_message', '_base/install/pages/flash', $flash);
+		$this->template->write('title', lang('install_verify_title'));
+		$this->template->write('label', lang('install_verify_title'));
 				
 		/* write the data to the template */
 		$this->template->write_view('content', $view_loc, $data);
-		$this->template->write_view('javascript', $js_loc);
 		
 		/* render the template */
 		$this->template->render();

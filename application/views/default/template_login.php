@@ -75,7 +75,7 @@ echo "<?xml version='1.0' encoding='UTF-8'?>\r\n";
 						<?php echo img(APPFOLDER .'/views/'. $current_skin .'/'. $sec .'/images/nova-small.png', FALSE);?>
 					</div>
 					
-					<?php echo text_output($this->settings['sim_name'], '');?>
+					<?php echo text_output($this->options['sim_name'], '');?>
 				</div>
 			
 				<!-- PAGE CONTENT -->

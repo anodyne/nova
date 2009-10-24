@@ -14,7 +14,7 @@
 class Sim_base extends Controller {
 	
 	/* set the variables */
-	var $settings;
+	var $options;
 	var $skin;
 	var $rank;
 	var $timezone;
@@ -59,13 +59,13 @@ class Sim_base extends Controller {
 		);
 		
 		/* grab the settings */
-		$this->settings = $this->settings_model->get_settings($settings_array);
+		$this->options = $this->settings->get_settings($settings_array);
 		
 		/* set the variables */
-		$this->skin = $this->settings['skin_main'];
-		$this->rank = $this->settings['display_rank'];
-		$this->timezone = $this->settings['timezone'];
-		$this->dst = $this->settings['daylight_savings'];
+		$this->skin = $this->options['skin_main'];
+		$this->rank = $this->options['display_rank'];
+		$this->timezone = $this->options['timezone'];
+		$this->dst = $this->options['daylight_savings'];
 		
 		if ($this->auth->is_logged_in() === TRUE)
 		{ /* if there's a session, set the variables appropriately */
@@ -84,7 +84,7 @@ class Sim_base extends Controller {
 		/* write the common elements to the template */
 		$this->template->write('nav_main', $this->menu->build('main', 'main'), TRUE);
 		$this->template->write('nav_sub', $this->menu->build('sub', 'sim'), TRUE);
-		$this->template->write('title', $this->settings['sim_name'] . ' :: ');
+		$this->template->write('title', $this->options['sim_name'] . ' :: ');
 		
 		if ($this->session->userdata('player_id') !== FALSE)
 		{
@@ -100,7 +100,7 @@ class Sim_base extends Controller {
 	{
 		/* other data used by the view */
 		$data['header'] = ucwords(lang('labels_the') .' '. lang('global_sim'));
-		$data['msg_sim'] = $this->messages_model->get_message('sim');
+		$data['msg_sim'] = $this->msgs->get_message('sim');
 		
 		/* figure out where the view should be coming from */
 		$view_loc = view_location('sim_index', $this->skin, 'main');
@@ -201,7 +201,7 @@ class Sim_base extends Controller {
 				if ($awardees->num_rows() > 0)
 				{ /* build the awardees data array */
 					$i = 1;
-					$datestring = $this->settings['date_format'];
+					$datestring = $this->options['date_format'];
 					
 					foreach ($awardees->result() as $item)
 					{
@@ -464,7 +464,7 @@ class Sim_base extends Controller {
 	
 	function dockingrequest()
 	{
-		if ($this->settings['system_email'] == 'off')
+		if ($this->options['system_email'] == 'off')
 		{
 			$flash['status'] = 'info';
 			$flash['message'] = lang_output('flash_system_email_off_disabled');
@@ -506,7 +506,7 @@ class Sim_base extends Controller {
 				!empty($content['reason_duration']))
 			{
 				/* try to send the email */
-				$email = ($this->settings['system_email'] == 'on') ? $this->_email('docking', $content) : FALSE;
+				$email = ($this->options['system_email'] == 'on') ? $this->_email('docking', $content) : FALSE;
 				
 				if ($email === FALSE)
 				{
@@ -608,7 +608,7 @@ class Sim_base extends Controller {
 			'url' => ucwords(lang('global_sim') .' '. lang('abbr_url')),
 		);
 		
-		if ($this->settings['system_email'] == 'off')
+		if ($this->options['system_email'] == 'off')
 		{ /* make sure the form can't be submitted if system email is off */
 			$data['button_submit']['disabled'] = 'disabled';
 		}
@@ -636,7 +636,7 @@ class Sim_base extends Controller {
 		/* set the pagination configs */
 		$config['base_url'] = site_url('sim/listlogs');
 		$config['total_rows'] = $this->logs->count_all_logs();
-		$config['per_page'] = $this->settings['list_logs_num'];
+		$config['per_page'] = $this->options['list_logs_num'];
 		$config['full_tag_open'] = '<p>';
 		$config['full_tag_close'] = '</p>';
 	
@@ -651,7 +651,7 @@ class Sim_base extends Controller {
 		
 		if ($logs->num_rows() > 0)
 		{
-			$datestring = $this->settings['date_format'];
+			$datestring = $this->options['date_format'];
 			
 			foreach ($logs->result() as $log)
 			{
@@ -666,7 +666,7 @@ class Sim_base extends Controller {
 		
 		$data['header'] = ucwords(lang('global_personallogs'));
 		
-		if ($config['total_rows'] < $this->settings['list_logs_num'])
+		if ($config['total_rows'] < $this->options['list_logs_num'])
 		{
 			$data['display'] = sprintf(
 				lang('text_display_x_of_y'),
@@ -679,7 +679,7 @@ class Sim_base extends Controller {
 		{
 			$data['display'] = sprintf(
 				lang('text_display_x_of_y'),
-				$this->settings['list_logs_num'],
+				$this->options['list_logs_num'],
 				$config['total_rows'],
 				lang('global_personallogs')
 			);
@@ -729,7 +729,7 @@ class Sim_base extends Controller {
 			/* set the pagination configs */
 			$config['base_url'] = site_url('sim/listposts/');
 			$config['total_rows'] = $this->posts->count_all_posts();
-			$config['per_page'] = $this->settings['list_posts_num'];
+			$config['per_page'] = $this->options['list_posts_num'];
 			$config['full_tag_open'] = '<p class="fontMedium bold">';
 			$config['full_tag_close'] = '</p>';
 		
@@ -749,7 +749,7 @@ class Sim_base extends Controller {
 			/* set the pagination configs */
 			$config['base_url'] = site_url('sim/listposts/mission/'. $mission .'/');
 			$config['total_rows'] = $this->posts->count_all_posts($mission);
-			$config['per_page'] = $this->settings['list_posts_num'];
+			$config['per_page'] = $this->options['list_posts_num'];
 			$config['uri_segment'] = 5;
 			$config['full_tag_open'] = '<p class="fontMedium bold">';
 			$config['full_tag_close'] = '</p>';
@@ -766,7 +766,7 @@ class Sim_base extends Controller {
 		
 		if ($posts->num_rows() > 0)
 		{
-			$datestring = $this->settings['date_format'];
+			$datestring = $this->options['date_format'];
 			
 			foreach ($posts->result() as $post)
 			{
@@ -811,7 +811,7 @@ class Sim_base extends Controller {
 			$data['header'] = $title;
 		}
 		
-		if ($config['total_rows'] < $this->settings['list_posts_num'])
+		if ($config['total_rows'] < $this->options['list_posts_num'])
 		{
 			$data['display'] = sprintf(
 				lang('text_display_x_of_y'),
@@ -824,7 +824,7 @@ class Sim_base extends Controller {
 		{
 			$data['display'] = sprintf(
 				lang('text_display_x_of_y'),
-				$this->settings['list_posts_num'],
+				$this->options['list_posts_num'],
 				$config['total_rows'],
 				lang('global_missionposts')
 			);
@@ -909,12 +909,12 @@ class Sim_base extends Controller {
 				$data['info_header'] = ucwords(lang('global_mission') .' '. lang('labels_info'));
 				$data['basic']['desc'] = $row->mission_desc;
 				$data['basic']['status'] = ucfirst($row->mission_status);
-				$data['basic']['start'] = mdate($this->settings['date_format'], gmt_to_local($row->mission_start, $this->timezone, $this->dst));
+				$data['basic']['start'] = mdate($this->options['date_format'], gmt_to_local($row->mission_start, $this->timezone, $this->dst));
 				$data['basic']['end'] = NULL;
 				
 				if (!empty($row->mission_end))
 				{
-					$data['basic']['end'] = mdate($this->settings['date_format'], gmt_to_local($row->mission_end, $this->timezone, $this->dst));
+					$data['basic']['end'] = mdate($this->options['date_format'], gmt_to_local($row->mission_end, $this->timezone, $this->dst));
 				}
 				
 				/* summary data */
@@ -926,7 +926,7 @@ class Sim_base extends Controller {
 				
 				if ($posts->num_rows() > 0)
 				{
-					$data['posts_header'] = lang('global_missionposts');
+					$data['posts_header'] = ucwords(lang('global_missionposts'));
 					
 					foreach ($posts->result() as $post)
 					{
@@ -973,7 +973,7 @@ class Sim_base extends Controller {
 					$data['missions'][$row->mission_status][$mid]['id'] = $row->mission_id;
 					$data['missions'][$row->mission_status][$mid]['title'] = $row->mission_title;
 					$data['missions'][$row->mission_status][$mid]['desc'] = $row->mission_desc;
-					$data['missions'][$row->mission_status][$mid]['count'] = $this->posts->count_mission_posts($row->mission_id, $this->settings['post_count_format']);
+					$data['missions'][$row->mission_status][$mid]['count'] = $this->posts->count_mission_posts($row->mission_id, $this->options['post_count_format']);
 				}
 				
 				if (isset($data['missions']['current']))
@@ -1187,8 +1187,8 @@ class Sim_base extends Controller {
 		);
 		
 		$data['posts'] = array(
-			'current' => $this->posts->count_posts($this_month, $next_month, $this->settings['post_count_format']),
-			'previous' => $this->posts->count_posts($last_month, $this_month, $this->settings['post_count_format'])
+			'current' => $this->posts->count_posts($this_month, $next_month, $this->options['post_count_format']),
+			'previous' => $this->posts->count_posts($last_month, $this_month, $this->options['post_count_format'])
 		);
 		
 		$data['logs'] = array(
@@ -1463,7 +1463,7 @@ class Sim_base extends Controller {
 							'comment' => $comment_text);
 						
 						/* send the email */
-						$email = ($this->settings['system_email'] == 'on') ? $this->_email('log_comment_pending', $email_data) : FALSE;
+						$email = ($this->options['system_email'] == 'on') ? $this->_email('log_comment_pending', $email_data) : FALSE;
 					}
 					else
 					{
@@ -1482,7 +1482,7 @@ class Sim_base extends Controller {
 								'comment' => $comment_text);
 							
 							/* send the email */
-							$email = ($this->settings['system_email'] == 'on') ? $this->_email('log_comment', $email_data) : FALSE;
+							$email = ($this->options['system_email'] == 'on') ? $this->_email('log_comment', $email_data) : FALSE;
 						}
 					}
 				}
@@ -1520,7 +1520,7 @@ class Sim_base extends Controller {
 			$prev = $this->logs->get_link_id($id, 'prev');
 			
 			/* set the date format */
-			$datestring = $this->settings['date_format'];
+			$datestring = $this->options['date_format'];
 			
 			/* set the date */
 			$date = gmt_to_local($logs->log_date, $this->timezone, $this->dst);
@@ -1675,7 +1675,7 @@ class Sim_base extends Controller {
 							'comment' => $comment_text);
 						
 						/* send the email */
-						$email = ($this->settings['system_email'] == 'on') ? $this->_email('post_comment_pending', $email_data) : FALSE;
+						$email = ($this->options['system_email'] == 'on') ? $this->_email('post_comment_pending', $email_data) : FALSE;
 					}
 					else
 					{
@@ -1686,7 +1686,7 @@ class Sim_base extends Controller {
 							'comment' => $comment_text);
 						
 						/* send the email */
-						$email = ($this->settings['system_email'] == 'on') ? $this->_email('post_comment', $email_data) : FALSE;
+						$email = ($this->options['system_email'] == 'on') ? $this->_email('post_comment', $email_data) : FALSE;
 					}
 				}
 				else
@@ -1717,7 +1717,7 @@ class Sim_base extends Controller {
 		$comments = $this->posts->get_post_comments($id);
 		
 		/* set the date format */
-		$datestring = $this->settings['date_format'];
+		$datestring = $this->options['date_format'];
 		
 		if ($row !== FALSE)
 		{
@@ -1915,7 +1915,7 @@ class Sim_base extends Controller {
 				/* set the parameters for sending the email */
 				$this->email->from($from, $name);
 				$this->email->to($to);
-				$this->email->subject($this->settings['email_subject'] .' '. $email_data['email_subject']);
+				$this->email->subject($this->options['email_subject'] .' '. $email_data['email_subject']);
 				$this->email->message($message);
 				
 				break;
@@ -1955,7 +1955,7 @@ class Sim_base extends Controller {
 				/* set the parameters for sending the email */
 				$this->email->from($from, $name);
 				$this->email->to($to);
-				$this->email->subject($this->settings['email_subject'] .' '. $email_data['email_subject']);
+				$this->email->subject($this->options['email_subject'] .' '. $email_data['email_subject']);
 				$this->email->message($message);
 				
 				break;
@@ -2014,7 +2014,7 @@ class Sim_base extends Controller {
 				/* set the parameters for sending the email */
 				$this->email->from($from, $name);
 				$this->email->to($to);
-				$this->email->subject($this->settings['email_subject'] .' '. $email_data['email_subject']);
+				$this->email->subject($this->options['email_subject'] .' '. $email_data['email_subject']);
 				$this->email->message($message);
 				
 				break;
@@ -2054,7 +2054,7 @@ class Sim_base extends Controller {
 				/* set the parameters for sending the email */
 				$this->email->from($from, $name);
 				$this->email->to($to);
-				$this->email->subject($this->settings['email_subject'] .' '. $email_data['email_subject']);
+				$this->email->subject($this->options['email_subject'] .' '. $email_data['email_subject']);
 				$this->email->message($message);
 				
 				break;
@@ -2108,7 +2108,7 @@ class Sim_base extends Controller {
 				/* set the parameters for sending the email */
 				$this->email->from($data['gm_email'], $data['gm_name']);
 				$this->email->to($to);
-				$this->email->subject($this->settings['email_subject'] .' '. $email_data['email_subject']);
+				$this->email->subject($this->options['email_subject'] .' '. $email_data['email_subject']);
 				$this->email->message($message);
 				
 				break;

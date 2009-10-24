@@ -8,7 +8,7 @@
 
 <ul id="options" class="fontLarge none">
 	<li>
-		<a href="<?php echo site_url('install/tour');?>">
+		<a href="http://docs.anodyne-productions.com/index.php/nova/tour" target="_blank">
 			<span class="icon ui-icon ui-icon-search"></span>
 			<?php echo $label['options_tour'];?>
 		</a>

@@ -1884,7 +1884,7 @@ class Ajax_base extends Controller {
 						'name' => 'accept',
 						'id' => 'accept',
 						'class' => 'hud',
-						'value' => $this->messages_model->get_message('accept_message')),
+						'value' => $this->msgs->get_message('accept_message')),
 					'player_status' => $player->status,
 				);
 				
@@ -1950,12 +1950,11 @@ class Ajax_base extends Controller {
 		
 		/* input parameters */
 		$data['inputs'] = array(
-			'comment_text' => array(
-				'name' => 'comment_text',
-				'id' => 'comment_text',
-				'rows' => 10,
+			'password' => array(
+				'name' => 'password',
+				'id' => 'password',
 				'class' => 'hud'),
-			'comment_button' => array(
+			'submit' => array(
 				'type' => 'submit',
 				'class' => 'hud_button',
 				'name' => 'submit',
@@ -3058,7 +3057,7 @@ class Ajax_base extends Controller {
 		$data['id'] = (is_numeric($this->uri->segment(3))) ? $this->uri->segment(3) : 0;
 		$data['text'] = sprintf(
 			lang('fbx_content_del_site_message'),
-			$this->messages_model->get_message_label($data['id'])
+			$this->msgs->get_message_label($data['id'])
 		);
 		
 		/* input parameters */
@@ -3357,7 +3356,7 @@ class Ajax_base extends Controller {
 		$data['id'] = (is_numeric($this->uri->segment(3))) ? $this->uri->segment(3) : 0;
 		$data['text'] = sprintf(
 			lang('fbx_content_del_user_setting'),
-			$this->settings_model->get_setting_label($data['id'], 'setting_id')
+			$this->settings->get_setting_label($data['id'], 'setting_id')
 		);
 		
 		/* input parameters */
@@ -4331,7 +4330,7 @@ class Ajax_base extends Controller {
 		$data['id'] = (is_numeric($this->uri->segment(3))) ? $this->uri->segment(3) : 0;
 		
 		/* get the message */
-		$message = $this->messages_model->get_message_details($data['id'], 'id');
+		$message = $this->msgs->get_message_details($data['id'], 'id');
 		
 		if ($message->num_rows() > 0)
 		{
@@ -4574,7 +4573,7 @@ class Ajax_base extends Controller {
 		$data['id'] = (is_numeric($this->uri->segment(3))) ? $this->uri->segment(3) : 0;
 		
 		/* get the message */
-		$setting = $this->settings_model->get_setting_details($data['id'], 'setting_id');
+		$setting = $this->settings->get_setting_details($data['id'], 'setting_id');
 		
 		if ($setting->num_rows() > 0)
 		{
@@ -4817,7 +4816,7 @@ class Ajax_base extends Controller {
 						'name' => 'reject',
 						'id' => 'reject',
 						'class' => 'hud',
-						'value' => $this->messages_model->get_message('reject_message')),
+						'value' => $this->msgs->get_message('reject_message')),
 				);
 				
 				$data['form'] = 'characters/index/pending/'. $data['id'];

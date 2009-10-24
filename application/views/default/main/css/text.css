@@ -38,6 +38,7 @@ p {
 .fontMedium	{ font-size: 117%; }
 .fontNormal { font-size: 100%; }
 .fontSmall	{ font-size: 92%; }
+.fontTiny	{ font-size: 80%; }
 
 .font80		{ font-size: 90%; }
 .font70		{ font-size: 80%; }

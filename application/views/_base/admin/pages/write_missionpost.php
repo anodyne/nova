@@ -3,7 +3,7 @@
 <?php if (isset($missions) && $missions === FALSE): ?>
 	<?php echo text_output($label['no_mission'], 'p', 'bold');?>
 <?php else: ?>
-	<?php if ($this->settings['use_mission_notes'] == 'y'): ?>
+	<?php if ($this->options['use_mission_notes'] == 'y'): ?>
 		<div id="notes">
 			<p class="float_right fontSmall">
 				<a href="#" id="toggle_notes"><strong><?php echo $label['showhide'];?></strong></a>

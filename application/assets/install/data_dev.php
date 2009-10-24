@@ -531,6 +531,10 @@ $catalogue_skinsecs = array(
 		'skinsec_section' => 'main',
 		'skinsec_skin' => 'lightness',
 		'skinsec_image_preview' => 'preview-main.png'),
+	array(
+		'skinsec_section' => 'admin',
+		'skinsec_skin' => 'lightness',
+		'skinsec_image_preview' => 'preview-admin.png'),
 		
 	array(
 		'skinsec_section' => 'main',
@@ -748,11 +752,27 @@ $characters_fields = array(
 		
 	array(
 		'field_type' => 'text',
+		'field_name' => 'spouse',
+		'field_fid' => 'spouse',
+		'field_class' => '',
+		'field_label_page' => 'Spouse',
+		'field_order' => 0,
+		'field_section' => 3),
+	array(
+		'field_type' => 'textarea',
+		'field_name' => 'children',
+		'field_fid' => 'children',
+		'field_class' => '',
+		'field_label_page' => 'Children',
+		'field_order' => 1,
+		'field_section' => 3),
+	array(
+		'field_type' => 'text',
 		'field_name' => 'father',
 		'field_fid' => 'father',
 		'field_class' => '',
 		'field_label_page' => 'Father',
-		'field_order' => 0,
+		'field_order' => 2,
 		'field_section' => 3),
 	array(
 		'field_type' => 'text',
@@ -760,7 +780,7 @@ $characters_fields = array(
 		'field_fid' => 'mother',
 		'field_class' => '',
 		'field_label_page' => 'Mother',
-		'field_order' => 1,
+		'field_order' => 3,
 		'field_section' => 3),
 	array(
 		'field_type' => 'textarea',
@@ -768,7 +788,7 @@ $characters_fields = array(
 		'field_fid' => 'brothers',
 		'field_class' => '',
 		'field_label_page' => 'Brother(s)',
-		'field_order' => 2,
+		'field_order' => 4,
 		'field_section' => 3),
 	array(
 		'field_type' => 'textarea',
@@ -776,7 +796,7 @@ $characters_fields = array(
 		'field_fid' => 'sisters',
 		'field_class' => '',
 		'field_label_page' => 'Sister(s)',
-		'field_order' => 3,
+		'field_order' => 5,
 		'field_section' => 3),
 	array(
 		'field_type' => 'textarea',
@@ -784,7 +804,7 @@ $characters_fields = array(
 		'field_fid' => 'other_family',
 		'field_class' => '',
 		'field_label_page' => 'Other Family',
-		'field_order' => 4,
+		'field_order' => 6,
 		'field_section' => 3),
 		
 	array(
@@ -3283,10 +3303,10 @@ $system_components = array(
 		'comp_url' => 'http://jqueryui.com/',
 		'comp_desc' => 'jQuery UI is a lightweight, easily customizable interface library for the jQuery Javascript library.'),
 	array(
-		'comp_name' => 'jQuery lightBox',
-		'comp_version' => '0.5',
-		'comp_desc' => "Lightboxes are a way to display an image on the same page simply and elegantly.",
-		'comp_url' => 'http://leandrovieira.com/projects/jquery/lightbox/'),
+		'comp_name' => 'jQuery ColorBox',
+		'comp_version' => '1.3.1',
+		'comp_desc' => "A light-weight, customizable lightbox plugin for jQuery.",
+		'comp_url' => 'http://colorpowered.com/colorbox/'),
 	array(
 		'comp_name' => 'Facebox',
 		'comp_version' => '1.2',
@@ -3369,7 +3389,7 @@ $system_versions = array(
 		'version_major' => '0',
 		'version_minor' => '6',
 		'version_update' => '0',
-		'version_rev' => 'r1581',
+		'version_rev' => 'r1738',
 		'version_date' => now()),
 );
 

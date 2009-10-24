@@ -14,7 +14,7 @@
 class Report_base extends Controller {
 
 	/* set the variables */
-	var $settings;
+	var $options;
 	var $skin;
 	var $rank;
 	var $timezone;
@@ -55,13 +55,13 @@ class Report_base extends Controller {
 		);
 		
 		/* grab the settings */
-		$this->settings = $this->settings_model->get_settings($settings_array);
+		$this->options = $this->settings->get_settings($settings_array);
 		
 		/* set the variables */
-		$this->skin = $this->settings['skin_admin'];
-		$this->rank = $this->settings['display_rank'];
-		$this->timezone = $this->settings['timezone'];
-		$this->dst = $this->settings['daylight_savings'];
+		$this->skin = $this->options['skin_admin'];
+		$this->rank = $this->options['display_rank'];
+		$this->timezone = $this->options['timezone'];
+		$this->dst = $this->options['daylight_savings'];
 		
 		if ($this->auth->is_logged_in() === TRUE)
 		{ /* if there's a session, set the variables appropriately */
@@ -85,7 +85,7 @@ class Report_base extends Controller {
 		$this->template->write('panel_2', $this->user_panel->panel_2(), TRUE);
 		$this->template->write('panel_3', $this->user_panel->panel_3(), TRUE);
 		$this->template->write('panel_workflow', $this->user_panel->panel_workflow(), TRUE);
-		$this->template->write('title', $this->settings['sim_name'] . ' :: ');
+		$this->template->write('title', $this->options['sim_name'] . ' :: ');
 	}
 
 	function index()
@@ -107,9 +107,9 @@ class Report_base extends Controller {
 		if ($players->num_rows() > 0)
 		{
 			/* set the posting requirement threshold */
-			$requirement = now() - (86400 * $this->settings['posting_requirement']);
+			$requirement = now() - (86400 * $this->options['posting_requirement']);
 			
-			$timeframe = $this->settings['posting_requirement'] * 86400;
+			$timeframe = $this->options['posting_requirement'] * 86400;
 			$timeframe = now() - $timeframe;
 			
 			$month = 30 * 86400;
@@ -210,7 +210,7 @@ class Report_base extends Controller {
 					'player' => $a->app_player_name,
 					'position' => $a->app_position,
 					'action' => $a->app_action,
-					'date' => mdate($this->settings['date_format'], $date)
+					'date' => mdate($this->options['date_format'], $date)
 				);
 			}
 		}
@@ -310,7 +310,7 @@ class Report_base extends Controller {
 					'award' => $this->awards->get_award($n->queue_award, 'award_name'),
 					'reason' => $n->queue_reason,
 					'status' => $n->queue_status,
-					'date' => mdate($this->settings['date_format'], $date)
+					'date' => mdate($this->options['date_format'], $date)
 				);
 				
 				if (empty($n->queue_receive_character))
@@ -403,7 +403,7 @@ class Report_base extends Controller {
 		
 		if ($records->num_rows() > 0)
 		{
-			$datestring = $this->settings['date_format'];
+			$datestring = $this->options['date_format'];
 			
 			foreach ($records->result() as $r)
 			{
@@ -467,7 +467,7 @@ class Report_base extends Controller {
 					'name' => $this->char->get_character_name($p->main_char, TRUE),
 					'id' => $p->player_id,
 					'charid' => $p->main_char,
-					'join_date' => mdate($this->settings['date_format'], $date),
+					'join_date' => mdate($this->options['date_format'], $date),
 					'timespan' => timespan_short($p->join_date, now()),
 				);
 			}
@@ -595,8 +595,8 @@ class Report_base extends Controller {
 						'logs' => $this->logs->count_player_logs($p->player_id),
 						'news' => $this->news->count_player_news($p->player_id),
 						'posts' => $this->posts->count_player_posts($p->player_id),
-						'class' => ($last > $this->settings['posting_requirement']) ? 'red bold' : '',
-						'lastpost' => mdate($this->settings['date_format'], $date),
+						'class' => ($last > $this->options['posting_requirement']) ? 'red bold' : '',
+						'lastpost' => mdate($this->options['date_format'], $date),
 					);
 				}
 			}
@@ -629,8 +629,8 @@ class Report_base extends Controller {
 						'logs' => $this->logs->count_character_logs($c->charid),
 						'news' => $this->news->count_character_news($c->charid),
 						'posts' => $this->posts->count_character_posts($c->charid),
-						'class' => ($last > $this->settings['posting_requirement']) ? 'red bold' : '',
-						'lastpost' => mdate($this->settings['date_format'], $date),
+						'class' => ($last > $this->options['posting_requirement']) ? 'red bold' : '',
+						'lastpost' => mdate($this->options['date_format'], $date),
 					);
 				}
 			}
@@ -786,7 +786,7 @@ class Report_base extends Controller {
 					'player' => $a->app_player_name,
 					'position' => $a->app_position,
 					'action' => ucfirst($a->app_action),
-					'date' => mdate($this->settings['date_format'], $date),
+					'date' => mdate($this->options['date_format'], $date),
 					'message' => $a->app_message,
 				);
 			}

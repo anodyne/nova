@@ -73,7 +73,7 @@
 						<?php echo text_output($c['dept'], 'h3');?>
 						<table class="table100 zebra">
 							<tbody>
-							<?php foreach ($c['chars']['active'] as $i): ?>
+							<?php foreach ($c['chars']['inactive'] as $i): ?>
 								<tr>
 									<td>
 										<strong><?php echo $i['name'];?></strong><br />

@@ -56,7 +56,20 @@ ul.none {
 	
 	list-style: none;
 }
-ol.roman { list-style: upper-roman; }
+ol.roman {
+	margin: 1em !important;
+	padding: .5em 1.5em !important;
+	line-height: 1.6;
+	
+	list-style: upper-roman;
+}
+ol.decimal {
+	margin: 1em !important;
+	padding: .5em 1.5em !important;
+	line-height: 1.6;
+	
+	list-style: decimal;
+}
 
 #options { width: 375px; }
 #options li { margin: 4px 0; }

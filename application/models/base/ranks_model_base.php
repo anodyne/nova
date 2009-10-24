@@ -147,6 +147,8 @@ class Ranks_model_base extends Model {
 			$this->db->where('rank_display', $display);
 		}
 		
+		$this->db->order_by('rank_class, rank_order', 'asc');
+		
 		$query = $this->db->get();
 		
 		return $query;

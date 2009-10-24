@@ -88,10 +88,6 @@ if(isset($display))
 			return false;
 		});
 		
-		<?php if ($display == 'crew' || $display == FALSE): ?>
-			$('tr.inactive').css('opacity', 0.5);
-		<?php endif; ?>
-		
 		$('#loader').hide(); /* hide the loader */
 		$('#manifest').removeClass('hidden'); /* show the manifest */
 	});

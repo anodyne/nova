@@ -12,7 +12,9 @@ class Test extends Controller {
 	
 	function index()
 	{
-		echo form_dropdown_characters('characters', '', '', 'player_npc', TRUE);
+		echo $this->msgs->get_message('welcome_msg');
+		echo '<br /><br />';
+		echo $this->settings->get_setting('sim_year');
 	}
 
 	function memory()

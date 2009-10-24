@@ -14,7 +14,7 @@
 class Write_base extends Controller {
 
 	/* set the variables */
-	var $settings;
+	var $options;
 	var $skin;
 	var $rank;
 	var $timezone;
@@ -57,15 +57,15 @@ class Write_base extends Controller {
 		);
 		
 		/* grab the settings */
-		$this->settings = $this->settings_model->get_settings($settings_array);
+		$this->options = $this->settings->get_settings($settings_array);
 		
 		/* set the variables */
-		$this->skin = $this->settings['skin_admin'];
-		$this->rank = $this->settings['display_rank'];
-		$this->timezone = $this->settings['timezone'];
-		$this->dst = $this->settings['daylight_savings'];
+		$this->skin = $this->options['skin_admin'];
+		$this->rank = $this->options['display_rank'];
+		$this->timezone = $this->options['timezone'];
+		$this->dst = $this->options['daylight_savings'];
 		
-		if ($this->session->userdata('player_id') === TRUE)
+		if ($this->auth->is_logged_in() === TRUE)
 		{ /* if there's a session, set the variables appropriately */
 			$this->skin = $this->session->userdata('skin_admin');
 			$this->rank = $this->session->userdata('display_rank');
@@ -87,7 +87,7 @@ class Write_base extends Controller {
 		$this->template->write('panel_2', $this->user_panel->panel_2(), TRUE);
 		$this->template->write('panel_3', $this->user_panel->panel_3(), TRUE);
 		$this->template->write('panel_workflow', $this->user_panel->panel_workflow(), TRUE);
-		$this->template->write('title', $this->settings['sim_name'] . ' :: ');
+		$this->template->write('title', $this->options['sim_name'] . ' :: ');
 	}
 
 	function index()
@@ -125,7 +125,7 @@ class Write_base extends Controller {
 		);
 		
 		/* set the datestring */
-		$datestring = $this->settings['date_format'];
+		$datestring = $this->options['date_format'];
 		
 		/*
 		|---------------------------------------------------------------
@@ -350,7 +350,7 @@ class Write_base extends Controller {
 		/* load the models */
 		$this->load->model('personallogs_model', 'logs');
 		
-		if ($this->settings['system_email'] == 'off')
+		if ($this->options['system_email'] == 'off')
 		{
 			$flash['status'] = 'info';
 			$flash['message'] = lang_output('flash_system_email_off');
@@ -579,12 +579,12 @@ class Write_base extends Controller {
 								if ($status == 'pending')
 								{
 									/* send the email */
-									$email = ($this->settings['system_email'] == 'on') ? $this->_email('log_pending', $email_data) : FALSE;
+									$email = ($this->options['system_email'] == 'on') ? $this->_email('log_pending', $email_data) : FALSE;
 								}
 								else
 								{
 									/* send the email */
-									$email = ($this->settings['system_email'] == 'on') ? $this->_email('log', $email_data) : FALSE;
+									$email = ($this->options['system_email'] == 'on') ? $this->_email('log', $email_data) : FALSE;
 								}
 							}
 							else
@@ -643,12 +643,12 @@ class Write_base extends Controller {
 								if ($status == 'pending')
 								{
 									/* send the email */
-									$email = ($this->settings['system_email'] == 'on') ? $this->_email('log_pending', $email_data) : FALSE;
+									$email = ($this->options['system_email'] == 'on') ? $this->_email('log_pending', $email_data) : FALSE;
 								}
 								else
 								{
 									/* send the email */
-									$email = ($this->settings['system_email'] == 'on') ? $this->_email('log', $email_data) : FALSE;
+									$email = ($this->options['system_email'] == 'on') ? $this->_email('log', $email_data) : FALSE;
 								}
 								
 								/* reset the fields if everything worked */
@@ -683,7 +683,7 @@ class Write_base extends Controller {
 		}
 		
 		/* run the methods */
-		$char = $this->char->get_player_characters($this->session->userdata('player_id'), 'active', 'array');
+		$char = $this->session->userdata('characters');
 		
 		if (count($char) > 1)
 		{ /* only continue if there's more than 1 character in the array */
@@ -692,7 +692,7 @@ class Write_base extends Controller {
 			
 			foreach ($char as $item)
 			{ /* loop through all the characters */
-				$type = $this->char->get_character_type($item);
+				$type = $this->char->get_character($item, 'crew_type');
 				
 				if ($type == 'active' || $type == 'npc')
 				{ /* split the characters out between active and npcs */
@@ -823,7 +823,7 @@ class Write_base extends Controller {
 		$this->load->model('posts_model', 'posts');
 		$this->load->model('missions_model', 'mis');
 		
-		if ($this->settings['system_email'] == 'off')
+		if ($this->options['system_email'] == 'off')
 		{
 			$flash['status'] = 'info';
 			$flash['message'] = lang_output('flash_system_email_off');
@@ -984,7 +984,7 @@ class Write_base extends Controller {
 										);
 										
 										/* send the email */
-										$email = ($this->settings['system_email'] == 'on') ? $this->_email('post_delete', $email_data) : FALSE;
+										$email = ($this->options['system_email'] == 'on') ? $this->_email('post_delete', $email_data) : FALSE;
 									}
 								}
 								else
@@ -1117,7 +1117,7 @@ class Write_base extends Controller {
 							);
 							
 							/* send the email */
-							$email = ($this->settings['system_email'] == 'on') ? $this->_email('post_save', $email_data) : FALSE;
+							$email = ($this->options['system_email'] == 'on') ? $this->_email('post_save', $email_data) : FALSE;
 						}
 						
 						/* reset the fields if everything worked */
@@ -1189,12 +1189,12 @@ class Write_base extends Controller {
 								if ($status == 'pending')
 								{
 									/* send the email */
-									$email = ($this->settings['system_email'] == 'on') ? $this->_email('post_pending', $email_data) : FALSE;
+									$email = ($this->options['system_email'] == 'on') ? $this->_email('post_pending', $email_data) : FALSE;
 								}
 								else
 								{
 									/* send the email */
-									$email = ($this->settings['system_email'] == 'on') ? $this->_email('post', $email_data) : FALSE;
+									$email = ($this->options['system_email'] == 'on') ? $this->_email('post', $email_data) : FALSE;
 								}
 							}
 							else
@@ -1265,12 +1265,12 @@ class Write_base extends Controller {
 								if ($status == 'pending')
 								{
 									/* send the email */
-									$email = ($this->settings['system_email'] == 'on') ? $this->_email('post_pending', $email_data) : FALSE;
+									$email = ($this->options['system_email'] == 'on') ? $this->_email('post_pending', $email_data) : FALSE;
 								}
 								else
 								{
 									/* send the email */
-									$email = ($this->settings['system_email'] == 'on') ? $this->_email('post', $email_data) : FALSE;
+									$email = ($this->options['system_email'] == 'on') ? $this->_email('post', $email_data) : FALSE;
 								}
 								
 								/* reset the fields if everything worked */
@@ -1329,7 +1329,7 @@ class Write_base extends Controller {
 			
 			foreach ($char as $item)
 			{ /* loop through all the characters */
-				$type = $this->char->get_character_type($item);
+				$type = $this->char->get_character($item, 'crew_type');
 				
 				if ($type == 'active' || $type == 'npc')
 				{ /* split the characters out between active and npcs */
@@ -1573,7 +1573,7 @@ class Write_base extends Controller {
 		/* load the models */
 		$this->load->model('news_model', 'news');
 		
-		if ($this->settings['system_email'] == 'off')
+		if ($this->options['system_email'] == 'off')
 		{
 			$flash['status'] = 'info';
 			$flash['message'] = lang_output('flash_system_email_off');
@@ -1800,12 +1800,12 @@ class Write_base extends Controller {
 							if ($status == 'pending')
 							{
 								/* send the email */
-								$email = ($this->settings['system_email'] == 'on') ? $this->_email('news_pending', $email_data) : FALSE;
+								$email = ($this->options['system_email'] == 'on') ? $this->_email('news_pending', $email_data) : FALSE;
 							}
 							else
 							{
 								/* send the email */
-								$email = ($this->settings['system_email'] == 'on') ? $this->_email('news', $email_data) : FALSE;
+								$email = ($this->options['system_email'] == 'on') ? $this->_email('news', $email_data) : FALSE;
 							}
 						}
 						else
@@ -1862,12 +1862,12 @@ class Write_base extends Controller {
 							if ($status == 'pending')
 							{
 								/* send the email */
-								$email = ($this->settings['system_email'] == 'on') ? $this->_email('news_pending', $email_data) : FALSE;
+								$email = ($this->options['system_email'] == 'on') ? $this->_email('news_pending', $email_data) : FALSE;
 							}
 							else
 							{
 								/* send the email */
-								$email = ($this->settings['system_email'] == 'on') ? $this->_email('news', $email_data) : FALSE;
+								$email = ($this->options['system_email'] == 'on') ? $this->_email('news', $email_data) : FALSE;
 							}
 							
 							/* reset the fields if everything worked */
@@ -2061,7 +2061,7 @@ class Write_base extends Controller {
 				/* set the parameters for sending the email */
 				$this->email->from($from_email, $from_name);
 				$this->email->to($to);
-				$this->email->subject($this->settings['email_subject'] .' '. $subject);
+				$this->email->subject($this->options['email_subject'] .' '. $subject);
 				$this->email->message($message);
 				
 				break;
@@ -2105,7 +2105,7 @@ class Write_base extends Controller {
 				/* set the parameters for sending the email */
 				$this->email->from($from_email, $from_name);
 				$this->email->to($to);
-				$this->email->subject($this->settings['email_subject'] .' '. lang('email_subject_news_pending'));
+				$this->email->subject($this->options['email_subject'] .' '. lang('email_subject_news_pending'));
 				$this->email->message($message);
 
 				break;
@@ -2144,7 +2144,7 @@ class Write_base extends Controller {
 				/* set the parameters for sending the email */
 				$this->email->from($from_email, $from_name);
 				$this->email->to($to);
-				$this->email->subject($this->settings['email_subject'] .' '. $subject);
+				$this->email->subject($this->options['email_subject'] .' '. $subject);
 				$this->email->message($message);
 				
 				break;
@@ -2186,7 +2186,7 @@ class Write_base extends Controller {
 				/* set the parameters for sending the email */
 				$this->email->from($from_email, $from_name);
 				$this->email->to($to);
-				$this->email->subject($this->settings['email_subject'] .' '. lang('email_subject_log_pending'));
+				$this->email->subject($this->options['email_subject'] .' '. lang('email_subject_log_pending'));
 				$this->email->message($message);
 
 				break;
@@ -2245,7 +2245,7 @@ class Write_base extends Controller {
 				/* set the parameters for sending the email */
 				$this->email->from($from_email, $from_name);
 				$this->email->to($to);
-				$this->email->subject($this->settings['email_subject'] .' '. $subject);
+				$this->email->subject($this->options['email_subject'] .' '. $subject);
 				$this->email->message($message);
 				
 				break;
@@ -2311,7 +2311,7 @@ class Write_base extends Controller {
 				/* set the parameters for sending the email */
 				$this->email->from($from_email, $from_name);
 				$this->email->to($to);
-				$this->email->subject($this->settings['email_subject'] .' '. $subject);
+				$this->email->subject($this->options['email_subject'] .' '. $subject);
 				$this->email->message($message);
 
 				break;
@@ -2354,7 +2354,7 @@ class Write_base extends Controller {
 				/* set the parameters for sending the email */
 				$this->email->from($from_email, $from_name);
 				$this->email->to($to);
-				$this->email->subject($this->settings['email_subject'] .' '. lang('email_subject_post_pending'));
+				$this->email->subject($this->options['email_subject'] .' '. lang('email_subject_post_pending'));
 				$this->email->message($message);
 
 				break;
@@ -2429,7 +2429,7 @@ class Write_base extends Controller {
 				/* set the parameters for sending the email */
 				$this->email->from($from_email, $from_name);
 				$this->email->to($to);
-				$this->email->subject($this->settings['email_subject'] .' '. $subject);
+				$this->email->subject($this->options['email_subject'] .' '. $subject);
 				$this->email->message($message);
 				
 				break;

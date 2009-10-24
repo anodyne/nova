@@ -91,10 +91,10 @@
 		<?php endforeach; ?>
 	<?php endif; ?>
 	
-	<?php if ($this->settings['use_sample_post'] == 'y'): ?>
+	<?php if ($this->options['use_sample_post'] == 'y'): ?>
 		<?php echo text_output($label['other'], 'h3', 'page-subhead');?>
 		<table class="table100">
-			<?php if ($this->settings['use_sample_post'] == 'y'): ?>
+			<?php if ($this->options['use_sample_post'] == 'y'): ?>
 				<tr>
 					<td colspan="2"></td>
 					<td><?php echo text_output($sample_post_msg, 'p', 'fontSmall bold gray');?></td>

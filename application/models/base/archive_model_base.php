@@ -27,6 +27,27 @@ class Archive_model_base extends Model {
 	|---------------------------------------------------------------
 	*/
 	
+	function get_all_db_entries()
+	{
+		$query = $this->db->query('SELECT * FROM sms_database');
+		
+		return $query;
+	}
+	
+	function get_db_entry($id = '')
+	{
+		$query = $this->db->query("SELECT * FROM sms_database WHERE dbid = '$id' LIMIT 1");
+		
+		return $query;
+	}
+	
+	function get_deck_listing()
+	{
+		$query = $this->db->query('SELECT * FROM sms_tour_decks');
+		
+		return $query;
+	}
+	
 	function get_sms_version()
 	{
 		$query = $this->db->query('SELECT * FROM sms_system WHERE sysid = 1');

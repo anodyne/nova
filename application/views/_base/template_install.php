@@ -70,9 +70,8 @@ echo "<?xml version='1.0' encoding='UTF-8'?>\r\n";
 		
 		<!-- FOOTER -->
 		<div id="footer">
-			Powered by <strong><?php echo APP_NAME .' '. APP_VERSION;?></strong> &amp; <strong>CodeIgniter <?php echo CI_VERSION;?></strong><br />
-			Elapsed Time: {elapsed_time} seconds<br />
-			Memory Usage: {memory_usage}
+			Powered by <strong><?php echo APP_NAME;?></strong><br />
+			&copy; Anodyne Productions, <?php echo date('Y');?>
 		</div>
 		
 		<script type="text/javascript" src="<?php echo base_url() . APPFOLDER .'/assets/js/jquery.js';?>"></script>

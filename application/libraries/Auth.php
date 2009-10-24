@@ -11,8 +11,6 @@
 |
 */
 
-# TODO: remove error message from the autologin method
-
 class Auth {
 	
 	var $allowed_login_attempts = 3;
@@ -20,19 +18,15 @@ class Auth {
 	
 	function Auth()
 	{
-		/* get an instance of CI */
-		$this->ci =& get_instance();
-		
-		/* load the resources */
-		$this->ci->load->model('players_model', 'player');
-		$this->ci->load->model('system_model', 'sys');
-		
 		/* log the debug message */
 		log_message('debug', 'Auth Library Initialized');
 	}
 	
 	function check_access($uri = '', $redirect = TRUE, $partial = FALSE)
 	{
+		/* get an instance of CI */
+		$this->ci =& get_instance();
+		
 		/* set the URI */
 		if (empty($uri))
 		{
@@ -81,6 +75,9 @@ class Auth {
 	
 	function get_access_level($uri = '')
 	{
+		/* get an instance of CI */
+		$this->ci =& get_instance();
+		
 		if (empty($uri))
 		{
 			$uri = $this->ci->uri->segment(1) .'/'. $this->ci->uri->segment(2);
@@ -100,6 +97,12 @@ class Auth {
 	
 	function is_gamemaster($player = '')
 	{
+		/* get an instance of CI */
+		$this->ci =& get_instance();
+		
+		/* load the resources */
+		$this->ci->load->model('players_model', 'player');
+		
 		$gm = $this->ci->player->get_player($player, 'is_game_master');
 		
 		$retval = ($gm == 'y') ? TRUE : FALSE;
@@ -109,6 +112,9 @@ class Auth {
 	
 	function is_logged_in($redirect = FALSE)
 	{
+		/* get an instance of CI */
+		$this->ci =& get_instance();
+		
 		if ($this->ci->session->userdata('player_id') === FALSE)
 		{
 			$auto = $this->_autologin();
@@ -133,6 +139,12 @@ class Auth {
 	
 	function is_sysadmin($player = '')
 	{
+		/* get an instance of CI */
+		$this->ci =& get_instance();
+		
+		/* load the resources */
+		$this->ci->load->model('players_model', 'player');
+		
 		$admin = $this->ci->player->get_player($player, 'is_sysadmin');
 		
 		$retval = ($admin == 'y') ? TRUE : FALSE;
@@ -142,6 +154,12 @@ class Auth {
 	
 	function is_webmaster($player = '')
 	{
+		/* get an instance of CI */
+		$this->ci =& get_instance();
+		
+		/* load the resources */
+		$this->ci->load->model('players_model', 'player');
+		
 		$web = $this->ci->player->get_player($player, 'is_webmaster');
 		
 		$retval = ($web == 'y') ? TRUE : FALSE;
@@ -151,6 +169,13 @@ class Auth {
 	
 	function login($email = '', $password = '', $remember = '')
 	{
+		/* get an instance of CI */
+		$this->ci =& get_instance();
+		
+		/* load the resources */
+		$this->ci->load->model('players_model', 'player');
+		$this->ci->load->model('system_model', 'sys');
+		
 		/* xss clean of the data coming in */
 		$email = $this->ci->input->xss_clean($email);
 		$password = $this->ci->input->xss_clean($password);
@@ -245,6 +270,9 @@ class Auth {
 	
 	function logout()
 	{
+		/* get an instance of CI */
+		$this->ci =& get_instance();
+		
 		/* destroy the cookie */
 		$this->_destroy_cookie();
 		
@@ -259,6 +287,12 @@ class Auth {
 	
 	function verify($email = '', $password = '')
 	{
+		/* get an instance of CI */
+		$this->ci =& get_instance();
+		
+		/* load the resources */
+		$this->ci->load->model('players_model', 'player');
+		
 		$retval = 0;
 		
 		$login = $this->ci->player->get_user_details_by_email($email);
@@ -294,6 +328,13 @@ class Auth {
 	
 	function _check_login_attempts($email = '')
 	{
+		/* get an instance of CI */
+		$this->ci =& get_instance();
+		
+		/* load the resources */
+		$this->ci->load->model('players_model', 'player');
+		$this->ci->load->model('system_model', 'sys');
+		
 		$attempts = $this->ci->sys->count_login_attempts($email);
 		
 		if ($attempts < $this->allowed_login_attempts)
@@ -319,6 +360,12 @@ class Auth {
 	
 	function _autologin()
 	{
+		/* get an instance of CI */
+		$this->ci =& get_instance();
+		
+		/* load the resources */
+		$this->ci->load->model('system_model', 'sys');
+		
 		/* load the CI resources */
 		$this->ci->load->helper('cookie');
 		
@@ -332,8 +379,6 @@ class Auth {
 		{
 			$login = $this->login($cookie['email'], $cookie['password']);
 			
-			log_message('error', 'AUTO LOGIN INITIATED');
-			
 			return $login;
 		}
 		
@@ -342,6 +387,12 @@ class Auth {
 	
 	function _destroy_cookie()
 	{
+		/* get an instance of CI */
+		$this->ci =& get_instance();
+		
+		/* load the resources */
+		$this->ci->load->model('system_model', 'sys');
+		
 		/* load the CI resources */
 		$this->ci->load->helper('cookie');
 		
@@ -369,6 +420,9 @@ class Auth {
 	
 	function _set_access($role = '')
 	{
+		/* get an instance of CI */
+		$this->ci =& get_instance();
+		
 		/* load the resources */
 		$this->ci->load->model('access_model', 'access');
 		
@@ -383,6 +437,12 @@ class Auth {
 	
 	function _set_cookie($email = '', $password = '')
 	{
+		/* get an instance of CI */
+		$this->ci =& get_instance();
+		
+		/* load the resources */
+		$this->ci->load->model('system_model', 'sys');
+		
 		/* load the CI resources */
 		$this->ci->load->helper('cookie');
 		
@@ -410,11 +470,15 @@ class Auth {
 	
 	function _set_session($person = '')
 	{
+		/* get an instance of CI */
+		$this->ci =& get_instance();
+		
 		/* load the resources */
+		$this->ci->load->model('players_model', 'player');
 		$this->ci->load->model('menu_model');
 		$this->ci->load->model('characters_model', 'char');
 		
-		$characters = $this->ci->char->get_player_characters($person->player_id, 'active', 'array');
+		$characters = $this->ci->char->get_player_characters($person->player_id, '', 'array');
 		
 		/* set the data that goes in to the session */
 		$array['player_id'] = $person->player_id;
