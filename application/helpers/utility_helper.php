@@ -459,5 +459,152 @@ if ( ! function_exists('verify_server'))
 
 // ------------------------------------------------------------------------
 
+/**
+ * Database Forge Data Type Translation
+ *
+ * Translate data from a set of base items to either MySQL, MySQLi or PostgreSQL
+ *
+ * @access	public
+ * @param	string
+ * @param	string
+ * @return	string
+ */	
+if ( ! function_exists('dbforge_type_translation'))
+{
+	function dbforge_type_translation($data = '', $db = '')
+	{
+		$types = array(
+			'integer' => array(
+				'mysql' 	=> 'integer',
+				'mysqli'	=> 'integer',
+				'postgre'	=> 'int'),
+			'integer(1)' => array(
+				'mysql' 	=> 'tinyint',
+				'mysqli'	=> 'tinyint',
+				'postgre'	=> 'smallint'),
+			'integer(2)' => array(
+				'mysql' 	=> 'smallint',
+				'mysqli'	=> 'smallint',
+				'postgre'	=> 'smallint'),
+			'integer(3)' => array(
+				'mysql' 	=> 'mediumint',
+				'mysqli'	=> 'mediumint',
+				'postgre'	=> 'int'),
+			'integer(4)' => array(
+				'mysql' 	=> 'int',
+				'mysqli'	=> 'int',
+				'postgre'	=> 'int'),
+			'integer(5)' => array(
+				'mysql' 	=> 'bigint',
+				'mysqli'	=> 'bigint',
+				'postgre'	=> 'bigint'),
+			'float' => array(
+				'mysql' 	=> 'double',
+				'mysqli'	=> 'double',
+				'postgre'	=> 'float'),
+			'double' => array(
+				'mysql' 	=> 'double',
+				'mysqli'	=> 'double',
+				'postgre'	=> 'float'),
+			'decimal' => array(
+				'mysql' 	=> 'decimal',
+				'mysqli'	=> 'decimal',
+				'postgre'	=> 'numeric'),
+			'char' => array(
+				'mysql' 	=> 'char',
+				'mysqli'	=> 'char',
+				'postgre'	=> 'char'),
+			'varchar' => array(
+				'mysql' 	=> 'varchar',
+				'mysqli'	=> 'varchar',
+				'postgre'	=> 'varchar'),
+			'string' => array(
+				'mysql' 	=> 'varchar',
+				'mysqli'	=> 'varchar',
+				'postgre'	=> 'varchar'),
+			'array' => array(
+				'mysql' 	=> 'text',
+				'mysqli'	=> 'text',
+				'postgre'	=> 'text'),
+			'object' => array(
+				'mysql' 	=> 'text',
+				'mysqli'	=> 'text',
+				'postgre'	=> 'text'),
+			'blob' => array(
+				'mysql' 	=> 'longblob',
+				'mysqli'	=> 'longblob',
+				'postgre'	=> 'bytea'),
+			'blob(255)' => array(
+				'mysql' 	=> 'tinyblob',
+				'mysqli'	=> 'tinyblob',
+				'postgre'	=> 'bytea'),
+			'blob(65532)' => array(
+				'mysql' 	=> 'blob',
+				'mysqli'	=> 'blob',
+				'postgre'	=> 'bytea'),
+			'blob(16777215)' => array(
+				'mysql' 	=> 'mediumblob',
+				'mysqli'	=> 'mediumblob',
+				'postgre'	=> 'bytea'),
+			'clob' => array(
+				'mysql' 	=> 'longtext',
+				'mysqli'	=> 'longtext',
+				'postgre'	=> 'text'),
+			'clob(255)' => array(
+				'mysql' 	=> 'tinytext',
+				'mysqli'	=> 'tinytext',
+				'postgre'	=> 'text'),
+			'clob(65532)' => array(
+				'mysql' 	=> 'text',
+				'mysqli'	=> 'text',
+				'postgre'	=> 'text'),
+			'clob(16777215)' => array(
+				'mysql' 	=> 'mediumtext',
+				'mysqli'	=> 'mediumtext',
+				'postgre'	=> 'text'),
+			'timestamp' => array(
+				'mysql' 	=> 'datetime',
+				'mysqli'	=> 'datetime',
+				'postgre'	=> 'timestamp'),
+			'time' => array(
+				'mysql' 	=> 'time',
+				'mysqli'	=> 'time',
+				'postgre'	=> 'time'),
+			'date' => array(
+				'mysql' 	=> 'date',
+				'mysqli'	=> 'date',
+				'postgre'	=> 'date'),
+			'gzip' => array(
+				'mysql' 	=> 'text',
+				'mysqli'	=> 'text',
+				'postgre'	=> 'text'),
+			'boolean' => array(
+				'mysql' 	=> 'tinyint',
+				'mysqli'	=> 'tinyint',
+				'postgre'	=> 'boolean'),
+			'bit' => array(
+				'mysql' 	=> 'bit',
+				'mysqli'	=> 'bit',
+				'postgre'	=> 'varbit'),
+			'varbit' => array(
+				'mysql' 	=> '',
+				'mysqli'	=> '',
+				'postgre'	=> 'varbit'),
+			'inet' => array(
+				'mysql' 	=> '',
+				'mysqli'	=> '',
+				'postgre'	=> 'inet'),
+			'enum' => array(
+				'mysql' 	=> 'longtext',
+				'mysqli'	=> 'longtext',
+				'postgre'	=> 'text'),
+		);
+		
+		return $types[$data][$db];
+	}
+}
+
+// ------------------------------------------------------------------------
+
 /* End of file utility_helper.php */
 /* Location: ./application/helpers/utility_helper.php */
