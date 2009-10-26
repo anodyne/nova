@@ -313,22 +313,59 @@ class Install_base extends Controller {
 			case 1:
 				if (phpversion() >= 5)
 				{
-					# TODO need to figure out the FTP library stuff for chmodding the logs and images folders
-					
 					/* load the resources */
 					$this->load->library('ftp');
 					
-					/*$this->ftp->connect();
-					
-					$this->ftp->chmod(BASEPATH .'logs/', DIR_WRITE_MODE);
-					$this->ftp->chmod(APPPATH .'assets/images/characters/', DIR_WRITE_MODE);
-					
-					$this->ftp->close();*/
+					if ($this->ftp->hostname != 'ftp.example.com')
+					{
+						$this->ftp->connect();
+						
+						$this->ftp->chmod(BASEPATH .'logs/', DIR_WRITE_MODE);
+						$this->ftp->chmod(APPPATH .'assets/images/characters/', DIR_WRITE_MODE);
+						$this->ftp->chmod(APPPATH .'assets/images/awards/', DIR_WRITE_MODE);
+						$this->ftp->chmod(APPPATH .'assets/images/tour/', DIR_WRITE_MODE);
+						$this->ftp->chmod(APPPATH .'assets/images/missions/', DIR_WRITE_MODE);
+						
+						$this->ftp->close();
+					}
 				}
 				 
 				/* update the character set and collation */
 				$charset = $this->sys->update_database_charset();
 				
+				//$message = (count($table) > 0) ? lang('install_step1_failure') : lang('install_step1_success');
+				
+				$data['next'] = array(
+					'type' => 'submit',
+					'class' => 'button',
+					'name' => 'next',
+					'value' => 'next',
+					'id' => 'next',
+					'content' => ucwords(lang('install_label_next'))
+				);
+				
+				$data['test'] = array(
+					'type' => 'submit',
+					'class' => 'button',
+					'name' => 'test',
+					'value' => 'test',
+					'id' => 'test',
+					'content' => ucwords(lang('install_label_testdb'))
+				);
+				
+				//$data['label']['inst_step1'] = $message;
+				
+				/* figure out where the view files should be coming from */
+				$view_loc = view_location('step_1', '_base', 'install');
+				$js_loc = js_location('step_1_js', '_base', 'install');
+				
+				/* set the title and label */
+				$this->template->write('title', lang('install_step1_title'));
+				$this->template->write('label', lang('install_step1_label'));
+				
+				break;
+				
+			case 2:
 				/* pull in the install fields asset file */
 				include_once(APPPATH .'assets/install/fields.php');
 				
@@ -350,7 +387,7 @@ class Install_base extends Controller {
 					}
 				}
 				
-				$message = (count($table) > 0) ? lang('install_step1_failure') : lang('install_step1_success');
+				$message = (count($table) > 0) ? lang('install_step2_failure') : lang('install_step2_success');
 				
 				$data['next'] = array(
 					'type' => 'submit',
@@ -366,19 +403,19 @@ class Install_base extends Controller {
 					$data['next']['disabled'] = 'disabled';
 				}
 				
-				$data['label']['inst_step1'] = $message;
+				$data['label']['inst_step2'] = $message;
 				
 				/* figure out where the view files should be coming from */
-				$view_loc = view_location('step_1', '_base', 'install');
-				$js_loc = js_location('step_1_js', '_base', 'install');
+				$view_loc = view_location('step_2', '_base', 'install');
+				$js_loc = js_location('step_2_js', '_base', 'install');
 				
 				/* set the title and label */
-				$this->template->write('title', lang('install_step1_title'));
-				$this->template->write('label', lang('install_step1_label'));
+				$this->template->write('title', lang('install_step2_title'));
+				$this->template->write('label', lang('install_step2_label'));
 				
 				break;
 				
-			case 2:
+			case 3:
 				/* load the helpers */
 				$this->load->helper('string');
 				
@@ -403,7 +440,7 @@ class Install_base extends Controller {
 					}
 				}
 				
-				$message = (count($insert) > 0) ? lang('install_step2_failure') : lang('install_step2_success');
+				$message = (count($insert) > 0) ? lang('install_step3_failure') : lang('install_step3_success');
 				
 				$data['next'] = array(
 					'type' => 'submit',
@@ -419,19 +456,19 @@ class Install_base extends Controller {
 					$data['next']['disabled'] = 'disabled';
 				}
 				
-				$data['label']['inst_step2'] = $message;
+				$data['label']['inst_step3'] = $message;
 				
 				/* figure out where the view files should be coming from */
-				$view_loc = view_location('step_2', '_base', 'install');
-				$js_loc = js_location('step_2_js', '_base', 'install');
+				$view_loc = view_location('step_3', '_base', 'install');
+				$js_loc = js_location('step_3_js', '_base', 'install');
 				
 				/* set the title and label */
-				$this->template->write('title', lang('install_step2_title'));
-				$this->template->write('label', lang('install_step2_label'));
+				$this->template->write('title', lang('install_step3_title'));
+				$this->template->write('label', lang('install_step3_label'));
 				
 				break;
 				
-			case 3:
+			case 4:
 				/* pull in the install genre data asset file */
 				include_once(APPPATH .'assets/install/genres/'. GENRE .'_data.php');
 				
@@ -453,7 +490,7 @@ class Install_base extends Controller {
 					}
 				}
 				
-				$message = (count($genre) > 0) ? lang('install_step3_failure') : lang('install_step3_success');
+				$message = (count($genre) > 0) ? lang('install_step4_failure') : lang('install_step4_success');
 				
 				$data['next'] = array(
 					'type' => 'submit',
@@ -523,34 +560,34 @@ class Install_base extends Controller {
 				);
 		
 				$data['label'] = array(
-					'player' => lang('install_step3_player'),
-					'name' => lang('install_step3_name'),
-					'email' => lang('install_step3_email'),
-					'password' => lang('install_step3_password'),
-					'dob' => lang('install_step3_dob'),
-					'question' => lang('install_step3_question'),
-					'answer' => lang('install_step3_answer'),
+					'player' => lang('install_step4_player'),
+					'name' => lang('install_step4_name'),
+					'email' => lang('install_step4_email'),
+					'password' => lang('install_step4_password'),
+					'dob' => lang('install_step4_dob'),
+					'question' => lang('install_step4_question'),
+					'answer' => lang('install_step4_answer'),
 					'remember' => lang('text_security_question'),
-					'timezone' => lang('install_step3_timezone'),
-					'character' => lang('install_step3_character'),
-					'fname' => lang('install_step3_fname'),
-					'lname' => lang('install_step3_lname'),
-					'rank' => lang('install_step3_rank'),
-					'position' => lang('install_step3_position'),
-					'inst_step3' => $message,
+					'timezone' => lang('install_step4_timezone'),
+					'character' => lang('install_step4_character'),
+					'fname' => lang('install_step4_fname'),
+					'lname' => lang('install_step4_lname'),
+					'rank' => lang('install_step4_rank'),
+					'position' => lang('install_step4_position'),
+					'inst_step4' => $message,
 				);
 				
 				/* figure out where the view file should be coming from */
-				$view_loc = view_location('step_3', '_base', 'install');
-				$js_loc = js_location('step_3_js', '_base', 'install');
+				$view_loc = view_location('step_4', '_base', 'install');
+				$js_loc = js_location('step_4_js', '_base', 'install');
 				
 				/* set the title */
-				$this->template->write('title', lang('install_step3_title'));
-				$this->template->write('label', lang('install_step3_label'));
+				$this->template->write('title', lang('install_step4_title'));
+				$this->template->write('label', lang('install_step4_label'));
 				
 				break;
 				
-			case 4:
+			case 5:
 				/* set the variables */
 				$submit = $this->input->post('next');
 				
@@ -647,7 +684,7 @@ class Install_base extends Controller {
 					}
 				}
 				
-				$message = (count($insert) > 0) ? lang('install_step4_failure') : lang('install_step4_success');
+				$message = (count($insert) > 0) ? lang('install_step5_failure') : lang('install_step5_success');
 				
 				/* the next button */
 				$data['next'] = array(
@@ -689,10 +726,10 @@ class Install_base extends Controller {
 				);
 				
 				$data['updates_v'] = array(
-					'all' => lang('install_step4_updates_all'),
-					'major' => lang('install_step4_updates_maj'),
-					'minor' => lang('install_step4_updates_min'),
-					'none' => lang('install_step4_updates_none')
+					'all' => lang('install_step5_updates_all'),
+					'major' => lang('install_step5_updates_maj'),
+					'minor' => lang('install_step5_updates_min'),
+					'none' => lang('install_step5_updates_none')
 				);
 				
 				$data['dates_v'] = array(
@@ -705,27 +742,27 @@ class Install_base extends Controller {
 				);
 				
 				$data['label'] = array(
-					'simname' => lang('install_step4_simname'),
-					'sysemail' => lang('install_step4_sysemail'),
-					'emailsubject' => lang('install_step4_emailsubject'),
-					'updates' => lang('install_step4_updates'),
-					'characters' => lang('install_step4_chars'),
-					'npcs' => lang('install_step4_npcs'),
-					'dates' => lang('install_step4_dates'),
-					'inst_step4' => $message,
+					'simname' => lang('install_step5_simname'),
+					'sysemail' => lang('install_step5_sysemail'),
+					'emailsubject' => lang('install_step5_emailsubject'),
+					'updates' => lang('install_step5_updates'),
+					'characters' => lang('install_step5_chars'),
+					'npcs' => lang('install_step5_npcs'),
+					'dates' => lang('install_step5_dates'),
+					'inst_step5' => $message,
 				);
 				
 				/* figure out where the view file should be coming from */
-				$view_loc = view_location('step_4', '_base', 'install');
-				$js_loc = js_location('step_4_js', '_base', 'install');
+				$view_loc = view_location('step_5', '_base', 'install');
+				$js_loc = js_location('step_5_js', '_base', 'install');
 				
 				/* set the title */
-				$this->template->write('title', lang('install_step4_title'));
-				$this->template->write('label', lang('install_step4_label'));
+				$this->template->write('title', lang('install_step5_title'));
+				$this->template->write('label', lang('install_step5_label'));
 				
 				break;
 				
-			case 5:
+			case 6:
 				/* set the variables */
 				$submit = $this->input->post('next');
 				$data = FALSE;
@@ -746,20 +783,20 @@ class Install_base extends Controller {
 					}
 				}
 				
-				$message = ($update > 0) ? lang('install_step5_success') : lang('install_step5_failure');
+				$message = ($update > 0) ? lang('install_step6_success') : lang('install_step6_failure');
 				
 				$data['label'] = array(
 					'site' => lang('install_label_site'),
-					'inst_step5' => $message,
+					'inst_step6' => $message,
 				);
 					
 				/* figure out where the view file should be coming from */
-				$view_loc = view_location('step_5', '_base', 'install');
-				$js_loc = js_location('step_5_js', '_base', 'install');
+				$view_loc = view_location('step_6', '_base', 'install');
+				$js_loc = js_location('step_6_js', '_base', 'install');
 				
 				/* set the title */
-				$this->template->write('title', lang('install_step5_title'));
-				$this->template->write('label', lang('install_step5_label'));
+				$this->template->write('title', lang('install_step6_title'));
+				$this->template->write('label', lang('install_step6_label'));
 				
 				break;
 		}

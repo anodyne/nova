@@ -5127,6 +5127,44 @@ class Ajax_base extends Controller {
 		echo $output;
 	}
 	
+	function try_database()
+	{
+		$query = $this->db->simple_query('DESCRIBE nova_system_info');
+		
+		if ($query === FALSE)
+		{
+			$message = sprintf(
+				lang('flash_failure'),
+				ucfirst(lang('global_tour') .' '. lang('labels_field') .' '. lang('labels_value')),
+				lang('actions_updated'),
+				''
+			);
+			
+			$flash['status'] = 'error';
+			$flash['message'] = text_output($message);
+				
+			$output = $this->load->view('_base/admin/pages/flash', $flash, TRUE);
+		}
+		else
+		{
+			// success
+			
+			$message = sprintf(
+				lang('flash_failure'),
+				ucfirst(lang('global_tour') .' '. lang('labels_field') .' '. lang('labels_value')),
+				lang('actions_updated'),
+				''
+			);
+			
+			$flash['status'] = 'error';
+			$flash['message'] = text_output($message);
+				
+			$output = $this->load->view('_base/admin/pages/flash', $flash, TRUE);
+		}
+		
+		echo $output;
+	}
+	
 	function what_new()
 	{
 		/* data being sent to the facebox */

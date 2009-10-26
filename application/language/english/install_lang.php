@@ -89,6 +89,7 @@ $lang['install_label_off'] = 'Off';
 $lang['install_label_submit'] = 'Submit';
 $lang['install_label_login'] = 'Login Now';
 $lang['install_label_begin'] = 'Begin Upgrade';
+$lang['install_label_testdb'] = 'Test Database';
 
 /*
  * Step 1
@@ -101,61 +102,69 @@ $lang['install_step1_failure'] = "There was a problem creating the database stru
 /*
  * Step 2
  */
-$lang['install_step2_title'] = 'Step 2 - Insert Basic Data';
-$lang['install_step2_label'] = 'Step 2: Basic Data';
-$lang['install_step2_success'] = 'You have successfully inserted the basic system data into your database. The next step will insert all of the genre-specific data into your database. Click <strong>Next Step</strong> to continue.';
-$lang['install_step2_failure'] = 'There was a problem inserting all of the basic data into your database. Please clear your database tables and try again. If the problem persists, please contact <a href="http://forums.anodyne-productions.com" target="_blank">Anodyne Productions</a> for additional support.';
+$lang['install_step2_title'] = 'Step 1 - Create Database Tables';
+$lang['install_step2_label'] = 'Step 1: Database Structure';
+$lang['install_step2_success'] = 'You have successfully created the database structure needed by Nova! The next step will insert some basic data into your newly created database tables for use by Nova. Click <strong>Next Step</strong> to continue.';
+$lang['install_step2_failure'] = "There was a problem creating the database structure. Please make sure all your settings in your config file are correct and try again. If the problem persists, please contact <a href='http://forums.anodyne-productions.com' target='_blank'>Anodyne Productions</a> for additional support.";
 
 /*
  * Step 3
  */
-$lang['install_step3_title'] = 'Step 3 - Insert Genre Data';
-$lang['install_step3_label'] = 'Step 3: User Account &amp; Character';
-$lang['install_step3_success'] = 'You have successfully inserted the genre data into your database. Please use the fields below to create your user profile and main character. You will be able to edit the character bio and your account once installation is complete and you have logged in to the system. Once you are finished, click <strong>Next Step</strong> to continue.';
-$lang['install_step3_failure'] = 'There was a problem inserting all of the genre data into your database. Please clear your database tables and try again. If you have created the genre file yourself, please make sure the file is formatted correctly and you don'. RSQUO .'t have any syntax errors. If you are using an Anodyne-created genre file, try installing again. If the problem persists, please contact <a href="http://forums.anodyne-productions.com" target="_blank">Anodyne Productions</a> for additional support.';
-
-$lang['install_step3_player'] = 'Player Information';
-$lang['install_step3_name'] = 'Real Name';
-$lang['install_step3_email'] = 'Email Address';
-$lang['install_step3_password'] = 'Password';
-$lang['install_step3_dob'] = 'Date of Birth';
-$lang['install_step3_character'] = 'Character Information';
-$lang['install_step3_fname'] = 'First Name';
-$lang['install_step3_lname'] = 'Last Name';
-$lang['install_step3_rank'] = 'Rank';
-$lang['install_step3_position'] = 'Position';
-$lang['install_step3_timezone'] = 'Select Your Timezone';
-$lang['install_step3_question'] = 'Security Question';
-$lang['install_step3_answer'] = 'Answer';
-$lang['text_security_question'] = 'Remember your security answer exactly as you type it!';
+$lang['install_step3_title'] = 'Step 2 - Insert Basic Data';
+$lang['install_step3_label'] = 'Step 2: Basic Data';
+$lang['install_step3_success'] = 'You have successfully inserted the basic system data into your database. The next step will insert all of the genre-specific data into your database. Click <strong>Next Step</strong> to continue.';
+$lang['install_step3_failure'] = 'There was a problem inserting all of the basic data into your database. Please clear your database tables and try again. If the problem persists, please contact <a href="http://forums.anodyne-productions.com" target="_blank">Anodyne Productions</a> for additional support.';
 
 /*
  * Step 4
  */
-$lang['install_step4_title'] = 'Step 4 - Create Account';
-$lang['install_step4_label'] = 'Step 4: System Setup';
-$lang['install_step4_success'] = 'You have successfully created your user profile and main character. You will be able to login to the system using your email address and the password you just created. You can now set up some of the basic system settings. You will be able to update more settings once Nova is installed and you have logged in to the Admin Control Panel. Once you are finished, click <strong>Next Step</strong> to continue.';
-$lang['install_step4_failure'] = 'There was a problem inserting your user profile and/or main character. Please clear your database tables and try again. If you are using an Anodyne-created genre file, try installing again. If the problem persists, please contact <a href="http://forums.anodyne-productions.com" target="_blank">Anodyne Productions</a> for additional support.';
+$lang['install_step4_title'] = 'Step 3 - Insert Genre Data';
+$lang['install_step4_label'] = 'Step 3: User Account &amp; Character';
+$lang['install_step4_success'] = 'You have successfully inserted the genre data into your database. Please use the fields below to create your user profile and main character. You will be able to edit the character bio and your account once installation is complete and you have logged in to the system. Once you are finished, click <strong>Next Step</strong> to continue.';
+$lang['install_step4_failure'] = 'There was a problem inserting all of the genre data into your database. Please clear your database tables and try again. If you have created the genre file yourself, please make sure the file is formatted correctly and you don'. RSQUO .'t have any syntax errors. If you are using an Anodyne-created genre file, try installing again. If the problem persists, please contact <a href="http://forums.anodyne-productions.com" target="_blank">Anodyne Productions</a> for additional support.';
 
-$lang['install_step4_simname'] = 'Sim Name';
-$lang['install_step4_emailsubject'] = 'Email Subject Prefix';
-$lang['install_step4_sysemail'] = 'System Emails';
-$lang['install_step4_updates'] = 'Update Notification';
-$lang['install_step4_chars'] = 'Allowed Playing Characters / Player';
-$lang['install_step4_npcs'] = 'Allowed NPCs / Player';
-$lang['install_step4_dates'] = 'Date Format';
-$lang['install_step4_updates_all'] = 'All Updates';
-$lang['install_step4_updates_maj'] = 'Major Updates (1.0, 2.0, etc.)';
-$lang['install_step4_updates_min'] = 'Minor Updates (1.1, 1.2, etc.)';
-$lang['install_step4_updates_none'] = 'No Updates';
+$lang['install_step4_player'] = 'Player Information';
+$lang['install_step4_name'] = 'Real Name';
+$lang['install_step4_email'] = 'Email Address';
+$lang['install_step4_password'] = 'Password';
+$lang['install_step4_dob'] = 'Date of Birth';
+$lang['install_step4_character'] = 'Character Information';
+$lang['install_step4_fname'] = 'First Name';
+$lang['install_step4_lname'] = 'Last Name';
+$lang['install_step4_rank'] = 'Rank';
+$lang['install_step4_position'] = 'Position';
+$lang['install_step4_timezone'] = 'Select Your Timezone';
+$lang['install_step4_question'] = 'Security Question';
+$lang['install_step4_answer'] = 'Answer';
+$lang['text_security_question'] = 'Remember your security answer exactly as you type it!';
 
 /*
  * Step 5
  */
-$lang['install_step5_title'] = 'Step 5 - Set System Values';
-$lang['install_step5_label'] = 'Step 5: Finalize';
-$lang['install_step5_success'] = "You have successfully updated the selected system values.\r\n\r\nNova has been successfully installed and you can begin using it. Please take the time to read through our extensive <a href='http://docs.anodyne-productions.com/nova.php' target='_blank'>user guide</a> as it will answer most questions you may have.\r\n\r\nNow that Nova is installed, please make sure the <em>application/assets/images</em> and <em>application/assets/backups</em> directories and all their subdirectories are writable (777). If you don". RSQUO ."t know how to do that, please contact your host. Nova needs these directories writable for several features.";
-$lang['install_step5_failure'] = "There was a problem updating your system settings. This is not a critical error however. Once you have logged in, you will be able to update site settings.\r\n\r\nPlease take the time to read through our extensive <a href='http://docs.anodyne-productions.com/nova.php' target='_blank'>user guide</a> as it will answer most questions you may have.\r\n\r\nNow that Nova is installed, please make sure the <em>application/assets/images</em> and <em>application/assets/backups</em> directories and all their subdirectories are writable (777). If you don". RSQUO ."t know how to do that, please contact your host. Nova needs these directories writable for several features.";
+$lang['install_step5_title'] = 'Step 4 - Create Account';
+$lang['install_step5_label'] = 'Step 4: System Setup';
+$lang['install_step5_success'] = 'You have successfully created your user profile and main character. You will be able to login to the system using your email address and the password you just created. You can now set up some of the basic system settings. You will be able to update more settings once Nova is installed and you have logged in to the Admin Control Panel. Once you are finished, click <strong>Next Step</strong> to continue.';
+$lang['install_step5_failure'] = 'There was a problem inserting your user profile and/or main character. Please clear your database tables and try again. If you are using an Anodyne-created genre file, try installing again. If the problem persists, please contact <a href="http://forums.anodyne-productions.com" target="_blank">Anodyne Productions</a> for additional support.';
+
+$lang['install_step5_simname'] = 'Sim Name';
+$lang['install_step5_emailsubject'] = 'Email Subject Prefix';
+$lang['install_step5_sysemail'] = 'System Emails';
+$lang['install_step5_updates'] = 'Update Notification';
+$lang['install_step5_chars'] = 'Allowed Playing Characters / Player';
+$lang['install_step5_npcs'] = 'Allowed NPCs / Player';
+$lang['install_step5_dates'] = 'Date Format';
+$lang['install_step5_updates_all'] = 'All Updates';
+$lang['install_step5_updates_maj'] = 'Major Updates (1.0, 2.0, etc.)';
+$lang['install_step5_updates_min'] = 'Minor Updates (1.1, 1.2, etc.)';
+$lang['install_step5_updates_none'] = 'No Updates';
+
+/*
+ * Step 6
+ */
+$lang['install_step6_title'] = 'Step 5 - Set System Values';
+$lang['install_step6_label'] = 'Step 5: Finalize';
+$lang['install_step6_success'] = "You have successfully updated the selected system values.\r\n\r\nNova has been successfully installed and you can begin using it. Please take the time to read through our extensive <a href='http://docs.anodyne-productions.com/nova.php' target='_blank'>user guide</a> as it will answer most questions you may have.\r\n\r\nNow that Nova is installed, please make sure the <em>application/assets/images</em> and <em>application/assets/backups</em> directories and all their subdirectories are writable (777). If you don". RSQUO ."t know how to do that, please contact your host. Nova needs these directories writable for several features.";
+$lang['install_step6_failure'] = "There was a problem updating your system settings. This is not a critical error however. Once you have logged in, you will be able to update site settings.\r\n\r\nPlease take the time to read through our extensive <a href='http://docs.anodyne-productions.com/nova.php' target='_blank'>user guide</a> as it will answer most questions you may have.\r\n\r\nNow that Nova is installed, please make sure the <em>application/assets/images</em> and <em>application/assets/backups</em> directories and all their subdirectories are writable (777). If you don". RSQUO ."t know how to do that, please contact your host. Nova needs these directories writable for several features.";
 
 /*
 |---------------------------------------------------------------
