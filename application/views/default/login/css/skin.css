@@ -1,0 +1,268 @@
+/*
+|---------------------------------------------------------------
+| MASTER BODY STYLES
+|---------------------------------------------------------------
+*/
+body {
+	margin: 0;
+	padding: 0;
+	
+	background: #ccc url('../images/body-bg.png') repeat-x 0 0;
+	color: #444;
+	font: 75%/1.5 "lucida grande", verdana, arial, sans-serif;
+	text-align: center;
+}
+
+/*
+|---------------------------------------------------------------
+| WRAPPER STYLES
+|---------------------------------------------------------------
+| The wrapper controls the width and centering of the layout
+*/
+.wrapper {
+	width: 650px;
+	margin: 4em auto;
+	
+	text-align: left;
+	border: 1px solid #333;
+	background: #fcfdfd;
+	
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+}
+
+/*
+|---------------------------------------------------------------
+| HEAD STYLES
+|---------------------------------------------------------------
+|
+| The head layer
+*/
+#head {
+	margin: 0;
+	padding: 0 .1em 0 .5em;
+	height: 80px;
+	line-height: 75px;
+	
+	background: #222 url('../images/head_bg.jpg') repeat-x top left;
+	color: #ddd;
+	font-size: 250%;
+	font-weight: bold;
+}
+
+.logo {
+	float: right;
+	padding: 48px 0 0 0;
+	line-height: 1 !important;
+}
+
+/*
+|---------------------------------------------------------------
+| BODY STYLES
+|---------------------------------------------------------------
+*/
+#body { text-align: left; }
+
+.content {
+	line-height: 1.4;
+	padding: 1em 0;
+	width: 90%;
+	margin: 0 auto;
+	
+	text-align: center;
+}
+
+/*
+|---------------------------------------------------------------
+| FOOTER STYLES
+|---------------------------------------------------------------
+*/
+#footer {
+	margin: 1.5em 0 0 0;
+	padding: .5em 0;
+	clear: both;
+	
+	text-align: center;
+	font-size: 85%;
+	color: #999;
+	background: #f1f1f1;
+	border-top: 1px solid #e1e1e1;
+	
+	-moz-border-radius-bottomleft: 4px;
+	-moz-border-radius-bottomright: 4px;
+	-webkit-border-bottom-left-radius: 4px;
+	-webkit-border-bottom-right-radius: 4px;
+}
+
+/*
+|---------------------------------------------------------------
+| FONT COLOR CLASSES
+|---------------------------------------------------------------
+*/
+.page-head { color: #587498; }
+.page-subhead	{ color: #5b7444; }
+
+.red { color: #c00; }
+
+/*
+|---------------------------------------------------------------
+| LINKS
+|---------------------------------------------------------------
+*/
+a {
+	text-decoration: none; 
+	color: #5b7444;
+	border-bottom: 1px dotted;
+}
+a:hover {
+	color: #a3c586;
+	border-bottom: 1px solid;
+}
+
+/*
+|---------------------------------------------------------------
+| INPUT STYLES
+|---------------------------------------------------------------
+*/
+input[type=text],
+input[type=password] {
+	border: 1px solid #d8d8d8;
+	color: #777;
+	font-family: inherit;
+	font-size: 120%;
+}
+input[type=text]:focus,
+input[type=password]:focus {
+	color: #444;
+	border: 1px solid #777;
+}
+
+select {
+	border: 1px solid #d8d8d8;
+	color: #777;
+	font-family: inherit;
+	font-size: 120%;
+}
+select:focus,
+select:hover {
+	color: #444;
+	border: 1px solid #777;
+}
+
+/*
+|---------------------------------------------------------------
+| TABLE STYLES
+|---------------------------------------------------------------
+*/
+table.verify { border: 1px solid #aaa; }
+table.verify th {
+	font-weight: bold;
+	font-size: 125%;
+	background-color: #666;
+	color: #fff;
+}
+table.verify td { font-size: 115%; }
+
+tr.alt td { background-color: #eee; }
+
+/*
+|---------------------------------------------------------------
+| BUTTONS
+|---------------------------------------------------------------
+*/
+button {
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+	
+	font-weight: bold;
+}
+
+button.button-main {
+	border: 1px solid #adc0d0;
+	background: #dfeffc url('../images/button_main_bg.jpg') repeat-x top left;
+	color: #2e6e9e;
+}
+button.button-main:hover {
+	border: 1px solid #fbcb09;
+	background: #fdf5ce url('../images/button_main_bg_hover.jpg') repeat-x top left;
+	color: #c77405;
+}
+
+button.button-sec {
+	border: 1px solid #ccc;
+	background: #fff url('../images/button_sec_bg.jpg') repeat-x top left;
+	color: #777;
+}
+button.button-sec:hover { border: 1px solid #aaa; }
+
+input.button-main {
+	border: 1px solid #adc0d0;
+	background: #dfeffc url('../images/button_main_bg.jpg') repeat-x bottom left;
+	font-weight: bold;
+	font-size: 120%;
+	color: #2e6e9e;
+}
+input.button-main:hover {
+	border: 1px solid #fbcb09;
+	background: #fdf5ce url('../images/button_main_bg_hover.jpg') repeat-x top left;
+	color: #c77405;
+}
+
+input.button-sec {
+	border: 1px solid #ccc;
+	background: #f9f9f9 url('../images/button_sec_bg.jpg') repeat-x bottom left;
+	font-weight: bold;
+	font-size: 120%;
+	color: #555;
+}
+input.button-sec:hover { color: #999; }
+
+input[disabled],
+button[disabled] { color: #aaa; }
+
+input[disabled]:hover,
+button[disabled]:hover { border: 1px solid #ccc; }
+
+/*
+|---------------------------------------------------------------
+| LIST STYLES
+|---------------------------------------------------------------
+*/
+ul.square { list-style: square; }
+ul.none { list-style: none; }
+ol.roman { list-style: upper-roman; }
+
+/*
+|---------------------------------------------------------------
+| FLASH MESSAGES
+|---------------------------------------------------------------
+*/
+.flash_message {
+	font-weight: bold;
+	font-size: .9em;
+}
+.flash-success {
+	border: 1px solid #a4c897;
+	background: #ccecc5 url('../images/flash_green_bg.jpg') repeat-x bottom left;
+	color: #376b0e;
+}
+.flash-error {
+	border: 1px solid #c89797; 
+	background: #ecc5c5 url('../images/flash_red_bg.jpg') repeat-x bottom left;
+	color: #6b0f0e;
+}
+.flash-info {
+	border: 1px solid #97a5c8;
+	background: #c5d6ec url('../images/flash_blue_bg.jpg') repeat-x bottom left;
+	color: #0e2d6b;
+}
+
+/*
+|---------------------------------------------------------------
+| MISC
+|---------------------------------------------------------------
+*/
+hr {
+	border: 1px solid #ddd;
+	border-width: 1px 0 0;
+}
