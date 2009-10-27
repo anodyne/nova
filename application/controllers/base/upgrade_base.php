@@ -39,6 +39,7 @@ class Upgrade_base extends Controller {
 		
 		/* run the methods */
 		$installed = $this->sys->check_install_status();
+		$data['installed'] = $installed;
 		
 		/* grab the tables */
 		$tables = $this->db->list_tables();
@@ -77,6 +78,15 @@ class Upgrade_base extends Controller {
 		
 		$data['label'] = array(
 			'text' => lang('upg_index'),
+			'intro' => lang('global_content_index'),
+			'title' => lang('upg_index_header'),
+			'options_readme' => lang('install_index_options_readme'),
+			'options_tour' => lang('install_index_options_tour'),
+			'options_verify' => lang('install_index_options_verify'),
+			'options_guide' => lang('install_index_options_upg_guide'),
+			'firststeps' => lang('install_index_options_firststeps'),
+			'whatsnext' => lang('install_index_options_whatsnext'),
+			'intro' => lang('global_content_index'),
 		);
 		
 		$data['next'] = array(
@@ -137,6 +147,26 @@ class Upgrade_base extends Controller {
 		/* set the title */
 		$this->template->write('title', lang('upg_error_title'));
 		$this->template->write('label', lang('upg_error_title'));
+				
+		/* write the data to the template */
+		$this->template->write_view('content', $view_loc, $data);
+		
+		/* render the template */
+		$this->template->render();
+	}
+	
+	function readme()
+	{
+		$data['label'] = array(
+			'back' => lang('install_label_back')
+		);
+		
+		/* figure out where the view file should be coming from */
+		$view_loc = view_location('readme', '_base', 'update');
+		
+		/* set the title */
+		$this->template->write('title', lang('install_readme_title'));
+		$this->template->write('label', APP_NAME .' '. lang('install_readme_title'));
 				
 		/* write the data to the template */
 		$this->template->write_view('content', $view_loc, $data);
@@ -1515,6 +1545,26 @@ class Upgrade_base extends Controller {
 				
 				/* do the update to all players */
 				$this->player->update_all_players($defaults);
+				
+				if (phpversion() >= 5)
+				{
+					/* load the resources */
+					$this->load->library('ftp');
+					
+					if ($this->ftp->hostname != 'ftp.example.com')
+					{
+						$this->ftp->connect();
+						
+						$this->ftp->chmod(BASEPATH .'logs/', DIR_WRITE_MODE);
+						$this->ftp->chmod(APPPATH .'assets/backups/', DIR_WRITE_MODE);
+						$this->ftp->chmod(APPPATH .'assets/images/characters/', DIR_WRITE_MODE);
+						$this->ftp->chmod(APPPATH .'assets/images/awards/', DIR_WRITE_MODE);
+						$this->ftp->chmod(APPPATH .'assets/images/tour/', DIR_WRITE_MODE);
+						$this->ftp->chmod(APPPATH .'assets/images/missions/', DIR_WRITE_MODE);
+						
+						$this->ftp->close();
+					}
+				}
 				
 				/* grab the crew */
 				$crew = $this->db->query('SELECT * FROM sms_crew');
