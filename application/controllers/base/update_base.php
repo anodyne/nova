@@ -11,8 +11,6 @@
 |
 */
 
-# TODO: remove the debug helper
-
 class Update_base extends Controller {
 	
 	var $options;
@@ -42,7 +40,8 @@ class Update_base extends Controller {
 		$settings_array = array(
 			'sim_name',
 			'date_format',
-			'updates'
+			'updates',
+			'maintenance'
 		);
 		
 		/* grab the settings */
@@ -52,16 +51,60 @@ class Update_base extends Controller {
 		$this->template->write('title', APP_NAME .' :: ');
 		
 		/* set and load the language file needed */
-		$this->lang->load('app', $this->session->userdata('language'));
 		$this->lang->load('install');
-		
+		$this->lang->load('app', $this->session->userdata('language'));
+				
 		/* set the version of nova */
 		$this->version = APP_VERSION_MAJOR .'.'. APP_VERSION_MINOR .'.'. APP_VERSION_UPDATE;
-		
-		$this->load->helper('debug');
 	}
 
 	function index()
+	{
+		/* check to see if the system is installed */
+		$data['installed'] = $this->sys->check_install_status();
+		
+		/* set the error code */
+		$code = 0;
+		
+		/* go through and check for errors */
+		$code = ($data['installed'] === FALSE) ? 1 : $code;
+		$code = ($this->options['maintenance'] == 'off') ? 2 : $code;
+		
+		if ($code > 0)
+		{ /* if there's an error, redirect */
+			redirect('update/error/'. $code);
+		}
+		
+		$data['label'] = array(
+			'options_check' => lang('upd_index_options_update'),
+			'options_readme' => lang('upd_index_options_readme'),
+			'options_tour' => lang('upd_index_options_tour'),
+			'options_update' => lang('upd_index_options_update'),
+			'options_verify' => lang('upd_index_options_verify'),
+			'options_guide' => lang('upd_index_options_upd_guide'),
+			'firststeps' => lang('upd_index_options_firststeps'),
+			'whatsnext' => lang('upd_index_options_whatsnext'),
+			'intro' => lang('global_content_index'),
+			'header' => lang('upd_index_header'),
+		);
+		
+		/* figure out where the view file should be coming from */
+		$view_loc = view_location('update_index', '_base', 'update');
+		$js_loc = js_location('update_index_js', '_base', 'update');
+		
+		/* set the title */
+		$this->template->write('title', lang('upd_index_title'));
+		$this->template->write('label', lang('upd_index_title'));
+				
+		/* write the data to the template */
+		$this->template->write_view('content', $view_loc, $data);
+		$this->template->write_view('javascript', $js_loc);
+		
+		/* render the template */
+		$this->template->render();
+	}
+	
+	function check()
 	{
 		if (isset($_POST['submit']))
 		{
@@ -80,9 +123,26 @@ class Update_base extends Controller {
 			
 			if ($verify == 0 && $sysadmin === TRUE)
 			{
-				$this->session->set_flashdata('verified', 'yes');
+				/* do the version check */
+				$update = $this->_check_version($this->version);
 				
-				redirect('update/main');
+				/* set the flash variable */
+				$flash = $update['flash'];
+				
+				$data['label'] = array(
+					'whatsnew' => lang('upd_header_whatsnew'),
+					'notes' => (is_array($update['update'])) ? $update['update']['description'] : '',
+					'files' => lang('upd_check_header_files'),
+					'files_text' => lang('upd_check_text_files'),
+					'files_go' => lang('upd_check_go_files'),
+					'start' => lang('upd_check_header_start'),
+					'start_text' => lang('upd_check_text_start'),
+					'start_go' => anchor('update/step/1', lang('upd_check_go_start'), array('id' => 'next')),
+				);
+				
+				/* figure out where the view file should be coming from */
+				$view_loc = view_location('update_check_main', '_base', 'update');
+				$js_loc = js_location('update_check_js', '_base', 'update');
 			}
 			else
 			{
@@ -98,40 +158,68 @@ class Update_base extends Controller {
 					$flash['message'] = lang_output('error_login_'. $verify);
 				}
 				
-				/* write everything to the template */
-				$this->template->write_view('flash_message', '_base/update/pages/flash', $flash);
+				$data['inputs'] = array(
+					'email' => array(
+						'name' => 'email',
+						'id' => 'email'),
+					'password' => array(
+						'name' => 'password',
+						'id' => 'password'),
+					'submit' => array(
+						'type' => 'submit',
+						'class' => 'button',
+						'name' => 'submit',
+						'value' => 'submit',
+						'content' => ucwords(lang('button_submit'))
+					)
+				);
+				
+				$data['label'] = array(
+					'email' => ucwords(lang('install_step3_email')),
+					'password' => ucwords(lang('install_step3_password')),
+					'text' => lang('upd_text_sysadmin'),
+				);
+				
+				/* figure out where the view file should be coming from */
+				$view_loc = view_location('update_check', '_base', 'update');
+				$js_loc = js_location('update_check_js', '_base', 'update');
 			}
+			
+			/* write everything to the template */
+			$this->template->write_view('flash_message', '_base/update/pages/flash', $flash);
+		}
+		else
+		{
+			$data['inputs'] = array(
+				'email' => array(
+					'name' => 'email',
+					'id' => 'email'),
+				'password' => array(
+					'name' => 'password',
+					'id' => 'password'),
+				'submit' => array(
+					'type' => 'submit',
+					'class' => 'button',
+					'name' => 'submit',
+					'value' => 'submit',
+					'content' => ucwords(lang('button_submit'))
+				)
+			);
+			
+			$data['label'] = array(
+				'email' => ucwords(lang('install_step3_email')),
+				'password' => ucwords(lang('install_step3_password')),
+				'text' => lang('upd_text_sysadmin'),
+			);
+			
+			/* figure out where the view file should be coming from */
+			$view_loc = view_location('update_check', '_base', 'update');
+			$js_loc = js_location('update_check_js', '_base', 'update');
 		}
 		
-		$data['inputs'] = array(
-			'email' => array(
-				'name' => 'email',
-				'id' => 'email'),
-			'password' => array(
-				'name' => 'password',
-				'id' => 'password'),
-			'submit' => array(
-				'type' => 'submit',
-				'class' => 'button',
-				'name' => 'submit',
-				'value' => 'submit',
-				'content' => ucwords(lang('actions_submit'))
-			)
-		);
-		
-		$data['label'] = array(
-			'email' => ucwords(lang('labels_email_address')),
-			'password' => ucwords(lang('labels_password')),
-			'text' => lang('update_text_index'),
-		);
-		
-		/* figure out where the view file should be coming from */
-		$view_loc = view_location('update_index', '_base', 'update');
-		$js_loc = js_location('update_index_js', '_base', 'update');
-		
 		/* set the title */
-		$this->template->write('title', lang('update_title_index'));
-		$this->template->write('label', lang('update_title_index'));
+		$this->template->write('title', lang('upd_index_title'));
+		$this->template->write('label', lang('upd_index_title'));
 				
 		/* write the data to the template */
 		$this->template->write_view('content', $view_loc, $data);
@@ -145,167 +233,29 @@ class Update_base extends Controller {
 	{
 		/*
 			0 - no error
-			1 - sms version not compatible
+			1 - nova is not installed
+			2 - maintenance mode is not active ... system cannot be updated
+			3 - you are not a system admin, make sure you're logged in
 		*/
 		
-		/*
-			1 - maintenance mode is not active ... system cannot be updated!
-			2 - you are not a system administrator, you cannot update the system
-			3 - you are not a system administrator, you cannot modify the database
-			4 - the table you are trying to create already exists
-			5 - you must be logged in to update the system
-			6 - SMS is not install (upgrade only)
-			7 - you do not have SMS 2.6.0 or higher (upgrade only)
-		*/
-	}
-	
-	function main()
-	{
-		/*if ($this->session->flashdata('verified') == 'yes')
-		{*/
-			/* load the resources */
-			$this->load->library('simplepie');
-			
-			/* get the system information */
-			$system = $this->sys->get_system_info();
-			
-			/* build the array of version info */
-			$version = array(
-				'files' => array(
-					'full'		=> $this->version,
-					'major'		=> APP_VERSION_MAJOR,
-					'minor'		=> APP_VERSION_MINOR,
-					'update'	=> APP_VERSION_UPDATE
-				),
-				'database' => array(
-					'full'		=> $system->sys_version_major .'.'. $system->sys_version_minor .'.'. $system->sys_version_update,
-					'major'		=> $system->sys_version_major,
-					'minor'		=> $system->sys_version_minor,
-					'update'	=> $system->sys_version_update
-				),
-			);
-			
-			/* grab the information from the version feed */
-			$this->simplepie->set_feed_url(base_url() . APPFOLDER .'/assets/version.xml');
-			$this->simplepie->enable_cache(FALSE);
-			$this->simplepie->init();
-			$this->simplepie->handle_content_type();
-			
-			/* get the items from the feed */
-			$items = $this->simplepie->get_items();
-			
-			$type = $this->options['updates'];
-			
-			foreach ($items as $i)
-			{ /* loop through and figure out what we should be displaying */
-				switch ($type)
-				{
-					case 'major':
-						$major = $i->get_item_tags(SIMPLEPIE_NAMESPACE_RSS_20, 'major');
-						$major = $major[0]['data'];
-						
-						if ($major > $version['files']['major'] || $major > $version['database']['major'])
-						{
-							$update['version'] = $i->get_title();
-							$update['description'] = $i->get_description();
-						}
-					
-						break;
-						
-					case 'minor':
-						$major = $i->get_item_tags(SIMPLEPIE_NAMESPACE_RSS_20, 'major');
-						$minor = $i->get_item_tags(SIMPLEPIE_NAMESPACE_RSS_20, 'minor');
-						
-						$major = $major[0]['data'];
-						$minor = $minor[0]['data'];
-						
-						if ($minor > $version['files']['minor'] || $minor > $version['database']['minor'])
-						{
-							$update['version'] = $i->get_title();
-							$update['description'] = $i->get_description();
-						}
-						elseif (($minor < $version['files']['minor'] || $major > $version['files']['major']) &&
-								($minor < $version['database']['minor'] || $major > $version['database']['major']))
-						{
-							$update['version'] = $i->get_title();
-							$update['description'] = $i->get_description();
-						}
-					
-						break;
-						
-					case 'all':
-						if ($i->get_title() != $version['files']['full'] && $i->get_title() != $version['database']['full'])
-						{
-							$update['version'] = $i->get_title();
-							$update['description'] = $i->get_description();
-						}
-							
-						break;
-				}
-			}
-			
-			if ($version['database']['full'] > $version['files']['full'])
-			{
-				$flash['status'] = 'info';
-				$flash['message'] = '<span class="icon ui-icon ui-icon-info"></span>';
-				$flash['message'].= sprintf(
-					lang_output('update_outofdate_files'),
-					$version['files']['full'],
-					$version['database']['full']
-				);
-			}
-			elseif ($version['database']['full'] < $version['files']['full'])
-			{
-				$flash['status'] = 'info';
-				$flash['message'] = '<span class="icon ui-icon ui-icon-info"></span>';
-				$flash['message'].= sprintf(
-					lang_output('update_outofdate_database'),
-					$version['database']['full'],
-					$version['files']['full']
-				);
-			}
-			elseif (isset($update))
-			{
-				$flash['status'] = 'info';
-				$flash['message'] = '<span class="icon ui-icon ui-icon-info"></span>';
-				$flash['message'].= sprintf(
-					lang_output('update_available'),
-					APP_NAME,
-					$update['version'],
-					APP_NAME
-				);
-			}
-			else
-			{
-				$flash['status'] = '';
-				$flash['message'] = '';
-			}
-			
-			/* write everything to the template */
-			$this->template->write_view('flash_message', '_base/update/pages/flash', $flash);
-		/*}
-		else
-		{
-			redirect('update/error/2');
-		}*/
+		$data['id'] = $this->uri->segment(3, 0);
 		
 		$data['label'] = array(
-			'notes' => (isset($update)) ? $update['description'] : '',
-			'whatsnew' => lang('update_header_whatsnew'),
-			'update'
+			'error_1' => lang('upd_error_1'),
+			'error_2' => lang('upd_error_2'),
+			'error_3' => lang('upd_error_3'),
+			'back' => lang('upd_error_back'),
 		);
 		
 		/* figure out where the view file should be coming from */
-		$view_loc = view_location('update_main', '_base', 'update');
-		$js_loc = js_location('update_main_js', '_base', 'update');
+		$view_loc = view_location('update_error', '_base', 'update');
 		
 		/* set the title */
-		$this->template->write('title', lang('update_title_index'));
-		$this->template->write('label', lang('update_title_index'));
+		$this->template->write('title', lang('upd_error_title'));
+		$this->template->write('label', lang('upd_error_title'));
 				
 		/* write the data to the template */
 		$this->template->write_view('content', $view_loc, $data);
-		$this->template->write_view('javascript', $js_loc);
 		
 		/* render the template */
 		$this->template->render();
@@ -327,13 +277,17 @@ class Update_base extends Controller {
 		$this->template->render();
 	}
 	
-	function run()
+	function step()
 	{
+		/* set the step */
 		$step = $this->uri->segment(3, 1, TRUE);
 		
 		switch ($step)
 		{
 			case 1:
+				/* clear the memory limit to attempt the backup */
+				ini_set('memory_limit', -1);
+				
 				/* load the resources */
 				$this->load->helper('utility');
 				
@@ -346,65 +300,59 @@ class Update_base extends Controller {
 				
 				if ($memory === TRUE)
 				{ /* if there's enough memory, continue */
-					$fields = $this->db->list_tables();
+					/* grab today's date info */
+					$today = getdate();
 					
-					/* get the length of the prefix */
-					$length = strlen($prefix);
+					/* set the filename */
+					$filename = $prefix . $today['year'] . $today['mon'] . $today['mday'];
+						
+					$backup = backup_database($prefix, 'save', $filename);
 					
-					foreach ($fields as $key => $value)
+					if ($backup === TRUE)
 					{
-						if (substr($value, 0, $length) != $prefix)
-						{
-							unset($fields[$key]);
-						}
-					}
-					
-					if (count($fields) > 0)
-					{
-						/* grab today's date info */
-						$today = getdate();
-						
-						/* set the filename */
-						$filename = $prefix . $today['year'] . $today['mon'] . $today['mday'];
-						
-						/* backup the data */
-						$this->_backup_sql($prefix, 'save', $filename);
-						
 						if (is_file(APPPATH .'assets/backups/'. $filename .'.zip'))
 						{
-							// success
+							$message = lang('upd_step1_success');
 						}
 						else
 						{
-							// failure
+							$message = lang('upd_step1_failure');
 						}
 					}
 					else
 					{
-						# TODO: need message if there are no fields
+						$message = lang('upd_step1_nofields');
+						$data['next']['disabled'] = TRUE;
 					}
 				}
 				else
 				{
-					# TODO: need message if they don't have enough memory
+					$message = lang('upd_step1_memory');
 				}
 				
-				$data['inputs'] = array(
-					'submit' => array(
-						'type' => 'submit',
-						'class' => 'button',
-						'name' => 'submit',
-						'value' => 'submit',
-						'content' => ucwords(lang('actions_submit'))
-					)
+				$data['next'] = array(
+					'type' => 'submit',
+					'class' => 'button',
+					'name' => 'next',
+					'value' => 'next',
+					'id' => 'next',
+					'content' => ucwords(lang('install_label_next'))
 				);
 				
-				/* figure out where the view file should be coming from */
-				$view_loc = view_location('update_run_1', '_base', 'update');
+				$data['label']['text'] = $message;
+				
+				/* figure out where the view files should be coming from */
+				$view_loc = view_location('update_step_1', '_base', 'update');
+				$js_loc = js_location('update_step_1_js', '_base', 'update');
+				
+				/* set the title and label */
+				$this->template->write('title', lang('upd_step1_title'));
+				$this->template->write('label', lang('upd_step1_title'));
 				
 				break;
 				
 			case 2:
+				/* pull in the versions file */
 				include_once(APPPATH .'assets/update/versions.php');
 				
 				$version = str_replace('.', '', $this->version);
@@ -430,18 +378,28 @@ class Update_base extends Controller {
 				$players = array('is_firstlaunch' => 'y');
 				$this->player->update_all_players($players, '');
 				
+				$data['label'] = array(
+					'text' => sprintf(
+						lang('upd_step2_success'),
+						$system_versions['version']
+					),
+					'back' => lang('upd_step2_site')
+				);
+				
 				/* figure out where the view file should be coming from */
-				$view_loc = view_location('update_run_2', '_base', 'update');
+				$view_loc = view_location('update_step_2', '_base', 'update');
+				$js_loc = js_location('update_step_1_js', '_base', 'update');
+				
+				/* set the title and label */
+				$this->template->write('title', lang('upd_step2_title'));
+				$this->template->write('label', lang('upd_step2_title'));
 				
 				break;
 		}
 		
-		/* set the title */
-		$this->template->write('title', lang('title_update_readme'));
-		$this->template->write('label', APP_NAME .' '. lang('title_update_readme'));
-				
 		/* write the data to the template */
 		$this->template->write_view('content', $view_loc, $data);
+		$this->template->write_view('javascript', $js_loc);
 		
 		/* render the template */
 		$this->template->render();
@@ -474,47 +432,135 @@ class Update_base extends Controller {
 		$this->template->render();
 	}
 	
-	function _backup_sql($prefix = '', $action = 'download', $name = 'sms_backup')
+	function _check_version($current = '')
 	{
-		# TODO: need to figure out the best way to make filenames unique
+		/* load the resources */
+		$this->load->library('simplepie');
 		
-		/* load the utility class */
-		$this->load->dbutil();
+		/* get the system information */
+		$system = $this->sys->get_system_info();
 		
-		/* get an array of the tables */
-		$fields = $this->db->list_tables();
+		/* build the array of version info */
+		$version = array(
+			'files' => array(
+				'full'		=> $this->version,
+				'major'		=> APP_VERSION_MAJOR,
+				'minor'		=> APP_VERSION_MINOR,
+				'update'	=> APP_VERSION_UPDATE
+			),
+			'database' => array(
+				'full'		=> $system->sys_version_major .'.'. $system->sys_version_minor .'.'. $system->sys_version_update,
+				'major'		=> $system->sys_version_major,
+				'minor'		=> $system->sys_version_minor,
+				'update'	=> $system->sys_version_update
+			),
+		);
 		
-		/* go through all the tables to find out if its part of the system or not */
-		foreach ($fields as $key => $value)
-		{
-			if (substr($value, 0, 4) != $prefix)
+		/* grab the information from the version feed */
+		$this->simplepie->set_feed_url(base_url() . APPFOLDER .'/assets/version.xml');
+		$this->simplepie->enable_cache(FALSE);
+		$this->simplepie->init();
+		$this->simplepie->handle_content_type();
+		
+		/* get the items from the feed */
+		$items = $this->simplepie->get_items();
+		
+		/* grab the updates setting */
+		$type = $this->options['updates'];
+		
+		$update = FALSE;
+		
+		foreach ($items as $i)
+		{ /* loop through and figure out what we should be displaying */
+			switch ($type)
 			{
-				unset($fields[$key]);
+				case 'major':
+					$major = $i->get_item_tags(SIMPLEPIE_NAMESPACE_RSS_20, 'major');
+					$major = $major[0]['data'];
+					
+					if ($major > $version['files']['major'] || $major > $version['database']['major'])
+					{
+						$update['version'] = $i->get_title();
+						$update['description'] = $i->get_description();
+					}
+				
+					break;
+					
+				case 'minor':
+					$major = $i->get_item_tags(SIMPLEPIE_NAMESPACE_RSS_20, 'major');
+					$minor = $i->get_item_tags(SIMPLEPIE_NAMESPACE_RSS_20, 'minor');
+					
+					$major = $major[0]['data'];
+					$minor = $minor[0]['data'];
+					
+					if ($minor > $version['files']['minor'] || $minor > $version['database']['minor'])
+					{
+						$update['version'] = $i->get_title();
+						$update['description'] = $i->get_description();
+					}
+					elseif (($minor < $version['files']['minor'] || $major > $version['files']['major']) &&
+							($minor < $version['database']['minor'] || $major > $version['database']['major']))
+					{
+						$update['version'] = $i->get_title();
+						$update['description'] = $i->get_description();
+					}
+				
+					break;
+					
+				case 'all':
+					if ($i->get_title() != $version['files']['full'] && $i->get_title() != $version['database']['full'])
+					{
+						$update['version'] = $i->get_title();
+						$update['description'] = $i->get_description();
+					}
+						
+					break;
 			}
 		}
 		
-		/* preferences for the backup */
-		$prefs = array(
-			'tables'		=> $fields,
-			'format'		=> 'zip',
-			'filename'		=> $name .'.sql'
+		if ($version['database']['full'] > $version['files']['full'])
+		{
+			$flash['status'] = 'info';
+			$flash['message'] = '<span class="icon ui-icon ui-icon-info"></span>';
+			$flash['message'].= sprintf(
+				lang_output('update_outofdate_files'),
+				$version['files']['full'],
+				$version['database']['full']
+			);
+		}
+		elseif ($version['database']['full'] < $version['files']['full'])
+		{
+			$flash['status'] = 'info';
+			$flash['message'] = '<span class="icon ui-icon ui-icon-info"></span>';
+			$flash['message'].= sprintf(
+				lang_output('update_outofdate_database'),
+				$version['database']['full'],
+				$version['files']['full']
+			);
+		}
+		elseif (isset($update))
+		{
+			$flash['status'] = 'info';
+			$flash['message'] = '<span class="icon ui-icon ui-icon-info"></span>';
+			$flash['message'].= sprintf(
+				lang_output('update_available'),
+				APP_NAME,
+				$update['version'],
+				APP_NAME
+			);
+		}
+		else
+		{
+			$flash['status'] = '';
+			$flash['message'] = '';
+		}
+		
+		$retval = array(
+			'flash' => $flash,
+			'update' => $update
 		);
 		
-		/* backup the database and assign it to a variable */
-		$backup =& $this->dbutil->backup($prefs);
-		
-		if ($action == 'download')
-		{
-			/* load the download helper and send the file to the desktop */
-			$this->load->helper('download');
-			force_download($name .'.zip', $backup);
-		}
-		elseif ($action == 'save')
-		{
-			/* load the file helper and write the file to your server */
-			$this->load->helper('file');
-			write_file(APPPATH .'assets/backups/'. $name .'.zip', $backup);
-		}
+		return $retval;
 	}
 }
 
