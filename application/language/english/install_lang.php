@@ -39,6 +39,8 @@ $lang['global_processing'] = 'Processing, please wait...';
 
 $lang['global_content_index'] = "From all of us at Anodyne Productions we want to thank you for choosing <strong>Nova</strong> as your RPG management tool!\r\n\r\nNova represents years of work and a new approach to RPG management that we". RSQUO ."re excited to share. While the SIMM Management System was a revolution in managing your RPG, Nova is the next evolution that provides an easy-to-use, clean interface with a more powerful system engine that allows more robust tools for skin developers and third-party developers.";
 
+$lang['button_submit'] = 'Submit';
+
 /*
 |---------------------------------------------------------------
 | INSTALL
@@ -54,11 +56,13 @@ $lang['install_index_header_whattodo'] = 'What do you want to do?';
 
 $lang['install_index_options_install'] = 'Install a fresh copy of Nova '. RARROW;
 $lang['install_index_options_upgrade'] = 'Upgrade to Nova from SMS 2 '. RARROW;
-$lang['install_index_options_update'] = 'Update to the newest version of Nova '. RARROW;
+$lang['install_index_options_update'] = 'Check for updates to Nova '. RARROW;
 $lang['install_index_options_verify'] = 'Verify my server can run Nova '. RARROW;
 $lang['install_index_options_readme'] = 'View the Nova readme '. RARROW;
 $lang['install_index_options_remove'] = 'Uninstall Nova '. RARROW;
 $lang['install_index_options_tour'] = 'Take a tour of Nova '. RARROW;
+$lang['install_index_options_guide'] = 'Read the Install Guide '. RARROW;
+$lang['install_index_options_upg_guide'] = 'Read the Upgrade Guide '. RARROW;
 $lang['install_index_options_firststeps'] = 'First Steps';
 $lang['install_index_options_whatsnext'] = 'What'. RSQUO .'s Next?';
 
@@ -92,7 +96,7 @@ $lang['install_label_begin'] = 'Begin Upgrade';
 $lang['install_label_testdb'] = 'Test Database';
 
 /*
- * Step 1
+ * Step 2
  */
 $lang['install_step1_title'] = 'Step 1 - Create Database Tables';
 $lang['install_step1_label'] = 'Step 1: Database Structure';
@@ -100,92 +104,63 @@ $lang['install_step1_success'] = 'You have successfully created the database str
 $lang['install_step1_failure'] = "There was a problem creating the database structure. Please make sure all your settings in your config file are correct and try again. If the problem persists, please contact <a href='http://forums.anodyne-productions.com' target='_blank'>Anodyne Productions</a> for additional support.";
 
 /*
- * Step 2
- */
-$lang['install_step2_title'] = 'Step 1 - Create Database Tables';
-$lang['install_step2_label'] = 'Step 1: Database Structure';
-$lang['install_step2_success'] = 'You have successfully created the database structure needed by Nova! The next step will insert some basic data into your newly created database tables for use by Nova. Click <strong>Next Step</strong> to continue.';
-$lang['install_step2_failure'] = "There was a problem creating the database structure. Please make sure all your settings in your config file are correct and try again. If the problem persists, please contact <a href='http://forums.anodyne-productions.com' target='_blank'>Anodyne Productions</a> for additional support.";
-
-/*
  * Step 3
  */
-$lang['install_step3_title'] = 'Step 2 - Insert Basic Data';
-$lang['install_step3_label'] = 'Step 2: Basic Data';
-$lang['install_step3_success'] = 'You have successfully inserted the basic system data into your database. The next step will insert all of the genre-specific data into your database. Click <strong>Next Step</strong> to continue.';
-$lang['install_step3_failure'] = 'There was a problem inserting all of the basic data into your database. Please clear your database tables and try again. If the problem persists, please contact <a href="http://forums.anodyne-productions.com" target="_blank">Anodyne Productions</a> for additional support.';
+$lang['install_step2_title'] = 'Step 2 - Insert Basic Data';
+$lang['install_step2_label'] = 'Step 2: Basic Data';
+$lang['install_step2_success'] = 'You have successfully inserted the basic system data into your database. The next step will insert all of the genre-specific data into your database. Click <strong>Next Step</strong> to continue.';
+$lang['install_step2_failure'] = 'There was a problem inserting all of the basic data into your database. Please clear your database tables and try again. If the problem persists, please contact <a href="http://forums.anodyne-productions.com" target="_blank">Anodyne Productions</a> for additional support.';
 
 /*
  * Step 4
  */
-$lang['install_step4_title'] = 'Step 3 - Insert Genre Data';
-$lang['install_step4_label'] = 'Step 3: User Account &amp; Character';
-$lang['install_step4_success'] = 'You have successfully inserted the genre data into your database. Please use the fields below to create your user profile and main character. You will be able to edit the character bio and your account once installation is complete and you have logged in to the system. Once you are finished, click <strong>Next Step</strong> to continue.';
-$lang['install_step4_failure'] = 'There was a problem inserting all of the genre data into your database. Please clear your database tables and try again. If you have created the genre file yourself, please make sure the file is formatted correctly and you don'. RSQUO .'t have any syntax errors. If you are using an Anodyne-created genre file, try installing again. If the problem persists, please contact <a href="http://forums.anodyne-productions.com" target="_blank">Anodyne Productions</a> for additional support.';
+$lang['install_step3_title'] = 'Step 3 - Insert Genre Data';
+$lang['install_step3_label'] = 'Step 3: User Account &amp; Character';
+$lang['install_step3_success'] = 'You have successfully inserted the genre data into your database. Please use the fields below to create your user profile and main character. You will be able to edit the character bio and your account once installation is complete and you have logged in to the system. Once you are finished, click <strong>Next Step</strong> to continue.';
+$lang['install_step3_failure'] = 'There was a problem inserting all of the genre data into your database. Please clear your database tables and try again. If you have created the genre file yourself, please make sure the file is formatted correctly and you don'. RSQUO .'t have any syntax errors. If you are using an Anodyne-created genre file, try installing again. If the problem persists, please contact <a href="http://forums.anodyne-productions.com" target="_blank">Anodyne Productions</a> for additional support.';
 
-$lang['install_step4_player'] = 'Player Information';
-$lang['install_step4_name'] = 'Real Name';
-$lang['install_step4_email'] = 'Email Address';
-$lang['install_step4_password'] = 'Password';
-$lang['install_step4_dob'] = 'Date of Birth';
-$lang['install_step4_character'] = 'Character Information';
-$lang['install_step4_fname'] = 'First Name';
-$lang['install_step4_lname'] = 'Last Name';
-$lang['install_step4_rank'] = 'Rank';
-$lang['install_step4_position'] = 'Position';
-$lang['install_step4_timezone'] = 'Select Your Timezone';
-$lang['install_step4_question'] = 'Security Question';
-$lang['install_step4_answer'] = 'Answer';
+$lang['install_step3_player'] = 'Player Information';
+$lang['install_step3_name'] = 'Real Name';
+$lang['install_step3_email'] = 'Email Address';
+$lang['install_step3_password'] = 'Password';
+$lang['install_step3_dob'] = 'Date of Birth';
+$lang['install_step3_character'] = 'Character Information';
+$lang['install_step3_fname'] = 'First Name';
+$lang['install_step3_lname'] = 'Last Name';
+$lang['install_step3_rank'] = 'Rank';
+$lang['install_step3_position'] = 'Position';
+$lang['install_step3_timezone'] = 'Select Your Timezone';
+$lang['install_step3_question'] = 'Security Question';
+$lang['install_step3_answer'] = 'Answer';
 $lang['text_security_question'] = 'Remember your security answer exactly as you type it!';
 
 /*
  * Step 5
  */
-$lang['install_step5_title'] = 'Step 4 - Create Account';
-$lang['install_step5_label'] = 'Step 4: System Setup';
-$lang['install_step5_success'] = 'You have successfully created your user profile and main character. You will be able to login to the system using your email address and the password you just created. You can now set up some of the basic system settings. You will be able to update more settings once Nova is installed and you have logged in to the Admin Control Panel. Once you are finished, click <strong>Next Step</strong> to continue.';
-$lang['install_step5_failure'] = 'There was a problem inserting your user profile and/or main character. Please clear your database tables and try again. If you are using an Anodyne-created genre file, try installing again. If the problem persists, please contact <a href="http://forums.anodyne-productions.com" target="_blank">Anodyne Productions</a> for additional support.';
+$lang['install_step4_title'] = 'Step 4 - Create Account';
+$lang['install_step4_label'] = 'Step 4: System Setup';
+$lang['install_step4_success'] = 'You have successfully created your user profile and main character. You will be able to login to the system using your email address and the password you just created. You can now set up some of the basic system settings. You will be able to update more settings once Nova is installed and you have logged in to the Admin Control Panel. Once you are finished, click <strong>Next Step</strong> to continue.';
+$lang['install_step4_failure'] = 'There was a problem inserting your user profile and/or main character. Please clear your database tables and try again. If you are using an Anodyne-created genre file, try installing again. If the problem persists, please contact <a href="http://forums.anodyne-productions.com" target="_blank">Anodyne Productions</a> for additional support.';
 
-$lang['install_step5_simname'] = 'Sim Name';
-$lang['install_step5_emailsubject'] = 'Email Subject Prefix';
-$lang['install_step5_sysemail'] = 'System Emails';
-$lang['install_step5_updates'] = 'Update Notification';
-$lang['install_step5_chars'] = 'Allowed Playing Characters / Player';
-$lang['install_step5_npcs'] = 'Allowed NPCs / Player';
-$lang['install_step5_dates'] = 'Date Format';
-$lang['install_step5_updates_all'] = 'All Updates';
-$lang['install_step5_updates_maj'] = 'Major Updates (1.0, 2.0, etc.)';
-$lang['install_step5_updates_min'] = 'Minor Updates (1.1, 1.2, etc.)';
-$lang['install_step5_updates_none'] = 'No Updates';
+$lang['install_step4_simname'] = 'Sim Name';
+$lang['install_step4_emailsubject'] = 'Email Subject Prefix';
+$lang['install_step4_sysemail'] = 'System Emails';
+$lang['install_step4_updates'] = 'Update Notification';
+$lang['install_step4_chars'] = 'Allowed Playing Characters / Player';
+$lang['install_step4_npcs'] = 'Allowed NPCs / Player';
+$lang['install_step4_dates'] = 'Date Format';
+$lang['install_step4_updates_all'] = 'All Updates';
+$lang['install_step4_updates_maj'] = 'Major Updates (1.0, 2.0, etc.)';
+$lang['install_step4_updates_min'] = 'Minor Updates (1.1, 1.2, etc.)';
+$lang['install_step4_updates_none'] = 'No Updates';
 
 /*
  * Step 6
  */
-$lang['install_step6_title'] = 'Step 5 - Set System Values';
-$lang['install_step6_label'] = 'Step 5: Finalize';
-$lang['install_step6_success'] = "You have successfully updated the selected system values.\r\n\r\nNova has been successfully installed and you can begin using it. Please take the time to read through our extensive <a href='http://docs.anodyne-productions.com/nova.php' target='_blank'>user guide</a> as it will answer most questions you may have.\r\n\r\nNow that Nova is installed, please make sure the <em>application/assets/images</em> and <em>application/assets/backups</em> directories and all their subdirectories are writable (777). If you don". RSQUO ."t know how to do that, please contact your host. Nova needs these directories writable for several features.";
-$lang['install_step6_failure'] = "There was a problem updating your system settings. This is not a critical error however. Once you have logged in, you will be able to update site settings.\r\n\r\nPlease take the time to read through our extensive <a href='http://docs.anodyne-productions.com/nova.php' target='_blank'>user guide</a> as it will answer most questions you may have.\r\n\r\nNow that Nova is installed, please make sure the <em>application/assets/images</em> and <em>application/assets/backups</em> directories and all their subdirectories are writable (777). If you don". RSQUO ."t know how to do that, please contact your host. Nova needs these directories writable for several features.";
-
-/*
-|---------------------------------------------------------------
-| FEATURE TOUR
-|---------------------------------------------------------------
-*/
-
-$lang['install_tour_whatsnew'] = 'What'. RSQUO .'s New in Nova?';
-$lang['install_tour_whatsnew_content'] = 'There isn'. RSQUO .'t a single area of the system we haven'. RSQUO .'t gone in and improved in some way, shape or form. Sometimes it'. RSQUO .'s minor, other times it'. RSQUO .'s a radical change. But even with all the changes we'. RSQUO .'ve worked hard to make sure the system is still incredibly intuitive. Our goal with Nova was to provide a system that got out of your way and just let you play the game the way you want. We'. RSQUO .'re very proud of what we'. RSQUO .'ve accomplished here and are excited to share it with you. Below are a handful of brand new features and enhancements in Nova. We encourage you to check out <a href="http://docs.anodyne-productions.com/nova.php">Nova'. RSQUO .'s documentation</a> to get a complete list of changes since SMS and get a ton of information from the new user guide.';
-
-$lang['install_title_tour'] = 'Nova Tour';
-
-$lang['install_tour_header_genres'] = 'Genres';
-$lang['install_tour_header_bios'] = 'Dynamic Bios';
-$lang['install_tour_header_players'] = 'Players &amp; Characters';
-$lang['install_tour_header_wiki'] = 'Built-in Wiki';
-
-$lang['install_tour_genres_content'] = 'When Anodyne Productions released SMS in the spring of 2005, the focus was entirely on Star Trek. Even with the release of version 2 of SMS, Anodyne decided not to stray from what they knew and had worked so well. But as time went on, other organizations wanted to use SMS for their RPGs because of its ease of use and power. With everything hard-coded for Star Trek though, any modifications were laborious at best. With Nova, we'. RSQUO .'ve addressed that issue head on by creating wide-ranging support for different genres. Right now, Nova can handle fourteen different genres ranging from Battlestar Galactica to Firefly to Stargate Atlantis and everything in between. In addition, we'. RSQUO .'ve greatly expanded our Star Trek genres to include information for Enterprise, The Original Series, the Movie era and even several different alien races (Klingon, Cardassian, Romulan and Bajoran). Our goal was to make Nova as flexible and versatile a product as we could and genres is just one way we do that.';
-$lang['install_tour_bios_content'] = 'Character biographies are now driven almost entirely from the database. While that may not sound like anything special, it'. RSQUO .'s actually one of the coolest things about Nova. Now, instead of a static HTML file, the bios (as well as specs and tour pages) are built entirely on the fly from the database. This means that admins have more control than ever before over bios, specs and tour pages to make them their own. Don'. RSQUO .'t want to see a Service Record entry in the bio pages? Remove it. Want to add a field for any pets your character may have? You can add it. All these changes are done right from the Nova Admin Control Panel in an easy to use interface, meaning that more than ever, you have complete control over your site.';
-$lang['install_tour_players_content'] = 'Let'. RSQUO .'s face it, not everyone plays the game the same way. Some organizations or RPGs allow a single player to have multiple playing characters while others restrict it to a single playing character for each player. Why should people who do it one way have an easier time than others? The answer is they shouldn'. RSQUO .'t and we'. RSQUO .'ve corrected that imbalance in Nova by separating player and character accounts. Now, once you have a player account, admins can assign playing characters and even non-playing characters to a player for them to post as. This means that instead of having to post as John even when you'. RSQUO .'re playing Dave, you can post as Dave and the crew will see it on the site and in their inboxes as coming from Dave, not John. Nova even allows admins to set the maximum number of playing and non-playing characters that can be assigned to a player. This leap forward ensures that no matter how you play the game, Nova makes it easier for you to starting posting how you want.';
-$lang['install_tour_wiki_content'] = '<em>Coming Soon...</em>';
+$lang['install_step5_title'] = 'Step 5 - Set System Values';
+$lang['install_step5_label'] = 'Step 5: Finalize';
+$lang['install_step5_success'] = "You have successfully updated the selected system values.\r\n\r\nNova has been successfully installed and you can begin using it. Please take the time to read through our extensive <a href='http://docs.anodyne-productions.com/nova.php' target='_blank'>user guide</a> as it will answer most questions you may have.\r\n\r\nNow that Nova is installed, please make sure the <em>application/assets/images</em> and <em>application/assets/backups</em> directories and all their subdirectories are writable (777). If you don". RSQUO ."t know how to do that, please contact your host. Nova needs these directories writable for several features.";
+$lang['install_step5_failure'] = "There was a problem updating your system settings. This is not a critical error however. Once you have logged in, you will be able to update site settings.\r\n\r\nPlease take the time to read through our extensive <a href='http://docs.anodyne-productions.com/nova.php' target='_blank'>user guide</a> as it will answer most questions you may have.\r\n\r\nNow that Nova is installed, please make sure the <em>application/assets/images</em> and <em>application/assets/backups</em> directories and all their subdirectories are writable (777). If you don". RSQUO ."t know how to do that, please contact your host. Nova needs these directories writable for several features.";
 
 /*
 |---------------------------------------------------------------
@@ -226,6 +201,59 @@ $lang['verify_on'] = 'On';
 */
 
 /*
+ * Index
+ */
+$lang['upd_index_title'] = 'Update Center';
+$lang['upd_index_header'] = 'Welcome to Nova!';
+$lang['upd_index_options_update'] = 'Check for updates to Nova '. RARROW;
+$lang['upd_index_options_verify'] = 'Verify my server can run Nova '. RARROW;
+$lang['upd_index_options_readme'] = 'View the Nova readme '. RARROW;
+$lang['upd_index_options_tour'] = 'Take a tour of Nova '. RARROW;
+$lang['upd_index_options_upd_guide'] = 'Read the Update Guide '. RARROW;
+$lang['upd_index_options_firststeps'] = 'First Steps';
+$lang['upd_index_options_whatsnext'] = 'What'. RSQUO .'s Next?';
+
+/*
+ * Check
+ */
+$lang['upd_header_releasenotes'] = 'Release Notes';
+$lang['upd_header_whatsnew'] = "What's New in This Release?";
+$lang['update_text_no_updates'] = 'No updates are available for %s right now.';
+
+$lang['upd_check_header_files'] = "Get the New Files";
+$lang['upd_check_text_files'] = "The first thing you'll need to do is download the new Nova files. You can download the files from the <a href='http://www.anodyne-productions.com/index.php/nova/download' target='_blank'>Anodyne site</a>. Once you've downloaded the files, follow the directions in the README for updating to the latest version of Nova.";
+$lang['upd_check_go_files'] = "<a href='http://www.anodyne-productions.com/index.php/nova/download' target='_blank'>Get the files now ". RARROW ."</a>";
+
+$lang['upd_check_header_start'] = "Already Have the Files? Start the Update!";
+$lang['upd_check_text_start'] = "If you've already downloaded the files and made the udpates to your system but just need to update your database, you can use the link below to start the process.";
+$lang['upd_check_go_start'] = 'Start the update '. RARROW;
+
+/*
+ * Errors
+ */
+$lang['upd_error_title'] = 'Update Error!';
+$lang['upd_error_back'] = LARROW .' Back to the Update Center';
+$lang['upd_error_1'] = 'No version of Nova can be found in this database. In order to update, you must have Nova installed in this database. Please verify your database connection settings and try again.';
+$lang['upd_error_2'] = 'Maintenance mode is currently off. You must login and turn maintenance mode on from Site Settings page before you can update the system.';
+$lang['upd_error_3'] = 'You are not a system administrator and cannot update the system!';
+
+/*
+ * Step 1
+ */
+$lang['upd_step1_title'] = 'Step 1: Backup Database';
+$lang['upd_step1_success'] = 'You have successfully backed up your Nova database and can continue with the update process. Click <strong>Next Step</strong> to continue.';
+$lang['upd_step1_failure'] = "There was a problem backing up your Nova database. This can be caused by a variety issues, but is most likely caused by your host not allowing files to be written to the server. Please manually backup your Nova database then click <strong>Next Step</strong> to continue.";
+$lang['upd_step1_nofields'] = "The update cannot continue because there are no Nova tables in this database!";
+$lang['upd_step1_memory'] = "Your server does not have a sufficient memory capacity to initiate an automatic backup of your Nova database. Please manually backup your Nova database then click <strong>Next Step</strong> to continue.";
+
+/*
+ * Step 2
+ */
+$lang['upd_step2_title'] = 'Step 2: Run Update';
+$lang['upd_step2_success'] = 'You have successfully updated Nova to version %s. You can continue using Nova as normal now. Remember to turn maintenance mode off from the Site Settings page so the rest of your players can use the site!';
+$lang['upd_step2_site'] = 'Back to Site '. RARROW;
+
+/*
  * Verify
  */
 $lang['upd_verify_title'] = 'Verify Server Requirements';
@@ -238,11 +266,7 @@ $lang['update_available'] = '%s %s is now available.';
 $lang['update_outofdate_files'] = 'Your system files are running version %s, but your database is running version %s. Please update your system files and try again.';
 $lang['update_outofdate_database'] = 'Your database is running version %s, but your files are running version %s. Please use the links below to update your database.';
 
-$lang['update_header_releasenotes'] = 'Release Notes';
-$lang['update_header_whatsnew'] = "What's New in This Release?";
-
-$lang['update_text_no_updates'] = 'No updates are available for %s right now.';
-$lang['update_text_index'] = 'Only system administrators can update the system. In order to continue with the update, you must verify you are a system administrator. Please provide your email address and password and click Submit.';
+$lang['upd_text_sysadmin'] = 'Only system administrators can update the system. In order to continue with the update, you must verify you are a system administrator. Please provide your email address and password and click Submit.';
 
 $lang['update_title_index'] = 'Update Center';
 
@@ -294,7 +318,8 @@ $lang['upg_status_2'] = 'You are running a version of SMS that is not supported 
 $lang['upg_status_3'] = 'We could not find an copy of SMS installed on this database. In order to upgrade, you must be running SMS 2.6.0 or higher.';
 $lang['upg_status_4'] = 'You are using a genre other than the DS9 genre. This upgrade process only supports upgrading to the DS9 genre. Please change your genre in the Nova config file and try again.';
 
-$lang['upg_index'] = "<h2>Welcome to the Nova Upgrade Center!</h2><p>We know you're excited to start using Nova, but before you jump right in and start upgrading, make sure you read through everything very carefully. Nova is the product of years of work and as a result, a lot of things are different from SMS. The upgrade process should cover everything but to ensure everything is upgraded properly the first time, you should read our <a href='http://docs.anodyne-productions.com/index.php/nova/overview/upgrade' target='_blank'>upgrade guide</a> in the user guide. We realize this is a long document, but it has information crucial to properly upgrading SMS to Nova, so make sure you take the time to read it before beginning.</p><h4>Before Beginning</h4><p>There are a couple things you need to do before you even start the upgrade process.</p><ol class='decimal'><li>Set up your database connection file located at <strong>application/config/database.php</strong></li><li>Make sure you're using the DS9 genre (the upgrade will only work for the DS9 genre)</li><li>Make sure you've set up your SMS config preferences, upgrade password and upgrade email address located in <strong>application/config/sms.php</strong></li></ol><p>It's very important that you take the above steps before beginning otherwise you could be missing all the management tools or have errors throughout the upgrade process.</p><h4>Let's Get Started!</h4><p>Step 1 will attempt to automatically back up your SMS database before beginning the upgrade. If you have a large database and your server memory limit isn't high enough or your server doesn't support writing files to directories, you may not be able to complete the backup, but if it doesn't work, you can manually backup your database before starting. We <strong>strongly</strong> encourage you to have a backup before upgrading.</p>";
+$lang['upg_index_header'] = 'Welcome to the Nova Upgrade Center!';
+$lang['upg_index'] = "<p>We know you're excited to start using Nova, but before you jump right in and start upgrading, make sure you read through everything very carefully. Nova is the product of years of work and as a result, a lot of things are different from SMS. The upgrade process should cover everything but to ensure everything is upgraded properly the first time, you should read our <a href='http://docs.anodyne-productions.com/index.php/nova/overview/upgrade' target='_blank'>upgrade guide</a> in the user guide. We realize this is a long document, but it has information crucial to properly upgrading SMS to Nova, so make sure you take the time to read it before beginning.</p><h4>Before Beginning</h4><p>There are a couple things you need to do before you even start the upgrade process.</p><ol class='decimal'><li>Set up your database connection file located at <strong>application/config/database.php</strong></li><li>Make sure you're using the DS9 genre (the upgrade will only work for the DS9 genre)</li><li>Make sure you've set up your SMS config preferences, upgrade password and upgrade email address located in <strong>application/config/sms.php</strong></li></ol><p>It's very important that you take the above steps before beginning otherwise you could be missing all the management tools or have errors throughout the upgrade process.</p><h4>Let's Get Started!</h4><p>Step 1 will attempt to automatically back up your SMS database before beginning the upgrade. If you have a large database and your server memory limit isn't high enough or your server doesn't support writing files to directories, you may not be able to complete the backup, but if it doesn't work, you can manually backup your database before starting. We <strong>strongly</strong> encourage you to have a backup before upgrading.</p>";
 
 /*
  * Errors
