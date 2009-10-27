@@ -25,6 +25,12 @@
 			<?php echo $label['options_verify'];?>
 		</a>
 	</li>
+	<li>
+		<a href="http://docs.anodyne-productions.com/index.php/nova/overview/install" target="_blank">
+			<span class="icon ui-icon ui-icon-bookmark"></span>
+			<?php echo $label['options_guide'];?>
+		</a>
+	</li>
 	
 	<?php if ($installed === TRUE): ?>
 		<li>
