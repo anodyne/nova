@@ -3,88 +3,45 @@
 <?php echo form_open('install/step/5');?>
 	<table class="table100">
 		<tr>
-			<td colspan="3" class="fontMedium bold"><?php echo $label['player'];?></td>
-		</tr>
-		<tr>
-			<td class="cell_label"><?php echo $label['name'];?></td>
+			<td class="cell_label"><?php echo $label['simname'];?></td>
 			<td class="cell_spacer"></td>
-			<td><?php echo form_input($inputs['name']);?></td>
+			<td><?php echo form_input($inputs['sim_name']);?></td>
 		</tr>
 		<?php echo table_row_spacer(3, 5);?>
 		<tr>
-			<td class="cell_label"><?php echo $label['email'];?></td>
+			<td class="cell_label"><?php echo $label['sysemail'];?></td>
 			<td class="cell_spacer"></td>
-			<td><?php echo form_input($inputs['email']);?></td>
+			<td><?php echo form_dropdown('s_system_email', $email_v, $this->settings->get_setting('system_email'));?></td>
 		</tr>
 		<?php echo table_row_spacer(3, 5);?>
 		<tr>
-			<td class="cell_label"><?php echo $label['password'];?></td>
+			<td class="cell_label"><?php echo $label['emailsubject'];?></td>
 			<td class="cell_spacer"></td>
-			<td><?php echo form_password($inputs['password']);?></td>
+			<td><?php echo form_input($inputs['email_subject']);?></td>
 		</tr>
 		<?php echo table_row_spacer(3, 5);?>
 		<tr>
-			<td class="cell_label"><?php echo $label['dob'];?></td>
+			<td class="cell_label"><?php echo $label['updates'];?></td>
 			<td class="cell_spacer"></td>
-			<td><?php echo form_input($inputs['dob']);?></td>
+			<td><?php echo form_dropdown('s_updates', $updates_v, $this->settings->get_setting('updates'));?></td>
 		</tr>
 		<?php echo table_row_spacer(3, 5);?>
 		<tr>
-			<td class="cell_label"><?php echo $label['question'];?></td>
+			<td class="cell_label"><?php echo $label['characters'];?></td>
 			<td class="cell_spacer"></td>
-			<td><?php echo form_dropdown('security_question', $questions);?></td>
+			<td><?php echo form_input($inputs['num_chars']);?></td>
 		</tr>
 		<?php echo table_row_spacer(3, 5);?>
 		<tr>
-			<td class="cell_label"><?php echo $label['answer'];?></td>
+			<td class="cell_label"><?php echo $label['npcs'];?></td>
 			<td class="cell_spacer"></td>
-			<td>
-				<?php echo text_output($label['remember'], 'span', 'fontSmall gray bold');?><br />
-				<?php echo form_input($inputs['security_answer']);?>
-			</td>
+			<td><?php echo form_input($inputs['num_npc']);?></td>
 		</tr>
 		<?php echo table_row_spacer(3, 5);?>
 		<tr>
-			<td class="cell_label"><?php echo $label['timezone'];?></td>
+			<td class="cell_label"><?php echo $label['dates'];?></td>
 			<td class="cell_spacer"></td>
-			<td><?php echo timezone_menu('UTC');?></td>
-		</tr>
-		
-		<?php echo table_row_spacer(3, 15);?>
-		
-		<tr>
-			<td colspan="3" class="fontMedium bold"><?php echo $label['character'];?></td>
-		</tr>
-		<tr>
-			<td class="cell_label"><?php echo $label['fname'];?></td>
-			<td class="cell_spacer"></td>
-			<td><?php echo form_input($inputs['first_name']);?></td>
-		</tr>
-		<?php echo table_row_spacer(3, 5);?>
-		<tr>
-			<td class="cell_label"><?php echo $label['lname'];?></td>
-			<td class="cell_spacer"></td>
-			<td><?php echo form_input($inputs['last_name']);?></td>
-		</tr>
-		<?php echo table_row_spacer(3, 5);?>
-		<tr>
-			<td class="cell_label"><?php echo $label['rank'];?></td>
-			<td class="cell_spacer"></td>
-			<td>
-				<?php echo form_dropdown_rank('rank', '', 'id="rank"');?>
-				&nbsp; <span id="loading_update_rank" class="hidden fontSmall gray"><?php echo img($loading);?></span>
-				<p id="rank_img" class="fontSmall gray"><?php echo img($default_rank);?></p>
-			</td>
-		</tr>
-		<?php echo table_row_spacer(3, 5);?>
-		<tr>
-			<td class="cell_label"><?php echo $label['position'];?></td>
-			<td class="cell_spacer"></td>
-			<td>
-				<?php echo form_dropdown_position('position', '', 'id="position"', 'open');?>
-				&nbsp; <span id="loading_update" class="hidden fontSmall gray"><?php echo img($loading);?></span>
-				<p id="position_desc" class="fontSmall gray"></p>
-			</td>
+			<td><?php echo form_dropdown('s_date_format', $dates_v, $this->settings->get_setting('date_format'));?></td>
 		</tr>
 		
 		<?php echo table_row_spacer(3, 15);?>
