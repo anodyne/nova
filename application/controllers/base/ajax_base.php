@@ -19,7 +19,7 @@ class Ajax_base extends Controller {
 		
 		/* load the session library */
 		$this->load->library('session');
-		
+	
 		/* check to see if they are logged in */
 		$this->auth->is_logged_in();
 		
@@ -29,11 +29,6 @@ class Ajax_base extends Controller {
 		
 		/* set and load the language file needed */
 		$this->lang->load('app', $this->session->userdata('language'));
-		
-		if ($this->session->userdata('player_id') === FALSE)
-		{
-			log_message('error', 'Player ID not found, attempting autologin. This error originated from '. $this->uri->uri_string());
-		}
 	}
 
 	function index()
@@ -5111,44 +5106,6 @@ class Ajax_base extends Controller {
 		}
 		else
 		{
-			$message = sprintf(
-				lang('flash_failure'),
-				ucfirst(lang('global_tour') .' '. lang('labels_field') .' '. lang('labels_value')),
-				lang('actions_updated'),
-				''
-			);
-			
-			$flash['status'] = 'error';
-			$flash['message'] = text_output($message);
-				
-			$output = $this->load->view('_base/admin/pages/flash', $flash, TRUE);
-		}
-		
-		echo $output;
-	}
-	
-	function try_database()
-	{
-		$query = $this->db->simple_query('DESCRIBE nova_system_info');
-		
-		if ($query === FALSE)
-		{
-			$message = sprintf(
-				lang('flash_failure'),
-				ucfirst(lang('global_tour') .' '. lang('labels_field') .' '. lang('labels_value')),
-				lang('actions_updated'),
-				''
-			);
-			
-			$flash['status'] = 'error';
-			$flash['message'] = text_output($message);
-				
-			$output = $this->load->view('_base/admin/pages/flash', $flash, TRUE);
-		}
-		else
-		{
-			// success
-			
 			$message = sprintf(
 				lang('flash_failure'),
 				ucfirst(lang('global_tour') .' '. lang('labels_field') .' '. lang('labels_value')),
