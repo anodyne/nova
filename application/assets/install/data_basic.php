@@ -1730,7 +1730,7 @@ $settings = array(
 		'setting_user_created' => 'n'),
 	array(
 		'setting_key' => 'updates',
-		'setting_value' => 'major',
+		'setting_value' => 'all',
 		'setting_user_created' => 'n'),
 	array(
 		'setting_key' => 'show_news',
