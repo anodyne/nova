@@ -183,7 +183,7 @@ class Auth {
 		
 		/* set the variables */
 		$retval = 0;
-		$maintenance = $this->ci->settings_model->get_setting('maintenance');
+		$maintenance = $this->ci->settings->get_setting('maintenance');
 		
 		if ($email == '')
 		{ /* if they don't put anything for an email address, stop right here */
