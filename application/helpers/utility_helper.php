@@ -89,7 +89,7 @@ if ( ! function_exists('whos_online'))
 		$ci->load->model('players_model', 'player');
 		$ci->load->model('characters_model', 'char');
 		
-		$timespan = $ci->settings_model->get_setting('online_timespan');
+		$timespan = $ci->settings->get_setting('online_timespan');
 		
 		$online = $ci->player->get_online_players($timespan);
 			
