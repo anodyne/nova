@@ -359,151 +359,22 @@ class Admin_base extends Controller {
 		
 		if ($this->auth->is_sysadmin($this->session->userdata('player_id')))
 		{
-			/* load the resources */
-			$this->load->library('simplepie');
+			/* load the install file */
 			$this->lang->load('install', $this->session->userdata('language'));
 			
-			/* get the system information */
-			$s = $this->sys->get_system_info();
+			$check = $this->_check_version(APP_VERSION_MAJOR .'.'. APP_VERSION_MINOR .'.'. APP_VERSION_UPDATE);
 			
-			/* build the array of version info */
-			$version = array(
-				'files' => array(
-					'full'		=> APP_VERSION_MAJOR .'.'. APP_VERSION_MINOR .'.'. APP_VERSION_UPDATE,
-					'major'		=> APP_VERSION_MAJOR,
-					'minor'		=> APP_VERSION_MINOR,
-					'update'	=> APP_VERSION_UPDATE
-				),
-				'database' => array(
-					'full'		=> $s->sys_version_major .'.'. $s->sys_version_minor .'.'. $s->sys_version_update,
-					'major'		=> $s->sys_version_major,
-					'minor'		=> $s->sys_version_minor,
-					'update'	=> $s->sys_version_update
-				),
-			);
+			/* assign the update values to the udpate variable */
+			$update = $check['update'];
+			$update['link'] = 'http://www.anodyne-productions.com/index.php/nova/downloads';
 			
-			/* grab the information from the version feed */
-			$this->simplepie->set_feed_url(base_url() . APPFOLDER .'/assets/version.xml');
-			$this->simplepie->enable_cache(FALSE);
-			$this->simplepie->init();
-			$this->simplepie->handle_content_type();
+			/* grab the ignore version */
+			$ignore = $this->sys->get_item('system_info', 'sys_id', 1, 'sys_version_ignore');
 			
-			/* get the items from the feed */
-			$items = $this->simplepie->get_items();
+			/* set the update variable to be empty */
+			$data['update'] = FALSE;
 			
-			foreach ($items as $i)
-			{ /* loop through and figure out what we should be displaying */
-				$type = $this->options['updates'];
-				
-				switch ($type)
-				{
-					case 'major':
-						$major = $i->get_item_tags(SIMPLEPIE_NAMESPACE_RSS_20, 'major');
-						$major = $major[0]['data'];
-						
-						if ($major > $version['files']['major'] && $major > $version['database']['major'])
-						{
-							$severity = $i->get_item_tags(SIMPLEPIE_NAMESPACE_RSS_20, 'severity');
-							
-							$update['version'] = $i->get_title();
-							$update['description'] = $i->get_description();
-							$update['severity'] = $severity[0]['date'];
-						}
-					
-						break;
-						
-					case 'minor':
-						$major = $i->get_item_tags(SIMPLEPIE_NAMESPACE_RSS_20, 'major');
-						$minor = $i->get_item_tags(SIMPLEPIE_NAMESPACE_RSS_20, 'minor');
-						
-						$major = $major[0]['data'];
-						$minor = $minor[0]['data'];
-						
-						if ($minor > $version['files']['minor'] && $minor > $version['database']['minor'])
-						{
-							$severity = $i->get_item_tags(SIMPLEPIE_NAMESPACE_RSS_20, 'severity');
-							
-							$update['version'] = $i->get_title();
-							$update['description'] = $i->get_description();
-							$update['severity'] = $severity[0]['data'];
-						}
-						elseif (($minor < $version['files']['minor'] && $major > $version['files']['major']) &&
-								($minor < $version['database']['minor'] && $major > $version['database']['major']))
-						{
-							$severity = $i->get_item_tags(SIMPLEPIE_NAMESPACE_RSS_20, 'severity');
-							
-							$update['version'] = $i->get_title();
-							$update['description'] = $i->get_description();
-							$update['severity'] = $severity[0]['data'];
-						}
-					
-						break;
-						
-					case 'all':
-						if ($i->get_title() != $version['files']['full'] && $i->get_title() != $version['database']['full'])
-						{
-							$severity = $i->get_item_tags(SIMPLEPIE_NAMESPACE_RSS_20, 'severity');
-							
-							$update['version'] = $i->get_title();
-							$update['description'] = $i->get_description();
-							$update['severity'] = $severity[0]['data'];
-						}
-							
-						break;
-				}
-			}
-			
-			if ($version['database']['full'] > $version['files']['full'])
-			{
-				$data['update']['version'] = sprintf(
-					lang_output('update_outofdate_files'),
-					$version['files']['full'],
-					$version['database']['full']
-				);
-				$data['update']['desc'] = $update['description'];
-				$data['update']['link'] = 'http://www.anodyne-productions.com/index.php/nova/downloads';
-				
-				switch ($update['severity'])
-				{
-					case 'critical':
-						$data['update']['severity'] = 'red';
-						break;
-					
-					case 'major':
-						$data['update']['severity'] = 'orange';
-						break;
-						
-					case 'minor':
-						$data['update']['severity'] = 'blue';
-						break;
-				}
-			}
-			elseif ($version['database']['full'] < $version['files']['full'])
-			{
-				$data['update']['version'] = sprintf(
-					lang_output('update_outofdate_database'),
-					$version['database']['full'],
-					$version['files']['full']
-				);
-				$data['update']['desc'] = $update['description'];
-				$data['update']['link'] = 'http://www.anodyne-productions.com/index.php/nova/downloads';
-				
-				switch ($update['severity'])
-				{
-					case 'critical':
-						$data['update']['severity'] = 'red';
-						break;
-					
-					case 'major':
-						$data['update']['severity'] = 'orange';
-						break;
-						
-					case 'minor':
-						$data['update']['severity'] = 'blue';
-						break;
-				}
-			}
-			elseif (isset($update))
+			if ($update['version'] != $ignore)
 			{
 				$data['update']['version'] = sprintf(
 					lang_output('update_available'),
@@ -511,6 +382,7 @@ class Admin_base extends Controller {
 					$update['version'],
 					APP_NAME
 				);
+				$data['update']['version_only'] = $update['version'];
 				$data['update']['desc'] = $update['description'];
 				$data['update']['link'] = 'http://www.anodyne-productions.com/index.php/nova/downloads';
 				
@@ -529,9 +401,10 @@ class Admin_base extends Controller {
 						break;
 				}
 			}
-			
-			$js_data['panel'] = (isset($data['update'])) ? 'update' : $js_data['panel'];
 		}
+		
+		/* set the panel */
+		$js_data['panel'] = ($data['update'] !== FALSE) ? 'update' : $js_data['panel'];
 		
 		/* view data */
 		$data['header'] = lang('head_admin_index');
@@ -539,7 +412,7 @@ class Admin_base extends Controller {
 		/*  javascript data */
 		$js_data['first_launch'] = $this->session->flashdata('first_launch');
 		$js_data['password_reset'] = $this->session->flashdata('password_reset');
-		$js_data['version'] = (isset($update)) ? $update['version'] : '';
+		$js_data['version'] = ($update !== FALSE) ? $update['version'] : '';
 		
 		$data['label'] = array(
 			'view_all_posts' => ucwords(lang('actions_viewall') .' '. lang('global_posts') .' '. RARROW),
@@ -625,29 +498,38 @@ class Admin_base extends Controller {
 		$this->template->render();
 	}
 	
-	function version()
+	function whatsnew()
 	{
-		$version = array(
-			'version' => APP_VERSION,
-			'major' => APP_MAJOR_VERSION,
-			'minor' => APP_MINOR_VERSION,
-			'update' => APP_UPDATE_VERSION
+		/* build the array of pieces we need */
+		$version_pieces = array(
+			'sys_version_major',
+			'sys_version_minor',
+			'sys_version_update'
 		);
 		
-		$this->_check_version($version);
-	}
-	
-	function whats_new()
-	{
-		/* load the model and assign the data to a variable */
-		$this->load->model('system_model', 'sys');
-		$data['whats_new'] = $this->sys->get_whatsnew();
+		/* get the current version */
+		$version = $this->sys->get_item('system_info', 'sys_id', 1, $version_pieces);
 		
-		/* load the view */
-		$this->load->view('_base/admin/pages/whats_new', $data);
+		/* put the version into a string */
+		$version_str = implode('.', $version);
+		
+		/* grab the what's new information */
+		$data['whats_new'] = $this->sys->get_item('system_versions', 'version', $version_str, 'version_launch');
+		
+		$data['header'] = lang('head_admin_whatsnew');
+		
+		/* figure out where the view files should be coming from */
+		$view_loc = view_location('whats_new', $this->skin, 'admin');
+		
+		/* write the data to the template */
+		$this->template->write('title', lang('head_admin_whatsnew'));
+		$this->template->write_view('content', $view_loc, $data);
+		
+		/* render the template */
+		$this->template->render();
 	}
 	
-	function _check_version($local_version = '')
+	function _check_version($current = '')
 	{
 		/*
 		
@@ -667,61 +549,138 @@ class Admin_base extends Controller {
 		
 		*/
 		
-		/* load the simplepie library */
+		/* load the resources */
 		$this->load->library('simplepie');
 		
-		/* set the feed url and initiate it */
-		$this->simplepie->set_feed_url(APPFOLDER . '/assets/version.xml');
-		$this->simplepie->init();
+		/* get the system information */
+		$system = $this->sys->get_system_info();
 		
-		/* assign the objects to an array */
+		/* build the array of version info */
+		$version = array(
+			'files' => array(
+				'full'		=> APP_VERSION_MAJOR .'.'. APP_VERSION_MINOR .'.'. APP_VERSION_UPDATE,
+				'major'		=> APP_VERSION_MAJOR,
+				'minor'		=> APP_VERSION_MINOR,
+				'update'	=> APP_VERSION_UPDATE
+			),
+			'database' => array(
+				'full'		=> $system->sys_version_major .'.'. $system->sys_version_minor .'.'. $system->sys_version_update,
+				'major'		=> $system->sys_version_major,
+				'minor'		=> $system->sys_version_minor,
+				'update'	=> $system->sys_version_update
+			),
+		);
+		
+		/* grab the information from the version feed */
+		$this->simplepie->set_feed_url(VERSION_FEED);
+		$this->simplepie->enable_cache(FALSE);
+		$this->simplepie->init();
+		$this->simplepie->handle_content_type();
+		
+		/* get the items from the feed */
 		$items = $this->simplepie->get_items();
 		
-		echo 'local version - '. $local_version['version'] .'<br />';
+		/* grab the updates setting */
+		$type = $this->options['updates'];
 		
-		/* create an array that will hold all the version info */
-		$versions = array();
+		$update = FALSE;
 		
-		foreach ($items as $item)
-		{ /* go through the feed items */
-			$major = $item->get_item_tags('', 'major');
-			$minor = $item->get_item_tags('', 'minor');
-			$update = $item->get_item_tags('', 'update');
-			
-			/* add the items to the versions array */
-			$versions[] = array(
-				'version' => $item->get_title(),
-				'major' => $major[0]['data'],
-				'minor' => $minor[0]['data'],
-				'update' => $update[0]['data']
+		foreach ($items as $i)
+		{ /* loop through and figure out what we should be displaying */
+			switch ($type)
+			{
+				case 'major':
+					$major = $i->get_item_tags(SIMPLEPIE_NAMESPACE_RSS_20, 'major');
+					$major = $major[0]['data'];
+					$severity = $i->get_item_tags(SIMPLEPIE_NAMESPACE_RSS_20, 'severity');
+					
+					if ($major > $version['files']['major'] || $major > $version['database']['major'])
+					{
+						$update['version'] = $i->get_title();
+						$update['description'] = $i->get_description();
+						$update['severity'] = $severity[0]['data'];
+					}
+				
+					break;
+					
+				case 'minor':
+					$major = $i->get_item_tags(SIMPLEPIE_NAMESPACE_RSS_20, 'major');
+					$minor = $i->get_item_tags(SIMPLEPIE_NAMESPACE_RSS_20, 'minor');
+					$severity = $i->get_item_tags(SIMPLEPIE_NAMESPACE_RSS_20, 'severity');
+					
+					$major = $major[0]['data'];
+					$minor = $minor[0]['data'];
+					
+					if ($minor > $version['files']['minor'] || $minor > $version['database']['minor'])
+					{
+						$update['version'] = $i->get_title();
+						$update['description'] = $i->get_description();
+						$update['severity'] = $severity[0]['data'];
+					}
+					elseif (($minor < $version['files']['minor'] || $major > $version['files']['major']) ||
+							($minor < $version['database']['minor'] || $major > $version['database']['major']))
+					{
+						$update['version'] = $i->get_title();
+						$update['description'] = $i->get_description();
+						$update['severity'] = $severity[0]['data'];
+					}
+				
+					break;
+					
+				case 'all':
+					$severity = $i->get_item_tags(SIMPLEPIE_NAMESPACE_RSS_20, 'severity');
+					
+					if ($i->get_title() != $version['files']['full'] || $i->get_title() != $version['database']['full'])
+					{
+						$update['version'] = $i->get_title();
+						$update['description'] = $i->get_description();
+						$update['severity'] = $severity[0]['data'];
+					}
+						
+					break;
+			}
+		}
+		
+		if ($version['database']['full'] > $version['files']['full'])
+		{
+			$flash['status'] = 'info';
+			$flash['message'] = sprintf(
+				lang_output('update_outofdate_files'),
+				$version['files']['full'],
+				$version['database']['full']
 			);
 		}
-		
-		foreach ($versions as $key => $value)
-		{ /* loop through the versions array and remove unneeded items */
-			
-			if ($this->globals['updates'] == 'major')
-			{
-				
-			}
-			elseif ($this->globals['updates'] == 'minor')
-			{
-				
-			}
-			
-			
-			
-			if (
-				($this->globals['updates'] == 'major' && ($value['major'] == $local_version['major'] || $value['minor'] <= $local_version['minor'])) ||
-				($value['version'] == $local_version['version'])
-				)
-			{
-				unset($versions[$key]);
-			}
+		elseif ($version['database']['full'] < $version['files']['full'])
+		{
+			$flash['status'] = 'info';
+			$flash['message'] = sprintf(
+				lang_output('update_outofdate_database'),
+				$version['database']['full'],
+				$version['files']['full']
+			);
+		}
+		elseif (isset($update))
+		{
+			$flash['status'] = 'info';
+			$flash['message'] = sprintf(
+				lang_output('update_available'),
+				APP_NAME,
+				$update['version'],
+				APP_NAME
+			);
+		}
+		else
+		{
+			$flash['status'] = '';
+			$flash['message'] = '';
 		}
 		
-		$this->load->helper('debug');
-		print_var($versions);
+		$retval = array(
+			'flash' => $flash,
+			'update' => $update
+		);
+		
+		return $retval;
 	}
 }
 

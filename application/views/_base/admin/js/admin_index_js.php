@@ -42,15 +42,23 @@ elseif ($first_launch == 1)
 		});
 		
 		$('.ignore').click(function(){
+			var myVersion = $(this).attr('myVersion');
+			
 			$.ajax({
 				type: "POST",
 				url: "<?php echo site_url('ajax/save_ignore_update_version');?>",
-				data: { version: '<?php echo $version;?>' },
+				data: { version: myVersion },
 				success: function(data){
-					$('.' + parent + ' .flash_message').remove();
-					$('.' + parent).prepend(data);
+					$('#update').fadeOut('normal', function(){
+						$('#update').remove();
+					});
+					$('.update').fadeOut('normal');
+					$('.stats').removeClass('hidden');
+					$('#stats').addClass('active');
 				}
 			});
+			
+			return false;
 		});
 	});
 </script>

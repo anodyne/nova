@@ -5015,7 +5015,17 @@ class Ajax_base extends Controller {
 	
 	function save_ignore_update_version()
 	{
+		/* load the resources */
+		$this->load->model('system_model', 'sys');
+		
+		/* grab the version from the POST */
 		$version = $this->input->post('version', TRUE);
+		
+		/* build the array used by AR */
+		$update = array('sys_version_ignore' => $version);
+		
+		/* do the update */
+		$this->sys->update_system_info($update);
 	}
 	
 	function save_spec_field_value()
@@ -5122,34 +5132,40 @@ class Ajax_base extends Controller {
 		echo $output;
 	}
 	
-	function what_new()
+	function whats_new()
 	{
-		/* data being sent to the facebox */
-		$data['header'] = lang('fbx_change_password');
-		$data['text'] = lang('fbx_change_password_text');
+		/* load the resources */
+		$this->load->model('players_model', 'player');
+		$this->load->model('system_model', 'sys');
 		
-		/* input parameters */
-		$data['inputs'] = array(
-			'comment_text' => array(
-				'name' => 'comment_text',
-				'id' => 'comment_text',
-				'rows' => 10,
-				'class' => 'hud'),
-			'comment_button' => array(
-				'type' => 'submit',
-				'class' => 'hud_button',
-				'name' => 'submit',
-				'value' => 'submit',
-				'content' => ucwords(lang('actions_submit')))
+		/* build the array of pieces we need */
+		$version_pieces = array(
+			'sys_version_major',
+			'sys_version_minor',
+			'sys_version_update'
 		);
 		
-		/*if ($person->is_firstlaunch == 1)
+		/* get the current version */
+		$version = $this->sys->get_item('system_info', 'sys_id', 1, $version_pieces);
+		
+		/* put the version into a string */
+		$version_str = implode('.', $version);
+		
+		/* grab the user info */
+		$person = $this->player->get_player($this->session->userdata('player_id'), 'is_firstlaunch');
+		
+		/* grab the what's new information */
+		$data['whats_new'] = $this->sys->get_item('system_versions', 'version', $version_str, 'version_launch');
+		
+		$data['header'] = lang('head_admin_whatsnew');
+		
+		if ($person == 1)
 		{
-			$update_first_launch = $this->players->update_first_launch($person->player_id);
-		}*/
+			$this->player->update_first_launch($this->session->userdata('player_id'));
+		}
 		
 		/* write the data to the template */
-		$this->template->write_view('content', '_base/ajax/change_password', $data);
+		$this->template->write_view('content', '_base/ajax/whats_new', $data);
 		
 		/* render the template */
 		$this->template->render();
