@@ -1826,16 +1826,15 @@ class Sim_base extends Controller {
 		{
 			$data['valid'] = array();
 			
-			foreach ($this->session->userdata('characters') as $c)
+			$players = explode(',', $row->post_authors_players);
+			
+			if (in_array($this->session->userdata('player_id'), $players))
 			{
-				if (strstr($row->post_authors, $c))
-				{
-					$data['valid'][] = TRUE;
-				}
-				else
-				{
-					$data['valid'][] = FALSE;
-				}
+				$data['valid'][] = TRUE;
+			}
+			else
+			{
+				$data['valid'][] = FALSE;
 			}
 		}
 		elseif ($this->auth->is_logged_in() === TRUE && $this->auth->get_access_level('manage/posts') == 2)
