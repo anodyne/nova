@@ -1,3 +1,36 @@
+2009.10.28
+
+* added a version feed constant to the config/constants file
+* added ajax/whats_new view file
+
+* updated the admin controller with the version feed constant
+* updated the update controller with the version feed constant
+* updated the admin/whatsnew page with content
+* updated the ajax controller with content for ajax/whats_new
+* updated the language files
+* updated personnel/character to show an edit link if the user has the proper privileges
+* updated the npc management page to show both positions under the character name
+* updated the npc management page to respect access levels
+* updated the database schema
+* updated the basic install data
+* updated the control panel to allow ignoring the current version for update notification
+* updated the skin catalogue page to make the layout more consistent
+* updated the nova license
+
+* removed get_whatsnew method from the system model
+* removed the update_sms2 update file since it isn't needed
+
+* cleared TODO in upgrade/step
+* cleared TODO in departments model
+* cleared TODO in the default login template
+* cleared TODO in personnel/character
+* cleared TODO in characters/npcs
+
+* fixed bug in viewing a post that wouldn't allow players to edit posts from their previous characters
+* fixed bug that prevented level 1 and 2 users from editing bios
+
+==========
+
 2009.10.27
 
 * updated the language files
@@ -19,6 +52,7 @@
 * removed the unusued default main section theme stylesheets
 * removed the unusued default login section theme stylesheets
 * removed the unusued lightness main section theme stylesheets
+* removed the genre folders from assets/common
 
 * fixed bug with mis-referenced model in a view file
 * fixed bug in auth library with an error thrown because of a missing model object name
