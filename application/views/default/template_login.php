@@ -14,8 +14,6 @@
 |
 */
 
-# TODO: hook up SS
-
 $sec = 'login'; /* set the section of the system */
 $css = 'main.css'; /* the name of the main css file */
 

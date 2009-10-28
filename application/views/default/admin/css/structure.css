@@ -56,7 +56,10 @@ p {
 */
 a { outline: 0; }
 
-a.image { border: none; }
+a.image, a.image:hover {
+	border: none;
+	text-decoration: none;
+}
 
 /*
 |---------------------------------------------------------------

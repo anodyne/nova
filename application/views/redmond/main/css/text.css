@@ -86,4 +86,7 @@ a:hover {
 	border-bottom: 1px solid;
 }
 
-a.image { border: none; }
+a.image, a.image:hover {
+	border: none;
+	text-decoration: none;
+}
