@@ -2153,46 +2153,40 @@ $system_info = array(
 
 $system_versions = array(
 	array(
-		'version' => '0.1.0 (M1)',
+		'version' => '0.1.0',
 		'version_major' => '0',
 		'version_minor' => '1',
 		'version_update' => '0',
-		'version_rev' => 'r35',
 		'version_date' => 1222750800),
 	array(
-		'version' => '0.2.0 (M2)',
+		'version' => '0.2.0',
 		'version_major' => '0',
 		'version_minor' => '2',
 		'version_update' => '0',
-		'version_rev' => 'r277',
 		'version_date' => 1231898945),
 	array(
-		'version' => '0.3.0 (M3)',
+		'version' => '0.3.0',
 		'version_major' => '0',
 		'version_minor' => '3',
 		'version_update' => '0',
-		'version_rev' => 'r596',
 		'version_date' => 1235944800),
 	array(
-		'version' => '0.4.0 (M4)',
+		'version' => '0.4.0',
 		'version_major' => '0',
 		'version_minor' => '4',
 		'version_update' => '0',
-		'version_rev' => 'r1236',
 		'version_date' => 1246421246),
 	array(
-		'version' => '0.5.0 (M5)',
+		'version' => '0.5.0',
 		'version_major' => '0',
 		'version_minor' => '5',
 		'version_update' => '0',
-		'version_rev' => 'r1580',
 		'version_date' => 1251867706),
 	array(
-		'version' => '0.6.0 (M6)',
+		'version' => '0.6.0',
 		'version_major' => '0',
 		'version_minor' => '6',
 		'version_update' => '0',
-		'version_rev' => 'r1738',
 		'version_date' => now()),
 );
 
