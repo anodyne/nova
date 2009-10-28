@@ -16,13 +16,13 @@ $system_versions = array(
 	'version_major'		=> 0,
 	'version_minor'		=> 6,
 	'version_update'	=> 1,
-	'version_rev'		=> 'rXXXX',
 	'version_date'		=> 123456789,
-	'version_launch'	=> '',
-	'version_changes'	=> ''
+	'version_launch'	=> 'Nova 0.6.1 launch notes',
+	'version_changes'	=> 'Changelog'
 );
 
 $system_info = array(
+	'sys_last_update'		=> now(),
 	'sys_version_major'		=> 0,
 	'sys_version_minor'		=> 6,
 	'sys_version_update'	=> 1
