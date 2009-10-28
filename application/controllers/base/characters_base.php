@@ -804,8 +804,8 @@ class Characters_base extends Controller {
 		 * level 2 - edit own characters and npcs
 		 * level 3 - edit all characters
 		 */
-		if ($data['level'] == 1 && !in_array($this->session->userdata('characters')) || 
-				$data['level'] == 2 && (!in_array($this->session->userdata('characters')) || 
+		if ($data['level'] == 1 && !in_array($data['id'], $this->session->userdata('characters')) ||
+				$data['level'] == 2 && (!in_array($data['id'], $this->session->userdata('characters')) ||
 				$this->char->get_character($data['id'], 'crew_type') != 'npc'))
 		{
 			redirect('admin/error/1');
@@ -1521,9 +1521,10 @@ class Characters_base extends Controller {
 	
 	function npcs()
 	{
-		# TODO: need to build in all kinds of crazy checks for different access levels
-		
 		$this->auth->check_access();
+		
+		/* set the level variable */
+		$level = $this->auth->get_access_level();
 		
 		if (isset($_POST['submit']))
 		{
@@ -1622,9 +1623,6 @@ class Characters_base extends Controller {
 					$this->template->write_view('flash_message', '_base/admin/pages/flash', $flash);
 					
 					break;
-					
-				case 'pending':
-					break;
 			}
 		}
 		
@@ -1634,16 +1632,81 @@ class Characters_base extends Controller {
 		$this->load->model('ranks_model', 'ranks');
 		$this->load->helper('utility');
 		
-		$all = $this->char->get_all_characters('npc');
-		
-		$depts = $this->dept->get_all_depts('asc', '');
-		
-		if ($depts->num_rows() > 0)
+		switch ($level)
 		{
-			foreach ($depts->result() as $d)
-			{
-				$data['characters'][$d->dept_id]['dept'] = $d->dept_name;
-			}
+			case 1:
+				/* get the user's main character information */
+				$me = $this->char->get_character($this->session->userdata('main_char'));
+				
+				/* grab the department their primary position is in */
+				$dept = $this->pos->get_position($me->position_1, 'pos_dept');
+				
+				/* get an array of department positions */
+				$positions = $this->pos->get_dept_positions($dept, 'y', 'array');
+				
+				/* get the department info */
+				$depts = $this->dept->get_dept($dept);
+				
+				/* build the array of departments */
+				$data['characters'][$depts->dept_id]['dept'] = $depts->dept_name;
+				
+				/* get all the NPCs */
+				$all = $this->char->get_all_characters('npc');
+				
+				break;
+				
+			case 2:
+				/* get the user's main character information */
+				$me = $this->char->get_character($this->session->userdata('main_char'));
+				
+				/* grab the department their primary position is in */
+				$dept[] = $this->pos->get_position($me->position_1, 'pos_dept');
+				
+				if (!empty($me->position_2))
+				{
+					$dept[] = $this->pos->get_position($me->position_2, 'pos_dept');
+				}
+				
+				/* set up an empty positions array */
+				$positions = array();
+				
+				foreach ($dept as $d)
+				{
+					/* pull the positions */
+					$array = $this->pos->get_dept_positions($d, 'y', 'array');
+					
+					/* merge the array onto what's already there */
+					$positions = array_merge($positions, $array);
+					
+					/* get the department info */
+					$depts = $this->dept->get_dept($d);
+					
+					/* build the array of departments */
+					$data['characters'][$d]['dept'] = $depts->dept_name;
+				}
+				
+				/* get all the NPCs */
+				$all = $this->char->get_all_characters('npc');
+				
+				break;
+				
+			case 3:
+				/* get all the departments */
+				$depts = $this->dept->get_all_depts('asc', '');
+				
+				/* put the departments into an array */
+				if ($depts->num_rows() > 0)
+				{
+					foreach ($depts->result() as $d)
+					{
+						$data['characters'][$d->dept_id]['dept'] = $d->dept_name;
+					}
+				}
+				
+				/* get all the NPCs */
+				$all = $this->char->get_all_characters('npc');
+				
+				break;
 		}
 		
 		$data['count'] = 0;
@@ -1652,6 +1715,7 @@ class Characters_base extends Controller {
 		{
 			foreach ($all->result() as $a)
 			{
+				/* build an array of their name */
 				$name = array(
 					($a->crew_type != 'pending') ? $this->ranks->get_rank($a->rank, 'rank_name') : '',
 					$a->first_name,
@@ -1660,28 +1724,55 @@ class Characters_base extends Controller {
 					$a->suffix
 				);
 				
-				$pos = $this->pos->get_position($a->position_1);
-				
-				if (array_key_exists($pos->pos_dept, $data['characters']) === FALSE)
+				if ($level == 1)
 				{
-					$cdept = $this->dept->get_dept($pos->pos_dept, 'dept_parent');
+					$cdept = $dept;
 				}
-				else
+				elseif ($level == 2)
 				{
-					$cdept = $pos->pos_dept;
+					$pos = $this->pos->get_position($a->position_1);
+					
+					if (array_key_exists($pos->pos_dept, $data['characters']) === FALSE)
+					{
+						$cdept = $this->pos->get_position($a->position_2, 'pos_dept');
+					}
+					else
+					{
+						$cdept = $pos->pos_dept;
+					}
+				}
+				elseif ($level == 3)
+				{
+					$pos = $this->pos->get_position($a->position_1);
+					
+					if (array_key_exists($pos->pos_dept, $data['characters']) === FALSE)
+					{
+						$cdept = $this->dept->get_dept($pos->pos_dept, 'dept_parent');
+					}
+					else
+					{
+						$cdept = $pos->pos_dept;
+					}
 				}
 				
+				/* get the player info */
 				$p = $this->player->get_player($a->player, array('status', 'email'));
 				
-				$data['characters'][$cdept]['chars'][$a->charid] = array(
-					'id' => $a->charid,
-					'pid' => $a->player,
-					'name' => parse_name($name),
-					'position_1' => $pos->pos_name,
-					'position_2' => $this->pos->get_position($a->position_2, 'pos_name'),
-					'pstatus' => $p['status'],
-					'email' => $p['email']
-				);
+				if (
+					(($level == 1 || $level == 2) && (in_array($a->position_1, $positions) || in_array($a->position_2, $positions))) || 
+					($level == 3)
+				)
+				{
+					$data['characters'][$cdept]['chars'][$a->charid] = array(
+						'id' => $a->charid,
+						'pid' => $a->player,
+						'name' => parse_name($name),
+						'position_1' => $pos->pos_name,
+						'position_2' => (!empty($a->position_2)) ? $this->pos->get_position($a->position_2, 'pos_name') : '',
+						'pstatus' => $p['status'],
+						'email' => $p['email']
+					);
+				}
 				
 				++$data['count'];
 			}
