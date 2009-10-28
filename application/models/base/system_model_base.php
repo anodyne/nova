@@ -350,26 +350,6 @@ class System_model_base extends Model {
 		
 		return $query;
 	}
-
-	function get_whatsnew()
-	{
-		/* build the query */
-		$this->db->select('system_whatsnew');
-		$this->db->from('system');
-		$this->db->where('system_id', 1);
-		
-		/* execute the query */
-		$query = $this->db->get();
-		
-		/* grab the data */
-		foreach ($query->result() as $row)
-		{
-			$data = $row->system_whatsnew;
-		}
-		
-		/* return the data for use */
-		return $data;
-	}	
 	
 	/*
 	|---------------------------------------------------------------
