@@ -13,25 +13,23 @@ are met:
 1. Products or serviced derived from the Software may not be used for monetary
    gain without prior written consent from Anodyne Productions. This includes,
    but is not limited to: selling support, skins, modifications, or services.
-
-2. Redistribution of the complete Software must obtain prior written permission
-   from Anodyne Productions.
    
-3. Redistribution of Software components are allowed through both official
-   and third-party outlets provided that all conditions of the license are met.
+2. Redistribution of the complete Software or Software components are allowed
+   through both official and third-party outlets provided that all conditions
+   of the license are met.
    
-4. Redistributions in binary form (complete or component) must reproduce the 
+3. Redistributions in binary form (complete or component) must reproduce the 
    above copyright notice in the documentation and/or other materials provided
    with the distribution.
 
-5. Any files that have been modified must carry notices stating the nature
+4. Any files that have been modified must carry notices stating the nature
    of the change and the names of those who changed them.
 
-6. Products derived from the Software may not be called "Nova", "SMS",
+5. Products derived from the Software may not be called "Nova", "SMS",
    or "Anodyne", nor may "Nova", "SMS", or "Anodyne" appear in their name,
    without prior written permission from Anodyne Productions.
    
-7. All conditions of the CodeIgniter licence must be properly met and the
+6. All conditions of the CodeIgniter licence must be properly met and the
    CodeIgniter license cannot be removed under any circumstances.
 
 INDEMNITY
