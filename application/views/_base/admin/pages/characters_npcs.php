@@ -21,7 +21,13 @@
 							<td>
 								<strong><?php echo $i['name'];?></strong><br />
 								
-								<?php echo text_output($i['position_1'], 'span', 'fontSmall gray');?>
+								<span class="fontSmall gray">
+									<?php echo $i['position_1'];?>
+									
+									<?php if (!empty($i['position_2'])): ?>
+										&amp; <?php echo $i['position_2'];?>
+									<?php endif;?>
+								</span>
 							</td>
 							<td class="col_100 align_right">
 								<?php if (!empty($i['pid']) && $levelcheck['account'] == 2): ?>
