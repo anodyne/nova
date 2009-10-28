@@ -355,8 +355,13 @@ class Update_base extends Controller {
 				/* pull in the versions file */
 				include_once(APPPATH .'assets/update/versions.php');
 				
-				$version = str_replace('.', '', $this->version);
+				/* grab the version from the database */
+				$item = $this->sys->get_item('system_info', 'sys_id', 1);
 				
+				/* build the version string */
+				$version = $item->sys_version_major . $item->sys_version_minor . $item->sys_version_update;
+				
+				/* make sure we're not doing more work than we need to */
 				foreach ($version_array as $k => $v)
 				{
 					if ($v < $version)
@@ -365,9 +370,13 @@ class Update_base extends Controller {
 					}
 				}
 				
+				/* loop through and do the update */
 				foreach ($version_array as $value)
 				{
 					include_once(APPPATH .'assets/update/update_' . $value . '.php');
+					
+					/* pause the script for 1 second */
+					sleep(1);
 				}
 				
 				/* update the system info */
@@ -388,7 +397,7 @@ class Update_base extends Controller {
 				
 				/* figure out where the view file should be coming from */
 				$view_loc = view_location('update_step_2', '_base', 'update');
-				$js_loc = js_location('update_step_1_js', '_base', 'update');
+				$js_loc = js_location('update_step_2_js', '_base', 'update');
 				
 				/* set the title and label */
 				$this->template->write('title', lang('upd_step2_title'));
@@ -457,7 +466,7 @@ class Update_base extends Controller {
 		);
 		
 		/* grab the information from the version feed */
-		$this->simplepie->set_feed_url(base_url() . APPFOLDER .'/assets/version.xml');
+		$this->simplepie->set_feed_url(VERSION_FEED);
 		$this->simplepie->enable_cache(FALSE);
 		$this->simplepie->init();
 		$this->simplepie->handle_content_type();
@@ -498,7 +507,7 @@ class Update_base extends Controller {
 						$update['version'] = $i->get_title();
 						$update['description'] = $i->get_description();
 					}
-					elseif (($minor < $version['files']['minor'] || $major > $version['files']['major']) &&
+					elseif (($minor < $version['files']['minor'] || $major > $version['files']['major']) ||
 							($minor < $version['database']['minor'] || $major > $version['database']['major']))
 					{
 						$update['version'] = $i->get_title();
@@ -508,7 +517,7 @@ class Update_base extends Controller {
 					break;
 					
 				case 'all':
-					if ($i->get_title() != $version['files']['full'] && $i->get_title() != $version['database']['full'])
+					if ($i->get_title() != $version['files']['full'] || $i->get_title() != $version['database']['full'])
 					{
 						$update['version'] = $i->get_title();
 						$update['description'] = $i->get_description();
