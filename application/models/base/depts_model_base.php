@@ -9,12 +9,7 @@
 |
 | Model used to access the ranks table
 |
-| Note: in get_all_depts() random ordering is not currently supported
-| in Oracle or MSSQL drivers. These will default to 'asc'.
-|
 */
-
-# TODO: better way to do sort column in get_all_depts()
 
 class Depts_model_base extends Model {
 
