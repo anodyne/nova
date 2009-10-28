@@ -13,7 +13,7 @@
 			<tbody>
 				<tr>
 					<td colspan="2"><?php echo text_output($c['name'], 'h4');?></td>
-					<td class="fontSmall bold gray align_center">
+					<td class="fontSmall bold gray align_center col_50pct">
 						<?php echo $label['location'] .' '.APPFOLDER .'/views/'. $c['location'];?>
 					</td>
 					<td class="col_75 align_right">
