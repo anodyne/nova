@@ -43,7 +43,7 @@ class Positions_model_base extends Model {
 		return $query;
 	}
 	
-	function get_dept_positions($dept = '', $display = 'y')
+	function get_dept_positions($dept = '', $display = 'y', $return = 'object')
 	{
 		$this->db->from('positions_'. GENRE);
 		$this->db->where('pos_dept', $dept);
@@ -57,7 +57,24 @@ class Positions_model_base extends Model {
 		
 		$query = $this->db->get();
 		
-		return $query;
+		if ($return == 'object')
+		{
+			return $query;
+		}
+		else
+		{
+			if ($query->num_rows() > 0)
+			{
+				foreach ($query->result() as $p)
+				{
+					$array[] = $p->pos_id;
+				}
+				
+				return $array;
+			}
+			
+			return FALSE;
+		}
 	}
 	
 	function get_open_positions($display = 'y')
