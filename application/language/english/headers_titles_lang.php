@@ -41,6 +41,7 @@ $lang['head_login_success']				= 'Logging In';
 
 $lang['head_admin_index']				= 'Admin Control Panel';
 $lang['head_admin_error']				= 'Error!';
+$lang['head_admin_whatsnew']			= "What's New in Nova?";
 
 $lang['head_report_loa']				= 'LOA Report';
 $lang['head_report_system']				= 'System Information &amp; Version History';

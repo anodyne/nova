@@ -242,9 +242,9 @@ $lang['upd_error_3'] = 'You are not a system administrator and cannot update the
  */
 $lang['upd_step1_title'] = 'Step 1: Backup Database';
 $lang['upd_step1_success'] = 'You have successfully backed up your Nova database and can continue with the update process. Click <strong>Next Step</strong> to continue.';
-$lang['upd_step1_failure'] = "There was a problem backing up your Nova database. This can be caused by a variety issues, but is most likely caused by your host not allowing files to be written to the server. Please manually backup your Nova database then click <strong>Next Step</strong> to continue.";
+$lang['upd_step1_failure'] = "There was a problem backing up your Nova database. This can be caused by a few different things, but it's most likely because your sever doesn't allowing files to be created on the server. Please manually backup your Nova database then click <strong>Next Step</strong> to continue.";
 $lang['upd_step1_nofields'] = "The update cannot continue because there are no Nova tables in this database!";
-$lang['upd_step1_memory'] = "Your server does not have a sufficient memory capacity to initiate an automatic backup of your Nova database. Please manually backup your Nova database then click <strong>Next Step</strong> to continue.";
+$lang['upd_step1_memory'] = "Your server does'nt have enough available memory to do an automatic backup of your Nova database. You should manually backup your Nova database right now then, when finished, click <strong>Next Step</strong> to continue.";
 
 /*
  * Step 2
