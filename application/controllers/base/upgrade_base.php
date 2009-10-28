@@ -256,21 +256,6 @@ class Upgrade_base extends Controller {
 				 * CREATE THE NOVA TABLES
 				 */
 				
-				if (phpversion() >= 5)
-				{
-					# TODO need to figure out the FTP library stuff for chmodding the logs and images folders
-					
-					/* load the resources */
-					$this->load->library('ftp');
-					
-					/*$this->ftp->connect();
-					
-					$this->ftp->chmod(BASEPATH .'logs/', DIR_WRITE_MODE);
-					$this->ftp->chmod(APPPATH .'assets/images/characters/', DIR_WRITE_MODE);
-					
-					$this->ftp->close();*/
-				}
-				 
 				/* update the character set and collation */
 				$charset = $this->sys->update_database_charset();
 				
