@@ -627,23 +627,58 @@ class Personnel_base extends Controller {
 			$this->template->write('title', lang('error_pagetitle'));
 		}
 		
-		# TODO: hook up edit link
-		if ($this->auth->is_logged_in() === TRUE && $this->auth->check_access('manage/tour', FALSE) === TRUE)
+		if ($this->auth->is_logged_in() === TRUE)
 		{
-			$data['edit_valid'] = FALSE;
-		}
-		else
-		{
-			$data['edit_valid'] = FALSE;
-		}
-		
-		if ($this->auth->is_logged_in() === TRUE && $this->auth->check_access('site/bioform', FALSE) === TRUE)
-		{
-			$data['edit_valid_form'] = TRUE;
-		}
-		else
-		{
-			$data['edit_valid_form'] = FALSE;
+			if ($this->auth->check_access('site/bioform', FALSE) === TRUE)
+			{
+				$data['edit_valid_form'] = TRUE;
+			}
+			else
+			{
+				$data['edit_valid_form'] = FALSE;
+			}
+			
+			if ($this->auth->check_access('characters/bio', FALSE) === TRUE)
+			{
+				if ($this->auth->get_access_level('characters/bio') == 3)
+				{
+					$data['edit_valid'] = TRUE;
+				}
+				elseif ($this->auth->get_access_level('characters/bio') == 2)
+				{
+					$characters = $this->char->get_player_characters($this->session->userdata('player_id'), '', 'array');
+					
+					if (in_array($id, $characters) || $character->crew_type == 'npc')
+					{
+						$data['edit_valid'] = TRUE;
+					}
+					else
+					{
+						$data['edit_valid'] = FALSE;
+					}
+				}
+				elseif ($this->auth->get_access_level('characters/bio') == 1)
+				{
+					$characters = $this->char->get_player_characters($this->session->userdata('player_id'), '', 'array');
+					
+					if (in_array($id, $characters))
+					{
+						$data['edit_valid'] = TRUE;
+					}
+					else
+					{
+						$data['edit_valid'] = FALSE;
+					}
+				}
+				else
+				{
+					$data['edit_valid'] = FALSE;
+				}
+			}
+			else
+			{
+				$data['edit_valid'] = FALSE;
+			}
 		}
 		
 		$data['label'] = array(
