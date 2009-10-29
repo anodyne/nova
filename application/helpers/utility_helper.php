@@ -393,8 +393,8 @@ if ( ! function_exists('verify_server'))
 				'req'	=> array('mysql' => '4.1', 'mysqli' => '-'),
 				'act'	=> $ci->db->version()),
 			'regglobals' => array(
-				'req'	=> lang('verify_off'),
-				'act'	=> (ini_get('register_globals') == 1) ? lang('verify_on') : lang('verify_off')),
+				'req'	=> lang('global_off'),
+				'act'	=> (ini_get('register_globals') == 1) ? lang('global_on') : lang('global_off')),
 			'mem' => array(
 				'req'	=> 8,
 				'act'	=> substr(ini_get('memory_limit'), 0, -1)),
