@@ -63,8 +63,20 @@
 	<?php if ($installed === TRUE): ?>
 		<li>
 			<a href="<?php echo site_url('update/index');?>">
-				<span class="icon ui-icon ui-icon-transferthick-e-w"></span>
+				<span class="icon ui-icon ui-icon-signal-diag"></span>
 				<?php echo $label['options_update'];?>
+			</a>
+		</li>
+		<li>
+			<a href="<?php echo site_url('install/genre');?>">
+				<span class="icon ui-icon ui-icon-plusthick"></span>
+				<?php echo $label['options_genre'];?>
+			</a>
+		</li>
+		<li>
+			<a href="<?php echo site_url('install/changedb');?>">
+				<span class="icon ui-icon ui-icon-plusthick"></span>
+				<?php echo $label['options_database'];?>
 			</a>
 		</li>
 	<?php endif;?>

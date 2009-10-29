@@ -3,14 +3,14 @@
 	<?php echo form_open('install/remove');?>
 		<table>
 			<tr>
-				<td class="cell_label"><?php echo $label['email'];?></td>
-				<td class="cell_spacer"></td>
+				<td class="cell-label"><?php echo $label['email'];?></td>
+				<td class="cell-spacer"></td>
 				<td><input type="text" name="email" autocomplete="off" /></td>
 			</tr>
 			<?php echo table_row_spacer(3, 5);?>
 			<tr>
-				<td class="cell_label"><?php echo $label['password'];?></td>
-				<td class="cell_spacer"></td>
+				<td class="cell-label"><?php echo $label['password'];?></td>
+				<td class="cell-spacer"></td>
 				<td><input type="password" name="password" /></td>
 			</tr>
 			<?php echo table_row_spacer(3, 15);?>

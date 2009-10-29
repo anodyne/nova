@@ -68,14 +68,14 @@ select:hover {
 	border: 1px solid #777;
 }
 
-.cell_label {
+.cell-label {
 	width: 130px;
 	
 	font-weight: bold;
 	font-size: 100%;
 	text-align: right;
 }
-.cell_spacer { width: 20px; }
+.cell-spacer { width: 20px; }
 
 /*
 |---------------------------------------------------------------
