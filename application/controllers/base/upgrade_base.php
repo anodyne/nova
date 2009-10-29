@@ -95,7 +95,7 @@ class Upgrade_base extends Controller {
 			'name' => 'next',
 			'value' => 'next',
 			'id' => 'next',
-			'content' => ucwords(lang('install_label_begin'))
+			'content' => ucwords(lang('button_begin'))
 		);
 		
 		/* figure out where the view file should be coming from */
@@ -157,19 +157,15 @@ class Upgrade_base extends Controller {
 	
 	function readme()
 	{
-		$data['label'] = array(
-			'back' => lang('install_label_back')
-		);
-		
 		/* figure out where the view file should be coming from */
 		$view_loc = view_location('readme', '_base', 'update');
 		
 		/* set the title */
-		$this->template->write('title', lang('install_readme_title'));
-		$this->template->write('label', APP_NAME .' '. lang('install_readme_title'));
+		$this->template->write('title', APP_NAME .' '. lang('global_readme_title'));
+		$this->template->write('label', APP_NAME .' '. lang('global_readme_title'));
 				
 		/* write the data to the template */
-		$this->template->write_view('content', $view_loc, $data);
+		$this->template->write_view('content', $view_loc);
 		
 		/* render the template */
 		$this->template->render();
@@ -236,7 +232,7 @@ class Upgrade_base extends Controller {
 					'name' => 'next',
 					'value' => 'next',
 					'id' => 'next',
-					'content' => ucwords(lang('install_label_next'))
+					'content' => ucwords(lang('button_next'))
 				);
 				
 				$data['label']['text'] = $message;
@@ -288,7 +284,7 @@ class Upgrade_base extends Controller {
 					'name' => 'next',
 					'value' => 'next',
 					'id' => 'next',
-					'content' => ucwords(lang('install_label_next'))
+					'content' => ucwords(lang('button_next'))
 				);
 				
 				if (count($table) > 0)
@@ -345,7 +341,7 @@ class Upgrade_base extends Controller {
 					'name' => 'next',
 					'value' => 'next',
 					'id' => 'next',
-					'content' => ucwords(lang('install_label_next'))
+					'content' => ucwords(lang('button_next'))
 				);
 				
 				if (count($insert) > 0)
@@ -399,7 +395,7 @@ class Upgrade_base extends Controller {
 					'name' => 'next',
 					'value' => 'next',
 					'id' => 'next',
-					'content' => ucwords(lang('install_label_next'))
+					'content' => ucwords(lang('button_next'))
 				);
 				
 				if (count($genre) > 0)
@@ -503,7 +499,7 @@ class Upgrade_base extends Controller {
 					'name' => 'next',
 					'value' => 'next',
 					'id' => 'next',
-					'content' => ucwords(lang('install_label_next'))
+					'content' => ucwords(lang('button_next'))
 				);
 				
 				/* figure out where the view file should be coming from */
@@ -597,7 +593,7 @@ class Upgrade_base extends Controller {
 					'name' => 'next',
 					'value' => 'next',
 					'id' => 'next',
-					'content' => ucwords(lang('install_label_next'))
+					'content' => ucwords(lang('button_next'))
 				);
 				
 				/* figure out where the view file should be coming from */
@@ -702,7 +698,7 @@ class Upgrade_base extends Controller {
 					'name' => 'next',
 					'value' => 'next',
 					'id' => 'next',
-					'content' => ucwords(lang('install_label_next'))
+					'content' => ucwords(lang('button_next'))
 				);
 				
 				/* figure out where the view file should be coming from */
@@ -841,7 +837,7 @@ class Upgrade_base extends Controller {
 					'name' => 'next',
 					'value' => 'next',
 					'id' => 'next',
-					'content' => ucwords(lang('install_label_next'))
+					'content' => ucwords(lang('button_next'))
 				);
 				
 				/* figure out where the view file should be coming from */
@@ -938,7 +934,7 @@ class Upgrade_base extends Controller {
 					'name' => 'next',
 					'value' => 'next',
 					'id' => 'next',
-					'content' => ucwords(lang('install_label_next'))
+					'content' => ucwords(lang('button_next'))
 				);
 				
 				/* figure out where the view file should be coming from */
@@ -1054,7 +1050,7 @@ class Upgrade_base extends Controller {
 					'name' => 'next',
 					'value' => 'next',
 					'id' => 'next',
-					'content' => ucwords(lang('install_label_next'))
+					'content' => ucwords(lang('button_next'))
 				);
 				
 				/* figure out where the view file should be coming from */
@@ -1177,7 +1173,7 @@ class Upgrade_base extends Controller {
 					'name' => 'next',
 					'value' => 'next',
 					'id' => 'next',
-					'content' => ucwords(lang('install_label_next'))
+					'content' => ucwords(lang('button_next'))
 				);
 				
 				/* figure out where the view file should be coming from */
@@ -1269,7 +1265,7 @@ class Upgrade_base extends Controller {
 					'name' => 'next',
 					'value' => 'next',
 					'id' => 'next',
-					'content' => ucwords(lang('install_label_next'))
+					'content' => ucwords(lang('button_next'))
 				);
 				
 				/* figure out where the view file should be coming from */
@@ -1491,7 +1487,7 @@ class Upgrade_base extends Controller {
 					'name' => 'next',
 					'value' => 'next',
 					'id' => 'next',
-					'content' => ucwords(lang('install_label_next'))
+					'content' => ucwords(lang('button_next'))
 				);
 				
 				/* figure out where the view file should be coming from */
@@ -1657,7 +1653,7 @@ class Upgrade_base extends Controller {
 					'name' => 'next',
 					'value' => 'next',
 					'id' => 'next',
-					'content' => ucwords(lang('install_label_login'))
+					'content' => ucwords(lang('button_login'))
 				);
 				
 				/* figure out where the view file should be coming from */
@@ -1693,15 +1689,15 @@ class Upgrade_base extends Controller {
 		
 		$data['label'] = array(
 			'back' => lang('upg_verify_back'),
-			'text' => lang('upg_verify_text')
+			'text' => lang('verify_text')
 		);
 		
 		/* figure out where the view file should be coming from */
 		$view_loc = view_location('upgrade_verify', '_base', 'update');
 		
 		/* set the title */
-		$this->template->write('title', lang('upg_verify_title'));
-		$this->template->write('label', lang('upg_verify_title'));
+		$this->template->write('title', lang('verify_title'));
+		$this->template->write('label', lang('verify_title'));
 				
 		/* write the data to the template */
 		$this->template->write_view('content', $view_loc, $data);

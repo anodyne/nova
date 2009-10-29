@@ -175,9 +175,12 @@ class Update_base extends Controller {
 				);
 				
 				$data['label'] = array(
-					'email' => ucwords(lang('install_step3_email')),
-					'password' => ucwords(lang('install_step3_password')),
-					'text' => lang('upd_text_sysadmin'),
+					'email' => ucwords(lang('global_email')),
+					'password' => ucwords(lang('global_password')),
+					'text' => sprintf(
+						lang('global_content_sysadmin'),
+						lang('global_update'),
+						lang('global_update')),
 				);
 				
 				/* figure out where the view file should be coming from */
@@ -207,9 +210,12 @@ class Update_base extends Controller {
 			);
 			
 			$data['label'] = array(
-				'email' => ucwords(lang('install_step3_email')),
-				'password' => ucwords(lang('install_step3_password')),
-				'text' => lang('upd_text_sysadmin'),
+				'email' => ucwords(lang('global_email')),
+				'password' => ucwords(lang('global_password')),
+				'text' => sprintf(
+					lang('global_content_sysadmin'),
+					lang('global_update'),
+					lang('global_update')),
 			);
 			
 			/* figure out where the view file should be coming from */
@@ -267,8 +273,8 @@ class Update_base extends Controller {
 		$view_loc = view_location('readme', '_base', 'update');
 		
 		/* set the title */
-		$this->template->write('title', lang('title_update_readme'));
-		$this->template->write('label', APP_NAME .' '. lang('title_update_readme'));
+		$this->template->write('title', APP_NAME .' '. lang('global_readme_title'));
+		$this->template->write('label', APP_NAME .' '. lang('global_readme_title'));
 				
 		/* write the data to the template */
 		$this->template->write_view('content', $view_loc);
@@ -336,7 +342,7 @@ class Update_base extends Controller {
 					'name' => 'next',
 					'value' => 'next',
 					'id' => 'next',
-					'content' => ucwords(lang('install_label_next'))
+					'content' => ucwords(lang('button_next'))
 				);
 				
 				$data['label']['text'] = $message;
@@ -424,15 +430,15 @@ class Update_base extends Controller {
 		
 		$data['label'] = array(
 			'back' => lang('upd_verify_back'),
-			'text' => lang('upd_verify_text')
+			'text' => lang('verify_text')
 		);
 		
 		/* figure out where the view file should be coming from */
 		$view_loc = view_location('update_verify', '_base', 'update');
 		
 		/* set the title */
-		$this->template->write('title', lang('upd_verify_title'));
-		$this->template->write('label', lang('upd_verify_title'));
+		$this->template->write('title', lang('verify_title'));
+		$this->template->write('label', lang('verify_title'));
 				
 		/* write the data to the template */
 		$this->template->write_view('content', $view_loc, $data);
