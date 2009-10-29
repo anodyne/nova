@@ -24,6 +24,7 @@
 | ROM	- Star Trek, Romulan
 | CRD	- Star Trek, Cardassian
 | BAJ	- Star Trek, Bajoran
+| STO	- Star Trek Online
 */
 
 $config['genre'] = "BSG";
