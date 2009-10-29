@@ -39,7 +39,25 @@ $lang['global_processing'] = 'Processing, please wait...';
 
 $lang['global_content_index'] = "From all of us at Anodyne Productions we want to thank you for choosing <strong>Nova</strong> as your RPG management tool!\r\n\r\nNova represents years of work and a new approach to RPG management that we". RSQUO ."re excited to share. While the SIMM Management System was a revolution in managing your RPG, Nova is the next evolution that provides an easy-to-use, clean interface with a more powerful system engine that allows more robust tools for skin developers and third-party developers.";
 
-$lang['button_submit'] = 'Submit';
+$lang['global_content_sysadmin'] = "Only system administrators can %s the system. In order to continue with the %s, you must verify you are a system administrator. Please provide your email address and password and click Submit.";
+
+$lang['button_submit']			= 'Submit';
+$lang['button_begin']			= 'Begin Upgrade';
+$lang['button_login']			= 'Login Now';
+$lang['button_site']			= 'Go to your site '. RARROW;
+$lang['button_back_install'] 	= LARROW .' Back to Installation Center';
+$lang['button_next']			= 'Next Step';
+$lang['button_clear']			= 'Clear Data';
+
+$lang['global_email']			= 'Email Address';
+$lang['global_genre']			= 'Genre';
+$lang['global_off']				= 'Off';
+$lang['global_on']				= 'On';
+$lang['global_password']		= 'Password';
+$lang['global_update']			= 'update';
+$lang['global_upgrade']			= 'upgrade';
+
+$lang['global_readme_title'] 	= 'Readme';
 
 /*
 |---------------------------------------------------------------
@@ -62,6 +80,8 @@ $lang['install_index_options_readme'] = 'View the Nova readme '. RARROW;
 $lang['install_index_options_remove'] = 'Uninstall Nova '. RARROW;
 $lang['install_index_options_tour'] = 'Take a tour of Nova '. RARROW;
 $lang['install_index_options_guide'] = 'Read the Install Guide '. RARROW;
+$lang['install_index_options_genre'] = 'Install additional genres '. RARROW;
+$lang['install_index_options_database'] = 'Add your own tables/fields to the database '. RARROW;
 $lang['install_index_options_upg_guide'] = 'Read the Upgrade Guide '. RARROW;
 $lang['install_index_options_firststeps'] = 'First Steps';
 $lang['install_index_options_whatsnext'] = 'What'. RSQUO .'s Next?';
@@ -72,31 +92,39 @@ $lang['install_index_options_whatsnext'] = 'What'. RSQUO .'s Next?';
 $lang['install_remove_title'] = 'Uninstall Nova';
 $lang['install_remove_warning'] = 'Removing system data is permanent and cannot be undone, proceed with caution!';
 $lang['install_remove_success'] = 'All system data has been cleared! You are free to re-install the system.';
-$lang['install_remove_button_clear'] = 'Clear Data';
 
 /*
- * Verify
+ * Genre Change
  */
-$lang['install_verify_title'] = 'Verify Server Requirements';
-$lang['install_verify_text'] = 'Below are the results of the server verification test. If any of the items below have failed, you will not be able to upgrade SMS to Nova. If any of the items below are listed as warnings, you should talk to your host about getting those items upgraded, but you will still be able to use Nova even if those warnings exist.';
+$lang['install_genre_title'] = 'Install New Genre';
+$lang['install_genre_inst'] = 'Please select the genre file you want to use for installing a new genre then click Submit.';
+$lang['install_genre_success'] = 'New genre was successfully installed! You can now use the genre by changing the genre variable in your Nova config file.';
 
 /*
- * Readme
+ * Database Change
  */
-$lang['install_readme_title'] = 'Readme';
+$lang['install_changedb_title'] = 'Change Database';
+$lang['install_changedb_header_table'] = 'Add Database Table';
+$lang['install_changedb_header_field'] = 'Add Database Field';
+$lang['install_changedb_inst'] = "You can use the sections below to modify your database for any changes you'd like to make. You can only add tables and fields, you cannot delete or modify existing tables or fields. In addition, you can only take these actions on Nova's tables, no other tables in your database. <span class='bold red'>Use extreme caution when modifying the database!</span>";
+$lang['install_changedb_inst_table'] = "To create a new database table, simply provide the name you want the table called and click Submit. Nova will automatically add the table prefix, so you do not need to include it. In addition, Nova will create an ID field for you. If you want to change that field, you'll need to do so from the database.";
+$lang['install_changedb_inst_field'] = "To create a new field in the database, simply select the table you'd like to add it to, the name, the type, the constraint (if any) and the default then click Submit.";
 
-$lang['install_label_next'] = 'Next Step';
-$lang['install_label_back'] = LARROW .' Back to Installation Center';
-$lang['install_label_site'] = 'Proceed to Site '. RARROW;
-$lang['install_label_on'] = 'On';
-$lang['install_label_off'] = 'Off';
-$lang['install_label_submit'] = 'Submit';
-$lang['install_label_login'] = 'Login Now';
-$lang['install_label_begin'] = 'Begin Upgrade';
-$lang['install_label_testdb'] = 'Test Database';
+$lang['install_changedb_choose'] = 'Choose a Database Table';
+$lang['install_changedb_table'] = 'Database Table';
+$lang['install_changedb_name'] = 'Field Name';
+$lang['install_changedb_constraint'] = 'Field Constraint';
+$lang['install_changedb_type'] = 'Field Type';
+$lang['install_changedb_value'] = 'Field Default';
+
+$lang['install_changedb_table_success'] = 'Database table %s was successfully added!';
+$lang['install_changedb_table_failure'] = 'Could not add database table %s. Please try again.';
+$lang['install_changedb_field_success'] = 'Database field %s was successfully added to %s!';
+$lang['install_changedb_field_failure'] = 'Could not add database field %s to %s. Please try again.';
+$lang['install_changedb_field_notable'] = 'Could not add field to the database because no database table was specified. Please choose a database table and try again.';
 
 /*
- * Step 2
+ * Step 1
  */
 $lang['install_step1_title'] = 'Step 1 - Create Database Tables';
 $lang['install_step1_label'] = 'Step 1: Database Structure';
@@ -104,7 +132,7 @@ $lang['install_step1_success'] = 'You have successfully created the database str
 $lang['install_step1_failure'] = "There was a problem creating the database structure. Please make sure all your settings in your config file are correct and try again. If the problem persists, please contact <a href='http://forums.anodyne-productions.com' target='_blank'>Anodyne Productions</a> for additional support.";
 
 /*
- * Step 3
+ * Step 2
  */
 $lang['install_step2_title'] = 'Step 2 - Insert Basic Data';
 $lang['install_step2_label'] = 'Step 2: Basic Data';
@@ -112,7 +140,7 @@ $lang['install_step2_success'] = 'You have successfully inserted the basic syste
 $lang['install_step2_failure'] = 'There was a problem inserting all of the basic data into your database. Please clear your database tables and try again. If the problem persists, please contact <a href="http://forums.anodyne-productions.com" target="_blank">Anodyne Productions</a> for additional support.';
 
 /*
- * Step 4
+ * Step 3
  */
 $lang['install_step3_title'] = 'Step 3 - Insert Genre Data';
 $lang['install_step3_label'] = 'Step 3: User Account &amp; Character';
@@ -121,8 +149,6 @@ $lang['install_step3_failure'] = 'There was a problem inserting all of the genre
 
 $lang['install_step3_player'] = 'Player Information';
 $lang['install_step3_name'] = 'Real Name';
-$lang['install_step3_email'] = 'Email Address';
-$lang['install_step3_password'] = 'Password';
 $lang['install_step3_dob'] = 'Date of Birth';
 $lang['install_step3_character'] = 'Character Information';
 $lang['install_step3_fname'] = 'First Name';
@@ -135,7 +161,7 @@ $lang['install_step3_answer'] = 'Answer';
 $lang['text_security_question'] = 'Remember your security answer exactly as you type it!';
 
 /*
- * Step 5
+ * Step 4
  */
 $lang['install_step4_title'] = 'Step 4 - Create Account';
 $lang['install_step4_label'] = 'Step 4: System Setup';
@@ -155,7 +181,7 @@ $lang['install_step4_updates_min'] = 'Minor Updates (1.1, 1.2, etc.)';
 $lang['install_step4_updates_none'] = 'No Updates';
 
 /*
- * Step 6
+ * Step 5
  */
 $lang['install_step5_title'] = 'Step 5 - Set System Values';
 $lang['install_step5_label'] = 'Step 5: Finalize';
@@ -167,14 +193,6 @@ $lang['install_step5_failure'] = "There was a problem updating your system setti
 | SERVER VERIFICATION
 |---------------------------------------------------------------
 */
-
-$lang['verify_header_success'] = 'Congratulations, your server is able to run Nova!';
-$lang['verify_header_failure'] = 'Your server does not meet the minimum requirements for running Nova!';
-
-$lang['verify_content_success'] = 'Continuing on to the installation will create the database tables the system needs to run, insert some basic data, and allow you to set up your account.';
-$lang['verify_content_failure'] = 'We' . RSQUO . 're sorry, but your server cannot run Nova. In order to run Nova, you must be running PHP version 4.3.2 or higher and have a database. (Supported database platforms are MySQL 4.1+ and MySQLi.) Please make sure you have a server that meets these requirements and try again.';
-
-$lang['verify_link_success'] = 'Go to step 1 '. RARROW;
 
 $lang['verify_component'] = 'Component';
 $lang['verify_required'] = 'Required';
@@ -191,14 +209,18 @@ $lang['verify_success'] = '<span class="bold green">Success</span>';
 $lang['verify_failure'] = '<span class="bold red">Failed</span>';
 $lang['verify_warning'] = '<span class="bold orange">Warning</span>';
 
-$lang['verify_off'] = 'Off';
-$lang['verify_on'] = 'On';
+$lang['verify_title'] = 'Verify Server Requirements';
+$lang['verify_text'] = 'Below are the results of the server verification test. If any of the items below have failed, you will not be able to install Nova. If there are any warnings listed, you should talk to your host about getting those items updated, but you\'ll still be able to use Nova even with those warnings.';
 
 /*
 |---------------------------------------------------------------
 | UPDATE
 |---------------------------------------------------------------
 */
+
+$lang['update_available'] = '%s %s is now available.';
+$lang['update_outofdate_files'] = 'Your system files are running version %s, but your database is running version %s. Please update your system files and try again.';
+$lang['update_outofdate_database'] = 'Your database is running version %s, but your files are running version %s. Please use the links below to update your database.';
 
 /*
  * Index
@@ -256,51 +278,7 @@ $lang['upd_step2_site'] = 'Back to Site '. RARROW;
 /*
  * Verify
  */
-$lang['upd_verify_title'] = 'Verify Server Requirements';
 $lang['upd_verify_back'] = LARROW .' Back to Update Center';
-$lang['upd_verify_text'] = 'Below are the results of the server verification test. If any of the items below have failed, you will not be able to upgrade SMS to Nova. If any of the items below are listed as warnings, you should talk to your host about getting those items upgraded, but you will still be able to use Nova even if those warnings exist.';
-
-$lang['update_not_installed'] = 'You have not installed Nova and cannot update the system until it is installed!';
-
-$lang['update_available'] = '%s %s is now available.';
-$lang['update_outofdate_files'] = 'Your system files are running version %s, but your database is running version %s. Please update your system files and try again.';
-$lang['update_outofdate_database'] = 'Your database is running version %s, but your files are running version %s. Please use the links below to update your database.';
-
-$lang['upd_text_sysadmin'] = 'Only system administrators can update the system. In order to continue with the update, you must verify you are a system administrator. Please provide your email address and password and click Submit.';
-
-$lang['update_title_index'] = 'Update Center';
-
-$lang['title_update_readme'] = 'Readme';
-$lang['title_update_sms_index'] = 'Upgrade from SMS';
-$lang['title_update_sms_step1'] = 'SMS Update - Step 1: Database Backup';
-$lang['title_update_sms_step2'] = 'SMS Update - Step 2: Create New Tables';
-$lang['title_update_sms_step3'] = 'SMS Update - Step 3: Insert Basic Data';
-$lang['title_update_sms_step4'] = 'SMS Update - Step 4: Insert Genre Data';
-$lang['title_update_sms_step5'] = 'SMS Update - Step 5: Import SMS Data';
-
-$lang['head_update_error'] = 'Error!';
-$lang['head_update_sms_index'] = 'Upgrade SMS';
-$lang['head_update_sms_step1'] = 'SMS Update '. NDASH .' Step 1: Database Backup';
-
-$lang['update_sms_next'] = 'Next';
-$lang['update_sms_begin_update'] = 'Begin Update';
-
-$lang['update_sms_menu_step1'] = 'Step 1: Database Backup';
-$lang['update_sms_menu_step2'] = 'Step 2: Create New Tables';
-$lang['update_sms_menu_step3'] = 'Step 3: Insert Basic Data';
-$lang['update_sms_menu_step4'] = 'Step 4: Insert Genre Data';
-$lang['update_sms_menu_step5'] = 'Step 5: Import SMS Data';
-
-$lang['update_sms_index_msg'] = "Nova represents an incredible evolution of the RPG management system and one of those majors evolutions is how simple it is to upgrade from SMS 2.6 to Nova. The following steps will guide you through upgrading your SMS system to the current version of Nova. All in all, the upgrade process will take anywhere between 60 seconds and a few minutes depending on the speed of your connection and how much data needs to be converted and inserted into Nova.\r\n\r\nYou <strong>must</strong> be running SMS 2.6.0 or higher before beginning the upgrade! If you are not running the latest version of SMS, you will not be allowed to continue.\r\n\r\nThe upgrade will start by doing an automatic backup of your SMS database tables. In the event that your server doesn". RSQUO ."t have a high enough memory limit, you will be notified to perform a manual backup before continuing. We <strong>strongly</strong> urge you to do a backup of both your SMS files and database before moving forward with the upgrade. We". RSQUO ."ve done our best to test the upgrade script, but things can always go wrong, and without a backup, you may not be able to recover your sim". RSQUO ."s data.\r\n\r\n";
-
-$lang['update_sms_step1_success'] = "The backup has been successfully run. We recommend that you verify the backup ZIP archive is in the <strong>application/assets/backups</strong> directory before continuing. If it is not, we <strong>strongly</strong> recommend that you create a manual backup of your SMS database tables.\r\n\r\nThe next step of the update process will create the new tables Nova will need to run.";
-$lang['update_sms_step1_no_backup'] = 'The backup could not be run because your server does not have a high enough memory limit. We <strong>strongly</strong> recommend that you do a manual backup through phpMyAdmin before continuing. Once you have backed up your SMS database tables, you can continue to the next step which will create the new tables Nova will need to run.';
-$lang['update_sms_step1_no_fields'] = 'There are no SMS database tables to backup. If you believe you have receive this message in error, please manually backup your SMS database tables before continuing. Once you have backed up your data, you can continue to the next step which will create the new tables Nova will need to run.';
-
-$lang['install_label_yes'] = 'yes';
-$lang['install_label_no'] = 'no';
-$lang['install_label_on'] = 'on';
-$lang['install_label_off'] = 'off';
 
 /*
 |---------------------------------------------------------------
@@ -333,9 +311,7 @@ $lang['upg_error_4'] = 'You can only upgrade Nova with the DS9 genre. Your genre
 /*
  * Verify
  */
-$lang['upg_verify_title'] = 'Verify Server Requirements';
 $lang['upg_verify_back'] = LARROW .' Back to Upgrade Center';
-$lang['upg_verify_text'] = 'Below are the results of the server verification test. If any of the items below have failed, you will not be able to upgrade SMS to Nova. If any of the items below are listed as warnings, you should talk to your host about getting those items upgraded, but you will still be able to use Nova even if those warnings exist.';
 
 /*
  * Step 1
@@ -464,13 +440,14 @@ $lang['upg_step14_success'] = "You have successfully upgraded SMS to Nova. You c
 |---------------------------------------------------------------
 */
 
-$lang['install_login_proceed'] = 'You must provide your email address and password to proceed!';
-
-$lang['error_not_sysadmin_genre'] = 'You must be a system administrator to change this sim' . RSQUO . 's genre!';
 $lang['error_not_sysadmin_remove'] = 'You must be a system administrator to remove this sim' . RSQUO . 's system data!';
-$lang['error_incorrect_credentials'] = 'Either your username and/or password are incorrect. Please try again.';
+
+$lang['error_verify_2'] = 'Email address not found, please try again.';
+$lang['error_verify_3'] = 'Your password does not match our records, please try again.';
+$lang['error_verify_4'] = 'We have found more than one account with your email address. Please contact the game master to resolve this issue.';
 
 $lang['install_error_1'] = 'The system is already installed. If you want to re-install the system, you must first remove all the system data and database tables.';
+$lang['install_error_2'] = 'You must be a system administrator to change this sim'. RSQUO .'s genre!';
 $lang['error_install_no_genre'] = 'You must configure your genre in <strong>applications/config/nova.php</strong>! You cannot continue until you set a genre. Once you have setup a genre, refresh this page to re-run the genre data install.';
 
 /* End of file install_lang.php */
