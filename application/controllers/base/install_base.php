@@ -33,6 +33,7 @@ class Install_base extends Controller {
 		/*
 			0 - no errors
 			1 - system is already installed!
+			2 - you must be a sysadmin to update the genre
 		*/
 		
 		$this->load->model('system_model', 'sys');
@@ -67,6 +68,8 @@ class Install_base extends Controller {
 			'firststeps' => lang('install_index_options_firststeps'),
 			'whatsnext' => lang('install_index_options_whatsnext'),
 			'intro' => lang('global_content_index'),
+			'options_database' => lang('install_index_options_database'),
+			'options_genre' => lang('install_index_options_genre'),
 		);
 		
 		/* figure out where the view file should be coming from */
@@ -85,87 +88,438 @@ class Install_base extends Controller {
 		$this->template->render();
 	}
 	
-	function genre()
+	function changedb()
 	{
-		$data = FALSE;
-		
 		if (isset($_POST['submit']))
 		{
-			$email = $this->input->post('email');
-			$password = sha1($this->input->post('password'));
+			/* figure out what action we need to take */
+			$action = $this->uri->segment(3);
 			
-			$this->load->model('players_model', 'players');
-			$verify = $this->players->verify_login_details($email, $password);
-			
-			if ($verify->num_rows() > 0)
+			switch ($action)
 			{
-				foreach ($verify->result() as $row)
-				{
-					$verify_admin = $this->players->verify_sysadmin($row->player_id);
-				
-					if ($verify_admin->num_rows() > 0)
+				case 'change':
+					/* load the resources */
+					$this->load->dbforge();
+					
+					/* get the type of modification we're making */
+					$type = $this->uri->segment(4);
+					
+					switch ($type)
 					{
-						redirect('install/genre/change', 'refresh');
+						case 'table':
+							/* get the table name */
+							$table = $this->input->post('table_name', TRUE);
+							
+							/* add an id field to keep everything happy */
+							$this->dbforge->add_field('id');
+							
+							/* add the table */
+							$add = $this->dbforge->create_table($table, TRUE);
+							
+							if ($add === FALSE)
+							{
+								/* set the flash message */
+								$flash['status'] = 'error';
+								$flash['message'] = sprintf(
+									lang_output('install_changedb_table_failure'),
+									$this->db->dbprefix . $table
+								);
+							}
+							else
+							{
+								/* set the flash message */
+								$flash['status'] = 'success';
+								$flash['message'] = sprintf(
+									lang_output('install_changedb_table_success'),
+									$this->db->dbprefix . $table
+								);
+							}
+							
+							break;
+							
+						case 'field':
+							/* get the table name */
+							$table = $this->input->post('table_name', TRUE);
+							$name = $this->input->post('field_name', TRUE);
+							$ftype = $this->input->post('field_type', TRUE);
+							$constraint = $this->input->post('field_constraint', TRUE);
+							$fvalue = $this->input->post('field_value', TRUE);
+							
+							if ($table !== 0)
+							{
+								$fields = array(
+									$name => array(
+										'type' => strtoupper($ftype),
+										'constraint' => $constraint,
+										'default' => (!empty($fvalue)) ? $fvalue : '',
+									),
+								);
+								
+								/* add an id field to keep everything happy */
+								$add = $this->dbforge->add_column($table, $fields);
+							}
+							
+							if (isset($add))
+							{
+								if ($add === FALSE)
+								{
+									/* set the flash message */
+									$flash['status'] = 'error';
+									$flash['message'] = sprintf(
+										lang_output('install_changedb_field_failure'),
+										$name,
+										$this->db->dbprefix . $table
+									);
+								}
+								else
+								{
+									/* set the flash message */
+									$flash['status'] = 'success';
+									$flash['message'] = sprintf(
+										lang_output('install_changedb_field_success'),
+										$name,
+										$this->db->dbprefix . $table
+									);
+								}
+							}
+							else
+							{
+								/* set the flash message */
+								$flash['status'] = 'error';
+								$flash['message'] = lang_output('install_changedb_field_notable');
+							}
+							
+							break;
+					}
+					
+					/* write everything to the template */
+					$this->template->write_view('flash_message', '_base/install/pages/flash', $flash);
+					
+					/* figure out where the view file should be coming from */
+					$view_loc = view_location('changedb', '_base', 'install');
+					
+					break;
+					
+				case 'verify':
+					/* load the resources */
+					$this->load->model('system_model', 'sys');
+					
+					/* set the POST variables */
+					$email = $this->input->post('email', TRUE);
+					$password = sha1($this->input->post('password', TRUE));
+					
+					/* verify their email/password combo is right */
+					$verify = $this->auth->verify($email, $password);
+					
+					/* get their player ID */
+					$player = $this->sys->get_item('players', 'email', $email, 'player_id');
+					
+					/* verify they're a sys admin */
+					$sysadmin = $this->auth->is_sysadmin($player);
+					
+					if ($verify == 0 && $sysadmin === TRUE)
+					{
+						/* get the database tables */
+						$tables = $this->db->list_tables();
+						
+						$prefixlen = strpos($this->db->dbprefix, '_');
+						
+						/* create a blank array */
+						$data['options'][0] = lang('install_changedb_choose');
+						
+						/* make sure we're only dealing with the nova tables */
+						foreach ($tables as $key => $value)
+						{
+							if (substr($value, 0, $prefixlen) != $this->db->dbprefix)
+							{
+								/* remove the prefix from what will be the field value */
+								$k = str_replace($this->db->dbprefix, '', $value);
+								
+								/* assign each table to the options array */
+								$data['options'][$k] = $value;
+							}
+						}
+						
+						/* figure out where the view file should be coming from */
+						$view_loc = view_location('changedb_main', '_base', 'install');
 					}
 					else
 					{
-						$data['error'] = lang_output('error_not_sysadmin_genre', 'h3', 'error');
+						/* set the flash message */
+						$flash['status'] = 'error';
+						$flash['message'] = lang_output('error_verify_'. $verify);
+						
+						/* write everything to the template */
+						$this->template->write_view('flash_message', '_base/install/pages/flash', $flash);
+						
+						/* figure out where the view file should be coming from */
+						$view_loc = view_location('changedb', '_base', 'install');
 					}
-				}
+					
+					break;
 			}
-			else
-			{
-				$data['error'] = lang_output('login_error_incorrect', 'h3', 'error');
-			}
-		}
-		
-		if ($this->uri->segment(3) == 'change')
-		{
-			/* pull in the install genre data asset file */
-			include_once(APPPATH . 'assets/install/install_genre_' . GENRE . '.php');
-			
-			/* build the genre tables */
-			foreach ($tables as $key_t => $value_t)
-			{
-				$this->dbforge->add_field($$value_t['fields']);
-				$this->dbforge->add_key($value_t['id'], TRUE);
-				$this->dbforge->create_table($key_t);
-			}
-			
-			/* pause between executing scripts */
-			sleep(1);
-			
-			/* insert the genre data */
-			foreach ($data as $key_d => $value_d)
-			{
-				$this->db->insert($value_d, $$value_d);
-			}
-			
-			/* pull in the view */
-			$this->layout->view('_base/install/pages/genre_change');
 		}
 		else
 		{
-			/* pull in the view */
-			$this->layout->view('_base/install/pages/genre', $data);
+			/* figure out where the view file should be coming from */
+			$view_loc = view_location('changedb', '_base', 'install');
 		}
+		
+		$data['inputs'] = array(
+			'email' => array(
+				'name' => 'email',
+				'id' => 'email'),
+			'password' => array(
+				'name' => 'password',
+				'id' => 'password'),
+			'table_name' => array(
+				'name' => 'table_name',
+				'id' => 'table_name'),
+			'field_name' => array(
+				'name' => 'field_name',
+				'id' => 'field_name'),
+			'field_type' => array(
+				'name' => 'field_type',
+				'id' => 'field_type'),
+			'field_constraint' => array(
+				'name' => 'field_constraint',
+				'id' => 'field_constraint'),
+			'field_value' => array(
+				'name' => 'field_value',
+				'id' => 'field_value'),
+			'submit' => array(
+				'type' => 'submit',
+				'class' => 'button',
+				'name' => 'submit',
+				'value' => 'submit',
+				'content' => ucwords(lang('button_submit'))
+			)
+		);
+		
+		$data['label'] = array(
+			'email' => ucwords(lang('global_email')),
+			'password' => ucwords(lang('global_password')),
+			'header_table' => lang('install_changedb_header_table'),
+			'header_field' => lang('install_changedb_header_field'),
+			'inst' => lang('install_changedb_inst'),
+			'inst_table' => lang('install_changedb_inst_table'),
+			'inst_field' => lang('install_changedb_inst_field'),
+			'text' => sprintf(
+				lang('global_content_sysadmin'),
+				lang('global_update'),
+				lang('global_update')),
+			'prefix' => $this->db->dbprefix,
+			'ftable' => lang('install_changedb_table'),
+			'fname' => lang('install_changedb_name'),
+			'fconstraint' => lang('install_changedb_constraint'),
+			'fvalue' => lang('install_changedb_value'),
+			'ftype' => lang('install_changedb_type'),
+			'back' => lang('button_back_install'),
+		);
+		
+		/* figure out where the view file should be coming from */
+		$js_loc = js_location('genre_js', '_base', 'install');
+		
+		/* set the title */
+		$this->template->write('title', lang('install_changedb_title'));
+		$this->template->write('label', lang('install_changedb_title'));
+				
+		/* write the data to the template */
+		$this->template->write_view('content', $view_loc, $data);
+		$this->template->write_view('javascript', $js_loc);
+		
+		/* render the template */
+		$this->template->render();
+	}
+	
+	function genre()
+	{
+		if (isset($_POST['submit']))
+		{
+			/* figure out what action we need to take */
+			$action = $this->uri->segment(3);
+			
+			switch ($action)
+			{
+				case 'change':
+					/* load the resources */
+					$this->load->dbforge();
+					
+					/* get the file to use */
+					$file = $this->input->post('genre', TRUE);
+					
+					/* get the selected genre */
+					$under = strpos($file, '_');
+					$selected_genre = strtolower(substr($file, 0, $under));
+					
+					/* pull in the install fields asset file */
+					include_once(APPPATH .'assets/install/fields.php');
+					
+					/* build an array of genre tables that need to be added */
+					$tables = array(
+						'departments_'. $selected_genre => array(
+							'id' => 'dept_id',
+							'fields' => $fields_departments),
+						'positions_'. $selected_genre => array(
+							'id' => 'pos_id',
+							'fields' => $fields_positions),
+						'ranks_'. $selected_genre => array(
+							'id' => 'rank_id',
+							'fields' => $fields_ranks),
+					);
+					
+					foreach ($tables as $key => $value)
+					{
+						$this->dbforge->add_field($value['fields']);
+						$this->dbforge->add_key($value['id'], TRUE);
+						$this->dbforge->create_table($key, TRUE);
+					}
+					
+					/* pull in the install genre data asset file */
+					include_once(APPPATH .'assets/install/genres/'. $file);
+					
+					/* put the genre data in the newly created tables */
+					foreach ($data as $key_d => $value_d)
+					{
+						foreach ($$value_d as $k => $v)
+						{
+							$this->db->insert($key_d, $v);
+						}
+					}
+					
+					/* set the flash message */
+					$flash['status'] = 'info';
+					$flash['message'] = '<span class="icon ui-icon ui-icon-check"></span>';
+					$flash['message'].= lang_output('install_genre_success');
+					
+					/* write everything to the template */
+					$this->template->write_view('flash_message', '_base/install/pages/flash', $flash);
+					
+					/* figure out where the view file should be coming from */
+					$view_loc = view_location('genre', '_base', 'install');
+					
+					break;
+					
+				case 'verify':
+					/* load the resources */
+					$this->load->model('system_model', 'sys');
+					
+					/* set the POST variables */
+					$email = $this->input->post('email', TRUE);
+					$password = sha1($this->input->post('password', TRUE));
+					
+					/* verify their email/password combo is right */
+					$verify = $this->auth->verify($email, $password);
+					
+					/* get their player ID */
+					$player = $this->sys->get_item('players', 'email', $email, 'player_id');
+					
+					/* verify they're a sys admin */
+					$sysadmin = $this->auth->is_sysadmin($player);
+					
+					if ($verify == 0 && $sysadmin === TRUE)
+					{
+						/* load the resources */
+						$this->load->helper('directory');
+						
+						/* grab the files from the directory */
+						$genre_files = directory_map(APPPATH .'assets/install/genres/', TRUE);
+						
+						/* grab the genre and find out it's length */
+						$genre = strtolower(GENRE);
+						$genrelen = strlen($genre);
+						
+						foreach ($genre_files as $key => $g)
+						{
+							/* if the file is index.html or the current genre's data file, ignore it */
+							if ($g == 'index.html' || substr($g, 0, $genrelen) == $genre)
+							{
+								unset($genre_files[$key]);
+							}
+						}
+						
+						/* send the list of genres to the view */
+						$data['files'] = $genre_files;
+						
+						/* figure out where the view file should be coming from */
+						$view_loc = view_location('genre_main', '_base', 'install');
+					}
+					else
+					{
+						/* set the flash message */
+						$flash['status'] = 'error';
+						$flash['message'] = lang_output('error_verify_'. $verify);
+						
+						/* write everything to the template */
+						$this->template->write_view('flash_message', '_base/install/pages/flash', $flash);
+						
+						/* figure out where the view file should be coming from */
+						$view_loc = view_location('genre', '_base', 'install');
+					}
+					
+					break;
+			}
+		}
+		else
+		{
+			/* figure out where the view file should be coming from */
+			$view_loc = view_location('genre', '_base', 'install');
+		}
+		
+		$data['inputs'] = array(
+			'email' => array(
+				'name' => 'email',
+				'id' => 'email'),
+			'password' => array(
+				'name' => 'password',
+				'id' => 'password'),
+			'submit' => array(
+				'type' => 'submit',
+				'class' => 'button',
+				'name' => 'submit',
+				'value' => 'submit',
+				'content' => ucwords(lang('button_submit'))
+			)
+		);
+		
+		$data['label'] = array(
+			'email' => ucwords(lang('global_email')),
+			'password' => ucwords(lang('global_password')),
+			'text' => sprintf(
+				lang('global_content_sysadmin'),
+				lang('global_update'),
+				lang('global_update')),
+			'genre' => lang('global_genre'),
+			'genre_inst' => lang('install_genre_inst'),
+			'back' => lang('button_back_install'),
+		);
+		
+		/* figure out where the view file should be coming from */
+		$js_loc = js_location('genre_js', '_base', 'install');
+		
+		/* set the title */
+		$this->template->write('title', lang('install_genre_title'));
+		$this->template->write('label', lang('install_genre_title'));
+				
+		/* write the data to the template */
+		$this->template->write_view('content', $view_loc, $data);
+		$this->template->write_view('javascript', $js_loc);
+		
+		/* render the template */
+		$this->template->render();
 	}
 	
 	function readme()
 	{
-		$data['label'] = array(
-			'back' => lang('install_label_back')
-		);
-		
 		/* figure out where the view file should be coming from */
 		$view_loc = view_location('readme', '_base', 'install');
 		
 		/* set the title */
-		$this->template->write('title', lang('install_readme_title'));
-		$this->template->write('label', APP_NAME .' '. lang('install_readme_title'));
+		$this->template->write('title', APP_NAME .' '. lang('global_readme_title'));
+		$this->template->write('label', APP_NAME .' '. lang('global_readme_title'));
 				
 		/* write the data to the template */
-		$this->template->write_view('content', $view_loc, $data);
+		$this->template->write_view('content', $view_loc);
 		
 		/* render the template */
 		$this->template->render();
@@ -179,36 +533,36 @@ class Install_base extends Controller {
 		
 		if (isset($_POST['submit']))
 		{
-			$email = $this->input->post('email');
-			$password = sha1($this->input->post('password'));
+			/* load the resources */
+			$this->load->model('system_model', 'sys');
 			
-			$this->load->model('players_model', 'players');
-			$verify = $this->players->verify_login_details($email, $password);
+			/* set the POST variables */
+			$email = $this->input->post('email', TRUE);
+			$password = sha1($this->input->post('password', TRUE));
 			
-			if ($verify->num_rows() > 0)
+			/* verify their email/password combo is right */
+			$verify = $this->auth->verify($email, $password);
+			
+			/* get their player ID */
+			$player = $this->sys->get_item('players', 'email', $email, 'player_id');
+			
+			/* verify they're a sys admin */
+			$sysadmin = $this->auth->is_sysadmin($player);
+			
+			if ($verify == 0 && $sysadmin === TRUE)
 			{
-				foreach ($verify->result() as $row)
-				{
-					$verify_admin = $this->players->verify_sysadmin($row->player_id);
+				/* remove the data */
+				$this->_destroy_data();
 				
-					if ($verify_admin->num_rows() >= 1)
-					{
-						$this->_destroy_data();
-						
-						$flash['status'] = 'success';
-						$flash['message'] = lang_output('install_remove_success');
-					}
-					else
-					{
-						$flash['status'] = 'error';
-						$flash['message'] = lang_output('error_not_sysadmin_remove');
-					}
-				}
+				/* set the flash info */
+				$flash['status'] = 'success';
+				$flash['message'] = lang_output('install_remove_success');
 			}
 			else
 			{
+				/* set the flash info */
 				$flash['status'] = 'error';
-				$flash['message'] = lang_output('error_incorrect_credentials');
+				$flash['message'] = lang_output('error_verify_'. $verify);
 			}
 			
 			/* add redirect */
@@ -224,13 +578,13 @@ class Install_base extends Controller {
 			'name' => 'submit',
 			'value' => 'clear',
 			'id' => 'clear',
-			'content' => ucwords(lang('install_remove_button_clear'))
+			'content' => ucwords(lang('button_clear'))
 		);
 		
 		$data['label'] = array(
-			'back' => lang('install_label_back'),
-			'email' => lang('install_step3_email'),
-			'password' => lang('install_step3_password'),
+			'back' => lang('button_back_install'),
+			'email' => lang('global_email'),
+			'password' => lang('global_password'),
 		);
 		
 		/* figure out where the view file should be coming from */
@@ -302,7 +656,7 @@ class Install_base extends Controller {
 					'name' => 'next',
 					'value' => 'next',
 					'id' => 'next',
-					'content' => ucwords(lang('install_label_next'))
+					'content' => ucwords(lang('button_next'))
 				);
 				
 				if (count($table) > 0)
@@ -355,7 +709,7 @@ class Install_base extends Controller {
 					'name' => 'next',
 					'value' => 'next',
 					'id' => 'next',
-					'content' => ucwords(lang('install_label_next'))
+					'content' => ucwords(lang('button_next'))
 				);
 				
 				if (count($insert) > 0)
@@ -405,7 +759,7 @@ class Install_base extends Controller {
 					'name' => 'next',
 					'value' => 'next',
 					'id' => 'next',
-					'content' => ucwords(lang('install_label_next'))
+					'content' => ucwords(lang('button_next'))
 				);
 				
 				if (count($genre) > 0)
@@ -469,8 +823,8 @@ class Install_base extends Controller {
 				$data['label'] = array(
 					'player' => lang('install_step3_player'),
 					'name' => lang('install_step3_name'),
-					'email' => lang('install_step3_email'),
-					'password' => lang('install_step3_password'),
+					'email' => lang('global_email'),
+					'password' => lang('global_password'),
 					'dob' => lang('install_step3_dob'),
 					'question' => lang('install_step3_question'),
 					'answer' => lang('install_step3_answer'),
@@ -600,7 +954,7 @@ class Install_base extends Controller {
 					'name' => 'next',
 					'value' => 'next',
 					'id' => 'next',
-					'content' => ucwords(lang('install_label_next'))
+					'content' => ucwords(lang('button_next'))
 				);
 				
 				if (count($insert) > 0)
@@ -628,8 +982,8 @@ class Install_base extends Controller {
 				);
 				
 				$data['email_v'] = array(
-					'on' => ucfirst(lang('install_label_on')),
-					'off' => ucfirst(lang('install_label_off'))
+					'on' => ucfirst(lang('global_on')),
+					'off' => ucfirst(lang('global_off'))
 				);
 				
 				$data['updates_v'] = array(
@@ -713,7 +1067,7 @@ class Install_base extends Controller {
 				$message = ($update > 0) ? lang('install_step5_success') : lang('install_step5_failure');
 				
 				$data['label'] = array(
-					'site' => lang('install_label_site'),
+					'site' => lang('button_site'),
 					'inst_step5' => $message,
 				);
 					
@@ -749,16 +1103,16 @@ class Install_base extends Controller {
 		$data['table'] = verify_server();
 		
 		$data['label'] = array(
-			'back' => lang('install_label_back'),
-			'text' => lang('install_verify_text')
+			'back' => lang('button_back_install'),
+			'text' => lang('verify_text')
 		);
 		
 		/* figure out where the view file should be coming from */
 		$view_loc = view_location('verify', '_base', 'install');
 		
 		/* set the title */
-		$this->template->write('title', lang('install_verify_title'));
-		$this->template->write('label', lang('install_verify_title'));
+		$this->template->write('title', lang('verify_title'));
+		$this->template->write('label', lang('verify_title'));
 				
 		/* write the data to the template */
 		$this->template->write_view('content', $view_loc, $data);
