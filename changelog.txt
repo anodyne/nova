@@ -1,3 +1,25 @@
+2009.10.29
+
+* removed old genre change view files
+* removed the install/mods directory since we're not doing that feature for 1.0
+* removed the database field and table view files from the update section
+
+* updated the install stylesheets with new classes
+* updated the genre change view files
+* updated install/genre to allow installing additional genres
+* updated the language files
+* updated the install controller with updated language keys
+* updated the update controller with updated language keys
+* updated the upgrade controller with updated language keys
+* updated the utility helper with updated language keys
+* updated install/changedb to allow adding tables and fields to nova
+
+* added genre_main view file
+* added genre js view file
+* added install/changedb view files
+
+==========
+
 2009.10.28
 
 * added a version feed constant to the config/constants file

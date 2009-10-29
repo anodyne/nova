@@ -8,36 +8,25 @@ Nova M6 (0.6)
 
 LAST UPDATE
 ==========
-2009.10.27
+2009.10.29
 
 LATEST CHANGES
 ==========
 
-* added a version feed constant to the config/constants file
-* added ajax/whats_new view file
+* removed old genre change view files
+* removed the install/mods directory since we're not doing that feature for 1.0
+* removed the database field and table view files from the update section
 
-* updated the admin controller with the version feed constant
-* updated the update controller with the version feed constant
-* updated the admin/whatsnew page with content
-* updated the ajax controller with content for ajax/whats_new
+* updated the install stylesheets with new classes
+* updated the genre change view files
+* updated install/genre to allow installing additional genres
 * updated the language files
-* updated personnel/character to show an edit link if the user has the proper privileges
-* updated the npc management page to show both positions under the character name
-* updated the npc management page to respect access levels
-* updated the database schema
-* updated the basic install data
-* updated the control panel to allow ignoring the current version for update notification
-* updated the skin catalogue page to make the layout more consistent
-* updated the nova license
+* updated the install controller with updated language keys
+* updated the update controller with updated language keys
+* updated the upgrade controller with updated language keys
+* updated the utility helper with updated language keys
+* updated install/changedb to allow adding tables and fields to nova
 
-* removed get_whatsnew method from the system model
-* removed the update_sms2 update file since it isn't needed
-
-* cleared TODO in upgrade/step
-* cleared TODO in departments model
-* cleared TODO in the default login template
-* cleared TODO in personnel/character
-* cleared TODO in characters/npcs
-
-* fixed bug in viewing a post that wouldn't allow players to edit posts from their previous characters
-* fixed bug that prevented level 1 and 2 users from editing bios
+* added genre_main view file
+* added genre js view file
+* added install/changedb view files
