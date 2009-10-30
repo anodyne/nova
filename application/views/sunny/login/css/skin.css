@@ -1,0 +1,274 @@
+/*
+|---------------------------------------------------------------
+| MASTER BODY STYLES
+|---------------------------------------------------------------
+*/
+body {
+	margin: 0;
+	padding: 0;
+	
+	background: #eee;
+	color: #444;
+	font: 75%/1.5 "lucida grande", verdana, arial, sans-serif;
+	text-align: center;
+}
+
+/*
+|---------------------------------------------------------------
+| WRAPPER STYLES
+|---------------------------------------------------------------
+| The wrapper controls the width and centering of the layout
+*/
+.wrapper {
+	width: 650px;
+	margin: 4em auto;
+	
+	text-align: left;
+	background: #fcfdfd;
+	border: 1px solid #d19405;
+	
+	-moz-border-radius: 8px;
+	-webkit-border-radius: 8px;
+	
+	-moz-box-shadow: 6px 6px 10px #ccc;
+	-webkit-box-shadow: 6px 6px 10px #ccc;
+}
+
+/*
+|---------------------------------------------------------------
+| HEAD STYLES
+|---------------------------------------------------------------
+|
+| The head layer
+*/
+#head {
+	margin: 0;
+	padding: 0 .1em 0 .5em;
+	height: 80px;
+	line-height: 75px;
+	
+	color: #333;
+	font-size: 250%;
+	font-weight: bold;
+	border: 0 !important;
+	
+	-moz-border-radius: 8px 8px 0 0;
+	-webkit-border-radius: 8px 8px 0 0;
+}
+
+.logo {
+	float: right;
+	padding: 48px 0 0 0;
+	line-height: 1 !important;
+}
+
+/*
+|---------------------------------------------------------------
+| BODY STYLES
+|---------------------------------------------------------------
+*/
+#body {
+	text-align: left;
+}
+
+.content {
+	line-height: 1.4;
+	padding: 1em 0;
+	width: 90%;
+	margin: 0 auto;
+	
+	text-align: center;
+}
+
+/*
+|---------------------------------------------------------------
+| FOOTER STYLES
+|---------------------------------------------------------------
+*/
+#footer {
+	margin: 1.5em 0 0 0;
+	padding: .5em 0;
+	clear: both;
+	
+	text-align: center;
+	font-size: 85%;
+	color: #333;
+	border-bottom: 0 !important;
+	border-left: 0 !important;
+	border-right: 0 !important;
+	
+	-moz-border-radius: 0 0 8px 8px;
+	-webkit-border-radius: 0 0 8px 8px;
+}
+
+/*
+|---------------------------------------------------------------
+| FONT COLOR CLASSES
+|---------------------------------------------------------------
+*/
+.page-head 		{ color: #494437; }
+.page-subhead	{ color: #0074c7; }
+
+.gray	{ color: #777; }
+.red	{ color: #c00; }
+.orange	{ color: #e99e1c; }
+.green	{ color: #008000; }
+.blue	{ color: lightblue; }
+
+/*
+|---------------------------------------------------------------
+| LINKS
+|---------------------------------------------------------------
+*/
+a {
+	text-decoration: none; 
+	color: #026890;
+}
+a:hover {
+	color: #2e6e9e;
+	border-bottom: 1px solid;
+}
+
+/*
+|---------------------------------------------------------------
+| INPUT STYLES
+|---------------------------------------------------------------
+*/
+input[type=text],
+input[type=password] {
+	border: 1px solid #d8d8d8;
+	color: #777;
+	font-family: inherit;
+}
+input[type=text]:focus,
+input[type=password]:focus {
+	color: #444;
+	border: 1px solid #777;
+}
+
+textarea {
+	font-size: 100%;
+	font-family: inherit;
+	border: 1px solid #d8d8d8;
+	color: #777;
+}
+textarea:focus {
+	color: #444;
+	border: 1px solid #777;
+}
+
+select {
+	border: 1px solid #d8d8d8;
+	color: #777;
+	font-family: inherit;
+}
+select:focus,
+select:hover {
+	color: #444;
+	border: 1px solid #777;
+}
+
+/*
+|---------------------------------------------------------------
+| TABLE STYLES
+|---------------------------------------------------------------
+*/
+table.verify { border: 1px solid #aaa; }
+table.verify th {
+	font-weight: bold;
+	font-size: 125%;
+	background-color: #666;
+	color: #fff;
+}
+table.verify td { font-size: 115%; }
+
+tr.alt td { background-color: #eee; }
+
+/*
+|---------------------------------------------------------------
+| BUTTONS
+|---------------------------------------------------------------
+*/
+button {
+	-moz-border-radius: 8px;
+	-webkit-border-radius: 8px;
+	
+	font-weight: bold;
+}
+
+button.button-main {
+	border: 1px solid #494437;
+	background: #817865 url('../images/gradient-30-bg.png') repeat-x center left;
+	color: #fff;
+}
+button.button-main:hover {
+	border: 1px solid #a45b13;
+	background: #ffdd57 url('../images/gradient-50-bg.png') repeat-x center left;
+	color: #381f00;
+}
+
+input.button-main {
+	border: 1px solid #494437;
+	background: #817865 url('../images/gradient-30-bg.png') repeat-x center left;
+	color: #fff;
+	font-weight: bold;
+	font-size: 120%;
+}
+input.button-main:hover {
+	border: 1px solid #a45b13;
+	background: #ffdd57 url('../images/gradient-50-bg.png') repeat-x center left;
+	color: #381f00;
+}
+
+input[disabled],
+button[disabled] { color: #aaa; }
+
+input[disabled]:hover,
+button[disabled]:hover { border: 1px solid #ccc; }
+
+/*
+|---------------------------------------------------------------
+| LIST STYLES
+|---------------------------------------------------------------
+*/
+ul.square { list-style: square; }
+ul.none { list-style: none; }
+ol.roman { list-style: upper-roman; }
+
+/*
+|---------------------------------------------------------------
+| FLASH MESSAGES
+|---------------------------------------------------------------
+*/
+.flash_message {
+	font-weight: bold;
+	font-size: .9em;
+	
+	-moz-border-radius: 8px;
+	-webkit-border-radius: 8px;
+}
+.flash-success {
+	border: 1px solid #a4c897;
+	background: #ccecc5;
+	color: #376b0e;
+}
+.flash-error {
+	border: 1px solid #cd0a0a; 
+	background: #fef1ec;
+	color: #cd0a0a;
+}
+.flash-info {
+	border: 1px solid #fad42e;
+	background: #fbec88 url('../images/gradient-30-bg.png') repeat-x 0 0;
+	color: #363636;
+}
+
+/*
+|---------------------------------------------------------------
+| MISC
+|---------------------------------------------------------------
+*/
+hr {
+	border: 1px solid #ddd;
+	border-width: 1px 0 0;
+}
