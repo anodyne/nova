@@ -29,6 +29,9 @@ body {
 	
 	-moz-border-radius: 4px;
 	-webkit-border-radius: 4px;
+	
+	-moz-box-shadow: 6px 6px 10px #ccc;
+	-webkit-box-shadow: 6px 6px 10px #ccc;
 }
 
 /*
