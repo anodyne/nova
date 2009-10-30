@@ -545,6 +545,10 @@ $catalogue_skinsecs = array(
 		'skinsec_section' => 'main',
 		'skinsec_skin' => 'sunny',
 		'skinsec_image_preview' => 'preview-main.png'),
+	array(
+		'skinsec_section' => 'login',
+		'skinsec_skin' => 'sunny',
+		'skinsec_image_preview' => 'preview-login.png'),
 );
 
 $characters_data = array(
