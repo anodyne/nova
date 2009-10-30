@@ -1,0 +1,440 @@
+/*
+|---------------------------------------------------------------
+| MASTER BODY STYLES
+|---------------------------------------------------------------
+*/
+html, body { height: 100%; }
+
+body {
+	margin: 0;
+	padding: 0;
+	
+	background: #eee;
+	color: #383838;
+	font: 75%/1.5 "lucida grande", verdana, arial, sans-serif;
+	text-align: center;
+}
+
+/*
+|---------------------------------------------------------------
+| WRAPPER STYLES
+|---------------------------------------------------------------
+*/
+.wrapper {
+	width: 85%;
+	padding: 0 45px;
+	margin: 0 auto;
+	
+	text-align: left;
+}
+
+#container {
+	min-height: 100%;
+	margin-bottom: -25px;
+	position: relative;
+}
+
+/*
+|---------------------------------------------------------------
+| HEAD STYLES
+|---------------------------------------------------------------
+*/
+#head {
+	margin: 0;
+	padding: 0;
+	height: auto;
+}
+#head .head_content {
+	margin: 20px 0 0 0;
+	padding: 7px 0 0 8px;
+	
+	font-weight: bold;
+	border-bottom: none;
+	
+	-moz-border-radius-topleft: 8px;
+	-moz-border-radius-topright: 8px;
+	-webkit-border-top-left-radius: 8px;
+	-webkit-border-top-right-radius: 8px;
+}
+
+/*
+|---------------------------------------------------------------
+| MENU STYLES
+|---------------------------------------------------------------
+*/
+#menu {
+	height: 30px;
+	line-height: 30px;
+	
+	font-size: 95%;
+	border: 1px solid #494437;
+	
+	-moz-border-radius-bottomleft: 8px;
+	-moz-border-radius-bottomright: 8px;
+	-webkit-border-bottom-left-radius: 8px;
+	-webkit-border-bottom-right-radius: 8px;
+}
+#menu .nav-main {}
+#menu .nav-main ul {
+	margin: 0 5px;
+	padding: 0;
+	
+	list-style-type: none;
+}
+#menu .nav-main ul li {
+	float: left;
+	margin: 0 2px;
+	padding: 0;
+}
+#menu .nav-main ul li a {
+	display: block;
+	
+	text-decoration: none;
+	color: #2e6e9e;
+	font-weight: bold;
+	border-left: 1px solid transparent;
+	border-right: 1px solid transparent;
+	border-bottom: none;
+}
+#menu .nav-main ul li a span { padding: 12px; }
+#menu .nav-main ul li a:hover,
+#menu .nav-main ul li a.active {
+	background: #eee url('../images/gradient-50-bg.png') repeat-x 0 0;
+	border-left: 1px solid #655e4e;
+	border-right: 1px solid #655e4e;
+	color: #0074c7;
+}
+
+/*
+|---------------------------------------------------------------
+| BODY STYLES
+|---------------------------------------------------------------
+*/
+#body {}
+
+.nav-sub {
+	width: 160px;
+	margin: 22px 0 10px 0;
+	float: left;
+	
+	font-size: 92%;
+}
+.nav-sub ul {
+	margin: 0;
+	padding: 0;
+	
+	list-style: none;
+}
+.nav-sub ul li {
+	padding: 0 0 0 4px;
+	margin: 0;
+	line-height: 2;
+}
+.nav-sub ul li a {
+	display: block;
+	
+	text-decoration: none;
+	color: #2e6e9e;
+	font-weight: bold;
+	border: 1px solid transparent;
+	
+	-moz-border-radius: 3px;
+}
+.nav-sub ul li a:hover {
+	color: #381f00;
+	border: 1px solid #a45b13;
+	background: #ffdd57 url('../images/gradient-50-bg.png') repeat-x center left;
+}
+.nav-sub ul li a span { padding: 2px; }
+.nav-sub ul li.spacer { border: none; }
+
+.content {
+	margin-left: 180px;
+	line-height: 1.4;
+	padding: 8px 8px 0 0;
+}
+
+/*
+|---------------------------------------------------------------
+| FOOTER STYLES
+|---------------------------------------------------------------
+*/
+.clearfooter {
+	height: 25px;
+	clear: both;
+}
+
+#footer {
+	height: 24px;
+	line-height: 23px;
+	position: relative;
+	
+	text-align: center;
+	font-size: 85%;
+	border-bottom: none;
+	border-left: none;
+	border-right: none;
+}
+
+/*
+|---------------------------------------------------------------
+| FONT COLOR CLASSES
+|---------------------------------------------------------------
+*/
+.page-head 		{ color: #494437; }
+.page-subhead	{ color: #0074c7; }
+
+.gray	{ color: #777; }
+.red	{ color: #c00; }
+.orange	{ color: #e99e1c; }
+.green	{ color: #008000; }
+.blue	{ color: lightblue; }
+
+/*
+|---------------------------------------------------------------
+| LINKS
+|---------------------------------------------------------------
+*/
+a {
+	text-decoration: none; 
+	color: #026890;
+}
+a:hover {
+	color: #2e6e9e;
+	border-bottom: 1px solid;
+}
+
+/*
+|---------------------------------------------------------------
+| INPUT STYLES
+|---------------------------------------------------------------
+*/
+input[type=text],
+input[type=password] {
+	border: 1px solid #d8d8d8;
+	color: #777;
+	font-family: inherit;
+}
+input[type=text]:focus,
+input[type=password]:focus {
+	color: #444;
+	border: 1px solid #777;
+}
+
+textarea {
+	font-size: 100%;
+	font-family: inherit;
+	border: 1px solid #d8d8d8;
+	color: #777;
+}
+textarea:focus {
+	color: #444;
+	border: 1px solid #777;
+}
+
+select {
+	border: 1px solid #d8d8d8;
+	color: #777;
+	font-family: inherit;
+}
+select:focus,
+select:hover {
+	color: #444;
+	border: 1px solid #777;
+}
+
+.cell-label {
+	font-weight: bold;
+	font-size: 100%;
+	text-align: right;
+}
+
+/*
+|---------------------------------------------------------------
+| TABLE STYLES
+|---------------------------------------------------------------
+*/
+tr.alt td { background-color: #eee; }
+tr.light_gray { background-color: #ddd; }
+
+th {
+	text-align: center;
+	font-size: 120%;
+}
+
+/*
+|---------------------------------------------------------------
+| BUTTONS
+|---------------------------------------------------------------
+*/
+
+button {
+	-moz-border-radius: 8px;
+	-webkit-border-radius: 8px;
+	
+	font-weight: bold;
+}
+
+button.button-main {
+	border: 1px solid #adc0d0;
+	background: #dfeffc url('../images/button_main_bg.jpg') repeat-x top left;
+	color: #2e6e9e;
+}
+button.button-main:hover {
+	border: 1px solid #fbcb09;
+	background: #fdf5ce url('../images/button_main_bg_hover.jpg') repeat-x top left;
+	color: #c77405;
+}
+
+button.button-sec {
+	border: 1px solid #ccc;
+	background: #fff url('../images/button_sec_bg.jpg') repeat-x top left;
+	color: #777;
+}
+button.button-sec:hover { border: 1px solid #aaa; }
+
+button.button-small {
+	border: 1px solid #ccc;
+	background: #fff url('../images/button_sec_bg.jpg') repeat-x top left;
+	color: #777;
+	font-weight: normal !important;
+	font-size: 90%;
+}
+button.button-small:hover { border: 1px solid #aaa; }
+
+input.button-main {
+	border: 1px solid #adc0d0;
+	background: #dfeffc url('../images/button_main_bg.jpg') repeat-x bottom left;
+	font-weight: bold;
+	font-size: 120%;
+	color: #2e6e9e;
+}
+input.button-main:hover {
+	border: 1px solid #fbcb09;
+	background: #fdf5ce url('../images/button_main_bg_hover.jpg') repeat-x top left;
+	color: #c77405;
+}
+
+input.button-sec {
+	border: 1px solid #ccc;
+	background: #f9f9f9 url('../images/button-sec_bg.jpg') repeat-x bottom left;
+	font-weight: bold;
+	font-size: 120%;
+	color: #555;
+}
+input.button-sec:hover { color: #999; }
+
+input[disabled],
+button[disabled] { color: #aaa; }
+
+input[disabled]:hover,
+button[disabled]:hover { border: 1px solid #ccc; }
+
+/*
+|---------------------------------------------------------------
+| COMMENT STYLES
+|---------------------------------------------------------------
+*/
+#comments p, #news_blocks p, .post_info {
+	background-color: #f5f8f9;
+	border: 1px solid #ccc;
+}
+
+/*
+|---------------------------------------------------------------
+| LIST STYLES
+|---------------------------------------------------------------
+*/
+ul.square { list-style: square; }
+ul.none, ol.none { list-style: none; }
+ol.roman { list-style: upper-roman; }
+
+/*
+|---------------------------------------------------------------
+| FLASH MESSAGES
+|---------------------------------------------------------------
+*/
+.flash_message {
+	font-weight: bold;
+	font-size: .9em;
+	
+	-moz-border-radius: 8px;
+	-webkit-border-radius: 8px;
+}
+.flash-success {
+	border: 1px solid #a4c897;
+	background: #ccecc5;
+	color: #376b0e;
+}
+.flash-error {
+	border: 1px solid #cd0a0a; 
+	background: #fef1ec;
+	color: #cd0a0a;
+}
+.flash-info {
+	border: 1px solid #fad42e;
+	background: #fbec88 url('../images/gradient-30-bg.png') repeat-x 0 0;
+	color: #363636;
+}
+
+/*
+|---------------------------------------------------------------
+| MISC
+|---------------------------------------------------------------
+*/
+hr {
+	border: 1px solid #ddd;
+	border-width: 1px 0 0;
+}
+
+.loader { text-align: center; }
+
+.system_warning {
+	font-weight: bold;
+	text-align: center;
+}
+
+/*
+|---------------------------------------------------------------
+| PANEL
+|---------------------------------------------------------------
+*/
+.panel-handle a, .panel-handle a:hover {
+	text-decoration: none;
+	border: none;
+}
+.panel-handle a span {
+	border-left: 1px solid transparent;
+	border-right: 1px solid transparent;
+	font-weight: bold;
+}
+.panel-handle a:hover span {
+	background: #ffdd57 url(../images/ui-bg_gloss-wave_70_ffdd57_500x100.png) 50% 50% repeat-x;
+	color: #381f00;
+	border-left: 1px solid #a45b13;
+	border-right: 1px solid #a45b13;
+}
+
+#panel .panel-body {
+	background: #555 url('../images/panel-bg.png') repeat-x top left;
+	color: #fff;
+}
+
+.panel-handle {
+	border-bottom: 1px solid #444;
+	text-align: center;
+	font-size: 85%;
+}
+.panel-trigger span { text-align: center; }
+
+.panel_1 a, .panel_2 a, .panel_3 a {
+	color: #fff;
+	border-bottom: 1px solid;
+}
+
+.panel_1 a.edit, .panel_2 a.edit, .panel_3 a.edit {
+	color: #999;
+	border-bottom: 0;
+	font-weight: bold;
+}
+.panel_1 a.edit:hover, .panel_2 a.edit:hover, .panel_3 a.edit:hover { color: #ddd; }
