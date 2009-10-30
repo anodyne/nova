@@ -10,7 +10,13 @@
 |
 */
 
-
+$hook['post_controller_constructor'][] = array(
+	'class'		=> 'Maintenance',
+	'function'	=> 'main',
+	'filename'	=> 'Maintenance.php',
+	'filepath'	=> 'hooks',
+	'params'	=> ''
+);
 
 /* End of file hooks.php */
 /* Location: ./application/config/hooks.php */
