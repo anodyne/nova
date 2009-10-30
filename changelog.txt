@@ -1,3 +1,20 @@
+2009.10.30
+
+* updated the config file to enable hooks
+* updated the hooks config file to define the maintenance hook
+* updated the default login stylesheet
+* updated install data to include the sunny login section
+
+* added a hook for maintenance mode
+* added new skin stylesheets for redmond main skin section
+* added new skin stylesheets for sunny main skin section
+* added login section for the sunny skin
+
+* removed the old skin stylesheets for redmond main skin section
+* removed the old skin stylesheets for sunny main skin section
+
+==========
+
 2009.10.29
 
 * removed old genre change view files

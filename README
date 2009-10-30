@@ -8,25 +8,20 @@ Nova M6 (0.6)
 
 LAST UPDATE
 ==========
-2009.10.29
+2009.10.30
 
 LATEST CHANGES
 ==========
 
-* removed old genre change view files
-* removed the install/mods directory since we're not doing that feature for 1.0
-* removed the database field and table view files from the update section
+* updated the config file to enable hooks
+* updated the hooks config file to define the maintenance hook
+* updated the default login stylesheet
+* updated install data to include the sunny login section
 
-* updated the install stylesheets with new classes
-* updated the genre change view files
-* updated install/genre to allow installing additional genres
-* updated the language files
-* updated the install controller with updated language keys
-* updated the update controller with updated language keys
-* updated the upgrade controller with updated language keys
-* updated the utility helper with updated language keys
-* updated install/changedb to allow adding tables and fields to nova
+* added a hook for maintenance mode
+* added new skin stylesheets for redmond main skin section
+* added new skin stylesheets for sunny main skin section
+* added login section for the sunny skin
 
-* added genre_main view file
-* added genre js view file
-* added install/changedb view files
+* removed the old skin stylesheets for redmond main skin section
+* removed the old skin stylesheets for sunny main skin section
