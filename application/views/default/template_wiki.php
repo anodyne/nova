@@ -1,61 +1,141 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
-<head>
-   <title>Template</title>
-   <?= $_scripts ?>
-   <?= $_styles ?>
-   <style type="text/css">
-      body {
-      background-color: #fff;
-      margin:           40px;
-      font-family:      Lucida Grande, Verdana, Sans-serif;
-      font-size:        12px;
-      color:            #000;
-      }
-      
-      #content  {
-      border:           #999 1px solid;
-      background-color: #fff;
-      padding:       20px 20px 12px 20px;
-      }
-      
-      h1 {
-      font-weight:      normal;
-      font-size:        14px;
-      color:            #990000;
-      margin:        0 0 4px 0;
-      }
-      
-      a {
-         color: #069;
-         text-decoration: underline;
-      }
-      a:hover {
-         color: #900;
-      }
-      
-      p {
-         line-height: 1.55;
-      }
-   </style>
-</head>
-<body>
-   
-   <div id="content">
-      <h1>Template Library</h1>
-      <p>The Template library, written for the <a href="http://www.codeigniter.com">CodeIgniter PHP
-         framework</a>, is a wrapper for CI’s View 
-         implementation. Template is a reaction to the numerous questions from the CI community 
-         regarding how one would display multiple views for one controller, and how to embed "views 
-         within views" in a standardized fashion.</p>
-      <p>In addition, Template provides extra Views loading 
-         capabilities and shortcuts for including CSS, JavaScript, and other common elements in your 
-         final rendered HTML.</p>
-      <p><a href="http://www.williamsconcepts.com/ci/libraries/template/index.html">Read Template 
-         Library Documentation Online</a></p>
-   </div>
-   
-   
-</body>
+<?php
+/*
+|---------------------------------------------------------------
+| TEMPLATE - WIKI
+|---------------------------------------------------------------
+|
+| File: application/views/default/template_wiki.php
+| Skin Version: 1.0
+|
+| Wiki layout file used by the default skin.
+|
+| $sec options are: main, wiki, admin, login
+| $css can be anything you want (with a .css extension of course)
+|
+*/
+
+$sec = 'wiki'; /* set the section of the system */
+$css = 'main.css'; /* the name of the main css file */
+
+$path_raw = dirname(__FILE__); /* absolute path of the current file */
+$path = explode('/', $path_raw); /* explode the string into an array */
+
+if (count($path) <= 1)
+{ /* Windows servers use back slashes, so we have to capture for that */
+	$path = explode('\\', $path_raw);
+}
+
+$pcount = count($path); /* count the number of keys in the array */
+$skin_loc = $pcount -1; /* create the first element used */
+$current_skin = $path[$skin_loc];
+
+/* set the final style location */
+$style_loc = APPFOLDER . '/views/' . $current_skin . '/' . $sec . '/css/' . $css;
+
+/* set up the link tag parameters */
+$link = array(
+	'href'	=> 	$style_loc,
+	'rel'	=> 	'stylesheet',
+	'type'	=> 	'text/css',
+	'media'		=> 'screen',
+	'charset'	=> 'utf-8'
+);
+
+echo "<?xml version='1.0' encoding='UTF-8'?>\r\n";
+
+?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+	<head>
+		<title><?php echo $title;?></title>
+		
+		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+		<meta name="language" content="en" />
+		<meta name="description" content="<?php echo $this->config->item('meta_desc');?>" />
+		<meta name="keywords" content="<?php echo $this->config->item('meta_keywords');?>" />
+		<meta name="author" content="<?php echo $this->config->item('meta_author');?>" />
+		
+		<?php echo $_redirect;?>
+		
+		<!-- STYLESHEETS -->
+		<?php echo link_tag($link); ?>
+		
+		<!-- JAVASCRIPT FILES -->
+		<?php include_once($this->config->item('include_head_wiki')); ?>
+		
+		<?php echo $javascript;?>
+	</head>
+	<body>
+		<noscript>
+			<div class="system_warning"><?php echo lang_output('text_javascript_off', '');?></div>
+		</noscript>
+		
+		<?php if ($this->session->userdata('player_id') !== FALSE): ?>
+			<!-- USER PANEL -->
+			<div id="panel">
+				<div class="panel-body">
+					<div class="wrapper">
+						<table class="table100">
+							<tbody>
+								<tr>
+									<td class="panel_1 align_top"><?php echo $panel_1;?></td>
+									<td class="panel_spacer"></td>
+									<td class="panel_2 align_top"><?php echo $panel_2;?></td>
+									<td class="panel_spacer"></td>
+									<td class="panel_3 align_top"><?php echo $panel_3;?></td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+				<div class="panel-handle UITheme">
+					<div class="wrapper">
+						<?php echo $panel_workflow;?>
+					</div>
+				</div>
+			</div>
+		<?php endif; ?>
+		
+		<!-- HEAD -->
+		<div id="head">
+			<div class="head_top"></div>
+			<div class="wrapper">
+				<div class="head_content">
+					<?php echo img(APPFOLDER .'/views/'. $current_skin .'/'. $sec .'/images/head_logo.png', FALSE);?>
+				</div>
+			</div>
+		</div>
+		
+		<!-- MENU -->
+		<div id="menu">
+			<div class="wrapper">
+				<div class="nav-main">
+					<?php echo $nav_main;?>
+				</div>
+			</div>
+		</div>
+		
+		<!-- BODY -->
+		<div id="body">
+			<div class="wrapper">
+				<!-- SUB NAVIGATION -->
+				<div class="nav-sub">
+					<?php echo $nav_sub;?>
+				</div>
+				
+				<!-- PAGE CONTENT -->
+				<div class="content">
+					<?php echo $flash_message;?>
+					<?php echo $content;?>
+					<?php echo $ajax;?>
+				</div>
+			</div>
+		</div>
+		
+		<!-- FOOTER -->
+		<div id="footer">
+			Powered by <strong><?php echo APP_NAME;?></strong><br />
+			Elapsed Time: {elapsed_time} seconds<br />
+			Memory Usage: {memory_usage}
+		</div>
+	</body>
 </html>
