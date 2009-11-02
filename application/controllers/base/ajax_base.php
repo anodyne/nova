@@ -428,7 +428,7 @@ class Ajax_base extends Controller {
 				$data['values']['section'] = array(
 					'main' => ucfirst(lang('labels_main')),
 					'admin' => ucfirst(lang('labels_admin')),
-					'wiki' => ucfirst(lang('labels_wiki')),
+					'wiki' => ucfirst(lang('global_wiki')),
 					'login' => ucfirst(lang('labels_login')),
 				);
 				
@@ -3371,6 +3371,43 @@ class Ajax_base extends Controller {
 		$this->template->render();
 	}
 	
+	function del_wiki_category()
+	{
+		/* load the resources */
+		$this->load->model('wiki_model', 'wiki');
+		
+		$head = sprintf(
+			lang('fbx_head'),
+			ucwords(lang('fbx_action_del')),
+			ucwords(lang('global_wiki') .' '. lang('labels_category'))
+		);
+		
+		/* data being sent to the facebox */
+		$data['header'] = $head;
+		$data['id'] = (is_numeric($this->uri->segment(3))) ? $this->uri->segment(3) : 0;
+		$data['text'] = sprintf(
+			lang('fbx_content_del_entry'),
+			lang('global_wiki') .' '. lang('labels_category'),
+			$this->wiki->get_category($data['id'], 'wikicat_name')
+		);
+		
+		/* input parameters */
+		$data['inputs'] = array(
+			'submit' => array(
+				'type' => 'submit',
+				'class' => 'hud_button',
+				'name' => 'submit',
+				'value' => 'submit',
+				'content' => ucwords(lang('actions_submit')))
+		);
+		
+		/* write the data to the template */
+		$this->template->write_view('content', '_base/ajax/del_wiki_category', $data);
+		
+		/* render the template */
+		$this->template->render();
+	}
+	
 	function duplicate_role()
 	{
 		/* load the resources */
@@ -3767,7 +3804,7 @@ class Ajax_base extends Controller {
 						.' '. lang('order_one')),
 					'main' => ucfirst(lang('labels_main')),
 					'admin' => ucfirst(lang('labels_admin')),
-					'wiki' => ucfirst(lang('labels_wiki')),
+					'wiki' => ucfirst(lang('global_wiki')),
 					'login' => ucfirst(lang('labels_login')),
 				);
 				
@@ -4605,6 +4642,49 @@ class Ajax_base extends Controller {
 		
 		/* write the data to the template */
 		$this->template->write_view('content', '_base/ajax/edit_user_setting', $data);
+		
+		/* render the template */
+		$this->template->render();
+	}
+	
+	function edit_wiki_category()
+	{
+		/* load the resources */
+		$this->load->model('wiki_model', 'wiki');
+		
+		$head = sprintf(
+			lang('fbx_head'),
+			ucwords(lang('fbx_action_edit')),
+			ucwords(lang('global_wiki') .' '. lang('labels_category'))
+		);
+		
+		/* data being sent to the facebox */
+		$data['header'] = $head;
+		$data['id'] = (is_numeric($this->uri->segment(3))) ? $this->uri->segment(3) : 0;
+		
+		/* get the message */
+		$cat = $this->wiki->get_category($data['id']);
+		
+		/* input parameters */
+		$data['inputs'] = array(
+			'name' => array(
+				'name' => 'name',
+				'value' => $cat->wikicat_name,
+				'class' => 'hud'),
+			'submit' => array(
+				'type' => 'submit',
+				'class' => 'hud_button',
+				'name' => 'submit',
+				'value' => 'submit',
+				'content' => ucwords(lang('actions_submit')))
+		);
+		
+		$data['label'] = array(
+			'name' => ucwords(lang('labels_category') .' '. lang('labels_name')),
+		);
+		
+		/* write the data to the template */
+		$this->template->write_view('content', '_base/ajax/edit_wiki_category', $data);
 		
 		/* render the template */
 		$this->template->render();

@@ -3851,7 +3851,7 @@ class Site_base extends Controller {
 			'skin_admin' => ucwords(lang('labels_admin') .' '. lang('labels_site')),
 			'skin_login' => ucwords(lang('actions_login') .' '. lang('labels_page')),
 			'skin_main' => ucwords(lang('labels_main') .' '. lang('labels_site')),
-			'skin_wiki' => ucfirst(lang('labels_wiki')),
+			'skin_wiki' => ucfirst(lang('global_wiki')),
 			'sysemail' => ucwords(lang('labels_system') .' '. lang('labels_email')),
 			'system' => ucwords(lang('labels_system') .'/'. ucfirst(lang('labels_email'))),
 			'timezone' => ucfirst(lang('labels_timezone')),

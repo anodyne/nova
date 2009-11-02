@@ -63,9 +63,9 @@ define('AMP',		'&amp;');		/* left double arrow */
 */
 
 define('APP_NAME',				'Nova');
-define('APP_VERSION',			'M6');
+define('APP_VERSION',			'M7');
 define('APP_VERSION_MAJOR',		0);
-define('APP_VERSION_MINOR',		6);
+define('APP_VERSION_MINOR',		7);
 define('APP_VERSION_UPDATE',	0);
 
 define('SMS_UPGRADE_VERSION',	'2.6.9');

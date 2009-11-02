@@ -1746,7 +1746,7 @@ class User_base extends Controller {
 			'myskins' => ucwords(lang('labels_my') .' '. lang('labels_skins')),
 			'skin_admin' => ucwords(lang('labels_admin') .' '. lang('labels_site')),
 			'skin_main' => ucwords(lang('labels_main') .' '. lang('labels_site')),
-			'skin_wiki' => ucfirst(lang('labels_wiki')),
+			'skin_wiki' => ucfirst(lang('global_wiki')),
 		);
 		
 		/* figure out where the view files should be coming from */

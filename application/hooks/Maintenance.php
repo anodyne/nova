@@ -23,24 +23,29 @@ class Maintenance {
 	{
 		$ci =& get_instance();
 		
-		if ($ci->settings->get_setting('maintenance') == 'on' && $ci->uri->segment(1) != 'login')
+		$ignore = array('install', 'login', 'update', 'upgrade');
+		
+		if (!in_array($ci->uri->segment(1), $ignore))
 		{
-			$sysadmin = $ci->auth->is_sysadmin($ci->session->userdata('player_id'));
-			
-			if ($sysadmin === FALSE)
+			if ($ci->settings->get_setting('maintenance') == 'on' && $ci->uri->segment(1) != 'login')
 			{
-				$view = view_location('maintenance', $ci->settings->get_setting('skin_login'), 'login');
+				$sysadmin = $ci->auth->is_sysadmin($ci->session->userdata('player_id'));
 				
-				if (file_exists(APPPATH .'views/'. $view .'.php'))
+				if ($sysadmin === FALSE)
 				{
-					$data = $ci->load->view($view, '', TRUE);
+					$view = view_location('maintenance', $ci->settings->get_setting('skin_login'), 'login');
 					
-					echo $data;
-					exit();
-				}
-				else
-				{
-					redirect('login/index');
+					if (file_exists(APPPATH .'views/'. $view .'.php'))
+					{
+						$data = $ci->load->view($view, '', TRUE);
+						
+						echo $data;
+						exit();
+					}
+					else
+					{
+						redirect('login/index');
+					}
 				}
 			}
 		}
