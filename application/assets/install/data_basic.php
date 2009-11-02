@@ -73,6 +73,9 @@ $access_groups = array(
 	array(
 		'group_name' => 'Users',
 		'group_order' => 6),
+	array(
+		'group_name' => 'Wiki',
+		'group_order' => 7),
 );
 
 $access_roles = array(
@@ -408,6 +411,24 @@ $access_pages = array(
 		'page_group' => 7,
 		'page_level' => 2,
 		'page_desc' => "Can nominate playing and non-playing characters for awards as well as approving/rejecting pending award nominations"),
+		
+	array(
+		'page_name' => "Wiki Pages (Level 1)",
+		'page_url' => 'wiki/page',
+		'page_group' => 8,
+		'page_level' => 1,
+		'page_desc' => "Can create and edit wiki pages including viewing history and reverting to previous drafts"),
+	array(
+		'page_name' => "Wiki Pages (Level 2)",
+		'page_url' => 'wiki/page',
+		'page_group' => 8,
+		'page_level' => 2,
+		'page_desc' => "Can create, delete and edit wiki pages"),
+	array(
+		'page_name' => "Wiki Categories",
+		'page_url' => 'wiki/categories',
+		'page_group' => 8,
+		'page_desc' => "Can create, delete and edit wiki categories"),
 );
 
 $catalogue_skins = array(
@@ -754,6 +775,10 @@ $menu_categories = array(
 		'menucat_name' => 'Reports',
 		'menucat_order' => 10,
 		'menucat_menu_cat' => 'report'),
+	array(
+		'menucat_name' => 'Wiki',
+		'menucat_order' => 11,
+		'menucat_menu_cat' => 'wiki'),
 );
 
 # TODO: updated data for release
@@ -786,7 +811,7 @@ $menu_items = array(
 		'menu_link' => 'wiki/index',
 		'menu_sim_type' => 1,
 		'menu_cat' => 'main',
-		'menu_display' => 'n'),
+		'menu_display' => 'y'),
 	array(
 		'menu_name' => 'Search',
 		'menu_group' => 0,
@@ -982,6 +1007,61 @@ $menu_items = array(
 		'menu_display' => 'n',
 		'menu_type' => 'sub',
 		'menu_cat' => 'sim'),
+		
+	array(
+		'menu_name' => 'Main Page',
+		'menu_group' => 0,
+		'menu_order' => 0,
+		'menu_link' => 'wiki/index',
+		'menu_sim_type' => 1,
+		'menu_display' => 'y',
+		'menu_type' => 'sub',
+		'menu_cat' => 'wiki'),
+	array(
+		'menu_name' => 'Categories',
+		'menu_group' => 0,
+		'menu_order' => 1,
+		'menu_link' => 'wiki/categories',
+		'menu_sim_type' => 1,
+		'menu_display' => 'y',
+		'menu_type' => 'sub',
+		'menu_cat' => 'wiki'),
+	array(
+		'menu_name' => 'Manage Pages',
+		'menu_group' => 1,
+		'menu_order' => 0,
+		'menu_link' => 'wiki/managepages',
+		'menu_sim_type' => 1,
+		'menu_display' => 'y',
+		'menu_type' => 'sub',
+		'menu_use_access' => 'y',
+		'menu_access' => 'wiki/pages',
+		'menu_need_login' => 'y',
+		'menu_cat' => 'wiki'),
+	array(
+		'menu_name' => 'Manage Categories',
+		'menu_group' => 1,
+		'menu_order' => 1,
+		'menu_link' => 'wiki/managecategories',
+		'menu_sim_type' => 1,
+		'menu_display' => 'y',
+		'menu_type' => 'sub',
+		'menu_use_access' => 'y',
+		'menu_access' => 'wiki/categories',
+		'menu_need_login' => 'y',
+		'menu_cat' => 'wiki'),
+	array(
+		'menu_name' => 'Create New Page',
+		'menu_group' => 2,
+		'menu_order' => 0,
+		'menu_link' => 'wiki/page',
+		'menu_sim_type' => 1,
+		'menu_display' => 'y',
+		'menu_type' => 'sub',
+		'menu_use_access' => 'y',
+		'menu_access' => 'wiki/pages',
+		'menu_need_login' => 'y',
+		'menu_cat' => 'wiki'),
 		
 	array(
 		'menu_name' => 'Control Panel',
@@ -1581,7 +1661,7 @@ $messages = array(
 	array(
 		'message_key' => 'welcome_head',
 		'message_label' => 'Welcome Header',
-		'message_content' => "Welcome to Nova M6!",
+		'message_content' => "Welcome to Nova M7!",
 		'message_type' => 'title'),
 	array(
 		'message_key' => 'main_credits_title',
@@ -1654,7 +1734,7 @@ $security_questions = array(
 $settings = array(
 	array(
 		'setting_key' => 'sim_name',
-		'setting_value' => 'Nova M6',
+		'setting_value' => 'Nova M7',
 		'setting_user_created' => 'n'),
 	array(
 		'setting_key' => 'sim_year',
@@ -1706,7 +1786,7 @@ $settings = array(
 		'setting_user_created' => 'n'),
 	array(
 		'setting_key' => 'email_subject',
-		'setting_value' => '[Nova M6]',
+		'setting_value' => '[Nova M7]',
 		'setting_user_created' => 'n'),
 	array(
 		'setting_key' => 'timezone',
@@ -1750,7 +1830,7 @@ $settings = array(
 		'setting_user_created' => 'n'),
 	array(
 		'setting_key' => 'default_email_name',
-		'setting_value' => 'Nova M6',
+		'setting_value' => 'Nova M7',
 		'setting_user_created' => 'n'),
 	array(
 		'setting_key' => 'default_email_address',
@@ -2090,6 +2170,11 @@ $system_components = array(
 		'comp_url' => 'http://codeigniter.com/',
 		'comp_desc' => 'CodeIgniter is an open source web application framework for use in building dynamic web sites with PHP. It enables developers to build applications faster - compared to coding from scratch - by providing a rich set of libraries for commonly needed tasks, as well as a simple interface and a logical structure to access these libraries.'),
 	array(
+		'comp_name' => 'Thresher',
+		'comp_version' => 'Release 1',
+		'comp_url' => '',
+		'comp_desc' => "Thresher is Anodyne Productions' integrated mini-wiki for Nova."),
+	array(
 		'comp_name' => 'Template Library',
 		'comp_version' => '1.4.1',
 		'comp_desc' => "The Template library, written for the CodeIgniter PHP-framework, is a wrapper for CI's View implementation. Template is a reaction to the numerous questions from the CI community regarding how one would display multiple views for one controller, and how to embed \"views within views\" in a standardized fashion. In addition, Template provides extra Views loading capabilities, the ability to utilize any template parser (like Smarty), and shortcuts for including CSS, JavaScript, and other common elements in your final rendered HTML.",
@@ -2151,7 +2236,7 @@ $system_info = array(
 		'sys_uid' => random_string('alnum', 32),
 		'sys_install_date' => now(),
 		'sys_version_major' => 0,
-		'sys_version_minor' => 6,
+		'sys_version_minor' => 7,
 		'sys_version_update' => 0)
 );
 
@@ -2190,6 +2275,12 @@ $system_versions = array(
 		'version' => '0.6.0',
 		'version_major' => '0',
 		'version_minor' => '6',
+		'version_update' => '0',
+		'version_date' => 1257170400),
+	array(
+		'version' => '0.7.0',
+		'version_major' => '0',
+		'version_minor' => '7',
 		'version_update' => '0',
 		'version_date' => now()),
 );

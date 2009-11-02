@@ -80,17 +80,16 @@ $data = array(
 	'specs_values'				=> array('id' => 'value_id', 'fields' => 'fields_specs_values'),
 	'system_components'			=> array('id' => 'comp_id', 'fields' => 'fields_system_components'),
 	'system_info'				=> array('id' => 'sys_id', 'fields' => 'fields_system_info'),
-	//'system_mods'				=> array('id' => 'mod_id', 'fields' => 'fields_system_mods'),
 	'system_versions'			=> array('id' => 'version_id', 'fields' => 'fields_system_versions'),
 	'tour'						=> array('id' => 'tour_id', 'fields' => 'fields_tour'),
 	'tour_data'					=> array('id' => 'data_id', 'fields' => 'fields_tour_data'),
 	'tour_fields'				=> array('id' => 'field_id', 'fields' => 'fields_tour_fields'),
 	'tour_values'				=> array('id' => 'value_id', 'fields' => 'fields_tour_values'),
 	'tour_decks'				=> array('id' => 'deck_id', 'fields' => 'fields_tour_decks'),
-	//'wiki_categories'			=> array('id' => 'wikicat_id', 'fields' => 'fields_wiki_categories'),
-	//'wiki_comments'			=> array('id' => 'wcomments_id', 'fields' => 'fields_wiki_comments'),
-	//'wiki_drafts'				=> array('id' => 'draft_id', 'fields' => 'fields_wiki_drafts'),
-	//'wiki_pages'				=> array('id' => 'page_id', 'fields' => 'fields_wiki_pages'),
+	'wiki_categories'			=> array('id' => 'wikicat_id', 'fields' => 'fields_wiki_categories'),
+	'wiki_comments'				=> array('id' => 'wcomments_id', 'fields' => 'fields_wiki_comments'),
+	'wiki_drafts'				=> array('id' => 'draft_id', 'fields' => 'fields_wiki_drafts'),
+	'wiki_pages'				=> array('id' => 'page_id', 'fields' => 'fields_wiki_pages'),
 	'uploads'					=> array('id' => 'upload_id', 'fields' => 'fields_uploads')
 );
 
@@ -1662,15 +1661,18 @@ $fields_wiki_comments = array(
 		'type' => 'INT',
 		'constraint' => 10,
 		'auto_increment' => TRUE),
-	'wcomments_author' => array(
-		'type' => 'INT',
-		'constraint' => 8),
-	'wcomments_article' => array(
+	'wcomments_author_player' => array(
+		'type' => $player_id_type,
+		'constraint' => $player_id_constraint),
+	'wcomments_author_character' => array(
+		'type' => $character_id_type,
+		'constraint' => $character_id_constraint),
+	'wcomments_page' => array(
 		'type' => 'INT',
 		'constraint' => 10),
 	'wcomments_date' => array(
-		'type' => 'BIGINT',
-		'constraint' => 20),
+		'type' => $date_type,
+		'constraint' => $date_constraint),
 	'wcomments_content' => array(
 		'type' => 'TEXT')
 );
@@ -1684,20 +1686,20 @@ $fields_wiki_drafts = array(
 		'type' => 'VARCHAR',
 		'constraint' => 255,
 		'default' => ''),
-	'draft_author' => array(
-		'type' => 'INT',
-		'constraint' => 8),
+	'draft_author_player' => array(
+		'type' => $player_id_type,
+		'constraint' => $player_id_constraint),
+	'draft_author_character' => array(
+		'type' => $character_id_type,
+		'constraint' => $character_id_constraint),
 	'draft_content' => array(
 		'type' => 'TEXT'),
-	'draft_created_at' => array(
-		'type' => 'BIGINT',
-		'constraint' => 20),
-	'draft_updated_at' => array(
-		'type' => 'BIGINT',
-		'constraint' => 20),
-	'draft_updated_by' => array(
+	'draft_page' => array(
 		'type' => 'INT',
-		'constraint' => 8),
+		'constraint' => 10),
+	'draft_created_at' => array(
+		'type' => $date_type,
+		'constraint' => $date_constraint),
 	'draft_categories' => array(
 		'type' => 'TEXT')
 );
@@ -1711,17 +1713,23 @@ $fields_wiki_pages = array(
 		'type' => 'INT',
 		'constraint' => 10),
 	'page_created_at' => array(
-		'type' => 'BIGINT',
-		'constraint' => 20),
-	'page_created_by' => array(
-		'type' => 'INT',
-		'constraint' => 8),
+		'type' => $date_type,
+		'constraint' => $date_constraint),
+	'page_created_by_player' => array(
+		'type' => $player_id_type,
+		'constraint' => $player_id_constraint),
+	'page_created_by_character' => array(
+		'type' => $character_id_type,
+		'constraint' => $character_id_constraint),
 	'page_updated_at' => array(
-		'type' => 'BIGINT',
-		'constraint' => 20),
-	'page_updated_by' => array(
-		'type' => 'INT',
-		'constraint' => 8),
+		'type' => $date_type,
+		'constraint' => $date_constraint),
+	'page_updated_by_player' => array(
+		'type' => $player_id_type,
+		'constraint' => $player_id_constraint),
+	'page_updated_by_character' => array(
+		'type' => $character_id_type,
+		'constraint' => $character_id_constraint),
 	'page_allow_comments' => array(
 		'type' => 'ENUM',
 		'constraint' => "'y','n'",
