@@ -50,5 +50,4 @@
 		<br />
 		<?php echo form_button($buttons['update']);?>
 	<?php echo form_close();?>
-	</div>
 <?php endif;?>
