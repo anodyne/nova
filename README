@@ -4,24 +4,32 @@ Anodyne Production's next-generation RPG management system combines popular feat
 
 VERSION
 ==========
-Nova M6 (0.6)
+Nova M7 (0.7)
 
 LAST UPDATE
 ==========
-2009.10.30
+2009.11.02
 
 LATEST CHANGES
 ==========
 
-* updated the config file to enable hooks
-* updated the hooks config file to define the maintenance hook
-* updated the default login stylesheet
-* updated install data to include the sunny login section
+* added the october changelog archive
+* added the wiki model and wiki base model
+* added the wiki/categories view files
+* added the wiki/category view files
+* added the wiki/managecategories view files
+* added the needed images to the base wiki directory
+* added the wiki stylesheets
+* added the wiki flash view file
+* added the markitup files
+* added the thresher class
+* added the thresher config file
 
-* added a hook for maintenance mode
-* added new skin stylesheets for redmond main skin section
-* added new skin stylesheets for sunny main skin section
-* added login section for the sunny skin
+* updated the install data to reflect the change from m6 to m7
+* updated the database schema with the wiki tables
+* updated the basic install data with changes for the wiki
+* updated the wiki include head
+* updated the language files
+* updated the wiki template file to not be the template default
 
-* removed the old skin stylesheets for redmond main skin section
-* removed the old skin stylesheets for sunny main skin section
+* fixed bug where fatal error is thrown when trying to go to the install page when not logged in and maintenance mode is active
