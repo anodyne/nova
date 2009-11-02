@@ -43,6 +43,7 @@ include_once APPPATH .'language/'. $language .'/headers_titles_lang.php';
 include_once APPPATH .'language/'. $language .'/error_lang.php';
 include_once APPPATH .'language/'. $language .'/facebox_lang.php';
 include_once APPPATH .'language/'. $language .'/text_lang.php';
+include_once APPPATH .'language/'. $language .'/wiki_lang.php';
 
 /*
 |---------------------------------------------------------------
@@ -93,6 +94,7 @@ $lang['global_tour']			= 'tour';
 $lang['global_touritem']		= 'tour item';
 $lang['global_touritems']		= 'tour items';
 $lang['global_webmaster']		= 'webmaster';
+$lang['global_wiki']			= 'wiki';
 
 /*
 |---------------------------------------------------------------
@@ -508,7 +510,6 @@ $lang['labels_users']			= 'users';
 $lang['labels_value']			= 'value';
 $lang['labels_values']			= 'values';
 $lang['labels_version']			= 'version';
-$lang['labels_wiki']			= 'wiki';
 $lang['labels_writing']			= 'writing';
 $lang['labels_yes']				= 'yes';
 $lang['labels_your'] 			= 'your';

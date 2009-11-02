@@ -102,6 +102,10 @@ $lang['error_no_catalogue_skins'] = 'No skins found';
 $lang['error_no_catalogue_themes'] = 'No themes found';
 $lang['error_no_award_nominations'] = 'No award nominations found';
 $lang['error_no_awards_to_give'] = 'There are no awards to give for this character type!';
+$lang['error_no_categories'] = 'No categories found';
+$lang['error_no_pages'] = 'No pages found';
+
+$lang['error_not_found'] = "No %s found";
 
 $lang['error_invalid_tab'] = 'Invalid tab '. NDASH .' Section will not display!';
 
