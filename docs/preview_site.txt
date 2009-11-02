@@ -169,7 +169,7 @@ Here we go! This is what you would call the home stretch. We're down to report, 
 Other things we'll need to address in M6 are the reports based on data the system collects and updating from one version of Nova to the next. Each of those poses their own challenges, but by far, the biggest beast to tackle is upgrading.
 
 Start Date - 01 September 2009
-End Date - 
+End Date - 02 November 2009
 
 Development Report -
 
