@@ -3426,6 +3426,21 @@ $system_components = array(
 		'comp_version' => '',
 		'comp_desc' => "QuickSearch is a simple plugin for filtering tables, lists and paragraphs.",
 		'comp_url' => 'http://rikrikrik.com/jquery/quicksearch/'),
+	array(
+		'comp_name' => 'markItUp!',
+		'comp_version' => '1.1.5',
+		'comp_desc' => "markItUp! is a JavaScript plugin built on the jQuery library that allows you to turn any textarea into a markup editor.",
+		'comp_url' => 'http://markitup.jaysalvat.com/home/'),
+	array(
+		'comp_name' => 'Textile',
+		'comp_version' => '2.0.0',
+		'comp_desc' => "markItUp! is a JavaScript plugin built on the jQuery library that allows you to turn any textarea into a markup editor.",
+		'comp_url' => 'http://textile.thresholdstate.com/'),
+	array(
+		'comp_name' => 'PHP Markdown Extra',
+		'comp_version' => '1.2.4',
+		'comp_desc' => "PHP Markdown is a port to PHP of the Markdown program written by John Gruber. Markdown is two things: a plain text markup syntax, and a software tool that converts the plain text markup to HTML for publishing on the web.",
+		'comp_url' => 'http://michelf.com/projects/php-markdown/'),
 );
 
 $system_info = array(
