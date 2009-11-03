@@ -8,28 +8,16 @@ Nova M7 (0.7)
 
 LAST UPDATE
 ==========
-2009.11.02
+2009.11.03
 
 LATEST CHANGES
 ==========
 
-* added the october changelog archive
-* added the wiki model and wiki base model
-* added the wiki/categories view files
-* added the wiki/category view files
-* added the wiki/managecategories view files
-* added the needed images to the base wiki directory
-* added the wiki stylesheets
-* added the wiki flash view file
-* added the markitup files
-* added the thresher class
-* added the thresher config file
+* removed markitup wiki set
 
-* updated the install data to reflect the change from m6 to m7
-* updated the database schema with the wiki tables
-* updated the basic install data with changes for the wiki
-* updated the wiki include head
-* updated the language files
-* updated the wiki template file to not be the template default
+* added markitup textile set
+* added markitup markdown set
+* added markdown php class
+* added textile php class
 
-* fixed bug where fatal error is thrown when trying to go to the install page when not logged in and maintenance mode is active
+* updated the basic install data with more components
