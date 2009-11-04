@@ -3408,6 +3408,58 @@ class Ajax_base extends Controller {
 		$this->template->render();
 	}
 	
+	function del_wiki_page()
+	{
+		/* load the resources */
+		$this->load->model('wiki_model', 'wiki');
+		
+		$head = sprintf(
+			lang('fbx_head'),
+			ucwords(lang('fbx_action_del')),
+			ucwords(lang('global_wiki') .' '. lang('labels_page'))
+		);
+		
+		/* data being sent to the facebox */
+		$data['header'] = $head;
+		$data['id'] = (is_numeric($this->uri->segment(3))) ? $this->uri->segment(3) : 0;
+		
+		$page = $this->wiki->get_page($data['id']);
+		
+		if ($page->num_rows() > 0)
+		{
+			foreach ($page->result() as $p)
+			{
+				$title = $p->draft_title;
+			}
+		}
+		else
+		{
+			$title = '';
+		}
+		
+		$data['text'] = sprintf(
+			lang('fbx_content_del_entry'),
+			lang('global_wiki') .' '. lang('labels_page'),
+			$title
+		);
+		
+		/* input parameters */
+		$data['inputs'] = array(
+			'submit' => array(
+				'type' => 'submit',
+				'class' => 'hud_button',
+				'name' => 'submit',
+				'value' => 'submit',
+				'content' => ucwords(lang('actions_submit')))
+		);
+		
+		/* write the data to the template */
+		$this->template->write_view('content', '_base/ajax/del_wiki_page', $data);
+		
+		/* render the template */
+		$this->template->render();
+	}
+	
 	function duplicate_role()
 	{
 		/* load the resources */
@@ -4921,6 +4973,58 @@ class Ajax_base extends Controller {
 		
 		/* write the data to the template */
 		$this->template->write_view('content', $view, $data);
+		
+		/* render the template */
+		$this->template->render();
+	}
+	
+	function revert_wiki_page()
+	{
+		/* load the resources */
+		$this->load->model('wiki_model', 'wiki');
+		
+		$head = sprintf(
+			lang('fbx_head'),
+			ucwords(lang('actions_revert')),
+			ucwords(lang('global_wiki') .' '. lang('labels_page'))
+		);
+		
+		/* data being sent to the facebox */
+		$data['header'] = $head;
+		$data['page'] = (is_numeric($this->uri->segment(3))) ? $this->uri->segment(3) : 0;
+		$data['draft'] = (is_numeric($this->uri->segment(4))) ? $this->uri->segment(4) : 0;
+		
+		$page = $this->wiki->get_page($data['page']);
+		
+		if ($page->num_rows() > 0)
+		{
+			foreach ($page->result() as $p)
+			{
+				$title = $p->draft_title;
+			}
+		}
+		else
+		{
+			$title = '';
+		}
+		
+		$data['text'] = sprintf(
+			lang('wiki_revert'),
+			$title
+		);
+		
+		/* input parameters */
+		$data['inputs'] = array(
+			'submit' => array(
+				'type' => 'submit',
+				'class' => 'hud_button',
+				'name' => 'submit',
+				'value' => 'submit',
+				'content' => ucwords(lang('actions_submit')))
+		);
+		
+		/* write the data to the template */
+		$this->template->write_view('content', '_base/ajax/revert_wiki_page', $data);
 		
 		/* render the template */
 		$this->template->render();
