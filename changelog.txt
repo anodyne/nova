@@ -9,6 +9,8 @@
 * added bbcode function file
 
 * updated the basic install data with more components
+* updated the logos to use the m7 branding
+* updated the default login stylesheet to have a darker drop shadow
 
 ==========
 
