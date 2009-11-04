@@ -168,3 +168,110 @@
     
     background: url(../images/loading.gif) no-repeat 0 50%;
 }
+
+/* Sub Tabs Skin */
+.subtabs .ui-tabs-nav {
+	height: 28px !important;
+	line-height: 28px !important;
+	
+    border: 1px solid #ddd !important;
+    background: #eee !important;
+    
+    -moz-border-radius: 3px !important;
+    -webkit-border-radius: 3px !important;
+}
+.subtabs .ui-tabs-nav li { margin: 4px !important; }
+.subtabs .ui-tabs-nav a, .subtabs .ui-tabs-nav a span {
+    display: block;
+    padding: 0 !important;
+}
+.subtabs .ui-tabs-nav a {
+    background: #eee !important;
+    color: #999 !important;
+    border: 0 !important;
+    font-size: 85% !important;
+    
+    -moz-border-radius: 20px !important;
+    -webkit-border-radius: 20px !important;
+}
+.subtabs .ui-tabs-nav .ui-tabs-selected {}
+.subtabs .ui-tabs-nav .ui-tabs-selected a,
+.subtabs .ui-tabs-nav .ui-tabs-selected a:hover {
+    background: #999 !important;
+    border: 0 !important;
+    color: #eee !important;
+	
+	-moz-border-radius: 20px !important;
+    -webkit-border-radius: 20px !important;
+}
+.subtabs .ui-tabs-nav a:hover, .subtabs .ui-tabs-nav a:active {
+    background-color: #ccc !important;
+	color: #eee !important;
+	border: 0 !important;
+	
+	-moz-border-radius: 20px !important;
+    -webkit-border-radius: 20px !important;
+}
+
+.subtabs .ui-tabs-disabled a {
+    outline: 0; /* prevent dotted border in Firefox */
+    
+    background-color: #ccc;
+    color: #1b1b1b;
+}
+.subtabs .ui-tabs-disabled a:hover {
+    outline: 0; /* prevent dotted border in Firefox */
+    
+    background-color: #ccc;
+    color: #1b1b1b;
+}
+
+.subtabs .ui-tabs-nav a,
+.subtabs .ui-tabs-nav .ui-tabs-disabled a:hover,
+.subtabs .ui-tabs-nav .ui-tabs-disabled a:focus,
+.subtabs .ui-tabs-nav .ui-tabs-disabled a:active {}
+
+.subtabs .ui-tabs-nav a span {
+    min-width: 64px;
+    height: 20px; /* IE 6 treats height as min-height */
+    min-height: 20px;
+    line-height: 19px;
+    padding: 0 10px !important;
+}
+*>.ui-tabs-nav a span { /* hide from IE 6 */
+    width: auto;
+    height: auto;
+}
+.subtabs .ui-tabs-nav .ui-tabs-selected a span {}
+
+.subtabs .ui-tabs-nav .ui-tabs-selected a span, 
+.subtabs .ui-tabs-nav a:hover span,
+.subtabs .ui-tabs-nav a:focus span,
+.subtabs .ui-tabs-nav a:active span {}
+
+.subtabs .ui-tabs-nav a span,
+.subtabs .ui-tabs-nav .ui-tabs-disabled a:hover span,
+.subtabs .ui-tabs-nav .ui-tabs-disabled a:focus span,
+.subtabs .ui-tabs-nav .ui-tabs-disabled a:active span {}
+
+.subtabs .ui-tabs-nav .ui-tabs-selected a:link,
+.subtabs .ui-tabs-nav .ui-tabs-selected a:visited,
+.subtabs .ui-tabs-nav .ui-tabs-disabled a:link,
+.subtabs .ui-tabs-nav .ui-tabs-disabled a:visited { cursor: pointer; }
+
+.subtabs .ui-tabs-nav a:hover,
+.subtabs .ui-tabs-nav a:focus,
+.subtabs .ui-tabs-nav a:active { cursor: pointer; }
+
+.subtabs .ui-tabs-nav .ui-tabs-disabled { opacity: .4; }
+.subtabs .ui-tabs-panel {
+    padding: .5em 8px;
+    
+    border-top: 0 !important;
+    background: #fff; /* declare background color for container to avoid distorted fonts in IE while fading */
+}
+.subtabs .ui-tabs-loading em {
+    padding: 0 0 0 20px;
+    
+    background: url(../images/loading.gif) no-repeat 0 50%;
+}

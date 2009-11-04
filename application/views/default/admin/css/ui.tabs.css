@@ -236,7 +236,7 @@
     min-width: 64px;
     height: 20px; /* IE 6 treats height as min-height */
     min-height: 20px;
-    line-height: 20px;
+    line-height: 19px;
     padding: 0 10px !important;
 }
 *>.ui-tabs-nav a span { /* hide from IE 6 */
