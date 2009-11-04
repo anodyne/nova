@@ -36,5 +36,7 @@
 
 $lang['wiki_categories_text'] = "Below are all of the %s that currently exist for the %s. Please click on the links to see a list of all pages in each %s.";
 
+$lang['wiki_revert'] = "Are you sure you want to revert to this previous draft of %s?";
+
 /* End of file wiki_lang.php */
 /* Location: ./application/language/english/wiki_lang.php */
