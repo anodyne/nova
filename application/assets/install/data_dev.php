@@ -99,19 +99,19 @@ $access_groups = array(
 $access_roles = array(
 	array(
 		'role_name' => 'System Administrator',
-		'role_access' => '1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,29,31,33,34,35,36,37,38,39,40,41,42,43,46,47,50,52,53,55,57',
+		'role_access' => '1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,29,31,33,34,35,36,37,38,39,40,41,42,43,46,47,50,52,53,55,57,60,61',
 		'role_desc' => 'System administrators can take any action in the system. Only give this access level out to people you implicitly trust.'),
 	array(
 		'role_name' => 'Basic Administrator',
-		'role_access' => '1,2,3,4,5,6,7,8,21,29,31,33,35,37,38,39,40,41,42,43,46,47,50,52,53,55,57',
+		'role_access' => '1,2,3,4,5,6,7,8,21,29,31,33,35,37,38,39,40,41,42,43,46,47,50,52,53,55,57,60,61',
 		'role_desc' => 'Basic administrators have power to do many of the tasks system administrators do, but with some restrictions. This role is intended to be used by an assistant game manager or other highly senior players on the RPG.'),
 	array(
 		'role_name' => 'Power User',
-		'role_access' => '1,2,4,5,6,7,8,28,30,32,37,38,40,41,45,49,51,54,56',
+		'role_access' => '1,2,4,5,6,7,8,28,30,32,37,38,40,41,45,49,51,54,56,59',
 		'role_desc' => 'Power users are users that can take more action than a standard user. This role is intended to be used for senior players on the RPG.'),
 	array(
 		'role_name' => 'Standard User',
-		'role_access' => '1,2,4,5,6,7,8,28,30,32,37,38,40,48,51,54,56',
+		'role_access' => '1,2,4,5,6,7,8,28,30,32,37,38,40,48,51,54,56,58',
 		'role_desc' => 'Standard users are generally the majority of players. This role gives them access to all the pieces they will need to play the game and use the system.'),
 	array(
 		'role_name' => 'Inactive User',
@@ -435,13 +435,19 @@ $access_pages = array(
 		'page_url' => 'wiki/page',
 		'page_group' => 8,
 		'page_level' => 1,
-		'page_desc' => "Can create and edit wiki pages including viewing history and reverting to previous drafts"),
+		'page_desc' => "Can create wiki pages and edit any pages they have created, including viewing history and reverting to previous drafts"),
 	array(
 		'page_name' => "Wiki Pages (Level 2)",
 		'page_url' => 'wiki/page',
 		'page_group' => 8,
 		'page_level' => 2,
-		'page_desc' => "Can create, delete and edit wiki pages"),
+		'page_desc' => "Can create wiki pages and edit all pages, including viewing history and reverting to previous drafts"),
+	array(
+		'page_name' => "Wiki Pages (Level 3)",
+		'page_url' => 'wiki/page',
+		'page_group' => 8,
+		'page_level' => 3,
+		'page_desc' => "Can create, delete and edit all wiki pages, including viewing history and reverting to previous drafts"),
 	array(
 		'page_name' => "Wiki Categories",
 		'page_url' => 'wiki/categories',
