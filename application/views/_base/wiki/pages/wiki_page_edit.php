@@ -2,7 +2,7 @@
 
 <p class="fontMedium bold"><?php echo anchor('wiki/managepages', $label['back']);?></p>
 
-<?php echo form_open('wiki/page/0/create');?>
+<?php echo form_open('wiki/page/'. $id .'/edit');?>
 	<?php echo text_output($label['title'], 'p', 'fontMedium bold');?>
 	<?php echo form_input($inputs['title']);?>
 	
@@ -16,5 +16,5 @@
 	
 	<br /><br />
 	
-	<?php echo form_button($buttons['add']);?>
+	<?php echo form_button($buttons['update']);?>
 <?php echo form_close();?>

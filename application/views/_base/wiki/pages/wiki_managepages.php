@@ -17,7 +17,7 @@
 		<tbody>
 		<?php foreach ($pages as $p): ?>
 			<tr>
-				<td class="col_40pct bold"><?php echo anchor('wiki/view/'. $p['id'], $p['title']);?></td>
+				<td class="col_40pct bold"><?php echo anchor('wiki/view/page/'. $p['id'], $p['title']);?></td>
 				<td class="fontSmall gray">
 					<?php echo $p['created'];?><br />
 					<span class="fontTiny"><?php echo $p['created_date'];?></span>
