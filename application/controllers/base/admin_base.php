@@ -374,7 +374,7 @@ class Admin_base extends Controller {
 			/* set the update variable to be empty */
 			$data['update'] = FALSE;
 			
-			if ($update['version'] != $ignore)
+			if (isset($update['version']) && $update['version'] != $ignore)
 			{
 				$data['update']['version'] = sprintf(
 					lang_output('update_available'),
@@ -412,7 +412,7 @@ class Admin_base extends Controller {
 		/*  javascript data */
 		$js_data['first_launch'] = $this->session->flashdata('first_launch');
 		$js_data['password_reset'] = $this->session->flashdata('password_reset');
-		$js_data['version'] = ($update !== FALSE) ? $update['version'] : '';
+		$js_data['version'] = (isset($update['version'])) ? $update['version'] : '';
 		
 		$data['label'] = array(
 			'view_all_posts' => ucwords(lang('actions_viewall') .' '. lang('global_posts') .' '. RARROW),
@@ -630,7 +630,11 @@ class Admin_base extends Controller {
 				case 'all':
 					$severity = $i->get_item_tags(SIMPLEPIE_NAMESPACE_RSS_20, 'severity');
 					
-					if ($i->get_title() != $version['files']['full'] || $i->get_title() != $version['database']['full'])
+					$xml_version = str_replace('.', '', $i->get_title());
+					$files_version = str_replace('.', '', $version['files']['full']);
+					$db_version = str_replace('.', '', $version['database']['full']);
+					
+					if ($xml_version > $files_version || $xml_version > $db_version)
 					{
 						$update['version'] = $i->get_title();
 						$update['description'] = $i->get_description();

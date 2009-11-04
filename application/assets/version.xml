@@ -2,12 +2,12 @@
 	<channel>
 		
 		<item>
-			<title>0.6.1</title>
+			<title>0.7.0</title>
 			<description>Nova M6 is an update to a development release of the next generation RPG management software from Anodyne Productions.</description>
 			<severity>major</severity>
 			<major>0</major>
-			<minor>6</minor>
-			<update>1</update>
+			<minor>7</minor>
+			<update>0</update>
 			<link>http://www.anodyne-productions.com/</link>
 			<date>October 01, 2009 - 07:45</date>
 		</item>
