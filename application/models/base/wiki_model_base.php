@@ -62,6 +62,46 @@ class Wiki_model_base extends Model {
 		return $row;
 	}
 	
+	function get_comments($id = '')
+	{
+		$this->db->from('wiki_comments');
+		$this->db->where('wcomments_page', $id);
+		$this->db->order_by('wcomments_date', 'desc');
+		
+		$query = $this->db->get();
+		
+		return $query;
+	}
+	
+	function get_draft($id = '')
+	{
+		$query = $this->db->get_where('wiki_drafts', array('draft_id' => $id));
+		
+		return $query;
+	}
+	
+	function get_drafts($id = '')
+	{
+		$this->db->from('wiki_drafts');
+		$this->db->where('draft_page', $id);
+		$this->db->order_by('draft_created_at', 'desc');
+		
+		$query = $this->db->get();
+		
+		return $query;
+	}
+	
+	function get_page($id = '')
+	{
+		$this->db->from('wiki_pages');
+		$this->db->join('wiki_drafts', 'wiki_drafts.draft_id = wiki_pages.page_draft');
+		$this->db->where('page_id', $id);
+		
+		$query = $this->db->get();
+		
+		return $query;
+	}
+	
 	function get_pages($category = '', $order = 'wiki_drafts.draft_title', $sort = 'asc')
 	{
 		$this->db->from('wiki_pages');
@@ -94,6 +134,24 @@ class Wiki_model_base extends Model {
 		return $query;
 	}
 	
+	function create_draft($data = '')
+	{
+		$query = $this->db->insert('wiki_drafts', $data);
+		
+		$this->dbutil->optimize_table('wiki_drafts');
+		
+		return $query;
+	}
+	
+	function create_page($data = '')
+	{
+		$query = $this->db->insert('wiki_pages', $data);
+		
+		$this->dbutil->optimize_table('wiki_pages');
+		
+		return $query;
+	}
+	
 	/*
 	|---------------------------------------------------------------
 	| UPDATE METHODS
@@ -110,6 +168,16 @@ class Wiki_model_base extends Model {
 		return $query;
 	}
 	
+	function update_page($id = '', $data = '')
+	{
+		$this->db->where('page_id', $id);
+		$query = $this->db->update('wiki_pages', $data);
+		
+		$this->dbutil->optimize_table('wiki_pages');
+		
+		return $query;
+	}
+	
 	/*
 	|---------------------------------------------------------------
 	| DELETE METHODS
@@ -121,6 +189,28 @@ class Wiki_model_base extends Model {
 		$query = $this->db->delete('wiki_categories', array('wikicat_id' => $id));
 		
 		$this->dbutil->optimize_table('wiki_categories');
+		
+		return $query;
+	}
+	
+	function delete_comment($id = '', $type = 'comment')
+	{
+		switch ($type)
+		{
+			case 'comment':
+				$this->db->where('wcomments_id', $id);
+			
+				break;
+				
+			case 'page':
+				$this->db->where('wcomments_page', $id);
+			
+				break;
+		}
+		
+		$query = $this->db->delete('wiki_comments');
+		
+		$this->dbutil->optimize_table('wiki_comments');
 		
 		return $query;
 	}
@@ -171,7 +261,10 @@ class Wiki_model_base extends Model {
 	
 	function delete_page($id = '')
 	{
-		/* start by removing the drafts */
+		/* remove the comments */
+		$drafts = $this->delete_comment($id, 'page');
+		
+		/* remove the drafts */
 		$drafts = $this->delete_draft($id, 'page');
 		
 		$query = $this->db->delete('wiki_pages', array('page_id' => $id));
