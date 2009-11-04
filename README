@@ -8,19 +8,35 @@ Nova M7 (0.7)
 
 LAST UPDATE
 ==========
-2009.11.03
+2009.11.04
 
 LATEST CHANGES
 ==========
 
-* removed markitup wiki set
+* fixed bug in admin ui.tabs stylesheet with subtabs
+* fixed bug on the admin control panel with undefined variable warnings
 
-* added markitup textile set
-* added markitup markdown set
-* added markdown php class
-* added textile php class
-* added bbcode function file
+* added wiki/view view files
+* added wiki/page/x/edit view file
+* added ajax view files for deleting and reverting wiki pages
+* added wiki/view/page view file
+* added wiki/view/draft view file
 
-* updated the basic install data with more components
-* updated the logos to use the m7 branding
-* updated the default login stylesheet to have a darker drop shadow
+* updated the wiki ui.tabs stylesheet
+* updated the wiki head include file to pull in the proper jquery items
+* updated the basic install data
+* updated the database schema
+* updated the bbcode, markdown and textile settings to remove the preview icon
+* updated the ajax controller with a method for deleting a wiki page
+* updated the ajax controller with a method for reverting to a previous draft of a wiki page
+* updated the language files
+* updated the page icons in the wiki section
+* updated the wiki/category page to point to the right link
+* updated the wiki/view js view file
+* updated the admin skins to a visual glitch with subtabs
+* updated the wiki model with some new methods
+* updated the page icons in the admin section
+* updated the group icons in the admin section
+
+* removed some unnecessary readme files from the markitup stuff
+* removed the markitup default set
