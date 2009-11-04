@@ -12,9 +12,20 @@ class Test extends Controller {
 	
 	function index()
 	{
-		echo $this->msgs->get_message('welcome_msg');
-		echo '<br /><br />';
-		echo $this->settings->get_setting('sim_year');
+		/* load the config file */
+		$this->config->load('thresher', TRUE);
+		
+		/* assign the config array to a variable */
+		$c = $this->config->item('thresher');
+		
+		/* load the library and pass the config items in */
+		$this->load->library('thresher', $c);
+		
+		$text = '<b>This is bold text</b> and <em>this is emphasized text</em>.';
+		$text = '[b]This is bold text[/b] and [i]this is emphasized text[/i].';
+		$text = "A *simple* example.";
+		
+		echo $this->thresher->parse($text);
 	}
 
 	function memory()

@@ -1,3 +1,17 @@
+11.03.2009
+
+* removed markitup wiki set
+
+* added markitup textile set
+* added markitup markdown set
+* added markdown php class
+* added textile php class
+* added bbcode function file
+
+* updated the basic install data with more components
+
+==========
+
 11.02.2009
 
 * added the october changelog archive

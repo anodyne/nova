@@ -15,14 +15,24 @@ class Thresher {
 	
 	var $parsetype = 'html';
 	
-	function Thresher()
+	function Thresher($params = array())
 	{
+		if (is_array($params))
+		{
+			foreach ($params as $key => $value)
+			{
+				$this->$key = $value;
+			}
+		}
+		
 		/* log the debug message */
 		log_message('debug', 'Thresher Library Initialized');
 	}
 	
 	function parse($text = '')
 	{
+		$retval = $text;
+		
 		switch ($this->parsetype)
 		{
 			case 'bbcode':
@@ -32,119 +42,24 @@ class Thresher {
 			case 'html':
 				$retval = $this->_html($text);
 				break;
+				
+			case 'markdown':
+				$retval = $this->_markdown($text);
+				break;
+				
+			case 'textile':
+				$retval = $this->_textile($text);
+				break;
 		}
 		
 		return $retval;
 	}
 	
-	// ----------------------------------------------------------------------------
-	// markItUp! BBCode Parser
-	// v 1.0.5
-	// Dual licensed under the MIT and GPL licenses.
-	// ----------------------------------------------------------------------------
-	// Copyright (C) 2009 Jay Salvat
-	// http://www.jaysalvat.com/
-	// http://markitup.jaysalvat.com/
-	// ----------------------------------------------------------------------------
-	// Permission is hereby granted, free of charge, to any person obtaining a copy
-	// of this software and associated documentation files (the "Software"), to deal
-	// in the Software without restriction, including without limitation the rights
-	// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-	// copies of the Software, and to permit persons to whom the Software is
-	// furnished to do so, subject to the following conditions:
-	// 
-	// The above copyright notice and this permission notice shall be included in
-	// all copies or substantial portions of the Software.
-	// 
-	// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-	// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-	// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-	// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-	// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-	// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-	// THE SOFTWARE.
-	// ----------------------------------------------------------------------------
-	// Thanks to Arialdo Martini, Mustafa Dindar for feedbacks.
-	// ----------------------------------------------------------------------------
-
 	function _bbcode($text = '')
 	{
-		$text = trim($text);
+		include_once APPPATH .'libraries/Thresher_BBCode.php';
 		
-		if (!function_exists('escape'))
-		{
-			function escape($s)
-			{
-				global $text;
-				
-				$text = strip_tags($text);
-				$code = $s[1];
-				$code = htmlspecialchars($code);
-				$code = str_replace("[", "&#91;", $code);
-				$code = str_replace("]", "&#93;", $code);
-				
-				return '<pre><code>'.$code.'</code></pre>';
-			}	
-		}
-		
-		$text = preg_replace_callback('/\[code\](.*?)\[\/code\]/ms', "escape", $text);
-		
-		/* BBCode to find... */
-		$in = array(
-			'/\[b\](.*?)\[\/b\]/ms',	
-			'/\[i\](.*?)\[\/i\]/ms',
-			'/\[u\](.*?)\[\/u\]/ms',
-			'/\[img\](.*?)\[\/img\]/ms',
-			'/\[email\](.*?)\[\/email\]/ms',
-			'/\[url\="?(.*?)"?\](.*?)\[\/url\]/ms',
-			'/\[size\="?(.*?)"?\](.*?)\[\/size\]/ms',
-			'/\[color\="?(.*?)"?\](.*?)\[\/color\]/ms',
-			'/\[quote](.*?)\[\/quote\]/ms',
-			'/\[list\=(.*?)\](.*?)\[\/list\]/ms',
-			'/\[list\](.*?)\[\/list\]/ms',
-			'/\[\*\]\s?(.*?)\n/ms'
-		);
-		
-		/* And replace them by... */
-		$out = array(
-			'<strong>\1</strong>',
-			'<em>\1</em>',
-			'<u>\1</u>',
-			'<img src="\1" alt="\1" />',
-			'<a href="mailto:\1">\1</a>',
-			'<a href="\1">\2</a>',
-			'<span style="font-size:\1%">\2</span>',
-			'<span style="color:\1">\2</span>',
-			'<blockquote>\1</blockquote>',
-			'<ol start="\1">\2</ol>',
-			'<ul>\1</ul>',
-			'<li>\1</li>'
-		);
-		
-		$text = preg_replace($in, $out, $text);
-		
-		/* paragraphs */
-		$text = str_replace("\r", "", $text);
-		$text = "<p>".ereg_replace("(\n){2,}", "</p><p>", $text)."</p>";
-		$text = nl2br($text);
-		
-		/* clean some tags to remain strict */
-		/* not very elegant, but it works. No time to do better ;) */
-		if (!function_exists('removeBr'))
-		{
-			function removeBr($s)
-			{
-				return str_replace("<br />", "", $s[0]);
-			}
-		}
-			
-		$text = preg_replace_callback('/<pre>(.*?)<\/pre>/ms', "removeBr", $text);
-		$text = preg_replace('/<p><pre>(.*?)<\/pre><\/p>/ms', "<pre>\\1</pre>", $text);
-		
-		$text = preg_replace_callback('/<ul>(.*?)<\/ul>/ms', "removeBr", $text);
-		$text = preg_replace('/<p><ul>(.*?)<\/ul><\/p>/ms', "<ul>\\1</ul>", $text);
-		
-		return $text;
+		return bbcode($text);
 	}
 	
 	function _html($text = '')
@@ -152,9 +67,20 @@ class Thresher {
 		return $text;
 	}
 	
-	function _wiki($text = '')
+	function _markdown($text = '')
 	{
-		# code...
+		include_once APPPATH .'libraries/Thresher_Markdown.php';
+		
+		return Markdown($text);
+	}
+	
+	function _textile($text = '')
+	{
+		include_once APPPATH .'libraries/Thresher_Textile.php';
+		
+		$textile = new Textile();
+		
+		return $textile->TextileThis($text);
 	}
 }
 

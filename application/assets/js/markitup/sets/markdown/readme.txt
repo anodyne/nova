@@ -1,8 +1,8 @@
 Markup language: 
-Wiki
+Markdown
 
 Description:
-A basic Wiki markup set with Headings, Bold, Italic, Stroke through, Picture, Link, List, Quotes, Code, Preview button.
+A basic Markdown markup set with Headings, Bold, Italic, Picture, Link, List, Quotes, Code, Preview button.
 
 Install:
 - Download the zip file
