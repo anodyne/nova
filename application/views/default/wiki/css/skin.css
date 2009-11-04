@@ -205,11 +205,9 @@ body {
 a {
 	text-decoration: none; 
 	color: #5b7444;
-	border-bottom: 1px dotted;
 }
 a:hover {
 	color: #a3c586;
-	border-bottom: 1px solid;
 }
 
 a.edit {
