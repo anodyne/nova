@@ -1623,6 +1623,11 @@ $messages = array(
 		'message_content' => "Define your sim message through the Site Messages page.",
 		'message_type' => 'message'),
 	array(
+		'message_key' => 'wiki_main',
+		'message_label' => 'Wiki Main Page Message',
+		'message_content' => "Welcome to Thresher Release 1, Anodyne's integrated mini-wiki included with Nova. You can change this message through the Site Messages page.",
+		'message_type' => 'message'),
+	array(
 		'message_key' => 'credits_perm',
 		'message_label' => 'Permanent Credits',
 		'message_content' => "Nova has been developed on the <a href='http://www.codeigniter.com' target='_blank'>CodeIgniter</a> PHP framework by <a href='http://www.ellislab.com' target='_blank'>EllisLab</a>.\r\n\r\nIcons used throughout Nova were created by <a href='http://www.famfamfam.com'>FamFamFam</a>, <a href='http://www.pinvoke.com'>Pinvoke</a> and the Tango Icon Library.",
@@ -2250,6 +2255,11 @@ $system_components = array(
 		'comp_version' => '1.2.4',
 		'comp_desc' => "PHP Markdown is a port to PHP of the Markdown program written by John Gruber. Markdown is two things: a plain text markup syntax, and a software tool that converts the plain text markup to HTML for publishing on the web.",
 		'comp_url' => 'http://michelf.com/projects/php-markdown/'),
+	array(
+		'comp_name' => 'TextboxList',
+		'comp_version' => '0.3',
+		'comp_desc' => "TextboxList turns normal textboxes into a widget which can be navigated with the keyboard, effectively turning your input into a 'list' of items that can be easily deleted. It comes with an Autocomplete plugin.",
+		'comp_url' => 'http://devthought.com/projects/jquery/textboxlist/'),
 );
 
 $system_info = array(
