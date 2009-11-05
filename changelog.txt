@@ -1,3 +1,29 @@
+11.05.2009
+
+* added Services_json library
+* added textboxlist plugin
+* added textboxlist autocomplete plugin
+* added default textboxlist plugin stylesheets and images
+* added textboxlist plugin stylesheets and images to the default/wiki section
+* added the wiki/index view file
+
+* updated wiki/page to handle categories during creation and editing
+* updated wiki/page js view to handle the new work with textboxlist
+* updated the ajax controller with a method to return a JSON object with category information
+* updated the wiki head include file
+* updated the basic install data
+* updated the wiki controller to handle the main page
+* updated the wiki model with some new methods
+* updated the default wiki template file to list powered by nova and thresher
+* updated the constants config file to add wiki_name and wiki_version constants
+* updated the language files
+* updated wiki/categories to have an uncategorized option
+* updated wiki/view to show an edit link
+* updated wiki/categories to show an edit link
+* updated wiki/view to show categories with links at the bottom of the page content
+
+==========
+
 11.04.2009
 
 * fixed bug in admin ui.tabs stylesheet with subtabs

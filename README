@@ -8,35 +8,29 @@ Nova M7 (0.7)
 
 LAST UPDATE
 ==========
-2009.11.04
+2009.11.05
 
 LATEST CHANGES
 ==========
 
-* fixed bug in admin ui.tabs stylesheet with subtabs
-* fixed bug on the admin control panel with undefined variable warnings
+* added Services_json library
+* added textboxlist plugin
+* added textboxlist autocomplete plugin
+* added default textboxlist plugin stylesheets and images
+* added textboxlist plugin stylesheets and images to the default/wiki section
+* added the wiki/index view file
 
-* added wiki/view view files
-* added wiki/page/x/edit view file
-* added ajax view files for deleting and reverting wiki pages
-* added wiki/view/page view file
-* added wiki/view/draft view file
-
-* updated the wiki ui.tabs stylesheet
-* updated the wiki head include file to pull in the proper jquery items
+* updated wiki/page to handle categories during creation and editing
+* updated wiki/page js view to handle the new work with textboxlist
+* updated the ajax controller with a method to return a JSON object with category information
+* updated the wiki head include file
 * updated the basic install data
-* updated the database schema
-* updated the bbcode, markdown and textile settings to remove the preview icon
-* updated the ajax controller with a method for deleting a wiki page
-* updated the ajax controller with a method for reverting to a previous draft of a wiki page
-* updated the language files
-* updated the page icons in the wiki section
-* updated the wiki/category page to point to the right link
-* updated the wiki/view js view file
-* updated the admin skins to a visual glitch with subtabs
+* updated the wiki controller to handle the main page
 * updated the wiki model with some new methods
-* updated the page icons in the admin section
-* updated the group icons in the admin section
-
-* removed some unnecessary readme files from the markitup stuff
-* removed the markitup default set
+* updated the default wiki template file to list powered by nova and thresher
+* updated the constants config file to add wiki_name and wiki_version constants
+* updated the language files
+* updated wiki/categories to have an uncategorized option
+* updated wiki/view to show an edit link
+* updated wiki/categories to show an edit link
+* updated wiki/view to show categories with links at the bottom of the page content
