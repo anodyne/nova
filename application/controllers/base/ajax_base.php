@@ -4892,6 +4892,43 @@ class Ajax_base extends Controller {
 		echo img($output);
 	}
 	
+	function info_show_wiki_categories()
+	{
+		$this->load->model('wiki_model', 'wiki');
+		
+		if (!function_exists('json_encode'))
+		{
+			$this->load->library('Services_json');
+		}
+		
+		/* set the empty arrays */
+		$response = array();
+		$names = array();
+		
+		/* grab the categories */
+		$categories = $this->wiki->get_categories();
+		
+		if ($categories->num_rows() > 0)
+		{
+			foreach ($categories->result() as $cat)
+			{
+				$names[$cat->wikicat_id] = $cat->wikicat_name;
+			}
+		}
+		
+		// make sure they're sorted alphabetically, for binary search tests
+		asort($names);
+		
+		foreach ($names as $i => $name)
+		{
+			$filename = str_replace(' ', '', strtolower($name));
+			$response[] = array($i, $name);
+		}
+		
+		header('Content-type: application/json');
+		echo json_encode($response);
+	}
+	
 	function reject()
 	{
 		$data['type'] = $this->uri->segment(3, FALSE);
