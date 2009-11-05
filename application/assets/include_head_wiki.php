@@ -19,33 +19,42 @@ $this->load->config('thresher');
 $parse = $this->config->item('parsetype');
 
 ?><style type="text/css">
-			<?php if (!is_file(APPPATH .'views/'. $current_skin .'/admin/css/jquery.facebox.css')): ?>
+			<?php if (!is_file(APPPATH .'views/'. $current_skin .'/wiki/css/jquery.facebox.css')): ?>
 				@import url("<?php echo base_url() . APPFOLDER .'/assets/js/css/jquery.facebox.css';?>");
 			<?php else: ?>
-				@import url("<?php echo base_url() . APPFOLDER .'/views/'. $current_skin .'/admin/css/jquery.facebox.css';?>");
+				@import url("<?php echo base_url() . APPFOLDER .'/views/'. $current_skin .'/wiki/css/jquery.facebox.css';?>");
 			<?php endif;?>
 			
 			@import url("<?php echo base_url() . APPFOLDER .'/assets/js/css/ui.core.css';?>");
 			
-			<?php if (!is_file(APPPATH .'views/'. $current_skin .'/admin/css/ui.theme.css')): ?>
+			<?php if (!is_file(APPPATH .'views/'. $current_skin .'/wiki/css/ui.theme.css')): ?>
 				@import url("<?php echo base_url() . APPFOLDER .'/assets/js/css/ui.theme.css';?>");
 			<?php else: ?>
-				@import url("<?php echo base_url() . APPFOLDER .'/views/'. $current_skin .'/admin/css/ui.theme.css';?>");
+				@import url("<?php echo base_url() . APPFOLDER .'/views/'. $current_skin .'/wiki/css/ui.theme.css';?>");
 			<?php endif;?>
 			
 			@import url("<?php echo base_url() . APPFOLDER .'/assets/js/markitup/skins/simple/style.css';?>");
 			@import url("<?php echo base_url() . APPFOLDER .'/assets/js/markitup/sets/'. $parse .'/style.css';?>");
+			
+			<?php if (!is_file(APPPATH .'views/'. $current_skin .'/wiki/css/jquery.textboxlist.css')): ?>
+				@import url("<?php echo base_url() . APPFOLDER .'/assets/js/css/jquery.textboxlist.css';?>");
+			<?php else: ?>
+				@import url("<?php echo base_url() . APPFOLDER .'/views/'. $current_skin .'/wiki/css/jquery.textboxlist.css';?>");
+			<?php endif;?>
+			
+			<?php if (!is_file(APPPATH .'views/'. $current_skin .'/wiki/css/jquery.textboxlist.autocomplete.css')): ?>
+				@import url("<?php echo base_url() . APPFOLDER .'/assets/js/css/jquery.textboxlist.autocomplete.css';?>");
+			<?php else: ?>
+				@import url("<?php echo base_url() . APPFOLDER .'/views/'. $current_skin .'/wiki/css/jquery.textboxlist.autocomplete.css';?>");
+			<?php endif;?>
 		</style>
 			
 		<script type="text/javascript" src="<?php echo base_url() . APPFOLDER .'/assets/js/jquery.js';?>"></script>
-		<script type="text/javascript" src="<?php echo base_url() . APPFOLDER .'/assets/js/jquery.lazy.js';?>"></script>
 		<script type="text/javascript" src="<?php echo base_url() . APPFOLDER .'/assets/js/ui.core.min.js';?>"></script>
 		<script type="text/javascript" src="<?php echo base_url() . APPFOLDER .'/assets/js/ui.tabs.min.js';?>"></script>
 		<script type="text/javascript" src="<?php echo base_url() . APPFOLDER .'/assets/js/jquery.facebox.js';?>"></script>
-		
 		<script type="text/javascript" src="<?php echo base_url() . APPFOLDER .'/assets/js/markitup/jquery.markitup.js';?>"></script>
 		<script type="text/javascript" src="<?php echo base_url() . APPFOLDER .'/assets/js/markitup/sets/'. $parse .'/set.js';?>"></script>
-
 		
 		<script type="text/javascript">
 			$(document).ready(function(){
