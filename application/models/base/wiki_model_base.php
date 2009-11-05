@@ -109,10 +109,51 @@ class Wiki_model_base extends Model {
 		
 		if (!empty($category))
 		{
-			$this->db->like('wiki_drafts.draft_categories', $category);
+			if ($category == 0)
+			{
+				$this->db->where('wiki_drafts.draft_categories', '');
+			}
+			else
+			{
+				$this->db->like('wiki_drafts.draft_categories', $category);
+			}
 		}
 		
 		$this->db->order_by($order, $sort);
+		
+		$query = $this->db->get();
+		
+		return $query;
+	}
+	
+	function get_recently_created($limit = 10)
+	{
+		$this->db->from('wiki_pages');
+		$this->db->join('wiki_drafts', 'wiki_drafts.draft_id = wiki_pages.page_draft');
+		$this->db->where('page_created_at >', '');
+		$this->db->order_by('page_created_at', 'desc');
+		
+		if ($limit > 0)
+		{
+			$this->db->limit($limit);
+		}
+		
+		$query = $this->db->get();
+		
+		return $query;
+	}
+	
+	function get_recently_updated($limit = 10)
+	{
+		$this->db->from('wiki_pages');
+		$this->db->join('wiki_drafts', 'wiki_drafts.draft_id = wiki_pages.page_draft');
+		$this->db->where('page_updated_at >', '');
+		$this->db->order_by('page_updated_at', 'desc');
+		
+		if ($limit > 0)
+		{
+			$this->db->limit($limit);
+		}
 		
 		$query = $this->db->get();
 		
