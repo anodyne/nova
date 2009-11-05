@@ -133,9 +133,7 @@ echo "<?xml version='1.0' encoding='UTF-8'?>\r\n";
 		
 		<!-- FOOTER -->
 		<div id="footer">
-			Powered by <strong><?php echo APP_NAME;?></strong><br />
-			Elapsed Time: {elapsed_time} seconds<br />
-			Memory Usage: {memory_usage}
+			Powered by <strong><?php echo APP_NAME;?></strong> &amp; <strong><?php echo WIKI_NAME;?></strong>
 		</div>
 	</body>
 </html>
