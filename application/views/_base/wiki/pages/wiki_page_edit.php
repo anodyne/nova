@@ -10,6 +10,13 @@
 	
 	<?php echo form_textarea($inputs['content']);?>
 	
+	<br /><br />
+	
+	<?php echo text_output($label['categories'], 'p', 'fontMedium bold');?>
+	<?php echo form_input($inputs['categories']);?>
+	
+	<br /><br />
+	
 	<?php echo text_output($label['comments'], 'p', 'fontMedium bold');?>
 	<?php echo form_radio($inputs['comments_open']) .' '. form_label($label['open'], 'comments_open');?>
 	<?php echo form_radio($inputs['comments_closed']) .' '. form_label($label['closed'], 'comments_closed');?>

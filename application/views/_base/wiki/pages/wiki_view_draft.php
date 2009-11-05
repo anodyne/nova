@@ -7,3 +7,8 @@
 </p>
 
 <?php echo text_output($draft['content'], 'p', '', FALSE);?>
+
+<br />
+<div class="info-full fontSmall">
+	<p><?php echo text_output($label['categories'], 'strong') .' '. $draft['categories'];?></p>
+</div>

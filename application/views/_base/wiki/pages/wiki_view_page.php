@@ -1,5 +1,7 @@
 <?php echo text_output($header, 'h1', 'page-head');?>
 
+<p class="bold fontSmall"><?php echo link_to_if($edit, 'wiki/page/'. $id .'/edit', $label['edit']);?></p>
+
 <div id="tabs">
 	<ul>
 		<li><a href="#one"><span><?php echo $label['page'];?></span></a></li>
@@ -8,11 +10,16 @@
 	</ul>
 	
 	<div id="one">
-		<?php echo text_output($page['content'], 'p', '', FALSE);?>
-		
 		<p class="fontSmall gray bold">
 			<?php echo ucfirst($label['created']) .' '. $label['by'] .' '. $page['created'] .' '. $label['on'] .' '. $page['created_date'];?>
 		</p>
+		
+		<?php echo text_output($page['content'], 'p', '', FALSE);?>
+		
+		<br />
+		<div class="info-full fontSmall">
+			<p><?php echo text_output($label['categories'], 'strong') .' '. $page['categories'];?></p>
+		</div>
 	</div>
 	
 	<div id="two">

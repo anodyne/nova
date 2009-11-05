@@ -11,8 +11,6 @@
 |
 */
 
-# TODO: remove the debug helper
-
 class Wiki_base extends Controller {
 
 	/* set the variables */
@@ -94,18 +92,59 @@ class Wiki_base extends Controller {
 			$this->template->write('panel_3', $this->user_panel->panel_3(), TRUE);
 			$this->template->write('panel_workflow', $this->user_panel->panel_workflow(), TRUE);
 		}
-		
-		$this->load->helper('debug');
 	}
 
 	function index()
 	{
-		/* figure out where the view should be coming from */
-		$view_loc = view_location('wiki_index', $this->skin, 'wiki', APPPATH);
+		/* grab the recently updated items */
+		$updated = $this->wiki->get_recently_updated();
+		
+		if ($updated->num_rows() > 0)
+		{
+			foreach ($updated->result() as $u)
+			{
+				$data['recent']['updates'][] = array(
+					'id' => $u->page_id,
+					'title' => $u->draft_title,
+					'author' => $this->char->get_character_name($u->page_updated_by_character),
+					'timespan' => timespan_short($u->page_updated_at, now()),
+				);
+			}
+		}
+		
+		/* grab the recently updated items */
+		$created = $this->wiki->get_recently_created();
+		
+		if ($created->num_rows() > 0)
+		{
+			foreach ($created->result() as $c)
+			{
+				$data['recent']['created'][] = array(
+					'id' => $c->page_id,
+					'title' => $c->draft_title,
+					'author' => $this->char->get_character_name($c->page_created_by_character),
+					'timespan' => timespan_short($c->page_created_at, now()),
+				);
+			}
+		}
+		
+		$data['header'] = ucwords(lang('global_wiki') .' - '. lang('labels_main') .' '. lang('labels_page'));
+		
+		$data['text'] = $this->msgs->get_message('wiki_main');
+		
+		$data['label'] = array(
+			'ago' => lang('time_ago'),
+			'by' => lang('labels_by'),
+			'recent_created' => ucwords(lang('status_recently') .' '. lang('actions_created')),
+			'recent_updates' => ucwords(lang('status_recently') .' '. lang('actions_updated')),
+		);
+		
+		/* figure out where the view files should be coming from */
+		$view_loc = view_location('wiki_index', $this->skin, 'wiki');
 		
 		/* write the data to the template */
-		$this->template->write('title', lang('title_wiki_index'));
 		$this->template->write_view('content', $view_loc, $data);
+		$this->template->write('title', $data['header']);
 		
 		/* render the template */
 		$this->template->render();
@@ -113,10 +152,14 @@ class Wiki_base extends Controller {
 	
 	function categories()
 	{
-		# TODO: need to have an 'uncategorized' section to catch anything that doesn't have a category
+		/* check the user's access */
+		$data['access'] = $this->auth->check_access('wiki/categories', FALSE);
 		
 		/* grab the categories */
 		$categories = $this->wiki->get_categories();
+		
+		/* create the uncategorized item first */
+		$data['categories'][0] = ucfirst(lang('labels_uncategorized'));
 		
 		if ($categories->num_rows() > 0)
 		{
@@ -130,6 +173,7 @@ class Wiki_base extends Controller {
 		$data['header'] = ucwords(lang('global_wiki') .' '. lang('labels_categories'));
 		
 		$data['label'] = array(
+			'edit' => '[ '. ucwords(lang('actions_edit') .' '. lang('labels_categories')) .' ]',
 			'nocats' => sprintf(
 				lang('error_not_found'),
 				lang('global_wiki') .' '. lang('labels_categories')
@@ -156,25 +200,27 @@ class Wiki_base extends Controller {
 	function category()
 	{
 		/* set the variables */
-		$id = $this->uri->segment(3, FALSE, TRUE);
+		$id = $this->uri->segment(3, 0, TRUE);
 		
-		if ($id !== FALSE)
+		/* get the category name */
+		$category = $this->wiki->get_category($id, 'wikicat_name');
+		$category = ($category === FALSE) ? ucfirst(lang('labels_uncategorized')) : $category;
+		
+		/* grab the pages */
+		$pages = $this->wiki->get_pages($id);
+		
+		if ($pages->num_rows() > 0)
 		{
-			$pages = $this->wiki->get_pages($id);
-			
-			if ($pages->num_rows() > 0)
+			foreach ($pages->result() as $p)
 			{
-				foreach ($pages->result() as $p)
-				{
-					$data['pages'][$p->page_id]['id'] = $p->page_id;
-					$data['pages'][$p->page_id]['title'] = $p->draft_title;
-					$data['pages'][$p->page_id]['author'] = $p->draft_author;
-				}
+				$data['pages'][$p->page_id]['id'] = $p->page_id;
+				$data['pages'][$p->page_id]['title'] = $p->draft_title;
+				$data['pages'][$p->page_id]['author'] = $this->char->get_character_name($p->draft_author_character);
 			}
 		}
 		
 		/* set the header */
-		$data['header'] = ucwords(lang('global_wiki') .' '. lang('labels_category'));
+		$data['header'] = ucfirst(lang('labels_category')) .' - '. $category;
 		
 		$data['label'] = array(
 			'nopages' => sprintf(
@@ -198,11 +244,6 @@ class Wiki_base extends Controller {
 		
 		/* render the template */
 		$this->template->render();
-	}
-	
-	function history()
-	{
-		# display the history for a wiki page based on what's passed through the URL
 	}
 	
 	function managecategories()
@@ -539,7 +580,7 @@ class Wiki_base extends Controller {
 						'draft_title' => $this->input->post('title', TRUE),
 						'draft_created_at' => now(),
 						'draft_page' => $pageid,
-						'draft_categories' => ''
+						'draft_categories' => $this->input->post('categories', TRUE),
 					);
 					
 					/* put the draft information into the database */
@@ -585,7 +626,7 @@ class Wiki_base extends Controller {
 						'draft_title' => $this->input->post('title', TRUE),
 						'draft_created_at' => now(),
 						'draft_page' => $id,
-						'draft_categories' => ''
+						'draft_categories' => $this->input->post('categories', TRUE),
 					);
 					
 					/* put the draft information into the database */
@@ -657,7 +698,12 @@ class Wiki_base extends Controller {
 					'name' => 'comments',
 					'id' => 'comments_closed',
 					'value' => 'closed'),
+				'categories' => array(
+					'name' => 'categories',
+					'id' => 'categories'),
 			);
+			
+			$js_data = FALSE;
 			
 			/* set the header */
 			$data['header'] = ucwords(lang('actions_create') .' '. lang('global_wiki') .' '. lang('labels_page'));
@@ -696,12 +742,32 @@ class Wiki_base extends Controller {
 							'id' => 'comments_closed',
 							'value' => 'closed',
 							'checked' => ($p->page_comments == 'closed') ? TRUE : FALSE),
+						'categories' => array(
+							'name' => 'categories',
+							'id' => 'categories'),
 					);
 				}
 			}
 			
 			/* set the id */
 			$data['id'] = $id;
+			
+			/* build the category list */
+			$cats = explode(',', $p->draft_categories);
+			
+			/* create an empty array */
+			$populate = array();
+			
+			foreach ($cats as $c)
+			{
+				$name = $this->wiki->get_category($c, 'wikicat_name');
+				
+				$populate[$c]['id'] = $c;
+				$populate[$c]['name'] = $name;
+			}
+			
+			/* set the populate data */
+			$js_data['populate'] = $populate;
 			
 			/* set the header */
 			$data['header'] = ucwords(lang('actions_edit') .' '. lang('global_wiki') .' '. lang('labels_page'));
@@ -728,6 +794,7 @@ class Wiki_base extends Controller {
 		$data['label'] = array(
 			'back' => LARROW .' '. ucfirst(lang('actions_back')) .' '. lang('labels_to') .' '. 
 				ucwords(lang('actions_manage') .' '. lang('global_wiki') .' '. lang('labels_pages')),
+			'categories' => ucfirst(lang('labels_categories')),
 			'closed' => ucfirst(lang('status_closed')),
 			'comments' => ucfirst(lang('labels_comments')),
 			'open' => ucfirst(lang('status_open')),
@@ -739,7 +806,7 @@ class Wiki_base extends Controller {
 		
 		/* write the data to the template */
 		$this->template->write_view('content', $view_loc, $data);
-		$this->template->write_view('javascript', $js_loc);
+		$this->template->write_view('javascript', $js_loc, $js_data);
 		$this->template->write('title', $data['header']);
 		
 		/* render the template */
@@ -748,7 +815,12 @@ class Wiki_base extends Controller {
 	
 	function view()
 	{
+		# TODO: add a comment
+		
 		$this->auth->check_access('wiki/page', FALSE);
+		
+		/* get the access level */
+		$level = $this->auth->get_access_level('wiki/page');
 		
 		/* set the variables */
 		$type = $this->uri->segment(3, 'page');
@@ -837,6 +909,91 @@ class Wiki_base extends Controller {
 				/* write everything to the template */
 				$this->template->write_view('flash_message', '_base/wiki/pages/flash', $flash);
 			}
+			
+			if ($type == 'comment')
+			{
+				$comment_text = $this->input->post('comment_text');
+				
+				if (!empty($comment_text))
+				{
+					$status = $this->player->checking_moderation('news_comment', $this->session->userdata('player_id'));
+					
+					/* build the insert array */
+					$insert = array(
+						'ncomment_content' => $comment_text,
+						'ncomment_news' => $id,
+						'ncomment_date' => now(),
+						'ncomment_author_character' => $this->session->userdata('main_char'),
+						'ncomment_author_player' => $this->session->userdata('player_id'),
+						'ncomment_status' => $status
+					);
+					
+					/* insert the data */
+					$add = $this->news->add_news_comment($insert);
+					
+					if ($add > 0)
+					{
+						$message = sprintf(
+							lang('flash_success'),
+							ucfirst(lang('labels_comment')),
+							lang('actions_added'),
+							''
+						);
+						
+						$flash['status'] = 'success';
+						$flash['message'] = text_output($message);
+						
+						if ($status == 'pending')
+						{
+							/* set the array of data for the email */
+							$email_data = array(
+								'author' => $this->session->userdata('main_char'),
+								'news_item' => $id,
+								'comment' => $comment_text);
+							
+							/* send the email */
+							$email = ($this->options['system_email'] == 'on') ? $this->_email('news_comment_pending', $email_data) : FALSE;
+						}
+						else
+						{
+							/* get the player id */
+							$player = $this->player->get_player_id($this->news->get_news_author($id));
+							
+							/* get the author's preference */
+							$pref = $this->player->get_pref('email_new_news_comments', $player);
+							
+							if ($pref == 'y')
+							{
+								/* set the array of data for the email */
+								$email_data = array(
+									'author' => $this->session->userdata('main_char'),
+									'news_item' => $id,
+									'comment' => $comment_text);
+								
+								/* send the email */
+								$email = ($this->options['system_email'] == 'on') ? $this->_email('news_comment', $email_data) : FALSE;
+							}
+						}
+					}
+					else
+					{
+						$message = sprintf(
+							lang('flash_failure'),
+							ucfirst(lang('labels_comment')),
+							lang('actions_added'),
+							''
+						);
+						
+						$flash['status'] = 'error';
+						$flash['message'] = text_output($message);
+					}
+				}
+				else
+				{
+					$flash['status'] = 'error';
+					$flash['message'] = lang_output('flash_add_comment_empty_body');
+				}
+			}
 		}
 		
 		/* set the date format */
@@ -856,11 +1013,33 @@ class Wiki_base extends Controller {
 					
 					$data['header'] = ucfirst(lang('labels_draft')) .' - '. $d->draft_title;
 					
+					$categories = explode(',', $d->draft_categories);
+					
+					if (count($categories) > 1)
+					{
+						foreach ($categories as $c)
+						{
+							$name = $this->wiki->get_category($c, 'wikicat_name');
+							
+							$cat[] = anchor('wiki/category/'. $c, $name);
+						}
+						
+						$string = implode(' | ', $cat);
+					}
+					else
+					{
+						$string = sprintf(
+							lang('error_not_found'),
+							lang('labels_categories')
+						);
+					}
+					
 					$data['draft'] = array(
 						'content' => $this->thresher->parse($d->draft_content),
 						'created' => $this->char->get_character_name($d->draft_author_character, TRUE),
 						'created_date' => mdate($datestring, $created),
 						'page' => $d->draft_page,
+						'categories' => $string,
 					);
 				}
 			}
@@ -869,6 +1048,8 @@ class Wiki_base extends Controller {
 		}
 		else
 		{
+			$data['id'] = $id;
+			
 			/*
 			|---------------------------------------------------------------
 			| PAGE
@@ -888,13 +1069,47 @@ class Wiki_base extends Controller {
 					
 					$data['header'] = $p->draft_title;
 					
+					$categories = explode(',', $p->draft_categories);
+					
+					if (count($categories) > 1)
+					{
+						foreach ($categories as $c)
+						{
+							$name = $this->wiki->get_category($c, 'wikicat_name');
+							
+							$cat[] = anchor('wiki/category/'. $c, $name);
+						}
+						
+						$string = implode(' | ', $cat);
+					}
+					else
+					{
+						$string = sprintf(
+							lang('error_not_found'),
+							lang('labels_categories')
+						);
+					}
+					
 					$data['page'] = array(
 						'content' => $this->thresher->parse($p->draft_content),
 						'created' => $this->char->get_character_name($p->page_created_by_character, TRUE),
 						'updated' => (!empty($p->page_updated_by_character)) ? $this->char->get_character_name($p->page_updated_by_character, TRUE) : FALSE,
 						'created_date' => mdate($datestring, $created),
-						'updated_date' => mdate($datestring, $updated)
+						'updated_date' => mdate($datestring, $updated),
+						'categories' => $string,
 					);
+				}
+			}
+			
+			if ($this->auth->is_logged_in())
+			{
+				if ($level == 3 || $level == 2 || ($level == 1 && ($p->page_created_by_player == $this->session->userdata('player_id'))))
+				{
+					$data['edit'] = TRUE;
+				}
+				else
+				{
+					$data['edit'] = FALSE;
 				}
 			}
 			
@@ -966,9 +1181,11 @@ class Wiki_base extends Controller {
 			'back_page' => LARROW .' '. ucfirst(lang('actions_back')) .' '. lang('labels_to') .' '.
 				ucwords(lang('global_wiki') .' '. lang('labels_page')),
 			'by' => lang('labels_by'),
+			'categories' => ucfirst(lang('labels_categories')) .':',
 			'comments' => ucfirst(lang('labels_comments')),
 			'created' => lang('actions_created'),
 			'draft' => ucfirst(lang('labels_draft')),
+			'edit' => '[ '. ucfirst(lang('actions_edit')) .' ]',
 			'history' => ucfirst(lang('labels_history')),
 			'nocomments' => sprintf(
 				lang('error_not_found'),
@@ -990,10 +1207,49 @@ class Wiki_base extends Controller {
 		/* write the data to the template */
 		$this->template->write_view('content', $view_loc, $data);
 		$this->template->write_view('javascript', $js_loc);
-		$this->template->write('title', $data['header']);
+		$this->template->write('title', ucfirst(lang('global_wiki')) .' - '. $data['header']);
 		
 		/* render the template */
 		$this->template->render();
+	}
+	
+	function _email($data = '')
+	{
+		/* load the libraries */
+		$this->load->library('email');
+		$this->load->library('parser');
+		
+		/* set the content */	
+		$content = sprintf(
+			lang('email_content_news_comment_added'),
+			"<strong>". $row->news_title ."</strong>",
+			$data['comment']
+		);
+		
+		/* create the array passing the data to the email */
+		$email_data = array(
+			'email_subject' => lang('email_subject_news_comment_added'),
+			'email_from' => ucfirst(lang('time_from')) .': '. $name .' - '. $from,
+			'email_content' => ($this->email->mailtype == 'html') ? nl2br($content) : $content
+		);
+		
+		/* where should the email be coming from */
+		$em_loc = email_location('wiki_new_comment', $this->email->mailtype);
+		
+		/* parse the message */
+		$message = $this->parser->parse($em_loc, $email_data, TRUE);
+		
+		/* set the parameters for sending the email */
+		$this->email->from($from, $name);
+		$this->email->to($to);
+		$this->email->subject($this->options['email_subject'] .' '. $email_data['email_subject']);
+		$this->email->message($message);
+		
+		/* send the email */
+		$email = $this->email->send();
+		
+		/* return the email variable */
+		return $email;
 	}
 }
 

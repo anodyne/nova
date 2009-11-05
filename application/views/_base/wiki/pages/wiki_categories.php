@@ -1,5 +1,7 @@
 <?php echo text_output($header, 'h1', 'page-head');?>
 
+<p class="bold fontSmall"><?php echo link_to_if($access, 'wiki/managecategories', $label['edit']);?></p>
+
 <?php echo text_output($label['text']);?>
 
 <?php if (isset($categories)): ?>
