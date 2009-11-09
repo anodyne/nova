@@ -12,20 +12,13 @@ class Test extends Controller {
 	
 	function index()
 	{
-		/* load the config file */
-		$this->config->load('thresher', TRUE);
+		$this->load->model('wiki_model', 'wiki');
 		
-		/* assign the config array to a variable */
-		$c = $this->config->item('thresher');
+		$this->load->helper('debug');
 		
-		/* load the library and pass the config items in */
-		$this->load->library('thresher', $c);
+		$foo = $this->wiki->get_all_contributors(1);
 		
-		$text = '<b>This is bold text</b> and <em>this is emphasized text</em>.';
-		$text = '[b]This is bold text[/b] and [i]this is emphasized text[/i].';
-		$text = "A *simple* example.";
-		
-		echo $this->thresher->parse($text);
+		print_var($foo);
 	}
 
 	function memory()
