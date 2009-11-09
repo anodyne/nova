@@ -1861,6 +1861,33 @@ class Ajax_base extends Controller {
 				
 				break;
 				
+			case 'wiki_comment':
+				$this->load->model('wiki_model', 'wiki');
+				$this->load->model('characters_model', 'char');
+				
+				$type = lang('global_wiki') .' '. lang('labels_comment');
+				
+				$item = $this->wiki->get_comment($data['id'], array('wcomment_page', 'wcomment_author_character'));
+				
+				$page = $this->wiki->get_page($item['wcomment_page']);
+				
+				if ($page->num_rows() > 0)
+				{
+					$row = $page->row();
+				
+					$data['text'] = sprintf(
+						lang('fbx_content_approve_entry'),
+						lang('global_wiki') .' '. lang('labels_comment') .' '. lang('labels_on'),
+						$row->draft_title,
+						' '. lang('labels_by') .' '.
+							$this->char->get_character_name($item['wcomment_author_character'], TRUE)
+					);
+				}
+				
+				$data['form'] = 'manage/comments/wiki/activated/0/approve';
+				
+				break;
+				
 			case 'award_nomination':
 				/* load the resources */
 				$this->load->model('system_model', 'sys');
@@ -2498,6 +2525,28 @@ class Ajax_base extends Controller {
 				$type = lang('global_newsitem');
 				
 				$item = $this->news->get_newsitem($this->news->get_news_comment($data['id'], 'ncomment_news'), 'news_title');
+				
+				break;
+				
+			case 'wiki':
+				$this->load->model('wiki_model', 'wiki');
+				
+				$type = lang('global_wiki');
+				
+				$pageid = $this->wiki->get_comment($data['id'], 'wcomment_page');
+				
+				$page = $this->wiki->get_page($pageid);
+				
+				if ($page->num_rows() > 0)
+				{
+					$row = $page->row();
+					
+					$item = $row->draft_title;
+				}
+				else
+				{
+					$item = FALSE;
+				}
 				
 				break;
 		}
@@ -4007,6 +4056,25 @@ class Ajax_base extends Controller {
 						'rows' => 10,
 						'value' => $item['ncomment_content']),
 					'author' => $this->char->get_character_name($item['ncomment_author_character'], TRUE)
+				);
+				
+				break;
+				
+			case 'wiki':
+				$this->load->model('wiki_model', 'wiki');
+				$this->load->model('characters_model', 'char');
+				
+				$type = lang('global_wiki');
+				
+				$item = $this->wiki->get_comment($data['id'], array('wcomment_content', 'wcomment_author_character'));
+				
+				$data['inputs'] = array(
+					'content' => array(
+						'name' => 'wcomment_content',
+						'class' => 'hud',
+						'rows' => 10,
+						'value' => $item['wcomment_content']),
+					'author' => $this->char->get_character_name($item['wcomment_author_character'], TRUE)
 				);
 				
 				break;

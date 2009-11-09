@@ -815,8 +815,6 @@ class Wiki_base extends Controller {
 	
 	function view()
 	{
-		# TODO: add a comment
-		
 		$this->auth->check_access('wiki/page', FALSE);
 		
 		/* get the access level */
@@ -944,6 +942,17 @@ class Wiki_base extends Controller {
 						
 						$flash['status'] = 'success';
 						$flash['message'] = text_output($message);
+						
+						/* set the array of data for the email */
+						$email_data = array(
+							'author' => $this->session->userdata('main_char'),
+							'page' => $id,
+							'comment' => $comment_text);
+							
+						$emailaction = ($status == 'pending') ? 'comment_pending' : 'comment';
+						
+						/* send the email */
+						$email = ($this->options['system_email'] == 'on') ? $this->_email($emailaction, $email_data) : FALSE;
 					}
 					else
 					{
@@ -1191,37 +1200,102 @@ class Wiki_base extends Controller {
 		$this->template->render();
 	}
 	
-	function _email($data = '')
+	function _email($type = '', $data = '')
 	{
 		/* load the libraries */
 		$this->load->library('email');
 		$this->load->library('parser');
 		
-		/* set the content */	
-		$content = sprintf(
-			lang('email_content_news_comment_added'),
-			"<strong>". $row->news_title ."</strong>",
-			$data['comment']
-		);
+		/* define the variables */
+		$email = FALSE;
 		
-		/* create the array passing the data to the email */
-		$email_data = array(
-			'email_subject' => lang('email_subject_news_comment_added'),
-			'email_from' => ucfirst(lang('time_from')) .': '. $name .' - '. $from,
-			'email_content' => ($this->email->mailtype == 'html') ? nl2br($content) : $content
-		);
+		/* run the methods */
+		$page = $this->wiki->get_page($data['page']);
+		$row = $page->row();
+		$name = $this->char->get_character_name($data['author']);
+		$from = $this->player->get_email_address('character', $data['author']);
 		
-		/* where should the email be coming from */
-		$em_loc = email_location('wiki_new_comment', $this->email->mailtype);
-		
-		/* parse the message */
-		$message = $this->parser->parse($em_loc, $email_data, TRUE);
-		
-		/* set the parameters for sending the email */
-		$this->email->from($from, $name);
-		$this->email->to($to);
-		$this->email->subject($this->options['email_subject'] .' '. $email_data['email_subject']);
-		$this->email->message($message);
+		switch ($type)
+		{
+			case 'comment':
+				/* get all the contributors of a wiki page */
+				$cont = $this->wiki->get_all_contributors($data['page']);
+				
+				foreach ($cont as $c)
+				{
+					$pref = $this->player->get_pref('email_new_wiki_comments', $c);
+					
+					if ($pref == 'y')
+					{
+						$to_array[] = $this->player->get_email_address('player', $c);
+					}
+				}
+				
+				/* set the to string */
+				$to = implode(',', $to_array);
+				
+				/* set the content */	
+				$content = sprintf(
+					lang('email_content_wiki_comment_added'),
+					"<strong>". $row->draft_title ."</strong>",
+					$data['comment']
+				);
+				
+				/* create the array passing the data to the email */
+				$email_data = array(
+					'email_subject' => lang('email_subject_wiki_comment_added'),
+					'email_from' => ucfirst(lang('time_from')) .': '. $name .' - '. $from,
+					'email_content' => ($this->email->mailtype == 'html') ? nl2br($content) : $content
+				);
+				
+				/* where should the email be coming from */
+				$em_loc = email_location('wiki_comment', $this->email->mailtype);
+				
+				/* parse the message */
+				$message = $this->parser->parse($em_loc, $email_data, TRUE);
+				
+				/* set the parameters for sending the email */
+				$this->email->from($from, $name);
+				$this->email->to($to);
+				$this->email->subject($this->options['email_subject'] .' '. $email_data['email_subject']);
+				$this->email->message($message);
+				
+				break;
+				
+			case 'comment_pending':
+				/* run the methods */
+				$to = implode(',', $this->player->get_emails_with_access('manage/comments'));
+				
+				/* set the content */	
+				$content = sprintf(
+					lang('email_content_comment_pending'),
+					lang('global_wiki'),
+					"<strong>". $row->draft_title ."</strong>",
+					$data['comment'],
+					site_url('login/index')
+				);
+				
+				/* create the array passing the data to the email */
+				$email_data = array(
+					'email_subject' => lang('email_subject_comment_pending'),
+					'email_from' => ucfirst(lang('time_from')) .': '. $name .' - '. $from,
+					'email_content' => ($this->email->mailtype == 'html') ? nl2br($content) : $content
+				);
+				
+				/* where should the email be coming from */
+				$em_loc = email_location('comment_pending', $this->email->mailtype);
+				
+				/* parse the message */
+				$message = $this->parser->parse($em_loc, $email_data, TRUE);
+				
+				/* set the parameters for sending the email */
+				$this->email->from($from, $name);
+				$this->email->to($to);
+				$this->email->subject($this->options['email_subject'] .' '. $email_data['email_subject']);
+				$this->email->message($message);
+				
+				break;
+		}
 		
 		/* send the email */
 		$email = $this->email->send();

@@ -400,7 +400,7 @@ class Manage_base extends Controller {
 	{
 		$this->auth->check_access();
 		
-		$types = array('posts', 'logs', 'news');
+		$types = array('posts', 'logs', 'news', 'wiki');
 		$values = array('activated', 'pending', 'edit');
 		$type = $this->uri->segment(3, 'posts', FALSE, $types);
 		$section = $this->uri->segment(4, 'activated', FALSE, $values);
@@ -410,6 +410,7 @@ class Manage_base extends Controller {
 		$this->load->model('posts_model', 'posts');
 		$this->load->model('personallogs_model', 'logs');
 		$this->load->model('news_model', 'news');
+		$this->load->model('wiki_model', 'wiki');
 		
 		if (isset($_POST['submit']))
 		{
@@ -474,6 +475,24 @@ class Manage_base extends Controller {
 							);
 							
 							break;
+							
+						case 'wiki':
+							$approve_array = array('wcomment_status' => 'activated');
+							
+							$approve = $this->wiki->update_comment($id, $approve_array);
+							$item = ucfirst(lang('global_wiki'));
+							
+							$row = $this->wiki->get_comment($id);
+							
+							$email_type = 'wiki_comment';
+							
+							$email_data = array(
+								'author' => $row->wcomment_author_character,
+								'page' => $row->wcomment_page,
+								'comment' => $row->wcomment_content
+							);
+							
+							break;
 					}
 					
 					if ($approve > 0)
@@ -528,6 +547,12 @@ class Manage_base extends Controller {
 						case 'news':
 							$delete = $this->news->delete_news_comment($id);
 							$item = ucfirst(lang('global_newsitem'));
+							
+							break;
+							
+						case 'wiki':
+							$delete = $this->wiki->delete_comment($id);
+							$item = ucfirst(lang('global_wiki'));
 							
 							break;
 					}
@@ -591,6 +616,14 @@ class Manage_base extends Controller {
 							$item = ucfirst(lang('global_newsitem'));
 							
 							break;
+							
+						case 'wiki':
+							$update_array = array('wcomment_content' => $this->input->post('wcomment_content', TRUE));
+							
+							$update = $this->wiki->update_comment($id, $update_array);
+							$item = ucfirst(lang('global_wiki'));
+							
+							break;
 					}
 					
 					$id = FALSE;
@@ -636,6 +669,9 @@ class Manage_base extends Controller {
 		$n_activated = ($section == 'activated' && $type == 'news') ? $offset : 0;
 		$n_pending = ($section == 'pending' && $type == 'news') ? $offset : 0;
 		
+		$w_activated = ($section == 'activated' && $type == 'wiki') ? $offset : 0;
+		$w_pending = ($section == 'pending' && $type == 'wiki') ? $offset : 0;
+		
 		$data['posts'] = array(
 			'activated' => $this->_comments_ajax($p_activated, 'posts'),
 			'pending' => $this->_comments_ajax($p_pending, 'posts', 'pending'),
@@ -647,6 +683,10 @@ class Manage_base extends Controller {
 		$data['news'] = array(
 			'activated' => $this->_comments_ajax($n_activated, 'news'),
 			'pending' => $this->_comments_ajax($n_pending, 'news', 'pending'),
+		);
+		$data['wiki'] = array(
+			'activated' => $this->_comments_ajax($w_activated, 'wiki'),
+			'pending' => $this->_comments_ajax($w_pending, 'wiki', 'pending'),
 		);
 		
 		$data['header'] = ucwords(lang('actions_manage') .' '. lang('labels_comments'));
@@ -665,6 +705,7 @@ class Manage_base extends Controller {
 			'posts' => ucwords(lang('global_post') .' '. lang('labels_comments')),
 			'logs' => ucwords(lang('global_log') .' '. lang('labels_comments')),
 			'news' => ucwords(lang('global_news') .' '. lang('labels_comments')),
+			'wiki' => ucwords(lang('global_wiki') .' '. lang('labels_comments')),
 		);
 		
 		switch ($type)
@@ -679,6 +720,10 @@ class Manage_base extends Controller {
 				
 			case 'news':
 				$js_data['type'] = 2;
+				break;
+				
+			case 'wiki':
+				$js_data['type'] = 3;
 				break;
 				
 			default:
@@ -3963,6 +4008,59 @@ class Manage_base extends Controller {
 			    $data['subheader'] = 'header_news';
 				
 				break;
+				
+			case 'wiki':
+				$this->load->model('wiki_model', 'wiki');
+				
+				$config['base_url'] = site_url('manage/comments/wiki/'. $status .'/');
+				$config['uri_segment'] = ($offset > 0) ? 5 : FALSE;
+				$config['per_page'] = 15;
+				$config['full_tag_open'] = '<p class="fontMedium bold">';
+				$config['full_tag_close'] = '</p>';
+				
+				$wiki = $this->wiki->get_comments('', $status);
+				
+				$data['entries'] = NULL;
+				
+				if ($wiki->num_rows() > 0)
+				{
+					$datestring = $this->options['date_format'];
+					
+					foreach ($wiki->result() as $w)
+					{
+						/* set the comment ID */
+						$wid = $w->wcomment_id;
+						
+						/* set the date */
+						$date = gmt_to_local($w->wcomment_date, $this->timezone, $this->dst);
+						
+						/* grab the wiki page info */
+						$page = $this->wiki->get_page($w->wcomment_page);
+						
+						if ($page->num_rows() > 0)
+						{
+							$row = $page->row();
+								
+							$data['entries'][$wid]['id'] = $wid;
+							$data['entries'][$wid]['content'] = ($w->wcomment_status == 'pending') ? $w->wcomment_content : word_limiter($w->wcomment_content, 25);
+							$data['entries'][$wid]['author'] = $this->char->get_authors($w->wcomment_author_character, TRUE);
+							$data['entries'][$wid]['date'] = mdate($datestring, $date);
+							$data['entries'][$wid]['source'] = anchor('wiki/view/page/'. $row->page_id, $row->draft_title);
+							$data['entries'][$wid]['status'] = $w->wcomment_status;
+						}
+					}
+				}
+		
+				$config['total_rows'] = $this->wiki->count_all_comments($status);
+				
+			    $this->pagination->initialize($config);
+			    
+			    /* create the page links */
+				$data['pagination'] = $this->pagination->create_links();
+			    
+			    $data['subheader'] = 'header_wiki';
+				
+				break;
 		}
 		
 		$data['status'] = $status;
@@ -3995,6 +4093,8 @@ class Manage_base extends Controller {
 	    	'header_logs' => ucwords($status .' '. lang('global_personallog') .' '.
 	    		lang('labels_comments')),
 	    	'header_news' => ucwords($status .' '. lang('global_news') .' '.
+	    		lang('labels_comments')),
+	    	'header_wiki' => ucwords($status .' '. lang('global_wiki') .' '.
 	    		lang('labels_comments')),
 	    	'error' => ucfirst(lang('labels_no') .' '. lang('labels_comments') .' '.
 	    		lang('actions_found')),
@@ -4036,7 +4136,7 @@ class Manage_base extends Controller {
 				/* set the email data */
 				$email_data = array(
 					'email_subject' => $subject,
-					'email_content' => nl2br($content)
+					'email_content' => ($this->email->mailtype == 'html') ? nl2br($content) : $content
 				);
 				
 				/* where should the email be coming from */
@@ -4075,7 +4175,7 @@ class Manage_base extends Controller {
 				/* set the email data */
 				$email_data = array(
 					'email_subject' => $subject,
-					'email_content' => nl2br($content)
+					'email_content' => ($this->email->mailtype == 'html') ? nl2br($content) : $content
 				);
 				
 				/* where should the email be coming from */
@@ -4133,7 +4233,9 @@ class Manage_base extends Controller {
 				);
 				
 				/* set the email data */
-				$email_data = array('email_content' => nl2br($content));
+				$email_data = array(
+					'email_content' => ($this->email->mailtype == 'html') ? nl2br($content) : $content
+				);
 				
 				/* where should the email be coming from */
 				$em_loc = email_location('write_missionpost', $this->email->mailtype);
@@ -4176,7 +4278,7 @@ class Manage_base extends Controller {
 				$email_data = array(
 					'email_subject' => lang('email_subject_log_comment_added'),
 					'email_from' => ucfirst(lang('time_from')) .': '. $name .' - '. $from,
-					'email_content' => nl2br($content)
+					'email_content' => ($this->email->mailtype == 'html') ? nl2br($content) : $content
 				);
 				
 				/* where should the email be coming from */
@@ -4215,7 +4317,7 @@ class Manage_base extends Controller {
 				$email_data = array(
 					'email_subject' => lang('email_subject_news_comment_added'),
 					'email_from' => ucfirst(lang('time_from')) .': '. $name .' - '. $from,
-					'email_content' => nl2br($content)
+					'email_content' => ($this->email->mailtype == 'html') ? nl2br($content) : $content
 				);
 				
 				/* where should the email be coming from */
@@ -4265,13 +4367,67 @@ class Manage_base extends Controller {
 				$email_data = array(
 					'email_subject' => lang('email_subject_post_comment_added'),
 					'email_from' => ucfirst(lang('time_from')) .': '. $name .' - '. $from,
-					'email_content' => nl2br($content)
+					'email_content' => ($this->email->mailtype == 'html') ? nl2br($content) : $content
 				);
 				
 				$em_loc = email_location('sim_post_comment', $this->email->mailtype);
 				
 				$message = $this->parser->parse($em_loc, $email_data, TRUE);
 				
+				$this->email->from($from, $name);
+				$this->email->to($to);
+				$this->email->subject($this->options['email_subject'] .' '. $email_data['email_subject']);
+				$this->email->message($message);
+				
+				break;
+				
+			case 'wiki_comment':
+				/* load the models */
+				$this->load->model('wiki_model', 'wiki');
+				
+				/* run the methods */
+				$page = $this->wiki->get_page($data['page']);
+				$row = $page->row();
+				$name = $this->char->get_character_name($data['author']);
+				$from = $this->player->get_email_address('character', $data['author']);
+				
+				/* get all the contributors of a wiki page */
+				$cont = $this->wiki->get_all_contributors($data['page']);
+				
+				foreach ($cont as $c)
+				{
+					$pref = $this->player->get_pref('email_new_wiki_comments', $c);
+					
+					if ($pref == 'y')
+					{
+						$to_array[] = $this->player->get_email_address('player', $c);
+					}
+				}
+				
+				/* set the to string */
+				$to = implode(',', $to_array);
+				
+				/* set the content */	
+				$content = sprintf(
+					lang('email_content_wiki_comment_added'),
+					"<strong>". $row->draft_title ."</strong>",
+					$data['comment']
+				);
+				
+				/* create the array passing the data to the email */
+				$email_data = array(
+					'email_subject' => lang('email_subject_wiki_comment_added'),
+					'email_from' => ucfirst(lang('time_from')) .': '. $name .' - '. $from,
+					'email_content' => ($this->email->mailtype == 'html') ? nl2br($content) : $content
+				);
+				
+				/* where should the email be coming from */
+				$em_loc = email_location('wiki_comment', $this->email->mailtype);
+				
+				/* parse the message */
+				$message = $this->parser->parse($em_loc, $email_data, TRUE);
+				
+				/* set the parameters for sending the email */
 				$this->email->from($from, $name);
 				$this->email->to($to);
 				$this->email->subject($this->options['email_subject'] .' '. $email_data['email_subject']);
