@@ -8,29 +8,28 @@ Nova M7 (0.7)
 
 LAST UPDATE
 ==========
-2009.11.05
+2009.11.09
 
 LATEST CHANGES
 ==========
 
-* added Services_json library
-* added textboxlist plugin
-* added textboxlist autocomplete plugin
-* added default textboxlist plugin stylesheets and images
-* added textboxlist plugin stylesheets and images to the default/wiki section
-* added the wiki/index view file
-
-* updated wiki/page to handle categories during creation and editing
-* updated wiki/page js view to handle the new work with textboxlist
-* updated the ajax controller with a method to return a JSON object with category information
-* updated the wiki head include file
-* updated the basic install data
-* updated the wiki controller to handle the main page
+* updated user/account to handle setting whether wiki comments are moderated or not
+* updated the database schema to have the wiki comments fields match the other comment tables
 * updated the wiki model with some new methods
-* updated the default wiki template file to list powered by nova and thresher
-* updated the constants config file to add wiki_name and wiki_version constants
+* updated the wiki model to change the wiki comment fields
+* updated wiki/view to be able to add comments
+* updated the ajax controller to handle adding wiki comments
+* updated the basic install data
+* updated the wiki model with new methods
+* updated the manage controller to allow managing wiki comments
 * updated the language files
-* updated wiki/categories to have an uncategorized option
-* updated wiki/view to show an edit link
-* updated wiki/categories to show an edit link
-* updated wiki/view to show categories with links at the bottom of the page content
+* updated the admin control panel to include wiki comments when checking for pending comments
+* updated the ajax controller to allow wiki comments to be deleted, edited and approved
+* updated the wiki controller to handle sending emails out about wiki comments
+
+* added ajax/add_comment_wiki view file
+* added comment-add.png to wiki/images
+* added html email view for wiki comments
+* added text email view for wiki comments
+
+* fixed bug in manage controller with content being parsed the same for all types of emails

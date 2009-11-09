@@ -1,3 +1,34 @@
+11.09.2009
+
+* added html email view for wiki comments
+* added text email view for wiki comments
+
+* updated the wiki model with new methods
+* updated the manage controller to allow managing wiki comments
+* updated the language files
+* updated the admin control panel to include wiki comments when checking for pending comments
+* updated the ajax controller to allow wiki comments to be deleted, edited and approved
+* updated the wiki controller to handle sending emails out about wiki comments
+
+* fixed bug in manage controller with content being parsed the same for all types of emails
+
+==========
+
+11.06.2009
+
+* updated user/account to handle setting whether wiki comments are moderated or not
+* updated the database schema to have the wiki comments fields match the other comment tables
+* updated the wiki model with some new methods
+* updated the wiki model to change the wiki comment fields
+* updated wiki/view to be able to add comments
+* updated the ajax controller to handle adding wiki comments
+* updated the basic install data
+
+* added ajax/add_comment_wiki view file
+* added comment-add.png to wiki/images
+
+==========
+
 11.05.2009
 
 * added Services_json library
