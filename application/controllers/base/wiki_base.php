@@ -832,9 +832,11 @@ class Wiki_base extends Controller {
 		/* load the library and pass the config items in */
 		$this->load->library('thresher', $c);
 		
-		if (isset($_POST))
+		if (isset($_POST) && $this->auth->is_logged_in())
 		{
-			if ($type == 'revert')
+			$action = $this->uri->segment(5);
+			
+			if ($action == 'revert')
 			{
 				/* get the POST variables */
 				$page = $this->input->post('page', TRUE);
@@ -910,26 +912,26 @@ class Wiki_base extends Controller {
 				$this->template->write_view('flash_message', '_base/wiki/pages/flash', $flash);
 			}
 			
-			if ($type == 'comment')
+			if ($action == 'comment')
 			{
 				$comment_text = $this->input->post('comment_text');
 				
 				if (!empty($comment_text))
 				{
-					$status = $this->player->checking_moderation('news_comment', $this->session->userdata('player_id'));
+					$status = $this->player->checking_moderation('wiki_comment', $this->session->userdata('player_id'));
 					
 					/* build the insert array */
 					$insert = array(
-						'ncomment_content' => $comment_text,
-						'ncomment_news' => $id,
-						'ncomment_date' => now(),
-						'ncomment_author_character' => $this->session->userdata('main_char'),
-						'ncomment_author_player' => $this->session->userdata('player_id'),
-						'ncomment_status' => $status
+						'wcomment_content' => $comment_text,
+						'wcomment_page' => $id,
+						'wcomment_date' => now(),
+						'wcomment_author_character' => $this->session->userdata('main_char'),
+						'wcomment_author_player' => $this->session->userdata('player_id'),
+						'wcomment_status' => $status
 					);
 					
 					/* insert the data */
-					$add = $this->news->add_news_comment($insert);
+					$add = $this->wiki->create_comment($insert);
 					
 					if ($add > 0)
 					{
@@ -942,38 +944,6 @@ class Wiki_base extends Controller {
 						
 						$flash['status'] = 'success';
 						$flash['message'] = text_output($message);
-						
-						if ($status == 'pending')
-						{
-							/* set the array of data for the email */
-							$email_data = array(
-								'author' => $this->session->userdata('main_char'),
-								'news_item' => $id,
-								'comment' => $comment_text);
-							
-							/* send the email */
-							$email = ($this->options['system_email'] == 'on') ? $this->_email('news_comment_pending', $email_data) : FALSE;
-						}
-						else
-						{
-							/* get the player id */
-							$player = $this->player->get_player_id($this->news->get_news_author($id));
-							
-							/* get the author's preference */
-							$pref = $this->player->get_pref('email_new_news_comments', $player);
-							
-							if ($pref == 'y')
-							{
-								/* set the array of data for the email */
-								$email_data = array(
-									'author' => $this->session->userdata('main_char'),
-									'news_item' => $id,
-									'comment' => $comment_text);
-								
-								/* send the email */
-								$email = ($this->options['system_email'] == 'on') ? $this->_email('news_comment', $email_data) : FALSE;
-							}
-						}
 					}
 					else
 					{
@@ -993,6 +963,9 @@ class Wiki_base extends Controller {
 					$flash['status'] = 'error';
 					$flash['message'] = lang_output('flash_add_comment_empty_body');
 				}
+				
+				/* write everything to the template */
+				$this->template->write_view('flash_message', '_base/wiki/pages/flash', $flash);
 			}
 		}
 		
@@ -1153,11 +1126,11 @@ class Wiki_base extends Controller {
 			{
 				foreach ($comments->result() as $cm)
 				{
-					$date = gmt_to_local($cm->wcomments_date, $this->timezone, $this->dst);
+					$date = gmt_to_local($cm->wcomment_date, $this->timezone, $this->dst);
 					
-					$data['comments'][$cm->wcomments_id]['author'] = $this->char->get_character_name($cm->wcomments_author_character, TRUE);
-					$data['comments'][$cm->wcomments_id]['content'] = $cm->wcomments_content;
-					$data['comments'][$cm->wcomments_id]['date'] = mdate($datestring, $date);
+					$data['comments'][$cm->wcomment_id]['author'] = $this->char->get_character_name($cm->wcomment_author_character, TRUE);
+					$data['comments'][$cm->wcomment_id]['content'] = $cm->wcomment_content;
+					$data['comments'][$cm->wcomment_id]['date'] = mdate($datestring, $date);
 				}
 			}
 			
@@ -1175,9 +1148,14 @@ class Wiki_base extends Controller {
 				'src' => img_location('page-view.png', $this->skin, 'wiki'),
 				'alt' => '',
 				'title' => ucfirst(lang('actions_view'))),
+			'comment' => array(
+				'src' => img_location('comment-add.png', $this->skin, 'wiki'),
+				'alt' => '',
+				'class' => 'inline_img_left image'),
 		);
 		
 		$data['label'] = array(
+			'addcomment' => ucfirst(lang('actions_add')) .' '. lang('labels_a') .' '. ucfirst(lang('labels_comment')),
 			'back_page' => LARROW .' '. ucfirst(lang('actions_back')) .' '. lang('labels_to') .' '.
 				ucwords(lang('global_wiki') .' '. lang('labels_page')),
 			'by' => lang('labels_by'),
