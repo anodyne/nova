@@ -101,6 +101,7 @@ class Admin_base extends Controller {
 		$this->load->model('missions_model', 'mis');
 		$this->load->model('privmsgs_model', 'pm');
 		$this->load->model('awards_model', 'awards');
+		$this->load->model('wiki_model', 'wiki');
 		
 		/* load the helpers */
 		$this->load->helper('utility');
@@ -192,7 +193,7 @@ class Admin_base extends Controller {
 			'pending_posts' 	=> $this->posts->count_all_posts('', 'pending'),
 			'pending_logs' 		=> $this->logs->count_all_logs('pending'),
 			'pending_news' 		=> $this->news->count_all_news('pending'),
-			'pending_comments' 	=> $this->posts->count_all_post_comments('pending') + $this->logs->count_all_log_comments('pending') + $this->news->count_all_news_comments('pending'),
+			'pending_comments' 	=> $this->posts->count_all_post_comments('pending') + $this->logs->count_all_log_comments('pending') + $this->news->count_all_news_comments('pending') + $this->wiki->count_all_comments('pending'),
 			'pending_awards' 	=> $this->awards->count_award_noms('pending')
 		);
 		
