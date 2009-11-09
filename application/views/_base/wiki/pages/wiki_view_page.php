@@ -1,5 +1,13 @@
 <?php echo text_output($header, 'h1', 'page-head');?>
 
+<?php if ($this->auth->is_logged_in()): ?>
+	<p class="bold">
+		<a href="#" myAction="comment" rel="facebox" myID="<?php echo $id;?>" class="image">
+			<?php echo img($images['comment']) .' '. $label['addcomment'];?>
+		</a>
+	</p>
+<?php endif;?>
+
 <p class="bold fontSmall"><?php echo link_to_if($edit, 'wiki/page/'. $id .'/edit', $label['edit']);?></p>
 
 <div id="tabs">
