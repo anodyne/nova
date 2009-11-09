@@ -62,11 +62,17 @@ class Wiki_model_base extends Model {
 		return $row;
 	}
 	
-	function get_comments($id = '')
+	function get_comments($id = '', $status = 'activated')
 	{
 		$this->db->from('wiki_comments');
-		$this->db->where('wcomments_page', $id);
-		$this->db->order_by('wcomments_date', 'desc');
+		$this->db->where('wcomment_page', $id);
+		
+		if (!empty($status))
+		{
+			$this->db->where('wcomment_status', $status);
+		}
+		
+		$this->db->order_by('wcomment_date', 'desc');
 		
 		$query = $this->db->get();
 		
@@ -175,6 +181,15 @@ class Wiki_model_base extends Model {
 		return $query;
 	}
 	
+	function create_comment($data = '')
+	{
+		$query = $this->db->insert('wiki_comments', $data);
+		
+		$this->dbutil->optimize_table('wiki_comments');
+		
+		return $query;
+	}
+	
 	function create_draft($data = '')
 	{
 		$query = $this->db->insert('wiki_drafts', $data);
@@ -239,12 +254,12 @@ class Wiki_model_base extends Model {
 		switch ($type)
 		{
 			case 'comment':
-				$this->db->where('wcomments_id', $id);
+				$this->db->where('wcomment_id', $id);
 			
 				break;
 				
 			case 'page':
-				$this->db->where('wcomments_page', $id);
+				$this->db->where('wcomment_page', $id);
 			
 				break;
 		}
