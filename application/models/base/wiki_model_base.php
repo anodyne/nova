@@ -27,6 +27,28 @@ class Wiki_model_base extends Model {
 	|---------------------------------------------------------------
 	*/
 	
+	function get_all_contributors($id = '')
+	{
+		$this->db->from('wiki_drafts');
+		$this->db->where('draft_page', $id);
+		
+		$query = $this->db->get();
+		
+		if ($query->num_rows() > 0)
+		{
+			foreach ($query->result() as $q)
+			{
+				$array[] = $q->draft_author_player;
+			}
+			
+			$retval = array_unique($array);
+			
+			return $retval;
+		}
+		
+		return FALSE;
+	}
+	
 	function get_categories()
 	{
 		$query = $this->db->get('wiki_categories');
@@ -62,10 +84,42 @@ class Wiki_model_base extends Model {
 		return $row;
 	}
 	
+	function get_comment($id = '', $return = '')
+	{
+		$query = $this->db->get_where('wiki_comments', array('wcomment_id' => $id));
+		
+		$row = ($query->num_rows() > 0) ? $query->row() : FALSE;
+		
+		if (!empty($return) && $row !== FALSE)
+		{
+			if (!is_array($return))
+			{
+				return $row->$return;
+			}
+			else
+			{
+				$array = array();
+				
+				foreach ($return as $r)
+				{
+					$array[$r] = $row->$r;
+				}
+				
+				return $array;
+			}
+		}
+		
+		return $row;
+	}
+	
 	function get_comments($id = '', $status = 'activated')
 	{
 		$this->db->from('wiki_comments');
-		$this->db->where('wcomment_page', $id);
+		
+		if (!empty($id))
+		{
+			$this->db->where('wcomment_page', $id);
+		}
 		
 		if (!empty($status))
 		{
@@ -168,6 +222,25 @@ class Wiki_model_base extends Model {
 	
 	/*
 	|---------------------------------------------------------------
+	| COUNT METHODS
+	|---------------------------------------------------------------
+	*/
+	
+	function count_all_comments($status = 'activated', $id = '')
+	{
+		$this->db->from('wiki_comments');
+		$this->db->where('wcomment_status', $status);
+		
+		if (!empty($id))
+		{
+			$this->db->where('wcomment_page', $id);
+		}
+		
+		return $this->db->count_all_results();
+	}
+	
+	/*
+	|---------------------------------------------------------------
 	| CREATE METHODS
 	|---------------------------------------------------------------
 	*/
@@ -220,6 +293,16 @@ class Wiki_model_base extends Model {
 		$query = $this->db->update('wiki_categories', $data);
 		
 		$this->dbutil->optimize_table('wiki_categories');
+		
+		return $query;
+	}
+	
+	function update_comment($id = '', $data = '')
+	{
+		$this->db->where('wcomment_id', $id);
+		$query = $this->db->update('wiki_comments', $data);
+		
+		$this->dbutil->optimize_table('wiki_comments');
 		
 		return $query;
 	}
