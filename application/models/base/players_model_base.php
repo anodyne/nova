@@ -585,6 +585,10 @@ class Players_model_base extends Model {
 					case 'news_comment':
 						$retval = ($row->moderate_news_comments == 'y') ? TRUE : FALSE;
 						break;
+						
+					case 'wiki_comment':
+						$retval = ($row->moderate_wiki_comments == 'y') ? TRUE : FALSE;
+						break;
 				}
 				
 				if ($retval === TRUE)
