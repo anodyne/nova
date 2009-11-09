@@ -54,8 +54,8 @@ body {
 	height: 20px;
 	line-height: 18px;
 	
-	-moz-border-radius-bottomleft: 5px;
-	-moz-border-radius-bottomright: 5px;
+	-moz-border-radius: 0 0 5px 5px;
+	-webkit-border-radius: 0 0 5px 5px;
 	
 	background: #111;
 	border-bottom: 1px solid #444;
