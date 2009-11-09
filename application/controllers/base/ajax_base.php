@@ -639,6 +639,40 @@ class Ajax_base extends Controller {
 		$this->template->render();
 	}
 	
+	function add_comment_wiki()
+	{
+		$head = sprintf(
+			lang('fbx_head'),
+			ucwords(lang('fbx_action_add')),
+			ucwords(lang('global_wiki') .' '. lang('labels_comment'))
+		);
+		
+		/* data being sent to the facebox */
+		$data['header'] = $head;
+		$data['id'] = $this->uri->segment(3, 0);
+		
+		/* input parameters */
+		$data['inputs'] = array(
+			'comment_text' => array(
+				'name' => 'comment_text',
+				'id' => 'comment_text',
+				'rows' => 10,
+				'class' => 'hud'),
+			'comment_button' => array(
+				'type' => 'submit',
+				'class' => 'hud_button',
+				'name' => 'submit',
+				'value' => 'submit',
+				'content' => ucwords(lang('actions_submit')))
+		);
+		
+		/* write the data to the template */
+		$this->template->write_view('content', '_base/ajax/add_wiki_comment', $data);
+		
+		/* render the template */
+		$this->template->render();
+	}
+	
 	function add_deck()
 	{
 		/* load the resources */
