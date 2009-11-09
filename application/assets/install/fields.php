@@ -87,7 +87,7 @@ $data = array(
 	'tour_values'				=> array('id' => 'value_id', 'fields' => 'fields_tour_values'),
 	'tour_decks'				=> array('id' => 'deck_id', 'fields' => 'fields_tour_decks'),
 	'wiki_categories'			=> array('id' => 'wikicat_id', 'fields' => 'fields_wiki_categories'),
-	'wiki_comments'				=> array('id' => 'wcomments_id', 'fields' => 'fields_wiki_comments'),
+	'wiki_comments'				=> array('id' => 'wcomment_id', 'fields' => 'fields_wiki_comments'),
 	'wiki_drafts'				=> array('id' => 'draft_id', 'fields' => 'fields_wiki_drafts'),
 	'wiki_pages'				=> array('id' => 'page_id', 'fields' => 'fields_wiki_pages'),
 	'uploads'					=> array('id' => 'upload_id', 'fields' => 'fields_uploads')
@@ -1081,6 +1081,10 @@ $fields_players = array(
 		'type' => 'ENUM',
 		'constraint' => "'y','n'",
 		'default' => 'n'),
+	'moderate_wiki_comments' => array(
+		'type' => 'ENUM',
+		'constraint' => "'y','n'",
+		'default' => 'n'),
 	'my_links' => array(
 		'type' => 'TEXT'),
 	'last_update' => array(
@@ -1657,24 +1661,28 @@ $fields_wiki_categories = array(
 );
 
 $fields_wiki_comments = array(
-	'wcomments_id' => array(
+	'wcomment_id' => array(
 		'type' => 'INT',
 		'constraint' => 10,
 		'auto_increment' => TRUE),
-	'wcomments_author_player' => array(
+	'wcomment_author_player' => array(
 		'type' => $player_id_type,
 		'constraint' => $player_id_constraint),
-	'wcomments_author_character' => array(
+	'wcomment_author_character' => array(
 		'type' => $character_id_type,
 		'constraint' => $character_id_constraint),
-	'wcomments_page' => array(
+	'wcomment_page' => array(
 		'type' => 'INT',
 		'constraint' => 10),
-	'wcomments_date' => array(
+	'wcomment_date' => array(
 		'type' => $date_type,
 		'constraint' => $date_constraint),
-	'wcomments_content' => array(
-		'type' => 'TEXT')
+	'wcomment_content' => array(
+		'type' => 'TEXT'),
+	'wcomment_status' => array(
+		'type' => 'ENUM',
+		'constraint' => "'activated','pending'",
+		'default' => 'activated')
 );
 
 $fields_wiki_drafts = array(
