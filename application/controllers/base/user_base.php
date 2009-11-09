@@ -401,6 +401,16 @@ class User_base extends Controller {
 					'id' => 'mod_ncomment_n',
 					'value' => 'n',
 					'checked' => ($details->moderate_news_comments == 'n') ? TRUE : FALSE),
+				'mod_wcomment_y' => array(
+					'name' => 'moderate_wiki_comments',
+					'id' => 'mod_wcomment_y',
+					'value' => 'y',
+					'checked' => ($details->moderate_wiki_comments == 'y') ? TRUE : FALSE),
+				'mod_wcomment_n' => array(
+					'name' => 'moderate_wiki_comments',
+					'id' => 'mod_wcomment_n',
+					'value' => 'n',
+					'checked' => ($details->moderate_wiki_comments == 'n') ? TRUE : FALSE),
 			);
 		}
 		
@@ -511,6 +521,7 @@ class User_base extends Controller {
 			'mod_c_logs' => ucwords(lang('global_log') .' '. lang('labels_comments')),
 			'mod_c_news' => ucwords(lang('global_news') .' '. lang('labels_comments')),
 			'mod_c_posts' => ucwords(lang('global_post') .' '. lang('labels_comments')),
+			'mod_c_wiki' => ucwords(lang('global_wiki') .' '. lang('labels_comments')),
 			'mod_logs' => ucwords(lang('global_personallogs')),
 			'mod_news' => ucwords(lang('global_newsitems')),
 			'mod_posts' => ucwords(lang('global_missionposts')),

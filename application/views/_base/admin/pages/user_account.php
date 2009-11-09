@@ -255,6 +255,17 @@
 								<?php echo form_radio($inputs['mod_ncomment_n']) .' '. form_label($label['no'], 'mod_ncomment_n');?>
 							</td>
 						</tr>
+						
+						<?php echo table_row_spacer(3, 15);?>
+						
+						<tr>
+							<td class="cell-label"><?php echo $label['mod_c_wiki'];?></td>
+							<td class="cell-spacer"></td>
+							<td>
+								<?php echo form_radio($inputs['mod_wcomment_y']) .' '. form_label($label['yes'], 'mod_wcomment_y');?>
+								<?php echo form_radio($inputs['mod_wcomment_n']) .' '. form_label($label['no'], 'mod_wcomment_n');?>
+							</td>
+						</tr>
 					</tbody>
 				</table>
 			</div>
