@@ -1707,6 +1707,10 @@ $player_prefs = array(
 		'pref_label' => 'Email Post Comments',
 		'pref_default' => 'y'),
 	array(
+		'pref_key' => 'email_new_wiki_comments',
+		'pref_label' => 'Email Wiki Comments',
+		'pref_default' => 'y'),
+	array(
 		'pref_key' => 'email_private_message',
 		'pref_label' => 'Email Private Messages',
 		'pref_default' => 'y'),
