@@ -43,6 +43,7 @@
 $lang['email_subject_news_comment_added'] 	= 'New Comment Added to News Item';
 $lang['email_subject_log_comment_added'] 	= 'New Comment Added to Personal Log';
 $lang['email_subject_post_comment_added'] 	= 'New Comment Added to Mission Post';
+$lang['email_subject_wiki_comment_added'] 	= 'New Comment Added to Wiki Page';
 $lang['email_subject_join_player'] 			= 'Application Received';
 $lang['email_subject_join_gm'] 				= 'Application Received';
 $lang['email_subject_docking_request'] 		= 'Docking Request Application';
@@ -76,6 +77,10 @@ $lang['email_content_log_comment_added'] = "A new comment has been added to your
 %s";
 
 $lang['email_content_post_comment_added'] = "A new comment has been added to your mission post %s. The content of the comment is below.
+
+%s";
+
+$lang['email_content_wiki_comment_added'] = "A new comment has been added to your wiki page %s. The content of the comment is below.
 
 %s";
 
