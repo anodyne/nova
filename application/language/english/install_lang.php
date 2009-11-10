@@ -147,7 +147,7 @@ $lang['install_step3_label'] = 'Step 3: User Account &amp; Character';
 $lang['install_step3_success'] = 'You have successfully inserted the genre data into your database. Please use the fields below to create your user profile and main character. You will be able to edit the character bio and your account once installation is complete and you have logged in to the system. Once you are finished, click <strong>Next Step</strong> to continue.';
 $lang['install_step3_failure'] = 'There was a problem inserting all of the genre data into your database. Please clear your database tables and try again. If you have created the genre file yourself, please make sure the file is formatted correctly and you don'. RSQUO .'t have any syntax errors. If you are using an Anodyne-created genre file, try installing again. If the problem persists, please contact <a href="http://forums.anodyne-productions.com" target="_blank">Anodyne Productions</a> for additional support.';
 
-$lang['install_step3_player'] = 'Player Information';
+$lang['install_step3_user'] = 'User Information';
 $lang['install_step3_name'] = 'Real Name';
 $lang['install_step3_dob'] = 'Date of Birth';
 $lang['install_step3_character'] = 'Character Information';
@@ -172,8 +172,8 @@ $lang['install_step4_simname'] = 'Sim Name';
 $lang['install_step4_emailsubject'] = 'Email Subject Prefix';
 $lang['install_step4_sysemail'] = 'System Emails';
 $lang['install_step4_updates'] = 'Update Notification';
-$lang['install_step4_chars'] = 'Allowed Playing Characters / Player';
-$lang['install_step4_npcs'] = 'Allowed NPCs / Player';
+$lang['install_step4_chars'] = 'Allowed Playing Characters / User';
+$lang['install_step4_npcs'] = 'Allowed NPCs / Users';
 $lang['install_step4_dates'] = 'Date Format';
 $lang['install_step4_updates_all'] = 'All Updates';
 $lang['install_step4_updates_maj'] = 'Major Updates (1.0, 2.0, etc.)';
@@ -272,7 +272,7 @@ $lang['upd_step1_memory'] = "Your server does'nt have enough available memory to
  * Step 2
  */
 $lang['upd_step2_title'] = 'Step 2: Run Update';
-$lang['upd_step2_success'] = 'You have successfully updated Nova to version %s. You can continue using Nova as normal now. Remember to turn maintenance mode off from the Site Settings page so the rest of your players can use the site!';
+$lang['upd_step2_success'] = 'You have successfully updated Nova to version %s. You can continue using Nova as normal now. Remember to turn maintenance mode off from the Site Settings page so the rest of your users can use the site!';
 $lang['upd_step2_site'] = 'Back to Site '. RARROW;
 
 /*
@@ -415,24 +415,24 @@ $lang['upg_step11_noupgrade'] = 'You have selected not to upgrade your specifica
  */
 $lang['upg_step12_title'] = 'Step 12 - Upgrade Tour Items';
 $lang['upg_step12_label'] = 'Step 12: Upgrade Tour Items';
-$lang['upg_step12_success'] = 'You have successfully upgraded the tour items to the new Nova format. The next step will upgrade your characters and players to the new Nova format. This will take a few minutes! Click <strong>Next Step</strong> to continue.';
+$lang['upg_step12_success'] = 'You have successfully upgraded the tour items to the new Nova format. The next step will upgrade your characters and users to the new Nova format. This will take a few minutes! Click <strong>Next Step</strong> to continue.';
 $lang['upg_step12_failure'] = 'There was a problem upgrading all of your tour items to the new Nova format. This can be caused by having made previous changes to the table, causing problems with the upgrade script. You can continue with the upgrade, but you will have to manually add your tour items at a later date. Click <strong>Next Step</strong> if you want to continue.';
-$lang['upg_step12_noupgrade'] = 'You have selected not to upgrade your tour items. Please continue to the next step where we will upgrade your characters and players to the new Nova format. This will take a few minutes! Click <strong>Next Step</strong> to continue.';
+$lang['upg_step12_noupgrade'] = 'You have selected not to upgrade your tour items. Please continue to the next step where we will upgrade your characters and users to the new Nova format. This will take a few minutes! Click <strong>Next Step</strong> to continue.';
 
 /*
  * Step 13
  */
 $lang['upg_step13_title'] = 'Step 13 - Upgrade Characters';
 $lang['upg_step13_label'] = 'Step 13: Upgrade Characters';
-$lang['upg_step13_success'] = 'You have successfully upgraded the characters and players to the new Nova format. All players will login to the system using the password set in the SMS config file. The next step will do some final clean up work across the database and will take a few minutes to complete. Click <strong>Next Step</strong> to continue.';
-$lang['upg_step13_failure'] = 'There was a problem upgrading all of your characters and players to the new Nova format. This can be caused by having made previous changes to the table, causing problems with the upgrade script. You can continue with the upgrade, but you will have to manually add your characters and players at a later date. You will need to add your player record in the database manually before you will be able to login. Click <strong>Next Step</strong> if you want to continue.';
+$lang['upg_step13_success'] = 'You have successfully upgraded the characters and users to the new Nova format. All users will login to the system using the password set in the SMS config file. The next step will do some final clean up work across the database and will take a few minutes to complete. Click <strong>Next Step</strong> to continue.';
+$lang['upg_step13_failure'] = 'There was a problem upgrading all of your characters and users to the new Nova format. This can be caused by having made previous changes to the table, causing problems with the upgrade script. You can continue with the upgrade, but you will have to manually add your characters and users at a later date. You will need to add your user record in the database manually before you will be able to login. Click <strong>Next Step</strong> if you want to continue.';
 
 /*
  * Step 14
  */
 $lang['upg_step14_title'] = 'Step 14 - Finalize';
 $lang['upg_step14_label'] = 'Step 14: Finalize';
-$lang['upg_step14_success'] = "You have successfully upgraded SMS to Nova. You can now login using your email address and the password you set in the SMS config file. Once you've logged in, you'll be able to make changes to the system. All other players will login to the system using the password set in the SMS config file. Click <strong>Login</strong> to continue.";
+$lang['upg_step14_success'] = "You have successfully upgraded SMS to Nova. You can now login using your email address and the password you set in the SMS config file. Once you've logged in, you'll be able to make changes to the system. All other users will login to the system using the password set in the SMS config file. Click <strong>Login</strong> to continue.";
 
 /*
 |---------------------------------------------------------------

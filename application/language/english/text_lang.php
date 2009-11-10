@@ -76,7 +76,7 @@ $lang['text_manage_uploads'] = "Nova provides the ability for users to upload ch
 
 $lang['text_file_not_deleted'] = "While the record has been removed from the database there was a problem deleting the selected file(s) from the server. Please manually remove the files from the server.";
 
-$lang['text_moderation_report'] = "The moderation status report gives an overview of which %s have been moderated for the different types of posts. Un-moderated players are shown with a green icon (%s) in the appropriate column while moderated users are shown with a red icon (%s) in the appropriate column.";
+$lang['text_moderation_report'] = "The moderation status report gives an overview of which %s have been moderated for the different types of posts. Un-moderated users are shown with a green icon (%s) in the appropriate column while moderated users are shown with a red icon (%s) in the appropriate column.";
 
 $lang['text_awardnom_report'] = "The award nomination report gives an overview of all %s nominations that have been submitted. Accepted %s are shown with a green icon (%s), pending %s are shown with a yellow icon (%s) and rejected %s are shown with a red icon (%s).";
 
@@ -92,9 +92,7 @@ $lang['text_db_insert'] = "This is the value that will be inserted into the data
 
 $lang['text_dropdown_value'] = "This is what you will see in the dropdown menu";
 
-/** =========================== **/
-
-$lang['text_stats_avg'] = "&dagger; Averages are calculated by taking the number of posts in the month and dividing by the number of players.  For the current month, the averages are calculated the same but will appear smaller until the end of the month.  End of the month averages will look similar to previous month average.";
+$lang['text_stats_avg'] = "&dagger; Averages are calculated by taking the number of posts in the month and dividing by the number of users.  For the current month, the averages are calculated the same but will appear smaller until the end of the month.  End of the month averages will look similar to previous month average.";
 $lang['text_stats_pace'] = "&Dagger; Pace is determined by dividing the number of posts in a month by the number of elapsed days, then multiplying by the number of days in a given month.  Actual end of the month numbers may vary.";
 $lang['text_search_results'] = 'Your search returned the following %d %s.';
 $lang['text_sim_dockingrequest'] = "Use the form below to request to dock with the sim. Your request will be emailed to the game master and they will make a decision in the next few days and notify you whether your request has been accepted or rejected.";
@@ -103,7 +101,7 @@ $lang['text_display_x_of_y'] = 'Displaying %d of %d %s';
 $lang['text_add_new_message'] = "Use the fields below to change any of the messages throughout the site. You can also add a new message and manually plug it in anywhere in Nova.";
 $lang['text_add_new_setting'] = 'Nova gives game masters and admins the ability to create their own settings to be used throughout the system. Once a setting is created, it can be added to user-created page or extended core pages and changed through the Site Settings page. At this time, user-created settings can only be edited through a simple text field and you will not have the ability to create a setting that uses a radio button, textarea, or dropdown menu.';
 
-$lang['text_bioform'] = 'Nova provides admins unparalleled control over the character biography and join form. Instead of a static page, the form itself is now built out of the database and the data stored in a dynamic way, giving admins all the control they could ever want. Using the page below, admins can edit the fields seen, delete unwanted fields and add entirely new fields to the form. Admins can create standard text fields, larger textareas or even dropdown menus for players to fill in. Use the links and pages below to start making the bio and join forms your own!';
+$lang['text_bioform'] = 'Nova provides admins unparalleled control over the character biography and join form. Instead of a static page, the form itself is now built out of the database and the data stored in a dynamic way, giving admins all the control they could ever want. Using the page below, admins can edit the fields seen, delete unwanted fields and add entirely new fields to the form. Admins can create standard text fields, larger textareas or even dropdown menus for users to fill in. Use the links and pages below to start making the bio and join forms your own!';
 
 $lang['text_biosections'] = 'Nova provides admins unparalleled control over the character biography and join form. Instead of a static page, the form itself is now built out of the database and the data stored in a dynamic way, giving admins all the control they could ever want. Using the page below, admins can edit the sections that break the character biography and join form up. If you do not want a section header, just leave the name blank.';
 
@@ -121,9 +119,9 @@ $lang['text_specssections'] = 'Nova provides admins unparalleled control over th
 
 $lang['text_rolepages'] = 'Nova provides robost access control that includes not only all pages that come with the system by default, but can include pages that you create. To begin adding your pages or editing existing pages, use the page below.';
 
-$lang['text_roles'] = 'Nova provides robust access control that allows admins to put players into roles that define what access people in those roles can have. You can use the form below to create, update and delete roles then assign the roles to players through player management.';
+$lang['text_roles'] = 'Nova provides robust access control that allows admins to put users into roles that define what access people in those roles can have. You can use the form below to create, update and delete roles then assign the roles to users through user management.';
 
-$lang['text_role_groups'] = 'Nova provides robust access control that allows admins to put players into roles that define what access people in those roles can have. To make managing role pages easier, admins can put pages into groups. You can use this page to create, update and delete role page groups then assign the role pages to groups through role page management.';
+$lang['text_role_groups'] = 'Nova provides robust access control that allows admins to put users into roles that define what access people in those roles can have. To make managing role pages easier, admins can put pages into groups. You can use this page to create, update and delete role page groups then assign the role pages to groups through role page management.';
 
 $lang['text_catalogueranks'] = "Nova provides extensive control over system rank sets even down to the credits for each rank set. Use this page to manage all ranks available for the system. The system default rank set is indicated by the %s icon.";
 
@@ -139,7 +137,7 @@ $lang['text_manage_specs'] = 'Nova provides admins unparalleled control over the
 
 $lang['info_online_timespan'] = "The online timespan setting determines the time period in which Nova considers someone as being online. By default, this is set to 5 minutes, but can be changed to any value (in minutes) that you want. The higher the number, the more processing power is required.";
 
-$lang['info_posting_req'] = "The posting requirement is the timespan (in days) in which players must post or risk having some form of disciplinary action taken against them. If a player has gone beyond this timespan, their name will appear in red on the crew activity report as well as the activity panel of the ACP. If you do not use a posting requirement, set this value to zero.";
+$lang['info_posting_req'] = "The posting requirement is the timespan (in days) in which users must post or risk having some form of disciplinary action taken against them. If a user has gone beyond this timespan, their name will appear in red on the crew activity report as well as the activity panel of the ACP. If you do not use a posting requirement, set this value to zero.";
 
 $lang['info_post_count_format'] = 'Nova allows GMs to count posts in one of two ways. The first way (and default) is <strong>multiple</strong>. This format counts a post as many times as there are authors on the post. If a post has 3 authors, it will count as 3 posts. The second way is <strong>single</strong>. The single format counts a post once regardless of how many authors were part it.';
 
@@ -168,8 +166,18 @@ $lang['confirm_delete_personallog'] = 'Are you sure you want to delete this pers
 $lang['confirm_delete_newsitem'] = 'Are you sure you want to delete this news item? This action is permanent and cannot be undone!';
 $lang['confirm_delete_missionpost'] = 'Are you sure you want to delete this mission entry? This action is permanent and cannot be undone!';
 
-$lang['alert_pcs_greater_than_zero'] = 'You must allow at least 1 playing character per player!';
+$lang['alert_pcs_greater_than_zero'] = 'You must allow at least 1 playing character per user!';
 $lang['alert_sys_email_off'] = 'Turning off system email will affect the entire system, including reset password emails not being sent out!';
+
+/*
+|---------------------------------------------------------------
+| WIKI MESSAGES
+|---------------------------------------------------------------
+*/
+
+$lang['wiki_categories_text'] = "Below are all of the %s that currently exist for the %s. Please click on the links to see a list of all pages in each %s.";
+
+$lang['wiki_revert'] = "Are you sure you want to revert to this previous draft of %s?";
 
 /* End of file long_text_lang.php */
 /* Location: ./application/language/english/long_text_lang.php */

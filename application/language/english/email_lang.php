@@ -44,7 +44,7 @@ $lang['email_subject_news_comment_added'] 	= 'New Comment Added to News Item';
 $lang['email_subject_log_comment_added'] 	= 'New Comment Added to Personal Log';
 $lang['email_subject_post_comment_added'] 	= 'New Comment Added to Mission Post';
 $lang['email_subject_wiki_comment_added'] 	= 'New Comment Added to Wiki Page';
-$lang['email_subject_join_player'] 			= 'Application Received';
+$lang['email_subject_join_user'] 			= 'Application Received';
 $lang['email_subject_join_gm'] 				= 'Application Received';
 $lang['email_subject_docking_request'] 		= 'Docking Request Application';
 $lang['email_subject_password_reset'] 		= 'Password Reset';
@@ -84,7 +84,7 @@ $lang['email_content_wiki_comment_added'] = "A new comment has been added to you
 
 %s";
 
-$lang['email_content_join_player'] = "You recently applied to join the %s. Your application is currently under review and the game master will notify you of their decision in the near future. If you have further questions, please contact the game master directly. Your email address and password are provided below for reference.
+$lang['email_content_join_user'] = "You recently applied to join the %s. Your application is currently under review and the game master will notify you of their decision in the near future. If you have further questions, please contact the game master directly. Your email address and password are provided below for reference.
 
 Email: %s
 Password: %s

@@ -43,7 +43,6 @@ include_once APPPATH .'language/'. $language .'/headers_titles_lang.php';
 include_once APPPATH .'language/'. $language .'/error_lang.php';
 include_once APPPATH .'language/'. $language .'/facebox_lang.php';
 include_once APPPATH .'language/'. $language .'/text_lang.php';
-include_once APPPATH .'language/'. $language .'/wiki_lang.php';
 
 /*
 |---------------------------------------------------------------
@@ -72,9 +71,6 @@ $lang['global_newsitem']		= 'news item';
 $lang['global_newsitems']		= 'news items';
 $lang['global_personallog'] 	= 'personal log';
 $lang['global_personallogs'] 	= 'personal logs';
-$lang['global_player']			= 'player';
-$lang['global_player_poss']		= 'player'. RSQUO .'s';
-$lang['global_players']			= 'players';
 $lang['global_position']		= 'position';
 $lang['global_positions']		= 'positions';
 $lang['global_post']			= 'post';
@@ -93,6 +89,9 @@ $lang['global_sysadmin']		= 'system administrator';
 $lang['global_tour']			= 'tour';
 $lang['global_touritem']		= 'tour item';
 $lang['global_touritems']		= 'tour items';
+$lang['global_user']			= 'user';
+$lang['global_user_poss']		= 'user'. RSQUO .'s';
+$lang['global_users']			= 'users';
 $lang['global_webmaster']		= 'webmaster';
 $lang['global_wiki']			= 'wiki';
 
@@ -225,6 +224,7 @@ $lang['actions_assigned']		= 'assigned';
 $lang['actions_awarded']		= 'awarded';
 $lang['actions_back']			= 'back';
 $lang['actions_change']			= 'change';
+$lang['actions_changes']		= 'changes';
 $lang['actions_choose']			= 'choose';
 $lang['actions_confirm']		= 'confirm';
 $lang['actions_contact']		= 'contact';
