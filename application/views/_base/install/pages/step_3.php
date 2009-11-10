@@ -3,7 +3,7 @@
 <?php echo form_open('install/step/4');?>
 	<table class="table100">
 		<tr>
-			<td colspan="3" class="fontMedium bold"><?php echo $label['player'];?></td>
+			<td colspan="3" class="fontMedium bold"><?php echo $label['user'];?></td>
 		</tr>
 		<tr>
 			<td class="cell-label"><?php echo $label['name'];?></td>
