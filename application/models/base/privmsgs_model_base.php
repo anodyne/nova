@@ -31,7 +31,7 @@ class Privmsgs_model_base extends Model {
 	{
 		$this->db->from('privmsgs_to');
 		$this->db->join('privmsgs', 'privmsgs.privmsgs_id = privmsgs_to.pmto_message');
-		$this->db->where('pmto_recipient_player', $id);
+		$this->db->where('pmto_recipient_user', $id);
 		$this->db->where('pmto_display', 'y');
 		$this->db->order_by('privmsgs_date', 'desc');
 		
@@ -43,7 +43,7 @@ class Privmsgs_model_base extends Model {
 	function get_outbox($id = '')
 	{
 		$this->db->from('privmsgs');
-		$this->db->where('privmsgs_author_player', $id);
+		$this->db->where('privmsgs_author_user', $id);
 		$this->db->where('privmsgs_author_display', 'y');
 		$this->db->order_by('privmsgs_date', 'desc');
 		
@@ -67,7 +67,7 @@ class Privmsgs_model_base extends Model {
 		{
 			foreach ($query->result() as $row)
 			{
-				$array[] = $row->pmto_recipient_player;
+				$array[] = $row->pmto_recipient_user;
 			}
 			
 			return $array;
@@ -96,7 +96,7 @@ class Privmsgs_model_base extends Model {
 	function count_unread_pms($id = '')
 	{
 		$this->db->from('privmsgs_to');
-		$this->db->where('pmto_recipient_player', $id);
+		$this->db->where('pmto_recipient_user', $id);
 		$this->db->where('pmto_display', 'y');
 		$this->db->where('pmto_unread', 'y');
 		
@@ -145,19 +145,19 @@ class Privmsgs_model_base extends Model {
 	|---------------------------------------------------------------
 	*/
 	
-	function update_message($id = '', $player = '', $data = '')
+	function update_message($id = '', $user = '', $data = '')
 	{
 		$this->db->where('pmto_message', $id);
-		$this->db->where('pmto_recipient_player', $player);
+		$this->db->where('pmto_recipient_user', $user);
 		$query = $this->db->update('privmsgs_to', $data);
 		
 		return $query;
 	}
 	
-	function update_to_message($id = '', $player = '', $data = '')
+	function update_to_message($id = '', $user = '', $data = '')
 	{
 		$this->db->where('pmto_id', $id);
-		$this->db->where('pmto_recipient_player', $player);
+		$this->db->where('pmto_recipient_user', $user);
 		$query = $this->db->update('privmsgs_to', $data);
 		
 		return $query;

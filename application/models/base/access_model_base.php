@@ -116,10 +116,10 @@ class Access_model_base extends Model {
 		return $array;
 	}
 	
-	function get_players_with_role($id = '')
+	function get_users_with_role($id = '')
 	{
 		$this->db->from('access_roles');
-		$this->db->join('players', 'players.access_role = access_roles.role_id');
+		$this->db->join('users', 'users.access_role = access_roles.role_id');
 		$this->db->where('role_id', $id);
 		
 		$query = $this->db->get();

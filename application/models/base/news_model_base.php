@@ -277,12 +277,12 @@ class News_model_base extends Model {
 		return FALSE;
 	}
 	
-	function get_player_news($id = '', $limit = 0)
+	function get_user_news($id = '', $limit = 0)
 	{
 		$this->db->from('news');
 		$this->db->join('news_categories', 'news_categories.newscat_id = news.news_cat');
 		$this->db->where('news_status', 'activated');
-		$this->db->where('news_author_player', $id);
+		$this->db->where('news_author_user', $id);
 		$this->db->order_by('news_date', 'desc');
 		
 		if ($limit > 0)
@@ -303,7 +303,7 @@ class News_model_base extends Model {
 		
 		if (!empty($id))
 		{
-			$this->db->where('news_author_player', $id);
+			$this->db->where('news_author_user', $id);
 		}
 		
 		$this->db->order_by('news_date', 'desc');
@@ -358,7 +358,7 @@ class News_model_base extends Model {
 		return $query->num_rows();
 	}
 	
-	function count_player_news($id = '', $status = 'activated', $timeframe = '')
+	function count_user_news($id = '', $status = 'activated', $timeframe = '')
 	{
 		$count = 0;
 		
@@ -370,20 +370,20 @@ class News_model_base extends Model {
 			$this->db->where('news_date >=', $timeframe);
 		}
 		
-		$this->db->where('news_author_player', $id);
+		$this->db->where('news_author_user', $id);
 			
 		$count = $this->db->count_all_results();
 		
 		return $count;
 	}
 	
-	function count_player_news_comments($player = '')
+	function count_user_news_comments($user = '')
 	{
 		$count = 0;
 		
 		$this->db->from('news_comments');
 		$this->db->where('ncomment_status', 'activated');
-		$this->db->where('ncomment_author_player', $player);
+		$this->db->where('ncomment_author_user', $user);
 			
 		$count = $this->db->count_all_results();
 		

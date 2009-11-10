@@ -108,11 +108,11 @@ class Awards_model_base extends Model {
 		return $query;
 	}
 	
-	function get_player_awards($player = '', $limit = 10, $where = array())
+	function get_user_awards($user = '', $limit = 10, $where = array())
 	{
 		$this->db->from('awards_received');
 		$this->db->join('awards', 'awards.award_id = awards_received.awardrec_award');
-		$this->db->where('awardrec_player', $player);
+		$this->db->where('awardrec_user', $user);
 		
 		if (!empty($where))
 		{
@@ -136,8 +136,8 @@ class Awards_model_base extends Model {
 	{
 		switch ($type)
 		{ /* make sure we're querying the right field */
-			case 'player':
-				$field = 'awardrec_player';
+			case 'user':
+				$field = 'awardrec_user';
 				break;
 			
 			default:

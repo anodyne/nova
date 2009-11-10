@@ -45,7 +45,7 @@ class Characters_model_base extends Model {
 				$this->db->where('crew_type', 'npc');
 				break;
 				
-			case 'player_npc':
+			case 'user_npc':
 				$this->db->where('crew_type', 'active');
 				$this->db->or_where('crew_type', 'npc');
 				break;
@@ -54,12 +54,12 @@ class Characters_model_base extends Model {
 				$this->db->where('crew_type', 'pending');
 				break;
 				
-			case 'has_player':
-				$this->db->where('player >', '');
+			case 'has_user':
+				$this->db->where('user >', '');
 				break;
 				
-			case 'no_player':
-				$this->db->where('player', NULL);
+			case 'no_user':
+				$this->db->where('user', NULL);
 				
 			case 'all':
 				break;
@@ -235,7 +235,7 @@ class Characters_model_base extends Model {
 		
 		foreach ($data as $item)
 		{
-			$this->db->select('player');
+			$this->db->select('user');
 			$this->db->from('characters');
 			$this->db->where('charid', $item);
 			
@@ -245,13 +245,13 @@ class Characters_model_base extends Model {
 			{
 				$row = $query->row();
 				
-				$query2 = $this->db->get_where('players', array('player_id' => $row->player));
+				$query2 = $this->db->get_where('users', array('userid' => $row->user));
 				
 				if ($query2->num_rows() > 0)
 				{
-					$player = $query2->row();
+					$user = $query2->row();
 					
-					$array[$player->player_id] = $player->email;
+					$array[$user->userid] = $user->email;
 				}
 			}
 		}
@@ -321,11 +321,11 @@ class Characters_model_base extends Model {
 		return $query;
 	}
 	
-	function get_characters_minus_player($player = '')
+	function get_characters_minus_user($user = '')
 	{
 		$this->db->from('characters');
-		$this->db->where('player >', '');
-		$this->db->where('player !=', $player);
+		$this->db->where('user >', '');
+		$this->db->where('user !=', $user);
 		
 		$query = $this->db->get();
 		
@@ -356,10 +356,10 @@ class Characters_model_base extends Model {
 		return $query;
 	}
 	
-	function get_player_characters($player = '', $type = 'active', $return = 'object')
+	function get_user_characters($user = '', $type = 'active', $return = 'object')
 	{
 		$this->db->from('characters');
-		$this->db->where('player', $player);
+		$this->db->where('user', $user);
 		
 		if (!empty($type))
 		{
@@ -412,10 +412,10 @@ class Characters_model_base extends Model {
 		return FALSE;
 	}
 	
-	function get_rank_history($player = '')
+	function get_rank_history($user = '')
 	{
 		$this->db->from('characters_promotions');
-		$this->db->where('prom_player', $player);
+		$this->db->where('prom_user', $user);
 		$this->db->order_by('prom_date', 'desc');
 		
 		$query = $this->db->get();
@@ -535,7 +535,7 @@ class Characters_model_base extends Model {
 		return $query;
 	}
 	
-	function create_character_data_fields($character = '', $player = '')
+	function create_character_data_fields($character = '', $user = '')
 	{
 		$get = $this->db->get_where('characters_fields', array('field_display' => 'y'));
 		
@@ -546,7 +546,7 @@ class Characters_model_base extends Model {
 				$data = array(
 					'data_field' => $row->field_id,
 					'data_char' => $character,
-					'data_player' => $player,
+					'data_user' => $user,
 					'data_value' => '',
 					'data_updated' => now()
 				);
@@ -737,7 +737,7 @@ class Characters_model_base extends Model {
 		return $query;
 	}
 	
-	function update_character_data_all($id = '', $identifier = 'data_player', $data = '')
+	function update_character_data_all($id = '', $identifier = 'data_user', $data = '')
 	{
 		$this->db->where($identifier, $id);
 		$query = $this->db->update('characters_data', $data);
