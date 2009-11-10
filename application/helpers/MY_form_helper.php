@@ -105,7 +105,7 @@ if ( ! function_exists('form_dropdown_characters'))
 			
 			foreach ($all->result() as $a)
 			{
-				if ($type == 'player_npc')
+				if ($type == 'user_npc')
 				{
 					switch ($a->crew_type)
 					{
