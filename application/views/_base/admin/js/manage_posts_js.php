@@ -28,9 +28,9 @@
 		});
 		
 		$('a#add_author').click(function() {
-			var player = $('#all').val();
+			var user = $('#all').val();
 			var hidden = $('#authors_hidden').val();
-			var name = $("option[value='" + player + "']").html();
+			var name = $("option[value='" + user + "']").html();
 			
 			if (hidden == 0)
 			{
@@ -38,31 +38,31 @@
 			}
 			
 			/* update the hidden field */
-			$('#authors_hidden').val(hidden + ',' + player + ',');
+			$('#authors_hidden').val(hidden + ',' + user + ',');
 			
 			/* update the list of recipients */
-			$('#authors').append('<span class="' + player + '"><a href="#" id="remove_author" class="image" myID="' + player + '" myName="' + name + '"><?php echo $remove;?></a>' + name + '<br /></span>');
+			$('#authors').append('<span class="' + user + '"><a href="#" id="remove_author" class="image" myID="' + user + '" myName="' + name + '"><?php echo $remove;?></a>' + name + '<br /></span>');
 			
 			/* hide the option so it can't be selected again */
-			$("#all option[value='" + player + "']").attr('disabled', 'yes');
+			$("#all option[value='" + user + "']").attr('disabled', 'yes');
 			
 			return false;
 		});
 		
 		$('a#remove_author').live('click', function(event) {
-			var player = $(this).attr('myID');
+			var user = $(this).attr('myID');
 			var name = $(this).attr('myName');
 			var hidden = $('#authors_hidden').val();
-			var new_hidden = hidden.replace(player, "");
+			var new_hidden = hidden.replace(user, "");
 			
 			/* update the hidden field */
 			$('#authors_hidden').val(new_hidden);
 			
 			/* remove the name from the list */
-			$('#authors span.' + player).remove();
+			$('#authors span.' + user).remove();
 			
 			/* show the option again */
-			$("#all option[value='" + player + "']").attr('disabled', '');
+			$("#all option[value='" + user + "']").attr('disabled', '');
 			
 			return false;
 		});

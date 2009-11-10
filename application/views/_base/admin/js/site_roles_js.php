@@ -10,7 +10,7 @@
 				var location = '<?php echo site_url('ajax/del_role');?>/' + id;
 			
 			if (action == 'view')
-				var location = '<?php echo site_url('ajax/info_players_with_role');?>/' + id;
+				var location = '<?php echo site_url('ajax/info_users_with_role');?>/' + id;
 				
 			if (action == 'duplicate')
 				var location = '<?php echo site_url('ajax/duplicate_role');?>';
