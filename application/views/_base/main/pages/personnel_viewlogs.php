@@ -31,7 +31,7 @@
 		</tbody>
 	</table>
 <?php elseif (isset($char)): ?>
-	<p class="bold"><?php echo anchor('personnel/player/' . $player .'/4', $label['backplayer']);?></p>
+	<p class="bold"><?php echo anchor('personnel/user/' . $user .'/4', $label['backuser']);?></p>
 	<?php foreach ($char as $c): ?>
 		<br />
 		<?php echo text_output($c['character'], 'h2');?>

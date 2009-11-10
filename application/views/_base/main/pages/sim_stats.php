@@ -12,9 +12,9 @@
 	
 	<tbody>
 		<tr>
-			<td class="align_center"><?php echo $players['previous'];?></td>
-			<td class="align_center bold"><?php echo $label['players'];?></td>
-			<td class="align_center"><?php echo $players['current'];?></td>
+			<td class="align_center"><?php echo $users['previous'];?></td>
+			<td class="align_center bold"><?php echo $label['users'];?></td>
+			<td class="align_center"><?php echo $users['current'];?></td>
 		</tr>
 		<tr>
 			<td class="align_center"><?php echo $characters['previous'];?></td>
