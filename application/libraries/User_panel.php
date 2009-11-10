@@ -29,14 +29,14 @@ class User_panel {
 		$this->ci->load->model('privmsgs_model', 'pm');
 		
 		/* run the methods */
-		$player = $this->ci->player->get_user_details($this->ci->session->userdata('player_id'));
-		$count = $this->ci->pm->count_unread_pms($this->ci->session->userdata('player_id'));
+		$user = $this->ci->user->get_user_details($this->ci->session->userdata('userid'));
+		$count = $this->ci->pm->count_unread_pms($this->ci->session->userdata('userid'));
 		
 		$data['count'] = ($count > 0) ? ' <strong>('. $count .')</strong>' : FALSE;
 		
-		if ($player->num_rows() > 0)
+		if ($user->num_rows() > 0)
 		{
-			$row = $player->row();
+			$row = $user->row();
 			
 			$data['name'] = $row->name;
 		}
@@ -125,14 +125,14 @@ class User_panel {
 		$this->ci->load->model('personallogs_model', 'logs');
 		$this->ci->load->model('news_model', 'news');
 		
-		$data['unreadpm'] = $this->ci->pm->count_unread_pms($this->ci->session->userdata('player_id'));
+		$data['unreadpm'] = $this->ci->pm->count_unread_pms($this->ci->session->userdata('userid'));
 		$data['unreadpm_icon'] = ($data['unreadpm'] > 0) ? 'green' : 'gray';
 		
 		$data['unreadjp'] = $this->ci->posts->count_unattended_posts($this->ci->session->userdata('characters'));
 		
 		$posts = $this->ci->posts->count_character_posts($this->ci->session->userdata('characters'), 'saved');
-		$logs = $this->ci->logs->count_player_logs($this->ci->session->userdata('player_id'), 'saved');
-		$news = $this->ci->news->count_player_news($this->ci->session->userdata('player_id'), 'saved');
+		$logs = $this->ci->logs->count_user_logs($this->ci->session->userdata('userid'), 'saved');
+		$news = $this->ci->news->count_user_news($this->ci->session->userdata('userid'), 'saved');
 		
 		$data['saveditems'] = $posts + $logs + $news;
 		
