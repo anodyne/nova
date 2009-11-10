@@ -38,7 +38,7 @@ class Admin_base extends Controller {
 		
 		/* load the models */
 		$this->load->model('characters_model', 'char');
-		$this->load->model('players_model', 'player');
+		$this->load->model('users_model', 'user');
 		
 		/* check to see if they are logged in */
 		$this->auth->is_logged_in(TRUE);
@@ -116,7 +116,7 @@ class Admin_base extends Controller {
 				$user = $this->input->post('user', TRUE);
 				
 				/* make sure the person submitting the form is the person logged in */
-				if ($user == $this->session->userdata('player_id'))
+				if ($user == $this->session->userdata('userid'))
 				{
 					$update_array = array(
 						'password' => sha1($password),
@@ -124,7 +124,7 @@ class Admin_base extends Controller {
 						'last_update' => now()
 					);
 					
-					$update = $this->player->update_player($user, $update_array);
+					$update = $this->user->update_user($user, $update_array);
 					
 					if ($update > 0)
 					{
@@ -167,15 +167,15 @@ class Admin_base extends Controller {
 		
 		$data['posts'] = array(
 			'entries' => $this->posts->count_character_posts($this->session->userdata('characters')),
-			'comments' => $this->posts->count_player_post_comments($this->session->userdata('player_id'))
+			'comments' => $this->posts->count_user_post_comments($this->session->userdata('userid'))
 		);
 		$data['logs'] = array(
 			'entries' => $this->logs->count_character_logs($this->session->userdata('characters')),
-			'comments' => $this->logs->count_player_log_comments($this->session->userdata('player_id'))
+			'comments' => $this->logs->count_user_log_comments($this->session->userdata('userid'))
 		);
 		$data['news'] = array(
 			'entries' => $this->news->count_character_news($this->session->userdata('characters')),
-			'comments' => $this->news->count_player_news_comments($this->session->userdata('player_id'))
+			'comments' => $this->news->count_user_news_comments($this->session->userdata('userid'))
 		);
 		
 		/*
@@ -186,9 +186,9 @@ class Admin_base extends Controller {
 		
 		$data['notification'] = array(
 			'saved_posts'		=> $this->posts->count_character_posts($this->session->userdata('characters'), 'saved'),
-			'saved_logs'		=> $this->logs->count_player_logs($this->session->userdata('player_id'), 'saved'),
-			'saved_news' 		=> $this->news->count_player_news($this->session->userdata('player_id'), 'saved'),
-			'unread_pms' 		=> $this->pm->count_unread_pms($this->session->userdata('player_id')),
+			'saved_logs'		=> $this->logs->count_user_logs($this->session->userdata('userid'), 'saved'),
+			'saved_news' 		=> $this->news->count_user_news($this->session->userdata('userid'), 'saved'),
+			'unread_pms' 		=> $this->pm->count_unread_pms($this->session->userdata('userid')),
 			'pending_users' 	=> $this->char->count_characters('pending', ''),
 			'pending_posts' 	=> $this->posts->count_all_posts('', 'pending'),
 			'pending_logs' 		=> $this->logs->count_all_logs('pending'),
@@ -214,7 +214,7 @@ class Admin_base extends Controller {
 		|---------------------------------------------------------------
 		*/
 		
-		$all = $this->player->get_players();
+		$all = $this->user->get_users();
 		
 		$now = now();
 		$threshold = $now - ($this->options['posting_requirement'] * 86400);
@@ -225,7 +225,7 @@ class Admin_base extends Controller {
 			{
 				if ($threshold > $a->last_post)
 				{
-					$data['activity'][$a->player_id] = array(
+					$data['activity'][$a->userid] = array(
 						'post' => (!empty($a->last_post)) ? $a->last_post : lang('error_no_last_post'),
 						'login' => (!empty($a->last_login)) ? $a->last_login : lang('error_no_last_login'),
 						'name' => $this->char->get_character_name($a->main_char, TRUE)
@@ -233,7 +233,7 @@ class Admin_base extends Controller {
 				}
 				
 				$milestones[] = array(
-					'id' => $a->player_id,
+					'id' => $a->userid,
 					'char' => $a->main_char,
 					'join' => $a->join_date
 				);
@@ -305,7 +305,7 @@ class Admin_base extends Controller {
 		/* grab the data */		
 		$posts_all = $this->posts->get_post_list('', 'desc', 10, '', 'activated');
 		$logs_all = $this->logs->get_log_list(10);
-		$news_all = $this->news->get_news_items(10, $this->session->userdata('player_id'));
+		$news_all = $this->news->get_news_items(10, $this->session->userdata('userid'));
 		
 		if ($posts_all->num_rows() > 0)
 		{
@@ -358,7 +358,7 @@ class Admin_base extends Controller {
 		|---------------------------------------------------------------
 		*/
 		
-		if ($this->auth->is_sysadmin($this->session->userdata('player_id')))
+		if ($this->auth->is_sysadmin($this->session->userdata('userid')))
 		{
 			/* load the install file */
 			$this->lang->load('install', $this->session->userdata('language'));
@@ -426,7 +426,7 @@ class Admin_base extends Controller {
 			's_logs' => ucwords(lang('status_saved') .' '. lang('global_personallogs')),
 			's_news' => ucwords(lang('status_saved') .' '. lang('global_newsitems')),
 			'pm' => ucwords(lang('status_unread') .' '. lang('global_privatemessages')),
-			'p_players' => ucwords(lang('status_pending') .' '. lang('global_characters')),
+			'p_users' => ucwords(lang('status_pending') .' '. lang('global_characters')),
 			'p_posts' => ucwords(lang('status_pending') .' '. lang('global_missionposts')),
 			'p_logs' => ucwords(lang('status_pending') .' '. lang('global_personallogs')),
 			'p_news' => ucwords(lang('status_pending') .' '. lang('global_newsitems')),

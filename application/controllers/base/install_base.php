@@ -211,11 +211,11 @@ class Install_base extends Controller {
 					/* verify their email/password combo is right */
 					$verify = $this->auth->verify($email, $password);
 					
-					/* get their player ID */
-					$player = $this->sys->get_item('players', 'email', $email, 'player_id');
+					/* get their user ID */
+					$user = $this->sys->get_item('users', 'email', $email, 'userid');
 					
 					/* verify they're a sys admin */
-					$sysadmin = $this->auth->is_sysadmin($player);
+					$sysadmin = $this->auth->is_sysadmin($user);
 					
 					if ($verify == 0 && $sysadmin === TRUE)
 					{
@@ -411,11 +411,11 @@ class Install_base extends Controller {
 					/* verify their email/password combo is right */
 					$verify = $this->auth->verify($email, $password);
 					
-					/* get their player ID */
-					$player = $this->sys->get_item('players', 'email', $email, 'player_id');
+					/* get their user ID */
+					$user = $this->sys->get_item('users', 'email', $email, 'userid');
 					
 					/* verify they're a sys admin */
-					$sysadmin = $this->auth->is_sysadmin($player);
+					$sysadmin = $this->auth->is_sysadmin($user);
 					
 					if ($verify == 0 && $sysadmin === TRUE)
 					{
@@ -543,11 +543,11 @@ class Install_base extends Controller {
 			/* verify their email/password combo is right */
 			$verify = $this->auth->verify($email, $password);
 			
-			/* get their player ID */
-			$player = $this->sys->get_item('players', 'email', $email, 'player_id');
+			/* get their user ID */
+			$user = $this->sys->get_item('users', 'email', $email, 'userid');
 			
 			/* verify they're a sys admin */
-			$sysadmin = $this->auth->is_sysadmin($player);
+			$sysadmin = $this->auth->is_sysadmin($user);
 			
 			if ($verify == 0 && $sysadmin === TRUE)
 			{
@@ -821,7 +821,7 @@ class Install_base extends Controller {
 				);
 		
 				$data['label'] = array(
-					'player' => lang('install_step3_player'),
+					'user' => lang('install_step3_user'),
 					'name' => lang('install_step3_name'),
 					'email' => lang('global_email'),
 					'password' => lang('global_password'),
@@ -853,7 +853,7 @@ class Install_base extends Controller {
 				$submit = $this->input->post('next');
 				
 				/* load the models */
-				$this->load->model('players_model');
+				$this->load->model('users_model');
 				$this->load->model('characters_model', 'char');
 				$this->load->model('positions_model', 'pos');
 				$this->load->model('system_model', 'sys');
@@ -863,8 +863,8 @@ class Install_base extends Controller {
 				{
 					$insert = array();
 					
-					/* build the create player array */
-					$create_player = array(
+					/* build the create user array */
+					$create_user = array(
 						'name'				=> $this->input->post('real_name', TRUE),
 						'email'				=> $this->input->post('email', TRUE),
 						'password'			=> sha1($this->input->post('password', TRUE)),
@@ -883,20 +883,20 @@ class Install_base extends Controller {
 						'display_rank'		=> $this->ranks->get_rank_default()
 					);
 					
-					/* insert the player data */
-					$c_player = $this->players_model->create_player($create_player);
-					$insert[] = $c_player;
+					/* insert the user data */
+					$c_user = $this->users_model->create_user($create_user);
+					$insert[] = $c_user;
 					
-					/* get the ID from the player insert */
+					/* get the ID from the user insert */
 					$p_id = $this->db->insert_id();
 					
-					/* create the player prefs */
-					$prefs = $this->players_model->create_player_prefs($p_id);
+					/* create the user prefs */
+					$prefs = $this->users_model->create_user_prefs($p_id);
 					$insert[] = $prefs;
 					
 					/* build the create character array */
 					$create_character = array(
-						'player'		=> $p_id,
+						'user'			=> $p_id,
 						'first_name'	=> $this->input->post('first_name', TRUE),
 						'last_name'		=> $this->input->post('last_name', TRUE),
 						'position_1'	=> $this->input->post('position', TRUE),
@@ -914,8 +914,8 @@ class Install_base extends Controller {
 					
 					$characters = array('main_char' => $c_id);
 					
-					/* update the players table */
-					$this->players_model->update_player($p_id, $characters);
+					/* update the users table */
+					$this->users_model->update_user($p_id, $characters);
 					
 					/* build the COC array */
 					$create_coc = array(

@@ -39,7 +39,7 @@ class Wiki_base extends Controller {
 		
 		/* load the models */
 		$this->load->model('characters_model', 'char');
-		$this->load->model('players_model', 'player');
+		$this->load->model('users_model', 'user');
 		$this->load->model('wiki_model', 'wiki');
 		
 		/* check to see if they are logged in */
@@ -226,12 +226,6 @@ class Wiki_base extends Controller {
 			'nopages' => sprintf(
 				lang('error_not_found'),
 				lang('global_wiki') .' '. lang('labels_pages')
-			),
-			'text' => sprintf(
-				lang('wiki_categories_text'),
-				lang('labels_categories'),
-				lang('global_wiki'),
-				lang('labels_category')
 			),
 		);
 		
@@ -563,7 +557,7 @@ class Wiki_base extends Controller {
 					/* create the array of page data */
 					$page_array = array(
 						'page_created_at' => now(),
-						'page_created_by_player' => $this->session->userdata('player_id'),
+						'page_created_by_user' => $this->session->userdata('userid'),
 						'page_created_by_character' => $this->session->userdata('main_char'),
 						'page_comments' => $this->input->post('comments', TRUE)
 					);
@@ -574,7 +568,7 @@ class Wiki_base extends Controller {
 					
 					/* create the array of draft data */
 					$draft_array = array(
-						'draft_author_player' => $this->session->userdata('player_id'),
+						'draft_author_user' => $this->session->userdata('userid'),
 						'draft_author_character' => $this->session->userdata('main_char'),
 						'draft_content' => $this->input->post('content', TRUE),
 						'draft_title' => $this->input->post('title', TRUE),
@@ -620,7 +614,7 @@ class Wiki_base extends Controller {
 				case 'edit':
 					/* create the array of draft data */
 					$draft_array = array(
-						'draft_author_player' => $this->session->userdata('player_id'),
+						'draft_author_user' => $this->session->userdata('userid'),
 						'draft_author_character' => $this->session->userdata('main_char'),
 						'draft_content' => $this->input->post('content', TRUE),
 						'draft_title' => $this->input->post('title', TRUE),
@@ -636,7 +630,7 @@ class Wiki_base extends Controller {
 					/* create the array of page data */
 					$page_array = array(
 						'page_updated_at' => now(),
-						'page_updated_by_player' => $this->session->userdata('player_id'),
+						'page_updated_by_user' => $this->session->userdata('userid'),
 						'page_updated_by_character' => $this->session->userdata('main_char'),
 						'page_comments' => $this->input->post('comments', TRUE),
 						'page_draft' => $draftid
@@ -813,6 +807,75 @@ class Wiki_base extends Controller {
 		$this->template->render();
 	}
 	
+	function recent()
+	{
+		/* set the uri segments */
+		$type = $this->uri->segment(3);
+		
+		switch ($type)
+		{
+			case 'updates':
+			default:
+				/* grab the recently updated items */
+				$updated = $this->wiki->get_recently_updated(100);
+				
+				if ($updated->num_rows() > 0)
+				{
+					foreach ($updated->result() as $u)
+					{
+						$data['recent']['updates'][] = array(
+							'id' => $u->page_id,
+							'title' => $u->draft_title,
+							'author' => $this->char->get_character_name($u->page_updated_by_character),
+							'timespan' => timespan_short($u->page_updated_at, now()),
+						);
+					}
+				}
+				
+				$data['header'] = ucwords(lang('global_wiki') .' - '. lang('status_recently') .' '. lang('actions_updated'));
+				
+				break;
+				
+			case 'created':
+				/* grab the recently updated items */
+				$created = $this->wiki->get_recently_created(100);
+				
+				if ($created->num_rows() > 0)
+				{
+					foreach ($created->result() as $c)
+					{
+						$data['recent']['created'][] = array(
+							'id' => $c->page_id,
+							'title' => $c->draft_title,
+							'author' => $this->char->get_character_name($c->page_created_by_character),
+							'timespan' => timespan_short($c->page_created_at, now()),
+						);
+					}
+				}
+				
+				$data['header'] = ucwords(lang('global_wiki') .' - '. lang('status_recently') .' '. lang('actions_created'));
+				
+				break;
+		}
+		
+		$data['label'] = array(
+			'ago' => lang('time_ago'),
+			'by' => lang('labels_by'),
+			'created' => ucwords(lang('actions_show') .' '. lang('status_recently') .' '. lang('actions_created')),
+			'updates' => ucwords(lang('actions_show') .' '. lang('status_recently') .' '. lang('actions_updated')),
+		);
+		
+		/* figure out where the view files should be coming from */
+		$view_loc = view_location('wiki_recent', $this->skin, 'wiki');
+		
+		/* write the data to the template */
+		$this->template->write_view('content', $view_loc, $data);
+		$this->template->write('title', $data['header']);
+		
+		/* render the template */
+		$this->template->render();
+	}
+	
 	function view()
 	{
 		$this->auth->check_access('wiki/page', FALSE);
@@ -850,7 +913,7 @@ class Wiki_base extends Controller {
 					$insert_array = array(
 						'draft_id_old' => $row->draft_id,
 						'draft_title' => $row->draft_title,
-						'draft_author_player' => $this->session->userdata('player_id'),
+						'draft_author_user' => $this->session->userdata('userid'),
 						'draft_author_character' => $this->session->userdata('main_char'),
 						'draft_content' => $row->draft_content,
 						'draft_page' => $page,
@@ -863,7 +926,7 @@ class Wiki_base extends Controller {
 					
 					$update_array = array(
 						'page_draft' => $draftid,
-						'page_updated_by_player' => $this->session->userdata('player_id'),
+						'page_updated_by_user' => $this->session->userdata('userid'),
 						'page_updated_by_character' => $this->session->userdata('main_char'),
 						'page_updated_at' => now()
 					);
@@ -916,7 +979,7 @@ class Wiki_base extends Controller {
 				
 				if (!empty($comment_text))
 				{
-					$status = $this->player->checking_moderation('wiki_comment', $this->session->userdata('player_id'));
+					$status = $this->user->checking_moderation('wiki_comment', $this->session->userdata('userid'));
 					
 					/* build the insert array */
 					$insert = array(
@@ -924,7 +987,7 @@ class Wiki_base extends Controller {
 						'wcomment_page' => $id,
 						'wcomment_date' => now(),
 						'wcomment_author_character' => $this->session->userdata('main_char'),
-						'wcomment_author_player' => $this->session->userdata('player_id'),
+						'wcomment_author_user' => $this->session->userdata('userid'),
 						'wcomment_status' => $status
 					);
 					
@@ -1085,7 +1148,7 @@ class Wiki_base extends Controller {
 			
 			if ($this->auth->is_logged_in())
 			{
-				if ($level == 3 || $level == 2 || ($level == 1 && ($p->page_created_by_player == $this->session->userdata('player_id'))))
+				if ($level == 3 || $level == 2 || ($level == 1 && ($p->page_created_by_user == $this->session->userdata('userid'))))
 				{
 					$data['edit'] = TRUE;
 				}
@@ -1213,7 +1276,7 @@ class Wiki_base extends Controller {
 		$page = $this->wiki->get_page($data['page']);
 		$row = $page->row();
 		$name = $this->char->get_character_name($data['author']);
-		$from = $this->player->get_email_address('character', $data['author']);
+		$from = $this->user->get_email_address('character', $data['author']);
 		
 		switch ($type)
 		{
@@ -1223,11 +1286,11 @@ class Wiki_base extends Controller {
 				
 				foreach ($cont as $c)
 				{
-					$pref = $this->player->get_pref('email_new_wiki_comments', $c);
+					$pref = $this->user->get_pref('email_new_wiki_comments', $c);
 					
 					if ($pref == 'y')
 					{
-						$to_array[] = $this->player->get_email_address('player', $c);
+						$to_array[] = $this->user->get_email_address('user', $c);
 					}
 				}
 				
@@ -1264,7 +1327,7 @@ class Wiki_base extends Controller {
 				
 			case 'comment_pending':
 				/* run the methods */
-				$to = implode(',', $this->player->get_emails_with_access('manage/comments'));
+				$to = implode(',', $this->user->get_emails_with_access('manage/comments'));
 				
 				/* set the content */	
 				$content = sprintf(

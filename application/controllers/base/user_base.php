@@ -38,7 +38,7 @@ class User_base extends Controller {
 		
 		/* load the models */
 		$this->load->model('characters_model', 'char');
-		$this->load->model('players_model', 'player');
+		$this->load->model('users_model', 'user');
 		
 		/* check to see if they are logged in */
 		$this->auth->is_logged_in(TRUE);
@@ -101,7 +101,7 @@ class User_base extends Controller {
 		$this->auth->check_access();
 		
 		$level = $this->auth->get_access_level();
-		$id = $this->session->userdata('player_id');
+		$id = $this->session->userdata('userid');
 		$id = ($level == 2) ? $this->uri->segment(3, $id, TRUE) : $id;
 		
 		if (isset($_POST['submit']))
@@ -113,16 +113,16 @@ class User_base extends Controller {
 			 
 			if ($_POST['submit'] == 'Update')
 			{
-				$player = $this->uri->segment(3, 0, TRUE);
+				$user = $this->uri->segment(3, 0, TRUE);
 				
-				if ($level == 1 && $player != $this->session->userdata('player_id'))
+				if ($level == 1 && $user != $this->session->userdata('userid'))
 				{
 					redirect('admin/error/7');
 				}
 				
 				$update = 0;
 				
-				$update_all = $this->player->update_all_player_prefs($player);
+				$update_all = $this->user->update_all_user_prefs($user);
 				
 				foreach ($_POST as $key => $value)
 				{
@@ -132,7 +132,7 @@ class User_base extends Controller {
 						
 						$new_key = substr_replace($key, '', 0, 2);
 						
-						$update += $this->player->update_player_pref($player, $new_key, $update_array);
+						$update += $this->user->update_user_pref($user, $new_key, $update_array);
 					}
 					else
 					{
@@ -179,20 +179,20 @@ class User_base extends Controller {
 					$array['leave_date'] = NULL;
 				}
 				
-				if ($player == $this->session->userdata('player_id'))
+				if ($user == $this->session->userdata('userid'))
 				{
 					$this->session->set_userdata('timezone', $array['timezone']);
 					$this->session->set_userdata('dst', $array['daylight_savings']);
 					$this->session->set_userdata('language', $array['language']);
 				}
 				
-				$update += $this->player->update_player($player, $array);
+				$update += $this->user->update_user($user, $array);
 				
 				if ($update > 0)
 				{
 					if ($array['loa'] != $old_loa)
 					{
-						$loa = $this->player->get_last_loa($player, TRUE);
+						$loa = $this->user->get_last_loa($user, TRUE);
 				
 						if ($loa->num_rows() > 0)
 						{
@@ -200,21 +200,21 @@ class User_base extends Controller {
 							
 							$loa_array = array('loa_end_date' => now());
 							
-							$this->player->update_loa_record($row->loa_id, $loa_array);
+							$this->user->update_loa_record($row->loa_id, $loa_array);
 						}
 						else
 						{
 							if ($array['loa'] != 'active')
 							{
 								$loa_array = array(
-									'loa_player' => $player,
+									'loa_user' => $user,
 									'loa_start_date' => now(),
 									'loa_type' => $array['loa'],
 									'loa_duration' => '',
 									'loa_reason' => ''
 								);
 								
-								$this->player->create_loa_record($loa_array);
+								$this->user->create_loa_record($loa_array);
 							}
 						}
 					}
@@ -251,13 +251,13 @@ class User_base extends Controller {
 		$this->load->helper('directory');
 		$this->load->model('access_model', 'access');
 		
-		/* grab the player details */
-		$details = $this->player->get_player($id);
+		/* grab the user details */
+		$details = $this->user->get_user($id);
 		
 		if ($details !== FALSE)
 		{
 			$data['inputs'] = array(
-				'id' => $details->player_id,
+				'id' => $details->userid,
 				'timezone' => $details->timezone,
 				'language' => $details->language,
 				'loa' => $details->loa,
@@ -425,7 +425,7 @@ class User_base extends Controller {
 						'name' => 'p_'. $p->pref_key,
 						'id' => 'p_'. $p->pref_key,
 						'value' => 'y',
-						'checked' => ($this->player->get_pref($p->pref_key, $id) == 'y') ? TRUE : FALSE),
+						'checked' => ($this->user->get_pref($p->pref_key, $id) == 'y') ? TRUE : FALSE),
 					'label' => $p->pref_label
 				);
 			}
@@ -531,7 +531,7 @@ class User_base extends Controller {
 			'name' => ucfirst(lang('labels_name')),
 			'no' => ucfirst(lang('labels_no')),
 			'password' => ucfirst(lang('labels_password')),
-			'playersettings' => ucwords(lang('global_player') .' '. lang('labels_settings')),
+			'usersettings' => ucwords(lang('global_user') .' '. lang('labels_settings')),
 			'role' => ucwords(lang('labels_access') .' '. lang('labels_role')),
 			'secanswer' => ucwords(lang('labels_security') .' '. lang('labels_answer')),
 			'secquestion' => ucwords(lang('labels_security') .' '. lang('labels_question')),
@@ -542,7 +542,7 @@ class User_base extends Controller {
 			'text_credentials_2' => lang('text_user_credential_confirm_2'),
 			'datetime' => ucwords(lang('time_dates') .' '. AMP .' '. lang('labels_times')),
 			'timezone' => ucfirst(lang('labels_timezone')),
-			'type' => ucwords(lang('global_player') .' '. lang('labels_type')),
+			'type' => ucwords(lang('global_user') .' '. lang('labels_type')),
 			'webmaster' => ucfirst(lang('global_webmaster')),
 			'yes' => ucfirst(lang('labels_yes')),
 		);
@@ -581,15 +581,15 @@ class User_base extends Controller {
 					$id = $this->input->post('id', TRUE);
 					$id = (is_numeric($id)) ? $id : FALSE;
 					
-					$delete = $this->player->delete_player($id);
+					$delete = $this->user->delete_user($id);
 					
 					if ($delete > 0)
 					{
-						$chars = $this->char->get_player_characters($id, '', 'array');
+						$chars = $this->char->get_user_characters($id, '', 'array');
 						
 						if (count($chars) > 0)
 						{
-							$update_array = array('player' => NULL);
+							$update_array = array('user' => NULL);
 							
 							foreach ($chars as $c)
 							{
@@ -599,7 +599,7 @@ class User_base extends Controller {
 						
 						$message = sprintf(
 							lang('flash_success'),
-							ucfirst(lang('global_player')),
+							ucfirst(lang('global_user')),
 							lang('actions_deleted'),
 							''
 						);
@@ -611,7 +611,7 @@ class User_base extends Controller {
 					{
 						$message = sprintf(
 							lang('flash_failure'),
-							ucfirst(lang('global_player')),
+							ucfirst(lang('global_user')),
 							lang('actions_deleted'),
 							''
 						);
@@ -627,14 +627,14 @@ class User_base extends Controller {
 			}
 		}
 		
-		$players = $this->player->get_players('');
+		$users = $this->user->get_users('');
 		
-		if ($players->num_rows() > 0)
+		if ($users->num_rows() > 0)
 		{
-			foreach ($players->result() as $p)
+			foreach ($users->result() as $p)
 			{
-				$data['players'][$p->status][$p->player_id] = array(
-					'id' => $p->player_id,
+				$data['users'][$p->status][$p->userid] = array(
+					'id' => $p->userid,
 					'main_char' => $this->char->get_character_name($p->main_char, TRUE),
 					'email' => $p->email,
 					'name' => $p->name,
@@ -668,13 +668,13 @@ class User_base extends Controller {
 		);
 		
 		$data['label'] = array(
-			'active' => ucwords(lang('status_active') .' '. lang('global_players')),
+			'active' => ucwords(lang('status_active') .' '. lang('global_users')),
 			'ago' => lang('time_ago'),
 			'character' => ucwords(lang('labels_main') .' '. lang('global_character')),
-			'inactive' => ucwords(lang('status_inactive') .' '. lang('global_players')),
+			'inactive' => ucwords(lang('status_inactive') .' '. lang('global_users')),
 			'left' => ucfirst(lang('labels_left')),
 			'name' => ucfirst(lang('labels_name')),
-			'pending' => ucwords(lang('status_pending') .' '. lang('global_players')),
+			'pending' => ucwords(lang('status_pending') .' '. lang('global_users')),
 		);
 		
 		/* figure out where the view files should be coming from */
@@ -698,8 +698,8 @@ class User_base extends Controller {
 		
 		if ($level == 2)
 		{
-			$player = $this->uri->segment(3, 0, TRUE);
-			$data['player'] = $player;
+			$user = $this->uri->segment(3, 0, TRUE);
+			$data['user'] = $user;
 			
 			switch ($this->uri->segment(4))
 			{
@@ -707,7 +707,7 @@ class User_base extends Controller {
 					$id = $this->uri->segment(5, 0, TRUE);
 					
 					/* get all the characters and make sure it isn't blank */
-					$chars_raw = $this->char->get_player_characters($player, '', 'array');
+					$chars_raw = $this->char->get_user_characters($user, '', 'array');
 					$chars = ($chars_raw !== FALSE) ? $chars_raw : array();
 					
 					$type = array(
@@ -731,10 +731,10 @@ class User_base extends Controller {
 					
 					if ($key === FALSE)
 					{
-						/* set up the data array with the player info */
-						$data_array = array('data_player' => $data['player']);
+						/* set up the data array with the user info */
+						$data_array = array('data_user' => $data['user']);
 						
-						/* update all the character data to point to the player */
+						/* update all the character data to point to the user */
 						$update_data = $this->char->update_character_data_all($id, 'data_char', $data_array);
 					
 						$c_type = $this->char->get_character($id, 'crew_type');
@@ -754,21 +754,21 @@ class User_base extends Controller {
 								lang('global_characters')
 							);
 							
-							$player_update = 0;
+							$user_update = 0;
 						}
 						else
 						{
 							$message = sprintf(
 								lang('flash_failure_plural'),
-								ucfirst(lang('global_player') .' '. lang('global_characters')),
+								ucfirst(lang('global_user') .' '. lang('global_characters')),
 								lang('actions_updated'),
 								''
 							);
 							
-							/* set the deactivate date and player ID */
+							/* set the deactivate date and user ID */
 							$char_activate = array(
 								'date_activate' => now(),
-								'player' => $player,
+								'user' => $user,
 							);
 							
 							/* run the update */
@@ -780,11 +780,11 @@ class User_base extends Controller {
 							/* put the characters into a string */
 							$chars_string = implode(',', $chars);
 							
-							/* create an array for updating the player record */
+							/* create an array for updating the user record */
 							$update_array = array('last_update' => now());
 							
-							/* get the player's main character */
-							$main = $this->player->get_player($player, 'main_char');
+							/* get the user's main character */
+							$main = $this->user->get_user($user, 'main_char');
 							
 							if ($chars_raw === FALSE || empty($main))
 							{ /* if they don't have any characters or don't have a main character */
@@ -792,14 +792,14 @@ class User_base extends Controller {
 							}
 							
 							/* run the update */
-							$player_update = $this->player->update_player($player, $update_array);
+							$user_update = $this->user->update_user($user, $update_array);
 						}
 						
-						if ($player_update > 0)
+						if ($user_update > 0)
 						{
 							$message = sprintf(
 								lang('flash_success_plural'),
-								ucfirst(lang('global_player') .' '. lang('global_characters')),
+								ucfirst(lang('global_user') .' '. lang('global_characters')),
 								lang('actions_updated'),
 								' '. lang('text_logout')
 							);
@@ -822,8 +822,8 @@ class User_base extends Controller {
 				case 'remove':
 					$id = $this->uri->segment(5, 0, TRUE);
 					
-					/* get an array of the player's characters */
-					$chars = $this->char->get_player_characters($player, 'active_npc', 'array');
+					/* get an array of the user's characters */
+					$chars = $this->char->get_user_characters($user, 'active_npc', 'array');
 					
 					/* new main is NULL until something overwrites it in the event the main char is removed */
 					$newmain = NULL;
@@ -849,18 +849,18 @@ class User_base extends Controller {
 					
 					if ($key !== FALSE)
 					{
-						/* set up the data array with the player info */
-						$data_array = array('data_player' => NULL);
+						/* set up the data array with the user info */
+						$data_array = array('data_user' => NULL);
 						
-						/* update all the character data to point to the player */
+						/* update all the character data to point to the user */
 						$update_data = $this->char->update_character_data_all($id, 'data_char', $data_array);
 					
-						$main = $this->player->get_player($data['player'], 'main_char');
+						$main = $this->user->get_user($data['user'], 'main_char');
 						
-						/* set the deactivate date and player ID */
+						/* set the deactivate date and user ID */
 						$char_deactivate = array(
 							'date_deactivate' => now(),
-							'player' => NULL,
+							'user' => NULL,
 						);
 						
 						/* run the update */
@@ -872,20 +872,20 @@ class User_base extends Controller {
 						/* put the characters into a string */
 						$chars_string = implode(',', $chars);
 						
-						/* create an array for updating the player record */
+						/* create an array for updating the user record */
 						$update_array = array(
 							'last_update' => now(),
 							'main_char' => ($main == $id) ? $newmain : $main
 						);
 						
 						/* run the update */
-						$player_update = $this->player->update_player($player, $update_array);
+						$user_update = $this->user->update_user($user, $update_array);
 						
-						if ($player_update > 0)
+						if ($user_update > 0)
 						{
 							$message = sprintf(
 								lang('flash_success_plural'),
-								ucfirst(lang('global_player') .' '. lang('global_characters')),
+								ucfirst(lang('global_user') .' '. lang('global_characters')),
 								lang('actions_updated'),
 								' '. lang('text_logout')
 							);
@@ -897,7 +897,7 @@ class User_base extends Controller {
 						{
 							$message = sprintf(
 								lang('flash_failure_plural'),
-								ucfirst(lang('global_player') .' '. lang('global_characters')),
+								ucfirst(lang('global_user') .' '. lang('global_characters')),
 								lang('actions_updated'),
 								''
 							);
@@ -916,24 +916,24 @@ class User_base extends Controller {
 					$id = $this->uri->segment(5, 0, TRUE);
 					
 					/* grab the current main character */
-					$char = $this->player->get_player($player, 'main_char');
+					$char = $this->user->get_user($user, 'main_char');
 					
 					if ($char != $id)
 					{
-						/* create an array for updating the player record */
+						/* create an array for updating the user record */
 						$update_array = array(
 							'main_char' => $id,
 							'last_update' => now()
 						);
 						
 						/* run the update */
-						$player_update = $this->player->update_player($player, $update_array);
+						$user_update = $this->user->update_user($user, $update_array);
 						
-						if ($player_update > 0)
+						if ($user_update > 0)
 						{
 							$message = sprintf(
 								lang('flash_success_plural'),
-								ucfirst(lang('global_player') .' '. lang('global_characters')),
+								ucfirst(lang('global_user') .' '. lang('global_characters')),
 								lang('actions_updated'),
 								' '. lang('text_logout')
 							);
@@ -945,7 +945,7 @@ class User_base extends Controller {
 						{
 							$message = sprintf(
 								lang('flash_failure_plural'),
-								ucfirst(lang('global_player') .' '. lang('global_characters')),
+								ucfirst(lang('global_user') .' '. lang('global_characters')),
 								lang('actions_updated'),
 								''
 							);
@@ -961,15 +961,15 @@ class User_base extends Controller {
 					break;
 			}
 			
-			if ($player == 0)
+			if ($user == 0)
 			{
-				$all = $this->player->get_players();
+				$all = $this->user->get_users();
 				
 				if ($all->num_rows() > 0)
 				{
 					foreach ($all->result() as $a)
 					{
-						$data['all'][$a->player_id] = (!empty($a->name)) ? $a->name : $a->email;
+						$data['all'][$a->userid] = (!empty($a->name)) ? $a->name : $a->email;
 					}
 				}
 			}
@@ -978,18 +978,18 @@ class User_base extends Controller {
 				/* load the resources */
 				$this->load->model('positions_model', 'pos');
 				
-				$all = $this->char->get_player_characters($player, '', 'array');
+				$all = $this->char->get_user_characters($user, '', 'array');
 				
-				/* get the player's current characters */
+				/* get the user's current characters */
 				$chars = ($all !== FALSE) ? $all : array();
 				
-				/* get all characters that don't have a player assigned to them */
-				$unassigned = $this->char->get_all_characters('no_player');
+				/* get all characters that don't have a user assigned to them */
+				$unassigned = $this->char->get_all_characters('no_user');
 				
-				$playerinfo = $this->player->get_player($player);
+				$userinfo = $this->user->get_user($user);
 				
-				$data['p_name'] = $playerinfo->name;
-				$data['p_email'] = $playerinfo->email;
+				$data['p_name'] = $userinfo->name;
+				$data['p_email'] = $userinfo->email;
 				
 				$data['count_active'] = 0;
 				$data['count_npc'] = 0;
@@ -1004,7 +1004,7 @@ class User_base extends Controller {
 							'name' => $this->char->get_character_name($c, TRUE),
 							'position' => $this->pos->get_position($d['position_1'], 'pos_name'),
 							'type' => ($d['crew_type'] == 'npc') ? strtoupper($d['crew_type']) : ucfirst($d['crew_type']),
-							'main' => ($this->player->get_main_character($player) != $c) ? FALSE : TRUE,
+							'main' => ($this->user->get_main_character($user) != $c) ? FALSE : TRUE,
 						);
 						
 						if ($d['crew_type'] == 'npc')
@@ -1038,15 +1038,15 @@ class User_base extends Controller {
 				lang('labels_to') .' '. ucfirst(lang('labels_account'));
 			$data['text'] = sprintf(
 				lang('text_link_characters'),
-				lang('global_player'),
+				lang('global_user'),
 				lang('global_characters'),
 				lang('global_characters'),
-				lang('global_player'),
+				lang('global_user'),
 				lang('global_character'),
 				lang('global_character'),
-				lang('global_player'),
+				lang('global_user'),
 				lang('global_character'),
-				lang('global_player')
+				lang('global_user')
 			);
 			
 			$data['buttons'] = array(
@@ -1091,16 +1091,16 @@ class User_base extends Controller {
 			
 			$data['label'] = array(
 				'add' => ucwords(lang('actions_add') .' '. lang('global_character')),
-				'allchars' => LARROW .' '. ucwords(lang('labels_all') .' '. lang('global_players')),
+				'allchars' => LARROW .' '. ucwords(lang('labels_all') .' '. lang('global_users')),
 				'chars_nonplaying' => ucwords(lang('status_nonplaying') .' '. lang('global_characters')),
 				'chars_playing' => ucwords(lang('status_playing') .' '. lang('global_characters')),
 				'current' => ucwords(lang('status_current') .' '. lang('global_characters')),
 				'email' => ucwords(lang('labels_email_address')),
 				'name' => ucfirst(lang('labels_name')),
 				'nocharacters' => ucfirst(lang('labels_no') .' '. lang('global_characters') .' '. lang('actions_found')),
-				'player' => ucwords(lang('global_player') .' '. lang('labels_info')),
+				'user' => ucwords(lang('global_user') .' '. lang('labels_info')),
 				'select' => ucfirst(lang('labels_please') .' '. lang('actions_select') .' '. 
-					lang('labels_a') .' '. lang('global_player')),
+					lang('labels_a') .' '. lang('global_user')),
 				'remove' => ucfirst(lang('actions_remove')),
 			);
 			
@@ -1160,7 +1160,7 @@ class User_base extends Controller {
 								$nom = $this->sys->get_item('awards_queue', 'queue_id', $id);
 								
 								$received = array(
-									'awardrec_player' => $nom->queue_receive_player,
+									'awardrec_user' => $nom->queue_receive_user,
 									'awardrec_character' => $nom->queue_receive_character,
 									'awardrec_award' => $nom->queue_award,
 									'awardrec_date' => now(),
@@ -1247,7 +1247,7 @@ class User_base extends Controller {
 					
 					$insert_array = array(
 						'queue_receive_character' => ($award->award_cat == 'ooc') ? 0 : $character,
-						'queue_receive_player' => $this->char->get_character($character, 'player'),
+						'queue_receive_user' => $this->char->get_character($character, 'user'),
 						'queue_nominate' => $this->session->userdata('main_char'),
 						'queue_award' => $awardid,
 						'queue_reason' => $this->input->post('reason', TRUE),
@@ -1270,7 +1270,7 @@ class User_base extends Controller {
 						$flash['message'] = text_output($message);
 						
 						$email_data = array(
-							'receive' => ($award->award_cat == 'ooc') ? $insert_array['queue_receive_player'] : $character,
+							'receive' => ($award->award_cat == 'ooc') ? $insert_array['queue_receive_user'] : $character,
 							'cat' => $award->award_cat,
 							'reason' => $insert_array['queue_reason'],
 							'award' => $insert_array['queue_award'],
@@ -1409,7 +1409,7 @@ class User_base extends Controller {
 		$this->auth->check_access('user/account');
 		
 		/* set the user id */
-		$id = $this->session->userdata('player_id');
+		$id = $this->session->userdata('userid');
 		
 		/* set the tab */
 		$js_data['tab'] = 0;
@@ -1442,13 +1442,13 @@ class User_base extends Controller {
 						'last_update' => now()
 					);
 					
-					$update = $this->player->update_player($id, $update_array);
+					$update = $this->user->update_user($id, $update_array);
 					
 					if ($update > 0)
 					{
 						$message = sprintf(
 							lang('flash_success_plural'),
-							ucfirst(lang('global_player') .' '. lang('labels_menu')
+							ucfirst(lang('global_user') .' '. lang('labels_menu')
 								.' '. lang('labels_preferences')),
 							lang('actions_updated'),
 							lang('flash_additional_refresh')
@@ -1464,7 +1464,7 @@ class User_base extends Controller {
 					{
 						$message = sprintf(
 							lang('flash_failure_plural'),
-							ucfirst(lang('global_player') .' '. lang('labels_menu')
+							ucfirst(lang('global_user') .' '. lang('labels_menu')
 								.' '. lang('labels_preferences')),
 							lang('actions_updated'),
 							''
@@ -1489,13 +1489,13 @@ class User_base extends Controller {
 						'last_update' => now()
 					);
 					
-					$update = $this->player->update_player($id, $update_array);
+					$update = $this->user->update_user($id, $update_array);
 					
 					if ($update > 0)
 					{
 						$message = sprintf(
 							lang('flash_success'),
-							ucfirst(lang('global_player') .' '. lang('global_rank')
+							ucfirst(lang('global_user') .' '. lang('global_rank')
 								.' '. lang('labels_preference')),
 							lang('actions_updated'),
 							lang('flash_additional_refresh')
@@ -1511,7 +1511,7 @@ class User_base extends Controller {
 					{
 						$message = sprintf(
 							lang('flash_failure'),
-							ucfirst(lang('global_player') .' '. lang('global_rank')
+							ucfirst(lang('global_user') .' '. lang('global_rank')
 								.' '. lang('labels_preference')),
 							lang('actions_updated'),
 							''
@@ -1540,13 +1540,13 @@ class User_base extends Controller {
 						'last_update' => now()
 					);
 					
-					$update = $this->player->update_player($id, $update_array);
+					$update = $this->user->update_user($id, $update_array);
 					
 					if ($update > 0)
 					{
 						$message = sprintf(
 							lang('flash_success_plural'),
-							ucfirst(lang('global_player') .' '. lang('labels_skin')
+							ucfirst(lang('global_user') .' '. lang('labels_skin')
 								.' '. lang('labels_preferences')),
 							lang('actions_updated'),
 							lang('flash_additional_refresh')
@@ -1575,7 +1575,7 @@ class User_base extends Controller {
 					{
 						$message = sprintf(
 							lang('flash_failure_plural'),
-							ucfirst(lang('global_player') .' '. lang('labels_skin')
+							ucfirst(lang('global_user') .' '. lang('labels_skin')
 								.' '. lang('labels_preferences')),
 							lang('actions_updated'),
 							''
@@ -1597,8 +1597,8 @@ class User_base extends Controller {
 		/* load the resources */
 		$this->load->model('ranks_model', 'ranks');
 		
-		/* grab the player details */
-		$player = $this->player->get_player($id);
+		/* grab the user details */
+		$user = $this->user->get_user($id);
 		
 		/*
 		|---------------------------------------------------------------
@@ -1641,7 +1641,7 @@ class User_base extends Controller {
 			}
 		}
 		
-		$links = explode(',', $player->my_links);
+		$links = explode(',', $user->my_links);
 		$data['defaults']['links'] = array(
 			1 => (isset($links[0])) ? $links[0] : 0,
 			2 => (isset($links[1])) ? $links[1] : 0,
@@ -1659,9 +1659,9 @@ class User_base extends Controller {
 		$skin_access = ($s_access === TRUE) ? array('active', 'development') : 'active';
 		
 		$skins = $this->sys->get_all_skins();
-		$data['defaults']['main'] = $player->skin_main;
-		$data['defaults']['admin'] = $player->skin_admin;
-		$data['defaults']['wiki'] = $player->skin_wiki;
+		$data['defaults']['main'] = $user->skin_main;
+		$data['defaults']['admin'] = $user->skin_admin;
+		$data['defaults']['wiki'] = $user->skin_wiki;
 		
 		if ($skins->num_rows() > 0)
 		{
@@ -1792,11 +1792,11 @@ class User_base extends Controller {
 			
 			$update_data = array('loa' => $status);
 			
-			$update = $this->player->update_player($this->session->userdata('player_id'), $update_data);
+			$update = $this->user->update_user($this->session->userdata('userid'), $update_data);
 			
 			if ($update > 0)
 			{
-				$loa = $this->player->get_last_loa($this->session->userdata('player_id'), TRUE);
+				$loa = $this->user->get_last_loa($this->session->userdata('userid'), TRUE);
 				
 				if ($loa->num_rows() > 0)
 				{
@@ -1804,21 +1804,21 @@ class User_base extends Controller {
 					
 					$loa_array = array('loa_end_date' => now());
 					
-					$this->player->update_loa_record($row->loa_id, $loa_array);
+					$this->user->update_loa_record($row->loa_id, $loa_array);
 				}
 				else
 				{
 					if ($status != 'active')
 					{
 						$loa_array = array(
-							'loa_player' => $this->session->userdata('player_id'),
+							'loa_user' => $this->session->userdata('userid'),
 							'loa_start_date' => now(),
 							'loa_type' => $status,
 							'loa_duration' => $this->input->post('duration', TRUE),
 							'loa_reason' => $this->input->post('reason', TRUE)
 						);
 						
-						$this->player->create_loa_record($loa_array);
+						$this->user->create_loa_record($loa_array);
 					}
 				}
 				
@@ -1869,8 +1869,8 @@ class User_base extends Controller {
 				'content' => ucwords(lang('actions_submit'))),
 		);
 		
-		/* grab the loa status of the player */
-		$loa = $this->player->get_loa($this->session->userdata('player_id'));
+		/* grab the loa status of the user */
+		$loa = $this->user->get_loa($this->session->userdata('userid'));
 		
 		$data['inputs'] = array(
 			'reason' => array(
@@ -1930,12 +1930,12 @@ class User_base extends Controller {
 				
 				/* set who the email is coming from */
 				$from_name = $this->char->get_character_name($data['nominate'], TRUE, TRUE);
-				$from_email = $this->player->get_email_address('character', $data['nominate']);
+				$from_email = $this->user->get_email_address('character', $data['nominate']);
 				
 				if ($data['cat'] == 'ooc')
 				{
-					$player = $this->player->get_player($data['receive']);
-					$to_name = (empty($player->name)) ? $player->email : $player->name;
+					$user = $this->user->get_user($data['receive']);
+					$to_name = (empty($user->name)) ? $user->email : $user->name;
 				}
 				else
 				{
@@ -1967,7 +1967,7 @@ class User_base extends Controller {
 				$message = $this->parser->parse($em_loc, $email_data, TRUE);
 				
 				/* make a string of email addresses */
-				$to = implode(',', $this->player->get_emails_with_access('user/nominate', 2));
+				$to = implode(',', $this->user->get_emails_with_access('user/nominate', 2));
 				
 				/* set the parameters for sending the email */
 				$this->email->from($from_email, $from_name);
@@ -1983,7 +1983,7 @@ class User_base extends Controller {
 				
 				/* set who the email is coming from */
 				$from_name = $this->char->get_character_name($data['requestor'], TRUE, TRUE);
-				$from_email = $this->player->get_email_address('character', $data['requestor']);
+				$from_email = $this->user->get_email_address('character', $data['requestor']);
 				
 				/* set the content */
 				$content = sprintf(
@@ -2007,7 +2007,7 @@ class User_base extends Controller {
 				$message = $this->parser->parse($em_loc, $email_data, TRUE);
 				
 				/* make a string of email addresses */
-				$to = implode(',', $this->player->get_gm_emails());
+				$to = implode(',', $this->user->get_gm_emails());
 				
 				/* set the parameters for sending the email */
 				$this->email->from($from_email, $from_name);

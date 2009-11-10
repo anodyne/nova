@@ -38,7 +38,7 @@ class Sim_base extends Controller {
 		
 		/* load the models */
 		$this->load->model('characters_model', 'char');
-		$this->load->model('players_model', 'player');
+		$this->load->model('users_model', 'user');
 		
 		/* check to see if they are logged in */
 		$this->auth->is_logged_in();
@@ -86,7 +86,7 @@ class Sim_base extends Controller {
 		$this->template->write('nav_sub', $this->menu->build('sub', 'sim'), TRUE);
 		$this->template->write('title', $this->options['sim_name'] . ' :: ');
 		
-		if ($this->session->userdata('player_id') !== FALSE)
+		if ($this->auth->is_logged_in())
 		{
 			/* create the user panels */
 			$this->template->write('panel_1', $this->user_panel->panel_1(), TRUE);
@@ -211,7 +211,7 @@ class Sim_base extends Controller {
 						$data['awardees'][$i]['reason'] = $item->awardrec_reason;
 						
 						switch ($award_row->award_cat)
-						{ /* determine whether the player name or character name should be displayed */
+						{ /* determine whether the user name or character name should be displayed */
 							case 'both':
 								$data['awardees'][$i]['person'] = $this->char->get_character_name($item->awardrec_character);
 								break;
@@ -221,7 +221,7 @@ class Sim_base extends Controller {
 								break;
 								
 							case 'ooc':
-								$data['awardees'][$i]['person'] = $this->player->get_player_name($item->awardrec_player);
+								$data['awardees'][$i]['person'] = $this->user->get_user_name($item->awardrec_user);
 								break;
 						}
 						
@@ -1171,9 +1171,9 @@ class Sim_base extends Controller {
 		$days = date('t');
 
 		/* run the methods */
-		$data['players'] = array(
-			'current' => $this->player->count_players('current', $this_month, $last_month),
-			'previous' => $this->player->count_players('previous', $this_month, $last_month)
+		$data['users'] = array(
+			'current' => $this->user->count_users('current', $this_month, $last_month),
+			'previous' => $this->user->count_users('previous', $this_month, $last_month)
 		);
 		
 		$data['characters'] = array(
@@ -1202,18 +1202,18 @@ class Sim_base extends Controller {
 		);
 		
 		$data['avg_posts'] = array(
-			'current' => ($data['posts']['current'] > 0) ? round($data['posts']['current'] / $data['players']['current'], 2) : 0,
-			'previous' => ($data['posts']['previous'] > 0) ? round($data['posts']['previous'] / $data['players']['previous'], 2) : 0
+			'current' => ($data['posts']['current'] > 0) ? round($data['posts']['current'] / $data['users']['current'], 2) : 0,
+			'previous' => ($data['posts']['previous'] > 0) ? round($data['posts']['previous'] / $data['users']['previous'], 2) : 0
 		);
 		
 		$data['avg_logs'] = array(
-			'current' => ($data['logs']['current'] > 0) ? round($data['logs']['current'] / $data['players']['current'], 2) : 0,
-			'previous' => ($data['logs']['previous'] > 0) ? round($data['logs']['previous'] / $data['players']['previous'], 2) : 0
+			'current' => ($data['logs']['current'] > 0) ? round($data['logs']['current'] / $data['users']['current'], 2) : 0,
+			'previous' => ($data['logs']['previous'] > 0) ? round($data['logs']['previous'] / $data['users']['previous'], 2) : 0
 		);
 		
 		$data['avg_totals'] = array(
-			'current' => ($data['post_totals']['current'] > 0) ? round($data['post_totals']['current'] / $data['players']['current'], 2) : 0,
-			'previous' => ($data['post_totals']['previous'] > 0) ? round($data['post_totals']['previous'] / $data['players']['previous'], 2) : 0
+			'current' => ($data['post_totals']['current'] > 0) ? round($data['post_totals']['current'] / $data['users']['current'], 2) : 0,
+			'previous' => ($data['post_totals']['previous'] > 0) ? round($data['post_totals']['previous'] / $data['users']['previous'], 2) : 0
 		);
 		
 		$data['pace'] = array(
@@ -1226,16 +1226,16 @@ class Sim_base extends Controller {
 		$data['header'] = $title;
 		
 		$data['label'] = array(
-			'avgentries' => lang('abbr_avg') .' '. ucwords(lang('labels_entries') .' / '. lang('global_player')),
-			'avglogs' => lang('abbr_avg') .' '. ucwords(lang('global_personallogs') .' / '. lang('global_player')),
-			'avgposts' => lang('abbr_avg') .' '. ucwords(lang('global_missionposts') .' / '. lang('global_player')),
+			'avgentries' => lang('abbr_avg') .' '. ucwords(lang('labels_entries') .' / '. lang('global_user')),
+			'avglogs' => lang('abbr_avg') .' '. ucwords(lang('global_personallogs') .' / '. lang('global_user')),
+			'avgposts' => lang('abbr_avg') .' '. ucwords(lang('global_missionposts') .' / '. lang('global_user')),
 			'lastmonth' => ucwords(lang('order_last') .' '. lang('time_month')),
 			'logs' => ucwords(lang('global_personallogs')),
 			'npcs' => lang('abbr_npcs'),
 			'pacelogs' => ucwords(lang('global_personallogs') .' '. lang('labels_pace')),
 			'paceposts' => ucwords(lang('global_missionposts') .' '. lang('labels_pace')),
 			'pacetotal' => ucwords(lang('labels_totals') .' '. lang('labels_pace')),
-			'players' => ucfirst(lang('global_players')),
+			'users' => ucfirst(lang('global_users')),
 			'playing_chars' => ucwords(lang('status_playing') .' '. lang('global_characters')),
 			'posts' => ucwords(lang('global_missionposts')),
 			'statsavg' => lang('text_stats_avg'),
@@ -1421,13 +1421,13 @@ class Sim_base extends Controller {
 		/* load the model */
 		$this->load->model('personallogs_model', 'logs');
 		
-		if ($this->session->userdata('player_id') !== FALSE && isset($_POST['submit']))
+		if ($this->session->userdata('userid') !== FALSE && isset($_POST['submit']))
 		{
 			$comment_text = $this->input->post('comment_text');
 			
 			if (!empty($comment_text))
 			{
-				$status = $this->player->checking_moderation('log_comment', $this->session->userdata('player_id'));
+				$status = $this->user->checking_moderation('log_comment', $this->session->userdata('userid'));
 				
 				/* build the insert array */
 				$insert = array(
@@ -1435,7 +1435,7 @@ class Sim_base extends Controller {
 					'lcomment_log' => $id,
 					'lcomment_date' => now(),
 					'lcomment_author_character' => $this->session->userdata('main_char'),
-					'lcomment_author_player' => $this->session->userdata('player_id'),
+					'lcomment_author_user' => $this->session->userdata('userid'),
 					'lcomment_status' => $status
 				);
 				
@@ -1467,11 +1467,11 @@ class Sim_base extends Controller {
 					}
 					else
 					{
-						/* get the player id */
-						$player = $this->player->get_player_id($this->logs->get_log_author($id));
+						/* get the user id */
+						$user = $this->user->get_user_id($this->logs->get_log_author($id));
 						
 						/* get the author's preference */
-						$pref = $this->player->get_pref('email_new_log_comments', $player);
+						$pref = $this->user->get_pref('email_new_log_comments', $user);
 						
 						if ($pref == 'y')
 						{
@@ -1540,7 +1540,7 @@ class Sim_base extends Controller {
 			
 			/* determine if they can edit the log */
 			if ($this->auth->is_logged_in() === TRUE && ( ($this->auth->get_access_level('manage/logs') == 2) ||
-				($this->auth->get_access_level('manage/logs') == 1 && $this->session->userdata('player_id') == $logs->log_author_player)))
+				($this->auth->get_access_level('manage/logs') == 1 && $this->session->userdata('userid') == $logs->log_author_user)))
 			{
 				$data['edit_valid'] = TRUE;
 			}
@@ -1633,20 +1633,20 @@ class Sim_base extends Controller {
 		$this->load->model('posts_model', 'posts');
 		$this->load->model('missions_model', 'mis');
 		
-		if ($this->session->userdata('player_id') !== FALSE && isset($_POST['submit']))
+		if ($this->session->userdata('userid') !== FALSE && isset($_POST['submit']))
 		{
 			$comment_text = $this->input->post('comment_text');
 			
 			if (!empty($comment_text))
 			{
-				$status = $this->player->checking_moderation('post_comment', $this->session->userdata('player_id'));
+				$status = $this->user->checking_moderation('post_comment', $this->session->userdata('userid'));
 				
 				/* build the insert array */
 				$insert = array(
 					'pcomment_content' => $comment_text,
 					'pcomment_post' => $id,
 					'pcomment_date' => now(),
-					'pcomment_author_player' => $this->session->userdata('player_id'),
+					'pcomment_author_user' => $this->session->userdata('userid'),
 					'pcomment_author_character' => $this->session->userdata('main_char'),
 					'pcomment_status' => $status
 				);
@@ -1826,9 +1826,9 @@ class Sim_base extends Controller {
 		{
 			$data['valid'] = array();
 			
-			$players = explode(',', $row->post_authors_players);
+			$users = explode(',', $row->post_authors_users);
 			
-			if (in_array($this->session->userdata('player_id'), $players))
+			if (in_array($this->session->userdata('userid'), $users))
 			{
 				$data['valid'][] = TRUE;
 			}
@@ -1888,8 +1888,8 @@ class Sim_base extends Controller {
 				/* run the methods */
 				$row = $this->logs->get_log($data['log']);
 				$name = $this->char->get_character_name($data['author']);
-				$from = $this->player->get_email_address('character', $data['author']);
-				$to = $this->player->get_email_address('character', $row->log_author);
+				$from = $this->user->get_email_address('character', $data['author']);
+				$to = $this->user->get_email_address('character', $row->log_author);
 				
 				/* set the content */	
 				$content = sprintf(
@@ -1926,8 +1926,8 @@ class Sim_base extends Controller {
 				/* run the methods */
 				$row = $this->logs->get_log($data['log']);
 				$name = $this->char->get_character_name($data['author']);
-				$from = $this->player->get_email_address('character', $data['author']);
-				$to = implode(',', $this->player->get_emails_with_access('manage/comments'));
+				$from = $this->user->get_email_address('character', $data['author']);
+				$to = implode(',', $this->user->get_emails_with_access('manage/comments'));
 				
 				/* set the content */	
 				$content = sprintf(
@@ -1968,18 +1968,18 @@ class Sim_base extends Controller {
 				
 				/* get who the comment is from */
 				$name = $this->char->get_character_name($data['author']);
-				$from = $this->player->get_email_address('character', $data['author']);
+				$from = $this->user->get_email_address('character', $data['author']);
 				
 				/* get the authors' email addresses */
 				$authors = $this->posts->get_author_emails($data['post']);
 				
 				foreach ($authors as $key => $value)
 				{
-					/* get the player id */
-					$player = $this->player->get_player_id_from_email($value);
+					/* get the user id */
+					$user = $this->user->get_user_id_from_email($value);
 					
 					/* get the author's preference */
-					$pref = $this->player->get_pref('email_new_post_comments', $player);
+					$pref = $this->user->get_pref('email_new_post_comments', $user);
 					
 					if ($pref == 'n' || $pref == '')
 					{
@@ -2025,8 +2025,8 @@ class Sim_base extends Controller {
 				/* run the methods */
 				$row = $this->posts->get_post($data['post']);
 				$name = $this->char->get_character_name($data['author']);
-				$from = $this->player->get_email_address('character', $data['author']);
-				$to = implode(',', $this->player->get_emails_with_access('manage/comments'));
+				$from = $this->user->get_email_address('character', $data['author']);
+				$to = implode(',', $this->user->get_emails_with_access('manage/comments'));
 				
 				/* set the content */	
 				$content = sprintf(
@@ -2093,7 +2093,7 @@ class Sim_base extends Controller {
 				);
 				
 				/* get the game masters email addresses */
-				$gm = $this->player->get_gm_emails();
+				$gm = $this->user->get_gm_emails();
 				
 				/* set the TO variable */
 				$to = implode(',', $gm);

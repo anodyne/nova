@@ -38,7 +38,7 @@ class Write_base extends Controller {
 		
 		/* load the models */
 		$this->load->model('characters_model', 'char');
-		$this->load->model('players_model', 'player');
+		$this->load->model('users_model', 'user');
 		
 		/* check to see if they are logged in */
 		$logged_in = $this->auth->is_logged_in(TRUE);
@@ -136,7 +136,7 @@ class Write_base extends Controller {
 		/* grab the data */
 		$posts_saved = $this->posts->get_saved_posts($this->session->userdata('characters'));
 		$logs_saved = $this->logs->get_saved_logs($this->session->userdata('characters'));
-		$news_saved = $this->news->get_saved_news($this->session->userdata('player_id'));
+		$news_saved = $this->news->get_saved_news($this->session->userdata('userid'));
 		
 		if ($posts_saved->num_rows() > 0)
 		{
@@ -197,7 +197,7 @@ class Write_base extends Controller {
 		/* grab the data */
 		$posts = $this->posts->get_character_posts($this->session->userdata('characters'), 5);
 		$logs = $this->logs->get_character_logs($this->session->userdata('characters'), 5);
-		$news = $this->news->get_player_news($this->session->userdata('player_id'), 5);
+		$news = $this->news->get_user_news($this->session->userdata('userid'), 5);
 		
 		if ($posts->num_rows() > 0)
 		{
@@ -252,7 +252,7 @@ class Write_base extends Controller {
 		/* grab the data */		
 		$posts_all = $this->posts->get_post_list('', 'desc', 5);
 		$logs_all = $this->logs->get_log_list(5);
-		$news_all = $this->news->get_news_items(5, $this->session->userdata('player_id'));
+		$news_all = $this->news->get_news_items(5, $this->session->userdata('userid'));
 		
 		if ($posts_all->num_rows() > 0)
 		{
@@ -320,9 +320,9 @@ class Write_base extends Controller {
 			'view_all_posts' => ucwords(lang('actions_viewall') .' '. lang('global_posts') .' '. RARROW),
 			'view_all_logs' => ucwords(lang('actions_viewall') .' '. lang('global_personallogs') .' '. RARROW),
 			'view_all_news' => ucwords(lang('actions_viewall') .' '. lang('global_newsitems') .' '. RARROW),
-			'view_player_logs' => ucwords(lang('actions_viewall') .' '. lang('global_player_poss') .' '. 
+			'view_user_logs' => ucwords(lang('actions_viewall') .' '. lang('global_user_poss') .' '. 
 				lang('global_logs') .' '. RARROW),
-			'view_player_posts' => ucwords(lang('actions_viewall') .' '. lang('global_player_poss') .' '. 
+			'view_user_posts' => ucwords(lang('actions_viewall') .' '. lang('global_user_poss') .' '. 
 				lang('global_posts') .' '. RARROW),
 			'write_log' => ucwords(lang('actions_write') .' '. lang('global_personallog')),
 			'write_news' => ucwords(lang('actions_write') .' '. lang('global_newsitem')),
@@ -396,7 +396,7 @@ class Write_base extends Controller {
 						if ($row !== FALSE)
 						{
 							if ($row->log_status == 'saved' &&
-									$row->log_author_player == $this->session->userdata('player_id'))
+									$row->log_author_user == $this->session->userdata('userid'))
 							{
 								/* delete the log */
 								$delete = $this->logs->delete_log($id);
@@ -441,7 +441,7 @@ class Write_base extends Controller {
 						if ($id !== FALSE)
 						{ /* if there is an ID, it is a previously saved post */
 							$update_array = array(
-								'log_author_player' => $this->session->userdata('player_id'),
+								'log_author_user' => $this->session->userdata('userid'),
 								'log_author_character' => $author,
 								'log_title' => $title,
 								'log_content' => $content,
@@ -482,7 +482,7 @@ class Write_base extends Controller {
 						{
 							/* build the insert array */
 							$insert_array = array(
-								'log_author_player' => $this->session->userdata('player_id'),
+								'log_author_user' => $this->session->userdata('userid'),
 								'log_author_character' => $author,
 								'log_title' => $title,
 								'log_content' => $content,
@@ -535,12 +535,12 @@ class Write_base extends Controller {
 						
 					case 'post':
 						/* check the moderation status */
-						$status = $this->player->checking_moderation('log', $this->session->userdata('player_id'));
+						$status = $this->user->checking_moderation('log', $this->session->userdata('userid'));
 						
 						if ($id !== FALSE)
 						{ /* if there is an ID, it is a previously saved post */
 							$update_array = array(
-								'log_author_player' => $this->session->userdata('player_id'),
+								'log_author_user' => $this->session->userdata('userid'),
 								'log_author_character' => $author,
 								'log_date' => now(),
 								'log_title' => $title,
@@ -556,7 +556,7 @@ class Write_base extends Controller {
 							if ($update > 0)
 							{
 								$array = array('last_post' => now());
-								$this->player->update_player($this->session->userdata('player_id'), $array);
+								$this->user->update_user($this->session->userdata('userid'), $array);
 								$this->char->update_character($author, $array);
 								
 								$message = sprintf(
@@ -604,7 +604,7 @@ class Write_base extends Controller {
 						{
 							/* build the insert array */
 							$insert_array = array(
-								'log_author_player' => $this->session->userdata('player_id'),
+								'log_author_user' => $this->session->userdata('userid'),
 								'log_author_character' => $author,
 								'log_date' => now(),
 								'log_title' => $title,
@@ -620,7 +620,7 @@ class Write_base extends Controller {
 							if ($insert > 0)
 							{
 								$array = array('last_post' => now());
-								$this->player->update_player($this->session->userdata('player_id'), $array);
+								$this->user->update_user($this->session->userdata('userid'), $array);
 								$this->char->update_character($author, $array);
 								
 								$message = sprintf(
@@ -722,7 +722,7 @@ class Write_base extends Controller {
 		
 		if ($row !== FALSE)
 		{
-			if ($row->log_author_player != $this->session->userdata('player_id'))
+			if ($row->log_author_user != $this->session->userdata('userid'))
 			{ /* sorry, if you aren't the author, you're not allowed here */
 				redirect('admin/error/4');
 			}
@@ -881,8 +881,8 @@ class Write_base extends Controller {
 				/* put the authors into an array */
 				$authors_array = explode(',', $authors_list);
 				
-				$players = array();
-				$players[] = $this->sys->get_item('characters', 'charid', $author, 'player');
+				$users = array();
+				$users[] = $this->sys->get_item('characters', 'charid', $author, 'user');
 				
 				foreach ($authors_array as $key => $value)
 				{ /* make sure there aren't any empty values */
@@ -891,18 +891,18 @@ class Write_base extends Controller {
 						unset($authors_array[$key]);
 					}
 					
-					/* get the player ID */
-					$pid = $this->sys->get_item('characters', 'charid', $value, 'player');
+					/* get the user ID */
+					$pid = $this->sys->get_item('characters', 'charid', $value, 'user');
 					
-					/* put the players into an array */
-					$players[] = ($pid !== FALSE) ? $pid : NULL;
+					/* put the users into an array */
+					$users[] = ($pid !== FALSE) ? $pid : NULL;
 				}
 				
-				foreach ($players as $a => $b)
+				foreach ($users as $a => $b)
 				{
 					if (!is_numeric($b) || $b < 1)
 					{
-						unset($players[$a]);
+						unset($users[$a]);
 					}
 				}
 				
@@ -929,7 +929,7 @@ class Write_base extends Controller {
 				
 				/* set the authors string */
 				$authors_string = implode(',', $author_array_final);
-				$players_string = implode(',', $players);
+				$users_string = implode(',', $users);
 				
 				switch ($action)
 				{
@@ -1012,7 +1012,7 @@ class Write_base extends Controller {
 						{ /* if there is an ID, it is a previously saved post */
 							$update_array = array(
 								'post_authors' => $authors_string,
-								'post_authors_players' => $players_string,
+								'post_authors_users' => $users_string,
 								'post_date' => now(),
 								'post_title' => $title,
 								'post_content' => $content,
@@ -1057,7 +1057,7 @@ class Write_base extends Controller {
 							/* build the insert array */
 							$insert_array = array(
 								'post_authors' => $authors_string,
-								'post_authors_players' => $players_string,
+								'post_authors_users' => $users_string,
 								'post_date' => now(),
 								'post_title' => $title,
 								'post_content' => $content,
@@ -1132,13 +1132,13 @@ class Write_base extends Controller {
 						
 					case 'post':
 						/* check the moderation status */
-						$status = $this->player->checking_moderation('post', $authors_string);
+						$status = $this->user->checking_moderation('post', $authors_string);
 						
 						if ($id !== FALSE)
 						{ /* if there is an ID, it is a previously saved post */
 							$update_array = array(
 								'post_authors' => $authors_string,
-								'post_authors_players' => $players_string,
+								'post_authors_users' => $users_string,
 								'post_date' => now(),
 								'post_title' => $title,
 								'post_content' => $content,
@@ -1159,10 +1159,10 @@ class Write_base extends Controller {
 								
 								foreach ($string as $s)
 								{
-									$playerid = $this->char->get_character($s, 'player');
+									$userid = $this->char->get_character($s, 'user');
 									
 									$array = array('last_post' => now());
-									$this->player->update_player($playerid, $array);
+									$this->user->update_user($userid, $array);
 									$this->char->update_character($s, $array);
 								}
 								
@@ -1215,7 +1215,7 @@ class Write_base extends Controller {
 							/* build the insert array */
 							$insert_array = array(
 								'post_authors' => $authors_string,
-								'post_authors_players' => $players_string,
+								'post_authors_users' => $users_string,
 								'post_date' => now(),
 								'post_title' => $title,
 								'post_content' => $content,
@@ -1235,10 +1235,10 @@ class Write_base extends Controller {
 								
 								foreach ($string as $s)
 								{
-									$playerid = $this->char->get_character($s, 'player');
+									$userid = $this->char->get_character($s, 'user');
 									
 									$array = array('last_post' => now());
-									$this->player->update_player($playerid, $array);
+									$this->user->update_user($userid, $array);
 									$this->char->update_character($s, $array);
 								}
 								
@@ -1312,11 +1312,11 @@ class Write_base extends Controller {
 		/* grab all characters based on whether or not the post is saved */
 		if ($id !== FALSE)
 		{
-			$all = $this->char->get_all_characters('player_npc');
+			$all = $this->char->get_all_characters('user_npc');
 		}
 		else
 		{
-			$all = $this->char->get_characters_minus_player($this->session->userdata('player_id'));
+			$all = $this->char->get_characters_minus_user($this->session->userdata('userid'));
 		}
 		
 		/* get the current missions */
@@ -1614,7 +1614,7 @@ class Write_base extends Controller {
 						$row = $news_author->row();
 						
 						if ($row->news_status == 'saved' &&
-								$row->news_author_player == $this->session->userdata('player_id'))
+								$row->news_author_user == $this->session->userdata('userid'))
 						{
 							/* delete the log */
 							$delete = $this->news->delete_news_item($id);
@@ -1659,7 +1659,7 @@ class Write_base extends Controller {
 					if ($id !== FALSE)
 					{ /* if there is an ID, it is a previously saved post */
 						$update_array = array(
-							'news_author_player' => $this->session->userdata('player_id'),
+							'news_author_user' => $this->session->userdata('userid'),
 							'news_author_character' => $this->session->userdata('main_char'),
 							'news_date' => now(),
 							'news_title' => $title,
@@ -1702,7 +1702,7 @@ class Write_base extends Controller {
 					{
 						/* build the insert array */
 						$insert_array = array(
-							'news_author_player' => $this->session->userdata('player_id'),
+							'news_author_user' => $this->session->userdata('userid'),
 							'news_author_character' => $this->session->userdata('main_char'),
 							'news_date' => now(),
 							'news_title' => $title,
@@ -1758,12 +1758,12 @@ class Write_base extends Controller {
 					
 				case 'post':
 					/* check the moderation status */
-					$status = $this->player->checking_moderation('news', $this->session->userdata('player_id'));
+					$status = $this->user->checking_moderation('news', $this->session->userdata('userid'));
 					
 					if ($id !== FALSE)
 					{ /* if there is an ID, it is a previously saved post */
 						$update_array = array(
-							'news_author_player' => $this->session->userdata('player_id'),
+							'news_author_user' => $this->session->userdata('userid'),
 							'news_author_character' => $this->session->userdata('main_char'),
 							'news_date' => now(),
 							'news_title' => $title,
@@ -1825,7 +1825,7 @@ class Write_base extends Controller {
 					{
 						/* build the insert array */
 						$insert_array = array(
-							'news_author_player' => $this->session->userdata('player_id'),
+							'news_author_user' => $this->session->userdata('userid'),
 							'news_author_character' => $this->session->userdata('main_char'),
 							'news_date' => now(),
 							'news_title' => $title,
@@ -1912,7 +1912,7 @@ class Write_base extends Controller {
 		{ /* make sure the info object exists */
 			$row = $info->row();
 			
-			if ($row->news_author_player != $this->session->userdata('player_id'))
+			if ($row->news_author_user != $this->session->userdata('userid'))
 			{ /* sorry, if you aren't the author, you're not allowed here */
 				redirect('admin/error/4');
 			}
@@ -2030,7 +2030,7 @@ class Write_base extends Controller {
 			case 'news':
 				/* set some variables */
 				$from_name = $this->char->get_character_name($data['author'], TRUE, TRUE);
-				$from_email = $this->player->get_email_address('character', $data['author']);
+				$from_email = $this->user->get_email_address('character', $data['author']);
 				$subject = $data['category'] .' - '. $data['title'];
 				
 				/* set the content */
@@ -2053,7 +2053,7 @@ class Write_base extends Controller {
 				$message = $this->parser->parse($em_loc, $email_data, TRUE);
 				
 				/* get the email addresses */
-				$emails = $this->player->get_crew_emails(TRUE, 'email_news_items');
+				$emails = $this->user->get_crew_emails(TRUE, 'email_news_items');
 				
 				/* make a string of email addresses */
 				$to = implode(',', $emails);
@@ -2069,7 +2069,7 @@ class Write_base extends Controller {
 			case 'news_pending':
 				/* set some variables */
 				$from_name = $this->char->get_character_name($data['author'], TRUE, TRUE);
-				$from_email = $this->player->get_email_address('character', $data['author']);
+				$from_email = $this->user->get_email_address('character', $data['author']);
 				$subject = $data['category'] .' - '. $data['title'];
 
 				/* set the content */
@@ -2097,10 +2097,10 @@ class Write_base extends Controller {
 				$message = $this->parser->parse($em_loc, $email_data, TRUE);
 
 				/* get the email addresses */
-				$emails = $this->player->get_crew_emails(TRUE, 'email_news_items');
+				$emails = $this->user->get_crew_emails(TRUE, 'email_news_items');
 
 				/* make a string of email addresses */
-				$to = implode(',', $this->player->get_emails_with_access('manage/news', 2));
+				$to = implode(',', $this->user->get_emails_with_access('manage/news', 2));
 
 				/* set the parameters for sending the email */
 				$this->email->from($from_email, $from_name);
@@ -2113,7 +2113,7 @@ class Write_base extends Controller {
 			case 'log':
 				/* set some variables */
 				$from_name = $this->char->get_character_name($data['author'], TRUE, TRUE);
-				$from_email = $this->player->get_email_address('character', $data['author']);
+				$from_email = $this->user->get_email_address('character', $data['author']);
 				$subject = $from_name ."'s ". lang('email_subject_personal_log') ." - ". $data['title'];
 				
 				/* set the content */
@@ -2136,7 +2136,7 @@ class Write_base extends Controller {
 				$message = $this->parser->parse($em_loc, $email_data, TRUE);
 				
 				/* get the email addresses */
-				$emails = $this->player->get_crew_emails(TRUE, 'email_personal_logs');
+				$emails = $this->user->get_crew_emails(TRUE, 'email_personal_logs');
 				
 				/* make a string of email addresses */
 				$to = implode(',', $emails);
@@ -2152,7 +2152,7 @@ class Write_base extends Controller {
 			case 'log_pending':
 				/* set some variables */
 				$from_name = $this->char->get_character_name($data['author'], TRUE, TRUE);
-				$from_email = $this->player->get_email_address('character', $data['author']);
+				$from_email = $this->user->get_email_address('character', $data['author']);
 				$subject = $from_name ."'s ". lang('email_subject_personal_log') ." - ". $data['title'];
 
 				/* set the content */
@@ -2181,7 +2181,7 @@ class Write_base extends Controller {
 				$message = $this->parser->parse($em_loc, $email_data, TRUE);
 
 				/* get the email addresses */
-				$to = implode(',', $this->player->get_emails_with_access('manage/logs', 2));
+				$to = implode(',', $this->user->get_emails_with_access('manage/logs', 2));
 
 				/* set the parameters for sending the email */
 				$this->email->from($from_email, $from_name);
@@ -2213,7 +2213,7 @@ class Write_base extends Controller {
 				
 				/* set who the email is coming from */
 				$from_name = $this->char->get_character_name($my_chars[0], TRUE, TRUE);
-				$from_email = $this->player->get_email_address('character', $my_chars[0]);
+				$from_email = $this->user->get_email_address('character', $my_chars[0]);
 				
 				/* set the content */
 				$content = sprintf(
@@ -2237,7 +2237,7 @@ class Write_base extends Controller {
 				$message = $this->parser->parse($em_loc, $email_data, TRUE);
 				
 				/* get the email addresses */
-				$emails = $this->player->get_crew_emails(TRUE, 'email_mission_posts');
+				$emails = $this->user->get_crew_emails(TRUE, 'email_mission_posts');
 				
 				/* make a string of email addresses */
 				$to = implode(',', $emails);
@@ -2268,7 +2268,7 @@ class Write_base extends Controller {
 
 				/* set who the email is coming from */
 				$from_name = $this->char->get_character_name($my_chars[0], TRUE, TRUE);
-				$from_email = $this->player->get_email_address('character', $my_chars[0]);
+				$from_email = $this->user->get_email_address('character', $my_chars[0]);
 
 				/* set the content */
 				$content = sprintf(
@@ -2293,7 +2293,7 @@ class Write_base extends Controller {
 
 				foreach ($emails as $key => $value)
 				{
-					$pref = $this->player->get_pref('email_mission_posts_delete', $key);
+					$pref = $this->user->get_pref('email_mission_posts_delete', $key);
 
 					if ($pref == 'y')
 					{
@@ -2320,7 +2320,7 @@ class Write_base extends Controller {
 				$chars = explode(',', $data['authors']);
 				
 				$from_name = $this->char->get_character_name($chars[0], TRUE, TRUE);
-				$from_email = $this->player->get_email_address('character', $chars[0]);
+				$from_email = $this->user->get_email_address('character', $chars[0]);
 				$subject = $data['mission'] ." - ". $data['title'];
 
 				/* set the content */
@@ -2349,7 +2349,7 @@ class Write_base extends Controller {
 				$message = $this->parser->parse($em_loc, $email_data, TRUE);
 
 				/* get the email addresses */
-				$to = implode(',', $this->player->get_emails_with_access('manage/posts', 2));
+				$to = implode(',', $this->user->get_emails_with_access('manage/posts', 2));
 
 				/* set the parameters for sending the email */
 				$this->email->from($from_email, $from_name);
@@ -2381,7 +2381,7 @@ class Write_base extends Controller {
 				
 				/* set who the email is coming from */
 				$from_name = $this->char->get_character_name($my_chars[0], TRUE, TRUE);
-				$from_email = $this->player->get_email_address('character', $my_chars[0]);
+				$from_email = $this->user->get_email_address('character', $my_chars[0]);
 				
 				/* set the content */
 				$content = sprintf(
@@ -2411,7 +2411,7 @@ class Write_base extends Controller {
 				
 				foreach ($emails as $key => $value)
 				{
-					$pref = $this->player->get_pref('email_mission_posts_save', $key);
+					$pref = $this->user->get_pref('email_mission_posts_save', $key);
 					
 					if ($pref == 'y')
 					{

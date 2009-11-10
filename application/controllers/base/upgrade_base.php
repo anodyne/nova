@@ -804,7 +804,7 @@ class Upgrade_base extends Controller {
 					
 					/* add the award_display column */
 					$add = array(
-						'news_author_player' => array(
+						'news_author_user' => array(
 							'type' => 'INT',
 							'constraint' => 5),
 						'news_tags' => array(
@@ -901,7 +901,7 @@ class Upgrade_base extends Controller {
 					
 					/* add the award_display column */
 					$add = array(
-						'log_author_player' => array(
+						'log_author_user' => array(
 							'type' => 'INT',
 							'constraint' => 5),
 						'log_tags' => array(
@@ -1015,7 +1015,7 @@ class Upgrade_base extends Controller {
 					
 					/* add the award_display column */
 					$add = array(
-						'post_authors_players' => array(
+						'post_authors_users' => array(
 							'type' => 'TEXT'),
 						'post_tags' => array(
 							'type' => 'TEXT'),
@@ -1280,15 +1280,15 @@ class Upgrade_base extends Controller {
 				
 			case 13:
 				/*
-				 * CHARACTERS & PLAYERS
+				 * CHARACTERS & USERS
 				 */
 				$this->load->model('characters_model', 'char');
-				$this->load->model('players_model', 'player');
+				$this->load->model('users_model', 'user');
 				$this->load->helper('utility');
 				
 				$crew = $this->db->query('SELECT * FROM sms_crew');
 				
-				$playerarray = array();
+				$userarray = array();
 					
 				/* get the crew */
 				if ($crew->num_rows() > 0)
@@ -1317,22 +1317,22 @@ class Upgrade_base extends Controller {
 						if ($c->crewType != 'npc')
 						{
 							/* set the values (newer items will overwrite older items) */
-							$players[$c->email]['name'] = $c->realName;
-							$players[$c->email]['password'] = $password;
-							$players[$c->email]['email'] = $c->email;
-							$players[$c->email]['leave_date'] = $c->leaveDate;
-							$players[$c->email]['status'] = $c->crewType;
-							$players[$c->email]['moderate_posts'] = $c->moderatePosts;
-							$players[$c->email]['moderate_logs'] = $c->moderateLogs;
-							$players[$c->email]['moderate_news'] = $c->moderateNews;
-							$players[$c->email]['password_reset'] = 1;
-							$players[$c->email]['access_role'] = ($c->email == $email) ? 1 : 4;
-							$players[$c->email]['is_sysadmin'] = ($c->email == $email) ? 'y' : 'n';
-							$players[$c->email]['is_game_master'] = ($c->email == $email) ? 'y' : 'n';
+							$users[$c->email]['name'] = $c->realName;
+							$users[$c->email]['password'] = $password;
+							$users[$c->email]['email'] = $c->email;
+							$users[$c->email]['leave_date'] = $c->leaveDate;
+							$users[$c->email]['status'] = $c->crewType;
+							$users[$c->email]['moderate_posts'] = $c->moderatePosts;
+							$users[$c->email]['moderate_logs'] = $c->moderateLogs;
+							$users[$c->email]['moderate_news'] = $c->moderateNews;
+							$users[$c->email]['password_reset'] = 1;
+							$users[$c->email]['access_role'] = ($c->email == $email) ? 1 : 4;
+							$users[$c->email]['is_sysadmin'] = ($c->email == $email) ? 'y' : 'n';
+							$users[$c->email]['is_game_master'] = ($c->email == $email) ? 'y' : 'n';
 							
-							if (!isset($characters[$c->email]['player']['join_date']))
+							if (!isset($characters[$c->email]['user']['join_date']))
 							{ /* we want to take the first join date and nothing else */
-								$players[$c->email]['join_date'] = $c->joinDate;
+								$users[$c->email]['join_date'] = $c->joinDate;
 							}
 						}
 					}
@@ -1340,18 +1340,18 @@ class Upgrade_base extends Controller {
 					/* pause the script */
 					sleep(2);
 					
-					foreach ($players as $email => $p)
+					foreach ($users as $email => $p)
 					{
-						/* create the player */
-						$this->player->create_player($p);
+						/* create the user */
+						$this->user->create_user($p);
 						
 						/* grab the insert id */
 						$pid = $this->db->insert_id();
 						
-						/* create the player prefs */
-						$this->player->create_player_prefs($pid);
+						/* create the user prefs */
+						$this->user->create_user_prefs($pid);
 						
-						/* keep track of the player ids */
+						/* keep track of the user ids */
 						$charIDs[$email] = $pid;
 					}
 					
@@ -1363,7 +1363,7 @@ class Upgrade_base extends Controller {
 						$characters[$c->email][] = array(
 							'basic' => array(
 								'charid' => $c->crewid,
-								'player' => $charIDs[$c->email],
+								'user' => $charIDs[$c->email],
 								'first_name' => $c->firstName,
 								'middle_name' => $c->middleName,
 								'last_name' => $c->lastName,
@@ -1506,7 +1506,7 @@ class Upgrade_base extends Controller {
 				 */
 				$this->load->model('awards_model', 'awards');
 				$this->load->model('characters_model', 'char');
-				$this->load->model('players_model', 'player');
+				$this->load->model('users_model', 'user');
 				$this->load->model('news_model', 'news');
 				$this->load->model('personallogs_model', 'logs');
 				$this->load->model('posts_model', 'posts');
@@ -1516,7 +1516,7 @@ class Upgrade_base extends Controller {
 				/* update the my links id numbers */
 				$this->sys->update_my_links('');
 				
-				/* update all players skin and rank defaults */
+				/* update all users skin and rank defaults */
 				$defaults = array(
 					'skin_main'			=> $this->sys->get_skinsec_default('main'),
 					'skin_admin'		=> $this->sys->get_skinsec_default('admin'),
@@ -1524,8 +1524,8 @@ class Upgrade_base extends Controller {
 					'display_rank'		=> $this->ranks->get_rank_default()
 				);
 				
-				/* do the update to all players */
-				$this->player->update_all_players($defaults);
+				/* do the update to all users */
+				$this->user->update_all_users($defaults);
 				
 				if (phpversion() >= 5)
 				{
@@ -1568,14 +1568,14 @@ class Upgrade_base extends Controller {
 				{
 					foreach ($crew->result() as $c)
 					{
-						if (!empty($c->player))
+						if (!empty($c->user))
 						{
 							/* update the news items */
-							$news = array('news_author_player', $c->player);
+							$news = array('news_author_user', $c->user);
 							$this->news->update_news_item($c->crewid, $news, 'news_author_character');
 							
 							/* update the personal logs */
-							$log = array('log_author_player', $c->player);
+							$log = array('log_author_user', $c->user);
 							$this->logs->update_log($c->crewid, $log, 'log_author_character');
 						}
 						
@@ -1627,21 +1627,21 @@ class Upgrade_base extends Controller {
 						
 						foreach ($authors as $a)
 						{
-							/* get the player id */
-							$player = $this->sys->get_item('characters', 'charid', $a, 'player');
+							/* get the user id */
+							$user = $this->sys->get_item('characters', 'charid', $a, 'user');
 							
-							/* if the player variable isn't empty and it isn't in the array already */
-							if ($player !== FALSE && !in_array($player, $array))
+							/* if the user variable isn't empty and it isn't in the array already */
+							if ($user !== FALSE && !in_array($user, $array))
 							{
-								$array[] = $player;
+								$array[] = $user;
 							}
 						}
 						
 						/* create a string from the array */
-						$players = implode(',', $array);
+						$users = implode(',', $array);
 						
 						/* update the post */
-						$this->posts->update_post($p->post_id, array('post_authors_players' => $players));
+						$this->posts->update_post($p->post_id, array('post_authors_users' => $users));
 					}
 				}
 				

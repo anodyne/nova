@@ -38,7 +38,7 @@ class Personnel_base extends Controller {
 		
 		/* load the models */
 		$this->load->model('characters_model', 'char');
-		$this->load->model('players_model', 'player');
+		$this->load->model('users_model', 'user');
 		
 		/* check to see if they are logged in */
 		$this->auth->is_logged_in();
@@ -82,7 +82,7 @@ class Personnel_base extends Controller {
 		$this->template->write('nav_sub', $this->menu->build('sub', 'personnel'), TRUE);
 		$this->template->write('title', $this->options['sim_name'] . ' :: ');
 		
-		if ($this->session->userdata('player_id') !== FALSE)
+		if ($this->session->userdata('userid') !== FALSE)
 		{
 			/* create the user panels */
 			$this->template->write('panel_1', $this->user_panel->panel_1(), TRUE);
@@ -160,8 +160,8 @@ class Personnel_base extends Controller {
 									$c = 1;
 									foreach ($characters->result() as $char)
 									{
-										/* get player info */
-										$player = $this->player->get_user_details($char->player);
+										/* get user info */
+										$user = $this->user->get_user_details($char->user);
 										
 										/* grab the rank data we need */
 										$rankdata = $this->ranks->get_rank($char->rank, array('rank_name', 'rank_image'));
@@ -178,10 +178,10 @@ class Personnel_base extends Controller {
 										/* set the color */
 										$color = '';
 										
-										if ($char->player > 0)
+										if ($char->user > 0)
 										{
-											$color = ($this->player->get_loa($char->player) == 'loa') ? '_loa' : $color;
-											$color = ($this->player->get_loa($char->player) == 'eloa') ? '_eloa' : $color;
+											$color = ($this->user->get_loa($char->user) == 'loa') ? '_loa' : $color;
+											$color = ($this->user->get_loa($char->user) == 'eloa') ? '_eloa' : $color;
 										}
 										
 										$color = ($char->crew_type == 'npc') ? '_npc' : $color;
@@ -197,7 +197,7 @@ class Personnel_base extends Controller {
 										/* get the character name and rank */
 										$name = $this->char->get_character_name($char->charid, TRUE);
 										
-										if ($char->crew_type == 'active' && empty($char->player))
+										if ($char->crew_type == 'active' && empty($char->user))
 										{
 											/* don't do anything */
 										}
@@ -266,10 +266,10 @@ class Personnel_base extends Controller {
 								/* set the color */
 								$color = '';
 								
-								if ($char->player > 0)
+								if ($char->user > 0)
 								{
-									$color = ($this->player->get_loa($char->player) == 'loa') ? '_loa' : $color;
-									$color = ($this->player->get_loa($char->player) == 'eloa') ? '_eloa' : $color;
+									$color = ($this->user->get_loa($char->user) == 'loa') ? '_loa' : $color;
+									$color = ($this->user->get_loa($char->user) == 'eloa') ? '_eloa' : $color;
 								}
 								
 								$color = ($char->crew_type == 'inactive') ? '' : $color;
@@ -286,7 +286,7 @@ class Personnel_base extends Controller {
 								/* get the character name and rank */
 								$name = $this->char->get_character_name($char->charid, TRUE);
 								
-								if ($char->crew_type == 'active' && empty($char->player))
+								if ($char->crew_type == 'active' && empty($char->user))
 								{
 									/* don't do anything */
 								}
@@ -364,12 +364,12 @@ class Personnel_base extends Controller {
 		{
 			foreach ($query->result() as $item)
 			{
-				$loa = (!empty($item->player)) ? $this->player->get_loa($item->player) : 0;
+				$loa = (!empty($item->user)) ? $this->user->get_loa($item->user) : 0;
 				
 				/* set the color */
 				$color = '';
 				
-				if ($item->player > 0)
+				if ($item->user > 0)
 				{
 					$color = ($loa == 'loa') ? '_loa' : $color;
 					$color = ($loa == 'eloa') ? '_eloa' : $color;
@@ -392,7 +392,7 @@ class Personnel_base extends Controller {
 						'class' => 'image')
 				);
 				
-				if ($item->crew_type == 'active' && empty($item->player))
+				if ($item->crew_type == 'active' && empty($item->user))
 				{
 					/* don't do anything */
 				}
@@ -503,7 +503,7 @@ class Personnel_base extends Controller {
 			$data['character']['rank'] = $character->rank;
 			$data['character']['position_1'] = $character->position_1;
 			$data['character']['position_2'] = $character->position_2;
-			$data['character']['player'] = $character->player;
+			$data['character']['user'] = $character->user;
 			
 			if ($character->images > '')
 			{ /* make sure there are actually images */
@@ -646,7 +646,7 @@ class Personnel_base extends Controller {
 				}
 				elseif ($this->auth->get_access_level('characters/bio') == 2)
 				{
-					$characters = $this->char->get_player_characters($this->session->userdata('player_id'), '', 'array');
+					$characters = $this->char->get_user_characters($this->session->userdata('userid'), '', 'array');
 					
 					if (in_array($id, $characters) || $character->crew_type == 'npc')
 					{
@@ -659,7 +659,7 @@ class Personnel_base extends Controller {
 				}
 				elseif ($this->auth->get_access_level('characters/bio') == 1)
 				{
-					$characters = $this->char->get_player_characters($this->session->userdata('player_id'), '', 'array');
+					$characters = $this->char->get_user_characters($this->session->userdata('userid'), '', 'array');
 					
 					if (in_array($id, $characters))
 					{
@@ -689,7 +689,7 @@ class Personnel_base extends Controller {
 			'view_all_posts' => ucwords(lang('actions_viewall') .' '. lang('global_posts') .' '. RARROW),
 			'view_all_logs' => ucwords(lang('actions_viewall') .' '. lang('global_personallogs') .' '. RARROW),
 			'view_all_awards' => ucwords(lang('actions_viewall') .' '. lang('global_awards') .' '. RARROW),
-			'view_player' => ucwords(lang('actions_view') .' '. lang('global_player') .' '.
+			'view_user' => ucwords(lang('actions_view') .' '. lang('global_user') .' '.
 				lang('labels_info') .' '. RARROW),
 		);
 		
@@ -705,12 +705,12 @@ class Personnel_base extends Controller {
 		$this->template->render();
 	}
 	
-	function player()
+	function user()
 	{
 		$this->auth->is_logged_in(TRUE);
 		
 		/* set the variables */
-		$player = $this->uri->segment(3, FALSE, TRUE);
+		$user = $this->uri->segment(3, FALSE, TRUE);
 		$js_data['tab'] = $this->uri->segment(4, 0, TRUE);
 		
 		/* load the resources */
@@ -721,13 +721,13 @@ class Personnel_base extends Controller {
 		$this->load->model('missions_model', 'mis');
 		
 		/* run the methods */
-		$info = $this->player->get_user_details($player);
+		$info = $this->user->get_user_details($user);
 		$charinfo = array(
-			'active' => $this->char->get_player_characters($player),
-			'inactive' => $this->char->get_player_characters($player, 'inactive'),
-			'npcs' => $this->char->get_player_characters($player, 'npc')
+			'active' => $this->char->get_user_characters($user),
+			'inactive' => $this->char->get_user_characters($user, 'inactive'),
+			'npcs' => $this->char->get_user_characters($user, 'npc')
 		);
-		$rankhistory = $this->char->get_rank_history($player);
+		$rankhistory = $this->char->get_rank_history($user);
 		
 		/* set the datestring */
 		$datestring = $this->options['date_format'];
@@ -759,8 +759,8 @@ class Personnel_base extends Controller {
 			}
 			
 			/* set the data for the view */
-			$data['header'] = ucwords(lang('global_player') .' '. lang('labels_info')) .' - '. $row->name;
-			$data['player_id'] = $player;
+			$data['header'] = ucwords(lang('global_user') .' '. lang('labels_info')) .' - '. $row->name;
+			$data['userid'] = $user;
 			
 			/*
 			|---------------------------------------------------------------
@@ -861,8 +861,8 @@ class Personnel_base extends Controller {
 				$data['last_login'] = mdate($datestring, gmt_to_local($row->last_login, $this->timezone, $this->dst));
 			}
 			
-			/* get the IDs of the characters that player has */
-			$characters = $this->char->get_player_characters($player, '', 'array');
+			/* get the IDs of the characters that user has */
+			$characters = $this->char->get_user_characters($user, '', 'array');
 			
 			/* post and log counts */
 			$data['post_count'] = $this->posts->count_character_posts($characters);
@@ -923,7 +923,7 @@ class Personnel_base extends Controller {
 			|---------------------------------------------------------------
 			*/
 			
-			$awards = $this->awards->get_player_awards($player);
+			$awards = $this->awards->get_user_awards($user);
 			
 			if ($awards->num_rows() > 0)
 			{
@@ -941,13 +941,13 @@ class Personnel_base extends Controller {
 			}
 			
 			/* set the title */
-			$this->template->write('title', $this->msgs->get_message('personnel_player_title') . $row->name);
+			$this->template->write('title', $this->msgs->get_message('personnel_user_title') . $row->name);
 		}
 		else
 		{
 			/* set the header */
-			$data['header'] = lang('error_title_invalid_player');
-			$data['msg_error'] = lang('error_msg_invalid_player');
+			$data['header'] = lang('error_title_invalid_user');
+			$data['msg_error'] = lang('error_msg_invalid_user');
 			
 			/* set the title */
 			$this->template->write('title', lang('error_pagetitle'));
@@ -956,7 +956,7 @@ class Personnel_base extends Controller {
 		if ($this->auth->is_logged_in() === TRUE)
 		{
 			if ($this->auth->check_access('user/account', FALSE) === TRUE && 
-				$this->auth->get_access_level('user/account') == 1 && $player == $this->session->userdata('player_id'))
+				$this->auth->get_access_level('user/account') == 1 && $user == $this->session->userdata('userid'))
 			{
 				$data['edit_valid'] = TRUE;
 			}
@@ -985,7 +985,7 @@ class Personnel_base extends Controller {
 			'date' => ucfirst(lang('labels_date')),
 			'demoted' => ucfirst(lang('actions_demoted') .' '. lang('labels_from')),
 			'dob' => lang('labels_dob'),
-			'edit' => '[ '. ucwords(lang('actions_edit') .' '. lang('global_player')) .' ]',
+			'edit' => '[ '. ucwords(lang('actions_edit') .' '. lang('global_user')) .' ]',
 			'email' => ucwords(lang('labels_email_address')),
 			'from' => lang('labels_from'),
 			'im' => ucwords(lang('labels_im')),
@@ -1020,17 +1020,17 @@ class Personnel_base extends Controller {
 			'to' => lang('labels_to'),
 			'totallogs' => ucwords(lang('labels_total') .' '. lang('global_personallogs')),
 			'totalposts' => ucwords(lang('labels_total') .' '. lang('global_missionposts')),
-			'viewawards' => ucwords(lang('actions_view') .' '. lang('global_player') .' '.
+			'viewawards' => ucwords(lang('actions_view') .' '. lang('global_user') .' '.
 				lang('global_awards') .' '. RARROW),
-			'viewlogs' => ucwords(lang('actions_view') .' '. lang('global_player') .' '.
+			'viewlogs' => ucwords(lang('actions_view') .' '. lang('global_user') .' '.
 				lang('global_logs') .' '. RARROW),
-			'viewposts' => ucwords(lang('actions_view') .' '. lang('global_player') .' '.
+			'viewposts' => ucwords(lang('actions_view') .' '. lang('global_user') .' '.
 				lang('global_posts') .' '. RARROW),
 		);
 		
 		/* figure out where the view JS files should be coming from */
-		$view_loc = view_location('personnel_player', $this->skin, 'main');
-		$js_loc = js_location('personnel_player_js', $this->skin, 'main');
+		$view_loc = view_location('personnel_user', $this->skin, 'main');
+		$js_loc = js_location('personnel_user_js', $this->skin, 'main');
 		
 		/* write the data to the template */
 		$this->template->write_view('content', $view_loc, $data);
@@ -1051,18 +1051,18 @@ class Personnel_base extends Controller {
 		
 		switch ($type)
 		{
-			case 'p':
+			case 'u':
 				/* run the model methods */
-				$player = $this->player->get_user_details($id);
-				$data['player'] = $id;
+				$user = $this->user->get_user_details($id);
+				$data['user'] = $id;
 
-				if ($player->num_rows() > 0)
+				if ($user->num_rows() > 0)
 				{
 					/* drop the object into a variable */
-					$item = $player->row();
+					$item = $user->row();
 					
 					/* get the awards info */
-					$awards = $this->awards->get_awards_for_id($id, 'player');
+					$awards = $this->awards->get_awards_for_id($id, 'user');
 					
 					/* set the name */
 					$name = $item->name;
@@ -1137,7 +1137,7 @@ class Personnel_base extends Controller {
 					
 					/* set the data used by the view */
 					$data['header'] = lang('error_title_invalid_id');
-					$data['msg_error'] = lang('error_msg_invalid_player');
+					$data['msg_error'] = lang('error_msg_invalid_user');
 					
 					/* write the title */
 					$this->template->write('title', lang('error_pagetitle'));
@@ -1241,8 +1241,8 @@ class Personnel_base extends Controller {
 			'awards' => ucfirst(lang('global_awards')),
 			'backchar' => ucfirst(lang('actions_back')) .' '. lang('labels_to') .' '.
 				ucwords(lang('global_character') .' '. lang('labels_bio')),
-			'backplayer' => ucfirst(lang('actions_back')) .' '. lang('labels_to') .' '.
-				ucwords(lang('global_player') .' '. lang('labels_bio')),
+			'backuser' => ucfirst(lang('actions_back')) .' '. lang('labels_to') .' '.
+				ucwords(lang('global_user') .' '. lang('labels_bio')),
 			'nominatedby' => ucfirst(lang('actions_nominated') .' '. lang('labels_by')),
 			'ooc' => ucwords(lang('labels_ooc')),
 			'reason' => ucfirst(lang('labels_reason')),
@@ -1270,17 +1270,17 @@ class Personnel_base extends Controller {
 		
 		switch ($type)
 		{
-			case 'p':
+			case 'u':
 				/* run the model methods */
-				$player = $this->player->get_user_details($id);
-				$data['player'] = $id;
+				$user = $this->user->get_user_details($id);
+				$data['user'] = $id;
 				
-				if ($player->num_rows() > 0)
+				if ($user->num_rows() > 0)
 				{ /* if there is a character, run the method and continue */
-					$row = $player->row();
+					$row = $user->row();
 					
-					/* get the player's characters */
-					$characters = $this->char->get_player_characters($row->player_id, 'active', 'array');
+					/* get the user's characters */
+					$characters = $this->char->get_user_characters($row->userid, 'active', 'array');
 					
 					foreach ($characters as $char)
 					{
@@ -1321,8 +1321,8 @@ class Personnel_base extends Controller {
 				else
 				{
 					/* set the header */
-					$data['header'] = lang('error_title_invalid_player');
-					$data['msg_error'] = lang('error_msg_invalid_player');
+					$data['header'] = lang('error_title_invalid_user');
+					$data['msg_error'] = lang('error_msg_invalid_user');
 
 					/* set the title */
 					$this->template->write('title', lang('error_pagetitle'));
@@ -1398,8 +1398,8 @@ class Personnel_base extends Controller {
 				lang('labels_comment'),
 			'backchar' => LARROW .' '. ucfirst(lang('actions_back')) .' '. lang('labels_to') .' '.
 				ucwords(lang('global_character') .' '. lang('labels_bio')),
-			'backplayer' => LARROW .' '. ucfirst(lang('actions_back')) .' '. lang('labels_to') .' '.
-				ucwords(lang('global_player') .' '. lang('labels_bio')),
+			'backuser' => LARROW .' '. ucfirst(lang('actions_back')) .' '. lang('labels_to') .' '.
+				ucwords(lang('global_user') .' '. lang('labels_bio')),
 			'blurb' => ucfirst(lang('labels_blurb')),
 			'by' => lang('labels_by'),
 			'comments' => ucfirst(lang('labels_comments')),
@@ -1435,17 +1435,17 @@ class Personnel_base extends Controller {
 		
 		switch ($type)
 		{
-			case 'p':
+			case 'u':
 				/* run the model methods */
-				$player = $this->player->get_user_details($id);
-				$data['player'] = $id;
+				$user = $this->user->get_user_details($id);
+				$data['user'] = $id;
 				
-				if ($player->num_rows() > 0)
+				if ($user->num_rows() > 0)
 				{ /* if there is a character, run the method and continue */
-					$row = $player->row();
+					$row = $user->row();
 					
-					/* get the player's characters */
-					$characters = $this->char->get_player_characters($row->player_id, 'active', 'array');
+					/* get the user's characters */
+					$characters = $this->char->get_user_characters($row->userid, 'active', 'array');
 					
 					foreach ($characters as $char)
 					{
@@ -1487,8 +1487,8 @@ class Personnel_base extends Controller {
 				else
 				{
 					/* set the header */
-					$data['header'] = lang('error_title_invalid_player');
-					$data['msg_error'] = lang('error_msg_invalid_player');
+					$data['header'] = lang('error_title_invalid_user');
+					$data['msg_error'] = lang('error_msg_invalid_user');
 
 					/* set the title */
 					$this->template->write('title', lang('error_pagetitle'));
@@ -1563,8 +1563,8 @@ class Personnel_base extends Controller {
 		$data['label'] = array(
 			'backchar' => LARROW .' '. ucfirst(lang('actions_back')) .' '. lang('labels_to') .' '.
 				ucwords(lang('global_character') .' '. lang('labels_bio')),
-			'backplayer' => LARROW .' '. ucfirst(lang('actions_back')) .' '. lang('labels_to') .' '.
-				ucwords(lang('global_player') .' '. lang('labels_bio')),
+			'backuser' => LARROW .' '. ucfirst(lang('actions_back')) .' '. lang('labels_to') .' '.
+				ucwords(lang('global_user') .' '. lang('labels_bio')),
 			'mission' => ucfirst(lang('global_mission')),
 			'noposts' => lang('error_no_posts'),
 			'on' => lang('labels_on'),
