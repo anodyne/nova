@@ -3,7 +3,7 @@
 <?php echo form_open($form);?>
 	<table class="table100">
 		<tbody>
-			<?php if ($values['player_status'] != 'active'): ?>
+			<?php if ($values['user_status'] != 'active'): ?>
 				<tr>
 					<td class="cell-label"><?php echo $label['role'];?></td>
 					<td class="cell-spacer"></td>
