@@ -152,8 +152,8 @@ The best word to describe M5 would probably have to be straightforward. At this 
 While we still wouldn't recommend using Nova on a day-to-day basis (mainly because of a lack of support), it's more possible than ever now that you can manage characters and players right through the system now. Create a character, delete them, accept them, reject them and much more! If you need to do something to a character or player, you can do it in Nova now, including linking characters to players.
 
 Stats -
-?? Files
-?? Lines
+1,113 Files
+101,730 Lines
 56 Database Tables
 
 Where To From Here? -
@@ -175,8 +175,8 @@ Development Report -
 
 
 Stats -
-?? Files
-?? Lines
+1,353 Files
+115,072 Lines
 56 Database Tables
 
 Where To From Here? -
@@ -188,16 +188,16 @@ Thresher (M7)
 Objective -
 I never thought I'd be able to say this, but six down and one to go. Probably one of the most ambitious features we've ever undertaken, Milestone 7, also known as Thresher, is an integrated mini wiki that works seamlessly with Nova to give you and your players a place to colloborate and share information. It'll work similar to what you've come to know and love about wikis with history and categories and collaboration, but we're also tapping in to Nova's access control system and providing easy ways to manage categories and pages. We're excited for the first build of this milestone to roll out to let people use this feature and start to flesh out the last leg of Nova's development.
 
-Start Date - 
-End Date - 
+Start Date - 02 November 2009
+End Date - 09 November 2009
 
 Development Report -
 
 
 Stats -
-?? Files
-?? Lines
-56 Database Tables
+1,543 Files
+126,761 Lines
+60 Database Tables
 
 Where To From Here? -
 Absolutely nowhere.
