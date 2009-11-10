@@ -687,12 +687,12 @@ $catalogue_ranks = array(
 
 $characters = array(
 	array(
-		'player' => 1,
+		'user' => 1,
 		'first_name' => 'John',
 		'last_name' => 'Doe',
 		'date_activate' => now()),
 	array(
-		'player' => 2,
+		'user' => 2,
 		'first_name' => 'Jane',
 		'last_name' => 'Doe',
 		'date_activate' => now())
