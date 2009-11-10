@@ -14,7 +14,7 @@
 		<?php foreach ($loa as $l): ?>
 			<tr>
 				<td class="col_50pct">
-					<?php echo text_output($l['player'], 'span', 'fontMedium bold');?><br />
+					<?php echo text_output($l['user'], 'span', 'fontMedium bold');?><br />
 					<span class="fontSmall gray">
 						<strong><?php echo $label['date_start'] .'</strong> '. $l['date_start'];?>
 						<?php if (!empty($l['date_end'])): ?>

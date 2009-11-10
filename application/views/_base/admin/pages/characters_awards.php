@@ -54,22 +54,22 @@
 		</div>
 		
 		<div id="two">
-			<?php if (isset($player)): ?>
+			<?php if (isset($user)): ?>
 				<?php echo text_output($label['ooc'], 'h3');?>
 				<table class="table100 zebra">
 					<tbody>
-					<?php foreach ($player['awards'] as $p): ?>
-						<tr id="<?php echo $p['id'];?>">
-							<td class="col_75 align_center"><?php echo img($p['image']);?></td>
+					<?php foreach ($user['awards'] as $u): ?>
+						<tr id="<?php echo $u['id'];?>">
+							<td class="col_75 align_center"><?php echo img($u['image']);?></td>
 							<td>
-								<strong><?php echo $p['award'];?></strong><br />
+								<strong><?php echo $u['award'];?></strong><br />
 								<span class="fontSmall gray">
-									<?php echo $label['given'] .' '. $p['date'];?><br />
-									<?php echo text_output($p['reason'], '');?>
+									<?php echo $label['given'] .' '. $u['date'];?><br />
+									<?php echo text_output($u['reason'], '');?>
 								</span>
 							</td>
 							<td class="col_75 align_right">
-								<a href="#" myID="<?php echo $p['id'];?>" class="remove image"><?php echo img($images['remove']);?></a>
+								<a href="#" myID="<?php echo $u['id'];?>" class="remove image"><?php echo img($images['remove']);?></a>
 							</td>
 						</tr>
 					<?php endforeach;?>

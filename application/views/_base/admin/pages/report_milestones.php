@@ -1,6 +1,6 @@
 <?php echo text_output($header, 'h1', 'page-head');?>
 
-<?php if (isset($players)): ?>
+<?php if (isset($users)): ?>
 	<table class="table100 zebra">
 		<thead>
 			<tr>
@@ -9,19 +9,19 @@
 			</tr>
 		</thead>
 		<tbody>
-		<?php foreach ($players as $p): ?>
+		<?php foreach ($users as $u): ?>
 			<tr>
 				<td class="col_50pct">
-					<strong><?php echo $p['name'];?></strong><br />
+					<strong><?php echo $u['name'];?></strong><br />
 					<span class="fontTiny gray">
-						<?php echo anchor('personnel/player/'. $p['id'], $label['bio_player']);?>
+						<?php echo anchor('personnel/user/'. $u['id'], $label['bio_user']);?>
 						|
-						<?php echo anchor('personnel/character/'. $p['charid'], $label['bio_char']);?>
+						<?php echo anchor('personnel/character/'. $u['charid'], $label['bio_char']);?>
 					</span>
 				</td>
 				<td class="align_right">
-					<?php echo $p['timespan'];?><br />
-					<?php echo text_output($p['join_date'], 'span', 'fontSmall gray');?>
+					<?php echo $u['timespan'];?><br />
+					<?php echo text_output($u['join_date'], 'span', 'fontSmall gray');?>
 				</td>
 			</tr>
 		<?php endforeach;?>

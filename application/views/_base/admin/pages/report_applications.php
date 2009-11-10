@@ -9,7 +9,7 @@
 		<thead>
 			<tr>
 				<th><?php echo $label['character'];?></th>
-				<th><?php echo $label['player'];?></th>
+				<th><?php echo $label['user'];?></th>
 				<th><?php echo $label['action'];?></th>
 				<th></th>
 			</tr>
@@ -24,7 +24,7 @@
 					</span>
 				</td>
 				<td>
-					<?php echo text_output($a['player'], 'strong');?><br />
+					<?php echo text_output($a['user'], 'strong');?><br />
 					<span class="fontSmall gray">
 						<?php echo text_output($label['date'], 'strong') .': '. $a['date'];?>
 					</span>

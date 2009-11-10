@@ -8,20 +8,20 @@
 	
 	<div id="tabs">
 		<ul>
-			<?php if (isset($players['active'])): ?>
+			<?php if (isset($users['active'])): ?>
 				<li><a href="#one"><span><?php echo $label['active'];?></span></a></li>
 			<?php endif;?>
 			
-			<?php if (isset($players['inactive'])): ?>
+			<?php if (isset($users['inactive'])): ?>
 				<li><a href="#two"><span><?php echo $label['inactive'];?></span></a></li>
 			<?php endif;?>
 			
-			<?php if (isset($players['pending'])): ?>
+			<?php if (isset($users['pending'])): ?>
 				<li><a href="#three"><span><?php echo $label['pending'];?></span></a></li>
 			<?php endif;?>
 		</ul>
 		
-		<?php foreach ($players as $key => $p): ?>
+		<?php foreach ($users as $key => $u): ?>
 			<?php if ($key == 'active'): ?>
 				<div id="one">
 			<?php elseif ($key == 'inactive'): ?>
@@ -30,7 +30,7 @@
 				<div id="three">
 			<?php endif;?>
 			
-			<?php if (count($p) > 0): ?>
+			<?php if (count($u) > 0): ?>
 				<table class="table100 zebra">
 					<thead>
 						<tr>
@@ -40,7 +40,7 @@
 						</tr>
 					</thead>
 					<tbody>
-					<?php foreach ($p as $i): ?>
+					<?php foreach ($u as $i): ?>
 						<tr>
 							<td class="col_40pct">
 								<strong class="fontMedium"><?php echo $i['name'];?></strong><br />
@@ -54,7 +54,7 @@
 							</td>
 							<td><?php echo $i['main_char'];?></td>
 							<td class="col_100 align_right">
-								<?php echo anchor('personnel/player/'. $i['id'], img($images['view']), array('class' => 'image'));?>
+								<?php echo anchor('personnel/user/'. $i['id'], img($images['view']), array('class' => 'image'));?>
 								&nbsp;
 								<?php echo anchor('user/account/'. $i['id'], img($images['edit']), array('class' => 'image'));?>
 								&nbsp;

@@ -26,44 +26,44 @@
 		</tr>
 	</thead>
 	<tbody>
-	<?php foreach ($players as $p): ?>
+	<?php foreach ($user as $u): ?>
 		<tr>
 			<td class="col_50pct">
-				<?php if ($p['loa'] == '[LOA]'): ?>
-					<?php echo text_output($p['loa'], 'span', 'red fontSmall bold');?>
-				<?php elseif ($p['loa'] == '[ELOA]'): ?>
-					<?php echo text_output($p['loa'], 'span', 'orange fontSmall bold');?>
+				<?php if ($u['loa'] == '[LOA]'): ?>
+					<?php echo text_output($u['loa'], 'span', 'red fontSmall bold');?>
+				<?php elseif ($u['loa'] == '[ELOA]'): ?>
+					<?php echo text_output($u['loa'], 'span', 'orange fontSmall bold');?>
 				<?php endif;?>
 				
-				<?php echo text_output($p['main_char'], 'span', 'bold');?><br />
+				<?php echo text_output($u['main_char'], 'span', 'bold');?><br />
 				<span class="fontTiny">
-					<?php echo anchor('personnel/player/'. $p['id'], $label['bioplayer']);?>
+					<?php echo anchor('personnel/user/'. $u['id'], $label['biouser']);?>
 					|
-					<?php echo anchor('personnel/character/'. $p['charid'], $label['biochar']);?>
+					<?php echo anchor('personnel/character/'. $u['charid'], $label['biochar']);?>
 				</span><br /><br />
 				
-				<span class="fontSmall<?php echo $p['requirement_login'];?>">
-					<?php echo text_output($label['lastlogin'], 'strong') .': '.$p['last_login'];?>
+				<span class="fontSmall<?php echo $u['requirement_login'];?>">
+					<?php echo text_output($label['lastlogin'], 'strong') .': '.$u['last_login'];?>
 				</span><br />
-				<span class="fontSmall<?php echo $p['requirement_post'];?>">
-					<?php echo text_output($label['lastpost'], 'strong') .': '. $p['last_post'];?>
+				<span class="fontSmall<?php echo $u['requirement_post'];?>">
+					<?php echo text_output($label['lastpost'], 'strong') .': '. $u['last_post'];?>
 				</span>
 			</td>
 			
-			<td class="align_center"><?php echo $p['posts']['timeframe'];?></td>
-			<td class="align_center activity-border"><?php echo $p['posts']['month'];?></td>
+			<td class="align_center"><?php echo $u['posts']['timeframe'];?></td>
+			<td class="align_center activity-border"><?php echo $u['posts']['month'];?></td>
 			
-			<td class="align_center"><?php echo $p['logs']['timeframe'];?></td>
-			<td class="align_center activity-border"><?php echo $p['logs']['month'];?></td>
+			<td class="align_center"><?php echo $u['logs']['timeframe'];?></td>
+			<td class="align_center activity-border"><?php echo $u['logs']['month'];?></td>
 			
-			<td class="align_center"><?php echo $p['news']['timeframe'];?></td>
-			<td class="align_center activity-border"><?php echo $p['news']['month'];?></td>
+			<td class="align_center"><?php echo $u['news']['timeframe'];?></td>
+			<td class="align_center activity-border"><?php echo $u['news']['month'];?></td>
 			
 			<td class="align_center">
-				<?php echo $p['posts']['timeframe'] + $p['logs']['timeframe'] + $p['news']['timeframe'];?>
+				<?php echo $u['posts']['timeframe'] + $u['logs']['timeframe'] + $u['news']['timeframe'];?>
 			</td>
 			<td class="align_center">
-				<?php echo $p['posts']['month'] + $p['logs']['month'] + $p['news']['month'];?>
+				<?php echo $u['posts']['month'] + $u['logs']['month'] + $u['news']['month'];?>
 			</td>
 		</tr>
 	<?php endforeach;?>

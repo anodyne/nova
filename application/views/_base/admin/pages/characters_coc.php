@@ -13,7 +13,7 @@
 </div>
 
 <div>
-	<?php echo form_dropdown_characters('characters', '', 'id="crew"', 'player_npc', TRUE);?>
+	<?php echo form_dropdown_characters('characters', '', 'id="crew"', 'user_npc', TRUE);?>
 	&nbsp;
 	<?php echo form_button($buttons['add']);?>
 </div><br />

@@ -8,20 +8,20 @@
 	
 	<div id="tabs">
 		<ul>
-			<li><a href="#one"><span><?php echo $label['players'];?></span></a></li>
+			<li><a href="#one"><span><?php echo $label['users'];?></span></a></li>
 			<li><a href="#two"><span><?php echo $label['char_active'];?></span></a></li>
 			<li><a href="#three"><span><?php echo $label['char_npc'];?></span></a></li>
 			<li><a href="#four"><span><?php echo $label['char_inactive'];?></span></a></li>
 		</ul>
 		
 		<div id="one">
-			<?php if (isset($players)): ?>
-				<?php if (isset($players['active'])): ?>
+			<?php if (isset($users)): ?>
+				<?php if (isset($users['active'])): ?>
 					<br /><div class="search"></div>
 					
-					<?php echo text_output($label['players_active'], 'h2', 'page-subhead');?>
+					<?php echo text_output($label['users_active'], 'h2', 'page-subhead');?>
 					
-					<table class="table100 zebra search_players">
+					<table class="table100 zebra search_users">
 						<thead>
 							<th><?php echo $label['name'];?></th>
 							<th class="fontSmall"><?php echo $label['posts'];?></th>
@@ -30,37 +30,37 @@
 							<th class="fontSmall"><?php echo $label['total'];?></th>
 						</thead>
 						<tbody>
-						<?php foreach ($players['active'] as $p): ?>
-							<tr class="<?php echo $p['class'];?>">
+						<?php foreach ($users['active'] as $u): ?>
+							<tr class="<?php echo $u['class'];?>">
 								<td class="col_40pct">
-									<?php echo text_output($p['name'], 'span', 'bold fontMedium');?>
+									<?php echo text_output($u['name'], 'span', 'bold fontMedium');?>
 									
-									<?php if ($p['posts'] > 0 || $p['logs'] > 0): ?>
+									<?php if ($u['posts'] > 0 || $u['logs'] > 0): ?>
 										<br />
-										<?php if (empty($p['class'])): ?>
+										<?php if (empty($u['class'])): ?>
 											<span class="fontSmall gray">
 										<?php else: ?>
 											<span class="fontSmall">
 										<?php endif;?>
 										
-											<?php echo text_output($label['lastpost'], 'strong') .': '. $p['lastpost'];?>
+											<?php echo text_output($label['lastpost'], 'strong') .': '. $u['lastpost'];?>
 										</span>
 									<?php endif;?>
 								</td>
-								<td class="align_center"><?php echo $p['posts'];?></td>
-								<td class="align_center"><?php echo $p['logs'];?></td>
-								<td class="align_center"><?php echo $p['news'];?></td>
-								<td class="align_center"><?php echo $p['posts'] + $p['logs'] + $p['news'];?></td>
+								<td class="align_center"><?php echo $u['posts'];?></td>
+								<td class="align_center"><?php echo $u['logs'];?></td>
+								<td class="align_center"><?php echo $u['news'];?></td>
+								<td class="align_center"><?php echo $u['posts'] + $u['logs'] + $u['news'];?></td>
 							</tr>
 						<?php endforeach;?>
 						</tbody>
 					</table>
 				<?php endif;?>
 				
-				<?php if (isset($players['inactive'])): ?>
-					<?php echo text_output($label['players_inactive'], 'h2', 'page-subhead');?>
+				<?php if (isset($users['inactive'])): ?>
+					<?php echo text_output($label['users_inactive'], 'h2', 'page-subhead');?>
 					
-					<table class="table100 zebra search_players">
+					<table class="table100 zebra search_users">
 						<thead>
 							<th><?php echo $label['name'];?></th>
 							<th class="fontSmall"><?php echo $label['posts'];?></th>
@@ -69,20 +69,20 @@
 							<th class="fontSmall"><?php echo $label['total'];?></th>
 						</thead>
 						<tbody>
-						<?php foreach ($players['inactive'] as $p): ?>
+						<?php foreach ($users['inactive'] as $u): ?>
 							<tr>
-								<td class="col_40pct bold fontMedium"><?php echo $p['name'];?></td>
-								<td class="align_center"><?php echo $p['posts'];?></td>
-								<td class="align_center"><?php echo $p['logs'];?></td>
-								<td class="align_center"><?php echo $p['news'];?></td>
-								<td class="align_center"><?php echo $p['posts'] + $p['logs'] + $p['news'];?></td>
+								<td class="col_40pct bold fontMedium"><?php echo $u['name'];?></td>
+								<td class="align_center"><?php echo $u['posts'];?></td>
+								<td class="align_center"><?php echo $u['logs'];?></td>
+								<td class="align_center"><?php echo $u['news'];?></td>
+								<td class="align_center"><?php echo $u['posts'] + $u['logs'] + $u['news'];?></td>
 							</tr>
 						<?php endforeach;?>
 						</tbody>
 					</table>
 				<?php endif;?>
 			<?php else: ?>
-				<?php echo text_output($label['no_players'], 'h3', 'orange');?>
+				<?php echo text_output($label['no_users'], 'h3', 'orange');?>
 			<?php endif;?>
 		</div>
 		
