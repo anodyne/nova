@@ -42,9 +42,9 @@ $data = array(
 	'news_comments',
 	'personallogs',
 	'personallogs_comments',
-	'player_prefs',
-	'player_prefs_values',
-	'players',
+	'user_prefs',
+	'user_prefs_values',
+	'users',
 	'posts',
 	'posts_comments',
 	'security_questions',
@@ -324,12 +324,12 @@ $access_pages = array(
 		'page_name' => "Moderation",
 		'page_url' => 'report/moderation',
 		'page_group' => 5,
-		'page_desc' => "Can view a report on the moderation status of players"),
+		'page_desc' => "Can view a report on the moderation status of users"),
 	array(
 		'page_name' => "Milestones",
 		'page_url' => 'report/milestones',
 		'page_group' => 5,
-		'page_desc' => "Can view a report on the milestones of players"),
+		'page_desc' => "Can view a report on the milestones of users"),
 	array(
 		'page_name' => "Award Nominations",
 		'page_url' => 'report/awardnominations',
@@ -473,7 +473,7 @@ $awards = array(
 $awards_queue = array(
 	array(
 		'queue_receive_character' => 2,
-		'queue_receive_player' => 2,
+		'queue_receive_user' => 2,
 		'queue_nominate' => 1,
 		'queue_award' => 1,
 		'queue_reason' => 'Jon definitely deserves the Silver Star because of what he did in our last mission.',
@@ -481,7 +481,7 @@ $awards_queue = array(
 		'queue_date' => 1229483743),
 	array(
 		'queue_receive_character' => 1,
-		'queue_receive_player' => 1,
+		'queue_receive_user' => 1,
 		'queue_nominate' => 2,
 		'queue_award' => 2,
 		'queue_reason' => 'David deserves the Bronze Medal because he came in third in the race we were doing.',
@@ -492,21 +492,21 @@ $awards_queue = array(
 $awards_received = array(
 	array(
 		'awardrec_award' => 1,
-		'awardrec_player' => 1,
+		'awardrec_user' => 1,
 		'awardrec_character' => 1,
 		'awardrec_nominated_by' => 2,
 		'awardrec_reason' => 'This is my first reason.',
 		'awardrec_date' => 1229483743),
 	array(
 		'awardrec_award' => 2,
-		'awardrec_player' => 1,
+		'awardrec_user' => 1,
 		'awardrec_character' => 1,
 		'awardrec_nominated_by' => 2,
 		'awardrec_reason' => 'This is my second reason.',
 		'awardrec_date' => 1229483943),
 	array(
 		'awardrec_award' => 1,
-		'awardrec_player' => 2,
+		'awardrec_user' => 2,
 		'awardrec_character' => 2,
 		'awardrec_nominated_by' => 1,
 		'awardrec_reason' => 'This is my third reason.',
@@ -581,105 +581,105 @@ $catalogue_skinsecs = array(
 $characters_data = array(
 	array(
 		'data_field' => 1,
-		'data_player' => 1,
+		'data_user' => 1,
 		'data_char' => 1,
 		'data_updated' => now(),
 		'data_value' => 'Male'),
 	array(
 		'data_field' => 2,
-		'data_player' => 1,
+		'data_user' => 1,
 		'data_char' => 1,
 		'data_updated' => now(),
 		'data_value' => 'Human'),
 	array(
 		'data_field' => 3,
-		'data_player' => 1,
+		'data_user' => 1,
 		'data_char' => 1,
 		'data_updated' => now(),
 		'data_value' => '59'),
 	array(
 		'data_field' => 4,
-		'data_player' => 1,
+		'data_user' => 1,
 		'data_char' => 1,
 		'data_updated' => now(),
 		'data_value' => '6\'0"'),
 	array(
 		'data_field' => 5,
-		'data_player' => 1,
+		'data_user' => 1,
 		'data_char' => 1,
 		'data_updated' => now(),
 		'data_value' => '225 lbs.'),
 	array(
 		'data_field' => 6,
-		'data_player' => 1,
+		'data_user' => 1,
 		'data_char' => 1,
 		'data_updated' => now(),
 		'data_value' => 'Gray'),
 	array(
 		'data_field' => 7,
-		'data_player' => 1,
+		'data_user' => 1,
 		'data_char' => 1,
 		'data_updated' => now(),
 		'data_value' => 'Brown'),
 	array(
 		'data_field' => 8,
-		'data_player' => 1,
+		'data_user' => 1,
 		'data_char' => 1,
 		'data_updated' => now(),
 		'data_value' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'),
 		
 	array(
 		'data_field' => 9,
-		'data_player' => 1,
+		'data_user' => 1,
 		'data_char' => 1,
 		'data_updated' => now(),
 		'data_value' => "Personality overview here.\r\n\r\nLorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."),
 	array(
 		'data_field' => 10,
-		'data_player' => 1,
+		'data_user' => 1,
 		'data_char' => 1,
 		'data_updated' => now(),
 		'data_value' => "Strengths and weaknesses go here.\r\n\r\nLorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."),
 	array(
 		'data_field' => 11,
-		'data_player' => 1,
+		'data_user' => 1,
 		'data_char' => 1,
 		'data_updated' => now(),
 		'data_value' => "Ambitions go here.\r\n\r\nLorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."),
 	array(
 		'data_field' => 12,
-		'data_player' => 1,
+		'data_user' => 1,
 		'data_char' => 1,
 		'data_updated' => now(),
 		'data_value' => 'All my hobbies and different interests go here.'),
 		
 	array(
 		'data_field' => 13,
-		'data_player' => 1,
+		'data_user' => 1,
 		'data_char' => 1,
 		'data_updated' => now(),
 		'data_value' => 'Father'),
 	array(
 		'data_field' => 14,
-		'data_player' => 1,
+		'data_user' => 1,
 		'data_char' => 1,
 		'data_updated' => now(),
 		'data_value' => 'Mother'),
 	array(
 		'data_field' => 15,
-		'data_player' => 1,
+		'data_user' => 1,
 		'data_char' => 1,
 		'data_updated' => now(),
 		'data_value' => 'Brother'),
 	array(
 		'data_field' => 16,
-		'data_player' => 1,
+		'data_user' => 1,
 		'data_char' => 1,
 		'data_updated' => now(),
 		'data_value' => 'Sister'),
 	array(
 		'data_field' => 17,
-		'data_player' => 1,
+		'data_user' => 1,
 		'data_char' => 1,
 		'data_updated' => now(),
 		'data_value' => 'Other Family'),
@@ -921,7 +921,7 @@ $characters_values = array(
 
 $characters = array(
 	array(
-		'player' => 1,
+		'user' => 1,
 		'first_name' => 'William',
 		'last_name' => 'Adama',
 		'position_1' => 1,
@@ -929,7 +929,7 @@ $characters = array(
 		'date_activate' => now(),
 		'images' => 'bio_image_1.jpg, bio_image_2.jpg, bio_image_3.jpg'),
 	array(
-		'player' => 2,
+		'user' => 2,
 		'first_name' => 'Saul',
 		'last_name' => 'Tigh',
 		'position_1' => 2,
@@ -1265,9 +1265,18 @@ $menu_items = array(
 		'menu_type' => 'sub',
 		'menu_cat' => 'wiki'),
 	array(
-		'menu_name' => 'Categories',
+		'menu_name' => 'Recent Changes',
 		'menu_group' => 0,
 		'menu_order' => 1,
+		'menu_link' => 'wiki/recent',
+		'menu_sim_type' => 1,
+		'menu_display' => 'y',
+		'menu_type' => 'sub',
+		'menu_cat' => 'wiki'),
+	array(
+		'menu_name' => 'Categories',
+		'menu_group' => 0,
+		'menu_order' => 2,
 		'menu_link' => 'wiki/categories',
 		'menu_sim_type' => 1,
 		'menu_display' => 'y',
@@ -1896,13 +1905,13 @@ $messages = array(
 		'message_type' => 'other'),
 	array(
 		'message_key' => 'accept_message',
-		'message_label' => 'Player Acceptance Email',
-		'message_content' => "Define your player acceptance message through the Site Message page.",
+		'message_label' => 'User Acceptance Email',
+		'message_content' => "Define your user acceptance message through the Site Message page.",
 		'message_type' => 'other'),
 	array(
 		'message_key' => 'reject_message',
-		'message_label' => 'Player Rejection Message',
-		'message_content' => "Define your player rejection message through the Site Messages page.",
+		'message_label' => 'User Rejection Message',
+		'message_content' => "Define your user rejection message through the Site Messages page.",
 		'message_type' => 'other'),
 	array(
 		'message_key' => 'contact',
@@ -1913,7 +1922,7 @@ $messages = array(
 	array(
 		'message_key' => 'welcome_head',
 		'message_label' => 'Welcome Header',
-		'message_content' => "Welcome to Nova M7!",
+		'message_content' => "Welcome to Nova Beta!",
 		'message_type' => 'title'),
 	array(
 		'message_key' => 'main_credits_title',
@@ -2130,7 +2139,7 @@ $missions = array(
 $news = array(
 	array(
 		'news_title' => 'Welcome to Nova',
-		'news_author_player' => 1,
+		'news_author_user' => 1,
 		'news_author_character' => 1,
 		'news_content' => "Nova is the start of something very special and something that's going to make a big difference in the way that people manage their RPGs. No more is Anodyne focusing on Star Trek; now, we are providing a multitude of genres for game masters to choose from. We're offering everything from DS9 to Enterprise to Battlestar Galactica. Check out Nova and RPG management evolved.",
 		'news_date' => 1229483743,
@@ -2138,7 +2147,7 @@ $news = array(
 		'news_status' => 'activated'),
 	array(
 		'news_title' => 'Nova Says Hello to Comments',
-		'news_author_player' => 1,
+		'news_author_user' => 1,
 		'news_author_character' => 1,
 		'news_content' => "One of the new features that's found its way into Nova is comments. Users are now able to leave comments on personal logs, news items, and mission posts. Later on, comments will be available on the wiki as well!",
 		'news_date' => 1229484743,
@@ -2146,7 +2155,7 @@ $news = array(
 		'news_status' => 'activated'),
 	array(
 		'news_title' => 'Nova Goes Private',
-		'news_author_player' => 1,
+		'news_author_user' => 1,
 		'news_author_character' => 1,
 		'news_private' => 'y',
 		'news_content' => "A feature that's making it's way over from SMS is private news items. Sometimes, you just don't want everyone to see what you're telling the crew, or you need an easy way to get in touch with all of them quickly. Private news items insure that only your crew can see the news item. If a user navigates to the page, they won't ever know that there are more news items than what's shown.",
@@ -2164,13 +2173,13 @@ $news_categories = array(
 
 $news_comments = array(
 	array(
-		'ncomment_author_player' => 2,
+		'ncomment_author_user' => 2,
 		'ncomment_author_character' => 2,
 		'ncomment_news' => 1,
 		'ncomment_content' => "This is really cool to hear! I've been running a BSG sim for a couple years now and it's kind of frustrating that I've had to modify SMS 2 so much, especially when a new release comes out. Nova should make things a lot easier. Thank you!",
 		'ncomment_date' => 1229483783),
 	array(
-		'ncomment_author_player' => 1,
+		'ncomment_author_user' => 1,
 		'ncomment_author_character' => 1,
 		'ncomment_news' => 1,
 		'ncomment_content' => "No problem! That's the whole goal of Nova - to make it easier. Though if you're still using SMS 2, you'll definitely want to check out the official BSG MOD that we released. It'll turn SMS 2 into a BSG sim in a couple of minutes. Enjoy!",
@@ -2180,13 +2189,13 @@ $news_comments = array(
 $personallogs = array(
 	array(
 		'log_title' => 'First Personal Log',
-		'log_author_player' => 1,
+		'log_author_user' => 1,
 		'log_author_character' => 1,
 		'log_content' => 'This is the content of my first personal log!',
 		'log_date' => 1229483743),
 	array(
 		'log_title' => 'Second Personal Log',
-		'log_author_player' => 2,
+		'log_author_user' => 2,
 		'log_author_character' => 2,
 		'log_content' => 'This is the content of the second personal log!',
 		'log_date' => 1229483843)
@@ -2195,25 +2204,25 @@ $personallogs = array(
 $personallogs_comments = array(
 	array(
 		'lcomment_author_character' => 2,
-		'lcomment_author_player' => 2,
+		'lcomment_author_user' => 2,
 		'lcomment_log' => 1,
 		'lcomment_content' => 'Very good first personal log!',
 		'lcomment_date' => 1229483843),
 	array(
 		'lcomment_author_character' => 1,
-		'lcomment_author_player' => 1,
+		'lcomment_author_user' => 1,
 		'lcomment_log' => 1,
 		'lcomment_content' => 'Thank you, I really enjoyed writing this one! You should give it a try sometime.',
 		'lcomment_date' => 1229483943),
 	array(
 		'lcomment_author_character' => 2,
-		'lcomment_author_player' => 2,
+		'lcomment_author_user' => 2,
 		'lcomment_log' => 1,
 		'lcomment_content' => "I was actually thinking about it.\r\n\r\nWhat do you think I should write mine about though?",
 		'lcomment_date' => 1229484143)
 );
 
-$player_prefs = array(
+$user_prefs = array(
 	array(
 		'pref_key' => 'email_new_news_comments',
 		'pref_label' => 'Email News Comments',
@@ -2256,9 +2265,9 @@ $player_prefs = array(
 		'pref_default' => 'y'),
 );
 
-$player_prefs_values = array();
+$user_prefs_values = array();
 
-$players = array(
+$users = array(
 	array(
 		'name' => 'John Doe',
 		'email' => '',
@@ -2910,19 +2919,19 @@ $posts = array(
 
 $posts_comments = array(
 	array(
-		'pcomment_author_player' => 2,
+		'pcomment_author_user' => 2,
 		'pcomment_author_character' => 2,
 		'pcomment_post' => 1,
 		'pcomment_content' => 'Very good first mission post!',
 		'pcomment_date' => now()),
 	array(
-		'pcomment_author_player' => 1,
+		'pcomment_author_user' => 1,
 		'pcomment_author_character' => 1,
 		'pcomment_post' => 2,
 		'pcomment_content' => 'Thanks, I really enjoyed writing this one. You and I should do one soon.',
 		'pcomment_date' => now()),
 	array(
-		'pcomment_author_player' => 2,
+		'pcomment_author_user' => 2,
 		'pcomment_author_character' => 2,
 		'pcomment_post' => 1,
 		'pcomment_content' => 'Sounds like a plan, just drop me a note when you want to get started.',
@@ -2941,7 +2950,7 @@ $security_questions = array(
 $settings = array(
 	array(
 		'setting_key' => 'sim_name',
-		'setting_value' => 'Nova M7',
+		'setting_value' => 'Nova Beta',
 		'setting_user_created' => 'n'),
 	array(
 		'setting_key' => 'sim_year',
@@ -2993,7 +3002,7 @@ $settings = array(
 		'setting_user_created' => 'n'),
 	array(
 		'setting_key' => 'email_subject',
-		'setting_value' => '[Nova M7]',
+		'setting_value' => '[Nova Beta]',
 		'setting_user_created' => 'n'),
 	array(
 		'setting_key' => 'timezone',
@@ -3037,7 +3046,7 @@ $settings = array(
 		'setting_user_created' => 'n'),
 	array(
 		'setting_key' => 'default_email_name',
-		'setting_value' => 'Nova M7',
+		'setting_value' => 'Nova',
 		'setting_user_created' => 'n'),
 	array(
 		'setting_key' => 'default_email_address',
