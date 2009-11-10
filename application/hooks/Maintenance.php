@@ -29,7 +29,7 @@ class Maintenance {
 		{
 			if ($ci->settings->get_setting('maintenance') == 'on' && $ci->uri->segment(1) != 'login')
 			{
-				$sysadmin = $ci->auth->is_sysadmin($ci->session->userdata('player_id'));
+				$sysadmin = $ci->auth->is_sysadmin($ci->session->userdata('userid'));
 				
 				if ($sysadmin === FALSE)
 				{
