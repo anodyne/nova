@@ -243,6 +243,32 @@ class Wiki_model_base extends Model {
 	
 	/*
 	|---------------------------------------------------------------
+	| SEARCH METHODS
+	|---------------------------------------------------------------
+	*/
+	
+	function search_pages($component = '', $input = '')
+	{
+		switch ($component)
+		{
+			case 'title':
+				$this->db->from('wiki_drafts');
+				$this->db->like('draft_title', $input);
+				break;
+				
+			case 'content':
+				$this->db->from('wiki_drafts');
+				$this->db->like('draft_content', $input);
+				break;
+		}
+		
+		$query = $this->db->get();
+		
+		return $query;
+	}
+	
+	/*
+	|---------------------------------------------------------------
 	| CREATE METHODS
 	|---------------------------------------------------------------
 	*/
