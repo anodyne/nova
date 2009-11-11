@@ -1,3 +1,19 @@
+11.11.2009
+
+* fixed bug in the search page where all links besides post search were wrong
+
+* updated the search page to allow searching wiki pages
+* updated the language files
+* updated the wiki model with a method for searching
+* updated the inbox to use a loader for large inboxes
+* updated the control panel to use a loader to help with longer load times (> 1 second)
+* updated the auth library with a hash function to salt and hash strings
+* updated the controllers to use the auth library for hashing passwords
+
+* added search/index js view file
+
+==========
+
 11.10.2009
 
 * updated the wiki category page to remove the intro text since it was wrong
