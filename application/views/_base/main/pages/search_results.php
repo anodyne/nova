@@ -14,7 +14,7 @@
 	<ul class="square line_height_18">
 		<?php foreach ($results as $result): ?>
 			<li>
-				<strong><?php echo anchor('sim/viewpost/'. $result['id'], $result['title']);?></strong>
+				<strong><?php echo $result['link'];?></strong>
 				<div class="line_height_13"><?php echo word_limiter($result['content'], 100);?></div><br />
 			</li>
 		<?php endforeach; ?>
