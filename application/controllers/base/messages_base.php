@@ -315,9 +315,15 @@ class Messages_base extends Controller {
 		/* set the js data */
 		$js_data['tab'] = ($this->uri->segment(3) == 'sent') ? 1 : 0;
 		
+		$data['loader'] = array(
+			'src' => img_location('loading-bar.gif', $this->skin, 'admin'),
+			'alt' => lang('actions_loading'),
+		);
+		
 		$data['label'] = array(
 			'from' => ucfirst(lang('time_from')),
 			'inbox' => ucwords(lang('labels_inbox')),
+			'loading' => ucfirst(lang('actions_loading')) .'...',
 			'no_inbox' => lang('error_no_inbox'),
 			'no_outbox' => lang('error_no_outbox'),
 			'sent' => ucwords(lang('actions_sent') .' '. lang('labels_messages')),			

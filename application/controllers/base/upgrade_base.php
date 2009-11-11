@@ -1293,7 +1293,7 @@ class Upgrade_base extends Controller {
 				/* get the crew */
 				if ($crew->num_rows() > 0)
 				{
-					$password = sha1($this->config->item('sms_password'));
+					$password = $this->auth->hash($this->config->item('sms_password'));
 					$email = $this->config->item('sms_email');
 					
 					/* info for the languages field */

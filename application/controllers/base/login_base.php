@@ -219,7 +219,7 @@ class Login_base extends Controller {
 	{
 		/* grab the POST data */
 		$email = $this->input->post('email');
-		$password = sha1($this->input->post('password'));
+		$password = $this->input->post('password');
 		$remember = $this->input->post('remember');
 		
 		/* do the login */
@@ -487,7 +487,7 @@ class Login_base extends Controller {
 		/* build the update array */
 		$array = array(
 			'password_reset' => 1,
-			'password' => sha1($new_password)
+			'password' => $this->auth->hash($new_password)
 		);
 		
 		/* update the user record */

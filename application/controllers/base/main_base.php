@@ -381,7 +381,7 @@ class Main_base extends Controller {
 					$user_array = array(
 						'name' => $real_name,
 						'email' => $email,
-						'password' => sha1($password),
+						'password' => $this->auth->hash($password),
 						'instant_message' => $im,
 						'date_of_birth' => $dob,
 						'join_date' => now(),

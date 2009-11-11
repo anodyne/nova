@@ -206,7 +206,7 @@ class Install_base extends Controller {
 					
 					/* set the POST variables */
 					$email = $this->input->post('email', TRUE);
-					$password = sha1($this->input->post('password', TRUE));
+					$password = $this->input->post('password', TRUE);
 					
 					/* verify their email/password combo is right */
 					$verify = $this->auth->verify($email, $password);
@@ -406,7 +406,7 @@ class Install_base extends Controller {
 					
 					/* set the POST variables */
 					$email = $this->input->post('email', TRUE);
-					$password = sha1($this->input->post('password', TRUE));
+					$password = $this->input->post('password', TRUE);
 					
 					/* verify their email/password combo is right */
 					$verify = $this->auth->verify($email, $password);
@@ -538,7 +538,7 @@ class Install_base extends Controller {
 			
 			/* set the POST variables */
 			$email = $this->input->post('email', TRUE);
-			$password = sha1($this->input->post('password', TRUE));
+			$password = $this->input->post('password', TRUE);
 			
 			/* verify their email/password combo is right */
 			$verify = $this->auth->verify($email, $password);
@@ -867,7 +867,7 @@ class Install_base extends Controller {
 					$create_user = array(
 						'name'				=> $this->input->post('real_name', TRUE),
 						'email'				=> $this->input->post('email', TRUE),
-						'password'			=> sha1($this->input->post('password', TRUE)),
+						'password'			=> $this->auth->hash($this->input->post('password', TRUE)),
 						'date_of_birth'		=> $this->input->post('dob', TRUE),
 						'access_role'		=> 1,
 						'is_sysadmin'		=> 'y',
