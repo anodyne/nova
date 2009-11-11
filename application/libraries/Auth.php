@@ -95,6 +95,26 @@ class Auth {
 		return FALSE;
 	}
 	
+	function hash($string = '')
+	{
+		/* get an instance of CI */
+		$this->ci =& get_instance();
+		
+		/* load the resources */
+		$this->ci->load->model('system_model', 'sys');
+		
+		/* grab the Nova UID */
+		$uid = $this->ci->sys->get_nova_uid();
+		
+		/* double hash the UID */
+		$uid = sha1(sha1($uid));
+		
+		/* hash the string with the salt */
+		$string = sha1($uid . $string);
+		
+		return $string;
+	}
+	
 	function is_gamemaster($user = '')
 	{
 		/* get an instance of CI */
@@ -181,6 +201,9 @@ class Auth {
 		$password = $this->ci->input->xss_clean($password);
 		$remember = $this->ci->input->xss_clean($remember);
 		
+		/* hash the password coming in */
+		$pass = $this->hash($password);
+		
 		/* set the variables */
 		$retval = 0;
 		$maintenance = $this->ci->settings->get_setting('maintenance');
@@ -223,7 +246,7 @@ class Auth {
 			/* assign the object to a variable */
 			$person = $login->row();
 			
-			if ($person->password == $password)
+			if ($person->password == $pass)
 			{
 				if ($maintenance == 'on' && $person->is_sysadmin == 'n')
 				{
@@ -262,7 +285,7 @@ class Auth {
 		if ($remember == 'yes')
 		{
 			/* set the cookie */
-			$this->_set_cookie($email, $password);
+			$this->_set_cookie($email, $pass);
 		}
 		
 		return $retval;
@@ -292,6 +315,9 @@ class Auth {
 		
 		/* load the resources */
 		$this->ci->load->model('users_model', 'user');
+		
+		/* hash the password */
+		$password = $this->hash($password);
 		
 		$retval = 0;
 		
