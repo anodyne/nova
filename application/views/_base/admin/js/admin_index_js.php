@@ -60,5 +60,8 @@ elseif ($first_launch == 1)
 			
 			return false;
 		});
+		
+		$('#loading').hide();
+		$('#loaded').removeClass('hidden');
 	});
 </script>
