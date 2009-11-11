@@ -131,7 +131,7 @@ class Personallogs_model_base extends Model {
 		{
 			$row = $query->row();
 			
-			return $row->log_author_player;
+			return $row->log_author_user;
 		}
 		
 		return FALSE;
@@ -295,7 +295,7 @@ class Personallogs_model_base extends Model {
 		return $count;
 	}
 	
-	function count_player_logs($id = '', $status = 'activated', $timeframe = '')
+	function count_user_logs($id = '', $status = 'activated', $timeframe = '')
 	{
 		$count = 0;
 		
@@ -307,7 +307,7 @@ class Personallogs_model_base extends Model {
 			$this->db->where('log_date >=', $timeframe);
 		}
 		
-		$this->db->where('log_author_player', $id);
+		$this->db->where('log_author_user', $id);
 			
 		$count = $this->db->count_all_results();
 		
@@ -326,13 +326,13 @@ class Personallogs_model_base extends Model {
 		return $query->num_rows();
 	}
 	
-	function count_player_log_comments($player = '')
+	function count_user_log_comments($user = '')
 	{
 		$count = 0;
 		
 		$this->db->from('personallogs_comments');
 		$this->db->where('lcomment_status', 'activated');
-		$this->db->where('lcomment_author_player', $player);
+		$this->db->where('lcomment_author_user', $user);
 			
 		$count = $this->db->count_all_results();
 		

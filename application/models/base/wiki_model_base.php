@@ -38,7 +38,7 @@ class Wiki_model_base extends Model {
 		{
 			foreach ($query->result() as $q)
 			{
-				$array[] = $q->draft_author_player;
+				$array[] = $q->draft_author_user;
 			}
 			
 			$retval = array_unique($array);
@@ -175,7 +175,9 @@ class Wiki_model_base extends Model {
 			}
 			else
 			{
-				$this->db->like('wiki_drafts.draft_categories', $category);
+				$string = "(wiki_drafts.draft_categories LIKE '%,$category' OR wiki_drafts.draft_categories LIKE '$category,%' OR wiki_drafts.draft_categories = $category)";
+			
+				$this->db->where("($string)", NULL);
 			}
 		}
 		

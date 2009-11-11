@@ -38,7 +38,7 @@ class Main_base extends Controller {
 		
 		/* load the models */
 		$this->load->model('characters_model', 'char');
-		$this->load->model('players_model', 'player');
+		$this->load->model('users_model', 'user');
 		
 		/* check to see if they are logged in */
 		$this->auth->is_logged_in();
@@ -103,7 +103,7 @@ class Main_base extends Controller {
 		$this->load->model('news_model', 'news');
 		
 		/* run any model or lib methods */
-		$news = $this->news->get_news_items(5, $this->session->userdata('player_id'));
+		$news = $this->news->get_news_items(5, $this->session->userdata('userid'));
 		
 		if ($news->num_rows() > 0 && $this->options['show_news'] == 'y')
 		{
@@ -341,7 +341,7 @@ class Main_base extends Controller {
 		
 		if ($submit != FALSE)
 		{
-			/* player POST variables */
+			/* user POST variables */
 			$email = $this->input->post('email', TRUE);
 			$real_name = $this->input->post('name',TRUE);
 			$im = $this->input->post('instant_message', TRUE);
@@ -372,13 +372,13 @@ class Main_base extends Controller {
 				/* load the additional models */
 				$this->load->model('applications_model', 'apps');
 				
-				/* grab the player id */
-				$check_player = $this->player->check_email($email);
+				/* grab the user id */
+				$check_user = $this->user->check_email($email);
 				
-				if ($check_player === FALSE)
+				if ($check_user === FALSE)
 				{
-					/* build the players data array */
-					$player_array = array(
+					/* build the users data array */
+					$user_array = array(
 						'name' => $real_name,
 						'email' => $email,
 						'password' => sha1($password),
@@ -392,18 +392,18 @@ class Main_base extends Controller {
 						'display_rank' => $this->ranks->get_rank_default(),
 					);
 				
-					/* create the player */
-					$players = $this->player->create_player($player_array);
-					$player_id = $this->db->insert_id();
-					$prefs = $this->player->create_player_prefs($player_id);
+					/* create the user */
+					$users = $this->user->create_user($user_array);
+					$user_id = $this->db->insert_id();
+					$prefs = $this->user->create_user_prefs($user_id);
 				}
 				
-				/* set the player id */
-				$player = (!isset($player_id)) ? $check_player : $player_id;
+				/* set the user id */
+				$user = (!isset($user_id)) ? $check_user : $user_id;
 				
 				/* build the characters data array */
 				$character_array = array(
-					'player' => $player,
+					'user' => $user,
 					'first_name' => $first_name,
 					'middle_name' => $middle_name,
 					'last_name' => $last_name,
@@ -421,8 +421,8 @@ class Main_base extends Controller {
 				/* build the apps data array */
 				$app_array = array(
 					'app_email' => $email,
-					'app_player' => $player,
-					'app_player_name' => $real_name,
+					'app_user' => $user,
+					'app_user_name' => $real_name,
 					'app_character' => $character_id,
 					'app_character_name' => parse_name($name),
 					'app_position' => $this->pos->get_position($position, 'pos_name'),
@@ -440,7 +440,7 @@ class Main_base extends Controller {
 						$array = array(
 							'data_field' => $key,
 							'data_char' => $character_id,
-							'data_player' => $player,
+							'data_user' => $user,
 							'data_value' => $value,
 							'data_updated' => now()
 						);
@@ -450,7 +450,7 @@ class Main_base extends Controller {
 					}
 				}
 				
-				if ($character < 1 && $players < 1)
+				if ($character < 1 && $users < 1)
 				{
 					$message = sprintf(
 						lang('flash_failure'),
@@ -471,13 +471,13 @@ class Main_base extends Controller {
 					);
 					
 					/* execute the email method */
-					$email_user = ($this->options['system_email'] == 'on') ? $this->_email('join_player', $user_data) : FALSE;
+					$email_user = ($this->options['system_email'] == 'on') ? $this->_email('join_user', $user_data) : FALSE;
 					
 					$gm_data = array(
 						'email' => $email,
 						'name' => $real_name,
 						'id' => $character_id,
-						'player' => $player
+						'user' => $user
 					);
 					
 					/* execute the email method */
@@ -639,7 +639,7 @@ class Main_base extends Controller {
 			$data['sample_post_msg'] = $this->msgs->get_message('join_post');
 			
 			$data['label'] = array(
-				'player_info' => ucwords(lang('global_player') .' '. lang('labels_information')),
+				'user_info' => ucwords(lang('global_user') .' '. lang('labels_information')),
 				'name' => ucwords(lang('labels_name')),
 				'email' => ucwords(lang('labels_email_address')),
 				'password' => ucwords(lang('labels_password')),
@@ -704,7 +704,7 @@ class Main_base extends Controller {
 		$this->load->helper('text');
 		
 		/* grab the data from the models */
-		$news = $this->news->get_category_news($category, $this->session->userdata('player_id'));
+		$news = $this->news->get_category_news($category, $this->session->userdata('userid'));
 		$newscat = $this->news->get_news_category($category);
 		$categories = $this->news->get_news_categories();
 		
@@ -795,13 +795,13 @@ class Main_base extends Controller {
 		
 		$id = $this->uri->segment(3, FALSE, TRUE);
 		
-		if ($this->session->userdata('player_id') !== FALSE && isset($_POST['submit']))
+		if ($this->session->userdata('userid') !== FALSE && isset($_POST['submit']))
 		{
 			$comment_text = $this->input->post('comment_text');
 			
 			if (!empty($comment_text))
 			{
-				$status = $this->player->checking_moderation('news_comment', $this->session->userdata('player_id'));
+				$status = $this->user->checking_moderation('news_comment', $this->session->userdata('userid'));
 				
 				/* build the insert array */
 				$insert = array(
@@ -809,7 +809,7 @@ class Main_base extends Controller {
 					'ncomment_news' => $id,
 					'ncomment_date' => now(),
 					'ncomment_author_character' => $this->session->userdata('main_char'),
-					'ncomment_author_player' => $this->session->userdata('player_id'),
+					'ncomment_author_user' => $this->session->userdata('userid'),
 					'ncomment_status' => $status
 				);
 				
@@ -841,11 +841,11 @@ class Main_base extends Controller {
 					}
 					else
 					{
-						/* get the player id */
-						$player = $this->player->get_player_id($this->news->get_news_author($id));
+						/* get the user id */
+						$user = $this->user->get_user_id($this->news->get_news_author($id));
 						
 						/* get the author's preference */
-						$pref = $this->player->get_pref('email_new_news_comments', $player);
+						$pref = $this->user->get_pref('email_new_news_comments', $user);
 						
 						if ($pref == 'y')
 						{
@@ -904,8 +904,8 @@ class Main_base extends Controller {
 			}
 			
 			/* grab the next and previous IDs */
-			$next = $this->news->get_link_id($id, 'next', $this->session->userdata('player_id'));
-			$prev = $this->news->get_link_id($id, 'prev', $this->session->userdata('player_id'));
+			$next = $this->news->get_link_id($id, 'next', $this->session->userdata('userid'));
+			$prev = $this->news->get_link_id($id, 'prev', $this->session->userdata('userid'));
 			
 			/* set the data being sent to the view */
 			$data['id'] = $row->news_id;
@@ -920,7 +920,7 @@ class Main_base extends Controller {
 			
 			/* determine if they can edit the log */
 			if ($this->auth->is_logged_in() === TRUE && ( ($this->auth->get_access_level('manage/news') == 2) ||
-				($this->auth->get_access_level('manage/news') == 1 && $this->session->userdata('player_id') == $row->news_author_player)))
+				($this->auth->get_access_level('manage/news') == 1 && $this->session->userdata('userid') == $row->news_author_user)))
 			{
 				$data['edit_valid'] = TRUE;
 			}
@@ -1071,7 +1071,7 @@ class Main_base extends Controller {
 				{ /* figure out who the emails are going to */
 					case 1:
 						/* get the game masters */
-						$gm = $this->player->get_gm_emails();
+						$gm = $this->user->get_gm_emails();
 						
 						/* set the TO variable */
 						$to = implode(',', $gm);
@@ -1080,7 +1080,7 @@ class Main_base extends Controller {
 						
 					case 2:
 						/* get the command staff */	
-						$command = $this->player->get_command_staff_emails();
+						$command = $this->user->get_command_staff_emails();
 						
 						/* set the TO variable */
 						$to = implode(',', $command);
@@ -1089,7 +1089,7 @@ class Main_base extends Controller {
 						
 					case 3:
 						/* get the webmasters */
-						$webmaster = $this->player->get_webmasters_emails();
+						$webmaster = $this->user->get_webmasters_emails();
 						
 						/* set the TO variable */
 						$to = implode(',', $webmaster);
@@ -1113,8 +1113,8 @@ class Main_base extends Controller {
 				$news = $this->news->get_news_item($data['news_item']);
 				$row = $news->row();
 				$name = $this->char->get_character_name($data['author']);
-				$from = $this->player->get_email_address('character', $data['author']);
-				$to = $this->player->get_email_address('character', $row->news_author);
+				$from = $this->user->get_email_address('character', $data['author']);
+				$to = $this->user->get_email_address('character', $row->news_author);
 				
 				/* set the content */	
 				$content = sprintf(
@@ -1152,8 +1152,8 @@ class Main_base extends Controller {
 				$news = $this->news->get_news_item($data['news_item']);
 				$row = $news->row();
 				$name = $this->char->get_character_name($data['author']);
-				$from = $this->player->get_email_address('character', $data['author']);
-				$to = implode(',', $this->player->get_emails_with_access('manage/comments'));
+				$from = $this->user->get_email_address('character', $data['author']);
+				$to = implode(',', $this->user->get_emails_with_access('manage/comments'));
 				
 				/* set the content */	
 				$content = sprintf(
@@ -1185,10 +1185,10 @@ class Main_base extends Controller {
 				
 				break;
 				
-			case 'join_player':
+			case 'join_user':
 				/* set the content */	
 				$content = sprintf(
-					lang('email_content_join_player'),
+					lang('email_content_join_user'),
 					$this->options['sim_name'],
 					$data['email'],
 					$data['password']
@@ -1196,13 +1196,13 @@ class Main_base extends Controller {
 				
 				/* create the array passing the data to the email */
 				$email_data = array(
-					'email_subject' => lang('email_subject_join_player'),
+					'email_subject' => lang('email_subject_join_user'),
 					'email_from' => ucfirst(lang('time_from')) .': '. $this->options['default_email_name'] .' - '. $this->options['default_email_address'],
 					'email_content' => ($this->email->mailtype == 'html') ? nl2br($content) : $content 
 				);
 				
 				/* where should the email be coming from */
-				$em_loc = email_location('main_join_player', $this->email->mailtype);
+				$em_loc = email_location('main_join_user', $this->email->mailtype);
 				
 				/* parse the message */
 				$message = $this->parser->parse($em_loc, $email_data, TRUE);
@@ -1226,13 +1226,13 @@ class Main_base extends Controller {
 					'email_content' => nl2br(lang('email_content_join_gm'))
 				);
 				
-				$email_data['basic_title'] = lang('tabs_player_basic');
+				$email_data['basic_title'] = lang('tabs_user_basic');
 				
-				/* build the player data array */
-				$player_data = $this->player->get_user_details($data['player']);
-				$p_data = $player_data->row();
+				/* build the user data array */
+				$user_data = $this->user->get_user_details($data['user']);
+				$p_data = $user_data->row();
 				
-				$email_data['player'] = array(
+				$email_data['user'] = array(
 					array(
 						'label' => lang('labels_name'),
 						'data' => $data['name']),
@@ -1296,7 +1296,7 @@ class Main_base extends Controller {
 				$message = $this->parser->parse($em_loc, $email_data, TRUE);
 				
 				/* get the game masters email addresses */
-				$gm = $this->player->get_gm_emails();
+				$gm = $this->user->get_gm_emails();
 				
 				/* set the TO variable */
 				$to = implode(',', $gm);

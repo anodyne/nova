@@ -31,7 +31,7 @@ $data = array(
 	'menu_items',
 	'messages',
 	'news_categories',
-	'player_prefs',
+	'user_prefs',
 	'security_questions',
 	'settings',
 	'sim_type',
@@ -306,12 +306,12 @@ $access_pages = array(
 		'page_name' => "Moderation",
 		'page_url' => 'report/moderation',
 		'page_group' => 5,
-		'page_desc' => "Can view a report on the moderation status of players"),
+		'page_desc' => "Can view a report on the moderation status of users"),
 	array(
 		'page_name' => "Milestones",
 		'page_url' => 'report/milestones',
 		'page_group' => 5,
-		'page_desc' => "Can view a report on the milestones of players"),
+		'page_desc' => "Can view a report on the milestones of users"),
 	array(
 		'page_name' => "Award Nominations",
 		'page_url' => 'report/awardnominations',
@@ -1024,9 +1024,18 @@ $menu_items = array(
 		'menu_type' => 'sub',
 		'menu_cat' => 'wiki'),
 	array(
-		'menu_name' => 'Categories',
+		'menu_name' => 'Recent Changes',
 		'menu_group' => 0,
 		'menu_order' => 1,
+		'menu_link' => 'wiki/recent',
+		'menu_sim_type' => 1,
+		'menu_display' => 'y',
+		'menu_type' => 'sub',
+		'menu_cat' => 'wiki'),
+	array(
+		'menu_name' => 'Categories',
+		'menu_group' => 0,
+		'menu_order' => 2,
 		'menu_link' => 'wiki/categories',
 		'menu_sim_type' => 1,
 		'menu_display' => 'y',
@@ -1655,13 +1664,13 @@ $messages = array(
 		'message_type' => 'other'),
 	array(
 		'message_key' => 'accept_message',
-		'message_label' => 'Player Acceptance Email',
-		'message_content' => "Define your player acceptance message through the Site Message page.",
+		'message_label' => 'User Acceptance Email',
+		'message_content' => "Define your user acceptance message through the Site Message page.",
 		'message_type' => 'other'),
 	array(
 		'message_key' => 'reject_message',
-		'message_label' => 'Player Rejection Message',
-		'message_content' => "Define your player rejection message through the Site Messages page.",
+		'message_label' => 'User Rejection Message',
+		'message_content' => "Define your user rejection message through the Site Messages page.",
 		'message_type' => 'other'),
 	array(
 		'message_key' => 'contact',
@@ -1672,7 +1681,7 @@ $messages = array(
 	array(
 		'message_key' => 'welcome_head',
 		'message_label' => 'Welcome Header',
-		'message_content' => "Welcome to Nova M7!",
+		'message_content' => "Welcome to Nova!",
 		'message_type' => 'title'),
 	array(
 		'message_key' => 'main_credits_title',
@@ -1693,7 +1702,7 @@ $news_categories = array(
 	array('newscat_name' => 'Website Update')
 );
 
-$player_prefs = array(
+$user_prefs = array(
 	array(
 		'pref_key' => 'email_new_news_comments',
 		'pref_label' => 'Email News Comments',
@@ -1749,7 +1758,7 @@ $security_questions = array(
 $settings = array(
 	array(
 		'setting_key' => 'sim_name',
-		'setting_value' => 'Nova M7',
+		'setting_value' => '',
 		'setting_user_created' => 'n'),
 	array(
 		'setting_key' => 'sim_year',
@@ -1801,7 +1810,7 @@ $settings = array(
 		'setting_user_created' => 'n'),
 	array(
 		'setting_key' => 'email_subject',
-		'setting_value' => '[Nova M7]',
+		'setting_value' => '',
 		'setting_user_created' => 'n'),
 	array(
 		'setting_key' => 'timezone',
@@ -1845,11 +1854,11 @@ $settings = array(
 		'setting_user_created' => 'n'),
 	array(
 		'setting_key' => 'default_email_name',
-		'setting_value' => 'Nova M7',
+		'setting_value' => '',
 		'setting_user_created' => 'n'),
 	array(
 		'setting_key' => 'default_email_address',
-		'setting_value' => 'nova@anodyne-productions.com',
+		'setting_value' => '',
 		'setting_user_created' => 'n'),
 	array(
 		'setting_key' => 'use_mission_notes',

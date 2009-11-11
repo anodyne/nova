@@ -37,7 +37,7 @@ class Login_base extends Controller {
 		$this->load->library('session');
 		
 		/* load the models */
-		$this->load->model('players_model', 'player');
+		$this->load->model('users_model', 'user');
 		
 		/* an array of the global we want to retrieve */
 		$settings_array = array(
@@ -60,7 +60,7 @@ class Login_base extends Controller {
 		$this->timezone = $this->options['timezone'];
 		$this->dst = $this->options['daylight_savings'];
 		
-		if ($this->session->userdata('player_id') === TRUE)
+		if ($this->auth->is_logged_in())
 		{ /* if there's a session, set the variables appropriately */
 			$this->skin = $this->session->userdata('skin_login');
 			$this->rank = $this->session->userdata('display_rank');
@@ -303,7 +303,7 @@ class Login_base extends Controller {
 			$answer = $this->input->post('answer', TRUE);
 			
 			/* run the methods */
-			$info = $this->player->get_user_details_by_email($email);
+			$info = $this->user->get_user_details_by_email($email);
 			
 			if ($info->num_rows() == 1)
 			{
@@ -468,13 +468,13 @@ class Login_base extends Controller {
 		$name = FALSE;
 		
 		/* run the methods */
-		$info = $this->player->get_user_details_by_email($email);
+		$info = $this->user->get_user_details_by_email($email);
 		
 		if ($info->num_rows() > 0)
 		{ /* set the ID */
 			$row = $info->row();
 			
-			$id = $row->player_id;
+			$id = $row->userid;
 			$name = $row->name;
 		}
 		
@@ -490,8 +490,8 @@ class Login_base extends Controller {
 			'password' => sha1($new_password)
 		);
 		
-		/* update the player record */
-		$update = $this->player->update_player($id, $array);
+		/* update the user record */
+		$update = $this->user->update_user($id, $array);
 		
 		/* build the data array for the email */
 		$data = array(

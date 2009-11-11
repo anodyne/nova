@@ -1,6 +1,6 @@
 <?php echo text_output($header, 'h1', 'page-head');?>
 
-<p><?php echo link_to_if($edit_valid, 'user/account/'. $player_id, $label['edit'], array('class' => 'edit fontSmall bold'));?></p>
+<p><?php echo link_to_if($edit_valid, 'user/account/'. $userid, $label['edit'], array('class' => 'edit fontSmall bold'));?></p>
 
 <?php if (isset($msg_error)): ?>
 	<?php echo text_output($msg_error, 'h3', 'orange');?>
@@ -244,7 +244,7 @@
 		<div id="five">
 			<?php echo text_output($label['missionposts'], 'h2');?>
 			<?php if (isset($posts)): ?>
-				<p class="bold"><?php echo anchor('personnel/viewposts/p/'. $player_id, $label['viewposts']);?></p>
+				<p class="bold"><?php echo anchor('personnel/viewposts/p/'. $userid, $label['viewposts']);?></p>
 				<table class="table100 zebra">
 					<thead>
 						<tr>
@@ -276,7 +276,7 @@
 			
 			<?php echo text_output($label['personallogs'], 'h2');?>
 			<?php if (isset($logs)): ?>
-				<p class="bold"><?php echo anchor('personnel/viewlogs/p/'. $player_id, $label['viewlogs']);?></p>
+				<p class="bold"><?php echo anchor('personnel/viewlogs/p/'. $userid, $label['viewlogs']);?></p>
 				<table class="table100 zebra">
 					<thead>
 						<tr>
@@ -335,7 +335,7 @@
 					</tbody>
 				</table>
 				
-				<p class="bold"><?php echo anchor('personnel/viewawards/p/'. $player_id, $label['viewawards']);?></p>
+				<p class="bold"><?php echo anchor('personnel/viewawards/p/'. $userid, $label['viewawards']);?></p>
 			<?php else: ?>
 				<?php echo text_output($label['noawards'], 'h2', 'orange');?>
 			<?php endif; ?>

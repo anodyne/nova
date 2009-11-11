@@ -156,7 +156,7 @@ class System_model_base extends Model {
 	
 	function get_loa_records($limit = 0, $offset = 0)
 	{
-		$this->db->from('player_loa');
+		$this->db->from('user_loa');
 		$this->db->order_by('loa_start_date', 'desc');
 		
 		if (!empty($limit))
@@ -185,7 +185,7 @@ class System_model_base extends Model {
 	
 	function get_preferences()
 	{
-		$query = $this->db->get('player_prefs');
+		$query = $this->db->get('user_prefs');
 		
 		return $query;
 	}
@@ -419,7 +419,7 @@ class System_model_base extends Model {
 	
 	function count_loa_records()
 	{
-		$this->db->from('player_loa');
+		$this->db->from('user_loa');
 		
 		return $this->db->count_all_results();
 	}
@@ -447,17 +447,18 @@ class System_model_base extends Model {
 	
 	function update_my_links($status = 'active')
 	{
-		$update = array('my_links' => '69');
+		/* sets the default to Site Options link */
+		$update = array('my_links' => '75');
 		
 		if (!empty($status))
 		{
 			$this->db->where('status', 'active');
 		}
 		
-		$query = $this->db->update('players', $update);
+		$query = $this->db->update('users', $update);
 		
 		/* optimize the table */
-		$this->dbutil->optimize_table('players');
+		$this->dbutil->optimize_table('users');
 		
 		return $query;
 	}

@@ -1892,7 +1892,7 @@ class Ajax_base extends Controller {
 				/* load the resources */
 				$this->load->model('system_model', 'sys');
 				$this->load->model('characters_model', 'char');
-				$this->load->model('players_model', 'player');
+				$this->load->model('users_model', 'user');
 				
 				$type = lang('global_award') .' '. lang('labels_nomination');
 				
@@ -1901,8 +1901,8 @@ class Ajax_base extends Controller {
 				
 				if ($award->award_cat == 'ooc')
 				{
-					$player = $this->player->get_player($nom->award_receive_player);
-					$name = (empty($player->name)) ? $player->email : $player->name;
+					$user = $this->user->get_user($nom->award_receive_user);
+					$name = (empty($user->name)) ? $user->email : $user->name;
 				}
 				else
 				{
@@ -1924,13 +1924,13 @@ class Ajax_base extends Controller {
 				
 			case 'character':
 				$this->load->model('characters_model', 'char');
-				$this->load->model('players_model', 'player');
+				$this->load->model('users_model', 'user');
 				$this->load->model('access_model', 'access');
 				
 				$type = lang('global_character');
 				
 				$item = $this->char->get_character($data['id']);
-				$player = $this->player->get_player($item->player);
+				$user = $this->user->get_user($item->user);
 				$roles = $this->access->get_roles();
 				
 				$data['values'] = array(
@@ -1941,7 +1941,7 @@ class Ajax_base extends Controller {
 						'id' => 'accept',
 						'class' => 'hud',
 						'value' => $this->msgs->get_message('accept_message')),
-					'player_status' => $player->status,
+					'user_status' => $user->status,
 				);
 				
 				if ($roles->num_rows() > 0)
@@ -1971,7 +1971,7 @@ class Ajax_base extends Controller {
 			'rank' => ucfirst(lang('global_rank')),
 			'position' => ucfirst(lang('global_position')),
 			'email' => ucfirst(lang('labels_email')),
-			'role' => ucwords(lang('global_player') .' '. lang('labels_role'))
+			'role' => ucwords(lang('global_user') .' '. lang('labels_role'))
 		);
 		
 		/* input parameters */
@@ -2897,26 +2897,26 @@ class Ajax_base extends Controller {
 		$this->template->render();
 	}
 	
-	function del_player()
+	function del_user()
 	{
 		/* load the resources */
-		$this->load->model('players_model', 'player');
+		$this->load->model('users_model', 'user');
 		
 		$head = sprintf(
 			lang('fbx_head'),
 			ucwords(lang('actions_delete')),
-			ucwords(lang('global_player'))
+			ucwords(lang('global_user'))
 		);
 		
 		/* data being sent to the facebox */
 		$data['header'] = $head;
 		$data['id'] = $this->uri->segment(3, 0, TRUE);
 		
-		$item = $this->player->get_player($data['id']);
+		$item = $this->user->get_user($data['id']);
 		
 		$data['text'] = sprintf(
 			lang('fbx_content_del_entry'),
-			lang('global_player'),
+			lang('global_user'),
 			(!empty($item->name)) ? $item->name : $item->email
 		);
 		
@@ -2931,7 +2931,7 @@ class Ajax_base extends Controller {
 		);
 		
 		/* write the data to the template */
-		$this->template->write_view('content', '_base/ajax/del_player', $data);
+		$this->template->write_view('content', '_base/ajax/del_user', $data);
 		
 		/* render the template */
 		$this->template->render();
@@ -4850,7 +4850,7 @@ class Ajax_base extends Controller {
 	|---------------------------------------------------------------
 	*/
 	
-	function info_players_with_role()
+	function info_users_with_role()
 	{
 		/* load the resources */
 		$this->load->model('access_model', 'access');
@@ -4859,7 +4859,7 @@ class Ajax_base extends Controller {
 		$head = sprintf(
 			lang('fbx_head'),
 			ucwords(lang('fbx_action_info')),
-			ucwords(lang('fbx_item_players_role'))
+			ucwords(lang('fbx_item_users_role'))
 		);
 		
 		/* data being sent to the facebox */
@@ -4869,22 +4869,22 @@ class Ajax_base extends Controller {
 		$role = $this->access->get_role($data['id']);
 		
 		$data['text'] = sprintf(
-			lang('fbx_content_info_players_with_role'),
+			lang('fbx_content_info_users_with_role'),
 			$role->role_name
 		);
 		
-		$players = $this->access->get_players_with_role($data['id']);
+		$users = $this->access->get_users_with_role($data['id']);
 		
-		if (is_array($players))
+		if (is_array($users))
 		{
-			foreach ($players as $p)
+			foreach ($users as $p)
 			{
 				$data['list'][] = $this->char->get_character_name($p, TRUE);
 			}
 		}
 		
 		/* write the data to the template */
-		$this->template->write_view('content', '_base/ajax/info_players_with_role', $data);
+		$this->template->write_view('content', '_base/ajax/info_users_with_role', $data);
 		
 		/* render the template */
 		$this->template->render();
@@ -4923,7 +4923,7 @@ class Ajax_base extends Controller {
 			switch ($type)
 			{
 				case 'ic':
-					$chars = 'player_npc';
+					$chars = 'user_npc';
 					break;
 					
 				default:
@@ -5044,7 +5044,7 @@ class Ajax_base extends Controller {
 				/* load the resources */
 				$this->load->model('system_model', 'sys');
 				$this->load->model('characters_model', 'char');
-				$this->load->model('players_model', 'player');
+				$this->load->model('users_model', 'user');
 				
 				$type = lang('global_award') .' '. lang('labels_nomination');
 				
@@ -5053,8 +5053,8 @@ class Ajax_base extends Controller {
 				
 				if ($award->award_cat == 'ooc')
 				{
-					$player = $this->player->get_player($nom->award_receive_player);
-					$name = (empty($player->name)) ? $player->email : $player->name;
+					$user = $this->user->get_user($nom->award_receive_user);
+					$name = (empty($user->name)) ? $user->email : $user->name;
 				}
 				else
 				{
@@ -5458,7 +5458,7 @@ class Ajax_base extends Controller {
 	function whats_new()
 	{
 		/* load the resources */
-		$this->load->model('players_model', 'player');
+		$this->load->model('users_model', 'user');
 		$this->load->model('system_model', 'sys');
 		
 		/* build the array of pieces we need */
@@ -5475,7 +5475,7 @@ class Ajax_base extends Controller {
 		$version_str = implode('.', $version);
 		
 		/* grab the user info */
-		$person = $this->player->get_player($this->session->userdata('player_id'), 'is_firstlaunch');
+		$person = $this->user->get_user($this->session->userdata('userid'), 'is_firstlaunch');
 		
 		/* grab the what's new information */
 		$data['whats_new'] = $this->sys->get_item('system_versions', 'version', $version_str, 'version_launch');
@@ -5484,7 +5484,7 @@ class Ajax_base extends Controller {
 		
 		if ($person == 1)
 		{
-			$this->player->update_first_launch($this->session->userdata('player_id'));
+			$this->user->update_first_launch($this->session->userdata('userid'));
 		}
 		
 		/* write the data to the template */

@@ -38,7 +38,7 @@ class Messages_base extends Controller {
 		
 		/* load the models */
 		$this->load->model('characters_model', 'char');
-		$this->load->model('players_model', 'player');
+		$this->load->model('users_model', 'user');
 		
 		/* check to see if they are logged in */
 		$this->auth->is_logged_in(TRUE);
@@ -117,7 +117,7 @@ class Messages_base extends Controller {
 						);
 						
 						/* do the update */
-						$update = $this->pm->update_to_message($v, $this->session->userdata('player_id'), $update_array);
+						$update = $this->pm->update_to_message($v, $this->session->userdata('userid'), $update_array);
 						
 						if ($update > 0)
 						{
@@ -209,8 +209,8 @@ class Messages_base extends Controller {
 		}
 		
 		/* run the methods */
-		$inbox = $this->pm->get_inbox($this->session->userdata('player_id'));
-		$outbox = $this->pm->get_outbox($this->session->userdata('player_id'));
+		$inbox = $this->pm->get_inbox($this->session->userdata('userid'));
+		$outbox = $this->pm->get_outbox($this->session->userdata('userid'));
 		
 		/* set the data used by the view */
 		$data['header'] = ucwords(lang('global_privatemessages'));
@@ -365,8 +365,8 @@ class Messages_base extends Controller {
 			$datestring = $this->options['date_format'];
 			
 			/* the person trying to view must either be the author or a recipient of the PM */
-			if ($row->privmsgs_author_player == $this->session->userdata('player_id') ||
-					in_array($this->session->userdata('player_id'), $recips))
+			if ($row->privmsgs_author_user == $this->session->userdata('userid') ||
+					in_array($this->session->userdata('userid'), $recips))
 			{
 				/* start to the build the date */
 				$date = gmt_to_local($row->privmsgs_date, $this->timezone, $this->dst);
@@ -379,7 +379,7 @@ class Messages_base extends Controller {
 				
 				foreach ($recips as $rec)
 				{
-					$array[] = $this->char->get_character_name($this->player->get_main_character($rec), TRUE);
+					$array[] = $this->char->get_character_name($this->user->get_main_character($rec), TRUE);
 				}
 				
 				$to = implode(' &amp; ', $array);
@@ -403,10 +403,10 @@ class Messages_base extends Controller {
 						'class' => 'image inline_img_left')
 				);
 				
-				if (in_array($this->session->userdata('player_id'), $recips))
+				if (in_array($this->session->userdata('userid'), $recips))
 				{
 					$update_array = array('pmto_unread' => 'n');
-					$update = $this->pm->update_message($id, $this->session->userdata('player_id'), $update_array);
+					$update = $this->pm->update_message($id, $this->session->userdata('userid'), $update_array);
 				}
 			
 				/* write the data to the template */
@@ -511,7 +511,7 @@ class Messages_base extends Controller {
 				
 				/* build the insert array */
 				$insert_array = array(
-					'privmsgs_author_player' => $this->session->userdata('player_id'),
+					'privmsgs_author_user' => $this->session->userdata('userid'),
 					'privmsgs_author_character' => $this->session->userdata('main_char'),
 					'privmsgs_date' => now(),
 					'privmsgs_subject' => $subject,
@@ -531,8 +531,8 @@ class Messages_base extends Controller {
 				{ /* go through and add records for every recipient */
 					$insert_array = array(
 						'pmto_message' => $msgid,
-						'pmto_recipient_player' => $value,
-						'pmto_recipient_character' => $this->player->get_main_character($value)
+						'pmto_recipient_user' => $value,
+						'pmto_recipient_character' => $this->user->get_main_character($value)
 					);
 					
 					/* do the insert */
@@ -581,7 +581,7 @@ class Messages_base extends Controller {
 		}
 		
 		/* run the methods */
-		$characters = $this->player->get_main_characters();
+		$characters = $this->user->get_main_characters();
 		
 		if ($characters->num_rows() > 0)
 		{
@@ -589,7 +589,7 @@ class Messages_base extends Controller {
 			
 			foreach ($characters->result() as $item)
 			{
-				$data['characters'][$item->player_id] = $this->char->get_character_name($item->main_char, TRUE);
+				$data['characters'][$item->userid] = $this->char->get_character_name($item->main_char, TRUE);
 			}
 		}
 		
@@ -630,8 +630,8 @@ class Messages_base extends Controller {
 		/* make sure the person is allowed to be replying */
 		if ($recipient_list !== FALSE)
 		{
-			if (!in_array($this->session->userdata('player_id'), $recipient_list) &&
-					!($this->session->userdata('player_id') == $row->privmsgs_author_player))
+			if (!in_array($this->session->userdata('userid'), $recipient_list) &&
+					!($this->session->userdata('userid') == $row->privmsgs_author_user))
 			{
 				redirect('admin/error/3');
 			}
@@ -647,7 +647,7 @@ class Messages_base extends Controller {
 				$data['inputs']['subject']['value'] = lang('abbr_reply') .': '. $row->privmsgs_subject;
 				
 				/* grab the key for the array */
-				$data['key'] = (array_key_exists($row->privmsgs_author_player, $data['characters'])) ? $row->privmsgs_author_player : 0;
+				$data['key'] = (array_key_exists($row->privmsgs_author_user, $data['characters'])) ? $row->privmsgs_author_user : 0;
 				
 				/* set the header */
 				$data['header'] = ucfirst(lang('actions_reply')) .' '. lang('labels_to') 
@@ -667,7 +667,7 @@ class Messages_base extends Controller {
 			
 			case 'replyall':
 				/* set the hidden TO field */
-				$data['to'] = implode(',', $recipient_list) .','. $row->privmsgs_author_player;
+				$data['to'] = implode(',', $recipient_list) .','. $row->privmsgs_author_user;
 				
 				/* send an array to the js view for disabling items in the list */
 				$js_data['replyall'] = explode(',', $data['to']);
@@ -678,7 +678,7 @@ class Messages_base extends Controller {
 				$i = 1;
 				foreach ($to_array as $value)
 				{
-					$to_name = $this->char->get_character_name($this->player->get_main_character($value), TRUE);
+					$to_name = $this->char->get_character_name($this->user->get_main_character($value), TRUE);
 					
 					$data['recipient_list'][$i] = '<span class="'. $value .'">';
 					$data['recipient_list'][$i].= '<a href="#" id="remove_recipient" class="image" myID="'. $value .'" myName="'.  $to_name .'">';
@@ -716,7 +716,7 @@ class Messages_base extends Controller {
 				
 				foreach ($to_array as $rec)
 				{
-					$array[] = $this->char->get_character_name($this->player->get_main_character($rec), TRUE);
+					$array[] = $this->char->get_character_name($this->user->get_main_character($rec), TRUE);
 				}
 				
 				/* create a string of character names */
@@ -781,7 +781,7 @@ class Messages_base extends Controller {
 		$email = FALSE;
 		
 		/* load the models */
-		$this->load->model('players_model', 'player');
+		$this->load->model('users_model', 'user');
 		$this->load->model('characters_model', 'char');
 		
 		/* create an array from the data TO var and prep the emails array */
@@ -793,15 +793,15 @@ class Messages_base extends Controller {
 		
 		foreach ($email_start as $em)
 		{ /* get the emails */
-			$emails[$em] = $this->player->get_email_address('player', $em);
+			$emails[$em] = $this->user->get_email_address('user', $em);
 		}
 		
 		foreach ($emails as $key => $email)
 		{ /* get the character names and narrow the email array based on prefs */
-			$array[] = $this->char->get_character_name($this->player->get_main_character($key), TRUE, TRUE);
+			$array[] = $this->char->get_character_name($this->user->get_main_character($key), TRUE, TRUE);
 			
 			/* get their prefs */
-			$pref = $this->player->get_pref('email_private_message', $key);
+			$pref = $this->user->get_pref('email_private_message', $key);
 			
 			if ($pref == 'y')
 			{
@@ -815,7 +815,7 @@ class Messages_base extends Controller {
 		
 		/* set some variables */
 		$from_name = $this->char->get_character_name($data['author'], TRUE, TRUE);
-		$from_email = $this->player->get_email_address('character', $data['author']);
+		$from_email = $this->user->get_email_address('character', $data['author']);
 		$subject = $this->options['email_subject'] .' '. lang('email_subject_private_message') .' - '. $data['subject'];
 		$to_names = implode(', ', $array);
 		

@@ -74,9 +74,9 @@ class Menu {
 		/* get an instance of CI */
 		$this->ci =& get_instance();
 		
-		/* load the session library and assign the player id */
+		/* load the session library and assign the user id */
 		$this->ci->load->library('session');
-		$player_id = $this->ci->session->userdata('player_id');
+		$userid = $this->ci->session->userdata('userid');
 		
 		/* load the menu model */
 		$this->ci->load->model('menu_model');
@@ -108,15 +108,15 @@ class Menu {
 		
 		foreach ($array as $k => $v)
 		{
-			if ($this->ci->session->userdata('player_id') !== FALSE)
+			if ($this->ci->session->userdata('userid') !== FALSE)
 			{
 				/* check access */
 				$access = $this->ci->auth->check_access($v['link'], FALSE, TRUE);
 			}
 			
-			if (($v['login'] == 'y' && $this->ci->session->userdata('player_id') === FALSE) ||
+			if (($v['login'] == 'y' && $this->ci->session->userdata('userid') === FALSE) ||
 					($v['login'] == 'y' && $access === FALSE) ||
-					($v['login'] == 'n' && $this->ci->session->userdata('player_id') !== FALSE))
+					($v['login'] == 'n' && $this->ci->session->userdata('userid') !== FALSE))
 			{
 				/* do nothing */
 			}
@@ -157,9 +157,9 @@ class Menu {
 		/* get an instance of CI */
 		$this->ci =& get_instance();
 		
-		/* load the session library and assign the player id */
+		/* load the session library and assign the user id */
 		$this->ci->load->library('session');
-		$player_id = $this->ci->session->userdata('player_id');
+		$userid = $this->ci->session->userdata('userid');
 		
 		/* load the menu model */
 		$this->ci->load->model('menu_model');
@@ -189,8 +189,8 @@ class Menu {
 					$link = site_url($item->menu_link);
 				}
 				
-				if (($item->menu_need_login == 'y' && $player_id !== FALSE) ||
-						($item->menu_need_login == 'n' && $player_id === FALSE) || $item->menu_need_login == 'none')
+				if (($item->menu_need_login == 'y' && $userid !== FALSE) ||
+						($item->menu_need_login == 'n' && $userid === FALSE) || $item->menu_need_login == 'none')
 				{
 					$this->output.= '<li><a href="' . $link .'"' . $target . '><span>' . $item->menu_name . '</span></a></li>';
 				}

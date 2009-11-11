@@ -76,7 +76,7 @@ echo "<?xml version='1.0' encoding='UTF-8'?>\r\n";
 			<div class="system_warning"><?php echo lang_output('text_javascript_off', '');?></div>
 		</noscript>
 		
-		<?php if ($this->session->userdata('player_id') !== FALSE): ?>
+		<?php if ($this->session->userdata('userid') !== FALSE): ?>
 			<!-- USER PANEL -->
 			<div id="panel">
 				<div class="panel-body">

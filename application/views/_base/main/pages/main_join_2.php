@@ -1,7 +1,7 @@
 <?php echo text_output($header, 'h1', 'page-head');?>
 
 <?php echo form_open('main/join');?>
-	<?php echo text_output($label['player_info'], 'h3', 'page-subhead');?>
+	<?php echo text_output($label['user_info'], 'h3', 'page-subhead');?>
 	<table class="table100">
 		<tr>
 			<td class="cell-label"><?php echo $label['name'];?></td>

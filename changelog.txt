@@ -1,3 +1,19 @@
+11.10.2009
+
+* updated the wiki category page to remove the intro text since it was wrong
+* updated the get_pages() wiki model method to fix bug where page categories would overlap
+* udpated the language files
+* updated the basic install data
+* updated the wiki to be able to show recent changes
+* updated the application to use 'user' instead of 'player'
+
+* added wiki/recents view file
+* added users model
+
+* fixed bug where the initial my link wasn't site options
+
+==========
+
 11.09.2009
 
 * added html email view for wiki comments

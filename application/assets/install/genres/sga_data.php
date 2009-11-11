@@ -80,28 +80,28 @@ $catalogue_ranks = array(
 
 $characters = array(
 	array(
-		'player' => 1,
+		'user' => 1,
 		'first_name' => 'Cameron',
 		'last_name' => 'Mitchell',
 		'position_1' => 1,
 		'rank' => 1,
 		'date_activate' => now()),
 	array(
-		'player' => 2,
+		'user' => 2,
 		'first_name' => 'Samantha',
 		'last_name' => 'Carter',
 		'position_1' => 2,
 		'rank' => 4,
 		'date_activate' => now()),
 	array(
-		'player' => 2,
+		'user' => 2,
 		'first_name' => 'Daniel',
 		'last_name' => 'Jackson',
 		'position_1' => 9,
 		'rank' => 5,
 		'date_activate' => now()),
 	array(
-		'player' => 1,
+		'user' => 1,
 		'first_name' => 'Hank',
 		'last_name' => 'Landry',
 		'position_1' => 10,

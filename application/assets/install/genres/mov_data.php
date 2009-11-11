@@ -799,14 +799,14 @@ $catalogue_ranks = array(
 
 $characters = array(
 	array(
-		'player' => 1,
+		'user' => 1,
 		'first_name' => 'James',
 		'last_name' => 'Kirk',
 		'position_1' => 1,
 		'rank' => 5,
 		'date_activate' => now()),
 	array(
-		'player' => 2,
+		'user' => 2,
 		'first_name' => "Spock",
 		'last_name' => '',
 		'position_1' => 2,
@@ -814,14 +814,14 @@ $characters = array(
 		'rank' => 17,
 		'date_activate' => now()),
 	array(
-		'player' => 2,
+		'user' => 2,
 		'first_name' => 'Montgomery',
 		'last_name' => 'Scott',
 		'position_1' => 18,
 		'rank' => 21,
 		'date_activate' => now()),
 	array(
-		'player' => 1,
+		'user' => 1,
 		'first_name' => 'Leonard',
 		'last_name' => 'McCoy',
 		'position_1' => 24,

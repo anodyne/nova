@@ -29,15 +29,15 @@
 									<td>
 										<strong><?php echo $i['name'];?></strong><br />
 										
-										<?php if (empty($i['pid'])): ?>
-											<?php echo text_output($label['noplayer'], 'span', 'fontSmall bold red');?><br />
+										<?php if (empty($i['uid'])): ?>
+											<?php echo text_output($label['nouser'], 'span', 'fontSmall bold red');?><br />
 										<?php endif;?>
 										
 										<?php echo text_output($i['position_1'], 'span', 'fontSmall gray');?>
 									</td>
 									<td class="col_100 align_right">
-										<?php if (!empty($i['pid']) && $levelcheck['account'] == 2): ?>
-											<?php echo anchor('user/account/'. $i['pid'], img($images['account']), array('class' => 'image'));?>
+										<?php if (!empty($i['uid']) && $levelcheck['account'] == 2): ?>
+											<?php echo anchor('user/account/'. $i['uid'], img($images['account']), array('class' => 'image'));?>
 											&nbsp;
 										<?php else: ?>
 											<?php echo anchor('user/characterlink', img($images['assign']), array('class' => 'image'));?>
@@ -114,15 +114,15 @@
 										<?php endif;?>
 										<strong><?php echo $i['name'];?></strong><br />
 										
-										<?php if (empty($i['pid'])): ?>
-											<?php echo text_output($label['noplayer'], 'span', 'fontSmall bold red');?><br />
+										<?php if (empty($i['uid'])): ?>
+											<?php echo text_output($label['nouser'], 'span', 'fontSmall bold red');?><br />
 										<?php endif;?>
 										
 										<span class="fontSmall gray"><?php echo $i['position_1'];?></span>
 									</td>
 									<td>
 										<?php if ($i['pstatus'] == 'pending'): ?>
-											<?php echo text_output($label['newplayer'], 'span', 'green fontSmall bold');?>
+											<?php echo text_output($label['newuser'], 'span', 'green fontSmall bold');?>
 											<br />
 										<?php endif;?>
 										<?php echo text_output($i['email'], 'span', 'fontSmall bold gray');?>

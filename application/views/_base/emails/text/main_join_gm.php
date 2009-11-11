@@ -3,10 +3,10 @@
 {email_from}
 
 {basic_title}
-{player}
+{user}
 	{label}
 	{data}
-{/player}
+{/user}
 
 {character}
 	{label}

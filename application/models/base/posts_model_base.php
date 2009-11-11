@@ -237,7 +237,7 @@ class Posts_model_base extends Model {
 			foreach ($authors as $value)
 			{
 				$this->db->select('email');
-				$this->db->from('players');
+				$this->db->from('users');
 				$this->db->like('characters', $value);
 				
 				$query = $this->db->get();
@@ -259,7 +259,7 @@ class Posts_model_base extends Model {
 		return FALSE;
 	}
 	
-	function get_author_player_ids($post = '')
+	function get_author_user_ids($post = '')
 	{
 		$post = $this->db->get_where('posts', array('post_id' => $post));
 		
@@ -276,8 +276,8 @@ class Posts_model_base extends Model {
 			
 			foreach ($authors as $value)
 			{
-				$this->db->select('player_id');
-				$this->db->from('players');
+				$this->db->select('user_id');
+				$this->db->from('users');
 				$this->db->like('characters', $value);
 				
 				$query = $this->db->get();
@@ -286,9 +286,9 @@ class Posts_model_base extends Model {
 				{
 					$item = $query->row();
 					
-					if (!in_array($item->player_id, $array))
+					if (!in_array($item->userid, $array))
 					{
-						$array[] = $item->player_id;
+						$array[] = $item->userid;
 					}
 				}
 			}
@@ -502,7 +502,7 @@ class Posts_model_base extends Model {
 		return $count;
 	}
 	
-	function count_player_posts($id = '', $status = 'activated', $timeframe = '')
+	function count_user_posts($id = '', $status = 'activated', $timeframe = '')
 	{
 		$count = 0;
 		
@@ -514,20 +514,20 @@ class Posts_model_base extends Model {
 			$this->db->where('post_date >=', $timeframe);
 		}
 		
-		$this->db->like('post_authors_players', $id);
+		$this->db->like('post_authors_users', $id);
 			
 		$count = $this->db->count_all_results();
 		
 		return $count;
 	}
 	
-	function count_player_post_comments($player = '')
+	function count_user_post_comments($user = '')
 	{
 		$count = 0;
 		
 		$this->db->from('posts_comments');
 		$this->db->where('pcomment_status', 'activated');
-		$this->db->where('pcomment_author_player', $player);
+		$this->db->where('pcomment_author_user', $user);
 			
 		$count = $this->db->count_all_results();
 		

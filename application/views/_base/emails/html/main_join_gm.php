@@ -12,12 +12,12 @@
 		<h3>{email_from}</h3>
 		
 		<h3>{basic_title}</h3>
-		{player}
+		{user}
 			<p>
 				<strong>{label}</strong><br />
 				{data}
 			<p>
-		{/player}
+		{/user}
 		
 		{character}
 			<p>

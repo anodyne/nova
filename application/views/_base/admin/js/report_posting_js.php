@@ -9,11 +9,11 @@
 		$('#loader').hide();
 		$('#loaded').removeClass('hidden');
 		
-		$('table.search_players tbody tr').quicksearch({
+		$('table.search_users tbody tr').quicksearch({
 			position: 'append',
 			attached: 'div.search',
 			labelText: '',
-			inputText: '<?php echo $lang['search_players'];?>',
+			inputText: '<?php echo $lang['search_users'];?>',
 			loaderText: '',
 			stripeRowClass: ['alt', '']
 		});

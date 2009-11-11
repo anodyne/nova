@@ -40,11 +40,11 @@
 	
 	<?php echo table_row_spacer(3, 10);?>
 	
-	<?php if ($this->auth->is_logged_in() === TRUE && !is_null($character['player'])): ?>
+	<?php if ($this->auth->is_logged_in() === TRUE && !is_null($character['user'])): ?>
 	<tr>
 		<td colspan="2"></td>
 		<td>
-			<?php echo anchor('personnel/player/'. $character['player'], $label['view_player'], array('class' => 'bold'));?>
+			<?php echo anchor('personnel/user/'. $character['user'], $label['view_user'], array('class' => 'bold'));?>
 		</td>
 	</tr>
 	<?php endif; ?>

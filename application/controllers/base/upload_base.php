@@ -39,7 +39,7 @@ class Upload_base extends Controller {
 		
 		/* load the models */
 		$this->load->model('characters_model', 'char');
-		$this->load->model('players_model', 'player');
+		$this->load->model('users_model', 'user');
 		
 		/* check to see if they are logged in */
 		$this->auth->is_logged_in(TRUE);
@@ -118,7 +118,7 @@ class Upload_base extends Controller {
 					'upload_filename' => $upload['file_name'],
 					'upload_mime_type' => $upload['file_type'],
 					'upload_resource_type' => $upload_data['type'],
-					'upload_player' => $this->session->userdata('player_id'),
+					'upload_user' => $this->session->userdata('userid'),
 					'upload_ip' => $this->input->ip_address(),
 					'upload_date' => now()
 				);
@@ -321,7 +321,7 @@ class Upload_base extends Controller {
 						break;
 				}
 				
-				$player = $this->player->get_player($d->upload_player, array('name', 'email'));
+				$user = $this->user->get_user($d->upload_user, array('name', 'email'));
 				
 				$date = gmt_to_local($d->upload_date, $this->timezone, $this->dst);
 				
@@ -337,7 +337,7 @@ class Upload_base extends Controller {
 					'filename' => $d->upload_filename,
 					'id' => $d->upload_id,
 					'is_file' => (!is_file(APPPATH .'assets/'. $location .'/'. $d->upload_filename)) ? FALSE : TRUE,
-					'player' => (empty($player['name'])) ? $player['email'] : $player['name'],
+					'user' => (empty($user['name'])) ? $user['email'] : $user['name'],
 					'date' => mdate($this->options['date_format'], $date),
 				);
 			}

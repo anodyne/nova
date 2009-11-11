@@ -38,7 +38,7 @@ class Characters_base extends Controller {
 		
 		/* load the models */
 		$this->load->model('characters_model', 'char');
-		$this->load->model('players_model', 'player');
+		$this->load->model('users_model', 'user');
 		
 		/* check to see if they are logged in */
 		$this->auth->is_logged_in(TRUE);
@@ -108,21 +108,21 @@ class Characters_base extends Controller {
 					$id = $this->input->post('id', TRUE);
 					$id = (is_numeric($id)) ? $id : FALSE;
 					
-					/* get the player id */
-					$playerid = $this->char->get_character($id, array('player', 'crew_type'));
+					/* get the user id */
+					$userid = $this->char->get_character($id, array('user', 'crew_type'));
 					
-					if ($playerid !== FALSE)
+					if ($userid !== FALSE)
 					{
-						/* grab the player data */
-						$player = $this->player->get_player($playerid['player']);
+						/* grab the user data */
+						$user = $this->user->get_user($userid['user']);
 						
 						/* temp variable for setting a new main character */
 						$newmain = NULL;
 						
-						if ($player !== FALSE)
+						if ($user !== FALSE)
 						{
-							$characters = $player->characters;
-							$main = $player->main_char;
+							$characters = $user->characters;
+							$main = $user->main_char;
 							
 							if (strstr($characters, $id) !== FALSE)
 							{ /* if the ID is in the characters string, remove it */
@@ -152,13 +152,13 @@ class Characters_base extends Controller {
 								$newchars = $characters;
 							}
 							
-							/* set the array to update the players table */
+							/* set the array to update the users table */
 							$update_array = array('main_char' => ($main == $id) ? $newmain : $main);
 							
-							$update = $this->player->update_player($playerid, $update_array);
+							$update = $this->user->update_user($userid, $update_array);
 						}
 						
-						if ($playerid['crew_type'] == 'pending')
+						if ($userid['crew_type'] == 'pending')
 						{
 							$this->load->model('applications_model', 'apps');
 							
@@ -211,8 +211,8 @@ class Characters_base extends Controller {
 					$action = $this->input->post('action', TRUE);
 					
 					$info = $this->char->get_character($id);
-					$player = $this->player->get_player($info->player);
-					$characters = $this->char->get_player_characters($info->player, 'active', 'array');
+					$user = $this->user->get_user($info->user);
+					$characters = $this->char->get_user_characters($info->user, 'active', 'array');
 					$count = count($characters);
 					
 					if ($action == 'approve')
@@ -222,7 +222,7 @@ class Characters_base extends Controller {
 							'rank' => $this->input->post('rank', TRUE),
 							'crew_type' => 'active',
 							'date_activate' => (empty($info->date_activate)) ? now() : $info->date_activate,
-							'player' => ($count >= $this->options['allowed_chars_playing']) ? NULL : $info->player, 
+							'user' => ($count >= $this->options['allowed_chars_playing']) ? NULL : $info->user, 
 						);
 						
 						$update = $this->char->update_character($id, $c_update);
@@ -241,7 +241,7 @@ class Characters_base extends Controller {
 						
 						/* set the arguments for the message */
 						$args = array(
-							'name' => (!empty($player->name)) ? $player->name : $player->email,
+							'name' => (!empty($user->name)) ? $user->name : $user->email,
 							'character' => $this->char->get_character_name($id),
 							'position' => $this->pos->get_position($c_update['position_1'], 'pos_name'),
 							'rank' => $this->ranks->get_rank($c_update['rank'], 'rank_name'),
@@ -251,15 +251,15 @@ class Characters_base extends Controller {
 						/* parse the message with the args */
 						$content = parse_dynamic_message($message, $args);
 						
-						if ($player->status != 'active')
-						{ /* updated the players table if necessary */
+						if ($user->status != 'active')
+						{ /* updated the users table if necessary */
 							$p_update = array(
 								'status' => 'active',
 								'leave_date' => NULL,
 								'access_role' => $this->input->post('role', TRUE)
 							);
 							
-							$update += $this->player->update_player($player->player_id, $p_update);
+							$update += $this->user->update_user($user->userid, $p_update);
 						}
 						
 						/* update the applications table */
@@ -284,8 +284,8 @@ class Characters_base extends Controller {
 							
 							$email_data = array(
 								'message' => $content,
-								'email' => $player->email,
-								'name' => $player->name,
+								'email' => $user->email,
+								'name' => $user->name,
 								'character' => $args['character']
 							);
 							
@@ -310,9 +310,9 @@ class Characters_base extends Controller {
 					
 						$delete = $this->char->delete_character($id);
 						
-						if ($player->status == 'pending')
-						{ /* if the player is pending, it means they should only have one character */
-							$delete += $this->player->delete_player($player->player_id);
+						if ($user->status == 'pending')
+						{ /* if the user is pending, it means they should only have one character */
+							$delete += $this->user->delete_user($user->userid);
 						}
 						
 						/* grab the message */
@@ -320,7 +320,7 @@ class Characters_base extends Controller {
 						
 						/* set the arguments for the message */
 						$args = array(
-							'name' => (!empty($player->name)) ? $player->name : $player->email,
+							'name' => (!empty($user->name)) ? $user->name : $user->email,
 							'character' => $this->char->get_character_name($id),
 							'position' => $this->pos->get_position($info->position_1, 'pos_name'),
 							'ship' => $this->options['sim_name']
@@ -351,8 +351,8 @@ class Characters_base extends Controller {
 							
 							$email_data = array(
 								'message' => $content,
-								'email' => $player->email,
-								'name' => $player->name,
+								'email' => $user->email,
+								'name' => $user->name,
 								'character' => $args['character']
 							);
 							
@@ -422,11 +422,11 @@ class Characters_base extends Controller {
 						$cdept = $pos->pos_dept;
 					}
 					
-					$p = $this->player->get_player($a->player, array('status', 'email'));
+					$p = $this->user->get_user($a->user, array('status', 'email'));
 					
 					$data['characters'][$cdept]['chars'][$a->crew_type][$a->charid] = array(
 						'id' => $a->charid,
-						'pid' => $a->player,
+						'uid' => $a->user,
 						'name' => parse_name($name),
 						'position_1' => $pos->pos_name,
 						'position_2' => $this->pos->get_position($a->position_2, 'pos_name'),
@@ -506,14 +506,14 @@ class Characters_base extends Controller {
 				.' '. lang('global_character') .' '. RARROW),
 			'inactive' => ucwords(lang('status_inactive') .' '. lang('global_characters')),
 			'loading' => ucfirst(lang('actions_loading') .'...'),
-			'newplayer' => ucwords(lang('status_new') .' '. lang('global_player')),
+			'newuser' => ucwords(lang('status_new') .' '. lang('global_user')),
 			'noactive' => ucfirst(lang('labels_no') .' '. lang('status_active')
 				.' '. lang('global_characters') .' '. lang('actions_found')),
 			'noinactive' => ucfirst(lang('labels_no') .' '. lang('status_inactive')
 				.' '. lang('global_characters') .' '. lang('actions_found')),
 			'nopending' => ucfirst(lang('labels_no') .' '. lang('status_pending')
 				.' '. lang('global_characters') .' '. lang('actions_found')),
-			'noplayer' => ucfirst(lang('labels_no') .' '. lang('global_player')
+			'nouser' => ucfirst(lang('labels_no') .' '. lang('global_user')
 				.' '. lang('actions_assigned') .'!'),
 			'pending' => ucwords(lang('status_pending') .' '. lang('global_characters')),
 		);
@@ -575,7 +575,7 @@ class Characters_base extends Controller {
 			$insert_array = array(
 				'awardrec_award' => $award,
 				'awardrec_character' => ($info->award_cat == 'ooc') ? 0 : $id,
-				'awardrec_player' => $this->char->get_character($id, 'player'),
+				'awardrec_user' => $this->char->get_character($id, 'user'),
 				'awardrec_reason' => $this->input->post('reason', TRUE),
 				'awardrec_date' => now(),
 				'awardrec_nominated_by' => $this->session->userdata('main_char'),
@@ -678,25 +678,25 @@ class Characters_base extends Controller {
 				}
 			}
 			
-			if (!empty($info->player))
+			if (!empty($info->user))
 			{
 				$where = array(
 					'awardrec_character' => 0
 				);
 				
-				$playerawards = $this->awards->get_player_awards($info->player, 0, $where);
+				$userawards = $this->awards->get_user_awards($info->user, 0, $where);
 				
-				if ($playerawards->num_rows() > 0)
+				if ($userawards->num_rows() > 0)
 				{
-					foreach ($playerawards->result() as $p)
+					foreach ($userawards->result() as $p)
 					{
 						$date = gmt_to_local($p->awardrec_date, $this->timezone, $this->dst);
 						
-						$data['player']['awards'][$p->awardrec_id]['id'] = $p->awardrec_id;
-						$data['player']['awards'][$p->awardrec_id]['award'] = $p->award_name;
-						$data['player']['awards'][$p->awardrec_id]['reason'] = $p->awardrec_reason;
-						$data['player']['awards'][$p->awardrec_id]['date'] = mdate($this->options['date_format'], $date);
-						$data['player']['awards'][$p->awardrec_id]['image'] = array(
+						$data['user']['awards'][$p->awardrec_id]['id'] = $p->awardrec_id;
+						$data['user']['awards'][$p->awardrec_id]['award'] = $p->award_name;
+						$data['user']['awards'][$p->awardrec_id]['reason'] = $p->awardrec_reason;
+						$data['user']['awards'][$p->awardrec_id]['date'] = mdate($this->options['date_format'], $date);
+						$data['user']['awards'][$p->awardrec_id]['image'] = array(
 							'src' => asset_location('images/awards', $p->award_image),
 							'alt' => '',
 							'class' => 'image award-small'
@@ -818,9 +818,9 @@ class Characters_base extends Controller {
 		
 		if (isset($_POST['submit']))
 		{
-			/* get the player ID and figure out if it should be NULL or not */
-			$player = $this->char->get_character($data['id'], array('player', 'crew_type'));
-			$p = (empty($player['player'])) ? NULL : $player['player'];
+			/* get the user ID and figure out if it should be NULL or not */
+			$user = $this->char->get_character($data['id'], array('user', 'crew_type'));
+			$p = (empty($user['user'])) ? NULL : $user['user'];
 			
 			foreach ($_POST as $key => $value)
 			{
@@ -830,7 +830,7 @@ class Characters_base extends Controller {
 					$array['fields'][$key] = array(
 						'data_field' => $key,
 						'data_char' => $data['id'],
-						'data_player' => $p,
+						'data_user' => $p,
 						'data_value' => $value,
 						'data_updated' => now()
 					);
@@ -849,12 +849,12 @@ class Characters_base extends Controller {
 			unset($array['character']['position_1_old']);
 			unset($array['character']['position_2_old']);
 			
-			if ($array['character']['crew_type'] == 'inactive' && $player['crew_type'] != 'inactive')
+			if ($array['character']['crew_type'] == 'inactive' && $user['crew_type'] != 'inactive')
 			{ /* set the deactivate date */
 				$array['character']['date_deactivate'] = now();
 			}
 			
-			if ($array['character']['crew_type'] != 'inactive' && $player['crew_type'] == 'inactive')
+			if ($array['character']['crew_type'] != 'inactive' && $user['crew_type'] == 'inactive')
 			{ /* wipe out the deactivate date if they're being reactivated */
 				$array['character']['date_deactivate'] = NULL;
 			}
@@ -1085,7 +1085,7 @@ class Characters_base extends Controller {
 		{
 			foreach ($dir->result() as $d)
 			{
-				if ($d->upload_player == $this->session->userdata('player_id'))
+				if ($d->upload_user == $this->session->userdata('userid'))
 				{
 					$data['myuploads'][$d->upload_id] = array(
 						'image' => array(
@@ -1269,7 +1269,7 @@ class Characters_base extends Controller {
 							}
 							else
 							{
-								$array['character']['player'] = $this->session->userdata('player_id');
+								$array['character']['user'] = $this->session->userdata('userid');
 								$array['character']['crew_type'] = 'pending';
 							}
 						}
@@ -1320,13 +1320,13 @@ class Characters_base extends Controller {
 			{
 				if ($array['character']['crew_type'] == 'pending')
 				{
-					$player = $this->player->get_player($array['character']['player']);
+					$user = $this->user->get_user($array['character']['user']);
 					
 					$gm_data = array(
-						'email' => $player->email,
-						'name' => $player->name,
+						'email' => $user->email,
+						'name' => $user->name,
 						'id' => $cid,
-						'player' => $array['character']['player']
+						'user' => $array['character']['user']
 					);
 					
 					/* execute the email method */
@@ -1534,21 +1534,21 @@ class Characters_base extends Controller {
 					$id = $this->input->post('id', TRUE);
 					$id = (is_numeric($id)) ? $id : FALSE;
 					
-					/* get the player id */
-					$playerid = $this->char->get_character($id, 'player');
+					/* get the user id */
+					$userid = $this->char->get_character($id, 'user');
 					
-					if ($playerid !== FALSE)
+					if ($userid !== FALSE)
 					{
-						/* grab the player data */
-						$player = $this->player->get_player($playerid);
+						/* grab the user data */
+						$user = $this->user->get_user($userid);
 						
 						/* temp variable for setting a new main character */
 						$newmain = NULL;
 						
-						if ($player !== FALSE)
+						if ($user !== FALSE)
 						{
-							$characters = $player->characters;
-							$main = $player->main_char;
+							$characters = $user->characters;
+							$main = $user->main_char;
 							
 							if (strstr($characters, $id) !== FALSE)
 							{ /* if the ID is in the characters string, remove it */
@@ -1578,13 +1578,13 @@ class Characters_base extends Controller {
 								$newchars = $characters;
 							}
 							
-							/* set the array to update the players table */
+							/* set the array to update the users table */
 							$update_array = array(
 								'characters' => $newchars,
 								'main_char' => ($main == $id) ? $newmain : $main
 							);
 							
-							$update = $this->player->update_player($playerid, $update_array);
+							$update = $this->user->update_user($userid, $update_array);
 						}
 					}
 					
@@ -1755,8 +1755,8 @@ class Characters_base extends Controller {
 					}
 				}
 				
-				/* get the player info */
-				$p = $this->player->get_player($a->player, array('status', 'email'));
+				/* get the user info */
+				$p = $this->user->get_user($a->user, array('status', 'email'));
 				
 				if (
 					(($level == 1 || $level == 2) && (in_array($a->position_1, $positions) || in_array($a->position_2, $positions))) || 
@@ -1765,7 +1765,7 @@ class Characters_base extends Controller {
 				{
 					$data['characters'][$cdept]['chars'][$a->charid] = array(
 						'id' => $a->charid,
-						'pid' => $a->player,
+						'uid' => $a->user,
 						'name' => parse_name($name),
 						'position_1' => $pos->pos_name,
 						'position_2' => (!empty($a->position_2)) ? $this->pos->get_position($a->position_2, 'pos_name') : '',
@@ -1826,7 +1826,7 @@ class Characters_base extends Controller {
 			'loading' => ucfirst(lang('actions_loading') .'...'),
 			'noactive' => ucfirst(lang('labels_no') .' '. lang('status_active')
 				.' '. lang('status_nonplaying') .' '. lang('global_characters') .' '. lang('actions_found')),
-			'noplayer' => ucfirst(lang('labels_no') .' '. lang('global_player')
+			'nouser' => ucfirst(lang('labels_no') .' '. lang('global_user')
 				.' '. lang('actions_assigned') .'!'),
 		);
 		
@@ -1855,7 +1855,7 @@ class Characters_base extends Controller {
 		switch ($type)
 		{
 			case 'accept':
-				$cc = implode(',', $this->player->get_emails_with_access('characters/index'));
+				$cc = implode(',', $this->user->get_emails_with_access('characters/index'));
 				
 				$email_data = array(
 					'email_subject' => lang('email_subject_character_approved') .' - '. $data['character'],
@@ -1876,7 +1876,7 @@ class Characters_base extends Controller {
 				break;
 				
 			case 'reject':
-				$cc = implode(',', $this->player->get_emails_with_access('characters/index'));
+				$cc = implode(',', $this->user->get_emails_with_access('characters/index'));
 				
 				$email_data = array(
 					'email_subject' => lang('email_subject_character_rejected') .' - '. $data['character'],
@@ -1907,13 +1907,13 @@ class Characters_base extends Controller {
 					'email_content' => nl2br(lang('email_content_join_gm'))
 				);
 				
-				$email_data['basic_title'] = lang('tabs_player_basic');
+				$email_data['basic_title'] = lang('tabs_user_basic');
 				
-				/* build the player data array */
-				$player_data = $this->player->get_user_details($data['player']);
-				$p_data = $player_data->row();
+				/* build the user data array */
+				$user_data = $this->user->get_user_details($data['user']);
+				$p_data = $user_data->row();
 				
-				$email_data['player'] = array(
+				$email_data['user'] = array(
 					array(
 						'label' => lang('labels_name'),
 						'data' => $data['name']),
@@ -1977,7 +1977,7 @@ class Characters_base extends Controller {
 				$message = $this->parser->parse($em_loc, $email_data, TRUE);
 				
 				/* get the game masters email addresses */
-				$gm = $this->player->get_gm_emails();
+				$gm = $this->user->get_gm_emails();
 				
 				/* set the TO variable */
 				$to = implode(',', $gm);

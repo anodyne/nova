@@ -38,7 +38,7 @@ class Archive_base extends Controller {
 		
 		/* load the models */
 		$this->load->model('characters_model', 'char');
-		$this->load->model('players_model', 'player');
+		$this->load->model('users_model', 'user');
 		
 		/* check to see if they are logged in */
 		$this->auth->is_logged_in();

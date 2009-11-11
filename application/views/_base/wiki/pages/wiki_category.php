@@ -1,7 +1,5 @@
 <?php echo text_output($header, 'h1', 'page-head');?>
 
-<?php echo text_output($label['text']);?>
-
 <?php if (isset($pages)): ?>
 	<ul class="square margin1 padding1">
 	<?php foreach ($pages as $p): ?>

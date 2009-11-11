@@ -72,7 +72,7 @@ echo "<?xml version='1.0' encoding='UTF-8'?>\r\n";
 				</span>
 			</noscript>
 			
-			<?php if ($this->session->userdata('player_id') !== FALSE): ?>
+			<?php if ($this->session->userdata('userid') !== FALSE): ?>
 				<!-- USER PANEL -->
 				<div id="panel" class="UITheme">
 					<div class="panel-body">

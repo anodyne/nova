@@ -15,7 +15,7 @@
 				<div class="count ui-state-highlight"><?php echo $notifycount;?></div>
 			<?php endif;?><?php echo $label['mynotify'];?></span></a></li>
 			
-			<?php if ($this->auth->is_gamemaster($this->session->userdata('player_id')) === TRUE && $activitycount > 0): ?>
+			<?php if ($this->auth->is_gamemaster($this->session->userdata('userid')) === TRUE && $activitycount > 0): ?>
 				<li><a href="#" id="activity"><span>
 					<div class="count ui-state-highlight"><?php echo $activitycount;?></div>
 					<?php echo $label['activity'];?></span></a></li>
@@ -120,7 +120,7 @@
 						<tr>
 							<td class="col1"><?php echo $notification['pending_users'];?></td>
 							<td class="cell-spacer"></td>
-							<td class="col2"><?php echo anchor('characters/index/pending', $label['p_players']);?></td>
+							<td class="col2"><?php echo anchor('characters/index/pending', $label['p_users']);?></td>
 						</tr>
 					<?php endif; ?>
 					

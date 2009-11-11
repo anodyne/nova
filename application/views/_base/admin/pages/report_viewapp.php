@@ -11,7 +11,7 @@
 			<tr>
 				<td class="cell-label"><?php echo $label['pname'];?></td>
 				<td class="cell-spacer"></td>
-				<td><?php echo $app['player'];?></td>
+				<td><?php echo $app['user'];?></td>
 			</tr>
 			<tr>
 				<td class="cell-label"><?php echo $label['email'];?></td>

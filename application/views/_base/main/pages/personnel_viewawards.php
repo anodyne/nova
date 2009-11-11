@@ -36,7 +36,7 @@
 <?php endif; ?>
 	
 <?php if (isset($char)): ?>
-	<p class="bold"><?php echo anchor('personnel/player/'. $player .'/5', $label['backplayer']);?></p>
+	<p class="bold"><?php echo anchor('personnel/user/'. $user .'/5', $label['backuser']);?></p>
 	<?php foreach ($char as $key => $value): ?>
 	<br />
 	<?php echo text_output($value['character'], 'h2');?>

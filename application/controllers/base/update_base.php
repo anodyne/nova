@@ -115,11 +115,11 @@ class Update_base extends Controller {
 			/* verify their email/password combo is right */
 			$verify = $this->auth->verify($email, $password);
 			
-			/* get their player ID */
-			$player = $this->sys->get_item('players', 'email', $email, 'player_id');
+			/* get their user ID */
+			$user = $this->sys->get_item('users', 'email', $email, 'userid');
 			
 			/* verify they're a sys admin */
-			$sysadmin = $this->auth->is_sysadmin($player);
+			$sysadmin = $this->auth->is_sysadmin($user);
 			
 			if ($verify == 0 && $sysadmin === TRUE)
 			{
@@ -388,10 +388,10 @@ class Update_base extends Controller {
 				/* update the system info */
 				$this->sys->update_system_info($system_info);
 				
-				/* update the players to be first launch */
-				$this->load->model('players_model', 'player');
-				$players = array('is_firstlaunch' => 'y');
-				$this->player->update_all_players($players, '');
+				/* update the users to be first launch */
+				$this->load->model('users_model', 'user');
+				$users = array('is_firstlaunch' => 'y');
+				$this->user->update_all_users($users, '');
 				
 				$data['label'] = array(
 					'text' => sprintf(

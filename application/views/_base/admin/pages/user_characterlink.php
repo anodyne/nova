@@ -11,7 +11,7 @@
 	
 	<p class="bold fontMedium"><?php echo anchor('user/characterlink', $label['allchars']);?></p>
 	
-	<?php echo text_output($label['player'], 'h2', 'page-subhead');?>
+	<?php echo text_output($label['user'], 'h2', 'page-subhead');?>
 	
 	<strong><?php echo $label['name'];?></strong> &ndash; <?php echo $p_name;?><br />
 	<strong><?php echo $label['email'];?></strong> &ndash; <?php echo $p_email;?>
@@ -39,10 +39,10 @@
 						<?php echo text_output($c['type'], 'span', 'fontSmall gray');?>
 					</td>
 					<td class="cell-spacer"></td>
-					<td class="col_30 align_right"><?php echo anchor('user/characterlink/'. $player .'/remove/'. $key, img($images['remove']), array('class' => 'image'));?></td>
+					<td class="col_30 align_right"><?php echo anchor('user/characterlink/'. $user .'/remove/'. $key, img($images['remove']), array('class' => 'image'));?></td>
 					<td class="col_30 align_right">
 						<?php if ($c['main'] === FALSE && $c['type'] == 'Active'): ?>
-							<?php echo anchor('user/characterlink/'. $player .'/set/'. $key, img($images['star']), array('class' => 'image'));?>
+							<?php echo anchor('user/characterlink/'. $user .'/set/'. $key, img($images['star']), array('class' => 'image'));?>
 						<?php endif;?>
 					</td>
 				</tr>
@@ -74,7 +74,7 @@
 							<td class="cell-spacer"></td>
 							<td class="col_30">
 								<?php if ($count_active < $this->options['allowed_chars_playing']): ?>
-									<?php echo anchor('user/characterlink/'. $player .'/add/'. $key, img($images['add']), array('class' => 'image'));?>
+									<?php echo anchor('user/characterlink/'. $user .'/add/'. $key, img($images['add']), array('class' => 'image'));?>
 								<?php endif;?>
 							</td>
 						</tr>
@@ -99,7 +99,7 @@
 							<td class="cell-spacer"></td>
 							<td class="col_30">
 								<?php if ($count_npc < $this->options['allowed_chars_npc']): ?>
-									<?php echo anchor('user/characterlink/'. $player .'/add/'. $key, img($images['add']), array('class' => 'image'));?>
+									<?php echo anchor('user/characterlink/'. $user .'/add/'. $key, img($images['add']), array('class' => 'image'));?>
 								<?php endif;?>
 							</td>
 						</tr>

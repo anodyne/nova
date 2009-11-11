@@ -86,18 +86,18 @@ if ( ! function_exists('whos_online'))
 	{
 		$ci =& get_instance();
 	
-		$ci->load->model('players_model', 'player');
+		$ci->load->model('users_model', 'user');
 		$ci->load->model('characters_model', 'char');
 		
 		$timespan = $ci->settings->get_setting('online_timespan');
 		
-		$online = $ci->player->get_online_players($timespan);
+		$online = $ci->user->get_online_users($timespan);
 			
 		if (count($online) > 0)
 		{
 			foreach ($online as $value)
 			{
-				$char = $ci->player->get_main_character($value);
+				$char = $ci->user->get_main_character($value);
 				$array[$value] = $ci->char->get_character_name($char, TRUE);
 			}
 			

@@ -38,7 +38,7 @@ class Report_base extends Controller {
 		
 		/* load the models */
 		$this->load->model('characters_model', 'char');
-		$this->load->model('players_model', 'player');
+		$this->load->model('users_model', 'user');
 		
 		/* check to see if they are logged in */
 		$this->auth->is_logged_in(TRUE);
@@ -102,9 +102,9 @@ class Report_base extends Controller {
 		$this->load->model('posts_model', 'posts');
 		$this->load->model('news_model', 'news');
 		
-		$players = $this->player->get_players();
+		$users = $this->user->get_users();
 		
-		if ($players->num_rows() > 0)
+		if ($users->num_rows() > 0)
 		{
 			/* set the posting requirement threshold */
 			$requirement = now() - (86400 * $this->options['posting_requirement']);
@@ -115,13 +115,13 @@ class Report_base extends Controller {
 			$month = 30 * 86400;
 			$month = now() - $month;
 			
-			foreach ($players->result() as $p)
+			foreach ($users->result() as $p)
 			{
-				$data['players'][$p->player_id] = array(
+				$data['users'][$p->userid] = array(
 					'name' => $p->name,
 					'main_char' => $this->char->get_character_name($p->main_char, TRUE),
 					'email' => $p->email,
-					'id' => $p->player_id,
+					'id' => $p->userid,
 					'charid' => $p->main_char,
 					'last_post' => timespan_short($p->last_post, now()) .' '. lang('time_ago'),
 					'last_login' => timespan_short($p->last_login, now()) .' '. lang('time_ago'),
@@ -129,16 +129,16 @@ class Report_base extends Controller {
 					'requirement_login' => ($p->last_login < $requirement) ? ' red' : '',
 					'loa' => ($p->loa != 'active') ? '['. strtoupper($p->loa) .']' : '',
 					'posts' => array(
-						'timeframe' => $this->posts->count_player_posts($p->player_id, 'activated', $timeframe),
-						'month' => $this->posts->count_player_posts($p->player_id, 'activated', $month),
+						'timeframe' => $this->posts->count_user_posts($p->userid, 'activated', $timeframe),
+						'month' => $this->posts->count_user_posts($p->userid, 'activated', $month),
 					),
 					'logs' => array(
-						'timeframe' => $this->logs->count_player_logs($p->player_id, 'activated', $timeframe),
-						'month' => $this->logs->count_player_logs($p->player_id, 'activated', $month),
+						'timeframe' => $this->logs->count_user_logs($p->userid, 'activated', $timeframe),
+						'month' => $this->logs->count_user_logs($p->userid, 'activated', $month),
 					),
 					'news' => array(
-						'timeframe' => $this->news->count_player_news($p->player_id, 'activated', $timeframe),
-						'month' => $this->news->count_player_news($p->player_id, 'activated', $month),
+						'timeframe' => $this->news->count_user_news($p->userid, 'activated', $timeframe),
+						'month' => $this->news->count_user_news($p->userid, 'activated', $month),
 					),
 				);
 			}
@@ -148,7 +148,7 @@ class Report_base extends Controller {
 		
 		$data['label'] = array(
 			'biochar' => ucwords(lang('global_character') .' '. lang('labels_bio')),
-			'bioplayer' => ucwords(lang('global_player') .' '. lang('labels_bio')),
+			'biouser' => ucwords(lang('global_user') .' '. lang('labels_bio')),
 			'days' => ucfirst(lang('time_days')),
 			'lastlogin' => ucwords(lang('order_last') .' '. lang('actions_login')),
 			'lastpost' => ucwords(lang('order_last') .' '. lang('global_post')),
@@ -207,7 +207,7 @@ class Report_base extends Controller {
 				$data['apps'][$a->app_id] = array(
 					'id' => $a->app_id,
 					'character' => $a->app_character_name,
-					'player' => $a->app_player_name,
+					'user' => $a->app_user_name,
 					'position' => $a->app_position,
 					'action' => $a->app_action,
 					'date' => mdate($this->options['date_format'], $date)
@@ -254,7 +254,7 @@ class Report_base extends Controller {
 			'character' => ucfirst(lang('global_character')),
 			'date' => ucfirst(lang('labels_date')),
 			'none' => ucfirst(lang('labels_no') .' '. lang('labels_applications') .' '. lang('actions_found')),
-			'player' => ucfirst(lang('global_player')),
+			'user' => ucfirst(lang('global_user')),
 			'position' => ucfirst(lang('global_position')),
 		);
 		
@@ -315,7 +315,7 @@ class Report_base extends Controller {
 				
 				if (empty($n->queue_receive_character))
 				{
-					$charid = $this->player->get_player($n->queue_receive_player, 'main_char');
+					$charid = $this->user->get_user($n->queue_receive_user, 'main_char');
 					$data['nominations'][$n->queue_id]['name'] = $this->char->get_character_name($charid, TRUE);
 				}
 				else
@@ -412,10 +412,10 @@ class Report_base extends Controller {
 				
 				$end = (!empty($r->loa_end_date)) ? $r->loa_end_date : now();
 				
-				$player = $this->player->get_player($r->loa_player);
-				$name = (!empty($player->name)) ? $player->name : $player->email;
+				$user = $this->user->get_user($r->loa_user);
+				$name = (!empty($user->name)) ? $user->name : $user->email;
 				
-				$data['loa'][$r->loa_id]['player'] = $name;
+				$data['loa'][$r->loa_id]['user'] = $name;
 				$data['loa'][$r->loa_id]['date_start'] = mdate($datestring, $date_start);
 				$data['loa'][$r->loa_id]['date_end'] = (!empty($r->loa_end_date)) ? mdate($datestring, $date_end) : '';
 				$data['loa'][$r->loa_id]['duration'] = $r->loa_duration;
@@ -455,17 +455,17 @@ class Report_base extends Controller {
 	{
 		$this->auth->check_access();
 		
-		$players = $this->player->get_players();
+		$users = $this->user->get_users();
 		
-		if ($players->num_rows() > 0)
+		if ($users->num_rows() > 0)
 		{
-			foreach ($players->result() as $p)
+			foreach ($users->result() as $p)
 			{
 				$date = gmt_to_local($p->join_date, $this->timezone, $this->dst);
 				
-				$data['players'][$p->player_id] = array(
+				$data['users'][$p->userid] = array(
 					'name' => $this->char->get_character_name($p->main_char, TRUE),
-					'id' => $p->player_id,
+					'id' => $p->userid,
 					'charid' => $p->main_char,
 					'join_date' => mdate($this->options['date_format'], $date),
 					'timespan' => timespan_short($p->join_date, now()),
@@ -477,7 +477,7 @@ class Report_base extends Controller {
 		
 		$data['label'] = array(
 			'bio_char' => ucwords(lang('global_character') .' '. lang('labels_bio')),
-			'bio_player' => ucwords(lang('global_player') .' '. lang('labels_bio')),
+			'bio_user' => ucwords(lang('global_user') .' '. lang('labels_bio')),
 			'name' => ucwords(lang('global_character') .' '. lang('labels_name')),
 			'timespan' => ucfirst(lang('time_timespan')),
 		);
@@ -499,15 +499,15 @@ class Report_base extends Controller {
 	{
 		$this->auth->check_access();
 		
-		$players = $this->player->get_players();
+		$users = $this->user->get_users();
 		
-		if ($players->num_rows() > 0)
+		if ($users->num_rows() > 0)
 		{
-			foreach ($players->result() as $p)
+			foreach ($users->result() as $p)
 			{
-				$data['players'][$p->player_id] = array(
+				$data['users'][$p->userid] = array(
 					'name' => $this->char->get_character_name($p->main_char, TRUE),
-					'id' => $p->player_id,
+					'id' => $p->userid,
 					'charid' => $p->main_char,
 					'posts' => ($p->moderate_posts == 'y') ? 'red' : 'green',
 					'comments_p' => ($p->moderate_post_comments == 'y') ? 'red' : 'green',
@@ -534,14 +534,14 @@ class Report_base extends Controller {
 		
 		$data['text'] = sprintf(
 			lang('text_moderation_report'),
-			lang('global_players'),
+			lang('global_users'),
 			img($data['images']['green']),
 			img($data['images']['red'])
 		);
 		
 		$data['label'] = array(
 			'bio_char' => ucwords(lang('global_character') .' '. lang('labels_bio')),
-			'bio_player' => ucwords(lang('global_player') .' '. lang('labels_bio')),
+			'bio_user' => ucwords(lang('global_user') .' '. lang('labels_bio')),
 			'comments_l' => ucwords(lang('global_log') ."\r\n". lang('labels_comments')),
 			'comments_n' => ucwords(lang('global_news') ."\r\n". lang('labels_comments')),
 			'comments_p' => ucwords(lang('global_post') ."\r\n". lang('labels_comments')),
@@ -575,12 +575,12 @@ class Report_base extends Controller {
 		$this->load->model('ranks_model', 'ranks');
 		$this->load->helper('utility');
 		
-		/* get all the players */
-		$players = $this->player->get_players('');
+		/* get all the users */
+		$users = $this->user->get_users('');
 		
-		if ($players->num_rows() > 0)
+		if ($users->num_rows() > 0)
 		{
-			foreach ($players->result() as $p)
+			foreach ($users->result() as $p)
 			{
 				if ($p->status != 'pending')
 				{
@@ -589,12 +589,12 @@ class Report_base extends Controller {
 					
 					$date = gmt_to_local($p->last_post, $this->timezone, $this->dst);
 					
-					$data['players'][$p->status][$p->player_id] = array(
-						'id' => $p->player_id,
+					$data['users'][$p->status][$p->userid] = array(
+						'id' => $p->userid,
 						'name' => (!empty($p->name)) ? $p->name : $p->email,
-						'logs' => $this->logs->count_player_logs($p->player_id),
-						'news' => $this->news->count_player_news($p->player_id),
-						'posts' => $this->posts->count_player_posts($p->player_id),
+						'logs' => $this->logs->count_user_logs($p->userid),
+						'news' => $this->news->count_user_news($p->userid),
+						'posts' => $this->posts->count_user_posts($p->userid),
 						'class' => ($last > $this->options['posting_requirement']) ? 'red bold' : '',
 						'lastpost' => mdate($this->options['date_format'], $date),
 					);
@@ -602,7 +602,7 @@ class Report_base extends Controller {
 			}
 		}
 		
-		/* get all the players */
+		/* get all the users */
 		$characters = $this->char->get_all_characters('all');
 		
 		if ($characters->num_rows() > 0)
@@ -655,10 +655,10 @@ class Report_base extends Controller {
 			'name' => ucfirst(lang('labels_name')),
 			'news' => ucwords(lang('global_newsitems')),
 			'no_characters' => ucfirst(lang('labels_no') .' '. lang('global_characters') .' '. lang('actions_found')),
-			'no_players' => ucfirst(lang('labels_no') .' '. lang('global_players') .' '. lang('actions_found')),
-			'players' => ucfirst(lang('global_players')),
-			'players_active' => ucwords(lang('status_active') .' '. lang('global_players')),
-			'players_inactive' => ucwords(lang('status_inactive') .' '. lang('global_players')),
+			'no_users' => ucfirst(lang('labels_no') .' '. lang('global_users') .' '. lang('actions_found')),
+			'users' => ucfirst(lang('global_users')),
+			'users_active' => ucwords(lang('status_active') .' '. lang('global_users')),
+			'users_inactive' => ucwords(lang('status_inactive') .' '. lang('global_users')),
 			'posts' => ucwords(lang('global_missionposts')),
 			'total' => ucfirst(lang('labels_totals')),
 		);
@@ -667,7 +667,7 @@ class Report_base extends Controller {
 			'search_active' => ucwords(lang('actions_search') .' '. lang('status_active') .' '. lang('global_characters')),
 			'search_inactive' => ucwords(lang('actions_search') .' '. lang('status_inactive') .' '. lang('global_characters')),
 			'search_npc' => ucwords(lang('actions_search') .' '. lang('abbr_npcs')),
-			'search_players' => ucwords(lang('actions_search') .' '. lang('global_players')),
+			'search_users' => ucwords(lang('actions_search') .' '. lang('global_users')),
 		);
 		
 		/* figure out where the view file should be coming from */
@@ -783,7 +783,7 @@ class Report_base extends Controller {
 					'id' => $a->app_id,
 					'email' => $a->app_email,
 					'character' => $a->app_character_name,
-					'player' => $a->app_player_name,
+					'user' => $a->app_user_name,
 					'position' => $a->app_position,
 					'action' => ucfirst($a->app_action),
 					'date' => mdate($this->options['date_format'], $date),
@@ -801,7 +801,7 @@ class Report_base extends Controller {
 			'email' => ucwords(lang('labels_email_address')),
 			'message' => ucfirst(lang('labels_message')),
 			'none' => ucfirst(lang('labels_no') .' '. lang('labels_applications') .' '. lang('actions_found')),
-			'pname' => ucwords(lang('global_player') .' '. lang('labels_name')),
+			'pname' => ucwords(lang('global_user') .' '. lang('labels_name')),
 			'position' => ucfirst(lang('global_position')),
 		);
 		

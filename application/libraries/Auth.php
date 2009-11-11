@@ -95,15 +95,15 @@ class Auth {
 		return FALSE;
 	}
 	
-	function is_gamemaster($player = '')
+	function is_gamemaster($user = '')
 	{
 		/* get an instance of CI */
 		$this->ci =& get_instance();
 		
 		/* load the resources */
-		$this->ci->load->model('players_model', 'player');
+		$this->ci->load->model('users_model', 'user');
 		
-		$gm = $this->ci->player->get_player($player, 'is_game_master');
+		$gm = $this->ci->user->get_user($user, 'is_game_master');
 		
 		$retval = ($gm == 'y') ? TRUE : FALSE;
 		
@@ -115,7 +115,7 @@ class Auth {
 		/* get an instance of CI */
 		$this->ci =& get_instance();
 		
-		if ($this->ci->session->userdata('player_id') === FALSE)
+		if ($this->ci->session->userdata('userid') === FALSE)
 		{
 			$auto = $this->_autologin();
 			
@@ -137,30 +137,30 @@ class Auth {
 		return TRUE;
 	}
 	
-	function is_sysadmin($player = '')
+	function is_sysadmin($user = '')
 	{
 		/* get an instance of CI */
 		$this->ci =& get_instance();
 		
 		/* load the resources */
-		$this->ci->load->model('players_model', 'player');
+		$this->ci->load->model('users_model', 'user');
 		
-		$admin = $this->ci->player->get_player($player, 'is_sysadmin');
+		$admin = $this->ci->user->get_user($user, 'is_sysadmin');
 		
 		$retval = ($admin == 'y') ? TRUE : FALSE;
 		
 		return $retval;
 	}
 	
-	function is_webmaster($player = '')
+	function is_webmaster($user = '')
 	{
 		/* get an instance of CI */
 		$this->ci =& get_instance();
 		
 		/* load the resources */
-		$this->ci->load->model('players_model', 'player');
+		$this->ci->load->model('users_model', 'user');
 		
-		$web = $this->ci->player->get_player($player, 'is_webmaster');
+		$web = $this->ci->user->get_user($user, 'is_webmaster');
 		
 		$retval = ($web == 'y') ? TRUE : FALSE;
 		
@@ -173,7 +173,7 @@ class Auth {
 		$this->ci =& get_instance();
 		
 		/* load the resources */
-		$this->ci->load->model('players_model', 'player');
+		$this->ci->load->model('users_model', 'user');
 		$this->ci->load->model('system_model', 'sys');
 		
 		/* xss clean of the data coming in */
@@ -206,7 +206,7 @@ class Auth {
 		}
 		
 		/* check to see if the account exists */
-		$login = $this->ci->player->get_user_details_by_email($email);
+		$login = $this->ci->user->get_user_details_by_email($email);
 		
 		if ($login->num_rows() == 0)
 		{
@@ -236,7 +236,7 @@ class Auth {
 					$this->ci->sys->delete_login_attempts($email);
 				
 					/* update the login record */
-					$this->ci->player->update_login_record($person->player_id, now());
+					$this->ci->user->update_login_record($person->userid, now());
 					
 					/* set the session */
 					$this->_set_session($person);
@@ -291,11 +291,11 @@ class Auth {
 		$this->ci =& get_instance();
 		
 		/* load the resources */
-		$this->ci->load->model('players_model', 'player');
+		$this->ci->load->model('users_model', 'user');
 		
 		$retval = 0;
 		
-		$login = $this->ci->player->get_user_details_by_email($email);
+		$login = $this->ci->user->get_user_details_by_email($email);
 		
 		if ($login->num_rows() == 0)
 		{
@@ -332,7 +332,7 @@ class Auth {
 		$this->ci =& get_instance();
 		
 		/* load the resources */
-		$this->ci->load->model('players_model', 'player');
+		$this->ci->load->model('users_model', 'user');
 		$this->ci->load->model('system_model', 'sys');
 		
 		$attempts = $this->ci->sys->count_login_attempts($email);
@@ -474,14 +474,14 @@ class Auth {
 		$this->ci =& get_instance();
 		
 		/* load the resources */
-		$this->ci->load->model('players_model', 'player');
+		$this->ci->load->model('users_model', 'user');
 		$this->ci->load->model('menu_model');
 		$this->ci->load->model('characters_model', 'char');
 		
-		$characters = $this->ci->char->get_player_characters($person->player_id, '', 'array');
+		$characters = $this->ci->char->get_user_characters($person->userid, '', 'array');
 		
 		/* set the data that goes in to the session */
-		$array['player_id'] = $person->player_id;
+		$array['userid'] = $person->userid;
 		$array['skin_main'] = $person->skin_main;
 		$array['skin_admin'] = $person->skin_admin;
 		$array['skin_wiki'] = $person->skin_wiki;

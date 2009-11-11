@@ -5,7 +5,7 @@ $location = FALSE;
 
 if ($password_reset == 1)
 { /* if they need to reset their password, show them the right facebox */
-	$location = site_url('ajax/change_password/'. $this->session->userdata('player_id'));
+	$location = site_url('ajax/change_password/'. $this->session->userdata('userid'));
 }
 elseif ($first_launch == 1)
 { /* if it is the first launch since an update */

@@ -139,7 +139,7 @@
 				<table class="table100">
 					<tbody>
 						<tr>
-							<td colspan="3"><?php echo text_output($label['playersettings'], 'h3', 'page-subhead');?></td>
+							<td colspan="3"><?php echo text_output($label['usersettings'], 'h3', 'page-subhead');?></td>
 						</tr>
 						<tr>
 							<td class="cell-label"><?php echo $label['role'];?></td>

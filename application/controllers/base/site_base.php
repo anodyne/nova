@@ -38,7 +38,7 @@ class Site_base extends Controller {
 		
 		/* load the models */
 		$this->load->model('characters_model', 'char');
-		$this->load->model('players_model', 'player');
+		$this->load->model('users_model', 'user');
 		
 		/* check to see if they are logged in */
 		$this->auth->is_logged_in(TRUE);
@@ -154,7 +154,7 @@ class Site_base extends Controller {
 							}
 						}
 						
-						$characters = $this->char->get_all_characters('has_player');
+						$characters = $this->char->get_all_characters('has_user');
 						
 						if ($characters->num_rows() > 0)
 						{
@@ -163,7 +163,7 @@ class Site_base extends Controller {
 								$ins_array = array(
 									'data_field' => $insert_id,
 									'data_char' => $char->charid,
-									'data_player' => $char->player,
+									'data_user' => $char->user,
 									'data_value' => '',
 									'data_updated' => now()
 								);
@@ -1128,12 +1128,12 @@ class Site_base extends Controller {
 						$update_settings = $this->settings->update_setting('display_rank', $setting_data);
 					}
 						
-					$player_data = array('display_rank' => $new);
-					$player_where = array('display_rank' => $item->rankcat_location);
+					$user_data = array('display_rank' => $new);
+					$user_where = array('display_rank' => $item->rankcat_location);
 					
 					/* update the database */
 					$delete = $this->ranks->delete_rank_set($old_id);
-					$update = $this->player->update_all_players($player_data, $player_where);
+					$update = $this->user->update_all_users($user_data, $user_where);
 							
 					if ($delete > 0)
 					{
@@ -1527,13 +1527,13 @@ class Site_base extends Controller {
 								$update_settings = $this->settings->update_setting('skin_'. $section, $setting_data);
 							}
 							
-							/* set the player data */					
-							$player_data = array('skin_'. $section => $new_skin);
-							$player_where = array('skin_'. $section => $old_skin);
+							/* set the user data */					
+							$user_data = array('skin_'. $section => $new_skin);
+							$user_where = array('skin_'. $section => $old_skin);
 							
 							/* update the database */
 							$delete = $this->sys->delete_skin_section($id);
-							$update = $this->player->update_all_players($player_data, $player_where);
+							$update = $this->user->update_all_users($user_data, $user_where);
 									
 							if ($delete > 0)
 							{
@@ -3171,7 +3171,7 @@ class Site_base extends Controller {
 						$update_data = array('access_role' => $new_role);
 						$where = array('access_role' => $id);
 						
-						$players = $this->player->update_all_players($update_data, $where);
+						$users = $this->user->update_all_users($update_data, $where);
 						
 						$message = sprintf(
 							lang('flash_success'),

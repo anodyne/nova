@@ -38,7 +38,7 @@
 							<td>
 								<strong><?php echo $i['filename'];?></strong><br />
 								<span class="fontSmall gray">
-									<?php echo $label['uploadedby'] .' '. $i['player'];?>
+									<?php echo $label['uploadedby'] .' '. $i['user'];?>
 									<?php echo $label['on'] .' '. $i['date'];?>
 								</span>
 							</td>

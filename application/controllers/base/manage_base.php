@@ -38,7 +38,7 @@ class Manage_base extends Controller {
 		
 		/* load the models */
 		$this->load->model('characters_model', 'char');
-		$this->load->model('players_model', 'player');
+		$this->load->model('users_model', 'user');
 		
 		/* check to see if they are logged in */
 		$this->auth->is_logged_in(TRUE);
@@ -1282,7 +1282,7 @@ class Manage_base extends Controller {
 						'log_tags' => $this->input->post('log_tags', TRUE),
 						'log_content' => $this->input->post('log_content', TRUE),
 						'log_status' => $this->input->post('log_status', TRUE),
-						'log_author_player' => $this->player->get_player_id($this->input->post('log_author')),
+						'log_author_user' => $this->user->get_user_id($this->input->post('log_author')),
 						'log_author_character' => $this->input->post('log_author', TRUE),
 						'log_last_update' => now()
 					);
@@ -1331,14 +1331,14 @@ class Manage_base extends Controller {
 			
 			if ($this->auth->get_access_level() < 2)
 			{
-				if ($this->session->userdata('player_id') != $row->log_author_player || $row->log_status == 'pending')
+				if ($this->session->userdata('userid') != $row->log_author_user || $row->log_status == 'pending')
 				{
 					redirect('admin/error/6');
 				}
 			}
 			
 			/* get all characters */
-			$all = $this->char->get_all_characters('player_npc');
+			$all = $this->char->get_all_characters('user_npc');
 			
 			if ($all->num_rows() > 0)
 			{
@@ -2013,7 +2013,7 @@ class Manage_base extends Controller {
 						'news_tags' => $this->input->post('news_tags', TRUE),
 						'news_content' => $this->input->post('news_content', TRUE),
 						'news_author_character' => $this->input->post('news_author', TRUE),
-						'news_author_player' => $this->player->get_player_id($this->input->post('news_author')),
+						'news_author_user' => $this->user->get_user_id($this->input->post('news_author')),
 						'news_status' => $this->input->post('news_status', TRUE),
 						'news_cat' => $this->input->post('news_cat', TRUE),
 						'news_private' => $this->input->post('news_private', TRUE),
@@ -2065,7 +2065,7 @@ class Manage_base extends Controller {
 			
 			if ($this->auth->get_access_level() < 2)
 			{
-				if ($this->session->userdata('player_id') != $row->news_author_player || $row->news_status == 'pending')
+				if ($this->session->userdata('userid') != $row->news_author_user || $row->news_status == 'pending')
 				{
 					redirect('admin/error/6');
 				}
@@ -2776,26 +2776,26 @@ class Manage_base extends Controller {
 							unset($to[$a]);
 						}
 						
-						/* get the player ID */
-						$pid = $this->sys->get_item('characters', 'charid', $b, 'player');
+						/* get the user ID */
+						$uid = $this->sys->get_item('characters', 'charid', $b, 'user');
 						
-						/* put the players into an array */
-						$players[] = ($pid !== FALSE) ? $pid : NULL;
+						/* put the users into an array */
+						$users[] = ($uid !== FALSE) ? $uid : NULL;
 					}
 					
-					foreach ($players as $k => $v)
+					foreach ($users as $k => $v)
 					{
 						if (!is_numeric($v) || $v < 1)
 						{
-							unset($players[$k]);
+							unset($users[$k]);
 						}
 					}
 					
 					$authors = implode(',', $to);
-					$authors_players = implode(',', $players);
+					$authors_users = implode(',', $users);
 					
 					$update_array['post_authors'] = $this->input->xss_clean($authors);
-					$update_array['post_authors_players'] = $authors_players;
+					$update_array['post_authors_users'] = $authors_users;
 					
 					$update = $this->posts->update_post($id, $update_array);
 					
@@ -2862,7 +2862,7 @@ class Manage_base extends Controller {
 			}
 			
 			/* get all characters */
-			$all = $this->char->get_all_characters('player_npc');
+			$all = $this->char->get_all_characters('user_npc');
 			
 			/* get the current missions */
 			$missions = $this->mis->get_all_missions();
@@ -4123,7 +4123,7 @@ class Manage_base extends Controller {
 			case 'news':
 				/* set some variables */
 				$from_name = $this->char->get_character_name($data['author'], TRUE, TRUE);
-				$from_email = $this->player->get_email_address('character', $data['author']);
+				$from_email = $this->user->get_email_address('character', $data['author']);
 				$subject = $data['category'] .' - '. $data['title'];
 				
 				/* set the content */
@@ -4146,7 +4146,7 @@ class Manage_base extends Controller {
 				$message = $this->parser->parse($em_loc, $email_data, TRUE);
 				
 				/* get the email addresses */
-				$emails = $this->player->get_crew_emails(TRUE, 'email_news_items');
+				$emails = $this->user->get_crew_emails(TRUE, 'email_news_items');
 				
 				/* make a string of email addresses */
 				$to = implode(',', $emails);
@@ -4162,7 +4162,7 @@ class Manage_base extends Controller {
 			case 'log':
 				/* set some variables */
 				$from_name = $this->char->get_character_name($data['author'], TRUE, TRUE);
-				$from_email = $this->player->get_email_address('character', $data['author']);
+				$from_email = $this->user->get_email_address('character', $data['author']);
 				$subject = $from_name ."'s ". lang('email_subject_personal_log') ." - ". $data['title'];
 				
 				/* set the content */
@@ -4185,7 +4185,7 @@ class Manage_base extends Controller {
 				$message = $this->parser->parse($em_loc, $email_data, TRUE);
 				
 				/* get the email addresses */
-				$emails = $this->player->get_crew_emails(TRUE, 'email_personal_logs');
+				$emails = $this->user->get_crew_emails(TRUE, 'email_personal_logs');
 				
 				/* make a string of email addresses */
 				$to = implode(',', $emails);
@@ -4220,7 +4220,7 @@ class Manage_base extends Controller {
 				
 				/* set who the email is coming from */
 				$from_name = $this->char->get_character_name($my_chars[0], TRUE, TRUE);
-				$from_email = $this->player->get_email_address('character', $my_chars[0]);
+				$from_email = $this->user->get_email_address('character', $my_chars[0]);
 				
 				/* set the content */
 				$content = sprintf(
@@ -4244,7 +4244,7 @@ class Manage_base extends Controller {
 				$message = $this->parser->parse($em_loc, $email_data, TRUE);
 				
 				/* get the email addresses */
-				$emails = $this->player->get_crew_emails(TRUE, 'email_mission_posts');
+				$emails = $this->user->get_crew_emails(TRUE, 'email_mission_posts');
 				
 				/* make a string of email addresses */
 				$to = implode(',', $emails);
@@ -4264,8 +4264,8 @@ class Manage_base extends Controller {
 				/* run the methods */
 				$row = $this->logs->get_log($data['log']);
 				$name = $this->char->get_character_name($data['author']);
-				$from = $this->player->get_email_address('character', $data['author']);
-				$to = $this->player->get_email_address('character', $row->log_author);
+				$from = $this->user->get_email_address('character', $data['author']);
+				$to = $this->user->get_email_address('character', $row->log_author);
 				
 				/* set the content */	
 				$content = sprintf(
@@ -4303,8 +4303,8 @@ class Manage_base extends Controller {
 				$news = $this->news->get_news_item($data['news_item']);
 				$row = $news->row();
 				$name = $this->char->get_character_name($data['author']);
-				$from = $this->player->get_email_address('character', $data['author']);
-				$to = $this->player->get_email_address('character', $row->news_author);
+				$from = $this->user->get_email_address('character', $data['author']);
+				$to = $this->user->get_email_address('character', $row->news_author);
 				
 				/* set the content */	
 				$content = sprintf(
@@ -4340,15 +4340,15 @@ class Manage_base extends Controller {
 				$row = $this->posts->get_post($data['post']);
 				
 				$name = $this->char->get_character_name($data['author']);
-				$from = $this->player->get_email_address('character', $data['author']);
+				$from = $this->user->get_email_address('character', $data['author']);
 				
 				$authors = $this->posts->get_author_emails($data['post']);
 				
 				foreach ($authors as $key => $value)
 				{
-					$player = $this->player->get_player_id_from_email($value);
+					$user = $this->user->get_user_id_from_email($value);
 					
-					$pref = $this->player->get_pref('email_new_post_comments', $player);
+					$pref = $this->user->get_pref('email_new_post_comments', $user);
 					
 					if ($pref == 'n' || $pref == '')
 					{
@@ -4389,18 +4389,18 @@ class Manage_base extends Controller {
 				$page = $this->wiki->get_page($data['page']);
 				$row = $page->row();
 				$name = $this->char->get_character_name($data['author']);
-				$from = $this->player->get_email_address('character', $data['author']);
+				$from = $this->user->get_email_address('character', $data['author']);
 				
 				/* get all the contributors of a wiki page */
 				$cont = $this->wiki->get_all_contributors($data['page']);
 				
 				foreach ($cont as $c)
 				{
-					$pref = $this->player->get_pref('email_new_wiki_comments', $c);
+					$pref = $this->user->get_pref('email_new_wiki_comments', $c);
 					
 					if ($pref == 'y')
 					{
-						$to_array[] = $this->player->get_email_address('player', $c);
+						$to_array[] = $this->user->get_email_address('user', $c);
 					}
 				}
 				
@@ -4570,7 +4570,7 @@ class Manage_base extends Controller {
 					{
 						if ($this->auth->get_access_level('manage/logs') == 1)
 						{
-							if ($this->session->userdata('player_id') == $l->log_author_player)
+							if ($this->session->userdata('userid') == $l->log_author_user)
 							{
 								$date = gmt_to_local($l->log_date, $this->timezone, $this->dst);
 								
@@ -4649,7 +4649,7 @@ class Manage_base extends Controller {
 					{
 						if ($this->auth->get_access_level('manage/news') == 1)
 						{
-							if ($this->session->userdata('player_id') == $n->news_author_player)
+							if ($this->session->userdata('userid') == $n->news_author_user)
 							{
 								$date = gmt_to_local($n->news_date, $this->timezone, $this->dst);
 								$nid = $n->news_id;
