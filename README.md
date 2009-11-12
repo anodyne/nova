@@ -8,51 +8,56 @@ Beta
 
 Last Update
 -----------
-11 November 2009
+12 November 2009
 
 Latest Changes
 --------------
-* fixed bug in the search page where all links besides post search were wrong
-* updated the search page to allow searching wiki pages
-* updated the language files
-* updated the wiki model with a method for searching
-* updated the inbox to use a loader for large inboxes
-* updated the control panel to use a loader to help with longer load times (> 1 second)
-* updated the auth library with a hash function to salt and hash strings
-* updated the controllers to use the auth library for hashing passwords
-* added search/index js view file
+* updated the inbox to be filterable through quicksearch
+* updated the outbox to be filterable through quicksearch
+* updated the wiki category page listing to be filterable through quicksearch
+* updated wiki page creation/update view file to drop the phrase "back to" in the link since they may not be coming from manage pages
+* updated the database schema with synopsis and change comments for wiki drafts
+* updated the menu library to use spacers for sub menus
+* updated the display of some of the wiki pages
+* updated the spacer class in all the skin stylesheets
+* updated the basic install data
+* updated wiki/managepages to be filterable through quicksearch
+* updated javascript files with minified versions
+* fixed bug when writing a private message where the subject and message weren't reset after sending the message
+* added wiki/category js view file
+* added wiki/index js view file
 
 Version History
 ---------------
 <table>
 	<tr>
-		<th>Version</th><th>Description</th><th>Date</th>
+		<th>Version</th><th>Description</th><th>Start Date</th><th>End Date</th>
 	</tr>
 	<tr>
-		<td>Beta</td><td>Feature complete testing version</td><td>-</td>
+		<td>Beta</td><td>Feature complete testing version</td><td>09 Nov 2009</td><td>-</td>
 	</tr>
 	<tr>
-		<td>M7</td><td>Thresher Release 1</td><td>09 Nov 2009</td>
+		<td>M7</td><td>Thresher Release 1</td><td>02 Nov 2009</td><td>09 Nov 2009</td>
 	</tr>
 	<tr>
-		<td>M6</td><td>Reports, upgrading from SMS, updating Nova</td><td>30 Oct 2009</td>
+		<td>M6</td><td>Reports, upgrading from SMS, updating Nova</td><td>02 Sep 2009</td><td>30 Oct 2009</td>
 	</tr>
 	<tr>
-		<td>M5</td><td>Character and user management</td><td>31 Sep 2009</td>
+		<td>M5</td><td>Character and user management</td><td>01 Jul 2009</td><td>31 Sep 2009</td>
 	</tr>
 	<tr>
-		<td>M4</td><td>Site and data management</td><td>30 Jun 2009</td>
+		<td>M4</td><td>Site and data management</td><td>01 Mar 2009</td><td>30 Jun 2009</td>
 	</tr>
 	<tr>
-		<td>M3</td><td>Authentication, writing and private messaging</td><td>27 Feb 2009</td>
+		<td>M3</td><td>Authentication, writing and private messaging</td><td>14 Jan 2009</td><td>27 Feb 2009</td>
 	</tr>
 	<tr>
-		<td>M2</td><td>Un-authenticated system</td><td>13 Jan 2009</td>
+		<td>M2</td><td>Un-authenticated system</td><td>30 Sep 2008</td><td>13 Jan 2009</td>
 	</tr>
 	<tr>
-		<td>M1</td><td>CodeIgniter and Nova setup</td><td>30 Sep 2008</td>
+		<td>M1</td><td>CodeIgniter and Nova setup</td><td>01 Jul 2008</td><td>30 Sep 2008</td>
 	</tr>
 	<tr>
-		<td>M0</td><td>Development start</td><td>30 May 2008</td>
+		<td>M0</td><td>Development start</td><td>-</td><td>30 May 2008</td>
 	</tr>
 </table>
