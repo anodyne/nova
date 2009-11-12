@@ -160,7 +160,11 @@ body {
 	-webkit-border-radius-bottom-right: 4px;
 }
 .nav-sub ul li a span { padding: 2px 7px; }
-.nav-sub ul li.spacer { border: none; }
+.nav-sub ul li.spacer {
+	height: 12px;
+	
+	border: none;
+}
 
 .content {
 	margin-right: 210px;

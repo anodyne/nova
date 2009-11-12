@@ -79,6 +79,7 @@ textarea {
 	padding: 3px;
 	width: 500px;
 }
+textarea.full-width { width: 690px; }
 
 select {
 	margin: 0;

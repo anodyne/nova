@@ -146,7 +146,11 @@ body {
 	background: #ffdd57 url('../images/gradient-50-bg.png') repeat-x center left;
 }
 .nav-sub ul li a span { padding: 2px; }
-.nav-sub ul li.spacer { border: none; }
+.nav-sub ul li.spacer {
+	height: 12px;
+	
+	border: none;
+}
 
 .content {
 	margin-left: 180px;
