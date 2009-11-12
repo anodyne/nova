@@ -173,9 +173,9 @@ class Menu {
 			
 			foreach ($menu_items->result() as $item)
 			{
-				if ($item->menu_group != 0)
+				if ($item->menu_group != 0 && $item->menu_order == 0)
 				{
-					//$this->output.= '<li class="spacer">&nbsp;</li>';
+					$this->output.= '<li class="spacer"></li>';
 				}
 				
 				if ($item->menu_link_type == 'offsite')
@@ -225,7 +225,7 @@ class Menu {
 				
 				if ($item->menu_group != 0 && $item->menu_order == 0)
 				{
-					$this->output.= '<li class="spacer">&nbsp;</li>';
+					$this->output.= '<li class="spacer"></li>';
 				}
 				
 				if ($item->menu_link_type == 'offsite')
@@ -252,7 +252,7 @@ class Menu {
 			{
 				if ($item->menu_group != 0 && $item->menu_order == 0)
 				{
-					$this->output.= '<li class="spacer">&nbsp;</li>';
+					$this->output.= '<li class="spacer"></li>';
 				}
 				
 				if ($item->menu_link_type == 'offsite')
