@@ -10,6 +10,8 @@
 
 <p class="bold fontSmall"><?php echo link_to_if($edit, 'wiki/page/'. $id .'/edit', $label['edit']);?></p>
 
+<?php echo text_output($page['summary'], 'p', 'gray italic');?>
+
 <div id="tabs">
 	<ul>
 		<li><a href="#one"><span><?php echo $label['page'];?></span></a></li>
@@ -38,11 +40,16 @@
 				<tbody>
 				<?php foreach ($history as $h): ?>
 					<tr>
-						<td class="fontSmall">
+						<td>
 							<?php if ($h['old_id'] === FALSE): ?>
-								<?php echo $h['created'] .' '. $label['created'] .' '. anchor('wiki/view/draft/'. $h['draft'], text_output($h['title'], 'em')) .' '. $label['on'] .' '. $h['created_date'];?>
+								<?php echo $h['created'] .' '. $label['created'] .' '. anchor('wiki/view/draft/'. $h['draft'], text_output($h['title'], 'strong')) .' '. $label['on'] .' '. $h['created_date'];?>
 							<?php else: ?>
-								<?php echo $h['created'] .' '. $label['reverted'] .' '. $label['to'] .' '. anchor('wiki/view/draft/'. $h['old_id'], text_output($h['title'], 'em')) .' '. $label['on'] .' '. $h['created_date'];?>
+								<?php echo $h['created'] .' '. $label['reverted'] .' '. $label['to'] .' '. anchor('wiki/view/draft/'. $h['old_id'], text_output($h['title'], 'strong')) .' '. $label['on'] .' '. $h['created_date'];?>
+							<?php endif;?>
+							
+							<?php if (!empty($h['changes'])): ?>
+								<br />
+								<?php echo text_output($h['changes'], 'em', 'fontSmall gray');?>
 							<?php endif;?>
 						</td>
 						

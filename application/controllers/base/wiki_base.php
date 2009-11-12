@@ -108,6 +108,7 @@ class Wiki_base extends Controller {
 					'title' => $u->draft_title,
 					'author' => $this->char->get_character_name($u->page_updated_by_character),
 					'timespan' => timespan_short($u->page_updated_at, now()),
+					'comments' => $u->draft_changed_comments,
 				);
 			}
 		}
@@ -124,6 +125,7 @@ class Wiki_base extends Controller {
 					'title' => $c->draft_title,
 					'author' => $this->char->get_character_name($c->page_created_by_character),
 					'timespan' => timespan_short($c->page_created_at, now()),
+					'summary' => $c->draft_summary,
 				);
 			}
 		}
@@ -135,15 +137,20 @@ class Wiki_base extends Controller {
 		$data['label'] = array(
 			'ago' => lang('time_ago'),
 			'by' => lang('labels_by'),
+			'page' => ucfirst(lang('labels_page')),
 			'recent_created' => ucwords(lang('status_recently') .' '. lang('actions_created')),
 			'recent_updates' => ucwords(lang('status_recently') .' '. lang('actions_updated')),
+			'summary' => ucfirst(lang('labels_summary')),
+			'updates' => ucwords(lang('actions_update') .' '. lang('labels_summary')),
 		);
 		
 		/* figure out where the view files should be coming from */
 		$view_loc = view_location('wiki_index', $this->skin, 'wiki');
+		$js_loc = js_location('wiki_index_js', $this->skin, 'wiki');
 		
 		/* write the data to the template */
 		$this->template->write_view('content', $view_loc, $data);
+		$this->template->write_view('javascript', $js_loc);
 		$this->template->write('title', $data['header']);
 		
 		/* render the template */
@@ -216,6 +223,7 @@ class Wiki_base extends Controller {
 				$data['pages'][$p->page_id]['id'] = $p->page_id;
 				$data['pages'][$p->page_id]['title'] = $p->draft_title;
 				$data['pages'][$p->page_id]['author'] = $this->char->get_character_name($p->draft_author_character);
+				$data['pages'][$p->page_id]['summary'] = $p->draft_summary;
 			}
 		}
 		
@@ -231,9 +239,11 @@ class Wiki_base extends Controller {
 		
 		/* figure out where the view files should be coming from */
 		$view_loc = view_location('wiki_category', $this->skin, 'wiki');
+		$js_loc = js_location('wiki_category_js', $this->skin, 'wiki');
 		
 		/* write the data to the template */
 		$this->template->write_view('content', $view_loc, $data);
+		$this->template->write_view('javascript', $js_loc);
 		$this->template->write('title', $data['header']);
 		
 		/* render the template */
@@ -575,6 +585,7 @@ class Wiki_base extends Controller {
 						'draft_created_at' => now(),
 						'draft_page' => $pageid,
 						'draft_categories' => $this->input->post('categories', TRUE),
+						'draft_summary' => $this->input->post('summary', TRUE),
 					);
 					
 					/* put the draft information into the database */
@@ -621,6 +632,8 @@ class Wiki_base extends Controller {
 						'draft_created_at' => now(),
 						'draft_page' => $id,
 						'draft_categories' => $this->input->post('categories', TRUE),
+						'draft_summary' => $this->input->post('summary', TRUE),
+						'draft_changed_comments' => $this->input->post('changes', TRUE),
 					);
 					
 					/* put the draft information into the database */
@@ -695,6 +708,11 @@ class Wiki_base extends Controller {
 				'categories' => array(
 					'name' => 'categories',
 					'id' => 'categories'),
+				'summary' => array(
+					'name' => 'summary',
+					'id' => 'summary',
+					'class' => 'full-width',
+					'rows' => 2),
 			);
 			
 			$js_data = FALSE;
@@ -739,6 +757,17 @@ class Wiki_base extends Controller {
 						'categories' => array(
 							'name' => 'categories',
 							'id' => 'categories'),
+						'changes' => array(
+							'name' => 'changes',
+							'id' => 'changes',
+							'class' => 'full-width',
+							'rows' => 2),
+						'summary' => array(
+							'name' => 'summary',
+							'id' => 'summary',
+							'class' => 'full-width',
+							'rows' => 2,
+							'value' => (!empty($p->draft_summary)) ? $p->draft_summary : ''),
 					);
 				}
 			}
@@ -786,12 +815,13 @@ class Wiki_base extends Controller {
 		);
 		
 		$data['label'] = array(
-			'back' => LARROW .' '. ucfirst(lang('actions_back')) .' '. lang('labels_to') .' '. 
-				ucwords(lang('actions_manage') .' '. lang('global_wiki') .' '. lang('labels_pages')),
+			'back' => LARROW .' '. ucwords(lang('actions_manage') .' '. lang('global_wiki') .' '. lang('labels_pages')),
 			'categories' => ucfirst(lang('labels_categories')),
+			'changes' => ucfirst(lang('actions_changes')),
 			'closed' => ucfirst(lang('status_closed')),
 			'comments' => ucfirst(lang('labels_comments')),
 			'open' => ucfirst(lang('status_open')),
+			'summary' => ucfirst(lang('labels_summary')),
 			'title' => ucfirst(lang('labels_title')),
 		);
 		
@@ -828,6 +858,7 @@ class Wiki_base extends Controller {
 							'title' => $u->draft_title,
 							'author' => $this->char->get_character_name($u->page_updated_by_character),
 							'timespan' => timespan_short($u->page_updated_at, now()),
+							'comments' => $u->draft_changed_comments,
 						);
 					}
 				}
@@ -849,6 +880,7 @@ class Wiki_base extends Controller {
 							'title' => $c->draft_title,
 							'author' => $this->char->get_character_name($c->page_created_by_character),
 							'timespan' => timespan_short($c->page_created_at, now()),
+							'summary' => $c->draft_summary,
 						);
 					}
 				}
@@ -861,15 +893,20 @@ class Wiki_base extends Controller {
 		$data['label'] = array(
 			'ago' => lang('time_ago'),
 			'by' => lang('labels_by'),
+			'page' => ucfirst(lang('labels_page')),
 			'created' => ucwords(lang('actions_show') .' '. lang('status_recently') .' '. lang('actions_created')),
 			'updates' => ucwords(lang('actions_show') .' '. lang('status_recently') .' '. lang('actions_updated')),
+			'summary' => ucfirst(lang('labels_summary')),
+			'update_summary' => ucwords(lang('actions_update') .' '. lang('labels_summary')),
 		);
 		
 		/* figure out where the view files should be coming from */
 		$view_loc = view_location('wiki_recent', $this->skin, 'wiki');
+		$js_loc = js_location('wiki_recent_js', $this->skin, 'wiki');
 		
 		/* write the data to the template */
 		$this->template->write_view('content', $view_loc, $data);
+		$this->template->write_view('javascript', $js_loc);
 		$this->template->write('title', $data['header']);
 		
 		/* render the template */
@@ -915,6 +952,7 @@ class Wiki_base extends Controller {
 						'draft_title' => $row->draft_title,
 						'draft_author_user' => $this->session->userdata('userid'),
 						'draft_author_character' => $this->session->userdata('main_char'),
+						'draft_summary' => $row->draft_summary,
 						'draft_content' => $row->draft_content,
 						'draft_page' => $page,
 						'draft_created_at' => now(),
@@ -1142,6 +1180,7 @@ class Wiki_base extends Controller {
 						'created_date' => mdate($datestring, $created),
 						'updated_date' => mdate($datestring, $updated),
 						'categories' => $string,
+						'summary' => $p->draft_summary,
 					);
 				}
 			}
@@ -1181,6 +1220,7 @@ class Wiki_base extends Controller {
 						'created_date' => mdate($datestring, $created),
 						'old_id' => (!empty($d->draft_id_old)) ? $d->draft_id_old : FALSE,
 						'page' => $d->draft_page,
+						'changes' => $d->draft_changed_comments,
 					);
 				}
 			}

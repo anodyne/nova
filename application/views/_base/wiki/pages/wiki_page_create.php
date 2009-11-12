@@ -8,6 +8,11 @@
 	
 	<br /><br />
 	
+	<?php echo text_output($label['summary'], 'p', 'fontMedium bold');?>
+	<?php echo form_textarea($inputs['summary']);?>
+	
+	<br /><br />
+	
 	<?php echo form_textarea($inputs['content']);?>
 	
 	<br /><br />

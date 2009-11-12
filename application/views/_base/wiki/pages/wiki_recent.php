@@ -8,27 +8,63 @@
 </div>
 
 <?php if (isset($recent['updates'])): ?>
-	<ul class="square margin1 padding1">
-	<?php foreach ($recent['updates'] as $r): ?>
-		<li>
-			<strong><?php echo anchor('wiki/view/page/'. $r['id'], $r['title']);?></strong><br />
-			<span class="fontSmall gray">
-				<?php echo $label['by'] .' '. $r['author'] .' '. $r['timespan'] .' '. $label['ago'];?>
-			</span><br />
-		</li>
-	<?php endforeach;?>
-	</ul>
+	<br />	
+	<table class="table100 zebra">
+		<thead>
+			<tr>
+				<th><?php echo $label['page'];?></th>
+				<th></th>
+				<th><?php echo $label['update_summary'];?></th>
+			</tr>
+		</thead>
+		<tbody>
+		<?php foreach ($recent['updates'] as $r): ?>
+			<tr>
+				<td class="col_40pct">
+					<strong><?php echo anchor('wiki/view/page/'. $r['id'], $r['title']);?></strong><br />
+					<span class="fontSmall gray">
+						<?php echo $label['by'] .' '. $r['author'] .' '. $r['timespan'] .' '. $label['ago'];?>
+					</span>
+				</td>
+				<td class="cell-spacer"></td>
+				<td class="gray fontSmall">
+					<?php if (!empty($r['comments'])): ?>
+						<em><?php echo text_output($r['comments'], '');?></em>
+					<?php endif;?>
+				</td>
+			</tr>
+		<?php endforeach;?>
+		</tbody>
+	</table>
 <?php endif;?>
 
 <?php if (isset($recent['created'])): ?>
-	<ul class="square margin1 padding1">
-	<?php foreach ($recent['created'] as $r): ?>
-		<li>
-			<strong><?php echo anchor('wiki/view/page/'. $r['id'], $r['title']);?></strong><br />
-			<span class="fontSmall gray">
-				<?php echo $label['by'] .' '. $r['author'] .' '. $r['timespan'] .' '. $label['ago'];?>
-			</span><br />
-		</li>
-	<?php endforeach;?>
-	</ul>
+	<br />
+	<table class="table100 zebra">
+		<thead>
+			<tr>
+				<th><?php echo $label['page'];?></th>
+				<th></th>
+				<th><?php echo $label['summary'];?></th>
+			</tr>
+		</thead>
+		<tbody>
+		<?php foreach ($recent['created'] as $r): ?>
+			<tr>
+				<td class="col_40pct">
+					<strong><?php echo anchor('wiki/view/page/'. $r['id'], $r['title']);?></strong><br />
+					<span class="fontSmall gray">
+						<?php echo $label['by'] .' '. $r['author'] .' '. $r['timespan'] .' '. $label['ago'];?>
+					</span>
+				</td>
+				<td class="cell-spacer"></td>
+				<td class="gray fontSmall">
+					<?php if (!empty($r['summary'])): ?>
+						<em><?php echo text_output($r['summary'], '');?></em>
+					<?php endif;?>
+				</td>
+			</tr>
+		<?php endforeach;?>
+		</tbody>
+	</table>
 <?php endif;?>

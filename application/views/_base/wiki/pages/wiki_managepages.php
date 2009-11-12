@@ -5,8 +5,9 @@
 </p>
 
 <?php if (isset($pages)): ?>
-	<br />
-	<table class="zebra table100">
+	<br /><div class="search_pages"></div><br />
+	
+	<table class="zebra table100 pages_search">
 		<thead>
 			<tr>
 				<th><?php echo $label['name'];?></th>
