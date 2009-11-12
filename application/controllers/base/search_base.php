@@ -113,7 +113,8 @@ class Search_base extends Controller {
 		$data['type'] = array(
 			'posts' => ucwords(lang('global_missionposts')),
 			'logs' => ucwords(lang('global_personallogs')),
-			'news' => ucwords(lang('global_newsitems'))
+			'news' => ucwords(lang('global_newsitems')),
+			'wiki' => ucwords(lang('global_wiki') .' '. lang('labels_pages')),
 		);
 		
 		/* set up the components */
@@ -131,10 +132,12 @@ class Search_base extends Controller {
 		
 		/* figure out where the view JS files should be coming from */
 		$view_loc = view_location('search_index', $this->skin, 'main');
+		$js_loc = js_location('search_index_js', $this->skin, 'main');
 		
 		/* write the data to the template */
 		$this->template->write('title', $data['header']);
 		$this->template->write_view('content', $view_loc, $data);
+		$this->template->write_view('javascript', $js_loc);
 		
 		/* render the template */
 		$this->template->render();
@@ -229,6 +232,13 @@ class Search_base extends Controller {
 					
 					$result = $this->news->search_news($comp, $input);
 					break;
+					
+				case 'wiki':
+					/* load the model */
+					$this->load->model('wiki_model', 'wiki');
+					
+					$result = $this->wiki->search_pages($component, $input);
+					break;
 			}
 			
 			if ($result->num_rows() > 0)
@@ -239,19 +249,27 @@ class Search_base extends Controller {
 					switch ($type)
 					{
 						case 'posts':
-							$data['results'][$i]['id'] = $item->post_id;
-							$data['results'][$i]['title'] = $item->post_title;
 							$data['results'][$i]['content'] = $item->post_content;
+							$data['results'][$i]['link'] = anchor('sim/viewpost/'. $item->post_id, $item->post_title);
 							break;
 						case 'logs':
-							$data['results'][$i]['id'] = $item->log_id;
-							$data['results'][$i]['title'] = $item->log_title;
 							$data['results'][$i]['content'] = $item->log_content;
+							$data['results'][$i]['link'] = anchor('sim/viewlog/'. $item->log_id, $item->log_title);
 							break;
 						case 'news':
-							$data['results'][$i]['id'] = $item->news_id;
-							$data['results'][$i]['title'] = $item->news_title;
 							$data['results'][$i]['content'] = $item->news_content;
+							$data['results'][$i]['link'] = anchor('main/viewnews/'. $item->news_id, $item->news_title);
+							break;
+						case 'wiki':
+							$page = $this->wiki->get_page($item->draft_page);
+							$row = ($page->num_rows() > 0) ? $page->row() : FALSE;
+							
+							if ($row !== FALSE)
+							{
+								$data['results'][$i]['content'] = $row->draft_content;
+								$data['results'][$i]['link'] = anchor('wiki/page/view/'. $item->draft_page, $row->draft_title);
+							}
+							
 							break;
 					}
 					
@@ -273,6 +291,12 @@ class Search_base extends Controller {
 				$result->num_rows(),
 				$inflector
 			);
+			
+			if ($type == 'wiki')
+			{ /* if it's a wiki search, show an additional explanation */
+				$data['msg'].= "\r\n\r\n";
+				$data['msg'].= sprintf(lang('wiki_search_results'), ucfirst(lang('global_wiki')));
+			}
 		}
 		
 		$data['label'] = array(

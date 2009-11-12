@@ -142,7 +142,7 @@ class User_base extends Controller {
 						{
 							if (!empty($value))
 							{
-								$array[$key] = sha1($value);
+								$array[$key] = ($key == 'password') ? $this->auth->hash($value) : sha1($value);
 							}
 							else
 							{

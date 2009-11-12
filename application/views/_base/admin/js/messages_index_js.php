@@ -14,5 +14,8 @@
 		$('#outbox_check_all').click(function(){
 			$("div.outbox input[type='checkbox']").attr('checked', $('#outbox_check_all').is(':checked'));
 		});
+		
+		$('#loading').hide();
+		$('#loaded').removeClass('hidden');
 	});
 </script>

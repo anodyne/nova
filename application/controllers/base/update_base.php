@@ -110,7 +110,7 @@ class Update_base extends Controller {
 		{
 			/* set the POST variables */
 			$email = $this->input->post('email', TRUE);
-			$password = sha1($this->input->post('password', TRUE));
+			$password = $this->input->post('password', TRUE);
 			
 			/* verify their email/password combo is right */
 			$verify = $this->auth->verify($email, $password);

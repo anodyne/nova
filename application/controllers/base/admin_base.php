@@ -119,7 +119,7 @@ class Admin_base extends Controller {
 				if ($user == $this->session->userdata('userid'))
 				{
 					$update_array = array(
-						'password' => sha1($password),
+						'password' => $this->auth->hash($password),
 						'password_reset' => 0,
 						'last_update' => now()
 					);
@@ -415,6 +415,11 @@ class Admin_base extends Controller {
 		$js_data['password_reset'] = $this->session->flashdata('password_reset');
 		$js_data['version'] = (isset($update['version'])) ? $update['version'] : '';
 		
+		$data['loader'] = array(
+			'src' => img_location('loading-bar.gif', $this->skin, 'admin'),
+			'alt' => lang('actions_loading'),
+		);
+		
 		$data['label'] = array(
 			'view_all_posts' => ucwords(lang('actions_viewall') .' '. lang('global_posts') .' '. RARROW),
 			'view_all_logs' => ucwords(lang('actions_viewall') .' '. lang('global_personallogs') .' '. RARROW),
@@ -458,6 +463,7 @@ class Admin_base extends Controller {
 			'update' => ucwords(APP_NAME .' '. lang('actions_update')),
 			'getupdate' => ucfirst(lang('actions_get') .' '. lang('labels_the') .' '. lang('actions_update')) .' '. RARROW,
 			'ignore' => ucfirst(lang('actions_ignore') .' '. lang('labels_this') .' '. lang('labels_version')),
+			'loading' => ucfirst(lang('actions_loading')) .'...',
 		);
 		
 		/* figure out where the view JS files should be coming from */
