@@ -584,6 +584,10 @@ class Messages_base extends Controller {
 				/* write everything to the template */
 				$this->template->write_view('flash_message', '_base/admin/pages/flash', $flash);
 			}
+			
+			/* reset the message and subject variables */
+			$message = FALSE;
+			$subject = FALSE;
 		}
 		
 		/* run the methods */
