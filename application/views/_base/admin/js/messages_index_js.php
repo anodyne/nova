@@ -1,9 +1,29 @@
+<script type="text/javascript" src="<?php echo base_url() . APPFOLDER .'/assets/js/jquery.quicksearch.js';?>"></script>
+
 <script type="text/javascript">
 	$(document).ready(function(){
 		$('#tabs').tabs();
 		$('#tabs').tabs('select', <?php echo $tab;?>);
 		
 		$('table.zebra tbody > tr:nth-child(odd)').addClass('alt');
+		
+		$('table.inbox_search tbody tr').quicksearch({
+			position: 'append',
+			attached: 'div.search_inbox',
+			labelText: '',
+			inputText: '<?php echo ucwords(lang("actions_search") ." ". lang("labels_inbox"));?>',
+			loaderText: '',
+			stripeRowClass: ['alt', '']
+		});
+		
+		$('table.outbox_search tbody tr').quicksearch({
+			position: 'append',
+			attached: 'div.search_outbox',
+			labelText: '',
+			inputText: '<?php echo ucwords(lang("actions_search") ." ". lang("actions_sent") ." ". lang("labels_messages"));?>',
+			loaderText: '',
+			stripeRowClass: ['alt', '']
+		});
 		
 		/* check all items in the inbox */
 		$('#inbox_check_all').click(function(){

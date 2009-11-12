@@ -21,7 +21,9 @@
 				<?php echo text_output($label['no_inbox'], 'h3', 'orange');?>
 			<?php else: ?>
 				<?php echo form_open('messages/index');?>
-					<table class="zebra table100">
+					<br /><div class="search_inbox"></div><br />
+					
+					<table class="zebra table100 inbox_search">
 						<thead>
 							<tr>
 								<th><?php echo $label['from'];?></th>
@@ -54,7 +56,9 @@
 				<?php echo text_output($label['no_outbox'], 'h3', 'orange');?>
 			<?php else: ?>
 				<?php echo form_open('messages/index/sent');?>
-					<table class="zebra table100">
+					<br /><div class="search_outbox"></div><br />
+					
+					<table class="zebra table100 outbox_search">
 						<thead>
 							<tr>
 								<th><?php echo $label['to'];?></th>
@@ -65,7 +69,7 @@
 						<tbody>
 						<?php foreach ($outbox as $item): ?>
 							<tr>
-								<td class="col_40pct"><strong><?php echo $item['to'];?></strong></td>
+								<td class="col_30pct"><strong><?php echo $item['to'];?></strong></td>
 								<td>
 									<strong><?php echo anchor('messages/read/'. $item['id'], $item['subject']);?></strong><br />
 									<span class="fontSmall gray"><?php echo $item['blurb'];?></span>
