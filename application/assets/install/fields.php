@@ -1703,6 +1703,8 @@ $fields_wiki_drafts = array(
 	'draft_author_character' => array(
 		'type' => $character_id_type,
 		'constraint' => $character_id_constraint),
+	'draft_summary' => array(
+		'type' => 'TEXT'),
 	'draft_content' => array(
 		'type' => 'LONGTEXT'),
 	'draft_page' => array(
@@ -1712,7 +1714,9 @@ $fields_wiki_drafts = array(
 		'type' => $date_type,
 		'constraint' => $date_constraint),
 	'draft_categories' => array(
-		'type' => 'TEXT')
+		'type' => 'TEXT'),
+	'draft_changed_comments' => array(
+		'type' => 'TEXT'),
 );
 
 $fields_wiki_pages = array(
