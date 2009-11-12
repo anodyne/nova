@@ -975,7 +975,7 @@ $menu_items = array(
 	array(
 		'menu_name' => 'Tour',
 		'menu_group' => 1,
-		'menu_order' => 5,
+		'menu_order' => 0,
 		'menu_link' => 'sim/tour',
 		'menu_sim_type' => 1,
 		'menu_type' => 'sub',
@@ -983,7 +983,7 @@ $menu_items = array(
 	array(
 		'menu_name' => 'Specifications',
 		'menu_group' => 1,
-		'menu_order' => 6,
+		'menu_order' => 1,
 		'menu_link' => 'sim/specs',
 		'menu_sim_type' => 1,
 		'menu_type' => 'sub',
@@ -991,7 +991,7 @@ $menu_items = array(
 	array(
 		'menu_name' => 'Deck Listing',
 		'menu_group' => 1,
-		'menu_order' => 7,
+		'menu_order' => 2,
 		'menu_link' => 'sim/decks',
 		'menu_sim_type' => 1,
 		'menu_type' => 'sub',
@@ -999,7 +999,7 @@ $menu_items = array(
 	array(
 		'menu_name' => 'Departments',
 		'menu_group' => 1,
-		'menu_order' => 8,
+		'menu_order' => 3,
 		'menu_link' => 'sim/departments',
 		'menu_sim_type' => 1,
 		'menu_type' => 'sub',
@@ -1007,7 +1007,7 @@ $menu_items = array(
 	array(
 		'menu_name' => 'Docking Request',
 		'menu_group' => 1,
-		'menu_order' => 9,
+		'menu_order' => 4,
 		'menu_link' => 'sim/dockingrequest',
 		'menu_sim_type' => 3,
 		'menu_display' => 'n',
