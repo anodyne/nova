@@ -44,7 +44,7 @@
 		<script type="text/javascript">
 			$(document).ready(function(){
 				$.lazy({					
-					src: '<?php echo base_url() . APPFOLDER;?>/assets/js/jquery.colorbox-min.js',
+					src: '<?php echo base_url() . APPFOLDER;?>/assets/js/jquery.colorbox.js',
 					name: 'colorbox',
 					dependencies: {
 						css: ['<?php echo $colorbox_css;?>']
@@ -59,7 +59,7 @@
 				});
 				
 				$.lazy({					
-					src: '<?php echo base_url() . APPFOLDER;?>/assets/js/jquery.qtip.min.js',
+					src: '<?php echo base_url() . APPFOLDER;?>/assets/js/jquery.qtip.js',
 					name: 'qtip',
 					cache: true
 				});
@@ -78,15 +78,6 @@
 					name: 'accordion',
 					dependencies: {
 						css: ['<?php echo base_url() . APPFOLDER;?>/assets/js/css/ui.accordion.css']
-					},
-					cache: true
-				});
-				
-				$.lazy({					
-					src: '<?php echo base_url() . APPFOLDER;?>/assets/js/jquery.visualize.js',
-					name: 'visualize',
-					dependencies: {
-						css: ['<?php echo base_url() . APPFOLDER;?>/assets/js/css/jquery.visualize.css']
 					},
 					cache: true
 				});

@@ -44,7 +44,7 @@
 		<script type="text/javascript">
 			$(document).ready(function(){
 				$.lazy({					
-					src: '<?php echo base_url() . APPFOLDER .'/assets/js/jquery.colorbox-min.js';?>',
+					src: '<?php echo base_url() . APPFOLDER .'/assets/js/jquery.colorbox.js';?>',
 					name: 'colorbox',
 					dependencies: {
 						css: ['<?php echo $colorbox_css;?>']
