@@ -16,6 +16,7 @@ The Original Series data compiled by David VanScott.
 Movie era data compiled by David VanScott.
 Firefly data compiled by Indigo (Anodyne forums).
 Dungeons and Dragons data compiled by Wade Duerkes.
+Star Trek Online data compiled by David VanScott.
 
 /*
 |---------------------------------------------------------------
