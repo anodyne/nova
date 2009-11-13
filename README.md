@@ -34,7 +34,7 @@ Version History
 		<th>Version</th><th>Description</th><th>Start Date</th><th>End Date</th>
 	</tr>
 	<tr>
-		<td>Beta</td><td>Feature complete testing version</td><td>09 Nov 2009</td><td>-</td>
+		<td>Beta</td><td>Feature complete testing version</td><td>10 Nov 2009</td><td>-</td>
 	</tr>
 	<tr>
 		<td>M7</td><td>Thresher Release 1</td><td>02 Nov 2009</td><td>09 Nov 2009</td>
