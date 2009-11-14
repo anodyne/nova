@@ -2,6 +2,8 @@
 
 * fixed bug where the version revision field hadn't been taken out of the versions page
 * fixed bug where errors were thrown on the award nomination page when no awards were present
+* fixed bug where the default manifest options dropdown in site/settings had duplicate entries
+* fixed bug where errors were thrown when trying to delete the last department when there's only 1 department
 
 ==========
 
