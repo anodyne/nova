@@ -706,7 +706,6 @@ class Report_base extends Controller {
 				
 				$data['versions'][$key][$v->version] = array(
 					'version' => $v->version,
-					'rev' => $v->version_rev,
 					'changes' => explode(';', $v->version_changes)
 				);
 			}
