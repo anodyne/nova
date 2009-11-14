@@ -1382,6 +1382,7 @@ class User_base extends Controller {
 			'character' => ucfirst(lang('global_character')),
 			'choose' => ucfirst(lang('labels_please') .' '. lang('actions_choose')
 				.' '. lang('labels_an') .' '. lang('global_award')),
+			'noawards' => sprintf(lang('error_not_found'), lang('global_awards')),
 			'nominate' => ucfirst(lang('actions_nominate')),
 			'nominatequeue' => ucwords(lang('labels_nomination') .' '. lang('labels_queue')),
 			'nonominations' => lang('error_no_award_nominations'),

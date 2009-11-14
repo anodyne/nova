@@ -12,7 +12,8 @@
 		
 		<div id="one"><br />
 <?php endif;?>
-
+			
+			<?php if (isset($awards)): ?>
 			<?php echo form_open('user/nominate');?>
 				<table class="table100">
 					<tbody>
@@ -54,6 +55,9 @@
 					</tbody>
 				</table>
 			<?php echo form_close();?>
+			<?php else: ?>
+				<?php echo text_output($label['noawards'], 'h3', 'orange');?>
+			<?php endif;?>
 		
 <?php if ($this->auth->get_access_level('user/nominate') > 1): ?>
 		</div>
