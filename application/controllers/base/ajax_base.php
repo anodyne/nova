@@ -2635,9 +2635,13 @@ class Ajax_base extends Controller {
 		/* set the id */
 		$data['id'] = $this->uri->segment(3, 0, TRUE);
 		
+		/* grab the departments */
+		$depts = $this->dept->get_all_depts();
+		
 		/* grab the department details */
 		$subs = $this->dept->get_sub_depts($data['id'], 'asc', '');
 		
+		$data['dept_count'] = $depts->num_rows();
 		$data['sub_count'] = $subs->num_rows();
 		
 		/* data being sent to the facebox */
@@ -2662,7 +2666,9 @@ class Ajax_base extends Controller {
 			'delete' => array(
 				'name' => 'delete',
 				'id' => 'delete_y',
-				'value' => 'y'),
+				'value' => 'y',
+				'checked' => ($depts->num_rows() <= 1) ? TRUE : FALSE,
+				'disabled' => ($depts->num_rows() <= 1) ? TRUE : FALSE),
 			'submit' => array(
 				'type' => 'submit',
 				'class' => 'hud_button',

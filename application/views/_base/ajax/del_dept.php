@@ -7,8 +7,10 @@
 		
 		<p><?php echo '<strong>'. form_label($label['delete'], 'delete_y') .'</strong> '. form_checkbox($inputs['delete']);?></p>
 		
-		<p><strong><?php echo $label['reassign'];?></strong></p>
-		<p><?php echo form_dropdown_dept('dept', '', 'class="hud"', 'main', '', $id);?></p>
+		<?php if ($dept_count > 1): ?>
+			<p><strong><?php echo $label['reassign'];?></strong></p>
+			<p><?php echo form_dropdown_dept('dept', '', 'class="hud"', 'main', '', $id);?></p>
+		<?php endif;?>
 		
 		<?php if ($sub_count > 0): ?>
 			<?php echo text_output($label['subdepts'], 'h3');?>
