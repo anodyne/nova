@@ -3772,9 +3772,9 @@ class Site_base extends Controller {
 					lang('labels_only')),
 				"$('tr.active').show();,$('tr.npc').show();" => ucwords(lang('status_active') .' '. 					lang('global_characters') .' &amp; '. lang('abbr_npcs')),
 				"$('tr.active').show();,$('tr.npc').show();,$('tr.open').show();" => ucwords(lang('status_active') .' '. 
-					lang('global_characters') .' '. lang('labels_only')),
-				"$('tr.npc').show();,$('tr.open').show();" => ucwords(lang('status_active') .' '. 
 					lang('global_characters') .', '. lang('abbr_npcs') .' &amp; '. lang('status_open') .' '.
+					lang('global_positions')),
+				"$('tr.npc').show();,$('tr.open').show();" => ucwords(lang('abbr_npcs') .' &amp; '. lang('status_open') .' '.
 					lang('global_positions')),
 			);
 			
