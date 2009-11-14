@@ -8,24 +8,12 @@ Beta
 
 Last Update
 -----------
-12 November 2009
+14 November 2009
 
 Latest Changes
 --------------
-* updated the inbox to be filterable through quicksearch
-* updated the outbox to be filterable through quicksearch
-* updated the wiki category page listing to be filterable through quicksearch
-* updated wiki page creation/update view file to drop the phrase "back to" in the link since they may not be coming from manage pages
-* updated the database schema with synopsis and change comments for wiki drafts
-* updated the menu library to use spacers for sub menus
-* updated the display of some of the wiki pages
-* updated the spacer class in all the skin stylesheets
-* updated the basic install data
-* updated wiki/managepages to be filterable through quicksearch
-* updated javascript files with minified versions
-* fixed bug when writing a private message where the subject and message weren't reset after sending the message
-* added wiki/category js view file
-* added wiki/index js view file
+* fixed bug where the version revision field hadn't been taken out of the versions page
+* fixed bug where errors were thrown on the award nomination page when no awards were present
 
 Version History
 ---------------

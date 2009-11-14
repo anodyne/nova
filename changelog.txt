@@ -1,3 +1,10 @@
+11.14.2009
+
+* fixed bug where the version revision field hadn't been taken out of the versions page
+* fixed bug where errors were thrown on the award nomination page when no awards were present
+
+==========
+
 11.12.2009
 
 * updated the inbox to be filterable through quicksearch
