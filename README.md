@@ -16,6 +16,7 @@ Latest Changes
 * fixed bug where errors were thrown on the award nomination page when no awards were present
 * fixed bug where the default manifest options dropdown in site/settings had duplicate entries
 * fixed bug where errors were thrown when trying to delete the last department when there's only 1 department
+* fixed bug when logging out in some circumstances could lead to blank pages
 
 Version History
 ---------------
