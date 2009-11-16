@@ -62,7 +62,6 @@ class Login_base extends Controller {
 		
 		if ($this->auth->is_logged_in())
 		{ /* if there's a session, set the variables appropriately */
-			$this->skin = $this->session->userdata('skin_login');
 			$this->rank = $this->session->userdata('display_rank');
 			$this->timezone = $this->session->userdata('timezone');
 			$this->dst = $this->session->userdata('dst');
@@ -253,6 +252,8 @@ class Login_base extends Controller {
 	
 	function logout()
 	{
+		log_message('error', 'Logout method');
+		
 		/* destroy the session data */
 		$this->auth->logout();
 		
