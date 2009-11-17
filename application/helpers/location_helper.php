@@ -227,5 +227,44 @@ if ( ! function_exists('email_location'))
 	
 // ------------------------------------------------------------------------
 
+/**
+ * Ajax Location
+ *
+ * Determine if a view exists in the current skin and if it doesn't, use the
+ * system global one instead
+ *
+ * @access	public
+ * @param	string
+ * @return	string
+ */	
+if ( ! function_exists('ajax_location'))
+{
+	function ajax_location($view = '', $skin = 'default', $section = '', $app_loc = APPPATH)
+	{
+		$array = array();
+		$array['view'] = $view;
+		$array['sec'] = $section;
+		
+		if (is_file($app_loc . 'views/' . $skin . '/' . $section . '/ajax/' . $view . '.php'))
+		{
+			$array['skin'] = $skin;
+		}
+		elseif (is_file($app_loc . 'views/_base_override/' . $section . '/ajax/' . $view . '.php'))
+		{
+			$array['skin'] = '_base_override';
+		}
+		else
+		{
+			$array['skin'] = '_base';
+		}
+		
+		$location = $array['skin'] . '/' . $array['sec'] . '/ajax/' . $array['view'];
+		
+		return $location;
+	}
+}
+	
+// ------------------------------------------------------------------------
+
 /* End of file location_helper.php */
 /* Location: ./application/helpers/location_helper.php */
