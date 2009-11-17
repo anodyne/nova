@@ -8,15 +8,14 @@ Beta
 
 Last Update
 -----------
-14 November 2009
+17 November 2009
 
 Latest Changes
 --------------
-* fixed bug where the version revision field hadn't been taken out of the versions page
-* fixed bug where errors were thrown on the award nomination page when no awards were present
-* fixed bug where the default manifest options dropdown in site/settings had duplicate entries
-* fixed bug where errors were thrown when trying to delete the last department when there's only 1 department
-* fixed bug when logging out in some circumstances could lead to blank pages
+* added the ajax_location helper
+* added the ajax directories
+* moved the ajax files to their respective skin sections
+* updated the ajax controller with the new seamless substitution code
 
 Version History
 ---------------

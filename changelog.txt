@@ -1,3 +1,14 @@
+11.17.2009
+
+* added the ajax_location helper
+* added the ajax directories
+
+* moved the ajax files to their respective skin sections
+
+* updated the ajax controller with the new seamless substitution code
+
+==========
+
 11.14.2009
 
 * fixed bug where the version revision field hadn't been taken out of the versions page
