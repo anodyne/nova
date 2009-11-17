@@ -131,8 +131,14 @@ class Ajax_base extends Controller {
 			'yes' => ucfirst(lang('labels_yes')),
 		);
 		
+		/* figure out the skin */
+		$skin = $this->session->userdata('skin_admin');
+		
+		/* figure out where the view should come from */
+		$ajax = ajax_location('add_bio_field', $skin, 'admin');
+		
 		/* write the data to the template */
-		$this->template->write_view('content', '_base/ajax/add_bio_field', $data);
+		$this->template->write_view('content', $ajax, $data);
 		
 		/* render the template */
 		$this->template->render();
@@ -244,8 +250,14 @@ class Ajax_base extends Controller {
 			'tab' => ucfirst(lang('labels_tab')),
 		);
 		
+		/* figure out the skin */
+		$skin = $this->session->userdata('skin_admin');
+		
+		/* figure out where the view should come from */
+		$ajax = ajax_location('add_bio_sec', $skin, 'admin');
+		
 		/* write the data to the template */
-		$this->template->write_view('content', '_base/ajax/add_bio_sec', $data);
+		$this->template->write_view('content', $ajax, $data);
 		
 		/* render the template */
 		$this->template->render();
@@ -300,8 +312,14 @@ class Ajax_base extends Controller {
 			'yes' => ucfirst(lang('labels_yes')),
 		);
 		
+		/* figure out the skin */
+		$skin = $this->session->userdata('skin_admin');
+		
+		/* figure out where the view should come from */
+		$ajax = ajax_location('add_bio_tab', $skin, 'admin');
+		
 		/* write the data to the template */
-		$this->template->write_view('content', '_base/ajax/add_bio_tab', $data);
+		$this->template->write_view('content', $ajax, $data);
 		
 		/* render the template */
 		$this->template->render();
@@ -323,7 +341,11 @@ class Ajax_base extends Controller {
 		switch ($type)
 		{
 			case 'ranks':
-				$view = '_base/ajax/add_catalogue_ranks';
+				/* figure out the skin */
+				$skin = $this->session->userdata('skin_admin');
+				
+				/* figure out where the view should come from */
+				$view = ajax_location('add_catalogue_skinsec', $skin, 'admin');
 				
 				$data['inputs'] = array(
 					'name' => array(
@@ -374,7 +396,11 @@ class Ajax_base extends Controller {
 				break;
 				
 			case 'skins':
-				$view = '_base/ajax/add_catalogue_skins';
+				/* figure out the skin */
+				$skin = $this->session->userdata('skin_admin');
+				
+				/* figure out where the view should come from */
+				$view = ajax_location('add_catalogue_skinsec', $skin, 'admin');
 				
 				$data['inputs'] = array(
 					'name' => array(
@@ -398,7 +424,11 @@ class Ajax_base extends Controller {
 				break;
 				
 			case 'skinsecs':
-				$view = '_base/ajax/add_catalogue_skinsec';
+				/* figure out the skin */
+				$skin = $this->session->userdata('skin_admin');
+				
+				/* figure out where the view should come from */
+				$view = ajax_location('add_catalogue_skinsec', $skin, 'admin');
 				
 				/* load the resources */
 				$this->load->model('system_model', 'sys');
@@ -564,8 +594,14 @@ class Ajax_base extends Controller {
 				'content' => ucwords(lang('actions_submit')))
 		);
 		
+		/* figure out the skin */
+		$skin = $this->session->userdata('skin_main');
+		
+		/* figure out where the view should come from */
+		$ajax = ajax_location('add_log_comment', $skin, 'main');
+		
 		/* write the data to the template */
-		$this->template->write_view('content', '_base/ajax/add_log_comment', $data);
+		$this->template->write_view('content', $ajax, $data);
 		
 		/* render the template */
 		$this->template->render();
@@ -598,8 +634,14 @@ class Ajax_base extends Controller {
 				'content' => ucwords(lang('actions_submit')))
 		);
 		
+		/* figure out the skin */
+		$skin = $this->session->userdata('skin_main');
+		
+		/* figure out where the view should come from */
+		$ajax = ajax_location('add_news_comment', $skin, 'main');
+		
 		/* write the data to the template */
-		$this->template->write_view('content', '_base/ajax/add_news_comment', $data);
+		$this->template->write_view('content', $ajax, $data);
 		
 		/* render the template */
 		$this->template->render();
@@ -632,8 +674,14 @@ class Ajax_base extends Controller {
 				'content' => ucwords(lang('actions_submit')))
 		);
 		
+		/* figure out the skin */
+		$skin = $this->session->userdata('skin_main');
+		
+		/* figure out where the view should come from */
+		$ajax = ajax_location('add_post_comment', $skin, 'main');
+		
 		/* write the data to the template */
-		$this->template->write_view('content', '_base/ajax/add_post_comment', $data);
+		$this->template->write_view('content', $ajax, $data);
 		
 		/* render the template */
 		$this->template->render();
@@ -666,8 +714,14 @@ class Ajax_base extends Controller {
 				'content' => ucwords(lang('actions_submit')))
 		);
 		
+		/* figure out the skin */
+		$skin = $this->session->userdata('skin_wiki');
+		
+		/* figure out where the view should come from */
+		$ajax = ajax_location('add_wiki_comment', $skin, 'wiki');
+		
 		/* write the data to the template */
-		$this->template->write_view('content', '_base/ajax/add_wiki_comment', $data);
+		$this->template->write_view('content', $ajax, $data);
 		
 		/* render the template */
 		$this->template->render();
@@ -800,8 +854,14 @@ class Ajax_base extends Controller {
 			'parent' => ucwords(lang('labels_parent') .' '. lang('global_department'))
 		);
 		
+		/* figure out the skin */
+		$skin = $this->session->userdata('skin_admin');
+		
+		/* figure out where the view should come from */
+		$ajax = ajax_location('add_dept', $skin, 'admin');
+		
 		/* write the data to the template */
-		$this->template->write_view('content', '_base/ajax/add_dept', $data);
+		$this->template->write_view('content', $ajax, $data);
 		
 		/* render the template */
 		$this->template->render();
@@ -855,8 +915,14 @@ class Ajax_base extends Controller {
 			'order' => ucfirst(lang('labels_order')),
 		);
 		
+		/* figure out the skin */
+		$skin = $this->session->userdata('skin_admin');
+		
+		/* figure out where the view should come from */
+		$ajax = ajax_location('add_menu_cat', $skin, 'admin');
+		
 		/* write the data to the template */
-		$this->template->write_view('content', '_base/ajax/add_menu_cat', $data);
+		$this->template->write_view('content', $ajax, $data);
 		
 		/* render the template */
 		$this->template->render();
@@ -1005,8 +1071,14 @@ class Ajax_base extends Controller {
 			'yes' => ucfirst(lang('labels_yes')),
 		);
 		
+		/* figure out the skin */
+		$skin = $this->session->userdata('skin_admin');
+		
+		/* figure out where the view should come from */
+		$ajax = ajax_location('add_menu_item', $skin, 'admin');
+		
 		/* write the data to the template */
-		$this->template->write_view('content', '_base/ajax/add_menu_item', $data);
+		$this->template->write_view('content', $ajax, $data);
 		
 		/* render the template */
 		$this->template->render();
@@ -1102,8 +1174,14 @@ class Ajax_base extends Controller {
 			'order' => ucfirst(lang('labels_order'))
 		);
 		
+		/* figure out the skin */
+		$skin = $this->session->userdata('skin_admin');
+		
+		/* figure out where the view should come from */
+		$ajax = ajax_location('add_position', $skin, 'admin');
+		
 		/* write the data to the template */
-		$this->template->write_view('content', '_base/ajax/add_position', $data);
+		$this->template->write_view('content', $ajax, $data);
 		
 		/* render the template */
 		$this->template->render();
@@ -1177,8 +1255,14 @@ class Ajax_base extends Controller {
 			'image' => ucfirst(lang('labels_image')),
 		);
 		
+		/* figure out the skin */
+		$skin = $this->session->userdata('skin_admin');
+		
+		/* figure out where the view should come from */
+		$ajax = ajax_location('add_rank', $skin, 'admin');
+		
 		/* write the data to the template */
-		$this->template->write_view('content', '_base/ajax/add_rank', $data);
+		$this->template->write_view('content', $ajax, $data);
 		
 		/* render the template */
 		$this->template->render();
@@ -1219,8 +1303,14 @@ class Ajax_base extends Controller {
 			'order' => ucfirst(lang('labels_order')),
 		);
 		
+		/* figure out the skin */
+		$skin = $this->session->userdata('skin_admin');
+		
+		/* figure out where the view should come from */
+		$ajax = ajax_location('add_role_group', $skin, 'admin');
+		
 		/* write the data to the template */
-		$this->template->write_view('content', '_base/ajax/add_role_group', $data);
+		$this->template->write_view('content', $ajax, $data);
 		
 		/* render the template */
 		$this->template->render();
@@ -1287,8 +1377,14 @@ class Ajax_base extends Controller {
 			'url' => ucwords(lang('labels_page') .' '. lang('abbr_url')),
 		);
 		
+		/* figure out the skin */
+		$skin = $this->session->userdata('skin_admin');
+		
+		/* figure out where the view should come from */
+		$ajax = ajax_location('add_role_page', $skin, 'admin');
+		
 		/* write the data to the template */
-		$this->template->write_view('content', '_base/ajax/add_role_page', $data);
+		$this->template->write_view('content', $ajax, $data);
 		
 		/* render the template */
 		$this->template->render();
@@ -1338,8 +1434,14 @@ class Ajax_base extends Controller {
 			'type' => ucfirst(lang('labels_type')),
 		);
 		
+		/* figure out the skin */
+		$skin = $this->session->userdata('skin_admin');
+		
+		/* figure out where the view should come from */
+		$ajax = ajax_location('add_site_message', $skin, 'admin');
+		
 		/* write the data to the template */
-		$this->template->write_view('content', '_base/ajax/add_site_message', $data);
+		$this->template->write_view('content', $ajax, $data);
 		
 		/* render the template */
 		$this->template->render();
@@ -1434,8 +1536,14 @@ class Ajax_base extends Controller {
 			'yes' => ucfirst(lang('labels_yes')),
 		);
 		
+		/* figure out the skin */
+		$skin = $this->session->userdata('skin_admin');
+		
+		/* figure out where the view should come from */
+		$ajax = ajax_location('add_spec_field', $skin, 'admin');
+		
 		/* write the data to the template */
-		$this->template->write_view('content', '_base/ajax/add_spec_field', $data);
+		$this->template->write_view('content', $ajax, $data);
 		
 		/* render the template */
 		$this->template->render();
@@ -1533,8 +1641,14 @@ class Ajax_base extends Controller {
 			'order' => ucfirst(lang('labels_order')),
 		);
 		
+		/* figure out the skin */
+		$skin = $this->session->userdata('skin_admin');
+		
+		/* figure out where the view should come from */
+		$ajax = ajax_location('add_spec_sec', $skin, 'admin');
+		
 		/* write the data to the template */
-		$this->template->write_view('content', '_base/ajax/add_spec_sec', $data);
+		$this->template->write_view('content', $ajax, $data);
 		
 		/* render the template */
 		$this->template->render();
@@ -1619,8 +1733,14 @@ class Ajax_base extends Controller {
 			'yes' => ucfirst(lang('labels_yes')),
 		);
 		
+		/* figure out the skin */
+		$skin = $this->session->userdata('skin_admin');
+		
+		/* figure out where the view should come from */
+		$ajax = ajax_location('add_tour_field', $skin, 'admin');
+		
 		/* write the data to the template */
-		$this->template->write_view('content', '_base/ajax/add_tour_field', $data);
+		$this->template->write_view('content', $ajax, $data);
 		
 		/* render the template */
 		$this->template->render();
@@ -1719,8 +1839,14 @@ class Ajax_base extends Controller {
 			'value' => ucfirst(lang('labels_value')),
 		);
 		
+		/* figure out the skin */
+		$skin = $this->session->userdata('skin_admin');
+		
+		/* figure out where the view should come from */
+		$ajax = ajax_location('add_user_setting', $skin, 'admin');
+		
 		/* write the data to the template */
-		$this->template->write_view('content', '_base/ajax/add_user_setting', $data);
+		$this->template->write_view('content', $ajax, $data);
 		
 		/* render the template */
 		$this->template->render();
@@ -1731,7 +1857,11 @@ class Ajax_base extends Controller {
 		$data['type'] = $this->uri->segment(3, FALSE);
 		$data['id'] = $this->uri->segment(4, 0, TRUE);
 		
-		$view = '_base/ajax/approve';
+		/* figure out the skin */
+		$skin = $this->session->userdata('skin_admin');
+		
+		/* figure out where the view should come from */
+		$view = ajax_location('approve', $skin, 'admin');
 		
 		switch ($data['type'])
 		{
@@ -1918,7 +2048,8 @@ class Ajax_base extends Controller {
 				
 				$data['form'] = 'user/nominate/queue';
 				
-				$view = '_base/ajax/approve_awardnom';
+				/* figure out where the view should come from */
+				$view = ajax_location('approve_awardnom', $skin, 'admin');
 				
 				break;
 				
@@ -1954,7 +2085,8 @@ class Ajax_base extends Controller {
 				
 				$data['form'] = 'characters/index/pending';
 				
-				$view = '_base/ajax/approve_character';
+				/* figure out where the view should come from */
+				$view = ajax_location('approve_character', $skin, 'admin');
 				
 				break;
 		}
@@ -2018,8 +2150,14 @@ class Ajax_base extends Controller {
 				'content' => ucwords(lang('actions_submit')))
 		);
 		
+		/* figure out the skin */
+		$skin = $this->session->userdata('skin_admin');
+		
+		/* figure out where the view should come from */
+		$ajax = ajax_location('change_password', $skin, 'admin');
+		
 		/* write the data to the template */
-		$this->template->write_view('content', '_base/ajax/change_password', $data);
+		$this->template->write_view('content', $ajax, $data);
 		
 		/* render the template */
 		$this->template->render();
@@ -2058,8 +2196,14 @@ class Ajax_base extends Controller {
 				'content' => ucwords(lang('actions_submit')))
 		);
 		
+		/* figure out the skin */
+		$skin = $this->session->userdata('skin_admin');
+		
+		/* figure out where the view should come from */
+		$ajax = ajax_location('del_award', $skin, 'admin');
+		
 		/* write the data to the template */
-		$this->template->write_view('content', '_base/ajax/del_award', $data);
+		$this->template->write_view('content', $ajax, $data);
 		
 		/* render the template */
 		$this->template->render();
@@ -2099,8 +2243,14 @@ class Ajax_base extends Controller {
 				'content' => ucwords(lang('actions_submit')))
 		);
 		
+		/* figure out the skin */
+		$skin = $this->session->userdata('skin_admin');
+		
+		/* figure out where the view should come from */
+		$ajax = ajax_location('del_bio_field', $skin, 'admin');
+		
 		/* write the data to the template */
-		$this->template->write_view('content', '_base/ajax/del_bio_field', $data);
+		$this->template->write_view('content', $ajax, $data);
 		
 		/* render the template */
 		$this->template->render();
@@ -2200,8 +2350,14 @@ class Ajax_base extends Controller {
 				'content' => ucwords(lang('actions_submit')))
 		);
 		
+		/* figure out the skin */
+		$skin = $this->session->userdata('skin_admin');
+		
+		/* figure out where the view should come from */
+		$ajax = ajax_location('del_bio_sec', $skin, 'admin');
+		
 		/* write the data to the template */
-		$this->template->write_view('content', '_base/ajax/del_bio_sec', $data);
+		$this->template->write_view('content', $ajax, $data);
 		
 		/* render the template */
 		$this->template->render();
@@ -2260,8 +2416,14 @@ class Ajax_base extends Controller {
 				'content' => ucwords(lang('actions_submit')))
 		);
 		
+		/* figure out the skin */
+		$skin = $this->session->userdata('skin_admin');
+		
+		/* figure out where the view should come from */
+		$ajax = ajax_location('del_bio_tab', $skin, 'admin');
+		
 		/* write the data to the template */
-		$this->template->write_view('content', '_base/ajax/del_bio_tab', $data);
+		$this->template->write_view('content', $ajax, $data);
 		
 		/* render the template */
 		$this->template->render();
@@ -2288,7 +2450,11 @@ class Ajax_base extends Controller {
 		switch ($type)
 		{
 			case 'ranks':
-				$view = '_base/ajax/del_catalogue_ranks';
+				/* figure out the skin */
+				$skin = $this->session->userdata('skin_admin');
+				
+				/* figure out where the view should come from */
+				$view = ajax_location('del_catalogue_ranks', $skin, 'admin');
 				
 				$item = $this->ranks->get_rankcat($data['id'], 'rankcat_id');
 				$ranks = $this->ranks->get_all_rank_sets();
@@ -2321,7 +2487,11 @@ class Ajax_base extends Controller {
 				break;
 				
 			case 'skins':
-				$view = '_base/ajax/del_catalogue_skins';
+				/* figure out the skin */
+				$skin = $this->session->userdata('skin_admin');
+				
+				/* figure out where the view should come from */
+				$view = ajax_location('del_catalogue_skins', $skin, 'admin');
 				
 				$item = $this->sys->get_skin_info($data['id'], 'skin_id');
 				
@@ -2342,7 +2512,11 @@ class Ajax_base extends Controller {
 				break;
 				
 			case 'skinsecs':
-				$view = '_base/ajax/del_catalogue_skinsec';
+				/* figure out the skin */
+				$skin = $this->session->userdata('skin_admin');
+				
+				/* figure out where the view should come from */
+				$view = ajax_location('del_catalogue_skinsec', $skin, 'admin');
 				
 				$item = $this->sys->get_skin_section_info($data['id'], 'skinsec_id');
 				$skins = $this->sys->get_all_skins();
@@ -2432,8 +2606,14 @@ class Ajax_base extends Controller {
 				'content' => ucwords(lang('actions_submit')))
 		);
 		
+		/* figure out the skin */
+		$skin = $this->session->userdata('skin_admin');
+		
+		/* figure out where the view should come from */
+		$ajax = ajax_location('del_character', $skin, 'admin');
+		
 		/* write the data to the template */
-		$this->template->write_view('content', '_base/ajax/del_character', $data);
+		$this->template->write_view('content', $ajax, $data);
 		
 		/* render the template */
 		$this->template->render();
@@ -2573,8 +2753,14 @@ class Ajax_base extends Controller {
 				'content' => ucwords(lang('actions_submit')))
 		);
 		
+		/* figure out the skin */
+		$skin = $this->session->userdata('skin_admin');
+		
+		/* figure out where the view should come from */
+		$ajax = ajax_location('del_comment', $skin, 'admin');
+		
 		/* write the data to the template */
-		$this->template->write_view('content', '_base/ajax/del_comment', $data);
+		$this->template->write_view('content', $ajax, $data);
 		
 		/* render the template */
 		$this->template->render();
@@ -2689,8 +2875,14 @@ class Ajax_base extends Controller {
 			'subdepts' => ucwords(lang('global_subdepartments')),
 		);
 		
+		/* figure out the skin */
+		$skin = $this->session->userdata('skin_admin');
+		
+		/* figure out where the view should come from */
+		$ajax = ajax_location('del_dept', $skin, 'admin');
+		
 		/* write the data to the template */
-		$this->template->write_view('content', '_base/ajax/del_dept', $data);
+		$this->template->write_view('content', $ajax, $data);
 		
 		/* render the template */
 		$this->template->render();
@@ -2731,8 +2923,14 @@ class Ajax_base extends Controller {
 				'content' => ucwords(lang('actions_submit')))
 		);
 		
+		/* figure out the skin */
+		$skin = $this->session->userdata('skin_admin');
+		
+		/* figure out where the view should come from */
+		$ajax = ajax_location('del_log', $skin, 'admin');
+		
 		/* write the data to the template */
-		$this->template->write_view('content', '_base/ajax/del_log', $data);
+		$this->template->write_view('content', $ajax, $data);
 		
 		/* render the template */
 		$this->template->render();
@@ -2770,8 +2968,14 @@ class Ajax_base extends Controller {
 				'content' => ucwords(lang('actions_submit')))
 		);
 		
+		/* figure out the skin */
+		$skin = $this->session->userdata('skin_admin');
+		
+		/* figure out where the view should come from */
+		$ajax = ajax_location('del_menu_cat', $skin, 'admin');
+		
 		/* write the data to the template */
-		$this->template->write_view('content', '_base/ajax/del_menu_cat', $data);
+		$this->template->write_view('content', $ajax, $data);
 		
 		/* render the template */
 		$this->template->render();
@@ -2812,8 +3016,14 @@ class Ajax_base extends Controller {
 				'content' => ucwords(lang('actions_submit')))
 		);
 		
+		/* figure out the skin */
+		$skin = $this->session->userdata('skin_admin');
+		
+		/* figure out where the view should come from */
+		$ajax = ajax_location('del_menu_item', $skin, 'admin');
+		
 		/* write the data to the template */
-		$this->template->write_view('content', '_base/ajax/del_menu_item', $data);
+		$this->template->write_view('content', $ajax, $data);
 		
 		/* render the template */
 		$this->template->render();
@@ -2854,8 +3064,14 @@ class Ajax_base extends Controller {
 				'content' => ucwords(lang('actions_submit')))
 		);
 		
+		/* figure out the skin */
+		$skin = $this->session->userdata('skin_admin');
+		
+		/* figure out where the view should come from */
+		$ajax = ajax_location('del_mission', $skin, 'admin');
+		
 		/* write the data to the template */
-		$this->template->write_view('content', '_base/ajax/del_mission', $data);
+		$this->template->write_view('content', $ajax, $data);
 		
 		/* render the template */
 		$this->template->render();
@@ -2896,8 +3112,14 @@ class Ajax_base extends Controller {
 				'content' => ucwords(lang('actions_submit')))
 		);
 		
+		/* figure out the skin */
+		$skin = $this->session->userdata('skin_admin');
+		
+		/* figure out where the view should come from */
+		$ajax = ajax_location('del_news', $skin, 'admin');
+		
 		/* write the data to the template */
-		$this->template->write_view('content', '_base/ajax/del_news', $data);
+		$this->template->write_view('content', $ajax, $data);
 		
 		/* render the template */
 		$this->template->render();
@@ -2936,8 +3158,14 @@ class Ajax_base extends Controller {
 				'content' => ucwords(lang('actions_submit')))
 		);
 		
+		/* figure out the skin */
+		$skin = $this->session->userdata('skin_admin');
+		
+		/* figure out where the view should come from */
+		$ajax = ajax_location('del_user', $skin, 'admin');
+		
 		/* write the data to the template */
-		$this->template->write_view('content', '_base/ajax/del_user', $data);
+		$this->template->write_view('content', $ajax, $data);
 		
 		/* render the template */
 		$this->template->render();
@@ -2979,8 +3207,14 @@ class Ajax_base extends Controller {
 				'content' => ucwords(lang('actions_submit')))
 		);
 		
+		/* figure out the skin */
+		$skin = $this->session->userdata('skin_admin');
+		
+		/* figure out where the view should come from */
+		$ajax = ajax_location('del_post', $skin, 'admin');
+		
 		/* write the data to the template */
-		$this->template->write_view('content', '_base/ajax/del_post', $data);
+		$this->template->write_view('content', $ajax, $data);
 		
 		/* render the template */
 		$this->template->render();
@@ -3034,8 +3268,14 @@ class Ajax_base extends Controller {
 				'content' => ucwords(lang('actions_submit')))
 		);
 		
+		/* figure out the skin */
+		$skin = $this->session->userdata('skin_admin');
+		
+		/* figure out where the view should come from */
+		$ajax = ajax_location('del_role', $skin, 'admin');
+		
 		/* write the data to the template */
-		$this->template->write_view('content', '_base/ajax/del_role', $data);
+		$this->template->write_view('content', $ajax, $data);
 		
 		/* render the template */
 		$this->template->render();
@@ -3085,8 +3325,14 @@ class Ajax_base extends Controller {
 				'content' => ucwords(lang('actions_submit')))
 		);
 		
+		/* figure out the skin */
+		$skin = $this->session->userdata('skin_admin');
+		
+		/* figure out where the view should come from */
+		$ajax = ajax_location('del_role_group', $skin, 'admin');
+		
 		/* write the data to the template */
-		$this->template->write_view('content', '_base/ajax/del_role_group', $data);
+		$this->template->write_view('content', $ajax, $data);
 		
 		/* render the template */
 		$this->template->render();
@@ -3121,8 +3367,14 @@ class Ajax_base extends Controller {
 				'content' => ucwords(lang('actions_submit')))
 		);
 		
+		/* figure out the skin */
+		$skin = $this->session->userdata('skin_admin');
+		
+		/* figure out where the view should come from */
+		$ajax = ajax_location('del_role_page', $skin, 'admin');
+		
 		/* write the data to the template */
-		$this->template->write_view('content', '_base/ajax/del_role_page', $data);
+		$this->template->write_view('content', $ajax, $data);
 		
 		/* render the template */
 		$this->template->render();
@@ -3154,8 +3406,14 @@ class Ajax_base extends Controller {
 				'content' => ucwords(lang('actions_submit')))
 		);
 		
+		/* figure out the skin */
+		$skin = $this->session->userdata('skin_admin');
+		
+		/* figure out where the view should come from */
+		$ajax = ajax_location('del_site_message', $skin, 'admin');
+		
 		/* write the data to the template */
-		$this->template->write_view('content', '_base/ajax/del_site_message', $data);
+		$this->template->write_view('content', $ajax, $data);
 		
 		/* render the template */
 		$this->template->render();
@@ -3195,8 +3453,14 @@ class Ajax_base extends Controller {
 				'content' => ucwords(lang('actions_submit')))
 		);
 		
+		/* figure out the skin */
+		$skin = $this->session->userdata('skin_admin');
+		
+		/* figure out where the view should come from */
+		$ajax = ajax_location('del_spec_field', $skin, 'admin');
+		
 		/* write the data to the template */
-		$this->template->write_view('content', '_base/ajax/del_spec_field', $data);
+		$this->template->write_view('content', $ajax, $data);
 		
 		/* render the template */
 		$this->template->render();
@@ -3296,8 +3560,14 @@ class Ajax_base extends Controller {
 				'content' => ucwords(lang('actions_submit')))
 		);
 		
+		/* figure out the skin */
+		$skin = $this->session->userdata('skin_admin');
+		
+		/* figure out where the view should come from */
+		$ajax = ajax_location('del_spec_sec', $skin, 'admin');
+		
 		/* write the data to the template */
-		$this->template->write_view('content', '_base/ajax/del_spec_sec', $data);
+		$this->template->write_view('content', $ajax, $data);
 		
 		/* render the template */
 		$this->template->render();
@@ -3337,8 +3607,14 @@ class Ajax_base extends Controller {
 				'content' => ucwords(lang('actions_submit')))
 		);
 		
+		/* figure out the skin */
+		$skin = $this->session->userdata('skin_admin');
+		
+		/* figure out where the view should come from */
+		$ajax = ajax_location('del_tour_field', $skin, 'admin');
+		
 		/* write the data to the template */
-		$this->template->write_view('content', '_base/ajax/del_tour_field', $data);
+		$this->template->write_view('content', $ajax, $data);
 		
 		/* render the template */
 		$this->template->render();
@@ -3420,8 +3696,14 @@ class Ajax_base extends Controller {
 				'content' => ucwords(lang('actions_submit')))
 		);
 		
+		/* figure out the skin */
+		$skin = $this->session->userdata('skin_admin');
+		
+		/* figure out where the view should come from */
+		$ajax = ajax_location('del_tour_item', $skin, 'admin');
+		
 		/* write the data to the template */
-		$this->template->write_view('content', '_base/ajax/del_tour_item', $data);
+		$this->template->write_view('content', $ajax, $data);
 		
 		/* render the template */
 		$this->template->render();
@@ -3453,8 +3735,14 @@ class Ajax_base extends Controller {
 				'content' => ucwords(lang('actions_submit')))
 		);
 		
+		/* figure out the skin */
+		$skin = $this->session->userdata('skin_admin');
+		
+		/* figure out where the view should come from */
+		$ajax = ajax_location('del_user_setting', $skin, 'admin');
+		
 		/* write the data to the template */
-		$this->template->write_view('content', '_base/ajax/del_user_setting', $data);
+		$this->template->write_view('content', $ajax, $data);
 		
 		/* render the template */
 		$this->template->render();
@@ -3490,8 +3778,14 @@ class Ajax_base extends Controller {
 				'content' => ucwords(lang('actions_submit')))
 		);
 		
+		/* figure out the skin */
+		$skin = $this->session->userdata('skin_wiki');
+		
+		/* figure out where the view should come from */
+		$ajax = ajax_location('del_wiki_category', $skin, 'wiki');
+		
 		/* write the data to the template */
-		$this->template->write_view('content', '_base/ajax/del_wiki_category', $data);
+		$this->template->write_view('content', $ajax, $data);
 		
 		/* render the template */
 		$this->template->render();
@@ -3542,8 +3836,14 @@ class Ajax_base extends Controller {
 				'content' => ucwords(lang('actions_submit')))
 		);
 		
+		/* figure out the skin */
+		$skin = $this->session->userdata('skin_wiki');
+		
+		/* figure out where the view should come from */
+		$ajax = ajax_location('del_wiki_page', $skin, 'wiki');
+		
 		/* write the data to the template */
-		$this->template->write_view('content', '_base/ajax/del_wiki_page', $data);
+		$this->template->write_view('content', $ajax, $data);
 		
 		/* render the template */
 		$this->template->render();
@@ -3596,8 +3896,14 @@ class Ajax_base extends Controller {
 			'role' => ucfirst(lang('labels_role'))
 		);
 		
+		/* figure out the skin */
+		$skin = $this->session->userdata('skin_admin');
+		
+		/* figure out where the view should come from */
+		$ajax = ajax_location('dup_role', $skin, 'admin');
+		
 		/* write the data to the template */
-		$this->template->write_view('content', '_base/ajax/dup_role', $data);
+		$this->template->write_view('content', $ajax, $data);
 		
 		/* render the template */
 		$this->template->render();
@@ -3666,8 +3972,14 @@ class Ajax_base extends Controller {
 		
 		$data['selected_field'] = $item->value_field;
 		
+		/* figure out the skin */
+		$skin = $this->session->userdata('skin_admin');
+		
+		/* figure out where the view should come from */
+		$ajax = ajax_location('edit_bio_field_value', $skin, 'admin');
+		
 		/* write the data to the template */
-		$this->template->write_view('content', '_base/ajax/edit_bio_field_value', $data);
+		$this->template->write_view('content', $ajax, $data);
 		
 		/* render the template */
 		$this->template->render();
@@ -3730,8 +4042,14 @@ class Ajax_base extends Controller {
 			'tab' => ucfirst(lang('labels_tab')),
 		);
 		
+		/* figure out the skin */
+		$skin = $this->session->userdata('skin_admin');
+		
+		/* figure out where the view should come from */
+		$ajax = ajax_location('edit_bio_sec', $skin, 'admin');
+		
 		/* write the data to the template */
-		$this->template->write_view('content', '_base/ajax/edit_bio_sec', $data);
+		$this->template->write_view('content', $ajax, $data);
 		
 		/* render the template */
 		$this->template->render();
@@ -3797,8 +4115,14 @@ class Ajax_base extends Controller {
 			'yes' => ucfirst(lang('labels_yes')),
 		);
 		
+		/* figure out the skin */
+		$skin = $this->session->userdata('skin_admin');
+		
+		/* figure out where the view should come from */
+		$ajax = ajax_location('edit_bio_tab', $skin, 'admin');
+		
 		/* write the data to the template */
-		$this->template->write_view('content', '_base/ajax/edit_bio_tab', $data);
+		$this->template->write_view('content', $ajax, $data);
 		
 		/* render the template */
 		$this->template->render();
@@ -3825,7 +4149,11 @@ class Ajax_base extends Controller {
 		switch ($type)
 		{
 			case 'ranks':
-				$view = '_base/ajax/edit_catalogue_ranks';
+				/* figure out the skin */
+				$skin = $this->session->userdata('skin_admin');
+				
+				/* figure out where the view should come from */
+				$view = ajax_location('edit_catalogue_ranks', $skin, 'admin');
 				
 				$item = $this->ranks->get_rankcat($data['id'], 'rankcat_id');
 				
@@ -3884,7 +4212,11 @@ class Ajax_base extends Controller {
 				break;
 				
 			case 'skins':
-				$view = '_base/ajax/edit_catalogue_skins';
+				/* figure out the skin */
+				$skin = $this->session->userdata('skin_admin');
+				
+				/* figure out where the view should come from */
+				$view = ajax_location('edit_catalogue_skins', $skin, 'admin');
 				
 				$item = $this->sys->get_skin_info($data['id'], 'skin_id');
 				
@@ -3913,7 +4245,11 @@ class Ajax_base extends Controller {
 				break;
 				
 			case 'skinsecs':
-				$view = '_base/ajax/edit_catalogue_skinsec';
+				/* figure out the skin */
+				$skin = $this->session->userdata('skin_admin');
+				
+				/* figure out where the view should come from */
+				$view = ajax_location('edit_catalogue_skinsec', $skin, 'admin');
 				
 				$item = $this->sys->get_skin_section_info($data['id'], 'skinsec_id');
 				
@@ -4107,8 +4443,14 @@ class Ajax_base extends Controller {
 				'content' => ucwords(lang('actions_submit')))
 		);
 		
+		/* figure out the skin */
+		$skin = $this->session->userdata('skin_admin');
+		
+		/* figure out where the view should come from */
+		$ajax = ajax_location('edit_comment', $skin, 'admin');
+		
 		/* write the data to the template */
-		$this->template->write_view('content', '_base/ajax/edit_comment', $data);
+		$this->template->write_view('content', $ajax, $data);
 		
 		/* render the template */
 		$this->template->render();
@@ -4154,8 +4496,14 @@ class Ajax_base extends Controller {
 			'name' => ucfirst(lang('labels_name')),
 		);
 		
+		/* figure out the skin */
+		$skin = $this->session->userdata('skin_admin');
+		
+		/* figure out where the view should come from */
+		$ajax = ajax_location('edit_deck', $skin, 'admin');
+		
 		/* write the data to the template */
-		$this->template->write_view('content', '_base/ajax/edit_deck', $data);
+		$this->template->write_view('content', $ajax, $data);
 		
 		/* render the template */
 		$this->template->render();
@@ -4214,8 +4562,14 @@ class Ajax_base extends Controller {
 			'order' => ucfirst(lang('labels_order')),
 		);
 		
+		/* figure out the skin */
+		$skin = $this->session->userdata('skin_admin');
+		
+		/* figure out where the view should come from */
+		$ajax = ajax_location('edit_menu_cat', $skin, 'admin');
+		
 		/* write the data to the template */
-		$this->template->write_view('content', '_base/ajax/edit_menu_cat', $data);
+		$this->template->write_view('content', $ajax, $data);
 		
 		/* render the template */
 		$this->template->render();
@@ -4383,8 +4737,14 @@ class Ajax_base extends Controller {
 			'yes' => ucfirst(lang('labels_yes')),
 		);
 		
+		/* figure out the skin */
+		$skin = $this->session->userdata('skin_admin');
+		
+		/* figure out where the view should come from */
+		$ajax = ajax_location('edit_menu_item', $skin, 'admin');
+		
 		/* write the data to the template */
-		$this->template->write_view('content', '_base/ajax/edit_menu_item', $data);
+		$this->template->write_view('content', $ajax, $data);
 		
 		/* render the template */
 		$this->template->render();
@@ -4430,8 +4790,14 @@ class Ajax_base extends Controller {
 			'order' => ucfirst(lang('labels_order')),
 		);
 		
+		/* figure out the skin */
+		$skin = $this->session->userdata('skin_admin');
+		
+		/* figure out where the view should come from */
+		$ajax = ajax_location('edit_role_group', $skin, 'admin');
+		
 		/* write the data to the template */
-		$this->template->write_view('content', '_base/ajax/edit_role_group', $data);
+		$this->template->write_view('content', $ajax, $data);
 		
 		/* render the template */
 		$this->template->render();
@@ -4502,8 +4868,14 @@ class Ajax_base extends Controller {
 			'url' => ucwords(lang('labels_page') .' '. lang('abbr_url')),
 		);
 		
+		/* figure out the skin */
+		$skin = $this->session->userdata('skin_admin');
+		
+		/* figure out where the view should come from */
+		$ajax = ajax_location('edit_role_page', $skin, 'admin');
+		
 		/* write the data to the template */
-		$this->template->write_view('content', '_base/ajax/edit_role_page', $data);
+		$this->template->write_view('content', $ajax, $data);
 		
 		/* render the template */
 		$this->template->render();
@@ -4568,8 +4940,14 @@ class Ajax_base extends Controller {
 			'type' => ucfirst(lang('labels_type')),
 		);
 		
+		/* figure out the skin */
+		$skin = $this->session->userdata('skin_admin');
+		
+		/* figure out where the view should come from */
+		$ajax = ajax_location('edit_site_message', $skin, 'admin');
+		
 		/* write the data to the template */
-		$this->template->write_view('content', '_base/ajax/edit_site_message', $data);
+		$this->template->write_view('content', $ajax, $data);
 		
 		/* render the template */
 		$this->template->render();
@@ -4632,8 +5010,14 @@ class Ajax_base extends Controller {
 			'value' => ucfirst(lang('labels_value')),
 		);
 		
+		/* figure out the skin */
+		$skin = $this->session->userdata('skin_admin');
+		
+		/* figure out where the view should come from */
+		$ajax = ajax_location('edit_spec_field_value', $skin, 'admin');
+		
 		/* write the data to the template */
-		$this->template->write_view('content', '_base/ajax/edit_spec_field_value', $data);
+		$this->template->write_view('content', $ajax, $data);
 		
 		/* render the template */
 		$this->template->render();
@@ -4681,8 +5065,14 @@ class Ajax_base extends Controller {
 			'order' => ucfirst(lang('labels_order')),
 		);
 		
+		/* figure out the skin */
+		$skin = $this->session->userdata('skin_admin');
+		
+		/* figure out where the view should come from */
+		$ajax = ajax_location('edit_spec_sec', $skin, 'admin');
+		
 		/* write the data to the template */
-		$this->template->write_view('content', '_base/ajax/edit_spec_sec', $data);
+		$this->template->write_view('content', $ajax, $data);
 		
 		/* render the template */
 		$this->template->render();
@@ -4745,8 +5135,14 @@ class Ajax_base extends Controller {
 			'value' => ucfirst(lang('labels_value')),
 		);
 		
+		/* figure out the skin */
+		$skin = $this->session->userdata('skin_admin');
+		
+		/* figure out where the view should come from */
+		$ajax = ajax_location('edit_tour_field_value', $skin, 'admin');
+		
 		/* write the data to the template */
-		$this->template->write_view('content', '_base/ajax/edit_tour_field_value', $data);
+		$this->template->write_view('content', $ajax, $data);
 		
 		/* render the template */
 		$this->template->render();
@@ -4800,8 +5196,14 @@ class Ajax_base extends Controller {
 			'value' => ucfirst(lang('labels_value')),
 		);
 		
+		/* figure out the skin */
+		$skin = $this->session->userdata('skin_admin');
+		
+		/* figure out where the view should come from */
+		$ajax = ajax_location('edit_user_setting', $skin, 'admin');
+		
 		/* write the data to the template */
-		$this->template->write_view('content', '_base/ajax/edit_user_setting', $data);
+		$this->template->write_view('content', $ajax, $data);
 		
 		/* render the template */
 		$this->template->render();
@@ -4843,8 +5245,14 @@ class Ajax_base extends Controller {
 			'name' => ucwords(lang('labels_category') .' '. lang('labels_name')),
 		);
 		
+		/* figure out the skin */
+		$skin = $this->session->userdata('skin_wiki');
+		
+		/* figure out where the view should come from */
+		$ajax = ajax_location('edit_wiki_category', $skin, 'wiki');
+		
 		/* write the data to the template */
-		$this->template->write_view('content', '_base/ajax/edit_wiki_category', $data);
+		$this->template->write_view('content', $ajax, $data);
 		
 		/* render the template */
 		$this->template->render();
@@ -4889,8 +5297,14 @@ class Ajax_base extends Controller {
 			}
 		}
 		
+		/* figure out the skin */
+		$skin = $this->session->userdata('skin_admin');
+		
+		/* figure out where the view should come from */
+		$ajax = ajax_location('info_users_with_role', $skin, 'admin');
+		
 		/* write the data to the template */
-		$this->template->write_view('content', '_base/ajax/info_users_with_role', $data);
+		$this->template->write_view('content', $ajax, $data);
 		
 		/* render the template */
 		$this->template->render();
@@ -5042,7 +5456,11 @@ class Ajax_base extends Controller {
 		$data['type'] = $this->uri->segment(3, FALSE);
 		$data['id'] = $this->uri->segment(4, 0, TRUE);
 		
-		$view = '_base/ajax/reject';
+		/* figure out the skin */
+		$skin = $this->session->userdata('skin_admin');
+		
+		/* figure out where the view should come from */
+		$view = ajax_location('reject', $skin, 'admin');
 		
 		switch ($data['type'])
 		{
@@ -5075,7 +5493,8 @@ class Ajax_base extends Controller {
 				
 				$data['form'] = 'user/nominate/queue';
 				
-				$view = '_base/ajax/reject_awardnom';
+				/* figure out where the view should come from */
+				$view = ajax_location('reject_awardnom', $skin, 'admin');
 				
 				break;
 				
@@ -5168,8 +5587,14 @@ class Ajax_base extends Controller {
 				'content' => ucwords(lang('actions_submit')))
 		);
 		
+		/* figure out the skin */
+		$skin = $this->session->userdata('skin_wiki');
+		
+		/* figure out where the view should come from */
+		$ajax = ajax_location('revert_wiki_page', $skin, 'wiki');
+		
 		/* write the data to the template */
-		$this->template->write_view('content', '_base/ajax/revert_wiki_page', $data);
+		$this->template->write_view('content', $ajax, $data);
 		
 		/* render the template */
 		$this->template->render();
@@ -5493,8 +5918,14 @@ class Ajax_base extends Controller {
 			$this->user->update_first_launch($this->session->userdata('userid'));
 		}
 		
+		/* figure out the skin */
+		$skin = $this->session->userdata('skin_admin');
+		
+		/* figure out where the view should come from */
+		$ajax = ajax_location('whats_new', $skin, 'admin');
+		
 		/* write the data to the template */
-		$this->template->write_view('content', '_base/ajax/whats_new', $data);
+		$this->template->write_view('content', $ajax, $data);
 		
 		/* render the template */
 		$this->template->render();
