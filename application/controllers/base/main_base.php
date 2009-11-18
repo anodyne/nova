@@ -842,7 +842,7 @@ class Main_base extends Controller {
 					else
 					{
 						/* get the user id */
-						$user = $this->news->get_newsitem($id, 'news_author_user');
+						$user = $this->news->get_news_item($id, 'news_author_user');
 						
 						/* get the author's preference */
 						$pref = $this->user->get_pref('email_new_news_comments', $user);
@@ -884,7 +884,7 @@ class Main_base extends Controller {
 		}
 		
 		/* get the news item */
-		$row = $this->news->get_newsitem($id);
+		$row = $this->news->get_news_item($id);
 		$comments = $this->news->get_news_comments($id);
 		
 		/* set the date format */
@@ -1108,7 +1108,7 @@ class Main_base extends Controller {
 				$this->load->model('news_model', 'news');
 				
 				/* run the methods */
-				$row = $this->news->get_newsitem($data['news_item']);
+				$row = $this->news->get_news_item($data['news_item']);
 				$name = $this->char->get_character_name($data['author']);
 				$from = $this->user->get_email_address('character', $data['author']);
 				$to = $this->user->get_email_address('character', $row->news_author_character);
@@ -1146,7 +1146,7 @@ class Main_base extends Controller {
 				$this->load->model('news_model', 'news');
 				
 				/* run the methods */
-				$row = $this->news->get_newsitem($data['news_item']);
+				$row = $this->news->get_news_item($data['news_item']);
 				$name = $this->char->get_character_name($data['author']);
 				$from = $this->user->get_email_address('character', $data['author']);
 				$to = implode(',', $this->user->get_emails_with_access('manage/comments'));

@@ -1914,7 +1914,7 @@ class Ajax_base extends Controller {
 				$type = lang('global_newsitem');
 				
 				/* grab the news item info */
-				$item = $this->news->get_newsitem($data['id']);
+				$item = $this->news->get_news_item($data['id']);
 				
 				$data['text'] = sprintf(
 					lang('fbx_content_approve_entry'),
@@ -1982,7 +1982,7 @@ class Ajax_base extends Controller {
 					lang('fbx_content_approve_entry'),
 					lang('global_newsitem') .' '. lang('labels_comment') .' '.
 						lang('labels_on'),
-					$this->news->get_newsitem($item['ncomment_news'], 'news_title'),
+					$this->news->get_news_item($item['ncomment_news'], 'news_title'),
 					' '. lang('labels_by') .' '.
 						$this->char->get_character_name($item['ncomment_author_character'], TRUE)
 				);
@@ -2704,7 +2704,7 @@ class Ajax_base extends Controller {
 				
 				$type = lang('global_newsitem');
 				
-				$item = $this->news->get_newsitem($this->news->get_news_comment($data['id'], 'ncomment_news'), 'news_title');
+				$item = $this->news->get_news_item($this->news->get_news_comment($data['id'], 'ncomment_news'), 'news_title');
 				
 				break;
 				
@@ -3094,7 +3094,7 @@ class Ajax_base extends Controller {
 		$data['page'] = $this->uri->segment(4, 0, TRUE);
 		$data['id'] = $this->uri->segment(5, 0, TRUE);
 		
-		$item = $this->news->get_newsitem($data['id'], 'news_title');
+		$item = $this->news->get_news_item($data['id'], 'news_title');
 		
 		$data['text'] = sprintf(
 			lang('fbx_content_del_entry'),

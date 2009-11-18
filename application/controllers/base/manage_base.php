@@ -1939,13 +1939,13 @@ class Manage_base extends Controller {
 						$flash['message'] = text_output($message);
 						
 						/* grab the post details */
-						$row = $this->news->get_newsitem($id);
+						$row = $this->news->get_news_item($id);
 						
 						/* set the array of data for the email */
 						$email_data = array(
 							'author' => $row->news_author_character,
 							'title' => $row->news_title,
-							'category' => $this->news->get_news_category_name($row->news_cat),
+							'category' => $this->news->get_news_category($row->news_cat, 'newscat_name'),
 							'content' => $row->news_content
 						);
 						
@@ -2060,7 +2060,7 @@ class Manage_base extends Controller {
 			$id = $this->uri->segment(4, 0, TRUE);
 			
 			/* grab the post data */
-			$row = $this->news->get_newsitem($id);
+			$row = $this->news->get_news_item($id);
 			$cats = $this->news->get_news_categories();
 			
 			if ($this->auth->get_access_level() < 2)
@@ -2106,7 +2106,7 @@ class Manage_base extends Controller {
 				'character' => $this->char->get_character_name($row->news_author_character, TRUE),
 				'status' => $row->news_status,
 				'category' => $row->news_cat,
-				'category_name' => $this->news->get_news_category_name($row->news_cat),
+				'category_name' => $this->news->get_news_category($row->news_cat, 'newscat_name'),
 				'private' => $row->news_private,
 				'private_long' => ($row->news_private == 'y') ? ucfirst(lang('labels_yes')) : ucfirst(lang('labels_no'))
 			);
@@ -3993,7 +3993,7 @@ class Manage_base extends Controller {
 						$data['entries'][$n->ncomment_id]['content'] = ($n->ncomment_status == 'pending') ? $n->ncomment_content : word_limiter($n->ncomment_content, 25);
 						$data['entries'][$n->ncomment_id]['author'] = $this->char->get_authors($n->ncomment_author_character, TRUE);
 						$data['entries'][$n->ncomment_id]['date'] = mdate($datestring, $date);
-						$data['entries'][$n->ncomment_id]['source'] = anchor('main/viewnews/'. $n->ncomment_news, $this->news->get_newsitem($n->ncomment_news, 'news_title'));
+						$data['entries'][$n->ncomment_id]['source'] = anchor('main/viewnews/'. $n->ncomment_news, $this->news->get_news_item($n->ncomment_news, 'news_title'));
 						$data['entries'][$n->ncomment_id]['status'] = $n->ncomment_status;
 					}
 				}
@@ -4300,7 +4300,7 @@ class Manage_base extends Controller {
 				$this->load->model('news_model', 'news');
 				
 				/* run the methods */
-				$row = $this->news->get_newsitem($data['news_item']);
+				$row = $this->news->get_news_item($data['news_item']);
 				$name = $this->char->get_character_name($data['author']);
 				$from = $this->user->get_email_address('character', $data['author']);
 				$to = $this->user->get_email_address('character', $row->news_author_character);

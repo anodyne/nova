@@ -136,7 +136,7 @@ class Write_base extends Controller {
 		/* grab the data */
 		$posts_saved = $this->posts->get_saved_posts($this->session->userdata('characters'));
 		$logs_saved = $this->logs->get_saved_logs($this->session->userdata('characters'));
-		$news_saved = $this->news->get_saved_news($this->session->userdata('userid'));
+		$news_saved = $this->news->get_user_news($this->session->userdata('userid'), 0, 'saved');
 		
 		if ($posts_saved->num_rows() > 0)
 		{
@@ -1607,7 +1607,7 @@ class Write_base extends Controller {
 			{
 				case 'delete':
 					/* get the log information */
-					$row = $this->news->get_newsitem($id);
+					$row = $this->news->get_news_item($id);
 					
 					if ($row !== FALSE)
 					{
@@ -1791,7 +1791,7 @@ class Write_base extends Controller {
 							$email_data = array(
 								'author' => $this->session->userdata('main_char'),
 								'title' => $title,
-								'category' => $this->news->get_news_category_name($category),
+								'category' => $this->news->get_news_category($category, 'newscat_name'),
 								'content' => $content
 							);
 							
@@ -1853,7 +1853,7 @@ class Write_base extends Controller {
 							$email_data = array(
 								'author' => $this->session->userdata('main_char'),
 								'title' => $title,
-								'category' => $this->news->get_news_category_name($category),
+								'category' => $this->news->get_news_category($category, 'newscat_name'),
 								'content' => $content
 							);
 							
@@ -1904,7 +1904,7 @@ class Write_base extends Controller {
 		$data['character']['name'] = $this->char->get_character_name($this->session->userdata('main_char'), TRUE);
 		
 		/* get the data */
-		$row = ($id !== FALSE) ? $this->news->get_newsitem($id) : FALSE;
+		$row = ($id !== FALSE) ? $this->news->get_news_item($id) : FALSE;
 		
 		if ($row !== FALSE)
 		{

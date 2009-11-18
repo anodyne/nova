@@ -1468,7 +1468,7 @@ class Sim_base extends Controller {
 					else
 					{
 						/* get the user id */
-						$user = $this->user->get_user_id($this->logs->get_log_author($id));
+						$user = $this->logs->get_log($id, 'log_author_user');
 						
 						/* get the author's preference */
 						$pref = $this->user->get_pref('email_new_log_comments', $user);
