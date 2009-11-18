@@ -147,7 +147,7 @@ class Write_base extends Controller {
 				$data['posts_saved'][$i]['post_id'] = $p->post_id;
 				$data['posts_saved'][$i]['date'] = mdate($datestring, gmt_to_local($p->post_date, $this->timezone, $this->dst));
 				$data['posts_saved'][$i]['authors'] = $this->char->get_authors($p->post_authors);
-				$data['posts_saved'][$i]['mission'] = $this->mis->get_mission_name($p->post_mission);
+				$data['posts_saved'][$i]['mission'] = $this->mis->get_mission($p->post_mission, 'mission_title');
 				$data['posts_saved'][$i]['mission_id'] = $p->post_mission;
 				$data['posts_saved'][$i]['saved'] = $p->post_saved;
 				
@@ -208,7 +208,7 @@ class Write_base extends Controller {
 				$data['posts'][$i]['post_id'] = $p->post_id;
 				$data['posts'][$i]['date'] = mdate($datestring, gmt_to_local($p->post_date, $this->timezone, $this->dst));
 				$data['posts'][$i]['authors'] = $this->char->get_authors($p->post_authors);
-				$data['posts'][$i]['mission'] = $this->mis->get_mission_name($p->post_mission);
+				$data['posts'][$i]['mission'] = $this->mis->get_mission($p->post_mission, 'mission_title');
 				$data['posts'][$i]['mission_id'] = $p->post_mission;
 				
 				++$i;
@@ -263,7 +263,7 @@ class Write_base extends Controller {
 				$data['posts_all'][$i]['post_id'] = $p->post_id;
 				$data['posts_all'][$i]['date'] = mdate($datestring, gmt_to_local($p->post_date, $this->timezone, $this->dst));
 				$data['posts_all'][$i]['authors'] = $this->char->get_authors($p->post_authors);
-				$data['posts_all'][$i]['mission'] = $this->mis->get_mission_name($p->post_mission);
+				$data['posts_all'][$i]['mission'] = $this->mis->get_mission($p->post_mission, 'mission_title');
 				$data['posts_all'][$i]['mission_id'] = $p->post_mission;
 				
 				++$i;
@@ -1113,7 +1113,7 @@ class Write_base extends Controller {
 								'timeline' => $timeline,
 								'location' => $location,
 								'content' => $content,
-								'mission' => $this->mis->get_mission_name($mission)
+								'mission' => $this->mis->get_mission($mission, 'mission_title')
 							);
 							
 							/* send the email */
@@ -1183,7 +1183,7 @@ class Write_base extends Controller {
 									'timeline' => $timeline,
 									'location' => $location,
 									'content' => $content,
-									'mission' => $this->mis->get_mission_name($mission)
+									'mission' => $this->mis->get_mission($mission, 'mission_title')
 								);
 								
 								if ($status == 'pending')
@@ -1259,7 +1259,7 @@ class Write_base extends Controller {
 									'timeline' => $timeline,
 									'location' => $location,
 									'content' => $content,
-									'mission' => $this->mis->get_mission_name($mission)
+									'mission' => $this->mis->get_mission($mission, 'mission_title')
 								);
 								
 								if ($status == 'pending')
@@ -1320,7 +1320,7 @@ class Write_base extends Controller {
 		}
 		
 		/* get the current missions */
-		$missions = $this->mis->get_current_missions();
+		$missions = $this->mis->get_all_missions('current');
 		
 		if (count($char) > 1)
 		{ /* only continue if there's more than 1 character in the array */
@@ -1607,12 +1607,10 @@ class Write_base extends Controller {
 			{
 				case 'delete':
 					/* get the log information */
-					$news_author = $this->news->get_news_item($id);
+					$row = $this->news->get_newsitem($id);
 					
-					if ($news_author->num_rows() > 0)
+					if ($row !== FALSE)
 					{
-						$row = $news_author->row();
-						
 						if ($row->news_status == 'saved' &&
 								$row->news_author_user == $this->session->userdata('userid'))
 						{
@@ -1905,13 +1903,11 @@ class Write_base extends Controller {
 		$data['character']['id'] = $this->session->userdata('main_char');
 		$data['character']['name'] = $this->char->get_character_name($this->session->userdata('main_char'), TRUE);
 		
-		/* get the data if it is not a new PM */
-		$info = ($id !== FALSE) ? $this->news->get_news_item($id) : FALSE;
+		/* get the data */
+		$row = ($id !== FALSE) ? $this->news->get_newsitem($id) : FALSE;
 		
-		if ($info !== FALSE && $info->num_rows() > 0)
-		{ /* make sure the info object exists */
-			$row = $info->row();
-			
+		if ($row !== FALSE)
+		{
 			if ($row->news_author_user != $this->session->userdata('userid'))
 			{ /* sorry, if you aren't the author, you're not allowed here */
 				redirect('admin/error/4');

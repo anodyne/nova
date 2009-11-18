@@ -842,7 +842,7 @@ class Main_base extends Controller {
 					else
 					{
 						/* get the user id */
-						$user = $this->user->get_user_id($this->news->get_news_author($id));
+						$user = $this->news->get_newsitem($id, 'news_author_user');
 						
 						/* get the author's preference */
 						$pref = $this->user->get_pref('email_new_news_comments', $user);
@@ -884,16 +884,14 @@ class Main_base extends Controller {
 		}
 		
 		/* get the news item */
-		$query = $this->news->get_news_item($id);
+		$row = $this->news->get_newsitem($id);
 		$comments = $this->news->get_news_comments($id);
 		
 		/* set the date format */
 		$datestring = $this->options['date_format'];
 		
-		if ($query->num_rows() > 0)
+		if ($row !== FALSE)
 		{
-			$row = $query->row();
-			
 			/* set the date */
 			$date = gmt_to_local($row->news_date, $this->timezone, $this->dst);
 			
@@ -1110,11 +1108,10 @@ class Main_base extends Controller {
 				$this->load->model('news_model', 'news');
 				
 				/* run the methods */
-				$news = $this->news->get_news_item($data['news_item']);
-				$row = $news->row();
+				$row = $this->news->get_newsitem($data['news_item']);
 				$name = $this->char->get_character_name($data['author']);
 				$from = $this->user->get_email_address('character', $data['author']);
-				$to = $this->user->get_email_address('character', $row->news_author);
+				$to = $this->user->get_email_address('character', $row->news_author_character);
 				
 				/* set the content */	
 				$content = sprintf(
@@ -1149,8 +1146,7 @@ class Main_base extends Controller {
 				$this->load->model('news_model', 'news');
 				
 				/* run the methods */
-				$news = $this->news->get_news_item($data['news_item']);
-				$row = $news->row();
+				$row = $this->news->get_newsitem($data['news_item']);
 				$name = $this->char->get_character_name($data['author']);
 				$from = $this->user->get_email_address('character', $data['author']);
 				$to = implode(',', $this->user->get_emails_with_access('manage/comments'));

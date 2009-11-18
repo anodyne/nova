@@ -776,7 +776,7 @@ class Sim_base extends Controller {
 				$data['posts'][$post->post_id]['title'] = $post->post_title;
 				$data['posts'][$post->post_id]['author'] = $this->char->get_authors($post->post_authors, TRUE);
 				$data['posts'][$post->post_id]['date'] = mdate($datestring, $date);
-				$data['posts'][$post->post_id]['mission'] = $this->mis->get_mission_name($post->post_mission);
+				$data['posts'][$post->post_id]['mission'] = $this->mis->get_mission($post->post_mission, 'mission_title');
 				$data['posts'][$post->post_id]['mission_id'] = $post->post_mission;
 			}
 			
@@ -788,7 +788,7 @@ class Sim_base extends Controller {
 			else
 			{
 				/* set the mission name */
-				$mission_name = $this->mis->get_mission_name($mission);
+				$mission_name = $this->mis->get_mission($mission, 'mission_title');
 				
 				if (!is_numeric($mission) || empty($mission_name))
 				{ /* if there isn't a mission or mission name */
@@ -1734,7 +1734,7 @@ class Sim_base extends Controller {
 			$prev = $this->posts->get_link_id($id, 'prev');
 			
 			/* set the data being sent to the view */
-			$data['mission'] = $this->mis->get_mission_name($row->post_mission);
+			$data['mission'] = $this->mis->get_mission($row->post_mission, 'mission_title');
 			$data['mission_id'] = $row->post_mission;
 			$data['title'] = $row->post_title;
 			$data['content'] = $row->post_content;

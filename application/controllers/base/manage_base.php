@@ -2694,7 +2694,7 @@ class Manage_base extends Controller {
 							'timeline' => $row->post_timeline,
 							'location' => $row->post_location,
 							'content' => $row->post_content,
-							'mission' => $this->mis->get_mission_name($row->post_mission)
+							'mission' => $this->mis->get_mission($row->post_mission, 'mission_title')
 						);
 						
 						/* send the email */
@@ -2942,7 +2942,7 @@ class Manage_base extends Controller {
 					'name' => 'post_location',
 					'value' => $row->post_location),
 				'mission' => $row->post_mission,
-				'mission_name' => $this->mis->get_mission_name($row->post_mission),
+				'mission_name' => $this->mis->get_mission($row->post_mission, 'mission_title'),
 				'status' => $row->post_status,
 			);
 			
@@ -3998,7 +3998,7 @@ class Manage_base extends Controller {
 					}
 				}
 		
-				$config['total_rows'] = $this->news->count_all_news_comments($status);
+				$config['total_rows'] = $this->news->count_news_comments($status);
 				
 			    $this->pagination->initialize($config);
 			    
@@ -4300,11 +4300,10 @@ class Manage_base extends Controller {
 				$this->load->model('news_model', 'news');
 				
 				/* run the methods */
-				$news = $this->news->get_news_item($data['news_item']);
-				$row = $news->row();
+				$row = $this->news->get_newsitem($data['news_item']);
 				$name = $this->char->get_character_name($data['author']);
 				$from = $this->user->get_email_address('character', $data['author']);
-				$to = $this->user->get_email_address('character', $row->news_author);
+				$to = $this->user->get_email_address('character', $row->news_author_character);
 				
 				/* set the content */	
 				$content = sprintf(
@@ -4495,7 +4494,7 @@ class Manage_base extends Controller {
 								$data['entries'][$p->post_id]['title'] = $p->post_title;
 								$data['entries'][$p->post_id]['author'] = $this->char->get_authors($p->post_authors, TRUE);
 								$data['entries'][$p->post_id]['date'] = mdate($datestring, $date);
-								$data['entries'][$p->post_id]['mission'] = $this->mis->get_mission_name($p->post_mission);
+								$data['entries'][$p->post_id]['mission'] = $this->mis->get_mission($p->post_mission, 'mission_title');
 								$data['entries'][$p->post_id]['status'] = $p->post_status;
 							}
 						}
@@ -4507,7 +4506,7 @@ class Manage_base extends Controller {
 							$data['entries'][$p->post_id]['title'] = $p->post_title;
 							$data['entries'][$p->post_id]['author'] = $this->char->get_authors($p->post_authors, TRUE);
 							$data['entries'][$p->post_id]['date'] = mdate($datestring, $date);
-							$data['entries'][$p->post_id]['mission'] = $this->mis->get_mission_name($p->post_mission);
+							$data['entries'][$p->post_id]['mission'] = $this->mis->get_mission($p->post_mission, 'mission_title');
 							$data['entries'][$p->post_id]['status'] = $p->post_status;
 						}
 					}
@@ -4677,7 +4676,7 @@ class Manage_base extends Controller {
 					}
 				}
 		
-				$config['total_rows'] = $this->news->count_all_news($status);
+				$config['total_rows'] = $this->news->count_news_items($status);
 				
 			    $this->pagination->initialize($config);
 			    

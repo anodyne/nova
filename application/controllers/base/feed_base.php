@@ -153,7 +153,7 @@ class Feed_base extends Controller {
 				
 				/* break the array into a string */
 				$post_header = 'A post by '. implode(', ', $authors['full_names']) ."\r\n\r\n";
-				$post_header.= "<b>Mission</b> - ". $this->mis->get_mission_name($post->post_mission) ."\r\n";
+				$post_header.= "<b>Mission</b> - ". $this->mis->get_mission($post->post_mission, 'mission_title') ."\r\n";
 				$post_header.= (!empty($post->post_location)) ? "<b>Location</b> - ". $post->post_location ."\r\n" : '';
 				$post_header.= (!empty($post->post_timeline)) ? "<b>Timeline</b> - ". $post->post_timeline ."\r\n" : '';
 				$post_header.= "\r\n";

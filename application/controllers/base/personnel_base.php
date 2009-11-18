@@ -896,7 +896,7 @@ class Personnel_base extends Controller {
 					$data['posts'][$i]['post_id'] = $p->post_id;
 					$data['posts'][$i]['date'] = mdate($datestring, gmt_to_local($p->post_date, $this->timezone, $this->dst));
 					$data['posts'][$i]['authors'] = $this->char->get_authors($p->post_authors);
-					$data['posts'][$i]['mission'] = $this->mis->get_mission_name($p->post_mission);
+					$data['posts'][$i]['mission'] = $this->mis->get_mission($p->post_mission, 'mission_title');
 					$data['posts'][$i]['mission_id'] = $p->post_mission;
 					
 					++$i;
@@ -1466,7 +1466,7 @@ class Personnel_base extends Controller {
 								$data['char'][$char]['posts'][$post->post_id]['id'] = $post->post_id;
 								$data['char'][$char]['posts'][$post->post_id]['title'] = $post->post_title;
 								$data['char'][$char]['posts'][$post->post_id]['date'] = mdate($datestring, $date);
-								$data['char'][$char]['posts'][$post->post_id]['mission'] = $this->mis->get_mission_name($post->post_mission);
+								$data['char'][$char]['posts'][$post->post_id]['mission'] = $this->mis->get_mission($post->post_mission, 'mission_title');
 								$data['char'][$char]['posts'][$post->post_id]['mission_id'] = $post->post_mission;
 							}
 							
@@ -1515,7 +1515,7 @@ class Personnel_base extends Controller {
 							$data['posts'][$post->post_id]['id'] = $post->post_id;
 							$data['posts'][$post->post_id]['title'] = $post->post_title;
 							$data['posts'][$post->post_id]['date'] = mdate($datestring, $date);
-							$data['posts'][$post->post_id]['mission'] = $this->mis->get_mission_name($post->post_mission);
+							$data['posts'][$post->post_id]['mission'] = $this->mis->get_mission($post->post_mission, 'mission_title');
 							$data['posts'][$post->post_id]['mission_id'] = $post->post_mission;
 						}
 

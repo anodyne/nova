@@ -819,7 +819,7 @@ class Upgrade_base extends Controller {
 					/* make award_id auto increment and the primary key */
 					$this->db->query('ALTER TABLE '. $this->db->dbprefix .'news MODIFY COLUMN `news_id` INT(8) auto_increment primary key');
 					
-					$news_after = $this->news->count_all_news('');
+					$news_after = $this->news->count_news_items('');
 					
 					/* set the message */
 					$message = ($news_before = $news_after) ? lang('upg_step8_success') : lang('upg_step8_failure');

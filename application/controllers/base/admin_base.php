@@ -192,8 +192,8 @@ class Admin_base extends Controller {
 			'pending_users' 	=> $this->char->count_characters('pending', ''),
 			'pending_posts' 	=> $this->posts->count_all_posts('', 'pending'),
 			'pending_logs' 		=> $this->logs->count_all_logs('pending'),
-			'pending_news' 		=> $this->news->count_all_news('pending'),
-			'pending_comments' 	=> $this->posts->count_all_post_comments('pending') + $this->logs->count_all_log_comments('pending') + $this->news->count_all_news_comments('pending') + $this->wiki->count_all_comments('pending'),
+			'pending_news' 		=> $this->news->count_news_items('pending'),
+			'pending_comments' 	=> $this->posts->count_all_post_comments('pending') + $this->logs->count_all_log_comments('pending') + $this->news->count_news_comments('pending') + $this->wiki->count_all_comments('pending'),
 			'pending_awards' 	=> $this->awards->count_award_noms('pending')
 		);
 		
@@ -316,7 +316,7 @@ class Admin_base extends Controller {
 				$data['posts_all'][$i]['post_id'] = $p->post_id;
 				$data['posts_all'][$i]['date'] = mdate($datestring, gmt_to_local($p->post_date, $this->timezone, $this->dst));
 				$data['posts_all'][$i]['authors'] = $this->char->get_authors($p->post_authors);
-				$data['posts_all'][$i]['mission'] = $this->mis->get_mission_name($p->post_mission);
+				$data['posts_all'][$i]['mission'] = $this->mis->get_mission($p->post_mission, 'mission_title');
 				$data['posts_all'][$i]['mission_id'] = $p->post_mission;
 				
 				++$i;
