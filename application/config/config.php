@@ -7,19 +7,13 @@
 | URL to your CodeIgniter root. Typically this will be your base URL,
 | WITH a trailing slash:
 |
-|	http://www.your-site.com/
-|
 */
-/*$url = $_SERVER['SCRIPT_NAME'];
-$url = substr($url,0,strpos($url,".php"));
-$url = substr($url,0,(strlen($url) - strpos(strrev($url),"/")));
-$url = ((empty($_SERVER['HTTPS']) OR $_SERVER['HTTPS'] === 'off') ? 'http' : 'https')."://".$_SERVER['HTTP_HOST'].$url;*/
+$url = $_SERVER['SCRIPT_NAME'];
+$url = substr($url, 0, strpos($url, '.php'));
+$url = substr($url, 0, (strlen($url) - strpos(strrev($url), '/')));
+$url = ((empty($_SERVER['HTTPS']) OR $_SERVER['HTTPS'] === 'off') ? 'http' : 'https') .'://'. $_SERVER['HTTP_HOST'] . $url;
 
-$base_url = ((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == "on") ? "https" : "http");
-$base_url.= "://".$_SERVER['HTTP_HOST'];
-$base_url.= str_replace(basename($_SERVER['SCRIPT_NAME']),"",$_SERVER['SCRIPT_NAME']);
-
-$config['base_url']	= $base_url;
+$config['base_url']	= $url;
 
 /*
 |--------------------------------------------------------------------------
