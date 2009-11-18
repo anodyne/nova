@@ -26,6 +26,79 @@ class Personallogs_model_base extends Model {
 	| RETRIEVE METHODS
 	|---------------------------------------------------------------
 	*/
+	
+	function get_character_logs($id = '', $limit = 0)
+	{
+		$this->db->from('personallogs');
+		$this->db->where('log_status', 'activated');
+		
+		if (is_array($id))
+		{
+			/* make sure the keys are set up right */
+			$id = array_values($id);
+			
+			$this->db->where('log_author_character', $id[0]);
+			
+			$count = count($id);
+			for ($i=1; $i < $count; $i++)
+			{ 
+				$this->db->or_where('log_author_character', $id[$i]);
+			}
+		}
+		else
+		{
+			$this->db->where('log_author_character', $id);
+		}
+		
+		$this->db->order_by('log_date', 'desc');
+		
+		if ($limit > 0)
+		{
+			$this->db->limit($limit);
+		}
+		
+		$query = $this->db->get();
+		
+		return $query;
+	}
+	
+	function get_link_id($id = '', $direction = 'next')
+	{
+		$get = $this->db->get_where('personallogs', array('log_id' => $id));
+		
+		if ($get->num_rows() > 0)
+		{
+			$fetch = $get->row();
+			
+			$this->db->select('log_id');
+			$this->db->from('personallogs');
+			$this->db->where('log_status', 'activated');
+			
+			switch ($direction)
+			{
+				case 'next':
+					$this->db->where('log_date >', $fetch->log_date);
+					break;
+				
+				case 'prev':
+					$this->db->where('log_date <', $fetch->log_date);
+					$this->db->order_by('log_id', 'desc');
+					break;
+			}
+			
+			$this->db->limit(1);
+			
+			$query = $this->db->get();
+			
+			if ($query->num_rows() > 0)
+			{
+				$row = $query->row();
+				return $row->log_id;
+			}
+		}
+		
+		return FALSE;
+	}
 
 	function get_log($id = '', $return = '')
 	{
@@ -123,93 +196,6 @@ class Personallogs_model_base extends Model {
 		return $query;
 	}
 	
-	function get_log_author($id = '')
-	{
-		$query = $this->db->get_where('personallogs', array('log_id' => $id));
-		
-		if ($query->num_rows() > 0)
-		{
-			$row = $query->row();
-			
-			return $row->log_author_user;
-		}
-		
-		return FALSE;
-	}
-	
-	function get_character_logs($id = '', $limit = 0)
-	{
-		$this->db->from('personallogs');
-		$this->db->where('log_status', 'activated');
-		
-		if (is_array($id))
-		{
-			/* make sure the keys are set up right */
-			$id = array_values($id);
-			
-			$this->db->where('log_author_character', $id[0]);
-			
-			$count = count($id);
-			for ($i=1; $i < $count; $i++)
-			{ 
-				$this->db->or_where('log_author_character', $id[$i]);
-			}
-		}
-		else
-		{
-			$this->db->where('log_author_character', $id);
-		}
-		
-		$this->db->order_by('log_date', 'desc');
-		
-		if ($limit > 0)
-		{
-			$this->db->limit($limit);
-		}
-		
-		$query = $this->db->get();
-		
-		return $query;
-	}
-	
-	function get_link_id($id = '', $direction = 'next')
-	{
-		$get = $this->db->get_where('personallogs', array('log_id' => $id));
-		
-		if ($get->num_rows() > 0)
-		{
-			$fetch = $get->row();
-			
-			$this->db->select('log_id');
-			$this->db->from('personallogs');
-			$this->db->where('log_status', 'activated');
-			
-			switch ($direction)
-			{
-				case 'next':
-					$this->db->where('log_date >', $fetch->log_date);
-					break;
-				
-				case 'prev':
-					$this->db->where('log_date <', $fetch->log_date);
-					$this->db->order_by('log_id', 'desc');
-					break;
-			}
-			
-			$this->db->limit(1);
-			
-			$query = $this->db->get();
-			
-			if ($query->num_rows() > 0)
-			{
-				$row = $query->row();
-				return $row->log_id;
-			}
-		}
-		
-		return FALSE;
-	}
-	
 	function get_saved_logs($id = '', $limit = 0)
 	{
 		$this->db->from('personallogs');
@@ -268,6 +254,31 @@ class Personallogs_model_base extends Model {
 	|---------------------------------------------------------------
 	*/
 	
+	function count_all_log_comments($status = 'activated', $id = '')
+	{
+		$this->db->from('personallogs_comments');
+		$this->db->where('lcomment_status', $status);
+		
+		if (!empty($id))
+		{
+			$this->db->where('lcomment_log', $id);
+		}
+		
+		return $this->db->count_all_results();
+	}
+	
+	function count_all_logs($status = 'activated')
+	{
+		$this->db->from('personallogs');
+		
+		if (!empty($status))
+		{
+			$this->db->where('log_status', $status);
+		}
+		
+		return $this->db->count_all_results();
+	}
+	
 	function count_character_logs($character = '', $status = 'activated')
 	{
 		$count = 0;
@@ -291,25 +302,6 @@ class Personallogs_model_base extends Model {
 			
 			$count += $this->db->count_all_results();
 		}
-		
-		return $count;
-	}
-	
-	function count_user_logs($id = '', $status = 'activated', $timeframe = '')
-	{
-		$count = 0;
-		
-		$this->db->from('personallogs');
-		$this->db->where('log_status', $status);
-		
-		if (!empty($timeframe))
-		{
-			$this->db->where('log_date >=', $timeframe);
-		}
-		
-		$this->db->where('log_author_user', $id);
-			
-		$count = $this->db->count_all_results();
 		
 		return $count;
 	}
@@ -339,8 +331,10 @@ class Personallogs_model_base extends Model {
 		return $count;
 	}
 	
-	function count_all_logs($status = 'activated')
+	function count_user_logs($id = '', $status = 'activated', $timeframe = '')
 	{
+		$count = 0;
+		
 		$this->db->from('personallogs');
 		
 		if (!empty($status))
@@ -348,20 +342,16 @@ class Personallogs_model_base extends Model {
 			$this->db->where('log_status', $status);
 		}
 		
-		return $this->db->count_all_results();
-	}
-	
-	function count_all_log_comments($status = 'activated', $id = '')
-	{
-		$this->db->from('personallogs_comments');
-		$this->db->where('lcomment_status', $status);
-		
-		if (!empty($id))
+		if (!empty($timeframe))
 		{
-			$this->db->where('lcomment_log', $id);
+			$this->db->where('log_date >=', $timeframe);
 		}
 		
-		return $this->db->count_all_results();
+		$this->db->where('log_author_user', $id);
+			
+		$count = $this->db->count_all_results();
+		
+		return $count;
 	}
 	
 	/*
@@ -387,16 +377,6 @@ class Personallogs_model_base extends Model {
 	|---------------------------------------------------------------
 	*/
 	
-	function create_personal_log($data = '')
-	{
-		$query = $this->db->insert('personallogs', $data);
-		
-		/* optimize the table */
-		$this->dbutil->optimize_table('personallogs');
-		
-		return $query;
-	}
-	
 	function add_log_comment($data = '')
 	{
 		$this->db->insert('personallogs_comments', $data);
@@ -406,6 +386,16 @@ class Personallogs_model_base extends Model {
 		
 		/* return the number of affected rows to show success/failure (should be 1) */
 		return $this->db->affected_rows();
+	}
+	
+	function create_personal_log($data = '')
+	{
+		$query = $this->db->insert('personallogs', $data);
+		
+		/* optimize the table */
+		$this->dbutil->optimize_table('personallogs');
+		
+		return $query;
 	}
 	
 	/*
