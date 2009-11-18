@@ -8,14 +8,22 @@ Beta
 
 Last Update
 -----------
-17 November 2009
+18 November 2009
 
 Latest Changes
 --------------
-* added the ajax_location helper
-* added the ajax directories
-* moved the ajax files to their respective skin sections
-* updated the ajax controller with the new seamless substitution code
+* removed unnecessary methods from the missions model
+* removed unnecessary methods from the news model
+* removed unnecessary methods from the personal logs model
+* removed the players model
+* removed the players_base model
+* updated the controllers to remove some unnecessary method calls
+* updated the news model to have the methods sorted alphabetically
+* updated the index.php file with better debug code
+* updated the main config file with a better base url script
+* updated the database config file with a constant from index for database debugging
+* updated the personal logs model to have the methods sorted alphabetically
+* updated the rss model to have the methods sorted alphabetically
 
 Version History
 ---------------
