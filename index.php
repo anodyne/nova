@@ -1,16 +1,47 @@
 <?php
 /*
 |---------------------------------------------------------------
-| PHP ERROR REPORTING LEVEL
+| PHP & DB ERROR REPORTING LEVEL
 |---------------------------------------------------------------
 |
-| By default CI runs with error reporting set to ALL.  For security
-| reasons you are encouraged to change this when your site goes live.
-| For more info visit:  http://www.php.net/error_reporting
+| 0 : No error reporting
+| 1 : PHP fatal errors & DB errors
+| 2 : PHP compiler errors and DB errors
+| 3 : All PHP errors, warnings & notices and DB errors
 |
 */
-	error_reporting(E_ALL);
-	//error_reporting(0);
+$debug_errors = 3;
+
+switch ($debug_errors)
+{
+	case 1:
+		ini_set('display_errors', 0);
+		error_reporting(E_ERROR);
+		define('NOVA_DB_DEBUG', TRUE);
+		
+		break;
+		
+	case 2:
+		ini_set('display_errors', 1);
+		error_reporting(E_ERROR | E_PARSE);
+		define('NOVA_DB_DEBUG', TRUE);
+		
+		break;
+		
+	case 3:
+		ini_set('display_errors', 1);
+		error_reporting(E_ALL);
+		define('NOVA_DB_DEBUG', TRUE);
+		
+		break;
+	
+	default:
+		ini_set('display_errors', 0);
+		error_reporting(0);
+		define('NOVA_DB_DEBUG', FALSE);
+		
+		break;
+}
 
 /*
 |---------------------------------------------------------------
@@ -24,7 +55,7 @@
 | NO TRAILING SLASH!
 |
 */
-	$system_folder = "core";
+$system_folder = "core";
 
 /*
 |---------------------------------------------------------------
@@ -41,10 +72,10 @@
 | NO TRAILING SLASH!
 |
 */
-	$abspath = getcwd();
-	$app_folder = "application";
-	
-	$application_folder = $abspath . "/" . $app_folder;
+$abspath = getcwd();
+$app_folder = "application";
+
+$application_folder = $abspath . "/" . $app_folder;
 
 /*
 |===============================================================
