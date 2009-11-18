@@ -27,6 +27,22 @@ class Missions_model_base extends Model {
 	|---------------------------------------------------------------
 	*/
 	
+	function get_all_missions($status = '')
+	{
+		$this->db->from('missions');
+		
+		if (!empty($status))
+		{
+			$this->db->where('mission_status', $status);
+		}
+		
+		$this->db->order_by('mission_order', 'asc');
+		
+		$query = $this->db->get();
+		
+		return $query;
+	}
+	
 	function get_mission($id = '', $return = '')
 	{
 		$query = $this->db->get_where('missions', array('mission_id' => $id));
@@ -53,46 +69,6 @@ class Missions_model_base extends Model {
 		}
 		
 		return $row;
-	}
-	
-	function get_mission_info($id = '')
-	{
-		$this->db->from('missions');
-		$this->db->where('mission_id', $id);
-		$this->db->limit(1);
-		
-		$query = $this->db->get();
-		
-		return $query;
-	}
-	
-	function get_mission_name($id = '')
-	{
-		$query = $this->db->get_where('missions', array('mission_id' => $id));
-		$row = $query->row();
-		
-		return $row->mission_title;
-	}
-	
-	function get_all_missions()
-	{
-		$this->db->from('missions');
-		$this->db->order_by('mission_order', 'asc');
-		
-		$query = $this->db->get();
-		
-		return $query;
-	}
-	
-	function get_current_missions()
-	{
-		$this->db->from('missions');
-		$this->db->where('mission_status', 'current');
-		$this->db->order_by('mission_order', 'asc');
-		
-		$query = $this->db->get();
-		
-		return $query;
 	}
 	
 	/*
