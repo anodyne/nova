@@ -146,3 +146,11 @@ http://codeigniter.com/wiki/BBCode_Helper/
 |---------------------------------------------------------------
 
 http://devthought.com/projects/jquery/textboxlist/
+
+|---------------------------------------------------------------
+| OLD DYNAMIC BASE URL
+|---------------------------------------------------------------
+
+$url = ((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == "on") ? "https" : "http");
+$url.= "://".$_SERVER['HTTP_HOST'];
+$url.= str_replace(basename($_SERVER['SCRIPT_NAME']), '', $_SERVER['SCRIPT_NAME']);
