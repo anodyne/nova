@@ -25,18 +25,6 @@ class Rss_model_base extends Model {
 	|---------------------------------------------------------------
 	*/
 	
-	function get_posts($limit = 25)
-	{
-		$this->db->from('posts');
-		$this->db->where('post_status', 'activated');
-		$this->db->order_by('post_date', 'desc');
-		$this->db->limit($limit);
-		
-		$query = $this->db->get();
-		
-		return $query;
-	}
-	
 	function get_logs($limit = 25)
 	{
 		$this->db->from('personallogs');
@@ -56,6 +44,18 @@ class Rss_model_base extends Model {
 		$this->db->where('news_status', 'activated');
 		$this->db->where('news_private', 'n');
 		$this->db->order_by('news_date', 'desc');
+		$this->db->limit($limit);
+		
+		$query = $this->db->get();
+		
+		return $query;
+	}
+	
+	function get_posts($limit = 25)
+	{
+		$this->db->from('posts');
+		$this->db->where('post_status', 'activated');
+		$this->db->order_by('post_date', 'desc');
 		$this->db->limit($limit);
 		
 		$query = $this->db->get();
