@@ -1,3 +1,11 @@
+11.23.2009
+
+* updated the add_coc_entry() ajax method to handle the order properly so it doesn't throw an error
+* updated the characters/coc js view file to be better overall
+* updated the characters/coc view file to handle showing and hiding buttons
+
+==========
+
 11.18.2009
 
 * removed unnecessary methods from the missions model

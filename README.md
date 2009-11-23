@@ -8,22 +8,13 @@ Beta
 
 Last Update
 -----------
-18 November 2009
+23 November 2009
 
 Latest Changes
 --------------
-* removed unnecessary methods from the missions model
-* removed unnecessary methods from the news model
-* removed unnecessary methods from the personal logs model
-* removed the players model
-* removed the players_base model
-* updated the controllers to remove some unnecessary method calls
-* updated the news model to have the methods sorted alphabetically
-* updated the index.php file with better debug code
-* updated the main config file with a better base url script
-* updated the database config file with a constant from index for database debugging
-* updated the personal logs model to have the methods sorted alphabetically
-* updated the rss model to have the methods sorted alphabetically
+* updated the add_coc_entry() ajax method to handle the order properly so it doesn't throw an error
+* updated the characters/coc js view file to be better overall
+* updated the characters/coc view file to handle showing and hiding buttons
 
 Version History
 ---------------
