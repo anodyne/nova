@@ -530,7 +530,7 @@ class Ajax_base extends Controller {
 		
 		$insert_array = array(
 			'coc_crew' => $user,
-			'coc_order' => $order
+			'coc_order' => (isset($order)) ? $order : 0,
 		);
 			
 		$insert = $this->char->create_coc_entry($insert_array);

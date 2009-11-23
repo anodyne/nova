@@ -20,18 +20,20 @@
 
 <hr /><br />
 
-<?php if (isset($coc)): ?>
-	<div class="UITheme">
-		<ul id="list">
+<div class="UITheme">
+	<ul id="list">
+		<?php if (isset($coc)): ?>
 			<?php foreach ($coc as $key => $value): ?>
 				<li class="ui-state-default" id="coc_<?php echo $key;?>">
 					<div class="float_right"><a href="#" class="remove image" name="remove" id="<?php echo $key;?>">x</a></div>
 					<?php echo $value;?>
 				</li>
 			<?php endforeach; ?>
-		</ul>
-	</div>
-	
+		<?php endif; ?>
+	</ul>
+</div>
+
+<div class="submit-div hidden">
 	<br />
 	<?php echo form_button($buttons['submit']);?>
-<?php endif; ?>
+</div>
