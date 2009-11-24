@@ -26,7 +26,7 @@
 		</tr>
 	</thead>
 	<tbody>
-	<?php foreach ($user as $u): ?>
+	<?php foreach ($users as $u): ?>
 		<tr>
 			<td class="col_50pct">
 				<?php if ($u['loa'] == '[LOA]'): ?>
