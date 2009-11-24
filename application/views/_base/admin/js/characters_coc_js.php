@@ -46,7 +46,7 @@
 				data: { coc: id },
 				success: function(data){
 					$('.flash_message').remove();
-					$('.' + parent).before(data);
+					$('.' + parent).prepend(data);
 					
 					if ($('#list li').length == 1)
 					{
@@ -83,7 +83,7 @@
 						content += '"><div class="float_right"><a href="#" class="remove image" name="remove" id="' + id + '">x</a></div>' + user + '</li>';
 						
 						$('.flash_message').remove();
-						$('.' + parent).before(data);
+						$('.' + parent).prepend(data);
 						$(content).hide().appendTo('#list').fadeIn('slow');
 						$('.submit-div').fadeIn('slow');
 					},
