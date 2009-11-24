@@ -32,9 +32,9 @@
 						</td>
 						<td class="fontSmall"><?php echo $t['content'];?></td>
 						<td class="col_75 align_right">
-							<a href="#" rel="facebox" class="delete" myAction="delete" myID="<?php echo $t['id'];?>" title="<?php echo $label['delete'];?>"><?php echo img($images['delete']);?></a>
+							<a href="#" rel="facebox" class="delete image" myAction="delete" myID="<?php echo $t['id'];?>" title="<?php echo $label['delete'];?>"><?php echo img($images['delete']);?></a>
 							&nbsp;
-							<a href="#" rel="facebox" class="edit" myAction="edit" myID="<?php echo $t['id'];?>" title="<?php echo $label['edit'];?>"><?php echo img($images['edit']);?></a>
+							<a href="#" rel="facebox" class="edit image" myAction="edit" myID="<?php echo $t['id'];?>" title="<?php echo $label['edit'];?>"><?php echo img($images['edit']);?></a>
 						</td>
 					</tr>
 				<?php endforeach; ?>
