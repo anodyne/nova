@@ -123,9 +123,12 @@ button {
 	outline: 0 !important;
 }
 
+button.button-main, button.button-sec { min-width: 85px; }
+
 input.button-main, input.button-sec {
 	height: 25px;
 	padding: 0 10px;
+	min-width: 85px;
 }
 
 /*

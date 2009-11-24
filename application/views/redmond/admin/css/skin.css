@@ -324,11 +324,17 @@ input.button-sec:hover {
 	color: #eb8f00;
 }
 
-input[disabled],
-button[disabled] { color: #aaa; }
-
-input[disabled]:hover,
-button[disabled]:hover { border: 1px solid #ccc; }
+button[disabled],
+button[disabled]:hover,
+input.button-main[disabled],
+input.button-main[disabled]:hover {
+	opacity: .5;
+	filter:alpha(opacity='70');
+	
+	border: 1px solid #adc0d0;
+	background: #dfeffc url('../images/button_main_bg.jpg') repeat-x top left;
+	color: #2e6e9e;
+}
 
 /*
 |---------------------------------------------------------------

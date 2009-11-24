@@ -258,7 +258,7 @@ select:hover {
 | TABLE STYLES
 |---------------------------------------------------------------
 */
-tr.alt td { background-color: #eee; }
+tr.alt td { background-color: #e3e3e3; }
 tr.light_gray { background-color: #ddd; }
 
 th {
@@ -271,68 +271,80 @@ th {
 | BUTTONS
 |---------------------------------------------------------------
 */
-
 button {
-	-moz-border-radius: 8px;
-	-webkit-border-radius: 8px;
+	border-radius: 15px;
+	-moz-border-radius: 15px;
+	-webkit-border-radius: 15px;
 	
 	font-weight: bold;
 }
 
 button.button-main {
-	border: 1px solid #adc0d0;
-	background: #dfeffc url('../images/button_main_bg.jpg') repeat-x top left;
-	color: #2e6e9e;
+	border: 1px solid #494437;
+	background: #817865 url('../images/gradient-30-bg.png') repeat-x center left;
+	color: #fff;
 }
 button.button-main:hover {
-	border: 1px solid #fbcb09;
-	background: #fdf5ce url('../images/button_main_bg_hover.jpg') repeat-x top left;
-	color: #c77405;
+	border: 1px solid #a45b13;
+	background: #ffdd57 url('../images/gradient-50-bg.png') repeat-x center left;
+	color: #381f00;
+}
+button.button-sec {
+	border: 1px solid #bbb;
+	background: #ddd url('../images/gradient-30-bg.png') repeat-x center left;
+	color: #555;
+}
+button.button-sec:hover {
+	border: 1px solid #999;
+	background: #ccc url('../images/gradient-50-bg.png') repeat-x center left;
+	color: #555;
 }
 
-button.button-sec {
-	border: 1px solid #ccc;
-	background: #fff url('../images/button_sec_bg.jpg') repeat-x top left;
-	color: #777;
+input.button-main {
+	border: 1px solid #494437;
+	background: #817865 url('../images/gradient-30-bg.png') repeat-x center left;
+	color: #fff;
+	font-weight: bold;
+	font-size: 120%;
 }
-button.button-sec:hover { border: 1px solid #aaa; }
+input.button-main:hover {
+	border: 1px solid #a45b13;
+	background: #ffdd57 url('../images/gradient-50-bg.png') repeat-x center left;
+	color: #381f00;
+}
+input.button-sec {
+	border: 1px solid #bbb;
+	background: #ddd url('../images/gradient-30-bg.png') repeat-x center left;
+	color: #555;
+	font-weight: bold;
+	font-size: 120%;
+}
+input.button-sec:hover {
+	border: 1px solid #999;
+	background: #ccc url('../images/gradient-50-bg.png') repeat-x center left;
+	color: #555;
+}
+
+button[disabled],
+button[disabled]:hover,
+input.button-main[disabled],
+input.button-main[disabled]:hover {
+	opacity: .5;
+	filter:alpha(opacity='70');
+	
+	color: #ccc;
+	background: #817865 url('../images/gradient-30-bg.png') repeat-x center left;
+	border: 1px solid #494437;
+}
 
 button.button-small {
 	border: 1px solid #ccc;
-	background: #fff url('../images/button_sec_bg.jpg') repeat-x top left;
+	background: #fff url('../images/button-sec_bg.jpg') repeat-x top left;
 	color: #777;
 	font-weight: normal !important;
 	font-size: 90%;
 }
 button.button-small:hover { border: 1px solid #aaa; }
-
-input.button-main {
-	border: 1px solid #adc0d0;
-	background: #dfeffc url('../images/button_main_bg.jpg') repeat-x bottom left;
-	font-weight: bold;
-	font-size: 120%;
-	color: #2e6e9e;
-}
-input.button-main:hover {
-	border: 1px solid #fbcb09;
-	background: #fdf5ce url('../images/button_main_bg_hover.jpg') repeat-x top left;
-	color: #c77405;
-}
-
-input.button-sec {
-	border: 1px solid #ccc;
-	background: #f9f9f9 url('../images/button-sec_bg.jpg') repeat-x bottom left;
-	font-weight: bold;
-	font-size: 120%;
-	color: #555;
-}
-input.button-sec:hover { color: #999; }
-
-input[disabled],
-button[disabled] { color: #aaa; }
-
-input[disabled]:hover,
-button[disabled]:hover { border: 1px solid #ccc; }
 
 /*
 |---------------------------------------------------------------

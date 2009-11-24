@@ -153,6 +153,8 @@ button {
 	outline: 0 !important;
 }
 
+button.button-main, button.button-sec { min-width: 85px; }
+
 button.button-small {
 	height: 20px !important;
 	padding: 0 0 1px 6px !important;
@@ -163,6 +165,7 @@ input.button-main,
 input.button-sec {
 	height: 25px;
 	padding: 0 10px;
+	min-width: 85px;
 }
 
 /*
@@ -229,7 +232,7 @@ ul.padding1, ol.padding1 { padding: .5em 1em; }
 */
 .inline_img_left {
     float: left;
-    margin: 0 6px 0 0;
+    margin: 2px 6px 0 0;
 }
 .inline_img_right {
     float: right;

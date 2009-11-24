@@ -190,8 +190,9 @@ tr.alt td { background-color: #eee; }
 |---------------------------------------------------------------
 */
 button {
-	-moz-border-radius: 8px;
-	-webkit-border-radius: 8px;
+	border-radius: 15px;
+	-moz-border-radius: 15px;
+	-webkit-border-radius: 15px;
 	
 	font-weight: bold;
 }
@@ -220,11 +221,17 @@ input.button-main:hover {
 	color: #381f00;
 }
 
-input[disabled],
-button[disabled] { color: #aaa; }
-
-input[disabled]:hover,
-button[disabled]:hover { border: 1px solid #ccc; }
+button[disabled],
+button[disabled]:hover,
+input.button-main[disabled],
+input.button-main[disabled]:hover {
+	opacity: .5;
+	filter:alpha(opacity='70');
+	
+	color: #ccc;
+	background: #817865 url('../images/gradient-30-bg.png') repeat-x center left;
+	border: 1px solid #494437;
+}
 
 /*
 |---------------------------------------------------------------
