@@ -23,7 +23,7 @@
 				<td class="col_40pct">
 					<strong><?php echo anchor('wiki/view/page/'. $r['id'], $r['title']);?></strong><br />
 					<span class="fontSmall gray">
-						<?php echo $label['by'] .' '. $r['author'] .' '. $r['timespan'] .' '. $label['ago'];?>
+						<?php echo $label['by'] .' '. $r['author'] .' '. $r['timespan'];?>
 					</span>
 				</td>
 				<td class="cell-spacer"></td>
@@ -54,7 +54,7 @@
 				<td class="col_40pct">
 					<strong><?php echo anchor('wiki/view/page/'. $r['id'], $r['title']);?></strong><br />
 					<span class="fontSmall gray">
-						<?php echo $label['by'] .' '. $r['author'] .' '. $r['timespan'] .' '. $label['ago'];?>
+						<?php echo $label['by'] .' '. $r['author'] .' '. $r['timespan'];?>
 					</span>
 				</td>
 				<td class="cell-spacer"></td>
