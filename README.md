@@ -8,13 +8,20 @@ Beta
 
 Last Update
 -----------
-23 November 2009
+24 November 2009
 
 Latest Changes
 --------------
-* updated the add_coc_entry() ajax method to handle the order properly so it doesn't throw an error
-* updated the characters/coc js view file to be better overall
-* updated the characters/coc view file to handle showing and hiding buttons
+* fixed bug with characters/coc where the notification for an added character was misplaced
+* fixed language bug on wiki/index
+* fixed language bug on wiki/recent
+* updated the language files
+* updated the MY_date_helper to handle null dates
+* updated the moderation report with wiki comments status
+* updated the sunny admin skin section
+* updated the system icons
+* updated the disabled button styles
+* updated the install file with the sunny admin and wiki sections
 
 Version History
 ---------------
