@@ -13,6 +13,7 @@
 				<th class="fontTiny align_middle"><?php echo text_output($label['comments_l'], '');?></th>
 				<th class="fontTiny align_middle"><?php echo $label['news'];?></th>
 				<th class="fontTiny align_middle"><?php echo text_output($label['comments_n'], '');?></th>
+				<th class="fontTiny align_middle"><?php echo text_output($label['comments_w'], '');?></th>
 			</tr>
 		</thead>
 		<tbody>
@@ -32,6 +33,7 @@
 				<td class="align_center"><?php echo img($images[$u['comments_l']]);?></td>
 				<td class="align_center"><?php echo img($images[$u['news']]);?></td>
 				<td class="align_center"><?php echo img($images[$u['comments_n']]);?></td>
+				<td class="align_center"><?php echo img($images[$u['comments_w']]);?></td>
 			</tr>
 		<?php endforeach;?>
 		</tbody>

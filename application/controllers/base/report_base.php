@@ -123,8 +123,8 @@ class Report_base extends Controller {
 					'email' => $p->email,
 					'id' => $p->userid,
 					'charid' => $p->main_char,
-					'last_post' => timespan_short($p->last_post, now()) .' '. lang('time_ago'),
-					'last_login' => timespan_short($p->last_login, now()) .' '. lang('time_ago'),
+					'last_post' => timespan_short($p->last_post, now()),
+					'last_login' => timespan_short($p->last_login, now()),
 					'requirement_post' => ($p->last_post < $requirement) ? ' red' : '',
 					'requirement_login' => ($p->last_login < $requirement) ? ' red' : '',
 					'loa' => ($p->loa != 'active') ? '['. strtoupper($p->loa) .']' : '',
@@ -515,6 +515,7 @@ class Report_base extends Controller {
 					'comments_l' => ($p->moderate_log_comments == 'y') ? 'red' : 'green',
 					'news' => ($p->moderate_news == 'y') ? 'red' : 'green',
 					'comments_n' => ($p->moderate_news_comments == 'y') ? 'red' : 'green',
+					'comments_w' => ($p->moderate_wiki_comments == 'y') ? 'red' : 'green',
 				);
 			}
 		}
@@ -545,6 +546,7 @@ class Report_base extends Controller {
 			'comments_l' => ucwords(lang('global_log') ."\r\n". lang('labels_comments')),
 			'comments_n' => ucwords(lang('global_news') ."\r\n". lang('labels_comments')),
 			'comments_p' => ucwords(lang('global_post') ."\r\n". lang('labels_comments')),
+			'comments_w' => ucwords(lang('global_wiki') ."\r\n". lang('labels_comments')),
 			'logs' => ucfirst(lang('global_logs')),
 			'name' => ucwords(lang('global_character') .' '. lang('labels_name')),
 			'news' => ucfirst(lang('global_news')),
