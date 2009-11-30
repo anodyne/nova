@@ -49,8 +49,8 @@ class Ajax_base extends Controller {
 		
 		$head = sprintf(
 			lang('fbx_head'),
-			ucwords(lang('fbx_action_add')),
-			ucwords(lang('fbx_item_bio_field'))
+			ucwords(lang('actions_add')),
+			ucwords(lang('labels_bio') .' '. lang('labels_field'))
 		);
 		
 		/* data being sent to the facebox */
@@ -220,8 +220,8 @@ class Ajax_base extends Controller {
 		
 		$head = sprintf(
 			lang('fbx_head'),
-			ucwords(lang('fbx_action_add')),
-			ucwords(lang('fbx_item_bio_sec'))
+			ucwords(lang('actions_add')),
+			ucwords(lang('labels_bio') .' '. lang('labels_section'))
 		);
 		
 		/* data being sent to the facebox */
@@ -267,8 +267,8 @@ class Ajax_base extends Controller {
 	{
 		$head = sprintf(
 			lang('fbx_head'),
-			ucwords(lang('fbx_action_add')),
-			ucwords(lang('fbx_item_bio_tab'))
+			ucwords(lang('actions_add')),
+			ucwords(lang('labels_bio') .' '. lang('labels_tab'))
 		);
 		
 		/* data being sent to the facebox */
@@ -331,7 +331,7 @@ class Ajax_base extends Controller {
 		
 		$head = sprintf(
 			lang('fbx_head'),
-			ucwords(lang('fbx_action_add')),
+			ucwords(lang('actions_add')),
 			ucwords(lang('fbx_item_catalogue_'. $type))
 		);
 		
@@ -571,8 +571,8 @@ class Ajax_base extends Controller {
 	{
 		$head = sprintf(
 			lang('fbx_head'),
-			ucwords(lang('fbx_action_add')),
-			ucwords(lang('fbx_item_log_comment'))
+			ucwords(lang('actions_add')),
+			ucwords(lang('global_personallog') .' '. lang('labels_comment'))
 		);
 		
 		/* data being sent to the facebox */
@@ -611,8 +611,8 @@ class Ajax_base extends Controller {
 	{
 		$head = sprintf(
 			lang('fbx_head'),
-			ucwords(lang('fbx_action_add')),
-			ucwords(lang('fbx_item_news_comment'))
+			ucwords(lang('actions_add')),
+			ucwords(lang('global_newsitem') .' '. lang('labels_comment'))
 		);
 		
 		/* data being sent to the facebox */
@@ -651,8 +651,8 @@ class Ajax_base extends Controller {
 	{
 		$head = sprintf(
 			lang('fbx_head'),
-			ucwords(lang('fbx_action_add')),
-			ucwords(lang('fbx_item_post_comment'))
+			ucwords(lang('actions_add')),
+			ucwords(lang('global_missionpost') .' '. lang('labels_comment'))
 		);
 		
 		/* data being sent to the facebox */
@@ -691,7 +691,7 @@ class Ajax_base extends Controller {
 	{
 		$head = sprintf(
 			lang('fbx_head'),
-			ucwords(lang('fbx_action_add')),
+			ucwords(lang('actions_add')),
 			ucwords(lang('global_wiki') .' '. lang('labels_comment'))
 		);
 		
@@ -787,8 +787,8 @@ class Ajax_base extends Controller {
 		
 		$head = sprintf(
 			lang('fbx_head'),
-			ucwords(lang('fbx_action_add')),
-			ucwords(lang('fbx_item_dept'))
+			ucwords(lang('actions_add')),
+			ucwords(lang('global_department'))
 		);
 		
 		/* data being sent to the facebox */
@@ -874,8 +874,8 @@ class Ajax_base extends Controller {
 		
 		$head = sprintf(
 			lang('fbx_head'),
-			ucwords(lang('fbx_action_add')),
-			ucwords(lang('fbx_item_menucat'))
+			ucwords(lang('actions_add')),
+			ucwords(lang('labels_menu') .' '. lang('labels_category'))
 		);
 		
 		/* data being sent to the facebox */
@@ -936,8 +936,8 @@ class Ajax_base extends Controller {
 		
 		$head = sprintf(
 			lang('fbx_head'),
-			ucwords(lang('fbx_action_add')),
-			ucwords(lang('fbx_item_menu'))
+			ucwords(lang('actions_add')),
+			ucwords(lang('labels_menu'))
 		);
 		
 		/* data being sent to the facebox */
@@ -1091,8 +1091,8 @@ class Ajax_base extends Controller {
 		
 		$head = sprintf(
 			lang('fbx_head'),
-			ucwords(lang('fbx_action_add')),
-			ucwords(lang('fbx_item_position'))
+			ucwords(lang('actions_add')),
+			ucwords(lang('global_position'))
 		);
 		
 		/* data being sent to the facebox */
@@ -1193,8 +1193,8 @@ class Ajax_base extends Controller {
 		
 		$head = sprintf(
 			lang('fbx_head'),
-			ucwords(lang('fbx_action_add')),
-			ucwords(lang('fbx_item_rank'))
+			ucwords(lang('actions_add')),
+			ucwords(lang('global_rank'))
 		);
 		
 		$data['set'] = $this->uri->segment(3, 1, TRUE);
@@ -1272,8 +1272,8 @@ class Ajax_base extends Controller {
 	{
 		$head = sprintf(
 			lang('fbx_head'),
-			ucwords(lang('fbx_action_add')),
-			ucwords(lang('fbx_item_role_group'))
+			ucwords(lang('actions_add')),
+			ucwords(lang('labels_role') .' '. lang('labels_page') .' '. lang('labels_group'))
 		);
 		
 		/* data being sent to the facebox */
@@ -1323,13 +1323,12 @@ class Ajax_base extends Controller {
 		
 		$head = sprintf(
 			lang('fbx_head'),
-			ucwords(lang('fbx_action_add')),
-			ucwords(lang('fbx_item_role_page'))
+			ucwords(lang('actions_add')),
+			ucwords(lang('labels_role') .' '. lang('labels_page'))
 		);
 		
 		/* data being sent to the facebox */
 		$data['header'] = $head;
-		$data['text'] = lang('fbx_content_add_role_page');
 		$data['user'] = $this->uri->segment(3, 0);
 		
 		$groups = $this->access->get_page_groups();
@@ -1394,8 +1393,8 @@ class Ajax_base extends Controller {
 	{
 		$head = sprintf(
 			lang('fbx_head'),
-			ucwords(lang('fbx_action_add')),
-			ucwords(lang('fbx_item_site_message'))
+			ucwords(lang('actions_add')),
+			ucwords(lang('labels_site') .' '. lang('labels_message'))
 		);
 		
 		/* data being sent to the facebox */
@@ -1454,8 +1453,8 @@ class Ajax_base extends Controller {
 		
 		$head = sprintf(
 			lang('fbx_head'),
-			ucwords(lang('fbx_action_add')),
-			ucwords(lang('fbx_item_specs_field'))
+			ucwords(lang('actions_add')),
+			ucwords(lang('global_specifications') .' '. lang('labels_field'))
 		);
 		
 		/* data being sent to the facebox */
@@ -1612,8 +1611,8 @@ class Ajax_base extends Controller {
 		
 		$head = sprintf(
 			lang('fbx_head'),
-			ucwords(lang('fbx_action_add')),
-			ucwords(lang('fbx_item_specs_sec'))
+			ucwords(lang('actions_add')),
+			ucwords(lang('global_specifications') .' '. lang('labels_section'))
 		);
 		
 		/* data being sent to the facebox */
@@ -1661,8 +1660,8 @@ class Ajax_base extends Controller {
 		
 		$head = sprintf(
 			lang('fbx_head'),
-			ucwords(lang('fbx_action_add')),
-			ucwords(lang('fbx_item_tour_field'))
+			ucwords(lang('actions_add')),
+			ucwords(lang('global_tour') .' '. lang('labels_field'))
 		);
 		
 		/* data being sent to the facebox */
@@ -1806,8 +1805,8 @@ class Ajax_base extends Controller {
 	{
 		$head = sprintf(
 			lang('fbx_head'),
-			ucwords(lang('fbx_action_create')),
-			ucwords(lang('fbx_item_site_setting'))
+			ucwords(lang('actions_create')),
+			ucwords(lang('labels_site') .' '. lang('labels_setting'))
 		);
 		
 		/* data being sent to the facebox */
@@ -2132,7 +2131,7 @@ class Ajax_base extends Controller {
 	function change_password()
 	{
 		/* data being sent to the facebox */
-		$data['header'] = lang('fbx_change_password');
+		$data['header'] = ucwords(lang('actions_change') .' '. lang('labels_password'));
 		$data['text'] = lang('fbx_change_password_text');
 		$data['user'] = $this->uri->segment(3, 0);
 		
@@ -2216,8 +2215,8 @@ class Ajax_base extends Controller {
 		
 		$head = sprintf(
 			lang('fbx_head'),
-			ucwords(lang('fbx_action_del')),
-			ucwords(lang('fbx_item_bio_field'))
+			ucwords(lang('actions_delete')),
+			ucwords(lang('labels_bio') .' '. lang('labels_field'))
 		);
 		
 		/* data being sent to the facebox */
@@ -2304,8 +2303,8 @@ class Ajax_base extends Controller {
 		
 		$head = sprintf(
 			lang('fbx_head'),
-			ucwords(lang('fbx_action_del')),
-			ucwords(lang('fbx_item_bio_sec'))
+			ucwords(lang('actions_delete')),
+			ucwords(lang('labels_bio') .' '. lang('labels_section'))
 		);
 		
 		/* data being sent to the facebox */
@@ -2370,8 +2369,8 @@ class Ajax_base extends Controller {
 		
 		$head = sprintf(
 			lang('fbx_head'),
-			ucwords(lang('fbx_action_del')),
-			ucwords(lang('fbx_item_bio_tab'))
+			ucwords(lang('actions_delete')),
+			ucwords(lang('labels_bio') .' '. lang('labels_tab'))
 		);
 		
 		/* data being sent to the facebox */
@@ -2436,7 +2435,7 @@ class Ajax_base extends Controller {
 		
 		$head = sprintf(
 			lang('fbx_head'),
-			ucwords(lang('fbx_action_delete')),
+			ucwords(lang('actions_delete')),
 			ucwords(lang('fbx_item_catalogue_'. $type))
 		);
 		
@@ -2943,8 +2942,8 @@ class Ajax_base extends Controller {
 		
 		$head = sprintf(
 			lang('fbx_head'),
-			ucwords(lang('fbx_action_del')),
-			ucwords(lang('fbx_item_menucat'))
+			ucwords(lang('actions_delete')),
+			ucwords(lang('labels_menu') .' '. lang('labels_category'))
 		);
 		
 		/* data being sent to the facebox */
@@ -2988,8 +2987,8 @@ class Ajax_base extends Controller {
 		
 		$head = sprintf(
 			lang('fbx_head'),
-			ucwords(lang('fbx_action_del')),
-			ucwords(lang('fbx_item_menu'))
+			ucwords(lang('actions_delete')),
+			ucwords(lang('labels_menu'))
 		);
 		
 		/* data being sent to the facebox */
@@ -3227,8 +3226,8 @@ class Ajax_base extends Controller {
 		
 		$head = sprintf(
 			lang('fbx_head'),
-			ucwords(lang('fbx_action_del')),
-			ucwords(lang('fbx_item_role'))
+			ucwords(lang('actions_delete')),
+			ucwords(lang('labels_role'))
 		);
 		
 		/* data being sent to the facebox */
@@ -3288,8 +3287,8 @@ class Ajax_base extends Controller {
 		
 		$head = sprintf(
 			lang('fbx_head'),
-			ucwords(lang('fbx_action_del')),
-			ucwords(lang('fbx_item_role_group'))
+			ucwords(lang('actions_delete')),
+			ucwords(lang('labels_role') .' '. lang('labels_page') .' '. lang('labels_group'))
 		);
 		
 		/* data being sent to the facebox */
@@ -3345,8 +3344,8 @@ class Ajax_base extends Controller {
 		
 		$head = sprintf(
 			lang('fbx_head'),
-			ucwords(lang('fbx_action_del')),
-			ucwords(lang('fbx_item_role_page'))
+			ucwords(lang('actions_delete')),
+			ucwords(lang('labels_role') .' '. lang('labels_page'))
 		);
 		
 		/* data being sent to the facebox */
@@ -3384,8 +3383,8 @@ class Ajax_base extends Controller {
 	{
 		$head = sprintf(
 			lang('fbx_head'),
-			ucwords(lang('fbx_action_del')),
-			ucwords(lang('fbx_item_site_message'))
+			ucwords(lang('actions_delete')),
+			ucwords(lang('labels_site') .' '. lang('labels_message'))
 		);
 		
 		/* data being sent to the facebox */
@@ -3426,8 +3425,8 @@ class Ajax_base extends Controller {
 		
 		$head = sprintf(
 			lang('fbx_head'),
-			ucwords(lang('fbx_action_del')),
-			ucwords(lang('fbx_item_specs_field'))
+			ucwords(lang('actions_delete')),
+			ucwords(lang('global_specifications') .' '. lang('labels_field'))
 		);
 		
 		/* data being sent to the facebox */
@@ -3514,8 +3513,8 @@ class Ajax_base extends Controller {
 		
 		$head = sprintf(
 			lang('fbx_head'),
-			ucwords(lang('fbx_action_del')),
-			ucwords(lang('fbx_item_specs_sec'))
+			ucwords(lang('actions_delete')),
+			ucwords(lang('global_specifications') .' '. lang('labels_section'))
 		);
 		
 		/* data being sent to the facebox */
@@ -3580,8 +3579,8 @@ class Ajax_base extends Controller {
 		
 		$head = sprintf(
 			lang('fbx_head'),
-			ucwords(lang('fbx_action_del')),
-			ucwords(lang('fbx_item_tour_field'))
+			ucwords(lang('actions_delete')),
+			ucwords(lang('global_tour') .' '. lang('labels_field'))
 		);
 		
 		/* data being sent to the facebox */
@@ -3713,8 +3712,8 @@ class Ajax_base extends Controller {
 	{
 		$head = sprintf(
 			lang('fbx_head'),
-			ucwords(lang('fbx_action_del')),
-			ucwords(lang('fbx_item_site_setting'))
+			ucwords(lang('actions_delete')),
+			ucwords(lang('labels_site') .' '. lang('labels_setting'))
 		);
 		
 		/* data being sent to the facebox */
@@ -3755,7 +3754,7 @@ class Ajax_base extends Controller {
 		
 		$head = sprintf(
 			lang('fbx_head'),
-			ucwords(lang('fbx_action_del')),
+			ucwords(lang('actions_delete')),
 			ucwords(lang('global_wiki') .' '. lang('labels_category'))
 		);
 		
@@ -3798,7 +3797,7 @@ class Ajax_base extends Controller {
 		
 		$head = sprintf(
 			lang('fbx_head'),
-			ucwords(lang('fbx_action_del')),
+			ucwords(lang('actions_delete')),
 			ucwords(lang('global_wiki') .' '. lang('labels_page'))
 		);
 		
@@ -3856,8 +3855,8 @@ class Ajax_base extends Controller {
 		
 		$head = sprintf(
 			lang('fbx_head'),
-			ucwords(lang('fbx_action_dup')),
-			ucwords(lang('fbx_item_role'))
+			ucwords(lang('actions_duplicate')),
+			ucwords(lang('labels_role'))
 		);
 		
 		/* data being sent to the facebox */
@@ -3922,8 +3921,8 @@ class Ajax_base extends Controller {
 		
 		$head = sprintf(
 			lang('fbx_head'),
-			ucwords(lang('fbx_action_edit')),
-			ucwords(lang('fbx_item_bio_field_value'))
+			ucwords(lang('actions_edit')),
+			ucwords(lang('labels_bio') .' '. lang('labels_field') .' '. lang('labels_value'))
 		);
 		
 		/* data being sent to the facebox */
@@ -3992,8 +3991,8 @@ class Ajax_base extends Controller {
 		
 		$head = sprintf(
 			lang('fbx_head'),
-			ucwords(lang('fbx_action_edit')),
-			ucwords(lang('fbx_item_bio_sec'))
+			ucwords(lang('actions_edit')),
+			ucwords(lang('labels_bio') .' '. lang('labels_section'))
 		);
 		
 		/* data being sent to the facebox */
@@ -4062,8 +4061,8 @@ class Ajax_base extends Controller {
 		
 		$head = sprintf(
 			lang('fbx_head'),
-			ucwords(lang('fbx_action_edit')),
-			ucwords(lang('fbx_item_bio_tab'))
+			ucwords(lang('actions_edit')),
+			ucwords(lang('labels_bio') .' '. lang('labels_tab'))
 		);
 		
 		/* data being sent to the facebox */
@@ -4135,7 +4134,7 @@ class Ajax_base extends Controller {
 		
 		$head = sprintf(
 			lang('fbx_head'),
-			ucwords(lang('fbx_action_edit')),
+			ucwords(lang('actions_edit')),
 			ucwords(lang('fbx_item_catalogue_'. $type))
 		);
 		
@@ -4463,8 +4462,8 @@ class Ajax_base extends Controller {
 		
 		$head = sprintf(
 			lang('fbx_head'),
-			ucwords(lang('fbx_action_edit')),
-			ucwords(lang('fbx_item_deck'))
+			ucwords(lang('actions_edit')),
+			ucwords(lang('global_deck'))
 		);
 		
 		/* data being sent to the facebox */
@@ -4516,8 +4515,8 @@ class Ajax_base extends Controller {
 		
 		$head = sprintf(
 			lang('fbx_head'),
-			ucwords(lang('fbx_action_edit')),
-			ucwords(lang('fbx_item_menucat'))
+			ucwords(lang('actions_edit')),
+			ucwords(lang('labels_menu') .' '. lang('labels_category'))
 		);
 		
 		/* data being sent to the facebox */
@@ -4583,8 +4582,8 @@ class Ajax_base extends Controller {
 		
 		$head = sprintf(
 			lang('fbx_head'),
-			ucwords(lang('fbx_action_edit')),
-			ucwords(lang('fbx_item_menu'))
+			ucwords(lang('actions_edit')),
+			ucwords(lang('labels_menu'))
 		);
 		
 		/* data being sent to the facebox */
@@ -4757,8 +4756,8 @@ class Ajax_base extends Controller {
 		
 		$head = sprintf(
 			lang('fbx_head'),
-			ucwords(lang('fbx_action_edit')),
-			ucwords(lang('fbx_item_role_group'))
+			ucwords(lang('actions_edit')),
+			ucwords(lang('labels_role') .' '. lang('labels_page') .' '. lang('labels_group'))
 		);
 		
 		/* data being sent to the facebox */
@@ -4810,8 +4809,8 @@ class Ajax_base extends Controller {
 		
 		$head = sprintf(
 			lang('fbx_head'),
-			ucwords(lang('fbx_action_edit')),
-			ucwords(lang('fbx_item_role_page'))
+			ucwords(lang('actions_edit')),
+			ucwords(lang('labels_role') .' '. lang('labels_page'))
 		);
 		
 		/* data being sent to the facebox */
@@ -4885,8 +4884,8 @@ class Ajax_base extends Controller {
 	{
 		$head = sprintf(
 			lang('fbx_head'),
-			ucwords(lang('fbx_action_edit')),
-			ucwords(lang('fbx_item_site_message'))
+			ucwords(lang('actions_edit')),
+			ucwords(lang('labels_site') .' '. lang('labels_message'))
 		);
 		
 		/* data being sent to the facebox */
@@ -4960,8 +4959,8 @@ class Ajax_base extends Controller {
 		
 		$head = sprintf(
 			lang('fbx_head'),
-			ucwords(lang('fbx_action_edit')),
-			ucwords(lang('fbx_item_specs_field_value'))
+			ucwords(lang('actions_edit')),
+			ucwords(lang('global_specifications') .' '. lang('labels_field') .' '. lang('labels_value'))
 		);
 		
 		/* data being sent to the facebox */
@@ -5030,8 +5029,8 @@ class Ajax_base extends Controller {
 		
 		$head = sprintf(
 			lang('fbx_head'),
-			ucwords(lang('fbx_action_edit')),
-			ucwords(lang('fbx_item_specs_sec'))
+			ucwords(lang('actions_edit')),
+			ucwords(lang('global_specifications') .' '. lang('labels_section'))
 		);
 		
 		/* data being sent to the facebox */
@@ -5085,8 +5084,8 @@ class Ajax_base extends Controller {
 		
 		$head = sprintf(
 			lang('fbx_head'),
-			ucwords(lang('fbx_action_edit')),
-			ucwords(lang('fbx_item_tour_field_value'))
+			ucwords(lang('actions_edit')),
+			ucwords(lang('global_tour') .' '. lang('labels_field') .' '. lang('labels_value'))
 		);
 		
 		/* data being sent to the facebox */
@@ -5152,8 +5151,8 @@ class Ajax_base extends Controller {
 	{
 		$head = sprintf(
 			lang('fbx_head'),
-			ucwords(lang('fbx_action_edit')),
-			ucwords(lang('fbx_item_site_setting'))
+			ucwords(lang('actions_edit')),
+			ucwords(lang('labels_site') .' '. lang('labels_setting'))
 		);
 		
 		/* data being sent to the facebox */
@@ -5216,7 +5215,7 @@ class Ajax_base extends Controller {
 		
 		$head = sprintf(
 			lang('fbx_head'),
-			ucwords(lang('fbx_action_edit')),
+			ucwords(lang('actions_edit')),
 			ucwords(lang('global_wiki') .' '. lang('labels_category'))
 		);
 		
@@ -5272,7 +5271,7 @@ class Ajax_base extends Controller {
 		
 		$head = sprintf(
 			lang('fbx_head'),
-			ucwords(lang('fbx_action_info')),
+			ucwords(lang('labels_info') .' '. NDASH .' '),
 			ucwords(lang('fbx_item_users_role'))
 		);
 		
