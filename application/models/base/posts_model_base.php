@@ -357,50 +357,34 @@ class Posts_model_base extends Model {
 	|---------------------------------------------------------------
 	*/
 	
-	function count_mission_posts($mission = '', $count_pref = '')
+	function count_all_post_comments($status = 'activated', $id = '')
 	{
-		/* run the query */
-		$query = $this->db->get_where('posts', array('post_mission' => $mission));
+		$this->db->from('posts_comments');
+		$this->db->where('pcomment_status', $status);
 		
-		/* set the count variable */
-		$count = 0;
-		
-		if ($query->num_rows() > 0)
-		{ /* if there are results, continue */
-			switch ($count_pref)
-			{ /* take action based on how nova is set up to count posts */
-				case 'single':
-					$count = $query->num_rows();
-					
-					break;
-					
-				case 'multiple':
-					$array = array();
-					
-					foreach ($query->result() as $row)
-					{ /* we need to break out the authors if we are counting by multiple */
-						if (substr_count($row->post_authors, ',') > 0)
-						{
-							$temp = explode(',', $row->post_authors);
-							
-							foreach ($temp as $a)
-							{
-								$array[] = $a;
-							}
-						}
-						else
-						{
-							$array[] = $row->post_authors;
-						}
-					}
-					
-					$count = count($array);
-				
-					break;
-			}
+		if (!empty($id))
+		{
+			$this->db->where('pcomment_post', $id);
 		}
 		
-		return $count;
+		return $this->db->count_all_results();
+	}
+	
+	function count_all_posts($mission = '', $status = 'activated')
+	{
+		$this->db->from('posts');
+		
+		if ($mission > '')
+		{
+			$this->db->where('post_mission', $mission);
+		}
+		
+		if (!empty($status))
+		{
+			$this->db->where('post_status', $status);
+		}
+		
+		return $this->db->count_all_results();
 	}
 	
 	function count_character_posts($character = '', $status = 'activated')
@@ -445,6 +429,52 @@ class Posts_model_base extends Model {
 		$count_final += $this->db->count_all_results();
 		
 		return $count_final;
+	}
+	
+	function count_mission_posts($mission = '', $count_pref = '')
+	{
+		/* run the query */
+		$query = $this->db->get_where('posts', array('post_mission' => $mission));
+		
+		/* set the count variable */
+		$count = 0;
+		
+		if ($query->num_rows() > 0)
+		{ /* if there are results, continue */
+			switch ($count_pref)
+			{ /* take action based on how nova is set up to count posts */
+				case 'single':
+					$count = $query->num_rows();
+					
+					break;
+					
+				case 'multiple':
+					$array = array();
+					
+					foreach ($query->result() as $row)
+					{ /* we need to break out the authors if we are counting by multiple */
+						if (substr_count($row->post_authors, ',') > 0)
+						{
+							$temp = explode(',', $row->post_authors);
+							
+							foreach ($temp as $a)
+							{
+								$array[] = $a;
+							}
+						}
+						else
+						{
+							$array[] = $row->post_authors;
+						}
+					}
+					
+					$count = count($array);
+				
+					break;
+			}
+		}
+		
+		return $count;
 	}
 	
 	function count_posts($start = '', $end = '', $count_pref = '', $status = 'activated')
@@ -502,68 +532,6 @@ class Posts_model_base extends Model {
 		return $count;
 	}
 	
-	function count_user_posts($id = '', $status = 'activated', $timeframe = '')
-	{
-		$count = 0;
-		
-		$this->db->from('posts');
-		$this->db->where('post_status', $status);
-		
-		if (!empty($timeframe))
-		{
-			$this->db->where('post_date >=', $timeframe);
-		}
-		
-		$this->db->like('post_authors_users', $id);
-			
-		$count = $this->db->count_all_results();
-		
-		return $count;
-	}
-	
-	function count_user_post_comments($user = '')
-	{
-		$count = 0;
-		
-		$this->db->from('posts_comments');
-		$this->db->where('pcomment_status', 'activated');
-		$this->db->where('pcomment_author_user', $user);
-			
-		$count = $this->db->count_all_results();
-		
-		return $count;
-	}
-	
-	function count_all_posts($mission = '', $status = 'activated')
-	{
-		$this->db->from('posts');
-		
-		if ($mission > '')
-		{
-			$this->db->where('post_mission', $mission);
-		}
-		
-		if (!empty($status))
-		{
-			$this->db->where('post_status', $status);
-		}
-		
-		return $this->db->count_all_results();
-	}
-	
-	function count_all_post_comments($status = 'activated', $id = '')
-	{
-		$this->db->from('posts_comments');
-		$this->db->where('pcomment_status', $status);
-		
-		if (!empty($id))
-		{
-			$this->db->where('pcomment_post', $id);
-		}
-		
-		return $this->db->count_all_results();
-	}
-	
 	function count_unattended_posts($id = '')
 	{
 		$this->db->from('posts');
@@ -610,6 +578,38 @@ class Posts_model_base extends Model {
 		return $this->db->count_all_results();
 	}
 	
+	function count_user_post_comments($user = '')
+	{
+		$count = 0;
+		
+		$this->db->from('posts_comments');
+		$this->db->where('pcomment_status', 'activated');
+		$this->db->where('pcomment_author_user', $user);
+			
+		$count = $this->db->count_all_results();
+		
+		return $count;
+	}
+	
+	function count_user_posts($id = '', $status = 'activated', $timeframe = '')
+	{
+		$count = 0;
+		
+		$this->db->from('posts');
+		$this->db->where('post_status', $status);
+		
+		if (!empty($timeframe))
+		{
+			$this->db->where('post_date >=', $timeframe);
+		}
+		
+		$this->db->like('post_authors_users', $id);
+			
+		$count = $this->db->count_all_results();
+		
+		return $count;
+	}
+	
 	/*
 	|---------------------------------------------------------------
 	| SEARCH METHODS
@@ -633,18 +633,6 @@ class Posts_model_base extends Model {
 	|---------------------------------------------------------------
 	*/
 	
-	function create_mission_entry($data = '')
-	{
-		/* run the insert query */
-		$this->db->insert('posts', $data);
-		
-		/* optimize the table */
-		$this->dbutil->optimize_table('posts');
-		
-		/* return the number of affected rows to show success/failure (should be 1) */
-		return $this->db->affected_rows();
-	}
-	
 	function add_post_comment($data = '')
 	{
 		/* run the insert query */
@@ -652,6 +640,18 @@ class Posts_model_base extends Model {
 		
 		/* optimize the table */
 		$this->dbutil->optimize_table('posts_comments');
+		
+		/* return the number of affected rows to show success/failure (should be 1) */
+		return $this->db->affected_rows();
+	}
+	
+	function create_mission_entry($data = '')
+	{
+		/* run the insert query */
+		$this->db->insert('posts', $data);
+		
+		/* optimize the table */
+		$this->dbutil->optimize_table('posts');
 		
 		/* return the number of affected rows to show success/failure (should be 1) */
 		return $this->db->affected_rows();
