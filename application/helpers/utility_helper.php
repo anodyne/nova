@@ -172,39 +172,6 @@ if ( ! function_exists('parse_dynamic_message'))
 // ------------------------------------------------------------------------
 
 /**
- * Is Valid Email
- *
- * Checks to see if an email is valid and if it has a valid MX record
- *
- * @access	public
- * @param	string
- * @param	boolean (true/false)
- * @return	boolean (true/false)
- */	
-if ( ! function_exists('is_valid_email'))
-{
-	function is_valid_email($email = '', $test_mx = FALSE)
-	{
-		if (eregi("^([_a-z0-9-]+)(\.[_a-z0-9-]+)*@([a-z0-9-]+)(\.[a-z0-9-]+)*(\.[a-z]{2,4})$", $email))
-		{
-			if ($test_mx === TRUE)  
-			{  
-				list($username, $domain) = split('@', $email);
-				return getmxrr($domain, $mxrecords);
-			}
-			else
-			{
-				return TRUE;
-			}
-		}
-		
-		return FALSE;
-	}
-}
-
-// ------------------------------------------------------------------------
-
-/**
  * Backup Database
  *
  * Back up the SQL database (only works with MySQL)
