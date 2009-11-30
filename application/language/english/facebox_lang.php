@@ -34,62 +34,9 @@
 |   translate what is on the right side of the equal sign (=).
 */
 
-$lang['fbx_change_password'] = 'Change Password';
-$lang['fbx_change_password_text'] = "You have recently reset your password. Before you continue, please change your password to something you'll remember.";
-
-/*
-|---------------------------------------------------------------
-| HEADER ASSETS
-|---------------------------------------------------------------
-*/
-
 $lang['fbx_head'] = "%s %s";
 
-$lang['fbx_action_add'] 	= 'add';
-$lang['fbx_action_create'] 	= 'create';
-$lang['fbx_action_del'] 	= 'delete';
-$lang['fbx_action_edit'] 	= 'edit';
-$lang['fbx_action_info'] 	= 'info '. NDASH .' ';
-$lang['fbx_action_update'] 	= 'update';
-$lang['fbx_action_dup']		= 'duplicate';
-
-/*
-|---------------------------------------------------------------
-| ITEMS
-|---------------------------------------------------------------
-*/
-
-$lang['fbx_item_award_img_large'] = 'large award image directory';
-$lang['fbx_item_post_count'] = 'post count format';
 $lang['fbx_item_users_role'] = 'users with this role';
-$lang['fbx_item_role_page'] = 'role page';
-$lang['fbx_item_role_group'] = 'role page group';
-$lang['fbx_item_role'] = 'role';
-$lang['fbx_item_site_message'] = 'site message';
-$lang['fbx_item_site_setting'] = 'site setting';
-$lang['fbx_item_bio_field'] = 'bio field';
-$lang['fbx_item_bio_field_value'] = 'bio field value';
-$lang['fbx_item_bio_tab'] = 'bio tab';
-$lang['fbx_item_bio_sec'] = 'bio section';
-$lang['fbx_item_tour_field'] = 'tour field';
-$lang['fbx_item_tour_field_value'] = 'tour field value';
-$lang['fbx_item_specs_field'] = 'specifications field';
-$lang['fbx_item_specs_field_value'] = 'specifications field value';
-$lang['fbx_item_specs_sec'] = 'specifications section';
-$lang['fbx_item_news_comment'] = 'news item comment';
-$lang['fbx_item_log_comment'] = 'personal log comment';
-$lang['fbx_item_post_comment'] = 'mission post comment';
-$lang['fbx_item_menu'] = 'menu item';
-$lang['fbx_item_menucat'] = 'menu category';
-$lang['fbx_item_catalogue_ranks'] = 'rank catalogue item';
-$lang['fbx_item_catalogue_skins'] = 'skin catalogue item';
-$lang['fbx_item_catalogue_skinsecs'] = 'skin section';
-$lang['fbx_item_deck'] = 'deck';
-$lang['fbx_item_online_timespan'] = "Who". RSQUO ."s Online Timespan";
-$lang['fbx_item_position'] = 'position';
-$lang['fbx_item_dept'] = 'department';
-$lang['fbx_item_rank'] = 'rank';
-$lang['fbx_item_posting_req'] = 'posting requirement';
 
 /*
 |---------------------------------------------------------------
@@ -97,9 +44,10 @@ $lang['fbx_item_posting_req'] = 'posting requirement';
 |---------------------------------------------------------------
 */
 
+$lang['fbx_change_password_text'] = "You have recently reset your password. Before you continue, please change your password to something you'll remember.";
+
 $lang['fbx_content_info_users_with_role'] = "The following users have been granted the <strong>%s</strong> access role:";
 
-$lang['fbx_content_add_role_page'] = 'Use the form below to create a new page that will be available under access control';
 $lang['fbx_content_add_site_message'] = 'Using the form below you can create new messages that you will be able to manually put in to your own pages or replace existing messages. You must have all 3 fields below. The key is used to reference the message. It should be short and simple and contain no spaces. The label is how it will appear in the Site Messages page.';
 $lang['fbx_content_add_user_setting'] = "Using the form below you can create new system settings that can be inserted into your own created pages or supplement Nova's settings by extending the system core. A label and key are required. At this time, user-created settings are only editable through a simple text field.";
 $lang['fbx_content_add_bio_field'] = "Using the form below you can create new field to be used on the bio and join pages. If you select dropdown menu as the type, you can specify the values of the dropdown at the bottom of this box.";
