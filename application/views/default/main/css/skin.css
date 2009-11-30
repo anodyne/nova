@@ -410,7 +410,11 @@ hr {
 .loader { text-align: center; }
 
 .system_warning {
-	background: orange;
+	height: 20px;
+	line-height: 19px;
+	width: 100%;
+	
+	background: transparent url('../images/js-disabled.png') repeat-x 0 0;
 	color: #111;
 	font-weight: bold;
 	text-align: center;
