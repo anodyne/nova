@@ -1309,6 +1309,9 @@ class Wiki_base extends Controller {
 		$this->load->library('email');
 		$this->load->library('parser');
 		
+		/* load the language file */
+		$this->lang->load('email');
+		
 		/* define the variables */
 		$email = FALSE;
 		
