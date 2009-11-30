@@ -8,20 +8,20 @@ Beta
 
 Last Update
 -----------
-24 November 2009
+30 November 2009
 
 Latest Changes
 --------------
-* fixed bug with characters/coc where the notification for an added character was misplaced
-* fixed language bug on wiki/index
-* fixed language bug on wiki/recent
+* removed the email language file include from base_lang
+* updated the email methods to load the email language file for the system not the user
+* updated the feed controller with proper language code
+* updated a language item on the control panel
+* updated the ajax controller to use new language items
 * updated the language files
-* updated the MY_date_helper to handle null dates
-* updated the moderation report with wiki comments status
-* updated the sunny admin skin section
-* updated the system icons
-* updated the disabled button styles
-* updated the install file with the sunny admin and wiki sections
+* updated the posts model
+* updated the utility helper to remove a function
+* updated the javascript warning for default/main
+* updated the private messages model
 
 Version History
 ---------------
