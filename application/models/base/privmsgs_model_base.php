@@ -105,28 +105,9 @@ class Privmsgs_model_base extends Model {
 	
 	/*
 	|---------------------------------------------------------------
-	| SEARCH METHODS
-	|---------------------------------------------------------------
-	*/
-	
-	
-	
-	/*
-	|---------------------------------------------------------------
 	| CREATE METHODS
 	|---------------------------------------------------------------
 	*/
-	
-	function insert_private_message($data = '')
-	{
-		$query = $this->db->insert('privmsgs', $data);
-		
-		/* optimize the table */
-		$this->dbutil->optimize_table('privmsgs');
-		
-		/* return the number of affected rows to show success/failure (should be 1) */
-		return $this->db->affected_rows();
-	}
 	
 	function insert_pm_recipients($data = '')
 	{
@@ -134,6 +115,17 @@ class Privmsgs_model_base extends Model {
 		
 		/* optimize the table */
 		$this->dbutil->optimize_table('privmsgs_to');
+		
+		/* return the number of affected rows to show success/failure (should be 1) */
+		return $this->db->affected_rows();
+	}
+	
+	function insert_private_message($data = '')
+	{
+		$query = $this->db->insert('privmsgs', $data);
+		
+		/* optimize the table */
+		$this->dbutil->optimize_table('privmsgs');
 		
 		/* return the number of affected rows to show success/failure (should be 1) */
 		return $this->db->affected_rows();
@@ -154,15 +146,6 @@ class Privmsgs_model_base extends Model {
 		return $query;
 	}
 	
-	function update_to_message($id = '', $user = '', $data = '')
-	{
-		$this->db->where('pmto_id', $id);
-		$this->db->where('pmto_recipient_user', $user);
-		$query = $this->db->update('privmsgs_to', $data);
-		
-		return $query;
-	}
-	
 	function update_private_message($id = '', $data = '')
 	{
 		$this->db->where('privmsgs_id', $id);
@@ -171,13 +154,14 @@ class Privmsgs_model_base extends Model {
 		return $query;
 	}
 	
-	/*
-	|---------------------------------------------------------------
-	| DELETE METHODS
-	|---------------------------------------------------------------
-	*/
-	
-	
+	function update_to_message($id = '', $user = '', $data = '')
+	{
+		$this->db->where('pmto_id', $id);
+		$this->db->where('pmto_recipient_user', $user);
+		$query = $this->db->update('privmsgs_to', $data);
+		
+		return $query;
+	}
 }
 
 /* End of file privmsgs_model_base.php */
