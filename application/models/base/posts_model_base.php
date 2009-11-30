@@ -27,6 +27,173 @@ class Posts_model_base extends Model {
 	|---------------------------------------------------------------
 	*/
 	
+	function get_author_emails($post = '')
+	{
+		$post = $this->db->get_where('posts', array('post_id' => $post));
+		
+		if ($post->num_rows() > 0)
+		{
+			/* grab the row */
+			$row = $post->row();
+			
+			/* put the authors string into an array */
+			$authors = explode(',', $row->post_authors);
+			
+			/* create an arrray to use */
+			$array = array();
+			
+			foreach ($authors as $value)
+			{
+				$this->db->select('email');
+				$this->db->from('users');
+				$this->db->like('characters', $value);
+				
+				$query = $this->db->get();
+				
+				if ($query->num_rows() > 0)
+				{
+					$item = $query->row();
+					
+					if (!in_array($item->email, $array))
+					{
+						$array[] = $item->email;
+					}
+				}
+			}
+			
+			return $array;
+		}
+		
+		return FALSE;
+	}
+	
+	function get_author_user_ids($post = '')
+	{
+		$post = $this->db->get_where('posts', array('post_id' => $post));
+		
+		if ($post->num_rows() > 0)
+		{
+			/* grab the row */
+			$row = $post->row();
+			
+			/* put the authors string into an array */
+			$authors = explode(',', $row->post_authors);
+			
+			/* create an arrray to use */
+			$array = array();
+			
+			foreach ($authors as $value)
+			{
+				$this->db->select('user_id');
+				$this->db->from('users');
+				$this->db->like('characters', $value);
+				
+				$query = $this->db->get();
+				
+				if ($query->num_rows() > 0)
+				{
+					$item = $query->row();
+					
+					if (!in_array($item->userid, $array))
+					{
+						$array[] = $item->userid;
+					}
+				}
+			}
+			
+			return $array;
+		}
+		
+		return FALSE;
+	}
+	
+	function get_character_posts($character = '', $limit = 0)
+	{
+		$this->db->from('posts');
+		$this->db->where('post_status', 'activated');
+		
+		if (is_array($character))
+		{
+			/* make sure the keys are set up right */
+			$character = array_values($character);
+			
+			/* count the items in the array */
+			$count = count($character);
+			
+			/* set the initial string */
+			$string = "";
+			
+			for ($i=0; $i < $count; $i++)
+			{
+				if ($i > 0)
+				{
+					$or = " OR ";
+				}
+				else
+				{
+					$or = "";
+				}
+				
+				$string.= $or . "(post_authors LIKE '%,$character[$i]' OR post_authors LIKE '$character[$i],%' OR post_authors = $character[$i])";
+			}
+			
+			$this->db->where("($string)", NULL);
+		}
+		else
+		{
+			$this->db->like('post_authors', $character);
+		}
+		
+		$this->db->order_by('post_date', 'desc');
+		
+		if ($limit > 0)
+		{
+			$this->db->limit($limit);
+		}
+		
+		$query = $this->db->get();
+		
+		return $query;
+	}
+	
+	function get_link_id($id = '', $direction = 'next')
+	{
+		$get = $this->db->get_where('posts', array('post_id' => $id));
+		
+		if ($get->num_rows() > 0)
+		{
+			$fetch = $get->row();
+			
+			$this->db->select('post_id');
+			$this->db->from('posts');
+			$this->db->where('post_status', 'activated');
+			
+			switch ($direction)
+			{
+				case 'next':
+					$this->db->where('post_date >', $fetch->post_date);
+					break;
+				
+				case 'prev':
+					$this->db->where('post_date <', $fetch->post_date);
+					$this->db->order_by('post_id', 'desc');
+					break;
+			}
+			
+			$this->db->limit(1);
+			
+			$query = $this->db->get();
+			
+			if ($query->num_rows() > 0)
+			{
+				$row = $query->row();
+				return $row->post_id;
+			}
+		}
+		
+		return FALSE;
+	}
+	
 	function get_post($id = '', $return = '')
 	{
 		$query = $this->db->get_where('posts', array('post_id' => $id));
@@ -130,173 +297,6 @@ class Posts_model_base extends Model {
 		$query = $this->db->get();
 		
 		return $query;
-	}
-	
-	function get_character_posts($character = '', $limit = 0)
-	{
-		$this->db->from('posts');
-		$this->db->where('post_status', 'activated');
-		
-		if (is_array($character))
-		{
-			/* make sure the keys are set up right */
-			$character = array_values($character);
-			
-			/* count the items in the array */
-			$count = count($character);
-			
-			/* set the initial string */
-			$string = "";
-			
-			for ($i=0; $i < $count; $i++)
-			{
-				if ($i > 0)
-				{
-					$or = " OR ";
-				}
-				else
-				{
-					$or = "";
-				}
-				
-				$string.= $or . "(post_authors LIKE '%,$character[$i]' OR post_authors LIKE '$character[$i],%' OR post_authors = $character[$i])";
-			}
-			
-			$this->db->where("($string)", NULL);
-		}
-		else
-		{
-			$this->db->like('post_authors', $character);
-		}
-		
-		$this->db->order_by('post_date', 'desc');
-		
-		if ($limit > 0)
-		{
-			$this->db->limit($limit);
-		}
-		
-		$query = $this->db->get();
-		
-		return $query;
-	}
-	
-	function get_link_id($id = '', $direction = 'next')
-	{
-		$get = $this->db->get_where('posts', array('post_id' => $id));
-		
-		if ($get->num_rows() > 0)
-		{
-			$fetch = $get->row();
-			
-			$this->db->select('post_id');
-			$this->db->from('posts');
-			$this->db->where('post_status', 'activated');
-			
-			switch ($direction)
-			{
-				case 'next':
-					$this->db->where('post_date >', $fetch->post_date);
-					break;
-				
-				case 'prev':
-					$this->db->where('post_date <', $fetch->post_date);
-					$this->db->order_by('post_id', 'desc');
-					break;
-			}
-			
-			$this->db->limit(1);
-			
-			$query = $this->db->get();
-			
-			if ($query->num_rows() > 0)
-			{
-				$row = $query->row();
-				return $row->post_id;
-			}
-		}
-		
-		return FALSE;
-	}
-	
-	function get_author_emails($post = '')
-	{
-		$post = $this->db->get_where('posts', array('post_id' => $post));
-		
-		if ($post->num_rows() > 0)
-		{
-			/* grab the row */
-			$row = $post->row();
-			
-			/* put the authors string into an array */
-			$authors = explode(',', $row->post_authors);
-			
-			/* create an arrray to use */
-			$array = array();
-			
-			foreach ($authors as $value)
-			{
-				$this->db->select('email');
-				$this->db->from('users');
-				$this->db->like('characters', $value);
-				
-				$query = $this->db->get();
-				
-				if ($query->num_rows() > 0)
-				{
-					$item = $query->row();
-					
-					if (!in_array($item->email, $array))
-					{
-						$array[] = $item->email;
-					}
-				}
-			}
-			
-			return $array;
-		}
-		
-		return FALSE;
-	}
-	
-	function get_author_user_ids($post = '')
-	{
-		$post = $this->db->get_where('posts', array('post_id' => $post));
-		
-		if ($post->num_rows() > 0)
-		{
-			/* grab the row */
-			$row = $post->row();
-			
-			/* put the authors string into an array */
-			$authors = explode(',', $row->post_authors);
-			
-			/* create an arrray to use */
-			$array = array();
-			
-			foreach ($authors as $value)
-			{
-				$this->db->select('user_id');
-				$this->db->from('users');
-				$this->db->like('characters', $value);
-				
-				$query = $this->db->get();
-				
-				if ($query->num_rows() > 0)
-				{
-					$item = $query->row();
-					
-					if (!in_array($item->userid, $array))
-					{
-						$array[] = $item->userid;
-					}
-				}
-			}
-			
-			return $array;
-		}
-		
-		return FALSE;
 	}
 	
 	function get_saved_posts($id = '', $limit = 0)
