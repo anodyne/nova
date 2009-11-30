@@ -425,7 +425,7 @@ class Admin_base extends Controller {
 			'view_all_logs' => ucwords(lang('actions_viewall') .' '. lang('global_personallogs') .' '. RARROW),
 			'view_all_news' => ucwords(lang('actions_viewall') .' '. lang('global_newsitems') .' '. RARROW),
 			'mynova' => ucwords(lang('labels_my') .' '. APP_NAME),
-			'mynotify' => ucwords(lang('labels_my') .' '. lang('labels_notifications')),
+			'mynotify' => ucfirst(lang('labels_notifications')),
 			'online' => ucwords(lang('online_now')) .':',
 			's_posts' => ucwords(lang('status_saved') .' '. lang('global_missionposts')),
 			's_logs' => ucwords(lang('status_saved') .' '. lang('global_personallogs')),
