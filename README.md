@@ -22,6 +22,8 @@ Latest Changes
 * updated the system icons
 * updated the disabled button styles
 * updated the install file with the sunny admin and wiki sections
+* updated colorbox to version 1.3.3
+* updated textboxlist to version 0.4
 
 Version History
 ---------------
