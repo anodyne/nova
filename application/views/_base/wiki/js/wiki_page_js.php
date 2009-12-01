@@ -1,10 +1,10 @@
 <script type="text/javascript" src="<?php echo base_url() . APPFOLDER .'/assets/js/jquery.textboxlist.js';?>"></script>
 <script type="text/javascript" src="<?php echo base_url() . APPFOLDER .'/assets/js/jquery.textboxlist.autocomplete.js';?>"></script>
-<script type="text/javascript" src="<?php echo base_url() . APPFOLDER .'/assets/js/GrowingInput.js';?>"></script>
+<script type="text/javascript" src="<?php echo base_url() . APPFOLDER .'/assets/js/jquery.growinginput.js';?>"></script>
 		
 <script type="text/javascript">
 	$(document).ready(function(){
-		var cat = new TextboxList('#categories', {
+		var cat = new $.TextboxList('#categories', {
 			unique: true,
 			plugins: {
 				autocomplete: {
