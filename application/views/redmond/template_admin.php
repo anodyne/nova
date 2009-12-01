@@ -127,6 +127,8 @@ echo "<?xml version='1.0' encoding='UTF-8'?>\r\n";
 					<?php echo $flash_message;?>
 					<?php echo $content;?>
 					<?php echo $ajax;?>
+					
+					<div style="clear:both;"></div>
 				</div>
 			</div>
 		</div>
