@@ -3475,7 +3475,7 @@ $system_components = array(
 		'comp_url' => 'http://michelf.com/projects/php-markdown/'),
 	array(
 		'comp_name' => 'TextboxList',
-		'comp_version' => '0.4',
+		'comp_version' => '0.4v2',
 		'comp_desc' => "TextboxList turns normal textboxes into a widget which can be navigated with the keyboard, effectively turning your input into a 'list' of items that can be easily deleted. It comes with an Autocomplete plugin.",
 		'comp_url' => 'http://devthought.com/projects/jquery/textboxlist/'),
 );
@@ -3485,7 +3485,7 @@ $system_info = array(
 		'sys_uid' => random_string('alnum', 32),
 		'sys_install_date' => now(),
 		'sys_version_major' => 0,
-		'sys_version_minor' => 7,
+		'sys_version_minor' => 9,
 		'sys_version_update' => 0)
 );
 
@@ -3530,6 +3530,12 @@ $system_versions = array(
 		'version' => '0.7.0',
 		'version_major' => '0',
 		'version_minor' => '7',
+		'version_update' => '0',
+		'version_date' => 1258005600),
+	array(
+		'version' => '0.9.0',
+		'version_major' => '0',
+		'version_minor' => '9',
 		'version_update' => '0',
 		'version_date' => now()),
 );
