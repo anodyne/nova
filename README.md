@@ -4,26 +4,27 @@ Anodyne Production's next-generation RPG management system combines popular feat
 
 Current Version
 ---------------
-Beta
+Beta (0.9.0)
 
 Last Update
 -----------
-30 November 2009
+01 December 2009
 
 Latest Changes
 --------------
-* removed the email language file include from base_lang
-* updated the email methods to load the email language file for the system not the user
-* updated the feed controller with proper language code
-* updated a language item on the control panel
-* updated the ajax controller to use new language items
-* updated the language files
-* updated the posts model
-* updated the utility helper to remove a function
-* updated the javascript warning for default/main
-* updated the private messages model
-* updated colorbox to version 1.3.3
-* updated textboxlist to version 0.4
+* updated textboxlist to version 0.4v2
+* updated the wiki js view file to use the new textboxlist syntax
+* updated the basic install data
+* updated the version info
+* added the november 2009 changelog archive
+* added the jquery.growinginput.js file
+* removed the GrowingInput.js file
+* fixed a bug in the template files where long tab panels would cause issues with background colors
+* fixed undefined variable issue on personnel/character when logged out
+
+Known Issues
+------------
+* Skin display issues in Internet Explorer
 
 Version History
 ---------------
