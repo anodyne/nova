@@ -1,0 +1,261 @@
+11.30.2009
+
+* removed the email language file include from base_lang
+
+* updated the email methods to load the email language file for the system not the user
+* updated the feed controller with proper language code
+* updated a language item on the control panel
+* updated the ajax controller to use new language items
+* updated the language files
+* updated the posts model
+* updated the utility helper to remove a function
+* updated the javascript warning for default/main
+* updated the private messages model
+
+==========
+
+11.24.2009
+
+* fixed bug with characters/coc where the notification for an added character was misplaced
+* fixed language bug on wiki/index
+* fixed language bug on wiki/recent
+
+* updated the language files
+* updated the MY_date_helper to handle null dates
+* updated the moderation report with wiki comments status
+* updated the sunny admin skin section
+* updated the system icons
+* updated the disabled button styles
+* updated the install file with the sunny admin and wiki sections
+* updated colorbox to version 1.3.3
+* updated textboxlist to version 0.4
+
+==========
+
+11.23.2009
+
+* updated the add_coc_entry() ajax method to handle the order properly so it doesn't throw an error
+* updated the characters/coc js view file to be better overall
+* updated the characters/coc view file to handle showing and hiding buttons
+
+==========
+
+11.18.2009
+
+* removed unnecessary methods from the missions model
+* removed unnecessary methods from the news model
+* removed unnecessary methods from the personal logs model
+* removed the players model
+* removed the players_base model
+
+* updated the controllers to remove some unnecessary method calls
+* updated the news model to have the methods sorted alphabetically
+* updated the index.php file with better debug code
+* updated the main config file with a better base url script
+* updated the database config file with a constant from index for database debugging
+* updated the personal logs model to have the methods sorted alphabetically
+* updated the rss model to have the methods sorted alphabetically
+
+==========
+
+11.17.2009
+
+* added the ajax_location helper
+* added the ajax directories
+
+* moved the ajax files to their respective skin sections
+
+* updated the ajax controller with the new seamless substitution code
+
+==========
+
+11.14.2009
+
+* fixed bug where the version revision field hadn't been taken out of the versions page
+* fixed bug where errors were thrown on the award nomination page when no awards were present
+* fixed bug where the default manifest options dropdown in site/settings had duplicate entries
+* fixed bug where errors were thrown when trying to delete the last department when there's only 1 department
+* fixed bug when logging out in some circumstances could lead to blank pages
+
+==========
+
+11.12.2009
+
+* updated the inbox to be filterable through quicksearch
+* updated the outbox to be filterable through quicksearch
+* updated the wiki category page listing to be filterable through quicksearch
+* updated wiki page creation/update view file to drop the phrase "back to" in the link since they may not be coming from manage pages
+* updated the database schema with synopsis and change comments for wiki drafts
+* updated the menu library to use spacers for sub menus
+* updated the display of some of the wiki pages
+* updated the spacer class in all the skin stylesheets
+* updated the basic install data
+* updated wiki/managepages to be filterable through quicksearch
+* updated javascript files with minified versions
+
+* fixed bug when writing a private message where the subject and message weren't reset after sending the message
+
+* added wiki/category js view file
+* added wiki/index js view file
+
+==========
+
+11.11.2009
+
+* fixed bug in the search page where all links besides post search were wrong
+
+* updated the search page to allow searching wiki pages
+* updated the language files
+* updated the wiki model with a method for searching
+* updated the inbox to use a loader for large inboxes
+* updated the control panel to use a loader to help with longer load times (> 1 second)
+* updated the auth library with a hash function to salt and hash strings
+* updated the controllers to use the auth library for hashing passwords
+
+* added search/index js view file
+
+==========
+
+11.10.2009
+
+* updated the wiki category page to remove the intro text since it was wrong
+* updated the get_pages() wiki model method to fix bug where page categories would overlap
+* udpated the language files
+* updated the basic install data
+* updated the wiki to be able to show recent changes
+* updated the application to use 'user' instead of 'player'
+
+* added wiki/recents view file
+* added users model
+
+* fixed bug where the initial my link wasn't site options
+
+==========
+
+11.09.2009
+
+* added html email view for wiki comments
+* added text email view for wiki comments
+
+* updated the wiki model with new methods
+* updated the manage controller to allow managing wiki comments
+* updated the language files
+* updated the admin control panel to include wiki comments when checking for pending comments
+* updated the ajax controller to allow wiki comments to be deleted, edited and approved
+* updated the wiki controller to handle sending emails out about wiki comments
+
+* fixed bug in manage controller with content being parsed the same for all types of emails
+
+==========
+
+11.06.2009
+
+* updated user/account to handle setting whether wiki comments are moderated or not
+* updated the database schema to have the wiki comments fields match the other comment tables
+* updated the wiki model with some new methods
+* updated the wiki model to change the wiki comment fields
+* updated wiki/view to be able to add comments
+* updated the ajax controller to handle adding wiki comments
+* updated the basic install data
+
+* added ajax/add_comment_wiki view file
+* added comment-add.png to wiki/images
+
+==========
+
+11.05.2009
+
+* added Services_json library
+* added textboxlist plugin
+* added textboxlist autocomplete plugin
+* added default textboxlist plugin stylesheets and images
+* added textboxlist plugin stylesheets and images to the default/wiki section
+* added the wiki/index view file
+
+* updated wiki/page to handle categories during creation and editing
+* updated wiki/page js view to handle the new work with textboxlist
+* updated the ajax controller with a method to return a JSON object with category information
+* updated the wiki head include file
+* updated the basic install data
+* updated the wiki controller to handle the main page
+* updated the wiki model with some new methods
+* updated the default wiki template file to list powered by nova and thresher
+* updated the constants config file to add wiki_name and wiki_version constants
+* updated the language files
+* updated wiki/categories to have an uncategorized option
+* updated wiki/view to show an edit link
+* updated wiki/categories to show an edit link
+* updated wiki/view to show categories with links at the bottom of the page content
+
+==========
+
+11.04.2009
+
+* fixed bug in admin ui.tabs stylesheet with subtabs
+* fixed bug on the admin control panel with undefined variable warnings
+
+* added wiki/view view files
+* added wiki/page/x/edit view file
+* added ajax view files for deleting and reverting wiki pages
+* added wiki/view/page view file
+* added wiki/view/draft view file
+
+* updated the wiki ui.tabs stylesheet
+* updated the wiki head include file to pull in the proper jquery items
+* updated the basic install data
+* updated the database schema
+* updated the bbcode, markdown and textile settings to remove the preview icon
+* updated the ajax controller with a method for deleting a wiki page
+* updated the ajax controller with a method for reverting to a previous draft of a wiki page
+* updated the language files
+* updated the page icons in the wiki section
+* updated the wiki/category page to point to the right link
+* updated the wiki/view js view file
+* updated the admin skins to a visual glitch with subtabs
+* updated the wiki model with some new methods
+* updated the page icons in the admin section
+* updated the group icons in the admin section
+
+* removed some unnecessary readme files from the markitup stuff
+* removed the markitup default set
+
+==========
+
+11.03.2009
+
+* removed markitup wiki set
+
+* added markitup textile set
+* added markitup markdown set
+* added markdown php class
+* added textile php class
+* added bbcode function file
+
+* updated the basic install data with more components
+* updated the logos to use the m7 branding
+* updated the default login stylesheet to have a darker drop shadow
+
+==========
+
+11.02.2009
+
+* added the october changelog archive
+* added the wiki model and wiki base model
+* added the wiki/categories view files
+* added the wiki/category view files
+* added the wiki/managecategories view files
+* added the needed images to the base wiki directory
+* added the wiki stylesheets
+* added the wiki flash view file
+* added the markitup files
+* added the thresher class
+* added the thresher config file
+
+* updated the install data to reflect the change from m6 to m7
+* updated the database schema with the wiki tables
+* updated the basic install data with changes for the wiki
+* updated the wiki include head
+* updated the language files
+* updated the wiki template file to not be the template default
+
+* fixed bug where fatal error is thrown when trying to go to the install page when not logged in and maintenance mode is active
