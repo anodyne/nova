@@ -2228,7 +2228,7 @@ $system_components = array(
 		'comp_desc' => 'jQuery UI is a lightweight, easily customizable interface library for the jQuery Javascript library.'),
 	array(
 		'comp_name' => 'jQuery ColorBox',
-		'comp_version' => '1.3.1',
+		'comp_version' => '1.3.3',
 		'comp_desc' => "A light-weight, customizable lightbox plugin for jQuery.",
 		'comp_url' => 'http://colorpowered.com/colorbox/'),
 	array(
@@ -2278,7 +2278,7 @@ $system_components = array(
 		'comp_url' => 'http://michelf.com/projects/php-markdown/'),
 	array(
 		'comp_name' => 'TextboxList',
-		'comp_version' => '0.3',
+		'comp_version' => '0.4',
 		'comp_desc' => "TextboxList turns normal textboxes into a widget which can be navigated with the keyboard, effectively turning your input into a 'list' of items that can be easily deleted. It comes with an Autocomplete plugin.",
 		'comp_url' => 'http://devthought.com/projects/jquery/textboxlist/'),
 );
