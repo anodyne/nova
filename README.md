@@ -22,6 +22,8 @@ Latest Changes
 * updated the utility helper to remove a function
 * updated the javascript warning for default/main
 * updated the private messages model
+* updated colorbox to version 1.3.3
+* updated textboxlist to version 0.4
 
 Version History
 ---------------
