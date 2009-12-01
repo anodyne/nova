@@ -680,6 +680,11 @@ class Personnel_base extends Controller {
 				$data['edit_valid'] = FALSE;
 			}
 		}
+		else
+		{
+			$data['edit_valid'] = FALSE;
+			$data['edit_valid_form'] = FALSE;
+		}
 		
 		$data['label'] = array(
 			'edit' => '[ '. ucwords(lang('actions_edit') .' '. lang('global_character')) .' ]',
