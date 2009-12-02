@@ -400,7 +400,7 @@ class Ajax_base extends Controller {
 				$skin = $this->session->userdata('skin_admin');
 				
 				/* figure out where the view should come from */
-				$view = ajax_location('add_catalogue_skinsec', $skin, 'admin');
+				$view = ajax_location('add_catalogue_skins', $skin, 'admin');
 				
 				$data['inputs'] = array(
 					'name' => array(
