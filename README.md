@@ -21,6 +21,7 @@ Latest Changes
 * removed the GrowingInput.js file
 * fixed a bug in the template files where long tab panels would cause issues with background colors
 * fixed undefined variable issue on personnel/character when logged out
+* fixed bug with errors being thrown when adding a skin to the system
 
 Known Issues
 ------------
