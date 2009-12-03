@@ -1,3 +1,9 @@
+12.02.2009
+
+* fixed bug with database error thrown when viewing pages in a category
+
+==========
+
 12.01.2009
 
 * updated textboxlist to version 0.4v2

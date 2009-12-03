@@ -8,24 +8,16 @@ Beta (0.9.0)
 
 Last Update
 -----------
-01 December 2009
+02 December 2009
 
 Latest Changes
 --------------
-* updated textboxlist to version 0.4v2
-* updated the wiki js view file to use the new textboxlist syntax
-* updated the basic install data
-* updated the version info
-* added the november 2009 changelog archive
-* added the jquery.growinginput.js file
-* removed the GrowingInput.js file
-* fixed a bug in the template files where long tab panels would cause issues with background colors
-* fixed undefined variable issue on personnel/character when logged out
-* fixed bug with errors being thrown when adding a skin to the system
+* fixed bug with database error thrown when viewing pages in a category
 
 Known Issues
 ------------
 * Skin display issues in Internet Explorer
+* Text display issues between operating systems
 
 Version History
 ---------------
