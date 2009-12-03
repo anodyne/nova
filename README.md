@@ -13,6 +13,9 @@ Last Update
 Latest Changes
 --------------
 * fixed bug with database error thrown when viewing pages in a category
+* fixed bug with array error thrown when viewing the wiki categories and not logged in
+* fixed bug with array errors thrown when viewing a wiki page and not logged in
+* fixed bug with undefined variable when viewing a wiki page and not logged in
 
 Known Issues
 ------------
