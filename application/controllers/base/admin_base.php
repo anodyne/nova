@@ -488,11 +488,7 @@ class Admin_base extends Controller {
 		$data['header'] = lang('head_admin_error');
 		
 		/* set the data used by the view */
-		$data['error'] = sprintf(
-			lang('error_admin_'. $error),
-			$page,
-			'foo'
-		);
+		$data['error'] = lang('error_admin_'. $error);
 		
 		/* figure out where the view JS files should be coming from */
 		$view_loc = view_location('error', $this->skin, 'admin');

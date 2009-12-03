@@ -111,7 +111,7 @@ $lang['error_invalid_tab'] = 'Invalid tab '. NDASH .' Section will not display!'
 
 $lang['error_private_news'] = 'You must be logged in to view a private news item. Please login and try again.';
 
-$lang['error_admin_1'] = "You are not authorized to view this page. If you believe you have received this message in error, please contact the game master.\r\n\r\nYou attempted to access <strong>%s</strong>. In order to access that page, you must have at least the following credentials: %s.";
+$lang['error_admin_1'] = "You are not authorized to view this page. If you believe you have received this message in error, please contact the game master.";
 $lang['error_admin_2'] = 'You are only authorized to view private messages that you wrote or are a recipient of. If you believe you have received this message in error, please contact the game master.';
 $lang['error_admin_3'] = 'You are only authorized to reply to private messages that you are a recipient of. If you believe you have received this message in error, please contact the game master.';
 $lang['error_admin_4'] = 'You are only authorized to take action on saved item you own. If you believe you have received this message in error, please contact the game master.';
