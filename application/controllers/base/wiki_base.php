@@ -160,7 +160,7 @@ class Wiki_base extends Controller {
 	function categories()
 	{
 		/* check the user's access */
-		$data['access'] = $this->auth->check_access('wiki/categories', FALSE);
+		$data['access'] = ($this->auth->is_logged_in()) ? $this->auth->check_access('wiki/categories', FALSE) : FALSE;
 		
 		/* grab the categories */
 		$categories = $this->wiki->get_categories();
@@ -915,10 +915,11 @@ class Wiki_base extends Controller {
 	
 	function view()
 	{
-		$this->auth->check_access('wiki/page', FALSE);
+		/* check to see if they have access */
+		$access = ($this->auth->is_logged_in()) ? $this->auth->check_access('wiki/page', FALSE) : FALSE;
 		
 		/* get the access level */
-		$level = $this->auth->get_access_level('wiki/page');
+		$level = ($this->auth->is_logged_in()) ? $this->auth->get_access_level('wiki/page') : FALSE;
 		
 		/* set the variables */
 		$type = $this->uri->segment(3, 'page');
@@ -1195,6 +1196,10 @@ class Wiki_base extends Controller {
 				{
 					$data['edit'] = FALSE;
 				}
+			}
+			else
+			{
+				$data['edit'] = FALSE;
 			}
 			
 			/*
