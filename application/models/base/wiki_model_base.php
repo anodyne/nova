@@ -175,7 +175,9 @@ class Wiki_model_base extends Model {
 			}
 			else
 			{
-				$string = "(wiki_drafts.draft_categories LIKE '%,$category' OR wiki_drafts.draft_categories LIKE '$category,%' OR wiki_drafts.draft_categories = $category)";
+				$table = $this->db->dbprefix('wiki_drafts');
+				
+				$string = "(". $table .".draft_categories LIKE '%,$category' OR ". $table .".draft_categories LIKE '$category,%' OR ". $table .".draft_categories = $category)";
 			
 				$this->db->where("($string)", NULL);
 			}
