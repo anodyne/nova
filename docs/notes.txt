@@ -1,90 +1,4 @@
 |---------------------------------------------------------------
-| FORM BUTTONS
-|---------------------------------------------------------------
-
-http://www.monc.se/kitchen/59/scalable-css-buttons-using-png-and-background-colors
-http://monc.se/kitchen/95/scalable-buttons-update
-
-form_submit()
-
-echo form_submit('mysubmit', 'Submit Post!');
-<input type="submit" name="mysubmit" value="Submit Post!" />
-
-$button_values = array(
-	'name'	=> 'mysubmit',
-	'id'	=> 'myid',
-	'class'	=> 'button',
-	'value'	=> 'Click Me'
-);
-echo form_submit($button_values);
-<input type="submit" name="mysubmit" id="myid" class="button" value="Click Me" />
-
-|---------------------------------------------------------------
-| FILE UPLOADING
-| http://jamierumbelow.net/blog/file_uploading_in_codeigniter/
-| http://codeigniter.com/user_guide/libraries/file_uploading.html
-|---------------------------------------------------------------
-
-CONTROLLER
-==========
-
-class Upload extends Controller {
-
-	function Upload()
-	{
-		parent::Controller();
-		
-		$config['upload_path'] = "uploads";
-		$config['allowed_types'] = "jpg|jpeg|png|gif";
-		$config['encrypt_name'] = "TRUE";
-		
-		$this->load->library("upload", $config);
-		$this->load->helper("form");
-	}
-	
-	function go()
-	{
-		if (!$this->upload->do_upload()
-		{
-			$data['error'] = $this->upload->display_errors();
-			$this->load->view("error", $data);
-		}
-		else
-		{
-			$data['file'] = $this->upload->data();
-			$this->load->view("success", $data);
-		}
-	}
-}
-
-VIEW
-==========
-
-<?=form_open_multipart("upload/go")?>
-<?=form_upload("userfile")?>
-<?=form_submit("submit","Upload!")?>
-<?=form_close()?>
-
-|---------------------------------------------------------------
-| ACCESS
-|---------------------------------------------------------------
-
-Array (
-	[access_levels] => Array(
-		manage/crew => 2
-		manage/npcs => 1
-	)
-)
-
-First, we need to check if they've got anything in the access array. If they do, let them through. Once they're in, we can do logic based on their level of access to that particular method.
-
-|---------------------------------------------------------------
-| TEMPLATE
-|---------------------------------------------------------------
-
-http://williamsconcepts.com/ci/codeigniter/libraries/template/index.html
-
-|---------------------------------------------------------------
 | BASIC FORUM
 |---------------------------------------------------------------
 
@@ -95,13 +9,6 @@ http://www.pixel2life.com/publish/tutorials/607/creating_a_simple_discussion_boa
 |---------------------------------------------------------------
 
 Need an easy way to add database tables and/or fields to the system for MODs
-
-|---------------------------------------------------------------
-| SCOPE IN JQUERY UI
-|---------------------------------------------------------------
-
-http://groups.google.com/group/jquery-ui/browse_thread/thread/42ca7b482373857f
-http://www.filamentgroup.com/lab/using_multiple_jquery_ui_themes_on_a_single_page/
 
 |---------------------------------------------------------------
 | PASSWORD SALTING

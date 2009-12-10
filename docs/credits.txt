@@ -8,6 +8,7 @@ Thanks to all those who compiled genre data for us to use in Nova!
 Enterprise data compiled by Moss (Anodyne forums).
 Battlestar Galactica data compiled by ladythorne (Anodyne forums).
 Stargate SG-1 data compiled by Lord_Trekie (Anodyne forums).
+Stargate SG-1 and Stargate Atlantis data compiled by Alexander (Anodyne forums).
 Romulan and Cardassian data compiled by Hasahnaithiau Nghymru.
 Babylon 5 data compiled by Rycon (Anodyne forums).
 Klingon data compiled by David VanScott.
