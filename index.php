@@ -16,7 +16,7 @@ switch ($debug_errors)
 {
 	case 1:
 		ini_set('display_errors', 0);
-		error_reporting(E_ERROR);
+		error_reporting(E_ERROR & ~E_DEPRECATED);
 		define('NOVA_DB_DEBUG', TRUE);
 		
 		break;
@@ -30,7 +30,7 @@ switch ($debug_errors)
 		
 	case 3:
 		ini_set('display_errors', 1);
-		error_reporting(E_ALL);
+		error_reporting(E_ALL & ~E_DEPRECATED);
 		define('NOVA_DB_DEBUG', TRUE);
 		
 		break;
@@ -68,7 +68,6 @@ $system_folder = "core";
 | For more info please see the user guide:
 | http://codeigniter.com/user_guide/general/managing_apps.html
 |
-|
 | NO TRAILING SLASH!
 |
 */
@@ -83,6 +82,20 @@ $application_folder = $abspath . "/" . $app_folder;
 |===============================================================
 */
 
+/*
+|---------------------------------------------------------------
+| DEFAULT TIMEZONE
+|---------------------------------------------------------------
+|
+| Set the default timezone for date/time functions to use if
+| none is set on the server. This prevents PHP 5.3 from throwing
+| errors.
+|
+*/
+if (!ini_get('date.timezone'))
+{
+	date_default_timezone_set('GMT');
+}
 
 /*
 |---------------------------------------------------------------
