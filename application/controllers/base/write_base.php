@@ -497,6 +497,9 @@ class Write_base extends Controller {
 							/* grab the insert id */
 							$insert_id = $this->db->insert_id();
 							
+							/* optimize the table */
+							this->sys->optimize_table('personallogs');
+							
 							if ($insert > 0)
 							{
 								$message = sprintf(
@@ -1074,6 +1077,9 @@ class Write_base extends Controller {
 							
 							/* grab the insert id */
 							$insert_id = $this->db->insert_id();
+							
+							/* optimize the table */
+							$this->sys->optimize_table('posts');
 							
 							if ($insert > 0)
 							{
@@ -1716,6 +1722,9 @@ class Write_base extends Controller {
 						
 						/* grab the insert id */
 						$insert_id = $this->db->insert_id();
+						
+						/* optimize the table */
+						$this->sys->optimize_table('news');
 						
 						if ($insert > 0)
 						{

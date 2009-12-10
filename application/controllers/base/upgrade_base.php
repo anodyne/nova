@@ -1229,6 +1229,9 @@ class Upgrade_base extends Controller {
 							$count += $this->tour->add_tour_item($tour);
 							$tid = $this->db->insert_id();
 							
+							/* optimize the table */
+							$this->sys->optimize_table('tour');
+							
 							/* insert the supplemental data */
 							$tourdata = array(
 								array(
@@ -1355,6 +1358,9 @@ class Upgrade_base extends Controller {
 						$charIDs[$email] = $pid;
 					}
 					
+					/* optimize the table */
+					$this->sys->optimize_table('users');
+					
 					/* pause the script */
 					sleep(2);
 					
@@ -1471,6 +1477,9 @@ class Upgrade_base extends Controller {
 							}
 						}
 					}
+					
+					/* optimize the table */
+					$this->sys->optimize_table('characters');
 					
 					/* count the characters */
 					$count = $this->char->count_characters('', '');

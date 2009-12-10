@@ -656,8 +656,6 @@ class Users_model_base extends Model {
 	{
 		$query = $this->db->insert('users', $data);
 		
-		$this->dbutil->optimize_table('users');
-		
 		/* this returns the number of affected rows, not the query object */
 		return $query;
 	}

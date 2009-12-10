@@ -429,9 +429,6 @@ class News_model_base extends Model {
 	{
 		$query = $this->db->insert('news', $data);
 		
-		/* optimize the table */
-		$this->dbutil->optimize_table('news');
-		
 		return $this->db->affected_rows();
 	}
 	

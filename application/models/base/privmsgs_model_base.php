@@ -124,9 +124,6 @@ class Privmsgs_model_base extends Model {
 	{
 		$query = $this->db->insert('privmsgs', $data);
 		
-		/* optimize the table */
-		$this->dbutil->optimize_table('privmsgs');
-		
 		/* return the number of affected rows to show success/failure (should be 1) */
 		return $this->db->affected_rows();
 	}

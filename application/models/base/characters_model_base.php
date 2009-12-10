@@ -479,9 +479,6 @@ class Characters_model_base extends Model {
 	{
 		$query = $this->db->insert('characters_fields', $data);
 		
-		/* optimize the table */
-		$this->dbutil->optimize_table('characters_fields');
-		
 		return $query;
 	}
 	
@@ -497,9 +494,6 @@ class Characters_model_base extends Model {
 	function add_bio_field_value($data = '')
 	{
 		$query = $this->db->insert('characters_values', $data);
-		
-		/* optimize the table */
-		$this->dbutil->optimize_table('characters_values');
 		
 		return $query;
 	}
@@ -527,9 +521,6 @@ class Characters_model_base extends Model {
 	function create_character($data = '')
 	{
 		$query = $this->db->insert('characters', $data);
-		
-		/* optimize the table */
-		$this->dbutil->optimize_table('characters');
 		
 		/* this returns the number of affected rows, not the query object */
 		return $query;

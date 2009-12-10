@@ -853,7 +853,7 @@ class Install_base extends Controller {
 				$submit = $this->input->post('next');
 				
 				/* load the models */
-				$this->load->model('users_model');
+				$this->load->model('users_model', 'user');
 				$this->load->model('characters_model', 'char');
 				$this->load->model('positions_model', 'pos');
 				$this->load->model('system_model', 'sys');
@@ -884,14 +884,17 @@ class Install_base extends Controller {
 					);
 					
 					/* insert the user data */
-					$c_user = $this->users_model->create_user($create_user);
+					$c_user = $this->user->create_user($create_user);
 					$insert[] = $c_user;
 					
 					/* get the ID from the user insert */
 					$p_id = $this->db->insert_id();
 					
+					/* optimize the table */
+					$this->sys->optimize_table('users');
+					
 					/* create the user prefs */
-					$prefs = $this->users_model->create_user_prefs($p_id);
+					$prefs = $this->user->create_user_prefs($p_id);
 					$insert[] = $prefs;
 					
 					/* build the create character array */
@@ -912,10 +915,13 @@ class Install_base extends Controller {
 					/* get the ID from the character insert */
 					$c_id = $this->db->insert_id();
 					
+					/* optimize the table */
+					$this->sys->optimize_table('characters');
+					
 					$characters = array('main_char' => $c_id);
 					
 					/* update the users table */
-					$this->users_model->update_user($p_id, $characters);
+					$this->user->update_user($p_id, $characters);
 					
 					/* build the COC array */
 					$create_coc = array(

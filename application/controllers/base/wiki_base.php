@@ -576,6 +576,9 @@ class Wiki_base extends Controller {
 					$insert = $this->wiki->create_page($page_array);
 					$pageid = $this->db->insert_id();
 					
+					/* optimize the table */
+					$this->sys->optimize_table('wiki_pages');
+					
 					/* create the array of draft data */
 					$draft_array = array(
 						'draft_author_user' => $this->session->userdata('userid'),
@@ -591,6 +594,9 @@ class Wiki_base extends Controller {
 					/* put the draft information into the database */
 					$insert += $this->wiki->create_draft($draft_array);
 					$draftid = $this->db->insert_id();
+					
+					/* optimize the table */
+					$this->sys->optimize_table('wiki_drafts');
 					
 					/* update the page with the draft ID */
 					$this->wiki->update_page($pageid, array('page_draft' => $draftid));
@@ -639,6 +645,9 @@ class Wiki_base extends Controller {
 					/* put the draft information into the database */
 					$insert = $this->wiki->create_draft($draft_array);
 					$draftid = $this->db->insert_id();
+					
+					/* optimize the table */
+					$this->sys->optimize_table('wiki_drafts');
 					
 					/* create the array of page data */
 					$page_array = array(
@@ -962,6 +971,9 @@ class Wiki_base extends Controller {
 					
 					$insert = $this->wiki->create_draft($insert_array);
 					$draftid = $this->db->insert_id();
+					
+					/* optimize the table */
+					$this->sys->optimize_table('wiki_drafts');
 					
 					$update_array = array(
 						'page_draft' => $draftid,

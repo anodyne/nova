@@ -115,16 +115,12 @@ class Specs_model_base extends Model {
 	{
 		$query = $this->db->insert('specs_fields', $data);
 		
-		$this->dbutil->optimize_table('specs_fields');
-		
 		return $query;
 	}
 	
 	function add_spec_field_value($data = '')
 	{
 		$query = $this->db->insert('specs_values', $data);
-		
-		$this->dbutil->optimize_table('specs_values');
 		
 		return $query;
 	}

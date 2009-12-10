@@ -392,9 +392,6 @@ class Personallogs_model_base extends Model {
 	{
 		$query = $this->db->insert('personallogs', $data);
 		
-		/* optimize the table */
-		$this->dbutil->optimize_table('personallogs');
-		
 		return $query;
 	}
 	

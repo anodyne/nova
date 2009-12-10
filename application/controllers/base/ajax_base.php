@@ -29,6 +29,9 @@ class Ajax_base extends Controller {
 		
 		/* set and load the language file needed */
 		$this->lang->load('app', $this->session->userdata('language'));
+		
+		/* load the system model */
+		$this->load->model('system_model', 'sys');
 	}
 
 	function index()
@@ -177,6 +180,9 @@ class Ajax_base extends Controller {
 			
 		$insert = $this->char->add_bio_field_value($insert_array);
 		$insert_id = $this->db->insert_id();
+		
+		/* optimize the table */
+		$this->sys->optimize_table('characters_values');
 		
 		if ($insert > 0)
 		{
@@ -429,9 +435,6 @@ class Ajax_base extends Controller {
 				
 				/* figure out where the view should come from */
 				$view = ajax_location('add_catalogue_skinsec', $skin, 'admin');
-				
-				/* load the resources */
-				$this->load->model('system_model', 'sys');
 				
 				$data['inputs'] = array(
 					'preview' => array(
@@ -758,6 +761,9 @@ class Ajax_base extends Controller {
 		$insert = $this->tour->add_deck($insert_array);
 		$insert_id = $this->db->insert_id();
 		
+		/* optimize the table */
+		$this->sys->optimize_table('tour_decks');
+		
 		if ($insert > 0)
 		{
 			$output = '<li class="ui-state-default" id="deck_'. $insert_id .'"><div class="float_right"><a href="#" class="remove image" name="remove" id="'. $insert_id .'">x</a></div><a href="#" rel="facebox" myAction="edit_val" myField="<?php echo $id;?>" class="image" myID="'. $insert_id .'"/>'. $deck .'</a></li>';
@@ -931,7 +937,6 @@ class Ajax_base extends Controller {
 	function add_menu_item()
 	{
 		/* load the resources */
-		$this->load->model('system_model', 'sys');
 		$this->load->model('menu_model');
 		
 		$head = sprintf(
@@ -1582,6 +1587,9 @@ class Ajax_base extends Controller {
 		$insert = $this->specs->add_spec_field_value($insert_array);
 		$insert_id = $this->db->insert_id();
 		
+		/* optimize the table */
+		$this->sys->optimize_table('specs_values');
+		
 		if ($insert > 0)
 		{
 			$output = '<li class="ui-state-default" id="value_'. $insert_id .'"><div class="float_right"><a href="#" class="remove image" name="remove" id="'. $insert_id .'">x</a></div><a href="#" rel="facebox" myAction="edit_val" myField="<?php echo $id;?>" class="image" myID="'. $insert_id .'"/>'. $content .'</a></li>';
@@ -1778,6 +1786,9 @@ class Ajax_base extends Controller {
 			
 		$insert = $this->tour->add_tour_field_value($insert_array);
 		$insert_id = $this->db->insert_id();
+		
+		/* optimize the table */
+		$this->sys->optimize_table('tour_values');
 		
 		if ($insert > 0)
 		{
@@ -2019,7 +2030,6 @@ class Ajax_base extends Controller {
 				
 			case 'award_nomination':
 				/* load the resources */
-				$this->load->model('system_model', 'sys');
 				$this->load->model('characters_model', 'char');
 				$this->load->model('users_model', 'user');
 				
@@ -2443,7 +2453,6 @@ class Ajax_base extends Controller {
 		$data['header'] = $head;
 		
 		/* load the resources */
-		$this->load->model('system_model', 'sys');
 		$this->load->model('ranks_model', 'ranks');
 		
 		switch ($type)
@@ -4142,7 +4151,6 @@ class Ajax_base extends Controller {
 		$data['header'] = $head;
 		
 		/* load the resources */
-		$this->load->model('system_model', 'sys');
 		$this->load->model('ranks_model', 'ranks');
 		
 		switch ($type)
@@ -4577,7 +4585,6 @@ class Ajax_base extends Controller {
 	function edit_menu_item()
 	{
 		/* load the resources */
-		$this->load->model('system_model', 'sys');
 		$this->load->model('menu_model');
 		
 		$head = sprintf(
@@ -5392,9 +5399,6 @@ class Ajax_base extends Controller {
 	
 	function info_show_skin_preview()
 	{
-		/* load the resources */
-		$this->load->model('system_model', 'sys');
-		
 		/* set the POST variables */
 		$location = $this->input->post('skin', TRUE);
 		$section = $this->input->post('section', TRUE);
@@ -5465,7 +5469,6 @@ class Ajax_base extends Controller {
 		{
 			case 'award_nomination':
 				/* load the resources */
-				$this->load->model('system_model', 'sys');
 				$this->load->model('characters_model', 'char');
 				$this->load->model('users_model', 'user');
 				
@@ -5768,9 +5771,6 @@ class Ajax_base extends Controller {
 	
 	function save_ignore_update_version()
 	{
-		/* load the resources */
-		$this->load->model('system_model', 'sys');
-		
 		/* grab the version from the POST */
 		$version = $this->input->post('version', TRUE);
 		
@@ -5889,7 +5889,6 @@ class Ajax_base extends Controller {
 	{
 		/* load the resources */
 		$this->load->model('users_model', 'user');
-		$this->load->model('system_model', 'sys');
 		
 		/* build the array of pieces we need */
 		$version_pieces = array(

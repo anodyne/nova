@@ -565,6 +565,18 @@ class System_model_base extends Model {
 		
 		return $query;
 	}
+	
+	function optimize_table($table = '')
+	{
+		if (!empty($table))
+		{
+			$this->dbutil->optimize_table($table);
+		}
+		else
+		{
+			return FALSE;
+		}
+	}
 }
 
 /* End of file system_model_base.php */

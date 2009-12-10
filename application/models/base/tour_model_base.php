@@ -145,8 +145,6 @@ class Tour_model_base extends Model {
 	{
 		$query = $this->db->insert('tour_decks', $data);
 		
-		$this->dbutil->optimize_table('tour_decks');
-		
 		return $query;
 	}
 	
@@ -154,16 +152,12 @@ class Tour_model_base extends Model {
 	{
 		$query = $this->db->insert('tour_fields', $data);
 		
-		$this->dbutil->optimize_table('tour_fields');
-		
 		return $query;
 	}
 	
 	function add_tour_field_value($data = '')
 	{
 		$query = $this->db->insert('tour_values', $data);
-		
-		$this->dbutil->optimize_table('tour_values');
 		
 		return $query;
 	}
@@ -180,8 +174,6 @@ class Tour_model_base extends Model {
 	function add_tour_item($data = '')
 	{
 		$query = $this->db->insert('tour', $data);
-		
-		$this->dbutil->optimize_table('tour');
 		
 		return $query;
 	}

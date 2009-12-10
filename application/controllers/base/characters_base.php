@@ -1288,6 +1288,9 @@ class Characters_base extends Controller {
 			$update = $this->char->create_character($array['character']);
 			$cid = $this->db->insert_id();
 			
+			/* optimize the database */
+			$this->sys->optimize_table('characters');
+			
 			if ($array['character']['crew_type'] == 'active' || $array['character']['crew_type'] == 'pending')
 			{
 				$name = array(

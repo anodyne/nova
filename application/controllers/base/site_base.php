@@ -130,6 +130,9 @@ class Site_base extends Controller {
 					$insert = $this->char->add_bio_field($insert_array);
 					$insert_id = $this->db->insert_id();
 					
+					/* optimize the table */
+					$this->sys->optimize_table('characters_fields');
+					
 					if ($insert > 0)
 					{
 						if ($type == 'select')
@@ -4093,6 +4096,9 @@ class Site_base extends Controller {
 					$insert = $this->specs->add_spec_field($insert_array);
 					$insert_id = $this->db->insert_id();
 					
+					/* optimize the table */
+					$this->sys->optimize_table('specs_fields');
+					
 					if ($insert > 0)
 					{
 						if ($type == 'select')
@@ -4797,6 +4803,9 @@ class Site_base extends Controller {
 					/* insert the record */
 					$insert = $this->tour->add_tour_field($insert_array);
 					$insert_id = $this->db->insert_id();
+					
+					/* optimize the table */
+					$this->sys->optimize_table('tour_fields');
 					
 					if ($insert > 0)
 					{

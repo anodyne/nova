@@ -396,6 +396,9 @@ class Main_base extends Controller {
 					$users = $this->user->create_user($user_array);
 					$user_id = $this->db->insert_id();
 					$prefs = $this->user->create_user_prefs($user_id);
+					
+					/* optimize the table */
+					$this->sys->optimize_table('users');
 				}
 				
 				/* set the user id */
@@ -415,6 +418,9 @@ class Main_base extends Controller {
 				/* create the character */
 				$character = $this->char->create_character($character_array);
 				$character_id = $this->db->insert_id();
+				
+				/* optimize the table */
+				$this->sys->optimize_table('characters');
 				
 				$name = array($first_name, $middle_name, $last_name, $suffix);
 				

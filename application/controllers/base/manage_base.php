@@ -3528,6 +3528,9 @@ class Manage_base extends Controller {
 					$insert = $this->tour->add_tour_item($tour);
 					$insert_id = $this->db->insert_id();
 					
+					/* optimize the table */
+					$this->sys->optimize_table('tour');
+					
 					foreach ($fields as $k => $v)
 					{
 						$v['data_tour_item'] = $insert_id;

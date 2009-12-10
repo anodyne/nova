@@ -530,6 +530,9 @@ class Messages_base extends Controller {
 				/* get the message ID */
 				$msgid = $this->db->insert_id();
 				
+				/* optimize the table */
+				$this->sys->optimize_table('privmsgs');
+				
 				/* create an array of who the PM is going to */
 				$recipients = explode(',', $to);
 				

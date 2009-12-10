@@ -297,16 +297,12 @@ class Wiki_model_base extends Model {
 	{
 		$query = $this->db->insert('wiki_drafts', $data);
 		
-		$this->dbutil->optimize_table('wiki_drafts');
-		
 		return $query;
 	}
 	
 	function create_page($data = '')
 	{
 		$query = $this->db->insert('wiki_pages', $data);
-		
-		$this->dbutil->optimize_table('wiki_pages');
 		
 		return $query;
 	}

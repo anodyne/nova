@@ -650,9 +650,6 @@ class Posts_model_base extends Model {
 		/* run the insert query */
 		$this->db->insert('posts', $data);
 		
-		/* optimize the table */
-		$this->dbutil->optimize_table('posts');
-		
 		/* return the number of affected rows to show success/failure (should be 1) */
 		return $this->db->affected_rows();
 	}
