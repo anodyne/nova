@@ -52,7 +52,8 @@ class Characters_base extends Controller {
 			'sim_name',
 			'date_format',
 			'system_email',
-			'allowed_chars_playing'
+			'allowed_chars_playing',
+			'email_subject'
 		);
 		
 		/* grab the settings */
@@ -1866,7 +1867,7 @@ class Characters_base extends Controller {
 				$email_data = array(
 					'email_subject' => lang('email_subject_character_approved') .' - '. $data['character'],
 					'email_from' => ucfirst(lang('time_from')) .': '. $data['name'] .' - '. $data['email'],
-					'email_content' => ($this->email->mailtype == 'html') ? nl2br($data['content']) : $data['content']
+					'email_content' => ($this->email->mailtype == 'html') ? nl2br($data['message']) : $data['message']
 				);
 				
 				$em_loc = email_location('character_action', $this->email->mailtype);
@@ -1887,7 +1888,7 @@ class Characters_base extends Controller {
 				$email_data = array(
 					'email_subject' => lang('email_subject_character_rejected') .' - '. $data['character'],
 					'email_from' => ucfirst(lang('time_from')) .': '. $data['name'] .' - '. $data['email'],
-					'email_content' => ($this->email->mailtype == 'html') ? nl2br($data['content']) : $data['content']
+					'email_content' => ($this->email->mailtype == 'html') ? nl2br($data['message']) : $data['message']
 				);
 				
 				$em_loc = email_location('character_action', $this->email->mailtype);
