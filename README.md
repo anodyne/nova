@@ -8,14 +8,37 @@ Beta (0.9.0)
 
 Last Update
 -----------
-02 December 2009
+10 December 2009
 
 Latest Changes
 --------------
-* fixed bug with database error thrown when viewing pages in a category
-* fixed bug with array error thrown when viewing the wiki categories and not logged in
-* fixed bug with array errors thrown when viewing a wiki page and not logged in
-* fixed bug with undefined variable when viewing a wiki page and not logged in
+* updated the index file to set the default timezone if nothing is set (fixes a PHP 5.3 issue with CI)
+* updated the system model with a new method
+* updated the character model
+* updated the news mdoel
+* updated the personal logs model
+* updated the posts model
+* updated the private messages model
+* updated the specs model
+* updated the tour model
+* updated the users model
+* updated the wiki model
+* updated the admin controller
+* updated the ajax controller
+* updated the characters controller
+* updated the install controller
+* updated the main controller
+* updated the manage controller
+* udpated the messages controller
+* updated the site controller
+* updated the upgrade controller
+* updated the wiki controller
+* updated the write controller
+* removed the personnel_player js view
+* added the personnel_user js view (fixes #48)
+* fixed major bug with PHP 5.3 and Simplepie where HTTPD would crash
+* fixed major bug resulting from a change in PHP 5.3 with mysql_insert_id
+* fixed bug with undefined variables when accepting or rejecting users
 
 Known Issues
 ------------
