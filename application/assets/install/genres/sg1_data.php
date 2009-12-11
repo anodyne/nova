@@ -20,7 +20,7 @@ $g = 'sg1';
 
 /*
 |---------------------------------------------------------------
-| Genre Table Data (SG1)
+| Genre Table Data (SGA)
 |---------------------------------------------------------------
 */
 $data = array(
@@ -28,30 +28,53 @@ $data = array(
 	'ranks_'. $g		=> 'ranks',
 	'positions_'. $g	=> 'positions',
 	'catalogue_ranks'	=> 'catalogue_ranks',
-	'characters'		=> 'characters'
 );
 
 $depts = array(
 	array(
-		'dept_name' => 'Command Staff',
-		'dept_desc' => "The command staff are responsible for organizing and directing the Off World teams, as well as handling any non terrestrial diplomatic occurrences.",
+		'dept_name' => 'Command',
+		'dept_desc' => "The Command Department consists of the Commander and the Executive Officer. The Commander is ultimately responsible for the safety and welfare of the SG Team. S/he has final authority on all decisions regarding the ship and her mission. The Executive officer or XO is the commander's immediate subordinate, and is also his/her successor should the need arise.",
 		'dept_order' => 0),
 	array(
-		'dept_name' => 'Medical Staff',
-		'dept_desc' => "The base medical staff are in charge of keeping everyone in working condition, and they're good at it. It's up to them to make sure that all team members are healthy leaving, and returning through the Stargate.",
+		'dept_name' => 'Archeology',
+		'dept_desc' => "The Branch of anthropology studies people and their cultures on off world planets and catalogs them back on base for further study of the culture and its people.  Civilans play an important role in this department because Armed forces usually don't have jobs in Archeology.",
 		'dept_order' => 1),
 	array(
-		'dept_name' => 'Engineering Staff',
-		'dept_desc' => "The Engineering staff are responsible for maintaining all base equipment, as well as the base itself. Power Grid, Sanitation, the Weapons, the Gate, it all needs to be kept in near perfect working order.",
+		'dept_name' => 'Linguistics',
+		'dept_desc' => "Linguists are the people that can communicate in different languages with other cultures.  Both Military and Civilians are employed to do this.",
 		'dept_order' => 2),
 	array(
-		'dept_name' => 'Research &amp; Development',
-		'dept_desc' => "The Research and Development Division is by far one of the most important for the Stargate Program, without them we still could well be limited to traveling back and forth to Abydos or we wouldn't have the BC-304's to defend Earth with. You know those shiny alien devices locked up in Area 51? They are there because they are giving the awesome R&amp;D guys a run for their money. Just wait 'til they figure out what they do...",
+		'dept_name' => 'Engineering',
+		'dept_desc' => "When something needs fixing these are the people men and women, military and civilian that get called.   Engineers are responsible for the fixing computer systems, to the stargate, and even sending in UAVs & MALPs.",
 		'dept_order' => 3),
 	array(
-		'dept_name' => 'Off-World Team',
-		'dept_desc' => "An off world team usually consists of 4-8 members, depending on the mission type that the team is assigned. They could be an Exploration group charting the way for others to follow, or it could be a Marine Combat Unit, sent off world to repel the bad guy assault or to rescue a stranded team in the field.",
-		'dept_order' => 4)
+		'dept_name' => 'Science',
+		'dept_desc' => "The Science department is always making discoveries on survival, coming up with new ideas on how to help the team, and cataloging information on current off world discoveries and events.",
+		'dept_order' => 4),
+	array(
+		'dept_name' => 'Medical',
+		'dept_desc' => "When a person is either hurt or sick the medical department will always be there.  These skilled men and women are doctors and medics either staying in the infirmary or going out in the fields with teams.",
+		'dept_order' => 5),
+	array(
+		'dept_name' => 'Diplomatic Liaisons',
+		'dept_desc' => "Representing Earth and Humans alike the diplomat Liaisons stay on base or travel out with teams making sure the human race is not seen in a negative right.",
+		'dept_order' => 6),
+	array(
+		'dept_name' => 'Fighter Squadron',
+		'dept_desc' => "When Earth is in those dire situations the X302 is there. With the ability to fly on planet they have the capability of also flying in space.",
+		'dept_order' => 7),
+	array(
+		'dept_name' => 'Military',
+		'dept_desc' => "Your Military personnel in an SG Team are trained combat warriors from all branch all over the world.  In some times things get sticky and military is there to back it up with expert combat knowledge and firepower.",
+		'dept_order' => 8),
+	array(
+		'dept_name' => 'Alpha Team',
+		'dept_desc' => "The Alpha Team of SG1.  Capable of carrying out missions and orders directed to them.",
+		'dept_order' => 9),
+	array(
+		'dept_name' => 'Bravo Team',
+		'dept_desc' => "The Bravo Team of SG1.  Capable of carrying out missions and orders directed to them.",
+		'dept_order' => 10)
 );
 
 $ranks= array(
@@ -69,148 +92,271 @@ $ranks= array(
 
 $positions = array(
 	array(
-		'pos_name' => 'Base Commander',
-		'pos_desc' => "The base commander is the highest ranking officer around. He gets the big chair and the small office, along with the proverbial red phone if there's one to be had.",
+		'pos_name' => 'Commanding Officer',
+		'pos_desc' => "Ultimately responsible for the ship and crew, the Commanding Officer is the most senior officer aboard a vessel. S/he is responsible for carrying out the orders of the Generals above their position.",
 		'pos_dept' => 1,
 		'pos_order' => 0,
 		'pos_open' => 1,
 		'pos_type' => 'senior'),
 	array(
-		'pos_name' => 'Duty Officer',
-		'pos_desc' => "The base duty officer is the one usually in charge of directing the off world teams to their destinations, handing out the mission assignments to the best qualified and making sure they have everything they need to complete their mission before they leave. If something happens to an off world team he's responsible for organizing the response.",
+		'pos_name' => 'Executive Officer',
+		'pos_desc' => "The liaison between captain and crew, the Executive Officer acts as the disciplinarian, personnel manager, advisor to the captain, and much more. S/he is also one of only two officers, along with the Chief Medical Officer, that can remove a Commanding Officer from duty.",
 		'pos_dept' => 1,
 		'pos_order' => 1,
 		'pos_open' => 1,
 		'pos_type' => 'senior'),
+		
 	array(
-		'pos_name' => "Commander's Aide",
-		'pos_desc' => "The Commander's Aide is there to assist the duty officer and base commander whenever nessecary, they want a coffee black, they get it, they want the latest mission reports to P5X-732 they were on their desk 10 minutes ago.",
-		'pos_dept' => 1,
-		'pos_order' => 2,
-		'pos_open' => 2,
+		'pos_name' => 'Chief Archaeologist',
+		'pos_desc' => "Studies people and cultures of off world planets.  Shares and discusses the human race with other cultures off world. In addition, they are in charge of the department and report to the Executive Officer. Is a member of the Senior Staff.",
+		'pos_dept' => 2,
+		'pos_order' => 0,
+		'pos_open' => 1,
+		'pos_type' => 'senior'),
+	array(
+		'pos_name' => 'Assistant Chief Archaeologist',
+		'pos_desc' => "Studies people and cultures of off world planets.  Shares and discusses the human race with other cultures off world. Also assists the Department head in daily operations.  If the Chief of the department is for some reason not able to perform his/her duties the Assistant Chief steps forwards as Acting Chief until the Chief returns.",
+		'pos_dept' => 2,
+		'pos_order' => 1,
+		'pos_open' => 1,
 		'pos_type' => 'officer'),
 	array(
-		'pos_name' => 'Stargate Coordinator',
-		'pos_desc' => "The gate coordinator is responsible for dialing the Stargate for missions, as well controlling any aspect of the gate that's linked to it, such as an iris or a shield. If there are any computer controlled defenses the gate coordinator deploys them when instructed and is also responsible for MALP or UAV deployment and retrieval.",
-		'pos_dept' => 1,
-		'pos_order' => 3,
-		'pos_open' => 2,
+		'pos_name' => 'Archaeologist',
+		'pos_desc' => "Studies people and cultures of off world planets.  Shares and discusses the human race with other cultures off world.",
+		'pos_dept' => 2,
+		'pos_order' => 2,
+		'pos_open' => 5,
 		'pos_type' => 'officer'),
 		
 	array(
-		'pos_name' => 'Base Medical Officer',
-		'pos_desc' => "The base medical officer sees to the well being of all base personnel, and ensures that all off world teams are capable of doing the missions that they are mandated. The Base MO can also quarantine the facility or just a specific section of there's sufficient reason, and without the Base Commander's permission.",
-		'pos_dept' => 2,
-		'pos_order' => 0,
-		'pos_open' => 1,
-		'pos_type' => 'senior'),
-	array(
-		'pos_name' => 'Lab Technician',
-		'pos_desc' => "Lab techs are famous for running tests, tests and more tests. Technicians set up, operate, and maintain laboratory instruments, monitor experiments, make observations, calculate and record results, and often develop conclusions.",
-		'pos_dept' => 2,
-		'pos_order' => 1,
-		'pos_open' => 8,
-		'pos_type' => 'officer'),
-	array(
-		'pos_name' => 'Medical Orderly',
-		'pos_desc' => "A medical orderly or orderly is a hospital attendant whose job consists of assisting medical and/or nursing staff with various nursing and/or medical interventions. These duties are classified as routine tasks involving no risk for the patient. Orderlies are often utilized in various hospital departments. Orderly duties can range in scope depending on the area of the health care facility they are employed. For that reason, duties can range from assisting in the physical restraint of combative patients, assisting physicians with the application of casts, transporting patients, shaving patients and providing other similar routine personal care to setting up specialized hospital equipment such as bed traction arrays.",
-		'pos_dept' => 2,
-		'pos_order' => 2,
-		'pos_open' => 8,
-		'pos_type' => 'officer'),
-	array(
-		'pos_name' => 'Nurse',
-		'pos_desc' => "A nurse is responsible for the treatment, safety, and recovery of acutely or chronically ill/injured people, health maintenance of the healthy, and treatment of life-threatening emergencies in a wide range of health care settings. Nurses may also be involved in medical and nursing research and perform a wide range of non-clinical functions necessary to the delivery of health care. Nurses also provide care at birth and death.",
-		'pos_dept' => 2,
-		'pos_order' => 3,
-		'pos_open' => 8,
-		'pos_type' => 'officer'),
-		
-	array(
-		'pos_name' => 'Corps of Engineers Lead',
-		'pos_desc' => "The Corp of Engineers lead is responsible for maintaining all base systems, equipment, and of course the plumbing. If something's broken on base, he/she usually knows about it and can assign a person to fix the problem ASAP.",
+		'pos_name' => 'Chief of Linguistics',
+		'pos_desc' => "A person who speaks more than one language.  Most linguists specialize in languages.  The Linguist some times does more than English and one other languages. In addition, they are in charge of the department and reports to the Executive Officer.  Is a member of the Senior Staff.",
 		'pos_dept' => 3,
 		'pos_order' => 0,
 		'pos_open' => 1,
 		'pos_type' => 'senior'),
 	array(
-		'pos_name' => 'Stargate Technician',
-		'pos_desc' => "The stargate technician is the one reason that the stargate continues to function so well, constantly monitoring power consumption and looking for any errors that may occur during gate use. The techs are also responsible for maintaining the base computer systems as a whole, and the other mechanical equipment present.",
+		'pos_name' => 'Assistant Chief of Linguistics',
+		'pos_desc' => "A person who speaks more than one language.  Most linguists specialize in languages.  The Linguist some times does more than English and one other languages. Also assists the Department head in daily operations.  If the Chief of the department is for some reason not able to perform his/her duties the Assistant Chief steps forwards as Acting Chief until the Chief returns.",
 		'pos_dept' => 3,
 		'pos_order' => 1,
-		'pos_open' => 4,
+		'pos_open' => 1,
 		'pos_type' => 'officer'),
 	array(
-		'pos_name' => 'Electrical Engineer',
-		'pos_desc' => "The gate uses a lot of power, and it uses the ever increasingly sized Naquadah generators that Colonel Carter started way back when, so be careful, besides, someone has to make sure the lights stay on.",
+		'pos_name' => 'Linguist',
+		'pos_desc' => "A person who speaks more than one language.  Most linguists specialize in languages.  The Linguist some times does more than English and one other languages.",
 		'pos_dept' => 3,
 		'pos_order' => 2,
-		'pos_open' => 8,
+		'pos_open' => 5,
+		'pos_type' => 'officer'),
+	
+	array(
+		'pos_name' => 'Chief of Engineering',
+		'pos_desc' => "In charge of the department and reports to the Executive Officer.  Is a member of the Senior Staff.",
+		'pos_dept' => 4,
+		'pos_order' => 0,
+		'pos_open' => 1,
+		'pos_type' => 'senior'),
+	array(
+		'pos_name' => 'Assistant Chief of Engineering',
+		'pos_desc' => "Assists the Department head in daily operations.  If the Chief of the department is for some reason not able to perform his/her duties the Assistant Chief steps forwards as Acting Chief until the Chiefs return.",
+		'pos_dept' => 4,
+		'pos_order' => 1,
+		'pos_open' => 1,
 		'pos_type' => 'officer'),
 	array(
-		'pos_name' => 'Robotics Engineer',
-		'pos_desc' => "MALPS, UAV's, MAT's, FRED's, if it's unmanned and robotic you know how to break it, find out what you did to break it, and fix it again in a jiffy.",
-		'pos_dept' => 3,
+		'pos_name' => 'Chief of the Deck',
+		'pos_desc' => "The Chief of the deck is in charge of the deck crew.  He reports to the Chief of Engineering.",
+		'pos_dept' => 4,
+		'pos_order' => 2,
+		'pos_open' => 1,
+		'pos_type' => 'officer'),
+	array(
+		'pos_name' => 'Engineering Specialist',
+		'pos_desc' => "",
+		'pos_dept' => 4,
 		'pos_order' => 3,
-		'pos_open' => 8,
+		'pos_open' => 5,
 		'pos_type' => 'officer'),
 	array(
-		'pos_name' => 'Munitions Engineer',
-		'pos_desc' => "You know all those firearms and explosives that are stored in the armory? It's your job to make sure it all works the way it's supposed to.",
-		'pos_dept' => 3,
+		'pos_name' => 'Deck Crew',
+		'pos_desc' => "A Deck crew member is your grease monkey.  They maintain, test, and check the Jumpers.",
+		'pos_dept' => 4,
 		'pos_order' => 4,
-		'pos_open' => 8,
+		'pos_open' => 5,
+		'pos_type' => 'enlisted'),
+	array(
+		'pos_name' => 'Stargate Specialist',
+		'pos_desc' => "A Stargate Specialist knows how to maintain and test the Stargate.  If the Stargate is not working they know the best means of trouble shooting.",
+		'pos_dept' => 4,
+		'pos_order' => 5,
+		'pos_open' => 5,
+		'pos_type' => 'officer'),
+	array(
+		'pos_name' => 'DHD Specialist',
+		'pos_desc' => "The Dialer for the Stargate, the DHD is an ancient system that the humans rebuilt and made current to computers.  The DHD specialist knows how to troubleshoot and dial the DHD.",
+		'pos_dept' => 4,
+		'pos_order' => 6,
+		'pos_open' => 5,
+		'pos_type' => 'officer'),
+	array(
+		'pos_name' => 'UAV/MALP Specialist',
+		'pos_desc' => "Before Stargate will send a team through they will send in a UAV (Unmanned Aerial Vehicle) or a MALP (Mobile Analytic Laboratory Probe) a wheeled robot.  The Specialist sends the device in and collects data and Intelligence for the team to use.",
+		'pos_dept' => 4,
+		'pos_order' => 7,
+		'pos_open' => 5,
+		'pos_type' => 'officer'),
+	array(
+		'pos_name' => 'Communications Specialist',
+		'pos_desc' => "Responsible for all communication equipment the Communications Specialist can travel with the team or stay on base.  They report to the front lines of the field and can send information to the team and vise versa.",
+		'pos_dept' => 4,
+		'pos_order' => 8,
+		'pos_open' => 5,
 		'pos_type' => 'officer'),
 		
 	array(
-		'pos_name' => 'Lead R&amp;D Officer',
-		'pos_desc' => "Typically a Captain or Major, the Leading R&amp;D Officer is responsible for inspecting new technologies and assessing use within the Stargate Program.",
-		'pos_dept' => 4,
+		'pos_name' => 'Chief of Science',
+		'pos_desc' => "In charge of the department and reports to the Executive Officer.  Is a member of the Senior Staff.",
+		'pos_dept' => 5,
 		'pos_order' => 0,
 		'pos_open' => 1,
 		'pos_type' => 'senior'),
 	array(
-		'pos_name' => 'Assistant R&amp;D Officer',
-		'pos_desc' => "The Assistant R&amp;D Officer is the man to go to when the Lead man (or woman) is off duty, they usually have an extensive engineering background, just not as extensive as their boss. Usually 1st or 2nd Lieutenant (or equivalent).",
-		'pos_dept' => 4,
-		'pos_order' => 1,
-		'pos_open' => 2,
-		'pos_type' => 'officer'),
-	array(
-		'pos_name' => 'Alien Technologies Specialist',
-		'pos_desc' => "The ATS is responsible for maintaining and testing all alien technologies, reverse engineering and analyzing all technology, and also able to perform repairs in the field.",
-		'pos_dept' => 4,
-		'pos_order' => 2,
-		'pos_open' => 8,
-		'pos_type' => 'officer'),
-		
-	array(
-		'pos_name' => 'Team Commander',
-		'pos_desc' => "The team commander is the highest authority in the field and makes all operational and command decisions, team commanders typically select their team from a list of available candidates and are responsible for maintaining that teams readiness and training.",
+		'pos_name' => 'Assistant Chief of Science',
+		'pos_desc' => "Assists the Department head in daily operations.  If the Chief of the department is for some reason not able to perform his/her duties the Assistant Chief steps forwards as Acting Chief until the Chief returns.",
 		'pos_dept' => 5,
-		'pos_order' => 0,
+		'pos_order' => 1,
 		'pos_open' => 1,
-		'pos_type' => 'senior'),
-	array(
-		'pos_name' => 'Weapons Officer',
-		'pos_desc' => "The weapons officer is an expert in almost every single weapon fieldable by the base, and if he's not an expert he at least knows how to use it. This often includes explosives of various kinds as well marksman training. Every team typically has one Weapons Officer, maybe more if the situation calls for it.",
-		'pos_dept' => 5,
-		'pos_order' => 1,
-		'pos_open' => 4,
 		'pos_type' => 'officer'),
 	array(
-		'pos_name' => 'Cultural Specialist',
-		'pos_desc' => "The cultural specialist is the one position on the off world team that is usually filled by an individual not a part of the military. These members typically have aphd in their chosen 'field' and can typically speak a language or few more than their native fluently. They can often be the greatest asset on an exploration mission and during first contact scenarios.",
+		'pos_name' => 'Botanist',
+		'pos_desc' => "Specializing in the study of plants the Botanist catalogs data of off world plants as with studies plants.",
 		'pos_dept' => 5,
 		'pos_order' => 2,
-		'pos_open' => 4,
+		'pos_open' => 5,
 		'pos_type' => 'officer'),
 	array(
-		'pos_name' => 'Mission Specialist',
-		'pos_desc' => "The mission specialist is typically a filler for the team, they need someone who knows the inner workings of a computer system they bring along a computer specialist, if they need to have a cave blasted into then they call upon demo experts. This position is usually filled by a member of the military, and is specific to the duty the team needs performed.",
+		'pos_name' => 'Geologist',
+		'pos_desc' => "Studies the liquid and matter that makes up off world planets.",
 		'pos_dept' => 5,
 		'pos_order' => 3,
-		'pos_open' => 4,
+		'pos_open' => 5,
+		'pos_type' => 'officer'),
+	array(
+		'pos_name' => 'Astrophysicist',
+		'pos_desc' => "They look up towards the stars. These specialist look at start maps and charts and try to figure out new places to travel.  They also keep the catalog up to date on past visited planets.",
+		'pos_dept' => 5,
+		'pos_order' => 4,
+		'pos_open' => 5,
+		'pos_type' => 'officer'),
+		
+	array(
+		'pos_name' => 'Chief of Medical',
+		'pos_desc' => "In charge of the department and reports to the Executive Officer.  Is a member of the Senior Staff.",
+		'pos_dept' => 6,
+		'pos_order' => 0,
+		'pos_open' => 1,
+		'pos_type' => 'senior'),
+	array(
+		'pos_name' => 'Assistant Chief of Medical',
+		'pos_desc' => "Assists the Department head in daily operations.  If the Chief of the department is for some reason not able to perform his/her duties the Assistant Chief steps forwards as Acting Chief until the Chief returns.",
+		'pos_dept' => 6,
+		'pos_order' => 1,
+		'pos_open' => 1,
+		'pos_type' => 'officer'),
+	array(
+		'pos_name' => 'Physician',
+		'pos_desc' => "The Physician stays on the base in the infirmary and assists the Chief of Medical and the Assistant Chief.",
+		'pos_dept' => 6,
+		'pos_order' => 2,
+		'pos_open' => 5,
+		'pos_type' => 'officer'),
+	array(
+		'pos_name' => 'Field Medic',
+		'pos_desc' => "Travels out into the field with the Stargate Teams.  The Field Medic is the expert in Emergency Medicine.",
+		'pos_dept' => 6,
+		'pos_order' => 3,
+		'pos_open' => 5,
+		'pos_type' => 'officer'),
+		
+	array(
+		'pos_name' => 'Chief of Diplomatics',
+		'pos_desc' => "In charge of the department and reports to the Executive Officer.  Is a member of the Senior Staff.",
+		'pos_dept' => 7,
+		'pos_order' => 0,
+		'pos_open' => 1,
+		'pos_type' => 'senior'),
+	array(
+		'pos_name' => 'Assistant Chief of Diplomatics',
+		'pos_desc' => "Assists the Department head in daily operations.  If the Chief of the department is for some reason not able to perform his/her duties the Assistant Chief steps forwards as Acting Chief until the Chief returns.",
+		'pos_dept' => 7,
+		'pos_order' => 1,
+		'pos_open' => 1,
+		'pos_type' => 'officer'),
+	array(
+		'pos_name' => 'Base Diplomatic Liaison',
+		'pos_desc' => "The Base Diplomatic Liaison is a consultant for cultures coming to Earth. Base Diplomatic Liaisons consult with the American and other foreign countries to Earth.",
+		'pos_dept' => 7,
+		'pos_order' => 2,
+		'pos_open' => 5,
+		'pos_type' => 'other'),
+	array(
+		'pos_name' => 'Off World Diplomatic Liaison',
+		'pos_desc' => "Representing Earth and Humans the Off world Diplomatic Liaison represents the team in a positive light.",
+		'pos_dept' => 7,
+		'pos_order' => 3,
+		'pos_open' => 5,
+		'pos_type' => 'other'),
+		
+	array(
+		'pos_name' => 'Squadron Leader',
+		'pos_desc' => "Is leader of the Jumper Squadron Air lift team. Reports to the Executive Officer. Is a member of the Senior Staff.",
+		'pos_dept' => 8,
+		'pos_order' => 0,
+		'pos_open' => 1,
+		'pos_type' => 'senior'),
+	array(
+		'pos_name' => 'Squadron Pilot',
+		'pos_desc' => "A member of the Jumper Squadron. The Jumper pilot reports the Squadron Leader.",
+		'pos_dept' => 8,
+		'pos_order' => 1,
+		'pos_open' => 6,
+		'pos_type' => 'officer'),
+		
+	array(
+		'pos_name' => 'Chief of Military',
+		'pos_desc' => "In charge of the department and reports to the Executive Officer. Is a member of the Senior Staff.",
+		'pos_dept' => 9,
+		'pos_order' => 0,
+		'pos_open' => 1,
+		'pos_type' => 'senior'),
+	array(
+		'pos_name' => 'Assistant Chief of Military',
+		'pos_desc' => "Assists the Department head in daily operations. If the Chief of the department is for some reason not able to perform his/her duties the Assistant Chief steps forwards as Acting Chief until the Chiefs return.",
+		'pos_dept' => 9,
+		'pos_order' => 1,
+		'pos_open' => 1,
+		'pos_type' => 'officer'),
+	array(
+		'pos_name' => 'Weapons Specialist',
+		'pos_desc' => "The Weapons Specialist is the master of all weapons, US and foreign, and off world. They train in small and heavy weapons and assist others in weapons training.",
+		'pos_dept' => 9,
+		'pos_order' => 2,
+		'pos_open' => 5,
+		'pos_type' => 'officer'),
+	array(
+		'pos_name' => 'Engineering Specialist',
+		'pos_desc' => "A very crucial member of the team is the Engineering Specialist is your demolitions man. Able to do land and underwater demolitions and navigation as with fortification and sabotage.",
+		'pos_dept' => 9,
+		'pos_order' => 3,
+		'pos_open' => 5,
+		'pos_type' => 'officer'),
+	array(
+		'pos_name' => 'Infiltration Specialist',
+		'pos_desc' => "When you need to get in undetected the Infiltration can get him/herself and the team in. Sometimes the Infiltration specialist works alone and done specialized mission. While they can get in they can get out as well.  Expert in rescue operations as well s/he can get in and out of any area.",
+		'pos_dept' => 9,
+		'pos_order' => 4,
+		'pos_open' => 5,
 		'pos_type' => 'officer'),
 );
 
@@ -221,37 +367,6 @@ $catalogue_ranks = array(
 		'rankcat_credits' => "The Stargate ranks used in Nova are the US Military sets created by James Arnhem. The rankset can be found at <a href='http://www.kuro-rpg.net' target='_blank'>Kuro-RPG</a>. Please do not copy or modify the images.",
 		'rankcat_default' => 'y',
 		'rankcat_url' => 'http://www.kuro-rpg.net/')
-);
-
-$characters = array(
-	array(
-		'user' => 1,
-		'first_name' => 'Cameron',
-		'last_name' => 'Mitchell',
-		'position_1' => 1,
-		'rank' => 1,
-		'date_activate' => now()),
-	array(
-		'user' => 2,
-		'first_name' => 'Samantha',
-		'last_name' => 'Carter',
-		'position_1' => 2,
-		'rank' => 4,
-		'date_activate' => now()),
-	array(
-		'user' => 2,
-		'first_name' => 'Daniel',
-		'last_name' => 'Jackson',
-		'position_1' => 9,
-		'rank' => 5,
-		'date_activate' => now()),
-	array(
-		'user' => 1,
-		'first_name' => 'Hank',
-		'last_name' => 'Landry',
-		'position_1' => 10,
-		'rank' => 6,
-		'date_activate' => now())
 );
 
 /* End of file install_data_sg1.php */
