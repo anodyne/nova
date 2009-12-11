@@ -1,3 +1,10 @@
+12.11.2009
+
+* updated the stargate atlantis genre
+* updated the stargate sg-1 genre
+
+==========
+
 12.10.2009
 
 * updated the index file to set the default timezone if nothing is set (fixes a PHP 5.3 issue with CI)
