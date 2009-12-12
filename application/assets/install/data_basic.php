@@ -2213,7 +2213,7 @@ $system_components = array(
 		'comp_url' => 'http://www.williamsconcepts.com/ci/codeigniter/libraries/template/index.html'),
 	array(
 		'comp_name' => 'SimplePie',
-		'comp_version' => '1.2',
+		'comp_version' => '1.2.1-dev',
 		'comp_desc' => "SimplePie is a very fast and easy-to-use class, written in PHP, that puts the 'simple' back into 'really simple syndication'. Flexible enough to suit beginners and veterans alike, SimplePie is focused on speed, ease of use, compatibility and standards compliance.",
 		'comp_url' => 'http://www.simplepie.org/'),
 	array(
