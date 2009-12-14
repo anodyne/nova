@@ -165,6 +165,140 @@ class User_panel {
 		
 		return $content;
 	}
+	
+	function workflow_dashboard($text = TRUE, $content = '')
+	{
+		$output = '<a href="#" id="userpanel" title="'. ucfirst(lang('labels_dashboard')) .'"><span>';
+		
+		if (!empty($content))
+		{
+			$output.= $content;
+		}
+		elseif (empty($content) && $text === TRUE)
+		{
+			$output.= ucfirst(lang('labels_dashboard'));
+		}
+		
+		$output.= '</span></a>';
+
+		return $output;
+	}
+	
+	function workflow_inbox($icon = TRUE, $text = TRUE, $count = TRUE, $count_dec = '(x)', $content = '')
+	{
+		$this->ci =& get_instance();
+		
+		/* load the resources */
+		$this->ci->load->model('privmsgs_model', 'pm');
+		
+		$unread = $this->ci->pm->count_unread_pms($this->ci->session->userdata('userid'));
+		
+		$icons = array(
+			'green' => array(
+				'src' => asset_location('images', 'icon-green.png'),
+				'alt' => '',
+				'class' => 'image'),
+			'gray' => array(
+				'src' => asset_location('images', 'icon-gray.png'),
+				'alt' => '',
+				'class' => 'image'),
+		);
+		
+		$output = '<a href="'. site_url('messages/index') .'" title="'. ucfirst(lang('labels_inbox')) .'"><span>';
+		
+		if ($icon === TRUE)
+		{
+			if ($unread > 0)
+			{
+				$output.= img($icons['green']);
+			}
+			else
+			{
+				$output.= img($icons['gray']);
+			}
+		}
+		
+		if (!empty($content))
+		{
+			$output.= ' '. $content;
+		}
+		elseif (empty($content) && $text === TRUE)
+		{
+			$output.= ' '. ucfirst(lang('labels_inbox'));
+		}
+		
+		if ($count === TRUE && $unread > 0)
+		{
+			$string = str_replace('x', $unread, $count_dec);
+			$output.= ' '. $string;
+		}
+		
+		$output.= '</span></a>';
+		
+		return $output;
+	}
+	
+	function workflow_writing($icon = TRUE, $text = TRUE, $count = TRUE, $count_dec = '(x)', $content = '')
+	{
+		$this->ci =& get_instance();
+		
+		/* load the resources */
+		$this->ci->load->model('posts_model', 'posts');
+		$this->ci->load->model('personallogs_model', 'logs');
+		$this->ci->load->model('news_model', 'news');
+		
+		$icons = array(
+			'green' => array(
+				'src' => asset_location('images', 'icon-green.png'),
+				'alt' => '',
+				'class' => 'image'),
+			'gray' => array(
+				'src' => asset_location('images', 'icon-gray.png'),
+				'alt' => '',
+				'class' => 'image'),
+			'yellow' => array(
+				'src' => asset_location('images', 'icon-yellow.png'),
+				'alt' => '',
+				'class' => 'image'),
+		);
+		
+		$unreadjp = $this->ci->posts->count_unattended_posts($this->ci->session->userdata('characters'));
+		
+		$posts = $this->ci->posts->count_character_posts($this->ci->session->userdata('characters'), 'saved');
+		$logs = $this->ci->logs->count_user_logs($this->ci->session->userdata('userid'), 'saved');
+		$news = $this->ci->news->count_user_news($this->ci->session->userdata('userid'), 'saved');
+		
+		$saveditems = $posts + $logs + $news;
+		
+		$output = '<a href="'. site_url('write/index') .'" title="'. ucwords(lang('labels_writing') .' '. lang('labels_entries')) .'"><span>';
+		
+		if ($icon === TRUE)
+		{
+			$icon_status = ($saveditems > 0) ? 'yellow' : 'gray';
+			$icon_status = ($unreadjp > 0) ? 'green' : $icon_status;
+			
+			$output.= img($icons[$icon_status]);
+		}
+		
+		if (!empty($content))
+		{
+			$output.= ' '. $content;
+		}
+		elseif (empty($content) && $text === TRUE)
+		{
+			$output.= ' '. ucwords(lang('labels_writing') .' '. lang('labels_entries'));
+		}
+		
+		if ($count === TRUE && $saveditems > 0)
+		{
+			$string = str_replace('x', $unread, $count_dec);
+			$output.= ' '. $string;
+		}
+		
+		$output.= '</span></a>';
+		
+		return $output;
+	}
 }
 
 /* End of file User_panel.php */
