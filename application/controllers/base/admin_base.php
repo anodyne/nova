@@ -358,6 +358,8 @@ class Admin_base extends Controller {
 		|---------------------------------------------------------------
 		*/
 		
+		$data['update'] = FALSE;
+		
 		if ($this->auth->is_sysadmin($this->session->userdata('userid')))
 		{
 			/* load the install file */
