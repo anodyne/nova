@@ -11,9 +11,17 @@
 */
 
 $hook['post_controller_constructor'][] = array(
-	'class'		=> 'Maintenance',
-	'function'	=> 'main',
-	'filename'	=> 'Maintenance.php',
+	'class'		=> 'Utility',
+	'function'	=> 'browser',
+	'filename'	=> 'Utility.php',
+	'filepath'	=> 'hooks',
+	'params'	=> ''
+);
+
+$hook['post_controller_constructor'][] = array(
+	'class'		=> 'Utility',
+	'function'	=> 'maintenance',
+	'filename'	=> 'Utility.php',
 	'filepath'	=> 'hooks',
 	'params'	=> ''
 );
