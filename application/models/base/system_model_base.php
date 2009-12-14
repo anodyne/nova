@@ -445,10 +445,15 @@ class System_model_base extends Model {
 		return $query;
 	}
 	
-	function update_my_links($status = 'active')
+	function update_my_links($id = '', $status = 'active')
 	{
 		/* sets the default to Site Options link */
 		$update = array('my_links' => '75');
+		
+		if (!empty($id))
+		{
+			$this->db->where('userid', $id);
+		}
 		
 		if (!empty($status))
 		{
