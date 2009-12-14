@@ -396,13 +396,11 @@ class Main_base extends Controller {
 					$users = $this->user->create_user($user_array);
 					$user_id = $this->db->insert_id();
 					$prefs = $this->user->create_user_prefs($user_id);
-					
-					/* optimize the table */
-					$this->sys->optimize_table('users');
+					$my_links = $this->sys->update_my_links($user_id);
 				}
 				
 				/* set the user id */
-				$user = (!isset($user_id)) ? $check_user : $user_id;
+				$user = ($check_user === FALSE) ? $user_id : $check_user;
 				
 				/* build the characters data array */
 				$character_array = array(
@@ -419,8 +417,16 @@ class Main_base extends Controller {
 				$character = $this->char->create_character($character_array);
 				$character_id = $this->db->insert_id();
 				
-				/* optimize the table */
+				/* update the main character if this is their first app */
+				if ($check_user === FALSE)
+				{
+					$main_char = array('main_char' => $character_id);
+					$update_main = $this->user->update_user($user, $main_char);
+				}
+				
+				/* optimize the tables */
 				$this->sys->optimize_table('characters');
+				$this->sys->optimize_table('users');
 				
 				$name = array($first_name, $middle_name, $last_name, $suffix);
 				
