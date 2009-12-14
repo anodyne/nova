@@ -41,6 +41,15 @@ $link = array(
 	'charset'	=> 'utf-8'
 );
 
+$panel = array(
+	'inbox' => array(
+		'src' => APPFOLDER .'/views/'. $current_skin .'/'. $sec .'/images/panel-mail.png'),
+	'writing' => array(
+		'src' => APPFOLDER .'/views/'. $current_skin .'/'. $sec .'/images/panel-writing.png'),
+	'dashboard' => array(
+		'src' => APPFOLDER .'/views/'. $current_skin .'/'. $sec .'/images/panel-dashboard.png'),
+);
+
 echo "<?xml version='1.0' encoding='UTF-8'?>\r\n";
 
 ?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
@@ -63,60 +72,70 @@ echo "<?xml version='1.0' encoding='UTF-8'?>\r\n";
 		<?php include_once($this->config->item('include_head_main')); ?>
 		
 		<?php echo $javascript;?>
+		
+		<script type="text/javascript">
+			$(document).ready(function(){
+				$('a.go-button-click').click(function(){
+					$('.go-button-click').toggleClass('active');
+					$('.nav-main').toggleClass('hidden');
+					return false;
+				});
+			});
+			
+			/* if the escape key is pressed, close the menu */
+			$(document).keyup(function(event){
+				if (event.keyCode == 27) {
+					$('.go-button-click').removeClass('active');
+					$('.nav-main').addClass('hidden');
+				}
+			});
+		</script>
 	</head>
 	<body>
-		<noscript>
-			<span class="UITheme">
-				<div class="system_warning ui-state-error"><?php echo lang_output('text_javascript_off', '');?></div>
-			</span>
-		</noscript>
-		
-		<?php if ($this->session->userdata('userid') !== FALSE): ?>
-			<!-- USER PANEL -->
-			<div id="panel" class="UITheme">
-				<div class="panel-body">
-					<div class="wrapper">
-						<table class="table100">
-							<tbody>
-								<tr>
-									<td class="panel_1 align_top"><?php echo $panel_1;?></td>
-									<td class="panel_spacer"></td>
-									<td class="panel_2 align_top"><?php echo $panel_2;?></td>
-									<td class="panel_spacer"></td>
-									<td class="panel_3 align_top"><?php echo $panel_3;?></td>
-								</tr>
-							</tbody>
-						</table>
+		<div id="wrap">
+			<noscript>
+				<span class="UITheme">
+					<div class="system_warning ui-state-error"><?php echo lang_output('text_javascript_off', '');?></div>
+				</span>
+			</noscript>
+			
+			<?php if ($this->auth->is_logged_in()): ?>
+				<!-- USER PANEL -->
+				<div id="panel">
+					<div class="panel-body">
+						<div class="wrapper">
+							<table class="table100">
+								<tbody>
+									<tr>
+										<td class="panel_1 align_top"><?php echo $panel_1;?></td>
+										<td class="panel_spacer"></td>
+										<td class="panel_2 align_top"><?php echo $panel_2;?></td>
+										<td class="panel_spacer"></td>
+										<td class="panel_3 align_top"><?php echo $panel_3;?></td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
 					</div>
 				</div>
-				<div class="panel-handle ui-state-default">
-					<div class="wrapper">
-						<?php echo $panel_workflow;?>
+			<?php endif; ?>
+			
+			<div id="header">
+				<div class="wrapper">
+					<div class="go">
+						<div class="go-button"><a href="#" class="go-button-click"><?php echo strtoupper(APP_NAME);?></a></div>
+						<div class="nav-main hidden"><?php echo $nav_main;?></div>
 					</div>
+					<div style="float:right">
+						<?php echo $this->user_panel->workflow_inbox(TRUE, TRUE, FALSE, '(x)', img($panel['inbox']));?> &nbsp;&nbsp;
+						<?php echo $this->user_panel->workflow_writing(TRUE, TRUE, FALSE, '(x)', img($panel['writing']));?> &nbsp;&nbsp;
+						<?php echo $this->user_panel->workflow_dashboard(FALSE, img($panel['dashboard']));?>
+					</div>
+					<?php echo $title;?>
 				</div>
 			</div>
-		<?php endif; ?>
 		
-		<!-- HEAD -->
-		<div id="head">
-			<div class="wrapper">
-				<div class="head_content">
-					<?php echo img(APPFOLDER .'/views/'. $current_skin .'/'. $sec .'/images/head_logo.png', FALSE);?>
-				</div>
-			</div>
-		</div>
-		
-		<div class="wrapper">
-			<div id="menu">
-				<div class="nav-main">
-					<?php echo $nav_main;?>
-				</div>
-			</div>
-		</div>
-		
-		<!-- BODY -->
-		<div id="body">
-			<div class="wrapper">
+			<div id="body" class="wrapper clearfix">
 				<!-- SUB NAVIGATION -->
 				<div class="nav-sub">
 					<?php echo $nav_sub;?>
@@ -134,11 +153,9 @@ echo "<?xml version='1.0' encoding='UTF-8'?>\r\n";
 		</div>
 		
 		<!-- FOOTER -->
-		<div class="wrapper">
-			<div id="footer">
-				Powered by <strong><?php echo APP_NAME;?></strong> from <a href="http://www.anodyne-productions.com" target="_blank">Anodyne Productions</a> | 
+		<div id="footer">
+			Powered by <strong><?php echo APP_NAME;?></strong> from <a href="http://www.anodyne-productions.com" target="_blank">Anodyne Productions</a> | 
 			<?php echo anchor('main/credits', 'Site Credits');?>
-			</div>
 		</div>
 	</body>
 </html>

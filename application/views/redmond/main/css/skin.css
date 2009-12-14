@@ -3,11 +3,14 @@
 | MASTER BODY STYLES
 |---------------------------------------------------------------
 */
+html, body, #wrap { height: 100%; }
+
 body {
 	margin: 0;
 	padding: 0;
 	
-	background: #678fc2;
+	/*background: #678fc2;*/
+	background: #fafafa url('../images/body-bg.jpg') repeat-x 0 0;
 	color: #363636;
 	font: 75%/1.5 "lucida grande", verdana, arial, sans-serif;
 	text-align: center;
@@ -19,10 +22,17 @@ body {
 |---------------------------------------------------------------
 */
 .wrapper {
-	width: 960px;
+	width: 70%;
 	margin: 0 auto;
 	
 	text-align: left;
+}
+
+#body { padding-bottom: 35px; }
+
+body > #wrap {
+	height: auto;
+	min-height: 100%;
 }
 
 /*
@@ -30,24 +40,17 @@ body {
 | HEAD STYLES
 |---------------------------------------------------------------
 */
-#head {
+#header {
 	margin: 0;
 	padding: 0;
-	height: auto;
-}
-#head .head_content {
-	margin: 20px 0 0 0;
-	padding: 7px 0 0 30px;
+	height: 35px;
+	line-height: 35px;
 	
+	background: #216e9a;
+	color: #eee;
 	font-weight: bold;
-	border: 1px solid #c5dbec;
-	border-bottom: none;
-	background: #d0e5f5;
-	
-	-moz-border-radius-topleft: 30px;
-	-moz-border-radius-topright: 5px;
-	-webkit-border-top-left-radius: 30px;
-	-webkit-border-top-right-radius: 5px;
+	border-bottom: 1px solid #111;
+	border-bottom: 1px solid rgba(0, 0, 0, .4);
 }
 
 /*
@@ -55,43 +58,76 @@ body {
 | MENU STYLES
 |---------------------------------------------------------------
 */
-#menu {
-	height: 30px;
-	line-height: 30px;
-	
-	background: #dfeffc url('../images/gradient-50-bg.png') repeat-x 0 0;
-	border: 1px solid #c5dbec;
-	font-size: 95%;
+.go {
+	float: left;
+	margin: 0 25px 0 0;
 }
-#menu .nav-main {}
-#menu .nav-main ul {
-	margin: 0 5px;
-	padding: 0;
+.go-button a {
+	padding: 4px 10px 9px 10px;
+	
+	color: #fff;
+	border: 1px solid transparent;
+	
+	border-radius: 6px 6px 0 0;
+	-moz-border-radius: 6px 6px 0 0;
+	-webkit-border-radius: 6px 6px 0 0;
+}
+.go-button a:hover, .go-button a.active {
+	background: #fff;
+	background: rgba(255, 255, 255, .9);
+	color: #000;
+	border: 1px solid #5b7782;
+}
+
+.nav-main {
+	position: absolute;
+	width: 250px;
+	z-index: 1000;
+	float: left;
+	
+	background: #fff;
+	border-bottom: 1px solid #5b7782;
+	border-left: 1px solid #5b7782;
+	border-right: 1px solid #5b7782;
+	
+	border-radius: 0 0 6px 6px;
+	-moz-border-radius: 0 0 6px 6px;
+	-webkit-border-radius: 0 0 6px 6px;
+	
+	box-shadow: 2px 2px 5px rgba(0, 0, 0, .5);
+	-moz-box-shadow: 2px 2px 5px rgba(0, 0, 0, .5);
+	-webkit-box-shadow: 2px 2px 5px rgba(0, 0, 0, .5);
+}
+.nav-main ul {
+	margin: 0;
+	padding: 4px 0;
 	
 	list-style-type: none;
 }
-#menu .nav-main ul li {
-	float: left;
-	margin: 0 2px;
-	padding: 0;
+.nav-main ul li {
+	margin: 0 0 2px 0;
+	padding: 0 5px;
 }
-#menu .nav-main ul li a {
+.nav-main ul li a {
 	display: block;
+	margin: 0;
+	padding: 0;
 	
 	text-decoration: none;
-	color: #2e6e9e;
+	color: #3d3c5b;
 	font-weight: bold;
-	border-left: 1px solid transparent;
-	border-right: 1px solid transparent;
-	border-bottom: none;
+	border: 1px solid transparent;
+	
+	border-radius: 3px;
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
 }
-#menu .nav-main ul li a span { padding: 12px; }
-#menu .nav-main ul li a:hover,
-#menu .nav-main ul li a.active {
-	background: #d0e5f5 url('../images/gradient-50-bg.png') repeat-x 0 0;
-	border-left: 1px solid #79b7e7;
-	border-right: 1px solid #79b7e7;
+.nav-main ul li a span { padding: 12px; }
+.nav-main ul li a:hover,
+.nav-main ul li a.active {
+	background: #d0e5f5 url('../images/gradient-soft.png') repeat-x 0 0;
 	color: #1d5987;
+	border: 1px solid #79b7e7;
 }
 
 /*
@@ -99,19 +135,13 @@ body {
 | BODY STYLES
 |---------------------------------------------------------------
 */
-#body {}
-#body .wrapper {
-	min-height: 320px;
-	
-	background: #fcfdfd;
-}
+#body { position: relative; }
 
 .nav-sub {
 	width: 160px;
 	margin: 22px 0 10px 0;
-	float: left;
+	float: right;
 	
-	background: #fcfdfd;
 	font-size: 92%;
 }
 .nav-sub ul {
@@ -124,6 +154,8 @@ body {
 	padding: 0;
 	margin: 0;
 	line-height: 2;
+	
+	text-align: right;
 }
 .nav-sub ul li a {
 	display: block;
@@ -135,16 +167,14 @@ body {
 	border-left: none;
 	font-weight: bold;
 	
-	-moz-border-radius-topright: 5px;
-	-moz-border-radius-bottomright: 5px;
-	-webkit-border-top-right-radius: 5px;
-	-webkit-border-bottom-right-radius: 5px;
+	border-radius: 3px;
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
 }
 .nav-sub ul li a:hover {
 	color: #1d5987;
-	background: #d0e5f5 url('../images/gradient-50-bg.png') repeat-x 0 0;
+	background: #d0e5f5 url('../images/gradient-30-bg.png') repeat-x 0 0;
 	border: 1px solid #79b7e7;
-	border-left: none;
 }
 .nav-sub ul li a span { padding: 2px 7px; }
 .nav-sub ul li.spacer {
@@ -154,10 +184,19 @@ body {
 }
 
 .content {
-	margin-left: 180px;
+	margin-right: 180px;
 	line-height: 1.4;
 	padding: 8px 8px 0 0;
 }
+
+.clearfix:after {
+	content: ".";
+	display: block;
+	height: 0;
+	clear: both;
+	visibility: hidden;
+}
+.clearfix { display: inline-block; }
 
 /*
 |---------------------------------------------------------------
@@ -165,20 +204,17 @@ body {
 |---------------------------------------------------------------
 */
 #footer {
-	padding: 1em 0;
+	position: relative;
+	margin-top: -35px;
+	height: 35px;
+	line-height: 35px;
 	clear: both;
-	line-height: 1.4;
 	
 	text-align: center;
 	font-size: 90%;
-	color: #79b7e7;
+	color: #888;
 	background: #f1f8fd;
-	border: 1px solid #c5dbec;
-	
-	-moz-border-radius-bottomleft: 5px;
-	-moz-border-radius-bottomright: 5px;
-	-webkit-border-bottom-left-radius: 5px;
-	-webkit-border-bottom-right-radius: 5px;
+	border-top: 1px solid #c5dbec;
 }
 
 /*
@@ -186,8 +222,8 @@ body {
 | FONT COLOR CLASSES
 |---------------------------------------------------------------
 */
-.page-head 		{ color: #6eac2c; }
-.page-subhead	{ color: #888; }
+.page-head 		{ color: #eb981e; }
+.page-subhead	{ color: #479338; }
 
 .gray	{ color: #777; }
 .red	{ color: #c00; }
@@ -411,28 +447,32 @@ hr {
 */
 .panel-handle a, .panel-handle a:hover {
 	text-decoration: none;
+	color: #eee;
 }
 .panel-handle a span {
 	border-left: 1px solid transparent;
 	border-right: 1px solid transparent;
 	font-weight: bold;
 }
+.panel-handle a:hover { border-bottom: 0; }
 .panel-handle a:hover span {
-	background: #d0e5f5 url(../images/ui-bg_glass_75_d0e5f5_1x400.png) 50% 50% repeat-x;
+	background: #d0e5f5;
+	background: rgba(255, 255, 255, .7);
 	color: #1d5987;
+	border-bottom: 1px solid #79b7e7;
 	border-left: 1px solid #79b7e7;
 	border-right: 1px solid #79b7e7;
 }
 
 #panel .panel-body {
-	background: #555 url('../images/panel-bg.png') repeat-x top left;
+	background: #216e9a url('../images/panel-bg.png') repeat-x top left;
 	color: #fff;
 }
 
 .panel-handle {
-	border-bottom: 1px solid #444;
 	text-align: center;
 	font-size: 85%;
+	background: #216e9a;
 }
 .panel-trigger span { text-align: center; }
 

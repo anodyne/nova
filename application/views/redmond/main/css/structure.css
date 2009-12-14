@@ -291,14 +291,17 @@ img { border: none; }
 }
 
 .panel-handle {
-	height: 22px;
+	height: 24px;
 	line-height: 22px;
 }
 
 .panel-trigger {
-	display: block;
+	display: inline;
 	float: right;
-	width: 115px;
+	/*min-width: 115px;
+	max-width: 115px;*/
+	width: auto;
+	padding: 0 1.5em !important;
 }
 
 #panel-handle-left { width: auto; }
