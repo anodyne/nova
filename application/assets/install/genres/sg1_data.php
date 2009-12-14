@@ -78,16 +78,366 @@ $depts = array(
 );
 
 $ranks= array(
-	/*
-		this rank needs to stay here as it protects against errors being thrown
-		in the event that someone's rank field gets blown away
-	*/
 	array(
-		'rank_name' => '',
-		'rank_short_name' => '',
-		'rank_image' => '',
+		'rank_name' => 'General',
+		'rank_short_name' => 'GEN',
+		'rank_image' => 'a-a4',
 		'rank_order' => 0,
-		'rank_class' => 0),
+		'rank_class' => 1),
+	array(
+		'rank_name' => 'General',
+		'rank_short_name' => 'GEN',
+		'rank_image' => 'm-a4',
+		'rank_order' => 0,
+		'rank_class' => 2),
+	array(
+		'rank_name' => 'General',
+		'rank_short_name' => 'GEN',
+		'rank_image' => 'af-a4',
+		'rank_order' => 0,
+		'rank_class' => 3),
+		
+	array(
+		'rank_name' => 'Lieutenant General',
+		'rank_short_name' => 'LTGEN',
+		'rank_image' => 'a-a3',
+		'rank_order' => 1,
+		'rank_class' => 1),
+	array(
+		'rank_name' => 'Lieutenant General',
+		'rank_short_name' => 'LTGEN',
+		'rank_image' => 'm-a3',
+		'rank_order' => 1,
+		'rank_class' => 2),
+	array(
+		'rank_name' => 'Lieutenant General',
+		'rank_short_name' => 'LTGEN',
+		'rank_image' => 'af-a3',
+		'rank_order' => 1,
+		'rank_class' => 3),
+		
+	array(
+		'rank_name' => 'Major General',
+		'rank_short_name' => 'MAJGEN',
+		'rank_image' => 'a-a2',
+		'rank_order' => 2,
+		'rank_class' => 1),
+	array(
+		'rank_name' => 'Major General',
+		'rank_short_name' => 'MAJGEN',
+		'rank_image' => 'm-a2',
+		'rank_order' => 2,
+		'rank_class' => 2),
+	array(
+		'rank_name' => 'Major General',
+		'rank_short_name' => 'MAJGEN',
+		'rank_image' => 'af-a2',
+		'rank_order' => 2,
+		'rank_class' => 3),
+		
+	array(
+		'rank_name' => 'Brigadier General',
+		'rank_short_name' => 'BRGGEN',
+		'rank_image' => 'a-a1',
+		'rank_order' => 3,
+		'rank_class' => 1),
+	array(
+		'rank_name' => 'Brigadier General',
+		'rank_short_name' => 'BRGGEN',
+		'rank_image' => 'm-a1',
+		'rank_order' => 3,
+		'rank_class' => 2),
+	array(
+		'rank_name' => 'Brigadier General',
+		'rank_short_name' => 'BRGGEN',
+		'rank_image' => 'af-a1',
+		'rank_order' => 3,
+		'rank_class' => 3),
+		
+	array(
+		'rank_name' => 'Colonel',
+		'rank_short_name' => 'COL',
+		'rank_image' => 'a-o6',
+		'rank_order' => 4,
+		'rank_class' => 1),
+	array(
+		'rank_name' => 'Colonel',
+		'rank_short_name' => 'COL',
+		'rank_image' => 'm-o6',
+		'rank_order' => 4,
+		'rank_class' => 2),
+	array(
+		'rank_name' => 'Colonel',
+		'rank_short_name' => 'COL',
+		'rank_image' => 'af-o6',
+		'rank_order' => 4,
+		'rank_class' => 3),
+		
+	array(
+		'rank_name' => 'Lieutenant Colonel',
+		'rank_short_name' => 'LTCOL',
+		'rank_image' => 'a-o5',
+		'rank_order' => 5,
+		'rank_class' => 1),
+	array(
+		'rank_name' => 'Lieutenant Colonel',
+		'rank_short_name' => 'LTCOL',
+		'rank_image' => 'm-o5',
+		'rank_order' => 5,
+		'rank_class' => 2),
+	array(
+		'rank_name' => 'Lieutenant Colonel',
+		'rank_short_name' => 'LTCOL',
+		'rank_image' => 'af-o5',
+		'rank_order' => 5,
+		'rank_class' => 3),
+		
+	array(
+		'rank_name' => 'Major',
+		'rank_short_name' => 'MAJ',
+		'rank_image' => 'a-o4',
+		'rank_order' => 6,
+		'rank_class' => 1),
+	array(
+		'rank_name' => 'Major',
+		'rank_short_name' => 'MAJ',
+		'rank_image' => 'm-o4',
+		'rank_order' => 6,
+		'rank_class' => 2),
+	array(
+		'rank_name' => 'Major',
+		'rank_short_name' => 'MAJ',
+		'rank_image' => 'af-o4',
+		'rank_order' => 6,
+		'rank_class' => 3),
+		
+	array(
+		'rank_name' => 'Captain',
+		'rank_short_name' => 'CAPT',
+		'rank_image' => 'a-o3',
+		'rank_order' => 7,
+		'rank_class' => 1),
+	array(
+		'rank_name' => 'Captain',
+		'rank_short_name' => 'CAPT',
+		'rank_image' => 'm-o3',
+		'rank_order' => 7,
+		'rank_class' => 2),
+	array(
+		'rank_name' => 'Captain',
+		'rank_short_name' => 'CAPT',
+		'rank_image' => 'af-o3',
+		'rank_order' => 7,
+		'rank_class' => 3),
+		
+	array(
+		'rank_name' => '1st Lieutenant',
+		'rank_short_name' => '1LT',
+		'rank_image' => 'a-o2',
+		'rank_order' => 8,
+		'rank_class' => 1),
+	array(
+		'rank_name' => '1st Lieutenant',
+		'rank_short_name' => '1LT',
+		'rank_image' => 'm-o2',
+		'rank_order' => 8,
+		'rank_class' => 2),
+	array(
+		'rank_name' => '1st Lieutenant',
+		'rank_short_name' => '1LT',
+		'rank_image' => 'af-o2',
+		'rank_order' => 8,
+		'rank_class' => 3),
+		
+	array(
+		'rank_name' => '2nd Lieutenant',
+		'rank_short_name' => '2LT',
+		'rank_image' => 'a-o1',
+		'rank_order' => 9,
+		'rank_class' => 1),
+	array(
+		'rank_name' => '2nd Lieutenant',
+		'rank_short_name' => '2LT',
+		'rank_image' => 'm-o1',
+		'rank_order' => 9,
+		'rank_class' => 2),
+	array(
+		'rank_name' => '2nd Lieutenant',
+		'rank_short_name' => '2LT',
+		'rank_image' => 'af-o1',
+		'rank_order' => 9,
+		'rank_class' => 3),
+		
+	array(
+		'rank_name' => 'Sergeant Major',
+		'rank_short_name' => 'SGTMAJ',
+		'rank_image' => 'a-e9',
+		'rank_order' => 10,
+		'rank_class' => 1),
+	array(
+		'rank_name' => 'Master Gunnery Sergeant',
+		'rank_short_name' => 'MSTGSGT',
+		'rank_image' => 'm-e9',
+		'rank_order' => 10,
+		'rank_class' => 2),
+	array(
+		'rank_name' => 'Chief Master Sergeant',
+		'rank_short_name' => 'CMSGT',
+		'rank_image' => 'af-e9',
+		'rank_order' => 10,
+		'rank_class' => 3),
+		
+	array(
+		'rank_name' => 'Master Sergeant',
+		'rank_short_name' => 'MSTSGT',
+		'rank_image' => 'a-e8',
+		'rank_order' => 11,
+		'rank_class' => 1),
+	array(
+		'rank_name' => 'Master Sergeant',
+		'rank_short_name' => 'MSTSGT',
+		'rank_image' => 'm-e8',
+		'rank_order' => 11,
+		'rank_class' => 2),
+	array(
+		'rank_name' => 'Senior Master Sergeant',
+		'rank_short_name' => 'SRMSGT',
+		'rank_image' => 'af-e8',
+		'rank_order' => 11,
+		'rank_class' => 3),
+		
+	array(
+		'rank_name' => 'Sergeant 1st Class',
+		'rank_short_name' => 'SGT1',
+		'rank_image' => 'a-e7',
+		'rank_order' => 12,
+		'rank_class' => 1),
+	array(
+		'rank_name' => 'Gunnery Sergeant',
+		'rank_short_name' => 'GNYSGT',
+		'rank_image' => 'm-e7',
+		'rank_order' => 12,
+		'rank_class' => 2),
+	array(
+		'rank_name' => 'Master Sergeant',
+		'rank_short_name' => 'MSTSGT',
+		'rank_image' => 'af-e7',
+		'rank_order' => 12,
+		'rank_class' => 3),
+		
+	array(
+		'rank_name' => 'Staff Sergeant',
+		'rank_short_name' => 'SSGT',
+		'rank_image' => 'a-e6',
+		'rank_order' => 13,
+		'rank_class' => 1),
+	array(
+		'rank_name' => 'Staff Sergeant',
+		'rank_short_name' => 'SSGT',
+		'rank_image' => 'm-e6',
+		'rank_order' => 13,
+		'rank_class' => 2),
+	array(
+		'rank_name' => 'Technical Sergeant',
+		'rank_short_name' => 'TSGT',
+		'rank_image' => 'af-e6',
+		'rank_order' => 13,
+		'rank_class' => 3),
+		
+	array(
+		'rank_name' => 'Sergeant',
+		'rank_short_name' => 'SGT',
+		'rank_image' => 'a-e5',
+		'rank_order' => 14,
+		'rank_class' => 1),
+	array(
+		'rank_name' => 'Sergeant',
+		'rank_short_name' => 'SGT',
+		'rank_image' => 'm-e5',
+		'rank_order' => 14,
+		'rank_class' => 2),
+	array(
+		'rank_name' => 'Staff Sergeant',
+		'rank_short_name' => 'SSGT',
+		'rank_image' => 'af-e5',
+		'rank_order' => 14,
+		'rank_class' => 3),
+		
+	array(
+		'rank_name' => 'Corporal',
+		'rank_short_name' => 'CPL',
+		'rank_image' => 'a-e4',
+		'rank_order' => 15,
+		'rank_class' => 1),
+	array(
+		'rank_name' => 'Corporal',
+		'rank_short_name' => 'CPL',
+		'rank_image' => 'm-e4',
+		'rank_order' => 15,
+		'rank_class' => 2),
+	array(
+		'rank_name' => 'Sergeant',
+		'rank_short_name' => 'SGT',
+		'rank_image' => 'af-e4',
+		'rank_order' => 15,
+		'rank_class' => 3),
+		
+	array(
+		'rank_name' => 'Private 1st Class',
+		'rank_short_name' => 'PVT1',
+		'rank_image' => 'a-e3',
+		'rank_order' => 16,
+		'rank_class' => 1),
+	array(
+		'rank_name' => 'Lance Corporal',
+		'rank_short_name' => 'LCPL',
+		'rank_image' => 'm-e3',
+		'rank_order' => 16,
+		'rank_class' => 2),
+	array(
+		'rank_name' => 'Airman 1st Class',
+		'rank_short_name' => 'ARM1',
+		'rank_image' => 'af-e3',
+		'rank_order' => 16,
+		'rank_class' => 3),
+		
+	array(
+		'rank_name' => 'Private',
+		'rank_short_name' => 'PVT',
+		'rank_image' => 'a-e2',
+		'rank_order' => 17,
+		'rank_class' => 1),
+	array(
+		'rank_name' => 'Private 1st Class',
+		'rank_short_name' => 'PVT1',
+		'rank_image' => 'm-e2',
+		'rank_order' => 17,
+		'rank_class' => 2),
+	array(
+		'rank_name' => 'Airman',
+		'rank_short_name' => 'ARM',
+		'rank_image' => 'af-e2',
+		'rank_order' => 17,
+		'rank_class' => 3),
+		
+	array(
+		'rank_name' => 'Private',
+		'rank_short_name' => 'PVT',
+		'rank_image' => 'a-e1',
+		'rank_order' => 18,
+		'rank_class' => 1),
+	array(
+		'rank_name' => 'Private',
+		'rank_short_name' => 'PVT',
+		'rank_image' => 'm-e1',
+		'rank_order' => 18,
+		'rank_class' => 2),
+	array(
+		'rank_name' => 'Airman Basic',
+		'rank_short_name' => 'ARMB',
+		'rank_image' => 'af-e1',
+		'rank_order' => 18,
+		'rank_class' => 3),
 );
 
 $positions = array(
@@ -180,7 +530,7 @@ $positions = array(
 		'pos_type' => 'officer'),
 	array(
 		'pos_name' => 'Deck Crew',
-		'pos_desc' => "A Deck crew member is your grease monkey.  They maintain, test, and check the Jumpers.",
+		'pos_desc' => "A Deck crew member is your grease monkey.  They maintain, test, and check the X203s.",
 		'pos_dept' => 4,
 		'pos_order' => 4,
 		'pos_open' => 5,
@@ -310,14 +660,14 @@ $positions = array(
 		
 	array(
 		'pos_name' => 'Squadron Leader',
-		'pos_desc' => "Is leader of the Jumper Squadron Air lift team. Reports to the Executive Officer. Is a member of the Senior Staff.",
+		'pos_desc' => "Is leader of the Fighter Squadron. Reports to the Executive Officer. Is a member of the Senior Staff.",
 		'pos_dept' => 8,
 		'pos_order' => 0,
 		'pos_open' => 1,
 		'pos_type' => 'senior'),
 	array(
 		'pos_name' => 'Squadron Pilot',
-		'pos_desc' => "A member of the Jumper Squadron. The Jumper pilot reports the Squadron Leader.",
+		'pos_desc' => "A member of the Fighter Squadron. The fighter pilot reports the Squadron Leader.",
 		'pos_dept' => 8,
 		'pos_order' => 1,
 		'pos_open' => 6,
