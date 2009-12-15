@@ -16,7 +16,7 @@ switch ($debug_errors)
 {
 	case 1:
 		ini_set('display_errors', 0);
-		error_reporting(E_ERROR & ~E_DEPRECATED);
+		error_reporting(E_ERROR);
 		define('NOVA_DB_DEBUG', TRUE);
 		
 		break;
@@ -30,7 +30,7 @@ switch ($debug_errors)
 		
 	case 3:
 		ini_set('display_errors', 1);
-		error_reporting(E_ALL & ~E_DEPRECATED);
+		error_reporting(E_ALL);
 		define('NOVA_DB_DEBUG', TRUE);
 		
 		break;
