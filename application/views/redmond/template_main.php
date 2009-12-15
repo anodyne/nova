@@ -32,6 +32,9 @@ $current_skin = $path[$skin_loc];
 /* set the final style location */
 $style_loc = APPFOLDER . '/views/' . $current_skin . '/' . $sec . '/css/' . $css;
 
+/* load the panel helper */
+$this->load->helper('panel');
+
 /* set up the link tag parameters */
 $link = array(
 	'href'	=> 	$style_loc,
@@ -127,9 +130,9 @@ echo "<?xml version='1.0' encoding='UTF-8'?>\r\n";
 						<div class="nav-main hidden"><?php echo $nav_main;?></div>
 					</div>
 					<div style="float:right">
-						<?php echo $this->user_panel->workflow_inbox(TRUE, TRUE, FALSE, '(x)', img($panel['inbox']));?> &nbsp;&nbsp;
-						<?php echo $this->user_panel->workflow_writing(TRUE, TRUE, FALSE, '(x)', img($panel['writing']));?> &nbsp;&nbsp;
-						<?php echo $this->user_panel->workflow_dashboard(FALSE, img($panel['dashboard']));?>
+						<?php echo panel_inbox(TRUE, TRUE, FALSE, '(x)', img($panel['inbox']));?> &nbsp;&nbsp;
+						<?php echo panel_writing(TRUE, TRUE, FALSE, '(x)', img($panel['writing']));?> &nbsp;&nbsp;
+						<?php echo panel_dashboard(FALSE, img($panel['dashboard']));?>
 					</div>
 					<?php echo $title;?>
 				</div>
