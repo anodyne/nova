@@ -1,3 +1,9 @@
+12.15.2009
+
+* added the panel helper
+
+==========
+
 12.14.2009
 
 * added utility class to the hook directory

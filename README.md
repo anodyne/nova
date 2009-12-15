@@ -8,29 +8,16 @@ Beta (0.9.0)
 
 Last Update
 -----------
-14 December 2009
+15 December 2009
 
 Latest Changes
 --------------
-* added utility class to the hook directory
-* updated the hooks config file to point to the utility class instead of the maintenance class
-* updated the maintenance script to point to the utility hook
-* updated the system model to allow setting my links by ID
-* updated the stargate atlantic install data
-* updated the stargate sg-1 install data
-* updated redmond/main with a whole new look and feel
-* updated the user panel library with more methods for more control over displaying individual panel items
-* fixed bug where the update panel showed for everyone
-* fixed bug where my links weren't populated when a new user joined the sim
-* fixed bug where user id wasn't set during join process
-* fixed bug where open position slots weren't incremented during the approval process
-* removed the maintenance hook file
+* added the panel helper
 
 Known Issues
 ------------
 * Skin display issues in Internet Explorer
 * Text display issues between operating systems
-* Errors thrown with update process in certain situations
 * Menu sections with no menu items display when they shouldn't
 
 Version History
