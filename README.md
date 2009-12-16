@@ -8,11 +8,15 @@ Beta (0.9.0)
 
 Last Update
 -----------
-15 December 2009
+16 December 2009
 
 Latest Changes
 --------------
-* added the panel helper
+* fixed bugs in simplepie that was crashing httpd on windows
+* updated the basic install data
+* updated the version xml file
+* updated the language files
+* updated site/catalogueskins to be able to handle quick installs
 
 Known Issues
 ------------

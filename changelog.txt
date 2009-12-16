@@ -1,6 +1,24 @@
+12.16.2009
+
+* fixed bugs in simplepie that was crashing httpd on windows
+
+* updated the basic install data
+* updated the version xml file
+* updated the language files
+* updated site/catalogueskins to be able to handle quick installs
+
+==========
+
 12.15.2009
 
 * added the panel helper
+* added the YAYparser helper
+
+* updated the skin catalogue management page to be able to handle quick install files
+* updated the basic install data
+* updated the language files
+
+* fixed a bug where users couldn't create a rank catalogue item
 
 ==========
 
