@@ -1300,6 +1300,75 @@ class Site_base extends Controller {
 		{
 			switch ($this->uri->segment(3))
 			{
+				case 'install':
+					/* set the variable */
+					$selection = $this->input->post('install_skin', TRUE);
+					
+					/* load the yaml parser */
+					$this->load->helper('yayparser');
+					
+					/* get the contents of the file */
+					$contents = file_get_contents(APPPATH .'views/'. $selection .'/skin.yml');
+					
+					/* parse the contents of the yaml file */
+					$array = yayparser($contents);
+					
+					/* create the skin array */
+					$skin = array(
+						'skin_name'		=> $array['skin'],
+						'skin_location'	=> $array['location'],
+						'skin_credits'	=> $array['credits']
+					);
+					
+					/* insert the record */
+					$install_count = $insert = $this->sys->add_skin($skin);
+
+					foreach ($array['sections'] as $value)
+					{
+						$section = array(
+							'skinsec_section'			=> $value['type'],
+							'skinsec_skin'				=> $array['skin'],
+							'skinsec_image_preview'		=> $value['preview'],
+							'skinsec_status'			=> 'active',
+							'skinsec_default'			=> 'n'
+						);
+						
+						/* insert the record */
+						$install_count += $insert = $this->sys->add_skin_section($section);
+					}
+					
+					$total_count = count($array['sections']) + 1;
+					
+					if ($install_count == $total_count)
+					{
+						$message = sprintf(
+							lang('flash_success'),
+							ucfirst(lang('labels_skin')),
+							lang('actions_installed'),
+							''
+						);
+
+						$flash['status'] = 'success';
+						$flash['message'] = text_output($message);
+					}
+					else
+					{
+						$message = sprintf(
+							lang('flash_failure'),
+							ucfirst(lang('labels_skin')),
+							lang('actions_installed'),
+							''
+						);
+
+						$flash['status'] = 'error';
+						$flash['message'] = text_output($message);
+					}
+					
+					/* write everything to the template */
+					$this->template->write_view('flash_message', '_base/admin/pages/flash', $flash);
+				
+					break;
+					
 				case 'skin':
 					switch ($this->uri->segment(4))
 					{
