@@ -1321,20 +1321,22 @@ class Site_base extends Controller {
 					);
 					
 					/* insert the record */
-					$install_count = $insert = $this->sys->add_skin($skin);
+					$install_count = $this->sys->add_skin($skin);
+					
+					echo $this->db->last_query();
 
 					foreach ($array['sections'] as $value)
 					{
 						$section = array(
 							'skinsec_section'			=> $value['type'],
-							'skinsec_skin'				=> $array['skin'],
+							'skinsec_skin'				=> $array['location'],
 							'skinsec_image_preview'		=> $value['preview'],
 							'skinsec_status'			=> 'active',
 							'skinsec_default'			=> 'n'
 						);
 						
 						/* insert the record */
-						$install_count += $insert = $this->sys->add_skin_section($section);
+						$install_count += $this->sys->add_skin_section($section);
 					}
 					
 					$total_count = count($array['sections']) + 1;
@@ -1700,7 +1702,12 @@ class Site_base extends Controller {
 			}
 		}
 		
+		/* load the resources */
+		$this->load->helper('directory');
+		
 		$check = array();
+		
+		$viewdirs = directory_map(APPPATH .'views/', TRUE);
 		
 		$skins = $this->sys->get_all_skins();
 		
@@ -1713,6 +1720,13 @@ class Site_base extends Controller {
 				$data['catalogue'][$sloc]['id'] = $skin->skin_id;
 				$data['catalogue'][$sloc]['name'] = $skin->skin_name;
 				$data['catalogue'][$sloc]['location'] = $skin->skin_location;
+				
+				$key = array_search($skin->skin_location, $viewdirs);
+				
+				if ($key !== FALSE)
+				{
+					unset($viewdirs[$key]);
+				}
 				
 				$sections = $this->sys->get_skin_sections($skin->skin_location, '');
 				
@@ -1734,6 +1748,32 @@ class Site_base extends Controller {
 				}
 			}
 		}
+		
+		/* create an array of items that shouldn't be included in the dir listing */
+		$pop = array('_base', '_base_override', 'index.html', 'template.php');
+		
+		/* make sure the items aren't in the listing */
+		foreach ($pop as $value)
+		{
+			$key = array_search($value, $viewdirs);
+			
+			if ($key !== FALSE)
+			{
+				unset($viewdirs[$key]);
+			}
+		}
+		
+		/* make sure these are items that can use quick install */
+		foreach ($viewdirs as $key => $value)
+		{
+			if (!file_exists(APPPATH .'views/'. $value .'/skin.yml'))
+			{
+				unset($viewdirs[$key]);
+			}
+		}
+		
+		/* pass the listing to the view */
+		$data['uninstalled'] = $viewdirs;
 		
 		if (count($check) < 4)
 		{
@@ -1762,6 +1802,15 @@ class Site_base extends Controller {
 				'class' => 'image'),
 		);
 		
+		$data['buttons'] = array(
+			'install' => array(
+				'type' => 'submit',
+				'class' => 'button-small',
+				'name' => 'submit',
+				'value' => 'submit',
+				'content' => ucwords(lang('actions_install')) .'&nbsp;&nbsp;'),
+		);
+		
 		$data['header'] = ucwords(lang('labels_system') .' '. lang('labels_skin') .' '. lang('labels_catalogue'));
 		$data['text'] = sprintf(lang('text_catalogueskins'), img($data['images']['default']));
 		
@@ -1771,8 +1820,11 @@ class Site_base extends Controller {
 				lang('labels_section') .' '. RARROW),
 			'delete' => ucfirst(lang('actions_delete')),
 			'edit' => ucfirst(lang('actions_edit')),
+			'install' => ucfirst(lang('actions_install')),
+			'install_skins' => ucwords(lang('actions_install') .' '. lang('labels_skins')),
 			'location' => ucfirst(lang('labels_location') .':'),
 			'no_skins' => lang('error_no_catalogue_skins'),
+			'quick_install' => sprintf(lang('text_quick_install'), lang('labels_skins'), lang('labels_skins')),
 		);
 				
 		/* figure out where the view should be coming from */

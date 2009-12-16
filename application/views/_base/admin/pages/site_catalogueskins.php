@@ -2,6 +2,28 @@
 
 <?php echo text_output($text);?>
 
+<?php if (count($uninstalled) > 0): ?>
+	<?php echo text_output($label['install_skins'], 'h3', 'orange');?>
+	<?php echo text_output($label['quick_install'], 'p', 'fontSmall gray');?>
+	
+	<table class="table100 zebra UITheme">
+		<tbody>
+		<?php foreach ($uninstalled as $u): ?>
+			<tr class="height_40">
+				<td><strong><?php echo ucfirst($u);?></strong></td>
+				<td class="gray">views/<?php echo $u;?></strong></td>
+				<td class="col_75 align_right">
+					<?php echo form_open('site/catalogueskins/install');?>
+						<?php echo form_hidden('install_skin', $u);?>
+						<?php echo form_button($buttons['install']);?>
+					<?php echo form_close();?>
+				</td>
+			</tr>
+		<?php endforeach;?>
+		</tbody>
+	</table><br />
+<?php endif;?>
+
 <p class="bold">
 	<a href="#" rel="facebox" myAction="add" mySec="skin" class="image"><?php echo img($images['add']) .' '. $label['addskin'];?></a><br />
 	<a href="#" rel="facebox" myAction="add" mySec="section" class="image"><?php echo img($images['add']) .' '. $label['addskinsec'];?></a>
