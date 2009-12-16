@@ -3,13 +3,13 @@
 		
 		<item>
 			<title>0.9.0</title>
-			<description>Nova M6 is an update to a development release of the next generation RPG management software from Anodyne Productions.</description>
+			<description>Nova Beta is an update to a development release of the next generation RPG management software from Anodyne Productions.</description>
 			<severity>major</severity>
 			<major>0</major>
 			<minor>9</minor>
 			<update>0</update>
 			<link>http://www.anodyne-productions.com/</link>
-			<date>October 01, 2009 - 07:45</date>
+			<date>December 01, 2009 - 07:45</date>
 		</item>
 		
 	</channel>
