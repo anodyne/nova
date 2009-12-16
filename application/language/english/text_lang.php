@@ -129,6 +129,8 @@ $lang['text_catalogueskins'] = "Nova provides extensive control over system skin
 
 $lang['text_manage_specs'] = 'Nova provides admins unparalleled control over the specifications. Instead of a static page, the form itself is now built out of the database and the data stored in a dynamic way, giving admins all the control they could ever want. Using the page below, admins can edit the specifications data to whatever they want. The links below will take you to the page for editing the form itself.';
 
+$lang['text_quick_install'] = "Nova has detected the following %s aren't installed yet. Using Quick Install, Nova can install these %s quickly and easily. Simply click Install to start the process.";
+
 /*
 |---------------------------------------------------------------
 | INFORMATIONAL MESSAGES
