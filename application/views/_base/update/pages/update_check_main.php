@@ -1,3 +1,5 @@
+<?php echo $link;?>
+
 <?php if ($label['notes'] > ''): ?>
 	<?php echo text_output($label['whatsnew'], 'h2');?>
 	<?php echo text_output($label['notes']);?>

@@ -124,17 +124,30 @@ class Update_base extends Controller {
 			if ($verify == 0 && $sysadmin === TRUE)
 			{
 				/* do the version check */
-				$update = $this->_check_version($this->version);
+				$update = $this->_check_version();
 				
-				/* set the flash variable */
-				$flash = $update['flash'];
+				
+				if ($update['flash']['message'] != '')
+				{
+					$flash = $update['flash'];
+					$data['link'] = FALSE;
+				}
+				else
+				{
+					$flash['status'] = 'info';
+					$flash['message'] = sprintf(
+						lang_output('update_text_no_updates'),
+						APP_NAME
+					);
+					$data['link'] = text_output(anchor('update/index', lang('button_back_update')), 'p', 'fontMedium bold');
+				}
 				
 				$data['label'] = array(
 					'whatsnew' => lang('upd_header_whatsnew'),
-					'notes' => (is_array($update['update'])) ? $update['update']['description'] : '',
+					'notes' => (is_array($update['update'])) ? $update['update']['notes'] : '',
 					'files' => lang('upd_check_header_files'),
-					'files_text' => lang('upd_check_text_files'),
-					'files_go' => lang('upd_check_go_files'),
+					'files_text' => sprintf(lang('upd_check_text_files'), $update['update']['link']),
+					'files_go' => sprintf(lang('upd_check_go_files'), $update['update']['link']),
 					'start' => lang('upd_check_header_start'),
 					'start_text' => lang('upd_check_text_start'),
 					'start_go' => anchor('update/step/1', lang('upd_check_go_start'), array('id' => 'next')),
@@ -447,135 +460,125 @@ class Update_base extends Controller {
 		$this->template->render();
 	}
 	
-	function _check_version($current = '')
+	function _check_version()
 	{
-		/* load the resources */
-		$this->load->library('simplepie');
-		
-		/* get the system information */
-		$system = $this->sys->get_system_info();
-		
-		/* build the array of version info */
-		$version = array(
-			'files' => array(
-				'full'		=> $this->version,
-				'major'		=> APP_VERSION_MAJOR,
-				'minor'		=> APP_VERSION_MINOR,
-				'update'	=> APP_VERSION_UPDATE
-			),
-			'database' => array(
-				'full'		=> $system->sys_version_major .'.'. $system->sys_version_minor .'.'. $system->sys_version_update,
-				'major'		=> $system->sys_version_major,
-				'minor'		=> $system->sys_version_minor,
-				'update'	=> $system->sys_version_update
-			),
-		);
-		
-		/* grab the information from the version feed */
-		$this->simplepie->set_feed_url(VERSION_FEED);
-		$this->simplepie->enable_cache(FALSE);
-		$this->simplepie->init();
-		$this->simplepie->handle_content_type();
-		
-		/* get the items from the feed */
-		$items = $this->simplepie->get_items();
-		
-		/* grab the updates setting */
-		$type = $this->options['updates'];
-		
-		$update = FALSE;
-		
-		foreach ($items as $i)
-		{ /* loop through and figure out what we should be displaying */
+		if (ini_get('allow_url_fopen'))
+		{
+			/* load the resources */
+			$this->load->helper('yayparser');
+			
+			/* get the contents of the file */
+			$contents = file_get_contents(VERSION_FEED);
+					
+			/* parse the contents of the yaml file */
+			$array = yayparser($contents);
+			
+			/* get the system information */
+			$system = $this->sys->get_system_info();
+			
+			/* build the array of version info */
+			$version = array(
+				'files' => array(
+					'full'		=> APP_VERSION_MAJOR .'.'. APP_VERSION_MINOR .'.'. APP_VERSION_UPDATE,
+					'major'		=> APP_VERSION_MAJOR,
+					'minor'		=> APP_VERSION_MINOR,
+					'update'	=> APP_VERSION_UPDATE
+				),
+				'database' => array(
+					'full'		=> $system->sys_version_major .'.'. $system->sys_version_minor .'.'. $system->sys_version_update,
+					'major'		=> $system->sys_version_major,
+					'minor'		=> $system->sys_version_minor,
+					'update'	=> $system->sys_version_update
+				),
+			);
+			
+			/* grab the updates setting */
+			$type = $this->options['updates'];
+			
+			$update = FALSE;
+			
 			switch ($type)
 			{
 				case 'major':
-					$major = $i->get_item_tags(SIMPLEPIE_NAMESPACE_RSS_20, 'major');
-					$major = $major[0]['data'];
 					
-					if ($major > $version['files']['major'] || $major > $version['database']['major'])
+					if ($array['version_major'] > $version['files']['major'] || $array['version_major'] > $version['database']['major'])
 					{
-						$update['version'] = $i->get_title();
-						$update['description'] = $i->get_description();
+						$update['version']		= $array['version'];
+						$update['notes']		= $array['notes'];
+						$update['severity']		= $array['severity'];
+						$update['link']			= $array['link'];
 					}
 				
 					break;
 					
 				case 'minor':
-					$major = $i->get_item_tags(SIMPLEPIE_NAMESPACE_RSS_20, 'major');
-					$minor = $i->get_item_tags(SIMPLEPIE_NAMESPACE_RSS_20, 'minor');
-					
-					$major = $major[0]['data'];
-					$minor = $minor[0]['data'];
-					
-					if ($minor > $version['files']['minor'] || $minor > $version['database']['minor'])
-					{
-						$update['version'] = $i->get_title();
-						$update['description'] = $i->get_description();
-					}
-					elseif (($minor < $version['files']['minor'] || $major > $version['files']['major']) ||
-							($minor < $version['database']['minor'] || $major > $version['database']['major']))
-					{
-						$update['version'] = $i->get_title();
-						$update['description'] = $i->get_description();
-					}
 				
+					if ($array['version_minor'] > $version['files']['minor'] || $array['version_minor'] > $version['database']['minor'])
+					{
+						$update['version']		= $array['version'];
+						$update['notes']		= $array['notes'];
+						$update['severity']		= $array['severity'];
+						$update['link']			= $array['link'];
+					}
+					
 					break;
 					
 				case 'all':
-					if ($i->get_title() != $version['files']['full'] || $i->get_title() != $version['database']['full'])
+				
+					if (version_compare($version['files']['full'], $array['version'], '<') || version_compare($version['database']['full'], $array['version'], '<'))
 					{
-						$update['version'] = $i->get_title();
-						$update['description'] = $i->get_description();
+						$update['version']		= $array['version'];
+						$update['notes']		= $array['notes'];
+						$update['severity']		= $array['severity'];
+						$update['link']			= $array['link'];
 					}
-						
+				
 					break;
 			}
+			
+			if ($version['database']['full'] > $version['files']['full'])
+			{
+				$flash['status'] = 'info';
+				$flash['message'] = sprintf(
+					lang_output('update_outofdate_files'),
+					$version['files']['full'],
+					$version['database']['full']
+				);
+			}
+			elseif ($version['database']['full'] < $version['files']['full'])
+			{
+				$flash['status'] = 'info';
+				$flash['message'] = sprintf(
+					lang_output('update_outofdate_database'),
+					$version['database']['full'],
+					$version['files']['full']
+				);
+			}
+			elseif ($update !== FALSE)
+			{
+				$flash['status'] = 'info';
+				$flash['message'] = sprintf(
+					lang_output('update_available'),
+					APP_NAME,
+					$update['version'],
+					APP_NAME
+				);
+			}
+			else
+			{
+				$flash['status'] = '';
+				$flash['message'] = '';
+			}
+			
+			$retval = array(
+				'flash' => $flash,
+				'update' => $update
+			);
+			
+			return $retval;
 		}
 		
-		if ($version['database']['full'] > $version['files']['full'])
-		{
-			$flash['status'] = 'info';
-			$flash['message'] = '<span class="icon ui-icon ui-icon-info"></span>';
-			$flash['message'].= sprintf(
-				lang_output('update_outofdate_files'),
-				$version['files']['full'],
-				$version['database']['full']
-			);
-		}
-		elseif ($version['database']['full'] < $version['files']['full'])
-		{
-			$flash['status'] = 'info';
-			$flash['message'] = '<span class="icon ui-icon ui-icon-info"></span>';
-			$flash['message'].= sprintf(
-				lang_output('update_outofdate_database'),
-				$version['database']['full'],
-				$version['files']['full']
-			);
-		}
-		elseif (isset($update))
-		{
-			$flash['status'] = 'info';
-			$flash['message'] = '<span class="icon ui-icon ui-icon-info"></span>';
-			$flash['message'].= sprintf(
-				lang_output('update_available'),
-				APP_NAME,
-				$update['version'],
-				APP_NAME
-			);
-		}
-		else
-		{
-			$flash['status'] = '';
-			$flash['message'] = '';
-		}
-		
-		$retval = array(
-			'flash' => $flash,
-			'update' => $update
-		);
-		
-		return $retval;
+		return FALSE;
 	}
 }
 
