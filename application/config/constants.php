@@ -73,7 +73,7 @@ define('WIKI_VERSION',			'Release 1');
 
 define('SMS_UPGRADE_VERSION',	'2.6.9');
 
-define('VERSION_FEED',			APPFOLDER . '/assets/version.xml');
+define('VERSION_FEED',			APPPATH . 'assets/version.yml');
 
 # TODO: remove this before final release
 define('APP_DATA_SRC',			'dev'); /* options for data source are dev and basic */
