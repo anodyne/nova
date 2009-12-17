@@ -1019,6 +1019,15 @@ class Install_base extends Controller {
 					'inst_step4' => $message,
 				);
 				
+				if (ini_get('allow_url_fopen') != 1)
+				{
+					$flash['status'] = 'info';
+					$flash['message'] = lang_output('install_step4_filehandle');
+					
+					/* write everything to the template */
+					$this->template->write_view('flash_message', '_base/install/pages/flash', $flash);
+				}
+				
 				/* figure out where the view file should be coming from */
 				$view_loc = view_location('step_4', '_base', 'install');
 				$js_loc = js_location('step_4_js', '_base', 'install');
