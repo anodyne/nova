@@ -46,6 +46,7 @@ $lang['button_begin']			= 'Begin Upgrade';
 $lang['button_login']			= 'Login Now';
 $lang['button_site']			= 'Go to your site '. RARROW;
 $lang['button_back_install'] 	= LARROW .' Back to Installation Center';
+$lang['button_back_update'] 	= LARROW .' Back to Update Center';
 $lang['button_next']			= 'Next Step';
 $lang['button_clear']			= 'Clear Data';
 
@@ -168,6 +169,8 @@ $lang['install_step4_label'] = 'Step 4: System Setup';
 $lang['install_step4_success'] = 'You have successfully created your user profile and main character. You will be able to login to the system using your email address and the password you just created. You can now set up some of the basic system settings. You will be able to update more settings once Nova is installed and you have logged in to the Admin Control Panel. Once you are finished, click <strong>Next Step</strong> to continue.';
 $lang['install_step4_failure'] = 'There was a problem inserting your user profile and/or main character. Please clear your database tables and try again. If you are using an Anodyne-created genre file, try installing again. If the problem persists, please contact <a href="http://forums.anodyne-productions.com" target="_blank">Anodyne Productions</a> for additional support.';
 
+$lang['install_step4_filehandle'] = "Your server does not allow the necessary file handling functions required for checking for new versions of Nova. Because of this, you will not be notified when new versions of Nova are released and will need to manually check the Anodyne Productions website. You can contact your host to get this issue resolved and tell them to turn <em>allow_url_fopen</em> on in the php.ini file.";
+
 $lang['install_step4_simname'] = 'Sim Name';
 $lang['install_step4_emailsubject'] = 'Email Subject Prefix';
 $lang['install_step4_sysemail'] = 'System Emails';
@@ -204,6 +207,7 @@ $lang['verify_db'] = 'Database Platform';
 $lang['verify_db_ver'] = 'Database Version';
 $lang['verify_mem'] = 'Memory Limit';
 $lang['verify_regglobals'] = 'Register Globals';
+$lang['verify_file'] = 'File Handling';
 
 $lang['verify_success'] = '<span class="bold green">Success</span>';
 $lang['verify_failure'] = '<span class="bold red">Failed</span>';
@@ -243,8 +247,8 @@ $lang['upd_header_whatsnew'] = "What's New in This Release?";
 $lang['update_text_no_updates'] = 'No updates are available for %s right now.';
 
 $lang['upd_check_header_files'] = "Get the New Files";
-$lang['upd_check_text_files'] = "The first thing you'll need to do is download the new Nova files. You can download the files from the <a href='http://www.anodyne-productions.com/index.php/nova/download' target='_blank'>Anodyne site</a>. Once you've downloaded the files, follow the directions in the README for updating to the latest version of Nova.";
-$lang['upd_check_go_files'] = "<a href='http://www.anodyne-productions.com/index.php/nova/download' target='_blank'>Get the files now ". RARROW ."</a>";
+$lang['upd_check_text_files'] = "The first thing you'll need to do is download the new Nova files. You can download the files from the <a href='%s' target='_blank'>Anodyne site</a>. Once you've downloaded the files, follow the directions in the README for updating to the latest version of Nova.";
+$lang['upd_check_go_files'] = "<a href='%s' target='_blank'>Get the files now ". RARROW ."</a>";
 
 $lang['upd_check_header_start'] = "Already Have the Files? Start the Update!";
 $lang['upd_check_text_start'] = "If you've already downloaded the files and made the udpates to your system but just need to update your database, you can use the link below to start the process.";
