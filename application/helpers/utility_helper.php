@@ -365,6 +365,9 @@ if ( ! function_exists('verify_server'))
 			'mem' => array(
 				'req'	=> 8,
 				'act'	=> substr(ini_get('memory_limit'), 0, -1)),
+			'file' => array(
+				'req'	=> lang('global_on'),
+				'act'	=> (ini_get('allow_url_fopen') == 1) ? lang('global_on') : lang('global_off')),
 		);
 		
 		/* set the final result array */
@@ -373,7 +376,8 @@ if ( ! function_exists('verify_server'))
 			'db' => (!in_array($specs['db']['act'], $specs['db']['req'])) ? lang('verify_failure') : lang('verify_success'),
 			'dbver' => ($specs['dbver']['act'] < $specs['dbver']['req'][$specs['db']['act']]) ? lang('verify_failure') : lang('verify_success'),
 			'regglobals' => ($specs['regglobals']['act'] != $specs['regglobals']['req']) ? lang('verify_warning') : lang('verify_success'),
-			'mem' => ($specs['mem']['act'] < $specs['mem']['req']) ? lang('verify_warning') : lang('verify_success')
+			'mem' => ($specs['mem']['act'] < $specs['mem']['req']) ? lang('verify_warning') : lang('verify_success'),
+			'file' => ($specs['file']['act'] != $specs['file']['req']) ? lang('verify_warning') : lang('verify_success')
 		);
 		
 		/* set the table template */
@@ -417,6 +421,7 @@ if ( ! function_exists('verify_server'))
 		$ci->table->add_row(lang('verify_db_ver'), implode(', ', $specs['dbver']['req']), $specs['dbver']['act'], $final['dbver']);
 		$ci->table->add_row(lang('verify_regglobals'), $specs['regglobals']['req'], $specs['regglobals']['act'], $final['regglobals']);
 		$ci->table->add_row(lang('verify_mem'), $specs['mem']['req'] .'M', $specs['mem']['act'] .'M', $final['mem']);
+		$ci->table->add_row(lang('verify_file'), $specs['file']['req'], $specs['file']['act'], $final['file']);
 		
 		$retval = $ci->table->generate();
 		
