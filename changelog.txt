@@ -1,3 +1,17 @@
+12.17.2009
+
+* updated the install process to notify a user if they don't have file handling turned on and won't be able to check for Nova updates
+* updated the language files
+* updated the server verification helper
+* updated the constants config file with the new location of the version file
+* updated the admin controller with a whole new check version method
+* updated the update controller with a whole new check version method
+* updated the install controller to notify an admin if they'll be able to update the system (step 4)
+
+* added the version.yml file
+
+==========
+
 12.16.2009
 
 * fixed bugs in simplepie that was crashing httpd on windows

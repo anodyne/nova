@@ -8,15 +8,18 @@ Beta (0.9.0)
 
 Last Update
 -----------
-16 December 2009
+17 December 2009
 
 Latest Changes
 --------------
-* fixed bugs in simplepie that was crashing httpd on windows
-* updated the basic install data
-* updated the version xml file
+* updated the install process to notify a user if they don't have file handling turned on and won't be able to check for Nova updates
 * updated the language files
-* updated site/catalogueskins to be able to handle quick installs
+* updated the server verification helper
+* updated the constants config file with the new location of the version file
+* updated the admin controller with a whole new check version method
+* updated the update controller with a whole new check version method
+* updated the install controller to notify an admin if they'll be able to update the system (step 4)
+* added the version.yml file
 
 Known Issues
 ------------
