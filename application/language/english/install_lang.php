@@ -181,6 +181,7 @@ $lang['install_step4_dates'] = 'Date Format';
 $lang['install_step4_updates_all'] = 'All Updates';
 $lang['install_step4_updates_maj'] = 'Major Updates (1.0, 2.0, etc.)';
 $lang['install_step4_updates_min'] = 'Minor Updates (1.1, 1.2, etc.)';
+$lang['install_step4_updates_incr'] = 'Incremental Updates (1.0.1, 1.0.2, etc.)';
 $lang['install_step4_updates_none'] = 'No Updates';
 
 /*
@@ -222,7 +223,8 @@ $lang['verify_text'] = 'Below are the results of the server verification test. I
 |---------------------------------------------------------------
 */
 
-$lang['update_available'] = '%s %s is now available.';
+$lang['update_available'] = '%s %s is now available.%s';
+$lang['update_your_version'] = " You are running %s %s.";
 $lang['update_outofdate_files'] = 'Your system files are running version %s, but your database is running version %s. Please update your system files and try again.';
 $lang['update_outofdate_database'] = 'Your database is running version %s, but your files are running version %s. Please use the links below to update your database.';
 
