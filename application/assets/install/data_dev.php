@@ -518,18 +518,6 @@ $catalogue_skins = array(
 		'skin_name' => 'Default',
 		'skin_location' => 'default',
 		'skin_credits' => 'Skin created by David VanScott. Edits are permissible as long as original credits stay intact.'),
-	array(
-		'skin_name' => 'Lightness',
-		'skin_location' => 'lightness',
-		'skin_credits' => 'Skin created by David VanScott and based on jQuery UI Lightness theme created by the jQuery UI team. Edits are permissible as long as original credits stay intact.'),
-	array(
-		'skin_name' => 'Redmond',
-		'skin_location' => 'redmond',
-		'skin_credits' => 'Skin created by David VanScott and based on jQuery UI Redmond theme created by the jQuery UI team. Edits are permissible as long as original credits stay intact.'),
-	array(
-		'skin_name' => 'Sunny',
-		'skin_location' => 'sunny',
-		'skin_credits' => 'Skin created by David VanScott and based on jQuery UI Sunny theme created by the jQuery UI team. Edits are permissible as long as original credits stay intact.'),
 );
 
 $catalogue_skinsecs = array(
@@ -553,37 +541,6 @@ $catalogue_skinsecs = array(
 		'skinsec_skin' => 'default',
 		'skinsec_image_preview' => 'preview-login.png',
 		'skinsec_default' => 'y'),
-	
-	array(
-		'skinsec_section' => 'main',
-		'skinsec_skin' => 'lightness',
-		'skinsec_image_preview' => 'preview-main.png'),
-	array(
-		'skinsec_section' => 'admin',
-		'skinsec_skin' => 'lightness',
-		'skinsec_image_preview' => 'preview-admin.png'),
-		
-	array(
-		'skinsec_section' => 'main',
-		'skinsec_skin' => 'redmond',
-		'skinsec_image_preview' => 'preview-main.png'),
-		
-	array(
-		'skinsec_section' => 'main',
-		'skinsec_skin' => 'sunny',
-		'skinsec_image_preview' => 'preview-main.png'),
-	array(
-		'skinsec_section' => 'admin',
-		'skinsec_skin' => 'sunny',
-		'skinsec_image_preview' => 'preview-admin.png'),
-	array(
-		'skinsec_section' => 'wiki',
-		'skinsec_skin' => 'sunny',
-		'skinsec_image_preview' => 'preview-wiki.png'),
-	array(
-		'skinsec_section' => 'login',
-		'skinsec_skin' => 'sunny',
-		'skinsec_image_preview' => 'preview-login.png'),
 );
 
 $characters_data = array(
@@ -3408,11 +3365,6 @@ $system_components = array(
 		'comp_version' => '1.4.1',
 		'comp_desc' => "The Template library, written for the CodeIgniter PHP-framework, is a wrapper for CI's View implementation. Template is a reaction to the numerous questions from the CI community regarding how one would display multiple views for one controller, and how to embed \"views within views\" in a standardized fashion. In addition, Template provides extra Views loading capabilities, the ability to utilize any template parser (like Smarty), and shortcuts for including CSS, JavaScript, and other common elements in your final rendered HTML.",
 		'comp_url' => 'http://www.williamsconcepts.com/ci/codeigniter/libraries/template/index.html'),
-	array(
-		'comp_name' => 'SimplePie',
-		'comp_version' => '1.2',
-		'comp_desc' => "SimplePie is a very fast and easy-to-use class, written in PHP, that puts the 'simple' back into 'really simple syndication'. Flexible enough to suit beginners and veterans alike, SimplePie is focused on speed, ease of use, compatibility and standards compliance.",
-		'comp_url' => 'http://www.simplepie.org/'),
 	array(
 		'comp_name' => 'jQuery',
 		'comp_version' => '1.3.2',
