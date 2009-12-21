@@ -144,6 +144,7 @@ $lang['status_current']			= 'current';
 $lang['status_end']				= 'end';
 $lang['status_eloa']			= 'extended leave of absence';
 $lang['status_inactive']		= 'inactive';
+$lang['status_incremental']		= 'incremental';
 $lang['status_latest']			= 'latest';
 $lang['status_loa']				= 'leave of absence';
 $lang['status_major']			= 'major';
