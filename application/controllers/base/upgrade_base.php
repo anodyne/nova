@@ -1536,6 +1536,10 @@ class Upgrade_base extends Controller {
 				/* do the update to all users */
 				$this->user->update_all_users($defaults);
 				
+				/* install the skins and ranks */
+				$this->_install_ranks();
+				$this->_install_skins();
+				
 				if (phpversion() >= 5)
 				{
 					/* load the resources */
@@ -1713,6 +1717,147 @@ class Upgrade_base extends Controller {
 		
 		/* render the template */
 		$this->template->render();
+	}
+	
+	function _install_ranks()
+	{
+		/* load the resources */
+		$this->load->helper('directory');
+		$this->load->helper('yayparser');
+		$this->load->model('ranks_model', 'ranks');
+		
+		$dir = directory_map(APPPATH .'assets/common/'. GENRE .'/ranks/', TRUE);
+		
+		$ranks = $this->ranks->get_all_rank_sets('');
+		
+		if ($ranks->num_rows() > 0)
+		{
+			foreach ($ranks->result() as $rank)
+			{
+				$key = array_search($rank->rankcat_location, $dir);
+				
+				if ($key !== FALSE)
+				{
+					unset($dir[$key]);
+				}
+			}
+			
+			/* create an array of items that shouldn't be included in the dir listing */
+			$pop = array('index.html');
+			
+			/* make sure the items aren't in the listing */
+			foreach ($pop as $value)
+			{
+				$key = array_search($value, $dir);
+				
+				if ($key !== FALSE)
+				{
+					unset($dir[$key]);
+				}
+			}
+			
+			/* make sure these are items that can use quick install */
+			foreach ($dir as $key => $value)
+			{
+				if (file_exists(APPPATH .'assets/common/'. GENRE .'/ranks/'. $value .'/rank.yml'))
+				{
+					/* get the contents of the file */
+					$contents = file_get_contents(APPPATH .'assets/common/'. GENRE .'/ranks/'. $selection .'/rank.yml');
+					
+					/* parse the contents of the yaml file */
+					$array = yayparser($contents);
+					
+					/* create the skin array */
+					$set = array(
+						'rankcat_name'		=> $array['rank'],
+						'rankcat_location'	=> $array['location'],
+						'rankcat_credits'	=> $array['credits'],
+						'rankcat_preview'	=> $array['preview'],
+						'rankcat_blank'		=> $array['blank'],
+						'rankcat_extension'	=> $array['extension'],
+						'rankcat_url'		=> $array['url'],
+					);
+					
+					/* insert the record */
+					$this->ranks->add_rank_set($set);
+				}
+			}
+		}
+	}
+	
+	function _install_skins()
+	{
+		/* load the resources */
+		$this->load->helper('directory');
+		$this->load->helper('yayparser');
+		
+		/* map the views directory */
+		$viewdirs = directory_map(APPPATH .'views/', TRUE);
+		
+		$skins = $this->sys->get_all_skins();
+		
+		if ($skins->num_rows() > 0)
+		{
+			foreach ($skins->result() as $skin)
+			{
+				$key = array_search($skin->skin_location, $viewdirs);
+				
+				if ($key !== FALSE)
+				{
+					unset($viewdirs[$key]);
+				}
+			}
+		}
+		
+		/* create an array of items that shouldn't be included in the dir listing */
+		$pop = array('_base', '_base_override', 'index.html', 'template.php');
+		
+		/* make sure the items aren't in the listing */
+		foreach ($pop as $value)
+		{
+			$key = array_search($value, $viewdirs);
+			
+			if ($key !== FALSE)
+			{
+				unset($viewdirs[$key]);
+			}
+		}
+		
+		foreach ($viewdirs as $key => $value)
+		{
+			if (file_exists(APPPATH .'views/'. $value .'/skin.yml'))
+			{
+				/* get the contents of the file */
+				$contents = file_get_contents(APPPATH .'views/'. $value .'/skin.yml');
+				
+				/* parse the contents of the yaml file */
+				$array = yayparser($contents);
+				
+				/* create the skin array */
+				$skin = array(
+					'skin_name'		=> $array['skin'],
+					'skin_location'	=> $array['location'],
+					'skin_credits'	=> $array['credits']
+				);
+				
+				/* insert the record */
+				$this->sys->add_skin($skin);
+
+				foreach ($array['sections'] as $v)
+				{
+					$section = array(
+						'skinsec_section'			=> $v['type'],
+						'skinsec_skin'				=> $array['location'],
+						'skinsec_image_preview'		=> $v['preview'],
+						'skinsec_status'			=> 'active',
+						'skinsec_default'			=> 'n'
+					);
+					
+					/* insert the record */
+					$this->sys->add_skin_section($section);
+				}
+			}
+		}
 	}
 }
 
