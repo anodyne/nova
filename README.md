@@ -8,18 +8,22 @@ Beta (0.9.0)
 
 Last Update
 -----------
-17 December 2009
+18 December 2009
 
 Latest Changes
 --------------
-* updated the install process to notify a user if they don't have file handling turned on and won't be able to check for Nova updates
+* updated the update controller to always check for any updates from the check method
+* updated the update check to allow checking only incremental updates (1.0.1, 1.0.2, etc)
 * updated the language files
-* updated the server verification helper
-* updated the constants config file with the new location of the version file
-* updated the admin controller with a whole new check version method
-* updated the update controller with a whole new check version method
-* updated the install controller to notify an admin if they'll be able to update the system (step 4)
-* added the version.yml file
+* updated the basic install data files
+* updated the version.yml file
+* updated the rank catalogue to be able to handle quick installs
+* updated the install controller to be able to handle quick installs during installation
+* updated the upgrade controller to be able to handle quick installs during an sms upgrade
+* removed the simplepie library
+* added rank.yml file to the default bsg rank set
+* added skin.yml file to the lightness skin
+* added skin.yml file to the sunny skin
 
 Known Issues
 ------------
