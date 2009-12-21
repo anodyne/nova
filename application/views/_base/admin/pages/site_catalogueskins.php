@@ -11,7 +11,7 @@
 		<?php foreach ($uninstalled as $u): ?>
 			<tr class="height_40">
 				<td><strong><?php echo ucfirst($u);?></strong></td>
-				<td class="gray">views/<?php echo $u;?></strong></td>
+				<td class="gray">views/<?php echo $u;?></td>
 				<td class="col_75 align_right">
 					<?php echo form_open('site/catalogueskins/install');?>
 						<?php echo form_hidden('install_skin', $u);?>
