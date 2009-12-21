@@ -492,48 +492,14 @@ class Update_base extends Controller {
 				),
 			);
 			
-			/* grab the updates setting */
-			$type = $this->options['updates'];
-			
 			$update = FALSE;
 			
-			switch ($type)
+			if (version_compare($version['files']['full'], $array['version'], '<') || version_compare($version['database']['full'], $array['version'], '<'))
 			{
-				case 'major':
-					
-					if ($array['version_major'] > $version['files']['major'] || $array['version_major'] > $version['database']['major'])
-					{
-						$update['version']		= $array['version'];
-						$update['notes']		= $array['notes'];
-						$update['severity']		= $array['severity'];
-						$update['link']			= $array['link'];
-					}
-				
-					break;
-					
-				case 'minor':
-				
-					if ($array['version_minor'] > $version['files']['minor'] || $array['version_minor'] > $version['database']['minor'])
-					{
-						$update['version']		= $array['version'];
-						$update['notes']		= $array['notes'];
-						$update['severity']		= $array['severity'];
-						$update['link']			= $array['link'];
-					}
-					
-					break;
-					
-				case 'all':
-				
-					if (version_compare($version['files']['full'], $array['version'], '<') || version_compare($version['database']['full'], $array['version'], '<'))
-					{
-						$update['version']		= $array['version'];
-						$update['notes']		= $array['notes'];
-						$update['severity']		= $array['severity'];
-						$update['link']			= $array['link'];
-					}
-				
-					break;
+				$update['version']		= $array['version'];
+				$update['notes']		= $array['notes'];
+				$update['severity']		= $array['severity'];
+				$update['link']			= $array['link'];
 			}
 			
 			if ($version['database']['full'] > $version['files']['full'])
@@ -556,12 +522,17 @@ class Update_base extends Controller {
 			}
 			elseif ($update !== FALSE)
 			{
+				$yourversion = sprintf(
+					lang('update_your_version'),
+					APP_NAME,
+					$version['files']['full']);
+					
 				$flash['status'] = 'info';
 				$flash['message'] = sprintf(
 					lang_output('update_available'),
 					APP_NAME,
 					$update['version'],
-					APP_NAME
+					$yourversion
 				);
 			}
 			else

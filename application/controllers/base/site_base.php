@@ -1052,12 +1052,71 @@ class Site_base extends Controller {
 		/* check access */
 		$this->auth->check_access();
 		
+		/* load the resources */
 		$this->load->model('ranks_model', 'ranks');
+		$this->load->helper('directory');
 		
 		if (isset($_POST['submit']))
 		{
 			switch ($this->uri->segment(3))
 			{
+				case 'install':
+					/* set the variable */
+					$selection = $this->input->post('install_rank', TRUE);
+					
+					/* load the yaml parser */
+					$this->load->helper('yayparser');
+					
+					/* get the contents of the file */
+					$contents = file_get_contents(APPPATH .'assets/common/'. GENRE .'/ranks/'. $selection .'/rank.yml');
+					
+					/* parse the contents of the yaml file */
+					$array = yayparser($contents);
+					
+					/* create the skin array */
+					$set = array(
+						'rankcat_name'		=> $array['rank'],
+						'rankcat_location'	=> $array['location'],
+						'rankcat_credits'	=> $array['credits'],
+						'rankcat_preview'	=> $array['preview'],
+						'rankcat_blank'		=> $array['blank'],
+						'rankcat_extension'	=> $array['extension'],
+						'rankcat_url'		=> $array['url'],
+					);
+					
+					/* insert the record */
+					$insert = $this->ranks->add_rank_set($set);
+					
+					if ($insert > 0)
+					{
+						$message = sprintf(
+							lang('flash_success'),
+							ucfirst(lang('global_rank') .' '. lang('labels_set')),
+							lang('actions_installed'),
+							''
+						);
+
+						$flash['status'] = 'success';
+						$flash['message'] = text_output($message);
+					}
+					else
+					{
+						$message = sprintf(
+							lang('flash_failure'),
+							ucfirst(lang('global_rank') .' '. lang('labels_set')),
+							lang('actions_installed'),
+							''
+						);
+
+						$flash['status'] = 'error';
+						$flash['message'] = text_output($message);
+					}
+					
+					/* write everything to the template */
+					$this->template->write_view('flash_message', '_base/admin/pages/flash', $flash);
+				
+					break;
+					
 				case 'add':
 					$name = $this->input->post('rank_name', TRUE);
 					$location = $this->input->post('rank_location', TRUE);
@@ -1232,6 +1291,8 @@ class Site_base extends Controller {
 			}
 		}
 		
+		$dir = directory_map(APPPATH .'assets/common/'. GENRE .'/ranks/', TRUE);
+		
 		$ranks = $this->ranks->get_all_rank_sets('');
 		
 		if ($ranks->num_rows() > 0)
@@ -1243,7 +1304,40 @@ class Site_base extends Controller {
 				$data['catalogue'][$rank->rankcat_id]['location'] = $rank->rankcat_location;
 				$data['catalogue'][$rank->rankcat_id]['status'] = $rank->rankcat_status;
 				$data['catalogue'][$rank->rankcat_id]['default'] = $rank->rankcat_default;
+				
+				$key = array_search($rank->rankcat_location, $dir);
+				
+				if ($key !== FALSE)
+				{
+					unset($dir[$key]);
+				}
 			}
+			
+			/* create an array of items that shouldn't be included in the dir listing */
+			$pop = array('index.html');
+			
+			/* make sure the items aren't in the listing */
+			foreach ($pop as $value)
+			{
+				$key = array_search($value, $dir);
+				
+				if ($key !== FALSE)
+				{
+					unset($dir[$key]);
+				}
+			}
+			
+			/* make sure these are items that can use quick install */
+			foreach ($dir as $key => $value)
+			{
+				if (!file_exists(APPPATH .'assets/common/'. GENRE .'/ranks/'. $value .'/rank.yml'))
+				{
+					unset($dir[$key]);
+				}
+			}
+			
+			/* pass the listing to the view */
+			$data['uninstalled'] = $dir;
 		}
 		
 		$data['images'] = array(
@@ -1265,6 +1359,15 @@ class Site_base extends Controller {
 				'class' => 'image')
 		);
 		
+		$data['buttons'] = array(
+			'install' => array(
+				'type' => 'submit',
+				'class' => 'button-small',
+				'name' => 'submit',
+				'value' => 'submit',
+				'content' => ucwords(lang('actions_install')) .'&nbsp;&nbsp;'),
+		);
+		
 		$data['header'] = ucwords(lang('labels_system') .' '. lang('global_rank') .' '. lang('labels_catalogue'));
 		$data['text'] = sprintf(lang('text_catalogueranks'), img($data['images']['default']));
 		
@@ -1272,9 +1375,12 @@ class Site_base extends Controller {
 			'add' => ucwords(lang('actions_add') .' '. lang('global_rank') .' '. lang('labels_set') .' '. RARROW),
 			'delete' => ucfirst(lang('actions_delete')),
 			'edit' => ucfirst(lang('actions_edit')),
+			'install' => ucfirst(lang('actions_install')),
+			'install_ranks' => ucwords(lang('actions_install') .' '. lang('global_rank') .' '. lang('labels_sets')),
 			'location' => ucfirst(lang('labels_location') .':'),
 			'name' => ucfirst(lang('labels_name')),
 			'no_ranks' => lang('error_no_catalogue_ranks'),
+			'quick_install' => sprintf(lang('text_quick_install'), lang('global_ranks'), lang('global_ranks')),
 			'status' => ucfirst(lang('labels_status')),
 		);
 				
@@ -1322,8 +1428,6 @@ class Site_base extends Controller {
 					
 					/* insert the record */
 					$install_count = $this->sys->add_skin($skin);
-					
-					echo $this->db->last_query();
 
 					foreach ($array['sections'] as $value)
 					{
@@ -3763,6 +3867,7 @@ class Site_base extends Controller {
 				'all' => ucwords(lang('labels_all') .' '. lang('labels_updates')),
 				'major' => ucwords(lang('status_major') .' '. lang('labels_updates') .' '. lang('labels_only')) .' (1.0, 2.0, etc.)',
 				'minor' => ucwords(lang('status_minor') .' '. lang('labels_updates') .' '. lang('labels_only')) .' (1.1, 1.2, etc.)',
+				'update' => ucwords(lang('status_incremental') .' '. lang('labels_updates') .' '. lang('labels_only')) .' (1.0.1, 1.0.2, etc.)',
 				'none' => ucwords(lang('labels_no') .' '. lang('labels_updates'))
 			);
 			

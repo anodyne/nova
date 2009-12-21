@@ -755,6 +755,18 @@ class Admin_base extends Controller {
 					
 					break;
 					
+				case 'update':
+				
+					if ($array['version_update'] > $version['files']['update'] || $array['version_update'] > $version['database']['update'])
+					{
+						$update['version']		= $array['version'];
+						$update['notes']		= $array['notes'];
+						$update['severity']		= $array['severity'];
+						$update['link']			= $array['link'];
+					}
+					
+					break;
+					
 				case 'all':
 				
 					if (version_compare($version['files']['full'], $array['version'], '<') || version_compare($version['database']['full'], $array['version'], '<'))
@@ -793,7 +805,7 @@ class Admin_base extends Controller {
 					lang_output('update_available'),
 					APP_NAME,
 					$update['version'],
-					APP_NAME
+					''
 				);
 			}
 			else
