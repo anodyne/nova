@@ -55,7 +55,8 @@ body {
 	line-height: 18px;
 	
 	-moz-border-radius: 0 0 5px 5px;
-	-webkit-border-radius: 0 0 5px 5px;
+	-webkit-border-bottom-left-radius: 5px;
+	-webkit-border-bottom-right-radius: 5px;
 	
 	background: #111;
 	border-bottom: 1px solid #444;

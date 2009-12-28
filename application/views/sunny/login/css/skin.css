@@ -53,7 +53,8 @@ body {
 	border: 0 !important;
 	
 	-moz-border-radius: 8px 8px 0 0;
-	-webkit-border-radius: 8px 8px 0 0;
+	-webkit-border-top-left-radius: 8px;
+	-webkit-border-top-right-radius: 8px;
 }
 
 .logo {
@@ -98,7 +99,8 @@ body {
 	border-right: 0 !important;
 	
 	-moz-border-radius: 0 0 8px 8px;
-	-webkit-border-radius: 0 0 8px 8px;
+	-webkit-border-bottom-left-radius: 8px;
+	-webkit-border-bottom-right-radius: 8px;
 }
 
 /*
