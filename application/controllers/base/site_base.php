@@ -2222,7 +2222,7 @@ class Site_base extends Controller {
 				'class' => 'image',
 				'alt' => ''),
 			'cats' => array(
-				'src' => img_location('forms-section.png', $this->skin, 'admin'),
+				'src' => img_location('category.png', $this->skin, 'admin'),
 				'class' => 'image inline_img_left',
 				'alt' => ''),
 		);
@@ -2461,15 +2461,15 @@ class Site_base extends Controller {
 		/* build the images array */
 		$data['images'] = array(
 			'add' => array(
-				'src' => img_location('forms-section-add.png', $this->skin, 'admin'),
+				'src' => img_location('category-add.png', $this->skin, 'admin'),
 				'class' => 'image inline_img_left',
 				'alt' => ''),
 			'edit' => array(
-				'src' => img_location('forms-section-edit.png', $this->skin, 'admin'),
+				'src' => img_location('category-edit.png', $this->skin, 'admin'),
 				'class' => 'image',
 				'alt' => ''),
 			'delete' => array(
-				'src' => img_location('forms-section-delete.png', $this->skin, 'admin'),
+				'src' => img_location('category-delete.png', $this->skin, 'admin'),
 				'class' => 'image',
 				'alt' => ''),
 			'menu' => array(
