@@ -8,22 +8,15 @@ Beta (0.9.0)
 
 Last Update
 -----------
-18 December 2009
+28 December 2009
 
 Latest Changes
 --------------
-* updated the update controller to always check for any updates from the check method
-* updated the update check to allow checking only incremental updates (1.0.1, 1.0.2, etc)
-* updated the language files
-* updated the basic install data files
-* updated the version.yml file
-* updated the rank catalogue to be able to handle quick installs
-* updated the install controller to be able to handle quick installs during installation
-* updated the upgrade controller to be able to handle quick installs during an sms upgrade
-* removed the simplepie library
-* added rank.yml file to the default bsg rank set
-* added skin.yml file to the lightness skin
-* added skin.yml file to the sunny skin
+* added category icons
+* updated manage/newscats with new category icons
+* updated site/menus with new category icons
+* fixed bug in the admin control panel where the update notification text was wrong
+* fixed bug where safari didn't respect -webkit-border-radius with multiple parameters
 
 Known Issues
 ------------

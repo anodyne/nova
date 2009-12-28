@@ -1,3 +1,21 @@
+12.28.2009
+
+* added category icons
+
+* updated manage/newscats with new category icons
+* updated site/menus with new category icons
+
+* fixed bug in the admin control panel where the update notification text was wrong
+* fixed bug where safari didn't respect -webkit-border-radius with multiple parameters
+
+==========
+
+12.27.2009
+
+* updated the language files
+
+==========
+
 12.18.2009
 
 * updated the update controller to always check for any updates from the check method
