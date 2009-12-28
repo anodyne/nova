@@ -2371,7 +2371,7 @@ class Manage_base extends Controller {
 		
 		$data['images'] = array(
 			'add' => array(
-				'src' => img_location('icon-add.png', $this->skin, 'admin'),
+				'src' => img_location('category-add.png', $this->skin, 'admin'),
 				'alt' => '')
 		);
 		
