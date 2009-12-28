@@ -378,7 +378,7 @@ class Admin_base extends Controller {
 					lang_output('update_available'),
 					APP_NAME,
 					$check['update']['version'],
-					APP_NAME
+					''
 				);
 				$data['update']['version_only'] = $check['update']['version'];
 				$data['update']['desc'] = $check['update']['notes'];
