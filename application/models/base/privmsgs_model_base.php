@@ -52,13 +52,6 @@ class Privmsgs_model_base extends Model {
 		return $query;
 	}
 	
-	function get_messages_for_id($id = '')
-	{
-		$query = $this->db->get_where('privmsgs_to', array('pmto_message' => $id));
-		
-		return $query;
-	}
-	
 	function get_message_recipients($id = '')
 	{
 		$query = $this->db->get_where('privmsgs_to', array('pmto_message' => $id));
@@ -83,6 +76,13 @@ class Privmsgs_model_base extends Model {
 		$this->db->where('privmsgs_id', $id);
 		
 		$query = $this->db->get();
+		
+		return $query;
+	}
+	
+	function get_messages_for_id($id = '')
+	{
+		$query = $this->db->get_where('privmsgs_to', array('pmto_message' => $id));
 		
 		return $query;
 	}
