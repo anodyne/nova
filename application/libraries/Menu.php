@@ -208,77 +208,54 @@ class Menu {
 		/* load the menu model */
 		$this->ci->load->model('menu_model');
 		
-		/* run the methods */
-		$menu_upper = $this->ci->menu_model->get_admin_menu_active($this->type, $this->cat);
-		$menu_lower = $this->ci->menu_model->get_admin_menu_inactive($this->type, $this->cat);
+		/* get the categories */
+		$categories = $this->ci->menu_model->get_menu_categories('adminsub');
 		
-		if ($menu_upper->num_rows() > 0)
+		/* grab the menu items */
+		$menu = $this->ci->menu_model->get_admin_menu($this->type);
+		
+		if ($categories->num_rows() > 0)
 		{
 			$this->output = '<ul>';
 			
-			foreach ($menu_upper->result() as $item)
+			foreach ($categories->result() as $cat)
 			{
-				if (strstr($this->output, 'li') === FALSE)
+				$this->output.= '<li class="menu_category">'. $cat->menucat_name .'</li>';
+				
+				if ($menu->num_rows() > 0)
 				{
-					$this->output.= '<li class="menu_category">'. $item->menucat_name .'</li>';
+					foreach ($menu->result() as $item)
+					{
+						if ($item->menu_cat == $cat->menucat_menu_cat)
+						{
+							if ($item->menu_group != 0 && $item->menu_order == 0)
+							{
+								$this->output.= '<li class="spacer"></li>';
+							}
+							
+							if ($item->menu_link_type == 'offsite')
+							{
+								$target = ' target="_blank"';
+								$link = $item->menu_link;
+							}
+							else
+							{
+								$target = NULL;
+								$link = site_url($item->menu_link);
+							}
+							
+							$access = $this->ci->auth->check_access($item->menu_access, FALSE);
+							$level = $this->ci->auth->get_access_level($item->menu_access);
+							
+							if (($item->menu_use_access == 'y' && $access === TRUE && ($item->menu_access_level > 0 && $level >= $item->menu_access_level || $item->menu_access_level == 0)) || $item->menu_use_access == 'n')
+							{
+								$this->output.= '<li><a href="' . $link .'"' . $target . '><span>' . $item->menu_name . '</span></a></li>';
+							}
+						}
+					}
 				}
 				
-				if ($item->menu_group != 0 && $item->menu_order == 0)
-				{
-					$this->output.= '<li class="spacer"></li>';
-				}
-				
-				if ($item->menu_link_type == 'offsite')
-				{
-					$target = ' target="_blank"';
-					$link = $item->menu_link;
-				}
-				else
-				{
-					$target = NULL;
-					$link = site_url($item->menu_link);
-				}
-				
-				$access = $this->ci->auth->check_access($item->menu_access, FALSE);
-				$level = $this->ci->auth->get_access_level($item->menu_access);
-				
-				if (($item->menu_use_access == 'y' && $access === TRUE && ($item->menu_access_level > 0 && $level >= $item->menu_access_level || $item->menu_access_level == 0)) || $item->menu_use_access == 'n')
-				{
-					$this->output.= '<li><a href="' . $link .'"' . $target . '><span>' . $item->menu_name . '</span></a></li>';
-				}
-			}
-			
-			foreach ($menu_lower->result() as $item)
-			{
-				if ($item->menu_group != 0 && $item->menu_order == 0)
-				{
-					$this->output.= '<li class="spacer"></li>';
-				}
-				
-				if ($item->menu_link_type == 'offsite')
-				{
-					$target = ' target="_blank"';
-					$link = $item->menu_link;
-				}
-				else
-				{
-					$target = NULL;
-					$link = site_url($item->menu_link);
-				}
-				
-				if ($item->menu_group == 0 && $item->menu_order == 0)
-				{
-					$this->output.= '<li class="spacer">&nbsp;</li>';
-					$this->output.= '<li class="menu_category">'. $item->menucat_name .'</li>';
-				}
-				
-				$access = $this->ci->auth->check_access($item->menu_access, FALSE);
-				$level = $this->ci->auth->get_access_level($item->menu_access);
-				
-				if (($item->menu_use_access == 'y' && $access === TRUE && ($item->menu_access_level > 0 && $level >= $item->menu_access_level || $item->menu_access_level == 0)) || $item->menu_use_access == 'n')
-				{
-					$this->output.= '<li><a href="' . $link .'"' . $target . '><span>' . $item->menu_name . '</span></a></li>';
-				}
+				$this->output.= '<li class="spacer"></li>';
 			}
 			
 			$this->output.= '</ul>';

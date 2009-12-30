@@ -61,9 +61,10 @@ class Menu_model_base extends Model {
 		return $query;
 	}
 	
-	function get_menu_categories()
+	function get_menu_categories($cat = 'sub')
 	{
 		$this->db->from('menu_categories');
+		$this->db->where('menucat_type', $cat);
 		$this->db->order_by('menucat_order', 'asc');
 		
 		$query = $this->db->get();
@@ -91,29 +92,12 @@ class Menu_model_base extends Model {
 		return $query;
 	}
 	
-	function get_admin_menu_active($type = '', $cat = '')
+	function get_admin_menu($type = '')
 	{
 		$this->db->from('menu_items');
 		$this->db->join('menu_categories', 'menu_categories.menucat_menu_cat = menu_items.menu_cat');
 		$this->db->where('menu_type', $type);
-		$this->db->where('menu_cat', $cat);
 		$this->db->where('menu_display', 'y');
-		$this->db->order_by('menu_group', 'asc');
-		$this->db->order_by('menu_order', 'asc');
-		
-		$query = $this->db->get();
-		
-		return $query;
-	}
-	
-	function get_admin_menu_inactive($type = '', $cat = '')
-	{
-		$this->db->from('menu_items');
-		$this->db->join('menu_categories', 'menu_categories.menucat_menu_cat = menu_items.menu_cat');
-		$this->db->where('menu_type', $type);
-		$this->db->where('menu_cat !=', $cat);
-		$this->db->where('menu_display', 'y');
-		$this->db->order_by('menucat_order', 'asc');
 		$this->db->order_by('menu_group', 'asc');
 		$this->db->order_by('menu_order', 'asc');
 		
