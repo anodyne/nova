@@ -4,25 +4,35 @@ Anodyne Production's next-generation RPG management system combines popular feat
 
 Current Version
 ---------------
-Beta (0.9.0)
+Beta (0.9.1-pre)
 
 Last Update
 -----------
-28 December 2009
+30 December 2009
 
 Latest Changes
 --------------
 * added category icons
+* added menu model method to grab the admin sub items
+* added the menuca_type field to the install fields file
 * updated manage/newscats with new category icons
 * updated site/menus with new category icons
+* udpated the ajax controller to allow adding and updating menucat_type
+* updated the ajax view files to allow adding and updating menucat_type
+* updated the menu model to allow filtering menu categories by type
+* updated the menu library with the simplified code in _built_sub_admin()
+* updated the basic install data with information about menu category types
+* updated the private messages model to put the methods in the right order
 * fixed bug in the admin control panel where the update notification text was wrong
 * fixed bug where safari didn't respect -webkit-border-radius with multiple parameters
+* fixed bug where the ui.tabs.css stylesheets used the wrong syntax for webkit border radius
+* removed the get_admin_menu_active() method from the menu model
+* removed the get_admin_menu_inactive() method from the menu model
 
 Known Issues
 ------------
 * Skin display issues in Internet Explorer
 * Text display issues between operating systems
-* Menu sections with no menu items display when they shouldn't
 
 Version History
 ---------------
