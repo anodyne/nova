@@ -636,7 +636,11 @@ $fields_menu_categories = array(
 	'menucat_name' => array(
 		'type' => 'VARCHAR',
 		'constraint' => 100,
-		'default' => '')
+		'default' => ''),
+	'menucat_type' => array(
+		'type' => 'ENUM',
+		'constraint' => "'sub','adminsub'",
+		'default' => 'sub')
 );
 
 $fields_menu_items = array(

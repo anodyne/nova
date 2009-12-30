@@ -705,51 +705,63 @@ $menu_categories = array(
 	array(
 		'menucat_name' => 'Main',
 		'menucat_order' => 0,
-		'menucat_menu_cat' => 'main'),
+		'menucat_menu_cat' => 'main',
+		'menucat_type' => 'sub'),
 	array(
 		'menucat_name' => 'Personnel',
 		'menucat_order' => 1,
-		'menucat_menu_cat' => 'personnel'),
+		'menucat_menu_cat' => 'personnel',
+		'menucat_type' => 'sub'),
 	array(
 		'menucat_name' => 'The Sim',
 		'menucat_order' => 2,
-		'menucat_menu_cat' => 'sim'),
+		'menucat_menu_cat' => 'sim',
+		'menucat_type' => 'sub'),
 	array(
 		'menucat_name' => 'Admin Control Panel',
 		'menucat_order' => 3,
-		'menucat_menu_cat' => 'acp'),
+		'menucat_menu_cat' => 'acp',
+		'menucat_type' => 'adminsub'),
 	array(
 		'menucat_name' => 'Write',
 		'menucat_order' => 4,
-		'menucat_menu_cat' => 'write'),
+		'menucat_menu_cat' => 'write',
+		'menucat_type' => 'adminsub'),
 	array(
 		'menucat_name' => 'Private Messages',
 		'menucat_order' => 5,
-		'menucat_menu_cat' => 'messages'),
+		'menucat_menu_cat' => 'messages',
+		'menucat_type' => 'adminsub'),
 	array(
 		'menucat_name' => 'Site Management',
 		'menucat_order' => 6,
-		'menucat_menu_cat' => 'site'),
+		'menucat_menu_cat' => 'site',
+		'menucat_type' => 'adminsub'),
 	array(
 		'menucat_name' => 'Management',
 		'menucat_order' => 7,
-		'menucat_menu_cat' => 'manage'),
+		'menucat_menu_cat' => 'manage',
+		'menucat_type' => 'adminsub'),
 	array(
 		'menucat_name' => 'Characters',
 		'menucat_order' => 8,
-		'menucat_menu_cat' => 'characters'),
+		'menucat_menu_cat' => 'characters',
+		'menucat_type' => 'adminsub'),
 	array(
 		'menucat_name' => 'User',
 		'menucat_order' => 9,
-		'menucat_menu_cat' => 'user'),
+		'menucat_menu_cat' => 'user',
+		'menucat_type' => 'adminsub'),
 	array(
 		'menucat_name' => 'Reports',
 		'menucat_order' => 10,
-		'menucat_menu_cat' => 'report'),
+		'menucat_menu_cat' => 'report',
+		'menucat_type' => 'adminsub'),
 	array(
 		'menucat_name' => 'Wiki',
 		'menucat_order' => 11,
-		'menucat_menu_cat' => 'wiki'),
+		'menucat_menu_cat' => 'wiki',
+		'menucat_type' => 'sub'),
 );
 
 # TODO: updated data for release
