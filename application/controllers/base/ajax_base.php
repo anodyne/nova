@@ -919,6 +919,12 @@ class Ajax_base extends Controller {
 			'category' => ucfirst(lang('labels_category')),
 			'name' => ucfirst(lang('labels_name')),
 			'order' => ucfirst(lang('labels_order')),
+			'type' => ucfirst(lang('labels_type'))
+		);
+		
+		$data['types'] = array(
+			'sub' => ucwords(lang('labels_sub') .' '. lang('labels_navigation')),
+			'adminsub' => ucwords(lang('labels_admin') .' '. lang('labels_sub') .' '. lang('labels_navigation')),
 		);
 		
 		/* figure out the skin */
@@ -4562,11 +4568,18 @@ class Ajax_base extends Controller {
 		}
 		
 		$data['default']['cat'] = $item->menucat_menu_cat;
+		$data['default']['type'] = $item->menucat_type;
+		
+		$data['types'] = array(
+			'sub' => ucwords(lang('labels_sub') .' '. lang('labels_navigation')),
+			'adminsub' => ucwords(lang('labels_admin') .' '. lang('labels_sub') .' '. lang('labels_navigation')),
+		);
 		
 		$data['label'] = array(
 			'category' => ucfirst(lang('labels_category')),
 			'name' => ucfirst(lang('labels_name')),
 			'order' => ucfirst(lang('labels_order')),
+			'type' => ucfirst(lang('labels_type'))
 		);
 		
 		/* figure out the skin */

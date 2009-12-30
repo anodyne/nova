@@ -2284,6 +2284,7 @@ class Site_base extends Controller {
 					$name = $this->input->post('menucat_name', TRUE);
 					$order = $this->input->post('menucat_order', TRUE);
 					$cat = $this->input->post('menucat_menu_cat', TRUE);
+					$type = $this->input->post('menucat_type', TRUE);
 					
 					if (empty($name) || empty($cat))
 					{
@@ -2306,7 +2307,8 @@ class Site_base extends Controller {
 						$insert_array = array(
 							'menucat_name' => $name,
 							'menucat_order' => $order,
-							'menucat_menu_cat' => $cat
+							'menucat_menu_cat' => $cat,
+							'menucat_type' => $type
 						);
 						
 						/* insert the record */
@@ -2384,6 +2386,7 @@ class Site_base extends Controller {
 					$order = $this->input->post('menucat_order', TRUE);
 					$cat = $this->input->post('menucat_menu_cat', TRUE);
 					$id = $this->input->post('id', TRUE);
+					$type = $this->input->post('menucat_type', TRUE);
 					
 					if (empty($name) || empty($cat))
 					{
@@ -2406,7 +2409,8 @@ class Site_base extends Controller {
 						$update_array = array(
 							'menucat_name' => $name,
 							'menucat_order' => $order,
-							'menucat_menu_cat' => $cat
+							'menucat_menu_cat' => $cat,
+							'menucat_type' => $type
 						);
 						
 						/* insert the record */
