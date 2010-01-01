@@ -2192,7 +2192,7 @@ $system_components = array(
 		'comp_desc' => 'jQuery UI is a lightweight, easily customizable interface library for the jQuery Javascript library.'),
 	array(
 		'comp_name' => 'jQuery ColorBox',
-		'comp_version' => '1.3.3',
+		'comp_version' => '1.3.5',
 		'comp_desc' => "A light-weight, customizable lightbox plugin for jQuery.",
 		'comp_url' => 'http://colorpowered.com/colorbox/'),
 	array(
@@ -2250,6 +2250,11 @@ $system_components = array(
 		'comp_version' => '',
 		'comp_desc' => "YAYparser is a regular expression driven YAML parser that is aimed to be small and easy to use.",
 		'comp_url' => 'http://codeigniter.com/wiki/YAYparser/'),
+	array(
+		'comp_name' => 'jQuery Countdown',
+		'comp_version' => '',
+		'comp_desc' => "A simple plugin that counts down and updates the text every second.",
+		'comp_url' => 'http://davidwalsh.name/jquery-countdown-plugin'),
 );
 
 $system_info = array(
