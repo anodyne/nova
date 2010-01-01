@@ -8,26 +8,17 @@ Beta (0.9.1-pre)
 
 Last Update
 -----------
-30 December 2009
+01 January 2010
 
 Latest Changes
 --------------
-* added category icons
-* added menu model method to grab the admin sub items
-* added the menuca_type field to the install fields file
-* updated manage/newscats with new category icons
-* updated site/menus with new category icons
-* udpated the ajax controller to allow adding and updating menucat_type
-* updated the ajax view files to allow adding and updating menucat_type
-* updated the menu model to allow filtering menu categories by type
-* updated the menu library with the simplified code in _built_sub_admin()
-* updated the basic install data with information about menu category types
-* updated the private messages model to put the methods in the right order
-* fixed bug in the admin control panel where the update notification text was wrong
-* fixed bug where safari didn't respect -webkit-border-radius with multiple parameters
-* fixed bug where the ui.tabs.css stylesheets used the wrong syntax for webkit border radius
-* removed the get_admin_menu_active() method from the menu model
-* removed the get_admin_menu_inactive() method from the menu model
+* updated the basic install files
+* updated the language files
+* updated some of the login view files
+* updated the colorbox plugin to version 1.3.5
+* updated the login head include to pull in the countdown script
+* added the december 2009 changelog archive
+* added the countdown script
 
 Known Issues
 ------------
