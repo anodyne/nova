@@ -254,6 +254,7 @@ $lang['actions_join']			= 'join';
 $lang['actions_joined']			= 'joined';
 $lang['actions_loading']		= 'loading';
 $lang['actions_login']			= 'login';
+$lang['actions_logout']			= 'logout';
 $lang['actions_manage']			= 'manage';
 $lang['actions_managed']		= 'managed';
 $lang['actions_moderate']		= 'moderate';
@@ -538,6 +539,7 @@ $lang['logout_message'] = 'You have successfully logged out. You can %s or proce
 $lang['login_questions_selectone'] = 'Please select your security question';
 $lang['login_reset_message'] = "Please provide your email address, security question, and answer to reset your password. Once you have reset your password, your new one will be emailed to you and you will be prompted to change it the next time you log in.";
 $lang['login_message'] = 'Login successful. Redirecting to %s in 5 seconds...';
+$lang['login_forgot'] = 'Forgot your password?';
 
 /*
 |---------------------------------------------------------------
