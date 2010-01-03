@@ -3460,7 +3460,7 @@ $system_info = array(
 		'sys_install_date' => now(),
 		'sys_version_major' => 0,
 		'sys_version_minor' => 9,
-		'sys_version_update' => 0)
+		'sys_version_update' => 1)
 );
 
 $system_versions = array(
@@ -3507,10 +3507,10 @@ $system_versions = array(
 		'version_update' => '0',
 		'version_date' => 1258005600),
 	array(
-		'version' => '0.9.0',
+		'version' => '0.9.1',
 		'version_major' => '0',
 		'version_minor' => '9',
-		'version_update' => '0',
+		'version_update' => '1',
 		'version_date' => now()),
 );
 
