@@ -498,7 +498,7 @@ class Write_base extends Controller {
 							$insert_id = $this->db->insert_id();
 							
 							/* optimize the table */
-							this->sys->optimize_table('personallogs');
+							$this->sys->optimize_table('personallogs');
 							
 							if ($insert > 0)
 							{
