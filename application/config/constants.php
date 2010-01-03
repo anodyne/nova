@@ -66,7 +66,7 @@ define('APP_NAME',				'Nova');
 define('APP_VERSION',			'Beta');
 define('APP_VERSION_MAJOR',		0);
 define('APP_VERSION_MINOR',		9);
-define('APP_VERSION_UPDATE',	0);
+define('APP_VERSION_UPDATE',	2);
 
 define('WIKI_NAME',				'Thresher');
 define('WIKI_VERSION',			'Release 1');
@@ -74,6 +74,7 @@ define('WIKI_VERSION',			'Release 1');
 define('SMS_UPGRADE_VERSION',	'2.6.9');
 
 define('VERSION_FEED',			APPPATH . 'assets/version.yml');
+//define('VERSION_FEED',				'http://www.anodyne-productions.com/feeds/version_nova.yml');
 
 # TODO: remove this before final release
 define('APP_DATA_SRC',			'dev'); /* options for data source are dev and basic */
