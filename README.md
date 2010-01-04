@@ -4,21 +4,18 @@ Anodyne Production's next-generation RPG management system combines popular feat
 
 Current Version
 ---------------
-Beta (0.9.1-pre)
+Beta (0.9.2-pre)
 
 Last Update
 -----------
-01 January 2010
+03 January 2010
 
 Latest Changes
 --------------
-* updated the basic install files
-* updated the language files
-* updated some of the login view files
-* updated the colorbox plugin to version 1.3.5
-* updated the login head include to pull in the countdown script
-* added the december 2009 changelog archive
-* added the countdown script
+* fixed bug in write controller with a missing $
+* fixed bug with wrong link to the edit character bio page when viewing a character bio
+* updated the basic install data
+* updated some of the system constants
 
 Known Issues
 ------------
