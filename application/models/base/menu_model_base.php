@@ -61,10 +61,15 @@ class Menu_model_base extends Model {
 		return $query;
 	}
 	
-	function get_menu_categories($cat = 'sub')
+	function get_menu_categories($type = '')
 	{
 		$this->db->from('menu_categories');
-		$this->db->where('menucat_type', $cat);
+		
+		if (!empty($type))
+		{
+			$this->db->where('menucat_type', $type);
+		}
+		
 		$this->db->order_by('menucat_order', 'asc');
 		
 		$query = $this->db->get();
