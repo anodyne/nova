@@ -46,29 +46,25 @@ class Tour_model_base extends Model {
 		return $query;
 	}
 	
-	function get_tour_items($display = 'y')
+	function get_tour_data($item = '', $field = '')
 	{
-		$this->db->from('tour');
+		$this->db->from('tour_data');
+		$this->db->where('data_tour_item', $item);
+		$this->db->where('data_field', $field);
 		
-		if (!empty($display))
+		$query = $this->db->get();
+		
+		if ($query->num_rows() > 0)
 		{
-			$this->db->where('tour_display', $display);
+			return $query->row();
 		}
 		
-		$this->db->order_by('tour_order', 'asc');
-		
-		$query = $this->db->get();
-		
-		return $query;
+		return FALSE;
 	}
 	
-	function get_tour_item($id = '')
+	function get_tour_field_details($id = '')
 	{
-		$this->db->from('tour');
-		$this->db->where('tour_id', $id);
-		$this->db->limit(1);
-		
-		$query = $this->db->get();
+		$query = $this->db->get_where('tour_fields', array('field_id' => $id));
 		
 		return $query;
 	}
@@ -94,11 +90,27 @@ class Tour_model_base extends Model {
 		return $query;
 	}
 	
-	function get_tour_values($field = '')
+	function get_tour_item($id = '')
 	{
-		$this->db->from('tour_values');
-		$this->db->where('value_field', $field);
-		$this->db->order_by('value_order', 'asc');
+		$this->db->from('tour');
+		$this->db->where('tour_id', $id);
+		$this->db->limit(1);
+		
+		$query = $this->db->get();
+		
+		return $query;
+	}
+	
+	function get_tour_items($display = 'y')
+	{
+		$this->db->from('tour');
+		
+		if (!empty($display))
+		{
+			$this->db->where('tour_display', $display);
+		}
+		
+		$this->db->order_by('tour_order', 'asc');
 		
 		$query = $this->db->get();
 		
@@ -112,25 +124,13 @@ class Tour_model_base extends Model {
 		return $query;
 	}
 	
-	function get_tour_data($item = '', $field = '')
+	function get_tour_values($field = '')
 	{
-		$this->db->from('tour_data');
-		$this->db->where('data_tour_item', $item);
-		$this->db->where('data_field', $field);
+		$this->db->from('tour_values');
+		$this->db->where('value_field', $field);
+		$this->db->order_by('value_order', 'asc');
 		
 		$query = $this->db->get();
-		
-		if ($query->num_rows() > 0)
-		{
-			return $query->row();
-		}
-		
-		return FALSE;
-	}
-	
-	function get_tour_field_details($id = '')
-	{
-		$query = $this->db->get_where('tour_fields', array('field_id' => $id));
 		
 		return $query;
 	}
@@ -155,18 +155,18 @@ class Tour_model_base extends Model {
 		return $query;
 	}
 	
-	function add_tour_field_value($data = '')
-	{
-		$query = $this->db->insert('tour_values', $data);
-		
-		return $query;
-	}
-	
 	function add_tour_field_data($data = '')
 	{
 		$query = $this->db->insert('tour_data', $data);
 		
 		$this->dbutil->optimize_table('tour_data');
+		
+		return $query;
+	}
+	
+	function add_tour_field_value($data = '')
+	{
+		$query = $this->db->insert('tour_values', $data);
 		
 		return $query;
 	}
@@ -193,20 +193,20 @@ class Tour_model_base extends Model {
 		return $query;
 	}
 	
-	function delete_tour_field_data($field = '')
-	{
-		$query = $this->db->delete('tour_data', array('data_field' => $field));
-		
-		$this->dbutil->optimize_table('tour_data');
-		
-		return $query;
-	}
-	
 	function delete_tour_field($id = '')
 	{
 		$query = $this->db->delete('tour_fields', array('field_id' => $id));
 		
 		$this->dbutil->optimize_table('tour_fields');
+		
+		return $query;
+	}
+	
+	function delete_tour_field_data($field = '')
+	{
+		$query = $this->db->delete('tour_data', array('data_field' => $field));
+		
+		$this->dbutil->optimize_table('tour_data');
 		
 		return $query;
 	}

@@ -250,6 +250,19 @@ class System_model_base extends Model {
 		return $row;
 	}
 	
+	function get_skin_section_info($id = '', $field = 'skinsec_section')
+	{
+		$this->db->from('catalogue_skinsecs');
+		$this->db->where($field, $id);
+		$this->db->limit(1);
+		
+		$query = $this->db->get();
+		
+		$row = ($query->num_rows() > 0) ? $query->row() : FALSE;
+		
+		return $row;
+	}
+	
 	function get_skin_sections($id = '', $status = 'active')
 	{
 		$this->db->from('catalogue_skinsecs');
@@ -292,19 +305,6 @@ class System_model_base extends Model {
 		$query = $this->db->get();
 		
 		return $query;
-	}
-	
-	function get_skin_section_info($id = '', $field = 'skinsec_section')
-	{
-		$this->db->from('catalogue_skinsecs');
-		$this->db->where($field, $id);
-		$this->db->limit(1);
-		
-		$query = $this->db->get();
-		
-		$row = ($query->num_rows() > 0) ? $query->row() : FALSE;
-		
-		return $row;
 	}
 	
 	function get_skinsec($where = '')
@@ -445,10 +445,10 @@ class System_model_base extends Model {
 		return $query;
 	}
 	
-	function update_my_links($id = '', $status = 'active')
+	function update_my_links($id = '', $status = 'active', $items = '75')
 	{
 		/* sets the default to Site Options link */
-		$update = array('my_links' => '75');
+		$update = array('my_links' => $items);
 		
 		if (!empty($id))
 		{
@@ -570,6 +570,12 @@ class System_model_base extends Model {
 		
 		return $query;
 	}
+	
+	/*
+	|---------------------------------------------------------------
+	| MISC METHODS
+	|---------------------------------------------------------------
+	*/
 	
 	function optimize_table($table = '')
 	{

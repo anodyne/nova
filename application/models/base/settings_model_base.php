@@ -28,6 +28,51 @@ class Settings_model_base extends Model {
 	|---------------------------------------------------------------
 	*/
 	
+	function get_all_settings($user = 'n')
+	{
+		$this->db->from('settings');
+		$this->db->where('setting_user_created', $user);
+		
+		$query = $this->db->get();
+		
+		return $query;
+	}
+	
+	function get_setting($value = '')
+	{
+		$query = $this->db->get_where('settings', array('setting_key' => $value));
+		
+		if ($query->num_rows() > 0)
+		{ /* if there is at least 1 row in the result */
+			$row = $query->row();
+			
+			return $row->setting_value;
+		}
+		
+		return FALSE;
+	}
+	
+	function get_setting_details($value = '', $identifier = 'setting_key')
+	{
+		$query = $this->db->get_where('settings', array($identifier => $value));
+		
+		return $query;
+	}
+	
+	function get_setting_label($value = '', $identifier = 'setting_key')
+	{
+		$query = $this->db->get_where('settings', array($identifier => $value));
+		
+		if ($query->num_rows() > 0)
+		{ /* if there is at least 1 row in the result */
+			$row = $query->row();
+			
+			return $row->setting_label;
+		}
+		
+		return FALSE;
+	}
+	
 	function get_settings($value = '')
 	{
 		$array = FALSE;
@@ -57,51 +102,6 @@ class Settings_model_base extends Model {
 		
 		/* return the final settings array */
 		return $array;
-	}
-	
-	function get_setting($value = '')
-	{
-		$query = $this->db->get_where('settings', array('setting_key' => $value));
-		
-		if ($query->num_rows() > 0)
-		{ /* if there is at least 1 row in the result */
-			$row = $query->row();
-			
-			return $row->setting_value;
-		}
-		
-		return FALSE;
-	}
-	
-	function get_setting_label($value = '', $identifier = 'setting_key')
-	{
-		$query = $this->db->get_where('settings', array($identifier => $value));
-		
-		if ($query->num_rows() > 0)
-		{ /* if there is at least 1 row in the result */
-			$row = $query->row();
-			
-			return $row->setting_label;
-		}
-		
-		return FALSE;
-	}
-	
-	function get_setting_details($value = '', $identifier = 'setting_key')
-	{
-		$query = $this->db->get_where('settings', array($identifier => $value));
-		
-		return $query;
-	}
-	
-	function get_all_settings($user = 'n')
-	{
-		$this->db->from('settings');
-		$this->db->where('setting_user_created', $user);
-		
-		$query = $this->db->get();
-		
-		return $query;
 	}
 	
 	function get_sim_types($start_id = 2)
