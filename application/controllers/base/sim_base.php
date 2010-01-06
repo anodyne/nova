@@ -221,7 +221,7 @@ class Sim_base extends Controller {
 								break;
 								
 							case 'ooc':
-								$data['awardees'][$i]['person'] = $this->user->get_user_name($item->awardrec_user);
+								$data['awardees'][$i]['person'] = $this->user->get_user($item->awardrec_user, 'name');
 								break;
 						}
 						

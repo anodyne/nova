@@ -4404,7 +4404,7 @@ class Site_base extends Controller {
 						{
 							foreach ($values->result() as $value)
 							{
-								$delete_values = $this->specs->delete_spec_value($value->value_id);
+								$delete_values = $this->specs->delete_spec_field_value($value->value_id);
 							}
 						}
 						

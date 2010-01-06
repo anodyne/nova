@@ -1920,8 +1920,7 @@ class Characters_base extends Controller {
 				$email_data['basic_title'] = lang('tabs_user_basic');
 				
 				/* build the user data array */
-				$user_data = $this->user->get_user_details($data['user']);
-				$p_data = $user_data->row();
+				$p_data = $this->user->get_user($data['user']);
 				
 				$email_data['user'] = array(
 					array(

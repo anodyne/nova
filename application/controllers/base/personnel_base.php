@@ -160,9 +160,6 @@ class Personnel_base extends Controller {
 									$c = 1;
 									foreach ($characters->result() as $char)
 									{
-										/* get user info */
-										$user = $this->user->get_user_details($char->user);
-										
 										/* grab the rank data we need */
 										$rankdata = $this->ranks->get_rank($char->rank, array('rank_name', 'rank_image'));
 										
@@ -726,7 +723,7 @@ class Personnel_base extends Controller {
 		$this->load->model('missions_model', 'mis');
 		
 		/* run the methods */
-		$info = $this->user->get_user_details($user);
+		$row = $this->user->get_user($user);
 		$charinfo = array(
 			'active' => $this->char->get_user_characters($user),
 			'inactive' => $this->char->get_user_characters($user, 'inactive'),
@@ -737,11 +734,8 @@ class Personnel_base extends Controller {
 		/* set the datestring */
 		$datestring = $this->options['date_format'];
 		
-		if ($info->num_rows() > 0)
+		if ($row !== FALSE)
 		{
-			/* grab the row info */
-			$row = $info->row();
-			
 			/* calculate the timezone difference */
 			$pl_timezone = timezones($row->timezone);
 			$my_timezone = timezones($this->timezone);
@@ -1058,14 +1052,11 @@ class Personnel_base extends Controller {
 		{
 			case 'u':
 				/* run the model methods */
-				$user = $this->user->get_user_details($id);
+				$item = $this->user->get_user($id);
 				$data['user'] = $id;
 
-				if ($user->num_rows() > 0)
+				if ($item !== FALSE)
 				{
-					/* drop the object into a variable */
-					$item = $user->row();
-					
 					/* get the awards info */
 					$awards = $this->awards->get_awards_for_id($id, 'user');
 					
@@ -1277,13 +1268,11 @@ class Personnel_base extends Controller {
 		{
 			case 'u':
 				/* run the model methods */
-				$user = $this->user->get_user_details($id);
+				$row = $this->user->get_user($id);
 				$data['user'] = $id;
 				
-				if ($user->num_rows() > 0)
-				{ /* if there is a character, run the method and continue */
-					$row = $user->row();
-					
+				if ($row !== FALSE)
+				{
 					/* get the user's characters */
 					$characters = $this->char->get_user_characters($row->userid, 'active', 'array');
 					
@@ -1442,13 +1431,11 @@ class Personnel_base extends Controller {
 		{
 			case 'u':
 				/* run the model methods */
-				$user = $this->user->get_user_details($id);
+				$row = $this->user->get_user($id);
 				$data['user'] = $id;
 				
-				if ($user->num_rows() > 0)
-				{ /* if there is a character, run the method and continue */
-					$row = $user->row();
-					
+				if ($row !== FALSE)
+				{
 					/* get the user's characters */
 					$characters = $this->char->get_user_characters($row->userid, 'active', 'array');
 					
