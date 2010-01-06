@@ -8,14 +8,27 @@ Beta (0.9.2-pre)
 
 Last Update
 -----------
-03 January 2010
+06 January 2010
 
 Latest Changes
 --------------
-* fixed bug in write controller with a missing $
-* fixed bug with wrong link to the edit character bio page when viewing a character bio
-* updated the basic install data
-* updated some of the system constants
+* updated the debug helper with more functions
+* updated the utility browser hook with a new redirect URL (won't work until 1 March)
+* updated the system model to organize the methods alphabetically
+* updated the specs model to organize the methods alphabetically
+* updated the site controller to use a different model method
+* updated the system model to allow update_my_links to be passed the items to put in the my links field
+* updated the tour model to organize the methods alphabetically
+* updated the users model to organize the methods alphabetically
+* updated the controllers to stop using get_user_details model method
+* updated the controllers to stop using get_user_name and use get_user instead
+* removed a duplicated method from the specifications model
+* removed the is_sysadmin method from the users model
+* removed the verify_sysadmin method from the users model
+* removed the verify_login_details method from the users model
+* removed the get_all_characters method from the users model
+* removed the get_user_details method from the users model
+* removed the get_user_name method from the users model
 
 Known Issues
 ------------
