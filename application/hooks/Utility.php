@@ -29,7 +29,7 @@ class Utility {
 		
 		if ($ci->agent->browser() == 'Internet Explorer' && $ci->agent->version() < 7)
 		{
-			header('Location:http://www.anodyne-productions.com/notice/browser.html');
+			header('Location:http://www.anodyne-productions.com/index.php/nova/browser');
 		}
 	}
 	
