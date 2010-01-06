@@ -29,21 +29,11 @@ class User_panel {
 		$this->ci->load->model('privmsgs_model', 'pm');
 		
 		/* run the methods */
-		$user = $this->ci->user->get_user_details($this->ci->session->userdata('userid'));
+		$user = $this->ci->user->get_user($this->ci->session->userdata('userid'));
 		$count = $this->ci->pm->count_unread_pms($this->ci->session->userdata('userid'));
 		
 		$data['count'] = ($count > 0) ? ' <strong>('. $count .')</strong>' : FALSE;
-		
-		if ($user->num_rows() > 0)
-		{
-			$row = $user->row();
-			
-			$data['name'] = $row->name;
-		}
-		else
-		{
-			$data['name'] = '';
-		}
+		$data['name'] = ($user !== FALSE) ? $user->name : '';
 		
 		$data['label'] = array(
 			'edit_account' => ucwords(lang('actions_edit') .' '. lang('labels_account')),
