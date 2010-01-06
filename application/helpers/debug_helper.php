@@ -26,47 +26,126 @@ if ( ! function_exists('print_var'))
 		if (is_array($variable))
 		{
 			$type = 'array';
-			$title = 'Array Output';
 		}
 		elseif (is_object($variable))
 		{
 			$type = 'object';
-			$title = 'Object Output';
 		}
 		else
 		{
 			$type = 'variable';
-			$title = 'Variable Output';
 		}
 		
-		echo '<div style="background:#eee; border:1px solid #888; color:#444; width:75%; margin:auto;">';
-		echo '<h5 style="font-weight:bold; font-size:1.2em; line-height:1.4em;">' . $title . '</h5>';
+		echo _before();
 		
 		switch ($type)
 		{
 			case 'array':
-				echo '<pre>';
 				print_r($variable);
-				echo '</pre>';
-				
 				break;
+				
 			case 'object':
-				echo '<pre>';
 				print_r($variable);
-				echo '</pre>';
-				
 				break;
+				
 			case 'variable':
 				echo $variable;
 				
 				break;
 		}
 		
-		echo '</div>';
+		echo _after();
 	}
 }
 	
-// ------------------------------------------------------------------------
+//------------------------------------------------------------------------------
+
+/**
+ * Outputs the last query
+ *
+ * @return    string
+ */
+if ( ! function_exists('last_query'))
+{
+    function last_query()
+    {
+        $CI =& get_instance();
+        
+        echo _before();
+        echo $CI->db->last_query();
+        echo _after();
+    }
+}
+
+//------------------------------------------------------------------------------
+
+/**
+* Outputs the query result
+*
+* @param    $query object
+* @return    string
+*/
+if ( ! function_exists('query_result'))
+{
+    function query_result($query = '')
+    {
+        echo _before();
+        
+        print_r($query->result_array());
+        
+        echo _after();
+    }
+}
+
+//------------------------------------------------------------------------------
+
+/**
+ * Outputs all session data
+ *
+ * @return    string
+ */
+if ( ! function_exists('print_session'))
+{
+    function print_session()
+    {
+        $CI =& get_instance();
+        
+        echo _before();
+        print_r($CI->session->all_userdata());
+        echo _after();
+    }
+}
+
+//------------------------------------------------------------------------------
+
+/**
+ * _before
+ *
+ * @return    string
+ */
+function _before()
+{
+    $before = '<div style="padding:10px 20px 10px 20px; background-color:#fbe6f2; border:1px solid #d893a1; color: #000; font-size: 12px;>'."\n";
+    $before .= '<h5 style="font-family:verdana,sans-serif; font-weight:bold; font-size:18px;">Debug Helper Output</h5>'."\n";
+    $before .= '<pre>'."\n";
+    return $before;
+}
+    
+//------------------------------------------------------------------------------
+
+/**
+ * _after
+ *
+ * @return    string
+ */
+function _after()
+{
+    $after = '</pre>'."\n";
+    $after .= '</div>'."\n";
+    return $after;
+}
+
+//------------------------------------------------------------------------------
 
 /* End of file debug_helper.php */
 /* Location: ./application/helpers/debug_helper.php */
