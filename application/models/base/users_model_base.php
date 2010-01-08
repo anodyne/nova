@@ -629,7 +629,7 @@ class Users_model_base extends Model {
 		return $query;
 	}
 	
-	function update_all_users($data = '', $where = array('' => ''))
+	function update_all_users($data = '', $where = '')
 	{
 		if (is_array($where))
 		{
