@@ -65,8 +65,9 @@ $lang['text_loa_request'] = 'Use the form below to notify the game master of any
 $lang['text_preferences'] = 'Nova includes a wide array of options for which emails the system will send you. Change your email preferences below by checking/unchecking the boxes you do/don&rsquo;t want to receive.';
 
 $lang['text_logout'] = 'You must logout and log back in for your changes to be applied.';
+$lang['text_logout_alt'] = 'In order for these changes to be applied the user must log out and log back in.';
 
-$lang['text_link_characters'] = "Nova provides the ability for a single %s to be associated with multiple %s. From this page, you can link %s with a %s account. To add or remove a %s, click on the respective icon. If you want to change the main %s for a %s, click on the star next to the %s name. All changes require the %s to log out and log back in for the changes to be applied.";
+$lang['text_link_characters'] = "Nova provides the ability for a single %s to be associated with multiple %s. From this page, you can link %s with a %s account. To add or remove a %s, click on the respective icon. If you want to change the main %s for a %s, click on the star next to the %s name. <strong>All changes require the %s to log out and log back in for the changes to be applied.</strong>";
 
 $lang['text_award_nomination'] = "Using the fields below, select the %s and %s as well as a short reason why you". RSQUO ."re nominating them. Your submission will be sent to the command staff for their review and approval.";
 
