@@ -801,7 +801,7 @@ class User_base extends Controller {
 								lang('flash_success_plural'),
 								ucfirst(lang('global_user') .' '. lang('global_characters')),
 								lang('actions_updated'),
-								' '. lang('text_logout')
+								' '. lang('text_logout_alt')
 							);
 		
 							$flash['status'] = 'success';
@@ -887,7 +887,7 @@ class User_base extends Controller {
 								lang('flash_success_plural'),
 								ucfirst(lang('global_user') .' '. lang('global_characters')),
 								lang('actions_updated'),
-								' '. lang('text_logout')
+								' '. lang('text_logout_alt')
 							);
 		
 							$flash['status'] = 'success';
@@ -935,7 +935,7 @@ class User_base extends Controller {
 								lang('flash_success_plural'),
 								ucfirst(lang('global_user') .' '. lang('global_characters')),
 								lang('actions_updated'),
-								' '. lang('text_logout')
+								' '. lang('text_logout_alt')
 							);
 		
 							$flash['status'] = 'success';
