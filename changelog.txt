@@ -1,3 +1,12 @@
+01.08.2010
+
+* updated the language files
+* updated the link characters page to use a slightly different flash message on linking characters success
+
+* fixed bug with missing where parameters in step 14 of the upgrade process
+
+==========
+
 01.06.2010
 
 * updated the site controller to use a different model method
