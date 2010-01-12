@@ -2,7 +2,9 @@ skin: Lightness
 location: lightness
 credits: Skin created by David VanScott and based on jQuery UI Lightness theme created by the jQuery UI team. Edits are permissible as long as original credits stay intact.
 sections:
-    - type: main
-      preview: preview-main.png
-    - type: admin
-      preview: preview-admin.png
+  -
+    type: main
+    preview: preview-main.png
+  -
+    type: admin
+    preview: preview-admin.png
