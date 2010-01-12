@@ -731,20 +731,10 @@ class Characters_base extends Controller {
 		$data['header'] = ucwords(lang('actions_give') .'/'. ucfirst(lang('actions_remove')) .' '. lang('global_awards'));
 		
 		$data['images'] = array(
-			'view' => array(
-				'src' => img_location('icon-view.png', $this->skin, 'admin'),
-				'alt' => lang('actions_view'),
-				'title' => ucfirst(lang('actions_view')),
-				'class' => 'image'),
 			'remove' => array(
 				'src' => img_location('icon-delete.png', $this->skin, 'admin'),
 				'alt' => lang('actions_remove'),
 				'title' => ucfirst(lang('actions_remove')),
-				'class' => 'image'),
-			'give' => array(
-				'src' => img_location('icon-star.png', $this->skin, 'admin'),
-				'alt' => lang('actions_give'),
-				'title' => ucfirst(lang('actions_give')),
 				'class' => 'image'),
 			'loading' => array(
 				'src' => img_location('loading-circle.gif', $this->skin, 'admin'),

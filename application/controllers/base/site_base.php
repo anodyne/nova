@@ -1354,7 +1354,7 @@ class Site_base extends Controller {
 				'class' => 'image',
 				'alt' => ucfirst(lang('actions_delete'))),
 			'default' => array(
-				'src' => img_location('mail-unread.png', $this->skin, 'admin'),
+				'src' => img_location('icon-green-small.png', $this->skin, 'admin'),
 				'alt' => '*',
 				'class' => 'image')
 		);

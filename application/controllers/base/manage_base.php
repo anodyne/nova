@@ -3822,7 +3822,7 @@ class Manage_base extends Controller {
 		
 		$data['images'] = array(
 			'form' => array(
-				'src' => img_location('forms-field-add.png', $this->skin, 'admin'),
+				'src' => img_location('forms-field.png', $this->skin, 'admin'),
 				'alt' => '',
 				'class' => 'image'),
 			'edit' => array(
