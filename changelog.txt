@@ -1,3 +1,30 @@
+01.12.2010
+
+* updated the skin.yml files to remove tabs (bad YAML form)
+* updated the tour management page to use the right icon
+* updated the characters controller to remove some unused code
+* updated the rank catalogue to use the proper icon
+* updated forms-field.png
+* updated forms-field-add.png
+* updated forms-field-delete.png
+* updated forms-field-edit.png
+* updated forms-section.png
+* updated forms-section-add.png
+* updated forms-section-delete.png
+* updated forms-section-edit.png
+* updated menu.png
+* updated menu-add.png
+* updated menu-delete.png
+* updated menu-edit.png
+
+* removed message.png (not used anywhere)
+* removed tour.png (not used anywhere)
+* removed image.png (not used anywhere)
+* removed image-delete.png (not used anywhere)
+* removed catalogue.png (not used anywhere)
+
+==========
+
 01.08.2010
 
 * updated the language files
