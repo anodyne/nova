@@ -219,6 +219,9 @@ class Admin_base extends Controller {
 		$now = now();
 		$threshold = $now - ($this->options['posting_requirement'] * 86400);
 		
+		/* set activity as an empty array to avoid errors */
+		$data['activity'] = array();
+		
 		if ($all->num_rows() > 0)
 		{
 			foreach ($all->result() as $a)
