@@ -19,7 +19,7 @@
 				$('#countdown').countDown({
 					startNumber: 5,
 					startFontSize: '1em',
-					endFontSize: '1em',
+					endFontSize: '1em'
 				});
 			});
 		</script>
