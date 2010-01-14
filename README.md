@@ -4,35 +4,31 @@ Anodyne Production's next-generation RPG management system combines popular feat
 
 Current Version
 ---------------
-Beta (0.9.2)
+Beta (0.9.3-pre)
 
 Last Update
 -----------
-12 January 2010
+14 January 2010
 
 Latest Changes
 --------------
-* updated the skin.yml files to remove tabs (bad YAML form)
-* updated the tour management page to use the right icon
-* updated the characters controller to remove some unused code
-* updated the rank catalogue to use the proper icon
-* updated forms-field.png
-* updated forms-field-add.png
-* updated forms-field-delete.png
-* updated forms-field-edit.png
-* updated forms-section.png
-* updated forms-section-add.png
-* updated forms-section-delete.png
-* updated forms-section-edit.png
-* updated menu.png
-* updated menu-add.png
-* updated menu-delete.png
-* updated menu-edit.png
-* removed message.png (not used anywhere)
-* removed tour.png (not used anywhere)
-* removed image.png (not used anywhere)
-* removed image-delete.png (not used anywhere)
-* removed catalogue.png (not used anywhere)
+* added category-add.png to wiki
+* added category-delete.png to wiki
+* added category-edit.png to wiki
+* removed icon-add.png from wiki
+* removed icon-delete.png from wiki
+* removed icon-edit.png from wiki
+* removed some debug code
+* updated the wiki controller to use the new category icons
+* updated the redmond skin
+* updated the basic install data
+* updated the constants config file
+* updated the language files
+* updated the lightness skin
+* updated the sunny skin
+* fixed IE bug with the countdown script on login and logout
+* fixed IE bug where text reverted to arial instead of inheriting the global font
+* fixed IE bug where the admin panel was messed up
 
 Known Issues
 ------------
