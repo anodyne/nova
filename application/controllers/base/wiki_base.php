@@ -387,13 +387,13 @@ class Wiki_base extends Controller {
 		
 		$data['images'] = array(
 			'add' => array(
-				'src' => img_location('icon-add.png', $this->skin, 'wiki'),
+				'src' => img_location('category-add.png', $this->skin, 'wiki'),
 				'alt' => ''),
 			'delete' => array(
-				'src' => img_location('icon-delete.png', $this->skin, 'wiki'),
+				'src' => img_location('category-delete.png', $this->skin, 'wiki'),
 				'alt' => ''),
 			'edit' => array(
-				'src' => img_location('icon-edit.png', $this->skin, 'wiki'),
+				'src' => img_location('category-edit.png', $this->skin, 'wiki'),
 				'alt' => ''),
 		);
 		
