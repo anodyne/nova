@@ -534,11 +534,11 @@ $lang['labels_your'] 			= 'your';
 $lang['login_proceed'] = 'You must provide your email address and password to proceed!';
 $lang['login_error_incorrect'] = 'Either your username and/or password are incorrect. Please try again.';
 $lang['login_instructions'] = 'Login with your email address and password below. If you have forgotten your password, you can reset your password using the link below and a new password will be emailed to you.';
-$lang['login_redirect'] = 'Login successful. Redirecting to Control Panel in <span id="countdown"></span> seconds...';
-$lang['logout_message'] = 'You have successfully logged out. You can %s or proceed to the %s. You will be redirected in <span id="countdown"></span> seconds.';
+$lang['login_redirect'] = 'Login successful. Redirecting to Control Panel in <span id="countdown"></span>&nbsp;seconds...';
+$lang['logout_message'] = 'You have successfully logged out. You can %s or proceed to the %s. You will be redirected in <span id="countdown"></span>&nbsp;seconds.';
 $lang['login_questions_selectone'] = 'Please select your security question';
 $lang['login_reset_message'] = "Please provide your email address, security question, and answer to reset your password. Once you have reset your password, your new one will be emailed to you and you will be prompted to change it the next time you log in.";
-$lang['login_message'] = 'Login successful. Redirecting to %s in <span id="countdown"></span> seconds...';
+$lang['login_message'] = 'Login successful. Redirecting to %s in <span id="countdown"></span>&nbsp;seconds...';
 $lang['login_forgot'] = 'Forgot your password?';
 
 /*
