@@ -1,20 +1,20 @@
 <?php
 /*
 |---------------------------------------------------------------
-| TEMPLATE - ADMIN
+| TEMPLATE - WIKI
 |---------------------------------------------------------------
 |
-| File: application/views/redmond/template_admin.php
+| File: application/views/redmon/template_wiki.php
 | Skin Version: 1.0
 |
-| Main layout file used by the redmond skin.
+| Wiki layout file used by the redmond skin.
 |
 | $sec options are: main, wiki, admin, login
 | $css can be anything you want (with a .css extension of course)
 |
 */
 
-$sec = 'admin'; /* set the section of the system */
+$sec = 'wiki'; /* set the section of the system */
 $css = 'main.css'; /* the name of the main css file */
 
 $path_raw = dirname(__FILE__); /* absolute path of the current file */
@@ -72,7 +72,7 @@ echo "<?xml version='1.0' encoding='UTF-8'?>\r\n";
 		<?php echo link_tag($link); ?>
 		
 		<!-- JAVASCRIPT FILES -->
-		<?php include_once($this->config->item('include_head_admin')); ?>
+		<?php include_once($this->config->item('include_head_wiki')); ?>
 		
 		<?php echo $javascript;?>
 		
@@ -101,7 +101,7 @@ echo "<?xml version='1.0' encoding='UTF-8'?>\r\n";
 					<div class="system_warning ui-state-error"><?php echo lang_output('text_javascript_off', '');?></div>
 				</span>
 			</noscript>
-			
+		
 			<?php if ($this->auth->is_logged_in()): ?>
 				<!-- USER PANEL -->
 				<div id="panel">
@@ -141,7 +141,8 @@ echo "<?xml version='1.0' encoding='UTF-8'?>\r\n";
 					<?php echo $title;?>
 				</div>
 			</div>
-		
+			
+			<!-- BODY -->
 			<div id="body" class="wrapper clearfix">
 				<!-- SUB NAVIGATION -->
 				<div class="nav-sub">
@@ -161,8 +162,7 @@ echo "<?xml version='1.0' encoding='UTF-8'?>\r\n";
 		
 		<!-- FOOTER -->
 		<div id="footer">
-			Powered by <strong><?php echo APP_NAME;?></strong> from <a href="http://www.anodyne-productions.com" target="_blank">Anodyne Productions</a> | 
-			<?php echo anchor('main/credits', 'Site Credits');?>
+			Powered by <strong><?php echo APP_NAME;?></strong> &amp; <strong><?php echo WIKI_NAME;?></strong>
 		</div>
 	</body>
 </html>

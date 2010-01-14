@@ -19,14 +19,23 @@
 }
 
 #one, #two, #three, #four, #five,
-#six, #seven, #eight, #nine, #ten { clear: left; }
+#six, #seven, #eight, #nine, #ten,
+#eleven, #twelve { clear: left; }
 
 /* Skin */
 .ui-tabs-nav {
     margin: 0;
     padding: 0;
+    height: 28px;
+	line-height: 28px;
     
     list-style: none;
+    border: 1px solid #ddd !important;
+    background: #eee !important;
+    
+    border-radius: 3px;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
 }
 .ui-tabs-nav:after { /* clearing without presentational markup, IE gets extra treatment */
     display: block;
@@ -35,12 +44,12 @@
 }
 .ui-tabs-nav li {
     float: left;
-    margin: 0 3px 0 0;
+    margin: 4px !important;
     min-width: 84px; /* be nice to Opera */
 }
 .ui-tabs-nav a, .ui-tabs-nav a span {
     display: block;
-    padding: 0 15px;
+    padding: 0 !important;
 }
 .ui-tabs-nav a {
     position: relative;
@@ -48,47 +57,42 @@
     padding-left: 0;
     line-height: 1.4;
     
-    font-size: 92%;
     font-weight: bold;
     text-align: center;
     text-decoration: none;
     white-space: nowrap; /* required in IE 6 */
-    border-top: 1px solid #c5dbec;
-    border-left: 1px solid #c5dbec;
-    border-right: 1px solid #c5dbec;
-    border-bottom: 0;
-    background: #dfeffc;
-    color: #2e6e9e;
+    background: #eee;
+    color: #999;
+    border: 0;
+    font-size: 85%;
     
-    border-radius: 5px 5px 0 0;
-    -moz-border-radius: 5px 5px 0 0;
-    -webkit-border-top-left-radius: 5px;
-    -webkit-border-top-right-radius: 5px;
+    border-radius: 20px;
+    -moz-border-radius: 20px;
+    -webkit-border-radius: 20px;
 }
-.ui-tabs-nav .ui-tabs-selected {}
-.ui-tabs-nav .ui-tabs-selected a, .ui-tabs-nav .ui-tabs-selected a:hover {
+.ui-tabs-nav .ui-tabs-selected,
+.ui-tabs-nav .ui-tabs-selected a,
+.ui-tabs-nav .ui-tabs-selected a:hover {
     outline: 0; /* prevent dotted border in Firefox */
-    
-	background: #5c9ccc;
-	color: #fff;
-	border-top: 1px solid #5c9ccc;
-	border-left: 1px solid #5c9ccc;
-	border-right: 1px solid #5c9ccc;
-	border-bottom: 0;
 	
-	border-radius: 5px 5px 0 0;
-	-moz-border-radius: 5px 5px 0 0;
-    -webkit-border-top-left-radius: 5px;
-    -webkit-border-top-right-radius: 5px;
+	background: #999;
+    border: 0;
+    color: #eee;
+	
+    border-radius: 20px;
+	-moz-border-radius: 20px;
+    -webkit-border-radius: 20px;
 }
 .ui-tabs-nav a:hover, .ui-tabs-nav a:active {
     outline: 0; /* prevent dotted border in Firefox */
     
-    background-color: #d0e5f5;
-	color: #1d5987;
-	border-top: 1px solid #79b7e7;
-	border-left: 1px solid #79b7e7;
-	border-right: 1px solid #79b7e7;
+    background-color: #ccc;
+	color: #eee;
+	border: 0;
+	
+	border-radius: 20px;
+	-moz-border-radius: 20px;
+    -webkit-border-radius: 20px;
 }
 
 .ui-tabs-disabled a {
@@ -110,12 +114,11 @@
 .ui-tabs-nav .ui-tabs-disabled a:active {}
 
 .ui-tabs-nav a span {
-    width: 64px; /* IE 6 treats width as min-width */
     min-width: 64px;
-    height: 21px; /* IE 6 treats height as min-height */
-    min-height: 21px;
-    padding-top: 4px;
-    padding-right: 0;
+    height: 20px; /* IE 6 treats height as min-height */
+    min-height: 20px;
+    line-height: 19px;
+    padding: 0 10px !important;
 }
 *>.ui-tabs-nav a span { /* hide from IE 6 */
     width: auto;
@@ -146,8 +149,7 @@
 .ui-tabs-panel {
     padding: .5em 8px;
     
-    border-top: 3px solid #5c9ccc;
-    background: #fcfdfd; /* declare background color for container to avoid distorted fonts in IE while fading */
+    background: #fafafa; /* declare background color for container to avoid distorted fonts in IE while fading */
 }
 .ui-tabs-loading em {
     padding: 0 0 0 20px;

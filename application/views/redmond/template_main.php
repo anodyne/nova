@@ -4,10 +4,10 @@
 | TEMPLATE - MAIN
 |---------------------------------------------------------------
 |
-| File: application/views/default/template_main.php
+| File: application/views/redmond/template_main.php
 | Skin Version: 1.0
 |
-| Main layout file used by the default skin.
+| Main layout file used by the redmond skin.
 |
 | $sec options are: main, wiki, admin, login
 | $css can be anything you want (with a .css extension of course)
@@ -130,9 +130,13 @@ echo "<?xml version='1.0' encoding='UTF-8'?>\r\n";
 						<div class="nav-main hidden"><?php echo $nav_main;?></div>
 					</div>
 					<div style="float:right">
-						<?php echo panel_inbox(TRUE, TRUE, FALSE, '(x)', img($panel['inbox']));?> &nbsp;&nbsp;
-						<?php echo panel_writing(TRUE, TRUE, FALSE, '(x)', img($panel['writing']));?> &nbsp;&nbsp;
-						<?php echo panel_dashboard(FALSE, img($panel['dashboard']));?>
+						<?php if ($this->auth->is_logged_in()): ?>
+							<?php echo panel_inbox(TRUE, TRUE, FALSE, '(x)', img($panel['inbox']));?> &nbsp;&nbsp;
+							<?php echo panel_writing(TRUE, TRUE, FALSE, '(x)', img($panel['writing']));?> &nbsp;&nbsp;
+							<?php echo panel_dashboard(FALSE, img($panel['dashboard']));?>
+						<?php else: ?>
+							<strong><?php echo anchor('login/index', ucfirst(lang('actions_login')), array('class' => 'login-text'));?></strong>
+						<?php endif;?>
 					</div>
 					<?php echo $title;?>
 				</div>

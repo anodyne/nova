@@ -1,6 +1,7 @@
 skin: Redmond
 location: redmond
-credits: Skin created by David VanScott. Edits are permissible as long as original credits stay intact.
+credits: Skin created by Anodyne Productions. Edits are permissible to this skin as long as original credits stay intact.
+version: 1.0
 sections:
   -
     type: main
@@ -8,3 +9,9 @@ sections:
   -
     type: admin
     preview: preview-admin.png
+  -
+    type: login
+    preview: preview-login.png
+  -
+    type: wiki
+    preview: preview-wiki.png

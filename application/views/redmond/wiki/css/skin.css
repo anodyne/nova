@@ -1,6 +1,6 @@
 /*
 |---------------------------------------------------------------
-| BODY
+| MASTER BODY
 |---------------------------------------------------------------
 */
 html, body, #wrap { height: 100%; }
@@ -19,6 +19,7 @@ body {
 |---------------------------------------------------------------
 | WRAPPER
 |---------------------------------------------------------------
+| The wrapper controls the width and centering of the layout
 */
 .wrapper {
 	width: 70%;
@@ -61,7 +62,7 @@ a.login-text:hover { border-bottom: 1px solid !important; }
 
 /*
 |---------------------------------------------------------------
-| MAIN MENU
+| MENU STYLES
 |---------------------------------------------------------------
 */
 .go {
@@ -140,7 +141,7 @@ a.login-text:hover { border-bottom: 1px solid !important; }
 
 /*
 |---------------------------------------------------------------
-| BODY STYLES
+| CONTENT
 |---------------------------------------------------------------
 */
 #body { position: relative; }
@@ -190,15 +191,11 @@ a.login-text:hover { border-bottom: 1px solid !important; }
 	
 	border: none;
 }
-.nav-sub ul li.menu_category {
-	font-weight: bold;
-	font-size: 120%;
-}
 
 .content {
 	margin-right: 180px;
 	line-height: 1.4;
-	padding: 8px 8px 0 0;
+	padding: 8px 8px 20px 0;
 }
 
 .clearfix:after {
@@ -256,6 +253,14 @@ a:hover {
 	color: #2e6e9e;
 	border-bottom: 1px solid;
 }
+
+a.edit {
+	color: #bbb;
+	border: none;
+}
+a.edit:hover { color: #a3c586; }
+
+.markItUp a { border: 0 !important; }
 
 /*
 |---------------------------------------------------------------
@@ -353,17 +358,14 @@ button.button-main:hover {
 
 button.button-sec {
 	border: 1px solid #ccc;
-	background: #eee url('../images/gradient-30-bg.png') repeat-x center left;
+	background: #fff url('../images/button_sec_bg.jpg') repeat-x top left;
 	color: #777;
 }
-button.button-sec:hover {
-	background: #ddd url('../images/gradient-50-bg.png') repeat-x center left;
-	border: 1px solid #aaa;
-}
+button.button-sec:hover { border: 1px solid #aaa; }
 
 button.button-small {
 	border: 1px solid #ccc;
-	background: #eee url('../images/gradient-30-bg.png') repeat-x center left;
+	background: #fff url('../images/button_sec_bg.jpg') repeat-x top left;
 	color: #777;
 	font-weight: normal !important;
 	font-size: 90%;
@@ -385,15 +387,12 @@ input.button-main:hover {
 
 input.button-sec {
 	border: 1px solid #ccc;
-	background: #eee url('../images/gradient-30-bg.png') repeat-x center left;
-	color: #777;
+	background: #f9f9f9 url('../images/button-sec_bg.jpg') repeat-x bottom left;
 	font-weight: bold;
 	font-size: 120%;
+	color: #555;
 }
-input.button-sec:hover {
-	background: #ddd url('../images/gradient-50-bg.png') repeat-x center left;
-	border: 1px solid #aaa;
-}
+input.button-sec:hover { color: #999; }
 
 button[disabled],
 button[disabled]:hover,
@@ -412,26 +411,21 @@ input.button-main[disabled]:hover {
 | COMMENTS AND BOXES
 |---------------------------------------------------------------
 */
-#comments p, #news_blocks p, .post_info {
-	background-color: #f5f8f9;
-	border: 1px solid #ccc;
-}
-
-.info-full, #notes {
+#comments p, #news_blocks p, .post_info, .info-full, #notes {
 	background-color: #f8f8f8;
 	border: 1px solid #e8e8e8;
 }
 
-.border-1 { border: 1px solid #79b7e7; }
+.border-1 { border: 1px solid #ddd; }
 
 /*
 |---------------------------------------------------------------
-| LISTS
+| LIST STYLES
 |---------------------------------------------------------------
 */
 ul.square { list-style: square; }
-ul.none, ol.none { list-style: none; }
 ol.roman { list-style: upper-roman; }
+ul.none, ol.none { list-style: none; }
 
 /*
 |---------------------------------------------------------------
@@ -447,13 +441,13 @@ ol.roman { list-style: upper-roman; }
 	-webkit-border-radius: 5px;
 }
 .flash-success {
-	border: 1px solid #a4c897 url('../images/gradient-30-bg.png') repeat-x center left;
-	background: #ccecc5;
+	border: 1px solid #a4c897;
+	background: #ccecc5 url('../images/gradient-30-bg.png') repeat-x center left;
 	color: #376b0e;
 }
 .flash-error {
-	border: 1px solid #cd0a0a url('../images/gradient-30-bg.png') repeat-x center left; 
-	background: #fef1ec;
+	border: 1px solid #cd0a0a; 
+	background: #fef1ec url('../images/gradient-30-bg.png') repeat-x center left;
 	color: #cd0a0a;
 }
 .flash-info {
@@ -467,7 +461,6 @@ ol.roman { list-style: upper-roman; }
 | MISC
 |---------------------------------------------------------------
 */
-
 hr {
 	border: 1px solid #ddd;
 	border-width: 1px 0 0;
@@ -476,98 +469,15 @@ hr {
 .loader { text-align: center; }
 
 .system_warning {
+	background: orange;
+	color: #111;
 	font-weight: bold;
 	text-align: center;
 }
 
 /*
 |---------------------------------------------------------------
-| ACP PANEL
-|---------------------------------------------------------------
-*/
-#acp-panel {
-	border: 1px solid #79b7e7;
-	background: #f8f8f8;
-	color: #666;
-	
-	border-radius: 5px 5px 0 0;
-	-moz-border-radius: 5px 5px 0 0;
-	-webkit-border-top-left-radius: 5px;
-	-webkit-border-top-right-radius: 5px;
-}
-.panel {
-	background: #fafafa;
-	border-left: 1px solid #79b7e7;
-	
-	-moz-border-radius-topright: 5px;
-	-webkit-border-top-right-radius: 5px;
-}
-#panelmenu { list-style: none; }
-#panelmenu li a {
-	text-decoration: none;
-	font-weight: bold;
-	border-bottom: none;
-}
-#panelmenu li a span {
-	color: #2e6e9e;
-	border-top: 1px solid transparent;
-	border-bottom: 1px solid transparent;
-	border-right: 1px solid #79b7e7;
-}
-#panelmenu li a:hover span {
-	color: #1d5987;
-	background: #d0e5f5;
-	border-top: 1px solid #79b7e7;
-	border-bottom: 1px solid #79b7e7;
-}
-#panelmenu li a.active span {
-	background: #fafafa;
-	border-top: 1px solid #79b7e7;
-	border-bottom: 1px solid #79b7e7;
-	border-right: 1px solid #fafafa;
-}
-#panelmenu li a.active:hover span {
-	color: #1c94c4;
-	border-right: 1px solid #fafafa;
-}
-
-#online {
-	background: #f8f8f8;
-	border: 1px solid #79b7e7;
-	border-top: none;
-	
-	border-radius: 0 0 5px 5px;
-	-moz-border-radius: 0 0 5px 5px;
-	-webkit-border-bottom-left-radius: 5px;
-	-webkit-border-bottom-right-radius: 5px;
-}
-
-.count {
-	font-weight: bold;
-	font-size: 90%;
-	
-	border-radius: 12px;
-	-moz-border-radius: 12px;
-	-webkit-border-radius: 12px;
-}
-
-table.acp {
-	font-size: 110%;
-	border: 1px solid #79b7e7;
-}
-.col1 {
-	font-size: 125%;
-	text-align: right;
-	font-weight: bold;
-}
-.col2 {
-	font-size: 90%;
-	font-weight: bold;
-}
-
-/*
-|---------------------------------------------------------------
-| DASHBOARD
+| PANEL
 |---------------------------------------------------------------
 */
 .panel-handle a, .panel-handle a:hover {
