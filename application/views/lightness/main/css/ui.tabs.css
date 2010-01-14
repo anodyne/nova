@@ -161,7 +161,7 @@
     padding: .5em 8px;
     
     border-top: 3px solid #f6a828;
-    background: #fff; /* declare background color for container to avoid distorted fonts in IE while fading */
+    background: #eee; /* declare background color for container to avoid distorted fonts in IE while fading */
 }
 .ui-tabs-loading em {
     padding: 0 0 0 20px;

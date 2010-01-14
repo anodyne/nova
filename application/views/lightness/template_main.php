@@ -4,10 +4,10 @@
 | TEMPLATE - MAIN
 |---------------------------------------------------------------
 |
-| File: application/views/default/template_main.php
+| File: application/views/lightness/template_main.php
 | Skin Version: 1.0
 |
-| Main layout file used by the default skin.
+| Main layout file used by the lightness skin.
 |
 | $sec options are: main, wiki, admin, login
 | $css can be anything you want (with a .css extension of course)
@@ -89,7 +89,7 @@ echo "<?xml version='1.0' encoding='UTF-8'?>\r\n";
 						</table>
 					</div>
 				</div>
-				<div class="panel-handle ui-state-default">
+				<div class="panel-handle">
 					<div class="wrapper">
 						<?php echo $panel_workflow;?>
 					</div>
@@ -109,6 +109,38 @@ echo "<?xml version='1.0' encoding='UTF-8'?>\r\n";
 				<div class="head_content">
 					<?php echo img(APPFOLDER .'/views/'. $current_skin .'/'. $sec .'/images/head_logo.png', FALSE);?>
 				</div>
+			</div>
+		</div>
+		
+		<div id="lower-head">
+			<div class="wrapper head-content">
+				<?php if ($this->uri->rsegment(1) == 'main'): ?>
+					<?php
+					
+					$this->load->model('posts_model', 'posts');
+					$this->load->helper('text');
+					
+					$posts = $this->posts->get_post_list('', 'desc', 2, '', 'activated');
+					
+					if ($posts->num_rows() > 0)
+					{
+						echo '<h2>'. ucwords(lang('status_recent') .' '. lang('global_posts')) .'</h2>';
+						
+						echo '<ul>';
+						foreach ($posts->result() as $p)
+						{
+							echo '<li>';
+							echo '<strong>'. anchor('sim/viewpost/'. $p->post_id, $p->post_title .' '. RARROW) .'</strong><br />';
+							echo '<span class="fontSmall">'. word_limiter($p->post_content, 25) .'</span>';
+							echo '</li>';
+						}
+						echo '</ul>';
+					}
+					
+					?>
+				<?php else: ?>
+					<h1><?php echo ucfirst($this->uri->rsegment(1, APP_NAME));?></h1>
+				<?php endif;?>
 			</div>
 		</div>
 		
