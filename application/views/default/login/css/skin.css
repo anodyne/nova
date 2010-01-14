@@ -131,7 +131,7 @@ input[type=text],
 input[type=password] {
 	border: 1px solid #d8d8d8;
 	color: #777;
-	font-family: inherit;
+	font-family: "lucida grande", verdana, arial, sans-serif;
 	font-size: 120%;
 }
 input[type=text]:focus,
@@ -143,7 +143,7 @@ input[type=password]:focus {
 select {
 	border: 1px solid #d8d8d8;
 	color: #777;
-	font-family: inherit;
+	font-family: "lucida grande", verdana, arial, sans-serif;
 	font-size: 120%;
 }
 select:focus,

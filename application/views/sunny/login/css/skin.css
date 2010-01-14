@@ -140,7 +140,7 @@ input[type=text],
 input[type=password] {
 	border: 1px solid #d8d8d8;
 	color: #777;
-	font-family: inherit;
+	font-family: "lucida grande", verdana, arial, sans-serif;
 }
 input[type=text]:focus,
 input[type=password]:focus {
@@ -150,7 +150,7 @@ input[type=password]:focus {
 
 textarea {
 	font-size: 100%;
-	font-family: inherit;
+	font-family: "lucida grande", verdana, arial, sans-serif;
 	border: 1px solid #d8d8d8;
 	color: #777;
 }
@@ -162,7 +162,7 @@ textarea:focus {
 select {
 	border: 1px solid #d8d8d8;
 	color: #777;
-	font-family: inherit;
+	font-family: "lucida grande", verdana, arial, sans-serif;
 }
 select:focus,
 select:hover {
