@@ -322,12 +322,12 @@ img { border: none; }
 */
 .panelnav {
 	float: left;
-	width: 25%;
+	width: 220px;
 	min-height: 175px;
 	padding: 1em 0;
 }
 .panel {
-	margin-left: 25%;
+	margin-left: 220px;
 	min-height: 175px;
 	padding: 1em;
 }
