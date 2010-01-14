@@ -252,8 +252,6 @@ class Login_base extends Controller {
 	
 	function logout()
 	{
-		log_message('error', 'Logout method');
-		
 		/* destroy the session data */
 		$this->auth->logout();
 		
