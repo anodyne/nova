@@ -1,6 +1,6 @@
 /*
 |---------------------------------------------------------------
-| MASTER BODY STYLES
+| MASTER BODY
 |---------------------------------------------------------------
 */
 body {
@@ -15,7 +15,7 @@ body {
 
 /*
 |---------------------------------------------------------------
-| WRAPPER STYLES
+| WRAPPER
 |---------------------------------------------------------------
 | The wrapper controls the width and centering of the layout
 */
@@ -30,7 +30,7 @@ body {
 
 /*
 |---------------------------------------------------------------
-| HEAD STYLES
+| HEAD
 |---------------------------------------------------------------
 */
 #head {
@@ -133,7 +133,7 @@ body {
 
 /*
 |---------------------------------------------------------------
-| BODY STYLES
+| CONTENT
 |---------------------------------------------------------------
 */
 #body { margin: 1em 0 2em 0; }
@@ -185,7 +185,7 @@ body {
 
 /*
 |---------------------------------------------------------------
-| FOOTER STYLES
+| FOOTER
 |---------------------------------------------------------------
 */
 #footer {
@@ -208,7 +208,7 @@ body {
 
 /*
 |---------------------------------------------------------------
-| FONT COLOR CLASSES
+| FONT COLORS
 |---------------------------------------------------------------
 */
 .page-head 		{ color: #f6a828; }
@@ -234,9 +234,17 @@ a:hover {
 	border-bottom: 1px solid;
 }
 
+a.edit {
+	color: #bbb;
+	border: none;
+}
+a.edit:hover { color: #a3c586; }
+
+.markItUp a { border: 0 !important; }
+
 /*
 |---------------------------------------------------------------
-| INPUT STYLES
+| INPUTS
 |---------------------------------------------------------------
 */
 input[type=text],
@@ -293,7 +301,7 @@ select:hover {
 
 /*
 |---------------------------------------------------------------
-| TABLE STYLES
+| TABLES
 |---------------------------------------------------------------
 */
 tr.alt td { background-color: #e3e3e3; }
@@ -385,10 +393,10 @@ input.button-main[disabled]:hover {
 
 /*
 |---------------------------------------------------------------
-| COMMENT STYLES
+| COMMENTS AND BOXES
 |---------------------------------------------------------------
 */
-#comments p, #news_blocks p, .post_info {
+#comments p, #news_blocks p, .post_info, .info-full, #notes {
     background-color: #f3f3f3;
     border: 1px solid #ddd;
     
@@ -397,14 +405,16 @@ input.button-main[disabled]:hover {
     -webkit-border-radius: 3px;
 }
 
+.border-1 { border: 1px solid #ccc; }
+
 /*
 |---------------------------------------------------------------
 | LIST STYLES
 |---------------------------------------------------------------
 */
 ul.square { list-style: square; }
-ul.none, ol.none { list-style: none; }
 ol.roman { list-style: upper-roman; }
+ul.none, ol.none { list-style: none; }
 
 /*
 |---------------------------------------------------------------
@@ -448,6 +458,8 @@ hr {
 .loader { text-align: center; }
 
 .system_warning {
+	background: orange;
+	color: #111;
 	font-weight: bold;
 	text-align: center;
 }

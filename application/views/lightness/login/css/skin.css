@@ -7,7 +7,7 @@ body {
 	margin: 0;
 	padding: 0;
 	
-	background: #eee;
+	background: #ccc url('../images/body-bg.png') repeat-x 0 0;
 	color: #363636;
 	font: 75%/1.5 "lucida grande", verdana, arial, sans-serif;
 	text-align: center;
@@ -19,30 +19,43 @@ body {
 |---------------------------------------------------------------
 | The wrapper controls the width and centering of the layout
 */
-.wrapper {
-	min-width: 960px;
-	max-width: 1280px;
-	padding: 0 60px;
-	margin: 0 auto;
+#container {
+	width: 650px;
+	margin: 3em auto;
 	
+	border: 1px solid #999;
 	text-align: left;
+	
+	-moz-box-shadow: 7px 7px 12px #aaa;
+	-webkit-box-shadow: 7px 7px 12px #aaa;
+	
+	border-radius: 4px;
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
 }
 
 /*
 |---------------------------------------------------------------
 | HEAD STYLES
 |---------------------------------------------------------------
+|
+| The head layer
 */
 #head {
 	margin: 0;
 	padding: 0;
 	height: 70px;
 	
-	background: #f5f5f5 url('../images/gradient-head.png') repeat-x top left;
+	background: #f5f5f5 url('../images/gradient-head.png') repeat-x bottom left;
 	color: #444;
+	
+	border-radius: 4px 4px 0 0;
+	-moz-border-radius: 4px 4px 0 0;
+	-webkit-border-top-left-radius: 4px;
+	-webkit-border-top-right-radius: 4px;
 }
 #head .head_content {
-	padding: 12px 0 0 0;
+	padding: 12px 0 0 10px;
 	
 	font-weight: bold;
 }
@@ -53,7 +66,7 @@ body {
 |---------------------------------------------------------------
 */
 #lower-head {
-	height: 180px;
+	height: 100px;
 	margin: 0;
 	padding: 0;
 	
@@ -62,8 +75,11 @@ body {
 	border-bottom: 1px solid #c58620;
 	border-bottom: 1px solid rgba(0, 0, 0, .2);
 }
-#lower-head .head-content { height: 180px; background: transparent url('../images/lower-head-overlay.png') no-repeat top right; }
-#lower-head h1, #lower-head h2 { margin: 0 !important; padding: 10px 0 0 0 !important; }
+#lower-head .head-content { height: 100px; }
+#lower-head h1 {
+	margin: 0 !important;
+	padding: 28px 0 0 12px !important;
+}
 #lower-head a {
 	color: #fff !important;
 	border-bottom: 1px solid;
@@ -121,7 +137,7 @@ body {
 	-webkit-border-top-left-radius: 4px;
 	-webkit-border-top-right-radius: 4px;
 }
-#menu .nav-main ul li a span { padding: 12px; }
+#menu .nav-main ul li a span { padding: 0 12px; }
 #menu .nav-main ul li a:hover,
 #menu .nav-main ul li a.active {
 	background: #f8b953 url('../images/gradient-menu-active.png') repeat-x top left;
@@ -136,51 +152,14 @@ body {
 | BODY STYLES
 |---------------------------------------------------------------
 */
-#body { margin: 1em 0 2em 0; }
-
-.nav-sub {
-	float: right;
-	width: 160px;
-	margin: 0 0 10px 0;
-	
-	text-align: right;
-	font-size: 95%;
-}
-.nav-sub ul {
-	margin: 0;
-	padding: 0;
-	
-	list-style: none;
-}
-.nav-sub ul li {
-	padding: 0;
-	margin: 0;
-	line-height: 2.3;
-}
-.nav-sub ul li a {
-	display: block;
-	
-	text-decoration: none;
-	color: #1c94c4;
-	font-weight: bold;
-	border-right: 2px solid transparent;
-}
-.nav-sub ul li a:hover {
-	color: #363636;
-	background: transparent url('../images/gradient-submenu-hover.png') repeat-y top right;
-	border-bottom: 0;
-	border-right: 2px solid #1c94c4;
-}
-.nav-sub ul li a span { padding: 2px 5px; }
-.nav-sub ul li.spacer {
-	height: 12px;
-	
-	border: none;
-}
+#body { text-align: left; }
 
 .content {
-	margin-right: 210px;
 	line-height: 1.4;
+	padding: 1em 2em;
+	margin: 0 auto;
+	
+	background: #eee;
 }
 
 /*
@@ -189,21 +168,20 @@ body {
 |---------------------------------------------------------------
 */
 #footer {
-	margin: 2em auto;
+	margin: 0;
 	padding: 1.7em 0;
 	clear: both;
-	line-height: 1.4;
-	width: 65%;
 	
 	text-align: center;
 	font-size: 90%;
-	border: 1px solid #ddd;
 	color: #888;
 	background: #f3f3f3;
+	border-top: 1px solid #ddd;
 	
-	border-radius: 3px;
-	-moz-border-radius: 3px;
-	-webkit-border-radius: 3px;
+	border-radius: 0 0 4px 4px;
+	-moz-border-radius: 0 0 4px 4px;
+	-webkit-border-bottom-left-radius: 4px;
+	-webkit-border-bottom-right-radius: 4px;
 }
 
 /*
@@ -211,14 +189,9 @@ body {
 | FONT COLOR CLASSES
 |---------------------------------------------------------------
 */
-.page-head 		{ color: #f6a828; }
-.page-subhead	{ color: #777; }
+.page-head { color: #777; }
 
-.gray	{ color: #777; }
-.red	{ color: #c00; }
-.orange	{ color: #e99e1c; }
-.green	{ color: #008000; }
-.blue	{ color: lightblue; }
+.red { color: #c00; }
 
 /*
 |---------------------------------------------------------------
@@ -244,6 +217,7 @@ input[type=password] {
 	border: 1px solid #bbb;
 	color: #777;
 	font-family: "lucida grande", verdana, arial, sans-serif;
+	font-size: 120%;
 	
 	border-radius: 2px;
 	-moz-border-radius: 2px;
@@ -255,25 +229,11 @@ input[type=password]:focus {
 	border: 1px solid #888;
 }
 
-textarea {
-	font-size: 100%;
-	font-family: "lucida grande", verdana, arial, sans-serif;
-	border: 1px solid #bbb;
-	color: #777;
-	
-	border-radius: 2px;
-	-moz-border-radius: 2px;
-	-webkit-border-radius: 2px;
-}
-textarea:focus {
-	color: #444;
-	border: 1px solid #666;
-}
-
 select {
 	border: 1px solid #bbb;
 	color: #777;
 	font-family: "lucida grande", verdana, arial, sans-serif;
+	font-size: 120%;
 	
 	border-radius: 2px;
 	-moz-border-radius: 2px;
@@ -285,35 +245,17 @@ select:hover {
 	border: 1px solid #888;
 }
 
-.cell-label {
-	font-weight: bold;
-	font-size: 100%;
-	text-align: right;
-}
-
-/*
-|---------------------------------------------------------------
-| TABLE STYLES
-|---------------------------------------------------------------
-*/
-tr.alt td { background-color: #e3e3e3; }
-tr.light_gray { background-color: #ddd; }
-
-th {
-	text-align: center;
-	font-size: 120%;
-}
-
 /*
 |---------------------------------------------------------------
 | BUTTONS
 |---------------------------------------------------------------
 */
 button {
-	-moz-border-radius: 3px;
-	-webkit-border-radius: 3px;
-	
 	font-weight: bold;
+	
+	border-radius: 4px;
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
 }
 
 button.button-main {
@@ -327,25 +269,6 @@ button.button-main:hover {
 	color: #fff;
 }
 
-button.button-sec {
-	border: 1px solid #ccc;
-	background: #fff url('../images/button-sec-bg.png') repeat-x top left;
-	color: #1c94c4;
-}
-button.button-sec:hover {
-	border: 1px solid #fbd850;
-	color: #eb8f00;
-}
-
-button.button-small {
-	border: 1px solid #ccc;
-	background: #fff url('../images/button-sec_bg.jpg') repeat-x top left;
-	color: #777;
-	font-weight: normal !important;
-	font-size: 90%;
-}
-button.button-small:hover { border: 1px solid #aaa; }
-
 input.button-main {
 	font-weight: bold;
 	font-size: 120%;
@@ -357,18 +280,6 @@ input.button-main:hover {
 	border: 1px solid #e78f08;
 	background: #f6a828 url('../images/gradient-hard-50.png') repeat-x center left;
 	color: #fff;
-}
-
-input.button-sec {
-	font-weight: bold;
-	font-size: 120%;
-	border: 1px solid #ccc;
-	background: #fff url('../images/button-sec-bg.png') repeat-x top left;
-	color: #1c94c4;
-}
-input.button-sec:hover {
-	border: 1px solid #fbd850;
-	color: #eb8f00;
 }
 
 button[disabled],
@@ -385,25 +296,11 @@ input.button-main[disabled]:hover {
 
 /*
 |---------------------------------------------------------------
-| COMMENT STYLES
-|---------------------------------------------------------------
-*/
-#comments p, #news_blocks p, .post_info {
-    background-color: #f3f3f3;
-    border: 1px solid #ddd;
-    
-    border-radius: 3px;
-    -moz-border-radius: 3px;
-    -webkit-border-radius: 3px;
-}
-
-/*
-|---------------------------------------------------------------
 | LIST STYLES
 |---------------------------------------------------------------
 */
 ul.square { list-style: square; }
-ul.none, ol.none { list-style: none; }
+ul.none { list-style: none; }
 ol.roman { list-style: upper-roman; }
 
 /*
@@ -444,58 +341,3 @@ hr {
 	border: 1px solid #ccc;
 	border-width: 1px 0 0;
 }
-
-.loader { text-align: center; }
-
-.system_warning {
-	font-weight: bold;
-	text-align: center;
-}
-
-/*
-|---------------------------------------------------------------
-| PANEL
-|---------------------------------------------------------------
-*/
-.panel-handle a, .panel-handle a:hover {
-	text-decoration: none;
-	border: none;
-	color: #aaa;
-}
-.panel-handle a span {
-	border-left: 1px solid transparent;
-	border-right: 1px solid transparent;
-	font-weight: bold;
-}
-.panel-handle a:hover span {
-	background: #111 url('../images/gradient-menu-active.png') repeat-x center left;
-	color: #eee;
-	border-left: 1px solid #000;
-	border-right: 1px solid #000;
-}
-
-#panel .panel-body {
-	background: #555 url('../images/panel-bg.png') repeat-x top left;
-	color: #fff;
-}
-
-.panel-handle {
-	background: #333 url('../images/gradient-menu-active.png') repeat-x center left;
-	border-bottom: 1px solid #111;
-	text-align: center;
-	font-size: 85%;
-}
-
-.panel-trigger span { text-align: center; }
-
-.panel_1 a, .panel_2 a, .panel_3 a {
-	color: #fff;
-	border-bottom: 1px solid;
-}
-
-.panel_1 a.edit, .panel_2 a.edit, .panel_3 a.edit {
-	color: #999;
-	border-bottom: 0;
-	font-weight: bold;
-}
-.panel_1 a.edit:hover, .panel_2 a.edit:hover, .panel_3 a.edit:hover { color: #ddd; }

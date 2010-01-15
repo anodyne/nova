@@ -9,3 +9,9 @@ sections:
   -
     type: admin
     preview: preview-admin.png
+  -
+    type: login
+    preview: preview-login.png
+  -
+    type: wiki
+    preview: preview-wiki.png
