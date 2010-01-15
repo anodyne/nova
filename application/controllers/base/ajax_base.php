@@ -335,15 +335,6 @@ class Ajax_base extends Controller {
 	{
 		$type = $this->uri->segment(3);
 		
-		$head = sprintf(
-			lang('fbx_head'),
-			ucwords(lang('actions_add')),
-			ucwords(lang('fbx_item_catalogue_'. $type))
-		);
-		
-		/* data being sent to the facebox */
-		$data['header'] = $head;
-		
 		switch ($type)
 		{
 			case 'ranks':
@@ -393,6 +384,12 @@ class Ajax_base extends Controller {
 						'content' => ucwords(lang('actions_submit')))
 				);
 				
+				$head = sprintf(
+					lang('fbx_head'),
+					ucwords(lang('actions_add')),
+					ucwords(lang('global_rank') .' '. lang('labels_set'))
+				);
+				
 				$data['values']['status'] = array(
 					'active' => ucfirst(lang('status_active')),
 					'inactive' => ucfirst(lang('status_inactive')),
@@ -407,6 +404,12 @@ class Ajax_base extends Controller {
 				
 				/* figure out where the view should come from */
 				$view = ajax_location('add_catalogue_skins', $skin, 'admin');
+				
+				$head = sprintf(
+					lang('fbx_head'),
+					ucwords(lang('actions_add')),
+					ucwords(lang('labels_skin'))
+				);
 				
 				$data['inputs'] = array(
 					'name' => array(
@@ -435,6 +438,12 @@ class Ajax_base extends Controller {
 				
 				/* figure out where the view should come from */
 				$view = ajax_location('add_catalogue_skinsec', $skin, 'admin');
+				
+				$head = sprintf(
+					lang('fbx_head'),
+					ucwords(lang('actions_add')),
+					ucwords(lang('labels_skin') .' '. lang('labels_section'))
+				);
 				
 				$data['inputs'] = array(
 					'preview' => array(
@@ -483,6 +492,9 @@ class Ajax_base extends Controller {
 		
 				break;
 		}
+		
+		/* data being sent to the facebox */
+		$data['header'] = $head;
 		
 		$data['label'] = array(
 			'blank' => ucwords(lang('labels_blank') .' '. lang('labels_image')),
@@ -2449,15 +2461,6 @@ class Ajax_base extends Controller {
 		$type = $this->uri->segment(3);
 		$data['id'] = $this->uri->segment(4, 0, TRUE);
 		
-		$head = sprintf(
-			lang('fbx_head'),
-			ucwords(lang('actions_delete')),
-			ucwords(lang('fbx_item_catalogue_'. $type))
-		);
-		
-		/* data being sent to the facebox */
-		$data['header'] = $head;
-		
 		/* load the resources */
 		$this->load->model('ranks_model', 'ranks');
 		
@@ -2484,6 +2487,12 @@ class Ajax_base extends Controller {
 					}
 				}
 				
+				$head = sprintf(
+					lang('fbx_head'),
+					ucwords(lang('actions_delete')),
+					ucwords(lang('global_rank') .' '. lang('labels_set'))
+				);
+				
 				$data['text'] = sprintf(
 					lang('fbx_content_del_catalogue_rank'),
 					$item->rankcat_name
@@ -2508,6 +2517,12 @@ class Ajax_base extends Controller {
 				$view = ajax_location('del_catalogue_skins', $skin, 'admin');
 				
 				$item = $this->sys->get_skin_info($data['id'], 'skin_id');
+				
+				$head = sprintf(
+					lang('fbx_head'),
+					ucwords(lang('actions_delete')),
+					ucwords(lang('labels_skin'))
+				);
 				
 				$data['text'] = sprintf(
 					lang('fbx_content_del_catalogue_skin'),
@@ -2549,6 +2564,12 @@ class Ajax_base extends Controller {
 					}
 				}
 				
+				$head = sprintf(
+					lang('fbx_head'),
+					ucwords(lang('actions_delete')),
+					ucwords(lang('labels_skin') .' '. lang('labels_section'))
+				);
+				
 				$data['text'] = sprintf(
 					lang('fbx_content_del_catalogue_skinsec'),
 					$this->sys->get_skin_name($item->skinsec_skin),
@@ -2566,6 +2587,9 @@ class Ajax_base extends Controller {
 				
 				break;
 		}
+		
+		/* data being sent to the facebox */
+		$data['header'] = $head;
 		
 		/* write the data to the template */
 		$this->template->write_view('content', $view, $data);
@@ -4147,15 +4171,6 @@ class Ajax_base extends Controller {
 		$type = $this->uri->segment(3);
 		$data['id'] = $this->uri->segment(4, 0, TRUE);
 		
-		$head = sprintf(
-			lang('fbx_head'),
-			ucwords(lang('actions_edit')),
-			ucwords(lang('fbx_item_catalogue_'. $type))
-		);
-		
-		/* data being sent to the facebox */
-		$data['header'] = $head;
-		
 		/* load the resources */
 		$this->load->model('ranks_model', 'ranks');
 		
@@ -4169,6 +4184,12 @@ class Ajax_base extends Controller {
 				$view = ajax_location('edit_catalogue_ranks', $skin, 'admin');
 				
 				$item = $this->ranks->get_rankcat($data['id'], 'rankcat_id');
+				
+				$head = sprintf(
+					lang('fbx_head'),
+					ucwords(lang('actions_edit')),
+					ucwords(lang('global_rank') .' '. lang('labels_set'))
+				);
 				
 				$data['inputs'] = array(
 					'name' => array(
@@ -4233,6 +4254,12 @@ class Ajax_base extends Controller {
 				
 				$item = $this->sys->get_skin_info($data['id'], 'skin_id');
 				
+				$head = sprintf(
+					lang('fbx_head'),
+					ucwords(lang('actions_edit')),
+					ucwords(lang('labels_skin'))
+				);
+				
 				$data['inputs'] = array(
 					'name' => array(
 						'name' => 'skin_name',
@@ -4265,6 +4292,12 @@ class Ajax_base extends Controller {
 				$view = ajax_location('edit_catalogue_skinsec', $skin, 'admin');
 				
 				$item = $this->sys->get_skin_section_info($data['id'], 'skinsec_id');
+				
+				$head = sprintf(
+					lang('fbx_head'),
+					ucwords(lang('actions_edit')),
+					ucwords(lang('labels_skin') .' '. lang('labels_section'))
+				);
 				
 				$data['inputs'] = array(
 					'preview' => array(
@@ -4323,6 +4356,9 @@ class Ajax_base extends Controller {
 		
 				break;
 		}
+		
+		/* data being sent to the facebox */
+		$data['header'] = $head;
 		
 		$data['label'] = array(
 			'blank' => ucwords(lang('labels_blank') .' '. lang('labels_image')),
