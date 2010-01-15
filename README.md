@@ -30,6 +30,7 @@ Latest Changes
 * fixed IE bug where text reverted to arial instead of inheriting the global font
 * fixed IE bug where the admin panel was messed up
 * fixed bug where the control panel threw an error if there were no activity notices (#63)
+* fixed bug where adding, deleting and editing a catalogue item used an incomplete header (#65)
 
 Known Issues
 ------------
