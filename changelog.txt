@@ -1,3 +1,9 @@
+01.15.2010
+
+* updated the lightness skin
+
+==========
+
 01.14.2010
 
 * added category-add.png to wiki

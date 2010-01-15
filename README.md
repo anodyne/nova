@@ -8,29 +8,11 @@ Beta (0.9.3-pre)
 
 Last Update
 -----------
-14 January 2010
+15 January 2010
 
 Latest Changes
 --------------
-* added category-add.png to wiki
-* added category-delete.png to wiki
-* added category-edit.png to wiki
-* removed icon-add.png from wiki
-* removed icon-delete.png from wiki
-* removed icon-edit.png from wiki
-* removed some debug code
-* updated the wiki controller to use the new category icons
-* updated the redmond skin
-* updated the basic install data
-* updated the constants config file
-* updated the language files
 * updated the lightness skin
-* updated the sunny skin
-* fixed IE bug with the countdown script on login and logout
-* fixed IE bug where text reverted to arial instead of inheriting the global font
-* fixed IE bug where the admin panel was messed up
-* fixed bug where the control panel threw an error if there were no activity notices (#63)
-* fixed bug where adding, deleting and editing a catalogue item used an incomplete header (#65)
 
 Known Issues
 ------------
