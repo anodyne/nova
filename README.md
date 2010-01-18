@@ -8,11 +8,19 @@ Beta (0.9.3-pre)
 
 Last Update
 -----------
-17 January 2010
+18 January 2010
 
 Latest Changes
 --------------
-* fixed bug where an autologin would fail and wouldn't be able to load the template files (#58)
+* fixed bug in IE where the footers overlapped the content (IE needs something inside the DIV)
+* updated the facebox style to be something less like SMS
+* updated the wiki stylesheets to make hover text more readable
+* updated the colorbox overlay
+* updated the search index view file to put the submit button in a better place
+* updated the lightness skin
+* updated markitUp to version 1.1.6
+* updated the basic install data
+* updated the settings page to be able to show skin previews
 
 Known Issues
 ------------
