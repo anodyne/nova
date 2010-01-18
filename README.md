@@ -8,11 +8,11 @@ Beta (0.9.3-pre)
 
 Last Update
 -----------
-15 January 2010
+17 January 2010
 
 Latest Changes
 --------------
-* updated the lightness skin
+* fixed bug where an autologin would fail and wouldn't be able to load the template files (#58)
 
 Known Issues
 ------------
