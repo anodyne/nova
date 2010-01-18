@@ -161,7 +161,7 @@
     padding: .5em 8px;
     
     border-top: 3px solid #f6a828;
-    background: #fff; /* declare background color for container to avoid distorted fonts in IE while fading */
+    background: #eee; /* declare background color for container to avoid distorted fonts in IE while fading */
 }
 .ui-tabs-loading em {
     padding: 0 0 0 20px;
@@ -175,7 +175,7 @@
 	line-height: 28px !important;
 	
     border: 1px solid #ddd !important;
-    background: #eee !important;
+    background: #f3f3f3 !important;
     
     -moz-border-radius: 3px !important;
     -webkit-border-radius: 3px !important;
@@ -186,7 +186,7 @@
     padding: 0 !important;
 }
 .subtabs .ui-tabs-nav a {
-    background: #eee !important;
+    background: #f3f3f3 !important;
     color: #999 !important;
     border: 0 !important;
     font-size: 85% !important;
@@ -199,14 +199,14 @@
 .subtabs .ui-tabs-nav .ui-tabs-selected a:hover {
     background: #999 !important;
     border: 0 !important;
-    color: #eee !important;
+    color: #fff !important;
 	
 	-moz-border-radius: 20px !important;
     -webkit-border-radius: 20px !important;
 }
 .subtabs .ui-tabs-nav a:hover, .subtabs .ui-tabs-nav a:active {
     background-color: #ccc !important;
-	color: #eee !important;
+	color: #fff !important;
 	border: 0 !important;
 	
 	-moz-border-radius: 20px !important;
@@ -268,7 +268,7 @@
     padding: .5em 8px;
     
     border-top: 0 !important;
-    background: #fff; /* declare background color for container to avoid distorted fonts in IE while fading */
+    background: #eee; /* declare background color for container to avoid distorted fonts in IE while fading */
 }
 .subtabs .ui-tabs-loading em {
     padding: 0 0 0 20px;

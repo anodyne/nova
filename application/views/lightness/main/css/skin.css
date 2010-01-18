@@ -64,6 +64,7 @@ body {
 }
 #lower-head .head-content { height: 180px; background: transparent url('../images/lower-head-overlay.png') no-repeat top right; }
 #lower-head h1, #lower-head h2 { margin: 0 !important; padding: 10px 0 0 0 !important; }
+#lower-head h1 { font-size: 400%; }
 #lower-head a {
 	color: #fff !important;
 	border-bottom: 1px solid;
@@ -189,7 +190,7 @@ body {
 |---------------------------------------------------------------
 */
 #footer {
-	margin: 2em auto;
+	margin: 2em auto 2em auto;
 	padding: 1.7em 0;
 	clear: both;
 	line-height: 1.4;
@@ -468,20 +469,20 @@ hr {
 	font-weight: bold;
 }
 .panel-handle a:hover span {
-	background: #111 url('../images/gradient-menu-active.png') repeat-x center left;
+	background: #333;
 	color: #eee;
-	border-left: 1px solid #000;
-	border-right: 1px solid #000;
+	border-left: 1px solid #222;
+	border-right: 1px solid #222;
 }
 
 #panel .panel-body {
-	background: #555 url('../images/panel-bg.png') repeat-x top left;
+	background: #555;
 	color: #fff;
 }
 
 .panel-handle {
-	background: #333 url('../images/gradient-menu-active.png') repeat-x center left;
-	border-bottom: 1px solid #111;
+	background: #555;
+	border-bottom: 1px solid #222;
 	text-align: center;
 	font-size: 85%;
 }

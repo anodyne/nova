@@ -114,33 +114,51 @@ echo "<?xml version='1.0' encoding='UTF-8'?>\r\n";
 		
 		<div id="lower-head">
 			<div class="wrapper head-content">
-				<?php if ($this->uri->rsegment(1) == 'main'): ?>
-					<?php
-					
-					$this->load->model('posts_model', 'posts');
-					$this->load->helper('text');
-					
-					$posts = $this->posts->get_post_list('', 'desc', 2, '', 'activated');
-					
-					if ($posts->num_rows() > 0)
-					{
-						echo '<h2>'. ucwords(lang('status_recent') .' '. lang('global_posts')) .'</h2>';
+				<?php
+				
+				$this->load->model('wiki_model', 'wiki');
+				$this->load->helper('text');
+				
+				$created = $this->wiki->get_recently_created(2);
+				$updated = $this->wiki->get_recently_updated(2);
+				
+				if ($updated->num_rows() > 0)
+				{
+					echo '<div class="right">';
+						echo '<h2>'. ucwords(lang('status_recently') .' '. lang('actions_updated')) .'</h2>';
 						
 						echo '<ul>';
-						foreach ($posts->result() as $p)
+						foreach ($updated->result() as $u)
 						{
 							echo '<li>';
-							echo '<strong>'. anchor('sim/viewpost/'. $p->post_id, $p->post_title .' '. RARROW) .'</strong><br />';
-							echo '<span class="fontSmall">'. word_limiter($p->post_content, 25) .'</span>';
+							echo '<strong>'. anchor('wiki/view/page/'. $u->page_id, $u->draft_title .' '. RARROW) .'</strong><br />';
+							echo '<span class="fontSmall">'. word_limiter($u->draft_summary, 25) .'</span>';
 							echo '</li>';
 						}
 						echo '</ul>';
-					}
+					echo '</div>';
+				}
+				
+				if ($created->num_rows() > 0)
+				{
+					echo '<h2>'. ucwords(lang('status_recently') .' '. lang('actions_created')) .'</h2>';
 					
-					?>
-				<?php else: ?>
-					<h1><?php echo ucfirst($this->uri->rsegment(1, APP_NAME));?></h1>
-				<?php endif;?>
+					echo '<ul>';
+					foreach ($created->result() as $c)
+					{
+						echo '<li>';
+						echo '<strong>'. anchor('wiki/view/page/'. $c->page_id, $c->draft_title .' '. RARROW) .'</strong><br />';
+						echo '<span class="fontSmall">'. word_limiter($c->draft_summary, 25) .'</span>';
+						echo '</li>';
+					}
+					echo '</ul>';
+				}
+				else
+				{
+					echo '<h1>'. $this->options['sim_name'] .'</h1>';
+				}
+				
+				?>
 			</div>
 		</div>
 		
@@ -158,7 +176,7 @@ echo "<?xml version='1.0' encoding='UTF-8'?>\r\n";
 					<?php echo $content;?>
 					<?php echo $ajax;?>
 					
-					<div style="clear:both;"></div>
+					<div style="clear:both;">&nbsp;</div>
 				</div>
 			</div>
 		</div>

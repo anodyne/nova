@@ -139,7 +139,7 @@ echo "<?xml version='1.0' encoding='UTF-8'?>\r\n";
 					
 					?>
 				<?php else: ?>
-					<h1><?php echo ucfirst($this->uri->rsegment(1, APP_NAME));?></h1>
+					<h1><?php echo $this->options['sim_name'];?></h1>
 				<?php endif;?>
 			</div>
 		</div>
@@ -158,7 +158,7 @@ echo "<?xml version='1.0' encoding='UTF-8'?>\r\n";
 					<?php echo $content;?>
 					<?php echo $ajax;?>
 					
-					<div style="clear:both;"></div>
+					<div style="clear:both;">&nbsp;</div>
 				</div>
 			</div>
 		</div>

@@ -63,6 +63,15 @@ echo "<?xml version='1.0' encoding='UTF-8'?>\r\n";
 		<?php include_once($this->config->item('include_head_admin')); ?>
 		
 		<?php echo $javascript;?>
+		
+		<script type="text/javascript">
+			$(document).ready(function(){
+				$('.nav-main ul li a').each(function(){
+					if ($(this).attr('href') == '<?php echo site_url("admin/index");?>')
+						$(this).addClass('active');
+				});
+			});
+		</script>
 	</head>
 	<body>
 		<noscript>
@@ -89,7 +98,7 @@ echo "<?xml version='1.0' encoding='UTF-8'?>\r\n";
 						</table>
 					</div>
 				</div>
-				<div class="panel-handle ui-state-default">
+				<div class="panel-handle">
 					<div class="wrapper">
 						<?php echo $panel_workflow;?>
 					</div>
@@ -107,8 +116,14 @@ echo "<?xml version='1.0' encoding='UTF-8'?>\r\n";
 				</div>
 				
 				<div class="head_content">
-					<?php echo img(APPFOLDER .'/views/'. $current_skin .'/'. $sec .'/images/head_logo.png', FALSE);?>
+					<?php echo img(APPFOLDER .'/views/'. $current_skin .'/'. $sec .'/images/head-logo.png', FALSE);?>
 				</div>
+			</div>
+		</div>
+		
+		<div id="lower-head">
+			<div class="wrapper head-content">
+				<h1><?php echo $this->options['sim_name'];?></h1>
 			</div>
 		</div>
 		
@@ -126,7 +141,7 @@ echo "<?xml version='1.0' encoding='UTF-8'?>\r\n";
 					<?php echo $content;?>
 					<?php echo $ajax;?>
 					
-					<div style="clear:both;"></div>
+					<div style="clear:both;">&nbsp;</div>
 				</div>
 			</div>
 		</div>
