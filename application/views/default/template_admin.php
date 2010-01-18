@@ -132,7 +132,7 @@ echo "<?xml version='1.0' encoding='UTF-8'?>\r\n";
 					<?php echo $content;?>
 					<?php echo $ajax;?>
 					
-					<div style="clear:both;"></div>
+					<div style="clear:both;">&nbsp;</div>
 				</div>
 			</div>
 		</div>
