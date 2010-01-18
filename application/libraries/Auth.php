@@ -201,9 +201,6 @@ class Auth {
 		$password = $this->ci->input->xss_clean($password);
 		$remember = $this->ci->input->xss_clean($remember);
 		
-		/* hash the password coming in */
-		$pass = $this->hash($password);
-		
 		/* set the variables */
 		$retval = 0;
 		$maintenance = $this->ci->settings->get_setting('maintenance');
@@ -246,7 +243,7 @@ class Auth {
 			/* assign the object to a variable */
 			$person = $login->row();
 			
-			if ($person->password == $pass)
+			if ($person->password == $password)
 			{
 				if ($maintenance == 'on' && $person->is_sysadmin == 'n')
 				{
@@ -285,7 +282,7 @@ class Auth {
 		if ($remember == 'yes')
 		{
 			/* set the cookie */
-			$this->_set_cookie($email, $pass);
+			$this->_set_cookie($email, $password);
 		}
 		
 		return $retval;

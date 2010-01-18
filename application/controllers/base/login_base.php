@@ -218,7 +218,7 @@ class Login_base extends Controller {
 	{
 		/* grab the POST data */
 		$email = $this->input->post('email');
-		$password = $this->input->post('password');
+		$password = $this->auth->hash($this->input->post('password'));
 		$remember = $this->input->post('remember');
 		
 		/* do the login */
