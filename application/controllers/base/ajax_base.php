@@ -5446,6 +5446,26 @@ class Ajax_base extends Controller {
 		echo img($output);
 	}
 	
+	function info_show_skin_preview_image()
+	{
+		/* set the POST variables */
+		$location = $this->input->post('skin', TRUE);
+		$section = $this->input->post('section', TRUE);
+		
+		$where = array(
+			'skinsec_section' => $section,
+			'skinsec_skin' => $location
+		);
+		
+		/* grab the position details */
+		$item = $this->sys->get_skinsec($where);
+		
+		/* set the output */
+		$output = ($item !== FALSE) ? base_url() . APPFOLDER .'/views/'. $location .'/'. $item->skinsec_image_preview : '';
+		
+		echo $output;
+	}
+	
 	function info_show_skin_preview()
 	{
 		/* set the POST variables */

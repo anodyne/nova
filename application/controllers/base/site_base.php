@@ -3763,6 +3763,10 @@ class Site_base extends Controller {
 					'src' => img_location('gear.png', $this->skin, 'admin'),
 					'alt' => '',
 					'class' => 'image inline_img_left'),
+				'view' => array(
+					'src' => img_location('icon-view.png', $this->skin, 'admin'),
+					'alt' => '',
+					'class' => 'image'),
 			);
 			
 			/*

@@ -176,22 +176,34 @@
 					<tr class="height_40">
 						<td class="cell-label"><?php echo $label['skin_main'];?></td>
 						<td class="cell-spacer"></td>
-						<td><?php echo form_dropdown('skin_main', $themes['main'], $default['skin_main']);?></td>
+						<td>
+							<?php echo form_dropdown('skin_main', $themes['main'], $default['skin_main'], 'class="skins" myType="main"');?>
+							&nbsp;<a href="#" class="image cb preview-main"><?php echo img($images['view']);?></a>
+						</td>
 					</tr>
 					<tr class="height_40">
 						<td class="cell-label"><?php echo $label['skin_admin'];?></td>
 						<td class="cell-spacer"></td>
-						<td><?php echo form_dropdown('skin_admin', $themes['admin'], $default['skin_admin']);?></td>
+						<td>
+							<?php echo form_dropdown('skin_admin', $themes['admin'], $default['skin_admin'], 'class="skins" myType="admin"');?>
+							&nbsp;<a href="#" class="image cb preview-admin"><?php echo img($images['view']);?></a>
+						</td>
 					</tr>
 					<tr class="height_40">
 						<td class="cell-label"><?php echo $label['skin_login'];?></td>
 						<td class="cell-spacer"></td>
-						<td><?php echo form_dropdown('skin_login', $themes['login'], $default['skin_login']);?></td>
+						<td>
+							<?php echo form_dropdown('skin_login', $themes['login'], $default['skin_login'], 'class="skins" myType="login"');?>
+							&nbsp;<a href="#" class="image cb preview-login"><?php echo img($images['view']);?></a>
+						</td>
 					</tr>
 					<tr class="height_40">
 						<td class="cell-label"><?php echo $label['skin_wiki'];?></td>
 						<td class="cell-spacer"></td>
-						<td><?php echo form_dropdown('skin_wiki', $themes['wiki'], $default['skin_wiki']);?></td>
+						<td>
+							<?php echo form_dropdown('skin_wiki', $themes['wiki'], $default['skin_wiki'], 'class="skins" myType="wiki"');?>
+							&nbsp;<a href="#" class="image cb preview-wiki"><?php echo img($images['view']);?></a>
+						</td>
 					</tr>
 				</tbody>
 			</table><br />
