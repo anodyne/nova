@@ -6,7 +6,7 @@
     margin-left: -375px;
 	
 	text-align: left;
-    color: #fff;
+    color: #333;
 }
 
 #facebox .popup {
@@ -18,34 +18,64 @@
 	width: 750px;
     margin: 0 auto;
     
+    background: #eee;
+    
+    border-radius: 4px;
     -moz-border-radius: 4px;
     -webkit-border-radius: 4px;
     
-    background: #3a3a3a;
-    border: 1px solid #555;
+    box-shadow: 4px 4px 8px rgba(0, 0, 0, .35);
+    -moz-box-shadow: 4px 4px 8px rgba(0, 0, 0, .35);
+    -webkit-box-shadow: 4px 4px 8px rgba(0, 0, 0, .35);
 }
 
 #facebox .hud_title {
-    height: 22px;
-    line-height: 22px;
+    height: 25px;
+    line-height: 25px;
     
     text-align: center;
     font-weight: bold;
     font-size: 110%;
-    border-bottom: 1px solid #252525;
+    border-bottom: 1px solid #8a7f6b;
+    background: #fcd000 url('../images/facebox-title.png') repeat-x top left;
+    color: #363636;
+    
+    border-radius: 4px 4px 0 0;
+    -moz-border-radius: 4px 4px 0 0;
+    -webkit-border-top-left-radius: 4px;
+    -webkit-border-top-right-radius: 4px;
 }
 
-#facebox .hud_content { padding: 0 10px 10px 10px; }
+#facebox .hud_content {
+	padding: 0 10px 10px 10px;
+	
+	background: #eee;
+	
+	border-radius: 0 0 4px 4px;
+    -moz-border-radius: 0 0 4px 4px;
+    -webkit-border-bottom-left-radius: 4px;
+    -webkit-border-bottom-right-radius: 4px;
+}
 
-#facebox .close_image {
-    float: left;
-    margin: 4px 0 0 7px;
+#facebox a.close {
+	float: right;
+	height: 25px;
+	width: 30px;
+	
+	border: none;
+	background: transparent url('../images/facebox-close-button.png') no-repeat 50% 50%;
+}
+#facebox a.close:hover { background: transparent url('../images/facebox-close-button-hover.png') no-repeat 50% 50%; }
+
+/*#facebox .close_image {
+    float: right;
+    margin: 6px 7px 0 0;
     height: 13px;
     width: 13px;
     
     border: none;
     background: transparent url('../images/facebox-close.png') no-repeat top left;
-}
+}*/
 
 #facebox .loading { text-align: center; }
 
@@ -81,16 +111,17 @@
 textarea.hud,
 input.hud,
 select.hud {
-	background: #3a3a3a;
-	border: 1px solid #555;
-	color: #eee;
+	background: #eee;
+	border: 1px solid #bbb;
+	color: #333;
 }
 
 textarea.hud:focus,
 input.hud:focus,
 select.hud:focus {
-	background: #3c3c3c;
-	color: #eee;
+	background: #f2f2f2;
+	color: #333;
+	border: 1px solid #999;
 }
 
 /*
@@ -98,23 +129,34 @@ select.hud:focus {
 | BUTTONS
 |---------------------------------------------------------------
 */
-
 #facebox button.hud_button {
-	height: 20px;
+	height: 23px;
 	padding: 0 10px 1px 10px;
 	min-width: 90px;
 	
+	border: 1px solid #aaa;
+	background: #ccc url('../images/facebox-button.png') repeat-x top left;
+	font-weight: bold;
+	color: #333;
+	outline: 0;
+	font-size: 90%;
+	
+	border-radius: 14px;
 	-moz-border-radius: 14px;
 	-webkit-border-radius: 14px;
 	
-	border: 1px solid #aaa;
-	background: #353235 url('../images/facebox-button-bg.jpg') repeat-x top left;
-	font-weight: bold;
-	color: #eee;
-	outline: 0;
-	font-size: 90%;
+	box-shadow: 1px 1px 1px rgba(255, 255, 255, .8);
+	-moz-box-shadow: 1px 1px 1px rgba(255, 255, 255, .8);
+	-webkit-box-shadow: 1px 1px 1px rgba(255, 255, 255, .8);
 }
-#facebox button.button:hover { border: 1px solid #ccc; }
+#facebox button.hud_button:hover {
+	border: 1px solid #999;
+	background: #ccc url('../images/facebox-button-hover.png') repeat-x top left;
+	
+	box-shadow: 1px 1px 1px rgba(0, 0, 0, .1);
+	-moz-box-shadow: 1px 1px 1px rgba(0, 0, 0, .1);
+	-webkit-box-shadow: 1px 1px 1px rgba(0, 0, 0, .1);
+}
 
 input.hud_button {
 	height: 20px;
@@ -122,9 +164,9 @@ input.hud_button {
 	min-width: 90px;
 	
 	border: 1px solid #aaa;
-	background: #353235;
+	background: #ccc;
 	font-weight: bold;
 	font-size: 120%;
-	color: #eee;
+	color: #333;
 }
-input.button:hover { border: 1px solid #ccc; }
+input.button:hover { border: 1px solid #999; }
