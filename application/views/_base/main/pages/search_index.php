@@ -8,7 +8,7 @@
 			<td><?php echo form_dropdown('type', $type);?></td>
 		</tr>
 		
-		<?php echo table_row_spacer(3, 5);?>
+		<?php echo table_row_spacer(3, 10);?>
 		
 		<tr>
 			<td class="cell-label"><?php echo $label['search_in'];?></td>
@@ -16,7 +16,7 @@
 			<td><?php echo form_dropdown('component', $component);?></td>
 		</tr>
 		
-		<?php echo table_row_spacer(3, 5);?>
+		<?php echo table_row_spacer(3, 10);?>
 		
 		<tr>
 			<td class="cell-label"><?php echo $label['search_for'];?></td>
@@ -24,10 +24,11 @@
 			<td><?php echo form_input($inputs['search']);?></td>
 		</tr>
 		
-		<?php echo table_row_spacer(3, 15);?>
+		<?php echo table_row_spacer(3, 25);?>
 		
 		<tr>
-			<td colspan="3"><?php echo form_button($inputs['submit']);?></td>
+			<td colspan="2"></td>
+			<td><?php echo form_button($inputs['submit']);?></td>
 		</tr>
 	</table>
 <?php echo form_close();?>
