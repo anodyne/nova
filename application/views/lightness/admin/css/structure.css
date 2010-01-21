@@ -316,6 +316,8 @@ img { border: none; }
 }
 .award-small { width: 65px; }
 
+.indent-left { padding: 0 0 0 1.5em; }
+
 /*
 |---------------------------------------------------------------
 | ACP PANEL
