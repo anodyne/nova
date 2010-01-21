@@ -29,7 +29,7 @@
 	</li>
 </ul>
 
-<?php if ($installed === TRUE): ?>
+<?php if ($installed === FALSE): ?>
 	<?php echo text_output($label['whatsnext'], 'h2', 'page-subhead');?>
 	
 	<?php echo $label['text'];?>
