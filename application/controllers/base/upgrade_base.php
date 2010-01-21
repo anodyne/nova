@@ -66,7 +66,7 @@ class Upgrade_base extends Controller {
 		$status = 0;
 		
 		/* determine the status */
-		$status = (GENRE != 'DS9') ? 4 : $status;
+		$status = (GENRE != 'ds9') ? 4 : $status;
 		$status = ($sms === FALSE) ? 3 : $status;
 		$status = ($sms_ver < $sms_const) ? 2 : $status;
 		$status = ($installed === TRUE) ? 1 : $status;
