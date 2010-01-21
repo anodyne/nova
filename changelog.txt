@@ -1,3 +1,22 @@
+01.20.2010
+
+* updated the structure stylesheets for all the skins
+* updated the join form to use a better designed form
+* updated the language files
+* udpated the search page to use a better designed form
+* updated the contact page to use a better designed form
+* updated the lightness skin
+* updated the sunny skin
+
+==========
+
+01.19.2010
+
+* fixed bug where upgrade process wasn't evaluating the genre properly
+* fixed bug where the upgrade controls weren't shown because of wrong logic
+
+==========
+
 01.18.2010
 
 * fixed bug in IE where the footers overlapped the content (IE needs something inside the DIV)

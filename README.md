@@ -8,11 +8,13 @@ Beta (0.9.3-pre)
 
 Last Update
 -----------
-18 January 2010
+20 January 2010
 
 Latest Changes
 --------------
 * fixed bug in IE where the footers overlapped the content (IE needs something inside the DIV)
+* fixed bug where upgrade process wasn't evaluating the genre properly
+* fixed bug where the upgrade controls weren't shown because of wrong logic
 * updated the facebox style to be something less like SMS
 * updated the wiki stylesheets to make hover text more readable
 * updated the colorbox overlay
@@ -21,6 +23,13 @@ Latest Changes
 * updated markitUp to version 1.1.6
 * updated the basic install data
 * updated the settings page to be able to show skin previews
+* updated the structure stylesheets for all the skins
+* updated the join form to use a better designed form
+* updated the language files
+* udpated the search page to use a better designed form
+* updated the contact page to use a better designed form
+* updated the lightness skin
+* updated the sunny skin
 
 Known Issues
 ------------
