@@ -488,6 +488,7 @@ $lang['labels_slots'] 			= 'slots';
 $lang['labels_sorting']			= 'sorting';
 $lang['labels_stats'] 			= 'stats';
 $lang['labels_status'] 			= 'status';
+$lang['labels_step'] 			= 'step';
 $lang['labels_sub'] 			= 'sub';
 $lang['labels_subject'] 		= 'subject';
 $lang['labels_suffix'] 			= 'suffix';
