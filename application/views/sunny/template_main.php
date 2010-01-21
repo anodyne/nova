@@ -4,10 +4,10 @@
 | TEMPLATE - MAIN
 |---------------------------------------------------------------
 |
-| File: application/views/default/template_main.php
+| File: application/views/sunny/template_main.php
 | Skin Version: 1.0
 |
-| Main layout file used by the default skin.
+| Main layout file used by the sunny skin.
 |
 | $sec options are: main, wiki, admin, login
 | $css can be anything you want (with a .css extension of course)
@@ -65,7 +65,7 @@ echo "<?xml version='1.0' encoding='UTF-8'?>\r\n";
 		<?php echo $javascript;?>
 	</head>
 	<body>
-		<div id="container">
+		<div id="wrap">
 			<noscript>
 				<span class="UITheme">
 					<div class="system_warning ui-state-error"><?php echo lang_output('text_javascript_off', '');?></div>
@@ -99,25 +99,23 @@ echo "<?xml version='1.0' encoding='UTF-8'?>\r\n";
 			<?php endif; ?>
 			
 			<!-- HEAD -->
-			<div id="head" class="UITheme">
-				<div class="wrapper">
-					<div class="head_content ui-widget-header">
-						<?php echo img(APPFOLDER .'/views/'. $current_skin .'/'. $sec .'/images/head_logo.png', FALSE);?>
-					</div>
-				</div>
-			</div>
-			
-			<div class="wrapper UITheme">
-				<div id="menu" class="ui-state-default">
-					<div class="nav-main">
-						<?php echo $nav_main;?>
+			<div class="wrapper">
+				<div id="head">
+					<div class="head-content"><?php echo img(APPFOLDER .'/views/'. $current_skin .'/'. $sec .'/images/header-image.jpg', FALSE);?></div>
+					
+					<?php echo img(APPFOLDER .'/views/'. $current_skin .'/'. $sec .'/images/head_logo.png', FALSE);?>
+					
+					<div id="menu">
+						<div class="nav-main">
+							<?php echo $nav_main;?>
+						</div>
 					</div>
 				</div>
 			</div>
 			
 			<!-- BODY -->
 			<div id="body">
-				<div class="wrapper">
+				<div class="wrapper clearfix">
 					<!-- SUB NAVIGATION -->
 					<div class="nav-sub">
 						<?php echo $nav_sub;?>
@@ -133,15 +131,12 @@ echo "<?xml version='1.0' encoding='UTF-8'?>\r\n";
 					</div>
 				</div>
 			</div>
-			<div class="clearfooter"></div>
 		</div>
 		
 		<!-- FOOTER -->
-		<div class="UITheme">
-			<div id="footer" class="ui-widget-header">
-				Powered by <strong><?php echo APP_NAME;?></strong> from <a href="http://www.anodyne-productions.com" target="_blank">Anodyne Productions</a> | 
-			<?php echo anchor('main/credits', 'Site Credits');?>
-			</div>
+		<div id="footer">
+			Powered by <strong><?php echo APP_NAME;?></strong> from <a href="http://www.anodyne-productions.com" target="_blank">Anodyne Productions</a> | 
+		<?php echo anchor('main/credits', 'Site Credits');?>
 		</div>
 	</body>
 </html>

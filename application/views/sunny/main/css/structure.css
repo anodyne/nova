@@ -12,7 +12,7 @@ html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abb
 */
 h1, h2, h3, h4, p { margin: 8px 0; }
 
-h1 { font-size: 200%; }
+h1 { font-size: 220%; }
 h2 { font-size: 150%; }
 h3 { font-size: 133%; }
 h4 { font-size: 117%; }
@@ -267,6 +267,8 @@ img { border: none; }
 }
 
 .award-small { width: 65px; }
+
+.indent-left { padding: 0 0 0 1.5em; }
 
 /*
 |---------------------------------------------------------------
