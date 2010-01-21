@@ -116,7 +116,6 @@ echo "<?xml version='1.0' encoding='UTF-8'?>\r\n";
 			<div class="wrapper head-content">
 				<?php
 				
-				$this->load->model('wiki_model', 'wiki');
 				$this->load->helper('text');
 				
 				$created = $this->wiki->get_recently_created(2);
