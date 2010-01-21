@@ -1,5 +1,20 @@
 <script type="text/javascript">
 	$(document).ready(function(){
+		var $tabs = $('#tabs').tabs();
+		
+		$('#nextTab').click(function(){
+			var value = parseInt($tabs.tabs('option', 'selected'));
+			var length = $tabs.tabs('length');
+			
+			value = value + 1;
+			length = length - 1;
+			
+			if (value <= length)
+				$tabs.tabs('select', value);
+			
+			return false;
+		});
+		
 		$('#position').change(function(){
 			var id = $('#position option:selected').val();
 			

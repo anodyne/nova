@@ -644,7 +644,7 @@ class Main_base extends Controller {
 				'sample_post' => array(
 					'name' => 'sample_post',
 					'id' => 'sample_post',
-					'rows' => 14),
+					'rows' => 30),
 			);
 			
 			/* get the sample post question */
@@ -660,12 +660,14 @@ class Main_base extends Controller {
 				'im_inst' => lang('text_im_instructions'),
 				'fname' => ucwords(lang('order_first') .' '. lang('labels_name')),
 				'mname' => ucwords(lang('order_middle') .' '. lang('labels_name')),
+				'next' => ucwords(lang('actions_next') .' '. lang('labels_step')) .' '. RARROW,
 				'lname' => ucwords(lang('order_last') .' '. lang('labels_name')),
 				'suffix' => ucfirst(lang('labels_suffix')),
 				'position' => ucwords(lang('global_position')),
 				'other' => ucfirst(lang('labels_other')),
 				'samplepost' => ucwords(lang('labels_sample_post')),
 				'character' => ucfirst(lang('global_character')),
+				'character_info' => ucwords(lang('global_character') .' '. lang('labels_info')),
 			);
 		}
 		
@@ -677,6 +679,13 @@ class Main_base extends Controller {
 				'name' => 'submit',
 				'value' => 'submit',
 				'content' => ucwords(lang('actions_submit'))),
+			'next' => array(
+				'type' => 'submit',
+				'class' => 'button-sec',
+				'name' => 'submit',
+				'value' => 'submit',
+				'id' => 'nextTab',
+				'content' => ucwords(lang('actions_next') .' '. lang('labels_step'))),
 			'agree' => array(
 				'type' => 'submit',
 				'class' => 'button-main',
