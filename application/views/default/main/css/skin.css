@@ -272,7 +272,7 @@ select:hover {
 | TABLES
 |---------------------------------------------------------------
 */
-tr.alt td { background-color: #eee; }
+tr.alt td, .alt { background-color: #eee; }
 tr.light_gray { background-color: #ddd; }
 
 th {

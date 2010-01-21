@@ -68,16 +68,16 @@ input[type=text],
 input[type=password] {
 	margin: 0;
 	padding: 3px;
-	width: 275px;
+	width: 325px;
 }
-input.small     	{ width: 50px; }
-input.medium    	{ width: 100px; }
-input.medium-large	{ width: 150px; }
+input.small     	{ width: 75px; }
+input.medium    	{ width: 150px; }
+input.medium-large	{ width: 250px; }
 
 textarea {
 	margin: 0;
 	padding: 3px;
-	width: 500px;
+	width: 600px;
 }
 
 select {
@@ -264,6 +264,8 @@ img { border: none; }
 }
 
 .award-small { width: 65px; }
+
+.indent-left { padding: 0 0 0 1.5em; }
 
 /*
 |---------------------------------------------------------------
