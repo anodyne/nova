@@ -30,6 +30,7 @@ Latest Changes
 * updated the contact page to use a better designed form
 * updated the lightness skin
 * updated the sunny skin
+* updated the install controller with the xml-rpc code
 
 Known Issues
 ------------
