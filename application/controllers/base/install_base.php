@@ -1063,6 +1063,9 @@ class Install_base extends Controller {
 					$this->_install_ranks();
 					$this->_install_skins();
 					
+					/* do the product registration */
+					//$this->_register();
+					
 					if (phpversion() >= 5)
 					{
 						/* load the resources */
@@ -1310,6 +1313,33 @@ class Install_base extends Controller {
 				}
 			}
 		}
+	}
+	
+	function _register()
+	{
+		/* load the resources */
+		$this->load->library('xmlrpc');
+		
+		/* set up the server and method for the request */
+		$this->xmlrpc->server('http://localhost/anodyne/code/www/index.php/utility/do_registration', 80);
+		$this->xmlrpc->method('Do_Registration');
+		
+		/* build the request */
+		$request = array(
+			APP_NAME,
+			APP_VERSION_MAJOR .'.'. APP_VERSION_MINOR .'.'. APP_VERSION_UPDATE,
+			base_url(),
+			$_SERVER['REMOTE_ADDR'],
+			$_SERVER['SERVER_ADDR'],
+			phpversion(),
+			$this->db->platform(),
+			$this->db->version(),
+			'install',
+			'install'
+		);
+		
+		/* send the request */
+		$this->xmlrpc->request($request);
 	}
 }
 
