@@ -78,6 +78,15 @@ echo "<?xml version='1.0' encoding='UTF-8'?>\r\n";
 		
 		<script type="text/javascript">
 			$(document).ready(function(){
+				$('body').click(function(event){
+					console.log($(event.target).closest('div'));
+					if (! $(event.target).closest('div').hasClass('nav-main'))
+					{
+						$('.go-button-click').removeClass('active');
+						$('.nav-main').addClass('hidden');
+					}
+				});
+		
 				$('a.go-button-click').click(function(){
 					$('.go-button-click').toggleClass('active');
 					$('.nav-main').toggleClass('hidden');

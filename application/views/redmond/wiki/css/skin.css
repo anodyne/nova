@@ -70,7 +70,7 @@ a.login-text:hover { border-bottom: 1px solid !important; }
 	margin: 0 25px 0 0;
 }
 .go-button a {
-	padding: 4px 10px 9px 10px;
+	padding: 4px 10px 10px 10px;
 	
 	color: #fff;
 	border: 1px solid transparent;
@@ -313,6 +313,12 @@ select:hover {
 	border: 1px solid #777;
 }
 
+kbd {
+	font-weight: bold;
+	font-family: "lucida grande", verdana, arial, sans-serif;
+	font-size: 115%;
+}
+
 .cell-label {
 	font-weight: bold;
 	font-size: 100%;
@@ -412,8 +418,12 @@ input.button-main[disabled]:hover {
 |---------------------------------------------------------------
 */
 #comments p, #news_blocks p, .post_info, .info-full, #notes {
-	background-color: #f8f8f8;
-	border: 1px solid #e8e8e8;
+	background-color: #f5f5f5;
+	border: 1px solid #e5e5e5;
+	
+	border-radius: 3px;
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
 }
 
 .border-1 { border: 1px solid #ddd; }
