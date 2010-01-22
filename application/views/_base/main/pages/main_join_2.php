@@ -16,27 +16,27 @@
 			<?php echo text_output($label['user_info'], 'h3', 'page-subhead');?>
 			<div class="indent-left">
 				<p>
-					<strong><?php echo $label['name'];?></strong><br />
+					<kbd><?php echo $label['name'];?></kbd>
 					<?php echo form_input($inputs['name']);?>
 				</p>
 				
 				<p>
-					<strong><?php echo $label['email'];?></strong><br />
+					<kbd><?php echo $label['email'];?></kbd>
 					<?php echo form_input($inputs['email']);?>
 				</p>
 				
 				<p>
-					<strong><?php echo $label['password'];?></strong><br />
+					<kbd><?php echo $label['password'];?></kbd>
 					<?php echo form_password($inputs['password']);?>
 				</p>
 				
 				<p>
-					<strong><?php echo $label['dob'];?></strong><br />
+					<kbd><?php echo $label['dob'];?></kbd>
 					<?php echo form_input($inputs['dob']);?>
 				</p>
 				
 				<p>
-					<strong><?php echo $label['im'];?></strong><br />
+					<kbd><?php echo $label['im'];?></kbd>
 					<?php echo text_output($label['im_inst'], 'span', 'fontSmall gray');?><br />
 					<?php echo form_textarea($inputs['im']);?>
 				</p>
@@ -48,27 +48,27 @@
 	
 			<div class="indent-left">
 				<p>
-					<strong><?php echo $label['fname'];?></strong><br />
+					<kbd><?php echo $label['fname'];?></kbd>
 					<?php echo form_input($inputs['first_name']);?>
 				</p>
 				
 				<p>
-					<strong><?php echo $label['mname'];?></strong><br />
+					<kbd><?php echo $label['mname'];?></kbd>
 					<?php echo form_input($inputs['middle_name']);?>
 				</p>
 				
 				<p>
-					<strong><?php echo $label['lname'];?></strong><br />
+					<kbd><?php echo $label['lname'];?></kbd>
 					<?php echo form_input($inputs['last_name']);?>
 				</p>
 				
 				<p>
-					<strong><?php echo $label['suffix'];?></strong><br />
+					<kbd><?php echo $label['suffix'];?></kbd>
 					<?php echo form_input($inputs['suffix']);?>
 				</p>
 				
 				<p>
-					<strong><?php echo $label['position'];?></strong><br />
+					<kbd><?php echo $label['position'];?></kbd>
 					<?php echo form_dropdown_position('position_1', $selected_position, 'id="position"', 'open');?>
 					&nbsp; <span id="loading_update" class="hidden fontSmall gray"><?php echo img($loading);?></span>
 					<p id="position_desc" class="fontSmall gray"><?php echo text_output($pos_desc, '');?></p>
@@ -85,7 +85,7 @@
 						<div class="indent-left">
 							<?php foreach ($a['fields'] as $f): ?>
 								<p>
-									<strong><?php echo $f['field_label'];?></strong><br />
+									<kbd><?php echo $f['field_label'];?></kbd>
 									<?php echo $f['input'];?>
 								</p>
 							<?php endforeach; ?>

@@ -2,17 +2,17 @@
 
 <?php echo form_open('search/results');?>
 	<p>
-		<strong><?php echo $label['type'];?></strong><br />
+		<kbd><?php echo $label['type'];?></kbd>
 		<?php echo form_dropdown('type', $type);?>
 	</p>
 	
 	<p>
-		<strong><?php echo $label['search_in'];?></strong><br />
+		<kbd><?php echo $label['search_in'];?></kbd>
 		<?php echo form_dropdown('component', $component);?>
 	</p>
 	
 	<p>
-		<strong><?php echo $label['search_for'];?></strong><br />
+		<kbd><?php echo $label['search_for'];?></kbd>
 		<?php echo form_input($inputs['search']);?>
 	</p><br />
 	
