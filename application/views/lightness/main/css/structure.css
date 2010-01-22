@@ -85,6 +85,11 @@ select {
 }
 select:focus, select:hover { outline: 0; }
 
+kbd {
+	display: block;
+	margin: 0 0 5px 0;
+}
+
 .cell-label { width: 130px; }
 .cell-spacer { width: 20px; }
 
