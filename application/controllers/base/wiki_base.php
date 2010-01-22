@@ -933,6 +933,7 @@ class Wiki_base extends Controller {
 		/* set the variables */
 		$type = $this->uri->segment(3, 'page');
 		$id = $this->uri->segment(4, 0, TRUE);
+		$action = $this->uri->segment(5, FALSE);
 		
 		/* assign the config array to a variable */
 		$c = $this->config->item('thresher');
@@ -940,10 +941,8 @@ class Wiki_base extends Controller {
 		/* load the library and pass the config items in */
 		$this->load->library('thresher', $c);
 		
-		if (isset($_POST) && $this->auth->is_logged_in())
+		if (isset($_POST['submit']) && $this->auth->is_logged_in())
 		{
-			$action = $this->uri->segment(5);
-			
 			if ($action == 'revert')
 			{
 				/* get the POST variables */
@@ -1090,6 +1089,20 @@ class Wiki_base extends Controller {
 				/* write everything to the template */
 				$this->template->write_view('flash_message', '_base/wiki/pages/flash', $flash);
 			}
+		}
+		
+		switch ($action)
+		{
+			case 'comment':
+				$js_data['tab'] = 2;
+				break;
+				
+			case 'revert':
+				$js_data['tab'] = 1;
+				break;
+				
+			default:
+				$js_data['tab'] = 0;
 		}
 		
 		/* set the date format */
@@ -1313,7 +1326,7 @@ class Wiki_base extends Controller {
 		
 		/* write the data to the template */
 		$this->template->write_view('content', $view_loc, $data);
-		$this->template->write_view('javascript', $js_loc);
+		$this->template->write_view('javascript', $js_loc, $js_data);
 		$this->template->write('title', ucfirst(lang('global_wiki')) .' - '. $data['header']);
 		
 		/* render the template */
