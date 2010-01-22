@@ -1,3 +1,12 @@
+01.22.2010
+
+* updated the redmond skin to position the nova button better
+* updated the redmond skin so that when you click outside of the menu, it'll close the menu
+* updated the wiki page view to allow going directly to a tab from the url
+* updated the skins with a new tag for doing form labels (kbd)
+
+==========
+
 01.20.2010
 
 * updated the structure stylesheets for all the skins

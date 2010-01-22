@@ -8,29 +8,14 @@ Beta (0.9.3-pre)
 
 Last Update
 -----------
-20 January 2010
+22 January 2010
 
 Latest Changes
 --------------
-* fixed bug in IE where the footers overlapped the content (IE needs something inside the DIV)
-* fixed bug where upgrade process wasn't evaluating the genre properly
-* fixed bug where the upgrade controls weren't shown because of wrong logic
-* updated the facebox style to be something less like SMS
-* updated the wiki stylesheets to make hover text more readable
-* updated the colorbox overlay
-* updated the search index view file to put the submit button in a better place
-* updated the lightness skin
-* updated markitUp to version 1.1.6
-* updated the basic install data
-* updated the settings page to be able to show skin previews
-* updated the structure stylesheets for all the skins
-* updated the join form to use a better designed form
-* updated the language files
-* udpated the search page to use a better designed form
-* updated the contact page to use a better designed form
-* updated the lightness skin
-* updated the sunny skin
-* updated the install controller with the xml-rpc code
+* updated the redmond skin to position the nova button better
+* updated the redmond skin so that when you click outside of the menu, it'll close the menu
+* updated the wiki page view to allow going directly to a tab from the url
+* updated the skins with a new tag for doing form labels (kbd)
 
 Known Issues
 ------------
