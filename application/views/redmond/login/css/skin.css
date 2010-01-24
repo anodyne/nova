@@ -118,6 +118,7 @@ input[type=password] {
 	border: 1px solid #d8d8d8;
 	color: #777;
 	font-family: "lucida grande", verdana, arial, sans-serif;
+	font-size: 100%;
 	
 	border-radius: 2px;
 	-moz-border-radius: 2px;
@@ -148,6 +149,7 @@ select {
 	border: 1px solid #d8d8d8;
 	color: #777;
 	font-family: "lucida grande", verdana, arial, sans-serif;
+	font-size: 100%;
 	
 	border-radius: 2px;
 	-moz-border-radius: 2px;
@@ -157,6 +159,12 @@ select:focus,
 select:hover {
 	color: #444;
 	border: 1px solid #777;
+}
+
+kbd {
+	font-weight: bold;
+	font-family: "lucida grande", verdana, arial, sans-serif;
+	font-size: 115%;
 }
 
 /*
