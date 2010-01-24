@@ -41,6 +41,7 @@ http://allmarkedup.com/archives/jquery-quick-pagination-plugin/
 
 http://flowplayer.org/tools/index.html
 http://jquerylist.com/
+http://www.filamentgroup.com/lab/using_multiple_jquery_ui_themes_on_a_single_page/
 
 |---------------------------------------------------------------
 | INTERESTING CODEIGNITER LINKS
