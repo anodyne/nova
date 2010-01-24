@@ -152,6 +152,12 @@ select:hover {
 	border: 1px solid #777;
 }
 
+kbd {
+	font-weight: bold;
+	font-family: "lucida grande", verdana, arial, sans-serif;
+	font-size: 115%;
+}
+
 /*
 |---------------------------------------------------------------
 | TABLE STYLES
