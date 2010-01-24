@@ -8,7 +8,7 @@ Beta (0.9.3-pre)
 
 Last Update
 -----------
-22 January 2010
+23 January 2010
 
 Latest Changes
 --------------
@@ -16,6 +16,12 @@ Latest Changes
 * updated the redmond skin so that when you click outside of the menu, it'll close the menu
 * updated the wiki page view to allow going directly to a tab from the url
 * updated the skins with a new tag for doing form labels (kbd)
+* updated the star trek online genre data
+* updated the login views to use the kbd tag for field labels
+* updated the lightness skin
+* updated the redmond skin
+* updated the sunny skin
+* updated the notes doc
 
 Known Issues
 ------------
