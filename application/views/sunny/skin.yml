@@ -1,6 +1,6 @@
 skin: Sunny
 location: sunny
-credits: Skin created by David VanScott and based on jQuery UI Sunny theme created by the jQuery UI team. Edits are permissible as long as original credits stay intact.
+credits: The Sunny skin was created by Anodyne Productions and is loosely based on the jQuery UI Sunny theme created by the jQuery UI team. Edits are permissible provided the original credits remain intact.
 sections:
   -
     type: main

@@ -65,43 +65,33 @@ echo "<?xml version='1.0' encoding='UTF-8'?>\r\n";
 		<?php echo $javascript;?>
 	</head>
 	<body>
+		<!-- HEAD -->
+		<div id="head">
+			<?php echo img(APPFOLDER .'/views/'. $current_skin .'/'. $sec .'/images/head-logo.png', FALSE);?>
+		</div>
+		
 		<!-- BODY -->
 		<div id="body">
-			<div class="wrapper UITheme">
-				<div id="head" class="ui-state-default">
-					<div class="logo">
-						<?php echo img(APPFOLDER .'/views/'. $current_skin .'/'. $sec .'/images/nova-small.png', FALSE);?>
-					</div>
+			<div class="wrapper">
+				<!-- SUB NAVIGATION -->
+				<div class="nav-sub">
+					<ul>
+						<li><a href="<?php echo site_url('login/index');?>"<?php if ($this->uri->rsegment(2) != 'reset_password') { echo ' class="active"'; }?>><span><?php echo ucwords(lang('actions_login') .' '. lang('time_now'));?></span></a></li>
+						<li><a href="<?php echo site_url('login/reset_password');?>"<?php if ($this->uri->rsegment(2) == 'reset_password') { echo ' class="active"'; }?>><span><?php echo ucwords(lang('actions_reset') .' '. lang('labels_password'));?></span></a></li>
+						<li><a href="<?php echo site_url('main/index');?>"><span><?php echo ucfirst(lang('actions_back') .' '. lang('labels_to') .' '. lang('labels_site'));?></span></a></li>
+					</ul>
 					
-					<?php echo text_output($this->options['sim_name'], '');?>
+					<div class="footer">
+						Powered by <strong><?php echo APP_NAME;?></strong> from <a href="http://www.anodyne-productions.com" target="_blank">Anodyne Productions</a>
+					</div>
 				</div>
-			
+				
 				<!-- PAGE CONTENT -->
 				<div class="content">
 					<?php echo $flash_message;?>
 					<?php echo $content;?>
 					
-					<?php if (!$this->uri->segment(2) || $this->uri->segment(2) == 'index' || $this->uri->segment(2) == 'reset_password'): ?>
-						<!-- FAUX FOOTER -->
-						<div class="lower_content">
-							<?php if ($this->uri->segment(2) && $this->uri->segment(2) != 'index'): ?>
-								<strong><?php echo anchor('login/index', ucwords(lang('actions_login') .' '. lang('time_now')));?></strong>
-								&nbsp; | &nbsp;
-							<?php endif; ?>
-	
-							<?php if ($this->uri->segment(2) != 'reset_password'): ?>
-								<strong><?php echo anchor('login/reset_password', ucwords(lang('actions_reset') .' '. lang('labels_password')));?></strong>
-								&nbsp; | &nbsp;
-							<?php endif; ?>
-	
-							<strong><?php echo anchor('main/index', ucfirst(lang('actions_back') .' '. lang('labels_to') .' '. lang('labels_site')));?></strong>
-						</div>
-					<?php endif; ?>
-				</div>
-				
-				<!-- FOOTER -->
-				<div id="footer" class="ui-state-default">
-					Powered by <strong><?php echo APP_NAME;?></strong>
+					<div style="clear:both;">&nbsp;</div>
 				</div>
 			</div>
 		</div>

@@ -80,6 +80,11 @@ select {
 }
 select:focus, select:hover { outline: 0; }
 
+kbd {
+	display: block;
+	margin: 0 0 5px 0;
+}
+
 /*
 |---------------------------------------------------------------
 | TABLE STYLES
@@ -172,7 +177,6 @@ ul.none {
 .flash_message {
 	margin: 0 auto 10px auto;
 	line-height: 1;
-	width: 95%;
 }
 .flash_message p {
 	margin: 0;
