@@ -2,12 +2,12 @@
 
 <?php echo form_open('login/check_login');?>
 	<br /><p>
-		<strong class="fontMedium"><?php echo $label['email'];?></strong><br />
+		<kbd><?php echo $label['email'];?></kbd>
 		<?php echo form_input($inputs['email']);?>
 	</p>
 	
 	<p>
-		<strong class="fontMedium"><?php echo $label['password'];?></strong><br />
+		<kbd><?php echo $label['password'];?></kbd>
 		<?php echo form_password($inputs['password']);?>
 	</p>
 	
