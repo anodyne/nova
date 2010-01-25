@@ -678,6 +678,7 @@ class Main_base extends Controller {
 				'class' => 'button-main',
 				'name' => 'submit',
 				'value' => 'submit',
+				'id' => 'submitJoin',
 				'content' => ucwords(lang('actions_submit'))),
 			'next' => array(
 				'type' => 'submit',

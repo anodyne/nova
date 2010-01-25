@@ -15,6 +15,10 @@
 			return false;
 		});
 		
+		$('#submitJoin').click(function(){
+			return confirm('<?php echo lang('confirm_join');?>');
+		});
+		
 		$('#position').change(function(){
 			var id = $('#position option:selected').val();
 			
