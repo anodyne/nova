@@ -8,20 +8,25 @@ Beta (0.9.3-pre)
 
 Last Update
 -----------
-23 January 2010
+25 January 2010
 
 Latest Changes
 --------------
-* updated the redmond skin to position the nova button better
-* updated the redmond skin so that when you click outside of the menu, it'll close the menu
-* updated the wiki page view to allow going directly to a tab from the url
-* updated the skins with a new tag for doing form labels (kbd)
-* updated the star trek online genre data
-* updated the login views to use the kbd tag for field labels
-* updated the lightness skin
-* updated the redmond skin
+* updated the skin catalogue to change the admin skin default to match the default skin admin section
+* updated the site settings page to remove the admin dropdown from the appearance (since it doesn't actually do anything)
 * updated the sunny skin
-* updated the notes doc
+* updated the write controller to alphabetize the methods
+* updated the write news item view to use the new form layout
+* updated the write personal log view to use the new form layout
+* updated the write/reply/forward private message view to use the new form layout
+* updated the give character award view to use the new form layout
+* updated the edit bio view to use the new form layout
+* updated the join page to have a confirmation dialog
+* updated the language files
+* updated the index files in the application directory to use the proper line endings (unix) and encoding (utf8)
+* fixed bug where IE7 didn't have confirm dialogs on the post pages (#70)
+* fixed bug where the confirm dialogs wouldn't respect a cancel event (#69)
+* added the titan skin directory
 
 Known Issues
 ------------

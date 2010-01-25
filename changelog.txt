@@ -1,3 +1,25 @@
+01.25.2010
+
+* updated the skin catalogue to change the admin skin default to match the default skin admin section
+* updated the site settings page to remove the admin dropdown from the appearance (since it doesn't actually do anything)
+* updated the sunny skin
+* updated the write controller to alphabetize the methods
+* updated the write news item view to use the new form layout
+* updated the write personal log view to use the new form layout
+* updated the write/reply/forward private message view to use the new form layout
+* updated the give character award view to use the new form layout
+* updated the edit bio view to use the new form layout
+* updated the join page to have a confirmation dialog
+* updated the language files
+* updated the index files in the application directory to use the proper line endings (unix) and encoding (utf8)
+
+* fixed bug where IE7 didn't have confirm dialogs on the post pages (#70)
+* fixed bug where the confirm dialogs wouldn't respect a cancel event (#69)
+
+* added the titan skin directory
+
+==========
+
 01.23.2010
 
 * updated the login views to use the kbd tag for field labels
