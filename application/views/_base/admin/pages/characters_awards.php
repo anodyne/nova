@@ -13,40 +13,24 @@
 
 		<div id="one">
 			<?php if (isset($awards)): ?>
-				<br />
 				<?php echo form_open('characters/awards');?>
-					<table class="table100">
-						<tbody>
-							<tr>
-								<td class="cell-label"><?php echo $label['award'];?></td>
-								<td class="cell-spacer"></td>
-								<td>
-									<?php echo form_dropdown('award', $awards, '', 'id="awards"');?>
-									&nbsp;
-									<span id="loading" class="hidden"><?php echo img($images['loading']);?></span>
-									<p class="award-desc fontSmall gray"></p>
-								</td>
-							</tr>
-							
-							<?php echo table_row_spacer(3, 15);?>
-							
-							<tr>
-								<td class="cell-label"><?php echo $label['reason'];?></td>
-								<td class="cell-spacer"></td>
-								<td><?php echo form_textarea($inputs['reason']);?></td>
-							</tr>
-							
-							<?php echo table_row_spacer(3, 25);?>
-							
-							<tr>
-								<td colspan="2"></td>
-								<td>
-									<?php echo form_hidden('id', $id);?>
-									<?php echo form_button($buttons['submit']);?>
-								</td>
-							</tr>
-						</tbody>
-					</table>
+					<p>
+						<kbd><?php echo $label['award'];?></kbd>
+						<?php echo form_dropdown('award', $awards, '', 'id="awards"');?>
+						&nbsp;
+						<span id="loading" class="hidden"><?php echo img($images['loading']);?></span>
+						<p class="award-desc fontSmall gray"></p>
+					</p>
+					
+					<p>
+						<kbd><?php echo $label['reason'];?></kbd>
+						<?php echo form_textarea($inputs['reason']);?>
+					</p><br />
+					
+					<p>
+						<?php echo form_hidden('id', $id);?>
+						<?php echo form_button($buttons['submit']);?>
+					</p>
 				<?php echo form_close();?>
 			<?php else: ?>
 				<?php echo text_output($label['no_awards_to_give'], 'h3', 'orange');?>
