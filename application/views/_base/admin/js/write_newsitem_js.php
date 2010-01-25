@@ -1,11 +1,11 @@
 <script type="text/javascript">
 	$(document).ready(function(){
-		$('button[value="Delete"]').click(function(){
-			window.confirm('<?php echo $this->lang->line('confirm_delete_newsitem');?>');
+		$('#submitDelete').click(function(){
+			return confirm('<?php echo lang('confirm_delete_newsitem');?>');
 		});
 		
-		$('button[value="Post"]').click(function(){
-			window.confirm('<?php echo $this->lang->line('confirm_post_newsitem');?>');
+		$('#submitPost').click(function(){
+			return confirm('<?php echo lang('confirm_post_newsitem');?>');
 		});
 	});
 </script>

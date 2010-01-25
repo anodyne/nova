@@ -5,12 +5,12 @@
 			return false;
 		});
 		
-		$('button[value="Delete"]').click(function(){
-			window.confirm('<?php echo $this->lang->line('confirm_delete_missionpost');?>');
+		$('#submitDelete').click(function(){
+			return confirm('<?php echo lang('confirm_delete_missionpost');?>');
 		});
 		
-		$('button[value="Post"]').click(function(){
-			window.confirm('<?php echo $this->lang->line('confirm_post_missionpost');?>');
+		$('#submitPost').click(function(){
+			return confirm('<?php echo lang('confirm_post_missionpost');?>');
 		});
 		
 		$('a#add_author').click(function() {
