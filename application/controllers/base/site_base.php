@@ -1804,6 +1804,15 @@ class Site_base extends Controller {
 					}
 					break;
 			}
+			
+			/* get the admin section default */
+			$admin_default = $this->sys->get_skinsec_default('admin');
+			
+			/* if the admin default has changed, update the database */
+			if ($admin_default != $this->options['skin_admin'])
+			{
+				$this->settings->update_setting('skin_admin', array('setting_value' => $admin_default));
+			}
 		}
 		
 		/* load the resources */

@@ -182,14 +182,6 @@
 						</td>
 					</tr>
 					<tr class="height_40">
-						<td class="cell-label"><?php echo $label['skin_admin'];?></td>
-						<td class="cell-spacer"></td>
-						<td>
-							<?php echo form_dropdown('skin_admin', $themes['admin'], $default['skin_admin'], 'class="skins" myType="admin"');?>
-							&nbsp;<a href="#" class="image cb preview-admin"><?php echo img($images['view']);?></a>
-						</td>
-					</tr>
-					<tr class="height_40">
 						<td class="cell-label"><?php echo $label['skin_login'];?></td>
 						<td class="cell-spacer"></td>
 						<td>
