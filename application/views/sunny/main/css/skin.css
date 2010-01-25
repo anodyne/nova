@@ -473,6 +473,7 @@ hr {
 #panel .panel-body {
 	background: #555 url('../images/panel-bg.png') repeat-x top left;
 	color: #fff;
+	text-align: left;
 }
 
 .panel-handle {
