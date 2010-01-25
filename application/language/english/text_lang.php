@@ -169,6 +169,8 @@ $lang['confirm_delete_personallog'] = 'Are you sure you want to delete this pers
 $lang['confirm_delete_newsitem'] = 'Are you sure you want to delete this news item? This action is permanent and cannot be undone!';
 $lang['confirm_delete_missionpost'] = 'Are you sure you want to delete this mission entry? This action is permanent and cannot be undone!';
 
+$lang['confirm_join'] = 'Before submitting your application, please make sure you have filled out all the appropriate fields. Are you sure you want to submit this application?';
+
 $lang['alert_pcs_greater_than_zero'] = 'You must allow at least 1 playing character per user!';
 $lang['alert_sys_email_off'] = 'Turning off system email will affect the entire system, including reset password emails not being sent out!';
 
