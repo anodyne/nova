@@ -7,7 +7,7 @@
 | File: application/views/sunny/template_wiki.php
 | Skin Version: 1.0
 |
-| Main layout file used by the default skin.
+| Wiki layout file used by the sunny skin.
 |
 | $sec options are: main, wiki, admin, login
 | $css can be anything you want (with a .css extension of course)
@@ -65,82 +65,72 @@ echo "<?xml version='1.0' encoding='UTF-8'?>\r\n";
 		<?php echo $javascript;?>
 	</head>
 	<body>
-		<div id="container">
-			<noscript>
-				<span class="UITheme">
-					<div class="system_warning ui-state-error"><?php echo lang_output('text_javascript_off', '');?></div>
-				</span>
-			</noscript>
-			
-			<?php if ($this->session->userdata('userid') !== FALSE): ?>
-				<!-- USER PANEL -->
-				<div id="panel" class="UITheme">
-					<div class="panel-body">
-						<div class="wrapper">
-							<table class="table100">
-								<tbody>
-									<tr>
-										<td class="panel_1 align_top"><?php echo $panel_1;?></td>
-										<td class="panel_spacer"></td>
-										<td class="panel_2 align_top"><?php echo $panel_2;?></td>
-										<td class="panel_spacer"></td>
-										<td class="panel_3 align_top"><?php echo $panel_3;?></td>
-									</tr>
-								</tbody>
-							</table>
-						</div>
-					</div>
-					<div class="panel-handle ui-state-default">
-						<div class="wrapper">
-							<?php echo $panel_workflow;?>
-						</div>
+		<noscript>
+			<span class="UITheme">
+				<div class="system_warning ui-state-error"><?php echo lang_output('text_javascript_off', '');?></div>
+			</span>
+		</noscript>
+		
+		<?php if ($this->session->userdata('userid') !== FALSE): ?>
+			<!-- USER PANEL -->
+			<div id="panel" class="UITheme">
+				<div class="panel-body">
+					<div class="wrapper">
+						<table class="table100">
+							<tbody>
+								<tr>
+									<td class="panel_1 align_top"><?php echo $panel_1;?></td>
+									<td class="panel_spacer"></td>
+									<td class="panel_2 align_top"><?php echo $panel_2;?></td>
+									<td class="panel_spacer"></td>
+									<td class="panel_3 align_top"><?php echo $panel_3;?></td>
+								</tr>
+							</tbody>
+						</table>
 					</div>
 				</div>
-			<?php endif; ?>
-			
-			<!-- HEAD -->
-			<div id="head" class="UITheme">
-				<div class="wrapper">
-					<div class="head_content ui-widget-header">
-						<?php echo img(APPFOLDER .'/views/'. $current_skin .'/'. $sec .'/images/head_logo.png', FALSE);?>
+				<div class="panel-handle ui-state-default">
+					<div class="wrapper">
+						<?php echo $panel_workflow;?>
 					</div>
 				</div>
 			</div>
-			
-			<div class="wrapper UITheme">
-				<div id="menu" class="ui-state-default">
+		<?php endif; ?>
+		
+		<!-- HEAD -->
+		<div class="wrapper">
+			<div id="head">
+				<?php echo img(APPFOLDER .'/views/'. $current_skin .'/'. $sec .'/images/head-logo.png', FALSE);?>
+				
+				<div id="menu">
 					<div class="nav-main">
 						<?php echo $nav_main;?>
 					</div>
 				</div>
 			</div>
-			
-			<!-- BODY -->
-			<div id="body">
-				<div class="wrapper">
-					<!-- SUB NAVIGATION -->
-					<div class="nav-sub">
-						<?php echo $nav_sub;?>
-					</div>
-					
-					<!-- PAGE CONTENT -->
-					<div class="content">
-						<?php echo $flash_message;?>
-						<?php echo $content;?>
-						<?php echo $ajax;?>
-						
-						<div style="clear:both;">&nbsp;</div>
-					</div>
-				</div>
-			</div>
-			<div class="clearfooter"></div>
 		</div>
 		
-		<!-- FOOTER -->
-		<div class="UITheme">
-			<div id="footer" class="ui-widget-header">
-				Powered by <strong><?php echo APP_NAME;?></strong> from <a href="http://www.anodyne-productions.com" target="_blank">Anodyne Productions</a> | 
-			<?php echo anchor('main/credits', 'Site Credits');?>
+		<!-- BODY -->
+		<div id="body">
+			<div class="wrapper">
+				<!-- SUB NAVIGATION -->
+				<div class="nav-sub">
+					<?php echo $nav_sub;?>
+					
+					<div class="footer">
+						Powered by <strong><?php echo APP_NAME;?></strong> from <a href="http://www.anodyne-productions.com" target="_blank">Anodyne Productions</a><br /><br />
+						<?php echo anchor('main/credits', 'Site Credits');?>
+					</div>
+				</div>
+				
+				<!-- PAGE CONTENT -->
+				<div class="content">
+					<?php echo $flash_message;?>
+					<?php echo $content;?>
+					<?php echo $ajax;?>
+					
+					<div style="clear:both;">&nbsp;</div>
+				</div>
 			</div>
 		</div>
 	</body>

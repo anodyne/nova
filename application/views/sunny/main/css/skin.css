@@ -285,7 +285,7 @@ kbd {
 | TABLE STYLES
 |---------------------------------------------------------------
 */
-tr.alt td { background-color: #e3e3e3; }
+tr.alt td { background-color: #ededed; }
 tr.light_gray { background-color: #ddd; }
 
 th {
@@ -390,9 +390,13 @@ button.button-small:hover { border: 1px solid #aaa; }
 | COMMENT STYLES
 |---------------------------------------------------------------
 */
-#comments p, #news_blocks p, .post_info {
-	background-color: #f5f8f9;
-	border: 1px solid #ccc;
+#comments p, #news_blocks p, .post_info, .info-full {
+	background-color: #f4f4f4;
+	border: 1px solid #ddd;
+	
+	border-radius: 3px;
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
 }
 
 /*
