@@ -66,7 +66,7 @@ define('APP_NAME',				'Nova');
 define('APP_VERSION',			'Beta');
 define('APP_VERSION_MAJOR',		0);
 define('APP_VERSION_MINOR',		9);
-define('APP_VERSION_UPDATE',	3);
+define('APP_VERSION_UPDATE',	4);
 
 define('WIKI_NAME',				'Thresher');
 define('WIKI_VERSION',			'Release 1');
