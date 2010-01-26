@@ -22,8 +22,8 @@ Changes
 * updated the mission management page to use the datepicker
 * updated the version info in the constants file
 * updated the basic install data
-** version information
-** system information
+    * version information
+    * system information
 
 Known Issues
 ------------
