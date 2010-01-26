@@ -14,11 +14,14 @@
 * updated the index files in the application directory to use the proper line endings (unix) and encoding (utf8)
 * updated the skin yaml files
 * updated the basic install data
+* updated the mission management page to use the datepicker
+* updated the version info in the constants file
 
 * fixed bug where IE7 didn't have confirm dialogs on the post pages (#70)
 * fixed bug where the confirm dialogs wouldn't respect a cancel event (#69)
 
 * added the titan skin directory
+* added the datepicker plugin
 
 ==========
 

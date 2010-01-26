@@ -4,31 +4,26 @@ Anodyne Production's next-generation RPG management system combines popular feat
 
 Current Version
 ---------------
-Beta (0.9.3)
+Beta (0.9.4-pre)
 
 Last Update
 -----------
 25 January 2010
 
-Latest Changes
+Latest Updates
 --------------
-* updated the skin catalogue to change the admin skin default to match the default skin admin section
-* updated the site settings page to remove the admin dropdown from the appearance (since it doesn't actually do anything)
-* updated the sunny skin
-* updated the write controller to alphabetize the methods
-* updated the write news item view to use the new form layout
-* updated the write personal log view to use the new form layout
-* updated the write/reply/forward private message view to use the new form layout
-* updated the give character award view to use the new form layout
-* updated the edit bio view to use the new form layout
-* updated the join page to have a confirmation dialog
-* updated the language files
-* updated the index files in the application directory to use the proper line endings (unix) and encoding (utf8)
-* updated the skin yaml files
+* added the datepicker plugin
+* updated the mission management page to use the datepicker
+* updated the version info in the constants file
+
+Changes
+-------
+* added the datepicker plugin
+* updated the mission management page to use the datepicker
+* updated the version info in the constants file
 * updated the basic install data
-* fixed bug where IE7 didn't have confirm dialogs on the post pages (#70)
-* fixed bug where the confirm dialogs wouldn't respect a cancel event (#69)
-* added the titan skin directory
+** version information
+** system information
 
 Known Issues
 ------------
