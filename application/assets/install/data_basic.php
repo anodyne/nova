@@ -2263,7 +2263,7 @@ $system_info = array(
 		'sys_install_date' => now(),
 		'sys_version_major' => 0,
 		'sys_version_minor' => 9,
-		'sys_version_update' => 3)
+		'sys_version_update' => 4)
 );
 
 $system_versions = array(
@@ -2273,6 +2273,12 @@ $system_versions = array(
 		'version_minor' => '9',
 		'version_update' => '3',
 		'version_date' => 1264467600),
+	array(
+		'version' => '0.9.4',
+		'version_major' => '0',
+		'version_minor' => '9',
+		'version_update' => '4',
+		'version_date' => now()),
 );
 
 $tour_fields = array(
