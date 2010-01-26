@@ -4,7 +4,7 @@ Anodyne Production's next-generation RPG management system combines popular feat
 
 Current Version
 ---------------
-Beta (0.9.3-pre)
+Beta (0.9.3)
 
 Last Update
 -----------
@@ -24,6 +24,8 @@ Latest Changes
 * updated the join page to have a confirmation dialog
 * updated the language files
 * updated the index files in the application directory to use the proper line endings (unix) and encoding (utf8)
+* updated the skin yaml files
+* updated the basic install data
 * fixed bug where IE7 didn't have confirm dialogs on the post pages (#70)
 * fixed bug where the confirm dialogs wouldn't respect a cancel event (#69)
 * added the titan skin directory
