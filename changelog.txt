@@ -1,3 +1,12 @@
+01.26.2010
+
+* updated the index files in the core directory to use the prper line endings (unix) and encoding (utf8)
+* updated the sunny skin
+
+* added the skin.yml file to the beta skin
+
+==========
+
 01.25.2010
 
 * updated the skin catalogue to change the admin skin default to match the default skin admin section

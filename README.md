@@ -8,13 +8,13 @@ Beta (0.9.4-pre)
 
 Last Update
 -----------
-25 January 2010
+26 January 2010
 
 Latest Updates
 --------------
-* added the datepicker plugin
-* updated the mission management page to use the datepicker
-* updated the version info in the constants file
+* added the skin.yml file to the beta skin
+* updated the index files in the core directory to use the proper line endings (unix) and encoding (utf8)
+* updated the sunny skin
 
 Changes
 -------
@@ -24,6 +24,20 @@ Changes
 * updated the basic install data
     * version information
     * system information
+* updated the index files in the core directory to use the proper line endings (unix) and encoding (utf8)
+* updated the beta skin
+    * added the skin.yml file
+* updated the sunny skin
+    * [wiki] updated the stylesheets
+        * updated to look like the main section
+        * updated the alt row color
+        * updated the textboxlist styles to remove the focus shadow
+        * added the markitup link fix
+    * [main] updated the stylesheets
+        * updated the alt row color
+        * added the info-full class
+    * [wiki] removed unused images
+    * [wiki] added the proper images
 
 Known Issues
 ------------
