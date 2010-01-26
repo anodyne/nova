@@ -2268,53 +2268,11 @@ $system_info = array(
 
 $system_versions = array(
 	array(
-		'version' => '0.1.0',
-		'version_major' => '0',
-		'version_minor' => '1',
-		'version_update' => '0',
-		'version_date' => 1222750800),
-	array(
-		'version' => '0.2.0',
-		'version_major' => '0',
-		'version_minor' => '2',
-		'version_update' => '0',
-		'version_date' => 1231898945),
-	array(
-		'version' => '0.3.0',
-		'version_major' => '0',
-		'version_minor' => '3',
-		'version_update' => '0',
-		'version_date' => 1235944800),
-	array(
-		'version' => '0.4.0',
-		'version_major' => '0',
-		'version_minor' => '4',
-		'version_update' => '0',
-		'version_date' => 1246421246),
-	array(
-		'version' => '0.5.0',
-		'version_major' => '0',
-		'version_minor' => '5',
-		'version_update' => '0',
-		'version_date' => 1251867706),
-	array(
-		'version' => '0.6.0',
-		'version_major' => '0',
-		'version_minor' => '6',
-		'version_update' => '0',
-		'version_date' => 1257170400),
-	array(
-		'version' => '0.7.0',
-		'version_major' => '0',
-		'version_minor' => '7',
-		'version_update' => '0',
-		'version_date' => 1258005600),
-	array(
 		'version' => '0.9.3',
 		'version_major' => '0',
 		'version_minor' => '9',
 		'version_update' => '3',
-		'version_date' => now()),
+		'version_date' => 1264467600),
 );
 
 $tour_fields = array(
