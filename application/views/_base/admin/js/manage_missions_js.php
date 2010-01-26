@@ -1,7 +1,15 @@
+<link rel="stylesheet" type="text/css" href="<?php echo base_url() . APPFOLDER;?>/assets/js/css/ui.datepicker.css" />
+
+<script type="text/javascript" src="<?php echo base_url() . APPFOLDER;?>/assets/js/ui.datepicker.js"></script>
+
 <script type="text/javascript">
 	$(document).ready(function(){
-		$('#tabs').tabs();
-		$('#tabs').tabs('select', <?php echo $tab;?>);
+		var $tabs = $('#tabs').tabs();
+		$tabs.tabs('select', <?php echo $tab;?>);
+		
+		var $date = $('.datepick').datepicker();
+		$date.closest('body').find('#ui-datepicker-div').wrap('<span class="UITheme"></span>');
+		$date.datepicker('option', {dateFormat: 'yy-mm-dd'});
 		
 		$('table.zebra tbody > tr:nth-child(odd)').addClass('alt');
 		

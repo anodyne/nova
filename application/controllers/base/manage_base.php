@@ -1693,9 +1693,11 @@ class Manage_base extends Controller {
 					'value' => ($item === FALSE) ? 99 : $item->mission_order),
 				'start' => array(
 					'name' => 'mission_start',
+					'class' => 'datepick medium',
 					'value' => $start),
 				'end' => array(
 					'name' => 'mission_end',
+					'class' => 'datepick medium',
 					'value' => ($item === FALSE || empty($item->mission_end)) ? '' : unix_to_human($item->mission_end)),
 				'desc' => array(
 					'name' => 'mission_desc',
