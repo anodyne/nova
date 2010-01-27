@@ -259,7 +259,10 @@ class Wiki_base extends Controller {
 			switch ($this->uri->segment(3))
 			{
 				case 'add':
-					$insert_array = array('wikicat_name' => $this->input->post('name', TRUE));
+					$insert_array = array(
+						'wikicat_name' => $this->input->post('name', TRUE),
+						'wikicat_desc' => $this->input->post('desc', TRUE),
+					);
 					
 					/* insert the record */
 					$insert = $this->wiki->create_category($insert_array);
@@ -334,7 +337,10 @@ class Wiki_base extends Controller {
 					$id = $this->input->post('id', TRUE);
 					$id = (is_numeric($id)) ? $id : FALSE;
 					
-					$update_array = array('wikicat_name' => $this->input->post('name', TRUE));
+					$update_array = array(
+						'wikicat_name' => $this->input->post('name', TRUE),
+						'wikicat_desc' => $this->input->post('desc', TRUE)
+					);
 					
 					/* insert the record */
 					$update = $this->wiki->update_category($id, $update_array);
@@ -380,6 +386,7 @@ class Wiki_base extends Controller {
 			{
 				$data['categories'][$c->wikicat_id]['id'] = $c->wikicat_id;
 				$data['categories'][$c->wikicat_id]['name'] = $c->wikicat_name;
+				$data['categories'][$c->wikicat_id]['desc'] = $c->wikicat_desc;
 			}
 		}
 		
@@ -401,11 +408,17 @@ class Wiki_base extends Controller {
 			'name' => array(
 				'name' => 'name',
 				'id' => 'name'),
+			'desc' => array(
+				'name' => 'desc',
+				'id' => 'desc',
+				'rows' => 3),
 		);
 		
 		$data['label'] = array(
-			'catname' => ucwords(lang('labels_category') .' '. lang('labels_name')),
+			'catdesc' => ucfirst(lang('labels_desc')),
+			'catname' => ucfirst(lang('labels_name')),
 			'name' => ucfirst(lang('labels_name')),
+			'desc' => ucfirst(lang('labels_desc')),
 			'add' => ucwords(lang('actions_add') .' '. lang('global_wiki') .' '.
 				lang('labels_category') .' '. RARROW),
 			'delete' => ucfirst(lang('actions_delete'))
@@ -579,6 +592,16 @@ class Wiki_base extends Controller {
 					/* optimize the table */
 					$this->sys->optimize_table('wiki_pages');
 					
+					foreach ($_POST as $key => $value)
+					{
+						if (substr($key, 0, 4) == 'cat_')
+						{
+							$category_array[$key] = $value;
+						}
+					}
+					
+					$category_string = implode(',', $category_array);
+					
 					/* create the array of draft data */
 					$draft_array = array(
 						'draft_author_user' => $this->session->userdata('userid'),
@@ -587,7 +610,7 @@ class Wiki_base extends Controller {
 						'draft_title' => $this->input->post('title', TRUE),
 						'draft_created_at' => now(),
 						'draft_page' => $pageid,
-						'draft_categories' => $this->input->post('categories', TRUE),
+						'draft_categories' => $category_string,
 						'draft_summary' => $this->input->post('summary', TRUE),
 					);
 					
@@ -629,6 +652,16 @@ class Wiki_base extends Controller {
 					break;
 					
 				case 'edit':
+					foreach ($_POST as $key => $value)
+					{
+						if (substr($key, 0, 4) == 'cat_')
+						{
+							$category_array[$key] = $value;
+						}
+					}
+					
+					$category_string = implode(',', $category_array);
+					
 					/* create the array of draft data */
 					$draft_array = array(
 						'draft_author_user' => $this->session->userdata('userid'),
@@ -637,7 +670,7 @@ class Wiki_base extends Controller {
 						'draft_title' => $this->input->post('title', TRUE),
 						'draft_created_at' => now(),
 						'draft_page' => $id,
-						'draft_categories' => $this->input->post('categories', TRUE),
+						'draft_categories' => $category_string,
 						'draft_summary' => $this->input->post('summary', TRUE),
 						'draft_changed_comments' => $this->input->post('changes', TRUE),
 					);
@@ -714,9 +747,6 @@ class Wiki_base extends Controller {
 					'name' => 'comments',
 					'id' => 'comments_closed',
 					'value' => 'closed'),
-				'categories' => array(
-					'name' => 'categories',
-					'id' => 'categories'),
 				'summary' => array(
 					'name' => 'summary',
 					'id' => 'summary',
@@ -724,7 +754,19 @@ class Wiki_base extends Controller {
 					'rows' => 2),
 			);
 			
-			$js_data = FALSE;
+			$categories = $this->wiki->get_categories();
+			
+			if ($categories->num_rows() > 0)
+			{
+				foreach ($categories->result() as $c)
+				{
+					$data['cats'][] = array(
+						'id' => $c->wikicat_id,
+						'name' => $c->wikicat_name,
+						'desc' => $c->wikicat_desc,
+					);
+				}
+			}
 			
 			/* set the header */
 			$data['header'] = ucwords(lang('actions_create') .' '. lang('global_wiki') .' '. lang('labels_page'));
@@ -763,9 +805,6 @@ class Wiki_base extends Controller {
 							'id' => 'comments_closed',
 							'value' => 'closed',
 							'checked' => ($p->page_comments == 'closed') ? TRUE : FALSE),
-						'categories' => array(
-							'name' => 'categories',
-							'id' => 'categories'),
 						'changes' => array(
 							'name' => 'changes',
 							'id' => 'changes',
@@ -787,19 +826,20 @@ class Wiki_base extends Controller {
 			/* build the category list */
 			$cats = explode(',', $p->draft_categories);
 			
-			/* create an empty array */
-			$populate = array();
+			$categories = $this->wiki->get_categories();
 			
-			foreach ($cats as $c)
+			if ($categories->num_rows() > 0)
 			{
-				$name = $this->wiki->get_category($c, 'wikicat_name');
-				
-				$populate[$c]['id'] = $c;
-				$populate[$c]['name'] = $name;
+				foreach ($categories->result() as $c)
+				{
+					$data['cats'][] = array(
+						'id' => $c->wikicat_id,
+						'name' => $c->wikicat_name,
+						'desc' => $c->wikicat_desc,
+						'checked' => (in_array($c->wikicat_id, $cats)) ? TRUE : FALSE,
+					);
+				}
 			}
-			
-			/* set the populate data */
-			$js_data['populate'] = $populate;
 			
 			/* set the header */
 			$data['header'] = ucwords(lang('actions_edit') .' '. lang('global_wiki') .' '. lang('labels_page'));
@@ -839,7 +879,7 @@ class Wiki_base extends Controller {
 		
 		/* write the data to the template */
 		$this->template->write_view('content', $view_loc, $data);
-		$this->template->write_view('javascript', $js_loc, $js_data);
+		$this->template->write_view('javascript', $js_loc);
 		$this->template->write('title', $data['header']);
 		
 		/* render the template */
@@ -1124,7 +1164,7 @@ class Wiki_base extends Controller {
 					
 					$categories = explode(',', $d->draft_categories);
 					
-					if (count($categories) > 1)
+					if (is_array($categories))
 					{
 						foreach ($categories as $c)
 						{
@@ -1137,10 +1177,17 @@ class Wiki_base extends Controller {
 					}
 					else
 					{
-						$string = sprintf(
-							lang('error_not_found'),
-							lang('labels_categories')
-						);
+						if (empty($categories))
+						{
+							$string = sprintf(
+								lang('error_not_found'),
+								lang('labels_categories')
+							);
+						}
+						else
+						{
+							$string = anchor('wiki/category/'. $categories, $categories);
+						}
 					}
 					
 					$data['draft'] = array(
@@ -1180,7 +1227,7 @@ class Wiki_base extends Controller {
 					
 					$categories = explode(',', $p->draft_categories);
 					
-					if (count($categories) > 1)
+					if (is_array($categories))
 					{
 						foreach ($categories as $c)
 						{
@@ -1193,10 +1240,17 @@ class Wiki_base extends Controller {
 					}
 					else
 					{
-						$string = sprintf(
-							lang('error_not_found'),
-							lang('labels_categories')
-						);
+						if (empty($categories))
+						{
+							$string = sprintf(
+								lang('error_not_found'),
+								lang('labels_categories')
+							);
+						}
+						else
+						{
+							$string = anchor('wiki/category/'. $categories, $categories);
+						}
 					}
 					
 					$data['page'] = array(

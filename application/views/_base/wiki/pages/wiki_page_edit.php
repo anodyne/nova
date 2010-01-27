@@ -18,7 +18,45 @@
 	<br /><br />
 	
 	<?php echo text_output($label['categories'], 'p', 'fontMedium bold');?>
-	<?php echo form_input($inputs['categories']);?>
+	
+	<?php if (isset($cats)): ?>
+		<?php $i = 0;?>
+		<table class="table100 zebra">
+			<tbody>
+			<?php foreach ($cats as $c): ?>
+				<?php if ($i % 4 == 0): ?>
+					<tr>
+				<?php endif;?>
+						
+						<td width="25%">
+							<div class="inline_img_left">
+								<?php echo form_checkbox('cat_'. $c['id'], $c['id'], $c['checked'], 'id="cat_'. $c['id'] .'"');?>
+							</div>
+							<label for="cat_<?php echo $c['id'];?>">
+								<?php echo $c['name'];?>
+								<span class="fontSmall gray">
+									<?php if (!empty($c['desc'])): ?>
+										<a href="#" rel="tooltip" tooltip="<?php echo $c['desc'];?>">[?]</a>
+									<?php endif;?>
+								</span>
+							</label>
+						</td>
+						
+						<?php if($i == (count($cats) - 1)): ?>
+							<?php while (($i + 1) % 4 != 0): ?>
+								<td width="25%">&nbsp;</td>
+								<?php $i++;?>
+							<?php endwhile; ?>
+						<?php endif;?>
+						
+					<?php if (($i + 1) % 4 == 0): ?>
+						</tr>
+					<?php endif;?>
+				<?php $i++;?>
+			<?php endforeach;?>
+			</tbody>
+		</table>
+	<?php endif;?>
 	
 	<br /><br />
 	
