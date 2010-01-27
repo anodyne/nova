@@ -1,3 +1,34 @@
+01.27.2010
+
+* updated jquery to version 1.4.1
+* updated jquery ui to version 1.8b1
+* updated the basic install data
+* updated the head include files to pull in the jquery.ui.widget file which is now required
+* updated the admin's head include file to set some depencies for the ui widgets
+* updated the language files
+* updated the install and update templates to not use a copyright statement
+* updated the update versions array
+* updated the wiki page creation to use a different manner of selecting categories
+* updated the wiki categories to handle a description as well
+* updated the database schema
+* updated the manage wiki categories page to allow creating a description
+* updated the wiki head include to pull in the qtip plugin
+* updated the wiki head include to not pull the textboxlist plugin
+
+* removed unused jquery ui files (new naming scheme in 1.8)
+* removed the textboxlist files
+* removed the skins' textbox list stylesheets and images
+* removed test update file
+
+* added the jquery.ui.mouse file
+* added the jquery.ui.widget file
+* added the 0.9.4 update file
+
+* fixed bug where the update panel wasn't showing the proper information at the right times (#71)
+* fixed bug where viewing a wiki page or draft with fewer than 2 categories wouldn't display the category
+
+==========
+
 01.26.2010
 
 * updated the index files in the core directory to use the prper line endings (unix) and encoding (utf8)

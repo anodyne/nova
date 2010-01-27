@@ -8,25 +8,55 @@ Beta (0.9.4-pre)
 
 Last Update
 -----------
-26 January 2010
+27 January 2010
 
 Latest Updates
 --------------
-* added the skin.yml file to the beta skin
-* updated the index files in the core directory to use the proper line endings (unix) and encoding (utf8)
-* updated the sunny skin
+* updated jquery to version 1.4.1
+* updated jquery ui to version 1.8b1
+* updated the basic install data
+* updated the head include files to pull in the jquery.ui.widget file which is now required
+* updated the admin's head include file to set some depencies for the ui widgets
+* updated the language files
+* updated the install and update templates to not use a copyright statement
+* updated the update versions array
+* updated the wiki page creation to use a different manner of selecting categories
+* updated the wiki categories to handle a description as well
+* updated the database schema
+* updated the manage wiki categories page to allow creating a description
+* updated the wiki head include to pull in the qtip plugin
+* updated the wiki head include to not pull the textboxlist plugin
+* removed unused jquery ui files (new naming scheme in 1.8)
+* removed the textboxlist files
+* removed the skins' textbox list stylesheets and images
+* removed test update file
+* added the jquery.ui.mouse file
+* added the jquery.ui.widget file
+* added the 0.9.4 update file
+* fixed bug where the update panel wasn't showing the proper information at the right times (#71)
+* fixed bug where viewing a wiki page or draft with fewer than 2 categories wouldn't display the category
 
 Changes
 -------
 * added the datepicker plugin
+* added the jquery.ui.mouse file
+* added the jquery.ui.widget file
+* added the 0.9.4 update file
 * updated the mission management page to use the datepicker
 * updated the version info in the constants file
 * updated the basic install data
     * version information
     * system information
+    * jquery component information
+    * jquery ui component information
+    * removed textboxlist from components list
+* updated the database schema
+    * added the wiki category description field
 * updated the index files in the core directory to use the proper line endings (unix) and encoding (utf8)
 * updated the beta skin
     * added the skin.yml file
+    * [wiki] removed the textboxlist images
+    * [wiki] removed the textboxlist stylesheets
 * updated the sunny skin
     * [wiki] updated the stylesheets
         * updated to look like the main section
@@ -37,7 +67,38 @@ Changes
         * updated the alt row color
         * added the info-full class
     * [wiki] removed unused images
+    * [wiki] removed the textboxlist images
+    * [wiki] removed the textboxlist stylesheets
     * [wiki] added the proper images
+* updated the lightness skin
+	* [wiki] removed the textboxlist images
+    * [wiki] removed the textboxlist stylesheets
+* updated the titan skin
+	* [wiki] removed the textboxlist images
+    * [wiki] removed the textboxlist stylesheets
+* updated the redmond skin
+	* [wiki] removed the textboxlist images
+    * [wiki] removed the textboxlist stylesheets
+* updated jquery to version 1.4.1
+* updated jquery ui to version 1.8b1
+* updated the head include files to pull in the jquery.ui.widget file which is now required
+* updated the admin's head include file to set some depencies for the ui widgets
+* updated the language files
+    * [install\_lang] added key _update\_required_
+    * [install\_lang] updated key _update\_outofdate\_database_ to change plurality of "links" to "link"
+    * [base\_lang] added key _actions\_run_
+* updated the update template to not have a copyright statement
+* updated the install template to not have a copyright statement
+* updated the update versions array
+* updated the manage wiki categories page to allow creating a description
+* updated the wiki head include to pull in the qtip plugin
+* updated the wiki head include to not pull the textboxlist plugin
+* updated the wiki page creation to use a different manner of selecting categories
+* updated the wiki categories to handle a description as well
+* removed old jquery ui files (version 1.8 uses a new naming scheme for the .js files)
+* removed test update file
+* fixed bug where the update panel wasn't showing the proper information at the right times (#71)
+* fixed bug where viewing a wiki page or draft with fewer than 2 categories wouldn't display the category
 
 Known Issues
 ------------
