@@ -180,6 +180,9 @@ $this->db->update('system_components', array('comp_version' => '1.4.1'));
 $this->db->where('comp_name', 'jQuery UI');
 $this->db->update('system_components', array('comp_version' => '1.8b1'));
 
+/* jquery ui version info */
+$this->db->delete('system_components', array('comp_name', 'TextboxList'));
+
 /* add system version info */
 $this->load->model('system_model', 'sys');
 $this->sys->add_system_version($system_versions);
