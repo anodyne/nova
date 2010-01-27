@@ -70,13 +70,13 @@ echo "<?xml version='1.0' encoding='UTF-8'?>\r\n";
 		
 		<!-- FOOTER -->
 		<div id="footer">
-			Powered by <strong><?php echo APP_NAME;?></strong><br />
-			&copy; Anodyne Productions, <?php echo date('Y');?>
+			Powered by <strong><?php echo APP_NAME;?></strong>
 		</div>
 		
 		<script type="text/javascript" src="<?php echo base_url() . APPFOLDER .'/assets/js/jquery.js';?>"></script>
-		<script type="text/javascript" src="<?php echo base_url() . APPFOLDER .'/assets/js/ui.core.min.js';?>"></script>
-		<script type="text/javascript" src="<?php echo base_url() . APPFOLDER .'/assets/js/ui.progressbar.min.js';?>"></script>
+		<script type="text/javascript" src="<?php echo base_url() . APPFOLDER .'/assets/js/jquery.ui.core.min.js';?>"></script>
+		<script type="text/javascript" src="<?php echo base_url() . APPFOLDER .'/assets/js/jquery.ui.widget.min.js';?>"></script>
+		<script type="text/javascript" src="<?php echo base_url() . APPFOLDER .'/assets/js/jquery.ui.progressbar.min.js';?>"></script>
 		
 		<script type="text/javascript">
 			$(document).ready(function(){

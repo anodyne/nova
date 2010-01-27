@@ -50,8 +50,9 @@ $parse = $this->config->item('parsetype');
 		</style>
 			
 		<script type="text/javascript" src="<?php echo base_url() . APPFOLDER .'/assets/js/jquery.js';?>"></script>
-		<script type="text/javascript" src="<?php echo base_url() . APPFOLDER .'/assets/js/ui.core.min.js';?>"></script>
-		<script type="text/javascript" src="<?php echo base_url() . APPFOLDER .'/assets/js/ui.tabs.min.js';?>"></script>
+		<script type="text/javascript" src="<?php echo base_url() . APPFOLDER .'/assets/js/jquery.ui.core.min.js';?>"></script>
+		<script type="text/javascript" src="<?php echo base_url() . APPFOLDER .'/assets/js/jquery.ui.widget.min.js';?>"></script>
+		<script type="text/javascript" src="<?php echo base_url() . APPFOLDER .'/assets/js/jquery.ui.tabs.min.js';?>"></script>
 		<script type="text/javascript" src="<?php echo base_url() . APPFOLDER .'/assets/js/jquery.facebox.js';?>"></script>
 		<script type="text/javascript" src="<?php echo base_url() . APPFOLDER .'/assets/js/markitup/jquery.markitup.js';?>"></script>
 		<script type="text/javascript" src="<?php echo base_url() . APPFOLDER .'/assets/js/markitup/sets/'. $parse .'/set.js';?>"></script>

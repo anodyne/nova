@@ -36,8 +36,9 @@
 		
 		<script type="text/javascript" src="<?php echo base_url() . APPFOLDER .'/assets/js/jquery.js';?>"></script>
 		<script type="text/javascript" src="<?php echo base_url() . APPFOLDER .'/assets/js/jquery.lazy.js';?>"></script>
-		<script type="text/javascript" src="<?php echo base_url() . APPFOLDER .'/assets/js/ui.core.min.js';?>"></script>
-		<script type="text/javascript" src="<?php echo base_url() . APPFOLDER .'/assets/js/ui.tabs.min.js';?>"></script>
+		<script type="text/javascript" src="<?php echo base_url() . APPFOLDER .'/assets/js/jquery.ui.core.min.js';?>"></script>
+		<script type="text/javascript" src="<?php echo base_url() . APPFOLDER .'/assets/js/jquery.ui.widget.min.js';?>"></script>
+		<script type="text/javascript" src="<?php echo base_url() . APPFOLDER .'/assets/js/jquery.ui.tabs.min.js';?>"></script>
 		<script type="text/javascript" src="<?php echo base_url() . APPFOLDER .'/assets/js/reflect.js';?>"></script>
 		<script type="text/javascript" src="<?php echo base_url() . APPFOLDER .'/assets/js/jquery.facebox.js';?>"></script>
 		
@@ -53,8 +54,11 @@
 				});
 				
 				$.lazy({					
-					src: '<?php echo base_url() . APPFOLDER;?>/assets/js/ui.sortable.min.js',
+					src: '<?php echo base_url() . APPFOLDER;?>/assets/js/jquery.ui.sortable.min.js',
 					name: 'sortable',
+					dependencies: {
+						js: ['<?php echo base_url() . APPFOLDER;?>/assets/js/jquery.ui.mouse.min.js']
+					},
 					cache: true
 				});
 				
@@ -65,16 +69,17 @@
 				});
 				
 				$.lazy({					
-					src: '<?php echo base_url() . APPFOLDER;?>/assets/js/ui.slider.min.js',
+					src: '<?php echo base_url() . APPFOLDER;?>/assets/js/jquery.ui.slider.min.js',
 					name: 'slider',
 					dependencies: {
-						css: ['<?php echo base_url() . APPFOLDER;?>/assets/js/css/ui.slider.css']
+						css: ['<?php echo base_url() . APPFOLDER;?>/assets/js/css/ui.slider.css'],
+						js: ['<?php echo base_url() . APPFOLDER;?>/assets/js/jquery.ui.mouse.min.js']
 					},
 					cache: true
 				});
 				
 				$.lazy({					
-					src: '<?php echo base_url() . APPFOLDER;?>/assets/js/ui.accordion.min.js',
+					src: '<?php echo base_url() . APPFOLDER;?>/assets/js/jquery.ui.accordion.min.js',
 					name: 'accordion',
 					dependencies: {
 						css: ['<?php echo base_url() . APPFOLDER;?>/assets/js/css/ui.accordion.css']

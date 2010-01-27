@@ -1,6 +1,6 @@
 <link rel="stylesheet" type="text/css" href="<?php echo base_url() . APPFOLDER;?>/assets/js/css/ui.datepicker.css" />
 
-<script type="text/javascript" src="<?php echo base_url() . APPFOLDER;?>/assets/js/ui.datepicker.js"></script>
+<script type="text/javascript" src="<?php echo base_url() . APPFOLDER;?>/assets/js/jquery.ui.datepicker.js"></script>
 
 <script type="text/javascript">
 	$(document).ready(function(){
