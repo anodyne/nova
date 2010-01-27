@@ -112,6 +112,12 @@ if (isset($rename_tables))
 |---------------------------------------------------------------
 */
 
+$add_column = array(
+	'wiki_categories' => array(
+		'wikicat_desc' => array('type' => 'TEXT')
+	),
+);
+
 if (isset($add_column))
 {
 	foreach ($add_column as $key => $value)
