@@ -40,13 +40,19 @@
 					
 					<?php echo text_output($update['desc'], 'p', 'fontSmall gray');?>
 					
-					<p class="fontSmall">
-						<a href="<?php echo $update['link'];?>" target="_blank"><?php echo $label['getupdate'];?></a>
-					</p>
-					
-					<p class="fontSmall">
-						<a href="<?php echo $update['link'];?>" class="ignore" target="_blank" myVersion="<?php echo $update['version_only'];?>"><?php echo $label['ignore'];?></a>
-					</p>
+					<?php if ($update['status'] == 1): ?>
+						<p class="fontSmall">
+							<a href="<?php echo $update['link'];?>" target="_blank"><?php echo $label['getupdate'];?></a>
+						</p>
+						
+						<p class="fontSmall">
+							<a href="<?php echo $update['link'];?>" class="ignore" target="_blank" myVersion="<?php echo $update['version_only'];?>"><?php echo $label['ignore'];?></a>
+						</p>
+					<?php elseif ($update['status'] == 2): ?>
+						<p class="fontSmall">
+							<a href="<?php echo $update['link'];?>" target="_blank"><?php echo $label['runupdate'];?></a>
+						</p>
+					<?php endif;?>
 				</div>
 			<?php endif;?>
 			

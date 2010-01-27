@@ -376,16 +376,11 @@ class Admin_base extends Controller {
 			
 			if (isset($check['update']['version']) && $check['update']['version'] != $ignore)
 			{
-				//$data['update']['version'] = $update['flash'];
-				$data['update']['version'] = sprintf(
-					lang_output('update_available'),
-					APP_NAME,
-					$check['update']['version'],
-					''
-				);
+				$data['update']['version'] = $check['flash']['header'];
 				$data['update']['version_only'] = $check['update']['version'];
-				$data['update']['desc'] = $check['update']['notes'];
-				$data['update']['link'] = $check['update']['link'];
+				$data['update']['desc'] = $check['flash']['message'];
+				$data['update']['link'] = ($check['flash']['status'] == 1) ? $check['update']['link'] : site_url('update/index');
+				$data['update']['status'] = $check['flash']['status'];
 				
 				switch ($check['update']['severity'])
 				{
@@ -462,6 +457,7 @@ class Admin_base extends Controller {
 			'nonews' => lang('error_no_news'),
 			'update' => ucwords(APP_NAME .' '. lang('actions_update')),
 			'getupdate' => ucfirst(lang('actions_get') .' '. lang('labels_the') .' '. lang('actions_update')) .' '. RARROW,
+			'runupdate' => ucfirst(lang('actions_run') .' '. lang('labels_the') .' '. lang('actions_update')) .' '. RARROW,
 			'ignore' => ucfirst(lang('actions_ignore') .' '. lang('labels_this') .' '. lang('labels_version')),
 			'loading' => ucfirst(lang('actions_loading')) .'...',
 		);
@@ -530,169 +526,6 @@ class Admin_base extends Controller {
 		
 		/* render the template */
 		$this->template->render();
-	}
-	
-	function _check_version_old($current = '')
-	{
-		/*
-		
-		CRITERIA
-		
-			if they only want MAJOR updates:
-				* get the base version
-				* if they're the same (which they should be), don't do anything
-				* get the major version variable
-				* if they're the same, don't do anything
-				* if what's coming from the XML file is greater, then there's a new major version
-			
-			if they want ALL updates:
-				* check the major version
-				* check the minor version
-				* check the update version
-		
-		*/
-		
-		if (ini_get('allow_url_fopen'))
-		{
-			/* load the resources */
-			$this->load->library('simplepie');
-			
-			/* get the system information */
-			$system = $this->sys->get_system_info();
-			
-			/* build the array of version info */
-			$version = array(
-				'files' => array(
-					'full'		=> APP_VERSION_MAJOR .'.'. APP_VERSION_MINOR .'.'. APP_VERSION_UPDATE,
-					'major'		=> APP_VERSION_MAJOR,
-					'minor'		=> APP_VERSION_MINOR,
-					'update'	=> APP_VERSION_UPDATE
-				),
-				'database' => array(
-					'full'		=> $system->sys_version_major .'.'. $system->sys_version_minor .'.'. $system->sys_version_update,
-					'major'		=> $system->sys_version_major,
-					'minor'		=> $system->sys_version_minor,
-					'update'	=> $system->sys_version_update
-				),
-			);
-			
-			/* grab the information from the version feed */
-			$this->simplepie->set_feed_url(VERSION_FEED);
-			$this->simplepie->enable_cache(FALSE);
-			$this->simplepie->init();
-			$this->simplepie->handle_content_type();
-			
-			/* get the items from the feed */
-			$items = $this->simplepie->get_items();
-			
-			/* grab the updates setting */
-			$type = $this->options['updates'];
-			
-			$update = FALSE;
-			
-			foreach ($items as $i)
-			{ /* loop through and figure out what we should be displaying */
-				switch ($type)
-				{
-					case 'major':
-						$major = $i->get_item_tags(SIMPLEPIE_NAMESPACE_RSS_20, 'major');
-						$major = $major[0]['data'];
-						$severity = $i->get_item_tags(SIMPLEPIE_NAMESPACE_RSS_20, 'severity');
-						
-						if ($major > $version['files']['major'] || $major > $version['database']['major'])
-						{
-							$update['version'] = $i->get_title();
-							$update['description'] = $i->get_description();
-							$update['severity'] = $severity[0]['data'];
-						}
-					
-						break;
-						
-					case 'minor':
-						$major = $i->get_item_tags(SIMPLEPIE_NAMESPACE_RSS_20, 'major');
-						$minor = $i->get_item_tags(SIMPLEPIE_NAMESPACE_RSS_20, 'minor');
-						$severity = $i->get_item_tags(SIMPLEPIE_NAMESPACE_RSS_20, 'severity');
-						
-						$major = $major[0]['data'];
-						$minor = $minor[0]['data'];
-						
-						if ($minor > $version['files']['minor'] || $minor > $version['database']['minor'])
-						{
-							$update['version'] = $i->get_title();
-							$update['description'] = $i->get_description();
-							$update['severity'] = $severity[0]['data'];
-						}
-						elseif (($minor < $version['files']['minor'] || $major > $version['files']['major']) ||
-								($minor < $version['database']['minor'] || $major > $version['database']['major']))
-						{
-							$update['version'] = $i->get_title();
-							$update['description'] = $i->get_description();
-							$update['severity'] = $severity[0]['data'];
-						}
-					
-						break;
-						
-					case 'all':
-						$severity = $i->get_item_tags(SIMPLEPIE_NAMESPACE_RSS_20, 'severity');
-						
-						$xml_version = str_replace('.', '', $i->get_title());
-						$files_version = str_replace('.', '', $version['files']['full']);
-						$db_version = str_replace('.', '', $version['database']['full']);
-						
-						if ($xml_version > $files_version || $xml_version > $db_version)
-						{
-							$update['version'] = $i->get_title();
-							$update['description'] = $i->get_description();
-							$update['severity'] = $severity[0]['data'];
-						}
-							
-						break;
-				}
-			}
-			
-			if ($version['database']['full'] > $version['files']['full'])
-			{
-				$flash['status'] = 'info';
-				$flash['message'] = sprintf(
-					lang_output('update_outofdate_files'),
-					$version['files']['full'],
-					$version['database']['full']
-				);
-			}
-			elseif ($version['database']['full'] < $version['files']['full'])
-			{
-				$flash['status'] = 'info';
-				$flash['message'] = sprintf(
-					lang_output('update_outofdate_database'),
-					$version['database']['full'],
-					$version['files']['full']
-				);
-			}
-			elseif (isset($update))
-			{
-				$flash['status'] = 'info';
-				$flash['message'] = sprintf(
-					lang_output('update_available'),
-					APP_NAME,
-					$update['version'],
-					APP_NAME
-				);
-			}
-			else
-			{
-				$flash['status'] = '';
-				$flash['message'] = '';
-			}
-			
-			$retval = array(
-				'flash' => $flash,
-				'update' => $update
-			);
-			
-			return $retval;
-		}
-		
-		return FALSE;
 	}
 	
 	function _check_version()
@@ -785,36 +618,40 @@ class Admin_base extends Controller {
 			
 			if ($version['database']['full'] > $version['files']['full'])
 			{
-				$flash['status'] = 'info';
+				$flash['header'] = lang('update_required');
 				$flash['message'] = sprintf(
-					lang_output('update_outofdate_files'),
+					lang('update_outofdate_files'),
 					$version['files']['full'],
 					$version['database']['full']
 				);
+				$flash['status'] = 2;
 			}
 			elseif ($version['database']['full'] < $version['files']['full'])
 			{
-				$flash['status'] = 'info';
+				$flash['header'] = lang('update_required');
 				$flash['message'] = sprintf(
-					lang_output('update_outofdate_database'),
+					lang('update_outofdate_database'),
 					$version['database']['full'],
 					$version['files']['full']
 				);
+				$flash['status'] = 2;
 			}
 			elseif (isset($update))
 			{
-				$flash['status'] = 'info';
-				$flash['message'] = sprintf(
-					lang_output('update_available'),
+				$flash['header'] = sprintf(
+					lang('update_available'),
 					APP_NAME,
 					$update['version'],
 					''
 				);
+				$flash['message'] = $update['notes'];
+				$flash['status'] = 1;
 			}
 			else
 			{
-				$flash['status'] = '';
+				$flash['header'] = '';
 				$flash['message'] = '';
+				$flash['status'] = '';
 			}
 			
 			$retval = array(
