@@ -1661,7 +1661,9 @@ $fields_wiki_categories = array(
 	'wikicat_name' => array(
 		'type' => 'VARCHAR',
 		'constraint' => 100,
-		'default' => '')
+		'default' => ''),
+	'wikicat_desc' => array(
+		'type' => 'TEXT')
 );
 
 $fields_wiki_comments = array(
