@@ -14,12 +14,7 @@
 */
 
 $version_array = array(
-	'010',
-	'020',
-	'030',
-	'040',
-	'050',
-	'060',
+	'093',
 );
 
 /* End of file versions.php */
