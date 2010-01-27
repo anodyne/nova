@@ -281,6 +281,7 @@ $lang['actions_request']		= 'request';
 $lang['actions_reset']			= 'reset';
 $lang['actions_revert']			= 'revert';
 $lang['actions_reverted']		= 'reverted';
+$lang['actions_run']			= 'run';
 $lang['actions_save']			= 'save';
 $lang['actions_saved']			= 'saved';
 $lang['actions_search']			= 'search';
