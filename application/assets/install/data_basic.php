@@ -2241,11 +2241,6 @@ $system_components = array(
 		'comp_desc' => "PHP Markdown is a port to PHP of the Markdown program written by John Gruber. Markdown is two things: a plain text markup syntax, and a software tool that converts the plain text markup to HTML for publishing on the web.",
 		'comp_url' => 'http://michelf.com/projects/php-markdown/'),
 	array(
-		'comp_name' => 'TextboxList',
-		'comp_version' => '0.4v2',
-		'comp_desc' => "TextboxList turns normal textboxes into a widget which can be navigated with the keyboard, effectively turning your input into a 'list' of items that can be easily deleted. It comes with an Autocomplete plugin.",
-		'comp_url' => 'http://devthought.com/projects/jquery/textboxlist/'),
-	array(
 		'comp_name' => 'YAYparser',
 		'comp_version' => '',
 		'comp_desc' => "YAYparser is a regular expression driven YAML parser that is aimed to be small and easy to use.",
