@@ -8,33 +8,16 @@ Beta (0.9.4-pre)
 
 Last Update
 -----------
-27 January 2010
+28 January 2010
 
 Latest Updates
 --------------
-* updated jquery to version 1.4.1
-* updated jquery ui to version 1.8b1
-* updated the basic install data
-* updated the head include files to pull in the jquery.ui.widget file which is now required
-* updated the admin's head include file to set some depencies for the ui widgets
-* updated the language files
-* updated the install and update templates to not use a copyright statement
-* updated the update versions array
-* updated the wiki page creation to use a different manner of selecting categories
-* updated the wiki categories to handle a description as well
-* updated the database schema
-* updated the manage wiki categories page to allow creating a description
-* updated the wiki head include to pull in the qtip plugin
-* updated the wiki head include to not pull the textboxlist plugin
-* removed unused jquery ui files (new naming scheme in 1.8)
-* removed the textboxlist files
-* removed the skins' textbox list stylesheets and images
-* removed test update file
-* added the jquery.ui.mouse file
-* added the jquery.ui.widget file
-* added the 0.9.4 update file
-* fixed bug where the update panel wasn't showing the proper information at the right times (#71)
-* fixed bug where viewing a wiki page or draft with fewer than 2 categories wouldn't display the category
+* updated the main logo images to use the new font
+* updated to version 1.8rc1 of the jquery ui
+* updated the beta skin
+* updated the lightness skin
+* updated the redmond skin
+* updated the sunny skin
 
 Changes
 -------
@@ -57,6 +40,10 @@ Changes
     * added the skin.yml file
     * [wiki] removed the textboxlist images
     * [wiki] removed the textboxlist stylesheets
+    * updated the main logo files
+    * [login] removed unused image files
+    * [login] updated the image files
+    * [login] updated the stylesheets
 * updated the sunny skin
     * [wiki] updated the stylesheets
         * updated to look like the main section
@@ -70,17 +57,21 @@ Changes
     * [wiki] removed the textboxlist images
     * [wiki] removed the textboxlist stylesheets
     * [wiki] added the proper images
+    * [login] updated the stylesheets to match the main section
+    * updated the main logo files
 * updated the lightness skin
 	* [wiki] removed the textboxlist images
     * [wiki] removed the textboxlist stylesheets
+    * updated the main logo files
 * updated the titan skin
 	* [wiki] removed the textboxlist images
     * [wiki] removed the textboxlist stylesheets
 * updated the redmond skin
 	* [wiki] removed the textboxlist images
     * [wiki] removed the textboxlist stylesheets
+    * [login] updated the nova small logo
 * updated jquery to version 1.4.1
-* updated jquery ui to version 1.8b1
+* updated jquery ui to version 1.8rc1
 * updated the head include files to pull in the jquery.ui.widget file which is now required
 * updated the admin's head include file to set some depencies for the ui widgets
 * updated the language files

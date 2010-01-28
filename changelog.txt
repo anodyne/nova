@@ -1,3 +1,14 @@
+01.28.2010
+
+* updated the main logo images to use the new font
+* updated to version 1.8rc1 of the jquery ui
+* updated the beta skin
+* updated the lightness skin
+* updated the redmond skin
+* updated the sunny skin
+
+==========
+
 01.27.2010
 
 * updated jquery to version 1.4.1
