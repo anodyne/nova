@@ -117,7 +117,10 @@ body {
 | FONT COLOR CLASSES
 |---------------------------------------------------------------
 */
-.page-head 		{ color: #494437; }
+.page-head {
+	color: #111;
+	font-weight: normal;
+}
 .page-subhead	{ color: #0074c7; }
 
 .gray	{ color: #666; }
@@ -133,10 +136,10 @@ body {
 */
 a {
 	text-decoration: none; 
-	color: #026890;
+	color: #817865;
 }
 a:hover {
-	color: #2e6e9e;
+	color: #494437;
 	border-bottom: 1px solid;
 }
 
