@@ -178,7 +178,7 @@ $this->db->update('system_components', array('comp_version' => '1.4.1'));
 
 /* jquery ui version info */
 $this->db->where('comp_name', 'jQuery UI');
-$this->db->update('system_components', array('comp_version' => '1.8b1'));
+$this->db->update('system_components', array('comp_version' => '1.8rc1'));
 
 /* jquery ui version info */
 $this->db->delete('system_components', array('comp_name' => 'TextboxList'));
