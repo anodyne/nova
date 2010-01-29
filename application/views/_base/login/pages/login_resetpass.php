@@ -1,6 +1,6 @@
 <?php echo text_output($header, 'h1', 'page-head');?>
 
-<?php echo text_output($message, 'p', 'fontMedium');?><br />
+<?php echo text_output($message, 'p');?><br />
 
 <?php echo form_open('login/reset_password');?>
 
