@@ -2,19 +2,19 @@
 	$(document).ready(function(){
 		$('div.zebra div:nth-child(odd)').addClass('alt');
 		
-		$(".slider_control > div.slider").each(function() {
+		$('.slider_control > .slider').each(function() {
 			var value = parseInt($(this).text());
 			var id = parseInt($(this).attr('id'));
 			
 			$(this).empty();
 			$(this).slider({
-				range: "min",
+				range: 'min',
 				value: value,
 				min: 0,
 				max: 50,
 				slide: function(event, ui) {
-					$('#' + id + '_amount').html(ui.value);
-					$('#' + id + '_open').val(ui.value);
+					$('#' + parseInt(ui.handle.parentNode.id) + '_amount').html(ui.value);
+					$('#' + parseInt(ui.handle.parentNode.id) + '_open').val(ui.value);
 				}
 			});
 		});
