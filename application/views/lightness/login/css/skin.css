@@ -80,23 +80,6 @@ body {
 	margin: 0 !important;
 	padding: 28px 0 0 12px !important;
 }
-#lower-head a {
-	color: #fff !important;
-	border-bottom: 1px solid;
-	font-size: 110%;
-}
-#lower-head a:hover { color: #363636 !important; }
-#lower-head ul {
-	margin: 5px 0 0 0;
-	width: 700px;
-	position: relative;
-}
-#lower-head ul li {
-	margin: 0 0 10px 0;
-	
-	color: #fdf0da;
-	color: rgba(255, 255, 255, .85);
-}
 
 /*
 |---------------------------------------------------------------
@@ -152,8 +135,6 @@ body {
 | BODY STYLES
 |---------------------------------------------------------------
 */
-#body { text-align: left; }
-
 .content {
 	line-height: 1.4;
 	padding: 1em 2em;
@@ -190,8 +171,6 @@ body {
 |---------------------------------------------------------------
 */
 .page-head { color: #777; }
-
-.red { color: #c00; }
 
 /*
 |---------------------------------------------------------------
@@ -302,15 +281,6 @@ input.button-main[disabled]:hover {
 
 /*
 |---------------------------------------------------------------
-| LIST STYLES
-|---------------------------------------------------------------
-*/
-ul.square { list-style: square; }
-ul.none { list-style: none; }
-ol.roman { list-style: upper-roman; }
-
-/*
-|---------------------------------------------------------------
 | FLASH MESSAGES
 |---------------------------------------------------------------
 */
@@ -336,14 +306,4 @@ ol.roman { list-style: upper-roman; }
 	border: 1px solid #fed22f;
 	background: #fff0a5 url('../images/gradient-soft-30.png') repeat-x center left;
 	color: #363636;
-}
-
-/*
-|---------------------------------------------------------------
-| MISC
-|---------------------------------------------------------------
-*/
-hr {
-	border: 1px solid #ccc;
-	border-width: 1px 0 0;
 }

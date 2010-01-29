@@ -90,9 +90,6 @@ body {
 |---------------------------------------------------------------
 */
 .page-head 		{ color: #eb981e; }
-.page-subhead	{ color: #479338; }
-
-.red { color: #c00; }
 
 /*
 |---------------------------------------------------------------
@@ -130,21 +127,6 @@ input[type=password]:focus {
 	border: 1px solid #777;
 }
 
-textarea {
-	font-size: 100%;
-	font-family: "lucida grande", verdana, arial, sans-serif;
-	border: 1px solid #d8d8d8;
-	color: #777;
-	
-	border-radius: 2px;
-	-moz-border-radius: 2px;
-	-webkit-border-radius: 2px;
-}
-textarea:focus {
-	color: #444;
-	border: 1px solid #777;
-}
-
 select {
 	border: 1px solid #d8d8d8;
 	color: #777;
@@ -166,22 +148,6 @@ kbd {
 	font-family: "lucida grande", verdana, arial, sans-serif;
 	font-size: 115%;
 }
-
-/*
-|---------------------------------------------------------------
-| TABLE STYLES
-|---------------------------------------------------------------
-*/
-table.verify { border: 1px solid #aaa; }
-table.verify th {
-	font-weight: bold;
-	font-size: 125%;
-	background-color: #666;
-	color: #fff;
-}
-table.verify td { font-size: 115%; }
-
-tr.alt td { background-color: #eee; }
 
 /*
 |---------------------------------------------------------------
@@ -234,15 +200,6 @@ input.button-main[disabled]:hover {
 
 /*
 |---------------------------------------------------------------
-| LIST STYLES
-|---------------------------------------------------------------
-*/
-ul.square { list-style: square; }
-ul.none { list-style: none; }
-ol.roman { list-style: upper-roman; }
-
-/*
-|---------------------------------------------------------------
 | FLASH MESSAGES
 |---------------------------------------------------------------
 */
@@ -268,14 +225,4 @@ ol.roman { list-style: upper-roman; }
 	border: 1px solid #fad42e;
 	background: #fbec88 url('../images/gradient-30-bg.png') repeat-x center left;
 	color: #363636;
-}
-
-/*
-|---------------------------------------------------------------
-| MISC
-|---------------------------------------------------------------
-*/
-hr {
-	border: 1px solid #ddd;
-	border-width: 1px 0 0;
 }

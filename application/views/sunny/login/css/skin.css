@@ -85,11 +85,6 @@ body {
 	background: #ffdd57 url('../images/gradient-50-bg.png') repeat-x center left;
 }
 .nav-sub ul li a span { padding: 2px 3px; }
-.nav-sub ul li.spacer {
-	height: 12px;
-	
-	border: none;
-}
 
 .nav-sub .footer {
 	margin: 3em 0 0 0;
@@ -121,13 +116,6 @@ body {
 	color: #111;
 	font-weight: normal;
 }
-.page-subhead	{ color: #0074c7; }
-
-.gray	{ color: #666; }
-.red	{ color: #c00; }
-.orange	{ color: #e99e1c; }
-.green	{ color: #008000; }
-.blue	{ color: lightblue; }
 
 /*
 |---------------------------------------------------------------
@@ -169,25 +157,6 @@ input[type=password]:focus {
 	-webkit-box-shadow: 1px 1px 2px rgba(0, 0, 0, .18);
 }
 
-textarea {
-	font-size: 100%;
-	font-family: "lucida grande", verdana, arial, sans-serif;
-	border: 1px solid #d8d8d8;
-	color: #777;
-	
-	border-radius: 2px;
-	-moz-border-radius: 2px;
-	-webkit-border-radius: 2px;
-}
-textarea:focus {
-	color: #444;
-	border: 1px solid #777;
-	
-	box-shadow: 1px 1px 2px rgba(0, 0, 0, .18);
-	-moz-box-shadow: 1px 1px 2px rgba(0, 0, 0, .18);
-	-webkit-box-shadow: 1px 1px 2px rgba(0, 0, 0, .18);
-}
-
 select {
 	border: 1px solid #d8d8d8;
 	color: #777;
@@ -213,22 +182,6 @@ kbd {
 	font-family: "lucida grande", verdana, arial, sans-serif;
 	font-size: 115%;
 }
-
-/*
-|---------------------------------------------------------------
-| TABLE STYLES
-|---------------------------------------------------------------
-*/
-table.verify { border: 1px solid #aaa; }
-table.verify th {
-	font-weight: bold;
-	font-size: 125%;
-	background-color: #666;
-	color: #fff;
-}
-table.verify td { font-size: 115%; }
-
-tr.alt td { background-color: #eee; }
 
 /*
 |---------------------------------------------------------------
@@ -281,15 +234,6 @@ input.button-main[disabled]:hover {
 
 /*
 |---------------------------------------------------------------
-| LIST STYLES
-|---------------------------------------------------------------
-*/
-ul.square { list-style: square; }
-ul.none { list-style: none; }
-ol.roman { list-style: upper-roman; }
-
-/*
-|---------------------------------------------------------------
 | FLASH MESSAGES
 |---------------------------------------------------------------
 */
@@ -314,14 +258,4 @@ ol.roman { list-style: upper-roman; }
 	border: 1px solid #fad42e;
 	background: #fbec88 url('../images/gradient-30-bg.png') repeat-x 0 0;
 	color: #363636;
-}
-
-/*
-|---------------------------------------------------------------
-| MISC
-|---------------------------------------------------------------
-*/
-hr {
-	border: 1px solid #ddd;
-	border-width: 1px 0 0;
 }
