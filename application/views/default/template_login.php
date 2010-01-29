@@ -4,10 +4,10 @@
 | TEMPLATE - LOGIN
 |---------------------------------------------------------------
 |
-| File: application/views/default/template_login.php
+| File: application/views/beta/template_login.php
 | Skin Version: 1.0
 |
-| Login layout file used by the default skin.
+| Login template file used by the beta skin.
 |
 | $sec options are: main, wiki, admin, login
 | $css can be anything you want (with a .css extension of course)

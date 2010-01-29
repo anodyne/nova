@@ -4,10 +4,13 @@
 |---------------------------------------------------------------
 */
 body {
-    background: #fff;
-    color: #444;
-    font: 75%/1.5 "lucida grande", verdana, arial, sans-serif;
-    text-align: center;
+	margin: 0;
+	padding: 0;
+	
+	background: #fff;
+	color: #444;
+	font: 75%/1.5 "lucida grande", verdana, arial, sans-serif;
+	text-align: center;
 }
 
 /*
@@ -29,12 +32,12 @@ body {
 |---------------------------------------------------------------
 */
 #head {
-    margin: 0;
-    padding: 0;
-    height: 80px;
-    
-    background: #222 url('../images/head_bg.jpg') repeat-x top left;
-    color: #eee;
+	margin: 0;
+	padding: 0;
+	height: 80px;
+	
+	background: #222 url('../images/head-bg.png') repeat-x top left;
+	color: #eee;
 }
 #head .head_top {
 	height: 6px;
@@ -54,6 +57,7 @@ body {
 	height: 20px;
 	line-height: 18px;
 	
+	border-radius: 0 0 5px 5px;
 	-moz-border-radius: 0 0 5px 5px;
 	-webkit-border-bottom-left-radius: 5px;
 	-webkit-border-bottom-right-radius: 5px;
@@ -153,13 +157,21 @@ body {
 |---------------------------------------------------------------
 */
 #footer {
-    padding: 2em 0;
-    clear: both;
-    line-height: 1.4;
-    
-    text-align: center;
-    font-size: 90%;
-    border-top: 1px solid #ddd;
+	padding: 1.5em 0;
+	clear: both;
+	line-height: 1.4;
+	width: 960px;
+	margin: 2em auto;
+	
+	text-align: center;
+	font-size: 90%;
+	color: #888;
+	background: #f8f8f8;
+	border: 1px solid #d8d8d8;
+	
+	border-radius: 2px;
+	-moz-border-radius: 2px;
+	-webkit-border-radius: 2px;
 }
 
 /*
@@ -182,61 +194,71 @@ body {
 |---------------------------------------------------------------
 */
 a {
-    text-decoration: none; 
-    color: #5b7444;
-    border-bottom: 1px dotted;
+	text-decoration: none; 
+	color: #2e6e9e;
 }
 a:hover {
-    color: #a3c586;
-    border-bottom: 1px solid;
+	color: #c77405;
+	border-bottom: 1px solid;
 }
 
 a.delete, a.edit {
-	color: #5b7444;
+	color: #999;
 	border: 0;
 	font-weight: bold;
 }
 a.delete:hover { color: #c00; }
-a.edit:hover { color: orange; }
+a.edit:hover { color: #008000; }
 
 /*
 |---------------------------------------------------------------
 | INPUTS
 |---------------------------------------------------------------
 */
-
 input[type=text],
 input[type=password] {
-    border: 1px solid #d8d8d8;
-    color: #777;
-    font-family: "lucida grande", verdana, arial, sans-serif;
+	border: 1px solid #d8d8d8;
+	color: #777;
+	font-family: "lucida grande", verdana, arial, sans-serif;
+	
+	border-radius: 2px;
+	-moz-border-radius: 2px;
+	-webkit-border-radius: 2px;
 }
 input[type=text]:focus,
 input[type=password]:focus {
-    color: #444;
-    border: 1px solid #777;
+	color: #444;
+	border: 1px solid #777;
 }
 
 textarea {
-    font-size: 100%;
-    font-family: "lucida grande", verdana, arial, sans-serif;
-    border: 1px solid #d8d8d8;
-    color: #777;
+	font-size: 100%;
+	font-family: "lucida grande", verdana, arial, sans-serif;
+	border: 1px solid #d8d8d8;
+	color: #777;
+	
+	border-radius: 2px;
+	-moz-border-radius: 2px;
+	-webkit-border-radius: 2px;
 }
 textarea:focus {
-    color: #444;
-    border: 1px solid #777;
+	color: #444;
+	border: 1px solid #777;
 }
 
 select {
-    border: 1px solid #d8d8d8;
-    color: #777;
-    font-family: "lucida grande", verdana, arial, sans-serif;
+	border: 1px solid #d8d8d8;
+	color: #777;
+	font-family: "lucida grande", verdana, arial, sans-serif;
+	
+	border-radius: 2px;
+	-moz-border-radius: 2px;
+	-webkit-border-radius: 2px;
 }
 select:focus,
 select:hover {
-    color: #444;
-    border: 1px solid #777;
+	color: #444;
+	border: 1px solid #777;
 }
 
 kbd {
@@ -272,8 +294,8 @@ tr.light_gray { background-color: #ddd; }
 | BUTTONS
 |---------------------------------------------------------------
 */
-
 button {
+	border-radius: 4px;
 	-moz-border-radius: 4px;
 	-webkit-border-radius: 4px;
 	
@@ -282,25 +304,33 @@ button {
 
 button.button-main {
 	border: 1px solid #adc0d0;
-	background: #dfeffc url('../images/button_main_bg.jpg') repeat-x top left;
+	background: #dfeffc url('../images/button-bg.png') repeat-x top left;
 	color: #2e6e9e;
 }
 button.button-main:hover {
 	border: 1px solid #fbcb09;
-	background: #fdf5ce url('../images/button_main_bg_hover.jpg') repeat-x top left;
+	background: #fdf5ce url('../images/button-bg-hover.png') repeat-x top left;
 	color: #c77405;
+	text-shadow: 1px 1px 1px rgba(255, 255, 255, .75);
+	
+	box-shadow: 1px 1px 2px rgba(0, 0, 0, .2);
+	-moz-box-shadow: 1px 1px 2px rgba(0, 0, 0, .2);
+	-webkit-box-shadow: 1px 1px 2px rgba(0, 0, 0, .2);
 }
 
 button.button-sec {
 	border: 1px solid #ccc;
-	background: #fff url('../images/button_sec_bg.jpg') repeat-x top left;
+	background: #eee url('../images/button-bg.png') repeat-x top left;
 	color: #777;
 }
-button.button-sec:hover { border: 1px solid #aaa; }
+button.button-sec:hover {
+	border: 1px solid #aaa;
+	background: #ddd url('../images/button-bg-hover.png') repeat-x top left;
+}
 
 button.button-small {
 	border: 1px solid #ccc;
-	background: #fff url('../images/button_sec_bg.jpg') repeat-x top left;
+	background: #fff url('../images/button-bg.png') repeat-x top left;
 	color: #777;
 	font-weight: normal !important;
 	font-size: 90%;
@@ -309,25 +339,28 @@ button.button-small:hover { border: 1px solid #aaa; }
 
 input.button-main {
 	border: 1px solid #adc0d0;
-	background: #dfeffc url('../images/button_main_bg.jpg') repeat-x bottom left;
+	background: #dfeffc url('../images/button-bg.png') repeat-x top left;
+	color: #2e6e9e;
 	font-weight: bold;
 	font-size: 120%;
-	color: #2e6e9e;
 }
 input.button-main:hover {
 	border: 1px solid #fbcb09;
-	background: #fdf5ce url('../images/button_main_bg_hover.jpg') repeat-x top left;
+	background: #fdf5ce url('../images/button-bg-hover.png') repeat-x top left;
 	color: #c77405;
 }
 
 input.button-sec {
 	border: 1px solid #ccc;
-	background: #f9f9f9 url('../images/button_sec_bg.jpg') repeat-x bottom left;
+	background: #eee url('../images/button-bg.png') repeat-x top left;
+	color: #777;
 	font-weight: bold;
 	font-size: 120%;
-	color: #555;
 }
-input.button-sec:hover { color: #999; }
+input.button-sec:hover {
+	border: 1px solid #aaa;
+	background: #ddd url('../images/button-bg-hover.png') repeat-x top left;
+}
 
 button[disabled],
 button[disabled]:hover,
@@ -337,7 +370,7 @@ input.button-main[disabled]:hover {
 	filter:alpha(opacity='70');
 	
 	border: 1px solid #adc0d0;
-	background: #dfeffc url('../images/button_main_bg.jpg') repeat-x top left;
+	background: #dfeffc url('../images/button-bg.png') repeat-x top left;
 	color: #2e6e9e;
 }
 
@@ -347,8 +380,12 @@ input.button-main[disabled]:hover {
 |---------------------------------------------------------------
 */
 #comments p, #news_blocks p, .post_info, .info-full, #notes {
-    background-color: #fafafa;
-    border: 1px solid #eee;
+    background-color: #f8f8f8;
+	border: 1px solid #d8d8d8;
+	
+	border-radius: 2px;
+	-moz-border-radius: 2px;
+	-webkit-border-radius: 2px;
 }
 
 .border-1 { border: 1px solid #ddd; }
@@ -375,20 +412,28 @@ ol.roman { list-style: upper-roman; }
 .flash_message {
 	font-weight: bold;
 	font-size: .9em;
+	
+	border-radius: 2px;
+	-moz-border-radius: 2px;
+	-webkit-border-radius: 2px;
+	
+	box-shadow: 1px 1px 2px rgba(0, 0, 0, .1);
+	-moz-box-shadow: 1px 1px 2px rgba(0, 0, 0, .1);
+	-webkit-box-shadow: 1px 1px 2px rgba(0, 0, 0, .1);
 }
 .flash-success {
 	border: 1px solid #a4c897;
-	background: #ccecc5 url('../images/flash_green_bg.jpg') repeat-x bottom left;
+	background: #ccecc5 url('../images/flash-bg.png') repeat-x top left;
 	color: #376b0e;
 }
 .flash-error {
 	border: 1px solid #c89797; 
-	background: #ecc5c5 url('../images/flash_red_bg.jpg') repeat-x bottom left;
+	background: #ecc5c5 url('../images/flash-bg.png') repeat-x top left;
 	color: #6b0f0e;
 }
 .flash-info {
 	border: 1px solid #97a5c8;
-	background: #c5d6ec url('../images/flash_blue_bg.jpg') repeat-x bottom left;
+	background: #c5d6ec url('../images/flash-bg.png') repeat-x top left;
 	color: #0e2d6b;
 }
 
@@ -424,6 +469,8 @@ hr {
 	border: 1px solid #aaa;
 	background: #f5f8f9;
 	
+	border-radius-topleft: 4px;
+	border-radius-topright: 4px;
 	-moz-border-radius-topleft: 4px;
 	-moz-border-radius-topright: 4px;
 	-webkit-border-top-left-radius: 4px;
@@ -433,6 +480,7 @@ hr {
 	background: #fff;
 	border-left: 1px solid #aaa;
 	
+	border-radius-topright: 4px;
 	-moz-border-radius-topright: 4px;
 	-webkit-border-top-right-radius: 4px;
 }
@@ -470,6 +518,8 @@ hr {
 	border: 1px solid #aaa;
 	border-top: none;
 	
+	border-radius-bottomleft: 4px;
+	border-radius-bottomright: 4px;
 	-moz-border-radius-bottomleft: 4px;
 	-moz-border-radius-bottomright: 4px;
 	-webkit-border-bottom-left-radius: 4px;

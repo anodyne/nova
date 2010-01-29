@@ -4,10 +4,10 @@
 | TEMPLATE - ADMIN
 |---------------------------------------------------------------
 |
-| File: application/views/default/template_admin.php
+| File: application/views/beta/template_admin.php
 | Skin Version: 1.0
 |
-| Admin layout file used by the default skin.
+| Admin template file used by the beta skin.
 |
 | $sec options are: main, wiki, admin, login
 | $css can be anything you want (with a .css extension of course)
@@ -43,7 +43,7 @@ $link = array(
 
 /* set up the logo image */
 $logo = array(
-	'src' => APPFOLDER .'/views/'. $current_skin .'/'. $sec .'/images/head_logo.png',
+	'src' => APPFOLDER .'/views/'. $current_skin .'/'. $sec .'/images/head-logo.png',
 	'alt' => APP_NAME,
 	'class' => 'logo'
 );
@@ -139,9 +139,8 @@ echo "<?xml version='1.0' encoding='UTF-8'?>\r\n";
 		
 		<!-- FOOTER -->
 		<div id="footer">
-			Powered by <strong><?php echo APP_NAME;?></strong><br />
-			Elapsed Time: {elapsed_time} seconds<br />
-			Memory Usage: {memory_usage}
+			Powered by <strong><?php echo APP_NAME;?></strong> from <a href="http://www.anodyne-productions.com" target="_blank">Anodyne Productions</a> | 
+			<?php echo anchor('main/credits', 'Site Credits');?>
 		</div>
 	</body>
 </html>

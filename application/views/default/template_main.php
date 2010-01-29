@@ -4,10 +4,10 @@
 | TEMPLATE - MAIN
 |---------------------------------------------------------------
 |
-| File: application/views/default/template_main.php
+| File: application/views/beta/template_main.php
 | Skin Version: 1.0
 |
-| Main layout file used by the default skin.
+| Main template file used by the beta skin.
 |
 | $sec options are: main, wiki, admin, login
 | $css can be anything you want (with a .css extension of course)
@@ -100,7 +100,7 @@ echo "<?xml version='1.0' encoding='UTF-8'?>\r\n";
 			<div class="head_top"></div>
 			<div class="wrapper">
 				<div class="head_content">
-					<?php echo img(APPFOLDER .'/views/'. $current_skin .'/'. $sec .'/images/head_logo.png', FALSE);?>
+					<?php echo img(APPFOLDER .'/views/'. $current_skin .'/'. $sec .'/images/head-logo.png', FALSE);?>
 				</div>
 			</div>
 		</div>
@@ -135,9 +135,8 @@ echo "<?xml version='1.0' encoding='UTF-8'?>\r\n";
 		
 		<!-- FOOTER -->
 		<div id="footer">
-			Powered by <strong><?php echo APP_NAME;?></strong><br />
-			Elapsed Time: {elapsed_time} seconds<br />
-			Memory Usage: {memory_usage}
+			Powered by <strong><?php echo APP_NAME;?></strong> from <a href="http://www.anodyne-productions.com" target="_blank">Anodyne Productions</a> | 
+			<?php echo anchor('main/credits', 'Site Credits');?>
 		</div>
 	</body>
 </html>
