@@ -1,3 +1,19 @@
+01.29.2010
+
+* updated the styling of the readme
+* updated the beta skin
+* updated the jquery ui images to the base theme
+* updated the jquery ui theme stylesheet to the base theme
+* updated the lightness skin
+* updated the redmond skin
+* updated the sunny skin
+
+* removed the version.xml file
+
+* fixed bug with position sliders not updating the proper item (#72)
+
+==========
+
 01.28.2010
 
 * updated the main logo images to use the new font

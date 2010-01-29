@@ -8,19 +8,22 @@ Beta (0.9.4-pre)
 
 Last Update
 -----------
-28 January 2010
+29 January 2010
 
 Latest Updates
 --------------
-* updated the main logo images to use the new font
-* updated to version 1.8rc1 of the jquery ui
+* updated the styling of the readme
 * updated the beta skin
+* updated the jquery ui images to the base theme
+* updated the jquery ui theme stylesheet to the base theme
 * updated the lightness skin
 * updated the redmond skin
 * updated the sunny skin
+* removed the version.xml file
+* fixed bug with position sliders not updating the proper item (#72)
 
-Changes
--------
+Changes in 0.9.4
+----------------
 * added the datepicker plugin
 * added the jquery.ui.mouse file
 * added the jquery.ui.widget file
@@ -38,28 +41,54 @@ Changes
 * updated the index files in the core directory to use the proper line endings (unix) and encoding (utf8)
 * updated the beta skin
     * added the skin.yml file
-    * [wiki] removed the textboxlist images
-    * [wiki] removed the textboxlist stylesheets
     * updated the main logo files
+    * [admin] removed unused images
+    * [admin] updated the skin images
+    * [admin] updated the footer of the template
+    * [admin] updated the stylesheets
+        * updated the skin.css file to match with some of the changes from the login's skin.css
     * [login] removed unused image files
     * [login] updated the image files
     * [login] updated the stylesheets
+        * updated the styles to be cleaner and use better practices
+        * updated the skin.css file to remove unused styles
+        * updated the structure.css file to remove unused styles
+    * [main] removed unused images
+    * [main] updated the skin images
+    * [main] updated the footer of the template
+    * [main] updated the stylesheets
+        * updated the skin.css file to match with some of the changes from the login's skin.css
+    * [wiki] removed the textboxlist images
+    * [wiki] removed the textboxlist stylesheets
+    * [wiki] removed unused images
+    * [wiki] updated the skin images
+    * [wiki] updated the footer of the template
+    * [wiki] updated the stylesheets
+        * updated the skin.css file to match with some of the changes from the login's skin.css
 * updated the sunny skin
+    * updated the main logo files
+    * [main] updated the stylesheets
+        * updated the alt row color
+        * added the info-full class
+    * [login] updated the stylesheets
+        * updated the skin.css file to match changes made to main's skin.css
+        * updated the skin.css file to remove unused styles
+        * updated the structure.css file to remove unused styles
+    * [login] removed the ui.theme.css file
+    * [login] removed the unused jquery ui theme images
+    * [wiki] added the proper images
+    * [wiki] removed unused images
+    * [wiki] removed the textboxlist images
+    * [wiki] removed the textboxlist stylesheets
     * [wiki] updated the stylesheets
         * updated to look like the main section
         * updated the alt row color
         * updated the textboxlist styles to remove the focus shadow
         * added the markitup link fix
-    * [main] updated the stylesheets
-        * updated the alt row color
-        * added the info-full class
-    * [wiki] removed unused images
-    * [wiki] removed the textboxlist images
-    * [wiki] removed the textboxlist stylesheets
-    * [wiki] added the proper images
-    * [login] updated the stylesheets to match the main section
-    * updated the main logo files
 * updated the lightness skin
+    * [login] updated the stylesheets
+        * updated the skin.css file to remove unused styles
+        * updated the structure.css file to remove unused styles
 	* [wiki] removed the textboxlist images
     * [wiki] removed the textboxlist stylesheets
     * updated the main logo files
@@ -67,9 +96,12 @@ Changes
 	* [wiki] removed the textboxlist images
     * [wiki] removed the textboxlist stylesheets
 * updated the redmond skin
+    * [login] updated the nova small logo
+    * [login] updated the stylesheets
+        * updated the skin.css file to remove unused styles
+        * updated the structure.css file to remove unused styles
 	* [wiki] removed the textboxlist images
     * [wiki] removed the textboxlist stylesheets
-    * [login] updated the nova small logo
 * updated jquery to version 1.4.1
 * updated jquery ui to version 1.8rc1
 * updated the head include files to pull in the jquery.ui.widget file which is now required
@@ -86,15 +118,18 @@ Changes
 * updated the wiki head include to not pull the textboxlist plugin
 * updated the wiki page creation to use a different manner of selecting categories
 * updated the wiki categories to handle a description as well
+* updated the jquery ui images to the base theme
+* updated the jquery ui theme stylesheet to the base theme
 * removed old jquery ui files (version 1.8 uses a new naming scheme for the .js files)
 * removed test update file
+* removed the version.xml file
 * fixed bug where the update panel wasn't showing the proper information at the right times (#71)
 * fixed bug where viewing a wiki page or draft with fewer than 2 categories wouldn't display the category
+* fixed bug with position sliders not updating the proper item (#72)
 
 Known Issues
 ------------
-* Skin display issues in Internet Explorer
-* Text display issues between operating systems
+* Problems with position sliders updating the wrong position's counts (#72)
 
 Version History
 ---------------
