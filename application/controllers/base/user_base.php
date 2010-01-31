@@ -1656,20 +1656,15 @@ class User_base extends Controller {
 		| SKINS
 		|---------------------------------------------------------------
 		*/
-		$s_access = $this->auth->check_access('site/catalogueskins', FALSE);
-		$skin_access = ($s_access === TRUE) ? array('active', 'development') : 'active';
 		
 		$skins = $this->sys->get_all_skins();
-		$data['defaults']['main'] = $user->skin_main;
-		$data['defaults']['admin'] = $user->skin_admin;
-		$data['defaults']['wiki'] = $user->skin_wiki;
-		
+	
 		if ($skins->num_rows() > 0)
 		{
 			foreach ($skins->result() as $skin)
 			{
-				$sections = $this->sys->get_skin_sections($skin->skin_location, $skin_access);
-				
+				$sections = $this->sys->get_skin_sections($skin->skin_location);
+			
 				if ($sections->num_rows() > 0)
 				{
 					foreach ($sections->result() as $section)
@@ -1679,27 +1674,10 @@ class User_base extends Controller {
 				}
 			}
 		}
-		
-		$where = array(
-			'main' => array(
-				'skinsec_section' => 'main',
-				'skinsec_skin' => $this->session->userdata('skin_main')),
-			'admin' => array(
-				'skinsec_section' => 'admin',
-				'skinsec_skin' => $this->session->userdata('skin_admin')),
-			'wiki' => array(
-				'skinsec_section' => 'wiki',
-				'skinsec_skin' => $this->session->userdata('skin_wiki')),
-		);
-		
-		/* grab the position details */
-		$item_m = $this->sys->get_skinsec($where['main']);
-		$item_a = $this->sys->get_skinsec($where['admin']);
-		$item_w = $this->sys->get_skinsec($where['wiki']);
-		
-		$data['skin_main'] = ($item_m !== FALSE) ? array('src' => base_url() . APPFOLDER .'/views/'. $this->session->userdata('skin_main') .'/'. $item_m->skinsec_image_preview) : '';
-		$data['skin_admin'] = ($item_a !== FALSE) ? array('src' => base_url() . APPFOLDER .'/views/'. $this->session->userdata('skin_admin') .'/'. $item_a->skinsec_image_preview) : '';
-		$data['skin_wiki'] = ($item_w !== FALSE) ? array('src' => base_url() . APPFOLDER .'/views/'. $this->session->userdata('skin_wiki') .'/'. $item_w->skinsec_image_preview) : '';
+	
+		$data['default']['skin_main'] = $this->session->userdata('skin_main');
+		$data['default']['skin_admin'] = $this->session->userdata('skin_admin');
+		$data['default']['skin_wiki'] = $this->session->userdata('skin_wiki');
 		
 		/*
 		|---------------------------------------------------------------
@@ -1745,6 +1723,10 @@ class User_base extends Controller {
 			'loading' => array(
 				'src' => img_location('loading-circle.gif', $this->skin, 'admin'),
 				'alt' => ucfirst(lang('actions_loading'))),
+			'view' => array(
+				'src' => img_location('icon-view.png', $this->skin, 'admin'),
+				'alt' => '',
+				'class' => 'image'),
 		);
 		
 		$data['label'] = array(

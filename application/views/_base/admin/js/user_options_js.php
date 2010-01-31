@@ -5,64 +5,39 @@
 		$('#tabs').tabs();
 		$('#tabs').tabs('select', <?php echo $tab;?>);
 		
-		$('#skin_main').change(function(){
-			var id = $('#skin_main option:selected').val();
-			var section = 'main';
+		$('select.skins').each(function(){
+			var type = $(this).attr('myType');
+			var selected = $('option:selected', this).val();
+			var send = { section: type, skin: selected };
 			
 			$.ajax({
 				type: "POST",
-				url: "<?php echo site_url('ajax/info_show_skin_preview');?>",
-				data: {
-					skin: id,
-					section: section
-				},
+				url: "<?php echo site_url('ajax/info_show_skin_preview_image');?>",
+				data: send,
 				success: function(data){
-					$('#skin_main_preview').html('');
-					$('#skin_main_preview').append(data);
+					$('a.preview-' + type).attr('href', data);
 				}
 			});
-			
-			return false;
 		});
 		
-		$('#skin_admin').change(function(){
-			var id = $('#skin_admin option:selected').val();
-			var section = 'admin';
-			
-			$.ajax({
-				type: "POST",
-				url: "<?php echo site_url('ajax/info_show_skin_preview');?>",
-				data: {
-					skin: id,
-					section: section
-				},
-				success: function(data){
-					$('#skin_admin_preview').html('');
-					$('#skin_admin_preview').append(data);
-				}
-			});
-			
-			return false;
+		$('a.cb').colorbox({
+			transition:	'elastic',
+			speed:		400
 		});
 		
-		$('#skin_wiki').change(function(){
-			var id = $('#skin_wiki option:selected').val();
-			var section = 'wiki';
+		$('select.skins').change(function(){
+			var type = $(this).attr('myType');
+			var selected = $('option:selected', this).val();
+			var send = { section: type, skin: selected };
 			
 			$.ajax({
 				type: "POST",
-				url: "<?php echo site_url('ajax/info_show_skin_preview');?>",
-				data: {
-					skin: id,
-					section: section
-				},
+				url: "<?php echo site_url('ajax/info_show_skin_preview_image');?>",
+				data: send,
 				success: function(data){
-					$('#skin_wiki_preview').html('');
-					$('#skin_wiki_preview').append(data);
+					$('a.preview-' + type).attr('href', data);
 				}
 			});
-			
-			return false;
 		});
 	});
 </script>

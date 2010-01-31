@@ -48,31 +48,31 @@
 	<div id="two">
 		<br />
 		<?php echo form_open('user/options/skins');?>
-			<table class="zebra table100">
+			<table class="table100 zebra">
 				<tbody>
-					<tr>
+					<tr class="height_40">
 						<td class="cell-label"><?php echo $label['skin_main'];?></td>
 						<td class="cell-spacer"></td>
 						<td>
-							<?php echo form_dropdown('skin_main', $themes['main'], $defaults['main'], 'id="skin_main"');?>
+							<?php echo form_dropdown('skin_main', $themes['main'], $default['skin_main'], 'class="skins" myType="main"');?>
+							&nbsp;<a href="#" class="image cb preview-main"><?php echo img($images['view']);?></a>
 						</td>
-						<td id="skin_main_preview" class="fontSmall gray align_right"><?php echo img($skin_main);?></td>
 					</tr>
-					<tr>
+					<tr class="height_40">
 						<td class="cell-label"><?php echo $label['skin_admin'];?></td>
 						<td class="cell-spacer"></td>
 						<td>
-							<?php echo form_dropdown('skin_admin', $themes['admin'], $defaults['admin'], 'id="skin_admin"');?>
+							<?php echo form_dropdown('skin_admin', $themes['admin'], $default['skin_admin'], 'class="skins" myType="admin"');?>
+							&nbsp;<a href="#" class="image cb preview-admin"><?php echo img($images['view']);?></a>
 						</td>
-						<td id="skin_admin_preview" class="fontSmall gray align_right"><?php echo img($skin_admin);?></td>
 					</tr>
-					<tr>
+					<tr class="height_40">
 						<td class="cell-label"><?php echo $label['skin_wiki'];?></td>
 						<td class="cell-spacer"></td>
 						<td>
-							<?php echo form_dropdown('skin_wiki', $themes['wiki'], $defaults['wiki'], 'id="skin_wiki"');?>
+							<?php echo form_dropdown('skin_wiki', $themes['wiki'], $default['skin_wiki'], 'class="skins" myType="wiki"');?>
+							&nbsp;<a href="#" class="image cb preview-wiki"><?php echo img($images['view']);?></a>
 						</td>
-						<td id="skin_wiki_preview" class="fontSmall gray align_right"><?php echo img($skin_wiki);?></td>
 					</tr>
 				</tbody>
 			</table>
