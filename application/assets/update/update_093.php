@@ -16,7 +16,7 @@ $system_versions = array(
 	'version_major'		=> 0,
 	'version_minor'		=> 9,
 	'version_update'	=> 4,
-	'version_date'		=> now(),
+	'version_date'		=> 1264903200,
 	'version_launch'	=> 'Nova 0.9.4 is an update to the beta release of the next generation RPG management software from Anodyne Productions.',
 	'version_changes'	=> "* added the jquery.ui.mouse file
 	* added the jquery.ui.widget file
