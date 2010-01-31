@@ -1,12 +1,6 @@
 01.30.2010
 
-* updated the version history page to use the Markdown parser
-* updated the version history accordion to be collapsible
-* updated the beta skin
-* updated the lightness skin
-* updated the redmond skin
-* updated the sunny skin
-* updated the titan skin
+
 
 ==========
 
