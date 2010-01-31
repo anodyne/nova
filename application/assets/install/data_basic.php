@@ -2207,7 +2207,7 @@ $system_components = array(
 		'comp_desc' => 'jQuery UI is a lightweight, easily customizable interface library for the jQuery Javascript library.'),
 	array(
 		'comp_name' => 'jQuery ColorBox',
-		'comp_version' => '1.3.5',
+		'comp_version' => '1.3.6',
 		'comp_desc' => "A light-weight, customizable lightbox plugin for jQuery.",
 		'comp_url' => 'http://colorpowered.com/colorbox/'),
 	array(
