@@ -11,6 +11,8 @@
 |
 */
 
+# TODO: add full list of changes to the what's new page
+
 class Admin_base extends Controller {
 
 	/* set the variables */
