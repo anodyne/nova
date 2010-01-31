@@ -33,7 +33,7 @@
 				style: { 
 					border: {
 						width: 1,
-						radius: 4,
+						radius: 4
 					},
 					name: 'dark',
 					fontSize: '90%'
