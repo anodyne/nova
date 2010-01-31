@@ -1,3 +1,19 @@
+01.31.2010
+
+* updated the version to 0.9.5
+* updated the basic install data
+* updated the 0.9.4 update file
+* updated the report controller to duplicate the sim stats page
+* updated the versions array
+* updated the test versions yaml file
+
+* added the 0.9.5 update file
+* added the sim stats view file
+* added the sim stats js view file
+* added a TODO to the admin controller
+
+==========
+
 01.30.2010
 
 * updated the version history page to use the Markdown parser
