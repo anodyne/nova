@@ -166,6 +166,10 @@ if (isset($drop_column))
 |---------------------------------------------------------------
 */
 
+/* jquery version info */
+$this->db->where('comp_name', 'jQuery ColorBox');
+$this->db->update('system_components', array('comp_version' => '1.3.6'));
+
 /* new menu item */
 $insert = array(
 	'menu_name' => 'Sim Statistics',
