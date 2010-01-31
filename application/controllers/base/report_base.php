@@ -687,7 +687,8 @@ class Report_base extends Controller {
 	
 	function versions()
 	{
-		$this->auth->check_access();
+		/* pull in the markdown parser */
+		include_once APPPATH .'libraries/Thresher_Markdown.php';
 		
 		$ver = $this->sys->get_item('system_info', 'sys_id', 1);
 		
@@ -708,7 +709,7 @@ class Report_base extends Controller {
 				
 				$data['versions'][$key][$v->version] = array(
 					'version' => $v->version,
-					'changes' => explode(';', $v->version_changes)
+					'changes' => Markdown($v->version_changes)
 				);
 			}
 		}

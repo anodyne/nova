@@ -22,13 +22,7 @@
 						<div>
 							<?php foreach ($value as $v): ?>
 								<h4><?php echo $v['version'];?></h4>
-								<ul class="fontSmall square margin1">
-								
-								<?php foreach ($v['changes'] as $c): ?>
-									<li><?php echo $c;?></li>
-								<?php endforeach;?>
-								
-								</ul>
+								<?php echo $v['changes'];?>
 							<?php endforeach;?>
 						</div>
 					<?php endforeach;?>
