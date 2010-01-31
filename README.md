@@ -8,23 +8,20 @@ Beta (0.9.4-pre)
 
 Last Update
 -----------
-29 January 2010
+30 January 2010
 
 Latest Updates
 --------------
-* updated the styling of the readme
+* updated the version history page to use the Markdown parser
+* updated the version history accordion to be collapsible
 * updated the beta skin
-* updated the jquery ui images to the base theme
-* updated the jquery ui theme stylesheet to the base theme
 * updated the lightness skin
 * updated the redmond skin
 * updated the sunny skin
-* removed the version.xml file
-* fixed bug with position sliders not updating the proper item (#72)
+* updated the titan skin
 
 Changes in 0.9.4
 ----------------
-* added the datepicker plugin
 * added the jquery.ui.mouse file
 * added the jquery.ui.widget file
 * added the 0.9.4 update file
@@ -46,6 +43,7 @@ Changes in 0.9.4
     * [admin] updated the skin images
     * [admin] updated the footer of the template
     * [admin] updated the stylesheets
+        * added styling for accordion lists
         * updated the skin.css file to match with some of the changes from the login's skin.css
     * [login] removed unused image files
     * [login] updated the image files
@@ -67,6 +65,8 @@ Changes in 0.9.4
         * updated the skin.css file to match with some of the changes from the login's skin.css
 * updated the sunny skin
     * updated the main logo files
+    * [admin] updated the stylesheets
+        * added styling for accordion lists
     * [main] updated the stylesheets
         * updated the alt row color
         * added the info-full class
@@ -86,6 +86,8 @@ Changes in 0.9.4
         * updated the textboxlist styles to remove the focus shadow
         * added the markitup link fix
 * updated the lightness skin
+    * [admin] updated the stylesheets
+        * added styling for accordion lists
     * [login] updated the stylesheets
         * updated the skin.css file to remove unused styles
         * updated the structure.css file to remove unused styles
@@ -120,6 +122,8 @@ Changes in 0.9.4
 * updated the wiki categories to handle a description as well
 * updated the jquery ui images to the base theme
 * updated the jquery ui theme stylesheet to the base theme
+* updated the version history to use the Markdown parser
+* updated the version history accordion to be collapsible
 * removed old jquery ui files (version 1.8 uses a new naming scheme for the .js files)
 * removed test update file
 * removed the version.xml file
@@ -129,7 +133,7 @@ Changes in 0.9.4
 
 Known Issues
 ------------
-* Problems with position sliders updating the wrong position's counts (#72)
+
 
 Version History
 ---------------

@@ -1,3 +1,14 @@
+01.30.2010
+
+* updated the version history page to use the Markdown parser
+* updated the beta skin
+* updated the lightness skin
+* updated the redmond skin
+* updated the sunny skin
+* updated the titan skin
+
+==========
+
 01.29.2010
 
 * updated the styling of the readme
