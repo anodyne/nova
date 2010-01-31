@@ -231,6 +231,14 @@ ul.padding1, ol.padding1 { padding: .5em 1em; }
 	width: 350px;
 }
 
+#accordion ul {
+	margin: 0 1em;
+	padding: 0 1em;
+	line-height: 1.5;
+	
+	list-style: disc;
+}
+
 /*
 |---------------------------------------------------------------
 | IMAGES
