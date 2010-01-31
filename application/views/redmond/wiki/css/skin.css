@@ -330,7 +330,7 @@ kbd {
 | TABLES
 |---------------------------------------------------------------
 */
-tr.alt td { background-color: #f0f8ff; }
+tr.alt td { background-color: #f0f0f0; }
 tr.light_gray { background-color: #ddd; }
 
 th {
