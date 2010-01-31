@@ -44,11 +44,9 @@
 			
 			<table class="table100">
 				<tbody>
-					<?php echo table_row_spacer(3, 15);?>
+					<?php echo table_row_spacer(1, 15);?>
 					<tr>
-						<td class="cell-label"></td>
-						<td class="cell-spacer"></td>
-						<td align="right"><?php echo form_button($button_submit);?></td>
+						<td><?php echo form_button($button_submit);?></td>
 					</tr>
 				</tbody>
 			</table>
@@ -157,11 +155,9 @@
 			
 			<table class="table100">
 				<tbody>
-					<?php echo table_row_spacer(3, 15);?>
+					<?php echo table_row_spacer(1, 15);?>
 					<tr>
-						<td class="cell-label"></td>
-						<td class="cell-spacer"></td>
-						<td align="right"><?php echo form_button($button_submit);?></td>
+						<td><?php echo form_button($button_submit);?></td>
 					</tr>
 				</tbody>
 			</table>
@@ -282,11 +278,9 @@
 			
 			<table class="table100">
 				<tbody>
-					<?php echo table_row_spacer(3, 15);?>
+					<?php echo table_row_spacer(1, 15);?>
 					<tr>
-						<td class="cell-label"></td>
-						<td class="cell-spacer"></td>
-						<td align="right"><?php echo form_button($button_submit);?></td>
+						<td><?php echo form_button($button_submit);?></td>
 					</tr>
 				</tbody>
 			</table>
@@ -311,11 +305,9 @@
 				
 				<table class="table100">
 					<tbody>
-						<?php echo table_row_spacer(3, 15);?>
+						<?php echo table_row_spacer(1, 15);?>
 						<tr>
-							<td class="cell-label"></td>
-							<td class="cell-spacer"></td>
-							<td align="right"><?php echo form_button($button_submit);?></td>
+							<td><?php echo form_button($button_submit);?></td>
 						</tr>
 					</tbody>
 				</table>
