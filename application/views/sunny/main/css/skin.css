@@ -50,18 +50,19 @@ body {
 	text-align: center;
 }
 #menu .nav-main ul li {
-	margin: 0 10px;
+	margin: 0 5px;
 	padding: 0;
 	display: inline;
 }
 #menu .nav-main ul li a {
 	padding: 0 0 2px 0;
+	margin: 0 5px;
 	
 	text-decoration: none;
 	color: #666;
 	font-weight: bold;
 }
-#menu .nav-main ul li a span {}
+#menu .nav-main ul li a span { padding: 0; }
 #menu .nav-main ul li a:hover { border-bottom: 2px solid #817865; }
 #menu .nav-main ul li a.active {
 	border-bottom: 2px solid #0074c7;
@@ -481,9 +482,11 @@ hr {
 }
 
 .panel-handle {
-	border-bottom: 1px solid #444;
 	text-align: center;
 	font-size: 85%;
+	border-top: 0 !important;
+	border-left: 0 !important;
+	border-right: 0 !important;
 }
 .panel-trigger span { text-align: center; }
 
