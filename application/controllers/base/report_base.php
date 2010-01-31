@@ -51,7 +51,8 @@ class Report_base extends Controller {
 			'daylight_savings',
 			'sim_name',
 			'date_format',
-			'posting_requirement'
+			'posting_requirement',
+			'post_count_format'
 		);
 		
 		/* grab the settings */
@@ -680,6 +681,124 @@ class Report_base extends Controller {
 		$this->template->write('title', $data['header']);
 		$this->template->write_view('content', $view_loc, $data);
 		$this->template->write_view('javascript', $js_loc, $js_data);
+		
+		/* render the template */
+		$this->template->render();
+	}
+	
+	function stats()
+	{
+		/* grab the title */
+		$title = ucfirst(lang('labels_stats'));
+		
+		/* load the models */
+		$this->load->model('posts_model', 'posts');
+		$this->load->model('personallogs_model', 'logs');
+		
+		/* set the times */
+		$today = getdate();
+		
+		/* this month */
+		$this_month_mysql = $today['year'] .'-'. $today['mon'] .'-01 00:00:00';
+		$this_month = human_to_unix($this_month_mysql, TRUE);
+		
+		/* last month */
+		$year = ($today['mon'] == 1) ? $today['year'] - 1 : $today['year'];
+		$month = ($today['mon'] == 1) ? 12 : $today['mon'] - 1;
+		$last_month_mysql = $year .'-'. $month .'-01 00:00:00';
+		$last_month = human_to_unix($last_month_mysql, TRUE);
+		
+		/* next month */
+		$year = ($today['mon'] == 12) ? $today['year'] + 1 : $today['year'];
+		$month = ($today['mon'] == 12) ? '01' : $today['mon'] + 1;
+		$next_month_mysql = $year .'-'. $month .'-01 00:00:00';
+		$next_month = human_to_unix($next_month_mysql, TRUE);
+		
+		/* days in the months */
+		$days = date('t');
+
+		/* run the methods */
+		$data['users'] = array(
+			'current' => $this->user->count_users('current', $this_month, $last_month),
+			'previous' => $this->user->count_users('previous', $this_month, $last_month)
+		);
+		
+		$data['characters'] = array(
+			'current' => $this->char->count_characters('active', 'current', $this_month, $last_month),
+			'previous' => $this->char->count_characters('active', 'previous', $this_month, $last_month)
+		);
+		
+		$data['npcs'] = array(
+			'current' => $this->char->count_characters('npc', 'current', $this_month, $last_month),
+			'previous' => $this->char->count_characters('npc', 'previous', $this_month, $last_month)
+		);
+		
+		$data['posts'] = array(
+			'current' => $this->posts->count_posts($this_month, $next_month, $this->options['post_count_format']),
+			'previous' => $this->posts->count_posts($last_month, $this_month, $this->options['post_count_format'])
+		);
+		
+		$data['logs'] = array(
+			'current' => $this->logs->count_logs($this_month, $next_month),
+			'previous' => $this->logs->count_logs($last_month, $this_month)
+		);
+		
+		$data['post_totals'] = array(
+			'current' => $data['posts']['current'] + $data['logs']['current'],
+			'previous' => $data['posts']['previous'] + $data['logs']['previous'],
+		);
+		
+		$data['avg_posts'] = array(
+			'current' => ($data['posts']['current'] > 0) ? round($data['posts']['current'] / $data['users']['current'], 2) : 0,
+			'previous' => ($data['posts']['previous'] > 0) ? round($data['posts']['previous'] / $data['users']['previous'], 2) : 0
+		);
+		
+		$data['avg_logs'] = array(
+			'current' => ($data['logs']['current'] > 0) ? round($data['logs']['current'] / $data['users']['current'], 2) : 0,
+			'previous' => ($data['logs']['previous'] > 0) ? round($data['logs']['previous'] / $data['users']['previous'], 2) : 0
+		);
+		
+		$data['avg_totals'] = array(
+			'current' => ($data['post_totals']['current'] > 0) ? round($data['post_totals']['current'] / $data['users']['current'], 2) : 0,
+			'previous' => ($data['post_totals']['previous'] > 0) ? round($data['post_totals']['previous'] / $data['users']['previous'], 2) : 0
+		);
+		
+		$data['pace'] = array(
+			'posts' => round((($data['posts']['current']) / ($today['mday'])) * $days, 2),
+			'logs' => round((($data['logs']['current']) / ($today['mday'])) * $days, 2),
+			'total' => round((($data['post_totals']['current']) / ($today['mday'])) * $days, 2)
+		);
+		
+		/* set the header */
+		$data['header'] = $title;
+		
+		$data['label'] = array(
+			'avgentries' => lang('abbr_avg') .' '. ucwords(lang('labels_entries') .' / '. lang('global_user')),
+			'avglogs' => lang('abbr_avg') .' '. ucwords(lang('global_personallogs') .' / '. lang('global_user')),
+			'avgposts' => lang('abbr_avg') .' '. ucwords(lang('global_missionposts') .' / '. lang('global_user')),
+			'lastmonth' => ucwords(lang('order_last') .' '. lang('time_month')),
+			'logs' => ucwords(lang('global_personallogs')),
+			'npcs' => lang('abbr_npcs'),
+			'pacelogs' => ucwords(lang('global_personallogs') .' '. lang('labels_pace')),
+			'paceposts' => ucwords(lang('global_missionposts') .' '. lang('labels_pace')),
+			'pacetotal' => ucwords(lang('labels_totals') .' '. lang('labels_pace')),
+			'users' => ucfirst(lang('global_users')),
+			'playing_chars' => ucwords(lang('status_playing') .' '. lang('global_characters')),
+			'posts' => ucwords(lang('global_missionposts')),
+			'statsavg' => lang('text_stats_avg'),
+			'statspace' => lang('text_stats_pace'),
+			'thismonth' => ucwords(lang('labels_this') .' '. lang('time_month')),
+			'totals' => ucwords(lang('labels_totals')),
+		);
+		
+		/* figure out where the view file should be coming from */
+		$view_loc = view_location('report_stats', $this->skin, 'admin');
+		$js_loc = js_location('report_stats_js', $this->skin, 'admin');
+		
+		/* write the data to the template */
+		$this->template->write('title', $title);
+		$this->template->write_view('content', $view_loc, $data);
+		$this->template->write_view('javascript', $js_loc);
 		
 		/* render the template */
 		$this->template->render();
