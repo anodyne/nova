@@ -18,7 +18,7 @@
 |---------------------------------------------------------------
 */
 $user_id_type				= 'INT';
-$user_id_constraint		= 8;
+$user_id_constraint			= 8;
 $character_id_type			= 'INT';
 $character_id_constraint	= 8;
 $date_type					= 'BIGINT';
@@ -50,6 +50,11 @@ $data = array(
 	'characters_values'			=> array('id' => 'value_id', 'fields' => 'fields_characters_values'),
 	'coc'						=> array('id' => 'coc_id', 'fields' => 'fields_coc'),
 	'departments_'.	GENRE		=> array('id' => 'dept_id', 'fields' => 'fields_departments'),
+	'docking'					=> array('id' => 'docking_id', 'fields' => 'fields_docking'),
+	'docking_data'				=> array('id' => 'data_id', 'fields' => 'fields_docking_data'),
+	'docking_fields'			=> array('id' => 'field_id', 'fields' => 'fields_docking_fields'),
+	'docking_sections'			=> array('id' => 'section_id', 'fields' => 'fields_docking_sections'),
+	'docking_values'			=> array('id' => 'value_id', 'fields' => 'fields_docking_values'),
 	'login_attempts'			=> array('id' => 'login_id', 'fields' => 'fields_login_attempts'),
 	'menu_categories'			=> array('id' => 'menucat_id', 'fields' => 'fields_menu_categories'),
 	'menu_items'				=> array('id' => 'menu_id', 'fields' => 'fields_menu_items'),
@@ -599,6 +604,133 @@ $fields_departments = array(
 		'type' => 'INT',
 		'constraint' => 10,
 		'default' => 0)
+);
+
+$fields_docking = array(
+	'docking_id' => array(
+		'type' => 'INT',
+		'constraint' => 5,
+		'auto_increment' => TRUE),
+	'docking_sim_name' => array(
+		'type' => 'VARCHAR',
+		'constraint' => 255,
+		'default' => ''),
+	'docking_sim_url' => array(
+		'type' => 'TEXT'),
+	'docking_gm_name' => array(
+		'type' => 'VARCHAR',
+		'constraint' => 255,
+		'default' => ''),
+	'docking_gm_email' => array(
+		'type' => 'VARCHAR',
+		'constraint' => 255,
+		'default' => ''),
+	'docking_status' => array(
+		'type' => 'ENUM',
+		'constraint' => "'active','inactive','pending'",
+		'default' => 'pending'),
+	'docking_date' => array(
+		'type' => $date_type,
+		'constraint' => $date_constraint)
+);
+
+$fields_docking_data = array(
+	'data_id' => array(
+		'type' => 'BIGINT',
+		'constraint' => 20,
+		'auto_increment' => TRUE),
+	'data_docking_item' => array(
+		'type' => 'INT',
+		'constraint' => 5),
+	'data_field' => array(
+		'type' => 'INT',
+		'constraint' => 10),
+	'data_value' => array(
+		'type' => 'TEXT'),
+	'data_updated' => array(
+		'type' => $date_type,
+		'constraint' => $date_constraint),
+);
+
+$fields_docking_fields = array(
+	'field_id' => array(
+		'type' => 'INT',
+		'constraint' => 10,
+		'auto_increment' => TRUE),
+	'field_type' => array(
+		'type' => 'ENUM',
+		'constraint' => "'text','select','textarea'",
+		'default' => 'text'),
+	'field_name' => array(
+		'type' => 'VARCHAR',
+		'constraint' => 100,
+		'default' => ''),
+	'field_fid' => array(
+		'type' => 'VARCHAR',
+		'constraint' => 100,
+		'default' => ''),
+	'field_class' => array(
+		'type' => 'TEXT'),
+	'field_label_page' => array(
+		'type' => 'TEXT'),
+	'field_value' => array(
+		'type' => 'TEXT'),
+	'field_selected' => array(
+		'type' => 'VARCHAR',
+		'constraint' => 20,
+		'default' => ''),
+	'field_order' => array(
+		'type' => 'INT',
+		'constraint' => 5),
+	'field_display' => array(
+		'type' => 'ENUM',
+		'constraint' => "'y','n'",
+		'default' => 'y'),
+	'field_rows' => array(
+		'type' => 'INT',
+		'constraint' => 3,
+		'default' => 5),
+	'field_section' => array(
+		'type' => 'INT',
+		'constraint' => 8,
+		'default' => 1),
+);
+
+$fields_docking_sections = array(
+	'section_id' => array(
+		'type' => 'INT',
+		'constraint' => 8,
+		'auto_increment' => TRUE),
+	'section_name' => array(
+		'type' => 'VARCHAR',
+		'constraint' => 255,
+		'default' => ''),
+	'section_order' => array(
+		'type' => 'INT',
+		'constraint' => 5)
+);
+
+$fields_docking_values = array(
+	'value_id' => array(
+		'type' => 'INT',
+		'constraint' => 10,
+		'auto_increment' => TRUE),
+	'value_field' => array(
+		'type' => 'INT',
+		'constraint' => 10),
+	'value_field_value' => array(
+		'type' => 'VARCHAR',
+		'constraint' => 255,
+		'default' => ''),
+	'value_selected' => array(
+		'type' => 'VARCHAR',
+		'constraint' => 10,
+		'default' => ''),
+	'value_content' => array(
+		'type' => 'TEXT'),
+	'value_order' => array(
+		'type' => 'INT',
+		'constraint' => 5)
 );
 
 $fields_login_attempts = array(
