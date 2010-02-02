@@ -18,12 +18,20 @@ Latest Updates
 * added docking gm email view files
 * added sim/docked view file
 * added sim/docked js view file
+* added icon-view.png to the main section
+* added sim_docked_all view file
+* added sim_docked_one view file
+* added a new access role (senior admin)
 * updated the database schema to add the docking tables
 * updated the main controller to change a language key
 * updated the sim controller to chang a language key
 * updated the language files
 * updated the dev install data
+* updated sim/docked to handle viewing individual docked items
+* updated the basic install data
+* updated the docking model
 * removed the old docking request email views
+* removed sim_docked view file
 
 Changes in 0.9.5
 ----------------
@@ -31,8 +39,10 @@ Changes in 0.9.5
 * added the 0.9.4 changelog to the docs directory
 * added the docking user email view files
 * added the docking gm email view files
-* added the sim/docked view file
+* added the sim_docked_all view file
+* added the sim_docked_one view file
 * added the sim/docked js view file
+* added the icon-view.png image to the main section
 * removed the old docking request email views
 * updated the database schema
     * added docking table
@@ -46,6 +56,10 @@ Changes in 0.9.5
     * updated the version history info
     * updated the menu items
     * updated the colorbox version info
+    * updated the menu items
+    * updated the access pages
+    * updated the access roles
+    * updated the skin catalogue item
 * updated the 0.9.4 update file
 * updated the update versions array
 * updated the colorbox plugin to version 1.3.6

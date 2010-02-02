@@ -1,6 +1,15 @@
 02.02.2010
 
+* added icon-view.png to the main section
+* added sim_docked_all view file
+* added sim_docked_one view file
+* added a new access role (senior admin)
 
+* removed sim_docked view file
+
+* updated sim/docked to handle viewing individual docked items
+* updated the basic install data
+* updated the docking model
 
 ==========
 
