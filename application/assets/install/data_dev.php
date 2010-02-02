@@ -101,16 +101,20 @@ $access_groups = array(
 $access_roles = array(
 	array(
 		'role_name' => 'System Administrator',
-		'role_access' => '1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,29,31,33,34,35,36,37,38,39,40,41,42,43,44,47,48,51,53,54,56,58,61,62',
+		'role_access' => '1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,31,33,35,36,37,38,39,40,41,42,43,44,45,46,49,50,53,55,56,58,60,63,64',
 		'role_desc' => 'System administrators can take any action in the system. Only give this access level out to people you implicitly trust.'),
+	array(
+		'role_name' => 'Senior Administrator',
+		'role_access' => '',
+		'role_desc' => 'Senior administrators have power to do almost all of the tasks system administrators do, but with some restrictions. This role is intended to be used by an assistant game manager or other highly senior players on the RPG.'),
 	array(
 		'role_name' => 'Basic Administrator',
 		'role_access' => '1,2,3,4,5,6,7,8,21,29,31,33,35,37,38,39,40,41,42,43,44,47,48,51,53,54,56,58,61,62',
-		'role_desc' => 'Basic administrators have power to do many of the tasks system administrators do, but with some restrictions. This role is intended to be used by an assistant game manager or other highly senior players on the RPG.'),
+		'role_desc' => 'Basic administrators have power to do some of the tasks system administrators do, but with more restrictions. This role is intended to be used senior players on the RPG.'),
 	array(
 		'role_name' => 'Power User',
 		'role_access' => '1,2,4,5,6,7,8,28,30,32,37,38,40,41,43,46,50,52,55,57,60',
-		'role_desc' => 'Power users are users that can take more action than a standard user. This role is intended to be used for senior players on the RPG.'),
+		'role_desc' => 'Power users are users that can take more action than a standard user. This role is intended to be used for senior players on the RPG (department heads for example).'),
 	array(
 		'role_name' => 'Standard User',
 		'role_access' => '1,2,4,5,6,7,8,28,30,32,37,38,40,43,49,52,55,57,59',
@@ -195,6 +199,11 @@ $access_pages = array(
 		'page_group' => 3,
 		'page_desc' => "Can add to, edit or remove from the dynamic tour form"),
 	array(
+		'page_name' => "Docking Form",
+		'page_url' => 'site/dockingform',
+		'page_group' => 3,
+		'page_desc' => "Can add to, edit or remove from the dynamic docking form"),
+	array(
 		'page_name' => "Menus",
 		'page_url' => 'site/menus',
 		'page_group' => 3,
@@ -255,6 +264,11 @@ $access_pages = array(
 		'page_url' => 'manage/tour',
 		'page_group' => 4,
 		'page_desc' => "Can add, delete and edit tour items"),
+	array(
+		'page_name' => "Manage Docked Items",
+		'page_url' => 'manage/docked',
+		'page_group' => 4,
+		'page_desc' => "Can add, approve, delete, edit and reject docked items"),
 	array(
 		'page_name' => "Manage Missions",
 		'page_url' => 'manage/missions',
@@ -524,7 +538,7 @@ $catalogue_skins = array(
 	array(
 		'skin_name' => 'Default',
 		'skin_location' => 'default',
-		'skin_credits' => 'Skin created by David VanScott. Edits are permissible as long as original credits stay intact.'),
+		'skin_credits' => 'The Pulsar skin was created by Anodyne Productions. Edits are permissible as long as original credits stay intact.'),
 );
 
 $catalogue_skinsecs = array(
@@ -1251,9 +1265,18 @@ $menu_items = array(
 		'menu_type' => 'sub',
 		'menu_cat' => 'sim'),
 	array(
+		'menu_name' => 'Docked Items',
+		'menu_group' => 2,
+		'menu_order' => 0,
+		'menu_link' => 'sim/docked',
+		'menu_sim_type' => 3,
+		'menu_display' => 'n',
+		'menu_type' => 'sub',
+		'menu_cat' => 'sim'),
+	array(
 		'menu_name' => 'Docking Request',
-		'menu_group' => 1,
-		'menu_order' => 4,
+		'menu_group' => 2,
+		'menu_order' => 1,
 		'menu_link' => 'sim/dockingrequest',
 		'menu_sim_type' => 3,
 		'menu_display' => 'n',
@@ -1488,6 +1511,16 @@ $menu_items = array(
 		'menu_use_access' => 'y',
 		'menu_access' => 'site/tourform'),
 	array(
+		'menu_name' => 'Docking Form',
+		'menu_group' => 1,
+		'menu_order' => 3,
+		'menu_link' => 'site/dockingform',
+		'menu_sim_type' => 3,
+		'menu_type' => 'adminsub',
+		'menu_cat' => 'site',
+		'menu_use_access' => 'n',
+		'menu_access' => 'site/dockingform'),
+	array(
 		'menu_name' => 'Sim Types',
 		'menu_group' => 2,
 		'menu_order' => 0,
@@ -1648,6 +1681,16 @@ $menu_items = array(
 		'menu_cat' => 'manage',
 		'menu_use_access' => 'y',
 		'menu_access' => 'manage/decks'),
+	array(
+		'menu_name' => 'Docked Items',
+		'menu_group' => 2,
+		'menu_order' => 3,
+		'menu_link' => 'manage/docked',
+		'menu_sim_type' => 3,
+		'menu_type' => 'adminsub',
+		'menu_cat' => 'manage',
+		'menu_use_access' => 'n',
+		'menu_access' => 'manage/docked'),
 		
 	array(
 		'menu_name' => 'Uploads',
