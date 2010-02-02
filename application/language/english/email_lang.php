@@ -61,6 +61,8 @@ $lang['email_subject_user_status_change'] 	= 'User Status Change Notification';
 $lang['email_subject_award_nomination'] 	= 'Award Nomination';
 $lang['email_subject_character_approved'] 	= 'Character Application Approved';
 $lang['email_subject_character_rejected'] 	= 'Character Application Rejected';
+$lang['email_subject_docking_user'] 		= 'Docking Request Received';
+$lang['email_subject_docking_gm'] 			= 'Docking Request Received';
 
 /*
 |---------------------------------------------------------------
@@ -171,6 +173,14 @@ Nominated By: %s
 Reason: %s
 
 This is an automatically generated email, please do not respond.";
+
+$lang['email_content_docking_user'] = "You recently applied to dock with the %s. Your application is currently under review and the game master will notify you of their decision in the near future. If you have further questions, please contact the game master directly.
+
+This is an automatically generated email, do not reply to this message.";
+
+$lang['email_content_docking_gm'] = "There is currently a docking request waiting for your review. The content of the application is displayed below. You can log in to Nova to approve and reject this request.
+
+This is an automatically generated email, do not reply to this message.";
 
 /* End of file email_lang.php */
 /* Location: ./application/language/english/email_lang.php */
