@@ -467,37 +467,122 @@ class Sim_base extends Controller {
 		/* load the resources */
 		$this->load->model('docking_model', 'docking');
 		
-		$items = $this->docking->get_docked_items();
+		$id = $this->uri->segment(3, FALSE, TRUE);
 		
-		if ($items->num_rows() > 0)
+		if ($id !== FALSE)
 		{
-			foreach ($items->result() as $i)
+			/* grab the docked item */
+			$item = $this->docking->get_docked_item($id);
+			
+			if ($item !== FALSE)
 			{
-				if ($i->docking_status != 'pending')
+				/* set the date format */
+				$datestring = $this->options['date_format'];
+				
+				/* set the date */
+				$date = gmt_to_local($item->docking_date, $this->timezone, $this->dst);
+				
+				$data['docked'] = array(
+					'sim_name' => $item->docking_sim_name,
+					'sim_url' => $item->docking_sim_url,
+					'gm_name' => $item->docking_gm_name,
+					'id' => $item->docking_id,
+					'date' => mdate($datestring, $date)
+				);
+				
+				/* run the methods */
+				$sections = $this->docking->get_docking_sections();
+				
+				if ($sections->num_rows() > 0)
 				{
-					$data['docked'][$i->docking_status][] = array(
-						'sim_name' => $i->docking_sim_name,
-						'sim_url' => $i->docking_sim_url,
-						'gm_name' => $i->docking_gm_name,
-						'id' => $i->docking_id
-					);
+					foreach ($sections->result() as $sec)
+					{
+						$data['sections'][$sec->section_id]['title'] = $sec->section_name;
+						
+						/* get the fields */
+						$fields = $this->docking->get_docking_fields($sec->section_id);
+						
+						if ($fields->num_rows() > 0)
+						{
+							foreach ($fields->result() as $field)
+							{
+								/* grab the data for the fields */
+								$field_data = $this->docking->get_field_data($field->field_id, $data['docked']['id']);
+								
+								if ($field_data->num_rows() > 0)
+								{
+									foreach ($field_data->result() as $item)
+									{
+										$data['sections'][$sec->section_id]['fields'][] = array(
+											'field' => $field->field_label_page,
+											'data' => $item->data_value
+										);
+									}
+								}
+							}
+						}
+					}
+				}
+				
+				/* send the variables to the view */
+				$data['header'] = ucwords(lang('actions_docked') .' '. lang('global_sim') .' - '. $data['docked']['sim_name']);
+			}
+			else
+			{
+				/* send the variables to the view */
+				$data['header'] = ucwords(lang('actions_docked') .' '. lang('global_sim'));
+			}
+			
+			/* figure out where the view should be coming from */
+			$view_loc = view_location('sim_docked_one', $this->skin, 'main');
+		}
+		else
+		{
+			$items = $this->docking->get_docked_items();
+		
+			if ($items->num_rows() > 0)
+			{
+				foreach ($items->result() as $i)
+				{
+					if ($i->docking_status != 'pending')
+					{
+						$data['docked'][$i->docking_status][] = array(
+							'sim_name' => $i->docking_sim_name,
+							'sim_url' => $i->docking_sim_url,
+							'gm_name' => $i->docking_gm_name,
+							'id' => $i->docking_id
+						);
+					}
 				}
 			}
+			
+			/* figure out where the view should be coming from */
+			$view_loc = view_location('sim_docked_all', $this->skin, 'main');
+			
+			/* send the variables to the view */
+			$data['header'] = ucwords(lang('actions_docked') .' '. lang('global_sims'));
 		}
 		
-		/* figure out where the view should be coming from */
-		$view_loc = view_location('sim_docked', $this->skin, 'main');
+		/* figure out where the js view should be coming from */
 		$js_loc = js_location('sim_docked_js', $this->skin, 'main');
 		
-		/* send the variables to the view */
-		$data['header'] = ucwords(lang('actions_docking') .' '. lang('actions_request'));
+		$data['images'] = array(
+			'view' => array(
+				'src' => img_location('icon-view.png', $this->skin, 'main'),
+				'alt' => lang('actions_view'),
+				'title' => ucfirst(lang('actions_view'))
+			)
+		);
 		
 		$data['label'] = array(
+			'back' => LARROW .' '. ucfirst(lang('actions_back')) .' '. lang('labels_to') .' '. ucwords(lang('actions_docked') .' '. lang('global_sims')),
 			'docked_current' => ucwords(lang('status_current') .' '. lang('actions_docked') .' '. lang('global_sims')),
 			'docked_previous' => ucwords(lang('status_previous') .' '. lang('actions_docked') .' '. lang('global_sims')),
 			'gm_name' => ucfirst(lang('labels_name')),
 			'name' => ucwords(lang('global_sim') .' '. lang('labels_name')),
 			'norequests' => sprintf(lang('error_not_found'), lang('actions_docked') .' '. lang('labels_items')),
+			'nosim' => sprintf(lang('error_not_found'), lang('actions_docked') .' '. lang('global_sim')),
+			'received' => ucfirst(lang('actions_received')),
 		);
 	
 		/* write the data to the template */
