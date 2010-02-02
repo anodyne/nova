@@ -33,6 +33,8 @@ $data = array(
 	'characters_values',
 	'characters',
 	'coc',
+	'docking_fields',
+	'docking_sections',
 	'menu_categories',
 	'menu_items',
 	'messages',
@@ -946,6 +948,27 @@ $coc = array(
 	array(
 		'coc_crew' => 4,
 		'coc_order' => 4)
+);
+
+$docking_fields = array(
+	array(
+		'field_type' => 'text',
+		'field_name' => 'duration',
+		'field_label_page' => 'Duration',
+		'field_order' => 0,
+		'field_section' => 1),
+	array(
+		'field_type' => 'textarea',
+		'field_name' => 'reason',
+		'field_label_page' => 'Reason for Docking',
+		'field_order' => 1,
+		'field_section' => 1),
+);
+
+$docking_sections = array(
+	array(
+		'section_name' => 'Details',
+		'section_order' => 0)
 );
 
 $menu_categories = array(
