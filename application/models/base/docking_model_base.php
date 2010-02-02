@@ -43,9 +43,9 @@ class Docking_model_base extends Model {
 		return FALSE;
 	}
 	
-	function get_tour_field_details($id = '')
+	function get_docking_field_details($id = '')
 	{
-		$query = $this->db->get_where('tour_fields', array('field_id' => $id));
+		$query = $this->db->get_where('docking_fields', array('field_id' => $id));
 		
 		return $query;
 	}
@@ -80,7 +80,14 @@ class Docking_model_base extends Model {
 		
 		$query = $this->db->get();
 		
-		return $query;
+		if ($query->num_rows() > 0)
+		{
+			$row = $query->row();
+			
+			return $row;
+		}
+		
+		return FALSE;
 	}
 	
 	function get_docked_items()
@@ -110,9 +117,9 @@ class Docking_model_base extends Model {
 		return $query;
 	}
 	
-	function get_tour_value_details($id = '')
+	function get_docking_value_details($id = '')
 	{
-		$query = $this->db->get_where('tour_values', array('value_id' => $id));
+		$query = $this->db->get_where('docking_values', array('value_id' => $id));
 		
 		return $query;
 	}
@@ -162,13 +169,6 @@ class Docking_model_base extends Model {
 		return $query;
 	}
 	
-	function add_deck($data = '')
-	{
-		$query = $this->db->insert('tour_decks', $data);
-		
-		return $query;
-	}
-	
 	function add_tour_field($data = '')
 	{
 		$query = $this->db->insert('tour_fields', $data);
@@ -204,15 +204,6 @@ class Docking_model_base extends Model {
 	| DELETE METHODS
 	|---------------------------------------------------------------
 	*/
-	
-	function delete_deck($id = '')
-	{
-		$query = $this->db->delete('tour_decks', array('deck_id' => $id));
-		
-		$this->dbutil->optimize_table('tour_decks');
-		
-		return $query;
-	}
 	
 	function delete_tour_field($id = '')
 	{
@@ -255,16 +246,6 @@ class Docking_model_base extends Model {
 	| UPDATE METHODS
 	|---------------------------------------------------------------
 	*/
-	
-	function update_deck($id = '', $data = '')
-	{
-		$this->db->where('deck_id', $id);
-		$query = $this->db->update('tour_decks', $data);
-		
-		$this->dbutil->optimize_table('tour_decks');
-		
-		return $query;
-	}
 	
 	function update_tour_data($id = '', $data = '')
 	{
