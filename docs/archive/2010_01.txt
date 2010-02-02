@@ -1,0 +1,314 @@
+01.31.2010
+
+* updated the version to 0.9.5
+* updated the basic install data
+* updated the 0.9.4 update file
+* updated the report controller to duplicate the sim stats page
+* updated the versions array
+* updated the test versions yaml file
+* updated the site settings page to put the submit button in a better place
+* updated colorbox to version 1.3.6
+* updated the sunny skin
+* updated the site options page to handle skin previews like site/settings
+* updated the beta skin
+* updated the lightness skin
+* updated the redmond skin
+
+* added the 0.9.5 update file
+* added the sim stats view file
+* added the sim stats js view file
+* added a TODO to the admin controller
+
+* fixed bug in IE where an error was thrown because of a stray comma
+
+==========
+
+01.30.2010
+
+* updated the version history page to use the Markdown parser
+* updated the version history accordion to be collapsible
+* updated the beta skin
+* updated the lightness skin
+* updated the redmond skin
+* updated the sunny skin
+* updated the titan skin
+
+==========
+
+01.29.2010
+
+* updated the styling of the readme
+* updated the beta skin
+* updated the jquery ui images to the base theme
+* updated the jquery ui theme stylesheet to the base theme
+* updated the lightness skin
+* updated the redmond skin
+* updated the sunny skin
+
+* removed the version.xml file
+
+* fixed bug with position sliders not updating the proper item (#72)
+
+==========
+
+01.28.2010
+
+* updated the main logo images to use the new font
+* updated to version 1.8rc1 of the jquery ui
+* updated the beta skin
+* updated the lightness skin
+* updated the redmond skin
+* updated the sunny skin
+
+==========
+
+01.27.2010
+
+* updated jquery to version 1.4.1
+* updated jquery ui to version 1.8b1
+* updated the basic install data
+* updated the head include files to pull in the jquery.ui.widget file which is now required
+* updated the admin's head include file to set some depencies for the ui widgets
+* updated the language files
+* updated the install and update templates to not use a copyright statement
+* updated the update versions array
+* updated the wiki page creation to use a different manner of selecting categories
+* updated the wiki categories to handle a description as well
+* updated the database schema
+* updated the manage wiki categories page to allow creating a description
+* updated the wiki head include to pull in the qtip plugin
+* updated the wiki head include to not pull the textboxlist plugin
+
+* removed unused jquery ui files (new naming scheme in 1.8)
+* removed the textboxlist files
+* removed the skins' textbox list stylesheets and images
+* removed test update file
+
+* added the jquery.ui.mouse file
+* added the jquery.ui.widget file
+* added the 0.9.4 update file
+
+* fixed bug where the update panel wasn't showing the proper information at the right times (#71)
+* fixed bug where viewing a wiki page or draft with fewer than 2 categories wouldn't display the category
+
+==========
+
+01.26.2010
+
+* updated the index files in the core directory to use the prper line endings (unix) and encoding (utf8)
+* updated the sunny skin
+
+* added the skin.yml file to the beta skin
+
+==========
+
+01.25.2010
+
+* updated the skin catalogue to change the admin skin default to match the default skin admin section
+* updated the site settings page to remove the admin dropdown from the appearance (since it doesn't actually do anything)
+* updated the sunny skin
+* updated the write controller to alphabetize the methods
+* updated the write news item view to use the new form layout
+* updated the write personal log view to use the new form layout
+* updated the write/reply/forward private message view to use the new form layout
+* updated the give character award view to use the new form layout
+* updated the edit bio view to use the new form layout
+* updated the join page to have a confirmation dialog
+* updated the language files
+* updated the index files in the application directory to use the proper line endings (unix) and encoding (utf8)
+* updated the skin yaml files
+* updated the basic install data
+* updated the mission management page to use the datepicker
+* updated the version info in the constants file
+
+* fixed bug where IE7 didn't have confirm dialogs on the post pages (#70)
+* fixed bug where the confirm dialogs wouldn't respect a cancel event (#69)
+
+* added the titan skin directory
+* added the datepicker plugin
+
+==========
+
+01.23.2010
+
+* updated the login views to use the kbd tag for field labels
+* updated the lightness skin
+* updated the redmond skin
+* updated the sunny skin
+* updated the notes doc
+
+==========
+
+01.22.2010
+
+* updated the redmond skin to position the nova button better
+* updated the redmond skin so that when you click outside of the menu, it'll close the menu
+* updated the wiki page view to allow going directly to a tab from the url
+* updated the skins with a new tag for doing form labels (kbd)
+* updated the star trek online genre data
+
+==========
+
+01.20.2010
+
+* updated the structure stylesheets for all the skins
+* updated the join form to use a better designed form
+* updated the language files
+* udpated the search page to use a better designed form
+* updated the contact page to use a better designed form
+* updated the lightness skin
+* updated the sunny skin
+* updated the install controller with the xml-rpc code
+
+==========
+
+01.19.2010
+
+* fixed bug where upgrade process wasn't evaluating the genre properly
+* fixed bug where the upgrade controls weren't shown because of wrong logic
+
+==========
+
+01.18.2010
+
+* fixed bug in IE where the footers overlapped the content (IE needs something inside the DIV)
+
+* updated the facebox style to be something less like SMS
+* updated the wiki stylesheets to make hover text more readable
+* updated the colorbox overlay
+* updated the search index view file to put the submit button in a better place
+* updated the lightness skin
+* updated markitUp to version 1.1.6
+* updated the basic install data
+* updated the settings page to be able to show skin previews
+
+==========
+
+01.17.2010
+
+* fixed bug where an autologin would fail and wouldn't be able to load the template files (#58)
+
+==========
+
+01.15.2010
+
+* updated the lightness skin
+
+==========
+
+01.14.2010
+
+* added category-add.png to wiki
+* added category-delete.png to wiki
+* added category-edit.png to wiki
+
+* removed icon-add.png from wiki
+* removed icon-delete.png from wiki
+* removed icon-edit.png from wiki
+* removed some debug code
+
+* updated the wiki controller to use the new category icons
+* updated the redmond skin
+* updated the basic install data
+* updated the constants config file
+* updated the language files
+* updated the lightness skin
+* updated the sunny skin
+
+* fixed IE bug with the countdown script on login and logout
+* fixed IE bug where text reverted to arial instead of inheriting the global font
+* fixed IE bug where the admin panel was messed up
+* fixed bug where the control panel threw an error if there were no activity notices (#63)
+* fixed bug where adding, deleting and editing a catalogue item used an incomplete header (#65)
+
+==========
+
+01.12.2010
+
+* updated the skin.yml files to remove tabs (bad YAML form)
+* updated the tour management page to use the right icon
+* updated the characters controller to remove some unused code
+* updated the rank catalogue to use the proper icon
+* updated forms-field.png
+* updated forms-field-add.png
+* updated forms-field-delete.png
+* updated forms-field-edit.png
+* updated forms-section.png
+* updated forms-section-add.png
+* updated forms-section-delete.png
+* updated forms-section-edit.png
+* updated menu.png
+* updated menu-add.png
+* updated menu-delete.png
+* updated menu-edit.png
+
+* removed message.png (not used anywhere)
+* removed tour.png (not used anywhere)
+* removed image.png (not used anywhere)
+* removed image-delete.png (not used anywhere)
+* removed catalogue.png (not used anywhere)
+
+==========
+
+01.08.2010
+
+* updated the language files
+* updated the link characters page to use a slightly different flash message on linking characters success
+
+* fixed bug with missing where parameters in step 14 of the upgrade process
+
+==========
+
+01.06.2010
+
+* updated the site controller to use a different model method
+* updated the system model to allow update_my_links to be passed the items to put in the my links field
+* updated the tour model to organize the methods alphabetically
+* updated the users model to organize the methods alphabetically
+* updated the controllers to stop using get_user_details model method
+* updated the controllers to stop using get_user_name and use get_user instead
+
+* removed a duplicated method from the specifications model
+* removed the is_sysadmin method from the users model
+* removed the verify_sysadmin method from the users model
+* removed the verify_login_details method from the users model
+* removed the get_all_characters method from the users model
+* removed the get_user_details method from the users model
+* removed the get_user_name method from the users model
+
+==========
+
+01.05.2010
+
+* updated the system model to organize the methods alphabetically
+* updated the specs model to organize the methods alphabetically
+
+==========
+
+01.04.2010
+
+* updated the debug helper with more functions
+* updated the utility browser hook with a new redirect URL (won't work until 1 March)
+
+==========
+
+01.03.2010
+
+* fixed bug in write controller with a missing $
+* fixed bug with wrong link to the edit character bio page when viewing a character bio
+
+* updated the basic install data
+* updated some of the system constants
+
+==========
+
+01.01.2010
+
+* updated the basic install files
+* updated the language files
+* updated some of the login view files
+* updated the colorbox plugin to version 1.3.5
+* updated the login head include to pull in the countdown script
+
+* added the december 2009 changelog archive
+* added the countdown script
