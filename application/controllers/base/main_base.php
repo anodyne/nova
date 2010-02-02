@@ -981,7 +981,7 @@ class Main_base extends Controller {
 					'class' => 'image'),
 				'prev' => array(
 					'src' => img_location('previous.png', $this->skin, 'main'),
-					'alt' => ucfirst(lang('actions_previous')),
+					'alt' => ucfirst(lang('status_previous')),
 					'class' => 'image'),
 				'feed' => array(
 					'src' => img_location('feed.png', $this->skin, 'main'),

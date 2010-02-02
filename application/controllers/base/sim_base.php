@@ -462,12 +462,62 @@ class Sim_base extends Controller {
 		$this->template->render();
 	}
 	
+	function docked()
+	{
+		/* load the resources */
+		$this->load->model('docking_model', 'docking');
+		
+		$items = $this->docking->get_docked_items();
+		
+		if ($items->num_rows() > 0)
+		{
+			foreach ($items->result() as $i)
+			{
+				if ($i->docking_status != 'pending')
+				{
+					$data['docked'][$i->docking_status][] = array(
+						'sim_name' => $i->docking_sim_name,
+						'sim_url' => $i->docking_sim_url,
+						'gm_name' => $i->docking_gm_name,
+						'id' => $i->docking_id
+					);
+				}
+			}
+		}
+		
+		/* figure out where the view should be coming from */
+		$view_loc = view_location('sim_docked', $this->skin, 'main');
+		$js_loc = js_location('sim_docked_js', $this->skin, 'main');
+		
+		/* send the variables to the view */
+		$data['header'] = ucwords(lang('actions_docking') .' '. lang('actions_request'));
+		
+		$data['label'] = array(
+			'docked_current' => ucwords(lang('status_current') .' '. lang('actions_docked') .' '. lang('global_sims')),
+			'docked_previous' => ucwords(lang('status_previous') .' '. lang('actions_docked') .' '. lang('global_sims')),
+			'gm_name' => ucfirst(lang('labels_name')),
+			'name' => ucwords(lang('global_sim') .' '. lang('labels_name')),
+			'norequests' => sprintf(lang('error_not_found'), lang('actions_docked') .' '. lang('labels_items')),
+		);
+	
+		/* write the data to the template */
+		$this->template->write('title', $data['header']);
+		$this->template->write_view('content', $view_loc, $data);
+		$this->template->write_view('javascript', $js_loc);
+		
+		/* render the template */
+		$this->template->render();
+	}
+	
 	function dockingrequest()
 	{
+		/* load the resources */
+		$this->load->model('docking_model', 'docking');
+		
 		if ($this->options['system_email'] == 'off')
 		{
 			$flash['status'] = 'info';
-			$flash['message'] = lang_output('flash_system_email_off_disabled');
+			$flash['message'] = lang_output('flash_system_email_off');
 			
 			/* write everything to the template */
 			$this->template->write_view('flash_message', '_base/main/pages/flash', $flash);
@@ -475,19 +525,9 @@ class Sim_base extends Controller {
 		
 		if (isset($_POST['submit']))
 		{
-			/* set the content array */
-			$content = array(
-				'sim_name' => $this->input->post('sim_name', TRUE),
-				'sim_class' => $this->input->post('sim_class', TRUE),
-				'sim_url' => $this->input->post('sim_url', TRUE),
-				'gm_name' => $this->input->post('gm_name', TRUE),
-				'gm_email' => $this->input->post('gm_email', TRUE),
-				'reason_duration' => $this->input->post('reason_duration', TRUE),
-				'reason_explain' => $this->input->post('reason_explain', TRUE),
-				'check' => $this->input->post('check', TRUE),
-			);
+			$check = $this->input->post('check', TRUE);
 			
-			if (!empty($content['check']))
+			if (!empty($check))
 			{
 				$message = sprintf(
 					lang('flash_failure'),
@@ -499,54 +539,156 @@ class Sim_base extends Controller {
 				$flash['status'] = 'error';
 				$flash['message'] = text_output($message);
 			}
-			elseif (!empty($content['sim_name']) && 
-				!empty($content['sim_url']) && 
-				!empty($content['gm_name']) && 
-				!empty($content['gm_email']) && 
-				!empty($content['reason_duration']))
+			else
 			{
-				/* try to send the email */
-				$email = ($this->options['system_email'] == 'on') ? $this->_email('docking', $content) : FALSE;
+				foreach ($_POST as $key => $value)
+				{
+					if (!is_numeric($key))
+					{
+						$insert_array[$key] = $value;
+					}
+				}
 				
-				if ($email === FALSE)
+				$insert_array['docking_date'] = now();
+				
+				/* take unnecessary items off the array */
+				unset($insert_array['check']);
+				unset($insert_array['submit']);
+				
+				/* put the record into the database */
+				$insert = $this->docking->insert_docking_record($insert_array);
+				
+				/* grab the insert ID */
+				$dock_id = $this->db->insert_id();
+				
+				/* optimize the table */
+				$this->sys->optimize_table('docking');
+				
+				foreach ($_POST as $key => $value)
+				{
+					if (is_numeric($key))
+					{
+						$array = array(
+							'data_field' => $key,
+							'data_docking_item' => $dock_id,
+							'data_value' => $value,
+							'data_updated' => now()
+						);
+						
+						$this->docking->insert_docking_data($array);
+					}
+				}
+				
+				if ($insert > 0)
+				{
+					$message = sprintf(
+						lang('flash_success'),
+						ucfirst(lang('actions_docking') .' '. lang('actions_request')),
+						lang('actions_submitted'),
+						''
+					);
+					
+					$flash['status'] = 'success';
+					$flash['message'] = text_output($message);
+					
+					$email_data = array(
+						'name' => $this->input->post('docking_gm_name', TRUE),
+						'email' => $this->input->post('docking_gm_email', TRUE)
+					);
+					
+					$email = ($this->options['system_email'] == 'on') ? $this->_email('docking_user', $email_data) : FALSE;
+					$email = ($this->options['system_email'] == 'on') ? $this->_email('docking_gm', $dock_id) : FALSE;
+				}
+				else
 				{
 					$message = sprintf(
 						lang('flash_failure'),
 						ucfirst(lang('actions_docking') .' '. lang('actions_request')),
 						lang('actions_submitted'),
-						lang('flash_additional_use_contact')
+						''
 					);
 					
 					$flash['status'] = 'error';
 					$flash['message'] = text_output($message);
 				}
-				else
-				{
-					$message = sprintf(
-						lang('flash_success'),
-						ucfirst(lang('actions_docking') .' '. lang('actions_request')),
-						lang('actions_submitted')
-					);
-					
-					$flash['status'] = 'success';
-					$flash['message'] = text_output($message);
-				}
-			}
-			else
-			{
-				$message = sprintf(
-					lang('flash_empty_fields'),
-					lang('flash_fields_all'),
-					lang('actions_submit'),
-					lang('actions_docking') .' '. lang('actions_request')
-				);
-				
-				$flash['status'] = 'error';
-				$flash['message'] = text_output($message);
 			}
 			
 			/* write everything to the template */
 			$this->template->write_view('flash_message', '_base/main/pages/flash', $flash);
+		}
+		
+		/* grab the join fields */
+		$sections = $this->docking->get_docking_sections();
+		
+		if ($sections->num_rows() > 0)
+		{
+			foreach ($sections->result() as $sec)
+			{
+				$sid = $sec->section_id; /* section id */
+				
+				/* set the section name */
+				$data['docking'][$sid]['name'] = $sec->section_name;
+				
+				/* grab the fields for the given section */
+				$fields = $this->docking->get_docking_fields($sec->section_id);
+				
+				if ($fields->num_rows() > 0)
+				{
+					foreach ($fields->result() as $field)
+					{
+						$f_id = $field->field_id; /* field id */
+						
+						/* set the page label */
+						$data['docking'][$sid]['fields'][$f_id]['field_label'] = $field->field_label_page;
+						
+						switch ($field->field_type)
+						{
+							case 'text':
+								$input = array(
+									'name' => $field->field_id,
+									'id' => $field->field_fid,
+									'class' => $field->field_class,
+									'value' => $field->field_value
+								);
+								
+								$data['docking'][$sid]['fields'][$f_id]['input'] = form_input($input);
+								
+								break;
+								
+							case 'textarea':
+								$input = array(
+									'name' => $field->field_id,
+									'id' => $field->field_fid,
+									'class' => $field->field_class,
+									'value' => $field->field_value,
+									'rows' => $field->field_rows
+								);
+								
+								$data['docking'][$sid]['fields'][$f_id]['input'] = form_textarea($input);
+								
+								break;
+								
+							case 'select':
+								$value = FALSE;
+								$values = FALSE;
+								$input = FALSE;
+							
+								$values = $this->char->get_bio_values($field->field_id);
+								
+								if ($values->num_rows() > 0)
+								{
+									foreach ($values->result() as $value)
+									{
+										$input[$value->value_field_value] = $value->value_content;
+									}
+								}
+								
+								$data['docking'][$sid]['fields'][$f_id]['input'] = form_dropdown($field->field_id, $input);
+								break;
+						}
+					}
+				}
+			}
 		}
 		
 		/* figure out where the view should be coming from */
@@ -559,30 +701,21 @@ class Sim_base extends Controller {
 		/* inputs */
 		$data['inputs'] = array(
 			'sim_name' => array(
-				'name' => 'sim_name',
+				'name' => 'docking_sim_name',
 				'id' => 'sim_name'),
-			'sim_class' => array(
-				'name' => 'sim_class',
-				'id' => 'sim_class'),
 			'sim_url' => array(
-				'name' => 'sim_url',
+				'name' => 'docking_sim_url',
 				'id' => 'sim_url'),
 			'gm_name' => array(
-				'name' => 'gm_name',
+				'name' => 'docking_gm_name',
 				'id' => 'gm_name'),
 			'gm_email' => array(
-				'name' => 'gm_email',
+				'name' => 'docking_gm_email',
 				'id' => 'gm_email'),
-			'reason_duration' => array(
-				'name' => 'reason_duration',
-				'id' => 'reason_duration'),
-			'reason_explain' => array(
-				'name' => 'reason_explain',
-				'id' => 'reason_explain',
-				'rows' => 5),
 			'check' => array(
 				'name' => 'check',
-				'id' => 'check'),
+				'id' => 'check',
+				'style' => 'background:transparent; border:1px solid transparent; color:transparent'),
 		);
 		
 		/* submit button */
@@ -596,7 +729,6 @@ class Sim_base extends Controller {
 		
 		$data['label'] = array(
 			'check' => ucfirst(lang('text_leave_blank')),
-			'class' => ucwords(lang('global_sim') .' '. lang('labels_class')),
 			'gm_email' => ucwords(lang('labels_email_address')),
 			'gm_info' => ucwords(lang('global_game_master') .' '. lang('labels_information')),
 			'gm_name' => ucfirst(lang('labels_name')),
@@ -607,11 +739,6 @@ class Sim_base extends Controller {
 			'r_info' => ucwords(lang('actions_docking') .' '. lang('labels_information')),
 			'url' => ucwords(lang('global_sim') .' '. lang('abbr_url')),
 		);
-		
-		if ($this->options['system_email'] == 'off')
-		{ /* make sure the form can't be submitted if system email is off */
-			$data['button_submit']['disabled'] = 'disabled';
-		}
 	
 		/* write the data to the template */
 		$this->template->write('title', $data['header']);
@@ -1568,7 +1695,7 @@ class Sim_base extends Controller {
 				'class' => 'image'),
 			'prev' => array(
 				'src' => img_location('previous.png', $this->skin, 'main'),
-				'alt' => ucfirst(lang('actions_previous')),
+				'alt' => ucfirst(lang('status_previous')),
 				'class' => 'image'),
 			'feed' => array(
 				'src' => img_location('feed.png', $this->skin, 'main'),
@@ -1786,7 +1913,7 @@ class Sim_base extends Controller {
 					'class' => 'image'),
 				'prev' => array(
 					'src' => img_location('previous.png', $this->skin, 'main'),
-					'alt' => ucfirst(lang('actions_previous')),
+					'alt' => ucfirst(lang('status_previous')),
 					'class' => 'image'),
 				'feed' => array(
 					'src' => img_location('feed.png', $this->skin, 'main'),
@@ -2061,57 +2188,117 @@ class Sim_base extends Controller {
 				
 				break;
 				
-			case 'docking':
+			case 'docking_user':
 				/* set the content */	
-				$content = lang('email_content_docking_request');
+				$content = sprintf(
+					lang('email_content_docking_user'),
+					$this->options['sim_name']
+				);
 				
 				/* create the array passing the data to the email */
 				$email_data = array(
-					'email_subject' => lang('email_subject_docking_request'),
-					'email_from' => ucfirst(lang('time_from')) .': '. $data['gm_name'] .' - '. $data['gm_email'],
-					'email_content' => nl2br($content),
-					'data' => array(
-						array(
-							'label' => ucwords(lang('global_sim') .' '. lang('labels_name')),
-							'value' => $data['sim_name']),
-						array(
-							'label' => ucwords(lang('global_sim') .' '. lang('labels_class')),
-							'value' => $data['sim_class']),
-						array(
-							'label' => ucwords(lang('global_sim') .' '. lang('abbr_url')),
-							'value' => $data['sim_url']),
-						array(
-							'label' => ucfirst(lang('labels_name')),
-							'value' => $data['gm_name']),
-						array(
-							'label' => ucfirst(lang('labels_email_address')),
-							'value' => $data['gm_email']),
-						array(
-							'label' => ucfirst(lang('labels_duration')),
-							'value' => $data['reason_duration']),
-						array(
-							'label' => ucfirst(lang('labels_reason')),
-							'value' => $data['reason_explain'])
-					),
+					'email_subject' => lang('email_subject_docking_user'),
+					'email_from' => ucfirst(lang('time_from')) .': '. $this->options['default_email_name'] .' - '. $this->options['default_email_address'],
+					'email_content' => ($this->email->mailtype == 'html') ? nl2br($content) : $content
 				);
 				
-				/* get the game masters email addresses */
-				$gm = $this->user->get_gm_emails();
-				
-				/* set the TO variable */
-				$to = implode(',', $gm);
-				
 				/* where should the email be coming from */
-				$em_loc = email_location('sim_docking_request', $this->email->mailtype);
+				$em_loc = email_location('sim_docking_user', $this->email->mailtype);
 				
 				/* parse the message */
 				$message = $this->parser->parse($em_loc, $email_data, TRUE);
 				
 				/* set the parameters for sending the email */
-				$this->email->from($data['gm_email'], $data['gm_name']);
-				$this->email->to($to);
+				$this->email->from($this->options['default_email_address'], $this->options['default_email_name']);
+				$this->email->to($data['email']);
 				$this->email->subject($this->options['email_subject'] .' '. $email_data['email_subject']);
 				$this->email->message($message);
+				
+				break;
+				
+			case 'docking_gm':
+				/* load the models */
+				$this->load->model('docking_model', 'docking');
+				
+				$item = $this->docking->get_docked_item($data);
+				
+				if ($item->num_rows() > 0)
+				{
+					$row = $item->row();
+					
+					/* create the array passing the data to the email */
+					$email_data = array(
+						'email_subject' => lang('email_subject_docking_gm'),
+						'email_from' => ucfirst(lang('time_from')) .': '. $row['docking_gm_name'] .' - '. $data['docking_gm_email'],
+						'email_content' => nl2br(lang('email_content_docking_gm'))
+					);
+					
+					$email_data['info'] = array(
+						array(
+							'label' => ucwords(lang('global_sim') .' '. lang('labels_name')),
+							'data' => $row->docking_sim_name),
+						array(
+							'label' => ucwords(lang('global_sim') .' '. lang('abbr_url')),
+							'data' => $row->docking_sim_url),
+						array(
+							'label' => ucfirst(lang('labels_name')),
+							'data' => $row->docking_gm_name),
+						array(
+							'label' => ucwords(lang('labels_email_address')),
+							'data' => $row->docking_gm_email)
+					);
+					
+					/* get the sections */
+					$sections = $this->docking->get_docking_sections();
+					
+					if ($sections->num_rows() > 0)
+					{
+						foreach ($sections->result() as $sec)
+						{
+							$email_data['sections'][$sec->section_id]['title'] = $sec->section_name;
+							
+							/* get the section fields */
+							$fields = $this->docking->get_docking_fields($sec->section_id);
+							
+							if ($fields->num_rows() > 0)
+							{
+								foreach ($fields->result() as $field)
+								{
+									$docking_data = $this->docking->get_field_data($field->field_id, $data);
+									
+									if ($docking_data->num_rows() > 0)
+									{
+										foreach ($docking_data->result() as $d)
+										{ /* put the data into an array */
+											$email_data['sections'][$sec->section_id]['fields'][] = array(
+												'field' => $field->field_label_page,
+												'data' => text_output($d->data_value, '')
+											);
+										}
+									}
+								}
+							}
+						}
+					}
+					
+					/* where should the email be coming from */
+					$em_loc = email_location('sim_docking_gm', $this->email->mailtype);
+					
+					/* parse the message */
+					$message = $this->parser->parse($em_loc, $email_data, TRUE);
+					
+					/* get the game masters email addresses */
+					$gm = $this->user->get_gm_emails();
+					
+					/* set the TO variable */
+					$to = implode(',', $gm);
+					
+					/* set the parameters for sending the email */
+					$this->email->from($data['email'], $data['name']);
+					$this->email->to($to);
+					$this->email->subject($this->options['email_subject'] .' '. $email_data['email_subject']);
+					$this->email->message($message);
+				}
 				
 				break;
 		}
