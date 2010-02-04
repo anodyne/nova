@@ -85,7 +85,7 @@
 			var parent = $(this).parent().parent().attr('class');
 			var value = $('#value').val();
 			var content = $('#content').val();
-			var field = $('#add').val();
+			var field = $('#add').attr('rel');
 			
 			$('#loading_add').ajaxStart(function(){
 				$(this).show();
