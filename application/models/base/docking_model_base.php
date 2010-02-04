@@ -169,25 +169,25 @@ class Docking_model_base extends Model {
 		return $query;
 	}
 	
-	function add_tour_field($data = '')
+	function add_docking_field($data = '')
 	{
-		$query = $this->db->insert('tour_fields', $data);
+		$query = $this->db->insert('docking_fields', $data);
 		
 		return $query;
 	}
 	
-	function add_tour_field_data($data = '')
+	function add_docking_field_data($data = '')
 	{
-		$query = $this->db->insert('tour_data', $data);
+		$query = $this->db->insert('docking_data', $data);
 		
-		$this->dbutil->optimize_table('tour_data');
+		$this->dbutil->optimize_table('docking_data');
 		
 		return $query;
 	}
 	
-	function add_tour_field_value($data = '')
+	function add_docking_field_value($data = '')
 	{
-		$query = $this->db->insert('tour_values', $data);
+		$query = $this->db->insert('docking_values', $data);
 		
 		return $query;
 	}
@@ -199,26 +199,44 @@ class Docking_model_base extends Model {
 		return $query;
 	}
 	
+	function add_docking_section($data = '')
+	{
+		$query = $this->db->insert('docking_sections', $data);
+		
+		$this->dbutil->optimize_table('docking_sections');
+		
+		return $query;
+	}
+	
 	/*
 	|---------------------------------------------------------------
 	| DELETE METHODS
 	|---------------------------------------------------------------
 	*/
 	
-	function delete_tour_field($id = '')
+	function delete_docking_field($id = '')
 	{
-		$query = $this->db->delete('tour_fields', array('field_id' => $id));
+		$query = $this->db->delete('docking_fields', array('field_id' => $id));
 		
-		$this->dbutil->optimize_table('tour_fields');
+		$this->dbutil->optimize_table('docking_fields');
 		
 		return $query;
 	}
 	
-	function delete_tour_field_data($field = '')
+	function delete_docking_field_data($field = '')
 	{
-		$query = $this->db->delete('tour_data', array('data_field' => $field));
+		$query = $this->db->delete('docking_data', array('data_field' => $field));
 		
-		$this->dbutil->optimize_table('tour_data');
+		$this->dbutil->optimize_table('docking_data');
+		
+		return $query;
+	}
+	
+	function delete_docking_field_value($id = '')
+	{
+		$query = $this->db->delete('docking_values', array('value_id' => $id));
+		
+		$this->dbutil->optimize_table('docking_values');
 		
 		return $query;
 	}
@@ -232,11 +250,11 @@ class Docking_model_base extends Model {
 		return $query;
 	}
 	
-	function delete_tour_value($id = '')
+	function delete_docking_section($id = '')
 	{
-		$query = $this->db->delete('tour_values', array('value_id' => $id));
+		$query = $this->db->delete('docking_sections', array('section_id' => $id));
 		
-		$this->dbutil->optimize_table('tour_values');
+		$this->dbutil->optimize_table('docking_sections');
 		
 		return $query;
 	}
@@ -246,6 +264,18 @@ class Docking_model_base extends Model {
 	| UPDATE METHODS
 	|---------------------------------------------------------------
 	*/
+	
+	function update_field_sections($old_id = '', $new_id = '')
+	{
+		$data = array('field_section' => $new_id);
+		
+		$this->db->where('field_section', $old_id);
+		$query = $this->db->update('docking_fields', $data);
+		
+		$this->dbutil->optimize_table('docking_fields');
+		
+		return $query;
+	}
 	
 	function update_tour_data($id = '', $data = '')
 	{
@@ -257,22 +287,22 @@ class Docking_model_base extends Model {
 		return $query;
 	}
 	
-	function update_tour_field($id = '', $data = '')
+	function update_docking_field($id = '', $data = '')
 	{
 		$this->db->where('field_id', $id);
-		$query = $this->db->update('tour_fields', $data);
+		$query = $this->db->update('docking_fields', $data);
 		
-		$this->dbutil->optimize_table('tour_fields');
+		$this->dbutil->optimize_table('docking_fields');
 		
 		return $query;
 	}
 	
-	function update_tour_field_value($id = '', $data = '')
+	function update_docking_field_value($id = '', $data = '')
 	{
 		$this->db->where('value_id', $id);
-		$query = $this->db->update('tour_values', $data);
+		$query = $this->db->update('docking_values', $data);
 		
-		$this->dbutil->optimize_table('tour_values');
+		$this->dbutil->optimize_table('docking_values');
 		
 		return $query;
 	}
@@ -285,6 +315,30 @@ class Docking_model_base extends Model {
 		$this->dbutil->optimize_table('tour');
 		
 		return $query;
+	}
+	
+	function update_docking_section($id = '', $data = '')
+	{
+		$this->db->where('section_id', $id);
+		$query = $this->db->update('docking_sections', $data);
+		
+		$this->dbutil->optimize_table('docking_sections');
+		
+		return $query;
+	}
+	
+	/*
+	|---------------------------------------------------------------
+	| COUNT METHODS
+	|---------------------------------------------------------------
+	*/
+	
+	function count_docked_items($status = '')
+	{
+		$this->db->from('docking');
+		$this->db->where('docking_status', $status);
+		
+		return $this->db->count_all_results();
 	}
 }
 
