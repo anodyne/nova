@@ -603,12 +603,12 @@ class Site_base extends Controller {
 			'content' => ucwords(lang('labels_dropdown') .' '. lang('labels_content')),
 			'display' => ucfirst(lang('labels_display')),
 			'html' => lang('misc_html_attr'),
-			'id' => lang('attr_id'),
+			'id' => lang('abbr_id'),
 			'label' => ucwords(lang('labels_page') .' '. lang('labels_label')),
 			'name' => ucfirst(lang('labels_name')),
 			'no' => ucfirst(lang('labels_no')),
 			'order' => ucfirst(lang('labels_order')),
-			'rows' => lang('form_label_rows'),
+			'rows' => lang('misc_textarea_rows'),
 			'section' => ucfirst(lang('labels_section')),
 			'select_values' => ucwords(lang('labels_dropdown') .' '. lang('labels_menu') .' '. lang('labels_values')),
 			'type' => ucwords(lang('labels_field') .' '. lang('labels_type')),
@@ -1943,6 +1943,703 @@ class Site_base extends Controller {
 		/* figure out where the view should be coming from */
 		$view_loc = view_location('site_catalogueskins', $this->skin, 'admin');
 		$js_loc = js_location('site_catalogueskins_js', $this->skin, 'admin');
+		
+		/* write the data to the template */
+		$this->template->write('title', $data['header']);
+		$this->template->write_view('content', $view_loc, $data);
+		$this->template->write_view('javascript', $js_loc);
+		
+		/* render the template */
+		$this->template->render();
+	}
+	
+	function dockingform()
+	{
+		/* check access */
+		$this->auth->check_access();
+		
+		/* load the resources */
+		$this->load->model('docking_model', 'docking');
+		
+		if (isset($_POST['submit']))
+		{
+			switch ($this->uri->segment(3))
+			{
+				case 'add':
+					foreach ($_POST as $key => $value)
+					{
+						$insert_array[$key] = $this->input->xss_clean($value);
+					}
+					
+					$select = $insert_array['select_values'];
+					$type = $insert_array['field_type'];
+					
+					unset($insert_array['select_values']);
+					unset($insert_array['submit']);
+							
+					/* insert the record */
+					$insert = $this->docking->add_docking_field($insert_array);
+					$insert_id = $this->db->insert_id();
+					
+					/* optimize the table */
+					$this->sys->optimize_table('docking_fields');
+					
+					if ($insert > 0)
+					{
+						if ($type == 'select')
+						{
+							$select_array = explode("\n", $select);
+							
+							$i = 0;
+							foreach ($select_array as $select)
+							{
+								$array = explode(',', $select);
+								
+								$values_array = array(
+									'value_field' => $insert_id,
+									'value_field_value' => $array[0],
+									'value_content' => $array[1],
+									'value_order' => $i
+								);
+								
+								$insert = $this->docking->add_docking_field_value($values_array);
+								
+								++$i;
+							}
+						}
+						
+						$data_array = array(
+							'data_field' => $insert_id,
+							'data_value' => '',
+							'data_updated' => now()
+						);
+								
+						$data_insert = $this->docking->add_docking_field_data($data_array);
+						
+						/* optimize the table */
+						$this->sys->optimize_table('docking_values');
+						
+						$message = sprintf(
+							lang('flash_success'),
+							ucfirst(lang('actions_docking') .' '. lang('labels_field')),
+							lang('actions_created'),
+							''
+						);
+
+						$flash['status'] = 'success';
+						$flash['message'] = text_output($message);
+					}
+					else
+					{
+						$message = sprintf(
+							lang('flash_failure'),
+							ucfirst(lang('actions_docking') .' '. lang('labels_field')),
+							lang('actions_created'),
+							''
+						);
+
+						$flash['status'] = 'error';
+						$flash['message'] = text_output($message);
+					}
+											
+					/* write everything to the template */
+					$this->template->write_view('flash_message', '_base/admin/pages/flash', $flash);
+					
+					break;
+					
+				case 'delete':
+					$id = (is_numeric($this->input->post('id', TRUE))) ? $this->input->post('id', TRUE) : 0;
+							
+					/* update the database */
+					$delete = $this->docking->delete_docking_field($id);
+					
+					if ($delete > 0)
+					{
+						$delete_fields = $this->docking->delete_docking_field_data($id);
+						$values = $this->docking->get_docking_values($id);
+						
+						if ($values->num_rows() > 0)
+						{
+							foreach ($values->result() as $value)
+							{
+								$delete_values = $this->docking->delete_docking_field_value($value->value_id);
+							}
+						}
+						
+						$message = sprintf(
+							lang('flash_success'),
+							ucfirst(lang('actions_docking') .' '. lang('labels_field')),
+							lang('actions_deleted'),
+							''
+						);
+
+						$flash['status'] = 'success';
+						$flash['message'] = text_output($message);
+					}
+					else
+					{
+						$message = sprintf(
+							lang('flash_failure'),
+							ucfirst(lang('actions_docking') .' '. lang('labels_field')),
+							lang('actions_deleted'),
+							''
+						);
+
+						$flash['status'] = 'error';
+						$flash['message'] = text_output($message);
+					}
+											
+					/* write everything to the template */
+					$this->template->write_view('flash_message', '_base/admin/pages/flash', $flash);
+					
+					break;
+					
+				case 'edit':
+					foreach ($_POST as $key => $value)
+					{
+						$update_array[$key] = $this->input->xss_clean($value);
+					}
+					
+					$id = $update_array['field_id'];
+					
+					unset($update_array['field_id']);
+					unset($update_array['submit']);
+							
+					/* insert the record */
+					$update = $this->docking->update_docking_field($id, $update_array);
+					
+					if ($update > 0)
+					{
+						$message = sprintf(
+							lang('flash_success'),
+							ucfirst(lang('actions_docking') .' '. lang('labels_field')),
+							lang('actions_updated'),
+							''
+						);
+
+						$flash['status'] = 'success';
+						$flash['message'] = text_output($message);
+					}
+					else
+					{
+						$message = sprintf(
+							lang('flash_failure'),
+							ucfirst(lang('actions_docking') .' '. lang('labels_field')),
+							lang('actions_updated'),
+							''
+						);
+
+						$flash['status'] = 'error';
+						$flash['message'] = text_output($message);
+					}
+											
+					/* write everything to the template */
+					$this->template->write_view('flash_message', '_base/admin/pages/flash', $flash);
+					
+					break;
+					
+				case 'editval':
+					foreach ($_POST as $key => $value)
+					{
+						$update_array[$key] = $this->input->xss_clean($value);
+					}
+					
+					$id = $update_array['id'];
+					
+					unset($update_array['id']);
+					unset($update_array['submit']);
+					
+					$value = $this->input->post('value_field_value', TRUE);
+					$content = $this->input->post('value_content', TRUE);
+					$field = $this->input->post('value_field', TRUE);
+					$id = $this->input->post('id', TRUE);
+
+					$update_array = array(
+						'value_field_value' => $value,
+						'value_content' => $content,
+						'value_field' => $field
+					);
+
+					/* insert the record */
+					$update = $this->docking->update_docking_field_value($id, $update_array);
+
+					if ($update > 0)
+					{
+						$message = sprintf(
+							lang('flash_success'),
+							ucfirst(lang('actions_docking') .' '. lang('labels_field') .' '. lang('labels_value')),
+							lang('actions_updated'),
+							''
+						);
+
+						$flash['status'] = 'success';
+						$flash['message'] = text_output($message);
+					}
+					else
+					{
+						$message = sprintf(
+							lang('flash_failure'),
+							ucfirst(lang('actions_docking') .' '. lang('labels_field') .' '. lang('labels_value')),
+							lang('actions_updated'),
+							''
+						);
+
+						$flash['status'] = 'error';
+						$flash['message'] = text_output($message);
+					}
+
+					/* write everything to the template */
+					$this->template->write_view('flash_message', '_base/admin/pages/flash', $flash);
+
+					break;
+			}
+		}
+		
+		$id = $this->uri->segment(4, FALSE, TRUE);
+		
+		if ($id === FALSE)
+		{
+			$sections = $this->docking->get_docking_sections();
+			
+			if ($sections->num_rows() > 0)
+			{
+				foreach ($sections->result() as $sec)
+				{
+					$data['docking']['sections'][$sec->section_id]['name'] = $sec->section_name;
+					
+					$fields = $this->docking->get_docking_fields($sec->section_id, '');
+					
+					if ($fields->num_rows() > 0)
+					{
+						foreach ($fields->result() as $field)
+						{
+							$fid = $field->field_id;
+							
+							$data['docking']['sections'][$sec->section_id]['fields'][$fid]['label'] = $field->field_label_page;
+							
+							switch ($field->field_type)
+							{
+								case 'text':
+									$input = array(
+										'name' => $field->field_id,
+										'id' => $field->field_fid,
+										'class' => $field->field_class,
+										'value' => $field->field_value
+									);
+									
+									$data['docking']['sections'][$sec->section_id]['fields'][$fid]['input'] = form_input($input);
+									$data['docking']['sections'][$sec->section_id]['fields'][$fid]['id'] = $field->field_id;
+											
+									break;
+											
+								case 'textarea':
+									$input = array(
+										'name' => $field->field_id,
+										'id' => $field->field_fid,
+										'class' => $field->field_class,
+										'value' => $field->field_value,
+										'rows' => $field->field_rows
+									);
+											
+									$data['docking']['sections'][$sec->section_id]['fields'][$fid]['input'] = form_textarea($input);
+									$data['docking']['sections'][$sec->section_id]['fields'][$fid]['id'] = $field->field_id;
+											
+									break;
+											
+								case 'select':
+									$value = FALSE;
+									$values = FALSE;
+									$input = FALSE;
+											
+									$values = $this->docking->get_docking_values($field->field_id);
+											
+									if ($values->num_rows() > 0)
+									{
+										foreach ($values->result() as $value)
+										{
+											$input[$value->value_field_value] = $value->value_content;
+										}
+									}
+											
+									$data['docking']['sections'][$sec->section_id]['fields'][$fid]['input'] = form_dropdown($field->field_id, $input);
+									$data['docking']['sections'][$sec->section_id]['fields'][$fid]['id'] = $field->field_id;
+									break;
+							}
+						}
+					}
+				}
+			}
+			
+			$data['images'] = array(
+				'edit' => array(
+					'src' => img_location('forms-field-edit.png', $this->skin, 'admin'),
+					'class' => 'image',
+					'alt' => lang('actions_edit')),
+				'delete' => array(
+					'src' => img_location('forms-field-delete.png', $this->skin, 'admin'),
+					'class' => 'image',
+					'alt' => lang('actions_delete')),
+				'add_field' => array(
+					'src' => img_location('forms-field-add.png', $this->skin, 'admin'),
+					'class' => 'image inline_img_left',
+					'alt' => ''),
+				'sections' => array(
+					'src' => img_location('forms-section.png', $this->skin, 'admin'),
+					'class' => 'image inline_img_left',
+					'alt' => ''),
+			);
+					
+			/* figure out where the view should be coming from */
+			$view_loc = view_location('site_dockingform_all', $this->skin, 'admin');
+			
+			/* set the header */
+			$data['header'] = ucwords(lang('actions_docking') .' '. lang('labels_form'));
+			$data['text'] = lang('text_dockingform');
+		}
+		else
+		{
+			$field = $this->docking->get_docking_field_details($id);
+			
+			if ($field->num_rows() > 0)
+			{
+				$row = $field->row();
+				
+				$data['id'] = $row->field_id;
+				
+				$data['inputs'] = array(
+					'fid' => array(
+						'name' => 'field_fid',
+						'id' => 'field_fid',
+						'value' => $row->field_fid),
+					'name' => array(
+						'name' => 'field_name',
+						'id' => 'field_name',
+						'value' => $row->field_name),
+					'class' => array(
+						'name' => 'field_class',
+						'id' => 'field_class',
+						'value' => $row->field_class),
+					'label' => array(
+						'name' => 'field_label_page',
+						'id' => 'field_label_page',
+						'value' => $row->field_label_page),
+					'value' => array(
+						'name' => 'field_value',
+						'id' => 'field_value',
+						'value' => $row->field_value),
+					'order' => array(
+						'name' => 'field_order',
+						'id' => 'field_order',
+						'class' => 'small',
+						'value' => $row->field_order),
+					'display_y' => array(
+						'name' => 'field_display',
+						'id' => 'field_display_y',
+						'value' => 'y',
+						'checked' => ($row->field_display == 'y') ? TRUE : FALSE),
+					'display_n' => array(
+						'name' => 'field_display',
+						'id' => 'field_display_n',
+						'value' => 'n',
+						'checked' => ($row->field_display == 'n') ? TRUE : FALSE),
+					'rows' => array(
+						'name' => 'field_rows',
+						'id' => 'field_rows',
+						'class' => 'small',
+						'value' => $row->field_rows)
+				);
+				
+				$data['values']['type'] = array(
+					'text' => ucwords(lang('labels_text') .' '. lang('labels_field')),
+					'textarea' => ucwords(lang('labels_text') .' '. lang('labels_area')),
+					'select' => ucwords(lang('labels_dropdown') .' '. lang('labels_menu'))
+				);
+				
+				$sections = $this->docking->get_docking_sections();
+		
+				if ($sections->num_rows() > 0)
+				{
+					foreach ($sections->result() as $sec)
+					{
+						$data['values']['section'][$sec->section_id] = $sec->section_name;
+					}
+				}
+				
+				$data['defaults']['type'] = $row->field_type;
+				$data['defaults']['section'] = $row->field_section;
+			}
+			
+			/* figure out where the view should be coming from */
+			$view_loc = view_location('site_dockingform_one', $this->skin, 'admin');
+			
+			/* set the header */
+			$data['header'] = ucwords(lang('actions_edit') .' '. lang('actions_docking') .' '. lang('labels_form'));
+			
+			$data['buttons'] = array(
+				'submit' => array(
+					'type' => 'submit',
+					'class' => 'button-main',
+					'name' => 'submit',
+					'value' => 'submit',
+					'content' => ucwords(lang('actions_submit'))),
+				'update' => array(
+					'type' => 'submit',
+					'class' => 'button-main',
+					'name' => 'submit',
+					'value' => 'submit',
+					'id' => 'update',
+					'content' => ucwords(lang('actions_update'))),
+				'add' => array(
+					'type' => 'submit',
+					'class' => 'button-main',
+					'name' => 'submit',
+					'rel' => $id,
+					'id' => 'add',
+					'content' => ucwords(lang('actions_add'))),
+			);
+			
+			if ($row->field_type == 'select')
+			{
+				$values = $this->docking->get_docking_values($row->field_id);
+				
+				if ($values->num_rows() > 0)
+				{
+					foreach ($values->result() as $value)
+					{
+						$data['select'][$value->value_id] = $value->value_content;
+					}
+				}
+				
+				$data['loading'] = array(
+					'src' => img_location('loading-circle.gif', $this->skin, 'admin'),
+					'alt' => lang('actions_loading'),
+					'class' => 'image'
+				);
+				
+				$data['inputs']['val_add_value'] = array('id' => 'value');
+				$data['inputs']['val_add_content'] = array('id' => 'content');
+			}
+		}
+		
+		$data['label'] = array(
+			'add' => ucwords(lang('actions_add') .' '. lang('actions_docking') .' '. lang('labels_field') .' '. RARROW),
+			'back' => LARROW .' '. ucfirst(lang('actions_back')) .' '. lang('labels_to') .' '.
+				ucwords(lang('actions_docking') .' '. lang('labels_form')),
+			'bioval' => lang('text_site_bioval'),
+			'class' => ucfirst(lang('labels_class')),
+			'content' => ucwords(lang('labels_dropdown') .' '. lang('labels_content')),
+			'display' => ucfirst(lang('labels_display')),
+			'html' => lang('misc_html_attr'),
+			'id' => lang('abbr_id'),
+			'label' => ucwords(lang('labels_page') .' '. lang('labels_label')),
+			'name' => ucfirst(lang('labels_name')),
+			'no' => ucfirst(lang('labels_no')),
+			'nofields' => sprintf(lang('error_not_found'), lang('actions_docking') .' '. lang('labels_form') .' '. lang('labels_fields')),
+			'order' => ucfirst(lang('labels_order')),
+			'rows' => lang('misc_textarea_rows'),
+			'section' => ucfirst(lang('labels_section')),
+			'sections' => ucwords(lang('actions_manage') .' '. lang('actions_docking') .' '. 
+				lang('labels_sections') .' '. RARROW),
+			'type' => ucwords(lang('labels_field') .' '. lang('labels_type')),
+			'value' => ucwords(lang('labels_dropdown') .' '. lang('labels_value')),
+			'values' => ucwords(lang('labels_dropdown') .' '. lang('labels_menu') .' '. lang('labels_values')),
+			'yes' => ucfirst(lang('labels_yes')),
+		);
+		
+		$js_loc = js_location('site_dockingform_js', $this->skin, 'admin');
+		
+		/* write the data to the template */
+		$this->template->write('title', $data['header']);
+		$this->template->write_view('content', $view_loc, $data);
+		$this->template->write_view('javascript', $js_loc);
+		
+		/* render the template */
+		$this->template->render();
+	}
+	
+	function dockingsections()
+	{
+		/* check access */
+		$this->auth->check_access('site/dockingform');
+		
+		/* load the resources */
+		$this->load->model('docking_model', 'docking');
+		
+		if (isset($_POST['submit']))
+		{
+			switch ($this->uri->segment(3))
+			{
+				case 'add':
+					foreach ($_POST as $key => $value)
+					{
+						$insert_array[$key] = $this->input->xss_clean($value);
+					}
+					
+					unset($insert_array['submit']);
+							
+					/* insert the record */
+					$insert = $this->docking->add_docking_section($insert_array);
+					
+					if ($insert > 0)
+					{
+						$message = sprintf(
+							lang('flash_success'),
+							ucfirst(lang('actions_docking') .' '. lang('labels_section')),
+							lang('actions_created'),
+							lang('flash_additional_docking_section')
+						);
+
+						$flash['status'] = 'success';
+						$flash['message'] = text_output($message);
+					}
+					else
+					{
+						$message = sprintf(
+							lang('flash_failure'),
+							ucfirst(lang('actions_docking') .' '. lang('labels_section')),
+							lang('actions_created'),
+							''
+						);
+
+						$flash['status'] = 'error';
+						$flash['message'] = text_output($message);
+					}
+											
+					/* write everything to the template */
+					$this->template->write_view('flash_message', '_base/admin/pages/flash', $flash);
+					
+					break;
+					
+				case 'delete':
+					$old_id = $this->input->post('id', TRUE);
+					$new_id = $this->input->post('new_sec', TRUE);
+					
+					/* update the database */
+					$delete = $this->docking->delete_docking_section($old_id);
+					$update = $this->docking->update_field_sections($old_id, $new_id);
+							
+					if ($delete > 0)
+					{
+						$message = sprintf(
+							lang('flash_success'),
+							ucfirst(lang('actions_docking') .' '. lang('labels_section')),
+							lang('actions_deleted'),
+							''
+						);
+
+						$flash['status'] = 'success';
+						$flash['message'] = text_output($message);
+					}
+					else
+					{
+						$message = sprintf(
+							lang('flash_failure'),
+							ucfirst(lang('actions_docking') .' '. lang('labels_section')),
+							lang('actions_deleted'),
+							''
+						);
+
+						$flash['status'] = 'error';
+						$flash['message'] = text_output($message);
+					}
+											
+					/* write everything to the template */
+					$this->template->write_view('flash_message', '_base/admin/pages/flash', $flash);
+					
+					break;
+					
+				case 'edit':
+					foreach ($_POST as $key => $value)
+					{
+						$update_array[$key] = $this->input->xss_clean($value);
+					}
+					
+					$id = $update_array['id'];
+					
+					unset($update_array['id']);
+					unset($update_array['submit']);
+							
+					/* insert the record */
+					$update = $this->docking->update_docking_section($id, $update_array);
+					
+					if ($update > 0)
+					{
+						$message = sprintf(
+							lang('flash_success'),
+							ucfirst(lang('actions_docking') .' '. lang('labels_section')),
+							lang('actions_updated'),
+							''
+						);
+
+						$flash['status'] = 'success';
+						$flash['message'] = text_output($message);
+					}
+					else
+					{
+						$message = sprintf(
+							lang('flash_failure'),
+							ucfirst(lang('actions_docking') .' '. lang('labels_section')),
+							lang('actions_updated'),
+							''
+						);
+
+						$flash['status'] = 'error';
+						$flash['message'] = text_output($message);
+					}
+											
+					/* write everything to the template */
+					$this->template->write_view('flash_message', '_base/admin/pages/flash', $flash);
+					
+					break;
+			}
+		}
+		
+		$sections = $this->docking->get_docking_sections();
+		
+		if ($sections->num_rows() > 0)
+		{
+			foreach ($sections->result() as $sec)
+			{
+				$data['sections'][] = array(
+					'id' => $sec->section_id,
+					'name' => $sec->section_name
+				);
+			}
+		}
+		
+		$data['header'] = ucwords(lang('actions_docking') .' '. lang('labels_form') .' '. lang('labels_sections'));
+		$data['text'] = lang('text_dockingsections');
+		
+		$data['images'] = array(
+			'form' => array(
+				'src' => img_location('forms-field.png', $this->skin, 'admin'),
+				'class' => 'image inline_img_left',
+				'alt' => ''),
+			'add' => array(
+				'src' => img_location('forms-section-add.png', $this->skin, 'admin'),
+				'class' => 'image inline_img_left',
+				'alt' => ''),
+			'edit' => array(
+				'src' => img_location('forms-section-edit.png', $this->skin, 'admin'),
+				'class' => 'image',
+				'alt' => ucfirst(lang('actions_edit'))),
+			'delete' => array(
+				'src' => img_location('forms-section-delete.png', $this->skin, 'admin'),
+				'class' => 'image',
+				'alt' => ucfirst(lang('actions_delete'))),
+		);
+		
+		$data['label'] = array(
+			'add' => ucwords(lang('actions_add') .' '. lang('actions_docking') .' '. lang('labels_section') .' '. RARROW),
+			'delete' => ucfirst(lang('actions_delete')),
+			'edit' => ucfirst(lang('actions_edit')),
+			'form' => ucwords(lang('actions_manage') .' '. lang('actions_docking') .' '. lang('labels_form') .' '. RARROW),
+			'name' => ucfirst(lang('labels_name')),
+		);
+				
+		/* figure out where the view should be coming from */
+		$view_loc = view_location('site_dockingsections', $this->skin, 'admin');
+		$js_loc = js_location('site_dockingsections_js', $this->skin, 'admin');
 		
 		/* write the data to the template */
 		$this->template->write('title', $data['header']);
@@ -4752,7 +5449,7 @@ class Site_base extends Controller {
 					'type' => 'submit',
 					'class' => 'button-main',
 					'name' => 'submit',
-					'value' => $id,
+					'rel' => $id,
 					'id' => 'add',
 					'content' => ucwords(lang('actions_add'))),
 			);
@@ -4789,12 +5486,12 @@ class Site_base extends Controller {
 			'content' => ucwords(lang('labels_dropdown') .' '. lang('labels_content')),
 			'display' => ucfirst(lang('labels_display')),
 			'html' => lang('misc_html_attr'),
-			'id' => lang('attr_id'),
+			'id' => lang('abbr_id'),
 			'label' => ucwords(lang('labels_page') .' '. lang('labels_label')),
 			'name' => ucfirst(lang('labels_name')),
 			'no' => ucfirst(lang('labels_no')),
 			'order' => ucfirst(lang('labels_order')),
-			'rows' => lang('form_label_rows'),
+			'rows' => lang('misc_textarea_rows'),
 			'section' => ucfirst(lang('labels_section')),
 			'sections' => ucwords(lang('actions_manage') .' '. lang('global_specs') .' '. 
 				lang('labels_sections') .' '. RARROW),
@@ -5444,7 +6141,7 @@ class Site_base extends Controller {
 					'type' => 'submit',
 					'class' => 'button-main',
 					'name' => 'submit',
-					'value' => $id,
+					'rel' => $id,
 					'id' => 'add',
 					'content' => ucwords(lang('actions_add'))),
 			);
@@ -5481,12 +6178,12 @@ class Site_base extends Controller {
 			'content' => ucwords(lang('labels_dropdown') .' '. lang('labels_content')),
 			'display' => ucfirst(lang('labels_display')),
 			'html' => lang('misc_html_attr'),
-			'id' => lang('attr_id'),
+			'id' => lang('abbr_id'),
 			'label' => ucwords(lang('labels_page') .' '. lang('labels_label')),
 			'name' => ucfirst(lang('labels_name')),
 			'no' => ucfirst(lang('labels_no')),
 			'order' => ucfirst(lang('labels_order')),
-			'rows' => lang('form_label_rows'),
+			'rows' => lang('misc_textarea_rows'),
 			'type' => ucwords(lang('labels_field') .' '. lang('labels_type')),
 			'value' => ucwords(lang('labels_dropdown') .' '. lang('labels_value')),
 			'values' => ucwords(lang('labels_dropdown') .' '. lang('labels_menu') .' '. lang('labels_values')),
