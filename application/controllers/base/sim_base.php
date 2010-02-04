@@ -758,7 +758,7 @@ class Sim_base extends Controller {
 								$values = FALSE;
 								$input = FALSE;
 							
-								$values = $this->char->get_bio_values($field->field_id);
+								$values = $this->docking->get_docking_values($field->field_id);
 								
 								if ($values->num_rows() > 0)
 								{
