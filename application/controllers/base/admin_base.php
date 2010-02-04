@@ -104,6 +104,7 @@ class Admin_base extends Controller {
 		$this->load->model('privmsgs_model', 'pm');
 		$this->load->model('awards_model', 'awards');
 		$this->load->model('wiki_model', 'wiki');
+		$this->load->model('docking_model', 'docking');
 		
 		/* load the helpers */
 		$this->load->helper('utility');
@@ -196,7 +197,8 @@ class Admin_base extends Controller {
 			'pending_logs' 		=> $this->logs->count_all_logs('pending'),
 			'pending_news' 		=> $this->news->count_news_items('pending'),
 			'pending_comments' 	=> $this->posts->count_all_post_comments('pending') + $this->logs->count_all_log_comments('pending') + $this->news->count_news_comments('pending') + $this->wiki->count_all_comments('pending'),
-			'pending_awards' 	=> $this->awards->count_award_noms('pending')
+			'pending_awards' 	=> $this->awards->count_award_noms('pending'),
+			'pending_docked' 	=> $this->docking->count_docked_items('pending'),
 		);
 		
 		/* set the count to zero by default */
@@ -434,6 +436,7 @@ class Admin_base extends Controller {
 			'p_news' => ucwords(lang('status_pending') .' '. lang('global_newsitems')),
 			'p_comments' => ucwords(lang('status_pending') .' '. lang('labels_comments')),
 			'p_awards' => ucwords(lang('status_pending') .' '. lang('global_award') .' '. lang('labels_nominations')),
+			'p_docked' => ucwords(lang('status_pending') .' '. lang('actions_docking') .' '. lang('labels_requests')),
 			'r_posts' => ucwords(lang('status_recent') .' '. lang('global_missionposts')),
 			'r_logs' => ucwords(lang('status_recent') .' '. lang('global_personallogs')),
 			'r_news' => ucwords(lang('status_recent') .' '. lang('global_newsitems')),

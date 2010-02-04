@@ -175,6 +175,14 @@
 								<td class="col2"><?php echo anchor('user/nominate/queue', $label['p_awards']);?></td>
 							</tr>
 						<?php endif; ?>
+						
+						<?php if ($notification['pending_docked'] > 0): ?>
+							<tr>
+								<td class="col1"><?php echo $notification['pending_docked'];?></td>
+								<td class="cell-spacer"></td>
+								<td class="col2"><?php echo anchor('manage/docked/pending', $label['p_docked']);?></td>
+							</tr>
+						<?php endif; ?>
 					</tbody>
 				</table>
 			</div>
