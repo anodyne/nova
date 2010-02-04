@@ -118,6 +118,10 @@ $lang['text_specsform'] = 'Nova provides admins unparalleled control over the sp
 
 $lang['text_specssections'] = 'Nova provides admins unparalleled control over the specifications. Instead of a static page, the form itself is now built out of the database and the data stored in a dynamic way, giving admins all the control they could ever want. Using the page below, admins can edit the sections that break the specifications page up. If you do not want a section header, just leave the name blank.';
 
+$lang['text_dockingform'] = 'Nova provides admins unparalleled control over the docking form. Instead of a static page, the form itself is now built out of the database and the data stored in a dynamic way, giving admins all the control they could ever want. Using the page below, admins can edit the fields seen, delete unwanted fields and add entirely new fields to the form. Admins can create standard text fields, larger textareas or even dropdown menus to fill in with docking request details. Use the links and pages below to start making the docking form your own!';
+
+$lang['text_dockingsections'] = 'Nova provides admins unparalleled control over the docking form. Instead of a static page, the form itself is now built out of the database and the data stored in a dynamic way, giving admins all the control they could ever want. Using the page below, admins can edit the sections that break the docking form up. If you do not want a section header, just leave the name blank.';
+
 $lang['text_rolepages'] = 'Nova provides robost access control that includes not only all pages that come with the system by default, but can include pages that you create. To begin adding your pages or editing existing pages, use the page below.';
 
 $lang['text_roles'] = 'Nova provides robust access control that allows admins to put users into roles that define what access people in those roles can have. You can use the form below to create, update and delete roles then assign the roles to users through user management.';
