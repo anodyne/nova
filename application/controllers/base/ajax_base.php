@@ -885,6 +885,218 @@ class Ajax_base extends Controller {
 		$this->template->render();
 	}
 	
+	function add_docking_field()
+	{
+		/* load the resources */
+		$this->load->model('docking_model', 'docking');
+		
+		$head = sprintf(
+			lang('fbx_head'),
+			ucwords(lang('actions_add')),
+			ucwords(lang('actions_docking') .' '. lang('labels_field'))
+		);
+		
+		/* data being sent to the facebox */
+		$data['header'] = $head;
+		$data['text'] = lang('fbx_content_add_docking_field');
+		
+		/* input parameters */
+		$data['inputs'] = array(
+			'name' => array(
+				'name' => 'field_name',
+				'class' => 'hud'),
+			'id' => array(
+				'name' => 'field_fid',
+				'class' => 'hud'),
+			'class' => array(
+				'name' => 'field_class',
+				'class' => 'hud'),
+			'label' => array(
+				'name' => 'field_label_page',
+				'class' => 'hud'),
+			'rows' => array(
+				'name' => 'field_rows',
+				'class' => 'hud small'),
+			'order' => array(
+				'name' => 'field_order',
+				'class' => 'hud small'),
+			'display_y' => array(
+				'name' => 'field_display',
+				'id' => 'field_display_y',
+				'value' => 'y',
+				'checked' => TRUE),
+			'display_n' => array(
+				'name' => 'field_display',
+				'id' => 'field_display_n',
+				'value' => 'n'),
+			'select' => array(
+				'name' => 'select_values',
+				'rows' => 8,
+				'class' => 'hud'),
+			'submit' => array(
+				'type' => 'submit',
+				'class' => 'hud_button',
+				'name' => 'submit',
+				'value' => 'submit',
+				'content' => ucwords(lang('actions_submit')))
+		);
+		
+		$data['values']['type'] = array(
+			'text' => ucwords(lang('labels_text') .' '. lang('labels_field')),
+			'textarea' => ucwords(lang('labels_text') .' '. lang('labels_area')),
+			'select' => ucwords(lang('labels_dropdown') .' '. lang('labels_menu'))
+		);
+		
+		$sections = $this->docking->get_docking_sections();
+		
+		$data['values']['section'][0] = ucwords(lang('labels_please') .' '. lang('actions_choose') .' '. lang('labels_one'));
+		
+		if ($sections->num_rows() > 0)
+		{
+			foreach ($sections->result() as $sec)
+			{
+				$data['values']['section'][$sec->section_id] = $sec->section_name;
+			}
+		}
+		
+		$data['label'] = array(
+			'class' => ucfirst(lang('labels_class')),
+			'display' => ucfirst(lang('labels_display')),
+			'dropdown_select' => lang('text_dropdown_select'),
+			'html' => lang('misc_html_attr'),
+			'id' => lang('abbr_id'),
+			'label' => ucwords(lang('labels_page') .' '. lang('labels_label')),
+			'name' => ucfirst(lang('labels_name')),
+			'no' => ucfirst(lang('labels_no')),
+			'order' => ucfirst(lang('labels_order')),
+			'rows' => lang('misc_textarea_rows'),
+			'section' => ucfirst(lang('labels_section')),
+			'select' => lang('misc_select'),
+			'type' => ucwords(lang('labels_field') .' '. lang('labels_type')),
+			'yes' => ucfirst(lang('labels_yes')),
+		);
+		
+		/* figure out the skin */
+		$skin = $this->session->userdata('skin_admin');
+		
+		/* figure out where the view should come from */
+		$ajax = ajax_location('add_docking_field', $skin, 'admin');
+		
+		/* write the data to the template */
+		$this->template->write_view('content', $ajax, $data);
+		
+		/* render the template */
+		$this->template->render();
+	}
+	
+	function add_docking_field_value()
+	{
+		/* load the resources */
+		$this->load->model('docking_model', 'docking');
+		
+		$value = $this->input->post('value', TRUE);
+		$content = $this->input->post('content', TRUE);
+		$field = $this->input->post('field', TRUE);
+		
+		$last = $this->docking->get_docking_values($field);
+		
+		if ($last->num_rows() > 0)
+		{
+			foreach ($last->result() as $l)
+			{
+				$array[] = $l->value_order;
+			}
+			
+			sort($array, SORT_NUMERIC);
+			$sort = array_reverse($array);
+			$order = $sort[0] + 1;
+			
+		}
+		
+		$insert_array = array(
+			'value_content' => $content,
+			'value_order' => $order,
+			'value_field' => $field,
+			'value_field_value' => $value
+		);
+			
+		$insert = $this->docking->add_docking_field_value($insert_array);
+		$insert_id = $this->db->insert_id();
+		
+		/* optimize the table */
+		$this->sys->optimize_table('docking_values');
+		
+		if ($insert > 0)
+		{
+			$output = '<li class="ui-state-default" id="value_'. $insert_id .'"><div class="float_right"><a href="#" class="remove image" name="remove" id="'. $insert_id .'">x</a></div><a href="#" rel="facebox" myAction="edit_val" myField="<?php echo $id;?>" class="image" myID="'. $insert_id .'"/>'. $content .'</a></li>';
+		}
+		else
+		{
+			$message = sprintf(
+				lang('flash_failure'),
+				ucfirst(lang('actions_docking') .' '. lang('labels_form') .' '. lang('labels_field')),
+				lang('actions_created'),
+				''
+			);
+
+			$flash['status'] = 'error';
+			$flash['message'] = text_output($message);
+				
+			$output = $this->load->view('_base/admin/pages/flash', $flash, TRUE);
+		}
+		
+		echo $output;
+	}
+	
+	function add_docking_sec()
+	{
+		/* load the resources */
+		$this->load->model('docking_model', 'docking');
+		
+		$head = sprintf(
+			lang('fbx_head'),
+			ucwords(lang('actions_add')),
+			ucwords(lang('actions_docking') .' '. lang('labels_section'))
+		);
+		
+		/* data being sent to the facebox */
+		$data['header'] = $head;
+		$data['text'] = lang('fbx_content_add_docking_sec');
+		
+		/* input parameters */
+		$data['inputs'] = array(
+			'name' => array(
+				'name' => 'section_name',
+				'class' => 'hud'),
+			'order' => array(
+				'name' => 'section_order',
+				'class' => 'hud small'),
+			'submit' => array(
+				'type' => 'submit',
+				'class' => 'hud_button',
+				'name' => 'submit',
+				'value' => 'submit',
+				'content' => ucwords(lang('actions_submit')))
+		);
+		
+		$data['label'] = array(
+			'name' => ucfirst(lang('labels_name')),
+			'order' => ucfirst(lang('labels_order')),
+		);
+		
+		/* figure out the skin */
+		$skin = $this->session->userdata('skin_admin');
+		
+		/* figure out where the view should come from */
+		$ajax = ajax_location('add_docking_sec', $skin, 'admin');
+		
+		/* write the data to the template */
+		$this->template->write_view('content', $ajax, $data);
+		
+		/* render the template */
+		$this->template->render();
+	}
+	
 	function add_menu_cat()
 	{
 		/* load the resources */
@@ -2926,6 +3138,160 @@ class Ajax_base extends Controller {
 		$this->template->render();
 	}
 	
+	function del_docking_field()
+	{
+		/* load the resources */
+		$this->load->model('docking_model', 'docking');
+		
+		$head = sprintf(
+			lang('fbx_head'),
+			ucwords(lang('actions_delete')),
+			ucwords(lang('actions_docking') .' '. lang('labels_field'))
+		);
+		
+		/* data being sent to the facebox */
+		$data['header'] = $head;
+		$data['id'] = (is_numeric($this->uri->segment(3))) ? $this->uri->segment(3) : 0;
+		
+		$field = $this->docking->get_docking_field_details($data['id']);
+		
+		$item = ($field->num_rows() > 0) ? $field->row() : FALSE;
+		
+		$data['text'] = sprintf(
+			lang('fbx_content_del_docking_field'),
+			$item->field_label_page
+		);
+		
+		/* input parameters */
+		$data['inputs'] = array(
+			'submit' => array(
+				'type' => 'submit',
+				'class' => 'hud_button',
+				'name' => 'submit',
+				'value' => 'submit',
+				'content' => ucwords(lang('actions_submit')))
+		);
+		
+		/* figure out the skin */
+		$skin = $this->session->userdata('skin_admin');
+		
+		/* figure out where the view should come from */
+		$ajax = ajax_location('del_docking_field', $skin, 'admin');
+		
+		/* write the data to the template */
+		$this->template->write_view('content', $ajax, $data);
+		
+		/* render the template */
+		$this->template->render();
+	}
+	
+	function del_docking_field_value()
+	{
+		/* load the resources */
+		$this->load->model('docking_model', 'docking');
+		
+		$id = (is_numeric($this->input->post('field'))) ? $this->input->post('field', TRUE) : 0;
+		
+		$delete = $this->docking->delete_docking_field_value($id);
+		
+		if ($delete > 0)
+		{
+			$message = sprintf(
+				lang('flash_success'),
+				ucfirst(lang('actions_docking') .' '. lang('labels_field') .' '. lang('labels_value')),
+				lang('actions_deleted'),
+				''
+			);
+
+			$flash['status'] = 'success';
+			$flash['message'] = text_output($message);
+				
+			$output = $this->load->view('_base/admin/pages/flash', $flash, TRUE);
+		}
+		else
+		{
+			$message = sprintf(
+				lang('flash_failure'),
+				ucfirst(lang('actions_docking') .' '. lang('labels_field') .' '. lang('labels_value')),
+				lang('actions_deleted'),
+				''
+			);
+
+			$flash['status'] = 'error';
+			$flash['message'] = text_output($message);
+				
+			$output = $this->load->view('_base/admin/pages/flash', $flash, TRUE);
+		}
+		
+		echo $output;
+	}
+	
+	function del_docking_sec()
+	{
+		/* load the resources */
+		$this->load->model('docking_model', 'docking');
+		
+		$head = sprintf(
+			lang('fbx_head'),
+			ucwords(lang('actions_delete')),
+			ucwords(lang('actions_docking') .' '. lang('labels_section'))
+		);
+		
+		/* data being sent to the facebox */
+		$data['header'] = $head;
+		$data['id'] = (is_numeric($this->uri->segment(3))) ? $this->uri->segment(3) : 0;
+		
+		$sec = $this->docking->get_docking_section_details($data['id']);
+		$sections = $this->docking->get_docking_sections();
+		
+		$item = ($sec->num_rows() > 0) ? $sec->row() : FALSE;
+		
+		$data['text'] = sprintf(
+			lang('fbx_content_del_docking_sec'),
+			$item->section_name
+		);
+		
+		$data['values']['sections'][0] = ucwords(lang('labels_please') .' '.
+			lang('actions_choose') .' '. lang('order_one'));
+		
+		if ($sections->num_rows() > 0)
+		{
+			foreach ($sections->result() as $s)
+			{
+				if ($s->section_id == $data['id'])
+				{
+					/* do nothing */
+				}
+				else
+				{
+					$data['values']['sections'][$s->section_id] = $s->section_name;
+				}
+			}
+		}
+		
+		/* input parameters */
+		$data['inputs'] = array(
+			'submit' => array(
+				'type' => 'submit',
+				'class' => 'hud_button',
+				'name' => 'submit',
+				'value' => 'submit',
+				'content' => ucwords(lang('actions_submit')))
+		);
+		
+		/* figure out the skin */
+		$skin = $this->session->userdata('skin_admin');
+		
+		/* figure out where the view should come from */
+		$ajax = ajax_location('del_docking_sec', $skin, 'admin');
+		
+		/* write the data to the template */
+		$this->template->write_view('content', $ajax, $data);
+		
+		/* render the template */
+		$this->template->render();
+	}
+	
 	function del_log()
 	{
 		/* load the resources */
@@ -4558,6 +4924,131 @@ class Ajax_base extends Controller {
 		$this->template->render();
 	}
 	
+	function edit_docking_field_value()
+	{
+		/* load the resources */
+		$this->load->model('docking_model', 'docking');
+		
+		$head = sprintf(
+			lang('fbx_head'),
+			ucwords(lang('actions_edit')),
+			ucwords(lang('actions_docking') .' '. lang('labels_field') .' '. lang('labels_value'))
+		);
+		
+		/* data being sent to the facebox */
+		$data['header'] = $head;
+		$data['id'] = (is_numeric($this->uri->segment(3))) ? $this->uri->segment(3) : 0;
+		$data['field'] = (is_numeric($this->uri->segment(4))) ? $this->uri->segment(4) : 0;
+		
+		$value = $this->docking->get_docking_value_details($data['id']);
+		$fields = $this->docking->get_docking_fields('', 'select');
+		
+		if ($fields->num_rows() > 0)
+		{
+			foreach ($fields->result() as $field)
+			{
+				$data['values']['fields'][$field->field_id] = $field->field_label_page;
+			}
+		}
+		
+		$item = ($value->num_rows() > 0) ? $value->row() : FALSE;
+		
+		/* input parameters */
+		$data['inputs'] = array(
+			'value' => array(
+				'name' => 'value_field_value',
+				'class' => 'hud',
+				'value' => $item->value_field_value),
+			'content' => array(
+				'name' => 'value_content',
+				'class' => 'hud',
+				'value' => $item->value_content),
+			'submit' => array(
+				'type' => 'submit',
+				'class' => 'hud_button',
+				'name' => 'submit',
+				'value' => 'submit',
+				'content' => ucwords(lang('actions_submit')))
+		);
+		
+		$data['selected_field'] = $item->value_field;
+		
+		$data['label'] = array(
+			'content' => ucfirst(lang('labels_content')),
+			'dropdown' => lang('text_dropdown_value'),
+			'field' => ucfirst(lang('labels_field')),
+			'insert' => lang('text_db_insert'),
+			'value' => ucfirst(lang('labels_value')),
+		);
+		
+		/* figure out the skin */
+		$skin = $this->session->userdata('skin_admin');
+		
+		/* figure out where the view should come from */
+		$ajax = ajax_location('edit_docking_field_value', $skin, 'admin');
+		
+		/* write the data to the template */
+		$this->template->write_view('content', $ajax, $data);
+		
+		/* render the template */
+		$this->template->render();
+	}
+	
+	function edit_docking_sec()
+	{
+		/* load the resources */
+		$this->load->model('docking_model', 'docking');
+		
+		$head = sprintf(
+			lang('fbx_head'),
+			ucwords(lang('actions_edit')),
+			ucwords(lang('actions_docking') .' '. lang('labels_section'))
+		);
+		
+		/* data being sent to the facebox */
+		$data['header'] = $head;
+		$data['id'] = (is_numeric($this->uri->segment(3))) ? $this->uri->segment(3) : 0;
+		
+		$sec = $this->docking->get_docking_section_details($data['id']);
+		
+		$item = ($sec->num_rows() > 0) ? $sec->row() : FALSE;
+		
+		/* input parameters */
+		$data['inputs'] = array(
+			'name' => array(
+				'name' => 'section_name',
+				'class' => 'hud',
+				'value' => $item->section_name),
+			'order' => array(
+				'name' => 'section_order',
+				'class' => 'hud small',
+				'value' => $item->section_order),
+			'submit' => array(
+				'type' => 'submit',
+				'class' => 'hud_button',
+				'name' => 'submit',
+				'value' => 'submit',
+				'content' => ucwords(lang('actions_submit')))
+		);
+		
+		$data['label'] = array(
+			'name' => ucfirst(lang('labels_name')),
+			'order' => ucfirst(lang('labels_order')),
+		);
+		
+		/* figure out the skin */
+		$skin = $this->session->userdata('skin_admin');
+		
+		/* figure out where the view should come from */
+		$ajax = ajax_location('edit_docking_sec', $skin, 'admin');
+		
+		/* write the data to the template */
+		$this->template->write_view('content', $ajax, $data);
+		
+		/* render the template */
+		$this->template->render();
+	}
+	
 	function edit_menu_cat()
 	{
 		/* load the resources */
@@ -5829,6 +6320,58 @@ class Ajax_base extends Controller {
 				''
 			);
 
+			$flash['status'] = 'error';
+			$flash['message'] = text_output($message);
+				
+			$output = $this->load->view('_base/admin/pages/flash', $flash, TRUE);
+		}
+		
+		echo $output;
+	}
+	
+	function save_docking_field_value()
+	{
+		/* load the resources */
+		$this->load->model('docking_model', 'docking');
+		
+		$post = $this->input->post('value', TRUE);
+		
+		$i = 0;
+		$count = 0;
+		
+		foreach ($post as $key => $value)
+		{
+			$update_array = array('value_order' => $i);
+			
+			$update = $this->docking->update_docking_field_value($value, $update_array);
+			$count+= $update;
+			
+			++$i;
+		}
+		
+		if ($count > 0)
+		{
+			$message = sprintf(
+				lang('flash_success'),
+				ucfirst(lang('actions_docking') .' '. lang('labels_field') .' '. lang('labels_value')),
+				lang('actions_updated'),
+				''
+			);
+			
+			$flash['status'] = 'success';
+			$flash['message'] = text_output($message);
+				
+			$output = $this->load->view('_base/admin/pages/flash', $flash, TRUE);
+		}
+		else
+		{
+			$message = sprintf(
+				lang('flash_failure'),
+				ucfirst(lang('actions_docking') .' '. lang('labels_field') .' '. lang('labels_value')),
+				lang('actions_updated'),
+				''
+			);
+			
 			$flash['status'] = 'error';
 			$flash['message'] = text_output($message);
 				
