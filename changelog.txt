@@ -1,3 +1,32 @@
+02.04.2010
+
+* updated the language files
+* updated the ajax controller to handle the docking form stuff
+* updated the ajax controller to handle the docking sections stuff
+* updated the site controller to handle the docking form stuff
+* udpated the site controller to handle the docking sections stuff
+* updated the docking model
+* updated the control panel to notify of docking requests
+
+* fixed bug in specs form management where values couldn't be added to the dropdown menus
+* fixed bug in tour form management where values couldn't be added to the dropdown menus
+* fixed bug in bio form management where values couldn't be added to the dropdown menus
+* fixed bug in the docking request form where dropdowns didn't work
+
+* added add_docking_field ajax view
+* added add_docking_sec ajax view
+* added del_docking_field ajax view
+* added del_docking_sec ajax view
+* added edit_docking_field_value ajax view
+* added edit_docking_sec ajax view
+* added site/dockingform js view
+* added site/dockingsections js view
+* added site/dockingform view
+* added site/dockingform/edit view
+* added site/dockingsections view
+
+==========
+
 02.02.2010
 
 * added icon-view.png to the main section

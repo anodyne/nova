@@ -8,7 +8,7 @@ Beta (0.9.5-pre)
 
 Last Update
 -----------
-01 February 2010
+04 February 2010
 
 Latest Updates
 --------------
@@ -22,6 +22,17 @@ Latest Updates
 * added sim_docked_all view file
 * added sim_docked_one view file
 * added a new access role (senior admin)
+* added add_docking_field ajax view
+* added add_docking_sec ajax view
+* added del_docking_field ajax view
+* added del_docking_sec ajax view
+* added edit_docking_field_value ajax view
+* added edit_docking_sec ajax view
+* added site/dockingform js view
+* added site/dockingsections js view
+* added site/dockingform view
+* added site/dockingform/edit view
+* added site/dockingsections view
 * updated the database schema to add the docking tables
 * updated the main controller to change a language key
 * updated the sim controller to chang a language key
@@ -30,8 +41,17 @@ Latest Updates
 * updated sim/docked to handle viewing individual docked items
 * updated the basic install data
 * updated the docking model
+* updated the language files
+* updated the ajax controller to handle the docking form stuff
+* updated the ajax controller to handle the docking sections stuff
+* updated the site controller to handle the docking form stuff
+* udpated the site controller to handle the docking sections stuff
+* updated the control panel to notify of docking requests
 * removed the old docking request email views
 * removed sim_docked view file
+* fixed bug in specs form management where values couldn't be added to the dropdown menus
+* fixed bug in tour form management where values couldn't be added to the dropdown menus
+* fixed bug in bio form management where values couldn't be added to the dropdown menus
 
 Changes in 0.9.5
 ----------------
@@ -43,6 +63,17 @@ Changes in 0.9.5
 * added the sim_docked_one view file
 * added the sim/docked js view file
 * added the icon-view.png image to the main section
+* added add_docking_field ajax view
+* added add_docking_sec ajax view
+* added del_docking_field ajax view
+* added del_docking_sec ajax view
+* added edit_docking_field_value ajax view
+* added edit_docking_sec ajax view
+* added site/dockingform js view
+* added site/dockingsections js view
+* added site/dockingform view
+* added site/dockingform/edit view
+* added site/dockingsections view
 * removed the old docking request email views
 * updated the database schema
     * added docking table
@@ -68,11 +99,19 @@ Changes in 0.9.5
     * [base\_lang] added _global\_sims_
     * [base\_lang] added _status\_previous_
     * [base\_lang] added _labels\_requests_
+    * [base\_lang] added _flash\_additional\_docking\_section_
+    * [base\_lang] added _labels\_fields_
     * [base\_lang] removed _actions\_previous_
     * [email\_lang] added _email\_subject\_docking\_user_
     * [email\_lang] added _email\_subject\_docking\_gm_
     * [email\_lang] added _email\_content\_docking\_user_
     * [email\_lang] added _email\_content\_docking\_gm_
+    * [text\_lang] added _text\_dockingsections_
+    * [text\_lang] added _text\_dockingform_
+    * [facebox\_lang] added _fbx\_content\_del\_docking\_sec_
+    * [facebox\_lang] added _fbx\_content\_add\_docking\_sec_
+    * [facebox\_lang] added _fbx\_content\_add\_docking\_field_
+    * [facebox\_lang] added _fbx\_content\_del\_docking\_field_
 * updated the sunny skin
     * added the preview-main.jpg image
     * removed the preview-main.png image
@@ -113,7 +152,15 @@ Changes in 0.9.5
         * updated the alt row color
 * updated the main and sim controllers to update some language keys
 * updated the docking request form to use the dynamic form
+* updated the ajax controller to handle operations for the docking form
+* updated the ajax controller to handle operations for the docking sections
+* updated the site controller to handle operations for the docking form
+* updated the site controller to handle operations for the docking sections
+* updated the control panel to notify of docking requests
 * fixed bug where a stray in comma threw errors in IE
+* fixed bug in specs form management where values couldn't be added to the dropdown menus
+* fixed bug in tour form management where values couldn't be added to the dropdown menus
+* fixed bug in bio form management where values couldn't be added to the dropdown menus
 
 Known Issues
 ------------
