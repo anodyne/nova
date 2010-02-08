@@ -791,7 +791,7 @@ class Characters_base extends Controller {
 		
 		/* grab the level and character ID */
 		$data['level'] = $this->auth->get_access_level();
-		$data['id'] = $this->uri->segment(3, $this->session->userdata('main_char'), TRUE);
+		$data['id'] = $this->uri->segment(3, FALSE, TRUE);
 		
 		/*
 		 * level 1 - edit own characters
@@ -939,173 +939,199 @@ class Characters_base extends Controller {
 			$this->template->write_view('flash_message', '_base/admin/pages/flash', $flash);
 		}
 		
-		/* grab the character info */
-		$char = $this->char->get_character($data['id']);
-		
-		/* grab the join fields */
-		$sections = $this->char->get_bio_sections();
-		
-		if ($sections->num_rows() > 0)
+		if ($data['id'] === FALSE && count($this->session->userdata('characters')) > 1)
 		{
-			foreach ($sections->result() as $sec)
+			/* load the resources */
+			$this->load->helper('utility');
+			
+			$data['header'] = ucwords(lang('actions_edit') .' '. lang('labels_bio'));
+			
+			foreach ($this->session->userdata('characters') as $c)
 			{
-				$sid = $sec->section_id; /* section id */
+				$character = $this->char->get_character($c);
 				
-				/* set the section name */
-				$data['join'][$sid]['name'] = $sec->section_name;
+				$name = array(
+					$this->ranks->get_rank($character->rank, 'rank_name'),
+					$character->first_name,
+					$character->middle_name,
+					$character->last_name,
+					$character->suffix
+				);
 				
-				/* grab the fields for the given section */
-				$fields = $this->char->get_bio_fields($sec->section_id);
-				
-				if ($fields->num_rows() > 0)
+				$data['characters'][$character->crew_type][$c] = parse_name($name);
+			}
+		}
+		else
+		{
+			$data['id'] = $this->session->userdata('main_char');
+			
+			/* grab the character info */
+			$char = $this->char->get_character($data['id']);
+			
+			/* grab the join fields */
+			$sections = $this->char->get_bio_sections();
+			
+			if ($sections->num_rows() > 0)
+			{
+				foreach ($sections->result() as $sec)
 				{
-					foreach ($fields->result() as $field)
+					$sid = $sec->section_id; /* section id */
+					
+					/* set the section name */
+					$data['join'][$sid]['name'] = $sec->section_name;
+					
+					/* grab the fields for the given section */
+					$fields = $this->char->get_bio_fields($sec->section_id);
+					
+					if ($fields->num_rows() > 0)
 					{
-						$f_id = $field->field_id; /* field id */
-						
-						/* set the page label */
-						$data['join'][$sid]['fields'][$f_id]['field_label'] = $field->field_label_page;
-						
-						$info = $this->char->get_field_data($field->field_id, $data['id']);
-						$row = ($info->num_rows() > 0) ? $info->row() : FALSE;
-						
-						switch ($field->field_type)
+						foreach ($fields->result() as $field)
 						{
-							case 'text':
-								$input = array(
-									'name' => $field->field_id,
-									'id' => $field->field_fid,
-									'class' => $field->field_class,
-									'value' => ($row !== FALSE) ? $row->data_value : '',
-								);
-								
-								$data['join'][$sid]['fields'][$f_id]['input'] = form_input($input);
-								
-								break;
-								
-							case 'textarea':
-								$input = array(
-									'name' => $field->field_id,
-									'id' => $field->field_fid,
-									'class' => $field->field_class,
-									'value' => ($row !== FALSE) ? $row->data_value : '',
-									'rows' => $field->field_rows
-								);
-								
-								$data['join'][$sid]['fields'][$f_id]['input'] = form_textarea($input);
-								
-								break;
-								
-							case 'select':
-								$value = FALSE;
-								$values = FALSE;
-								$input = FALSE;
+							$f_id = $field->field_id; /* field id */
 							
-								$values = $this->char->get_bio_values($field->field_id);
-								$data_val = ($row !== FALSE) ? $row->data_value : '';
+							/* set the page label */
+							$data['join'][$sid]['fields'][$f_id]['field_label'] = $field->field_label_page;
+							
+							$info = $this->char->get_field_data($field->field_id, $data['id']);
+							$row = ($info->num_rows() > 0) ? $info->row() : FALSE;
+							
+							switch ($field->field_type)
+							{
+								case 'text':
+									$input = array(
+										'name' => $field->field_id,
+										'id' => $field->field_fid,
+										'class' => $field->field_class,
+										'value' => ($row !== FALSE) ? $row->data_value : '',
+									);
+									
+									$data['join'][$sid]['fields'][$f_id]['input'] = form_input($input);
+									
+									break;
+									
+								case 'textarea':
+									$input = array(
+										'name' => $field->field_id,
+										'id' => $field->field_fid,
+										'class' => $field->field_class,
+										'value' => ($row !== FALSE) ? $row->data_value : '',
+										'rows' => $field->field_rows
+									);
+									
+									$data['join'][$sid]['fields'][$f_id]['input'] = form_textarea($input);
+									
+									break;
+									
+								case 'select':
+									$value = FALSE;
+									$values = FALSE;
+									$input = FALSE;
 								
-								if ($values->num_rows() > 0)
-								{
-									foreach ($values->result() as $value)
+									$values = $this->char->get_bio_values($field->field_id);
+									$data_val = ($row !== FALSE) ? $row->data_value : '';
+									
+									if ($values->num_rows() > 0)
 									{
-										$input[$value->value_field_value] = $value->value_content;
+										foreach ($values->result() as $value)
+										{
+											$input[$value->value_field_value] = $value->value_content;
+										}
 									}
-								}
-								
-								$data['join'][$sid]['fields'][$f_id]['input'] = form_dropdown($field->field_id, $input, $data_val);
-								break;
+									
+									$data['join'][$sid]['fields'][$f_id]['input'] = form_dropdown($field->field_id, $input, $data_val);
+									break;
+							}
 						}
 					}
 				}
 			}
-		}
-		
-		$pos1 = $this->pos->get_position($char->position_1);
-		$pos2 = $this->pos->get_position($char->position_2);
-		$rank = $this->ranks->get_rank($char->rank);
-		$rankcat = $this->ranks->get_rankcat($this->rank);
-		
-		/* inputs */
-		$data['inputs'] = array(
-			'first_name' => array(
-				'name' => 'first_name',
-				'id' => 'first_name',
-				'value' => $char->first_name),
-			'middle_name' => array(
-				'name' => 'middle_name',
-				'id' => 'middle_name',
-				'value' => $char->middle_name),
-			'last_name' => array(
-				'name' => 'last_name',
-				'id' => 'last_name',
-				'value' => $char->last_name),
-			'suffix' => array(
-				'name' => 'suffix',
-				'id' => 'suffix',
-				'class' => 'medium',
-				'value' => $char->suffix),
-			'position1_id' => $char->position_1,
-			'position2_id' => $char->position_2,
-			'position1_name' => ($pos1 !== FALSE) ? $pos1->pos_name : '',
-			'position2_name' => ($pos2 !== FALSE) ? $pos2->pos_name : '',
-			'position1_desc' => ($pos1 !== FALSE) ? $pos1->pos_desc : '',
-			'position2_desc' => ($pos2 !== FALSE) ? $pos2->pos_desc : '',
-			'rank_id' => $char->rank,
-			'rank_name' => $rank->rank_name,
-			'rank' => array(
-				'src' => rank_location($this->rank, $rank->rank_image, $rankcat->rankcat_extension),
-				'alt' => $rank->rank_name,
-				'class' => 'image'),
-			'crew_type' => $char->crew_type,
-			'images' => array(
-				'name' => 'images',
-				'id' => 'images',
-				'rows' => 4,
-				'value' => $char->images),
-		);
-		
-		$data['values']['crew_type'] = array(
-			'active' => ucwords(lang('status_playing') .' '. lang('global_character')),
-			'npc' => ucwords(lang('status_nonplaying') .' '. lang('global_character')),
-			'inactive' => ucwords(lang('status_inactive') .' '. lang('global_character')),
-			'pending' => ucwords(lang('status_pending') .' '. lang('global_character')),
-		);
-		
-		$data['directory'] = array();
-		
-		$dir = $this->sys->get_uploaded_images('bio');
-		
-		if ($dir->num_rows() > 0)
-		{
-			foreach ($dir->result() as $d)
+			
+			$pos1 = $this->pos->get_position($char->position_1);
+			$pos2 = $this->pos->get_position($char->position_2);
+			$rank = $this->ranks->get_rank($char->rank);
+			$rankcat = $this->ranks->get_rankcat($this->rank);
+			
+			/* inputs */
+			$data['inputs'] = array(
+				'first_name' => array(
+					'name' => 'first_name',
+					'id' => 'first_name',
+					'value' => $char->first_name),
+				'middle_name' => array(
+					'name' => 'middle_name',
+					'id' => 'middle_name',
+					'value' => $char->middle_name),
+				'last_name' => array(
+					'name' => 'last_name',
+					'id' => 'last_name',
+					'value' => $char->last_name),
+				'suffix' => array(
+					'name' => 'suffix',
+					'id' => 'suffix',
+					'class' => 'medium',
+					'value' => $char->suffix),
+				'position1_id' => $char->position_1,
+				'position2_id' => $char->position_2,
+				'position1_name' => ($pos1 !== FALSE) ? $pos1->pos_name : '',
+				'position2_name' => ($pos2 !== FALSE) ? $pos2->pos_name : '',
+				'position1_desc' => ($pos1 !== FALSE) ? $pos1->pos_desc : '',
+				'position2_desc' => ($pos2 !== FALSE) ? $pos2->pos_desc : '',
+				'rank_id' => $char->rank,
+				'rank_name' => $rank->rank_name,
+				'rank' => array(
+					'src' => rank_location($this->rank, $rank->rank_image, $rankcat->rankcat_extension),
+					'alt' => $rank->rank_name,
+					'class' => 'image'),
+				'crew_type' => $char->crew_type,
+				'images' => array(
+					'name' => 'images',
+					'id' => 'images',
+					'rows' => 4,
+					'value' => $char->images),
+			);
+			
+			$data['values']['crew_type'] = array(
+				'active' => ucwords(lang('status_playing') .' '. lang('global_character')),
+				'npc' => ucwords(lang('status_nonplaying') .' '. lang('global_character')),
+				'inactive' => ucwords(lang('status_inactive') .' '. lang('global_character')),
+				'pending' => ucwords(lang('status_pending') .' '. lang('global_character')),
+			);
+			
+			$data['directory'] = array();
+			
+			$dir = $this->sys->get_uploaded_images('bio');
+			
+			if ($dir->num_rows() > 0)
 			{
-				if ($d->upload_user == $this->session->userdata('userid'))
+				foreach ($dir->result() as $d)
 				{
-					$data['myuploads'][$d->upload_id] = array(
-						'image' => array(
-							'src' => asset_location('images/characters', $d->upload_filename),
-							'alt' => $d->upload_filename,
-							'class' => 'image image-height-100'),
-						'file' => $d->upload_filename,
-						'id' => $d->upload_id
-					);
-				}
-				else
-				{
-					$data['directory'][$d->upload_id] = array(
-						'image' => array(
-							'src' => asset_location('images/characters', $d->upload_filename),
-							'alt' => $d->upload_filename,
-							'class' => 'image image-height-100'),
-						'file' => $d->upload_filename,
-						'id' => $d->upload_id
-					);
+					if ($d->upload_user == $this->session->userdata('userid'))
+					{
+						$data['myuploads'][$d->upload_id] = array(
+							'image' => array(
+								'src' => asset_location('images/characters', $d->upload_filename),
+								'alt' => $d->upload_filename,
+								'class' => 'image image-height-100'),
+							'file' => $d->upload_filename,
+							'id' => $d->upload_id
+						);
+					}
+					else
+					{
+						$data['directory'][$d->upload_id] = array(
+							'image' => array(
+								'src' => asset_location('images/characters', $d->upload_filename),
+								'alt' => $d->upload_filename,
+								'class' => 'image image-height-100'),
+							'file' => $d->upload_filename,
+							'id' => $d->upload_id
+						);
+					}
 				}
 			}
+			
+			$data['header'] = ucwords(lang('actions_edit') .' '. lang('labels_bio')) .' - '. $this->char->get_character_name($data['id']);
 		}
-		
-		$data['header'] = ucwords(lang('actions_edit') .' '. lang('labels_bio')) .' - '. 
-			$this->char->get_character_name($data['id']);
 			
 		$data['image_instructions'] = sprintf(
 			lang('text_image_select'),
@@ -1135,6 +1161,8 @@ class Characters_base extends Controller {
 		
 		$data['label'] = array(
 			'character' => ucfirst(lang('global_character')),
+			'choose_char' => ucwords(lang('actions_choose') .' '. lang('labels_a') .' '. lang('global_character') .' '. lang('labels_to')
+				.' '. lang('actions_edit')),
 			'fname' => ucwords(lang('order_first') .' '. lang('labels_name')),
 			'images' => ucfirst(lang('labels_images')),
 			'info' => ucfirst(lang('labels_info')),
@@ -1147,6 +1175,9 @@ class Characters_base extends Controller {
 			'rank' => ucfirst(lang('global_rank')),
 			'suffix' => ucfirst(lang('labels_suffix')),
 			'type' => ucwords(lang('global_character') .' '. lang('labels_type')),
+			'type_active' => ucwords(lang('status_active') .' '. lang('global_characters')),
+			'type_inactive' => ucwords(lang('status_inactive') .' '. lang('global_characters')),
+			'type_npc' => ucwords(lang('status_nonplaying') .' '. lang('global_characters')),
 			'upload' => ucwords(lang('actions_upload') .' '. lang('labels_images') .' '. RARROW),
 		);
 		
