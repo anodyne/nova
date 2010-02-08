@@ -1679,6 +1679,13 @@ class Manage_base extends Controller {
 			
 			$start = ($item === FALSE) ? $date : '';
 			$start = (empty($item->mission_start)) ? '' : unix_to_human($item->mission_start);
+			$start = (!empty($start)) ? substr_replace($start, '', strpos($start, ' ')) : '';
+			
+			$end = ($item === FALSE || empty($item->mission_end)) ? '' : unix_to_human($item->mission_end);
+			$end = (!empty($end)) ? substr_replace($end, '', strpos($end, ' ')) : '';
+			
+			$js_data['start'] = $start;
+			$js_data['end'] = $end;
 			
 			$data['header'] = ucwords(lang('actions_'. $action) .' '. lang('global_mission'));
 			$data['header'].= ($action == 'edit') ? ' - '. $item->mission_title : '';
@@ -1693,12 +1700,10 @@ class Manage_base extends Controller {
 					'value' => ($item === FALSE) ? 99 : $item->mission_order),
 				'start' => array(
 					'name' => 'mission_start',
-					'class' => 'datepick medium',
-					'value' => $start),
+					'class' => 'medium datepick'),
 				'end' => array(
 					'name' => 'mission_end',
-					'class' => 'datepick medium',
-					'value' => ($item === FALSE || empty($item->mission_end)) ? '' : unix_to_human($item->mission_end)),
+					'class' => 'medium datepick'),
 				'desc' => array(
 					'name' => 'mission_desc',
 					'rows' => 6,
@@ -1806,6 +1811,9 @@ class Manage_base extends Controller {
 					$data['label']['s_upcoming'] = ucwords(lang('status_upcoming') .' '. $mis_label_upcoming);
 				}
 			}
+			
+			$js_data['start'] = FALSE;
+			$js_data['end'] = FALSE;
 			
 			$data['header'] = ucwords(lang('actions_manage') .' '. lang('global_missions'));
 			
