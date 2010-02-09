@@ -8,50 +8,15 @@ Beta (0.9.5-pre)
 
 Last Update
 -----------
-04 February 2010
+08 February 2010
 
 Latest Updates
 --------------
-* added the january 2010 changelog archive file
-* added docking model
-* added docking user email view files
-* added docking gm email view files
-* added sim/docked view file
-* added sim/docked js view file
-* added icon-view.png to the main section
-* added sim_docked_all view file
-* added sim_docked_one view file
-* added a new access role (senior admin)
-* added add_docking_field ajax view
-* added add_docking_sec ajax view
-* added del_docking_field ajax view
-* added del_docking_sec ajax view
-* added edit_docking_field_value ajax view
-* added edit_docking_sec ajax view
-* added site/dockingform js view
-* added site/dockingsections js view
-* added site/dockingform view
-* added site/dockingform/edit view
-* added site/dockingsections view
-* updated the database schema to add the docking tables
-* updated the main controller to change a language key
-* updated the sim controller to chang a language key
-* updated the language files
-* updated the dev install data
-* updated sim/docked to handle viewing individual docked items
-* updated the basic install data
-* updated the docking model
-* updated the language files
-* updated the ajax controller to handle the docking form stuff
-* updated the ajax controller to handle the docking sections stuff
-* updated the site controller to handle the docking form stuff
-* udpated the site controller to handle the docking sections stuff
-* updated the control panel to notify of docking requests
-* removed the old docking request email views
-* removed sim_docked view file
-* fixed bug in specs form management where values couldn't be added to the dropdown menus
-* fixed bug in tour form management where values couldn't be added to the dropdown menus
-* fixed bug in bio form management where values couldn't be added to the dropdown menus
+* fixed bug where the datepicker wouldn't work properly if a date was passed to the field
+* fixed bug where the bio page wasn't able to handle choosing which of multiple characters to edit if none was in the URI (#73)
+* updated the manage missions page to use the new form layout
+* updated the icon-add.png image
+* updated the icon-delete.png image
 
 Changes in 0.9.5
 ----------------
@@ -157,14 +122,19 @@ Changes in 0.9.5
 * updated the site controller to handle operations for the docking form
 * updated the site controller to handle operations for the docking sections
 * updated the control panel to notify of docking requests
+* updated the manage missions page to use the new form layout
+* updated the icon-add.png image
+* updated the icon-delete.png image
 * fixed bug where a stray in comma threw errors in IE
 * fixed bug in specs form management where values couldn't be added to the dropdown menus
 * fixed bug in tour form management where values couldn't be added to the dropdown menus
 * fixed bug in bio form management where values couldn't be added to the dropdown menus
+* fixed bug where the datepicker wouldn't work if a date was passed to the field
+* fixed bug where the bio page wasn't able to handle choosing which of multiple characters to edit if none was in the URI (#73)
 
 Known Issues
 ------------
-
+_None_
 
 Version History
 ---------------

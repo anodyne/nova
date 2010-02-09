@@ -10,66 +10,41 @@
 
 	<?php echo form_open('manage/missions/'. $form);?>
 	<div id="one">
-		<br />
-		<table class="table100">
-			<tbody>
-				<tr>
-					<td class="cell-label"><?php echo $label['title'];?></td>
-					<td class="cell-spacer"></td>
-					<td><?php echo form_input($inputs['title']);?></td>
-				</tr>
-				<tr>
-					<td class="cell-label"><?php echo $label['status'];?></td>
-					<td class="cell-spacer"></td>
-					<td>
-						<?php echo form_dropdown('mission_status', $values['status'], $inputs['status']);?>
-						<?php echo form_hidden('mission_oldstatus', $inputs['status']);?>
-					</td>
-				</tr>
-				<tr>
-					<td class="cell-label"><?php echo $label['order'];?></td>
-					<td class="cell-spacer"></td>
-					<td><?php echo form_input($inputs['order']);?></td>
-				</tr>
-				
-				<?php echo table_row_spacer(3, 15);?>
-				
-				<tr>
-					<td class="cell-label"><?php echo $label['start'];?></td>
-					<td class="cell-spacer"></td>
-					<td><?php echo form_input($inputs['start']);?></td>
-				</tr>
-				<tr>
-					<td class="cell-label"><?php echo $label['end'];?></td>
-					<td class="cell-spacer"></td>
-					<td><?php echo form_input($inputs['end']);?></td>
-				</tr>
-				
-				<?php echo table_row_spacer(3, 15);?>
-				
-				<tr>
-					<td class="cell-label"><?php echo $label['desc'];?></td>
-					<td class="cell-spacer"></td>
-					<td><?php echo form_textarea($inputs['desc']);?></td>
-				</tr>
-				
-				<?php echo table_row_spacer(3, 15);?>
-				
-				<tr>
-					<td class="cell-label"><?php echo $label['summary'];?></td>
-					<td class="cell-spacer"></td>
-					<td><?php echo form_textarea($inputs['summary']);?></td>
-				</tr>
-				
-				<?php echo table_row_spacer(3, 15);?>
-				
-				<tr>
-					<td class="cell-label"><?php echo $label['notes'];?></td>
-					<td class="cell-spacer"></td>
-					<td><?php echo form_textarea($inputs['notes']);?></td>
-				</tr>
-			</tbody>
-		</table>
+		<p>
+			<kbd><?php echo $label['title'];?></kbd>
+			<?php echo form_input($inputs['title']);?>
+		</p>
+		<p>
+			<kbd><?php echo $label['status'];?></kbd>
+			<?php echo form_dropdown('mission_status', $values['status'], $inputs['status']);?>
+			<?php echo form_hidden('mission_oldstatus', $inputs['status']);?>
+		</p>
+		<p>
+			<kbd><?php echo $label['order'];?></kbd>
+			<?php echo form_input($inputs['order']);?>
+		</p><br />
+		
+		<p>
+			<kbd><?php echo $label['start'];?></kbd>
+			<?php echo form_input($inputs['start']);?>
+		</p>
+		<p>
+			<kbd><?php echo $label['end'];?></kbd>
+			<?php echo form_input($inputs['end']);?>
+		</p><br />
+		
+		<p>
+			<kbd><?php echo $label['desc'];?></kbd>
+			<?php echo form_textarea($inputs['desc']);?>
+		</p>
+		<p>
+			<kbd><?php echo $label['summary'];?></kbd>
+			<?php echo form_textarea($inputs['summary']);?>
+		</p>
+		<p>
+			<kbd><?php echo $label['notes'];?></kbd>
+			<?php echo form_textarea($inputs['notes']);?>
+		</p>
 	</div>
 	
 	<div id="two">

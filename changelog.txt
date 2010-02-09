@@ -1,3 +1,14 @@
+02.08.2010
+
+* fixed bug where the datepicker wouldn't work properly if a date was passed to the field
+* fixed bug where the bio page wasn't able to handle choosing which of multiple characters to edit if none was in the URI (#73)
+
+* updated the manage missions page to use the new form layout
+* updated the icon-add.png image
+* updated the icon-delete.png image
+
+==========
+
 02.04.2010
 
 * updated the language files
