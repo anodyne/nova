@@ -1172,6 +1172,132 @@ class Manage_base extends Controller {
 		$this->template->render();
 	}
 	
+	function docked()
+	{
+		$this->auth->check_access();
+		
+		$this->load->model('docking_model', 'docking');
+		
+		$section = $this->uri->segment(3, 'activated');
+		
+		if (isset($_POST['submit']))
+		{
+			# code...
+		}
+		
+		if ($section == 'edit')
+		{
+			/* grab the ID from the URL */
+			$id = $this->uri->segment(4, FALSE, TRUE);
+			
+			/* grab the post data */
+			$row = $this->docking->get_docked_item($id);
+			
+			/* set the data used by the view */
+			$data['inputs'] = array(
+				'title' => array(
+					'name' => 'log_title',
+					'value' => $row->log_title),
+				'content' => array(
+					'name' => 'log_content',
+					'rows' => 20,
+					'value' => $row->log_content),
+				'tags' => array(
+					'name' => 'log_tags',
+					'value' => $row->log_tags),
+				'author' => $row->log_author_character,
+				'character' => $this->char->get_character_name($row->log_author_character, TRUE),
+				'status' => $row->log_status,
+			);
+			
+			$data['status'] = array(
+				'activated' => ucfirst(lang('status_activated')),
+				'saved' => ucfirst(lang('status_saved')),
+				'pending' => ucfirst(lang('status_pending')),
+			);
+			
+			$data['buttons'] = array(
+				'update' => array(
+					'type' => 'submit',
+					'class' => 'button-main',
+					'name' => 'submit',
+					'value' => 'update',
+					'content' => ucfirst(lang('actions_update'))),
+			);
+			
+			$data['header'] = ucwords(lang('actions_edit') .' '. lang('global_personallogs'));
+			$data['id'] = $id;
+			
+			$data['label'] = array(
+				'back' => LARROW .' '. ucfirst(lang('actions_back')) .' '. lang('labels_to')
+					.' '. ucwords(lang('global_personallogs')),
+				'status' => ucfirst(lang('labels_status')),
+				'title' => ucfirst(lang('labels_title')),
+				'content' => ucfirst(lang('labels_content')),
+				'tags' => ucfirst(lang('labels_tags')),
+				'tags_inst' => ucfirst(lang('tags_separated')),
+				'addauthor' => ucwords(lang('actions_add') .' '. lang('labels_author')),
+				'author' => ucwords(lang('labels_author'))
+			);
+			
+			$js_data = FALSE;
+			
+			/* figure out where the view should be coming from */
+			$view_loc = view_location('manage_logs_edit', $this->skin, 'admin');
+			$js_loc = js_location('manage_logs_js', $this->skin, 'admin');
+		}
+		else
+		{
+			switch ($section)
+			{
+				case 'active':
+				default:
+					$js_data['tab'] = 0;
+					break;
+					
+				case 'inactive':
+					$js_data['tab'] = 1;
+					break;
+					
+				case 'pending':
+					$js_data['tab'] = 2;
+					break;
+			}
+			
+			$offset_activated = ($section == 'activated') ? $offset : 0;
+			$offset_saved = ($section == 'saved') ? $offset : 0;
+			$offset_pending = ($section == 'pending') ? $offset : 0;
+			
+			$data['activated'] = $this->_entries_ajax($offset_activated, 'activated', 'logs');
+			$data['saved'] = $this->_entries_ajax($offset_saved, 'saved', 'logs');
+			$data['pending'] = $this->_entries_ajax($offset_pending, 'pending', 'logs');
+	
+		    $data['label'] = array(
+				'activated' => ucfirst(lang('status_activated')),
+				'pending' => ucfirst(lang('status_pending')),
+				'saved' => ucfirst(lang('status_saved')),
+			);
+			
+			$data['header'] = ucwords(lang('actions_manage') .' '. lang('global_personallogs'));
+			
+			/* figure out where the view should be coming from */
+			$view_loc = view_location('manage_logs', $this->skin, 'admin');
+		}
+		
+		/* figure out where the view should be coming from */
+		$js_loc = js_location('manage_docked_js', $this->skin, 'admin');
+		
+		$data['header'] = ucwords(lang('actions_docked') .' '. lang('labels_items'));
+		
+		/* write the data to the template */
+		$this->template->write('title', $data['header']);
+		$this->template->write_view('content', $view_loc, $data);
+		$this->template->write_view('javascript', $js_loc);
+		
+		/* render the template */
+		$this->template->render();
+	}
+	
 	function logs()
 	{
 		$this->auth->check_access();
