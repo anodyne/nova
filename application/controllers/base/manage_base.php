@@ -1178,11 +1178,75 @@ class Manage_base extends Controller {
 		
 		$this->load->model('docking_model', 'docking');
 		
-		$section = $this->uri->segment(3, 'activated');
+		$section = $this->uri->segment(3, 'active');
 		
 		if (isset($_POST['submit']))
 		{
-			# code...
+			switch ($section)
+			{
+				case 'edit':
+					foreach ($_POST as $key => $value)
+					{
+						if (!is_numeric($key))
+						{
+							$update_array[$key] = $value;
+						}
+					}
+					
+					/* take unnecessary items off the array */
+					unset($update_array['submit']);
+					unset($update_array['action_id']);
+					
+					$action_id = $this->input->post('action_id', TRUE);
+					
+					/* put the record into the database */
+					$update = $this->docking->update_docking_record($update_array, $action_id);
+					
+					foreach ($_POST as $key => $value)
+					{
+						if (is_numeric($key))
+						{
+							$array = array(
+								'data_field' => $key,
+								'data_docking_item' => $action_id,
+								'data_value' => $value,
+								'data_updated' => now()
+							);
+							
+							$this->docking->update_docking_data($array, $action_id, $key);
+						}
+					}
+					
+					if ($update > 0)
+					{
+						$message = sprintf(
+							lang('flash_success'),
+							ucfirst(lang('actions_docked') .' '. lang('labels_item')),
+							lang('actions_updated'),
+							''
+						);
+						
+						$flash['status'] = 'success';
+						$flash['message'] = text_output($message);
+					}
+					else
+					{
+						$message = sprintf(
+							lang('flash_failure'),
+							ucfirst(lang('actions_docked') .' '. lang('labels_item')),
+							lang('actions_updated'),
+							''
+						);
+						
+						$flash['status'] = 'error';
+						$flash['message'] = text_output($message);
+					}
+				
+					/* write everything to the template */
+					$this->template->write_view('flash_message', '_base/main/pages/flash', $flash);
+				
+					break;
+			}
 		}
 		
 		if ($section == 'edit')
@@ -1195,59 +1259,141 @@ class Manage_base extends Controller {
 			
 			/* set the data used by the view */
 			$data['inputs'] = array(
-				'title' => array(
-					'name' => 'log_title',
-					'value' => $row->log_title),
-				'content' => array(
-					'name' => 'log_content',
-					'rows' => 20,
-					'value' => $row->log_content),
-				'tags' => array(
-					'name' => 'log_tags',
-					'value' => $row->log_tags),
-				'author' => $row->log_author_character,
-				'character' => $this->char->get_character_name($row->log_author_character, TRUE),
-				'status' => $row->log_status,
+				'sim_name' => array(
+					'name' => 'docking_sim_name',
+					'id' => 'sim_name',
+					'value' => $row->docking_sim_name),
+				'sim_url' => array(
+					'name' => 'docking_sim_url',
+					'id' => 'sim_url',
+					'value' => $row->docking_sim_url),
+				'gm_name' => array(
+					'name' => 'docking_gm_name',
+					'id' => 'gm_name',
+					'value' => $row->docking_gm_name),
+				'gm_email' => array(
+					'name' => 'docking_gm_email',
+					'id' => 'gm_email',
+					'value' => $row->docking_gm_email),
 			);
 			
-			$data['status'] = array(
-				'activated' => ucfirst(lang('status_activated')),
-				'saved' => ucfirst(lang('status_saved')),
+			$data['values'] = array(
+				'active' => ucfirst(lang('status_active')),
+				'inactive' => ucfirst(lang('status_inactive')),
 				'pending' => ucfirst(lang('status_pending')),
 			);
 			
-			$data['buttons'] = array(
-				'update' => array(
-					'type' => 'submit',
-					'class' => 'button-main',
-					'name' => 'submit',
-					'value' => 'update',
-					'content' => ucfirst(lang('actions_update'))),
-			);
+			/* grab the join fields */
+			$sections = $this->docking->get_docking_sections();
 			
-			$data['header'] = ucwords(lang('actions_edit') .' '. lang('global_personallogs'));
+			if ($sections->num_rows() > 0)
+			{
+				foreach ($sections->result() as $sec)
+				{
+					$sid = $sec->section_id; /* section id */
+					
+					/* set the section name */
+					$data['docking'][$sid]['name'] = $sec->section_name;
+					
+					/* grab the fields for the given section */
+					$fields = $this->docking->get_docking_fields($sec->section_id);
+					
+					if ($fields->num_rows() > 0)
+					{
+						foreach ($fields->result() as $field)
+						{
+							$f_id = $field->field_id; /* field id */
+							
+							/* set the page label */
+							$data['docking'][$sid]['fields'][$f_id]['field_label'] = $field->field_label_page;
+							
+							$field_data = $this->docking->get_field_data($f_id, $id);
+
+							$frow = ($field_data->num_rows() > 0) ? $field_data->row() : FALSE;
+							
+							switch ($field->field_type)
+							{
+								case 'text':
+									$input = array(
+										'name' => $field->field_id,
+										'id' => $field->field_fid,
+										'class' => $field->field_class,
+										'value' => $frow->data_value
+									);
+									
+									$data['docking'][$sid]['fields'][$f_id]['input'] = form_input($input);
+									
+									break;
+									
+								case 'textarea':
+									$input = array(
+										'name' => $field->field_id,
+										'id' => $field->field_fid,
+										'class' => $field->field_class,
+										'value' => $frow->data_value,
+										'rows' => $field->field_rows
+									);
+									
+									$data['docking'][$sid]['fields'][$f_id]['input'] = form_textarea($input);
+									
+									break;
+									
+								case 'select':
+									$value = FALSE;
+									$values = FALSE;
+									$input = FALSE;
+								
+									$values = $this->docking->get_docking_values($field->field_id);
+									
+									if ($values->num_rows() > 0)
+									{
+										foreach ($values->result() as $value)
+										{
+											$input[$value->value_field_value] = $value->value_content;
+										}
+									}
+									
+									$data['docking'][$sid]['fields'][$f_id]['input'] = form_dropdown($field->field_id, $input, $frow->data_value);
+									break;
+							}
+						}
+					}
+				}
+			}
+			
+			$data['header'] = ucwords(lang('actions_edit') .' '. lang('actions_docked') .' '. lang('labels_item'));
 			$data['id'] = $id;
-			
-			$data['label'] = array(
-				'back' => LARROW .' '. ucfirst(lang('actions_back')) .' '. lang('labels_to')
-					.' '. ucwords(lang('global_personallogs')),
-				'status' => ucfirst(lang('labels_status')),
-				'title' => ucfirst(lang('labels_title')),
-				'content' => ucfirst(lang('labels_content')),
-				'tags' => ucfirst(lang('labels_tags')),
-				'tags_inst' => ucfirst(lang('tags_separated')),
-				'addauthor' => ucwords(lang('actions_add') .' '. lang('labels_author')),
-				'author' => ucwords(lang('labels_author'))
-			);
+			$data['status'] = $row->docking_status;
 			
 			$js_data = FALSE;
 			
 			/* figure out where the view should be coming from */
-			$view_loc = view_location('manage_logs_edit', $this->skin, 'admin');
-			$js_loc = js_location('manage_logs_js', $this->skin, 'admin');
+			$view_loc = view_location('manage_docked_edit', $this->skin, 'admin');
 		}
 		else
 		{
+			$items = $this->docking->get_docked_items();
+			
+			if ($items->num_rows() > 0)
+			{
+				foreach ($items->result() as $i)
+				{
+					$data['docking'][$i->docking_status][$i->docking_id] = array(
+						'sim_name' => $i->docking_sim_name,
+						'sim_url' => $i->docking_sim_url,
+						'gm_name' => $i->docking_gm_name,
+						'id' => $i->docking_id
+					);
+				}
+			}
+			
+			$data['header'] = ucwords(lang('actions_docked') .' '. lang('labels_items'));
+			
+			$data['count'] = (isset($data['docking']['pending'])) ? count($data['docking']['pending']) : 0;
+			
+			/* figure out where the view should be coming from */
+			$view_loc = view_location('manage_docked', $this->skin, 'admin');
+			
 			switch ($section)
 			{
 				case 'active':
@@ -1263,36 +1409,67 @@ class Manage_base extends Controller {
 					$js_data['tab'] = 2;
 					break;
 			}
-			
-			$offset_activated = ($section == 'activated') ? $offset : 0;
-			$offset_saved = ($section == 'saved') ? $offset : 0;
-			$offset_pending = ($section == 'pending') ? $offset : 0;
-			
-			$data['activated'] = $this->_entries_ajax($offset_activated, 'activated', 'logs');
-			$data['saved'] = $this->_entries_ajax($offset_saved, 'saved', 'logs');
-			$data['pending'] = $this->_entries_ajax($offset_pending, 'pending', 'logs');
-	
-		    $data['label'] = array(
-				'activated' => ucfirst(lang('status_activated')),
-				'pending' => ucfirst(lang('status_pending')),
-				'saved' => ucfirst(lang('status_saved')),
-			);
-			
-			$data['header'] = ucwords(lang('actions_manage') .' '. lang('global_personallogs'));
-			
-			/* figure out where the view should be coming from */
-			$view_loc = view_location('manage_logs', $this->skin, 'admin');
 		}
 		
 		/* figure out where the view should be coming from */
 		$js_loc = js_location('manage_docked_js', $this->skin, 'admin');
 		
-		$data['header'] = ucwords(lang('actions_docked') .' '. lang('labels_items'));
+		$data['buttons'] = array(
+			'update' => array(
+				'type' => 'submit',
+				'class' => 'button-main',
+				'name' => 'submit',
+				'value' => 'update',
+				'content' => ucfirst(lang('actions_update'))),
+		);
+		
+		$data['images'] = array(
+			'accept' => array(
+				'src' => img_location('icon-check.png', $this->skin, 'admin'),
+				'alt' => lang('actions_accept'),
+				'class' => 'image',
+				'title' => ucfirst(lang('actions_accept'))),
+			'delete' => array(
+				'src' => img_location('icon-delete.png', $this->skin, 'admin'),
+				'alt' => lang('actions_delete'),
+				'class' => 'image',
+				'title' => ucfirst(lang('actions_delete'))),
+			'edit' => array(
+				'src' => img_location('icon-edit.png', $this->skin, 'admin'),
+				'alt' => lang('actions_edit'),
+				'class' => 'image',
+				'title' => ucfirst(lang('actions_edit'))),
+			'reject' => array(
+				'src' => img_location('icon-cross.png', $this->skin, 'admin'),
+				'alt' => lang('actions_reject'),
+				'class' => 'image',
+				'title' => ucfirst(lang('actions_reject'))),
+			'view' => array(
+				'src' => img_location('icon-view.png', $this->skin, 'admin'),
+				'alt' => lang('actions_view'),
+				'class' => 'image',
+				'title' => ucfirst(lang('actions_view'))),
+		);
+		
+		$data['label'] = array(
+			'back' => LARROW .' '. ucfirst(lang('actions_back')) .' '. lang('labels_to') .' '. ucwords(lang('actions_docked') .' '. lang('labels_items')),
+			'email' => ucwords(lang('labels_email_address')),
+			'gm_info' => ucwords(lang('global_game_master') .' '. lang('labels_information')),
+			'info' => ucwords(lang('global_sim') .' '. lang('labels_information')),
+			'name' => ucfirst(lang('labels_name')),
+			'noitems' => sprintf(lang('error_not_found'), lang('actions_docked') .' '. lang('labels_items')),
+			'sim_name' => ucwords(lang('global_sim') .' '. lang('labels_name')),
+			'sim_url' => ucfirst(lang('global_sim') .' '. lang('abbr_url')),
+			'status' => ucfirst(lang('labels_status')),
+			'status_active' => ucwords(lang('status_active') .' '. lang('labels_items')),
+			'status_inactive' => ucwords(lang('status_inactive') .' '. lang('labels_items')),
+			'status_pending' => ucwords(lang('status_pending') .' '. lang('labels_items')),
+		);
 		
 		/* write the data to the template */
 		$this->template->write('title', $data['header']);
 		$this->template->write_view('content', $view_loc, $data);
-		$this->template->write_view('javascript', $js_loc);
+		$this->template->write_view('javascript', $js_loc, $js_data);
 		
 		/* render the template */
 		$this->template->render();

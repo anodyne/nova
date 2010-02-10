@@ -1,21 +1,9 @@
 <script type="text/javascript">
 	$(document).ready(function(){
-		$('#tabs').tabs();
+		var $tabs = $('#tabs').tabs();
+		$tabs.tabs('select', <?php echo $tab;?>);
 		
 		$('table.zebra tbody > tr:nth-child(odd)').addClass('alt');
-		
-		$('.imagepick').click(function(){
-			var image = $(this).attr('myfile');
-			
-			if ($('#images').val() == '')
-				var pre = '';
-			else
-				var pre = ', ';
-				
-			$('#images').append(pre + image);
-			
-			return false;
-		});
 		
 		$("a[rel*=facebox]").click(function() {
 			var action = $(this).attr('myAction');

@@ -192,13 +192,6 @@ class Docking_model_base extends Model {
 		return $query;
 	}
 	
-	function add_tour_item($data = '')
-	{
-		$query = $this->db->insert('tour', $data);
-		
-		return $query;
-	}
-	
 	function add_docking_section($data = '')
 	{
 		$query = $this->db->insert('docking_sections', $data);
@@ -265,6 +258,27 @@ class Docking_model_base extends Model {
 	|---------------------------------------------------------------
 	*/
 	
+	function update_docking_data($data = '', $id = '', $field = '')
+	{
+		$this->db->where('data_field', $field);
+		$this->db->where('data_docking_item', $id);
+		$query = $this->db->update('docking_data', $data);
+		
+		$this->dbutil->optimize_table('docking_data');
+		
+		return $query;
+	}
+	
+	function update_docking_record($data = '', $id = '')
+	{
+		$this->db->where('docking_id', $id);
+		$query = $this->db->update('docking', $data);
+		
+		$this->dbutil->optimize_table('docking');
+		
+		return $query;
+	}
+	
 	function update_field_sections($old_id = '', $new_id = '')
 	{
 		$data = array('field_section' => $new_id);
@@ -273,16 +287,6 @@ class Docking_model_base extends Model {
 		$query = $this->db->update('docking_fields', $data);
 		
 		$this->dbutil->optimize_table('docking_fields');
-		
-		return $query;
-	}
-	
-	function update_tour_data($id = '', $data = '')
-	{
-		$this->db->where('data_id', $id);
-		$query = $this->db->update('tour_data', $data);
-		
-		$this->dbutil->optimize_table('tour_data');
 		
 		return $query;
 	}
@@ -303,16 +307,6 @@ class Docking_model_base extends Model {
 		$query = $this->db->update('docking_values', $data);
 		
 		$this->dbutil->optimize_table('docking_values');
-		
-		return $query;
-	}
-	
-	function update_tour_item($id = '', $data = '')
-	{
-		$this->db->where('tour_id', $id);
-		$query = $this->db->update('tour', $data);
-		
-		$this->dbutil->optimize_table('tour');
 		
 		return $query;
 	}
