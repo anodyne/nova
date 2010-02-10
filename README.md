@@ -8,15 +8,16 @@ Beta (0.9.5-pre)
 
 Last Update
 -----------
-08 February 2010
+10 February 2010
 
 Latest Updates
 --------------
-* fixed bug where the datepicker wouldn't work properly if a date was passed to the field
-* fixed bug where the bio page wasn't able to handle choosing which of multiple characters to edit if none was in the URI (#73)
-* updated the manage missions page to use the new form layout
-* updated the icon-add.png image
-* updated the icon-delete.png image
+* updated the managed docked items page to be able to edit a docked item
+* updated the managed docked items page to display active, inactive and pending docked items
+* updated the icon-delete icon
+* added manage_docked_edit view file
+* added the icon-cross icon
+* added the icon-check icon
 
 Changes in 0.9.5
 ----------------
@@ -39,6 +40,9 @@ Changes in 0.9.5
 * added site/dockingform view
 * added site/dockingform/edit view
 * added site/dockingsections view
+* added manage\_docked\_edit view file
+* added the icon-cross icon
+* added the icon-check icon
 * removed the old docking request email views
 * updated the database schema
     * added docking table
@@ -124,7 +128,11 @@ Changes in 0.9.5
 * updated the control panel to notify of docking requests
 * updated the manage missions page to use the new form layout
 * updated the icon-add.png image
-* updated the icon-delete.png image
+* updated the managed docked items page to be able to edit a docked item
+* updated the managed docked items page to display active, inactive and pending docked items
+* updated the managed docked items page to be able to edit a docked item
+* updated the managed docked items page to display active, inactive and pending docked items
+* updated the icon-delete icon
 * fixed bug where a stray in comma threw errors in IE
 * fixed bug in specs form management where values couldn't be added to the dropdown menus
 * fixed bug in tour form management where values couldn't be added to the dropdown menus

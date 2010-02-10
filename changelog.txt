@@ -1,3 +1,15 @@
+02.10.2010
+
+* updated the managed docked items page to be able to edit a docked item
+* updated the managed docked items page to display active, inactive and pending docked items
+* updated the icon-delete icon
+
+* added manage_docked_edit view file
+* added the icon-cross icon
+* added the icon-check icon
+
+==========
+
 02.08.2010
 
 * fixed bug where the datepicker wouldn't work properly if a date was passed to the field
