@@ -216,9 +216,9 @@ class Docking_model_base extends Model {
 		return $query;
 	}
 	
-	function delete_docking_field_data($field = '')
+	function delete_docking_field_data($value = '', $identifier = 'data_field')
 	{
-		$query = $this->db->delete('docking_data', array('data_field' => $field));
+		$query = $this->db->delete('docking_data', array($identifier => $value));
 		
 		$this->dbutil->optimize_table('docking_data');
 		
@@ -234,11 +234,11 @@ class Docking_model_base extends Model {
 		return $query;
 	}
 	
-	function delete_tour_item($id = '')
+	function delete_docked_item($id = '')
 	{
-		$query = $this->db->delete('tour', array('tour_id' => $id));
+		$query = $this->db->delete('docking', array('docking_id' => $id));
 		
-		$this->dbutil->optimize_table('tour');
+		$this->dbutil->optimize_table('docking');
 		
 		return $query;
 	}

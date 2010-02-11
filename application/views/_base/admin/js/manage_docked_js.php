@@ -8,7 +8,10 @@
 		$("a[rel*=facebox]").click(function() {
 			var action = $(this).attr('myAction');
 			var id = $(this).attr('myID');
-			var location = '<?php echo site_url('ajax/del_tour_item');?>/' + id;
+			var location;
+			
+			if (action == 'delete')
+				location = '<?php echo site_url('ajax/del_docked_item');?>/' + id;
 			
 			$.facebox(function() {
 				$.get(location, function(data) {

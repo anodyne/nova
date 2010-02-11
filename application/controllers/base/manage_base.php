@@ -1184,6 +1184,44 @@ class Manage_base extends Controller {
 		{
 			switch ($section)
 			{
+				case 'delete':
+					$id = $this->input->post('id', TRUE);
+					$id = (is_numeric($id)) ? $id : FALSE;
+					
+					$delete = $this->docking->delete_docked_item($id);
+					
+					if ($delete > 0)
+					{
+						$message = sprintf(
+							lang('flash_success'),
+							ucfirst(lang('actions_docked') .' '. lang('labels_item')),
+							lang('actions_deleted'),
+							''
+						);
+
+						$flash['status'] = 'success';
+						$flash['message'] = text_output($message);
+						
+						$this->docking->delete_docking_field_data($id, 'data_docking_item');
+					}
+					else
+					{
+						$message = sprintf(
+							lang('flash_failure'),
+							ucfirst(lang('actions_docked') .' '. lang('labels_item')),
+							lang('actions_deleted'),
+							''
+						);
+
+						$flash['status'] = 'error';
+						$flash['message'] = text_output($message);
+					}
+					
+					/* write everything to the template */
+					$this->template->write_view('flash_message', '_base/admin/pages/flash', $flash);
+					
+					break;
+					
 				case 'edit':
 					foreach ($_POST as $key => $value)
 					{
@@ -3898,6 +3936,8 @@ class Manage_base extends Controller {
 
 						$flash['status'] = 'success';
 						$flash['message'] = text_output($message);
+						
+						$this->tour->delete_tour_field_data($id, 'data_tour_item');
 					}
 					else
 					{
@@ -3955,8 +3995,6 @@ class Manage_base extends Controller {
 
 						$flash['status'] = 'success';
 						$flash['message'] = text_output($message);
-						
-						$this->tour->delete_tour_field_data($id, 'data_tour_item');
 					}
 					else
 					{

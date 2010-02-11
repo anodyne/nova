@@ -29,7 +29,7 @@
 						<td class="col_75 align_right">
 							<?php echo anchor('sim/docked/'. $d['id'], img($images['view']), array('class' => 'image'));?>
 							&nbsp;
-							<?php echo anchor('sim/docked/'. $d['id'], img($images['delete']), array('class' => 'image'));?>
+							<a href="#" rel="facebox" class="image" myAction="delete" myID="<?php echo $d['id'];?>"><?php echo img($images['delete']);?></a>
 							&nbsp;
 							<?php echo anchor('manage/docked/edit/'. $d['id'], img($images['edit']), array('class' => 'image'));?>
 						</td>
@@ -64,7 +64,7 @@
 						<td class="col_75 align_right">
 							<?php echo anchor('sim/docked/'. $d['id'], img($images['view']), array('class' => 'image'));?>
 							&nbsp;
-							<?php echo anchor('sim/docked/'. $d['id'], img($images['delete']), array('class' => 'image'));?>
+							<a href="#" rel="facebox" class="image" myAction="delete" myID="<?php echo $d['id'];?>"><?php echo img($images['delete']);?></a>
 							&nbsp;
 							<?php echo anchor('manage/docked/edit/'. $d['id'], img($images['edit']), array('class' => 'image'));?>
 						</td>
@@ -97,14 +97,14 @@
 						</td>
 						<td><?php echo $d['gm_name'];?></td>
 						<td class="col_75 align_center">
-							<?php echo img($images['reject']);?>
+							<?php //echo img($images['reject']);?>
 							&nbsp;
-							<?php echo img($images['accept']);?>
+							<?php //echo img($images['accept']);?>
 						</td>
 						<td class="col_75 align_right">
 							<?php echo anchor('sim/docked/'. $d['id'], img($images['view']), array('class' => 'image'));?>
 							&nbsp;
-							<?php echo anchor('sim/docked/'. $d['id'], img($images['delete']), array('class' => 'image'));?>
+							<a href="#" rel="facebox" class="image" myAction="delete" myID="<?php echo $d['id'];?>"><?php echo img($images['delete']);?></a>
 							&nbsp;
 							<?php echo anchor('manage/docked/edit/'. $d['id'], img($images['edit']), array('class' => 'image'));?>
 						</td>
