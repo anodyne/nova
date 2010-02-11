@@ -202,9 +202,9 @@ class Tour_model_base extends Model {
 		return $query;
 	}
 	
-	function delete_tour_field_data($field = '')
+	function delete_tour_field_data($value = '', $identifier = 'data_field')
 	{
-		$query = $this->db->delete('tour_data', array('data_field' => $field));
+		$query = $this->db->delete('tour_data', array($identifier => $value));
 		
 		$this->dbutil->optimize_table('tour_data');
 		
