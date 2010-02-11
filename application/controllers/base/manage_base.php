@@ -3955,6 +3955,8 @@ class Manage_base extends Controller {
 
 						$flash['status'] = 'success';
 						$flash['message'] = text_output($message);
+						
+						$this->tour->delete_tour_field_data($id, 'data_tour_item');
 					}
 					else
 					{
