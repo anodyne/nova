@@ -3138,6 +3138,52 @@ class Ajax_base extends Controller {
 		$this->template->render();
 	}
 	
+	function del_docked_item()
+	{
+		/* load the resources */
+		$this->load->model('docking_model', 'docking');
+		
+		$head = sprintf(
+			lang('fbx_head'),
+			ucwords(lang('actions_delete')),
+			ucwords(lang('actions_docked') .' '. lang('labels_item'))
+		);
+		
+		/* data being sent to the facebox */
+		$data['header'] = $head;
+		$data['id'] = $this->uri->segment(3, 0, TRUE);
+		
+		$item = $this->docking->get_docked_item($data['id']);
+		
+		$data['text'] = sprintf(
+			lang('fbx_content_del_entry'),
+			lang('actions_docked') .' '. lang('labels_item'),
+			$item->docking_sim_name
+		);
+		
+		/* input parameters */
+		$data['inputs'] = array(
+			'submit' => array(
+				'type' => 'submit',
+				'class' => 'hud_button',
+				'name' => 'submit',
+				'value' => 'submit',
+				'content' => ucwords(lang('actions_submit')))
+		);
+		
+		/* figure out the skin */
+		$skin = $this->session->userdata('skin_admin');
+		
+		/* figure out where the view should come from */
+		$ajax = ajax_location('del_docked_item', $skin, 'admin');
+		
+		/* write the data to the template */
+		$this->template->write_view('content', $ajax, $data);
+		
+		/* render the template */
+		$this->template->render();
+	}
+	
 	function del_docking_field()
 	{
 		/* load the resources */
