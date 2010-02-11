@@ -63,17 +63,17 @@ class Archive_base extends Controller {
 		$this->options = $this->settings->get_settings($settings_array);
 		
 		/* set the variables */
-		$this->skin = $this->options['skin_main'];
+		$this->skin = $this->options['skin_admin'];
 		$this->rank = $this->options['display_rank'];
 		$this->timezone = $this->options['timezone'];
-		$this->dst = $this->options['daylight_savings'];
+		$this->dst = (strtoupper($this->options['daylight_savings']) == 'TRUE') ? TRUE : FALSE;
 		
 		if ($this->auth->is_logged_in() === TRUE)
-		{
-			$this->skin = $this->session->userdata('skin_main');
+		{ /* if there's a session, set the variables appropriately */
+			$this->skin = $this->session->userdata('skin_admin');
 			$this->rank = $this->session->userdata('display_rank');
 			$this->timezone = $this->session->userdata('timezone');
-			$this->dst = $this->session->userdata('dst');
+			$this->dst = (strtoupper($this->session->userdata('dst')) == 'TRUE') ? TRUE : FALSE;
 		}
 		
 		/* set and load the language file needed */

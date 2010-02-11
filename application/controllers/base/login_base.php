@@ -58,13 +58,13 @@ class Login_base extends Controller {
 		$this->skin = $this->options['skin_login'];
 		$this->rank = $this->options['display_rank'];
 		$this->timezone = $this->options['timezone'];
-		$this->dst = $this->options['daylight_savings'];
+		$this->dst = (strtoupper($this->options['daylight_savings']) == 'TRUE') ? TRUE : FALSE;
 		
-		if ($this->auth->is_logged_in())
+		if ($this->auth->is_logged_in() === TRUE)
 		{ /* if there's a session, set the variables appropriately */
 			$this->rank = $this->session->userdata('display_rank');
 			$this->timezone = $this->session->userdata('timezone');
-			$this->dst = $this->session->userdata('dst');
+			$this->dst = (strtoupper($this->session->userdata('dst')) == 'TRUE') ? TRUE : FALSE;
 		}
 		
 		/* set the template */
