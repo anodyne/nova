@@ -1,3 +1,15 @@
+02.11.2010
+
+* fixed bug where the system wouldn't respect daylight savings time changes
+* fixed bug where deleting a tour item would leave orphan dynamic data in the database
+
+* updated the tour model to include an identifier in the delete_tour_field_data method
+* updated the ajax controller to be able to handle deletion confirmation for a docked item
+
+* added the del_docked_item ajax view
+
+==========
+
 02.10.2010
 
 * updated the managed docked items page to be able to edit a docked item

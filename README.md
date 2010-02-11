@@ -8,16 +8,15 @@ Beta (0.9.5-pre)
 
 Last Update
 -----------
-10 February 2010
+11 February 2010
 
 Latest Updates
 --------------
-* updated the managed docked items page to be able to edit a docked item
-* updated the managed docked items page to display active, inactive and pending docked items
-* updated the icon-delete icon
-* added manage_docked_edit view file
-* added the icon-cross icon
-* added the icon-check icon
+* fixed bug where the system wouldn't respect daylight savings time changes
+* fixed bug where deleting a tour item would leave orphan dynamic data in the database
+* updated the tour model to include an identifier in the delete_tour_field_data method
+* updated the ajax controller to be able to handle deletion confirmation for a docked item
+* added the del_docked_item ajax view
 
 Changes in 0.9.5
 ----------------
@@ -43,6 +42,7 @@ Changes in 0.9.5
 * added manage\_docked\_edit view file
 * added the icon-cross icon
 * added the icon-check icon
+* added the del\_docked\_item ajax view
 * removed the old docking request email views
 * updated the database schema
     * added docking table
@@ -133,16 +133,21 @@ Changes in 0.9.5
 * updated the managed docked items page to be able to edit a docked item
 * updated the managed docked items page to display active, inactive and pending docked items
 * updated the icon-delete icon
+* updated the tour model to include an identifier in the delete\_tour\_field\_data method
+* updated the ajax controller to be able to handle deletion confirmation for a docked item
 * fixed bug where a stray in comma threw errors in IE
 * fixed bug in specs form management where values couldn't be added to the dropdown menus
 * fixed bug in tour form management where values couldn't be added to the dropdown menus
 * fixed bug in bio form management where values couldn't be added to the dropdown menus
 * fixed bug where the datepicker wouldn't work if a date was passed to the field
 * fixed bug where the bio page wasn't able to handle choosing which of multiple characters to edit if none was in the URI (#73)
+* fixed bug where the system wouldn't respect daylight savings time changes
+* fixed bug where deleting a tour item would leave orphan dynamic data in the database
 
 Known Issues
 ------------
-_None_
+* cannot accept docked item requests
+* cannot reject docked item requests
 
 Version History
 ---------------
