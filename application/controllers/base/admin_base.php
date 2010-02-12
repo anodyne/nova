@@ -11,8 +11,6 @@
 |
 */
 
-# TODO: add full list of changes to the what's new page
-
 class Admin_base extends Controller {
 
 	/* set the variables */
@@ -504,6 +502,9 @@ class Admin_base extends Controller {
 	
 	function whatsnew()
 	{
+		/* pull in the markdown parser */
+		include_once APPPATH .'libraries/Thresher_Markdown.php';
+		
 		/* build the array of pieces we need */
 		$version_pieces = array(
 			'sys_version_major',
@@ -518,7 +519,9 @@ class Admin_base extends Controller {
 		$version_str = implode('.', $version);
 		
 		/* grab the what's new information */
-		$data['whats_new'] = $this->sys->get_item('system_versions', 'version', $version_str, 'version_launch');
+		$item = $this->sys->get_item('system_versions', 'version', $version_str);
+		$data['whats_new'] = $item->version_launch;
+		$data['full_changes'] = Markdown($item->version_changes);
 		
 		$data['header'] = lang('head_admin_whatsnew');
 		
