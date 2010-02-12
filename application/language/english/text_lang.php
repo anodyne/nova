@@ -136,6 +136,10 @@ $lang['text_manage_specs'] = 'Nova provides admins unparalleled control over the
 
 $lang['text_quick_install'] = "Nova has detected the following %s aren't installed yet. Using Quick Install, Nova can install these %s quickly and easily. Simply click Install to start the process.";
 
+$lang['text_docking_approve'] = "Are you sure you want to approve the docking request for %s? Accepting this request will notify the %s of your decision automatically using the email below.";
+
+$lang['text_docking_reject'] = "Are you sure you want to reject the docking request for %s? Rejecting this request will notify the %s of your decision automatically using the email below and delete the record. This action is permanent and cannot be undone!";
+
 /*
 |---------------------------------------------------------------
 | INFORMATIONAL MESSAGES

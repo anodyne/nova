@@ -63,6 +63,8 @@ $lang['email_subject_character_approved'] 	= 'Character Application Approved';
 $lang['email_subject_character_rejected'] 	= 'Character Application Rejected';
 $lang['email_subject_docking_user'] 		= 'Docking Request Received';
 $lang['email_subject_docking_gm'] 			= 'Docking Request Received';
+$lang['email_subject_docking_approved']		= 'Docking Request Approved';
+$lang['email_subject_docking_rejected']		= 'Docking Request Rejected';
 
 /*
 |---------------------------------------------------------------
