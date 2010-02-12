@@ -1972,6 +1972,16 @@ $messages = array(
 		'message_content' => "Define your user rejection message through the Site Messages page.",
 		'message_type' => 'other'),
 	array(
+		'message_key' => 'docking_accept_message',
+		'message_label' => 'Docking Acceptance Email',
+		'message_content' => "Define your docking acceptance message through the Site Message page.",
+		'message_type' => 'other'),
+	array(
+		'message_key' => 'docking_reject_message',
+		'message_label' => 'Docking Rejection Message',
+		'message_content' => "Define your docking rejection message through the Site Messages page.",
+		'message_type' => 'other'),
+	array(
 		'message_key' => 'contact',
 		'message_label' => 'Contact Instructions',
 		'message_content' => 'Please use the form below to contact the sim with questions. You can choose to email the game master, the command staff, or the webmaster with your questions and/or comments.',
