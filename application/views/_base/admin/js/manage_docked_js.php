@@ -12,6 +12,10 @@
 			
 			if (action == 'delete')
 				location = '<?php echo site_url('ajax/del_docked_item');?>/' + id;
+			else if (action == 'approve')
+				location = '<?php echo site_url('ajax/approve/docking');?>/' + id;
+			else if (action == 'reject')
+				location = '<?php echo site_url('ajax/reject/docking');?>/' + id;
 			
 			$.facebox(function() {
 				$.get(location, function(data) {

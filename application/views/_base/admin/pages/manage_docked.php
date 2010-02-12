@@ -97,9 +97,9 @@
 						</td>
 						<td><?php echo $d['gm_name'];?></td>
 						<td class="col_75 align_center">
-							<?php //echo img($images['reject']);?>
+							<a href="#" rel="facebox" class="image" myAction="reject" myID="<?php echo $d['id'];?>"><?php echo img($images['reject']);?></a>
 							&nbsp;
-							<?php //echo img($images['accept']);?>
+							<a href="#" rel="facebox" class="image" myAction="approve" myID="<?php echo $d['id'];?>"><?php echo img($images['accept']);?></a>
 						</td>
 						<td class="col_75 align_right">
 							<?php echo anchor('sim/docked/'. $d['id'], img($images['view']), array('class' => 'image'));?>

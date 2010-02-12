@@ -52,7 +52,8 @@ class Manage_base extends Controller {
 			'sim_name',
 			'date_format',
 			'system_email',
-			'post_count_format'
+			'post_count_format',
+			'default_email_address'
 		);
 		
 		/* grab the settings */
@@ -1176,7 +1177,9 @@ class Manage_base extends Controller {
 	{
 		$this->auth->check_access();
 		
+		/* load the resources */
 		$this->load->model('docking_model', 'docking');
+		$this->load->helper('utility');
 		
 		$section = $this->uri->segment(3, 'active');
 		
@@ -1282,6 +1285,129 @@ class Manage_base extends Controller {
 				
 					/* write everything to the template */
 					$this->template->write_view('flash_message', '_base/main/pages/flash', $flash);
+				
+					break;
+					
+				case 'pending':
+					$id = $this->input->post('id', TRUE);
+					$id = (is_numeric($id)) ? $id : FALSE;
+					
+					$action = $this->input->post('action', TRUE);
+					
+					if ($action == 'approve')
+					{
+						$update_array = array('docking_status' => 'active');
+						
+						$update = $this->docking->update_docking_record($update_array, $id);
+						
+						/* grab the message */
+						$message = $this->msgs->get_message('docking_accept_message');
+						
+						$item = $this->docking->get_docked_item($id);
+						
+						/* set the arguments for the message */
+						$args = array(
+							'gm_name' => (!empty($item->docking_gm_name)) ? $item->docking_gm_name : $item->docking_gm_email,
+							'sim_name' => $item->docking_sim_name,
+							'ship' => $this->options['sim_name']
+						);
+						
+						/* parse the message with the args */
+						$content = parse_dynamic_message($message, $args);
+						
+						if ($update > 0)
+						{
+							$message = sprintf(
+								lang('flash_success'),
+								ucfirst(lang('actions_docked') .' '. lang('labels_item')),
+								lang('actions_approved'),
+								''
+							);
+			
+							$flash['status'] = 'success';
+							$flash['message'] = text_output($message);
+							
+							$email_data = array(
+								'message' => $content,
+								'email' => $item->docking_gm_email,
+								'name' => $item->docking_gm_name,
+								'sim' => $item->docking_sim_name
+							);
+							
+							$email = ($this->options['system_email'] == 'on') ? $this->_email('docking_accept', $email_data) : FALSE;
+						}
+						else
+						{
+							$message = sprintf(
+								lang('flash_failure'),
+								ucfirst(lang('actions_docked') .' '. lang('labels_item')),
+								lang('actions_approved'),
+								''
+							);
+			
+							$flash['status'] = 'error';
+							$flash['message'] = text_output($message);
+						}
+					}
+					elseif ($action == 'reject')
+					{
+						/* grab the message */
+						$message = $this->msgs->get_message('docking_reject_message');
+						
+						/* grab the info for the item being rejected */
+						$item = $this->docking->get_docked_item($id);
+						
+						/* set the arguments for the message */
+						$args = array(
+							'gm_name' => (!empty($item->docking_gm_name)) ? $item->docking_gm_name : $item->docking_gm_email,
+							'sim_name' => $item->docking_sim_name,
+							'ship' => $this->options['sim_name']
+						);
+						
+						/* parse the message with the args */
+						$content = parse_dynamic_message($message, $args);
+						
+						/* delete the record and its data */
+						$delete = $this->docking->delete_docked_item($id);
+						$delete+= $this->docking->delete_docking_field_data($id, 'data_docking_item');
+						
+						if ($delete > 0)
+						{
+							$message = sprintf(
+								lang('flash_success'),
+								ucfirst(lang('actions_docked') .' '. lang('labels_item')),
+								lang('actions_rejected'),
+								''
+							);
+			
+							$flash['status'] = 'success';
+							$flash['message'] = text_output($message);
+							
+							$email_data = array(
+								'message' => $content,
+								'email' => $item->docking_gm_email,
+								'name' => $item->docking_gm_name,
+								'sim' => $item->docking_sim_name
+							);
+							
+							$email = ($this->options['system_email'] == 'on') ? $this->_email('docking_reject', $email_data) : FALSE;
+						}
+						else
+						{
+							$message = sprintf(
+								lang('flash_failure'),
+								ucfirst(lang('actions_docked') .' '. lang('labels_item')),
+								lang('actions_rejected'),
+								''
+							);
+			
+							$flash['status'] = 'error';
+							$flash['message'] = text_output($message);
+						}
+					}
+					
+					/* write everything to the template */
+					$this->template->write_view('flash_message', '_base/admin/pages/flash', $flash);
 				
 					break;
 			}
@@ -4788,6 +4914,48 @@ class Manage_base extends Controller {
 				/* set the parameters for sending the email */
 				$this->email->from($from, $name);
 				$this->email->to($to);
+				$this->email->subject($this->options['email_subject'] .' '. $email_data['email_subject']);
+				$this->email->message($message);
+				
+				break;
+				
+			case 'docking_accept':
+				$cc = implode(',', $this->user->get_emails_with_access('manage/docked'));
+				
+				$email_data = array(
+					'email_subject' => lang('email_subject_docking_approved') .' - '. $data['sim'],
+					'email_from' => ucfirst(lang('time_from')) .': '. $this->options['sim_name'] .' - '. $$this->options['default_email_address'],
+					'email_content' => ($this->email->mailtype == 'html') ? nl2br($data['message']) : $data['message']
+				);
+				
+				$em_loc = email_location('docked_action', $this->email->mailtype);
+				
+				$message = $this->parser->parse($em_loc, $email_data, TRUE);
+				
+				$this->email->from($this->options['default_email_address'], $this->options['sim_name']);
+				$this->email->to($data['email']);
+				$this->email->cc($cc);
+				$this->email->subject($this->options['email_subject'] .' '. $email_data['email_subject']);
+				$this->email->message($message);
+				
+				break;
+				
+			case 'docking_reject':
+				$cc = implode(',', $this->user->get_emails_with_access('manage/docked'));
+				
+				$email_data = array(
+					'email_subject' => lang('email_subject_docking_rejected') .' - '. $data['sim'],
+					'email_from' => ucfirst(lang('time_from')) .': '. $this->options['sim_name'] .' - '. $$this->options['default_email_address'],
+					'email_content' => ($this->email->mailtype == 'html') ? nl2br($data['message']) : $data['message']
+				);
+				
+				$em_loc = email_location('docked_action', $this->email->mailtype);
+				
+				$message = $this->parser->parse($em_loc, $email_data, TRUE);
+				
+				$this->email->from($this->options['default_email_address'], $this->options['sim_name']);
+				$this->email->to($data['email']);
+				$this->email->cc($cc);
 				$this->email->subject($this->options['email_subject'] .' '. $email_data['email_subject']);
 				$this->email->message($message);
 				

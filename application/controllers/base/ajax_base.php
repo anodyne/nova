@@ -2328,6 +2328,34 @@ class Ajax_base extends Controller {
 				$view = ajax_location('approve_character', $skin, 'admin');
 				
 				break;
+				
+			case 'docking':
+				$this->load->model('docking_model', 'docking');
+				
+				$type = lang('actions_docking') .' '. lang('labels_request');
+				
+				$item = $this->docking->get_docked_item($data['id']);
+				
+				$data['text'] = sprintf(
+					lang('text_docking_approve'),
+					$item->docking_sim_name,
+					lang('global_game_master')
+				);
+				
+				$data['values'] = array(
+					'email' => array(
+						'name' => 'accept',
+						'id' => 'accept',
+						'class' => 'hud',
+						'value' => $this->msgs->get_message('docking_accept_message')),
+				);
+				
+				$data['form'] = 'manage/docked/pending';
+				
+				/* figure out where the view should come from */
+				$view = ajax_location('approve_docking', $skin, 'admin');
+				
+				break;
 		}
 		
 		$data['header'] = sprintf(
@@ -6110,7 +6138,7 @@ class Ajax_base extends Controller {
 				$type = lang('global_character');
 				
 				/* input parameters */
-				$data['values'] = array(
+				$data['inputs'] = array(
 					'email' => array(
 						'name' => 'reject',
 						'id' => 'reject',
@@ -6119,6 +6147,34 @@ class Ajax_base extends Controller {
 				);
 				
 				$data['form'] = 'characters/index/pending/'. $data['id'];
+				
+				break;
+				
+			case 'docking':
+				$this->load->model('docking_model', 'docking');
+				
+				$type = lang('actions_docking') .' '. lang('labels_request');
+				
+				$item = $this->docking->get_docked_item($data['id']);
+				
+				$data['text'] = sprintf(
+					lang('text_docking_reject'),
+					$item->docking_sim_name,
+					lang('global_game_master')
+				);
+				
+				$data['values'] = array(
+					'email' => array(
+						'name' => 'accept',
+						'id' => 'accept',
+						'class' => 'hud',
+						'value' => $this->msgs->get_message('docking_reject_message')),
+				);
+				
+				$data['form'] = 'manage/docked/pending';
+				
+				/* figure out where the view should come from */
+				$view = ajax_location('reject_docking', $skin, 'admin');
 				
 				break;
 		}
