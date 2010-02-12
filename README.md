@@ -8,15 +8,18 @@ Beta (0.9.5-pre)
 
 Last Update
 -----------
-11 February 2010
+12 February 2010
 
 Latest Updates
 --------------
-* fixed bug where the system wouldn't respect daylight savings time changes
-* fixed bug where deleting a tour item would leave orphan dynamic data in the database
-* updated the tour model to include an identifier in the delete_tour_field_data method
-* updated the ajax controller to be able to handle deletion confirmation for a docked item
-* added the del_docked_item ajax view
+* updated the language files
+* updated the docked item management page to be able to approve docking requests
+* updated the docked item management page to be able to reject docking requests
+* updated the ajax controller to handle docking request approval and rejection
+* updated the what's new page to show the full changelog as well
+* added the approve_docking ajax view file
+* added the docked_action email view file
+* fixed error being thrown in the modal window when rejecting a user
 
 Changes in 0.9.5
 ----------------
@@ -43,6 +46,8 @@ Changes in 0.9.5
 * added the icon-cross icon
 * added the icon-check icon
 * added the del\_docked\_item ajax view
+* added the approve\_docking ajax view file
+* added the docked\_action email view file
 * removed the old docking request email views
 * updated the database schema
     * added docking table
@@ -60,6 +65,7 @@ Changes in 0.9.5
     * updated the access pages
     * updated the access roles
     * updated the skin catalogue item
+    * updated the messages to include docking emails
 * updated the 0.9.4 update file
 * updated the update versions array
 * updated the colorbox plugin to version 1.3.6
@@ -75,8 +81,12 @@ Changes in 0.9.5
     * [email\_lang] added _email\_subject\_docking\_gm_
     * [email\_lang] added _email\_content\_docking\_user_
     * [email\_lang] added _email\_content\_docking\_gm_
+    * [email\_lang] added _email\_subject\_docking\_approved_
+    * [email\_lang] added _email\_subject\_docking\_rejected_
     * [text\_lang] added _text\_dockingsections_
     * [text\_lang] added _text\_dockingform_
+    * [text\_lang] added _text\_docking\_approve_
+    * [text\_lang] added _text\_docking\_reject_
     * [facebox\_lang] added _fbx\_content\_del\_docking\_sec_
     * [facebox\_lang] added _fbx\_content\_add\_docking\_sec_
     * [facebox\_lang] added _fbx\_content\_add\_docking\_field_
@@ -135,6 +145,10 @@ Changes in 0.9.5
 * updated the icon-delete icon
 * updated the tour model to include an identifier in the delete\_tour\_field\_data method
 * updated the ajax controller to be able to handle deletion confirmation for a docked item
+* updated the docked item management page to be able to approve docking requests
+* updated the docked item management page to be able to reject docking requests
+* updated the ajax controller to handle docking request approval and rejection
+* updated the what's new page to show the full changelog as well
 * fixed bug where a stray in comma threw errors in IE
 * fixed bug in specs form management where values couldn't be added to the dropdown menus
 * fixed bug in tour form management where values couldn't be added to the dropdown menus
@@ -143,10 +157,10 @@ Changes in 0.9.5
 * fixed bug where the bio page wasn't able to handle choosing which of multiple characters to edit if none was in the URI (#73)
 * fixed bug where the system wouldn't respect daylight savings time changes
 * fixed bug where deleting a tour item would leave orphan dynamic data in the database
+* fixed error being thrown in the modal window when rejecting a user
 
 Known Issues
 ------------
-* cannot accept docked item requests
 * cannot reject docked item requests
 
 Version History

@@ -1,3 +1,18 @@
+02.12.2010
+
+* updated the language files
+* updated the docked item management page to be able to approve docking requests
+* updated the docked item management page to be able to reject docking requests
+* updated the ajax controller to handle docking request approval and rejection
+* updated the what's new page to show the full changelog as well
+
+* added the approve_docking ajax view file
+* added the docked_action email view file
+
+* fixed error being thrown in the modal window when rejecting a user
+
+==========
+
 02.11.2010
 
 * fixed bug where the system wouldn't respect daylight savings time changes
