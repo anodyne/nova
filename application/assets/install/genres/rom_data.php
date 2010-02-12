@@ -11,8 +11,6 @@
 |
 */
 
-# TODO: need to figure out rank classes better
-
 /*
 |---------------------------------------------------------------
 | Genre Variables
