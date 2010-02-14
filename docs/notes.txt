@@ -62,3 +62,10 @@ http://devthought.com/projects/jquery/textboxlist/
 $url = ((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == "on") ? "https" : "http");
 $url.= "://".$_SERVER['HTTP_HOST'];
 $url.= str_replace(basename($_SERVER['SCRIPT_NAME']), '', $_SERVER['SCRIPT_NAME']);
+
+|---------------------------------------------------------------
+| GIT MAGIC
+|---------------------------------------------------------------
+
+// generate a changelog with the subject for the last 8 days
+git log --pretty=format:"* %s" --since=8.days > CHANGELOG
