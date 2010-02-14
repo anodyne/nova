@@ -4,22 +4,15 @@ Anodyne Production's next-generation RPG management system combines popular feat
 
 Current Version
 ---------------
-Beta (0.9.5-pre)
+Beta (0.9.5)
 
 Last Update
 -----------
-12 February 2010
+14 February 2010
 
 Latest Updates
 --------------
-* updated the language files
-* updated the docked item management page to be able to approve docking requests
-* updated the docked item management page to be able to reject docking requests
-* updated the ajax controller to handle docking request approval and rejection
-* updated the what's new page to show the full changelog as well
-* added the approve_docking ajax view file
-* added the docked_action email view file
-* fixed error being thrown in the modal window when rejecting a user
+* fixed bug where the initial my links was wrong
 
 Changes in 0.9.5
 ----------------
@@ -158,6 +151,7 @@ Changes in 0.9.5
 * fixed bug where the system wouldn't respect daylight savings time changes
 * fixed bug where deleting a tour item would leave orphan dynamic data in the database
 * fixed error being thrown in the modal window when rejecting a user
+* fixed bug where the initial my links was wrong
 
 Known Issues
 ------------

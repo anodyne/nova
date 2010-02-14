@@ -1,3 +1,9 @@
+02.14.2010
+
+* fixed bug where the initial my links was wrong
+
+==========
+
 02.12.2010
 
 * updated the language files
