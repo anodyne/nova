@@ -6,7 +6,8 @@
 		
 		$('#accordion').accordion({
 			header: 'h2',
-			collapsible: true
+			collapsible: true,
+			autoHeight: false
 		});
 		$('#accordion a').css('border-bottom', 'none');
 		
