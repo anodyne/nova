@@ -577,7 +577,7 @@ class Admin_base extends Controller {
 			{
 				case 'major':
 					
-					if ($array['version_major'] > $version['files']['major'] || $array['version_major'] > $version['database']['major'])
+					if (version_compare($array['version_major'], $version['files']['major'], '>') || version_compare($array['version_major'], $version['database']['major'], '>'))
 					{
 						$update['version']		= $array['version'];
 						$update['notes']		= $array['notes'];
@@ -589,7 +589,7 @@ class Admin_base extends Controller {
 					
 				case 'minor':
 				
-					if ($array['version_minor'] > $version['files']['minor'] || $array['version_minor'] > $version['database']['minor'])
+					if (version_compare($array['version_minor'], $version['files']['minor'], '>') || version_compare($array['version_minor'], $version['database']['minor'], '>'))
 					{
 						$update['version']		= $array['version'];
 						$update['notes']		= $array['notes'];
@@ -601,7 +601,7 @@ class Admin_base extends Controller {
 					
 				case 'update':
 				
-					if ($array['version_update'] > $version['files']['update'] || $array['version_update'] > $version['database']['update'])
+					if (version_compare($array['version_update'], $version['files']['update'], '>') || version_compare($array['version_update'], $version['database']['update'], '>'))
 					{
 						$update['version']		= $array['version'];
 						$update['notes']		= $array['notes'];
@@ -624,7 +624,7 @@ class Admin_base extends Controller {
 					break;
 			}
 			
-			if ($version['database']['full'] > $version['files']['full'])
+			if (version_compare($version['database']['full'], $version['files']['full'], '>'))
 			{
 				$flash['header'] = lang('update_required');
 				$flash['message'] = sprintf(
@@ -634,7 +634,7 @@ class Admin_base extends Controller {
 				);
 				$flash['status'] = 2;
 			}
-			elseif ($version['database']['full'] < $version['files']['full'])
+			elseif (version_compare($version['database']['full'], $version['files']['full'], '<'))
 			{
 				$flash['header'] = lang('update_required');
 				$flash['message'] = sprintf(

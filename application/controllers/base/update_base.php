@@ -502,7 +502,7 @@ class Update_base extends Controller {
 				$update['link']			= $array['link'];
 			}
 			
-			if ($version['database']['full'] > $version['files']['full'])
+			if (version_compare($version['database']['full'], $version['files']['full'], '>'))
 			{
 				$flash['status'] = 'info';
 				$flash['message'] = sprintf(
@@ -511,7 +511,7 @@ class Update_base extends Controller {
 					$version['database']['full']
 				);
 			}
-			elseif ($version['database']['full'] < $version['files']['full'])
+			elseif (version_compare($version['database']['full'], $version['files']['full'], '<'))
 			{
 				$flash['status'] = 'info';
 				$flash['message'] = sprintf(
