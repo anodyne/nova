@@ -140,6 +140,8 @@ $lang['text_docking_approve'] = "Are you sure you want to approve the docking re
 
 $lang['text_docking_reject'] = "Are you sure you want to reject the docking request for %s? Rejecting this request will notify the %s of your decision automatically using the email below and delete the record. This action is permanent and cannot be undone!";
 
+$lang['text_dynamic_emails'] = "This message includes in the ability to set several variables in the body of the message that will be automatically replaced when the message is parsed. This message includes the following variables that can be used:<br /><br />%s";
+
 /*
 |---------------------------------------------------------------
 | INFORMATIONAL MESSAGES
