@@ -1,7 +1,7 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 /*
 |---------------------------------------------------------------
-| UPDATE - 0.9.4 => 0.9.5
+| UPDATE - 0.9.5 => 0.9.6
 |---------------------------------------------------------------
 */
 
@@ -12,12 +12,12 @@
 */
 
 $system_versions = array(
-	'version'			=> '0.9.5',
+	'version'			=> '0.9.6',
 	'version_major'		=> 0,
 	'version_minor'		=> 9,
-	'version_update'	=> 5,
-	'version_date'		=> '',
-	'version_launch'	=> 'Nova 0.9.5 is an update to the beta release of the next generation RPG management software from Anodyne Productions.',
+	'version_update'	=> 6,
+	'version_date'		=> 1264903200,
+	'version_launch'	=> 'Nova 0.9.6 is an update to the beta release of the next generation RPG management software from Anodyne Productions. This version is the final public beta build and is considered a release candidate for Nova 1.0.',
 	'version_changes'	=> ""
 );
 
@@ -25,7 +25,7 @@ $system_info = array(
 	'sys_last_update'		=> now(),
 	'sys_version_major'		=> 0,
 	'sys_version_minor'		=> 9,
-	'sys_version_update'	=> 5
+	'sys_version_update'	=> 6
 );
 
 /*
@@ -170,5 +170,5 @@ if (isset($drop_column))
 $this->load->model('system_model', 'sys');
 $this->sys->add_system_version($system_versions);
 
-/* End of file update_094.php */
-/* Location: ./application/assets/update/update_094.php */
+/* End of file update_095.php */
+/* Location: ./application/assets/update/update_095.php */
