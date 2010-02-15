@@ -156,27 +156,6 @@ body {
 
 /*
 |---------------------------------------------------------------
-| FOOTER STYLES
-|---------------------------------------------------------------
-*/
-#footer {
-	position: relative;
-	clear: both;
-	
-	text-align: center;
-	font-size: 90%;
-	color: #fff;
-	background: #817865;
-	border-top: 1px solid #494437;
-}
-#footer a {
-	color: #eee;
-	border-bottom: 1px dotted;
-}
-#footer a:hover { border-bottom: 1px solid; }
-
-/*
-|---------------------------------------------------------------
 | FONT COLOR CLASSES
 |---------------------------------------------------------------
 */
@@ -418,17 +397,18 @@ ol.roman { list-style: upper-roman; }
 	font-weight: bold;
 	font-size: .9em;
 	
+	border-radius: 8px;
 	-moz-border-radius: 8px;
 	-webkit-border-radius: 8px;
 }
 .flash-success {
 	border: 1px solid #a4c897;
-	background: #ccecc5;
+	background: #ccecc5 url('../images/gradient-30-bg.png') repeat-x 0 0;
 	color: #376b0e;
 }
 .flash-error {
 	border: 1px solid #cd0a0a; 
-	background: #fef1ec;
+	background: #fef1ec url('../images/gradient-30-bg.png') repeat-x 0 0;
 	color: #cd0a0a;
 }
 .flash-info {

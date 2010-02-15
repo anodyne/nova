@@ -8,3 +8,6 @@ sections:
   -
     type: login
     preview: preview-login.jpg
+  -
+    type: wiki
+    preview: preview-wiki.jpg

@@ -17,7 +17,6 @@ body {
 |---------------------------------------------------------------
 | WRAPPER
 |---------------------------------------------------------------
-| The wrapper controls the width and centering of the layout
 */
 .wrapper {
 	width: 960px;
@@ -51,18 +50,19 @@ body {
 	text-align: center;
 }
 #menu .nav-main ul li {
-	margin: 0 10px;
+	margin: 0 5px;
 	padding: 0;
 	display: inline;
 }
 #menu .nav-main ul li a {
 	padding: 0 0 2px 0;
+	margin: 0 5px;
 	
 	text-decoration: none;
 	color: #666;
 	font-weight: bold;
 }
-#menu .nav-main ul li a span {}
+#menu .nav-main ul li a span { padding: 0; }
 #menu .nav-main ul li a:hover { border-bottom: 2px solid #817865; }
 #menu .nav-main ul li a.active {
 	border-bottom: 2px solid #0074c7;
@@ -407,17 +407,18 @@ ul.none, ol.none { list-style: none; }
 	font-weight: bold;
 	font-size: .9em;
 	
+	border-radius: 8px;
 	-moz-border-radius: 8px;
 	-webkit-border-radius: 8px;
 }
 .flash-success {
 	border: 1px solid #a4c897;
-	background: #ccecc5;
+	background: #ccecc5 url('../images/gradient-30-bg.png') repeat-x 0 0;
 	color: #376b0e;
 }
 .flash-error {
 	border: 1px solid #cd0a0a; 
-	background: #fef1ec;
+	background: #fef1ec url('../images/gradient-30-bg.png') repeat-x 0 0;
 	color: #cd0a0a;
 }
 .flash-info {
@@ -473,9 +474,11 @@ hr {
 }
 
 .panel-handle {
-	border-bottom: 1px solid #444;
 	text-align: center;
 	font-size: 85%;
+	border-top: 0 !important;
+	border-left: 0 !important;
+	border-right: 0 !important;
 }
 .panel-trigger span { text-align: center; }
 
