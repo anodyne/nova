@@ -27,6 +27,34 @@ class Docking_model_base extends Model {
 	|---------------------------------------------------------------
 	*/
 	
+	function get_docked_item($id = '')
+	{
+		$this->db->from('docking');
+		$this->db->where('docking_id', $id);
+		$this->db->limit(1);
+		
+		$query = $this->db->get();
+		
+		if ($query->num_rows() > 0)
+		{
+			$row = $query->row();
+			
+			return $row;
+		}
+		
+		return FALSE;
+	}
+	
+	function get_docked_items()
+	{
+		$this->db->from('docking');
+		$this->db->order_by('docking_date', 'desc');
+		
+		$query = $this->db->get();
+		
+		return $query;
+	}
+	
 	function get_docking_data($item = '', $field = '')
 	{
 		$this->db->from('docking_data');
@@ -72,30 +100,9 @@ class Docking_model_base extends Model {
 		return $query;
 	}
 	
-	function get_docked_item($id = '')
+	function get_docking_section_details($id = '')
 	{
-		$this->db->from('docking');
-		$this->db->where('docking_id', $id);
-		$this->db->limit(1);
-		
-		$query = $this->db->get();
-		
-		if ($query->num_rows() > 0)
-		{
-			$row = $query->row();
-			
-			return $row;
-		}
-		
-		return FALSE;
-	}
-	
-	function get_docked_items()
-	{
-		$this->db->from('docking');
-		$this->db->order_by('docking_date', 'desc');
-		
-		$query = $this->db->get();
+		$query = $this->db->get_where('docking_sections', array('section_id' => $id));
 		
 		return $query;
 	}
@@ -106,13 +113,6 @@ class Docking_model_base extends Model {
 		$this->db->order_by('section_order', 'asc');
 		
 		$query = $this->db->get();
-		
-		return $query;
-	}
-	
-	function get_docking_section_details($id = '')
-	{
-		$query = $this->db->get_where('docking_sections', array('section_id' => $id));
 		
 		return $query;
 	}
@@ -152,23 +152,6 @@ class Docking_model_base extends Model {
 	|---------------------------------------------------------------
 	*/
 	
-	function insert_docking_data($data = '')
-	{
-		$query = $this->db->insert('docking_data', $data);
-		
-		/* optimize the table */
-		$this->dbutil->optimize_table('docking_data');
-		
-		return $query;
-	}
-	
-	function insert_docking_record($data = '')
-	{
-		$query = $this->db->insert('docking', $data);
-		
-		return $query;
-	}
-	
 	function add_docking_field($data = '')
 	{
 		$query = $this->db->insert('docking_fields', $data);
@@ -201,11 +184,37 @@ class Docking_model_base extends Model {
 		return $query;
 	}
 	
+	function insert_docking_data($data = '')
+	{
+		$query = $this->db->insert('docking_data', $data);
+		
+		/* optimize the table */
+		$this->dbutil->optimize_table('docking_data');
+		
+		return $query;
+	}
+	
+	function insert_docking_record($data = '')
+	{
+		$query = $this->db->insert('docking', $data);
+		
+		return $query;
+	}
+	
 	/*
 	|---------------------------------------------------------------
 	| DELETE METHODS
 	|---------------------------------------------------------------
 	*/
+	
+	function delete_docked_item($id = '')
+	{
+		$query = $this->db->delete('docking', array('docking_id' => $id));
+		
+		$this->dbutil->optimize_table('docking');
+		
+		return $query;
+	}
 	
 	function delete_docking_field($id = '')
 	{
@@ -230,15 +239,6 @@ class Docking_model_base extends Model {
 		$query = $this->db->delete('docking_values', array('value_id' => $id));
 		
 		$this->dbutil->optimize_table('docking_values');
-		
-		return $query;
-	}
-	
-	function delete_docked_item($id = '')
-	{
-		$query = $this->db->delete('docking', array('docking_id' => $id));
-		
-		$this->dbutil->optimize_table('docking');
 		
 		return $query;
 	}
@@ -269,28 +269,6 @@ class Docking_model_base extends Model {
 		return $query;
 	}
 	
-	function update_docking_record($data = '', $id = '')
-	{
-		$this->db->where('docking_id', $id);
-		$query = $this->db->update('docking', $data);
-		
-		$this->dbutil->optimize_table('docking');
-		
-		return $query;
-	}
-	
-	function update_field_sections($old_id = '', $new_id = '')
-	{
-		$data = array('field_section' => $new_id);
-		
-		$this->db->where('field_section', $old_id);
-		$query = $this->db->update('docking_fields', $data);
-		
-		$this->dbutil->optimize_table('docking_fields');
-		
-		return $query;
-	}
-	
 	function update_docking_field($id = '', $data = '')
 	{
 		$this->db->where('field_id', $id);
@@ -311,12 +289,34 @@ class Docking_model_base extends Model {
 		return $query;
 	}
 	
+	function update_docking_record($data = '', $id = '')
+	{
+		$this->db->where('docking_id', $id);
+		$query = $this->db->update('docking', $data);
+		
+		$this->dbutil->optimize_table('docking');
+		
+		return $query;
+	}
+	
 	function update_docking_section($id = '', $data = '')
 	{
 		$this->db->where('section_id', $id);
 		$query = $this->db->update('docking_sections', $data);
 		
 		$this->dbutil->optimize_table('docking_sections');
+		
+		return $query;
+	}
+	
+	function update_field_sections($old_id = '', $new_id = '')
+	{
+		$data = array('field_section' => $new_id);
+		
+		$this->db->where('field_section', $old_id);
+		$query = $this->db->update('docking_fields', $data);
+		
+		$this->dbutil->optimize_table('docking_fields');
 		
 		return $query;
 	}
