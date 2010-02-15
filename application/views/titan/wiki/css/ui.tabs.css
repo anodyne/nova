@@ -30,9 +30,10 @@
 	line-height: 28px;
     
     list-style: none;
-    border: 1px solid #ddd !important;
-    background: #f3f3f3 !important;
+    border: 1px solid #222 !important;
+    background: #0b0b0b !important;
     
+    border-radius: 3px;
     -moz-border-radius: 3px;
     -webkit-border-radius: 3px;
 }
@@ -60,11 +61,12 @@
     text-align: center;
     text-decoration: none;
     white-space: nowrap; /* required in IE 6 */
-    background: #f3f3f3;
-    color: #999;
+    background: #0b0b0b;
+    color: #777;
     border: 0;
     font-size: 85%;
     
+    border-radius: 20px;
     -moz-border-radius: 20px;
     -webkit-border-radius: 20px;
 }
@@ -73,18 +75,19 @@
 .ui-tabs-nav .ui-tabs-selected a:hover {
     outline: 0; /* prevent dotted border in Firefox */
 	
-	background: #999;
+	background: #444;
     border: 0;
-    color: #eee;
+    color: #999;
 	
+    border-radius: 20px;
 	-moz-border-radius: 20px;
     -webkit-border-radius: 20px;
 }
 .ui-tabs-nav a:hover, .ui-tabs-nav a:active {
     outline: 0; /* prevent dotted border in Firefox */
     
-    background-color: #ccc;
-	color: #fff;
+    background-color: #222;
+	color: #777;
 	border: 0;
 	
 	-moz-border-radius: 20px;
@@ -145,7 +148,7 @@
 .ui-tabs-panel {
     padding: .5em 8px;
     
-    background: #eee; /* declare background color for container to avoid distorted fonts in IE while fading */
+    background: #000; /* declare background color for container to avoid distorted fonts in IE while fading */
 }
 .ui-tabs-loading em {
     padding: 0 0 0 20px;

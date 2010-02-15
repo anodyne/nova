@@ -237,7 +237,7 @@ a:hover { color: #f3b907; }
 input[type=text],
 input[type=password] {
 	border: 1px solid #333;
-	color: #666;
+	color: #888;
 	font-family: "lucida grande", verdana, arial, sans-serif;
 	background: #000;
 	font-size: 120%;
@@ -257,7 +257,7 @@ textarea {
 	font-size: 100%;
 	font-family: "lucida grande", verdana, arial, sans-serif;
 	border: 1px solid #333;
-	color: #666;
+	color: #888;
 	background: #000;
 	
 	border-radius: 2px;
@@ -272,7 +272,7 @@ textarea:focus {
 
 select {
 	border: 1px solid #333;
-	color: #666;
+	color: #888;
 	font-family: "lucida grande", verdana, arial, sans-serif;
 	background: #000;
 	
@@ -304,8 +304,8 @@ kbd {
 | TABLE STYLES
 |---------------------------------------------------------------
 */
-tr.alt td { background-color: #e3e3e3; }
-tr.light_gray { background-color: #ddd; }
+tr.alt td { background-color: #0b0b0b; }
+tr.light_gray { background-color: #0b0b0b; }
 
 th {
 	text-align: center;
@@ -318,43 +318,39 @@ th {
 |---------------------------------------------------------------
 */
 button {
-	border-radius: 6px;
-	-moz-border-radius: 6px;
-	-webkit-border-radius: 6px;
+	border-radius: 25px;
+	-moz-border-radius: 25px;
+	-webkit-border-radius: 25px;
 	
 	font-weight: bold;
 	font-size: 105%;
 }
 
 button.button-main {
-	border: 1px solid orange;
-	background: #f3b907 url('../images/gradient-hard-30.png') repeat-x center left;
-	color: #111;
-	text-shadow: 1px 1px 1px rgba(255, 255, 255, .35);
+	border: 1px solid #333;
+	background: #000 url('../images/gradient-hard-30.png') repeat-x center left;
+	color: #ccc;
 }
 button.button-main:hover {
-	border: 1px solid darkblue;
-	background: #3c76bd url('../images/gradient-hard-50.png') repeat-x center left;
+	border: 1px solid #333;
+	background: #111 url('../images/gradient-hard-50.png') repeat-x center left;
 	color: #fff;
-	text-shadow: 1px 1px 1px rgba(0, 0, 0, .35);
-	
-	-moz-box-shadow: 0 0 12px rgba(255, 255, 255, .35);
 }
 
 button.button-sec {
-	border: 1px solid #222;
-	background: #111 url('../images/gradient-hard-30.png') repeat-x center left;
-	color: #888;
+	border: 1px solid transparent;
+	color: #555;
+	background: transparent;
 }
 button.button-sec:hover {
-	border: 1px solid #fbd850;
-	color: #eb8f00;
-	background: #111 url('../images/gradient-hard-50.png') repeat-x center left;
+	color: #aaa;
+	border: 1px solid #222;
+	background: #111 url('../images/gradient-hard-30.png') repeat-x center left;
 }
 
 button.button-small {
 	border: 1px solid #ccc;
-	background: #fff url('../images/button-sec_bg.jpg') repeat-x top left;
+	background: #fff url('../images/gradient-soft-30.png') repeat-x center left;
 	color: #777;
 	font-weight: normal !important;
 	font-size: 90%;
@@ -364,26 +360,27 @@ button.button-small:hover { border: 1px solid #aaa; }
 input.button-main {
 	font-weight: bold;
 	font-size: 120%;
-	border: 1px solid #e78f08;
-	background: #f6a828 url('../images/gradient-hard-30.png') repeat-x center left;
-	color: #fff;
+	border: 1px solid #333;
+	background: #000 url('../images/gradient-hard-30.png') repeat-x center left;
+	color: #ccc;
 }
 input.button-main:hover {
-	border: 1px solid #e78f08;
-	background: #f6a828 url('../images/gradient-hard-50.png') repeat-x center left;
+	border: 1px solid #333;
+	background: #111 url('../images/gradient-hard-50.png') repeat-x center left;
 	color: #fff;
 }
 
 input.button-sec {
 	font-weight: bold;
 	font-size: 120%;
-	border: 1px solid #ccc;
-	background: #fff url('../images/button-sec-bg.png') repeat-x top left;
-	color: #1c94c4;
+	border: 1px solid transparent;
+	color: #555;
+	background: transparent;
 }
 input.button-sec:hover {
-	border: 1px solid #fbd850;
-	color: #eb8f00;
+	color: #aaa;
+	border: 1px solid #222;
+	background: #111 url('../images/gradient-hard-30.png') repeat-x center left;
 }
 
 button[disabled],
@@ -393,9 +390,9 @@ input.button-main[disabled]:hover {
 	opacity: .5;
 	filter:alpha(opacity='70');
 	
-	border: 1px solid #e78f08;
-	background: #f6a828 url('../images/gradient-hard-30.png') repeat-x center left;
-	color: #fff;
+	border: 1px solid #333;
+	background: #000 url('../images/gradient-hard-30.png') repeat-x center left;
+	color: #ccc;
 }
 
 /*
@@ -403,9 +400,9 @@ input.button-main[disabled]:hover {
 | COMMENT STYLES
 |---------------------------------------------------------------
 */
-#comments p, #news_blocks p, .post_info {
-    background-color: #f3f3f3;
-    border: 1px solid #ddd;
+#comments p, #news_blocks p, .post_info, .info-full, #notes {
+    background-color: #0b0b0b;
+    border: 1px solid transparent;
     
     border-radius: 3px;
     -moz-border-radius: 3px;
@@ -430,24 +427,24 @@ ol.roman { list-style: upper-roman; }
 	font-weight: bold;
 	font-size: .9em;
 	
-	border-radius: 4px;
-	-moz-border-radius: 4px;
-	-webkit-border-radius: 4px;
+	border-radius: 5px;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
 }
 .flash-success {
-	border: 1px solid #a4c897;
-	background: #ccecc5 url('../images/gradient-soft-30.png') repeat-x center left;
-	color: #376b0e;
+	border: 1px solid #108500;
+	background: #108500 url('../images/gradient-soft-30.png') repeat-x center left;
+	color: #fff;
 }
 .flash-error {
 	border: 1px solid #cd0a0a; 
-	background: #d93232 url('../images/gradient-soft-30.png') repeat-x center left;
+	background: #cd0a0a url('../images/gradient-soft-30.png') repeat-x center left;
 	color: #fff;
 }
 .flash-info {
-	border: 1px solid #fed22f;
-	background: #fff0a5 url('../images/gradient-soft-30.png') repeat-x center left;
-	color: #363636;
+	border: 1px solid #406ceb;
+	background: #406ceb url('../images/gradient-soft-30.png') repeat-x center left;
+	color: #fff;
 }
 
 /*

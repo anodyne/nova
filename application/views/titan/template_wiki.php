@@ -41,6 +41,18 @@ $link = array(
 	'charset'	=> 'utf-8'
 );
 
+/* load the panel helper */
+$this->load->helper('panel');
+
+$panel = array(
+	'inbox' => array(
+		'src' => APPFOLDER .'/views/'. $current_skin .'/'. $sec .'/images/panel-mail.png'),
+	'writing' => array(
+		'src' => APPFOLDER .'/views/'. $current_skin .'/'. $sec .'/images/panel-writing.png'),
+	'dashboard' => array(
+		'src' => APPFOLDER .'/views/'. $current_skin .'/'. $sec .'/images/panel-dashboard.png'),
+);
+
 echo "<?xml version='1.0' encoding='UTF-8'?>\r\n";
 
 ?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
@@ -65,125 +77,85 @@ echo "<?xml version='1.0' encoding='UTF-8'?>\r\n";
 		<?php echo $javascript;?>
 	</head>
 	<body>
-		<noscript>
-			<span class="UITheme">
-				<div class="system_warning ui-state-error"><?php echo lang_output('text_javascript_off', '');?></div>
-			</span>
-		</noscript>
-		
-		<?php if ($this->session->userdata('userid') !== FALSE): ?>
-			<!-- USER PANEL -->
-			<div id="panel" class="UITheme">
-				<div class="panel-body">
-					<div class="wrapper">
-						<table class="table100">
-							<tbody>
-								<tr>
-									<td class="panel_1 align_top"><?php echo $panel_1;?></td>
-									<td class="panel_spacer"></td>
-									<td class="panel_2 align_top"><?php echo $panel_2;?></td>
-									<td class="panel_spacer"></td>
-									<td class="panel_3 align_top"><?php echo $panel_3;?></td>
-								</tr>
-							</tbody>
-						</table>
+		<div id="wrap">
+			<noscript>
+				<span class="UITheme">
+					<div class="system_warning ui-state-error"><?php echo lang_output('text_javascript_off', '');?></div>
+				</span>
+			</noscript>
+			
+			<?php if ($this->session->userdata('userid') !== FALSE): ?>
+				<!-- USER PANEL -->
+				<div class="wrapper">
+					<div id="panel" class="UITheme">
+						<div class="panel-body">
+							<table class="table100">
+								<tbody>
+									<tr>
+										<td class="panel_1 align_top"><?php echo $panel_1;?></td>
+										<td class="panel_spacer"></td>
+										<td class="panel_2 align_top"><?php echo $panel_2;?></td>
+										<td class="panel_spacer"></td>
+										<td class="panel_3 align_top"><?php echo $panel_3;?></td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
 					</div>
 				</div>
-				<div class="panel-handle">
-					<div class="wrapper">
-						<?php echo $panel_workflow;?>
-					</div>
-				</div>
-			</div>
-		<?php endif; ?>
-		
-		<!-- HEAD -->
-		<div id="head">
+			<?php endif; ?>
+			
+			<!-- HEAD -->
 			<div class="wrapper">
-				<div id="menu">
-					<div class="nav-main">
-						<?php echo $nav_main;?>
-					</div>
-				</div>
-				
-				<div class="head_content">
-					<?php echo img(APPFOLDER .'/views/'. $current_skin .'/'. $sec .'/images/head-logo.png', FALSE);?>
-				</div>
-			</div>
-		</div>
-		
-		<div id="lower-head">
-			<div class="wrapper head-content">
-				<?php
-				
-				$this->load->helper('text');
-				
-				$created = $this->wiki->get_recently_created(2);
-				$updated = $this->wiki->get_recently_updated(2);
-				
-				if ($updated->num_rows() > 0)
-				{
-					echo '<div class="right">';
-						echo '<h2>'. ucwords(lang('status_recently') .' '. lang('actions_updated')) .'</h2>';
+				<div id="head">
+					<div class="head_content">
+						<div class="panel-controls">
+							<?php if ($this->auth->is_logged_in()): ?>
+								<?php echo panel_inbox(TRUE, TRUE, FALSE, '(x)', img($panel['inbox']));?> &nbsp;&nbsp;
+								<?php echo panel_writing(TRUE, TRUE, FALSE, '(x)', img($panel['writing']));?> &nbsp;&nbsp;
+								<?php echo panel_dashboard(FALSE, img($panel['dashboard']));?>
+							<?php else: ?>
+								<strong><?php echo anchor('login/index', ucfirst(lang('actions_login')), array('class' => 'login-text'));?></strong>
+							<?php endif;?>
+						</div>
 						
-						echo '<ul>';
-						foreach ($updated->result() as $u)
-						{
-							echo '<li>';
-							echo '<strong>'. anchor('wiki/view/page/'. $u->page_id, $u->draft_title .' '. RARROW) .'</strong><br />';
-							echo '<span class="fontSmall">'. word_limiter($u->draft_summary, 25) .'</span>';
-							echo '</li>';
-						}
-						echo '</ul>';
-					echo '</div>';
-				}
-				
-				if ($created->num_rows() > 0)
-				{
-					echo '<h2>'. ucwords(lang('status_recently') .' '. lang('actions_created')) .'</h2>';
+						<h1><?php echo $this->options['sim_name'];?></h1>
+					</div>
 					
-					echo '<ul>';
-					foreach ($created->result() as $c)
-					{
-						echo '<li>';
-						echo '<strong>'. anchor('wiki/view/page/'. $c->page_id, $c->draft_title .' '. RARROW) .'</strong><br />';
-						echo '<span class="fontSmall">'. word_limiter($c->draft_summary, 25) .'</span>';
-						echo '</li>';
-					}
-					echo '</ul>';
-				}
-				else
-				{
-					echo '<h1>'. $this->options['sim_name'] .'</h1>';
-				}
-				
-				?>
-			</div>
-		</div>
-		
-		<!-- BODY -->
-		<div id="body">
-			<div class="wrapper">
-				<!-- SUB NAVIGATION -->
-				<div class="nav-sub">
-					<?php echo $nav_sub;?>
+					<div id="menu">
+						<div class="nav-main">
+							<?php echo $nav_main;?>
+						</div>
+					</div>
 				</div>
-				
-				<!-- PAGE CONTENT -->
-				<div class="content">
-					<?php echo $flash_message;?>
-					<?php echo $content;?>
-					<?php echo $ajax;?>
+			</div>
+			
+			<!-- BODY -->
+			<div class="wrapper">
+				<div id="body">
+					<!-- SUB NAVIGATION -->
+					<div class="nav-sub">
+						<?php echo $nav_sub;?>
+					</div>
 					
-					<div style="clear:both;">&nbsp;</div>
+					<!-- PAGE CONTENT -->
+					<div class="content">
+						<?php echo $flash_message;?>
+						<?php echo $content;?>
+						<?php echo $ajax;?>
+						
+						<div style="clear:both;">&nbsp;</div>
+					</div>
 				</div>
 			</div>
 		</div>
 		
 		<!-- FOOTER -->
-		<div id="footer">
-			Powered by <strong><?php echo APP_NAME;?></strong> from <a href="http://www.anodyne-productions.com" target="_blank">Anodyne Productions</a> | 
-			<?php echo anchor('main/credits', 'Site Credits');?>
+		<div class="wrapper">
+			<div id="footer">
+				Powered by <strong><?php echo APP_NAME;?></strong> from <a href="http://www.anodyne-productions.com" target="_blank">Anodyne Productions</a> | 
+				<?php echo anchor('main/credits', 'Site Credits');?>
+			</div>
 		</div>
 	</body>
 </html>
