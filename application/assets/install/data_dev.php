@@ -3546,7 +3546,7 @@ $system_info = array(
 		'sys_install_date' => now(),
 		'sys_version_major' => 0,
 		'sys_version_minor' => 9,
-		'sys_version_update' => 5)
+		'sys_version_update' => 6)
 );
 
 $system_versions = array(
@@ -3814,6 +3814,14 @@ $system_versions = array(
 * fixed bug where deleting a tour item would leave orphan dynamic data in the database
 * fixed error being thrown in the modal window when rejecting a user
 * fixed bug where the initial my links was wrong"),
+	array(
+		'version' => '0.9.6',
+		'version_major' => '0',
+		'version_minor' => '9',
+		'version_update' => '6',
+		'version_date' => now(),
+		'version_launch'	=> 'Nova 0.9.6 is an update to the beta release of the next generation RPG management software from Anodyne Productions.',
+		'version_changes'	=> ""),
 );
 
 $tour = array(
