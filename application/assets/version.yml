@@ -1,8 +1,9 @@
-version: 0.9.5
+version: 0.9.6
 version_major: 0
 version_minor: 9
-version_update: 5
+version_update: 6
 severity: minor
-notes: Nova Beta is an update to a development release of the next generation RPG management software from Anodyne Productions.
+notes: |
+  Nova Beta is an update to a development release of the next generation RPG management software from Anodyne Productions. This update, which is one of the last...
 date: 17 December 2009
 link: http://www.anodyne-productions.com
