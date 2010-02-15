@@ -249,6 +249,7 @@ class Characters_base extends Controller {
 							'character' => $this->char->get_character_name($id),
 							'position' => $this->pos->get_position($c_update['position_1'], 'pos_name'),
 							'rank' => $this->ranks->get_rank($c_update['rank'], 'rank_name'),
+							'sim' => $this->options['sim_name'],
 							'ship' => $this->options['sim_name']
 						);
 						
@@ -327,6 +328,7 @@ class Characters_base extends Controller {
 							'name' => (!empty($user->name)) ? $user->name : $user->email,
 							'character' => $this->char->get_character_name($id),
 							'position' => $this->pos->get_position($info->position_1, 'pos_name'),
+							'sim' => $this->options['sim_name'],
 							'ship' => $this->options['sim_name']
 						);
 						

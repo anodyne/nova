@@ -1309,7 +1309,7 @@ class Manage_base extends Controller {
 						$args = array(
 							'gm_name' => (!empty($item->docking_gm_name)) ? $item->docking_gm_name : $item->docking_gm_email,
 							'sim_name' => $item->docking_sim_name,
-							'ship' => $this->options['sim_name']
+							'sim' => $this->options['sim_name']
 						);
 						
 						/* parse the message with the args */
@@ -1361,7 +1361,7 @@ class Manage_base extends Controller {
 						$args = array(
 							'gm_name' => (!empty($item->docking_gm_name)) ? $item->docking_gm_name : $item->docking_gm_email,
 							'sim_name' => $item->docking_sim_name,
-							'ship' => $this->options['sim_name']
+							'sim' => $this->options['sim_name']
 						);
 						
 						/* parse the message with the args */
