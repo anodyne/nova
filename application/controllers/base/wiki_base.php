@@ -600,7 +600,7 @@ class Wiki_base extends Controller {
 						}
 					}
 					
-					$category_string = implode(',', $category_array);
+					$category_string = (isset($category_array) && is_array($category_array)) ? implode(',', $category_array) : '';
 					
 					/* create the array of draft data */
 					$draft_array = array(
@@ -1162,10 +1162,19 @@ class Wiki_base extends Controller {
 					
 					$data['header'] = ucfirst(lang('labels_draft')) .' - '. $d->draft_title;
 					
-					$categories = explode(',', $d->draft_categories);
+					$count = substr_count($d->draft_categories, ',');
 					
-					if (is_array($categories))
+					if ($count === 0 && empty($d->draft_categories))
 					{
+						$string = sprintf(
+							lang('error_not_found'),
+							lang('labels_categories')
+						);
+					}
+					else
+					{
+						$categories = explode(',', $d->draft_categories);
+						
 						foreach ($categories as $c)
 						{
 							$name = $this->wiki->get_category($c, 'wikicat_name');
@@ -1174,20 +1183,6 @@ class Wiki_base extends Controller {
 						}
 						
 						$string = implode(' | ', $cat);
-					}
-					else
-					{
-						if (empty($categories))
-						{
-							$string = sprintf(
-								lang('error_not_found'),
-								lang('labels_categories')
-							);
-						}
-						else
-						{
-							$string = anchor('wiki/category/'. $categories, $categories);
-						}
 					}
 					
 					$data['draft'] = array(
@@ -1224,11 +1219,20 @@ class Wiki_base extends Controller {
 					$updated = gmt_to_local($p->page_updated_at, $this->timezone, $this->dst);
 					
 					$data['header'] = $p->draft_title;
+
+					$count = substr_count($p->draft_categories, ',');
 					
-					$categories = explode(',', $p->draft_categories);
-					
-					if (is_array($categories))
+					if ($count === 0 && empty($p->draft_categories))
 					{
+						$string = sprintf(
+							lang('error_not_found'),
+							lang('labels_categories')
+						);
+					}
+					else
+					{
+						$categories = explode(',', $p->draft_categories);
+						
 						foreach ($categories as $c)
 						{
 							$name = $this->wiki->get_category($c, 'wikicat_name');
@@ -1237,20 +1241,6 @@ class Wiki_base extends Controller {
 						}
 						
 						$string = implode(' | ', $cat);
-					}
-					else
-					{
-						if (empty($categories))
-						{
-							$string = sprintf(
-								lang('error_not_found'),
-								lang('labels_categories')
-							);
-						}
-						else
-						{
-							$string = anchor('wiki/category/'. $categories, $categories);
-						}
 					}
 					
 					$data['page'] = array(
