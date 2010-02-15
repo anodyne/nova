@@ -5551,6 +5551,67 @@ class Ajax_base extends Controller {
 			$data['value']['type'] = $row->message_type;
 			
 			$data['old_key'] = $row->message_key;
+			
+			switch ($row->message_key)
+			{
+				case 'accept_message':
+					$op = array(
+						'#name# '. NDASH .' '. lang('global_user_poss') .' '. lang('labels_name'),
+						'#character# '. NDASH .' '. lang('global_character') .' '. lang('labels_name'),
+						'#sim# '. NDASH .' '. lang('global_sim') .' '. lang('labels_name'),
+						'#position# '. NDASH .' '. lang('global_position'),
+						'#rank# '. NDASH .' '. lang('global_rank')
+					);
+					
+					$data['text'] = sprintf(
+						lang('text_dynamic_emails'),
+						implode('<br />', $op)
+					);
+					break;
+					
+				case 'reject_message':
+					$op = array(
+						'#name# '. NDASH .' '. lang('global_user_poss') .' '. lang('labels_name'),
+						'#character# '. NDASH .' '. lang('global_character') .' '. lang('labels_name'),
+						'#sim# '. NDASH .' '. lang('global_sim') .' '. lang('labels_name'),
+						'#position# '. NDASH .' '. lang('global_position'),
+					);
+					
+					$data['text'] = sprintf(
+						lang('text_dynamic_emails'),
+						implode('<br />', $op)
+					);
+					break;
+					
+				case 'docking_accept_message':
+					$op = array(
+						'#sim# '. NDASH .' '. lang('global_sim') .' '. lang('labels_name'),
+						'#sim_name# '. NDASH .' '. lang('actions_docked') .' '. lang('global_sim') .' '. lang('labels_name'),
+						'#gm_name# '. NDASH .' '. lang('actions_docked') .' '. lang('global_game_master') .' '. lang('labels_name')
+					);
+					
+					$data['text'] = sprintf(
+						lang('text_dynamic_emails'),
+						implode('<br />', $op)
+					);
+					break;
+					
+				case 'docking_reject_message':
+					$op = array(
+						'#sim# '. NDASH .' '. lang('global_sim') .' '. lang('labels_name'),
+						'#sim_name# '. NDASH .' '. lang('actions_docked') .' '. lang('global_sim') .' '. lang('labels_name'),
+						'#gm_name# '. NDASH .' '. lang('actions_docked') .' '. lang('global_game_master') .' '. lang('labels_name')
+					);
+					
+					$data['text'] = sprintf(
+						lang('text_dynamic_emails'),
+						implode('<br />', $op)
+					);
+					break;
+				
+				default:
+					$data['text'] = '';
+			}
 		}
 		
 		$data['label'] = array(
