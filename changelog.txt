@@ -1,3 +1,26 @@
+02.15.2010
+
+* updated the dynamic emails to use #sim# and #ship#
+* updated the language files
+* updated the edit site messages page to handle special instructions for some site messages
+* updated the way updates are checked to use PHP's version_compare function
+* updated the constants config file
+* updated the basic install data
+* updated the docking model methods to be listed alphabetically
+* updated the sunny skin
+* updated the titan skin
+
+* fixed bug where the site messages always showed the type as page title (#74)
+* fixed bug where the system versions accordion broke when there were multiple versions
+* fixed bug where the system versions threw an error when only one version was in the database
+* fixed bug where thresher threw errors when submitting a page without categories
+* fixed bug where thresher still wasn't printing categories properly (should be completely fixed now)
+* fixed bug where thresher was missing some language elements
+
+* added the 0.9.6 update file
+
+==========
+
 02.14.2010
 
 * fixed bug where the initial my links was wrong
