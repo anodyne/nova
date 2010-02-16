@@ -4,37 +4,37 @@ Anodyne Production's next-generation RPG management system combines popular feat
 
 Current Version
 ---------------
-Beta (0.9.6-pre)
+Release Candidate 1 (0.9.6-pre)
 
 Last Update
 -----------
-15 February 2010
+16 February 2010
 
 Latest Updates
 --------------
-* updated the dynamic emails to use sim and ship
-* updated the language files
-* updated the edit site messages page to handle special instructions for some site messages
-* updated the way updates are checked to use PHP's version\_compare function
-* updated the constants config file
-* updated the basic install data
-* updated the docking model methods to be listed alphabetically
-* updated the sunny skin
-* updated the titan skin
-* fixed bug where the site messages always showed the type as page title (#74)
-* fixed bug where the system versions accordion broke when there were multiple versions
-* fixed bug where the system versions threw an error when only one version was in the database
-* fixed bug where thresher threw errors when submitting a page without categories
-* fixed bug where thresher still wasn't printing categories properly (should be completely fixed now)
-* fixed bug where thresher was missing some language elements
-* added the 0.9.6 update file
+* updated the jquery ui to version 1.8rc2
+* updated the head include files with the new jquery ui css naming scheme
+* updated all the skins with the new naming scheme
+* updated the install data
+* updated the 0.9.6 update file
+* updated the user section view files to use the new form layout
+* updated the characters section view files to use the new form layout
+* updated the skin stylesheets to tweak the new form layout
+* updated the manage section view files to use the new form layout on some pages
+* updated the site section view files to use the new form layout on some pages
+* updated the admin section to clean up some UI inconsistencies
+* removed the old jquery ui css files
+* added the new jquery ui css files
 
 Changes in 0.9.6
 ----------------
 * added the 0.9.6 update file
+* added the new jquery ui css files
+* removed the old jquery ui css files
 * updated the install data
     * system info
     * system versions info
+    * component info
 * updated the language files
     * [text\_lang] added _text\_dynamic\_emails_
 * updated the sunny skin
@@ -62,6 +62,15 @@ Changes in 0.9.6
 * updated the way updates are checked to use PHP's version\_compare function
 * updated the constants config file
 * updated the docking model methods to be listed alphabetically
+* updated the jquery ui to version 1.8rc2
+* updated the head include files with the new jquery ui css naming scheme
+* updated all the skins with the new naming scheme
+* updated the user section view files to use the new form layout
+* updated the characters section view files to use the new form layout
+* updated the skin stylesheets to tweak the new form layout
+* updated the manage section view files to use the new form layout on some pages
+* updated the site section view files to use the new form layout on some pages
+* updated the admin section to clean up some UI inconsistencies
 * fixed bug where the site messages always showed the type as page title (#74)
 * fixed bug where the system versions accordion broke when there were multiple versions
 * fixed bug where the system versions threw an error when only one version was in the database
