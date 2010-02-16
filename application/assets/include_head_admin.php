@@ -25,12 +25,12 @@
 				@import url("<?php echo base_url() . APPFOLDER .'/views/'. $current_skin .'/admin/css/jquery.facebox.css';?>");
 			<?php endif;?>
 			
-			@import url("<?php echo base_url() . APPFOLDER .'/assets/js/css/ui.core.css';?>");
+			@import url("<?php echo base_url() . APPFOLDER .'/assets/js/css/jquery.ui.core.css';?>");
 			
-			<?php if (!is_file(APPPATH .'views/'. $current_skin .'/admin/css/ui.theme.css')): ?>
-				@import url("<?php echo base_url() . APPFOLDER .'/assets/js/css/ui.theme.css';?>");
+			<?php if (!is_file(APPPATH .'views/'. $current_skin .'/admin/css/jquery.ui.theme.css')): ?>
+				@import url("<?php echo base_url() . APPFOLDER .'/assets/js/css/jquery.ui.theme.css';?>");
 			<?php else: ?>
-				@import url("<?php echo base_url() . APPFOLDER .'/views/'. $current_skin .'/admin/css/ui.theme.css';?>");
+				@import url("<?php echo base_url() . APPFOLDER .'/views/'. $current_skin .'/admin/css/jquery.ui.theme.css';?>");
 			<?php endif;?>
 		</style>
 		
@@ -72,7 +72,7 @@
 					src: '<?php echo base_url() . APPFOLDER;?>/assets/js/jquery.ui.slider.min.js',
 					name: 'slider',
 					dependencies: {
-						css: ['<?php echo base_url() . APPFOLDER;?>/assets/js/css/ui.slider.css'],
+						css: ['<?php echo base_url() . APPFOLDER;?>/assets/js/css/jquery.ui.slider.css'],
 						js: ['<?php echo base_url() . APPFOLDER;?>/assets/js/jquery.ui.mouse.min.js']
 					},
 					cache: true
@@ -82,7 +82,7 @@
 					src: '<?php echo base_url() . APPFOLDER;?>/assets/js/jquery.ui.accordion.min.js',
 					name: 'accordion',
 					dependencies: {
-						css: ['<?php echo base_url() . APPFOLDER;?>/assets/js/css/ui.accordion.css']
+						css: ['<?php echo base_url() . APPFOLDER;?>/assets/js/css/jquery.ui.accordion.css']
 					},
 					cache: true
 				});

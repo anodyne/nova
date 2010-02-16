@@ -30,9 +30,9 @@ echo "<?xml version='1.0' encoding='UTF-8'?>\r\n";
 		<?php echo $_redirect;?>
 		
 		<style type="text/css">
-			@import url("<?php echo base_url() . APPFOLDER .'/assets/js/css/ui.core.css';?>");
-			@import url("<?php echo base_url() . APPFOLDER .'/assets/js/css/ui.theme.css';?>");
-			@import url("<?php echo base_url() . APPFOLDER .'/assets/js/css/ui.progressbar.css';?>");
+			@import url("<?php echo base_url() . APPFOLDER .'/assets/js/css/jquery.ui.core.css';?>");
+			@import url("<?php echo base_url() . APPFOLDER .'/assets/js/css/jquery.ui.theme.css';?>");
+			@import url("<?php echo base_url() . APPFOLDER .'/assets/js/css/jquery.ui.progressbar.css';?>");
 		</style>
 		
 		<!-- STYLESHEETS -->

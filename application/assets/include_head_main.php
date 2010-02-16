@@ -25,12 +25,12 @@
 				@import url("<?php echo base_url() . APPFOLDER .'/views/'. $current_skin .'/main/css/jquery.facebox.css';?>");
 			<?php endif;?>
 			
-			@import url("<?php echo base_url() . APPFOLDER .'/assets/js/css/ui.core.css';?>");
+			@import url("<?php echo base_url() . APPFOLDER .'/assets/js/css/jquery.ui.core.css';?>");
 			
-			<?php if (!is_file(APPPATH .'views/'. $current_skin .'/main/css/ui.theme.css')): ?>
-				@import url("<?php echo base_url() . APPFOLDER .'/assets/js/css/ui.theme.css';?>");
+			<?php if (!is_file(APPPATH .'views/'. $current_skin .'/main/css/jquery.ui.theme.css')): ?>
+				@import url("<?php echo base_url() . APPFOLDER .'/assets/js/css/jquery.ui.theme.css';?>");
 			<?php else: ?>
-				@import url("<?php echo base_url() . APPFOLDER .'/views/'. $current_skin .'/main/css/ui.theme.css';?>");
+				@import url("<?php echo base_url() . APPFOLDER .'/views/'. $current_skin .'/main/css/jquery.ui.theme.css';?>");
 			<?php endif;?>
 		</style>
 		
