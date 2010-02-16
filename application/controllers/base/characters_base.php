@@ -1525,15 +1525,24 @@ class Characters_base extends Controller {
 		
 		$data['label'] = array(
 			'character' => ucfirst(lang('global_character')),
+			'choose_char' => ucwords(lang('actions_choose') .' '. lang('labels_a') .' '. lang('global_character') .' '. lang('labels_to')
+				.' '. lang('actions_edit')),
 			'fname' => ucwords(lang('order_first') .' '. lang('labels_name')),
+			'images' => ucfirst(lang('labels_images')),
+			'info' => ucfirst(lang('labels_info')),
 			'lname' => ucwords(lang('order_last') .' '. lang('labels_name')),
 			'mname' => ucwords(lang('order_middle') .' '. lang('labels_name')),
+			'myuploads' => ucwords(lang('labels_my') .' '. lang('labels_uploads')),
 			'other' => ucfirst(lang('labels_other')),
 			'position1' => ucwords(lang('order_first') .' '. lang('global_position')),
 			'position2' => ucwords(lang('order_second') .' '. lang('global_position')),
 			'rank' => ucfirst(lang('global_rank')),
 			'suffix' => ucfirst(lang('labels_suffix')),
-			'type' => ucwords(lang('global_character') .' '. lang('labels_type'))
+			'type' => ucwords(lang('global_character') .' '. lang('labels_type')),
+			'type_active' => ucwords(lang('status_active') .' '. lang('global_characters')),
+			'type_inactive' => ucwords(lang('status_inactive') .' '. lang('global_characters')),
+			'type_npc' => ucwords(lang('status_nonplaying') .' '. lang('global_characters')),
+			'upload' => ucwords(lang('actions_upload') .' '. lang('labels_images') .' '. RARROW),
 		);
 		
 		/* figure out where the view should be coming from */

@@ -1,5 +1,7 @@
 <script type="text/javascript">
 	$(document).ready(function(){
+		$('#tabs').tabs();
+		
 		$('#position1').change(function(){
 			var id = $('#position1 option:selected').val();
 			
