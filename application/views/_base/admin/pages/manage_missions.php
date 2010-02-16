@@ -2,7 +2,7 @@
 
 <?php echo text_output($text);?>
 
-<p class="bold fontMedium">
+<p class="bold">
 	<?php echo anchor('manage/missions/add', img($images['add']) .' '. $label['add'], array('class' => 'image'));?>
 </p>
 

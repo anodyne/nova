@@ -1,6 +1,6 @@
 <?php echo text_output($header, 'h1', 'page-head');?>
 
-<p class="bold fontMedium"><?php echo anchor('manage/awards', $label['back']);?></p>
+<p class="bold"><?php echo anchor('manage/awards', $label['back']);?></p>
 
 <div id="tabs">
 	<ul>
@@ -10,45 +10,27 @@
 
 	<?php echo form_open('manage/awards/'. $form);?>
 	<div id="one">
-		<br />
-		<table class="table100">
-			<tbody>
-				<tr>
-					<td class="cell-label"><?php echo $label['name'];?></td>
-					<td class="cell-spacer"></td>
-					<td><?php echo form_input($inputs['name']);?></td>
-				</tr>
-				<tr>
-					<td class="cell-label"><?php echo $label['order'];?></td>
-					<td class="cell-spacer"></td>
-					<td><?php echo form_input($inputs['order']);?></td>
-				</tr>
-				<tr>
-					<td class="cell-label"><?php echo $label['cat'];?></td>
-					<td class="cell-spacer"></td>
-					<td><?php echo form_dropdown('award_cat', $values['cat'], $inputs['cat']);?></td>
-				</tr>
-				
-				<?php echo table_row_spacer(3, 10);?>
-				
-				<tr>
-					<td class="cell-label"><?php echo $label['display'];?></td>
-					<td class="cell-spacer"></td>
-					<td>
-						<?php echo form_radio($inputs['display_y']) .' '. form_label($label['on'], 'display_y');?>
-						<?php echo form_radio($inputs['display_n']) .' '. form_label($label['off'], 'display_n');?>
-					</td>
-				</tr>
-				
-				<?php echo table_row_spacer(3, 10);?>
-				
-				<tr>
-					<td class="cell-label"><?php echo $label['desc'];?></td>
-					<td class="cell-spacer"></td>
-					<td><?php echo form_textarea($inputs['desc']);?></td>
-				</tr>
-			</tbody>
-		</table>
+		<p>
+			<kbd><?php echo $label['name'];?></kbd>
+			<?php echo form_input($inputs['name']);?>
+		</p>
+		<p>
+			<kbd><?php echo $label['order'];?></kbd>
+			<?php echo form_input($inputs['order']);?>
+		</p>
+		<p>
+			<kbd><?php echo $label['cat'];?></kbd>
+			<?php echo form_dropdown('award_cat', $values['cat'], $inputs['cat']);?>
+		</p>
+		<p>
+			<kbd><?php echo $label['display'];?></kbd>
+			<?php echo form_radio($inputs['display_y']) .' '. form_label($label['on'], 'display_y');?>
+			<?php echo form_radio($inputs['display_n']) .' '. form_label($label['off'], 'display_n');?>
+		</p>
+		<p>
+			<kbd><?php echo $label['desc'];?></kbd>
+			<?php echo form_textarea($inputs['desc']);?>
+		</p>
 	</div>
 	
 	<div id="two">

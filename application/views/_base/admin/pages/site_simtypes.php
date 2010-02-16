@@ -3,23 +3,16 @@
 <?php echo text_output($text);?>
 
 <p class="bold">
-	<a href="#" class="addtoggle"><?php echo $label['add'];?></a>
+	<a href="#" class="addtoggle image"><?php echo img($images['add']) .' '. $label['add'];?></a>
 </p>
 
 <div class="addtype info-full hidden">
 	<?php echo form_open('site/simtypes/add');?>
-		<table>
-			<tbody>
-				<tr>
-					<td class="align_bottom">
-						<strong><?php echo $label['name'];?></strong><br />
-						<?php echo form_input($inputs['name']);?>
-					</td>
-					<td class="col_30"></td>
-					<td class="align_bottom"><?php echo form_button($buttons['add']);?></td>
-				</tr>
-			</tbody>
-		</table>
+		<p>
+			<kbd><?php echo $label['name'];?></kbd>
+			<?php echo form_input($inputs['name']);?>
+		</p>
+		<p><?php echo form_button($buttons['add']);?></p>
 	<?php echo form_close();?>
 </div><br />
 

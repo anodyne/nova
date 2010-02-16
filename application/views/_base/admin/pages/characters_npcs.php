@@ -6,7 +6,7 @@
 <div id="loaded" class="hidden">
 	<?php echo text_output($header, 'h1', 'page-head');?>
 	
-	<p class="fontMedium bold">
+	<p class="bold">
 		<?php echo anchor('characters/create', img($images['add']) .' '. $label['create'], array('class' => 'image'));?>
 	</p>
 	

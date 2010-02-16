@@ -22,7 +22,7 @@
 	<?php endif;?>
 </div>
 
-<p class="bold fontMedium">
+<p class="bold">
 	<a href="#" rel="facebox" myClass="<?php echo $class;?>" mySet="<?php echo $set;?>" class="image">
 		<?php echo img($images['add']) .' '. $label['addrank'];?>
 	</a>

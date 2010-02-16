@@ -494,11 +494,11 @@ class User_base extends Controller {
 			'user' => array(
 				'src' => img_location('user.png', $this->skin, 'admin'),
 				'alt' => '',
-				'class' => 'image img_inline_left'),
+				'class' => 'image inline_img_left'),
 			'display' => array(
 				'src' => img_location('display.png', $this->skin, 'admin'),
 				'alt' => '',
-				'class' => 'image img_inline_left'),
+				'class' => 'image inline_img_left'),
 		);
 		
 		$data['label'] = array(

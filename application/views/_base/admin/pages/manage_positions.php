@@ -16,7 +16,7 @@
 	</p>
 </div>
 
-<p class="bold fontMedium">
+<p class="bold">
 	<a href="#" rel="facebox" myID="<?php echo $g_dept;?>" class="image">
 		<?php echo img($images['add']) .' '. $label['add_position'];?>
 	</a>

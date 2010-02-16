@@ -7,9 +7,9 @@
 		<?php echo anchor('user/characterlink/'. $key, $a, array('class' => 'bold'));?><br />
 	<?php endforeach;?>
 <?php else: ?>
+	<p class="bold"><?php echo anchor('user/characterlink', $label['allchars']);?></p>
+		
 	<?php echo text_output($text);?>
-	
-	<p class="bold fontMedium"><?php echo anchor('user/characterlink', $label['allchars']);?></p>
 	
 	<?php echo text_output($label['user'], 'h2', 'page-subhead');?>
 	

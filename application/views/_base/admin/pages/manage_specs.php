@@ -11,27 +11,25 @@
 <?php if (isset($specs)): ?>
 	<?php echo form_open('manage/specs');?>
 		<?php foreach ($specs as $s): ?>
-			<?php echo text_output($s['name'], 'h3');?>
+			<?php echo text_output($s['name'], 'h3', 'page-subhead');?>
 			
 			<?php if (isset($s['fields'])): ?>
-				<table class="table100 zebra" cellpadding="3">
-					<tbody>
-					<?php foreach ($s['fields'] as $field): ?>
-						<tr>
-							<td class="cell-label"><?php echo $field['field_label'];?></td>
-							<td class="cell-spacer"></td>
-							<td><?php echo $field['input'];?></td>
-						</tr>
-					<?php endforeach; ?>
-					</tbody>
-				</table>
+				<div class="indent-left">
+				<?php foreach ($s['fields'] as $field): ?>
+					<p>
+						<kbd><?php echo $field['field_label'];?></kbd>
+						<?php echo $field['input'];?>
+					</p>
+				<?php endforeach; ?>
+				</div>
 					
 			<?php else: ?>
 				<?php echo text_output($label['no_specs'], 'h4', 'orange');?>
 			<?php endif; ?>
 		<?php endforeach; ?>
 		
-		<?php echo form_button($button_submit);?>
+		<br />
+		<p><?php echo form_button($button_submit);?></p>
 	<?php echo form_close();?>
 <?php else: ?>
 	<?php echo text_output($label['no_specs'], 'h3', 'orange');?>

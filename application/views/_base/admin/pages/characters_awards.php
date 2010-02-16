@@ -1,7 +1,7 @@
 <?php echo text_output($header, 'h1', 'page-head');?>
 
 <?php if (!isset($characters)): ?>
-	<?php echo text_output($name, 'h2', 'gray');?>
+	<?php echo text_output($name, 'h2', 'page-subhead');?>
 
 	<p class="bold"><?php echo anchor('characters/awards', $label['back']);?></p>
 

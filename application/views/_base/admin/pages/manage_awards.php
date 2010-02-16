@@ -1,6 +1,6 @@
 <?php echo text_output($header, 'h1', 'page-head');?>
 
-<p class="bold fontMedium">
+<p class="bold">
 	<?php echo anchor('manage/awards/add', img($images['add']) .' '. $label['addaward'], array('class' => 'image'));?>
 </p><br />
 

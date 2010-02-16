@@ -1,6 +1,6 @@
 <?php echo text_output($header, 'h1', 'page-head');?>
 
-<p class="bold fontMedium"><?php echo anchor('manage/missions', $label['back']);?></p>
+<p class="bold"><?php echo anchor('manage/missions', $label['back']);?></p>
 
 <div id="tabs">
 	<ul>

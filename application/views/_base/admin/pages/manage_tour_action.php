@@ -1,6 +1,6 @@
 <?php echo text_output($header, 'h1', 'page-head');?>
 
-<p class="bold fontMedium"><?php echo anchor('manage/tour', $label['back']);?></p>
+<p class="bold"><?php echo anchor('manage/tour', $label['back']);?></p>
 
 <div id="tabs">
 	<ul>
@@ -10,57 +10,32 @@
 
 	<?php echo form_open('manage/tour/'. $form);?>
 	<div id="one">
-		<br />
-		<table class="table100">
-			<tbody>
-				<tr>
-					<td class="cell-label"><?php echo $label['name'];?></td>
-					<td class="cell-spacer"></td>
-					<td><?php echo form_input($inputs['name']);?></td>
-				</tr>
-				
-				<?php echo table_row_spacer(3, 10);?>
-				
-				<tr>
-					<td class="cell-label"><?php echo $label['order'];?></td>
-					<td class="cell-spacer"></td>
-					<td><?php echo form_input($inputs['order']);?></td>
-				</tr>
-				
-				<?php echo table_row_spacer(3, 10);?>
-				
-				<tr>
-					<td class="cell-label"><?php echo $label['display'];?></td>
-					<td class="cell-spacer"></td>
-					<td>
-						<?php echo form_radio($inputs['display_y']) .' '. form_label($label['on'], 'display_y');?>
-						<?php echo form_radio($inputs['display_n']) .' '. form_label($label['off'], 'display_n');?>
-					</td>
-				</tr>
-				
-				<?php echo table_row_spacer(3, 10);?>
-				
-				<tr>
-					<td class="cell-label"><?php echo $label['summary'];?></td>
-					<td class="cell-spacer"></td>
-					<td><?php echo form_textarea($inputs['summary']);?></td>
-				</tr>
-				
-				<?php echo table_row_spacer(3, 10);?>
-				
-				<?php if (isset($inputs['fields'])): ?>
-					<?php foreach ($inputs['fields'] as $f): ?>
-						<tr>
-							<td class="cell-label"><?php echo $f['field_label'];?></td>
-							<td class="cell-spacer"></td>
-							<td><?php echo $f['input'];?></td>
-						</tr>
-						
-						<?php echo table_row_spacer(3, 10);?>
-					<?php endforeach;?>
-				<?php endif;?>
-			</tbody>
-		</table>
+		<p>
+			<kbd><?php echo $label['name'];?></kbd>
+			<?php echo form_input($inputs['name']);?>
+		</p>
+		<p>
+			<kbd><?php echo $label['order'];?></kbd>
+			<?php echo form_input($inputs['order']);?>
+		</p>
+		<p>
+			<kbd><?php echo $label['display'];?></kbd>
+			<?php echo form_radio($inputs['display_y']) .' '. form_label($label['on'], 'display_y');?>
+			<?php echo form_radio($inputs['display_n']) .' '. form_label($label['off'], 'display_n');?>
+		</p>
+		<p>
+			<kbd><?php echo $label['summary'];?></kbd>
+			<?php echo form_textarea($inputs['summary']);?>
+		</p><br />
+		
+		<?php if (isset($inputs['fields'])): ?>
+			<?php foreach ($inputs['fields'] as $f): ?>
+				<p>
+					<kbd><?php echo $f['field_label'];?></kbd>
+					<?php echo $f['input'];?>
+				</p>
+			<?php endforeach;?>
+		<?php endif;?>
 	</div>
 	
 	<div id="two">

@@ -4970,6 +4970,13 @@ class Site_base extends Controller {
 				'content' => ucwords(lang('actions_add')))
 		);
 		
+		$data['images'] = array(
+			'add' => array(
+				'src' => img_location('icon-add.png', $this->skin, 'admin'),
+				'alt' => '',
+				'class' => 'inline_img_left')
+		);
+		
 		$data['inputs']['name'] = array(
 			'name' => 'simtype_name'
 		);
@@ -6172,7 +6179,7 @@ class Site_base extends Controller {
 		$data['label'] = array(
 			'add' => ucwords(lang('actions_add') .' '. lang('global_tour') .' '. lang('labels_field')) .' '. RARROW,
 			'back' => LARROW .' '. ucfirst(lang('actions_back')) .' '. lang('labels_to') .' '. 
-				ucwords(lang('global_touritems')) .' '. RARROW,
+				ucwords(lang('global_tour') .' '. lang('labels_form')),
 			'bioval' => lang('text_site_bioval'),
 			'class' => ucfirst(lang('labels_class')),
 			'content' => ucwords(lang('labels_dropdown') .' '. lang('labels_content')),

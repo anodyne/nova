@@ -3,12 +3,12 @@
 <?php echo text_output($text);?>
 
 <?php if ($this->auth->check_access('site/tourform', FALSE) !== FALSE): ?>
-	<p class="bold fontMedium">
+	<p class="bold">
 		<?php echo anchor('site/tourform', img($images['form']) .' '. $label['form'], array('class' => 'image'));?>
 	</p>
 <?php endif;?>
 
-<p class="bold fontMedium">
+<p class="bold">
 	<?php echo anchor('manage/tour/add', img($images['add']) .' '. $label['add'], array('class' => 'image'));?>
 </p>
 

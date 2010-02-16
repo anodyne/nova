@@ -349,7 +349,8 @@ class Manage_base extends Controller {
 		$data['images'] = array(
 			'add' => array(
 				'src' => img_location('award-add.png', $this->skin, 'admin'),
-				'alt' => ''),
+				'alt' => '',
+				'class' => 'inline_img_left'),
 			'delete' => array(
 				'src' => img_location('award-delete.png', $this->skin, 'admin'),
 				'alt' => lang('actions_delete'),
@@ -1152,7 +1153,7 @@ class Manage_base extends Controller {
 			'add' => array(
 				'src' => img_location('icon-add.png', $this->skin, 'admin'),
 				'alt' => '',
-				'class' => ''),
+				'class' => 'inline_img_left'),
 		);
 		
 		$data['buttons'] = array(
@@ -2324,7 +2325,8 @@ class Manage_base extends Controller {
 		$data['images'] = array(
 			'add' => array(
 				'src' => img_location('icon-add.png', $this->skin, 'admin'),
-				'alt' => ''),
+				'alt' => '',
+				'class' => 'inline_img_left'),
 			'delete' => array(
 				'src' => img_location('icon-delete.png', $this->skin, 'admin'),
 				'alt' => lang('actions_delete'),
@@ -2849,7 +2851,8 @@ class Manage_base extends Controller {
 		$data['images'] = array(
 			'add' => array(
 				'src' => img_location('category-add.png', $this->skin, 'admin'),
-				'alt' => '')
+				'alt' => '',
+				'class' => 'inline_img_left')
 		);
 		
 		$data['header'] = ucwords(lang('actions_manage') .' '. lang('global_news') .' '. lang('labels_categories'));
@@ -3103,7 +3106,7 @@ class Manage_base extends Controller {
 			'add' => array(
 				'src' => img_location('icon-add.png', $this->skin, 'admin'),
 				'alt' => '',
-				'class' => ''),
+				'class' => 'inline_img_left'),
 		);
 		
 		$data['buttons'] = array(
@@ -3759,7 +3762,7 @@ class Manage_base extends Controller {
 			'add' => array(
 				'src' => img_location('icon-add.png', $this->skin, 'admin'),
 				'alt' => '',
-				'class' => ''),
+				'class' => 'inline_img_left'),
 		);
 		
 		$data['label'] = array(
@@ -4303,7 +4306,7 @@ class Manage_base extends Controller {
 			'form' => array(
 				'src' => img_location('forms-field.png', $this->skin, 'admin'),
 				'alt' => '',
-				'class' => 'image'),
+				'class' => 'image inline_img_left'),
 			'edit' => array(
 				'src' => img_location('tour-edit.png', $this->skin, 'admin'),
 				'alt' => ucfirst(lang('actions_edit')),
@@ -4318,7 +4321,7 @@ class Manage_base extends Controller {
 				'src' => img_location('tour-add.png', $this->skin, 'admin'),
 				'alt' => ucfirst(lang('actions_add')),
 				'title' => ucfirst(lang('actions_add')),
-				'class' => ''),
+				'class' => 'image inline_img_left'),
 			'upload' => array(
 				'src' => img_location('image-upload.png', $this->skin, 'admin'),
 				'alt' => lang('actions_upload'),

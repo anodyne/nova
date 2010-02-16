@@ -4,92 +4,71 @@
 
 <?php if (isset($inputs)): ?>
 	<?php echo form_open('site/dockingform/edit/'. $id);?>
-		<table class="table100 zebra">
-			<tbody>
-				<tr>
-					<td class="cell-label"><?php echo $label['section'];?></td>
-					<td class="cell-spacer"></td>
-					<td><?php echo form_dropdown('field_section', $values['section'], $defaults['section']);?></td>
-				</tr>
-				<tr>
-					<td class="cell-label"><?php echo $label['type'];?></td>
-					<td class="cell-spacer"></td>
-					<td><?php echo form_dropdown('field_type', $values['type'], $defaults['type']);?></td>
-				</tr>
-				<tr>
-					<td class="cell-label"><?php echo $label['label'];?></td>
-					<td class="cell-spacer"></td>
-					<td><?php echo form_input($inputs['label']);?></td>
-				</tr>
-				<tr>
-					<td class="cell-label"><?php echo $label['order'];?></td>
-					<td class="cell-spacer"></td>
-					<td><?php echo form_input($inputs['order']);?></td>
-				</tr>
-				<tr>
-					<td class="cell-label"><?php echo $label['display'];?></td>
-					<td class="cell-spacer"></td>
-					<td>
-						<?php echo form_radio($inputs['display_y']);?>
-						<?php echo form_label($label['yes'], 'field_display_y');?>
-						
-						<?php echo form_radio($inputs['display_n']);?>
-						<?php echo form_label($label['no'], 'field_display_n');?>
-					</td>
-				</tr>
-			</tbody>
-		</table><br />
+		<p>
+			<kbd><?php echo $label['section'];?></kbd>
+			<?php echo form_dropdown('field_section', $values['section'], $defaults['section']);?>
+		</p>
+		<p>
+			<kbd><?php echo $label['type'];?></kbd>
+			<?php echo form_dropdown('field_type', $values['type'], $defaults['type']);?>
+		</p>
+		<p>
+			<kbd><?php echo $label['label'];?></kbd>
+			<?php echo form_input($inputs['label']);?>
+		</p>
+		<p>
+			<kbd><?php echo $label['order'];?></kbd>
+			<?php echo form_input($inputs['order']);?>
+		</p>
+		<p>
+			<kbd><?php echo $label['display'];?></kbd>
+			<?php echo form_radio($inputs['display_y']);?>
+			<?php echo form_label($label['yes'], 'field_display_y');?>
+			
+			<?php echo form_radio($inputs['display_n']);?>
+			<?php echo form_label($label['no'], 'field_display_n');?>
+		</p><br />
 		
-		<?php echo text_output($label['html'], 'h4');?>
+		<?php echo text_output($label['html'], 'h3', 'page-subhead');?>
 		
-		<table class="table100 zebra">
-			<tbody>
-				<tr>
-					<td class="cell-label"><?php echo $label['name'];?></td>
-					<td class="cell-spacer"></td>
-					<td><?php echo form_input($inputs['name']);?></td>
-				</tr>
-				<tr>
-					<td class="cell-label"><?php echo $label['id'];?></td>
-					<td class="cell-spacer"></td>
-					<td><?php echo form_input($inputs['fid']);?></td>
-				</tr>
-				<tr>
-					<td class="cell-label"><?php echo $label['class'];?></td>
-					<td class="cell-spacer"></td>
-					<td><?php echo form_input($inputs['class']);?></td>
-				</tr>
-				<tr>
-					<td class="cell-label"><?php echo $label['rows'];?></td>
-					<td class="cell-spacer"></td>
-					<td><?php echo form_input($inputs['rows']);?></td>
-				</tr>
-			</tbody>
-		</table><br />
+		<div class="indent-left">
+			<p>
+				<kbd><?php echo $label['name'];?></kbd>
+				<?php echo form_input($inputs['name']);?>
+			</p>
+			<p>
+				<kbd><?php echo $label['id'];?></kbd>
+				<?php echo form_input($inputs['fid']);?>
+			</p>
+			<p>
+				<kbd><?php echo $label['class'];?></kbd>
+				<?php echo form_input($inputs['class']);?>
+			</p>
+			<p>
+				<kbd><?php echo $label['rows'];?></kbd>
+				<?php echo form_input($inputs['rows']);?>
+			</p>
+		</div><br />
 		
-		<table class="table100">
-			<tbody>
-				<tr>
-					<td class="cell-label"></td>
-					<td class="cell-spacer"></td>
-					<td>
-						<?php echo form_hidden('field_id', $id);?>
-						<?php echo form_button($buttons['submit']);?>
-					</td>
-				</tr>
-			</tbody>
-		</table>
+		<p>
+			<?php echo form_hidden('field_id', $id);?>
+			<?php echo form_button($buttons['submit']);?>
+		</p>
 	<?php echo form_close();?>
 	
 	<?php if (isset($select)): ?>
 		<br /><hr /><br />
-		<?php echo text_output($label['values'], 'h2', 'page-subhead');?>
-		<?php echo text_output($label['bioval']);?><br />
+		<?php echo text_output($label['select_values'], 'h2', 'page-subhead');?>
+		<?php echo text_output($label['bioval']);?>
 		
-		<?php echo text_output($label['value'], 'span', 'bold') .'<br />'. form_input($inputs['val_add_value']);?>
-		<br /><br />
-		<?php echo text_output($label['content'], 'span', 'bold') .'<br />'. form_input($inputs['val_add_content']);?>
-		<br /><br />
+		<p>
+			<kbd><?php echo $label['value'];?></kbd>
+			<?php echo form_input($inputs['val_add_value']);?>
+		</p>
+		<p>
+			<kbd><?php echo $label['content'];?></kbd>
+			<?php echo form_input($inputs['val_add_content']);?>
+		</p><br />
 		
 		<?php echo form_button($buttons['add']);?>
 		&nbsp;

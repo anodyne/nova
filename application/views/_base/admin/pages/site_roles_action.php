@@ -1,25 +1,19 @@
 <?php echo text_output($header, 'h1', 'page-head');?>
 
-<?php echo text_output($text);?>
+<p><?php echo anchor('site/roles', $label['back'], array('class' => 'bold'));?></p>
 
-<p><?php echo anchor('site/roles', $label['back'], array('class' => 'bold'));?></p><br />
+<?php echo text_output($text);?><br />
 
 <?php if (isset($pages)): ?>
 	<?php echo form_open('site/roles/'. $action .'/'. $id);?>
-		<table class="table100">
-			<tbody>
-				<tr>
-					<td class="align_top">
-						<strong><?php echo $label['name'];?></strong><br />
-						<?php echo form_input($inputs['name']);?>
-					</td>
-					<td class="cell-spacer"></td>
-					<td>
-						<strong><?php echo $label['desc'];?></strong><br />
-						<?php echo form_textarea($inputs['desc']);?>
-					</td>
-			</tbody>
-		</table>
+		<p>
+			<kbd><?php echo $label['name'];?></kbd>
+			<?php echo form_input($inputs['name']);?>
+		</p>
+		<p>
+			<kbd><?php echo $label['desc'];?></kbd>
+			<?php echo form_textarea($inputs['desc']);?>
+		</p>
 		
 		<?php echo text_output($label['pages'], 'h3', 'page-subhead');?>
 		

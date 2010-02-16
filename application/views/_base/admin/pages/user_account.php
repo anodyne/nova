@@ -1,8 +1,8 @@
 <?php echo text_output($header, 'h1', 'page-head');?>
 
-<p><?php echo anchor('user/options', img($images['display']) .' '. $label['display'], array('class' => 'fontMedium bold image'));?></p>
+<p><?php echo anchor('user/options', img($images['display']) .' '. $label['display'], array('class' => 'bold image'));?></p>
 
-<p><?php echo link_to_if($level == 2, 'user/characterlink/'. $inputs['id'], img($images['user']) .' '. $label['characters'], array('class' => 'fontMedium bold image'));?></p>
+<p><?php echo link_to_if($level == 2, 'user/characterlink/'. $inputs['id'], img($images['user']) .' '. $label['characters'], array('class' => 'bold image'));?></p>
 
 <?php echo form_open('user/account/'. $inputs['id']);?>
 	<div id="tabs">

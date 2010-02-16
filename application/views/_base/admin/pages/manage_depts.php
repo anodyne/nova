@@ -2,7 +2,7 @@
 
 <?php echo text_output($text);?>
 
-<p class="bold fontMedium">
+<p class="bold">
 	<a href="#" rel="facebox" class="image"><?php echo img($images['add']) .' '. $label['add_dept'];?></a>
 </p><br />
 
