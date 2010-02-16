@@ -1,17 +1,3 @@
-/*
-|---------------------------------------------------------------
-| STYLESHEET - UI.TABS
-|---------------------------------------------------------------
-|
-| File: sunny/admin/css/ui.tabs.css
-| Author: David VanScott [davidv@anodyne-productions.com]
-| Version: 1.0
-|
-| Stylesheet that controls the look and feel of the tabs throughout
-| the system
-|
-*/
-
 /* Caution! Ensure accessibility in print and other media types... */
 @media projection, screen { /* Use class for showing/hiding tab content */
     .ui-tabs-hide {
