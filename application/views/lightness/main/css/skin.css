@@ -289,7 +289,7 @@ select:hover {
 kbd {
 	font-weight: bold;
 	font-family: "lucida grande", verdana, arial, sans-serif;
-	font-size: 115%;
+	font-size: 110%;
 }
 
 .cell-label {
