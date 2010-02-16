@@ -5,8 +5,6 @@
 		$('#tabs').tabs();
 		$('#tabs').tabs('select', <?php echo $tab;?>);
 		
-		$('table.zebra tbody > tr:nth-child(odd)').addClass('alt');
-		
 		$('#awards').change(function(){
 			var id = $('#awards option:selected').val();
 			
