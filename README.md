@@ -8,7 +8,7 @@ Release Candidate 1 (0.9.6-pre)
 
 Last Update
 -----------
-16 February 2010
+17 February 2010
 
 Latest Updates
 --------------
@@ -23,6 +23,9 @@ Latest Updates
 * updated the manage section view files to use the new form layout on some pages
 * updated the site section view files to use the new form layout on some pages
 * updated the admin section to clean up some UI inconsistencies
+* updated thresher to clean up some UI inconsistencies
+* updated the titan skin
+* updated markItUp! to version 1.1.6.1
 * removed the old jquery ui css files
 * added the new jquery ui css files
 
@@ -53,6 +56,10 @@ Changes in 0.9.6
 * updated the titan skin
     * updated the skin.yml file
     * updated the wiki template file
+    * [admin] updated the images
+    * [admin] updated the stylesheets
+         * updated the skin stylesheet to match the main section
+         * udpated the structure stylesheet to match the main section
     * [main] updated the stylesheets
     * [wiki] updated the images
     * [wiki] updated the stylesheets
@@ -71,6 +78,8 @@ Changes in 0.9.6
 * updated the manage section view files to use the new form layout on some pages
 * updated the site section view files to use the new form layout on some pages
 * updated the admin section to clean up some UI inconsistencies
+* updated thresher to clean up some UI inconsistencies
+* updated markItUp! to version 1.1.6.1
 * fixed bug where the site messages always showed the type as page title (#74)
 * fixed bug where the system versions accordion broke when there were multiple versions
 * fixed bug where the system versions threw an error when only one version was in the database

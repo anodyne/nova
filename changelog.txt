@@ -1,3 +1,13 @@
+02.17.2010
+
+* updated thresher to clean up some UI inconsistencies
+* updated the titan skin
+* updated the 0.9.6 update file
+* updated the install data
+* updated markItUp! to version 1.1.6.1
+
+==========
+
 02.16.2010
 
 * updated the jquery ui to version 1.8rc2
