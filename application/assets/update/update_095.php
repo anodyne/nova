@@ -170,6 +170,14 @@ if (isset($drop_column))
 $this->db->where('comp_name', 'jQuery UI');
 $this->db->update('system_components', array('comp_version' => '1.8rc2'));
 
+/* markitup version info */
+$this->db->where('comp_name', 'markItUp!');
+$this->db->update('system_components', array('comp_version' => '1.1.6.1'));
+
+/* textile info */
+$this->db->where('comp_name', 'Textile');
+$this->db->update('system_components', array('comp_desc' => "Textile is a lightweight markup language that converts its marked-up text input to valid, well-formed XHTML and also inserts character entity references for apostrophes, opening and closing single and double quotation marks, ellipses and em dashes."));
+
 /* add system version info */
 $this->load->model('system_model', 'sys');
 $this->sys->add_system_version($system_versions);
