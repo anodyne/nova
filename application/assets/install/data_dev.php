@@ -3515,13 +3515,13 @@ $system_components = array(
 		'comp_url' => 'http://rikrikrik.com/jquery/quicksearch/'),
 	array(
 		'comp_name' => 'markItUp!',
-		'comp_version' => '1.1.6',
+		'comp_version' => '1.1.6.1',
 		'comp_desc' => "markItUp! is a JavaScript plugin built on the jQuery library that allows you to turn any textarea into a markup editor.",
 		'comp_url' => 'http://markitup.jaysalvat.com/home/'),
 	array(
 		'comp_name' => 'Textile',
 		'comp_version' => '2.0.0',
-		'comp_desc' => "markItUp! is a JavaScript plugin built on the jQuery library that allows you to turn any textarea into a markup editor.",
+		'comp_desc' => "Textile is a lightweight markup language that converts its marked-up text input to valid, well-formed XHTML and also inserts character entity references for apostrophes, opening and closing single and double quotation marks, ellipses and em dashes.",
 		'comp_url' => 'http://textile.thresholdstate.com/'),
 	array(
 		'comp_name' => 'PHP Markdown Extra',
