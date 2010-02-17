@@ -7,8 +7,8 @@ body {
 	margin: 0;
 	padding: 0;
 	
-	background: #ccc url('../images/body-bg.png') repeat-x 0 0;
-	color: #363636;
+	background: #000;
+	color: #ccc;
 	font: 75%/1.5 "lucida grande", verdana, arial, sans-serif;
 	text-align: center;
 }
@@ -17,21 +17,12 @@ body {
 |---------------------------------------------------------------
 | WRAPPER STYLES
 |---------------------------------------------------------------
-| The wrapper controls the width and centering of the layout
 */
 #container {
-	width: 650px;
-	margin: 3em auto;
+	width: 750px;
+	margin: 0 auto;
 	
-	border: 1px solid #999;
 	text-align: left;
-	
-	-moz-box-shadow: 7px 7px 12px #aaa;
-	-webkit-box-shadow: 7px 7px 12px #aaa;
-	
-	border-radius: 4px;
-	-moz-border-radius: 4px;
-	-webkit-border-radius: 4px;
 }
 
 /*
@@ -46,56 +37,25 @@ body {
 	padding: 0;
 	height: 70px;
 	
-	background: #f5f5f5 url('../images/gradient-head.png') repeat-x bottom left;
-	color: #444;
+	background: #202020 url('../images/gradient-head.png') repeat-x top left;
+	color: #fff;
+	border: 1px solid #444;
 	
-	border-radius: 4px 4px 0 0;
-	-moz-border-radius: 4px 4px 0 0;
-	-webkit-border-top-left-radius: 4px;
-	-webkit-border-top-right-radius: 4px;
+	border-radius: 0 0 10px 10px;
+	-moz-border-radius: 0 0 10px 10px;
+	-webkit-border-bottom-left-radius: 10px;
+	-webkit-border-bottom-right-radius: 10px;
 }
 #head .head_content {
 	padding: 12px 0 0 10px;
 	
 	font-weight: bold;
 }
-
-/*
-|---------------------------------------------------------------
-| LOWER HEAD STYLES
-|---------------------------------------------------------------
-*/
-#lower-head {
-	height: 100px;
-	margin: 0;
-	padding: 0;
+#head .head-top {
+	height: 5px;
 	
-	color: #fff;
-	background: #f6a828 url('../images/gradient-lower-head.png') repeat-x top left;
-	border-bottom: 1px solid #c58620;
-	border-bottom: 1px solid rgba(0, 0, 0, .2);
-}
-#lower-head .head-content { height: 100px; }
-#lower-head h1 {
-	margin: 0 !important;
-	padding: 28px 0 0 12px !important;
-}
-#lower-head a {
-	color: #fff !important;
-	border-bottom: 1px solid;
-	font-size: 110%;
-}
-#lower-head a:hover { color: #363636 !important; }
-#lower-head ul {
-	margin: 5px 0 0 0;
-	width: 700px;
-	position: relative;
-}
-#lower-head ul li {
-	margin: 0 0 10px 0;
-	
-	color: #fdf0da;
-	color: rgba(255, 255, 255, .85);
+	background: #444;
+	border-bottom: 1px solid #777;
 }
 
 /*
@@ -104,16 +64,25 @@ body {
 |---------------------------------------------------------------
 */
 #menu {
-	height: 22px;
-	line-height: 22px;
-	margin: 47px 0 0 0;
 	float: right;
+	margin: -1px 10px 0 0;
+	padding: .3em .5em;
+	
+	background: #444;
+	border-bottom: 1px solid #696969;
+	border-left: 1px solid #606060;
+	border-right: 1px solid #606060;
+	
+	border-radius: 0 0 6px 6px;
+	-moz-border-radius: 0 0 6px 6px;
+	-webkit-border-bottom-left-radius: 6px;
+	-webkit-border-bottom-right-radius: 6px;
 	
 	font-size: 95%;
 }
 #menu .nav-main {}
 #menu .nav-main ul {
-	margin: 0 5px;
+	margin: 0 2px;
 	padding: 0;
 	
 	list-style-type: none;
@@ -129,22 +98,13 @@ body {
 	text-decoration: none;
 	color: #888;
 	font-weight: bold;
-	border: 1px solid transparent;
-	text-shadow: 1px 1px 1px rgba(255, 255, 255, .6);
-	
-	border-radius: 4px 4px 0 0;
-	-moz-border-radius: 4px 4px 0 0;
-	-webkit-border-top-left-radius: 4px;
-	-webkit-border-top-right-radius: 4px;
+	border: 0;
 }
-#menu .nav-main ul li a span { padding: 0 12px; }
-#menu .nav-main ul li a:hover,
+#menu .nav-main ul li a span { padding: 0 7px; }
+#menu .nav-main ul li a:hover { color: #ccc; }
 #menu .nav-main ul li a.active {
-	background: #f8b953 url('../images/gradient-menu-active.png') repeat-x top left;
 	color: #fff;
-	border: 1px solid #f8b953;
-	border-top: 1px solid #f6a828;
-	text-shadow: 1px 1px 1px rgba(0, 0, 0, .22);
+	text-shadow: 1px 1px 1px rgba(0, 0, 0, .25);
 }
 
 /*
@@ -157,9 +117,7 @@ body {
 .content {
 	line-height: 1.4;
 	padding: 1em 2em;
-	margin: 0 auto;
-	
-	background: #eee;
+	margin: 1em auto 2em auto;
 }
 
 /*
@@ -174,14 +132,13 @@ body {
 	
 	text-align: center;
 	font-size: 90%;
-	color: #888;
-	background: #f3f3f3;
-	border-top: 1px solid #ddd;
+	color: #555;
+	background: #080808;
+	border: 1px solid #111;
 	
-	border-radius: 0 0 4px 4px;
-	-moz-border-radius: 0 0 4px 4px;
-	-webkit-border-bottom-left-radius: 4px;
-	-webkit-border-bottom-right-radius: 4px;
+	border-radius: 10px;
+	-moz-border-radius: 10px;
+	-webkit-border-radius: 10px;
 }
 
 /*
@@ -189,7 +146,7 @@ body {
 | FONT COLOR CLASSES
 |---------------------------------------------------------------
 */
-.page-head { color: #777; }
+.page-head { color: #f3b907; }
 
 .red { color: #c00; }
 
@@ -214,8 +171,9 @@ a:hover {
 */
 input[type=text],
 input[type=password] {
-	border: 1px solid #bbb;
-	color: #777;
+	border: 1px solid #333;
+	color: #888;
+	background: #000;
 	font-family: "lucida grande", verdana, arial, sans-serif;
 	font-size: 120%;
 	
@@ -225,13 +183,15 @@ input[type=password] {
 }
 input[type=text]:focus,
 input[type=password]:focus {
-	color: #444;
-	border: 1px solid #888;
+	color: #eee;
+	border: 1px solid #444;
+	background: #080808;
 }
 
 select {
-	border: 1px solid #bbb;
-	color: #777;
+	border: 1px solid #333;
+	color: #888;
+	background: #000;
 	font-family: "lucida grande", verdana, arial, sans-serif;
 	font-size: 120%;
 	
@@ -241,8 +201,9 @@ select {
 }
 select:focus,
 select:hover {
-	color: #444;
-	border: 1px solid #888;
+	color: #eee;
+	border: 1px solid #444;
+	background: #080808;
 }
 
 kbd {
@@ -257,34 +218,35 @@ kbd {
 |---------------------------------------------------------------
 */
 button {
-	font-weight: bold;
+	border-radius: 25px;
+	-moz-border-radius: 25px;
+	-webkit-border-radius: 25px;
 	
-	border-radius: 4px;
-	-moz-border-radius: 4px;
-	-webkit-border-radius: 4px;
+	font-weight: bold;
+	font-size: 105%;
 }
 
 button.button-main {
-	border: 1px solid #e78f08;
-	background: #f6a828 url('../images/gradient-hard-30.png') repeat-x center left;
-	color: #fff;
+	border: 1px solid #333;
+	background: #000 url('../images/gradient-hard-30.png') repeat-x center left;
+	color: #ccc;
 }
 button.button-main:hover {
-	border: 1px solid #e78f08;
-	background: #f6a828 url('../images/gradient-hard-50.png') repeat-x center left;
+	border: 1px solid #333;
+	background: #111 url('../images/gradient-hard-50.png') repeat-x center left;
 	color: #fff;
 }
 
 input.button-main {
 	font-weight: bold;
 	font-size: 120%;
-	border: 1px solid #e78f08;
-	background: #f6a828 url('../images/gradient-hard-30.png') repeat-x center left;
-	color: #fff;
+	border: 1px solid #333;
+	background: #000 url('../images/gradient-hard-30.png') repeat-x center left;
+	color: #ccc;
 }
 input.button-main:hover {
-	border: 1px solid #e78f08;
-	background: #f6a828 url('../images/gradient-hard-50.png') repeat-x center left;
+	border: 1px solid #333;
+	background: #111 url('../images/gradient-hard-50.png') repeat-x center left;
 	color: #fff;
 }
 
@@ -295,9 +257,9 @@ input.button-main[disabled]:hover {
 	opacity: .5;
 	filter:alpha(opacity='70');
 	
-	border: 1px solid #e78f08;
-	background: #f6a828 url('../images/gradient-hard-30.png') repeat-x center left;
-	color: #fff;
+	border: 1px solid #333;
+	background: #000 url('../images/gradient-hard-30.png') repeat-x center left;
+	color: #ccc;
 }
 
 /*
@@ -318,24 +280,24 @@ ol.roman { list-style: upper-roman; }
 	font-weight: bold;
 	font-size: .9em;
 	
-	border-radius: 4px;
-	-moz-border-radius: 4px;
-	-webkit-border-radius: 4px;
+	border-radius: 5px;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
 }
 .flash-success {
-	border: 1px solid #a4c897;
-	background: #ccecc5 url('../images/gradient-soft-30.png') repeat-x center left;
-	color: #376b0e;
+	border: 1px solid #108500;
+	background: #108500 url('../images/gradient-soft-30.png') repeat-x center left;
+	color: #fff;
 }
 .flash-error {
 	border: 1px solid #cd0a0a; 
-	background: #d93232 url('../images/gradient-soft-30.png') repeat-x center left;
+	background: #cd0a0a url('../images/gradient-soft-30.png') repeat-x center left;
 	color: #fff;
 }
 .flash-info {
-	border: 1px solid #fed22f;
-	background: #fff0a5 url('../images/gradient-soft-30.png') repeat-x center left;
-	color: #363636;
+	border: 1px solid #406ceb;
+	background: #406ceb url('../images/gradient-soft-30.png') repeat-x center left;
+	color: #fff;
 }
 
 /*
@@ -344,6 +306,6 @@ ol.roman { list-style: upper-roman; }
 |---------------------------------------------------------------
 */
 hr {
-	border: 1px solid #ccc;
+	border: 1px solid #333;
 	border-width: 1px 0 0;
 }

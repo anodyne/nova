@@ -4,10 +4,10 @@
 | TEMPLATE - LOGIN
 |---------------------------------------------------------------
 |
-| File: application/views/lightness/template_login.php
+| File: application/views/titan/template_login.php
 | Skin Version: 1.0
 |
-| Login layout file used by the lightness skin.
+| Login layout file used by the titan skin.
 |
 | $sec options are: main, wiki, admin, login
 | $css can be anything you want (with a .css extension of course)
@@ -67,6 +67,7 @@ echo "<?xml version='1.0' encoding='UTF-8'?>\r\n";
 	<body>
 		<div id="container">
 			<div id="head">
+				<div class="head-top"></div>
 				<div id="menu">
 					<div class="nav-main">
 						<ul>
@@ -78,13 +79,7 @@ echo "<?xml version='1.0' encoding='UTF-8'?>\r\n";
 				</div>
 				
 				<div class="head_content">
-					<?php echo img(APPFOLDER .'/views/'. $current_skin .'/'. $sec .'/images/head-logo.png', FALSE);?>
-				</div>
-			</div>
-			
-			<div id="lower-head">
-				<div class="head-content">
-					<h1><?php echo text_output($this->options['sim_name'], '');?></h1>
+					<h1><?php echo $this->options['sim_name'];?></h1>
 				</div>
 			</div>
 			

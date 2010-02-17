@@ -5,4 +5,13 @@ version: 1.0
 sections:
   -
     type: main
-    preview: preview-main.png
+    preview: preview-main.jpg
+  -
+    type: wiki
+    preview: preview-wiki.jpg
+  -
+    type: login
+    preview: preview-login.jpg
+  -
+    type: admin
+    preview: preview-admin.jpg

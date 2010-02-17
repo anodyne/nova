@@ -4,10 +4,10 @@
 | TEMPLATE - WIKI
 |---------------------------------------------------------------
 |
-| File: application/views/lightness/template_wiki.php
+| File: application/views/titan/template_wiki.php
 | Skin Version: 1.0
 |
-| Wiki layout file used by the lightness skin.
+| Wiki layout file used by the titan skin.
 |
 | $sec options are: main, wiki, admin, login
 | $css can be anything you want (with a .css extension of course)

@@ -19,7 +19,6 @@ body {
 |---------------------------------------------------------------
 | WRAPPER
 |---------------------------------------------------------------
-| The wrapper controls the width and centering of the layout
 */
 .wrapper {
 	min-width: 960px;
@@ -158,7 +157,7 @@ body > #wrap {
 .nav-sub ul li {
 	padding: 0;
 	margin: 0;
-	line-height: 2.3;
+	line-height: 2;
 }
 .nav-sub ul li a {
 	display: block;
@@ -463,7 +462,7 @@ ul.none, ol.none { list-style: none; }
 |---------------------------------------------------------------
 */
 hr {
-	border: 1px solid #ccc;
+	border: 1px solid #333;
 	border-width: 1px 0 0;
 }
 
@@ -503,6 +502,9 @@ hr {
 	
 	background: #444;
 	color: #fff;
+	border: 1px solid #444;
+	border-bottom: 1px solid #777;
+	border-top: 0;
 }
 
 .panel-handle {
@@ -528,7 +530,7 @@ hr {
 
 .panel-controls {
 	float: right;
-	margin: -.5em 0 0 0;
+	margin: -7px 0 0 0;
 	padding: .3em .5em;
 	
 	background: #444;
