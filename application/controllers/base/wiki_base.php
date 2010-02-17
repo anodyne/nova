@@ -395,7 +395,8 @@ class Wiki_base extends Controller {
 		$data['images'] = array(
 			'add' => array(
 				'src' => img_location('category-add.png', $this->skin, 'wiki'),
-				'alt' => ''),
+				'alt' => '',
+				'class' => 'image inline_img_left'),
 			'delete' => array(
 				'src' => img_location('category-delete.png', $this->skin, 'wiki'),
 				'alt' => ''),
@@ -531,7 +532,8 @@ class Wiki_base extends Controller {
 		$data['images'] = array(
 			'add' => array(
 				'src' => img_location('page-add.png', $this->skin, 'wiki'),
-				'alt' => ''),
+				'alt' => '',
+				'class' => 'image inline_img_left'),
 			'delete' => array(
 				'src' => img_location('page-delete.png', $this->skin, 'wiki'),
 				'alt' => ''),

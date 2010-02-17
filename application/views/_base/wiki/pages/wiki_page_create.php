@@ -1,6 +1,6 @@
 <?php echo text_output($header, 'h1', 'page-head');?>
 
-<p class="fontMedium bold"><?php echo anchor('wiki/managepages', $label['back']);?></p>
+<p class="bold"><?php echo anchor('wiki/managepages', $label['back']);?></p>
 
 <?php echo form_open('wiki/page/0/create');?>
 	<?php echo text_output($label['title'], 'p', 'fontMedium bold');?>

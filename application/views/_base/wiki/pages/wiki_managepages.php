@@ -1,6 +1,6 @@
 <?php echo text_output($header, 'h1', 'page-head');?>
 
-<p class="bold fontMedium">
+<p class="bold">
 	<?php echo anchor('wiki/page', img($images['add']) .' '. $label['add'], array('class' => 'image'));?>
 </p>
 
