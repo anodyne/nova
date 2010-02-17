@@ -1478,7 +1478,7 @@ class User_base extends Controller {
 					/* write everything to the template */
 					$this->template->write_view('flash_message', '_base/admin/pages/flash', $flash);
 					
-					$js_data['tab'] = 0;
+					$js_data['tab'] = 2;
 					
 					break;
 					
@@ -1525,7 +1525,7 @@ class User_base extends Controller {
 					/* write everything to the template */
 					$this->template->write_view('flash_message', '_base/admin/pages/flash', $flash);
 					
-					$js_data['tab'] = 2;
+					$js_data['tab'] = 1;
 					
 					break;
 					
@@ -1589,7 +1589,7 @@ class User_base extends Controller {
 					/* write everything to the template */
 					$this->template->write_view('flash_message', '_base/admin/pages/flash', $flash);
 					
-					$js_data['tab'] = 1;
+					$js_data['tab'] = 0;
 					
 					break;
 			}
