@@ -6061,13 +6061,31 @@ class Ajax_base extends Controller {
 		
 		/* set the POST variable */
 		$rank = $this->input->post('rank', TRUE);
+		$location = $this->input->post('location', TRUE);
 		
 		/* grab the position details */
 		$item = $this->rank->get_rank($rank, 'rank_image');
-		$ext = $this->rank->get_rankcat('default', 'rankcat_location', 'rankcat_extension');
+		$ext = $this->rank->get_rankcat($location, 'rankcat_location', 'rankcat_extension');
 		
 		/* set the output */
-		$output = ($item !== FALSE) ? array('src' => base_url() . rank_location('default', $item, $ext)) : '';
+		$output = ($item !== FALSE) ? array('src' => base_url() . rank_location($location, $item, $ext)) : '';
+		
+		echo img($output);
+	}
+	
+	function info_show_rank_preview_img()
+	{
+		/* load the resources */
+		$this->load->model('ranks_model', 'rank');
+		
+		/* set the POST variable */
+		$rank = $this->input->post('rank', TRUE);
+		
+		/* grab the position details */
+		$preview = $this->rank->get_rankcat($rank, 'rankcat_location', 'rankcat_preview');
+		
+		/* set the output */
+		$output = ($preview !== FALSE) ? array('src' => base_url() . rank_location($rank, $preview, '')) : '';
 		
 		echo img($output);
 	}

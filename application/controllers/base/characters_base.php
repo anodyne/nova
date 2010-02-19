@@ -1183,6 +1183,8 @@ class Characters_base extends Controller {
 			'upload' => ucwords(lang('actions_upload') .' '. lang('labels_images') .' '. RARROW),
 		);
 		
+		$js_data['rankloc'] = $this->rank;
+		
 		/* figure out where the view should be coming from */
 		$view_loc = view_location('characters_bio', $this->skin, 'admin');
 		$js_loc = js_location('characters_bio_js', $this->skin, 'admin');
@@ -1190,7 +1192,7 @@ class Characters_base extends Controller {
 		/* write the data to the template */
 		$this->template->write('title', $data['header']);
 		$this->template->write_view('content', $view_loc, $data);
-		$this->template->write_view('javascript', $js_loc);
+		$this->template->write_view('javascript', $js_loc, $js_data);
 		
 		/* render the template */
 		$this->template->render();
@@ -1545,6 +1547,8 @@ class Characters_base extends Controller {
 			'upload' => ucwords(lang('actions_upload') .' '. lang('labels_images') .' '. RARROW),
 		);
 		
+		$js_data['rankloc'] = $this->rank;
+		
 		/* figure out where the view should be coming from */
 		$view_loc = view_location('characters_create', $this->skin, 'admin');
 		$js_loc = js_location('characters_create_js', $this->skin, 'admin');
@@ -1552,7 +1556,7 @@ class Characters_base extends Controller {
 		/* write the data to the template */
 		$this->template->write('title', $data['header']);
 		$this->template->write_view('content', $view_loc, $data);
-		$this->template->write_view('javascript', $js_loc);
+		$this->template->write_view('javascript', $js_loc, $js_data);
 		
 		/* render the template */
 		$this->template->render();
