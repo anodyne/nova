@@ -4473,6 +4473,10 @@ class Site_base extends Controller {
 					'src' => img_location('icon-view.png', $this->skin, 'admin'),
 					'alt' => '',
 					'class' => 'image'),
+				'loading' => array(
+					'src' => img_location('loading-circle.gif', $this->skin, 'admin'),
+					'alt' => lang('actions_loading'),
+					'class' => 'image'),
 			);
 			
 			/*
@@ -4626,23 +4630,16 @@ class Site_base extends Controller {
 			
 			if ($ranks->num_rows() > 0)
 			{
+				$ext = $this->ranks->get_rankcat($this->options['display_rank'], 'rankcat_location', 'rankcat_extension');
+				
+				$data['inputs']['rank'] = array(
+					'src' => rank_location($this->options['display_rank'], 'preview', $ext),
+					'alt' => ''
+				);
+					
 				foreach ($ranks->result() as $rank)
 				{
-					$image = array(
-						'src' => rank_location($rank->rankcat_location, 'preview', $rank->rankcat_extension),
-						'alt' => $rank->rankcat_name
-					);
-					
-					$data['ranks'][$rank->rankcat_id]['id'] = $rank->rankcat_id;
-					$data['ranks'][$rank->rankcat_id]['image'] = img($image);
-					$data['ranks'][$rank->rankcat_id]['location'] = $rank->rankcat_location;
-					
-					$data['inputs']['ranks'][$rank->rankcat_location] = array(
-						'name' => 'display_rank',
-						'id' => 'r_'. $rank->rankcat_id,
-						'value' => $rank->rankcat_location,
-						'checked' => ($rank->rankcat_location == $setting['display_rank']) ? TRUE : FALSE
-					);
+					$data['values']['ranks'][$rank->rankcat_location] = $rank->rankcat_name;
 				}
 			}
 			

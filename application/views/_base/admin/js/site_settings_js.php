@@ -75,5 +75,27 @@
 				}
 			});
 		});
+		
+		$('#rank').change(function(){
+			var location = $('#rank option:selected').val();
+			
+			$.ajax({
+				beforeSend: function(){
+					$('#loading_rank').show();
+				},
+				type: "POST",
+				url: "<?php echo site_url('ajax/info_show_rank_preview_img');?>",
+				data: { rank: location },
+				success: function(data){
+					$('#rank_img').html('');
+					$('#rank_img').append(data);
+				},
+				complete: function(){
+					$('#loading_rank').hide();
+				}
+			});
+			
+			return false;
+		});
 	});
 </script>
