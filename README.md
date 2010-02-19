@@ -8,26 +8,13 @@ Release Candidate 1 (0.9.6-pre)
 
 Last Update
 -----------
-17 February 2010
+19 February 2010
 
 Latest Updates
 --------------
-* updated the jquery ui to version 1.8rc2
-* updated the head include files with the new jquery ui css naming scheme
-* updated all the skins with the new naming scheme
-* updated the install data
-* updated the 0.9.6 update file
-* updated the user section view files to use the new form layout
-* updated the characters section view files to use the new form layout
-* updated the skin stylesheets to tweak the new form layout
-* updated the manage section view files to use the new form layout on some pages
-* updated the site section view files to use the new form layout on some pages
-* updated the admin section to clean up some UI inconsistencies
-* updated thresher to clean up some UI inconsistencies
-* updated the titan skin
-* updated markItUp! to version 1.1.6.1
-* removed the old jquery ui css files
-* added the new jquery ui css files
+* fixed bug where the rank ajax menus always showed the default rank set (#75)
+* updated the site settings page to use the form layout
+* updated the site settings page to handle rank selection better
 
 Changes in 0.9.6
 ----------------
@@ -80,16 +67,15 @@ Changes in 0.9.6
 * updated the admin section to clean up some UI inconsistencies
 * updated thresher to clean up some UI inconsistencies
 * updated markItUp! to version 1.1.6.1
+* updated the site settings page to use the form layout
+* updated the site settings page to handle rank selection better
 * fixed bug where the site messages always showed the type as page title (#74)
 * fixed bug where the system versions accordion broke when there were multiple versions
 * fixed bug where the system versions threw an error when only one version was in the database
 * fixed bug where thresher threw errors when submitting a page without categories
 * fixed bug where thresher still wasn't printing categories properly (should be completely fixed now)
 * fixed bug where thresher was missing some language elements
-
-Known Issues
-------------
-_None_
+* fixed bug where the rank ajax menus always showed the default rank set (#75)
 
 Version History
 ---------------

@@ -1,3 +1,12 @@
+02.19.2010
+
+* fixed bug where the rank ajax menus always showed the default rank set (#75)
+
+* updated the site settings page to use the form layout
+* updated the site settings page to handle rank selection better
+
+==========
+
 02.17.2010
 
 * updated thresher to clean up some UI inconsistencies
