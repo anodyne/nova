@@ -73,7 +73,39 @@ class Upgrade_base extends Controller {
 		
 		if ($status > 0)
 		{
-			redirect('upgrade/error/'. $status);
+			$flash['status'] = '';
+			$flash['message'] = '';
+			
+			if ($code == 1)
+			{
+				$flash['status'] = 'error';
+				$flash['message'] = sprintf(
+					lang('upg_error_1'),
+					SMS_UPGRADE_VERSION,
+					SMS_UPGRADE_VERSION
+				);
+			}
+			elseif ($code == 2)
+			{
+				$flash['status'] = 'error';
+				$flash['message'] = lang('upg_error_2');
+			}
+			elseif ($code == 3)
+			{
+				$flash['status'] = 'error';
+				$flash['message'] = lang('upg_error_3');
+			}
+			elseif ($code == 4)
+			{
+				$flash['status'] = 'error';
+				$flash['message'] = sprintf(
+					lang('upg_error_4'),
+					strtoupper(GENRE)
+				);
+			}
+			
+			/* write everything to the template */
+			$this->template->write_view('flash_message', '_base/update/pages/flash', $flash);
 		}
 		
 		$data['label'] = array(

@@ -1,3 +1,3 @@
 <div class="flash_message flash-<?php echo $status;?>">
-	<?php echo $message;?>
+	<p><?php echo $message;?></p>
 </div>

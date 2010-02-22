@@ -71,8 +71,23 @@ class Update_base extends Controller {
 		$code = ($this->options['maintenance'] == 'off') ? 2 : $code;
 		
 		if ($code > 0)
-		{ /* if there's an error, redirect */
-			redirect('update/error/'. $code);
+		{
+			$flash['status'] = '';
+			$flash['message'] = '';
+			
+			if ($code == 1)
+			{
+				$flash['status'] = 'error';
+				$flash['message'] = lang('upd_error_1');
+			}
+			elseif ($code == 2)
+			{
+				$flash['status'] = 'info';
+				$flash['message'] = lang('upd_error_2');
+			}
+			
+			/* write everything to the template */
+			$this->template->write_view('flash_message', '_base/update/pages/flash', $flash);
 		}
 		
 		$data['label'] = array(
@@ -136,7 +151,7 @@ class Update_base extends Controller {
 				{
 					$flash['status'] = 'info';
 					$flash['message'] = sprintf(
-						lang_output('update_text_no_updates'),
+						lang('update_text_no_updates'),
 						APP_NAME
 					);
 					$data['link'] = text_output(anchor('update/index', lang('button_back_update')), 'p', 'fontMedium bold');
@@ -163,12 +178,12 @@ class Update_base extends Controller {
 				
 				if ($sysadmin === FALSE)
 				{
-					$flash['message'] = lang_output('error_update_2');
+					$flash['message'] = lang('error_update_2');
 				}
 				
 				if ($verify > 0)
 				{
-					$flash['message'] = lang_output('error_login_'. $verify);
+					$flash['message'] = lang('error_login_'. $verify);
 				}
 				
 				$data['inputs'] = array(
@@ -509,7 +524,7 @@ class Update_base extends Controller {
 			{
 				$flash['status'] = 'info';
 				$flash['message'] = sprintf(
-					lang_output('update_outofdate_files'),
+					lang('update_outofdate_files'),
 					$version['files']['full'],
 					$version['database']['full']
 				);
@@ -518,7 +533,7 @@ class Update_base extends Controller {
 			{
 				$flash['status'] = 'info';
 				$flash['message'] = sprintf(
-					lang_output('update_outofdate_database'),
+					lang('update_outofdate_database'),
 					$version['database']['full'],
 					$version['files']['full']
 				);
@@ -532,7 +547,7 @@ class Update_base extends Controller {
 					
 				$flash['status'] = 'info';
 				$flash['message'] = sprintf(
-					lang_output('update_available'),
+					lang('update_available'),
 					APP_NAME,
 					$update['version'],
 					$yourversion

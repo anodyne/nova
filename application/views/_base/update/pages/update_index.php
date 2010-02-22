@@ -10,13 +10,13 @@
 		</a>
 	</li>
 	<li>
-		<a href="<?php echo site_url('upgrade/readme');?>">
+		<a href="<?php echo site_url('update/readme');?>">
 			<span class="icon ui-icon ui-icon-lightbulb"></span>
 			<?php echo $label['options_readme'];?>
 		</a>
 	</li>
 	<li>
-		<a href="<?php echo site_url('upgrade/verify');?>">
+		<a href="<?php echo site_url('update/verify');?>">
 			<span class="icon ui-icon ui-icon-check"></span>
 			<?php echo $label['options_verify'];?>
 		</a>
