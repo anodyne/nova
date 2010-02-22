@@ -1536,6 +1536,9 @@ class Upgrade_base extends Controller {
 				/* do the update to all users */
 				$this->user->update_all_users($defaults);
 				
+				/* do the product registration */
+				//$this->_register();
+				
 				/* install the skins and ranks */
 				$this->_install_ranks();
 				$this->_install_skins();
@@ -1858,6 +1861,35 @@ class Upgrade_base extends Controller {
 				}
 			}
 		}
+	}
+	
+	function _register()
+	{
+		/* load the resources */
+		$this->load->library('xmlrpc');
+		
+		/* set up the server and method for the request */
+		$this->xmlrpc->server('http://www.anodyne-productions.com/ano.php/utility/do_registration', 80);
+		$this->xmlrpc->method('Do_Registration');
+		
+		/* build the request */
+		$request = array(
+			APP_NAME,
+			APP_VERSION_MAJOR .'.'. APP_VERSION_MINOR .'.'. APP_VERSION_UPDATE,
+			base_url(),
+			$_SERVER['REMOTE_ADDR'],
+			$_SERVER['SERVER_ADDR'],
+			phpversion(),
+			$this->db->platform(),
+			$this->db->version(),
+			'upgrade'
+		);
+		
+		/* compile the request */
+		$this->xmlrpc->request($request);
+		
+		/* send the request */
+		$this->xmlrpc->send_request();
 	}
 }
 
