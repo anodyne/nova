@@ -35,6 +35,11 @@
 		
 		$('#rank').change(function(){
 			var id = $('#rank option:selected').val();
+			var set = 'default';
+			var send = {
+				rank: id,
+				location: set
+			};
 			
 			$.ajax({
 				beforeSend: function(){
@@ -42,7 +47,7 @@
 				},
 				type: "POST",
 				url: "<?php echo site_url('ajax/info_show_rank_img');?>",
-				data: { rank: id },
+				data: send,
 				success: function(data){
 					$('#rank_img').html('');
 					$('#rank_img').append(data);
