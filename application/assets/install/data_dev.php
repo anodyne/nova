@@ -3470,7 +3470,7 @@ $system_components = array(
 		'comp_url' => 'http://www.williamsconcepts.com/ci/codeigniter/libraries/template/index.html'),
 	array(
 		'comp_name' => 'jQuery',
-		'comp_version' => '1.4.1',
+		'comp_version' => '1.4.2',
 		'comp_url' => 'http://www.jquery.com/',
 		'comp_desc' => 'jQuery is a lightweight JavaScript library that emphasizes interaction between JavaScript and HTML.'),
 	array(
@@ -3538,6 +3538,11 @@ $system_components = array(
 		'comp_version' => '',
 		'comp_desc' => "A simple plugin that counts down and updates the text every second.",
 		'comp_url' => 'http://davidwalsh.name/jquery-countdown-plugin'),
+	array(
+		'comp_name' => 'Uniform',
+		'comp_version' => '1.5',
+		'comp_desc' => "Uniform masks your standard form controls with custom themed controls. It works in sync with your real form elements to ensure accessibility and compatibility.",
+		'comp_url' => 'http://pixelmatrixdesign.com/uniform/'),
 );
 
 $system_info = array(
