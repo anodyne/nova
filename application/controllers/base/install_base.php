@@ -1321,7 +1321,8 @@ class Install_base extends Controller {
 		$this->load->library('xmlrpc');
 		
 		/* set up the server and method for the request */
-		$this->xmlrpc->server('http://localhost/anodyne/code/www/index.php/utility/do_registration', 80);
+		//$this->xmlrpc->server('http://localhost/anodyne/code/www/index.php/utility/do_registration', 80);
+		$this->xmlrpc->server('http://localhost/projects/anodyne/www/index.php/utility/do_registration', 80);
 		$this->xmlrpc->method('Do_Registration');
 		
 		/* build the request */
@@ -1334,12 +1335,14 @@ class Install_base extends Controller {
 			phpversion(),
 			$this->db->platform(),
 			$this->db->version(),
-			'install',
 			'install'
 		);
 		
-		/* send the request */
+		/* compile the request */
 		$this->xmlrpc->request($request);
+		
+		/* send the request */
+		$this->xmlrpc->send_request();
 	}
 }
 
