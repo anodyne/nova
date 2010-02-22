@@ -166,6 +166,10 @@ if (isset($drop_column))
 |---------------------------------------------------------------
 */
 
+/* jquery version info */
+$this->db->where('comp_name', 'jQuery');
+$this->db->update('system_components', array('comp_version' => '1.4.2'));
+
 /* jquery ui version info */
 $this->db->where('comp_name', 'jQuery UI');
 $this->db->update('system_components', array('comp_version' => '1.8rc2'));
@@ -177,6 +181,15 @@ $this->db->update('system_components', array('comp_version' => '1.1.6.1'));
 /* textile info */
 $this->db->where('comp_name', 'Textile');
 $this->db->update('system_components', array('comp_desc' => "Textile is a lightweight markup language that converts its marked-up text input to valid, well-formed XHTML and also inserts character entity references for apostrophes, opening and closing single and double quotation marks, ellipses and em dashes."));
+
+/* new jquery plugin component */
+$array = array(
+	'comp_name' => 'Uniform',
+	'comp_version' => '1.5',
+	'comp_desc' => "Uniform masks your standard form controls with custom themed controls. It works in sync with your real form elements to ensure accessibility and compatibility.",
+	'comp_url' => 'http://pixelmatrixdesign.com/uniform/'
+);
+$this->db->insert('system_components', $array);
 
 /* add system version info */
 $this->load->model('system_model', 'sys');
