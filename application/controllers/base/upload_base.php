@@ -193,10 +193,12 @@ class Upload_base extends Controller {
 		
 		/* figure out where the view should be coming from */
 		$view_loc = view_location('upload_index', $this->skin, 'admin');
+		$js_loc = js_location('upload_index_js', $this->skin, 'admin');
 		
 		/* write the data to the template */
 		$this->template->write('title', $data['header']);
 		$this->template->write_view('content', $view_loc, $data);
+		$this->template->write_view('javascript', $js_loc);
 		
 		/* render the template */
 		$this->template->render();
