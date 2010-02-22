@@ -263,7 +263,7 @@ $lang['upd_check_go_start'] = 'Start the update '. RARROW;
 $lang['upd_error_title'] = 'Update Error!';
 $lang['upd_error_back'] = LARROW .' Back to the Update Center';
 $lang['upd_error_1'] = 'No version of Nova can be found in this database. In order to update, you must have Nova installed in this database. Please verify your database connection settings and try again.';
-$lang['upd_error_2'] = 'Maintenance mode is currently off. You must login and turn maintenance mode on from Site Settings page before you can update the system.';
+$lang['upd_error_2'] = 'Maintenance mode is currently off. It\'s recommended that you turn maintenance mode on from Site Settings page before you attempting to update the system.';
 $lang['upd_error_3'] = 'You are not a system administrator and cannot update the system!';
 
 /*
