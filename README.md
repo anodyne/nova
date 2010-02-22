@@ -8,18 +8,26 @@ Release Candidate 1 (0.9.6-pre)
 
 Last Update
 -----------
-19 February 2010
+22 February 2010
 
 Latest Updates
 --------------
-* fixed bug where the rank ajax menus always showed the default rank set (#75)
-* updated the site settings page to use the form layout
-* updated the site settings page to handle rank selection better
+* fixed bug with the install rank ajax menu where it wasn't passing the right information to the ajax method
+* fixed bug with the registration process in the install controller
+* updated the update controller with the registration code
+* updated the upgrade controller with the registration code
+* updated jquery to version 1.4.2
+* updated the 0.9.6 update file
+* updated the basic install data
+* added the uniform jquery plugin
+* added a javascript view for the upload index
 
 Changes in 0.9.6
 ----------------
 * added the 0.9.6 update file
 * added the new jquery ui css files
+* added the uniform jquery plugin
+* added a javascript view for the upload index
 * removed the old jquery ui css files
 * updated the install data
     * system info
@@ -27,6 +35,7 @@ Changes in 0.9.6
     * component info
 * updated the language files
     * [text\_lang] added _text\_dynamic\_emails_
+    * [install\_lang] updated _upd\_error\_2_
 * updated the sunny skin
     * removed the notes document
     * updated the skin.yml file
@@ -69,6 +78,9 @@ Changes in 0.9.6
 * updated markItUp! to version 1.1.6.1
 * updated the site settings page to use the form layout
 * updated the site settings page to handle rank selection better
+* updated the update controller with the registration code
+* updated the upgrade controller with the registration code
+* updated jquery to version 1.4.2
 * fixed bug where the site messages always showed the type as page title (#74)
 * fixed bug where the system versions accordion broke when there were multiple versions
 * fixed bug where the system versions threw an error when only one version was in the database
@@ -76,6 +88,8 @@ Changes in 0.9.6
 * fixed bug where thresher still wasn't printing categories properly (should be completely fixed now)
 * fixed bug where thresher was missing some language elements
 * fixed bug where the rank ajax menus always showed the default rank set (#75)
+* fixed bug with the install rank ajax menu where it wasn't passing the right information to the ajax method
+* fixed bug with the registration process in the install controller
 
 Version History
 ---------------
