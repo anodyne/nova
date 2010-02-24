@@ -64,14 +64,14 @@ class User_base extends Controller {
 		$this->skin = $this->options['skin_admin'];
 		$this->rank = $this->options['display_rank'];
 		$this->timezone = $this->options['timezone'];
-		$this->dst = (strtoupper($this->options['daylight_savings']) == 'TRUE') ? TRUE : FALSE;
+		$this->dst = (bool) $this->options['daylight_savings'];
 		
 		if ($this->auth->is_logged_in() === TRUE)
 		{ /* if there's a session, set the variables appropriately */
 			$this->skin = $this->session->userdata('skin_admin');
 			$this->rank = $this->session->userdata('display_rank');
 			$this->timezone = $this->session->userdata('timezone');
-			$this->dst = (strtoupper($this->session->userdata('dst')) == 'TRUE') ? TRUE : FALSE;
+			$this->dst = (bool) $this->session->userdata('dst');
 		}
 		
 		/* set and load the language file needed */
@@ -304,13 +304,13 @@ class User_base extends Controller {
 				'dst_y' => array(
 					'name' => 'daylight_savings',
 					'id' => 'dst_y',
-					'value' => 'TRUE',
-					'checked' => ($details->daylight_savings == 'TRUE') ? TRUE : FALSE),
+					'value' => '1',
+					'checked' => ($details->daylight_savings == '1') ? TRUE : FALSE),
 				'dst_n' => array(
 					'name' => 'daylight_savings',
 					'id' => 'dst_n',
-					'value' => 'FALSE',
-					'checked' => ($details->daylight_savings == 'FALSE') ? TRUE : FALSE),
+					'value' => '0',
+					'checked' => ($details->daylight_savings == '0') ? TRUE : FALSE),
 				'admin_y' => array(
 					'name' => 'is_sysadmin',
 					'id' => 'admin_y',
