@@ -27,8 +27,7 @@ $data = array(
 	'departments_'. $g 	=> 'depts',
 	'ranks_'. $g		=> 'ranks',
 	'positions_'. $g	=> 'positions',
-	'catalogue_ranks'	=> 'catalogue_ranks',
-	'characters'		=> 'characters'
+	'catalogue_ranks'	=> 'catalogue_ranks'
 );
 
 $depts = array(
@@ -785,59 +784,8 @@ $catalogue_ranks = array(
 	array(
 		'rankcat_name' => 'Duty Uniform',
 		'rankcat_location' => 'default',
-		'rankcat_credits' => "Rank set created by Kuro-chan of Kuro-RPG.",
-		'rankcat_default' => 'y'),
-	array(
-		'rankcat_name' => 'Alternate Uniform',
-		'rankcat_location' => 'alternate',
-		'rankcat_credits' => "Rank set created by Kuro-chan of Kuro-RPG.")
-);
-
-$characters = array(
-	array(
-		'user' => 1,
-		'first_name' => 'James',
-		'last_name' => 'Kirk',
-		'position_1' => 1,
-		'rank' => 17,
-		'date_activate' => now()),
-	array(
-		'user' => 2,
-		'first_name' => "Spock",
-		'last_name' => '',
-		'position_1' => 2,
-		'position_2' => 22,
-		'rank' => 22,
-		'date_activate' => now()),
-	array(
-		'user' => 2,
-		'first_name' => 'Montgomery',
-		'last_name' => 'Scott',
-		'position_1' => 18,
-		'rank' => 21,
-		'date_activate' => now()),
-	array(
-		'user' => 1,
-		'first_name' => 'Leonard',
-		'last_name' => 'McCoy',
-		'position_1' => 24,
-		'rank' => 22,
-		'date_activate' => now()),
-	array(
-		'first_name' => 'Hikara',
-		'last_name' => 'Sulu',
-		'position_1' => 5,
-		'rank' => 27,
-		'crew_type' => 'npc',
-		'date_activate' => now()),
-	array(
-		'first_name' => 'Pavel',
-		'last_name' => 'Chekov',
-		'position_1' => 8,
-		'position_2' => 12,
-		'rank' => 32,
-		'crew_type' => 'npc',
-		'date_activate' => now()),
+		'rankcat_credits' => "The Original Series rank sets used in Nova were created by Kuro-chan of Kuro-RPG. The ranksets can be found at <a href='http://www.kuro-rpg.net' target='_blank''>Kuro-RPG</a>. Please do not copy or modify the images.",
+		'rankcat_default' => 'y')
 );
 
 /* End of file install_data_tos.php */
