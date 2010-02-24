@@ -134,6 +134,16 @@ if (isset($add_column))
 |---------------------------------------------------------------
 */
 
+$modify_column = array(
+	'users' => array(
+		'daylight_savings' => array(
+			'name' => 'daylight_savings',
+			'type' => 'VARCHAR',
+			'constraint' => 1,
+			'default' => '0')
+	)
+);
+
 if (isset($modify_column))
 {
 	foreach ($modify_column as $key => $value)
