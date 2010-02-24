@@ -1568,6 +1568,15 @@ class Upgrade_base extends Controller {
 				/* do the update to all users */
 				$this->user->update_all_users($defaults);
 				
+				/* update the welcome page header */
+				$name = $this->settings->get_setting('sim_name');
+				
+				if (!empty($name))
+				{
+					$update_data = array('message_content' => 'Welcome to the '. $name .'!');
+					$this->msgs->update_message($update_data, 'welcome_head');
+				}
+				
 				/* do the product registration */
 				//$this->_register();
 				

@@ -1059,6 +1059,15 @@ class Install_base extends Controller {
 						}
 					}
 					
+					/* update the welcome page header */
+					$name = $this->settings->get_setting('sim_name');
+					
+					if (!empty($name))
+					{
+						$update_data = array('message_content' => 'Welcome to the '. $name .'!');
+						$this->msgs->update_message($update_data, 'welcome_head');
+					}
+					
 					/* install the skins and ranks */
 					$this->_install_ranks();
 					$this->_install_skins();
