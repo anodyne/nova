@@ -11,6 +11,9 @@
 |
 */
 
+# TODO: position descriptions
+# TODO: department descriptions
+
 /*
 |---------------------------------------------------------------
 | Genre Variables
@@ -492,15 +495,9 @@ $positions = array(
 
 $catalogue_ranks = array(
 	array(
-		'rankcat_name' => 'Klingon Ranks - Gold',
+		'rankcat_name' => 'Duty Uniform',
 		'rankcat_location' => 'default',
-		'rankcat_credits' => "The rank sets used in Nova were created by Kuro-chan of Kuro-RPG. The ranksets can be found at <a href='http://www.kuro-rpg.net' target='_blank'>Kuro-RPG</a>. Please do not copy or modify the images.",
-		'rankcat_default' => 'y',
-		'rankcat_url' => 'http://www.kuro-rpg.net/'),
-	array(
-		'rankcat_name' => 'Klingon Ranks - Silver',
-		'rankcat_location' => 'silver',
-		'rankcat_credits' => "The rank sets used in Nova were created by Kuro-chan of Kuro-RPG. The ranksets can be found at <a href='http://www.kuro-rpg.net' target='_blank'>Kuro-RPG</a>. Please do not copy or modify the images.",
+		'rankcat_credits' => "The Klingon Duty Uniform rank set was created by Kuro-chan of Kuro-RPG. The rankset (and others) can be found at <a href='http://www.kuro-rpg.net' target='_blank'>Kuro-RPG</a>. Please do not copy or modify the images.",
 		'rankcat_default' => 'y',
 		'rankcat_url' => 'http://www.kuro-rpg.net/')
 );

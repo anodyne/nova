@@ -11,6 +11,8 @@
 |
 */
 
+# TODO: figure out the rank image names
+
 /*
 |---------------------------------------------------------------
 | Genre Variables
@@ -497,7 +499,7 @@ $catalogue_ranks = array(
 	array(
 		'rankcat_name' => 'Duty Ranks',
 		'rankcat_location' => 'default',
-		'rankcat_credits' => "The rank sets used in Nova were created by Kuro-chan of Kuro-RPG. The ranksets can be found at <a href='http://www.kuro-rpg.net' target='_blank'>Kuro-RPG</a>. Please do not copy or modify the images.",
+		'rankcat_credits' => "The Andromeda Duty rank set was created by Fedhog of Kuro-RPG. The rankset can be found at <a href='http://www.kuro-rpg.net' target='_blank'>Kuro-RPG</a>. Please do not copy or modify the images.",
 		'rankcat_default' => 'y',
 		'rankcat_url' => 'http://www.kuro-rpg.net/')
 );

@@ -11,6 +11,9 @@
 |
 */
 
+# TODO: chief tactical officer description
+# TODO: tactical officer description
+
 /*
 |---------------------------------------------------------------
 | Genre Variables

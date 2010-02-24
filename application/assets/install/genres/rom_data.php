@@ -27,8 +27,7 @@ $data = array(
 	'departments_'. $g 	=> 'depts',
 	'ranks_'. $g		=> 'ranks',
 	'positions_'. $g	=> 'positions',
-	'catalogue_ranks'	=> 'catalogue_ranks',
-	'characters'		=> 'characters'
+	'catalogue_ranks'	=> 'catalogue_ranks'
 );
 
 $depts = array(
@@ -673,27 +672,9 @@ $catalogue_ranks = array(
 	array(
 		'rankcat_name' => 'Nemesis Ranks',
 		'rankcat_location' => 'default',
-		'rankcat_credits' => 'Rank set created by Kuro-chan of Kuro-RPG.',
+		'rankcat_credits' => "The Nemesis rank set was created by Kuro-chan of Kuro-RPG. The rankset (and others) can be found at <a href='http://www.kuro-rpg.net' target='_blank'>Kuro-RPG</a>. Please do not copy or modify the images.",
 		'rankcat_default' => 'y',
-		'rankcat_url' => 'http://www.kuro-rpg.net/'),
-	array(
-		'rankcat_name' => 'Nemesis Alternate Ranks',
-		'rankcat_location' => 'nemesis2',
-		'rankcat_credits' => 'Rank set created by Kuro-chan of Kuro-RPG.',
 		'rankcat_url' => 'http://www.kuro-rpg.net/')
-);
-
-$characters = array(
-	array(
-		'user' => 1,
-		'first_name' => 'John',
-		'last_name' => 'Doe',
-		'date_activate' => now()),
-	array(
-		'user' => 2,
-		'first_name' => 'Jane',
-		'last_name' => 'Doe',
-		'date_activate' => now())
 );
 
 /* End of file install_data_rom.php */
