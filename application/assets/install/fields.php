@@ -1639,7 +1639,6 @@ $fields_user_prefs_values = array(
 		'type' => 'TEXT')
 );
 
-# TODO: need to change theme and rank defaults for release
 $fields_users = array(
 	'userid' => array(
 		'type' => $user_id_type,
