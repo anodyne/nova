@@ -1,0 +1,45 @@
+FINAL GENRES FOR 1.0
+====================
+
+* sto
+	x ranks
+	x data
+* ds9
+	x ranks
+	x data
+* bsg
+	x ranks
+	x data
+* tos
+	- ranks
+	x data
+* ent
+	- ranks
+	x data
+* mov
+	- ranks
+	- data
+* sga
+	- ranks
+	- data
+* sg1
+	- ranks
+	- data
+* baj
+	- ranks
+	- data
+* crd
+	- ranks
+	- data
+* rom
+	- ranks
+	- data
+* kli
+	- ranks
+	- data
+* and
+	- ranks
+	- data
+* dnd
+	- ranks
+	- data
