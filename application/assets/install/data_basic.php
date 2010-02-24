@@ -1658,7 +1658,7 @@ $messages = array(
 	array(
 		'message_key' => 'welcome_msg',
 		'message_label' => 'Welcome Page Message',
-		'message_content' => "Define your welcome message through the Site Messages page.",
+		'message_content' => "Define your welcome message and welcome page header through the Site Messages page.",
 		'message_type' => 'message'),
 	array(
 		'message_key' => 'sim',
