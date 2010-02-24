@@ -1,3 +1,23 @@
+02.24.2010
+
+* updated the database schema to change the users::daylight_savings field from enum to varchar
+* updated the 0.9.6 update file
+* updated the controller constructors to cast the daylight savings value as a boolean instead of doing logic against it
+* updated the MOV genre file
+* updated the BAJ genre file
+* updated the ENT genre file
+* updated the TOS genre file
+* updated the KLI genre file
+* updated the ROM genre file
+* updated the BL5 genre file
+* updated the AND genre file
+* updated files to remove some of the remaining TODOs
+* updated the install and upgrade process to try and automatically set the welcome page title
+
+* removed the changes doc
+
+==========
+
 02.22.2010
 
 * fixed bug with the install rank ajax menu where it wasn't passing the right information to the ajax method

@@ -8,19 +8,24 @@ Release Candidate 1 (0.9.6-pre)
 
 Last Update
 -----------
-22 February 2010
+24 February 2010
 
 Latest Updates
 --------------
-* fixed bug with the install rank ajax menu where it wasn't passing the right information to the ajax method
-* fixed bug with the registration process in the install controller
-* updated the update controller with the registration code
-* updated the upgrade controller with the registration code
-* updated jquery to version 1.4.2
+* updated the database schema to change the users::daylight_savings field from enum to varchar
 * updated the 0.9.6 update file
-* updated the basic install data
-* added the uniform jquery plugin
-* added a javascript view for the upload index
+* updated the controller constructors to cast the daylight savings value as a boolean instead of doing logic against it
+* updated the MOV genre file
+* updated the BAJ genre file
+* updated the ENT genre file
+* updated the TOS genre file
+* updated the KLI genre file
+* updated the ROM genre file
+* updated the BL5 genre file
+* updated the AND genre file
+* updated files to remove some of the remaining TODOs
+* updated the install and upgrade process to try and automatically set the welcome page title
+* removed the changes doc
 
 Changes in 0.9.6
 ----------------
@@ -29,10 +34,22 @@ Changes in 0.9.6
 * added the uniform jquery plugin
 * added a javascript view for the upload index
 * removed the old jquery ui css files
+* removed the changes doc
 * updated the install data
     * system info
     * system versions info
     * component info
+* updated the database schema
+    * users::daylight\_savings from enum to varchar
+* updated the genre files
+    * MOV
+    * BAJ
+    * ENT
+    * TOS
+    * KLI
+    * ROM
+    * BL5
+    * AND
 * updated the language files
     * [text\_lang] added _text\_dynamic\_emails_
     * [install\_lang] updated _upd\_error\_2_
@@ -81,6 +98,9 @@ Changes in 0.9.6
 * updated the update controller with the registration code
 * updated the upgrade controller with the registration code
 * updated jquery to version 1.4.2
+* updated the controller constructors to cast the daylight savings value as a boolean instead of doing logic against it
+* updated files to remove some of the remaining TODOs
+* updated the install and upgrade process to try and automatically set the welcome page title
 * fixed bug where the site messages always showed the type as page title (#74)
 * fixed bug where the system versions accordion broke when there were multiple versions
 * fixed bug where the system versions threw an error when only one version was in the database
