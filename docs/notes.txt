@@ -69,3 +69,9 @@ $url.= str_replace(basename($_SERVER['SCRIPT_NAME']), '', $_SERVER['SCRIPT_NAME'
 
 // generate a changelog with the subject for the last 8 days
 git log --pretty=format:"* %s" --since=8.days > CHANGELOG
+
+|---------------------------------------------------------------
+| CSS OVERLAY BADGES
+|---------------------------------------------------------------
+
+http://css-tricks.com/date-badges-and-comment-bubbles-for-your-blog/

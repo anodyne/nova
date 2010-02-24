@@ -30,10 +30,10 @@ FINAL GENRES FOR 1.0
 	- data
 * crd
 	- ranks
-	- data
+	x data
 * rom
 	- ranks
-	- data
+	x data
 * kli
 	- ranks
 	- data
@@ -41,5 +41,8 @@ FINAL GENRES FOR 1.0
 	- ranks
 	- data
 * dnd
+	- ranks
+	- data
+* bl5
 	- ranks
 	- data
