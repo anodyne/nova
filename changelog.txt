@@ -1,3 +1,11 @@
+02.25.2010
+
+* updated the KLI genre file
+* updated the BAJ genre file
+* updated the DS9 genre file
+
+==========
+
 02.24.2010
 
 * updated the database schema to change the users::daylight_savings field from enum to varchar
