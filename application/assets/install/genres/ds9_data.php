@@ -1607,7 +1607,7 @@ $positions = array(
 		'pos_type' => 'officer'),
 	array(
 		'pos_name' => 'Quartermaster',
-		'pos_desc' => "The Chief Operations Officer cannot man the bridge at all times. Extra personnel are needed to relive and maintain ship operations. The Operations Officers are thus assistants to the Chief, fulfilling his/her duties when required, and assuming the Operations consoles if required at any time.\r\n\r\nThe Operations Officer reports to the Chief Operations Officer.",
+		'pos_desc' => "The Quartermaster specializes in distributing supplies and provisions to personnel aboard the vessel. In addition, the Quartermaster controls all physical assignments to quarters throughout the vessel.",
 		'pos_dept' => 5,
 		'pos_order' => 6,
 		'pos_open' => 1,
@@ -1629,21 +1629,21 @@ $positions = array(
 		
 	array(
 		'pos_name' => 'Chief Engineering Officer',
-		'pos_desc' => "The Chief Engineer is responsible for the condition of all systems and equipment on board a Starfleet ship or facility. S/he oversees maintenance, repairs and upgrades of all equipment. S/he is also responsible for the many repairs teams during crisis situations.\r\n\r\nThe Chief Engineer is not only the department head but also a senior officer, responsible for all the crew members in her/his department and maintenance of the duty rosters.",
+		'pos_desc' => "The Chief Engineer is responsible for the condition of all systems and equipment on board a Starfleet ship or facility. S/he oversees maintenance, repairs and upgrades of all equipment. S/he is also responsible for the many repair teams during crisis situations.\r\n\r\nThe Chief Engineer is not only the department head but also a senior officer, responsible for all the crew members in her/his department and maintenance of the duty rosters.",
 		'pos_dept' => 6,
 		'pos_order' => 0,
 		'pos_open' => 1,
 		'pos_type' => 'senior'),
 	array(
 		'pos_name' => 'Assistant Chief Engineering Officer',
-		'pos_desc' => "The Assistant Chief Engineer assists the Chief Engineer in the daily work; in issues regarding mechanical, administrative matters and co-ordinating repairs with other departments.\r\n\r\nIf so required, the Assistant Chief Engineer must be able to take over as Chief Engineer, and thus must be versed in current information regarding the ship or facility.",
+		'pos_desc' => "The Assistant Chief Engineer assists the Chief Engineer in the daily work; in issues regarding mechanical, administrative matters and coordinating repairs with other departments.\r\n\r\nIf so required, the Assistant Chief Engineer must be able to take over as Chief Engineer, and thus must be versed in current information regarding the ship or facility.",
 		'pos_dept' => 6,
 		'pos_order' => 1,
 		'pos_open' => 1,
 		'pos_type' => 'officer'),
 	array(
 		'pos_name' => 'Engineering Officer',
-		'pos_desc' => "The Assistant Chief Engineer assists the Chief Engineer in the daily work; in issues regarding mechanical, administrative matters and co-ordinating repairs with other departments.\r\n\r\nIf so required, the Assistant Chief Engineer must be able to take over as Chief Engineer, and thus must be versed in current information regarding the ship or facility.",
+		'pos_desc' => "Engineers are the backbone of the Engineering Corps and are responsible for, under the guidance of the Chief Engineer, maintaining and repairing the vessel.",
 		'pos_dept' => 6,
 		'pos_order' => 2,
 		'pos_open' => 5,
@@ -1685,7 +1685,7 @@ $positions = array(
 		'pos_type' => 'enlisted'),
 	array(
 		'pos_name' => 'Structural/Environmental Specialist',
-		'pos_desc' => "The Structural and Environmental Systems Specialist is a specialised Engineer. From a small ship/facility to a large one, all requires constant monitoring. The hull, bulkheads, walls, Jeffrey's tubes, turbolifts, structural integrity field, internal dampening field, and environmental systems are all monitored and maintained by this officer and his/her team.\r\n\r\nThe team assigned to the Structural and Environmental Systems Specialist is made up from NCO personnel, assigned by the Assistant and Chief Engineer. The Structural and Environmental Systems Specialist reports to the Asst and Chief Engineer.",
+		'pos_desc' => "The Structural and Environmental Systems Specialist is a specialized Engineer. From a small ship/facility to a large one, all requires constant monitoring. The hull, bulkheads, walls, Jeffrey's tubes, turbolifts, structural integrity field, internal dampening field, and environmental systems are all monitored and maintained by this officer and his/her team.\r\n\r\nThe team assigned to the Structural and Environmental Systems Specialist is made up from NCO personnel, assigned by the Assistant and Chief Engineer. The Structural and Environmental Systems Specialist reports to the Asst and Chief Engineer.",
 		'pos_dept' => 6,
 		'pos_order' => 10,
 		'pos_open' => 1,
