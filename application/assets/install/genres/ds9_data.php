@@ -1721,7 +1721,7 @@ $positions = array(
 		'pos_type' => 'officer'),
 	array(
 		'pos_name' => 'Alien Archaeologist/Anthropologist',
-		'pos_desc' => "Specialized Science Officer in charge of the Alien Culture Section. This role involves the study of all newly discovered alien species and life forms, from the long dead to thriving. There knowledge also involves current known alien species. Has close ties to the Historian.\r\n\r\nAnswers to the Chief Science Officer and Assistant Chief Science Officer.",
+		'pos_desc' => "Specialized Science Officer in charge of the Alien Culture Section. This role involves the study of all newly discovered alien species and life forms, from the long dead to thriving. Their knowledge also involves current known alien species. Has close ties to the Historian.\r\n\r\nAnswers to the Chief Science Officer and Assistant Chief Science Officer.",
 		'pos_dept' => 7,
 		'pos_order' => 5,
 		'pos_open' => 1,
@@ -1799,14 +1799,14 @@ $positions = array(
 		'pos_type' => 'officer'),
 	array(
 		'pos_name' => 'Head Nurse',
-		'pos_desc' => "The Head Nurse oversees all the Nurses currently aboard, ensuring they are assigned to task and working as required in there area. Additionally the Head nurse performs the normal duties of the nurse, assisting the Duty Medical Officer in sickbay.",
+		'pos_desc' => "The Head Nurse oversees all the Nurses currently aboard, ensuring they are assigned to tasks and working as required in their area. Additionally the Head nurse performs the normal duties of the nurse, assisting the Duty Medical Officer in sickbay.",
 		'pos_dept' => 8,
 		'pos_order' => 7,
 		'pos_open' => 3,
 		'pos_type' => 'enlisted'),
 	array(
 		'pos_name' => 'Nurse',
-		'pos_desc' => "Nurses are trained in basic medical care, and are capable of dealing with less serious medical cases. In more serious matters the nurse assist the medical officer in the examination and administration of medical care, be this injecting required drugs, or simply assuring the injured party that they will be ok. The Nurses also maintain the medical wards, overseeing the patients and ensuring they are receiving medication and care as instructed by the Medical Officer.",
+		'pos_desc' => "Nurses are trained in basic medical care, and are capable of dealing with less serious medical cases. In more serious matters the nurse assists the medical officer in the examination and administration of medical care, be this injecting required drugs, or simply assuring the injured party that they will be ok. The Nurses also maintain the medical wards, overseeing the patients and ensuring they are receiving medication and care as instructed by the Medical Officer.",
 		'pos_dept' => 8,
 		'pos_order' => 8,
 		'pos_open' => 3,
@@ -1950,7 +1950,7 @@ $positions = array(
 		'pos_type' => 'senior'),
 	array(
 		'pos_name' => 'Squadron Leader',
-		'pos_desc' => "The Squadron Leader is in charge of all things related to his flight's fighters, generally a responsibility of up to 24 starfighters. As well, the squadron leader is responsible for all the personnel assigned to the squadron on the ship/facility, and ensuring that maintenance work is carried on the craft by Engineering.\r\n\r\nReports to the Wing Commander. If the Squadron Leader is the senior starfighter pilot assigned to the starship, starbase or facility they report to the Commanding Officer or Executive Officer and is a member of the Senior Staff.",
+		'pos_desc' => "The Squadron Leader is in charge of all things related to his squadron's fighters, generally a responsibility of up to 24 starfighters. As well, the squadron leader is responsible for all the personnel assigned to the squadron on the ship/facility, and ensuring that maintenance work is carried on the craft by Engineering.\r\n\r\nReports to the Wing Commander. If the Squadron Leader is the senior starfighter pilot assigned to the starship, starbase or facility they report to the Commanding Officer or Executive Officer and is a member of the Senior Staff.",
 		'pos_dept' => 12,
 		'pos_order' => 2,
 		'pos_open' => 2,
