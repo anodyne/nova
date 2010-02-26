@@ -8,11 +8,10 @@ Release Candidate 1 (0.9.6-pre)
 
 Last Update
 -----------
-25 February 2010
+26 February 2010
 
 Latest Updates
 --------------
-* updated the KLI genre file
 * updated the BAJ genre file
 * updated the DS9 genre file
 
