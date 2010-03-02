@@ -2253,7 +2253,7 @@ $system_components = array(
 		'comp_desc' => 'jQuery is a lightweight JavaScript library that emphasizes interaction between JavaScript and HTML.'),
 	array(
 		'comp_name' => 'jQuery UI',
-		'comp_version' => '1.8rc2',
+		'comp_version' => '1.8rc3',
 		'comp_url' => 'http://jqueryui.com/',
 		'comp_desc' => 'jQuery UI is a lightweight, easily customizable interface library for the jQuery Javascript library.'),
 	array(
@@ -2329,7 +2329,7 @@ $system_info = array(
 		'sys_install_date' => now(),
 		'sys_version_major' => 0,
 		'sys_version_minor' => 9,
-		'sys_version_update' => 6)
+		'sys_version_update' => 7)
 );
 
 $system_versions = array(
@@ -2686,6 +2686,14 @@ $system_versions = array(
 * fixed bug where the rank ajax menus always showed the default rank set (#75)
 * fixed bug with the install rank ajax menu where it wasn't passing the right information to the ajax method
 * fixed bug with the registration process in the install controller"),
+	array(
+		'version' => '0.9.7',
+		'version_major' => '0',
+		'version_minor' => '9',
+		'version_update' => '7',
+		'version_date' => now(),
+		'version_launch' => 'Nova 0.9.7 is an update to the beta release of the next generation RPG management software from Anodyne Productions.',
+		'version_changes' => ""),
 );
 
 $tour_fields = array(
