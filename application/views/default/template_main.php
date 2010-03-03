@@ -4,10 +4,10 @@
 | TEMPLATE - MAIN
 |---------------------------------------------------------------
 |
-| File: application/views/beta/template_main.php
+| File: application/views/default/template_main.php
 | Skin Version: 1.0
 |
-| Main template file used by the beta skin.
+| Main layout file used by the default skin.
 |
 | $sec options are: main, wiki, admin, login
 | $css can be anything you want (with a .css extension of course)
@@ -41,6 +41,16 @@ $link = array(
 	'charset'	=> 'utf-8'
 );
 
+$this->load->helper('panel');
+
+$button_login = array(
+	'class' => 'button-signin',
+	'value' => 'submit',
+	'type' => 'submit',
+	'name' => 'submit',
+	'content' => ucfirst(lang('actions_login'))
+);
+
 echo "<?xml version='1.0' encoding='UTF-8'?>\r\n";
 
 ?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
@@ -63,6 +73,34 @@ echo "<?xml version='1.0' encoding='UTF-8'?>\r\n";
 		<?php include_once($this->config->item('include_head_main')); ?>
 		
 		<?php echo $javascript;?>
+		
+		<script type="text/javascript">
+			$(document).ready(function(){
+				$('body').click(function(event){
+					if (! $(event.target).closest('div').hasClass('signin-panel'))
+					{
+						$('.signin-panel').hide();
+						$('a#signin').addClass('corner-lower-left').addClass('corner-lower-right').removeClass('signin-active');
+					}
+				});
+				
+				$('a#signin').click(function(e){
+					$('.signin-panel').toggle();
+					$('a#signin').toggleClass('corner-lower-left').toggleClass('corner-lower-right').toggleClass('signin-active');
+					$('.signin-panel input:first').focus();
+					
+					return false;
+				});
+			});
+			
+			/* if the escape key is pressed, close the menu */
+			$(document).keyup(function(event){
+				if (event.keyCode == 27) {
+					$('.signin-panel').hide();
+					$('a#signin').addClass('corner-lower-left').addClass('corner-lower-right').removeClass('signin-active');
+				}
+			});
+		</script>
 	</head>
 	<body>
 		<noscript>
@@ -87,56 +125,74 @@ echo "<?xml version='1.0' encoding='UTF-8'?>\r\n";
 						</table>
 					</div>
 				</div>
-				<div class="panel-handle UITheme">
-					<div class="wrapper">
-						<?php echo $panel_workflow;?>
-					</div>
-				</div>
 			</div>
 		<?php endif; ?>
 		
 		<!-- HEAD -->
-		<div id="head">
-			<div class="head_top"></div>
-			<div class="wrapper">
-				<div class="head_content">
-					<?php echo img(APPFOLDER .'/views/'. $current_skin .'/'. $sec .'/images/head-logo.png', FALSE);?>
-				</div>
-			</div>
-		</div>
-		
-		<!-- MENU -->
-		<div id="menu">
-			<div class="wrapper">
-				<div class="nav-main">
-					<?php echo $nav_main;?>
-				</div>
-			</div>
-		</div>
+		<div id="head"></div>
 		
 		<!-- BODY -->
-		<div id="body">
-			<div class="wrapper">
+		<div class="wrapper">
+			<div id="body">
+				<div id="upper-body">
+					<div>
+						<?php if (!$this->auth->is_logged_in()): ?>
+							<div class="signin-panel corner-upper-left corner-lower-left corner-lower-right">
+								<?php echo form_open('login/check_login');?>
+									<p>
+										<?php echo ucfirst(lang('labels_email'));?><br />
+										<input type="text" name="email" class="signin-panel-input" />
+									</p>
+							
+									<p>
+										<?php echo ucfirst(lang('labels_password'));?><br />
+										<input type="password" name="password" class="signin-panel-input">
+									</p>
+							
+									<p>
+										<?php echo form_button($button_login);?>
+										&nbsp;&nbsp;
+										<input id="remember" type="checkbox" name="remember" value="yes" />
+										<label for="remember"><?php echo ucfirst(lang('actions_remember') .' '. lang('labels_me'));?></label>
+									</p>
+							
+									<p><?php echo anchor('login/reset_password', lang('login_forgot'));?></p>
+								<?php echo form_close();?>
+							</div>
+							<a href="<?php echo site_url('login/index');?>" id="signin" class="signin corner-upper-left corner-upper-right corner-lower-left corner-lower-right"><?php echo ucfirst(lang('actions_login'));?></a>
+						<?php else: ?>
+							<a href="<?php echo site_url('login/logout');?>" class="signin corner-upper-left corner-upper-right corner-lower-left corner-lower-right"><?php echo ucfirst(lang('actions_logout'));?></a>
+						<?php endif;?>
+					</div>
+				
+					<div style="clear:both;"></div>
+					
+					<div id="menu">
+						<div class="nav-main">
+							<?php echo $nav_main;?>
+						</div>
+					</div>
+				</div>
+				
 				<!-- SUB NAVIGATION -->
 				<div class="nav-sub">
 					<?php echo $nav_sub;?>
 				</div>
-				
+			
 				<!-- PAGE CONTENT -->
 				<div class="content">
 					<?php echo $flash_message;?>
 					<?php echo $content;?>
 					<?php echo $ajax;?>
-					
-					<div style="clear:both;">&nbsp;</div>
+				
+					<div style="clear:both;"></div>
+				</div>
+				
+				<!-- FOOTER -->
+				<div id="footer">
+					Powered by <strong><?php echo APP_NAME;?></strong>
 				</div>
 			</div>
-		</div>
-		
-		<!-- FOOTER -->
-		<div id="footer">
-			Powered by <strong><?php echo APP_NAME;?></strong> from <a href="http://www.anodyne-productions.com" target="_blank">Anodyne Productions</a> | 
-			<?php echo anchor('main/credits', 'Site Credits');?>
 		</div>
 	</body>
 </html>

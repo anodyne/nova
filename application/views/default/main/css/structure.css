@@ -10,7 +10,7 @@ html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abb
 | HEADINGS
 |---------------------------------------------------------------
 */
-h1, h2, h3, h4, p { margin: 8px 0; }
+h1, h2, h3, h4, p { margin: 0 0 10px 0; }
 
 h1 { font-size: 200%; }
 h2 { font-size: 150%; }
@@ -68,16 +68,16 @@ input[type=text],
 input[type=password] {
 	margin: 0;
 	padding: 3px;
-	width: 325px;
+	width: 275px;
 }
-input.small     	{ width: 75px; }
-input.medium    	{ width: 150px; }
-input.medium-large	{ width: 250px; }
+input.small     	{ width: 50px; }
+input.medium    	{ width: 100px; }
+input.medium-large	{ width: 150px; }
 
 textarea {
 	margin: 0;
 	padding: 3px;
-	width: 600px;
+	width: 500px;
 }
 
 select {
@@ -143,9 +143,19 @@ td.align_center { text-align: center; }
 | BUTTONS
 |---------------------------------------------------------------
 */
-button {
-	height: 25px;
-	padding: 0 10px 1px 10px;
+button.button-main {
+	height: 28px;
+	padding: 0 20px 2px 20px;
+	outline: 0 !important;
+}
+button.button-sec {
+	height: 22px;
+	padding: 0 10px 2px 10px;
+	outline: 0 !important;
+}
+
+button.button-signin {
+	padding: 0 10px 2px 10px !important;
 	outline: 0 !important;
 }
 
@@ -157,7 +167,7 @@ button.button-small {
 
 input.button-main, input.button-sec {
 	height: 25px;
-	padding: 0 10px;
+	padding: 0 15px;
 }
 
 /*
@@ -218,7 +228,7 @@ ul.padding1 { padding: .5em 1em; }
 }
 .flash_message p {
 	margin: 0;
-	padding: 3px 5px;
+	padding: 4px 7px;
 }
 
 /*
@@ -270,8 +280,6 @@ img { border: none; }
 
 .award-small { width: 65px; }
 
-.indent-left { padding: 0 0 0 1.5em; }
-
 /*
 |---------------------------------------------------------------
 | PANEL
@@ -281,12 +289,8 @@ img { border: none; }
 	outline: 0;
 	margin: 0;
 	padding: 0;
-	display: block;
 }
-.panel-handle a span {
-	display: block;
-	padding: 0 1em;
-}
+.panel-handle a span {}
 .panel-handle .ui-icon {
 	margin: 3px 0 0 4px;
 	padding: 0;
@@ -298,8 +302,8 @@ img { border: none; }
 }
 
 .panel-handle {
-	height: 22px;
-	line-height: 22px;
+	height: 40px;
+	line-height: 40px;
 }
 
 .panel-trigger {
@@ -311,7 +315,7 @@ img { border: none; }
 #panel-handle-left { width: auto; }
 #panel-handle-left li {
 	float: left;
-	margin: 0 2px 0 0;
+	margin: 0;
 }
 
 .panel-notify-icon {
