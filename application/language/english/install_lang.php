@@ -73,19 +73,21 @@ $lang['install_index_title'] = 'Installation Center';
 $lang['install_index_header_welcome'] = 'Welcome to Nova!';
 $lang['install_index_header_whattodo'] = 'What do you want to do?';
 
-$lang['install_index_options_install'] = 'Install a fresh copy of Nova '. RARROW;
-$lang['install_index_options_upgrade'] = 'Upgrade to Nova from SMS 2 '. RARROW;
-$lang['install_index_options_update'] = 'Check for updates to Nova '. RARROW;
-$lang['install_index_options_verify'] = 'Verify my server can run Nova '. RARROW;
-$lang['install_index_options_readme'] = 'View the Nova readme '. RARROW;
-$lang['install_index_options_remove'] = 'Uninstall Nova '. RARROW;
-$lang['install_index_options_tour'] = 'Take a tour of Nova '. RARROW;
-$lang['install_index_options_guide'] = 'Read the Install Guide '. RARROW;
-$lang['install_index_options_genre'] = 'Install additional genres '. RARROW;
-$lang['install_index_options_database'] = 'Add your own tables/fields to the database '. RARROW;
-$lang['install_index_options_upg_guide'] = 'Read the Upgrade Guide '. RARROW;
+$lang['install_index_options_install'] = 'Install a fresh copy of Nova';
+$lang['install_index_options_upgrade'] = 'Upgrade to Nova from SMS 2';
+$lang['install_index_options_update'] = 'Check for updates to Nova';
+$lang['install_index_options_verify'] = 'Verify my server can run Nova';
+$lang['install_index_options_readme'] = 'View the Nova readme';
+$lang['install_index_options_remove'] = 'Uninstall Nova';
+$lang['install_index_options_tour'] = 'Take a tour of Nova';
+$lang['install_index_options_guide'] = 'Read the Install Guide';
+$lang['install_index_options_genre'] = 'Install additional genres';
+$lang['install_index_options_database'] = 'Add your own tables/fields to the database';
+$lang['install_index_options_upg_guide'] = 'Read the Upgrade Guide';
 $lang['install_index_options_firststeps'] = 'First Steps';
-$lang['install_index_options_whatsnext'] = 'What'. RSQUO .'s Next?';
+$lang['install_index_options_whatsnext'] = "What's Next?";
+
+$lang['install_option_begin'] = 'Begin Nova Installation';
 
 /*
  * Remove
