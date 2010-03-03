@@ -14,10 +14,10 @@ Latest Updates
 --------------
 * added the 0.9.7 update file
 * added the february changelog archive file
-
 * updated the jquery ui to version 1.8rc3
 * updated the constants config file with the new version info
 * updated the install data with the new version info
+* updated the look and feel of the installation center
 
 Changes in 0.9.7
 ----------------
@@ -27,6 +27,7 @@ Changes in 0.9.7
     * system component info
 * updated the constants config file with the new version info
 * updated the jquery ui to version 1.8rc3
+* updated the look and feel of the installation center
 
 Version History
 ---------------
