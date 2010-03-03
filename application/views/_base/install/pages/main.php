@@ -1,83 +1,85 @@
-<?php echo text_output($label['welcome'], 'h2', 'page-subhead');?>
+<?php echo text_output($label['welcome'], 'h2');?>
 
 <?php echo text_output($label['intro'], 'p', 'fontMedium');?>
 
-<br />
-
-<?php echo text_output($label['firststeps'], 'h2', 'page-subhead');?>
-
-<ul id="options" class="fontLarge none">
-	<li>
-		<a href="http://docs.anodyne-productions.com/index.php/nova/tour" target="_blank">
-			<span class="icon ui-icon ui-icon-search"></span>
-			<?php echo $label['options_tour'];?>
-		</a>
-	</li>
-	<li>
-		<a href="<?php echo site_url('install/readme');?>">
-			<span class="icon ui-icon ui-icon-lightbulb"></span>
-			<?php echo $label['options_readme'];?>
-		</a>
-	</li>
-	<li>
-		<a href="<?php echo site_url('install/verify');?>">
-			<span class="icon ui-icon ui-icon-check"></span>
-			<?php echo $label['options_verify'];?>
-		</a>
-	</li>
-	<li>
-		<a href="http://docs.anodyne-productions.com/index.php/nova/overview/install" target="_blank">
-			<span class="icon ui-icon ui-icon-bookmark"></span>
-			<?php echo $label['options_guide'];?>
-		</a>
-	</li>
+<?php if ($this->uri->segment(3) == 'full'): ?>
+	<br />
 	
-	<?php if ($installed === TRUE): ?>
-		<li>
-			<a href="<?php echo site_url('install/remove');?>">
-				<span class="icon ui-icon ui-icon-trash"></span>
-				<?php echo $label['options_remove'];?>
-			</a>
-		</li>
-	<?php endif;?>
-</ul>
-
-<?php echo text_output($label['whatsnext'], 'h2', 'page-subhead');?>
-
-<ul class="fontLarge none">
-	<?php if ($installed === FALSE): ?>
-		<li>
-			<a href="<?php echo site_url('install/step/1');?>" id="install">
-				<span class="icon ui-icon ui-icon-newwin"></span>
-				<?php echo $label['options_install'];?>
-			</a>
-		</li>
-		<li>
-			<a href="<?php echo site_url('upgrade/index');?>">
-				<span class="icon ui-icon ui-icon-transferthick-e-w"></span>
-				<?php echo $label['options_upgrade'];?>
-			</a>
-		</li>
-	<?php endif;?>
+	<?php echo text_output($label['firststeps'], 'h2', 'page-subhead');?>
 	
-	<?php if ($installed === TRUE): ?>
+	<ul id="options" class="fontLarge none">
 		<li>
-			<a href="<?php echo site_url('update/index');?>">
-				<span class="icon ui-icon ui-icon-signal-diag"></span>
-				<?php echo $label['options_update'];?>
+			<a href="http://docs.anodyne-productions.com/index.php/nova/tour" target="_blank">
+				<span class="icon ui-icon ui-icon-search"></span>
+				<?php echo $label['options_tour'];?>
 			</a>
 		</li>
 		<li>
-			<a href="<?php echo site_url('install/genre');?>">
-				<span class="icon ui-icon ui-icon-plusthick"></span>
-				<?php echo $label['options_genre'];?>
+			<a href="<?php echo site_url('install/readme');?>">
+				<span class="icon ui-icon ui-icon-lightbulb"></span>
+				<?php echo $label['options_readme'];?>
 			</a>
 		</li>
 		<li>
-			<a href="<?php echo site_url('install/changedb');?>">
-				<span class="icon ui-icon ui-icon-plusthick"></span>
-				<?php echo $label['options_database'];?>
+			<a href="<?php echo site_url('install/verify');?>">
+				<span class="icon ui-icon ui-icon-check"></span>
+				<?php echo $label['options_verify'];?>
 			</a>
 		</li>
-	<?php endif;?>
-</ul>
+		<li>
+			<a href="http://docs.anodyne-productions.com/index.php/nova/overview/install" target="_blank">
+				<span class="icon ui-icon ui-icon-bookmark"></span>
+				<?php echo $label['options_guide'];?>
+			</a>
+		</li>
+		
+		<?php if ($installed === TRUE): ?>
+			<li>
+				<a href="<?php echo site_url('install/remove');?>">
+					<span class="icon ui-icon ui-icon-trash"></span>
+					<?php echo $label['options_remove'];?>
+				</a>
+			</li>
+		<?php endif;?>
+	</ul>
+	
+	<?php echo text_output($label['whatsnext'], 'h2', 'page-subhead');?>
+	
+	<ul class="fontLarge none">
+		<?php if ($installed === FALSE): ?>
+			<li>
+				<a href="<?php echo site_url('install/step/1');?>" id="install">
+					<span class="icon ui-icon ui-icon-newwin"></span>
+					<?php echo $label['options_install'];?>
+				</a>
+			</li>
+			<li>
+				<a href="<?php echo site_url('upgrade/index');?>">
+					<span class="icon ui-icon ui-icon-transferthick-e-w"></span>
+					<?php echo $label['options_upgrade'];?>
+				</a>
+			</li>
+		<?php endif;?>
+		
+		<?php if ($installed === TRUE): ?>
+			<li>
+				<a href="<?php echo site_url('update/index');?>">
+					<span class="icon ui-icon ui-icon-signal-diag"></span>
+					<?php echo $label['options_update'];?>
+				</a>
+			</li>
+			<li>
+				<a href="<?php echo site_url('install/genre');?>">
+					<span class="icon ui-icon ui-icon-plusthick"></span>
+					<?php echo $label['options_genre'];?>
+				</a>
+			</li>
+			<li>
+				<a href="<?php echo site_url('install/changedb');?>">
+					<span class="icon ui-icon ui-icon-plusthick"></span>
+					<?php echo $label['options_database'];?>
+				</a>
+			</li>
+		<?php endif;?>
+	</ul>
+<?php endif;?>

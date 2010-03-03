@@ -59,6 +59,22 @@ $lang['global_update']			= 'update';
 $lang['global_upgrade']			= 'upgrade';
 
 $lang['global_readme_title'] 	= 'Readme';
+$lang['global_more_options']	= 'More Options';
+
+/*
+|---------------------------------------------------------------
+| INSTALL TYPE
+|---------------------------------------------------------------
+*/
+
+$lang['install_options_choose'] = 'Please select from the following options:';
+$lang['install_options_fresh_title'] = 'Fresh Install';
+$lang['install_options_upd_title'] = 'Update Nova';
+$lang['install_options_upg_title'] = 'Upgrade From SMS';
+
+$lang['install_options_fresh_text'] = "If you don't already have Nova installed on your server and want to install a clean copy of the system, use this option. Don't try to install the system over top of an existing Nova installation. If you want to re-install Nova, you'll need to uninstall the system first then install it again.";
+$lang['install_options_upd_text'] = "Anodyne is committed to providing continued support for Nova through software updates. If you need to access the Update Center to check for and apply Nova software updates, use this option.";
+$lang['install_options_upg_text'] = "Nova includes an easy-to-use upgrade process that will take the information from a site running SMS 2.6.9 or higher and upgrade it to be usable by Nova. In order to do the upgrade, your SMS database has to be in the same database as where you're installing Nova.";
 
 /*
 |---------------------------------------------------------------

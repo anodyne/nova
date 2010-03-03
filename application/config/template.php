@@ -132,7 +132,9 @@ $template['install']['regions'] = array(
 	'content',
 	'label',
 	'javascript',
-	'flash_message'
+	'flash_message',
+	'controls',
+	'install_options'
 );
 $template['install']['parser'] = 'parser';
 $template['install']['parser_method'] = 'parse';

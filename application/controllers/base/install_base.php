@@ -26,9 +26,44 @@ class Install_base extends Controller {
 		
 		/* set and load the language file needed */
 		$this->lang->load('install');
+		
+		/* load the resources */
+		$this->load->model('system_model', 'sys');
+		
+		/* check to see if the system is installed */
+		$d['installed'] = $this->sys->check_install_status();
+		
+		/* build the options menu */
+		$this->template->write_view('install_options', '_base/install/pages/_options', $d);
+	}
+	
+	function index()
+	{
+		$data['label'] = array(
+			'choose' => lang('install_options_choose'),
+			'text_fresh' => lang('install_options_fresh_text'),
+			'text_upd' => lang('install_options_upd_text'),
+			'text_upg' => lang('install_options_upg_text'),
+			'title_fresh' => lang('install_options_fresh_title'),
+			'title_upd' => lang('install_options_upd_title'),
+			'title_upg' => lang('install_options_upg_title')
+		);
+		
+		/* figure out where the view file should be coming from */
+		$view_loc = view_location('index', '_base', 'install');
+		
+		/* set the title */
+		$this->template->write('title', lang('install_index_title'));
+		$this->template->write('label', lang('install_index_title'));
+				
+		/* write the data to the template */
+		$this->template->write_view('content', $view_loc, $data);
+		
+		/* render the template */
+		$this->template->render();
 	}
 
-	function index()
+	function main()
 	{
 		/*
 			0 - no errors
@@ -76,6 +111,9 @@ class Install_base extends Controller {
 		$view_loc = view_location('main', '_base', 'install');
 		$js_loc = js_location('main_js', '_base', 'install');
 		
+		/* build the next step control */
+		$control = '<a href="'. site_url('install/verify') .'" class="btn">'. lang('install_index_options_verify') .'</a>';
+		
 		/* set the title */
 		$this->template->write('title', lang('install_index_title'));
 		$this->template->write('label', lang('install_index_title'));
@@ -83,6 +121,7 @@ class Install_base extends Controller {
 		/* write the data to the template */
 		$this->template->write_view('content', $view_loc, $data);
 		$this->template->write_view('javascript', $js_loc);
+		$this->template->write('controls', $control);
 		
 		/* render the template */
 		$this->template->render();
