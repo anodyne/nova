@@ -1,0 +1,252 @@
+/*
+|---------------------------------------------------------------
+| MASTER BODY STYLES
+|---------------------------------------------------------------
+*/
+body {
+	margin: 0;
+	padding: 0;
+	
+	background: #ccc url('../images/body-bg.png') repeat-x 0 0;
+	color: #444;
+	font: 75%/1.5 "lucida grande", verdana, arial, sans-serif;
+	text-align: center;
+}
+
+/*
+|---------------------------------------------------------------
+| WRAPPER STYLES
+|---------------------------------------------------------------
+| The wrapper controls the width and centering of the layout
+*/
+.wrapper {
+	width: 650px;
+	margin: 4em auto;
+	
+	text-align: left;
+	border: 1px solid #333;
+	background: #fcfdfd;
+	
+	border-radius: 4px;
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+	
+	box-shadow: 4px 6px 8px rgba(0, 0, 0, .12);
+	-moz-box-shadow: 4px 6px 8px rgba(0, 0, 0, .12);
+	-webkit-box-shadow: 4px 6px 8px rgba(0, 0, 0, .12);
+}
+
+/*
+|---------------------------------------------------------------
+| HEAD STYLES
+|---------------------------------------------------------------
+|
+| The head layer
+*/
+#head {
+	margin: 0;
+	padding: 0 .1em 0 .5em;
+	height: 80px;
+	line-height: 75px;
+	
+	background: #222 url('../images/head-bg.png') repeat-x top left;
+	color: #eee;
+	font-size: 250%;
+	font-weight: bold;
+}
+
+.logo {
+	float: right;
+	padding: 48px 0 0 0;
+	line-height: 1 !important;
+}
+
+/*
+|---------------------------------------------------------------
+| BODY STYLES
+|---------------------------------------------------------------
+*/
+#body { text-align: left; }
+
+.content {
+	line-height: 1.4;
+	padding: 1em 0;
+	width: 90%;
+	margin: 0 auto;
+	
+	text-align: center;
+}
+
+/*
+|---------------------------------------------------------------
+| FOOTER STYLES
+|---------------------------------------------------------------
+*/
+#footer {
+	margin: 1.5em 0 0 0;
+	padding: .5em 0;
+	clear: both;
+	
+	text-align: center;
+	font-size: 85%;
+	color: #888;
+	background: #f4f4f4;
+	border-top: 1px solid #e1e1e1;
+	
+	border-radius: 0 0 4px 4px;
+	-moz-border-radius: 0 0 4px 4px;
+	-webkit-border-bottom-left-radius: 4px;
+	-webkit-border-bottom-right-radius: 4px;
+}
+
+/*
+|---------------------------------------------------------------
+| FONT COLOR CLASSES
+|---------------------------------------------------------------
+*/
+.page-head { color: #587498; }
+
+/*
+|---------------------------------------------------------------
+| LINKS
+|---------------------------------------------------------------
+*/
+a {
+	text-decoration: none; 
+	color: #2e6e9e;
+}
+a:hover {
+	color: #c77405;
+	border-bottom: 1px solid;
+}
+
+/*
+|---------------------------------------------------------------
+| INPUT STYLES
+|---------------------------------------------------------------
+*/
+input[type=text],
+input[type=password] {
+	border: 1px solid #d8d8d8;
+	color: #777;
+	font-family: "lucida grande", verdana, arial, sans-serif;
+	font-size: 120%;
+	
+	border-radius: 2px;
+	-moz-border-radius: 2px;
+	-webkit-border-radius: 2px;
+}
+input[type=text]:focus,
+input[type=password]:focus {
+	color: #444;
+	border: 1px solid #777;
+}
+
+select {
+	border: 1px solid #d8d8d8;
+	color: #777;
+	font-family: "lucida grande", verdana, arial, sans-serif;
+	font-size: 120%;
+	
+	border-radius: 2px;
+	-moz-border-radius: 2px;
+	-webkit-border-radius: 2px;
+}
+select:focus,
+select:hover {
+	color: #444;
+	border: 1px solid #777;
+}
+
+kbd {
+	font-weight: bold;
+	font-family: "lucida grande", verdana, arial, sans-serif;
+	font-size: 110%;
+}
+
+/*
+|---------------------------------------------------------------
+| BUTTONS
+|---------------------------------------------------------------
+*/
+button {
+	border-radius: 4px;
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+	
+	font-weight: bold;
+}
+
+button.button-main {
+	border: 1px solid #adc0d0;
+	background: #dfeffc url('../images/button-bg.png') repeat-x top left;
+	color: #2e6e9e;
+}
+button.button-main:hover {
+	border: 1px solid #fbcb09;
+	background: #fdf5ce url('../images/button-bg-hover.png') repeat-x top left;
+	color: #c77405;
+	text-shadow: 1px 1px 1px rgba(255, 255, 255, .75);
+	
+	box-shadow: 1px 1px 2px rgba(0, 0, 0, .2);
+	-moz-box-shadow: 1px 1px 2px rgba(0, 0, 0, .2);
+	-webkit-box-shadow: 1px 1px 2px rgba(0, 0, 0, .2);
+}
+
+input.button-main {
+	border: 1px solid #adc0d0;
+	background: #dfeffc url('../images/button-bg.png') repeat-x top left;
+	color: #2e6e9e;
+	font-weight: bold;
+	font-size: 120%;
+}
+input.button-main:hover {
+	border: 1px solid #fbcb09;
+	background: #fdf5ce url('../images/button-bg-hover.png') repeat-x top left;
+	color: #c77405;
+}
+
+button[disabled],
+button[disabled]:hover,
+input.button-main[disabled],
+input.button-main[disabled]:hover {
+	opacity: .5;
+	filter:alpha(opacity='70');
+	
+	border: 1px solid #adc0d0;
+	background: #dfeffc url('../images/button-bg.png') repeat-x top left;
+	color: #2e6e9e;
+}
+
+/*
+|---------------------------------------------------------------
+| FLASH MESSAGES
+|---------------------------------------------------------------
+*/
+.flash_message {
+	font-weight: bold;
+	font-size: .9em;
+	
+	border-radius: 2px;
+	-moz-border-radius: 2px;
+	-webkit-border-radius: 2px;
+	
+	box-shadow: 1px 1px 2px rgba(0, 0, 0, .1);
+	-moz-box-shadow: 1px 1px 2px rgba(0, 0, 0, .1);
+	-webkit-box-shadow: 1px 1px 2px rgba(0, 0, 0, .1);
+}
+.flash-success {
+	border: 1px solid #a4c897;
+	background: #ccecc5 url('../images/flash-bg.png') repeat-x top left;
+	color: #376b0e;
+}
+.flash-error {
+	border: 1px solid #c89797; 
+	background: #ecc5c5 url('../images/flash-bg.png') repeat-x top left;
+	color: #6b0f0e;
+}
+.flash-info {
+	border: 1px solid #97a5c8;
+	background: #c5d6ec url('../images/flash-bg.png') repeat-x top left;
+	color: #0e2d6b;
+}

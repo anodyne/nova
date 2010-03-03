@@ -1,0 +1,597 @@
+/*
+|---------------------------------------------------------------
+| BODY
+|---------------------------------------------------------------
+*/
+body {
+	margin: 0;
+	padding: 0;
+	
+	background: #fff;
+	color: #444;
+	font: 75%/1.5 "lucida grande", verdana, arial, sans-serif;
+	text-align: center;
+}
+
+/*
+|---------------------------------------------------------------
+| WRAPPER
+|---------------------------------------------------------------
+| The wrapper controls the width and centering of the layout
+*/
+.wrapper {
+    width: 960px;
+    margin: 0 auto;
+    
+    text-align: left;
+}
+
+/*
+|---------------------------------------------------------------
+| HEAD
+|---------------------------------------------------------------
+*/
+#head {
+	margin: 0;
+	padding: 0;
+	height: 80px;
+	
+	background: #222 url('../images/head-bg.png') repeat-x top left;
+	color: #eee;
+}
+#head .head_top {
+	height: 6px;
+	
+	background: #111;
+}
+#head .head_content {}
+#head .head_content .logo { padding: 14px 0 0 0; }
+
+/*
+|---------------------------------------------------------------
+| MAIN MENU
+|---------------------------------------------------------------
+*/
+.menu {
+	float: right;
+	height: 20px;
+	line-height: 18px;
+	
+	border-radius: 0 0 5px 5px;
+	-moz-border-radius: 0 0 5px 5px;
+	-webkit-border-bottom-left-radius: 5px;
+	-webkit-border-bottom-right-radius: 5px;
+	
+	background: #111;
+	border-bottom: 1px solid #444;
+	border-left: 1px solid #333;
+	border-right: 1px solid #333;
+	font-size: 90%;
+}
+.menu .nav-main {}
+.menu .nav-main ul {
+	margin: 0;
+	padding: 0;
+	
+	list-style-type: none;
+}
+.menu .nav-main ul li {
+	float: left;
+	margin: 0 2px 0 0;
+	padding: 0;
+}
+.menu .nav-main ul li a {
+	display: block;
+	
+	text-decoration: none;
+	color: #888;
+	font-weight: bold;
+	border: 0;
+	font-variant: small-caps;
+}
+.menu .nav-main ul li a span { padding: 12px; }
+.menu .nav-main ul li a:hover {
+	color: #ccc;
+	border: 0;
+}
+
+/*
+|---------------------------------------------------------------
+| CONTENT
+|---------------------------------------------------------------
+*/
+#body { margin: 1em 0 2em 0; }
+
+.content {
+    width: 760px;
+	margin-right: 175px;
+    padding-left: 5px;
+    line-height: 1.4;
+}
+
+.nav-sub {
+	float: right;
+	width: 160px;
+	margin: 0 0 10px 0;
+	
+	text-align: right;
+}
+.nav-sub ul {
+	margin: 0;
+	padding: 0;
+	
+	list-style: none;
+}
+.nav-sub ul li {
+	padding: 0;
+	margin: 0;
+	line-height: 2;
+}
+.nav-sub ul li a {
+	display: block;
+	
+	text-decoration: none;
+	color: #444;
+	border: 1px solid transparent;
+	font-size: 92%;
+}
+.nav-sub ul li a:hover {
+	color: #c77405;
+	background: #fdf5ce;
+	border: 1px solid #fbcb09;
+}
+.nav-sub ul li a span { padding: 2px 7px; }
+.nav-sub ul li.spacer {
+	height: 12px;
+	
+	border: none;
+}
+.nav-sub ul li.menu_category {
+	font-weight: bold;
+	font-size: 100%;
+}
+
+/*
+|---------------------------------------------------------------
+| FOOTER STYLES
+|---------------------------------------------------------------
+*/
+#footer {
+	padding: 1.5em 0;
+	clear: both;
+	line-height: 1.4;
+	width: 960px;
+	margin: 2em auto;
+	
+	text-align: center;
+	font-size: 90%;
+	color: #888;
+	background: #f8f8f8;
+	border: 1px solid #d8d8d8;
+	
+	border-radius: 2px;
+	-moz-border-radius: 2px;
+	-webkit-border-radius: 2px;
+}
+
+/*
+|---------------------------------------------------------------
+| FONT COLOR CLASSES
+|---------------------------------------------------------------
+*/
+.page-head      { color: #587498; }
+.page-subhead   { color: #5b7444; }
+
+.gray   { color: #777; }
+.red    { color: #c00; }
+.orange { color: #e99e1c; }
+.green  { color: #008000; }
+.blue	{ color: #3baae3; }
+
+/*
+|---------------------------------------------------------------
+| LINKS
+|---------------------------------------------------------------
+*/
+a {
+	text-decoration: none; 
+	color: #2e6e9e;
+}
+a:hover {
+	color: #c77405;
+	border-bottom: 1px solid;
+}
+
+a.delete, a.edit {
+	color: #999;
+	border: 0;
+	font-weight: bold;
+}
+a.delete:hover { color: #c00; }
+a.edit:hover { color: #008000; }
+
+/*
+|---------------------------------------------------------------
+| INPUTS
+|---------------------------------------------------------------
+*/
+input[type=text],
+input[type=password] {
+	border: 1px solid #d8d8d8;
+	color: #777;
+	font-family: "lucida grande", verdana, arial, sans-serif;
+	
+	border-radius: 2px;
+	-moz-border-radius: 2px;
+	-webkit-border-radius: 2px;
+}
+input[type=text]:focus,
+input[type=password]:focus {
+	color: #444;
+	border: 1px solid #777;
+}
+
+textarea {
+	font-size: 100%;
+	font-family: "lucida grande", verdana, arial, sans-serif;
+	border: 1px solid #d8d8d8;
+	color: #777;
+	
+	border-radius: 2px;
+	-moz-border-radius: 2px;
+	-webkit-border-radius: 2px;
+}
+textarea:focus {
+	color: #444;
+	border: 1px solid #777;
+}
+
+select {
+	border: 1px solid #d8d8d8;
+	color: #777;
+	font-family: "lucida grande", verdana, arial, sans-serif;
+	
+	border-radius: 2px;
+	-moz-border-radius: 2px;
+	-webkit-border-radius: 2px;
+}
+select:focus,
+select:hover {
+	color: #444;
+	border: 1px solid #777;
+}
+
+kbd {
+	font-weight: bold;
+	font-family: "lucida grande", verdana, arial, sans-serif;
+	font-size: 110%;
+}
+
+.cell-label {
+    font-weight: bold;
+    font-size: 100%;
+    text-align: right;
+}
+
+/*
+|---------------------------------------------------------------
+| TABLES
+|---------------------------------------------------------------
+*/
+
+table { font-size: 100%; }
+
+th {
+    text-align: center;
+    font-size: 120%;
+}
+
+tr.alt td { background-color: #eee; }
+tr.light_gray { background-color: #ddd; }
+
+/*
+|---------------------------------------------------------------
+| BUTTONS
+|---------------------------------------------------------------
+*/
+button {
+	border-radius: 4px;
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+	
+	font-weight: bold;
+}
+
+button.button-main {
+	border: 1px solid #adc0d0;
+	background: #dfeffc url('../images/button-bg.png') repeat-x top left;
+	color: #2e6e9e;
+}
+button.button-main:hover {
+	border: 1px solid #fbcb09;
+	background: #fdf5ce url('../images/button-bg-hover.png') repeat-x top left;
+	color: #c77405;
+	text-shadow: 1px 1px 1px rgba(255, 255, 255, .75);
+	
+	box-shadow: 1px 1px 2px rgba(0, 0, 0, .2);
+	-moz-box-shadow: 1px 1px 2px rgba(0, 0, 0, .2);
+	-webkit-box-shadow: 1px 1px 2px rgba(0, 0, 0, .2);
+}
+
+button.button-sec {
+	border: 1px solid #ccc;
+	background: #eee url('../images/button-bg.png') repeat-x top left;
+	color: #777;
+}
+button.button-sec:hover {
+	border: 1px solid #aaa;
+	background: #ddd url('../images/button-bg-hover.png') repeat-x top left;
+}
+
+button.button-small {
+	border: 1px solid #ccc;
+	background: #fff url('../images/button-bg.png') repeat-x top left;
+	color: #777;
+	font-weight: normal !important;
+	font-size: 90%;
+}
+button.button-small:hover { border: 1px solid #aaa; }
+
+input.button-main {
+	border: 1px solid #adc0d0;
+	background: #dfeffc url('../images/button-bg.png') repeat-x top left;
+	color: #2e6e9e;
+	font-weight: bold;
+	font-size: 120%;
+}
+input.button-main:hover {
+	border: 1px solid #fbcb09;
+	background: #fdf5ce url('../images/button-bg-hover.png') repeat-x top left;
+	color: #c77405;
+}
+
+input.button-sec {
+	border: 1px solid #ccc;
+	background: #eee url('../images/button-bg.png') repeat-x top left;
+	color: #777;
+	font-weight: bold;
+	font-size: 120%;
+}
+input.button-sec:hover {
+	border: 1px solid #aaa;
+	background: #ddd url('../images/button-bg-hover.png') repeat-x top left;
+}
+
+button[disabled],
+button[disabled]:hover,
+input.button-main[disabled],
+input.button-main[disabled]:hover {
+	opacity: .5;
+	filter:alpha(opacity='70');
+	
+	border: 1px solid #adc0d0;
+	background: #dfeffc url('../images/button-bg.png') repeat-x top left;
+	color: #2e6e9e;
+}
+
+/*
+|---------------------------------------------------------------
+| COMMENTS AND BOXES
+|---------------------------------------------------------------
+*/
+#comments p, #news_blocks p, .post_info, .info-full, #notes {
+    background-color: #f8f8f8;
+	border: 1px solid #d8d8d8;
+	
+	border-radius: 2px;
+	-moz-border-radius: 2px;
+	-webkit-border-radius: 2px;
+}
+
+.border-1 { border: 1px solid #ddd; }
+
+/*
+|---------------------------------------------------------------
+| LISTS
+|---------------------------------------------------------------
+*/
+ul.square { list-style: square; }
+ul.none, ol.none { list-style: none; }
+ol.roman { list-style: upper-roman; }
+
+#list li {
+	font-weight: bold;
+	font-size: 90%;
+}
+
+/*
+|---------------------------------------------------------------
+| FLASH MESSAGES
+|---------------------------------------------------------------
+*/
+.flash_message {
+	font-weight: bold;
+	font-size: .9em;
+	
+	border-radius: 2px;
+	-moz-border-radius: 2px;
+	-webkit-border-radius: 2px;
+	
+	box-shadow: 1px 1px 2px rgba(0, 0, 0, .1);
+	-moz-box-shadow: 1px 1px 2px rgba(0, 0, 0, .1);
+	-webkit-box-shadow: 1px 1px 2px rgba(0, 0, 0, .1);
+}
+.flash-success {
+	border: 1px solid #a4c897;
+	background: #ccecc5 url('../images/flash-bg.png') repeat-x top left;
+	color: #376b0e;
+}
+.flash-error {
+	border: 1px solid #c89797; 
+	background: #ecc5c5 url('../images/flash-bg.png') repeat-x top left;
+	color: #6b0f0e;
+}
+.flash-info {
+	border: 1px solid #97a5c8;
+	background: #c5d6ec url('../images/flash-bg.png') repeat-x top left;
+	color: #0e2d6b;
+}
+
+/*
+|---------------------------------------------------------------
+| MISC
+|---------------------------------------------------------------
+*/
+hr {
+    border: 1px solid #ddd;
+    border-width: 1px 0 0;
+}
+
+.loader { text-align: center; }
+
+.system_warning {
+	background: orange;
+	color: #111;
+	font-weight: bold;
+	text-align: center;
+}
+
+.alt { background-color: #eee; }
+
+.activity-border { border-right: 1px solid #ddd; }
+
+/*
+|---------------------------------------------------------------
+| ACP PANEL STYLES
+|---------------------------------------------------------------
+*/
+#acp-panel {
+	border: 1px solid #aaa;
+	background: #f5f8f9;
+	
+	border-radius-topleft: 4px;
+	border-radius-topright: 4px;
+	-moz-border-radius-topleft: 4px;
+	-moz-border-radius-topright: 4px;
+	-webkit-border-top-left-radius: 4px;
+	-webkit-border-top-right-radius: 4px;
+}
+.panel {
+	background: #fff;
+	border-left: 1px solid #aaa;
+	
+	border-radius-topright: 4px;
+	-moz-border-radius-topright: 4px;
+	-webkit-border-top-right-radius: 4px;
+}
+#panelmenu { list-style: none; }
+#panelmenu li a {
+	text-decoration: none;
+	font-weight: bold;
+	border-bottom: none;
+}
+#panelmenu li a span {
+	color: #2e6e9e;
+	border-top: 1px solid transparent;
+	border-bottom: 1px solid transparent;
+	border-right: 1px solid #aaa;
+}
+#panelmenu li a:hover span {
+	color: #2e6e9e;
+	background: #dfeffc;
+	border-top: 1px solid #c5dbec;
+	border-bottom: 1px solid #c5dbec;
+}
+#panelmenu li a.active span {
+	background: #fff;
+	border-top: 1px solid #aaa;
+	border-bottom: 1px solid #aaa;
+	border-right: 1px solid #fff;
+}
+#panelmenu li a.active:hover span {
+	color: #2e6e9e;
+	border-right: 1px solid #fff;
+}
+
+#online {
+	background: #f5f8f9;
+	border: 1px solid #aaa;
+	border-top: none;
+	
+	border-radius-bottomleft: 4px;
+	border-radius-bottomright: 4px;
+	-moz-border-radius-bottomleft: 4px;
+	-moz-border-radius-bottomright: 4px;
+	-webkit-border-bottom-left-radius: 4px;
+	-webkit-border-bottom-right-radius: 4px;
+}
+
+.count {
+	font-weight: bold;
+	font-size: 90%;
+	
+	-moz-border-radius: 12px;
+	-webkit-border-radius: 12px;
+}
+
+table.acp {
+	font-size: 110%;
+	border: 1px solid #aaa;
+}
+.col1 {
+	font-size: 125%;
+	text-align: right;
+	font-weight: bold;
+}
+.col2 {
+	font-size: 90%;
+	font-weight: bold;
+}
+
+/*
+|---------------------------------------------------------------
+| DASHBOARD
+|---------------------------------------------------------------
+*/
+.panel-handle a, .panel-handle a:hover {
+	text-decoration: none;
+	border: none;
+}
+.panel-handle a span {
+	border-left: 1px solid transparent;
+	border-right: 1px solid transparent;
+	color: #777;
+	font-weight: bold;
+}
+.panel-handle a:hover span {
+	background: #ccc url('../images/panel-handle-bg.png') repeat-x 0 0;
+	color: #555;
+	border-left: 1px solid #bbb;
+	border-right: 1px solid #bbb;
+}
+
+#panel .panel-body {
+	background: #555 url('../images/panel-bg.png') repeat-x top left;
+	color: #fff;
+}
+
+.panel-handle {
+	background: #ddd url('../images/panel-handle-bg.png') repeat-x 0 0;
+	border-bottom: 1px solid #222;
+	text-align: center;
+	font-size: 85%;
+}
+
+.panel-trigger span { text-align: center; }
+
+.panel_1 a, .panel_2 a, .panel_3 a {
+	color: #fff;
+	border-bottom: 1px solid;
+}
+
+.panel_1 a.edit, .panel_2 a.edit, .panel_3 a.edit {
+	color: #999;
+	border-bottom: 0;
+	font-weight: bold;
+}
+.panel_1 a.edit:hover, .panel_2 a.edit:hover, .panel_3 a.edit:hover { color: #ddd; }
