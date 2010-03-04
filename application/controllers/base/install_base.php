@@ -63,70 +63,6 @@ class Install_base extends Controller {
 		$this->template->render();
 	}
 
-	function main()
-	{
-		/*
-			0 - no errors
-			1 - system is already installed!
-			2 - you must be a sysadmin to update the genre
-		*/
-		
-		$this->load->model('system_model', 'sys');
-		
-		$data['installed'] = $this->sys->check_install_status();
-		
-		$error = $this->uri->segment(4, 0, TRUE);
-		
-		if ($error > 0 || $data['installed'] === TRUE)
-		{
-			$error = ($error == 1 || $data['installed'] === TRUE) ? 1 : $error;
-			
-			$flash['status'] = ($error == 1) ? 'info' : 'error';
-			$flash['message'] = '<span class="icon ui-icon ui-icon-info"></span>';
-			$flash['message'].= lang_output('install_error_'. $error);
-			
-			/* write everything to the template */
-			$this->template->write_view('flash_message', '_base/install/pages/flash', $flash);
-		}
-		
-		$data['label'] = array(
-			'options_install' => lang('install_index_options_install'),
-			'options_readme' => lang('install_index_options_readme'),
-			'options_remove' => lang('install_index_options_remove'),
-			'options_tour' => lang('install_index_options_tour'),
-			'options_update' => lang('install_index_options_update'),
-			'options_upgrade' => lang('install_index_options_upgrade'),
-			'options_verify' => lang('install_index_options_verify'),
-			'options_guide' => lang('install_index_options_guide'),
-			'welcome' => lang('install_index_header_welcome'),			
-			'whattodo' => lang('install_index_header_whattodo'),
-			'firststeps' => lang('install_index_options_firststeps'),
-			'whatsnext' => lang('install_index_options_whatsnext'),
-			'intro' => lang('global_content_index'),
-			'options_database' => lang('install_index_options_database'),
-			'options_genre' => lang('install_index_options_genre'),
-		);
-		
-		/* figure out where the view file should be coming from */
-		$view_loc = view_location('main', '_base', 'install');
-		$js_loc = js_location('main_js', '_base', 'install');
-		
-		/* build the next step control */
-		$control = '<a href="'. site_url('install/verify') .'" class="btn">'. lang('install_index_options_verify') .'</a>';
-		
-		/* set the title */
-		$this->template->write('title', lang('install_index_title'));
-		$this->template->write('label', lang('install_index_title'));
-				
-		/* write the data to the template */
-		$this->template->write_view('content', $view_loc, $data);
-		$this->template->write_view('javascript', $js_loc);
-		$this->template->write('controls', $control);
-		
-		/* render the template */
-		$this->template->render();
-	}
-	
 	function changedb()
 	{
 		if (isset($_POST['submit']))
@@ -237,6 +173,16 @@ class Install_base extends Controller {
 					/* figure out where the view file should be coming from */
 					$view_loc = view_location('changedb', '_base', 'install');
 					
+					$submit = array(
+						'type' => 'submit',
+						'class' => 'button',
+						'name' => 'submit',
+						'value' => 'submit',
+						'content' => ucwords(lang('button_submit'))
+					);
+					
+					$control = form_button($submit) . form_close();
+					
 					break;
 					
 				case 'verify':
@@ -281,6 +227,8 @@ class Install_base extends Controller {
 						
 						/* figure out where the view file should be coming from */
 						$view_loc = view_location('changedb_main', '_base', 'install');
+						
+						$control = '';
 					}
 					else
 					{
@@ -293,6 +241,16 @@ class Install_base extends Controller {
 						
 						/* figure out where the view file should be coming from */
 						$view_loc = view_location('changedb', '_base', 'install');
+						
+						$submit = array(
+							'type' => 'submit',
+							'class' => 'button',
+							'name' => 'submit',
+							'value' => 'submit',
+							'content' => ucwords(lang('button_submit'))
+						);
+						
+						$control = form_button($submit) . form_close();
 					}
 					
 					break;
@@ -302,6 +260,16 @@ class Install_base extends Controller {
 		{
 			/* figure out where the view file should be coming from */
 			$view_loc = view_location('changedb', '_base', 'install');
+			
+			$submit = array(
+				'type' => 'submit',
+				'class' => 'button',
+				'name' => 'submit',
+				'value' => 'submit',
+				'content' => ucwords(lang('button_submit'))
+			);
+			
+			$control = form_button($submit) . form_close();
 		}
 		
 		$data['inputs'] = array(
@@ -366,6 +334,7 @@ class Install_base extends Controller {
 		/* write the data to the template */
 		$this->template->write_view('content', $view_loc, $data);
 		$this->template->write_view('javascript', $js_loc);
+		$this->template->write('controls', $control);
 		
 		/* render the template */
 		$this->template->render();
@@ -428,14 +397,23 @@ class Install_base extends Controller {
 					
 					/* set the flash message */
 					$flash['status'] = 'info';
-					$flash['message'] = '<span class="icon ui-icon ui-icon-check"></span>';
-					$flash['message'].= lang_output('install_genre_success');
+					$flash['message'] = lang_output('install_genre_success');
 					
 					/* write everything to the template */
 					$this->template->write_view('flash_message', '_base/install/pages/flash', $flash);
 					
 					/* figure out where the view file should be coming from */
 					$view_loc = view_location('genre', '_base', 'install');
+					
+					$submit = array(
+						'type' => 'submit',
+						'class' => 'button',
+						'name' => 'submit',
+						'value' => 'submit',
+						'content' => ucwords(lang('button_submit'))
+					);
+					
+					$control = form_button($submit) . form_close();
 					
 					break;
 					
@@ -482,6 +460,16 @@ class Install_base extends Controller {
 						
 						/* figure out where the view file should be coming from */
 						$view_loc = view_location('genre_main', '_base', 'install');
+						
+						$submit = array(
+							'type' => 'submit',
+							'class' => 'button',
+							'name' => 'submit',
+							'value' => 'submit',
+							'content' => ucwords(lang('button_submit'))
+						);
+						
+						$control = form_button($submit) . form_close();
 					}
 					else
 					{
@@ -494,6 +482,16 @@ class Install_base extends Controller {
 						
 						/* figure out where the view file should be coming from */
 						$view_loc = view_location('genre', '_base', 'install');
+						
+						$submit = array(
+							'type' => 'submit',
+							'class' => 'button',
+							'name' => 'submit',
+							'value' => 'submit',
+							'content' => ucwords(lang('button_submit'))
+						);
+						
+						$control = form_button($submit) . form_close();
 					}
 					
 					break;
@@ -503,6 +501,16 @@ class Install_base extends Controller {
 		{
 			/* figure out where the view file should be coming from */
 			$view_loc = view_location('genre', '_base', 'install');
+			
+			$submit = array(
+				'type' => 'submit',
+				'class' => 'button',
+				'name' => 'submit',
+				'value' => 'submit',
+				'content' => ucwords(lang('button_submit'))
+			);
+			
+			$control = form_button($submit) . form_close();
 		}
 		
 		$data['inputs'] = array(
@@ -543,6 +551,70 @@ class Install_base extends Controller {
 		/* write the data to the template */
 		$this->template->write_view('content', $view_loc, $data);
 		$this->template->write_view('javascript', $js_loc);
+		$this->template->write('controls', $control);
+		
+		/* render the template */
+		$this->template->render();
+	}
+	
+	function main()
+	{
+		/*
+			0 - no errors
+			1 - system is already installed!
+			2 - you must be a sysadmin to update the genre
+		*/
+		
+		$this->load->model('system_model', 'sys');
+		
+		$data['installed'] = $this->sys->check_install_status();
+		
+		$error = $this->uri->segment(4, 0, TRUE);
+		
+		if ($error > 0 || $data['installed'] === TRUE)
+		{
+			$error = ($error == 1 || $data['installed'] === TRUE) ? 1 : $error;
+			
+			$flash['status'] = ($error == 1) ? 'info' : 'error';
+			$flash['message'] = lang_output('install_error_'. $error);
+			
+			/* write everything to the template */
+			$this->template->write_view('flash_message', '_base/install/pages/flash', $flash);
+		}
+		
+		$data['label'] = array(
+			'options_install' => lang('install_index_options_install'),
+			'options_readme' => lang('install_index_options_readme'),
+			'options_remove' => lang('install_index_options_remove'),
+			'options_tour' => lang('install_index_options_tour'),
+			'options_update' => lang('install_index_options_update'),
+			'options_upgrade' => lang('install_index_options_upgrade'),
+			'options_verify' => lang('install_index_options_verify'),
+			'options_guide' => lang('install_index_options_guide'),
+			'welcome' => lang('install_index_header_welcome'),			
+			'whattodo' => lang('install_index_header_whattodo'),
+			'firststeps' => lang('install_index_options_firststeps'),
+			'whatsnext' => lang('install_index_options_whatsnext'),
+			'intro' => lang('global_content_index'),
+			'options_database' => lang('install_index_options_database'),
+			'options_genre' => lang('install_index_options_genre'),
+		);
+		
+		/* figure out where the view file should be coming from */
+		$view_loc = view_location('main', '_base', 'install');
+		$js_loc = js_location('main_js', '_base', 'install');
+		
+		/* build the next step control */
+		$control = '<a href="'. site_url('install/verify') .'" class="btn">'. lang('install_index_options_verify') .'</a>';
+		
+		/* set the title */
+		$this->template->write('title', lang('install_index_title'));
+		$this->template->write('label', lang('install_index_title'));
+				
+		/* write the data to the template */
+		$this->template->write_view('content', $view_loc, $data);
+		$this->template->write_view('javascript', $js_loc);
+		$this->template->write('controls', $control);
 		
 		/* render the template */
 		$this->template->render();
@@ -567,8 +639,7 @@ class Install_base extends Controller {
 	function remove()
 	{
 		$flash['status'] = 'info';
-		$flash['message'] = '<span class="icon ui-icon ui-icon-info"></span>';
-		$flash['message'].= lang_output('install_remove_warning');
+		$flash['message'] = lang_output('install_remove_warning');
 		
 		if (isset($_POST['submit']))
 		{
@@ -604,21 +675,33 @@ class Install_base extends Controller {
 				$flash['message'] = lang_output('error_verify_'. $verify);
 			}
 			
+			$view_loc = view_location('remove_confirm', '_base', 'install');
+			
+			/* build the next step control */
+			$control = '<a href="'. site_url('install/index') .'" class="btn">'. lang('button_back_install') .'</a>';
+			
 			/* add redirect */
 			$this->template->add_redirect('install/index', 15);
+		}
+		else
+		{
+			$clear = array(
+				'type' => 'submit',
+				'class' => 'button',
+				'name' => 'submit',
+				'value' => 'clear',
+				'id' => 'clear',
+				'content' => ucwords(lang('button_clear'))
+			);
+		
+			$view_loc = view_location('remove', '_base', 'install');
+			
+			/* build the next step control */
+			$control = form_button($clear) . form_close();
 		}
 		
 		/* write everything to the template */
 		$this->template->write_view('flash_message', '_base/install/pages/flash', $flash);
-		
-		$data['button_clear'] = array(
-			'type' => 'submit',
-			'class' => 'button',
-			'name' => 'submit',
-			'value' => 'clear',
-			'id' => 'clear',
-			'content' => ucwords(lang('button_clear'))
-		);
 		
 		$data['label'] = array(
 			'back' => lang('button_back_install'),
@@ -627,7 +710,6 @@ class Install_base extends Controller {
 		);
 		
 		/* figure out where the view file should be coming from */
-		$view_loc = view_location('remove', '_base', 'install');
 		$js_loc = js_location('install_remove_js', '_base', 'install');
 		
 		/* set the title */
@@ -637,6 +719,7 @@ class Install_base extends Controller {
 		/* write the data to the template */
 		$this->template->write_view('content', $view_loc, $data);
 		$this->template->write_view('javascript', $js_loc);
+		$this->template->write('controls', $control);
 		
 		/* render the template */
 		$this->template->render();
@@ -689,7 +772,7 @@ class Install_base extends Controller {
 				
 				$message = (count($table) > 0) ? lang('install_step1_failure') : lang('install_step1_success');
 				
-				$data['next'] = array(
+				$next = array(
 					'type' => 'submit',
 					'class' => 'button',
 					'name' => 'next',
@@ -700,7 +783,7 @@ class Install_base extends Controller {
 				
 				if (count($table) > 0)
 				{
-					$data['next']['disabled'] = 'disabled';
+					$next['disabled'] = 'disabled';
 				}
 				
 				$data['label']['inst_step1'] = $message;
@@ -708,6 +791,9 @@ class Install_base extends Controller {
 				/* figure out where the view files should be coming from */
 				$view_loc = view_location('step_1', '_base', 'install');
 				$js_loc = js_location('step_1_js', '_base', 'install');
+				
+				/* build the next step control */
+				$control = form_open('install/step/2') . form_button($next) . form_close();
 				
 				/* set the title and label */
 				$this->template->write('title', lang('install_step1_title'));
@@ -742,7 +828,7 @@ class Install_base extends Controller {
 				
 				$message = (count($insert) > 0) ? lang('install_step2_failure') : lang('install_step2_success');
 				
-				$data['next'] = array(
+				$next = array(
 					'type' => 'submit',
 					'class' => 'button',
 					'name' => 'next',
@@ -751,9 +837,18 @@ class Install_base extends Controller {
 					'content' => ucwords(lang('button_next'))
 				);
 				
-				if (count($insert) > 0)
+				if (count($insert) > 0 || GENRE == '')
 				{
-					$data['next']['disabled'] = 'disabled';
+					$next['disabled'] = 'disabled';
+				}
+				
+				if (GENRE == '')
+				{
+					$flash['message'] = lang_output('error_install_no_genre');
+					$flash['status'] = 'error';
+					
+					/* write everything to the template */
+					$this->template->write_view('flash_message', '_base/install/pages/flash', $flash);
 				}
 				
 				$data['label']['inst_step2'] = $message;
@@ -761,6 +856,9 @@ class Install_base extends Controller {
 				/* figure out where the view files should be coming from */
 				$view_loc = view_location('step_2', '_base', 'install');
 				$js_loc = js_location('step_2_js', '_base', 'install');
+				
+				/* build the next step control */
+				$control = form_open('install/step/3') . form_button($next) . form_close();
 				
 				/* set the title and label */
 				$this->template->write('title', lang('install_step2_title'));
@@ -792,7 +890,7 @@ class Install_base extends Controller {
 				
 				$message = (count($genre) > 0) ? lang('install_step3_failure') : lang('install_step3_success');
 				
-				$data['next'] = array(
+				$next = array(
 					'type' => 'submit',
 					'class' => 'button',
 					'name' => 'next',
@@ -803,7 +901,7 @@ class Install_base extends Controller {
 				
 				if (count($genre) > 0)
 				{
-					$data['next']['disabled'] = 'disabled';
+					$next['disabled'] = 'disabled';
 				}
 					
 				$data['inputs'] = array(
@@ -880,6 +978,9 @@ class Install_base extends Controller {
 				/* figure out where the view file should be coming from */
 				$view_loc = view_location('step_3', '_base', 'install');
 				$js_loc = js_location('step_3_js', '_base', 'install');
+				
+				/* build the next step control */
+				$control = form_button($next) . form_close();
 				
 				/* set the title */
 				$this->template->write('title', lang('install_step3_title'));
@@ -993,7 +1094,7 @@ class Install_base extends Controller {
 				$message = (count($insert) > 0) ? lang('install_step4_failure') : lang('install_step4_success');
 				
 				/* the next button */
-				$data['next'] = array(
+				$next = array(
 					'type' => 'submit',
 					'class' => 'button',
 					'name' => 'next',
@@ -1004,7 +1105,7 @@ class Install_base extends Controller {
 				
 				if (count($insert) > 0)
 				{
-					$data['next']['disabled'] = 'disabled';
+					$next['disabled'] = 'disabled';
 				}
 					
 				/* fields */
@@ -1072,6 +1173,9 @@ class Install_base extends Controller {
 				$view_loc = view_location('step_4', '_base', 'install');
 				$js_loc = js_location('step_4_js', '_base', 'install');
 				
+				/* build the next step control */
+				$control = form_button($next) . form_close();
+				
 				/* set the title */
 				$this->template->write('title', lang('install_step4_title'));
 				$this->template->write('label', lang('install_step4_label'));
@@ -1112,7 +1216,7 @@ class Install_base extends Controller {
 					$this->_install_skins();
 					
 					/* do the product registration */
-					//$this->_register();
+					$this->_register();
 					
 					if (phpversion() >= 5)
 					{
@@ -1146,6 +1250,9 @@ class Install_base extends Controller {
 				$view_loc = view_location('step_5', '_base', 'install');
 				$js_loc = js_location('step_5_js', '_base', 'install');
 				
+				/* build the next step control */
+				$control = '<a href="'. site_url('main/index') .'" class="btn">'. lang('button_site') .'</a>';
+				
 				/* set the title */
 				$this->template->write('title', lang('install_step5_title'));
 				$this->template->write('label', lang('install_step5_label'));
@@ -1155,6 +1262,7 @@ class Install_base extends Controller {
 		
 		/* write the data to the template */
 		$this->template->write_view('content', $view_loc, $data);
+		$this->template->write('controls', $control);
 		
 		if (isset($js_loc))
 		{
@@ -1180,6 +1288,10 @@ class Install_base extends Controller {
 		
 		/* figure out where the view file should be coming from */
 		$view_loc = view_location('verify', '_base', 'install');
+		$js_loc = js_location('verify_js', '_base', 'install');
+		
+		/* build the next step control */
+		$control = '<a href="'. site_url('install/step/1') .'" id="install" class="btn">'. lang('install_option_begin') .'</a>';
 		
 		/* set the title */
 		$this->template->write('title', lang('verify_title'));
@@ -1187,6 +1299,8 @@ class Install_base extends Controller {
 				
 		/* write the data to the template */
 		$this->template->write_view('content', $view_loc, $data);
+		$this->template->write_view('javascript', $js_loc);
+		$this->template->write('controls', $control);
 		
 		/* render the template */
 		$this->template->render();
@@ -1370,6 +1484,7 @@ class Install_base extends Controller {
 		
 		/* set up the server and method for the request */
 		$this->xmlrpc->server('http://www.anodyne-productions.com/ano.php/utility/do_registration', 80);
+		//$this->xmlrpc->server('http://localhost/projects/anodyne/www/index.php/utility/do_registration', 80);
 		$this->xmlrpc->method('Do_Registration');
 		
 		/* build the request */
@@ -1389,7 +1504,18 @@ class Install_base extends Controller {
 		$this->xmlrpc->request($request);
 		
 		/* send the request */
-		$this->xmlrpc->send_request();
+		//$this->xmlrpc->send_request();
+		
+		if ( ! $this->xmlrpc->send_request())
+		{
+			echo $this->xmlrpc->display_error();
+		}
+		else
+		{
+			echo '<pre>';
+			print_r($this->xmlrpc->display_response());
+			echo '</pre>';
+		}
 	}
 }
 

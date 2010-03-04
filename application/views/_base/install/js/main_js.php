@@ -1,7 +1,8 @@
-<script type="text/javascript">
+<script type="text/javascript" charset="utf-8">
 	$(document).ready(function(){
-		$('#install').click(function(){
-			$('#body').fadeOut('fast', function(){
+		$('#install').live('click', function(){
+			$('#container .lower').fadeOut('fast');
+			$('#loaded').fadeOut('fast', function(){
 				$('#loading').removeClass('hidden');
 			});
 		});

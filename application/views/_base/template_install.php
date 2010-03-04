@@ -7,7 +7,7 @@
 | File: application/views/_base/template_install.php
 | Skin Version: 1.0
 |
-| Main layout file used by the update system
+| Main layout file used by the install system
 |
 */
 
@@ -30,8 +30,8 @@ echo "<?xml version='1.0' encoding='UTF-8'?>\r\n";
 		<?php echo $_redirect;?>
 		
 		<style type="text/css">
-			@import url("<?php echo base_url() . APPFOLDER .'/assets/js/css/jquery.ui.core.css';?>");
-			@import url("<?php echo base_url() . APPFOLDER .'/assets/js/css/jquery.ui.theme.css';?>");
+			@import url("<?php echo base_url() . APPFOLDER .'/views/_base/install/css/jquery.ui.core.css';?>");
+			@import url("<?php echo base_url() . APPFOLDER .'/views/_base/install/css/jquery.ui.theme.css';?>");
 			@import url("<?php echo base_url() . APPFOLDER .'/assets/js/css/jquery.ui.progressbar.css';?>");
 		</style>
 		
@@ -103,7 +103,7 @@ echo "<?xml version='1.0' encoding='UTF-8'?>\r\n";
 					<strong><?php echo lang('global_processing');?></strong>
 				</div>
 				
-				<div id="loaded">
+				<div id="loaded" class="UITheme">
 					<?php if ($this->uri->segment(2) == 'step'): ?>
 						<div id="amount"><?php echo lang('global_progress');?>: <span id="percent">0%</span></div>
 						<div id="progress"></div>
