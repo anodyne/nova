@@ -1,3 +1,10 @@
+03.04.2010
+
+* updated the look and feel of the installation center
+* updated the pulsar skin
+
+==========
+
 03.03.2010
 
 * updated the look and feel of the installation center

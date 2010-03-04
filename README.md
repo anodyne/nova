@@ -8,16 +8,12 @@ Release Candidate 2 (0.9.7)
 
 Last Update
 -----------
-01 March 2010
+04 March 2010
 
 Latest Updates
 --------------
-* added the 0.9.7 update file
-* added the february changelog archive file
-* updated the jquery ui to version 1.8rc3
-* updated the constants config file with the new version info
-* updated the install data with the new version info
 * updated the look and feel of the installation center
+* updated the pulsar skin
 
 Changes in 0.9.7
 ----------------
@@ -28,6 +24,8 @@ Changes in 0.9.7
 * updated the constants config file with the new version info
 * updated the jquery ui to version 1.8rc3
 * updated the look and feel of the installation center
+* updated the pulsar skin
+    * [main] updated the stylesheets
 
 Version History
 ---------------
@@ -36,7 +34,10 @@ Version History
 		<th>Version</th><th>Description</th><th>Start Date</th><th>End Date</th>
 	</tr>
 	<tr>
-		<td>Beta</td><td>Feature complete testing version</td><td>10 Nov 2009</td><td>-</td>
+		<td>Release Candidate</td><td>Final candidate builds for golden master</td><td>01 March 2010</td><td>-</td>
+	</tr>
+	<tr>
+		<td>Beta</td><td>Feature complete testing version</td><td>10 Nov 2009</td><td>01 March 2010</td>
 	</tr>
 	<tr>
 		<td>M7</td><td>Thresher Release 1</td><td>02 Nov 2009</td><td>09 Nov 2009</td>
