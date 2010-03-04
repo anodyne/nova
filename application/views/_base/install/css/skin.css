@@ -22,9 +22,9 @@ body {
 	border: 1px solid #555;
 	border: 1px solid rgba(0, 0, 0, 0);
 	
-	border-radius: 4px;
-	-moz-border-radius: 4px;
-	-webkit-border-radius: 4px;
+	border-radius: 6px;
+	-moz-border-radius: 6px;
+	-webkit-border-radius: 6px;
 	
 	box-shadow: 2px 2px 9px rgba(0, 0, 0, .3);
 	-moz-box-shadow: 2px 2px 9px rgba(0, 0, 0, .3);
@@ -41,10 +41,10 @@ body {
 	border-bottom: 1px solid #bcbcbc;
 	border-bottom: 1px solid rgba(0, 0, 0, .15);
 	
-	border-radius: 4px 4px 0 0;
-	-moz-border-radius: 4px 4px 0 0;
-	-webkit-border-top-left-radius: 4px;
-	-webkit-border-top-right-radius: 4px;
+	border-radius: 6px 6px 0 0;
+	-moz-border-radius: 6px 6px 0 0;
+	-webkit-border-top-left-radius: 6px;
+	-webkit-border-top-right-radius: 6px;
 }
 .head h1 {
 	font-size: 180%;
@@ -68,8 +68,7 @@ body {
 }
 
 .footer {
-	height: 32px;
-	line-height: 32px;
+	padding: .5em 0;
 	
 	font-size: .85em;
 	color: #888;
@@ -173,9 +172,9 @@ ul.padding1 { padding: .5em 1em; }
 	text-decoration: none;
 	border: 1px solid transparent;
 	
-	border-radius: 2px;
-	-moz-border-radius: 2px;
-	-webkit-border-radius: 2px;
+	border-radius: 3px;
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
 }
 .install-options span {
 	padding: 0 0 0 20px;
@@ -223,11 +222,11 @@ a.btn {
 	-webkit-box-shadow: 0px -1px 0px #666;
 }
 a.btn:hover {
-	background: #0cc62b url('../images/install-btn-bg.png') repeat-x top left;
-	border: 1px solid #0b9722;
-	border-top: 1px solid rgba(255, 255, 255, .4);
+	background: #63a62f url('../images/install-btn-bg.png') repeat-x top left;
+	border: 1px solid #4e8623;
+	border-top: 1px solid rgba(255, 255, 255, .5);
 	
-	box-shadow: 0px -1px 0px #0b9722;
-	-moz-box-shadow: 0px -1px 0px #0b9722;
-	-webkit-box-shadow: 0px -1px 0px #0b9722;
+	box-shadow: 0px -1px 0px #4e8623;
+	-moz-box-shadow: 0px -1px 0px #4e8623;
+	-webkit-box-shadow: 0px -1px 0px #4e8623;
 }
