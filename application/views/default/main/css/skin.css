@@ -17,7 +17,6 @@ body {
 |---------------------------------------------------------------
 | WRAPPER
 |---------------------------------------------------------------
-| The wrapper controls the width and centering of the layout
 */
 .wrapper {
 	width: 960px;
@@ -40,25 +39,6 @@ body {
 	border-bottom: 1px solid #a8b3a3;
 	border-bottom: 1px solid rgba(0, 0, 0, .2);
 }
-#head .head_content {
-	margin: 12px 0 0 0;
-	
-	font-weight: bold;
-}
-
-#head .top-head {
-	height: 65px;
-	width: 400px;
-	margin: 0 auto;
-	
-	border-bottom: 1px solid rgba(0, 0, 0, .3);
-}
-#head .bottom-head {
-	width: 400px;
-	margin: 0 auto;
-	
-	border-top: 1px solid rgba(255, 255, 255, .25);
-}
 
 /*
 |---------------------------------------------------------------
@@ -66,10 +46,11 @@ body {
 |---------------------------------------------------------------
 */
 #body {
+	position: relative;
 	margin: -105px 0 1em 0;
 	
 	background: #f0f0f0;
-	border: 1px solid #647160;
+	border: 1px solid #a2b89b;
 	
 	border-radius: 6px;
 	-moz-border-radius: 6px;
@@ -77,8 +58,8 @@ body {
 }
 
 #upper-body {
-	height: 130px;
 	position: relative;
+	height: 130px;
 	
 	background: #7ba66b url('../images/upper-body-bg.png') no-repeat 0 0;
 	
@@ -95,7 +76,13 @@ body {
 	padding: 1em 15px 1em 1em;
 	
 	background: #fcfcfc;
-	border-right: 1px solid #ccc;
+	border: 1px solid #ccc;
+	border-top: 0;
+	border-left: 0;
+	
+	border-radius: 0 0 6px 0;
+	-moz-border-radius: 0 0 6px 0;
+	-webkit-border-bottom-right-radius: 6px;
 }
 
 /*
@@ -104,14 +91,14 @@ body {
 |---------------------------------------------------------------
 */
 #menu {
-	height: 35px;
-	line-height: 35px;
-	margin-top: 64px;
+	height: 32px;
+	line-height: 32px;
+	margin-top: 67px;
 	
 	border-bottom: 1px solid #647160;
 	font-size: 110%;
 }
-#menu .nav-main {}
+#menu .nav-main { height: 32px; }
 #menu .nav-main ul {
 	margin: 0 0 0 5px;
 	padding: 0;
@@ -132,7 +119,7 @@ body {
 	font-weight: bold;
 	border: 1px solid transparent;
 	border-bottom: 0;
-	text-shadow: 1px 1px 1px rgba(0, 0, 0, .5);
+	text-shadow: 0px 1px 0px rgba(0, 0, 0, .25);
 	
 	border-radius: 4px 4px 0 0;
 	-moz-border-radius: 4px 4px 0 0;
@@ -142,15 +129,15 @@ body {
 #menu .nav-main ul li a span {}
 #menu .nav-main ul li a:hover {
 	background: transparent url('../images/menu-bg-hover.png') repeat-x bottom left;
-	border-top: 1px solid rgba(255, 255, 255, .1);
-	border-left: 1px solid rgba(255, 255, 255, .15);
-	border-right: 1px solid rgba(255, 255, 255, .15);
+	border: 1px solid rgba(0, 0, 0, .2);
+	border-bottom: 0;
+	text-shadow: 1px 1px 1px rgba(0, 0, 0, .45);
 }
 #menu .nav-main ul li a.active {
 	background: transparent url('../images/menu-bg-active.png') repeat-x bottom left;
-	border-top: 1px solid rgba(0, 0, 0, .1);
-	border-left: 1px solid rgba(0, 0, 0, .3);
-	border-right: 1px solid rgba(0, 0, 0, .3);
+	border: 1px solid rgba(0, 0, 0, .3);
+	border-bottom: 0;
+	text-shadow: 1px 1px 1px rgba(0, 0, 0, .45);
 }
 
 /*
@@ -206,7 +193,12 @@ body {
 | SIGN IN PANEL
 |---------------------------------------------------------------
 */
+.signin-container {
+	position: relative;
+	height: 30px;
+}
 .signin {
+	position: relative;
 	float: right;
 	margin: 8px 10px 0 10px;
 	padding: 3px 8px;
@@ -236,6 +228,7 @@ body {
 	top: 30px;
 	padding: .5em;
 	width: 200px;
+	z-index: 100;
 	
 	color: #fff;
 	background: #4a6440;
@@ -287,13 +280,11 @@ body {
 #footer {
 	clear: both;
 	line-height: 1.4;
-	padding: .5em 0;
+	padding: .8em 0;
 	
-	background: #4a6440;
 	text-align: center;
 	font-size: 90%;
-	color: #bbb;
-	color: rgba(255, 255, 255, .65);
+	color: #888;
 	
 	border-radius: 0 0 6px 6px;
 	-moz-border-radius: 0 0 6px 6px;
@@ -326,7 +317,7 @@ a {
 	border-bottom: 1px solid;
 }
 a:hover {
-	color: #999;
+	color: #555;
 	border-bottom: 0;
 }
 
@@ -343,48 +334,50 @@ a.edit:hover { color: #a3c586; }
 */
 input[type=text],
 input[type=password] {
-	border: 1px solid #d8d8d8;
+	border: 1px solid #d5d5d5;
 	color: #777;
-	font-family: inherit;
+	font-family: "lucida grande", verdana, arial, sans-serif;
+	font-size: 1.2em;
 	
-	border-radius: 3px;
-	-moz-border-radius: 3px;
-	-webkit-border-radius: 3px;
+	border-radius: 2px;
+	-moz-border-radius: 2px;
+	-webkit-border-radius: 2px;
 }
 input[type=text]:focus,
 input[type=password]:focus {
 	color: #444;
-	border: 1px solid #777;
+	border: 1px solid #bbb;
 }
 
 textarea {
 	font-size: 100%;
-	font-family: inherit;
-	border: 1px solid #d8d8d8;
+	font-family: "lucida grande", verdana, arial, sans-serif;
+	border: 1px solid #d5d5d5;
 	color: #777;
 	
-	border-radius: 3px;
-	-moz-border-radius: 3px;
-	-webkit-border-radius: 3px;
+	border-radius: 2px;
+	-moz-border-radius: 2px;
+	-webkit-border-radius: 2px;
 }
 textarea:focus {
 	color: #444;
-	border: 1px solid #777;
+	border: 1px solid #bbb;
 }
 
 select {
-	border: 1px solid #d8d8d8;
+	border: 1px solid #d5d5d5;
 	color: #777;
-	font-family: inherit;
+	font-family: "lucida grande", verdana, arial, sans-serif;
+	font-size: 1.2em;
 	
-	border-radius: 3px;
-	-moz-border-radius: 3px;
-	-webkit-border-radius: 3px;
+	border-radius: 2px;
+	-moz-border-radius: 2px;
+	-webkit-border-radius: 2px;
 }
 select:focus,
 select:hover {
 	color: #444;
-	border: 1px solid #777;
+	border: 1px solid #bbb;
 }
 
 kbd {
@@ -404,8 +397,8 @@ kbd {
 | TABLES
 |---------------------------------------------------------------
 */
-tr.alt td { background-color: #eee; }
-tr.light_gray { background-color: #ddd; }
+tr.alt td { background-color: #f5f5f5; }
+tr.light_gray { background-color: #f5f5f5; }
 
 th {
 	text-align: center;
@@ -423,31 +416,34 @@ button {
 	-webkit-border-radius: 3px;
 	
 	font-weight: bold;
+	font-family: "lucida grande", verdana, arial, sans-serif;
 }
 
 button.button-main {
-	background: #ddd url('../images/gradient-soft-50.png') repeat-x top left;
-	color: #666;
-	border: 1px solid #aaa;
-	text-shadow: 0px 1px 1px rgba(255, 255, 255, .7);
-	font-size: 110%;
+	background: #e5e5e5 url('../images/gradient-soft-50.png') repeat-x top left;
+	color: #888;
+	border: 1px solid #d0d0d0;
+	text-shadow: 0px 1px 0px rgba(255, 255, 255, .55);
+	font-size: 100%;
 }
 button.button-main:hover {
-	border: 1px solid #6fc651;
-	background: #4cb330 url('../images/gradient-soft-50.png') repeat-x top left;
+	border: 1px solid #76896e;
+	background: #4a6440 url('../images/menu-bg-active.png') repeat-x center left;
 	color: #fff;
-	text-shadow: 0 1px 1px rgba(0, 0, 0, .6);
+	text-shadow: 0 1px 1px rgba(0, 0, 0, .4);
 }
 
 button.button-sec {
-	border: 1px solid #d3d3d3;
-	background: #fff url('../images/button_sec_bg.jpg') repeat-x top left;
-	color: #777;
+	background: #e5e5e5 url('../images/gradient-soft-50.png') repeat-x top left;
+	color: #888;
+	border: 1px solid #d0d0d0;
+	font-size: 90%;
 	font-weight: normal;
 }
 button.button-sec:hover {
-	border: 1px solid #bbb;
-	background-color: #eee;
+	border: 1px solid #fbcb09;
+	background: #fdf5ce url('../images/gradient-soft-50.png') repeat-x center left;
+	color: #c77405;
 }
 
 button.button-small {
@@ -460,38 +456,47 @@ button.button-small {
 button.button-small:hover { border: 1px solid #aaa; }
 
 button.button-signin {
-	background: #ddd url('../images/gradient-soft-50.png') repeat-x top left;
-	color: #666;
-	border: 1px solid #aaa;
+	height: 24px;
+	padding: 0 10px 2px 10px;
+	
+	font-size: 95%;
+	font-weight: bold;
+	background: #e5e5e5 url('../images/gradient-soft-50.png') repeat-x top left;
+	color: #888;
+	border: 1px solid #d0d0d0;
+	text-shadow: 0px 1px 0px rgba(255, 255, 255, .55);
 }
 button.button-signin:hover {
-	border: 1px solid #6fc651;
-	background: #4cb330 url('../images/gradient-soft-50.png') repeat-x top left;
-	color: #fff;
-	text-shadow: 0 1px 1px rgba(0, 0, 0, .5);
+	border: 1px solid #fbcb09;
+	background: #fdf5ce url('../images/gradient-soft-50.png') repeat-x center left;
+	color: #c77405;
 }
 
 input.button-main {
-	background: #ddd url('../images/gradient-soft-50.png') repeat-x top left;
-	color: #666;
-	border: 1px solid #aaa;
+	background: #e5e5e5 url('../images/gradient-soft-50.png') repeat-x top left;
+	color: #888;
+	border: 1px solid #d0d0d0;
 	font-weight: bold;
 	font-size: 120%;
 }
 input.button-main:hover {
-	border: 1px solid #6fc651;
-	background: #4cb330 url('../images/gradient-soft-50.png') repeat-x top left;
+	border: 1px solid #76896e;
+	background: #4a6440 url('../images/menu-bg-active.png') repeat-x center left;
 	color: #fff;
 }
 
 input.button-sec {
-	border: 1px solid #ccc;
-	background: #f9f9f9 url('../images/button_sec_bg.jpg') repeat-x bottom left;
-	font-weight: bold;
-	font-size: 120%;
-	color: #555;
+	background: #e5e5e5 url('../images/gradient-soft-50.png') repeat-x top left;
+	color: #888;
+	border: 1px solid #d0d0d0;
+	font-size: 100%;
+	font-weight: normal;
 }
-input.button-sec:hover { color: #999; }
+input.button-sec:hover {
+	border: 1px solid #fbcb09;
+	background: #fdf5ce url('../images/gradient-soft-50.png') repeat-x center left;
+	color: #c77405;
+}
 
 button[disabled],
 button[disabled]:hover,
@@ -500,10 +505,11 @@ input.button-main[disabled]:hover {
 	opacity: .65;
 	filter:alpha(opacity='70');
 	
-	border: 1px solid #aaa;
-	background: #ddd url('../images/gradient-soft-50.png') repeat-x top left;
-	color: #666;
-	text-shadow: 0 0 0 transparent !important;
+	background: #e5e5e5 url('../images/gradient-soft-50.png') repeat-x top left;
+	color: #888;
+	border: 1px solid #c0c0c0;
+	text-shadow: 0px 1px 0px rgba(255, 255, 255, .55);
+	font-size: 100%;
 }
 
 /*

@@ -67,7 +67,7 @@ a.image, a.image:hover {
 input[type=text],
 input[type=password] {
 	margin: 0;
-	padding: 4px 12px;
+	padding: 3px;
 	width: 265px;
 }
 input.small     	{ width: 50px; }
@@ -76,7 +76,7 @@ input.medium-large	{ width: 150px; }
 
 select {
 	margin: 0;
-	padding: 3px 12px;
+	padding: 3px;
 }
 select:focus, select:hover { outline: 0; }
 

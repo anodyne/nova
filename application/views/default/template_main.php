@@ -135,7 +135,7 @@ echo "<?xml version='1.0' encoding='UTF-8'?>\r\n";
 		<div class="wrapper">
 			<div id="body">
 				<div id="upper-body">
-					<div>
+					<div class="signin-container">
 						<?php if (!$this->auth->is_logged_in()): ?>
 							<div class="signin-panel corner-upper-left corner-lower-left corner-lower-right">
 								<?php echo form_open('login/check_login');?>

@@ -17,7 +17,6 @@ body {
 |---------------------------------------------------------------
 | WRAPPER STYLES
 |---------------------------------------------------------------
-| The wrapper controls the width and centering of the layout
 */
 .wrapper {
 	width: 850px;
@@ -47,9 +46,7 @@ body {
 	font-weight: bold;
 }
 
-.content {
-	line-height: 1.4;
-}
+.content { line-height: 1.4; }
 
 /*
 |---------------------------------------------------------------
@@ -62,7 +59,7 @@ body {
 	
 	text-align: center;
 	font-size: 90%;
-	color: #666;
+	color: #999;
 }
 
 /*
@@ -86,7 +83,7 @@ a {
 	border-bottom: 1px solid;
 }
 a:hover {
-	color: #999;
+	color: #555;
 	border-bottom: 1px solid;
 }
 
@@ -103,18 +100,18 @@ input[type=password] {
 	font-family: inherit;
 	font-size: 110%;
 	
-	border-radius: 14px;
-	-moz-border-radius: 14px;
-	-webkit-border-radius: 14px;
+	border-radius: 3px;
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
 }
 input[type=text]:focus,
 input[type=password]:focus {
 	color: #444;
 	background: #e7eee4;
 	
-	box-shadow: 0px 0px 6px rgba(0, 0, 0, .4);
-	-moz-box-shadow: 0px 0px 6px rgba(0, 0, 0, .4);
-	-webkit-box-shadow: 0px 0px 6px rgba(0, 0, 0, .4);
+	box-shadow: 0px 0px 4px rgba(0, 0, 0, .4);
+	-moz-box-shadow: 0px 0px 4px rgba(0, 0, 0, .4);
+	-webkit-box-shadow: 0px 0px 4px rgba(0, 0, 0, .4);
 }
 
 select {
@@ -124,22 +121,18 @@ select {
 	font-family: inherit;
 	font-size: 110%;
 	
-	border-radius: 14px;
-	-moz-border-radius: 14px;
-	-webkit-border-radius: 14px;
+	border-radius: 3px;
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
 }
 select:focus,
 select:hover {
 	color: #444;
 	background: #e7eee4;
 	
-	border-radius: 14px;
-	-moz-border-radius: 14px;
-	-webkit-border-radius: 14px;
-	
-	box-shadow: 0px 0px 6px rgba(0, 0, 0, .4);
-	-moz-box-shadow: 0px 0px 6px rgba(0, 0, 0, .4);
-	-webkit-box-shadow: 0px 0px 6px rgba(0, 0, 0, .4);
+	box-shadow: 0px 0px 4px rgba(0, 0, 0, .4);
+	-moz-box-shadow: 0px 0px 4px rgba(0, 0, 0, .4);
+	-webkit-box-shadow: 0px 0px 4px rgba(0, 0, 0, .4);
 }
 
 /*
@@ -169,30 +162,33 @@ button {
 	-webkit-border-radius: 3px;
 	
 	font-weight: bold;
+	font-family: "lucida grande", verdana, arial, sans-serif;
 }
 
 button.button-main {
-	background: #ddd url('../images/gradient-soft-50.png') repeat-x top left;
-	color: #666;
-	border: 1px solid #aaa;
+	background: #e5e5e5 url('../images/gradient-soft-50.png') repeat-x top left;
+	color: #888;
+	border: 1px solid #c0c0c0;
+	text-shadow: 0px 1px 0px rgba(255, 255, 255, .55);
+	font-size: 100%;
 }
 button.button-main:hover {
-	border: 1px solid #6fc651;
-	background: #4cb330 url('../images/gradient-soft-50.png') repeat-x top left;
+	border: 1px solid #76896e;
+	background: #4a6440 url('../images/menu-bg-active.png') repeat-x center left;
 	color: #fff;
-	text-shadow: 0 1px 1px rgba(0, 0, 0, .5);
+	text-shadow: 0 1px 1px rgba(0, 0, 0, .4);
 }
 
 input.button-main {
-	background: #ddd url('../images/gradient-soft-50.png') repeat-x top left;
-	color: #666;
-	border: 1px solid #aaa;
+	background: #e5e5e5 url('../images/gradient-soft-50.png') repeat-x top left;
+	color: #888;
+	border: 1px solid #c0c0c0;
 	font-weight: bold;
 	font-size: 120%;
 }
 input.button-main:hover {
-	border: 1px solid #6fc651;
-	background: #4cb330 url('../images/gradient-soft-50.png') repeat-x top left;
+	border: 1px solid #76896e;
+	background: #4a6440 url('../images/menu-bg-active.png') repeat-x center left;
 	color: #fff;
 }
 
@@ -203,10 +199,11 @@ input.button-main[disabled]:hover {
 	opacity: .65;
 	filter:alpha(opacity='70');
 	
-	border: 1px solid #aaa;
-	background: #ddd url('../images/gradient-soft-50.png') repeat-x top left;
-	color: #666;
-	text-shadow: 0 0 0 transparent !important;
+	background: #e5e5e5 url('../images/gradient-soft-50.png') repeat-x top left;
+	color: #888;
+	border: 1px solid #c0c0c0;
+	text-shadow: 0px 1px 0px rgba(255, 255, 255, .55);
+	font-size: 100%;
 }
 
 /*
@@ -255,4 +252,9 @@ ol.roman { list-style: upper-roman; }
 hr {
 	border: 1px solid #ddd;
 	border-width: 1px 0 0;
+}
+
+.remember {
+	font-size: 90%;
+	font-weight: bold;
 }

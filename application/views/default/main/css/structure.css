@@ -145,7 +145,7 @@ td.align_center { text-align: center; }
 */
 button.button-main {
 	height: 28px;
-	padding: 0 20px 2px 20px;
+	padding: 0 30px 2px 30px;
 	outline: 0 !important;
 }
 button.button-sec {
@@ -165,9 +165,13 @@ button.button-small {
 	outline: 0 !important;
 }
 
-input.button-main, input.button-sec {
-	height: 25px;
-	padding: 0 15px;
+input.button-main {
+	height: 28px;
+	padding: 0 30px;
+}
+input.button-sec {
+	height: 22px;
+	padding: 0 10px;
 }
 
 /*
