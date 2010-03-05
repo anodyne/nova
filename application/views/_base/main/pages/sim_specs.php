@@ -9,7 +9,7 @@
 
 <?php if (isset($sections)): ?>
 	<?php foreach ($sections as $section): ?>
-		<?php echo text_output($section['title'], 'h3');?>
+		<?php echo text_output($section['title'], 'h3', 'page-subhead');?>
 		
 		<?php if (isset($section['fields'])): ?>
 		<table class="table100 zebra" cellpadding="3">
@@ -22,7 +22,7 @@
 				</tr>
 			<?php endforeach; ?>
 			</tbody>
-		</table>
+		</table><br />
 		<?php else: ?>
 			<?php echo text_output($label['nospecs'], 'h4', 'orange');?>
 		<?php endif; ?>
