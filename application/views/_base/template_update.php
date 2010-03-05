@@ -7,12 +7,12 @@
 | File: application/views/_base/template_update.php
 | Skin Version: 1.0
 |
-| Main layout file used by the update and upgrade systems
+| Main layout file used by the updated system
 |
 */
 
 /* set the final style location */
-$style_loc = APPFOLDER . '/views/_base/update/css/main.css';
+$style_loc = APPFOLDER . '/views/_base/update/css/skin.css';
 
 echo "<?xml version='1.0' encoding='UTF-8'?>\r\n";
 
@@ -30,48 +30,13 @@ echo "<?xml version='1.0' encoding='UTF-8'?>\r\n";
 		<?php echo $_redirect;?>
 		
 		<style type="text/css">
-			@import url("<?php echo base_url() . APPFOLDER .'/assets/js/css/jquery.ui.core.css';?>");
-			@import url("<?php echo base_url() . APPFOLDER .'/assets/js/css/jquery.ui.theme.css';?>");
+			@import url("<?php echo base_url() . APPFOLDER .'/views/_base/update/css/jquery.ui.core.css';?>");
+			@import url("<?php echo base_url() . APPFOLDER .'/views/_base/update/css/jquery.ui.theme.css';?>");
 			@import url("<?php echo base_url() . APPFOLDER .'/assets/js/css/jquery.ui.progressbar.css';?>");
 		</style>
 		
 		<!-- STYLESHEETS -->
 		<?php echo link_tag($style_loc); ?>
-	</head>
-	<body class="UITheme">
-		<div class="wrapper">
-			<div id="head">
-				<div class="logo"><?php echo img('application/views/_base/update/images/head_logo.png', FALSE);?></div>
-				
-				<?php echo text_output($label, 'h1', 'page-head');?>
-			</div>
-		</div>
-		
-		<div id="loading" class="hidden">
-			<img src="<?php echo base_url() . APPFOLDER;?>/views/_base/update/images/loading-circle-large.gif" alt="" />
-			<br />
-			<strong><?php echo $this->lang->line('global_processing');?></strong>
-		</div>
-		
-		<div id="body">
-			<?php if ($this->uri->segment(2) == 'step'): ?>
-				<div id="amount"><?php echo $this->lang->line('global_progress');?>: <span id="percent">0%</span></div>
-				<div id="progress"></div>
-			<?php endif;?>
-			
-			<!-- PAGE CONTENT -->
-			<div class="content">
-				<?php echo $flash_message;?>
-				<?php echo $content;?>
-			</div>
-			
-			<div style="clear:left;"></div>
-		</div>
-		
-		<!-- FOOTER -->
-		<div id="footer">
-			Powered by <strong><?php echo APP_NAME;?></strong>
-		</div>
 		
 		<script type="text/javascript" src="<?php echo base_url() . APPFOLDER .'/assets/js/jquery.js';?>"></script>
 		<script type="text/javascript" src="<?php echo base_url() . APPFOLDER .'/assets/js/jquery.ui.core.min.js';?>"></script>
@@ -80,14 +45,72 @@ echo "<?xml version='1.0' encoding='UTF-8'?>\r\n";
 		
 		<script type="text/javascript">
 			$(document).ready(function(){
-				$('#update').click(function(){
-					$('#body').fadeOut('fast', function(){
-						$('#loading').removeClass('hidden');
-					});
+				$('body').click(function(event){
+					if (! $(event.target).closest('div').hasClass('signin-panel'))
+					{
+						$('.signin-panel').hide();
+						$('a#signin').addClass('corner-lower-left').addClass('corner-lower-right').removeClass('signin-active');
+					}
 				});
+				
+				$('a#signin').click(function(e){
+					$('.signin-panel').toggle();
+					$('a#signin').toggleClass('corner-lower-left').toggleClass('corner-lower-right').toggleClass('signin-active');
+					$('.signin-panel input:first').focus();
+					
+					return false;
+				});
+			});
+			
+			/* if the escape key is pressed, close the menu */
+			$(document).keyup(function(event){
+				if (event.keyCode == 27) {
+					$('.signin-panel').hide();
+					$('a#signin').addClass('corner-lower-left').addClass('corner-lower-right').removeClass('signin-active');
+				}
 			});
 		</script>
 		
 		<?php echo $javascript;?>
+	</head>
+	<body>
+		<div id="header"></div>
+		
+		<div id="container">
+			<div class="head">
+				<div class="more-options">
+					<div class="signin-panel corner-upper-left corner-lower-left corner-lower-right">
+						<?php echo $update_options;?>
+					</div>
+					<a href="<?php echo site_url('update/index/full');?>" id="signin" class="signin corner-upper-left corner-upper-right corner-lower-left corner-lower-right"><?php echo lang('global_more_options');?></a>
+				</div>
+							
+				<?php echo text_output($label, 'h1');?>
+			</div>
+			
+			<div class="content">
+				<div id="loading" class="hidden">
+					<img src="<?php echo base_url() . APPFOLDER;?>/views/_base/update/images/loading-circle-large.gif" alt="" />
+					<br />
+					<strong><?php echo lang('global_processing');?></strong>
+				</div>
+				
+				<div id="loaded" class="UITheme">
+					<?php if ($this->uri->segment(2) == 'step'): ?>
+						<div id="amount"><?php echo lang('global_progress');?>: <span id="percent">0%</span></div>
+						<div id="progress"></div>
+					<?php endif;?>
+				
+					<?php echo $flash_message;?>
+					<?php echo $content;?>
+				</div>
+			</div>
+			
+			<div class="lower"><?php echo $controls;?></div>
+			
+			<div class="footer">
+				Powered by <strong><?php echo APP_NAME;?></strong>
+			</div>
+		</div>
 	</body>
 </html>

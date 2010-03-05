@@ -56,6 +56,15 @@ class Update_base extends Controller {
 				
 		/* set the version of nova */
 		$this->version = APP_VERSION_MAJOR .'.'. APP_VERSION_MINOR .'.'. APP_VERSION_UPDATE;
+		
+		/* load the resources */
+		$this->load->model('system_model', 'sys');
+		
+		/* check to see if the system is installed */
+		$d['installed'] = $this->sys->check_install_status();
+		
+		/* build the options menu */
+		$this->template->write_view('update_options', '_base/update/pages/_options', $d);
 	}
 
 	function index()
@@ -107,6 +116,9 @@ class Update_base extends Controller {
 		$view_loc = view_location('update_index', '_base', 'update');
 		$js_loc = js_location('update_index_js', '_base', 'update');
 		
+		/* build the next step control */
+		$control = '<a href="'. site_url('update/verify') .'" class="btn">'. lang('upd_index_options_verify') .'</a>';
+		
 		/* set the title */
 		$this->template->write('title', lang('upd_index_title'));
 		$this->template->write('label', lang('upd_index_title'));
@@ -114,6 +126,7 @@ class Update_base extends Controller {
 		/* write the data to the template */
 		$this->template->write_view('content', $view_loc, $data);
 		$this->template->write_view('javascript', $js_loc);
+		$this->template->write('controls', $control);
 		
 		/* render the template */
 		$this->template->render();
@@ -161,8 +174,8 @@ class Update_base extends Controller {
 					'whatsnew' => lang('upd_header_whatsnew'),
 					'notes' => (is_array($update['update'])) ? $update['update']['notes'] : '',
 					'files' => lang('upd_check_header_files'),
-					'files_text' => sprintf(lang('upd_check_text_files'), $update['update']['link']),
-					'files_go' => sprintf(lang('upd_check_go_files'), $update['update']['link']),
+					'files_text' => lang('upd_check_text_files'),
+					'files_go' => $update['update']['link'],
 					'start' => lang('upd_check_header_start'),
 					'start_text' => lang('upd_check_text_start'),
 					'start_go' => anchor('update/step/1', lang('upd_check_go_start'), array('id' => 'next')),
@@ -171,6 +184,9 @@ class Update_base extends Controller {
 				/* figure out where the view file should be coming from */
 				$view_loc = view_location('update_check_main', '_base', 'update');
 				$js_loc = js_location('update_check_js', '_base', 'update');
+				
+				/* build the next step control */
+				$control = '';
 			}
 			else
 			{
@@ -214,6 +230,9 @@ class Update_base extends Controller {
 				/* figure out where the view file should be coming from */
 				$view_loc = view_location('update_check', '_base', 'update');
 				$js_loc = js_location('update_check_js', '_base', 'update');
+				
+				/* build the next step control */
+				$control = form_button($data['inputs']['submit']) . form_close();
 			}
 			
 			/* write everything to the template */
@@ -249,6 +268,9 @@ class Update_base extends Controller {
 			/* figure out where the view file should be coming from */
 			$view_loc = view_location('update_check', '_base', 'update');
 			$js_loc = js_location('update_check_js', '_base', 'update');
+			
+			/* build the next step control */
+			$control = form_button($data['inputs']['submit']) . form_close();
 		}
 		
 		/* set the title */
@@ -258,6 +280,7 @@ class Update_base extends Controller {
 		/* write the data to the template */
 		$this->template->write_view('content', $view_loc, $data);
 		$this->template->write_view('javascript', $js_loc);
+		$this->template->write('controls', $control);
 		
 		/* render the template */
 		$this->template->render();
@@ -272,24 +295,32 @@ class Update_base extends Controller {
 			3 - you are not a system admin, make sure you're logged in
 		*/
 		
-		$data['id'] = $this->uri->segment(3, 0);
+		$id = $this->uri->segment(3, 0);
 		
-		$data['label'] = array(
+		$label = array(
 			'error_1' => lang('upd_error_1'),
 			'error_2' => lang('upd_error_2'),
 			'error_3' => lang('upd_error_3'),
-			'back' => lang('upd_error_back'),
 		);
+		
+		$flash['status'] = 'error';
+		$flash['message'] = $label['error_'. $id];
+		
+		/* write everything to the template */
+		$this->template->write_view('flash_message', '_base/update/pages/flash', $flash);
 		
 		/* figure out where the view file should be coming from */
 		$view_loc = view_location('update_error', '_base', 'update');
+		
+		$control = '<a href="'. site_url('update/index') .'" class="btn">'. lang('button_back_update') .'</a>';
 		
 		/* set the title */
 		$this->template->write('title', lang('upd_error_title'));
 		$this->template->write('label', lang('upd_error_title'));
 				
 		/* write the data to the template */
-		$this->template->write_view('content', $view_loc, $data);
+		$this->template->write_view('content', $view_loc);
+		$this->template->write('controls', $control);
 		
 		/* render the template */
 		$this->template->render();
@@ -300,12 +331,15 @@ class Update_base extends Controller {
 		/* figure out where the view file should be coming from */
 		$view_loc = view_location('readme', '_base', 'update');
 		
+		$control = '';
+		
 		/* set the title */
 		$this->template->write('title', APP_NAME .' '. lang('global_readme_title'));
 		$this->template->write('label', APP_NAME .' '. lang('global_readme_title'));
 				
 		/* write the data to the template */
 		$this->template->write_view('content', $view_loc);
+		$this->template->write('controls', $control);
 		
 		/* render the template */
 		$this->template->render();
@@ -364,15 +398,6 @@ class Update_base extends Controller {
 					$message = lang('upd_step1_memory');
 				}
 				
-				$data['next'] = array(
-					'type' => 'submit',
-					'class' => 'button',
-					'name' => 'next',
-					'value' => 'next',
-					'id' => 'next',
-					'content' => ucwords(lang('button_next'))
-				);
-				
 				$data['label']['text'] = $message;
 				
 				/* figure out where the view files should be coming from */
@@ -382,6 +407,8 @@ class Update_base extends Controller {
 				/* set the title and label */
 				$this->template->write('title', lang('upd_step1_title'));
 				$this->template->write('label', lang('upd_step1_title'));
+				
+				$control = '<a href="'. site_url('update/step/2') .'" class="btn" id="next">'. lang('button_next') .'</a>';
 				
 				break;
 				
@@ -440,12 +467,15 @@ class Update_base extends Controller {
 				$this->template->write('title', lang('upd_step2_title'));
 				$this->template->write('label', lang('upd_step2_title'));
 				
+				$control = '<a href="'. site_url('main/index') .'" class="btn" id="next">'. lang('upd_step2_site') .'</a>';
+				
 				break;
 		}
 		
 		/* write the data to the template */
 		$this->template->write_view('content', $view_loc, $data);
 		$this->template->write_view('javascript', $js_loc);
+		$this->template->write('controls', $control);
 		
 		/* render the template */
 		$this->template->render();
@@ -467,12 +497,16 @@ class Update_base extends Controller {
 		/* figure out where the view file should be coming from */
 		$view_loc = view_location('update_verify', '_base', 'update');
 		
+		/* build the next step control */
+		$control = '<a href="'. site_url('update/check') .'" class="btn">'. lang('upd_index_options_update') .'</a>';
+		
 		/* set the title */
 		$this->template->write('title', lang('verify_title'));
 		$this->template->write('label', lang('verify_title'));
 				
 		/* write the data to the template */
 		$this->template->write_view('content', $view_loc, $data);
+		$this->template->write('controls', $control);
 		
 		/* render the template */
 		$this->template->render();

@@ -3,7 +3,8 @@
 		$('input:first').focus();
 		
 		$('#next').click(function(){
-			$('#body').fadeOut('fast', function(){
+			$('.lower').fadeOut('fast');
+			$('#loaded').fadeOut('fast', function(){
 				$('#loading').removeClass('hidden');
 			});
 		});

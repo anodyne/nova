@@ -147,7 +147,9 @@ $template['update']['regions'] = array(
 	'content',
 	'label',
 	'javascript',
-	'flash_message'
+	'flash_message',
+	'controls',
+	'update_options'
 );
 $template['update']['parser'] = 'parser';
 $template['update']['parser_method'] = 'parse';

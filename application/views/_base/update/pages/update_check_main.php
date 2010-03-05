@@ -1,16 +1,16 @@
-<?php echo $link;?>
-
 <?php if ($label['notes'] > ''): ?>
 	<?php echo text_output($label['whatsnew'], 'h2');?>
-	<?php echo text_output($label['notes']);?>
+	<?php echo text_output($label['notes'], 'p', 'fontMedium');?>
 	
-	<br /><hr /><br />
+	<hr />
 	
-	<?php echo text_output($label['files'], 'h3');?>
-	<?php echo text_output($label['files_text']);?>
-	<?php echo text_output($label['files_go'], 'p', 'fontMedium bold');?>
+	<a href="<?php echo $label['files_go'];?>" class="install-options">
+		<span><?php echo $label['files'];?></span>
+		<em><?php echo $label['files_text'];?></em>
+	</a>
 	
-	<?php echo text_output($label['start'], 'h3');?>
-	<?php echo text_output($label['start_text']);?>
-	<?php echo text_output($label['start_go'], 'p', 'fontMedium bold');?>
+	<a href="<?php echo site_url('update/step/1');?>" id="next" class="install-options">
+		<span><?php echo $label['start'];?></span>
+		<em><?php echo $label['start_text'];?></em>
+	</a>
 <?php endif;?>

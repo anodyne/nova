@@ -46,7 +46,7 @@ $lang['button_begin']			= 'Begin Upgrade';
 $lang['button_login']			= 'Login Now';
 $lang['button_site']			= 'Go To Your Site';
 $lang['button_back_install'] 	= 'Back to Installation Center';
-$lang['button_back_update'] 	= LARROW .' Back to Update Center';
+$lang['button_back_update'] 	= 'Back to Update Center';
 $lang['button_next']			= 'Next Step';
 $lang['button_clear']			= 'Clear Data';
 
@@ -252,13 +252,13 @@ $lang['update_outofdate_database'] = 'Your database is running version %s, but y
  */
 $lang['upd_index_title'] = 'Update Center';
 $lang['upd_index_header'] = 'Welcome to Nova!';
-$lang['upd_index_options_update'] = 'Check for updates to Nova '. RARROW;
-$lang['upd_index_options_verify'] = 'Verify my server can run Nova '. RARROW;
-$lang['upd_index_options_readme'] = 'View the Nova readme '. RARROW;
-$lang['upd_index_options_tour'] = 'Take a tour of Nova '. RARROW;
-$lang['upd_index_options_upd_guide'] = 'Read the Update Guide '. RARROW;
+$lang['upd_index_options_update'] = 'Check for updates to Nova';
+$lang['upd_index_options_verify'] = 'Verify my server can run Nova';
+$lang['upd_index_options_readme'] = 'View the Nova readme';
+$lang['upd_index_options_tour'] = 'Take a tour of Nova';
+$lang['upd_index_options_upd_guide'] = 'Read the Update Guide';
 $lang['upd_index_options_firststeps'] = 'First Steps';
-$lang['upd_index_options_whatsnext'] = 'What'. RSQUO .'s Next?';
+$lang['upd_index_options_whatsnext'] = "What's Next?";
 
 /*
  * Check
@@ -268,7 +268,7 @@ $lang['upd_header_whatsnew'] = "What's New in This Release?";
 $lang['update_text_no_updates'] = 'No updates are available for %s right now.';
 
 $lang['upd_check_header_files'] = "Get the New Files";
-$lang['upd_check_text_files'] = "The first thing you'll need to do is download the new Nova files. You can download the files from the <a href='%s' target='_blank'>Anodyne site</a>. Once you've downloaded the files, follow the directions in the README for updating to the latest version of Nova.";
+$lang['upd_check_text_files'] = "The first thing you'll need to do is download the new Nova files. You can download the files from the Anodyne site. Once you've downloaded the files, follow the directions in the README for updating to the latest version of Nova.";
 $lang['upd_check_go_files'] = "<a href='%s' target='_blank'>Get the files now ". RARROW ."</a>";
 
 $lang['upd_check_header_start'] = "Already Have the Files? Start the Update!";
@@ -291,14 +291,14 @@ $lang['upd_step1_title'] = 'Step 1: Backup Database';
 $lang['upd_step1_success'] = 'You have successfully backed up your Nova database and can continue with the update process. Click <strong>Next Step</strong> to continue.';
 $lang['upd_step1_failure'] = "There was a problem backing up your Nova database. This can be caused by a few different things, but it's most likely because your sever doesn't allowing files to be created on the server. Please manually backup your Nova database then click <strong>Next Step</strong> to continue.";
 $lang['upd_step1_nofields'] = "The update cannot continue because there are no Nova tables in this database!";
-$lang['upd_step1_memory'] = "Your server does'nt have enough available memory to do an automatic backup of your Nova database. You should manually backup your Nova database right now then, when finished, click <strong>Next Step</strong> to continue.";
+$lang['upd_step1_memory'] = "Your server doesn't have enough available memory to do an automatic backup of your Nova database. You should manually backup your Nova database right now then, when finished, click <strong>Next Step</strong> to continue.";
 
 /*
  * Step 2
  */
 $lang['upd_step2_title'] = 'Step 2: Run Update';
 $lang['upd_step2_success'] = 'You have successfully updated Nova to version %s. You can continue using Nova as normal now. Remember to turn maintenance mode off from the Site Settings page so the rest of your users can use the site!';
-$lang['upd_step2_site'] = 'Back to Site '. RARROW;
+$lang['upd_step2_site'] = 'Back to Site';
 
 /*
  * Verify
