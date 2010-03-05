@@ -53,7 +53,8 @@ class Wiki_base extends Controller {
 			'daylight_savings',
 			'sim_name',
 			'date_format',
-			'system_email'
+			'system_email',
+			'email_subject'
 		);
 		
 		/* grab the settings */
