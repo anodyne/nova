@@ -236,9 +236,13 @@ class Main_base extends Controller {
 				'class' => 'button-main',
 				'name' => 'submit',
 				'value' => 'submit',
-				'disabled' => ($this->options['system_email'] == 'off') ? 'disabled' : '',
 				'content' => ucwords(lang('actions_submit'))),
 		);
+		
+		if ($this->options['system_email'] == 'off')
+		{
+			$data['button']['submit']['disabled'] = 'disabled';
+		}
 		
 		$data['inputs'] = array(
 			'name' => array(
@@ -257,8 +261,7 @@ class Main_base extends Controller {
 		);
 		
 		$data['values']['to'] = array(
-			0 => ucwords(lang('labels_please') .' '. 
-				lang('actions_choose') .' '. lang('order_one')),
+			0 => ucwords(lang('labels_please') .' '. lang('actions_choose') .' '. lang('order_one')),
 			1 => ucwords(lang('global_game_master')),
 			2 => ucwords(lang('global_command_staff')),
 			3 => ucwords(lang('global_webmaster')),
