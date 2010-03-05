@@ -8,16 +8,23 @@ Release Candidate 2 (0.9.7)
 
 Last Update
 -----------
-04 March 2010
+05 March 2010
 
 Latest Updates
 --------------
-* updated the look and feel of the installation center
+* fixed bug where error was thrown when submitting a wiki comment (#77)
+* fixed bug where error was thrown when submitting a log comment (#78)
+* fixed bug where error was thrown when submitting a post comment (#79) - would also affect sending post save and post delete emails as well
+* fixed bug where the submit button on the contact form didn't work (#80)
+* removed the get_author_user_ids() method from the posts model
+* updated the specifications listing to clean up some small issues
 * updated the pulsar skin
+* updated the update center with the new UI
 
 Changes in 0.9.7
 ----------------
 * added the 0.9.7 update file
+* removed the get_author_user_ids() method from the posts model
 * updated the install data
     * version info
     * system component info
@@ -26,6 +33,14 @@ Changes in 0.9.7
 * updated the look and feel of the installation center
 * updated the pulsar skin
     * [main] updated the stylesheets
+    * [login] updated the stylesheets
+* updated the specifications listing to clean up some small issues
+* updated the pulsar skin
+* updated the look and feel of the update center
+* fixed bug where error was thrown when submitting a wiki comment (#77)
+* fixed bug where error was thrown when submitting a log comment (#78)
+* fixed bug where error was thrown when submitting a post comment (#79) - would also affect sending post save and post delete emails as well
+* fixed bug where the submit button on the contact form didn't work (#80)
 
 Version History
 ---------------
