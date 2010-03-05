@@ -2104,7 +2104,7 @@ class Sim_base extends Controller {
 				$row = $this->logs->get_log($data['log']);
 				$name = $this->char->get_character_name($data['author']);
 				$from = $this->user->get_email_address('character', $data['author']);
-				$to = $this->user->get_email_address('character', $row->log_author);
+				$to = $this->user->get_email_address('character', $row->log_author_character);
 				
 				/* set the content */	
 				$content = sprintf(
