@@ -45,12 +45,6 @@ echo "<?xml version='1.0' encoding='UTF-8'?>\r\n";
 		
 		<script type="text/javascript">
 			$(document).ready(function(){
-				$('#install').click(function(){
-					$('#body').fadeOut('fast', function(){
-						$('#loading').removeClass('hidden');
-					});
-				});
-				
 				$('body').click(function(event){
 					if (! $(event.target).closest('div').hasClass('signin-panel'))
 					{
