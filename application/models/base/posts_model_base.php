@@ -39,14 +39,30 @@ class Posts_model_base extends Model {
 			/* put the authors string into an array */
 			$authors = explode(',', $row->post_authors);
 			
-			/* create an arrray to use */
+			/* create the arrays to use */
 			$array = array();
+			$users = array();
 			
-			foreach ($authors as $value)
+			foreach ($authors as $a)
+			{
+				$q = $this->db->get_where('characters', array('charid' => $a));
+				
+				if ($q->num_rows() > 0)
+				{
+					$i = $q->row();
+					
+					if (!empty($i->user))
+					{
+						$users[$i->user] = $i->user;
+					}
+				}
+			}
+			
+			foreach ($users as $value)
 			{
 				$this->db->select('email');
 				$this->db->from('users');
-				$this->db->like('characters', $value);
+				$this->db->where('user_id', $value);
 				
 				$query = $this->db->get();
 				
@@ -57,46 +73,6 @@ class Posts_model_base extends Model {
 					if (!in_array($item->email, $array))
 					{
 						$array[] = $item->email;
-					}
-				}
-			}
-			
-			return $array;
-		}
-		
-		return FALSE;
-	}
-	
-	function get_author_user_ids($post = '')
-	{
-		$post = $this->db->get_where('posts', array('post_id' => $post));
-		
-		if ($post->num_rows() > 0)
-		{
-			/* grab the row */
-			$row = $post->row();
-			
-			/* put the authors string into an array */
-			$authors = explode(',', $row->post_authors);
-			
-			/* create an arrray to use */
-			$array = array();
-			
-			foreach ($authors as $value)
-			{
-				$this->db->select('user_id');
-				$this->db->from('users');
-				$this->db->like('characters', $value);
-				
-				$query = $this->db->get();
-				
-				if ($query->num_rows() > 0)
-				{
-					$item = $query->row();
-					
-					if (!in_array($item->userid, $array))
-					{
-						$array[] = $item->userid;
 					}
 				}
 			}
