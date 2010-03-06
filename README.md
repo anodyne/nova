@@ -16,7 +16,8 @@ Latest Updates
 * fixed bug where error was thrown when submitting a log comment (#78)
 * fixed bug where error was thrown when submitting a post comment (#79) - would also affect sending post save and post delete emails as well
 * fixed bug where the submit button on the contact form didn't work (#80)
-* removed the get_author_user_ids() method from the posts model
+* fixed bug where the character bio editing didn't work with character selection (#73)
+* removed the get\_author\_user\_ids() method from the posts model
 * updated the specifications listing to clean up some small issues
 * updated the pulsar skin
 * updated the update center with the new UI
@@ -24,7 +25,7 @@ Latest Updates
 Changes in 0.9.7
 ----------------
 * added the 0.9.7 update file
-* removed the get_author_user_ids() method from the posts model
+* removed the get\_author\_user\_ids() method from the posts model
 * updated the install data
     * version info
     * system component info
@@ -41,6 +42,7 @@ Changes in 0.9.7
 * fixed bug where error was thrown when submitting a log comment (#78)
 * fixed bug where error was thrown when submitting a post comment (#79) - would also affect sending post save and post delete emails as well
 * fixed bug where the submit button on the contact form didn't work (#80)
+* fixed bug where the character bio editing didn't work with character selection (#73)
 
 Version History
 ---------------
