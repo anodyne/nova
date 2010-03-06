@@ -965,7 +965,10 @@ class Characters_base extends Controller {
 		}
 		else
 		{
-			$data['id'] = $this->session->userdata('main_char');
+			if ($data['id'] === FALSE)
+			{
+				$data['id'] = $this->session->userdata('main_char');
+			}
 			
 			/* grab the character info */
 			$char = $this->char->get_character($data['id']);
