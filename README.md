@@ -8,19 +8,22 @@ Release Candidate 2 (0.9.7)
 
 Last Update
 -----------
-05 March 2010
+08 March 2010
 
 Latest Updates
 --------------
-* fixed bug where error was thrown when submitting a wiki comment (#77)
-* fixed bug where error was thrown when submitting a log comment (#78)
-* fixed bug where error was thrown when submitting a post comment (#79) - would also affect sending post save and post delete emails as well
-* fixed bug where the submit button on the contact form didn't work (#80)
-* fixed bug where the character bio editing didn't work with character selection (#73)
-* removed the get\_author\_user\_ids() method from the posts model
-* updated the specifications listing to clean up some small issues
-* updated the pulsar skin
-* updated the update center with the new UI
+* fixed bug where IE would cache the ajax views and won't let go (#81)
+* fixed bug where the lazy plugin was throwing errors with the qtip plugin
+* updated the controllers to remove calls to load the string helper (it's autoloaded now)
+* updated the autoload config to pull in the string helper automatically
+* updated jquery qtip plugin to version 1.0-r29
+* updated the pulsar skin with a wiki section
+* updated the tooltip location to the upper right of the target
+* updated the 0.9.7 update file
+* updated the install data
+* removed unused images from the main pulsar section
+* added the jquery ui images to the main pulsar section
+* added the jquery ui stylesheet to the main pulsar section
 
 Changes in 0.9.7
 ----------------
@@ -33,16 +36,26 @@ Changes in 0.9.7
 * updated the jquery ui to version 1.8rc3
 * updated the look and feel of the installation center
 * updated the pulsar skin
+    * [main] added jquery ui stylesheet
     * [main] updated the stylesheets
+    * [main] removed unused images
     * [login] updated the stylesheets
+    * [wiki] added wiki section
 * updated the specifications listing to clean up some small issues
 * updated the pulsar skin
 * updated the look and feel of the update center
+* updated the look and feel of the upgrade center
+* updated the controllers to remove calls to load the string helper (it's autoloaded now)
+* updated the autoload config to pull in the string helper automatically
+* updated jquery qtip plugin to version 1.0-r29
+* updated the tooltip location to the upper right of the target
 * fixed bug where error was thrown when submitting a wiki comment (#77)
 * fixed bug where error was thrown when submitting a log comment (#78)
 * fixed bug where error was thrown when submitting a post comment (#79) - would also affect sending post save and post delete emails as well
 * fixed bug where the submit button on the contact form didn't work (#80)
 * fixed bug where the character bio editing didn't work with character selection (#73)
+* fixed bug where IE would cache the ajax views and won't let go (#81)
+* fixed bug where the lazy plugin was throwing errors with the qtip plugin
 
 Version History
 ---------------

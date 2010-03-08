@@ -1,3 +1,26 @@
+03.08.2010
+
+* fixed bug where IE would cache the ajax views and won't let go (#81)
+* fixed bug where the lazy plugin was throwing errors with the qtip plugin
+
+* updated the controllers to remove calls to load the string helper (it's autoloaded now)
+* updated the autoload config to pull in the string helper automatically
+* updated jquery qtip plugin to version 1.0-r29
+* updated the pulsar skin with a wiki section
+* updated the tooltip location to the upper right of the target
+* updated the 0.9.7 update file
+* updated the install data
+
+* removed the preview site doc
+* removed the README doc
+* removed the UPGRADE doc
+* removed unused images from the main pulsar section
+
+* added the jquery ui images to the main pulsar section
+* added the jquery ui stylesheet to the main pulsar section
+
+==========
+
 03.05.2010
 
 * fixed bug where error was thrown when submitting a wiki comment (#77)
