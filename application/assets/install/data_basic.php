@@ -2273,7 +2273,7 @@ $system_components = array(
 		'comp_url' => 'http://plugins.jquery.com/project/ajaxq'),
 	array(
 		'comp_name' => 'qTip',
-		'comp_version' => '1.0.0-rc3',
+		'comp_version' => '1.0-r29',
 		'comp_desc' => "qTip is an advanced tooltip plugin for the ever popular jQuery JavaScript framework. Built from the ground up to be user friendly, yet feature rich, qTip provides you with tonnes of features like rounded corners and speech bubble tips, and best of all... it's completely free under the MIT license!",
 		'comp_url' => 'http://craigsworks.com/projects/qtip/'),
 	array(
