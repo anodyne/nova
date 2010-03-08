@@ -170,6 +170,10 @@ if (isset($drop_column))
 $this->db->where('comp_name', 'jQuery UI');
 $this->db->update('system_components', array('comp_version' => '1.8rc3'));
 
+/* jquery qtip version info */
+$this->db->where('comp_name', 'qTip');
+$this->db->update('system_components', array('comp_version' => '1.0-r29'));
+
 /* add system version info */
 $this->load->model('system_model', 'sys');
 $this->sys->add_system_version($system_versions);
