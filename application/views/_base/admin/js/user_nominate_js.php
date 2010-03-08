@@ -1,3 +1,5 @@
+<?php $string = random_string('alnum', 8);?>
+
 <script type="text/javascript" src="<?php echo base_url() . APPFOLDER;?>/assets/js/jquery.ajaxq.js"></script>
 
 <script type="text/javascript">
@@ -48,10 +50,10 @@
 			var action = $(this).attr('myAction');
 			
 			if (action == 'approve')
-				var location = '<?php echo site_url('ajax/approve/award_nomination');?>/' + id;
+				var location = '<?php echo site_url('ajax/approve/award_nomination');?>/' + id + '/<?php echo $string;?>';
 				
 			if (action == 'reject')
-				var location = '<?php echo site_url('ajax/reject/award_nomination');?>/' + id;
+				var location = '<?php echo site_url('ajax/reject/award_nomination');?>/' + id + '/<?php echo $string;?>';
 				
 			$.facebox(function() {
 				$.get(location, function(data) {

@@ -1,3 +1,5 @@
+<?php $string = random_string('alnum', 8);?>
+
 <script type="text/javascript" src="<?php echo base_url() . APPFOLDER .'/assets/js/jquery.quicksearch.js';?>"></script>
 
 <script type="text/javascript">
@@ -6,7 +8,7 @@
 		
 		$("a[rel*=facebox]").click(function() {
 			var id = $(this).attr('myID');
-			var location = '<?php echo site_url('ajax/del_wiki_page');?>/' + id;
+			var location = '<?php echo site_url('ajax/del_wiki_page');?>/' + id + '/<?php echo $string;?>';
 			
 			$.facebox(function() {
 				$.get(location, function(data) {

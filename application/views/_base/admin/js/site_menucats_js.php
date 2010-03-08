@@ -1,3 +1,5 @@
+<?php $string = random_string('alnum', 8);?>
+
 <script type="text/javascript">
 	$(document).ready(function(){
 		$('table.zebra tbody > tr:nth-child(odd)').addClass('alt');
@@ -8,17 +10,17 @@
 			
 			if (action == 'delete')
 			{
-				var location = '<?php echo site_url('ajax/del_menu_cat');?>/' + id;
+				var location = '<?php echo site_url('ajax/del_menu_cat');?>/' + id + '/<?php echo $string;?>';
 			}
 			
 			if (action == 'edit')
 			{
-				var location = '<?php echo site_url('ajax/edit_menu_cat');?>/' + id;
+				var location = '<?php echo site_url('ajax/edit_menu_cat');?>/' + id + '/<?php echo $string;?>';
 			}
 			
 			if (action == 'add')
 			{
-				var location = '<?php echo site_url('ajax/add_menu_cat');?>';
+				var location = '<?php echo site_url('ajax/add_menu_cat/'. $string);?>';
 			}
 			
 			$.facebox(function() {

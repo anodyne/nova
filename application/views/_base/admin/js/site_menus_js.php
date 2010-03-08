@@ -1,3 +1,5 @@
+<?php $string = random_string('alnum', 8);?>
+
 <script type="text/javascript">
 	$(document).ready(function(){
 		$('#tabs').tabs();
@@ -11,19 +13,13 @@
 			var selected = $('#tabs').tabs('option', 'selected');
 			
 			if (action == 'delete')
-			{
-				var location = '<?php echo site_url('ajax/del_menu_item');?>/' + id + '/' + selected;
-			}
+				var location = '<?php echo site_url('ajax/del_menu_item');?>/' + id + '/' + selected + '/<?php echo $string;?>';
 			
 			if (action == 'edit')
-			{
-				var location = '<?php echo site_url('ajax/edit_menu_item');?>/' + id + '/' + selected;
-			}
+				var location = '<?php echo site_url('ajax/edit_menu_item');?>/' + id + '/' + selected + '/<?php echo $string;?>';
 			
 			if (action == 'add')
-			{
-				var location = '<?php echo site_url('ajax/add_menu_item');?>/' + selected;
-			}
+				var location = '<?php echo site_url('ajax/add_menu_item');?>/' + selected + '/<?php echo $string;?>';
 			
 			$.facebox(function() {
 				$.get(location, function(data) {

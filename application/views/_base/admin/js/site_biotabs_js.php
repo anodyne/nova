@@ -1,3 +1,5 @@
+<?php $string = random_string('alnum', 8);?>
+
 <script type="text/javascript">
 	$(document).ready(function(){
 		$('table.zebra tbody > tr:nth-child(odd)').addClass('alt');
@@ -7,13 +9,13 @@
 			var action = $(this).attr('myAction');
 			
 			if (action == 'add')
-				var location = '<?php echo site_url('ajax/add_bio_tab');?>';
+				var location = '<?php echo site_url('ajax/add_bio_tab/'. $string);?>';
 				
 			if (action == 'edit')
-				var location = '<?php echo site_url('ajax/edit_bio_tab');?>/' + id;
+				var location = '<?php echo site_url('ajax/edit_bio_tab');?>/' + id + '/<?php echo $string;?>';
 				
 			if (action == 'delete')
-				var location = '<?php echo site_url('ajax/del_bio_tab');?>/' + id;
+				var location = '<?php echo site_url('ajax/del_bio_tab');?>/' + id + '/<?php echo $string;?>';
 			
 			$.facebox(function(){
 				$.get(location, function(data){

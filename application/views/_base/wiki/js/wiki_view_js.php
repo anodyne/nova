@@ -1,3 +1,5 @@
+<?php $string = random_string('alnum', 8);?>
+
 <script type="text/javascript">
 	$(document).ready(function(){
 		$tabs = $('#tabs').tabs();
@@ -13,14 +15,14 @@
 			{
 				var id = $(this).attr('myID');
 				
-				location = '<?php echo site_url('ajax/add_comment_wiki');?>/' + id;
+				location = '<?php echo site_url('ajax/add_comment_wiki');?>/' + id + '/<?php echo $string;?>';
 			}
 			else if (action == 'revert')
 			{
 				var page = $(this).attr('myPage');
 				var draft = $(this).attr('myDraft');
 				
-				location = '<?php echo site_url('ajax/revert_wiki_page');?>/' + page + '/' + draft;
+				location = '<?php echo site_url('ajax/revert_wiki_page');?>/' + page + '/' + draft + '/<?php echo $string;?>';
 			}
 			
 			$.facebox(function() {

@@ -1,3 +1,5 @@
+<?php $string = random_string('alnum', 8);?>
+
 <script type="text/javascript">
 	$(document).ready(function(){
 		var $tabs = $('#tabs').tabs();
@@ -11,11 +13,11 @@
 			var location;
 			
 			if (action == 'delete')
-				location = '<?php echo site_url('ajax/del_docked_item');?>/' + id;
+				location = '<?php echo site_url('ajax/del_docked_item');?>/' + id + '/<?php echo $string;?>';
 			else if (action == 'approve')
-				location = '<?php echo site_url('ajax/approve/docking');?>/' + id;
+				location = '<?php echo site_url('ajax/approve/docking');?>/' + id + '/<?php echo $string;?>';
 			else if (action == 'reject')
-				location = '<?php echo site_url('ajax/reject/docking');?>/' + id;
+				location = '<?php echo site_url('ajax/reject/docking');?>/' + id + '/<?php echo $string;?>';
 			
 			$.facebox(function() {
 				$.get(location, function(data) {

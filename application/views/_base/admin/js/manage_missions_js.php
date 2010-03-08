@@ -1,3 +1,5 @@
+<?php $string = random_string('alnum', 8);?>
+
 <link rel="stylesheet" type="text/css" href="<?php echo base_url() . APPFOLDER;?>/assets/js/css/jquery.ui.datepicker.css" />
 
 <script type="text/javascript" src="<?php echo base_url() . APPFOLDER;?>/assets/js/jquery.ui.datepicker.min.js"></script>
@@ -35,7 +37,7 @@
 		$("a[rel*=facebox]").click(function() {
 			var action = $(this).attr('myAction');
 			var id = $(this).attr('myID');
-			var location = '<?php echo site_url('ajax/del_mission');?>/' + id;
+			var location = '<?php echo site_url('ajax/del_mission');?>/' + id + '/<?php echo $string;?>';
 			
 			$.facebox(function() {
 				$.get(location, function(data) {

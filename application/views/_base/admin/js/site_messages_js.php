@@ -1,3 +1,5 @@
+<?php $string = random_string('alnum', 8);?>
+
 <script type="text/javascript">
 	$(document).ready(function(){
 		$('#tabs').tabs();
@@ -10,19 +12,13 @@
 			var id = $(this).attr('myID');
 			
 			if (action == 'delete')
-			{
-				var location = '<?php echo site_url('ajax/del_site_message');?>/' + id;
-			}
+				var location = '<?php echo site_url('ajax/del_site_message');?>/' + id + '/<?php echo $string;?>';
 			
 			if (action == 'edit')
-			{
-				var location = '<?php echo site_url('ajax/edit_site_message');?>/' + id;
-			}
+				var location = '<?php echo site_url('ajax/edit_site_message');?>/' + id + '/<?php echo $string;?>';
 			
 			if (action == 'add')
-			{
-				var location = '<?php echo site_url('ajax/add_site_message');?>';
-			}
+				var location = '<?php echo site_url('ajax/add_site_message/'. $string);?>';
 			
 			$.facebox(function() {
 				$.get(location, function(data) {

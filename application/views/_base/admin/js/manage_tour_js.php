@@ -1,3 +1,5 @@
+<?php $string = random_string('alnum', 8);?>
+
 <script type="text/javascript">
 	$(document).ready(function(){
 		$('#tabs').tabs();
@@ -20,7 +22,7 @@
 		$("a[rel*=facebox]").click(function() {
 			var action = $(this).attr('myAction');
 			var id = $(this).attr('myID');
-			var location = '<?php echo site_url('ajax/del_tour_item');?>/' + id;
+			var location = '<?php echo site_url('ajax/del_tour_item');?>/' + id + '/<?php echo $string;?>';
 			
 			$.facebox(function() {
 				$.get(location, function(data) {

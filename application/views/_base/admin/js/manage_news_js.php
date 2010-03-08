@@ -1,3 +1,5 @@
+<?php $string = random_string('alnum', 8);?>
+
 <script type="text/javascript">
 	$(document).ready(function(){
 		$('#tabs').tabs();
@@ -13,10 +15,10 @@
 			var location;
 			
 			if (action == 'approve')
-				location = '<?php echo site_url('ajax/approve');?>/news/' + id;
+				location = '<?php echo site_url('ajax/approve');?>/news/' + id + '/<?php echo $string;?>';
 				
 			if (action == 'delete')
-				location = '<?php echo site_url('ajax/del_news');?>/' + status + '/' + page + '/' + id;
+				location = '<?php echo site_url('ajax/del_news');?>/' + status + '/' + page + '/' + id + '/<?php echo $string;?>';
 			
 			$.facebox(function() {
 				$.get(location, function(data) {

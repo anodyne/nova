@@ -1,3 +1,5 @@
+<?php $string = random_string('alnum', 8);?>
+
 <script type="text/javascript">
 	$(document).ready(function(){
 		$('table.zebra tbody > tr:nth-child(odd)').addClass('alt');
@@ -8,13 +10,13 @@
 			var field = $(this).attr('myField');
 			
 			if (action == 'add')
-				var location = '<?php echo site_url('ajax/add_spec_field');?>';
+				var location = '<?php echo site_url('ajax/add_spec_field/'. $string);?>';
 			
 			if (action == 'delete')
-				var location = '<?php echo site_url('ajax/del_spec_field');?>/' + id;
+				var location = '<?php echo site_url('ajax/del_spec_field');?>/' + id + '/<?php echo $string;?>';
 				
 			if (action == 'edit_val')
-				var location = '<?php echo site_url('ajax/edit_spec_field_value');?>/' + id + '/' + field;
+				var location = '<?php echo site_url('ajax/edit_spec_field_value');?>/' + id + '/' + field + '/<?php echo $string;?>';
 			
 			$.facebox(function() {
 				$.get(location, function(data) {

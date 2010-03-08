@@ -1,3 +1,5 @@
+<?php $string = random_string('alnum', 8);?>
+
 <script type="text/javascript">
 	$(document).ready(function(){
 		$('div.zebra div:nth-child(odd)').addClass('alt');
@@ -41,7 +43,7 @@
 		
 		$("a[rel*=facebox]").click(function() {
 			var id = $(this).attr('myID');
-			var location = '<?php echo site_url('ajax/add_position');?>/' + id;
+			var location = '<?php echo site_url('ajax/add_position');?>/' + id + '/<?php echo $string;?>';
 			
 			$.facebox(function() {
 				$.get(location, function(data) {

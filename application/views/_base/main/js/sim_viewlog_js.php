@@ -1,10 +1,12 @@
+<?php $string = random_string('alnum', 8);?>
+
 <script type="text/javascript">
 	$(document).ready(function(){
 		$("a[rel*=facebox]").click(function() {
 			var num = $(this).attr('myID');
 			
 			$.facebox(function() {
-				$.get('<?php echo site_url();?>/ajax/add_comment_log/'+ num, function(data) {
+				$.get('<?php echo site_url();?>/ajax/add_comment_log/'+ num + '/<?php echo $string;?>', function(data) {
 					$.facebox(data);
 				});
 			});
