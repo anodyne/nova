@@ -30,6 +30,15 @@ class Upgrade_base extends Controller {
 		/* set and load the language file needed */
 		$this->lang->load('app');
 		$this->lang->load('install');
+		
+		/* load the resources */
+		$this->load->model('system_model', 'sys');
+		
+		/* check to see if the system is installed */
+		$d['installed'] = $this->sys->check_install_status();
+		
+		/* build the options menu */
+		$this->template->write_view('update_options', '_base/update/pages/_options_upgrade', $d);
 	}
 
 	function index()
@@ -67,16 +76,16 @@ class Upgrade_base extends Controller {
 		
 		/* determine the status */
 		$status = (GENRE != 'ds9') ? 4 : $status;
-		$status = ($sms === FALSE) ? 3 : $status;
+		$status = ($sms === FALSE) ? 1 : $status;
 		$status = ($sms_ver < $sms_const) ? 2 : $status;
-		$status = ($installed === TRUE) ? 1 : $status;
+		$status = ($installed === TRUE) ? 3 : $status;
 		
 		if ($status > 0)
 		{
 			$flash['status'] = '';
 			$flash['message'] = '';
 			
-			if ($code == 1)
+			if ($status == 1)
 			{
 				$flash['status'] = 'error';
 				$flash['message'] = sprintf(
@@ -85,17 +94,17 @@ class Upgrade_base extends Controller {
 					SMS_UPGRADE_VERSION
 				);
 			}
-			elseif ($code == 2)
+			elseif ($status == 2)
 			{
 				$flash['status'] = 'error';
 				$flash['message'] = lang('upg_error_2');
 			}
-			elseif ($code == 3)
+			elseif ($status == 3)
 			{
 				$flash['status'] = 'error';
 				$flash['message'] = lang('upg_error_3');
 			}
-			elseif ($code == 4)
+			elseif ($status == 4)
 			{
 				$flash['status'] = 'error';
 				$flash['message'] = sprintf(
@@ -109,7 +118,7 @@ class Upgrade_base extends Controller {
 		}
 		
 		$data['label'] = array(
-			'text' => lang('upg_index'),
+			'text' => lang('upg_info'),
 			'intro' => lang('global_content_index'),
 			'title' => lang('upg_index_header'),
 			'options_readme' => lang('install_index_options_readme'),
@@ -134,6 +143,9 @@ class Upgrade_base extends Controller {
 		$view_loc = view_location('upgrade_index', '_base', 'update');
 		$js_loc = js_location('upgrade_index_js', '_base', 'update');
 		
+		/* build the next step control */
+		$control = '<a href="'. site_url('upgrade/verify') .'" class="btn">'. lang('install_index_options_verify') .'</a>';
+		
 		/* set the title */
 		$this->template->write('title', lang('upg_index_title'));
 		$this->template->write('label', lang('upg_index_title'));
@@ -141,6 +153,7 @@ class Upgrade_base extends Controller {
 		/* write the data to the template */
 		$this->template->write_view('content', $view_loc, $data);
 		$this->template->write_view('javascript', $js_loc);
+		$this->template->write('controls', $control);
 		
 		/* render the template */
 		$this->template->render();
@@ -156,9 +169,9 @@ class Upgrade_base extends Controller {
 			4 - ds9 genre not being used
 		*/
 		
-		$data['id'] = $this->uri->segment(3, 0);
+		$id = $this->uri->segment(3, 0);
 		
-		$data['label'] = array(
+		$label = array(
 			'error_1' => sprintf(
 				lang('upg_error_1'),
 				SMS_UPGRADE_VERSION,
@@ -173,15 +186,50 @@ class Upgrade_base extends Controller {
 			'back' => lang('upg_verify_back'),
 		);
 		
+		$flash['status'] = 'error';
+		$flash['message'] = $label['error_'. $id];
+		
+		/* write everything to the template */
+		$this->template->write_view('flash_message', '_base/update/pages/flash', $flash);
+		
 		/* figure out where the view file should be coming from */
 		$view_loc = view_location('upgrade_error', '_base', 'update');
+		
+		$control = '<a href="'. site_url('upgrade/index') .'" class="btn">'. lang('button_back_upgrade') .'</a>';
 		
 		/* set the title */
 		$this->template->write('title', lang('upg_error_title'));
 		$this->template->write('label', lang('upg_error_title'));
 				
 		/* write the data to the template */
+		$this->template->write_view('content', $view_loc);
+		$this->template->write('controls', $control);
+		
+		/* render the template */
+		$this->template->render();
+	}
+	
+	function info()
+	{
+		$data['label'] = array(
+			'text' => lang('upg_info')
+		);
+		
+		/* figure out where the view file should be coming from */
+		$view_loc = view_location('upgrade_info', '_base', 'update');
+		$js_loc = js_location('upgrade_info_js', '_base', 'update');
+		
+		/* build the next step control */
+		$control = '<a href="'. site_url('upgrade/step/1') .'" class="btn" id="next">'. lang('button_begin') .'</a>';
+		
+		/* set the title */
+		$this->template->write('title', lang('upg_more_info'));
+		$this->template->write('label', lang('upg_more_info'));
+				
+		/* write the data to the template */
 		$this->template->write_view('content', $view_loc, $data);
+		$this->template->write_view('javascript', $js_loc);
+		$this->template->write('controls', $control);
 		
 		/* render the template */
 		$this->template->render();
@@ -258,20 +306,14 @@ class Upgrade_base extends Controller {
 					$message = lang('upg_step1_memory');
 				}
 				
-				$data['next'] = array(
-					'type' => 'submit',
-					'class' => 'button',
-					'name' => 'next',
-					'value' => 'next',
-					'id' => 'next',
-					'content' => ucwords(lang('button_next'))
-				);
-				
 				$data['label']['text'] = $message;
 				
 				/* figure out where the view files should be coming from */
 				$view_loc = view_location('upgrade_step_1', '_base', 'update');
 				$js_loc = js_location('upgrade_step_1_js', '_base', 'update');
+				
+				/* build the next step control */
+				$control = '<a href="'. site_url('upgrade/step/2') .'" class="btn" id="next">'. lang('button_next') .'</a>';
 				
 				/* set the title and label */
 				$this->template->write('title', lang('upg_step1_title'));
@@ -310,18 +352,14 @@ class Upgrade_base extends Controller {
 				
 				$message = (count($table) > 0) ? lang('upg_step2_failure') : lang('upg_step2_success');
 				
-				$data['next'] = array(
-					'type' => 'submit',
-					'class' => 'button',
-					'name' => 'next',
-					'value' => 'next',
-					'id' => 'next',
-					'content' => ucwords(lang('button_next'))
-				);
-				
 				if (count($table) > 0)
 				{
-					$data['next']['disabled'] = 'disabled';
+					$control = '';
+				}
+				else
+				{
+					/* build the next step control */
+					$control = '<a href="'. site_url('upgrade/step/3') .'" class="btn" id="next">'. lang('button_next') .'</a>';
 				}
 				
 				$data['label']['text'] = $message;
@@ -367,18 +405,14 @@ class Upgrade_base extends Controller {
 				
 				$message = (count($insert) > 0) ? lang('upg_step3_failure') : lang('upg_step3_success');
 				
-				$data['next'] = array(
-					'type' => 'submit',
-					'class' => 'button',
-					'name' => 'next',
-					'value' => 'next',
-					'id' => 'next',
-					'content' => ucwords(lang('button_next'))
-				);
-				
 				if (count($insert) > 0)
 				{
-					$data['next']['disabled'] = 'disabled';
+					$control = '';
+				}
+				else
+				{
+					/* build the next step control */
+					$control = '<a href="'. site_url('upgrade/step/4') .'" class="btn" id="next">'. lang('button_next') .'</a>';
 				}
 				
 				$data['label']['text'] = $message;
@@ -421,18 +455,14 @@ class Upgrade_base extends Controller {
 				
 				$message = (count($genre) > 0) ? lang('upg_step4_failure') : lang('upg_step4_success');
 				
-				$data['next'] = array(
-					'type' => 'submit',
-					'class' => 'button',
-					'name' => 'next',
-					'value' => 'next',
-					'id' => 'next',
-					'content' => ucwords(lang('button_next'))
-				);
-				
 				if (count($genre) > 0)
 				{
-					$data['next']['disabled'] = 'disabled';
+					$control = '';
+				}
+				else
+				{
+					/* build the next step control */
+					$control = '<a href="'. site_url('upgrade/step/5') .'" class="btn" id="next">'. lang('button_next') .'</a>';
 				}
 					
 				$data['label']['text'] = $message;
@@ -525,18 +555,12 @@ class Upgrade_base extends Controller {
 				
 				$data['label']['text'] = $message;
 				
-				$data['next'] = array(
-					'type' => 'submit',
-					'class' => 'button',
-					'name' => 'next',
-					'value' => 'next',
-					'id' => 'next',
-					'content' => ucwords(lang('button_next'))
-				);
-				
 				/* figure out where the view file should be coming from */
 				$view_loc = view_location('upgrade_step_5', '_base', 'update');
 				$js_loc = js_location('upgrade_step_5_js', '_base', 'update');
+				
+				/* build the next step control */
+				$control = '<a href="'. site_url('upgrade/step/6') .'" class="btn" id="next">'. lang('button_next') .'</a>';
 				
 				/* set the title */
 				$this->template->write('title', lang('upg_step5_title'));
@@ -619,18 +643,12 @@ class Upgrade_base extends Controller {
 				
 				$data['label']['text'] = $message;
 				
-				$data['next'] = array(
-					'type' => 'submit',
-					'class' => 'button',
-					'name' => 'next',
-					'value' => 'next',
-					'id' => 'next',
-					'content' => ucwords(lang('button_next'))
-				);
-				
 				/* figure out where the view file should be coming from */
 				$view_loc = view_location('upgrade_step_6', '_base', 'update');
 				$js_loc = js_location('upgrade_step_6_js', '_base', 'update');
+				
+				/* build the next step control */
+				$control = '<a href="'. site_url('upgrade/step/7') .'" class="btn" id="next">'. lang('button_next') .'</a>';
 				
 				/* set the title */
 				$this->template->write('title', lang('upg_step6_title'));
@@ -724,18 +742,12 @@ class Upgrade_base extends Controller {
 				
 				$data['label']['text'] = $message;
 				
-				$data['next'] = array(
-					'type' => 'submit',
-					'class' => 'button',
-					'name' => 'next',
-					'value' => 'next',
-					'id' => 'next',
-					'content' => ucwords(lang('button_next'))
-				);
-				
 				/* figure out where the view file should be coming from */
 				$view_loc = view_location('upgrade_step_7', '_base', 'update');
 				$js_loc = js_location('upgrade_step_7_js', '_base', 'update');
+				
+				/* build the next step control */
+				$control = '<a href="'. site_url('upgrade/step/8') .'" class="btn" id="next">'. lang('button_next') .'</a>';
 				
 				/* set the title */
 				$this->template->write('title', lang('upg_step7_title'));
@@ -863,18 +875,12 @@ class Upgrade_base extends Controller {
 				
 				$data['label']['text'] = $message;
 				
-				$data['next'] = array(
-					'type' => 'submit',
-					'class' => 'button',
-					'name' => 'next',
-					'value' => 'next',
-					'id' => 'next',
-					'content' => ucwords(lang('button_next'))
-				);
-				
 				/* figure out where the view file should be coming from */
 				$view_loc = view_location('upgrade_step_8', '_base', 'update');
 				$js_loc = js_location('upgrade_step_8_js', '_base', 'update');
+				
+				/* build the next step control */
+				$control = '<a href="'. site_url('upgrade/step/9') .'" class="btn" id="next">'. lang('button_next') .'</a>';
 				
 				/* set the title */
 				$this->template->write('title', lang('upg_step8_title'));
@@ -960,18 +966,12 @@ class Upgrade_base extends Controller {
 				
 				$data['label']['text'] = $message;
 				
-				$data['next'] = array(
-					'type' => 'submit',
-					'class' => 'button',
-					'name' => 'next',
-					'value' => 'next',
-					'id' => 'next',
-					'content' => ucwords(lang('button_next'))
-				);
-				
 				/* figure out where the view file should be coming from */
 				$view_loc = view_location('upgrade_step_9', '_base', 'update');
 				$js_loc = js_location('upgrade_step_9_js', '_base', 'update');
+				
+				/* build the next step control */
+				$control = '<a href="'. site_url('upgrade/step/10') .'" class="btn" id="next">'. lang('button_next') .'</a>';
 				
 				/* set the title */
 				$this->template->write('title', lang('upg_step9_title'));
@@ -1076,18 +1076,12 @@ class Upgrade_base extends Controller {
 				
 				$data['label']['text'] = $message;
 				
-				$data['next'] = array(
-					'type' => 'submit',
-					'class' => 'button',
-					'name' => 'next',
-					'value' => 'next',
-					'id' => 'next',
-					'content' => ucwords(lang('button_next'))
-				);
-				
 				/* figure out where the view file should be coming from */
 				$view_loc = view_location('upgrade_step_10', '_base', 'update');
 				$js_loc = js_location('upgrade_step_10_js', '_base', 'update');
+				
+				/* build the next step control */
+				$control = '<a href="'. site_url('upgrade/step/11') .'" class="btn" id="next">'. lang('button_next') .'</a>';
 				
 				/* set the title */
 				$this->template->write('title', lang('upg_step10_title'));
@@ -1199,18 +1193,12 @@ class Upgrade_base extends Controller {
 				
 				$data['label']['text'] = $message;
 				
-				$data['next'] = array(
-					'type' => 'submit',
-					'class' => 'button',
-					'name' => 'next',
-					'value' => 'next',
-					'id' => 'next',
-					'content' => ucwords(lang('button_next'))
-				);
-				
 				/* figure out where the view file should be coming from */
 				$view_loc = view_location('upgrade_step_11', '_base', 'update');
 				$js_loc = js_location('upgrade_step_11_js', '_base', 'update');
+				
+				/* build the next step control */
+				$control = '<a href="'. site_url('upgrade/step/12') .'" class="btn" id="next">'. lang('button_next') .'</a>';
 				
 				/* set the title */
 				$this->template->write('title', lang('upg_step11_title'));
@@ -1294,18 +1282,12 @@ class Upgrade_base extends Controller {
 				
 				$data['label']['text'] = $message;
 				
-				$data['next'] = array(
-					'type' => 'submit',
-					'class' => 'button',
-					'name' => 'next',
-					'value' => 'next',
-					'id' => 'next',
-					'content' => ucwords(lang('button_next'))
-				);
-				
 				/* figure out where the view file should be coming from */
 				$view_loc = view_location('upgrade_step_12', '_base', 'update');
 				$js_loc = js_location('upgrade_step_12_js', '_base', 'update');
+				
+				/* build the next step control */
+				$control = '<a href="'. site_url('upgrade/step/13') .'" class="btn" id="next">'. lang('button_next') .'</a>';
 				
 				/* set the title */
 				$this->template->write('title', lang('upg_step12_title'));
@@ -1522,18 +1504,12 @@ class Upgrade_base extends Controller {
 				
 				$data['label']['text'] = $message;
 				
-				$data['next'] = array(
-					'type' => 'submit',
-					'class' => 'button',
-					'name' => 'next',
-					'value' => 'next',
-					'id' => 'next',
-					'content' => ucwords(lang('button_next'))
-				);
-				
 				/* figure out where the view file should be coming from */
 				$view_loc = view_location('upgrade_step_13', '_base', 'update');
 				$js_loc = js_location('upgrade_step_13_js', '_base', 'update');
+				
+				/* build the next step control */
+				$control = '<a href="'. site_url('upgrade/step/14') .'" class="btn" id="next">'. lang('button_next') .'</a>';
 				
 				/* set the title */
 				$this->template->write('title', lang('upg_step13_title'));
@@ -1578,7 +1554,7 @@ class Upgrade_base extends Controller {
 				}
 				
 				/* do the product registration */
-				//$this->_register();
+				$this->_register();
 				
 				/* install the skins and ranks */
 				$this->_install_ranks();
@@ -1704,18 +1680,12 @@ class Upgrade_base extends Controller {
 				
 				$data['label']['text'] = lang('upg_step14_success');
 				
-				$data['next'] = array(
-					'type' => 'submit',
-					'class' => 'button',
-					'name' => 'next',
-					'value' => 'next',
-					'id' => 'next',
-					'content' => ucwords(lang('button_login'))
-				);
-				
 				/* figure out where the view file should be coming from */
 				$view_loc = view_location('upgrade_step_14', '_base', 'update');
 				$js_loc = js_location('upgrade_step_14_js', '_base', 'update');
+				
+				/* build the next step control */
+				$control = '<a href="'. site_url('login/index') .'" class="btn" id="next">'. lang('button_login') .'</a>';
 				
 				/* set the title */
 				$this->template->write('title', lang('upg_step14_title'));
@@ -1726,6 +1696,7 @@ class Upgrade_base extends Controller {
 		
 		/* write the data to the template */
 		$this->template->write_view('content', $view_loc, $data);
+		$this->template->write('controls', $control);
 		
 		if (isset($js_loc))
 		{
@@ -1752,12 +1723,16 @@ class Upgrade_base extends Controller {
 		/* figure out where the view file should be coming from */
 		$view_loc = view_location('upgrade_verify', '_base', 'update');
 		
+		/* build the next step control */
+		$control = '<a href="'. site_url('upgrade/info') .'" class="btn">'. lang('upg_more_info') .'</a>';
+		
 		/* set the title */
 		$this->template->write('title', lang('verify_title'));
 		$this->template->write('label', lang('verify_title'));
 				
 		/* write the data to the template */
 		$this->template->write_view('content', $view_loc, $data);
+		$this->template->write('controls', $control);
 		
 		/* render the template */
 		$this->template->render();

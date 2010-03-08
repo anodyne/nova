@@ -237,6 +237,13 @@ ul.square {
 	list-style: square;
 }
 
+ol {
+	margin: 1em;
+	padding: 0 1.5em;
+	
+	list-style: decimal;
+}
+
 /*
 |---------------------------------------------------------------
 | TABLES

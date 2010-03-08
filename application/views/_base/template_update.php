@@ -82,7 +82,7 @@ echo "<?xml version='1.0' encoding='UTF-8'?>\r\n";
 					<div class="signin-panel corner-upper-left corner-lower-left corner-lower-right">
 						<?php echo $update_options;?>
 					</div>
-					<a href="<?php echo site_url('update/index/full');?>" id="signin" class="signin corner-upper-left corner-upper-right corner-lower-left corner-lower-right"><?php echo lang('global_more_options');?></a>
+					<a href="<?php echo site_url($this->uri->segment(1) .'/index/full');?>" id="signin" class="signin corner-upper-left corner-upper-right corner-lower-left corner-lower-right"><?php echo lang('global_more_options');?></a>
 				</div>
 							
 				<?php echo text_output($label, 'h1');?>
