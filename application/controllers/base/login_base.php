@@ -480,9 +480,6 @@ class Login_base extends Controller {
 			$name = $row->name;
 		}
 		
-		/* load the helpers */
-		$this->load->helper('string');
-		
 		/* generate a password */
 		$new_password = random_string('alnum', 8);
 		

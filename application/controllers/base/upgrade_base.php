@@ -379,9 +379,6 @@ class Upgrade_base extends Controller {
 				 * INSERT BASIC NOVA DATA
 				 */
 				 
-				/* load the helpers */
-				$this->load->helper('string');
-				
 				/* pull in the install data asset file */
 				include_once(APPPATH .'assets/install/data_basic.php');
 				

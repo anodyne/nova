@@ -802,9 +802,6 @@ class Install_base extends Controller {
 				break;
 				
 			case 2:
-				/* load the helpers */
-				$this->load->helper('string');
-				
 				/* pull in the install data asset file */
 				include_once(APPPATH .'assets/install/data_'. APP_DATA_SRC .'.php');
 				
