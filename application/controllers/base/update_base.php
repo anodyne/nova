@@ -444,7 +444,7 @@ class Update_base extends Controller {
 				$this->sys->update_system_info($system_info);
 				
 				/* do the product registration */
-				//$this->_register();
+				$this->_register();
 				
 				/* update the users to be first launch */
 				$this->load->model('users_model', 'user');
