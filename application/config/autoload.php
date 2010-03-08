@@ -57,7 +57,7 @@ $autoload['libraries'] = array('database', 'template', 'menu', 'input', 'auth', 
 | View: helper used to determine the location of the proper view file
 */
 
-$autoload['helper'] = array('location', 'url', 'date', 'html', 'language', 'form');
+$autoload['helper'] = array('location', 'url', 'date', 'html', 'language', 'form', 'string');
 
 
 /*
