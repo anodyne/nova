@@ -47,6 +47,7 @@ $lang['button_login']			= 'Login Now';
 $lang['button_site']			= 'Go To Your Site';
 $lang['button_back_install'] 	= 'Back to Installation Center';
 $lang['button_back_update'] 	= 'Back to Update Center';
+$lang['button_back_upgrade'] 	= 'Back to Upgrade Center';
 $lang['button_next']			= 'Next Step';
 $lang['button_clear']			= 'Clear Data';
 
@@ -322,7 +323,6 @@ $lang['upg_status_3'] = 'We could not find an copy of SMS installed on this data
 $lang['upg_status_4'] = 'You are using a genre other than the DS9 genre. This upgrade process only supports upgrading to the DS9 genre. Please change your genre in the Nova config file and try again.';
 
 $lang['upg_index_header'] = 'Welcome to the Nova Upgrade Center!';
-$lang['upg_index'] = "<p>We know you're excited to start using Nova, but before you jump right in and start upgrading, make sure you read through everything very carefully. Nova is the product of years of work and as a result, a lot of things are different from SMS. The upgrade process should cover everything but to ensure everything is upgraded properly the first time, you should read our <a href='http://docs.anodyne-productions.com/index.php/nova/overview/upgrade' target='_blank'>upgrade guide</a> in the user guide. We realize this is a long document, but it has information crucial to properly upgrading SMS to Nova, so make sure you take the time to read it before beginning.</p><h4>Before Beginning</h4><p>There are a couple things you need to do before you even start the upgrade process.</p><ol class='decimal'><li>Set up your database connection file located at <strong>application/config/database.php</strong></li><li>Make sure you're using the DS9 genre (the upgrade will only work for the DS9 genre)</li><li>Make sure you've set up your SMS config preferences, upgrade password and upgrade email address located in <strong>application/config/sms.php</strong></li></ol><p>It's very important that you take the above steps before beginning otherwise you could be missing all the management tools or have errors throughout the upgrade process.</p><h4>Let's Get Started!</h4><p>Step 1 will attempt to automatically back up your SMS database before beginning the upgrade. If you have a large database and your server memory limit isn't high enough or your server doesn't support writing files to directories, you may not be able to complete the backup, but if it doesn't work, you can manually backup your database before starting. We <strong>strongly</strong> encourage you to have a backup before upgrading.</p>";
 
 /*
  * Errors
@@ -336,7 +336,12 @@ $lang['upg_error_4'] = 'You can only upgrade Nova with the DS9 genre. Your genre
 /*
  * Verify
  */
-$lang['upg_verify_back'] = LARROW .' Back to Upgrade Center';
+$lang['upg_more_info'] = 'Important Upgrade Info';
+
+/*
+ * Important Info
+ */
+$lang['upg_info'] = "<p class='fontMedium'>We know you're excited to start using Nova, but before you jump right in and start upgrading, make sure you read through everything very carefully. Nova is the product of years of work and as a result, a lot of things are different from SMS. The upgrade process should cover everything but to ensure everything is upgraded properly the first time, you should read our <a href='http://docs.anodyne-productions.com/index.php/nova/overview/upgrade' target='_blank'>upgrade guide</a> in the user guide. We realize this is a long document, but it has information crucial to properly upgrading SMS to Nova, so make sure you take the time to read it before beginning.</p><h3>Before Beginning</h3><p class='fontMedium'>There are a couple things you need to do before you even start the upgrade process.</p><ol><li>Set up your database connection file located at <strong>application/config/database.php</strong></li><li>Make sure you're using the DS9 genre (the upgrade will only work for the DS9 genre)</li><li>Make sure you've set up your SMS config preferences, upgrade password and upgrade email address located in <strong>application/config/sms.php</strong></li></ol><p class='fontMedium'>It's very important that you take the above steps before beginning otherwise you could be missing all the management tools or have errors throughout the upgrade process.</p><h3>Let's Get Started!</h3><p class='fontMedium'>Step 1 will attempt to automatically back up your SMS database before beginning the upgrade. If you have a large database and your server memory limit isn't high enough or your server doesn't support writing files to directories, you may not be able to complete the backup, but if it doesn't work, you can manually backup your database before starting. We <strong>strongly</strong> encourage you to have a backup before upgrading.</p>";
 
 /*
  * Step 1
