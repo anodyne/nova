@@ -1,3 +1,5 @@
+<script type="text/javascript" src="<?php echo base_url() . APPFOLDER;?>/assets/js/jquery.qtip.js"></script>
+
 <script type="text/javascript">
 	$(document).ready(function(){
 		$('#tabs').tabs();
@@ -26,8 +28,8 @@
 				content: $(this).attr('tooltip'),
 				position: {
 					corner: {
-						target: 'topRight',
-						tooltip: 'bottomLeft'
+						tooltip: 'bottomLeft',
+						target: 'topRight'
 					}
 				},
 				style: { 

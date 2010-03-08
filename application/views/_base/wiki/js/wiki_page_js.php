@@ -1,3 +1,5 @@
+<script type="text/javascript" src="<?php echo base_url() . APPFOLDER;?>/assets/js/jquery.qtip.js"></script>
+
 <script type="text/javascript">
 	$(document).ready(function(){
 		$('a[rel=tooltip]').each(function(){

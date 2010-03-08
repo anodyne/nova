@@ -48,12 +48,6 @@ $parse = $this->config->item('parsetype');
 		
 		<script type="text/javascript">
 			$(document).ready(function(){
-				$.lazy({					
-					src: '<?php echo base_url() . APPFOLDER;?>/assets/js/jquery.qtip.js',
-					name: 'qtip',
-					cache: true
-				});
-				
 				$('a#userpanel').toggle(function(){
 					$('div.panel-body').slideDown('normal', function(){
 						$('.panel-trigger div.ui-icon').removeClass('ui-icon-triangle-1-s');

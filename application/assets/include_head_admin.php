@@ -63,12 +63,6 @@
 				});
 				
 				$.lazy({					
-					src: '<?php echo base_url() . APPFOLDER;?>/assets/js/jquery.qtip.js',
-					name: 'qtip',
-					cache: true
-				});
-				
-				$.lazy({					
 					src: '<?php echo base_url() . APPFOLDER;?>/assets/js/jquery.ui.slider.min.js',
 					name: 'slider',
 					dependencies: {

@@ -1,5 +1,7 @@
 <?php $string = random_string('alnum', 8);?>
 
+<script type="text/javascript" src="<?php echo base_url() . APPFOLDER;?>/assets/js/jquery.qtip.js"></script>
+
 <script type="text/javascript">
 	$(document).ready(function(){
 		$('table.zebra tbody > tr:nth-child(odd)').addClass('alt');
@@ -29,6 +31,12 @@
 		$('a[rel=tooltip]').each(function(){
 			$(this).qtip({
 				content: $(this).attr('tooltip'),
+				position: {
+					corner: {
+						tooltip: 'bottomLeft',
+						target: 'topRight'
+					}
+				},
 				style: { 
 					border: {
 						width: 1,
