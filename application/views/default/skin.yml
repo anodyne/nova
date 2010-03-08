@@ -1,6 +1,6 @@
 skin: Pulsar
-location: austin
-credits: Skin created by Anodyne Productions. Edits are permissible as long as original credits stay intact.
+location: default
+credits: The Pulsar skin was created by Anodyne Productions. Edits are permissible as long as original credits stay intact.
 version: 1.0
 sections:
   -
@@ -9,3 +9,6 @@ sections:
   -
     type: login
     preview: preview-login.png
+  -
+    type: wiki
+    preview: preview-wiki.jpg
