@@ -1,20 +1,20 @@
 <?php
 /*
 |---------------------------------------------------------------
-| TEMPLATE - MAIN
+| TEMPLATE - ADMIN
 |---------------------------------------------------------------
 |
-| File: application/views/default/template_main.php
+| File: application/views/default/template_admin.php
 | Skin Version: 1.0
 |
-| Main layout file used by the default skin.
+| Admin layout file used by the default skin.
 |
 | $sec options are: main, wiki, admin, login
 | $css can be anything you want (with a .css extension of course)
 |
 */
 
-$sec = 'main'; /* set the section of the system */
+$sec = 'admin'; /* set the section of the system */
 $css = 'main.css'; /* the name of the main css file */
 
 $path_raw = dirname(__FILE__); /* absolute path of the current file */
@@ -79,7 +79,7 @@ echo "<?xml version='1.0' encoding='UTF-8'?>\r\n";
 		<?php echo link_tag($link); ?>
 		
 		<!-- JAVASCRIPT FILES -->
-		<?php include_once($this->config->item('include_head_main')); ?>
+		<?php include_once($this->config->item('include_head_admin')); ?>
 		
 		<script type="text/javascript" src="<?php echo base_url() . APPFOLDER;?>/views/<?php echo $current_skin;?>/jquery.blockUI.js"></script>
 		

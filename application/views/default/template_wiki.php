@@ -43,6 +43,15 @@ $link = array(
 
 $this->load->helper('panel');
 
+$panel = array(
+	'inbox' => array(
+		'src' => APPFOLDER .'/views/'. $current_skin .'/'. $sec .'/images/panel-mail.png'),
+	'writing' => array(
+		'src' => APPFOLDER .'/views/'. $current_skin .'/'. $sec .'/images/panel-writing.png'),
+	'dashboard' => array(
+		'src' => APPFOLDER .'/views/'. $current_skin .'/'. $sec .'/images/panel-dashboard.png'),
+);
+
 $button_login = array(
 	'class' => 'button-signin',
 	'value' => 'submit',
@@ -72,6 +81,8 @@ echo "<?xml version='1.0' encoding='UTF-8'?>\r\n";
 		<!-- JAVASCRIPT FILES -->
 		<?php include_once($this->config->item('include_head_wiki')); ?>
 		
+		<script type="text/javascript" src="<?php echo base_url() . APPFOLDER;?>/views/<?php echo $current_skin;?>/jquery.blockUI.js"></script>
+		
 		<?php echo $javascript;?>
 		
 		<script type="text/javascript">
@@ -81,6 +92,8 @@ echo "<?xml version='1.0' encoding='UTF-8'?>\r\n";
 					{
 						$('.signin-panel').hide();
 						$('a#signin').addClass('corner-lower-left').addClass('corner-lower-right').removeClass('signin-active');
+						
+						$.unblockUI();
 					}
 				});
 				
@@ -91,6 +104,23 @@ echo "<?xml version='1.0' encoding='UTF-8'?>\r\n";
 					
 					return false;
 				});
+				
+				$('a#userpanel').unbind('click').click(function(){
+					$.blockUI({
+						message: $('#panel'),
+						css: { 
+							border: '0', 
+							cursor: 'cursor',
+							background: 'transparent',
+							width: '700px',
+							top: '10%',
+							left: '50%',
+							margin: '0 0 0 -350px'
+						}
+					});
+					
+					return false;
+				});
 			});
 			
 			/* if the escape key is pressed, close the menu */
@@ -98,6 +128,8 @@ echo "<?xml version='1.0' encoding='UTF-8'?>\r\n";
 				if (event.keyCode == 27) {
 					$('.signin-panel').hide();
 					$('a#signin').addClass('corner-lower-left').addClass('corner-lower-right').removeClass('signin-active');
+					
+					$.unblockUI();
 				}
 			});
 		</script>
@@ -107,23 +139,21 @@ echo "<?xml version='1.0' encoding='UTF-8'?>\r\n";
 			<div class="system_warning"><?php echo lang_output('text_javascript_off', '');?></div>
 		</noscript>
 		
-		<?php if ($this->session->userdata('userid') !== FALSE): ?>
+		<?php if ($this->auth->is_logged_in()): ?>
 			<!-- USER PANEL -->
-			<div id="panel">
+			<div id="panel" class="hidden">
 				<div class="panel-body">
-					<div class="wrapper">
-						<table class="table100">
-							<tbody>
-								<tr>
-									<td class="panel_1 align_top"><?php echo $panel_1;?></td>
-									<td class="panel_spacer"></td>
-									<td class="panel_2 align_top"><?php echo $panel_2;?></td>
-									<td class="panel_spacer"></td>
-									<td class="panel_3 align_top"><?php echo $panel_3;?></td>
-								</tr>
-							</tbody>
-						</table>
-					</div>
+					<table class="table100">
+						<tbody>
+							<tr>
+								<td class="panel_1 align_top"><?php echo $panel_1;?></td>
+								<td class="panel_spacer"></td>
+								<td class="panel_2 align_top"><?php echo $panel_2;?></td>
+								<td class="panel_spacer"></td>
+								<td class="panel_3 align_top"><?php echo $panel_3;?></td>
+							</tr>
+						</tbody>
+					</table>
 				</div>
 			</div>
 		<?php endif; ?>
@@ -162,6 +192,14 @@ echo "<?xml version='1.0' encoding='UTF-8'?>\r\n";
 							<a href="<?php echo site_url('login/index');?>" id="signin" class="signin corner-upper-left corner-upper-right corner-lower-left corner-lower-right"><?php echo ucfirst(lang('actions_login'));?></a>
 						<?php else: ?>
 							<a href="<?php echo site_url('login/logout');?>" class="signin corner-upper-left corner-upper-right corner-lower-left corner-lower-right"><?php echo ucfirst(lang('actions_logout'));?></a>
+							
+							<div class="logged-in-controls">
+								<?php if ($this->auth->is_logged_in()): ?>
+									<?php echo panel_inbox(TRUE, TRUE, FALSE, '(x)', img($panel['inbox']));?> &nbsp;
+									<?php echo panel_writing(TRUE, TRUE, FALSE, '(x)', img($panel['writing']));?> &nbsp;
+									<?php echo panel_dashboard(FALSE, img($panel['dashboard']));?>
+								<?php endif;?>
+							</div>
 						<?php endif;?>
 					</div>
 				

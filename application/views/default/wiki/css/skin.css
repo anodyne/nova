@@ -70,8 +70,8 @@ body {
 }
 
 .content {
-	width: 770px;
-	margin-right: 160px;
+	width: 750px;
+	margin-right: 180px;
 	line-height: 1.4;
 	padding: 1em 15px 1.5em 1em;
 	
@@ -147,7 +147,7 @@ body {
 */
 .nav-sub {
 	float: right;
-	width: 160px;
+	width: 180px;
 	margin: 0 0 10px 0;
 	
 	text-align: right;
@@ -227,7 +227,7 @@ body {
 	right: 10px;
 	top: 30px;
 	padding: .5em;
-	width: 200px;
+	width: 235px;
 	z-index: 100;
 	
 	color: #fff;
@@ -236,7 +236,7 @@ body {
 }
 .signin-panel input[type=text],
 .signin-panel input[type=password] {
-	width: 175px;
+	width: 210px;
 	padding-top: 5px !important;
 	padding-bottom: 5px !important;
 	
@@ -450,12 +450,16 @@ button.button-sec:hover {
 
 button.button-small {
 	border: 1px solid #ccc;
-	background: #fff url('../images/button_sec_bg.jpg') repeat-x top left;
+	background: #eee url('../images/gradient-soft-30.png') repeat-x top left;
 	color: #777;
 	font-weight: normal !important;
 	font-size: 90%;
 }
-button.button-small:hover { border: 1px solid #aaa; }
+button.button-small:hover {
+	border: 1px solid #bbb;
+	background: #eee url('../images/gradient-soft-50.png') repeat-x top left;
+	color: #555;
+}
 
 button.button-signin {
 	height: 24px;
@@ -591,9 +595,12 @@ hr {
 	text-align: center;
 }
 
+.logged-in-controls {}
+.logged-in-controls a { border: 0; }
+
 /*
 |---------------------------------------------------------------
-| PANEL
+| DASHBOARD
 |---------------------------------------------------------------
 */
 .panel-handle a, .panel-handle a:hover {
@@ -615,7 +622,17 @@ hr {
 
 #panel .panel-body {
 	background: #555 url('../images/panel-bg.png') repeat-x top left;
+	border: 1px solid #111;
 	color: #fff;
+	text-align: left;
+	
+	border-radius: 6px;
+	-moz-border-radius: 6px;
+	-webkit-border-radius: 6px;
+	
+	box-shadow: 2px 2px 4px rgba(0, 0, 0, .3);
+	-moz-box-shadow: 2px 2px 4px rgba(0, 0, 0, .3);
+	-webkit-box-shadow: 2px 2px 4px rgba(0, 0, 0, .3);
 }
 
 .panel-handle {

@@ -10,7 +10,7 @@ html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abb
 | HEADINGS
 |---------------------------------------------------------------
 */
-h1, h2, h3, h4, p { margin: 8px 0; }
+h1, h2, h3, h4, p { margin: 10px 0; }
 
 h1 { font-size: 200%; }
 h2 { font-size: 150%; }
@@ -18,31 +18,33 @@ h3 { font-size: 133%; }
 h4 { font-size: 117%; }
 
 p {
-	font-size: 100%;
-	line-height: 1.6;
+    font-size: 100%;
+    line-height: 1.6;
 }
 
 /*
 |---------------------------------------------------------------
-| SPECIAL FONT SIZES
+| FONT SIZES
 |---------------------------------------------------------------
 */
-.fontLarge	{ font-size: 133%; }
-.fontMedium	{ font-size: 117%; }
+.fontLarge  { font-size: 133%; }
+.fontMedium { font-size: 117%; }
 .fontNormal { font-size: 100%; }
-.fontSmall	{ font-size: 92%; }
+.fontSmall  { font-size: 92%; }
 .fontTiny	{ font-size: 80%; }
 
 /*
 |---------------------------------------------------------------
-| SPECIAL FONT PRESENTATION CLASSES
+| FONT PRESENTATION
 |---------------------------------------------------------------
 */
-.nobold	{ font-weight: normal; }
-.bold	{ font-weight: bold; }
-.italic	{ font-style: italic; }
+.nobold { font-weight: normal; }
+.bold   { font-weight: bold; }
+.italic { font-style: italic; }
 
+.align_left { text-align: left; }
 .align_right { text-align: right; }
+.align_center { text-align: center; }
 
 .uppercase { text-transform: uppercase; }
 .lowercase { text-transform: lowercase; }
@@ -64,29 +66,31 @@ a.image, a.image:hover {
 | INPUTS
 |---------------------------------------------------------------
 */
+
 input[type=text],
 input[type=password] {
-	margin: 0;
-	padding: 3px;
-	width: 275px;
+    margin: 0;
+    padding: 3px;
+    width: 275px;
 }
 input.small     	{ width: 50px; }
 input.medium    	{ width: 100px; }
 input.medium-large	{ width: 150px; }
 
 textarea {
-	margin: 0;
-	padding: 3px;
-	width: 500px;
+    margin: 0;
+    padding: 3px;
+    width: 99%;
 }
-textarea.full-width { width: 690px; }
 
 select {
-	margin: 0;
-	padding: 2px;
+    margin: 0;
+    padding: 2px;
 }
 select:focus,
-select:hover { outline: 0; }
+select:hover {
+	outline: 0;
+}
 
 kbd {
 	display: block;
@@ -103,16 +107,22 @@ kbd {
 */
 table { font-size: 100%; }
 
-.table100	{ width: 100%; }
-.table75	{ width: 75%; }
+.table100   { width: 100%; }
+.table75    { width: 75%; }
+.table50    { width: 50%; }
 
-.table560px	{ width: 560px; }
+.table560px { width: 560px; }
 
 td {
-	padding: 3px;
-	vertical-align: middle;
+    padding: 3px;
+    vertical-align: middle;
 }
 
+tr.height_40 { height: 40px; }
+tr.height_50 { height: 50px; }
+tr.height_60 { height: 60px; }
+
+.col_5 { width: 5px; }
 .col_15 { width: 15px; }
 .col_30 { width: 30px; }
 .col_40 { width: 40px; }
@@ -132,9 +142,9 @@ td {
 .col_50pct { width: 50%; }
 .col_60pct { width: 60%; }
 
-td.align_top { vertical-align: top; }
-td.align_bottom { vertical-align: bottom; }
-td.align_middle { vertical-align: middle; }
+.align_top { vertical-align: top; }
+.align_bottom { vertical-align: bottom; }
+.align_middle { vertical-align: middle; }
 td.align_left { text-align: left; }
 td.align_right { text-align: right; }
 td.align_center { text-align: center; }
@@ -181,13 +191,13 @@ input.button-sec {
 |---------------------------------------------------------------
 */
 .hidden {
-	display: none;
-	height: auto;
+    display: none;
+    height: auto;
 }
 
-.clear_both		{ clear: both; }
-.clear_right	{ clear: right; }
-.clear_left		{ clear: left; }
+.clear_both	{ clear: both; }
+.clear_right { clear: right; }
+.clear_left { clear: left; }
 
 /*
 |---------------------------------------------------------------
@@ -214,13 +224,30 @@ input.button-sec {
 
 /*
 |---------------------------------------------------------------
-| LIST STYLES
+| LISTS
 |---------------------------------------------------------------
 */
 ul.margin0, ol.margin0 { margin: 0; }
-ul.margin1 { margin: 1em; }
-ul.padding0 { padding: 0; }
-ul.padding1 { padding: .5em 1em; }
+ul.margin1, ol.margin1 { margin: 1em; }
+
+ul.padding0, ol.padding0 { padding: 0; }
+ul.padding1, ol.padding1 { padding: .5em 1em; }
+
+#list li {
+	margin: 2px 0;
+	padding: 0 5px;
+	height: 22px;
+	line-height: 22px;
+	width: 350px;
+}
+
+#accordion ul {
+	margin: 0 1em;
+	padding: 0 1em;
+	line-height: 1.5;
+	
+	list-style: disc;
+}
 
 /*
 |---------------------------------------------------------------
@@ -230,6 +257,10 @@ ul.padding1 { padding: .5em 1em; }
 .inline_img_left {
     float: left;
     margin: 2px 6px 0 0;
+}
+.inline_img_right {
+    float: right;
+    margin: 0 0 0 6px;
 }
 
 /*
@@ -251,16 +282,19 @@ ul.padding1 { padding: .5em 1em; }
 | PADDINGS
 |---------------------------------------------------------------
 */
-.top_p5em	{ padding-top: .5em; }
-.top_1em	{ padding-top: 1em; }
+.top_p5em   { padding-top: .5em; }
+.top_1em    { padding-top: 1em; }
 
-.right_p5em	{ padding-right: .5em; }
-.right_1em	{ padding-right: 1em; }
+.right_p5em { padding-right: .5em; }
+.right_1em  { padding-right: 1em; }
 
-.left_p5em	{ padding-right: .5em; }
-.left_1em	{ padding-right: 1em; }
+.left_p5em  { padding-right: .5em; }
+.left_1em   { padding-right: 1em; }
 
 .padding_all_p5em { padding: .5em; }
+
+.padding_p5_0_p5_0 { padding: .5em 0; }
+.padding_1_0_1_0 { padding: 1em 0; }
 
 /*
 |---------------------------------------------------------------
@@ -271,26 +305,35 @@ ul.padding1 { padding: .5em 1em; }
 .line_height_18 { line-height: 1.8; }
 
 .bio_main_image {
-	float: right;
-	max-width: 200px;
-	max-height: 250px;
+    float: right;
+    max-width: 200px;
+    max-height: 250px;
 }
 
 .float_left { float: left; }
 .float_right { float: right; }
 
 hr {
-	height: 0;
-	width: 100%;
+    height: 0;
+    width: 100%;
 }
 
 img { border: none; }
 
-.loader { height: 50px; }
+.loader { height: 60px; }
+#loading_circle {
+	height: 20px;
+	width: 20px;
+}
 
 .system_warning {
 	height: 22px;
 	line-height: 22px;
+}
+
+.image-height-100 {
+	display: block;
+	max-height: 100px;
 }
 
 .award-small { width: 65px; }
@@ -301,6 +344,43 @@ img { border: none; }
 	float: right;
 	padding: 11px 5px 0 0;
 }
+
+/*
+|---------------------------------------------------------------
+| ACP PANEL
+|---------------------------------------------------------------
+*/
+.panelnav {
+	float: left;
+	width: 220px;
+	min-height: 175px;
+	padding: 1em 0;
+}
+.panel {
+	margin-left: 220px;
+	min-height: 175px;
+	padding: 1em;
+}
+#panelmenu { list-style: none; }
+#panelmenu li { margin: 0 0 7px 0; }
+#panelmenu li a span {
+	display: block;
+	padding: 5px 10px;
+	margin-right: -1px;
+}
+
+#online {
+	margin: 0 0 2em 0;
+	padding: .5em;
+}
+
+.count {
+	float: right;
+	padding: 1px 7px;
+	margin: -1px 0 0 0;
+}
+
+.col1 { width: 65px; }
 
 /*
 |---------------------------------------------------------------

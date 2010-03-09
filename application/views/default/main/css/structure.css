@@ -286,30 +286,39 @@ img { border: none; }
 
 .indent-left { padding: 0 0 0 1.5em; }
 
+.logged-in-controls {
+	float: right;
+	padding: 11px 5px 0 0;
+}
+
 /*
 |---------------------------------------------------------------
-| PANEL
+| DASHBOARD
 |---------------------------------------------------------------
 */
+#panel {}
 .panel-handle a, .panel-handle a:hover {
 	outline: 0;
 	margin: 0;
 	padding: 0;
+	display: block;
 }
-.panel-handle a span {}
+.panel-handle a span {
+	display: block;
+	padding: 0 1em;
+}
 .panel-handle .ui-icon {
 	margin: 3px 0 0 4px;
 	padding: 0;
 }
 
 #panel .panel-body {
-	display: none;
-	padding: 0 0 1em 0;
+	padding: 1em;
 }
 
 .panel-handle {
-	height: 40px;
-	line-height: 40px;
+	height: 22px;
+	line-height: 22px;
 }
 
 .panel-trigger {
@@ -321,7 +330,7 @@ img { border: none; }
 #panel-handle-left { width: auto; }
 #panel-handle-left li {
 	float: left;
-	margin: 0;
+	margin: 0 2px 0 0;
 }
 
 .panel-notify-icon {
