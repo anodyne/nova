@@ -8,22 +8,21 @@ Release Candidate 2 (0.9.7)
 
 Last Update
 -----------
-08 March 2010
+09 March 2010
 
 Latest Updates
 --------------
-* fixed bug where IE would cache the ajax views and won't let go (#81)
-* fixed bug where the lazy plugin was throwing errors with the qtip plugin
-* updated the controllers to remove calls to load the string helper (it's autoloaded now)
-* updated the autoload config to pull in the string helper automatically
-* updated jquery qtip plugin to version 1.0-r29
-* updated the pulsar skin with a wiki section
-* updated the tooltip location to the upper right of the target
-* updated the 0.9.7 update file
+* updated the pulsar skin with the admin section
+* updated pulsar main with some minor tweaks
+* updated pulsar wiki with some minor tweaks
+* updated pulsar with panel images
 * updated the install data
-* removed unused images from the main pulsar section
-* added the jquery ui images to the main pulsar section
-* added the jquery ui stylesheet to the main pulsar section
+* updated titan main with jquery ui theme
+* updated titan admin with jquery ui theme
+* updated titan main with some minor tweaks
+* updated titan admin with some minor tweaks
+* updated titan wiki with some minor tweaks
+* added the jquery block ui plugin to pulsar
 
 Changes in 0.9.7
 ----------------
@@ -36,11 +35,19 @@ Changes in 0.9.7
 * updated the jquery ui to version 1.8rc3
 * updated the look and feel of the installation center
 * updated the pulsar skin
-    * [main] added jquery ui stylesheet
+    * [admin] added admin section
+    * [main] added the jquery ui theme
+    * [main] added panel control images
     * [main] updated the stylesheets
     * [main] removed unused images
     * [login] updated the stylesheets
     * [wiki] added wiki section
+    * added the jquery block ui plugin
+* updated the titan skin
+    * [admin] updated the jquery ui theme
+    * [admin] updated the stylesheets
+    * [main] updated the jquery ui theme
+    * [main] updated the stylesheets
 * updated the specifications listing to clean up some small issues
 * updated the pulsar skin
 * updated the look and feel of the update center

@@ -1,3 +1,21 @@
+03.09.2010
+
+* updated the pulsar skin with the admin section
+* updated pulsar main with some minor tweaks
+* updated pulsar wiki with some minor tweaks
+* updated pulsar with panel images
+* updated the install data
+* updated titan main with jquery ui theme
+* updated titan admin with jquery ui theme
+* updated titan main with some minor tweaks
+* updated titan admin with some minor tweaks
+* updated titan wiki with some minor tweaks
+* updated the beta skin
+
+* added the jquery block ui plugin to pulsar
+
+==========
+
 03.08.2010
 
 * fixed bug where IE would cache the ajax views and won't let go (#81)
