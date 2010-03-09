@@ -458,31 +458,31 @@ $access_pages = array(
 
 $catalogue_skins = array(
 	array(
-		'skin_name' => 'Default',
+		'skin_name' => 'Pulsar',
 		'skin_location' => 'default',
-		'skin_credits' => 'The Pulsar skin was created by Anodyne Productions. Edits are permissible as long as original credits stay intact.'),
+		'skin_credits' => 'The Pulsar skin was created by Anodyne Productions. Edits are permissible as long as original credits stay intact. The Pulsar skin includes the jQuery BlockUI plugin by Malsup. More information can be found at <a href="http://malsup.com/jquery/block/">http://malsup.com/jquery/block/</a>.'),
 );
 
 $catalogue_skinsecs = array(
 	array(
 		'skinsec_section' => 'main',
 		'skinsec_skin' => 'default',
-		'skinsec_image_preview' => 'preview-main.png',
+		'skinsec_image_preview' => 'preview-main.jpg',
 		'skinsec_default' => 'y'),
 	array(
 		'skinsec_section' => 'admin',
 		'skinsec_skin' => 'default',
-		'skinsec_image_preview' => 'preview-admin.png',
+		'skinsec_image_preview' => 'preview-admin.jpg',
 		'skinsec_default' => 'y'),
 	array(
 		'skinsec_section' => 'wiki',
 		'skinsec_skin' => 'default',
-		'skinsec_image_preview' => 'preview-wiki.png',
+		'skinsec_image_preview' => 'preview-wiki.jpg',
 		'skinsec_default' => 'y'),
 	array(
 		'skinsec_section' => 'login',
 		'skinsec_skin' => 'default',
-		'skinsec_image_preview' => 'preview-login.png',
+		'skinsec_image_preview' => 'preview-login.jpg',
 		'skinsec_default' => 'y'),
 );
 
