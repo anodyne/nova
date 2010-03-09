@@ -22,11 +22,14 @@ Latest Updates
 * updated titan main with some minor tweaks
 * updated titan admin with some minor tweaks
 * updated titan wiki with some minor tweaks
+* updated the beta skin
 * added the jquery block ui plugin to pulsar
+* added the shiloh skin
 
 Changes in 0.9.7
 ----------------
 * added the 0.9.7 update file
+* added the shiloh skin
 * removed the get\_author\_user\_ids() method from the posts model
 * updated the install data
     * version info
