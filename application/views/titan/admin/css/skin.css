@@ -352,13 +352,17 @@ button.button-sec:hover {
 }
 
 button.button-small {
-	border: 1px solid #ccc;
-	background: #fff url('../images/gradient-soft-30.png') repeat-x center left;
-	color: #777;
+	border: 1px solid #666;
+	background: #111 url('../images/gradient-soft-30.png') repeat-x center left;
+	color: #ddd;
 	font-weight: normal !important;
 	font-size: 90%;
 }
-button.button-small:hover { border: 1px solid #aaa; }
+button.button-small:hover {
+	border: 1px solid #888;
+	background: #222 url('../images/gradient-soft-30.png') repeat-x center left;
+	color: #ddd;
+}
 
 input.button-main {
 	font-weight: bold;

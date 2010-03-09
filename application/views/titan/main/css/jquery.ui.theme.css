@@ -1,52 +1,53 @@
 /*
 * jQuery UI CSS Framework
-* Copyright (c) 2009 AUTHORS.txt (http://jqueryui.com/about)
+* Copyright (c) 2010 AUTHORS.txt (http://jqueryui.com/about)
 * Dual licensed under the MIT (MIT-LICENSE.txt) and GPL (GPL-LICENSE.txt) licenses.
-* To view and modify this theme, visit http://jqueryui.com/themeroller/?ffDefault=Trebuchet%20MS,%20Tahoma,%20Verdana,%20Arial,%20sans-serif&fwDefault=bold&fsDefault=1.1em&cornerRadius=4px&bgColorHeader=f6a828&bgTextureHeader=12_gloss_wave.png&bgImgOpacityHeader=35&borderColorHeader=e78f08&fcHeader=ffffff&iconColorHeader=ffffff&bgColorContent=eeeeee&bgTextureContent=03_highlight_soft.png&bgImgOpacityContent=100&borderColorContent=dddddd&fcContent=333333&iconColorContent=222222&bgColorDefault=f6f6f6&bgTextureDefault=02_glass.png&bgImgOpacityDefault=100&borderColorDefault=cccccc&fcDefault=1c94c4&iconColorDefault=ef8c08&bgColorHover=fdf5ce&bgTextureHover=02_glass.png&bgImgOpacityHover=100&borderColorHover=fbcb09&fcHover=c77405&iconColorHover=ef8c08&bgColorActive=ffffff&bgTextureActive=02_glass.png&bgImgOpacityActive=65&borderColorActive=fbd850&fcActive=eb8f00&iconColorActive=ef8c08&bgColorHighlight=ffe45c&bgTextureHighlight=03_highlight_soft.png&bgImgOpacityHighlight=75&borderColorHighlight=fed22f&fcHighlight=363636&iconColorHighlight=228ef1&bgColorError=b81900&bgTextureError=08_diagonals_thick.png&bgImgOpacityError=18&borderColorError=cd0a0a&fcError=ffffff&iconColorError=ffd27a&bgColorOverlay=666666&bgTextureOverlay=08_diagonals_thick.png&bgImgOpacityOverlay=20&opacityOverlay=50&bgColorShadow=000000&bgTextureShadow=01_flat.png&bgImgOpacityShadow=10&opacityShadow=20&thicknessShadow=5px&offsetTopShadow=-5px&offsetLeftShadow=-5px&cornerRadiusShadow=5px
+* To view and modify this theme, visit http://jqueryui.com/themeroller/?ffDefault=Lucida%20Grande,Verdana,Arial,sans-serif&fwDefault=normal&fsDefault=1em&cornerRadius=4px&bgColorHeader=1b6cae&bgTextureHeader=01_flat.png&bgImgOpacityHeader=28&borderColorHeader=444444&fcHeader=ffffff&iconColorHeader=ffffff&bgColorContent=000000&bgTextureContent=01_flat.png&bgImgOpacityContent=75&borderColorContent=222222&fcContent=cccccc&iconColorContent=cccccc&bgColorDefault=222222&bgTextureDefault=01_flat.png&bgImgOpacityDefault=50&borderColorDefault=444444&fcDefault=eeeeee&iconColorDefault=eeeeee&bgColorHover=fccd40&bgTextureHover=01_flat.png&bgImgOpacityHover=35&borderColorHover=f3b907&fcHover=222222&iconColorHover=222222&bgColorActive=1b6cae&bgTextureActive=01_flat.png&bgImgOpacityActive=35&borderColorActive=1b6cae&fcActive=ffffff&iconColorActive=ffffff&bgColorHighlight=fccd40&bgTextureHighlight=01_flat.png&bgImgOpacityHighlight=30&borderColorHighlight=fccd40&fcHighlight=222222&iconColorHighlight=222222&bgColorError=cd0a0a&bgTextureError=01_flat.png&bgImgOpacityError=30&borderColorError=cd0a0a&fcError=ffffff&iconColorError=ffffff&bgColorOverlay=aaaaaa&bgTextureOverlay=01_flat.png&bgImgOpacityOverlay=0&opacityOverlay=30&bgColorShadow=aaaaaa&bgTextureShadow=01_flat.png&bgImgOpacityShadow=0&opacityShadow=30&thicknessShadow=8px&offsetTopShadow=-8px&offsetLeftShadow=-8px&cornerRadiusShadow=8px
 */
-
 
 /* Component containers
 ----------------------------------*/
-.UITheme .ui-widget { font-family: Trebuchet MS, Tahoma, Verdana, Arial, sans-serif; font-size: 1.1em; }
-.UITheme .ui-widget input, .UITheme .ui-widget select, .UITheme .ui-widget textarea, .UITheme .ui-widget button { font-family: Trebuchet MS, Tahoma, Verdana, Arial, sans-serif; font-size: 1em; }
-.UITheme .ui-widget-content { border: 1px solid #dddddd; background: #eeeeee url(../images/ui-bg_highlight-soft_100_eeeeee_1x100.png) 50% top repeat-x; color: #333333; }
-.UITheme .ui-widget-content a { color: #333333; }
-.UITheme .ui-widget-header { border: 1px solid #e78f08; background: #f6a828 url(../images/ui-bg_gloss-wave_35_f6a828_500x100.png) 50% 50% repeat-x; color: #ffffff; font-weight: bold; }
+.UITheme .ui-widget { font-family: Lucida Grande,Verdana,Arial,sans-serif; font-size: 1em; }
+.UITheme .ui-widget .ui-widget { font-size: 1em; }
+.UITheme .ui-widget input, .UITheme .ui-widget select, .UITheme .ui-widget textarea, .UITheme .ui-widget button { font-family: Lucida Grande,Verdana,Arial,sans-serif; font-size: 1em; }
+.UITheme .ui-widget-content { border: 1px solid #222222; background: #000000 url(../images/ui-bg_flat_75_000000_40x100.png) 50% 50% repeat-x; color: #cccccc; }
+.UITheme .ui-widget-content a { color: #cccccc; }
+.UITheme .ui-widget-header { border: 1px solid #444444; background: #1b6cae url(../images/ui-bg_flat_28_1b6cae_40x100.png) 50% 50% repeat-x; color: #ffffff; font-weight: bold; }
 .UITheme .ui-widget-header a { color: #ffffff; }
 
 /* Interaction states
 ----------------------------------*/
-.UITheme .ui-state-default, .UITheme .ui-widget-content .ui-state-default { border: 1px solid #cccccc; background: #f6f6f6 url(../images/ui-bg_glass_100_f6f6f6_1x400.png) 50% 50% repeat-x; font-weight: bold; color: #1c94c4; outline: none; }
-.UITheme .ui-state-default a, .UITheme .ui-state-default a:link, .UITheme .ui-state-default a:visited { color: #1c94c4; text-decoration: none; outline: none; }
-.UITheme .ui-state-hover, .UITheme .ui-widget-content .ui-state-hover, .UITheme .ui-state-focus, .UITheme .ui-widget-content .ui-state-focus { border: 1px solid #fbcb09; background: #fdf5ce url(../images/ui-bg_glass_100_fdf5ce_1x400.png) 50% 50% repeat-x; font-weight: bold; color: #c77405; outline: none; }
-.UITheme .ui-state-hover a, .UITheme .ui-state-hover a:hover { color: #c77405; text-decoration: none; outline: none; }
-.UITheme .ui-state-active, .UITheme .ui-widget-content .ui-state-active { border: 1px solid #fbd850; background: #ffffff url(../images/ui-bg_glass_65_ffffff_1x400.png) 50% 50% repeat-x; font-weight: bold; color: #eb8f00; outline: none; }
-.UITheme .ui-state-active a, .UITheme .ui-state-active a:link, .UITheme .ui-state-active a:visited { color: #eb8f00; outline: none; text-decoration: none; }
+.UITheme .ui-state-default, .UITheme .ui-widget-content .ui-state-default { border: 1px solid #444444; background: #222222 url(../images/ui-bg_flat_50_222222_40x100.png) 50% 50% repeat-x; font-weight: normal; color: #eeeeee; }
+.UITheme .ui-state-default a, .UITheme .ui-state-default a:link, .UITheme .ui-state-default a:visited { color: #eeeeee; text-decoration: none; }
+.UITheme .ui-state-hover, .UITheme .ui-widget-content .ui-state-hover, .UITheme .ui-state-focus, .UITheme .ui-widget-content .ui-state-focus { border: 1px solid #f3b907; background: #fccd40 url(../images/ui-bg_flat_35_fccd40_40x100.png) 50% 50% repeat-x; font-weight: normal; color: #222222; }
+.UITheme .ui-state-hover a, .UITheme .ui-state-hover a:hover { color: #222222; text-decoration: none; }
+.UITheme .ui-state-active, .UITheme .ui-widget-content .ui-state-active { border: 1px solid #1b6cae; background: #1b6cae url(../images/ui-bg_flat_35_1b6cae_40x100.png) 50% 50% repeat-x; font-weight: normal; color: #ffffff; }
+.UITheme .ui-state-active a, .UITheme .ui-state-active a:link, .UITheme .ui-state-active a:visited { color: #ffffff; text-decoration: none; }
+.UITheme .ui-widget :active { outline: none; }
 
 /* Interaction Cues
 ----------------------------------*/
-.UITheme .ui-state-highlight, .UITheme .ui-widget-content .ui-state-highlight {border: 1px solid #fed22f; background: #ffe45c url(../images/ui-bg_highlight-soft_75_ffe45c_1x100.png) 50% top repeat-x; color: #363636; }
-.UITheme .ui-state-highlight a, .UITheme .ui-widget-content .ui-state-highlight a { color: #363636; }
-.UITheme .ui-state-error, .UITheme .ui-widget-content .ui-state-error {border: 1px solid #cd0a0a; background: #b81900 url(../images/ui-bg_diagonals-thick_18_b81900_40x40.png) 50% 50% repeat; color: #ffffff; }
+.UITheme .ui-state-highlight, .UITheme .ui-widget-content .ui-state-highlight {border: 1px solid #fccd40; background: #fccd40 url(../images/ui-bg_flat_30_fccd40_40x100.png) 50% 50% repeat-x; color: #222222; }
+.UITheme .ui-state-highlight a, .UITheme .ui-widget-content .ui-state-highlight a { color: #222222; }
+.UITheme .ui-state-error, .UITheme .ui-widget-content .ui-state-error {border: 1px solid #cd0a0a; background: #cd0a0a url(../images/ui-bg_flat_30_cd0a0a_40x100.png) 50% 50% repeat-x; color: #ffffff; }
 .UITheme .ui-state-error a, .UITheme .ui-widget-content .ui-state-error a { color: #ffffff; }
 .UITheme .ui-state-error-text, .UITheme .ui-widget-content .ui-state-error-text { color: #ffffff; }
-.UITheme .ui-state-disabled, .UITheme .ui-widget-content .ui-state-disabled { opacity: .35; filter:Alpha(Opacity=35); background-image: none; }
 .UITheme .ui-priority-primary, .UITheme .ui-widget-content .ui-priority-primary { font-weight: bold; }
 .UITheme .ui-priority-secondary, .UITheme .ui-widget-content .ui-priority-secondary { opacity: .7; filter:Alpha(Opacity=70); font-weight: normal; }
+.UITheme .ui-state-disabled, .UITheme .ui-widget-content .ui-state-disabled { opacity: .35; filter:Alpha(Opacity=35); background-image: none; }
 
 /* Icons
 ----------------------------------*/
 
-/* states and ../images */
-.UITheme .ui-icon { width: 16px; height: 16px; background-image: url(../images/ui-icons_222222_256x240.png); }
-.UITheme .ui-widget-content .ui-icon {background-image: url(../images/ui-icons_222222_256x240.png); }
+/* states and images */
+.UITheme .ui-icon { width: 16px; height: 16px; background-image: url(../images/ui-icons_cccccc_256x240.png); }
+.UITheme .ui-widget-content .ui-icon {background-image: url(../images/ui-icons_cccccc_256x240.png); }
 .UITheme .ui-widget-header .ui-icon {background-image: url(../images/ui-icons_ffffff_256x240.png); }
-.UITheme .ui-state-default .ui-icon { background-image: url(../images/ui-icons_ef8c08_256x240.png); }
-.UITheme .ui-state-hover .ui-icon, .UITheme .ui-state-focus .ui-icon {background-image: url(../images/ui-icons_ef8c08_256x240.png); }
-.UITheme .ui-state-active .ui-icon {background-image: url(../images/ui-icons_ef8c08_256x240.png); }
-.UITheme .ui-state-highlight .ui-icon {background-image: url(../images/ui-icons_228ef1_256x240.png); }
-.UITheme .ui-state-error .ui-icon, .UITheme .ui-state-error-text .ui-icon {background-image: url(../images/ui-icons_ffd27a_256x240.png); }
+.UITheme .ui-state-default .ui-icon { background-image: url(../images/ui-icons_eeeeee_256x240.png); }
+.UITheme .ui-state-hover .ui-icon, .UITheme .ui-state-focus .ui-icon {background-image: url(../images/ui-icons_222222_256x240.png); }
+.UITheme .ui-state-active .ui-icon {background-image: url(../images/ui-icons_ffffff_256x240.png); }
+.UITheme .ui-state-highlight .ui-icon {background-image: url(../images/ui-icons_222222_256x240.png); }
+.UITheme .ui-state-error .ui-icon, .UITheme .ui-state-error-text .ui-icon {background-image: url(../images/ui-icons_ffffff_256x240.png); }
 
 /* positioning */
 .UITheme .ui-icon-carat-1-n { background-position: 0 0; }
@@ -184,6 +185,8 @@
 .UITheme .ui-icon-seek-next { background-position: -32px -160px; }
 .UITheme .ui-icon-seek-prev { background-position: -48px -160px; }
 .UITheme .ui-icon-seek-end { background-position: -64px -160px; }
+.UITheme .ui-icon-seek-start { background-position: -80px -160px; }
+/* ui-icon-seek-first is deprecated, use ui-icon-seek-start instead */
 .UITheme .ui-icon-seek-first { background-position: -80px -160px; }
 .UITheme .ui-icon-stop { background-position: -96px -160px; }
 .UITheme .ui-icon-eject { background-position: -112px -160px; }
@@ -228,16 +231,16 @@
 ----------------------------------*/
 
 /* Corner radius */
-.UITheme .ui-corner-tl { -moz-border-radius-topleft: 4px; -webkit-border-top-left-radius: 4px; }
-.UITheme .ui-corner-tr { -moz-border-radius-topright: 4px; -webkit-border-top-right-radius: 4px; }
-.UITheme .ui-corner-bl { -moz-border-radius-bottomleft: 4px; -webkit-border-bottom-left-radius: 4px; }
-.UITheme .ui-corner-br { -moz-border-radius-bottomright: 4px; -webkit-border-bottom-right-radius: 4px; }
-.UITheme .ui-corner-top { -moz-border-radius-topleft: 4px; -webkit-border-top-left-radius: 4px; -moz-border-radius-topright: 4px; -webkit-border-top-right-radius: 4px; }
-.UITheme .ui-corner-bottom { -moz-border-radius-bottomleft: 4px; -webkit-border-bottom-left-radius: 4px; -moz-border-radius-bottomright: 4px; -webkit-border-bottom-right-radius: 4px; }
-.UITheme .ui-corner-right {  -moz-border-radius-topright: 4px; -webkit-border-top-right-radius: 4px; -moz-border-radius-bottomright: 4px; -webkit-border-bottom-right-radius: 4px; }
-.UITheme .ui-corner-left { -moz-border-radius-topleft: 4px; -webkit-border-top-left-radius: 4px; -moz-border-radius-bottomleft: 4px; -webkit-border-bottom-left-radius: 4px; }
-.UITheme .ui-corner-all { -moz-border-radius: 4px; -webkit-border-radius: 4px; }
+.UITheme .ui-corner-tl { -moz-border-radius-topleft: 4px; -webkit-border-top-left-radius: 4px; border-top-left-radius: 4px; }
+.UITheme .ui-corner-tr { -moz-border-radius-topright: 4px; -webkit-border-top-right-radius: 4px; border-top-right-radius: 4px; }
+.UITheme .ui-corner-bl { -moz-border-radius-bottomleft: 4px; -webkit-border-bottom-left-radius: 4px; border-bottom-left-radius: 4px; }
+.UITheme .ui-corner-br { -moz-border-radius-bottomright: 4px; -webkit-border-bottom-right-radius: 4px; border-bottom-right-radius: 4px; }
+.UITheme .ui-corner-top { -moz-border-radius-topleft: 4px; -webkit-border-top-left-radius: 4px; border-top-left-radius: 4px; -moz-border-radius-topright: 4px; -webkit-border-top-right-radius: 4px; border-top-right-radius: 4px; }
+.UITheme .ui-corner-bottom { -moz-border-radius-bottomleft: 4px; -webkit-border-bottom-left-radius: 4px; border-bottom-left-radius: 4px; -moz-border-radius-bottomright: 4px; -webkit-border-bottom-right-radius: 4px; border-bottom-right-radius: 4px; }
+.UITheme .ui-corner-right {  -moz-border-radius-topright: 4px; -webkit-border-top-right-radius: 4px; border-top-right-radius: 4px; -moz-border-radius-bottomright: 4px; -webkit-border-bottom-right-radius: 4px; border-bottom-right-radius: 4px; }
+.UITheme .ui-corner-left { -moz-border-radius-topleft: 4px; -webkit-border-top-left-radius: 4px; border-top-left-radius: 4px; -moz-border-radius-bottomleft: 4px; -webkit-border-bottom-left-radius: 4px; border-bottom-left-radius: 4px; }
+.UITheme .ui-corner-all { -moz-border-radius: 4px; -webkit-border-radius: 4px; border-radius: 4px; }
 
 /* Overlays */
-.UITheme .ui-widget-overlay { background: #666666 url(../images/ui-bg_diagonals-thick_20_666666_40x40.png) 50% 50% repeat; opacity: .50;filter:Alpha(Opacity=50); }
-.UITheme .ui-widget-shadow { margin: -5px 0 0 -5px; padding: 5px; background: #000000 url(../images/ui-bg_flat_10_000000_40x100.png) 50% 50% repeat-x; opacity: .20;filter:Alpha(Opacity=20); -moz-border-radius: 5px; -webkit-border-radius: 5px; }
+.UITheme .ui-widget-overlay { background: #aaaaaa url(../images/ui-bg_flat_0_aaaaaa_40x100.png) 50% 50% repeat-x; opacity: .30;filter:Alpha(Opacity=30); }
+.UITheme .ui-widget-shadow { margin: -8px 0 0 -8px; padding: 8px; background: #aaaaaa url(../images/ui-bg_flat_0_aaaaaa_40x100.png) 50% 50% repeat-x; opacity: .30;filter:Alpha(Opacity=30); -moz-border-radius: 8px; -webkit-border-radius: 8px; border-radius: 8px; }
