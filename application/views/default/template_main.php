@@ -190,6 +190,8 @@ echo "<?xml version='1.0' encoding='UTF-8'?>\r\n";
 								<?php echo form_close();?>
 							</div>
 							<a href="<?php echo site_url('login/index');?>" id="signin" class="signin corner-upper-left corner-upper-right corner-lower-left corner-lower-right"><?php echo ucfirst(lang('actions_login'));?></a>
+							
+							<div class="logged-in-controls"></div>
 						<?php else: ?>
 							<a href="<?php echo site_url('login/logout');?>" class="signin corner-upper-left corner-upper-right corner-lower-left corner-lower-right"><?php echo ucfirst(lang('actions_logout'));?></a>
 							
