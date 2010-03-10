@@ -47,6 +47,11 @@ p {
 .uppercase { text-transform: uppercase; }
 .lowercase { text-transform: lowercase; }
 
+.page-subhead {
+	padding: 3px 5px;
+	width: 50%;
+}
+
 /*
 |---------------------------------------------------------------
 | LINKS
@@ -67,7 +72,7 @@ a.image, a.image:hover {
 input[type=text],
 input[type=password] {
 	margin: 0;
-	padding: 3px;
+	padding: 4px 3px;
 	width: 325px;
 }
 input.small     	{ width: 75px; }
@@ -76,7 +81,7 @@ input.medium-large	{ width: 250px; }
 
 textarea {
 	margin: 0;
-	padding: 3px;
+	padding: 4px 3px;
 	width: 600px;
 }
 
@@ -105,7 +110,7 @@ table { font-size: 100%; }
 .table100	{ width: 100%; }
 .table75	{ width: 75%; }
 
-.table560px	{ width: 560px; }
+.table560px	{ width: 550px; }
 
 td {
 	padding: 3px;
@@ -143,21 +148,31 @@ td.align_center { text-align: center; }
 | BUTTONS
 |---------------------------------------------------------------
 */
-button {
-	height: 25px;
-	padding: 0 10px 1px 10px;
+button.button-main {
+	height: 28px;
+	padding: 0 40px 2px 40px;
 	outline: 0 !important;
+}
+input.button-main {
+	height: 28px;
+	padding: 0 40px;
+	outline: 0 !important;
+}
+
+button.button-sec {
+	height: 23px;
+	padding: 0 15px 2px 15px;
+	outline: 0 !important;
+}
+input.button-sec {
+	height: 25px;
+	padding: 0 10px;
 }
 
 button.button-small {
 	height: 20px !important;
 	padding: 0 0 1px 6px !important;
 	outline: 0 !important;
-}
-
-input.button-main, input.button-sec {
-	height: 25px;
-	padding: 0 10px;
 }
 
 /*
