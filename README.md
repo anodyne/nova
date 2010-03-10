@@ -8,23 +8,12 @@ Release Candidate 2 (0.9.7)
 
 Last Update
 -----------
-09 March 2010
+10 March 2010
 
 Latest Updates
 --------------
-* updated the pulsar skin with the admin section
-* updated pulsar main with some minor tweaks
-* updated pulsar wiki with some minor tweaks
-* updated pulsar with panel images
-* updated the install data
-* updated titan main with jquery ui theme
-* updated titan admin with jquery ui theme
-* updated titan main with some minor tweaks
-* updated titan admin with some minor tweaks
-* updated titan wiki with some minor tweaks
-* updated the beta skin
-* added the jquery block ui plugin to pulsar
-* added the shiloh skin
+* updated the shiloh skin
+* updated the default style for the uniform stylesheet
 
 Changes in 0.9.7
 ----------------
@@ -59,6 +48,7 @@ Changes in 0.9.7
 * updated the autoload config to pull in the string helper automatically
 * updated jquery qtip plugin to version 1.0-r29
 * updated the tooltip location to the upper right of the target
+* updated the default style for the uniform stylesheet
 * fixed bug where error was thrown when submitting a wiki comment (#77)
 * fixed bug where error was thrown when submitting a log comment (#78)
 * fixed bug where error was thrown when submitting a post comment (#79) - would also affect sending post save and post delete emails as well
