@@ -30,7 +30,6 @@ $data = array(
 	'departments_'. $g 	=> 'depts',
 	'ranks_'. $g		=> 'ranks',
 	'positions_'. $g	=> 'positions',
-	'catalogue_ranks'	=> 'catalogue_ranks',
 );
 
 $depts = array(
