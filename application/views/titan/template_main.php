@@ -119,6 +119,9 @@ echo "<?xml version='1.0' encoding='UTF-8'?>\r\n";
 							<?php endif;?>
 						</div>
 						
+						<div class="float_left">
+							<?php echo img(APPFOLDER .'/views/'. $current_skin .'/'. $sec .'/images/genres/'. GENRE .'.png');?>
+						</div>
 						<h1><?php echo $this->options['sim_name'];?></h1>
 					</div>
 					
