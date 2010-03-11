@@ -13,7 +13,7 @@ $config['username'] = 'your-username';
 $config['password'] = 'your-password';
 $config['port']     = 21;
 $config['passive']  = FALSE;
-$config['debug']    = TRUE;
+$config['debug']    = FALSE;
 
 /* End of file ftp.php */
 /* Location: ./application/config/ftp.php */
