@@ -448,7 +448,7 @@ $ranks= array(
 		'rank_short_name' => '',
 		'rank_image' => 's-blank',
 		'rank_order' => 10,
-		'rank_class' => 5)
+		'rank_class' => 5),
 	array(
 		'rank_name' => '',
 		'rank_short_name' => '',
