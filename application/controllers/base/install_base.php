@@ -13,6 +13,8 @@
 
 class Install_base extends Controller {
 
+	var $d;
+	
 	function Install_base()
 	{
 		parent::Controller();
@@ -31,23 +33,31 @@ class Install_base extends Controller {
 		$this->load->model('system_model', 'sys');
 		
 		/* check to see if the system is installed */
-		$d['installed'] = $this->sys->check_install_status();
+		$this->d['installed'] = $this->sys->check_install_status();
 		
 		/* build the options menu */
-		$this->template->write_view('install_options', '_base/install/pages/_options', $d);
+		$this->template->write_view('install_options', '_base/install/pages/_options', $this->d);
 	}
 	
 	function index()
 	{
 		$data['label'] = array(
 			'choose' => lang('install_options_choose'),
+			'text_db' => lang('install_options_db_text'),
 			'text_fresh' => lang('install_options_fresh_text'),
+			'text_genre' => lang('install_options_genre_text'),
+			'text_remove' => lang('install_options_remove_text'),
 			'text_upd' => lang('install_options_upd_text'),
 			'text_upg' => lang('install_options_upg_text'),
+			'title_db' => lang('install_options_db_title'),
 			'title_fresh' => lang('install_options_fresh_title'),
+			'title_genre' => lang('install_options_genre_title'),
+			'title_remove' => lang('install_options_remove_title'),
 			'title_upd' => lang('install_options_upd_title'),
-			'title_upg' => lang('install_options_upg_title')
+			'title_upg' => lang('install_options_upg_title'),
 		);
+		
+		$data['installed'] = $this->d['installed'];
 		
 		/* figure out where the view file should be coming from */
 		$view_loc = view_location('index', '_base', 'install');
