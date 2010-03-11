@@ -8,12 +8,19 @@ Release Candidate 2 (0.9.7)
 
 Last Update
 -----------
-10 March 2010
+11 March 2010
 
 Latest Updates
 --------------
 * updated the shiloh skin
 * updated the default style for the uniform stylesheet
+* updated the titan skin
+* updated the install options screen
+* updated the language files
+* updated the genre logos for titan
+* updated the ftp config file to set debug to false
+* fixed error with the bl5 install file
+* fixed error with the baj install file
 
 Changes in 0.9.7
 ----------------
@@ -36,10 +43,17 @@ Changes in 0.9.7
     * [wiki] added wiki section
     * added the jquery block ui plugin
 * updated the titan skin
+    * [admin] added the genre logos
     * [admin] updated the jquery ui theme
     * [admin] updated the stylesheets
+    * [admin] updated the template file
     * [main] updated the jquery ui theme
     * [main] updated the stylesheets
+    * [main] updated the genre logos
+    * [main] updated the template file
+    * [wiki] added the genre logos
+    * [wiki] updated the stylesheets
+    * [wiki] updated the template file
 * updated the specifications listing to clean up some small issues
 * updated the pulsar skin
 * updated the look and feel of the update center
@@ -49,6 +63,9 @@ Changes in 0.9.7
 * updated jquery qtip plugin to version 1.0-r29
 * updated the tooltip location to the upper right of the target
 * updated the default style for the uniform stylesheet
+* updated the install language file
+* updated the install options screen
+* updated the ftp config file to set debug to false
 * fixed bug where error was thrown when submitting a wiki comment (#77)
 * fixed bug where error was thrown when submitting a log comment (#78)
 * fixed bug where error was thrown when submitting a post comment (#79) - would also affect sending post save and post delete emails as well
@@ -56,6 +73,8 @@ Changes in 0.9.7
 * fixed bug where the character bio editing didn't work with character selection (#73)
 * fixed bug where IE would cache the ajax views and won't let go (#81)
 * fixed bug where the lazy plugin was throwing errors with the qtip plugin
+* fixed error with the bl5 install file
+* fixed error with the baj install file
 
 Version History
 ---------------

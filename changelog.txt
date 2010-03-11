@@ -1,7 +1,24 @@
+03.11.2010
+
+* updated the titan skin
+* updated the ftp config file to set debug to false
+
+* added the genre logos to titan admin
+* added the genre logos to titan wiki
+
+==========
+
 03.10.2010
 
 * updated the shiloh skin
 * updated the default style for the uniform stylesheet
+* updated the titan skin
+* updated the install options screen
+* updated the language files
+* updated the genre logos for titan
+
+* fixed error with the bl5 install file
+* fixed error with the baj install file
 
 ==========
 
