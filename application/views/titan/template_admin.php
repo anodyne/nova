@@ -128,6 +128,14 @@ echo "<?xml version='1.0' encoding='UTF-8'?>\r\n";
 							<?php endif;?>
 						</div>
 						
+						<div class="float_left">
+							<?php if (file_exists(APPPATH .'views/'. $current_skin .'/'. $sec .'/images/genres/'. GENRE .'.png')): ?>
+								<?php echo img(APPFOLDER .'/views/'. $current_skin .'/'. $sec .'/images/genres/'. GENRE .'.png');?>
+							<?php else: ?>
+								<?php echo img(APPFOLDER .'/views/'. $current_skin .'/'. $sec .'/images/genres/blank.png');?>
+							<?php endif;?>
+						</div>
+						
 						<h1><?php echo $this->options['sim_name'];?></h1>
 					</div>
 					
