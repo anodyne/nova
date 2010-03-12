@@ -8,25 +8,20 @@ Release Candidate 2 (0.9.7)
 
 Last Update
 -----------
-11 March 2010
+12 March 2010
 
 Latest Updates
 --------------
-* updated the shiloh skin
-* updated the default style for the uniform stylesheet
-* updated the titan skin
-* updated the install options screen
-* updated the language files
-* updated the genre logos for titan
-* updated the ftp config file to set debug to false
-* fixed error with the bl5 install file
-* fixed error with the baj install file
+* updated the install language file
+* updated the install controller to remove some debug code
 
 Changes in 0.9.7
 ----------------
 * added the 0.9.7 update file
 * added the shiloh skin
 * removed the get\_author\_user\_ids() method from the posts model
+* removed the beta skin
+* removed the titan skin
 * updated the install data
     * version info
     * system component info
@@ -66,6 +61,7 @@ Changes in 0.9.7
 * updated the install language file
 * updated the install options screen
 * updated the ftp config file to set debug to false
+* updated the install controller to remove some debug code
 * fixed bug where error was thrown when submitting a wiki comment (#77)
 * fixed bug where error was thrown when submitting a log comment (#78)
 * fixed bug where error was thrown when submitting a post comment (#79) - would also affect sending post save and post delete emails as well
