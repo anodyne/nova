@@ -1511,18 +1511,7 @@ class Install_base extends Controller {
 		$this->xmlrpc->request($request);
 		
 		/* send the request */
-		//$this->xmlrpc->send_request();
-		
-		if ( ! $this->xmlrpc->send_request())
-		{
-			echo $this->xmlrpc->display_error();
-		}
-		else
-		{
-			echo '<pre>';
-			print_r($this->xmlrpc->display_response());
-			echo '</pre>';
-		}
+		$this->xmlrpc->send_request();
 	}
 }
 
