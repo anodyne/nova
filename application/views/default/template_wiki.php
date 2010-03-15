@@ -112,10 +112,10 @@ echo "<?xml version='1.0' encoding='UTF-8'?>\r\n";
 							border: '0', 
 							cursor: 'cursor',
 							background: 'transparent',
-							width: '700px',
+							width: '800px',
 							top: '10%',
 							left: '50%',
-							margin: '0 0 0 -350px'
+							margin: '0 0 0 -400px'
 						}
 					});
 					
