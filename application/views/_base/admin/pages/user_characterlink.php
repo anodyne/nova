@@ -88,7 +88,8 @@
 		
 		<div id="two">
 			<?php if (isset($unassigned['npc'])): ?>
-				<br /><table class="zebra table50">
+				<br /><div class="search"></div><br />
+				<table class="zebra table50 search_npcs">
 					<tbody>
 					<?php foreach ($unassigned['npc'] as $key => $n): ?>
 						<tr>
