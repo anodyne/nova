@@ -429,9 +429,9 @@ class Posts_model_base extends Model {
 					
 					foreach ($query->result() as $row)
 					{ /* we need to break out the authors if we are counting by multiple */
-						if (substr_count($row->post_authors, ',') > 0)
+						if (substr_count($row->post_authors_users, ',') > 0)
 						{
-							$temp = explode(',', $row->post_authors);
+							$temp = explode(',', $row->post_authors_users);
 							
 							foreach ($temp as $a)
 							{
@@ -484,9 +484,9 @@ class Posts_model_base extends Model {
 					
 					foreach ($query->result() as $row)
 					{ /* we need to break out the authors if we are counting by multiple */
-						if (substr_count($row->post_authors, ',') > 0)
+						if (substr_count($row->post_authors_users, ',') > 0)
 						{
-							$temp = explode(',', $row->post_authors);
+							$temp = explode(',', $row->post_authors_users);
 							
 							foreach ($temp as $a)
 							{
@@ -495,7 +495,7 @@ class Posts_model_base extends Model {
 						}
 						else
 						{
-							$array[] = $row->post_authors;
+							$array[] = $row->post_authors_users;
 						}
 					}
 					
