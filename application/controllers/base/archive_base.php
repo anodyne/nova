@@ -112,8 +112,11 @@ class Archive_base extends Controller {
 		else
 		{
 			$data['message'] = "Please select what you would like to view:\r\n\r\n";
+			$data['message'].= anchor('archive/characters', 'Characters') ."\r\n";
 			$data['message'].= anchor('archive/database', 'Database Entries') ."\r\n";
-			$data['message'].= anchor('archive/decks', 'Deck Listing');
+			$data['message'].= anchor('archive/decks', 'Deck Listing') ."\r\n";
+			$data['message'].= anchor('archive/departments', 'Departments') ."\r\n";
+			$data['message'].= anchor('archive/positions', 'Positions');
 		}
 		
 		$data['header'] = 'SMS Archives';
@@ -123,6 +126,26 @@ class Archive_base extends Controller {
 		
 		/* write the data to the template */
 		$this->template->write('title', 'SMS Archives');
+		$this->template->write_view('content', $view_loc, $data);
+		
+		/* render the template */
+		$this->template->render();
+	}
+	
+	function characters($type = 'active')
+	{
+		/* load the resources */
+		$this->load->model('archive_model', 'arc');
+		
+		$data['data'] = $this->arc->get_characters($type);
+		
+		$data['header'] = 'Archives - '. ucfirst($type) .' Characters';
+		
+		/* figure out where the view should be coming from */
+		$view_loc = view_location('archive_characters', $this->skin, 'main');
+		
+		/* write the data to the template */
+		$this->template->write('title', $data['header']);
 		$this->template->write_view('content', $view_loc, $data);
 		
 		/* render the template */
@@ -214,6 +237,82 @@ class Archive_base extends Controller {
 		$this->template->write('title', 'Archives - Deck Listing');
 		$this->template->write_view('content', $view_loc, $data);
 		$this->template->write_view('javascript', $js_loc);
+		
+		/* render the template */
+		$this->template->render();
+	}
+	
+	function departments()
+	{
+		/* load the resources */
+		$this->load->model('archive_model', 'arc');
+		
+		/* run the methods */
+		$depts = $this->arc->get_departments();
+		
+		if ($depts->num_rows() > 0)
+		{
+			foreach ($depts->result() as $d)
+			{
+				$data['depts'][$d->deptid] = array(
+					'name' => $d->deptName,
+					'desc' => $d->deptDesc
+				);
+			}
+		}
+		
+		$data['header'] = 'Archives - Departments';
+		
+		/* figure out where the view should be coming from */
+		$view_loc = view_location('archive_depts', $this->skin, 'main');
+		
+		/* write the data to the template */
+		$this->template->write('title', 'Archives - Departments');
+		$this->template->write_view('content', $view_loc, $data);
+		
+		/* render the template */
+		$this->template->render();
+	}
+	
+	function positions($dept = '1')
+	{
+		/* load the resources */
+		$this->load->model('archive_model', 'arc');
+		
+		/* run the methods */
+		$positions = $this->arc->get_positions($dept);
+		$depts = $this->arc->get_departments();
+		
+		if ($depts->num_rows() > 0)
+		{
+			foreach ($depts->result() as $d)
+			{
+				$deptArray[] = anchor('archive/positions/'. $d->deptid, $d->deptName);
+			}
+			
+			$data['depts'] = implode(' &middot; ', $deptArray);
+		}
+		
+		if ($positions->num_rows() > 0)
+		{
+			foreach ($positions->result() as $p)
+			{
+				$data['positions'][$p->positionid] = array(
+					'name' => $p->positionName,
+					'desc' => $p->positionDesc,
+					'open' => $p->positionOpen
+				);
+			}
+		}
+		
+		$data['header'] = 'Archives - Positions';
+		
+		/* figure out where the view should be coming from */
+		$view_loc = view_location('archive_positions', $this->skin, 'main');
+		
+		/* write the data to the template */
+		$this->template->write('title', 'Archives - Positions');
+		$this->template->write_view('content', $view_loc, $data);
 		
 		/* render the template */
 		$this->template->render();
