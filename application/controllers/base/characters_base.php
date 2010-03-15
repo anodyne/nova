@@ -419,13 +419,13 @@ class Characters_base extends Controller {
 					
 					$pos = $this->pos->get_position($a->position_1);
 					
-					if (array_key_exists($pos->pos_dept, $data['characters']) === FALSE)
+					if ($pos !== FALSE && array_key_exists($pos->pos_dept, $data['characters']) === FALSE)
 					{
 						$cdept = $this->dept->get_dept($pos->pos_dept, 'dept_parent');
 					}
 					else
 					{
-						$cdept = $pos->pos_dept;
+						$cdept = ($pos !== FALSE) ? $pos->pos_dept : '';
 					}
 					
 					$p = $this->user->get_user($a->user, array('status', 'email'));
@@ -434,7 +434,7 @@ class Characters_base extends Controller {
 						'id' => $a->charid,
 						'uid' => $a->user,
 						'name' => parse_name($name),
-						'position_1' => $pos->pos_name,
+						'position_1' => ($pos !== FALSE) ? $pos->pos_name : '',
 						'position_2' => $this->pos->get_position($a->position_2, 'pos_name'),
 						'pstatus' => $p['status'],
 						'email' => $p['email']
@@ -1791,13 +1791,13 @@ class Characters_base extends Controller {
 				{
 					$pos = $this->pos->get_position($a->position_1);
 					
-					if (array_key_exists($pos->pos_dept, $data['characters']) === FALSE)
+					if ($pos !== FALSE && array_key_exists($pos->pos_dept, $data['characters']) === FALSE)
 					{
 						$cdept = $this->dept->get_dept($pos->pos_dept, 'dept_parent');
 					}
 					else
 					{
-						$cdept = $pos->pos_dept;
+						$cdept = ($pos !== FALSE) ? $pos->pos_dept : '';
 					}
 				}
 				
@@ -1813,7 +1813,7 @@ class Characters_base extends Controller {
 						'id' => $a->charid,
 						'uid' => $a->user,
 						'name' => parse_name($name),
-						'position_1' => $pos->pos_name,
+						'position_1' => ($pos !== FALSE) ? $pos->pos_name : '',
 						'position_2' => (!empty($a->position_2)) ? $this->pos->get_position($a->position_2, 'pos_name') : '',
 						'pstatus' => $p['status'],
 						'email' => $p['email']
