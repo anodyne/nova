@@ -63,10 +63,10 @@ define('AMP',		'&amp;');		/* left double arrow */
 */
 
 define('APP_NAME',				'Nova');
-define('APP_VERSION',			'Beta');
+define('APP_VERSION',			'RC3');
 define('APP_VERSION_MAJOR',		0);
 define('APP_VERSION_MINOR',		9);
-define('APP_VERSION_UPDATE',	7);
+define('APP_VERSION_UPDATE',	8);
 
 define('WIKI_NAME',				'Thresher');
 define('WIKI_VERSION',			'Release 1');
