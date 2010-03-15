@@ -250,7 +250,7 @@ class Write_base extends Controller {
 		*/
 		
 		/* grab the data */		
-		$posts_all = $this->posts->get_post_list('', 'desc', 5);
+		$posts_all = $this->posts->get_post_list('', 'desc', 5, 0, 'activated');
 		$logs_all = $this->logs->get_log_list(5);
 		$news_all = $this->news->get_news_items(5, $this->session->userdata('userid'));
 		
