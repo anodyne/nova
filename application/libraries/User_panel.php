@@ -68,7 +68,7 @@ class User_panel {
 			{
 				$data['panel_characters'][] = array(
 					'id' => $char,
-					'name' => $this->ci->char->get_character_name($char, TRUE)
+					'name' => $this->ci->char->get_character_name($char, TRUE, TRUE)
 				);
 			}
 		}
