@@ -125,5 +125,7 @@ $lang['error_skin_defaults'] = 'You do not have defaults set for each skin secti
 
 $lang['error_no_mission_fail'] = "No current %s exist! In order to create a %s, you must first create a %s.";
 
+$lang['error_illegal_post'] = 'Your entry was not posted because you are not a member of the post.';
+
 /* End of file error_lang.php */
 /* Location: ./application/language/english/error_lang.php */
