@@ -1356,6 +1356,18 @@ class Upgrade_base extends Controller {
 								}
 							}
 							
+							if (!isset($users[$c->email]['last_post']))
+							{
+								$users[$c->email]['last_post'] = $c->lastPost;
+							}
+							else
+							{
+								if ($c->crewType == 'active')
+								{
+									$users[$c->email]['last_post'] = $c->lastPost;
+								}
+							}
+							
 							if (!isset($characters[$c->email]['user']['join_date']))
 							{ /* we want to take the first join date and nothing else */
 								$users[$c->email]['join_date'] = $c->joinDate;
