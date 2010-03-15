@@ -1,0 +1,9 @@
+skin: Redeye
+location: redeye
+credits: |
+  The Redeye skin was created by Anodyne Productions. Edits are permissible as long as original credits stay intact.
+version: 1.0
+sections:
+  -
+    type: main
+    preview: preview-main.png
