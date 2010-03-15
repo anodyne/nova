@@ -1328,7 +1328,7 @@ class Upgrade_base extends Controller {
 					
 					foreach ($crew->result() as $c)
 					{
-						if ($c->crewType != 'npc')
+						if ($c->crewType != 'npc' || !empty($c->email))
 						{
 							/* set the values (newer items will overwrite older items) */
 							$users[$c->email]['name'] = $c->realName;
@@ -1343,6 +1343,18 @@ class Upgrade_base extends Controller {
 							$users[$c->email]['access_role'] = ($c->email == $email) ? 1 : 4;
 							$users[$c->email]['is_sysadmin'] = ($c->email == $email) ? 'y' : 'n';
 							$users[$c->email]['is_game_master'] = ($c->email == $email) ? 'y' : 'n';
+							
+							if (!isset($users[$c->email]['main_char']))
+							{
+								$users[$c->email]['main_char'] = $c->crewid;
+							}
+							else
+							{
+								if ($c->crewType == 'active')
+								{
+									$users[$c->email]['main_char'] = $c->crewid;
+								}
+							}
 							
 							if (!isset($characters[$c->email]['user']['join_date']))
 							{ /* we want to take the first join date and nothing else */
@@ -1380,7 +1392,7 @@ class Upgrade_base extends Controller {
 						$characters[$c->email][] = array(
 							'basic' => array(
 								'charid' => $c->crewid,
-								'user' => $charIDs[$c->email],
+								'user' => (!empty($c->email)) ? $charIDs[$c->email] : '',
 								'first_name' => $c->firstName,
 								'middle_name' => $c->middleName,
 								'last_name' => $c->lastName,
@@ -1588,7 +1600,8 @@ class Upgrade_base extends Controller {
 					'menu_need_login' => 'y',
 					'menu_type' => 'sub',
 					'menu_cat' => 'main',
-					'menu_sim_type' => 1
+					'menu_sim_type' => 1,
+					'menu_link' => 'archive/index'
 				);
 				
 				/* insert the new menu item */
