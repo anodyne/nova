@@ -8,31 +8,40 @@ Release Candidate 3 (0.9.8)
 
 Last Update
 -----------
-14 March 2010
+15 March 2010
 
 Latest Updates
 --------------
-* updated the panel to use the short rank name instead of the full rank name
-* updated the size of the dashboard panel in the pulsar skin
-* updated the upgrade process to make the processing messages more descriptive
+* updated the archive model with methods for pulling characters, positions and departments
+* updated the archive controller to handle displaying characters from the SMS data
+* updated the archive controller to handle displaying departments from the SMS data
+* updated the archive controller to handle displaying positions from the SMS data
+* updated the posts model to count posts based on users not on characters (prevents padding stats)
+* updated character linking to use quick search on the NPCs tab
+* updated write/missionpost to allow a user to select multiple characters of theirs for a post (#59)
+* updated write/missionpost to simplify the UI a little bit
+* updated the language files
+* updated the upgrade process to pull over last post information as well
 * updated the install data
-* updated the 0.9.7 update file
-* updated the version info for rc3
-* updated the install language files
-* updated the characters model to take a zero into account instead of just NULL
-* fixed errors in the upgrade process
-* fixed errors after upgrading on the characters management page
-* fixed errors after upgrading on the npc management page
-* fixed bug where the all recent entries in the writing control panel showed all entries instead of just activated entries
-* fixed bug where the character link page wouldn't show npcs
-* fixed bug where the sms archives link didn't point to anywhere
-* fixed an error in the archive controller
+* updated the pulsar skin
+* added the archive_characters view file
+* added the archive_departments view file
+* added the archive_positions view file
+* added the 0.9.8 update file
+* added the redeye skin
+* fixed bug where user IDs were duplicated on multi-author posts allowing a user to pad their stats
 
 Changes in 0.9.8
 ----------------
+* added the 0.9.8 update file
+* added the archive_characters view file
+* added the archive_departments view file
+* added the archive_positions view file
+* added the redeye skin
 * updated the dashboard to use the short rank name instead of the full rank name
 * updated the pulsar skin
     * [admin] updated the size of the dashboard panel
+    * [admin] updated the stylesheets
     * [main] updated the size of the dashboard panel
     * [wiki] updated the size of the dashboard panel
 * updated the upgrade process to make the processing messages more descriptive
@@ -42,6 +51,15 @@ Changes in 0.9.8
 * updated the version info for 0.9.8
 * updated the language files
 * updated the characters model to take a zero into account instead of just NULL
+* updated the upgrade process to pull over last post information as well
+* updated the archive model with methods for pulling characters, positions and departments
+* updated the archive controller to handle displaying characters from the SMS data
+* updated the archive controller to handle displaying departments from the SMS data
+* updated the archive controller to handle displaying positions from the SMS data
+* updated the posts model to count posts based on users not on characters (prevents padding stats)
+* updated character linking to use quick search on the NPCs tab
+* updated write/missionpost to allow a user to select multiple characters of theirs for a post (#59)
+* updated write/missionpost to simplify the UI a little bit
 * fixed errors in the upgrade process
 * fixed errors after upgrading on the characters management page
 * fixed errors after upgrading on the npc management page
@@ -49,6 +67,7 @@ Changes in 0.9.8
 * fixed bug where the character link page wouldn't show npcs
 * fixed bug where the sms archives link didn't point to anywhere
 * fixed an error in the archive controller
+* fixed bug where user IDs were duplicated on multi-author posts allowing a user to pad their stats
 
 Version History
 ---------------
