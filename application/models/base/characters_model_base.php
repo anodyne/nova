@@ -60,6 +60,7 @@ class Characters_model_base extends Model {
 				
 			case 'no_user':
 				$this->db->where('user', NULL);
+				$this->db->orwhere('user', 0);
 				
 			case 'all':
 				break;
