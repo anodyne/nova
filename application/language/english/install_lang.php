@@ -36,6 +36,7 @@
 
 $lang['global_progress'] = 'Progress';
 $lang['global_processing'] = 'Processing, please wait...';
+$lang['global_upgrading'] = "Upgrading%s, please wait...";
 
 $lang['global_content_index'] = "In 2005, Anodyne Productions opened its doors with a simple belief: web software can be both elegant and powerful while still being easy to use.  That principle has guided Anodyne since then and Nova is no exception. Over two years in the making, Nova represents the next evolution in RPG management software with a clean interface, powerful system engine, more robust developer tools and tons of new features that'll make life running or enjoying an RPG better than ever.\r\n\r\nTo get started, first verify your server can run Nova by using the button before or you can select another option from the More Options menu at the top.  From everyone at Anodyne Productions, thank you for choosing Nova as your RPG management tool!";
 
