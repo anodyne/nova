@@ -364,12 +364,11 @@ class Write_base extends Controller {
 		$id = $this->uri->segment(3, FALSE, TRUE);
 		
 		$data['key'] = array(
-			'my_author' => $this->session->userdata('main_char'),
-			'all' => 0,
+			'all' => '0',
 			'missions' => ''
 		);
 		
-		$data['to'] = 0;
+		$data['to'] = '0';
 		
 		$content = FALSE;
 		$title = FALSE;
@@ -388,35 +387,43 @@ class Write_base extends Controller {
 			$timeline = $this->input->post('timeline', TRUE);
 			$location = $this->input->post('location', TRUE);
 			
-			$author = $this->input->post('author', TRUE);
-			$authors = $this->input->post('other_authors', TRUE);
+			$authors = $this->input->post('authors', TRUE);
 			$authors_list = $this->input->post('to', TRUE);
 			
 			$action = strtolower($this->input->post('submit', TRUE));
 			$status = FALSE;
 			$flash = FALSE;
+			$illegalpost = FALSE;
 			
-			if ($author == 0 && $authors == 0 && $authors_list == 0)
+			if ($authors == '0' && $authors_list == '0')
 			{
 				$flash['status'] = 'error';
-				$flash['message'] = lang_output('flash_personallogs_no_author');
+				$flash['message'] = lang_output('flash_missionposts_no_author');
 				
 				/* write everything to the template */
 				$this->template->write_view('flash_message', '_base/admin/pages/flash', $flash);
 			}
 			else
 			{
+				if ($authors_list == "0")
+				{
+					$authors_list = $authors;
+				}
+				else
+				{
+					$authors_list.= $authors;
+				}
+				
 				/* put the authors into an array */
-				$authors_array = explode(',', $authors_list);
+				$author_array_final = explode(',', $authors_list);
 				
 				$users = array();
-				$users[] = $this->sys->get_item('characters', 'charid', $author, 'user');
 				
-				foreach ($authors_array as $key => $value)
+				foreach ($author_array_final as $key => $value)
 				{ /* make sure there aren't any empty values */
 					if (!is_numeric($value) || $value < 1)
 					{
-						unset($authors_array[$key]);
+						unset($author_array_final[$key]);
 					}
 					
 					/* get the user ID */
@@ -434,30 +441,19 @@ class Write_base extends Controller {
 					}
 				}
 				
-				/* count the authors */
-				$authors_count = count($authors_array);
-				
-				/* set up the final array */
-				$author_array_final = array();
-				
-				if ($author > 0)
-				{ /* use the my author field */
-					$author_array_final[] = $author;
-				}
-				
-				if ($authors_count == 0 && $authors > 0)
-				{ /* if there isn't a list, use the other authors dropdown */
-					$author_array_final[] = $authors;
-				}
-				
-				if ($authors_count > 0)
-				{ /* if there is a list, use it */
-					$author_array_final = array_merge($author_array_final, $authors_array);
-				}
+				/* make sure the array doesn't the same ID multiple times */
+				$users = array_unique($users);
 				
 				/* set the authors string */
 				$authors_string = implode(',', $author_array_final);
 				$users_string = implode(',', $users);
+				
+				/* make sure the person posting is actually part of the post */
+				if (!in_array($this->session->userdata('userid'), $users))
+				{
+					$illegalpost = TRUE;
+					$action = lang('actions_save');
+				}
 				
 				switch ($action)
 				{
@@ -561,7 +557,7 @@ class Write_base extends Controller {
 									lang('flash_success'),
 									ucfirst(lang('global_missionpost')),
 									lang('actions_saved'),
-									''
+									($illegalpost === TRUE) ? ' '. lang('error_illegal_post') : ''
 								);
 
 								$flash['status'] = 'success';
@@ -573,7 +569,7 @@ class Write_base extends Controller {
 									lang('flash_failure'),
 									ucfirst(lang('global_missionpost')),
 									lang('actions_saved'),
-									''
+									($illegalpost === TRUE) ? ' '. lang('error_illegal_post') : ''
 								);
 
 								$flash['status'] = 'error';
@@ -612,7 +608,7 @@ class Write_base extends Controller {
 									lang('flash_success'),
 									ucfirst(lang('global_missionpost')),
 									lang('actions_saved'),
-									''
+									($illegalpost === TRUE) ? ' '. lang('error_illegal_post') : ''
 								);
 
 								$flash['status'] = 'success';
@@ -624,7 +620,7 @@ class Write_base extends Controller {
 									lang('flash_failure'),
 									ucfirst(lang('global_missionpost')),
 									lang('actions_saved'),
-									''
+									($illegalpost === TRUE) ? ' '. lang('error_illegal_post') : ''
 								);
 
 								$flash['status'] = 'error';
@@ -837,76 +833,53 @@ class Write_base extends Controller {
 			}
 		}
 		
-		/* get my characters */
-		$char = $this->session->userdata('characters');
-		
-		/* grab all characters based on whether or not the post is saved */
-		if ($id !== FALSE)
-		{
-			$all = $this->char->get_all_characters('user_npc');
-		}
-		else
-		{
-			$all = $this->char->get_characters_minus_user($this->session->userdata('userid'));
-		}
+		/* grab all the characters */
+		$all = $this->char->get_all_characters('user_npc');
 		
 		/* get the current missions */
 		$missions = $this->mis->get_all_missions('current');
 		
-		if (count($char) > 1)
-		{ /* only continue if there's more than 1 character in the array */
-			$data['characters'][0] = ucwords(lang('labels_please') .' '. lang('actions_select')
-				.' '. lang('labels_an') .' '. lang('labels_author'));
-			
-			foreach ($char as $item)
-			{ /* loop through all the characters */
-				$type = $this->char->get_character($item, 'crew_type');
-				
-				if ($type == 'active' || $type == 'npc')
-				{ /* split the characters out between active and npcs */
-					if ($type == 'active')
-					{
-						$label = ucwords(lang('status_playing') .' '. lang('global_characters'));
-					}
-					else
-					{
-						$label = ucwords(lang('abbr_npcs'));
-					}
-					
-					/* toss them in the array */
-					$data['characters'][$label][$item] = $this->char->get_character_name($item, TRUE);
-				}
-			}
-		}
-		else
-		{
-			/* set the ID and name */
-			$data['character']['id'] = $char[0];
-			$data['character']['name'] = $this->char->get_character_name($char[0], TRUE);
-		}
-		
 		if ($all->num_rows() > 0)
-		{ /* get the rest of the potential authors */
-			$data['all'][0] = ucwords(lang('labels_please') .' '. lang('actions_select')
-				.' '. lang('labels_an') .' '. lang('labels_author'));
-			
+		{
 			foreach ($all->result() as $a)
 			{
-				if ($a->crew_type == 'active' || $a->crew_type == 'npc')
-				{ /* split the characters out between active and npcs */
-					if ($a->crew_type == 'active')
-					{
-						$label = ucwords(lang('status_playing') .' '. lang('global_characters'));
-					}
-					else
-					{
-						$label = ucwords(lang('abbr_npcs'));
-					}
-					
-					/* toss them in the array */
-					$data['all'][$label][$a->charid] = $this->char->get_character_name($a->charid, TRUE);
+				if (in_array($a->charid, $this->session->userdata('characters')))
+				{
+					$label = ucwords(lang('labels_my') .' '. lang('global_characters'));
 				}
+				else
+				{
+					if ($a->crew_type == 'active' || $a->crew_type == 'npc')
+					{
+						if ($a->crew_type == 'active' && !in_array($a->charid, $this->session->userdata('characters')))
+						{
+							$label = ucwords(lang('status_playing') .' '. lang('global_characters'));
+						}
+						else
+						{
+							if ($a->user > 0)
+							{
+								$label = ucwords(lang('labels_linked') .' '. lang('abbr_npcs'));
+							}
+							else
+							{
+								$label = ucwords(lang('labels_unlinked') .' '. lang('abbr_npcs'));
+							}
+						}
+					}
+				}
+				
+				/* toss them in the array */
+				$allchars[$label][$a->charid] = $this->char->get_character_name($a->charid, TRUE);
 			}
+			
+			$data['all'] = array(
+				0 => ucwords(lang('labels_please') .' '. lang('actions_select') .' '. lang('labels_an') .' '. lang('labels_author')),
+				ucwords(lang('labels_my') .' '. lang('global_characters'))		=> $allchars[ucwords(lang('labels_my') .' '. lang('global_characters'))],
+				ucwords(lang('status_playing') .' '. lang('global_characters'))	=> $allchars[ucwords(lang('status_playing') .' '. lang('global_characters'))],
+				ucwords(lang('labels_linked') .' '. lang('abbr_npcs'))			=> $allchars[ucwords(lang('labels_linked') .' '. lang('abbr_npcs'))],
+				ucwords(lang('labels_unlinked') .' '. lang('abbr_npcs'))		=> $allchars[ucwords(lang('labels_unlinked') .' '. lang('abbr_npcs'))],
+			);
 		}
 		else
 		{

@@ -23,27 +23,11 @@
 	<?php endif; ?>
 
 	<?php echo form_open($form_action);?>
-		<?php if ($this->uri->segment(3) === FALSE): ?>
-			<p>
-				<kbd><?php echo $label['myauthor'];?></kbd>
-				<?php if (isset($characters)): ?>
-					<?php echo form_dropdown('author', $characters, $key['my_author']);?>
-				<?php else: ?>
-					<?php echo text_output($character['name'], ''); ?>
-					<?php echo form_hidden('author', $character['id']);?>
-				<?php endif; ?>
-			</p>
-		<?php endif; ?>
-		
 		<?php if (isset($all) && is_array($all)): ?>
 			<p>
-				<?php if ($this->uri->segment(3) === FALSE): ?>
-					<kbd><?php echo $label['otherauthors'];?></kbd>
-				<?php else: ?>
-					<kbd><?php echo $label['authors'];?></kbd>
-				<?php endif; ?>
+				<kbd><?php echo $label['authors'];?></kbd>
 				
-				<?php echo form_dropdown('other_authors', $all, $key['all'], 'id = "all"');?>
+				<?php echo form_dropdown('authors', $all, $key['all'], 'id = "all"');?>
 				&nbsp;
 				<a href="#" id="add_author" class="fontSmall"><?php echo $label['addauthor'];?></a>
 				<input type="hidden" name="to" id="authors_hidden" value="<?php echo $to;?>" />
