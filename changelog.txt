@@ -1,3 +1,24 @@
+03.14.2010
+
+* updated the panel to use the short rank name instead of the full rank name
+* updated the size of the dashboard panel in the pulsar skin
+* updated the upgrade process to make the processing messages more descriptive
+* updated the install data
+* updated the 0.9.7 update file
+* updated the version info for rc3
+* updated the install language files
+* updated the characters model to take a zero into account instead of just NULL
+
+* fixed errors in the upgrade process
+* fixed errors after upgrading on the characters management page
+* fixed errors after upgrading on the npc management page
+* fixed bug where the all recent entries in the writing control panel showed all entries instead of just activated entries
+* fixed bug where the character link page wouldn't show npcs
+* fixed bug where the sms archives link didn't point to anywhere
+* fixed an error in the archive controller
+
+==========
+
 03.12.2010
 
 * updated the install language file
