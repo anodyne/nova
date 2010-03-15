@@ -3551,7 +3551,7 @@ $system_info = array(
 		'sys_install_date' => now(),
 		'sys_version_major' => 0,
 		'sys_version_minor' => 9,
-		'sys_version_update' => 7)
+		'sys_version_update' => 8)
 );
 
 $system_versions = array(
@@ -3969,6 +3969,14 @@ $system_versions = array(
 * fixed bug where the lazy plugin was throwing errors with the qtip plugin
 * fixed error with the bl5 install file
 * fixed error with the baj install file"),
+	array(
+		'version' => '0.9.8',
+		'version_major' => '0',
+		'version_minor' => '9',
+		'version_update' => '8',
+		'version_date' => 1268536500,
+		'version_launch' => 'Nova 0.9.8 is an update to the beta release of the next generation RPG management software from Anodyne Productions.',
+		'version_changes' => ""),
 );
 
 $tour = array(
