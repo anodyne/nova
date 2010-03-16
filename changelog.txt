@@ -1,3 +1,13 @@
+03.16.2010
+
+* fixed potential bug where nova could look for array indices that wouldn't exist
+
+* updated the install controller to log any XML-RPC errors
+* updated the update controller to log any XML-RPC errors
+* updated the upgrade controller to log any XML-RPC errors
+
+==========
+
 03.15.2010
 
 * updated the archive model with methods for pulling characters, positions and departments

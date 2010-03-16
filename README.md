@@ -8,28 +8,14 @@ Release Candidate 3 (0.9.8)
 
 Last Update
 -----------
-15 March 2010
+16 March 2010
 
 Latest Updates
 --------------
-* updated the archive model with methods for pulling characters, positions and departments
-* updated the archive controller to handle displaying characters from the SMS data
-* updated the archive controller to handle displaying departments from the SMS data
-* updated the archive controller to handle displaying positions from the SMS data
-* updated the posts model to count posts based on users not on characters (prevents padding stats)
-* updated character linking to use quick search on the NPCs tab
-* updated write/missionpost to allow a user to select multiple characters of theirs for a post (#59)
-* updated write/missionpost to simplify the UI a little bit
-* updated the language files
-* updated the upgrade process to pull over last post information as well
-* updated the install data
-* updated the pulsar skin
-* added the archive_characters view file
-* added the archive_departments view file
-* added the archive_positions view file
-* added the 0.9.8 update file
-* added the redeye skin
-* fixed bug where user IDs were duplicated on multi-author posts allowing a user to pad their stats
+* fixed potential bug where nova could look for array indices that wouldn't exist
+* updated the install controller to log any XML-RPC errors
+* updated the update controller to log any XML-RPC errors
+* updated the upgrade controller to log any XML-RPC errors
 
 Changes in 0.9.8
 ----------------
@@ -60,6 +46,9 @@ Changes in 0.9.8
 * updated character linking to use quick search on the NPCs tab
 * updated write/missionpost to allow a user to select multiple characters of theirs for a post (#59)
 * updated write/missionpost to simplify the UI a little bit
+* updated the install controller to log any XML-RPC errors
+* updated the update controller to log any XML-RPC errors
+* updated the upgrade controller to log any XML-RPC errors
 * fixed errors in the upgrade process
 * fixed errors after upgrading on the characters management page
 * fixed errors after upgrading on the npc management page
@@ -68,6 +57,7 @@ Changes in 0.9.8
 * fixed bug where the sms archives link didn't point to anywhere
 * fixed an error in the archive controller
 * fixed bug where user IDs were duplicated on multi-author posts allowing a user to pad their stats
+* fixed potential bug where nova could look for array indices that wouldn't exist
 
 Version History
 ---------------
