@@ -1,6 +1,8 @@
 03.16.2010
 
 * fixed potential bug where nova could look for array indices that wouldn't exist
+* fixed bug in counting character's posts where low-numbered ID characters could have highly exaggerated post counts
+* fixed bug in coutning users' posts where low-numbered ID users could have highly exaggerated post counts
 
 * updated the install controller to log any XML-RPC errors
 * updated the update controller to log any XML-RPC errors

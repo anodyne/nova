@@ -13,6 +13,8 @@ Last Update
 Latest Updates
 --------------
 * fixed potential bug where nova could look for array indices that wouldn't exist
+* fixed bug in counting character's posts where low-numbered ID characters could have highly exaggerated post counts
+* fixed bug in coutning users' posts where low-numbered ID users could have highly exaggerated post counts
 * updated the install controller to log any XML-RPC errors
 * updated the update controller to log any XML-RPC errors
 * updated the upgrade controller to log any XML-RPC errors
@@ -58,6 +60,8 @@ Changes in 0.9.8
 * fixed an error in the archive controller
 * fixed bug where user IDs were duplicated on multi-author posts allowing a user to pad their stats
 * fixed potential bug where nova could look for array indices that wouldn't exist
+* fixed bug in counting character's posts where low-numbered ID characters could have highly exaggerated post counts
+* fixed bug in coutning users' posts where low-numbered ID users could have highly exaggerated post counts
 
 Version History
 ---------------
