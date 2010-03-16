@@ -1510,8 +1510,11 @@ class Install_base extends Controller {
 		/* compile the request */
 		$this->xmlrpc->request($request);
 		
-		/* send the request */
-		$this->xmlrpc->send_request();
+		/* send the request or log the message if it doesn't work */
+		if (!$this->xmlrpc->send_request())
+		{
+			log_message('error', $this->xmlrpc->display_error());
+		}
 	}
 }
 
