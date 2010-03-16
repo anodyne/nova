@@ -875,11 +875,31 @@ class Write_base extends Controller {
 			
 			$data['all'] = array(
 				0 => ucwords(lang('labels_please') .' '. lang('actions_select') .' '. lang('labels_an') .' '. lang('labels_author')),
-				ucwords(lang('labels_my') .' '. lang('global_characters'))		=> $allchars[ucwords(lang('labels_my') .' '. lang('global_characters'))],
-				ucwords(lang('status_playing') .' '. lang('global_characters'))	=> $allchars[ucwords(lang('status_playing') .' '. lang('global_characters'))],
-				ucwords(lang('labels_linked') .' '. lang('abbr_npcs'))			=> $allchars[ucwords(lang('labels_linked') .' '. lang('abbr_npcs'))],
-				ucwords(lang('labels_unlinked') .' '. lang('abbr_npcs'))		=> $allchars[ucwords(lang('labels_unlinked') .' '. lang('abbr_npcs'))],
 			);
+			
+			$key = ucwords(lang('labels_my') .' '. lang('global_characters'));
+			if (isset($allchars[$key]))
+			{
+				$data['all'][$key] = $allchars[$key];
+			}
+			
+			$key = ucwords(lang('status_playing') .' '. lang('global_characters'));
+			if (isset($allchars[$key]))
+			{
+				$data['all'][$key] = $allchars[$key];
+			}
+			
+			$key = ucwords(lang('labels_linked') .' '. lang('abbr_npcs'));
+			if (isset($allchars[$key]))
+			{
+				$data['all'][$key] = $allchars[$key];
+			}
+			
+			$key = ucwords(lang('labels_unlinked') .' '. lang('abbr_npcs'));
+			if (isset($allchars[$key]))
+			{
+				$data['all'][$key] = $allchars[$key];
+			}
 		}
 		else
 		{
