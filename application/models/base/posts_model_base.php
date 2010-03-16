@@ -399,7 +399,9 @@ class Posts_model_base extends Model {
 		}
 		else
 		{
-			$this->db->like('post_authors', $character);
+			$string = "(post_authors LIKE '%,$character' OR post_authors LIKE '$character,%' OR post_authors = $character)";
+			
+			$this->db->where("$string", NULL);
 		}
 		
 		$count_final += $this->db->count_all_results();
@@ -579,7 +581,9 @@ class Posts_model_base extends Model {
 			$this->db->where('post_date >=', $timeframe);
 		}
 		
-		$this->db->like('post_authors_users', $id);
+		$string = "(post_authors_users LIKE '%,$id' OR post_authors_users LIKE '$id,%' OR post_authors_users = $id)";
+			
+		$this->db->where("($string)", NULL);
 			
 		$count = $this->db->count_all_results();
 		
