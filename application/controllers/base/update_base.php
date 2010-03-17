@@ -604,6 +604,21 @@ class Update_base extends Controller {
 		return FALSE;
 	}
 	
+	function _escape_string($value = '')
+	{
+		if( get_magic_quotes_gpc() )
+		{
+			$value = stripslashes( $value );
+		}
+		
+		if( !is_numeric( $value ) )
+		{
+			$value = "'" . mysql_real_escape_string( $value ) . "'";
+		}
+		
+		return $value;
+	}
+	
 	function _register()
 	{
 		/* load the resources */
@@ -629,10 +644,39 @@ class Update_base extends Controller {
 		/* compile the request */
 		$this->xmlrpc->request($request);
 		
-		/* send the request or log the message if it doesn't work */
-		if (!$this->xmlrpc->send_request())
+		if (extension_loaded('xmlrpc'))
 		{
-			log_message('error', $this->xmlrpc->display_error());
+			/* send the request or log the message if it doesn't work */
+			if (!$this->xmlrpc->send_request())
+			{
+				log_message('error', $this->xmlrpc->display_error());
+			}
+		}
+		else
+		{
+			$to = 'register@anodyne-productions.com';
+			$subject = 'Nova Registration';
+			$headers = 'From: nobody@example.com' . "\r\n" .
+				'Reply-To: nobody@example.com' . "\r\n" .
+				'X-Mailer: PHP/' . phpversion();
+				
+			$insert = "INSERT INTO www_installs (product, version, url, ip_client, ip_server, php, db_platform, db_version, type, date) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %d);";
+			
+			$message = sprintf(
+				$insert,
+				$this->_escape_string($request[0]),
+				$this->_escape_string($request[1]),
+				$this->_escape_string($request[2]),
+				$this->_escape_string($request[3]),
+				$this->_escape_string($request[4]),
+				$this->_escape_string($request[5]),
+				$this->_escape_string($request[6]),
+				$this->_escape_string($request[7]),
+				$this->_escape_string($request[8]),
+				$this->_escape_string(now())
+			);
+			
+			mail($to, $subject, $message, $headers);
 		}
 	}
 }
