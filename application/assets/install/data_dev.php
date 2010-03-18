@@ -38,6 +38,7 @@ $data = array(
 	'menu_categories',
 	'menu_items',
 	'messages',
+	'mission_groups',
 	'missions',
 	'news',
 	'news_categories',
@@ -1209,9 +1210,17 @@ $menu_items = array(
 		'menu_type' => 'sub',
 		'menu_cat' => 'sim'),
 	array(
-		'menu_name' => 'Personal Logs',
+		'menu_name' => 'Mission Groups',
 		'menu_group' => 0,
 		'menu_order' => 2,
+		'menu_link' => 'sim/missions/group',
+		'menu_sim_type' => 1,
+		'menu_type' => 'sub',
+		'menu_cat' => 'sim'),
+	array(
+		'menu_name' => 'Personal Logs',
+		'menu_group' => 0,
+		'menu_order' => 3,
 		'menu_link' => 'sim/listlogs',
 		'menu_sim_type' => 1,
 		'menu_type' => 'sub',
@@ -1219,7 +1228,7 @@ $menu_items = array(
 	array(
 		'menu_name' => 'Stats',
 		'menu_group' => 0,
-		'menu_order' => 3,
+		'menu_order' => 4,
 		'menu_link' => 'sim/stats',
 		'menu_sim_type' => 1,
 		'menu_type' => 'sub',
@@ -1227,7 +1236,7 @@ $menu_items = array(
 	array(
 		'menu_name' => 'Crew Awards',
 		'menu_group' => 0,
-		'menu_order' => 4,
+		'menu_order' => 5,
 		'menu_link' => 'sim/awards',
 		'menu_sim_type' => 1,
 		'menu_type' => 'sub',
@@ -1602,9 +1611,19 @@ $menu_items = array(
 		'menu_use_access' => 'y',
 		'menu_access' => 'manage/missions'),
 	array(
-		'menu_name' => 'Mission Posts',
+		'menu_name' => 'Mission Groups',
 		'menu_group' => 1,
 		'menu_order' => 1,
+		'menu_link' => 'manage/missiongroups',
+		'menu_sim_type' => 1,
+		'menu_type' => 'adminsub',
+		'menu_cat' => 'manage',
+		'menu_use_access' => 'y',
+		'menu_access' => 'manage/missions'),
+	array(
+		'menu_name' => 'Mission Posts',
+		'menu_group' => 1,
+		'menu_order' => 2,
 		'menu_link' => 'manage/posts',
 		'menu_sim_type' => 1,
 		'menu_type' => 'adminsub',
@@ -1614,7 +1633,7 @@ $menu_items = array(
 	array(
 		'menu_name' => 'Personal Logs',
 		'menu_group' => 1,
-		'menu_order' => 2,
+		'menu_order' => 3,
 		'menu_link' => 'manage/logs',
 		'menu_sim_type' => 1,
 		'menu_type' => 'adminsub',
@@ -1624,7 +1643,7 @@ $menu_items = array(
 	array(
 		'menu_name' => 'News Items',
 		'menu_group' => 1,
-		'menu_order' => 3,
+		'menu_order' => 4,
 		'menu_link' => 'manage/news',
 		'menu_sim_type' => 1,
 		'menu_type' => 'adminsub',
@@ -1634,7 +1653,7 @@ $menu_items = array(
 	array(
 		'menu_name' => 'News Categories',
 		'menu_group' => 1,
-		'menu_order' => 4,
+		'menu_order' => 5,
 		'menu_link' => 'manage/newscats',
 		'menu_sim_type' => 1,
 		'menu_type' => 'adminsub',
@@ -1644,7 +1663,7 @@ $menu_items = array(
 	array(
 		'menu_name' => 'Comments',
 		'menu_group' => 1,
-		'menu_order' => 5,
+		'menu_order' => 6,
 		'menu_link' => 'manage/comments',
 		'menu_sim_type' => 1,
 		'menu_type' => 'adminsub',
@@ -2004,6 +2023,17 @@ $messages = array(
 		'message_type' => 'title'),
 );
 
+$mission_groups = array(
+	array(
+		'misgroup_name' => 'Mission Group 1',
+		'misgroup_order' => 0,
+		'misgroup_desc' => 'This is the first mission group I have'),
+	array(
+		'misgroup_name' => 'Mission Group 2',
+		'misgroup_order' => 1,
+		'misgroup_desc' => 'This is the second mission group I have'),
+);
+
 $missions = array(
 	array(
 		'mission_title' => 'Encounter at Farpoint',
@@ -2012,6 +2042,7 @@ $missions = array(
 		'mission_status' => 'completed',
 		'mission_start' => 1167631200,
 		'mission_end' => 1170309600,
+		'mission_group' => 1,
 		'mission_desc' => "Captain Jean-Luc Picard leads the crew of the USS Enterprise-D on its maiden voyage, to examine a new planetary station for trade with the Federation. On the way, they encounter Q, an omnipotent extra-dimensional being, who challenges humanity as a barbaric, inferior species. Picard and his new crew must hold off Q's challenge and solve the puzzle of Farpoint station on Deneb IV, a base that is far more than it seems to be."),
 	array(
 		'mission_title' => 'The Naked Now',
@@ -2020,6 +2051,7 @@ $missions = array(
 		'mission_status' => 'completed',
 		'mission_start' => 1170309600,
 		'mission_end' => 1172728800,
+		'mission_group' => 1,
 		'mission_desc' => "The crew of the Enterprise is subjected to an exotic illness that drives them to unusual manic behavior."),
 	array(
 		'mission_title' => 'Code of Honor',
@@ -2028,6 +2060,7 @@ $missions = array(
 		'mission_status' => 'completed',
 		'mission_start' => 1172728800,
 		'mission_end' => 1175403600,
+		'mission_group' => 2,
 		'mission_desc' => "A mission of mercy is jeopardized when a planetary ruler decides he wants an Enterprise officer as his wife."),
 	array(
 		'mission_title' => 'The Last Outpost',
@@ -2036,6 +2069,7 @@ $missions = array(
 		'mission_status' => 'completed',
 		'mission_start' => 1175403600,
 		'mission_end' =>  1177995600,
+		'mission_group' => 1,
 		'mission_desc' => "In pursuit of Ferengi marauders, the Enterprise and its quarry become trapped by a mysterious planet that is draining both ship's energies."),
 	array(
 		'mission_title' => 'Where No One Has Gone Before',

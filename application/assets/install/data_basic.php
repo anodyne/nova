@@ -944,9 +944,17 @@ $menu_items = array(
 		'menu_type' => 'sub',
 		'menu_cat' => 'sim'),
 	array(
-		'menu_name' => 'Personal Logs',
+		'menu_name' => 'Mission Groups',
 		'menu_group' => 0,
 		'menu_order' => 2,
+		'menu_link' => 'sim/missions/group',
+		'menu_sim_type' => 1,
+		'menu_type' => 'sub',
+		'menu_cat' => 'sim'),
+	array(
+		'menu_name' => 'Personal Logs',
+		'menu_group' => 0,
+		'menu_order' => 3,
 		'menu_link' => 'sim/listlogs',
 		'menu_sim_type' => 1,
 		'menu_type' => 'sub',
@@ -954,7 +962,7 @@ $menu_items = array(
 	array(
 		'menu_name' => 'Stats',
 		'menu_group' => 0,
-		'menu_order' => 3,
+		'menu_order' => 4,
 		'menu_link' => 'sim/stats',
 		'menu_sim_type' => 1,
 		'menu_type' => 'sub',
@@ -962,7 +970,7 @@ $menu_items = array(
 	array(
 		'menu_name' => 'Crew Awards',
 		'menu_group' => 0,
-		'menu_order' => 4,
+		'menu_order' => 5,
 		'menu_link' => 'sim/awards',
 		'menu_sim_type' => 1,
 		'menu_type' => 'sub',
@@ -1337,9 +1345,19 @@ $menu_items = array(
 		'menu_use_access' => 'y',
 		'menu_access' => 'manage/missions'),
 	array(
-		'menu_name' => 'Mission Posts',
+		'menu_name' => 'Mission Groups',
 		'menu_group' => 1,
 		'menu_order' => 1,
+		'menu_link' => 'manage/missiongroups',
+		'menu_sim_type' => 1,
+		'menu_type' => 'adminsub',
+		'menu_cat' => 'manage',
+		'menu_use_access' => 'y',
+		'menu_access' => 'manage/missions'),
+	array(
+		'menu_name' => 'Mission Posts',
+		'menu_group' => 1,
+		'menu_order' => 2,
 		'menu_link' => 'manage/posts',
 		'menu_sim_type' => 1,
 		'menu_type' => 'adminsub',
@@ -1349,7 +1367,7 @@ $menu_items = array(
 	array(
 		'menu_name' => 'Personal Logs',
 		'menu_group' => 1,
-		'menu_order' => 2,
+		'menu_order' => 3,
 		'menu_link' => 'manage/logs',
 		'menu_sim_type' => 1,
 		'menu_type' => 'adminsub',
@@ -1359,7 +1377,7 @@ $menu_items = array(
 	array(
 		'menu_name' => 'News Items',
 		'menu_group' => 1,
-		'menu_order' => 3,
+		'menu_order' => 4,
 		'menu_link' => 'manage/news',
 		'menu_sim_type' => 1,
 		'menu_type' => 'adminsub',
@@ -1369,7 +1387,7 @@ $menu_items = array(
 	array(
 		'menu_name' => 'News Categories',
 		'menu_group' => 1,
-		'menu_order' => 4,
+		'menu_order' => 5,
 		'menu_link' => 'manage/newscats',
 		'menu_sim_type' => 1,
 		'menu_type' => 'adminsub',
@@ -1379,7 +1397,7 @@ $menu_items = array(
 	array(
 		'menu_name' => 'Comments',
 		'menu_group' => 1,
-		'menu_order' => 5,
+		'menu_order' => 6,
 		'menu_link' => 'manage/comments',
 		'menu_sim_type' => 1,
 		'menu_type' => 'adminsub',
