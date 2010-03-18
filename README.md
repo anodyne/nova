@@ -22,6 +22,7 @@ Latest Updates
 * updated some view files to change the URLs for mission pages
 * updated the missions management page to be able to assign a mission group
 * updated the manage controller to handle management of mission groups
+* updated the copyright year of the nova license
 * added the manage/missiongroups view file
 * added the manage/missiongroups js view file
 * added the sim/missions/group view file
@@ -75,6 +76,7 @@ Changes in 0.9.8
 * updated some view files to change the URLs for mission pages
 * updated the missions management page to be able to assign a mission group
 * updated the manage controller to handle management of mission groups
+* updated the copyright year of the nova license
 * fixed errors in the upgrade process
 * fixed errors after upgrading on the characters management page
 * fixed errors after upgrading on the npc management page
