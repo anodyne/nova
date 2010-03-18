@@ -59,6 +59,7 @@ $data = array(
 	'menu_categories'			=> array('id' => 'menucat_id', 'fields' => 'fields_menu_categories'),
 	'menu_items'				=> array('id' => 'menu_id', 'fields' => 'fields_menu_items'),
 	'messages'					=> array('id' => 'message_id', 'fields' => 'fields_messages'),
+	'mission_groups'			=> array('id' => 'misgroup_id', 'fields' => 'fields_mission_groups'),
 	'missions'					=> array('id' => 'mission_id', 'fields' => 'fields_missions'),
 	'news'						=> array('id' => 'news_id', 'fields' => 'fields_news'),
 	'news_categories'			=> array('id' => 'newscat_id', 'fields' => 'fields_news_categories'),
@@ -854,6 +855,22 @@ $fields_messages = array(
 		'default' => 'n')
 );
 
+$fields_mission_groups = array(
+	'misgroup_id' => array(
+		'type' => 'INT',
+		'constraint' => 5,
+		'auto_increment' => TRUE),
+	'misgroup_name' => array(
+		'type' => 'VARCHAR',
+		'constraint' => 255,
+		'default' => ''),
+	'misgroup_order' => array(
+		'type' => 'INT',
+		'constraint' => 5),
+	'misgroup_desc' => array(
+		'type' => 'TEXT')
+);
+
 $fields_missions = array(
 	'mission_id' => array(
 		'type' => 'INT',
@@ -866,6 +883,9 @@ $fields_missions = array(
 	'mission_images' => array(
 		'type' => 'TEXT'),
 	'mission_order' => array(
+		'type' => 'INT',
+		'constraint' => 5),
+	'mission_group' => array(
 		'type' => 'INT',
 		'constraint' => 5),
 	'mission_status' => array(
