@@ -55,6 +55,28 @@ $system_info = array(
 |---------------------------------------------------------------
 */
 
+$add_tables = array(
+	'mission_groups' => array(
+		'id' => 'misgroup_id',
+		'fields' => 'fields_mission_groups')
+);
+
+$fields_mission_groups = array(
+	'misgroup_id' => array(
+		'type' => 'INT',
+		'constraint' => 5,
+		'auto_increment' => TRUE),
+	'misgroup_name' => array(
+		'type' => 'VARCHAR',
+		'constraint' => 255,
+		'default' => ''),
+	'misgroup_order' => array(
+		'type' => 'INT',
+		'constraint' => 5),
+	'misgroup_desc' => array(
+		'type' => 'TEXT')
+);
+
 if (isset($add_tables))
 {
 	foreach ($add_table as $key => $value)
@@ -112,6 +134,14 @@ if (isset($rename_tables))
 |---------------------------------------------------------------
 */
 
+$add_column = array(
+	'missions' => array(
+		'mission_group' => array(
+			'type' => 'INT',
+			'constraint' => 5),
+		),
+);
+
 if (isset($add_column))
 {
 	foreach ($add_column as $key => $value)
@@ -165,6 +195,32 @@ if (isset($drop_column))
 | DATA TO INSERT/UPDATE/DELETE
 |---------------------------------------------------------------
 */
+
+/* add the mission group menu item */
+$array = array(
+	'menu_name' => 'Mission Groups',
+	'menu_group' => 0,
+	'menu_order' => 2,
+	'menu_link' => 'sim/missions/group',
+	'menu_sim_type' => 1,
+	'menu_type' => 'sub',
+	'menu_cat' => 'sim'
+);
+$this->db->insert('menu_items', $array);
+
+/* add the mission group management menu item */
+$array = array(
+	'menu_name' => 'Mission Groups',
+	'menu_group' => 1,
+	'menu_order' => 1,
+	'menu_link' => 'manage/missiongroups',
+	'menu_sim_type' => 1,
+	'menu_type' => 'adminsub',
+	'menu_cat' => 'manage',
+	'menu_use_access' => 'y',
+	'menu_access' => 'manage/missions'
+);
+$this->db->insert('menu_items', $array);
 
 /* add system version info */
 $this->load->model('system_model', 'sys');
