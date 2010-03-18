@@ -1,3 +1,15 @@
+03.17.2010
+
+* updated the install controller to take the xmlrpc extension not being loaded into account
+* updated the upgrade controller to take the xmlrpc extension not being loaded into account
+* updated the update controller to take the xmlrpc extension not being loaded into account
+
+* fixed bug in the upgrade process where last post wasn't put into the characters table too
+* fixed bug in the upgrade process where news items weren't updated with the proper author user ID
+* fixed bug in the upgrade process where personal logs weren't updated with the proper author user ID
+
+==========
+
 03.16.2010
 
 * fixed potential bug where nova could look for array indices that wouldn't exist

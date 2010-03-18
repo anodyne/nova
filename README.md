@@ -8,16 +8,22 @@ Release Candidate 3 (0.9.8)
 
 Last Update
 -----------
-16 March 2010
+17 March 2010
 
 Latest Updates
 --------------
 * fixed potential bug where nova could look for array indices that wouldn't exist
 * fixed bug in counting character's posts where low-numbered ID characters could have highly exaggerated post counts
 * fixed bug in coutning users' posts where low-numbered ID users could have highly exaggerated post counts
+* fixed bug in the upgrade process where last post wasn't put into the characters table too
+* fixed bug in the upgrade process where news items weren't updated with the proper author user ID
+* fixed bug in the upgrade process where personal logs weren't updated with the proper author user ID
 * updated the install controller to log any XML-RPC errors
 * updated the update controller to log any XML-RPC errors
 * updated the upgrade controller to log any XML-RPC errors
+* updated the install controller to take the xmlrpc extension not being loaded into account
+* updated the upgrade controller to take the xmlrpc extension not being loaded into account
+* updated the update controller to take the xmlrpc extension not being loaded into account
 
 Changes in 0.9.8
 ----------------
@@ -51,6 +57,9 @@ Changes in 0.9.8
 * updated the install controller to log any XML-RPC errors
 * updated the update controller to log any XML-RPC errors
 * updated the upgrade controller to log any XML-RPC errors
+* updated the install controller to take the xmlrpc extension not being loaded into account
+* updated the upgrade controller to take the xmlrpc extension not being loaded into account
+* updated the update controller to take the xmlrpc extension not being loaded into account
 * fixed errors in the upgrade process
 * fixed errors after upgrading on the characters management page
 * fixed errors after upgrading on the npc management page
@@ -62,6 +71,9 @@ Changes in 0.9.8
 * fixed potential bug where nova could look for array indices that wouldn't exist
 * fixed bug in counting character's posts where low-numbered ID characters could have highly exaggerated post counts
 * fixed bug in coutning users' posts where low-numbered ID users could have highly exaggerated post counts
+* fixed bug in the upgrade process where last post wasn't put into the characters table too
+* fixed bug in the upgrade process where news items weren't updated with the proper author user ID
+* fixed bug in the upgrade process where personal logs weren't updated with the proper author user ID
 
 Version History
 ---------------
