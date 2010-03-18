@@ -22,7 +22,7 @@
 						<?php echo $label['by'] .' '. $post['author'];?><br />
 						
 						<strong><?php echo $label['mission'];?></strong>
-						<?php echo anchor('sim/missions/'. $post['mission_id'], $post['mission']);?>
+						<?php echo anchor('sim/missions/id/'. $post['mission_id'], $post['mission']);?>
 					</span>
 				</td>
 				<td class="col_30pct align_center fontSmall"><?php echo $post['date'];?></td>

@@ -27,7 +27,7 @@
 
 <p class="fontSmall gray">
 	<strong><?php echo $label['mission'];?></strong>
-	<?php echo anchor('sim/missions/'. $mission_id, $mission);?>
+	<?php echo anchor('sim/missions/id/'. $mission_id, $mission);?>
 	
 	<?php if (!empty($location)): ?>
 		<br /><strong><?php echo $label['location'] .'</strong> '. $location;?>

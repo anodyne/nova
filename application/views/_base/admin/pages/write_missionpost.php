@@ -46,7 +46,7 @@
 			<?php if (isset($missions)): ?>
 				<?php echo form_dropdown('mission', $missions, $key['missions']);?>
 			<?php else: ?>
-				<?php echo anchor('sim/missions/'. $mission['id'], $mission['title']); ?>
+				<?php echo anchor('sim/missions/id/'. $mission['id'], $mission['title']); ?>
 				<?php echo form_hidden('mission', $mission['id']);?>
 			<?php endif; ?>
 		</p>

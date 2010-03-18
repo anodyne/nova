@@ -22,7 +22,7 @@
 					<?php echo anchor('sim/viewpost/'. $post['id'], $post['title'], array('class' => 'bold'));?><br />
 					<span class="fontSmall"><?php echo $label['on'] .' '. $post['date'];?></span>
 				</td>
-				<td><?php echo anchor('sim/missions/'. $post['mission_id'], $post['mission']);?></td>
+				<td><?php echo anchor('sim/missions/id/'. $post['mission_id'], $post['mission']);?></td>
 				<td class="col_75 align_center">
 					<?php echo anchor('sim/viewpost/'. $post['id'], $label['view_post'], array('class' => 'bold'));?>
 				</td>
@@ -45,7 +45,7 @@
 							<?php echo anchor('sim/viewpost/'. $post['id'], $post['title'], array('class' => 'bold'));?><br />
 							<span class="fontSmall"><?php echo $label['on'] .' '. $post['date'];?></span>
 						</td>
-						<td><?php echo anchor('sim/missions/'. $post['mission_id'], $post['mission']);?></td>
+						<td><?php echo anchor('sim/missions/id/'. $post['mission_id'], $post['mission']);?></td>
 						<td class="col_75 align_center">
 							<?php echo anchor('sim/viewpost/'. $post['id'], $label['view_post'], array('class' => 'bold'));?>
 						</td>

@@ -262,7 +262,7 @@
 								<span class="fontSmall gray">
 									<?php echo $label['by'] .' '. $p['authors'];?><br />
 									<strong><?php echo $label['mission'];?>:</strong>
-									<?php echo anchor('sim/missions/'. $p['mission_id'], $p['mission']);?>
+									<?php echo anchor('sim/missions/id/'. $p['mission_id'], $p['mission']);?>
 								</span>
 							</td>
 							<td class="col_30pct align_center fontSmall"><?php echo $p['date'];?></td>
