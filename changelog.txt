@@ -1,3 +1,23 @@
+03.18.2010
+
+* updated the database schema to add the mission_group field to the missions table
+* updated the database schema to add the mission groups table
+* updated the install data
+* updated the missions model with methods for mission groups
+* updated the language files
+* updated the 0.9.8 update file
+* updated the sim controller to handle displaying mission groups
+* updated some view files to change the URLs for mission pages
+* updated the missions management page to be able to assign a mission group
+* updated the manage controller to handle management of mission groups
+
+* added the manage/missiongroups view file
+* added the manage/missiongroups js view file
+* added the sim/missions/group view file
+* added the sim/missions/group/X view file
+
+==========
+
 03.17.2010
 
 * updated the install controller to take the xmlrpc extension not being loaded into account
