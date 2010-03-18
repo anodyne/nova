@@ -2007,13 +2007,16 @@ class Manage_base extends Controller {
 					}
 					
 					foreach ($array as $a => $b)
-					{ /* update the positions */
+					{
 						$update += $this->mis->update_mission_group($a, $b);
 					}
 					
 					foreach ($delete as $del)
-					{ /* delete the positions marked for deletion */
+					{
 						$delete = $this->mis->delete_mission_group($del);
+						
+						$array = array('mission_group' => NULL);
+						$this->mis->update_mission('', $array, array('mission_group' => $del));
 					}
 					
 					if ($update > 0)
