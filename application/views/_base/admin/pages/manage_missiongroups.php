@@ -1,5 +1,7 @@
 <?php echo text_output($header, 'h1', 'page-head');?>
 
+<?php echo text_output($text);?>
+
 <p class="bold">
 	<a href="#" id="add" class="image"><?php echo img($images['add']) .' '. $label['addgroup'];?></a>
 </p>

@@ -2081,6 +2081,14 @@ class Manage_base extends Controller {
 		$js_loc = js_location('manage_missiongroups_js', $this->skin, 'admin');
 		
 		$data['header'] = ucwords(lang('actions_manage') .' '. lang('global_mission') .' '. lang('labels_groups'));
+		$data['text'] = sprintf(
+			lang('text_mission_groups'),
+			ucfirst(lang('global_mission')),
+			lang('global_missions'),
+			lang('global_missions'),
+			ucfirst(lang('global_mission')),
+			lang('global_missions')
+		);
 		
 		$data['buttons'] = array(
 			'update' => array(
