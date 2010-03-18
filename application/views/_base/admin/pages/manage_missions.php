@@ -29,7 +29,7 @@
 							</span>
 						</td>
 						<td class="col_100 align_right">
-							<?php echo anchor('sim/missions/'. $i['id'], img($images['view']), array('class' => 'image'));?>
+							<?php echo anchor('sim/missions/id/'. $i['id'], img($images['view']), array('class' => 'image'));?>
 							&nbsp;
 							<a href="#" myAction="delete" myID="<?php echo $i['id'];?>" rel="facebox" class="image"><?php echo img($images['delete']);?></a>
 							&nbsp;
@@ -83,7 +83,7 @@
 							<?php echo text_output($i['desc'], 'span', 'fontSmall gray');?>
 						</td>
 						<td class="col_100 align_right">
-							<?php echo anchor('sim/missions/'. $i['id'], img($images['view']), array('class' => 'image'));?>
+							<?php echo anchor('sim/missions/id/'. $i['id'], img($images['view']), array('class' => 'image'));?>
 							&nbsp;
 							<a href="#" myAction="delete" myID="<?php echo $i['id'];?>" rel="facebox" class="image"><?php echo img($images['delete']);?></a>
 							&nbsp;

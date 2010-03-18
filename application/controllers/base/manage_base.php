@@ -1932,6 +1932,195 @@ class Manage_base extends Controller {
 		$this->template->render();
 	}
 	
+	function missiongroups()
+	{
+		/* check access */
+		$this->auth->check_access('manage/missions');
+		
+		/* load the resources */
+		$this->load->model('missions_model', 'mis');
+		
+		if (isset($_POST['submit']))
+		{
+			switch ($this->uri->segment(3))
+			{
+				case 'add':
+					foreach ($_POST as $key => $value)
+					{
+						$insert_array[$key] = $value;
+					}
+					
+					unset($insert_array['submit']);
+					
+					/* insert the record */
+					$insert = $this->mis->add_mission_group($insert_array);
+					
+					if ($insert > 0)
+					{
+						$message = sprintf(
+							lang('flash_success'),
+							ucfirst(lang('global_mission') .' '. lang('labels_group')),
+							lang('actions_created'),
+							''
+						);
+
+						$flash['status'] = 'success';
+						$flash['message'] = text_output($message);
+					}
+					else
+					{
+						$message = sprintf(
+							lang('flash_failure'),
+							ucfirst(lang('global_mission') .' '. lang('labels_group')),
+							lang('actions_created'),
+							''
+						);
+
+						$flash['status'] = 'error';
+						$flash['message'] = text_output($message);
+					}
+					
+					/* write everything to the template */
+					$this->template->write_view('flash_message', '_base/admin/pages/flash', $flash);
+					
+					break;
+					
+				case 'edit':
+					$array = array();
+					$delete = (isset($_POST['delete'])) ? $_POST['delete'] : array();
+					$update = 0;
+					
+					foreach ($_POST as $key => $value)
+					{
+						$loc = strpos($key, '_');
+						
+						if ($loc !== FALSE)
+						{
+							$loc_pos = substr($key, 0, $loc);
+							
+							if (!in_array($loc_pos, $delete))
+							{ /* if the item is being deleted don't add it to the update array */
+								$new_key = 'misgroup_'. substr($key, ($loc+1));
+								$array[$loc_pos][$new_key] = $value;
+							}
+						}
+					}
+					
+					foreach ($array as $a => $b)
+					{ /* update the positions */
+						$update += $this->mis->update_mission_group($a, $b);
+					}
+					
+					foreach ($delete as $del)
+					{ /* delete the positions marked for deletion */
+						$delete = $this->mis->delete_mission_group($del);
+					}
+					
+					if ($update > 0)
+					{
+						$message = sprintf(
+							lang('flash_success_plural'),
+							ucfirst(lang('global_mission') .' '. lang('labels_groups')),
+							lang('actions_updated'),
+							''
+						);
+
+						$flash['status'] = 'success';
+						$flash['message'] = text_output($message);
+					}
+					else
+					{
+						$message = sprintf(
+							lang('flash_failure_plural'),
+							ucfirst(lang('global_mission') .' '. lang('labels_groups')),
+							lang('actions_updated'),
+							''
+						);
+
+						$flash['status'] = 'error';
+						$flash['message'] = text_output($message);
+					}
+					
+					/* write everything to the template */
+					$this->template->write_view('flash_message', '_base/admin/pages/flash', $flash);
+					
+					break;
+			}
+		}
+		
+		/* grab the mission groups */
+		$groups = $this->mis->get_all_mission_groups();
+		
+		if ($groups->num_rows() > 0)
+		{
+			foreach ($groups->result() as $g)
+			{
+				$data['groups'][$g->misgroup_id] = array(
+					'id' => $g->misgroup_id,
+					'name' => array(
+						'name' => $g->misgroup_id .'_name',
+						'value' => $g->misgroup_name),
+					'delete' => array(
+						'id' => $g->misgroup_id .'_id',
+						'name' => 'delete[]',
+						'value' => $g->misgroup_id),
+					'order' => array(
+						'name' => $g->misgroup_id .'_order',
+						'value' => $g->misgroup_order,
+						'class' => 'small'),
+					'desc' => array(
+						'name' => $g->misgroup_id .'_desc',
+						'value' => $g->misgroup_desc,
+						'rows' => 3),
+				);
+			}
+		}
+		
+		/* figure out where the view should be coming from */
+		$view_loc = view_location('manage_missiongroups', $this->skin, 'admin');
+		$js_loc = js_location('manage_missiongroups_js', $this->skin, 'admin');
+		
+		$data['header'] = ucwords(lang('actions_manage') .' '. lang('global_mission') .' '. lang('labels_groups'));
+		
+		$data['buttons'] = array(
+			'update' => array(
+				'type' => 'submit',
+				'class' => 'button-main',
+				'name' => 'submit',
+				'value' => 'submit',
+				'content' => ucwords(lang('actions_update'))),
+			'add' => array(
+				'type' => 'submit',
+				'class' => 'button-main',
+				'name' => 'submit',
+				'value' => 'submit',
+				'content' => ucwords(lang('actions_add')))
+		);
+		
+		$data['images'] = array(
+			'add' => array(
+				'src' => img_location('icon-add.png', $this->skin, 'admin'),
+				'alt' => '',
+				'class' => 'inline_img_left'),
+		);
+		
+		$data['label'] = array(
+			'addgroup' => ucwords(lang('actions_add') .' '. lang('global_mission') .' '. lang('labels_group') .' '. RARROW),
+			'name' => ucfirst(lang('labels_name')),
+			'delete' => ucfirst(lang('actions_delete')),
+			'order' => ucfirst(lang('labels_order')),
+			'desc' => ucfirst(lang('labels_desc')),
+		);
+		
+		/* write the data to the template */
+		$this->template->write('title', $data['header']);
+		$this->template->write_view('content', $view_loc, $data);
+		$this->template->write_view('javascript', $js_loc);
+		
+		/* render the template */
+		$this->template->render();
+	}
+	
 	function missions()
 	{
 		/* check access */
@@ -1967,6 +2156,7 @@ class Manage_base extends Controller {
 						'mission_end' => $end,
 						'mission_notes' => $this->input->post('mission_notes', TRUE),
 						'mission_summary' => $this->input->post('mission_summary', TRUE),
+						'mission_group' => $this->input->post('mission_group', TRUE),
 					);
 					
 					/* insert the record */
@@ -2190,7 +2380,20 @@ class Manage_base extends Controller {
 					'name' => 'mission_notes',
 					'rows' => 12,
 					'value' => ($item == FALSE) ? '' : $item->mission_notes),
+				'group' => ($item === FALSE) ? '' : $item->mission_group,
 			);
+			
+			$groups = $this->mis->get_all_mission_groups();
+			
+			if ($groups->num_rows() > 0)
+			{
+				$data['groups'][0] = ucwords(lang('labels_please') .' '. lang('actions_choose')) .' '. lang('labels_a') .' '. ucfirst(lang('labels_group'));
+				
+				foreach ($groups->result() as $g)
+				{
+					$data['groups'][$g->misgroup_id] = $g->misgroup_name;
+				}
+			}
 			
 			$data['directory'] = array();
 		
@@ -2312,6 +2515,9 @@ class Manage_base extends Controller {
 			'on' => ucfirst(lang('labels_on')),
 			'off' => ucfirst(lang('labels_off')),
 			'upload' => ucwords(lang('actions_upload') .' '. lang('labels_images') .' '. RARROW),
+			'group' => ucwords(lang('global_mission') .' '. lang('labels_group')),
+			'nogroups' => sprintf(lang('error_not_found'), lang('global_mission') .' '. lang('labels_groups')),
+			'managegroups' => '[ '. ucwords(lang('actions_manage') .' '. lang('global_mission') .' '. lang('labels_groups')) .' ]',
 		);
 		
 		$data['values'] = array(

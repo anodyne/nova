@@ -22,6 +22,19 @@
 		<p>
 			<kbd><?php echo $label['order'];?></kbd>
 			<?php echo form_input($inputs['order']);?>
+		</p>
+		<p>
+			<kbd>
+				<?php echo $label['group'];?>
+				&nbsp;
+				<span class="fontTiny"><?php echo anchor('manage/missiongroups', $label['managegroups'], array('class' => 'edit'));?></span>
+			</kbd>
+			<?php if (isset($groups)): ?>
+				<?php echo form_dropdown('mission_group', $groups, $inputs['group']);?>
+			<?php else: ?>
+				<?php echo text_output($label['nogroups'], 'span', 'orange bold fontSmall');?>
+				<?php echo form_hidden('mission_group', 0);?>
+			<?php endif;?>
 		</p><br />
 		
 		<p>
