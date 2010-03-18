@@ -142,6 +142,8 @@ $lang['text_docking_reject'] = "Are you sure you want to reject the docking requ
 
 $lang['text_dynamic_emails'] = "This message includes in the ability to set several variables in the body of the message that will be automatically replaced when the message is parsed. This message includes the following variables that can be used:<br /><br />%s";
 
+$lang['text_mission_groups'] = "%s groups are a new way to organize your %s to make it easier to find related missions. Whether the %s are consecutive or not, you can assign them to groups to display them together on the %s Groups page and give players the ability to quickly see and move through groups of similar %s.";
+
 /*
 |---------------------------------------------------------------
 | INFORMATIONAL MESSAGES
