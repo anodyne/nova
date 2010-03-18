@@ -158,9 +158,20 @@ class Missions_model_base extends Model {
 	|---------------------------------------------------------------
 	*/
 	
-	function update_mission($id = '', $data = '')
+	function update_mission($id = '', $data = '', $where = '')
 	{
-		$this->db->where('mission_id', $id);
+		if (is_array($where))
+		{
+			foreach ($where as $key => $value)
+			{
+				$this->db->where($key, $value);
+			}
+		}
+		else
+		{
+			$this->db->where('mission_id', $id);
+		}
+		
 		$query = $this->db->update('missions', $data);
 		
 		$this->dbutil->optimize_table('missions');
