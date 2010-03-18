@@ -1138,6 +1138,7 @@ class Sim_base extends Controller {
 						$data['basic']['status'] = ucfirst($row->mission_status);
 						$data['basic']['start'] = mdate($this->options['date_format'], gmt_to_local($row->mission_start, $this->timezone, $this->dst));
 						$data['basic']['end'] = NULL;
+						$data['basic']['group'] = $this->mis->get_mission_group($row->mission_group, array('misgroup_id', 'misgroup_name'));
 						
 						if (!empty($row->mission_end))
 						{
@@ -1335,6 +1336,7 @@ class Sim_base extends Controller {
 			'date_start' => ucwords(lang('status_start') .' '. lang('labels_date')),
 			'desc' => ucfirst(lang('labels_desc')),
 			'edit' => '[ '. ucfirst(lang('actions_edit')) .' ]',
+			'group' => ucwords(lang('global_mission') .' '. lang('labels_group')),
 			'included' => ucwords(lang('labels_included') .' '. lang('global_missions')),
 			'location' => ucfirst(lang('labels_location')),
 			'mission' => ucfirst(lang('global_mission')),

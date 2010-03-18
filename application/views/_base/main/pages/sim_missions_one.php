@@ -40,6 +40,15 @@
 					<td class="cell-spacer"></td>
 					<td><?php echo $basic['desc'];?></td>
 				</tr>
+				<?php if (is_array($basic['group'])): ?>
+					<?php echo table_row_spacer(3, 10);?>
+					<tr>
+						<td class="cell-label"><?php echo $label['group'];?></td>
+						<td class="cell-spacer"></td>
+						<td><?php echo anchor('sim/missions/group/'. $basic['group']['misgroup_id'], $basic['group']['misgroup_name']);?></td>
+					</tr>
+				<?php endif;?>
+				
 				<?php echo table_row_spacer(3, 10);?>
 				<tr>
 					<td class="cell-label"><?php echo $label['date_start'];?></td>
