@@ -1065,7 +1065,8 @@ class Sim_base extends Controller {
 	function missions()
 	{
 		/* set the variables */
-		$id = $this->uri->segment(3, FALSE, TRUE);
+		$type = $this->uri->segment(3);
+		$id = $this->uri->segment(4, FALSE, TRUE);
 		
 		/* load the models */
 		$this->load->model('missions_model', 'mis');
@@ -1076,176 +1077,277 @@ class Sim_base extends Controller {
 		/* get the title */
 		$title = ucfirst(lang('global_missions'));
 		
-		if ($id !== FALSE)
+		switch ($type)
 		{
-			$row = $this->mis->get_mission($id);
-			
-			if ($row !== FALSE)
-			{
-				$this->template->write('title', $title .' - '. $row->mission_title);
-				
-				if (!empty($row->mission_images))
+			case 'id':
+				if ($id === FALSE)
 				{
-					$images = explode(',', $row->mission_images);
-					$images_count = count($images);
+					$missions = $this->mis->get_all_missions('current');
 					
-					/* set the source */
-					$src = asset_location('images/missions', trim($images[0]));
-					
-					/* build the mission image array */
-					$data['mission_img'] = array(
-						'src' => $src,
-						'alt' => $row->mission_title,
-						'class' => 'image reflect rheight20 ropacity30'
-					);
-					
-					/* build the array of the rest of the images */
-					for ($i=1; $i < $images_count; $i++)
+					if ($missions->num_rows() > 0)
 					{
-						$src = asset_location('images/missions', trim($images[$i]));
+						$row = $missions->last_row();
+						$id = $row->mission_id;
+					}
+				}
+				
+				if ($id !== FALSE)
+				{
+					$row = (!isset($row)) ? $this->mis->get_mission($id) : $row;
+					
+					if ($row !== FALSE)
+					{
+						$this->template->write('title', $title .' - '. $row->mission_title);
 						
-						/* build the array */
-						$data['image_array'][] = array(
-							'src' => $src,
-							'alt' => $row->mission_title,
-							'class' => 'image'
+						if (!empty($row->mission_images))
+						{
+							$images = explode(',', $row->mission_images);
+							$images_count = count($images);
+							
+							/* set the source */
+							$src = asset_location('images/missions', trim($images[0]));
+							
+							/* build the mission image array */
+							$data['mission_img'] = array(
+								'src' => $src,
+								'alt' => $row->mission_title,
+								'class' => 'image reflect rheight20 ropacity30'
+							);
+							
+							/* build the array of the rest of the images */
+							for ($i=1; $i < $images_count; $i++)
+							{
+								$src = asset_location('images/missions', trim($images[$i]));
+								
+								/* build the array */
+								$data['image_array'][] = array(
+									'src' => $src,
+									'alt' => $row->mission_title,
+									'class' => 'image'
+								);
+							}
+						}
+						
+						/* data for the view */
+						$data['header'] = $row->mission_title;
+						$data['mission'] = $row->mission_id;
+						
+						/* basic mission info */
+						$data['info_header'] = ucwords(lang('global_mission') .' '. lang('labels_info'));
+						$data['basic']['desc'] = $row->mission_desc;
+						$data['basic']['status'] = ucfirst($row->mission_status);
+						$data['basic']['start'] = mdate($this->options['date_format'], gmt_to_local($row->mission_start, $this->timezone, $this->dst));
+						$data['basic']['end'] = NULL;
+						
+						if (!empty($row->mission_end))
+						{
+							$data['basic']['end'] = mdate($this->options['date_format'], gmt_to_local($row->mission_end, $this->timezone, $this->dst));
+						}
+						
+						/* summary data */
+						$data['summary']['title'] = ucwords(lang('global_mission') .' '. lang('labels_summary'));
+						$data['summary']['content'] = $row->mission_summary;
+						
+						/* grab the last 25 posts */
+						$posts = $this->posts->get_post_list($row->mission_id, 'desc', 25);
+						
+						if ($posts->num_rows() > 0)
+						{
+							$data['posts_header'] = ucwords(lang('global_missionposts'));
+							
+							foreach ($posts->result() as $post)
+							{
+								$pid = $post->post_id;
+								
+								$data['posts'][$pid]['id'] = $post->post_id;
+								$data['posts'][$pid]['title'] = $post->post_title;
+								$data['posts'][$pid]['authors'] = $this->char->get_authors($post->post_authors);
+								$data['posts'][$pid]['timeline'] = $post->post_timeline;
+								$data['posts'][$pid]['location'] = $post->post_location;
+							}
+						}
+						
+						/* figure out where the view should be coming from */
+						$view_loc = view_location('sim_missions_one', $this->skin, 'main');
+					}
+					else
+					{
+						/* figure out where the view should be coming from */
+						$view_loc = view_location('error', $this->skin, 'main');
+					
+						/* set the data for the view */
+						$data['header'] = lang('error_head_not_found');
+						$data['msg_error'] = lang('error_msg_no_mission');
+						
+						/* set the page title */
+						$this->template->write('title', lang('error_pagetitle'));
+					}
+				}
+		
+				break;
+				
+			case 'group':
+				if ($id === FALSE)
+				{
+					$groups = $this->mis->get_all_mission_groups();
+					
+					if ($groups->num_rows() > 0)
+					{
+						foreach ($groups->result() as $g)
+						{
+							$data['groups'][$g->misgroup_id] = array(
+								'id' => $g->misgroup_id,
+								'name' => $g->misgroup_name,
+								'desc' => $g->misgroup_desc,
+								'count' => $this->mis->get_mission_where(array('mission_group' => $g->misgroup_id))
+							);
+						}
+					}
+					
+					$title = ucwords(lang('global_mission') .' '. lang('labels_groups'));
+					$data['header'] = $title;
+					
+					/* figure out where the view should be coming from */
+					$view_loc = view_location('sim_missions_groups_all', $this->skin, 'main');
+					
+					/* set the page title */
+					$this->template->write('title', $title);
+				}
+				else
+				{
+					$group = $this->mis->get_mission_group($id);
+					
+					if ($group !== FALSE)
+					{
+						$data['group'] = array(
+							'id' => $group->misgroup_id,
+							'name' => $group->misgroup_name,
+							'desc' => $group->misgroup_desc,
+							'posts' => 0
 						);
-					}
-				}
-				
-				/* data for the view */
-				$data['header'] = $row->mission_title;
-				$data['mission'] = $row->mission_id;
-				
-				/* basic mission info */
-				$data['info_header'] = ucwords(lang('global_mission') .' '. lang('labels_info'));
-				$data['basic']['desc'] = $row->mission_desc;
-				$data['basic']['status'] = ucfirst($row->mission_status);
-				$data['basic']['start'] = mdate($this->options['date_format'], gmt_to_local($row->mission_start, $this->timezone, $this->dst));
-				$data['basic']['end'] = NULL;
-				
-				if (!empty($row->mission_end))
-				{
-					$data['basic']['end'] = mdate($this->options['date_format'], gmt_to_local($row->mission_end, $this->timezone, $this->dst));
-				}
-				
-				/* summary data */
-				$data['summary']['title'] = ucwords(lang('global_mission') .' '. lang('labels_summary'));
-				$data['summary']['content'] = $row->mission_summary;
-				
-				/* grab the last 25 posts */
-				$posts = $this->posts->get_post_list($row->mission_id, 'desc', 25);
-				
-				if ($posts->num_rows() > 0)
-				{
-					$data['posts_header'] = ucwords(lang('global_missionposts'));
-					
-					foreach ($posts->result() as $post)
-					{
-						$pid = $post->post_id;
 						
-						$data['posts'][$pid]['id'] = $post->post_id;
-						$data['posts'][$pid]['title'] = $post->post_title;
-						$data['posts'][$pid]['authors'] = $this->char->get_authors($post->post_authors);
-						$data['posts'][$pid]['timeline'] = $post->post_timeline;
-						$data['posts'][$pid]['location'] = $post->post_location;
+						$missions = $this->mis->get_mission_where(array('mission_group' => $group->misgroup_id), 'full');
+						
+						if ($missions->num_rows() > 0)
+						{
+							foreach ($missions->result() as $m)
+							{
+								$data['group']['missions'][$m->mission_id] = array(
+									'id' => $m->mission_id,
+									'title' => $m->mission_title,
+									'desc' => $m->mission_desc,
+									'count' => $this->posts->count_mission_posts($m->mission_id, $this->options['post_count_format'])
+								);
+								
+								$data['group']['posts'] += $data['group']['missions'][$m->mission_id]['count'];
+							}
+						}
+						
+						$title = ucwords(lang('global_mission') .' '. lang('labels_group') .' - '. $group->misgroup_name);
+						$data['header'] = $group->misgroup_name;
+					}
+					else
+					{
+						$title = ucwords(lang('global_mission') .' '. lang('labels_group'));
+						$data['header'] = $title;
+					}
+					
+					/* figure out where the view should be coming from */
+					$view_loc = view_location('sim_missions_groups_one', $this->skin, 'main');
+					
+					/* set the page title */
+					$this->template->write('title', $title);
+				}
+				
+				break;
+			
+			default:
+				$missions = $this->mis->get_all_missions();
+				
+				$data['label']['s_current'] = ucwords(lang('status_current') .' '. lang('global_missions'));
+				$data['label']['s_completed'] = ucwords(lang('status_completed') .' '. lang('global_missions'));
+				$data['label']['s_upcoming'] = ucwords(lang('status_upcoming') .' '. lang('global_missions'));
+				
+				if ($missions->num_rows() > 0)
+				{
+					foreach ($missions->result() as $row)
+					{
+						$mid = $row->mission_id;
+						$status = $row->mission_status;
+						
+						$data['missions'][$status][$mid]['id'] = $row->mission_id;
+						$data['missions'][$status][$mid]['title'] = $row->mission_title;
+						$data['missions'][$status][$mid]['desc'] = $row->mission_desc;
+						$data['missions'][$status][$mid]['count'] = $this->posts->count_mission_posts($row->mission_id, $this->options['post_count_format']);
+						$data['missions'][$status][$mid]['group'] = $this->mis->get_mission_group($row->mission_group, array('misgroup_id', 'misgroup_name'));
+					}
+					
+					if (isset($data['missions']['current']))
+					{
+						$mis_label_current = (count($data['missions']['current']) > 1) ? lang('global_missions') : lang('global_mission');
+	
+						$data['label']['s_current'] = ucwords(lang('status_current') .' '. $mis_label_current);
+					}
+	
+					if (isset($data['missions']['completed']))
+					{
+						$mis_label_completed = (count($data['missions']['completed']) > 1) ? lang('global_missions') : lang('global_mission');
+	
+						$data['label']['s_completed'] = ucwords(lang('status_completed') .' '. $mis_label_completed);
+					}
+	
+					if (isset($data['missions']['upcoming']))
+					{
+						$mis_label_upcoming = (count($data['missions']['upcoming']) > 1) ? lang('global_missions') : lang('global_mission');
+	
+						$data['label']['s_upcoming'] = ucwords(lang('status_upcoming') .' '. $mis_label_upcoming);
 					}
 				}
 				
-				/* figure out where the view should be coming from */
-				$view_loc = view_location('sim_missions_one', $this->skin, 'main');
-			}
-			else
-			{
-				/* figure out where the view should be coming from */
-				$view_loc = view_location('error', $this->skin, 'main');
-			
-				/* set the data for the view */
-				$data['header'] = lang('error_head_not_found');
-				$data['msg_error'] = lang('error_msg_no_mission');
+				/* other data used by the view */
+				$data['header'] = $title;
 				
-				/* set the page title */
-				$this->template->write('title', lang('error_pagetitle'));
-			}
-		}
-		else
-		{
-			$missions = $this->mis->get_all_missions();
-			
-			$data['label']['s_current'] = ucwords(lang('status_current') .' '. lang('global_missions'));
-			$data['label']['s_completed'] = ucwords(lang('status_completed') .' '. lang('global_missions'));
-			$data['label']['s_upcoming'] = ucwords(lang('status_upcoming') .' '. lang('global_missions'));
-			
-			if ($missions->num_rows() > 0)
-			{
-				foreach ($missions->result() as $row)
+				if ($this->auth->is_logged_in() === TRUE && $this->auth->check_access('manage/missions', FALSE) === TRUE)
 				{
-					$mid = $row->mission_id;
-					
-					$data['missions'][$row->mission_status][$mid]['id'] = $row->mission_id;
-					$data['missions'][$row->mission_status][$mid]['title'] = $row->mission_title;
-					$data['missions'][$row->mission_status][$mid]['desc'] = $row->mission_desc;
-					$data['missions'][$row->mission_status][$mid]['count'] = $this->posts->count_mission_posts($row->mission_id, $this->options['post_count_format']);
+					$data['edit_valid'] = TRUE;
+				}
+				else
+				{
+					$data['edit_valid'] = FALSE;
 				}
 				
-				if (isset($data['missions']['current']))
-				{
-					$mis_label_current = (count($data['missions']['current']) > 1) ? lang('global_missions') : lang('global_mission');
-
-					$data['label']['s_current'] = ucwords(lang('status_current') .' '. $mis_label_current);
-				}
-
-				if (isset($data['missions']['completed']))
-				{
-					$mis_label_completed = (count($data['missions']['completed']) > 1) ? lang('global_missions') : lang('global_mission');
-
-					$data['label']['s_completed'] = ucwords(lang('status_completed') .' '. $mis_label_completed);
-				}
-
-				if (isset($data['missions']['upcoming']))
-				{
-					$mis_label_upcoming = (count($data['missions']['upcoming']) > 1) ? lang('global_missions') : lang('global_mission');
-
-					$data['label']['s_upcoming'] = ucwords(lang('status_upcoming') .' '. $mis_label_upcoming);
-				}
-			}
-			
-			/* other data used by the view */
-			$data['header'] = $title;
-			
-			if ($this->auth->is_logged_in() === TRUE && $this->auth->check_access('manage/missions', FALSE) === TRUE)
-			{
-				$data['edit_valid'] = TRUE;
-			}
-			else
-			{
-				$data['edit_valid'] = FALSE;
-			}
-			
-			/* figure out where the view should be coming from */
-			$view_loc = view_location('sim_missions_all', $this->skin, 'main');
-			
-			/* write the data to the template */
-			$this->template->write('title', $title);
+				/* figure out where the view should be coming from */
+				$view_loc = view_location('sim_missions_all', $this->skin, 'main');
+				
+				/* write the data to the template */
+				$this->template->write('title', $title);
 		}
 		
 		$data['label'] += array(
+			'backgroups' => LARROW .' '. ucwords(lang('actions_back')) .' '. lang('labels_to') .' '.
+				ucwords(lang('global_mission') .' '. lang('labels_groups')),
 			'basicinfo' => ucwords(lang('labels_basic') .' '. lang('labels_info')),
 			'by' => lang('labels_by'),
 			'count' => ucwords(lang('global_post') .' '. lang('labels_count')) .':',
+			'count_missions' => ucfirst(lang('global_missions')) .':',
+			'count_posts_group' => ucwords(lang('labels_group') .' '. lang('global_post') .' '. lang('labels_count')) .':',
 			'date_end' => ucwords(lang('status_end') .' '. lang('labels_date')),
 			'date_start' => ucwords(lang('status_start') .' '. lang('labels_date')),
 			'desc' => ucfirst(lang('labels_desc')),
 			'edit' => '[ '. ucfirst(lang('actions_edit')) .' ]',
+			'included' => ucwords(lang('labels_included') .' '. lang('global_missions')),
 			'location' => ucfirst(lang('labels_location')),
 			'mission' => ucfirst(lang('global_mission')),
 			'missions' => LARROW .' '. ucwords(lang('actions_back')) .' '.
 				lang('labels_to') .' '.
 				ucwords(lang('global_missions')),
+			'nogroup' => sprintf(lang('error_not_found'), lang('global_mission') .' '. lang('labels_group')),
+			'nogroups' => sprintf(lang('error_not_found'), lang('global_mission') .' '. lang('labels_groups')),
 			'nomissions' => lang('error_no_missions'),
 			'noposts' => lang('error_no_posts'),
 			'nosummary' => lang('error_no_mission_summary'),
 			'open_gallery' => lang('open_gallery'),
+			'partof' => ucfirst(lang('labels_part') .' '. lang('labels_of')),
 			'posts' => ucfirst(lang('global_posts')),
 			'status' => ucfirst(lang('labels_status')),
 			'summary' => ucfirst(lang('labels_summary')),
