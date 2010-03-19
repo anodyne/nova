@@ -3130,9 +3130,7 @@ class Ajax_base extends Controller {
 			'delete' => array(
 				'name' => 'delete',
 				'id' => 'delete_y',
-				'value' => 'y',
-				'checked' => ($depts->num_rows() <= 1) ? TRUE : FALSE,
-				'disabled' => ($depts->num_rows() <= 1) ? TRUE : FALSE),
+				'value' => 'y'),
 			'submit' => array(
 				'type' => 'submit',
 				'class' => 'hud_button',
@@ -3140,6 +3138,11 @@ class Ajax_base extends Controller {
 				'value' => 'submit',
 				'content' => ucwords(lang('actions_submit')))
 		);
+		
+		if ($depts->num_rows() <= 1)
+		{
+			$data['inputs']['delete']['disabled'] = 'disabled';
+		}
 		
 		$data['label'] = array(
 			'dept' => ucfirst(lang('global_department')),
