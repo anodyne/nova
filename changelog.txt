@@ -2,6 +2,8 @@
 
 * updated the language files
 
+* fixed bug where the checkbox to delete all positions in a department being deleted was disabled (#86)
+
 ==========
 
 03.18.2010
