@@ -1,3 +1,9 @@
+03.19.2010
+
+* updated the language files
+
+==========
+
 03.18.2010
 
 * updated the database schema to add the mission_group field to the missions table

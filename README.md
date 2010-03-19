@@ -8,25 +8,11 @@ Release Candidate 3 (0.9.8)
 
 Last Update
 -----------
-18 March 2010
+19 March 2010
 
 Latest Updates
 --------------
-* updated the database schema to add the mission_group field to the missions table
-* updated the database schema to add the mission groups table
-* updated the install data
-* updated the missions model with methods for mission groups
 * updated the language files
-* updated the 0.9.8 update file
-* updated the sim controller to handle displaying mission groups
-* updated some view files to change the URLs for mission pages
-* updated the missions management page to be able to assign a mission group
-* updated the manage controller to handle management of mission groups
-* updated the copyright year of the nova license
-* added the manage/missiongroups view file
-* added the manage/missiongroups js view file
-* added the sim/missions/group view file
-* added the sim/missions/group/X view file
 
 Changes in 0.9.8
 ----------------
