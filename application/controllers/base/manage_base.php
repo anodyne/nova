@@ -2151,11 +2151,22 @@ class Manage_base extends Controller {
 		{
 			$status = $this->uri->segment(5);
 			
+			/* grab the date info */
+			$today = getdate();
+			
+			/* make sure things are formatted properly */
+			$hours = ($today['hours'] < 10) ? '0'. $today['hours'] : $today['hours'];
+			$minutes = ($today['minutes'] < 10) ? '0'. $today['minutes'] : $today['minutes'];
+			$seconds = ($today['seconds'] < 10) ? '0'. $today['seconds'] : $today['seconds'];
+			
+			/* set the current time */
+			$time = ' '. $hours .':'. $minutes .':'. $seconds;
+			
 			switch ($this->uri->segment(3))
 			{
 				case 'add':
-					$start = (empty($_POST['mission_start'])) ? '' : human_to_unix($this->input->post('mission_start', TRUE));
-					$end = (empty($_POST['mission_end'])) ? '' : human_to_unix($this->input->post('mission_end', TRUE));
+					$start = (empty($_POST['mission_start'])) ? '' : human_to_unix($this->input->post('mission_start', TRUE) . $time);
+					$end = (empty($_POST['mission_end'])) ? '' : human_to_unix($this->input->post('mission_end', TRUE) . $time);
 					
 					$insert_array = array(
 						'mission_title' => $this->input->post('mission_title', TRUE),
@@ -2255,7 +2266,7 @@ class Manage_base extends Controller {
 							
 							if (substr($key, ($loc+1)) == 'start' || substr($key, ($loc+1)) == 'end')
 							{
-								$mission[$new_key] = human_to_unix($value);
+								$mission[$new_key] = human_to_unix($value . $time);
 							}
 							else
 							{
