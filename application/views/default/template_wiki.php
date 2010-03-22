@@ -41,6 +41,15 @@ $link = array(
 	'charset'	=> 'utf-8'
 );
 
+/* set up the RTL link tag parameters */
+$rtl = array(
+	'href'	=> 	APPFOLDER .'/views/'. $current_skin .'/'. $sec .'/css/rtl.css',
+	'rel'	=> 	'stylesheet',
+	'type'	=> 	'text/css',
+	'media'		=> 'screen',
+	'charset'	=> 'utf-8'
+);
+
 $this->load->helper('panel');
 
 $panel = array(
@@ -77,6 +86,10 @@ echo "<?xml version='1.0' encoding='UTF-8'?>\r\n";
 		
 		<!-- STYLESHEETS -->
 		<?php echo link_tag($link); ?>
+		
+		<?php if (lang('rtl') === TRUE): ?>
+			<?php echo link_tag($rtl);?>
+		<?php endif;?>
 		
 		<!-- JAVASCRIPT FILES -->
 		<?php include_once($this->config->item('include_head_wiki')); ?>
@@ -134,7 +147,11 @@ echo "<?xml version='1.0' encoding='UTF-8'?>\r\n";
 			});
 		</script>
 	</head>
+<?php if (lang('rtl') === TRUE): ?>
+	<body class="rtl">
+<?php else: ?>
 	<body>
+<?php endif;?>
 		<noscript>
 			<div class="system_warning"><?php echo lang_output('text_javascript_off', '');?></div>
 		</noscript>

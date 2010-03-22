@@ -1,0 +1,8 @@
+body,
+#body,
+.content,
+#head,
+#menu {
+	text-align: right !important;
+	direction: rtl;
+}
