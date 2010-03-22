@@ -1343,21 +1343,6 @@ class Install_base extends Controller {
 		}
 	}
 	
-	function _escape_string($value = '')
-	{
-		if( get_magic_quotes_gpc() )
-		{
-			$value = stripslashes( $value );
-		}
-		
-		if( !is_numeric( $value ) )
-		{
-			$value = "'" . mysql_real_escape_string( $value ) . "'";
-		}
-		
-		return $value;
-	}
-	
 	function _install_ranks()
 	{
 		/* load the resources */
@@ -1535,29 +1520,30 @@ class Install_base extends Controller {
 		}
 		else
 		{
-			$to = 'register@anodyne-productions.com';
-			$subject = 'Nova Registration';
-			$headers = 'From: nobody@example.com' . "\r\n" .
-				'Reply-To: nobody@example.com' . "\r\n" .
-				'X-Mailer: PHP/' . phpversion();
-				
 			$insert = "INSERT INTO www_installs (product, version, url, ip_client, ip_server, php, db_platform, db_version, type, date) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %d);";
 			
 			$message = sprintf(
 				$insert,
-				$this->_escape_string($request[0]),
-				$this->_escape_string($request[1]),
-				$this->_escape_string($request[2]),
-				$this->_escape_string($request[3]),
-				$this->_escape_string($request[4]),
-				$this->_escape_string($request[5]),
-				$this->_escape_string($request[6]),
-				$this->_escape_string($request[7]),
-				$this->_escape_string($request[8]),
-				$this->_escape_string(now())
+				$this->db->escape($request[0]),
+				$this->db->escape($request[1]),
+				$this->db->escape($request[2]),
+				$this->db->escape($request[3]),
+				$this->db->escape($request[4]),
+				$this->db->escape($request[5]),
+				$this->db->escape($request[6]),
+				$this->db->escape($request[7]),
+				$this->db->escape($request[8]),
+				$this->db->escape(now())
 			);
 			
-			mail($to, $subject, $message, $headers);
+			/* set the parameters for sending the email */
+			$this->email->from('nova.registration@example.com');
+			$this->email->to('anodyne.nova@gmail.com');
+			$this->email->subject('Nova Registration');
+			$this->email->message($message);
+			
+			/* send the email */
+			$email = $this->email->send();
 		}
 	}
 }
