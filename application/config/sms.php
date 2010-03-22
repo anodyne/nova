@@ -25,7 +25,27 @@ $config['sms'] = array(
 	'tour'			=> TRUE
 );
 
+/*
+|--------------------------------------------------------------------------
+| PASSWORD
+|--------------------------------------------------------------------------
+| Because SMS and Nova use different encryption methods for their passwords,
+| passwords cannot be upgraded. Set the password below to something
+| different that every member of your RPG will use to log in with. Once
+| they've logged in, they'll be prompted to change their password to
+| something else.
+*/
+
 $config['sms_password'] = 'password';
+
+/*
+|--------------------------------------------------------------------------
+| SYSTEM ADMINISTRATOR ACCESS
+|--------------------------------------------------------------------------
+| Use this to specify the email address of the user who should be given
+| System Administrator access. You can only specify one email address
+| with this process.
+*/
 
 $config['sms_email'] = 'me@example.com';
 
