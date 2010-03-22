@@ -14,6 +14,7 @@ Latest Updates
 --------------
 * updated the language files
 * fixed bug where the checkbox to delete all positions in a department being deleted was disabled (#86)
+* fixed bug where adding and editing mission dates didn't work (#87)
 
 Changes in 0.9.8
 ----------------
@@ -79,6 +80,7 @@ Changes in 0.9.8
 * fixed bug in the upgrade process where news items weren't updated with the proper author user ID
 * fixed bug in the upgrade process where personal logs weren't updated with the proper author user ID
 * fixed bug where the checkbox to delete all positions in a department being deleted was disabled (#86)
+* fixed bug where adding and editing mission dates didn't work (#87)
 
 Version History
 ---------------
