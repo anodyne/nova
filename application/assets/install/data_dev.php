@@ -3585,7 +3585,7 @@ $system_info = array(
 		'sys_install_date' => now(),
 		'sys_version_major' => 0,
 		'sys_version_minor' => 9,
-		'sys_version_update' => 8)
+		'sys_version_update' => 9)
 );
 
 $system_versions = array(
@@ -4073,6 +4073,14 @@ $system_versions = array(
 * fixed bug in the upgrade process where personal logs weren't updated with the proper author user ID
 * fixed bug where the checkbox to delete all positions in a department being deleted was disabled (#86)
 * fixed bug where adding and editing mission dates didn't work (#87)"),
+	array(
+		'version' => '0.9.9',
+		'version_major' => '0',
+		'version_minor' => '9',
+		'version_update' => '9',
+		'version_date' => 1269109800,
+		'version_launch' => 'Nova 0.9.9 is an update to the beta release of the next generation RPG management software from Anodyne Productions.',
+		'version_changes' => ""),
 );
 
 $tour = array(
