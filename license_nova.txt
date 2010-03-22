@@ -52,3 +52,9 @@ WITH THE SOFTWARE. LICENSE HOLDERS ARE SOLELY RESPONSIBLE FOR DETERMINING THE
 APPROPRIATENESS OF USE AND ASSUME ALL RISKS ASSOCIATED WITH ITS USE, INCLUDING
 BUT NOT LIMITED TO THE RISKS OF PROGRAM ERRORS, DAMAGE TO EQUIPMENT, LOSS OF
 DATA OR SOFTWARE PROGRAMS, OR UNAVAILABILITY OR INTERRUPTION OF OPERATIONS.
+
+ANONYMOUS USAGE STATISTICS
+Anodyne Productions reserves the right, at their discretion, to collect
+anonymous statistics from your hosting environment for informational
+purposes related to future updates to the Software as well as future
+products.
