@@ -17,7 +17,9 @@ $version_array = array(
 	'093',
 	'094',
 	'095',
-	'096'
+	'096',
+	'097',
+	'098'
 );
 
 /* End of file versions.php */
