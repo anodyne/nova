@@ -211,6 +211,9 @@ class Upgrade_base extends Controller {
 	
 	function info()
 	{
+		/* pull in the config file */
+		$this->config->load('sms');
+		
 		$data['label'] = array(
 			'text' => lang('upg_info')
 		);
@@ -220,7 +223,20 @@ class Upgrade_base extends Controller {
 		$js_loc = js_location('upgrade_info_js', '_base', 'update');
 		
 		/* build the next step control */
-		$control = '<a href="'. site_url('upgrade/step/1') .'" class="btn" id="next">'. lang('button_begin') .'</a>';
+		if ($this->config->item('sms_password') == 'password' || $this->config->item('sms_email') == 'me@example.com')
+		{
+			$control = '';
+			
+			$flash['status'] = 'error';
+			$flash['message'] = lang('upg_info_error');
+			
+			/* write everything to the template */
+			$this->template->write_view('flash_message', '_base/update/pages/flash', $flash);
+		}
+		else
+		{
+			$control = '<a href="'. site_url('upgrade/step/1') .'" class="btn" id="next">'. lang('button_begin') .'</a>';
+		}
 		
 		/* set the title */
 		$this->template->write('title', lang('upg_more_info'));
