@@ -1,3 +1,21 @@
+03.22.2010
+
+* updated the install controller with some better email code
+* updated the upgrade controller with some better email code
+* updated the update controller with some better email code
+* updated the versions array file
+* updated the install data
+* updated the nova license
+* updated the pulsar skin with limited RTL support
+* updated the language files
+* updated the sms config file with directions about what each item is for
+
+* fixed bug in the upgrade controller where an error would be thrown in certain circumstances
+
+* added the 0.9.9 update file
+
+==========
+
 03.19.2010
 
 * updated the language files
