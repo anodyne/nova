@@ -17,9 +17,6 @@ $language = basename(dirname(__FILE__));
 /* include the base language file */
 include_once APPPATH .'language/'. $language .'/base_lang.php';
 
-/* set if text rendering should be right to left */
-$lang['rtl'] = FALSE;
-
 /*
  * Your language array keys go here in the following format:
  * 
