@@ -12,7 +12,7 @@
 .UITheme .ui-helper-clearfix:after { content: "."; display: block; height: 0; clear: both; visibility: hidden; }
 .UITheme .ui-helper-clearfix { display: inline-block; }
 /* required comment for clearfix to work in Opera \*/
-* html .UITheme .ui-helper-clearfix { height:1%; }
+* html .ui-helper-clearfix { height:1%; }
 .UITheme .ui-helper-clearfix { display:block; }
 /* end clearfix */
 .UITheme .ui-helper-zfix { width: 100%; height: 100%; top: 0; left: 0; position: absolute; opacity: 0; filter:Alpha(Opacity=0); }
