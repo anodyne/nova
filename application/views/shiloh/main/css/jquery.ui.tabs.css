@@ -25,8 +25,15 @@
 .ui-tabs-nav {
     margin: 0;
     padding: 0;
+    height: 25px;
     
     list-style: none;
+    background: #eee url('../images/gradient-soft-30.png') repeat-x top left;
+    border: 1px solid #2b5680;
+    
+    border-radius: 3px;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
 }
 .ui-tabs-nav:after { /* clearing without presentational markup, IE gets extra treatment */
     display: block;
@@ -35,7 +42,7 @@
 }
 .ui-tabs-nav li {
     float: left;
-    margin: 0 3px 0 0;
+    margin: 0 3px;
     min-width: 84px; /* be nice to Opera */
 }
 .ui-tabs-nav a, .ui-tabs-nav a span {
@@ -55,22 +62,19 @@
     white-space: nowrap; /* required in IE 6 */
 	border: 0;
     background: transparent;
-    
-    border-radius: 3px 3px 0 0;
-    -moz-border-radius: 3px 3px 0 0;
-    -webkit-border-top-left-radius: 3px;
-    -webkit-border-top-right-radius: 3px;
+    color: #888;
 }
 .ui-tabs-nav .ui-tabs-selected {}
 .ui-tabs-nav .ui-tabs-selected a, .ui-tabs-nav .ui-tabs-selected a:hover {
     outline: 0; /* prevent dotted border in Firefox */
     
-	background: #eee url('../images/gradient-soft-30.png') repeat-x top left;
-	background: rgba(255, 255, 255, .75) url('../images/gradient-soft-30.png') repeat-x top left;
-	color: #333;
+	background: #2b5680 url('../images/gradient-soft-30.png') repeat-x top left;
+	color: #fff;
 }
 .ui-tabs-nav a:hover, .ui-tabs-nav a:active {
     outline: 0; /* prevent dotted border in Firefox */
+    
+    color: #555;
 }
 
 .ui-tabs-disabled a {
@@ -128,8 +132,6 @@
 .ui-tabs-panel {
     padding: .5em 8px;
     
-    border-top: 3px solid #d2dde8;
-    border-top: 3px solid rgba(255, 255, 255, .75);
     background: transparent; /* declare background color for container to avoid distorted fonts in IE while fading */
 }
 .ui-tabs-loading em {

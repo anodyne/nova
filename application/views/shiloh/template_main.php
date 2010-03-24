@@ -41,6 +41,17 @@ $link = array(
 	'charset'	=> 'utf-8'
 );
 
+$this->load->helper('panel');
+
+$panel = array(
+	'inbox' => array(
+		'src' => APPFOLDER .'/views/'. $current_skin .'/'. $sec .'/images/panel-mail.png'),
+	'writing' => array(
+		'src' => APPFOLDER .'/views/'. $current_skin .'/'. $sec .'/images/panel-writing.png'),
+	'dashboard' => array(
+		'src' => APPFOLDER .'/views/'. $current_skin .'/'. $sec .'/images/panel-dashboard.png'),
+);
+
 echo "<?xml version='1.0' encoding='UTF-8'?>\r\n";
 
 ?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
@@ -105,7 +116,13 @@ echo "<?xml version='1.0' encoding='UTF-8'?>\r\n";
 		<div id="menu">
 			<div class="name"><?php echo $this->options['sim_name'];?></div>
 			
-			<div class="controls"><?php echo $this->options['sim_name'];?></div>
+			<div class="controls">
+				<?php if ($this->auth->is_logged_in()): ?>
+					<?php echo panel_inbox(TRUE, TRUE, FALSE, '(x)', img($panel['inbox']));?> &nbsp;
+					<?php echo panel_writing(TRUE, TRUE, FALSE, '(x)', img($panel['writing']));?> &nbsp;
+					<?php echo panel_dashboard(FALSE, img($panel['dashboard']));?>
+				<?php endif;?>
+			</div>
 			
 			<div class="wrapper">
 				<div class="nav-main">

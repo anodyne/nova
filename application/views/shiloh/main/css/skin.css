@@ -17,7 +17,6 @@ body {
 |---------------------------------------------------------------
 | WRAPPER
 |---------------------------------------------------------------
-| The wrapper controls the width and centering of the layout
 */
 .wrapper {
 	width: 960px;
@@ -35,7 +34,6 @@ body {
 	height: 2px;
 	
 	background-color: #2b5680;
-	background: rgba(0, 0, 0, .2);
 }
 
 #menu {
@@ -67,6 +65,7 @@ body {
 	font-variant: small-caps;
 	font-size: 125%;
 }
+#menu .controls a { border: 0; }
 
 #menu .nav-main {
 	height: 34px;
@@ -195,10 +194,14 @@ body {
 	-moz-border-radius: 3px;
 	-webkit-border-radius: 3px;
 	
+	box-shadow: -1px 1px 3px rgba(255, 255, 255, .2);
 	-moz-box-shadow: -1px 1px 3px rgba(255, 255, 255, .2);
+	-webkit-box-shadow: -1px 1px 3px rgba(255, 255, 255, .2);
 }
 
-.gray	{ color: #ccc; }
+p { text-shadow: 0px 1px 0px rgba(0, 0, 0, .25); }
+
+.gray	{ color: #ddd; }
 .red	{ color: #c00; }
 .orange	{ color: #e99e1c; }
 .green	{ color: #008000; }
@@ -212,7 +215,6 @@ body {
 a {
 	text-decoration: none; 
 	color: #c6d4e2;
-	color: rgba(255, 255, 255, .7);
 	border-bottom: 1px solid;
 }
 a:hover {
@@ -221,10 +223,10 @@ a:hover {
 }
 
 a.edit {
-	color: #999;
+	color: #ddd;
 	border: none;
 }
-a.edit:hover { color: #008000; }
+a.edit:hover { color: #fff; }
 
 /*
 |---------------------------------------------------------------
@@ -235,7 +237,7 @@ input[type=text],
 input[type=password] {
 	border: 1px solid #d8d8d8;
 	border: 1px solid rgba(255, 255, 255, .25);
-	color: #ccc;
+	color: #eee;
 	font-family: "lucida grande", verdana, arial, sans-serif;
 	background: transparent;
 	
@@ -255,7 +257,7 @@ textarea {
 	font-family: "lucida grande", verdana, arial, sans-serif;
 	border: 1px solid #d8d8d8;
 	border: 1px solid rgba(255, 255, 255, .25);
-	color: #ccc;
+	color: #eee;
 	background: transparent;
 	
 	border-radius: 2px;
@@ -271,7 +273,7 @@ textarea:focus {
 select {
 	border: 1px solid #d8d8d8;
 	border: 1px solid rgba(255, 255, 255, .25);
-	color: #ccc;
+	color: #555;
 	font-family: "lucida grande", verdana, arial, sans-serif;
 	
 	border-radius: 2px;
@@ -311,6 +313,8 @@ th {
 	text-align: center;
 	font-size: 120%;
 }
+
+td { text-shadow: 0px 1px 0px rgba(0, 0, 0, .25); }
 
 /*
 |---------------------------------------------------------------
@@ -462,6 +466,7 @@ ul.none, ol.none { list-style: none; }
 	-moz-box-shadow: 0px 1px 2px rgba(0, 0, 0, .3);
 	-webkit-box-shadow: 0px 1px 2px rgba(0, 0, 0, .3);
 }
+.flash_message p { text-shadow: none; }
 .flash-success {
 	border: 1px solid #a4c897;
 	background: #ccecc5 url('../images/flash-bg.png') repeat-x top left;
@@ -507,45 +512,26 @@ hr {
 | PANEL
 |---------------------------------------------------------------
 */
-.panel-handle a, .panel-handle a:hover {
-	text-decoration: none;
-	border: none;
-}
-.panel-handle a span {
-	border-left: 1px solid transparent;
-	border-right: 1px solid transparent;
-	color: #777;
-	font-weight: bold;
-}
-.panel-handle a:hover span {
-	background: #ccc url('../images/panel-handle-bg.png') repeat-x 0 0;
-	color: #555;
-	border-left: 1px solid #bbb;
-	border-right: 1px solid #bbb;
-}
-
 #panel .panel-body {
-	background: #555 url('../images/panel-bg.png') repeat-x top left;
+	background: #2b5680;
 	color: #fff;
 }
 
-.panel-handle {
-	background: #ddd url('../images/panel-handle-bg.png') repeat-x 0 0;
-	border-bottom: 1px solid #222;
-	text-align: center;
-	font-size: 85%;
-}
-
-.panel-trigger span { text-align: center; }
-
 .panel_1 a, .panel_2 a, .panel_3 a {
+	color: #fff;
+	border-bottom: 1px solid transparent;
+}
+.panel_1 a:hover, .panel_2 a:hover, .panel_3 a:hover {
 	color: #fff;
 	border-bottom: 1px solid;
 }
 
 .panel_1 a.edit, .panel_2 a.edit, .panel_3 a.edit {
-	color: #999;
+	color: #c6d4e2;
 	border-bottom: 0;
 	font-weight: bold;
 }
-.panel_1 a.edit:hover, .panel_2 a.edit:hover, .panel_3 a.edit:hover { color: #ddd; }
+.panel_1 a.edit:hover, .panel_2 a.edit:hover, .panel_3 a.edit:hover {
+	color: #fff;
+	border-bottom: 1px solid;
+}
