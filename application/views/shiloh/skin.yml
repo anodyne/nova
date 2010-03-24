@@ -6,3 +6,6 @@ sections:
   -
     type: main
     preview: preview-main.jpg
+  -
+    type: wiki
+    preview: preview-wiki.jpg
