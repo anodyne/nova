@@ -105,7 +105,7 @@ table { font-size: 100%; }
 .table100	{ width: 100%; }
 .table75	{ width: 75%; }
 
-.table560px	{ width: 560px; }
+.table560px	{ width: 500px; }
 
 td {
 	padding: 3px;
