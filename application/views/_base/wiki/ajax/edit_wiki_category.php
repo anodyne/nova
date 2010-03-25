@@ -9,6 +9,14 @@
 				<td><?php echo form_input($inputs['name']);?></td>
 			</tr>
 			
+			<?php echo table_row_spacer(3, 5);?>
+			
+			<tr>
+				<td class="cell-label"><?php echo $label['desc'];?></td>
+				<td class="cell-spacer"></td>
+				<td><?php echo form_textarea($inputs['desc']);?></td>
+			</tr>
+			
 			<?php echo table_row_spacer(3, 15);?>
 			
 			<tr>

@@ -5914,6 +5914,11 @@ class Ajax_base extends Controller {
 				'name' => 'name',
 				'value' => $cat->wikicat_name,
 				'class' => 'hud'),
+			'desc' => array(
+				'name' => 'desc',
+				'value' => $cat->wikicat_desc,
+				'class' => 'hud',
+				'rows' => 3),
 			'submit' => array(
 				'type' => 'submit',
 				'class' => 'hud_button',
@@ -5923,6 +5928,7 @@ class Ajax_base extends Controller {
 		);
 		
 		$data['label'] = array(
+			'desc' => ucfirst(lang('labels_desc')),
 			'name' => ucwords(lang('labels_category') .' '. lang('labels_name')),
 		);
 		
