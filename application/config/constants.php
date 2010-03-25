@@ -79,6 +79,9 @@ define('VERSION_FEED',			APPPATH . 'assets/version.yml');
 # TODO: remove this before final release
 define('APP_DATA_SRC',			'dev'); /* options for data source are dev and basic */
 
+/* figure out if the request is an ajax request */
+define('IS_AJAX', 				isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest');
+
 /* CI_VERSION is available as a constant and is defined in ./core/codeigniter/CodeIgniter.php */
 
 /* End of file constants.php */
