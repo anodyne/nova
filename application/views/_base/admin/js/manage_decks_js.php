@@ -21,7 +21,7 @@
 		});
 		$('#list').disableSelection();
 		
-		$('#update').click(function(){
+		$('#update').live('click', function(){
 			var parent = $(this).parent().attr('class');
 			var list = $('#list').sortable('serialize');
 			
@@ -69,7 +69,7 @@
 			return false;
 		});
 		
-		$('#add').click(function(){
+		$('#add').live('click', function(){
 			var parent = $(this).parent().parent().attr('class');
 			var value = $('#deck').val();
 			

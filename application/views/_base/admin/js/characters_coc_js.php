@@ -11,7 +11,7 @@
 			$('.submit-div').show();
 		}
 		
-		$('#update').click(function(){
+		$('#update').live('click', function(){
 			var parent = $(this).parent().parent().attr('class');
 			var list = $('#list').sortable('serialize');
 			
@@ -63,7 +63,7 @@
 			return false;
 		});
 		
-		$('#add').click(function(){
+		$('#add').live('click', function(){
 			var parent = $(this).parent().parent().attr('class');
 			var id = $('#crew option:selected').val();
 			var user = $('#crew option:selected').html();

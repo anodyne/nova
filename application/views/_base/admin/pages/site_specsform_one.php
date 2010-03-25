@@ -58,7 +58,7 @@
 	
 	<?php if (isset($select)): ?>
 		<br /><hr /><br />
-		<?php echo text_output($label['select_values'], 'h2', 'page-subhead');?>
+		<?php echo text_output($label['values'], 'h2', 'page-subhead');?>
 		<?php echo text_output($label['bioval']);?>
 		
 		<p>

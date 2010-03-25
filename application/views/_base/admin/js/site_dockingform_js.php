@@ -33,34 +33,32 @@
 		});
 		$('#list').disableSelection();
 		
-		$('#update').click(function(){
+		$('#update').live('click', function(){
 			var parent = $(this).parent().attr('class');
 			var list = $('#list').sortable('serialize');
 			
-			$('#loading_update').ajaxStart(function(){
-				$(this).show();
-				$('#update').attr('disabled', 'disabled');
-			});
-			
 			$.ajax({
+				beforeSend: function(){
+					$('#loading_update').show();
+					$('#update').attr('disabled', 'disabled');
+				},
 				type: "POST",
 				url: "<?php echo site_url('ajax/save_docking_field_value');?>",
 				data: list,
 				success: function(data){
 					$('.' + parent + ' .flash_message').remove();
 					$('.' + parent).prepend(data);
+				},
+				complete: function(){
+					$('#loading_update').hide();
+					$('#update').attr('disabled', '');
 				}
-			});
-			
-			$('#loading_update').ajaxStop(function(){
-				$(this).hide();
-				$('#update').attr('disabled', '');
 			});
 			
 			return false;
 		});
 		
-		$('.remove').click(function(){
+		$('.remove').live('click', function(){
 			var parent = $(this).parent().parent().parent().parent().attr('class');
 			var id = $(this).attr('id');
 			
@@ -71,41 +69,38 @@
 				success: function(data){
 					$('.' + parent + ' .flash_message').remove();
 					$('.' + parent).prepend(data);
+				},
+				complete: function(){
+					$('#value_' + id).fadeOut('slow', function(){
+						$(this).remove();
+					});
 				}
-			});
-			
-			$('#value_' + id).ajaxStop(function(){
-				$(this).fadeOut('slow', function(){
-					$(this).remove();
-				});
 			});
 			
 			return false;
 		});
 		
-		$('#add').click(function(){
+		$('#add').live('click', function(){
 			var parent = $(this).parent().parent().attr('class');
 			var value = $('#value').val();
 			var content = $('#content').val();
 			var field = $('#add').attr('rel');
 			
-			$('#loading_add').ajaxStart(function(){
-				$(this).show();
-				$('#add').attr('disabled', 'disabled');
-			});
-			
 			$.ajax({
+				beforeSend: function(){
+					$('#loading_add').show();
+					$('#add').attr('disabled', 'disabled');
+				},
 				type: "POST",
 				url: "<?php echo site_url('ajax/add_docking_field_value');?>",
 				data: { value: value, content: content, field: field },
 				success: function(data){
 					$('#list').append(data);
+				},
+				complete: function(){
+					$('#loading_add').hide();
+					$('#add').attr('disabled', '');
 				}
-			});
-			
-			$('#loading_add').ajaxStop(function(){
-				$(this).hide();
-				$('#add').attr('disabled', '');
 			});
 			
 			return false;
