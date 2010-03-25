@@ -564,7 +564,7 @@ class Site_base extends Controller {
 					'type' => 'submit',
 					'class' => 'button-main',
 					'name' => 'submit',
-					'value' => $id,
+					'rel' => $id,
 					'id' => 'add',
 					'content' => ucwords(lang('actions_add'))),
 			);
