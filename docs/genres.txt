@@ -1,5 +1,4 @@
-FINAL GENRES FOR 1.0
-====================
+# Finish Genres
 
 * sto
 	x ranks
@@ -26,17 +25,17 @@ FINAL GENRES FOR 1.0
 	- ranks
 	- data
 * baj
-	- ranks
+	x ranks
 	- data
 * crd
-	- ranks
+	x ranks
 	x data
 * rom
-	- ranks
+	x ranks
 	x data
 * kli
-	- ranks
-	- data
+	x ranks
+	x data
 * and
 	- ranks
 	- data
@@ -46,3 +45,5 @@ FINAL GENRES FOR 1.0
 * bl5
 	- ranks
 	- data
+	
+# In Progress Genres	
