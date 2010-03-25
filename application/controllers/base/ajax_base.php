@@ -149,61 +149,59 @@ class Ajax_base extends Controller {
 	
 	function add_bio_field_value()
 	{
-		/* load the resources */
-		$this->load->model('characters_model', 'char');
-		
-		$value = $this->input->post('value', TRUE);
-		$content = $this->input->post('content', TRUE);
-		$field = $this->input->post('field', TRUE);
-		
-		$last = $this->char->get_bio_values($field);
-		
-		if ($last->num_rows() > 0)
+		if (IS_AJAX)
 		{
-			foreach ($last->result() as $l)
+			/* load the resources */
+			$this->load->model('characters_model', 'char');
+			
+			$value = $this->input->post('value', TRUE);
+			$content = $this->input->post('content', TRUE);
+			$field = $this->input->post('field', TRUE);
+			$order = 0;
+			
+			$values = $this->char->get_bio_values($field);
+			
+			if ($values->num_rows() > 0)
 			{
-				$array[] = $l->value_order;
+				$last = $values->last_row();
+				$order = $last->value_order + 1;
+				
 			}
 			
-			sort($array, SORT_NUMERIC);
-			$sort = array_reverse($array);
-			$order = $sort[0] + 1;
-			
-		}
-		
-		$insert_array = array(
-			'value_content' => $content,
-			'value_order' => $order,
-			'value_field' => $field,
-			'value_field_value' => $value
-		);
-			
-		$insert = $this->char->add_bio_field_value($insert_array);
-		$insert_id = $this->db->insert_id();
-		
-		/* optimize the table */
-		$this->sys->optimize_table('characters_values');
-		
-		if ($insert > 0)
-		{
-			$output = '<li class="ui-state-default" id="value_'. $insert_id .'"><div class="float_right"><a href="#" class="remove image" name="remove" id="'. $insert_id .'">x</a></div><a href="#" rel="facebox" myAction="edit_val" myField="<?php echo $id;?>" class="image" myID="'. $insert_id .'"/>'. $content .'</a></li>';
-		}
-		else
-		{
-			$message = sprintf(
-				lang('flash_failure'),
-				ucfirst(lang('labels_bio') .' '. lang('labels_field') .' '. lang('labels_value')),
-				lang('actions_created'),
-				''
+			$insert_array = array(
+				'value_content' => $content,
+				'value_order' => $order,
+				'value_field' => $field,
+				'value_field_value' => $value
 			);
-
-			$flash['status'] = 'error';
-			$flash['message'] = text_output($message);
 				
-			$output = $this->load->view('_base/admin/pages/flash', $flash, TRUE);
+			$insert = $this->char->add_bio_field_value($insert_array);
+			$insert_id = $this->db->insert_id();
+			
+			/* optimize the table */
+			$this->sys->optimize_table('characters_values');
+			
+			if ($insert > 0)
+			{
+				$output = '<li class="ui-state-default" id="value_'. $insert_id .'"><div class="float_right"><a href="#" class="remove image" name="remove" id="'. $insert_id .'">x</a></div><a href="#" rel="facebox" myAction="edit_val" myField="<?php echo $id;?>" class="image" myID="'. $insert_id .'"/>'. $content .'</a></li>';
+			}
+			else
+			{
+				$message = sprintf(
+					lang('flash_failure'),
+					ucfirst(lang('labels_bio') .' '. lang('labels_field') .' '. lang('labels_value')),
+					lang('actions_created'),
+					''
+				);
+	
+				$flash['status'] = 'error';
+				$flash['message'] = text_output($message);
+					
+				$output = $this->load->view('_base/admin/pages/flash', $flash, TRUE);
+			}
+			
+			echo $output;
 		}
-		
-		echo $output;
 	}
 	
 	function add_bio_sec()
@@ -523,63 +521,59 @@ class Ajax_base extends Controller {
 	
 	function add_coc_entry()
 	{
-		/* load the resources */
-		$this->load->model('characters_model', 'char');
-		
-		$last = $this->char->get_coc();
-		
-		if ($last->num_rows() > 0)
+		if (IS_AJAX)
 		{
-			foreach ($last->result() as $l)
+			/* load the resources */
+			$this->load->model('characters_model', 'char');
+			
+			$values = $this->char->get_coc();
+			
+			if ($values->num_rows() > 0)
 			{
-				$array[] = $l->coc_order;
+				$last = $values->last_row();
+				$order = $last->coc_order + 1;
 			}
 			
-			sort($array, SORT_NUMERIC);
-			$sort = array_reverse($array);
-			$order = $sort[0] + 1;
+			$user = $this->input->post('user', TRUE);
 			
-		}
-		
-		$user = $this->input->post('user', TRUE);
-		
-		$insert_array = array(
-			'coc_crew' => $user,
-			'coc_order' => (isset($order)) ? $order : 0,
-		);
+			$insert_array = array(
+				'coc_crew' => $user,
+				'coc_order' => (isset($order)) ? $order : 0,
+			);
+				
+			$insert = $this->char->create_coc_entry($insert_array);
 			
-		$insert = $this->char->create_coc_entry($insert_array);
-		
-		if ($insert > 0)
-		{
-			$message = sprintf(
-				lang('flash_success'),
-				ucfirst(lang('global_character')),
-				lang('actions_added'),
-				''
-			);
-
-			$flash['status'] = 'success';
-			$flash['message'] = text_output($message);
-				
-			$output = $this->load->view('_base/admin/pages/flash', $flash, TRUE);
+			if ($insert > 0)
+			{
+				$message = sprintf(
+					lang('flash_success'),
+					ucfirst(lang('global_character')),
+					lang('actions_added'),
+					''
+				);
+	
+				$flash['status'] = 'success';
+				$flash['message'] = text_output($message);
+					
+				$output = $this->load->view('_base/admin/pages/flash', $flash, TRUE);
+			}
+			else
+			{
+				$message = sprintf(
+					lang('flash_failure'),
+					ucfirst(lang('global_character')),
+					lang('actions_added'),
+					''
+				);
+	
+				$flash['status'] = 'error';
+				$flash['message'] = text_output($message);
+					
+				$output = $this->load->view('_base/admin/pages/flash', $flash, TRUE);
+			}
+			
+			echo $output;
 		}
-		else
-		{
-			$message = sprintf(
-				lang('flash_failure'),
-				ucfirst(lang('global_character')),
-				lang('actions_added'),
-				''
-			);
-
-			$flash['status'] = 'error';
-			$flash['message'] = text_output($message);
-				
-			$output = $this->load->view('_base/admin/pages/flash', $flash, TRUE);
-		}
-		
-		echo $output;
 	}
 	
 	function add_comment_log()
@@ -744,58 +738,54 @@ class Ajax_base extends Controller {
 	
 	function add_deck()
 	{
-		/* load the resources */
-		$this->load->model('tour_model', 'tour');
-		
-		$last = $this->tour->get_decks();
-		
-		if ($last->num_rows() > 0)
+		if (IS_AJAX)
 		{
-			foreach ($last->result() as $l)
+			/* load the resources */
+			$this->load->model('tour_model', 'tour');
+			
+			$values = $this->tour->get_decks();
+			
+			if ($values->num_rows() > 0)
 			{
-				$array[] = $l->deck_order;
+				$last = $values->last_row();
+				$order = $last->deck_order + 1;
 			}
 			
-			sort($array, SORT_NUMERIC);
-			$sort = array_reverse($array);
-			$order = $sort[0] + 1;
+			$deck = $this->input->post('deck', TRUE);
 			
-		}
-		
-		$deck = $this->input->post('deck', TRUE);
-		
-		$insert_array = array(
-			'deck_name' => $deck,
-			'deck_order' => $order,
-			'deck_content' => ''
-		);
-			
-		$insert = $this->tour->add_deck($insert_array);
-		$insert_id = $this->db->insert_id();
-		
-		/* optimize the table */
-		$this->sys->optimize_table('tour_decks');
-		
-		if ($insert > 0)
-		{
-			$output = '<li class="ui-state-default" id="deck_'. $insert_id .'"><div class="float_right"><a href="#" class="remove image" name="remove" id="'. $insert_id .'">x</a></div><a href="#" rel="facebox" myAction="edit_val" myField="<?php echo $id;?>" class="image" myID="'. $insert_id .'"/>'. $deck .'</a></li>';
-		}
-		else
-		{
-			$message = sprintf(
-				lang('flash_failure'),
-				ucfirst(lang('global_deck')),
-				lang('actions_added'),
-				''
+			$insert_array = array(
+				'deck_name' => $deck,
+				'deck_order' => (isset($order)) ? $order : 0,
+				'deck_content' => ''
 			);
-
-			$flash['status'] = 'error';
-			$flash['message'] = text_output($message);
 				
-			$output = $this->load->view('_base/admin/pages/flash', $flash, TRUE);
+			$insert = $this->tour->add_deck($insert_array);
+			$insert_id = $this->db->insert_id();
+			
+			/* optimize the table */
+			$this->sys->optimize_table('tour_decks');
+			
+			if ($insert > 0)
+			{
+				$output = '<li class="ui-state-default" id="decks_'. $insert_id .'"><div class="float_right"><a href="#" class="remove image" name="remove" id="'. $insert_id .'">x</a></div><a href="#" rel="facebox" myAction="edit_val" myField="<?php echo $id;?>" class="image" myID="'. $insert_id .'"/>'. $deck .'</a></li>';
+			}
+			else
+			{
+				$message = sprintf(
+					lang('flash_failure'),
+					ucfirst(lang('global_deck')),
+					lang('actions_added'),
+					''
+				);
+	
+				$flash['status'] = 'error';
+				$flash['message'] = text_output($message);
+					
+				$output = $this->load->view('_base/admin/pages/flash', $flash, TRUE);
+			}
+			
+			echo $output;
 		}
-		
-		echo $output;
 	}
 	
 	function add_dept()
@@ -949,8 +939,6 @@ class Ajax_base extends Controller {
 		
 		$sections = $this->docking->get_docking_sections();
 		
-		$data['values']['section'][0] = ucwords(lang('labels_please') .' '. lang('actions_choose') .' '. lang('labels_one'));
-		
 		if ($sections->num_rows() > 0)
 		{
 			foreach ($sections->result() as $sec)
@@ -991,61 +979,57 @@ class Ajax_base extends Controller {
 	
 	function add_docking_field_value()
 	{
-		/* load the resources */
-		$this->load->model('docking_model', 'docking');
-		
-		$value = $this->input->post('value', TRUE);
-		$content = $this->input->post('content', TRUE);
-		$field = $this->input->post('field', TRUE);
-		
-		$last = $this->docking->get_docking_values($field);
-		
-		if ($last->num_rows() > 0)
+		if (IS_AJAX)
 		{
-			foreach ($last->result() as $l)
+			/* load the resources */
+			$this->load->model('docking_model', 'docking');
+			
+			$value = $this->input->post('value', TRUE);
+			$content = $this->input->post('content', TRUE);
+			$field = $this->input->post('field', TRUE);
+			
+			$values = $this->docking->get_docking_values($field);
+			
+			if ($values->num_rows() > 0)
 			{
-				$array[] = $l->value_order;
+				$last = $values->last_row();
+				$order = $last->value_order + 1;
 			}
 			
-			sort($array, SORT_NUMERIC);
-			$sort = array_reverse($array);
-			$order = $sort[0] + 1;
-			
-		}
-		
-		$insert_array = array(
-			'value_content' => $content,
-			'value_order' => $order,
-			'value_field' => $field,
-			'value_field_value' => $value
-		);
-			
-		$insert = $this->docking->add_docking_field_value($insert_array);
-		$insert_id = $this->db->insert_id();
-		
-		/* optimize the table */
-		$this->sys->optimize_table('docking_values');
-		
-		if ($insert > 0)
-		{
-			$output = '<li class="ui-state-default" id="value_'. $insert_id .'"><div class="float_right"><a href="#" class="remove image" name="remove" id="'. $insert_id .'">x</a></div><a href="#" rel="facebox" myAction="edit_val" myField="<?php echo $id;?>" class="image" myID="'. $insert_id .'"/>'. $content .'</a></li>';
-		}
-		else
-		{
-			$message = sprintf(
-				lang('flash_failure'),
-				ucfirst(lang('actions_docking') .' '. lang('labels_form') .' '. lang('labels_field')),
-				lang('actions_created'),
-				''
+			$insert_array = array(
+				'value_content' => $content,
+				'value_order' => (isset($order)) ? $order : 0,
+				'value_field' => $field,
+				'value_field_value' => $value
 			);
-
-			$flash['status'] = 'error';
-			$flash['message'] = text_output($message);
 				
-			$output = $this->load->view('_base/admin/pages/flash', $flash, TRUE);
+			$insert = $this->docking->add_docking_field_value($insert_array);
+			$insert_id = $this->db->insert_id();
+			
+			/* optimize the table */
+			$this->sys->optimize_table('docking_values');
+			
+			if ($insert > 0)
+			{
+				$output = '<li class="ui-state-default" id="value_'. $insert_id .'"><div class="float_right"><a href="#" class="remove image" name="remove" id="'. $insert_id .'">x</a></div><a href="#" rel="facebox" myAction="edit_val" myField="<?php echo $id;?>" class="image" myID="'. $insert_id .'"/>'. $content .'</a></li>';
+			}
+			else
+			{
+				$message = sprintf(
+					lang('flash_failure'),
+					ucfirst(lang('actions_docking') .' '. lang('labels_form') .' '. lang('labels_field')),
+					lang('actions_created'),
+					''
+				);
+	
+				$flash['status'] = 'error';
+				$flash['message'] = text_output($message);
+					
+				$output = $this->load->view('_base/admin/pages/flash', $flash, TRUE);
+			}
+			
+			echo $output;
 		}
-		
-		echo $output;
 	}
 	
 	function add_docking_sec()
@@ -1785,61 +1769,57 @@ class Ajax_base extends Controller {
 	
 	function add_spec_field_value()
 	{
-		/* load the resources */
-		$this->load->model('specs_model', 'specs');
-		
-		$value = $this->input->post('value', TRUE);
-		$content = $this->input->post('content', TRUE);
-		$field = $this->input->post('field', TRUE);
-		
-		$last = $this->specs->get_spec_values($field);
-		
-		if ($last->num_rows() > 0)
+		if (IS_AJAX)
 		{
-			foreach ($last->result() as $l)
+			/* load the resources */
+			$this->load->model('specs_model', 'specs');
+			
+			$value = $this->input->post('value', TRUE);
+			$content = $this->input->post('content', TRUE);
+			$field = $this->input->post('field', TRUE);
+			
+			$values = $this->specs->get_spec_values($field);
+			
+			if ($values->num_rows() > 0)
 			{
-				$array[] = $l->value_order;
+				$last = $values->last_row();
+				$order = $last->value_order + 1;
 			}
 			
-			sort($array, SORT_NUMERIC);
-			$sort = array_reverse($array);
-			$order = $sort[0] + 1;
-			
-		}
-		
-		$insert_array = array(
-			'value_content' => $content,
-			'value_order' => $order,
-			'value_field' => $field,
-			'value_field_value' => $value
-		);
-			
-		$insert = $this->specs->add_spec_field_value($insert_array);
-		$insert_id = $this->db->insert_id();
-		
-		/* optimize the table */
-		$this->sys->optimize_table('specs_values');
-		
-		if ($insert > 0)
-		{
-			$output = '<li class="ui-state-default" id="value_'. $insert_id .'"><div class="float_right"><a href="#" class="remove image" name="remove" id="'. $insert_id .'">x</a></div><a href="#" rel="facebox" myAction="edit_val" myField="<?php echo $id;?>" class="image" myID="'. $insert_id .'"/>'. $content .'</a></li>';
-		}
-		else
-		{
-			$message = sprintf(
-				lang('flash_failure'),
-				ucfirst(lang('flash_item_spec_field_value')),
-				lang('actions_created'),
-				''
+			$insert_array = array(
+				'value_content' => $content,
+				'value_order' => (isset($order)) ? $order : 0,
+				'value_field' => $field,
+				'value_field_value' => $value
 			);
-
-			$flash['status'] = 'error';
-			$flash['message'] = text_output($message);
 				
-			$output = $this->load->view('_base/admin/pages/flash', $flash, TRUE);
+			$insert = $this->specs->add_spec_field_value($insert_array);
+			$insert_id = $this->db->insert_id();
+			
+			/* optimize the table */
+			$this->sys->optimize_table('specs_values');
+			
+			if ($insert > 0)
+			{
+				$output = '<li class="ui-state-default" id="value_'. $insert_id .'"><div class="float_right"><a href="#" class="remove image" name="remove" id="'. $insert_id .'">x</a></div><a href="#" rel="facebox" myAction="edit_val" myField="<?php echo $id;?>" class="image" myID="'. $insert_id .'"/>'. $content .'</a></li>';
+			}
+			else
+			{
+				$message = sprintf(
+					lang('flash_failure'),
+					ucfirst(lang('flash_item_spec_field_value')),
+					lang('actions_created'),
+					''
+				);
+	
+				$flash['status'] = 'error';
+				$flash['message'] = text_output($message);
+					
+				$output = $this->load->view('_base/admin/pages/flash', $flash, TRUE);
+			}
+			
+			echo $output;
 		}
-		
-		echo $output;
 	}
 	
 	function add_spec_sec()
@@ -1985,61 +1965,57 @@ class Ajax_base extends Controller {
 	
 	function add_tour_field_value()
 	{
-		/* load the resources */
-		$this->load->model('tour_model', 'tour');
-		
-		$value = $this->input->post('value', TRUE);
-		$content = $this->input->post('content', TRUE);
-		$field = $this->input->post('field', TRUE);
-		
-		$last = $this->tour->get_tour_values($field);
-		
-		if ($last->num_rows() > 0)
+		if (IS_AJAX)
 		{
-			foreach ($last->result() as $l)
+			/* load the resources */
+			$this->load->model('tour_model', 'tour');
+			
+			$value = $this->input->post('value', TRUE);
+			$content = $this->input->post('content', TRUE);
+			$field = $this->input->post('field', TRUE);
+			
+			$values = $this->tour->get_tour_values($field);
+			
+			if ($values->num_rows() > 0)
 			{
-				$array[] = $l->value_order;
+				$last = $values->last_row();
+				$order = $last->value_order + 1;
 			}
 			
-			sort($array, SORT_NUMERIC);
-			$sort = array_reverse($array);
-			$order = $sort[0] + 1;
-			
-		}
-		
-		$insert_array = array(
-			'value_content' => $content,
-			'value_order' => $order,
-			'value_field' => $field,
-			'value_field_value' => $value
-		);
-			
-		$insert = $this->tour->add_tour_field_value($insert_array);
-		$insert_id = $this->db->insert_id();
-		
-		/* optimize the table */
-		$this->sys->optimize_table('tour_values');
-		
-		if ($insert > 0)
-		{
-			$output = '<li class="ui-state-default" id="value_'. $insert_id .'"><div class="float_right"><a href="#" class="remove image" name="remove" id="'. $insert_id .'">x</a></div><a href="#" rel="facebox" myAction="edit_val" myField="<?php echo $id;?>" class="image" myID="'. $insert_id .'"/>'. $content .'</a></li>';
-		}
-		else
-		{
-			$message = sprintf(
-				lang('flash_failure'),
-				ucfirst(lang('global_tour') .' '. lang('labels_field') .' '. lang('labels_value')),
-				lang('actions_created'),
-				''
+			$insert_array = array(
+				'value_content' => $content,
+				'value_order' => (isset($order)) ? $order : 0,
+				'value_field' => $field,
+				'value_field_value' => $value
 			);
-			
-			$flash['status'] = 'error';
-			$flash['message'] = text_output($message);
 				
-			$output = $this->load->view('_base/admin/pages/flash', $flash, TRUE);
+			$insert = $this->tour->add_tour_field_value($insert_array);
+			$insert_id = $this->db->insert_id();
+			
+			/* optimize the table */
+			$this->sys->optimize_table('tour_values');
+			
+			if ($insert > 0)
+			{
+				$output = '<li class="ui-state-default" id="value_'. $insert_id .'"><div class="float_right"><a href="#" class="remove image" name="remove" id="'. $insert_id .'">x</a></div><a href="#" rel="facebox" myAction="edit_val" myField="<?php echo $id;?>" class="image" myID="'. $insert_id .'"/>'. $content .'</a></li>';
+			}
+			else
+			{
+				$message = sprintf(
+					lang('flash_failure'),
+					ucfirst(lang('global_tour') .' '. lang('labels_field') .' '. lang('labels_value')),
+					lang('actions_created'),
+					''
+				);
+				
+				$flash['status'] = 'error';
+				$flash['message'] = text_output($message);
+					
+				$output = $this->load->view('_base/admin/pages/flash', $flash, TRUE);
+			}
+			
+			echo $output;
 		}
-		
-		echo $output;
 	}
 	
 	function add_user_setting()
@@ -2525,43 +2501,46 @@ class Ajax_base extends Controller {
 	
 	function del_bio_field_value()
 	{
-		/* load the resources */
-		$this->load->model('characters_model', 'char');
-		
-		$id = (is_numeric($this->input->post('field'))) ? $this->input->post('field', TRUE) : 0;
-		
-		$delete = $this->char->delete_bio_field_value($id);
-		
-		if ($delete > 0)
+		if (IS_AJAX)
 		{
-			$message = sprintf(
-				lang('flash_success'),
-				ucfirst(lang('labels_bio') .' '. lang('labels_field') .' '. lang('labels_value')),
-				lang('actions_deleted'),
-				''
-			);
-
-			$flash['status'] = 'success';
-			$flash['message'] = text_output($message);
-				
-			$output = $this->load->view('_base/admin/pages/flash', $flash, TRUE);
+			/* load the resources */
+			$this->load->model('characters_model', 'char');
+			
+			$id = (is_numeric($this->input->post('field'))) ? $this->input->post('field', TRUE) : 0;
+			
+			$delete = $this->char->delete_bio_field_value($id);
+			
+			if ($delete > 0)
+			{
+				$message = sprintf(
+					lang('flash_success'),
+					ucfirst(lang('labels_bio') .' '. lang('labels_field') .' '. lang('labels_value')),
+					lang('actions_deleted'),
+					''
+				);
+	
+				$flash['status'] = 'success';
+				$flash['message'] = text_output($message);
+					
+				$output = $this->load->view('_base/admin/pages/flash', $flash, TRUE);
+			}
+			else
+			{
+				$message = sprintf(
+					lang('flash_failure'),
+					ucfirst(lang('labels_bio') .' '. lang('labels_field') .' '. lang('labels_value')),
+					lang('actions_deleted'),
+					''
+				);
+	
+				$flash['status'] = 'error';
+				$flash['message'] = text_output($message);
+					
+				$output = $this->load->view('_base/admin/pages/flash', $flash, TRUE);
+			}
+			
+			echo $output;
 		}
-		else
-		{
-			$message = sprintf(
-				lang('flash_failure'),
-				ucfirst(lang('labels_bio') .' '. lang('labels_field') .' '. lang('labels_value')),
-				lang('actions_deleted'),
-				''
-			);
-
-			$flash['status'] = 'error';
-			$flash['message'] = text_output($message);
-				
-			$output = $this->load->view('_base/admin/pages/flash', $flash, TRUE);
-		}
-		
-		echo $output;
 	}
 	
 	function del_bio_sec()
@@ -2899,55 +2878,61 @@ class Ajax_base extends Controller {
 	
 	function del_character_award()
 	{
-		/* load the resources */
-		$this->load->model('awards_model', 'awards');
-		
-		$id = $this->input->post('award', TRUE);
-		
-		$delete = $this->awards->delete_received_award($id);
-		
-		echo '';
+		if (IS_AJAX)
+		{
+			/* load the resources */
+			$this->load->model('awards_model', 'awards');
+			
+			$id = $this->input->post('award', TRUE);
+			
+			$delete = $this->awards->delete_received_award($id);
+			
+			echo '';
+		}
 	}
 	
 	function del_coc()
 	{
-		/* load the resources */
-		$this->load->model('characters_model', 'char');
-		
-		$id = (is_numeric($this->input->post('coc'))) ? $this->input->post('coc', TRUE) : 0;
-		
-		$delete = $this->char->delete_coc_entry($id);
-		
-		if ($delete > 0)
+		if (IS_AJAX)
 		{
-			$message = sprintf(
-				lang('flash_success'),
-				ucfirst(lang('global_character')),
-				lang('actions_removed'),
-				''
-			);
-
-			$flash['status'] = 'success';
-			$flash['message'] = text_output($message);
-				
-			$output = $this->load->view('_base/admin/pages/flash', $flash, TRUE);
+			/* load the resources */
+			$this->load->model('characters_model', 'char');
+			
+			$id = (is_numeric($this->input->post('coc'))) ? $this->input->post('coc', TRUE) : 0;
+			
+			$delete = $this->char->delete_coc_entry($id);
+			
+			if ($delete > 0)
+			{
+				$message = sprintf(
+					lang('flash_success'),
+					ucfirst(lang('global_character')),
+					lang('actions_removed'),
+					''
+				);
+	
+				$flash['status'] = 'success';
+				$flash['message'] = text_output($message);
+					
+				$output = $this->load->view('_base/admin/pages/flash', $flash, TRUE);
+			}
+			else
+			{
+				$message = sprintf(
+					lang('flash_failure'),
+					ucfirst(lang('global_character')),
+					lang('actions_removed'),
+					''
+				);
+	
+				$flash['status'] = 'error';
+				$flash['message'] = text_output($message);
+					
+				$output = $this->load->view('_base/admin/pages/flash', $flash, TRUE);
+			}
+			
+			echo $output;
 		}
-		else
-		{
-			$message = sprintf(
-				lang('flash_failure'),
-				ucfirst(lang('global_character')),
-				lang('actions_removed'),
-				''
-			);
-
-			$flash['status'] = 'error';
-			$flash['message'] = text_output($message);
-				
-			$output = $this->load->view('_base/admin/pages/flash', $flash, TRUE);
-		}
-		
-		echo $output;
 	}
 	
 	function del_comment()
@@ -3046,43 +3031,46 @@ class Ajax_base extends Controller {
 	
 	function del_deck()
 	{
-		/* load the resources */
-		$this->load->model('tour_model', 'tour');
-		
-		$id = (is_numeric($this->input->post('deck'))) ? $this->input->post('deck', TRUE) : 0;
-		
-		$delete = $this->tour->delete_deck($id);
-		
-		if ($delete > 0)
+		if (IS_AJAX)
 		{
-			$message = sprintf(
-				lang('flash_success'),
-				ucfirst(lang('global_deck')),
-				lang('actions_removed'),
-				''
-			);
-
-			$flash['status'] = 'success';
-			$flash['message'] = text_output($message);
-				
-			$output = $this->load->view('_base/admin/pages/flash', $flash, TRUE);
+			/* load the resources */
+			$this->load->model('tour_model', 'tour');
+			
+			$id = (is_numeric($this->input->post('deck'))) ? $this->input->post('deck', TRUE) : 0;
+			
+			$delete = $this->tour->delete_deck($id);
+			
+			if ($delete > 0)
+			{
+				$message = sprintf(
+					lang('flash_success'),
+					ucfirst(lang('global_deck')),
+					lang('actions_removed'),
+					''
+				);
+	
+				$flash['status'] = 'success';
+				$flash['message'] = text_output($message);
+					
+				$output = $this->load->view('_base/admin/pages/flash', $flash, TRUE);
+			}
+			else
+			{
+				$message = sprintf(
+					lang('flash_failure'),
+					ucfirst(lang('global_deck')),
+					lang('actions_removed'),
+					''
+				);
+	
+				$flash['status'] = 'error';
+				$flash['message'] = text_output($message);
+					
+				$output = $this->load->view('_base/admin/pages/flash', $flash, TRUE);
+			}
+			
+			echo $output;
 		}
-		else
-		{
-			$message = sprintf(
-				lang('flash_failure'),
-				ucfirst(lang('global_deck')),
-				lang('actions_removed'),
-				''
-			);
-
-			$flash['status'] = 'error';
-			$flash['message'] = text_output($message);
-				
-			$output = $this->load->view('_base/admin/pages/flash', $flash, TRUE);
-		}
-		
-		echo $output;
 	}
 	
 	function del_dept()
@@ -3264,43 +3252,46 @@ class Ajax_base extends Controller {
 	
 	function del_docking_field_value()
 	{
-		/* load the resources */
-		$this->load->model('docking_model', 'docking');
-		
-		$id = (is_numeric($this->input->post('field'))) ? $this->input->post('field', TRUE) : 0;
-		
-		$delete = $this->docking->delete_docking_field_value($id);
-		
-		if ($delete > 0)
+		if (IS_AJAX)
 		{
-			$message = sprintf(
-				lang('flash_success'),
-				ucfirst(lang('actions_docking') .' '. lang('labels_field') .' '. lang('labels_value')),
-				lang('actions_deleted'),
-				''
-			);
-
-			$flash['status'] = 'success';
-			$flash['message'] = text_output($message);
-				
-			$output = $this->load->view('_base/admin/pages/flash', $flash, TRUE);
+			/* load the resources */
+			$this->load->model('docking_model', 'docking');
+			
+			$id = (is_numeric($this->input->post('field'))) ? $this->input->post('field', TRUE) : 0;
+			
+			$delete = $this->docking->delete_docking_field_value($id);
+			
+			if ($delete > 0)
+			{
+				$message = sprintf(
+					lang('flash_success'),
+					ucfirst(lang('actions_docking') .' '. lang('labels_field') .' '. lang('labels_value')),
+					lang('actions_deleted'),
+					''
+				);
+	
+				$flash['status'] = 'success';
+				$flash['message'] = text_output($message);
+					
+				$output = $this->load->view('_base/admin/pages/flash', $flash, TRUE);
+			}
+			else
+			{
+				$message = sprintf(
+					lang('flash_failure'),
+					ucfirst(lang('actions_docking') .' '. lang('labels_field') .' '. lang('labels_value')),
+					lang('actions_deleted'),
+					''
+				);
+	
+				$flash['status'] = 'error';
+				$flash['message'] = text_output($message);
+					
+				$output = $this->load->view('_base/admin/pages/flash', $flash, TRUE);
+			}
+			
+			echo $output;
 		}
-		else
-		{
-			$message = sprintf(
-				lang('flash_failure'),
-				ucfirst(lang('actions_docking') .' '. lang('labels_field') .' '. lang('labels_value')),
-				lang('actions_deleted'),
-				''
-			);
-
-			$flash['status'] = 'error';
-			$flash['message'] = text_output($message);
-				
-			$output = $this->load->view('_base/admin/pages/flash', $flash, TRUE);
-		}
-		
-		echo $output;
 	}
 	
 	function del_docking_sec()
@@ -3949,43 +3940,46 @@ class Ajax_base extends Controller {
 	
 	function del_spec_field_value()
 	{
-		/* load the resources */
-		$this->load->model('specs_model', 'specs');
-		
-		$id = (is_numeric($this->input->post('field'))) ? $this->input->post('field', TRUE) : 0;
-		
-		$delete = $this->specs->delete_spec_field_value($id);
-		
-		if ($delete > 0)
+		if (IS_AJAX)
 		{
-			$message = sprintf(
-				lang('flash_success'),
-				ucfirst(lang('global_specification') .' '. lang('labels_field') .' '. lang('labels_value')),
-				lang('actions_deleted'),
-				''
-			);
-
-			$flash['status'] = 'success';
-			$flash['message'] = text_output($message);
-				
-			$output = $this->load->view('_base/admin/pages/flash', $flash, TRUE);
+			/* load the resources */
+			$this->load->model('specs_model', 'specs');
+			
+			$id = (is_numeric($this->input->post('field'))) ? $this->input->post('field', TRUE) : 0;
+			
+			$delete = $this->specs->delete_spec_field_value($id);
+			
+			if ($delete > 0)
+			{
+				$message = sprintf(
+					lang('flash_success'),
+					ucfirst(lang('global_specification') .' '. lang('labels_field') .' '. lang('labels_value')),
+					lang('actions_deleted'),
+					''
+				);
+	
+				$flash['status'] = 'success';
+				$flash['message'] = text_output($message);
+					
+				$output = $this->load->view('_base/admin/pages/flash', $flash, TRUE);
+			}
+			else
+			{
+				$message = sprintf(
+					lang('flash_failure'),
+					ucfirst(lang('global_specification') .' '. lang('labels_field') .' '. lang('labels_value')),
+					lang('actions_deleted'),
+					''
+				);
+	
+				$flash['status'] = 'error';
+				$flash['message'] = text_output($message);
+					
+				$output = $this->load->view('_base/admin/pages/flash', $flash, TRUE);
+			}
+			
+			echo $output;
 		}
-		else
-		{
-			$message = sprintf(
-				lang('flash_failure'),
-				ucfirst(lang('global_specification') .' '. lang('labels_field') .' '. lang('labels_value')),
-				lang('actions_deleted'),
-				''
-			);
-
-			$flash['status'] = 'error';
-			$flash['message'] = text_output($message);
-				
-			$output = $this->load->view('_base/admin/pages/flash', $flash, TRUE);
-		}
-		
-		echo $output;
 	}
 	
 	function del_spec_sec()
@@ -4103,43 +4097,46 @@ class Ajax_base extends Controller {
 	
 	function del_tour_field_value()
 	{
-		/* load the resources */
-		$this->load->model('tour_model', 'tour');
-		
-		$id = (is_numeric($this->input->post('field'))) ? $this->input->post('field', TRUE) : 0;
-		
-		$delete = $this->tour->delete_tour_value($id);
-		
-		if ($delete > 0)
+		if (IS_AJAX)
 		{
-			$message = sprintf(
-				lang('flash_success'),
-				ucfirst(lang('global_tour') .' '. lang('labels_field') .' '. lang('labels_value')),
-				lang('actions_deleted'),
-				''
-			);
+			/* load the resources */
+			$this->load->model('tour_model', 'tour');
 			
-			$flash['status'] = 'success';
-			$flash['message'] = text_output($message);
-				
-			$output = $this->load->view('_base/admin/pages/flash', $flash, TRUE);
-		}
-		else
-		{
-			$message = sprintf(
-				lang('flash_failure'),
-				ucfirst(lang('global_tour') .' '. lang('labels_field') .' '. lang('labels_value')),
-				lang('actions_deleted'),
-				''
-			);
+			$id = (is_numeric($this->input->post('field'))) ? $this->input->post('field', TRUE) : 0;
 			
-			$flash['status'] = 'error';
-			$flash['message'] = text_output($message);
+			$delete = $this->tour->delete_tour_value($id);
+			
+			if ($delete > 0)
+			{
+				$message = sprintf(
+					lang('flash_success'),
+					ucfirst(lang('global_tour') .' '. lang('labels_field') .' '. lang('labels_value')),
+					lang('actions_deleted'),
+					''
+				);
 				
-			$output = $this->load->view('_base/admin/pages/flash', $flash, TRUE);
+				$flash['status'] = 'success';
+				$flash['message'] = text_output($message);
+					
+				$output = $this->load->view('_base/admin/pages/flash', $flash, TRUE);
+			}
+			else
+			{
+				$message = sprintf(
+					lang('flash_failure'),
+					ucfirst(lang('global_tour') .' '. lang('labels_field') .' '. lang('labels_value')),
+					lang('actions_deleted'),
+					''
+				);
+				
+				$flash['status'] = 'error';
+				$flash['message'] = text_output($message);
+					
+				$output = $this->load->view('_base/admin/pages/flash', $flash, TRUE);
+			}
+			
+			echo $output;
 		}
-		
-		echo $output;
 	}
 	
 	function del_tour_item()
@@ -6354,215 +6351,227 @@ class Ajax_base extends Controller {
 	
 	function save_coc()
 	{
-		/* load the resources */
-		$this->load->model('characters_model', 'char');
-		
-		$coc = $this->input->post('coc', TRUE);
-		
-		$empty = $this->char->empty_coc();
-		
-		$i = 0;
-		$count = 0;
-		
-		foreach ($coc as $c)
+		if (IS_AJAX)
 		{
-			$insert_array = array(
-				'coc_crew' => $c,
-				'coc_order' => $i
-			);
+			/* load the resources */
+			$this->load->model('characters_model', 'char');
 			
-			$insert = $this->char->create_coc_entry($insert_array);
-			$count+= $insert;
+			$coc = $this->input->post('coc', TRUE);
 			
-			++$i;
-		}
-		
-		if ($count > 0)
-		{
-			$message = sprintf(
-				lang('flash_success'),
-				ucfirst(strtolower(lang('labels_coc'))),
-				lang('actions_updated'),
-				''
-			);
-
-			$flash['status'] = 'success';
-			$flash['message'] = text_output($message);
+			$empty = $this->char->empty_coc();
+			
+			$i = 0;
+			$count = 0;
+			
+			foreach ($coc as $c)
+			{
+				$insert_array = array(
+					'coc_crew' => $c,
+					'coc_order' => $i
+				);
 				
-			$output = $this->load->view('_base/admin/pages/flash', $flash, TRUE);
-		}
-		else
-		{
-			$message = sprintf(
-				lang('flash_failure'),
-				ucfirst(strtolower(lang('labels_coc'))),
-				lang('actions_updated'),
-				''
-			);
-
-			$flash['status'] = 'error';
-			$flash['message'] = text_output($message);
+				$insert = $this->char->create_coc_entry($insert_array);
+				$count+= $insert;
 				
-			$output = $this->load->view('_base/admin/pages/flash', $flash, TRUE);
+				++$i;
+			}
+			
+			if ($count > 0)
+			{
+				$message = sprintf(
+					lang('flash_success'),
+					ucfirst(strtolower(lang('labels_coc'))),
+					lang('actions_updated'),
+					''
+				);
+	
+				$flash['status'] = 'success';
+				$flash['message'] = text_output($message);
+					
+				$output = $this->load->view('_base/admin/pages/flash', $flash, TRUE);
+			}
+			else
+			{
+				$message = sprintf(
+					lang('flash_failure'),
+					ucfirst(strtolower(lang('labels_coc'))),
+					lang('actions_updated'),
+					''
+				);
+	
+				$flash['status'] = 'error';
+				$flash['message'] = text_output($message);
+					
+				$output = $this->load->view('_base/admin/pages/flash', $flash, TRUE);
+			}
+			
+			echo $output;
 		}
-		
-		echo $output;
 	}
 	
 	function save_bio_field_value()
 	{
-		/* load the resources */
-		$this->load->model('characters_model', 'char');
-		
-		$post = $this->input->post('value', TRUE);
-		
-		$i = 0;
-		$count = 0;
-		
-		foreach ($post as $key => $value)
+		if (IS_AJAX)
 		{
-			$update_array = array('value_order' => $i);
+			/* load the resources */
+			$this->load->model('characters_model', 'char');
 			
-			$update = $this->char->update_bio_field_value($value, $update_array);
-			$count+= $update;
+			$post = $this->input->post('value', TRUE);
 			
-			++$i;
-		}
-		
-		if ($count > 0)
-		{
-			$message = sprintf(
-				lang('flash_success'),
-				ucfirst(lang('labels_bio') .' '. lang('labels_field') .' '. lang('labels_value')),
-				lang('actions_updated'),
-				''
-			);
-
-			$flash['status'] = 'success';
-			$flash['message'] = text_output($message);
+			$i = 0;
+			$count = 0;
+			
+			foreach ($post as $key => $value)
+			{
+				$update_array = array('value_order' => $i);
 				
-			$output = $this->load->view('_base/admin/pages/flash', $flash, TRUE);
-		}
-		else
-		{
-			$message = sprintf(
-				lang('flash_failure'),
-				ucfirst(lang('labels_bio') .' '. lang('labels_field') .' '. lang('labels_value')),
-				lang('actions_updated'),
-				''
-			);
-
-			$flash['status'] = 'error';
-			$flash['message'] = text_output($message);
+				$update = $this->char->update_bio_field_value($value, $update_array);
+				$count+= $update;
 				
-			$output = $this->load->view('_base/admin/pages/flash', $flash, TRUE);
+				++$i;
+			}
+			
+			if ($count > 0)
+			{
+				$message = sprintf(
+					lang('flash_success'),
+					ucfirst(lang('labels_bio') .' '. lang('labels_field') .' '. lang('labels_value')),
+					lang('actions_updated'),
+					''
+				);
+	
+				$flash['status'] = 'success';
+				$flash['message'] = text_output($message);
+					
+				$output = $this->load->view('_base/admin/pages/flash', $flash, TRUE);
+			}
+			else
+			{
+				$message = sprintf(
+					lang('flash_failure'),
+					ucfirst(lang('labels_bio') .' '. lang('labels_field') .' '. lang('labels_value')),
+					lang('actions_updated'),
+					''
+				);
+	
+				$flash['status'] = 'error';
+				$flash['message'] = text_output($message);
+					
+				$output = $this->load->view('_base/admin/pages/flash', $flash, TRUE);
+			}
+			
+			echo $output;
 		}
-		
-		echo $output;
 	}
 	
 	function save_deck()
 	{
-		/* load the resources */
-		$this->load->model('tour_model', 'tour');
-		
-		$post = $this->input->post('decks', TRUE);
-		
-		$i = 0;
-		$count = 0;
-		
-		foreach ($post as $key => $value)
+		if (IS_AJAX)
 		{
-			$update_array = array('deck_order' => $i);
+			/* load the resources */
+			$this->load->model('tour_model', 'tour');
 			
-			$update = $this->tour->update_deck($value, $update_array);
-			$count+= $update;
+			$post = $this->input->post('decks', TRUE);
 			
-			++$i;
-		}
-		
-		if ($count > 0)
-		{
-			$message = sprintf(
-				lang('flash_success_plural'),
-				ucfirst(lang('global_decks')),
-				lang('actions_updated'),
-				''
-			);
-
-			$flash['status'] = 'success';
-			$flash['message'] = text_output($message);
+			$i = 0;
+			$count = 0;
+			
+			foreach ($post as $key => $value)
+			{
+				$update_array = array('deck_order' => $i);
 				
-			$output = $this->load->view('_base/admin/pages/flash', $flash, TRUE);
-		}
-		else
-		{
-			$message = sprintf(
-				lang('flash_failure_plural'),
-				ucfirst(lang('global_decks')),
-				lang('actions_updated'),
-				''
-			);
-
-			$flash['status'] = 'error';
-			$flash['message'] = text_output($message);
+				$update = $this->tour->update_deck($value, $update_array);
+				$count+= $update;
 				
-			$output = $this->load->view('_base/admin/pages/flash', $flash, TRUE);
+				++$i;
+			}
+			
+			if ($count > 0)
+			{
+				$message = sprintf(
+					lang('flash_success_plural'),
+					ucfirst(lang('global_decks')),
+					lang('actions_updated'),
+					''
+				);
+	
+				$flash['status'] = 'success';
+				$flash['message'] = text_output($message);
+					
+				$output = $this->load->view('_base/admin/pages/flash', $flash, TRUE);
+			}
+			else
+			{
+				$message = sprintf(
+					lang('flash_failure_plural'),
+					ucfirst(lang('global_decks')),
+					lang('actions_updated'),
+					''
+				);
+	
+				$flash['status'] = 'error';
+				$flash['message'] = text_output($message);
+					
+				$output = $this->load->view('_base/admin/pages/flash', $flash, TRUE);
+			}
+			
+			echo $output;
 		}
-		
-		echo $output;
 	}
 	
 	function save_docking_field_value()
 	{
-		/* load the resources */
-		$this->load->model('docking_model', 'docking');
-		
-		$post = $this->input->post('value', TRUE);
-		
-		$i = 0;
-		$count = 0;
-		
-		foreach ($post as $key => $value)
+		if (IS_AJAX)
 		{
-			$update_array = array('value_order' => $i);
+			/* load the resources */
+			$this->load->model('docking_model', 'docking');
 			
-			$update = $this->docking->update_docking_field_value($value, $update_array);
-			$count+= $update;
+			$post = $this->input->post('value', TRUE);
 			
-			++$i;
-		}
-		
-		if ($count > 0)
-		{
-			$message = sprintf(
-				lang('flash_success'),
-				ucfirst(lang('actions_docking') .' '. lang('labels_field') .' '. lang('labels_value')),
-				lang('actions_updated'),
-				''
-			);
+			$i = 0;
+			$count = 0;
 			
-			$flash['status'] = 'success';
-			$flash['message'] = text_output($message);
+			foreach ($post as $key => $value)
+			{
+				$update_array = array('value_order' => $i);
 				
-			$output = $this->load->view('_base/admin/pages/flash', $flash, TRUE);
-		}
-		else
-		{
-			$message = sprintf(
-				lang('flash_failure'),
-				ucfirst(lang('actions_docking') .' '. lang('labels_field') .' '. lang('labels_value')),
-				lang('actions_updated'),
-				''
-			);
-			
-			$flash['status'] = 'error';
-			$flash['message'] = text_output($message);
+				$update = $this->docking->update_docking_field_value($value, $update_array);
+				$count+= $update;
 				
-			$output = $this->load->view('_base/admin/pages/flash', $flash, TRUE);
+				++$i;
+			}
+			
+			if ($count > 0)
+			{
+				$message = sprintf(
+					lang('flash_success'),
+					ucfirst(lang('actions_docking') .' '. lang('labels_field') .' '. lang('labels_value')),
+					lang('actions_updated'),
+					''
+				);
+				
+				$flash['status'] = 'success';
+				$flash['message'] = text_output($message);
+					
+				$output = $this->load->view('_base/admin/pages/flash', $flash, TRUE);
+			}
+			else
+			{
+				$message = sprintf(
+					lang('flash_failure'),
+					ucfirst(lang('actions_docking') .' '. lang('labels_field') .' '. lang('labels_value')),
+					lang('actions_updated'),
+					''
+				);
+				
+				$flash['status'] = 'error';
+				$flash['message'] = text_output($message);
+					
+				$output = $this->load->view('_base/admin/pages/flash', $flash, TRUE);
+			}
+			
+			echo $output;
 		}
-		
-		echo $output;
 	}
 	
 	function save_ignore_update_version()
@@ -6579,106 +6588,112 @@ class Ajax_base extends Controller {
 	
 	function save_spec_field_value()
 	{
-		/* load the resources */
-		$this->load->model('specs_model', 'specs');
-		
-		$post = $this->input->post('value', TRUE);
-		
-		$i = 0;
-		$count = 0;
-		
-		foreach ($post as $key => $value)
+		if (IS_AJAX)
 		{
-			$update_array = array('value_order' => $i);
+			/* load the resources */
+			$this->load->model('specs_model', 'specs');
 			
-			$update = $this->specs->update_spec_field_value($value, $update_array);
-			$count+= $update;
+			$post = $this->input->post('value', TRUE);
 			
-			++$i;
-		}
-		
-		if ($count > 0)
-		{
-			$message = sprintf(
-				lang('flash_success'),
-				ucfirst(lang('global_specification') .' '. lang('labels_field') .' '. lang('labels_value')),
-				lang('actions_updated'),
-				''
-			);
+			$i = 0;
+			$count = 0;
 			
-			$flash['status'] = 'success';
-			$flash['message'] = text_output($message);
+			foreach ($post as $key => $value)
+			{
+				$update_array = array('value_order' => $i);
 				
-			$output = $this->load->view('_base/admin/pages/flash', $flash, TRUE);
-		}
-		else
-		{
-			$message = sprintf(
-				lang('flash_failure'),
-				ucfirst(lang('global_specification') .' '. lang('labels_field') .' '. lang('labels_value')),
-				lang('actions_updated'),
-				''
-			);
-			
-			$flash['status'] = 'error';
-			$flash['message'] = text_output($message);
+				$update = $this->specs->update_spec_field_value($value, $update_array);
+				$count+= $update;
 				
-			$output = $this->load->view('_base/admin/pages/flash', $flash, TRUE);
+				++$i;
+			}
+			
+			if ($count > 0)
+			{
+				$message = sprintf(
+					lang('flash_success'),
+					ucfirst(lang('global_specification') .' '. lang('labels_field') .' '. lang('labels_value')),
+					lang('actions_updated'),
+					''
+				);
+				
+				$flash['status'] = 'success';
+				$flash['message'] = text_output($message);
+					
+				$output = $this->load->view('_base/admin/pages/flash', $flash, TRUE);
+			}
+			else
+			{
+				$message = sprintf(
+					lang('flash_failure'),
+					ucfirst(lang('global_specification') .' '. lang('labels_field') .' '. lang('labels_value')),
+					lang('actions_updated'),
+					''
+				);
+				
+				$flash['status'] = 'error';
+				$flash['message'] = text_output($message);
+					
+				$output = $this->load->view('_base/admin/pages/flash', $flash, TRUE);
+			}
+			
+			echo $output;
 		}
-		
-		echo $output;
 	}
 	
 	function save_tour_field_value()
 	{
-		/* load the resources */
-		$this->load->model('tour_model', 'tour');
-		
-		$post = $this->input->post('value', TRUE);
-		
-		$i = 0;
-		$count = 0;
-		
-		foreach ($post as $key => $value)
+		if (IS_AJAX)
 		{
-			$update_array = array('value_order' => $i);
+			/* load the resources */
+			$this->load->model('tour_model', 'tour');
 			
-			$update = $this->tour->update_tour_field_value($value, $update_array);
-			$count+= $update;
+			$post = $this->input->post('value', TRUE);
 			
-			++$i;
-		}
-		
-		if ($count > 0)
-		{
-			$message = sprintf(
-				lang('flash_success'),
-				ucfirst(lang('global_tour') .' '. lang('labels_field') .' '. lang('labels_value')),
-				lang('actions_updated'),
-				''
-			);
+			$i = 0;
+			$count = 0;
 			
-			$flash['status'] = 'success';
-			$flash['message'] = text_output($message);
+			foreach ($post as $key => $value)
+			{
+				$update_array = array('value_order' => $i);
 				
-			$output = $this->load->view('_base/admin/pages/flash', $flash, TRUE);
-		}
-		else
-		{
-			$message = sprintf(
-				lang('flash_failure'),
-				ucfirst(lang('global_tour') .' '. lang('labels_field') .' '. lang('labels_value')),
-				lang('actions_updated'),
-				''
-			);
-			
-			$flash['status'] = 'error';
-			$flash['message'] = text_output($message);
+				$update = $this->tour->update_tour_field_value($value, $update_array);
+				$count+= $update;
 				
-			$output = $this->load->view('_base/admin/pages/flash', $flash, TRUE);
+				++$i;
+			}
+			
+			if ($count > 0)
+			{
+				$message = sprintf(
+					lang('flash_success'),
+					ucfirst(lang('global_tour') .' '. lang('labels_field') .' '. lang('labels_value')),
+					lang('actions_updated'),
+					''
+				);
+				
+				$flash['status'] = 'success';
+				$flash['message'] = text_output($message);
+					
+				$output = $this->load->view('_base/admin/pages/flash', $flash, TRUE);
+			}
+			else
+			{
+				$message = sprintf(
+					lang('flash_failure'),
+					ucfirst(lang('global_tour') .' '. lang('labels_field') .' '. lang('labels_value')),
+					lang('actions_updated'),
+					''
+				);
+				
+				$flash['status'] = 'error';
+				$flash['message'] = text_output($message);
+					
+				$output = $this->load->view('_base/admin/pages/flash', $flash, TRUE);
+			}
+			
+			echo $output;
 		}
-		
-		echo $output;
 	}
 	
 	function whats_new()
