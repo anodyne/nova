@@ -514,7 +514,7 @@ class Personnel_base extends Controller {
 				}
 				else
 				{
-					$src = asset_location('images/characters', trim($images[0]));
+					$src = base_url() . asset_location('images/characters', trim($images[0]));
 				}
 				
 				/* set the image */
@@ -533,7 +533,7 @@ class Personnel_base extends Controller {
 					}
 					else
 					{
-						$src = asset_location('images/characters', trim($images[$i]));
+						$src = base_url() . asset_location('images/characters', trim($images[$i]));
 					}
 					
 					/* build the array */
