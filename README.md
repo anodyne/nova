@@ -8,21 +8,33 @@ Release Candidate 4 (0.9.9)
 
 Last Update
 -----------
-22 March 2010
+25 March 2010
 
 Latest Updates
 --------------
-* updated the install controller with some better email code
-* updated the upgrade controller with some better email code
-* updated the update controller with some better email code
-* updated the versions array file
-* updated the install data
-* updated the nova license
-* updated the pulsar skin with limited RTL support
+* updated the pulsar skin to pull out the RTL stuff until a later version
 * updated the language files
-* updated the sms config file with directions about what each item is for
-* fixed bug in the upgrade controller where an error would be thrown in certain circumstances
-* added the 0.9.9 update file
+* updated the upgrade process to not show the start button on the info page if the email address and password haven't been changed
+* updated the 0.9.9 update file
+* updated the install data
+* updated to jquery ui version 1.8
+* updated the shiloh skin
+* updated the constants config file with a constant for defining whether something is an ajax request
+* updated several ajax methods that were vulnerable to outside hijacking
+* updated several ajax methods to get the final order integer better
+* updated the pulsar skin
+* fixed bug with adding bio dropdown values
+* fixed bug where adding a deck and immediately trying to re-order it wouldn't work (#93)
+* fixed error thrown when editing a specs field because of a misnamed array index
+* fixed error thrown when editing a tour field because of a misnamed array index
+* fixed error thrown when editing a docking field because of a misnamed array index
+* fixed bug where adding a docking field dropdown value then immediately updating them would trigger multiple animations
+* fixed bug where adding a specs form field dropdown value then immediately updating them would trigger multiple animations
+* fixed bug where adding a tour form field dropdown value then immediately updating them would trigger multiple animations
+* fixed bug where adding a bio form field dropdown value then immediately updating them would trigger multiple animations
+* fixed bug where the description for wiki categories couldn't be edited (#92)
+* fixed bug where external images wouldn't display in character bio pages (#91)
+* fixed bug where gallery wouldn't work unless there were 3 images
 
 Changes in 0.9.9
 ----------------
@@ -30,19 +42,37 @@ Changes in 0.9.9
 * updated the versions array file
 * updated the install data
     * version info
+    * component info
 * updated the nova license
-* updated the pulsar skin
-   * [admin] added rtl.css stylesheet
-   * [admin] updated the template to pull in RTL when necessary
-   * [main] added rtl.css stylesheet
-   * [main] updated the template to pull in RTL when necessary
-   * [login] added rtl.css stylesheet
-   * [login] updated the template to pull in RTL when necessary
-   * [wiki] added rtl.css stylesheet
-   * [wiki] updated the template to pull in RTL when necessary
 * updated the language files
 * updated the sms config file with directions about what each item is for
+* updated to jquery ui version 1.8
+* updated the constants config file with a constant for defining whether something is an ajax request
+* updated several ajax methods that were vulnerable to outside hijacking
+* updated several ajax methods to get the final order integer better
+* updated the shiloh skin
+    * [main] updated the stylesheets
+    * [wiki] added the wiki section
+* updated the pulsar skin
+    * [admin] added a new small loading circle graphic
+    * [main] updated the structure stylesheet
 * fixed bug in the upgrade controller where an error would be thrown in certain circumstances
+* fixed bug with adding bio dropdown values
+* fixed bug where adding a deck and immediately trying to re-order it wouldn't work (#93)
+* fixed error thrown when editing a specs field because of a misnamed array index
+* fixed error thrown when editing a tour field because of a misnamed array index
+* fixed error thrown when editing a docking field because of a misnamed array index
+* fixed bug where adding a docking field dropdown value then immediately updating them would trigger multiple animations
+* fixed bug where adding a specs form field dropdown value then immediately updating them would trigger multiple animations
+* fixed bug where adding a tour form field dropdown value then immediately updating them would trigger multiple animations
+* fixed bug where adding a bio form field dropdown value then immediately updating them would trigger multiple animations
+* fixed bug where the description for wiki categories couldn't be edited (#92)
+* fixed bug where external images wouldn't display in character bio pages (#91)
+* fixed bug where gallery wouldn't work unless there were 3 images
+
+Known Issues
+------------
+http://github.com/anodyne/nova/issues/labels/Bug
 
 Version History
 ---------------
