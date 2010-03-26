@@ -144,6 +144,8 @@ $lang['text_dynamic_emails'] = "This message includes in the ability to set seve
 
 $lang['text_mission_groups'] = "%s groups are a new way to organize your %s to make it easier to find related missions. Whether the %s are consecutive or not, you can assign them to groups to display them together on the %s Groups page and give players the ability to quickly see and move through groups of similar %s.";
 
+$lang['text_create_mission_onfly'] = "You do not have any current %s right now. In order to post, you need to have at least one current %s. You can create a new current %s right now or choose an upcoming %s to make the current one. You can change any of these values from the %s management page.";
+
 /*
 |---------------------------------------------------------------
 | INFORMATIONAL MESSAGES
@@ -166,6 +168,8 @@ $lang['tags_separated'] = 'Separate tags by commas';
 $lang['whats_this'] = '[What is this?]';
 $lang['online_now'] = 'who'. RSQUO .'s online now';
 $lang['open_gallery'] = 'Click the image to open the gallery';
+$lang['text_create_news'] = "You can create a %s from the %s.";
+$lang['wiki_reverted'] = "Reverted to a previous draft of the page.";
 
 /*
 |---------------------------------------------------------------
