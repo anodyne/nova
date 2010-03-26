@@ -34,7 +34,7 @@
 		<tbody>
 		<?php foreach ($categories as $c): ?>
 			<tr>
-				<td><?php echo text_output($c['name'], 'strong');?></td>
+				<td class="col_30pct"><?php echo text_output($c['name'], 'strong');?></td>
 				<td class="fontSmall gray"><?php echo $c['desc'];?></td>
 				<td class="col_75 align_right">
 					<a href="#" rel="facebox" myAction="delete" myID="<?php echo $c['id'];?>" class="image"><?php echo img($images['delete']);?></a>
@@ -45,4 +45,6 @@
 		<?php endforeach;?>
 		</tbody>
 	</table>
+<?php else: ?>
+	<?php echo text_output($label['nocats'], 'h3', 'orange');?>
 <?php endif;?>
