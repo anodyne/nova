@@ -8,7 +8,7 @@
 	</p>
 <?php endif;?>
 
-<p class="bold fontSmall"><?php echo link_to_if($edit, 'wiki/page/'. $id .'/edit', $label['edit']);?></p>
+<p class="bold fontSmall"><?php echo link_to_if($edit, 'wiki/page/'. $id .'/edit', $label['edit'], array('class' => 'edit'));?></p>
 
 <?php echo text_output($page['summary'], 'p', 'gray italic');?>
 
@@ -55,9 +55,11 @@
 						
 						<?php if ($this->auth->is_logged_in()): ?>
 							<td class="col_75 align_right">
+								<?php if (count($history) > 1 && $h['draft'] != $h['page_draft']): ?>
+									<a href="#" rel="facebox" myAction="revert" myPage="<?php echo $h['page'];?>" myDraft="<?php echo $h['draft'];?>" class="image"><?php echo img($images['revert']);?></a>
+									&nbsp;
+								<?php endif;?>
 								<?php echo anchor('wiki/view/draft/'. $h['draft'], img($images['view']), array('class' => 'image'));?>
-								&nbsp;
-								<a href="#" rel="facebox" myAction="revert" myPage="<?php echo $h['page'];?>" myDraft="<?php echo $h['draft'];?>" class="image"><?php echo img($images['revert']);?></a>
 							</td>
 						<?php endif;?>
 					</tr>

@@ -423,7 +423,11 @@ class Wiki_base extends Controller {
 			'desc' => ucfirst(lang('labels_desc')),
 			'add' => ucwords(lang('actions_add') .' '. lang('global_wiki') .' '.
 				lang('labels_category') .' '. RARROW),
-			'delete' => ucfirst(lang('actions_delete'))
+			'delete' => ucfirst(lang('actions_delete')),
+			'nocats' => sprintf(
+				lang('error_not_found'),
+				lang('global_wiki') .' '. lang('labels_categories')
+			),
 		);
 		
 		$data['buttons'] = array(
@@ -1008,7 +1012,8 @@ class Wiki_base extends Controller {
 						'draft_content' => $row->draft_content,
 						'draft_page' => $page,
 						'draft_created_at' => now(),
-						'draft_categories' => ''
+						'draft_categories' => $row->draft_categories,
+						'draft_changed_comments' => lang('wiki_reverted')
 					);
 					
 					$insert = $this->wiki->create_draft($insert_array);
@@ -1289,6 +1294,9 @@ class Wiki_base extends Controller {
 				{
 					$created = gmt_to_local($d->draft_created_at, $this->timezone, $this->dst);
 					
+					$page = $this->wiki->get_page($d->draft_page);
+					$row = ($page->num_rows() > 0) ? $page->row() : FALSE;
+					
 					$data['history'][$d->draft_id] = array(
 						'draft' => $d->draft_id,
 						'title' => $d->draft_title,
@@ -1298,6 +1306,7 @@ class Wiki_base extends Controller {
 						'old_id' => (!empty($d->draft_id_old)) ? $d->draft_id_old : FALSE,
 						'page' => $d->draft_page,
 						'changes' => $d->draft_changed_comments,
+						'page_draft' => ($row !== FALSE) ? $row->page_draft : FALSE,
 					);
 				}
 			}
