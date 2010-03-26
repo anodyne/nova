@@ -1488,6 +1488,7 @@ class Install_base extends Controller {
 	{
 		/* load the resources */
 		$this->load->library('xmlrpc');
+		$this->load->library('email');
 		
 		/* set up the server and method for the request */
 		$this->xmlrpc->server('http://www.anodyne-productions.com/ano.php/utility/do_registration', 80);
