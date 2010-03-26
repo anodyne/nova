@@ -5,23 +5,19 @@
 	<?php echo text_output($label['loading'], 'h3', 'gray');?>
 </div>
 
-<div id="news" class="hidden">
-	<?php if (isset($categories)): ?>
-		<strong class="fontNormal"><?php echo $label['categories'];?></strong><br />
-		<span class="fontSmall">
-			<a href="#" class="all" myTitle="<?php echo $header;?>"><?php echo $label['all_news'];?></a>
-			
-			<?php foreach ($categories as $cat): ?>
-				&middot; <a href="#" class="show" myID="<?php echo $cat['id'];?>" myTitle="<?php echo $header .' '. NDASH .' '. $cat['name'];?>"><?php echo $cat['name'];?></a>
-			<?php endforeach; ?>
-		</span>
-	<?php endif; ?>
-	
-	<?php if (isset($msg)): ?>
-		<?php echo $msg;?>
-	<?php endif;?>
-	
-	<?php if (isset($news)): ?>
+<?php if (isset($news)): ?>
+	<div id="news" class="hidden">
+		<?php if (isset($categories)): ?>
+			<strong class="fontNormal"><?php echo $label['categories'];?></strong><br />
+			<span class="fontSmall">
+				<a href="#" class="all" myTitle="<?php echo $header;?>"><?php echo $label['all_news'];?></a>
+				
+				<?php foreach ($categories as $cat): ?>
+					&middot; <a href="#" class="show" myID="<?php echo $cat['id'];?>" myTitle="<?php echo $header .' '. NDASH .' '. $cat['name'];?>"><?php echo $cat['name'];?></a>
+				<?php endforeach; ?>
+			</span>
+		<?php endif; ?>
+		
 		<?php foreach ($news as $value): ?>
 			<div class="news <?php echo $value['cat_id'];?>">
 				<br />
@@ -39,5 +35,11 @@
 				</p>
 			</div>
 		<?php endforeach; ?>
-	<?php endif; ?>
-</div>
+	</div>
+<?php else: ?>
+	<?php echo text_output($label['nonews'], 'h3', 'orange');?>
+	
+	<?php if ($this->auth->is_logged_in()): ?>
+		<?php echo text_output($label['createnews'], 'p', 'bold gray');?>
+	<?php endif;?>
+<?php endif;?>

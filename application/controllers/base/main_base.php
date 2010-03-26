@@ -152,15 +152,6 @@ class Main_base extends Controller {
 	
 	function contact()
 	{
-		if ($this->options['system_email'] == 'off')
-		{
-			$flash['status'] = 'info';
-			$flash['message'] = lang_output('flash_system_email_off_disabled');
-			
-			/* write everything to the template */
-			$this->template->write_view('flash_message', '_base/main/pages/flash', $flash);
-		}
-		
 		if (isset($_POST['submit']))
 		{
 			/* set the variables */
@@ -273,6 +264,7 @@ class Main_base extends Controller {
 			'email' => ucwords(lang('labels_email_address')),
 			'subject' => ucwords(lang('labels_subject')),
 			'message' => ucwords(lang('labels_message')),
+			'nosubmit' => lang('flash_system_email_off_disabled'),
 		);
 		
 		/* figure out where the view files should be coming from */
@@ -722,10 +714,8 @@ class Main_base extends Controller {
 		/* set any variables */
 		$category = $this->uri->segment(3, 0, TRUE);
 		
-		/* load the models */
+		/* load the resources */
 		$this->load->model('news_model', 'news');
-		
-		/* load the helpers */
 		$this->load->helper('text');
 		
 		/* grab the data from the models */
@@ -733,18 +723,8 @@ class Main_base extends Controller {
 		$newscat = $this->news->get_news_category($category);
 		$categories = $this->news->get_news_categories();
 		
-		$data['label'] = array(
-			'categories' => ucfirst(lang('labels_categories')),
-			'all_news' => ucwords(lang('labels_all') .' '. lang('global_news')),
-			'comments' => lang('labels_comments'),
-			'category' => ucfirst(lang('labels_category')) .':',
-			'author' => ucfirst(lang('labels_author')) .':',
-			'posted_on' => ucfirst(lang('actions_posted') .' '. lang('labels_on')) .':',
-			'loading' => ucfirst(lang('actions_loading'))
-		);
-		
 		if ($category >= 1)
-		{ /* build the page title based on the category */
+		{
 			foreach ($newscat->result() as $cat)
 			{
 				$data['header'] = lang('global_news') .' '. NDASH .' '. $cat->newscat_name;
@@ -752,11 +732,11 @@ class Main_base extends Controller {
 		}
 		else
 		{
-			$data['header'] = $data['label']['all_news'];
+			$data['header'] = ucwords(lang('labels_all') .' '. lang('global_news'));
 		}
 		
 		if ($categories->num_rows() > 0)
-		{ /* get the list of news categories */
+		{
 			$j = 1;
 			
 			foreach ($categories->result() as $item)
@@ -769,7 +749,7 @@ class Main_base extends Controller {
 		}
 		
 		if ($news->num_rows() > 0)
-		{ /* loop through the news data and assign them to variables */
+		{
 			$i = 1;
 			$datestring = $this->options['date_format'];
 			
@@ -789,16 +769,29 @@ class Main_base extends Controller {
 				++$i;
 			}
 		}
-		else
-		{
-			$data['msg'] = lang_output('error_msg_no_news', 'h3', 'orange');
-		}
 		
 		/* set the info for the loader image */
 		$data['loader'] = array(
 			'src' => img_location('loader.gif', $this->skin, 'main'),
 			'alt' => '',
-			'class' => 'image');
+			'class' => 'image'
+		);
+		
+		$data['label'] = array(
+			'categories' => ucfirst(lang('labels_categories')),
+			'createnews' => sprintf(
+				lang('text_create_news'),
+				lang('global_newsitem'),
+				anchor('write/index', ucwords(lang('labels_writing') .' '. lang('labels_controlpanel')))
+			),
+			'all_news' => ucwords(lang('labels_all') .' '. lang('global_news')),
+			'comments' => lang('labels_comments'),
+			'category' => ucfirst(lang('labels_category')) .':',
+			'author' => ucfirst(lang('labels_author')) .':',
+			'posted_on' => ucfirst(lang('actions_posted') .' '. lang('labels_on')) .':',
+			'loading' => ucfirst(lang('actions_loading')),
+			'nonews' => lang('error_msg_no_news'),
+		);
 			
 		/* figure out where the view should be coming from */
 		$view_loc = view_location('main_news', $this->skin, 'main');
