@@ -1957,7 +1957,7 @@ $messages = array(
 	array(
 		'message_key' => 'credits_perm',
 		'message_label' => 'Permanent Credits',
-		'message_content' => "Nova has been developed on the <a href='http://www.codeigniter.com' target='_blank'>CodeIgniter</a> PHP framework by <a href='http://www.ellislab.com' target='_blank'>EllisLab</a>.\r\n\r\nIcons used throughout Nova were created by <a href='http://www.famfamfam.com'>FamFamFam</a>, <a href='http://www.pinvoke.com'>Pinvoke</a> and the Tango Icon Library.",
+		'message_content' => "Nova has been developed on the <a href='http://www.codeigniter.com' target='_blank'>CodeIgniter</a> PHP framework by <a href='http://www.ellislab.com' target='_blank'>EllisLab</a>.\r\n\r\nIcons used throughout Nova were created by <a href='http://www.famfamfam.com'>FamFamFam</a> and <a href='http://www.pinvoke.com'>Pinvoke</a>.",
 		'message_protected' => 'y',
 		'message_type' => 'message'),
 	array(
