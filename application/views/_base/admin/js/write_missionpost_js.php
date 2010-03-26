@@ -1,3 +1,5 @@
+<?php $string = random_string('alnum', 8);?>
+
 <script type="text/javascript">
 	$(document).ready(function(){
 		$('#toggle_notes').click(function(){
@@ -58,5 +60,25 @@
 				$("#all option[value='<?php echo $r;?>']").attr('disabled', 'yes');
 			<?php endforeach; ?>
 		<?php endif; ?>
+		
+		<?php if ($missionCount == 0 && $authorized === TRUE): ?>
+			$.facebox(function(){
+				$.get('<?php echo site_url('ajax/add_mission');?>/<?php echo $string;?>', function(data) {
+					$.facebox(data);
+				});
+			});
+			
+			$('#addMission').live('click', function(){
+				var title = $('#addMissionTitle').val();
+				var desc = $('#addMissionDesc').val();
+				var option = $('#addMissionOption').val();
+				
+				$.ajax({
+					type: "POST",
+					url: "<?php echo site_url('ajax/add_mission_action');?>",
+					data: { title: title, desc: desc, option: option }
+				});
+			});
+		<?php endif;?>
 	});
 </script>

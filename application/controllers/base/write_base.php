@@ -395,120 +395,335 @@ class Write_base extends Controller {
 			$flash = FALSE;
 			$illegalpost = FALSE;
 			
-			if ($authors == '0' && $authors_list == '0')
+			if ($this->uri->segment(3) != 'missionCreate')
 			{
-				$flash['status'] = 'error';
-				$flash['message'] = lang_output('flash_missionposts_no_author');
-				
-				/* write everything to the template */
-				$this->template->write_view('flash_message', '_base/admin/pages/flash', $flash);
-			}
-			else
-			{
-				if ($authors_list == "0")
+				if ($authors == '0' && $authors_list == '0')
 				{
-					$authors_list = $authors;
+					$flash['status'] = 'error';
+					$flash['message'] = lang_output('flash_missionposts_no_author');
+					
+					/* write everything to the template */
+					$this->template->write_view('flash_message', '_base/admin/pages/flash', $flash);
 				}
 				else
 				{
-					$authors_list.= $authors;
-				}
-				
-				/* put the authors into an array */
-				$author_array_final = explode(',', $authors_list);
-				
-				$users = array();
-				
-				foreach ($author_array_final as $key => $value)
-				{ /* make sure there aren't any empty values */
-					if (!is_numeric($value) || $value < 1)
+					if ($authors_list == "0")
 					{
-						unset($author_array_final[$key]);
+						$authors_list = $authors;
+					}
+					else
+					{
+						$authors_list.= $authors;
 					}
 					
-					/* get the user ID */
-					$pid = $this->sys->get_item('characters', 'charid', $value, 'user');
+					/* put the authors into an array */
+					$author_array_final = explode(',', $authors_list);
 					
-					/* put the users into an array */
-					$users[] = ($pid !== FALSE) ? $pid : NULL;
-				}
-				
-				foreach ($users as $a => $b)
-				{
-					if (!is_numeric($b) || $b < 1)
-					{
-						unset($users[$a]);
-					}
-				}
-				
-				/* make sure the array doesn't the same ID multiple times */
-				$users = array_unique($users);
-				
-				/* set the authors string */
-				$authors_string = implode(',', $author_array_final);
-				$users_string = implode(',', $users);
-				
-				/* make sure the person posting is actually part of the post */
-				if (!in_array($this->session->userdata('userid'), $users))
-				{
-					$illegalpost = TRUE;
-					$action = lang('actions_save');
-				}
-				
-				switch ($action)
-				{
-					case 'delete':
-						/* get the log information */
-						$row = $this->posts->get_post($id);
-						
-						if ($row !== FALSE)
+					$users = array();
+					
+					foreach ($author_array_final as $key => $value)
+					{ /* make sure there aren't any empty values */
+						if (!is_numeric($value) || $value < 1)
 						{
-							if ($row->post_status == 'saved')
+							unset($author_array_final[$key]);
+						}
+						
+						/* get the user ID */
+						$pid = $this->sys->get_item('characters', 'charid', $value, 'user');
+						
+						/* put the users into an array */
+						$users[] = ($pid !== FALSE) ? $pid : NULL;
+					}
+					
+					foreach ($users as $a => $b)
+					{
+						if (!is_numeric($b) || $b < 1)
+						{
+							unset($users[$a]);
+						}
+					}
+					
+					/* make sure the array doesn't the same ID multiple times */
+					$users = array_unique($users);
+					
+					/* set the authors string */
+					$authors_string = implode(',', $author_array_final);
+					$users_string = implode(',', $users);
+					
+					/* make sure the person posting is actually part of the post */
+					if (!in_array($this->session->userdata('userid'), $users))
+					{
+						$illegalpost = TRUE;
+						$action = lang('actions_save');
+					}
+					
+					switch ($action)
+					{
+						case 'delete':
+							/* get the log information */
+							$row = $this->posts->get_post($id);
+							
+							if ($row !== FALSE)
 							{
-								$valid = array();
-			
-								foreach ($this->session->userdata('characters') as $check)
+								if ($row->post_status == 'saved')
 								{
-									if (strstr($row->post_authors, $check) === FALSE)
+									$valid = array();
+				
+									foreach ($this->session->userdata('characters') as $check)
 									{
-										$valid[] = FALSE;
+										if (strstr($row->post_authors, $check) === FALSE)
+										{
+											$valid[] = FALSE;
+										}
+										else
+										{
+											$valid[] = TRUE;
+										}
+									}
+									
+									if (!in_array(TRUE, $valid))
+									{
+										redirect('admin/error/4');
+									}
+									
+									/* delete the log */
+									$delete = $this->posts->delete_post($id);
+									
+									if ($delete > 0)
+									{
+										$message = sprintf(
+											lang('flash_success'),
+											ucfirst(lang('global_missionpost')),
+											lang('actions_deleted'),
+											''
+										);
+	
+										$flash['status'] = 'success';
+										$flash['message'] = text_output($message);
+										
+										if (count($author_array_final) > 1)
+										{
+											/* set the array of data for the email */
+											$email_data = array(
+												'authors' => $authors_string,
+												'title' => $title
+											);
+											
+											/* send the email */
+											$email = ($this->options['system_email'] == 'on') ? $this->_email('post_delete', $email_data) : FALSE;
+										}
 									}
 									else
 									{
-										$valid[] = TRUE;
+										$message = sprintf(
+											lang('flash_failure'),
+											ucfirst(lang('global_missionpost')),
+											lang('actions_deleted'),
+											''
+										);
+	
+										$flash['status'] = 'error';
+										$flash['message'] = text_output($message);
 									}
 								}
 								
-								if (!in_array(TRUE, $valid))
-								{
-									redirect('admin/error/4');
-								}
+								/* add an automatic redirect */
+								$this->template->add_redirect('write/index');
+							}
+							
+							break;
+							
+						case 'save':
+							if ($id !== FALSE)
+							{ /* if there is an ID, it is a previously saved post */
+								$update_array = array(
+									'post_authors' => $authors_string,
+									'post_authors_users' => $users_string,
+									'post_date' => now(),
+									'post_title' => $title,
+									'post_content' => $content,
+									'post_tags' => $tags,
+									'post_status' => 'saved',
+									'post_timeline' => $timeline,
+									'post_location' => $location,
+									'post_mission' => $mission,
+									'post_saved' => $this->session->userdata('main_char')
+								);
 								
-								/* delete the log */
-								$delete = $this->posts->delete_post($id);
+								/* do the update */
+								$update = $this->posts->update_post($id, $update_array);
 								
-								if ($delete > 0)
+								if ($update > 0)
 								{
 									$message = sprintf(
 										lang('flash_success'),
 										ucfirst(lang('global_missionpost')),
-										lang('actions_deleted'),
+										lang('actions_saved'),
+										($illegalpost === TRUE) ? ' '. lang('error_illegal_post') : ''
+									);
+	
+									$flash['status'] = 'success';
+									$flash['message'] = text_output($message);
+								}
+								else
+								{
+									$message = sprintf(
+										lang('flash_failure'),
+										ucfirst(lang('global_missionpost')),
+										lang('actions_saved'),
+										($illegalpost === TRUE) ? ' '. lang('error_illegal_post') : ''
+									);
+	
+									$flash['status'] = 'error';
+									$flash['message'] = text_output($message);
+								}
+							}
+							else
+							{
+								/* build the insert array */
+								$insert_array = array(
+									'post_authors' => $authors_string,
+									'post_authors_users' => $users_string,
+									'post_date' => now(),
+									'post_title' => $title,
+									'post_content' => $content,
+									'post_tags' => $tags,
+									'post_status' => 'saved',
+									'post_timeline' => $timeline,
+									'post_location' => $location,
+									'post_mission' => $mission,
+									'post_saved' => $this->session->userdata('main_char')
+								);
+								
+								/* do the insert */
+								$insert = $this->posts->create_mission_entry($insert_array);
+								
+								/* grab the insert id */
+								$insert_id = $this->db->insert_id();
+								
+								/* optimize the table */
+								$this->sys->optimize_table('posts');
+								
+								if ($insert > 0)
+								{
+									$message = sprintf(
+										lang('flash_success'),
+										ucfirst(lang('global_missionpost')),
+										lang('actions_saved'),
+										($illegalpost === TRUE) ? ' '. lang('error_illegal_post') : ''
+									);
+	
+									$flash['status'] = 'success';
+									$flash['message'] = text_output($message);
+								}
+								else
+								{
+									$message = sprintf(
+										lang('flash_failure'),
+										ucfirst(lang('global_missionpost')),
+										lang('actions_saved'),
+										($illegalpost === TRUE) ? ' '. lang('error_illegal_post') : ''
+									);
+	
+									$flash['status'] = 'error';
+									$flash['message'] = text_output($message);
+								}
+								
+								/* add a quick redirect */
+								$this->template->add_redirect('write/missionpost/'. $insert_id);
+							}
+							
+							if (count($author_array_final) > 1)
+							{ /* only send the saved notification if there's more than one author */
+								/* set the array of data for the email */
+								$email_data = array(
+									'authors' => $authors_string,
+									'title' => $title,
+									'timeline' => $timeline,
+									'location' => $location,
+									'content' => $content,
+									'mission' => $this->mis->get_mission($mission, 'mission_title')
+								);
+								
+								/* send the email */
+								$email = ($this->options['system_email'] == 'on') ? $this->_email('post_save', $email_data) : FALSE;
+							}
+							
+							/* reset the fields if everything worked */
+							$content = FALSE;
+							$title = FALSE;
+							$tags = FALSE;
+							$timeline = FALSE;
+							$location = FALSE;
+							$mission = FALSE;
+							
+							break;
+							
+						case 'post':
+							/* check the moderation status */
+							$status = $this->user->checking_moderation('post', $authors_string);
+							
+							if ($id !== FALSE)
+							{ /* if there is an ID, it is a previously saved post */
+								$update_array = array(
+									'post_authors' => $authors_string,
+									'post_authors_users' => $users_string,
+									'post_date' => now(),
+									'post_title' => $title,
+									'post_content' => $content,
+									'post_tags' => $tags,
+									'post_status' => $status,
+									'post_timeline' => $timeline,
+									'post_location' => $location,
+									'post_mission' => $mission,
+									'post_saved' => $this->session->userdata('main_char')
+								);
+								
+								/* do the update */
+								$update = $this->posts->update_post($id, $update_array);
+								
+								if ($update > 0)
+								{
+									$string = explode(',', $authors_string);
+									
+									foreach ($string as $s)
+									{
+										$userid = $this->char->get_character($s, 'user');
+										
+										$array = array('last_post' => now());
+										$this->user->update_user($userid, $array);
+										$this->char->update_character($s, $array);
+									}
+									
+									$message = sprintf(
+										lang('flash_success'),
+										ucfirst(lang('global_missionpost')),
+										lang('actions_posted'),
 										''
 									);
-
+	
 									$flash['status'] = 'success';
 									$flash['message'] = text_output($message);
 									
-									if (count($author_array_final) > 1)
+									/* set the array of data for the email */
+									$email_data = array(
+										'authors' => $authors_string,
+										'title' => $title,
+										'timeline' => $timeline,
+										'location' => $location,
+										'content' => $content,
+										'mission' => $this->mis->get_mission($mission, 'mission_title')
+									);
+									
+									if ($status == 'pending')
 									{
-										/* set the array of data for the email */
-										$email_data = array(
-											'authors' => $authors_string,
-											'title' => $title
-										);
-										
 										/* send the email */
-										$email = ($this->options['system_email'] == 'on') ? $this->_email('post_delete', $email_data) : FALSE;
+										$email = ($this->options['system_email'] == 'on') ? $this->_email('post_pending', $email_data) : FALSE;
+									}
+									else
+									{
+										/* send the email */
+										$email = ($this->options['system_email'] == 'on') ? $this->_email('post', $email_data) : FALSE;
 									}
 								}
 								else
@@ -516,320 +731,108 @@ class Write_base extends Controller {
 									$message = sprintf(
 										lang('flash_failure'),
 										ucfirst(lang('global_missionpost')),
-										lang('actions_deleted'),
+										lang('actions_posted'),
 										''
 									);
-
+	
+									$flash['status'] = 'error';
+									$flash['message'] = text_output($message);
+								}
+							}
+							else
+							{
+								/* build the insert array */
+								$insert_array = array(
+									'post_authors' => $authors_string,
+									'post_authors_users' => $users_string,
+									'post_date' => now(),
+									'post_title' => $title,
+									'post_content' => $content,
+									'post_tags' => $tags,
+									'post_status' => $status,
+									'post_timeline' => $timeline,
+									'post_location' => $location,
+									'post_mission' => $mission
+								);
+								
+								/* do the insert */
+								$insert = $this->posts->create_mission_entry($insert_array);
+								
+								if ($insert > 0)
+								{
+									$string = explode(',', $authors_string);
+									
+									foreach ($string as $s)
+									{
+										$userid = $this->char->get_character($s, 'user');
+										
+										$array = array('last_post' => now());
+										$this->user->update_user($userid, $array);
+										$this->char->update_character($s, $array);
+									}
+									
+									$message = sprintf(
+										lang('flash_success'),
+										ucfirst(lang('global_missionpost')),
+										lang('actions_posted'),
+										''
+									);
+	
+									$flash['status'] = 'success';
+									$flash['message'] = text_output($message);
+									
+									/* set the array of data for the email */
+									$email_data = array(
+										'authors' => $authors_string,
+										'title' => $title,
+										'timeline' => $timeline,
+										'location' => $location,
+										'content' => $content,
+										'mission' => $this->mis->get_mission($mission, 'mission_title')
+									);
+									
+									if ($status == 'pending')
+									{
+										/* send the email */
+										$email = ($this->options['system_email'] == 'on') ? $this->_email('post_pending', $email_data) : FALSE;
+									}
+									else
+									{
+										/* send the email */
+										$email = ($this->options['system_email'] == 'on') ? $this->_email('post', $email_data) : FALSE;
+									}
+									
+									/* reset the fields if everything worked */
+									$content = FALSE;
+									$title = FALSE;
+									$tags = FALSE;
+									$timeline = FALSE;
+									$location = FALSE;
+								}
+								else
+								{
+									$message = sprintf(
+										lang('flash_failure'),
+										ucfirst(lang('global_missionpost')),
+										lang('actions_posted'),
+										''
+									);
+	
 									$flash['status'] = 'error';
 									$flash['message'] = text_output($message);
 								}
 							}
 							
-							/* add an automatic redirect */
-							$this->template->add_redirect('write/index');
-						}
-						
-						break;
-						
-					case 'save':
-						if ($id !== FALSE)
-						{ /* if there is an ID, it is a previously saved post */
-							$update_array = array(
-								'post_authors' => $authors_string,
-								'post_authors_users' => $users_string,
-								'post_date' => now(),
-								'post_title' => $title,
-								'post_content' => $content,
-								'post_tags' => $tags,
-								'post_status' => 'saved',
-								'post_timeline' => $timeline,
-								'post_location' => $location,
-								'post_mission' => $mission,
-								'post_saved' => $this->session->userdata('main_char')
-							);
+							break;
 							
-							/* do the update */
-							$update = $this->posts->update_post($id, $update_array);
-							
-							if ($update > 0)
-							{
-								$message = sprintf(
-									lang('flash_success'),
-									ucfirst(lang('global_missionpost')),
-									lang('actions_saved'),
-									($illegalpost === TRUE) ? ' '. lang('error_illegal_post') : ''
-								);
-
-								$flash['status'] = 'success';
-								$flash['message'] = text_output($message);
-							}
-							else
-							{
-								$message = sprintf(
-									lang('flash_failure'),
-									ucfirst(lang('global_missionpost')),
-									lang('actions_saved'),
-									($illegalpost === TRUE) ? ' '. lang('error_illegal_post') : ''
-								);
-
-								$flash['status'] = 'error';
-								$flash['message'] = text_output($message);
-							}
-						}
-						else
-						{
-							/* build the insert array */
-							$insert_array = array(
-								'post_authors' => $authors_string,
-								'post_authors_users' => $users_string,
-								'post_date' => now(),
-								'post_title' => $title,
-								'post_content' => $content,
-								'post_tags' => $tags,
-								'post_status' => 'saved',
-								'post_timeline' => $timeline,
-								'post_location' => $location,
-								'post_mission' => $mission,
-								'post_saved' => $this->session->userdata('main_char')
-							);
-							
-							/* do the insert */
-							$insert = $this->posts->create_mission_entry($insert_array);
-							
-							/* grab the insert id */
-							$insert_id = $this->db->insert_id();
-							
-							/* optimize the table */
-							$this->sys->optimize_table('posts');
-							
-							if ($insert > 0)
-							{
-								$message = sprintf(
-									lang('flash_success'),
-									ucfirst(lang('global_missionpost')),
-									lang('actions_saved'),
-									($illegalpost === TRUE) ? ' '. lang('error_illegal_post') : ''
-								);
-
-								$flash['status'] = 'success';
-								$flash['message'] = text_output($message);
-							}
-							else
-							{
-								$message = sprintf(
-									lang('flash_failure'),
-									ucfirst(lang('global_missionpost')),
-									lang('actions_saved'),
-									($illegalpost === TRUE) ? ' '. lang('error_illegal_post') : ''
-								);
-
-								$flash['status'] = 'error';
-								$flash['message'] = text_output($message);
-							}
-							
-							/* add a quick redirect */
-							$this->template->add_redirect('write/missionpost/'. $insert_id);
-						}
-						
-						if (count($author_array_final) > 1)
-						{ /* only send the saved notification if there's more than one author */
-							/* set the array of data for the email */
-							$email_data = array(
-								'authors' => $authors_string,
-								'title' => $title,
-								'timeline' => $timeline,
-								'location' => $location,
-								'content' => $content,
-								'mission' => $this->mis->get_mission($mission, 'mission_title')
-							);
-							
-							/* send the email */
-							$email = ($this->options['system_email'] == 'on') ? $this->_email('post_save', $email_data) : FALSE;
-						}
-						
-						/* reset the fields if everything worked */
-						$content = FALSE;
-						$title = FALSE;
-						$tags = FALSE;
-						$timeline = FALSE;
-						$location = FALSE;
-						$mission = FALSE;
-						
-						break;
-						
-					case 'post':
-						/* check the moderation status */
-						$status = $this->user->checking_moderation('post', $authors_string);
-						
-						if ($id !== FALSE)
-						{ /* if there is an ID, it is a previously saved post */
-							$update_array = array(
-								'post_authors' => $authors_string,
-								'post_authors_users' => $users_string,
-								'post_date' => now(),
-								'post_title' => $title,
-								'post_content' => $content,
-								'post_tags' => $tags,
-								'post_status' => $status,
-								'post_timeline' => $timeline,
-								'post_location' => $location,
-								'post_mission' => $mission,
-								'post_saved' => $this->session->userdata('main_char')
-							);
-							
-							/* do the update */
-							$update = $this->posts->update_post($id, $update_array);
-							
-							if ($update > 0)
-							{
-								$string = explode(',', $authors_string);
-								
-								foreach ($string as $s)
-								{
-									$userid = $this->char->get_character($s, 'user');
-									
-									$array = array('last_post' => now());
-									$this->user->update_user($userid, $array);
-									$this->char->update_character($s, $array);
-								}
-								
-								$message = sprintf(
-									lang('flash_success'),
-									ucfirst(lang('global_missionpost')),
-									lang('actions_posted'),
-									''
-								);
-
-								$flash['status'] = 'success';
-								$flash['message'] = text_output($message);
-								
-								/* set the array of data for the email */
-								$email_data = array(
-									'authors' => $authors_string,
-									'title' => $title,
-									'timeline' => $timeline,
-									'location' => $location,
-									'content' => $content,
-									'mission' => $this->mis->get_mission($mission, 'mission_title')
-								);
-								
-								if ($status == 'pending')
-								{
-									/* send the email */
-									$email = ($this->options['system_email'] == 'on') ? $this->_email('post_pending', $email_data) : FALSE;
-								}
-								else
-								{
-									/* send the email */
-									$email = ($this->options['system_email'] == 'on') ? $this->_email('post', $email_data) : FALSE;
-								}
-							}
-							else
-							{
-								$message = sprintf(
-									lang('flash_failure'),
-									ucfirst(lang('global_missionpost')),
-									lang('actions_posted'),
-									''
-								);
-
-								$flash['status'] = 'error';
-								$flash['message'] = text_output($message);
-							}
-						}
-						else
-						{
-							/* build the insert array */
-							$insert_array = array(
-								'post_authors' => $authors_string,
-								'post_authors_users' => $users_string,
-								'post_date' => now(),
-								'post_title' => $title,
-								'post_content' => $content,
-								'post_tags' => $tags,
-								'post_status' => $status,
-								'post_timeline' => $timeline,
-								'post_location' => $location,
-								'post_mission' => $mission
-							);
-							
-							/* do the insert */
-							$insert = $this->posts->create_mission_entry($insert_array);
-							
-							if ($insert > 0)
-							{
-								$string = explode(',', $authors_string);
-								
-								foreach ($string as $s)
-								{
-									$userid = $this->char->get_character($s, 'user');
-									
-									$array = array('last_post' => now());
-									$this->user->update_user($userid, $array);
-									$this->char->update_character($s, $array);
-								}
-								
-								$message = sprintf(
-									lang('flash_success'),
-									ucfirst(lang('global_missionpost')),
-									lang('actions_posted'),
-									''
-								);
-
-								$flash['status'] = 'success';
-								$flash['message'] = text_output($message);
-								
-								/* set the array of data for the email */
-								$email_data = array(
-									'authors' => $authors_string,
-									'title' => $title,
-									'timeline' => $timeline,
-									'location' => $location,
-									'content' => $content,
-									'mission' => $this->mis->get_mission($mission, 'mission_title')
-								);
-								
-								if ($status == 'pending')
-								{
-									/* send the email */
-									$email = ($this->options['system_email'] == 'on') ? $this->_email('post_pending', $email_data) : FALSE;
-								}
-								else
-								{
-									/* send the email */
-									$email = ($this->options['system_email'] == 'on') ? $this->_email('post', $email_data) : FALSE;
-								}
-								
-								/* reset the fields if everything worked */
-								$content = FALSE;
-								$title = FALSE;
-								$tags = FALSE;
-								$timeline = FALSE;
-								$location = FALSE;
-							}
-							else
-							{
-								$message = sprintf(
-									lang('flash_failure'),
-									ucfirst(lang('global_missionpost')),
-									lang('actions_posted'),
-									''
-								);
-
-								$flash['status'] = 'error';
-								$flash['message'] = text_output($message);
-							}
-						}
-						
-						break;
-						
-					default:
-						$flash['status'] = 'error';
-						$flash['message'] = lang_output('error_generic', '');
+						default:
+							$flash['status'] = 'error';
+							$flash['message'] = lang_output('error_generic', '');
+					}
+					
+					/* write everything to the template */
+					$this->template->write_view('flash_message', '_base/admin/pages/flash', $flash);
 				}
-				
-				/* write everything to the template */
-				$this->template->write_view('flash_message', '_base/admin/pages/flash', $flash);
 			}
 		}
 		
@@ -1030,6 +1033,8 @@ class Write_base extends Controller {
 					$data['mission_notes'][$mission->mission_id]['title'] = $mission->mission_title;
 					$data['mission_notes'][$mission->mission_id]['notes'] = $mission->mission_notes;
 				}
+				
+				$js_data['missionCount'] = $missions->num_rows();
 			}
 			else
 			{
@@ -1038,6 +1043,8 @@ class Write_base extends Controller {
 				$data['mission']['id'] = $row->mission_id;
 				$data['mission']['title'] = $row->mission_title;
 				$data['mission']['notes'] = $row->mission_notes;
+				
+				$js_data['missionCount'] = 1;
 			}
 		}
 		else
@@ -1046,7 +1053,11 @@ class Write_base extends Controller {
 			$data['inputs']['post']['disabled'] = 'yes';
 			$data['inputs']['save']['disabled'] = 'yes';
 			$data['inputs']['delete']['disabled'] = 'yes';
+			
+			$js_data['missionCount'] = 0;
 		}
+		
+		$js_data['authorized'] = $this->auth->check_access('manage/missions', FALSE);
 		
 		$nomission = sprintf(
 			lang('error_no_mission_fail'),

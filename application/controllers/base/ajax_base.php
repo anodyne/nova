@@ -1303,6 +1303,126 @@ class Ajax_base extends Controller {
 		$this->template->render();
 	}
 	
+	function add_mission()
+	{
+		/* load the resources */
+		$this->load->model('missions_model', 'mis');
+		
+		$head = sprintf(
+			lang('fbx_head'),
+			ucwords(lang('actions_add')),
+			ucwords(lang('global_mission'))
+		);
+		
+		/* data being sent to the facebox */
+		$data['header'] = $head;
+		$data['text'] = sprintf(
+			lang('text_create_mission_onfly'),
+			lang('global_missions'),
+			lang('global_mission'),
+			lang('global_mission'),
+			lang('global_mission'),
+			lang('global_mission'),
+			lang('global_mission')
+		);
+		
+		/* input parameters */
+		$data['inputs'] = array(
+			'title' => array(
+				'name' => 'mission_title',
+				'class' => 'hud',
+				'id' => 'addMissionTitle'),
+			'desc' => array(
+				'name' => 'mission_desc',
+				'class' => 'hud',
+				'rows' => 4,
+				'id' => 'addMissionDesc'),
+			'submit' => array(
+				'type' => 'submit',
+				'class' => 'hud_button',
+				'name' => 'submit',
+				'value' => 'submit',
+				'id' => 'addMission',
+				'content' => ucwords(lang('actions_submit')))
+		);
+		
+		$missions = $this->mis->get_all_missions('upcoming');
+		
+		$data['missions'][0] = ucwords(lang('actions_create') .' '. lang('status_new') .' '. lang('global_mission'));
+		
+		if ($missions->num_rows() > 0)
+		{
+			foreach ($missions->result() as $m)
+			{
+				$data['missions'][$m->mission_id] = $m->mission_title;
+			}
+		}
+		
+		$data['label'] = array(
+			'desc' => ucfirst(lang('labels_desc')),
+			'title' => ucfirst(lang('labels_title')),
+		);
+		
+		/* figure out the skin */
+		$skin = $this->session->userdata('skin_admin');
+		
+		/* figure out where the view should come from */
+		$ajax = ajax_location('add_mission_simple', $skin, 'admin');
+		
+		/* write the data to the template */
+		$this->template->write_view('content', $ajax, $data);
+		
+		/* render the template */
+		$this->template->render();
+	}
+	
+	function add_mission_action()
+	{
+		if (IS_AJAX)
+		{
+			/* load the resources */
+			$this->load->model('missions_model', 'mis');
+			
+			$option = $this->input->post('option', TRUE);
+			
+			if ($option == 0)
+			{
+				$missions = $this->mis->get_all_missions();
+				
+				if ($missions->num_rows() > 0)
+				{
+					$last = $missions->last_row();
+					$order = $last->mission_order + 1;
+				}
+				else
+				{
+					$order = 0;
+				}
+				
+				$data = array(
+					'mission_title' => $this->input->post('title', TRUE),
+					'mission_desc' => $this->input->post('desc', TRUE),
+					'mission_start' => now(),
+					'mission_status' => 'current',
+					'mission_order' => $order
+				);
+				
+				$this->mis->add_mission($data);
+			}
+			else
+			{
+				$data = array(
+					'mission_status' => 'current',
+					'mission_start' => now()
+				);
+				
+				$this->mis->update_mission($option, $data);
+			}
+			
+			echo '';
+		}
+	}
+	
 	function add_position()
 	{
 		/* load the resources */
