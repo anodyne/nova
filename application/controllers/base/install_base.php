@@ -136,9 +136,17 @@ class Install_base extends Controller {
 									$name => array(
 										'type' => strtoupper($ftype),
 										'constraint' => $constraint,
-										'default' => (!empty($fvalue)) ? $fvalue : '',
 									),
 								);
+								
+								if (strtolower($ftype) == 'int')
+								{
+									/* do nothing ... for whatever reason i can't do != */
+								}
+								else
+								{
+									$fields[$name]['default'] = $fvalue;
+								}
 								
 								/* add an id field to keep everything happy */
 								$add = $this->dbforge->add_column($table, $fields);
