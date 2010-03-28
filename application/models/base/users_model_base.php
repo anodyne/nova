@@ -400,9 +400,12 @@ class Users_model_base extends Model {
 		{
 			foreach ($query->result() as $row)
 			{
-				$item = unserialize($row->user_data);
+				if (!is_null($row->user_data))
+				{
+					$item = unserialize($row->user_data);
 				
-				$array[] = $item['userid'];
+					$array[] = $item['userid'];
+				}
 			}
 		}
 		

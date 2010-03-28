@@ -13,6 +13,7 @@ Last Update
 Latest Updates
 --------------
 * fixed bug where adding an int field would error out because it tried to put a default value in (#94)
+* fixed bug where in certain situations an error could be thrown pulling online users
 * updated site settings to change the way the date format setting works
 
 Changes in 0.9.9
@@ -61,6 +62,7 @@ Changes in 0.9.9
 * fixed bug during update caused by not loading a library
 * fixed bug where reverting a wiki page wiped out the categories for the draft
 * fixed bug where adding an int field would error out because it tried to put a default value in (#94)
+* fixed bug where in certain situations an error could be thrown pulling online users
 
 Known Issues
 ------------
