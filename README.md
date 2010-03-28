@@ -8,22 +8,12 @@ Release Candidate 4 (0.9.9)
 
 Last Update
 -----------
-26 March 2010
+27 March 2010
 
 Latest Updates
 --------------
-* fixed bug during install caused by not loading a library
-* fixed bug during update caused by not loading a library
-* fixed bug where reverting a wiki page wiped out the categories for the draft
-* updated the install data
-* updated the all news page to handle the lack of news better
-* updated the contact page to not show the form if email is disabled
-* updated the wiki manage categories page to show a message if there aren't any categories
-* updated the wiki view page to only show the revert option if A) there's more than 1 draft and B) the draft row isn't the current page draft
-* updated the wiki revert draft functionality to put a generic update message in place
-* updated the language files
-* updated the write mission post page to check for missions and allow admins to create to create them right there
-* updated the write mission post page to be able to set an upcoming mission to current on the fly if there aren't no current missions
+* fixed bug where adding an int field would error out because it tried to put a default value in (#94)
+* updated site settings to change the way the date format setting works
 
 Changes in 0.9.9
 ----------------
@@ -53,6 +43,7 @@ Changes in 0.9.9
 * updated the wiki revert draft functionality to put a generic update message in place
 * updated the write mission post page to check for missions and allow admins to create to create them right there
 * updated the write mission post page to be able to set an upcoming mission to current on the fly if there aren't no current missions
+* updated site settings to change the way the date format setting works
 * fixed bug in the upgrade controller where an error would be thrown in certain circumstances
 * fixed bug with adding bio dropdown values
 * fixed bug where adding a deck and immediately trying to re-order it wouldn't work (#93)
@@ -69,6 +60,7 @@ Changes in 0.9.9
 * fixed bug during install caused by not loading a library
 * fixed bug during update caused by not loading a library
 * fixed bug where reverting a wiki page wiped out the categories for the draft
+* fixed bug where adding an int field would error out because it tried to put a default value in (#94)
 
 Known Issues
 ------------

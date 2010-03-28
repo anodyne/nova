@@ -1,3 +1,11 @@
+03.27.2010
+
+* fixed bug where adding an int field would error out because it tried to put a default value in (#94)
+
+* updated site settings to change the way the date format setting works
+
+==========
+
 03.26.2010
 
 * fixed bug during install caused by not loading a library
