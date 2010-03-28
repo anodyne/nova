@@ -59,7 +59,14 @@
 				
 				<p>
 					<kbd><?php echo $label['date'];?></kbd>
-					<?php echo form_dropdown('date_format', $values['date_format'], $default['date_format']);?>
+					<p><?php echo $label['date_format'];?></p>
+					<?php echo form_dropdown('formats', $values['date_format'], $default['date_format'], 'id="formats"');?>
+					&nbsp;&nbsp;
+					<?php echo form_input($inputs['date_format']);?><br />
+					<p class="fontSmall">
+						<strong><?php echo $label['sample_output'];?></strong>:
+						<span id="format_output"><?php echo mdate($inputs['date_format']['value'], now());?></span>
+					</p>
 				</p>
 				<p>
 					<kbd><?php echo $label['timezone'];?></kbd>

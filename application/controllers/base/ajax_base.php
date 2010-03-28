@@ -6071,6 +6071,13 @@ class Ajax_base extends Controller {
 	|---------------------------------------------------------------
 	*/
 	
+	function info_format_date()
+	{
+		$format = $this->input->post('format', TRUE);
+		
+		echo mdate($format, now());
+	}
+	
 	function info_users_with_role()
 	{
 		/* load the resources */

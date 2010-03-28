@@ -1,6 +1,18 @@
 <script type="text/javascript" src="<?php echo base_url() . APPFOLDER;?>/assets/js/jquery.qtip.js"></script>
 
 <script type="text/javascript">
+	function set_sample_output(value)
+	{
+		$.ajax({
+			type: "POST",
+			url: "<?php echo site_url('ajax/info_format_date');?>",
+			data: { format: value },
+			success: function(data){
+				$('#format_output').html(data);
+			}
+		});
+	}
+	
 	$(document).ready(function(){
 		$('#tabs').tabs();
 		$('#tabs').tabs('select', <?php echo $tab;?>);
@@ -98,6 +110,17 @@
 			});
 			
 			return false;
+		});
+		
+		$('#formats').change(function(){
+			var format = $(this).val();
+			$('#date_format').val(format);
+			set_sample_output(format);
+		});
+		
+		$('#date_format').change(function(){
+			var value = $(this).val();
+			set_sample_output(value);
 		});
 	});
 </script>

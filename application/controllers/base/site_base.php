@@ -4383,7 +4383,7 @@ class Site_base extends Controller {
 		
 		if (isset($_POST['submit']))
 		{
-			$key_exceptions = array('submit', 'old_sim_type');
+			$key_exceptions = array('submit', 'old_sim_type', 'formats');
 			
 			foreach ($_POST as $key => $value)
 			{
@@ -4579,6 +4579,10 @@ class Site_base extends Controller {
 					'name' => 'posting_requirement',
 					'value' => $setting['posting_requirement'],
 					'class' => 'small'),
+				'date_format' => array(
+					'name' => 'date_format',
+					'id' => 'date_format',
+					'value' => $setting['date_format']),
 			);
 			
 			$data['values']['updates'] = array(
@@ -4595,7 +4599,8 @@ class Site_base extends Controller {
 				'%l %F %j%S, %Y @ %g:%i%a'	=> 'Monday January 1st, 2009 @ 12:01am',
 				'%l %F %j, %Y @ %g:%i%a'	=> 'Monday January 1, 2009 @ 12:01am',
 				'%m/%d/%Y @ %g:%i%a'		=> '01/01/2009 @ 12:01am',
-				'%d %M %Y @ %g:%i%a'		=> '01 Jan 2009 @ 12:01am'
+				'%d %M %Y @ %g:%i%a'		=> '01 Jan 2009 @ 12:01am',
+				''							=> ucfirst(lang('labels_other'))
 			);
 			
 			/* defaults */
@@ -4756,6 +4761,7 @@ class Site_base extends Controller {
 			'count_multiple' => ucfirst(lang('labels_multiple')),
 			'count_single' => ucfirst(lang('labels_single')),
 			'date' => ucwords(lang('labels_date') .' '. lang('labels_format')),
+			'date_format' => lang('date_format'),
 			'days' => lang('time_days'),
 			'dst' => ucwords(lang('labels_dst')),
 			'edit' => ucfirst(lang('actions_edit')),
@@ -4788,6 +4794,7 @@ class Site_base extends Controller {
 			'requirement' => ucwords(lang('labels_posting') .' '. lang('labels_requirements')),
 			'sample_post' => ucwords(lang('actions_use') .' '. lang('labels_sample_post')) .' '. lang('labels_on') .' '.
 				ucwords(lang('actions_join') .' '. lang('labels_page')),
+			'sample_output' => lang('sample_output'),
 			'skin_admin' => ucwords(lang('labels_admin') .' '. lang('labels_site')),
 			'skin_login' => ucwords(lang('actions_login') .' '. lang('labels_page')),
 			'skin_main' => ucwords(lang('labels_main') .' '. lang('labels_site')),
