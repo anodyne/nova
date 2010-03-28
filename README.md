@@ -15,6 +15,7 @@ Latest Updates
 * fixed bug where adding an int field would error out because it tried to put a default value in (#94)
 * fixed bug where in certain situations an error could be thrown pulling online users
 * updated site settings to change the way the date format setting works
+* updated the check for an external bio image to be a little safer
 
 Changes in 0.9.9
 ----------------
@@ -45,6 +46,7 @@ Changes in 0.9.9
 * updated the write mission post page to check for missions and allow admins to create to create them right there
 * updated the write mission post page to be able to set an upcoming mission to current on the fly if there aren't no current missions
 * updated site settings to change the way the date format setting works
+* updated the check for an external bio image to be a little safer
 * fixed bug in the upgrade controller where an error would be thrown in certain circumstances
 * fixed bug with adding bio dropdown values
 * fixed bug where adding a deck and immediately trying to re-order it wouldn't work (#93)

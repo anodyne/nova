@@ -508,7 +508,7 @@ class Personnel_base extends Controller {
 				$images = explode(',', $character->images);
 				$images_count = count($images);
 			
-				if (strstr($images[0], 'http://'))
+				if (strstr($images[0], 'http://') !== FALSE)
 				{ /* make sure it is not an external image */
 					$src = $images[0];
 				}
@@ -527,7 +527,7 @@ class Personnel_base extends Controller {
 				
 				for ($i=1; $i < $images_count; $i++)
 				{
-					if (strstr($images[$i], 'http://'))
+					if (strstr($images[$i], 'http://') !== FALSE)
 					{ /* make sure it is not an external image */
 						$src = trim($images[$i]);
 					}

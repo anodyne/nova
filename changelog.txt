@@ -4,6 +4,7 @@
 * fixed bug where in certain situations an error could be thrown pulling online users
 
 * updated site settings to change the way the date format setting works
+* updated the check for an external bio image to be a little safer
 
 ==========
 
