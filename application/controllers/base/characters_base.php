@@ -223,7 +223,7 @@ class Characters_base extends Controller {
 							'rank' => $this->input->post('rank', TRUE),
 							'crew_type' => 'active',
 							'date_activate' => (empty($info->date_activate)) ? now() : $info->date_activate,
-							'user' => ($count >= $this->options['allowed_chars_playing']) ? NULL : $info->user, 
+							'user' => ($count > $this->options['allowed_chars_playing']) ? NULL : $info->user,
 						);
 						
 						$update = $this->char->update_character($id, $c_update);
