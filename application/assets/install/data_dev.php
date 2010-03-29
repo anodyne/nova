@@ -3100,7 +3100,7 @@ $settings = array(
 		'setting_user_created' => 'n'),
 	array(
 		'setting_key' => 'system_email',
-		'setting_value' => 'off',
+		'setting_value' => 'on',
 		'setting_user_created' => 'n'),
 	array(
 		'setting_key' => 'email_subject',

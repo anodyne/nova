@@ -1,3 +1,9 @@
+03.28.2010
+
+* updated the install data
+
+==========
+
 03.27.2010
 
 * fixed bug where adding an int field would error out because it tried to put a default value in (#94)

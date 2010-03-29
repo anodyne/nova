@@ -8,14 +8,11 @@ Release Candidate 4 (0.9.9)
 
 Last Update
 -----------
-27 March 2010
+28 March 2010
 
 Latest Updates
 --------------
-* fixed bug where adding an int field would error out because it tried to put a default value in (#94)
-* fixed bug where in certain situations an error could be thrown pulling online users
-* updated site settings to change the way the date format setting works
-* updated the check for an external bio image to be a little safer
+* updated the install data
 
 Changes in 0.9.9
 ----------------
@@ -25,6 +22,7 @@ Changes in 0.9.9
     * version info
     * component info
     * permanent credits message
+    * system email on by default
 * updated the shiloh skin
     * [main] updated the stylesheets
     * [wiki] added the wiki section
