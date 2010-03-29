@@ -18,7 +18,7 @@
 					<tbody>
 					<?php foreach ($c['chars'] as $i): ?>
 						<tr>
-							<td>
+							<td class="col_40pct">
 								<strong><?php echo $i['name'];?></strong><br />
 								
 								<span class="fontSmall gray">

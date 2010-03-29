@@ -26,7 +26,7 @@
 							<tbody>
 							<?php foreach ($c['chars']['active'] as $i): ?>
 								<tr>
-									<td>
+									<td class="col_40pct">
 										<strong><?php echo $i['name'];?></strong><br />
 										
 										<?php if (empty($i['uid'])): ?>
@@ -75,7 +75,7 @@
 							<tbody>
 							<?php foreach ($c['chars']['inactive'] as $i): ?>
 								<tr>
-									<td>
+									<td class="col_40pct">
 										<strong><?php echo $i['name'];?></strong><br />
 										<span class="fontSmall gray"><?php echo $i['position_1'];?></span>
 									</td>
@@ -108,7 +108,7 @@
 							<tbody>
 							<?php foreach ($c['chars']['pending'] as $i): ?>
 								<tr>
-									<td>
+									<td class="col_40pct">
 										<?php if ($i['pstatus'] == 'pending'): ?>
 											<?php echo img($images['new']);?>
 										<?php endif;?>
