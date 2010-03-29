@@ -1,3 +1,12 @@
+03.29.2010
+
+* updated the characters listing to make the tables display better
+* updated the npcs listing to make the tables display better
+
+* fixed bug where a character's user id was wiped out during the approval process
+
+==========
+
 03.28.2010
 
 * updated the install data

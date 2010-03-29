@@ -8,11 +8,13 @@ Release Candidate 4 (0.9.9)
 
 Last Update
 -----------
-28 March 2010
+29 March 2010
 
 Latest Updates
 --------------
-* updated the install data
+* updated the characters listing to make the tables display better
+* updated the npcs listing to make the tables display better
+* fixed bug where a character's user id was wiped out during the approval process
 
 Changes in 0.9.9
 ----------------
@@ -45,6 +47,8 @@ Changes in 0.9.9
 * updated the write mission post page to be able to set an upcoming mission to current on the fly if there aren't no current missions
 * updated site settings to change the way the date format setting works
 * updated the check for an external bio image to be a little safer
+* updated the characters listing to make the tables display better
+* updated the npcs listing to make the tables display better
 * fixed bug in the upgrade controller where an error would be thrown in certain circumstances
 * fixed bug with adding bio dropdown values
 * fixed bug where adding a deck and immediately trying to re-order it wouldn't work (#93)
@@ -63,6 +67,7 @@ Changes in 0.9.9
 * fixed bug where reverting a wiki page wiped out the categories for the draft
 * fixed bug where adding an int field would error out because it tried to put a default value in (#94)
 * fixed bug where in certain situations an error could be thrown pulling online users
+* fixed bug where a character's user id was wiped out during the approval process
 
 Known Issues
 ------------
