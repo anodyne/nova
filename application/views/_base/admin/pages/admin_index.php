@@ -345,3 +345,5 @@
 		</div>
 	</div>
 </div>
+
+<br /> <!-- need this because IE is stupid beyond stupid ... of course it doesn't fix IE7 tho -->
