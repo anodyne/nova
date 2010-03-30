@@ -61,6 +61,11 @@ a.image, a.image:hover {
 	text-decoration: none;
 }
 
+.upload-close {
+	float: left;
+	padding: 2px 2px 5px 4px;
+}
+
 /*
 |---------------------------------------------------------------
 | INPUTS
@@ -239,6 +244,18 @@ ul.padding1, ol.padding1 { padding: .5em 1em; }
 	height: 22px;
 	line-height: 22px;
 	width: 350px;
+}
+
+#list-grid {
+	margin: 0;
+	padding: 0;
+}
+#list-grid li {
+	margin: 3px 3px 3px 0;
+	padding: 3px 3px 3px 0;
+	float: left;
+	width: 150px;
+	height: 150px;
 }
 
 #accordion ul {

@@ -337,6 +337,19 @@ a.delete, a.edit {
 a.delete:hover { color: #c00; }
 a.edit:hover { color: #008000; }
 
+.upload-close {
+	color: #c00 important;
+	
+	border-radius: 4px 0 0 4px;
+	-moz-border-radius: 4px 0 0 4px;
+	-webkit-border-top-left-radius: 4px;
+	-webkit-border-bottom-left-radius: 4px;
+}
+.upload-close:hover {
+	background: #c00 !important;
+	color: #fff !important;
+}
+
 /*
 |---------------------------------------------------------------
 | INPUTS
@@ -552,7 +565,9 @@ ul.square { list-style: square; }
 ol.roman { list-style: upper-roman; }
 ul.none, ol.none { list-style: none; }
 
-#list li {
+#list-grid { list-style-type: none; }
+
+#list li, #list-grid li {
 	font-weight: bold;
 	font-size: 90%;
 }
