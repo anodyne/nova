@@ -3011,6 +3011,38 @@ class Ajax_base extends Controller {
 		}
 	}
 	
+	function del_character_image()
+	{
+		if (IS_AJAX)
+		{
+			/* load the resources */
+			$this->load->model('characters_model', 'char');
+			
+			/* set the variables */
+			$id = $this->uri->segment(3);
+			$image = $this->input->post('image', TRUE);
+			
+			$image = str_replace('\.', '.', $image);
+			
+			$images = $this->char->get_character($id, 'images');
+			
+			if (!empty($images))
+			{
+				$imagesArray = explode(',', $images);
+				
+				$key = array_search($image, $imagesArray);
+				
+				if ($key !== FALSE)
+				{
+					unset($imagesArray[$key]);
+					$imageStr = implode(',', $imagesArray);
+					
+					$this->char->update_character($id, array('images' => $imageStr));
+				}
+			}
+		}
+	}
+	
 	function del_coc()
 	{
 		if (IS_AJAX)
@@ -6481,6 +6513,95 @@ class Ajax_base extends Controller {
 	| SAVE METHODS
 	|---------------------------------------------------------------
 	*/
+	
+	function save_character_image()
+	{
+		if (IS_AJAX)
+		{
+			/* set the variables */
+			$id = $this->uri->segment(3);
+			$image = $this->input->post('image', TRUE);
+			
+			$image = str_replace('\.', '.', $image);
+			
+			/* load the resources */
+			$this->load->model('characters_model', 'char');
+			
+			/* get the images */
+			$images = $this->char->get_character($id, 'images');
+			
+			if (!empty($images))
+			{
+				$imagesArray = explode(',', $images);
+				
+				$key = array_search($image, $imagesArray);
+				
+				if ($key === FALSE)
+				{
+					/* add the image to the array */
+					$imagesArray[] = $image;
+					
+					/* make the array a string */
+					$imagesStr = implode(',', $imagesArray);
+					
+					/* fire the character update event */
+					$this->char->update_character($id, array('images' => $imagesStr));
+					
+					$array = array(
+						'src' => base_url() . asset_location('images/characters', $image),
+						'height' => 150
+					);
+					
+					echo img($array);
+				}
+				else
+				{
+					echo '';
+				}
+			}
+			else
+			{
+				/* add the image to the array */
+				$imagesArray[] = $image;
+				
+				/* make the array a string */
+				$imagesStr = implode(',', $imagesArray);
+				
+				/* fire the character update event */
+				$this->char->update_character($id, array('images' => $imagesStr));
+				
+				$array = array(
+					'src' => base_url() . asset_location('images/characters', $image),
+					'height' => 150
+				);
+				
+				echo img($array);
+			}
+		}
+	}
+	
+	function save_character_images()
+	{
+		if (IS_AJAX)
+		{
+			/* set the variables */
+			$images = $this->input->post('img', TRUE);
+			$id = $this->uri->segment(3);
+			
+			foreach ($images as $i)
+			{
+				$imageArray[] = str_replace('\.', '.', $i);
+			}
+			
+			$imageStr = implode(',', $imageArray);
+			
+			/* load the resources */
+			$this->load->model('characters_model', 'char');
+			
+			/* fire the character update event */
+			$this->char->update_character($id, array('images' => $imageStr));
+		}
+	}
 	
 	function save_coc()
 	{

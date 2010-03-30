@@ -955,7 +955,6 @@ class Characters_base extends Controller {
 				$name = array(
 					$this->ranks->get_rank($character->rank, 'rank_name'),
 					$character->first_name,
-					$character->middle_name,
 					$character->last_name,
 					$character->suffix
 				);
@@ -1088,11 +1087,7 @@ class Characters_base extends Controller {
 					'alt' => $rank->rank_name,
 					'class' => 'image'),
 				'crew_type' => $char->crew_type,
-				'images' => array(
-					'name' => 'images',
-					'id' => 'images',
-					'rows' => 4,
-					'value' => $char->images),
+				'images' => (!empty($char->images)) ? explode(',', $char->images) : '',
 			);
 			
 			$data['values']['crew_type'] = array(
@@ -1151,6 +1146,20 @@ class Characters_base extends Controller {
 				'name' => 'submit',
 				'value' => 'submit',
 				'content' => ucwords(lang('actions_submit'))),
+			'use' => array(
+				'type' => 'submit',
+				'class' => 'button-sec add',
+				'name' => 'use',
+				'value' => 'use',
+				'content' => ucwords(lang('actions_use') .' '. lang('labels_image'))),
+			'update' => array(
+				'type' => 'submit',
+				'class' => 'button-main',
+				'name' => 'submit',
+				'value' => 'submit',
+				'id' => 'update',
+				'rel' => $data['id'],
+				'content' => ucwords(lang('actions_update'))),
 		);
 		
 		$data['images'] = array(
@@ -1187,6 +1196,7 @@ class Characters_base extends Controller {
 		);
 		
 		$js_data['rankloc'] = $this->rank;
+		$js_data['id'] = $data['id'];
 		
 		/* figure out where the view should be coming from */
 		$view_loc = view_location('characters_bio', $this->skin, 'admin');

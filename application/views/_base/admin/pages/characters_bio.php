@@ -109,22 +109,33 @@
 			
 			<p><?php echo anchor('upload/index', img($images['upload']) .' '. $label['upload'], array('class' => 'image fontMedium bold'));?></p>
 			
-			<?php echo form_textarea($inputs['images']);?>
-			<br />
+			
+			<ul id="list-grid">
+			<?php if (is_array($inputs['images']) && count($inputs['images']) > 0): ?>
+				<?php foreach ($inputs['images'] as $i): ?>
+					<?php $image = array('src' => base_url() . asset_location('images/characters', $i), 'height' => 150);?>
+					<li id="img_<?php echo str_replace('.', '\\.', $i);?>"><a href="#" class="image upload-close" remove="<?php echo str_replace('.', '\\.', $i);?>">x</a><?php echo img($image);?></li>
+				<?php endforeach;?>
+			<?php endif;?>
+			</ul>
+			
+			<div style="clear:both;"></div><br />
+			
+			<?php echo form_button($button['update']);?> &nbsp;&nbsp; <span id="loading_upload_update" class="hidden"><?php echo img($images['loading']);?></span>
+			
+			<hr />
 			
 			<?php if (isset($myuploads)): ?>
 				<?php echo text_output($label['myuploads'], 'h3');?>
-				<table class="table100 zebra">
+				<table class="zebra">
 					<tbody>
 					<?php foreach ($myuploads as $d): ?>
 						<tr>
-							<td class="cell-label">
-								<a href="#" class="imagepick" myfile="<?php echo $d['file'];?>"><?php echo $d['file'];?></a>
-							</td>
+							<td class="cell-label"><?php echo $d['file'];?></td>
 							<td class="cell-spacer"></td>
-							<td>
-								<a href="#" class="imagepick image" myfile="<?php echo $d['file'];?>"><?php echo img($d['image']);?></a>
-							</td>
+							<td><?php echo img($d['image']);?></td>
+							<td class="cell-spacer"></td>
+							<td><?php echo form_button($button['use']);?></td>
 						</tr>
 					<?php endforeach;?>
 					</tbody>
@@ -136,10 +147,12 @@
 				<?php foreach ($directory as $d): ?>
 					<tr>
 						<td class="cell-label">
-							<a href="#" class="imagepick" myfile="<?php echo $d['file'];?>"><?php echo $d['file'];?></a>
+							<a href="" class="imagepick" myfile="<?php echo $d['file'];?>"><?php echo $d['file'];?></a>
 						</td>
 						<td class="cell-spacer"></td>
-						<td><?php echo img($d['image']);?></td>
+						<td>
+							<a href="" class="imagepick image" myfile="<?php echo $d['file'];?>"><?php echo img($d['image']);?></a>
+						</td>
 					</tr>
 				<?php endforeach;?>
 				</tbody>
