@@ -93,6 +93,11 @@ class Upload_base extends Controller {
 	{
 		if (isset($_POST['submit']))
 		{
+			/* images can't have _, - or = because of the way jquery serializes data for the sortable plugin */
+			$_FILES['userfile']['name'] = str_replace('_', '', $_FILES['userfile']['name']);
+			$_FILES['userfile']['name'] = str_replace('-', '', $_FILES['userfile']['name']);
+			$_FILES['userfile']['name'] = str_replace('=', '', $_FILES['userfile']['name']);
+			
 			$upload_data = array(
 				'type' => $this->input->post('type', TRUE),
 				'field' => 'userfile',
