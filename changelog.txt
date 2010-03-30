@@ -1,3 +1,13 @@
+03.30.2010
+
+* fixed IE8 display issue with the control panel
+
+* updated the pulsar skin
+* updated the upload controller to now allow _, - or = in the name of uploaded images
+* updated the edit character bio page to handle images in a whole new way and with lots of fun ajax stuff
+
+==========
+
 03.29.2010
 
 * updated the characters listing to make the tables display better
