@@ -8,17 +8,19 @@ Release Candidate 4 (0.9.9)
 
 Last Update
 -----------
-30 March 2010
+05 April 2010
 
 Latest Updates
 --------------
-* updated the characters listing to make the tables display better
-* updated the npcs listing to make the tables display better
-* updated the pulsar skin
-* updated the upload controller to now allow _, - or = in the name of uploaded images
-* updated the edit character bio page to handle images in a whole new way and with lots of fun ajax stuff
-* fixed bug where a character's user id was wiped out during the approval process
-* fixed IE8 display issue with the control panel
+* added the march 2010 changelog archive
+* fixed bug where error was thrown when rejecting an application (#98)
+* fixed bug where the post model wasn't taking one of the post author string potentials into account (#96)
+* fixed bug where the email language file wasn't extensible (#97)
+* fixed bug where creating an award wouldn't have a display set by default
+* updated the install data
+* updated upload management page to have a link to upload images
+* updated mission management with new image upload management code
+* updated the language files
 
 Changes in 0.9.9
 ----------------
@@ -29,6 +31,7 @@ Changes in 0.9.9
     * component info
     * permanent credits message
     * system email on by default
+    * menu items
 * updated the shiloh skin
     * [main] updated the stylesheets
     * [wiki] added the wiki section
@@ -56,6 +59,8 @@ Changes in 0.9.9
 * updated the npcs listing to make the tables display better
 * updated the upload controller to now allow _, - or = in the name of uploaded images
 * updated the edit character bio page to handle images in a whole new way and with lots of fun ajax stuff
+* updated upload management page to have a link to upload images
+* updated mission management with new image upload management code
 * fixed bug in the upgrade controller where an error would be thrown in certain circumstances
 * fixed bug with adding bio dropdown values
 * fixed bug where adding a deck and immediately trying to re-order it wouldn't work (#93)
@@ -76,6 +81,10 @@ Changes in 0.9.9
 * fixed bug where in certain situations an error could be thrown pulling online users
 * fixed bug where a character's user id was wiped out during the approval process
 * fixed IE8 display issue with the control panel
+* fixed bug where error was thrown when rejecting an application (#98)
+* fixed bug where the post model wasn't taking one of the post author string potentials into account (#96)
+* fixed bug where the email language file wasn't extensible (#97)
+* fixed bug where creating an award wouldn't have a display set by default
 
 Known Issues
 ------------
