@@ -2,6 +2,8 @@
 
 <?php echo text_output($text);?>
 
+<p class="bold fontMedium"><?php echo anchor('upload/index', $label['upload']);?></p><br />
+
 <div id="tabs">
 	<ul>
 		<?php if ($access['bio'] === TRUE): ?>

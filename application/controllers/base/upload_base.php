@@ -404,6 +404,7 @@ class Upload_base extends Controller {
 			'preview' => ucfirst(lang('labels_preview')),
 			'tourimages' => ucwords(lang('global_tour') .' '. lang('labels_images')),
 			'uploadedby' => ucfirst(lang('actions_uploaded') .' '. lang('labels_by')),
+			'upload' => ucwords(lang('actions_upload') .' '. lang('labels_images') .' '. RARROW),
 		);
 		
 		/* figure out where the view should be coming from */
