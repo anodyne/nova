@@ -1712,9 +1712,18 @@ $menu_items = array(
 		'menu_access' => 'manage/docked'),
 		
 	array(
-		'menu_name' => 'Uploads',
+		'menu_name' => 'Upload Images',
 		'menu_group' => 3,
 		'menu_order' => 0,
+		'menu_link' => 'upload/index',
+		'menu_sim_type' => 1,
+		'menu_type' => 'adminsub',
+		'menu_cat' => 'manage',
+		'menu_use_access' => 'n'),
+	array(
+		'menu_name' => 'Manage Uploads',
+		'menu_group' => 3,
+		'menu_order' => 1,
 		'menu_link' => 'upload/manage',
 		'menu_sim_type' => 1,
 		'menu_type' => 'adminsub',
