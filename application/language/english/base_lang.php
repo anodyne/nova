@@ -39,6 +39,7 @@ $language = basename(dirname(__FILE__));
 
 /* include the various other language files */
 include_once APPPATH .'language/'. $language .'/headers_titles_lang.php';
+include_once APPPATH .'language/'. $language .'/email_lang.php';
 include_once APPPATH .'language/'. $language .'/error_lang.php';
 include_once APPPATH .'language/'. $language .'/facebox_lang.php';
 include_once APPPATH .'language/'. $language .'/text_lang.php';
