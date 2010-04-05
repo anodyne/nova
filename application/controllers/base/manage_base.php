@@ -278,6 +278,11 @@ class Manage_base extends Controller {
 					'content' => ucwords(lang('actions_submit'))),
 			);
 			
+			if ($item === FALSE)
+			{
+				$data['inputs']['display_y']['checked'] = TRUE;
+			}
+			
 			$data['values']['cat'] = array(
 				'ic' => ucwords(lang('labels_ic')),
 				'ooc' => ucwords(lang('labels_ooc')),
@@ -2388,11 +2393,6 @@ class Manage_base extends Controller {
 					'name' => 'mission_desc',
 					'rows' => 6,
 					'value' => ($item == FALSE) ? '' : $item->mission_desc),
-				'images' => array(
-					'name' => 'mission_images',
-					'id' => 'images',
-					'rows' => 4,
-					'value' => ($action == 'edit') ? $item->mission_images : ''),
 				'status' => ($item === FALSE) ? '' : $item->mission_status,
 				'summary' => array(
 					'name' => 'mission_summary',
@@ -2403,6 +2403,7 @@ class Manage_base extends Controller {
 					'rows' => 12,
 					'value' => ($item == FALSE) ? '' : $item->mission_notes),
 				'group' => ($item === FALSE) ? '' : $item->mission_group,
+				'images' => (!empty($item->mission_images)) ? explode(',', $item->mission_images) : '',
 			);
 			
 			$groups = $this->mis->get_all_mission_groups();
@@ -2540,6 +2541,7 @@ class Manage_base extends Controller {
 			'group' => ucwords(lang('global_mission') .' '. lang('labels_group')),
 			'nogroups' => sprintf(lang('error_not_found'), lang('global_mission') .' '. lang('labels_groups')),
 			'managegroups' => '[ '. ucwords(lang('actions_manage') .' '. lang('global_mission') .' '. lang('labels_groups')) .' ]',
+			'images_later' => sprintf(lang('add_images_later'), lang('global_mission')),
 		);
 		
 		$data['values'] = array(
@@ -2571,6 +2573,10 @@ class Manage_base extends Controller {
 				'src' => img_location('image-upload.png', $this->skin, 'admin'),
 				'alt' => lang('actions_upload'),
 				'class' => 'image'),
+			'loading' => array(
+				'src' => img_location('loading-circle.gif', $this->skin, 'admin'),
+				'alt' => lang('actions_loading'),
+				'class' => 'image'),
 		);
 		
 		$data['image_instructions'] = sprintf(
@@ -2597,8 +2603,24 @@ class Manage_base extends Controller {
 				'class' => 'button-main',
 				'name' => 'submit',
 				'value' => 'submit',
-				'content' => ucwords(lang('actions_submit')))
+				'content' => ucwords(lang('actions_submit'))),
+			'use' => array(
+				'type' => 'submit',
+				'class' => 'button-sec add',
+				'name' => 'use',
+				'value' => 'use',
+				'content' => ucwords(lang('actions_use') .' '. lang('labels_image'))),
+			'update' => array(
+				'type' => 'submit',
+				'class' => 'button-main',
+				'name' => 'submit',
+				'value' => 'submit',
+				'id' => 'update',
+				'rel' => $id,
+				'content' => ucwords(lang('actions_update'))),
 		);
+		
+		$js_data['id'] = $id;
 		
 		/* write the data to the template */
 		$this->template->write('title', $data['header']);

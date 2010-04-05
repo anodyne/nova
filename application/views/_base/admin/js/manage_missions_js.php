@@ -5,6 +5,10 @@
 <script type="text/javascript" src="<?php echo base_url() . APPFOLDER;?>/assets/js/jquery.ui.datepicker.min.js"></script>
 
 <script type="text/javascript">
+	function jq(myid) { 
+		return myid.replace(/(:|\.)/g,'\\$1');
+	}
+	
 	$(document).ready(function(){
 		var $tabs = $('#tabs').tabs();
 		$tabs.tabs('select', <?php echo $tab;?>);
@@ -43,6 +47,64 @@
 				$.get(location, function(data) {
 					$.facebox(data);
 				});
+			});
+			
+			return false;
+		});
+		
+		$('#list-grid').sortable({
+			forcePlaceholderSize: true,
+			placeholder: 'ui-state-highlight'
+		});
+		$('#list-grid').disableSelection();
+		
+		$('.add').click(function(){
+			var image = $(this).parent().parent().children().eq(0).html();
+			
+			$.ajax({
+				type: "POST",
+				url: "<?php echo site_url('ajax/save_mission_image') .'/'. $id .'/'. $string;?>",
+				data: { image: image },
+				success: function(data){
+					var content = '<li id="img_' + jq(image) +'"><a href="#" class="image upload-close" remove="' + jq(image) + '">x</a>' + data + '</li>';
+					$(content).hide().appendTo('#list-grid').fadeIn();
+				}
+			});
+			
+			return false;
+		});
+		
+		$('#update').live('click', function(){
+			var list = $('#list-grid').sortable('serialize');
+			
+			$.ajax({
+				beforeSend: function(){
+					$('#loading_upload_update').show();
+				},
+				type: "POST",
+				url: "<?php echo site_url('ajax/save_mission_images') .'/'. $id .'/'. $string;?>",
+				data: list,
+				complete: function(){
+					$('#loading_upload_update').hide();
+				}
+			});
+			
+			return false;
+		});
+		
+		$('.upload-close').live('click', function(){
+			var image = $(this).attr('remove');
+			var index = $(this).parent().index();
+			
+			$.ajax({
+				type: "POST",
+				url: "<?php echo site_url('ajax/del_mission_image') .'/'. $id .'/'. $string;?>",
+				data: { image: image },
+				success: function(){
+					$('#list-grid').children().eq(index).fadeOut('slow', function(){
+						$(this).remove();
+					});
+				}
 			});
 			
 			return false;

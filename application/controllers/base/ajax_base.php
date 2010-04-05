@@ -3701,6 +3701,38 @@ class Ajax_base extends Controller {
 		$this->template->render();
 	}
 	
+	function del_mission_image()
+	{
+		if (IS_AJAX)
+		{
+			/* load the resources */
+			$this->load->model('missions_model', 'mis');
+			
+			/* set the variables */
+			$id = $this->uri->segment(3);
+			$image = $this->input->post('image', TRUE);
+			
+			$image = str_replace('\.', '.', $image);
+			
+			$images = $this->mis->get_mission($id, 'mission_images');
+			
+			if (!empty($images))
+			{
+				$imagesArray = explode(',', $images);
+				
+				$key = array_search($image, $imagesArray);
+				
+				if ($key !== FALSE)
+				{
+					unset($imagesArray[$key]);
+					$imageStr = implode(',', $imagesArray);
+					
+					$this->mis->update_mission($id, array('mission_images' => $imageStr));
+				}
+			}
+		}
+	}
+	
 	function del_news()
 	{
 		/* load the resources */
@@ -6549,7 +6581,7 @@ class Ajax_base extends Controller {
 					
 					$array = array(
 						'src' => base_url() . asset_location('images/characters', $image),
-						'height' => 150
+						'height' => 140
 					);
 					
 					echo img($array);
@@ -6572,7 +6604,7 @@ class Ajax_base extends Controller {
 				
 				$array = array(
 					'src' => base_url() . asset_location('images/characters', $image),
-					'height' => 150
+					'height' => 140
 				);
 				
 				echo img($array);
@@ -6838,6 +6870,95 @@ class Ajax_base extends Controller {
 		
 		/* do the update */
 		$this->sys->update_system_info($update);
+	}
+	
+	function save_mission_image()
+	{
+		if (IS_AJAX)
+		{
+			/* set the variables */
+			$id = $this->uri->segment(3);
+			$image = $this->input->post('image', TRUE);
+			
+			$image = str_replace('\.', '.', $image);
+			
+			/* load the resources */
+			$this->load->model('missions_model', 'mis');
+			
+			/* get the images */
+			$images = $this->mis->get_mission($id, 'mission_images');
+			
+			if (!empty($images))
+			{
+				$imagesArray = explode(',', $images);
+				
+				$key = array_search($image, $imagesArray);
+				
+				if ($key === FALSE)
+				{
+					/* add the image to the array */
+					$imagesArray[] = $image;
+					
+					/* make the array a string */
+					$imagesStr = implode(',', $imagesArray);
+					
+					/* fire the character update event */
+					$this->mis->update_mission($id, array('mission_images' => $imagesStr));
+					
+					$array = array(
+						'src' => base_url() . asset_location('images/missions', $image),
+						'width' => 130
+					);
+					
+					echo img($array);
+				}
+				else
+				{
+					echo '';
+				}
+			}
+			else
+			{
+				/* add the image to the array */
+				$imagesArray[] = $image;
+				
+				/* make the array a string */
+				$imagesStr = implode(',', $imagesArray);
+				
+				/* fire the character update event */
+				$this->mis->update_mission($id, array('mission_images' => $imagesStr));
+				
+				$array = array(
+					'src' => base_url() . asset_location('images/missions', $image),
+					'width' => 130
+				);
+				
+				echo img($array);
+			}
+		}
+	}
+	
+	function save_mission_images()
+	{
+		if (IS_AJAX)
+		{
+			/* set the variables */
+			$images = $this->input->post('img', TRUE);
+			$id = $this->uri->segment(3);
+			
+			foreach ($images as $i)
+			{
+				$imageArray[] = str_replace('\.', '.', $i);
+			}
+			
+			$imageStr = implode(',', $imageArray);
+			
+			/* load the resources */
+			$this->load->model('missions_model', 'mis');
+			
+			/* fire the character update event */
+			$this->mis->update_mission($id, array('mission_images' => $imageStr));
+		}
 	}
 	
 	function save_spec_field_value()
