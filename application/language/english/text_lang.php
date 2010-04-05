@@ -172,6 +172,7 @@ $lang['text_create_news'] = "You can create a %s from the %s.";
 $lang['wiki_reverted'] = "Reverted to a previous draft of the page.";
 $lang['date_format'] = "The date format is the same as the PHP date function. To update the sample output, make your changes in the text field then click outside the text field.";
 $lang['sample_output'] = 'Sample Output';
+$lang['add_images_later'] = 'You will be able to add and edit images for this %s after the item has been created.';
 
 /*
 |---------------------------------------------------------------

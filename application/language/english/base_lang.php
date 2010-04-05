@@ -379,6 +379,7 @@ $lang['labels_entries']			= 'entries';
 $lang['labels_entry'] 			= 'entry';
 $lang['labels_expected']		= 'expected';
 $lang['labels_extension']		= 'extension';
+$lang['labels_external']		= 'external';
 $lang['labels_field']			= 'field';
 $lang['labels_fields']			= 'fields';
 $lang['labels_file']			= 'file';
