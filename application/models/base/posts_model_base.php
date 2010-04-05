@@ -110,7 +110,7 @@ class Posts_model_base extends Model {
 					$or = "";
 				}
 				
-				$string.= $or . "(post_authors LIKE '%,$character[$i]' OR post_authors LIKE '$character[$i],%' OR post_authors = $character[$i])";
+				$string.= $or . "(post_authors LIKE '%,$character[$i]' OR post_authors LIKE '$character[$i],%' OR post_authors LIKE '%,$character[$i],%' OR post_authors = $character[$i])";
 			}
 			
 			$this->db->where("($string)", NULL);
@@ -304,7 +304,7 @@ class Posts_model_base extends Model {
 						$or = "";
 					}
 					
-					$string.= $or . "(post_authors LIKE '%,$id[$i]' OR post_authors LIKE '$id[$i],%' OR post_authors = $id[$i])";
+					$string.= $or . "(post_authors LIKE '%,$id[$i]' OR post_authors LIKE '$id[$i],%' OR post_authors LIKE '%,$id[$i],%' OR post_authors = $id[$i])";
 				}
 				
 				$this->db->where("($string)", NULL);
@@ -392,14 +392,14 @@ class Posts_model_base extends Model {
 					$or = "";
 				}
 				
-				$string.= $or . "(post_authors LIKE '%,$character[$i]' OR post_authors LIKE '$character[$i],%' OR post_authors = $character[$i])";
+				$string.= $or . "(post_authors LIKE '%,$character[$i]' OR post_authors LIKE '$character[$i],%' OR post_authors LIKE '%,$character[$i],%' OR post_authors = $character[$i])";
 			}
 			
 			$this->db->where("($string)", NULL);
 		}
 		else
 		{
-			$string = "(post_authors LIKE '%,$character' OR post_authors LIKE '$character,%' OR post_authors = $character)";
+			$string = "(post_authors LIKE '%,$character' OR post_authors LIKE '$character,%' OR post_authors = '%,$character,%' OR post_authors = $character)";
 			
 			$this->db->where("$string", NULL);
 		}
@@ -539,8 +539,9 @@ class Posts_model_base extends Model {
 						$or = "";
 					}
 					
-					$string.= $or . "post_authors LIKE '%$id[$i]%'";
-					$string2.= $or . "post_saved NOT LIKE '%$id[$i]%'";
+					//$string.= $or . "post_authors LIKE '%$id[$i]%'";
+					$string.= $or . "(post_authors LIKE '%,$id[$i]' OR post_authors LIKE '$id[$i],%' OR post_authors LIKE '%,$id[$i],%' OR post_authors = $id[$i])";
+					$string2.= $or . "post_saved != '$id[$i]'";
 				}
 				
 				$this->db->where("($string)", NULL);
@@ -581,7 +582,7 @@ class Posts_model_base extends Model {
 			$this->db->where('post_date >=', $timeframe);
 		}
 		
-		$string = "(post_authors_users LIKE '%,$id' OR post_authors_users LIKE '$id,%' OR post_authors_users = $id)";
+		$string = "(post_authors_users LIKE '%,$id' OR post_authors_users LIKE '$id,%' OR post_authors_users LIKE '%,$id,%' OR post_authors_users = $id)";
 			
 		$this->db->where("($string)", NULL);
 			
