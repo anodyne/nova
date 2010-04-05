@@ -6343,6 +6343,16 @@ class Ajax_base extends Controller {
 		/* figure out where the view should come from */
 		$view = ajax_location('reject', $skin, 'admin');
 		
+		/* input parameters */
+		$data['inputs'] = array(
+			'submit' => array(
+				'type' => 'submit',
+				'class' => 'hud_button',
+				'name' => 'submit',
+				'value' => 'submit',
+				'content' => ucwords(lang('actions_submit')))
+		);
+		
 		switch ($data['type'])
 		{
 			case 'award_nomination':
@@ -6382,7 +6392,7 @@ class Ajax_base extends Controller {
 				$type = lang('global_character');
 				
 				/* input parameters */
-				$data['inputs'] = array(
+				$data['inputs'] += array(
 					'email' => array(
 						'name' => 'reject',
 						'id' => 'reject',
@@ -6431,16 +6441,6 @@ class Ajax_base extends Controller {
 		
 		$data['label'] = array(
 			'email' => ucfirst(lang('labels_email')),
-		);
-		
-		/* input parameters */
-		$data['inputs'] = array(
-			'submit' => array(
-				'type' => 'submit',
-				'class' => 'hud_button',
-				'name' => 'submit',
-				'value' => 'submit',
-				'content' => ucwords(lang('actions_submit')))
 		);
 		
 		/* write the data to the template */
