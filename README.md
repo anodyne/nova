@@ -8,15 +8,27 @@ Current Version
 
 Last Update
 -----------
-05 April 2010
+06 April 2010
 
 Latest Updates
 --------------
-
+* fixed bug with undefined variable errors on the character bio page (#99)
+* fixed wrong link for the edit bio link on the character bio page
+* fixed wrong link for the mission groups link
+* fixed bug with the date format dropdown menu
+* fixed a couple of potential bugs in the mission management page
+* removed test images
+* updated tour management with the new image upload management code
 
 Changes in 1.0-pre
 ------------------
-
+* updated tour management with the new image upload management code
+* removed test images
+* fixed bug with undefined variable errors on the character bio page (#99)
+* fixed wrong link for the edit bio link on the character bio page
+* fixed wrong link for the mission groups link
+* fixed bug with the date format dropdown menu
+* fixed a couple of potential bugs in the mission management page
 
 Known Issues
 ------------
