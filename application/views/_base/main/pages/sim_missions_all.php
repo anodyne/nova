@@ -18,7 +18,7 @@
 				
 				<?php if (is_array($cur['group'])): ?>
 					<p class="fontSmall gray italic">
-						<?php echo $label['partof'] .' '. anchor('sim/mission/group/'. $cur['group']['misgroup_id'], $cur['group']['misgroup_name']);?>
+						<?php echo $label['partof'] .' '. anchor('sim/missions/group/'. $cur['group']['misgroup_id'], $cur['group']['misgroup_name']);?>
 					</p>
 				<?php endif;?>
 			<?php endforeach; ?>
@@ -36,7 +36,7 @@
 				
 				<?php if (is_array($upc['group'])): ?>
 					<p class="fontSmall gray italic">
-						<?php echo $label['partof'] .' '. anchor('sim/mission/group/'. $upc['group']['misgroup_id'], $upc['group']['misgroup_name']);?>
+						<?php echo $label['partof'] .' '. anchor('sim/missions/group/'. $upc['group']['misgroup_id'], $upc['group']['misgroup_name']);?>
 					</p>
 				<?php endif;?>
 			<?php endforeach; ?>
@@ -54,7 +54,7 @@
 				
 				<?php if (is_array($com['group'])): ?>
 					<p class="fontSmall gray italic">
-						<?php echo $label['partof'] .' '. anchor('sim/mission/group/'. $com['group']['misgroup_id'], $com['group']['misgroup_name']);?>
+						<?php echo $label['partof'] .' '. anchor('sim/missions/group/'. $com['group']['misgroup_id'], $com['group']['misgroup_name']);?>
 					</p>
 				<?php endif;?>
 			<?php endforeach; ?>
