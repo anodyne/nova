@@ -88,21 +88,23 @@
 		
 		<?php echo form_button($buttons['update']);?> &nbsp;&nbsp; <span id="loading_upload_update" class="hidden"><?php echo img($images['loading']);?></span>
 		
-		<hr />
-		
-		<table class="zebra">
-			<tbody>
-			<?php foreach ($directory as $d): ?>
-				<tr>
-					<td class="cell-label"><?php echo $d['file'];?></td>
-					<td class="cell-spacer"></td>
-					<td><?php echo img($d['image']);?></td>
-					<td class="cell-spacer"></td>
-					<td><?php echo form_button($buttons['use']);?></td>
-				</tr>
-			<?php endforeach;?>
-			</tbody>
-		</table>
+		<?php if (isset($directory)): ?>
+			<hr />
+			
+			<table class="zebra">
+				<tbody>
+				<?php foreach ($directory as $d): ?>
+					<tr>
+						<td class="cell-label"><?php echo $d['file'];?></td>
+						<td class="cell-spacer"></td>
+						<td><?php echo img($d['image']);?></td>
+						<td class="cell-spacer"></td>
+						<td><?php echo form_button($buttons['use']);?></td>
+					</tr>
+				<?php endforeach;?>
+				</tbody>
+			</table>
+		<?php endif;?>
 	</div>
 <?php endif;?>
 	

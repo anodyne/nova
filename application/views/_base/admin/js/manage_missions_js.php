@@ -25,19 +25,6 @@
 		
 		$('table.zebra tbody > tr:nth-child(odd)').addClass('alt');
 		
-		$('.imagepick').click(function(){
-			var image = $(this).attr('myfile');
-			
-			if ($('#images').val() == '')
-				var pre = '';
-			else
-				var pre = ', ';
-				
-			$('#images').append(pre + image);
-			
-			return false;
-		});
-		
 		$("a[rel*=facebox]").click(function() {
 			var action = $(this).attr('myAction');
 			var id = $(this).attr('myID');
