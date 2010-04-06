@@ -1,20 +1,69 @@
 <?php $string = random_string('alnum', 8);?>
 
 <script type="text/javascript">
+	function jq(myid) { 
+		return myid.replace(/(:|\.)/g,'\\$1');
+	}
+	
 	$(document).ready(function(){
 		$('#tabs').tabs();
 		
 		$('table.zebra tbody > tr:nth-child(odd)').addClass('alt');
 		
-		$('.imagepick').click(function(){
-			var image = $(this).attr('myfile');
+		$('#list-grid').sortable({
+			forcePlaceholderSize: true,
+			placeholder: 'ui-state-highlight'
+		});
+		$('#list-grid').disableSelection();
+		
+		$('.add').click(function(){
+			var image = $(this).parent().parent().children().eq(0).html();
 			
-			if ($('#images').val() == '')
-				var pre = '';
-			else
-				var pre = ', ';
-				
-			$('#images').append(pre + image);
+			$.ajax({
+				type: "POST",
+				url: "<?php echo site_url('ajax/save_tour_image') .'/'. $id .'/'. $string;?>",
+				data: { image: image },
+				success: function(data){
+					var content = '<li id="img_' + jq(image) +'"><a href="#" class="image upload-close" remove="' + jq(image) + '">x</a>' + data + '</li>';
+					$(content).hide().appendTo('#list-grid').fadeIn();
+				}
+			});
+			
+			return false;
+		});
+		
+		$('#update').live('click', function(){
+			var list = $('#list-grid').sortable('serialize');
+			
+			$.ajax({
+				beforeSend: function(){
+					$('#loading_upload_update').show();
+				},
+				type: "POST",
+				url: "<?php echo site_url('ajax/save_tour_images') .'/'. $id .'/'. $string;?>",
+				data: list,
+				complete: function(){
+					$('#loading_upload_update').hide();
+				}
+			});
+			
+			return false;
+		});
+		
+		$('.upload-close').live('click', function(){
+			var image = $(this).attr('remove');
+			var index = $(this).parent().index();
+			
+			$.ajax({
+				type: "POST",
+				url: "<?php echo site_url('ajax/del_tour_image') .'/'. $id .'/'. $string;?>",
+				data: { image: image },
+				success: function(){
+					$('#list-grid').children().eq(index).fadeOut('slow', function(){
+						$(this).remove();
+					});
+				}
+			});
 			
 			return false;
 		});

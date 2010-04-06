@@ -2,14 +2,23 @@
 
 <p class="bold"><?php echo anchor('manage/tour', $label['back']);?></p>
 
-<div id="tabs">
-	<ul>
-		<li><a href="#one"><span><?php echo $label['info'];?></span></a></li>
-		<li><a href="#two"><span><?php echo $label['images'];?></span></a></li>
-	</ul>
+<?php if ($id === FALSE): ?>
+	<?php echo text_output($label['images_later'], 'p', 'bold orange');?>
+<?php endif;?>
+
+<?php if ($id !== FALSE): ?>
+	<div id="tabs">
+		<ul>
+			<li><a href="#one"><span><?php echo $label['info'];?></span></a></li>
+			<li><a href="#two"><span><?php echo $label['images'];?></span></a></li>
+		</ul>
+<?php endif;?>
 
 	<?php echo form_open('manage/tour/'. $form);?>
+	
+<?php if ($id !== FALSE): ?>
 	<div id="one">
+<?php endif;?>
 		<p>
 			<kbd><?php echo $label['name'];?></kbd>
 			<?php echo form_input($inputs['name']);?>
@@ -36,6 +45,8 @@
 				</p>
 			<?php endforeach;?>
 		<?php endif;?>
+		
+<?php if ($id !== FALSE): ?>
 	</div>
 	
 	<div id="two">
@@ -43,29 +54,45 @@
 		
 		<p><?php echo anchor('upload/index', img($images['upload']) .' '. $label['upload'], array('class' => 'image fontMedium bold'));?></p>
 		
-		<?php echo form_textarea($inputs['images']);?>
-		<br />
-		
-		<table class="table100 zebra">
-			<tbody>
-			<?php foreach ($directory as $d): ?>
-				<tr>
-					<td class="cell-label">
-						<a href="#" class="imagepick" myfile="<?php echo $d['file'];?>"><?php echo $d['file'];?></a>
-					</td>
-					<td class="cell-spacer"></td>
-					<td>
-						<a href="#" class="imagepick image" myfile="<?php echo $d['file'];?>"><?php echo img($d['image']);?></a>
-					</td>
-				</tr>
+		<ul id="list-grid">
+		<?php if (is_array($inputs['images']) && count($inputs['images']) > 0): ?>
+			<?php foreach ($inputs['images'] as $i): ?>
+				<?php $image = array('src' => base_url() . asset_location('images/tour', $i), 'width' => 130);?>
+				<li id="img_<?php echo str_replace('.', '\\.', $i);?>"><a href="#" class="image upload-close" remove="<?php echo str_replace('.', '\\.', $i);?>">x</a><?php echo img($image);?></li>
 			<?php endforeach;?>
-			</tbody>
-		</table>
+		<?php endif;?>
+		</ul>
+		
+		<div style="clear:both;"></div><br />
+		
+		<?php echo form_button($buttons['update']);?> &nbsp;&nbsp; <span id="loading_upload_update" class="hidden"><?php echo img($images['loading']);?></span>
+		
+		<?php if (isset($directory)): ?>
+			<hr />
+			
+			<table class="zebra">
+				<tbody>
+				<?php foreach ($directory as $d): ?>
+					<tr>
+						<td class="cell-label"><?php echo $d['file'];?></td>
+						<td class="cell-spacer"></td>
+						<td><?php echo img($d['image']);?></td>
+						<td class="cell-spacer"></td>
+						<td><?php echo form_button($buttons['use']);?></td>
+					</tr>
+				<?php endforeach;?>
+				</tbody>
+			</table>
+		<?php endif;?>
 	</div>
+<?php endif;?>
 	
 	<br />
 	<?php echo form_hidden('id', $id);?>
-	<?php echo form_button($inputs['submit']);?>
+	<?php echo form_button($buttons['submit']);?>
 	
 	<?php echo form_close();?>
-</div>
+	
+<?php if ($id !== FALSE): ?>
+	</div>
+<?php endif;?>

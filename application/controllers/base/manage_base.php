@@ -4231,7 +4231,7 @@ class Manage_base extends Controller {
 		
 		/* set the variables */
 		$action = $this->uri->segment(3);
-		$id = $this->uri->segment(4, 0, TRUE);
+		$id = $this->uri->segment(4, FALSE, TRUE);
 		
 		if (isset($_POST['submit']))
 		{
@@ -4420,22 +4420,17 @@ class Manage_base extends Controller {
 					'id' => 'display_n',
 					'value' => 'n',
 					'checked' => ($item !== FALSE && $item->tour_display == 'n') ? TRUE : FALSE),
-				'images' => array(
-					'name' => 'tour_images',
-					'id' => 'images',
-					'rows' => 4,
-					'value' => ($action == 'edit') ? $item->tour_images : ''),
 				'summary' => array(
 					'name' => 'tour_summary',
 					'rows' => 6,
 					'value' => ($item === FALSE) ? '' : $item->tour_summary),
-				'submit' => array(
-					'type' => 'submit',
-					'class' => 'button-main',
-					'name' => 'submit',
-					'value' => 'submit',
-					'content' => ucwords(lang('actions_submit'))),
+				'images' => (!empty($item->tour_images)) ? explode(',', $item->tour_images) : '',
 			);
+			
+			if ($item === FALSE)
+			{
+				$data['inputs']['display_y']['checked'] = TRUE;
+			}
 			
 			$tour = $this->tour->get_tour_fields();
 		
@@ -4576,6 +4571,10 @@ class Manage_base extends Controller {
 				'src' => img_location('image-upload.png', $this->skin, 'admin'),
 				'alt' => lang('actions_upload'),
 				'class' => 'image'),
+			'loading' => array(
+				'src' => img_location('loading-circle.gif', $this->skin, 'admin'),
+				'alt' => lang('actions_loading'),
+				'class' => 'image'),
 		);
 		
 		$data['image_instructions'] = sprintf(
@@ -4598,7 +4597,33 @@ class Manage_base extends Controller {
 			'off' => ucfirst(lang('labels_off')),
 			'summary' => ucfirst(lang('labels_summary')) .': ',
 			'back' => LARROW .' '. ucfirst(lang('actions_back')) .' '. lang('labels_to') .' '. ucwords(lang('global_touritems')),
+			'images_later' => sprintf(lang('add_images_later'), lang('global_touritem')),
 		);
+		
+		$data['buttons'] = array(
+			'submit' => array(
+				'type' => 'submit',
+				'class' => 'button-main',
+				'name' => 'submit',
+				'value' => 'submit',
+				'content' => ucwords(lang('actions_submit'))),
+			'use' => array(
+				'type' => 'submit',
+				'class' => 'button-sec add',
+				'name' => 'use',
+				'value' => 'use',
+				'content' => ucwords(lang('actions_use') .' '. lang('labels_image'))),
+			'update' => array(
+				'type' => 'submit',
+				'class' => 'button-main',
+				'name' => 'submit',
+				'value' => 'submit',
+				'id' => 'update',
+				'rel' => $id,
+				'content' => ucwords(lang('actions_update'))),
+		);
+		
+		$js_data['id'] = $id;
 		
 		/* figure out where the view should be coming from */
 		$js_loc = js_location('manage_tour_js', $this->skin, 'admin');
@@ -4606,7 +4631,7 @@ class Manage_base extends Controller {
 		/* write the data to the template */
 		$this->template->write('title', $data['header']);
 		$this->template->write_view('content', $view_loc, $data);
-		$this->template->write_view('javascript', $js_loc);
+		$this->template->write_view('javascript', $js_loc, $js_data);
 		
 		/* render the template */
 		$this->template->render();

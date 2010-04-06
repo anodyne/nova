@@ -13,6 +13,8 @@
 </p>
 
 <?php if (isset($tour)): ?>
+	<br />
+	
 	<table class="table100 zebra">
 		<tbody>
 		<?php foreach ($tour as $t): ?>

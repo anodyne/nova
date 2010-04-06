@@ -4323,6 +4323,45 @@ class Ajax_base extends Controller {
 		}
 	}
 	
+	function del_tour_image()
+	{
+		if (IS_AJAX)
+		{
+			/* load the resources */
+			$this->load->model('tour_model', 'tour');
+			
+			/* set the variables */
+			$id = $this->uri->segment(3);
+			$image = $this->input->post('image', TRUE);
+			
+			$image = str_replace('\.', '.', $image);
+			
+			$tour = $this->tour->get_tour_item($id);
+			
+			if ($tour->num_rows() > 0)
+			{
+				$item = $tour->row();
+				
+				$images = $item->tour_images;
+				
+				if (!empty($images))
+				{
+					$imagesArray = explode(',', $images);
+					
+					$key = array_search($image, $imagesArray);
+					
+					if ($key !== FALSE)
+					{
+						unset($imagesArray[$key]);
+						$imageStr = implode(',', $imagesArray);
+						
+						$this->tour->update_tour_item($id, array('tour_images' => $imageStr));
+					}
+				}
+			}
+		}
+	}
+	
 	function del_tour_item()
 	{
 		/* load the resources */
@@ -7068,6 +7107,102 @@ class Ajax_base extends Controller {
 			}
 			
 			echo $output;
+		}
+	}
+	
+	function save_tour_image()
+	{
+		if (IS_AJAX)
+		{
+			/* set the variables */
+			$id = $this->uri->segment(3);
+			$image = $this->input->post('image', TRUE);
+			
+			$image = str_replace('\.', '.', $image);
+			
+			/* load the resources */
+			$this->load->model('tour_model', 'tour');
+			
+			/* get the images */
+			$tour = $this->tour->get_tour_item($id);
+			
+			if ($tour->num_rows() > 0)
+			{
+				$item = $tour->row();
+				
+				$images = $item->tour_images;
+				
+				if (!empty($images))
+				{
+					$imagesArray = explode(',', $images);
+					
+					$key = array_search($image, $imagesArray);
+					
+					if ($key === FALSE)
+					{
+						/* add the image to the array */
+						$imagesArray[] = $image;
+						
+						/* make the array a string */
+						$imagesStr = implode(',', $imagesArray);
+						
+						/* fire the character update event */
+						$this->tour->update_tour_item($id, array('tour_images' => $imagesStr));
+						
+						$array = array(
+							'src' => base_url() . asset_location('images/tour', $image),
+							'width' => 130
+						);
+						
+						echo img($array);
+					}
+					else
+					{
+						echo '';
+					}
+				}
+				else
+				{
+					/* add the image to the array */
+					$imagesArray[] = $image;
+					
+					/* make the array a string */
+					$imagesStr = implode(',', $imagesArray);
+					
+					/* fire the character update event */
+					$this->tour->update_tour_item($id, array('tour_images' => $imagesStr));
+					
+					$array = array(
+						'src' => base_url() . asset_location('images/tour', $image),
+						'width' => 130
+					);
+					
+					echo img($array);
+				}
+			}
+		}
+	}
+	
+	function save_tour_images()
+	{
+		if (IS_AJAX)
+		{
+			/* set the variables */
+			$images = $this->input->post('img', TRUE);
+			$id = $this->uri->segment(3);
+			
+			foreach ($images as $i)
+			{
+				$imageArray[] = str_replace('\.', '.', $i);
+			}
+			
+			$imageStr = implode(',', $imageArray);
+			
+			/* load the resources */
+			$this->load->model('tour_model', 'tour');
+			
+			/* fire the character update event */
+			$this->tour->update_tour_item($id, array('tour_images' => $imageStr));
 		}
 	}
 	
