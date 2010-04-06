@@ -145,19 +145,21 @@
 				</table><br />
 			<?php endif;?>
 			
-			<table class="zebra">
-				<tbody>
-				<?php foreach ($myuploads as $d): ?>
-					<tr>
-						<td class="cell-label"><?php echo $d['file'];?></td>
-						<td class="cell-spacer"></td>
-						<td><?php echo img($d['image']);?></td>
-						<td class="cell-spacer"></td>
-						<td><?php echo form_button($button['use']);?></td>
-					</tr>
-				<?php endforeach;?>
-				</tbody>
-			</table>
+			<?php if (isset($directory)): ?>
+				<table class="zebra">
+					<tbody>
+					<?php foreach ($directory as $d): ?>
+						<tr>
+							<td class="cell-label"><?php echo $d['file'];?></td>
+							<td class="cell-spacer"></td>
+							<td><?php echo img($d['image']);?></td>
+							<td class="cell-spacer"></td>
+							<td><?php echo form_button($button['use']);?></td>
+						</tr>
+					<?php endforeach;?>
+					</tbody>
+				</table>
+			<?php endif;?>
 		</div>
 		
 		<br /><?php echo form_button($button['submit']);?>
