@@ -4600,8 +4600,17 @@ class Site_base extends Controller {
 				'%l %F %j, %Y @ %g:%i%a'	=> 'Monday January 1, 2009 @ 12:01am',
 				'%m/%d/%Y @ %g:%i%a'		=> '01/01/2009 @ 12:01am',
 				'%d %M %Y @ %g:%i%a'		=> '01 Jan 2009 @ 12:01am',
-				''							=> ucfirst(lang('labels_other'))
 			);
+			
+			/* make sure the Other option is set properly */
+			if (array_key_exists($setting['date_format'], $data['values']['date_format']))
+			{
+				$data['values']['date_format'][''] = ucfirst(lang('labels_other'));
+			}
+			else
+			{
+				$data['values']['date_format'][$setting['date_format']] = ucfirst(lang('labels_other'));
+			}
 			
 			/* defaults */
 			$data['default']['sim_type'] = $setting['sim_type'];
