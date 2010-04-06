@@ -2,7 +2,7 @@
 
 <?php if ($edit_valid === TRUE || $edit_valid_form === TRUE): ?>
 	<p>
-		<?php echo link_to_if($edit_valid, 'characters/bio', $label['edit'], array('class' => 'edit fontSmall bold'));?>
+		<?php echo link_to_if($edit_valid, 'characters/bio/'. $character['id'], $label['edit'], array('class' => 'edit fontSmall bold'));?>
 		<?php echo link_to_if($edit_valid_form, 'site/bioform', $label['edit_form'], array('class' => 'edit fontSmall bold'));?>
 	</p>
 <?php endif;?>
