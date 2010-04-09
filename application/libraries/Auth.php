@@ -59,9 +59,9 @@ class Auth {
 		{
 			foreach ($this->ci->session->userdata('access') as $a => $b)
 			{
-				if (strpos($a, $uri) >= 0)
+				if (strpos($a, $uri) !== FALSE)
 				{
-				    return TRUE;
+					return TRUE;
 				}
 				else
 				{
