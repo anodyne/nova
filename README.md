@@ -8,31 +8,44 @@ Current Version
 
 Last Update
 -----------
-06 April 2010
+09 April 2010
 
 Latest Updates
 --------------
-* fixed bug with undefined variable errors on the character bio page (#99)
-* fixed wrong link for the edit bio link on the character bio page
-* fixed wrong link for the mission groups link
-* fixed bug with the date format dropdown menu
-* fixed a couple of potential bugs in the mission management page
-* removed test images
-* updated tour management with the new image upload management code
+* fixed bug where users with permissions lower than system administrator couldn't edit their characters (#100)
+* fixed bug the system didn't respect the access role allowing (or disallowing) people to upload images
+* fixed bug where the system wasn't using access control on the docking form menu item
+* updated the install data
+* updated the menu library with an all new method to build the admin sub menus that makes sure the right menu items and categories are displayed
+* updated the admin controller with a tweak to the code for building its submenus
+* updated the auth library with a minor change to some logic
 
 Changes in 1.0-pre
 ------------------
 * updated tour management with the new image upload management code
+* updated the install data
+    * menu items
+    * menu item categories
+    * access role pages
+    * access roles
+* updated the menu library with an all new method to build the admin sub menus that makes sure the right menu items and categories are displayed
+* updated the admin controller with a tweak to the code for building its submenus
+* updated the auth library with a minor change to some logic
 * removed test images
 * fixed bug with undefined variable errors on the character bio page (#99)
 * fixed wrong link for the edit bio link on the character bio page
 * fixed wrong link for the mission groups link
 * fixed bug with the date format dropdown menu
 * fixed a couple of potential bugs in the mission management page
+* fixed bug where users with permissions lower than system administrator couldn't edit their characters (#100)
+* fixed bug the system didn't respect the access role allowing (or disallowing) people to upload images
+* fixed bug where the system wasn't using access control on the docking form menu item
 
 Known Issues
 ------------
 http://github.com/anodyne/nova/issues/labels/Bug
+
+* main navigation menu items do not respect any access control put on them
 
 Version History
 ---------------
