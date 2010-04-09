@@ -85,23 +85,23 @@ $access_roles = array(
 		'role_desc' => 'System administrators can take any action in the system. Only give this access level out to people you implicitly trust.'),
 	array(
 		'role_name' => 'Senior Administrator',
-		'role_access' => '',
+		'role_access' => '1,2,3,4,5,6,7,8,21,22,27,31,33,35,37,39,40,41,42,43,44,45,46,49,53,55,58,59,63,64',
 		'role_desc' => 'Senior administrators have power to do almost all of the tasks system administrators do, but with some restrictions. This role is intended to be used by an assistant game manager or other highly senior players on the RPG.'),
 	array(
 		'role_name' => 'Basic Administrator',
-		'role_access' => '1,2,3,4,5,6,7,8,21,29,31,33,35,37,38,39,40,41,42,43,44,47,48,51,53,54,56,58,61,62',
+		'role_access' => '1,2,3,4,5,6,7,8,21,22,31,33,35,39,40,42,45,49,52,54,58,59,62,64',
 		'role_desc' => 'Basic administrators have power to do some of the tasks system administrators do, but with more restrictions. This role is intended to be used senior players on the RPG.'),
 	array(
 		'role_name' => 'Power User',
-		'role_access' => '1,2,4,5,6,7,8,28,30,32,37,38,40,41,43,46,50,52,55,57,60',
+		'role_access' => '1,2,4,5,6,7,8,30,32,34,39,40,42,45,48,52,54,57,59,62',
 		'role_desc' => 'Power users are users that can take more action than a standard user. This role is intended to be used for senior players on the RPG (department heads for example).'),
 	array(
 		'role_name' => 'Standard User',
-		'role_access' => '1,2,4,5,6,7,8,28,30,32,37,38,40,43,49,52,55,57,59',
+		'role_access' => '1,2,4,5,6,7,8,30,32,34,39,40,42,45,51,54,57,59,61',
 		'role_desc' => 'Standard users are generally the majority of players. This role gives them access to all the pieces they will need to play the game and use the system.'),
 	array(
 		'role_name' => 'Inactive User',
-		'role_access' => '1,4,37,38,40,43,49,52,55',
+		'role_access' => '1,4,45,51,54,57',
 		'role_desc' => 'Inactive players are players that have left the RPG. Instead of being completely locked out, the player can log in and take some very limited actions.')
 );
 
@@ -739,7 +739,7 @@ $menu_categories = array(
 	array(
 		'menucat_name' => 'Admin Control Panel',
 		'menucat_order' => 3,
-		'menucat_menu_cat' => 'acp',
+		'menucat_menu_cat' => 'admin',
 		'menucat_type' => 'adminsub'),
 	array(
 		'menucat_name' => 'Write',
@@ -1097,7 +1097,7 @@ $menu_items = array(
 		'menu_link' => 'admin/index',
 		'menu_sim_type' => 1,
 		'menu_type' => 'adminsub',
-		'menu_cat' => 'acp',
+		'menu_cat' => 'admin',
 		'menu_use_access' => 'y',
 		'menu_access' => 'admin/index'),
 	array(
@@ -1107,7 +1107,7 @@ $menu_items = array(
 		'menu_link' => 'admin/whatsnew',
 		'menu_sim_type' => 1,
 		'menu_type' => 'adminsub',
-		'menu_cat' => 'acp',
+		'menu_cat' => 'admin',
 		'menu_use_access' => 'y',
 		'menu_access' => 'admin/index'),
 		
@@ -1261,7 +1261,7 @@ $menu_items = array(
 		'menu_sim_type' => 3,
 		'menu_type' => 'adminsub',
 		'menu_cat' => 'site',
-		'menu_use_access' => 'n',
+		'menu_use_access' => 'y',
 		'menu_access' => 'site/dockingform'),
 	array(
 		'menu_name' => 'Sim Types',
