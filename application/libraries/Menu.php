@@ -108,15 +108,13 @@ class Menu {
 		
 		foreach ($array as $k => $v)
 		{
-			if ($this->ci->session->userdata('userid') !== FALSE)
+			if ($this->ci->auth->is_logged_in() === TRUE)
 			{
 				/* check access */
 				$access = $this->ci->auth->check_access($v['link'], FALSE, TRUE);
 			}
 			
-			if (($v['login'] == 'y' && $this->ci->session->userdata('userid') === FALSE) ||
-					($v['login'] == 'y' && $access === FALSE) ||
-					($v['login'] == 'n' && $this->ci->session->userdata('userid') !== FALSE))
+			if (($v['login'] == 'y' && $this->ci->auth->is_logged_in() === FALSE) || ($v['login'] == 'n' && $this->ci->auth->is_logged_in() === TRUE))
 			{
 				/* do nothing */
 			}
@@ -214,13 +212,13 @@ class Menu {
 		/* grab the menu items */
 		$menu = $this->ci->menu_model->get_admin_menu($this->type);
 		
+		$retval = array();
+		
 		if ($categories->num_rows() > 0)
 		{
-			$this->output = '<ul>';
-			
 			foreach ($categories->result() as $cat)
 			{
-				$this->output.= '<li class="menu_category">'. $cat->menucat_name .'</li>';
+				$retval[$cat->menucat_menu_cat]['name'] = $cat->menucat_name;
 				
 				if ($menu->num_rows() > 0)
 				{
@@ -228,38 +226,64 @@ class Menu {
 					{
 						if ($item->menu_cat == $cat->menucat_menu_cat)
 						{
-							if ($item->menu_group != 0 && $item->menu_order == 0)
-							{
-								$this->output.= '<li class="spacer"></li>';
-							}
-							
-							if ($item->menu_link_type == 'offsite')
-							{
-								$target = ' target="_blank"';
-								$link = $item->menu_link;
-							}
-							else
-							{
-								$target = NULL;
-								$link = site_url($item->menu_link);
-							}
-							
 							$access = $this->ci->auth->check_access($item->menu_access, FALSE);
 							$level = $this->ci->auth->get_access_level($item->menu_access);
 							
 							if (($item->menu_use_access == 'y' && $access === TRUE && ($item->menu_access_level > 0 && $level >= $item->menu_access_level || $item->menu_access_level == 0)) || $item->menu_use_access == 'n')
 							{
-								$this->output.= '<li><a href="' . $link .'"' . $target . '><span>' . $item->menu_name . '</span></a></li>';
+								$retval[$cat->menucat_menu_cat]['menu'][] = $item;
 							}
 						}
+					}
+				}
+			}
+		}
+		
+		$this->_render($retval);
+	}
+	
+	function _render($data = '')
+	{
+		$this->output = '<ul>';
+		
+		foreach ($data as $key => $value)
+		{
+			if (isset($value['menu']) && count($value['menu']) > 0)
+			{
+				$this->output.= '<li class="menu_category">'. $value['name'] .'</li>';
+				
+				foreach ($value['menu'] as $item)
+				{
+					if ($item->menu_group != 0 && $item->menu_order == 0)
+					{
+						$this->output.= '<li class="spacer"></li>';
+					}
+					
+					if ($item->menu_link_type == 'offsite')
+					{
+						$target = ' target="_blank"';
+						$link = $item->menu_link;
+					}
+					else
+					{
+						$target = NULL;
+						$link = site_url($item->menu_link);
+					}
+					
+					$access = $this->ci->auth->check_access($item->menu_access, FALSE);
+					$level = $this->ci->auth->get_access_level($item->menu_access);
+					
+					if (($item->menu_use_access == 'y' && $access === TRUE && ($item->menu_access_level > 0 && $level >= $item->menu_access_level || $item->menu_access_level == 0)) || $item->menu_use_access == 'n')
+					{
+						$this->output.= '<li><a href="' . $link .'"' . $target . '><span>' . $item->menu_name . '</span></a></li>';
 					}
 				}
 				
 				$this->output.= '<li class="spacer"></li>';
 			}
-			
-			$this->output.= '</ul>';
 		}
+		
+		$this->output.= '</ul>';
 	}
 }
 
