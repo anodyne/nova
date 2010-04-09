@@ -91,6 +91,8 @@ class Upload_base extends Controller {
 
 	function index()
 	{
+		$this->auth->check_access();
+		
 		if (isset($_POST['submit']))
 		{
 			/* images can't have _, - or = because of the way jquery serializes data for the sortable plugin */
