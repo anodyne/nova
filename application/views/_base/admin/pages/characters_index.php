@@ -39,18 +39,17 @@
 										<?php if (!empty($i['uid']) && $levelcheck['account'] == 2): ?>
 											<?php echo anchor('user/account/'. $i['uid'], img($images['account']), array('class' => 'image'));?>
 											&nbsp;
-										<?php else: ?>
-											<?php echo anchor('user/characterlink', img($images['assign']), array('class' => 'image'));?>
-											&nbsp;
 										<?php endif;?>
 										
 										<?php echo anchor('personnel/character/'. $i['id'], img($images['view']), array('class' => 'image'));?>
-										&nbsp;
-										<a href="#" rel="facebox" myID="<?php echo $i['id'];?>" myAction="delete" class="image">
-											<?php echo img($images['delete']);?>
-										</a>
 										
 										<?php if ($levelcheck['bio'] == 3): ?>
+											&nbsp;
+											<?php echo anchor('user/characterlink', img($images['assign']), array('class' => 'image'));?>
+											&nbsp;
+											<a href="#" rel="facebox" myID="<?php echo $i['id'];?>" myAction="delete" class="image">
+												<?php echo img($images['delete']);?>
+											</a>
 											&nbsp;
 											<?php echo anchor('characters/bio/'. $i['id'], img($images['edit']), array('class' => 'image'));?>
 										<?php endif;?>
@@ -81,12 +80,15 @@
 									</td>
 									<td class="col_75 align_right">
 										<?php echo anchor('personnel/character/'. $i['id'], img($images['view']), array('class' => 'image'));?>
-										&nbsp;
-										<a href="#" rel="facebox" myID="<?php echo $i['id'];?>" myAction="delete" class="image">
-											<?php echo img($images['delete']);?>
-										</a>
-										&nbsp;
-										<?php echo anchor('characters/bio/'. $i['id'], img($images['edit']), array('class' => 'image'));?>
+										
+										<?php if ($levelcheck['bio'] == 3): ?>
+											&nbsp;
+											<a href="#" rel="facebox" myID="<?php echo $i['id'];?>" myAction="delete" class="image">
+												<?php echo img($images['delete']);?>
+											</a>
+											&nbsp;
+											<?php echo anchor('characters/bio/'. $i['id'], img($images['edit']), array('class' => 'image'));?>
+										<?php endif;?>
 									</td>
 								</tr>
 							<?php endforeach;?>
