@@ -84,7 +84,7 @@ class Admin_base extends Controller {
 		
 		/* write the common elements to the template */
 		$this->template->write('nav_main', $this->menu->build('main', 'main'), TRUE);
-		$this->template->write('nav_sub', $this->menu->build('adminsub', 'acp'), TRUE);
+		$this->template->write('nav_sub', $this->menu->build('adminsub', 'admin'), TRUE);
 		$this->template->write('panel_1', $this->user_panel->panel_1(), TRUE);
 		$this->template->write('panel_2', $this->user_panel->panel_2(), TRUE);
 		$this->template->write('panel_3', $this->user_panel->panel_3(), TRUE);
