@@ -20,7 +20,7 @@ $g = 'dnd';
 
 /*
 |---------------------------------------------------------------
-| Genre Table Data (BSG)
+| Genre Table Data (DND)
 |---------------------------------------------------------------
 */
 $data = array(
@@ -705,9 +705,9 @@ $catalogue_ranks = array(
 	array(
 		'rankcat_name' => 'Standard Ranks',
 		'rankcat_location' => 'default',
-		'rankcat_credits' => "The Dungeons and Dragons rank used in Nova were created by Wade Duerkes for use by Anodyne. Please do not copy or modify the images.",
+		'rankcat_credits' => "The Dungeons and Dragons rank used in Nova were created by David VanScott with assistance from Wade Duerkes. Please do not copy or modify the images.",
 		'rankcat_default' => 'y',
-		'rankcat_url' => 'http://wadeduerkes.com/'),
+		'rankcat_url' => 'http://anodyne-productions.com/'),
 );
 
 /* End of file install_data_dnd.php */

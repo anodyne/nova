@@ -1895,16 +1895,11 @@ $positions = array(
 
 $catalogue_ranks = array(
 	array(
-		'rankcat_name' => 'DS9 Duty Uniform Ranks',
+		'rankcat_name' => 'Duty Uniform',
 		'rankcat_location' => 'default',
-		'rankcat_credits' => "The rank sets used in Nova were created by Kuro-chan of Kuro-RPG. The ranksets can be found at <a href='http://www.kuro-rpg.net' target='_blank''>Kuro-RPG</a>. Please do not copy or modify the images.",
+		'rankcat_credits' => "The Star Trek Online rank sets used in Nova were created by Kuro-chan of Kuro-RPG. The ranksets can be found at <a href='http://www.kuro-rpg.net' target='_blank''>Kuro-RPG</a>. Please do not copy or modify the images.",
 		'rankcat_default' => 'y',
 		'rankcat_url' => 'http://www.kuro-rpg.net/'),
-	array(
-		'rankcat_name' => 'DS9 Dress Uniform Ranks',
-		'rankcat_location' => 'alternate',
-		'rankcat_credits' => "The rank sets used in Nova were created by Kuro-chan of Kuro-RPG. The ranksets can be found at <a href='http://www.kuro-rpg.net' target='_blank''>Kuro-RPG</a>. Please do not copy or modify the images.",
-		'rankcat_url' => 'http://www.kuro-rpg.net/')
 );
 
 /* End of file sto_data.php */

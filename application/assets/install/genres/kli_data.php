@@ -473,10 +473,10 @@ $catalogue_ranks = array(
 	array(
 		'rankcat_name' => 'Duty Uniform',
 		'rankcat_location' => 'default',
-		'rankcat_credits' => "The Klingon Duty Uniform rank set was created by Kuro-chan of Kuro-RPG. The rankset (and others) can be found at <a href='http://www.kuro-rpg.net' target='_blank'>Kuro-RPG</a>. Please do not copy or modify the images.",
+		'rankcat_credits' => "The Klingon rank sets was created by Kuro-chan of Kuro-RPG. The rankset (and others) can be found at <a href='http://www.kuro-rpg.net' target='_blank'>Kuro-RPG</a>. Please do not copy or modify the images.",
 		'rankcat_default' => 'y',
 		'rankcat_url' => 'http://www.kuro-rpg.net/')
 );
 
-/* End of file install_data_baj.php */
-/* Location: ./application/assets/install/install_data_baj.php */
+/* End of file install_data_kli.php */
+/* Location: ./application/assets/install/install_data_kli.php */

@@ -670,9 +670,9 @@ $positions = array(
 
 $catalogue_ranks = array(
 	array(
-		'rankcat_name' => 'Nemesis Ranks',
+		'rankcat_name' => 'Duty Uniform (Nemesis)',
 		'rankcat_location' => 'default',
-		'rankcat_credits' => "The Nemesis rank set was created by Kuro-chan of Kuro-RPG. The rankset (and others) can be found at <a href='http://www.kuro-rpg.net' target='_blank'>Kuro-RPG</a>. Please do not copy or modify the images.",
+		'rankcat_credits' => "The Romulan rank sets was created by Kuro-chan of Kuro-RPG. The rankset (and others) can be found at <a href='http://www.kuro-rpg.net' target='_blank'>Kuro-RPG</a>. Please do not copy or modify the images.",
 		'rankcat_default' => 'y',
 		'rankcat_url' => 'http://www.kuro-rpg.net/')
 );

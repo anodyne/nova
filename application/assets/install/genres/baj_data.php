@@ -13,8 +13,6 @@
 
 # TODO: religious ranks
 
-# TODO: need a new name for chief of the boat position
-
 /*
 |---------------------------------------------------------------
 | Genre Variables
@@ -473,10 +471,17 @@ $positions = array(
 		'pos_open' => 1,
 		'pos_type' => 'senior'),
 	array(
-		'pos_name' => 'Chief of the Boat',
-		'pos_desc' => "The Chief of the Boat is the seniormost enlisted officer aboard the vessel. Usually handpicked by the Commanding Officer, the Chief of the Boat is responsible for working with the First Officer to manage the enlisted personnel on the vessel including training and additional qualifications.",
+		'pos_name' => 'First Bantaca',
+		'pos_desc' => "The First Bantaca is the seniormost enlisted officer aboard the vessel. Usually handpicked by the Commanding Officer, the First Bantaca is responsible for working with the First Officer to manage the enlisted personnel on the vessel including training and additional qualifications. These senior enlisted officers are often revered and seen as the father figure by most of the enlisted characters (hence the name). Most First Bantacas have a great deal of experience and wisdom and are critical to the successful running of a Bajoran vessel.",
 		'pos_dept' => 1,
 		'pos_order' => 2,
+		'pos_open' => 1,
+		'pos_type' => 'enlisted'),
+	array(
+		'pos_name' => 'Second Bantaca',
+		'pos_desc' => "The Second Bantaca is hand-picked by the First Bantaca to serve as their understudy as they work with the First Officer to manage the enlisted personnel on the vessel including training and additional qualifications. The Bantacas have a great deal of experience and wisdom and are critical to the successful running of a Bajoran vessel.",
+		'pos_dept' => 1,
+		'pos_order' => 3,
 		'pos_open' => 1,
 		'pos_type' => 'enlisted'),
 		
@@ -849,7 +854,7 @@ $positions = array(
 
 $catalogue_ranks = array(
 	array(
-		'rankcat_name' => 'Bajoran Ranks',
+		'rankcat_name' => 'Duty Uniform',
 		'rankcat_location' => 'default',
 		'rankcat_credits' => "The Bajoran rank set was created by Kuro-chan of Kuro-RPG. The rankset (and others) can be found at <a href='http://www.kuro-rpg.net' target='_blank'>Kuro-RPG</a>. Please do not copy or modify the images.",
 		'rankcat_default' => 'y',

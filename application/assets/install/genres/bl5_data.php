@@ -9,10 +9,8 @@
 |
 | Genre data compiled by Rycon (Anodyne forums)
 |
-*/
 
-# TODO: chief tactical officer description
-# TODO: tactical officer description
+*/
 
 /*
 |---------------------------------------------------------------
@@ -30,6 +28,7 @@ $data = array(
 	'departments_'. $g 	=> 'depts',
 	'ranks_'. $g		=> 'ranks',
 	'positions_'. $g	=> 'positions',
+	'catalogue_ranks'	=> 'catalogue_ranks',
 );
 
 $depts = array(
@@ -845,18 +844,27 @@ $positions = array(
 		
 	array(
 		'pos_name' => "Chief Tactical Officer",
-		'pos_desc' => "",
+		'pos_desc' => "The Chief Tactical Officer oversees all tactical decisions made onboard the ship/facility. Tactical Operations can include coordination of StarFury squadrons as well as vessel-to-vessel tactical operations. The Chief Tactical Officer works closely with those in the Weapons Division for the successful execution of tactical operations.",
 		'pos_dept' => 9,
 		'pos_order' => 0,
 		'pos_open' => 1,
 		'pos_type' => 'senior'),
 	array(
 		'pos_name' => "Tactical Officer",
-		'pos_desc' => "",
+		'pos_desc' => "Tactical Officers assist the Chief Tactical Officer with the tactical operations aboard the ship/facility.",
 		'pos_dept' => 9,
 		'pos_order' => 1,
 		'pos_open' => 3,
 		'pos_type' => 'officer'),
+);
+
+$catalogue_ranks = array(
+	array(
+		'rankcat_name' => 'Duty Uniform',
+		'rankcat_location' => 'default',
+		'rankcat_credits' => "The Babylon 5 rank sets used in Nova were created by Kuro-chan of Kuro-RPG. The ranksets can be found at <a href='http://www.kuro-rpg.net' target='_blank''>Kuro-RPG</a>. Please do not copy or modify the images.",
+		'rankcat_default' => 'y',
+		'rankcat_url' => 'http://www.kuro-rpg.net/')
 );
 
 /* End of file install_data_bl5.php */
