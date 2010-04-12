@@ -8,17 +8,11 @@ Current Version
 
 Last Update
 -----------
-09 April 2010
+12 April 2010
 
 Latest Updates
 --------------
-* fixed bug where users with permissions lower than system administrator couldn't edit their characters (#100)
-* fixed bug the system didn't respect the access role allowing (or disallowing) people to upload images
-* fixed bug where the system wasn't using access control on the docking form menu item
-* updated the install data
-* updated the menu library with an all new method to build the admin sub menus that makes sure the right menu items and categories are displayed
-* updated the admin controller with a tweak to the code for building its submenus
-* updated the auth library with a minor change to some logic
+* updated the genre data files
 
 Changes in 1.0-pre
 ------------------
@@ -31,6 +25,7 @@ Changes in 1.0-pre
 * updated the menu library with an all new method to build the admin sub menus that makes sure the right menu items and categories are displayed
 * updated the admin controller with a tweak to the code for building its submenus
 * updated the auth library with a minor change to some logic
+* updated the genre data files
 * removed test images
 * fixed bug with undefined variable errors on the character bio page (#99)
 * fixed wrong link for the edit bio link on the character bio page

@@ -1,3 +1,9 @@
+04.12.2010
+
+* updated the genre data files
+
+==========
+
 04.09.2010
 
 * fixed bug where users with permissions lower than system administrator couldn't edit their characters (#100)
