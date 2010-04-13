@@ -12,19 +12,21 @@
 | to install the genre data by pointing your browser toward
 | http://yoursite/install/genre
 |
-| AND	- Andromeda
+| BL5	- Babylon 5
 | BSG	- Battlestar Galactica
 | BLANK - Empty genre setup
 | DND	- Dungeons and Dragons
-| FLY	- Firefly
 | ENT	- Star Trek, Enterprise era
 | TOS	- Star Trek, Original Series
+| MOV	- Star Trek, Movie Era
 | DS9	- Star Trek, Deep Space Nine
 | KLI	- Star Trek, Klingon
 | ROM	- Star Trek, Romulan
 | CRD	- Star Trek, Cardassian
 | BAJ	- Star Trek, Bajoran
 | STO	- Star Trek Online
+| SG1	- Stargate SG-1
+| SGA	- Stargate Atlantis
 */
 
 $config['genre'] = "BSG";
