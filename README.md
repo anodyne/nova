@@ -26,6 +26,8 @@ Changes in 1.0-pre
 * updated the admin controller with a tweak to the code for building its submenus
 * updated the auth library with a minor change to some logic
 * updated the genre data files
+* updated the genre listing in the nova config file
+* updated the constants config file with the proper release values
 * removed test images
 * fixed bug with undefined variable errors on the character bio page (#99)
 * fixed wrong link for the edit bio link on the character bio page

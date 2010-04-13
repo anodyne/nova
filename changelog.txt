@@ -1,6 +1,8 @@
 04.12.2010
 
 * updated the genre data files
+* updated the genre listing in the nova config file
+* updated the constants config file with the proper release values
 
 ==========
 
