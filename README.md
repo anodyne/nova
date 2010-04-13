@@ -40,7 +40,8 @@ Known Issues
 ------------
 http://github.com/anodyne/nova/issues/labels/Bug
 
-* main navigation menu items do not respect any access control put on them
+* main navigation menu items do not respect any access control put on them (#101)
+* ranks don't display properly when multiple genres have been installed (#102)
 
 Version History
 ---------------
