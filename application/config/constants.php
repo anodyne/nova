@@ -73,11 +73,11 @@ define('WIKI_VERSION',			'Release 1');
 
 define('SMS_UPGRADE_VERSION',	'2.6.9');
 
-define('VERSION_FEED',			APPPATH . 'assets/version.yml');
-//define('VERSION_FEED',				'http://www.anodyne-productions.com/feeds/version_nova.yml');
+//define('VERSION_FEED',			APPPATH . 'assets/version.yml');
+define('VERSION_FEED',				'http://www.anodyne-productions.com/feeds/version_nova.yml');
 
 # TODO: remove this before final release
-define('APP_DATA_SRC',			'dev'); /* options for data source are dev and basic */
+define('APP_DATA_SRC',			'basic'); /* options for data source are dev and basic */
 
 /* figure out if the request is an ajax request */
 define('IS_AJAX', 				isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest');
