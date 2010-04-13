@@ -110,7 +110,7 @@ $ranks= array(
 	array(
 		'rank_name' => 'Emissary',
 		'rank_short_name' => 'EMS',
-		'rank_image' => 's-a4',
+		'rank_image' => 'rl-a4',
 		'rank_order' => 0,
 		'rank_class' => 6),
 		
@@ -147,7 +147,7 @@ $ranks= array(
 	array(
 		'rank_name' => 'Kai',
 		'rank_short_name' => 'KAI',
-		'rank_image' => 's-a3',
+		'rank_image' => 'rl-a3',
 		'rank_order' => 1,
 		'rank_class' => 6),
 		
@@ -184,7 +184,7 @@ $ranks= array(
 	array(
 		'rank_name' => 'Vedek',
 		'rank_short_name' => 'VDK',
-		'rank_image' => 's-a2',
+		'rank_image' => 'rl-a2',
 		'rank_order' => 2,
 		'rank_class' => 6),
 		
@@ -221,7 +221,7 @@ $ranks= array(
 	array(
 		'rank_name' => 'Ranjen',
 		'rank_short_name' => 'RNJ',
-		'rank_image' => 's-a1',
+		'rank_image' => 'rl-a1',
 		'rank_order' => 3,
 		'rank_class' => 6),
 		
@@ -258,7 +258,7 @@ $ranks= array(
 	array(
 		'rank_name' => 'Prylar',
 		'rank_short_name' => 'PYL',
-		'rank_image' => 's-o6',
+		'rank_image' => 'rl-o6',
 		'rank_order' => 4,
 		'rank_class' => 6),
 		
