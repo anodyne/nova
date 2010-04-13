@@ -37,7 +37,7 @@ switch ($debug_errors)
 	
 	default:
 		ini_set('display_errors', 0);
-		error_reporting(0);
+		error_reporting(E_ERROR);
 		define('NOVA_DB_DEBUG', FALSE);
 		
 		break;
