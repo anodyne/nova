@@ -12,6 +12,7 @@
 */
 
 # TODO: ranks - white = command, teal = medical, yellow = operations, red = cadets
+# NOTE: no warrant officers
 
 /*
 |---------------------------------------------------------------
