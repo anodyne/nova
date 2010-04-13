@@ -84,12 +84,8 @@ $access_roles = array(
 		'role_access' => '1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,31,33,35,36,37,38,39,40,41,42,43,44,45,46,49,50,53,55,56,58,60,63,64',
 		'role_desc' => 'System administrators can take any action in the system. Only give this access level out to people you implicitly trust.'),
 	array(
-		'role_name' => 'Senior Administrator',
-		'role_access' => '1,2,3,4,5,6,7,8,21,22,27,31,33,35,37,39,40,41,42,43,44,45,46,49,53,55,58,59,63,64',
-		'role_desc' => 'Senior administrators have power to do almost all of the tasks system administrators do, but with some restrictions. This role is intended to be used by an assistant game manager or other highly senior players on the RPG.'),
-	array(
 		'role_name' => 'Basic Administrator',
-		'role_access' => '1,2,3,4,5,6,7,8,21,22,31,33,35,39,40,42,45,49,52,54,58,59,62,64',
+		'role_access' => '1,2,3,4,5,6,7,8,20,21,22,27,31,33,35,37,39,40,41,42,43,44,45,46,49,53,54,58,59,63,64',
 		'role_desc' => 'Basic administrators have power to do some of the tasks system administrators do, but with more restrictions. This role is intended to be used senior players on the RPG.'),
 	array(
 		'role_name' => 'Power User',
