@@ -8,11 +8,14 @@ Current Version
 
 Last Update
 -----------
-12 April 2010
+13 April 2010
 
 Latest Updates
 --------------
-* updated the genre data files
+* updated the MOV genre file
+* updated the install data
+* updated the BAJ genre file to remove a TODO
+* updated the index file with a better error reporting default
 
 Changes in 1.0-pre
 ------------------
@@ -28,6 +31,7 @@ Changes in 1.0-pre
 * updated the genre data files
 * updated the genre listing in the nova config file
 * updated the constants config file with the proper release values
+* updated the index file with a better error reporting default
 * removed test images
 * fixed bug with undefined variable errors on the character bio page (#99)
 * fixed wrong link for the edit bio link on the character bio page
