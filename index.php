@@ -10,7 +10,7 @@
 | 3 : All PHP errors, warnings & notices and DB errors
 |
 */
-$debug_errors = 3;
+$debug_errors = 0;
 
 switch ($debug_errors)
 {
