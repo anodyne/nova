@@ -4,7 +4,7 @@ Anodyne Production's next-generation RPG management system combines popular feat
 
 Current Version
 ---------------
-1.0-pre
+1.0
 
 Last Update
 -----------
@@ -12,35 +12,11 @@ Last Update
 
 Latest Updates
 --------------
-* updated the MOV genre file
-* updated the install data
-* updated the BAJ genre file to remove a TODO
-* updated the index file with a better error reporting default
+* release prep
 
-Changes in 1.0-pre
-------------------
-* updated tour management with the new image upload management code
-* updated the install data
-    * menu items
-    * menu item categories
-    * access role pages
-    * access roles
-* updated the menu library with an all new method to build the admin sub menus that makes sure the right menu items and categories are displayed
-* updated the admin controller with a tweak to the code for building its submenus
-* updated the auth library with a minor change to some logic
-* updated the genre data files
-* updated the genre listing in the nova config file
-* updated the constants config file with the proper release values
-* updated the index file with a better error reporting default
-* removed test images
-* fixed bug with undefined variable errors on the character bio page (#99)
-* fixed wrong link for the edit bio link on the character bio page
-* fixed wrong link for the mission groups link
-* fixed bug with the date format dropdown menu
-* fixed a couple of potential bugs in the mission management page
-* fixed bug where users with permissions lower than system administrator couldn't edit their characters (#100)
-* fixed bug the system didn't respect the access role allowing (or disallowing) people to upload images
-* fixed bug where the system wasn't using access control on the docking form menu item
+Changes in 1.0
+--------------
+* initial release
 
 Known Issues
 ------------
@@ -56,7 +32,7 @@ Version History
 		<th>Version</th><th>Description</th><th>Start Date</th><th>End Date</th>
 	</tr>
 	<tr>
-		<td>Release Candidate</td><td>Final candidate builds for golden master</td><td>01 March 2010</td><td>-</td>
+		<td>Release Candidate</td><td>Final candidate builds for golden master</td><td>01 March 2010</td><td>13 April 2010</td>
 	</tr>
 	<tr>
 		<td>Beta</td><td>Feature complete testing version</td><td>10 Nov 2009</td><td>01 March 2010</td>
