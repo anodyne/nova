@@ -445,7 +445,7 @@ class System_model_base extends Model {
 		return $query;
 	}
 	
-	function update_my_links($id = '', $status = 'active', $items = '78')
+	function update_my_links($id = '', $status = 'active', $items = '81')
 	{
 		/* sets the default to Site Options link */
 		$update = array('my_links' => $items);
