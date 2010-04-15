@@ -504,7 +504,8 @@ $catalogue_ranks = array(
 		'rankcat_location' => 'default',
 		'rankcat_credits' => "The Battlestar Galactica rank sets used in Nova were created by Kuro-chan of Kuro-RPG. The ranksets can be found at <a href='http://www.kuro-rpg.net' target='_blank'>Kuro-RPG</a>. Please do not copy or modify the images.",
 		'rankcat_default' => 'y',
-		'rankcat_url' => 'http://www.kuro-rpg.net/'),
+		'rankcat_url' => 'http://www.kuro-rpg.net/',
+		'rankcat_genre' => $g),
 );
 
 /* End of file install_data_bsg.php */

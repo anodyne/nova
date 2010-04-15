@@ -707,7 +707,8 @@ $catalogue_ranks = array(
 		'rankcat_location' => 'default',
 		'rankcat_credits' => "The Dungeons and Dragons rank used in Nova were created by David VanScott with assistance from Wade Duerkes. Please do not copy or modify the images.",
 		'rankcat_default' => 'y',
-		'rankcat_url' => 'http://anodyne-productions.com/'),
+		'rankcat_url' => 'http://anodyne-productions.com/',
+		'rankcat_genre' => $g),
 );
 
 /* End of file install_data_dnd.php */
