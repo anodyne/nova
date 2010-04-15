@@ -1839,6 +1839,7 @@ class Upgrade_base extends Controller {
 						'rankcat_blank'		=> $array['blank'],
 						'rankcat_extension'	=> $array['extension'],
 						'rankcat_url'		=> $array['url'],
+						'rankcat_genre'		=> $array['genre'],
 					);
 					
 					/* insert the record */

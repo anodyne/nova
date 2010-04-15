@@ -5,7 +5,10 @@
 |---------------------------------------------------------------
 |
 | File: controllers/site_base.php
-| System Version: 1.0
+| System Version: 1.0.1
+|
+| Changes: updated the catalogue ranks pages to add and update
+|	the genre in the database table
 |
 | Controller that handles the SITE section of the admin system.
 |
@@ -1082,6 +1085,7 @@ class Site_base extends Controller {
 						'rankcat_blank'		=> $array['blank'],
 						'rankcat_extension'	=> $array['extension'],
 						'rankcat_url'		=> $array['url'],
+						'rankcat_genre'		=> $array['genre'],
 					);
 					
 					/* insert the record */
@@ -1126,6 +1130,7 @@ class Site_base extends Controller {
 					$status = $this->input->post('rank_status', TRUE);
 					$credits = $this->input->post('rank_credits', TRUE);
 					$default = $this->input->post('rank_default', TRUE);
+					$genre = $this->input->post('rank_genre', TRUE);
 					
 					if ($default == 'y')
 					{
@@ -1142,7 +1147,8 @@ class Site_base extends Controller {
 						'rankcat_extension' => $extension,
 						'rankcat_status' => $status,
 						'rankcat_credits' => $credits,
-						'rankcat_default' => $default
+						'rankcat_default' => $default,
+						'rankcat_genre' => $genre
 					);
 							
 					/* insert the record */
@@ -1236,6 +1242,7 @@ class Site_base extends Controller {
 					$status = $this->input->post('rank_status', TRUE);
 					$credits = $this->input->post('rank_credits', TRUE);
 					$default = $this->input->post('rank_default', TRUE);
+					$genre = $this->input->post('rank_genre', TRUE);
 					$id = $this->input->post('id', TRUE);
 					
 					if ($default == 'y')
@@ -1253,7 +1260,8 @@ class Site_base extends Controller {
 						'rankcat_extension' => $extension,
 						'rankcat_status' => $status,
 						'rankcat_credits' => $credits,
-						'rankcat_default' => $default
+						'rankcat_default' => $default,
+						'rankcat_genre' => $genre
 					);
 							
 					/* insert the record */
