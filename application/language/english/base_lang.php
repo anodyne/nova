@@ -388,6 +388,7 @@ $lang['labels_for'] 			= 'for';
 $lang['labels_form']			= 'form';
 $lang['labels_format']			= 'format';
 $lang['labels_general'] 		= 'general';
+$lang['labels_genre']			= 'genre';
 $lang['labels_group'] 			= 'group';
 $lang['labels_grouping']		= 'grouping';
 $lang['labels_groups']			= 'groups';
