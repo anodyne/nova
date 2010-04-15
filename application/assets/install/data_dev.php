@@ -3590,7 +3590,7 @@ $system_info = array(
 		'sys_install_date' => now(),
 		'sys_version_major' => 1,
 		'sys_version_minor' => 0,
-		'sys_version_update' => 0)
+		'sys_version_update' => 1)
 );
 
 $system_versions = array(
@@ -3599,6 +3599,14 @@ $system_versions = array(
 		'version_major' => '1',
 		'version_minor' => '0',
 		'version_update' => '0',
+		'version_date' => 1271393940,
+		'version_launch'	=> 'Nova 1.0 is the first release of the next generation RPG management software from Anodyne Productions.',
+		'version_changes'	=> "* Initial release"),
+	array(
+		'version' => '1.0.1',
+		'version_major' => '1',
+		'version_minor' => '0',
+		'version_update' => '1',
 		'version_date' => 1271393940,
 		'version_launch'	=> 'Nova 1.0 is the first release of the next generation RPG management software from Anodyne Productions.',
 		'version_changes'	=> "* Initial release"),
