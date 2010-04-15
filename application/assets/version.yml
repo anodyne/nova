@@ -1,9 +1,9 @@
-version: 0.9.8
-version_major: 0
-version_minor: 9
-version_update: 8
+version: 1.0.1
+version_major: 1
+version_minor: 0
+version_update: 1
 severity: minor
 notes: |
-  Nova Beta is an update to a development release of the next generation RPG management software from Anodyne Productions. This update, which is one of the last...
-date: 17 December 2009
+  Nova 1.0.1 fixes bugs from late in the 1.0 testing cycle including a bug that wouldn't allow access control to be used on main navigation and sub menu items and issues with the rank catalogue that occur when multiple genres are installed in the same database. This update is recommended for all users.
+date: 15 April 2010
 link: http://www.anodyne-productions.com
