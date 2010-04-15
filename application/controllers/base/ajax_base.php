@@ -5,7 +5,11 @@
 |---------------------------------------------------------------
 |
 | File: controllers/base/ajax_base.php
-| System Version: 1.0
+| System Version: 1.0.1
+|
+| Changes: updated the add_catalogue and edit_catalogue methods
+|	to handle the new genre field in the rank catalogue database
+|	table
 |
 | Controller that handles the AJAX work in the system
 |
@@ -361,6 +365,10 @@ class Ajax_base extends Controller {
 						'name' => 'rank_extension',
 						'class' => 'hud',
 						'value' => '.png'),
+					'genre' => array(
+						'name' => 'rank_genre',
+						'class' => 'hud',
+						'value' => GENRE),
 					'credits' => array(
 						'name' => 'rank_credits',
 						'class' => 'hud',
@@ -501,6 +509,7 @@ class Ajax_base extends Controller {
 			'default_theme' => ucwords(lang('labels_default') .' '. lang('labels_section')),
 			'display' => ucfirst(lang('labels_display')),
 			'extension' => ucwords(lang('labels_image') .' '. lang('labels_extension')),
+			'genre' => ucfirst(lang('labels_genre')),
 			'location' => lang('misc_server_dir'),
 			'name' => ucfirst(lang('labels_name')),
 			'no' => ucfirst(lang('labels_no')),
@@ -4875,6 +4884,10 @@ class Ajax_base extends Controller {
 						'name' => 'rank_extension',
 						'class' => 'hud',
 						'value' => $item->rankcat_extension),
+					'genre' => array(
+						'name' => 'rank_genre',
+						'class' => 'hud',
+						'value' => $item->rankcat_genre),
 					'credits' => array(
 						'name' => 'rank_credits',
 						'class' => 'hud',
@@ -5030,6 +5043,7 @@ class Ajax_base extends Controller {
 			'default_theme' => ucwords(lang('labels_default') .' '. lang('labels_section')),
 			'display' => ucfirst(lang('labels_display')),
 			'extension' => ucwords(lang('labels_image') .' '. lang('labels_extension')),
+			'genre' => ucfirst(lang('labels_genre')),
 			'location' => lang('misc_server_dir'),
 			'name' => ucfirst(lang('labels_name')),
 			'no' => ucfirst(lang('labels_no')),

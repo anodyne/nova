@@ -12,6 +12,14 @@
 			<?php echo table_row_spacer(3, 10);?>
 			
 			<tr>
+				<td class="cell-label"><?php echo $label['genre'];?></td>
+				<td class="cell-spacer"></td>
+				<td><?php echo form_input($inputs['genre']);?></td>
+			</tr>
+			
+			<?php echo table_row_spacer(3, 10);?>
+			
+			<tr>
 				<td class="cell-label"><?php echo $label['location'];?></td>
 				<td class="cell-spacer"></td>
 				<td>
