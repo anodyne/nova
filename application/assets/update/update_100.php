@@ -17,8 +17,10 @@ $system_versions = array(
 	'version_minor'		=> 0,
 	'version_update'	=> 1,
 	'version_date'		=> 1271393940,
-	'version_launch'	=> 'Nova 1.0.1 is a maintenance release that fixes multiple issues with Nova 1.0 found during the initial release. The release fixes issues with rank catalogue items when multiple genres have been installed and access control problems on main navigation and subnavigation menu items. This update is recommended for all users.',
-	'version_changes'	=> ""
+	'version_launch'	=> 'Nova 1.0.1 is a maintenance release that fixes two important issues with Nova 1.0. The release fixes a bug where the upgrade process did not create a necessary field in the missions table as well as two issues with installations oh PHP4 servers. This update is recommended for all users who have upgraded from SMS and/or are running on a PHP4 server.',
+	'version_changes'	=> "* fixed bug in the upgrade process where a database field wasn't added to the table
+* fixed bug where models couldn't be autoloaded because Base4 doesn't extend MY_Loader
+* fixed error that was thrown because the date_default_timezone_set function doesn't exist in PHP before version 5.1"
 );
 
 $system_info = array(
@@ -112,14 +114,16 @@ if (isset($rename_tables))
 |---------------------------------------------------------------
 */
 
-$add_column = array(
-	'catalogue_ranks' => array(
-		'rankcat_genre' => array(
-			'type' => 'VARCHAR',
-			'constraint' => 10,
-			'default' => GENRE)
-	)
-);
+if (!$this->db->field_exists('mission_group', 'missions'))
+{
+	$add_column = array(
+		'missions' => array(
+			'mission_group' => array(
+				'type' => 'INT',
+				'constraint' => 5)
+		)
+	);
+}
 
 if (isset($add_column))
 {
