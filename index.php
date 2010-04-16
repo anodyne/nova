@@ -92,7 +92,7 @@ $application_folder = $abspath . "/" . $app_folder;
 | errors.
 |
 */
-if (!ini_get('date.timezone'))
+if (!ini_get('date.timezone') && phpversion() >= '5.1')
 {
 	date_default_timezone_set('GMT');
 }
