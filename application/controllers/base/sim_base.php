@@ -5,7 +5,10 @@
 |---------------------------------------------------------------
 |
 | File: controllers/base/sim_base.php
-| System Version: 1.0
+| System Version: 1.0.1
+|
+| Changes: fixed bug where saved mission posts were displayed
+|	when they shouldn't be
 |
 | Controller that handles the SIM part of the system.
 |
@@ -952,7 +955,7 @@ class Sim_base extends Controller {
 			$data['pagination'] = $this->pagination->create_links();
 			
 			/* run the method */
-			$posts = $this->posts->get_post_list('', 'desc', $config['per_page'], $offset);
+			$posts = $this->posts->get_post_list('', 'desc', $config['per_page'], $offset, 'activated');
 		}
 		else
 		{
@@ -973,7 +976,7 @@ class Sim_base extends Controller {
 			$data['pagination'] = $this->pagination->create_links();
 			
 			/* run the method */
-			$posts = $this->posts->get_post_list($mission, 'desc', $config['per_page'], $offset);
+			$posts = $this->posts->get_post_list($mission, 'desc', $config['per_page'], $offset, 'activated');
 		}
 		
 		if ($posts->num_rows() > 0)
@@ -1150,7 +1153,7 @@ class Sim_base extends Controller {
 						$data['summary']['content'] = $row->mission_summary;
 						
 						/* grab the last 25 posts */
-						$posts = $this->posts->get_post_list($row->mission_id, 'desc', 25);
+						$posts = $this->posts->get_post_list($row->mission_id, 'desc', 25, '', 'activated');
 						
 						if ($posts->num_rows() > 0)
 						{
