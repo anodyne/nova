@@ -5,5 +5,5 @@ version_update: 1
 severity: minor
 notes: |
   Nova 1.0.1 fixes bugs from late in the 1.0 testing cycle including a bug that wouldn't allow access control to be used on main navigation and sub menu items and issues with the rank catalogue that occur when multiple genres are installed in the same database. This update is recommended for all users.
-date: 15 April 2010
+date: 16 April 2010
 link: http://www.anodyne-productions.com
