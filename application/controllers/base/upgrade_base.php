@@ -5,7 +5,10 @@
 |---------------------------------------------------------------
 |
 | File: controllers/base/upgrade_base.php
-| System Version: 1.0
+| System Version: 1.0.1
+|
+| Changes: fixed bug where the upgrade process doesn't add the
+|	mission group field to the missions table
 |
 | Controller that handles the upgrading SMS to Nova
 |
@@ -734,7 +737,10 @@ class Upgrade_base extends Controller {
 					$add = array(
 						'mission_notes_updated' => array(
 							'type' => 'BIGINT',
-							'constraint' => 20)
+							'constraint' => 20),
+						'mission_group' => array(
+							'type' => 'INT',
+							'constraint' => 5)
 					);
 					
 					$this->dbforge->add_column('missions', $add);
