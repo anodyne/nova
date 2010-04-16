@@ -3590,7 +3590,7 @@ $system_info = array(
 		'sys_install_date' => now(),
 		'sys_version_major' => 1,
 		'sys_version_minor' => 0,
-		'sys_version_update' => 0)
+		'sys_version_update' => 1)
 );
 
 $system_versions = array(
@@ -3602,6 +3602,16 @@ $system_versions = array(
 		'version_date' => 1271393940,
 		'version_launch'	=> 'Nova 1.0 is the first release of the next generation RPG management software from Anodyne Productions.',
 		'version_changes'	=> "* Initial release"),
+	array(
+		'version' => '1.0.1',
+		'version_major' => '1',
+		'version_minor' => '0',
+		'version_update' => '1',
+		'version_date' => 1271424600,
+		'version_launch'	=> 'Nova 1.0.1 is a maintenance release that fixes two important issues with Nova 1.0. The release fixes a bug where the upgrade process did not create a necessary field in the missions table as well as two issues with installations oh PHP4 servers. This update is recommended for all users who have upgraded from SMS and/or are running on a PHP4 server.',
+		'version_changes'	=> "* fixed bug in the upgrade process where a database field wasn't added to the table
+* fixed bug where models couldn't be autoloaded because Base4 doesn't extend MY_Loader
+* fixed error that was thrown because the date_default_timezone_set function doesn't exist in PHP before version 5.1"),
 );
 
 $tour = array(
