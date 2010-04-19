@@ -35,5 +35,8 @@
 				</p>
 			{/fields}
 		{/sections}
+		
+		<h3>{sample_post_label}</h3>
+		{sample_post}
 	</body>
 </html>

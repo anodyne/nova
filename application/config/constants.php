@@ -63,10 +63,10 @@ define('AMP',		'&amp;');		/* left double arrow */
 */
 
 define('APP_NAME',				'Nova');
-define('APP_VERSION',			'1.0.1');
+define('APP_VERSION',			'1.0.2');
 define('APP_VERSION_MAJOR',		1);
 define('APP_VERSION_MINOR',		0);
-define('APP_VERSION_UPDATE',	1);
+define('APP_VERSION_UPDATE',	2);
 
 define('WIKI_NAME',				'Thresher');
 define('WIKI_VERSION',			'Release 1');
@@ -76,6 +76,7 @@ define('SMS_UPGRADE_VERSION',	'2.6.9');
 //define('VERSION_FEED',			APPPATH . 'assets/version.yml');
 define('VERSION_FEED',				'http://www.anodyne-productions.com/feeds/version_nova.yml');
 
+/* figure out whether to install the bare essentials or the dev stuff */
 define('APP_DATA_SRC',			'basic'); /* options for data source are dev and basic */
 
 /* figure out if the request is an ajax request */

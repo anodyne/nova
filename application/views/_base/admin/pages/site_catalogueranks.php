@@ -2,7 +2,7 @@
 
 <?php echo text_output($text);?>
 
-<?php if (count($uninstalled) > 0): ?>
+<?php if (isset($uninstalled) && count($uninstalled) > 0): ?>
 	<?php echo text_output($label['install_ranks'], 'h3', 'orange');?>
 	<?php echo text_output($label['quick_install'], 'p', 'fontSmall gray');?>
 	

@@ -5,7 +5,11 @@
 |---------------------------------------------------------------
 |
 | File: controllers/write_base.php
-| System Version: 1.0
+| System Version: 1.0.2
+|
+| Changes: fixed bug where authors were being dropped off of posts
+|	because of faulty logic; updated the write news item page to
+|	not allow a news item to be submitted without a category
 |
 | Controller that handles the WRITE section of the admin system.
 |
@@ -410,10 +414,6 @@ class Write_base extends Controller {
 					if ($authors_list == "0")
 					{
 						$authors_list = $authors;
-					}
-					else
-					{
-						$authors_list.= $authors;
 					}
 					
 					/* put the authors into an array */
@@ -1511,11 +1511,6 @@ class Write_base extends Controller {
 		
 		/* grab the categories */
 		$cats = $this->news->get_news_categories();
-		
-		/* put something in the categories */
-		$data['values']['category'][0] = ucwords(lang('labels_please') .' '.
-			lang('actions_select') .' '. lang('labels_a') .' '. 
-			lang('labels_category'));
 		
 		if ($cats->num_rows() > 0)
 		{ /* throw the categories into the values array */

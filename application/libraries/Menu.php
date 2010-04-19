@@ -5,7 +5,10 @@
 |---------------------------------------------------------------
 |
 | File: libraries/Menu.php
-| System Version: 1.0
+| System Version: 1.0.1
+|
+| Changes: Fixed bug where the library wouldn't respect access
+|	control set on main navigation and sub navigation menu items
 |
 | Library that handles generating the system menus from the database.
 |
@@ -87,13 +90,16 @@ class Menu {
 		$segment = array();
 		
 		if ($items->num_rows() > 0)
-		{ /* create an array with the sub menu data */
+		{
 			foreach ($items->result() as $item)
 			{
 				$array[$item->menu_order]['name'] = $item->menu_name;
 				$array[$item->menu_order]['login'] = $item->menu_need_login;
 				$array[$item->menu_order]['link'] = $item->menu_link;
 				$array[$item->menu_order]['link_type'] = $item->menu_link_type;
+				$array[$item->menu_order]['access'] = $item->menu_access;
+				$array[$item->menu_order]['use_access'] = $item->menu_use_access;
+				$array[$item->menu_order]['level'] = $item->menu_access_level;
 				
 				/* get an array of the URI segments */
 				$seg = explode('/', $item->menu_link);
@@ -108,17 +114,27 @@ class Menu {
 		
 		foreach ($array as $k => $v)
 		{
-			if ($this->ci->auth->is_logged_in() === TRUE)
+			$display = FALSE;
+			
+			if (($v['login'] == 'y' && $this->ci->auth->is_logged_in()) || ($v['login'] == 'n' && $this->ci->auth->is_logged_in() === FALSE) || $v['login'] == 'none')
 			{
-				/* check access */
-				$access = $this->ci->auth->check_access($v['link'], FALSE, TRUE);
+				if ($v['login'] == 'y')
+				{
+					$access = $this->ci->auth->check_access($v['access'], FALSE);
+					$level = $this->ci->auth->get_access_level($v['access']);
+					
+					if (($v['use_access'] == 'y' && $access === TRUE && ($v['level'] > 0 && $level >= $v['level'] || $v['level'] == 0)) || $v['use_access'] == 'n')
+					{
+						$display = TRUE;
+					}
+				}
+				else
+				{
+					$display = TRUE;
+				}
 			}
 			
-			if (($v['login'] == 'y' && $this->ci->auth->is_logged_in() === FALSE) || ($v['login'] == 'n' && $this->ci->auth->is_logged_in() === TRUE))
-			{
-				/* do nothing */
-			}
-			else
+			if ($display === TRUE)
 			{
 				$this->output.= '<li>';
 			
@@ -171,6 +187,8 @@ class Menu {
 			
 			foreach ($menu_items->result() as $item)
 			{
+				$display = FALSE;
+				
 				if ($item->menu_group != 0 && $item->menu_order == 0)
 				{
 					$this->output.= '<li class="spacer"></li>';
@@ -187,8 +205,25 @@ class Menu {
 					$link = site_url($item->menu_link);
 				}
 				
-				if (($item->menu_need_login == 'y' && $userid !== FALSE) ||
-						($item->menu_need_login == 'n' && $userid === FALSE) || $item->menu_need_login == 'none')
+				if (($item->menu_need_login == 'y' && $this->ci->auth->is_logged_in()) || ($item->menu_need_login == 'n' && $this->ci->auth->is_logged_in() === FALSE) || $item->menu_need_login == 'none')
+				{
+					if ($item->menu_need_login == 'y')
+					{
+						$access = $this->ci->auth->check_access($item->menu_access, FALSE);
+						$level = $this->ci->auth->get_access_level($item->menu_access);
+						
+						if (($item->menu_use_access == 'y' && $access === TRUE && ($item->menu_access_level > 0 && $level >= $item->menu_access_level || $item->menu_access_level == 0)) || $item->menu_use_access == 'n')
+						{
+							$display = TRUE;
+						}
+					}
+					else
+					{
+						$display = TRUE;
+					}
+				}
+				
+				if ($display === TRUE)
 				{
 					$this->output.= '<li><a href="' . $link .'"' . $target . '><span>' . $item->menu_name . '</span></a></li>';
 				}

@@ -5,7 +5,11 @@
 |---------------------------------------------------------------
 |
 | File: controllers/base/main_base.php
-| System Version: 1.0
+| System Version: 1.0.2
+|
+| Changes: fixed bug where sample post wasn't sent out in the
+|	email sent to game masters; fixed capitalization issues in
+|	the email sent to game masters
 |
 | Controller that handles the MAIN section of the system.
 |
@@ -484,7 +488,8 @@ class Main_base extends Controller {
 						'email' => $email,
 						'name' => $real_name,
 						'id' => $character_id,
-						'user' => $user
+						'user' => $user,
+						'sample_post' => $this->input->post('sample_post')
 					);
 					
 					/* execute the email method */
@@ -1247,10 +1252,10 @@ class Main_base extends Controller {
 				
 				$email_data['user'] = array(
 					array(
-						'label' => lang('labels_name'),
+						'label' => ucfirst(lang('labels_name')),
 						'data' => $data['name']),
 					array(
-						'label' => lang('labels_email_address'),
+						'label' => ucwords(lang('labels_email_address')),
 						'data' => $data['email']),
 					array(
 						'label' => lang('labels_dob'),
@@ -1301,6 +1306,9 @@ class Main_base extends Controller {
 						}
 					}
 				}
+				
+				$email_data['sample_post_label'] = ucwords(lang('labels_sample_post'));
+				$email_data['sample_post'] = $data['sample_post'];
 				
 				/* where should the email be coming from */
 				$em_loc = email_location('main_join_gm', $this->email->mailtype);

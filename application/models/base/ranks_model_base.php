@@ -44,6 +44,8 @@ class Ranks_model_base extends Model {
 			}
 		}
 		
+		$this->db->where('rankcat_genre', GENRE);
+		
 		$query = $this->db->get();
 		
 		return $query;
@@ -92,6 +94,7 @@ class Ranks_model_base extends Model {
 		$this->db->from('catalogue_ranks');
 		$this->db->where('rankcat_status', 'active');
 		$this->db->where('rankcat_default', 'y');
+		$this->db->where('rankcat_genre', GENRE);
 		
 		$query = $this->db->get();
 		
@@ -107,7 +110,11 @@ class Ranks_model_base extends Model {
 	
 	function get_rankcat($id = '', $identifier = 'rankcat_location', $return = '')
 	{
-		$query = $this->db->get_where('catalogue_ranks', array($identifier => $id));
+		$this->db->from('catalogue_ranks');
+		$this->db->where($identifier, $id);
+		$this->db->where('rankcat_genre', GENRE);
+		
+		$query = $this->db->get();
 		
 		$row = ($query->num_rows() > 0) ? $query->row() : FALSE;
 		

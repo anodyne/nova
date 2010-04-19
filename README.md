@@ -2,28 +2,50 @@ Nova RPG Management System
 ==========================
 Anodyne Production's next-generation RPG management system combines popular features from the SIMM Management System as well as new features like internationalization, developer enhancements, commenting on entries, dynamic forms, multiple characters per player and much more to make Nova the premier web-based solution for managing your RPG game.
 
+This is a pre-release version of Nova and may contain bugs.
+
 Current Version
 ---------------
-1.0
+1.0.2-pre
 
 Last Update
 -----------
-13 April 2010
+18 April 2010
 
 Latest Updates
 --------------
-* release prep
 
-Changes in 1.0
---------------
-* initial release
+Changes in 1.0.2
+----------------
+* added the 1.0.2 update file
+* updated the database schema to use a genre field in the rank catalogue table
+* updated the genre install files to populate the new genre field in the rank catalogue table on creation
+* updated the language files
+    * [base\_lang] added labels_genre key
+* updated the ranks model to pull the genre when looking for the default rank catalogue item
+* updated the ranks model to pull only the ranks sets from a genre when getting all ranks
+* updated the ranks model to only pull rank catalogue items for the given genre
+* updated the site controller to handle adding and editing the genre for a rank catalogue item
+* updated the ajax controller to handle adding and editing the genre for a rank catalogue item
+* updated the upload management page to show messages if uploaded images weren't found in specific categories
+* updated the write news item page to not allow a user to have a news item without a category
+* updated the index file to use a higher debug to allow people to see any errors for debugging purposes
+* updated the upgrade process to fix some minor schema differences between sms and nova
+* fixed bug where the menu library wouldn't respect any access control put on main navigation menu items (#101)
+* fixed bug where the menu library wouldn't respect any access control put on sub navigation menu items
+* fixed undefined variable error thrown on site/catalogueranks
+* fixed bug where rank catalogue items didn't work well when multiple genres were installed (#102)
+* fixed bug where uploaded images besides bio images couldn't be deleted
+* fixed bug where authors were being dropped off of posts because of faulty logic
+* fixed bug where sample post wasn't sent out in the email sent to game masters
+* fixed bug in IE where ranks couldn't be added
 
 Known Issues
 ------------
 http://github.com/anodyne/nova/issues/labels/Bug
 
-* main navigation menu items do not respect any access control put on them (#101)
-* ranks don't display properly when multiple genres have been installed (#102)
+* the remember feature can cause issues like errors that say files can't be found
+* thresher doesn't work under php4
 
 Version History
 ---------------

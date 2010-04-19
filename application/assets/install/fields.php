@@ -313,7 +313,11 @@ $fields_catalogue_ranks = array(
 	'rankcat_default' => array(
 		'type' => 'ENUM',
 		'constraint' => "'y','n'",
-		'default' => 'n')
+		'default' => 'n'),
+	'rankcat_genre' => array(
+		'type' => 'VARCHAR',
+		'constraint' => 10,
+		'default' => GENRE),
 );
 
 $fields_catalogue_skins = array(
@@ -916,7 +920,7 @@ $fields_news = array(
 		'auto_increment' => TRUE),
 	'news_title' => array(
 		'type' => 'VARCHAR',
-		'constraint' => 150,
+		'constraint' => 255,
 		'default' => ''),
 	'news_author_user' => array(
 		'type' => $user_id_type,

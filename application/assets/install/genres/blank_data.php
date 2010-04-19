@@ -60,7 +60,8 @@ $catalogue_ranks = array(
 		'rankcat_location' => 'default',
 		'rankcat_credits' => "This is a blank rank catalogue record to be used as an example of what should be included in a rank catalogue record. Please edit this record to match your ranks or remove the record altogether.",
 		'rankcat_default' => 'y',
-		'rankcat_url' => ''),
+		'rankcat_url' => '',
+		'rankcat_genre' => $g),
 );
 
 /* End of file install_data_blank.php */

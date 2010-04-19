@@ -20,3 +20,6 @@
 		{data}
 	{/fields}
 {/sections}
+
+{sample_post_label}
+{sample_post}
