@@ -25,9 +25,9 @@
 		});
 		
 		$("a[rel*=facebox]").click(function() {
-			var class = $(this).attr('myClass');
+			var rankclass = $(this).attr('myClass');
 			var set = $(this).attr('mySet');
-			var location = '<?php echo site_url('ajax/add_rank');?>/' + set + '/' + class + '/<?php echo $string;?>';
+			var location = '<?php echo site_url('ajax/add_rank');?>/' + set + '/' + rankclass + '/<?php echo $string;?>';
 			
 			$.facebox(function() {
 				$.get(location, function(data) {
