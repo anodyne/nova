@@ -5,10 +5,11 @@
 |---------------------------------------------------------------
 |
 | File: controllers/base/upgrade_base.php
-| System Version: 1.0.1
+| System Version: 1.0.2
 |
 | Changes: fixed bug where the upgrade process doesn't add the
-|	mission group field to the missions table
+|	mission group field to the missions table; fixed minor
+|	schema differences between sms and nova during the upgrade
 |
 | Controller that handles the upgrading SMS to Nova
 |
@@ -703,7 +704,7 @@ class Upgrade_base extends Controller {
 						'missionTitle' => array(
 							'name' => 'mission_title',
 							'type' => 'VARCHAR',
-							'constraint' => 150),
+							'constraint' => 255),
 						'missionImage' => array(
 							'name' => 'mission_images',
 							'type' => 'TEXT'),
@@ -799,7 +800,7 @@ class Upgrade_base extends Controller {
 						'catName' => array(
 							'name' => 'newscat_name',
 							'type' => 'VARCHAR',
-							'constraint' => 150),
+							'constraint' => 255),
 						'catVisible' => array(
 							'name' => 'newscat_display',
 							'type' => 'ENUM',
@@ -838,7 +839,7 @@ class Upgrade_base extends Controller {
 						'newsAuthor' => array(
 							'name' => 'news_author_character',
 							'type' => 'INT',
-							'constraint' => 5),
+							'constraint' => 8),
 						'newsPosted' => array(
 							'name' => 'news_date',
 							'type' => 'BIGINT',
@@ -846,7 +847,7 @@ class Upgrade_base extends Controller {
 						'newsTitle' => array(
 							'name' => 'news_title',
 							'type' => 'VARCHAR',
-							'constraint' => 150,
+							'constraint' => 255,
 							'default' => 'upcoming'),
 						'newsContent' => array(
 							'name' => 'news_content',
@@ -869,7 +870,7 @@ class Upgrade_base extends Controller {
 					$add = array(
 						'news_author_user' => array(
 							'type' => 'INT',
-							'constraint' => 5),
+							'constraint' => 8),
 						'news_tags' => array(
 							'type' => 'TEXT'),
 						'news_last_update' => array(
@@ -934,7 +935,7 @@ class Upgrade_base extends Controller {
 						'logAuthor' => array(
 							'name' => 'log_author_character',
 							'type' => 'INT',
-							'constraint' => 5),
+							'constraint' => 8),
 						'logPosted' => array(
 							'name' => 'log_date',
 							'type' => 'BIGINT',
@@ -942,7 +943,7 @@ class Upgrade_base extends Controller {
 						'logTitle' => array(
 							'name' => 'log_title',
 							'type' => 'VARCHAR',
-							'constraint' => 150,
+							'constraint' => 255,
 							'default' => 'upcoming'),
 						'logContent' => array(
 							'name' => 'log_content',
@@ -960,7 +961,7 @@ class Upgrade_base extends Controller {
 					$add = array(
 						'log_author_user' => array(
 							'type' => 'INT',
-							'constraint' => 5),
+							'constraint' => 8),
 						'log_tags' => array(
 							'type' => 'TEXT'),
 						'log_last_update' => array(
@@ -1032,7 +1033,7 @@ class Upgrade_base extends Controller {
 						'postTitle' => array(
 							'name' => 'post_title',
 							'type' => 'VARCHAR',
-							'constraint' => 150,
+							'constraint' => 255,
 							'default' => ''),
 						'postContent' => array(
 							'name' => 'post_content',
@@ -1045,12 +1046,12 @@ class Upgrade_base extends Controller {
 						'postLocation' => array(
 							'name' => 'post_location',
 							'type' => 'VARCHAR',
-							'constraint' => 150,
+							'constraint' => 255,
 							'default' => ''),
 						'postTimeline' => array(
 							'name' => 'post_timeline',
 							'type' => 'VARCHAR',
-							'constraint' => 150,
+							'constraint' => 255,
 							'default' => ''),
 						'postMission' => array(
 							'name' => 'post_mission',
