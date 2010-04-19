@@ -1,7 +1,7 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 /*
 |---------------------------------------------------------------
-| UPDATE - 1.0.0 => 1.0.1
+| UPDATE - 1.0.1 => 1.0.2
 |---------------------------------------------------------------
 */
 
@@ -12,10 +12,10 @@
 */
 
 $system_versions = array(
-	'version'			=> '1.0.1',
+	'version'			=> '1.0.2',
 	'version_major'		=> 1,
 	'version_minor'		=> 0,
-	'version_update'	=> 1,
+	'version_update'	=> 2,
 	'version_date'		=> 1271393940,
 	'version_launch'	=> 'Nova 1.0.1 is a maintenance release that fixes two important issues with Nova 1.0. The release fixes a bug where the upgrade process did not create a necessary field in the missions table as well as two issues with installations oh PHP4 servers. This update is recommended for all users who have upgraded from SMS and/or are running on a PHP4 server.',
 	'version_changes'	=> ""
@@ -25,7 +25,7 @@ $system_info = array(
 	'sys_last_update'		=> now(),
 	'sys_version_major'		=> 1,
 	'sys_version_minor'		=> 0,
-	'sys_version_update'	=> 1
+	'sys_version_update'	=> 2
 );
 
 /*
@@ -151,6 +151,63 @@ if (isset($add_column))
 | );
 |---------------------------------------------------------------
 */
+
+$modify_column = array(
+	'missions' => array(
+		'mission_title' => array(
+			'name' => 'mission_title',
+			'type' => 'VARCHAR',
+			'constraint' => 255)
+	),
+	'news_categories' => array(
+		'newscat_name' => array(
+			'name' => 'newscat_name',
+			'type' => 'VARCHAR',
+			'constraint' => 255)
+	),
+	'news' => array(
+		'news_author_character' => array(
+			'name' => 'news_author_character',
+			'type' => 'INT',
+			'constraint' => 8),
+		'news_author_user' => array(
+			'name' => 'news_author_user',
+			'type' => 'INT',
+			'constraint' => 8),
+		'news_title' => array(
+			'name' => 'news_title',
+			'type' => 'VARCHAR',
+			'constraint' => 255)
+	),
+	'personallogs' => array(
+		'log_author_character' => array(
+			'name' => 'log_author_character',
+			'type' => 'INT',
+			'constraint' => 8),
+		'log_author_user' => array(
+			'name' => 'log_author_user',
+			'type' => 'INT',
+			'constraint' => 8),
+		'log_title' => array(
+			'name' => 'log_title',
+			'type' => 'VARCHAR',
+			'constraint' => 255)
+	),
+	'posts' => array(
+		'post_title' => array(
+			'name' => 'post_title',
+			'type' => 'VARCHAR',
+			'constraint' => 255),
+		'post_location' => array(
+			'name' => 'post_location',
+			'type' => 'VARCHAR',
+			'constraint' => 255),
+		'post_timeline' => array(
+			'name' => 'post_timeline',
+			'type' => 'VARCHAR',
+			'constraint' => 255)
+	)
+);
 
 if (isset($modify_column))
 {
