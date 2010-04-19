@@ -5,7 +5,11 @@
 |---------------------------------------------------------------
 |
 | File: controllers/upload_base.php
-| System Version: 1.0
+| System Version: 1.0.2
+|
+| Changes: fixed bug where uploaded images outside of the bio
+|	category couldn't be deleted; added notice messages to the
+|	tabs if no images were found
 |
 | Controller that handles uploading files and management of
 | uploaded files
@@ -402,6 +406,10 @@ class Upload_base extends Controller {
 			'delete' => ucfirst(lang('actions_delete') .'?'),
 			'filename' => ucwords(lang('labels_file') .' '. lang('labels_name')),
 			'missionimages' => ucwords(lang('global_mission') .' '. lang('labels_images')),
+			'noaward' => sprintf(lang('error_not_found'), lang('global_award') .' '. lang('labels_images')),
+			'nobio' => sprintf(lang('error_not_found'), lang('labels_bio') .' '. lang('labels_images')),
+			'nomission' => sprintf(lang('error_not_found'), lang('global_mission') .' '. lang('labels_images')),
+			'notour' => sprintf(lang('error_not_found'), lang('global_tour') .' '. lang('labels_images')),
 			'on' => lang('labels_on'),
 			'preview' => ucfirst(lang('labels_preview')),
 			'tourimages' => ucwords(lang('global_tour') .' '. lang('labels_images')),
