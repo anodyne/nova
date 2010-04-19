@@ -5,7 +5,11 @@
 |---------------------------------------------------------------
 |
 | File: models/ranks_model_base.php
-| System Version: 1.0
+| System Version: 1.0.2
+|
+| Changes: updated get_group_ranks() to allow for an identifier;
+|	updated several methods to pull the genre information when
+|	getting items from the rank catalogue
 |
 | Model used to access the ranks table
 |
@@ -30,6 +34,7 @@ class Ranks_model_base extends Model {
 	function get_all_rank_sets($status = 'active')
 	{
 		$this->db->from('catalogue_ranks');
+		$this->db->where('rankcat_genre', GENRE);
 		
 		if (!empty($status))
 		{
@@ -38,23 +43,38 @@ class Ranks_model_base extends Model {
 				$status = array($status);
 			}
 			
-			foreach ($status as $s)
+			/* count the items in the array */
+			$count = count($status);
+			
+			/* set the initial string */
+			$string = "";
+			
+			for ($i=0; $i < $count; $i++)
 			{
-				$this->db->or_where('rankcat_status', $s);
+				if ($i > 0)
+				{
+					$or = " OR ";
+				}
+				else
+				{
+					$or = "";
+				}
+				
+				$string.= $or . "rankcat_status = '$status[$i]'";
 			}
+			
+			$this->db->where("($string)", NULL);
 		}
-		
-		$this->db->where('rankcat_genre', GENRE);
 		
 		$query = $this->db->get();
 		
 		return $query;
 	}
 	
-	function get_group_ranks($name_id = '')
+	function get_group_ranks($name_id = '', $identifier = 'rank_name')
 	{
 		$this->db->from('ranks_'. GENRE);
-		$this->db->where('rank_name', $name_id);
+		$this->db->where($identifier, $name_id);
 		
 		$query = $this->db->get();
 		

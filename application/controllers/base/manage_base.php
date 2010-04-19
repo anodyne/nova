@@ -5,7 +5,10 @@
 |---------------------------------------------------------------
 |
 | File: controllers/manage_base.php
-| System Version: 1.0
+| System Version: 1.0.2
+|
+| Changes: fixed bug where a rank set without a blank rank image
+|	wouldn't display rank classes (i'm looking at your stargate)
 |
 | Controller that handles the MANAGE section of the admin system.
 |
@@ -3782,7 +3785,7 @@ class Manage_base extends Controller {
 		$this->load->model('ranks_model', 'ranks');
 		
 		/* set the variables */
-		$set = $this->uri->segment(3, 1, TRUE);
+		$set = $this->uri->segment(3, 'default');
 		$class = $this->uri->segment(4, 1, TRUE);
 		
 		if (isset($_POST['submit']))
@@ -3895,19 +3898,19 @@ class Manage_base extends Controller {
 			}
 		}
 		
-		$info = $this->ranks->get_rankcat($set, 'rankcat_id');
+		$info = $this->ranks->get_rankcat($set);
 		$ranks = $this->ranks->get_ranks($class, '');
 		
 		/* grab all the rank sets */
 		$setstatus = ($this->auth->check_access('site/catalogueranks', FALSE) === TRUE) ? array('active','development') : 'active';
 		$allranks = $this->ranks->get_all_rank_sets($setstatus);
-		$allclasses = $this->ranks->get_group_ranks();
+		$allclasses = $this->ranks->get_group_ranks(0, 'rank_order');
 		
 		if ($allranks->num_rows() > 0)
 		{ /* build the array with rank set data */
 			foreach ($allranks->result() as $allrank)
 			{
-				$data['allranks'][$allrank->rankcat_id] = array(
+				$data['allranks'][$allrank->rankcat_location] = array(
 					'src' => rank_location(
 						$allrank->rankcat_location,
 						$allrank->rankcat_preview,
@@ -3919,7 +3922,7 @@ class Manage_base extends Controller {
 				{ /* build the array with rank class data */
 					foreach ($allclasses->result() as $allclass)
 					{
-						if ($allclass->rank_class > 0 && $allrank->rankcat_id == $set)
+						if ($allclass->rank_class > 0 && $allrank->rankcat_location == $set)
 						{
 							$data['allclasses'][$allclass->rank_class] = array(
 								'src' => rank_location(
