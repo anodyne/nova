@@ -31,6 +31,7 @@ Changes in 1.0.2
 * updated the write news item page to not allow a user to have a news item without a category
 * updated the index file to use a higher debug to allow people to see any errors for debugging purposes
 * updated the upgrade process to fix some minor schema differences between sms and nova
+* updated the ranks model so the get\_group\_ranks() method had a customizable identifier
 * fixed bug where the menu library wouldn't respect any access control put on main navigation menu items (#101)
 * fixed bug where the menu library wouldn't respect any access control put on sub navigation menu items
 * fixed undefined variable error thrown on site/catalogueranks
@@ -39,6 +40,7 @@ Changes in 1.0.2
 * fixed bug where authors were being dropped off of posts because of faulty logic
 * fixed bug where sample post wasn't sent out in the email sent to game masters
 * fixed bug in IE where ranks couldn't be added
+* fixed bug where rank classes wouldn't be shown for ranks sets without a blank name rank item
 
 Known Issues
 ------------
