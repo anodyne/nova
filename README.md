@@ -6,11 +6,11 @@ This is a pre-release version of Nova and may contain bugs.
 
 Current Version
 ---------------
-1.0.2-pre
+1.0.2
 
 Last Update
 -----------
-18 April 2010
+19 April 2010
 
 Latest Updates
 --------------
@@ -41,6 +41,11 @@ Changes in 1.0.2
 * fixed bug where sample post wasn't sent out in the email sent to game masters
 * fixed bug in IE where ranks couldn't be added
 * fixed bug where rank classes wouldn't be shown for ranks sets without a blank name rank item
+* fixed bug where the user bio pointed to the wrong location for user posts and awards
+* fixed bug where listing all of a users' posts would display posts besides their own
+* fixed error thrown on commenting on a mission post
+* fixed fatal error thrown when updating a news item
+* fixed fatal error thrown when updating a personal log
 
 Known Issues
 ------------
