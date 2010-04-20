@@ -4,7 +4,9 @@
 | LANGUAGE FILE - ENGLISH
 |---------------------------------------------------------------
 | File: application/language/english/error_lang.php
-| System Version: 1.0
+| System Version: 1.0.2
+|
+| Changes: added error_login_7
 |
 | English language file for the system. Punctuation constants are
 | defined in ./application/config/constants.php
@@ -66,6 +68,7 @@ $lang['error_login_3'] = 'Your password does not match our records, please try a
 $lang['error_login_4'] = 'We have found more than one account with your email address. Please contact the game master to resolve this issue.';
 $lang['error_login_5'] = 'Maintenance mode has been activated! Only system administrators are allowed to login. Please try again later.';
 $lang['error_login_6'] = 'You have attempted to login more times than the system allows. You must wait %d minutes before attempting to login again! %s';
+$lang['error_login_7'] = 'Your account is currently pending %s review. You will not be allowed to login until your application has been accepted. Please contact the %s if you have questions.';
 
 $lang['error_last_login_time'] = 'Your last login was %d %s ago. You must wait another %d %s before you can login again.';
 

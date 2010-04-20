@@ -5,7 +5,11 @@
 |---------------------------------------------------------------
 |
 | File: controllers/base/login_base.php
-| System Version: 1.0
+| System Version: 1.0.2
+|
+| Changes: updated the index page to handle the new error message
+|	thrown when a pending user tries to log in; fixed presentation
+|	issue with error #6
 |
 | Controller that handles logging in to the system.
 |
@@ -88,6 +92,7 @@ class Login_base extends Controller {
 			4 - more than one account found - contact the GM
 			5 - maintenance mode
 			6 - login lockout
+			7 - pending users not allowed
 		*/
 		
 		/* data used by the view */
@@ -149,18 +154,32 @@ class Login_base extends Controller {
 		{
 			$flash['status'] = 'error';
 			
-			if ($this->uri->segment(4) == 6)
+			switch ($this->uri->segment(4))
 			{
-				$flash['message'] = sprintf(
-					lang('error_login_6'),
-					($this->auth->lockout_time / 60),
-					'',
-					''
-				);
-			}
-			else
-			{
-				$flash['message'] = lang_output('error_login_' . $this->uri->segment(4));
+				case 6:
+					$message = sprintf(
+						lang('error_login_6'),
+						($this->auth->lockout_time / 60),
+						'',
+						''
+					);
+					
+					$flash['message'] = text_output($message);
+					break;
+					
+				case 7:
+					$message = sprintf(
+						lang('error_login_7'),
+						lang('global_game_master'),
+						lang('global_game_master')
+					);
+					
+					$flash['message'] = text_output($message);
+					break;
+				
+				default:
+					$flash['message'] = lang_output('error_login_' . $this->uri->segment(4));
+					break;
 			}
 			
 			/* write everything to the template */

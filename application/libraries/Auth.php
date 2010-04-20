@@ -5,7 +5,10 @@
 |---------------------------------------------------------------
 |
 | File: libraries/Auth.php
-| System Version: 1.0
+| System Version: 1.0.2
+|
+| Changes: check to see if a user is pending and if they are,
+|	don't allow them to log in
 |
 | Library for all things authentication
 |
@@ -249,6 +252,11 @@ class Auth {
 				{
 					/* maintenance mode active */
 					$retval = 5;
+				}
+				elseif ($person->status == 'pending')
+				{
+					/* they haven't been approved yet */
+					$retval = 7;
 				}
 				else
 				{
