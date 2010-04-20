@@ -244,7 +244,7 @@
 		<div id="five">
 			<?php echo text_output($label['missionposts'], 'h2');?>
 			<?php if (isset($posts)): ?>
-				<p class="bold"><?php echo anchor('personnel/viewposts/p/'. $userid, $label['viewposts']);?></p>
+				<p class="bold"><?php echo anchor('personnel/viewposts/u/'. $userid, $label['viewposts']);?></p>
 				<table class="table100 zebra">
 					<thead>
 						<tr>
@@ -276,7 +276,7 @@
 			
 			<?php echo text_output($label['personallogs'], 'h2');?>
 			<?php if (isset($logs)): ?>
-				<p class="bold"><?php echo anchor('personnel/viewlogs/p/'. $userid, $label['viewlogs']);?></p>
+				<p class="bold"><?php echo anchor('personnel/viewlogs/u/'. $userid, $label['viewlogs']);?></p>
 				<table class="table100 zebra">
 					<thead>
 						<tr>
@@ -335,7 +335,7 @@
 					</tbody>
 				</table>
 				
-				<p class="bold"><?php echo anchor('personnel/viewawards/p/'. $userid, $label['viewawards']);?></p>
+				<p class="bold"><?php echo anchor('personnel/viewawards/u/'. $userid, $label['viewawards']);?></p>
 			<?php else: ?>
 				<?php echo text_output($label['noawards'], 'h2', 'orange');?>
 			<?php endif; ?>
