@@ -9,7 +9,9 @@
 |
 | Changes: fixed bug where authors were being dropped off of posts
 |	because of faulty logic; updated the write news item page to
-|	not allow a news item to be submitted without a category
+|	not allow a news item to be submitted without a category;
+|	updated the write mission post to pass the mission ID to the
+|	view when it exists
 |
 | Controller that handles the WRITE section of the admin system.
 |
