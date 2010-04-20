@@ -2,15 +2,13 @@ Nova RPG Management System
 ==========================
 Anodyne Production's next-generation RPG management system combines popular features from the SIMM Management System as well as new features like internationalization, developer enhancements, commenting on entries, dynamic forms, multiple characters per player and much more to make Nova the premier web-based solution for managing your RPG game.
 
-This is a pre-release version of Nova and may contain bugs.
-
 Current Version
 ---------------
 1.0.2
 
 Last Update
 -----------
-19 April 2010
+20 April 2010
 
 Latest Updates
 --------------
@@ -18,10 +16,12 @@ Latest Updates
 Changes in 1.0.2
 ----------------
 * added the 1.0.2 update file
+* added the MY\_Input library to add a call to a text cleanup function after filtering for XSS
 * updated the database schema to use a genre field in the rank catalogue table
 * updated the genre install files to populate the new genre field in the rank catalogue table on creation
 * updated the language files
     * [base\_lang] added labels_genre key
+    * [error\_lang] added error_login_7
 * updated the ranks model to pull the genre when looking for the default rank catalogue item
 * updated the ranks model to pull only the ranks sets from a genre when getting all ranks
 * updated the ranks model to only pull rank catalogue items for the given genre
@@ -32,6 +32,8 @@ Changes in 1.0.2
 * updated the index file to use a higher debug to allow people to see any errors for debugging purposes
 * updated the upgrade process to fix some minor schema differences between sms and nova
 * updated the ranks model so the get\_group\_ranks() method had a customizable identifier
+* updated the auth library to check for a user's status and not allow pending users to log in to the system
+* updated the login page to handle the new pending user error
 * fixed bug where the menu library wouldn't respect any access control put on main navigation menu items (#101)
 * fixed bug where the menu library wouldn't respect any access control put on sub navigation menu items
 * fixed undefined variable error thrown on site/catalogueranks
@@ -46,6 +48,8 @@ Changes in 1.0.2
 * fixed error thrown on commenting on a mission post
 * fixed fatal error thrown when updating a news item
 * fixed fatal error thrown when updating a personal log
+* fixed a presentational bug in login error #6
+* fixed bug where the mission dropdown wasn't properly populated when viewing a saved post
 
 Known Issues
 ------------
