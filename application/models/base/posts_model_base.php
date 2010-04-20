@@ -62,7 +62,7 @@ class Posts_model_base extends Model {
 			{
 				$this->db->select('email');
 				$this->db->from('users');
-				$this->db->where('user_id', $value);
+				$this->db->where('userid', $value);
 				
 				$query = $this->db->get();
 				
@@ -117,7 +117,9 @@ class Posts_model_base extends Model {
 		}
 		else
 		{
-			$this->db->like('post_authors', $character);
+			$string = "(post_authors LIKE '%,$character' OR post_authors LIKE '$character,%' OR post_authors = '%,$character,%' OR post_authors = $character)";
+			
+			$this->db->where("$string", NULL);
 		}
 		
 		$this->db->order_by('post_date', 'desc');
