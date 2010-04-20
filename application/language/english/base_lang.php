@@ -4,7 +4,9 @@
 | LANGUAGE FILE - ENGLISH
 |---------------------------------------------------------------
 | File: application/language/english/base_lang.php
-| System Version: 1.0
+| System Version: 1.0.2
+|
+| Changes: added labels_genre
 |
 | English language file for the system. Punctuation constants are
 | defined in ./application/config/constants.php
