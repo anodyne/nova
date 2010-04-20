@@ -1758,7 +1758,7 @@ class Manage_base extends Controller {
 						'log_tags' => $this->input->post('log_tags', TRUE),
 						'log_content' => $this->input->post('log_content', TRUE),
 						'log_status' => $this->input->post('log_status', TRUE),
-						'log_author_user' => $this->user->get_user_id($this->input->post('log_author')),
+						'log_author_user' => $this->user->get_userid($this->input->post('log_author')),
 						'log_author_character' => $this->input->post('log_author', TRUE),
 						'log_last_update' => now()
 					);
@@ -2745,7 +2745,7 @@ class Manage_base extends Controller {
 						'news_tags' => $this->input->post('news_tags', TRUE),
 						'news_content' => $this->input->post('news_content', TRUE),
 						'news_author_character' => $this->input->post('news_author', TRUE),
-						'news_author_user' => $this->user->get_user_id($this->input->post('news_author')),
+						'news_author_user' => $this->user->get_userid($this->input->post('news_author')),
 						'news_status' => $this->input->post('news_status', TRUE),
 						'news_cat' => $this->input->post('news_cat', TRUE),
 						'news_private' => $this->input->post('news_private', TRUE),
