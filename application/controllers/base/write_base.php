@@ -1001,6 +1001,7 @@ class Write_base extends Controller {
 				'name' => 'location',
 				'id' => 'location',
 				'value' => $location),
+			'mission' => ($id !== FALSE) ? $row->post_mission : FALSE,
 			'post' => array(
 				'type' => 'submit',
 				'class' => 'button-main',

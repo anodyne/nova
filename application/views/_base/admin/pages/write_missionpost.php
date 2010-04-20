@@ -44,7 +44,7 @@
 		<p>
 			<kbd><?php echo $label['mission'];?></kbd>
 			<?php if (isset($missions)): ?>
-				<?php echo form_dropdown('mission', $missions, $key['missions']);?>
+				<?php echo form_dropdown('mission', $missions, $inputs['mission']);?>
 			<?php else: ?>
 				<?php echo anchor('sim/missions/id/'. $mission['id'], $mission['title']); ?>
 				<?php echo form_hidden('mission', $mission['id']);?>
