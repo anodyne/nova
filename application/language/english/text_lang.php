@@ -4,7 +4,9 @@
 | LANGUAGE FILE - ENGLISH
 |---------------------------------------------------------------
 | File: application/language/english/long_text_lang.php
-| System Version: 1.0
+| System Version: 1.0.3
+|
+| Changes: added character_change
 |
 | English language file for the system. Punctuation constants are
 | defined in ./application/config/constants.php
@@ -173,6 +175,7 @@ $lang['wiki_reverted'] = "Reverted to a previous draft of the page.";
 $lang['date_format'] = "The date format is the same as the PHP date function. To update the sample output, make your changes in the text field then click outside the text field.";
 $lang['sample_output'] = 'Sample Output';
 $lang['add_images_later'] = 'You will be able to add and edit images for this %s after the item has been created.';
+$lang['character_change'] = "%s will need to log out and log back in for the changes to take affect.";
 
 /*
 |---------------------------------------------------------------
