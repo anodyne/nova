@@ -1545,7 +1545,7 @@ class Ajax_base extends Controller {
 			ucwords(lang('global_rank'))
 		);
 		
-		$data['set'] = $this->uri->segment(3, 1, TRUE);
+		$data['set'] = $this->uri->segment(3, 'default');
 		$data['class'] = $this->uri->segment(4, 1, TRUE);
 		
 		$data['ext'] = $this->ranks->get_rankcat($data['set'], 'rankcat_id', 'rankcat_extension');
