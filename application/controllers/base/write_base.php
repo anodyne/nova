@@ -5,13 +5,13 @@
 |---------------------------------------------------------------
 |
 | File: controllers/write_base.php
-| System Version: 1.0.2
+| System Version: 1.0.3
 |
 | Changes: fixed bug where authors were being dropped off of posts
 |	because of faulty logic; updated the write news item page to
 |	not allow a news item to be submitted without a category;
 |	updated the write mission post to pass the mission ID to the
-|	view when it exists
+|	view when it exists; fixed an error being thrown
 |
 | Controller that handles the WRITE section of the admin system.
 |
@@ -1003,7 +1003,7 @@ class Write_base extends Controller {
 				'name' => 'location',
 				'id' => 'location',
 				'value' => $location),
-			'mission' => ($id !== FALSE) ? $row->post_mission : FALSE,
+			'mission' => ($id !== FALSE && $row !== FALSE) ? $row->post_mission : FALSE,
 			'post' => array(
 				'type' => 'submit',
 				'class' => 'button-main',
