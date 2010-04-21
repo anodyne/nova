@@ -94,146 +94,158 @@
 			</div>
 			
 			<div class="notifications hidden">
-				<table class="table100 zebra">
-					<tbody>
-						<?php if ($notification['saved_posts'] > 0): ?>
-							<tr>
-								<td class="col1"><?php echo $notification['saved_posts'];?></td>
-								<td class="cell-spacer"></td>
-								<td class="col2"><?php echo anchor('write/index', $label['s_posts']);?></td>
-							</tr>
-						<?php endif; ?>
+				<?php if ($notifycount > 0): ?>
+					<table class="table100 zebra">
+						<tbody>
+							<?php if ($notification['saved_posts'] > 0): ?>
+								<tr>
+									<td class="col1"><?php echo $notification['saved_posts'];?></td>
+									<td class="cell-spacer"></td>
+									<td class="col2"><?php echo anchor('write/index', $label['s_posts']);?></td>
+								</tr>
+							<?php endif; ?>
+								
+							<?php if ($notification['saved_logs'] > 0): ?>
+								<tr>
+									<td class="col1"><?php echo $notification['saved_logs'];?></td>
+									<td class="cell-spacer"></td>
+									<td class="col2"><?php echo anchor('write/index', $label['s_logs']);?></td>
+								</tr>
+							<?php endif; ?>
 							
-						<?php if ($notification['saved_logs'] > 0): ?>
-							<tr>
-								<td class="col1"><?php echo $notification['saved_logs'];?></td>
-								<td class="cell-spacer"></td>
-								<td class="col2"><?php echo anchor('write/index', $label['s_logs']);?></td>
-							</tr>
-						<?php endif; ?>
-						
-						<?php if ($notification['saved_news'] > 0): ?>
-							<tr>
-								<td class="col1"><?php echo $notification['saved_news'];?></td>
-								<td class="cell-spacer"></td>
-								<td class="col2"><?php echo anchor('write/index', $label['s_news']);?></td>
-							</tr>
-						<?php endif; ?>
-						
-						<?php if ($notification['unread_pms'] > 0): ?>
-							<tr>
-								<td class="col1"><?php echo $notification['unread_pms'];?></td>
-								<td class="cell-spacer"></td>
-								<td class="col2"><?php echo anchor('messages/index', $label['pm']);?></td>
-							</tr>
-						<?php endif; ?>
-						
-						<?php if ($notification['pending_users'] > 0): ?>
-							<tr>
-								<td class="col1"><?php echo $notification['pending_users'];?></td>
-								<td class="cell-spacer"></td>
-								<td class="col2"><?php echo anchor('characters/index/pending', $label['p_users']);?></td>
-							</tr>
-						<?php endif; ?>
-						
-						<?php if ($notification['pending_posts'] > 0): ?>
-							<tr>
-								<td class="col1"><?php echo $notification['pending_posts'];?></td>
-								<td class="cell-spacer"></td>
-								<td class="col2"><?php echo anchor('manage/posts/pending', $label['p_posts']);?></td>
-							</tr>
-						<?php endif; ?>
-						
-						<?php if ($notification['pending_logs'] > 0): ?>
-							<tr>
-								<td class="col1"><?php echo $notification['pending_logs'];?></td>
-								<td class="cell-spacer"></td>
-								<td class="col2"><?php echo anchor('manage/logs/pending', $label['p_logs']);?></td>
-							</tr>
-						<?php endif; ?>
-						
-						<?php if ($notification['pending_news'] > 0): ?>
-							<tr>
-								<td class="col1"><?php echo $notification['pending_news'];?></td>
-								<td class="cell-spacer"></td>
-								<td class="col2"><?php echo anchor('manage/news/pending', $label['p_news']);?></td>
-							</tr>
-						<?php endif; ?>
-						
-						<?php if ($notification['pending_comments'] > 0): ?>
-							<tr>
-								<td class="col1"><?php echo $notification['pending_comments'];?></td>
-								<td class="cell-spacer"></td>
-								<td class="col2"><?php echo anchor('manage/comments', $label['p_comments']);?></td>
-							</tr>
-						<?php endif; ?>
-						
-						<?php if ($notification['pending_awards'] > 0): ?>
-							<tr>
-								<td class="col1"><?php echo $notification['pending_awards'];?></td>
-								<td class="cell-spacer"></td>
-								<td class="col2"><?php echo anchor('user/nominate/queue', $label['p_awards']);?></td>
-							</tr>
-						<?php endif; ?>
-						
-						<?php if ($notification['pending_docked'] > 0): ?>
-							<tr>
-								<td class="col1"><?php echo $notification['pending_docked'];?></td>
-								<td class="cell-spacer"></td>
-								<td class="col2"><?php echo anchor('manage/docked/pending', $label['p_docked']);?></td>
-							</tr>
-						<?php endif; ?>
-					</tbody>
-				</table>
+							<?php if ($notification['saved_news'] > 0): ?>
+								<tr>
+									<td class="col1"><?php echo $notification['saved_news'];?></td>
+									<td class="cell-spacer"></td>
+									<td class="col2"><?php echo anchor('write/index', $label['s_news']);?></td>
+								</tr>
+							<?php endif; ?>
+							
+							<?php if ($notification['unread_pms'] > 0): ?>
+								<tr>
+									<td class="col1"><?php echo $notification['unread_pms'];?></td>
+									<td class="cell-spacer"></td>
+									<td class="col2"><?php echo anchor('messages/index', $label['pm']);?></td>
+								</tr>
+							<?php endif; ?>
+							
+							<?php if ($notification['pending_users'] > 0): ?>
+								<tr>
+									<td class="col1"><?php echo $notification['pending_users'];?></td>
+									<td class="cell-spacer"></td>
+									<td class="col2"><?php echo anchor('characters/index/pending', $label['p_users']);?></td>
+								</tr>
+							<?php endif; ?>
+							
+							<?php if ($notification['pending_posts'] > 0): ?>
+								<tr>
+									<td class="col1"><?php echo $notification['pending_posts'];?></td>
+									<td class="cell-spacer"></td>
+									<td class="col2"><?php echo anchor('manage/posts/pending', $label['p_posts']);?></td>
+								</tr>
+							<?php endif; ?>
+							
+							<?php if ($notification['pending_logs'] > 0): ?>
+								<tr>
+									<td class="col1"><?php echo $notification['pending_logs'];?></td>
+									<td class="cell-spacer"></td>
+									<td class="col2"><?php echo anchor('manage/logs/pending', $label['p_logs']);?></td>
+								</tr>
+							<?php endif; ?>
+							
+							<?php if ($notification['pending_news'] > 0): ?>
+								<tr>
+									<td class="col1"><?php echo $notification['pending_news'];?></td>
+									<td class="cell-spacer"></td>
+									<td class="col2"><?php echo anchor('manage/news/pending', $label['p_news']);?></td>
+								</tr>
+							<?php endif; ?>
+							
+							<?php if ($notification['pending_comments'] > 0): ?>
+								<tr>
+									<td class="col1"><?php echo $notification['pending_comments'];?></td>
+									<td class="cell-spacer"></td>
+									<td class="col2"><?php echo anchor('manage/comments', $label['p_comments']);?></td>
+								</tr>
+							<?php endif; ?>
+							
+							<?php if ($notification['pending_awards'] > 0): ?>
+								<tr>
+									<td class="col1"><?php echo $notification['pending_awards'];?></td>
+									<td class="cell-spacer"></td>
+									<td class="col2"><?php echo anchor('user/nominate/queue', $label['p_awards']);?></td>
+								</tr>
+							<?php endif; ?>
+							
+							<?php if ($notification['pending_docked'] > 0): ?>
+								<tr>
+									<td class="col1"><?php echo $notification['pending_docked'];?></td>
+									<td class="cell-spacer"></td>
+									<td class="col2"><?php echo anchor('manage/docked/pending', $label['p_docked']);?></td>
+								</tr>
+							<?php endif; ?>
+						</tbody>
+					</table>
+				<?php else: ?>
+					<?php echo text_output($label['nonotifications'], 'h4', 'orange');?>
+				<?php endif;?>
 			</div>
 			
 			<div class="activity hidden">
-				<table class="table100 zebra">
-					<tbody>
-					<?php foreach ($activity as $a): ?>
-						<tr height="30">
-							<td width="2"></td>
-							<td>
-								<strong class="fontMedium"><?php echo $a['name'];?></strong><br />
-								<span class="gray fontSmall">
-									&nbsp;&nbsp;<strong><?php echo $label['last_post'];?></strong>
-									<?php if (is_numeric($a['post'])): ?>
-										<?php echo timespan($a['post'], now()) .' '. $label['ago'];?>
-									<?php else: ?>
-										<?php echo text_output($a['post'], 'span', 'orange bold');?>
-									<?php endif;?><br />
-									
-									&nbsp;&nbsp;<strong><?php echo $label['last_login'];?></strong>
-									<?php if (is_numeric($a['login'])): ?>
-										<?php echo timespan($a['login'], now()) .' '. $label['ago'];?>
-									<?php else: ?>
-										<?php echo text_output($a['login'], 'span', 'orange bold');?>
-									<?php endif;?>
-								</span>
-							</td>
-						</tr>
-					<?php endforeach;?>
-					</tbody>
-				</table>
+				<?php if ($activitycount > 0): ?>
+					<table class="table100 zebra">
+						<tbody>
+						<?php foreach ($activity as $a): ?>
+							<tr height="30">
+								<td width="2"></td>
+								<td>
+									<strong class="fontMedium"><?php echo $a['name'];?></strong><br />
+									<span class="gray fontSmall">
+										&nbsp;&nbsp;<strong><?php echo $label['last_post'];?></strong>
+										<?php if (is_numeric($a['post'])): ?>
+											<?php echo timespan($a['post'], now()) .' '. $label['ago'];?>
+										<?php else: ?>
+											<?php echo text_output($a['post'], 'span', 'orange bold');?>
+										<?php endif;?><br />
+										
+										&nbsp;&nbsp;<strong><?php echo $label['last_login'];?></strong>
+										<?php if (is_numeric($a['login'])): ?>
+											<?php echo timespan($a['login'], now()) .' '. $label['ago'];?>
+										<?php else: ?>
+											<?php echo text_output($a['login'], 'span', 'orange bold');?>
+										<?php endif;?>
+									</span>
+								</td>
+							</tr>
+						<?php endforeach;?>
+						</tbody>
+					</table>
+				<?php else: ?>
+					<?php echo text_output($label['noactivity'], 'h4', 'orange');?>
+				<?php endif;?>
 			</div>
 			
 			<div class="milestones hidden">
-				<table class="table100 zebra">
-					<tbody>
-					<?php foreach ($milestones as $m): ?>
-						<tr height="30">
-							<td width="2"></td>
-							<td>
-								<strong class="fontMedium"><?php echo $m['name'];?></strong><br />
-								<span class="gray fontSmall">
-									&nbsp;&nbsp;<strong><?php echo $label['joined'];?></strong>
-									<?php echo $m['timespan'] .' '. $label['ago'];?>
-								</span>
-							</td>
-						</tr>
-					<?php endforeach;?>
-					</tbody>
-				</table>
+				<?php if ($milestonecount > 0): ?>
+					<table class="table100 zebra">
+						<tbody>
+						<?php foreach ($milestones as $m): ?>
+							<tr height="30">
+								<td width="2"></td>
+								<td>
+									<strong class="fontMedium"><?php echo $m['name'];?></strong><br />
+									<span class="gray fontSmall">
+										&nbsp;&nbsp;<strong><?php echo $label['joined'];?></strong>
+										<?php echo $m['timespan'] .' '. $label['ago'];?>
+									</span>
+								</td>
+							</tr>
+						<?php endforeach;?>
+						</tbody>
+					</table>
+				<?php else: ?>
+					<?php echo text_output($label['nomilestones'], 'h4', 'orange');?>
+				<?php endif;?>
 			</div>
 		</div>
 	</div>

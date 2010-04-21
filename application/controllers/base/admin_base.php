@@ -5,10 +5,12 @@
 |---------------------------------------------------------------
 |
 | File: controllers/admin_base.php
-| System Version: 1.0.2
+| System Version: 1.0.3
 |
 | Changes: attempting a fix for the remember me issue which
-|	updates the cookie set when the password is changed
+|	updates the cookie set when the password is changed; added
+|	messages for the different panel tabs in the event there's
+|	nothing in the tab
 |
 | Controller that handles the ADMIN section of the system.
 |
@@ -490,6 +492,9 @@ class Admin_base extends Controller {
 			'runupdate' => ucfirst(lang('actions_run') .' '. lang('labels_the') .' '. lang('actions_update')) .' '. RARROW,
 			'ignore' => ucfirst(lang('actions_ignore') .' '. lang('labels_this') .' '. lang('labels_version')),
 			'loading' => ucfirst(lang('actions_loading')) .'...',
+			'nonotifications' => ucfirst(lang('labels_no') .' '. lang('labels_notifications') .' '. lang('labels_available')),
+			'nomilestones' => ucfirst(lang('labels_no') .' '. lang('labels_milestones') .' '. lang('labels_available')),
+			'noactivity' => ucfirst(lang('labels_no') .' '. lang('labels_activity') .' '. lang('labels_notifications')),
 		);
 		
 		/* figure out where the view JS files should be coming from */
