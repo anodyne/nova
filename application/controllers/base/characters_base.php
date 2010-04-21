@@ -5,7 +5,11 @@
 |---------------------------------------------------------------
 |
 | File: controllers/characters_base.php
-| System Version: 1.0
+| System Version: 1.0.3
+|
+| Changes: updated the NPC management page to do all the deletions
+|	on its own page instead of using the character management
+|	deletion functionality (could be confusing to users)
 |
 | Controller that handles the CHARACTERS section of the admin system.
 |
@@ -122,7 +126,7 @@ class Characters_base extends Controller {
 						
 						if ($user !== FALSE)
 						{
-							$characters = $user->characters;
+							$characters = implode(',', $this->session->userdata('characters'));
 							$main = $user->main_char;
 							
 							if (strstr($characters, $id) !== FALSE)
@@ -1586,57 +1590,6 @@ class Characters_base extends Controller {
 					/* get the user id */
 					$userid = $this->char->get_character($id, 'user');
 					
-					if ($userid !== FALSE)
-					{
-						/* grab the user data */
-						$user = $this->user->get_user($userid);
-						
-						/* temp variable for setting a new main character */
-						$newmain = NULL;
-						
-						if ($user !== FALSE)
-						{
-							$characters = $user->characters;
-							$main = $user->main_char;
-							
-							if (strstr($characters, $id) !== FALSE)
-							{ /* if the ID is in the characters string, remove it */
-								$carray = explode(',', $characters);
-								
-								foreach ($carray as $key => $value)
-								{
-									if ($value == $id)
-									{
-										unset($carray[$key]);
-									}
-									else
-									{ /* if we're removing a main character, replace it with the first active one */
-										$type = $this->char->get_character($value, 'crew_type');
-										
-										if ($type == 'active' && is_null($newmain))
-										{
-											$newmain = $value;
-										}
-									}
-								}
-								
-								$newchars = implode(',', $carray);
-							}
-							else
-							{
-								$newchars = $characters;
-							}
-							
-							/* set the array to update the users table */
-							$update_array = array(
-								'characters' => $newchars,
-								'main_char' => ($main == $id) ? $newmain : $main
-							);
-							
-							$update = $this->user->update_user($userid, $update_array);
-						}
-					}
-					
 					/* delete the data from the data table */
 					$delete = $this->char->delete_character_data($id, 'data_char');
 					
@@ -1645,11 +1598,16 @@ class Characters_base extends Controller {
 					
 					if ($delete > 0)
 					{
+						$submsg = sprintf(
+							lang('character_change'),
+							($userid == $this->session->userdata('userid')) ? ucfirst(lang('labels_you')) : ucfirst(lang('labels_the') .' '. lang('global_user'))
+						);
+						
 						$message = sprintf(
 							lang('flash_success'),
 							ucfirst(lang('global_character')),
 							lang('actions_deleted'),
-							''
+							($userid == 0 || $userid === NULL || $userid === FALSE) ? '' : ' '. $submsg
 						);
 		
 						$flash['status'] = 'success';

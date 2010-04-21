@@ -7,7 +7,7 @@
 		$("a[rel*=facebox]").click(function() {
 			var id = $(this).attr('myID');
 			var action = $(this).attr('myAction');
-			var location = '<?php echo site_url('ajax/del_character');?>/' + id + '/<?php echo $string;?>';
+			var location = '<?php echo site_url('ajax/del_npc');?>/' + id + '/<?php echo $string;?>';
 				
 			$.facebox(function() {
 				$.get(location, function(data) {
