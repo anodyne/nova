@@ -8,7 +8,8 @@
 | System Version: 1.0.2
 |
 | Changes: check to see if a user is pending and if they are,
-|	don't allow them to log in
+|	don't allow them to log in; attmpted fix for the issue with
+|	always being locked out of an account
 |
 | Library for all things authentication
 |
@@ -16,7 +17,7 @@
 
 class Auth {
 	
-	var $allowed_login_attempts = 3;
+	var $allowed_login_attempts = 5;
 	var $lockout_time = 1800; /* 30 minutes */
 	
 	function Auth()
@@ -380,6 +381,9 @@ class Auth {
 			
 			if ($timeframe > $this->lockout_time)
 			{
+				/* clear the login attempts if there are any */
+				$this->ci->sys->delete_login_attempts($email);
+					
 				return TRUE;
 			}
 			else
