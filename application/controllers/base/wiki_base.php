@@ -78,6 +78,7 @@ class Wiki_base extends Controller {
 		$this->lang->load('app', $this->session->userdata('language'));
 		
 		/* set the template */
+		$this->template->set_template('admin');
 		$this->template->set_master_template($this->skin . '/template_wiki.php');
 		
 		/* write the common elements to the template */

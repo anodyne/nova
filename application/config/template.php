@@ -98,10 +98,16 @@ $template['admin']['parse_template'] = FALSE;
 $template['wiki']['template'] = 'template';
 $template['wiki']['regions'] = array(
 	'title',
+	'flash_message',
 	'content',
 	'nav_main',
 	'nav_sub',
-	'javascript'
+	'javascript',
+	'ajax',
+	'panel_1',
+	'panel_2',
+	'panel_3',
+	'panel_workflow'
 );
 $template['wiki']['parser'] = 'parser';
 $template['wiki']['parser_method'] = 'parse';
