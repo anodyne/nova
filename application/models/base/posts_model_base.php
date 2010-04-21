@@ -5,7 +5,12 @@
 |---------------------------------------------------------------
 |
 | File: models/posts_model_base.php
-| System Version: 1.0
+| System Version: 1.0.3
+|
+| Changes: added parameter to get_unattended_posts for pulling
+|	specific statuses back; updated the get_unattended_posts
+|	method with better logic for single characters being passed
+|	in to the method
 |
 | Model used to access the posts and posts comments tables.
 |
@@ -385,14 +390,7 @@ class Posts_model_base extends Model {
 			
 			for ($i=0; $i < $count; $i++)
 			{
-				if ($i > 0)
-				{
-					$or = " OR ";
-				}
-				else
-				{
-					$or = "";
-				}
+				$or = ($i > 0) ? ' OR ' : '';
 				
 				$string.= $or . "(post_authors LIKE '%,$character[$i]' OR post_authors LIKE '$character[$i],%' OR post_authors LIKE '%,$character[$i],%' OR post_authors = $character[$i])";
 			}
@@ -512,9 +510,10 @@ class Posts_model_base extends Model {
 		return $count;
 	}
 	
-	function count_unattended_posts($id = '')
+	function count_unattended_posts($id = '', $status = 'saved')
 	{
 		$this->db->from('posts');
+		$this->db->where('post_status', $status);
 		
 		if (!empty($id))
 		{
@@ -532,18 +531,11 @@ class Posts_model_base extends Model {
 				
 				for ($i=0; $i < $count; $i++)
 				{
-					if ($i > 0)
-					{
-						$or = " OR ";
-					}
-					else
-					{
-						$or = "";
-					}
+					$or = ($i > 0) ? ' OR ' : '';
+					$and = ($i > 0) ? ' AND ' : '';
 					
-					//$string.= $or . "post_authors LIKE '%$id[$i]%'";
 					$string.= $or . "(post_authors LIKE '%,$id[$i]' OR post_authors LIKE '$id[$i],%' OR post_authors LIKE '%,$id[$i],%' OR post_authors = $id[$i])";
-					$string2.= $or . "post_saved != '$id[$i]'";
+					$string2.= $and . "post_saved != '$id[$i]'";
 				}
 				
 				$this->db->where("($string)", NULL);
@@ -551,7 +543,9 @@ class Posts_model_base extends Model {
 			}
 			else
 			{
-				$this->db->like('post_authors', $id);
+				$string.= $or . "(post_authors LIKE '%,$id' OR post_authors LIKE '$id,%' OR post_authors LIKE '%,$id,%' OR post_authors = $id)";
+				
+				$this->db->where("($string)", NULL);
 				$this->db->where('post_saved !=', $id);
 			}
 		}
