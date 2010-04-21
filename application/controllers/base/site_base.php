@@ -5,10 +5,12 @@
 |---------------------------------------------------------------
 |
 | File: controllers/site_base.php
-| System Version: 1.0.1
+| System Version: 1.0.3
 |
 | Changes: updated the catalogue ranks pages to add and update
-|	the genre in the database table
+|	the genre in the database table; updated the dynamic form
+|	management pages to display notices if there are no fields
+|	in a section (bio, specs, docking)
 |
 | Controller that handles the SITE section of the admin system.
 |
@@ -610,6 +612,7 @@ class Site_base extends Controller {
 			'label' => ucwords(lang('labels_page') .' '. lang('labels_label')),
 			'name' => ucfirst(lang('labels_name')),
 			'no' => ucfirst(lang('labels_no')),
+			'nofields' => sprintf(lang('error_not_found'), lang('labels_fields')),
 			'order' => ucfirst(lang('labels_order')),
 			'rows' => lang('misc_textarea_rows'),
 			'section' => ucfirst(lang('labels_section')),
@@ -2442,7 +2445,7 @@ class Site_base extends Controller {
 			'label' => ucwords(lang('labels_page') .' '. lang('labels_label')),
 			'name' => ucfirst(lang('labels_name')),
 			'no' => ucfirst(lang('labels_no')),
-			'nofields' => sprintf(lang('error_not_found'), lang('actions_docking') .' '. lang('labels_form') .' '. lang('labels_fields')),
+			'nofields' => sprintf(lang('error_not_found'), lang('labels_fields')),
 			'order' => ucfirst(lang('labels_order')),
 			'rows' => lang('misc_textarea_rows'),
 			'section' => ucfirst(lang('labels_section')),
@@ -2643,6 +2646,8 @@ class Site_base extends Controller {
 			'edit' => ucfirst(lang('actions_edit')),
 			'form' => ucwords(lang('actions_manage') .' '. lang('actions_docking') .' '. lang('labels_form') .' '. RARROW),
 			'name' => ucfirst(lang('labels_name')),
+			'nofields' => sprintf(lang('error_not_found'), lang('labels_fields')),
+			'nosections' => sprintf(lang('error_not_found'), lang('labels_sections')),
 		);
 				
 		/* figure out where the view should be coming from */
@@ -5518,6 +5523,7 @@ class Site_base extends Controller {
 			'label' => ucwords(lang('labels_page') .' '. lang('labels_label')),
 			'name' => ucfirst(lang('labels_name')),
 			'no' => ucfirst(lang('labels_no')),
+			'nofields' => sprintf(lang('error_not_found'), lang('labels_fields')),
 			'order' => ucfirst(lang('labels_order')),
 			'rows' => lang('misc_textarea_rows'),
 			'section' => ucfirst(lang('labels_section')),

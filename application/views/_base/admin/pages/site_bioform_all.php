@@ -9,14 +9,14 @@
 	<a href="#" rel="facebox" class="image" myAction="add">
 		<?php echo img($images['add_field']) .' '. $label['biofield'];?>
 	</a>
-</p>
-<br />
+</p><br />
 
 <?php if (isset($join)): ?>
 	<?php foreach ($join as $a): ?>
+		
+		<?php echo text_output($a['name'], 'h3', 'page-subhead');?>
+		
 		<?php if (isset($a['fields'])): ?>
-			<?php echo text_output($a['name'], 'h3', 'page-subhead');?>
-			
 			<table class="table100 zebra">
 				<tbody>
 					
@@ -35,6 +35,10 @@
 				
 				</tbody>
 			</table><br />
+		<?php else: ?>
+			<?php echo text_output($label['nofields'], 'h4', 'orange');?>
 		<?php endif; ?>
 	<?php endforeach; ?>
+<?php else: ?>
+	<?php echo text_output($label['nofields'], 'h3', 'orange');?>
 <?php endif; ?>

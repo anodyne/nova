@@ -5,7 +5,7 @@
 <p class="bold">
 	<?php echo anchor('site/dockingform', img($images['form']) .' '. $label['form'], array('class' => 'image'));?><br /><br />
 	<a href="#" rel="facebox" myAction="add" class="image"><?php echo img($images['add']) .' '. $label['add'];?></a>
-</p>
+</p><br />
 
 <?php if (isset($sections)): ?>
 	<table class="table100 zebra">
@@ -33,4 +33,6 @@
 		<?php endforeach; ?>
 		</tbody>
 	</table>
+<?php else: ?>
+	<?php echo text_output($label['nosections'], 'h3', 'orange');?>
 <?php endif; ?>
