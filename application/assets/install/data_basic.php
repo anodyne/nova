@@ -5,7 +5,7 @@
 |---------------------------------------------------------------
 |
 | File: assets/install/install_data_basic.php
-| System Version: 1.0
+| System Version: 1.0.3
 |
 | Data file that includes all the data being inserted into the
 | database after creating the tables.
@@ -1058,7 +1058,7 @@ $menu_items = array(
 		'menu_display' => 'y',
 		'menu_type' => 'sub',
 		'menu_use_access' => 'y',
-		'menu_access' => 'wiki/pages',
+		'menu_access' => 'wiki/page',
 		'menu_need_login' => 'y',
 		'menu_cat' => 'wiki'),
 	array(
@@ -1082,7 +1082,7 @@ $menu_items = array(
 		'menu_display' => 'y',
 		'menu_type' => 'sub',
 		'menu_use_access' => 'y',
-		'menu_access' => 'wiki/pages',
+		'menu_access' => 'wiki/page',
 		'menu_need_login' => 'y',
 		'menu_cat' => 'wiki'),
 		
