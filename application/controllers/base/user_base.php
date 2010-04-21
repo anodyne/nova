@@ -5,7 +5,10 @@
 |---------------------------------------------------------------
 |
 | File: controllers/user_base.php
-| System Version: 1.0
+| System Version: 1.0.2
+|
+| Changes: updated the account page to update a user's cookie
+|	if they've elected for nova to remember them
 |
 | Controller that handles the USER section of the admin system.
 |
@@ -228,6 +231,34 @@ class User_base extends Controller {
 
 					$flash['status'] = 'success';
 					$flash['message'] = text_output($message);
+					
+					/* if a user is updating their own password, update the cookie if it exists */
+					if ($user == $this->session->userdata('userid'))
+					{
+						/* load the cookie helper */
+						$this->load->helper('cookie');
+						
+						/* grab nova's unique identifier */
+						$uid = $this->sys->get_nova_uid();
+						
+						/* grab the cookie */
+						$cookie = get_cookie('nova_'. $uid);
+						
+						if ($cookie !== FALSE)
+						{
+							/* set the cookie data */
+							$c_data = array(
+								'password' => array(
+									'name'   => $uid .'[password]',
+									'value'  => $this->auth->hash($password),
+									'expire' => '1209600',
+									'prefix' => 'nova_')
+							);
+							
+							/* set the cookie */
+							set_cookie($c_data['password']);
+						}
+					}
 				}
 				else
 				{

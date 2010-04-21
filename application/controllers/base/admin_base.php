@@ -5,7 +5,10 @@
 |---------------------------------------------------------------
 |
 | File: controllers/admin_base.php
-| System Version: 1.0
+| System Version: 1.0.2
+|
+| Changes: attempting a fix for the remember me issue which
+|	updates the cookie set when the password is changed
 |
 | Controller that handles the ADMIN section of the system.
 |
@@ -138,6 +141,30 @@ class Admin_base extends Controller {
 
 						$flash['status'] = 'success';
 						$flash['message'] = text_output($message);
+						
+						/* load the cookie helper */
+						$this->load->helper('cookie');
+						
+						/* grab nova's unique identifier */
+						$uid = $this->sys->get_nova_uid();
+						
+						/* grab the cookie */
+						$cookie = get_cookie('nova_'. $uid);
+						
+						if ($cookie !== FALSE)
+						{
+							/* set the cookie data */
+							$c_data = array(
+								'password' => array(
+									'name'   => $uid .'[password]',
+									'value'  => $this->auth->hash($password),
+									'expire' => '1209600',
+									'prefix' => 'nova_')
+							);
+							
+							/* set the cookie */
+							set_cookie($c_data['password']);
+						}
 					}
 					else
 					{
