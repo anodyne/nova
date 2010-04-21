@@ -34,6 +34,10 @@ Changes in 1.0.2
 * updated the ranks model so the get\_group\_ranks() method had a customizable identifier
 * updated the auth library to check for a user's status and not allow pending users to log in to the system
 * updated the login page to handle the new pending user error
+* updated the Auth library to increase the login attempts allowed to 5
+* updated the Auth library to attempt a fix to the remember me lockout issue
+* updated the user account page to reset the cookie in the event of a password reset if the user has elected to have nova remember them
+* updated the admin controller so that nova resets the cookie password after an SMS upgrade if the user has elected to have nova remember them
 * fixed bug where the menu library wouldn't respect any access control put on main navigation menu items (#101)
 * fixed bug where the menu library wouldn't respect any access control put on sub navigation menu items
 * fixed undefined variable error thrown on site/catalogueranks
