@@ -5,11 +5,11 @@
 |---------------------------------------------------------------
 |
 | File: controllers/base/ajax_base.php
-| System Version: 1.0.1
+| System Version: 1.0.3
 |
 | Changes: updated the add_catalogue and edit_catalogue methods
 |	to handle the new genre field in the rank catalogue database
-|	table
+|	table; added method for deleting NPCs
 |
 | Controller that handles the AJAX work in the system
 |
@@ -3790,27 +3790,35 @@ class Ajax_base extends Controller {
 		$this->template->render();
 	}
 	
-	function del_user()
+	function del_npc()
 	{
 		/* load the resources */
-		$this->load->model('users_model', 'user');
+		$this->load->model('characters_model', 'char');
+		$this->load->helper('utility');
 		
 		$head = sprintf(
 			lang('fbx_head'),
 			ucwords(lang('actions_delete')),
-			ucwords(lang('global_user'))
+			ucwords(lang('abbr_npc'))
 		);
 		
 		/* data being sent to the facebox */
 		$data['header'] = $head;
 		$data['id'] = $this->uri->segment(3, 0, TRUE);
 		
-		$item = $this->user->get_user($data['id']);
+		$item = $this->char->get_character($data['id']);
+		
+		$name = array(
+			$item->first_name,
+			$item->middle_name,
+			$item->last_name,
+			$item->suffix
+		);
 		
 		$data['text'] = sprintf(
 			lang('fbx_content_del_entry'),
-			lang('global_user'),
-			(!empty($item->name)) ? $item->name : $item->email
+			lang('abbr_npc'),
+			parse_name($name)
 		);
 		
 		/* input parameters */
@@ -3827,7 +3835,7 @@ class Ajax_base extends Controller {
 		$skin = $this->session->userdata('skin_admin');
 		
 		/* figure out where the view should come from */
-		$ajax = ajax_location('del_user', $skin, 'admin');
+		$ajax = ajax_location('del_npc', $skin, 'admin');
 		
 		/* write the data to the template */
 		$this->template->write_view('content', $ajax, $data);
@@ -3835,6 +3843,8 @@ class Ajax_base extends Controller {
 		/* render the template */
 		$this->template->render();
 	}
+	
+	
 	
 	function del_post()
 	{
@@ -4411,6 +4421,52 @@ class Ajax_base extends Controller {
 		
 		/* figure out where the view should come from */
 		$ajax = ajax_location('del_tour_item', $skin, 'admin');
+		
+		/* write the data to the template */
+		$this->template->write_view('content', $ajax, $data);
+		
+		/* render the template */
+		$this->template->render();
+	}
+	
+	function del_user()
+	{
+		/* load the resources */
+		$this->load->model('users_model', 'user');
+		
+		$head = sprintf(
+			lang('fbx_head'),
+			ucwords(lang('actions_delete')),
+			ucwords(lang('global_user'))
+		);
+		
+		/* data being sent to the facebox */
+		$data['header'] = $head;
+		$data['id'] = $this->uri->segment(3, 0, TRUE);
+		
+		$item = $this->user->get_user($data['id']);
+		
+		$data['text'] = sprintf(
+			lang('fbx_content_del_entry'),
+			lang('global_user'),
+			(!empty($item->name)) ? $item->name : $item->email
+		);
+		
+		/* input parameters */
+		$data['inputs'] = array(
+			'submit' => array(
+				'type' => 'submit',
+				'class' => 'hud_button',
+				'name' => 'submit',
+				'value' => 'submit',
+				'content' => ucwords(lang('actions_submit')))
+		);
+		
+		/* figure out the skin */
+		$skin = $this->session->userdata('skin_admin');
+		
+		/* figure out where the view should come from */
+		$ajax = ajax_location('del_user', $skin, 'admin');
 		
 		/* write the data to the template */
 		$this->template->write_view('content', $ajax, $data);
