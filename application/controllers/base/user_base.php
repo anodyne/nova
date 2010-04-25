@@ -5,10 +5,12 @@
 |---------------------------------------------------------------
 |
 | File: controllers/user_base.php
-| System Version: 1.0.2
+| System Version: 1.0.3
 |
 | Changes: updated the account page to update a user's cookie
-|	if they've elected for nova to remember them
+|	if they've elected for nova to remember them; updated the
+|	user deactivation process to also deactivate the users'
+|	remaining active characters
 |
 | Controller that handles the USER section of the admin system.
 |
@@ -175,6 +177,21 @@ class User_base extends Controller {
 				if ($old_status != 'inactive' && $array['status'] == 'inactive')
 				{
 					$array['leave_date'] = now();
+					
+					$characters = $this->char->get_user_characters($id, 'active', 'array');
+					
+					if (count($characters) > 0)
+					{
+						/* update all the users' active characters to inactive */
+						foreach ($characters as $c)
+						{
+							$array = array(
+								'crew_type' => 'inactive',
+								'date_deactivate' => now()
+							);
+							$this->char->update_character($c, $array);
+						}
+					}
 				}
 				
 				if ($old_status == 'inactive' && $array['status'] != 'inactive')
