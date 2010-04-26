@@ -5,7 +5,11 @@
 |---------------------------------------------------------------
 |
 | File: controllers/base/update_base.php
-| System Version: 1.0
+| System Version: 1.0.3
+|
+| Changes: updated the update process to try and grab the directory
+|	listing and use that as a baseline first instead of the
+|	versions file
 |
 | Controller that handles the updating of the system.
 |
@@ -413,8 +417,8 @@ class Update_base extends Controller {
 				break;
 				
 			case 2:
-				/* pull in the versions file */
-				include_once(APPPATH .'assets/update/versions.php');
+				/* load the resources */
+				$this->load->helper('directory');
 				
 				/* grab the version from the database */
 				$item = $this->sys->get_item('system_info', 'sys_id', 1);
@@ -422,22 +426,59 @@ class Update_base extends Controller {
 				/* build the version string */
 				$version = $item->sys_version_major . $item->sys_version_minor . $item->sys_version_update;
 				
-				/* make sure we're not doing more work than we need to */
-				foreach ($version_array as $k => $v)
+				/* grab the directory listing */
+				$dir = directory_map(APPFOLDER .'/assets/update');
+				
+				if (is_array($dir))
 				{
-					if ($v < $version)
+					foreach ($dir as $key => $value)
 					{
-						unset($version_array[$k]);
+						if ($value == 'index.html' || $value == 'versions.php')
+						{
+							unset($dir[$key]);
+						}
+						else
+						{
+							$file = substr($value, 7, -4);
+							
+							if ($file < $version)
+							{
+								unset($dir[$key]);
+							}
+						}
+					}
+					
+					/* loop through and do the update */
+					foreach ($dir as $d)
+					{
+						include_once(APPPATH .'assets/update/'. $d);
+						
+						/* pause the script for 1 second */
+						sleep(1);
 					}
 				}
-				
-				/* loop through and do the update */
-				foreach ($version_array as $value)
+				else
 				{
-					include_once(APPPATH .'assets/update/update_' . $value . '.php');
+					/* pull in the versions file */
+					include_once(APPPATH .'assets/update/versions.php');
 					
-					/* pause the script for 1 second */
-					sleep(1);
+					/* make sure we're not doing more work than we need to */
+					foreach ($version_array as $k => $v)
+					{
+						if ($v < $version)
+						{
+							unset($version_array[$k]);
+						}
+					}
+					
+					/* loop through and do the update */
+					foreach ($version_array as $value)
+					{
+						include_once(APPPATH .'assets/update/update_' . $value . '.php');
+						
+						/* pause the script for 1 second */
+						sleep(1);
+					}
 				}
 				
 				/* update the system info */
