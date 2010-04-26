@@ -5,7 +5,10 @@
 |---------------------------------------------------------------
 |
 | File: models/wiki_model_base.php
-| System Version: 1.0
+| System Version: 1.0.3
+|
+| Changes: fixed bug where pages were being put into the
+|	uncategorized section even if they had a category
 |
 | Model used to access the wiki tables.
 |
@@ -162,12 +165,12 @@ class Wiki_model_base extends Model {
 		return $query;
 	}
 	
-	function get_pages($category = '', $order = 'wiki_drafts.draft_title', $sort = 'asc')
+	function get_pages($category = NULL, $order = 'wiki_drafts.draft_title', $sort = 'asc')
 	{
 		$this->db->from('wiki_pages');
 		$this->db->join('wiki_drafts', 'wiki_drafts.draft_id = wiki_pages.page_draft');
 		
-		if (!empty($category))
+		if (!is_null($category))
 		{
 			if ($category == 0)
 			{
