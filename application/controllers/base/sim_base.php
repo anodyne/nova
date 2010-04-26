@@ -5,10 +5,11 @@
 |---------------------------------------------------------------
 |
 | File: controllers/base/sim_base.php
-| System Version: 1.0.1
+| System Version: 1.0.3
 |
 | Changes: fixed bug where saved mission posts were displayed
-|	when they shouldn't be
+|	when they shouldn't be; fixed bug where error was thrown for
+|	missing option parameters
 |
 | Controller that handles the SIM part of the system.
 |
@@ -58,7 +59,9 @@ class Sim_base extends Controller {
 			'date_format',
 			'post_count_format',
 			'email_subject',
-			'system_email'
+			'system_email',
+			'default_email_address',
+			'default_email_name'
 		);
 		
 		/* grab the settings */
