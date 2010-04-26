@@ -29,6 +29,8 @@ Changes in 1.0.3
 * updated the dynamic form management pages (bio, docking, specs) to show notices if there are no fields in a section
 * updated the panel tabs on the control panel to display a notice if there's no content available
 * updated thresher to use the proper regions in the template config file
+* updated the user deactivation process to deactivate a users' characters at the same time
+* updated the update center to show the links to start the update regardless of whether there's information about the update or not
 * updated the auth library to add some debugging code to help track down the remember me bug
 * fixed bug where the create wiki entry page wasn't showing up in the sub navigation menu
 * fixed bug where the posts model wasn't accurately counting unattended posts when a character ID was passed in as an integer instead of array
@@ -37,6 +39,10 @@ Changes in 1.0.3
 * fixed bug where the post notification stayed active even after the post had been updated and/or sent out
 * fixed errors that were thrown when adding a rank
 * fixed error thrown when there are no fields in a specs form section
+* fixed error thrown in the dashboard
+* fixed bug where wiki pages were being put in the uncategorized section even if they had categories
+* fixed error thrown for missing option parameters
+* fixed error thrown during accepting/rejecting a docked ship application
 
 Known Issues
 ------------
