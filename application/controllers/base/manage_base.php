@@ -5,10 +5,11 @@
 |---------------------------------------------------------------
 |
 | File: controllers/manage_base.php
-| System Version: 1.0.2
+| System Version: 1.0.3
 |
 | Changes: fixed bug where a rank set without a blank rank image
-|	wouldn't display rank classes (i'm looking at your stargate)
+|	wouldn't display rank classes (i'm looking at your stargate);
+|	fixed error thrown during accepting a docked ship application
 |
 | Controller that handles the MANAGE section of the admin system.
 |
@@ -56,7 +57,8 @@ class Manage_base extends Controller {
 			'date_format',
 			'system_email',
 			'post_count_format',
-			'default_email_address'
+			'default_email_address',
+			'email_subject'
 		);
 		
 		/* grab the settings */
@@ -5202,7 +5204,7 @@ class Manage_base extends Controller {
 				
 				$email_data = array(
 					'email_subject' => lang('email_subject_docking_approved') .' - '. $data['sim'],
-					'email_from' => ucfirst(lang('time_from')) .': '. $this->options['sim_name'] .' - '. $$this->options['default_email_address'],
+					'email_from' => ucfirst(lang('time_from')) .': '. $this->options['sim_name'] .' - '. $this->options['default_email_address'],
 					'email_content' => ($this->email->mailtype == 'html') ? nl2br($data['message']) : $data['message']
 				);
 				
