@@ -5,6 +5,15 @@
 |---------------------------------------------------------------
 */
 
+$system_versions	= NULL;
+$system_info		= NULL;
+$add_tables			= NULL;
+$drop_tables		= NULL;
+$rename_tables		= NULL;
+$add_column			= NULL;
+$modify_column		= NULL;
+$drop_column		= NULL;
+
 /*
 |---------------------------------------------------------------
 | VERSION INFO FOR THE DATABASE
@@ -83,7 +92,7 @@ $system_info = array(
 |---------------------------------------------------------------
 */
 
-if (isset($add_tables))
+if (!is_null($add_tables))
 {
 	foreach ($add_table as $key => $value)
 	{
@@ -101,7 +110,7 @@ if (isset($add_tables))
 |---------------------------------------------------------------
 */
 
-if (isset($drop_tables))
+if (!is_null($drop_tables))
 {
 	foreach ($drop_tables as $value)
 	{
@@ -117,7 +126,7 @@ if (isset($drop_tables))
 |---------------------------------------------------------------
 */
 
-if (isset($rename_tables))
+if (!is_null($rename_tables))
 {
 	foreach ($rename_tables as $key => $value)
 	{
@@ -140,7 +149,7 @@ if (isset($rename_tables))
 |---------------------------------------------------------------
 */
 
-if (isset($add_column))
+if (!is_null($add_column))
 {
 	foreach ($add_column as $key => $value)
 	{
@@ -162,7 +171,7 @@ if (isset($add_column))
 |---------------------------------------------------------------
 */
 
-if (isset($modify_column))
+if (!is_null($modify_column))
 {
 	foreach ($modify_column as $key => $value)
 	{
@@ -180,7 +189,7 @@ if (isset($modify_column))
 |---------------------------------------------------------------
 */
 
-if (isset($drop_column))
+if (!is_null($drop_column))
 {
 	foreach ($drop_column as $key => $value)
 	{
@@ -215,5 +224,5 @@ if ($query->num_rows() > 0)
 $this->load->model('system_model', 'sys');
 $this->sys->add_system_version($system_versions);
 
-/* End of file update_100.php */
-/* Location: ./application/assets/update/update_100.php */
+/* End of file update_102.php */
+/* Location: ./application/assets/update/update_102.php */
