@@ -5,11 +5,13 @@
 |---------------------------------------------------------------
 |
 | File: controllers/manage_base.php
-| System Version: 1.0.3
+| System Version: 1.0.4
 |
 | Changes: fixed bug where a rank set without a blank rank image
 |	wouldn't display rank classes (i'm looking at your stargate);
-|	fixed error thrown during accepting a docked ship application
+|	fixed error thrown during accepting a docked ship application;
+|	fixed bug where IE threw errors that broke the pages for
+|	managing posts, logs, news and docked items
 |
 | Controller that handles the MANAGE section of the admin system.
 |
@@ -1540,7 +1542,7 @@ class Manage_base extends Controller {
 			$data['id'] = $id;
 			$data['status'] = $row->docking_status;
 			
-			$js_data = FALSE;
+			$js_data['tab'] = 0;
 			
 			/* figure out where the view should be coming from */
 			$view_loc = view_location('manage_docked_edit', $this->skin, 'admin');
@@ -1886,7 +1888,7 @@ class Manage_base extends Controller {
 				'author' => ucwords(lang('labels_author'))
 			);
 			
-			$js_data = FALSE;
+			$js_data['tab'] = 0;
 			
 			/* figure out where the view should be coming from */
 			$view_loc = view_location('manage_logs_edit', $this->skin, 'admin');
@@ -2881,7 +2883,7 @@ class Manage_base extends Controller {
 				'private' => ucfirst(lang('labels_private'))
 			);
 			
-			$js_data = FALSE;
+			$js_data['tab'] = 0;
 			
 			/* figure out where the view should be coming from */
 			$view_loc = view_location('manage_news_edit', $this->skin, 'admin');
@@ -3635,6 +3637,7 @@ class Manage_base extends Controller {
 			
 			/* prep the data for sending to the js view */
 			$js_data['remove'] = img($remove);
+			$js_data['tab'] = 0;
 			
 			if ($row !== FALSE)
 			{
