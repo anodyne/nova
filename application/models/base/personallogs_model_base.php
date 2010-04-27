@@ -5,7 +5,11 @@
 |---------------------------------------------------------------
 |
 | File: models/personallogs_model_base.php
-| System Version: 1.0
+| System Version: 1.0.4
+|
+| Changes: fixed bug where saved personal logs would be shown
+|	along with activated logs for users with multiple characters
+|	tied to their account because of the way the query was built
 |
 | Model used to access the personal logs and personal logs comments tables.
 |
@@ -37,13 +41,20 @@ class Personallogs_model_base extends Model {
 			/* make sure the keys are set up right */
 			$id = array_values($id);
 			
-			$this->db->where('log_author_character', $id[0]);
-			
+			/* count the items in the array */
 			$count = count($id);
-			for ($i=1; $i < $count; $i++)
-			{ 
-				$this->db->or_where('log_author_character', $id[$i]);
+			
+			/* set the initial string */
+			$string = '';
+			
+			for ($i=0; $i < $count; $i++)
+			{
+				$or = ($i > 0) ? ' OR ' : '';
+				
+				$string.= $or ."log_author_character = '$id[$i]'";
 			}
+			
+			$this->db->where("($string)", NULL);
 		}
 		else
 		{
