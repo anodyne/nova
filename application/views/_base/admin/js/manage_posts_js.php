@@ -39,13 +39,10 @@
 				hidden = '';
 			}
 			
-			/* update the hidden field */
 			$('#authors_hidden').val(hidden + ',' + user + ',');
 			
-			/* update the list of recipients */
 			$('#authors').append('<span class="' + user + '"><a href="#" id="remove_author" class="image" myID="' + user + '" myName="' + name + '"><?php echo $remove;?></a>' + name + '<br /></span>');
 			
-			/* hide the option so it can't be selected again */
 			$("#all option[value='" + user + "']").attr('disabled', 'yes');
 			
 			return false;
@@ -57,13 +54,10 @@
 			var hidden = $('#authors_hidden').val();
 			var new_hidden = hidden.replace(user, "");
 			
-			/* update the hidden field */
 			$('#authors_hidden').val(new_hidden);
 			
-			/* remove the name from the list */
 			$('#authors span.' + user).remove();
 			
-			/* show the option again */
 			$("#all option[value='" + user + "']").attr('disabled', '');
 			
 			return false;
