@@ -5,12 +5,13 @@
 |---------------------------------------------------------------
 |
 | File: controllers/user_base.php
-| System Version: 1.0.3
+| System Version: 1.0.4
 |
 | Changes: updated the account page to update a user's cookie
 |	if they've elected for nova to remember them; updated the
 |	user deactivation process to also deactivate the users'
-|	remaining active characters
+|	remaining active characters; fixed error thrown for level 1
+|	users when updating their account (status and loa hidden items)
 |
 | Controller that handles the USER section of the admin system.
 |
@@ -166,37 +167,41 @@ class User_base extends Controller {
 				/* set the last update */
 				$array['last_update'] = now();
 				
-				$old_loa = $array['loa_old'];
-				$old_status = $array['status_old'];
-				
 				/* submit needs to be removed */
 				unset($array['submit']);
-				unset($array['loa_old']);
-				unset($array['status_old']);
 				
-				if ($old_status != 'inactive' && $array['status'] == 'inactive')
+				if ($level == 2)
 				{
-					$array['leave_date'] = now();
+					$old_loa = $array['loa_old'];
+					$old_status = $array['status_old'];
 					
-					$characters = $this->char->get_user_characters($id, 'active', 'array');
+					unset($array['loa_old']);
+					unset($array['status_old']);
 					
-					if (count($characters) > 0)
+					if ($old_status != 'inactive' && $array['status'] == 'inactive')
 					{
-						/* update all the users' active characters to inactive */
-						foreach ($characters as $c)
+						$array['leave_date'] = now();
+
+						$characters = $this->char->get_user_characters($id, 'active', 'array');
+
+						if (count($characters) > 0)
 						{
-							$array = array(
-								'crew_type' => 'inactive',
-								'date_deactivate' => now()
-							);
-							$this->char->update_character($c, $array);
+							/* update all the users' active characters to inactive */
+							foreach ($characters as $c)
+							{
+								$array = array(
+									'crew_type' => 'inactive',
+									'date_deactivate' => now()
+								);
+								$this->char->update_character($c, $array);
+							}
 						}
 					}
-				}
-				
-				if ($old_status == 'inactive' && $array['status'] != 'inactive')
-				{
-					$array['leave_date'] = NULL;
+
+					if ($old_status == 'inactive' && $array['status'] != 'inactive')
+					{
+						$array['leave_date'] = NULL;
+					}
 				}
 				
 				if ($user == $this->session->userdata('userid'))
