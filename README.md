@@ -8,13 +8,15 @@ Current Version
 
 Last Update
 -----------
-26 April 2010
+27 April 2010
 
 Changes in 1.0.4
 ----------------
 * added the 1.0.4 update file
 * updated the version update files to make sure the values get reset at the start of every file
 * fixed error thrown when a user with level 1 user account privileges updates their account
+* fixed bug where saved personal logs could be shown in along with activated logs for users with multiple characters associated with their account
+* fixed bug where IE threw an exception on the post, log, news and docked item management pages
 
 Known Issues
 ------------
