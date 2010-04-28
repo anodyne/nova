@@ -5,11 +5,12 @@
 |---------------------------------------------------------------
 |
 | File: controllers/base/main_base.php
-| System Version: 1.0.2
+| System Version: 1.0.4
 |
 | Changes: fixed bug where sample post wasn't sent out in the
 |	email sent to game masters; fixed capitalization issues in
-|	the email sent to game masters
+|	the email sent to game masters; fixed error thrown on the
+|	contact page
 |
 | Controller that handles the MAIN section of the system.
 |
@@ -209,7 +210,8 @@ class Main_base extends Controller {
 					$message = sprintf(
 						lang('flash_success'),
 						ucfirst(lang('labels_contact')),
-						lang('actions_sent')
+						lang('actions_sent'),
+						''
 					);
 					
 					$flash['status'] = 'success';
