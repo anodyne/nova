@@ -8,7 +8,7 @@ Current Version
 
 Last Update
 -----------
-27 April 2010
+28 April 2010
 
 Changes in 1.0.4
 ----------------
@@ -17,6 +17,7 @@ Changes in 1.0.4
 * fixed error thrown when a user with level 1 user account privileges updates their account
 * fixed bug where saved personal logs could be shown in along with activated logs for users with multiple characters associated with their account
 * fixed bug where IE threw an exception on the post, log, news and docked item management pages
+* fixed error thrown on the contact page
 
 Known Issues
 ------------
