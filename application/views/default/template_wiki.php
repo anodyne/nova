@@ -134,11 +134,7 @@ echo "<?xml version='1.0' encoding='UTF-8'?>\r\n";
 			});
 		</script>
 	</head>
-<?php if (lang('rtl') === TRUE): ?>
-	<body class="rtl">
-<?php else: ?>
 	<body>
-<?php endif;?>
 		<noscript>
 			<div class="system_warning"><?php echo lang_output('text_javascript_off', '');?></div>
 		</noscript>
