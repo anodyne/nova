@@ -8,12 +8,16 @@ Current Version
 
 Last Update
 -----------
-28 April 2010
+02 May 2010
 
 Changes in 1.0.4
 ----------------
 * added the 1.0.4 update file
+* added the MY\_Email library file
 * updated the version update files to make sure the values get reset at the start of every file
+* updated jquery ui to version 1.8.1
+* updated markItUp! to version 1.1.7
+* updated the textile parser to fix some bugs (thanks to dustin for catching this)
 * fixed error thrown when a user with level 1 user account privileges updates their account
 * fixed bug where saved personal logs could be shown in along with activated logs for users with multiple characters associated with their account
 * fixed bug where IE threw an exception on the post, log, news and docked item management pages
