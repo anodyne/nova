@@ -175,6 +175,18 @@ if (!is_null($drop_column))
 |---------------------------------------------------------------
 */
 
+/* jquery ui version info */
+$this->db->where('comp_name', 'jQuery UI');
+$this->db->update('system_components', array('comp_version' => '1.8.1'));
+
+/* jquery ui version info */
+$this->db->where('comp_name', 'markItUp!');
+$this->db->update('system_components', array('comp_version' => '1.1.7'));
+
+/* jquery ui version info */
+$this->db->where('comp_name', 'Textile');
+$this->db->update('system_components', array('comp_url' => 'http://textpattern.com/download'));
+
 /* add system version info */
 $this->load->model('system_model', 'sys');
 $this->sys->add_system_version($system_versions);
