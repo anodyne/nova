@@ -5,9 +5,11 @@
 |---------------------------------------------------------------
 |
 | File: controllers/wiki_base.php
-| System Version: 1.0.3
+| System Version: 1.0.4
 |
-| Changes: updated Thresher to use the proper template regions
+| Changes: updated Thresher to use the proper template regions; updated the 
+|	constructor to show an error if someone isn't running PHP 5 due to a bug
+|	somewhere in the code causing 500 errors
 |
 | Controller that handles the WIKI section of the system.
 |
@@ -38,6 +40,12 @@ class Wiki_base extends Controller {
 		/* load the libraries */
 		$this->load->library('session');
 		$this->load->library('thresher');
+		
+		if (floor(phpversion()) < 5)
+		{
+			$error = "Due to a bug in Thresher we have been unable to identify, you must be running at least PHP 5.0 or higher on your server in order to use Nova's mini-wiki feature. We apologize for this inconvenience and will continue to troubleshoot the bug to find a resolution that will allow PHP 4 servers to run Thresher. If you have any questions, please contact <a href='http://www.anodyne-productions.com' target='_blank'>Anodyne Productions</a>.";
+			show_error($error);
+		}
 		
 		/* load the models */
 		$this->load->model('characters_model', 'char');

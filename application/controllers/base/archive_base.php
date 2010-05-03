@@ -5,7 +5,10 @@
 |---------------------------------------------------------------
 |
 | File: controllers/archive.php
-| System Version: 1.0
+| System Version: 1.0.4
+|
+| Changes: updated the constructor to show an error if someone isn't running PHP 5
+|	due to a bug somewhere in the code causing 500 errors
 |
 | Controller that handles the ARCHIVE section of the admin system.
 |
@@ -22,6 +25,12 @@ class Archive_base extends Controller {
 
 	function Archive_base()
 	{
+		if (floor(phpversion()) < 5)
+		{
+			$error = "Due to a PHP 4 we have been unable to identify, you must be running at least PHP 5.0 or higher on your server in order to use Nova's SMS Archive feature. We apologize for this inconvenience and will continue to troubleshoot the bug to find a resolution that will allow PHP 4 servers to use the archive feature. If you have any questions, please contact <a href='http://www.anodyne-productions.com' target='_blank'>Anodyne Productions</a>.";
+			show_error($error);
+		}
+		
 		parent::Controller();
 		
 		/* load the system model */
@@ -51,12 +60,6 @@ class Archive_base extends Controller {
 			'daylight_savings',
 			'sim_name',
 			'date_format',
-			'show_news',
-			'use_sample_post',
-			'default_email_name',
-			'default_email_address',
-			'email_subject',
-			'system_email'
 		);
 		
 		/* grab the settings */
@@ -68,7 +71,7 @@ class Archive_base extends Controller {
 		$this->timezone = $this->options['timezone'];
 		$this->dst = (bool) $this->options['daylight_savings'];
 		
-		if ($this->auth->is_logged_in() === TRUE)
+		if ($this->auth->is_logged_in())
 		{ /* if there's a session, set the variables appropriately */
 			$this->skin = $this->session->userdata('skin_main');
 			$this->rank = $this->session->userdata('display_rank');
@@ -87,7 +90,7 @@ class Archive_base extends Controller {
 		$this->template->write('nav_sub', $this->menu->build('sub', 'main'), TRUE);
 		$this->template->write('title', $this->options['sim_name'] . ' :: ');
 		
-		if ($this->auth->is_logged_in() === TRUE)
+		if ($this->auth->is_logged_in())
 		{
 			/* create the user panels */
 			$this->template->write('panel_1', $this->user_panel->panel_1(), TRUE);
