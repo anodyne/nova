@@ -8,7 +8,7 @@ Current Version
 
 Last Update
 -----------
-02 May 2010
+03 May 2010
 
 Changes in 1.0.4
 ----------------
@@ -18,6 +18,8 @@ Changes in 1.0.4
 * updated jquery ui to version 1.8.1
 * updated markItUp! to version 1.1.7
 * updated the textile parser to fix some bugs (thanks to dustin for catching this)
+* updated the wiki controller to show an error message if the server is running php 4
+* updated the archives controller to show an error message if the server is running php 4
 * fixed error thrown when a user with level 1 user account privileges updates their account
 * fixed bug where saved personal logs could be shown in along with activated logs for users with multiple characters associated with their account
 * fixed bug where IE threw an exception on the post, log, news and docked item management pages
