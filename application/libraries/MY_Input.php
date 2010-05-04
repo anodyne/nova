@@ -347,14 +347,33 @@ class MY_Input extends CI_Input {
 	
 	function _cleanup_text($src = '')
 	{
-		$src = str_replace("‘", "'", $src);
+		/*$src = str_replace("‘", "'", $src);
 		$src = str_replace("’", "'", $src);
 		$src = str_replace("”", '"', $src);
 		$src = str_replace("“", '"', $src);
 		$src = str_replace("–", "-", $src);
 		$src = str_replace("…", "...", $src);
 		
-		return $src;
+		/*$src = str_replace("”", '"', $src);
+		$src = str_replace("“", '"', $src);
+		$src = str_replace("’", '"', $src);
+		
+		return $src;*/
+		
+		$search = array(
+			chr(0xe2) . chr(0x80) . chr(0x98),
+			chr(0xe2) . chr(0x80) . chr(0x99),
+			chr(0xe2) . chr(0x80) . chr(0x9c),
+			chr(0xe2) . chr(0x80) . chr(0x9d),
+			chr(0xe2) . chr(0x80) . chr(0x93),
+			chr(0xe2) . chr(0x80) . chr(0x94)
+		);
+		
+		$replace = array(
+			"'", "'", '"', '"', '-', '-'
+		);
+		
+		return str_replace($search, $replace, $src);
 	}
 
 }
