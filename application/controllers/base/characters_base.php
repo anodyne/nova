@@ -5,11 +5,13 @@
 |---------------------------------------------------------------
 |
 | File: controllers/characters_base.php
-| System Version: 1.0.3
+| System Version: 1.0.4
 |
 | Changes: updated the NPC management page to do all the deletions
 |	on its own page instead of using the character management
-|	deletion functionality (could be confusing to users)
+|	deletion functionality (could be confusing to users); fixed errors
+|	thrown when users with an access level less than 2 try to update
+|	a character
 |
 | Controller that handles the CHARACTERS section of the admin system.
 |
@@ -865,22 +867,30 @@ class Characters_base extends Controller {
 				}
 			}
 			
-			$position1_old = $array['character']['position_1_old'];
-			$position2_old = $array['character']['position_2_old'];
-			
-			/* get rid of the submit button data and old position refs */
+			/* get rid of the submit button */
 			unset($array['character']['submit']);
-			unset($array['character']['position_1_old']);
-			unset($array['character']['position_2_old']);
 			
-			if ($array['character']['crew_type'] == 'inactive' && $user['crew_type'] != 'inactive')
-			{ /* set the deactivate date */
-				$array['character']['date_deactivate'] = now();
-			}
-			
-			if ($array['character']['crew_type'] != 'inactive' && $user['crew_type'] == 'inactive')
-			{ /* wipe out the deactivate date if they're being reactivated */
-				$array['character']['date_deactivate'] = NULL;
+			if ($data['level'] >= 2)
+			{
+				$position1_old = $array['character']['position_1_old'];
+				$position2_old = $array['character']['position_2_old'];
+				
+				/* get rid of the submit button data and old position refs */
+				unset($array['character']['position_1_old']);
+				unset($array['character']['position_2_old']);
+				
+				if ($data['level'] == 3)
+				{
+					if ($array['character']['crew_type'] == 'inactive' && $user['crew_type'] != 'inactive')
+					{ /* set the deactivate date */
+						$array['character']['date_deactivate'] = now();
+					}
+					
+					if ($array['character']['crew_type'] != 'inactive' && $user['crew_type'] == 'inactive')
+					{ /* wipe out the deactivate date if they're being reactivated */
+						$array['character']['date_deactivate'] = NULL;
+					}
+				}
 			}
 			
 			/* update the characters table */
@@ -903,52 +913,58 @@ class Characters_base extends Controller {
 				$flash['status'] = 'success';
 				$flash['message'] = text_output($message);
 				
-				/* update the positions */
-				if ($array['character']['position_1'] != $position1_old)
+				if ($data['level'] == 3)
 				{
-					$posnew = $this->pos->get_position($array['character']['position_1']);
-					$posold = $this->pos->get_position($position1_old);
-					
-					if ($posnew !== FALSE)
+					if ($array['character']['crew_type'] == 'active' || $array['character']['crew_type'] == 'pending')
 					{
-						/* build the update array */
-						$position_update['new'] = array('pos_open' => ($posnew->pos_open == 0) ? 0 : ($posnew->pos_open - 1));
+						/* update the positions */
+						if ($array['character']['position_1'] != $position1_old)
+						{
+							$posnew = $this->pos->get_position($array['character']['position_1']);
+							$posold = $this->pos->get_position($position1_old);
+							
+							if ($posnew !== FALSE)
+							{
+								/* build the update array */
+								$position_update['new'] = array('pos_open' => ($posnew->pos_open == 0) ? 0 : ($posnew->pos_open - 1));
+								
+								/* update the new position */
+								$posnew_update = $this->pos->update_position($array['character']['position_1'], $position_update['new']);
+							}
+							
+							if ($posold !== FALSE)
+							{
+								/* build the update array */
+								$position_update['old'] = array('pos_open' => $posold->pos_open + 1);
+								
+								/* update the new position */
+								$posold_update = $this->pos->update_position($position1_old, $position_update['old']);
+							}
+						}
 						
-						/* update the new position */
-						$posnew_update = $this->pos->update_position($array['character']['position_1'], $position_update['new']);
-					}
-					
-					if ($posold !== FALSE)
-					{
-						/* build the update array */
-						$position_update['old'] = array('pos_open' => $posold->pos_open + 1);
-						
-						/* update the new position */
-						$posold_update = $this->pos->update_position($position1_old, $position_update['old']);
-					}
-				}
-				
-				if ($array['character']['position_2'] != $position2_old)
-				{
-					$posnew = $this->pos->get_position($array['character']['position_2']);
-					$posold = $this->pos->get_position($position2_old);
-					
-					if ($posnew !== FALSE)
-					{
-						/* build the update array */
-						$position_update['new'] = array('pos_open' => ($posnew->pos_open == 0) ? 0 : ($posnew->pos_open - 1));
-						
-						/* update the new position */
-						$posnew_update = $this->pos->update_position($array['character']['position_2'], $position_update['new']);
-					}
-					
-					if ($posold !== FALSE)
-					{
-						/* build the update array */
-						$position_update['old'] = array('pos_open' => $posold->pos_open + 1);
-						
-						/* update the new position */
-						$posold_update = $this->pos->update_position($position2_old, $position_update['old']);
+						if ($array['character']['position_2'] != $position2_old)
+						{
+							$posnew = $this->pos->get_position($array['character']['position_2']);
+							$posold = $this->pos->get_position($position2_old);
+							
+							if ($posnew !== FALSE)
+							{
+								/* build the update array */
+								$position_update['new'] = array('pos_open' => ($posnew->pos_open == 0) ? 0 : ($posnew->pos_open - 1));
+								
+								/* update the new position */
+								$posnew_update = $this->pos->update_position($array['character']['position_2'], $position_update['new']);
+							}
+							
+							if ($posold !== FALSE)
+							{
+								/* build the update array */
+								$position_update['old'] = array('pos_open' => $posold->pos_open + 1);
+								
+								/* update the new position */
+								$posold_update = $this->pos->update_position($position2_old, $position_update['old']);
+							}
+						}
 					}
 				}
 			}
