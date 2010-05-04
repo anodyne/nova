@@ -8,7 +8,7 @@ Current Version
 
 Last Update
 -----------
-03 May 2010
+04 May 2010
 
 Changes in 1.0.4
 ----------------
@@ -24,6 +24,9 @@ Changes in 1.0.4
 * fixed bug where saved personal logs could be shown in along with activated logs for users with multiple characters associated with their account
 * fixed bug where IE threw an exception on the post, log, news and docked item management pages
 * fixed error thrown on the contact page
+* fixed errors thrown on the manage bio page for users with level 1 privileges
+* fixed bug with the manage bio page where positions were updated when they shouldn't be
+* fixed bug where the status change request email wasn't populated properly
 
 Known Issues
 ------------
