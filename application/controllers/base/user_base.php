@@ -11,7 +11,9 @@
 |	if they've elected for nova to remember them; updated the
 |	user deactivation process to also deactivate the users'
 |	remaining active characters; fixed error thrown for level 1
-|	users when updating their account (status and loa hidden items)
+|	users when updating their account (status and loa hidden items);
+|	fixed bug where the status change email wasn't populated
+|	properly
 |
 | Controller that handles the USER section of the admin system.
 |
@@ -1869,7 +1871,7 @@ class User_base extends Controller {
 				$flash['message'] = text_output($message);
 					
 				$email_data = array(
-					'requestor' => $this->session->userdata('mainchar'),
+					'requestor' => $this->session->userdata('main_char'),
 					'reason' => $this->input->post('reason', TRUE),
 					'duration' => $this->input->post('duration', TRUE),
 					'status' => $this->input->post('status', TRUE)
@@ -2033,14 +2035,16 @@ class User_base extends Controller {
 				
 				/* set the email data */
 				$email_data = array(
-					'email_content' => ($this->email->mailtype == 'html') ? nl2br($content) : $content
+					'email_content' => ($this->email->mailtype == 'html') ? nl2br($content) : $content,
+					'email_subject' => $subject,
+					'email_from' => $from_name,
 				);
 				
 				/* where should the email be coming from */
 				$em_loc = email_location('user_status_change', $this->email->mailtype);
 				
 				/* parse the message */
-				$message = $this->parser->parse($em_loc, $email_data, TRUE);
+				$message = $this->parser->parse($em_loc, $email_data, FALSE);
 				
 				/* make a string of email addresses */
 				$to = implode(',', $this->user->get_gm_emails());
