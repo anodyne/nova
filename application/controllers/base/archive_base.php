@@ -27,7 +27,7 @@ class Archive_base extends Controller {
 	{
 		if (floor(phpversion()) < 5)
 		{
-			$error = "Due to a PHP 4 we have been unable to identify, you must be running at least PHP 5.0 or higher on your server in order to use Nova's SMS Archive feature. We apologize for this inconvenience and will continue to troubleshoot the bug to find a resolution that will allow PHP 4 servers to use the archive feature. If you have any questions, please contact <a href='http://www.anodyne-productions.com' target='_blank'>Anodyne Productions</a>.";
+			$error = "Due to a PHP 4 issue we have been unable to identify, you must be running at least PHP 5.0 or higher on your server in order to use Nova's SMS Archive feature. We apologize for this inconvenience and will continue to troubleshoot the bug to find a resolution that will allow PHP 4 servers to use the archive feature. If you have any questions, please contact <a href='http://www.anodyne-productions.com' target='_blank'>Anodyne Productions</a>.";
 			show_error($error);
 		}
 		
