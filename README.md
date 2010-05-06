@@ -8,7 +8,7 @@ Current Version
 
 Last Update
 -----------
-04 May 2010
+05 May 2010
 
 Changes in 1.0.4
 ----------------
