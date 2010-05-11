@@ -5,7 +5,7 @@
 |---------------------------------------------------------------
 |
 | File: assets/install/install_data_basic.php
-| System Version: 1.0.3
+| System Version: 1.0.4
 |
 | Data file that includes all the data being inserted into the
 | database after creating the tables.
@@ -2352,7 +2352,7 @@ $system_info = array(
 		'sys_install_date' => now(),
 		'sys_version_major' => 1,
 		'sys_version_minor' => 0,
-		'sys_version_update' => 3)
+		'sys_version_update' => 4)
 );
 
 $system_versions = array(
@@ -2456,6 +2456,29 @@ $system_versions = array(
 * fixed bug where wiki pages were being put in the uncategorized section even if they had categories
 * fixed error thrown for missing option parameters
 * fixed error thrown during accepting/rejecting a docked ship application"),
+	array(
+		'version' => '1.0.4',
+		'version_major' => '1',
+		'version_minor' => '0',
+		'version_update' => '4',
+		'version_date' => 1273705200,
+		'version_launch'	=> "Nova 1.0.4 is the fourth maintainance release for Nova 1.0 and continues to fix issues with the system. Included in this release are fixes for errors being thrown throughout the system, bugs with emails not being sent out on some servers, user access errors and filtering text before going into the database. A full changelog can be found on AnodyneDocs or from the System and Versions report once Nova has been updated. This update is recommended for all users.",
+		'version_changes'	=> "* added the 1.0.4 update file
+* added the MY\_Email library file
+* updated the version update files to make sure the values get reset at the start of every file
+* updated jquery ui to version 1.8.1
+* updated markItUp! to version 1.1.7
+* updated the textile parser to fix some bugs (thanks to dustin for catching this)
+* updated the wiki controller to show an error message if the server is running php 4
+* updated the archives controller to show an error message if the server is running php 4
+* updated the MY\_Input library to try and do filtering for MS Word characters a little better
+* fixed error thrown when a user with level 1 user account privileges updates their account
+* fixed bug where saved personal logs could be shown in along with activated logs for users with multiple characters associated with their account
+* fixed bug where IE threw an exception on the post, log, news and docked item management pages
+* fixed error thrown on the contact page
+* fixed errors thrown on the manage bio page for users with level 1 privileges
+* fixed bug with the manage bio page where positions were updated when they shouldn't be
+* fixed bug where the status change request email wasn't populated properly"),
 );
 
 $tour_fields = array(
