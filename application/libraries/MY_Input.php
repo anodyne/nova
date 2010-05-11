@@ -360,7 +360,7 @@ class MY_Input extends CI_Input {
 		
 		return $src;*/
 		
-		$search = array(
+		/*$search = array(
 			chr(0xe2) . chr(0x80) . chr(0x98),
 			chr(0xe2) . chr(0x80) . chr(0x99),
 			chr(0xe2) . chr(0x80) . chr(0x9c),
@@ -373,7 +373,19 @@ class MY_Input extends CI_Input {
 			"'", "'", '"', '"', '-', '-'
 		);
 		
-		return str_replace($search, $replace, $src);
+		return str_replace($search, $replace, $src);*/
+		
+		$badContent = array("&nbsp;");
+		
+		$src = trim(str_replace($badContent, " ", $src));
+		
+		$theBad = array("“","”","‘","’","…","—","–");
+		$theGood = array("\"","\"","'","'","...","-","-");
+		$src = str_replace($theBad, $theGood, $src);
+		
+		$src = preg_replace('/[^(\x20-\x7F)\x0A]*/','', $src);
+		
+		return $src;
 	}
 
 }
