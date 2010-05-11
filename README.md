@@ -4,11 +4,11 @@ Anodyne Production's next-generation RPG management system combines popular feat
 
 Current Version
 ---------------
-1.0.4-pre
+1.0.4
 
 Last Update
 -----------
-05 May 2010
+11 May 2010
 
 Changes in 1.0.4
 ----------------
@@ -20,6 +20,7 @@ Changes in 1.0.4
 * updated the textile parser to fix some bugs (thanks to dustin for catching this)
 * updated the wiki controller to show an error message if the server is running php 4
 * updated the archives controller to show an error message if the server is running php 4
+* updated the MY\_Input library to try and do filtering for MS Word characters a little better
 * fixed error thrown when a user with level 1 user account privileges updates their account
 * fixed bug where saved personal logs could be shown in along with activated logs for users with multiple characters associated with their account
 * fixed bug where IE threw an exception on the post, log, news and docked item management pages
@@ -32,9 +33,6 @@ Known Issues
 ------------
 http://github.com/anodyne/nova/issues/labels/Bug
 
-* the remember feature can cause issues like errors that say files can't be found
-* thresher doesn't work under php4
-
 Version History
 ---------------
 <table>
@@ -42,7 +40,7 @@ Version History
 		<th>Version</th><th>Release Date</th>
 	</tr>
 	<tr>
-		<td>1.0.4</td><td>-</td>
+		<td>1.0.4</td><td>12 May 2010</td>
 	</tr>
 	<tr>
 		<td>1.0.3</td><td>26 April 2010</td>
