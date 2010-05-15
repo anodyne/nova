@@ -13,7 +13,9 @@
 	<?php if ($count > 0): ?>
 		<?php foreach ($characters as $c): ?>
 			<?php if (isset($c['chars'])): ?>
-				<?php echo text_output($c['dept'], 'h3');?>
+				<?php if (isset($c['dept'])): ?>
+					<?php echo text_output($c['dept'], 'h3', 'page-subhead');?>
+				<?php endif;?>
 				<table class="table100 zebra">
 					<tbody>
 					<?php foreach ($c['chars'] as $i): ?>

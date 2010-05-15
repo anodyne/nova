@@ -21,7 +21,9 @@
 			<?php if ($count['active'] > 0): ?>
 				<?php foreach ($characters as $c): ?>
 					<?php if (isset($c['chars']['active'])): ?>
-						<?php echo text_output($c['dept'], 'h3');?>
+						<?php if (isset($c['dept'])): ?>
+							<?php echo text_output($c['dept'], 'h3', 'page-subhead');?>
+						<?php endif;?>
 						<table class="table100 zebra">
 							<tbody>
 							<?php foreach ($c['chars']['active'] as $i): ?>
@@ -69,7 +71,9 @@
 			<?php if ($count['inactive'] > 0): ?>
 				<?php foreach ($characters as $c): ?>
 					<?php if (isset($c['chars']['inactive'])): ?>
-						<?php echo text_output($c['dept'], 'h3');?>
+						<?php if (isset($c['dept'])): ?>
+							<?php echo text_output($c['dept'], 'h3', 'page-subhead');?>
+						<?php endif;?>
 						<table class="table100 zebra">
 							<tbody>
 							<?php foreach ($c['chars']['inactive'] as $i): ?>
@@ -105,7 +109,9 @@
 			<?php if ($count['pending'] > 0): ?>
 				<?php foreach ($characters as $c): ?>
 					<?php if (isset($c['chars']['pending'])): ?>
-						<?php echo text_output($c['dept'], 'h3', 'page-subhead');?>
+						<?php if (isset($c['dept'])): ?>
+							<?php echo text_output($c['dept'], 'h3', 'page-subhead');?>
+						<?php endif;?>
 						<table class="table100 zebra">
 							<tbody>
 							<?php foreach ($c['chars']['pending'] as $i): ?>
