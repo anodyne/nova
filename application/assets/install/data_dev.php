@@ -5,7 +5,7 @@
 |---------------------------------------------------------------
 |
 | File: assets/install/install_data_dev.php
-| System Version: 1.0.4
+| System Version: 1.0.5
 |
 | Data file that includes all the data being inserted into the
 | database after creating the tables.
@@ -3584,7 +3584,7 @@ $system_components = array(
 		'comp_desc' => 'jQuery is a lightweight JavaScript library that emphasizes interaction between JavaScript and HTML.'),
 	array(
 		'comp_name' => 'jQuery UI',
-		'comp_version' => '1.8',
+		'comp_version' => '1.8.1',
 		'comp_url' => 'http://jqueryui.com/',
 		'comp_desc' => 'jQuery UI is a lightweight, easily customizable interface library for the jQuery Javascript library.'),
 	array(
@@ -3624,14 +3624,14 @@ $system_components = array(
 		'comp_url' => 'http://rikrikrik.com/jquery/quicksearch/'),
 	array(
 		'comp_name' => 'markItUp!',
-		'comp_version' => '1.1.6.1',
+		'comp_version' => '1.1.7',
 		'comp_desc' => "markItUp! is a JavaScript plugin built on the jQuery library that allows you to turn any textarea into a markup editor.",
 		'comp_url' => 'http://markitup.jaysalvat.com/home/'),
 	array(
 		'comp_name' => 'Textile',
 		'comp_version' => '2.0.0',
 		'comp_desc' => "Textile is a lightweight markup language that converts its marked-up text input to valid, well-formed XHTML and also inserts character entity references for apostrophes, opening and closing single and double quotation marks, ellipses and em dashes.",
-		'comp_url' => 'http://textile.thresholdstate.com/'),
+		'comp_url' => 'http://textpattern.com/download'),
 	array(
 		'comp_name' => 'PHP Markdown Extra',
 		'comp_version' => '1.2.4',
@@ -3787,6 +3787,14 @@ $system_versions = array(
 * fixed errors thrown on the manage bio page for users with level 1 privileges
 * fixed bug with the manage bio page where positions were updated when they shouldn't be
 * fixed bug where the status change request email wasn't populated properly"),
+	array(
+		'version' => '1.0.5',
+		'version_major' => '1',
+		'version_minor' => '0',
+		'version_update' => '5',
+		'version_date' => 1273705200,
+		'version_launch'	=> "Nova 1.0.5 is the fifth maintainance release for Nova 1.0 and continues to fix issues with the system. Included in this release are fixes for errors being thrown throughout the system, bugs with emails not being sent out on some servers, user access errors and filtering text before going into the database. A full changelog can be found on AnodyneDocs or from the System and Versions report once Nova has been updated. This update is recommended for all users.",
+		'version_changes'	=> ""),
 );
 
 $tour = array(
