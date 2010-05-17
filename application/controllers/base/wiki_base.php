@@ -5,11 +5,12 @@
 |---------------------------------------------------------------
 |
 | File: controllers/wiki_base.php
-| System Version: 1.0.4
+| System Version: 1.0.5
 |
 | Changes: updated Thresher to use the proper template regions; updated the 
 |	constructor to show an error if someone isn't running PHP 5 due to a bug
-|	somewhere in the code causing 500 errors
+|	somewhere in the code causing 500 errors; fixed errors that were thrown
+|	when editing a wiki page
 |
 | Controller that handles the WIKI section of the system.
 |
@@ -678,7 +679,7 @@ class Wiki_base extends Controller {
 						}
 					}
 					
-					$category_string = implode(',', $category_array);
+					$category_string = (isset($category_array) && is_array($category_array)) ? implode(',', $category_array) : FALSE;
 					
 					/* create the array of draft data */
 					$draft_array = array(

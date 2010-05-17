@@ -15,6 +15,7 @@ Changes in 1.0.5
 * added the 1.0.5 update file
 * fixed errors after upgrade on the characters management page
 * fixed error after upgrade on the npc management page
+* fixed errors thrown when editing a wiki page
 
 Known Issues
 ------------
