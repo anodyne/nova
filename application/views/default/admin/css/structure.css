@@ -61,11 +61,6 @@ a.image, a.image:hover {
 	text-decoration: none;
 }
 
-.upload-close {
-	float: left;
-	padding: 2px 2px 5px 4px;
-}
-
 /*
 |---------------------------------------------------------------
 | INPUTS
@@ -159,19 +154,10 @@ td.align_center { text-align: center; }
 | BUTTONS
 |---------------------------------------------------------------
 */
-button.button-main {
-	height: 28px;
-	padding: 0 30px 2px 30px;
-	outline: 0 !important;
-}
-button.button-sec {
-	height: 22px;
-	padding: 0 10px 2px 10px;
-	outline: 0 !important;
-}
 
-button.button-signin {
-	padding: 0 10px 2px 10px !important;
+button {
+	height: 25px;
+	padding: 0 10px 1px 10px;
 	outline: 0 !important;
 }
 
@@ -181,12 +167,8 @@ button.button-small {
 	outline: 0 !important;
 }
 
-input.button-main {
-	height: 28px;
-	padding: 0 30px;
-}
-input.button-sec {
-	height: 22px;
+input.button-main, input.button-sec {
+	height: 25px;
 	padding: 0 10px;
 }
 
@@ -244,18 +226,6 @@ ul.padding1, ol.padding1 { padding: .5em 1em; }
 	height: 22px;
 	line-height: 22px;
 	width: 350px;
-}
-
-#list-grid {
-	margin: 0;
-	padding: 0;
-}
-#list-grid li {
-	margin: 3px 3px 3px 0;
-	padding: 3px 3px 3px 0;
-	float: left;
-	width: 150px;
-	height: 150px;
 }
 
 #accordion ul {
@@ -357,12 +327,6 @@ img { border: none; }
 
 .indent-left { padding: 0 0 0 1.5em; }
 
-.logged-in-controls {
-	float: right;
-	padding: 11px 5px 0 0;
-	height: 20px;
-}
-
 /*
 |---------------------------------------------------------------
 | ACP PANEL
@@ -405,7 +369,6 @@ img { border: none; }
 | DASHBOARD
 |---------------------------------------------------------------
 */
-#panel {}
 .panel-handle a, .panel-handle a:hover {
 	outline: 0;
 	margin: 0;
@@ -422,7 +385,8 @@ img { border: none; }
 }
 
 #panel .panel-body {
-	padding: 1em;
+	display: none;
+	padding: 0 0 1em 0;
 }
 
 .panel-handle {

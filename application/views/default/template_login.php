@@ -4,10 +4,10 @@
 | TEMPLATE - LOGIN
 |---------------------------------------------------------------
 |
-| File: application/views/default/template_login.php
+| File: application/views/beta/template_login.php
 | Skin Version: 1.0
 |
-| Login layout file used by the default skin.
+| Login template file used by the beta skin.
 |
 | $sec options are: main, wiki, admin, login
 | $css can be anything you want (with a .css extension of course)
@@ -64,21 +64,18 @@ echo "<?xml version='1.0' encoding='UTF-8'?>\r\n";
 		
 		<?php echo $javascript;?>
 	</head>
-<?php if (lang('rtl') === TRUE): ?>
-	<body class="rtl">
-<?php else: ?>
 	<body>
-<?php endif;?>
 		<!-- BODY -->
 		<div id="body">
-			
-			<div class="upper">
-				<div class="wrapper">
-					<?php echo text_output($this->options['sim_name'], 'div', 'name');?>
-				</div>
-			</div>
-			
 			<div class="wrapper">
+				<div id="head">
+					<div class="logo">
+						<?php echo img(APPFOLDER .'/views/'. $current_skin .'/'. $sec .'/images/nova-small.png', FALSE);?>
+					</div>
+					
+					<?php echo text_output($this->options['sim_name'], '');?>
+				</div>
+			
 				<!-- PAGE CONTENT -->
 				<div class="content">
 					<?php echo $flash_message;?>
@@ -87,27 +84,23 @@ echo "<?xml version='1.0' encoding='UTF-8'?>\r\n";
 					<?php if (!$this->uri->segment(2) || $this->uri->segment(2) == 'index' || $this->uri->segment(2) == 'reset_password'): ?>
 						<!-- FAUX FOOTER -->
 						<div class="lower_content">
-							
+							<?php if ($this->uri->segment(2) && $this->uri->segment(2) != 'index'): ?>
+								<strong><?php echo anchor('login/index', ucwords(lang('actions_login') .' '. lang('time_now')));?></strong>
+								&nbsp; | &nbsp;
+							<?php endif; ?>
+	
+							<?php if ($this->uri->segment(2) != 'reset_password'): ?>
+								<strong><?php echo anchor('login/reset_password', ucwords(lang('actions_reset') .' '. lang('labels_password')));?></strong>
+								&nbsp; | &nbsp;
+							<?php endif; ?>
+	
+							<strong><?php echo anchor('main/index', ucfirst(lang('actions_back') .' '. lang('labels_to') .' '. lang('labels_site')));?></strong>
 						</div>
 					<?php endif; ?>
 				</div>
 				
 				<!-- FOOTER -->
 				<div id="footer">
-					<?php if ($this->uri->segment(2) && $this->uri->segment(2) != 'index'): ?>
-						<strong><?php echo anchor('login/index', ucwords(lang('actions_login') .' '. lang('time_now')));?></strong>
-						&nbsp; | &nbsp;
-					<?php endif; ?>
-
-					<?php if ($this->uri->segment(2) != 'reset_password'): ?>
-						<strong><?php echo anchor('login/reset_password', ucwords(lang('actions_reset') .' '. lang('labels_password')));?></strong>
-						&nbsp; | &nbsp;
-					<?php endif; ?>
-
-					<strong><?php echo anchor('main/index', ucfirst(lang('actions_back') .' '. lang('labels_to') .' '. lang('labels_site')));?></strong>
-					
-					<br /><br />
-					
 					Powered by <strong><?php echo APP_NAME;?></strong>
 				</div>
 			</div>

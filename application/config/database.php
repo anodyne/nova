@@ -1,56 +1,53 @@
-<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
-/*
-| -------------------------------------------------------------------
-| DATABASE CONNECTIVITY SETTINGS
-| -------------------------------------------------------------------
-| This file will contain the settings needed to access your database.
-|
-| For complete instructions please consult the "Database Connection"
-| page of the User Guide.
-|
-| -------------------------------------------------------------------
-| EXPLANATION OF VARIABLES
-| -------------------------------------------------------------------
-|
-|	['hostname'] The hostname of your database server.
-|	['username'] The username used to connect to the database
-|	['password'] The password used to connect to the database
-|	['database'] The name of the database you want to connect to
-|	['dbdriver'] The database type. ie: mysql.  Currently supported:
-				 mysql, mysqli, postgre, odbc, mssql, sqlite, oci8
-|	['dbprefix'] You can add an optional prefix, which will be added
-|				 to the table name when using the  Active Record class
-|	['pconnect'] TRUE/FALSE - Whether to use a persistent connection
-|	['db_debug'] TRUE/FALSE - Whether database errors should be displayed.
-|	['cache_on'] TRUE/FALSE - Enables/disables query caching
-|	['cachedir'] The path to the folder where cache files should be stored
-|	['char_set'] The character set used in communicating with the database
-|	['dbcollat'] The character collation used in communicating with the database
-|
-| The $active_group variable lets you choose which connection group to
-| make active.  By default there is only one group (the "default" group).
-|
-| The $active_record variables lets you determine whether or not to load
-| the active record class
-*/
+<?php defined('SYSPATH') OR die('No direct access allowed.');
 
-$active_group = "default";
-$active_record = TRUE; /** DO NOT CHANGE THIS - DOING SO WILL BREAK THE SYSTEM! **/
-
-/** DO NOT CHANGE THESE AFTER INSTALLING THE SYSTEM! **/
-
-$db['default']['hostname'] = "localhost";
-$db['default']['username'] = "nova";
-$db['default']['password'] = "";
-$db['default']['database'] = "nova";
-$db['default']['dbdriver'] = "mysql";
-$db['default']['dbprefix'] = "nova_";
-$db['default']['pconnect'] = TRUE;
-$db['default']['db_debug'] = NOVA_DB_DEBUG;
-$db['default']['cache_on'] = FALSE;
-$db['default']['cachedir'] = "";
-$db['default']['char_set'] = "utf8";
-$db['default']['dbcollat'] = "utf8_general_ci";
-
-/* End of file database.php */
-/* Location: ./application/config/database.php */
+return array
+(
+	'default' => array
+	(
+		'type'       => 'mysql',
+		'connection' => array(
+			/**
+			 * The following options are available for MySQL:
+			 *
+			 * string   hostname
+			 * string   username
+			 * string   password
+			 * boolean  persistent
+			 * string   database
+			 *
+			 * Ports and sockets may be appended to the hostname.
+			 */
+			'hostname'   => 'localhost',
+			'username'   => 'nova',
+			'password'   => FALSE,
+			'persistent' => FALSE,
+			'database'   => 'nova',
+		),
+		'table_prefix' => 'nova_',
+		'charset'      => 'utf8',
+		'caching'      => FALSE,
+		'profiling'    => TRUE,
+	),
+	'alternate' => array(
+		'type'       => 'pdo',
+		'connection' => array(
+			/**
+			 * The following options are available for PDO:
+			 *
+			 * string   dsn
+			 * string   username
+			 * string   password
+			 * boolean  persistent
+			 * string   identifier
+			 */
+			'dsn'        => 'mysql:host=localhost;dbname=kohana',
+			'username'   => 'root',
+			'password'   => 'r00tdb',
+			'persistent' => FALSE,
+		),
+		'table_prefix' => '',
+		'charset'      => 'utf8',
+		'caching'      => FALSE,
+		'profiling'    => TRUE,
+	),
+);

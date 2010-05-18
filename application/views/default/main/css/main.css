@@ -3,11 +3,11 @@
 | STYLESHEET - MAIN
 |---------------------------------------------------------------
 |
-| File: pulsar/main/css/main.css
+| File: default/main/css/main.css
 | Author: David VanScott [davidv@anodyne-productions.com]
 | Version: 1.0
 */
 
 @import url('structure.css');
 @import url('skin.css');
-@import url('jquery.ui.tabs.css');
+@import url('ui.tabs.css');
