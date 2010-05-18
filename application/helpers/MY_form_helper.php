@@ -337,22 +337,17 @@ if ( ! function_exists('form_dropdown_position'))
 			
 			foreach ($positions->result() as $pos)
 			{
-				$dept = $ci->dept->get_dept($pos->pos_dept, array('dept_name', 'dept_type'));
+				$dept = $ci->dept->get_dept($pos->pos_dept, array('dept_name', 'dept_type', 'dept_display'));
 				
-				if ($type == 'all' || $type == 'open')
+				if (($dept_type == 'playing' && $dept['dept_type'] == 'playing') ||
+						($dept_type == 'nonplaying' && $dept['dept_type'] == 'nonplaying') ||
+						$dept['dept_display'] == 'y')
 				{
-					if (empty($dept_type) || ($dept_type == 'playing' && $dept->dept_type == 'playing') ||
-							$dept_type == 'nonplaying' && $dept->dept_type == 'nonplaying')
+					if ($type == 'all' || $type == 'open')
 					{
 						$options[$dept['dept_name']][$pos->pos_id] = $pos->pos_name;
 					}
-				}
-				else
-				{
-					$dept = $ci->dept->get_dept($pos->pos_dept, 'dept_type');
-					
-					if (empty($dept_type) || ($dept_type == 'playing' && $dept->dept_type == 'playing') ||
-							$dept_type == 'nonplaying' && $dept->dept_type == 'nonplaying')
+					else
 					{
 						$options[$pos->pos_id] = $pos->pos_name;
 					}
