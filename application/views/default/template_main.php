@@ -33,7 +33,7 @@
 	<div class="head_top"></div>
 	<div class="wrapper">
 		<div class="head_content">
-			<?php echo Html::image('application/views/'.$skin.'/'.$sec.'/images/head-logo.png');?>
+			<?php echo html::image('application/views/'.$skin.'/'.$sec.'/images/head-logo.png');?>
 		</div>
 	</div>
 </div>

@@ -3,103 +3,129 @@
  * English Language File
  *
  * @package		Nova Core
- * @package		Language
- * @author		David VanScott [davidv@anodyne-productions.com]
+ * @subpackage	I18n
+ * @author		Anodyne Productions
  * @version		2.0
  *
  * The contention for language keys is GROUP.WORD where spaces are
  * replaced with underscores (_).
  */
 
-$translations['global.award']				= 'award';
-$translations['global.awards']				= 'awards';
-$translations['global.character']			= 'character';
-$translations['global.characters']			= 'characters';
-$translations['global.command_staff']		= 'command staff';
-$translations['global.deck']				= 'deck';
-$translations['global.decks']				= 'decks';
-$translations['global.department']			= 'department';
-$translations['global.departments']			= 'departments';
-$translations['global.game_master']			= 'game master';
-$translations['global.log']					= 'log';
-$translations['global.logs']				= 'logs';
-$translations['global.mission']				= 'mission';
-$translations['global.missions']			= 'missions';
-$translations['global.mission_post']		= 'mission post';
-$translations['global.mission_posts']		= 'mission posts';
-$translations['global.news']				= 'news';
-$translations['global.news_item']			= 'news item';
-$translations['global.news_items']			= 'news items';
-$translations['global.personal_log'] 		= 'personal log';
-$translations['global.personal_logs'] 		= 'personal logs';
-$translations['global.position']			= 'position';
-$translations['global.positions']			= 'positions';
-$translations['global.post']				= 'post';
-$translations['global.posts']				= 'posts';
-$translations['global.private_message']		= 'private message';
-$translations['global.private_messages']	= 'private messages';
-$translations['global.rank']				= 'rank';
-$translations['global.ranks']				= 'ranks';
-$translations['global.sim']					= 'sim';
-$translations['global.sims']				= 'sims';
-$translations['global.specification']		= 'specification';
-$translations['global.specifications']		= 'specifications';
-$translations['global.specs']				= 'specs';
-$translations['global.sub_department']		= 'sub department';
-$translations['global.sub_departments']		= 'sub departments';
-$translations['global.system_admin']		= 'system administrator';
-$translations['global.tour']				= 'tour';
-$translations['global.tour_item']			= 'tour item';
-$translations['global.tour_items']			= 'tour items';
-$translations['global.user']				= 'user';
-$translations['global.user_poss']			= "user's";
-$translations['global.users']				= 'users';
-$translations['global.webmaster']			= 'webmaster';
-$translations['global.wiki']				= 'wiki';
-
-$translations['word.by']					= 'by';
-$translations['word.category']				= 'category';
-$translations['word.comment']				= 'comment';
-$translations['word.comments']				= 'comments';
-$translations['word.email_address']			= 'email address';
-$translations['word.in']					= 'in';
-$translations['word.next']					= 'next';
-$translations['word.none']					= 'none';
-$translations['word.off']					= 'off';
-$translations['word.on']					= 'on';
-$translations['word.password']				= 'password';
-$translations['word.previous']				= 'previous';
-$translations['word.step']					= 'step';
-$translations['word.tags']					= 'tags';
-
-$translations['action.added']				= 'added';
-$translations['action.edited']				= 'edited';
-$translations['action.posted']				= 'posted';
-$translations['action.processing']			= 'processing';
-$translations['action.said']				= 'said';
-$translations['action.submit']				= 'submit';
-$translations['action.view']				= 'view';
-
-$translations['error.header']				= "Error!";
-$translations['error.not_found']			= "No :item found.";
-$translations['error.private_news']			= "This :news is private and can only be viewed by registered :users.";
-
-$translations['abbr.rss']					= 'RSS';
-
-$translations['phrase.enter_your_comment']		= "Enter your comment on this :item.";
-$translations['phrase.flash_success']			= ":item was successfully :action.:extra";
-$translations['phrase.flash_success_plural']	= ":item were successfully :action.:extra";
-$translations['phrase.flash_failure']			= ":item was not successfully :action.:extra";
-$translations['phrase.flash_failure_plural']	= ":item were not successfully :action.:extra";
-$translations['phrase.please_choose_one']		= "Please Choose One";
-
-$translations['order.next']						= 'next';
-
-$translations['status.inactive']				= 'inactive';
-$translations['status.nonplaying']				= 'non-playing';
-$translations['status.pending']					= 'pending';
-$translations['status.playing']					= 'playing';
-$translations['status.progress']				= 'progress';
+return array
+(
+	/**
+	 * Global Language Items
+	 */
+	'global.award' => 'award',
+	'global.awards' => 'awards',
+	'global.character' => 'character',
+	'global.characters' => 'characters',
+	'global.command_staff' => 'command staff',
+	'global.deck' => 'deck',
+	'global.decks' => 'decks',
+	'global.department' => 'department',
+	'global.departments' => 'departments',
+	'global.game_master' => 'game master',
+	'global.log' => 'log',
+	'global.logs' => 'logs',
+	'global.mission' => 'mission',
+	'global.missions' => 'missions',
+	'global.mission_post' => 'mission_post',
+	'global.mission_posts' => 'mission posts',
+	'global.news' => 'news',
+	'global.news_item' => 'news item',
+	'global.news_items' => 'news items',
+	'global.personal_log' => 'personal log',
+	'global.personal logs' => 'personal logs',
+	'global.position' => 'position',
+	'global.positions' => 'positions',
+	'global.post' => 'post',
+	'global.posts' => 'posts',
+	'global.private_message' => 'private message',
+	'global.private_messages' => 'private messages',
+	'global.rank' => 'rank',
+	'global.ranks' => 'ranks',
+	'global.sim' => 'sim',
+	'global.sims' => 'sims',
+	'global.specification' => 'specification',
+	'global.specifications' => 'specifications',
+	'global.specs' => 'specs',
+	'global.sub_department' => 'sub department',
+	'global.sub_departments' => 'sub departments',
+	'global.system_admin' => 'system administrator',
+	'global.tour' => 'tour',
+	'global.tour_item' => 'tour item',
+	'global.tour_items' => 'tour items',
+	'global.user' => 'user',
+	'global.users' => 'users',
+	'global.users_poss' => "user's",
+	'global.webmaster' => 'webmaster',
+	'global.wiki' => 'wiki',
+	
+	/**
+	 * Action Language Items
+	 */
+	'action.added' => 'added',
+	'action.edited' => 'edited',
+	'action.posted' => 'posted',
+	'action.processing' => 'processing',
+	'action.said' => 'said',
+	'action.submit' => 'submit',
+	'action.view' => 'view',
+	
+	/**
+	 * Labels
+	 */
+	'label.by' => 'by',
+	'label.category' => 'category',
+	'label.comment' => 'comment',
+	'label.comments' => 'comments',
+	'label.email_address' => 'email address',
+	'label.in' => 'in',
+	'label.none' => 'none',
+	'label.off' => 'off',
+	'label.on' => 'on',
+	'label.password' => 'password',
+	'label.step' => 'step',
+	'label.tags' => 'tags',
+	
+	/**
+	 * Ordering
+	 */
+	'order.next' => 'next',
+	'order.previous' => 'previous',
+	
+	/**
+	 * Statuses
+	 */
+	'status.inactive' => 'inactive',
+	'status.nonplaying' => 'non-playing',
+	'status.pending' => 'pending',
+	'status.playing' => 'playing',
+	'status.progress' => 'progress',
+	
+	/**
+	 * Abbreviations
+	 */
+	'abbr.rss' => 'RSS',
+	
+	/**
+	 * Error Messages
+	 */
+	'error.header' => 'Error!',
+	'error.not_found' => "No :item found.",
+	'error.private_news' => "This :news is private and can only be viewed by registered :users.",
+	
+	/**
+	 * Phrases
+	 */
+	'phrase.enter_your_comment' => "Enter your comment on this :item.",
+	'phrase.flash_success' => ":item was successfully :action.:extra",
+	'phrase.flash_success_plural' => ":item were successfully :action.:extra",
+	'phrase.flash_failure' => ":item was not successfully :action.:extra",
+	'phrase.flash_failure_plural' => ":item were not successfully :action.:extra",
+	'phrase.please_choose_one' => 'Please Choose One',
+);
 
 $translations['UM12']	= '(UTC -12:00) Baker/Howland Island';
 $translations['UM11']	= '(UTC -11:00) Samoa Time Zone, Niue';

@@ -1,6 +1,6 @@
 <?php defined('SYSPATH') OR die('No direct access allowed.');
 /**
- * Main Controller (Base)
+ * Main Controller
  *
  * @package		Nova Core
  * @subpackage	Controller
@@ -22,13 +22,12 @@ class Controller_Nova_Main extends Controller_Nova_Base
 		
 		// set the variables
 		$this->skin		= $this->session->get('skin_main', $this->options['skin_main']);
-		//$this->skin		= (Auth::is_logged_in()) ? $this->session->get('skin_main') : $this->options['skin_main'];
-		$this->rank		= (Auth::is_logged_in()) ? $this->session->get('display_rank') : $this->options['display_rank'];
-		$this->timezone	= (Auth::is_logged_in()) ? $this->session->get('timezone') : $this->options['timezone'];
-		$this->dst		= (Auth::is_logged_in()) ? $this->session->get('dst') : $this->options['daylight_savings'];
+		$this->rank		= $this->session->get('display_rank', $this->options['display_rank']);
+		$this->timezone	= $this->session->get('timezone', $this->options['timezone']);
+		$this->dst		= $this->session->get('dst', $this->options['daylight_savings']);
 		
 		// set the shell
-		$this->template = new View('_common/layouts/main', array('skin' => $this->skin, 'sec' => 'main'));
+		$this->template = View::factory('_common/layouts/main', array('skin' => $this->skin, 'sec' => 'main'));
 		
 		// grab the image index
 		$this->images = Utility::get_image_index($this->skin);
@@ -36,7 +35,7 @@ class Controller_Nova_Main extends Controller_Nova_Base
 		// set the variables in the template
 		$this->template->title 					= $this->options['sim_name'].' :: ';
 		$this->template->javascript				= FALSE;
-		$this->template->layout					= new View($this->skin.'/template_main', array('skin' => $this->skin, 'sec' => 'main'));
+		$this->template->layout					= View::factory($this->skin.'/template_main', array('skin' => $this->skin, 'sec' => 'main'));
 		$this->template->layout->nav_main 		= Menu::build('main', 'main');
 		$this->template->layout->nav_sub 		= Menu::build('sub', 'main');
 		$this->template->layout->ajax 			= FALSE;
@@ -57,7 +56,7 @@ class Controller_Nova_Main extends Controller_Nova_Base
 		$this->options['show_news'] = $this->mCore->get('settings', $args, 'setting_value');
 		
 		// create a new content view
-		$this->template->layout->content = new View(location::view('main_index', $this->skin, 'main', 'pages'));
+		$this->template->layout->content = View::factory(location::view('main_index', $this->skin, 'main', 'pages'));
 		
 		// assign the object a shorter variable to use in the method
 		$data = $this->template->layout->content;
@@ -131,12 +130,12 @@ class Controller_Nova_Main extends Controller_Nova_Base
 		# code...
 	}*/
 	
-	public function viewnews($id = '')
+	public function action_viewnews($id = '')
 	{
 		# TODO: need to handle comment moderation
 		
 		// create a new content view
-		$this->template->layout->content = new View(location::view('main_viewnews', $this->skin, 'main', 'pages'));
+		$this->template->layout->content = View::factory(location::view('main_viewnews', $this->skin, 'main', 'pages'));
 		
 		// assign the object a shorter variable to use in the method
 		$data = $this->template->layout->content;
@@ -308,7 +307,7 @@ class Controller_Nova_Main extends Controller_Nova_Base
 		);
 	}
 	
-	public function test()
+	public function action_test()
 	{
 		//$zone = new DateTimeZone();
 		//echo Kohana::debug($zone->listAbbreviations());

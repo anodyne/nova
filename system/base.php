@@ -26,7 +26,7 @@ if ( ! defined('KOHANA_START_MEMORY'))
  * @param   string  target language
  * @return  string
  */
-function __($string, array $values = NULL, $lang = 'en-us')
+function __($string, array $values = NULL, $lang = NULL)
 {
 	if ($lang !== I18n::$lang)
 	{
