@@ -1,0 +1,267 @@
+﻿SELECT
+====
+
+To set the select argument, create an array with all the fields you want to select.
+
+$args = array
+(
+	'select' => array('field1', 'field2', 'field3')
+);
+
+// would produce
+SELECT field1, field2, field3 FROM table
+
+WHERE
+====
+
+To build a where statement, whether it uses multiple where statements or not, simply create an array in the where array.
+
+$args = array
+(
+	'where' => array
+				(
+					'field1' => 'value',
+					'field2' => 'value',
+					'field3' => 'value'
+				)
+);
+
+// would produce
+SELECT * FROM table WHERE `field1` = 'value' AND `field2` = 'value' AND `field3` = 'value'
+
+ORWHERE
+====
+
+To build an orwhere statement, whether it uses multiple orwhere statements or not, simply create an array in the orwhere array.
+
+$args = array
+(
+	'orwhere' => array
+				(
+					'field1' => 'value',
+					'field2' => 'value',
+				)
+);
+
+// would produce
+SELECT * FROM table WHERE `field1` = 'value' OR `field2` = 'value'
+
+LIKE
+====
+
+The like statements are unique because of the wildcards and how Kohana handles them. If the third parameter of the statement is TRUE, Kohana will put wildcards at the beginning and end of the statement. If the third parameter is FALSE, it won't automatically set the wildcards and you can manually place those.
+
+$args = array
+(
+	'like' => array
+				(
+					array('field1', 'value', TRUE),
+					array('field2', 'val%', FALSE)
+				)
+);
+
+// would produce
+SELECT * FROM table WHERE `field1` LIKE '%value%' AND `field2` LIKE 'val%'
+
+ORLIKE
+====
+
+The like statements are unique because of the wildcards and how Kohana handles them. If the third parameter of the statement is TRUE, Kohana will put wildcards at the beginning and end of the statement. If the third parameter is FALSE, it won't automatically set the wildcards and you can manually place those.
+
+$args = array
+(
+	'orlike' => array
+				(
+					array('field1', 'value', TRUE),
+					array('field2', 'val%', FALSE)
+				)
+);
+
+// would produce
+SELECT * FROM table WHERE `field1` LIKE '%value%' OR `field2` LIKE 'val%'
+
+NOTLIKE
+====
+
+The like statements are unique because of the wildcards and how Kohana handles them. If the third parameter of the statement is TRUE, Kohana will put wildcards at the beginning and end of the statement. If the third parameter is FALSE, it won't automatically set the wildcards and you can manually place those.
+
+$args = array
+(
+	'notlike' => array
+				(
+					array('field1', 'value', TRUE),
+					array('field2', 'val%', FALSE)
+				)
+);
+
+// would produce
+SELECT * FROM table WHERE `field1` NOT LIKE '%value%' AND `field2` NOT LIKE 'val%'
+
+ORNOTLIKE
+====
+
+The like statements are unique because of the wildcards and how Kohana handles them. If the third parameter of the statement is TRUE, Kohana will put wildcards at the beginning and end of the statement. If the third parameter is FALSE, it won't automatically set the wildcards and you can manually place those.
+
+$args = array
+(
+	'ornotlike' => array
+				(
+					array('field1', 'value', TRUE),
+					array('field2', 'val%', FALSE)
+				)
+);
+
+// would produce
+SELECT * FROM table WHERE `field1` NOT LIKE '%value%' OR `field2` NOT LIKE 'val%'
+
+IN
+====
+
+$args = array
+(
+	'in' => array
+				(
+					array('field1', array(1, 2, 3))
+				)
+);
+
+// would produce
+SELECT * FROM table WHERE field1 IN ('1', '2', '3')
+
+NOTIN
+====
+
+$args = array
+(
+	'notin' => array
+				(
+					array('field1', array(1, 2, 3))
+				)
+);
+
+// would produce
+SELECT * FROM table WHERE field1 NOT IN ('1', '2', '3')
+
+Alternatively, you can also use a third parameter in the IN statement to accomplish the same thing.
+
+$args = array
+(
+	'in' => array
+				(
+					array('field1', array(1, 2, 3), TRUE)
+				)
+);
+
+GROUPBY
+====
+
+$args = array
+(
+	'groupby' => array('field1', 'field2')
+);
+
+// would produce
+SELECT * FROM table GROUP BY field1, field2
+
+HAVING
+====
+
+$args = array
+(
+	'having' => array
+				(
+					array('field1', 'value'),
+					array('field2', 'value')
+				)
+);
+
+// would produce
+SELECT * FROM table GROUP BY - HAVING field1 = 'value' AND field2 = 'value'
+
+ORHAVING
+====
+
+$args = array
+(
+	'nothaving' => array
+				(
+					array('field1', 'value'),
+					array('field2', 'value')
+				)
+);
+
+// would produce
+SELECT * FROM table GROUP BY - NOT HAVING field1 = 'value' OR field2 = 'value'
+
+OFFSET
+====
+
+$args = array
+(
+	'offset' => 10
+);
+
+// would produce
+SELECT * FROM table LIMIT 0, 10
+
+LIMIT
+====
+
+$args = array
+(
+	'limit' => 50
+);
+
+// would produce
+SELECT * FROM table LIMIT 50
+
+The Kohana query builder allows you to pass a second parameter to the limit method to set the offset, but because of a limit of the core model, you can't do this. Set the offset separately.
+
+ORDERBY
+====
+
+$args = array
+(
+	'orderby' => array
+					(
+						'field1' => 'asc',
+						'field2' => 'desc'
+					)
+);
+
+// would produce
+SELECT * FROM table ORDER BY field1 ASC, field2 DESC
+
+JOIN
+====
+
+$args = array
+(
+	'join' => array
+					(
+						array(),
+					)
+);
+
+// would produce
+SELECT * FROM table ORDER BY field1 ASC, field2 DESC
+
+DISALLOWED ITEMS
+====
+
+Nova 2 restricts access to some of Kohana's query builder through the core model. The items that will be ignored are:
+
+get
+getwhere
+update
+delete
+insert
+set
+merge
+count_records
+select
+from
+regex
+orregex
+notregex
+ornotregex

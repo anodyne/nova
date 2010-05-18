@@ -105,6 +105,7 @@ class Controller_Nova_Main extends Controller_Nova_Base
 		$data->header = $this->mMessages->get_message('main.index.header');
 		$data->message = $this->mMessages->get_message('main.index.message');
 		
+		// send the response
 		$this->request->response = $this->template;
 	}
 	

@@ -42,36 +42,3 @@ http://allmarkedup.com/archives/jquery-quick-pagination-plugin/
 http://flowplayer.org/tools/index.html
 http://jquerylist.com/
 http://www.filamentgroup.com/lab/using_multiple_jquery_ui_themes_on_a_single_page/
-
-|---------------------------------------------------------------
-| INTERESTING CODEIGNITER LINKS
-|---------------------------------------------------------------
-
-http://codeigniter.com/wiki/BBCode_Helper/
-
-|---------------------------------------------------------------
-| AUTO COMPLETE
-|---------------------------------------------------------------
-
-http://devthought.com/projects/jquery/textboxlist/
-
-|---------------------------------------------------------------
-| OLD DYNAMIC BASE URL
-|---------------------------------------------------------------
-
-$url = ((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == "on") ? "https" : "http");
-$url.= "://".$_SERVER['HTTP_HOST'];
-$url.= str_replace(basename($_SERVER['SCRIPT_NAME']), '', $_SERVER['SCRIPT_NAME']);
-
-|---------------------------------------------------------------
-| GIT MAGIC
-|---------------------------------------------------------------
-
-// generate a changelog with the subject for the last 8 days
-git log --pretty=format:"* %s" --since=8.days > CHANGELOG
-
-|---------------------------------------------------------------
-| CSS OVERLAY BADGES
-|---------------------------------------------------------------
-
-http://css-tricks.com/date-badges-and-comment-bubbles-for-your-blog/

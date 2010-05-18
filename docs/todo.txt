@@ -1,0 +1,30 @@
+MODELS
+======
+* core
+	- need to finish converting to 2.4 syntax
+
+LIBRARIES
+=========
+x Auth
+x Menu
+* MY_URI
+* User_Panel
+* Thresher
+* Thresher_Textile
+* Thresher_BBCode
+* Thresher_Markdown
+
+HELPERS
+=======
+* location
+	- view
+x debug
+	- not necessary because of Kohana::debug()
+* MY_date
+* MY_form
+* MY_html
+* MY_language
+* MY_url
+* panel
+* utility
+* yayparser

@@ -1,0 +1,10 @@
+What We Know
+============
+
+* Nova 2 will use the same database schema as Nova 1, so the impact to your data will be minimal.
+
+* Nova 2 will use the same password hashing, so admins won't be forced to change passwords and have their users change passwords.
+
+* Nova 1 template files shouldn't need very much editing to be compatible with Nova 2.
+
+* It's likely that custom solutions developed for Nova 1 will no longer work in Nova 2. This includes view files that utilize seamless substitution.
