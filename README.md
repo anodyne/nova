@@ -8,13 +8,14 @@ Current Version
 
 Last Update
 -----------
-15 May 2010
+18 May 2010
 
 Changes in 1.0.5
 ----------------
 * added the 1.0.5 update file
 * fixed errors after upgrade on the characters management page
 * fixed error after upgrade on the npc management page
+* fixed bug in the positions dropdown menu where hidden departments' positions were still shown
 
 Known Issues
 ------------
