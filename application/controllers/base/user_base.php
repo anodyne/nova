@@ -5,7 +5,7 @@
 |---------------------------------------------------------------
 |
 | File: controllers/user_base.php
-| System Version: 1.0.4
+| System Version: 1.0.5
 |
 | Changes: updated the account page to update a user's cookie
 |	if they've elected for nova to remember them; updated the
@@ -13,7 +13,9 @@
 |	remaining active characters; fixed error thrown for level 1
 |	users when updating their account (status and loa hidden items);
 |	fixed bug where the status change email wasn't populated
-|	properly
+|	properly; fixed error thrown when changing a user to inactive;
+|	fixed bug where there wasn't a sanity check for the type of
+|	variable the system was expecting
 |
 | Controller that handles the USER section of the admin system.
 |
@@ -186,16 +188,16 @@ class User_base extends Controller {
 
 						$characters = $this->char->get_user_characters($id, 'active', 'array');
 
-						if (count($characters) > 0)
+						if (is_array($characters) && count($characters) > 0)
 						{
 							/* update all the users' active characters to inactive */
 							foreach ($characters as $c)
 							{
-								$array = array(
+								$char_array = array(
 									'crew_type' => 'inactive',
 									'date_deactivate' => now()
 								);
-								$this->char->update_character($c, $array);
+								$this->char->update_character($c, $char_array);
 							}
 						}
 					}
