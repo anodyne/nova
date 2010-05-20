@@ -8,7 +8,7 @@ Current Version
 
 Last Update
 -----------
-18 May 2010
+19 May 2010
 
 Changes in 1.0.5
 ----------------
@@ -17,6 +17,7 @@ Changes in 1.0.5
 * fixed error after upgrade on the npc management page
 * fixed errors thrown when editing a wiki page
 * fixed bug in the positions dropdown menu where hidden departments' positions were still shown
+* fixed bug where a wrong variable was using in a model method
 
 Known Issues
 ------------
