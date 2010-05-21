@@ -5,11 +5,12 @@
 |---------------------------------------------------------------
 |
 | File: controllers/base/ajax_base.php
-| System Version: 1.0.3
+| System Version: 1.0.5
 |
 | Changes: updated the add_catalogue and edit_catalogue methods
 |	to handle the new genre field in the rank catalogue database
-|	table; added method for deleting NPCs
+|	table; added method for deleting NPCs; fixed bug where the
+|	wrong database column was used in a model method
 |
 | Controller that handles the AJAX work in the system
 |
@@ -2375,7 +2376,7 @@ class Ajax_base extends Controller {
 				
 				if ($award->award_cat == 'ooc')
 				{
-					$user = $this->user->get_user($nom->award_receive_user);
+					$user = $this->user->get_user($nom->queue_receive_user);
 					$name = (empty($user->name)) ? $user->email : $user->name;
 				}
 				else
