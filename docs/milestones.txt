@@ -9,11 +9,11 @@ MILESTONE 1
 	x form
 	x url
 	x date
-	- location
+	x location
 	- panel
 	- utility
 * Configuration updates
-x DBForge
+- DBForge
 * Controller updates
 	- install
 		x index

@@ -29,8 +29,8 @@ are met:
    or "Anodyne", nor may "Nova", "SMS", or "Anodyne" appear in their name,
    without prior written permission from Anodyne Productions.
    
-6. All conditions of the CodeIgniter licence must be properly met and the
-   CodeIgniter license cannot be removed under any circumstances.
+6. All conditions of the Kohana licence must be properly met and the
+   Kohana license cannot be removed under any circumstances.
 
 INDEMNITY
 You agree to indemnify and hold harmless the authors of the Software and

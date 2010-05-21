@@ -146,7 +146,7 @@ class Nova_Utility
 				'required' => TRUE,
 				'actual' => extension_loaded('iconv'),
 				'text' => __('verify.iconv_text'),
-				'failure' => TRUE),
+				'failure' => FALSE),
 			'reflection' => array(
 				'required' => TRUE,
 				'actual' => class_exists('ReflectionClass'),
@@ -162,6 +162,21 @@ class Nova_Utility
 				'actual' => extension_loaded('mbstring'),
 				'text' => __('verify.mbstring_text'),
 				'failure' => TRUE),
+			'mbstring_overload' => array(
+				'required' => TRUE,
+				'actual' => ini_get('mbstring.func_overload') & MB_OVERLOAD_STRING,
+				'text' => __('verify.mbstring_overload_text'),
+				'failure' => TRUE),
+			'pcre_utf8' => array(
+				'required' => TRUE,
+				'actual' => ! @preg_match('/^.$/u', 'ñ'),
+				'text' => __('verify.pcre_text'),
+				'failure' => FALSE),
+			'pcre_unicode' => array(
+				'required' => TRUE,
+				'actual' => ! @preg_match('/^\pL$/u', 'ñ'),
+				'text' => __('verify.pcre_text'),
+				'failure' => FALSE),
 		);
 		
 		/* build the specs array */

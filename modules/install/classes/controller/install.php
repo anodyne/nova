@@ -32,12 +32,12 @@ class Controller_Install extends Controller_Template
 		i18n::lang('en-us');
 		
 		// set the shell
-		$this->template = new View('_common/layouts/install');
+		$this->template = View::factory('_common/layouts/install');
 		
 		// set the variables in the template
 		$this->template->title 					= 'Nova :: ';
 		$this->template->javascript				= FALSE;
-		$this->template->layout					= new View('install/template_install');
+		$this->template->layout					= View::factory('install/template_install');
 		$this->template->layout->label			= FALSE;
 		$this->template->layout->flash_message	= FALSE;
 		$this->template->layout->controls		= FALSE;
@@ -49,7 +49,7 @@ class Controller_Install extends Controller_Template
 		$db = Database::Instance();
 		
 		// create a new content view
-		$this->template->layout->content = new View('install/pages/install_index');
+		$this->template->layout->content = View::factory('install/pages/install_index');
 		
 		// assign the object a shorter variable to use in the method
 		$data = $this->template->layout->content;

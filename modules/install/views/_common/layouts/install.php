@@ -7,25 +7,6 @@
  * @author		Anodyne Productions
  * @version		2.0
  */
-
-$styles = array(
-	'stylesheets' => array(
-		MODFOLDER.'/nova/views/_common/css/nova.css',
-		MODFOLDER.'/install/views/install/css/skin.css',
-		MODFOLDER.'/install/views/install/css/jquery.ui.core.css',
-		MODFOLDER.'/install/views/install/css/jquery.ui.theme.css',
-		MODFOLDER.'/nova/assets/js/css/jquery.ui.progressbar.css'
-	),
-	'media' => array('screen', 'screen', 'screen', 'screen', 'screen')
-);
-
-$scripts = array(
-	MODFOLDER.'/nova/assets/js/jquery.js',
-	MODFOLDER.'/nova/assets/js/jquery.ui.core.min.js',
-	MODFOLDER.'/nova/assets/js/jquery.ui.widget.min.js',
-	MODFOLDER.'/nova/assets/js/jquery.ui.progressbar.min.js',
-);
-
 ?><!DOCTYPE html>
 <html lang="en">
 	<head>
@@ -39,10 +20,17 @@ $scripts = array(
 		<?php if (isset($_redirect)): echo $_redirect; endif;?>
 		
 		<!-- STYLESHEETS -->
-		<?php echo html::stylesheet($styles['stylesheets'], $styles['media'], FALSE);?>
+		<?php echo html::style(MODFOLDER.'/nova/views/_common/css/nova.css');?>
+		<?php echo html::style(MODFOLDER.'/install/views/install/css/skin.css');?>
+		<?php echo html::style(MODFOLDER.'/install/views/install/css/jquery.ui.core.css');?>
+		<?php echo html::style(MODFOLDER.'/install/views/install/css/jquery.ui.theme.css');?>
+		<?php echo html::style(MODFOLDER.'/nova/assets/js/css/jquery.ui.progressbar.css');?>
 		
 		<!-- JAVASCRIPT -->
-		<?php echo html::script($scripts);?>
+		<?php echo html::script(MODFOLDER.'/nova/assets/js/jquery.js');?>
+		<?php echo html::script(MODFOLDER.'/nova/assets/js/jquery.ui.core.min.js');?>
+		<?php echo html::script(MODFOLDER.'/nova/assets/js/jquery.ui.widget.min.js');?>
+		<?php echo html::script(MODFOLDER.'/nova/assets/js/jquery.ui.progressbar.min.js');?>
 		<?php echo $javascript;?>
 	</head>
 	<body>

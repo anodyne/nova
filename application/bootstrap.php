@@ -69,8 +69,9 @@ Kohana::$config->attach(new Kohana_Config_File);
  * Enable modules. Modules are referenced by a relative or absolute path.
  */
 Kohana::modules(array(
-	'database'   => MODPATH.'database',   // Database access
 	'nova'		=> MODPATH.'nova',		// Nova module
+	'install'	=> MODPATH.'install',	// Install module
+	'database'	=> MODPATH.'database',	// Database access
 	));
 
 /**

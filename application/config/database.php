@@ -2,7 +2,7 @@
 
 return array
 (
-	'default' => array
+	'alternate' => array
 	(
 		'type'       => 'mysql',
 		'connection' => array(
@@ -28,7 +28,7 @@ return array
 		'caching'      => FALSE,
 		'profiling'    => TRUE,
 	),
-	'alternate' => array(
+	'default' => array(
 		'type'       => 'pdo',
 		'connection' => array(
 			/**
@@ -40,12 +40,12 @@ return array
 			 * boolean  persistent
 			 * string   identifier
 			 */
-			'dsn'        => 'mysql:host=localhost;dbname=kohana',
-			'username'   => 'root',
-			'password'   => 'r00tdb',
+			'dsn'        => 'mysql:host=localhost;dbname=nova',
+			'username'   => 'nova',
+			'password'   => FALSE,
 			'persistent' => FALSE,
 		),
-		'table_prefix' => '',
+		'table_prefix' => 'nova_',
 		'charset'      => 'utf8',
 		'caching'      => FALSE,
 		'profiling'    => TRUE,

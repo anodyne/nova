@@ -1,6 +1,7 @@
 <?php
 
-$translations = array(
+return array
+(
 	'install.global.more_options' => 'More Options',
 	
 	/** install errors **/
@@ -94,8 +95,18 @@ $translations = array(
 	'verify.text' => "Below are the results of the server verification test. If any of the items have <strong class='error'>failed</strong>, Nova won't install properly (or at all). If there are any <strong class='warning'>warnings</strong> listed, you should talk to your host about getting those items updated, but you'll still be able to install and use Nova despite the warnings.",
 	
 	'verify.php_text' => "PHP is the dynamic, web-based language Nova is written in. This version of Nova requires that your server has PHP version :php_req or higher. Unfortunately, your server is only running version :php_act and you won't be able to continue until your host provides access to PHP 5 either through another means or by upgrading the server (all of our testing has been done in PHP 5.3, so we know Nova works really well with that version). When you contact your host, just tell them you need PHP version :php_req or higher and they'll know what that means.",
+	
 	'verify.db_text' => "Nova is a database-driven system, meaning that without a MySQL database, it won't work. Unfortunately, your database configuration file says you're trying to use a database platform that we don't support. In order to run Nova you need to have a MySQL database and connect either through MySQL or MySQLi. Odds are that you've just mistyped the connection type in the configuration file, so make sure it reads mysql or mysqli. If your host doesn't have MySQL, you won't be able to run Nova.",
+	
 	'verify.dbver_text' => "Oops, it looks like you're running a version of MySQL that we don't support (:db_act to be exact). Make sure you're running at least MySQL version :db_req otherwise you won't be able to install Nova.",
-	'verify.reflection_text' => "What's this mean? PHP has an important Reflections class that is used by Kohana, the framework running Nova, to get all kinds of information about classes, functions and extensions. Kohana requires the Reflection class to be enabled and we've detected that your server doesn't have it enabled and you can't install Nova. In order to continue, you'll need to contact your host and ask them to enable the Reflection class in PHP. Once that's been done, this error will go away and you'll be able to install Nova.",
-	'verify.iconv_text' => "What the heck is this? Iconv is a computer program and standardized API used to convert text between different character encodings. So why is that important? Kohana, the framework running Nova, relies on this extension being loaded in order to work properly. Unfortunately, we've detected that your server doesn't have this extension loaded and you can't install Nova. In order to continue, you'll need to contact your host and ask them to enable the Iconv extension in PHP. Once that's been done, this error will go away and you'll be able to install Nova.",
+	
+	'verify.reflection_text' => "What's this mean? PHP has an important Reflections class that is used by Kohana, the framework running Nova, to get all kinds of information about classes, functions and extensions. Unfortunately, your server doesn't have this available, so your host has some work to do. In order to continue, contact your host and ask them to enable the Reflection class in PHP. Once that's been done, this error will go away and you'll be able to install Nova.",
+	
+	'verify.iconv_text' => "What the heck is this? Iconv is a standardized API used to convert text between different character encodings. So why is that important? Kohana, the framework running Nova, relies on this extension being loaded in order to convert strings between different character encodings. Unfortunately, we've detected that your server doesn't have this extension loaded. You can continue, but know that in the event you're doing anything with Kohana's UTF-8 functions, they won't work properly.",
+	
+	'verify.pcre_text' => "PCRE is a library that PHP uses for regular expression pattern matching that uses the same syntax as Perl. This is one of the requirements for Kohana, the PHP framework running Nova. Since PHP 4.2, PCRE has been enabled by default and beginning with PHP 5.3, PCRE can't be disabled. If you're receiving this notice, your host has intentionally removed PCRE or not compiled it with Unicode and UTF-8 support. So what does that mean exactly? For the average installation, probably nothing unless you start comparing UTF-8 only characters in regular expressions (that includes routes too since the router uses regex to match URIs). In most cases, ignoring this error will be fine.",
+	
+	'verify.spl_text' => "SPL Autoloading is magic. Literally, it's a magic method in PHP that automatically loads a file necessary for loading PHP classes so that files don't have to be included left and right (trust us, that's a good thing). The good news is that starting in PHP 5, this function is compiled into PHP, so if this test failed, your host did so intentionally. As of PHP 5.3, this function can no longer be turned off. The best thing to do is to talk to your host and get them to turn this back on, because without it, Nova won't work.",
+	
+	'verify.filters_text' => "",
 );

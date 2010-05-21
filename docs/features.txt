@@ -1,3 +1,12 @@
+Nova 2.0
+========
+* Per skin image index
+* Global CSS
+* CSS cleanup
+* Passing objects to the views instead of arrays
+* Core model
+* Base controller
+
 Nova 2 Features
 ===============
 
