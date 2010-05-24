@@ -8,7 +8,7 @@ Current Version
 
 Last Update
 -----------
-23 May 2010
+24 May 2010
 
 Changes in 1.0.5
 ----------------
@@ -22,6 +22,7 @@ Changes in 1.0.5
 * fixed bugs with the email sent to GMs when a docking request is submitted
 * fixed error thrown when updating a user to be inactive
 * fixed bug we weren't doing any sanity checking on the type of variable we needed when handling character deactivation
+* fixed errors thrown when rejecting a docking request
 
 Known Issues
 ------------

@@ -5,13 +5,14 @@
 |---------------------------------------------------------------
 |
 | File: controllers/manage_base.php
-| System Version: 1.0.4
+| System Version: 1.0.5
 |
 | Changes: fixed bug where a rank set without a blank rank image
 |	wouldn't display rank classes (i'm looking at your stargate);
 |	fixed error thrown during accepting a docked ship application;
 |	fixed bug where IE threw errors that broke the pages for
-|	managing posts, logs, news and docked items
+|	managing posts, logs, news and docked items; fixed errors thrown
+|	when rejecting a docking request
 |
 | Controller that handles the MANAGE section of the admin system.
 |
@@ -5228,7 +5229,7 @@ class Manage_base extends Controller {
 				
 				$email_data = array(
 					'email_subject' => lang('email_subject_docking_rejected') .' - '. $data['sim'],
-					'email_from' => ucfirst(lang('time_from')) .': '. $this->options['sim_name'] .' - '. $$this->options['default_email_address'],
+					'email_from' => ucfirst(lang('time_from')) .': '. $this->options['sim_name'] .' - '. $this->options['default_email_address'],
 					'email_content' => ($this->email->mailtype == 'html') ? nl2br($data['message']) : $data['message']
 				);
 				
