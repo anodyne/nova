@@ -44,6 +44,14 @@ return array
 	'readme.title' => 'Readme',
 	'readme.label' => 'Nova Readme',
 	
+	/** setup config **/
+	'setup.title' => "Config File Setup",
+	'setup.no_config_file' => "Sorry, I need the modules/database/config/database.php file to work from. Please re-upload this file from the Nova zip archive.",
+	'setup.config_exists' => "The database connection file already exists in your application directory. If you need to change any of the items in this file, please delete it first. You may try installing Nova now.",
+	'setup.php_version' => "Your server is running PHP version :php but Nova requires at least PHP 5.2.4.",
+	'setup.step0_text' => "<p>Welcome to Nova! Before getting started, I need some information about the database. You'll need to know the following items before proceeding:</p><ol><li>The database name</li><li>The database username</li><li>The database password</li><li>The database host</li></li>The table prefix you want to use</li></ol><p>In all likelihood, these items were supplied to you by your web host. If you do not have this information, then you will need to contact them before you can continue.</p><p><strong>If for any reason this automatic file creation doesn't work, don't worry. All this does is fill in the database information to a configuration file. You may also simply open <code>modules/database/config/database.php</code>, copy its contents and paste them into a new file called <code>database.php</code> in the <code>application/config</code> directory.</strong></p>",
+	'setup.step1_text' => "Below you should enter your database connection details. If you're not sure about these, contact your host.",
+	
 	/** step 1 **/
 	'step1.title' => 'Step 1 - Create Database Tables',
 	'step1.label' => 'Step 1: Database Structure',

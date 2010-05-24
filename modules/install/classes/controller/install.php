@@ -161,9 +161,12 @@ class Controller_Install extends Controller_Template
 		// assign the object a shorter variable to use in the method
 		$data = $this->template->layout->content;
 		
+		// pass the step over to the view file
+		$data->step = $step;
+		
 		if (!file_exists(MODPATH.'database/config/database'.EXT))
 		{
-			$data->message = __('Sorry, I need the modules/database/config/database.php file to work from. Please re-upload this file from your Nova installation.');
+			$data->message = __('setup.no_config_file');
 		}
 		else
 		{
@@ -172,45 +175,58 @@ class Controller_Install extends Controller_Template
 			
 			if (file_exists(APPPATH.'config/database'.EXT))
 			{
-				$data->message = __('The database connection file already exists in your application directory. If you need to change any of the items in this file, please delete it first. You may try installing Nova now.');
+				$data->message = __('setup.config_exists');
 			}
 			else
 			{
-				if (version_compare('5.2.4', PHP_VERSION, '>'))
+				if (version_compare('5.2.4', PHP_VERSION, '>='))
 				{
-					$data->message = __('Your server is running PHP version :php but WordPress requires at least 5.2.4.', array(':php' => PHP_VERSION));
+					$data->message = __('setup.php_version', array(':php' => PHP_VERSION));
 				}
 				else
 				{
 					switch ($step)
 					{
-						# show the form with all the database connection values
 						case 0:
-							
+							$data->message = __('setup.step0_text');
+							break;
+						
+						# show the form with all the database connection values	
+						case 1:
+							// build the next step button
+							$next = array(
+								'type' => 'submit',
+								'class' => 'button',
+								'id' => 'next',
+							);
+							$text = ucwords(__('order.next').' '.__('label.step'));
+
+							// build the next step control
+							$this->template->layout->controls = form::button('next', $text, $next).'</form>';
 							break;
 						
 						# write the file and offer link to installation
-						case 1:
-							$dbname  = trim($_POST['dbname']);
-							$uname   = trim($_POST['uname']);
-							$passwrd = trim($_POST['pwd']);
-							$dbhost  = trim($_POST['dbhost']);
-							$prefix  = trim($_POST['prefix']);
-							if (empty($prefix)) $prefix = 'nova_';
+						case 2:
+							// set the variables to use
+							$dbName		= trim(Security::xss_clean($_POST['dbName']));
+							$dbUser		= trim(Security::xss_clean($_POST['dbUser']));
+							$dbPass		= trim(Security::xss_clean($_POST['dbPass']));
+							$dbHost		= trim(Security::xss_clean($_POST['dbHost']));
+							$prefix		= trim(Security::xss_clean($_POST['prefix']));
 							
 							foreach ($file as $line_num => $line) {
 								switch (substr($line,0,16)) {
 									case "define('DB_NAME'":
-										$file[$line_num] = str_replace("putyourdbnamehere", $dbname, $line);
+										$file[$line_num] = str_replace("putyourdbnamehere", $dbName, $line);
 										break;
 									case "define('DB_USER'":
-										$file[$line_num] = str_replace("'usernamehere'", "'$uname'", $line);
+										$file[$line_num] = str_replace("'usernamehere'", "'$dbUser'", $line);
 										break;
 									case "define('DB_PASSW":
-										$file[$line_num] = str_replace("'yourpasswordhere'", "'$passwrd'", $line);
+										$file[$line_num] = str_replace("'yourpasswordhere'", "'$dbPass'", $line);
 										break;
 									case "define('DB_HOST'":
-										$file[$line_num] = str_replace("localhost", $dbhost, $line);
+										$file[$line_num] = str_replace("localhost", $dbHost, $line);
 										break;
 									case '$table_prefix  =':
 										$file[$line_num] = str_replace('wp_', $prefix, $line);
@@ -251,6 +267,10 @@ class Controller_Install extends Controller_Template
 				}
 			}
 		}
+		
+		// content
+		$this->template->title.= __('setup.title');
+		$this->template->layout->label = __('setup.title');
 		
 		// send the response
 		$this->request->response = $this->template;
