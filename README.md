@@ -20,6 +20,8 @@ Changes in 1.0.5
 * fixed bug where a wrong variable was using in a model method
 * fixed security issue where docking request data wasn't filtered for xss attacks
 * fixed bugs with the email sent to GMs when a docking request is submitted
+* fixed error thrown when updating a user to be inactive
+* fixed bug we weren't doing any sanity checking on the type of variable we needed when handling character deactivation
 
 Known Issues
 ------------
