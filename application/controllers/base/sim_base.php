@@ -5,11 +5,13 @@
 |---------------------------------------------------------------
 |
 | File: controllers/base/sim_base.php
-| System Version: 1.0.3
+| System Version: 1.0.5
 |
 | Changes: fixed bug where saved mission posts were displayed
 |	when they shouldn't be; fixed bug where error was thrown for
-|	missing option parameters
+|	missing option parameters; fixed security issue where docking
+|	request data wasn't filtered for xss attacks; fixed bugs with
+|	the email sent to GMs when a docking request is submitted
 |
 | Controller that handles the SIM part of the system.
 |
@@ -636,7 +638,7 @@ class Sim_base extends Controller {
 				{
 					if (!is_numeric($key))
 					{
-						$insert_array[$key] = $value;
+						$insert_array[$key] = $this->input->xss_clean($value);
 					}
 				}
 				
@@ -2412,16 +2414,14 @@ class Sim_base extends Controller {
 				/* load the models */
 				$this->load->model('docking_model', 'docking');
 				
-				$item = $this->docking->get_docked_item($data);
+				$row = $this->docking->get_docked_item($data);
 				
-				if ($item->num_rows() > 0)
+				if ($row !== FALSE)
 				{
-					$row = $item->row();
-					
 					/* create the array passing the data to the email */
 					$email_data = array(
 						'email_subject' => lang('email_subject_docking_gm'),
-						'email_from' => ucfirst(lang('time_from')) .': '. $row['docking_gm_name'] .' - '. $data['docking_gm_email'],
+						'email_from' => ucfirst(lang('time_from')) .': '. $row->docking_gm_name .' - '. $row->docking_gm_email,
 						'email_content' => nl2br(lang('email_content_docking_gm'))
 					);
 					
@@ -2471,25 +2471,25 @@ class Sim_base extends Controller {
 								}
 							}
 						}
+					
+						/* where should the email be coming from */
+						$em_loc = email_location('sim_docking_gm', $this->email->mailtype);
+					
+						/* parse the message */
+						$message = $this->parser->parse($em_loc, $email_data, TRUE);
+					
+						/* get the game masters email addresses */
+						$gm = $this->user->get_gm_emails();
+					
+						/* set the TO variable */
+						$to = implode(',', $gm);
+					
+						/* set the parameters for sending the email */
+						$this->email->from($row->docking_gm_email, $row->docking_gm_name);
+						$this->email->to($to);
+						$this->email->subject($this->options['email_subject'] .' '. $email_data['email_subject']);
+						$this->email->message($message);
 					}
-					
-					/* where should the email be coming from */
-					$em_loc = email_location('sim_docking_gm', $this->email->mailtype);
-					
-					/* parse the message */
-					$message = $this->parser->parse($em_loc, $email_data, TRUE);
-					
-					/* get the game masters email addresses */
-					$gm = $this->user->get_gm_emails();
-					
-					/* set the TO variable */
-					$to = implode(',', $gm);
-					
-					/* set the parameters for sending the email */
-					$this->email->from($data['email'], $data['name']);
-					$this->email->to($to);
-					$this->email->subject($this->options['email_subject'] .' '. $email_data['email_subject']);
-					$this->email->message($message);
 				}
 				
 				break;

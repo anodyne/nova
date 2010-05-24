@@ -8,7 +8,7 @@ Current Version
 
 Last Update
 -----------
-19 May 2010
+23 May 2010
 
 Changes in 1.0.5
 ----------------
@@ -18,6 +18,8 @@ Changes in 1.0.5
 * fixed errors thrown when editing a wiki page
 * fixed bug in the positions dropdown menu where hidden departments' positions were still shown
 * fixed bug where a wrong variable was using in a model method
+* fixed security issue where docking request data wasn't filtered for xss attacks
+* fixed bugs with the email sent to GMs when a docking request is submitted
 
 Known Issues
 ------------
