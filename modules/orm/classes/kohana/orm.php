@@ -661,7 +661,7 @@ class Kohana_ORM {
 		}
 
 		// Join the related object into the result
-		$this->join(array($target->_table_name, $this->_db->table_prefix().$target_path), 'LEFT')->on($join_col1, '=', $join_col2);
+		$this->join(array($target->_table_name, $target_path), 'LEFT')->on($join_col1, '=', $join_col2);
 
 		return $this;
 	}
@@ -1257,9 +1257,6 @@ class Kohana_ORM {
 			// Only fetch 1 record
 			$this->_db_builder->limit(1);
 		}
-
-		// Select all columns by default
-		$this->_db_builder->select($this->_table_name.'.*');
 
 		if ( ! isset($this->_db_applied['order_by']) AND ! empty($this->_sorting))
 		{

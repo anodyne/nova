@@ -2,12 +2,18 @@
 /**
  * Base session class.
  *
- * @package    Session
+ * @package    Kohana
+ * @category   Session
  * @author     Kohana Team
  * @copyright  (c) 2008-2009 Kohana Team
  * @license    http://kohanaphp.com/license
  */
 abstract class Kohana_Session {
+
+	/**
+	 * @var  string  default session adapter
+	 */
+	public static $default = 'native';
 
 	// Session instances
 	protected static $instances = array();
@@ -17,12 +23,23 @@ abstract class Kohana_Session {
 	 * (native, database) also support restarting a session by passing a
 	 * session id as the second parameter.
 	 *
+	 *     $session = Session::instance();
+	 *
+	 * [!!] [Session::write] will automatically be called when the request ends.
+	 *
 	 * @param   string   type of session (native, cookie, etc)
 	 * @param   string   session identifier
 	 * @return  Session
+	 * @uses    Kohana::config
 	 */
-	public static function instance($type = 'native', $id = NULL)
+	public static function instance($type = NULL, $id = NULL)
 	{
+		if ($type === NULL)
+		{
+			// Use the default type
+			$type = Session::$default;
+		}
+
 		if ( ! isset(Session::$instances[$type]))
 		{
 			// Load the configuration for this type
@@ -45,7 +62,7 @@ abstract class Kohana_Session {
 	protected $_name = 'session';
 
 	// Cookie lifetime
-	protected $_lifetime  = 0;
+	protected $_lifetime = 0;
 
 	// Encrypt session data?
 	protected $_encrypted = FALSE;
@@ -59,9 +76,12 @@ abstract class Kohana_Session {
 	/**
 	 * Overloads the name, lifetime, and encrypted session settings.
 	 *
+	 * [!!] Sessions can only be created using the [Session::instance] method.
+	 *
 	 * @param   array   configuration
 	 * @param   string  session id
 	 * @return  void
+	 * @uses    Session::read
 	 */
 	protected function __construct(array $config = NULL, $id = NULL)
 	{
@@ -94,9 +114,14 @@ abstract class Kohana_Session {
 	}
 
 	/**
-	 * Session object is rendered to a serialized string.
+	 * Session object is rendered to a serialized string. If encryption is
+	 * enabled, the session will be encrypted. If not, the output string will
+	 * be encoded using [base64_encode].
+	 *
+	 *     echo $session;
 	 *
 	 * @return  string
+	 * @uses    Encrypt::encode
 	 */
 	public function __toString()
 	{
@@ -118,7 +143,14 @@ abstract class Kohana_Session {
 	}
 
 	/**
-	 * Returns the current session array.
+	 * Returns the current session array. The returned array can also be
+	 * assigned by reference.
+	 *
+	 *     // Get a copy of the current session data
+	 *     $data = $session->as_array();
+	 *
+	 *     // Assign by reference for modification
+	 *     $data =& $session->as_array();
 	 *
 	 * @return  array
 	 */
@@ -129,6 +161,8 @@ abstract class Kohana_Session {
 
 	/**
 	 * Get a variable from the session array.
+	 *
+	 *     $foo = $session->get('foo');
 	 *
 	 * @param   string   variable name
 	 * @param   mixed    default value to return
@@ -142,9 +176,11 @@ abstract class Kohana_Session {
 	/**
 	 * Set a variable in the session array.
 	 *
+	 *     $session->set('foo');
+	 *
 	 * @param   string   variable name
 	 * @param   mixed    value
-	 * @return  Session
+	 * @return  $this
 	 */
 	public function set($key, $value)
 	{
@@ -156,18 +192,28 @@ abstract class Kohana_Session {
 	/**
 	 * Removes a variable in the session array.
 	 *
+	 *     $session->delete('foo');
+	 *
 	 * @param   string  variable name
-	 * @return  Session
+	 * @param   ...
+	 * @return  $this
 	 */
 	public function delete($key)
 	{
-		unset($this->_data[$key]);
+		$args = func_get_args();
+
+		foreach ($args as $key)
+		{
+			unset($this->_data[$key]);
+		}
 
 		return $this;
 	}
 
 	/**
-	 * Loads the session data.
+	 * Loads existing session data.
+	 *
+	 *     $session->read();
 	 *
 	 * @param   string   session id
 	 * @return  void
@@ -208,6 +254,8 @@ abstract class Kohana_Session {
 	/**
 	 * Generates a new session id and returns it.
 	 *
+	 *     $id = $session->regenerate();
+	 *
 	 * @return  string
 	 */
 	public function regenerate()
@@ -218,7 +266,14 @@ abstract class Kohana_Session {
 	/**
 	 * Sets the last_active timestamp and saves the session.
 	 *
+	 *     $session->write();
+	 *
+	 * [!!] Any errors that occur during session writing will be logged,
+	 * but not displayed, because sessions are written after output has
+	 * been sent.
+	 *
 	 * @return  boolean
+	 * @uses    Kohana::$log
 	 */
 	public function write()
 	{
@@ -246,7 +301,9 @@ abstract class Kohana_Session {
 	}
 
 	/**
-	 * Destroy the current session.
+	 * Completely destroy the current session.
+	 *
+	 *     $success = $session->destroy();
 	 *
 	 * @return  boolean
 	 */

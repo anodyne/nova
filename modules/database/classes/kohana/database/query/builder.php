@@ -2,7 +2,8 @@
 /**
  * Database query builder.
  *
- * @package    Database
+ * @package    Kohana/Database
+ * @category   Query
  * @author     Kohana Team
  * @copyright  (c) 2008-2009 Kohana Team
  * @license    http://kohanaphp.com/license
@@ -80,13 +81,13 @@ abstract class Kohana_Database_Query_Builder extends Database_Query {
 						// BETWEEN always has exactly two arguments
 						list($min, $max) = $value;
 
-						if (is_string($min) AND isset($this->_parameters[$min]))
+						if (is_string($min) AND array_key_exists($min, $this->_parameters))
 						{
 							// Set the parameter as the minimum
 							$min = $this->_parameters[$min];
 						}
 
-						if (is_string($max) AND isset($this->_parameters[$max]))
+						if (is_string($max) AND array_key_exists($max, $this->_parameters))
 						{
 							// Set the parameter as the maximum
 							$max = $this->_parameters[$max];
@@ -97,7 +98,7 @@ abstract class Kohana_Database_Query_Builder extends Database_Query {
 					}
 					else
 					{
-						if (is_string($value) AND isset($this->_parameters[$value]))
+						if (is_string($value) AND array_key_exists($value, $this->_parameters))
 						{
 							// Set the parameter as the value
 							$value = $this->_parameters[$value];
@@ -107,8 +108,14 @@ abstract class Kohana_Database_Query_Builder extends Database_Query {
 						$value = $db->quote($value);
 					}
 
+					if ($op)
+					{
+						// Make the operator uppercase and spaced
+						$op = ' '.strtoupper($op);
+					}
+
 					// Append the statement to the query
-					$sql .= $db->quote_identifier($column).' '.$op.' '.$value;
+					$sql .= $db->quote_identifier($column).$op.' '.$value;
 				}
 
 				$last_condition = $condition;
@@ -136,7 +143,7 @@ abstract class Kohana_Database_Query_Builder extends Database_Query {
 			// Quote the column name
 			$column = $db->quote_identifier($column);
 
-			if (is_string($value) AND isset($this->_parameters[$value]))
+			if (is_string($value) AND array_key_exists($value, $this->_parameters))
 			{
 				// Use the parameter value
 				$value = $this->_parameters[$value];

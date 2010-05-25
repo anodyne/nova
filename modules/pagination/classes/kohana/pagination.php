@@ -2,7 +2,8 @@
 /**
  * Pagination links generator.
  *
- * @package    Kohana
+ * @package    Kohana/Pagination
+ * @category   Base
  * @author     Kohana Team
  * @copyright  (c) 2008-2009 Kohana Team
  * @license    http://kohanaphp.com/license.html
@@ -144,7 +145,7 @@ class Kohana_Pagination {
 					break;
 
 				case 'route':
-					$this->current_page = (int) Request::instance()->param($this->config['current_page']['key'], 1);
+					$this->current_page = (int) Request::current()->param($this->config['current_page']['key'], 1);
 					break;
 			}
 
@@ -180,10 +181,10 @@ class Kohana_Pagination {
 		switch ($this->config['current_page']['source'])
 		{
 			case 'query_string':
-				return URL::site(Request::instance()->uri).URL::query(array($this->config['current_page']['key'] => $page));
+				return URL::site(Request::current()->uri).URL::query(array($this->config['current_page']['key'] => $page));
 
 			case 'route':
-				return URL::site(Request::instance()->uri(array($this->config['current_page']['key'] => $page))).URL::query();
+				return URL::site(Request::current()->uri(array($this->config['current_page']['key'] => $page))).URL::query();
 		}
 
 		return '#';

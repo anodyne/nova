@@ -1,8 +1,10 @@
 <?php defined('SYSPATH') or die('No direct script access.');
 /**
- * Request and response wrapper.
+ * Request and response wrapper. Uses the [Route] class to determine what
+ * [Controller] to send the request to.
  *
  * @package    Kohana
+ * @category   Base
  * @author     Kohana Team
  * @copyright  (c) 2008-2009 Kohana Team
  * @license    http://kohanaphp.com/license
@@ -23,6 +25,7 @@ class Kohana_Request {
 		204 => 'No Content',
 		205 => 'Reset Content',
 		206 => 'Partial Content',
+		207 => 'Multi-Status',
 
 		// Redirection 3xx
 		300 => 'Multiple Choices',
@@ -53,6 +56,9 @@ class Kohana_Request {
 		415 => 'Unsupported Media Type',
 		416 => 'Requested Range Not Satisfiable',
 		417 => 'Expectation Failed',
+		422 => 'Unprocessable Entity',
+		423 => 'Locked',
+		424 => 'Failed Dependency',
 
 		// Server Error 5xx
 		500 => 'Internal Server Error',
@@ -61,6 +67,7 @@ class Kohana_Request {
 		503 => 'Service Unavailable',
 		504 => 'Gateway Timeout',
 		505 => 'HTTP Version Not Supported',
+		507 => 'Insufficient Storage',
 		509 => 'Bandwidth Limit Exceeded'
 	);
 
@@ -95,17 +102,27 @@ class Kohana_Request {
 	public static $is_ajax = FALSE;
 
 	/**
+	 * @var  object  main request instance
+	 */
+	public static $instance;
+
+	/**
+	 * @var  object  currently executing request instance
+	 */
+	public static $current;
+
+	/**
 	 * Main request singleton instance. If no URI is provided, the URI will
 	 * be automatically detected using PATH_INFO, REQUEST_URI, or PHP_SELF.
+	 *
+	 *     $request = Request::instance();
 	 *
 	 * @param   string   URI of the request
 	 * @return  Request
 	 */
 	public static function instance( & $uri = TRUE)
 	{
-		static $instance;
-
-		if ($instance === NULL)
+		if ( ! Request::$instance)
 		{
 			if (Kohana::$is_cli)
 			{
@@ -252,17 +269,36 @@ class Kohana_Request {
 			$uri = preg_replace('#\.[\s./]*/#', '', $uri);
 
 			// Create the instance singleton
-			$instance = new Request($uri);
+			Request::$instance = Request::$current = new Request($uri);
 
-			// Add the Content-Type header
-			$instance->headers['Content-Type'] = 'text/html; charset='.Kohana::$charset;
+			// Add the default Content-Type header
+			Request::$instance->headers['Content-Type'] = 'text/html; charset='.Kohana::$charset;
 		}
 
-		return $instance;
+		return Request::$instance;
 	}
 
 	/**
-	 * Creates a new request object for the given URI.
+	 * Return the currently executing request. This is changed to the current
+	 * request when [Request::execute] is called and restored when the request
+	 * is completed.
+	 *
+	 *     $request = Request::current();
+	 *
+	 * @return  Request
+	 * @since   3.0.5
+	 */
+	public static function current()
+	{
+		return Request::$current;
+	}
+
+	/**
+	 * Creates a new request object for the given URI. This differs from
+	 * [Request::instance] in that it does not automatically detect the URI
+	 * and should only be used for creating HMVC requests.
+	 *
+	 *     $request = Request::factory($uri);
 	 *
 	 * @param   string  URI of the request
 	 * @return  Request
@@ -275,9 +311,14 @@ class Kohana_Request {
 	/**
 	 * Returns information about the client user agent.
 	 *
+	 *     // Returns "Chrome" when using Google Chrome
+	 *     $browser = Request::user_agent('browser');
+	 *
 	 * @param   string  value to return: browser, version, robot, mobile, platform
 	 * @return  string  requested information
 	 * @return  FALSE   no information found
+	 * @uses    Kohana::config
+	 * @uses    Request::$user_agent
 	 */
 	public static function user_agent($value)
 	{
@@ -339,9 +380,12 @@ class Kohana_Request {
 	 * Returns the accepted content types. If a specific type is defined,
 	 * the quality of that type will be returned.
 	 *
+	 *     $types = Request::accept_type();
+	 *
 	 * @param   string  content MIME type
 	 * @return  float   when checking a specific type
 	 * @return  array
+	 * @uses    Request::_parse_accept
 	 */
 	public static function accept_type($type = NULL)
 	{
@@ -367,9 +411,12 @@ class Kohana_Request {
 	 * the quality of that language will be returned. If the language is not
 	 * accepted, FALSE will be returned.
 	 *
+	 *     $langs = Request::accept_lang();
+	 *
 	 * @param   string  language code
 	 * @return  float   when checking a specific language
 	 * @return  array
+	 * @uses    Request::_parse_accept
 	 */
 	public static function accept_lang($lang = NULL)
 	{
@@ -395,9 +442,12 @@ class Kohana_Request {
 	 * the quality of that encoding will be returned. If the encoding is not
 	 * accepted, FALSE will be returned.
 	 *
+	 *     $encodings = Request::accept_encoding();
+	 *
 	 * @param   string  encoding type
 	 * @return  float   when checking a specific encoding
 	 * @return  array
+	 * @uses    Request::_parse_accept
 	 */
 	public static function accept_encoding($type = NULL)
 	{
@@ -421,6 +471,8 @@ class Kohana_Request {
 	/**
 	 * Parses an accept header and returns an array (type => quality) of the
 	 * accepted types, ordered by quality.
+	 *
+	 *     $accept = Request::_parse_accept($header, $defaults);
 	 *
 	 * @param   string   header to parse
 	 * @param   array    default values
@@ -518,12 +570,16 @@ class Kohana_Request {
 	protected $_params;
 
 	/**
-	 * Creates a new request object for the given URI.
-	 * Throws an exception when no route can be found for the URI.
+	 * Creates a new request object for the given URI. New requests should be
+	 * created using the [Request::instance] or [Request::factory] methods.
 	 *
-	 * @throws  Kohana_Request_Exception
+	 *     $request = new Request($uri);
+	 *
 	 * @param   string  URI of the request
 	 * @return  void
+	 * @throws  Kohana_Request_Exception
+	 * @uses    Route::all
+	 * @uses    Route::matches
 	 */
 	public function __construct($uri)
 	{
@@ -583,6 +639,8 @@ class Kohana_Request {
 	/**
 	 * Returns the response as the string representation of a request.
 	 *
+	 *     echo $request;
+	 *
 	 * @return  string
 	 */
 	public function __toString()
@@ -593,8 +651,11 @@ class Kohana_Request {
 	/**
 	 * Generates a relative URI for the current route.
 	 *
+	 *     $request->uri($params);
+	 *
 	 * @param   array   additional route parameters
 	 * @return  string
+	 * @uses    Route::uri
 	 */
 	public function uri(array $params = NULL)
 	{
@@ -625,6 +686,8 @@ class Kohana_Request {
 	/**
 	 * Retrieves a value from the route parameters.
 	 *
+	 *     $id = $request->param('id');
+	 *
 	 * @param   string   key of the value
 	 * @param   mixed    default value if the key is not set
 	 * @return  mixed
@@ -641,9 +704,14 @@ class Kohana_Request {
 	}
 
 	/**
-	 * Sends the response status and all set headers.
+	 * Sends the response status and all set headers. The current server
+	 * protocol (HTTP/1.0 or HTTP/1.1) will be used when available. If not
+	 * available, HTTP/1.1 will be used.
+	 *
+	 *     $request->send_headers();
 	 *
 	 * @return  $this
+	 * @uses    Request::$messages
 	 */
 	public function send_headers()
 	{
@@ -680,11 +748,18 @@ class Kohana_Request {
 	}
 
 	/**
-	 * Redirects as the request response.
+	 * Redirects as the request response. If the URL does not include a
+	 * protocol, it will be converted into a complete URL.
+	 *
+	 *     $request->redirect($url);
+	 *
+	 * [!!] No further processing can be done after this method is called!
 	 *
 	 * @param   string   redirect location
-	 * @param   integer  status code
+	 * @param   integer  status code: 301, 302, etc
 	 * @return  void
+	 * @uses    URL::site
+	 * @uses    Request::send_headers
 	 */
 	public function redirect($url, $code = 302)
 	{
@@ -718,10 +793,25 @@ class Kohana_Request {
 	 * `boolean` | inline    | Display inline instead of download | `FALSE`
 	 * `string`  | mime_type | Manual mime type                   | Automatic
 	 *
+	 * Download a file that already exists:
+	 *
+	 *     $request->send_file('media/packages/kohana.zip');
+	 *
+	 * Download generated content as a file:
+	 *
+	 *     $request->response = $content;
+	 *     $request->send_file(TRUE, $filename);
+	 *
+	 * [!!] No further processing can be done after this method is called!
+	 *
 	 * @param   string   filename with path, or TRUE for the current response
-	 * @param   string   download file name
+	 * @param   string   downloaded file name
 	 * @param   array    additional options
 	 * @return  void
+	 * @throws  Kohana_Exception
+	 * @uses    File::mime_by_ext
+	 * @uses    File::mime
+	 * @uses    Request::send_headers
 	 */
 	public function send_file($filename, $download = NULL, array $options = NULL)
 	{
@@ -831,32 +921,56 @@ class Kohana_Request {
 	}
 
 	/**
-	 * Processes the request, executing the controller. Before the routed action
-	 * is run, the before() method will be called, which allows the controller
-	 * to overload the action based on the request parameters. After the action
-	 * is run, the after() method will be called, for post-processing.
+	 * Processes the request, executing the controller action that handles this
+	 * request, determined by the [Route].
+	 *
+	 * 1. Before the controller action is called, the [Controller::before] method
+	 * will be called.
+	 * 2. Next the controller action will be called.
+	 * 3. After the controller action is called, the [Controller::after] method
+	 * will be called.
 	 *
 	 * By default, the output from the controller is captured and returned, and
 	 * no headers are sent.
 	 *
+	 *     $request->execute();
+	 *
 	 * @return  $this
+	 * @throws  Kohana_Exception
+	 * @uses    [Kohana::$profiling]
+	 * @uses    [Profiler]
 	 */
 	public function execute()
 	{
 		// Create the class prefix
 		$prefix = 'controller_';
 
-		if ( ! empty($this->directory))
+		if ($this->directory)
 		{
 			// Add the directory name to the class prefix
 			$prefix .= str_replace(array('\\', '/'), '_', trim($this->directory, '/')).'_';
 		}
 
-		if (Kohana::$profiling === TRUE)
+		if (Kohana::$profiling)
 		{
+			// Set the benchmark name
+			$benchmark = '"'.$this->uri.'"';
+
+			if ($this !== Request::$instance)
+			{
+				// Add the parent request uri
+				$benchmark .= ' « "'.Request::$current->uri.'"';
+			}
+
 			// Start benchmarking
-			$benchmark = Profiler::start('Requests', $this->uri);
+			$benchmark = Profiler::start('Requests', $benchmark);
 		}
+
+		// Store the currently active request
+		$previous = Request::$current;
+
+		// Change the current request to this request
+		Request::$current = $this;
 
 		try
 		{
@@ -886,6 +1000,9 @@ class Kohana_Request {
 		}
 		catch (Exception $e)
 		{
+			// Restore the previous request
+			Request::$current = $previous;
+
 			if (isset($benchmark))
 			{
 				// Delete the benchmark, it is invalid
@@ -907,6 +1024,9 @@ class Kohana_Request {
 			throw $e;
 		}
 
+		// Restore the previous request
+		Request::$current = $previous;
+
 		if (isset($benchmark))
 		{
 			// Stop the benchmark
@@ -918,11 +1038,16 @@ class Kohana_Request {
 
 
 	/**
-	 * Generate ETag
-	 * Generates an ETag from the response ready to be returned
+	 * Generates an [ETag](http://en.wikipedia.org/wiki/HTTP_ETag) from the
+	 * request response.
 	 *
+	 *     $etag = $request->generate_etag();
+	 * 
+	 * [!!] If the request response is empty when this method is called, an
+	 * exception will be thrown!
+	 *
+	 * @return string
 	 * @throws Kohana_Request_Exception
-	 * @return String Generated ETag
 	 */
 	public function generate_etag()
 	{
@@ -937,12 +1062,16 @@ class Kohana_Request {
 
 
 	/**
-	 * Check Cache
-	 * Checks the browser cache to see the response needs to be returned
+	 * Checks the browser cache to see the response needs to be returned.
 	 *
-	 * @param String Resource ETag
-	 * @throws Kohana_Request_Exception
-	 * @chainable
+	 *     $request->check_cache($etag);
+	 *
+	 * [!!] If the cache check succeeds, no further processing can be done!
+	 *
+	 * @param   string  etag to check
+	 * @return  $this
+	 * @throws  Kohana_Request_Exception
+	 * @uses    Request::generate_etag
 	 */
 	public function check_cache($etag = null)
 	{

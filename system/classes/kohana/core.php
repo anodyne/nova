@@ -8,6 +8,7 @@
  * - Variable and path debugging
  *
  * @package    Kohana
+ * @category   Base
  * @author     Kohana Team
  * @copyright  (c) 2008-2009 Kohana Team
  * @license    http://kohanaphp.com/license
@@ -452,7 +453,7 @@ class Kohana_Core {
 			if (is_dir($path))
 			{
 				// Add the module to include paths
-				$paths[] = realpath($path).DIRECTORY_SEPARATOR;
+				$paths[] = $modules[$name] = realpath($path).DIRECTORY_SEPARATOR;
 			}
 			else
 			{
@@ -472,7 +473,7 @@ class Kohana_Core {
 
 		foreach (Kohana::$_modules as $path)
 		{
-			$init = $path.DIRECTORY_SEPARATOR.'init'.EXT;
+			$init = $path.'init'.EXT;
 
 			if (is_file($init))
 			{
@@ -1117,10 +1118,10 @@ class Kohana_Core {
 		}
 		elseif (is_string($var))
 		{
-			if (strlen($var) > $length)
+			if (UTF8::strlen($var) > $length)
 			{
 				// Encode the truncated string
-				$str = htmlspecialchars(substr($var, 0, $length), ENT_NOQUOTES, Kohana::$charset).'&nbsp;&hellip;';
+				$str = htmlspecialchars(UTF8::substr($var, 0, $length), ENT_NOQUOTES, Kohana::$charset).'&nbsp;&hellip;';
 			}
 			else
 			{
