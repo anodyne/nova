@@ -68,11 +68,17 @@ Kohana::$config->attach(new Kohana_Config_File);
 /**
  * Enable modules. Modules are referenced by a relative or absolute path.
  */
-Kohana::modules(array(
-	'nova'		=> MODPATH.'nova',		// Nova module
-	'install'	=> MODPATH.'install',	// Install module
-	'database'	=> MODPATH.'database',	// Database access
-	));
+$base_modules = array(
+	'nova'			=> MODPATH.'nova',			// Nova module
+	'install'		=> MODPATH.'install',		// Install module
+	'database'		=> MODPATH.'database',		// Database access
+);
+
+// merge the base modules with whatever is in the modules section of the nova config file
+$modules = array_merge($base_modules, Kohana::config('nova.modules'));
+
+// set the modules
+Kohana::modules($modules);
 
 /**
  * Set the routes. Each route must have a minimum of a name, a URI and a set of

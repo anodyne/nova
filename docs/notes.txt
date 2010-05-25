@@ -42,3 +42,13 @@ http://allmarkedup.com/archives/jquery-quick-pagination-plugin/
 http://flowplayer.org/tools/index.html
 http://jquerylist.com/
 http://www.filamentgroup.com/lab/using_multiple_jquery_ui_themes_on_a_single_page/
+
+|---------------------------------------------------------------
+| ERRORS
+|---------------------------------------------------------------
+PDO, bad username/password: SQLSTATE[28000] [1045] Access denied for user 'username'@'localhost' (using password: YES)
+PDO, wrong database: SQLSTATE[42000] [1049] Unknown database 'foo'
+PDO, wrong host: SQLSTATE[HY000] [2002] php_network_getaddresses: getaddrinfo failed: No such host is known. 
+MySQL, bad username/password: mysql_connect() [<a href='function.mysql-connect'>function.mysql-connect</a>]: Access denied for user 'username'@'localhost' (using password: YES)
+MySQL, wrong database: Unknown database 'foo'
+MySQL, wrong host: mysql_connect() [<a href='function.mysql-connect'>function.mysql-connect</a>]: php_network_getaddresses: getaddrinfo failed: No such host is known. 

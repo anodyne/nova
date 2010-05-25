@@ -19,6 +19,11 @@ class Controller_Install extends Controller_Template
 	{
 		parent::before();
 		
+		if (!file_exists(APPPATH.'config/database.php') && $this->request->action != 'setupconfig')
+		{
+			$this->request->redirect('install/setupconfig');
+		}
+		
 		// set the locale
 		i18n::lang('en-us');
 		
@@ -113,47 +118,13 @@ class Controller_Install extends Controller_Template
 		$this->template->layout->label = __('readme.label');
 	}
 	
-	public function action_test()
-	{
-		$table = Database_Table::factory('test');
-		
-		$id = Database_Column::factory('int');
-		$id->is_primary = TRUE;
-		$id->is_auto_increment = TRUE;
-		$id->is_nullable = TRUE;
-		$id->name = 'id';
-		
-		$test_id = Database_Column::factory('int');
-		$test_id->is_nullable = TRUE;
-		$test_id->name = 'test_id';
-		
-		$email = Database_Column::factory('varchar');
-		$email->parameters = 45;
-		$email->is_nullable = FALSE;
-		$email->is_unique = TRUE;
-		$email->name = 'email';
-		$email->default = 'bob@mail.com';
-		
-		$table->add_column($id);
-		$table->add_column($test_id);
-		$table->add_column($email);
-		
-		//$ck = Database_Constraint::check('id', '>=', 0);
-		//$pk = Database_Constraint::primary_key(array($id->name), $table->name);
-		
-		//$table->add_constraint($pk);
-		//$table->add_constraint($ck);
-		
-		$table->create();
-		
-		echo Kohana::debug($table);
-		exit();
-	}
-	
 	public function action_setupconfig($step = 0)
 	{
 		// make sure the script doesn't time out
 		set_time_limit(0);
+		
+		// create a session instance
+		$session = Session::Instance();
 		
 		// create a new content view
 		$this->template->layout->content = View::factory('install/pages/install_setupconfig');
@@ -164,22 +135,19 @@ class Controller_Install extends Controller_Template
 		// pass the step over to the view file
 		$data->step = $step;
 		
-		if (!file_exists(MODPATH.'database/config/database'.EXT))
+		if (!file_exists(MODPATH.'database/assets/db.mysql'.EXT) || !file_exists(MODPATH.'database/assets/db.pdo'.EXT))
 		{
-			$data->message = __('setup.no_config_file');
+			$data->message = __('setup.no_config_file', array(':modules' => MODFOLDER, ':ext' => EXT));
 		}
 		else
 		{
-			// load the file into an array
-			$file = file(MODPATH.'database/config/database'.EXT);
-			
 			if (file_exists(APPPATH.'config/database'.EXT))
 			{
-				$data->message = __('setup.config_exists');
+				$data->message = __('setup.config_exists', array(':appfolder' => APPFOLDER));
 			}
 			else
 			{
-				if (version_compare('5.2.4', PHP_VERSION, '>='))
+				if (version_compare(PHP_VERSION, '5.2.4', '<'))
 				{
 					$data->message = __('setup.php_version', array(':php' => PHP_VERSION));
 				}
@@ -188,10 +156,28 @@ class Controller_Install extends Controller_Template
 					switch ($step)
 					{
 						case 0:
-							$data->message = __('setup.step0_text');
+							$data->message = __('setup.step0_text', array(':modules' => MODFOLDER, ':appfolder' => APPFOLDER));
+							
+							// build the next step button
+							$next = array(
+								'type' => 'submit',
+								'class' => 'button',
+								'id' => 'next',
+							);
+							$text = ucwords(__('order.next').' '.__('label.step'));
+							
+							if (class_exists('PDO') || extension_loaded('mysql'))
+							{
+								$this->template->layout->controls = form::open('install/setupconfig/1').form::button('next', $text, $next).'</form>';
+							}
+							else
+							{
+								$this->template->layout->flash_message = View::factory('install/pages/flash');
+								$this->template->layout->flash_message->status = 'error';
+								$this->template->layout->flash_message->message = __('setup.nodb');
+							}
 							break;
 						
-						# show the form with all the database connection values	
 						case 1:
 							// build the next step button
 							$next = array(
@@ -200,57 +186,271 @@ class Controller_Install extends Controller_Template
 								'id' => 'next',
 							);
 							$text = ucwords(__('order.next').' '.__('label.step'));
+							
+							// set some of the input attributes
+							$data->inputs = array(
+								'dbType_pdo' => array(
+									'disabled' => (class_exists('PDO')) ? NULL : 'disabled',
+									'id' => 'dbType_pdo'),
+								'dbType_mysql' => array(
+									'id' => 'dbType_mysql'),
+							);
+							
+							// set the message
+							$data->message = __('setup.step1_text');
 
 							// build the next step control
 							$this->template->layout->controls = form::button('next', $text, $next).'</form>';
 							break;
 						
-						# write the file and offer link to installation
 						case 2:
 							// set the variables to use
+							$dbType		= trim(Security::xss_clean($_POST['dbType']));
 							$dbName		= trim(Security::xss_clean($_POST['dbName']));
 							$dbUser		= trim(Security::xss_clean($_POST['dbUser']));
 							$dbPass		= trim(Security::xss_clean($_POST['dbPass']));
 							$dbHost		= trim(Security::xss_clean($_POST['dbHost']));
 							$prefix		= trim(Security::xss_clean($_POST['prefix']));
 							
-							foreach ($file as $line_num => $line) {
-								switch (substr($line,0,16)) {
-									case "define('DB_NAME'":
-										$file[$line_num] = str_replace("putyourdbnamehere", $dbName, $line);
-										break;
-									case "define('DB_USER'":
-										$file[$line_num] = str_replace("'usernamehere'", "'$dbUser'", $line);
-										break;
-									case "define('DB_PASSW":
-										$file[$line_num] = str_replace("'yourpasswordhere'", "'$dbPass'", $line);
-										break;
-									case "define('DB_HOST'":
-										$file[$line_num] = str_replace("localhost", $dbHost, $line);
-										break;
-									case '$table_prefix  =':
-										$file[$line_num] = str_replace('wp_', $prefix, $line);
-										break;
-								}
+							// set the session variables
+							$session->set('dbType', $dbType);
+							$session->set('dbName', $dbName);
+							$session->set('dbUser', $dbUser);
+							$session->set('dbPass', $dbPass);
+							$session->set('dbHost', $dbHost);
+							$session->set('prefix', $prefix);
+							
+							// create a new database configuration
+							if ($session->get('dbType') == 'pdo')
+							{
+								$dbconfig = array(
+									'type' => "".$session->get('dbType')."",
+									'table_prefix' => "".$session->get('prefix')."",
+									'connection' => array(
+										'dsn' => "mysql:host=".$session->get('dbHost').";dbname=".$session->get('dbName')."",
+										'username' => "".$session->get('dbUser')."",
+										'password' => "".$session->get('dbPass')."",
+									),
+								);
+							}
+							else
+							{
+								$dbconfig = array(
+									'type' => "mysql",
+									'table_prefix' => "".$session->get('prefix')."",
+									'connection' => array(
+										'hostname' => "".$session->get('dbHost')."",
+										'username' => "".$session->get('dbUser')."",
+										'password' => "".$session->get('dbPass')."",
+										'database' => "".$session->get('dbName')."",
+									),
+								);
 							}
 							
-							if (!is_writable($file))
-							{
-								$data->message = __("Sorry, but I can't write the database connection file. You can create the database.php file manually and paste the following text into it.");
-								foreach ($file as $line)
+							// get an instance of the database
+							$db = Database::Instance('custom', $dbconfig);
+							
+							try {
+								$tables = $db->list_tables();
+								
+								// write the message
+								$data->message = __('setup.step2_success');
+								
+								// build the next step button
+								$next = array(
+									'type' => 'submit',
+									'class' => 'button',
+									'id' => 'next',
+								);
+								$text = __('setup.step2_write_file');
+								
+								// write the controls
+								$this->template->layout->controls = form::open('install/setupconfig/3').form::button('next', $text, $next).form::close();
+							} catch (Exception $e) {
+								$msg = (string) $e->getMessage();
+								
+								if (stripos($msg, 'No such host is known') !== FALSE)
 								{
-									$data->file_output = htmlentities($line);
+									$data->message = __('setup.step2_db_host');
+								}
+								elseif (stripos($msg, 'Access denied for user') !== FALSE)
+								{
+									$data->message = __('setup.step2_db_userpass');
+								}
+								elseif (stripos($msg, 'Unknown database') !== FALSE)
+								{
+									$data->message = __('setup.step2_db_name', array(':dbname' => $dbName));
+								}
+								else
+								{
+									$data->message = __('setup.step2_db_gen');
+								}
+								
+								// build the next step button
+								$next = array(
+									'type' => 'submit',
+									'class' => 'button',
+									'id' => 'next',
+								);
+								$text = __('setup.step2_start_over');
+								
+								// write the controls
+								$this->template->layout->controls = form::open('install/setupconfig/1').form::button('next', $text, $next).form::close();
+							}
+							break;
+							
+						case 3:
+							// grab the disabled functions
+							$disabled = explode(',', ini_get('disable_functions'));
+							
+							// make sure everything is trimmed properly
+							foreach ($disabled as $key => $value)
+							{
+								$disabled[$key] = trim($value);
+							}
+							
+							// what we need
+							$need = array('fopen', 'fwrite', 'file');
+							
+							// check to make sure we have what we need
+							$check = array_intersect($disabled, $need);
+							
+							$file = FALSE;
+							
+							// load the file into an array
+							if ($session->get('dbType') == 'pdo')
+							{
+								try {
+									$file = file(MODPATH.'database/assets/db.pdo'.EXT);
+								} catch (Exception $e) {
+									$data->error = $e->getMessage();
+								}
+								
+								if (is_array($file))
+								{
+									foreach ($file as $line_num => $line)
+									{
+										switch (substr($line, 0, 9))
+										{
+											case "'dsn' => ":
+												$file[$line_num] = str_replace("mysql:host=localhost;dbname=nova", "mysql:host=".$session->get('dbHost').";dbname=".$session->get('dbName'), $line);
+												break;
+											case "'username":
+												$file[$line_num] = str_replace("FALSE", "'".$session->get('dbUser')."'", $line);
+												break;
+											case "'password":
+												$file[$line_num] = str_replace("FALSE", "'".$session->get('dbPass')."'", $line);
+												break;
+											case "'table_pr":
+												$file[$line_num] = str_replace("''", "'".$session->get('prefix')."'", $line);
+												break;
+										}
+									}
+									
+									$code = FALSE;
+									
+									foreach ($file as $value)
+									{
+										$code.= htmlentities($value);
+									}
+								}
+								else
+								{
+									$code = htmlentities("<?php defined('SYSPATH') OR die('No direct access allowed.');
+
+return array
+(
+'default' => array(
+'type' => 'pdo',
+
+'connection' => array(
+'dsn' => 'mysql:host=".$session->get('dbHost').";dbname=".$session->get('dbName')."',
+'username' => '".$session->get('dbUser')."',
+'password' => '".$session->get('dbPass')."',
+'persistent' => FALSE,
+),
+
+'table_prefix' => '".$session->get('prefix')."',
+'charset' => 'utf8',
+'caching' => FALSE,
+'profiling' => TRUE,
+),
+);");
 								}
 							}
 							else
 							{
+								$file = file(MODPATH.'database/assets/db.mysql'.EXT);
+								
+								if (is_array($file))
+								{
+									foreach ($file as $line_num => $line)
+									{
+										switch (substr($line, 0, 9))
+										{
+											case "'database":
+												$file[$line_num] = str_replace("nova", $session->get('dbName'), $line);
+												break;
+											case "'username":
+												$file[$line_num] = str_replace("FALSE", "'".$session->get('dbUser')."'", $line);
+												break;
+											case "'password":
+												$file[$line_num] = str_replace("FALSE", "'".$session->get('dbPass')."'", $line);
+												break;
+											case "'hostname":
+												$file[$line_num] = str_replace("localhost", $session->get('dbHost'), $line);
+												break;
+											case "'table_pr":
+												$file[$line_num] = str_replace("''", "'".$session->get('prefix')."'", $line);
+												break;
+										}
+									}
+									
+									$code = FALSE;
+									
+									foreach ($file as $value)
+									{
+										$code.= htmlentities($value);
+									}
+								}
+								else
+								{
+									$code = htmlentities("<?php defined('SYSPATH') OR die('No direct access allowed.');
+
+return array
+(
+'default' => array(
+'type' => 'mysql',
+
+'connection' => array(
+'hostname' => '".$session->get('dbHost')."',
+'username' => '".$session->get('dbUser')."',
+'password' => '".$session->get('dbPass')."',
+'persistent' => FALSE,
+'database' => '".$session->get('dbName')."',
+),
+
+'table_prefix' => '".$session->get('prefix')."',
+'charset' => 'utf8',
+'caching' => FALSE,
+'profiling' => TRUE,
+),
+);");
+								}
+							}
+							
+							if (count($check) == 0)
+							{
 								// open the file
 								$handle = fopen(APPPATH.'config/database'.EXT, 'w');
 								
+								// figure out if the write was successful
+								$write = FALSE;
+							
 								// write the file line by line
 								foreach ($file as $line)
 								{
-									fwrite($handle, $line);
+									$write = fwrite($handle, $line);
 								}
 								
 								// close the file
@@ -259,9 +459,116 @@ class Controller_Install extends Controller_Template
 								// try to chmod the file to the proper permissions
 								chmod(APPPATH.'config/database'.EXT, 0666);
 								
-								$data->message = __("All right sparky! You've made it through this part of the installation. Nova can now communicate with your database. If you are ready, you can start the install...");
+								if ($write !== FALSE)
+								{
+									// set the success message
+									$data->message = __('setup.step3_write');
+									
+									// wipe out the session
+									$session->destroy();
+									
+									// build the next step button
+									$next = array(
+										'type' => 'submit',
+										'class' => 'button',
+										'id' => 'next',
+									);
+									$text = __('setup.step3_install');
+									
+									// write the controls
+									$this->template->layout->controls = form::open('install/index').form::button('next', $text, $next).form::close();
+								}
+								else
+								{
+									$data->code = $code;
+								
+									$data->message = __('setup.step3_no_write', array(':ext' => EXT, ':appfolder' => APPFOLDER));
+									
+									// build the next step button
+									$next = array(
+										'type' => 'submit',
+										'class' => 'button',
+										'id' => 'next',
+									);
+									$text = __('setup.step3_retest');
+									
+									// write the controls
+									$this->template->layout->controls = form::open('install/setupconfig/4').form::button('next', $text, $next).form::close();
+								}
 							}
+							else
+							{
+								$data->code = $code;
+								
+								$data->message = __('setup.step3_no_write', array(':ext' => EXT, ':appfolder' => APPFOLDER));
+								
+								// build the next step button
+								$next = array(
+									'type' => 'submit',
+									'class' => 'button',
+									'id' => 'next',
+								);
+								$text = __('setup.step3_retest');
+								
+								// write the controls
+								$this->template->layout->controls = form::open('install/setupconfig/4').form::button('next', $text, $next).form::close();
+							}
+							break;
 							
+						case 4:
+							// get an instance of the database
+							$db = Database::Instance();
+							
+							try {
+								$tables = $db->list_tables();
+								
+								// write the message
+								$data->message = __('setup.step4_success');
+								
+								// build the next step button
+								$next = array(
+									'type' => 'submit',
+									'class' => 'button',
+									'id' => 'next',
+								);
+								$text = __('setup.step3_install');
+								
+								// write the controls
+								$this->template->layout->controls = form::open('install/index').form::button('next', $text, $next).form::close();
+								
+								// clear the session
+								$session->destroy();
+							} catch (Exception $e) {
+								$msg = (string) $e->getMessage();
+								
+								if (stripos($msg, 'No such host is known') !== FALSE)
+								{
+									$data->message = __('setup.step2_db_host');
+								}
+								elseif (stripos($msg, 'Access denied for user') !== FALSE)
+								{
+									$data->message = __('setup.step2_db_userpass');
+								}
+								elseif (stripos($msg, 'Unknown database') !== FALSE)
+								{
+									$data->message = __('setup.step2_db_name', array(':dbname' => $dbName));
+								}
+								else
+								{
+									$data->message = __('setup.step2_db_gen');
+								}
+								
+								// build the next step button
+								$next = array(
+									'type' => 'submit',
+									'class' => 'button',
+									'id' => 'next',
+								);
+								$text = __('setup.step2_start_over');
+								
+								// write the controls
+								$this->template->layout->controls = form::open('install/setupconfig/1').form::button('next', $text, $next).form::close();
+							}
 							break;
 					}
 				}
@@ -280,11 +587,6 @@ class Controller_Install extends Controller_Template
 	{
 		// make sure the script doesn't time out
 		set_time_limit(0);
-		
-		if (!file_exists(MODPATH.'database/config/database.php'))
-		{
-			Request::Instance()->redirect('install/setupconfig');
-		}
 		
 		// get an instance of the database
 		$db = Database::Instance();

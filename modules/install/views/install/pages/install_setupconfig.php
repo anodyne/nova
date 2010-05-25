@@ -1,42 +1,59 @@
 <?php if ($step == 0): ?>
-	<?php echo __('setup.step0_text');?>
+	<?php echo $message;?>
 <?php elseif ($step == 1): ?>
-	<p><?php echo __('setup.step1_text');?></p>
+	<p class="fontMedium"><?php echo $message;?></p>
 	
+	<?php if (isset($inputs)): ?>
 	<hr />
 	
 	<?php echo form::open('install/setupconfig/2');?>
 		<p>
-			<kbd>Database Name</kbd>
-			<span class="fontSmall subtle">The name of the database you want to install Nova in</span><br />
-			<input type="text" name="dbName" value="nova" />
+			<kbd><?php echo __('setup.step1_conntype');?></kbd>
+			<span class="fontSmall subtle"><?php echo __('setup.step1_conntype_desc');?></span><br />
+			<?php echo form::radio('dbType', 'pdo', class_exists('PDO'), $inputs['dbType_pdo']).' '.form::label('dbType_pdo', __('setup.pdo'));?>
+			<?php echo form::radio('dbType', 'mysql', (!class_exists('PDO') && extension_loaded('mysql')), $inputs['dbType_mysql']).' '.form::label('dbType_mysql', __('setup.mysql'));?>
+		</p>
+		
+		<p>
+			<kbd><?php echo __('setup.step1_dbname');?></kbd>
+			<span class="fontSmall subtle"><?php echo __('setup.step1_dbname_desc');?></span><br />
+			<?php echo form::input('dbName', Session::Instance()->get('dbName', 'nova'));?>
 		</p>
 	
 		<p>
-			<kbd>Username</kbd>
-			<span class="fontSmall subtle">Your database username</span><br />
-			<input type="text" name="dbUser" value="username" />
+			<kbd><?php echo __('setup.step1_dbuser');?></kbd>
+			<span class="fontSmall subtle"><?php echo __('setup.step1_dbuser_desc');?></span><br />
+			<?php echo form::input('dbUser', Session::Instance()->get('dbUser', 'username'));?>
 		</p>
 	
 		<p>
-			<kbd>Password</kbd>
-			<span class="fontSmall subtle">Your database password</span><br />
-			<input type="text" name="dbPass" value="password" />
+			<kbd><?php echo __('setup.step1_dbpass');?></kbd>
+			<span class="fontSmall subtle"><?php echo __('setup.step1_dbpass_desc');?></span><br />
+			<?php echo form::input('dbPass', Session::Instance()->get('dbPass', 'password'));?>
 		</p>
 	
 		<p>
-			<kbd>Database Host</kbd>
-			<span class="fontSmall subtle">99% chance you won't need to change this...</span><br />
-			<input type="text" name="dbHost" value="localhost" />
+			<kbd><?php echo __('setup.step1_dbhost');?></kbd>
+			<span class="fontSmall subtle"><?php echo __('setup.step1_dbhost_desc');?></span><br />
+			<?php echo form::input('dbHost', Session::Instance()->get('dbHost', 'localhost'));?>
 		</p>
 	
 		<p>
-			<kbd>Table Prefix</kbd>
-			<span class="fontSmall subtle">The database table prefix</span><br />
-			<input type="text" name="prefix" value="nova_" />
+			<kbd><?php echo __('setup.step1_prefix');?></kbd>
+			<span class="fontSmall subtle"><?php echo __('setup.step1_prefix_desc');?></span><br />
+			<?php echo form::input('prefix', Session::Instance()->get('prefix', 'nova_'));?>
 		</p>
+	<?php endif;?>
 <?php elseif ($step == 2): ?>
-
+	<p class="fontMedium"><?php echo $message;?></p>
 <?php elseif ($step == 3): ?>
-
+	<p class="fontMedium"><?php echo $message;?></p>
+	
+	<?php if (isset($code)): ?>
+		<hr />
+		
+		<pre><?php echo $code;?></pre>
+	<?php endif;?>
+<?php elseif ($step == 4): ?>
+	<p class="fontMedium"><?php echo $message;?></p>
 <?php endif;?>

@@ -66,6 +66,7 @@ return array
 	 * Action Language Items
 	 */
 	'action.added' => 'added',
+	'action.delete' => 'delete',
 	'action.edited' => 'edited',
 	'action.posted' => 'posted',
 	'action.processing' => 'processing',

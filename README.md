@@ -8,7 +8,7 @@ M1 (2.0.0-m1)
 
 Last Update
 -----------
-20 May 2010
+25 May 2010
 
 Latest Changes
 --------------
