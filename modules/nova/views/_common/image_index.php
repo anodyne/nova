@@ -7,7 +7,7 @@
  * @version		2.0
  */
 
-$images = array(
+return array(
 	'main.next'			=> 'next.png',
 	'main.previous'		=> 'previous.png',
 	'main.rss'			=> 'feed.png',
