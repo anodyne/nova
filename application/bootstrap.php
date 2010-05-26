@@ -72,6 +72,7 @@ $base_modules = array(
 	'nova'			=> MODPATH.'nova',			// Nova module
 	'install'		=> MODPATH.'install',		// Install module
 	'database'		=> MODPATH.'database',		// Database access
+	'jelly'			=> MODPATH.'jelly',			// Jelly ORM module
 );
 
 // merge the base modules with whatever is in the modules section of the nova config file
