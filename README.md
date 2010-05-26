@@ -8,10 +8,14 @@ M1 (2.0.0-m1)
 
 Last Update
 -----------
-25 May 2010
+26 May 2010
 
 Latest Changes
 --------------
+* added the jelly orm to the master branch
+* added models with the jelly orm
+* updated the install process
+* updated the setup config method to not allow PDO (jelly doesn't like it)
 
 Version History
 ---------------
