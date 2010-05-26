@@ -45,15 +45,8 @@ class Controller_Nova_Main extends Controller_Nova_Base
 	public function action_index()
 	{
 		// pull in the additional setting items we need for this method
-		$args = array(
-			'where' => array(
-				array(
-					'field' => 'setting_key',
-					'value' => 'show_news'
-				),
-			),
-		);
-		$this->options['show_news'] = $this->mCore->get('settings', $args, 'setting_value');
+		$setting = Jelly::select('setting')->where('key', '=', 'show_news')->load();
+		$this->options['show_news'] = $setting->value;
 		
 		// create a new content view
 		$this->template->layout->content = View::factory(location::view('main_index', $this->skin, 'main', 'pages'));
@@ -63,30 +56,15 @@ class Controller_Nova_Main extends Controller_Nova_Base
 		
 		if ($this->options['show_news'] == 'y')
 		{
-			$args = array(
-				'join' => array(
-					array('news_categories', 'news_categories.newscat_id', 'news.news_cat')
-				),
-				'where' => array(
-					'status' => array(
-						'field' => 'news_status',
-						'value' => 'activated'),
-					'private' => array(
-						'field' => 'news_private',
-						'value' => 'n'),
-				),
-				'order_by' => array(
-					array('news_date', 'desc'),
-				),
-				'limit' => 5
-			);
+			// get the news
+			$news = Jelly::select('news')
+				->where('status', '=', 'activated')
+				->order_by('news_date', 'desc')
+				->limit(5);
 			
-			if (Auth::is_logged_in())
-			{
-				unset($args['where']['private']);
-			}
+			(!Auth::is_logged_in()) ? $news->where('private', '=', 'n') : FALSE;
 			
-			$news = $this->mCore->get_all('news', $args);
+			$news = $news->execute();
 			
 			if ($news)
 			{
@@ -134,6 +112,9 @@ class Controller_Nova_Main extends Controller_Nova_Base
 	{
 		# TODO: need to handle comment moderation
 		
+		// sanitize the id
+		$id = (!is_numeric($id)) ? FALSE : $id;
+		
 		// create a new content view
 		$this->template->layout->content = View::factory(location::view('main_viewnews', $this->skin, 'main', 'pages'));
 		
@@ -144,83 +125,53 @@ class Controller_Nova_Main extends Controller_Nova_Base
 		{
 			// additional pieces of info that need to go on the end of the POST array
 			$additional = array(
-				'ncomment_date' => date::now(),
-				'ncomment_author_user' => $this->session->get('userid'),
-				'ncomment_author_character' => $this->session->get('main_char'),
-				'ncomment_news' => $id
+				'author_user' => $this->session->get('userid', 1),
+				'author_character' => $this->session->get('main_char', 1),
+				'news' => $id
 			);
 			
 			// what comes off the POST array
 			$pop = array('submit');
 			
 			// submit the comment
-			$submit = Submit::create($_POST, 'news_comments', $additional, $pop);
+			$submit = Submit::create($_POST, 'newscomment', $additional, $pop);
 			
 			// show the appropriate flash message
-			$this->template->layout->flash_message = Submit::show_flash($submit, __('word.comment'), __('action.added'), $this->skin, 'main');
+			$this->template->layout->flash_message = Submit::show_flash($submit, __('label.comment'), __('action.added'), $this->skin, 'main');
 		}
 		
 		// grab the news item referenced in the url
-		$args = array(
-			'join' => array(
-				array('news_categories', 'news_categories.newscat_id', 'news.news_cat', ''),
-			),
-			'where' => array(
-				'id' => array(
-					'field' => 'news_id',
-					'value' => (is_numeric($id)) ? $id : FALSE),
-			),
-		);
-		$news = $this->mCore->get('news', $args);
+		$news = Jelly::select('news', $id);
 		
 		// figure out what the previous item is
-		$args = array(
-			'where' => array(
-				'id' => array(
-					'field' => 'news_id',
-					'value' => (is_numeric($id)) ? $id : FALSE,
-					'operand' => '<',
-				),
-			),
-			'order_by' => array('news_id' => 'desc'),
-			'limit' => 1			
-		);
-		$prev = $this->mCore->get('news', $args);
+		$prev = Jelly::select('news')
+			->where('id', '<', $id)
+			->order_by('id', 'desc');
+			
+		(!Auth::is_logged_in()) ? $prev->where('private', '=', 'n') : FALSE;
+		
+		$prev = $prev->load();
 		
 		// figure out what the next item is
-		$args = array(
-			'where' => array(
-				'id' => array(
-					'field' => 'news_id',
-					'value' => (is_numeric($id)) ? $id : FALSE,
-					'operand' => '>',
-				),
-			),
-			'order_by' => array('news_id' => 'asc'),
-			'limit' => 1			
-		);
-		$next = $this->mCore->get('news', $args);
+		$next = Jelly::select('news')
+			->where('id', '>', $id)
+			->order_by('id', 'desc');
+			
+		(!Auth::is_logged_in()) ? $next->where('private', '=', 'n') : FALSE;
 		
-		if ($news)
+		$next = $next->load();
+		
+		if ($news->loaded())
 		{
 			// grab the news object
 			$data->news = $news;
 			
 			// grab the news comments for this news item
-			$args = array(
-				'where' => array(
-					'id' => array(
-						'field' => 'ncomment_news',
-						'value' => (is_numeric($id)) ? $id : FALSE
-					),
-					'status' => array(
-						'field' => 'ncomment_status',
-						'value' => 'activated'
-					),
-				),
-				'order_by' => array('ncomment_date' => 'desc')
-			);
-			$comments = $this->mCore->get_all('news_comments', $args);
+			$comments = Jelly::select('newscomment')
+				->where('news', '=', $id)
+				->where('status', '=', 'activated')
+				->order_by('date', 'desc')
+				->execute();
 			
 			if ($comments)
 			{
@@ -233,25 +184,28 @@ class Controller_Nova_Main extends Controller_Nova_Base
 			}
 			
 			// build the prev/next items
-			$data->prev = ($prev) ? $prev->news_id : FALSE;
-			$data->next = ($next) ? $next->news_id : FALSE;
+			$data->prev = $prev->id;
+			$data->next = $next->id;
 			
 			// build the images portion of the object
 			$data->images = array(
 				'rss' => array(
 					'src' => location::image($this->images['main.rss'], $this->skin, 'main', 'image'),
-					'alt' => __('abbr.rss'),
-					'class' => ''),
+					'attr' => array(
+						'alt' => __('abbr.rss'),
+						'class' => '')),
 				'prev' => array(
 					'src' => location::image($this->images['main.previous'], $this->skin, 'main', 'image'),
-					'alt' => __('word.previous'),
-					'title' => ucfirst(__('word.previous')),
-					'class' => ''),
+					'attr' => array(
+						'alt' => __('word.previous'),
+						'title' => ucfirst(__('word.previous')),
+						'class' => '')),
 				'next' => array(
 					'src' => location::image($this->images['main.next'], $this->skin, 'main', 'image'),
-					'alt' => __('word.next'),
-					'title' => ucfirst(__('word.next')),
-					'class' => ''),
+					'attr' => array(
+						'alt' => __('word.next'),
+						'title' => ucfirst(__('word.next')),
+						'class' => '')),
 				'comment'	=> array(),
 			);
 			
@@ -266,7 +220,7 @@ class Controller_Nova_Main extends Controller_Nova_Base
 			}
 			
 			// make sure they're logged in if it's a private news item
-			if ($news->news_private == 'y' && !Auth::is_logged_in())
+			if ($news->private == 'y' && !Auth::is_logged_in())
 			{
 				$this->template->title.= ucwords(__('action.view').' '.__('global.news_item'));
 				$data->header = __('error.header');
@@ -275,8 +229,8 @@ class Controller_Nova_Main extends Controller_Nova_Base
 			}
 			else
 			{
-				$this->template->title.= ucwords(__('action.view').' '.__('global.news_item')).' - '. $news->news_title;
-				$data->header = $news->news_title;
+				$this->template->title.= ucwords(__('action.view').' '.__('global.news_item')).' - '. $news->title;
+				$data->header = $news->title;
 				$data->headerclass = NULL;
 				$data->message = NULL;
 			}
@@ -292,33 +246,31 @@ class Controller_Nova_Main extends Controller_Nova_Base
 		// build the controls for the comment box
 		$data->inputs = array(
 			'content' => array(
-				'name' => 'ncomment_content',
-				'id' => 'ncomment_content',
-				'placeholder' => __('phrase.enter_your_comment', array(':item' => __('global.news_item'))),
-				'rows' => 6),
+				'name' => 'content',
+				'value' => '',
+				'attr' => array(
+					'id' => 'ncomment_content',
+					'placeholder' => __('phrase.enter_your_comment', array(':item' => __('global.news_item'))),
+					'rows' => 6)),
 		);
 		
 		$data->buttons = array(
 			'submit' => array(
-				'type' => 'submit',
-				'class' => 'button-main',
 				'name' => 'submit',
-				'value' => ucfirst(__('action.submit'))),
+				'value' => ucfirst(__('action.submit')),
+				'attr' => array(
+					'type' => 'submit',
+					'class' => 'button-main')),
 		);
 	}
 	
-	public function action_test()
+	public function action_test($id = 1)
 	{
-		//$zone = new DateTimeZone();
-		//echo Kohana::debug($zone->listAbbreviations());
-		//echo Kohana::debug($zone->listIdentifiers());
-		
-		//echo Kohana::debug(date::timezones());
-		
-		//echo Kohana::debug(timezone_identifiers_list());
-		//echo Kohana::debug(timezone_abbreviations_list());
-		
-		echo Kohana::debug(date::timezones());
+		$login = Jelly::select('user')
+			->where('email', '=', 'david.vanscott@gmail.com')
+			->execute();
+			
+		echo Kohana::debug($login->current());
 		exit();
 	}
 	
