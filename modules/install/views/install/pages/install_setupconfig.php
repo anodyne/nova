@@ -8,13 +8,6 @@
 	
 	<?php echo form::open('install/setupconfig/2');?>
 		<p>
-			<kbd><?php echo __('setup.step1_conntype');?></kbd>
-			<span class="fontSmall subtle"><?php echo __('setup.step1_conntype_desc');?></span><br />
-			<?php echo form::radio('dbType', 'pdo', class_exists('PDO'), $inputs['dbType_pdo']).' '.form::label('dbType_pdo', __('setup.pdo'));?>
-			<?php echo form::radio('dbType', 'mysql', (!class_exists('PDO') && extension_loaded('mysql')), $inputs['dbType_mysql']).' '.form::label('dbType_mysql', __('setup.mysql'));?>
-		</p>
-		
-		<p>
 			<kbd><?php echo __('setup.step1_dbname');?></kbd>
 			<span class="fontSmall subtle"><?php echo __('setup.step1_dbname_desc');?></span><br />
 			<?php echo form::input('dbName', Session::Instance()->get('dbName', 'nova'));?>

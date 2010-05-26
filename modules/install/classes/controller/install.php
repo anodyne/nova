@@ -135,7 +135,7 @@ class Controller_Install extends Controller_Template
 		// pass the step over to the view file
 		$data->step = $step;
 		
-		if (!file_exists(MODPATH.'database/assets/db.mysql'.EXT) || !file_exists(MODPATH.'database/assets/db.pdo'.EXT))
+		if (!file_exists(MODPATH.'database/assets/db.mysql'.EXT))
 		{
 			$data->message = __('setup.no_config_file', array(':modules' => MODFOLDER, ':ext' => EXT));
 		}
@@ -166,7 +166,7 @@ class Controller_Install extends Controller_Template
 							);
 							$text = ucwords(__('order.next').' '.__('label.step'));
 							
-							if (class_exists('PDO') || extension_loaded('mysql'))
+							if (extension_loaded('mysql'))
 							{
 								$this->template->layout->controls = form::open('install/setupconfig/1').form::button('next', $text, $next).'</form>';
 							}
@@ -187,15 +187,6 @@ class Controller_Install extends Controller_Template
 							);
 							$text = ucwords(__('order.next').' '.__('label.step'));
 							
-							// set some of the input attributes
-							$data->inputs = array(
-								'dbType_pdo' => array(
-									'disabled' => (class_exists('PDO')) ? NULL : 'disabled',
-									'id' => 'dbType_pdo'),
-								'dbType_mysql' => array(
-									'id' => 'dbType_mysql'),
-							);
-							
 							// set the message
 							$data->message = __('setup.step1_text');
 
@@ -205,7 +196,6 @@ class Controller_Install extends Controller_Template
 						
 						case 2:
 							// set the variables to use
-							$dbType		= trim(Security::xss_clean($_POST['dbType']));
 							$dbName		= trim(Security::xss_clean($_POST['dbName']));
 							$dbUser		= trim(Security::xss_clean($_POST['dbUser']));
 							$dbPass		= trim(Security::xss_clean($_POST['dbPass']));
@@ -213,39 +203,22 @@ class Controller_Install extends Controller_Template
 							$prefix		= trim(Security::xss_clean($_POST['prefix']));
 							
 							// set the session variables
-							$session->set('dbType', $dbType);
 							$session->set('dbName', $dbName);
 							$session->set('dbUser', $dbUser);
 							$session->set('dbPass', $dbPass);
 							$session->set('dbHost', $dbHost);
 							$session->set('prefix', $prefix);
 							
-							// create a new database configuration
-							if ($session->get('dbType') == 'pdo')
-							{
-								$dbconfig = array(
-									'type' => "".$session->get('dbType')."",
-									'table_prefix' => "".$session->get('prefix')."",
-									'connection' => array(
-										'dsn' => "mysql:host=".$session->get('dbHost').";dbname=".$session->get('dbName')."",
-										'username' => "".$session->get('dbUser')."",
-										'password' => "".$session->get('dbPass')."",
-									),
-								);
-							}
-							else
-							{
-								$dbconfig = array(
-									'type' => "mysql",
-									'table_prefix' => "".$session->get('prefix')."",
-									'connection' => array(
-										'hostname' => "".$session->get('dbHost')."",
-										'username' => "".$session->get('dbUser')."",
-										'password' => "".$session->get('dbPass')."",
-										'database' => "".$session->get('dbName')."",
-									),
-								);
-							}
+							$dbconfig = array(
+								'type' => "mysql",
+								'table_prefix' => "".$session->get('prefix')."",
+								'connection' => array(
+									'hostname' => "".$session->get('dbHost')."",
+									'username' => "".$session->get('dbUser')."",
+									'password' => "".$session->get('dbPass')."",
+									'database' => "".$session->get('dbName')."",
+								),
+							);
 							
 							// get an instance of the database
 							$db = Database::Instance('custom', $dbconfig);
@@ -315,107 +288,43 @@ class Controller_Install extends Controller_Template
 							// check to make sure we have what we need
 							$check = array_intersect($disabled, $need);
 							
-							$file = FALSE;
+							// pull in the mysql file
+							$file = file(MODPATH.'database/assets/db.mysql'.EXT);
 							
-							// load the file into an array
-							if ($session->get('dbType') == 'pdo')
+							if (is_array($file))
 							{
-								try {
-									$file = file(MODPATH.'database/assets/db.pdo'.EXT);
-								} catch (Exception $e) {
-									$data->error = $e->getMessage();
+								foreach ($file as $line_num => $line)
+								{
+									switch (substr($line, 0, 9))
+									{
+										case "'database":
+											$file[$line_num] = str_replace("nova", $session->get('dbName'), $line);
+											break;
+										case "'username":
+											$file[$line_num] = str_replace("FALSE", "'".$session->get('dbUser')."'", $line);
+											break;
+										case "'password":
+											$file[$line_num] = str_replace("FALSE", "'".$session->get('dbPass')."'", $line);
+											break;
+										case "'hostname":
+											$file[$line_num] = str_replace("localhost", $session->get('dbHost'), $line);
+											break;
+										case "'table_pr":
+											$file[$line_num] = str_replace("''", "'".$session->get('prefix')."'", $line);
+											break;
+									}
 								}
 								
-								if (is_array($file))
+								$code = FALSE;
+								
+								foreach ($file as $value)
 								{
-									foreach ($file as $line_num => $line)
-									{
-										switch (substr($line, 0, 9))
-										{
-											case "'dsn' => ":
-												$file[$line_num] = str_replace("mysql:host=localhost;dbname=nova", "mysql:host=".$session->get('dbHost').";dbname=".$session->get('dbName'), $line);
-												break;
-											case "'username":
-												$file[$line_num] = str_replace("FALSE", "'".$session->get('dbUser')."'", $line);
-												break;
-											case "'password":
-												$file[$line_num] = str_replace("FALSE", "'".$session->get('dbPass')."'", $line);
-												break;
-											case "'table_pr":
-												$file[$line_num] = str_replace("''", "'".$session->get('prefix')."'", $line);
-												break;
-										}
-									}
-									
-									$code = FALSE;
-									
-									foreach ($file as $value)
-									{
-										$code.= htmlentities($value);
-									}
-								}
-								else
-								{
-									$code = htmlentities("<?php defined('SYSPATH') OR die('No direct access allowed.');
-
-return array
-(
-'default' => array(
-'type' => 'pdo',
-
-'connection' => array(
-'dsn' => 'mysql:host=".$session->get('dbHost').";dbname=".$session->get('dbName')."',
-'username' => '".$session->get('dbUser')."',
-'password' => '".$session->get('dbPass')."',
-'persistent' => FALSE,
-),
-
-'table_prefix' => '".$session->get('prefix')."',
-'charset' => 'utf8',
-'caching' => FALSE,
-'profiling' => TRUE,
-),
-);");
+									$code.= htmlentities($value);
 								}
 							}
 							else
 							{
-								$file = file(MODPATH.'database/assets/db.mysql'.EXT);
-								
-								if (is_array($file))
-								{
-									foreach ($file as $line_num => $line)
-									{
-										switch (substr($line, 0, 9))
-										{
-											case "'database":
-												$file[$line_num] = str_replace("nova", $session->get('dbName'), $line);
-												break;
-											case "'username":
-												$file[$line_num] = str_replace("FALSE", "'".$session->get('dbUser')."'", $line);
-												break;
-											case "'password":
-												$file[$line_num] = str_replace("FALSE", "'".$session->get('dbPass')."'", $line);
-												break;
-											case "'hostname":
-												$file[$line_num] = str_replace("localhost", $session->get('dbHost'), $line);
-												break;
-											case "'table_pr":
-												$file[$line_num] = str_replace("''", "'".$session->get('prefix')."'", $line);
-												break;
-										}
-									}
-									
-									$code = FALSE;
-									
-									foreach ($file as $value)
-									{
-										$code.= htmlentities($value);
-									}
-								}
-								else
-								{
-									$code = htmlentities("<?php defined('SYSPATH') OR die('No direct access allowed.');
+								$code = htmlentities("<?php defined('SYSPATH') OR die('No direct access allowed.');
 
 return array
 (
@@ -432,11 +341,11 @@ return array
 
 'table_prefix' => '".$session->get('prefix')."',
 'charset' => 'utf8',
+'collate' => 'utf8_general_ci',
 'caching' => FALSE,
 'profiling' => TRUE,
 ),
 );");
-								}
 							}
 							
 							if (count($check) == 0)
@@ -849,6 +758,15 @@ return array
 		// content
 		$this->template->title.= __('verify.title');
 		$this->template->layout->label = __('verify.title');
+	}
+	
+	public function action_test()
+	{
+		include MODPATH.'install/assets/schema'.EXT;
+		
+		$result = Database::Instance()->query(0, $fields, TRUE);
+		
+		echo Kohana::debug($result);
 	}
 }
 
