@@ -3,17 +3,19 @@
 return array
 (
 'default' => array(
-'type' => 'pdo',
+'type' => 'mysql',
 
 'connection' => array(
-'dsn' => 'mysql:host=localhost;dbname=nova',
+'hostname' => 'localhost',
 'username' => 'nova',
 'password' => '',
 'persistent' => FALSE,
+'database' => 'nova_nova2_testing',
 ),
 
 'table_prefix' => 'nova_',
 'charset' => 'utf8',
+'collate' => 'utf8_general_ci',
 'caching' => FALSE,
 'profiling' => TRUE,
 ),
