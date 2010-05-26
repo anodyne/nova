@@ -1,6 +1,6 @@
 <?php defined('SYSPATH') or die('No direct script access.');
 /**
- * Award Model
+ * Rank Model
  *
  * @package		Nova Core
  * @subpackage	Model
@@ -8,39 +8,38 @@
  * @version		2.0
  */
  
-class Model_Award extends Jelly_Model
+class Model_Rank extends Jelly_Model
 {
 	public static function initialize(Jelly_Meta $meta)
 	{
+		$meta->table('ranks_'.Kohana::config('nova.genre'));
 		$meta->fields(array(
 			'id' => new Field_Primary(array(
-				'column' => 'award_id'
+				'column' => 'rank_id'
 			)),
 			'name' => new Field_String(array(
-				'column' => 'award_name'
+				'column' => 'rank_name'
+			)),
+			'shortname' => new Field_String(array(
+				'column' => 'rank_short_name',
 			)),
 			'image' => new Field_String(array(
-				'column' => 'award_image',
+				'column' => 'rank_image',
 			)),
 			'order' => new Field_Integer(array(
-				'column' => 'award_order',
-			)),
-			'desc' => new Field_Text(array(
-				'column' => 'award_desc',
-			)),
-			'category' => new Field_Enum(array(
-				'column' => 'award_cat',
-				'choices' => array('ic','ooc','both'),
-				'default' => 'ic'
+				'column' => 'rank_order',
 			)),
 			'display' => new Field_Enum(array(
-				'column' => 'award_display',
+				'column' => 'rank_display',
 				'choices' => array('y','n'),
 				'default' => 'y'
 			)),
+			'class' => new Field_Integer(array(
+				'column' => 'rank_class'
+			))
 		));
 	}
 }
 
-// End of file award.php
-// Location: modules/nova/classes/model/award.php
+// End of file rank.php
+// Location: modules/nova/classes/model/rank.php
