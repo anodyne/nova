@@ -10,4 +10,4 @@
  * then finally in the modules
  */
 
-$images = array();
+return array();
