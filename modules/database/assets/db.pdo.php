@@ -14,6 +14,7 @@ return array
 
 'table_prefix' => '',
 'charset' => 'utf8',
+'collate' => 'utf8_general_ci',
 'caching' => FALSE,
 'profiling' => TRUE,
 ),
