@@ -18,23 +18,15 @@ class Nova_Utility
 	public static function get_image_index($skin = '')
 	{
 		// load the base image index
-		$common_index = Kohana::find_file('views', '_common/image_index');
+		$common = Kohana::find_file('views', '_common/image_index');
+		$common_index = Kohana::load($common);
 		
 		// load the skin's image index
-		$skin_index = Kohana::find_file('views', $skin.'/image_index');
+		$skin = Kohana::find_file('views', $skin.'/image_index');
+		$skin_index = Kohana::load($skin);
 		
 		// merge the files into an array
-		$files = array_merge((array)$common_index, (array)$skin_index);
-		
-		// create the empty array
-		$image_index = array();
-		
-		foreach ($files as $f)
-		{
-			//include $f;
-			
-			//$image_index = array_merge($image_index, $images);
-		}
+		$image_index = array_merge((array)$common_index, (array)$skin_index);
 		
 		return $image_index;
 	}

@@ -43,6 +43,7 @@ class Nova_Location
 					if (!in_array($mod, $exclude))
 					{
 						$loc = MODFOLDER.'/'.$mod;
+						$loc = (substr($loc, -1, 1) == "\\") ? substr_replace($loc, '', -1, 1) : $loc;
 						$locations[$loc] = $m;
 					}
 				}

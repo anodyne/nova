@@ -53,7 +53,7 @@ class Nova_Auth
 				{
 					self::$session->set_flash('referer', $uri);
 					
-					url::redirect('admin/error/1');
+					Request::Instance()->redirect('admin/error/1');
 				}
 				
 				return FALSE;
@@ -113,10 +113,10 @@ class Nova_Auth
 	public static function hash($string = '')
 	{
 		// grab the system model
-		$sys = new Model_System;
+		$sys = Jelly::select('system', 1);
 		
 		// grab the Nova UID
-		$uid = $sys->get_nova_uid();
+		$uid = $sys->uid;
 		
 		// double hash the UID
 		$uid = sha1(sha1($uid));
@@ -164,14 +164,11 @@ class Nova_Auth
 	 */
 	public static function is_type($type = '', $id = '')
 	{
-		// change the type to use the standardized format is_THING
-		$field = 'is_'. $type;
-		
 		// load the user model
-		$user = new Model_User;
+		$user = Jelly::select('user', $id);
 		
 		// check the database for the flag
-		$is = $user->get_user($id, $field);
+		$is = $user->$type;
 		
 		// figure out whether it's true or false
 		$retval = ($is == 'y') ? TRUE : FALSE;
@@ -190,14 +187,9 @@ class Nova_Auth
 	 */
 	public static function login($email = '', $password = '', $remember = '')
 	{
-		// load the resources
-		$user = new Model_User;
-		$sys = new Model_System;
-		$settings = new Model_Setting;
-		
-		/* set the variables */
+		// set the variables
 		$retval = 0;
-		$maintenance = $settings->get_setting('maintenance');
+		$maintenance = Jelly::select('setting')->where('key', '=', 'maintenance')->load()->value;
 		
 		if ($email == '')
 		{
@@ -219,49 +211,51 @@ class Nova_Auth
 			return $retval;
 		}
 		
-		/* check to see if the account exists */
-		$login = $user->get_user_details_by_email($email);
+		// check to see if the account exists
+		$login = Jelly::select('user')
+			->where('email', '=', $email)
+			->execute();
 		
-		if ($login->num_rows() == 0)
+		if (count($login) == 0)
 		{
-			/* email doesn't exist */
+			// email doesn't exist
 			$retval = 2;
 		}
-		elseif ($login->num_rows() > 1)
+		elseif (count($login) > 1)
 		{
-			/* more than one account found - contact the GM */
+			// more than one account found - contact the GM
 			$retval = 4;
 		}
 		else
 		{
 			/* assign the object to a variable */
-			$person = $login->row();
+			$person = $login->current();
 			
 			if ($person->password == $password)
 			{
-				if ($maintenance == 'on' && $person->is_sysadmin == 'n')
+				if ($maintenance == 'on' && $person->sysadmin == 'n')
 				{
-					/* maintenance mode active */
+					// maintenance mode active
 					$retval = 5;
 				}
 				else
 				{
-					/* clear the login attempts if there are any */
+					// clear the login attempts if there are any
 					$sys->delete_login_attempts($email);
 				
-					/* update the login record */
+					// update the login record
 					$user->update_login_record($person->userid, now());
 					
-					/* set the session */
+					// set the session
 					self::_set_session($person);
 				}
 			}
 			else
 			{
-				/* password is wrong */
+				// password is wrong
 				$retval = 3;
 				
-				/* create the attempt array */
+				// create the attempt array
 				$login_attempt = array(
 					'login_ip' => $this->input->ip_address(),
 					'login_email' => $email,
@@ -275,7 +269,7 @@ class Nova_Auth
 		
 		if ($remember == 'yes')
 		{
-			/* set the cookie */
+			// set the cookie
 			$this->_set_cookie($email, $password);
 		}
 		

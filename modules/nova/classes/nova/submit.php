@@ -23,9 +23,9 @@ class Nova_Submit
 	 */
 	public static function create($values = '', $table = '', $additional = array(), $pop = array())
 	{
-		// load the core model
-		$mCore = new Core_Model;
+		$query = Jelly::factory($table);
 		
+		// clear out the unnecessary items
 		foreach ($values as $key => $value)
 		{
 			if (in_array($key, $pop))
@@ -41,8 +41,8 @@ class Nova_Submit
 		// push the additional items onto the end of the array
 		$array = array_merge($array, $additional);
 		
-		// add the item to the database
-		$retval = $mCore->add($table, $array);
+		// execute the query
+		$retval = $query->set($array)->save();
 		
 		return $retval;
 	}
