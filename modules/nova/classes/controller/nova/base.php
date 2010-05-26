@@ -11,7 +11,6 @@
 abstract class Controller_Nova_Base extends Controller_Template
 {
 	// these models should be globally available
-	public $mCore;
 	public $mSettings;
 	public $mMessages;
 	
@@ -38,11 +37,14 @@ abstract class Controller_Nova_Base extends Controller_Template
 	{
 		parent::before();
 		
+		// if the config file isn't set
+		if (!file_exists(APPPATH.'config/database'.EXT))
+		{
+			$this->request->redirect('install/setupconfig');
+		}
+		
 		// load the session library
 		$this->session = Session::instance();
-		
-		// load the core model
-		$this->mCore = new Model_Core;
 		
 		// load the settings model
 		$this->mSettings = new Model_Setting;
