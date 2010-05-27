@@ -21,8 +21,10 @@ class Model_User extends Jelly_Model
 				'default' => 'pending'
 			)),
 			'name' => new Field_String,
-			'email' => new Field_String,
-			'password' => new Field_String,
+			'email' => new Field_Email,
+			'password' => new Field_Password(array(
+				'hash_with' => FALSE,
+			)),
 			'date_of_birth' => new Field_String,
 			'instant_message' => new Field_Text,
 			'main_char' => new Field_HasOne(array(
