@@ -10,7 +10,7 @@ return array
 'username' => 'nova',
 'password' => '',
 'persistent' => FALSE,
-'database' => 'nova_nova2_testing',
+'database' => 'nova',
 ),
 
 'table_prefix' => 'nova_',

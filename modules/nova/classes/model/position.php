@@ -23,7 +23,7 @@ class Model_Position extends Jelly_Model
 			'desc' => new Field_Text(array(
 				'column' => 'pos_desc',
 			)),
-			'dept' => new Field_HasOne(array(
+			'dept' => new Field_BelongsTo(array(
 				'column' => 'pos_dept',
 				'foreign' => 'department'
 			)),

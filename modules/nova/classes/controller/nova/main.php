@@ -266,11 +266,95 @@ class Controller_Nova_Main extends Controller_Nova_Base
 	
 	public function action_test($id = 1)
 	{
-		$login = Jelly::select('user')
-			->where('email', '=', 'david.vanscott@gmail.com')
-			->execute();
+		/*$field = Jelly::select('formfield')
+			->where('form', '=', 1)
+			->where('display', '=', 'y')
+				->execute();*/
 			
-		echo Kohana::debug($login->current());
+		$field = db::select()->from('forms_fields')->where('field_form', '=', 1)->where('field_display', '=', 'y')->as_object()->execute();
+		
+		foreach ($field as $f)
+		{
+			$values = db::select()->from('forms_values')->where('value_field', '=', $f->field_id)->as_object()->execute();
+			
+			switch ($f->field_type)
+			{
+				case 'radio':
+					if (count($values) > 0)
+					{
+						foreach ($values as $v)
+						{
+							$attr = array(
+								'id' => $v->value_html_id,
+								'class' => $f->field_html_class
+							);
+							
+							$output[] = form::radio($f->field_html_name, $v->value_html_value, (bool) $v->value_selected, $attr).' '.form::label($v->value_html_id, $v->value_content);
+						}
+					}
+					break;
+					
+				case 'checkbox':
+					if (count($values) > 0)
+					{
+						foreach ($values as $v)
+						{
+							$attr = array(
+								'id' => $v->value_html_id,
+								'class' => $f->field_html_class
+							);
+								
+							$check[] = form::checkbox($v->value_html_name, $v->value_html_value, (bool) $v->value_selected, $attr).' '.form::label($v->value_html_id, $v->value_content);
+						}
+					}
+					break;
+			}
+		}
+		
+		echo Kohana::debug($output);
+		echo implode(' ', $output);
+		
+		echo Kohana::debug($check);
+		echo implode(' ', $check);
+		exit();
+			
+		foreach ($field as $f)
+		{
+			$values = Jelly::select('formvalue')
+				->where('field', '=', $f->id)
+				->execute();
+				
+			switch ($f->type)
+			{
+				case 'radio':
+					if (count($values) > 0)
+					{
+						foreach ($values as $v)
+						{
+							$attr = array(
+								'id' => $v->html_id,
+								'class' => $f->html_class
+							);
+							
+							$output[] = form::radio($f->html_name, $v->field_value, $v->selected, $attr).' '.form::label($v->html_id, $v->content);
+						}
+					}
+					break;
+				
+				default:
+					# code...
+					break;
+			}
+		}
+	}
+	
+	public function action_test2()
+	{
+		include_once MODPATH.'install/assets/schema.php';
+		
+		echo '<pre>';
+		echo $fields;
+		echo '</pre>';
 		exit();
 	}
 	
@@ -282,5 +366,5 @@ class Controller_Nova_Main extends Controller_Nova_Base
 	}*/
 }
 
-// End of file main_base.php
+// End of file main.php
 // Location: modules/nova/classes/controller/nova/main.php

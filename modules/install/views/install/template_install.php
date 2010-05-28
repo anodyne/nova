@@ -13,7 +13,7 @@
 		</div>
 		
 		<div id="loaded" class="UITheme">
-			<?php if (Request::Instance()->action == 'step'): ?>
+			<?php if (Request::Instance()->action == 'step' && Request::Instance()->param('id') > 0): ?>
 				<div id="progress"></div>
 				<div id="amount">Progress: <span id="percent">0%</span></div>
 				<div style="clear:both;"></div>

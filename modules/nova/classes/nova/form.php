@@ -3,7 +3,7 @@
  * Form Class
  *
  * @package		Nova Core
- * @subpackage	Base
+ * @subpackage	Class
  * @author		Anodyne Productions
  * @version		2.0
  */
@@ -20,7 +20,7 @@ class Nova_Form extends Kohana_Form
 	 * @param	boolean	whether to print a NONE option at the top of the menu
 	 * @return			a dropdown output from form::dropdown
 	 */
-	public static function dropdown_characters($name = '', $selected = array(), $extra = '', $type = 'active', $blank_option = FALSE)
+	/*public static function dropdown_characters($name = '', $selected = array(), $extra = '', $type = 'active', $blank_option = FALSE)
 	{
 		// load the core model
 		$mCore = new Core_Model;
@@ -160,21 +160,21 @@ class Nova_Form extends Kohana_Form
 		}
 		
 		return FALSE;
-	}
+	}*/
 	
 	/**
 	 * Dropdown menu of the departments
 	 *
-	 * @param	string	the name of the dropdown menu
+	 * @param	string	the name of the select menu
 	 * @param	array 	an array of selected items
 	 * @param	string	any extra attributes to be added to the dropdown
 	 * @param	string	which departments to pull (all/main)
 	 * @param	string	whether the department should be a displayed department
 	 * @param	string	a department to exclude from the list
 	 * @param	boolean	whether to print a NONE option at the top of the dropdown
-	 * @return			a dropdown output from form::dropdown
+	 * @return			a select menu output from form::select
 	 */
-	public static function dropdown_dept($name = '', $selected = array(), $extra = '', $type = 'all', $display = 'y', $exclude = '', $blank_option = FALSE)
+	/*public static function dropdown_dept($name = '', $selected = array(), $extra = NULL, $type = 'all', $display = 'y', $exclude = '', $blank_option = FALSE)
 	{
 		// load the core model
 		$mCore = new Core_Model;
@@ -294,89 +294,41 @@ class Nova_Form extends Kohana_Form
 		}
 		
 		return FALSE;
-	}
+	}*/
 	
 	/**
 	 * Dropdown of positions
 	 *
-	 * @param	string	the name of the dropdown
+	 * @param	string	the name of the select menu
 	 * @param	array 	an array of selected items
-	 * @param	string	any extra attributes to be added to the dropdown
+	 * @param	string	any extra attributes to be added to the select menu
 	 * @param	string	which positions to pull
 	 * @param	string	whether to pull displayed positions or not
 	 * @param	string	the department type to pull
-	 * @return			a dropdown output from form::dropdown
+	 * @return			a select menu output from form::select
 	 */
-	public static function dropdown_position($name = '', $selected = array(), $extra = '', $type = 'all', $display = 'y', $dept_type = '')
+	public static function select_position($name = '', $selected = array(), $extra = NULL, $type = 'all', $display = 'y', $dept_type = '')
 	{
-		// load the core model
-		$mCore = new Core_Model;
-		
-		/* grab the positions */
+		// grab the positions
 		if ($type == 'open')
 		{
-			$args = array(
-				'where' => array(
-					array(
-						'field' => 'pos_open',
-						'value' => 0,
-						'operand' => '>'),
-				),
-				'order_by' => array(
-					'pos_dept' => 'asc',
-					'pos_order' => 'asc'
-				),
-			);
-			
-			if (!empty($display))
-			{
-				$args['where'][] = array(
-					'field' => 'pos_display',
-					'value' => $display
-				);
-			}
+			$positions = Jelly::select('position')->open()->order_by('dept', 'asc')->order_by('order', 'asc');
 		}
 		elseif (is_numeric($type))
 		{
-			$args = array(
-				'where' => array(
-					array(
-						'field' => 'pos_dept',
-						'value' => $type),
-				),
-				'order_by' => array(
-					'pos_order' => 'asc'
-				),
-			);
-			
-			if (!empty($display))
-			{
-				$args['where'][] = array(
-					'field' => 'pos_display',
-					'value' => $display
-				);
-			}
+			$positions = Jelly::select('position')->where('dept', '=', $type)->order_by('order', 'asc');
 		}
 		else
 		{
-			$args = array(
-				'order_by' => array(
-					'pos_order' => 'asc'
-				),
-			);
-			
-			if (!empty($display))
-			{
-				$args['where'][] = array(
-					'field' => 'pos_display',
-					'value' => $display
-				);
-			}
+			$positions = Jelly::select('position')->order_by('order', 'asc');
 		}
 		
-		$positions = $mCore->get_all('positions_'.Kohana::config('nova.genre'), $args);
+		// set the display parameter
+		(!empty($display)) ? $positions->where('display', '=', $display) : FALSE;
 		
-		if ($positions)
+		$positions = $positions->execute();
+		
+		if (count($positions) > 0)
 		{
 			$options[0] = __('phrase.please_choose_one');
 			
@@ -384,31 +336,22 @@ class Nova_Form extends Kohana_Form
 			
 			foreach ($positions as $pos)
 			{
-				$args = array(
-					'where' => array(
-						array(
-							'field' => 'dept_id',
-							'value'=> $pos->pos_dept),
-					),
-				);
-				$dept = $mCore->get('departments_'.Kohana::config('nova.genre'), $args, array('dept_name', 'dept_type', 'dept_display'));
-				
-				if (($dept_type == 'playing' && $dept['dept_type'] == 'playing') ||
-						($dept_type == 'nonplaying' && $dept['dept_type'] == 'nonplaying') ||
-						$dept['dept_display'] == 'y')
+				if (($dept_type == 'playing' && $pos->dept->type == 'playing') ||
+						($dept_type == 'nonplaying' && $pos->dept->type == 'nonplaying') ||
+						$pos->dept->display == 'y')
 				{
 					if ($type == 'all' || $type == 'open')
 					{
-						$options[$dept['dept_name']][$pos->pos_id] = $pos->pos_name;
+						$options[$pos->dept->name][$pos->id] = $pos->name;
 					}
 					else
 					{
-						$options[$pos->pos_id] = $pos->pos_name;
+						$options[$pos->id] = $pos->name;
 					}
 				}
 			}
 			
-			return form::dropdown($name, $options, $selected, $extra);
+			return form::select($name, $options, $selected, $extra);
 		}
 		
 		return FALSE;
@@ -417,38 +360,28 @@ class Nova_Form extends Kohana_Form
 	/**
 	 * Dropdown of ranks
 	 *
-	 * @param	string	the name of the dropdown
+	 * @param	string	the name of the select menu
 	 * @param	array 	an array of selected items
-	 * @param	string	any extra attributes to add to the dropdown
-	 * @return			a dropdown output from form::dropdown
+	 * @param	string	any extra attributes to add to the select menu
+	 * @return			a select menu from form::select
 	 */
-	public static function dropdown_rank($name = '', $selected = array(), $extra = '')
+	public static function select_rank($name = '', $selected = array(), $extra = NULL)
 	{
-		// load the core model
-		$mCore = new Core_Model;
+		// grab the ranks
+		$ranks = Jelly::select('rank')
+			->where('display', '=', 'y')
+			->order_by('class', 'asc')
+			->order_by('order', 'asc')
+			->execute();
 		
-		// build the query
-		$args = array(
-			'where' => array(
-				array(
-					'field' => 'rank_display',
-					'value' => 'y'),
-			),
-			'order_by' => array(
-				'rank_class' => 'asc',
-				'rank_order' => 'asc'
-			),
-		);
-		$ranks = $mCore->get_all('ranks_'.Kohana::config('nova.genre'), $args);
-		
-		if ($ranks)
+		if (count($ranks) > 0)
 		{
 			foreach ($ranks as $rank)
 			{
-				$options[$rank->rank_id] = $rank->rank_name;
+				$options[$rank->id] = $rank->name;
 			}
 			
-			return form::dropdown($name, $options, $selected, $extra);
+			return form::select($name, $options, $selected, $extra);
 		}
 		
 		return FALSE;

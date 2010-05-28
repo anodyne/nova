@@ -49,7 +49,9 @@ class Model_User extends Jelly_Model
 				'choices' => array('y','n'),
 				'default' => 'n'
 			)),
-			'timezone' => new Field_String,
+			'timezone' => new Field_String(array(
+				'default' => 'UTC'
+			)),
 			'dst' => new Field_Integer(array(
 				'column' => 'daylight_savings'
 			)),

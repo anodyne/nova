@@ -492,6 +492,7 @@ return array
 		$this->request->response = $this->template;
 	}
 	
+	# TODO: need better styling for the progress bar
 	public function action_step($step = 0)
 	{
 		// make sure the script doesn't time out
@@ -500,248 +501,261 @@ return array
 		// get an instance of the database
 		$db = Database::Instance();
 		
+		// get an instance of the session
+		$session = Session::Instance();
+		
 		// figure out if the system is installed
 		$tables = $db->list_tables();
 		
 		# TODO: need to figure out the conditions under which they can't install
+			# if the genre is empty, they can't install
 		
 		switch ($step)
 		{
 			case 0:
+				// create a new content view
+				$this->template->layout->content = View::factory('install/pages/install_step0');
 				
+				// assign the object a shorter variable to use in the method
+				$data = $this->template->layout->content;
+				
+				// make sure the proper message is displayed
+				$data->message = nl2br(__('step0.inst'));
+				
+				// content
+				$this->template->title.= __('step0.title');
+				$this->template->layout->label = __('step0.label');
+				
+				// create the javascript view
+				$this->template->javascript = View::factory('install/js/install_step0_js');
+				
+				// build the next step button
+				$next = array(
+					'type' => 'submit',
+					'class' => 'button',
+					'id' => 'next',
+				);
+				
+				// build the next step control
+				$this->template->layout->controls = form::open('install/step/1').form::button('next', __('step0.button'), $next).form::close();
 				break;
 				
 			case 1:
-				// update the character set
-				$config = Kohana::config('database.default');
-				$db->set_charset($config['character_set']);
-				
-				// pull in the field information
-				include_once MODPATH.'install/assets/fields.php';
-				
-				foreach ($data as $key => $value)
+				if (isset($_POST['next']))
 				{
-					$dbforge->add_field($$value['fields']);
-					$dbforge->add_key($value['id'], TRUE);
-					$dbforge->create_table($key, TRUE);
+					/*// update the character set
+					$dbconfig = Kohana::config('database');
+					$db->set_charset($dbconfig['default']['charset']);
+					
+					// pull in the field information
+					include_once MODPATH.'install/assets/schema'.EXT;
+					
+					foreach ($fields as $f)
+					{
+						//db::query(NULL, $f);
+					}
+					
+					// pause the script for a second
+					sleep(1);
+					
+					// pull in the basic data
+					include_once MODPATH.'install/assets/data_'.Kohana::config('install.data_src').EXT;
+					
+					foreach ($data as $d)
+					{
+						//db::query(Database::INSERT, $d);
+					}
+					
+					// pause the script for a second
+					sleep(1);
+					
+					// pull in the genre data
+					include_once MODPATH.'install/assets/genres/'.strtolower(Kohana::config('nova.genre')).'_data'.EXT;
+					
+					foreach ($genre as $g)
+					{
+						//db::query(Database::INSERT, $g);
+					}
+					*/
 				}
 				
 				// get the number of tables
 				$tables = $db->list_tables();
 				
 				// create a new content view
-				$this->template->layout->content = new View('install/pages/install_step1');
+				$this->template->layout->content = View::factory('install/pages/install_step1');
 				
 				// assign the object a shorter variable to use in the method
 				$data = $this->template->layout->content;
 				
+				// set the validation errors
+				$data->errors = ($session->get('errors')) ? $session->get('errors') : FALSE;
+				
 				// make sure the proper message is displayed
-				$data->message = (count($tables) < 66) ? __('step1.failure') : __('step1.success');
+				$data->message = ($data->errors === FALSE)
+					? (count($tables) < 56) ? __('step1.failure') : __('step1.success')
+					: __('step1.errors');
+				
+				// set the loading image
+				$data->loading = array(
+					'src' => location::image('loading-circle-large.gif', NULL, 'install', 'image'),
+					'attr' => array(
+						'class' => 'image'),
+				);
+				
+				// get the default rank set
+				$rankdefault = Jelly::select('setting')->where('key', '=', 'display_rank')->load()->value;
+				
+				// grab the rank catalogue
+				$catalogue = Jelly::select('cataloguerank')->where('location', '=', $rankdefault)->load();
+				
+				// pull the rank record
+				$rank = Jelly::select('rank', $session->get('rank', 1));
+				
+				$data->default_rank = array(
+					'src' => location::image($rank->image.$catalogue->extension, NULL, $catalogue->location, 'rank'),
+					'attr' => array(
+						'class' => 'image'),
+				);
 				
 				// content
 				$this->template->title.= __('step1.title');
 				$this->template->layout->label = __('step1.label');
 				
 				// create the javascript view
-				$this->template->javascript = new View('install/js/install_step1_js');
+				$this->template->javascript = View::factory('install/js/install_step1_js');
 				
 				// build the next step button
 				$next = array(
 					'type' => 'submit',
 					'class' => 'button',
-					'name' => 'next',
-					'value' => ucwords(__('order.next').' '.__('word.step')),
 					'id' => 'next',
 				);
 				
 				// build the next step control
-				$this->template->layout->controls = (count($tables) < 66) ? FALSE : form::open('install/step/2').form::button($next).'</form>';
+				$this->template->layout->controls = (count($tables) < 56) ? FALSE : form::button('next', __('step1.button'), $next).form::close();
 				
 				break;
 				
 			case 2:
-				// pull in the install data asset file
-				include_once MODPATH.'install/assets/data_'.Kohana::config('install.data_src').'.php';
-				
-				// build a temporary array to check the results
-				$insert = array();
-				
-				foreach ($data as $value)
+				if (isset($_POST['next']))
 				{
-					foreach ($$value as $k => $v)
-					{
-						$query = $this->mCore->add($value, $v);
+					$validate = Validate::factory($_POST)
+						->rule('email', 'not_empty')
+						->rule('email', 'email')
+						->rule('password', 'not_empty')
+						->rule('password_confirm', 'not_empty')
+						->rule('password_confirm', 'matches', array('password'));
 						
-						if ($query == 0)
-						{
-							$insert[] = FALSE;
-						}
+					if ($validate->check())
+					{
+						// wipe out the session if everything is good
+						$session->destroy();
+						
+						// get the data
+						$simname = trim(security::xss_clean($_POST['sim_name']));
+						$name = trim(security::xss_clean($_POST['name']));
+						$email = trim(security::xss_clean($_POST['email']));
+						$password = trim(security::xss_clean($_POST['password']));
+						$first_name = trim(security::xss_clean($_POST['first_name']));
+						$last_name = trim(security::xss_clean($_POST['last_name']));
+						$position = trim(security::xss_clean($_POST['position']));
+						$rank = trim(security::xss_clean($_POST['rank']));
+						
+						// update the settings
+						$upSettings = Jelly::select('setting')->where('key', '=', 'sim_name')->load();
+						$upSettings->value = $sim_name;
+						$upSettings->save();
+						
+						$upSettings = Jelly::select('setting')->where('key', '=', 'email_subject')->load();
+						$upSettings->value = '['.$sim_name.']';
+						$upSettings->save();
+						
+						// create the user
+						$crUser = Jelly::factory('user')
+							->set(array(
+								'status'		=> 'active',
+								'name'			=> $name,
+								'email'			=> $email,
+								'password'		=> Auth::hash($password),
+								'role'			=> 1,
+								'sysadmin'		=> 'y',
+								'gm'			=> 'y',
+								'webmaster'		=> 'y',
+								'skin_main'		=> '',
+								'skin_wiki'		=> '',
+								'skin_admin'	=> '',
+								'rank'			=> '',
+							))
+							->save();
+						
+						// create the character
+						$crCharacter = Jelly::factor('character')
+							->set(array(
+								'user'			=> $crUser->id,
+								'fname'			=> $first_name,
+								'lname'			=> $last_name,
+								'position1'		=> $position,
+								'rank'			=> $rank,
+								'type'			=> 'active',
+								'activate'		=> date::now(),
+							))
+							->save();
+						
+						// update the user with the character info
+						$upUser = Jelly::select('user', $crUser);
+						$upUser->main_char = $crCharacter->id;
+						$upUser->save();
+					}
+					else
+					{
+						// set the session variables
+						$session->set('sim_name', security::xss_clean($_POST['sim_name']));
+						$session->set('name', security::xss_clean($_POST['name']));
+						$session->set('email', security::xss_clean($_POST['email']));
+						$session->set('password', security::xss_clean($_POST['password']));
+						$session->set('first_name', security::xss_clean($_POST['first_name']));
+						$session->set('last_name', security::xss_clean($_POST['last_name']));
+						$session->set('position', security::xss_clean($_POST['position']));
+						$session->set('rank', security::xss_clean($_POST['rank']));
+						$session->set('errors', $validate->errors('register'));
+						
+						// redirect back to step 1
+						$this->request->redirect('install/step/1');
 					}
 				}
 				
 				// create a new content view
-				$this->template->layout->content = new View('install/pages/install_step2');
+				$this->template->layout->content = View::factory('install/pages/install_step2');
 				
 				// assign the object a shorter variable to use in the method
 				$data = $this->template->layout->content;
 				
 				// make sure the proper message is displayed
-				$data->message = (count($insert) > 0) ? __('step2.failure') : __('step2.success');
+				$data->message = __('step2.message');
 				
 				// content
 				$this->template->title.= __('step2.title');
 				$this->template->layout->label = __('step2.label');
 				
 				// create the javascript view
-				$this->template->javascript = new View('install/js/install_step2_js');
+				$this->template->javascript = View::factory('install/js/install_step2_js');
 				
 				// build the next step button
 				$next = array(
 					'type' => 'submit',
 					'class' => 'button',
-					'name' => 'next',
-					'value' => ucwords(__('order.next').' '.__('word.step')),
-					'id' => 'next',
-				);
-				
-				if (Kohana::config('nova.genre') == '')
-				{
-					$this->template->layout->flash_message = new View('install/pages/flash');
-					$this->template->layout->flash_message->status = 'error';
-					$this->template->layout->flash_message->message = __('install.error.no_genre');
-				}
-				
-				// build the next step control
-				$this->template->layout->controls = (count($insert) > 0 || Kohana::config('nova.genre') == '') 
-					? FALSE 
-					: form::open('install/step/3').form::button($next).'</form>';
-				
-				break;
-				
-			case 3:
-				// pull in the install genre data asset file
-				include_once MODPATH.'install/assets/genres/'.Kohana::config('nova.genre').'_data.php';
-				
-				// build a temporary array to check the results
-				$genre = array();
-				
-				foreach ($data as $key_d => $value_d)
-				{
-					foreach ($$value_d as $k => $v)
-					{
-						$query = $this->mCore->add($key_d, $v);
-						
-						if ($query == 0)
-						{
-							$genre[] = FALSE;
-						}
-					}
-				}
-				
-				// create a new content view
-				$this->template->layout->content = new View('install/pages/install_step3');
-				
-				// assign the object a shorter variable to use in the method
-				$data = $this->template->layout->content;
-				
-				// make sure the proper message is displayed
-				$data->message = (count($genre) > 0) ? __('step3.failure') : __('step3.success');
-				
-				// content
-				$this->template->title.= __('step3.title');
-				$this->template->layout->label = __('step3.label');
-				
-				// create the javascript view
-				$this->template->javascript = new View('install/js/install_step3_js');
-				
-				// build the next step button
-				$next = array(
-					'type' => 'submit',
-					'class' => 'button',
-					'name' => 'next',
-					'value' => ucwords(__('order.next').' '.__('word.step')),
 					'id' => 'next',
 				);
 				
 				// build the next step control
-				$this->template->layout->controls = (count($genre) > 0) ? FALSE : form::button($next).'</form>';
-				
-				// build the inputs
-				$data->inputs = array(
-					'name' => array(
-						'name' => 'real_name',
-						'id' => 'real_name'),
-					'dob' => array(
-						'name' => 'dob',
-						'id' => 'dob'),
-					'email' => array(
-						'name' => 'email',
-						'id' => 'email'),
-					'password' => array(
-						'name' => 'password',
-						'id' => 'password'),
-					'security_answer' => array(
-						'name' => 'security_answer',
-						'id' => 'security_answer'),
-					'first_name' => array(
-						'name' => 'first_name',
-						'id' => 'first_name'),
-					'last_name' => array(
-						'name' => 'last_name',
-						'id' => 'last_name')
-				);
-				
-				// get the rank information
-				$args = array(
-					'where' => array(
-						array(
-							'field' => 'rank_id',
-							'value' => 1),
-					),
-				);
-				$rank = $this->mCore->get('ranks_'.Kohana::config('nova.genre'), $args, 'rank_image');
-				
-				// get the rank extension
-				$args = array(
-					'where' => array(
-						array(
-							'field' => 'rankcat_location',
-							'value' => 'default'),
-						array(
-							'field' => 'rankcat_genre',
-							'value' => Kohana::config('nova.genre')),
-					),
-				);
-				$ext = $this->mCore->get('catalogue_ranks', $args, 'rankcat_extension');
-				
-				// get the security questions
-				$questions = $this->mCore->get_all('security_questions');
-				
-				// set up a place to put the questions
-				$data->questions = FALSE;
-				
-				if ($questions)
-				{
-					$data->questions[0] = __('phrase.please_choose_one');
-					
-					foreach ($questions as $item)
-					{
-						$data->questions[$item->question_id] = $item->question_value;
-					}
-				}
-				
-				$data->images = array(
-					'loading' => array(
-						'src' => location::image('loading-circle-small.gif', NULL, 'install', 'image'),
-						'alt' => '',
-						'title' => '',
-						'class' => 'image'),
-					'default_rank' => array(
-						'src' => location::image($rank.$ext, NULL, 'default', 'rank')),
-				);
+				$this->template->layout->controls = form::open('main/index').form::button('next', __('step2.button'), $next).form::close();
 				
 				break;
 		}
+		
+		// send the response
+		$this->request->response = $this->template;
 	}
 	
 	public function action_verify()
@@ -762,11 +776,25 @@ return array
 	
 	public function action_test()
 	{
-		include MODPATH.'install/assets/schema'.EXT;
+		$create_user = Jelly::factory('user')
+			->set(array(
+				'status'		=> 'active',
+				'name'			=> 'john',
+				'email'			=> 'me@example.com',
+				'password'		=> Auth::hash('foo'),
+				'role'			=> 1,
+				'sysadmin'		=> 'y',
+				'gm'			=> 'y',
+				'webmaster'		=> 'y',
+				'skin_main'		=> '',
+				'skin_wiki'		=> '',
+				'skin_admin'	=> '',
+				'rank'			=> '',
+			))
+			->save();
 		
-		$result = Database::Instance()->query(0, $fields, TRUE);
-		
-		echo Kohana::debug($result);
+		echo Kohana::debug($create_user->id);
+		exit();
 	}
 }
 

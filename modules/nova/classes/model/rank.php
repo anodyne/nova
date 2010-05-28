@@ -36,7 +36,7 @@ class Model_Rank extends Jelly_Model
 			)),
 			'class' => new Field_Integer(array(
 				'column' => 'rank_class'
-			))
+			)),
 		));
 	}
 }

@@ -52,3 +52,8 @@ PDO, wrong host: SQLSTATE[HY000] [2002] php_network_getaddresses: getaddrinfo fa
 MySQL, bad username/password: mysql_connect() [<a href='function.mysql-connect'>function.mysql-connect</a>]: Access denied for user 'username'@'localhost' (using password: YES)
 MySQL, wrong database: Unknown database 'foo'
 MySQL, wrong host: mysql_connect() [<a href='function.mysql-connect'>function.mysql-connect</a>]: php_network_getaddresses: getaddrinfo failed: No such host is known. 
+
+|---------------------------------------------------------------
+| KO3 and GoDaddy
+|---------------------------------------------------------------
+http://forum.kohanaframework.org/comments.php?DiscussionID=4390

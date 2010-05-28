@@ -34,12 +34,12 @@ class Model_Character extends Jelly_Model
 				'choices' => array('active','inactive','pending','npc'),
 				'default' => 'active'
 			)),
-			'date_activate' => new Field_Timestamp(array(
+			'activate' => new Field_Timestamp(array(
 				'auto_now_create' => FALSE,
 				'auto_now_update' => FALSE,
 				'null' => TRUE
 			)),
-			'date_deactivate' => new Field_Timestamp(array(
+			'deactivate' => new Field_Timestamp(array(
 				'auto_now_create' => FALSE,
 				'auto_now_update' => FALSE,
 				'null' => TRUE
