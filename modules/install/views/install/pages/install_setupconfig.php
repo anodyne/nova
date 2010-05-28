@@ -3,7 +3,6 @@
 <?php elseif ($step == 1): ?>
 	<p class="fontMedium"><?php echo $message;?></p>
 	
-	<?php if (isset($inputs)): ?>
 	<hr />
 	
 	<?php echo form::open('install/setupconfig/2');?>
@@ -36,7 +35,6 @@
 			<span class="fontSmall subtle"><?php echo __('setup.step1_prefix_desc');?></span><br />
 			<?php echo form::input('prefix', Session::Instance()->get('prefix', 'nova_'));?>
 		</p>
-	<?php endif;?>
 <?php elseif ($step == 2): ?>
 	<p class="fontMedium"><?php echo $message;?></p>
 <?php elseif ($step == 3): ?>
