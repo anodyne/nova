@@ -1,24 +1,27 @@
 <?php defined('SYSPATH') OR die('No direct access allowed.');
 /**
- * Date Class
+ * Contains methods for handling dates in a logical for the system.
  *
- * @package		Nova Core
- * @subpackage	Base
+ * @package		Nova
+ * @category	Classes
  * @author		Anodyne Productions
- * @version		2.0
  */
 
 class Nova_Date extends Kohana_Date
 {
 	/**
-	 * Make the date from a UNIX timestamp with the format provided
+	 * Makes the date from a UNIX timestamp with the format provided. Date formats should
+	 * be in the PHP date() format unlike Nova 1.0 which uses the MySQL format.
+	 *
+	 *     // make the date
+	 *     echo mdate('', '', '');
 	 *
 	 * @param	string	the format to use for the date
 	 * @param	integer	the UNIX timestamp to convert
 	 * @param	string	the timezone to use for converting the timestamp
-	 * @return			the formatted date string
+	 * @return	string	the formatted date string
 	 */
-	public static function mdate($format = '', $time = '', $timezone = 'GMT')
+	public static function mdate($format, $time, $timezone = 'GMT')
 	{
 		$date = new DateTime('@'.$time, new DateTimeZone($timezone));
 		
@@ -26,10 +29,16 @@ class Nova_Date extends Kohana_Date
 	}
 	
 	/**
-	 * Returns the current time
+	 * Returns the current time with the timezone specified.
+	 *
+	 *     // get the current time
+	 *     $time = date::now();
+	 *
+	 *     // get the current time in New York
+	 *     $time = date::now('America/New_York');
 	 *
 	 * @param	string	the timezone to use for creating the current timestamp (GMT default)
-	 * @return			the UNIX timestamp of the current time
+	 * @return	integer	the UNIX timestamp of the current time
 	 */
 	public static function now($timezone = 'GMT')
 	{
@@ -240,6 +249,3 @@ class Nova_Date extends Kohana_Date
 		
 		}
 } // End date
-
-// End of file date.php
-// Location: modules/nova/classes/nova/date.php

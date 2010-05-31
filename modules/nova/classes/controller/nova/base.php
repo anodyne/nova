@@ -2,10 +2,9 @@
 /**
  * Base Controller
  *
- * @package		Nova Core
- * @subpackage	Controller
+ * @package		Nova
+ * @category	Controllers
  * @author		Anodyne Productions
- * @version		2.0
  */
 
 abstract class Controller_Nova_Base extends Controller_Template

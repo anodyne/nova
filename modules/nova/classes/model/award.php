@@ -2,10 +2,9 @@
 /**
  * Award Model
  *
- * @package		Nova Core
- * @subpackage	Model
+ * @package		Nova
+ * @category	Models
  * @author		Anodyne Productions
- * @version		2.0
  */
  
 class Model_Award extends Jelly_Model

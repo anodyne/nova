@@ -44,6 +44,12 @@ return array
 	'readme.title' => 'Readme',
 	'readme.label' => 'Nova Readme',
 	
+	/** remove **/
+	'remove.title' => "Uninstall Nova",
+	'remove.label' => "Uninstall Nova",
+	'remove.inst' => "Whoa, hold up! Uninstalling Nova will remove all the data in the database tables (posts, logs, characters, etc.) and cannot be undone, so make absolutely sure you want to do this before continuing. If you're sure, give me your email address and password so I can verify you're allowed to uninstall the system.",
+	'remove.button' => "Uninstall Nova",
+	
 	/** setup config **/
 	'setup.title' => "Config File Setup",
 	'setup.nodb' => "Sorry, I need to have the MySQL extension loaded in order to continue with Nova's installation.",

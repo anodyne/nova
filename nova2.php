@@ -23,6 +23,7 @@ if (isset($_POST['submit']))
 		'xmlrpc'				=> (bool) extension_loaded('xmlrpc'),
 		'disabled_functions'	=> ini_get('disable_functions'),
 		'disabled_classes'		=> ini_get('disable_classes'),
+		'server_os'				=> PHP_OS,
 	);
 }
 

@@ -116,6 +116,58 @@ class Controller_Install extends Controller_Template
 		// content
 		$this->template->title.= __('readme.title');
 		$this->template->layout->label = __('readme.label');
+		
+		// send the response
+		$this->request->response = $this->template;
+	}
+	
+	public function action_remove()
+	{
+		// create a new content view
+		$this->template->layout->content = View::factory('install/pages/install_remove');
+		
+		// assign the object a shorter variable to use in the method
+		$data = $this->template->layout->content;
+		
+		if (isset($_POST['submit']))
+		{
+			// grab an instance of the database
+			$db = Database::Instance();
+			
+			// set the POST variables
+			$email = trim(security::xss_clean($_POST['email']));
+			$password = trim(security::xss_clean($_POST['password']));
+			
+			// verify that they're allowed to uninstall the system
+			$verify = Auth::verify($email, $password);
+			
+			if ($verify == 0)
+			{
+				
+			}
+		}
+		else
+		{
+			// set the instructions
+			$data->message = __('remove.inst');
+			
+			// build the button attributes
+			$next = array(
+				'type' => 'submit',
+				'class' => 'button',
+				'id' => 'submit',
+			);
+			
+			// build the next step control
+			$this->template->layout->controls = form::button('submit', __('remove.button'), $next).form::close();
+		}
+		
+		// content
+		$this->template->title.= __('remove.title');
+		$this->template->layout->label = __('remove.label');
+		
+		// send the response
+		$this->request->response = $this->template;
 	}
 	
 	public function action_setupconfig($step = 0)

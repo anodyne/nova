@@ -2,22 +2,36 @@
 /**
  * Auth Class
  *
- * @package		Nova Core
- * @subpackage	Base
+ * @package		Nova
+ * @category	Classes
  * @author		Anodyne Productions
- * @version		2.0
  */
 
 class Nova_Auth
 {	
-	// the number of allowed login attempts
+	/**
+	 * @var		integer	Number of attempts allowed before lockout
+	 */
 	public static $allowed_login_attempts = 5;
 	
-	// the lockout time is 30 minutes
+	/**
+	 * @var		integer	Number of seconds the lockout lasts
+	 */
 	public static $lockout_time = 1800;
 	
-	public static $session;
+	/**
+	 * @var		an instance of the session for use throughout the class
+	 */
+	protected static $session;
 	
+	/**
+	 * Initializes the Auth class if necessary. The constructor will also
+	 * get an instance of the session and store it in the class variable
+	 * and set a Kohana debug log item to notify that the library has been
+	 * initialized.
+	 *
+	 * @return 	void
+	 */
 	public function __construct()
 	{
 		// get an instance of the session library
@@ -27,17 +41,31 @@ class Nova_Auth
 	}
 	
 	/**
-	 * Check a user's access to see if they're allowed to access a page
+	 * Checks a user's access level for the given page to see if they're allowed
+	 * to access the page. If no URI is given in the first parameter, Nova will
+	 * attempt to figure out what the current URI is and use that in its place.
+	 *
+	 *     // check the user's access to the page and redirects if FALSE
+	 *     Auth::check_access('admin/index');
+	 *
+	 *     // check the user's access to the page and doesn't redirect
+	 *     Auth::check_access('main/index', FALSE);
+	 *
+	 *     // no URI given, will auto-detect and redirect if FALSE
+	 *     Auth::check_access();
+	 *
+	 *     // no URI given, will auto-detect and not redirect
+	 *     Auth::check_access(NULL, FALSE);
 	 *
 	 * @param	string	the URI to check in the access session array
 	 * @param	boolean	whether to redirect to the login page (default: true)
 	 * @param	boolean	whether to search for a partial match (default: false)
-	 * @return			a boolean value of whether the user is allowed to access the page
+	 * @return	boolean	a boolean value of whether the user is allowed to access the page
 	 */
-	public static function check_access($uri = '', $redirect = TRUE, $partial = FALSE)
+	public static function check_access($uri = NULL, $redirect = TRUE, $partial = FALSE)
 	{
 		// make sure the uri is set properly
-		$uri = (empty($uri)) ? self::_set_uri() : $uri;
+		$uri = ($uri === NULL) ? self::_set_uri() : $uri;
 		
 		if ($partial === TRUE)
 		{
@@ -76,16 +104,23 @@ class Nova_Auth
 	}
 	
 	/**
-	 * Grab the access level from the session's access array to find out how much
-	 * access a user has to the page
+	 * Grabs the access level from the session's access array to find out how much
+	 * access a user has to the page. If no URI is given, Nova will attempt to
+	 * auto-detect the current URI and use that instead.
+	 *
+	 *     // get the access level for the current page
+	 *     $level = Auth::get_access_level();
+	 *
+	 *     // get the access level for a page that isn't the current one
+	 *     $level = Auth::get_access_level('admin/index');
 	 *
 	 * @param	string	the URI to check
-	 * @return			the access level for a given page or FALSE if no access
+	 * @return	mixed	the access level for a given page or FALSE if no access
 	 */
-	public static function get_access_level($uri = '')
+	public static function get_access_level($uri = NULL)
 	{
 		// make sure the uri is set properly
-		$uri = (empty($uri)) ? self::_set_uri() : $uri;
+		$uri = ($uri === NULL) ? self::_set_uri() : $uri;
 		
 		// grab the session
 		$session = self::$session->get('access', array());
@@ -102,36 +137,43 @@ class Nova_Auth
 	}
 	
 	/**
-	 * Hash a string and salt it with the system UID
+	 * Takes a string and hashes with the system's unique identifier.
 	 *
-	 * WARNING: uninstalling the system and re-installing it with the same data will break
-	 * all passwords since the UID is never the same between two installations
+	 * *WARNING:* uninstalling the system and re-installing it with the same data
+	 * will break all passwords since the UID is never the same between two installations.
+	 *
+	 *     // hash the password
+	 *     $password = Auth::hash('foo');
 	 *
 	 * @param	string	the string to hash
-	 * @return			the hashed string
+	 * @return	string	the hashed string
 	 */
-	public static function hash($string = '')
+	public static function hash($string)
 	{
 		// grab the system model
-		$sys = Jelly::select('system', 1);
-		
-		// grab the Nova UID
-		$uid = $sys->uid;
+		$uid = Jelly::select('system', 1)->uid;
 		
 		// double hash the UID
 		$uid = sha1(sha1($uid));
 		
 		// hash the string with the salt
-		$string = sha1($uid . $string);
+		$string = sha1($uid.$string);
 		
 		return $string;
 	}
 	
 	/**
-	 * Checks to see if someone is logged in or not
+	 * Checks to see if someone is logged in or not. If the parameter is TRUE, Nova will
+	 * redirect the user to the login page.
+	 *
+	 *     // is the user logged in?
+	 *     Auth::is_logged_in();
+	 *
+	 *     // if the user isn't logged in, send them to the login page
+	 *     Auth::is_logged_in(TRUE);
 	 *
 	 * @param	boolean	whether a failure should redirect the user to the login page
-	 * @return			TRUE/FALSE depending on its result or a redirect to the login page
+	 * @return	boolean	TRUE/FALSE depending on its result or a redirect to the login page
 	 */
 	public static function is_logged_in($redirect = FALSE)
 	{
@@ -156,19 +198,19 @@ class Nova_Auth
 	}
 	
 	/**
-	 * Checks to see if the user is flagged a certain way
+	 * Checks to see if the user is flagged a certain way.
+	 *
+	 *     // is the user a system administrator?
+	 *     $sysadmin = Auth::is_type('sysadmin', 1);
 	 *
 	 * @param	string	what is the type to check for (webmaster, game_master, sysadmin)
 	 * @param	integer	the user id to check
-	 * @return			a boolean value of whether or not the user is the type passed in the first parameter
+	 * @return	boolean	a boolean value of whether or not the user is the type passed in the first parameter
 	 */
-	public static function is_type($type = '', $id = '')
+	public static function is_type($type, $id)
 	{
 		// load the user model
-		$user = Jelly::select('user', $id);
-		
-		// check the database for the flag
-		$is = $user->$type;
+		$is = Jelly::select('user', $id)->$type;
 		
 		// figure out whether it's true or false
 		$retval = ($is == 'y') ? TRUE : FALSE;
@@ -178,171 +220,122 @@ class Nova_Auth
 	
 	/**
 	 * Executes the login process, sets the remember me cookie if it's been requested
-	 * and calls the method to set the session variables
+	 * and calls the method to set the session variables.
+	 *
+	 *     // do the login process
+	 *     $login = Auth::login('me@example.com', 'password', 'yes');
 	 *
 	 * @param	string	the email address
-	 * @param	string	the password (should already be hashed using Auth::hash())
-	 * @param	string	whether to set the auto-login (y, n)
-	 * @return			an integer with the error code, 0 means a successful login
+	 * @param	string	the password (should NOT be hashed before)
+	 * @param	string	whether to set the auto-login (yes, no)
+	 * @return	integer	the login error code (0 means a successful login)
 	 */
-	public static function login($email = '', $password = '', $remember = '')
+	public static function login($email, $password, $remember = 'no')
 	{
 		// set the variables
 		$retval = 0;
 		$maintenance = Jelly::select('setting')->where('key', '=', 'maintenance')->load()->value;
 		
-		if ($email == '')
-		{
-			$retval = 2;
-			return $retval;
-		}
-		
-		if ($password == '')
-		{
-			$retval = 3;
-			return $retval;
-		}
-		
-		$attempts = $this->_check_login_attempts($email);
+		// check the login attempts
+		$attempts = self::_check_login_attempts($email);
 		
 		if ($attempts === FALSE)
 		{
-			$retval = 6;
-			return $retval;
+			return 6;
 		}
 		
-		// check to see if the account exists
-		$login = Jelly::select('user')
-			->where('email', '=', $email)
-			->execute();
+		// do the legwork
+		$login = self::_verify($email, $password, TRUE);
 		
-		if (count($login) == 0)
+		if (is_object($login))
 		{
-			// email doesn't exist
-			$retval = 2;
-		}
-		elseif (count($login) > 1)
-		{
-			// more than one account found - contact the GM
-			$retval = 4;
-		}
-		else
-		{
-			/* assign the object to a variable */
-			$person = $login->current();
+			// hash the password
+			$password = self::hash($password);
 			
-			if ($person->password == $password)
+			if ($maintenance == 'on' && $login->sysadmin == 'n')
 			{
-				if ($maintenance == 'on' && $person->sysadmin == 'n')
-				{
-					// maintenance mode active
-					$retval = 5;
-				}
-				else
-				{
-					// clear the login attempts if there are any
-					$sys->delete_login_attempts($email);
-				
-					// update the login record
-					$user->update_login_record($person->userid, now());
-					
-					// set the session
-					self::_set_session($person);
-				}
+				// maintenance mode active
+				$retval = 5;
 			}
 			else
 			{
-				// password is wrong
-				$retval = 3;
+				// clear the login attempts if there are any
+				$sys->delete_login_attempts($email);
+			
+				// update the login record
+				$login->last_login = date::now();
+				$login->save();
 				
-				// create the attempt array
-				$login_attempt = array(
-					'login_ip' => $this->input->ip_address(),
-					'login_email' => $email,
-					'login_time' => now()
-				);
+				// set the session
+				self::_set_session($login);
 				
-				/* add a record to login attempt table */
-				$sys->add_login_attempt($login_attempt);
+				if ($remember == 'yes')
+				{
+					// set the cookie
+					self::_set_cookie($email, $password);
+				}
 			}
 		}
-		
-		if ($remember == 'yes')
+		else
 		{
-			// set the cookie
-			$this->_set_cookie($email, $password);
+			// grab the error code
+			$retval = $login;
+			
+			// create and save the login attempt
+			$attempt = Jelly::factor('loginattempt')
+				->set(array(
+					'ip' => Request::Instance()->$client_ip,
+					'email' => $email
+				))
+				->save();
 		}
 		
 		return $retval;
 	}
 	
 	/**
-	 * Log the user out of the system, destroy their cookies and session variables
+	 * Log the user out of the system, destroy their cookies and session variables.
+	 *
+	 *     // log the user out
+	 *     Auth::logout();
+	 *
+	 * @return 	void
 	 */
 	public static function logout()
 	{
 		// destroy any cookies that exist
-		$this->_destroy_cookie();
+		self::_destroy_cookie();
 		
 		// wipe out the session
 		self::$session->destroy();
 	}
 	
 	/**
-	 * Verify a user's login credentials
+	 * Verify a user's login credentials with their email address and password.
+	 *
+	 *     // verify the login credentials and return the login error code
+	 *     $login = Auth::verify('me@example.com', 'password');
+	 *
+	 *     // verify the login credentials and return the person object on success
+	 *     $login = Auth::verify('me@example.com', 'password', TRUE);
 	 *
 	 * @param	string	the email address
-	 * @param	string	the password (this should already be hashed using Auth::hash())
-	 * @return			an integer with the error code, 0 means a successful login
+	 * @param	string	the password
+	 * @param	boolean	whether or not to return the person object (TRUE) or the login code (FALSE)
+	 * @return	mixed	an integer with the error code (0 means successful login) or the person object
 	 */
-	public static function verify($email = '', $password = '')
+	public static function verify($email, $password, $object = FALSE)
 	{
-		// load the resources
-		$user = new Model_User;
-		
-		// hash the password
-		$password = self::hash($password);
-		
-		$retval = 0;
-		
-		$login = $user->get_user_details_by_email($email);
-		
-		if ($login->num_rows() == 0)
-		{
-			/* email doesn't exist */
-			$retval = 2;
-		}
-		elseif ($login->num_rows() > 1)
-		{
-			/* more than one account found - contact the GM */
-			$retval = 4;
-		}
-		else
-		{
-			/* assign the object to a variable */
-			$person = $login->row();
-			
-			if ($person->password == $password)
-			{
-				$retval = 0;
-			}
-			else
-			{
-				/* password is wrong */
-				$retval = 3;
-			}
-		}
-		
-		return $retval;
+		return self::_verify($email, $password, $object);
 	}
 	
 	/**
 	 * Checks to see how many login attempts a user has in the allowed timeframe
 	 *
 	 * @param	string	the email address
-	 * @return			a boolean value of whether the user is allowed to try another login attempt
+	 * @return	boolean	a boolean value of whether the user is allowed to try another login attempt
 	 */
-	protected static function _check_login_attempts($email = '')
+	protected static function _check_login_attempts($email)
 	{
 		// load the resources
 		$user = new Model_User;
@@ -372,7 +365,7 @@ class Nova_Auth
 	/**
 	 * Initiate the autologin process
 	 *
-	 * @return			an integer of the login error code (0 = success) or FALSE if the user didn't want to be remembered
+	 * @return	mixed	the login error code (0 is successful) or FALSE if the user didn't want to be remembered
 	 */
 	protected static function _autologin()
 	{
@@ -404,35 +397,26 @@ class Nova_Auth
 	
 	/**
 	 * Destroy the cookie (called from the logout method)
+	 *
+	 * @return 	void
 	 */
 	protected static function _destroy_cookie()
 	{
-		// load the models
-		$sys = new Model_System;
-		
 		// grab nova's unique identifier
-		$uid = $sys->get_nova_uid();
-		
-		// set the cookie data
-		$c_data = array(
-			'email' => array(
-				'name'   => $uid .'[email]',
-				'value'  => '',
-				'expire' => '0',
-				'prefix' => 'nova_'),
-			'password' => array(
-				'name'   => $uid .'[password]',
-				'value'  => '',
-				'expire' => '0',
-				'prefix' => 'nova_')
-		);
+		$uid = Jelly::select('system', 1)->uid;
 		
 		// destroy the cookie
-		cookie::delete($c_data['email']);
-		cookie::delete($c_data['password']);
+		cookie::delete('nova_'.$uid.'[email]');
+		cookie::delete('nova_'.$uid.'[password]');
 	}
 	
-	protected static function _set_access($role = '')
+	/**
+	 * Get the access page data to be used in the session
+	 *
+	 * @param	integer	the role ID
+	 * @return 	array	the pages from the access role
+	 */
+	protected static function _set_access($role)
 	{
 		// load the models
 		$access = new Access_Model;
@@ -448,41 +432,28 @@ class Nova_Auth
 	
 	/**
 	 * Set the cookie if a user wants to be remembered (called from the login method)
+	 *
+	 * @param	string	the email address
+	 * @param	string	the password
+	 * @return 	void
 	 */
-	protected static function _set_cookie($email = '', $password = '')
+	protected static function _set_cookie($email, $password)
 	{
-		// load the models
-		$sys = new System_Model;
-		
 		// grab nova's unique identifier
-		$uid = $sys->get_nova_uid();
-		
-		// set the cookie data
-		$c_data = array
-		(
-			'email' => array(
-				'name'   => $uid .'[email]',
-				'value'  => $email,
-				'expire' => '1209600',
-				'prefix' => 'nova_'),
-			'password' => array(
-				'name'   => $uid .'[password]',
-				'value'  => $password,
-				'expire' => '1209600',
-				'prefix' => 'nova_')
-		);
+		$uid = Jelly::select('system', 1)->uid;
 		
 		// set the cookie
-		cookie::set($c_data['email']);
-		cookie::set($c_data['password']);
+		cookie::set('nova_'.$uid.'[email]', $email, 1209600);
+		cookie::set('nova_'.$uid.'[password]', $password, 1209600);
 	}
 	
 	/**
 	 * Set the session variables (called from the login method)
 	 *
 	 * @param	object	an object with the user information
+	 * @return 	void
 	 */
-	protected static function _set_session($person = '')
+	protected static function _set_session(object $person)
 	{
 		// load the models
 		$user = new Users_Model;
@@ -535,7 +506,7 @@ class Nova_Auth
 	/**
 	 * Set the URI (called from the get_access_level and check_access methods)
 	 *
-	 * @return			a string with the URI properly set
+	 * @return	string	a string with the URI properly set
 	 */
 	protected static function _set_uri()
 	{
@@ -548,7 +519,57 @@ class Nova_Auth
 		// return the string
 		return implode('/', $uri);
 	}
-}
-
-// End of file auth.php
-// Location: modules/nova/classes/nova/auth.php
+	
+	/**
+	 * Method that does the legwork of verifying whether a
+	 * user has the right login credentials
+	 *
+	 * @param	string	the email address
+	 * @param	string	the password
+	 * @param	boolean	whether or not to return the person object (TRUE) or the login code (FALSE)
+	 * @return	mixed	an integer with the error code (0 means successful login) or the person object
+	 */
+	protected static function _verify($email, $password, $object = FALSE)
+	{
+		// set the default return value
+		$retval = 0;
+		
+		// make sure the email address isn't blank
+		$retval = ($email == '') ? 2 : $retval;
+		
+		// make sure the password isn't blank
+		$retval = ($password == '') ? 3 : $retval;
+		
+		// hash the password
+		$password = self::hash($password);
+		
+		// get the user record
+		$login = Jelly::select('user')->where('email', '=', $email)->execute();
+		
+		if (count($login) == 0)
+		{
+			// email doesn't exist
+			$retval = 2;
+		}
+		elseif (count($login) > 1)
+		{
+			// more than one account found - contact the GM
+			$retval = 4;
+		}
+		else
+		{
+			// assign the object to a variable
+			$person = $login->current();
+			
+			// make sure the password checks out
+			$retval = ($person->password == $password) ? 0 : 3;
+			
+			if ($retval == 0 && $object === TRUE)
+			{
+				return $person;
+			}
+		}
+		
+		return $retval;
+	}
+} // End Auth

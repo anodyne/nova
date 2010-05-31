@@ -53,7 +53,10 @@ $url = $_SERVER['SCRIPT_NAME'];
 $url = substr($url, 0, strpos($url, '.php'));
 $url = substr($url, 0, (strlen($url) - strpos(strrev($url), '/')));
 
-Kohana::init(array('base_url' => $url));
+Kohana::init(array(
+	'base_url' => $url,
+	'index_file' => 'index.php'
+));
 
 /**
  * Attach the file write to logging. Multiple writers are supported.
@@ -73,6 +76,7 @@ $base_modules = array(
 	'install'		=> MODPATH.'install',		// Install module
 	'database'		=> MODPATH.'database',		// Database access
 	'jelly'			=> MODPATH.'jelly',			// Jelly ORM module
+	'userguide'		=> MODPATH.'userguide',		// Kodoc userguide module
 );
 
 // merge the base modules with whatever is in the modules section of the nova config file

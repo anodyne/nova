@@ -128,7 +128,7 @@ class Kohana_Kodoc {
 	public static function class_methods(array $list = NULL)
 	{
 		$list = Kodoc::classes($list);
-
+		
 		$classes = array();
 
 		foreach ($list as $class)
