@@ -1,14 +1,15 @@
 <?php defined('SYSPATH') OR die('No direct access allowed.');
 /**
- * Form Class
+ * The Form class extends Kohana's native Form class to add additional methods specific to Nova.
+ * The methods added to the Form class allow developers to generate select menus with position,
+ * rank, department and character listings with only a single line of code.
  *
- * @package		Nova Core
- * @subpackage	Class
+ * @package		Nova
+ * @category	Classes
  * @author		Anodyne Productions
- * @version		2.0
  */
 
-class Nova_Form extends Kohana_Form
+abstract class Nova_Form extends Kohana_Form
 {
 	/**
 	 * Dropdown menu of characters
@@ -297,17 +298,20 @@ class Nova_Form extends Kohana_Form
 	}*/
 	
 	/**
-	 * Dropdown of positions
+	 * A select menu that includes all of the postions from the database based on the parameters passed to the method.
 	 *
+	 *     echo form::select_position('positions', 8, array('id' => 'positions'), 'open');
+	 *
+	 * @uses	Form::select
 	 * @param	string	the name of the select menu
 	 * @param	array 	an array of selected items
-	 * @param	string	any extra attributes to be added to the select menu
-	 * @param	string	which positions to pull
-	 * @param	string	whether to pull displayed positions or not
+	 * @param	array	any extra attributes to be added to the select menu
+	 * @param	string	which positions to pull (all, open, or a department ID)
+	 * @param	string	whether to pull displayed positions or not (y,n)
 	 * @param	string	the department type to pull
-	 * @return			a select menu output from form::select
+	 * @return	string	a select menu output from form::select
 	 */
-	public static function select_position($name = '', $selected = array(), $extra = NULL, $type = 'all', $display = 'y', $dept_type = '')
+	public static function select_position($name, $selected = array(), $extra = NULL, $type = 'all', $display = 'y', $dept_type = '')
 	{
 		// grab the positions
 		if ($type == 'open')
@@ -358,14 +362,17 @@ class Nova_Form extends Kohana_Form
 	}
 	
 	/**
-	 * Dropdown of ranks
+	 * A select menu that includes all of the ranks from the database based on the parameters passed to the method.
 	 *
+	 *     echo form::select_rank('ranks', 3, array('id' => 'ranks'));
+	 *
+	 * @uses	Form::select
 	 * @param	string	the name of the select menu
 	 * @param	array 	an array of selected items
-	 * @param	string	any extra attributes to add to the select menu
-	 * @return			a select menu from form::select
+	 * @param	array	any extra attributes to add to the select menu
+	 * @return	string	a select menu from form::select
 	 */
-	public static function select_rank($name = '', $selected = array(), $extra = NULL)
+	public static function select_rank($name, $selected = array(), $extra = NULL)
 	{
 		// grab the ranks
 		$ranks = Jelly::select('rank')
@@ -386,7 +393,4 @@ class Nova_Form extends Kohana_Form
 		
 		return FALSE;
 	}
-}
-
-// End of file form.php
-// Location: modules/nova/classes/nova/form.php
+} // End Form

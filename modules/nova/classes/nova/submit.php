@@ -1,29 +1,30 @@
 <?php defined('SYSPATH') OR die('No direct access allowed.');
 /**
- * Submit Class
+ * The Submit class allows developers to quickly and easily submit to the database for simple create,
+ * update and delete actions as well as displaying flash messages based on those actions.
  *
- * @package		Nova Core
- * @subpackage	Base
+ * @package		Nova
+ * @category	Classes
  * @author		Anodyne Productions
- * @version		2.0
  */
 
-class Nova_Submit
+abstract class Nova_Submit
 {
 	/**
 	 * Executes a create submission that loops through the arrays, does the XSS clean,
 	 * removes items from the array and merges it with any additional fields passed
 	 * to the method then runs the core model add method.
 	 *
+	 * @uses	Security::xss_clean
 	 * @param	array 	POST array
-	 * @param	string	the table being added to
+	 * @param	string	the model to use
 	 * @param	array 	an array of additional fields to be added to the POST array
 	 * @param	array 	an array of elements to pop off the POST array
-	 * @return			the number of affected rows by the add query
+	 * @return	integer	the number of affected rows by the add query
 	 */
-	public static function create($values = '', $table = '', $additional = array(), $pop = array())
+	public static function create($values, $model, $additional = array(), $pop = array())
 	{
-		$query = Jelly::factory($table);
+		$query = Jelly::factory($model);
 		
 		// clear out the unnecessary items
 		foreach ($values as $key => $value)
@@ -48,8 +49,10 @@ class Nova_Submit
 	}
 	
 	/**
-	 * Builds the flash message shown on some pages.
+	 * Builds a flash message with information about either a successful or failed submission.
 	 *
+	 * @uses	View::factory
+	 * @uses	Location::view
 	 * @param	integer	result from a create, update or delete query
 	 * @param	string	the item the action is being taken on
 	 * @param	string	the action being taken
@@ -57,12 +60,12 @@ class Nova_Submit
 	 * @param	string	the section
 	 * @param	string	extra content to be appended to the end of the flash message
 	 * @param	boolean	whether the verb should be pluralized or not (was/were)
-	 * @return			the string result of the flash message
+	 * @return	string	the string result of the flash message
 	 */
-	public static function show_flash($result = 0, $item = '', $action = '', $skin = '', $section = '', $extra = '', $plural = FALSE)
+	public static function show_flash($result, $item, $action, $skin, $section, $extra = '', $plural = FALSE)
 	{
 		// grab the flash partial
-		$flash = new View(location::view('flash', $skin, $section, 'pages'));
+		$flash = View::factory(location::view('flash', $skin, $section, 'pages'));
 		
 		if ($result > 0)
 		{
@@ -93,7 +96,4 @@ class Nova_Submit
 		
 		return $flash;
 	}
-}
-
-// End of file submit.php
-// Location: modules/nova/classes/nova/submit.php
+} // End Submit

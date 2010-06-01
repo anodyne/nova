@@ -1,26 +1,30 @@
 <?php defined('SYSPATH') OR die('No direct access allowed.');
 /**
- * Auth Class
+ * The Auth class is responsible for managing authentication in Nova. Included in the class
+ * are methods for checking access, getting access levels, hashing passwords, checking whether
+ * a user is logged in or not, verify login credentials, logging a user out, logging a user in
+ * and various protected methods for setting session variables, cookies and performing the
+ * autologin process.
  *
  * @package		Nova
  * @category	Classes
  * @author		Anodyne Productions
  */
 
-class Nova_Auth
+abstract class Nova_Auth
 {	
 	/**
-	 * @var		integer	Number of attempts allowed before lockout
+	 * @var	integer	Number of attempts allowed before lockout
 	 */
 	public static $allowed_login_attempts = 5;
 	
 	/**
-	 * @var		integer	Number of seconds the lockout lasts
+	 * @var	integer	Number of seconds the lockout lasts
 	 */
 	public static $lockout_time = 1800;
 	
 	/**
-	 * @var		an instance of the session for use throughout the class
+	 * @var	object	an instance of the session for use throughout the class
 	 */
 	protected static $session;
 	
@@ -29,6 +33,9 @@ class Nova_Auth
 	 * get an instance of the session and store it in the class variable
 	 * and set a Kohana debug log item to notify that the library has been
 	 * initialized.
+	 *
+	 * *This class is initialized in the base controller and should only be
+	 * initialized in your own work if you're not using the base controller.*
 	 *
 	 * @return 	void
 	 */
@@ -173,7 +180,7 @@ class Nova_Auth
 	 *     Auth::is_logged_in(TRUE);
 	 *
 	 * @param	boolean	whether a failure should redirect the user to the login page
-	 * @return	boolean	TRUE/FALSE depending on its result or a redirect to the login page
+	 * @return	boolean
 	 */
 	public static function is_logged_in($redirect = FALSE)
 	{
@@ -205,7 +212,7 @@ class Nova_Auth
 	 *
 	 * @param	string	what is the type to check for (webmaster, game_master, sysadmin)
 	 * @param	integer	the user id to check
-	 * @return	boolean	a boolean value of whether or not the user is the type passed in the first parameter
+	 * @return	boolean
 	 */
 	public static function is_type($type, $id)
 	{
@@ -299,6 +306,7 @@ class Nova_Auth
 	 *     // log the user out
 	 *     Auth::logout();
 	 *
+	 * @uses	Auth::_destroy_cookie
 	 * @return 	void
 	 */
 	public static function logout()
@@ -319,6 +327,7 @@ class Nova_Auth
 	 *     // verify the login credentials and return the person object on success
 	 *     $login = Auth::verify('me@example.com', 'password', TRUE);
 	 *
+	 * @uses	Auth::_verify
 	 * @param	string	the email address
 	 * @param	string	the password
 	 * @param	boolean	whether or not to return the person object (TRUE) or the login code (FALSE)
@@ -398,6 +407,7 @@ class Nova_Auth
 	/**
 	 * Destroy the cookie (called from the logout method)
 	 *
+	 * @uses	Cookie::delete
 	 * @return 	void
 	 */
 	protected static function _destroy_cookie()
@@ -433,6 +443,7 @@ class Nova_Auth
 	/**
 	 * Set the cookie if a user wants to be remembered (called from the login method)
 	 *
+	 * @uses	Cookie::set
 	 * @param	string	the email address
 	 * @param	string	the password
 	 * @return 	void

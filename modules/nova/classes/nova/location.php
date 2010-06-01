@@ -1,25 +1,29 @@
 <?php defined('SYSPATH') or die('No direct script access.');
 /**
- * Location Class
+ * The Location class provides methods for searching through Nova's file structure to find the correct
+ * view or image to pull. This is the heart and soul of seamless substitution.
  *
- * @package		Nova Core
- * @subpackage	Base
+ * @package		Nova
+ * @category	Classes
  * @author		Anodyne Productions
- * @version		2.0
  */
 
-class Nova_Location
+abstract class Nova_Location
 {
 	/**
-	 * Looks for the location of different types of images throughout the system
+	 * Looks for the location of the image file throughout the system. The first place this will look is in the
+	 * current skin. If the image isn't found there, it moves through the modules. Finally, if it can't be
+	 * found in the modules, it checks the nova module where it should find the image in question.
+	 *
+	 *     echo location::image('feed.png', 'default', 'main', 'image');
 	 *
 	 * @param	string	the image to find
 	 * @param	string	the skin to look in
 	 * @param	string	the section to look in
 	 * @param	string	the type of image (image, asset, rank)
-	 * @return			path to the image relative to index.php
+	 * @return	string	path to the image relative to index.php
 	 */
-	public static function image($image = '', $skin = '', $section = '', $type = '')
+	public static function image($image, $skin, $section, $type = 'image')
 	{
 		switch ($type)
 		{
@@ -138,16 +142,21 @@ class Nova_Location
 	}
 	
 	/**
-	 * Looks for the location of the view file throughout the system
+	 * Looks for the location of the view file throughout the system. The first place this will look is in the
+	 * current skin. If the view file isn't found there, it moves through the modules. Finally, if it can't be
+	 * found in the modules, it checks the nova module where it should find the file in question.
+	 *
+	 *     echo location::view('main_index', 'default', 'main', 'pages');
+	 *     echo location::view('main_index_js', 'default', 'main', 'js');
 	 *
 	 * @param	string	the view file
 	 * @param	string	the skin to search in
 	 * @param	string	the section to search in
 	 * @param	string	the type of view file (pages, js, ajax)
 	 * @param	string	the extension of the view file (default: .php)
-	 * @return			path to the view file relative to index.php
+	 * @return	string	path to the view file relative to index.php
 	 */
-	public static function view($view = '', $skin = '', $section = '', $type = '', $ext = EXT)
+	public static function view($view, $skin, $section, $type = 'pages', $ext = EXT)
 	{
 		// exclude these modules
 		$exclude = array();
@@ -206,7 +215,4 @@ class Nova_Location
 		
 		return FALSE;
 	}
-}
-
-// End of file location.php
-// Location: modules/nova/classes/nova/location.php
+} // End Location

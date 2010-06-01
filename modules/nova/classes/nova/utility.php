@@ -2,20 +2,34 @@
 /**
  * Utility Class
  *
- * @package		Nova Core
- * @subpackage	Base
+ * @package		Nova
+ * @category	Classes
  * @author		Anodyne Productions
- * @version		2.0
  */
 
-class Nova_Utility
+abstract class Nova_Utility
 {
+	/**
+	 * Initializes the class and sets a debug message.
+	 *
+	 * @return 	void
+	 */
 	public function __construct()
 	{
 		Kohana_Log::Instance()->add('debug', 'Auth library initialized.');
 	}
 	
-	public static function get_image_index($skin = '')
+	/**
+	 * Pulls the image index arrays from the base as well as the current skin.
+	 *
+	 *     $image_index = Utility::get_image_index('default');
+	 *
+	 * @uses	Kohana::find_file
+	 * @uses	Kohana::load
+	 * @param	string	the current skin
+	 * @return 	array 	the image index array
+	 */
+	public static function get_image_index($skin)
 	{
 		// load the base image index
 		$common = Kohana::find_file('views', '_common/image_index');
@@ -306,7 +320,4 @@ class Nova_Utility
 		
 		return implode(' ', $value);
 	}
-}
-
-// End of file utility.php
-// Location: modules/nova/classes/nova/utility.php
+} // End Utility

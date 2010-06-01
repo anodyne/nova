@@ -2,20 +2,37 @@
 /**
  * Menu Class
  *
- * @package		Nova Core
- * @subpackage	Base
+ * @package		Nova
+ * @category	Classes
  * @author		Anodyne Productions
- * @version		2.0
  */
 
-class Nova_Menu
-{    
+abstract class Nova_Menu
+{
+	/**
+	 * Initializes the library and sets a debug message.
+	 *
+	 * *The base controller automatically initializes this class, so unless you're developing outside
+	 * of the base controller, you do not need to initialize this class manually.*
+	 *
+	 * @return 	void
+	 */
 	public function __construct()
 	{
 		Kohana_Log::Instance()->add('debug', 'Auth library initialized.');
 	}
 	
-	public static function build($type = '', $cat = '')
+	/**
+	 * The only entry point into the class. This method will call one of the private methods to do all
+	 * the heavy lifting of generating the menus.
+	 *
+	 *     echo menu::build('sub', 'personnel');
+	 *
+	 * @param	string	the type of menu to build (main, sub, adminsub)
+	 * @param	string	the category of menu to build
+	 * @return 	mixed	an unordered list with all the menu items or FALSE if an invalid type is supplied
+	 */
+	public static function build($type, $cat)
 	{
 		switch ($type)
 		{
@@ -349,7 +366,4 @@ class Nova_Menu
 		
 		return $output;
 	}
-}
-
-// End of file menu.php
-// Location: modules/nova/classes/nova/menu.php
+} // End Menu
