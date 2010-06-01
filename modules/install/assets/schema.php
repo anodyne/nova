@@ -2,10 +2,9 @@
 /**
  * Database Schema
  *
- * @package		Install Module
- * @subpackage	Asset
+ * @package		Install
+ * @category	Assets
  * @author		Anodyne Productions
- * @version		2.0
  */
 
 $dbconfig		= Kohana::config('database');

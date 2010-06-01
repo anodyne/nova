@@ -595,7 +595,7 @@ return array
 			case 1:
 				if (isset($_POST['next']))
 				{
-					/*// update the character set
+					// update the character set
 					$dbconfig = Kohana::config('database');
 					$db->set_charset($dbconfig['default']['charset']);
 					
@@ -604,7 +604,7 @@ return array
 					
 					foreach ($fields as $f)
 					{
-						//db::query(NULL, $f);
+						$db->query(NULL, $f, TRUE);
 					}
 					
 					// pause the script for a second
@@ -613,14 +613,41 @@ return array
 					// pull in the basic data
 					include_once MODPATH.'install/assets/data_'.Kohana::config('install.data_src').EXT;
 					
-					foreach ($data as $d)
+					foreach ($data as $table => $d)
 					{
-						//db::query(Database::INSERT, $d);
+						$queryStart = "INSERT INTO $table";
+						$queryMiddle = NULL;
+						$array = NULL;
+						$final = NULL;
+						
+						$query = array();
+						
+						foreach ($d as $value)
+						{
+							foreach ($value as $k => $v)
+							{
+								$array[$k] = $db->escape($v);
+							}
+							
+							if (is_null($queryMiddle))
+							{
+								$queryMiddle = "(".implode(', ', array_keys($array)).") VALUES ";
+							}
+							
+							$values = implode(', ', array_values($array));
+							
+							$query[] = "($values)";
+						}
+						
+						$final = $queryStart.' '.$queryMiddle.' '.implode(', ', $query).';';
+						
+						// do the query
+						$db->query(Database::INSERT, $final, TRUE);
 					}
 					
 					// pause the script for a second
 					sleep(1);
-					
+					/*
 					// pull in the genre data
 					include_once MODPATH.'install/assets/genres/'.strtolower(Kohana::config('nova.genre')).'_data'.EXT;
 					
@@ -828,24 +855,45 @@ return array
 	
 	public function action_test()
 	{
-		$create_user = Jelly::factory('user')
-			->set(array(
-				'status'		=> 'active',
-				'name'			=> 'john',
-				'email'			=> 'me@example.com',
-				'password'		=> Auth::hash('foo'),
-				'role'			=> 1,
-				'sysadmin'		=> 'y',
-				'gm'			=> 'y',
-				'webmaster'		=> 'y',
-				'skin_main'		=> '',
-				'skin_wiki'		=> '',
-				'skin_admin'	=> '',
-				'rank'			=> '',
-			))
-			->save();
+		$db = Database::Instance();
 		
-		echo Kohana::debug($create_user->id);
+		// pull in the basic data
+		include_once MODPATH.'install/assets/data_basic'.EXT;
+		
+		foreach ($data as $table => $d)
+		{
+			$queryStart = "INSERT INTO $table";
+			$queryMiddle = NULL;
+			$array = NULL;
+			
+			$query = array();
+			
+			foreach ($d as $value)
+			{
+				foreach ($value as $k => $v)
+				{
+					$array[$k] = $db->escape($v);
+				}
+				
+				if (is_null($queryMiddle))
+				{
+					$queryMiddle = "(".implode(', ', array_keys($array)).") VALUES ";
+				}
+				
+				$values = implode(', ', array_values($array));
+				
+				$query[] = "($values)";
+			}
+			
+			$final[] = $queryStart.' '.$queryMiddle.' '.implode(', ', $query).';';
+			
+			// do the query
+			//$db->query(Database::INSERT, $query, TRUE);
+		}
+		
+		echo '<pre>';
+		print_r($final);
+		echo '</pre>';
 		exit();
 	}
 }
