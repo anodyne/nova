@@ -9,6 +9,11 @@
  
 class Model_Award extends Jelly_Model
 {
+	/**
+	 * Initialize the model with Jelly_Meta data
+	 *
+	 * @return	void
+	 */
 	public static function initialize(Jelly_Meta $meta)
 	{
 		$meta->fields(array(
@@ -40,6 +45,3 @@ class Model_Award extends Jelly_Model
 		));
 	}
 }
-
-// End of file award.php
-// Location: modules/nova/classes/model/award.php

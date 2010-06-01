@@ -2,14 +2,18 @@
 /**
  * News Categories Model
  *
- * @package		Nova Core
- * @subpackage	Model
+ * @package		Nova
+ * @category	Models
  * @author		Anodyne Productions
- * @version		2.0
  */
  
 class Model_Newscategory extends Jelly_Model
 {
+	/**
+	 * Initialize the model with Jelly_Meta data
+	 *
+	 * @return	void
+	 */
 	public static function initialize(Jelly_Meta $meta)
 	{
 		$meta->table('news_categories');
@@ -27,6 +31,3 @@ class Model_Newscategory extends Jelly_Model
 		));
 	}
 }
-
-// End of file newscategory.php
-// Location: modules/nova/classes/model/newscategory.php

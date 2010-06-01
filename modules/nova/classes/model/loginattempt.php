@@ -2,14 +2,18 @@
 /**
  * Login Attempts Model
  *
- * @package		Nova Core
- * @subpackage	Model
+ * @package		Nova
+ * @category	Models
  * @author		Anodyne Productions
- * @version		2.0
  */
  
 class Model_Loginattempt extends Jelly_Model
 {
+	/**
+	 * Initialize the model with Jelly_Meta data
+	 *
+	 * @return	void
+	 */
 	public static function initialize(Jelly_Meta $meta)
 	{
 		$meta->table('login_attempts');
@@ -32,6 +36,3 @@ class Model_Loginattempt extends Jelly_Model
 		));
 	}
 }
-
-// End of file loginattempt.php
-// Location: modules/nova/classes/model/loginattempt.php

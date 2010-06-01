@@ -2,14 +2,18 @@
 /**
  * System Model
  *
- * @package		Nova Core
- * @subpackage	Model
+ * @package		Nova
+ * @category	Models
  * @author		Anodyne Productions
- * @version		2.0
  */
  
 class Model_System extends Jelly_Model
 {
+	/**
+	 * Initialize the model with Jelly_Meta data
+	 *
+	 * @return	void
+	 */
 	public static function initialize(Jelly_Meta $meta)
 	{
 		$meta->table('system_info');
@@ -43,6 +47,3 @@ class Model_System extends Jelly_Model
 		));
 	}
 }
-
-// End of file system.php
-// Location: modules/nova/classes/model/system.php

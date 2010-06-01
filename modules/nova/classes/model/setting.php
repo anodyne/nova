@@ -2,14 +2,21 @@
 /**
  * Settings Model
  *
- * @package		Nova Core
- * @subpackage	Model
+ * @package		Nova
+ * @category	Models
  * @author		Anodyne Productions
- * @version		2.0
  */
  
 class Model_Setting extends Jelly_Model
 {
+	/**
+	 * Initialize the model with Jelly_Meta data
+	 *
+	 * *This model is automatically initialized by the base controller as <code>$this->mSettings</code>. The only time you
+	 * need to initialize this class is in the event you are not working with the base controller.*
+	 *
+	 * @return	void
+	 */
 	public static function initialize(Jelly_Meta $meta)
 	{
 		$meta->fields(array(
@@ -33,7 +40,16 @@ class Model_Setting extends Jelly_Model
 		));
 	}
 	
-	public static function get_settings($value = '')
+	/**
+	 * Pulls back specific settings from the database based on their setting key.
+	 *
+	 *     $settings = $this->mSettings->get_settings('sim_name');
+	 *     $settings = $this->mSettings->get_settings(array('sim_name', 'sim_year'));
+	 *
+	 * @param	mixed	key(s) to pull back from the database
+	 * @return	array 	an array of setting keys
+	 */
+	public static function get_settings($value)
 	{
 		$array = FALSE;
 		
@@ -62,6 +78,3 @@ class Model_Setting extends Jelly_Model
 		return $array;
 	}
 }
-
-// End of file setting.php
-// Location: modules/nova/classes/model/setting.php

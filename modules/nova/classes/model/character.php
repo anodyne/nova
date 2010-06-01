@@ -2,14 +2,18 @@
 /**
  * Character Model
  *
- * @package		Nova Core
- * @subpackage	Model
+ * @package		Nova
+ * @category	Models
  * @author		Anodyne Productions
- * @version		2.0
  */
  
 class Model_Character extends Jelly_Model
 {
+	/**
+	 * Initialize the model with Jelly_Meta data
+	 *
+	 * @return	void
+	 */
 	public static function initialize(Jelly_Meta $meta)
 	{
 		$meta->fields(array(
@@ -35,24 +39,27 @@ class Model_Character extends Jelly_Model
 				'default' => 'active'
 			)),
 			'activate' => new Field_Timestamp(array(
+				'column' => 'date_activate',
 				'auto_now_create' => FALSE,
 				'auto_now_update' => FALSE,
 				'null' => TRUE
 			)),
 			'deactivate' => new Field_Timestamp(array(
+				'column' => 'date_deactivate',
 				'auto_now_create' => FALSE,
 				'auto_now_update' => FALSE,
 				'null' => TRUE
 			)),
 			'images' => new Field_Text,
-			'rank' => new Field_HasOne(array(
+			'rank' => new Field_BelongsTo(array(
+				'column' => 'rank',
 				'foreign' => 'rank'
 			)),
-			'position1' => new Field_HasOne(array(
+			'position1' => new Field_BelongsTo(array(
 				'column' => 'position_1',
 				'foreign' => 'position'
 			)),
-			'position2' => new Field_HasOne(array(
+			'position2' => new Field_BelongsTo(array(
 				'column' => 'position_2',
 				'foreign' => 'position'
 			)),
@@ -61,14 +68,11 @@ class Model_Character extends Jelly_Model
 				'auto_now_update' => FALSE,
 				'null' => TRUE
 			)),
-			'last_update' => new Field_Timestamp(array(
+			/*'last_update' => new Field_Timestamp(array(
 				'auto_now_create' => FALSE,
 				'auto_now_update' => TRUE,
 				'null' => TRUE
-			))
+					))*/
 		));
 	}
 }
-
-// End of file character.php
-// Location: modules/nova/classes/model/character.php

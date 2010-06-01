@@ -2,14 +2,18 @@
 /**
  * News Model
  *
- * @package		Nova Core
- * @subpackage	Model
+ * @package		Nova
+ * @category	Models
  * @author		Anodyne Productions
- * @version		2.0
  */
  
 class Model_News extends Jelly_Model
 {
+	/**
+	 * Initialize the model with Jelly_Meta data
+	 *
+	 * @return	void
+	 */
 	public static function initialize(Jelly_Meta $meta)
 	{
 		$meta->table('news');
@@ -62,6 +66,3 @@ class Model_News extends Jelly_Model
 		));
 	}
 }
-
-// End of file news.php
-// Location: modules/nova/classes/model/news.php

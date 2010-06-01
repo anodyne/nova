@@ -2,14 +2,21 @@
 /**
  * Messages Model
  *
- * @package		Nova Core
- * @subpackage	Model
+ * @package		Nova
+ * @category	Models
  * @author		Anodyne Productions
- * @version		2.0
  */
  
 class Model_Message extends Jelly_Model
 {
+	/**
+	 * Initialize the model with Jelly_Meta data
+	 *
+	 * *This model is automatically initialized by the base controller as <code>$this->mMessages</code>. The only time you
+	 * need to initialize this class is in the event you are not working with the base controller.*
+	 *
+	 * @return	void
+	 */
 	public static function initialize(Jelly_Meta $meta)
 	{
 		$meta->fields(array(
@@ -36,13 +43,18 @@ class Model_Message extends Jelly_Model
 		));
 	}
 	
-	public function get_message($key = '')
+	/**
+	 * Pulls back a message from the database based on its message key.
+	 *
+	 *     echo $this->mMessages->get_message('message_key');
+	 *
+	 * @param	string	the message key
+	 * @return	string	the message
+	 */
+	public function get_message($key)
 	{
 		$query = Jelly::select('message')->where('key', '=', $key)->load();
 		
 		return $query->value;
 	}
 }
-
-// End of file message.php
-// Location: modules/nova/classes/model/message.php

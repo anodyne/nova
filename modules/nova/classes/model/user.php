@@ -2,10 +2,9 @@
 /**
  * User Model
  *
- * @package		Nova Core
- * @subpackage	Model
+ * @package		Nova
+ * @category	Models
  * @author		Anodyne Productions
- * @version		2.0
  */
  
 class Model_User extends Jelly_Model
@@ -102,6 +101,3 @@ class Model_User extends Jelly_Model
 		));
 	}
 }
-
-// End of file user.php
-// Location: modules/nova/classes/model/user.php

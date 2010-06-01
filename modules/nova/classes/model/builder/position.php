@@ -2,19 +2,22 @@
 /**
  * Postion Builder Model
  *
- * @package		Nova Core
- * @subpackage	Model
+ * @package		Nova
+ * @category	Model Builders
  * @author		Anodyne Productions
- * @version		2.0
  */
  
 class Model_Builder_Position extends Jelly_Builder
 {
+	/**
+	 * Pulls open positions from the database.
+	 *
+	 *     $positions = Jelly::select('position')->open()->execute();
+	 *
+	 * @return	object Jelly_Builder object
+	 */
 	public function open()
 	{
 		return $this->where('open', '>', 0);
 	}
 }
-
-// End of file character.php
-// Location: modules/nova/classes/model/builder/character.php
