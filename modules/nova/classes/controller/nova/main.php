@@ -349,11 +349,9 @@ class Controller_Nova_Main extends Controller_Nova_Base
 	
 	public function action_test2()
 	{
-		include_once MODPATH.'install/assets/schema.php';
+		$item = Jelly::select('character', 111111);
 		
-		echo '<pre>';
-		echo $fields;
-		echo '</pre>';
+		echo $item->rank->name.' '.$item->fname.' '.$item->lname.' is a '.$item->position1->name;
 		exit();
 	}
 	
