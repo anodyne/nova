@@ -12,4 +12,7 @@ return array
 	// Example: 'api_packages' => 'Kohana,Kohana/Database,Kohana/ORM,None',
 	//'api_packages' => TRUE,
 	'api_packages' => 'Kohana,Jelly,Nova',
+	
+	// Class prefixes to ignore
+	'api_prefix_ignore' => 'kohana_,nova_',
 );

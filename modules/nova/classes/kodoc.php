@@ -3,6 +3,75 @@
 class Kodoc extends Kohana_Kodoc
 {
 	/**
+	 * Creates an html list of all classes sorted by category (or package if no category)
+	 *
+	 * @return   string   the html for the menu
+	 */
+	public static function menu()
+	{
+		$classes = Kodoc::classes();
+
+		foreach ($classes as $class)
+		{
+			$exceptions = explode(',', Kohana::config('userguide.api_prefix_ignore'));
+			
+			foreach ($exceptions as $e)
+			{
+				if (isset($classes[$e.$class]))
+				{
+					// Remove extended classes
+					unset($classes[$e.$class]);
+				}
+			}
+		}
+
+		ksort($classes);
+
+		$menu = array();
+
+		$route = Route::get('docs/api');
+
+		foreach ($classes as $class)
+		{
+			$class = Kodoc_Class::factory($class);
+
+			// Test if we should show this class
+			if ( ! Kodoc::show_class($class))
+				continue;
+
+			$link = HTML::anchor($route->uri(array('class' => $class->class->name)), $class->class->name);
+
+			if (isset($class->tags['package']))
+			{
+				foreach ($class->tags['package'] as $package)
+				{
+					if (isset($class->tags['category']))
+					{
+						foreach ($class->tags['category'] as $category)
+						{
+							$menu[$package][$category][] = $link;
+						}
+					}
+					else
+					{
+						$menu[$package]['Base'][] = $link;
+					}
+				}
+			}
+			else
+			{
+				$menu['[Unknown]']['Base'][] = $link;
+			}
+		}
+
+		// Sort the packages
+		ksort($menu);
+
+		return View::factory('userguide/api/menu')
+			->bind('menu', $menu);
+	}
+	
+	/**
 	 * Returns an array of all the classes available, built by listing all files in the classes folder and then trying to create that class.
 	 *
 	 * This means any empty class files (as in completely empty) will cause an exception
