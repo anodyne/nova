@@ -116,6 +116,14 @@ return array
 	'error.header' => 'Error!',
 	'error.not_found' => "No :item found.",
 	'error.private_news' => "This :news is private and can only be viewed by registered :users.",
+	'error.login_1' => "You must login to continue!",
+	'error.login_2' => "Email address not found, please try again.",
+	'error.login_3' => "Your password doesn't match our records, please try again.",
+	'error.login_4' => "I've found more than one account with your email address. Please contact the game master to resolve this issue.",
+	'error.login_5' => "Maintenance mode has been activated! Only system administrators are allowed to login. Please try again later.",
+	'error.login_6' => "You've attempted to login more times than the system allows. You must wait :minutes minutes before attempting to login again! :extra",
+	'error.login_7' => "Your account is currently under review. You will not be allowed to login until your application has been accepted. Please contact the game master if you have questions.",
+	'error.sysadmin' => "You must be a system administrator to continue.",
 	
 	/**
 	 * Phrases

@@ -21,6 +21,7 @@ class Controller_Nova_Main extends Controller_Nova_Base
 		
 		// set the variables
 		$this->skin		= $this->session->get('skin_main', $this->options['skin_main']);
+		$this->skin		= $this->session->get('skin_main', 'default');
 		$this->rank		= $this->session->get('display_rank', $this->options['display_rank']);
 		$this->timezone	= $this->session->get('timezone', $this->options['timezone']);
 		$this->dst		= $this->session->get('dst', $this->options['daylight_savings']);
@@ -35,8 +36,8 @@ class Controller_Nova_Main extends Controller_Nova_Base
 		$this->template->title 					= $this->options['sim_name'].' :: ';
 		$this->template->javascript				= FALSE;
 		$this->template->layout					= View::factory($this->skin.'/template_main', array('skin' => $this->skin, 'sec' => 'main'));
-		$this->template->layout->nav_main 		= Menu::build('main', 'main');
-		$this->template->layout->nav_sub 		= Menu::build('sub', 'main');
+		//$this->template->layout->nav_main 		= Menu::build('main', 'main');
+		//$this->template->layout->nav_sub 		= Menu::build('sub', 'main');
 		$this->template->layout->ajax 			= FALSE;
 		$this->template->layout->flash_message	= FALSE;
 	}
@@ -349,9 +350,15 @@ class Controller_Nova_Main extends Controller_Nova_Base
 	
 	public function action_test2()
 	{
-		$item = Jelly::select('character', 1)->print_name(FALSE, FALSE, TRUE);
+		$forms = Jelly::select('form')->execute();
 		
-		echo Kohana::debug($item);
+		foreach ($forms as $f)
+		{
+			foreach ($f->fields as $field)
+			{
+				echo Kohana::debug($field->html_name);
+			}
+		}
 		
 		//echo $item->rank->name.' '.$item->fname.' '.$item->lname.' is a '.$item->position1->name;
 		exit();
