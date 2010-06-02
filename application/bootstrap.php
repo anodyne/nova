@@ -77,6 +77,7 @@ $base_modules = array(
 	'database'		=> MODPATH.'database',		// Database access
 	'jelly'			=> MODPATH.'jelly',			// Jelly ORM module
 	'userguide'		=> MODPATH.'userguide',		// Kodoc userguide module
+	'dbforge'		=> MODPATH.'dbforge',		// DBForge module
 );
 
 // merge the base modules with whatever is in the modules section of the nova config file
