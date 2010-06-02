@@ -49,6 +49,14 @@ $data = array(
 	'docking_fields'			=> array('id' => 'field_id', 'fields' => 'fields_docking_fields'),
 	'docking_sections'			=> array('id' => 'section_id', 'fields' => 'fields_docking_sections'),
 	'docking_values'			=> array('id' => 'value_id', 'fields' => 'fields_docking_values'),
+	
+	'forms'						=> array('id' => 'form_id', 'fields' => 'fields_forms'),
+	'forms_data'				=> array('id' => 'data_id', 'fields' => 'fields_forms_data'),
+	'forms_fields'				=> array('id' => 'field_id', 'fields' => 'fields_forms_fields'),
+	'forms_sections'			=> array('id' => 'section_id', 'fields' => 'fields_forms_sections'),
+	'forms_tabs'				=> array('id' => 'tab_id', 'fields' => 'fields_forms_tabs'),
+	'forms_values'				=> array('id' => 'value_id', 'fields' => 'fields_forms_values'),
+	
 	'login_attempts'			=> array('id' => 'login_id', 'fields' => 'fields_login_attempts'),
 	'menu_categories'			=> array('id' => 'menucat_id', 'fields' => 'fields_menu_categories'),
 	'menu_items'				=> array('id' => 'menu_id', 'fields' => 'fields_menu_items'),
@@ -58,8 +66,8 @@ $data = array(
 	'news'						=> array('id' => 'news_id', 'fields' => 'fields_news'),
 	'news_categories'			=> array('id' => 'newscat_id', 'fields' => 'fields_news_categories'),
 	'news_comments'				=> array('id' => 'ncomment_id', 'fields' => 'fields_news_comments'),
-	'personallogs'				=> array('id' => 'log_id', 'fields' => 'fields_personallogs'),
-	'personallogs_comments'		=> array('id' => 'lcomment_id', 'fields' => 'fields_personallogs_comments'),
+	'personal_logs'				=> array('id' => 'log_id', 'fields' => 'fields_personal_logs'),
+	'personal_logs_comments'	=> array('id' => 'lcomment_id', 'fields' => 'fields_personal_logs_comments'),
 	'positions_'.$_genre		=> array('id' => 'pos_id', 'fields' => 'fields_positions'),
 	'posts'						=> array('id' => 'post_id', 'fields' => 'fields_posts'),
 	'posts_comments'			=> array('id' => 'pcomment_id', 'fields' => 'fields_posts_comments'),
@@ -68,7 +76,7 @@ $data = array(
 	'ranks_'.$_genre			=> array('id' => 'rank_id', 'fields' => 'fields_ranks'),
 	'security_questions'		=> array('id' => 'question_id', 'fields' => 'fields_security_questions'),	
 	'settings'					=> array('id' => 'setting_id', 'fields' => 'fields_settings'),
-	'sessions'					=> array('id' => 'session_id', 'fields' => 'fields_sessions'),
+	'sessions'					=> array('id' => 'session_id', 'fields' => 'fields_sessions', 'index' => array('last_active')),
 	'sim_type'					=> array('id' => 'simtype_id', 'fields' => 'fields_sim_type'),
 	'specs_data'				=> array('id' => 'data_id', 'fields' => 'fields_specs_data'),
 	'specs_fields'				=> array('id' => 'field_id', 'fields' => 'fields_specs_fields'),
@@ -406,6 +414,9 @@ $fields_characters = array(
 	'last_post' => array(
 		'type' => $date_type,
 		'constraint' => $date_constraint),
+	'last_update' => array(
+		'type' => $date_type,
+		'constraint' => $date_constraint),
 );
 
 $fields_characters_data = array(
@@ -730,6 +741,109 @@ $fields_docking_values = array(
 		'constraint' => 5)
 );
 
+$fields_forms = array(
+	'form_id' => array(
+		'type' => 'INT',
+		'constraint' => 5,
+		'auto_increment' => TRUE),
+	'form_key' => array(
+		'type' => 'VARCHAR',
+		'constraint' => 20,
+		'default' => ''),
+	'form_name' => array(
+		'type' => 'VARCHAR',
+		'constraint' => 255,
+		'default' => ''),
+	'form_desc' => array(
+		'type' => 'TEXT'),
+	'form_status' => array(
+		'type' => 'ENUM',
+		'constraint' => "'active','inactive','development'",
+		'default' => 'active'),
+);
+
+$fields_forms_data = array(
+	'data_id' => array(
+		'type' => 'BIGINT',
+		'constraint' => 20,
+		'auto_increment' => TRUE),
+	'data_form' => array(
+		'type' => 'VARCHAR',
+		'constraint' => 20,
+		'default' => ''),
+	'data_field' => array(
+		'type' => 'BIGINT',
+		'constraint' => 20),
+	'data_user' => array(
+		'type' => $user_id_type,
+		'constraint' => $user_id_constraint),
+	'data_character' => array(
+		'type' => $character_id_type,
+		'constraint' => $character_id_constraint),
+	'data_item' => array(
+		'type' => 'INT',
+		'constraint' => 10),
+	'data_value' => array(
+		'type' => 'TEXT'),
+	'data_last_update' => array(
+		'type' => $date_type,
+		'constraint' => $date_constraint),
+);
+
+$fields_forms_fields = array(
+	'field_id' => array(),
+	'field_form' => array(
+		'type' => 'VARCHAR',
+		'constraint' => 20,
+		'default' => ''),
+	'field_section' => array(),
+	'field_type' => array(),
+	'field_html_name' => array(),
+	'field_html_id' => array(),
+	'field_html_class' => array(),
+	'field_html_rows' => array(),
+	'field_selected' => array(),
+	'field_value' => array(),
+	'field_label' => array(),
+	'field_order' => array(),
+	'field_display' => array(),
+	'field_last_update' => array(),
+);
+
+$fields_forms_sections = array(
+	'section_id' => array(),
+	'section_form' => array(
+		'type' => 'VARCHAR',
+		'constraint' => 20,
+		'default' => ''),
+	'section_tab' => array(),
+	'section_name' => array(),
+	'section_order' => array(),
+);
+
+$fields_forms_tabs = array(
+	'tab_id' => array(),
+	'tab_form' => array(
+		'type' => 'VARCHAR',
+		'constraint' => 20,
+		'default' => ''),
+	'tab_name' => array(),
+	'tab_link_id' => array(),
+	'tab_order' => array(),
+	'tab_display' => array(),
+);
+
+$fields_forms_values = array(
+	'value_id' => array(),
+	'value_field' => array(),
+	'value_html_name' => array(),
+	'value_html_value' => array(),
+	'value_html_id' => array(),
+	'value_selected' => array(),
+	'value_content' => array(),
+	'value_order' => array(),
+);
+
 $fields_login_attempts = array(
 	'login_id' => array(
 		'type' => 'INT',
@@ -984,7 +1098,7 @@ $fields_news_comments = array(
 		'default' => 'activated')
 );
 
-$fields_personallogs = array(
+$fields_personal_logs = array(
 	'log_id' => array(
 		'type' => 'INT',
 		'constraint' => 5,
@@ -1016,7 +1130,7 @@ $fields_personallogs = array(
 		'default' => 0),
 );
 
-$fields_personallogs_comments = array(
+$fields_personal_logs_comments = array(
 	'lcomment_id' => array(
 		'type' => 'INT',
 		'constraint' => 8,
@@ -1253,23 +1367,13 @@ $fields_settings = array(
 $fields_sessions = array(
 	'session_id' => array(
 		'type' => 'VARCHAR',
-		'constraint' => 40,
+		'constraint' => 24,
 		'default' => '0'),
-	'ip_address' => array(
-		'type' => 'VARCHAR',
-		'constraint' => 16,
-		'default' => '0'),
-	'user_agent' => array(
-		'type' => 'VARCHAR',
-		'constraint' => 50,
-		'default' => ''),
-	'last_activity' => array(
-		'type' => $date_type,
-		'constraint' => $date_constraint,
-		'unsigned' => TRUE,
-		'default' => 0),
-	'user_data' => array(
-		'type' => 'TEXT')
+	'last_active' => array(
+		'type' => 'INT',
+		'unsigned' => TRUE),
+	'contents' => array(
+		'type' => 'TEXT'),
 );
 
 $fields_sim_type = array(

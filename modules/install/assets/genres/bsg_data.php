@@ -2,11 +2,10 @@
 /**
  * Genre Install Data (BSG)
  *
- * @package		Install Module
- * @subpackage	Genre Data
+ * @package		Install
+ * @category	Assets
  * @author		Anodyne Productions
- * @contributor	ladythorne (Anodyne forums)
- * @version		2.0
+ * @author		ladythorne (Anodyne forums)
  */
 
 $g = 'bsg';
@@ -495,6 +494,3 @@ $catalogue_ranks = array(
 		'rankcat_url' => 'http://www.kuro-rpg.net/',
 		'rankcat_genre' => $g),
 );
-
-// End of file bsg_data.php
-// Location: modules/install/assets/genres/bsg_data.php

@@ -32,11 +32,11 @@
 
 <?php if ($installed === FALSE): ?>
 	<a href="<?php echo url::site('install/step/1');?>" class="install-secoptions">
-		<span class="secoptions-install"><?php echo __('main.options_install');?></span>
+		<span class="secoptions-go"><?php echo __('main.options_install');?></span>
 	</a>
 	
 	<a href="<?php echo url::site('upgrade/index');?>" class="install-secoptions">
-		<span class="secoptions-install"><?php echo __('index.upg_title');?></span>
+		<span class="secoptions-go"><?php echo __('index.upg_title');?></span>
 	</a>
 <?php endif;?>
 

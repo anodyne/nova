@@ -430,6 +430,11 @@ kbd {
 	background-repeat: no-repeat;
 	background-position: top left;
 }
+.secoptions-go {
+	background-image: url('../images/arrow-curve.png');
+	background-repeat: no-repeat;
+	background-position: top left;
+}
 
 /*
 |---------------------------------------------------------------

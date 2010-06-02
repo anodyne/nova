@@ -49,6 +49,10 @@ return array
 	'remove.label' => "Uninstall Nova",
 	'remove.inst' => "Whoa, hold up! Uninstalling Nova will remove all the data in the database tables (posts, logs, characters, etc.) and cannot be undone, so make absolutely sure you want to do this before continuing. If you're sure, give me your email address and password so I can verify you're allowed to uninstall the system.",
 	'remove.button' => "Uninstall Nova",
+	'remove.button_back' => "Try Again",
+	'remove.button_reinstall' => "Back to Installation Center",
+	'remove.failure' => "I was unable to uninstall Nova because there was a problem verifying your login credentials. Make sure you're a system administrator and try again.",
+	'remove.success' => "Poof! I was able to successfully uninstall Nova. Now, you can go back to the Installation Center to reinstall Nova or upgrade from SMS.",
 	
 	/** setup config **/
 	'setup.title' => "Config File Setup",
@@ -148,4 +152,7 @@ return array
 	'verify.spl_text' => "SPL Autoloading is magic. Literally, it's a magic method in PHP that automatically loads a file necessary for loading PHP classes so that files don't have to be included left and right (trust us, that's a good thing). The good news is that starting in PHP 5, this function is compiled into PHP, so if this test failed, your host did so intentionally. As of PHP 5.3, this function can no longer be turned off. The best thing to do is to talk to your host and get them to turn this back on, because without it, Nova won't work.",
 	
 	'verify.filters_text' => "",
+	
+	'verify.success_header' => "You're All Set!",
+	'verify.success_text' => "Good news! I've verified you can run Nova without any issues so whenever you're ready, click the button below to start the installation process...",
 );

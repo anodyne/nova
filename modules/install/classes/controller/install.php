@@ -2,19 +2,19 @@
 /**
  * Install Controller
  *
- * @package		Install Module
- * @subpackage	Controller
+ * @package		Install
+ * @subpackage	Controllers
  * @author		Anodyne Productions
- * @version		2.0
  */
+
+# TODO: changedb method
+# TODO: genre method
+# TODO: install ranks method
+# TODO: install skins method
+# TODO: register method
 
 class Controller_Install extends Controller_Template
 {
-	// these models should be globally available
-	public $mCore;
-	public $mSettings;
-	public $mMessages;
-	
 	public function before()
 	{
 		parent::before();
@@ -41,20 +41,14 @@ class Controller_Install extends Controller_Template
 	
 	public function action_index()
 	{
-		// get an instance of the database
-		$db = Database::Instance();
-		
 		// create a new content view
 		$this->template->layout->content = View::factory('install/pages/install_index');
 		
 		// assign the object a shorter variable to use in the method
 		$data = $this->template->layout->content;
 		
-		// get the tables
-		$tables = $db->list_tables();
-		
 		// figure out if the system is installed or not
-		$data->installed = (count($tables) < 1) ? FALSE : TRUE;
+		$data->installed = $this->_install_status();
 		
 		// content
 		$this->template->title.= __('index.title');
@@ -62,6 +56,16 @@ class Controller_Install extends Controller_Template
 		
 		// send the response
 		$this->request->response = $this->template;
+	}
+	
+	public function changedb()
+	{
+		# code...
+	}
+	
+	public function genre()
+	{
+		# code...
 	}
 	
 	public function action_main($error = 0)
@@ -72,22 +76,16 @@ class Controller_Install extends Controller_Template
 		 * 2 - you must be a sysadmin to update the genre
 		 */
 		
-		// get an instance of the database
-		$db = Database::Instance();
-		
 		// create a new content view
 		$this->template->layout->content = new View('install/pages/install_main');
 		
 		// assign the object a shorter variable to use in the method
 		$data = $this->template->layout->content;
 		
-		// get the tables
-		$tables = $db->list_tables();
-		
 		// figure out if the system is installed or not
-		$data->installed = (count($tables) < 1) ? FALSE : TRUE;
+		$data->installed = $this->_install_status();
 		
-		if ((is_numeric($error) && $error > 0) || count($tables) < 1)
+		if ((is_numeric($error) && $error > 0))
 		{
 			$this->template->layout->flash_message = new View('install/pages/flash');
 			$this->template->layout->flash_message->status = ($error == 1) ? 'info' : 'error';
@@ -139,11 +137,73 @@ class Controller_Install extends Controller_Template
 			$password = trim(security::xss_clean($_POST['password']));
 			
 			// verify that they're allowed to uninstall the system
-			$verify = Auth::verify($email, $password);
+			$verify = Auth::verify($email, $password, TRUE);
 			
-			if ($verify == 0)
+			if (is_object($verify) && $verify->sysadmin == 'y')
 			{
+				// get the database config
+				$dbconf = Kohana::config('database.default');
 				
+				// initialize the forge
+				$forge = new DBForge;
+				
+				// get an array of the tables
+				$tables = $db->list_tables();
+				
+				// get the prefix length
+				$prefix_len = strlen($dbconf['table_prefix']);
+				
+				// go through all the tables to find out if its part of the system or not
+				foreach ($tables as $key => $value)
+				{
+					if (substr($value, 0, $prefix_len) != $dbconf['table_prefix'])
+					{
+						unset($tables[$key]);
+					}
+					else
+					{
+						$tables[$key] = substr_replace($value, '', 0, $prefix_len);
+					}
+				}
+				
+				// loop through and uninstall the system
+				foreach ($tables as $v)
+				{
+					DBForge::drop_table($v);
+				}
+				
+				// set the failure message
+				$data->message = __('remove.success');
+				
+				// build the button attributes
+				$next = array(
+					'type' => 'submit',
+					'class' => 'button',
+					'id' => 'install',
+				);
+				
+				// build the next step control
+				$this->template->layout->controls = form::open('install/index').form::button('install', __('remove.button_reinstall'), $next).form::close();
+			}
+			else
+			{
+				// set the flash message
+				$this->template->layout->flash_message = View::factory('install/pages/flash');
+				$this->template->layout->flash_message->status = 'error';
+				$this->template->layout->flash_message->message = (is_numeric($verify)) ? __('error.login_'.$verify) : __('error.sysadmin');
+				
+				// set the failure message
+				$data->message = __('remove.failure');
+				
+				// build the button attributes
+				$next = array(
+					'type' => 'submit',
+					'class' => 'button',
+					'id' => 'back',
+				);
+				
+				// build the next step control
+				$this->template->layout->controls = form::open('install/remove').form::button('back', __('remove.button_back'), $next).form::close();
 			}
 		}
 		else
@@ -599,63 +659,75 @@ return array
 					$dbconfig = Kohana::config('database');
 					$db->set_charset($dbconfig['default']['charset']);
 					
-					// pull in the field information
-					include_once MODPATH.'install/assets/schema'.EXT;
+					// initialize the forge
+					$forge = new DBForge;
 					
-					foreach ($fields as $f)
+					// pull in the field information
+					include_once MODPATH.'install/assets/fields'.EXT;
+					
+					foreach ($data as $key => $value)
 					{
-						$db->query(NULL, $f, TRUE);
+						DBForge::add_field($$value['fields']);
+						DBForge::add_key($value['id'], TRUE);
+						
+						if (isset($value['index']))
+						{
+							foreach ($value['index'] as $index)
+							{
+								DBForge::add_key($index);
+							}
+						}
+						
+						DBForge::create_table($key, TRUE);
 					}
 					
 					// pause the script for a second
 					sleep(1);
+					
+					// wipe out the data from inserting the tables
+					$data = NULL;
 					
 					// pull in the basic data
 					include_once MODPATH.'install/assets/data_'.Kohana::config('install.data_src').EXT;
 					
-					foreach ($data as $table => $d)
+					$insert = array();
+					
+					foreach ($data as $value)
 					{
-						$queryStart = "INSERT INTO $table";
-						$queryMiddle = NULL;
-						$array = NULL;
-						$final = NULL;
-						
-						$query = array();
-						
-						foreach ($d as $value)
+						foreach ($$value as $k => $v)
 						{
-							foreach ($value as $k => $v)
-							{
-								$array[$k] = $db->escape($v);
-							}
-							
-							if (is_null($queryMiddle))
-							{
-								$queryMiddle = "(".implode(', ', array_keys($array)).") VALUES ";
-							}
-							
-							$values = implode(', ', array_values($array));
-							
-							$query[] = "($values)";
+							$sql = db::insert($value)
+								->columns(array_keys($v))
+								->values(array_values($v))
+								->compile($db);
+								
+							$insert[$value] = $db->query(Database::INSERT, $sql, TRUE);
 						}
-						
-						$final = $queryStart.' '.$queryMiddle.' '.implode(', ', $query).';';
-						
-						// do the query
-						$db->query(Database::INSERT, $final, TRUE);
 					}
 					
 					// pause the script for a second
 					sleep(1);
-					/*
+					
+					// wipe out the data from insert the data
+					$data = NULL;
+					
 					// pull in the genre data
 					include_once MODPATH.'install/assets/genres/'.strtolower(Kohana::config('nova.genre')).'_data'.EXT;
 					
-					foreach ($genre as $g)
+					$genre = array();
+					
+					foreach ($data as $key_d => $value_d)
 					{
-						//db::query(Database::INSERT, $g);
+						foreach ($$value_d as $k => $v)
+						{
+							$sql = db::insert($key_d)
+								->columns(array_keys($v))
+								->values(array_values($v))
+								->compile($db);
+								
+							$genre[$key_d] = $db->query(Database::INSERT, $sql, TRUE);
+						}
 					}
-					*/
 				}
 				
 				// get the number of tables
@@ -672,7 +744,7 @@ return array
 				
 				// make sure the proper message is displayed
 				$data->message = ($data->errors === FALSE)
-					? (count($tables) < 56) ? __('step1.failure') : __('step1.success')
+					? (count($tables) < 66) ? __('step1.failure') : __('step1.success')
 					: __('step1.errors');
 				
 				// set the loading image
@@ -712,7 +784,7 @@ return array
 				);
 				
 				// build the next step control
-				$this->template->layout->controls = (count($tables) < 56) ? FALSE : form::button('next', __('step1.button'), $next).form::close();
+				$this->template->layout->controls = (count($tables) < 66) ? FALSE : form::button('next', __('step1.button'), $next).form::close();
 				
 				break;
 				
@@ -743,12 +815,14 @@ return array
 						
 						// update the settings
 						$upSettings = Jelly::select('setting')->where('key', '=', 'sim_name')->load();
-						$upSettings->value = $sim_name;
+						$upSettings->value = $simname;
 						$upSettings->save();
 						
 						$upSettings = Jelly::select('setting')->where('key', '=', 'email_subject')->load();
-						$upSettings->value = '['.$sim_name.']';
+						$upSettings->value = '['.$simname.']';
 						$upSettings->save();
+						
+						# TODO: need to change the skin and rank defaults
 						
 						// create the user
 						$crUser = Jelly::factory('user')
@@ -761,15 +835,15 @@ return array
 								'sysadmin'		=> 'y',
 								'gm'			=> 'y',
 								'webmaster'		=> 'y',
-								'skin_main'		=> '',
-								'skin_wiki'		=> '',
-								'skin_admin'	=> '',
-								'rank'			=> '',
+								'skin_main'		=> 'default',
+								'skin_wiki'		=> 'default',
+								'skin_admin'	=> 'default',
+								'rank'			=> 'default',
 							))
 							->save();
 						
 						// create the character
-						$crCharacter = Jelly::factor('character')
+						$crCharacter = Jelly::factory('character')
 							->set(array(
 								'user'			=> $crUser->id,
 								'fname'			=> $first_name,
@@ -782,9 +856,8 @@ return array
 							->save();
 						
 						// update the user with the character info
-						$upUser = Jelly::select('user', $crUser);
-						$upUser->main_char = $crCharacter->id;
-						$upUser->save();
+						$crUser->main_char = $crCharacter->id;
+						$crUser->save();
 					}
 					else
 					{
@@ -845,58 +918,67 @@ return array
 		// assign the object a shorter variable to use in the method
 		$data = $this->template->layout->content;
 		
+		// create the javascript view
+		$this->template->javascript = View::factory('install/js/verify_js');
+		
 		// the verification table
-		$data->table = Utility::verify_server();
+		$data->verify = Utility::verify_server();
+		
+		if ($data->verify === FALSE || !isset($data->verify['failure']))
+		{
+			// build the next step button
+			$next = array(
+				'type' => 'submit',
+				'class' => 'button',
+				'id' => 'install',
+			);
+			
+			// build the next step control
+			$this->template->layout->controls = form::open('install/step').form::button('install', __('step0.button'), $next).form::close();
+		}
 		
 		// content
 		$this->template->title.= __('verify.title');
 		$this->template->layout->label = __('verify.title');
 	}
 	
-	public function action_test()
+	protected function _install_ranks()
 	{
-		$db = Database::Instance();
+		# code...
+	}
+	
+	protected function _install_skins()
+	{
+		# code...
+	}
+	
+	protected function _install_status()
+	{
+		// get the database config
+		$dbconf = Kohana::config('database.default');
 		
-		// pull in the basic data
-		include_once MODPATH.'install/assets/data_basic'.EXT;
+		// get an array of the tables
+		$tables = Database::Instance()->list_tables();
 		
-		foreach ($data as $table => $d)
+		// get the prefix length
+		$prefix_len = strlen($dbconf['table_prefix']);
+		
+		// go through all the tables to find out if its part of the system or not
+		foreach ($tables as $key => $value)
 		{
-			$queryStart = "INSERT INTO $table";
-			$queryMiddle = NULL;
-			$array = NULL;
-			
-			$query = array();
-			
-			foreach ($d as $value)
+			if (substr($value, 0, $prefix_len) != $dbconf['table_prefix'])
 			{
-				foreach ($value as $k => $v)
-				{
-					$array[$k] = $db->escape($v);
-				}
-				
-				if (is_null($queryMiddle))
-				{
-					$queryMiddle = "(".implode(', ', array_keys($array)).") VALUES ";
-				}
-				
-				$values = implode(', ', array_values($array));
-				
-				$query[] = "($values)";
+				unset($tables[$key]);
 			}
-			
-			$final[] = $queryStart.' '.$queryMiddle.' '.implode(', ', $query).';';
-			
-			// do the query
-			//$db->query(Database::INSERT, $query, TRUE);
 		}
 		
-		echo '<pre>';
-		print_r($final);
-		echo '</pre>';
-		exit();
+		$retval = (count($tables) > 0) ? TRUE : FALSE;
+		
+		return $retval;
+	}
+	
+	private function _register()
+	{
+		# code...
 	}
 }
-
-// End of file install.php
-// Location: modules/install/controllers/install.php

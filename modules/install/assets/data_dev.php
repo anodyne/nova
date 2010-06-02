@@ -1,22 +1,15 @@
 <?php defined('SYSPATH') OR die('No direct access allowed.');
-/*
-|---------------------------------------------------------------
-| INSTALL - DEV DATA
-|---------------------------------------------------------------
-|
-| File: assets/install/install_data_dev.php
-| System Version: 1.0.4
-|
-| Data file that includes all the data being inserted into the
-| database after creating the tables.
-|
-*/
+/**
+ * Database Data - Development
+ *
+ * @package		Install
+ * @category	Assets
+ * @author		Anodyne Productions
+ */
 
-/*
-|---------------------------------------------------------------
-| Data array with the table/array names being used.
-|---------------------------------------------------------------
-*/
+/**
+ * Data array with the table/array names used
+ */
 $data = array(
 	'access_groups',
 	'access_pages',
@@ -35,6 +28,7 @@ $data = array(
 	'coc',
 	'docking_fields',
 	'docking_sections',
+	'forms',
 	'menu_categories',
 	'menu_items',
 	'messages',
@@ -43,8 +37,8 @@ $data = array(
 	'news',
 	'news_categories',
 	'news_comments',
-	'personallogs',
-	'personallogs_comments',
+	'personal_logs',
+	'personal_logs_comments',
 	'user_prefs',
 	'user_prefs_values',
 	'users',
@@ -65,13 +59,9 @@ $data = array(
 	'tour_decks'
 );
 
-/*
-|---------------------------------------------------------------
-| Arrays of data with the information being inserted into the
-| database.
-|---------------------------------------------------------------
-*/
-
+/**
+ * Arrays of data with the information being inserted into the database
+ */
 $access_groups = array(
 	array(
 		'group_name' => 'General Admin',
@@ -1031,6 +1021,49 @@ $docking_sections = array(
 		'section_name' => 'Details',
 		'section_order' => 0)
 );
+
+
+
+
+
+
+$forms = array(
+	array(
+		'form_key' => 'bio',
+		'form_name' => 'Bio/Join Form'),
+	array(
+		'form_key' => 'specs',
+		'form_name' => 'Specifications Form'),
+	array(
+		'form_key' => 'tour',
+		'form_name' => 'Tour Form'),
+	array(
+		'form_key' => 'docking',
+		'form_name' => 'Docking Form'),
+);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 $menu_categories = array(
 	array(
@@ -2343,7 +2376,7 @@ $news_comments = array(
 		'ncomment_date' => 1229483813)
 );
 
-$personallogs = array(
+$personal_logs = array(
 	array(
 		'log_title' => 'First Personal Log',
 		'log_author_user' => 1,
@@ -2358,7 +2391,7 @@ $personallogs = array(
 		'log_date' => 1229483843)
 );
 
-$personallogs_comments = array(
+$personal_logs_comments = array(
 	array(
 		'lcomment_author_character' => 2,
 		'lcomment_author_user' => 2,
@@ -3841,6 +3874,3 @@ $tour_decks = array(
 		'deck_order' => 2,
 		'deck_content' => "CO's Quarters"),
 );
-
-/* End of file install_data_dev.php */
-/* Location: ./application/assets/install/install_data_dev.php */
