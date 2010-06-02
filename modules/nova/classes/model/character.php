@@ -75,4 +75,34 @@ class Model_Character extends Jelly_Model
 					))*/
 		));
 	}
+	
+	/**
+	 * Prints out the name of the character name
+	 *
+	 * @param	boolean	whether to print the rank
+	 * @param	boolean	whether to use the short rank name
+	 * @param	boolean	whether to show the middle name
+	 * @return 	string	the character name
+	 */
+	public function print_name($rank = TRUE, $shortrank = FALSE, $mname = FALSE)
+	{
+		$array = array(
+			($rank === TRUE)
+				? ($shortrank === TRUE) ? $this->rank->shortname : $this->rank->name
+				: FALSE,
+			$this->fname,
+			($mname === TRUE) ? $this->mname : FALSE,
+			$this->lname,
+		);
+		
+		foreach ($array as $key => $value)
+		{
+			if (empty($value))
+			{
+				unset($array[$key]);
+			}
+		}
+		
+		return implode(' ', $array);
+	}
 }

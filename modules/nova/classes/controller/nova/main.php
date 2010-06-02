@@ -349,9 +349,11 @@ class Controller_Nova_Main extends Controller_Nova_Base
 	
 	public function action_test2()
 	{
-		$item = Jelly::select('character', 111111);
+		$item = Jelly::select('character', 1)->print_name(FALSE, FALSE, TRUE);
 		
-		echo $item->rank->name.' '.$item->fname.' '.$item->lname.' is a '.$item->position1->name;
+		echo Kohana::debug($item);
+		
+		//echo $item->rank->name.' '.$item->fname.' '.$item->lname.' is a '.$item->position1->name;
 		exit();
 	}
 	
