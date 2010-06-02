@@ -40,7 +40,8 @@ class Model_Newscomment extends Jelly_Model
 				'column' => 'ncomment_date',
 				'auto_now_create' => TRUE,
 				'auto_now_update' => FALSE,
-				'null' => TRUE
+				'null' => TRUE,
+				'default' => date::now()
 			)),
 			'status' => new Field_Enum(array(
 				'column' => 'ncomment_status',

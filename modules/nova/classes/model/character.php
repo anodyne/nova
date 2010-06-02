@@ -20,7 +20,8 @@ class Model_Character extends Jelly_Model
 			'id' => new Field_Primary(array(
 				'column' => 'charid'
 			)),
-			'user' => new Field_HasOne(array(
+			'user' => new Field_BelongsTo(array(
+				'column' => 'user',
 				'foreign' => 'user'
 			)),
 			'fname' => new Field_String(array(
@@ -42,13 +43,15 @@ class Model_Character extends Jelly_Model
 				'column' => 'date_activate',
 				'auto_now_create' => FALSE,
 				'auto_now_update' => FALSE,
-				'null' => TRUE
+				'null' => TRUE,
+				'default' => date::now()
 			)),
 			'deactivate' => new Field_Timestamp(array(
 				'column' => 'date_deactivate',
 				'auto_now_create' => FALSE,
 				'auto_now_update' => FALSE,
-				'null' => TRUE
+				'null' => TRUE,
+				'default' => date::now()
 			)),
 			'images' => new Field_Text,
 			'rank' => new Field_BelongsTo(array(
@@ -66,13 +69,15 @@ class Model_Character extends Jelly_Model
 			'last_post' => new Field_Timestamp(array(
 				'auto_now_create' => FALSE,
 				'auto_now_update' => FALSE,
-				'null' => TRUE
+				'null' => TRUE,
+				'default' => date::now()
 			)),
-			/*'last_update' => new Field_Timestamp(array(
+			'last_update' => new Field_Timestamp(array(
 				'auto_now_create' => FALSE,
 				'auto_now_update' => TRUE,
-				'null' => TRUE
-					))*/
+				'null' => TRUE,
+				'default' => date::now()
+			))
 		));
 	}
 	

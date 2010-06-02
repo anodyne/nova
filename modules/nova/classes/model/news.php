@@ -40,7 +40,8 @@ class Model_News extends Jelly_Model
 				'column' => 'news_date',
 				'auto_now_create' => TRUE,
 				'auto_now_update' => FALSE,
-				'null' => TRUE
+				'null' => TRUE,
+				'default' => date::now()
 			)),
 			'content' => new Field_Text(array(
 				'column' => 'news_content'
@@ -56,9 +57,11 @@ class Model_News extends Jelly_Model
 			'tags' => new Field_Text(array(
 				'column' => 'news_tags'
 			)),
-			'last_update' => new Field_Integer(array(
+			'last_update' => new Field_Timestamp(array(
 				'auto_now_create' => FALSE,
-				'auto_now_update' => TRUE
+				'auto_now_update' => TRUE,
+				'null' => TRUE,
+				'default' => date::now()
 			)),
 			'comments' => new Field_HasMany(array(
 				'foreign' => 'newscomment.ncomment_news'

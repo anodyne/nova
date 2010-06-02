@@ -26,7 +26,8 @@ class Model_User extends Jelly_Model
 			)),
 			'date_of_birth' => new Field_String,
 			'instant_message' => new Field_Text,
-			'main_char' => new Field_HasOne(array(
+			'main_char' => new Field_BelongsTo(array(
+				'column' => 'main_char',
 				'foreign' => 'character'
 			)),
 			'role' => new Field_BelongsTo(array(
@@ -58,27 +59,32 @@ class Model_User extends Jelly_Model
 			'join_date' => new Field_Timestamp(array(
 				'auto_now_create' => TRUE,
 				'auto_now_update' => FALSE,
-				'null' => TRUE
+				'null' => TRUE,
+				'default' => date::now()
 			)),
 			'leave_date' => new Field_Timestamp(array(
 				'auto_now_create' => FALSE,
 				'auto_now_update' => FALSE,
-				'null' => TRUE
+				'null' => TRUE,
+				'default' => date::now()
 			)),
 			'last_update' => new Field_Timestamp(array(
 				'auto_now_create' => TRUE,
 				'auto_now_update' => TRUE,
-				'null' => TRUE
+				'null' => TRUE,
+				'default' => date::now()
 			)),
 			'last_post' => new Field_Timestamp(array(
 				'auto_now_create' => FALSE,
 				'auto_now_update' => FALSE,
-				'null' => TRUE
+				'null' => TRUE,
+				'default' => date::now()
 			)),
 			'last_login' => new Field_Timestamp(array(
 				'auto_now_create' => FALSE,
 				'auto_now_update' => FALSE,
-				'null' => TRUE
+				'null' => TRUE,
+				'default' => date::now()
 			)),
 			'loa' => new Field_Enum(array(
 				'choices' => array('active','loa','eloa'),

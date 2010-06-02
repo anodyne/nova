@@ -31,7 +31,8 @@ class Model_Loginattempt extends Jelly_Model
 				'column' => 'login_time',
 				'auto_now_create' => TRUE,
 				'auto_now_update' => FALSE,
-				'null' => TRUE
+				'null' => TRUE,
+				'default' => date::now()
 			)),
 		));
 	}
