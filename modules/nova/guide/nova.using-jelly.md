@@ -17,4 +17,12 @@ That's right. With that single line of code, we've managed to pull all the infor
 <pre>echo $item->rank->name.' '.$item->fname.' '.$item->lname.' is the '.$item->position1->name;
 // would produce: Captain John Doe is the Commanding Officer</pre>
 
-Seems pretty easy to me.
+Seems pretty easy to me, but wait, it gets easier.
+
+<pre>echo $item->print_name();// Captain John Doe
+
+echo $item->print_name(FALSE); // John Doe
+
+echo $item->print_name(TRUE, TRUE); // CAPT John Doe
+
+echo $item->print_name(TRUE, FALSE, TRUE); // Captain John William Doe</pre>
