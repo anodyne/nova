@@ -3160,7 +3160,7 @@ $security_questions = array(
 $settings = array(
 	array(
 		'setting_key' => 'sim_name',
-		'setting_value' => 'Nova Beta',
+		'setting_value' => 'Nova 2 Beta',
 		'setting_user_created' => 'n'),
 	array(
 		'setting_key' => 'sim_year',
@@ -3212,7 +3212,7 @@ $settings = array(
 		'setting_user_created' => 'n'),
 	array(
 		'setting_key' => 'email_subject',
-		'setting_value' => '[Nova Beta]',
+		'setting_value' => '[Nova 2 Beta]',
 		'setting_user_created' => 'n'),
 	array(
 		'setting_key' => 'timezone',
@@ -3224,7 +3224,7 @@ $settings = array(
 		'setting_user_created' => 'n'),
 	array(
 		'setting_key' => 'date_format',
-		'setting_value' => '%D %M %j%S, %Y @ %g:%i%a',
+		'setting_value' => 'D M jS, Y @ g:ia',
 		'setting_user_created' => 'n'),
 	array(
 		'setting_key' => 'list_logs_num',
