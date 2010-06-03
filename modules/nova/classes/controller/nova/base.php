@@ -9,15 +9,11 @@
 
 abstract class Controller_Nova_Base extends Controller_Template
 {
-	// these models should be globally available
-	public $mSettings;
-	public $mMessages;
-	
 	// these libraries should be globally available
 	public $auth;
 	public $session;
 	
-	// the options array
+	// the options object
 	public $options;
 	
 	// the images array
@@ -44,12 +40,6 @@ abstract class Controller_Nova_Base extends Controller_Template
 		
 		// load the session library
 		$this->session = Session::instance();
-		
-		// load the settings model
-		$this->mSettings = new Model_Setting;
-		
-		// load the messages model
-		$this->mMessages = new Model_Message;
 		
 		// load the auth library
 		$this->auth = new Auth;

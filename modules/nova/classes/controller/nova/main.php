@@ -16,15 +16,14 @@ class Controller_Nova_Main extends Controller_Nova_Base
 		// pull these additional setting keys that'll be available in every method
 		$this->settingsArray[] = 'skin_main';
 		
-		// pull the settings and put them into the options variable
-		$this->options = $this->mSettings->get_settings($this->settingsArray);
+		// pull the settings and put them into the options object
+		$this->options = Jelly::factory('setting')->get_settings($this->settingsArray);
 		
 		// set the variables
-		$this->skin		= $this->session->get('skin_main', $this->options['skin_main']);
-		$this->skin		= $this->session->get('skin_main', 'default');
-		$this->rank		= $this->session->get('display_rank', $this->options['display_rank']);
-		$this->timezone	= $this->session->get('timezone', $this->options['timezone']);
-		$this->dst		= $this->session->get('dst', $this->options['daylight_savings']);
+		$this->skin		= $this->session->get('skin_main', $this->options->skin_main);
+		$this->rank		= $this->session->get('display_rank', $this->options->display_rank);
+		$this->timezone	= $this->session->get('timezone', $this->options->timezone);
+		$this->dst		= $this->session->get('dst', $this->options->daylight_savings);
 		
 		// set the shell
 		$this->template = View::factory('_common/layouts/main', array('skin' => $this->skin, 'sec' => 'main'));
@@ -33,11 +32,11 @@ class Controller_Nova_Main extends Controller_Nova_Base
 		$this->images = Utility::get_image_index($this->skin);
 		
 		// set the variables in the template
-		$this->template->title 					= $this->options['sim_name'].' :: ';
+		$this->template->title 					= $this->options->sim_name.' :: ';
 		$this->template->javascript				= FALSE;
 		$this->template->layout					= View::factory($this->skin.'/template_main', array('skin' => $this->skin, 'sec' => 'main'));
-		//$this->template->layout->nav_main 		= Menu::build('main', 'main');
-		//$this->template->layout->nav_sub 		= Menu::build('sub', 'main');
+		$this->template->layout->nav_main 		= Menu::build('main', 'main');
+		$this->template->layout->nav_sub 		= Menu::build('sub', 'main');
 		$this->template->layout->ajax 			= FALSE;
 		$this->template->layout->flash_message	= FALSE;
 	}
@@ -45,8 +44,7 @@ class Controller_Nova_Main extends Controller_Nova_Base
 	public function action_index()
 	{
 		// pull in the additional setting items we need for this method
-		$setting = Jelly::select('setting')->where('key', '=', 'show_news')->load();
-		$this->options['show_news'] = $setting->value;
+		$this->options->show_news = Jelly::select('setting')->key('show_news')->load()->value;
 		
 		// create a new content view
 		$this->template->layout->content = View::factory(location::view('main_index', $this->skin, 'main', 'pages'));
@@ -54,7 +52,7 @@ class Controller_Nova_Main extends Controller_Nova_Base
 		// assign the object a shorter variable to use in the method
 		$data = $this->template->layout->content;
 		
-		if ($this->options['show_news'] == 'y')
+		if ($this->options->show_news == 'y')
 		{
 			// get the news
 			$news = Jelly::select('news')
@@ -79,8 +77,8 @@ class Controller_Nova_Main extends Controller_Nova_Base
 		
 		// content
 		$this->template->title.= 'Main';
-		$data->header = $this->mMessages->get_message('main.index.header');
-		$data->message = $this->mMessages->get_message('main.index.message');
+		$data->header = Jelly::select('message')->key('welcome_head')->load()->value;
+		$data->message = Jelly::select('message')->key('welcome_msg')->load()->value;
 		
 		// send the response
 		$this->request->response = $this->template;
