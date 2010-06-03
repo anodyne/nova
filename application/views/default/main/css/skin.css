@@ -493,3 +493,60 @@ hr {
 	font-weight: bold;
 }
 .panel_1 a.edit:hover, .panel_2 a.edit:hover, .panel_3 a.edit:hover { color: #ddd; }
+
+#nova-panel {}
+	.nova-panel-nav {
+		position: relative;
+		height: 45px;
+		line-height: 40px;
+		padding: 0 10px;
+		
+		background: #eee url('../images/gradient-50-soft-short.png') repeat-x 0 0;
+		border: 1px solid #d8d8d8;
+		text-shadow: 0px 1px 0px rgba(255, 255, 255, .4);
+		
+		border-radius: 3px 3px 0 0;
+		-moz-border-radius: 3px 3px 0 0;
+		-webkit-border-radius: 3px;
+	}
+	.nova-panel-nav h1 {
+		line-height: 28px;
+		
+		font-size: 150%;
+	}
+		.nova-panel-nav-links {
+			position: relative;
+			float: right;
+			height: 45px;
+			line-height: 40px;
+			
+			font-size: 90%;
+			font-weight: bold;
+		}
+		.nova-panel-nav-links ul {
+			margin: 0;
+			padding: 0;
+			height: 45px;
+			
+			list-style: none;
+		}
+		.nova-panel-nav-links ul li {
+			float: left;
+			margin: 0 0 0 15px;
+			display: block;
+			line-height: 45px;
+		}
+		.nova-panel-nav-links ul li a {}
+		.nova-panel-nav-links ul li a span {}
+	.nova-panel-content {
+		position: relative;
+		padding: .5em 1em;
+		
+		background: #f8f8f8;
+		border: 1px solid #d8d8d8;
+		border-top: 0;
+		
+		border-radius: 0 0 3px 3px;
+		-moz-border-radius: 0 0 3px 3px;
+		-webkit-border-radius: 3px;
+	}
