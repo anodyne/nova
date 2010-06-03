@@ -1,32 +1,19 @@
-<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
-/*
-|---------------------------------------------------------------
-| INSTALL - GENRE DATA (ST:ROM)
-|---------------------------------------------------------------
-|
-| File: assets/install_data_rom.php
-| System Version: 1.0
-|
-| Genre data compiled by Hasahnaithiau Nghymru
-|
-*/
+<?php defined('SYSPATH') OR die('No direct access allowed.');
+/**
+ * Genre Install Data (ROM)
+ *
+ * @package		Install
+ * @category	Assets
+ * @author		Anodyne Productions
+ * @author		Hasahnaithiau Nghymru
+ */
 
-/*
-|---------------------------------------------------------------
-| Genre Variables
-|---------------------------------------------------------------
-*/
 $g = 'rom';
 
-/*
-|---------------------------------------------------------------
-| Genre Table Data (ST:ROM)
-|---------------------------------------------------------------
-*/
 $data = array(
-	'departments_'. $g 	=> 'depts',
-	'ranks_'. $g		=> 'ranks',
-	'positions_'. $g	=> 'positions',
+	'departments_'.$g 	=> 'depts',
+	'ranks_'.$g			=> 'ranks',
+	'positions_'.$g		=> 'positions',
 	'catalogue_ranks'	=> 'catalogue_ranks'
 );
 
@@ -677,6 +664,3 @@ $catalogue_ranks = array(
 		'rankcat_url' => 'http://www.kuro-rpg.net/',
 		'rankcat_genre' => $g)
 );
-
-/* End of file install_data_rom.php */
-/* Location: ./application/assets/install/install_data_rom.php */

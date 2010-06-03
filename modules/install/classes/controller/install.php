@@ -8,7 +8,6 @@
  */
 
 # TODO: changedb method
-# TODO: genre method
 # TODO: install ranks method
 # TODO: install skins method
 # TODO: register method
@@ -63,9 +62,132 @@ class Controller_Install extends Controller_Template
 		# code...
 	}
 	
-	public function genre()
+	public function action_genre()
 	{
-		# code...
+		// create a new content view
+		$this->template->layout->content = View::factory('install/pages/install_genre');
+		
+		// create the javascript view
+		$this->template->javascript = View::factory('install/js/install_genre_js');
+		
+		// assign the object a shorter variable to use in the method
+		$data = $this->template->layout->content;
+		
+		if (isset($_POST['submit']))
+		{
+			// set the POST variables
+			$email = trim(security::xss_clean($_POST['email']));
+			$password = trim(security::xss_clean($_POST['password']));
+			
+			// verify that they're allowed to uninstall the system
+			$verify = Auth::verify($email, $password, TRUE);
+			
+			if (is_object($verify) && $verify->sysadmin == 'y')
+			{
+				// set the failure message
+				$data->message = __('genre.success');
+				
+				// map the genres directory
+				$map = Utility::directory_map(MODPATH.'install/assets/genres/');
+				
+				// clear out the index file
+				$indexkey = array_search('index.html', $map);
+				unset($map[$indexkey]);
+				
+				// get the genre info
+				$info = (array) Kohana::config('genreinfo');
+				
+				foreach ($map as $key => $m)
+				{
+					// drop the extension off
+					$length = strlen(EXT);
+					$value = str_replace(EXT, '', $m);
+					
+					if (array_key_exists($value, $info))
+					{
+						$genres[$value] = array(
+							'name' => $info[$value],
+							'installed' => (Database::Instance()->list_tables('%_'.$value)) ? TRUE : FALSE
+						);
+						
+						// clear out the item from the map
+						unset($map[$key]);
+					}
+					else
+					{
+						$additional[$value] = array(
+							'name' => $value,
+							'installed' => (Database::Instance()->list_tables('%_'.$value)) ? TRUE : FALSE
+						);
+					}
+				}
+				
+				// set the genres list
+				$data->genres = (isset($genres)) ? $genres : FALSE;
+				$data->additional = (isset($additional)) ? $additional : FALSE;
+				
+				// set the loading image
+				$data->images = array(
+					'loading' => array(
+						'src' => location::image('loading-circle-large.gif', NULL, 'install', 'image'),
+						'attr' => array(
+							'alt' => __('action.processing'),
+							'class' => '')),
+				);
+				
+				// build the button attributes
+				$next = array(
+					'type' => 'submit',
+					'class' => 'button',
+					'id' => 'back',
+				);
+				
+				// build the next step control
+				$this->template->layout->controls = form::open('install/main').form::button('back', __('genre.button_back'), $next).form::close();
+			}
+			else
+			{
+				// set the flash message
+				$this->template->layout->flash_message = View::factory('install/pages/flash');
+				$this->template->layout->flash_message->status = 'error';
+				$this->template->layout->flash_message->message = (is_numeric($verify)) ? __('error.login_'.$verify) : __('error.sysadmin');
+				
+				// set the message
+				$data->message = __('genre.inst');
+				
+				// build the button attributes
+				$next = array(
+					'type' => 'submit',
+					'class' => 'button',
+					'id' => 'submit',
+				);
+				
+				// build the next step control
+				$this->template->layout->controls = form::button('submit', ucfirst(__('action.submit')), $next).form::close();
+			}
+		}
+		else
+		{
+			// set the message
+			$data->message = __('genre.inst');
+			
+			// build the button attributes
+			$next = array(
+				'type' => 'submit',
+				'class' => 'button',
+				'id' => 'submit',
+			);
+			
+			// build the next step control
+			$this->template->layout->controls = form::button('submit', ucfirst(__('action.submit')), $next).form::close();
+		}
+		
+		// content
+		$this->template->title.= __('genre.title');
+		$this->template->layout->label = __('genre.label');
+		
+		// send the response
+		$this->request->response = $this->template;
 	}
 	
 	public function action_main($error = 0)
@@ -77,7 +199,7 @@ class Controller_Install extends Controller_Template
 		 */
 		
 		// create a new content view
-		$this->template->layout->content = new View('install/pages/install_main');
+		$this->template->layout->content = View::factory('install/pages/install_main');
 		
 		// assign the object a shorter variable to use in the method
 		$data = $this->template->layout->content;
@@ -87,7 +209,7 @@ class Controller_Install extends Controller_Template
 		
 		if ((is_numeric($error) && $error > 0))
 		{
-			$this->template->layout->flash_message = new View('install/pages/flash');
+			$this->template->layout->flash_message = View::factory('install/pages/flash');
 			$this->template->layout->flash_message->status = ($error == 1) ? 'info' : 'error';
 			$this->template->layout->flash_message->message = __('install.error.error_'.$error);
 		}
@@ -95,18 +217,15 @@ class Controller_Install extends Controller_Template
 		// content
 		$this->template->title.= __('index.title');
 		$this->template->layout->label = __('index.label');
-		 
-		// build the next step control
-		$this->template->layout->controls = '<a href="'. url::site('install/verify') .'" class="btn">'. __('main.options_verify') .'</a>';
 		
 		// load the javascript
-		$this->template->javascript = new View('install/js/verify_js');
+		$this->template->javascript = View::factory('install/js/verify_js');
 	}
 	
 	public function action_readme()
 	{
 		// create a new content view
-		$this->template->layout->content = new View('install/pages/install_readme');
+		$this->template->layout->content = View::factory('install/pages/install_readme');
 		
 		// assign the object a shorter variable to use in the method
 		$data = $this->template->layout->content;
@@ -712,7 +831,7 @@ return array
 					$data = NULL;
 					
 					// pull in the genre data
-					include_once MODPATH.'install/assets/genres/'.strtolower(Kohana::config('nova.genre')).'_data'.EXT;
+					include_once MODPATH.'install/assets/genres/'.strtolower(Kohana::config('nova.genre')).EXT;
 					
 					$genre = array();
 					
@@ -913,7 +1032,7 @@ return array
 	public function action_verify()
 	{
 		// create a new content view
-		$this->template->layout->content = new View('install/pages/install_verify');
+		$this->template->layout->content = View::factory('install/pages/install_verify');
 		
 		// assign the object a shorter variable to use in the method
 		$data = $this->template->layout->content;

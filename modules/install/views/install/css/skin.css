@@ -109,7 +109,7 @@ h3 { font-size: 133%; }
 |---------------------------------------------------------------
 */
 
-.hidden { display: none; }
+.hidden { display: none !important; }
 
 #loading { text-align: center; }
 
@@ -206,19 +206,22 @@ table {
 	position: relative;
 	
 	font-size: 100%;
+	border: 1px solid #bbb;
+	text-shadow: 0px 1px 0px rgba(255, 255, 255, .4);
 }
-tr { height: 30px; }
-th {
+thead {
+	background: #ccc url('../images/install-options-bg.png') repeat-x 0 0;
+	border-bottom: 1px solid #bbb;
+	font-size: 75%;
+}
+thead tr { height: 30px; }
+tbody tr { height: 40px; }
+th, td {
 	padding: 4px;
 	
 	vertical-align: middle;
-	text-shadow
 }
-td {
-	padding: 4px;
-	
-	vertical-align: middle;
-}
+th { border-right: 1px solid #bbb; }
 
 .alt { background-color: #e5e5e5; }
 
@@ -494,6 +497,32 @@ input[disabled], input:hover[disabled] {
 	box-shadow: 0px -1px 0px #ccc;
 	-moz-box-shadow: 0px -1px 0px #ccc;
 	-webkit-box-shadow: 0px -1px 0px #ccc;
+}
+
+button.button-small {
+	padding: 0 15px 2px 15px !important;
+	height: 22px !important;
+	float: none;
+	display: inline;
+	
+	font-weight: normal;
+	background: transparent;
+	border: 1px solid transparent;
+	color: #777;
+	text-shadow: 0px 1px 0px rgba(255, 255, 255, .4);
+	
+	box-shadow: none;
+	-moz-box-shadow: none;
+	-webkit-box-shadow: none;
+}
+button.button-small:hover {
+	background: #ccc url('../images/install-options-bg.png') repeat-x top left;
+	border: 1px solid #bbb;
+	color: #555;
+	
+	box-shadow: -1px 1px 2px rgba(255, 255, 255, .45);
+	-moz-box-shadow: -1px 1px 2px rgba(255, 255, 255, .45);
+	-webkit-box-shadow: -1px 1px 2px rgba(255, 255, 255, .45);
 }
 
 /*

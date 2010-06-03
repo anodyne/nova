@@ -1,32 +1,18 @@
-<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
-/*
-|---------------------------------------------------------------
-| INSTALL - GENRE DATA (ST:TOS)
-|---------------------------------------------------------------
-|
-| File: assets/install_data_tos.php
-| System Version: 1.0
-|
-| Genre data compiled by David VanScott
-|
-*/
+<?php defined('SYSPATH') OR die('No direct access allowed.');
+/**
+ * Genre Install Data (MOV)
+ *
+ * @package		Install
+ * @category	Assets
+ * @author		Anodyne Productions
+ */
 
-/*
-|---------------------------------------------------------------
-| Genre Variables
-|---------------------------------------------------------------
-*/
-$g = 'tos';
+$g = 'mov';
 
-/*
-|---------------------------------------------------------------
-| Genre Table Data (ST:TOS)
-|---------------------------------------------------------------
-*/
 $data = array(
-	'departments_'. $g 	=> 'depts',
-	'ranks_'. $g		=> 'ranks',
-	'positions_'. $g	=> 'positions',
+	'departments_'.$g 	=> 'depts',
+	'ranks_'.$g			=> 'ranks',
+	'positions_'.$g		=> 'positions',
 	'catalogue_ranks'	=> 'catalogue_ranks'
 );
 
@@ -65,13 +51,13 @@ $ranks = array(
 	array(
 		'rank_name' => 'Fleet Admiral',
 		'rank_short_name' => 'FADM',
-		'rank_image' => 'y-a5',
+		'rank_image' => 'w-a5',
 		'rank_order' => 0,
 		'rank_class' => 1),
 	array(
 		'rank_name' => 'Fleet Admiral',
 		'rank_short_name' => 'FADM',
-		'rank_image' => 'r-a5',
+		'rank_image' => 'y-a5',
 		'rank_order' => 0,
 		'rank_class' => 2),
 	array(
@@ -80,17 +66,23 @@ $ranks = array(
 		'rank_image' => 't-a5',
 		'rank_order' => 0,
 		'rank_class' => 3),
+	array(
+		'rank_name' => 'Fleet Admiral',
+		'rank_short_name' => 'FADM',
+		'rank_image' => 'r-a5',
+		'rank_order' => 0,
+		'rank_class' => 4),
 		
 	array(
 		'rank_name' => 'Admiral',
 		'rank_short_name' => 'ADM',
-		'rank_image' => 'y-a4',
+		'rank_image' => 'w-a4',
 		'rank_order' => 1,
 		'rank_class' => 1),
 	array(
 		'rank_name' => 'Admiral',
 		'rank_short_name' => 'ADM',
-		'rank_image' => 'r-a4',
+		'rank_image' => 'y-a4',
 		'rank_order' => 1,
 		'rank_class' => 2),
 	array(
@@ -99,17 +91,23 @@ $ranks = array(
 		'rank_image' => 't-a4',
 		'rank_order' => 1,
 		'rank_class' => 3),
+	array(
+		'rank_name' => 'Admiral',
+		'rank_short_name' => 'ADM',
+		'rank_image' => 'r-a4',
+		'rank_order' => 1,
+		'rank_class' => 3),
 		
 	array(
 		'rank_name' => 'Vice-Admiral',
 		'rank_short_name' => 'VADM',
-		'rank_image' => 'y-a3',
+		'rank_image' => 'w-a3',
 		'rank_order' => 2,
 		'rank_class' => 1),
 	array(
 		'rank_name' => 'Vice-Admiral',
 		'rank_short_name' => 'VADM',
-		'rank_image' => 'r-a3',
+		'rank_image' => 'y-a3',
 		'rank_order' => 2,
 		'rank_class' => 2),
 	array(
@@ -118,17 +116,23 @@ $ranks = array(
 		'rank_image' => 't-a3',
 		'rank_order' => 2,
 		'rank_class' => 3),
+	array(
+		'rank_name' => 'Vice-Admiral',
+		'rank_short_name' => 'VADM',
+		'rank_image' => 'r-a3',
+		'rank_order' => 2,
+		'rank_class' => 4),
 		
 	array(
 		'rank_name' => 'Rear-Admiral',
 		'rank_short_name' => 'RADM',
-		'rank_image' => 'y-a2',
+		'rank_image' => 'w-a2',
 		'rank_order' => 3,
 		'rank_class' => 1),
 	array(
 		'rank_name' => 'Rear-Admiral',
 		'rank_short_name' => 'RADM',
-		'rank_image' => 'r-a2',
+		'rank_image' => 'y-a2',
 		'rank_order' => 3,
 		'rank_class' => 2),
 	array(
@@ -137,17 +141,23 @@ $ranks = array(
 		'rank_image' => 't-a2',
 		'rank_order' => 3,
 		'rank_class' => 3),
+	array(
+		'rank_name' => 'Rear-Admiral',
+		'rank_short_name' => 'RADM',
+		'rank_image' => 'r-a2',
+		'rank_order' => 3,
+		'rank_class' => 4),
 		
 	array(
 		'rank_name' => 'Commodore',
 		'rank_short_name' => 'COMO',
-		'rank_image' => 'y-a1',
+		'rank_image' => 'w-a1',
 		'rank_order' => 4,
 		'rank_class' => 1),
 	array(
 		'rank_name' => 'Commodore',
 		'rank_short_name' => 'COMO',
-		'rank_image' => 'r-a1',
+		'rank_image' => 'y-a1',
 		'rank_order' => 4,
 		'rank_class' => 2),
 	array(
@@ -156,17 +166,23 @@ $ranks = array(
 		'rank_image' => 't-a1',
 		'rank_order' => 4,
 		'rank_class' => 3),
+	array(
+		'rank_name' => 'Commodore',
+		'rank_short_name' => 'COMO',
+		'rank_image' => 'r-a1',
+		'rank_order' => 4,
+		'rank_class' => 4),
 		
 	array(
 		'rank_name' => 'Captain',
 		'rank_short_name' => 'CAPT',
-		'rank_image' => 'y-o6',
+		'rank_image' => 'w-o6',
 		'rank_order' => 5,
 		'rank_class' => 1),
 	array(
 		'rank_name' => 'Captain',
 		'rank_short_name' => 'CAPT',
-		'rank_image' => 'r-o6',
+		'rank_image' => 'y-o6',
 		'rank_order' => 5,
 		'rank_class' => 2),
 	array(
@@ -175,17 +191,23 @@ $ranks = array(
 		'rank_image' => 't-o6',
 		'rank_order' => 5,
 		'rank_class' => 3),
+	array(
+		'rank_name' => 'Captain',
+		'rank_short_name' => 'CAPT',
+		'rank_image' => 'r-o6',
+		'rank_order' => 5,
+		'rank_class' => 4),
 	
 	array(
 		'rank_name' => 'Commander',
 		'rank_short_name' => 'CMDR',
-		'rank_image' => 'y-o5',
+		'rank_image' => 'w-o5',
 		'rank_order' => 6,
 		'rank_class' => 1),
 	array(
 		'rank_name' => 'Commander',
 		'rank_short_name' => 'CMDR',
-		'rank_image' => 'r-o5',
+		'rank_image' => 'y-o5',
 		'rank_order' => 6,
 		'rank_class' => 2),
 	array(
@@ -194,17 +216,23 @@ $ranks = array(
 		'rank_image' => 't-o5',
 		'rank_order' => 6,
 		'rank_class' => 3),
+	array(
+		'rank_name' => 'Commander',
+		'rank_short_name' => 'CMDR',
+		'rank_image' => 'r-o5',
+		'rank_order' => 6,
+		'rank_class' => 4),
 		
 	array(
 		'rank_name' => 'Lieutenant Commander',
 		'rank_short_name' => 'LT CMDR',
-		'rank_image' => 'y-o4',
+		'rank_image' => 'w-o4',
 		'rank_order' => 7,
 		'rank_class' => 1),
 	array(
 		'rank_name' => 'Lieutenant Commander',
 		'rank_short_name' => 'LT CMDR',
-		'rank_image' => 'r-o4',
+		'rank_image' => 'y-o4',
 		'rank_order' => 7,
 		'rank_class' => 2),
 	array(
@@ -213,17 +241,23 @@ $ranks = array(
 		'rank_image' => 't-o4',
 		'rank_order' => 7,
 		'rank_class' => 3),
+	array(
+		'rank_name' => 'Lieutenant Commander',
+		'rank_short_name' => 'LT CMDR',
+		'rank_image' => 'r-o4',
+		'rank_order' => 7,
+		'rank_class' => 4),
 		
 	array(
 		'rank_name' => 'Lieutenant',
 		'rank_short_name' => 'LT',
-		'rank_image' => 'y-o3',
+		'rank_image' => 'w-o3',
 		'rank_order' => 8,
 		'rank_class' => 1),
 	array(
 		'rank_name' => 'Lieutenant',
 		'rank_short_name' => 'LT',
-		'rank_image' => 'r-o3',
+		'rank_image' => 'y-o3',
 		'rank_order' => 8,
 		'rank_class' => 2),
 	array(
@@ -232,17 +266,23 @@ $ranks = array(
 		'rank_image' => 't-o3',
 		'rank_order' => 8,
 		'rank_class' => 3),
+	array(
+		'rank_name' => 'Lieutenant',
+		'rank_short_name' => 'LT',
+		'rank_image' => 'r-o3',
+		'rank_order' => 8,
+		'rank_class' => 4),
 		
 	array(
 		'rank_name' => 'Lieutenant JG',
 		'rank_short_name' => 'LT(JG)',
-		'rank_image' => 'y-o2',
+		'rank_image' => 'w-o2',
 		'rank_order' => 9,
 		'rank_class' => 1),
 	array(
 		'rank_name' => 'Lieutenant JG',
 		'rank_short_name' => 'LT(JG)',
-		'rank_image' => 'r-o2',
+		'rank_image' => 'y-o2',
 		'rank_order' => 9,
 		'rank_class' => 2),
 	array(
@@ -251,17 +291,23 @@ $ranks = array(
 		'rank_image' => 't-o2',
 		'rank_order' => 9,
 		'rank_class' => 3),
+	array(
+		'rank_name' => 'Lieutenant JG',
+		'rank_short_name' => 'LT(JG)',
+		'rank_image' => 'r-o2',
+		'rank_order' => 9,
+		'rank_class' => 4),
 		
 	array(
 		'rank_name' => 'Ensign',
 		'rank_short_name' => 'EN',
-		'rank_image' => 'y-o1',
+		'rank_image' => 'w-o1',
 		'rank_order' => 10,
 		'rank_class' => 1),
 	array(
 		'rank_name' => 'Ensign',
 		'rank_short_name' => 'EN',
-		'rank_image' => 'r-o1',
+		'rank_image' => 'y-o1',
 		'rank_order' => 10,
 		'rank_class' => 2),
 	array(
@@ -270,322 +316,187 @@ $ranks = array(
 		'rank_image' => 't-o1',
 		'rank_order' => 10,
 		'rank_class' => 3),
-		
 	array(
-		'rank_name' => 'Chief Warrant Officer',
-		'rank_short_name' => 'CWO',
-		'rank_image' => 'y-w2',
-		'rank_order' => 11,
-		'rank_class' => 1),
-	array(
-		'rank_name' => 'Chief Warrant Officer',
-		'rank_short_name' => 'CWO',
-		'rank_image' => 'r-w2',
-		'rank_order' => 11,
-		'rank_class' => 2),
-	array(
-		'rank_name' => 'Chief Warrant Officer',
-		'rank_short_name' => 'CWO',
-		'rank_image' => 't-w2',
-		'rank_order' => 11,
-		'rank_class' => 3),
-		
-	array(
-		'rank_name' => 'Warrant Officer',
-		'rank_short_name' => 'WO',
-		'rank_image' => 'y-w1',
-		'rank_order' => 12,
-		'rank_class' => 1),
-	array(
-		'rank_name' => 'Warrant Officer',
-		'rank_short_name' => 'WO',
-		'rank_image' => 'r-w1',
-		'rank_order' => 12,
-		'rank_class' => 2),
-	array(
-		'rank_name' => 'Warrant Officer',
-		'rank_short_name' => 'WO',
-		'rank_image' => 't-w1',
-		'rank_order' => 12,
-		'rank_class' => 3),
+		'rank_name' => 'Ensign',
+		'rank_short_name' => 'EN',
+		'rank_image' => 'r-o1',
+		'rank_order' => 10,
+		'rank_class' => 4),
 		
 	array(
 		'rank_name' => 'Master Chief Petty Officer',
 		'rank_short_name' => 'MCPO',
-		'rank_image' => 'y-e9',
-		'rank_order' => 13,
+		'rank_image' => 'w-e6',
+		'rank_order' => 11,
 		'rank_class' => 1),
 	array(
 		'rank_name' => 'Master Chief Petty Officer',
 		'rank_short_name' => 'MCPO',
-		'rank_image' => 'r-e9',
-		'rank_order' => 13,
-		'rank_class' => 2),
-	array(
-		'rank_name' => 'Master Chief Petty Officer',
-		'rank_short_name' => 'MCPO',
-		'rank_image' => 't-e9',
-		'rank_order' => 13,
-		'rank_class' => 3),
-		
-	array(
-		'rank_name' => 'Senior Chief Petty Officer',
-		'rank_short_name' => 'SCPO',
-		'rank_image' => 'y-e8',
-		'rank_order' => 14,
-		'rank_class' => 1),
-	array(
-		'rank_name' => 'Senior Chief Petty Officer',
-		'rank_short_name' => 'SCPO',
-		'rank_image' => 'r-e8',
-		'rank_order' => 14,
-		'rank_class' => 2),
-	array(
-		'rank_name' => 'Senior Chief Petty Officer',
-		'rank_short_name' => 'SCPO',
-		'rank_image' => 't-e8',
-		'rank_order' => 14,
-		'rank_class' => 3),
-		
-	array(
-		'rank_name' => 'Chief Petty Officer',
-		'rank_short_name' => 'CPO',
-		'rank_image' => 'y-e7',
-		'rank_order' => 15,
-		'rank_class' => 1),
-	array(
-		'rank_name' => 'Chief Petty Officer',
-		'rank_short_name' => 'CPO',
-		'rank_image' => 'r-e7',
-		'rank_order' => 15,
-		'rank_class' => 2),
-	array(
-		'rank_name' => 'Chief Petty Officer',
-		'rank_short_name' => 'CPO',
-		'rank_image' => 't-e7',
-		'rank_order' => 15,
-		'rank_class' => 3),
-		
-	array(
-		'rank_name' => 'Petty Officer, 1st Class',
-		'rank_short_name' => 'PO1',
 		'rank_image' => 'y-e6',
-		'rank_order' => 16,
-		'rank_class' => 1),
-	array(
-		'rank_name' => 'Petty Officer, 1st Class',
-		'rank_short_name' => 'PO1',
-		'rank_image' => 'r-e6',
-		'rank_order' => 16,
+		'rank_order' => 11,
 		'rank_class' => 2),
 	array(
-		'rank_name' => 'Petty Officer, 1st Class',
-		'rank_short_name' => 'PO1',
+		'rank_name' => 'Master Chief Petty Officer',
+		'rank_short_name' => 'MCPO',
 		'rank_image' => 't-e6',
+		'rank_order' => 11,
+		'rank_class' => 3),
+	array(
+		'rank_name' => 'Master Chief Petty Officer',
+		'rank_short_name' => 'MCPO',
+		'rank_image' => 'r-e6',
+		'rank_order' => 11,
+		'rank_class' => 4),
+		
+	array(
+		'rank_name' => 'Senior Chief Petty Officer',
+		'rank_short_name' => 'SCPO',
+		'rank_image' => 'w-e5',
+		'rank_order' => 12,
+		'rank_class' => 1),
+	array(
+		'rank_name' => 'Senior Chief Petty Officer',
+		'rank_short_name' => 'SCPO',
+		'rank_image' => 'y-e5',
+		'rank_order' => 12,
+		'rank_class' => 2),
+	array(
+		'rank_name' => 'Senior Chief Petty Officer',
+		'rank_short_name' => 'SCPO',
+		'rank_image' => 't-e5',
+		'rank_order' => 12,
+		'rank_class' => 3),
+	array(
+		'rank_name' => 'Senior Chief Petty Officer',
+		'rank_short_name' => 'SCPO',
+		'rank_image' => 'r-e5',
+		'rank_order' => 12,
+		'rank_class' => 4),
+		
+	array(
+		'rank_name' => 'Chief Petty Officer',
+		'rank_short_name' => 'CPO',
+		'rank_image' => 'w-e4',
+		'rank_order' => 13,
+		'rank_class' => 1),
+	array(
+		'rank_name' => 'Chief Petty Officer',
+		'rank_short_name' => 'CPO',
+		'rank_image' => 'y-e4',
+		'rank_order' => 13,
+		'rank_class' => 2),
+	array(
+		'rank_name' => 'Chief Petty Officer',
+		'rank_short_name' => 'CPO',
+		'rank_image' => 't-e4',
+		'rank_order' => 13,
+		'rank_class' => 3),
+	array(
+		'rank_name' => 'Chief Petty Officer',
+		'rank_short_name' => 'CPO',
+		'rank_image' => 'r-e4',
+		'rank_order' => 13,
+		'rank_class' => 4),
+		
+	array(
+		'rank_name' => 'Petty Officer, 1st Class',
+		'rank_short_name' => 'PO1',
+		'rank_image' => 'w-e3',
+		'rank_order' => 14,
+		'rank_class' => 1),
+	array(
+		'rank_name' => 'Petty Officer, 1st Class',
+		'rank_short_name' => 'PO1',
+		'rank_image' => 'y-e3',
+		'rank_order' => 14,
+		'rank_class' => 2),
+	array(
+		'rank_name' => 'Petty Officer, 1st Class',
+		'rank_short_name' => 'PO1',
+		'rank_image' => 't-e3',
+		'rank_order' => 14,
+		'rank_class' => 3),
+	array(
+		'rank_name' => 'Petty Officer, 1st Class',
+		'rank_short_name' => 'PO1',
+		'rank_image' => 'r-e3',
+		'rank_order' => 14,
+		'rank_class' => 4),
+		
+	array(
+		'rank_name' => 'Petty Officer, 2nd Class',
+		'rank_short_name' => 'PO2',
+		'rank_image' => 'w-e2',
+		'rank_order' => 15,
+		'rank_class' => 1),
+	array(
+		'rank_name' => 'Petty Officer, 2nd Class',
+		'rank_short_name' => 'PO2',
+		'rank_image' => 'y-e2',
+		'rank_order' => 15,
+		'rank_class' => 2),
+	array(
+		'rank_name' => 'Petty Officer, 2nd Class',
+		'rank_short_name' => 'PO2',
+		'rank_image' => 't-e2',
+		'rank_order' => 15,
+		'rank_class' => 3),
+	array(
+		'rank_name' => 'Petty Officer, 2nd Class',
+		'rank_short_name' => 'PO2',
+		'rank_image' => 'r-e2',
+		'rank_order' => 15,
+		'rank_class' => 4),
+		
+	array(
+		'rank_name' => 'Crewman',
+		'rank_short_name' => 'CR',
+		'rank_image' => 'w-e1',
+		'rank_order' => 16,
+		'rank_class' => 1),
+	array(
+		'rank_name' => 'Crewman',
+		'rank_short_name' => 'CR',
+		'rank_image' => 'y-e1',
+		'rank_order' => 16,
+		'rank_class' => 2),
+	array(
+		'rank_name' => 'Crewman',
+		'rank_short_name' => 'CR',
+		'rank_image' => 't-e1',
 		'rank_order' => 16,
 		'rank_class' => 3),
-		
-	array(
-		'rank_name' => 'Petty Officer, 2nd Class',
-		'rank_short_name' => 'PO2',
-		'rank_image' => 'y-e5',
-		'rank_order' => 17,
-		'rank_class' => 1),
-	array(
-		'rank_name' => 'Petty Officer, 2nd Class',
-		'rank_short_name' => 'PO2',
-		'rank_image' => 'r-e5',
-		'rank_order' => 17,
-		'rank_class' => 2),
-	array(
-		'rank_name' => 'Petty Officer, 2nd Class',
-		'rank_short_name' => 'PO2',
-		'rank_image' => 't-e5',
-		'rank_order' => 17,
-		'rank_class' => 3),
-		
-	array(
-		'rank_name' => 'Petty Officer, 3rd Class',
-		'rank_short_name' => 'PO3',
-		'rank_image' => 'y-e4',
-		'rank_order' => 18,
-		'rank_class' => 1),
-	array(
-		'rank_name' => 'Petty Officer, 3rd Class',
-		'rank_short_name' => 'PO3',
-		'rank_image' => 'r-e4',
-		'rank_order' => 18,
-		'rank_class' => 2),
-	array(
-		'rank_name' => 'Petty Officer, 3rd Class',
-		'rank_short_name' => 'PO3',
-		'rank_image' => 't-e4',
-		'rank_order' => 18,
-		'rank_class' => 3),
-		
 	array(
 		'rank_name' => 'Crewman',
 		'rank_short_name' => 'CR',
-		'rank_image' => 'y-e3',
-		'rank_order' => 19,
-		'rank_class' => 1),
-	array(
-		'rank_name' => 'Crewman',
-		'rank_short_name' => 'CR',
-		'rank_image' => 'r-e3',
-		'rank_order' => 19,
-		'rank_class' => 2),
-	array(
-		'rank_name' => 'Crewman',
-		'rank_short_name' => 'CR',
-		'rank_image' => 't-e3',
-		'rank_order' => 19,
-		'rank_class' => 3),
-		
-	array(
-		'rank_name' => 'Crewman Apprentice',
-		'rank_short_name' => 'CRA',
-		'rank_image' => 'y-e2',
-		'rank_order' => 20,
-		'rank_class' => 1),
-	array(
-		'rank_name' => 'Crewman Apprentice',
-		'rank_short_name' => 'CRA',
-		'rank_image' => 'r-e2',
-		'rank_order' => 20,
-		'rank_class' => 2),
-	array(
-		'rank_name' => 'Crewman Apprentice',
-		'rank_short_name' => 'CRA',
-		'rank_image' => 't-e2',
-		'rank_order' => 20,
-		'rank_class' => 3),
-		
-	array(
-		'rank_name' => 'Crewman Recruit',
-		'rank_short_name' => 'CRR',
-		'rank_image' => 'y-e1',
-		'rank_order' => 21,
-		'rank_class' => 1),
-	array(
-		'rank_name' => 'Crewman Recruit',
-		'rank_short_name' => 'CRR',
 		'rank_image' => 'r-e1',
-		'rank_order' => 21,
-		'rank_class' => 2),
-	array(
-		'rank_name' => 'Crewman Recruit',
-		'rank_short_name' => 'CRR',
-		'rank_image' => 't-e1',
-		'rank_order' => 21,
-		'rank_class' => 3),
+		'rank_order' => 16,
+		'rank_class' => 4),
 		
 	array(
-		'rank_name' => 'Cadet Senior Grade',
-		'rank_short_name' => 'CDT(SR)',
-		'rank_image' => 'c4',
-		'rank_order' => 22,
-		'rank_display' => 'n',
+		'rank_name' => '',
+		'rank_short_name' => '',
+		'rank_image' => 'w-blank',
+		'rank_order' => 17,
 		'rank_class' => 1),
-	array(
-		'rank_name' => 'Cadet Senior Grade',
-		'rank_short_name' => 'CDT(SR)',
-		'rank_image' => 'c4',
-		'rank_order' => 22,
-		'rank_display' => 'n',
-		'rank_class' => 2),
-	array(
-		'rank_name' => 'Cadet Senior Grade',
-		'rank_short_name' => 'CDT(SR)',
-		'rank_image' => 'c4',
-		'rank_order' => 22,
-		'rank_display' => 'n',
-		'rank_class' => 3),
-		
-	array(
-		'rank_name' => 'Cadet Junior Grade',
-		'rank_short_name' => 'CDT(JR)',
-		'rank_image' => 'c3',
-		'rank_order' => 23,
-		'rank_display' => 'n',
-		'rank_class' => 1),
-	array(
-		'rank_name' => 'Cadet Junior Grade',
-		'rank_short_name' => 'CDT(JR)',
-		'rank_image' => 'c3',
-		'rank_order' => 23,
-		'rank_display' => 'n',
-		'rank_class' => 2),
-	array(
-		'rank_name' => 'Cadet Junior Grade',
-		'rank_short_name' => 'CDT(JR)',
-		'rank_image' => 'c3',
-		'rank_order' => 23,
-		'rank_display' => 'n',
-		'rank_class' => 3),
-		
-	array(
-		'rank_name' => 'Cadet Sophomore Grade',
-		'rank_short_name' => 'CDT(SO)',
-		'rank_image' => 'c2',
-		'rank_order' => 24,
-		'rank_display' => 'n',
-		'rank_class' => 1),
-	array(
-		'rank_name' => 'Cadet Sophomore Grade',
-		'rank_short_name' => 'CDT(SO)',
-		'rank_image' => 'c2',
-		'rank_order' => 24,
-		'rank_display' => 'n',
-		'rank_class' => 2),
-	array(
-		'rank_name' => 'Cadet Sophomore Grade',
-		'rank_short_name' => 'CDT(SO)',
-		'rank_image' => 'c2',
-		'rank_order' => 24,
-		'rank_display' => 'n',
-		'rank_class' => 3),
-		
-	array(
-		'rank_name' => 'Cadet Freshman Grade',
-		'rank_short_name' => 'CDT(FR)',
-		'rank_image' => 'c1',
-		'rank_order' => 25,
-		'rank_display' => 'n',
-		'rank_class' => 1),
-	array(
-		'rank_name' => 'Cadet Freshman Grade',
-		'rank_short_name' => 'CDT(FR)',
-		'rank_image' => 'c1',
-		'rank_order' => 25,
-		'rank_display' => 'n',
-		'rank_class' => 2),
-	array(
-		'rank_name' => 'Cadet Freshman Grade',
-		'rank_short_name' => 'CDT(FR)',
-		'rank_image' => 'c1',
-		'rank_order' => 25,
-		'rank_display' => 'n',
-		'rank_class' => 3),
-		
 	array(
 		'rank_name' => '',
 		'rank_short_name' => '',
 		'rank_image' => 'y-blank',
-		'rank_order' => 26,
-		'rank_class' => 1),
-	array(
-		'rank_name' => '',
-		'rank_short_name' => '',
-		'rank_image' => 'r-blank',
-		'rank_order' => 26,
+		'rank_order' => 17,
 		'rank_class' => 2),
 	array(
 		'rank_name' => '',
 		'rank_short_name' => '',
 		'rank_image' => 't-blank',
-		'rank_order' => 26,
-		'rank_class' => 3)
+		'rank_order' => 17,
+		'rank_class' => 3),
+	array(
+		'rank_name' => '',
+		'rank_short_name' => '',
+		'rank_image' => 'r-blank',
+		'rank_order' => 17,
+		'rank_class' => 4)
 );
 
 $positions = array(
@@ -626,7 +537,7 @@ $positions = array(
 		'pos_type' => 'senior'),
 	array(
 		'pos_name' => 'Chief Navigator',
-		'pos_desc' => "A Navigator must always be present on the bridge of a starship. S/he is responsible for pointing the ship in the right direction and handling all navigation matters while the helmsman pilots the ship. The Chief Navigator is the senior most Navigation officer abaord, serving as a senior officer, and chief of the personnel under him/her.",
+		'pos_desc' => "The Chief Navigator is the seniormost navigator on the ship and is responsible for all navigators aboard the vessel. Responsibilities of the navigators is include projecting the course of a starship and determining a ship's position, velocity and direction in relationship to a course. The navigator can also use the ship's navigational sensors to determine the positions, speeds and trajectories of other objects. Additionally, the navigator is in charge of coordinating phaser crews for real and simulated combat and for firing the weapons.",
 		'pos_dept' => 2,
 		'pos_order' => 1,
 		'pos_open' => 1,
@@ -640,7 +551,7 @@ $positions = array(
 		'pos_type' => 'officer'),
 	array(
 		'pos_name' => 'Navigator',
-		'pos_desc' => "A Navigator must always be present on the bridge of a starship, and every vessel has a number of Navigators to allow shift rotations. S/he handles all matters of navigating the ship while the helmsmen pilot the ship. Navigators report to the Chief Navigator.",
+		'pos_desc' => "The Navigator is responsible for projecting the course of a starship and determining a ship's position, velocity and direction in relationship to a course. The navigator can also use the ship's navigational sensors to determine the positions, speeds and trajectories of other objects. Additionally, the navigator is in charge of coordinating phaser crews for real and simulated combat and for firing the weapons.",
 		'pos_dept' => 2,
 		'pos_order' => 3,
 		'pos_open' => 4,
@@ -782,12 +693,9 @@ $positions = array(
 
 $catalogue_ranks = array(
 	array(
-		'rankcat_name' => 'Duty Uniform',
+		'rankcat_name' => 'Duty Uniforms',
 		'rankcat_location' => 'default',
-		'rankcat_credits' => "The Original Series rank sets used in Nova were created by Kuro-chan of Kuro-RPG. The ranksets can be found at <a href='http://www.kuro-rpg.net' target='_blank''>Kuro-RPG</a>. Please do not copy or modify the images.",
+		'rankcat_credits' => "The Star Trek Movie era rank sets used in Nova were created by Kuro-chan of Kuro-RPG. The ranksets can be found at <a href='http://www.kuro-rpg.net' target='_blank''>Kuro-RPG</a>. Please do not copy or modify the images.",
 		'rankcat_default' => 'y',
 		'rankcat_genre' => $g)
 );
-
-/* End of file install_data_tos.php */
-/* Location: ./application/assets/install/install_data_tos.php */

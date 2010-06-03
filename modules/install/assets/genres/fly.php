@@ -1,32 +1,19 @@
-<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
-/*
-|---------------------------------------------------------------
-| INSTALL - GENRE DATA (FLY)
-|---------------------------------------------------------------
-|
-| File: assets/install_data_fly.php
-| System Version: 1.0
-|
-| Genre data compiled by Indigo (Anodyne forums)
-|
-*/
+<?php defined('SYSPATH') OR die('No direct access allowed.');
+/**
+ * Genre Install Data (BAJ)
+ *
+ * @package		Install
+ * @category	Assets
+ * @author		Anodyne Productions
+ * @author		Indigo (Anodyne forums)
+ */
 
-/*
-|---------------------------------------------------------------
-| Genre Variables
-|---------------------------------------------------------------
-*/
 $g = 'fly';
 
-/*
-|---------------------------------------------------------------
-| Genre Table Data (FLY)
-|---------------------------------------------------------------
-*/
 $data = array(
-	'departments_'. $g 	=> 'depts',
-	'ranks_'. $g		=> 'ranks',
-	'positions_'. $g	=> 'positions',
+	'departments_'.$g 	=> 'depts',
+	'ranks_'.$g			=> 'ranks',
+	'positions_'.$g		=> 'positions',
 	'catalogue_ranks'	=> 'catalogue_ranks',
 );
 
@@ -107,6 +94,3 @@ $catalogue_ranks = array(
 		'rankcat_default' => 'y',
 		'rankcat_url' => 'http://www.kuro-rpg.net/')
 );
-
-/* End of file install_data_fly.php */
-/* Location: ./application/assets/install/install_data_fly.php */

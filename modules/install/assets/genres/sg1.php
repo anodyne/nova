@@ -1,32 +1,18 @@
-<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
-/*
-|---------------------------------------------------------------
-| INSTALL - GENRE DATA (SGA)
-|---------------------------------------------------------------
-|
-| File: assets/install_data_sga.php
-| System Version: 1.0
-|
-| Data asset file for the STARGATE ATLANTIS genre.
-|
-*/
+<?php defined('SYSPATH') OR die('No direct access allowed.');
+/**
+ * Genre Install Data (SG1)
+ *
+ * @package		Install
+ * @category	Assets
+ * @author		Anodyne Productions
+ */
 
-/*
-|---------------------------------------------------------------
-| Genre Variables
-|---------------------------------------------------------------
-*/
-$g = 'sga';
+$g = 'sg1';
 
-/*
-|---------------------------------------------------------------
-| Genre Table Data (SGA)
-|---------------------------------------------------------------
-*/
 $data = array(
-	'departments_'. $g 	=> 'depts',
-	'ranks_'. $g		=> 'ranks',
-	'positions_'. $g	=> 'positions',
+	'departments_'.$g 	=> 'depts',
+	'ranks_'.$g			=> 'ranks',
+	'positions_'.$g		=> 'positions',
 	'catalogue_ranks'	=> 'catalogue_ranks',
 );
 
@@ -60,8 +46,8 @@ $depts = array(
 		'dept_desc' => "Representing Earth and Humans alike the diplomat Liaisons stay on base or travel out with teams making sure the human race is not seen in a negative right.",
 		'dept_order' => 6),
 	array(
-		'dept_name' => 'Jumper Squadron',
-		'dept_desc' => "The Jumper Squadron is a fast travel to close place or can fly through the gate and be a means of travel for the team.",
+		'dept_name' => 'Fighter Squadron',
+		'dept_desc' => "When Earth is in those dire situations the X302 is there. With the ability to fly on planet they have the capability of also flying in space.",
 		'dept_order' => 7),
 	array(
 		'dept_name' => 'Military',
@@ -69,11 +55,11 @@ $depts = array(
 		'dept_order' => 8),
 	array(
 		'dept_name' => 'Alpha Team',
-		'dept_desc' => "The Alpha Team of Atlantis.  Capable of carrying out missions and orders directed to them.",
+		'dept_desc' => "The Alpha Team of SG1.  Capable of carrying out missions and orders directed to them.",
 		'dept_order' => 9),
 	array(
 		'dept_name' => 'Bravo Team',
-		'dept_desc' => "The Bravo Team of Atlantis.  Capable of carrying out missions and orders directed to them.",
+		'dept_desc' => "The Bravo Team of SG1.  Capable of carrying out missions and orders directed to them.",
 		'dept_order' => 10)
 );
 
@@ -530,7 +516,7 @@ $positions = array(
 		'pos_type' => 'officer'),
 	array(
 		'pos_name' => 'Deck Crew',
-		'pos_desc' => "A Deck crew member is your grease monkey.  They maintain, test, and check the Jumpers.",
+		'pos_desc' => "A Deck crew member is your grease monkey.  They maintain, test, and check the X203s.",
 		'pos_dept' => 4,
 		'pos_order' => 4,
 		'pos_open' => 5,
@@ -645,7 +631,7 @@ $positions = array(
 		'pos_type' => 'officer'),
 	array(
 		'pos_name' => 'Base Diplomatic Liaison',
-		'pos_desc' => "The Base Diplomatic Liaison is a consultant for cultures coming to Atlantis. Base Diplomatic Liaisons consult with the American and other foreign countries to Earth.",
+		'pos_desc' => "The Base Diplomatic Liaison is a consultant for cultures coming to Earth. Base Diplomatic Liaisons consult with the American and other foreign countries to Earth.",
 		'pos_dept' => 7,
 		'pos_order' => 2,
 		'pos_open' => 5,
@@ -660,14 +646,14 @@ $positions = array(
 		
 	array(
 		'pos_name' => 'Squadron Leader',
-		'pos_desc' => "Is leader of the Jumper Squadron Air lift team. Reports to the Executive Officer. Is a member of the Senior Staff.",
+		'pos_desc' => "Is leader of the Fighter Squadron. Reports to the Executive Officer. Is a member of the Senior Staff.",
 		'pos_dept' => 8,
 		'pos_order' => 0,
 		'pos_open' => 1,
 		'pos_type' => 'senior'),
 	array(
 		'pos_name' => 'Squadron Pilot',
-		'pos_desc' => "A member of the Jumper Squadron. The Jumper pilot reports the Squadron Leader.",
+		'pos_desc' => "A member of the Fighter Squadron. The fighter pilot reports the Squadron Leader.",
 		'pos_dept' => 8,
 		'pos_order' => 1,
 		'pos_open' => 6,
@@ -719,6 +705,3 @@ $catalogue_ranks = array(
 		'rankcat_url' => 'http://www.kuro-rpg.net/',
 		'rankcat_genre' => $g)
 );
-
-/* End of file install_data_sga.php */
-/* Location: ./application/assets/install/install_data_sga.php */

@@ -1,33 +1,19 @@
-<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
-/*
-|---------------------------------------------------------------
-| INSTALL - GENRE DATA (ST:BL5)
-|---------------------------------------------------------------
-|
-| File: assets/install_data_bl5.php
-| System Version: 1.0
-|
-| Genre data compiled by Rycon (Anodyne forums)
-|
+<?php defined('SYSPATH') OR die('No direct access allowed.');
+/**
+ * Genre Install Data (BL5)
+ *
+ * @package		Install
+ * @category	Assets
+ * @author		Anodyne Productions
+ * @author		Rycon (Anodyne forums)
+ */
 
-*/
-
-/*
-|---------------------------------------------------------------
-| Genre Variables
-|---------------------------------------------------------------
-*/
 $g = 'bl5';
 
-/*
-|---------------------------------------------------------------
-| Genre Table Data (BL5)
-|---------------------------------------------------------------
-*/
 $data = array(
-	'departments_'. $g 	=> 'depts',
-	'ranks_'. $g		=> 'ranks',
-	'positions_'. $g	=> 'positions',
+	'departments_'.$g 	=> 'depts',
+	'ranks_'.$g			=> 'ranks',
+	'positions_'.$g		=> 'positions',
 	'catalogue_ranks'	=> 'catalogue_ranks',
 );
 
@@ -867,6 +853,3 @@ $catalogue_ranks = array(
 		'rankcat_url' => 'http://www.kuro-rpg.net/',
 		'rankcat_genre' => $g)
 );
-
-/* End of file install_data_bl5.php */
-/* Location: ./application/assets/install/install_data_bl5.php */

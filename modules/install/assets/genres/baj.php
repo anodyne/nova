@@ -1,32 +1,18 @@
-<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
-/*
-|---------------------------------------------------------------
-| INSTALL - GENRE DATA (ST:BAJ)
-|---------------------------------------------------------------
-|
-| File: assets/install_data_baj.php
-| System Version: 1.0
-|
-| Genre data compiled by David VanScott
-|
-*/
+<?php defined('SYSPATH') OR die('No direct access allowed.');
+/**
+ * Genre Install Data (BAJ)
+ *
+ * @package		Install
+ * @category	Assets
+ * @author		Anodyne Productions
+ */
 
-/*
-|---------------------------------------------------------------
-| Genre Variables
-|---------------------------------------------------------------
-*/
 $g = 'baj';
 
-/*
-|---------------------------------------------------------------
-| Genre Table Data (ST:BAJ)
-|---------------------------------------------------------------
-*/
 $data = array(
-	'departments_'. $g 	=> 'depts',
-	'ranks_'. $g		=> 'ranks',
-	'positions_'. $g	=> 'positions',
+	'departments_'.$g 	=> 'depts',
+	'ranks_'.$g			=> 'ranks',
+	'positions_'.$g		=> 'positions',
 	'catalogue_ranks'	=> 'catalogue_ranks',
 );
 
@@ -859,6 +845,3 @@ $catalogue_ranks = array(
 		'rankcat_url' => 'http://www.kuro-rpg.net/',
 		'rankcat_genre' => $g)
 );
-
-/* End of file install_data_baj.php */
-/* Location: ./application/assets/install/install_data_baj.php */

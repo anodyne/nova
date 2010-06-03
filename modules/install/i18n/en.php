@@ -143,7 +143,7 @@ return array
 	
 	'verify.dbver_text' => "Oops, it looks like you're running a version of MySQL that we don't support (:db_act to be exact). Make sure you're running at least MySQL version :db_req otherwise you won't be able to install Nova.",
 	
-	'verify.reflection_text' => "What's this mean? PHP has an important Reflections class that is used by Kohana, the framework running Nova, to get all kinds of information about classes, functions and extensions. Unfortunately, your server doesn't have this available, so your host has some work to do. In order to continue, contact your host and ask them to enable the Reflection class in PHP. Once that's been done, this error will go away and you'll be able to install Nova.",
+	'verify.reflection_text' => "What's this mean? PHP has a neat little class that's used extensively by Kohana (the framework running Nova) to get all kinds of information about classes. Unfortunately, your server doesn't have this available, so your host has some work to do. In order to continue, contact your host and ask them to enable the Reflection class in PHP. Once that's been done, this error will go away and you'll be able to install Nova.",
 	
 	'verify.iconv_text' => "What the heck is this? Iconv is a standardized API used to convert text between different character encodings. So why is that important? Kohana, the framework running Nova, relies on this extension being loaded in order to convert strings between different character encodings. Unfortunately, we've detected that your server doesn't have this extension loaded. You can continue, but know that in the event you're doing anything with Kohana's UTF-8 functions, they won't work properly.",
 	
@@ -153,6 +153,19 @@ return array
 	
 	'verify.filters_text' => "",
 	
+	'verify.mbstring_overloaded_text' => "Uh oh! The mbstring extension is overloading PHP's native string functions.",
+	
+	'verify.fopen_text' => "Not good. It seems that your web host has disabled PHP's <em>fopen</em> function which both Nova and Kohana need in several spots (Kohana will simply refuse to work in some situations even). In order to continue, you'll need to contact your web host and ask them to turn <em>fopen</em> back on for you. Once that's done, you'll be able to continue with the installation process.",
+	
+	'verify.fwrite_text' => "It looks like your web host has disabled writing files to the server. Nova uses file writing to build the database connection file for you, but there's no need to worry since the installation process will give you text to copy and paste into the database connection settings file. You can safely continue without this, just be aware of this limitation.",
+	
 	'verify.success_header' => "You're All Set!",
 	'verify.success_text' => "Good news! I've verified you can run Nova without any issues so whenever you're ready, click the button below to start the installation process...",
+	
+	/** genre change **/
+	'genre.title' => "Add New Genre",
+	'genre.label' => "The Genre Panel",
+	'genre.inst' => "In order to continue to the Genre Panel, I need your login credentials to verify you're a system administrator. Once I've verified your credentials, you'll be able to see the genre statuses and install/uninstall genres for Nova.",
+	'genre.success' => "Welcome to the Genre Panel. From here, you can see the status of genres and either install or uninstall genres as needed. Make sure you use great caution when removing genres as it can cause the entire system to break.",
+	'genre.button_back' => "Back to Installation Center",
 );

@@ -1,30 +1,18 @@
-<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
-/*
-|---------------------------------------------------------------
-| INSTALL - GENRE DATA (BLANK)
-|---------------------------------------------------------------
-|
-| File: assets/install_data_blank.php
-| System Version: 1.0
-|
-*/
+<?php defined('SYSPATH') OR die('No direct access allowed.');
+/**
+ * Genre Install Data (BLANK)
+ *
+ * @package		Install
+ * @category	Assets
+ * @author		Anodyne Productions
+ */
 
-/*
-|---------------------------------------------------------------
-| Genre Variables
-|---------------------------------------------------------------
-*/
 $g = 'blank';
 
-/*
-|---------------------------------------------------------------
-| Genre Table Data (BSG)
-|---------------------------------------------------------------
-*/
 $data = array(
-	'departments_'. $g 	=> 'depts',
-	'ranks_'. $g		=> 'ranks',
-	'positions_'. $g	=> 'positions',
+	'departments_'.$g 	=> 'depts',
+	'ranks_'.$g			=> 'ranks',
+	'positions_'.$g		=> 'positions',
 	'catalogue_ranks'	=> 'catalogue_ranks',
 );
 
@@ -63,6 +51,3 @@ $catalogue_ranks = array(
 		'rankcat_url' => '',
 		'rankcat_genre' => $g),
 );
-
-/* End of file install_data_blank.php */
-/* Location: ./application/assets/install/install_data_blank.php */
