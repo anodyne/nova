@@ -28,7 +28,7 @@ $data = array(
 	'coc',
 	'docking_fields',
 	'docking_sections',
-	'forms',
+	//'forms',
 	'menu_categories',
 	'menu_items',
 	'messages',
