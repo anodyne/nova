@@ -25,6 +25,7 @@ class Model_Newscategory extends Jelly_Model
 				'column' => 'newscat_name'
 			)),
 			'display' => new Field_Enum(array(
+				'column' => 'newscat_display',
 				'choices' => array('y', 'n'),
 				'default' => 'y'
 			)),

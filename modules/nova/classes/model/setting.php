@@ -51,7 +51,8 @@ class Model_Setting extends Jelly_Model
 	 */
 	public static function get_settings($value)
 	{
-		$array = FALSE;
+		// create a new class
+		$obj = new stdClass;
 		
 		if (is_array($value))
 		{
@@ -70,11 +71,11 @@ class Model_Setting extends Jelly_Model
 			{
 				if (in_array($i->key, $select))
 				{
-					$array[$i->key] = $i->value;
+					$obj->{$i->key} = $i->value;
 				}
 			}
 		}
 		
-		return $array;
+		return $obj;
 	}
 }

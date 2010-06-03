@@ -58,6 +58,7 @@ class Model_News extends Jelly_Model
 				'column' => 'news_tags'
 			)),
 			'last_update' => new Field_Timestamp(array(
+				'column' => 'news_last_update',
 				'auto_now_create' => FALSE,
 				'auto_now_update' => TRUE,
 				'null' => TRUE,
