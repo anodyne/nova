@@ -10,7 +10,7 @@ return array
 'username' => 'root',
 'password' => '',
 'persistent' => FALSE,
-'database' => 'nova_nova2',
+'database' => 'nova2_dbforge_test',
 ),
 
 'table_prefix' => 'nova_',

@@ -20,6 +20,63 @@ abstract class Nova_Utility
 	}
 	
 	/**
+	 * Reads the directory path specified in the first parameter and builds an array representation
+	 * of it and its contained files.
+	 *
+	 * *This is a port of the CodeIgniter directory_map function.*
+	 *
+	 *     // this will map sub-folders as well
+	 *     $map = Utility::directory_map('./mydirectory/');
+	 *
+	 *     // this will not map sub-folders
+	 *     $map = Utility::directory_map('./mydirectory/', TRUE);
+	 *
+	 *     // this will map hidden files as well
+	 *     $map = Utility::directory_map('./mydirectory/', TRUE, TRUE);
+	 *
+	 * @param	string	the path to map
+	 * @param	boolean	show the top level only?
+	 * @param	boolean	show hidden files?
+	 * @return	array 	an array of the directory structure
+	 */
+	public static function directory_map($source_dir, $top_level_only = FALSE, $hidden = FALSE)
+	{	
+		if ($fp = @opendir($source_dir))
+		{
+			$source_dir = rtrim($source_dir, DIRECTORY_SEPARATOR).DIRECTORY_SEPARATOR;		
+			$filedata = array();
+			
+			while (FALSE !== ($file = readdir($fp)))
+			{
+				if (($hidden == FALSE && strncmp($file, '.', 1) == 0) OR ($file == '.' OR $file == '..'))
+				{
+					continue;
+				}
+				
+				if ($top_level_only == FALSE && @is_dir($source_dir.$file))
+				{
+					$temp_array = array();
+				
+					$temp_array = self::directory_map($source_dir.$file.DIRECTORY_SEPARATOR, $top_level_only, $hidden);
+				
+					$filedata[$file] = $temp_array;
+				}
+				else
+				{
+					$filedata[] = $file;
+				}
+			}
+			
+			closedir($fp);
+			return $filedata;
+		}
+		else
+		{
+			return FALSE;
+		}
+	}
+	
+	/**
 	 * Pulls the image index arrays from the base as well as the current skin.
 	 *
 	 *     $image_index = Utility::get_image_index('default');
@@ -120,25 +177,30 @@ abstract class Nova_Utility
 				'header' => 'SPL Autoloading',
 				'text' => __('verify.spl_text'),
 				'failure' => TRUE),
-			'mbstring' => array(
-				'eval' => extension_loaded('mbstring'),
-				'header' => 'MBString Available',
-				'text' => __('verify.mbstring_text'),
-				'failure' => TRUE),
 			'mbstring_overload' => array(
-				'eval' => ini_get('mbstring.func_overload') & MB_OVERLOAD_STRING,
-				'header' => 'MBString Overloaded',
+				'eval' => extension_loaded('mbstring') && !(ini_get('mbstring.func_overload') & MB_OVERLOAD_STRING),
+				'header' => 'mbstring Is Overloaded',
 				'text' => __('verify.mbstring_overload_text'),
 				'failure' => TRUE),
 			'pcre_utf8' => array(
-				'eval' => ! @preg_match('/^.$/u', 'ñ'),
+				'eval' => @preg_match('/^.$/u', 'ñ'),
 				'header' => 'PCRE UTF-8',
 				'text' => __('verify.pcre_text'),
 				'failure' => FALSE),
 			'pcre_unicode' => array(
-				'eval' => ! @preg_match('/^\pL$/u', 'ñ'),
+				'eval' => @preg_match('/^\pL$/u', 'ñ'),
 				'header' => 'PCRE Unicode',
 				'text' => __('verify.pcre_text'),
+				'failure' => FALSE),
+			'fopen' => array(
+				'eval' => strpos(ini_get('disable_functions'), 'fopen') === FALSE,
+				'header' => 'File Handling',
+				'text' => __('verify.fopen_text'),
+				'failure' => TRUE),
+			'fwrite' => array(
+				'eval' => strpos(ini_get('disable_functions'), 'fwrite') === FALSE,
+				'header' => 'File Writing',
+				'text' => __('verify.fwrite_text'),
 				'failure' => FALSE),
 		);
 		
