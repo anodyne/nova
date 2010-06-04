@@ -3,7 +3,7 @@
  * Install Controller
  *
  * @package		Install
- * @subpackage	Controllers
+ * @category	Controllers
  * @author		Anodyne Productions
  */
 
@@ -47,7 +47,7 @@ class Controller_Install extends Controller_Template
 		$data = $this->template->layout->content;
 		
 		// figure out if the system is installed or not
-		$data->installed = $this->_install_status();
+		$data->installed = Utility::install_status();
 		
 		// content
 		$this->template->title.= __('index.title');
@@ -57,9 +57,93 @@ class Controller_Install extends Controller_Template
 		$this->request->response = $this->template;
 	}
 	
-	public function changedb()
+	public function action_changedb()
 	{
-		# code...
+		// create a new content view
+		$this->template->layout->content = View::factory('install/pages/install_changedb');
+		
+		// create the javascript view
+		$this->template->javascript = View::factory('install/js/install_changedb_js');
+		
+		// assign the object a shorter variable to use in the method
+		$data = $this->template->layout->content;
+		
+		if (isset($_POST['submit']))
+		{
+			// set the POST variables
+			$email = trim(security::xss_clean($_POST['email']));
+			$password = trim(security::xss_clean($_POST['password']));
+			
+			// verify that they're allowed to uninstall the system
+			$verify = Auth::verify($email, $password, TRUE);
+			
+			if (is_object($verify) && $verify->sysadmin == 'y')
+			{
+				// set the message
+				$data->message = __('changedb.success');
+				
+				// set the loading image
+				$data->images = array(
+					'loading' => array(
+						'src' => location::image('loading-circle-large.gif', NULL, 'install', 'image'),
+						'attr' => array(
+							'alt' => __('action.processing'),
+							'class' => '')),
+				);
+				
+				// build the button attributes
+				$next = array(
+					'type' => 'submit',
+					'class' => 'button',
+					'id' => 'back',
+				);
+				
+				// build the next step control
+				$this->template->layout->controls = form::open('install/main').form::button('back', __('genre.button_back'), $next).form::close();
+			}
+			else
+			{
+				// set the flash message
+				$this->template->layout->flash_message = View::factory('install/pages/flash');
+				$this->template->layout->flash_message->status = 'error';
+				$this->template->layout->flash_message->message = (is_numeric($verify)) ? __('error.login_'.$verify) : __('error.sysadmin');
+				
+				// set the message
+				$data->message = __('changedb.inst');
+				
+				// build the button attributes
+				$next = array(
+					'type' => 'submit',
+					'class' => 'button',
+					'id' => 'submit',
+				);
+				
+				// build the next step control
+				$this->template->layout->controls = form::button('submit', ucfirst(__('action.submit')), $next).form::close();
+			}
+		}
+		else
+		{
+			// set the message
+			$data->message = __('changedb.inst');
+			
+			// build the button attributes
+			$next = array(
+				'type' => 'submit',
+				'class' => 'button',
+				'id' => 'submit',
+			);
+			
+			// build the next step control
+			$this->template->layout->controls = form::button('submit', ucfirst(__('action.submit')), $next).form::close();
+		}
+		
+		// content
+		$this->template->title.= __('changedb.title');
+		$this->template->layout->label = __('changedb.label');
+		
+		// send the response
+		$this->request->response = $this->template;
 	}
 	
 	public function action_genre()
@@ -84,8 +168,8 @@ class Controller_Install extends Controller_Template
 			
 			if (is_object($verify) && $verify->sysadmin == 'y')
 			{
-				// set the failure message
-				$data->message = __('genre.success');
+				// set the message
+				$data->message = __('genre.success', array(':path' => APPFOLDER.'/config/nova'.EXT));
 				
 				// map the genres directory
 				$map = Utility::directory_map(MODPATH.'install/assets/genres/');
@@ -107,7 +191,7 @@ class Controller_Install extends Controller_Template
 					{
 						$genres[$value] = array(
 							'name' => $info[$value],
-							'installed' => (Database::Instance()->list_tables('%_'.$value)) ? TRUE : FALSE
+							'installed' => (Database::instance()->list_tables('%_'.$value)) ? TRUE : FALSE
 						);
 						
 						// clear out the item from the map
@@ -117,7 +201,7 @@ class Controller_Install extends Controller_Template
 					{
 						$additional[$value] = array(
 							'name' => $value,
-							'installed' => (Database::Instance()->list_tables('%_'.$value)) ? TRUE : FALSE
+							'installed' => (Database::instance()->list_tables('%_'.$value)) ? TRUE : FALSE
 						);
 					}
 				}
@@ -205,7 +289,7 @@ class Controller_Install extends Controller_Template
 		$data = $this->template->layout->content;
 		
 		// figure out if the system is installed or not
-		$data->installed = $this->_install_status();
+		$data->installed = Utility::install_status();
 		
 		if ((is_numeric($error) && $error > 0))
 		{
@@ -249,7 +333,7 @@ class Controller_Install extends Controller_Template
 		if (isset($_POST['submit']))
 		{
 			// grab an instance of the database
-			$db = Database::Instance();
+			$db = Database::instance();
 			
 			// set the POST variables
 			$email = trim(security::xss_clean($_POST['email']));
@@ -355,7 +439,7 @@ class Controller_Install extends Controller_Template
 		set_time_limit(0);
 		
 		// create a session instance
-		$session = Session::Instance();
+		$session = Session::instance();
 		
 		// create a new content view
 		$this->template->layout->content = View::factory('install/pages/install_setupconfig');
@@ -452,7 +536,7 @@ class Controller_Install extends Controller_Template
 							);
 							
 							// get an instance of the database
-							$db = Database::Instance('custom', $dbconfig);
+							$db = Database::instance('custom', $dbconfig);
 							
 							try {
 								$tables = $db->list_tables();
@@ -657,7 +741,7 @@ return array
 							
 						case 4:
 							// get an instance of the database
-							$db = Database::Instance();
+							$db = Database::instance();
 							
 							try {
 								$tables = $db->list_tables();
@@ -730,10 +814,10 @@ return array
 		set_time_limit(0);
 		
 		// get an instance of the database
-		$db = Database::Instance();
+		$db = Database::instance();
 		
 		// get an instance of the session
-		$session = Session::Instance();
+		$session = Session::instance();
 		
 		// figure out if the system is installed
 		$tables = $db->list_tables();
@@ -1061,6 +1145,13 @@ return array
 		$this->template->layout->label = __('verify.title');
 	}
 	
+	public function action_test()
+	{
+		$this->_register();
+		
+		exit();
+	}
+	
 	protected function _install_ranks()
 	{
 		# code...
@@ -1071,33 +1162,86 @@ return array
 		# code...
 	}
 	
-	protected function _install_status()
-	{
-		// get the database config
-		$dbconf = Kohana::config('database.default');
-		
-		// get an array of the tables
-		$tables = Database::Instance()->list_tables();
-		
-		// get the prefix length
-		$prefix_len = strlen($dbconf['table_prefix']);
-		
-		// go through all the tables to find out if its part of the system or not
-		foreach ($tables as $key => $value)
-		{
-			if (substr($value, 0, $prefix_len) != $dbconf['table_prefix'])
-			{
-				unset($tables[$key]);
-			}
-		}
-		
-		$retval = (count($tables) > 0) ? TRUE : FALSE;
-		
-		return $retval;
-	}
-	
 	private function _register()
 	{
-		# code...
+		if ($path = Kohana::find_file('vendor', 'swiftmailer/lib/swift_required'))
+		{
+			// load the file
+			Kohana::load($path);
+			
+			// get a new instance of SwiftMailer
+			$message = Swift_Message::newinstance();
+			
+			// set the subject
+			$message->setSubject('My Subject');
+			
+			echo Kohana::debug($message->toString());
+		}
+		else
+		{
+			throw new Kohana_Exception(__('Could not find the SwiftMailer class. Email will not be sent.'));
+		}
+		
+		exit();
+		
+		/* load the resources */
+		$this->load->library('xmlrpc');
+		$this->load->library('email');
+		
+		/* set up the server and method for the request */
+		$this->xmlrpc->server('http://www.anodyne-productions.com/index.php/utility/do_registration', 80);
+		$this->xmlrpc->method('Do_Registration');
+		
+		/* build the request */
+		$request = array(
+			APP_NAME,
+			APP_VERSION_MAJOR .'.'. APP_VERSION_MINOR .'.'. APP_VERSION_UPDATE,
+			base_url(),
+			$_SERVER['REMOTE_ADDR'],
+			$_SERVER['SERVER_ADDR'],
+			phpversion(),
+			$this->db->platform(),
+			$this->db->version(),
+			'install'
+		);
+		
+		/* compile the request */
+		$this->xmlrpc->request($request);
+		
+		if (extension_loaded('xmlrpc'))
+		{
+			/* send the request or log the message if it doesn't work */
+			if (!$this->xmlrpc->send_request())
+			{
+				log_message('error', $this->xmlrpc->display_error());
+			}
+		}
+		else
+		{
+			$insert = "INSERT INTO www_installs (product, version, url, ip_client, ip_server, php, db_platform, db_version, type, date) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %d);";
+			
+			$message = sprintf(
+				$insert,
+				$this->db->escape($request[0]),
+				$this->db->escape($request[1]),
+				$this->db->escape($request[2]),
+				$this->db->escape($request[3]),
+				$this->db->escape($request[4]),
+				$this->db->escape($request[5]),
+				$this->db->escape($request[6]),
+				$this->db->escape($request[7]),
+				$this->db->escape($request[8]),
+				$this->db->escape(now())
+			);
+			
+			/* set the parameters for sending the email */
+			$this->email->from('nova.registration@example.com');
+			$this->email->to('anodyne.nova@gmail.com');
+			$this->email->subject('Nova Registration');
+			$this->email->message($message);
+			
+			/* send the email */
+			$email = $this->email->send();
+		}
 	}
 }
