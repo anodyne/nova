@@ -348,17 +348,7 @@ class Controller_Nova_Main extends Controller_Nova_Base
 	
 	public function action_test2()
 	{
-		$forms = Jelly::select('form')->execute();
-		
-		foreach ($forms as $f)
-		{
-			foreach ($f->fields as $field)
-			{
-				echo Kohana::debug($field->html_name);
-			}
-		}
-		
-		//echo $item->rank->name.' '.$item->fname.' '.$item->lname.' is a '.$item->position1->name;
+		Events::event('preCreate');
 		exit();
 	}
 	

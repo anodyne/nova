@@ -19,7 +19,7 @@ abstract class Nova_Menu
 	 */
 	public function __construct()
 	{
-		Kohana_Log::Instance()->add('debug', 'Auth library initialized.');
+		Kohana_Log::instance()->add('debug', 'Auth library initialized.');
 	}
 	
 	/**
@@ -288,7 +288,7 @@ abstract class Nova_Menu
 		
 						if ($item->menu_link_type == 'onsite')
 						{
-							$uri = explode('/', Request::Instance()->uri());
+							$uri = explode('/', Request::instance()->uri());
 							$cur = explode('/', $item->menu_link);
 							
 							if ($uri[0] == $cur[0])

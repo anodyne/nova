@@ -16,7 +16,7 @@ abstract class Nova_Utility
 	 */
 	public function __construct()
 	{
-		Kohana_Log::Instance()->add('debug', 'Auth library initialized.');
+		Kohana_Log::instance()->add('debug', 'Auth library initialized.');
 	}
 	
 	/**
@@ -103,12 +103,44 @@ abstract class Nova_Utility
 	}
 	
 	/**
+	 * Checks to see if the system is installed.
+	 *
+	 *     $check = Utiliity::install_status();
+	 *
+	 * @return	boolean	is the system installed?
+	 */
+	public static function install_status()
+	{
+		// get the database config
+		$dbconf = Kohana::config('database.default');
+		
+		// get an array of the tables
+		$tables = Database::instance()->list_tables();
+		
+		// get the prefix length
+		$prefix_len = strlen($dbconf['table_prefix']);
+		
+		// go through all the tables to find out if its part of the system or not
+		foreach ($tables as $key => $value)
+		{
+			if (substr($value, 0, $prefix_len) != $dbconf['table_prefix'])
+			{
+				unset($tables[$key]);
+			}
+		}
+		
+		$retval = (count($tables) > 0) ? TRUE : FALSE;
+		
+		return $retval;
+	}
+	
+	/**
 	 * Prints a date in the proper format and with the right timezone
 	 *
 	 *     echo utility::print_date(1271393940);
 	 *     // would produce: Thur Apr 15th 2010 @ 11:59pm
 	 *
-	 * @uses	Session::Instance
+	 * @uses	Session::instance
 	 * @uses	Session::get
 	 * @uses	Date::mdate
 	 * @param	integer	the UNIX timestamp to print out
@@ -117,7 +149,7 @@ abstract class Nova_Utility
 	public static function print_date($time)
 	{
 		// get an instance of the session
-		$session = Session::Instance();
+		$session = Session::instance();
 		
 		// get the date format
 		$format = Jelly::select('setting')->where('key', '=', 'date_format')->load()->value;

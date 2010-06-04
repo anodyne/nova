@@ -44,7 +44,7 @@ abstract class Nova_Auth
 		// get an instance of the session library
 		self::$session = Session::instance();
 		
-		Kohana_Log::Instance()->add('debug', 'Auth library initialized.');
+		Kohana_Log::instance()->add('debug', 'Auth library initialized.');
 	}
 	
 	/**
@@ -88,7 +88,7 @@ abstract class Nova_Auth
 				{
 					self::$session->set_flash('referer', $uri);
 					
-					Request::Instance()->redirect('admin/error/1');
+					Request::instance()->redirect('admin/error/1');
 				}
 				
 				return FALSE;
@@ -195,7 +195,7 @@ abstract class Nova_Auth
 			
 			if ($redirect === TRUE)
 			{
-				Request::Instance()->redirect('login/index/error/1');
+				Request::instance()->redirect('login/index/error/1');
 			}
 			
 			return FALSE;
@@ -291,7 +291,7 @@ abstract class Nova_Auth
 			// create and save the login attempt
 			$attempt = Jelly::factor('loginattempt')
 				->set(array(
-					'ip' => Request::Instance()->$client_ip,
+					'ip' => Request::instance()->$client_ip,
 					'email' => $email
 				))
 				->save();
@@ -522,7 +522,7 @@ abstract class Nova_Auth
 	protected static function _set_uri()
 	{
 		// slice the current uri to only the first 2 segments
-		$uri = array_slice(explode('/', Request::Instance()->uri()), 0, 2);
+		$uri = array_slice(explode('/', Request::instance()->uri()), 0, 2);
 		
 		// if there's only one array key, push INDEX on to the end
 		$uri = (count($uri) == 1) ? array_push($uri, 'index') : $uri;

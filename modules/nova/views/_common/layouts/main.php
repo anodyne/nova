@@ -1,14 +1,4 @@
-<?php
-/**
- * Layout File (Main)
- *
- * @package		Nova Core
- * @subpackage	Layout
- * @author		Anodyne Productions
- * @version		2.0
- */
-
-?><!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 	<head>
 		<title><?php echo $title;?></title>
