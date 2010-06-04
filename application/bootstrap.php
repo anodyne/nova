@@ -100,7 +100,19 @@ Route::set('default', '(<controller>(/<action>(/<id>)))')
  * Execute the main request. A source of the URI can be passed, eg: $_SERVER['PATH_INFO'].
  * If no source is specified, the URI will be automatically detected.
  */
-echo Request::instance()
-	->execute()
-	->send_headers()
-	->response;
+
+Events::event('preCreate');
+$request = Request::instance();
+Events::event('postCreate');
+
+Events::event('preExecute');
+$request->execute();
+Events::event('postExecute');
+
+Events::event('preHeaders');
+$request->send_headers();
+Events::event('postHeaders');
+
+Events::event('preResponse');
+echo $request->response;
+Events::event('postResponse');
