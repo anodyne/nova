@@ -166,6 +166,19 @@ return array
 	'genre.title' => "Add New Genre",
 	'genre.label' => "The Genre Panel",
 	'genre.inst' => "In order to continue to the Genre Panel, I need your login credentials to verify you're a system administrator. Once I've verified your credentials, you'll be able to see the genre statuses and install/uninstall genres for Nova.",
-	'genre.success' => "Welcome to the Genre Panel. From here, you can see the status of genres and either install or uninstall genres as needed. Make sure you use great caution when removing genres as it can cause the entire system to break.",
+	'genre.success' => "Welcome to the Genre Panel. From here, you can see the status of genres and either install or uninstall genres as needed. Make sure you use great caution when removing genres as it can cause the entire system to break. The only limitation you have is that you cannot uninstall the current genre. If you want to uninstall the current genre, you'll need to change your Nova config file (:path), save and upload the file, then come back here to uninstall that genre.",
 	'genre.button_back' => "Back to Installation Center",
+	'genre.genre' => 'Genre',
+	'genre.status' => 'Status',
+	'genre.action' => 'Action',
+	'genre.installed' => 'Installed',
+	'genre.not_installed' => 'Not Installed',
+	'genre.install' => 'Install',
+	'genre.uninstall' => 'Uninstall',
+	
+	/** change database **/
+	'changedb.title' => "Change Database",
+	'changedb.label' => "Change Database",
+	'changedb.inst' => "In order to continue to change the database, I need your login credentials to verify you're a system administrator. Once I've verified your credentials, you'll be able to see the change database page and create new tables and fields for your Nova database.",
+	'changedb.success' => "You can use the sections below to modify your database for any changes you'd like to make. You can only add tables and fields, you cannot delete or modify existing tables or fields. In addition, you can only take these actions on Nova's tables, no other tables in your database. <span class='bold red'>Use extreme caution when modifying the database!</span>",
 );

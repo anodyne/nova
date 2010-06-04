@@ -28,8 +28,8 @@
 					if (data == "1")
 					{
 						// update the text
-						$row.children('td:eq(2)').children('strong.error').addClass('hidden');
-						$row.children('td:eq(2)').children('strong.success').removeClass('hidden');
+						$row.children('td:eq(1)').children('strong.error').addClass('hidden');
+						$row.children('td:eq(1)').children('strong.success').removeClass('hidden');
 						
 						// show the uninstall button
 						$th.prev('button').removeClass('hidden');
@@ -71,8 +71,8 @@
 					if (data == "1")
 					{
 						// update the text
-						$row.children('td:eq(2)').children('strong.success').addClass('hidden');
-						$row.children('td:eq(2)').children('strong.error').removeClass('hidden');
+						$row.children('td:eq(1)').children('strong.success').addClass('hidden');
+						$row.children('td:eq(1)').children('strong.error').removeClass('hidden');
 						
 						// show the install button
 						$th.next('button').removeClass('hidden');

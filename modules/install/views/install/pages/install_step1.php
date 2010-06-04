@@ -7,7 +7,7 @@
 	<div class="indent-left">
 		<p>
 			<kbd><?php echo __('step1.sim_name');?></kbd>
-			<?php echo form::input('sim_name', Session::Instance()->get('sim_name', ''));?>
+			<?php echo form::input('sim_name', Session::instance()->get('sim_name', ''));?>
 		</p>
 	</div><br />
 	
@@ -15,7 +15,7 @@
 	<div class="indent-left">
 		<p>
 			<kbd><?php echo __('step1.name');?></kbd>
-			<?php echo form::input('name', Session::Instance()->get('name', ''));?>
+			<?php echo form::input('name', Session::instance()->get('name', ''));?>
 		</p>
 		
 		<p>
@@ -26,7 +26,7 @@
 					<?php echo ucfirst($errors['email']);?>
 				</p>
 			<?php endif;?>
-			<?php echo form::input('email', Session::Instance()->get('email', ''));?>
+			<?php echo form::input('email', Session::instance()->get('email', ''));?>
 		</p>
 		
 		<p>
@@ -37,7 +37,7 @@
 					<?php echo ucfirst($errors['password']);?>
 				</p>
 			<?php endif;?>
-			<?php echo form::password('password', Session::Instance()->get('password', ''));?>
+			<?php echo form::password('password', Session::instance()->get('password', ''));?>
 		</p>
 		
 		<p>
@@ -56,24 +56,24 @@
 	<div class="indent-left">
 		<p>
 			<kbd><?php echo __('step1.char_fname');?></kbd>
-			<?php echo form::input('first_name', Session::Instance()->get('first_name', ''));?>
+			<?php echo form::input('first_name', Session::instance()->get('first_name', ''));?>
 		</p>
 		
 		<p>
 			<kbd><?php echo __('step1.char_lname');?></kbd>
-			<?php echo form::input('last_name', Session::Instance()->get('last_name', ''));?>
+			<?php echo form::input('last_name', Session::instance()->get('last_name', ''));?>
 		</p>
 		
 		<p>
 			<kbd><?php echo __('step1.char_position');?></kbd>
-			<?php echo form::select_position('position', Session::Instance()->get('position', NULL), array('id' => 'position'));?>
+			<?php echo form::select_position('position', Session::instance()->get('position', NULL), array('id' => 'position'));?>
 			&nbsp; <span id="loading_update" class="hidden fontSmall subtle"><?php echo html::image($loading['src'], $loading['attr']);?></span>
 			<p id="position_desc" class="subtle"></p>
 		</p>
 		
 		<p>
 			<kbd><?php echo __('step1.char_rank');?></kbd>
-			<?php echo form::select_rank('rank', Session::Instance()->get('rank', NULL), array('id' => 'rank'));?>
+			<?php echo form::select_rank('rank', Session::instance()->get('rank', NULL), array('id' => 'rank'));?>
 			&nbsp; <span id="loading_update_rank" class="hidden fontSmall subtle"><?php echo html::image($loading['src'], $loading['attr']);?></span>
 			<p id="rank_img" class="subtle"><?php echo html::image($default_rank['src'], $default_rank['attr']);?></p>
 		</p>

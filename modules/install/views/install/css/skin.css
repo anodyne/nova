@@ -500,8 +500,9 @@ input[disabled], input:hover[disabled] {
 }
 
 button.button-small {
-	padding: 0 15px 2px 15px !important;
+	padding: 0 15px 0 15px !important;
 	height: 22px !important;
+	line-height: 22px !important;
 	float: none;
 	display: inline;
 	
