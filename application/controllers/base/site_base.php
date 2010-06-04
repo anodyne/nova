@@ -5,12 +5,13 @@
 |---------------------------------------------------------------
 |
 | File: controllers/site_base.php
-| System Version: 1.0.3
+| System Version: 1.0.5
 |
 | Changes: updated the catalogue ranks pages to add and update
 |	the genre in the database table; updated the dynamic form
 |	management pages to display notices if there are no fields
-|	in a section (bio, specs, docking)
+|	in a section (bio, specs, docking); fixed bug where unlinked
+|	NPCs wouldn't be able to use newly created fields
 |
 | Controller that handles the SITE section of the admin system.
 |
@@ -162,7 +163,7 @@ class Site_base extends Controller {
 							}
 						}
 						
-						$characters = $this->char->get_all_characters('has_user');
+						$characters = $this->char->get_all_characters('all');
 						
 						if ($characters->num_rows() > 0)
 						{

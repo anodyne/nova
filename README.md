@@ -8,7 +8,7 @@ Current Version
 
 Last Update
 -----------
-24 May 2010
+03 June 2010
 
 Changes in 1.0.5
 ----------------
@@ -23,6 +23,7 @@ Changes in 1.0.5
 * fixed error thrown when updating a user to be inactive
 * fixed bug we weren't doing any sanity checking on the type of variable we needed when handling character deactivation
 * fixed errors thrown when rejecting a docking request
+* fixed bug where unlinked NPCs wouldn't be able to use newly created fields
 
 Known Issues
 ------------
