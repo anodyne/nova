@@ -15,7 +15,8 @@
 |	fixed bug where the status change email wasn't populated
 |	properly; fixed error thrown when changing a user to inactive;
 |	fixed bug where there wasn't a sanity check for the type of
-|	variable the system was expecting
+|	variable the system was expecting; fixed bug where site options
+|	didn't allow skin admins to select in development skins
 |
 | Controller that handles the USER section of the admin system.
 |
@@ -1720,7 +1721,11 @@ class User_base extends Controller {
 		{
 			foreach ($skins->result() as $skin)
 			{
-				$sections = $this->sys->get_skin_sections($skin->skin_location);
+				$skinaccess = ($this->auth->check_access('site/catalogueskins', FALSE))
+					? array('active', 'development')
+					: 'active';
+				
+				$sections = $this->sys->get_skin_sections($skin->skin_location, $skinaccess);
 			
 				if ($sections->num_rows() > 0)
 				{

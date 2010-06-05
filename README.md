@@ -8,7 +8,7 @@ Current Version
 
 Last Update
 -----------
-03 June 2010
+04 June 2010
 
 Changes in 1.0.5
 ----------------
@@ -24,6 +24,7 @@ Changes in 1.0.5
 * fixed bug we weren't doing any sanity checking on the type of variable we needed when handling character deactivation
 * fixed errors thrown when rejecting a docking request
 * fixed bug where unlinked NPCs wouldn't be able to use newly created fields
+* fixed bug where site options didn't allow skin admins to select in development skins
 
 Known Issues
 ------------
