@@ -8,7 +8,7 @@ Current Version
 
 Last Update
 -----------
-04 June 2010
+05 June 2010
 
 Changes in 1.0.5
 ----------------
@@ -25,6 +25,7 @@ Changes in 1.0.5
 * fixed errors thrown when rejecting a docking request
 * fixed bug where unlinked NPCs wouldn't be able to use newly created fields
 * fixed bug where site options didn't allow skin admins to select in development skins
+* fixed bug where join instructions weren't displayed
 
 Known Issues
 ------------

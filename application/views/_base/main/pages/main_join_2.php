@@ -1,5 +1,7 @@
 <?php echo text_output($header, 'h1', 'page-head');?>
 
+<?php echo text_output($msg);?><br />
+
 <?php echo form_open('main/join');?>
 	<div id="tabs">
 		<ul>

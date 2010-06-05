@@ -5,12 +5,13 @@
 |---------------------------------------------------------------
 |
 | File: controllers/base/main_base.php
-| System Version: 1.0.4
+| System Version: 1.0.5
 |
 | Changes: fixed bug where sample post wasn't sent out in the
 |	email sent to game masters; fixed capitalization issues in
 |	the email sent to game masters; fixed error thrown on the
-|	contact page
+|	contact page; fixed bug where join instructions weren't
+|	displayed
 |
 | Controller that handles the MAIN section of the system.
 |
@@ -608,6 +609,9 @@ class Main_base extends Controller {
 					}
 				}
 			}
+			
+			/* get the join instructions */
+			$data['msg'] = $this->msgs->get_message('join_instructions');
 			
 			/* figure out where the view should be coming from */
 			$view_loc = view_location('main_join_2', $this->skin, 'main');
