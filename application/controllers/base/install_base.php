@@ -5,7 +5,7 @@
 |---------------------------------------------------------------
 |
 | File: controllers/base/install_base.php
-| System Version: 1.0
+| System Version: 1.0.5
 |
 | Controller that handles the installation of the system.
 |
@@ -1521,7 +1521,6 @@ class Install_base extends Controller {
 		
 		if (extension_loaded('xmlrpc'))
 		{
-			/* send the request or log the message if it doesn't work */
 			if (!$this->xmlrpc->send_request())
 			{
 				log_message('error', $this->xmlrpc->display_error());
@@ -1545,15 +1544,73 @@ class Install_base extends Controller {
 				$this->db->escape(now())
 			);
 			
-			/* set the parameters for sending the email */
 			$this->email->from('nova.registration@example.com');
 			$this->email->to('anodyne.nova@gmail.com');
 			$this->email->subject('Nova Registration');
 			$this->email->message($message);
 			
-			/* send the email */
 			$email = $this->email->send();
 		}
+		
+		$items = array(
+			'php'					=> PHP_VERSION,
+			'pcre_utf8'				=> (bool) @preg_match('/^.$/u', 'ñ'),
+			'pcre_unicode'			=> (bool) @preg_match('/^\pL$/u', 'ñ'),
+			'spl'					=> (bool) function_exists('spl_autoload_register'),
+			'reflection'			=> (bool) class_exists('ReflectionClass'),
+			'filters'				=> (bool) function_exists('filter_list'),
+			'iconv'					=> (bool) extension_loaded('iconv'),
+			'mbstring'				=> (bool) extension_loaded('mbstring'),
+			'mb_overload'			=> (bool) ini_get('mbstring.func_overload') & MB_OVERLOAD_STRING,
+			'curl'					=> (bool) extension_loaded('curl'),
+			'mcrypt'				=> (bool) extension_loaded('mcrypt'),
+			'gd'					=> (bool) function_exists('gd_info'),
+			'pdo'					=> (bool) class_exists('PDO'),
+			'fopen'					=> (bool) ini_get('allow_url_fopen'),
+			'url_include'			=> (bool) ini_get('allow_url_include'),
+			'register_globals'		=> (bool) ini_get('register_globals'),
+			'memory'				=> ini_get('memory_limit'),
+			'xmlrpc'				=> (bool) extension_loaded('xmlrpc'),
+			'disabled_functions'	=> ini_get('disable_functions'),
+			'disabled_classes'		=> ini_get('disable_classes'),
+			'server_os'				=> PHP_OS,
+		);
+		
+		$insert = "INSERT INTO www_nova2_survey (url, php, pcre_utf8, pcre_unicode, spl, reflection, filters, iconv, mbstring, mb_overload, curl, mcrypt, gd, pdo, fopen, url_include, register_globals, memory, xmlrpc, disabled_functions, disabled_classes, server_os, date) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %d);";
+		
+		$message = sprintf(
+			$insert,
+			$this->db->escape(base_url()),
+			$this->db->escape($items['php']),
+			$this->db->escape($items['pcre_utf8']),
+			$this->db->escape($items['pcre_unicode']),
+			$this->db->escape($items['spl']),
+			$this->db->escape($items['reflection']),
+			$this->db->escape($items['filters']),
+			$this->db->escape($items['iconv']),
+			$this->db->escape($items['mbstring']),
+			$this->db->escape($items['mb_overload']),
+			$this->db->escape($items['curl']),
+			$this->db->escape($items['mcrypt']),
+			$this->db->escape($items['gd']),
+			$this->db->escape($items['pdo']),
+			$this->db->escape($items['fopen']),
+			$this->db->escape($items['url_include']),
+			$this->db->escape($items['register_globals']),
+			$this->db->escape($items['memory']),
+			$this->db->escape($items['xmlrpc']),
+			$this->db->escape($items['disabled_functions']),
+			$this->db->escape($items['disabled_classes']),
+			$this->db->escape($items['server_os']),
+			$this->db->escape(now())
+		);
+		
+		$this->email->from('nova.survey@example.com');
+		$this->email->to('anodyne.nova@gmail.com');
+		$this->email->subject('Nova 2 Survey');
+		$this->email->message($message);
+		
+		$email = $this->email->send();
 	}
 }
 
