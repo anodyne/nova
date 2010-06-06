@@ -1,9 +1,9 @@
-version: 1.0.4
+version: 1.0.5
 version_major: 1
 version_minor: 0
-version_update: 4
+version_update: 5
 severity: minor
 notes: |
-  Nova 1.0.4 is the fourth maintainance release for Nova 1.0 and continues to fix issues with the system. Included in this release are fixes for errors being thrown throughout the system, bugs with emails not being sent out on some servers, user access errors and filtering text before going into the database. A full changelog can be found on AnodyneDocs or from the System and Versions report once Nova has been updated. This update is recommended for all users.
-date: 12 May 2010
+  Nova 1.0.5 is the fifth maintenance release for Nova 1.0 and continues to fix issues with the system. Included in this release are fixes for errors being thrown throughout the system, a bug that wouldn't allow unlinked NPCs to use newly created bio fields, a security issue with the docking form and more. A full changelog can be found on AnodyneDocs or from the System and Versions report once Nova has been updated. This update is recommended for all users.
+date: 06 June 2010
 link: http://www.anodyne-productions.com
