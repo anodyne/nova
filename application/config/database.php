@@ -7,10 +7,10 @@ return array
 
 'connection' => array(
 'hostname' => 'localhost',
-'username' => 'root',
+'username' => 'nova',
 'password' => '',
 'persistent' => FALSE,
-'database' => 'nova2_dbforge_test',
+'database' => 'nova_nova2',
 ),
 
 'table_prefix' => 'nova_',
