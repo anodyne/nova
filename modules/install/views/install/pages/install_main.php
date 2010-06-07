@@ -31,7 +31,7 @@
 <h2 class="page-subhead"><?php echo __('main.options_whats_next');?></h2>
 
 <?php if ($installed === FALSE): ?>
-	<a href="<?php echo url::site('install/step/1');?>" class="install-secoptions">
+	<a href="<?php echo url::site('install/step');?>" class="install-secoptions">
 		<span class="secoptions-go"><?php echo __('main.options_install');?></span>
 	</a>
 	

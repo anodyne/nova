@@ -2,8 +2,7 @@
 
 return array
 (
-	//'data_src' => 'basic',
-	'data_src' => 'dev',
+	'dev' => TRUE,
 );
 
 // End of file install.php

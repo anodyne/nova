@@ -891,7 +891,7 @@ return array
 					$data = NULL;
 					
 					// pull in the basic data
-					include_once MODPATH.'install/assets/data_'.Kohana::config('install.data_src').EXT;
+					include_once MODPATH.'install/assets/data'.EXT;
 					
 					$insert = array();
 					
@@ -929,6 +929,33 @@ return array
 								->compile($db);
 								
 							$genre[$key_d] = $db->query(Database::INSERT, $sql, TRUE);
+						}
+					}
+					
+					if (Kohana::config('install.dev'))
+					{
+						// pause the script for a second
+						sleep(1);
+						
+						// wipe out the data from insert the data
+						$data = NULL;
+						
+						// pull in the development test data
+						include_once MODPATH.'install/assets/dev'.EXT;
+						
+						$insert = array();
+						
+						foreach ($data as $value)
+						{
+							foreach ($$value as $k => $v)
+							{
+								$sql = db::insert($value)
+									->columns(array_keys($v))
+									->values(array_values($v))
+									->compile($db);
+									
+								$insert[$value] = $db->query(Database::INSERT, $sql, TRUE);
+							}
 						}
 					}
 				}
