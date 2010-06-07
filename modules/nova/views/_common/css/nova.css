@@ -1,0 +1,249 @@
+/*
+|---------------------------------------------------------------
+| RESET
+|---------------------------------------------------------------
+*/
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outline:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+/*
+|---------------------------------------------------------------
+| FONTS
+|---------------------------------------------------------------
+*/
+h1, h2, h3, h4, p { margin: 8px 0; }
+
+h1 { font-size: 200%; }
+h2 { font-size: 150%; }
+h3 { font-size: 133%; }
+h4 { font-size: 117%; }
+
+p {
+	font-size: 100%;
+	line-height: 1.6;
+}
+
+.fontLarge	{ font-size: 133%; }
+.fontMedium	{ font-size: 117%; }
+.fontNormal { font-size: 100%; }
+.fontSmall	{ font-size: 92%; }
+.fontTiny	{ font-size: 80%; }
+
+.subtle		{ color: #888 !important; }
+.error		{ color: #c00 !important; }
+.warning	{ color: #e99e1c !important; }
+.success	{ color: #008000 !important; }
+.info		{ color: #888 !important; }
+
+.nobold		{ font-weight: normal; }
+.bold		{ font-weight: bold; }
+.italic		{ font-style: italic; }
+
+.uppercase	{ text-transform: uppercase; }
+.lowercase	{ text-transform: lowercase; }
+
+/*
+|---------------------------------------------------------------
+| LINKS
+|---------------------------------------------------------------
+*/
+a { outline: 0; }
+
+a.image, a.image:hover {
+	border: none;
+	text-decoration: none;
+}
+
+a.edit {
+	color: #999;
+	border: none;
+}
+a.edit:hover { color: #008000; }
+
+/*
+|---------------------------------------------------------------
+| FORM INPUTS
+|---------------------------------------------------------------
+*/
+input[type=text],
+input[type=password] {
+	margin: 0;
+	padding: 3px;
+	width: 325px;
+}
+input.small     	{ width: 75px; }
+input.medium    	{ width: 150px; }
+input.medium-large	{ width: 250px; }
+
+textarea {
+	margin: 0;
+	padding: 3px;
+	width: 99%;
+}
+
+select {
+	margin: 0;
+	padding: 2px;
+}
+select:focus,
+select:hover { outline: 0; }
+
+kbd {
+	display: block;
+	margin: 0 0 5px 0;
+	
+	font-weight: bold;
+	font-size: 115%;
+}
+
+/*
+|---------------------------------------------------------------
+| BUTTONS
+|---------------------------------------------------------------
+*/
+button {
+	height: 25px;
+	padding: 0 10px 1px 10px;
+	outline: 0 !important;
+	
+	font-weight: bold;
+}
+
+button.button-small {
+	height: 20px !important;
+	padding: 0 0 1px 6px !important;
+	outline: 0 !important;
+}
+
+/*
+|---------------------------------------------------------------
+| TABLES
+|---------------------------------------------------------------
+*/
+table { font-size: 100%; }
+
+.table100	{ width: 100%; }
+.table75	{ width: 75%; }
+
+th {
+	text-align: center;
+	font-size: 120%;
+}
+
+td {
+	padding: 3px;
+	vertical-align: middle;
+}
+
+.col-15		{ width: 15px; }
+.col-30		{ width: 30px; }
+.col-40		{ width: 40px; }
+.col-50		{ width: 50px; }
+.col-75		{ width: 75px; }
+.col-100	{ width: 100px; }
+.col-150	{ width: 150px; }
+.col-200	{ width: 200px; }
+.col-245	{ width: 245px; }
+.col-260	{ width: 260px; }
+.col-300	{ width: 300px; }
+
+.col-20pct	{ width: 20%; }
+.col-25pct	{ width: 25%; }
+.col-30pct	{ width: 30%; }
+.col-40pct	{ width: 40%; }
+.col-50pct	{ width: 50%; }
+.col-60pct	{ width: 60%; }
+
+.cell-label {
+	width: 130px;
+	
+	font-weight: bold;
+	font-size: 100%;
+	text-align: right;
+}
+.cell-spacer { width: 20px; }
+
+/*
+|---------------------------------------------------------------
+| LISTS
+|---------------------------------------------------------------
+*/
+ul, ol {
+	margin: .5em 1.5em;
+	padding: 1em;
+	line-height: 1.6;
+}
+ol { list-style-type: decimal; }
+ul { list-style-type: disc; }
+
+/*
+|---------------------------------------------------------------
+| MISCELLANEOUS
+|---------------------------------------------------------------
+*/
+.hidden {
+	display: none;
+	height: auto;
+}
+
+img { border: none; }
+
+hr {
+	margin: 2em 0;
+	height: 0;
+	width: 100%;
+}
+
+.indent-left	{ padding: 0 0 0 1.5em; }
+.indent-right	{ padding: 0 1.5em 0 0; }
+
+.inline-image-left {
+    float: left;
+    margin: 2px 6px 0 0;
+}
+
+/*
+|---------------------------------------------------------------
+| VISIBILITY & ALIGNMENT
+|---------------------------------------------------------------
+*/
+.float-left		{ float: left; }
+.float-right	{ float: right; }
+
+.clear-both		{ clear: both; }
+.clear-right	{ clear: right; }
+.clear-left		{ clear: left; }
+
+.align-left		{ text-align: left; }
+.align-right	{ text-align: right; }
+.align-center	{ text-align: center; }
+.align-top		{ vertical-align: top; }
+.align-middle	{ vertical-align: middle; }
+.align-bottom	{ vertical-align: bottom; }
+
+/*
+|---------------------------------------------------------------
+| FLASH MESSAGES
+|---------------------------------------------------------------
+*/
+.flash-message {
+	margin: 0 0 5px 0;
+	line-height: 1;
+}
+.flash-message p {
+	margin: 0;
+	padding: 3px 5px;
+}
+
+/*
+|---------------------------------------------------------------
+| LIST STYLES
+|---------------------------------------------------------------
+*/
+ul.margin0, ol.margin0 { margin: 0; }
+ul.margin1 { margin: 1em; }
+ul.padding0 { padding: 0; }
+ul.padding1 { padding: .5em 1em; }
+
+ul.square { list-style: square; }
+ol.roman { list-style: upper-roman; }
+ul.none, ol.none { list-style: none; }
