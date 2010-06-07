@@ -15,6 +15,7 @@
 		<?php echo html::style(APPFOLDER.'/views/'.$skin.'/'.$sec.'/css/main.css');?>
 		
 		<!-- JAVASCRIPT -->
+		<?php echo html::script(APPFOLDER.'/assets/js/jquery.js');?>
 		<?php echo $javascript;?>
 	</head>
 	<body>

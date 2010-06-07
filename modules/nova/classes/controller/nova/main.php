@@ -43,37 +43,14 @@ class Controller_Nova_Main extends Controller_Nova_Base
 	
 	public function action_index()
 	{
-		// pull in the additional setting items we need for this method
-		$this->options->show_news = Jelly::select('setting')->key('show_news')->load()->value;
-		
 		// create a new content view
 		$this->template->layout->content = View::factory(location::view('main_index', $this->skin, 'main', 'pages'));
 		
+		// create the javascript view
+		$this->template->javascript = View::factory(location::view('main_index_js', $this->skin, 'main', 'js'));
+		
 		// assign the object a shorter variable to use in the method
 		$data = $this->template->layout->content;
-		
-		if ($this->options->show_news == 'y')
-		{
-			// get the news
-			$news = Jelly::select('news')
-				->where('status', '=', 'activated')
-				->order_by('news_date', 'desc')
-				->limit(5);
-			
-			(!Auth::is_logged_in()) ? $news->where('private', '=', 'n') : FALSE;
-			
-			$news = $news->execute();
-			
-			if ($news)
-			{
-				$data->news = array();
-				
-				foreach ($news as $n)
-				{
-					$data->news[] = $n;
-				}
-			}
-		}
 		
 		// content
 		$this->template->title.= 'Main';
