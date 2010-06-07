@@ -73,8 +73,8 @@ define('WIKI_VERSION',			'Release 1');
 
 define('SMS_UPGRADE_VERSION',	'2.6.9');
 
-define('VERSION_FEED', APPPATH . 'assets/version.yml');
-//define('VERSION_FEED', 'http://www.anodyne-productions.com/feeds/version_nova.yml');
+//define('VERSION_FEED', APPPATH . 'assets/version.yml');
+define('VERSION_FEED', 'http://www.anodyne-productions.com/feeds/version_nova.yml');
 
 /* figure out whether to install the bare essentials or the dev stuff */
 define('APP_DATA_SRC', 'basic');
