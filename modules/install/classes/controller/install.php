@@ -1174,7 +1174,7 @@ return array
 	
 	public function action_test()
 	{
-		$this->_register();
+		//$this->_register();
 		
 		exit();
 	}
@@ -1196,79 +1196,57 @@ return array
 			// load the file
 			Kohana::load($path);
 			
-			// get a new instance of SwiftMailer
-			$message = Swift_Message::newinstance();
+			// get an instance of the database
+			$db = Database::instance();
 			
-			// set the subject
-			$message->setSubject('My Subject');
+			// build the data we need
+			$request = array(
+				Kohana::config('info.app_name'),			// application name
+				Kohana::config('info.app_version_full'),	// application version
+				url::site(),								// url
+				$_SERVER['REMOTE_ADDR'],					// client ip address
+				$_SERVER['SERVER_ADDR'],					// server ip address
+				phpversion(),								// php version
+				$this->db->platform(),						// database platform
+				$this->db->version(),						// database platform version
+				'install',									// type of registration
+				Kohana::config('nova.genre'),				// the genre
+			);
 			
-			echo Kohana::debug($message->toString());
-		}
-		else
-		{
-			throw new Kohana_Exception(__('Could not find the SwiftMailer class. Email will not be sent.'));
-		}
-		
-		exit();
-		
-		/* load the resources */
-		$this->load->library('xmlrpc');
-		$this->load->library('email');
-		
-		/* set up the server and method for the request */
-		$this->xmlrpc->server('http://www.anodyne-productions.com/index.php/utility/do_registration', 80);
-		$this->xmlrpc->method('Do_Registration');
-		
-		/* build the request */
-		$request = array(
-			APP_NAME,
-			APP_VERSION_MAJOR .'.'. APP_VERSION_MINOR .'.'. APP_VERSION_UPDATE,
-			base_url(),
-			$_SERVER['REMOTE_ADDR'],
-			$_SERVER['SERVER_ADDR'],
-			phpversion(),
-			$this->db->platform(),
-			$this->db->version(),
-			'install'
-		);
-		
-		/* compile the request */
-		$this->xmlrpc->request($request);
-		
-		if (extension_loaded('xmlrpc'))
-		{
-			/* send the request or log the message if it doesn't work */
-			if (!$this->xmlrpc->send_request())
-			{
-				log_message('error', $this->xmlrpc->display_error());
-			}
-		}
-		else
-		{
-			$insert = "INSERT INTO www_installs (product, version, url, ip_client, ip_server, php, db_platform, db_version, type, date) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %d);";
+			$insert = "INSERT INTO www_installs (product, version, url, ip_client, ip_server, php, db_platform, db_version, type, date, genre) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %d, %s);";
 			
 			$message = sprintf(
 				$insert,
-				$this->db->escape($request[0]),
-				$this->db->escape($request[1]),
-				$this->db->escape($request[2]),
-				$this->db->escape($request[3]),
-				$this->db->escape($request[4]),
-				$this->db->escape($request[5]),
-				$this->db->escape($request[6]),
-				$this->db->escape($request[7]),
-				$this->db->escape($request[8]),
-				$this->db->escape(now())
+				$db->escape($request[0]),
+				$db->escape($request[1]),
+				$db->escape($request[2]),
+				$db->escape($request[3]),
+				$db->escape($request[4]),
+				$db->escape($request[5]),
+				$db->escape($request[6]),
+				$db->escape($request[7]),
+				$db->escape($request[8]),
+				$db->escape($request[9]),
+				$db->escape(date::now())
 			);
 			
-			/* set the parameters for sending the email */
-			$this->email->from('nova.registration@example.com');
-			$this->email->to('anodyne.nova@gmail.com');
-			$this->email->subject('Nova Registration');
-			$this->email->message($message);
+			// create the transport
+			$transport = Swift_MailTransport::newInstance();
 			
-			/* send the email */
-			$email = $this->email->send();
+			// create the mailer
+			$mailer = Swift_Mailer::newInstance($transport);
+			
+			// get a new instance of SwiftMailer
+			$message = Swift_Message::newInstance();
+			
+			// set the data for the message
+			$message->setSubject('Nova Registration');
+			$message->setFrom('nova.registration@example.com');
+			$message->setTo(array('anodyne.nova@gmail.com'));
+			$message->setBody($message);
+			
+			// send the message
+			//$result = $mailer->send($message);
 		}
 	}
 }

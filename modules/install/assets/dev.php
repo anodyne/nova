@@ -449,7 +449,7 @@ $missions = array(
 		'mission_status' => 'completed',
 		'mission_start' => 1177995600,
 		'mission_end' =>  1180674000,
-		'mission_group' => 2,
+		'mission_group' => 3,
 		'mission_desc' => "Commander Adama and Captain Lee Adama risk the security of the Fleet as they try to locate a downed Kara Thrace..."),
 	array(
 		'mission_title' => "Litmus",
@@ -457,7 +457,7 @@ $missions = array(
 		'mission_status' => 'completed',
 		'mission_start' => 1177995600,
 		'mission_end' =>  1180674000,
-		'mission_group' => 2,
+		'mission_group' => 3,
 		'mission_desc' => "When Aaron Doral turns up on Galactica and detonates a device made from the ship's own munitions, Adama orders a full investigation - and Galen Tyrol's relationship with Boomer becomes the focus of the investigation."),
 	array(
 		'mission_title' => "Six Degrees of Separation",
@@ -465,7 +465,7 @@ $missions = array(
 		'mission_status' => 'completed',
 		'mission_start' => 1177995600,
 		'mission_end' =>  1180674000,
-		'mission_group' => 2,
+		'mission_group' => 3,
 		'mission_desc' => "Shelly Godfrey, a copy of the humanoid Cylon Number Six claiming to be a former aide to Doctor Amarak, arrives on Galactica and accuses Gaius Baltar of collaborating with the Cylons."),
 	array(
 		'mission_title' => "Flesh and Bone",
@@ -473,7 +473,7 @@ $missions = array(
 		'mission_status' => 'completed',
 		'mission_start' => 1177995600,
 		'mission_end' =>  1180674000,
-		'mission_group' => 2,
+		'mission_group' => 3,
 		'mission_desc' => "When a copy of Leoben Conoy is captured aboard a civilian ship, President Roslin orders his interrogation, and Lieutenant Thrace is assigned the job. She finds herself facing the possibility that the Cylon may have planted a bomb somewhere in the Fleet."),
 	array(
 		'mission_title' => "Tigh Me Up, Tigh Me Down",
@@ -481,7 +481,7 @@ $missions = array(
 		'mission_status' => 'completed',
 		'mission_start' => 1177995600,
 		'mission_end' =>  1180674000,
-		'mission_group' => 2,
+		'mission_group' => 4,
 		'mission_desc' => "Colonel Tigh's world is turned upside down when his wife arrives on Galactica - but is she all she claims to be?"),
 	array(
 		'mission_title' => "The Hand of God",
@@ -489,7 +489,7 @@ $missions = array(
 		'mission_status' => 'completed',
 		'mission_start' => 1177995600,
 		'mission_end' =>  1180674000,
-		'mission_group' => 2,
+		'mission_group' => 4,
 		'mission_desc' => "With the Fleet short of fuel, Galactica launches a daring attack on a Cylon base."),
 	array(
 		'mission_title' => "Colonial Day",
@@ -497,23 +497,22 @@ $missions = array(
 		'mission_status' => 'completed',
 		'mission_start' => 1177995600,
 		'mission_end' =>  1180674000,
-		'mission_group' => 2,
+		'mission_group' => 4,
 		'mission_desc' => "Colonial Day is due, and Laura Roslin is using the occasion to institute an interim Quorum of Twelve; then Tom Zarek, duly selected as the representative of Sagittaron, stands for the post of Vice President, a position Roslin is determined he will not hold."),
 	array(
 		'mission_title' => "Kobol's Last Gleaming, Part 1",
 		'mission_order' => 13,
-		'mission_status' => 'completed',
+		'mission_status' => 'current',
 		'mission_start' => 1177995600,
 		'mission_end' =>  1180674000,
-		'mission_group' => 2,
+		'mission_group' => 5,
 		'mission_desc' => "Galactica discovers Kobol, and a chain of events are set in motion that threatens to change everything."),
 	array(
 		'mission_title' => "Kobol's Last Gleaming, Part 2",
 		'mission_order' => 14,
-		'mission_status' => 'completed',
+		'mission_status' => 'upcoming',
 		'mission_start' => 1177995600,
-		'mission_end' =>  1180674000,
-		'mission_group' => 2,
+		'mission_group' => 5,
 		'mission_desc' => "Starbuck has gone to Caprica. Adama insists Roslin must stand down as President. When she refuses, he is forced to deal with that situation while simultaneously adapting the plan to rid themselves of the Cylon baseship over Kobol."),
 );
 

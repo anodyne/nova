@@ -2,10 +2,9 @@
 /**
  * Database Tables & Fields
  *
- * @package		Install Module
- * @subpackage	Asset
+ * @package		Install
+ * @category	Asset
  * @author		Anodyne Productions
- * @version		2.0
  */
 
 /**
@@ -35,34 +34,25 @@ $data = array(
 	'catalogue_ranks'			=> array('id' => 'rankcat_id', 'fields' => 'fields_catalogue_ranks'),
 	'catalogue_skins'			=> array('id' => 'skin_id', 'fields' => 'fields_catalogue_skins'),
 	'catalogue_skinsecs'		=> array('id' => 'skinsec_id', 'fields' => 'fields_catalogue_skinsecs'),
+	//'catalogue_widgets'			=> array('id' => 'widget_id', 'fields' => 'fields_catalogue_widgets'),
 	'characters'				=> array('id' => 'charid', 'fields' => 'fields_characters'),
-	'characters_data'			=> array('id' => 'data_id', 'fields' => 'fields_characters_data'),
-	'characters_fields'			=> array('id' => 'field_id', 'fields' => 'fields_characters_fields'),
 	'characters_promotions'		=> array('id' => 'prom_id', 'fields' => 'fields_characters_promotions'),
-	'characters_sections'		=> array('id' => 'section_id', 'fields' => 'fields_characters_sections'),
-	'characters_tabs'			=> array('id' => 'tab_id', 'fields' => 'fields_characters_tabs'),
-	'characters_values'			=> array('id' => 'value_id', 'fields' => 'fields_characters_values'),
 	'coc'						=> array('id' => 'coc_id', 'fields' => 'fields_coc'),
 	'departments_'.$_genre		=> array('id' => 'dept_id', 'fields' => 'fields_departments'),
 	'docking'					=> array('id' => 'docking_id', 'fields' => 'fields_docking'),
-	'docking_data'				=> array('id' => 'data_id', 'fields' => 'fields_docking_data'),
-	'docking_fields'			=> array('id' => 'field_id', 'fields' => 'fields_docking_fields'),
-	'docking_sections'			=> array('id' => 'section_id', 'fields' => 'fields_docking_sections'),
-	'docking_values'			=> array('id' => 'value_id', 'fields' => 'fields_docking_values'),
-	
-	//'forms'						=> array('id' => 'form_id', 'fields' => 'fields_forms'),
-	//'forms_data'				=> array('id' => 'data_id', 'fields' => 'fields_forms_data'),
-	//'forms_fields'				=> array('id' => 'field_id', 'fields' => 'fields_forms_fields'),
-	//'forms_sections'			=> array('id' => 'section_id', 'fields' => 'fields_forms_sections'),
-	//'forms_tabs'				=> array('id' => 'tab_id', 'fields' => 'fields_forms_tabs'),
-	//'forms_values'				=> array('id' => 'value_id', 'fields' => 'fields_forms_values'),
-	
+	'forms'						=> array('id' => 'form_id', 'fields' => 'fields_forms'),
+	'forms_data'				=> array('id' => 'data_id', 'fields' => 'fields_forms_data'),
+	'forms_fields'				=> array('id' => 'field_id', 'fields' => 'fields_forms_fields'),
+	'forms_sections'			=> array('id' => 'section_id', 'fields' => 'fields_forms_sections'),
+	'forms_tabs'				=> array('id' => 'tab_id', 'fields' => 'fields_forms_tabs'),
+	'forms_values'				=> array('id' => 'value_id', 'fields' => 'fields_forms_values'),
 	'login_attempts'			=> array('id' => 'login_id', 'fields' => 'fields_login_attempts'),
 	'menu_categories'			=> array('id' => 'menucat_id', 'fields' => 'fields_menu_categories'),
 	'menu_items'				=> array('id' => 'menu_id', 'fields' => 'fields_menu_items'),
 	'messages'					=> array('id' => 'message_id', 'fields' => 'fields_messages'),
 	'mission_groups'			=> array('id' => 'misgroup_id', 'fields' => 'fields_mission_groups'),
 	'missions'					=> array('id' => 'mission_id', 'fields' => 'fields_missions'),
+	//'moderation'				=> array('id' => 'moderation_id', 'fields' => 'fields_moderation'),
 	'news'						=> array('id' => 'news_id', 'fields' => 'fields_news'),
 	'news_categories'			=> array('id' => 'newscat_id', 'fields' => 'fields_news_categories'),
 	'news_comments'				=> array('id' => 'ncomment_id', 'fields' => 'fields_news_comments'),
@@ -78,17 +68,11 @@ $data = array(
 	'settings'					=> array('id' => 'setting_id', 'fields' => 'fields_settings'),
 	'sessions'					=> array('id' => 'session_id', 'fields' => 'fields_sessions', 'index' => array('last_active')),
 	'sim_type'					=> array('id' => 'simtype_id', 'fields' => 'fields_sim_type'),
-	'specs_data'				=> array('id' => 'data_id', 'fields' => 'fields_specs_data'),
-	'specs_fields'				=> array('id' => 'field_id', 'fields' => 'fields_specs_fields'),
-	'specs_sections'			=> array('id' => 'section_id', 'fields' => 'fields_specs_sections'),
-	'specs_values'				=> array('id' => 'value_id', 'fields' => 'fields_specs_values'),
+	//'specs'						=> array('id' => 'spec_id', 'fields' => 'fields_specs'),
 	'system_components'			=> array('id' => 'comp_id', 'fields' => 'fields_system_components'),
 	'system_info'				=> array('id' => 'sys_id', 'fields' => 'fields_system_info'),
 	'system_versions'			=> array('id' => 'version_id', 'fields' => 'fields_system_versions'),
 	'tour'						=> array('id' => 'tour_id', 'fields' => 'fields_tour'),
-	'tour_data'					=> array('id' => 'data_id', 'fields' => 'fields_tour_data'),
-	'tour_fields'				=> array('id' => 'field_id', 'fields' => 'fields_tour_fields'),
-	'tour_values'				=> array('id' => 'value_id', 'fields' => 'fields_tour_values'),
 	'tour_decks'				=> array('id' => 'deck_id', 'fields' => 'fields_tour_decks'),
 	'user_loa'					=> array('id' => 'loa_id', 'fields' => 'fields_user_loa'),
 	'user_prefs'				=> array('id' => 'pref_id', 'fields' => 'fields_user_prefs'),
@@ -791,57 +775,137 @@ $fields_forms_data = array(
 );
 
 $fields_forms_fields = array(
-	'field_id' => array(),
+	'field_id' => array(
+		'type' => 'INT',
+		'constraint' => 10,
+		'auto_increment' => TRUE),
 	'field_form' => array(
 		'type' => 'VARCHAR',
 		'constraint' => 20,
 		'default' => ''),
-	'field_section' => array(),
-	'field_type' => array(),
-	'field_html_name' => array(),
-	'field_html_id' => array(),
-	'field_html_class' => array(),
-	'field_html_rows' => array(),
-	'field_selected' => array(),
-	'field_value' => array(),
-	'field_label' => array(),
-	'field_order' => array(),
-	'field_display' => array(),
-	'field_last_update' => array(),
+	'field_section' => array(
+		'type' => 'INT',
+		'constraint' => 10),
+	'field_type' => array(
+		'type' => 'VARCHAR',
+		'constraint' => 50,
+		'default' => 'text'),
+	'field_html_name' => array(
+		'type' => 'VARCHAR',
+		'constraint' => 100,
+		'default' => ''),
+	'field_html_id' => array(
+		'type' => 'VARCHAR',
+		'constraint' => 100,
+		'default' => ''),
+	'field_html_class' => array(
+		'type' => 'TEXT'),
+	'field_html_rows' => array(
+		'type' => 'INT',
+		'constraint' => 3,
+		'default' => 5),
+	'field_selected' => array(
+		'type' => 'VARCHAR',
+		'constraint' => 50,
+		'default' => ''),
+	'field_value' => array(
+		'type' => 'VARCHAR',
+		'constraint' => 255,
+		'default' => ''),
+	'field_label' => array(
+		'type' => 'VARCHAR',
+		'constraint' => 255,
+		'default' => ''),
+	'field_placeholder' => array(
+		'type' => 'TEXT'),
+	'field_order' => array(
+		'type' => 'INT',
+		'constraint' => 5),
+	'field_display' => array(
+		'type' => 'ENUM',
+		'constraint' => "'y','n'",
+		'default' => 'y'),
+	'field_last_update' => array(
+		'type' => $date_type,
+		'constraint' => $date_constraint),
 );
 
 $fields_forms_sections = array(
-	'section_id' => array(),
+	'section_id' => array(
+		'type' => 'INT',
+		'constraint' => 10,
+		'auto_increment' => TRUE),
 	'section_form' => array(
 		'type' => 'VARCHAR',
 		'constraint' => 20,
 		'default' => ''),
-	'section_tab' => array(),
-	'section_name' => array(),
-	'section_order' => array(),
+	'section_tab' => array(
+		'type' => 'INT',
+		'constraint' => 10),
+	'section_name' => array(
+		'type' => 'VARCHAR',
+		'constraint' => 100,
+		'default' => ''),
+	'section_order' => array(
+		'type' => 'INT',
+		'constraint' => 5),
 );
 
 $fields_forms_tabs = array(
-	'tab_id' => array(),
+	'tab_id' => array(
+		'type' => 'INT',
+		'constraint' => 10,
+		'auto_increment' => TRUE),
 	'tab_form' => array(
 		'type' => 'VARCHAR',
 		'constraint' => 20,
 		'default' => ''),
-	'tab_name' => array(),
-	'tab_link_id' => array(),
-	'tab_order' => array(),
-	'tab_display' => array(),
+	'tab_name' => array(
+		'type' => 'VARCHAR',
+		'constraint' => 100,
+		'default' => ''),
+	'tab_link_id' => array(
+		'type' => 'VARCHAR',
+		'constraint' => 20,
+		'default' => ''),
+	'tab_order' => array(
+		'type' => 'INT',
+		'constraint' => 5),
+	'tab_display' => array(
+		'type' => 'ENUM',
+		'constraint' => "'y','n'",
+		'default' => 'y'),
 );
 
 $fields_forms_values = array(
-	'value_id' => array(),
-	'value_field' => array(),
-	'value_html_name' => array(),
-	'value_html_value' => array(),
-	'value_html_id' => array(),
-	'value_selected' => array(),
-	'value_content' => array(),
-	'value_order' => array(),
+	'value_id' => array(
+		'type' => 'INT',
+		'constraint' => 10,
+		'auto_increment' => TRUE),
+	'value_field' => array(
+		'type' => 'INT',
+		'constraint' => 10),
+	'value_html_name' => array(
+		'type' => 'VARCHAR',
+		'constraint' => 100,
+		'default' => ''),
+	'value_html_value' => array(
+		'type' => 'VARCHAR',
+		'constraint' => 100,
+		'default' => ''),
+	'value_html_id' => array(
+		'type' => 'VARCHAR',
+		'constraint' => 100,
+		'default' => ''),
+	'value_selected' => array(
+		'type' => 'VARCHAR',
+		'constraint' => 50,
+		'default' => ''),
+	'value_content' => array(
+		'type' => 'TEXT'),
+	'value_order' => array(
+		'type' => 'INT',
+		'constraint' => 5),
 );
 
 $fields_login_attempts = array(
@@ -859,8 +923,7 @@ $fields_login_attempts = array(
 		'default' => ''),
 	'login_time' => array(
 		'type' => $date_type,
-		'constraint' => $date_constraint,
-		'default' => 0)
+		'constraint' => $date_constraint)
 );
 
 $fields_menu_categories = array(
@@ -1385,6 +1448,14 @@ $fields_sim_type = array(
 		'type' => 'VARCHAR',
 		'constraint' => 50,
 		'default' => '')
+);
+
+$fields_specs = array(
+	'spec_id' => array(),
+	'spec_name' => array(),
+	'spec_desc' => array(),
+	'spec_display' => array(),
+	'spec_last_update' => array(),
 );
 
 $fields_specs_data = array(
@@ -2034,6 +2105,3 @@ $fields_uploads = array(
 		'type' => $date_type,
 		'constraint' => $date_constraint),
 );
-
-// End of file fields.php
-// Location: modules/install/assets/fields.php
