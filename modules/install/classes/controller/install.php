@@ -14,6 +14,11 @@
 
 class Controller_Install extends Controller_Template
 {
+	/**
+	 * @var	integer	the number of database tables in the system
+	 */
+	public $_tables = 56;
+	
 	public function before()
 	{
 		parent::before();
@@ -21,6 +26,13 @@ class Controller_Install extends Controller_Template
 		if (!file_exists(APPPATH.'config/database.php') && $this->request->action != 'setupconfig')
 		{
 			$this->request->redirect('install/setupconfig');
+		}
+		
+		$safesegs = array('step', 'index', 'main', 'verify', 'readme');
+		
+		if (count(Database::instance()->list_tables()) < $this->_tables && !(in_array($this->request->action, $safesegs)))
+		{
+			$this->request->redirect('install/index');
 		}
 		
 		// set the locale
@@ -79,8 +91,36 @@ class Controller_Install extends Controller_Template
 			
 			if (is_object($verify) && $verify->sysadmin == 'y')
 			{
+				// set the success variable
+				$data->success = TRUE;
+				
 				// set the message
 				$data->message = __('changedb.success');
+				
+				// set up the options
+				$data->options = array();
+				
+				// get the tables
+				$tables = Database::instance()->list_tables();
+				
+				// set the tables select menu options
+				foreach ($tables as $t)
+				{
+					$data->options[$t] = $t;
+				}
+				
+				// set the field type options
+				$data->fieldtypes = array(
+					'Strings &amp; Text' => array(
+						'VARCHAR' => 'Text String (varchar)',
+						'TEXT' => 'Text Field',
+						'LONGTEXT' => 'Long Text Field'),
+					'Numbers' => array(
+						'INT' => 'Integer',
+						'TINYINT' => 'Tiny Integer',
+						'BIGINT' => 'Big Integer'),
+					'ENUM' => 'Enumerated List'
+				);
 				
 				// set the loading image
 				$data->images = array(
@@ -90,6 +130,13 @@ class Controller_Install extends Controller_Template
 							'alt' => __('action.processing'),
 							'class' => '')),
 				);
+				
+				// set the inputs
+				$data->inputs = array(
+					'table' => array(
+						'class' => 'button-small',
+						'id' => 'table'),
+					);
 				
 				// build the button attributes
 				$next = array(
@@ -974,7 +1021,7 @@ return array
 				
 				// make sure the proper message is displayed
 				$data->message = ($data->errors === FALSE)
-					? (count($tables) < 66) ? __('step1.failure') : __('step1.success')
+					? (count($tables) < $this->_tables) ? __('step1.failure') : __('step1.success')
 					: __('step1.errors');
 				
 				// set the loading image
@@ -1014,7 +1061,7 @@ return array
 				);
 				
 				// build the next step control
-				$this->template->layout->controls = (count($tables) < 66) ? FALSE : form::button('next', __('step1.button'), $next).form::close();
+				$this->template->layout->controls = (count($tables) < $this->_tables) ? FALSE : form::button('next', __('step1.button'), $next).form::close();
 				
 				break;
 				
@@ -1172,19 +1219,12 @@ return array
 		$this->template->layout->label = __('verify.title');
 	}
 	
-	public function action_test()
-	{
-		//$this->_register();
-		
-		exit();
-	}
-	
-	protected function _install_ranks()
+	protected function install_ranks()
 	{
 		# code...
 	}
 	
-	protected function _install_skins()
+	protected function install_skins()
 	{
 		# code...
 	}
@@ -1201,16 +1241,16 @@ return array
 			
 			// build the data we need
 			$request = array(
-				Kohana::config('info.app_name'),			// application name
-				Kohana::config('info.app_version_full'),	// application version
-				url::site(),								// url
-				$_SERVER['REMOTE_ADDR'],					// client ip address
-				$_SERVER['SERVER_ADDR'],					// server ip address
-				phpversion(),								// php version
-				$this->db->platform(),						// database platform
-				$this->db->version(),						// database platform version
-				'install',									// type of registration
-				Kohana::config('nova.genre'),				// the genre
+				Kohana::config('info.app_name'),
+				Kohana::config('info.app_version_full'),
+				url::site(),
+				$_SERVER['REMOTE_ADDR'],
+				$_SERVER['SERVER_ADDR'],
+				phpversion(),
+				$this->db->platform(),
+				$this->db->version(),
+				'install',
+				Kohana::config('nova.genre'),
 			);
 			
 			$insert = "INSERT INTO www_installs (product, version, url, ip_client, ip_server, php, db_platform, db_version, type, date, genre) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %d, %s);";
