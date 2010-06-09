@@ -5,13 +5,14 @@
 |---------------------------------------------------------------
 |
 | File: controllers/characters_base.php
-| System Version: 1.0.4
+| System Version: 1.0.6
 |
 | Changes: updated the NPC management page to do all the deletions
 |	on its own page instead of using the character management
 |	deletion functionality (could be confusing to users); fixed errors
 |	thrown when users with an access level less than 2 try to update
-|	a character
+|	a character; fixed bug where acceptance and rejection messages
+|	were sent without any of the changes an admin added
 |
 | Controller that handles the CHARACTERS section of the admin system.
 |
@@ -246,9 +247,6 @@ class Characters_base extends Controller {
 						/* update the number of open slots for the position */
 						$pos_update = $this->pos->update_position($c_update['position_1'], $position_update);
 						
-						/* grab the message */
-						$message = $this->msgs->get_message('accept_message');
-						
 						/* set the arguments for the message */
 						$args = array(
 							'name' => (!empty($user->name)) ? $user->name : $user->email,
@@ -260,7 +258,7 @@ class Characters_base extends Controller {
 						);
 						
 						/* parse the message with the args */
-						$content = parse_dynamic_message($message, $args);
+						$content = parse_dynamic_message($this->input->post('accept', TRUE), $args);
 						
 						if ($user->status != 'active')
 						{ /* updated the users table if necessary */
@@ -326,9 +324,6 @@ class Characters_base extends Controller {
 							$delete += $this->user->delete_user($user->userid);
 						}
 						
-						/* grab the message */
-						$message = $this->msgs->get_message('reject_message');
-						
 						/* set the arguments for the message */
 						$args = array(
 							'name' => (!empty($user->name)) ? $user->name : $user->email,
@@ -339,7 +334,7 @@ class Characters_base extends Controller {
 						);
 						
 						/* parse the message with the args */
-						$content = parse_dynamic_message($message, $args);
+						$content = parse_dynamic_message($this->input->post('reject', TRUE), $args);
 						
 						/* update the applications table */
 						$a_update = array(
