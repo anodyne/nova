@@ -178,6 +178,12 @@ class Kohana_Pagination {
 		// Clean the page number
 		$page = max(1, (int) $page);
 
+		// No page number in URLs to first page
+		if ($page === 1)
+		{
+			$page = NULL;
+		}
+
 		switch ($this->config['current_page']['source'])
 		{
 			case 'query_string':
