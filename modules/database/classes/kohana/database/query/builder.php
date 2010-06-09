@@ -73,6 +73,20 @@ abstract class Kohana_Database_Query_Builder extends Database_Query {
 					// Split the condition
 					list($column, $op, $value) = $condition;
 
+					if ($value === NULL)
+					{
+						if ($op === '=')
+						{
+							// Convert "val = NULL" to "val IS NULL"
+							$op = 'IS';
+						}
+						elseif ($op === '!=')
+						{
+							// Convert "val != NULL" to "valu IS NOT NULL"
+							$op = 'IS NOT';
+						}
+					}
+
 					// Database operators are always uppercase
 					$op = strtoupper($op);
 
@@ -108,14 +122,8 @@ abstract class Kohana_Database_Query_Builder extends Database_Query {
 						$value = $db->quote($value);
 					}
 
-					if ($op)
-					{
-						// Make the operator uppercase and spaced
-						$op = ' '.strtoupper($op);
-					}
-
 					// Append the statement to the query
-					$sql .= $db->quote_identifier($column).$op.' '.$value;
+					$sql .= $db->quote_identifier($column).' '.$op.' '.$value;
 				}
 
 				$last_condition = $condition;
