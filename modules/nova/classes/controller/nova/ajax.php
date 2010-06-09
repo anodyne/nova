@@ -138,6 +138,36 @@ class Controller_Nova_Ajax extends Controller_Nova_Base
 		}
 	}
 	
+	public function action_install_table()
+	{
+		// we don't need the template, just the output from the method
+		$this->template = NULL;
+		
+		// grab an instance of the database
+		$db = Database::instance();
+		
+		// initialize the forge
+		$forge = new DBForge;
+		
+		// grab the genre variable
+		$table = trim(security::xss_clean($_POST['table']));
+		
+		// add an id field to keep everything happy
+		DBForge::add_field('id');
+		
+		// add the table
+		DBForge::create_table($table, TRUE);
+		
+		if (count($db->list_tables('%_'.$table)) > 0)
+		{
+			echo '1';
+		}
+		else
+		{
+			echo '0';
+		}
+	}
+	
 	public function action_uninstall_genre()
 	{
 		// we don't need the template, just the output from the method
