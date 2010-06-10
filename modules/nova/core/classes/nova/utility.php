@@ -103,6 +103,176 @@ abstract class Nova_Utility
 	}
 	
 	/**
+	 * Uses the rank.yml file to quickly install a rank set
+	 *
+	 *     Utility::install_ranks();
+	 *
+	 * @uses	Utility::directory_map()
+	 * @uses	Kohana::find_file()
+	 * @uses	Kohana::load()
+	 * @param	string	the value of a specific rank set to install
+	 * @return	void
+	 */
+	public static function install_ranks($value = NULL)
+	{
+		// find the sfYAML library
+		$path = Kohana::find_file('vendor', 'sfYaml/sfYaml');
+		
+		// load the sfYAML library
+		Kohana::load($path);
+		
+		// get the directory listing for the genre
+		$dir = self::directory_map(APPPATH.'assets/common/'.Kohana::config('nova.genre').'/ranks/', TRUE);
+		
+		// get all the rank sets locations
+		$ranks = Jelly::select('cataloguerank')->execute();
+		
+		if (count($ranks) > 0)
+		{
+			// start by removing anything that's already installed
+			foreach ($ranks as $rank)
+			{
+				if ($key = array_search($rank->location, $dir) !== FALSE)
+				{
+					unset($dir[$key]);
+				}
+			}
+			
+			// set the items to be pulled out of the listing
+			$pop = array('index.html');
+			
+			// remove unwanted items
+			foreach ($pop as $value)
+			{
+				if ($key = array_search($value, $dir) !== FALSE)
+				{
+					unset($dir[$key]);
+				}
+			}
+			
+			// loop through the directories now
+			foreach ($dir as $key => $value)
+			{
+				// assign our path to a variable
+				$file = APPPATH.'assets/common/'.Kohana::config('nova.genre').'/ranks/'.$value.'/rank.yml';
+				
+				// make sure the file exists first
+				if (file_exists($file))
+				{
+					// load the YAML data into an array
+					$content = sfYaml::load($file);
+					
+					// add the item to the database
+					$add = Jelly::factory('cataloguerank')
+						->set(array(
+							'name'		=> $content['rank'],
+							'location'	=> $content['location'],
+							'credits'	=> $content['credits'],
+							'preview'	=> $content['preview'],
+							'blank'		=> $content['blank'],
+							'extension'	=> $content['extension'],
+							'url'		=> $content['url'],
+							'genre'		=> $content['genre']
+						))
+						->save();
+				}
+			}
+		}
+	}
+	
+	/**
+	 * Uses the skin.yml file to quickly install a skin
+	 *
+	 *     Utility::install_skins();
+	 *
+	 * @uses	Utility::directory_map()
+	 * @uses	Kohana::find_file()
+	 * @uses	Kohana::load()
+	 * @param	string	the value of a specific skin set to install
+	 * @return	void
+	 */
+	public static function install_skins($value = '')
+	{
+		// find the sfYAML library
+		$path = Kohana::find_file('vendor', 'sfYaml/sfYaml');
+		
+		// load the sfYAML library
+		Kohana::load($path);
+		
+		// get the listing of the directory
+		$dir = self::directory_map(APPPATH.'views/', TRUE);
+		
+		// get all the skin catalogue items
+		$skins = Jelly::select('catalogueskin')->execute();
+		
+		if (count($skins) > 0)
+		{
+			// start by removing anything that's already installed
+			foreach ($skins as $skin)
+			{
+				if ($key = array_search($skin->skin_location, $viewdirs) !== FALSE)
+				{
+					unset($dir[$key]);
+				}
+			}
+			
+			// create an array of items to remove
+			$pop = array('index.html');
+			
+			# TODO: remove this after the application directory has been cleaned out
+			$pop[] = '_base';
+			$pop[] = '_base_override';
+			$pop[] = 'template.php';
+			
+			// remove the items
+			foreach ($pop as $value)
+			{
+				if ($key = array_search($value, $dir) !== FALSE)
+				{
+					unset($dir[$key]);
+				}
+			}
+			
+			// now loop through the directories and install the skins
+			foreach ($dir as $key => $value)
+			{
+				// assign our path to a variable
+				$file = APPPATH.'views/'.$value.'/skin.yml';
+				
+				// make sure the file exists first
+				if (file_exists($file))
+				{
+					// load the YAML data into an array
+					$content = sfYaml::load($file);
+					
+					// add the skin to the database
+					Jelly::factory('catalogueskin')
+						->set(array(
+							'name'		=> $content['skin'],
+							'location'	=> $content['location'],
+							'credits'	=> $content['credits'],
+						))
+						->save();
+					
+					// go through and add the sections
+					foreach ($content['sections'] as $v)
+					{
+						Jelly::factory('catalgueskinsec')
+							->set(array(
+								'section'	=> $v['type'],
+								'skin'		=> $content['location'],
+								'preview'	=> $v['preview'],
+								'status'	=> 'active',
+								'default'	=> 'n'
+							))
+							->save();
+					}
+				}
+			}
+		}
+	}
+	
+	/**
 	 * Checks to see if the system is installed.
 	 *
 	 *     $check = Utiliity::install_status();
