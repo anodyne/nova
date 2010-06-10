@@ -8,15 +8,7 @@ M1 (2.0.0-m1)
 
 Last Update
 -----------
-08 June 2010
-
-Latest Updates
---------------
-* updated jquery ui to version 1.8.2
-* updated jquery wysiwyg plugin to version 0.9
-* updated the install module
-* updated the jquery lazy plugin to version 1.5
-* added the jquery elastic plugin
+10 June 2010
 
 Version History
 ---------------

@@ -31,9 +31,6 @@ return array
 	 * Version Information Feed
 	 */
 	 
-	'version_info' => MODPATH.'nova/assets/version.yaml',
+	'version_info' => MODPATH.'nova/core/assets/version.yaml',
 	//'version_info' => 'http://www.anodyne-productions.com/feeds/version_nova.yaml',
 );
-
-// End of file info.php
-// Location: modules/nova/config/info.php

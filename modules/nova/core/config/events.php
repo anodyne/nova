@@ -25,6 +25,3 @@ return array
 	'preResponse' => array(),
 	'postResponse' => array(),
 );
-
-// End of file events.php
-// Location: modules/nova/config/events.php

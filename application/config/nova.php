@@ -46,9 +46,7 @@ return array
 	 * point for adding your own modules to the load order.
 	 */
 	'modules' => array(
-		// 'upgrade' => MODPATH.'upgrade',
+		// 'upgrade' => MODPATH.'nova/upgrade',
+		// 'your_mod' => MODPATH.'third_party/your_mod',
 	),
 );
-
-// End of file nova.php
-// Location: application/config/nova.php

@@ -12,6 +12,3 @@ return array(
 	'main.previous'		=> 'previous.png',
 	'main.rss'			=> 'feed.png',
 );
-
-// End of file image_index.php
-// Location: modules/nova/views/_common/image_index.php

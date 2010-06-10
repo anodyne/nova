@@ -11,7 +11,7 @@
 		<?php if (isset($_redirect)): echo $_redirect; endif;?>
 		
 		<!-- STYLESHEETS -->
-		<?php echo html::style(MODFOLDER.'/nova/views/_common/css/nova.css');?>
+		<?php echo html::style(MODFOLDER.'/nova/core/views/_common/css/nova.css');?>
 		<?php echo html::style(APPFOLDER.'/views/'.$skin.'/'.$sec.'/css/main.css');?>
 		
 		<!-- JAVASCRIPT -->

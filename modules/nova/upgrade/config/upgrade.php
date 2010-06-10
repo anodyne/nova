@@ -40,6 +40,3 @@ $config['email'] = array(
 	'me@example.com',
 	'john@example.com'
 );
-
-// End of file upgrade.php
-// Location: modules/upgrade/config/upgrade.php

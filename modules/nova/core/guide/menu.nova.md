@@ -1,4 +1,5 @@
 1. **Nova**
+   - [Folder Structure](nova.folder-structure)
    - [Coding Standards](nova.coding-standards)
    - [Extending Classes](nova.extending-classes)
    - [Extending Controllers](nova.extending-controllers)

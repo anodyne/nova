@@ -54,8 +54,10 @@ $url = substr($url, 0, strpos($url, '.php'));
 $url = substr($url, 0, (strlen($url) - strpos(strrev($url), '/')));
 
 Kohana::init(array(
-	'base_url' => $url,
-	'index_file' => 'index.php'
+	'base_url'		=> $url,
+	'index_file'	=> 'index.php',
+	'error'			=> TRUE,
+	'profile'		=> TRUE,
 ));
 
 /**
@@ -72,12 +74,12 @@ Kohana::$config->attach(new Kohana_Config_File);
  * Enable modules. Modules are referenced by a relative or absolute path.
  */
 $base_modules = array(
-	'nova'			=> MODPATH.'nova',			// Nova module
-	'install'		=> MODPATH.'install',		// Install module
-	'database'		=> MODPATH.'database',		// Database access
-	'jelly'			=> MODPATH.'jelly',			// Jelly ORM module
-	'userguide'		=> MODPATH.'userguide',		// Kodoc userguide module
-	'dbforge'		=> MODPATH.'dbforge',		// DBForge module
+	'nova'			=> MODPATH.'nova/core',
+	'install'		=> MODPATH.'nova/install',
+	'database'		=> MODPATH.'kohana/database',
+	'jelly'			=> MODPATH.'nova/jelly',
+	'userguide'		=> MODPATH.'kohana/userguide',
+	'dbforge'		=> MODPATH.'nova/dbforge',
 );
 
 // merge the base modules with whatever is in the modules section of the nova config file
