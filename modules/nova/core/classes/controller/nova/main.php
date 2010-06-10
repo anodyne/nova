@@ -39,6 +39,7 @@ class Controller_Nova_Main extends Controller_Nova_Base
 		$this->template->layout->nav_sub 		= Menu::build('sub', 'main');
 		$this->template->layout->ajax 			= FALSE;
 		$this->template->layout->flash_message	= FALSE;
+		$this->template->layout->content		= FALSE;
 	}
 	
 	public function action_index()
