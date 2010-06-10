@@ -48,5 +48,6 @@ return array
 	'modules' => array(
 		// 'upgrade' => MODPATH.'nova/upgrade',
 		// 'your_mod' => MODPATH.'third_party/your_mod',
+		'about_nova' => MODPATH.'third_party/about_nova',
 	),
 );

@@ -75,6 +75,7 @@ Kohana::$config->attach(new Kohana_Config_File);
  */
 $base_modules = array(
 	'nova'			=> MODPATH.'nova/core',
+	'override'		=> MODPATH.'override',
 	'install'		=> MODPATH.'nova/install',
 	'database'		=> MODPATH.'kohana/database',
 	'jelly'			=> MODPATH.'nova/jelly',
@@ -83,7 +84,7 @@ $base_modules = array(
 );
 
 // merge the base modules with whatever is in the modules section of the nova config file
-$modules = array_merge($base_modules, Kohana::config('nova.modules'));
+$modules = array_merge(Kohana::config('nova.modules'), $base_modules);
 
 // set the modules
 Kohana::modules($modules);
