@@ -8,9 +8,7 @@
  */
 
 # TODO: changedb method
-# TODO: install ranks method
-# TODO: install skins method
-# TODO: register method
+# TODO: uncomment _register() call in step()
 
 class Controller_Install extends Controller_Template
 {
@@ -1135,6 +1133,13 @@ return array
 						// update the user with the character info
 						$crUser->main_char = $crCharacter->id;
 						$crUser->save();
+						
+						// do the quick installs
+						Utility::install_ranks();
+						Utility::install_skins();
+						
+						// do the registration
+						//$this->_register();
 					}
 					else
 					{
@@ -1217,16 +1222,6 @@ return array
 		// content
 		$this->template->title.= __('verify.title');
 		$this->template->layout->label = __('verify.title');
-	}
-	
-	protected function install_ranks()
-	{
-		# code...
-	}
-	
-	protected function install_skins()
-	{
-		# code...
 	}
 	
 	private function _register()
