@@ -2604,4 +2604,12 @@ $system_versions = array(
 		'version_date' => 1273705200,
 		'version_launch'	=> "Nova 1.0.5 is the fifth maintainance release for Nova 1.0 and continues to fix issues with the system. Included in this release are fixes for errors being thrown throughout the system, bugs with emails not being sent out on some servers, user access errors and filtering text before going into the database. A full changelog can be found on AnodyneDocs or from the System and Versions report once Nova has been updated. This update is recommended for all users.",
 		'version_changes'	=> ""),
+	array(
+		'version' => '2.0.0',
+		'version_major' => '2',
+		'version_minor' => '0',
+		'version_update' => '0',
+		'version_date' => date::now(),
+		'version_launch'	=> "Nova 2 is a development release for the second generation of Anodyne's Nova RPG management software. Bugs should be reported to the Anodyne forums.",
+		'version_changes'	=> ""),
 );
