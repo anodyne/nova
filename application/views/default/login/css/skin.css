@@ -170,17 +170,25 @@ kbd {
 |---------------------------------------------------------------
 */
 button {
-	border-radius: 4px;
-	-moz-border-radius: 4px;
-	-webkit-border-radius: 4px;
-	
-	font-weight: bold;
+	border-radius: 3px;
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
 }
 
 button.button-main {
+	height: 27px;
+	padding: 0 29px 2px 29px;
+	
 	border: 1px solid #adc0d0;
 	background: #dfeffc url('../images/button-bg.png') repeat-x top left;
 	color: #2e6e9e;
+	font-size: 100%;
+	font-family: "lucida grande", verdana, arial, sans-serif;
+	font-variant: small-caps;
+	
+	box-shadow: -1px 1px 1px rgba(255, 255, 255, 1);
+	-moz-box-shadow: -1px 1px 1px rgba(255, 255, 255, 1);
+	-webkit-box-shadow: -1px 1px 1px rgba(255, 255, 255, 1);
 }
 button.button-main:hover {
 	border: 1px solid #fbcb09;
@@ -193,23 +201,27 @@ button.button-main:hover {
 	-webkit-box-shadow: 1px 1px 2px rgba(0, 0, 0, .2);
 }
 
-input.button-main {
-	border: 1px solid #adc0d0;
-	background: #dfeffc url('../images/button-bg.png') repeat-x top left;
-	color: #2e6e9e;
-	font-weight: bold;
-	font-size: 120%;
+button.button-sec {
+	border: 1px solid #ccc;
+	background: #eee url('../images/button-bg.png') repeat-x top left;
+	color: #777;
 }
-input.button-main:hover {
-	border: 1px solid #fbcb09;
-	background: #fdf5ce url('../images/button-bg-hover.png') repeat-x top left;
-	color: #c77405;
+button.button-sec:hover {
+	border: 1px solid #aaa;
+	background: #ddd url('../images/button-bg-hover.png') repeat-x top left;
 }
 
+button.button-small {
+	border: 1px solid #ccc;
+	background: #fff url('../images/button-bg.png') repeat-x top left;
+	color: #777;
+	font-weight: normal !important;
+	font-size: 90%;
+}
+button.button-small:hover { border: 1px solid #aaa; }
+
 button[disabled],
-button[disabled]:hover,
-input.button-main[disabled],
-input.button-main[disabled]:hover {
+button[disabled]:hover {
 	opacity: .5;
 	filter:alpha(opacity='70');
 	
