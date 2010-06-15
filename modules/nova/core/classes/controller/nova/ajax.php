@@ -70,6 +70,50 @@ class Controller_Nova_Ajax extends Controller_Nova_Base
 		echo html::image($output);
 	}
 	
+	public function action_install_field()
+	{
+		// we don't need the template, just the output from the method
+		$this->template = NULL;
+		
+		// grab an instance of the database
+		$db = Database::instance();
+		
+		// initialize the forge
+		$forge = new DBForge;
+		
+		// grab the fields
+		$table = trim(security::xss_clean($_POST['table']));
+		$name = trim(security::xss_clean($_POST['name']));
+		$type = trim(security::xss_clean($_POST['type']));
+		$constraint = trim(security::xss_clean($_POST['constraint']));
+		$default = trim(security::xss_clean($_POST['def']));
+		
+		// build the array for creating the field
+		$field = array(
+			$name => array(
+				'type' => $type,
+				'constraint' => $constraint
+			),
+		);
+		
+		if (!empty($default))
+		{
+			$field[$name]['default'] = $default;
+		}
+		
+		// add the column to the table
+		DBForge::add_column($table, $field);
+		
+		if (count($db->list_columns($table, '%'.$name.'%')) > 0)
+		{
+			echo '1';
+		}
+		else
+		{
+			echo '0';
+		}
+	}
+	
 	public function action_install_genre()
 	{
 		// we don't need the template, just the output from the method
@@ -135,6 +179,56 @@ class Controller_Nova_Ajax extends Controller_Nova_Base
 		else
 		{
 			echo '0';
+		}
+	}
+	
+	public function action_install_query()
+	{
+		// we don't need the template, just the output from the method
+		$this->template = NULL;
+		
+		// grab an instance of the database
+		$db = Database::instance();
+		
+		// grab the fields
+		$query = trim(security::xss_clean($_POST['query']));
+		
+		// explode the query to find out what type of query it is
+		$queryarray = explode(' ', $query);
+		
+		if (strtolower($queryarray[0]) == 'insert')
+		{
+			$result = $db->query(Database::INSERT, $query, TRUE);
+		}
+		elseif (strtolower($queryarray[0]) == 'update')
+		{
+			$result = $db->query(Database::UPDATE, $query, TRUE);
+			
+			if ($result > 0)
+			{
+				echo '1';
+			}
+			else
+			{
+				echo '0';
+			}
+		}
+		elseif (strtolower($queryarray[0]) == 'delete' || strtolower($queryarray[0]) == 'drop' || strtolower($queryarray[0]) == 'truncate')
+		{
+			$result = $db->query(Database::DELETE, $query, TRUE);
+			
+			if ($result > 0)
+			{
+				echo '1';
+			}
+			else
+			{
+				echo '0';
+			}
+		}
+		else
+		{
+			$result = $db->query(NULL, $query, TRUE);
 		}
 	}
 	
