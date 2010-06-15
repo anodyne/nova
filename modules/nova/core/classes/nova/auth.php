@@ -234,10 +234,10 @@ abstract class Nova_Auth
 	 *
 	 * @param	string	the email address
 	 * @param	string	the password (should NOT be hashed before)
-	 * @param	string	whether to set the auto-login (yes, no)
+	 * @param	integer	whether to set the auto-login (1 - yes, 0 - no)
 	 * @return	integer	the login error code (0 means a successful login)
 	 */
-	public static function login($email, $password, $remember = 'no')
+	public static function login($email, $password, $remember = 0)
 	{
 		// set the variables
 		$retval = 0;
@@ -276,7 +276,7 @@ abstract class Nova_Auth
 				// set the session
 				self::_set_session($login);
 				
-				if ($remember == 'yes')
+				if ($remember == 1)
 				{
 					// set the cookie
 					self::_set_cookie($email, $password);
