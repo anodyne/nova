@@ -24,7 +24,12 @@
 		</div>
 	</div>
 	
-	<div class="lower"><?php echo $controls;?></div>
+	<?php if ($controls !== FALSE): ?>	
+		<div class="lower">
+			<div class="control"><?php echo $controls;?></div>
+			<div class="control-text"><?php echo $controls_text;?></div>
+		</div>
+	<?php endif;?>
 	
 	<div class="footer">
 		Powered by <strong><?php echo Kohana::config('info.app_name').' '.Kohana::config('info.app_version_major');?></strong>

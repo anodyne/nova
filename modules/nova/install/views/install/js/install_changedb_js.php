@@ -12,6 +12,8 @@
 				beforeSend: function(){
 					// show the loader
 					$('.loading-table').removeClass('hidden');
+					$('.success-table').addClass('hidden');
+					$('.error-table').addClass('hidden');
 				},
 				type: "POST",
 				url: "<?php echo url::site('ajax/install_table');?>",
@@ -22,11 +24,11 @@
 					
 					if (data == "1")
 					{
-						$('strong.success-table').removeClass('hidden');
+						$('.success-table').removeClass('hidden');
 					}
 					else
 					{
-						$('strong.error-table').removeClass('hidden');
+						$('.error-table').removeClass('hidden');
 					}
 				}
 			});
@@ -98,6 +100,82 @@
 					.focus();
 				$('input[name=field_default]').val('').attr('disabled', '');
 			}
+		});
+		
+		$('#field').live('click', function(){
+			var table = $('select[name=table_name] option:selected').val();
+			var field_name = $('input[name=field_name]').val();
+			var field_type = $('select[name=field_type] option:selected').val();
+			var field_constraint = $('input[name=field_constraint]').val();
+			var field_default = $('input[name=field_default]').val();
+			var send = {
+				table: table,
+				name: field_name,
+				type: field_type,
+				constraint: field_constraint,
+				def: field_default
+			};
+			
+			$.ajax({
+				beforeSend: function(){
+					// show the loader
+					$('.loading-field').removeClass('hidden');
+					$('.success-field').addClass('hidden');
+					$('.error-field').addClass('hidden');
+				},
+				type: "POST",
+				url: "<?php echo url::site('ajax/install_field');?>",
+				data: send,
+				success: function(data){
+					// hide the loader
+					$('.loading-field').addClass('hidden');
+					
+					if (data == "1")
+					{
+						$('.success-field').removeClass('hidden');
+					}
+					else
+					{
+						$('.error-field').removeClass('hidden');
+					}
+				}
+			});
+			
+			return false;
+		});
+		
+		$('#query').live('click', function(){
+			var query = $('textarea[name=query]').val();
+			var send = {
+				query: query
+			};
+			
+			$.ajax({
+				beforeSend: function(){
+					// show the loader
+					$('.loading-query').removeClass('hidden');
+					$('.success-query').addClass('hidden');
+					$('.error-query').addClass('hidden');
+				},
+				type: "POST",
+				url: "<?php echo url::site('ajax/install_query');?>",
+				data: send,
+				success: function(data){
+					// hide the loader
+					$('.loading-query').addClass('hidden');
+					
+					if (data == "1")
+					{
+						$('.success-query').removeClass('hidden');
+					}
+					else
+					{
+						$('.error-query').removeClass('hidden');
+					}
+				}
+			});
+			
+			return false;
 		});
 	});
 </script>

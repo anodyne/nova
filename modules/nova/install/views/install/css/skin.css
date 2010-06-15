@@ -64,12 +64,41 @@ body {
 .content a:hover { color: #466b8c; }
 
 .lower {
-	height: 32px;
-	line-height: 32px;
-	padding: 0 2em;
-	margin: 1em 0 0 0;
+	height: 38px;
+	line-height: 38px;
+	margin: 1em 2em;
 	
 	text-align: right;
+	border: 1px solid #c8c8c8;
+	background: #e8e8e8;
+	
+	border-radius: 3px;
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
+}
+.control {
+	float: right;
+	height: 38px;
+	width: 188px;
+	padding: 0 .5em;
+	
+	background: #d8d8d8;
+	text-align: center;
+	
+	border-radius: 0 3px 3px 0;
+	-moz-border-radius: 0 3px 3px 0;
+	-webkit-border-top-right-radius: 3px;
+	-webkit-border-bottom-right-radius: 3px;
+}
+.control-text {
+	margin: 0 200px 0 0;
+	padding: 0 .5em;
+	
+	text-align: left;
+	font-size: 90%;
+	font-style: italic;
+	color: #777;
+	border-right: 1px solid #c8c8c8;
 }
 
 .footer {
@@ -429,6 +458,21 @@ kbd {
 	background-repeat: no-repeat;
 	background-position: top left;
 }
+.secoptions-dbtable {
+	background-image: url('../images/db-table.png');
+	background-repeat: no-repeat;
+	background-position: top left;
+}
+.secoptions-dbfield {
+	background-image: url('../images/db-field.png');
+	background-repeat: no-repeat;
+	background-position: top left;
+}
+.secoptions-dbquery {
+	background-image: url('../images/sql.png');
+	background-repeat: no-repeat;
+	background-position: top left;
+}
 
 /*
 |---------------------------------------------------------------
@@ -437,15 +481,16 @@ kbd {
 */
 
 a.btn, button, input[type=submit] {
-	display: block;
-	float: right;
-	padding: 0 40px 2px 40px;
-	height: 28px;
-	line-height: 28px;
+	/*display: block;*/
+	/*float: right;*/
+	padding: 0 25px 2px 25px;
+	height: 24px;
+	line-height: 24px;
 	
 	border: 1px solid #666;
 	border-top: 1px solid rgba(255, 255, 255, .4);
 	text-decoration: none;
+	font-family: "lucida grande", verdana, arial, sans-serif;
 	font-size: 90%;
 	font-weight: bold;
 	background: #777 url('../images/install-btn-bg.png') repeat-x top left;
@@ -469,13 +514,6 @@ a.btn:hover, button:hover, input[type=submit]:hover {
 	-moz-box-shadow: 0px -1px 0px #4e8623;
 	-webkit-box-shadow: 0px -1px 0px #4e8623;
 }
-
-button, input[type=submit] {
-	font-family: "lucida grande", verdana, arial, sans-serif;
-	
-	padding: 0 40px 3px 40px;
-}
-input[type=submit] { line-height: 24px; }
 
 button[disabled], button:hover[disabled],
 input[disabled], input:hover[disabled] {

@@ -21,16 +21,44 @@ class Controller_Install extends Controller_Template
 	{
 		parent::before();
 		
+		// make sure the database config file exists
 		if (!file_exists(APPPATH.'config/database.php') && $this->request->action != 'setupconfig')
 		{
 			$this->request->redirect('install/setupconfig');
 		}
 		
+		// you're allowed to go to these segments if the system isn't installed
 		$safesegs = array('step', 'index', 'main', 'verify', 'readme');
 		
+		// make sure the system is installed
 		if (count(Database::instance()->list_tables()) < $this->_tables && !(in_array($this->request->action, $safesegs)))
 		{
 			$this->request->redirect('install/index');
+		}
+		
+		// if the system is installed, make sure the user is logged in and a sysadmin
+		if (count(Database::instance()->list_tables()) == $this->_tables)
+		{
+			// get an instance of the session
+			$session = Session::instance();
+			
+			// make sure there's a session
+			if ($session->get('userid'))
+			{
+				// are they a sysadmin?
+				$sysadmin = Auth::is_type('sysadmin', $session->get('userid'));
+				
+				// if they aren't, send them away
+				if ($sysadmin === FALSE)
+				{
+					//$this->request->redirect('login/index/error/1');
+				}
+			}
+			else
+			{
+				// no session? send them away
+				//$this->request->redirect('login/index/error/1');
+			}
 		}
 		
 		// set the locale
@@ -46,6 +74,7 @@ class Controller_Install extends Controller_Template
 		$this->template->layout->label			= FALSE;
 		$this->template->layout->flash_message	= FALSE;
 		$this->template->layout->controls		= FALSE;
+		$this->template->layout->controls_text	= FALSE;
 	}
 	
 	public function action_index()
@@ -67,7 +96,7 @@ class Controller_Install extends Controller_Template
 		$this->request->response = $this->template;
 	}
 	
-	public function action_changedb()
+	public function action_changedb($view = 'main')
 	{
 		// create a new content view
 		$this->template->layout->content = View::factory('install/pages/install_changedb');
@@ -78,22 +107,47 @@ class Controller_Install extends Controller_Template
 		// assign the object a shorter variable to use in the method
 		$data = $this->template->layout->content;
 		
-		if (isset($_POST['submit']))
+		// build the images
+		$data->images = array(
+			'loading' => array(
+				'src' => MODFOLDER.'/nova/install/views/install/images/loading-circle-large.gif',
+				'attr' => array(
+					'alt' => __('action.processing'),
+					'class' => '')),
+		);
+		
+		// show the back button?
+		$showbutton = FALSE;
+		
+		switch ($view)
 		{
-			// set the POST variables
-			$email = trim(security::xss_clean($_POST['email']));
-			$password = trim(security::xss_clean($_POST['password']));
-			
-			// verify that they're allowed to uninstall the system
-			$verify = Auth::verify($email, $password, TRUE);
-			
-			if (is_object($verify) && $verify->sysadmin == 'y')
-			{
-				// set the success variable
-				$data->success = TRUE;
+			case 'table':
+				// set the header
+				$data->header = __('changedb.table_header');
 				
 				// set the message
-				$data->message = __('changedb.success');
+				$data->message = __('changedb.table_inst');
+				
+				// build the button attributes
+				$next = array(
+					'type' => 'submit',
+					'class' => 'button',
+					'id' => 'table',
+				);
+				
+				// build the next step control
+				$this->template->layout->controls = form::button('back', __('changedb.button_table'), $next);
+				
+				// build the controls text
+				$this->template->layout->controls_text = __('changedb.button_table_text');
+				break;
+				
+			case 'field':
+				// set the header
+				$data->header = __('changedb.field_header');
+				
+				// set the message
+				$data->message = __('changedb.field_inst');
 				
 				// set up the options
 				$data->options = array();
@@ -104,12 +158,18 @@ class Controller_Install extends Controller_Template
 				// set the tables select menu options
 				foreach ($tables as $t)
 				{
-					$data->options[$t] = $t;
+					// get the database prefix
+					$prefix = Database::instance()->table_prefix();
+					
+					// set the key without the prefix
+					$key = str_replace($prefix, '', $t);
+					
+					$data->options[$key] = $t;
 				}
 				
 				// set the field type options
 				$data->fieldtypes = array(
-					'Strings &amp; Text' => array(
+					'Strings & Text' => array(
 						'VARCHAR' => 'Text String (varchar)',
 						'TEXT' => 'Text Field',
 						'LONGTEXT' => 'Long Text Field'),
@@ -120,72 +180,65 @@ class Controller_Install extends Controller_Template
 					'ENUM' => 'Enumerated List'
 				);
 				
-				// set the loading image
-				$data->images = array(
-					'loading' => array(
-						'src' => location::image('loading-circle-large.gif', NULL, 'install', 'image'),
-						'attr' => array(
-							'alt' => __('action.processing'),
-							'class' => '')),
-				);
-				
-				// set the inputs
-				$data->inputs = array(
-					'table' => array(
-						'class' => 'button-small',
-						'id' => 'table'),
-					);
-				
 				// build the button attributes
 				$next = array(
 					'type' => 'submit',
 					'class' => 'button',
-					'id' => 'back',
+					'id' => 'field',
 				);
 				
 				// build the next step control
-				$this->template->layout->controls = form::open('install/main').form::button('back', __('genre.button_back'), $next).form::close();
-			}
-			else
-			{
-				// set the flash message
-				$this->template->layout->flash_message = View::factory('install/pages/flash');
-				$this->template->layout->flash_message->status = 'error';
-				$this->template->layout->flash_message->message = (is_numeric($verify)) ? __('error.login_'.$verify) : __('error.sysadmin');
+				$this->template->layout->controls = form::button('back', __('changedb.button_field'), $next);
+				
+				// build the controls text
+				$this->template->layout->controls_text = __('changedb.button_field_text');
+				break;
+				
+			case 'query':
+				// set the header
+				$data->header = __('changedb.query_header');
 				
 				// set the message
-				$data->message = __('changedb.inst');
+				$data->message = __('changedb.query_inst');
 				
 				// build the button attributes
 				$next = array(
 					'type' => 'submit',
 					'class' => 'button',
-					'id' => 'submit',
+					'id' => 'query',
 				);
 				
 				// build the next step control
-				$this->template->layout->controls = form::button('submit', ucfirst(__('action.submit')), $next).form::close();
-			}
-		}
-		else
-		{
-			// set the message
-			$data->message = __('changedb.inst');
+				$this->template->layout->controls = form::button('back', __('changedb.button_query'), $next);
+				
+				// build the controls text
+				$this->template->layout->controls_text = __('changedb.button_query_text');
+				break;
 			
-			// build the button attributes
-			$next = array(
-				'type' => 'submit',
-				'class' => 'button',
-				'id' => 'submit',
-			);
-			
-			// build the next step control
-			$this->template->layout->controls = form::button('submit', ucfirst(__('action.submit')), $next).form::close();
+			default:
+				// set the message
+				$data->message = __('changedb.message');
 		}
 		
 		// content
 		$this->template->title.= __('changedb.title');
 		$this->template->layout->label = __('changedb.label');
+		
+		if ($showbutton === TRUE)
+		{
+			// build the button attributes
+			$next = array(
+				'type' => 'submit',
+				'class' => 'button',
+				'id' => 'back',
+			);
+			
+			// build the next step control
+			$this->template->layout->controls = form::open('install/changedb').form::button('back', __('changedb.button_back'), $next).form::close();
+			
+			// build the controls text
+			$this->template->layout->controls_text = __('changedb.button_back_text');
+		}
 		
 		// send the response
 		$this->request->response = $this->template;
@@ -201,115 +254,70 @@ class Controller_Install extends Controller_Template
 		
 		// assign the object a shorter variable to use in the method
 		$data = $this->template->layout->content;
+	
+		// set the message
+		$data->message = __('genre.message', array(':path' => APPFOLDER.'/config/nova'.EXT));
 		
-		if (isset($_POST['submit']))
+		// map the genres directory
+		$map = Utility::directory_map(MODPATH.'nova/install/assets/genres/');
+		
+		// clear out the index file
+		$indexkey = array_search('index.html', $map);
+		unset($map[$indexkey]);
+		
+		// get the genre info
+		$info = (array) Kohana::config('genreinfo');
+		
+		foreach ($map as $key => $m)
 		{
-			// set the POST variables
-			$email = trim(security::xss_clean($_POST['email']));
-			$password = trim(security::xss_clean($_POST['password']));
+			// drop the extension off
+			$length = strlen(EXT);
+			$value = str_replace(EXT, '', $m);
 			
-			// verify that they're allowed to uninstall the system
-			$verify = Auth::verify($email, $password, TRUE);
-			
-			if (is_object($verify) && $verify->sysadmin == 'y')
+			if (array_key_exists($value, $info))
 			{
-				// set the message
-				$data->message = __('genre.success', array(':path' => APPFOLDER.'/config/nova'.EXT));
-				
-				// map the genres directory
-				$map = Utility::directory_map(MODPATH.'nova/install/assets/genres/');
-				
-				// clear out the index file
-				$indexkey = array_search('index.html', $map);
-				unset($map[$indexkey]);
-				
-				// get the genre info
-				$info = (array) Kohana::config('genreinfo');
-				
-				foreach ($map as $key => $m)
-				{
-					// drop the extension off
-					$length = strlen(EXT);
-					$value = str_replace(EXT, '', $m);
-					
-					if (array_key_exists($value, $info))
-					{
-						$genres[$value] = array(
-							'name' => $info[$value],
-							'installed' => (Database::instance()->list_tables('%_'.$value)) ? TRUE : FALSE
-						);
-						
-						// clear out the item from the map
-						unset($map[$key]);
-					}
-					else
-					{
-						$additional[$value] = array(
-							'name' => $value,
-							'installed' => (Database::instance()->list_tables('%_'.$value)) ? TRUE : FALSE
-						);
-					}
-				}
-				
-				// set the genres list
-				$data->genres = (isset($genres)) ? $genres : FALSE;
-				$data->additional = (isset($additional)) ? $additional : FALSE;
-				
-				// set the loading image
-				$data->images = array(
-					'loading' => array(
-						'src' => location::image('loading-circle-large.gif', NULL, 'install', 'image'),
-						'attr' => array(
-							'alt' => __('action.processing'),
-							'class' => '')),
+				$genres[$value] = array(
+					'name' => $info[$value],
+					'installed' => (Database::instance()->list_tables('%_'.$value)) ? TRUE : FALSE
 				);
 				
-				// build the button attributes
-				$next = array(
-					'type' => 'submit',
-					'class' => 'button',
-					'id' => 'back',
-				);
-				
-				// build the next step control
-				$this->template->layout->controls = form::open('install/main').form::button('back', __('genre.button_back'), $next).form::close();
+				// clear out the item from the map
+				unset($map[$key]);
 			}
 			else
 			{
-				// set the flash message
-				$this->template->layout->flash_message = View::factory('install/pages/flash');
-				$this->template->layout->flash_message->status = 'error';
-				$this->template->layout->flash_message->message = (is_numeric($verify)) ? __('error.login_'.$verify) : __('error.sysadmin');
-				
-				// set the message
-				$data->message = __('genre.inst');
-				
-				// build the button attributes
-				$next = array(
-					'type' => 'submit',
-					'class' => 'button',
-					'id' => 'submit',
+				$additional[$value] = array(
+					'name' => $value,
+					'installed' => (Database::instance()->list_tables('%_'.$value)) ? TRUE : FALSE
 				);
-				
-				// build the next step control
-				$this->template->layout->controls = form::button('submit', ucfirst(__('action.submit')), $next).form::close();
 			}
 		}
-		else
-		{
-			// set the message
-			$data->message = __('genre.inst');
-			
-			// build the button attributes
-			$next = array(
-				'type' => 'submit',
-				'class' => 'button',
-				'id' => 'submit',
-			);
-			
-			// build the next step control
-			$this->template->layout->controls = form::button('submit', ucfirst(__('action.submit')), $next).form::close();
-		}
+		
+		// set the genres list
+		$data->genres = (isset($genres)) ? $genres : FALSE;
+		$data->additional = (isset($additional)) ? $additional : FALSE;
+		
+		// set the loading image
+		$data->images = array(
+			'loading' => array(
+				'src' => location::image('loading-circle-large.gif', NULL, 'install', 'image'),
+				'attr' => array(
+					'alt' => __('action.processing'),
+					'class' => '')),
+		);
+		
+		// build the button attributes
+		$next = array(
+			'type' => 'submit',
+			'class' => 'button',
+			'id' => 'back',
+		);
+		
+		// build the next step control
+		$this->template->layout->controls = form::open('install/main').form::button('back', __('genre.button_back'), $next).form::close();
+		
+		// build the controls text
+		$this->template->layout->controls_text = "Go back to the Installation Center to do another operation";
 		
 		// content
 		$this->template->title.= __('genre.title');
@@ -380,79 +388,49 @@ class Controller_Install extends Controller_Template
 			// grab an instance of the database
 			$db = Database::instance();
 			
-			// set the POST variables
-			$email = trim(security::xss_clean($_POST['email']));
-			$password = trim(security::xss_clean($_POST['password']));
+			// get the database config
+			$dbconf = Kohana::config('database.default');
 			
-			// verify that they're allowed to uninstall the system
-			$verify = Auth::verify($email, $password, TRUE);
+			// initialize the forge
+			$forge = new DBForge;
 			
-			if (is_object($verify) && $verify->sysadmin == 'y')
+			// get an array of the tables
+			$tables = $db->list_tables();
+			
+			// get the prefix length
+			$prefix_len = strlen($dbconf['table_prefix']);
+			
+			// go through all the tables to find out if its part of the system or not
+			foreach ($tables as $key => $value)
 			{
-				// get the database config
-				$dbconf = Kohana::config('database.default');
-				
-				// initialize the forge
-				$forge = new DBForge;
-				
-				// get an array of the tables
-				$tables = $db->list_tables();
-				
-				// get the prefix length
-				$prefix_len = strlen($dbconf['table_prefix']);
-				
-				// go through all the tables to find out if its part of the system or not
-				foreach ($tables as $key => $value)
+				if (substr($value, 0, $prefix_len) != $dbconf['table_prefix'])
 				{
-					if (substr($value, 0, $prefix_len) != $dbconf['table_prefix'])
-					{
-						unset($tables[$key]);
-					}
-					else
-					{
-						$tables[$key] = substr_replace($value, '', 0, $prefix_len);
-					}
+					unset($tables[$key]);
 				}
-				
-				// loop through and uninstall the system
-				foreach ($tables as $v)
+				else
 				{
-					DBForge::drop_table($v);
+					$tables[$key] = substr_replace($value, '', 0, $prefix_len);
 				}
-				
-				// set the failure message
-				$data->message = __('remove.success');
-				
-				// build the button attributes
-				$next = array(
-					'type' => 'submit',
-					'class' => 'button',
-					'id' => 'install',
-				);
-				
-				// build the next step control
-				$this->template->layout->controls = form::open('install/index').form::button('install', __('remove.button_reinstall'), $next).form::close();
 			}
-			else
+			
+			// loop through and uninstall the system
+			foreach ($tables as $v)
 			{
-				// set the flash message
-				$this->template->layout->flash_message = View::factory('install/pages/flash');
-				$this->template->layout->flash_message->status = 'error';
-				$this->template->layout->flash_message->message = (is_numeric($verify)) ? __('error.login_'.$verify) : __('error.sysadmin');
-				
-				// set the failure message
-				$data->message = __('remove.failure');
-				
-				// build the button attributes
-				$next = array(
-					'type' => 'submit',
-					'class' => 'button',
-					'id' => 'back',
-				);
-				
-				// build the next step control
-				$this->template->layout->controls = form::open('install/remove').form::button('back', __('remove.button_back'), $next).form::close();
+				DBForge::drop_table($v);
 			}
+			
+			// set the failure message
+			$data->message = __('remove.success');
+			
+			// build the button attributes
+			$next = array(
+				'type' => 'submit',
+				'class' => 'button',
+				'id' => 'install',
+			);
+			
+			// build the next step control
+			$this->template->layout->controls = form::open('install/index').form::button('install', __('remove.button_reinstall'), $next).form::close();
 		}
 		else
 		{
