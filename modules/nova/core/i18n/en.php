@@ -134,6 +134,7 @@ return array
 	'phrase.flash_failure' => ":item was not successfully :action.:extra",
 	'phrase.flash_failure_plural' => ":item were not successfully :action.:extra",
 	'phrase.please_choose_one' => 'Please Choose One',
+	'phrase.remember_me' => 'Remember Me',
 );
 
 $translations['UM12']	= '(UTC -12:00) Baker/Howland Island';
