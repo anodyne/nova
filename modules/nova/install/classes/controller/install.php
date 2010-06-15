@@ -217,7 +217,7 @@ class Controller_Install extends Controller_Template
 				$data->message = __('genre.success', array(':path' => APPFOLDER.'/config/nova'.EXT));
 				
 				// map the genres directory
-				$map = Utility::directory_map(MODPATH.'install/assets/genres/');
+				$map = Utility::directory_map(MODPATH.'nova/install/assets/genres/');
 				
 				// clear out the index file
 				$indexkey = array_search('index.html', $map);
@@ -495,7 +495,7 @@ class Controller_Install extends Controller_Template
 		// pass the step over to the view file
 		$data->step = $step;
 		
-		if (!file_exists(MODPATH.'database/assets/db.mysql'.EXT))
+		if (!file_exists(MODPATH.'kohana/database/assets/db.mysql'.EXT))
 		{
 			$data->message = __('setup.no_config_file', array(':modules' => MODFOLDER, ':ext' => EXT));
 		}
@@ -649,7 +649,7 @@ class Controller_Install extends Controller_Template
 							$check = array_intersect($disabled, $need);
 							
 							// pull in the mysql file
-							$file = file(MODPATH.'database/assets/db.mysql'.EXT);
+							$file = file(MODPATH.'kohana/database/assets/db.mysql'.EXT);
 							
 							if (is_array($file))
 							{
@@ -911,7 +911,7 @@ return array
 					$forge = new DBForge;
 					
 					// pull in the field information
-					include_once MODPATH.'install/assets/fields'.EXT;
+					include_once MODPATH.'nova/install/assets/fields'.EXT;
 					
 					foreach ($data as $key => $value)
 					{
@@ -936,7 +936,7 @@ return array
 					$data = NULL;
 					
 					// pull in the basic data
-					include_once MODPATH.'install/assets/data'.EXT;
+					include_once MODPATH.'nova/install/assets/data'.EXT;
 					
 					$insert = array();
 					
@@ -960,7 +960,7 @@ return array
 					$data = NULL;
 					
 					// pull in the genre data
-					include_once MODPATH.'install/assets/genres/'.strtolower(Kohana::config('nova.genre')).EXT;
+					include_once MODPATH.'nova/install/assets/genres/'.strtolower(Kohana::config('nova.genre')).EXT;
 					
 					$genre = array();
 					
@@ -986,7 +986,7 @@ return array
 						$data = NULL;
 						
 						// pull in the development test data
-						include_once MODPATH.'install/assets/dev'.EXT;
+						include_once MODPATH.'nova/install/assets/dev'.EXT;
 						
 						$insert = array();
 						
@@ -1135,8 +1135,8 @@ return array
 						$crUser->save();
 						
 						// do the quick installs
-						Utility::install_ranks();
-						Utility::install_skins();
+						//Utility::install_ranks();
+						//Utility::install_skins();
 						
 						// do the registration
 						//$this->_register();
