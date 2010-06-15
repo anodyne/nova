@@ -2392,11 +2392,6 @@ $system_components = array(
 		'comp_desc' => "AjaxQ is a jQuery plugin that implements an AJAX request queueing mechanism.",
 		'comp_url' => 'http://plugins.jquery.com/project/ajaxq'),
 	array(
-		'comp_name' => 'qTip',
-		'comp_version' => '1.0-r29',
-		'comp_desc' => "qTip is an advanced tooltip plugin for the ever popular jQuery JavaScript framework. Built from the ground up to be user friendly, yet feature rich, qTip provides you with tonnes of features like rounded corners and speech bubble tips, and best of all... it's completely free under the MIT license!",
-		'comp_url' => 'http://craigsworks.com/projects/qtip/'),
-	array(
 		'comp_name' => 'TipTip',
 		'comp_version' => '1.3',
 		'comp_desc' => "TipTip is a sweet and simple custom tooltip that behaves just like the browser tooltip. TipTip detects the edges of the browser window and will make sure the tooltip stays within the current window size. As a result the tooltip will adjust itself to be displayed above, below, to the left or to the right of the element with TipTip applied to it, depending on what is necessary to stay within the browser window. TipTip is a very lightweight and intelligent custom tooltip jQuery plugin that uses ZERO images and is completely customizable via CSS.",
@@ -2422,30 +2417,10 @@ $system_components = array(
 		'comp_desc' => "QuickSearch is a simple plugin for filtering tables, lists and paragraphs.",
 		'comp_url' => 'http://rikrikrik.com/jquery/quicksearch/'),
 	array(
-		'comp_name' => 'markItUp!',
-		'comp_version' => '1.1.7',
-		'comp_desc' => "markItUp! is a JavaScript plugin built on the jQuery library that allows you to turn any textarea into a markup editor.",
-		'comp_url' => 'http://markitup.jaysalvat.com/home/'),
-	array(
 		'comp_name' => 'jwysiwyg',
 		'comp_version' => '0.9',
 		'comp_desc' => "A simple rich text editor plugin using jQuery.",
 		'comp_url' => 'http://github.com/akzhan/jwysiwyg'),
-	array(
-		'comp_name' => 'Textile',
-		'comp_version' => '2.0.0',
-		'comp_desc' => "Textile is a lightweight markup language that converts its marked-up text input to valid, well-formed XHTML and also inserts character entity references for apostrophes, opening and closing single and double quotation marks, ellipses and em dashes.",
-		'comp_url' => 'http://textpattern.com/download'),
-	array(
-		'comp_name' => 'PHP Markdown Extra',
-		'comp_version' => '1.2.4',
-		'comp_desc' => "PHP Markdown is a port to PHP of the Markdown program written by John Gruber. Markdown is two things: a plain text markup syntax, and a software tool that converts the plain text markup to HTML for publishing on the web.",
-		'comp_url' => 'http://michelf.com/projects/php-markdown/'),
-	array(
-		'comp_name' => 'YAYparser',
-		'comp_version' => '',
-		'comp_desc' => "YAYparser is a regular expression driven YAML parser that is aimed to be small and easy to use.",
-		'comp_url' => 'http://codeigniter.com/wiki/YAYparser/'),
 	array(
 		'comp_name' => 'sfYAML',
 		'comp_version' => '1.4',
