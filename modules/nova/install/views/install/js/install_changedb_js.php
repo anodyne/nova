@@ -156,6 +156,8 @@
 					$('.loading-query').removeClass('hidden');
 					$('.success-query').addClass('hidden');
 					$('.error-query').addClass('hidden');
+					$('.warning-query').addClass('hidden');
+					$('.special-query').addClass('hidden');
 				},
 				type: "POST",
 				url: "<?php echo url::site('ajax/install_query');?>",
@@ -164,13 +166,21 @@
 					// hide the loader
 					$('.loading-query').addClass('hidden');
 					
-					if (data == "1")
+					if (data == "0")
+					{
+						$('.error-query').removeClass('hidden');
+					}
+					else if (data == "1")
 					{
 						$('.success-query').removeClass('hidden');
 					}
-					else
+					else if (data == "2")
 					{
-						$('.error-query').removeClass('hidden');
+						$('.warning-query').removeClass('hidden');
+					}
+					else if (data == "3")
+					{
+						$('.special-query').removeClass('hidden');
 					}
 				}
 			});

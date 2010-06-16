@@ -16,4 +16,14 @@
 		<?php echo html::image(MODFOLDER.'/nova/install/views/install/images/tick-circle.png', array('class' => 'inline-image-left'));?>
 		<strong class="success"><?php echo __('changedb.success_query');?></strong>
 	</span>
+	
+	<span class="hidden warning-query">
+		<?php echo html::image(MODFOLDER.'/nova/install/views/install/images/exclamation.png', array('class' => 'inline-image-left'));?>
+		<strong class="warning"><?php echo __('changedb.warning_query');?></strong>
+	</span>
+	
+	<span class="hidden special-query">
+		<?php echo html::image(MODFOLDER.'/nova/install/views/install/images/information.png', array('class' => 'inline-image-left'));?>
+		<strong class="info"><?php echo __('changedb.special_query');?></strong>
+	</span>
 </p>

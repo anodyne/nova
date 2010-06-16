@@ -1,5 +1,7 @@
 <p class="fontMedium"><?php echo $message;?></p>
 
+<p class="fontMedium bold"><?php echo html::anchor('install/index', __('genre.button_install'));?></p>
+
 <hr />
 
 <?php if (isset($genres)): ?>

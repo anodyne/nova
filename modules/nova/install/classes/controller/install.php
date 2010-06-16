@@ -7,7 +7,6 @@
  * @author		Anodyne Productions
  */
 
-# TODO: changedb method
 # TODO: uncomment _register() call in step()
 
 class Controller_Install extends Controller_Template
@@ -22,42 +21,47 @@ class Controller_Install extends Controller_Template
 		parent::before();
 		
 		// make sure the database config file exists
-		if (!file_exists(APPPATH.'config/database.php') && $this->request->action != 'setupconfig')
+		if (!file_exists(APPPATH.'config/database.php'))
 		{
-			$this->request->redirect('install/setupconfig');
-		}
-		
-		// you're allowed to go to these segments if the system isn't installed
-		$safesegs = array('step', 'index', 'main', 'verify', 'readme');
-		
-		// make sure the system is installed
-		if (count(Database::instance()->list_tables()) < $this->_tables && !(in_array($this->request->action, $safesegs)))
-		{
-			$this->request->redirect('install/index');
-		}
-		
-		// if the system is installed, make sure the user is logged in and a sysadmin
-		if (count(Database::instance()->list_tables()) == $this->_tables)
-		{
-			// get an instance of the session
-			$session = Session::instance();
-			
-			// make sure there's a session
-			if ($session->get('userid'))
+			if ($this->request->action != 'setupconfig')
 			{
-				// are they a sysadmin?
-				$sysadmin = Auth::is_type('sysadmin', $session->get('userid'));
+				$this->request->redirect('install/setupconfig');
+			}
+		}
+		else
+		{
+			// you're allowed to go to these segments if the system isn't installed
+			$safesegs = array('step', 'index', 'main', 'verify', 'readme');
+			
+			// make sure the system is installed
+			if (count(Database::instance()->list_tables()) < $this->_tables && !(in_array($this->request->action, $safesegs)))
+			{
+				$this->request->redirect('install/index');
+			}
+			
+			// if the system is installed, make sure the user is logged in and a sysadmin
+			if (count(Database::instance()->list_tables()) == $this->_tables)
+			{
+				// get an instance of the session
+				$session = Session::instance();
 				
-				// if they aren't, send them away
-				if ($sysadmin === FALSE)
+				// make sure there's a session
+				if ($session->get('userid'))
 				{
+					// are they a sysadmin?
+					$sysadmin = Auth::is_type('sysadmin', $session->get('userid'));
+					
+					// if they aren't, send them away
+					if ($sysadmin === FALSE)
+					{
+						//$this->request->redirect('login/index/error/1');
+					}
+				}
+				else
+				{
+					// no session? send them away
 					//$this->request->redirect('login/index/error/1');
 				}
-			}
-			else
-			{
-				// no session? send them away
-				//$this->request->redirect('login/index/error/1');
 			}
 		}
 		
@@ -218,6 +222,19 @@ class Controller_Install extends Controller_Template
 			default:
 				// set the message
 				$data->message = __('changedb.message');
+				
+				// build the button attributes
+				$next = array(
+					'type' => 'submit',
+					'class' => 'button',
+					'id' => 'back',
+				);
+				
+				// build the next step control
+				$this->template->layout->controls = form::open('install/index').form::button('back', __('changedb.button_install'), $next).form::close();
+				
+				// build the controls text
+				$this->template->layout->controls_text = __('changedb.button_install_text');
 		}
 		
 		// content
@@ -306,19 +323,6 @@ class Controller_Install extends Controller_Template
 					'class' => '')),
 		);
 		
-		// build the button attributes
-		$next = array(
-			'type' => 'submit',
-			'class' => 'button',
-			'id' => 'back',
-		);
-		
-		// build the next step control
-		$this->template->layout->controls = form::open('install/main').form::button('back', __('genre.button_back'), $next).form::close();
-		
-		// build the controls text
-		$this->template->layout->controls_text = "Go back to the Installation Center to do another operation";
-		
 		// content
 		$this->template->title.= __('genre.title');
 		$this->template->layout->label = __('genre.label');
@@ -370,6 +374,19 @@ class Controller_Install extends Controller_Template
 		// content
 		$this->template->title.= __('readme.title');
 		$this->template->layout->label = __('readme.label');
+		
+		// build the next step button
+		$next = array(
+			'type' => 'submit',
+			'class' => 'button',
+			'id' => 'install',
+		);
+		
+		// build the next step control
+		$this->template->layout->controls = form::open('install/index').form::button('install', __('readme.button_install'), $next).form::close();
+		
+		// build the control text
+		$this->template->layout->controls_text = __('readme.button_install_text');
 		
 		// send the response
 		$this->request->response = $this->template;
@@ -431,11 +448,14 @@ class Controller_Install extends Controller_Template
 			
 			// build the next step control
 			$this->template->layout->controls = form::open('install/index').form::button('install', __('remove.button_reinstall'), $next).form::close();
+			
+			// build the control text
+			$this->template->layout->controls_text = __('remove.button_reinstall_text');
 		}
 		else
 		{
 			// set the instructions
-			$data->message = __('remove.inst');
+			$data->message = __('remove.message');
 			
 			// build the button attributes
 			$next = array(
@@ -445,7 +465,10 @@ class Controller_Install extends Controller_Template
 			);
 			
 			// build the next step control
-			$this->template->layout->controls = form::button('submit', __('remove.button'), $next).form::close();
+			$this->template->layout->controls = form::open('install/remove').form::button('submit', __('remove.button'), $next).form::close();
+			
+			// build the control text
+			$this->template->layout->controls_text = __('remove.button_text');
 		}
 		
 		// content
@@ -502,11 +525,11 @@ class Controller_Install extends Controller_Template
 								'class' => 'button',
 								'id' => 'next',
 							);
-							$text = ucwords(__('order.next').' '.__('label.step'));
 							
 							if (extension_loaded('mysql'))
 							{
-								$this->template->layout->controls = form::open('install/setupconfig/1').form::button('next', $text, $next).'</form>';
+								$this->template->layout->controls = form::open('install/setupconfig/1').form::button('next', __('setup.step0_button'), $next).form::close();
+								$this->template->layout->controls_text = __('setup.step0_button_text');
 							}
 							else
 							{
@@ -529,7 +552,8 @@ class Controller_Install extends Controller_Template
 							$data->message = __('setup.step1_text');
 
 							// build the next step control
-							$this->template->layout->controls = form::button('next', $text, $next).'</form>';
+							$this->template->layout->controls = form::button('next', __('setup.step1_button'), $next).form::close();
+							$this->template->layout->controls_text = __('setup.step1_button_text');
 							break;
 						
 						case 2:
@@ -577,6 +601,7 @@ class Controller_Install extends Controller_Template
 								
 								// write the controls
 								$this->template->layout->controls = form::open('install/setupconfig/3').form::button('next', $text, $next).form::close();
+								$this->template->layout->controls_text = __('setup.step2_write_file_text');
 							} catch (Exception $e) {
 								$msg = (string) $e->getMessage();
 								
@@ -607,6 +632,7 @@ class Controller_Install extends Controller_Template
 								
 								// write the controls
 								$this->template->layout->controls = form::open('install/setupconfig/1').form::button('next', $text, $next).form::close();
+								$this->template->layout->controls_text = __('setup.step2_start_over_text');
 							}
 							break;
 							
@@ -724,6 +750,7 @@ return array
 									
 									// write the controls
 									$this->template->layout->controls = form::open('install/index').form::button('next', $text, $next).form::close();
+									$this->template->layout->controls_text = __('setup.step3_install_text');
 								}
 								else
 								{
@@ -741,6 +768,7 @@ return array
 									
 									// write the controls
 									$this->template->layout->controls = form::open('install/setupconfig/4').form::button('next', $text, $next).form::close();
+									$this->template->layout->controls_text = __('setup.step3_retest_text');
 								}
 							}
 							else
@@ -759,6 +787,7 @@ return array
 								
 								// write the controls
 								$this->template->layout->controls = form::open('install/setupconfig/4').form::button('next', $text, $next).form::close();
+								$this->template->layout->controls_text = __('setup.step3_retest_text');
 							}
 							break;
 							
@@ -782,6 +811,7 @@ return array
 								
 								// write the controls
 								$this->template->layout->controls = form::open('install/index').form::button('next', $text, $next).form::close();
+								$this->template->layout->controls_text = __('setup.step3_install_text');
 								
 								// clear the session
 								$session->destroy();
@@ -815,6 +845,7 @@ return array
 								
 								// write the controls
 								$this->template->layout->controls = form::open('install/setupconfig/1').form::button('next', $text, $next).form::close();
+								$this->template->layout->controls_text = __('setup.step2_start_over_text');
 							}
 							break;
 					}
@@ -845,8 +876,19 @@ return array
 		// figure out if the system is installed
 		$tables = $db->list_tables();
 		
-		# TODO: need to figure out the conditions under which they can't install
-			# if the genre is empty, they can't install
+		// is installation allowed?
+		$allowed = TRUE;
+		
+		if (Kohana::config('nova.genre') == '')
+		{
+			// installation not allowed
+			$allowed = FALSE;
+			
+			// show the flash message
+			$this->template->layout->flash_message = View::factory('install/pages/flash');
+			$this->template->layout->flash_message->status = 'error';
+			$this->template->layout->flash_message->message = __('step.error_no_genre', array(':path' => APPFOLDER.'/config/nova'.EXT));
+		}
 		
 		switch ($step)
 		{
@@ -867,15 +909,19 @@ return array
 				// create the javascript view
 				$this->template->javascript = View::factory('install/js/install_step0_js');
 				
-				// build the next step button
-				$next = array(
-					'type' => 'submit',
-					'class' => 'button',
-					'id' => 'next',
-				);
-				
-				// build the next step control
-				$this->template->layout->controls = form::open('install/step/1').form::button('next', __('step0.button'), $next).form::close();
+				if ($allowed === TRUE)
+				{
+					// build the next step button
+					$next = array(
+						'type' => 'submit',
+						'class' => 'button',
+						'id' => 'next',
+					);
+					
+					// build the next step control
+					$this->template->layout->controls = form::open('install/step/1').form::button('next', __('step0.button'), $next).form::close();
+					$this->template->layout->controls_text = __('step0.button_text');
+				}
 				break;
 				
 			case 1:
@@ -1038,6 +1084,7 @@ return array
 				
 				// build the next step control
 				$this->template->layout->controls = (count($tables) < $this->_tables) ? FALSE : form::button('next', __('step1.button'), $next).form::close();
+				$this->template->layout->controls_text = __('step1.button_text');
 				
 				break;
 				
@@ -1162,6 +1209,7 @@ return array
 				
 				// build the next step control
 				$this->template->layout->controls = form::open('main/index').form::button('next', __('step2.button'), $next).form::close();
+				$this->template->layout->controls_text = __('step2.button_text');
 				
 				break;
 		}
@@ -1194,7 +1242,10 @@ return array
 			);
 			
 			// build the next step control
-			$this->template->layout->controls = form::open('install/step').form::button('install', __('step0.button'), $next).form::close();
+			$this->template->layout->controls = form::open('install/step').form::button('install', __('verify.button_install'), $next).form::close();
+			
+			// build the control text
+			$this->template->layout->controls_text = __('verify.button_install_text');
 		}
 		
 		// content
@@ -1243,11 +1294,8 @@ return array
 				$db->escape(date::now())
 			);
 			
-			// create the transport
-			$transport = Swift_MailTransport::newInstance();
-			
-			// create the mailer
-			$mailer = Swift_Mailer::newInstance($transport);
+			// email setup
+			$mailer = Utility::email_setup();
 			
 			// get a new instance of SwiftMailer
 			$message = Swift_Message::newInstance();
