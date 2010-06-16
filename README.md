@@ -1,17 +1,13 @@
-Nova RPG Management System
-==========================
+# Nova RPG Management System
 Anodyne Production's next-generation RPG management system combines popular features from the SIMM Management System as well as new features like internationalization, developer enhancements, commenting on entries, dynamic forms, multiple characters per player and much more to make Nova the premier web-based solution for managing your RPG game.
 
-Current Version
----------------
+## Current Version
 M1 (2.0.0-m1)
 
-Last Update
------------
-15 June 2010
+## Last Update
+16 June 2010
 
-Version History
----------------
+## Version History
 <table>
 	<tr>
 		<th>Version</th><th>Description</th><th>Start Date</th><th>End Date</th>
