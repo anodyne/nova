@@ -198,38 +198,42 @@ class Controller_Nova_Ajax extends Controller_Nova_Base
 		
 		if (strtolower($queryarray[0]) == 'insert')
 		{
-			$result = $db->query(Database::INSERT, $query, TRUE);
+			try {
+				$result = $db->query(Database::INSERT, $query, TRUE);
+				$return = ($result[1] > 0) ? '1' : '2';
+			} catch (Exception $e) {
+				$return = '0';
+			}
 		}
 		elseif (strtolower($queryarray[0]) == 'update')
 		{
-			$result = $db->query(Database::UPDATE, $query, TRUE);
-			
-			if ($result > 0)
-			{
-				echo '1';
-			}
-			else
-			{
-				echo '0';
+			try {
+				$result = $db->query(Database::UPDATE, $query, TRUE);
+				$return = ($result > 0) ? '1' : '2';
+			} catch (Exception $e) {
+				$return = '0';
 			}
 		}
-		elseif (strtolower($queryarray[0]) == 'delete' || strtolower($queryarray[0]) == 'drop' || strtolower($queryarray[0]) == 'truncate')
+		elseif (strtolower($queryarray[0]) == 'delete')
 		{
-			$result = $db->query(Database::DELETE, $query, TRUE);
-			
-			if ($result > 0)
-			{
-				echo '1';
-			}
-			else
-			{
-				echo '0';
+			try {
+				$result = $db->query(Database::DELETE, $query, TRUE);
+				$return = ($result > 0) ? '1' : '2';
+			} catch (Exception $e) {
+				$return = '0';
 			}
 		}
 		else
 		{
-			$result = $db->query(NULL, $query, TRUE);
+			try {
+				$result = $db->query(NULL, $query, TRUE);
+				echo '3';
+			} catch (Exception $e) {
+				$return = '0';
+			}
 		}
+		
+		echo $return;
 	}
 	
 	public function action_install_table()
