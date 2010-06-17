@@ -154,11 +154,18 @@ abstract class Nova_Utility
 	 */
 	public static function install_ranks($value = NULL)
 	{
-		// find the sfYAML library
-		$path = Kohana::find_file('vendor', 'sfYaml/sfYaml');
+		// get the list of classes that have been loaded
+		$classes = get_declared_classes();
 		
-		// load the sfYAML library
-		Kohana::load($path);
+		// if sfYaml hasn't been loaded, then load it
+		if (!in_array('sfYaml', $classes))
+		{
+			// find the sfYAML library
+			$path = Kohana::find_file('vendor', 'sfYaml/sfYaml');
+			
+			// load the sfYAML library
+			Kohana::load($path);
+		}
 		
 		// get the directory listing for the genre
 		$dir = self::directory_map(APPPATH.'assets/common/'.Kohana::config('nova.genre').'/ranks/', TRUE);
@@ -232,11 +239,18 @@ abstract class Nova_Utility
 	 */
 	public static function install_skins($value = '')
 	{
-		// find the sfYAML library
-		$path = Kohana::find_file('vendor', 'sfYaml/sfYaml');
+		// get the list of classes that have been loaded
+		$classes = get_declared_classes();
 		
-		// load the sfYAML library
-		Kohana::load($path);
+		// if sfYaml hasn't been loaded, then load it
+		if (!in_array('sfYaml', $classes))
+		{
+			// find the sfYAML library
+			$path = Kohana::find_file('vendor', 'sfYaml/sfYaml');
+			
+			// load the sfYAML library
+			Kohana::load($path);
+		}
 		
 		// get the listing of the directory
 		$dir = self::directory_map(APPPATH.'views/', TRUE);
@@ -249,7 +263,7 @@ abstract class Nova_Utility
 			// start by removing anything that's already installed
 			foreach ($skins as $skin)
 			{
-				if ($key = array_search($skin->skin_location, $viewdirs) !== FALSE)
+				if ($key = array_search($skin->skin_location, $dir) !== FALSE)
 				{
 					unset($dir[$key]);
 				}
@@ -296,7 +310,7 @@ abstract class Nova_Utility
 					// go through and add the sections
 					foreach ($content['sections'] as $v)
 					{
-						Jelly::factory('catalgueskinsec')
+						Jelly::factory('catalogueskinsec')
 							->set(array(
 								'section'	=> $v['type'],
 								'skin'		=> $content['location'],
