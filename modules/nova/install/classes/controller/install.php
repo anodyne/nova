@@ -8,6 +8,7 @@
  */
 
 # TODO: uncomment _register() call in step()
+# TODO: uncomment the redirects in the before() method after the login controller is built
 
 class Controller_Install extends Controller_Template
 {
@@ -1160,8 +1161,8 @@ return array
 						$crUser->save();
 						
 						// do the quick installs
-						//Utility::install_ranks();
-						//Utility::install_skins();
+						Utility::install_ranks();
+						Utility::install_skins();
 						
 						// do the registration
 						//$this->_register();
