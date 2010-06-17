@@ -1181,6 +1181,10 @@ class Characters_base extends Controller {
 				'src' => img_location('image-upload.png', $this->skin, 'admin'),
 				'alt' => lang('actions_upload'),
 				'class' => 'image'),
+			'loader' => array(
+				'src' => img_location('loading-bar.gif', $this->skin, 'admin'),
+				'alt' => lang('actions_loading'),
+				'class' => 'image'),
 		);
 		
 		$data['label'] = array(
@@ -1188,6 +1192,7 @@ class Characters_base extends Controller {
 			'fname' => ucwords(lang('order_first') .' '. lang('labels_name')),
 			'images' => ucfirst(lang('labels_images')),
 			'info' => ucfirst(lang('labels_info')),
+			'loading' => ucfirst(lang('actions_loading')) .'...',
 			'lname' => ucwords(lang('order_last') .' '. lang('labels_name')),
 			'mname' => ucwords(lang('order_middle') .' '. lang('labels_name')),
 			'myuploads' => ucwords(lang('labels_my') .' '. lang('labels_uploads')),

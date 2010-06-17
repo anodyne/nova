@@ -137,5 +137,8 @@
 			
 			return false;
 		});
+		
+		$('#loading').hide();
+		$('#loaded').removeClass('hidden');
 	});
 </script>
