@@ -8,11 +8,13 @@ Current Version
 
 Last Update
 -----------
-06 June 2010
+17 June 2010
 
 Changes in 1.0.6
 ----------------
 * added the 1.0.6 update file
+* updated the character bio management page to show a loader until everything has finished loading to help with load time
+* updated jquery ui to version 1.8.2
 * fixed bug where acceptance and rejection messages were sent without any changes an admin made
 
 Known Issues
@@ -24,6 +26,9 @@ Version History
 <table>
 	<tr>
 		<th>Version</th><th>Release Date</th>
+	</tr>
+	<tr>
+		<td>1.0.6</td><td>-</td>
 	</tr>
 	<tr>
 		<td>1.0.5</td><td>06 June 2010</td>
