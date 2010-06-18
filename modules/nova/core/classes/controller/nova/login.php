@@ -71,9 +71,9 @@ class Controller_Nova_Login extends Controller_Nova_Base
 		if (isset($_POST['submit']))
 		{
 			// grab the POST data
-			$email = trim(security:xss_clean($_POST['email']));
-			$password = trim(security:xss_clean($_POST['password']));
-			$remember = trim(security:xss_clean($_POST['rememberme']));
+			$email = trim(security::xss_clean($_POST['email']));
+			$password = trim(security::xss_clean($_POST['password']));
+			$remember = trim(security::xss_clean($_POST['rememberme']));
 			
 			// do the login
 			$login = Auth::login($email, $password, $remember);
