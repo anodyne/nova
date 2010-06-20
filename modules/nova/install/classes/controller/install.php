@@ -715,6 +715,9 @@ return array
 							
 							if (count($check) == 0)
 							{
+								// make sure the config directory has the proper permissions
+								chmod(APPPATH.'config', 0777);
+								
 								// open the file
 								$handle = fopen(APPPATH.'config/database'.EXT, 'w');
 								
