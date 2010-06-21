@@ -1,2 +1,0 @@
-* all users will need to have their timezone format changed from UMXX to X/Y
-	- we'll need some kind of translation array to do that

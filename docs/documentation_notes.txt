@@ -1,9 +1,0 @@
-There is a base controller that loads the stuff everything uses. Every base controller extends this base item.
-
-95% of the database interaction users will need can be accomplished through the Core model. The Core model is loaded in the base controller so it's always available through $this->mCore. Everything else would be handled by specific models.
-
-The Core model accepts an arguments array with just about anything from the Kohana query builder. There are some excpetions to what can be used.
-
-====
-
-Tutorial on extending the Jelly Builder for custom methods
