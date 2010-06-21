@@ -34,10 +34,10 @@ class Model_Character extends Jelly_Model
 				'column' => 'last_name',
 			)),
 			'suffix' => new Field_String,
-			'type' => new Field_Enum(array(
+			'status' => new Field_Enum(array(
 				'column' => 'crew_type',
-				'choices' => array('active','inactive','pending','npc'),
-				'default' => 'active'
+				'choices' => array('active','inactive','pending','archived'),
+				'default' => 'pending'
 			)),
 			'activate' => new Field_Timestamp(array(
 				'column' => 'date_activate',
