@@ -77,45 +77,6 @@ abstract class Nova_Utility
 	}
 	
 	/**
-	 * Sets up the SwiftMailer class with the appropriate transport, creates the mailer and returns
-	 * the instance of the mailer.
-	 *
-	 *     Utility::email_setup();
-	 *
-	 * @uses	Kohana::config
-	 * @return	object	an instance of the mailer object
-	 */
-	public static function email_setup()
-	{
-		// get the email config
-		$email = Kohana::config('email');
-		
-		// create the transport based on what's in the email config file
-		switch ($email->type)
-		{
-			case 'mail':
-				$transport = Swift_MailTransport::newInstance();
-				break;
-				
-			case 'sendmail':
-				$transport = Swift_SendmailTransport::newInstance($email->sendmail_path);
-				break;
-				
-			case 'smtp':
-				$transport = Swift_SmtpTransport::newInstance($email->smtp_server, $email->smtp_port)
-					->setUsername($email->smtp_username)
-					->setPassword($email->smtp_password);
-				
-				break;
-		}
-		
-		// create the mailer
-		$mailer = Swift_Mailer::newInstance($transport);
-		
-		return $mailer;
-	}
-	
-	/**
 	 * Pulls the image index arrays from the base as well as the current skin.
 	 *
 	 *     $image_index = Utility::get_image_index('default');
