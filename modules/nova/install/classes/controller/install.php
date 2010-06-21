@@ -21,7 +21,7 @@ class Controller_Install extends Controller_Template
 		parent::before();
 		
 		// make sure the database config file exists
-		if (!file_exists(APPPATH.'config/database.php'))
+		if (!file_exists(APPPATH.'config/database'.EXT))
 		{
 			if ($this->request->action != 'setupconfig')
 			{
