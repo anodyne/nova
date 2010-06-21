@@ -266,8 +266,8 @@ abstract class Nova_Auth
 			}
 			else
 			{
-				// clear the login attempts if there are any
-				$sys->delete_login_attempts($email);
+				// remove all of a user's login attempts
+				$attempts = Jelly::delete('loginattempt')->where('email', '=', $email)->execute();
 			
 				// update the login record
 				$login->last_login = date::now();
@@ -289,9 +289,9 @@ abstract class Nova_Auth
 			$retval = $login;
 			
 			// create and save the login attempt
-			$attempt = Jelly::factor('loginattempt')
+			$attempt = Jelly::factory('loginattempt')
 				->set(array(
-					'ip' => Request::instance()->$client_ip,
+					'ip' => Request::$client_ip,
 					'email' => $email
 				))
 				->save();
@@ -346,21 +346,18 @@ abstract class Nova_Auth
 	 */
 	protected static function _check_login_attempts($email)
 	{
-		// load the resources
-		$user = new Model_User;
-		$sys = new Model_System;
+		// get the number of attempts the user has made
+		$attempts = Jelly::select('loginattempt')->where('email', '=', $email)->execute();
 		
-		$attempts = $sys->count_login_attempts($email);
-		
-		if ($attempts < self::$allowed_login_attempts)
+		if ($attempts->count() < self::$allowed_login_attempts)
 		{
 			return TRUE;
 		}
 		else
 		{
-			$item = $sys->get_last_login_attempt($email);
+			//$item = $sys->get_last_login_attempt($email);
 			
-			$timeframe = now() - $item->login_time;
+			//$timeframe = now() - $item->login_time;
 			
 			if ($timeframe > self::$lockout_time)
 			{
@@ -428,14 +425,22 @@ abstract class Nova_Auth
 	 */
 	protected static function _set_access($role)
 	{
-		// load the models
-		$access = new Access_Model;
+		// get the string of page IDs
+		$pageids = Jelly::select('accessrole', $role)->pages;
 		
-		// a string of page ids
-		$page_ids = $access->get_role_data($role);
+		// explode the string of page IDs into an array
+		$pageids_array = explode(',', $pageids);
 		
-		// get all the page data for those page ids
-		$pages = $access->get_pages($page_ids);
+		// create an empty array
+		$pages = array();
+		
+		// loop through the page IDs to get page information and put it into an array
+		foreach ($pageids_array as $p)
+		{
+			$pageinfo = Jelly::select('accesspage', $p);
+			
+			$pages[$pageinfo->link] = $pageinfo->level;
+		}
 		
 		return $pages;
 	}
@@ -464,52 +469,54 @@ abstract class Nova_Auth
 	 * @param	object	an object with the user information
 	 * @return 	void
 	 */
-	protected static function _set_session(object $person)
+	protected static function _set_session($person)
 	{
-		// load the models
-		$user = new Users_Model;
-		$char = new Characters_Model;
-		$menu = new Menu_Model;
-		
-		$characters = $char->get_user_characters($person->userid, '', 'array');
-		
-		// set the data that goes in to the session
-		$array['userid'] = $person->userid;
-		$array['skin_main'] = $person->skin_main;
-		$array['skin_admin'] = $person->skin_admin;
-		$array['skin_wiki'] = $person->skin_wiki;
-		$array['display_rank'] = $person->display_rank;
-		$array['language'] = $person->language;
-		$array['timezone'] = $person->timezone;
-		$array['dst'] = $person->daylight_savings;
-		$array['main_char'] = $person->main_char;
-		$array['characters'] = $characters;
-		$array['access'] = $this->_set_access($person->access_role);
-		
-		// put my links into an array
-		$my_links = explode(',', $person->my_links);
-		
-		if (count($my_links) > 0)
+		// get the IDs of all a user's characters
+		foreach ($person->characters->as_array() as $c)
 		{
-			foreach ($my_links as $value)
+			$chars[] = $c['charid'];
+		}
+		
+		// get the user's my links list
+		$mylinks = explode(',', $person->links);
+		
+		// set an empty array
+		$links = array();
+		
+		if (count($mylinks) > 0)
+		{
+			foreach ($mylinks as $value)
 			{
-				$menus = $menu->get_menu_item($value);
-			
-				if ($menus->num_rows() > 0)
+				if (!empty($value) && $value !== NULL)
 				{
-					$item = $menus->row();
+					// get the menu item
+					$menu = Jelly::select('menu', $value);
 					
-					$array['my_links'][] = anchor($item->menu_link, $item->menu_name);
+					// set the link info
+					$links[] = html::anchor($menu->link, $menu->name);
 				}
 			}
 		}
-	
-		// set first launch in the flashdata
-		self::$session->set_flash('first_launch', $person->is_firstlaunch);
-		self::$session->set_flash('password_reset', $person->password_reset);
 		
 		// set the session data
-		self::$session->set($array);
+		self::$session->set('userid', $person->id);
+		self::$session->set('skin_main', $person->skin_main);
+		self::$session->set('skin_wiki', $person->skin_wiki);
+		self::$session->set('skin_admin', $person->skin_admin);
+		self::$session->set('display_rank', $person->rank);
+		self::$session->set('language', $person->language);
+		self::$session->set('dst', $person->dst);
+		self::$session->set('main_char', $person->main_char->id);
+		self::$session->set('characters', $chars);
+		self::$session->set('access', self::_set_access($person->role->id));
+		self::$session->set('my_links', $links);
+		
+		// set first launch in the flashdata
+		//self::$session->set_flash('first_launch', $person->is_firstlaunch);
+		//self::$session->set_flash('password_reset', $person->password_reset);
+		
+		// set the session data
+		//self::$session->set($array);
 		
 		# TODO: need to optimize the table
 	}
