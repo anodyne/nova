@@ -58,6 +58,3 @@ abstract class Controller_Nova_Base extends Controller_Template
 		);
 	}
 }
-
-// End of file base.php
-// Location: modules/nova/classes/controller/nova/base.php
