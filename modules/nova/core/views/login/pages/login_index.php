@@ -2,19 +2,19 @@
 
 <?php echo form::open('login/check');?>
 	<br /><p>
-		<kbd><?php echo ucwords(__('label.email_address'));?></kbd>
+		<kbd><?php echo ucwords(__('email address'));?></kbd>
 		<?php echo form::input('email', NULL, $inputs['email']);?>
 	</p>
 	
 	<p>
-		<kbd><?php echo ucfirst(__('label.password'));?></kbd>
+		<kbd><?php echo ucfirst(__('password'));?></kbd>
 		<?php echo form::password('password', NULL, $inputs['password']);?>
 	</p>
 	
 	<p>
-		<label class="remember" for="remember"><strong><?php echo __('phrase.remember_me');?></strong></label>
-		<?php echo form::checkbox('rememberme', 1, FALSE, $inputs['remember']);?>
+		<label class="remember" for="remember"><strong><?php echo ucwords(__('remember me'));?></strong></label>
+		<?php echo form::checkbox('remember', 1, FALSE, $inputs['remember']);?>
 	</p>
 	
-	<br /><p><?php echo form::button('submit', 'Login', $inputs['button']);?></p>
+	<br /><p><?php echo form::button('submit', ucwords(__('log in')), $inputs['button']);?></p>
 <?php echo form::close();?>

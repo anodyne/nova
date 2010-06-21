@@ -1,3 +1,3 @@
-<?php echo text_output($header, 'h1', 'page-head');?>
+<h1 class="page-head"><?php echo $header;?></h1>
 
-<?php echo text_output($message);?>
+<p><?php echo $message;?></p>

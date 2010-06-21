@@ -81,12 +81,10 @@ return array
 	'label.category' => 'category',
 	'label.comment' => 'comment',
 	'label.comments' => 'comments',
-	'label.email_address' => 'email address',
 	'label.in' => 'in',
 	'label.none' => 'none',
 	'label.off' => 'off',
 	'label.on' => 'on',
-	'label.password' => 'password',
 	'label.step' => 'step',
 	'label.tags' => 'tags',
 	
@@ -111,9 +109,14 @@ return array
 	'abbr.rss' => 'RSS',
 	
 	/**
+	 * Login
+	 */
+	'login.logout' => "You have successfully logged out. You can :login or proceed to the :main. You will be redirected in <span id='countdown'></span>&nbsp;seconds.",
+	'login.success' => "Log in successful. Redirecting to the Control Panel in <span id='countdown'></span>&nbsp;seconds...",
+	
+	/**
 	 * Error Messages
 	 */
-	'error.header' => 'Error!',
 	'error.not_found' => "No :item found.",
 	'error.private_news' => "This :news is private and can only be viewed by registered :users.",
 	'error.login_1' => "You must login to continue!",
@@ -134,10 +137,9 @@ return array
 	'phrase.flash_failure' => ":item was not successfully :action.:extra",
 	'phrase.flash_failure_plural' => ":item were not successfully :action.:extra",
 	'phrase.please_choose_one' => 'Please Choose One',
-	'phrase.remember_me' => 'Remember Me',
 );
 
-$translations['UM12']	= '(UTC -12:00) Baker/Howland Island';
+/*$translations['UM12']	= '(UTC -12:00) Baker/Howland Island';
 $translations['UM11']	= '(UTC -11:00) Samoa Time Zone, Niue';
 $translations['UM10']	= '(UTC -10:00) Hawaii-Aleutian Standard Time, Cook Islands, Tahiti';
 $translations['UM95']	= '(UTC -9:30) Marquesas Islands';
@@ -176,7 +178,4 @@ $translations['UP115']	= '(UTC +11:30) Norfolk Island';
 $translations['UP12']	= '(UTC +12:00) Fiji, Gilbert Islands, Kamchatka Time, New Zealand Standard Time';
 $translations['UP1275']	= '(UTC +12:45) Chatham Islands Standard Time';
 $translations['UP13']	= '(UTC +13:00) Phoenix Islands Time, Tonga';
-$translations['UP14']	= '(UTC +14:00) Line Islands';
-
-// End of file en.php
-// Location: modules/nova/i18n/en.php
+$translations['UP14']	= '(UTC +14:00) Line Islands';*/

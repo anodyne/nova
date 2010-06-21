@@ -8,7 +8,9 @@
 		<meta name="keywords" content="<?php echo Kohana::config('nova.meta_keywords');?>" />
 		<meta name="author" content="<?php echo Kohana::config('nova.meta_author');?>" />
 		
-		<?php if (isset($_redirect)): echo $_redirect; endif;?>
+		<?php if (isset($_redirect)): ?>
+			<meta http-equiv="refresh" content="<?php echo $_redirect['time'];?>;url=<?php echo $_redirect['url'];?>" />
+		<?php endif;?>
 		
 		<!-- STYLESHEETS -->
 		<?php echo html::style(MODFOLDER.'/nova/core/views/_common/css/nova.css');?>
