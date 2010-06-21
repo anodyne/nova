@@ -103,7 +103,10 @@ class Model_User extends Jelly_Model
 			'password_reset' => new Field_Integer,
 			'links' => new Field_Text(array(
 				'column' => 'my_links'
-			))
+			)),
+			'characters' => new Field_HasMany(array(
+				'foreign' => 'characters.user'
+			)),
 		));
 	}
 }
