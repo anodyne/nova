@@ -40,6 +40,10 @@ class Controller_Nova_Main extends Controller_Nova_Base
 		$this->template->layout->ajax 			= FALSE;
 		$this->template->layout->flash_message	= FALSE;
 		$this->template->layout->content		= FALSE;
+		$this->template->layout->panel_1		= FALSE;
+		$this->template->layout->panel_2		= FALSE;
+		$this->template->layout->panel_3		= FALSE;
+		$this->template->layout->panel_workflow	= FALSE;
 	}
 	
 	public function action_index()
