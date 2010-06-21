@@ -7,7 +7,6 @@
  * @author		Anodyne Productions
  */
 
-# TODO: uncomment _register() call in step()
 # TODO: uncomment the redirects in the before() method after the login controller is built
 
 class Controller_Install extends Controller_Template
@@ -1168,7 +1167,7 @@ return array
 						Utility::install_skins();
 						
 						// do the registration
-						//$this->_register();
+						$this->_register();
 					}
 					else
 					{
@@ -1283,7 +1282,7 @@ return array
 			
 			$insert = "INSERT INTO www_installs (product, version, url, ip_client, ip_server, php, db_platform, db_version, type, date, genre) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %d, %s);";
 			
-			$message = sprintf(
+			$data['message'] = sprintf(
 				$insert,
 				$db->escape($request[0]),
 				$db->escape($request[1]),
@@ -1298,20 +1297,8 @@ return array
 				$db->escape(date::now())
 			);
 			
-			// email setup
-			$mailer = Utility::email_setup();
-			
-			// get a new instance of SwiftMailer
-			$message = Swift_Message::newInstance();
-			
-			// set the data for the message
-			$message->setSubject('Nova Registration');
-			$message->setFrom('nova.registration@example.com');
-			$message->setTo(array('anodyne.nova@gmail.com'));
-			$message->setBody($message);
-			
-			// send the message
-			//$result = $mailer->send($message);
+			// send the email
+			$email = email::install_register($data);
 		}
 	}
 }
