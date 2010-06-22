@@ -7,6 +7,8 @@
  * @author		Anodyne Productions
  */
 
+# TODO: uncomment $this->_register
+
 class Controller_Upgrade extends Controller_Template
 {
 	/**
@@ -81,14 +83,6 @@ class Controller_Upgrade extends Controller_Template
 	
 	public function action_index()
 	{
-		// the upgrade process requires the genre to be DS9
-		if (Kohana::config('nova.genre') != 'ds9')
-		{
-			$this->template->layout->flash_message = View::factory('upgrade/pages/flash');
-			$this->template->layout->flash_message->status = 'error';
-			$this->template->layout->flash_message->message = __('Upgrading to Nova 2 requires your genre to be DS9!');
-		}
-		
 		// nova must be installed in the same database where sms is
 		if (count(Database::instance()->list_tables('sms_%')) == 0)
 		{
@@ -200,8 +194,8 @@ class Controller_Upgrade extends Controller_Template
 					);
 					
 					// build the next step control
-					$this->template->layout->controls = form::open('upgrade/step/1').form::button('next', __('step0.button'), $next).form::close();
-					$this->template->layout->controls_text = __('step0.button_text');
+					$this->template->layout->controls = form::open('upgrade/step/1').form::button('next', __('Start Upgrade'), $next).form::close();
+					$this->template->layout->controls_text = __("Start the upgrade by installing Nova's database tables and basic data");
 				}
 				break;
 				
@@ -319,32 +313,9 @@ class Controller_Upgrade extends Controller_Template
 				// assign the object a shorter variable to use in the method
 				$data = $this->template->layout->content;
 				
-				// set the validation errors
-				$data->errors = ($session->get('errors')) ? $session->get('errors') : FALSE;
-				
-				// make sure the proper message is displayed
-				$data->message = ($data->errors === FALSE)
-					? (count($tables) < $this->_tables) ? __('step1.failure') : __('step1.success')
-					: __('step1.errors');
-				
 				// set the loading image
 				$data->loading = array(
 					'src' => location::image('loading-circle-large.gif', NULL, 'upgrade', 'image'),
-					'attr' => array(
-						'class' => 'image'),
-				);
-				
-				// get the default rank set
-				$rankdefault = Jelly::select('setting')->where('key', '=', 'display_rank')->load()->value;
-				
-				// grab the rank catalogue
-				$catalogue = Jelly::select('cataloguerank')->where('location', '=', $rankdefault)->load();
-				
-				// pull the rank record
-				$rank = Jelly::select('rank', $session->get('rank', 1));
-				
-				$data->default_rank = array(
-					'src' => location::image($rank->image.$catalogue->extension, NULL, $catalogue->location, 'rank'),
 					'attr' => array(
 						'class' => 'image'),
 				);
@@ -360,126 +331,155 @@ class Controller_Upgrade extends Controller_Template
 				$next = array(
 					'type' => 'submit',
 					'class' => 'button',
-					'id' => 'next',
+					'id' => 'start',
 				);
 				
 				// build the next step control
-				$this->template->layout->controls = (count($tables) < $this->_tables) ? FALSE : form::button('next', __('step1.button'), $next).form::close();
-				$this->template->layout->controls_text = __('step1.button_text');
+				$this->template->layout->controls = (count($tables) < $this->_tables) ? FALSE : form::button('next', __('Upgrade'), $next).form::close();
+				$this->template->layout->controls_text = __('Upgrade SMS data to Nova. <b>Warning:</b> this may take several minutes');
 				
 				break;
 				
 			case 2:
 				if (isset($_POST['next']))
 				{
-					$validate = Validate::factory($_POST)
-						->rule('email', 'not_empty')
-						->rule('email', 'email')
-						->rule('password', 'not_empty')
-						->rule('password_confirm', 'not_empty')
-						->rule('password_confirm', 'matches', array('password'));
-						
-					if ($validate->check())
+					// pull the defaults for skins and ranks
+					$defaults = array(
+						'skin_main'		=> Jelly::select('catalogueskinsec')->where('section', '=', 'main')->where('default', '=', 'y')->load()->skin,
+						'skin_admin'	=> Jelly::select('catalogueskinsec')->where('section', '=', 'admin')->where('default', '=', 'y')->load()->skin,
+						'skin_wiki'		=> Jelly::select('catalogueskinsec')->where('section', '=', 'wiki')->where('default', '=', 'y')->load()->skin,
+						'rank'			=> Jelly::select('cataloguerank')->where('default', '=', 'y')->load()->location,
+						'links'			=> '',
+					);
+					
+					// update all users
+					Jelly::update('user')->set($defaults)->execute();
+					
+					// update the welcome page header
+					$msg = Jelly::select('message')->where('key', '=', 'welcome_head')->load();
+					$msg->value = 'Welcome to the '.Jelly::select('setting')->where('key', '=', 'sim_name')->load()->value.'!';
+					$msg->save();
+					
+					// do the quick installs
+					Utility::install_ranks();
+					Utility::install_skins();
+					
+					// do the registration
+					//$this->_register();
+					
+					// pause the script
+					sleep(1);
+					
+					// get the crew from the sms table
+					$result = $this->db->query(NULL, 'SELECT * FROM sms_crew', TRUE);
+					
+					foreach ($result as $c)
 					{
-						// wipe out the session if everything is good
-						$session->destroy();
+						$user = Jelly::select('character', $c->crewid)->user;
 						
-						// get the data
-						$simname = trim(security::xss_clean($_POST['sim_name']));
-						$name = trim(security::xss_clean($_POST['name']));
-						$email = trim(security::xss_clean($_POST['email']));
-						$password = trim(security::xss_clean($_POST['password']));
-						$first_name = trim(security::xss_clean($_POST['first_name']));
-						$last_name = trim(security::xss_clean($_POST['last_name']));
-						$position = trim(security::xss_clean($_POST['position']));
-						$rank = trim(security::xss_clean($_POST['rank']));
+						if (!is_null($user) && $user > 0)
+						{
+							// update the news items
+							$news = Jelly::update('news')
+								->where('author_character', '=', $c->crewid)
+								->set(array('author_user' => $user))
+								->save();
+							
+							// update the personal logs
+							$logs = Jelly::update('personallog')
+								->where('author_character', '=', $c->crewid)
+								->set(array('author_user' => $user))
+								->save();
+							
+						}
 						
-						// update the settings
-						$upSettings = Jelly::select('setting')->where('key', '=', 'sim_name')->load();
-						$upSettings->value = $simname;
-						$upSettings->save();
-						
-						$upSettings = Jelly::select('setting')->where('key', '=', 'email_subject')->load();
-						$upSettings->value = '['.$simname.']';
-						$upSettings->save();
-						
-						# TODO: need to change the skin and rank defaults
-						
-						// create the user
-						$crUser = Jelly::factory('user')
-							->set(array(
-								'status'		=> 'active',
-								'name'			=> $name,
-								'email'			=> $email,
-								'password'		=> Auth::hash($password),
-								'role'			=> 1,
-								'sysadmin'		=> 'y',
-								'gm'			=> 'y',
-								'webmaster'		=> 'y',
-								'skin_main'		=> 'default',
-								'skin_wiki'		=> 'default',
-								'skin_admin'	=> 'default',
-								'rank'			=> 'default',
-							))
-							->save();
-						
-						// create the character
-						$crCharacter = Jelly::factory('character')
-							->set(array(
-								'user'			=> $crUser->id,
-								'fname'			=> $first_name,
-								'lname'			=> $last_name,
-								'position1'		=> $position,
-								'rank'			=> $rank,
-								'type'			=> 'active',
-								'activate'		=> date::now(),
-							))
-							->save();
-						
-						// update the user with the character info
-						$crUser->main_char = $crCharacter->id;
-						$crUser->save();
-						
-						// do the quick installs
-						Utility::install_ranks();
-						Utility::install_skins();
-						
-						// do the registration
-						$this->_register();
+						if (!empty($c->awards))
+						{
+							$awards = explode(';', $c->awards);
+							
+							foreach ($awards as $a)
+							{
+								if (strstr($a, '|') !== FALSE)
+								{
+									$x = explode('|', $a);
+									
+									Jelly::factory('awardrec')
+										->set(array(
+											'character' => $c->crewid,
+											'award' => $x[0],
+											'date' => $x[1],
+											'reason' => $x[2]
+										))
+										->save();
+								}
+								else
+								{
+									Jelly::factory('awardrec')
+										->set(array(
+											'character' => $c->crewid,
+											'award' => $a
+										))
+										->save();
+								}
+							}
+						}
 					}
-					else
+					
+					// get all the posts
+					$posts = Jelly::select('post')->execute();
+					
+					foreach ($posts as $p)
 					{
-						// set the session variables
-						$session->set('sim_name', security::xss_clean($_POST['sim_name']));
-						$session->set('name', security::xss_clean($_POST['name']));
-						$session->set('email', security::xss_clean($_POST['email']));
-						$session->set('password', security::xss_clean($_POST['password']));
-						$session->set('first_name', security::xss_clean($_POST['first_name']));
-						$session->set('last_name', security::xss_clean($_POST['last_name']));
-						$session->set('position', security::xss_clean($_POST['position']));
-						$session->set('rank', security::xss_clean($_POST['rank']));
-						$session->set('errors', $validate->errors('register'));
+						// grab the authors and put them into an array
+						$authors = explode(',', $p->authors);
 						
-						// redirect back to step 1
-						$this->request->redirect('install/step/1');
+						// make sure we have an array
+						$array = array();
+						
+						foreach ($authors as $a)
+						{
+							// get the user id
+							$user = Jelly::select('character', $a)->user;
+							
+							if (!is_null($user) && !in_array($user, $array))
+							{
+								$array[] = $user;
+							}
+						}
+						
+						// create a string from the array
+						$users = implode(',', $array);
+						
+						// update the post
+						$post = Jelly::select('post', $p->id);
+						$post->author_users = $users;
+						$post->save();
 					}
 				}
 				
 				// create a new content view
-				$this->template->layout->content = View::factory('install/pages/install_step2');
+				$this->template->layout->content = View::factory('upgrade/pages/upgrade_step2');
 				
 				// assign the object a shorter variable to use in the method
 				$data = $this->template->layout->content;
 				
-				// make sure the proper message is displayed
-				$data->message = __('step2.message');
+				// an empty array for user info
+				$data->options = array();
+				
+				// get all active users
+				$all = Jelly::select('user')->where('status', '=', 'active')->execute();
+				
+				foreach ($all as $a)
+				{
+					$data->options[$a->id] = $a->name.' ('.$a->email.')';
+				}
 				
 				// content
 				$this->template->title.= __('step2.title');
 				$this->template->layout->label = __('step2.label');
 				
 				// create the javascript view
-				$this->template->javascript = View::factory('install/js/install_step2_js');
+				$this->template->javascript = View::factory('upgrade/js/upgrade_step2_js');
 				
 				// build the next step button
 				$next = array(
@@ -489,8 +489,14 @@ class Controller_Upgrade extends Controller_Template
 				);
 				
 				// build the next step control
-				$this->template->layout->controls = form::open('main/index').form::button('next', __('step2.button'), $next).form::close();
-				$this->template->layout->controls_text = __('step2.button_text');
+				$this->template->layout->controls = form::open('upgrade/step/3').form::button('next', __('Finalize'), $next).form::close();
+				$this->template->layout->controls_text = __('Finalize the upgrade process');
+				
+				break;
+				
+			case 3:
+				// do the user updates with passwords and roles here
+				// all done!
 				
 				break;
 		}
@@ -532,5 +538,51 @@ class Controller_Upgrade extends Controller_Template
 		// content
 		$this->template->title.= __('verify.title');
 		$this->template->layout->label = __('verify.title');
+	}
+	
+	private function _register()
+	{
+		if ($path = Kohana::find_file('vendor', 'swiftmailer/lib/swift_required'))
+		{
+			// load the file
+			Kohana::load($path);
+			
+			// get an instance of the database
+			$db = Database::instance();
+			
+			// build the data we need
+			$request = array(
+				Kohana::config('info.app_name'),
+				Kohana::config('info.app_version_full'),
+				url::site(),
+				$_SERVER['REMOTE_ADDR'],
+				$_SERVER['SERVER_ADDR'],
+				phpversion(),
+				$this->db->platform(),
+				$this->db->version(),
+				'upgrade',
+				Kohana::config('nova.genre'),
+			);
+			
+			$insert = "INSERT INTO www_installs (product, version, url, ip_client, ip_server, php, db_platform, db_version, type, date, genre) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %d, %s);";
+			
+			$data['message'] = sprintf(
+				$insert,
+				$db->escape($request[0]),
+				$db->escape($request[1]),
+				$db->escape($request[2]),
+				$db->escape($request[3]),
+				$db->escape($request[4]),
+				$db->escape($request[5]),
+				$db->escape($request[6]),
+				$db->escape($request[7]),
+				$db->escape($request[8]),
+				$db->escape($request[9]),
+				$db->escape(date::now())
+			);
+			
+			// send the email
+			$email = email::install_register($data);
+		}
 	}
 }

@@ -1,6 +1,6 @@
 <script type="text/javascript">
 	$(document).ready(function(){
-		$("#progress").progressbar({ value: 100 });
+		$("#progress").progressbar({ value: 75 });
 		$('#percent').text($('#progress').progressbar('option', 'value') + '%');
 		
 		$('#next').click(function(){
