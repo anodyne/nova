@@ -10,12 +10,12 @@
 | 3 : All PHP errors, warnings & notices and DB errors
 |
 */
-$debug_errors = 3;
+$debug_errors = 1;
 
 switch ($debug_errors)
 {
 	case 1:
-		ini_set('display_errors', 0);
+		ini_set('display_errors', 1);
 		error_reporting(E_ERROR);
 		define('NOVA_DB_DEBUG', TRUE);
 		
