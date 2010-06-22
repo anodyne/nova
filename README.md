@@ -8,13 +8,15 @@ Current Version
 
 Last Update
 -----------
-17 June 2010
+22 June 2010
 
 Changes in 1.0.6
 ----------------
 * added the 1.0.6 update file
 * updated the character bio management page to show a loader until everything has finished loading to help with load time
 * updated jquery ui to version 1.8.2
+* updated the auth library to remove some debug code since the autologin bug seems to have been solved
+* updated the index page to turn down the error reporting (fatal errors and database errors will still be shown)
 * fixed bug where acceptance and rejection messages were sent without any changes an admin made
 
 Known Issues
