@@ -46,7 +46,7 @@ return array
 	 * point for adding your own modules to the load order.
 	 */
 	'modules' => array(
-		// 'upgrade' => MODPATH.'nova/upgrade',
+		'upgrade' => MODPATH.'nova/upgrade',
 		// 'your_mod' => MODPATH.'third_party/your_mod',
 		'about_nova' => MODPATH.'third_party/about_nova',
 	),
