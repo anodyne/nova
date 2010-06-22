@@ -5,12 +5,13 @@
 |---------------------------------------------------------------
 |
 | File: libraries/Auth.php
-| System Version: 1.0.3
+| System Version: 1.0.6
 |
 | Changes: check to see if a user is pending and if they are,
 |	don't allow them to log in; attmpted fix for the issue with
 |	always being locked out of an account; added some debugging
-|	code to help track down the remember me bug
+|	code to help track down the remember me bug; removed some
+|	debug code since the autologin issue seems to have been solved
 |
 | Library for all things authentication
 |
@@ -146,11 +147,8 @@ class Auth {
 			
 			if ($auto !== FALSE)
 			{ /* if the autologin was successful */
-				log_message('error', 'AUTOLOGIN DEBUG - Autologin attempt was successful');
 				return TRUE;
 			}
-			
-			log_message('error', 'AUTOLOGIN DEBUG - Autologin attempt was not successful');
 			
 			if ($redirect === TRUE)
 			{
@@ -414,8 +412,6 @@ class Auth {
 		
 		if ($cookie !== FALSE)
 		{
-			log_message('error', 'AUTOLOGIN DEBUG - Attempting autologin for '. $cookie['email'] .' with password hash '. $cookie['password']);
-			
 			$login = $this->login($cookie['email'], $cookie['password']);
 			
 			return $login;
