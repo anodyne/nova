@@ -269,7 +269,6 @@ $characters = array(
 		'last_name' => 'Baltar',
 		'position_1' => 31,
 		'rank' => 20,
-		'crew_type' => 'npc',
 		'date_activate' => date::now()),
 	array(
 		'first_name' => 'Karl',
@@ -304,49 +303,42 @@ $characters = array(
 		'last_name' => 'Anders',
 		'position_1' => 11,
 		'rank' => 10,
-		'crew_type' => 'npc',
 		'date_activate' => date::now()),
 	array(
 		'first_name' => 'Anastasia',
 		'last_name' => 'Dualla',
 		'position_1' => 5,
 		'rank' => 15,
-		'crew_type' => 'npc',
 		'date_activate' => date::now()),
 	array(
 		'first_name' => 'Brendan',
 		'last_name' => 'Costanza',
 		'position_1' => 11,
 		'rank' => 9,
-		'crew_type' => 'npc',
 		'date_activate' => date::now()),
 	array(
 		'first_name' => 'Louanne',
 		'last_name' => 'Katraine',
 		'position_1' => 10,
 		'rank' => 7,
-		'crew_type' => 'npc',
 		'date_activate' => date::now()),
 	array(
 		'first_name' => 'Laura',
 		'last_name' => 'Roslin',
 		'position_1' => 26,
 		'rank' => 20,
-		'crew_type' => 'npc',
 		'date_activate' => date::now()),
 	array(
 		'first_name' => 'Tom',
 		'last_name' => 'Zarek',
 		'position_1' => 27,
 		'rank' => 20,
-		'crew_type' => 'npc',
 		'date_activate' => date::now()),
 	array(
 		'first_name' => 'Tory',
 		'last_name' => 'Foster',
 		'position_1' => 28,
 		'rank' => 20,
-		'crew_type' => 'npc',
 		'date_activate' => date::now()),
 );
 
