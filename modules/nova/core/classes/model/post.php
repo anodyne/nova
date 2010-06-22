@@ -1,13 +1,13 @@
 <?php defined('SYSPATH') or die('No direct script access.');
 /**
- * News Model
+ * Mission Posts Model
  *
  * @package		Nova
  * @category	Models
  * @author		Anodyne Productions
  */
  
-class Model_News extends Jelly_Model
+class Model_Post extends Jelly_Model
 {
 	/**
 	 * Initialize the model with Jelly_Meta data
@@ -16,56 +16,54 @@ class Model_News extends Jelly_Model
 	 */
 	public static function initialize(Jelly_Meta $meta)
 	{
-		$meta->table('news');
 		$meta->fields(array(
 			'id' => new Field_Primary(array(
-				'column' => 'news_id'
+				'column' => 'post_id'
 			)),
 			'title' => new Field_String(array(
-				'column' => 'news_title'
+				'column' => 'post_title'
 			)),
-			'author_user' => new Field_BelongsTo(array(
-				'column' => 'news_author_user',
-				'foreign' => 'user'
+			'authors' => new Field_Text(array(
+				'column' => 'post_authors'
 			)),
-			'author_character' => new Field_BelongsTo(array(
-				'column' => 'news_author_character',
-				'foreign' => 'character'
-			)),
-			'category' => new Field_HasOne(array(
-				'column' => 'news_cat',
-				'foreign' => 'newscategory.newscat_id'
+			'author_users' => new Field_Text(array(
+				'column' => 'post_authors_users'
 			)),
 			'date' => new Field_Timestamp(array(
-				'column' => 'news_date',
+				'column' => 'post_date',
 				'auto_now_create' => FALSE,
 				'auto_now_update' => FALSE,
 				'null' => TRUE,
 				'default' => date::now()
 			)),
 			'content' => new Field_Text(array(
-				'column' => 'news_content'
+				'column' => 'post_content'
+			)),
+			'location' => new Field_String(array(
+				'column' => 'post_location'
+			)),
+			'timeline' => new Field_String(array(
+				'column' => 'post_timeline'
 			)),
 			'status' => new Field_Enum(array(
-				'column' => 'news_status',
+				'column' => 'post_status',
 				'choices' => array('activated', 'saved', 'pending')
 			)),
-			'private' => new Field_Enum(array(
-				'column' => 'news_private',
-				'choices' => array('y', 'n')
+			'saved' => new Field_Integer(array(
+				'column' => 'post_saved'
 			)),
 			'tags' => new Field_Text(array(
-				'column' => 'news_tags'
+				'column' => 'post_tags'
 			)),
 			'last_update' => new Field_Timestamp(array(
-				'column' => 'news_last_update',
+				'column' => 'post_last_update',
 				'auto_now_create' => FALSE,
 				'auto_now_update' => TRUE,
 				'null' => TRUE,
 				'default' => date::now()
 			)),
 			'comments' => new Field_HasMany(array(
-				'foreign' => 'newscomment.ncomment_news'
+				'foreign' => 'postcomment.pcomment_post'
 			))
 		));
 	}

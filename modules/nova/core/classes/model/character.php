@@ -35,7 +35,7 @@ class Model_Character extends Jelly_Model
 			)),
 			'suffix' => new Field_String,
 			'status' => new Field_Enum(array(
-				'column' => 'crew_type',
+				'column' => 'status',
 				'choices' => array('active','inactive','pending','archived'),
 				'default' => 'pending'
 			)),
