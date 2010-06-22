@@ -2,5 +2,5 @@
 
 return array
 (
-	'dev' => TRUE,
+	'dev' => FALSE,
 );
