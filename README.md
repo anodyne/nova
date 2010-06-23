@@ -8,7 +8,7 @@ Current Version
 
 Last Update
 -----------
-22 June 2010
+23 June 2010
 
 Changes in 1.0.6
 ----------------
@@ -18,6 +18,7 @@ Changes in 1.0.6
 * updated the auth library to remove some debug code since the autologin bug seems to have been solved
 * updated the index page to turn down the error reporting (fatal errors and database errors will still be shown)
 * fixed bug where acceptance and rejection messages were sent without any changes an admin made
+* fixed error thrown when posting a comment on a mission post
 
 Known Issues
 ------------
