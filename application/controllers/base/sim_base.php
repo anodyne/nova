@@ -2300,7 +2300,7 @@ class Sim_base extends Controller {
 				foreach ($authors as $key => $value)
 				{
 					/* get the user id */
-					$user = $this->user->get_user_id_from_email($value);
+					$user = $this->user->get_userid_from_email($value);
 					
 					/* get the author's preference */
 					$pref = $this->user->get_pref('email_new_post_comments', $user);
