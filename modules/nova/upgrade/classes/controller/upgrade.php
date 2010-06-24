@@ -142,6 +142,9 @@ class Controller_Upgrade extends Controller_Template
 		// make sure the script doesn't time out
 		set_time_limit(0);
 		
+		// try to set the memory limit
+		ini_set('memory_limit', '128M');
+		
 		// get an instance of the database
 		$db = Database::instance();
 		
@@ -370,26 +373,27 @@ class Controller_Upgrade extends Controller_Template
 					// pause the script
 					sleep(1);
 					
+					// get an instance of the database
+					$db = Database::instance();
+					
 					// get the crew from the sms table
-					$result = $this->db->query(NULL, 'SELECT * FROM sms_crew', TRUE);
+					$result = $db->query(Database::SELECT, 'SELECT * FROM sms_crew', TRUE);
 					
 					foreach ($result as $c)
 					{
 						$user = Jelly::select('character', $c->crewid)->user;
 						
-						if (!is_null($user) && $user > 0)
+						if (!is_null($user) && $user->id > 0)
 						{
 							// update the news items
 							$news = Jelly::update('news')
 								->where('author_character', '=', $c->crewid)
-								->set(array('author_user' => $user))
-								->save();
+								->set(array('author_user' => $user->id));
 							
 							// update the personal logs
 							$logs = Jelly::update('personallog')
 								->where('author_character', '=', $c->crewid)
-								->set(array('author_user' => $user))
-								->save();
+								->set(array('author_user' => $user->id));
 							
 						}
 						
@@ -438,12 +442,15 @@ class Controller_Upgrade extends Controller_Template
 						
 						foreach ($authors as $a)
 						{
-							// get the user id
-							$user = Jelly::select('character', $a)->user;
-							
-							if (!is_null($user) && !in_array($user, $array))
+							if ($a > 0)
 							{
-								$array[] = $user;
+								// get the user id
+								$user = Jelly::select('character', $a)->user;
+							
+								if (!is_null($user) && !in_array($user->id, $array))
+								{
+									$array[] = $user->id;
+								}
 							}
 						}
 						
