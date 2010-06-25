@@ -4,6 +4,8 @@
  * The methods added to the Form class allow developers to generate select menus with position,
  * rank, department and character listings with only a single line of code.
  *
+ * The HTML5 input elements are based off of work done by Adam Fairholm for CodeIgniter 2.0.
+ *
  * @package		Nova
  * @category	Classes
  * @author		Anodyne Productions
@@ -11,6 +13,252 @@
 
 abstract class Nova_Form extends Kohana_Form
 {
+	/**
+	 * Creates a color picker input field. Currently, no browsers support this field type.
+	 * The HTML5 spec calls for it though, so at some point, it will be supported.
+	 *
+	 *     echo form::color('color');
+	 *
+	 * @uses	form::input
+	 * @param	string	the name of the field
+	 * @param	string	the value of the field
+	 * @param	array 	an array of attributes
+	 * @return	string	the complete field
+	 */
+	public static function color($name, $value = NULL, array $attributes = NULL)
+	{
+		// set the type
+		$attributes['type'] = 'color';
+		
+		// create the element
+		return form::input($name, $value, $attributes);
+	}
+	
+	/**
+	 * Creates a datalist input field. Datalists describe possible values for an input
+	 * element and have a similar format to a select box. The final output of a datalist
+	 * will look something like this:
+	 *
+	 *     <input list="cars" />
+	 *
+	 *     <datalist id="cars">
+	 *         <option value="BMW">
+	 *         <option value="Ford">
+	 *         <option value="Volvo">
+	 *     </datalist>
+	 *
+	 * The input has an attribute called list which corresponds to the id of the datalist.
+	 * The datalist contains elements that are possible values of the input. When a user starts 
+	 * typing, they see the options. This only works in Opera 9+.
+	 *
+	 *     echo form::datalist('data', $values, $attributes);
+	 *
+	 * @uses	form::input
+	 * @param	string	the name of the field
+	 * @param	array 	an array of potential values
+	 * @param	array 	an array of attributes
+	 * @return	string	the complete field
+	 */
+	public static function datalist($name, array $values, array $attributes = NULL)
+	{
+		// set the initial element
+		$html = '<datalist name="'.$name.'" '.html::attributes($attributes).'>';
+		
+		// loop through and create the options
+		foreach ($values as $label => $value)
+		{
+			$html.= '<option value="'.$value.'"></option>';
+		}
+		
+		return $html.= "</datalist>";
+	}
+	
+	/**
+	 * Creates a date input field. For browsers that don't support this field type, a standard
+	 * text input will be used instead. If you're viewing this field in a browser like Opera,
+	 * the field will use a standard date picker. More information about dates and times in
+	 * HTML5 can be found [here](http://diveintohtml5.org/forms.html).
+	 *
+	 *     echo form::date('date');
+	 *
+	 * @uses	form::input
+	 * @param	string	the name of the field
+	 * @param	string	the value of the field
+	 * @param	array 	an array of attributes
+	 * @return	string	the complete field
+	 */
+	public static function date($name, $value = NULL, array $attributes = NULL)
+	{
+		// set the type
+		$attributes['type'] = 'date';
+		
+		// create the element
+		return form::input($name, $value, $attributes);
+	}
+	
+	/**
+	 * Creates a datetime input field. For browsers that don't support this field type, a standard
+	 * text input will be used instead. If you're viewing this field in a browser like Opera, you'll
+	 * be shown a datetime selector.
+	 *
+	 *     echo form::datetime('datetime');
+	 *
+	 * @uses	form::input
+	 * @param	string	the name of the field
+	 * @param	string	the value of the field
+	 * @param	array 	an array of attributes
+	 * @return	string	the complete field
+	 */
+	public static function datetime($name, $value = NULL, array $attributes = NULL)
+	{
+		// set the type
+		$attributes['type'] = 'datetime';
+		
+		// create the element
+		return form::input($name, $value, $attributes);
+	}
+	
+	/**
+	 * Creates a local datetime email input field. For browsers that don't support this field type, a standard
+	 * text input will be used instead. If you're viewing this field in a browser like Opera, you'll
+	 * be shown a datetime selector.
+	 *
+	 *     echo form::datetime_local('datetime');
+	 *
+	 * @uses	form::input
+	 * @param	string	the name of the field
+	 * @param	string	the value of the field
+	 * @param	array 	an array of attributes
+	 * @return	string	the complete field
+	 */
+	public static function datetime_local($name, $value = NULL, array $attributes = NULL)
+	{
+		// set the type
+		$attributes['type'] = 'datetime-local';
+		
+		// create the element
+		return form::input($name, $value, $attributes);
+	}
+	
+	/**
+	 * Creates an email input field. For browsers that don't support this field type, a standard
+	 * text input will be used instead. If you're viewing this field on a device like an iPhone,
+	 * special formatting will be used. This is the preferred way of displaying and gathering
+	 * an email address.
+	 *
+	 *     echo form::email('email');
+	 *
+	 * @uses	form::input
+	 * @param	string	the name of the field
+	 * @param	string	the value of the field
+	 * @param	array 	an array of attributes
+	 * @return	string	the complete field
+	 */
+	public static function email($name, $value = NULL, array $attributes = NULL)
+	{
+		// set the type
+		$attributes['type'] = 'email';
+		
+		// create the element
+		return form::input($name, $value, $attributes);
+	}
+	
+	/**
+	 * Creates a month input field. For browsers that don't support this field type, a standard
+	 * text input will be used instead. If you're viewing this field in a browser like Opera,
+	 * a month/year selector will be shown.
+	 *
+	 *     echo form::month('month');
+	 *
+	 * @uses	form::input
+	 * @param	string	the name of the field
+	 * @param	string	the value of the field
+	 * @param	array 	an array of attributes
+	 * @return	string	the complete field
+	 */
+	public static function month($name, $value = NULL, array $attributes = NULL)
+	{
+		// set the type
+		$attributes['type'] = 'month';
+		
+		// create the element
+		return form::input($name, $value, $attributes);
+	}
+	
+	/**
+	 * Creates a number input field. For browsers that don't support this field type, a standard
+	 * text input will be used instead. If you're viewing this field on a device like an iPhone,
+	 * special formatting will be used. This is the preferred way of displaying and gathering
+	 * numbers. Some browsers will also read specific attributes for numbers as well.
+	 *
+	 *     $attributes = array(
+     *         'min' => 1, // the input's minimum value
+	 *         'max' => 5, // the input's maximum value
+	 *         'step' => 1 // increments the number can go in
+	 *     );
+	 *
+	 *     echo form::number('number', NULL, $attributes);
+	 *
+	 * @uses	form::input
+	 * @param	string	the name of the field
+	 * @param	string	the value of the field
+	 * @param	array 	an array of attributes
+	 * @return	string	the complete field
+	 */
+	public static function number($name, $value = NULL, array $attributes = NULL)
+	{
+		// set the type
+		$attributes['type'] = 'number';
+		
+		// create the element
+		return form::input($name, $value, $attributes);
+	}
+	
+	/**
+	 * Creates a slider input field. For browsers that don't support this field type, a standard
+	 * text input will be used instead. If you're viewing this field on a device like an iPhone,
+	 * special formatting will be used. This field takes the numeric attributes found in form::number
+	 * as well.
+	 *
+	 *     echo form::range('range');
+	 *
+	 * @uses	form::input
+	 * @param	string	the name of the field
+	 * @param	string	the value of the field
+	 * @param	array 	an array of attributes
+	 * @return	string	the complete field
+	 */
+	public static function range($name, $value = NULL, array $attributes = NULL)
+	{
+		// set the type
+		$attributes['type'] = 'range';
+		
+		// create the element
+		return form::input($name, $value, $attributes);
+	}
+	
+	/**
+	 * Creates a search input field. For browsers that don't support this field type, a standard
+	 * text input will be used instead. In some browsers, like Safari, the search box will
+	 * render in a native style. You can read more about search boxes [here](http://diveintohtml5.org/forms.html#type-search).
+	 *
+	 *     echo form::search('search');
+	 *
+	 * @uses	form::input
+	 * @param	string	the name of the field
+	 * @param	string	the value of the field
+	 * @param	array 	an array of attributes
+	 * @return	string	the complete field
+	 */
+	public static function search($name, $value = NULL, array $attributes = NULL)
+	{
+		// set the type
+		$attributes['type'] = 'search';
+		
+		// create the element
+		return form::input($name, $value, $attributes);
+	}
+	
 	/**
 	 * Dropdown menu of characters
 	 *
@@ -392,5 +640,95 @@ abstract class Nova_Form extends Kohana_Form
 		}
 		
 		return FALSE;
+	}
+	
+	/**
+	 * Creates a telephone input field. For browsers that don't support this field type, a standard
+	 * text input will be used instead. If you're viewing this field on a device like an iPhone,
+	 * special formatting will be used. This is the preferred way of displaying and gathering
+	 * telephone numers.
+	 *
+	 *     echo form::tel('phone');
+	 *
+	 * @uses	form::input
+	 * @param	string	the name of the field
+	 * @param	string	the value of the field
+	 * @param	array 	an array of attributes
+	 * @return	string	the complete field
+	 */
+	public static function tel($name, $value = NULL, array $attributes = NULL)
+	{
+		// set the type
+		$attributes['type'] = 'tel';
+		
+		// create the element
+		return form::input($name, $value, $attributes);
+	}
+	
+	/**
+	 * Creates a time input field. For browsers that don't support this field type, a standard
+	 * text input will be used instead. If you're viewing this field in a browser like Opera,
+	 * a time selector will be shown.
+	 *
+	 *     echo form::time('time');
+	 *
+	 * @uses	form::input
+	 * @param	string	the name of the field
+	 * @param	string	the value of the field
+	 * @param	array 	an array of attributes
+	 * @return	string	the complete field
+	 */
+	public static function time($name, $value = NULL, array $attributes = NULL)
+	{
+		// set the type
+		$attributes['type'] = 'time';
+		
+		// create the element
+		return form::input($name, $value, $attributes);
+	}
+	
+	/**
+	 * Creates a URL input field. For browsers that don't support this field type, a standard
+	 * text input will be used instead. If you're viewing this field on a device like an iPhone,
+	 * special formatting will be used. This is the preferred way of displaying and gathering
+	 * a URL.
+	 *
+	 *     echo form::url('link');
+	 *
+	 * @uses	form::input
+	 * @param	string	the name of the field
+	 * @param	string	the value of the field
+	 * @param	array 	an array of attributes
+	 * @return	string	the complete field
+	 */
+	public static function url($name, $value = NULL, array $attributes = NULL)
+	{
+		// set the type
+		$attributes['type'] = 'url';
+		
+		// create the element
+		return form::input($name, $value, $attributes);
+	}
+	
+	/**
+	 * Creates a week input field. For browsers that don't support this field type, a standard
+	 * text input will be used instead. If you're viewing this field in a browser like Opera,
+	 * you'll be shown a week selector.
+	 *
+	 *     echo form::week('week');
+	 *
+	 * @uses	form::input
+	 * @param	string	the name of the field
+	 * @param	string	the value of the field
+	 * @param	array 	an array of attributes
+	 * @return	string	the complete field
+	 */
+	public static function week($name, $value = NULL, array $attributes = NULL)
+	{
+		// set the type
+		$attributes['type'] = 'week';
+		
+		// create the element
+		return form::input($name, $value, $attributes);
 	}
 } // End Form
