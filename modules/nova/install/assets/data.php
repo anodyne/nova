@@ -2418,7 +2418,7 @@ $system_components = array(
 		'comp_url' => 'http://rikrikrik.com/jquery/quicksearch/'),
 	array(
 		'comp_name' => 'jwysiwyg',
-		'comp_version' => '0.9',
+		'comp_version' => '0.9.1',
 		'comp_desc' => "A simple rich text editor plugin using jQuery.",
 		'comp_url' => 'http://github.com/akzhan/jwysiwyg'),
 	array(
