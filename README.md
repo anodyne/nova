@@ -10,6 +10,7 @@ M1.2-pre (2.0-alpha)
 ## Latest Changes
 * updates to the html class
 * updates to the form class
+* updated the jwysiwyg plugin to version 0.9.1
 
 ## Version History
 <table>
