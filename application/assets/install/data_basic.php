@@ -35,7 +35,6 @@ $data = array(
 	'security_questions',
 	'settings',
 	'sim_type',
-	'specs_data',
 	'specs_fields',
 	'specs_sections',
 	'system_components',
@@ -1949,81 +1948,6 @@ $sim_type = array(
 	array('simtype_name' => 'realm'),
 	array('simtype_name' => 'planet'),
 	array('simtype_name' => 'organization')
-);
-
-$specs_data = array(
-	array(
-		'data_field' => 1,
-		'data_value' => ''),
-	array(
-		'data_field' => 2,
-		'data_value' => ''),
-	array(
-		'data_field' => 3,
-		'data_value' => ''),
-	array(
-		'data_field' => 4,
-		'data_value' => ''),
-	array(
-		'data_field' => 5,
-		'data_value' => ''),
-	array(
-		'data_field' => 6,
-		'data_value' => ''),
-	array(
-		'data_field' => 7,
-		'data_value' => ''),
-	array(
-		'data_field' => 8,
-		'data_value' => ''),
-	array(
-		'data_field' => 9,
-		'data_value' => ''),
-	array(
-		'data_field' => 10,
-		'data_value' => ''),
-	array(
-		'data_field' => 11,
-		'data_value' => ''),
-	array(
-		'data_field' => 12,
-		'data_value' => ''),
-	array(
-		'data_field' => 13,
-		'data_value' => ''),
-	array(
-		'data_field' => 14,
-		'data_value' => ''),
-	array(
-		'data_field' => 15,
-		'data_value' => ''),
-	array(
-		'data_field' => 16,
-		'data_value' => ''),
-	array(
-		'data_field' => 17,
-		'data_value' => ''),
-	array(
-		'data_field' => 18,
-		'data_value' => ''),
-	array(
-		'data_field' => 19,
-		'data_value' => ''),
-	array(
-		'data_field' => 20,
-		'data_value' => ''),
-	array(
-		'data_field' => 21,
-		'data_value' => ''),
-	array(
-		'data_field' => 22,
-		'data_value' => ''),
-	array(
-		'data_field' => 23,
-		'data_value' => ''),
-	array(
-		'data_field' => 24,
-		'data_value' => ''),
 );
 
 $specs_fields = array(

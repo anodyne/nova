@@ -76,6 +76,7 @@ $data = array(
 	'settings'					=> array('id' => 'setting_id', 'fields' => 'fields_settings'),
 	'sessions'					=> array('id' => 'session_id', 'fields' => 'fields_sessions'),
 	'sim_type'					=> array('id' => 'simtype_id', 'fields' => 'fields_sim_type'),
+	'specs'						=> array('id' => 'specs_id', 'fields' => 'fields_specs'),
 	'specs_data'				=> array('id' => 'data_id', 'fields' => 'fields_specs_data'),
 	'specs_fields'				=> array('id' => 'field_id', 'fields' => 'fields_specs_fields'),
 	'specs_sections'			=> array('id' => 'section_id', 'fields' => 'fields_specs_sections'),
@@ -1291,11 +1292,36 @@ $fields_sim_type = array(
 		'default' => '')
 );
 
+$fields_specs = array(
+	'specs_id' => array(
+		'type' => 'INT',
+		'constraint' => 5,
+		'auto_increment' => TRUE),
+	'specs_name' => array(
+		'type' => 'VARCHAR',
+		'constraint' => 255,
+		'default' => ''),
+	'specs_order' => array(
+		'type' => 'INT',
+		'constraint' => 4),
+	'specs_display' => array(
+		'type' => 'ENUM',
+		'constraint' => "'y','n'",
+		'default' => 'y'),
+	'specs_images' => array(
+		'type' => 'TEXT'),
+	'specs_summary' => array(
+		'type' => 'TEXT')
+);
+
 $fields_specs_data = array(
 	'data_id' => array(
 		'type' => 'BIGINT',
 		'constraint' => 20,
 		'auto_increment' => TRUE),
+	'data_item' => array(
+		'type' => 'INT',
+		'constraint' => 5),
 	'data_field' => array(
 		'type' => 'INT',
 		'constraint' => 10),
