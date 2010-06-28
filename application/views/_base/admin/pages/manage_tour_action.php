@@ -32,6 +32,14 @@
 			<?php echo form_radio($inputs['display_y']) .' '. form_label($label['on'], 'display_y');?>
 			<?php echo form_radio($inputs['display_n']) .' '. form_label($label['off'], 'display_n');?>
 		</p>
+		
+		<?php if (isset($specs)): ?>
+			<p>
+				<kbd><?php echo $label['spec_item'];?></kbd>
+				<?php echo form_dropdown('tour_spec_item', $specs, $inputs['spec_item']);?>
+			</p>
+		<?php endif;?>
+		
 		<p>
 			<kbd><?php echo $label['summary'];?></kbd>
 			<?php echo form_textarea($inputs['summary']);?>

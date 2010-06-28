@@ -9,7 +9,8 @@
 |
 | Changes: added the ability to have multiple specification items;
 |	fixed bug in the tour management where updating a tour item
-|	would only update the first item and not the one selected
+|	would only update the first item and not the one selected;
+|	added the ability to tie a tour item to a specification item
 |
 | Controller that handles the MANAGE section of the admin system.
 |
@@ -4479,6 +4480,7 @@ class Manage_base extends Controller {
 		
 		/* load the resources */
 		$this->load->model('tour_model', 'tour');
+		$this->load->model('specs_model', 'specs');
 		
 		/* set the variables */
 		$action = $this->uri->segment(3);
@@ -4676,11 +4678,26 @@ class Manage_base extends Controller {
 					'rows' => 6,
 					'value' => ($item === FALSE) ? '' : $item->tour_summary),
 				'images' => (!empty($item->tour_images)) ? explode(',', $item->tour_images) : '',
+				'spec_item' => ($item === FALSE) ? FALSE : $item->tour_spec_item,
 			);
 			
 			if ($item === FALSE)
 			{
 				$data['inputs']['display_y']['checked'] = TRUE;
+			}
+			
+			// get the spec items
+			$specs = $this->specs->get_spec_items();
+			
+			// build the array for the dropdown
+			if ($specs->num_rows() > 0)
+			{
+				$data['specs'][0] = ucwords(lang('labels_please') .' '. lang('actions_choose')) .' '. lang('labels_an') .' '. ucfirst(lang('labels_item'));
+				
+				foreach ($specs->result() as $s)
+				{
+					$data['specs'][$s->specs_id] = $s->specs_name;
+				}
 			}
 			
 			$tour = $this->tour->get_tour_fields();
@@ -4839,13 +4856,14 @@ class Manage_base extends Controller {
 			'info' => ucfirst(lang('labels_info')),
 			'summary' => ucfirst(lang('labels_summary')) .':',
 			'add' => ucwords(lang('actions_add') .' '. lang('global_touritem') .' '. RARROW),
-			'no_tour' => lang('error_no_tour'),
+			'no_tour' => sprintf(lang('error_not_found'), lang('global_touritems')),
 			'upload' => ucwords(lang('actions_upload') .' '. lang('labels_images') .' '. RARROW),
 			'name' => ucfirst(lang('labels_name')),
 			'order' => ucfirst(lang('labels_order')),
 			'display' => ucfirst(lang('labels_display')),
 			'on' => ucfirst(lang('labels_on')),
 			'off' => ucfirst(lang('labels_off')),
+			'spec_item' => ucwords(lang('global_specification') .' '. lang('labels_item')),
 			'summary' => ucfirst(lang('labels_summary')) .': ',
 			'back' => LARROW .' '. ucfirst(lang('actions_back')) .' '. lang('labels_to') .' '. ucwords(lang('global_touritems')),
 			'images_later' => sprintf(lang('add_images_later'), lang('global_touritem')),
