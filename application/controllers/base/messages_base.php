@@ -5,7 +5,11 @@
 |---------------------------------------------------------------
 |
 | File: controllers/messages_base.php
-| System Version: 1.0
+| System Version: 1.0.6
+|
+| Changes: updated the select menu to separate active and inactive
+|	characters to make it easier to get to the users who are actively
+|	using the system
 |
 | Controller that handles the MESSAGES section of the admin system.
 |
@@ -600,9 +604,23 @@ class Messages_base extends Controller {
 		{
 			$data['characters'][0] = ucfirst(lang('actions_select')) .' '. lang('labels_a') .' '. ucfirst(lang('labels_recipient'));
 			
+			/* we do this to make sure active characters are on top */
+			$data['characters'][ucwords(lang('status_active') .' '. lang('global_characters'))] = array();
+			$data['characters'][ucwords(lang('status_inactive') .' '. lang('global_characters'))] = array();
+			
 			foreach ($characters->result() as $item)
 			{
-				$data['characters'][$item->userid] = $this->char->get_character_name($item->main_char, TRUE);
+				$type = ($item->status == 'active')
+					? ucwords(lang('status_active') .' '. lang('global_characters')) 
+					: ucwords(lang('status_inactive') .' '. lang('global_characters'));
+					
+				$data['characters'][$type][$item->userid] = $this->char->get_character_name($item->main_char, TRUE);
+			}
+			
+			/* make sure there's something in the inactive section */
+			if (count($data['characters'][ucwords(lang('status_inactive') .' '. lang('global_characters'))]) == 0)
+			{
+				unset($data['characters'][ucwords(lang('status_inactive') .' '. lang('global_characters'))]);
 			}
 		}
 		
