@@ -5,7 +5,7 @@
 |---------------------------------------------------------------
 |
 | File: assets/install/install_data_dev.php
-| System Version: 1.0.5
+| System Version: 1.0.6
 |
 | Data file that includes all the data being inserted into the
 | database after creating the tables.
@@ -3589,7 +3589,7 @@ $system_components = array(
 		'comp_desc' => 'jQuery UI is a lightweight, easily customizable interface library for the jQuery Javascript library.'),
 	array(
 		'comp_name' => 'jQuery ColorBox',
-		'comp_version' => '1.3.6',
+		'comp_version' => '1.3.8',
 		'comp_desc' => "A light-weight, customizable lightbox plugin for jQuery.",
 		'comp_url' => 'http://colorpowered.com/colorbox/'),
 	array(

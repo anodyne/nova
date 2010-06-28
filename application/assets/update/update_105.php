@@ -179,6 +179,10 @@ if (!is_null($drop_column))
 $this->db->where('comp_name', 'jQuery UI');
 $this->db->update('system_components', array('comp_version' => '1.8.2'));
 
+/* jquery ui version info */
+$this->db->where('comp_name', 'jQuery ColorBox');
+$this->db->update('system_components', array('comp_version' => '1.3.8'));
+
 /* add system version info */
 $this->load->model('system_model', 'sys');
 $this->sys->add_system_version($system_versions);
