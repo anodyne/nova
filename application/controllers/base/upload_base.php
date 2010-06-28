@@ -5,11 +5,9 @@
 |---------------------------------------------------------------
 |
 | File: controllers/upload_base.php
-| System Version: 1.0.2
+| System Version: 1.1
 |
-| Changes: fixed bug where uploaded images outside of the bio
-|	category couldn't be deleted; added notice messages to the
-|	tabs if no images were found
+| Changes: added the ability to upload specs images to the server
 |
 | Controller that handles uploading files and management of
 | uploaded files
@@ -175,6 +173,7 @@ class Upload_base extends Controller {
 			'img_awards' => ucwords(lang('global_award') .' '. lang('labels_image')),
 			'img_char' => ucwords(lang('global_character') .' '. lang('labels_image')),
 			'img_mission' => ucwords(lang('global_mission') .' '. lang('labels_image')),
+			'img_specs' => ucwords(lang('global_specification') .' '. lang('labels_image')),
 			'img_tour' => ucwords(lang('global_tour') .' '. lang('labels_image')),
 			'name' => ucwords(lang('labels_file') .' '. lang('labels_name')),
 			'type' => ucwords(lang('labels_image') .' '. lang('labels_type')),
@@ -195,6 +194,11 @@ class Upload_base extends Controller {
 		if ($this->auth->check_access('manage/missions', FALSE))
 		{
 			$data['values']['type']['mission'] = $data['label']['img_mission'];
+		}
+		
+		if ($this->auth->check_access('manage/specs', FALSE))
+		{
+			$data['values']['type']['specs'] = $data['label']['img_specs'];
 		}
 		
 		if ($this->auth->check_access('manage/tour', FALSE))
@@ -251,6 +255,10 @@ class Upload_base extends Controller {
 						
 					case 'mission':
 						$location = 'images/missions';
+						break;
+						
+					case 'specs':
+						$location = 'images/specs';
 						break;
 						
 					case 'tour':
@@ -329,6 +337,10 @@ class Upload_base extends Controller {
 						$location = 'images/missions';
 						break;
 						
+					case 'specs':
+						$location = 'images/specs';
+						break;
+						
 					case 'tour':
 						$location = 'images/tour';
 						break;
@@ -376,8 +388,12 @@ class Upload_base extends Controller {
 				$js_data['tab'] = 2;
 				break;
 				
-			case 'tour':
+			case 'specs':
 				$js_data['tab'] = 3;
+				break;
+				
+			case 'tour':
+				$js_data['tab'] = 4;
 				break;
 				
 			default:
@@ -388,6 +404,7 @@ class Upload_base extends Controller {
 			'awards' => ($this->auth->check_access('manage/awards', FALSE)) ? TRUE : FALSE,
 			'bio' => ($this->auth->check_access('characters/bio', FALSE)) ? TRUE : FALSE,
 			'missions' => ($this->auth->check_access('manage/missions', FALSE)) ? TRUE : FALSE,
+			'specs' => ($this->auth->check_access('manage/specs', FALSE)) ? TRUE : FALSE,
 			'tour' => ($this->auth->check_access('manage/tour', FALSE)) ? TRUE : FALSE,
 		);
 		
@@ -409,9 +426,11 @@ class Upload_base extends Controller {
 			'noaward' => sprintf(lang('error_not_found'), lang('global_award') .' '. lang('labels_images')),
 			'nobio' => sprintf(lang('error_not_found'), lang('labels_bio') .' '. lang('labels_images')),
 			'nomission' => sprintf(lang('error_not_found'), lang('global_mission') .' '. lang('labels_images')),
+			'nospecs' => sprintf(lang('error_not_found'), lang('global_specification') .' '. lang('labels_images')),
 			'notour' => sprintf(lang('error_not_found'), lang('global_tour') .' '. lang('labels_images')),
 			'on' => lang('labels_on'),
 			'preview' => ucfirst(lang('labels_preview')),
+			'specsimages' => ucwords(lang('global_specs') .' '. lang('labels_images')),
 			'tourimages' => ucwords(lang('global_tour') .' '. lang('labels_images')),
 			'uploadedby' => ucfirst(lang('actions_uploaded') .' '. lang('labels_by')),
 			'upload' => ucwords(lang('actions_upload') .' '. lang('labels_images') .' '. RARROW),
@@ -447,6 +466,10 @@ class Upload_base extends Controller {
 				
 			case 'mission':
 				$path = APPPATH .'assets/images/missions/';
+				break;
+				
+			case 'specs':
+				$path = APPPATH .'assets/images/specs/';
 				break;
 				
 			case 'tour':

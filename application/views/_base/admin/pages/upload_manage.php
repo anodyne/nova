@@ -18,8 +18,12 @@
 			<li><a href="#three"><span><?php echo $label['missionimages'];?></span></a></li>
 		<?php endif;?>
 		
+		<?php if ($access['missions'] === TRUE): ?>
+			<li><a href="#four"><span><?php echo $label['specsimages'];?></span></a></li>
+		<?php endif;?>
+		
 		<?php if ($access['tour'] === TRUE): ?>
-			<li><a href="#four"><span><?php echo $label['tourimages'];?></span></a></li>
+			<li><a href="#five"><span><?php echo $label['tourimages'];?></span></a></li>
 		<?php endif;?>
 	</ul>
 	
@@ -128,8 +132,43 @@
 		</div>
 	<?php endif;?>
 	
-	<?php if ($access['tour'] === TRUE): ?>
+	<?php if ($access['specs'] === TRUE): ?>
 		<div id="four">
+			<?php echo form_open('upload/manage/specs');?>
+			<?php if (isset($directory['specs'])): ?>
+				<table class="table100 zebra">
+					<thead>
+						<th class="col_150"><?php echo $label['preview'];?></th>
+						<th><?php echo $label['filename'];?></th>
+						<th class="col_75"><?php echo $label['delete'];?></th>
+					</thead>
+					<tbody>
+					<?php foreach ($directory['specs'] as $i): ?>
+						<tr>
+							<td><?php echo img($i['image']);?></td>
+							<td>
+								<strong><?php echo $i['filename'];?></strong><br />
+								<span class="fontSmall gray">
+									<?php echo $label['uploadedby'] .' '. $i['user'];?>
+									<?php echo $label['on'] .' '. $i['date'];?>
+								</span>
+							</td>
+							<td class="align_center"><?php echo form_checkbox($i['check']);?></td>
+						</tr>
+					<?php endforeach;?>
+					</tbody>
+				</table><br />
+
+				<div class="align_right"><?php echo form_button($button['submit']);?></div>
+			<?php else: ?>
+				<?php echo text_output($label['nospecs'], 'h3', 'orange');?>
+			<?php endif;?>
+			<?php echo form_close();?>
+		</div>
+	<?php endif;?>
+	
+	<?php if ($access['tour'] === TRUE): ?>
+		<div id="five">
 			<?php echo form_open('upload/manage/tour');?>
 			<?php if (isset($directory['tour'])): ?>
 				<table class="table100 zebra">
