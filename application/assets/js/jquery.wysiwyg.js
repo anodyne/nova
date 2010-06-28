@@ -1,4 +1,3 @@
-// 1.js
 
 (function($)
 {var Wysiwyg=function(element,options)
@@ -25,8 +24,8 @@ options=$.extend({},$.fn.wysiwyg.defaults,options);options.controls=$.extend(tru
 else
 {options.controls[control]=controls[control];}}
 return this.each(function()
-{new Wysiwyg(this,options);});};$.fn.wysiwyg.defaults={html:'<'+'?xml version="1.0" encoding="UTF-8"?'+'><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">STYLE_SHEET</head><body style="margin: 0px;">INITIAL_CONTENT</body></html>',formTableHtml:'<form class="wysiwyg"><fieldset><legend>Insert table</legend><label>Count of columns: <input type="text" name="colCount" value="3" /></label><label><br />Count of rows: <input type="text" name="rowCount" value="3" /></label><input type="submit" class="button" value="Insert table" /> <input type="reset" value="Cancel" /></fieldset></form>',formImageHtml:'<form class="wysiwyg"><fieldset><legend>Insert Image</legend><label>Image URL: <input type="text" name="url" value="http://" /></label><label>Image Title: <input type="text" name="imagetitle" value="" /></label><label>Image Description: <input type="text" name="description" value="" /></label><input type="submit" class="button" value="Insert Image" /> <input type="reset" value="Cancel" /></fieldset></form>',formWidth:440,formHeight:270,tableFiller:'Lorem ipsum',css:{},debug:false,autoSave:true,rmUnwantedBr:true,brIE:true,messages:{nonSelection:'select the text you wish to link'},events:{},controls:{},resizeOptions:false};$.fn.wysiwyg.controls={bold:{visible:true,tags:['b','strong'],css:{fontWeight:'bold'},tooltip:'Bold'},italic:{visible:true,tags:['i','em'],css:{fontStyle:'italic'},tooltip:'Italic'},strikeThrough:{visible:true,tags:['s','strike'],css:{textDecoration:'line-through'},tooltip:'Strike-through'},underline:{visible:true,tags:['u'],css:{textDecoration:'underline'},tooltip:'Underline'},justifyLeft:{visible:true,groupIndex:1,css:{textAlign:'left'},tooltip:'Justify Left'},justifyCenter:{visible:true,tags:['center'],css:{textAlign:'center'},tooltip:'Justify Center'},justifyRight:{visible:true,css:{textAlign:'right'},tooltip:'Justify Right'},justifyFull:{visible:true,css:{textAlign:'justify'},tooltip:'Justify Full'},indent:{groupIndex:2,visible:true,tooltip:'Indent'},outdent:{visible:true,tooltip:'Outdent'},subscript:{groupIndex:3,visible:true,tags:['sub'],tooltip:'Subscript'},superscript:{visible:true,tags:['sup'],tooltip:'Superscript'},undo:{groupIndex:4,visible:true,tooltip:'Undo'},redo:{visible:true,tooltip:'Redo'},insertOrderedList:{groupIndex:5,visible:true,tags:['ol'],tooltip:'Insert Ordered List'},insertUnorderedList:{visible:true,tags:['ul'],tooltip:'Insert Unordered List'},insertHorizontalRule:{visible:true,tags:['hr'],tooltip:'Insert Horizontal Rule'},createLink:{groupIndex:6,visible:true,exec:function()
-{var selection=documentSelection.call($(this.editor));if(selection.length>0)
+{new Wysiwyg(this,options);});};$.fn.wysiwyg.defaults={html:'<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">STYLE_SHEET</head><body style="margin: 0px;">INITIAL_CONTENT</body></html>',formTableHtml:'<form class="wysiwyg"><fieldset><legend>Insert table</legend><label>Count of columns: <input type="text" name="colCount" value="3" /></label><label><br />Count of rows: <input type="text" name="rowCount" value="3" /></label><input type="submit" class="button" value="Insert table" /> <input type="reset" value="Cancel" /></fieldset></form>',formImageHtml:'<form class="wysiwyg"><fieldset><legend>Insert Image</legend><label>Image URL: <input type="text" name="url" value="http://" /></label><label>Image Title: <input type="text" name="imagetitle" value="" /></label><label>Image Description: <input type="text" name="description" value="" /></label><input type="submit" class="button" value="Insert Image" /> <input type="reset" value="Cancel" /></fieldset></form>',formWidth:440,formHeight:270,tableFiller:'Lorem ipsum',css:{},debug:false,autoSave:true,rmUnwantedBr:true,brIE:true,messages:{nonSelection:'select the text you wish to link'},events:{},controls:{},resizeOptions:false};$.fn.wysiwyg.controls={bold:{visible:true,tags:['b','strong'],css:{fontWeight:'bold'},tooltip:'Bold'},italic:{visible:true,tags:['i','em'],css:{fontStyle:'italic'},tooltip:'Italic'},strikeThrough:{visible:true,tags:['s','strike'],css:{textDecoration:'line-through'},tooltip:'Strike-through'},underline:{visible:true,tags:['u'],css:{textDecoration:'underline'},tooltip:'Underline'},justifyLeft:{visible:true,groupIndex:1,css:{textAlign:'left'},tooltip:'Justify Left'},justifyCenter:{visible:true,tags:['center'],css:{textAlign:'center'},tooltip:'Justify Center'},justifyRight:{visible:true,css:{textAlign:'right'},tooltip:'Justify Right'},justifyFull:{visible:true,css:{textAlign:'justify'},tooltip:'Justify Full'},indent:{groupIndex:2,visible:true,tooltip:'Indent'},outdent:{visible:true,tooltip:'Outdent'},subscript:{groupIndex:3,visible:true,tags:['sub'],tooltip:'Subscript'},superscript:{visible:true,tags:['sup'],tooltip:'Superscript'},undo:{groupIndex:4,visible:true,tooltip:'Undo'},redo:{visible:true,tooltip:'Redo'},insertOrderedList:{groupIndex:5,visible:true,tags:['ol'],tooltip:'Insert Ordered List'},insertUnorderedList:{visible:true,tags:['ul'],tooltip:'Insert Unordered List'},insertHorizontalRule:{visible:true,tags:['hr'],tooltip:'Insert Horizontal Rule'},createLink:{groupIndex:6,visible:true,exec:function()
+{var selection=documentSelection.call($(this.editor));if(selection&&selection.length>0)
 {if($.browser.msie)
 {this.focus();this.editorDoc.execCommand('createLink',true,null);}
 else
@@ -63,12 +62,22 @@ else
 {var colCount=prompt('Count of columns','3');var rowCount=prompt('Count of rows','3');this.insertTable(colCount,rowCount,$.fn.wysiwyg.defaults.tableFiller);}}},tags:['table'],tooltip:'Insert table'},h1:{visible:true,groupIndex:7,className:'h1',command:($.browser.msie||$.browser.safari)?'FormatBlock':'heading','arguments':($.browser.msie||$.browser.safari)?'<h1>':'h1',tags:['h1'],tooltip:'Header 1'},h2:{visible:true,className:'h2',command:($.browser.msie||$.browser.safari)?'FormatBlock':'heading','arguments':($.browser.msie||$.browser.safari)?'<h2>':'h2',tags:['h2'],tooltip:'Header 2'},h3:{visible:true,className:'h3',command:($.browser.msie||$.browser.safari)?'FormatBlock':'heading','arguments':($.browser.msie||$.browser.safari)?'<h3>':'h3',tags:['h3'],tooltip:'Header 3'},cut:{groupIndex:8,visible:false,tooltip:'Cut'},copy:{visible:false,tooltip:'Copy'},paste:{visible:false,tooltip:'Paste'},increaseFontSize:{groupIndex:9,visible:false&&!($.browser.msie),tags:['big'],tooltip:'Increase font size'},decreaseFontSize:{visible:false&&!($.browser.msie),tags:['small'],tooltip:'Decrease font size'},removeFormat:{visible:true,exec:function()
 {if($.browser.msie)
 {this.focus();}
-this.editorDoc.execCommand('removeFormat',false,null);this.editorDoc.execCommand('unlink',false,null);},tooltip:'Remove formatting'},html:{groupIndex:10,visible:false,exec:function()
+this.editorDoc.execCommand('formatBlock',false,'<P>');this.editorDoc.execCommand('removeFormat',false,null);this.editorDoc.execCommand('unlink',false,null);},tooltip:'Remove formatting'},html:{groupIndex:10,visible:false,exec:function()
 {if(this.viewHTML)
 {this.setContent($(this.original).val());$(this.original).hide();}
 else
 {this.saveContent();$(this.original).show();}
-this.viewHTML=!(this.viewHTML);},tooltip:'View source code'}};$.extend(Wysiwyg,{insertImage:function(szURL,attributes)
+this.viewHTML=!(this.viewHTML);},tooltip:'View source code'},rtl:{visible:false,exec:function()
+{var selection=$(this.editor).documentSelection();if($("<div />").append(selection).children().length>0)
+{selection=$(selection).attr("dir","rtl");}
+else
+{selection=$("<div />").attr("dir","rtl").append(selection);}
+this.editorDoc.execCommand('inserthtml',false,$("<div />").append(selection).html());},tooltip:"Right to Left"},ltr:{visible:false,exec:function()
+{var selection=$(this.editor).documentSelection();if($("<div />").append(selection).children().length>0)
+{selection=$(selection).attr("dir","ltr");}
+else
+{selection=$("<div />").attr("dir","ltr").append(selection);}
+this.editorDoc.execCommand('inserthtml',false,$("<div />").append(selection).html());},tooltip:"Left to Right"}};$.extend(Wysiwyg,{insertImage:function(szURL,attributes)
 {var self=$.data(this,'wysiwyg');if(self.constructor==Wysiwyg&&szURL&&szURL.length>0)
 {if($.browser.msie)
 {self.focus();}
@@ -80,7 +89,7 @@ else
 {self.editorDoc.execCommand('insertImage',false,szURL);}}
 return this;},createLink:function(szURL)
 {var self=$.data(this,'wysiwyg');if(self.constructor==Wysiwyg&&szURL&&szURL.length>0)
-{var selection=documentSelection.call($(self.editor));if(selection.length>0)
+{var selection=documentSelection.call($(self.editor));if(selection&&selection.length>0)
 {if($.browser.msie)
 {self.focus();}
 self.editorDoc.execCommand('unlink',false,null);self.editorDoc.execCommand('createLink',false,szURL);}
