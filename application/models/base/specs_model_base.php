@@ -27,14 +27,20 @@ class Specs_model_base extends Model {
 	|---------------------------------------------------------------
 	*/
 	
-	function get_field_data($field = '')
+	function get_field_data($id = 0, $field = '')
 	{
 		$this->db->from('specs_data');
+		$this->db->where('data_item', $id);
 		$this->db->where('data_field', $field);
 		
 		$query = $this->db->get();
 		
-		return $query;
+		if ($query->num_rows() > 0)
+		{
+			return $query->row();
+		}
+		
+		return FALSE;
 	}
 	
 	function get_spec_field_details($id = '')
@@ -64,6 +70,38 @@ class Specs_model_base extends Model {
 		}
 		
 		$this->db->order_by('field_order', 'asc');
+		
+		$query = $this->db->get();
+		
+		return $query;
+	}
+	
+	function get_spec_item($id = '')
+	{
+		$this->db->from('specs');
+		$this->db->where('specs_id', $id);
+		$this->db->limit(1);
+		
+		$query = $this->db->get();
+		
+		if ($query->num_rows() > 0)
+		{
+			return $query->row();
+		}
+		
+		return FALSE;
+	}
+	
+	function get_spec_items($display = 'y')
+	{
+		$this->db->from('specs');
+		
+		if (!empty($display))
+		{
+			$this->db->where('specs_display', $display);
+		}
+		
+		$this->db->order_by('specs_order', 'asc');
 		
 		$query = $this->db->get();
 		
@@ -134,6 +172,13 @@ class Specs_model_base extends Model {
 		return $query;
 	}
 	
+	function add_spec_item($data = '')
+	{
+		$query = $this->db->insert('specs', $data);
+		
+		return $query;
+	}
+	
 	function add_spec_section($data = '')
 	{
 		$query = $this->db->insert('specs_sections', $data);
@@ -158,9 +203,9 @@ class Specs_model_base extends Model {
 		return $query;
 	}
 	
-	function delete_spec_field_data($field = '')
+	function delete_spec_field_data($value = '', $identifier = 'data_field')
 	{
-		$query = $this->db->delete('specs_data', array('data_field' => $field));
+		$query = $this->db->delete('specs_data', array($identifier => $value));
 		
 		$this->dbutil->optimize_table('specs_data');
 		
@@ -172,6 +217,15 @@ class Specs_model_base extends Model {
 		$query = $this->db->delete('specs_values', array('value_id' => $id));
 		
 		$this->dbutil->optimize_table('specs_values');
+		
+		return $query;
+	}
+	
+	function delete_spec_item($id = '')
+	{
+		$query = $this->db->delete('specs', array('specs_id' => $id));
+		
+		$this->dbutil->optimize_table('specs');
 		
 		return $query;
 	}
@@ -203,6 +257,17 @@ class Specs_model_base extends Model {
 		return $query;
 	}
 	
+	function update_spec_data($id = '', $field = '', $data = '')
+	{
+		$this->db->where('data_item', $id);
+		$this->db->where('data_field', $field);
+		$query = $this->db->update('specs_data', $data);
+		
+		$this->dbutil->optimize_table('specs_data');
+		
+		return $query;
+	}
+	
 	function update_spec_field($id = '', $data = '')
 	{
 		$this->db->where('field_id', $id);
@@ -229,6 +294,16 @@ class Specs_model_base extends Model {
 		$query = $this->db->update('specs_values', $data);
 		
 		$this->dbutil->optimize_table('specs_values');
+		
+		return $query;
+	}
+	
+	function update_spec_item($id = '', $data = '')
+	{
+		$this->db->where('specs_id', $id);
+		$query = $this->db->update('specs', $data);
+		
+		$this->dbutil->optimize_table('specs');
 		
 		return $query;
 	}

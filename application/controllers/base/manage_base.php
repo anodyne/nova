@@ -5,14 +5,11 @@
 |---------------------------------------------------------------
 |
 | File: controllers/manage_base.php
-| System Version: 1.0.5
+| System Version: 1.1
 |
-| Changes: fixed bug where a rank set without a blank rank image
-|	wouldn't display rank classes (i'm looking at your stargate);
-|	fixed error thrown during accepting a docked ship application;
-|	fixed bug where IE threw errors that broke the pages for
-|	managing posts, logs, news and docked items; fixed errors thrown
-|	when rejecting a docking request
+| Changes: added the ability to have multiple specification items;
+|	fixed bug in the tour management where updating a tour item
+|	would only update the first item and not the one selected
 |
 | Controller that handles the MANAGE section of the admin system.
 |
@@ -4050,182 +4047,427 @@ class Manage_base extends Controller {
 	
 	function specs()
 	{
-		/* check access */
 		$this->auth->check_access();
 		
 		/* load the resources */
 		$this->load->model('specs_model', 'specs');
 		
+		/* set the variables */
+		$action = $this->uri->segment(3);
+		$id = $this->uri->segment(4, FALSE, TRUE);
+		
 		if (isset($_POST['submit']))
 		{
-			$update = 0;
-			
-			foreach ($_POST as $k => $v)
+			switch ($this->uri->segment(3))
 			{
-				$key = $this->input->xss_clean($k);
-				$value = $this->input->xss_clean($v);
-				
-				if (is_numeric($key))
-				{
-					$field_data = $this->specs->get_field_data($key);
-					$row = ($field_data->num_rows() > 0) ? $field_data->row() : FALSE;
-					
-					if ($row->data_value != $value)
+				case 'add':
+					foreach ($_POST as $key => $value)
 					{
-						$specs = array(
-							'data_value' => $value,
-							'data_updated' => now()
-						);
+						if (is_numeric($key))
+						{
+							$fields[] = array(
+								'data_field' => $key,
+								'data_value' => $value,
+								'data_updated' => now()
+							);
+						}
 						
-						$update += $this->specs->update_spec_field_data($key, $specs, 'data_field');
+						if (substr($key, 0, 6) == 'specs_')
+						{
+							$specs[$key] = $value;
+						}
 					}
-				}
-			}
-			
-			if ($update > 0)
-			{
-				$message = sprintf(
-					lang('flash_success_plural'),
-					ucfirst(lang('global_specifications')),
-					lang('actions_updated'),
-					''
-				);
+					
+					$insert = $this->specs->add_spec_item($specs);
+					$insert_id = $this->db->insert_id();
+					
+					/* optimize the table */
+					$this->sys->optimize_table('specs');
+					
+					foreach ($fields as $k => $v)
+					{
+						$v['data_item'] = $insert_id;
+						
+						$insert += $this->specs->add_spec_field_data($v);
+					}
+					
+					if ($insert > 0)
+					{
+						$message = sprintf(
+							lang('flash_success'),
+							ucfirst(lang('global_specification') .' '. lang('labels_item')),
+							lang('actions_created'),
+							''
+						);
 
-				$flash['status'] = 'success';
-				$flash['message'] = text_output($message);
-			}
-			else
-			{
-				$message = sprintf(
-					lang('flash_failure_plural'),
-					ucfirst(lang('global_specifications')),
-					lang('actions_updated'),
-					''
-				);
+						$flash['status'] = 'success';
+						$flash['message'] = text_output($message);
+					}
+					else
+					{
+						$message = sprintf(
+							lang('flash_failure'),
+							ucfirst(lang('global_specification') .' '. lang('labels_item')),
+							lang('actions_created'),
+							''
+						);
 
-				$flash['status'] = 'error';
-				$flash['message'] = text_output($message);
+						$flash['status'] = 'error';
+						$flash['message'] = text_output($message);
+					}
+					
+					/* write everything to the template */
+					$this->template->write_view('flash_message', '_base/admin/pages/flash', $flash);
+					
+					break;
+					
+				case 'delete':
+					$id = $this->input->post('id', TRUE);
+					$id = (is_numeric($id)) ? $id : FALSE;
+					
+					$delete = $this->specs->delete_spec_item($id);
+					
+					if ($delete > 0)
+					{
+						$message = sprintf(
+							lang('flash_success'),
+							ucfirst(lang('global_specification') .' '. lang('labels_item')),
+							lang('actions_deleted'),
+							''
+						);
+
+						$flash['status'] = 'success';
+						$flash['message'] = text_output($message);
+						
+						$this->specs->delete_spec_field_data($id, 'data_item');
+					}
+					else
+					{
+						$message = sprintf(
+							lang('flash_failure'),
+							ucfirst(lang('global_specification') .' '. lang('labels_item')),
+							lang('actions_deleted'),
+							''
+						);
+
+						$flash['status'] = 'error';
+						$flash['message'] = text_output($message);
+					}
+					
+					/* write everything to the template */
+					$this->template->write_view('flash_message', '_base/admin/pages/flash', $flash);
+					
+					break;
+					
+				case 'edit':
+					$id = $this->input->post('id', TRUE);
+					$id = (is_numeric($id)) ? $id : FALSE;
+					
+					foreach ($_POST as $key => $value)
+					{
+						if (is_numeric($key))
+						{
+							$fields[$key] = array(
+								'data_value' => $value,
+								'data_updated' => now()
+							);
+						}
+						
+						if (substr($key, 0, 6) == 'specs_')
+						{
+							$specs[$key] = $value;
+						}
+					}
+					
+					$update = $this->specs->update_spec_item($id, $specs);
+					
+					foreach ($fields as $k => $v)
+					{
+						$update += $this->specs->update_spec_data($id, $k, $v);
+					}
+					
+					if ($update > 0)
+					{
+						$message = sprintf(
+							lang('flash_success'),
+							ucfirst(lang('global_specification') .' '. lang('labels_item')),
+							lang('actions_updated'),
+							''
+						);
+
+						$flash['status'] = 'success';
+						$flash['message'] = text_output($message);
+					}
+					else
+					{
+						$message = sprintf(
+							lang('flash_failure'),
+							ucfirst(lang('global_specification') .' '. lang('labels_item')),
+							lang('actions_updated'),
+							''
+						);
+
+						$flash['status'] = 'error';
+						$flash['message'] = text_output($message);
+					}
+					
+					/* write everything to the template */
+					$this->template->write_view('flash_message', '_base/admin/pages/flash', $flash);
+					
+					break;
 			}
-			
-			/* write everything to the template */
-			$this->template->write_view('flash_message', '_base/admin/pages/flash', $flash);
 		}
 		
-		$sections = $this->specs->get_spec_sections();
-		
-		if ($sections->num_rows() > 0)
+		if ($action == 'add' || $action == 'edit')
 		{
-			foreach ($sections->result() as $sec)
+			$item = ($action == 'edit') ? $this->specs->get_spec_item($id) : FALSE;
+			
+			$data['header'] = ucwords(lang('actions_'. $action) .' '. lang('global_specification') .' '. lang('labels_item'));
+			$data['header'].= ($action == 'edit') ? ' - '. $item->specs_name : '';
+			
+			$data['inputs'] = array(
+				'name' => array(
+					'name' => 'specs_name',
+					'value' => ($item === FALSE) ? '' : $item->specs_name),
+				'order' => array(
+					'name' => 'specs_order',
+					'class' => 'small',
+					'value' => ($item === FALSE) ? '' : $item->specs_order),
+				'display_y' => array(
+					'name' => 'specs_display',
+					'id' => 'display_y',
+					'value' => 'y',
+					'checked' => ($item !== FALSE && $item->specs_display == 'y') ? TRUE : FALSE),
+				'display_n' => array(
+					'name' => 'specs_display',
+					'id' => 'display_n',
+					'value' => 'n',
+					'checked' => ($item !== FALSE && $item->specs_display == 'n') ? TRUE : FALSE),
+				'summary' => array(
+					'name' => 'specs_summary',
+					'rows' => 6,
+					'value' => ($item === FALSE) ? '' : $item->specs_summary),
+				'images' => (!empty($item->specs_images)) ? explode(',', $item->specs_images) : '',
+			);
+			
+			if ($item === FALSE)
 			{
-				$sid = $sec->section_id; /* section id */
-				
-				/* set the section name */
-				$data['specs'][$sid]['name'] = $sec->section_name;
-				
-				/* grab the fields for the given section */
-				$fields = $this->specs->get_spec_fields($sec->section_id);
-				
-				if ($fields->num_rows() > 0)
+				$data['inputs']['display_y']['checked'] = TRUE;
+			}
+			
+			$sections = $this->specs->get_spec_sections();
+			
+			if ($sections->num_rows() > 0)
+			{
+				foreach ($sections->result() as $sec)
 				{
-					foreach ($fields->result() as $field)
+					$sid = $sec->section_id; /* section id */
+					
+					/* set the section name */
+					$data['specs'][$sid]['name'] = $sec->section_name;
+					
+					/* grab the fields for the given section */
+					$fields = $this->specs->get_spec_fields($sec->section_id);
+					
+					if ($fields->num_rows() > 0)
 					{
-						$f_id = $field->field_id; /* field id */
-						
-						/* set the page label */
-						$data['specs'][$sid]['fields'][$f_id]['field_label'] = $field->field_label_page;
-						
-						switch ($field->field_type)
+						foreach ($fields->result() as $field)
 						{
-							case 'text':
-								$field_data = $this->specs->get_field_data($field->field_id);
-								$row = ($field_data->num_rows() > 0) ? $field_data->row() : FALSE;
-								
-								$input = array(
-									'name' => $field->field_id,
-									'id' => $field->field_fid,
-									'class' => $field->field_class,
-									'value' => ($row !== FALSE) ? $row->data_value : ''
-								);
-								
-								$data['specs'][$sid]['fields'][$f_id]['input'] = form_input($input);
-								
-								break;
-								
-							case 'textarea':
-								$field_data = $this->specs->get_field_data($field->field_id);
-								$row = ($field_data->num_rows() > 0) ? $field_data->row() : FALSE;
-								
-								$input = array(
-									'name' => $field->field_id,
-									'id' => $field->field_fid,
-									'class' => $field->field_class,
-									'value' => ($row !== FALSE) ? $row->data_value : '',
-									'rows' => $field->field_rows
-								);
-								
-								$data['specs'][$sid]['fields'][$f_id]['input'] = form_textarea($input);
-								
-								break;
-								
-							case 'select':
-								$value = FALSE;
-								$values = FALSE;
-								$input = FALSE;
+							$f_id = $field->field_id; /* field id */
 							
-								$values = $this->specs->get_spec_values($field->field_id);
+							/* set the page label */
+							$data['specs'][$sid]['fields'][$f_id]['field_label'] = $field->field_label_page;
+							
+							switch ($field->field_type)
+							{
+								case 'text':
+									$row = $this->specs->get_field_data($id, $f_id);
+									
+									$input = array(
+										'name' => $field->field_id,
+										'id' => $field->field_fid,
+										'class' => $field->field_class,
+										'value' => ($row !== FALSE) ? $row->data_value : ''
+									);
+									
+									$data['specs'][$sid]['fields'][$f_id]['input'] = form_input($input);
+									
+									break;
+									
+								case 'textarea':
+									$row = $this->specs->get_field_data($id, $f_id);
+									
+									$input = array(
+										'name' => $field->field_id,
+										'id' => $field->field_fid,
+										'class' => $field->field_class,
+										'value' => ($row !== FALSE) ? $row->data_value : '',
+										'rows' => $field->field_rows
+									);
+									
+									$data['specs'][$sid]['fields'][$f_id]['input'] = form_textarea($input);
+									
+									break;
+									
+								case 'select':
+									$value = FALSE;
+									$values = FALSE;
+									$input = FALSE;
 								
-								$field_data = $this->specs->get_field_data($field->field_id);
-								$row = ($field_data->num_rows() > 0) ? $field_data->row() : FALSE;
-								$default = ($row !== FALSE) ? $row->data_value : '';
-								
-								if ($values->num_rows() > 0)
-								{
-									foreach ($values->result() as $value)
+									$values = $this->specs->get_spec_values($field->field_id);
+									
+									$row = $this->specs->get_field_data($id, $f_id);
+									$default = ($row !== FALSE) ? $row->data_value : '';
+									
+									if ($values->num_rows() > 0)
 									{
-										$input[$value->value_field_value] = $value->value_content;
+										foreach ($values->result() as $value)
+										{
+											$input[$value->value_field_value] = $value->value_content;
+										}
 									}
-								}
-								
-								$data['specs'][$sid]['fields'][$f_id]['input'] = form_dropdown($field->field_id, $input, $default);
-								break;
+									
+									$data['specs'][$sid]['fields'][$f_id]['input'] = form_dropdown($field->field_id, $input, $default);
+									break;
+							}
 						}
 					}
 				}
 			}
-		}
-				
-		/* figure out where the view should be coming from */
-		$view_loc = view_location('manage_specs', $this->skin, 'admin');
-		$js_loc = js_location('manage_specs_js', $this->skin, 'admin');
+			
+			/*$data['directory'] = array();
 		
-		$data['header'] = ucwords(lang('actions_manage') .' '. lang('global_specifications'));
-		$data['text'] = lang('text_manage_specs');
+			$dir = $this->sys->get_uploaded_images('specs');
+			
+			if ($dir->num_rows() > 0)
+			{
+				foreach ($dir->result() as $d)
+				{
+					$data['directory'][$d->upload_id] = array(
+						'image' => array(
+							'src' => asset_location('images/specs', $d->upload_filename),
+							'alt' => $d->upload_filename,
+							'class' => 'image image-height-100'),
+						'file' => $d->upload_filename,
+						'id' => $d->upload_id
+					);
+				}
+			}*/
+			
+			$data['form'] = ($action == 'edit') ? 'edit/'. $id : 'add';
+			$data['id'] = $id;
+			
+			$view_loc = view_location('manage_specs_action', $this->skin, 'admin');
+		}
+		else
+		{
+			$specs = $this->specs->get_spec_items('');
+			
+			if ($specs->num_rows() > 0)
+			{
+				foreach ($specs->result() as $s)
+				{
+					$sid = $s->specs_id;
+					
+					$data['specs'][$sid] = array(
+						'id' => $sid,
+						'name' => $s->specs_name,
+						'summary' => $s->specs_summary
+					);
+				}
+			}
+			
+			$data['header'] = ucwords(lang('actions_manage') .' '. lang('global_specification') .' '. lang('labels_items'));
+			$data['text'] = lang('text_manage_specs');
+			
+			$view_loc = view_location('manage_specs', $this->skin, 'admin');
+		}
 		
 		$data['images'] = array(
 			'form' => array(
 				'src' => img_location('forms-field.png', $this->skin, 'admin'),
-				'class' => 'image inline_img_left',
-				'alt' => ''),
+				'alt' => '',
+				'class' => 'image inline_img_left'),
+			'edit' => array(
+				'src' => img_location('icon-edit.png', $this->skin, 'admin'),
+				'alt' => ucfirst(lang('actions_edit')),
+				'title' => ucfirst(lang('actions_edit')),
+				'class' => 'image'),
+			'delete' => array(
+				'src' => img_location('icon-delete.png', $this->skin, 'admin'),
+				'alt' => ucfirst(lang('actions_delete')),
+				'title' => ucfirst(lang('actions_delete')),
+				'class' => 'image'),
+			'add' => array(
+				'src' => img_location('icon-add.png', $this->skin, 'admin'),
+				'alt' => ucfirst(lang('actions_add')),
+				'title' => ucfirst(lang('actions_add')),
+				'class' => 'image inline_img_left'),
+			'upload' => array(
+				'src' => img_location('image-upload.png', $this->skin, 'admin'),
+				'alt' => lang('actions_upload'),
+				'class' => 'image'),
+			'loading' => array(
+				'src' => img_location('loading-circle.gif', $this->skin, 'admin'),
+				'alt' => lang('actions_loading'),
+				'class' => 'image'),
 		);
 		
-		$data['button_submit'] = array(
-			'type' => 'submit',
-			'class' => 'button-main',
-			'name' => 'submit',
-			'value' => 'submit',
-			'content' => ucwords(lang('actions_submit'))
+		$data['image_instructions'] = sprintf(
+			lang('text_image_select'),
+			lang('global_specification') .' '. lang('labels_items')
 		);
 		
 		$data['label'] = array(
-			'no_specs' => lang('error_no_specs'),
-			'specsform' => ucwords(lang('actions_manage') .' '. lang('global_specs') .' '. 
-				lang('labels_form') .' '. RARROW),
+			'form' => ucwords(lang('actions_manage') .' '. lang('global_specs') .' '. lang('labels_form') .' '. RARROW),
+			'images' => ucfirst(lang('labels_images')),
+			'info' => ucfirst(lang('labels_info')),
+			'summary' => ucfirst(lang('labels_summary')) .':',
+			'add' => ucwords(lang('actions_add') .' '. lang('global_specification') .' '. lang('labels_item') .' '. RARROW),
+			'no_specs' => sprintf(lang('error_not_found'), lang('global_specification') .' '. lang('labels_items')),
+			'upload' => ucwords(lang('actions_upload') .' '. lang('labels_images') .' '. RARROW),
+			'name' => ucfirst(lang('labels_name')),
+			'order' => ucfirst(lang('labels_order')),
+			'display' => ucfirst(lang('labels_display')),
+			'on' => ucfirst(lang('labels_on')),
+			'off' => ucfirst(lang('labels_off')),
+			'summary' => ucfirst(lang('labels_summary')) .': ',
+			'back' => LARROW .' '. ucfirst(lang('actions_back')) .' '. lang('labels_to') .' '. ucwords(lang('global_specification') .' '. lang('labels_items')),
+			'images_later' => sprintf(lang('add_images_later'), lang('global_specification') .' '. lang('labels_item')),
 		);
+		
+		$data['buttons'] = array(
+			'submit' => array(
+				'type' => 'submit',
+				'class' => 'button-main',
+				'name' => 'submit',
+				'value' => 'submit',
+				'content' => ucwords(lang('actions_submit'))),
+			'use' => array(
+				'type' => 'submit',
+				'class' => 'button-sec add',
+				'name' => 'use',
+				'value' => 'use',
+				'content' => ucwords(lang('actions_use') .' '. lang('labels_image'))),
+			'update' => array(
+				'type' => 'submit',
+				'class' => 'button-main',
+				'name' => 'submit',
+				'value' => 'submit',
+				'id' => 'update',
+				'rel' => $id,
+				'content' => ucwords(lang('actions_update'))),
+		);
+		
+		$js_data['id'] = $id;
+		
+		/* figure out where the view should be coming from */
+		$js_loc = js_location('manage_specs_js', $this->skin, 'admin');
 		
 		/* write the data to the template */
 		$this->template->write('title', $data['header']);
 		$this->template->write_view('content', $view_loc, $data);
-		$this->template->write_view('javascript', $js_loc);
+		$this->template->write_view('javascript', $js_loc, $js_data);
 		
 		/* render the template */
 		$this->template->render();
@@ -4369,7 +4611,7 @@ class Manage_base extends Controller {
 					
 					foreach ($fields as $k => $v)
 					{
-						$update += $this->tour->update_tour_data($k, $v);
+						$update += $this->tour->update_tour_data($id, $k, $v);
 					}
 					
 					if ($update > 0)

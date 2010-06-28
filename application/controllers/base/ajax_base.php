@@ -4186,6 +4186,52 @@ class Ajax_base extends Controller {
 		}
 	}
 	
+	function del_spec_item()
+	{
+		/* load the resources */
+		$this->load->model('specs_model', 'specs');
+		
+		$head = sprintf(
+			lang('fbx_head'),
+			ucwords(lang('actions_delete')),
+			ucwords(lang('global_specification') .' '. lang('labels_item'))
+		);
+		
+		/* data being sent to the facebox */
+		$data['header'] = $head;
+		$data['id'] = $this->uri->segment(3, 0, TRUE);
+		
+		$item = $this->specs->get_spec_item($data['id']);
+		
+		$data['text'] = sprintf(
+			lang('fbx_content_del_entry'),
+			lang('global_specification') .' '. lang('labels_item'),
+			$item->specs_name
+		);
+		
+		/* input parameters */
+		$data['inputs'] = array(
+			'submit' => array(
+				'type' => 'submit',
+				'class' => 'hud_button',
+				'name' => 'submit',
+				'value' => 'submit',
+				'content' => ucwords(lang('actions_submit')))
+		);
+		
+		/* figure out the skin */
+		$skin = $this->session->userdata('skin_admin');
+		
+		/* figure out where the view should come from */
+		$ajax = ajax_location('del_spec_item', $skin, 'admin');
+		
+		/* write the data to the template */
+		$this->template->write_view('content', $ajax, $data);
+		
+		/* render the template */
+		$this->template->render();
+	}
+	
 	function del_spec_sec()
 	{
 		/* load the resources */
