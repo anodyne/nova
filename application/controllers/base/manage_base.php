@@ -4336,7 +4336,7 @@ class Manage_base extends Controller {
 				}
 			}
 			
-			/*$data['directory'] = array();
+			$data['directory'] = array();
 		
 			$dir = $this->sys->get_uploaded_images('specs');
 			
@@ -4353,7 +4353,7 @@ class Manage_base extends Controller {
 						'id' => $d->upload_id
 					);
 				}
-			}*/
+			}
 			
 			$data['form'] = ($action == 'edit') ? 'edit/'. $id : 'add';
 			$data['id'] = $id;
