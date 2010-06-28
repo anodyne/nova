@@ -8,9 +8,8 @@ M1.2-pre (2.0-alpha)
 25 June 2010
 
 ## Latest Changes
-* updates to the html class
-* updates to the form class
-* updated the jwysiwyg plugin to version 0.9.1
+* updated the jwysiwyg plugin to version 0.9.2
+* updated the colobox plugin to version 1.3.8
 
 ## Version History
 <table>
