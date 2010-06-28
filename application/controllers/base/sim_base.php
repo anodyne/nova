@@ -5,13 +5,10 @@
 |---------------------------------------------------------------
 |
 | File: controllers/base/sim_base.php
-| System Version: 1.0.5
+| System Version: 1.1
 |
-| Changes: fixed bug where saved mission posts were displayed
-|	when they shouldn't be; fixed bug where error was thrown for
-|	missing option parameters; fixed security issue where docking
-|	request data wasn't filtered for xss attacks; fixed bugs with
-|	the email sent to GMs when a docking request is submitted
+| Changes: added the ability to display multiple specification
+|	items
 |
 | Controller that handles the SIM part of the system.
 |
@@ -1387,42 +1384,122 @@ class Sim_base extends Controller {
 		/* grab the title */
 		$title = ucfirst(lang('global_specifications'));
 		
-		/* run the methods */
-		$sections = $this->specs->get_spec_sections();
+		/* set the variables */
+		$id = $this->uri->segment(3, FALSE, TRUE);
 		
-		if ($sections->num_rows() > 0)
+		if ($id === FALSE)
 		{
-			foreach ($sections->result() as $sec)
-			{ /* throw the section title into the array */
-				$data['sections'][$sec->section_id]['title'] = $sec->section_name;
-				
-				/* get the fields */
-				$fields = $this->specs->get_spec_fields($sec->section_id);
-				
-				if ($fields->num_rows() > 0)
+			/* run the methods */
+			$specs = $this->specs->get_spec_items();
+			
+			if ($specs->num_rows() > 0)
+			{
+				foreach ($specs->result() as $item)
 				{
-					foreach ($fields->result() as $field)
+					$data['items'][$item->specs_id]['id'] = $item->specs_id;
+					$data['items'][$item->specs_id]['name'] = $item->specs_name;
+					$data['items'][$item->specs_id]['summary'] = $item->specs_summary;
+				}
+			}
+			
+			/* set the header */
+			$data['header'] = $title;
+			
+			/* figure out where the view should be coming from */
+			$view_loc = view_location('sim_specs_all', $this->skin, 'main');
+			
+			/* set the title */
+			$this->template->write('title', $title);
+		}
+		else
+		{
+			/* run the methods */
+			$item = $this->specs->get_spec_item($id);
+			
+			if ($item !== FALSE)
+			{
+				/* set the data being sent to the view */
+				$data['name'] = $item->specs_name;
+				$data['summary'] = $item->specs_summary;
+				
+				if ($item->specs_images > '')
+				{ /* make sure there are actually images */
+					/* get the images */
+					$images = explode(',', $item->specs_images);
+					$images_count = count($images);
+				
+					/* set the image */
+					$data['images']['main_img'] = array(
+						'src' => asset_location('images/specs', trim($images[0])),
+						'alt' => $data['name'],
+						'class' => 'image reflect rheight20 ropacity30',
+						'width' => 400
+					);
+					
+					for ($i=1; $i < $images_count; $i++)
 					{
-						/* grab the data for the fields */
-						$field_data = $this->specs->get_field_data($field->field_id);
+						/* build the array */
+						$data['images']['image_array'][] = array(
+							'src' => asset_location('images/specs', trim($images[$i])),
+							'alt' => $data['name'],
+							'class' => 'image'
+						);
+					}
+				}
+				
+				/* run the methods */
+				$sections = $this->specs->get_spec_sections();
+				
+				if ($sections->num_rows() > 0)
+				{
+					foreach ($sections->result() as $sec)
+					{
+						/* get the fields */
+						$fields = $this->specs->get_spec_fields($sec->section_id);
 						
-						if ($field_data->num_rows() > 0)
+						if ($fields->num_rows() > 0)
 						{
-							foreach ($field_data->result() as $item)
-							{ /* put the data into the array */
-								$data['sections'][$sec->section_id]['fields'][] = array(
-									'field' => $field->field_label_page,
-									'data' => $item->data_value
-								);
+							foreach ($fields->result() as $field)
+							{
+								/* grab the data for the fields */
+								$item = $this->specs->get_field_data($id, $field->field_id);
+								
+								if ($item !== FALSE && !empty($item->data_value))
+								{
+									$data['sections'][$sec->section_id]['title'] = $sec->section_name;
+									
+									$data['sections'][$sec->section_id]['fields'][] = array(
+										'field' => $field->field_label_page,
+										'data' => $item->data_value
+									);
+								}
 							}
 						}
 					}
 				}
+				
+				/* set the header */
+				$data['header'] = $title .' - '. $data['name'];
+				
+				/* figure out where the view should be coming from */
+				$view_loc = view_location('sim_specs_one', $this->skin, 'main');
+				
+				/* set the title */
+				$this->template->write('title', $title .' - '. $data['name']);
+			}
+			else
+			{
+				/* set the header */
+				$data['header'] = lang('error_head_not_found');
+				$data['msg_error'] = lang('error_msg_not_found');
+				
+				/* figure out where the view should be coming from */
+				$view_loc = view_location('error', $this->skin, 'main');
+				
+				/* set the title */
+				$this->template->write('title', lang('error_pagetitle'));
 			}
 		}
-		
-		/* set the header */
-		$data['header'] = $title;
 		
 		if ($this->auth->is_logged_in() === TRUE && $this->auth->check_access('manage/specs', FALSE) === TRUE)
 		{
@@ -1443,21 +1520,23 @@ class Sim_base extends Controller {
 		}
 		
 		$data['label'] = array(
-			'edit' => '[ '. ucwords(lang('actions_edit') .' '.
-				lang('global_specifications')) .' ]',
-			'edit_form' => '[ '. ucwords(lang('actions_edit') .' '.
-				lang('global_specifications') .' '. lang('labels_form')) .' ]',
+			'back' => LARROW .' '. ucfirst(lang('actions_back')) .' '. lang('labels_to') .' '. ucwords(lang('global_specs')),
+			'desc' => ucfirst(lang('labels_desc')),
+			'edit' => '[ '. ucwords(lang('actions_edit') .' '. lang('global_specs') .' '. lang('labels_items')) .' ]',
+			'edit_form' => '[ '. ucwords(lang('actions_edit') .' '. lang('global_specs') .' '. lang('labels_form')) .' ]',
+			'info' => ucwords(lang('labels_addtl_info')),
+			'name' => ucfirst(lang('labels_name')),
 			'nospecs' => lang('error_no_specs'),
+			'opengallery' => lang('open_gallery'),
+			'summary' => ucfirst(lang('labels_summary')),
 		);
 		
-		/* figure out where the views should be coming from */
-		$view_loc = view_location('sim_specs', $this->skin, 'main');
+		/* set the javascript location */
 		$js_loc = js_location('sim_specs_js', $this->skin, 'main');
 		
 		/* write the data to the template */
-		$this->template->write('title', $title);
 		$this->template->write_view('content', $view_loc, $data);
-		$this->template->write_view('javascript', $js_loc, $data);
+		$this->template->write_view('javascript', $js_loc);
 		
 		/* render the template */
 		$this->template->render();
