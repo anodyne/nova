@@ -2378,7 +2378,7 @@ $system_components = array(
 		'comp_desc' => 'jQuery UI is a lightweight, easily customizable interface library for the jQuery Javascript library.'),
 	array(
 		'comp_name' => 'jQuery ColorBox',
-		'comp_version' => '1.3.6',
+		'comp_version' => '1.3.8',
 		'comp_desc' => "A light-weight, customizable lightbox plugin for jQuery.",
 		'comp_url' => 'http://colorpowered.com/colorbox/'),
 	array(
@@ -2418,7 +2418,7 @@ $system_components = array(
 		'comp_url' => 'http://rikrikrik.com/jquery/quicksearch/'),
 	array(
 		'comp_name' => 'jwysiwyg',
-		'comp_version' => '0.9.1',
+		'comp_version' => '0.9.2',
 		'comp_desc' => "A simple rich text editor plugin using jQuery.",
 		'comp_url' => 'http://github.com/akzhan/jwysiwyg'),
 	array(
