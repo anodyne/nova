@@ -5,7 +5,7 @@
 |---------------------------------------------------------------
 |
 | File: assets/install/install_data_dev.php
-| System Version: 1.0.6
+| System Version: 1.1
 |
 | Data file that includes all the data being inserted into the
 | database after creating the tables.
@@ -3254,84 +3254,211 @@ $sim_type = array(
 	array('simtype_name' => 'organization')
 );
 
+$specs = array(
+	array(
+		'specs_name' => 'Item 1',
+		'specs_order' => 0,
+		'specs_summary' => 'Lorem ipsum...'),
+	array(
+		'specs_name' => 'Item 2',
+		'specs_order' => 1,
+		'specs_summary' => 'Lorem ipsum...'),
+);
+
 $specs_data = array(
 	array(
 		'data_field' => 1,
-		'data_value' => 'Prometheus'),
+		'data_value' => 'Prometheus',
+		'data_item' => 1),
 	array(
 		'data_field' => 2,
-		'data_value' => 'Heavy Cruiser'),
+		'data_value' => 'Heavy Cruiser',
+		'data_item' => 1),
 	array(
 		'data_field' => 3,
-		'data_value' => '75 years'),
+		'data_value' => '75 years',
+		'data_item' => 1),
 	array(
 		'data_field' => 4,
-		'data_value' => '5 years'),
+		'data_value' => '5 years',
+		'data_item' => 1),
 	array(
 		'data_field' => 5,
-		'data_value' => '1 year'),
-		
+		'data_value' => '1 year',
+		'data_item' => 1),
 	array(
 		'data_field' => 6,
-		'data_value' => '445 meters'),
+		'data_value' => '445 meters',
+		'data_item' => 1),
 	array(
 		'data_field' => 7,
-		'data_value' => '100 meters'),
+		'data_value' => '100 meters',
+		'data_item' => 1),
 	array(
 		'data_field' => 8,
-		'data_value' => '45 meters'),
+		'data_value' => '45 meters',
+		'data_item' => 1),
 	array(
 		'data_field' => 9,
-		'data_value' => '15'),
-		
+		'data_value' => '15',
+		'data_item' => 1),
 	array(
 		'data_field' => 10,
-		'data_value' => '10'),
+		'data_value' => '10',
+		'data_item' => 1),
 	array(
 		'data_field' => 11,
-		'data_value' => '20'),
+		'data_value' => '20',
+		'data_item' => 1),
 	array(
 		'data_field' => 12,
-		'data_value' => '30'),
+		'data_value' => '30',
+		'data_item' => 1),
 	array(
 		'data_field' => 13,
-		'data_value' => '40'),
+		'data_value' => '40',
+		'data_item' => 1),
 	array(
 		'data_field' => 14,
-		'data_value' => '500'),
-		
+		'data_value' => '500',
+		'data_item' => 1),
 	array(
 		'data_field' => 15,
-		'data_value' => 'Warp 7'),
+		'data_value' => 'Warp 7',
+		'data_item' => 1),
 	array(
 		'data_field' => 16,
-		'data_value' => 'Warp 9.8'),
+		'data_value' => 'Warp 9.8',
+		'data_item' => 1),
 	array(
 		'data_field' => 17,
-		'data_value' => 'Warp 9.9975'),
-		
+		'data_value' => 'Warp 9.9975',
+		'data_item' => 1),
 	array(
 		'data_field' => 18,
-		'data_value' => 'Shields'),
+		'data_value' => 'Shields',
+		'data_item' => 1),
 	array(
 		'data_field' => 19,
-		'data_value' => 'Weapon systems'),
+		'data_value' => 'Weapon systems',
+		'data_item' => 1),
 	array(
 		'data_field' => 20,
-		'data_value' => 'Default load out'),
-		
+		'data_value' => 'Default load out',
+		'data_item' => 1),
 	array(
 		'data_field' => 21,
-		'data_value' => '2'),
+		'data_value' => '2',
+		'data_item' => 1),
 	array(
 		'data_field' => 22,
-		'data_value' => '2 Standard Shuttles'),
+		'data_value' => '2 Standard Shuttles',
+		'data_item' => 1),
 	array(
 		'data_field' => 23,
-		'data_value' => '5 Fighters'),
+		'data_value' => '5 Fighters',
+		'data_item' => 1),
 	array(
 		'data_field' => 24,
-		'data_value' => '1 Runabout'),
+		'data_value' => '1 Runabout',
+		'data_item' => 1),
+		
+	array(
+		'data_field' => 1,
+		'data_value' => 'Prometheus',
+		'data_item' => 2),
+	array(
+		'data_field' => 2,
+		'data_value' => 'Heavy Cruiser',
+		'data_item' => 2),
+	array(
+		'data_field' => 3,
+		'data_value' => '75 years',
+		'data_item' => 2),
+	array(
+		'data_field' => 4,
+		'data_value' => '5 years',
+		'data_item' => 2),
+	array(
+		'data_field' => 5,
+		'data_value' => '1 year',
+		'data_item' => 2),
+	array(
+		'data_field' => 6,
+		'data_value' => '445 meters',
+		'data_item' => 2),
+	array(
+		'data_field' => 7,
+		'data_value' => '100 meters',
+		'data_item' => 2),
+	array(
+		'data_field' => 8,
+		'data_value' => '45 meters',
+		'data_item' => 2),
+	array(
+		'data_field' => 9,
+		'data_value' => '15',
+		'data_item' => 2),
+	array(
+		'data_field' => 10,
+		'data_value' => '10',
+		'data_item' => 2),
+	array(
+		'data_field' => 11,
+		'data_value' => '20',
+		'data_item' => 2),
+	array(
+		'data_field' => 12,
+		'data_value' => '30',
+		'data_item' => 2),
+	array(
+		'data_field' => 13,
+		'data_value' => '40',
+		'data_item' => 2),
+	array(
+		'data_field' => 14,
+		'data_value' => '500',
+		'data_item' => 2),
+	array(
+		'data_field' => 15,
+		'data_value' => 'Warp 7',
+		'data_item' => 2),
+	array(
+		'data_field' => 16,
+		'data_value' => 'Warp 9.8',
+		'data_item' => 2),
+	array(
+		'data_field' => 17,
+		'data_value' => 'Warp 9.9975',
+		'data_item' => 2),
+	array(
+		'data_field' => 18,
+		'data_value' => 'Shields',
+		'data_item' => 2),
+	array(
+		'data_field' => 19,
+		'data_value' => 'Weapon systems',
+		'data_item' => 2),
+	array(
+		'data_field' => 20,
+		'data_value' => 'Default load out',
+		'data_item' => 2),
+	array(
+		'data_field' => 21,
+		'data_value' => '2',
+		'data_item' => 2),
+	array(
+		'data_field' => 22,
+		'data_value' => '2 Standard Shuttles',
+		'data_item' => 2),
+	array(
+		'data_field' => 23,
+		'data_value' => '5 Fighters',
+		'data_item' => 2),
+	array(
+		'data_field' => 24,
+		'data_value' => '1 Runabout',
+		'data_item' => 2),
 );
 
 $specs_fields = array(
@@ -3814,11 +3941,13 @@ $tour = array(
 	array(
 		'tour_name' => 'Main Bridge',
 		'tour_order' => 0,
-		'tour_summary' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'),
+		'tour_summary' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+		'tour_spec_item' => 1),
 	array(
 		'tour_name' => 'Main Engineering',
 		'tour_order' => 1,
-		'tour_summary' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'),
+		'tour_summary' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+		'tour_spec_item' => 2),
 );
 
 $tour_data = array(

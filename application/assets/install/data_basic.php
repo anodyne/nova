@@ -5,7 +5,7 @@
 |---------------------------------------------------------------
 |
 | File: assets/install/install_data_basic.php
-| System Version: 1.0.6
+| System Version: 1.1
 |
 | Data file that includes all the data being inserted into the
 | database after creating the tables.

@@ -5,7 +5,7 @@
 |---------------------------------------------------------------
 |
 | File: assets/install/fields.php
-| System Version: 1.0
+| System Version: 1.1
 |
 | File that contains all of the arrays with the data for inserting
 | the database fields for the system to use.
@@ -1532,7 +1532,10 @@ $fields_tour = array(
 	'tour_images' => array(
 		'type' => 'TEXT'),
 	'tour_summary' => array(
-		'type' => 'TEXT')
+		'type' => 'TEXT'),
+	'tour_spec_item' => array(
+		'type' => 'INT',
+		'constraint' => 5),
 );
 
 $fields_tour_data = array(
