@@ -12,7 +12,10 @@
 |	deletion functionality (could be confusing to users); fixed errors
 |	thrown when users with an access level less than 2 try to update
 |	a character; fixed bug where acceptance and rejection messages
-|	were sent without any of the changes an admin added
+|	were sent without any of the changes an admin added; fixed bug
+|	where characters changing status to and from active wouldn't
+|	set the number of open slots for their position(s); fixed error
+|	thrown when attempting to delete a character
 |
 | Controller that handles the CHARACTERS section of the admin system.
 |
@@ -163,7 +166,7 @@ class Characters_base extends Controller {
 							/* set the array to update the users table */
 							$update_array = array('main_char' => ($main == $id) ? $newmain : $main);
 							
-							$update = $this->user->update_user($userid, $update_array);
+							$update = $this->user->update_user($userid['user'], $update_array);
 						}
 						
 						if ($userid['crew_type'] == 'pending')
@@ -876,6 +879,9 @@ class Characters_base extends Controller {
 				
 				if ($data['level'] == 3)
 				{
+					$crew_type_old = $array['character']['old_crew_type'];
+					unset($array['character']['old_crew_type']);
+					
 					if ($array['character']['crew_type'] == 'inactive' && $user['crew_type'] != 'inactive')
 					{ /* set the deactivate date */
 						$array['character']['date_deactivate'] = now();
@@ -910,6 +916,57 @@ class Characters_base extends Controller {
 				
 				if ($data['level'] == 3)
 				{
+					if ($array['character']['crew_type'] != $crew_type_old)
+					{
+						if ($crew_type_old == 'active' && ($array['character']['crew_type'] == 'inactive' || $array['character']['crew_type'] == 'npc'))
+						{
+							$pos1 = $this->pos->get_position($array['character']['position_1']);
+							$pos2 = $this->pos->get_position($array['character']['position_2']);
+							
+							if ($pos1 !== FALSE)
+							{
+								/* build the update array */
+								$position_update['new'] = array('pos_open' => $pos1->pos_open + 1);
+								
+								/* update the new position */
+								$posupdate = $this->pos->update_position($array['character']['position_1'], $position_update['new']);
+							}
+							
+							if ($pos2 !== FALSE)
+							{
+								/* build the update array */
+								$position_update['new'] = array('pos_open' => $pos2->pos_open + 1);
+								
+								/* update the new position */
+								$posupdate = $this->pos->update_position($array['character']['position_2'], $position_update['new']);
+							}
+						}
+						
+						if (($crew_type_old == 'inactive' || $crew_type_old == 'npc') && $array['character']['crew_type'] == 'active')
+						{
+							$pos1 = $this->pos->get_position($array['character']['position_1']);
+							$pos2 = $this->pos->get_position($array['character']['position_2']);
+							
+							if ($pos1 !== FALSE)
+							{
+								/* build the update array */
+								$position_update['new'] = array('pos_open' => ($pos1->pos_open == 0) ? 0 : ($pos1->pos_open - 1));
+								
+								/* update the new position */
+								$posupdate = $this->pos->update_position($array['character']['position_1'], $position_update['new']);
+							}
+							
+							if ($pos2 !== FALSE)
+							{
+								/* build the update array */
+								$position_update['new'] = array('pos_open' => ($pos2->pos_open == 0) ? 0 : ($pos2->pos_open - 1));
+								
+								/* update the new position */
+								$posupdate = $this->pos->update_position($array['character']['position_2'], $position_update['new']);
+							}
+						}
+					}
+					
 					if ($array['character']['crew_type'] == 'active' || $array['character']['crew_type'] == 'pending')
 					{
 						/* update the positions */

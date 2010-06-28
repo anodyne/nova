@@ -43,6 +43,7 @@
 						<p>
 							<kbd><?php echo $label['type'];?></kbd>
 							<?php echo form_dropdown('crew_type', $values['crew_type'], $inputs['crew_type']);?>
+							<?php echo form_hidden('old_crew_type', $inputs['crew_type']);?>
 						</p>
 					<?php endif;?>
 					
