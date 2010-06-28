@@ -245,9 +245,10 @@ class Tour_model_base extends Model {
 		return $query;
 	}
 	
-	function update_tour_data($id = '', $data = '')
+	function update_tour_data($id = '', $field = '', $data = '')
 	{
-		$this->db->where('data_id', $id);
+		$this->db->where('data_tour_item', $id);
+		$this->db->where('data_field', $field);
 		$query = $this->db->update('tour_data', $data);
 		
 		$this->dbutil->optimize_table('tour_data');
