@@ -20,9 +20,9 @@
 			});
 		});
 		
-		$('a.cb').colorbox({
-			transition:	'elastic',
-			speed:		400
+		$('a.cb').fancybox({
+			overlayOpacity:		'0.5',
+			titlePosition:		'over'
 		});
 		
 		$('select.skins').change(function(){

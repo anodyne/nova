@@ -21,7 +21,7 @@
 			
 			$.ajax({
 				type: "POST",
-				url: "<?php echo site_url('ajax/save_specs_image') .'/'. $id .'/'. $string;?>",
+				url: "<?php echo site_url('ajax/save_spec_image') .'/'. $id .'/'. $string;?>",
 				data: { image: image },
 				success: function(data){
 					var content = '<li id="img_' + jq(image) +'"><a href="#" class="image upload-close" remove="' + jq(image) + '">x</a>' + data + '</li>';
@@ -40,7 +40,7 @@
 					$('#loading_upload_update').show();
 				},
 				type: "POST",
-				url: "<?php echo site_url('ajax/save_specs_images') .'/'. $id .'/'. $string;?>",
+				url: "<?php echo site_url('ajax/save_spec_images') .'/'. $id .'/'. $string;?>",
 				data: list,
 				complete: function(){
 					$('#loading_upload_update').hide();
@@ -56,7 +56,7 @@
 			
 			$.ajax({
 				type: "POST",
-				url: "<?php echo site_url('ajax/del_specs_image') .'/'. $id .'/'. $string;?>",
+				url: "<?php echo site_url('ajax/del_spec_image') .'/'. $id .'/'. $string;?>",
 				data: { image: image },
 				success: function(){
 					$('#list-grid').children().eq(index).fadeOut('slow', function(){

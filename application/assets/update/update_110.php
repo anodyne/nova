@@ -211,6 +211,20 @@ if (!is_null($drop_column))
 |---------------------------------------------------------------
 */
 
+/* remove colorbox from the comps */
+$this->db->where('comp_name', 'jQuery ColorBox');
+$this->db->delete('system_components');
+
+/* add fancybox to the comps */
+$additem = array(
+	'comp_name' => 'FancyBox',
+	'comp_version' => '1.3.1',
+	'comp_desc' => "FancyBox is a tool for displaying images, HTML content and multi-media in a Mac-style 'lightbox' that floats overtop of web page. 
+It was built using the jQuery library and is licensed under both MIT and GPL licenses.",
+	'comp_url' => 'http://fancybox.net/home'
+);
+$this->db->insert('system_components', $additem);
+
 /* add system version info */
 $this->load->model('system_model', 'sys');
 $this->sys->add_system_version($system_versions);

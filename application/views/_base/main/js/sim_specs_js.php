@@ -2,10 +2,9 @@
 	$(document).ready(function(){
 		$('table.zebra tbody > tr:nth-child(odd)').addClass('alt');
 		
-		$('#gallery a').colorbox({
-			transition:	'elastic',
-			speed:		400,
-			rel:		'gallery'
+		$('#gallery a').fancybox({
+			overlayOpacity:		'0.5',
+			titlePosition:		'over'
 		});
 	});
 </script>

@@ -5,7 +5,7 @@
 |---------------------------------------------------------------
 |
 | File: application/assets/include_head_main.php
-| System Version: 1.0
+| System Version: 1.1
 |
 | File that pulls in all the required CSS and JS files for the
 | system to use.
@@ -13,10 +13,10 @@
 */
 
 ?><style type="text/css">
-			<?php if (!is_file(APPPATH .'views/'. $current_skin .'/main/css/jquery.colorbox.css')): ?>
-				<?php $colorbox_css = base_url() . APPFOLDER .'/assets/js/css/jquery.colorbox.css';?>
+			<?php if (!is_file(APPPATH .'views/'. $current_skin .'/main/css/jquery.fancybox.css')): ?>
+				<?php $fancybox_css = base_url() . APPFOLDER .'/assets/js/css/jquery.fancybox.css';?>
 			<?php else: ?>
-				<?php $colorbox_css = base_url() . APPFOLDER .'/views/'. $current_skin .'/main/css/jquery.colorbox.css';?>
+				<?php $fancybox_css = base_url() . APPFOLDER .'/views/'. $current_skin .'/main/css/jquery.fancybox.css';?>
 			<?php endif;?>
 			
 			<?php if (!is_file(APPPATH .'views/'. $current_skin .'/main/css/jquery.facebox.css')): ?>
@@ -45,10 +45,10 @@
 		<script type="text/javascript">
 			$(document).ready(function(){
 				$.lazy({					
-					src: '<?php echo base_url() . APPFOLDER .'/assets/js/jquery.colorbox.js';?>',
-					name: 'colorbox',
+					src: '<?php echo base_url() . APPFOLDER;?>/assets/js/jquery.fancybox.js',
+					name: 'fancybox',
 					dependencies: {
-						css: ['<?php echo $colorbox_css;?>']
+						css: ['<?php echo $fancybox_css;?>']
 					},
 					cache: true
 				});

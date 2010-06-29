@@ -2204,10 +2204,11 @@ $system_components = array(
 		'comp_url' => 'http://jqueryui.com/',
 		'comp_desc' => 'jQuery UI is a lightweight, easily customizable interface library for the jQuery Javascript library.'),
 	array(
-		'comp_name' => 'jQuery ColorBox',
-		'comp_version' => '1.3.8',
-		'comp_desc' => "A light-weight, customizable lightbox plugin for jQuery.",
-		'comp_url' => 'http://colorpowered.com/colorbox/'),
+		'comp_name' => 'FancyBox',
+		'comp_version' => '1.3.1',
+		'comp_desc' => "FancyBox is a tool for displaying images, HTML content and multi-media in a Mac-style 'lightbox' that floats overtop of web page. 
+It was built using the jQuery library and is licensed under both MIT and GPL licenses.",
+		'comp_url' => 'http://fancybox.net/home'),
 	array(
 		'comp_name' => 'Facebox',
 		'comp_version' => '1.2',

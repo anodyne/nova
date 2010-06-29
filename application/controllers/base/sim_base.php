@@ -1431,7 +1431,6 @@ class Sim_base extends Controller {
 					/* set the image */
 					$data['images']['main_img'] = array(
 						'src' => asset_location('images/specs', trim($images[0])),
-						'alt' => $data['name'],
 						'class' => 'image reflect rheight20 ropacity30',
 						'width' => 400
 					);
@@ -1441,7 +1440,6 @@ class Sim_base extends Controller {
 						/* build the array */
 						$data['images']['image_array'][] = array(
 							'src' => asset_location('images/specs', trim($images[$i])),
-							'alt' => $data['name'],
 							'class' => 'image'
 						);
 					}
