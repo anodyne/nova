@@ -142,9 +142,6 @@ class Controller_Upgrade extends Controller_Template
 		// make sure the script doesn't time out
 		set_time_limit(0);
 		
-		// try to set the memory limit
-		ini_set('memory_limit', '128M');
-		
 		// get an instance of the database
 		$db = Database::instance();
 		
@@ -339,133 +336,53 @@ class Controller_Upgrade extends Controller_Template
 				
 				// build the next step control
 				$this->template->layout->controls = (count($tables) < $this->_tables) ? FALSE : form::button('next', __('Upgrade'), $next).form::close();
-				$this->template->layout->controls_text = __('Upgrade SMS data to Nova. <b>Warning:</b> this may take several minutes');
+				$this->template->layout->controls_text = __('Upgrade SMS data to Nova. <strong>Warning:</strong> this may take several minutes');
 				
 				break;
 				
 			case 2:
-				if (isset($_POST['next']))
+				// create a new content view
+				$this->template->layout->content = View::factory('upgrade/pages/upgrade_step2');
+				
+				// assign the object a shorter variable to use in the method
+				$data = $this->template->layout->content;
+				
+				// content
+				$this->template->title.= __('step2.title');
+				$this->template->layout->label = __('step2.label');
+				
+				// create the javascript view
+				$this->template->javascript = View::factory('upgrade/js/upgrade_step2_js');
+				
+				// set the loading image
+				$data->loading = array(
+					'src' => location::image('loading-circle-large.gif', NULL, 'upgrade', 'image'),
+					'attr' => array(
+						'class' => 'image'),
+				);
+				
+				// build the next step button
+				$next = array(
+					'type' => 'submit',
+					'class' => 'button',
+					'id' => 'start',
+				);
+				
+				// build the next step control
+				$this->template->layout->controls = form::button('next', __('Run'), $next).form::close();
+				$this->template->layout->controls_text = __('Run the upgrade processes now. <strong>Warning:</strong> this may take several minutes');
+				
+				break;
+				
+			case 3:
+				if (isset($_POST['submit']))
 				{
-					// pull the defaults for skins and ranks
-					$defaults = array(
-						'skin_main'		=> Jelly::select('catalogueskinsec')->where('section', '=', 'main')->where('default', '=', 'y')->load()->skin,
-						'skin_admin'	=> Jelly::select('catalogueskinsec')->where('section', '=', 'admin')->where('default', '=', 'y')->load()->skin,
-						'skin_wiki'		=> Jelly::select('catalogueskinsec')->where('section', '=', 'wiki')->where('default', '=', 'y')->load()->skin,
-						'rank'			=> Jelly::select('cataloguerank')->where('default', '=', 'y')->load()->location,
-						'links'			=> '',
-					);
-					
-					// update all users
-					Jelly::update('user')->set($defaults)->execute();
-					
-					// update the welcome page header
-					$msg = Jelly::select('message')->where('key', '=', 'welcome_head')->load();
-					$msg->value = 'Welcome to the '.Jelly::select('setting')->where('key', '=', 'sim_name')->load()->value.'!';
-					$msg->save();
-					
-					// do the quick installs
-					Utility::install_ranks();
-					Utility::install_skins();
-					
 					// do the registration
 					//$this->_register();
-					
-					// pause the script
-					sleep(1);
-					
-					// get an instance of the database
-					$db = Database::instance();
-					
-					// get the crew from the sms table
-					$result = $db->query(Database::SELECT, 'SELECT * FROM sms_crew', TRUE);
-					
-					foreach ($result as $c)
-					{
-						$user = Jelly::select('character', $c->crewid)->user;
-						
-						if (!is_null($user) && $user->id > 0)
-						{
-							// update the news items
-							$news = Jelly::update('news')
-								->where('author_character', '=', $c->crewid)
-								->set(array('author_user' => $user->id));
-							
-							// update the personal logs
-							$logs = Jelly::update('personallog')
-								->where('author_character', '=', $c->crewid)
-								->set(array('author_user' => $user->id));
-							
-						}
-						
-						if (!empty($c->awards))
-						{
-							$awards = explode(';', $c->awards);
-							
-							foreach ($awards as $a)
-							{
-								if (strstr($a, '|') !== FALSE)
-								{
-									$x = explode('|', $a);
-									
-									Jelly::factory('awardrec')
-										->set(array(
-											'character' => $c->crewid,
-											'award' => $x[0],
-											'date' => $x[1],
-											'reason' => $x[2]
-										))
-										->save();
-								}
-								else
-								{
-									Jelly::factory('awardrec')
-										->set(array(
-											'character' => $c->crewid,
-											'award' => $a
-										))
-										->save();
-								}
-							}
-						}
-					}
-					
-					// get all the posts
-					$posts = Jelly::select('post')->execute();
-					
-					foreach ($posts as $p)
-					{
-						// grab the authors and put them into an array
-						$authors = explode(',', $p->authors);
-						
-						// make sure we have an array
-						$array = array();
-						
-						foreach ($authors as $a)
-						{
-							if ($a > 0)
-							{
-								// get the user id
-								$user = Jelly::select('character', $a)->user;
-							
-								if (!is_null($user) && !in_array($user->id, $array))
-								{
-									$array[] = $user->id;
-								}
-							}
-						}
-						
-						// create a string from the array
-						$users = implode(',', $array);
-						
-						// update the post
-						$post = Jelly::select('post', $p->id);
-						$post->author_users = $users;
-						$post->save();
-					}
 				}
 				
 				// create a new content view
-				$this->template->layout->content = View::factory('upgrade/pages/upgrade_step2');
+				$this->template->layout->content = View::factory('upgrade/pages/upgrade_step3');
 				
 				// assign the object a shorter variable to use in the method
 				$data = $this->template->layout->content;
@@ -486,22 +403,26 @@ class Controller_Upgrade extends Controller_Template
 				$this->template->layout->label = __('step2.label');
 				
 				// create the javascript view
-				$this->template->javascript = View::factory('upgrade/js/upgrade_step2_js');
+				$this->template->javascript = View::factory('upgrade/js/upgrade_step3_js');
+				
+				// set the loading image
+				$data->loading = array(
+					'src' => location::image('loading-circle-large.gif', NULL, 'upgrade', 'image'),
+					'attr' => array(
+						'class' => 'image'),
+				);
 				
 				// build the next step button
 				$next = array(
 					'type' => 'submit',
 					'class' => 'button',
-					'id' => 'next',
+					'id' => 'start',
 				);
 				
 				// build the next step control
-				$this->template->layout->controls = form::open('upgrade/step/3').form::button('next', __('Finalize'), $next).form::close();
-				$this->template->layout->controls_text = __('Finalize the upgrade process');
+				$this->template->layout->controls = form::button('next', __('Finalize'), $next).form::close();
+				$this->template->layout->controls_text = __('Set the passwords and access roles for Nova now');
 				
-				break;
-				
-			case 3:
 				// do the user updates with passwords and roles here
 				// all done!
 				
@@ -532,7 +453,7 @@ class Controller_Upgrade extends Controller_Template
 			$next = array(
 				'type' => 'submit',
 				'class' => 'button',
-				'id' => 'install',
+				'id' => 'install'
 			);
 			
 			// build the next step control

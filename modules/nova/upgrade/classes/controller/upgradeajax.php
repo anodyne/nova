@@ -117,7 +117,7 @@ class Controller_Upgradeajax extends Controller_Template
 					'leave_date' => $r->leaveDate,
 					'status' => ($r->crewType == 'npc') ? 'active' : $r->crewType,
 					'password_reset' => 1,
-					'access_role' => 1,
+					'role' => 4,
 				);
 				
 				if (!isset($users['main_char']))
@@ -232,6 +232,35 @@ class Controller_Upgradeajax extends Controller_Template
 		}
 		
 		# TODO: need to figure out the best way to validate characters and users
+		
+		echo '1';
+	}
+	
+	public function action_upgrade_final_password()
+	{
+		// grab the password
+		$password = $_POST['password'];
+		
+		// hash the password
+		$password = Auth::hash($password);
+		
+		// update everyone
+		Jelly::update('user')->set(array('password' => $password));
+		
+		echo '1';
+	}
+	
+	public function action_upgrade_final_roles()
+	{
+		// grab the user IDs that should have the sys admin role
+		$roles = $_POST['roles'];
+		
+		foreach ($roles as $r)
+		{
+			$user = Jelly::select('user', $r);
+			$user->role = 1;
+			$user->save();
+		}
 		
 		echo '1';
 	}
@@ -548,6 +577,15 @@ class Controller_Upgradeajax extends Controller_Template
 		
 		// make sure the auto increment and primary key are right
 		$this->db->query(NULL, "ALTER TABLE ".$this->db->table_prefix()."news MODIFY COLUMN `news_id` INT(8) auto_increment primary key", TRUE);
+		
+		echo '1';
+	}
+	
+	public function action_upgrade_quick_install()
+	{
+		// do the quick installs
+		Utility::install_ranks();
+		Utility::install_skins();
 		
 		echo '1';
 	}
@@ -1005,6 +1043,174 @@ class Controller_Upgradeajax extends Controller_Template
 		$tour_count = (in_array(FALSE, $tour)) ? FALSE : TRUE;
 		
 		if ($tour_count === TRUE)
+		{
+			echo '1';
+		}
+		else
+		{
+			echo '0';
+		}
+	}
+	
+	public function action_upgrade_user_awards()
+	{
+		// get the crew from the sms table
+		$result = $this->db->query(Database::SELECT, 'SELECT * FROM sms_crew', TRUE);
+		
+		foreach ($result as $c)
+		{
+			$user = Jelly::select('character', $c->crewid)->user;
+			
+			if (!empty($c->awards))
+			{
+				$awards = explode(';', $c->awards);
+				
+				foreach ($awards as $a)
+				{
+					if (strstr($a, '|') !== FALSE)
+					{
+						$x = explode('|', $a);
+						
+						Jelly::factory('awardrec')
+							->set(array(
+								'character' => $c->crewid,
+								'award' => $x[0],
+								'date' => $x[1],
+								'reason' => $x[2]
+							))
+							->save();
+					}
+					else
+					{
+						Jelly::factory('awardrec')
+							->set(array(
+								'character' => $c->crewid,
+								'award' => $a
+							))
+							->save();
+					}
+				}
+			}
+		}
+		
+		echo '1';
+	}
+	
+	public function action_upgrade_user_defaults()
+	{
+		// get the total number of users
+		$users = Jelly::select('user')->count();
+		
+		// get the total number of characters
+		$characters = Jelly::select('character')->count();
+		
+		if ($users > 0 && $characters > 0)
+		{
+			// pull the defaults for skins and ranks
+			$defaults = array(
+				'skin_main'		=> Jelly::select('catalogueskinsec')->defaultskin('main')->load()->skin,
+				'skin_admin'	=> Jelly::select('catalogueskinsec')->defaultskin('admin')->load()->skin,
+				'skin_wiki'		=> Jelly::select('catalogueskinsec')->defaultskin('wiki')->load()->skin,
+				'rank'			=> Jelly::select('cataloguerank')->defaultrank()->load()->location,
+				'links'			=> '',
+			);
+			
+			// update all users
+			Jelly::update('user')->set($defaults)->execute();
+			
+			echo '1';
+		}
+		else
+		{
+			echo '0';
+		}
+	}
+	
+	public function action_upgrade_user_logs()
+	{
+		// get the crew from the sms table
+		$result = $this->db->query(Database::SELECT, 'SELECT * FROM sms_crew', TRUE);
+		
+		foreach ($result as $c)
+		{
+			$user = Jelly::select('character', $c->crewid)->user;
+			
+			if (!is_null($user) && $user->id > 0)
+			{
+				// update the personal logs
+				$logs = Jelly::update('personallog')->where('author_character', '=', $c->crewid)->set(array('author_user' => $user->id));
+			}
+		}
+		
+		echo '1';
+	}
+	
+	public function action_upgrade_user_news()
+	{
+		// get the crew from the sms table
+		$result = $this->db->query(Database::SELECT, 'SELECT * FROM sms_crew', TRUE);
+		
+		foreach ($result as $c)
+		{
+			$user = Jelly::select('character', $c->crewid)->user;
+			
+			if (!is_null($user) && $user->id > 0)
+			{
+				// update the news items
+				$news = Jelly::update('news')->where('author_character', '=', $c->crewid)->set(array('author_user' => $user->id));
+			}
+		}
+		
+		echo '1';
+	}
+	
+	public function action_upgrade_user_posts()
+	{
+		// get all the posts
+		$posts = Jelly::select('post')->execute();
+		
+		foreach ($posts as $p)
+		{
+			// grab the authors and put them into an array
+			$authors = explode(',', $p->authors);
+			
+			// make sure we have an array
+			$array = array();
+			
+			foreach ($authors as $a)
+			{
+				if ($a > 0)
+				{
+					// get the user id
+					$user = Jelly::select('character', $a)->user;
+				
+					if (!is_null($user) && !in_array($user->id, $array))
+					{
+						$array[] = $user->id;
+					}
+				}
+			}
+			
+			// create a string from the array
+			$users = implode(',', $array);
+			
+			// update the post
+			$post = Jelly::select('post', $p->id);
+			$post->author_users = $users;
+			$post->save();
+		}
+		
+		echo '1';
+	}
+	
+	public function action_upgrade_welcome()
+	{
+		// update the welcome page header
+		$msg = Jelly::select('message')->where('key', '=', 'welcome_head')->load();
+		$msg->value = 'Welcome to the '.Jelly::select('setting')->where('key', '=', 'sim_name')->load()->value.'!';
+		$msg->save();
+		
+		if ($msg->saved())
 		{
 			echo '1';
 		}

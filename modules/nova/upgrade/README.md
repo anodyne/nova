@@ -9,6 +9,8 @@ The Nova 2 upgrade module provides functionality to upgrade SMS 2 (must have at 
 ## Latest Changes
 
 * created readme file
+* better buttons
+* more upgrade ajax work
 
 ## TODO
 
@@ -20,7 +22,6 @@ The Nova 2 upgrade module provides functionality to upgrade SMS 2 (must have at 
 * optmize tables in the ajax controller
 * create user preferences
 * figure out a good way to validate that users and characters were upgraded
-* ajax queue work
 
 ## History
 

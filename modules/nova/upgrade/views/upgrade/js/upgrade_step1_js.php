@@ -235,12 +235,14 @@
 				});
 			}
 			
-			$("#progress").progressbar({ value: 50 });
-			$('#percent').text($('#progress').progressbar('option', 'value') + '%');
-			
-			// change the button and text
-			$('.lower .control button').attr('id', 'next').html('<?php echo __("Next Step");?>');
-			$('.lower .control-text').html('<?php echo __("Move on to the next step of the upgrade process.");?>');
+			$('#progress').ajaxStop(function(){
+				$("#progress").progressbar({ value: 50 });
+				$('#percent').text($('#progress').progressbar('option', 'value') + '%');
+				
+				// change the button and text
+				$('.lower .control button').attr('id', 'next').html('<?php echo __("Next Step");?>');
+				$('.lower .control-text').html('<?php echo __("Move on to the next step of the upgrade process.");?>');
+			});
 			
 			return false;
 		});
