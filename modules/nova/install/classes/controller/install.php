@@ -1125,8 +1125,6 @@ return array
 						$upSettings->value = '['.$simname.']';
 						$upSettings->save();
 						
-						# TODO: need to change the skin and rank defaults
-						
 						// create the user
 						$crUser = Jelly::factory('user')
 							->set(array(
@@ -1138,10 +1136,10 @@ return array
 								'sysadmin'		=> 'y',
 								'gm'			=> 'y',
 								'webmaster'		=> 'y',
-								'skin_main'		=> 'default',
-								'skin_wiki'		=> 'default',
-								'skin_admin'	=> 'default',
-								'rank'			=> 'default',
+								'skin_main'		=> Jelly::select('catalogueskinsec')->defaultskin('main')->load()->location,
+								'skin_wiki'		=> Jelly::select('catalogueskinsec')->defaultskin('wiki')->load()->location,
+								'skin_admin'	=> Jelly::select('catalogueskinsec')->defaultskin('admin')->load()->location,
+								'rank'			=> Jelly::select('cataloguerank')->defaultrank()->load()->location,
 							))
 							->save();
 						
