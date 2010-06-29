@@ -6,7 +6,7 @@
 		<em><?php echo __('index.fresh_text');?></em>
 	</a>
 	
-	<a href="<?php echo url::site('upgrade/main');?>" class="install-options">
+	<a href="<?php echo url::site('upgrade/index');?>" class="install-options">
 		<span><?php echo __('index.upg_title');?></span>
 		<em><?php echo __('index.upg_text');?></em>
 	</a>

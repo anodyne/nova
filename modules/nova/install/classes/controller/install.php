@@ -1136,9 +1136,9 @@ return array
 								'sysadmin'		=> 'y',
 								'gm'			=> 'y',
 								'webmaster'		=> 'y',
-								'skin_main'		=> Jelly::select('catalogueskinsec')->defaultskin('main')->load()->location,
-								'skin_wiki'		=> Jelly::select('catalogueskinsec')->defaultskin('wiki')->load()->location,
-								'skin_admin'	=> Jelly::select('catalogueskinsec')->defaultskin('admin')->load()->location,
+								'skin_main'		=> Jelly::select('catalogueskinsec')->defaultskin('main')->load()->skin,
+								'skin_wiki'		=> Jelly::select('catalogueskinsec')->defaultskin('wiki')->load()->skin,
+								'skin_admin'	=> Jelly::select('catalogueskinsec')->defaultskin('admin')->load()->skin,
 								'rank'			=> Jelly::select('cataloguerank')->defaultrank()->load()->location,
 							))
 							->save();
