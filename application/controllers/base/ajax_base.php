@@ -5,12 +5,9 @@
 |---------------------------------------------------------------
 |
 | File: controllers/base/ajax_base.php
-| System Version: 1.0.5
+| System Version: 1.1
 |
-| Changes: updated the add_catalogue and edit_catalogue methods
-|	to handle the new genre field in the rank catalogue database
-|	table; added method for deleting NPCs; fixed bug where the
-|	wrong database column was used in a model method
+| Changes: added methods for handling uploaded spec images
 |
 | Controller that handles the AJAX work in the system
 |
@@ -4186,6 +4183,43 @@ class Ajax_base extends Controller {
 		}
 	}
 	
+	function del_spec_image()
+	{
+		if (IS_AJAX)
+		{
+			/* load the resources */
+			$this->load->model('specs_model', 'specs');
+			
+			/* set the variables */
+			$id = $this->uri->segment(3);
+			$image = $this->input->post('image', TRUE);
+			
+			$image = str_replace('\.', '.', $image);
+			
+			$item = $this->specs->get_spec_item($id);
+			
+			if ($item !== FALSE)
+			{
+				$images = $item->specs_images;
+				
+				if (!empty($images))
+				{
+					$imagesArray = explode(',', $images);
+					
+					$key = array_search($image, $imagesArray);
+					
+					if ($key !== FALSE)
+					{
+						unset($imagesArray[$key]);
+						$imageStr = implode(',', $imagesArray);
+						
+						$this->specs->update_spec_item($id, array('specs_images' => $imageStr));
+					}
+				}
+			}
+		}
+	}
+	
 	function del_spec_item()
 	{
 		/* load the resources */
@@ -7169,6 +7203,100 @@ class Ajax_base extends Controller {
 			}
 			
 			echo $output;
+		}
+	}
+	
+	function save_spec_image()
+	{
+		if (IS_AJAX)
+		{
+			/* set the variables */
+			$id = $this->uri->segment(3);
+			$image = $this->input->post('image', TRUE);
+			
+			$image = str_replace('\.', '.', $image);
+			
+			/* load the resources */
+			$this->load->model('specs_model', 'specs');
+			
+			/* get the images */
+			$item = $this->specs->get_spec_item($id);
+			
+			if ($item !== FALSE)
+			{
+				$images = $item->specs_images;
+				
+				if (!empty($images))
+				{
+					$imagesArray = explode(',', $images);
+					
+					$key = array_search($image, $imagesArray);
+					
+					if ($key === FALSE)
+					{
+						/* add the image to the array */
+						$imagesArray[] = $image;
+						
+						/* make the array a string */
+						$imagesStr = implode(',', $imagesArray);
+						
+						/* fire the character update event */
+						$this->specs->update_spec_item($id, array('specs_images' => $imagesStr));
+						
+						$array = array(
+							'src' => base_url() . asset_location('images/specs', $image),
+							'width' => 130
+						);
+						
+						echo img($array);
+					}
+					else
+					{
+						echo '';
+					}
+				}
+				else
+				{
+					/* add the image to the array */
+					$imagesArray[] = $image;
+					
+					/* make the array a string */
+					$imagesStr = implode(',', $imagesArray);
+					
+					/* fire the character update event */
+					$this->specs->update_spec_item($id, array('specs_images' => $imagesStr));
+					
+					$array = array(
+						'src' => base_url() . asset_location('images/specs', $image),
+						'width' => 130
+					);
+					
+					echo img($array);
+				}
+			}
+		}
+	}
+	
+	function save_spec_images()
+	{
+		if (IS_AJAX)
+		{
+			/* set the variables */
+			$images = $this->input->post('img', TRUE);
+			$id = $this->uri->segment(3);
+			
+			foreach ($images as $i)
+			{
+				$imageArray[] = str_replace('\.', '.', $i);
+			}
+			
+			$imageStr = implode(',', $imageArray);
+			
+			/* load the resources */
+			$this->load->model('specs_model', 'specs');
+			
+			/* fire the character update event */
+			$this->specs->update_spec_item($id, array('spec_images' => $imageStr));
 		}
 	}
 	
