@@ -4,7 +4,7 @@
 |---------------------------------------------------------------
 */
 body {
-	background: #fff;
+	background: #f8f8f8;
 	color: #444;
 	font: 75%/1.5 "lucida grande", verdana, arial, sans-serif;
 	text-align: center;
@@ -33,14 +33,16 @@ body {
 	padding: 0;
 	height: 80px;
 	
-	background: #222 url('../images/head-bg.png') repeat-x top left;
+	background: #212425 url('../images/head-bg.png') repeat-x top left;
+	background: -moz-linear-gradient(0% 100% 90deg, #212425, #525758);
+	background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#525758), to(#212425));
 	color: #eee;
 }
 #head .head_top {
 	height: 6px;
 	
 	background: #000;
-	border-bottom: 1px solid #555;
+	border-bottom: 1px solid #888;
 }
 #head .head_content {
 	margin: 12px 0 0 0;
@@ -54,17 +56,15 @@ body {
 |---------------------------------------------------------------
 */
 #menu {
-	height: 30px;
-	line-height: 30px;
+	height: 22px;
 	
-	background: #dedede url('../images/menu-bg.png') repeat-x top left;
-	border-bottom: 1px solid #aaa;
 	font-size: 100%;
 }
 #menu .nav-main {}
 #menu .nav-main ul {
 	margin: 0;
 	padding: 0;
+	height: 24px;
 	
 	list-style-type: none;
 }
@@ -72,24 +72,32 @@ body {
 	float: left;
 	margin: 0 2px 0 0;
 	padding: 0;
+	height: 22px;
+	line-height: 24px;
 }
 #menu .nav-main ul li a {
 	display: block;
 	
 	text-decoration: none;
-	color: #444;
+	color: #999;
 	font-weight: bold;
-	border-left: 1px solid transparent;
-	border-right: 1px solid transparent;
-	border-bottom: none;
+	border: 1px solid transparent;
+	border-top: none;
 }
-#menu .nav-main ul li a span { padding: 12px; }
-#menu .nav-main ul li a:hover,
+#menu .nav-main ul li a span { padding: 0 20px; }
+#menu .nav-main ul li a:hover {
+	color: #333;
+}
 #menu .nav-main ul li a.active {
-	background: #b2b2b2 url('../images/menu-bg-active.png') repeat-x top left;
-	border-left: 1px solid #aaa;
-	border-right: 1px solid #aaa;
-	border-bottom: 1px solid #aaa;
+	color: #fff;
+	background: #212425;
+	border: 1px solid #000;
+	border-top: 0;
+	
+	border-radius: 0 0 3px 3px;
+	-moz-border-radius: 0 0 3px 3px;
+	-webkit-border-bottom-left-radius: 3px;
+	-webkit-border-bottom-right-radius: 3px;
 }
 
 /*
@@ -97,15 +105,59 @@ body {
 | CONTENT
 |---------------------------------------------------------------
 */
-#body { margin: 1em 0 2em 0; }
+#body { margin: 2em 0; }
 
 .nav-sub {
 	float: right;
 	width: 160px;
 	margin: 0 0 10px 0;
+	padding: 0 0 .5em 0;
 	
 	text-align: right;
 	font-size: 92%;
+	background: #212425;
+	background: -moz-linear-gradient(0% 100% 90deg, #212425, #525758);
+	background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#525758), to(#212425));
+	border: 1px solid #000;
+	
+	border-radius: 3px;
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
+	
+	box-shadow:
+		inset 0px 1px 0px rgba(255, 255, 255, .25) /*Top*/, 
+		inset 0px 0px 2px rgba(255, 255, 255, .35) /*Shine*/;
+	-moz-box-shadow:
+		inset 0px 1px 0px rgba(255, 255, 255, .25) /*Top*/, 
+		inset 0px 0px 2px rgba(255, 255, 255, .35) /*Shine*/;
+	-webkit-box-shadow:
+		inset 0px 1px 0px rgba(255, 255, 255, .25) /*Top*/, 
+		inset 0px 0px 2px rgba(255, 255, 255, .35) /*Shine*/;
+}
+.nav-sub h1 {
+	margin: 7px auto !important;
+	padding: 0 !important;
+	line-height: 1.2;
+	width: 90%;
+	
+	border: 0 !important;
+	background: transparent !important;
+	font-size: 120% !important;
+	text-align: center !important;
+	color: #fff !important;
+	text-shadow: -1px -1px 0px rgba(0, 0, 0, .3);
+}
+.nav-sub hr {
+	height: 0;
+	width: 90%;
+	margin: 0 auto .5em auto;
+	
+	border-top: 1px solid #222525;
+	border-top: 1px solid rgba(0, 0, 0, .5);
+	border-bottom: 1px solid #6a6e6f;
+	border-bottom: 1px solid rgba(255, 255, 255, .2);
+	border-left: 0;
+	border-right: 0;
 }
 .nav-sub ul {
 	margin: 0;
@@ -122,18 +174,13 @@ body {
 	display: block;
 	
 	text-decoration: none;
-	color: #444;
-	border: 1px solid transparent;
+	color: #aaa;
 	font-weight: bold;
 }
 .nav-sub ul li a:hover {
-	color: #c77405;
-	background: #fdf5ce;
-	border: 1px solid #fbcb09;
-	
-	border-radius: 3px;
-	-moz-border-radius: 3px;
-	-webkit-border-radius: 3px;
+	color: #dadbdb;
+	border: 0 !important;
+	text-shadow: -1px -1px 0px rgba(0, 0, 0, .4);
 }
 .nav-sub ul li a span { padding: 2px 7px; }
 .nav-sub ul li.spacer {

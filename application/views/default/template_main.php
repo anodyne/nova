@@ -52,6 +52,8 @@
 	<div class="wrapper">
 		<!-- SUB NAVIGATION -->
 		<div class="nav-sub">
+			<h1><?php echo Jelly::select('setting')->key('sim_name')->load()->value;?></h1>
+			<hr />
 			<?php echo $nav_sub;?>
 		</div>
 		
