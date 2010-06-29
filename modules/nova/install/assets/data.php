@@ -2382,6 +2382,11 @@ $system_components = array(
 		'comp_desc' => "A light-weight, customizable lightbox plugin for jQuery.",
 		'comp_url' => 'http://colorpowered.com/colorbox/'),
 	array(
+		'comp_name' => 'FancyBox',
+		'comp_version' => '1.3.1',
+		'comp_desc' => "FancyBox is a tool for displaying images, html content and multi-media in a Mac-style 'lightbox' that floats overtop of web page. It was built using the jQuery library and licensed under both MIT and GPL licenses.",
+		'comp_url' => 'http://fancybox.net/home'),
+	array(
 		'comp_name' => 'Facebox',
 		'comp_version' => '1.2',
 		'comp_desc' => "Facebox is a jQuery-based lightbox which can display images, divs, or entire remote pages.",
