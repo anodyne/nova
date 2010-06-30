@@ -14,8 +14,8 @@
 		
 		<div id="loaded" class="UITheme">
 			<?php if (Request::instance()->action == 'step' && Request::instance()->param('id') > 0): ?>
-				<div id="amount"><span id="percent">0%</span></div>
 				<div id="progress"></div>
+				<div id="amount"><span id="percent">0%</span></div>
 				<div style="clear:both;"></div>
 			<?php endif;?>
 		

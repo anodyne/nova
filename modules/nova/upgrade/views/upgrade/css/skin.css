@@ -146,30 +146,76 @@ h3 { font-size: 133%; }
 
 #progress {
 	width: 400px;
-	padding: 5px;
+	padding: 2px 3px 3px 3px;
 	
-	box-shadow: -1px 1px 2px rgba(255, 255, 255, .8);
-	-moz-box-shadow: -1px 1px 2px rgba(255, 255, 255, .8);
-	-webkit-box-shadow: -1px 1px 2px rgba(255, 255, 255, .8);
+	border: 0 !important;
+	background: #858585 !important;
+	background: -moz-linear-gradient(
+					center top,
+					#a5a5a5 20%,
+					#858585 100%
+				) !important;
+	background: -webkit-gradient(
+					linear,
+					left top,
+					left bottom,
+					color-stop(.2, #a5a5a5),
+					color-stop(1, #858585)
+				);
+				
+	box-shadow: inset 0px 1px 2px #666, inset 0px 0px 4px #aaa;
+	-moz-box-shadow: inset 0px 1px 2px #666, inset 0px 0px 4px #aaa;
+	-webkit-box-shadow: inset 0px 1px 2px #666, inset 0px 0px 4px #aaa;
 }
 
 #amount {
-	float: left;
+	width: 50px;
 	height: 23px;
 	line-height: 23px;
-	padding: 0 1em;
-	margin: 6px;
+	margin: 6px 0;
 	
 	color: #fff;
 	color: rgba(0, 0, 0, .65);
 	font-weight: bold;
-	font-size: 100%;
-	background: #2ebbf3;
+	font-size: 120%;
 	text-align: center;
 	text-shadow: 0px 1px 0px rgba(255, 255, 255, .25);
 }
 
-.UITheme .ui-progressbar { height: 23px !important; }
+.UITheme .ui-progressbar {
+	height: 12px !important;
+	
+	border-radius: 12px;
+	-moz-border-radius: 12px;
+	-webkit-border-radius: 12px;
+}
+.UITheme .ui-progressbar-value {
+	height: 10px !important;
+	margin: 0 !important;
+	
+	border-color: #f5a12a;
+	background: #7c7c7c;
+	background: -webkit-gradient(
+					linear,
+					left top,
+					left bottom,
+					color-stop(.2, #f8c300),
+					color-stop(1, #f5a12a)
+				);
+	background: -moz-linear-gradient(
+					center top,
+					#f8c300 20%,
+					#f5a12a 100%
+				);
+	
+	border-radius: 12px;
+	-moz-border-radius: 12px;
+	-webkit-border-radius: 12px;
+	
+	box-shadow: inset 0px 1px 1px #fde255;
+	-moz-box-shadow: inset 0px 1px 1px #fde255;
+	-webkit-box-shadow: inset 0px 1px 1px #fde255;
+}
 
 .indent-left { padding: 0 0 0 1.5em; }
 
@@ -561,7 +607,8 @@ button {
 	line-height: 26px;
 	outline: 0 !important;
 	
-	border: 1px solid #666;
+	border: 1px solid #4081af;
+	border-bottom: 1px solid #20559a;
 	color: #fff;
 	font-family: "lucida grande", verdana, arial, sans-serif;
 	font-size: 90%;
@@ -573,18 +620,18 @@ button {
 	-moz-border-radius: 3px;
 	border-radius: 3px;
 	
-	background: #7c7c7c;
+	background: #237fd7;
 	background: -webkit-gradient(
 					linear,
 					left top,
 					left bottom,
-					color-stop(.2, #7c7c7c),
-					color-stop(1, #929292)
+					color-stop(.2, #52a8e8),
+					color-stop(1, #237fd7)
 				);
 	background: -moz-linear-gradient(
 					center top,
-					#929292 20%,
-					#7c7c7c 100%
+					#52a8e8 20%,
+					#237fd7 100%
 				);
 	
 
@@ -601,25 +648,24 @@ button {
 button:hover {
 	outline: 0 !important;
 	
-	border-color: #4e8623;
-	background: #69a936;
+	background: #0073d2;
 	background: -webkit-gradient(
 					linear,
 					left top,
 					left bottom,
-					color-stop(.2, #69a936),
-					color-stop(1, #82b859)
+					color-stop(.2, #3e9ee5),
+					color-stop(1, #0073d2)
 				);
 	background: -moz-linear-gradient(
 					center top,
-					#82b859 20%,
-					#69a936 100%
+					#3e9ee5 20%,
+					#0073d2 100%
 				);
 }
 button:active {
 	outline: 0 !important;
 	
-	border-color: #4e8623;
+	border-color: #20559a;
 	
 	-webkit-box-shadow: inset 0 0 7px hsla(0,0%,0%,.3) /*Shine*/,
 						0 1px 0 hsla(0, 100%, 100%, 1) /*Shadow*/;
