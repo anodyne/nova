@@ -27,6 +27,10 @@ class Controller_Upgradeajax extends Controller_Template
 	
 	public function action_upgrade_awards()
 	{
+		// start by getting a count of the number of items in the awards table
+		$c = $this->db->query(Database::SELECT, "SELECT awardid FROM sms_awards", TRUE);
+		$count_old = $c->count();
+		
 		// load the dbforge
 		$forge = new DBForge;
 		
@@ -81,7 +85,25 @@ class Controller_Upgradeajax extends Controller_Template
 		// make award_id auto increment and the primary key
 		$this->db->query(NULL, "ALTER TABLE ".$this->db->table_prefix()."awards MODIFY COLUMN `award_id` INT(5) auto_increment primary key", TRUE);
 		
-		echo '1';
+		// get the number of records in the new table
+		$count_new = Jelly::select('award')->count();
+
+		if ($count_new == $count_old)
+		{
+			$retval = array(
+				'code' => 1,
+				'message' => ''
+			);
+		}
+		else
+		{
+			$retval = array(
+				'code' => 0,
+				'message' => __("Not all of the awards were transferred to the Nova format")
+			);
+		}
+		
+		echo json_encode($retval);
 	}
 	
 	public function action_upgrade_characters()
@@ -681,12 +703,33 @@ class Controller_Upgradeajax extends Controller_Template
 		
 		if ($settings_count === TRUE && $messages_count === TRUE)
 		{
-			echo '1';
+			$retval = array(
+				'code' => 1,
+				'message' => ''
+			);
 		}
 		else
 		{
-			echo '0';
+			if ($settings_count === TRUE && $messages_count === FALSE)
+			{
+				$retval['code'] = 2;
+				$retval['message'] = __("All of your settings were upgraded, but some of your messages couldn't be upgraded");
+			}
+			
+			if ($settings_count === FALSE && $messages_count === TRUE)
+			{
+				$retval['code'] = 2;
+				$retval['message'] = __("All of your messages were upgraded, but some of your settings couldn't be upgraded");
+			}
+			
+			if ($settings_count === FALSE && $messages_count === FALSE)
+			{
+				$retval['code'] = 0;
+				$retval['message'] = __("None of your settings or messages could be upgraded");
+			}
 		}
+		
+		echo json_encode($retval);
 	}
 	
 	public function action_upgrade_specs()
