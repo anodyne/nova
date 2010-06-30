@@ -8,14 +8,13 @@ M1.2-pre (2.0-alpha)
 
 ## Last Update
 
-29 June 2010
+30 June 2010
 
 ## Latest Changes
 
-* removed the colorbox plugin
-* added the fancybox plugin
-* reorganized the thresher module
 * updates to the upgrade module
+* updated the auth class
+* updated the dbforge class
 
 ## Version History
 
