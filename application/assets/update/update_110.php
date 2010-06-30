@@ -150,11 +150,16 @@ if (!is_null($rename_tables))
 */
 
 $add_column = array(
+	'specs_data' => array(
+		'data_item' => array(
+			'type' => 'INT',
+			'constraint' => 5)
+	),
 	'tour' => array(
 		'tour_spec_item' => array(
 			'type' => 'INT',
 			'constraint' => 5)
-	)
+	),
 );
 
 if (!is_null($add_column))
@@ -211,11 +216,31 @@ if (!is_null($drop_column))
 |---------------------------------------------------------------
 */
 
-/* remove colorbox from the comps */
+/**
+ * update all the specs data to point to the first specification item
+ */
+$this->db->update('specs_data', array('data_item' => 1));
+
+/**
+ * create a new specification item from the sim name
+ */
+$name = $this->db->get_where('settings', array('setting_key' => 'sim_name'));
+$name = ($name->num_rows() > 0) ? $name->row : FALSE;
+$specitem = array(
+	'specs_name' => $name->setting_value,
+	'specs_summary' => 'Summary for the '. $name->setting_value,
+);
+$this->db->insert('specs', $specitem);
+
+/**
+ * remove the colorbox plugin from the list of components
+ */
 $this->db->where('comp_name', 'jQuery ColorBox');
 $this->db->delete('system_components');
 
-/* add fancybox to the comps */
+/**
+ * add the fancybox plugin to the list of components
+ */
 $additem = array(
 	'comp_name' => 'FancyBox',
 	'comp_version' => '1.3.1',
@@ -225,7 +250,9 @@ It was built using the jQuery library and is licensed under both MIT and GPL lic
 );
 $this->db->insert('system_components', $additem);
 
-/* add system version info */
+/**
+ * add the system version info
+ */
 $this->load->model('system_model', 'sys');
 $this->sys->add_system_version($system_versions);
 
