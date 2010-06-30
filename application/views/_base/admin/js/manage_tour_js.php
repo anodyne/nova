@@ -9,6 +9,7 @@
 		$('#tabs').tabs();
 		
 		$('table.zebra tbody > tr:nth-child(odd)').addClass('alt');
+		$('table.zebra-even tbody > tr:nth-child(even)').addClass('alt');
 		
 		$('#list-grid').sortable({
 			forcePlaceholderSize: true,

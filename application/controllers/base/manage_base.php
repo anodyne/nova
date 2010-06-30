@@ -10,9 +10,9 @@
 | Changes: added the ability to have multiple specification items;
 |	fixed bug in the tour management where updating a tour item
 |	would only update the first item and not the one selected;
-|	added the ability to tie a tour item to a specification item
-|
-| Controller that handles the MANAGE section of the admin system.
+|	added the ability to tie a tour item to a specification item;
+|	added the ability to display tour items based on the
+|	specification item they're associated with
 |
 */
 
@@ -4793,19 +4793,39 @@ class Manage_base extends Controller {
 		}
 		else
 		{
+			// run the methods
 			$tour = $this->tour->get_tour_items('');
+			$specs = $this->specs->get_spec_items();
+			
+			if ($specs->num_rows() > 0)
+			{
+				$data['items'][0] = ucwords(lang('labels_general') .' '. lang('labels_items'));
+				
+				foreach ($specs->result() as $s)
+				{
+					$data['items'][$s->specs_id] = $s->specs_name;
+				}
+			}
 			
 			if ($tour->num_rows() > 0)
 			{
-				foreach ($tour->result() as $t)
+				// set the tour array
+				$data['tour'] = array();
+				
+				foreach ($tour->result() as $item)
 				{
-					$tid = $t->tour_id;
+					// make sure we have the right tour spec item for the array
+					$specitem = (!empty($item->tour_spec_item)) ? $item->tour_spec_item : 0;
 					
-					$data['tour'][$tid] = array(
-						'id' => $tid,
-						'name' => $t->tour_name,
-						'summary' => $t->tour_summary
-					);
+					// set the order
+					$order = $item->tour_order;
+					
+					// make sure all of the items will show up
+					$order = (isset($data['tour'][$specitem][$order])) ? NULL : $order;
+					
+					$data['tour'][$specitem][$order]['id'] = $item->tour_id;
+					$data['tour'][$specitem][$order]['name'] = $item->tour_name;
+					$data['tour'][$specitem][$order]['summary'] = $item->tour_summary;
 				}
 			}
 			

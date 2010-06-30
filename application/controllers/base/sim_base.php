@@ -8,9 +8,8 @@
 | System Version: 1.1
 |
 | Changes: added the ability to display multiple specification
-|	items
-|
-| Controller that handles the SIM part of the system.
+|	items; added the ability to display tour items based on the
+|	specification item they're associated with
 |
 */
 
@@ -1665,6 +1664,7 @@ class Sim_base extends Controller {
 		
 		/* load the models */
 		$this->load->model('tour_model', 'tour');
+		$this->load->model('specs_model', 'specs');
 		
 		/* set the variables */
 		$id = $this->uri->segment(3, FALSE, TRUE);
@@ -1673,14 +1673,37 @@ class Sim_base extends Controller {
 		{
 			/* run the methods */
 			$tour = $this->tour->get_tour_items();
+			$specs = $this->specs->get_spec_items();
+			
+			if ($specs->num_rows() > 0)
+			{
+				$data['items'][0] = ucwords(lang('labels_general') .' '. lang('labels_items'));
+				
+				foreach ($specs->result() as $s)
+				{
+					$data['items'][$s->specs_id] = $s->specs_name;
+				}
+			}
 			
 			if ($tour->num_rows() > 0)
 			{
+				// set the tour array
+				$data['tour'] = array();
+				
 				foreach ($tour->result() as $item)
 				{
-					$data['items'][$item->tour_id]['id'] = $item->tour_id;
-					$data['items'][$item->tour_id]['name'] = $item->tour_name;
-					$data['items'][$item->tour_id]['summary'] = $item->tour_summary;
+					// make sure we have the right tour spec item for the array
+					$specitem = (!empty($item->tour_spec_item)) ? $item->tour_spec_item : 0;
+					
+					// set the order
+					$order = $item->tour_order;
+					
+					// make sure all of the items will show up
+					$order = (isset($data['tour'][$specitem][$order])) ? NULL : $order;
+					
+					$data['tour'][$specitem][$order]['id'] = $item->tour_id;
+					$data['tour'][$specitem][$order]['name'] = $item->tour_name;
+					$data['tour'][$specitem][$order]['summary'] = $item->tour_summary;
 				}
 			}
 			
@@ -1801,6 +1824,7 @@ class Sim_base extends Controller {
 			'notour_all' => lang('error_no_tour_all'),
 			'opengallery' => lang('open_gallery'),
 			'summary' => ucfirst(lang('labels_summary')),
+			'viewspec' => ucwords(lang('actions_view') .' '. lang('global_specifications') .' '. RARROW),
 		);
 		
 		/* set the javascript location */

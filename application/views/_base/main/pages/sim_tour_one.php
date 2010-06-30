@@ -1,6 +1,6 @@
 <?php echo text_output($header, 'h1', 'page-head');?>
 
-<?php echo anchor('sim/tour', $label['back'], array('class' => 'bold'));?>
+<p><?php echo anchor('sim/tour', $label['back'], array('class' => 'bold'));?></p>
 
 <?php echo text_output($label['summary'], 'h2', 'page-subhead');?>
 <?php echo text_output($summary);?>
