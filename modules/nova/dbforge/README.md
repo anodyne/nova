@@ -9,6 +9,7 @@ The Nova 2 DBForge module provides functionality to manipulate the database prog
 ## Latest Changes
 
 * created readme file
+* removed the debug message in the constructor
 
 ## History
 

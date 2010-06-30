@@ -73,9 +73,6 @@ abstract class Nova_DBForge
 		
 		// get the database configuration
 		self::$dbconfig = Kohana::config('database.default');
-		
-		// set the log message
-		Kohana_Log::instance()->add('debug', 'DBForge library initialized.');
 	}
 	
 	/**
