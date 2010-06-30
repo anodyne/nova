@@ -1,9 +1,9 @@
-version: 1.0.5
+version: 1.1.0
 version_major: 1
-version_minor: 0
-version_update: 5
-severity: minor
+version_minor: 1
+version_update: 0
+severity: major
 notes: |
-  Nova 1.0.5 is the fifth maintenance release for Nova 1.0 and continues to fix issues with the system. Included in this release are fixes for errors being thrown throughout the system, a bug that wouldn't allow unlinked NPCs to use newly created bio fields, a security issue with the docking form and more. A full changelog can be found on AnodyneDocs or from the System and Versions report once Nova has been updated. This update is recommended for all users.
+  Nova 1.1 is the first update Nova to add additional features to the system. Included in this release is the ability to create multiple specification items and to associate tour items with specific specification items as well as bug fixes (a bug where editing existing tour items wouldn't update the current item, but the first item). A full changelog can be found on AnodyneDocs or from the System and Versions report once Nova has been updated. This update is recommended for all users.
 date: 06 June 2010
 link: http://www.anodyne-productions.com
