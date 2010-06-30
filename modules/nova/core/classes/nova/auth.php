@@ -43,8 +43,6 @@ abstract class Nova_Auth
 	{
 		// get an instance of the session library
 		self::$session = Session::instance();
-		
-		Kohana_Log::instance()->add('debug', 'Auth library initialized.');
 	}
 	
 	/**
