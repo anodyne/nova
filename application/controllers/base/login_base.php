@@ -11,8 +11,6 @@
 |	thrown when a pending user tries to log in; fixed presentation
 |	issue with error #6
 |
-| Controller that handles logging in to the system.
-|
 */
 
 class Login_base extends Controller {

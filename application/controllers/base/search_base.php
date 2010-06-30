@@ -7,8 +7,6 @@
 | File: controllers/base/search_base.php
 | System Version: 1.0
 |
-| Controller used for the search options for the system.
-|
 */
 
 class Search_base extends Controller {

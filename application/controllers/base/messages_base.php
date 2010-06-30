@@ -11,8 +11,6 @@
 |	characters to make it easier to get to the users who are actively
 |	using the system
 |
-| Controller that handles the MESSAGES section of the admin system.
-|
 */
 
 class Messages_base extends Controller {

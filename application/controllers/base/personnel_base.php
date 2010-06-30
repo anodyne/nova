@@ -7,8 +7,6 @@
 | File: controllers/base/personnel_base.php
 | System Version: 1.0
 |
-| Controller that handles the PERSONNEL section of the system.
-|
 */
 
 class Personnel_base extends Controller {

@@ -11,8 +11,6 @@
 |	listing and use that as a baseline first instead of the
 |	versions file
 |
-| Controller that handles the updating of the system.
-|
 */
 
 class Update_base extends Controller {

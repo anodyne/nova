@@ -13,8 +13,6 @@
 |	contact page; fixed bug where join instructions weren't
 |	displayed
 |
-| Controller that handles the MAIN section of the system.
-|
 */
 
 class Main_base extends Controller {

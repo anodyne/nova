@@ -17,8 +17,6 @@
 |	set the number of open slots for their position(s); fixed error
 |	thrown when attempting to delete a character
 |
-| Controller that handles the CHARACTERS section of the admin system.
-|
 */
 
 class Characters_base extends Controller {

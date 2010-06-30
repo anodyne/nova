@@ -12,8 +12,6 @@
 |	messages for the different panel tabs in the event there's
 |	nothing in the tab
 |
-| Controller that handles the ADMIN section of the system.
-|
 */
 
 class Admin_base extends Controller {

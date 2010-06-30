@@ -13,8 +13,6 @@
 |	updated the write mission post to pass the mission ID to the
 |	view when it exists; fixed an error being thrown
 |
-| Controller that handles the WRITE section of the admin system.
-|
 */
 
 class Write_base extends Controller {

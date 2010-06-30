@@ -9,8 +9,6 @@
 |
 | Changes: added methods for handling uploaded spec images
 |
-| Controller that handles the AJAX work in the system
-|
 */
 
 class Ajax_base extends Controller {

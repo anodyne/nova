@@ -11,8 +11,6 @@
 |	mission group field to the missions table; fixed minor
 |	schema differences between sms and nova during the upgrade
 |
-| Controller that handles the upgrading SMS to Nova
-|
 */
 
 class Upgrade_base extends Controller {

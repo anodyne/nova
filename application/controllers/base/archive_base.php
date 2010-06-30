@@ -10,8 +10,6 @@
 | Changes: updated the constructor to show an error if someone isn't running PHP 5
 |	due to a bug somewhere in the code causing 500 errors
 |
-| Controller that handles the ARCHIVE section of the admin system.
-|
 */
 
 class Archive_base extends Controller {

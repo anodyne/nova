@@ -12,8 +12,6 @@
 |	somewhere in the code causing 500 errors; fixed errors that were thrown
 |	when editing a wiki page
 |
-| Controller that handles the WIKI section of the system.
-|
 */
 
 class Wiki_base extends Controller {

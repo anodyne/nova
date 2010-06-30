@@ -18,8 +18,6 @@
 |	variable the system was expecting; fixed bug where site options
 |	didn't allow skin admins to select in development skins
 |
-| Controller that handles the USER section of the admin system.
-|
 */
 
 class User_base extends Controller {

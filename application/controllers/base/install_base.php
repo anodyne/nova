@@ -7,8 +7,6 @@
 | File: controllers/base/install_base.php
 | System Version: 1.0.5
 |
-| Controller that handles the installation of the system.
-|
 */
 
 class Install_base extends Controller {

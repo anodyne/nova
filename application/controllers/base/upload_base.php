@@ -9,9 +9,6 @@
 |
 | Changes: added the ability to upload specs images to the server
 |
-| Controller that handles uploading files and management of
-| uploaded files
-|
 */
 
 class Upload_base extends Controller {

@@ -7,9 +7,6 @@
 | File: controllers/base/feed_base.php
 | System Version: 1.0
 |
-| Controller that handles generating the various RSS feeds used
-| by the system.
-|
 */
 
 class Feed_base extends Controller {

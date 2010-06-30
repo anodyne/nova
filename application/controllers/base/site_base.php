@@ -13,8 +13,6 @@
 |	in a section (bio, specs, docking); fixed bug where unlinked
 |	NPCs wouldn't be able to use newly created fields
 |
-| Controller that handles the SITE section of the admin system.
-|
 */
 
 class Site_base extends Controller {

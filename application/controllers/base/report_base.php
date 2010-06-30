@@ -7,8 +7,6 @@
 | File: controllers/report_base.php
 | System Version: 1.0
 |
-| Controller that handles the REPORT section of the admin system.
-|
 */
 
 class Report_base extends Controller {
