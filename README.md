@@ -8,13 +8,7 @@ M1.2-pre (2.0-alpha)
 
 ## Last Update
 
-30 June 2010
-
-## Latest Changes
-
-* updates to the upgrade module
-* updated the auth class
-* updated the dbforge class
+01 July 2010
 
 ## Version History
 
