@@ -28,6 +28,7 @@ _fgCharting requires the HTML5 canvas element which is not supported by Internet
 * http://flowplayer.org/tools/index.html
 * http://jquerylist.com/
 * http://www.filamentgroup.com/lab/using_multiple_jquery_ui_themes_on_a_single_page/
+* http://dropdown-check-list.googlecode.com/svn/trunk/src/demo.html
 
 # Database Errors
 
