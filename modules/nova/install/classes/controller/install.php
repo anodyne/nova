@@ -1160,6 +1160,20 @@ return array
 						$crUser->main_char = $crCharacter->id;
 						$crUser->save();
 						
+						// get the preferences
+						$prefs = Jelly::select('userpref')->execute();
+						
+						// loop through and create the preferences for the user
+						foreach ($prefs as $p)
+						{
+							$prefvalues = Jelly::insert('userprefvalue')
+								->set(array(
+									'user' => $crUser->id,
+									'key' => $p->key,
+									'value' => $p->default
+								));
+						}
+						
 						// do the quick installs
 						Utility::install_ranks();
 						Utility::install_skins();
