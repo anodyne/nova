@@ -411,6 +411,31 @@ abstract class Nova_DBForge
 	}
 	
 	/**
+	 * Optimizes the given table.
+	 *
+	 *     DBForge::optimize('table);
+	 *
+	 * @uses	Database::query
+	 * @param	string	the table to optimize
+	 * @param	boolean	whether or not to append the table prefix
+	 * @return	void
+	 */
+	public static function optimize($table, $prefix = TRUE)
+	{
+		// get an instance of the database
+		$db = Database::instance();
+		
+		// attach the prefix if necessary
+		if ($prefix === TRUE)
+		{
+			$table = $db->table_prefix().$table;
+		}
+		
+		// optimize the table
+		$db->query(NULL, "OPTIMIZE TABLE `$table`", TRUE);
+	}
+	
+	/**
 	 * Generates a query so that a table can be altered
 	 *
 	 * @uses	DBForge::_alter_table
