@@ -56,13 +56,15 @@ class Model_User extends Jelly_Model
 				'column' => 'daylight_savings'
 			)),
 			'language' => new Field_String,
-			'join_date' => new Field_Timestamp(array(
-				'auto_now_create' => TRUE,
+			'join' => new Field_Timestamp(array(
+				'column' => 'join_date',
+				'auto_now_create' => FALSE,
 				'auto_now_update' => FALSE,
 				'null' => TRUE,
 				'default' => date::now()
 			)),
-			'leave_date' => new Field_Timestamp(array(
+			'leave' => new Field_Timestamp(array(
+				'column' => 'leave_date',
 				'auto_now_create' => FALSE,
 				'auto_now_update' => FALSE,
 				'null' => TRUE,
