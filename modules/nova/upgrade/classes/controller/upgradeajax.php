@@ -37,69 +37,77 @@ class Controller_Upgradeajax extends Controller_Template
 		// drop the nova version of the table
 		DBForge::drop_table('awards');
 		
-		// copy the sms version of the table along with all its data
-		$this->db->query(NULL, "CREATE TABLE ".$this->db->table_prefix()."awards SELECT * FROM sms_awards", TRUE);
-		
-		// rename the fields
-		$fields = array(
-			'awardid' => array(
-				'name' => 'award_id',
-				'type' => 'INT',
-				'constraint' => 5),
-			'awardName' => array(
-				'name' => 'award_name',
-				'type' => 'VARCHAR',
-				'constraint' => 255),
-			'awardImage' => array(
-				'name' => 'award_image',
-				'type' => 'VARCHAR',
-				'constraint' => 100),
-			'awardOrder' => array(
-				'name' => 'award_order',
-				'type' => 'INT',
-				'constraint' => 5),
-			'awardDesc' => array(
-				'name' => 'award_desc',
-				'type' => 'TEXT'),
-			'awardCat' => array(
-				'name' => 'award_cat',
-				'type' => 'ENUM',
-				'constraint' => "'ic','ooc','both'",
-				'default' => 'ic'),
-		);
-		
-		// modify the columns
-		DBForge::modify_column('awards', $fields);
-		
-		// add the award_display column
-		$add = array(
-			'award_display' => array(
-				'type' => 'ENUM',
-				'constraint' => "'y','n'",
-				'default' => 'y')
-		);
-		
-		// do the add action
-		DBForge::add_column('awards', $add);
-		
-		// make award_id auto increment and the primary key
-		$this->db->query(NULL, "ALTER TABLE ".$this->db->table_prefix()."awards MODIFY COLUMN `award_id` INT(5) auto_increment primary key", TRUE);
-		
-		// get the number of records in the new table
-		$count_new = Jelly::select('award')->count();
-
-		if ($count_new == $count_old)
-		{
-			$retval = array(
-				'code' => 1,
-				'message' => ''
+		try {
+			// copy the sms version of the table along with all its data
+			$this->db->query(NULL, "CREATE TABLE ".$this->db->table_prefix()."awards SELECT * FROM sms_awards", TRUE);
+			
+			// rename the fields
+			$fields = array(
+				'awardid' => array(
+					'name' => 'award_id',
+					'type' => 'INT',
+					'constraint' => 5),
+				'awardName' => array(
+					'name' => 'award_name',
+					'type' => 'VARCHAR',
+					'constraint' => 255),
+				'awardImage' => array(
+					'name' => 'award_image',
+					'type' => 'VARCHAR',
+					'constraint' => 100),
+				'awardOrder' => array(
+					'name' => 'award_order',
+					'type' => 'INT',
+					'constraint' => 5),
+				'awardDesc' => array(
+					'name' => 'award_desc',
+					'type' => 'TEXT'),
+				'awardCat' => array(
+					'name' => 'award_cat',
+					'type' => 'ENUM',
+					'constraint' => "'ic','ooc','both'",
+					'default' => 'ic'),
 			);
-		}
-		else
-		{
+			
+			// modify the columns
+			DBForge::modify_column('awards', $fields);
+			
+			// add the award_display column
+			$add = array(
+				'award_display' => array(
+					'type' => 'ENUM',
+					'constraint' => "'y','n'",
+					'default' => 'y')
+			);
+			
+			// do the add action
+			DBForge::add_column('awards', $add);
+			
+			// make award_id auto increment and the primary key
+			$this->db->query(NULL, "ALTER TABLE ".$this->db->table_prefix()."awards MODIFY COLUMN `award_id` INT(5) auto_increment primary key", TRUE);
+			
+			// get the number of records in the new table
+			$count_new = Jelly::select('award')->count();
+	
+			if ($count_new == $count_old)
+			{
+				$retval = array(
+					'code' => 1,
+					'message' => ''
+				);
+			}
+			else
+			{
+				$retval = array(
+					'code' => 0,
+					'message' => __("Not all of the awards were transferred to the Nova format")
+				);
+			}
+		} catch (Exception $e) {
+			// catch the exception and put the error message into the return array
 			$retval = array(
 				'code' => 0,
-				'message' => __("Not all of the awards were transferred to the Nova format")
+				'message' => $e->getMessage()
 			);
 		}
 		
@@ -108,154 +116,268 @@ class Controller_Upgradeajax extends Controller_Template
 	
 	public function action_upgrade_characters()
 	{
-		// get the characters
-		$result = $this->db->query(Database::SELECT, 'SELECT * FROM sms_crew', TRUE);
-		
-		// the user array
-		$userarray = array();
-		
-		// an array of character IDs
-		$charIDs = array('' => 0);
-		
-		// add the languages field
-		/*$lang = Jelly::factory('formfield')
-			->set(array(
-				'type' => 'text',
-				'name' => 'languages',
-				
-			))
-				->save();*/
-		
-		foreach ($result as $r)
-		{
-			if ($r->crewType != 'npc' || !empty($r->email))
+		try {
+			// get the characters
+			$result = $this->db->query(Database::SELECT, 'SELECT * FROM sms_crew', TRUE);
+			
+			// the user array
+			$userarray = array();
+			
+			// an array of character IDs
+			$charIDs = array('' => 0);
+			
+			/*// add the languages field
+			$lang = Jelly::insert('formfield')
+				->set(array(
+					'type' => 'text',
+					'name' => 'languages',
+					'section' => 1,
+				));
+			*/
+			// create an empty users array
+			$users = array();
+			
+			foreach ($result as $r)
 			{
-				// make sure the users variable is reset
-				$users = NULL;
-				
-				$users = array(
-					'name' => $r->realName,
-					'email' => $r->email,
-					'leave_date' => $r->leaveDate,
-					'status' => ($r->crewType == 'npc') ? 'active' : $r->crewType,
-					'password_reset' => 1,
-					'role' => 4,
-				);
-				
-				if (!isset($users['main_char']))
+				if (!empty($r->email))
 				{
-					$users['main_char'] = $r->crewid;
-				}
-				else
-				{
-					if ($r->crewType == 'active')
+					// build the array with user information
+					$users[$r->email] = array(
+						'name'				=> $r->realName,
+						'email'				=> $r->email,
+						'join'				=> FALSE,
+						'leave'				=> $r->leaveDate,
+						'status'			=> ($r->crewType != 'active' && $r->crewType != 'pending') ? 'inactive' : $r->crewType,
+						'password_reset'	=> 1,
+						'role'				=> 4,
+					);
+					
+					if (!isset($users[$r->email]['main_char']))
 					{
-						$users['main_char'] = $c->crewid;
+						// if we haven't set the main charcter yet, set it now
+						$users[$r->email]['main_char'] = $r->crewid;
+					}
+					else
+					{
+						if ($r->crewType == 'active')
+						{
+							// if the main character has been set but the current character is active, use that
+							$users[$r->email]['main_char'] = $c->crewid;
+						}
+					}
+					
+					if (!isset($users['last_post']))
+					{
+						// drop the latest post date in if it isn't set
+						$users[$r->email]['last_post'] = $r->lastPost;
+					}
+					else
+					{
+						if ($r->crewType == 'active')
+						{
+							// if the latest post is set, but the current character is active, use that
+							$users[$r->email]['last_post'] = $r->lastPost;
+						}
+					}
+					
+					if ($users[$r->email]['join'] === FALSE)
+					{
+						// if the join date isn't set yet, set it
+						$users[$r->email]['join'] = $r->joinDate;
 					}
 				}
-				
-				if (!isset($users['last_post']))
-				{
-					$users['last_post'] = $r->lastPost;
-				}
-				else
-				{
-					if ($r->crewType == 'active')
-					{
-						$users['last_post'] = $r->lastPost;
-					}
-				}
-				
-				if (!isset($characters['user']['join_date']))
-				{
-					$users['join_date'] = $r->joinDate;
-				}
-				
+			}
+			
+			// create an empty array for checking users
+			$saved = array();
+			
+			foreach ($users as $u)
+			{
 				// create the user
-				$user = Jelly::factory('user')->set($users)->save();
+				$useraction = Jelly::factory('user')->set($u)->save();
 				
-				# TODO: create the user preferences
+				// store whether or not the save worked
+				$saved['users'][] = $useraction->saved();
+				
+				// optimize the table
+				DBForge::optimize('users');
+				
+				// get the preferences
+				$prefs = Jelly::select('userpref')->execute();
+				
+				// loop through and create the preferences for the user
+				foreach ($prefs as $p)
+				{
+					$prefvalues = Jelly::insert('userprefvalue')
+						->set(array(
+							'user' => $useraction->id(),
+							'key' => $p->key,
+							'value' => $p->default
+						));
+				}
 				
 				// keeping track of user ids
-				$charIDs[$r->email] = $user->id();
+				$charIDs[$u['email']] = $useraction->id();
 			}
 			
-			# TODO: optimize the users table
-		}
-		
-		// pause the script
-		sleep(1);
-		
-		foreach ($result as $c)
-		{
-			// make sure the fields array is empty
-			$fields = NULL;
+			// pause the script
+			sleep(1);
 			
-			// create the character
-			$character = Jelly::factory('character')
-				->set(array(
-					'id' => $c->crewid,
-					'user' => (!empty($c->email)) ? $charIDs[$c->email] : NULL,
-					'fname' => $c->firstName,
-					'mname' => $c->middleName,
-					'lname' => $c->lastName,
-					'status' => ($c->crewType == 'npc') ? 'active' : $c->crewType,
-					'images' => $c->image,
-					'activate' => $c->joinDate,
-					'deactivate' => $c->leaveDate,
-					'rank' => $c->rankid,
-					'position1' => $c->positionid,
-					'position2' => $c->positionid2,
-					'last_post' => $c->lastPost
-				))
-				->save();
-			
-			# TODO: optimize the characters table
-			
-			// create the array that stores all the character information
-			$fields = array(
-				1 => $c->gender,
-				2 => $c->species,
-				3 => $c->age,
-				4 => $c->heightFeet."' ".$c->heightInches.'"',
-				5 => $c->weight.' lbs',
-				6 => $c->hairColor,
-				7 => $c->eyeColor,
-				8 => $c->physicalDesc,
-				9 => $c->spouse,
-				10 => $c->children,
-				11 => $c->father,
-				12 => $c->mother,
-				13 => $c->brothers."\r\n\r\n".$c->sisters,
-				14 => $c->otherFamily,
-				15 => $c->personalityOverview,
-				16 => $c->strengths,
-				17 => $c->ambitions,
-				18 => $c->hobbies,
-				19 => $c->history,
-				20 => $c->serviceRecord
-			);
-			
-			foreach ($fields as $field => $value)
+			foreach ($result as $c)
 			{
-				// insert the character data
-				$fieldata = Jelly::factory('formdata')
+				// make sure the fields array is empty
+				$fields = FALSE;
+				
+				// create the character
+				$characteraction = Jelly::factory('character')
 					->set(array(
-						'form' => 'bio',
-						'character' => $character->id(),
-						'user' => (!empty($c->email)) ? $charIDs[$c->email] : NULL,
-						'field' => $field,
-						'value' => $value
+						'id'			=> $c->crewid,
+						'user'			=> (!empty($c->email)) ? $charIDs[$c->email] : NULL,
+						'fname'			=> $c->firstName,
+						'mname'			=> $c->middleName,
+						'lname'			=> $c->lastName,
+						'status'		=> ($c->crewType == 'npc') ? 'active' : $c->crewType,
+						'images' 		=> $c->image,
+						'activate' 		=> $c->joinDate,
+						'deactivate' 	=> $c->leaveDate,
+						'rank'			=> $c->rankid,
+						'position1'		=> $c->positionid,
+						'position2' 	=> $c->positionid2,
+						'last_post' 	=> $c->lastPost
 					))
 					->save();
+				
+				// store whether or not the save worked
+				$saved['characters'][] = $characteraction->saved();
+				
+				// optimize the table
+				DBForge::optimize('characters');
+				
+				// create the array that stores all the character information
+				$fields = array(
+					1 	=> $c->gender,
+					2 	=> $c->species,
+					3 	=> $c->age,
+					4 	=> $c->heightFeet."' ".$c->heightInches.'"',
+					5 	=> $c->weight.' lbs',
+					6 	=> $c->hairColor,
+					7 	=> $c->eyeColor,
+					8 	=> $c->physicalDesc,
+					9 	=> $c->spouse,
+					10 	=> $c->children,
+					11 	=> $c->father,
+					12 	=> $c->mother,
+					13 	=> $c->brothers."\r\n\r\n".$c->sisters,
+					14 	=> $c->otherFamily,
+					15 	=> $c->personalityOverview,
+					16 	=> $c->strengths,
+					17 	=> $c->ambitions,
+					18 	=> $c->hobbies,
+					19 	=> $c->history,
+					20 	=> $c->serviceRecord,
+					//$lang->id() => $c->languages,
+				);
+				
+				foreach ($fields as $field => $value)
+				{
+					// insert the character data
+					$fieldata = Jelly::factory('formdata')
+						->set(array(
+							'form'		=> 'bio',
+							'character' => $characteraction->id(),
+							'user' 		=> (!empty($c->email)) ? $charIDs[$c->email] : NULL,
+							'field' 	=> $field,
+							'value' 	=> $value
+						))
+						->save();
+						
+					// store whether or not the save worked
+					$saved['formdata'][] = $fieldata->saved();
+				}
+				
+				// optimize the table
+				DBForge::optimize('forms_data');
 			}
 			
-			# TODO: optimize the forms_data table
+			// set the count variables
+			$count_users = (in_array(FALSE, $saved['users'])) ? FALSE : TRUE;
+			$count_characters = (in_array(FALSE, $saved['characters'])) ? FALSE : TRUE;
+			$count_formdata = (in_array(FALSE, $saved['formdata'])) ? FALSE : TRUE;
+			
+			if ($count_users === TRUE && $count_characters === TRUE && $count_formdata === TRUE)
+			{
+				$retval = array(
+					'code' => 1,
+					'message' => ''
+				);
+			}
+			else
+			{
+				if ($count_users === FALSE && $count_characters === TRUE && $count_formdata === TRUE)
+				{
+					$retval = array(
+						'code' => 2,
+						'message' => __("Your characters and character data were successfully upgraded, but not all users were successfully upgraded")
+					);
+				}
+				
+				if ($count_users === FALSE && $count_characters === FALSE && $count_formdata === TRUE)
+				{
+					$retval = array(
+						'code' => 2,
+						'message' => __("Your character data was successfully upgraded, but not all users or characters were successfully upgraded")
+					);
+				}
+				
+				if ($count_users === TRUE && $count_characters === FALSE && $count_formdata === TRUE)
+				{
+					$retval = array(
+						'code' => 2,
+						'message' => __("Your users and character data was successfully upgraded, but not all characters were successfully upgraded")
+					);
+				}
+				
+				if ($count_users === TRUE && $count_characters === TRUE && $count_formdata === FALSE)
+				{
+					$retval = array(
+						'code' => 2,
+						'message' => __("Your users and characters were successfully upgraded, but not all character data was successfully upgraded")
+					);
+				}
+				
+				if ($count_users === FALSE && $count_characters === TRUE && $count_formdata === FALSE)
+				{
+					$retval = array(
+						'code' => 2,
+						'message' => __("Your characters were successfully upgraded, but not all users or character data were successfully upgraded")
+					);
+				}
+				
+				if ($count_users === TRUE && $count_characters === FALSE && $count_formdata === FALSE)
+				{
+					$retval = array(
+						'code' => 2,
+						'message' => __("Your users were successfully upgraded, but not all characters or character data were successfully upgraded")
+					);
+				}
+				
+				if ($count_users === FALSE && $count_characters === FALSE && $count_formdata === FALSE)
+				{
+					$retval = array(
+						'code' => 0,
+						'message' => __("Your users, characters and character data could not be updated")
+					);
+				}
+			}
+		} catch (Exception $e) {
+			// catch the exception
+			$retval = array(
+				'code' => 0,
+				'message' => 'PHP ERROR: '.$e->getMessage().' - line '.$e->getLine().' of '.$e->getFile()
+			);
 		}
 		
-		# TODO: need to figure out the best way to validate characters and users
-		
-		echo '1';
+		echo json_encode($retval);
 	}
 	
 	public function action_upgrade_final_password()

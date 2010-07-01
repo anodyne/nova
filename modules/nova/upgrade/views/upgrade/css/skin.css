@@ -199,12 +199,12 @@ h3 { font-size: 133%; }
 					linear,
 					left top,
 					left bottom,
-					color-stop(.2, #f8c300),
+					color-stop(.2, #f8e400),
 					color-stop(1, #f5a12a)
 				);
 	background: -moz-linear-gradient(
 					center top,
-					#f8c300 20%,
+					#f8e400 20%,
 					#f5a12a 100%
 				);
 	

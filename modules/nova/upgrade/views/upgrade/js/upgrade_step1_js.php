@@ -70,13 +70,30 @@
 					type: "POST",
 					url: "<?php echo url::site('upgradeajax/upgrade_characters');?>",
 					data: send,
+					dataType: 'json',
 					success: function(data){
 						$('table tbody tr:eq(0) td:eq(1) .loading').addClass('hidden');
 						
-						if (data == "1")
+						if (data.code == 1)
+						{
 							$('table tbody tr:eq(0) td:eq(1) .success').removeClass('hidden');
-						else
+						}
+						else if (data.code == 0)
+						{
 							$('table tbody tr:eq(0) td:eq(1) .failure').removeClass('hidden');
+							$('table tbody tr:eq(0) td:eq(1) .failure img').attr('title', function(){
+								return data.message
+							});
+							$('.tiptip').tipTip(tipOpts);
+						}
+						else if (data.code == 2)
+						{
+							$('table tbody tr:eq(0) td:eq(1) .warning').removeClass('hidden');
+							$('table tbody tr:eq(0) td:eq(1) .warning img').attr('title', function(){
+								return data.message
+							});
+							$('.tiptip').tipTip(tipOpts);
+						}
 					}
 				});
 			}
@@ -85,27 +102,26 @@
 			if ($('input[name=upgrade_awards]:checked').val() == 1)
 			{
 				var send;
-				var position = 1;
 				
 				$.ajaxq('queue', {
 					beforeSend: function(){
-						$('table tbody tr:eq(' + position + ') td:eq(1) .loading').removeClass('hidden');
+						$('table tbody tr:eq(1) td:eq(1) .loading').removeClass('hidden');
 					},
 					type: "POST",
 					url: "<?php echo url::site('upgradeajax/upgrade_awards');?>",
 					data: send,
 					dataType: 'json',
 					success: function(data){
-						$('table tbody tr:eq(' + position + ') td:eq(1) .loading').addClass('hidden');
+						$('table tbody tr:eq(1) td:eq(1) .loading').addClass('hidden');
 						
 						if (data.code == 1)
 						{
-							$('table tbody tr:eq(' + position + ') td:eq(1) .success').removeClass('hidden');
+							$('table tbody tr:eq(1) td:eq(1) .success').removeClass('hidden');
 						}
 						else if (data.code == 0)
 						{
-							$('table tbody tr:eq(' + position + ') td:eq(1) .failure').removeClass('hidden');
-							$('table tbody tr:eq(' + position + ') td:eq(1) .failure img').attr('title', function(){
+							$('table tbody tr:eq(1) td:eq(1) .failure').removeClass('hidden');
+							$('table tbody tr:eq(1) td:eq(1) .failure img').attr('title', function(){
 								return data.message
 							});
 							$('.tiptip').tipTip(tipOpts);
@@ -118,35 +134,34 @@
 			if ($('input[name=upgrade_settings]:checked').val() == 1)
 			{
 				var send;
-				var position = 2;
 				
 				$.ajaxq('queue', {
 					beforeSend: function(){
-						$('table tbody tr:eq(' + position + ') td:eq(1) .loading').removeClass('hidden');
+						$('table tbody tr:eq(2) td:eq(1) .loading').removeClass('hidden');
 					},
 					type: "POST",
 					url: "<?php echo url::site('upgradeajax/upgrade_settings');?>",
 					data: send,
 					dataType: 'json',
 					success: function(data){
-						$('table tbody tr:eq(' + position + ') td:eq(1) .loading').addClass('hidden');
+						$('table tbody tr:eq(2) td:eq(1) .loading').addClass('hidden');
 						
 						if (data.code == 1)
 						{
-							$('table tbody tr:eq(' + position + ') td:eq(1) .success').removeClass('hidden');
+							$('table tbody tr:eq(2) td:eq(1) .success').removeClass('hidden');
 						}
 						else if (data.code == 0)
 						{
-							$('table tbody tr:eq(' + position + ') td:eq(1) .failure').removeClass('hidden');
-							$('table tbody tr:eq(' + position + ') td:eq(1) .failure img').attr('title', function(){
+							$('table tbody tr:eq(2) td:eq(1) .failure').removeClass('hidden');
+							$('table tbody tr:eq(2) td:eq(1) .failure img').attr('title', function(){
 								return data.message
 							});
 							$('.tiptip').tipTip(tipOpts);
 						}
 						else if (data.code == 2)
 						{
-							$('table tbody tr:eq(' + position + ') td:eq(1) .warning').removeClass('hidden');
-							$('table tbody tr:eq(' + position + ') td:eq(1) .warning img').attr('title', function(){
+							$('table tbody tr:eq(2) td:eq(1) .warning').removeClass('hidden');
+							$('table tbody tr:eq(2) td:eq(1) .warning img').attr('title', function(){
 								return data.message
 							});
 							$('.tiptip').tipTip(tipOpts);
