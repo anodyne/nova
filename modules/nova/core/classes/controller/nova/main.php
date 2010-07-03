@@ -330,7 +330,13 @@ class Controller_Nova_Main extends Controller_Nova_Base
 	
 	public function action_test2()
 	{
-		Events::event('preCreate');
+		echo form::button('primary', 'Primary Button', array('class' => 'btn-prim'));
+		echo '<br /><br />';
+		
+		echo form::button('secondary', 'Secondary Button', array('class' => 'btn-sec'));
+		echo '<br /><br />';
+		
+		echo form::button('tertiary', 'Tertiary Button', array('class' => 'btn-ter'));
 		exit();
 	}
 	
