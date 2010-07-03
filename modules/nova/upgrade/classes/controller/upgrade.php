@@ -468,6 +468,19 @@ class Controller_Upgrade extends Controller_Template
 		$this->template->layout->label = __('verify.title');
 	}
 	
+	public function action_test()
+	{
+		$buttons = "";
+		
+		$buttons.= form::button('primary', 'Primary Button', array('class' => 'btn-main')).'<br /><br />';
+		
+		$buttons.= form::button('secondary', 'Secondary Button', array('class' => 'btn-sec')).'<br /><br />';
+		
+		$buttons.= form::button('tertiary', 'Tertiary Button', array('class' => 'btn-ter'));
+		
+		$this->template->layout->content = $buttons;
+	}
+	
 	private function _register()
 	{
 		if ($path = Kohana::find_file('vendor', 'swiftmailer/lib/swift_required'))
