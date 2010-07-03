@@ -16,7 +16,12 @@ return array
 	'preCreate'	=> array(),
 	'postCreate' => array(),
 	
-	'preExecute' => array(),
+	'preExecute' => array(
+		array(
+			'class' => 'Hooks',
+			'method' => 'browser',
+			'param' => FALSE),
+	),
 	'postExecute' => array(),
 	
 	'preHeaders' => array(),
