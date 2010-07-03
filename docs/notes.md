@@ -29,6 +29,9 @@ _fgCharting requires the HTML5 canvas element which is not supported by Internet
 * http://jquerylist.com/
 * http://www.filamentgroup.com/lab/using_multiple_jquery_ui_themes_on_a_single_page/
 * http://dropdown-check-list.googlecode.com/svn/trunk/src/demo.html
+* http://www.w3avenue.com/2009/06/20/jquery-ui-selectmenu-plugin/
+* http://devermind.com/aspnet/jquery-selectmenu-widget-for-jquery-ui-1-8/
+* http://www.filamentgroup.com/lab/jquery_ui_selectmenu_an_aria_accessible_plugin_for_styling_a_html_select/
 
 # Database Errors
 
