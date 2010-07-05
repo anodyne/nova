@@ -58,7 +58,7 @@ class Model_User extends Jelly_Model
 			'language' => new Field_String,
 			'join' => new Field_Timestamp(array(
 				'column' => 'join_date',
-				'auto_now_create' => FALSE,
+				'auto_now_create' => TRUE,
 				'auto_now_update' => FALSE,
 				'null' => TRUE,
 				'default' => date::now()

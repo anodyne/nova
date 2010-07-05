@@ -23,6 +23,9 @@ class Controller_Upgradeajax extends Controller_Template
 		
 		// get an instance of the database
 		$this->db = Database::instance();
+		
+		// change the user model to prevent NULL values
+		Jelly::meta('user')->fields('join')->auto_now_create = FALSE;
 	}
 	
 	public function action_upgrade_awards()
