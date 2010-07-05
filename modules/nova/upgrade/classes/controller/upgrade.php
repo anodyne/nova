@@ -476,7 +476,9 @@ class Controller_Upgrade extends Controller_Template
 		
 		$buttons.= form::button('secondary', 'Secondary Button', array('class' => 'btn-sec')).'<br /><br />';
 		
-		$buttons.= form::button('tertiary', 'Tertiary Button', array('class' => 'btn-ter'));
+		$buttons.= form::button('tertiary', 'Tertiary Button', array('class' => 'btn-ter')).'<br /><br />';
+		
+		$buttons.= form::button('disabled', 'Disabled Button', array('class' => 'btn-ter', 'disabled' => 'disabled'));
 		
 		$this->template->layout->content = $buttons;
 	}
