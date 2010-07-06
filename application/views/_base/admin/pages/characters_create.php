@@ -32,13 +32,13 @@
 		
 		<p>
 			<kbd><?php echo $label['position1'];?></kbd>
-			<?php echo form_dropdown_position('position_1', $inputs['position1_id'], 'id="position1"', 'all');?>
+			<?php echo form_dropdown_position('position_1', $inputs['position1_id'], 'id="position1"', 'open');?>
 			&nbsp; <span id="loading_pos1" class="hidden fontSmall gray"><?php echo img($images['loading']);?></span>
 			<p id="position1_desc" class="fontSmall gray"><?php echo text_output($inputs['position1_desc'], '');?></p>
 		</p>
 		<p>
 			<kbd><?php echo $label['position2'];?></kbd>
-			<?php echo form_dropdown_position('position_2', $inputs['position2_id'], 'id="position2"', 'all');?>
+			<?php echo form_dropdown_position('position_2', $inputs['position2_id'], 'id="position2"', 'open');?>
 			&nbsp; <span id="loading_pos2" class="hidden fontSmall gray"><?php echo img($images['loading']);?></span>
 			<p id="position2_desc" class="fontSmall gray"><?php echo text_output($inputs['position2_desc'], '');?></p>
 		</p>
