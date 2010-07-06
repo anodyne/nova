@@ -5,7 +5,9 @@
 |---------------------------------------------------------------
 |
 | File: models/base/characters_model_base.php
-| System Version: 1.0
+| System Version: 1.0.6
+|
+| Changes: added method for inserting character promotion records
 |
 | Model used to access the characters table.
 |
@@ -571,6 +573,16 @@ class Characters_model_base extends Model {
 		
 		/* optimize the table */
 		$this->dbutil->optimize_table('coc');
+		
+		return $query;
+	}
+	
+	function create_promotion_record($data = '')
+	{
+		$query = $this->db->insert('characters_promotions', $data);
+		
+		/* optimize the table */
+		$this->dbutil->optimize_table('characters_promotions');
 		
 		return $query;
 	}
