@@ -4,7 +4,7 @@
 
 The application directory is specific to your installation of Nova. We've worked hard to remove as much Nova core code from the application directory as possible. In fact, if you look through the application folder, you'll find that it's pretty bare. If you want to make quick and dirty changes to the system, like overriding a specific page, or adding new skins, that'll all be done through the application folder. Below is a rundown of the directories found in the application directory.
 
-* __assets__ - stores system backups, common items (like genre assets), images and Javascript files
+* __assets__ - stores system backups, common items (like genre assets) and images
 * __cache__ - stores any cache files created for the application by Kohana
 * __classes__ - stores all PHP classes used in the system (this includes controllers, libraries, helpers and models ... Kohana makes little distinction between them)
 * __config__ - stores configuration files used throughout the system
@@ -27,7 +27,11 @@ Kohana's core is stored in the system directory and contains all of the necessar
 
 ## The Modules
 
-Modules are a new feature to Nova that allow code to spread out across multiple modules. You'll find this comes in really handy when updating the system. You don't need to work around files you've modified, you just need to update a single directory. The modules directory is broken down in to 4 directories.
+Modules are a new feature to Nova that allow code to spread out across multiple modules. You'll find this comes in really handy when updating the system. You don't need to work around files you've modified, you just need to update a single directory. The modules directory is broken down in to 5 directories.
+
+#### Assets Module
+
+Stored in the <code>modules/assets</code> directory, the assets module contain all of the various system assets like stylesheets, some images, Javascript files and more for use by the wider system. Because of the high dependence of some components on things in the assets module, you shouldn't add, remove or change asset files.
 
 #### Kohana Modules
 
