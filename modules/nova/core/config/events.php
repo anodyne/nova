@@ -21,6 +21,10 @@ return array
 			'class' => 'Hooks',
 			'method' => 'browser',
 			'param' => FALSE),
+		array(
+			'class' => 'Hooks',
+			'method' => 'maintenance',
+			'param' => FALSE),
 	),
 	'postExecute' => array(),
 	

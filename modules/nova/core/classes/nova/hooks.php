@@ -47,6 +47,28 @@ abstract class Nova_Hooks
 	
 	public static function maintenance()
 	{
-		# code...
+		// get an instance of the request object
+		$request = Request::instance();
+		
+		// get an instance of the session object
+		$session = Session::instance();
+		
+		// figure out which controllers to ignore
+		$ignore = array('install', 'update', 'upgrade', 'upgradeajax', 'login');
+		
+		if (!in_array($request->controller, $ignore))
+		{
+			// get the maintenance setting
+			$maint = Jelly::select('setting')->key('maintenance')->load()->value;
+			
+			if ($maint == 'on' && $request->controller != 'login')
+			{
+				if (!Auth::is_type('sysadmin', $session->get('userid')))
+				{
+					// redirect to the login page
+					$request->redirect('login/maintenance');
+				}
+			}
+		}
 	}
 } // End hooks
