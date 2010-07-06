@@ -1,7 +1,7 @@
-<script type="text/javascript" src="<?php echo url::base().APPFOLDER;?>/assets/js/jquery.ajaxq.js"></script>
-<script type="text/javascript" src="<?php echo url::base().APPFOLDER;?>/assets/js/jquery.tipTip.js"></script>
+<script type="text/javascript" src="<?php echo url::base().MODFOLDER;?>/assets/js/jquery.ajaxq.js"></script>
+<script type="text/javascript" src="<?php echo url::base().MODFOLDER;?>/assets/js/jquery.ui.tooltip.min.js"></script>
 
-<link rel="stylesheet" href="<?php echo url::base().APPFOLDER;?>/assets/js/css/jquery.tipTip.css" />
+<link rel="stylesheet" href="<?php echo url::base().MODFOLDER;?>/assets/css/jquery.ui.tooltip.css" />
 
 <script type="text/javascript">
 	$(document).ready(function(){
@@ -84,7 +84,7 @@
 							$('table tbody tr:eq(0) td:eq(1) .failure img').attr('title', function(){
 								return data.message
 							});
-							$('.tiptip').tipTip(tipOpts);
+							$('.tiptip').tooltip(tipOpts);
 						}
 						else if (data.code == 2)
 						{
@@ -92,7 +92,7 @@
 							$('table tbody tr:eq(0) td:eq(1) .warning img').attr('title', function(){
 								return data.message
 							});
-							$('.tiptip').tipTip(tipOpts);
+							$('.tiptip').tooltip(tipOpts);
 						}
 					}
 				});

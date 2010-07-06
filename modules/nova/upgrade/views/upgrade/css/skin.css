@@ -79,7 +79,7 @@ body {
 .control {
 	float: right;
 	height: 38px;
-	width: 188px;
+	width: 218px; /* needs to be 12 pixel smaller than .control-text */
 	padding: 0 .5em;
 	
 	background: #d8d8d8;
@@ -91,7 +91,7 @@ body {
 	-webkit-border-bottom-right-radius: 3px;
 }
 .control-text {
-	margin: 0 200px 0 0;
+	margin: 0 230px 0 0;
 	padding: 0 .5em;
 	
 	text-align: left;

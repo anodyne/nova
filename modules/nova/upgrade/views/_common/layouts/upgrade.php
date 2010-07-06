@@ -22,13 +22,13 @@
 		<?php echo html::style(MODFOLDER.'/nova/upgrade/views/upgrade/css/skin.css');?>
 		<?php echo html::style(MODFOLDER.'/nova/upgrade/views/upgrade/css/jquery.ui.core.css');?>
 		<?php echo html::style(MODFOLDER.'/nova/upgrade/views/upgrade/css/jquery.ui.theme.css');?>
-		<?php echo html::style(MODFOLDER.'/nova/core/assets/js/css/jquery.ui.progressbar.css');?>
+		<?php echo html::style(MODFOLDER.'/assets/css/jquery.ui.progressbar.css');?>
 		
 		<!-- JAVASCRIPT -->
-		<?php echo html::script(MODFOLDER.'/nova/core/assets/js/jquery.js');?>
-		<?php echo html::script(MODFOLDER.'/nova/core/assets/js/jquery.ui.core.min.js');?>
-		<?php echo html::script(MODFOLDER.'/nova/core/assets/js/jquery.ui.widget.min.js');?>
-		<?php echo html::script(MODFOLDER.'/nova/core/assets/js/jquery.ui.progressbar.min.js');?>
+		<?php echo html::script(MODFOLDER.'/assets/js/jquery.js');?>
+		<?php echo html::script(MODFOLDER.'/assets/js/jquery.ui.core.min.js');?>
+		<?php echo html::script(MODFOLDER.'/assets/js/jquery.ui.widget.min.js');?>
+		<?php echo html::script(MODFOLDER.'/assets/js/jquery.ui.progressbar.min.js');?>
 		<?php echo $javascript;?>
 	</head>
 	<body>

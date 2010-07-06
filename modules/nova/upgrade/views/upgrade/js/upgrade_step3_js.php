@@ -1,4 +1,4 @@
-<script type="text/javascript" src="<?php echo url::base().APPFOLDER;?>/assets/js/jquery.ajaxq.js"></script>
+<script type="text/javascript" src="<?php echo url::base().MODFOLDER;?>/assets/js/jquery.ajaxq.js"></script>
 
 <script type="text/javascript">
 	$(document).ready(function(){

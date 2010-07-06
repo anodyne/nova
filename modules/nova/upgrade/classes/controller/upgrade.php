@@ -123,7 +123,7 @@ class Controller_Upgrade extends Controller_Template
 		// build the next step button
 		$next = array(
 			'type' => 'submit',
-			'class' => 'button',
+			'class' => 'btn-main',
 			'id' => 'install',
 		);
 		
@@ -189,7 +189,7 @@ class Controller_Upgrade extends Controller_Template
 					// build the next step button
 					$next = array(
 						'type' => 'submit',
-						'class' => 'button',
+						'class' => 'btn-main',
 						'id' => 'next',
 					);
 					
@@ -330,7 +330,7 @@ class Controller_Upgrade extends Controller_Template
 				// build the next step button
 				$next = array(
 					'type' => 'submit',
-					'class' => 'button',
+					'class' => 'btn-main',
 					'id' => 'start',
 				);
 				
@@ -364,7 +364,7 @@ class Controller_Upgrade extends Controller_Template
 				// build the next step button
 				$next = array(
 					'type' => 'submit',
-					'class' => 'button',
+					'class' => 'btn-main',
 					'id' => 'start',
 				);
 				
@@ -415,7 +415,7 @@ class Controller_Upgrade extends Controller_Template
 				// build the next step button
 				$next = array(
 					'type' => 'submit',
-					'class' => 'button',
+					'class' => 'btn-main',
 					'id' => 'start',
 				);
 				
@@ -452,7 +452,7 @@ class Controller_Upgrade extends Controller_Template
 			// build the next step button
 			$next = array(
 				'type' => 'submit',
-				'class' => 'button',
+				'class' => 'btn-main',
 				'id' => 'install'
 			);
 			
