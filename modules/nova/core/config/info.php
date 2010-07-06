@@ -12,7 +12,7 @@ return array
 	 */
 	 
 	'app_name' => 'Nova',
-	'app_version_full' => '2.m1',
+	'app_version_full' => '2.0-m1.2',
 	'app_version_major' => 2,
 	'app_version_minor' => 0,
 	'app_version_update' => 0,
@@ -31,6 +31,6 @@ return array
 	 * Version Information Feed
 	 */
 	 
-	'version_info' => MODPATH.'nova/core/assets/version.yaml',
+	'version_info' => MODPATH.'assets/version.yaml',
 	//'version_info' => 'http://www.anodyne-productions.com/feeds/version_nova.yaml',
 );
