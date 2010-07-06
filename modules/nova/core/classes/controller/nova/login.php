@@ -180,6 +180,11 @@ class Controller_Nova_Login extends Controller_Nova_Base
 		$this->request->response = $this->template;
 	}
 	
+	public function maintenance()
+	{
+		# code...
+	}
+	
 	public function reset_password()
 	{
 		/*
