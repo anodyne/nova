@@ -496,7 +496,7 @@ class Controller_Install extends Controller_Template
 		// pass the step over to the view file
 		$data->step = $step;
 		
-		if (!file_exists(MODPATH.'kohana/database/assets/db.mysql'.EXT))
+		if (!file_exists(MODPATH.'assets/database/db.mysql'.EXT))
 		{
 			$data->message = __('setup.no_config_file', array(':modules' => MODFOLDER, ':ext' => EXT));
 		}
@@ -653,7 +653,7 @@ class Controller_Install extends Controller_Template
 							$check = array_intersect($disabled, $need);
 							
 							// pull in the mysql file
-							$file = file(MODPATH.'kohana/database/assets/db.mysql'.EXT);
+							$file = file(MODPATH.'assets/database/db.mysql'.EXT);
 							
 							if (is_array($file))
 							{
