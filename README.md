@@ -8,7 +8,7 @@ Anodyne Production's next-generation RPG management system combines popular feat
 
 ## Last Update
 
-28 June 2010
+06 July 2010
 
 ## Changes in 1.0.6
 
@@ -19,10 +19,14 @@ Anodyne Production's next-generation RPG management system combines popular feat
 * updated the index page to turn down the error reporting (fatal errors and database errors will still be shown)
 * updated the select menu on the write PM page to separate active and inactive characters
 * updated colorbox to version 1.3.8
+* updated the characters model to include a method for inserting promotion records
+* updated the language file with a new item (_labels\_from_)
 * fixed bug where acceptance and rejection messages were sent without any changes an admin made
 * fixed error thrown when posting a comment on a mission post
 * fixed bug where changing a character's state to and from active wouldn't set the open slots of their position(s)
 * fixed error thrown when attempting to delete a character
+* fixed bug where the position dropdowns when creating a character showed all positions instead of open positions
+* fixed bug where rank history information wasn't being populated correctly
 
 ## Known Issues
 
