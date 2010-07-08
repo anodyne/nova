@@ -330,13 +330,14 @@ class Controller_Nova_Main extends Controller_Nova_Base
 	
 	public function action_test2()
 	{
-		echo form::button('primary', 'Primary Button', array('class' => 'btn-prim'));
-		echo '<br /><br />';
+		$field = Jelly::select('formfield', 2);
 		
-		echo form::button('secondary', 'Secondary Button', array('class' => 'btn-sec'));
-		echo '<br /><br />';
+		foreach ($field->values as $v)
+		{
+			echo Kohana::debug($v->content);
+		}
 		
-		echo form::button('tertiary', 'Tertiary Button', array('class' => 'btn-ter'));
+		echo Kohana::debug(count($field->values));
 		exit();
 	}
 	
