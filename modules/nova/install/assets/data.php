@@ -2373,14 +2373,9 @@ $system_components = array(
 		'comp_desc' => 'jQuery is a lightweight JavaScript library that emphasizes interaction between JavaScript and HTML.'),
 	array(
 		'comp_name' => 'jQuery UI',
-		'comp_version' => '1.8.2',
+		'comp_version' => '1.9-m2',
 		'comp_url' => 'http://jqueryui.com/',
 		'comp_desc' => 'jQuery UI is a lightweight, easily customizable interface library for the jQuery Javascript library.'),
-	array(
-		'comp_name' => 'jQuery ColorBox',
-		'comp_version' => '1.3.8',
-		'comp_desc' => "A light-weight, customizable lightbox plugin for jQuery.",
-		'comp_url' => 'http://colorpowered.com/colorbox/'),
 	array(
 		'comp_name' => 'FancyBox',
 		'comp_version' => '1.3.1',
@@ -2396,11 +2391,6 @@ $system_components = array(
 		'comp_version' => '0.0.1',
 		'comp_desc' => "AjaxQ is a jQuery plugin that implements an AJAX request queueing mechanism.",
 		'comp_url' => 'http://plugins.jquery.com/project/ajaxq'),
-	array(
-		'comp_name' => 'TipTip',
-		'comp_version' => '1.3',
-		'comp_desc' => "TipTip is a sweet and simple custom tooltip that behaves just like the browser tooltip. TipTip detects the edges of the browser window and will make sure the tooltip stays within the current window size. As a result the tooltip will adjust itself to be displayed above, below, to the left or to the right of the element with TipTip applied to it, depending on what is necessary to stay within the browser window. TipTip is a very lightweight and intelligent custom tooltip jQuery plugin that uses ZERO images and is completely customizable via CSS.",
-		'comp_url' => 'http://code.drewwilson.com/entry/tiptip-jquery-plugin'),
 	array(
 		'comp_name' => 'Lazy',
 		'comp_version' => '1.5',
