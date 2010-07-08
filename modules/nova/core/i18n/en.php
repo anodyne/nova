@@ -137,6 +137,8 @@ return array
 	'phrase.flash_failure' => ":item was not successfully :action.:extra",
 	'phrase.flash_failure_plural' => ":item were not successfully :action.:extra",
 	'phrase.please_choose_one' => 'Please Choose One',
+	
+	'search.text' => "Searching through Nova has never been simpler than it is right now. Instead of giving users tons of options they have to wade through, we've reduced search down to it's most basic element: the search field. By default, Nova will search through :posts for your search terms. Instead of just searching through one area, Nova will search through all the areas listed above the field. If you don't want all the areas searched, just click on the ones you don't want searched and Nova will ignore them. If you'd prefer to search for something besides :posts, simply click on the icon in the field and select the new item you want to search for.",
 );
 
 /*$translations['UM12']	= '(UTC -12:00) Baker/Howland Island';
