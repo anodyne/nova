@@ -68,7 +68,7 @@ $data = array(
 	'settings'					=> array('id' => 'setting_id', 'fields' => 'fields_settings'),
 	'sessions'					=> array('id' => 'session_id', 'fields' => 'fields_sessions', 'index' => array('last_active')),
 	'sim_type'					=> array('id' => 'simtype_id', 'fields' => 'fields_sim_type'),
-	//'specs'						=> array('id' => 'spec_id', 'fields' => 'fields_specs'),
+	'specs'						=> array('id' => 'specs_id', 'fields' => 'fields_specs'),
 	'system_components'			=> array('id' => 'comp_id', 'fields' => 'fields_system_components'),
 	'system_info'				=> array('id' => 'sys_id', 'fields' => 'fields_system_info'),
 	'system_versions'			=> array('id' => 'version_id', 'fields' => 'fields_system_versions'),
@@ -1451,111 +1451,25 @@ $fields_sim_type = array(
 );
 
 $fields_specs = array(
-	'spec_id' => array(),
-	'spec_name' => array(),
-	'spec_desc' => array(),
-	'spec_display' => array(),
-	'spec_last_update' => array(),
-);
-
-$fields_specs_data = array(
-	'data_id' => array(
-		'type' => 'BIGINT',
-		'constraint' => 20,
+	'specs_id' => array(
+		'type' => 'INT',
+		'constraint' => 5,
 		'auto_increment' => TRUE),
-	'data_field' => array(
-		'type' => 'INT',
-		'constraint' => 10),
-	'data_value' => array(
-		'type' => 'TEXT'),
-	'data_updated' => array(
-		'type' => $date_type,
-		'constraint' => $date_constraint)
-);
-
-$fields_specs_fields = array(
-	'field_id' => array(
-		'type' => 'INT',
-		'constraint' => 10,
-		'auto_increment' => TRUE),
-	'field_type' => array(
-		'type' => 'ENUM',
-		'constraint' => "'text','select','textarea'",
-		'default' => 'text'),
-	'field_name' => array(
+	'specs_name' => array(
 		'type' => 'VARCHAR',
-		'constraint' => 100,
+		'constraint' => 255,
 		'default' => ''),
-	'field_fid' => array(
-		'type' => 'VARCHAR',
-		'constraint' => 100,
-		'default' => ''),
-	'field_class' => array(
-		'type' => 'TEXT'),
-	'field_label_page' => array(
-		'type' => 'TEXT'),
-	'field_value' => array(
-		'type' => 'TEXT'),
-	'field_selected' => array(
-		'type' => 'VARCHAR',
-		'constraint' => 20,
-		'default' => ''),
-	'field_order' => array(
+	'specs_order' => array(
 		'type' => 'INT',
-		'constraint' => 5),
-	'field_display' => array(
+		'constraint' => 4),
+	'specs_display' => array(
 		'type' => 'ENUM',
 		'constraint' => "'y','n'",
 		'default' => 'y'),
-	'field_rows' => array(
-		'type' => 'INT',
-		'constraint' => 3,
-		'default' => 5),
-	'field_section' => array(
-		'type' => 'INT',
-		'constraint' => 8,
-		'default' => 1)
-);
-
-$fields_specs_sections = array(
-	'section_id' => array(
-		'type' => 'INT',
-		'constraint' => 8,
-		'auto_increment' => TRUE),
-	'section_name' => array(
-		'type' => 'VARCHAR',
-		'constraint' => 255,
-		'default' => ''),
-	'section_order' => array(
-		'type' => 'INT',
-		'constraint' => 5)
-);
-
-$fields_specs_values = array(
-	'value_id' => array(
-		'type' => 'INT',
-		'constraint' => 10,
-		'auto_increment' => TRUE),
-	'value_field' => array(
-		'type' => 'INT',
-		'constraint' => 10),
-	'value_type' => array(
-		'type' => 'ENUM',
-		'constraint' => "'option'",
-		'default' => 'option'),
-	'value_field_value' => array(
-		'type' => 'VARCHAR',
-		'constraint' => 255,
-		'default' => ''),
-	'value_selected' => array(
-		'type' => 'VARCHAR',
-		'constraint' => 10,
-		'default' => ''),
-	'value_content' => array(
+	'specs_images' => array(
 		'type' => 'TEXT'),
-	'value_order' => array(
-		'type' => 'INT',
-		'constraint' => 5)
+	'specs_summary' => array(
+		'type' => 'TEXT')
 );
 
 $fields_system_components = array(
@@ -1673,88 +1587,10 @@ $fields_tour = array(
 	'tour_images' => array(
 		'type' => 'TEXT'),
 	'tour_summary' => array(
-		'type' => 'TEXT')
-);
-
-$fields_tour_data = array(
-	'data_id' => array(
-		'type' => 'BIGINT',
-		'constraint' => 20,
-		'auto_increment' => TRUE),
-	'data_tour_item' => array(
+		'type' => 'TEXT'),
+	'tour_spec_item' => array(
 		'type' => 'INT',
 		'constraint' => 5),
-	'data_field' => array(
-		'type' => 'INT',
-		'constraint' => 10),
-	'data_value' => array(
-		'type' => 'TEXT'),
-	'data_updated' => array(
-		'type' => $date_type,
-		'constraint' => $date_constraint)
-);
-
-$fields_tour_fields = array(
-	'field_id' => array(
-		'type' => 'INT',
-		'constraint' => 10,
-		'auto_increment' => TRUE),
-	'field_type' => array(
-		'type' => 'ENUM',
-		'constraint' => "'text','select','textarea'",
-		'default' => 'text'),
-	'field_name' => array(
-		'type' => 'VARCHAR',
-		'constraint' => 100,
-		'default' => ''),
-	'field_fid' => array(
-		'type' => 'VARCHAR',
-		'constraint' => 100,
-		'default' => ''),
-	'field_class' => array(
-		'type' => 'TEXT'),
-	'field_label_page' => array(
-		'type' => 'TEXT'),
-	'field_value' => array(
-		'type' => 'TEXT'),
-	'field_selected' => array(
-		'type' => 'VARCHAR',
-		'constraint' => 20,
-		'default' => ''),
-	'field_order' => array(
-		'type' => 'INT',
-		'constraint' => 5),
-	'field_display' => array(
-		'type' => 'ENUM',
-		'constraint' => "'y','n'",
-		'default' => 'y'),
-	'field_rows' => array(
-		'type' => 'INT',
-		'constraint' => 3,
-		'default' => 5),
-);
-
-$fields_tour_values = array(
-	'value_id' => array(
-		'type' => 'INT',
-		'constraint' => 10,
-		'auto_increment' => TRUE),
-	'value_field' => array(
-		'type' => 'INT',
-		'constraint' => 10),
-	'value_field_value' => array(
-		'type' => 'VARCHAR',
-		'constraint' => 255,
-		'default' => ''),
-	'value_selected' => array(
-		'type' => 'VARCHAR',
-		'constraint' => 10,
-		'default' => ''),
-	'value_content' => array(
-		'type' => 'TEXT'),
-	'value_order' => array(
-		'type' => 'INT',
-		'constraint' => 5)
 );
 
 $fields_tour_decks = array(
