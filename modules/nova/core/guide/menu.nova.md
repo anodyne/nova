@@ -3,6 +3,8 @@
         - [What Is Nova?](basics.about)
         - [License](basics.license)
         - [Folder Structure](basics.folder-structure)
+    - __Support__
+        - [Nova 2 and GoDaddy](support.godaddy)
     - __Third-Party Development__
         - [Coding Standards](nova.coding-standards)
         - [Extending Classes](nova.extending-classes)
