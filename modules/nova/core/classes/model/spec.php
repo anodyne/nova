@@ -1,13 +1,13 @@
 <?php defined('SYSPATH') or die('No direct script access.');
 /**
- * Tour Model
+ * Specs Model
  *
  * @package		Nova
  * @category	Models
  * @author		Anodyne Productions
  */
  
-class Model_Tour extends Jelly_Model
+class Model_Spec extends Jelly_Model
 {
 	/**
 	 * Initialize the model with Jelly_Meta data
@@ -16,31 +16,29 @@ class Model_Tour extends Jelly_Model
 	 */
 	public static function initialize(Jelly_Meta $meta)
 	{
-		$meta->table('tour');
 		$meta->fields(array(
 			'id' => new Field_Primary(array(
-				'column' => 'tour_id'
+				'column' => 'specs_id'
 			)),
 			'name' => new Field_String(array(
-				'column' => 'tour_name'
+				'column' => 'specs_name'
 			)),
 			'order' => new Field_Integer(array(
-				'column' => 'tour_order'
+				'column' => 'specs_order'
 			)),
 			'display' => new Field_Enum(array(
-				'column' => 'tour_display',
+				'column' => 'specs_display',
 				'choices' => array('y','n'),
 				'default' => 'y'
 			)),
 			'images' => new Field_Text(array(
-				'column' => 'tour_images',
+				'column' => 'specs_images',
 			)),
 			'summary' => new Field_Text(array(
-				'column' => 'tour_summary',
+				'column' => 'specs_summary',
 			)),
-			'specitem' => new Field_BelongsTo(array(
-				'column' => 'tour_spec_item',
-				'foreign' => 'spec'
+			'touritems' => new Field_HasMany(array(
+				'foreign' => 'tour.specitem'
 			)),
 		));
 	}

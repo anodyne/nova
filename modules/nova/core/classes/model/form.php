@@ -30,14 +30,14 @@ class Model_Form extends Jelly_Model
 				'default' => 'active'
 			)),
 			'fields' => new Field_HasMany(array(
-				'foreign' => 'formfield.field_form'
+				'foreign' => 'formfield.form'
 			)),
-			/*'sections' => new Field_BelongsTo(array(
+			'sections' => new Field_BelongsTo(array(
 				'foreign' => 'formsection'
 			)),
 			'tabs' => new Field_BelongsTo(array(
 				'foreign' => 'formtab'
-					)),*/
+			)),
 		));
 	}
 }
