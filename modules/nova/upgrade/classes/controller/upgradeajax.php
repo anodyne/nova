@@ -23,9 +23,6 @@ class Controller_Upgradeajax extends Controller_Template
 		
 		// get an instance of the database
 		$this->db = Database::instance();
-		
-		// change the user model to prevent NULL values
-		Jelly::meta('user')->fields('join')->auto_now_create = FALSE;
 	}
 	
 	public function action_upgrade_awards()
@@ -107,10 +104,10 @@ class Controller_Upgradeajax extends Controller_Template
 				);
 			}
 		} catch (Exception $e) {
-			// catch the exception and put the error message into the return array
+			// catch the exception
 			$retval = array(
 				'code' => 0,
-				'message' => $e->getMessage()
+				'message' => 'ERROR: '.$e->getMessage().' - line '.$e->getLine().' of '.$e->getFile()
 			);
 		}
 		
@@ -119,6 +116,9 @@ class Controller_Upgradeajax extends Controller_Template
 	
 	public function action_upgrade_characters()
 	{
+		// change the user model to prevent NULL values
+		Jelly::meta('user')->fields('join')->auto_now_create = FALSE;
+		
 		try {
 			// get the characters
 			$result = $this->db->query(Database::SELECT, 'SELECT * FROM sms_crew', TRUE);
@@ -129,14 +129,21 @@ class Controller_Upgradeajax extends Controller_Template
 			// an array of character IDs
 			$charIDs = array('' => 0);
 			
-			/*// add the languages field
-			$lang = Jelly::insert('formfield')
+			// add the languages field
+			$lang = Jelly::factory('formfield')
 				->set(array(
 					'type' => 'text',
-					'name' => 'languages',
+					'html_name' => 'languages',
+					'html_id' => 'languages',
+					'html_rows' => 0,
+					'value' => '',
 					'section' => 1,
-				));
-			*/
+					'order' => 4,
+					'form' => 'bio',
+					'label' => 'Languages',
+				))
+				->save();
+			
 			// create an empty users array
 			$users = array();
 			
@@ -278,7 +285,7 @@ class Controller_Upgradeajax extends Controller_Template
 					18 	=> $c->hobbies,
 					19 	=> $c->history,
 					20 	=> $c->serviceRecord,
-					//$lang->id() => $c->languages,
+					$lang->id() => $c->languages,
 				);
 				
 				foreach ($fields as $field => $value)
@@ -320,7 +327,7 @@ class Controller_Upgradeajax extends Controller_Template
 				{
 					$retval = array(
 						'code' => 2,
-						'message' => __("Your characters and character data were successfully upgraded, but not all users were successfully upgraded")
+						'message' => __("Your characters and character data were upgraded, but not all users were upgraded")
 					);
 				}
 				
@@ -328,7 +335,7 @@ class Controller_Upgradeajax extends Controller_Template
 				{
 					$retval = array(
 						'code' => 2,
-						'message' => __("Your character data was successfully upgraded, but not all users or characters were successfully upgraded")
+						'message' => __("Your character data was upgraded, but not all users or characters were upgraded")
 					);
 				}
 				
@@ -336,7 +343,7 @@ class Controller_Upgradeajax extends Controller_Template
 				{
 					$retval = array(
 						'code' => 2,
-						'message' => __("Your users and character data was successfully upgraded, but not all characters were successfully upgraded")
+						'message' => __("Your users and character data was upgraded, but not all characters were upgraded")
 					);
 				}
 				
@@ -344,7 +351,7 @@ class Controller_Upgradeajax extends Controller_Template
 				{
 					$retval = array(
 						'code' => 2,
-						'message' => __("Your users and characters were successfully upgraded, but not all character data was successfully upgraded")
+						'message' => __("Your users and characters were upgraded, but not all character data was upgraded")
 					);
 				}
 				
@@ -352,7 +359,7 @@ class Controller_Upgradeajax extends Controller_Template
 				{
 					$retval = array(
 						'code' => 2,
-						'message' => __("Your characters were successfully upgraded, but not all users or character data were successfully upgraded")
+						'message' => __("Your characters were upgraded, but not all users or character data were upgraded")
 					);
 				}
 				
@@ -360,7 +367,7 @@ class Controller_Upgradeajax extends Controller_Template
 				{
 					$retval = array(
 						'code' => 2,
-						'message' => __("Your users were successfully upgraded, but not all characters or character data were successfully upgraded")
+						'message' => __("Your users were upgraded, but not all characters or character data were upgraded")
 					);
 				}
 				
@@ -376,7 +383,7 @@ class Controller_Upgradeajax extends Controller_Template
 			// catch the exception
 			$retval = array(
 				'code' => 0,
-				'message' => 'PHP ERROR: '.$e->getMessage().' - line '.$e->getLine().' of '.$e->getFile()
+				'message' => 'ERROR: '.$e->getMessage().' - line '.$e->getLine().' of '.$e->getFile()
 			);
 		}
 		
@@ -417,63 +424,103 @@ class Controller_Upgradeajax extends Controller_Template
 		// load the forge
 		$forge = new DBForge;
 		
-		// drop the nova version of the table
-		DBForge::drop_table('personal_logs');
+		// get the number of logs in the sms table
+		$c = $this->db->query(Database::SELECT, "SELECT logid FROM sms_personallogs", TRUE);
+		$count_old = $c->count();
 		
-		// copy the sms version of the table along with all its data
-		$this->db->query(NULL, "CREATE TABLE ".$this->db->table_prefix()."personal_logs SELECT * FROM sms_personallogs", TRUE);
+		try {
+			// drop the nova version of the table
+			DBForge::drop_table('personal_logs');
+			
+			// copy the sms version of the table along with all its data
+			$this->db->query(NULL, "CREATE TABLE ".$this->db->table_prefix()."personal_logs SELECT * FROM sms_personallogs", TRUE);
+			
+			// rename the fields to appropriate names
+			$fields = array(
+				'logid' => array(
+					'name' => 'log_id',
+					'type' => 'INT',
+					'constraint' => 5),
+				'logAuthor' => array(
+					'name' => 'log_author_character',
+					'type' => 'INT',
+					'constraint' => 8),
+				'logPosted' => array(
+					'name' => 'log_date',
+					'type' => 'BIGINT',
+					'constraint' => 20),
+				'logTitle' => array(
+					'name' => 'log_title',
+					'type' => 'VARCHAR',
+					'constraint' => 255,
+					'default' => 'upcoming'),
+				'logContent' => array(
+					'name' => 'log_content',
+					'type' => 'TEXT'),
+				'logStatus' => array(
+					'name' => 'log_status',
+					'type' => 'ENUM',
+					'constraint' => "'activated','saved','pending'",
+					'default' => 'activated'),
+			);
+			
+			// do the modification
+			DBForge::modify_column('personal_logs', $fields);
+			
+			// add the other columns
+			$add = array(
+				'log_author_user' => array(
+					'type' => 'INT',
+					'constraint' => 8),
+				'log_tags' => array(
+					'type' => 'TEXT'),
+				'log_last_update' => array(
+					'type' => 'BIGINT',
+					'constraint' => 20)
+			);
+			
+			// do the modification
+			DBForge::add_column('personal_logs', $add);
+			
+			// make sure the auto increment and primary key are right
+			$this->db->query(NULL, "ALTER TABLE ".$this->db->table_prefix()."personal_logs MODIFY COLUMN `log_id` INT(5) auto_increment primary key", TRUE);
+			
+			// get the new count of logs
+			$count_new = Jelly::select('personallog')->count();
+			
+			if ($count_new == 0)
+			{
+				// catch the exception
+				$retval = array(
+					'code' => 0,
+					'message' => __("None of your personal logs were able to be upgraded")
+				);
+			}
+			elseif ($count_new > 0 && $count_new != $count_old)
+			{
+				// catch the exception
+				$retval = array(
+					'code' => 2,
+					'message' => __("Some of your personal logs were upgraded, but some where unable to be upgraded")
+				);
+			}
+			else
+			{
+				// catch the exception
+				$retval = array(
+					'code' => 1,
+					'message' => ''
+				);
+			}
+		} catch (Exception $e) {
+			// catch the exception
+			$retval = array(
+				'code' => 0,
+				'message' => 'ERROR: '.$e->getMessage().' - line '.$e->getLine().' of '.$e->getFile()
+			);
+		}
 		
-		// rename the fields to appropriate names
-		$fields = array(
-			'logid' => array(
-				'name' => 'log_id',
-				'type' => 'INT',
-				'constraint' => 5),
-			'logAuthor' => array(
-				'name' => 'log_author_character',
-				'type' => 'INT',
-				'constraint' => 8),
-			'logPosted' => array(
-				'name' => 'log_date',
-				'type' => 'BIGINT',
-				'constraint' => 20),
-			'logTitle' => array(
-				'name' => 'log_title',
-				'type' => 'VARCHAR',
-				'constraint' => 255,
-				'default' => 'upcoming'),
-			'logContent' => array(
-				'name' => 'log_content',
-				'type' => 'TEXT'),
-			'logStatus' => array(
-				'name' => 'log_status',
-				'type' => 'ENUM',
-				'constraint' => "'activated','saved','pending'",
-				'default' => 'activated'),
-		);
-		
-		// do the modification
-		DBForge::modify_column('personal_logs', $fields);
-		
-		// add the other columns
-		$add = array(
-			'log_author_user' => array(
-				'type' => 'INT',
-				'constraint' => 8),
-			'log_tags' => array(
-				'type' => 'TEXT'),
-			'log_last_update' => array(
-				'type' => 'BIGINT',
-				'constraint' => 20)
-		);
-		
-		// do the modification
-		DBForge::add_column('personal_logs', $add);
-		
-		// make sure the auto increment and primary key are right
-		$this->db->query(NULL, "ALTER TABLE ".$this->db->table_prefix()."personal_logs MODIFY COLUMN `log_id` INT(5) auto_increment primary key", TRUE);
-		
-		echo '1';
+		echo json_encode($retval);
 	}
 	
 	public function action_upgrade_missions()
@@ -481,148 +528,262 @@ class Controller_Upgradeajax extends Controller_Template
 		// load the forge
 		$forge = new DBForge;
 		
-		// drop the nova version of the table
-		DBForge::drop_table('missions');
+		// get the number of news items in the sms table
+		$c = $this->db->query(Database::SELECT, "SELECT missionid FROM sms_missions", TRUE);
+		$count_missions_old = $c->count();
 		
-		// copy the sms version of the table along with all its data
-		$this->db->query(NULL, 'CREATE TABLE '.$this->db->table_prefix().'missions SELECT * FROM sms_missions', TRUE);
+		// get the number of news categories in the sms table
+		$c = $this->db->query(Database::SELECT, "SELECT postid FROM sms_posts", TRUE);
+		$count_posts_old = $c->count();
 		
-		// rename the fields to appropriate names
-		$fields = array(
-			'missionid' => array(
-				'name' => 'mission_id',
-				'type' => 'INT',
-				'constraint' => 8),
-			'missionOrder' => array(
-				'name' => 'mission_order',
-				'type' => 'INT',
-				'constraint' => 5),
-			'missionTitle' => array(
-				'name' => 'mission_title',
-				'type' => 'VARCHAR',
-				'constraint' => 255),
-			'missionImage' => array(
-				'name' => 'mission_images',
-				'type' => 'TEXT'),
-			'missionStatus' => array(
-				'name' => 'mission_status',
-				'type' => 'ENUM',
-				'constraint' => "'upcoming','current','completed'",
-				'default' => 'upcoming'),
-			'missionStart' => array(
-				'name' => 'mission_start',
-				'type' => 'BIGINT',
-				'constraint' => 20),
-			'missionEnd' => array(
-				'name' => 'mission_end',
-				'type' => 'BIGINT',
-				'constraint' => 20),
-			'missionDesc' => array(
-				'name' => 'mission_desc',
-				'type' => 'TEXT'),
-			'missionSummary' => array(
-				'name' => 'mission_summary',
-				'type' => 'TEXT'),
-			'missionNotes' => array(
-				'name' => 'mission_notes',
-				'type' => 'TEXT'),
-		);
+		try {
+			// drop the nova version of the table
+			DBForge::drop_table('missions');
+			
+			// copy the sms version of the table along with all its data
+			$this->db->query(NULL, 'CREATE TABLE '.$this->db->table_prefix().'missions SELECT * FROM sms_missions', TRUE);
+			
+			// rename the fields to appropriate names
+			$fields = array(
+				'missionid' => array(
+					'name' => 'mission_id',
+					'type' => 'INT',
+					'constraint' => 8),
+				'missionOrder' => array(
+					'name' => 'mission_order',
+					'type' => 'INT',
+					'constraint' => 5),
+				'missionTitle' => array(
+					'name' => 'mission_title',
+					'type' => 'VARCHAR',
+					'constraint' => 255),
+				'missionImage' => array(
+					'name' => 'mission_images',
+					'type' => 'TEXT'),
+				'missionStatus' => array(
+					'name' => 'mission_status',
+					'type' => 'ENUM',
+					'constraint' => "'upcoming','current','completed'",
+					'default' => 'upcoming'),
+				'missionStart' => array(
+					'name' => 'mission_start',
+					'type' => 'BIGINT',
+					'constraint' => 20),
+				'missionEnd' => array(
+					'name' => 'mission_end',
+					'type' => 'BIGINT',
+					'constraint' => 20),
+				'missionDesc' => array(
+					'name' => 'mission_desc',
+					'type' => 'TEXT'),
+				'missionSummary' => array(
+					'name' => 'mission_summary',
+					'type' => 'TEXT'),
+				'missionNotes' => array(
+					'name' => 'mission_notes',
+					'type' => 'TEXT'),
+			);
+			
+			// do the modification
+			DBForge::modify_column('missions', $fields);
+			
+			// add the other fields
+			$add = array(
+				'mission_notes_updated' => array(
+					'type' => 'BIGINT',
+					'constraint' => 20),
+				'mission_group' => array(
+					'type' => 'INT',
+					'constraint' => 5)
+			);
+			
+			// do the modifications
+			DBForge::add_column('missions', $add);
+			
+			// make sure the auto increment and primary key are right
+			$this->db->query(NULL, 'ALTER TABLE '.$this->db->table_prefix().'missions MODIFY COLUMN `mission_id` INT(8) auto_increment primary key', TRUE);
+			
+			// drop the nova version of the table
+			DBForge::drop_table('posts');
+			
+			// copy the sms version of the table along with all its data
+			$this->db->query(NULL, 'CREATE TABLE '.$this->db->table_prefix().'posts SELECT * FROM sms_posts', TRUE);
+			
+			// rename the fields to appropriate names
+			$fields = array(
+				'postid' => array(
+					'name' => 'post_id',
+					'type' => 'INT',
+					'constraint' => 8),
+				'postAuthor' => array(
+					'name' => 'post_authors',
+					'type' => 'TEXT'),
+				'postPosted' => array(
+					'name' => 'post_date',
+					'type' => 'BIGINT',
+					'constraint' => 20),
+				'postTitle' => array(
+					'name' => 'post_title',
+					'type' => 'VARCHAR',
+					'constraint' => 255,
+					'default' => ''),
+				'postContent' => array(
+					'name' => 'post_content',
+					'type' => 'TEXT'),
+				'postStatus' => array(
+					'name' => 'post_status',
+					'type' => 'ENUM',
+					'constraint' => "'activated','saved','pending'",
+					'default' => 'activated'),
+				'postLocation' => array(
+					'name' => 'post_location',
+					'type' => 'VARCHAR',
+					'constraint' => 255,
+					'default' => ''),
+				'postTimeline' => array(
+					'name' => 'post_timeline',
+					'type' => 'VARCHAR',
+					'constraint' => 255,
+					'default' => ''),
+				'postMission' => array(
+					'name' => 'post_mission',
+					'type' => 'INT',
+					'constraint' => 8),
+				'postSave' => array(
+					'name' => 'post_saved',
+					'type' => 'INT',
+					'constraint' => 11),
+			);
+			
+			// do the modifications
+			DBForge::modify_column('posts', $fields);
+			
+			// add the other fields
+			$add = array(
+				'post_authors_users' => array(
+					'type' => 'TEXT'),
+				'post_tags' => array(
+					'type' => 'TEXT'),
+				'post_last_update' => array(
+					'type' => 'BIGINT',
+					'constraint' => 20)
+			);
+			
+			// do the modifications
+			DBForge::add_column('posts', $add);
+			
+			// remove the tag column
+			DBForge::drop_column('posts', 'postTag');
+			
+			// make sure the auto increment and primary key are correct
+			$this->db->query(NULL, 'ALTER TABLE '.$this->db->table_prefix().'posts MODIFY COLUMN `post_id` INT(8) auto_increment primary key', TRUE);
+			
+			// count the missions
+			$count_missions_new = Jelly::select('mission')->count();
+			
+			// count the posts
+			$count_posts_new = Jelly::select('post')->count();
+			
+			if ($count_missions_new == 0 && $count_posts_new == 0)
+			{
+				// catch the exception
+				$retval = array(
+					'code' => 0,
+					'message' => __("None of your missions or mission posts were able to be upgraded")
+				);
+			}
+			elseif ($count_missions_new > 0 && $count_posts_new == 0)
+			{
+				if ($count_missions_new != $count_missions_old)
+				{
+					// catch the exception
+					$retval = array(
+						'code' => 2,
+						'message' => __(":new of :old missions were upgraded, but your mission posts were not", 
+							array(':old' => $count_missions_old, ':new' => $count_missions_new)
+						),
+					);
+				}
+				else
+				{
+					// catch the exception
+					$retval = array(
+						'code' => 2,
+						'message' => __("Your missions were upgraded, but your mission posts were not")
+					);
+				}
+			}
+			elseif ($count_missions_new == 0 && $count_posts_new > 0)
+			{
+				if ($count_posts_new != $count_posts_old)
+				{
+					// catch the exception
+					$retval = array(
+						'code' => 2,
+						'message' => __(":new of :old mission posts were upgraded, but your missions were not",
+							array(':old' => $count_posts_old, ':new' => $count_posts_new)
+						),
+					);
+				}
+				else
+				{
+					// catch the exception
+					$retval = array(
+						'code' => 2,
+						'message' => __("Your mission posts were upgraded, but your missions were not")
+					);
+				}
+			}
+			else
+			{
+				if ($count_missions_new == $count_missions_old && $count_posts_new == $count_posts_old)
+				{
+					// catch the exception
+					$retval = array(
+						'code' => 1,
+						'message' => ''
+					);
+				}
+				elseif ($count_missions_new == $count_missions_old && $count_posts_new != $count_posts_old)
+				{
+					// catch the exception
+					$retval = array(
+						'code' => 2,
+						'message' => __("All of your missions and :new of :old mission posts were upgraded",
+							array(':old' => $count_posts_old, ':new' => $count_posts_new)
+						),
+					);
+				}
+				elseif ($count_missions_new != $count_missions_old && $count_posts_new == $count_posts_old)
+				{
+					// catch the exception
+					$retval = array(
+						'code' => 2,
+						'message' => __("All of your mission posts and :new of :old missions were upgraded",
+							array(':old' => $count_missions_old, ':new' => $count_missions_new)
+						),
+					);
+				}
+				elseif ($count_missions_new != $count_missions_old && $count_posts_new != $count_posts_old)
+				{
+					// catch the exception
+					$retval = array(
+						'code' => 2,
+						'message' => __(":new_mis of :old_mis missions and :new_posts of :old_posts mission posts were upgraded", 
+							array(':old_posts' => $count_posts_old, ':new_posts' => $count_posts_new, ':new_mis' => $count_missions_new, ':old_mis' => $count_missions_old)
+						),
+					);
+				}
+			}
+		} catch (Exception $e) {
+			// catch the exception
+			$retval = array(
+				'code' => 0,
+				'message' => 'ERROR: '.$e->getMessage().' - line '.$e->getLine().' of '.$e->getFile()
+			);
+		}
 		
-		// do the modification
-		DBForge::modify_column('missions', $fields);
-		
-		// add the other fields
-		$add = array(
-			'mission_notes_updated' => array(
-				'type' => 'BIGINT',
-				'constraint' => 20),
-			'mission_group' => array(
-				'type' => 'INT',
-				'constraint' => 5)
-		);
-		
-		// do the modifications
-		DBForge::add_column('missions', $add);
-		
-		// make sure the auto increment and primary key are right
-		$this->db->query(NULL, 'ALTER TABLE '.$this->db->table_prefix().'missions MODIFY COLUMN `mission_id` INT(8) auto_increment primary key', TRUE);
-		
-		// drop the nova version of the table
-		DBForge::drop_table('posts');
-		
-		// copy the sms version of the table along with all its data
-		$this->db->query(NULL, 'CREATE TABLE '.$this->db->table_prefix().'posts SELECT * FROM sms_posts', TRUE);
-		
-		// rename the fields to appropriate names
-		$fields = array(
-			'postid' => array(
-				'name' => 'post_id',
-				'type' => 'INT',
-				'constraint' => 8),
-			'postAuthor' => array(
-				'name' => 'post_authors',
-				'type' => 'TEXT'),
-			'postPosted' => array(
-				'name' => 'post_date',
-				'type' => 'BIGINT',
-				'constraint' => 20),
-			'postTitle' => array(
-				'name' => 'post_title',
-				'type' => 'VARCHAR',
-				'constraint' => 255,
-				'default' => ''),
-			'postContent' => array(
-				'name' => 'post_content',
-				'type' => 'TEXT'),
-			'postStatus' => array(
-				'name' => 'post_status',
-				'type' => 'ENUM',
-				'constraint' => "'activated','saved','pending'",
-				'default' => 'activated'),
-			'postLocation' => array(
-				'name' => 'post_location',
-				'type' => 'VARCHAR',
-				'constraint' => 255,
-				'default' => ''),
-			'postTimeline' => array(
-				'name' => 'post_timeline',
-				'type' => 'VARCHAR',
-				'constraint' => 255,
-				'default' => ''),
-			'postMission' => array(
-				'name' => 'post_mission',
-				'type' => 'INT',
-				'constraint' => 8),
-			'postSave' => array(
-				'name' => 'post_saved',
-				'type' => 'INT',
-				'constraint' => 11),
-		);
-		
-		// do the modifications
-		DBForge::modify_column('posts', $fields);
-		
-		// add the other fields
-		$add = array(
-			'post_authors_users' => array(
-				'type' => 'TEXT'),
-			'post_tags' => array(
-				'type' => 'TEXT'),
-			'post_last_update' => array(
-				'type' => 'BIGINT',
-				'constraint' => 20)
-		);
-		
-		// do the modifications
-		DBForge::add_column('posts', $add);
-		
-		// remove the tag column
-		DBForge::drop_column('posts', 'postTag');
-		
-		// make sure the auto increment and primary key are correct
-		$this->db->query(NULL, 'ALTER TABLE '.$this->db->table_prefix().'posts MODIFY COLUMN `post_id` INT(8) auto_increment primary key', TRUE);
-		
-		echo '1';
+		echo json_encode($retval);
 	}
 	
 	public function action_upgrade_news()
@@ -630,102 +791,216 @@ class Controller_Upgradeajax extends Controller_Template
 		// load the dbforge
 		$forge = new DBForge;
 		
-		// drop the nova versions of the tables
-		DBForge::drop_table('news');
-		DBForge::drop_table('news_categories');
+		// get the number of news items in the sms table
+		$c = $this->db->query(Database::SELECT, "SELECT newsid FROM sms_news", TRUE);
+		$count_news_old = $c->count();
 		
-		// copy the sms version of the table along with all its data
-		$this->db->query(NULL, "CREATE TABLE ".$this->db->table_prefix()."news_categories SELECT * FROM sms_news_categories", TRUE);
+		// get the number of news categories in the sms table
+		$c = $this->db->query(Database::SELECT, "SELECT catid FROM sms_news_categories", TRUE);
+		$count_cats_old = $c->count();
 		
-		// rename the fields to appropriate names
-		$fields = array(
-			'catid' => array(
-				'name' => 'newscat_id',
-				'type' => 'INT',
-				'constraint' => 5),
-			'catName' => array(
-				'name' => 'newscat_name',
-				'type' => 'VARCHAR',
-				'constraint' => 255),
-			'catVisible' => array(
-				'name' => 'newscat_display',
-				'type' => 'ENUM',
-				'constraint' => "'y','n'",
-				'default' => 'y'),
-		);
+		try {
+			// drop the nova versions of the tables
+			DBForge::drop_table('news');
+			DBForge::drop_table('news_categories');
+			
+			// copy the sms version of the table along with all its data
+			$this->db->query(NULL, "CREATE TABLE ".$this->db->table_prefix()."news_categories SELECT * FROM sms_news_categories", TRUE);
+			
+			// rename the fields to appropriate names
+			$fields = array(
+				'catid' => array(
+					'name' => 'newscat_id',
+					'type' => 'INT',
+					'constraint' => 5),
+				'catName' => array(
+					'name' => 'newscat_name',
+					'type' => 'VARCHAR',
+					'constraint' => 255),
+				'catVisible' => array(
+					'name' => 'newscat_display',
+					'type' => 'ENUM',
+					'constraint' => "'y','n'",
+					'default' => 'y'),
+			);
+			
+			// do the modifications
+			DBForge::modify_column('news_categories', $fields);
+			
+			// remove the user level column
+			DBForge::drop_column('news_categories', 'catUserLevel');
+			
+			// make sure the auto increment and primary id are correct
+			$this->db->query(NULL, "ALTER TABLE ".$this->db->table_prefix()."news_categories MODIFY COLUMN `newscat_id` INT(5) auto_increment primary key", TRUE);
+			
+			// copy the sms version of the table along with all its data
+			$this->db->query(NULL, "CREATE TABLE ".$this->db->table_prefix()."news SELECT * FROM sms_news", TRUE);
+			
+			// rename the fields to appropriate names
+			$fields = array(
+				'newsid' => array(
+					'name' => 'news_id',
+					'type' => 'INT',
+					'constraint' => 8),
+				'newsCat' => array(
+					'name' => 'news_cat',
+					'type' => 'INT',
+					'constraint' => 3),
+				'newsAuthor' => array(
+					'name' => 'news_author_character',
+					'type' => 'INT',
+					'constraint' => 8),
+				'newsPosted' => array(
+					'name' => 'news_date',
+					'type' => 'BIGINT',
+					'constraint' => 20),
+				'newsTitle' => array(
+					'name' => 'news_title',
+					'type' => 'VARCHAR',
+					'constraint' => 255,
+					'default' => 'upcoming'),
+				'newsContent' => array(
+					'name' => 'news_content',
+					'type' => 'TEXT'),
+				'newsStatus' => array(
+					'name' => 'news_status',
+					'type' => 'ENUM',
+					'constraint' => "'activated','saved','pending'",
+					'default' => 'activated'),
+				'newsPrivate' => array(
+					'name' => 'news_private',
+					'type' => 'ENUM',
+					'constraint' => "'y','n'",
+					'default' => 'n'),
+			);
+			
+			// do the modifications
+			DBForge::modify_column('news', $fields);
+			
+			// add the missing columns
+			$add = array(
+				'news_author_user' => array(
+					'type' => 'INT',
+					'constraint' => 8),
+				'news_tags' => array(
+					'type' => 'TEXT'),
+				'news_last_update' => array(
+					'type' => 'BIGINT',
+					'constraint' => 20)
+			);
+			
+			// do the modifications
+			DBForge::add_column('news', $add);
+			
+			// make sure the auto increment and primary key are right
+			$this->db->query(NULL, "ALTER TABLE ".$this->db->table_prefix()."news MODIFY COLUMN `news_id` INT(8) auto_increment primary key", TRUE);
+			
+			// count the news items
+			$count_news_new = Jelly::select('news')->count();
+			
+			// count the news categories
+			$count_cats_new = Jelly::select('newscategory')->count();
+			
+			if ($count_news_new == 0 && $count_cats_new == 0)
+			{
+				// catch the exception
+				$retval = array(
+					'code' => 0,
+					'message' => __("None of your news categories or news item were able to be upgraded")
+				);
+			}
+			elseif ($count_news_new > 0 && $count_cats_new == 0)
+			{
+				if ($count_news_new != $count_news_old)
+				{
+					// catch the exception
+					$retval = array(
+						'code' => 2,
+						'message' => __(":new of :old news items were upgraded, but your news categories were not",
+							array(':old' => $count_news_old, ':new' => $count_news_new)
+						),
+					);
+				}
+				else
+				{
+					// catch the exception
+					$retval = array(
+						'code' => 2,
+						'message' => __("Your news items were upgraded, but your news categories were not")
+					);
+				}
+			}
+			elseif ($count_news_new == 0 && $count_cats_new > 0)
+			{
+				if ($count_cats_new != $count_cats_old)
+				{
+					// catch the exception
+					$retval = array(
+						'code' => 2,
+						'message' => __(":new of :old news categories were upgraded, but your news items were not",
+							array(':old' => $count_cats_old, ':new' => $count_cats_new)
+						),
+					);
+				}
+				else
+				{
+					// catch the exception
+					$retval = array(
+						'code' => 2,
+						'message' => __("Your news categories were upgraded, but your news items were not")
+					);
+				}
+			}
+			else
+			{
+				if ($count_news_new == $count_news_old && $count_cats_new == $count_cats_old)
+				{
+					// catch the exception
+					$retval = array(
+						'code' => 1,
+						'message' => ''
+					);
+				}
+				elseif ($count_news_new == $count_news_old && $count_cats_new != $count_cats_old)
+				{
+					// catch the exception
+					$retval = array(
+						'code' => 2,
+						'message' => __("All of your news items and :new of :old news categories were upgraded",
+							array(':old' => $count_cats_old, ':new' => $count_cats_new)
+						),
+					);
+				}
+				elseif ($count_news_new != $count_news_old && $count_cats_new == $count_cats_old)
+				{
+					// catch the exception
+					$retval = array(
+						'code' => 2,
+						'message' => __("All of your news categories and :new of :old news items were upgraded",
+							array(':old' => $count_news_old, ':new' => $count_news_new)
+						),
+					);
+				}
+				elseif ($count_news_new != $count_news_old && $count_cats_new != $count_cats_old)
+				{
+					// catch the exception
+					$retval = array(
+						'code' => 2,
+						'message' => __(":new_news of :old_news news items and :new_cats of :old_cats news categories were upgraded", 
+							array(':old_cats' => $count_cats_old, ':new_cats' => $count_cats_new, ':new_news' => $count_news_new, ':old_news' => $count_news_old)
+						),
+					);
+				}
+			}
+		} catch (Exception $e) {
+			// catch the exception
+			$retval = array(
+				'code' => 0,
+				'message' => 'ERROR: '.$e->getMessage().' - line '.$e->getLine().' of '.$e->getFile()
+			);
+		}
 		
-		// do the modifications
-		DBForge::modify_column('news_categories', $fields);
-		
-		// remove the user level column
-		DBForge::drop_column('news_categories', 'catUserLevel');
-		
-		// make sure the auto increment and primary id are correct
-		$this->db->query(NULL, "ALTER TABLE ".$this->db->table_prefix()."news_categories MODIFY COLUMN `newscat_id` INT(5) auto_increment primary key", TRUE);
-		
-		// copy the sms version of the table along with all its data
-		$this->db->query(NULL, "CREATE TABLE ".$this->db->table_prefix()."news SELECT * FROM sms_news", TRUE);
-		
-		// rename the fields to appropriate names
-		$fields = array(
-			'newsid' => array(
-				'name' => 'news_id',
-				'type' => 'INT',
-				'constraint' => 8),
-			'newsCat' => array(
-				'name' => 'news_cat',
-				'type' => 'INT',
-				'constraint' => 3),
-			'newsAuthor' => array(
-				'name' => 'news_author_character',
-				'type' => 'INT',
-				'constraint' => 8),
-			'newsPosted' => array(
-				'name' => 'news_date',
-				'type' => 'BIGINT',
-				'constraint' => 20),
-			'newsTitle' => array(
-				'name' => 'news_title',
-				'type' => 'VARCHAR',
-				'constraint' => 255,
-				'default' => 'upcoming'),
-			'newsContent' => array(
-				'name' => 'news_content',
-				'type' => 'TEXT'),
-			'newsStatus' => array(
-				'name' => 'news_status',
-				'type' => 'ENUM',
-				'constraint' => "'activated','saved','pending'",
-				'default' => 'activated'),
-			'newsPrivate' => array(
-				'name' => 'news_private',
-				'type' => 'ENUM',
-				'constraint' => "'y','n'",
-				'default' => 'n'),
-		);
-		
-		// do the modifications
-		DBForge::modify_column('news', $fields);
-		
-		// add the missing columns
-		$add = array(
-			'news_author_user' => array(
-				'type' => 'INT',
-				'constraint' => 8),
-			'news_tags' => array(
-				'type' => 'TEXT'),
-			'news_last_update' => array(
-				'type' => 'BIGINT',
-				'constraint' => 20)
-		);
-		
-		// do the modifications
-		DBForge::add_column('news', $add);
-		
-		// make sure the auto increment and primary key are right
-		$this->db->query(NULL, "ALTER TABLE ".$this->db->table_prefix()."news MODIFY COLUMN `news_id` INT(8) auto_increment primary key", TRUE);
-		
-		echo '1';
+		echo json_encode($retval);
 	}
 	
 	public function action_upgrade_quick_install()
@@ -859,365 +1134,398 @@ class Controller_Upgradeajax extends Controller_Template
 	
 	public function action_upgrade_specs()
 	{
-		// get the specs from the sms table
-		$result = $this->db->query(Database::SELECT, 'SELECT * FROM sms_specs WHERE specid = 1', TRUE);
-		
-		// create an empty array for validating the specs upgrade
-		$specs = array();
-		
-		foreach ($result as $r)
-		{
-			// ship class
-			$item = Jelly::factory('formdata')
-				->set(array(
-					'field' => 23,
-					'value' => $r->shipClass,
-					'item' => 1,
-					'form' => 'specs'
-				))
-				->save();
-			$specs[] = $item->saved();
+		try {
+			// get the specs from the sms table
+			$result = $this->db->query(Database::SELECT, 'SELECT * FROM sms_specs WHERE specid = 1', TRUE);
 			
-			// ship role
-			$item = Jelly::factory('formdata')
-				->set(array(
-					'field' => 24,
-					'value' => $r->shipRole,
-					'item' => 1,
-					'form' => 'specs'
-				))
-				->save();
-			$specs[] = $item->saved();
+			// create an empty array for validating the specs upgrade
+			$specs = array();
 			
-			// duration
-			$item = Jelly::factory('formdata')
-				->set(array(
-					'field' => 25,
-					'value' => $r->duration,
-					'item' => 1,
-					'form' => 'specs'
-				))
-				->save();
-			$specs[] = $item->saved();
+			foreach ($result as $r)
+			{
+				// ship class
+				$item = Jelly::factory('formdata')
+					->set(array(
+						'field' => 23,
+						'value' => $r->shipClass,
+						'item' => 1,
+						'form' => 'specs'
+					))
+					->save();
+				$specs[] = $item->saved();
+				
+				// ship role
+				$item = Jelly::factory('formdata')
+					->set(array(
+						'field' => 24,
+						'value' => $r->shipRole,
+						'item' => 1,
+						'form' => 'specs'
+					))
+					->save();
+				$specs[] = $item->saved();
+				
+				// duration
+				$item = Jelly::factory('formdata')
+					->set(array(
+						'field' => 25,
+						'value' => $r->duration,
+						'item' => 1,
+						'form' => 'specs'
+					))
+					->save();
+				$specs[] = $item->saved();
+				
+				// refit
+				$item = Jelly::factory('formdata')
+					->set(array(
+						'field' => 26,
+						'value' => $r->refit.' '.$r->refitUnit,
+						'item' => 1,
+						'form' => 'specs'
+					))
+					->save();
+				$specs[] = $item->saved();
+				
+				// resupply
+				$item = Jelly::factory('formdata')
+					->set(array(
+						'field' => 27,
+						'value' => $r->resupply.' '.$r->resupplyUnit,
+						'item' => 1,
+						'form' => 'specs'
+					))
+					->save();
+				$specs[] = $item->saved();
+				
+				// length
+				$item = Jelly::factory('formdata')
+					->set(array(
+						'field' => 28,
+						'value' => $r->length,
+						'item' => 1,
+						'form' => 'specs'
+					))
+					->save();
+				$specs[] = $item->saved();
+				
+				// width
+				$item = Jelly::factory('formdata')
+					->set(array(
+						'field' => 29,
+						'value' => $r->width,
+						'item' => 1,
+						'form' => 'specs'
+					))
+					->save();
+				$specs[] = $item->saved();
+				
+				// height
+				$item = Jelly::factory('formdata')
+					->set(array(
+						'field' => 30,
+						'value' => $r->height,
+						'item' => 1,
+						'form' => 'specs'
+					))
+					->save();
+				$specs[] = $item->saved();
+				
+				// decks
+				$item = Jelly::factory('formdata')
+					->set(array(
+						'field' => 31,
+						'value' => $r->decks,
+						'item' => 1,
+						'form' => 'specs'
+					))
+					->save();
+				$specs[] = $item->saved();
+				
+				// officers
+				$item = Jelly::factory('formdata')
+					->set(array(
+						'field' => 32,
+						'value' => $r->complimentOfficers,
+						'item' => 1,
+						'form' => 'specs'
+					))
+					->save();
+				$specs[] = $item->saved();
+				
+				// enlisted
+				$item = Jelly::factory('formdata')
+					->set(array(
+						'field' => 33,
+						'value' => $r->complimentEnlisted,
+						'item' => 1,
+						'form' => 'specs'
+					))
+					->save();
+				$specs[] = $item->saved();
+				
+				// marines
+				$item = Jelly::factory('formdata')
+					->set(array(
+						'field' => 34,
+						'value' => $r->complimentMarines,
+						'item' => 1,
+						'form' => 'specs'
+					))
+					->save();
+				$specs[] = $item->saved();
+				
+				// civilians
+				$item = Jelly::factory('formdata')
+					->set(array(
+						'field' => 35,
+						'value' => $r->complimentCivilians,
+						'item' => 1,
+						'form' => 'specs'
+					))
+					->save();
+				$specs[] = $item->saved();
+				
+				// emergency compliment
+				$item = Jelly::factory('formdata')
+					->set(array(
+						'field' => 36,
+						'value' => $r->complimentEmergency,
+						'item' => 1,
+						'form' => 'specs'
+					))
+					->save();
+				$specs[] = $item->saved();
+				
+				// warp cruise
+				$item = Jelly::factory('formdata')
+					->set(array(
+						'field' => 37,
+						'value' => $r->warpCruise,
+						'item' => 1,
+						'form' => 'specs'
+					))
+					->save();
+				$specs[] = $item->saved();
+				
+				// warp max cruise
+				$item = Jelly::factory('formdata')
+					->set(array(
+						'field' => 38,
+						'value' => $r->warpMaxCruise.' '.$r->warpMaxTime,
+						'item' => 1,
+						'form' => 'specs'
+					))
+					->save();
+				$specs[] = $item->saved();
+				
+				// warp emergency
+				$item = Jelly::factory('formdata')
+					->set(array(
+						'field' => 39,
+						'value' => $r->warpEmergency.' '.$r->warpEmergencyTime,
+						'item' => 1,
+						'form' => 'specs'
+					))
+					->save();
+				$specs[] = $item->saved();
+				
+				// defensive
+				$item = Jelly::factory('formdata')
+					->set(array(
+						'field' => 40,
+						'value' => $r->shields."\r\n\r\n".$r->defensive,
+						'item' => 1,
+						'form' => 'specs'
+					))
+					->save();
+				$specs[] = $item->saved();
+				
+				// weapons
+				$item = Jelly::factory('formdata')
+					->set(array(
+						'field' => 41,
+						'value' => $r->phasers."\r\n\r\n".$r->torpedoLaunchers,
+						'item' => 1,
+						'form' => 'specs'
+					))
+					->save();
+				$specs[] = $item->saved();
+				
+				// armament
+				$item = Jelly::factory('formdata')
+					->set(array(
+						'field' => 42,
+						'value' => $r->torpedoCompliment,
+						'item' => 1,
+						'form' => 'specs'
+					))
+					->save();
+				$specs[] = $item->saved();
+				
+				// number of shuttlebays
+				$item = Jelly::factory('formdata')
+					->set(array(
+						'field' => 43,
+						'value' => $r->shuttlebays,
+						'item' => 1,
+						'form' => 'specs'
+					))
+					->save();
+				$specs[] = $item->saved();
+				
+				// shuttles
+				$item = Jelly::factory('formdata')
+					->set(array(
+						'field' => 44,
+						'value' => $r->shuttles,
+						'item' => 1,
+						'form' => 'specs'
+					))
+					->save();
+				$specs[] = $item->saved();
+				
+				// number of fighters
+				$item = Jelly::factory('formdata')
+					->set(array(
+						'field' => 45,
+						'value' => $r->fighters,
+						'item' => 1,
+						'form' => 'specs'
+					))
+					->save();
+				$specs[] = $item->saved();
+				
+				// number of runabouts
+				$item = Jelly::factory('formdata')
+					->set(array(
+						'field' => 46,
+						'value' => $r->runabouts,
+						'item' => 1,
+						'form' => 'specs'
+					))
+					->save();
+				$specs[] = $item->saved();
+			}
 			
-			// refit
-			$item = Jelly::factory('formdata')
-				->set(array(
-					'field' => 26,
-					'value' => $r->refit.' '.$r->refitUnit,
-					'item' => 1,
-					'form' => 'specs'
-				))
-				->save();
-			$specs[] = $item->saved();
+			// check to see if everything worked
+			$specs_count = (in_array(FALSE, $specs)) ? FALSE : TRUE;
 			
-			// resupply
-			$item = Jelly::factory('formdata')
-				->set(array(
-					'field' => 27,
-					'value' => $r->resupply.' '.$r->resupplyUnit,
-					'item' => 1,
-					'form' => 'specs'
-				))
-				->save();
-			$specs[] = $item->saved();
-			
-			// length
-			$item = Jelly::factory('formdata')
-				->set(array(
-					'field' => 28,
-					'value' => $r->length,
-					'item' => 1,
-					'form' => 'specs'
-				))
-				->save();
-			$specs[] = $item->saved();
-			
-			// width
-			$item = Jelly::factory('formdata')
-				->set(array(
-					'field' => 29,
-					'value' => $r->width,
-					'item' => 1,
-					'form' => 'specs'
-				))
-				->save();
-			$specs[] = $item->saved();
-			
-			// height
-			$item = Jelly::factory('formdata')
-				->set(array(
-					'field' => 30,
-					'value' => $r->height,
-					'item' => 1,
-					'form' => 'specs'
-				))
-				->save();
-			$specs[] = $item->saved();
-			
-			// decks
-			$item = Jelly::factory('formdata')
-				->set(array(
-					'field' => 31,
-					'value' => $r->decks,
-					'item' => 1,
-					'form' => 'specs'
-				))
-				->save();
-			$specs[] = $item->saved();
-			
-			// officers
-			$item = Jelly::factory('formdata')
-				->set(array(
-					'field' => 32,
-					'value' => $r->complimentOfficers,
-					'item' => 1,
-					'form' => 'specs'
-				))
-				->save();
-			$specs[] = $item->saved();
-			
-			// enlisted
-			$item = Jelly::factory('formdata')
-				->set(array(
-					'field' => 33,
-					'value' => $r->complimentEnlisted,
-					'item' => 1,
-					'form' => 'specs'
-				))
-				->save();
-			$specs[] = $item->saved();
-			
-			// marines
-			$item = Jelly::factory('formdata')
-				->set(array(
-					'field' => 34,
-					'value' => $r->complimentMarines,
-					'item' => 1,
-					'form' => 'specs'
-				))
-				->save();
-			$specs[] = $item->saved();
-			
-			// civilians
-			$item = Jelly::factory('formdata')
-				->set(array(
-					'field' => 35,
-					'value' => $r->complimentCivilians,
-					'item' => 1,
-					'form' => 'specs'
-				))
-				->save();
-			$specs[] = $item->saved();
-			
-			// emergency compliment
-			$item = Jelly::factory('formdata')
-				->set(array(
-					'field' => 36,
-					'value' => $r->complimentEmergency,
-					'item' => 1,
-					'form' => 'specs'
-				))
-				->save();
-			$specs[] = $item->saved();
-			
-			// warp cruise
-			$item = Jelly::factory('formdata')
-				->set(array(
-					'field' => 37,
-					'value' => $r->warpCruise,
-					'item' => 1,
-					'form' => 'specs'
-				))
-				->save();
-			$specs[] = $item->saved();
-			
-			// warp max cruise
-			$item = Jelly::factory('formdata')
-				->set(array(
-					'field' => 38,
-					'value' => $r->warpMaxCruise.' '.$r->warpMaxTime,
-					'item' => 1,
-					'form' => 'specs'
-				))
-				->save();
-			$specs[] = $item->saved();
-			
-			// warp emergency
-			$item = Jelly::factory('formdata')
-				->set(array(
-					'field' => 39,
-					'value' => $r->warpEmergency.' '.$r->warpEmergencyTime,
-					'item' => 1,
-					'form' => 'specs'
-				))
-				->save();
-			$specs[] = $item->saved();
-			
-			// defensive
-			$item = Jelly::factory('formdata')
-				->set(array(
-					'field' => 40,
-					'value' => $r->shields."\r\n\r\n".$r->defensive,
-					'item' => 1,
-					'form' => 'specs'
-				))
-				->save();
-			$specs[] = $item->saved();
-			
-			// weapons
-			$item = Jelly::factory('formdata')
-				->set(array(
-					'field' => 41,
-					'value' => $r->phasers."\r\n\r\n".$r->torpedoLaunchers,
-					'item' => 1,
-					'form' => 'specs'
-				))
-				->save();
-			$specs[] = $item->saved();
-			
-			// armament
-			$item = Jelly::factory('formdata')
-				->set(array(
-					'field' => 42,
-					'value' => $r->torpedoCompliment,
-					'item' => 1,
-					'form' => 'specs'
-				))
-				->save();
-			$specs[] = $item->saved();
-			
-			// number of shuttlebays
-			$item = Jelly::factory('formdata')
-				->set(array(
-					'field' => 43,
-					'value' => $r->shuttlebays,
-					'item' => 1,
-					'form' => 'specs'
-				))
-				->save();
-			$specs[] = $item->saved();
-			
-			// shuttles
-			$item = Jelly::factory('formdata')
-				->set(array(
-					'field' => 44,
-					'value' => $r->shuttles,
-					'item' => 1,
-					'form' => 'specs'
-				))
-				->save();
-			$specs[] = $item->saved();
-			
-			// number of fighters
-			$item = Jelly::factory('formdata')
-				->set(array(
-					'field' => 45,
-					'value' => $r->fighters,
-					'item' => 1,
-					'form' => 'specs'
-				))
-				->save();
-			$specs[] = $item->saved();
-			
-			// number of runabouts
-			$item = Jelly::factory('formdata')
-				->set(array(
-					'field' => 46,
-					'value' => $r->runabouts,
-					'item' => 1,
-					'form' => 'specs'
-				))
-				->save();
-			$specs[] = $item->saved();
+			if ($specs_count === TRUE)
+			{
+				$retval = array(
+					'code' => 1,
+					'message' => ''
+				);
+			}
+			else
+			{
+				$retval = array(
+					'code' => 0,
+					'message' => __("Your specifications were not upgraded")
+				);
+			}
+		} catch (Exception $e) {
+			// catch the exception
+			$retval = array(
+				'code' => 0,
+				'message' => 'ERROR: '.$e->getMessage().' - line '.$e->getLine().' of '.$e->getFile()
+			);
 		}
 		
-		// check to see if everything worked
-		$specs_count = (in_array(FALSE, $specs)) ? FALSE : TRUE;
-		
-		if ($specs_count === TRUE)
-		{
-			echo '1';
-		}
-		else
-		{
-			echo '0';
-		}
+		echo json_encode($retval);
 	}
 	
 	public function action_upgrade_tour()
 	{
-		// get the tour items
-		$result = $this->db->query(Database::SELECT, 'SELECT * FROM sms_tour', TRUE);
-		
-		// create an array for validating
-		$tour = array();
-		
-		foreach ($result as $r)
-		{
-			$images = array();
+		try {
+			// get the tour items
+			$result = $this->db->query(Database::SELECT, 'SELECT * FROM sms_tour', TRUE);
 			
-			if (!empty($r->tourPicture1))
+			// create an array for validating
+			$tour = array();
+			
+			foreach ($result as $r)
 			{
-				$images[] = $r->tourPicture1;
+				$images = array();
+				
+				if (!empty($r->tourPicture1))
+				{
+					$images[] = $r->tourPicture1;
+				}
+				
+				if (!empty($r->tourPicture2))
+				{
+					$images[] = $r->tourPicture2;
+				}
+				
+				if (!empty($r->tourPicture3))
+				{
+					$images[] = $r->tourPicture3;
+				}
+				
+				// make the images array a string
+				$images = implode(',', $images);
+				
+				$item = Jelly::factory('tour')
+					->set(array(
+						'name' => $r->tourName,
+						'order' => $r->tourOrder,
+						'display' => $r->tourDisplay,
+						'summary' => $r->tourSummary,
+						'images' => $images,
+						'specitem' => 1
+					))
+					->save();
+				$tour[] = $item->saved();
+				
+				$dataitem = Jelly::factory('formdata')
+					->set(array(
+						'field' => 47,
+						'value' => $r->tourLocation,
+						'item' => $item->id(),
+						'form' => 'tour'
+					))
+					->save();
+				$tour[] = $dataitem->saved();
+				
+				$dataitem = Jelly::factory('formdata')
+					->set(array(
+						'field' => 48,
+						'value' => $r->tourDesc,
+						'item' => $item->id(),
+						'form' => 'tour'
+					))
+					->save();
+				$tour[] = $dataitem->saved();
 			}
 			
-			if (!empty($r->tourPicture2))
+			// validate the tour items
+			$tour_count = (in_array(FALSE, $tour)) ? FALSE : TRUE;
+			
+			if ($tour_count === TRUE)
 			{
-				$images[] = $r->tourPicture2;
+				$retval = array(
+					'code' => 1,
+					'message' => ''
+				);
 			}
-			
-			if (!empty($r->tourPicture3))
+			else
 			{
-				$images[] = $r->tourPicture3;
+				$retval = array(
+					'code' => 0,
+					'message' => __("Your tour items were not upgraded")
+				);
 			}
-			
-			// make the images array a string
-			$images = implode(',', $images);
-			
-			$item = Jelly::factory('tour')
-				->set(array(
-					'name' => $r->tourName,
-					'order' => $r->tourOrder,
-					'display' => $r->tourDisplay,
-					'summary' => $r->tourSummary,
-					'images' => $images
-				))
-				->save();
-			$tour[] = $item->saved();
-			
-			$dataitem = Jelly::factory('formdata')
-				->set(array(
-					'field' => 47,
-					'value' => $r->tourLocation,
-					'item' => $item->id(),
-					'form' => 'tour'
-				))
-				->save();
-			$tour[] = $dataitem->saved();
-			
-			$dataitem = Jelly::factory('formdata')
-				->set(array(
-					'field' => 48,
-					'value' => $r->tourDesc,
-					'item' => $item->id(),
-					'form' => 'tour'
-				))
-				->save();
-			$tour[] = $dataitem->saved();
+		} catch (Exception $e) {
+			// catch the exception
+			$retval = array(
+				'code' => 0,
+				'message' => 'ERROR: '.$e->getMessage().' - line '.$e->getLine().' of '.$e->getFile()
+			);
 		}
 		
-		// validate the tour items
-		$tour_count = (in_array(FALSE, $tour)) ? FALSE : TRUE;
-		
-		if ($tour_count === TRUE)
-		{
-			echo '1';
-		}
-		else
-		{
-			echo '0';
-		}
+		echo json_encode($retval);
 	}
 	
 	public function action_upgrade_user_awards()

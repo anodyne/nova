@@ -146,7 +146,7 @@ h3 { font-size: 133%; }
 
 #progress {
 	width: 400px;
-	padding: 2px 3px 3px 3px;
+	padding: 0;
 	
 	border: 0 !important;
 	background: #858585 !important;

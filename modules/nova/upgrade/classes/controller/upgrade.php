@@ -14,7 +14,7 @@ class Controller_Upgrade extends Controller_Template
 	/**
 	 * @var	integer	the number of database tables in the system
 	 */
-	public $_tables = 56;
+	public $_tables = 57;
 	
 	public function before()
 	{
@@ -321,8 +321,8 @@ class Controller_Upgrade extends Controller_Template
 				);
 				
 				// content
-				$this->template->title.= __('step1.title');
-				$this->template->layout->label = __('step1.label');
+				$this->template->title.= __('Upgrading to Nova');
+				$this->template->layout->label = __('Upgrading to Nova');
 				
 				// create the javascript view
 				$this->template->javascript = View::factory('upgrade/js/upgrade_step1_js');
@@ -348,8 +348,8 @@ class Controller_Upgrade extends Controller_Template
 				$data = $this->template->layout->content;
 				
 				// content
-				$this->template->title.= __('step2.title');
-				$this->template->layout->label = __('step2.label');
+				$this->template->title.= __('Cleaning Up Data');
+				$this->template->layout->label = __('Cleaning Up Data');
 				
 				// create the javascript view
 				$this->template->javascript = View::factory('upgrade/js/upgrade_step2_js');
@@ -399,8 +399,8 @@ class Controller_Upgrade extends Controller_Template
 				}
 				
 				// content
-				$this->template->title.= __('step2.title');
-				$this->template->layout->label = __('step2.label');
+				$this->template->title.= __('Passwords and Admin Rights');
+				$this->template->layout->label = __('Passwords and Admin Rights');
 				
 				// create the javascript view
 				$this->template->javascript = View::factory('upgrade/js/upgrade_step3_js');
@@ -470,6 +470,19 @@ class Controller_Upgrade extends Controller_Template
 	
 	public function action_test()
 	{
+		$aNonFlat = Database::instance()->list_columns('specs');
+		$objTmp = (object) array('aFlat' => array());
+		array_walk_recursive($aNonFlat, create_function('&$v, $k, &$t', '$t->aFlat[] = $v;'), $objTmp);
+		
+		echo Kohana::debug(md5(implode('', $objTmp->aFlat)));
+		
+		$aNonFlat = Database::instance()->list_columns('specs');
+		$objTmp = (object) array('aFlat' => array());
+		array_walk_recursive($aNonFlat, create_function('&$v, $k, &$t', '$t->aFlat[] = $v;'), $objTmp);
+		
+		echo Kohana::debug(md5(implode('', $objTmp->aFlat)));
+		//echo md5(implode('', ));
+		
 		$buttons = "";
 		
 		$buttons.= form::button('primary', 'Primary Button', array('class' => 'btn-main')).'<br /><br />';
