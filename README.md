@@ -8,7 +8,7 @@ M1.2-pre (2.0-alpha)
 
 ## Last Update
 
-06 July 2010
+08 July 2010
 
 ## Version History
 
