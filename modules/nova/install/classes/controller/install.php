@@ -14,7 +14,7 @@ class Controller_Install extends Controller_Template
 	/**
 	 * @var	integer	the number of database tables in the system
 	 */
-	public $_tables = 56;
+	public $_tables = 57;
 	
 	public function before()
 	{
