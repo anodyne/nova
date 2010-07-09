@@ -6,10 +6,6 @@ Anodyne Production's next-generation RPG management system combines popular feat
 
 M1.2-pre (2.0-alpha)
 
-## Last Update
-
-08 July 2010
-
 ## Version History
 
 <table>
