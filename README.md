@@ -15,12 +15,14 @@ Anodyne Production's next-generation RPG management system combines popular feat
 * updated the index page to turn down the error reporting (fatal errors and database errors will still be shown)
 * updated the select menu on the write PM page to separate active and inactive characters
 * updated colorbox to version 1.3.8
+* updated the users model with a new method for removing user preference values
 * fixed bug where acceptance and rejection messages were sent without any changes an admin made
 * fixed error thrown when posting a comment on a mission post
 * fixed bug where changing a character's state to and from active wouldn't set the open slots of their position(s)
 * fixed error thrown when attempting to delete a character
 * fixed errors thrown during step 2 of the update process for some users
 * fixed bug where turning off update notification still attempted to run the check (before running in to another check)
+* fixed bug where a user's email preferences remained even after they were set to inactive
 
 ## Version History
 
