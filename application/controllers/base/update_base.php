@@ -5,11 +5,12 @@
 |---------------------------------------------------------------
 |
 | File: controllers/base/update_base.php
-| System Version: 1.0.5
+| System Version: 1.0.6
 |
 | Changes: updated the update process to try and grab the directory
 |	listing and use that as a baseline first instead of the
-|	versions file
+|	versions file; fixed a bug where some users were getting errors
+|	while updating the system
 |
 | Controller that handles the updating of the system.
 |
@@ -431,6 +432,9 @@ class Update_base extends Controller {
 				
 				if (is_array($dir))
 				{
+					// sort the array
+					sort($dir);
+					
 					foreach ($dir as $key => $value)
 					{
 						if ($value == 'index.html' || $value == 'versions.php')
