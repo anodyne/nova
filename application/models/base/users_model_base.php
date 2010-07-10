@@ -718,6 +718,15 @@ class Users_model_base extends Model {
 		
 		return $query;
 	}
+	
+	function delete_user_pref_values($id = '')
+	{
+		$query = $this->db->delete('user_prefs_values', array('prefvalue_user' => $id));
+		
+		$this->dbutil->optimize_table('user_prefs_values');
+		
+		return $query;
+	}
 }
 
 /* End of file users_model_base.php */
