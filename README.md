@@ -6,10 +6,6 @@ Anodyne Production's next-generation RPG management system combines popular feat
 
 1.0.6-pre
 
-## Last Update
-
-09 July 2010
-
 ## Changes in 1.0.6
 
 * added the 1.0.6 update file
@@ -24,10 +20,6 @@ Anodyne Production's next-generation RPG management system combines popular feat
 * fixed bug where changing a character's state to and from active wouldn't set the open slots of their position(s)
 * fixed error thrown when attempting to delete a character
 * fixed errors thrown during step 2 of the update process for some users
-
-## Known Issues
-
-http://github.com/anodyne/nova/issues/labels/Bug
 
 ## Version History
 
