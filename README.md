@@ -20,6 +20,7 @@ Anodyne Production's next-generation RPG management system combines popular feat
 * fixed bug where changing a character's state to and from active wouldn't set the open slots of their position(s)
 * fixed error thrown when attempting to delete a character
 * fixed errors thrown during step 2 of the update process for some users
+* fixed bug where turning off update notification still attempted to run the check (before running in to another check)
 
 ## Version History
 
