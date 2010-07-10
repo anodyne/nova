@@ -6,10 +6,6 @@ Anodyne Production's next-generation RPG management system combines popular feat
 
 1.0.6-pre
 
-## Last Update
-
-09 July 2010
-
 ## Changes in 1.0.6
 
 * added the 1.0.6 update file
@@ -27,7 +23,7 @@ Anodyne Production's next-generation RPG management system combines popular feat
 
 ## Known Issues
 
-http://github.com/anodyne/nova/issues/labels/Bug
+(http://github.com/anodyne/nova/issues/labels/Bug)
 
 ## Version History
 
