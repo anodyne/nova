@@ -6,10 +6,6 @@ Anodyne Production's next-generation RPG management system combines popular feat
 
 1.0.6-pre
 
-## Last Update
-
-06 July 2010
-
 ## Changes in 1.0.6
 
 * added the 1.0.6 update file
@@ -21,16 +17,16 @@ Anodyne Production's next-generation RPG management system combines popular feat
 * updated colorbox to version 1.3.8
 * updated the characters model to include a method for inserting promotion records
 * updated the language file with a new item (_labels\_from_)
+* updated the users model with a new method for removing user preference values
 * fixed bug where acceptance and rejection messages were sent without any changes an admin made
 * fixed error thrown when posting a comment on a mission post
 * fixed bug where changing a character's state to and from active wouldn't set the open slots of their position(s)
 * fixed error thrown when attempting to delete a character
 * fixed bug where the position dropdowns when creating a character showed all positions instead of open positions
 * fixed bug where rank history information wasn't being populated correctly
-
-## Known Issues
-
-http://github.com/anodyne/nova/issues/labels/Bug
+* fixed errors thrown during step 2 of the update process for some users
+* fixed bug where turning off update notification still attempted to run the check (before running in to another check)
+* fixed bug where a user's email preferences remained even after they were set to inactive
 
 ## Version History
 
