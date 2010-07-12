@@ -83,6 +83,8 @@ All validation rules are defined as a field name, a method or function (using th
 
 To start our example, we will perform validation on a `$_POST` array that contains user registration information:
 
+    $post = Validate::factory($_POST);
+
 Next we need to process the POST'ed information using [Validate]. To start, we need to add some rules:
 
     $post
@@ -125,7 +127,7 @@ All validation callbacks are defined as a field name and a method or function (u
 
     $object->callback($field, $callback);
 
-[!!] Unlike filters and rules, no parameters can be passed to a callback. All additional callback
+[!!] Unlike filters and rules, no parameters can be passed to a callback.
 
 The user password must be hashed if it validates, so we will hash it using a callback:
 
@@ -160,7 +162,7 @@ First, we need a [View] that contains the HTML form, which will be placed in `ap
         <dd><?php echo Form::input('username', $post['username']) ?></dd>
 
         <dt><?php echo Form::label('password', 'Password') ?></dt>
-        <dd><?php echo From::password('password') ?></dd>
+        <dd><?php echo Form::password('password') ?></dd>
         <dd class="help">Passwords must be at least 6 characters long.</dd>
         <dt><?php echo Form::label('confirm', 'Confirm Password') ?></dt>
         <dd><?php echo Form::password('confirm') ?></dd>

@@ -10,7 +10,7 @@
 <?php foreach ($scripts as $script) echo HTML::script($script, NULL, TRUE), "\n" ?>
 
 </head>
-<body>
+<body class="<?php echo $l ?>">
 
 <div id="topbar" class="clear">
 	<div class="container">
@@ -37,7 +37,7 @@
 		<?php if (Kohana::$environment === Kohana::PRODUCTION): ?>
 		<div id="disqus_thread" class="clear"></div>
 		<script type="text/javascript">
-			var disqus_identifier = '<?php echo Request::instance()->uri ?>';
+			var disqus_identifier = '<?php echo HTML::chars(Request::instance()->uri) ?>';
 			(function() {
 				var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
 				dsq.src = 'http://kohana.disqus.com/embed.js';
