@@ -38,6 +38,12 @@ abstract class Controller_Nova_Base extends Controller_Template
 			$this->request->redirect('install/setupconfig');
 		}
 		
+		// make sure the system is installed
+		if (!Utility::install_status())
+		{
+			$this->request->redirect('install/index');
+		}
+		
 		// load the session library
 		$this->session = Session::instance();
 		
