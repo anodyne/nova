@@ -5,9 +5,9 @@
 |---------------------------------------------------------------
 |
 | File: models/users_model_base.php
-| System Version: 1.0
+| System Version: 1.0.6
 |
-| Model used to access the users table.
+| Changes: new model method for deleting user preferences
 |
 */
 
