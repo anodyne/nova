@@ -18,15 +18,16 @@ Anodyne Production's next-generation RPG management system combines popular feat
 * updated the characters model to include a method for inserting promotion records
 * updated the language file with a new item (_labels\_from_)
 * updated the users model with a new method for removing user preference values
-* fixed bug where acceptance and rejection messages were sent without any changes an admin made
 * fixed error thrown when posting a comment on a mission post
-* fixed bug where changing a character's state to and from active wouldn't set the open slots of their position(s)
 * fixed error thrown when attempting to delete a character
+* fixed error thrown during step 2 of the update process for some users
+* fixed bug where acceptance and rejection messages were sent without any changes an admin made
+* fixed bug where changing a character's state to and from active wouldn't set the open slots of their position(s)
 * fixed bug where the position dropdowns when creating a character showed all positions instead of open positions
 * fixed bug where rank history information wasn't being populated correctly
-* fixed errors thrown during step 2 of the update process for some users
 * fixed bug where turning off update notification still attempted to run the check (before running in to another check)
-* fixed bug where a user's email preferences remained even after they were set to inactive
+* fixed bug where a user's email preferences remained active even after the user was set to inactive
+* fixed bug where a user's email preferences weren't deleted when the user was deleted
 
 ## Version History
 
