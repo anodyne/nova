@@ -136,17 +136,25 @@ class Kohana_Pagination {
 			OR isset($config['items_per_page']))
 		{
 			// Retrieve the current page number
-			switch ($this->config['current_page']['source'])
+			if ( ! empty($this->config['current_page']['page']))
 			{
-				case 'query_string':
-					$this->current_page = isset($_GET[$this->config['current_page']['key']])
-						? (int) $_GET[$this->config['current_page']['key']]
-						: 1;
-					break;
+				// The current page number has been set manually
+				$this->current_page = (int) $this->config['current_page']['page'];
+			}
+			else
+			{
+				switch ($this->config['current_page']['source'])
+				{
+					case 'query_string':
+						$this->current_page = isset($_GET[$this->config['current_page']['key']])
+							? (int) $_GET[$this->config['current_page']['key']]
+							: 1;
+						break;
 
-				case 'route':
-					$this->current_page = (int) Request::current()->param($this->config['current_page']['key'], 1);
-					break;
+					case 'route':
+						$this->current_page = (int) Request::current()->param($this->config['current_page']['key'], 1);
+						break;
+				}
 			}
 
 			// Calculate and clean all pagination variables
@@ -194,6 +202,22 @@ class Kohana_Pagination {
 		}
 
 		return '#';
+	}
+
+	/**
+	 * Checks whether the given page number exists.
+	 *
+	 * @param   integer  page number
+	 * @return  boolean
+	 * @since   3.0.7
+	 */
+	public function valid_page($page)
+	{
+		// Page number has to be a clean integer
+		if ( ! Validate::digit($page))
+			return FALSE;
+
+		return $page > 0 AND $page <= $this->total_pages;
 	}
 
 	/**
