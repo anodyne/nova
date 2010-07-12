@@ -68,7 +68,7 @@ class Kohana_Remote {
 		// Get the response information
 		$code = curl_getinfo($remote, CURLINFO_HTTP_CODE);
 
-		if ($code < 200 OR $code > 299)
+		if ($code AND $code < 200 OR $code > 299)
 		{
 			$error = $response;
 		}
@@ -147,11 +147,6 @@ class Kohana_Remote {
 		fclose($remote);
 
 		return $response;
-	}
-
-	final private function __construct()
-	{
-		// This is a static class
 	}
 
 } // End remote
