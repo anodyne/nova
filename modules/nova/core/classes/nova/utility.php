@@ -132,14 +132,17 @@ abstract class Nova_Utility
 		$dir = self::directory_map(APPPATH.'assets/common/'.Kohana::config('nova.genre').'/ranks/', TRUE);
 		
 		// get all the rank sets locations
-		$ranks = Jelly::select('cataloguerank')->execute();
+		$ranks = Jelly::select('cataloguerank')->where('genre', '=', Kohana::config('nova.genre'))->execute();
 		
 		if (count($ranks) > 0)
 		{
 			// start by removing anything that's already installed
 			foreach ($ranks as $rank)
 			{
-				if ($key = array_search($rank->location, $dir) !== FALSE)
+				// find the location in the directory listing
+				$key = array_search($rank->location, $dir);
+				
+				if ($key !== FALSE)
 				{
 					unset($dir[$key]);
 				}
@@ -151,7 +154,10 @@ abstract class Nova_Utility
 			// remove unwanted items
 			foreach ($pop as $value)
 			{
-				if ($key = array_search($value, $dir) !== FALSE)
+				// find the locations in the directory listing
+				$key = array_search($value, $dir);
+				
+				if ($key !== FALSE)
 				{
 					unset($dir[$key]);
 				}
@@ -224,7 +230,10 @@ abstract class Nova_Utility
 			// start by removing anything that's already installed
 			foreach ($skins as $skin)
 			{
-				if ($key = array_search($skin->skin_location, $dir) !== FALSE)
+				// find the location in the directory listing
+				$key = array_search($skin->location, $dir);
+				
+				if ($key !== FALSE)
 				{
 					unset($dir[$key]);
 				}
@@ -235,13 +244,15 @@ abstract class Nova_Utility
 			
 			# TODO: remove this after the application directory has been cleaned out
 			$pop[] = '_base';
-			$pop[] = '_base_override';
 			$pop[] = 'template.php';
 			
 			// remove the items
 			foreach ($pop as $value)
 			{
-				if ($key = array_search($value, $dir) !== FALSE)
+				// find the location in the directory listing
+				$key = array_search($value, $dir);
+				
+				if ($key !== FALSE)
 				{
 					unset($dir[$key]);
 				}
