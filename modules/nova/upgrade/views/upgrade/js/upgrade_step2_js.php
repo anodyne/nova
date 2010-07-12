@@ -43,13 +43,21 @@
 				type: "POST",
 				url: "<?php echo url::site('upgradeajax/upgrade_welcome');?>",
 				data: send,
+				dataType: 'json',
 				success: function(data){
 					$('table tbody tr:eq(1) td:eq(1) .loading').addClass('hidden');
 					
-					if (data == "1")
+					if (data.code == 1)
+					{
 						$('table tbody tr:eq(1) td:eq(1) .success').removeClass('hidden');
-					else
+					}
+					else if (data.code == 0)
+					{
 						$('table tbody tr:eq(1) td:eq(1) .failure').removeClass('hidden');
+						$('table tbody tr:eq(1) td:eq(1) .failure img').attr('title', function(){
+							return data.message
+						});
+					}
 				}
 			});
 			

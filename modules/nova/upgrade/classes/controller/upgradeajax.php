@@ -1642,57 +1642,98 @@ class Controller_Upgradeajax extends Controller_Template
 	
 	public function action_upgrade_user_posts()
 	{
-		// get all the posts
-		$posts = Jelly::select('post')->execute();
-		
-		foreach ($posts as $p)
-		{
-			// grab the authors and put them into an array
-			$authors = explode(',', $p->authors);
+		try {
+			// get all the posts
+			$posts = Jelly::select('post')->execute();
 			
-			// make sure we have an array
-			$array = array();
+			// set a temp array to collect saves
+			$saved = array();
 			
-			foreach ($authors as $a)
+			foreach ($posts as $p)
 			{
-				if ($a > 0)
-				{
-					// get the user id
-					$user = Jelly::select('character', $a)->user;
+				// grab the authors and put them into an array
+				$authors = explode(',', $p->authors);
 				
-					if (!is_null($user) && !in_array($user->id, $array))
+				// make sure we have an array
+				$array = array();
+				
+				foreach ($authors as $a)
+				{
+					if ($a > 0)
 					{
-						$array[] = $user->id;
+						// get the user id
+						$user = Jelly::select('character', $a)->user;
+					
+						if (!is_null($user) && !in_array($user->id, $array))
+						{
+							$array[] = $user->id;
+						}
 					}
 				}
+				
+				// create a string from the array
+				$users = implode(',', $array);
+				
+				// update the post
+				$post = Jelly::select('post', $p->id);
+				$post->author_users = $users;
+				$post->save();
+				$saved[] = $post->saved();
 			}
 			
-			// create a string from the array
-			$users = implode(',', $array);
-			
-			// update the post
-			$post = Jelly::select('post', $p->id);
-			$post->author_users = $users;
-			$post->save();
+			if (!in_array(FALSE, $saved))
+			{
+				$retval = array(
+					'code' => 1,
+					'message' => ''
+				);
+			}
+			else
+			{
+				$retval = array(
+					'code' => 0,
+					'message' => __("Not all of your mission posts could be upgraded")
+				);
+			}
+		} catch (Exception $e) {
+			$retval = array(
+				'code' => 0,
+				'message' => 'ERROR: '.$e->getMessage().' - line '.$e->getLine().' of '.$e->getFile()
+			);
 		}
 		
-		echo '1';
+		echo json_encode($retval);
 	}
 	
 	public function action_upgrade_welcome()
 	{
-		// update the welcome page header
-		$msg = Jelly::select('message')->where('key', '=', 'welcome_head')->load();
-		$msg->value = 'Welcome to the '.Jelly::select('setting')->where('key', '=', 'sim_name')->load()->value.'!';
-		$msg->save();
+		try {
+			// update the welcome page header
+			$msg = Jelly::select('message')->where('key', '=', 'welcome_head')->load();
+			$msg->value = 'Welcome to the '.Jelly::select('setting')->where('key', '=', 'sim_name')->load()->value.'!';
+			$msg->save();
+			
+			if ($msg->saved())
+			{
+				$retval = array(
+					'code' => 1,
+					'message' => ''
+				);
+			}
+			else
+			{
+				$retval = array(
+					'code' => 0,
+					'message' => __("Your welcome message couldn't be upgraded, please do so manually")
+				);
+			}
+		} catch (Exception $e) {
+			$retval = array(
+				'code' => 0,
+				'message' => 'ERROR: '.$e->getMessage().' - line '.$e->getLine().' of '.$e->getFile()
+			);
+		}
 		
-		if ($msg->saved())
-		{
-			echo '1';
-		}
-		else
-		{
-			echo '0';
-		}
+		echo json_encode($retval);
 	}
 }

@@ -1,4 +1,4 @@
-<p class="fontMedium"><?php echo __("Nova gives you the ability to upgrade only the items you want from SMS. Using the list below, please select which items you want Nova to upgrade from the SMS format to the Nova format.");?></p>
+<p class="fontMedium"><?php echo __("step1.text");?></p>
 
 <hr />
 
