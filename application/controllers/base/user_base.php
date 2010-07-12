@@ -18,7 +18,8 @@
 |	variable the system was expecting; fixed bug where site options
 |	didn't allow skin admins to select in development skins; fixed
 |	bug where user email preferences remained active after they were
-|	made inactive
+|	made inactive; fixed bug where user preferences weren't removed
+|	when a user was deleted
 |
 | Controller that handles the USER section of the admin system.
 |
@@ -204,16 +205,16 @@ class User_base extends Controller {
 							}
 						}
 						
-						// remove the user's email preferences
-						$this->user->delete_user_pref_values($id);
+						// update the user prefs to all be no
+						$this->user->update_all_user_prefs($id);
 					}
 
 					if ($old_status == 'inactive' && $array['status'] != 'inactive')
 					{
 						$array['leave_date'] = NULL;
 						
-						// add the user's email preferences
-						$this->user->create_user_prefs($id);
+						// update the user prefs to all be yes
+						$this->user->update_all_user_prefs($id, 'y');
 					}
 				}
 				
@@ -647,7 +648,11 @@ class User_base extends Controller {
 					$id = $this->input->post('id', TRUE);
 					$id = (is_numeric($id)) ? $id : FALSE;
 					
-					$delete = $this->user->delete_user($id);
+					// remove the user's prefs
+					$delete = $this->user->delete_user_pref_values($id);
+					
+					// delete the user
+					$delete += $this->user->delete_user($id);
 					
 					if ($delete > 0)
 					{
