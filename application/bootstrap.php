@@ -5,7 +5,7 @@
 /**
  * Set the default time zone.
  *
- * @see  http://docs.kohanaphp.com/about.configuration
+ * @see  http://kohanaframework.org/guide/using.configuration
  * @see  http://php.net/timezones
  */
 date_default_timezone_set('America/New_York');
@@ -13,7 +13,7 @@ date_default_timezone_set('America/New_York');
 /**
  * Set the default locale.
  *
- * @see  http://docs.kohanaphp.com/about.configuration
+ * @see  http://kohanaframework.org/guide/using.configuration
  * @see  http://php.net/setlocale
  */
 setlocale(LC_ALL, 'en_US.utf-8');
@@ -21,7 +21,7 @@ setlocale(LC_ALL, 'en_US.utf-8');
 /**
  * Enable the Kohana auto-loader.
  *
- * @see  http://docs.kohanaphp.com/about.autoloading
+ * @see  http://kohanaframework.org/guide/using.autoloading
  * @see  http://php.net/spl_autoload_register
  */
 spl_autoload_register(array('Kohana', 'auto_load'));
@@ -99,23 +99,26 @@ Route::set('default', '(<controller>(/<action>(/<id>)))')
 		'action'     => 'index',
 	));
 
-/**
- * Execute the main request. A source of the URI can be passed, eg: $_SERVER['PATH_INFO'].
- * If no source is specified, the URI will be automatically detected.
- */
+if ( ! defined('SUPPRESS_REQUEST'))
+{
+	/**
+	 * Execute the main request. A source of the URI can be passed, eg: $_SERVER['PATH_INFO'].
+	 * If no source is specified, the URI will be automatically detected.
+	 */
 
-Events::event('preCreate');
-$request = Request::instance();
-Events::event('postCreate');
+	Events::event('preCreate');
+	$request = Request::instance();
+	Events::event('postCreate');
 
-Events::event('preExecute');
-$request->execute();
-Events::event('postExecute');
+	Events::event('preExecute');
+	$request->execute();
+	Events::event('postExecute');
 
-Events::event('preHeaders');
-$request->send_headers();
-Events::event('postHeaders');
+	Events::event('preHeaders');
+	$request->send_headers();
+	Events::event('postHeaders');
 
-Events::event('preResponse');
-echo $request->response;
-Events::event('postResponse');
+	Events::event('preResponse');
+	echo $request->response;
+	Events::event('postResponse');
+}
