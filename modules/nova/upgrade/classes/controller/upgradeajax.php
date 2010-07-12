@@ -1005,11 +1005,106 @@ class Controller_Upgradeajax extends Controller_Template
 	
 	public function action_upgrade_quick_install()
 	{
-		// do the quick installs
-		Utility::install_ranks();
-		Utility::install_skins();
+		try {
+			// do the quick installs
+			Utility::install_ranks();
+			Utility::install_skins();
+			
+			// get the directory listing for the genre
+			$dir = Utility::directory_map(APPPATH.'assets/common/'.Kohana::config('nova.genre').'/ranks/', TRUE);
+			
+			// set the items to be pulled out of the listing
+			$pop = array('index.html');
+			
+			// remove unwanted items
+			foreach ($pop as $value)
+			{
+				// find the item in the directory listing
+				$key = array_search($value, $dir);
+				
+				if ($key !== FALSE)
+				{
+					unset($dir[$key]);
+				}
+			}
+			
+			// get the count of ranks
+			$dir_ranks = count($dir);
+			
+			// pause the script for 1 second
+			sleep(1);
+			
+			// reset the variables
+			$pop = NULL;
+			$dir = NULL;
+			
+			// get the listing of the directory
+			$dir = Utility::directory_map(APPPATH.'views/', TRUE);
+			
+			// create an array of items to remove
+			$pop = array('index.html');
+			
+			# TODO: remove this after the application directory has been cleaned out
+			$pop[] = '_base';
+			$pop[] = 'template.php';
+			
+			// remove the items
+			foreach ($pop as $value)
+			{
+				// find the location in the directory listing
+				$key = array_search($value, $dir);
+				
+				if ($key !== FALSE)
+				{
+					unset($dir[$key]);
+				}
+			}
+			
+			// get the count of skins
+			$dir_skins = count($dir);
+			
+			// get the catalogue count for ranks
+			$db_ranks = Jelly::select('cataloguerank')->count();
+			
+			// get the catalogue count for skins
+			$db_skins = Jelly::select('catalogueskin')->count();
+
+			if ($dir_ranks == $db_ranks && $dir_skins == $db_skins)
+			{
+				$retval = array(
+					'code' => 1,
+					'message' => ''
+				);
+			}
+			elseif ($dir_ranks != $db_ranks && $dir_skins == $db_skins)
+			{
+				$retval = array(
+					'code' => 2,
+					'message' => __("Your skins were installed but not all of your rank sets were installed. Please try to install your ranks sets manually from the rank catalogue page.")
+				);
+			}
+			elseif ($dir_ranks == $db_ranks && $dir_skins != $db_skins)
+			{
+				$retval = array(
+					'code' => 2,
+					'message' => __("Your rank sets were installed but not all of your skins were installed. Please try to install your skins manually from the skin catalogue page.")
+				);
+			}
+			elseif ($dir_ranks != $db_ranks && $dir_skins != $db_skins)
+			{
+				$retval = array(
+					'code' => 0,
+					'message' => __("Additional ranks and skins were not installed. Please try to do so manually from the catalogue pages.")
+				);
+			}
+		} catch (Exception $e) {
+			$retval = array(
+				'code' => 0,
+				'message' => 'ERROR: '.$e->getMessage().' - line '.$e->getLine().' of '.$e->getFile()
+			);
+		}
 		
-		echo '1';
+		echo json_encode($retval);
 	}
 	
 	public function action_upgrade_settings()
@@ -1131,6 +1226,8 @@ class Controller_Upgradeajax extends Controller_Template
 		
 		echo json_encode($retval);
 	}
+	
+	# TODO: waiting on kohana updates to finish this
 	
 	public function action_upgrade_specs()
 	{
@@ -1436,6 +1533,8 @@ class Controller_Upgradeajax extends Controller_Template
 		echo json_encode($retval);
 	}
 	
+	# TODO: waiting on kohana to finish this
+	
 	public function action_upgrade_tour()
 	{
 		try {
@@ -1530,114 +1629,219 @@ class Controller_Upgradeajax extends Controller_Template
 	
 	public function action_upgrade_user_awards()
 	{
-		// get the crew from the sms table
-		$result = $this->db->query(Database::SELECT, 'SELECT * FROM sms_crew', TRUE);
+		// change the awards received model to prevent NULL values
+		Jelly::meta('awardrec')->fields('date')->auto_now_create = FALSE;
 		
-		foreach ($result as $c)
-		{
-			$user = Jelly::select('character', $c->crewid)->user;
+		try {
+			// get the crew from the sms table
+			$result = $this->db->query(Database::SELECT, 'SELECT * FROM sms_crew', TRUE);
 			
-			if (!empty($c->awards))
+			// create an array for saved entries
+			$saved = array();
+			
+			foreach ($result as $c)
 			{
-				$awards = explode(';', $c->awards);
+				$user = Jelly::select('character', $c->crewid)->user;
 				
-				foreach ($awards as $a)
+				if (!empty($c->awards))
 				{
-					if (strstr($a, '|') !== FALSE)
+					$awards = explode(';', $c->awards);
+					
+					foreach ($awards as $a)
 					{
-						$x = explode('|', $a);
-						
-						Jelly::factory('awardrec')
-							->set(array(
-								'character' => $c->crewid,
-								'award' => $x[0],
-								'date' => $x[1],
-								'reason' => $x[2]
-							))
-							->save();
-					}
-					else
-					{
-						Jelly::factory('awardrec')
-							->set(array(
-								'character' => $c->crewid,
-								'award' => $a
-							))
-							->save();
+						if (strstr($a, '|') !== FALSE)
+						{
+							$x = explode('|', $a);
+							
+							$awardaction = Jelly::factory('awardrec')
+								->set(array(
+									'character' => $c->crewid,
+									'user' => $user->id,
+									'award' => $x[0],
+									'date' => $x[1],
+									'reason' => $x[2]
+								))
+								->save();
+							$saved[] = $awardaction->saved();
+						}
+						else
+						{
+							$awardaction = Jelly::factory('awardrec')
+								->set(array(
+									'character' => $c->crewid,
+									'user' => $user->id,
+									'award' => $a,
+									'date' => NULL
+								))
+								->save();
+							$saved[] = $awardaction->saved();
+						}
 					}
 				}
 			}
+			
+			if (!in_array(TRUE, $saved))
+			{
+				$retval = array(
+					'code' => 0,
+					'message' => __("Your given awards could not be upgraded")
+				);
+			}
+			elseif (in_array(TRUE, $saved) && in_array(FALSE, $saved))
+			{
+				$retval = array(
+					'code' => 2,
+					'message' => __("All of your given awards could not be upgraded")
+				);
+			}
+			else
+			{
+				$retval = array(
+					'code' => 1,
+					'message' => ''
+				);
+			}
+		} catch (Exception $e) {
+			$retval = array(
+				'code' => 0,
+				'message' => 'ERROR: '.$e->getMessage().' - line '.$e->getLine().' of '.$e->getFile()
+			);
 		}
 		
-		echo '1';
+		echo json_encode($retval);
 	}
 	
 	public function action_upgrade_user_defaults()
 	{
-		// get the total number of users
-		$users = Jelly::select('user')->count();
-		
-		// get the total number of characters
-		$characters = Jelly::select('character')->count();
-		
-		if ($users > 0 && $characters > 0)
-		{
-			// pull the defaults for skins and ranks
-			$defaults = array(
-				'skin_main'		=> Jelly::select('catalogueskinsec')->defaultskin('main')->load()->skin,
-				'skin_admin'	=> Jelly::select('catalogueskinsec')->defaultskin('admin')->load()->skin,
-				'skin_wiki'		=> Jelly::select('catalogueskinsec')->defaultskin('wiki')->load()->skin,
-				'rank'			=> Jelly::select('cataloguerank')->defaultrank()->load()->location,
-				'links'			=> '',
+		try {
+			// get the total number of users
+			$users = Jelly::select('user')->count();
+			
+			// get the total number of characters
+			$characters = Jelly::select('character')->count();
+			
+			if ($users > 0 && $characters > 0)
+			{
+				// pull the defaults for skins and ranks
+				$defaults = array(
+					'skin_main'		=> Jelly::select('catalogueskinsec')->defaultskin('main')->load()->skin,
+					'skin_admin'	=> Jelly::select('catalogueskinsec')->defaultskin('admin')->load()->skin,
+					'skin_wiki'		=> Jelly::select('catalogueskinsec')->defaultskin('wiki')->load()->skin,
+					'rank'			=> Jelly::select('cataloguerank')->defaultrank()->load()->location,
+					'links'			=> '',
+				);
+				
+				// update all users
+				Jelly::update('user')->set($defaults)->execute();
+				
+				$retval = array(
+					'code' => 1,
+					'message' => ''
+				);
+			}
+			else
+			{
+				$retval = array(
+					'code' => 0,
+					'message' => __("User defaults could not be upgraded")
+				);
+			}
+		} catch (Exception $e) {
+			$retval = array(
+				'code' => 0,
+				'message' => 'ERROR: '.$e->getMessage().' - line '.$e->getLine().' of '.$e->getFile()
 			);
-			
-			// update all users
-			Jelly::update('user')->set($defaults)->execute();
-			
-			echo '1';
 		}
-		else
-		{
-			echo '0';
-		}
+		
+		echo json_encode($retval);
 	}
 	
 	public function action_upgrade_user_logs()
 	{
-		// get the crew from the sms table
-		$result = $this->db->query(Database::SELECT, 'SELECT * FROM sms_crew', TRUE);
-		
-		foreach ($result as $c)
-		{
-			$user = Jelly::select('character', $c->crewid)->user;
+		try {
+			// get the crew from the sms table
+			$result = $this->db->query(Database::SELECT, 'SELECT * FROM sms_crew', TRUE);
 			
-			if (!is_null($user) && $user->id > 0)
+			foreach ($result as $c)
 			{
-				// update the personal logs
-				$logs = Jelly::update('personallog')->where('author_character', '=', $c->crewid)->set(array('author_user' => $user->id));
+				$user = Jelly::select('character', $c->crewid)->user;
+				
+				if (!is_null($user) && $user->id > 0)
+				{
+					// update the personal logs
+					$logs = Jelly::update('personallog')->where('author_character', '=', $c->crewid)->set(array('author_user' => $user->id));
+				}
 			}
+			
+			// count the number of personal logs that don't have a user (there shouldn't be any)
+			$blank = Jelly::select('personallog')->where('author_user', '=', '')->count();
+			
+			if ($blank > 0)
+			{
+				$retval = array(
+					'code' => 0,
+					'message' => __("Some of your personal logs could not be upgraded and as a result, may not be associated with some users properly")
+				);
+			}
+			else
+			{
+				$retval = array(
+					'code' => 1,
+					'message' => ''
+				);
+			}
+		} catch (Exception $e) {
+			$retval = array(
+				'code' => 0,
+				'message' => 'ERROR: '.$e->getMessage().' - line '.$e->getLine().' of '.$e->getFile()
+			);
 		}
 		
-		echo '1';
+		echo json_encode($retval);
 	}
 	
 	public function action_upgrade_user_news()
 	{
-		// get the crew from the sms table
-		$result = $this->db->query(Database::SELECT, 'SELECT * FROM sms_crew', TRUE);
-		
-		foreach ($result as $c)
-		{
-			$user = Jelly::select('character', $c->crewid)->user;
+		try {
+			// get the crew from the sms table
+			$result = $this->db->query(Database::SELECT, 'SELECT * FROM sms_crew', TRUE);
 			
-			if (!is_null($user) && $user->id > 0)
+			foreach ($result as $c)
 			{
-				// update the news items
-				$news = Jelly::update('news')->where('author_character', '=', $c->crewid)->set(array('author_user' => $user->id));
+				$user = Jelly::select('character', $c->crewid)->user;
+				
+				if (!is_null($user) && $user->id > 0)
+				{
+					// update the news items
+					$news = Jelly::update('news')->where('author_character', '=', $c->crewid)->set(array('author_user' => $user->id));
+				}
 			}
+			
+			// count the number of news items without a user (there shouldn't be any)
+			$blank = Jelly::select('news')->where('author_user', '=', '')->count();
+			
+			if ($blank > 0)
+			{
+				$retval = array(
+					'code' => 0,
+					'message' => __("Some of your news items could not be upgraded and as a result, may not be associated with some users properly")
+				);
+			}
+			else
+			{
+				$retval = array(
+					'code' => 1,
+					'message' => ''
+				);
+			}
+		} catch (Exception $e) {
+			$retval = array(
+				'code' => 0,
+				'message' => 'ERROR: '.$e->getMessage().' - line '.$e->getLine().' of '.$e->getFile()
+			);
 		}
 		
-		echo '1';
+		echo json_encode($retval);
 	}
 	
 	public function action_upgrade_user_posts()
