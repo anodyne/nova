@@ -18,6 +18,7 @@ Anodyne Production's next-generation RPG management system combines popular feat
 * updated the characters model to include a method for inserting promotion records
 * updated the language file with a new item (_labels\_from_)
 * updated the users model with a new method for removing user preference values
+* updated CI's core upload class to fixing a security hole
 * fixed error thrown when posting a comment on a mission post
 * fixed error thrown when attempting to delete a character
 * fixed error thrown during step 2 of the update process for some users
