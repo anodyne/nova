@@ -1748,6 +1748,9 @@ class Sim_base extends Controller {
 						'width' => 400
 					);
 					
+					// create the empty array
+					$data['images']['image_array'] = array();
+					
 					for ($i=1; $i < $images_count; $i++)
 					{
 						/* build the array */

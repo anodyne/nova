@@ -525,6 +525,9 @@ class Personnel_base extends Controller {
 					'height' => 150
 				);
 				
+				// creating the empty array
+				$data['character']['image_array'] = array();
+				
 				for ($i=1; $i < $images_count; $i++)
 				{
 					if (strstr($images[$i], 'http://') !== FALSE)
