@@ -395,13 +395,38 @@ class Controller_Upgradeajax extends Controller_Template
 		// grab the password
 		$password = $_POST['password'];
 		
-		// hash the password
-		$password = Auth::hash($password);
+		try {
+			// hash the password
+			$password = Auth::hash($password);
+			
+			// update everyone
+			Jelly::update('user')->set(array('password' => $password))->execute();
+			
+			// find out how many users don't have the right password
+			$count = Jelly::select('user')->where('password', '!=', $password)->count();
+			
+			if ($count > 0)
+			{
+				$retval = array(
+					'code' => 0,
+					'message' => __("Not all of your users' passwords were updated")
+				);
+			}
+			else
+			{
+				$retval = array(
+					'code' => 1,
+					'message' => ''
+				);
+			}
+		} catch (Exception $e) {
+			$retval = array(
+				'code' => 0,
+				'message' => 'ERROR: '.$e->getMessage().' - line '.$e->getLine().' of '.$e->getFile()
+			);
+		}
 		
-		// update everyone
-		Jelly::update('user')->set(array('password' => $password));
-		
-		echo '1';
+		echo json_encode($retval);
 	}
 	
 	public function action_upgrade_final_roles()
@@ -409,14 +434,47 @@ class Controller_Upgradeajax extends Controller_Template
 		// grab the user IDs that should have the sys admin role
 		$roles = $_POST['roles'];
 		
-		foreach ($roles as $r)
-		{
-			$user = Jelly::select('user', $r);
-			$user->role = 1;
-			$user->save();
+		try {
+			// temporary array
+			$saved = array();
+			
+			foreach ($roles as $r)
+			{
+				$user = Jelly::select('user', $r);
+				$user->role = 1;
+				$user->save();
+				$saved[] = $user->saved();
+			}
+			
+			if (!in_array(TRUE, $saved))
+			{
+				$retval = array(
+					'code' => 0,
+					'message' => __("None of your administrators were set")
+				);
+			}
+			elseif (in_array(FALSE, $saved) && in_array(TRUE, $saved))
+			{
+				$retval = array(
+					'code' => 0,
+					'message' => __("Some of your administrators were set, but others were not")
+				);
+			}
+			else
+			{
+				$retval = array(
+					'code' => 1,
+					'message' => ''
+				);
+			}
+		} catch (Exception $e) {
+			$retval = array(
+				'code' => 0,
+				'message' => 'ERROR: '.$e->getMessage().' - line '.$e->getLine().' of '.$e->getFile()
+			);
 		}
 		
-		echo '1';
+		echo json_encode($retval);
 	}
 	
 	public function action_upgrade_logs()

@@ -423,9 +423,6 @@ class Controller_Upgrade extends Controller_Template
 				$this->template->layout->controls = form::button('next', __('Finalize'), $next).form::close();
 				$this->template->layout->controls_text = __('Set the passwords and access roles for Nova now');
 				
-				// do the user updates with passwords and roles here
-				// all done!
-				
 				break;
 		}
 		

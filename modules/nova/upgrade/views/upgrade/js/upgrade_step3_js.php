@@ -26,13 +26,21 @@
 				type: "POST",
 				url: "<?php echo url::site('upgradeajax/upgrade_final_password');?>",
 				data: { password: password },
+				dataType: 'json',
 				success: function(data){
 					$('.loading-password').addClass('hidden');
 					
-					if (data == "1")
+					if (data.code == 1)
+					{
 						$('.success-password').removeClass('hidden');
+					}
 					else
+					{
 						$('.failure-password').removeClass('hidden');
+						$('.failure-password img').attr('title', function(){
+							return data.message
+						});
+					}
 				}
 			});
 			
@@ -47,13 +55,21 @@
 				type: "POST",
 				url: "<?php echo url::site('upgradeajax/upgrade_final_roles');?>",
 				data: { roles: roles },
+				dataType: 'json',
 				success: function(data){
 					$('.loading-admins').addClass('hidden');
 					
-					if (data == "1")
+					if (data.code == 1)
+					{
 						$('.success-admins').removeClass('hidden');
+					}
 					else
+					{
 						$('.failure-admin').removeClass('hidden');
+						$('.failure-admin img').attr('title', function(){
+							return data.message
+						});
+					}
 				}
 			});
 			
