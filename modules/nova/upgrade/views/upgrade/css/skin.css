@@ -1,5 +1,3 @@
-@import url(http://fonts.googleapis.com/css?family=Yanone+Kaffeesatz);
-
 body {
 	background: #666 url('../images/body-bg.jpg') repeat top left;
 	font: 75%/1.5 "lucida grande", verdana, arial, sans-serif;
@@ -119,7 +117,6 @@ body {
 */
 
 h1, h2 { margin: 0 0 10px 0; }
-h1 { font-family: 'Yanone Kaffeesatz', 'lucida grande', verdana, arial, serif; }
 p { margin: 10px 0; }
 
 h2 { font-size: 150%; }
