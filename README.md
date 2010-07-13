@@ -23,6 +23,8 @@ Anodyne Production's next-generation RPG management system combines popular feat
 * fixed error thrown when attempting to delete a character
 * fixed error thrown during step 2 of the update process for some users
 * fixed error thrown when there's only one mission image set on the mission detail page
+* fixed error thrown when there's only one tour image set on the tour detail page
+* fixed error thrown when there's only one character image set on the character bio page
 * fixed bug where acceptance and rejection messages were sent without any changes an admin made
 * fixed bug where changing a character's state to and from active wouldn't set the open slots of their position(s)
 * fixed bug where the position dropdowns when creating a character showed all positions instead of open positions

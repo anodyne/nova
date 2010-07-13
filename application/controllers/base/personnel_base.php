@@ -5,9 +5,10 @@
 |---------------------------------------------------------------
 |
 | File: controllers/base/personnel_base.php
-| System Version: 1.0
+| System Version: 1.0.6
 |
-| Controller that handles the PERSONNEL section of the system.
+| Changes: fixed error thrown if only one character image was set
+|	on the character bio page
 |
 */
 
@@ -524,6 +525,9 @@ class Personnel_base extends Controller {
 					'class' => 'image reflect rheight20 ropacity30',
 					'height' => 150
 				);
+				
+				// creating the empty array
+				$data['character']['image_array'] = array();
 				
 				for ($i=1; $i < $images_count; $i++)
 				{

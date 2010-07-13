@@ -12,7 +12,8 @@
 |	missing option parameters; fixed security issue where docking
 |	request data wasn't filtered for xss attacks; fixed bugs with
 |	the email sent to GMs when a docking request is submitted;
-|	fixed error thrown when there's only 1 mission image set
+|	fixed error thrown when there's only 1 mission image set; fixed
+|	error thrown when there's only 1 tour image set
 |
 | Controller that handles the SIM part of the system.
 |
@@ -1647,6 +1648,9 @@ class Sim_base extends Controller {
 						'class' => 'image reflect rheight20 ropacity30',
 						'width' => 400
 					);
+					
+					// create the empty array
+					$data['images']['image_array'] = array();
 					
 					for ($i=1; $i < $images_count; $i++)
 					{
