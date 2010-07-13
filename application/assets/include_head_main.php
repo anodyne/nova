@@ -39,7 +39,7 @@
 		<script type="text/javascript" src="<?php echo base_url() . APPFOLDER .'/assets/js/jquery.ui.core.min.js';?>"></script>
 		<script type="text/javascript" src="<?php echo base_url() . APPFOLDER .'/assets/js/jquery.ui.widget.min.js';?>"></script>
 		<script type="text/javascript" src="<?php echo base_url() . APPFOLDER .'/assets/js/jquery.ui.tabs.min.js';?>"></script>
-		<script type="text/javascript" src="<?php echo base_url() . APPFOLDER .'/assets/js/reflect.js';?>"></script>
+		<script type="text/javascript" src="<?php echo base_url() . APPFOLDER .'/assets/js/reflection.js';?>"></script>
 		<script type="text/javascript" src="<?php echo base_url() . APPFOLDER .'/assets/js/jquery.facebox.js';?>"></script>
 		
 		<script type="text/javascript">
@@ -68,5 +68,9 @@
 				});
 				
 				$.facebox.settings.loadingImage = '<?php echo base_url() . APPFOLDER;?>/assets/js/images/facebox-loading.gif';
+				
+				$('.reflect').reflect({
+					opacity: '0.3'
+				});
 			});
 		</script>

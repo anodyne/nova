@@ -9,7 +9,8 @@
 |
 | Changes: added the ability to display multiple specification
 |	items; added the ability to display tour items based on the
-|	specification item they're associated with
+|	specification item they're associated with; updated the
+|	image reflection classes
 |
 */
 
@@ -1115,7 +1116,7 @@ class Sim_base extends Controller {
 							$data['mission_img'] = array(
 								'src' => $src,
 								'alt' => $row->mission_title,
-								'class' => 'image reflect rheight20 ropacity30'
+								'class' => 'image reflect'
 							);
 							
 							/* build the array of the rest of the images */
@@ -1430,7 +1431,7 @@ class Sim_base extends Controller {
 					/* set the image */
 					$data['images']['main_img'] = array(
 						'src' => asset_location('images/specs', trim($images[0])),
-						'class' => 'image reflect rheight20 ropacity30',
+						'class' => 'image reflect',
 						'width' => 400
 					);
 					
@@ -1740,7 +1741,7 @@ class Sim_base extends Controller {
 					$data['images']['main_img'] = array(
 						'src' => asset_location('images/tour', trim($images[0])),
 						'alt' => $data['name'],
-						'class' => 'image reflect rheight20 ropacity30',
+						'class' => 'image reflect',
 						'width' => 400
 					);
 					

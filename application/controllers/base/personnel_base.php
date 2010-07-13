@@ -5,7 +5,9 @@
 |---------------------------------------------------------------
 |
 | File: controllers/base/personnel_base.php
-| System Version: 1.0
+| System Version: 1.1
+|
+| Changes: updated the image reflection classes
 |
 */
 
@@ -519,7 +521,7 @@ class Personnel_base extends Controller {
 				$data['character']['image'] = array(
 					'src' => $src,
 					'alt' => $name,
-					'class' => 'image reflect rheight20 ropacity30',
+					'class' => 'image reflect',
 					'height' => 150
 				);
 				

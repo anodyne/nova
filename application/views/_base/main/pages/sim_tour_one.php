@@ -1,3 +1,9 @@
+<style type="text/css">
+	a.image { display: inline-block; }
+	a.image span { padding: 0px; display: inline-block; }
+	a.image span img { margin: 0px; padding: 0px; }
+</style>
+
 <?php echo text_output($header, 'h1', 'page-head');?>
 
 <p><?php echo anchor('sim/tour', $label['back'], array('class' => 'bold'));?></p>
@@ -9,7 +15,7 @@
 	<div id="gallery">
 		<?php echo text_output($label['opengallery'], 'p', 'fontSmall gray bold');?>
 		<a href="<?php echo base_url() . $images['main_img']['src'];?>" class="image" rel="gallery">
-			<?php echo img($images['main_img']);?>
+			<span><?php echo img($images['main_img']);?></span>
 		</a>
 		<div class="hidden">
 			<?php if (count($images['image_array']) > 0): ?>

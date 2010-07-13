@@ -1,3 +1,9 @@
+<style type="text/css">
+	a.image { display: inline-block; }
+	a.image span { padding: 0px; display: inline-block; }
+	a.image span img { margin: 0px; padding: 0px; }
+</style>
+
 <?php echo text_output($header, 'h1', 'page-head');?>
 
 <?php if ($edit_valid === TRUE || $edit_valid_form === TRUE): ?>
@@ -15,7 +21,7 @@
 	<div class="bio_main_image" id="gallery">
 		<div class="fontTiny gray"><?php echo $label['gallery'];?></div><br />
 		<a href="<?php echo $character['image']['src'];?>" class="image" rel="gallery">
-			<?php echo img($character['image']);?>
+			<span><?php echo img($character['image']);?></span>
 		</a>
 		<div class="hidden">
 			<?php if (count($character['image_array']) > 0): ?>

@@ -1,3 +1,9 @@
+<style type="text/css">
+	a.image { display: inline-block; }
+	a.image span { padding: 0px; display: inline-block; }
+	a.image span img { margin: 0px; padding: 0px; }
+</style>
+
 <?php echo text_output($header, 'h1', 'page-head');?>
 
 <p><?php echo anchor('sim/missions', $label['missions'], array('class' => 'bold'));?></p>
@@ -6,7 +12,7 @@
 	<div id="gallery">
 		<?php echo text_output($label['open_gallery'], 'p', 'fontSmall gray bold');?>
 		<a href="<?php echo base_url() . $mission_img['src'];?>" class="image" rel="gallery">
-			<?php echo img($mission_img);?>
+			<span><?php echo img($mission_img);?></span>
 		</a>
 		<div class="hidden">
 			<?php if (count($image_array) > 0): ?>
