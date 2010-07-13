@@ -5,13 +5,14 @@
 |---------------------------------------------------------------
 |
 | File: controllers/base/sim_base.php
-| System Version: 1.0.5
+| System Version: 1.0.6
 |
 | Changes: fixed bug where saved mission posts were displayed
 |	when they shouldn't be; fixed bug where error was thrown for
 |	missing option parameters; fixed security issue where docking
 |	request data wasn't filtered for xss attacks; fixed bugs with
-|	the email sent to GMs when a docking request is submitted
+|	the email sent to GMs when a docking request is submitted;
+|	fixed error thrown when there's only 1 mission image set
 |
 | Controller that handles the SIM part of the system.
 |
@@ -1121,6 +1122,9 @@ class Sim_base extends Controller {
 								'alt' => $row->mission_title,
 								'class' => 'image reflect rheight20 ropacity30'
 							);
+							
+							// set the empty image array to avoid errors
+							$data['image_array'] = array();
 							
 							/* build the array of the rest of the images */
 							for ($i=1; $i < $images_count; $i++)
