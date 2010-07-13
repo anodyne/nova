@@ -3,6 +3,7 @@
         - [What Is Nova?](basics.about)
         - [License](basics.license)
         - [Folder Structure](basics.folder-structure)
+        - [Credits](basics.credits)
     - __Support__
         - [Nova 2 and GoDaddy](support.godaddy)
     - __Third-Party Development__
@@ -12,4 +13,7 @@
         - [Building Modules](nova.building-modules)
         - [Getting Started with Jelly](nova.started-jelly)
         - [Using Jelly](nova.using-jelly)
+    - __Development__
+        - [Milestones](dev.milestones)
+        - [Roadmap](dev.roadmap)
    - [API Browser](api)
