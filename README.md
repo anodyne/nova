@@ -4,7 +4,7 @@ Anodyne Production's next-generation RPG management system combines popular feat
 
 ## Current Version
 
-1.0.6-pre
+1.0.6
 
 ## Changes in 1.0.6
 
@@ -40,7 +40,7 @@ Anodyne Production's next-generation RPG management system combines popular feat
 		<th>Version</th><th>Release Date</th>
 	</tr>
 	<tr>
-		<td>1.0.6</td><td>-</td>
+		<td>1.0.6</td><td>14 July 2010</td>
 	</tr>
 	<tr>
 		<td>1.0.5</td><td>06 June 2010</td>
