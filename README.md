@@ -16,6 +16,7 @@ Anodyne Production's next-generation RPG management system combines popular feat
 * updated the select menu on the write PM page to separate active and inactive characters
 * updated colorbox to version 1.3.8
 * updated the users model with a new method for removing user preference values
+* updated CI's core upload class to fixing a security hole
 * fixed bug where acceptance and rejection messages were sent without any changes an admin made
 * fixed error thrown when posting a comment on a mission post
 * fixed bug where changing a character's state to and from active wouldn't set the open slots of their position(s)
