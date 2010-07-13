@@ -8,8 +8,6 @@
         - [Nova 2 and GoDaddy](support.godaddy)
     - __Third-Party Development__
         - [Coding Standards](nova.coding-standards)
-        - [Extending Classes](nova.extending-classes)
-        - [Extending Controllers](nova.extending-controllers)
         - [Building Modules](nova.building-modules)
         - [Getting Started with Jelly](nova.started-jelly)
         - [Using Jelly](nova.using-jelly)

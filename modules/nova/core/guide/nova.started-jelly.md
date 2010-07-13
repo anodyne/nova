@@ -18,6 +18,17 @@ When it came time to build Nova 2's new model system, the first avenue we took w
 
 We've always said Nova would never use an ORM, but it only took a few minutes with Jelly to change our minds. Jelly is a simple ORM built for Kohana 3 that's easy-to-use, lightweight and incredibly powerful. For us, the turning point was when we finally got the news model set up and with a single line, we were able to pull a news item, its category information and all of its comments. A light went on for us that with a little more work in the models, we could provide developers with far more powerful tools in a much simpler interface.
 
+## So what are the advantages of using Jelly?
+
+Instead of trying to write something myself, I'll just quote directly from Jelly's creator when he answered a similar question about why Jelly was a better alternative to Kohana's built-in ORM or one of the other Kohana ORMs out there:
+
+* Jelly defines all it's functionality in extensible field objects. You can create new fields, even new types of relationship without changing the core.
+* Jelly supports complete aliasing - this may seem moot but Kohana's ORM and Sprig (another Kohana ORM) both have some issues when using non-conventional column /table names with some types of relationships
+* Jelly (will) support behaviours - that is mixin style shared code between different models without being limited to single inheritance of PHP - imagine wanting a model that is version controlled AND has MPTT ordering. This (should) be possible with behaviours. CAVEAT: This is still unstable code.
+* Jelly defines all meta data statically. This is crucial in separating metadata from model instances which allows you to have abstract models which still work seamlessly. This is a precursor and requirement for implementing model inheritance in a natural way. Again this is being worked in at the moment.
+* Jelly extends Kohana's query builder naturally giving you a more natural way to list and fetch models combined with a simple way to encapsulate listing logic without having a weird hybrid of a single record object which also has functions for listing multiple records. Fundamentally it is an attempt to extend query builder so that it is object and relationship aware rather than to write a different library that just uses query builder.
+* Jelly has meta aliases which just sound cool.
+
 ## Does this mean all my models won't work?
 
 Unfortunately, it does.
