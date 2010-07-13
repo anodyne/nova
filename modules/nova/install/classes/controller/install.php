@@ -135,7 +135,7 @@ class Controller_Install extends Controller_Template
 				// build the button attributes
 				$next = array(
 					'type' => 'submit',
-					'class' => 'button',
+					'class' => 'btn-main',
 					'id' => 'table',
 				);
 				
@@ -187,7 +187,7 @@ class Controller_Install extends Controller_Template
 				// build the button attributes
 				$next = array(
 					'type' => 'submit',
-					'class' => 'button',
+					'class' => 'btn-main',
 					'id' => 'field',
 				);
 				
@@ -208,7 +208,7 @@ class Controller_Install extends Controller_Template
 				// build the button attributes
 				$next = array(
 					'type' => 'submit',
-					'class' => 'button',
+					'class' => 'btn-main',
 					'id' => 'query',
 				);
 				
@@ -226,7 +226,7 @@ class Controller_Install extends Controller_Template
 				// build the button attributes
 				$next = array(
 					'type' => 'submit',
-					'class' => 'button',
+					'class' => 'btn-main',
 					'id' => 'back',
 				);
 				
@@ -246,7 +246,7 @@ class Controller_Install extends Controller_Template
 			// build the button attributes
 			$next = array(
 				'type' => 'submit',
-				'class' => 'button',
+				'class' => 'btn-main',
 				'id' => 'back',
 			);
 			
@@ -378,7 +378,7 @@ class Controller_Install extends Controller_Template
 		// build the next step button
 		$next = array(
 			'type' => 'submit',
-			'class' => 'button',
+			'class' => 'btn-main',
 			'id' => 'install',
 		);
 		
@@ -442,7 +442,7 @@ class Controller_Install extends Controller_Template
 			// build the button attributes
 			$next = array(
 				'type' => 'submit',
-				'class' => 'button',
+				'class' => 'btn-main',
 				'id' => 'install',
 			);
 			
@@ -460,7 +460,7 @@ class Controller_Install extends Controller_Template
 			// build the button attributes
 			$next = array(
 				'type' => 'submit',
-				'class' => 'button',
+				'class' => 'btn-main',
 				'id' => 'submit',
 			);
 			
@@ -522,7 +522,7 @@ class Controller_Install extends Controller_Template
 							// build the next step button
 							$next = array(
 								'type' => 'submit',
-								'class' => 'button',
+								'class' => 'btn-main',
 								'id' => 'next',
 							);
 							
@@ -543,7 +543,7 @@ class Controller_Install extends Controller_Template
 							// build the next step button
 							$next = array(
 								'type' => 'submit',
-								'class' => 'button',
+								'class' => 'btn-main',
 								'id' => 'next',
 							);
 							$text = ucwords(__('order.next').' '.__('label.step'));
@@ -594,7 +594,7 @@ class Controller_Install extends Controller_Template
 								// build the next step button
 								$next = array(
 									'type' => 'submit',
-									'class' => 'button',
+									'class' => 'btn-main',
 									'id' => 'next',
 								);
 								$text = __('setup.step2_write_file');
@@ -625,7 +625,7 @@ class Controller_Install extends Controller_Template
 								// build the next step button
 								$next = array(
 									'type' => 'submit',
-									'class' => 'button',
+									'class' => 'btn-main',
 									'id' => 'next',
 								);
 								$text = __('setup.step2_start_over');
@@ -746,7 +746,7 @@ return array
 									// build the next step button
 									$next = array(
 										'type' => 'submit',
-										'class' => 'button',
+										'class' => 'btn-main',
 										'id' => 'next',
 									);
 									$text = __('setup.step3_install');
@@ -764,7 +764,7 @@ return array
 									// build the next step button
 									$next = array(
 										'type' => 'submit',
-										'class' => 'button',
+										'class' => 'btn-main',
 										'id' => 'next',
 									);
 									$text = __('setup.step3_retest');
@@ -783,7 +783,7 @@ return array
 								// build the next step button
 								$next = array(
 									'type' => 'submit',
-									'class' => 'button',
+									'class' => 'btn-main',
 									'id' => 'next',
 								);
 								$text = __('setup.step3_retest');
@@ -807,7 +807,7 @@ return array
 								// build the next step button
 								$next = array(
 									'type' => 'submit',
-									'class' => 'button',
+									'class' => 'btn-main',
 									'id' => 'next',
 								);
 								$text = __('setup.step3_install');
@@ -841,7 +841,7 @@ return array
 								// build the next step button
 								$next = array(
 									'type' => 'submit',
-									'class' => 'button',
+									'class' => 'btn-main',
 									'id' => 'next',
 								);
 								$text = __('setup.step2_start_over');
@@ -917,7 +917,7 @@ return array
 					// build the next step button
 					$next = array(
 						'type' => 'submit',
-						'class' => 'button',
+						'class' => 'btn-main',
 						'id' => 'next',
 					);
 					
@@ -1081,7 +1081,7 @@ return array
 				// build the next step button
 				$next = array(
 					'type' => 'submit',
-					'class' => 'button',
+					'class' => 'btn-main',
 					'id' => 'next',
 				);
 				
@@ -1218,7 +1218,7 @@ return array
 				// build the next step button
 				$next = array(
 					'type' => 'submit',
-					'class' => 'button',
+					'class' => 'btn-main',
 					'id' => 'next',
 				);
 				
@@ -1252,7 +1252,7 @@ return array
 			// build the next step button
 			$next = array(
 				'type' => 'submit',
-				'class' => 'button',
+				'class' => 'btn-main',
 				'id' => 'install',
 			);
 			
