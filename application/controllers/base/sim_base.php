@@ -1119,6 +1119,9 @@ class Sim_base extends Controller {
 								'class' => 'image reflect'
 							);
 							
+							// set the empty image array to avoid errors
+							$data['image_array'] = array();
+							
 							/* build the array of the rest of the images */
 							for ($i=1; $i < $images_count; $i++)
 							{
