@@ -4,9 +4,9 @@
 | LANGUAGE FILE - ENGLISH
 |---------------------------------------------------------------
 | File: application/language/english/base_lang.php
-| System Version: 1.0.3
+| System Version: 1.0.6
 |
-| Changes: added labels_genre; added labels_you
+| Changes: added labels_genre; added labels_you; added labels_from
 |
 | English language file for the system. Punctuation constants are
 | defined in ./application/config/constants.php
@@ -389,6 +389,7 @@ $lang['labels_files']			= 'files';
 $lang['labels_for'] 			= 'for';
 $lang['labels_form']			= 'form';
 $lang['labels_format']			= 'format';
+$lang['labels_from']			= 'from';
 $lang['labels_general'] 		= 'general';
 $lang['labels_genre']			= 'genre';
 $lang['labels_group'] 			= 'group';

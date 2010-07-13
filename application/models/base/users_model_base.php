@@ -5,9 +5,9 @@
 |---------------------------------------------------------------
 |
 | File: models/users_model_base.php
-| System Version: 1.0
+| System Version: 1.0.6
 |
-| Model used to access the users table.
+| Changes: new model method for deleting user preferences
 |
 */
 
@@ -715,6 +715,15 @@ class Users_model_base extends Model {
 		$query = $this->db->delete('users', array('userid' => $id));
 		
 		$this->dbutil->optimize_table('users');
+		
+		return $query;
+	}
+	
+	function delete_user_pref_values($id = '')
+	{
+		$query = $this->db->delete('user_prefs_values', array('prefvalue_user' => $id));
+		
+		$this->dbutil->optimize_table('user_prefs_values');
 		
 		return $query;
 	}

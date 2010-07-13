@@ -69,6 +69,7 @@
 							<?php echo form_dropdown_rank('rank', $inputs['rank_id'], 'id="rank"');?>
 							&nbsp; <span id="loading_rank" class="hidden fontSmall gray"><?php echo img($images['loading']);?></span>
 							<p id="rank_img" class="fontSmall gray"><?php echo img($inputs['rank']);?></p>
+							<?php echo form_hidden('rank_old', $inputs['rank_id']);?>
 						</p>
 					<?php endif;?>
 				<?php else: ?>

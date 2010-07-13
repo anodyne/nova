@@ -15,7 +15,8 @@
 |	were sent without any of the changes an admin added; fixed bug
 |	where characters changing status to and from active wouldn't
 |	set the number of open slots for their position(s); fixed error
-|	thrown when attempting to delete a character
+|	thrown when attempting to delete a character; fixed bug where
+|	the rank history tab wasn't being populated
 |
 */
 
@@ -870,10 +871,12 @@ class Characters_base extends Controller {
 			{
 				$position1_old = $array['character']['position_1_old'];
 				$position2_old = $array['character']['position_2_old'];
+				$rank_old = $array['character']['rank_old'];
 				
 				/* get rid of the submit button data and old position refs */
 				unset($array['character']['position_1_old']);
 				unset($array['character']['position_2_old']);
+				unset($array['character']['rank_old']);
 				
 				if ($data['level'] == 3)
 				{
@@ -889,6 +892,24 @@ class Characters_base extends Controller {
 					{ /* wipe out the deactivate date if they're being reactivated */
 						$array['character']['date_deactivate'] = NULL;
 					}
+				}
+				
+				if ($array['character']['rank'] != $rank_old)
+				{
+					$oldR = $this->ranks->get_rank($rank_old, array('rank_order', 'rank_name'));
+					$newR = $this->ranks->get_rank($array['character']['rank'], array('rank_order', 'rank_name'));
+					
+					$promotion = array(
+						'prom_char' => $data['id'],
+						'prom_user' => $this->char->get_character($data['id'], 'user'),
+						'prom_date' => now(),
+						'prom_old_order' => $oldR['rank_order'],
+						'prom_old_rank' => $oldR['rank_name'],
+						'prom_new_order' => $newR['rank_order'],
+						'prom_new_rank' => $newR['rank_name'],
+					);
+					
+					$prom = $this->char->create_promotion_record($promotion);
 				}
 			}
 			

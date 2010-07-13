@@ -5,7 +5,7 @@
 |---------------------------------------------------------------
 |
 | File: controllers/user_base.php
-| System Version: 1.0.5
+| System Version: 1.0.6
 |
 | Changes: updated the account page to update a user's cookie
 |	if they've elected for nova to remember them; updated the
@@ -16,7 +16,10 @@
 |	properly; fixed error thrown when changing a user to inactive;
 |	fixed bug where there wasn't a sanity check for the type of
 |	variable the system was expecting; fixed bug where site options
-|	didn't allow skin admins to select in development skins
+|	didn't allow skin admins to select in development skins; fixed
+|	bug where user email preferences remained active after they were
+|	made inactive; fixed bug where user preferences weren't removed
+|	when a user was deleted
 |
 */
 
@@ -199,11 +202,17 @@ class User_base extends Controller {
 								$this->char->update_character($c, $char_array);
 							}
 						}
+						
+						// update the user prefs to all be no
+						$this->user->update_all_user_prefs($id);
 					}
 
 					if ($old_status == 'inactive' && $array['status'] != 'inactive')
 					{
 						$array['leave_date'] = NULL;
+						
+						// update the user prefs to all be yes
+						$this->user->update_all_user_prefs($id, 'y');
 					}
 				}
 				
@@ -637,7 +646,11 @@ class User_base extends Controller {
 					$id = $this->input->post('id', TRUE);
 					$id = (is_numeric($id)) ? $id : FALSE;
 					
-					$delete = $this->user->delete_user($id);
+					// remove the user's prefs
+					$delete = $this->user->delete_user_pref_values($id);
+					
+					// delete the user
+					$delete += $this->user->delete_user($id);
 					
 					if ($delete > 0)
 					{

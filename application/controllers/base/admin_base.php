@@ -5,12 +5,13 @@
 |---------------------------------------------------------------
 |
 | File: controllers/admin_base.php
-| System Version: 1.0.3
+| System Version: 1.0.6
 |
 | Changes: attempting a fix for the remember me issue which
 |	updates the cookie set when the password is changed; added
 |	messages for the different panel tabs in the event there's
-|	nothing in the tab
+|	nothing in the tab; fixed bug where turning off update
+|	notification still tried to run the check
 |
 */
 
@@ -391,8 +392,8 @@ class Admin_base extends Controller {
 		*/
 		
 		$data['update'] = FALSE;
-		
-		if ($this->auth->is_sysadmin($this->session->userdata('userid')))
+				
+		if ($this->auth->is_sysadmin($this->session->userdata('userid')) && $this->options['updates'] != 'none')
 		{
 			/* load the install file */
 			$this->lang->load('install', $this->session->userdata('language'));
