@@ -13,7 +13,7 @@ class Controller_Aboutnova extends Controller_Nova_Main
 		$this->template->layout->content = View::factory('aboutnova');
 		
 		// content
-		$this->template->title.= 'About Nova';
+		$this->template->title.= __('About Nova');
 		
 		// send the response
 		$this->request->response = $this->template;
