@@ -251,6 +251,17 @@ It was built using the jQuery library and is licensed under both MIT and GPL lic
 $this->db->insert('system_components', $additem);
 
 /**
+ * update the reflection plugin info
+ */
+$this->db->where('comp_name', 'Reflection.js');
+$this->db->update('system_components', array(
+	'comp_name'		=> 'jQuery Reflection',
+	'comp_version'	=> '1.0.3',
+	'comp_desc'		=> "This is an improved version of the reflection.js script rewritten for the jQuery Javascript library. It allows you to add instantaneous reflection effects to your images in modern browsers, in less than 2 KB.",
+	'comp_url'		=> 'http://www.digitalia.be/software/reflectionjs-for-jquery'
+));
+
+/**
  * add the system version info
  */
 $this->load->model('system_model', 'sys');

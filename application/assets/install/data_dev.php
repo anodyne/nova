@@ -3741,10 +3741,10 @@ It was built using the jQuery library and is licensed under both MIT and GPL lic
 		'comp_desc' => "Lazy is an on-demand jQuery plugin loader, also known as a lazy loader. Instead of downloading all jQuery plugins you might or might not need when the page loads, Lazy downloads the plugins when you actually use them. Lazy is very lightweight, super fast, and smart. Lazy will keep track of all your plugins and dependencies and make sure that they are only downloaded once.",
 		'comp_url' => 'http://www.unwrongest.com/projects/lazy/'),
 	array(
-		'comp_name' => 'Reflection.js',
-		'comp_version' => '2.0',
-		'comp_desc' => "Reflection.js allows you to add reflections to images on your webpages. It uses unobtrusive Javascript to keep your code clean.",
-		'comp_url' => 'http://cow.neondragon.net/stuff/reflection/'),
+		'comp_name' => 'jQuery Reflection',
+		'comp_version' => '1.0.3',
+		'comp_desc' => "This is an improved version of the reflection.js script rewritten for the jQuery Javascript library. It allows you to add instantaneous reflection effects to your images in modern browsers, in less than 2 KB.",
+		'comp_url' => 'http://www.digitalia.be/software/reflectionjs-for-jquery'),
 	array(
 		'comp_name' => 'jQuery QuickSearch',
 		'comp_version' => '',
