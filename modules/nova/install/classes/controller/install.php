@@ -1179,7 +1179,7 @@ return array
 						Utility::install_skins();
 						
 						// do the registration
-						$this->_register();
+						//$this->_register();
 					}
 					else
 					{
@@ -1286,8 +1286,8 @@ return array
 				$_SERVER['REMOTE_ADDR'],
 				$_SERVER['SERVER_ADDR'],
 				phpversion(),
-				$this->db->platform(),
-				$this->db->version(),
+				'db platform',
+				'db platform version',
 				'install',
 				Kohana::config('nova.genre'),
 			);
@@ -1310,7 +1310,7 @@ return array
 			);
 			
 			// send the email
-			$email = email::install_register($data);
+			//$email = email::install_register($data);
 		}
 	}
 }
