@@ -5,11 +5,10 @@
 |---------------------------------------------------------------
 |
 | File: controllers/base/upgrade_base.php
-| System Version: 1.0.5
+| System Version: 1.1
 |
-| Changes: fixed bug where the upgrade process doesn't add the
-|	mission group field to the missions table; fixed minor
-|	schema differences between sms and nova during the upgrade
+| Changes: updated the upgrade script to handle upgrading from SMS
+|	to the new specs and tour formats
 |
 */
 
@@ -1119,78 +1118,111 @@ class Upgrade_base extends Controller {
 					$query = $this->db->query('SELECT * FROM sms_specs WHERE specid = 1');
 					$row = $query->row();
 					
+					// information for the first spec item
+					$general = array(
+						'specs_name' => $this->settings->get_setting('sim_name'),
+						'specs_order' => 0
+					);
+					
+					// insert the spec item
+					$this->specs->add_spec_item($general);
+					
 					$specs = array(
 						1 => array(
 							'data_value' => $row->shipClass,
+							'data_item' => 1,
 							'data_updated' => now()),
 						2 => array(
 							'data_value' => $row->shipRole,
+							'data_item' => 1,
 							'data_updated' => now()),
 						3 => array(
 							'data_value' => $row->duration,
+							'data_item' => 1,
 							'data_updated' => now()),
 						4 => array(
 							'data_value' => $row->refit .' '. $row->refitUnit,
+							'data_item' => 1,
 							'data_updated' => now()),
 						5 => array(
 							'data_value' => $row->resupply .' '. $row->resupplyUnit,
+							'data_item' => 1,
 							'data_updated' => now()),
 						6 => array(
 							'data_value' => $row->length,
+							'data_item' => 1,
 							'data_updated' => now()),
 						7 => array(
 							'data_value' => $row->width,
+							'data_item' => 1,
 							'data_updated' => now()),
 						8 => array(
 							'data_value' => $row->height,
+							'data_item' => 1,
 							'data_updated' => now()),
 						9 => array(
 							'data_value' => $row->decks,
+							'data_item' => 1,
 							'data_updated' => now()),
 						10 => array(
 							'data_value' => $row->complimentOfficers,
+							'data_item' => 1,
 							'data_updated' => now()),
 						11 => array(
 							'data_value' => $row->complimentEnlisted,
+							'data_item' => 1,
 							'data_updated' => now()),
 						12 => array(
 							'data_value' => $row->complimentMarines,
+							'data_item' => 1,
 							'data_updated' => now()),
 						13 => array(
 							'data_value' => $row->complimentCivilians,
+							'data_item' => 1,
 							'data_updated' => now()),
 						14 => array(
 							'data_value' => $row->complimentEmergency,
+							'data_item' => 1,
 							'data_updated' => now()),
 						15 => array(
 							'data_value' => $row->warpCruise,
+							'data_item' => 1,
 							'data_updated' => now()),
 						16 => array(
 							'data_value' => $row->warpMaxCruise .' '. $row->warpMaxTime,
+							'data_item' => 1,
 							'data_updated' => now()),
 						17 => array(
 							'data_value' => $row->warpEmergency .' '. $row->warpEmergencyTime,
+							'data_item' => 1,
 							'data_updated' => now()),
 						18 => array(
 							'data_value' => $row->shields,
+							'data_item' => 1,
 							'data_updated' => now()),
 						19 => array(
 							'data_value' => $row->defensive,
+							'data_item' => 1,
 							'data_updated' => now()),
 						20 => array(
 							'data_value' => $row->phasers ."\r\n\r\n". $row->torpedoLaunchers ."\r\n\r\n". $row->torpedoCompliment,
+							'data_item' => 1,
 							'data_updated' => now()),
 						21 => array(
 							'data_value' => $row->shuttlebays,
+							'data_item' => 1,
 							'data_updated' => now()),
 						22 => array(
 							'data_value' => $row->shuttles,
+							'data_item' => 1,
 							'data_updated' => now()),
 						23 => array(
 							'data_value' => $row->fighters,
+							'data_item' => 1,
 							'data_updated' => now()),
 						24 => array(
 							'data_value' => $row->runabouts,
+							'data_item' => 1,
 							'data_updated' => now()),
 					);
 					
@@ -1261,7 +1293,8 @@ class Upgrade_base extends Controller {
 								'tour_images' => $images,
 								'tour_order' => $t->tourOrder,
 								'tour_display' => $t->tourDisplay,
-								'tour_summary' => $t->tourSummary
+								'tour_summary' => $t->tourSummary,
+								'tour_spec_item' => 1,
 							);
 							
 							$count += $this->tour->add_tour_item($tour);
