@@ -1,7 +1,7 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 /*
 |---------------------------------------------------------------
-| UPDATE - 1.0.x => 1.1.0
+| UPDATE - 1.0.6 => 1.1.0
 |---------------------------------------------------------------
 */
 
@@ -26,7 +26,7 @@ $system_versions = array(
 	'version_minor'		=> 1,
 	'version_update'	=> 0,
 	'version_date'		=> 1275865200,
-	'version_launch'	=> "Nova 1.0.5 is the fifth maintenance release for Nova 1.0 and continues to fix issues with the system. Included in this release are fixes for errors being thrown throughout the system, a bug that wouldn't allow unlinked NPCs to use newly created bio fields, a security issue with the docking form and more. A full changelog can be found on AnodyneDocs or from the System and Versions report once Nova has been updated. This update is recommended for all users.",
+	'version_launch'	=> "Nova 1.1 is the first feature update Nova 1. In addition to continuing to fix bugs in the system, version 1.1 includes the ability to create as many specification items as you want as well as the ability to associate tour items with specification items. A full changelog can be found on AnodyneDocs or from the System and Versions report once Nova has been updated. This update is recommended for all users.",
 	'version_changes'	=> ""
 );
 
@@ -267,5 +267,5 @@ $this->db->update('system_components', array(
 $this->load->model('system_model', 'sys');
 $this->sys->add_system_version($system_versions);
 
-/* End of file update_110.php */
-/* Location: ./application/assets/update/update_110.php */
+/* End of file update_106.php */
+/* Location: ./application/assets/update/update_106.php */
