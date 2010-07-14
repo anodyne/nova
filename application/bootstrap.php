@@ -77,6 +77,7 @@ $base_modules = array(
 	'nova'			=> MODPATH.'nova/core',
 	'override'		=> MODPATH.'override',
 	'install'		=> MODPATH.'nova/install',
+	'update'		=> MODPATH.'nova/update',
 	'database'		=> MODPATH.'kohana/database',
 	'jelly'			=> MODPATH.'nova/jelly',
 	'userguide'		=> MODPATH.'kohana/userguide',
