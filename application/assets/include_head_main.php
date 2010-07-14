@@ -7,9 +7,6 @@
 | File: application/assets/include_head_main.php
 | System Version: 1.1
 |
-| File that pulls in all the required CSS and JS files for the
-| system to use.
-|
 */
 
 ?><style type="text/css">

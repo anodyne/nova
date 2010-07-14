@@ -7,9 +7,6 @@
 | File: application/assets/include_head_admin.php
 | System Version: 1.1
 |
-| File that pulls in all the required CSS and JS files for the
-| system to use.
-|
 */
 
 ?><style type="text/css">
@@ -39,7 +36,7 @@
 		<script type="text/javascript" src="<?php echo base_url() . APPFOLDER .'/assets/js/jquery.ui.core.min.js';?>"></script>
 		<script type="text/javascript" src="<?php echo base_url() . APPFOLDER .'/assets/js/jquery.ui.widget.min.js';?>"></script>
 		<script type="text/javascript" src="<?php echo base_url() . APPFOLDER .'/assets/js/jquery.ui.tabs.min.js';?>"></script>
-		<script type="text/javascript" src="<?php echo base_url() . APPFOLDER .'/assets/js/reflect.js';?>"></script>
+		<script type="text/javascript" src="<?php echo base_url() . APPFOLDER .'/assets/js/reflection.js';?>"></script>
 		<script type="text/javascript" src="<?php echo base_url() . APPFOLDER .'/assets/js/jquery.facebox.js';?>"></script>
 		
 		<script type="text/javascript">
@@ -96,5 +93,9 @@
 				});
 				
 				$.facebox.settings.loadingImage = '<?php echo base_url() . APPFOLDER;?>/assets/js/images/facebox-loading.gif';
+				
+				$('.reflect').reflect({
+					opacity: '0.3'
+				});
 			});
 		</script>

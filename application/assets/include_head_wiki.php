@@ -5,10 +5,7 @@
 |---------------------------------------------------------------
 |
 | File: application/assets/include_head_wiki.php
-| System Version: 1.0
-|
-| File that pulls in all the required CSS and JS files for the
-| system to use.
+| System Version: 1.1
 |
 */
 
@@ -35,6 +32,11 @@ $parse = $this->config->item('parsetype');
 			
 			@import url("<?php echo base_url() . APPFOLDER .'/assets/js/markitup/skins/simple/style.css';?>");
 			@import url("<?php echo base_url() . APPFOLDER .'/assets/js/markitup/sets/'. $parse .'/style.css';?>");
+			
+			ul, ol { margin: 1em; padding: .5em; }
+			ul li, ol li { margin: 2px; }
+			ul { list-style: disc; }
+			ol { list-style: decimal; }
 		</style>
 			
 		<script type="text/javascript" src="<?php echo base_url() . APPFOLDER .'/assets/js/jquery.js';?>"></script>
