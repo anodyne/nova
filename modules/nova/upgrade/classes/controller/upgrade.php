@@ -23,15 +23,12 @@ class Controller_Upgrade extends Controller_Template
 		// make sure the database config file exists
 		if (!file_exists(APPPATH.'config/database'.EXT))
 		{
-			if ($this->request->action != 'setupconfig')
-			{
-				$this->request->redirect('install/setupconfig');
-			}
+			$this->request->redirect('install/setupconfig');
 		}
 		else
 		{
 			// you're allowed to go to these segments if the system isn't installed
-			$safesegs = array('step', 'index', 'main', 'verify', 'readme');
+			$safesegs = array('step', 'index', 'verify', 'readme');
 			
 			// make sure the system is installed
 			if (count(Database::instance()->list_tables()) < $this->_tables && !(in_array($this->request->action, $safesegs)))
@@ -467,18 +464,12 @@ class Controller_Upgrade extends Controller_Template
 	
 	public function action_test()
 	{
-		$aNonFlat = Database::instance()->list_columns('specs');
-		$objTmp = (object) array('aFlat' => array());
-		array_walk_recursive($aNonFlat, create_function('&$v, $k, &$t', '$t->aFlat[] = $v;'), $objTmp);
+		$fullarray = Database::instance()->list_columns('sms_tour', NULL, FALSE);
+		$obj = (object) array('flat' => array());
+		array_walk_recursive($fullarray, create_function('&$v, $k, &$t', '$t->flat[] = $v;'), $obj);
 		
-		echo Kohana::debug(md5(implode('', $objTmp->aFlat)));
-		
-		$aNonFlat = Database::instance()->list_columns('specs');
-		$objTmp = (object) array('aFlat' => array());
-		array_walk_recursive($aNonFlat, create_function('&$v, $k, &$t', '$t->aFlat[] = $v;'), $objTmp);
-		
-		echo Kohana::debug(md5(implode('', $objTmp->aFlat)));
-		//echo md5(implode('', ));
+		echo Kohana::debug(array_keys($fullarray));
+		echo Kohana::debug(md5(implode('', array_keys($fullarray))));
 		
 		$buttons = "";
 		
@@ -511,8 +502,8 @@ class Controller_Upgrade extends Controller_Template
 				$_SERVER['REMOTE_ADDR'],
 				$_SERVER['SERVER_ADDR'],
 				phpversion(),
-				$this->db->platform(),
-				$this->db->version(),
+				'db platform',
+				'db platform version',
 				'upgrade',
 				Kohana::config('nova.genre'),
 			);
@@ -535,7 +526,7 @@ class Controller_Upgrade extends Controller_Template
 			);
 			
 			// send the email
-			$email = email::install_register($data);
+			//$email = email::install_register($data);
 		}
 	}
 }

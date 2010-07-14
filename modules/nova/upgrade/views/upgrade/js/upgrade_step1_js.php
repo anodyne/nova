@@ -1,4 +1,12 @@
-<script type="text/javascript" src="<?php echo url::base().MODFOLDER;?>/assets/js/jquery.ajaxq.js"></script>
+<?php
+
+$specsarray = Database::instance()->list_columns('sms_specs', NULL, FALSE);
+$specshash = md5(implode('', array_keys($specsarray)));
+
+$tourarray = Database::instance()->list_columns('sms_tour', NULL, FALSE);
+$tourhash = md5(implode('', array_keys($tourarray)));
+
+?><script type="text/javascript" src="<?php echo url::base().MODFOLDER;?>/assets/js/jquery.ajaxq.js"></script>
 <script type="text/javascript" src="<?php echo url::base().MODFOLDER;?>/assets/js/jquery.ui.position.min.js"></script>
 <script type="text/javascript" src="<?php echo url::base().MODFOLDER;?>/assets/js/jquery.ui.tooltip.min.js"></script>
 
@@ -6,7 +14,8 @@
 
 <script type="text/javascript">
 	$(document).ready(function(){
-		var genre = '<?php echo Kohana::config("nova.genre");?>';
+		var specshash = '<?php echo $specshash;?>';
+		var tourhash = '<?php echo $tourhash;?>';
 		
 		$("[title]").tooltip();
 		
@@ -22,10 +31,16 @@
 			});
 		});
 		
-		if (genre != 'ds9')
+		if (specshash != 'e0027b9e9dd498d4c01b0ffd4e186646')
 		{
 			$('input[name=upgrade_specs]:nth(1)').attr("checked", true);
 			$('input[name=upgrade_specs]').attr("disabled", "disabled");
+		}
+		
+		if (tourhash != 'a03805aeed42e0c41f9f6f25c757e099')
+		{
+			$('input[name=upgrade_tour]:nth(1)').attr("checked", true);
+			$('input[name=upgrade_tour]').attr("disabled", "disabled");
 		}
 		
 		$('input[name=upgrade_characters_users]').change(function(){
@@ -290,13 +305,28 @@
 					type: "POST",
 					url: "<?php echo url::site('upgradeajax/upgrade_specs');?>",
 					data: send,
+					dataType: 'json',
 					success: function(data){
 						$('table tbody tr:eq(6) td:eq(1) .loading').addClass('hidden');
 						
-						if (data == "1")
+						if (data.code == 1)
+						{
 							$('table tbody tr:eq(6) td:eq(1) .success').removeClass('hidden');
-						else
+						}
+						else if (data.code == 0)
+						{
 							$('table tbody tr:eq(6) td:eq(1) .failure').removeClass('hidden');
+							$('table tbody tr:eq(6) td:eq(1) .failure img').attr('title', function(){
+								return data.message
+							});
+						}
+						else if (data.code == 2)
+						{
+							$('table tbody tr:eq(6) td:eq(1) .warning').removeClass('hidden');
+							$('table tbody tr:eq(6) td:eq(1) .warning img').attr('title', function(){
+								return data.message
+							});
+						}
 					}
 				});
 			}
@@ -325,6 +355,13 @@
 						{
 							$('table tbody tr:eq(7) td:eq(1) .failure').removeClass('hidden');
 							$('table tbody tr:eq(7) td:eq(1) .failure img').attr('title', function(){
+								return data.message
+							});
+						}
+						else if (data.code == 2)
+						{
+							$('table tbody tr:eq(7) td:eq(1) .warning').removeClass('hidden');
+							$('table tbody tr:eq(7) td:eq(1) .warning img').attr('title', function(){
 								return data.message
 							});
 						}

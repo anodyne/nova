@@ -508,6 +508,11 @@ kbd {
 	background-repeat: no-repeat;
 	background-position: top left;
 }
+.secoptions-back {
+	background-image: url('../images/back.png');
+	background-repeat: no-repeat;
+	background-position: top left;
+}
 .secoptions-dbtable {
 	background-image: url('../images/db-table.png');
 	background-repeat: no-repeat;

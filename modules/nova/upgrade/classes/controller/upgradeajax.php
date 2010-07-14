@@ -103,6 +103,9 @@ class Controller_Upgradeajax extends Controller_Template
 					'message' => __("Not all of the awards were transferred to the Nova format")
 				);
 			}
+			
+			// optmize the tables
+			DBForge::optimize('awards');
 		} catch (Exception $e) {
 			// catch the exception
 			$retval = array(
@@ -379,6 +382,13 @@ class Controller_Upgradeajax extends Controller_Template
 					);
 				}
 			}
+			
+			// optmize the tables
+			DBForge::optimize('characters');
+			DBForge::optimize('users');
+			DBForge::optimize('forms_data');
+			DBForge::optimize('forms_fields');
+			DBForge::optimize('user_prefs_values');
 		} catch (Exception $e) {
 			// catch the exception
 			$retval = array(
@@ -419,6 +429,9 @@ class Controller_Upgradeajax extends Controller_Template
 					'message' => ''
 				);
 			}
+			
+			// optmize the tables
+			DBForge::optimize('users');
 		} catch (Exception $e) {
 			$retval = array(
 				'code' => 0,
@@ -467,6 +480,9 @@ class Controller_Upgradeajax extends Controller_Template
 					'message' => ''
 				);
 			}
+			
+			// optmize the tables
+			DBForge::optimize('users');
 		} catch (Exception $e) {
 			$retval = array(
 				'code' => 0,
@@ -570,6 +586,9 @@ class Controller_Upgradeajax extends Controller_Template
 					'message' => ''
 				);
 			}
+			
+			// optmize the tables
+			DBForge::optimize('personal_logs');
 		} catch (Exception $e) {
 			// catch the exception
 			$retval = array(
@@ -833,6 +852,10 @@ class Controller_Upgradeajax extends Controller_Template
 					);
 				}
 			}
+			
+			// optmize the tables
+			DBForge::optimize('missions');
+			DBForge::optimize('posts');
 		} catch (Exception $e) {
 			// catch the exception
 			$retval = array(
@@ -1050,6 +1073,10 @@ class Controller_Upgradeajax extends Controller_Template
 					);
 				}
 			}
+			
+			// optmize the tables
+			DBForge::optimize('news');
+			DBForge::optimize('news_categories');
 		} catch (Exception $e) {
 			// catch the exception
 			$retval = array(
@@ -1155,6 +1182,11 @@ class Controller_Upgradeajax extends Controller_Template
 					'message' => __("Additional ranks and skins were not installed. Please try to do so manually from the catalogue pages.")
 				);
 			}
+			
+			// optmize the tables
+			DBForge::optimize('catalogue_ranks');
+			DBForge::optimize('catalogue_skins');
+			DBForge::optimize('catalogue_skinsecs');
 		} catch (Exception $e) {
 			$retval = array(
 				'code' => 0,
@@ -1250,6 +1282,10 @@ class Controller_Upgradeajax extends Controller_Template
 			$messages[] = $item->saved();
 		}
 		
+		// optmize the tables
+		DBForge::optimize('settings');
+		DBForge::optimize('messages');
+		
 		// check to see if everything worked
 		$settings_count = (in_array(FALSE, $settings)) ? FALSE : TRUE;
 		$messages_count = (in_array(FALSE, $messages)) ? FALSE : TRUE;
@@ -1285,13 +1321,19 @@ class Controller_Upgradeajax extends Controller_Template
 		echo json_encode($retval);
 	}
 	
-	# TODO: waiting on kohana updates to finish this
-	
 	public function action_upgrade_specs()
 	{
 		try {
 			// get the specs from the sms table
 			$result = $this->db->query(Database::SELECT, 'SELECT * FROM sms_specs WHERE specid = 1', TRUE);
+			
+			// create the spec item
+			Jelly::factory('spec')
+				->set(array(
+					'name' => Jelly::select('setting')->key('sim_name')->load()->value,
+					'order' => 0,
+				))
+				->save();
 			
 			// create an empty array for validating the specs upgrade
 			$specs = array();
@@ -1563,23 +1605,31 @@ class Controller_Upgradeajax extends Controller_Template
 				$specs[] = $item->saved();
 			}
 			
-			// check to see if everything worked
-			$specs_count = (in_array(FALSE, $specs)) ? FALSE : TRUE;
-			
-			if ($specs_count === TRUE)
-			{
-				$retval = array(
-					'code' => 1,
-					'message' => ''
-				);
-			}
-			else
+			if (in_array(FALSE, $specs) && !in_array(TRUE, $specs))
 			{
 				$retval = array(
 					'code' => 0,
 					'message' => __("Your specifications were not upgraded")
 				);
 			}
+			elseif (in_array(FALSE, $specs) && in_array(TRUE, $specs))
+			{
+				$retval = array(
+					'code' => 2,
+					'message' => __("Some of your specifications were upgraded, but others were not")
+				);
+			}
+			else
+			{
+				$retval = array(
+					'code' => 1,
+					'message' => ''
+				);
+			}
+			
+			// optmize the tables
+			DBForge::optimize('specs');
+			DBForge::optimize('forms_data');
 		} catch (Exception $e) {
 			// catch the exception
 			$retval = array(
@@ -1590,8 +1640,6 @@ class Controller_Upgradeajax extends Controller_Template
 		
 		echo json_encode($retval);
 	}
-	
-	# TODO: waiting on kohana to finish this
 	
 	public function action_upgrade_tour()
 	{
@@ -1657,23 +1705,31 @@ class Controller_Upgradeajax extends Controller_Template
 				$tour[] = $dataitem->saved();
 			}
 			
-			// validate the tour items
-			$tour_count = (in_array(FALSE, $tour)) ? FALSE : TRUE;
-			
-			if ($tour_count === TRUE)
-			{
-				$retval = array(
-					'code' => 1,
-					'message' => ''
-				);
-			}
-			else
+			if (in_array(FALSE, $tour) && !in_array(TRUE, $tour))
 			{
 				$retval = array(
 					'code' => 0,
 					'message' => __("Your tour items were not upgraded")
 				);
 			}
+			elseif (in_array(FALSE, $tour) && in_array(TRUE, $tour))
+			{
+				$retval = array(
+					'code' => 2,
+					'message' => __("Some of your tour items were upgraded, but others were not")
+				);
+			}
+			else
+			{
+				$retval = array(
+					'code' => 1,
+					'message' => ''
+				);
+			}
+			
+			// optmize the tables
+			DBForge::optimize('tour');
+			DBForge::optimize('forms_data');
 		} catch (Exception $e) {
 			// catch the exception
 			$retval = array(
@@ -1759,6 +1815,9 @@ class Controller_Upgradeajax extends Controller_Template
 					'message' => ''
 				);
 			}
+			
+			// optmize the tables
+			DBForge::optimize('awards_received');
 		} catch (Exception $e) {
 			$retval = array(
 				'code' => 0,
@@ -1804,6 +1863,10 @@ class Controller_Upgradeajax extends Controller_Template
 					'message' => __("User defaults could not be upgraded")
 				);
 			}
+			
+			// optmize the tables
+			DBForge::optimize('characters');
+			DBForge::optimize('users');
 		} catch (Exception $e) {
 			$retval = array(
 				'code' => 0,
@@ -1848,6 +1911,9 @@ class Controller_Upgradeajax extends Controller_Template
 					'message' => ''
 				);
 			}
+			
+			// optmize the tables
+			DBForge::optimize('personal_logs');
 		} catch (Exception $e) {
 			$retval = array(
 				'code' => 0,
@@ -1892,6 +1958,9 @@ class Controller_Upgradeajax extends Controller_Template
 					'message' => ''
 				);
 			}
+			
+			// optmize the tables
+			DBForge::optimize('news');
 		} catch (Exception $e) {
 			$retval = array(
 				'code' => 0,
@@ -1957,6 +2026,9 @@ class Controller_Upgradeajax extends Controller_Template
 					'message' => __("Not all of your mission posts could be upgraded")
 				);
 			}
+			
+			// optmize the tables
+			DBForge::optimize('posts');
 		} catch (Exception $e) {
 			$retval = array(
 				'code' => 0,
@@ -1989,6 +2061,9 @@ class Controller_Upgradeajax extends Controller_Template
 					'message' => __("Your welcome message couldn't be upgraded, please do so manually")
 				);
 			}
+			
+			// optmize the tables
+			DBForge::optimize('messages');
 		} catch (Exception $e) {
 			$retval = array(
 				'code' => 0,
