@@ -5,7 +5,8 @@
         - [Folder Structure](basics.folder-structure)
         - [Credits](basics.credits)
     - __Support__
-        - [Nova 2 and GoDaddy](support.godaddy)
+        - [Updating From Nova 1 to Nova 2](support.update-nova1)
+    	- [Nova 2 and GoDaddy](support.godaddy)
     - __Third-Party Development__
         - [Coding Standards](nova.coding-standards)
         - [Building Modules](nova.building-modules)
