@@ -4,40 +4,30 @@ Anodyne Production's next-generation RPG management system combines popular feat
 
 ## Current Version
 
-1.0.6
+1.1-pre
 
-## Changes in 1.0.6
+## Changes in 1.1
 
-* added the 1.0.6 update file
-* updated the character bio management page to show a loader until everything has finished loading to help with load time
-* updated jquery ui to version 1.8.2
-* updated the auth library to remove some debug code since the autologin bug seems to have been solved
-* updated the index page to turn down the error reporting (fatal errors and database errors will still be shown)
-* updated the select menu on the write PM page to separate active and inactive characters
-* updated colorbox to version 1.3.8
-* updated the characters model to include a method for inserting promotion records
-* updated the language file with a new item (_labels\_from_)
-* updated the users model with a new method for removing user preference values
-* updated CI's core upload class to fixing a security hole
-* fixed error thrown when posting a comment on a mission post
-* fixed error thrown when attempting to delete a character
-* fixed error thrown during step 2 of the update process for some users
-* fixed error thrown when there's only one mission image set on the mission detail page
-* fixed error thrown when there's only one tour image set on the tour detail page
-* fixed error thrown when there's only one character image set on the character bio page
-* fixed bug where acceptance and rejection messages were sent without any changes an admin made
-* fixed bug where changing a character's state to and from active wouldn't set the open slots of their position(s)
-* fixed bug where the position dropdowns when creating a character showed all positions instead of open positions
-* fixed bug where rank history information wasn't being populated correctly
-* fixed bug where turning off update notification still attempted to run the check (before running in to another check)
-* fixed bug where a user's email preferences remained active even after the user was set to inactive
-* fixed bug where a user's email preferences weren't deleted when the user was deleted
+* added the 1.1 update file
+* added the ability to have multiple specification items
+* added the ability to associate tour items with a specification item
+* added the fancybox plugin
+* added the jquery reflection plugin
+* removed the colorbox plugin
+* removed the reflection.js plugin
+* updated the system to use the new jquery reflection plugin instead of reflection.js
+* updated the image upload system to be able to handle spec images as well
+* updated the specifications model with new methods for handling spec items
+* fixed bug where ordered and unordered lists weren't properly styled in Thresher
 
 ## Version History
 
 <table>
 	<tr>
 		<th>Version</th><th>Release Date</th>
+	</tr>
+	<tr>
+		<td>1.1</td><td>-</td>
 	</tr>
 	<tr>
 		<td>1.0.6</td><td>14 July 2010</td>
