@@ -3787,8 +3787,8 @@ $system_info = array(
 		'sys_uid' => random_string('alnum', 32),
 		'sys_install_date' => now(),
 		'sys_version_major' => 1,
-		'sys_version_minor' => 0,
-		'sys_version_update' => 6)
+		'sys_version_minor' => 1,
+		'sys_version_update' => 0)
 );
 
 $system_versions = array(
