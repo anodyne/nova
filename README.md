@@ -19,6 +19,7 @@ Anodyne Production's next-generation RPG management system combines popular feat
 * updated the image upload system to be able to handle spec images as well
 * updated the specifications model with new methods for handling spec items
 * fixed bug where ordered and unordered lists weren't properly styled in Thresher
+* fixed bug where the private message dropdown didn't populate with an author when replying to a message
 
 ## Version History
 
