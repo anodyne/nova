@@ -10,7 +10,9 @@
 | Changes: added the ability to display multiple specification
 |	items; added the ability to display tour items based on the
 |	specification item they're associated with; updated the
-|	image reflection classes
+|	image reflection classes; fixed bug with mission group pages
+|	where missions in the group didn't respect the mission order
+|	that was set for them
 |
 */
 
@@ -1241,15 +1243,24 @@ class Sim_base extends Controller {
 						{
 							foreach ($missions->result() as $m)
 							{
-								$data['group']['missions'][$m->mission_id] = array(
+								// set the order
+								$order = $m->mission_order;
+								
+								// make sure all of the items will show up
+								$order = (isset($data['group']['missions'][$order])) ? NULL : $order;
+								
+								$data['group']['missions'][$order] = array(
 									'id' => $m->mission_id,
 									'title' => $m->mission_title,
 									'desc' => $m->mission_desc,
 									'count' => $this->posts->count_mission_posts($m->mission_id, $this->options['post_count_format'])
 								);
 								
-								$data['group']['posts'] += $data['group']['missions'][$m->mission_id]['count'];
+								$data['group']['posts'] += $data['group']['missions'][$order]['count'];
 							}
+							
+							// sort the array of missions
+							ksort($data['group']['missions']);
 						}
 						
 						$title = ucwords(lang('global_mission') .' '. lang('labels_group') .' - '. $group->misgroup_name);
