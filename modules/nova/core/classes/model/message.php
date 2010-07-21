@@ -19,6 +19,7 @@ class Model_Message extends Jelly_Model
 	 */
 	public static function initialize(Jelly_Meta $meta)
 	{
+		$meta->name_key('key');
 		$meta->fields(array(
 			'id' => Jelly::field('primary', array(
 				'column' => 'message_id'
