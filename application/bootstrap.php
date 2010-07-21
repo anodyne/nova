@@ -79,7 +79,8 @@ $base_modules = array(
 	'install'		=> MODPATH.'nova/install',
 	'update'		=> MODPATH.'nova/update',
 	'database'		=> MODPATH.'kohana/database',
-	'jelly'			=> MODPATH.'nova/jelly',
+	//'jelly'			=> MODPATH.'nova/jelly',
+	'jelly'			=> MODPATH.'nova/jelly-1.0',
 	'userguide'		=> MODPATH.'kohana/userguide',
 	'dbforge'		=> MODPATH.'nova/dbforge',
 );

@@ -13,17 +13,17 @@ class Model_Userprefvalue extends Jelly_Model
 	{
 		$meta->table('user_prefs_values');
 		$meta->fields(array(
-			'id' => new Field_Primary(array(
+			'id' => Jelly::field('primary', array(
 				'column' => 'prefvalue_id'
 			)),
-			'user' => new Field_BelongsTo(array(
+			'user' => Jelly::field('belongsto', array(
 				'column' => 'prefvalue_user',
 				'foreign' => 'user'
 			)),
-			'key' => new Field_String(array(
+			'key' => Jelly::field('string', array(
 				'column' => 'prefvalue_key'
 			)),
-			'value' => new Field_String(array(
+			'value' => Jelly::field('string', array(
 				'column' => 'prefvalue_value'
 			)),
 		));

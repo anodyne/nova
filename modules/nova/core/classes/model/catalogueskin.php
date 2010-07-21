@@ -18,16 +18,16 @@ class Model_Catalogueskin extends Jelly_Model
 	{
 		$meta->table('catalogue_skins');
 		$meta->fields(array(
-			'id' => new Field_Primary(array(
+			'id' => Jelly::field('primary', array(
 				'column' => 'skin_id'
 			)),
-			'name' => new Field_String(array(
+			'name' => Jelly::field('string', array(
 				'column' => 'skin_name'
 			)),
-			'location' => new Field_String(array(
+			'location' => Jelly::field('string', array(
 				'column' => 'skin_location',
 			)),
-			'credits' => new Field_Text(array(
+			'credits' => Jelly::field('text', array(
 				'column' => 'skin_credits'
 			)),
 		));

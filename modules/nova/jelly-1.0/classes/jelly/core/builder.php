@@ -1007,7 +1007,7 @@ abstract class Jelly_Core_Builder extends Kohana_Database_Query_Builder_Select
 				throw new Kohana_Exception("Jelly_Builder compiled without a query type specified");
 				break;
 		}
-
+		
 		// Copy over the common conditions to a new statement
 		$query->_where = $this->_where;
 

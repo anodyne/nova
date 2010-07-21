@@ -18,31 +18,31 @@ class Model_Position extends Jelly_Model
 	{
 		$meta->table('positions_'.Kohana::config('nova.genre'));
 		$meta->fields(array(
-			'id' => new Field_Primary(array(
+			'id' => Jelly::field('primary', array(
 				'column' => 'pos_id'
 			)),
-			'name' => new Field_String(array(
+			'name' => Jelly::field('string', array(
 				'column' => 'pos_name'
 			)),
-			'desc' => new Field_Text(array(
+			'desc' => Jelly::field('text', array(
 				'column' => 'pos_desc',
 			)),
-			'dept' => new Field_BelongsTo(array(
+			'dept' => Jelly::field('belongsto', array(
 				'column' => 'pos_dept',
 				'foreign' => 'department'
 			)),
-			'order' => new Field_Integer(array(
+			'order' => Jelly::field('integer', array(
 				'column' => 'pos_order',
 			)),
-			'open' => new Field_Integer(array(
+			'open' => Jelly::field('integer', array(
 				'column' => 'pos_open',
 			)),
-			'display' => new Field_Enum(array(
+			'display' => Jelly::field('enum', array(
 				'column' => 'pos_display',
 				'choices' => array('y','n'),
 				'default' => 'y'
 			)),
-			'type' => new Field_Enum(array(
+			'type' => Jelly::field('enum', array(
 				'column' => 'pos_type',
 				'choices' => array('senior','officer','enlisted','other'),
 				'default' => 'officer'

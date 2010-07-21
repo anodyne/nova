@@ -18,16 +18,16 @@ class Model_Missiongroup extends Jelly_Model
 	{
 		$meta->table('mission_groups');
 		$meta->fields(array(
-			'id' => new Field_Primary(array(
+			'id' => Jelly::field('primary', array(
 				'column' => 'misgroup_id'
 			)),
-			'name' => new Field_String(array(
+			'name' => Jelly::field('string', array(
 				'column' => 'misgroup_name'
 			)),
-			'order' => new Field_Integer(array(
+			'order' => Jelly::field('integer', array(
 				'column' => 'misgroup_order'
 			)),
-			'desc' => new Field_Text(array(
+			'desc' => Jelly::field('text', array(
 				'column' => 'misgroup_desc'
 			)),
 		));

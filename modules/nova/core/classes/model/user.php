@@ -12,101 +12,127 @@ class Model_User extends Jelly_Model
 	public static function initialize(Jelly_Meta $meta)
 	{
 		$meta->fields(array(
-			'id' => new Field_Primary(array(
+			'id' => Jelly::field('primary', array(
 				'column' => 'userid'
 			)),
-			'status' => new Field_Enum(array(
+			'status' => Jelly::field('enum', array(
 				'choices' => array('active','inactive','pending'),
 				'default' => 'pending'
 			)),
-			'name' => new Field_String,
-			'email' => new Field_Email,
-			'password' => new Field_Password(array(
+			'name' => Jelly::field('string', array(
+				'column' => 'name'
+			)),
+			'email' => Jelly::field('email', array(
+				'column' => 'email'
+			)),
+			'password' => Jelly::field('password', array(
 				'hash_with' => FALSE,
 			)),
-			'date_of_birth' => new Field_String,
-			'instant_message' => new Field_Text,
-			'main_char' => new Field_BelongsTo(array(
+			'date_of_birth' => Jelly::field('string', array(
+				'column' => 'date_of_birth'
+			)),
+			'instant_message' => Jelly::field('text', array(
+				'column' => 'instant_message'
+			)),
+			'main_char' => Jelly::field('belongsto', array(
 				'column' => 'main_char',
 				'foreign' => 'character'
 			)),
-			'role' => new Field_BelongsTo(array(
+			'role' => Jelly::field('belongsto', array(
 				'column' => 'access_role',
 				'foreign' => 'accessrole'
 			)),
-			'sysadmin' => new Field_Enum(array(
+			'sysadmin' => Jelly::field('enum', array(
 				'column' => 'is_sysadmin',
 				'choices' => array('y','n'),
 				'default' => 'n'
 			)),
-			'gm' => new Field_Enum(array(
+			'gm' => Jelly::field('enum', array(
 				'column' => 'is_game_master',
 				'choices' => array('y','n'),
 				'default' => 'n'
 			)),
-			'webmaster' => new Field_Enum(array(
+			'webmaster' => Jelly::field('enum', array(
 				'column' => 'is_webmaster',
 				'choices' => array('y','n'),
 				'default' => 'n'
 			)),
-			'timezone' => new Field_String(array(
+			'timezone' => Jelly::field('string', array(
 				'default' => 'UTC'
 			)),
-			'dst' => new Field_Integer(array(
+			'dst' => Jelly::field('integer', array(
 				'column' => 'daylight_savings'
 			)),
-			'language' => new Field_String,
-			'join' => new Field_Timestamp(array(
+			'language' => Jelly::field('string', array(
+				'column' => 'language'
+			)),
+			'join' => Jelly::field('timestamp', array(
 				'column' => 'join_date',
 				'auto_now_create' => TRUE,
 				'auto_now_update' => FALSE,
 				'null' => TRUE,
 				'default' => date::now()
 			)),
-			'leave' => new Field_Timestamp(array(
+			'leave' => Jelly::field('timestamp', array(
 				'column' => 'leave_date',
 				'auto_now_create' => FALSE,
 				'auto_now_update' => FALSE,
 				'null' => TRUE,
 				'default' => date::now()
 			)),
-			'last_update' => new Field_Timestamp(array(
+			'last_update' => Jelly::field('timestamp', array(
 				'auto_now_create' => TRUE,
 				'auto_now_update' => TRUE,
 				'null' => TRUE,
 				'default' => date::now()
 			)),
-			'last_post' => new Field_Timestamp(array(
+			'last_post' => Jelly::field('timestamp', array(
 				'auto_now_create' => FALSE,
 				'auto_now_update' => FALSE,
 				'null' => TRUE,
 				'default' => date::now()
 			)),
-			'last_login' => new Field_Timestamp(array(
+			'last_login' => Jelly::field('timestamp', array(
 				'auto_now_create' => FALSE,
 				'auto_now_update' => FALSE,
 				'null' => TRUE,
 				'default' => date::now()
 			)),
-			'loa' => new Field_Enum(array(
+			'loa' => Jelly::field('enum', array(
 				'choices' => array('active','loa','eloa'),
 				'default' => 'active'
 			)),
-			'rank' => new Field_String(array(
+			'rank' => Jelly::field('string', array(
 				'column'=> 'display_rank'
 			)),
-			'skin_main' => new Field_String,
-			'skin_wiki' => new Field_String,
-			'skin_admin' => new Field_String,
-			'location' => new Field_Text,
-			'bio' => new Field_Text,
-			'security_question' => new Field_Integer,
-			'security_answer' => new Field_String,
-			'password_reset' => new Field_Integer,
-			'links' => new Field_Text(array(
+			'skin_main' => Jelly::field('string', array(
+				'column' => 'skin_main'
+			)),
+			'skin_wiki' => Jelly::field('string', array(
+				'column' => 'skin_wiki'
+			)),
+			'skin_admin' => Jelly::field('string', array(
+				'column' => 'skin_admin'
+			)),
+			'location' => Jelly::field('text', array(
+				'column' => 'location'
+			)),
+			'bio' => Jelly::field('text', array(
+				'column' => 'bio'
+			)),
+			'security_question' => Jelly::field('integer', array(
+				'column' => 'security_question'
+			)),
+			'security_answer' => Jelly::field('string', array(
+				'column' => 'security_answer'
+			)),
+			'password_reset' => Jelly::field('integer', array(
+				'column' => 'password_reset'
+			)),
+			'links' => Jelly::field('text', array(
 				'column' => 'my_links'
 			)),
-			'characters' => new Field_HasMany(array(
+			'characters' => Jelly::field('hasmany', array(
 				'foreign' => 'characters.user'
 			)),
 		));

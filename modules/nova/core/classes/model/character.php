@@ -17,62 +17,66 @@ class Model_Character extends Jelly_Model
 	public static function initialize(Jelly_Meta $meta)
 	{
 		$meta->fields(array(
-			'id' => new Field_Primary(array(
+			'id' => Jelly::field('primary', array(
 				'column' => 'charid'
 			)),
-			'user' => new Field_BelongsTo(array(
+			'user' => Jelly::field('belongsto', array(
 				'column' => 'user',
 				'foreign' => 'user'
 			)),
-			'fname' => new Field_String(array(
+			'fname' => Jelly::field('string', array(
 				'column' => 'first_name',
 			)),
-			'mname' => new Field_String(array(
+			'mname' => Jelly::field('string', array(
 				'column' => 'middle_name',
 			)),
-			'lname' => new Field_String(array(
+			'lname' => Jelly::field('string', array(
 				'column' => 'last_name',
 			)),
-			'suffix' => new Field_String,
-			'status' => new Field_Enum(array(
+			'suffix' => Jelly::field('string', array(
+				'column' => 'suffix'
+			)),
+			'status' => Jelly::field('enum', array(
 				'column' => 'status',
 				'choices' => array('active','inactive','pending','archived'),
 				'default' => 'pending'
 			)),
-			'activate' => new Field_Timestamp(array(
+			'activate' => Jelly::field('timestamp', array(
 				'column' => 'date_activate',
 				'auto_now_create' => FALSE,
 				'auto_now_update' => FALSE,
 				'null' => TRUE,
 				'default' => date::now()
 			)),
-			'deactivate' => new Field_Timestamp(array(
+			'deactivate' => Jelly::field('timestamp', array(
 				'column' => 'date_deactivate',
 				'auto_now_create' => FALSE,
 				'auto_now_update' => FALSE,
 				'null' => TRUE,
 				'default' => date::now()
 			)),
-			'images' => new Field_Text,
-			'rank' => new Field_BelongsTo(array(
+			'images' => Jelly::field('text', array(
+				'column' => 'images'
+			)),
+			'rank' => Jelly::field('belongsto', array(
 				'column' => 'rank',
 				'foreign' => 'rank'
 			)),
-			'position1' => new Field_BelongsTo(array(
+			'position1' => Jelly::field('belongsto', array(
 				'column' => 'position_1',
 				'foreign' => 'position'
 			)),
-			'position2' => new Field_BelongsTo(array(
+			'position2' => Jelly::field('belongsto', array(
 				'column' => 'position_2',
 				'foreign' => 'position'
 			)),
-			'last_post' => new Field_Timestamp(array(
+			'last_post' => Jelly::field('timestamp', array(
 				'auto_now_create' => FALSE,
 				'auto_now_update' => FALSE,
 				'null' => TRUE,
 				'default' => date::now()
 			)),
-			'last_update' => new Field_Timestamp(array(
+			'last_update' => Jelly::field('timestamp', array(
 				'auto_now_create' => FALSE,
 				'auto_now_update' => TRUE,
 				'null' => TRUE,

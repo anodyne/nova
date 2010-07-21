@@ -18,13 +18,13 @@ class Model_Newscategory extends Jelly_Model
 	{
 		$meta->table('news_categories');
 		$meta->fields(array(
-			'id' => new Field_Primary(array(
+			'id' => Jelly::field('primary', array(
 				'column' => 'newscat_id'
 			)),
-			'name' => new Field_String(array(
+			'name' => Jelly::field('string', array(
 				'column' => 'newscat_name'
 			)),
-			'display' => new Field_Enum(array(
+			'display' => Jelly::field('enum', array(
 				'column' => 'newscat_display',
 				'choices' => array('y', 'n'),
 				'default' => 'y'

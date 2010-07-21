@@ -20,19 +20,19 @@ class Model_Setting extends Jelly_Model
 	public static function initialize(Jelly_Meta $meta)
 	{
 		$meta->fields(array(
-			'id' => new Field_Primary(array(
+			'id' => Jelly::field('primary', array(
 				'column' => 'setting_id'
 			)),
-			'key' => new Field_String(array(
+			'key' => Jelly::field('string', array(
 				'column' => 'setting_key'
 			)),
-			'value' => new Field_Text(array(
+			'value' => Jelly::field('text', array(
 				'column' => 'setting_value'
 			)),
-			'label' => new Field_String(array(
+			'label' => Jelly::field('string', array(
 				'column' => 'setting_label'
 			)),
-			'user_created' => new Field_Enum(array(
+			'user_created' => Jelly::field('enum', array(
 				'column' => 'setting_user_created',
 				'choices' => array('y','n'),
 				'default' => 'y'
@@ -63,7 +63,7 @@ class Model_Setting extends Jelly_Model
 			$select[] = $value;
 		}
 		
-		$query = Jelly::select('setting')->execute();
+		$query = Jelly::query('setting')->select();
 		
 		if ($query)
 		{

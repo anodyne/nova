@@ -20,23 +20,23 @@ class Model_Message extends Jelly_Model
 	public static function initialize(Jelly_Meta $meta)
 	{
 		$meta->fields(array(
-			'id' => new Field_Primary(array(
+			'id' => Jelly::field('primary', array(
 				'column' => 'message_id'
 			)),
-			'key' => new Field_String(array(
+			'key' => Jelly::field('string', array(
 				'column' => 'message_key'
 			)),
-			'value' => new Field_Text(array(
+			'value' => Jelly::field('text', array(
 				'column' => 'message_content'
 			)),
-			'label' => new Field_String(array(
+			'label' => Jelly::field('string', array(
 				'column' => 'message_label'
 			)),
-			'message_type' => new Field_Enum(array(
+			'message_type' => Jelly::field('enum', array(
 				'choices' => array('title','message','other'),
 				'default' => 'message'
 			)),
-			'message_protected' => new Field_Enum(array(
+			'message_protected' => Jelly::field('enum', array(
 				'choices' => array('y','n'),
 				'default' => 'n'
 			)),

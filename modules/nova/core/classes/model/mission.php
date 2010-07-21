@@ -17,55 +17,55 @@ class Model_Mission extends Jelly_Model
 	public static function initialize(Jelly_Meta $meta)
 	{
 		$meta->fields(array(
-			'id' => new Field_Primary(array(
+			'id' => Jelly::field('primary', array(
 				'column' => 'mission_id'
 			)),
-			'title' => new Field_String(array(
+			'title' => Jelly::field('string', array(
 				'column' => 'mission_title'
 			)),
-			'images' => new Field_Text(array(
+			'images' => Jelly::field('text', array(
 				'column' => 'mission_images'
 			)),
-			'order' => new Field_Integer(array(
+			'order' => Jelly::field('integer', array(
 				'column' => 'mission_order'
 			)),
-			'group' => new Field_BelongsTo(array(
+			'group' => Jelly::field('belongsto', array(
 				'column' => 'mission_group',
 				'foreign' => 'missiongroup'
 			)),
-			'status' => new Field_Enum(array(
+			'status' => Jelly::field('enum', array(
 				'column' => 'mission_status',
 				'choices' => array('upcoming','current','completed'),
 				'default' => 'upcoming'
 			)),
-			'start' => new Field_Timestamp(array(
+			'start' => Jelly::field('timestamp', array(
 				'column' => 'mission_start',
 				'auto_now_create' => FALSE,
 				'auto_now_update' => FALSE,
 				'null' => TRUE
 			)),
-			'end' => new Field_Timestamp(array(
+			'end' => Jelly::field('timestamp', array(
 				'column' => 'mission_end',
 				'auto_now_create' => FALSE,
 				'auto_now_update' => FALSE,
 				'null' => TRUE
 			)),
-			'desc' => new Field_Text(array(
+			'desc' => Jelly::field('text', array(
 				'column' => 'mission_desc'
 			)),
-			'summary' => new Field_Text(array(
+			'summary' => Jelly::field('text', array(
 				'column' => 'mission_summary'
 			)),
-			'notes' => new Field_Text(array(
+			'notes' => Jelly::field('text', array(
 				'column' => 'mission_notes'
 			)),
-			'notes_update' => new Field_Timestamp(array(
+			'notes_update' => Jelly::field('timestamp', array(
 				'column' => 'mission_notes_updated',
 				'auto_now_create' => FALSE,
 				'auto_now_update' => FALSE,
 				'null' => TRUE
 			)),
-			'posts' => new Field_HasMany(array(
+			'posts' => Jelly::field('hasmany', array(
 				'foreign' => 'posts.post_mission'
 			)),
 		));

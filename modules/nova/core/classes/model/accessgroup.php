@@ -18,13 +18,13 @@ class Model_Accessgroup extends Jelly_Model
 	{
 		$meta->table('access_groups');
 		$meta->fields(array(
-			'id' => new Field_Primary(array(
+			'id' => Jelly::field('primary', array(
 				'column' => 'group_id'
 			)),
-			'name' => new Field_String(array(
+			'name' => Jelly::field('string', array(
 				'column' => 'group_name'
 			)),
-			'order' => new Field_Integer(array(
+			'order' => Jelly::field('integer', array(
 				'column' => 'group_order'
 			)),
 		));

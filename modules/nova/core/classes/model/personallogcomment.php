@@ -18,32 +18,32 @@ class Model_Personallogcomment extends Jelly_Model
 	{
 		$meta->table('personal_logs_comments');
 		$meta->fields(array(
-			'id' => new Field_Primary(array(
+			'id' => Jelly::field('primary', array(
 				'column' => 'lcomment_id'
 			)),
-			'author_user' => new Field_HasOne(array(
+			'author_user' => Jelly::field('hasone', array(
 				'column' => 'lcomment_author_user',
 				'foreign' => 'user'
 			)),
-			'author_character' => new Field_HasOne(array(
+			'author_character' => Jelly::field('hasone', array(
 				'column' => 'lcomment_author_character',
 				'foreign' => 'character'
 			)),
-			'log' => new Field_HasOne(array(
+			'log' => Jelly::field('hasone', array(
 				'column' => 'lcomment_log',
 				'foreign' => 'personallog.id'
 			)),
-			'content' => new Field_Text(array(
+			'content' => Jelly::field('text', array(
 				'column' => 'lcomment_content'
 			)),
-			'date' => new Field_Timestamp(array(
+			'date' => Jelly::field('timestamp', array(
 				'column' => 'lcomment_date',
 				'auto_now_create' => TRUE,
 				'auto_now_update' => FALSE,
 				'null' => TRUE,
 				'default' => date::now()
 			)),
-			'status' => new Field_Enum(array(
+			'status' => Jelly::field('enum', array(
 				'column' => 'lcomment_status',
 				'choices' => array('activated', 'pending'),
 				'default' => 'activated'

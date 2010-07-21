@@ -13,57 +13,57 @@ class Model_Menu extends Jelly_Model
 	{
 		$meta->table('menu_items');
 		$meta->fields(array(
-			'id' => new Field_Primary(array(
+			'id' => Jelly::field('primary', array(
 				'column' => 'menu_id'
 			)),
-			'name' => new Field_String(array(
+			'name' => Jelly::field('string', array(
 				'column' => 'menu_name'
 			)),
-			'group' => new Field_Integer(array(
+			'group' => Jelly::field('integer', array(
 				'column' => 'menu_group'
 			)),
-			'order' => new Field_Integer(array(
+			'order' => Jelly::field('integer', array(
 				'column' => 'menu_order'
 			)),
-			'link' => new Field_Text(array(
+			'link' => Jelly::field('text', array(
 				'column' => 'menu_link'
 			)),
-			'linktype' => new Field_Enum(array(
+			'linktype' => Jelly::field('enum', array(
 				'column' => 'menu_link_type',
 				'choices' => array('onsite','offsite'),
 				'default' => 'onsite'
 			)),
-			'login' => new Field_Enum(array(
+			'login' => Jelly::field('enum', array(
 				'column' => 'menu_need_login',
 				'choices' => array('y','n','none'),
 				'default' => 'none'
 			)),
-			'useaccess' => new Field_Enum(array(
+			'useaccess' => Jelly::field('enum', array(
 				'column' => 'menu_use_access',
 				'choices' => array('y','n'),
 				'default' => 'n'
 			)),
-			'access' => new Field_String(array(
+			'access' => Jelly::field('string', array(
 				'column' => 'menu_access'
 			)),
-			'level' => new Field_Integer(array(
+			'level' => Jelly::field('integer', array(
 				'column' => 'menu_access_level'
 			)),
-			'type' => new Field_Enum(array(
+			'type' => Jelly::field('enum', array(
 				'column' => 'menu_type',
 				'choices' => array('main','sub','adminsub'),
 				'default' => 'main'
 			)),
-			'cat' => new Field_BelongsTo(array(
+			'cat' => Jelly::field('belongsto', array(
 				'column' => 'menu_cat',
 				'foreign' => 'menu_categories.menucat_menu_cat'
 			)),
-			'display' => new Field_Enum(array(
+			'display' => Jelly::field('enum', array(
 				'column' => 'menu_display',
 				'choices' => array('y','n'),
 				'default' => 'y'
 			)),
-			'simtype' => new Field_BelongsTo(array(
+			'simtype' => Jelly::field('belongsto', array(
 				'column' => 'menu_sim_type',
 				'foreign' => 'simtype'
 			)),

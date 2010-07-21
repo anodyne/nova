@@ -18,16 +18,16 @@ class Model_Accessrole extends Jelly_Model
 	{
 		$meta->table('access_roles');
 		$meta->fields(array(
-			'id' => new Field_Primary(array(
+			'id' => Jelly::field('primary', array(
 				'column' => 'role_id'
 			)),
-			'name' => new Field_String(array(
+			'name' => Jelly::field('string', array(
 				'column' => 'role_name'
 			)),
-			'pages' => new Field_Text(array(
+			'pages' => Jelly::field('text', array(
 				'column' => 'role_access',
 			)),
-			'desc' => new Field_Text(array(
+			'desc' => Jelly::field('text', array(
 				'column' => 'role_desc',
 			)),
 		));

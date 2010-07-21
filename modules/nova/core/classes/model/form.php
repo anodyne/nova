@@ -12,30 +12,30 @@ class Model_Form extends Jelly_Model
 	public static function initialize(Jelly_Meta $meta)
 	{
 		$meta->fields(array(
-			'id' => new Field_Primary(array(
+			'id' => Jelly::field('primary', array(
 				'column' => 'form_id'
 			)),
-			'key' => new Field_String(array(
+			'key' => Jelly::field('string', array(
 				'column' => 'form_key'
 			)),
-			'name' => new Field_String(array(
+			'name' => Jelly::field('string', array(
 				'column' => 'form_name'
 			)),
-			'desc' => new Field_Text(array(
+			'desc' => Jelly::field('text', array(
 				'column' => 'form_desc'
 			)),
-			'status' => new Field_Enum(array(
+			'status' => Jelly::field('enum', array(
 				'column' => 'form_status',
 				'choices' => array('active','inactive','development'),
 				'default' => 'active'
 			)),
-			'fields' => new Field_HasMany(array(
+			'fields' => Jelly::field('hasmany', array(
 				'foreign' => 'formfield.form'
 			)),
-			'sections' => new Field_BelongsTo(array(
+			'sections' => Jelly::field('belongsto', array(
 				'foreign' => 'formsection'
 			)),
-			'tabs' => new Field_BelongsTo(array(
+			'tabs' => Jelly::field('belongsto', array(
 				'foreign' => 'formtab'
 			)),
 		));

@@ -18,27 +18,27 @@ class Model_Rank extends Jelly_Model
 	{
 		$meta->table('ranks_'.Kohana::config('nova.genre'));
 		$meta->fields(array(
-			'id' => new Field_Primary(array(
+			'id' => Jelly::field('primary', array(
 				'column' => 'rank_id'
 			)),
-			'name' => new Field_String(array(
+			'name' => Jelly::field('string', array(
 				'column' => 'rank_name'
 			)),
-			'shortname' => new Field_String(array(
+			'shortname' => Jelly::field('string', array(
 				'column' => 'rank_short_name',
 			)),
-			'image' => new Field_String(array(
+			'image' => Jelly::field('string', array(
 				'column' => 'rank_image',
 			)),
-			'order' => new Field_Integer(array(
+			'order' => Jelly::field('integer', array(
 				'column' => 'rank_order',
 			)),
-			'display' => new Field_Enum(array(
+			'display' => Jelly::field('enum', array(
 				'column' => 'rank_display',
 				'choices' => array('y','n'),
 				'default' => 'y'
 			)),
-			'class' => new Field_Integer(array(
+			'class' => Jelly::field('integer', array(
 				'column' => 'rank_class'
 			)),
 		));

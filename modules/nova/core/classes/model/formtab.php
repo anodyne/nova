@@ -13,23 +13,23 @@ class Model_Formtab extends Jelly_Model
 	{
 		$meta->table('forms_tabs');
 		$meta->fields(array(
-			'id' => new Field_Primary(array(
+			'id' => Jelly::field('primary', array(
 				'column' => 'tab_id'
 			)),
-			'form' => new Field_BelongsTo(array(
+			'form' => Jelly::field('belongsto', array(
 				'column' => 'tab_form',
 				'foreign' => 'form.key'
 			)),
-			'name' => new Field_String(array(
+			'name' => Jelly::field('string', array(
 				'column' => 'tab_name'
 			)),
-			'linkid' => new Field_String(array(
+			'linkid' => Jelly::field('string', array(
 				'column' => 'tab_link_id'
 			)),
-			'order' => new Field_Integer(array(
+			'order' => Jelly::field('integer', array(
 				'column' => 'tab_order'
 			)),
-			'display' => new Field_Enum(array(
+			'display' => Jelly::field('enum', array(
 				'column' => 'tab_display',
 				'choices' => array('y','n'),
 				'default' => 'y'

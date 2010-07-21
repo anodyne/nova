@@ -13,31 +13,31 @@ class Model_Formdata extends Jelly_Model
 	{
 		$meta->table('forms_data');
 		$meta->fields(array(
-			'id' => new Field_Primary(array(
+			'id' => Jelly::field('primary', array(
 				'column' => 'data_id'
 			)),
-			'form' => new Field_String(array(
+			'form' => Jelly::field('string', array(
 				'column' => 'data_form'
 			)),
-			'field' => new Field_BelongsTo(array(
+			'field' => Jelly::field('belongsto', array(
 				'column' => 'data_field',
 				'foreign' => 'formfield'
 			)),
-			'user' => new Field_BelongsTo(array(
+			'user' => Jelly::field('belongsto', array(
 				'column' => 'data_user',
 				'foreign' => 'user'
 			)),
-			'character' => new Field_BelongsTo(array(
+			'character' => Jelly::field('belongsto', array(
 				'column' => 'data_character',
 				'foreign' => 'character'
 			)),
-			'item' => new Field_Integer(array(
+			'item' => Jelly::field('integer', array(
 				'column' => 'data_item'
 			)),
-			'value' => new Field_Text(array(
+			'value' => Jelly::field('text', array(
 				'column' => 'data_value'
 			)),
-			'last_update' => new Field_Timestamp(array(
+			'last_update' => Jelly::field('timestamp', array(
 				'column' => 'data_last_update',
 				'auto_now_create' => FALSE,
 				'auto_now_update' => TRUE,

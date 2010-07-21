@@ -13,10 +13,10 @@ class Model_Simtype extends Jelly_Model
 	{
 		$meta->table('sim_type');
 		$meta->fields(array(
-			'id' => new Field_Primary(array(
+			'id' => Jelly::field('primary', array(
 				'column' => 'simtype_id'
 			)),
-			'name' => new Field_String(array(
+			'name' => Jelly::field('string', array(
 				'column' => 'simtype_name'
 			)),
 		));

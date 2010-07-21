@@ -17,22 +17,24 @@ class Controller_Nova_Main extends Controller_Nova_Base
 		$this->settingsArray[] = 'skin_main';
 		
 		// pull the settings and put them into the options object
-		$this->options = Jelly::factory('setting')->get_settings($this->settingsArray);
+		//$this->options = Jelly::factory('setting')->get_settings($this->settingsArray);
 		
 		// set the variables
-		$this->skin		= $this->session->get('skin_main', $this->options->skin_main);
-		$this->rank		= $this->session->get('display_rank', $this->options->display_rank);
-		$this->timezone	= $this->session->get('timezone', $this->options->timezone);
-		$this->dst		= $this->session->get('dst', $this->options->daylight_savings);
+		//$this->skin		= $this->session->get('skin_main', $this->options->skin_main);
+		//$this->rank		= $this->session->get('display_rank', $this->options->display_rank);
+		//$this->timezone	= $this->session->get('timezone', $this->options->timezone);
+		//$this->dst		= $this->session->get('dst', $this->options->daylight_savings);
+		
+		$this->skin = 'default';
 		
 		// set the shell
 		$this->template = View::factory('_common/layouts/main', array('skin' => $this->skin, 'sec' => 'main'));
 		
 		// grab the image index
-		$this->images = Utility::get_image_index($this->skin);
+		//$this->images = Utility::get_image_index($this->skin);
 		
 		// set the variables in the template
-		$this->template->title 					= $this->options->sim_name.' :: ';
+		//$this->template->title 					= $this->options->sim_name.' :: ';
 		$this->template->javascript				= FALSE;
 		$this->template->layout					= View::factory($this->skin.'/template_main', array('skin' => $this->skin, 'sec' => 'main'));
 		$this->template->layout->nav_main 		= Menu::build('main', 'main');
@@ -338,6 +340,14 @@ class Controller_Nova_Main extends Controller_Nova_Base
 		}
 		
 		echo Kohana::debug(count($field->values));
+		exit();
+	}
+	
+	public function action_test3()
+	{
+		$item = Jelly::query('setting')->select();
+		
+		echo Kohana::debug($item);
 		exit();
 	}
 	
