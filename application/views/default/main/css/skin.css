@@ -4,7 +4,7 @@
 |---------------------------------------------------------------
 */
 body {
-	background: #f8f8f8;
+	background: #666 url('../images/body-bg.jpg') repeat 0 0;
 	color: #444;
 	font: 75%/1.5 "lucida grande", verdana, arial, sans-serif;
 	text-align: center;
@@ -106,33 +106,35 @@ body {
 |---------------------------------------------------------------
 */
 #body {
-	margin: 2em 0;
+	margin: 3em 0 0 0;
 	position: relative;
 }
 
 .nav-sub {
 	float: right;
-	width: 160px;
-	margin: 0 0 10px 0;
-	padding: 0 0 .5em 0;
+	width: 199px;
+	margin: 45px 0 0 0;
 	
 	text-align: right;
-	font-size: 92%;
+	/*font-size: 92%;*/
 	background: #212425;
-	background: -moz-linear-gradient(0% 100% 90deg, #212425, #525758);
+	background: -moz-linear-gradient(0% 100% 90deg, #aaa, #ccc);
 	background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#525758), to(#212425));
-	border: 1px solid #000;
+	border: 1px solid #555;
+	border-left: 0;
 	
-	border-radius: 3px;
-	-moz-border-radius: 3px;
-	-webkit-border-radius: 3px;
+	border-radius: 0 6px 6px 0;
+	-moz-border-radius: 0 6px 6px 0;
+	-webkit-border-top-right-radius: 6px;
+	-webkit-border-bottom-right-radius: 6px;
 	
 	box-shadow:
 		inset 0px 1px 0px rgba(255, 255, 255, .25) /*Top*/, 
 		inset 0px 0px 2px rgba(255, 255, 255, .35) /*Shine*/;
 	-moz-box-shadow:
-		inset 0px 1px 0px rgba(255, 255, 255, .25) /*Top*/, 
-		inset 0px 0px 2px rgba(255, 255, 255, .35) /*Shine*/;
+		inset -1px 1px 0 rgba(255, 255, 1, 1),
+		inset 0 0 0 rgba(255, 255, 255, 0),
+		2px 2px 4px rgba(0, 0, 0, .35);
 	-webkit-box-shadow:
 		inset 0px 1px 0px rgba(255, 255, 255, .25) /*Top*/, 
 		inset 0px 0px 2px rgba(255, 255, 255, .35) /*Shine*/;
@@ -177,13 +179,13 @@ body {
 	display: block;
 	
 	text-decoration: none;
-	color: #aaa;
+	color: #666;
 	font-weight: bold;
 }
 .nav-sub ul li a:hover {
-	color: #dadbdb;
+	color: #222;
 	border: 0 !important;
-	text-shadow: -1px -1px 0px rgba(0, 0, 0, .4);
+	text-shadow: 0 1px 0 rgba(255, 255, 255, .3);
 }
 .nav-sub ul li a span { padding: 2px 7px; }
 .nav-sub ul li.spacer {
@@ -193,11 +195,19 @@ body {
 }
 
 .content {
-	width: 760px;
-	margin-right: 175px;
-	padding-left: 5px;
+	width: 738px;
+	padding: 10px;
 	line-height: 1.4;
 	position: relative;
+	
+	border: 1px solid #555;
+	background: #f8f8f8;
+	
+	border-radius: 6px;
+	-moz-border-radius: 6px;
+	-webkit-border-radius: 6px;
+	
+	-moz-box-shadow: 2px 2px 4px rgba(0, 0, 0, .35);
 }
 
 /*
@@ -206,21 +216,21 @@ body {
 |---------------------------------------------------------------
 */
 #footer {
-	padding: 1.5em 0;
+	padding: 1.1em 0;
 	clear: both;
 	line-height: 1.4;
-	width: 960px;
-	margin: 2em auto;
+	margin: 1em -10px -10px -10px;
 	
 	text-align: center;
 	font-size: 90%;
 	color: #888;
-	background: #f8f8f8;
-	border: 1px solid #d8d8d8;
+	background: #f4f4f4;
+	border-top: 1px solid #d8d8d8;
 	
-	border-radius: 2px;
-	-moz-border-radius: 2px;
-	-webkit-border-radius: 2px;
+	border-radius: 0 0 6px 6px;
+	-moz-border-radius: 0 0 6px 6px;
+	-webkit-border-bottom-left-radius: 6px;
+	-webkit-border-bottom-right-radius: 6px;
 }
 
 /*
@@ -228,7 +238,28 @@ body {
 | FONT COLORS
 |---------------------------------------------------------------
 */
-.page-head 		{ color: #587498; }
+.page-head {
+	margin: -10px -10px 12px -10px !important;
+	padding: 5px;
+	
+	height: 40px;
+	line-height: 40px;
+	padding: 0 .5em;
+	
+	background: #ddd url('../images/head-bg.png') repeat-x top left;
+	border-bottom: 1px solid #bcbcbc;
+	border-bottom: 1px solid rgba(0, 0, 0, .15);
+	
+	/*color: #587498;
+	background: #f4f4f4;
+	border-bottom: 1px solid #d8d8d8;
+	text-shadow: 0 1px 0 rgba(255, 255, 255, .75);*/
+	
+	border-radius: 6px 6px 0 0;
+	-moz-border-radius: 6px 6px 0 0;
+	-webkit-border-top-left-radius: 6px;
+	-webkit-border-top-right-radius: 6px;
+}
 .page-subhead	{ color: #5b7444; }
 
 /*

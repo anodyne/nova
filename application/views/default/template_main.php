@@ -52,7 +52,7 @@
 	<div class="wrapper">
 		<!-- SUB NAVIGATION -->
 		<div class="nav-sub">
-			<h1><?php echo Jelly::select('setting')->key('sim_name')->load()->value;?></h1>
+			<h1><?php echo Jelly::query('setting')->key('sim_name')->select()->value;?></h1>
 			<hr />
 			<?php echo $nav_sub;?>
 		</div>
@@ -64,12 +64,12 @@
 			<?php echo $ajax;?>
 			
 			<div style="clear:both;">&nbsp;</div>
+			
+			<!-- FOOTER -->
+			<div id="footer">
+				Powered by <strong>Nova</strong> from <a href="http://www.anodyne-productions.com" target="_blank">Anodyne Productions</a> | 
+				<?php echo html::anchor('main/credits', 'Site Credits');?>
+			</div>
 		</div>
 	</div>
-</div>
-
-<!-- FOOTER -->
-<div id="footer">
-	Powered by <strong>Nova</strong> from <a href="http://www.anodyne-productions.com" target="_blank">Anodyne Productions</a> | 
-	<?php echo html::anchor('main/credits', 'Site Credits');?>
 </div>
