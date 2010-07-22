@@ -52,7 +52,7 @@
 	<div class="wrapper">
 		<!-- SUB NAVIGATION -->
 		<div class="nav-sub">
-			<h1><?php echo Jelly::select('setting')->key('sim_name')->load()->value;?></h1>
+			<h1><?php echo Jelly::query('setting')->key('sim_name')->select()->value;?></h1>
 			<hr />
 			<?php echo $nav_sub;?>
 		</div>
