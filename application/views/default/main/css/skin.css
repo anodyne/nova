@@ -112,21 +112,26 @@ body {
 |---------------------------------------------------------------
 */
 #body {
-	margin: 3em 0 0 0;
+	padding: 3em 0 0 0;
 	position: relative;
+	
+	box-shadow: inset 0 3px 4px rgba(0, 0, 0, .5);
+	-moz-box-shadow: inset 0 3px 4px rgba(0, 0, 0, .5);
+	-webkit-box-shadow: inset inset 0 3px 4px rgba(0, 0, 0, .5);
 }
 
 .nav-sub {
 	float: right;
-	width: 189px;
+	width: 179px;
 	margin: 45px 0 0 0;
 	padding: 0 0 1em 0;
 	
-	text-align: right;
+	text-align: left;
 	font-size: 92%;
-	background: #191919;
+	/*background: #191919;
 	border: 1px solid #000;
 	border-left: 0;
+	text-align: right;
 	
 	border-radius: 0 4px 4px 0;
 	-moz-border-radius: 0 4px 4px 0;
@@ -144,25 +149,24 @@ body {
 	-webkit-box-shadow:
 		inset -1px 1px 0 rgba(255, 255, 255, .1),
 		inset 0 -1px 0 rgba(255, 255, 255, .1),
-		1px 1px 1px rgba(255, 255, 255, .07);
+		1px 1px 1px rgba(255, 255, 255, .07);*/
 }
 .nav-sub h1 {
-	margin: 7px auto !important;
-	padding: 0 !important;
+	margin: 8px 0 !important;
+	padding: 0 0 0 8px !important;
 	line-height: 1.2;
 	width: 90%;
 	
 	border: 0 !important;
 	background: transparent !important;
 	font-size: 120% !important;
-	text-align: center !important;
+	/*text-align: center !important;*/
 	color: #fff !important;
 	text-shadow: -1px -1px 0px rgba(0, 0, 0, .3);
 }
 .nav-sub hr {
 	height: 0;
-	width: 85%;
-	margin: 0 auto .5em auto;
+	margin: 1em 0;
 	
 	border-top: 1px solid #222525;
 	border-top: 1px solid rgba(0, 0, 0, .65);
@@ -190,11 +194,11 @@ body {
 	font-weight: bold;
 }
 .nav-sub ul li a:hover {
-	color: #aaa;
+	color: #ccc;
 	border: 0 !important;
-	text-shadow: 0 -1px 0 rgba(0, 0, 0, .75);
+	text-shadow: 0 -1px 0 rgba(0, 0, 0, .9);
 }
-.nav-sub ul li a span { padding: 2px 7px; }
+.nav-sub ul li a span { padding: 2px 0 2px 14px; }
 .nav-sub ul li.spacer {
 	height: 12px;
 	
@@ -202,23 +206,27 @@ body {
 }
 
 .content {
-	width: 748px;
+	width: 758px;
 	padding: 10px;
 	line-height: 1.4;
 	position: relative;
 	
 	border: 1px solid #000;
 	background: #232323 url('../images/content-bg.png') no-repeat 0 0;
-	/*background: -moz-linear-gradient(center top, #303030 10%, #232323 100%);
-	background: -webkit-gradient(linear, left top, left bottom, color-stop(.2, #303030), color-stop(1, #232323));*/
 	
 	border-radius: 4px;
 	-moz-border-radius: 4px;
 	-webkit-border-radius: 4px;
 	
-	box-shadow: inset 0 0 0 rgba(255, 255, 255, 0), inset 0 0 1px rgba(255, 255, 255, .45), 2px 3px 4px rgba(0, 0, 0, .4);
-	-moz-box-shadow: inset 0 0 0 rgba(255, 255, 255, 0), inset 0 0 1px rgba(255, 255, 255, .45), 2px 3px 4px rgba(0, 0, 0, .4);
-	-webkit-box-shadow: inset 0 0 0 rgba(255, 255, 255, 0), inset 0 0 1px rgba(255, 255, 255, .45), 2px 3px 4px rgba(0, 0, 0, .4);
+	box-shadow: inset 0 0 0 rgba(255, 255, 255, 0),
+		inset 0 0 1px rgba(255, 255, 255, .45),
+		2px 3px 4px rgba(0, 0, 0, .4);
+	-moz-box-shadow: inset 0 0 0 rgba(255, 255, 255, 0),
+		inset 0 0 1px rgba(255, 255, 255, .45),
+		2px 3px 4px rgba(0, 0, 0, .4);
+	-webkit-box-shadow: inset 0 0 0 rgba(255, 255, 255, 0),
+		inset 0 0 1px rgba(255, 255, 255, .45),
+		2px 3px 4px rgba(0, 0, 0, .4);
 }
 
 /*
@@ -388,12 +396,9 @@ button.btn-main:hover {
 button.btn-main:active {
 	border-color: #20559a;
 	
-	box-shadow: inset 0 0 7px hsla(0, 0%, 0%, .3),
-		0 1px 0 hsla(0, 100%, 100%, 1);
-	-moz-box-shadow: inset 0 0 7px hsla(0, 0%, 0%, .3),
-		0 1px 0 hsla(0, 100%, 100%, 1);
-	-webkit-box-shadow: inset 0 0 7px hsla(0, 0%, 0%, .3),
-		0 1px 0 hsla(0, 100%, 100%, 1);
+	box-shadow: inset 0 0 7px hsla(0, 0%, 0%, .3), 0 1px 0 hsla(0, 0%, 0%, .3);
+	-moz-box-shadow: inset 0 0 7px hsla(0, 0%, 0%, .3), 0 1px 0 hsla(0, 0%, 0%, .3);
+	-webkit-box-shadow: inset 0 0 7px hsla(0, 0%, 0%, .3), 0 1px 0 hsla(0, 0%, 0%, .3);
 }
 
 button.btn-sec {
@@ -420,12 +425,9 @@ button.btn-sec:hover {
 	background: -webkit-gradient(linear, left top, left bottom, color-stop(.2, #e9f0f3), color-stop(1, #cbdff5));
 }
 button.btn-sec:active {
-	box-shadow: inset 0 0 5px hsla(0, 0%, 0%, .1),
-		0 1px 0 hsla(0, 100%, 100%, 1);
-	-moz-box-shadow: inset 0 0 5px hsla(0, 0%, 0%, .1),
-		0 1px 0 hsla(0, 100%, 100%, 1);
-	-webkit-box-shadow: inset 0 0 5px hsla(0, 0%, 0%, .1),
-		0 1px 0 hsla(0, 100%, 100%, 1);
+	box-shadow: inset 0 0 5px hsla(0, 0%, 0%, .1), 0 1px 0 hsla(0, 100%, 100%, 1);
+	-moz-box-shadow: inset 0 0 5px hsla(0, 0%, 0%, .1), 0 1px 0 hsla(0, 100%, 100%, 1);
+	-webkit-box-shadow: inset 0 0 5px hsla(0, 0%, 0%, .1), 0 1px 0 hsla(0, 100%, 100%, 1);
 }
 
 button.btn-ter {
@@ -465,12 +467,9 @@ button.btn-ter:hover {
 button.btn-ter:active {
 	border-color: #999;
 	
-	box-shadow: inset 0 0 5px hsla(0, 0%, 0%, .15),
-		0 1px 0 hsla(0, 100%, 100%, 1);
-	-moz-box-shadow: inset 0 0 5px hsla(0, 0%, 0%, .15),
-		0 1px 0 hsla(0, 100%, 100%, 1);
-	-webkit-box-shadow: inset 0 0 5px hsla(0, 0%, 0%, .15),
-		0 1px 0 hsla(0, 100%, 100%, 1);
+	box-shadow: inset 0 0 5px hsla(0, 0%, 0%, .15), 0 1px 0 hsla(0, 0%, 0%, .3);
+	-moz-box-shadow: inset 0 0 5px hsla(0, 0%, 0%, .15), 0 1px 0 hsla(0, 0%, 0%, .3);
+	-webkit-box-shadow: inset 0 0 5px hsla(0, 0%, 0%, .15), 0 1px 0 hsla(0, 0%, 0%, .3);
 }
 
 button[disabled], button:hover[disabled], button:active[disabled] {
@@ -715,8 +714,8 @@ hr {
 	line-height: 24px;
 	padding: 1px;
 	
-	border: 1px solid #d8d8d8;
-	background: #fff;
+	border: 1px solid #444;
+	background: #333;
 	
 	border-radius: 15px;
 	-moz-border-radius: 15px;
@@ -733,7 +732,8 @@ hr {
 	margin: 0 !important;
 	
 	border: 1px solid transparent !important;
-	color: #777 !important;
+	background: transparent !important;
+	color: #ccc !important;
 }
 .search-field-options {
 	float: left;
@@ -751,19 +751,21 @@ hr {
 
 .search-field-options-list {
 	position: absolute;
-	top: 270px;
-	
+	top: 280px;
 	width: 150px;
 	padding: .5em 0;
 	
-	border: 1px solid #ccc;
-	background: #eee;
+	border: 1px solid #111;
+	background: #333;
+	background: rgba(0, 0, 0, .85);
 	
-	border-radius: 6px;
-	-moz-border-radius: 6px;
-	-webkit-border-radius: 6px;
+	border-radius: 4px;
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
 	
+	box-shadow: 1px 1px 4px rgba(0, 0, 0, .2);
 	-moz-box-shadow: 1px 1px 4px rgba(0, 0, 0, .2);
+	-webkit-box-shadow: 1px 1px 4px rgba(0, 0, 0, .2);
 }
 .search-field-options-list ul {
 	margin: 0;
@@ -780,7 +782,7 @@ hr {
 	
 	font-weight: bold;
 	font-size: 90%;
-	color: #777;
+	color: #888;
 	border: 1px solid transparent;
 	border-left: 0;
 	border-right: 0;
