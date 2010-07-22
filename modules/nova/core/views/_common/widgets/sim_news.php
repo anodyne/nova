@@ -1,13 +1,13 @@
 <?php
 
-$news = Jelly::select('news')
+$news = Jelly::query('news')
 	->where('status', '=', 'activated')
 	->order_by('date', 'desc')
 	->limit(5);
 	
 (!Auth::is_logged_in()) ? $news->where('private', '=', 'n') : FALSE;
 
-$news = $news->execute();
+$news = $news->select();
 
 if (count($news) > 0):
 	foreach ($news as $n):
