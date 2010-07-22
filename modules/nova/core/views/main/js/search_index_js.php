@@ -16,6 +16,16 @@
 			// reset the class for the options icon
 			$('.search-field').find('span.search-field-options').attr('class', 'search-field-options options-' + clicked);
 			
+			// change the placeholder
+			if (clicked == 'posts')
+				$('.search-field input[name=search]').attr('placeholder', '<?php echo ucwords(__("search mission posts"));?>');
+			if (clicked == 'logs')
+				$('.search-field input[name=search]').attr('placeholder', '<?php echo ucwords(__("search personal logs"));?>');
+			if (clicked == 'news')
+				$('.search-field input[name=search]').attr('placeholder', '<?php echo ucwords(__("search news items"));?>');
+			if (clicked == 'wiki')
+				$('.search-field input[name=search]').attr('placeholder', '<?php echo ucwords(__("search wiki pages"));?>');
+			
 			// hide everything
 			$('.search-container').children().addClass('hidden');
 			
