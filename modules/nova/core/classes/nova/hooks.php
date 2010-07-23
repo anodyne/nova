@@ -25,7 +25,7 @@ abstract class Nova_Hooks
 			'Internet Explorer'	=> 8,
 			'Safari'			=> 4,
 			'Firefox'			=> 3,
-			'Chrome'			=> 3,
+			'Chrome'			=> 4,
 		);
 		
 		// get the browser
@@ -41,6 +41,7 @@ abstract class Nova_Hooks
 			if (version_compare($version, $notallowed[$browser], '<'))
 			{
 				header('Location:'.url::base().'browser.php?b='.$browser.'&v='.$version.'&pv='.$notallowed[$browser]);
+				exit();
 			}
 		}
 	}
