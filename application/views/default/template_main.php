@@ -29,19 +29,13 @@
 <?php endif; ?>
 
 <!-- HEAD -->
-<div id="head">
-	<div class="head_top"></div>
-	<div class="wrapper">
-		<div class="head_content">
-			<?php echo html::image('application/views/'.$skin.'/'.$sec.'/images/head-logo.png');?>
-		</div>
-	</div>
-</div>
+<div id="head-top"></div>
 
 <!-- MENU -->
 <div id="menu">
 	<div class="wrapper">
 		<div class="nav-main">
+			<?php echo html::image('application/views/'.$skin.'/'.$sec.'/images/menu-nova.png', array('class' => 'float-right'));?>
 			<?php echo $nav_main;?>
 		</div>
 	</div>
