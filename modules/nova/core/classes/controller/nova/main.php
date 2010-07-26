@@ -345,9 +345,7 @@ class Controller_Nova_Main extends Controller_Nova_Base
 	
 	public function action_test3()
 	{
-		$item = Jelly::query('setting')->select();
-		
-		echo Kohana::debug($item);
+		echo Kohana::debug(Database::instance()->list_columns('sms_specs', NULL, FALSE));
 		exit();
 	}
 	

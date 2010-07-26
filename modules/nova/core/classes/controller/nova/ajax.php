@@ -38,7 +38,7 @@ class Controller_Nova_Ajax extends Controller_Nova_Base
 		$position = (is_numeric($position)) ? $position : FALSE;
 		
 		// grab the position details
-		$item = Jelly::select('position', $position);
+		$item = Jelly::query('position', $position)->select();
 		
 		// set the output
 		$output = (count($item) > 0) ? $item->desc : FALSE;
@@ -59,10 +59,10 @@ class Controller_Nova_Ajax extends Controller_Nova_Base
 		$rank = (is_numeric($rank)) ? $rank : FALSE;
 		
 		// grab the rank catalogue
-		$catalogue = Jelly::select('cataloguerank')->where('location', '=', $location)->load();
+		$catalogue = Jelly::query('cataloguerank')->where('location', '=', $location)->limit(1)->select();
 		
 		// pull the rank record
-		$rank = Jelly::select('rank', $rank);
+		$rank = Jelly::query('rank', $rank)->select();
 		
 		// set the output
 		$output = (count($rank) > 0) ? location::image($rank->image.$catalogue->extension, NULL, $location, 'rank') : FALSE;
