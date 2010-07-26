@@ -8,7 +8,7 @@ Nova 2 is currently in heavy, active development. We do our best to keep bugs ou
 
 ## Current Version
 
-M1.2-pre (2.0-alpha)
+M1.3-pre (2.0-alpha)
 
 ## Important Information
 
