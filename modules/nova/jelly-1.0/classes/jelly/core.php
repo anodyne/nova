@@ -76,7 +76,7 @@ abstract class Jelly_Core
 				$builder = $meta->builder();
 			}
 		}
-
+		
 		return new $builder($model, $key);
 	}
 	

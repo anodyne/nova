@@ -13,21 +13,21 @@ class Model_Formsection extends Jelly_Model
 	{
 		$meta->table('forms_sections');
 		$meta->fields(array(
-			'id' => new Field_Primary(array(
+			'id' => Jelly::field('primary', array(
 				'column' => 'section_id'
 			)),
-			'form' => new Field_BelongsTo(array(
+			'form' => Jelly::field('belongsto', array(
 				'column' => 'section_form',
 				'foreign' => 'form.key'
 			)),
-			'tab' => new Field_BelongsTo(array(
+			'tab' => Jelly::field('belongsto', array(
 				'column' => 'section_tab',
 				'foreign' => 'formtab'
 			)),
-			'name' => new Field_String(array(
+			'name' => Jelly::field('string', array(
 				'column' => 'section_name'
 			)),
-			'order' => new Field_Integer(array(
+			'order' => Jelly::field('integer', array(
 				'column' => 'section_order'
 			)),
 		));

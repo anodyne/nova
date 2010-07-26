@@ -18,32 +18,32 @@ class Model_System extends Jelly_Model
 	{
 		$meta->table('system_info');
 		$meta->fields(array(
-			'id' => new Field_Primary(array(
+			'id' => Jelly::field('primary', array(
 				'column' => 'sys_id'
 			)),
-			'uid' => new Field_String(array(
+			'uid' => Jelly::field('string', array(
 				'column' => 'sys_uid'
 			)),
-			'install_date' => new Field_Timestamp(array(
+			'install_date' => Jelly::field('timestamp', array(
 				'column' => 'sys_install_date',
 				'null' => TRUE,
 				'default' => date::now()
 			)),
-			'last_update' => new Field_Timestamp(array(
+			'last_update' => Jelly::field('timestamp', array(
 				'column' => 'sys_last_update',
 				'null' => TRUE,
 				'default' => date::now()
 			)),
-			'version_major' => new Field_Integer(array(
+			'version_major' => Jelly::field('integer', array(
 				'column' => 'sys_version_major',
 			)),
-			'version_minor' => new Field_Integer(array(
+			'version_minor' => Jelly::field('integer', array(
 				'column' => 'sys_version_minor',
 			)),
-			'version_update' => new Field_Integer(array(
+			'version_update' => Jelly::field('integer', array(
 				'column' => 'sys_version_update',
 			)),
-			'ignore' => new Field_String(array(
+			'ignore' => Jelly::field('string', array(
 				'column' => 'sys_version_ignore',
 			)),
 		));

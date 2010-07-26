@@ -17,52 +17,52 @@ class Model_Post extends Jelly_Model
 	public static function initialize(Jelly_Meta $meta)
 	{
 		$meta->fields(array(
-			'id' => new Field_Primary(array(
+			'id' => Jelly::field('primary', array(
 				'column' => 'post_id'
 			)),
-			'title' => new Field_String(array(
+			'title' => Jelly::field('string', array(
 				'column' => 'post_title'
 			)),
-			'authors' => new Field_Text(array(
+			'authors' => Jelly::field('text', array(
 				'column' => 'post_authors'
 			)),
-			'author_users' => new Field_Text(array(
+			'author_users' => Jelly::field('text', array(
 				'column' => 'post_authors_users'
 			)),
-			'date' => new Field_Timestamp(array(
+			'date' => Jelly::field('timestamp', array(
 				'column' => 'post_date',
 				'auto_now_create' => FALSE,
 				'auto_now_update' => FALSE,
 				'null' => TRUE,
 				'default' => date::now()
 			)),
-			'content' => new Field_Text(array(
+			'content' => Jelly::field('text', array(
 				'column' => 'post_content'
 			)),
-			'location' => new Field_String(array(
+			'location' => Jelly::field('string', array(
 				'column' => 'post_location'
 			)),
-			'timeline' => new Field_String(array(
+			'timeline' => Jelly::field('string', array(
 				'column' => 'post_timeline'
 			)),
-			'status' => new Field_Enum(array(
+			'status' => Jelly::field('enum', array(
 				'column' => 'post_status',
 				'choices' => array('activated', 'saved', 'pending')
 			)),
-			'saved' => new Field_Integer(array(
+			'saved' => Jelly::field('integer', array(
 				'column' => 'post_saved'
 			)),
-			'tags' => new Field_Text(array(
+			'tags' => Jelly::field('text', array(
 				'column' => 'post_tags'
 			)),
-			'last_update' => new Field_Timestamp(array(
+			'last_update' => Jelly::field('timestamp', array(
 				'column' => 'post_last_update',
 				'auto_now_create' => FALSE,
 				'auto_now_update' => TRUE,
 				'null' => TRUE,
 				'default' => date::now()
 			)),
-			'comments' => new Field_HasMany(array(
+			'comments' => Jelly::field('hasmany', array(
 				'foreign' => 'postcomment.pcomment_post'
 			))
 		));

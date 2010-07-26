@@ -1,8 +1,8 @@
 <?php
 
-$missions = Jelly::select('mission')
+$missions = Jelly::query('mission')
 	->where('status', '=', 'current')
-	->execute();
+	->select();
 
 if (count($missions) > 0):
 	foreach ($missions as $m):

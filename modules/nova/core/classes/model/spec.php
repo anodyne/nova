@@ -17,27 +17,27 @@ class Model_Spec extends Jelly_Model
 	public static function initialize(Jelly_Meta $meta)
 	{
 		$meta->fields(array(
-			'id' => new Field_Primary(array(
+			'id' => Jelly::field('primary', array(
 				'column' => 'specs_id'
 			)),
-			'name' => new Field_String(array(
+			'name' => Jelly::field('string', array(
 				'column' => 'specs_name'
 			)),
-			'order' => new Field_Integer(array(
+			'order' => Jelly::field('integer', array(
 				'column' => 'specs_order'
 			)),
-			'display' => new Field_Enum(array(
+			'display' => Jelly::field('enum', array(
 				'column' => 'specs_display',
 				'choices' => array('y','n'),
 				'default' => 'y'
 			)),
-			'images' => new Field_Text(array(
+			'images' => Jelly::field('text', array(
 				'column' => 'specs_images',
 			)),
-			'summary' => new Field_Text(array(
+			'summary' => Jelly::field('text', array(
 				'column' => 'specs_summary',
 			)),
-			'touritems' => new Field_HasMany(array(
+			'touritems' => Jelly::field('hasmany', array(
 				'foreign' => 'tour.specitem'
 			)),
 		));

@@ -25,6 +25,8 @@ class Controller_Nova_Main extends Controller_Nova_Base
 		$this->timezone	= $this->session->get('timezone', $this->options->timezone);
 		$this->dst		= $this->session->get('dst', $this->options->daylight_savings);
 		
+		//$this->skin = 'default';
+		
 		// set the shell
 		$this->template = View::factory('_common/layouts/main', array('skin' => $this->skin, 'sec' => 'main'));
 		
@@ -59,8 +61,8 @@ class Controller_Nova_Main extends Controller_Nova_Base
 		
 		// content
 		$this->template->title.= 'Main';
-		$data->header = Jelly::select('message')->key('welcome_head')->load()->value;
-		$data->message = Jelly::select('message')->key('welcome_msg')->load()->value;
+		$data->header = Jelly::query('message')->key('welcome_head')->limit(1)->select()->value;
+		$data->message = Jelly::query('message', 'welcome_msg')->select()->value;
 		
 		// send the response
 		$this->request->response = $this->template;
@@ -338,6 +340,14 @@ class Controller_Nova_Main extends Controller_Nova_Base
 		}
 		
 		echo Kohana::debug(count($field->values));
+		exit();
+	}
+	
+	public function action_test3()
+	{
+		$item = Jelly::query('setting')->select();
+		
+		echo Kohana::debug($item);
 		exit();
 	}
 	

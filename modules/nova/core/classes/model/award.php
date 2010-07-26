@@ -17,27 +17,27 @@ class Model_Award extends Jelly_Model
 	public static function initialize(Jelly_Meta $meta)
 	{
 		$meta->fields(array(
-			'id' => new Field_Primary(array(
+			'id' => Jelly::field('primary', array(
 				'column' => 'award_id'
 			)),
-			'name' => new Field_String(array(
+			'name' => Jelly::field('string', array(
 				'column' => 'award_name'
 			)),
-			'image' => new Field_String(array(
+			'image' => Jelly::field('string', array(
 				'column' => 'award_image',
 			)),
-			'order' => new Field_Integer(array(
+			'order' => Jelly::field('integer', array(
 				'column' => 'award_order',
 			)),
-			'desc' => new Field_Text(array(
+			'desc' => Jelly::field('text', array(
 				'column' => 'award_desc',
 			)),
-			'category' => new Field_Enum(array(
+			'category' => Jelly::field('enum', array(
 				'column' => 'award_cat',
 				'choices' => array('ic','ooc','both'),
 				'default' => 'ic'
 			)),
-			'display' => new Field_Enum(array(
+			'display' => Jelly::field('enum', array(
 				'column' => 'award_display',
 				'choices' => array('y','n'),
 				'default' => 'y'

@@ -18,32 +18,32 @@ class Model_Awardrec extends Jelly_Model
 	{
 		$meta->table('awards_received');
 		$meta->fields(array(
-			'id' => new Field_Primary(array(
+			'id' => Jelly::field('primary', array(
 				'column' => 'awardrec_id'
 			)),
-			'user' => new Field_BelongsTo(array(
+			'user' => Jelly::field('belongsto', array(
 				'column' => 'awardrec_user',
 				'foreign' => 'user'
 			)),
-			'character' => new Field_BelongsTo(array(
+			'character' => Jelly::field('belongsto', array(
 				'column' => 'awardrec_character',
 				'foreign' => 'character'
 			)),
-			'nominated' => new Field_Integer(array(
+			'nominated' => Jelly::field('integer', array(
 				'column' => 'awardrec_nominated_by',
 			)),
-			'award' => new Field_BelongsTo(array(
+			'award' => Jelly::field('belongsto', array(
 				'column' => 'awardrec_award',
 				'foreign' => 'award'
 			)),
-			'date' => new Field_Timestamp(array(
+			'date' => Jelly::field('timestamp', array(
 				'column' => 'awardrec_date',
 				'auto_now_create' => TRUE,
 				'auto_now_update' => FALSE,
 				'null' => TRUE,
 				'default' => date::now()
 			)),
-			'reason' => new Field_Text(array(
+			'reason' => Jelly::field('text', array(
 				'column' => 'awardrec_reason'
 			)),
 		));

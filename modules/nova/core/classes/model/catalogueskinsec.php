@@ -18,24 +18,24 @@ class Model_Catalogueskinsec extends Jelly_Model
 	{
 		$meta->table('catalogue_skinsecs');
 		$meta->fields(array(
-			'id' => new Field_Primary(array(
+			'id' => Jelly::field('primary', array(
 				'column' => 'skinsec_id'
 			)),
-			'section' => new Field_String(array(
+			'section' => Jelly::field('string', array(
 				'column' => 'skinsec_section'
 			)),
-			'skin' => new Field_String(array(
+			'skin' => Jelly::field('string', array(
 				'column' => 'skinsec_skin',
 			)),
-			'image' => new Field_String(array(
+			'image' => Jelly::field('string', array(
 				'column' => 'skinsec_image_preview'
 			)),
-			'status' => new Field_Enum(array(
+			'status' => Jelly::field('enum', array(
 				'column' => 'skinsec_status',
 				'choices' => array('active','inactive','development'),
 				'default' => 'active'
 			)),
-			'default' => new Field_Enum(array(
+			'default' => Jelly::field('enum', array(
 				'column' => 'skinsec_default',
 				'choices' => array('y','n'),
 				'default' => 'n'

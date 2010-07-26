@@ -18,16 +18,16 @@ class Model_Loginattempt extends Jelly_Model
 	{
 		$meta->table('login_attempts');
 		$meta->fields(array(
-			'id' => new Field_Primary(array(
+			'id' => Jelly::field('primary', array(
 				'column' => 'login_id'
 			)),
-			'ip' => new Field_String(array(
+			'ip' => Jelly::field('string', array(
 				'column' => 'login_ip'
 			)),
-			'email' => new Field_Email(array(
+			'email' => Jelly::field('email', array(
 				'column' => 'login_email'
 			)),
-			'date' => new Field_Timestamp(array(
+			'date' => Jelly::field('timestamp', array(
 				'column' => 'login_time',
 				'auto_now_create' => TRUE,
 				'auto_now_update' => FALSE,

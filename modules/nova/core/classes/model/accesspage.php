@@ -18,23 +18,23 @@ class Model_Accesspage extends Jelly_Model
 	{
 		$meta->table('access_pages');
 		$meta->fields(array(
-			'id' => new Field_Primary(array(
+			'id' => Jelly::field('primary', array(
 				'column' => 'page_id'
 			)),
-			'name' => new Field_String(array(
+			'name' => Jelly::field('string', array(
 				'column' => 'page_name'
 			)),
-			'link' => new Field_String(array(
+			'link' => Jelly::field('string', array(
 				'column' => 'page_url'
 			)),
-			'level' => new Field_String(array(
+			'level' => Jelly::field('string', array(
 				'column' => 'page_level'
 			)),
-			'group' => new Field_BelongsTo(array(
+			'group' => Jelly::field('belongsto', array(
 				'column' => 'page_group',
 				'foreign' => 'accessgroup'
 			)),
-			'desc' => new Field_Text(array(
+			'desc' => Jelly::field('text', array(
 				'column' => 'page_desc'
 			)),
 		));

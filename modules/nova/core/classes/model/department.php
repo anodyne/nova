@@ -18,29 +18,29 @@ class Model_Department extends Jelly_Model
 	{
 		$meta->table('departments_'.Kohana::config('nova.genre'));
 		$meta->fields(array(
-			'id' => new Field_Primary(array(
+			'id' => Jelly::field('primary', array(
 				'column' => 'dept_id'
 			)),
-			'name' => new Field_String(array(
+			'name' => Jelly::field('string', array(
 				'column' => 'dept_name'
 			)),
-			'desc' => new Field_Text(array(
+			'desc' => Jelly::field('text', array(
 				'column' => 'dept_desc',
 			)),
-			'order' => new Field_Integer(array(
+			'order' => Jelly::field('integer', array(
 				'column' => 'dept_order',
 			)),
-			'display' => new Field_Enum(array(
+			'display' => Jelly::field('enum', array(
 				'column' => 'dept_display',
 				'choices' => array('y','n'),
 				'default' => 'y'
 			)),
-			'type' => new Field_Enum(array(
+			'type' => Jelly::field('enum', array(
 				'column' => 'dept_type',
 				'choices' => array('playing','nonplaying'),
 				'default' => 'playing'
 			)),
-			'parent' => new Field_HasOne(array(
+			'parent' => Jelly::field('hasone', array(
 				'column' => 'dept_parent',
 				'foreign' => 'department'
 			))

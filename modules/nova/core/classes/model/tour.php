@@ -18,27 +18,27 @@ class Model_Tour extends Jelly_Model
 	{
 		$meta->table('tour');
 		$meta->fields(array(
-			'id' => new Field_Primary(array(
+			'id' => Jelly::field('primary', array(
 				'column' => 'tour_id'
 			)),
-			'name' => new Field_String(array(
+			'name' => Jelly::field('string', array(
 				'column' => 'tour_name'
 			)),
-			'order' => new Field_Integer(array(
+			'order' => Jelly::field('integer', array(
 				'column' => 'tour_order'
 			)),
-			'display' => new Field_Enum(array(
+			'display' => Jelly::field('enum', array(
 				'column' => 'tour_display',
 				'choices' => array('y','n'),
 				'default' => 'y'
 			)),
-			'images' => new Field_Text(array(
+			'images' => Jelly::field('text', array(
 				'column' => 'tour_images',
 			)),
-			'summary' => new Field_Text(array(
+			'summary' => Jelly::field('text', array(
 				'column' => 'tour_summary',
 			)),
-			'specitem' => new Field_BelongsTo(array(
+			'specitem' => Jelly::field('belongsto', array(
 				'column' => 'tour_spec_item',
 				'foreign' => 'spec'
 			)),
