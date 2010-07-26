@@ -564,21 +564,21 @@ abstract class Nova_Form extends Kohana_Form
 		// grab the positions
 		if ($type == 'open')
 		{
-			$positions = Jelly::select('position')->open()->order_by('dept', 'asc')->order_by('order', 'asc');
+			$positions = Jelly::query('position')->open()->order_by('dept', 'asc')->order_by('order', 'asc');
 		}
 		elseif (is_numeric($type))
 		{
-			$positions = Jelly::select('position')->where('dept', '=', $type)->order_by('order', 'asc');
+			$positions = Jelly::query('position')->where('dept', '=', $type)->order_by('order', 'asc');
 		}
 		else
 		{
-			$positions = Jelly::select('position')->order_by('order', 'asc');
+			$positions = Jelly::query('position')->order_by('order', 'asc');
 		}
 		
 		// set the display parameter
 		(!empty($display)) ? $positions->where('display', '=', $display) : FALSE;
 		
-		$positions = $positions->execute();
+		$positions = $positions->select();
 		
 		if (count($positions) > 0)
 		{
@@ -623,11 +623,11 @@ abstract class Nova_Form extends Kohana_Form
 	public static function select_rank($name, $selected = array(), $extra = NULL)
 	{
 		// grab the ranks
-		$ranks = Jelly::select('rank')
+		$ranks = Jelly::query('rank')
 			->where('display', '=', 'y')
 			->order_by('class', 'asc')
 			->order_by('order', 'asc')
-			->execute();
+			->select();
 		
 		if (count($ranks) > 0)
 		{

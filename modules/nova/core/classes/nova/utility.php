@@ -132,7 +132,7 @@ abstract class Nova_Utility
 		$dir = self::directory_map(APPPATH.'assets/common/'.Kohana::config('nova.genre').'/ranks/', TRUE);
 		
 		// get all the rank sets locations
-		$ranks = Jelly::select('cataloguerank')->where('genre', '=', Kohana::config('nova.genre'))->execute();
+		$ranks = Jelly::query('cataloguerank')->where('genre', '=', Kohana::config('nova.genre'))->select();
 		
 		if (count($ranks) > 0)
 		{
@@ -176,18 +176,28 @@ abstract class Nova_Utility
 					$content = sfYaml::load($file);
 					
 					// add the item to the database
-					$add = Jelly::factory('cataloguerank')
-						->set(array(
-							'name'		=> $content['rank'],
-							'location'	=> $content['location'],
-							'credits'	=> $content['credits'],
-							'preview'	=> $content['preview'],
-							'blank'		=> $content['blank'],
-							'extension'	=> $content['extension'],
-							'url'		=> $content['url'],
-							'genre'		=> $content['genre']
+					$add = Jelly::query('cataloguerank')
+						->columns(array(
+							'name',
+							'location',
+							'credits',
+							'preview',
+							'blank',
+							'extension',
+							'url',
+							'genre'
 						))
-						->save();
+						->values(array(
+							$content['rank'],
+							$content['location'],
+							$content['credits'],
+							$content['preview'],
+							$content['blank'],
+							$content['extension'],
+							$content['url'],
+							$content['genre']
+						))
+						->insert();
 				}
 			}
 		}
@@ -223,7 +233,7 @@ abstract class Nova_Utility
 		$dir = self::directory_map(APPPATH.'views/', TRUE);
 		
 		// get all the skin catalogue items
-		$skins = Jelly::select('catalogueskin')->execute();
+		$skins = Jelly::query('catalogueskin')->select();
 		
 		if (count($skins) > 0)
 		{
@@ -271,26 +281,38 @@ abstract class Nova_Utility
 					$content = sfYaml::load($file);
 					
 					// add the skin to the database
-					Jelly::factory('catalogueskin')
-						->set(array(
-							'name'		=> $content['skin'],
-							'location'	=> $content['location'],
-							'credits'	=> $content['credits'],
+					Jelly::query('catalogueskin')
+						->columns(array(
+							'name',
+							'location',
+							'credits'
 						))
-						->save();
+						->values(array(
+							$content['skin'],
+							$content['location'],
+							$content['credits'],
+						))
+						->insert();
 					
 					// go through and add the sections
 					foreach ($content['sections'] as $v)
 					{
-						Jelly::factory('catalogueskinsec')
-							->set(array(
-								'section'	=> $v['type'],
-								'skin'		=> $content['location'],
-								'preview'	=> $v['preview'],
-								'status'	=> 'active',
-								'default'	=> 'n'
+						Jelly::query('catalogueskinsec')
+							->columns(array(
+								'section',
+								'skin',
+								'preview',
+								'status',
+								'default'
 							))
-							->save();
+							->values(array(
+								$v['type'],
+								$content['location'],
+								$v['preview'],
+								'active',
+								'n'
+							))
+							->insert();
 					}
 				}
 			}
@@ -336,7 +358,7 @@ abstract class Nova_Utility
 		$session = Session::instance();
 		
 		// get the date format
-		$format = Jelly::select('setting')->where('key', '=', 'date_format')->load()->value;
+		$format = Jelly::query('setting')->where('key', '=', 'date_format')->limit(1)->select()->value;
 		
 		// set the timezone
 		$timezone = $session->get('timezone', 'GMT');

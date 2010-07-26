@@ -156,7 +156,7 @@ abstract class Nova_Auth
 	public static function hash($string)
 	{
 		// grab the system model
-		$uid = Jelly::select('system', 1)->uid;
+		$uid = Jelly::query('system', 1)->select()->uid;
 		
 		// double hash the UID
 		$uid = sha1(sha1($uid));
@@ -215,7 +215,7 @@ abstract class Nova_Auth
 	public static function is_type($type, $id)
 	{
 		// load the user model
-		$is = Jelly::select('user', $id)->$type;
+		$is = Jelly::query('user', $id)->select()->$type;
 		
 		// figure out whether it's true or false
 		$retval = ($is == 'y') ? TRUE : FALSE;
@@ -239,7 +239,7 @@ abstract class Nova_Auth
 	{
 		// set the variables
 		$retval = 0;
-		$maintenance = Jelly::select('setting')->where('key', '=', 'maintenance')->load()->value;
+		$maintenance = Jelly::query('setting')->where('key', '=', 'maintenance')->limit(1)->select()->value;
 		
 		// check the login attempts
 		$attempts = self::_check_login_attempts($email);
@@ -265,7 +265,7 @@ abstract class Nova_Auth
 			else
 			{
 				// remove all of a user's login attempts
-				$attempts = Jelly::delete('loginattempt')->where('email', '=', $email)->execute();
+				$attempts = Jelly::query('loginattempt')->where('email', '=', $email)->delete();
 			
 				// update the login record
 				$login->last_login = date::now();
@@ -292,7 +292,7 @@ abstract class Nova_Auth
 					'ip' => Request::$client_ip,
 					'email' => $email
 				))
-				->save();
+				->update();
 		}
 		
 		return $retval;
@@ -345,7 +345,7 @@ abstract class Nova_Auth
 	protected static function _check_login_attempts($email)
 	{
 		// get the number of attempts the user has made
-		$attempts = Jelly::select('loginattempt')->where('email', '=', $email)->execute();
+		$attempts = Jelly::query('loginattempt')->where('email', '=', $email)->select();
 		
 		if ($attempts->count() < self::$allowed_login_attempts)
 		{
@@ -408,7 +408,7 @@ abstract class Nova_Auth
 	protected static function _destroy_cookie()
 	{
 		// grab nova's unique identifier
-		$uid = Jelly::select('system', 1)->uid;
+		$uid = Jelly::query('system', 1)->select()->uid;
 		
 		// destroy the cookie
 		cookie::delete('nova_'.$uid.'[email]');
@@ -424,7 +424,7 @@ abstract class Nova_Auth
 	protected static function _set_access($role)
 	{
 		// get the string of page IDs
-		$pageids = Jelly::select('accessrole', $role)->pages;
+		$pageids = Jelly::query('accessrole', $role)->select()->pages;
 		
 		// explode the string of page IDs into an array
 		$pageids_array = explode(',', $pageids);
@@ -435,7 +435,7 @@ abstract class Nova_Auth
 		// loop through the page IDs to get page information and put it into an array
 		foreach ($pageids_array as $p)
 		{
-			$pageinfo = Jelly::select('accesspage', $p);
+			$pageinfo = Jelly::query('accesspage', $p)->select();
 			
 			$pages[$pageinfo->link] = $pageinfo->level;
 		}
@@ -454,7 +454,7 @@ abstract class Nova_Auth
 	protected static function _set_cookie($email, $password)
 	{
 		// grab nova's unique identifier
-		$uid = Jelly::select('system', 1)->uid;
+		$uid = Jelly::query('system', 1)->select()->uid;
 		
 		// set the cookie
 		cookie::set('nova_'.$uid.'[email]', $email, 1209600);
@@ -488,7 +488,7 @@ abstract class Nova_Auth
 				if (!empty($value) && $value !== NULL)
 				{
 					// get the menu item
-					$menu = Jelly::select('menu', $value);
+					$menu = Jelly::query('menu', $value)->select();
 					
 					// set the link info
 					$links[] = html::anchor($menu->link, $menu->name);
@@ -560,7 +560,7 @@ abstract class Nova_Auth
 		$password = self::hash($password);
 		
 		// get the user record
-		$login = Jelly::select('user')->where('email', '=', $email)->execute();
+		$login = Jelly::query('user')->where('email', '=', $email)->select();
 		
 		if (count($login) == 0)
 		{
