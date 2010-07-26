@@ -10,14 +10,16 @@
 class Model_Builder_Setting extends Jelly_Builder
 {
 	/**
-	 * Creates a where statement based on the setting key value.
+	 * Creates a where statement based on the setting key value. Since we're trying pull
+	 * a specific key and the keys are supposed to be unique, this also creates a LIMIT 1
+	 * statement as well.
 	 *
-	 *     $setting = Jelly::select('setting')->key('sim_name')->load();
+	 *     $setting = Jelly::query('setting')->key('sim_name')->select();
 	 *
 	 * @return	object Jelly_Builder object
 	 */
 	public function key($value)
 	{
-		return $this->where('key', '=', $value);
+		return $this->where('key', '=', $value)->limit(1);
 	}
 }

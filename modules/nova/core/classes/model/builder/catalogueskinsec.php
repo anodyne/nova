@@ -18,6 +18,6 @@ class Model_Builder_Catalogueskinsec extends Jelly_Builder
 	 */
 	public function defaultskin($section)
 	{
-		return $this->where('status', '=', 'active')->where('default', '=', 'y')->where('section', '=', $section);
+		return $this->where('status', '=', 'active')->where('default', '=', 'y')->where('section', '=', $section)->limit(1);
 	}
 }

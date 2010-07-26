@@ -18,6 +18,6 @@ class Model_Builder_Cataloguerank extends Jelly_Builder
 	 */
 	public function defaultrank()
 	{
-		return $this->where('genre', '=', Kohana::config('nova.genre'))->where('default', '=', 'y');
+		return $this->where('genre', '=', Kohana::config('nova.genre'))->where('default', '=', 'y')->limit(1);
 	}
 }
