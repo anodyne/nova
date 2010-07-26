@@ -87,7 +87,7 @@ class Controller_Upgradeajax extends Controller_Template
 			$this->db->query(NULL, "ALTER TABLE ".$this->db->table_prefix()."awards MODIFY COLUMN `award_id` INT(5) auto_increment primary key", TRUE);
 			
 			// get the number of records in the new table
-			$count_new = Jelly::select('award')->count();
+			$count_new = Jelly::query('award')->count();
 	
 			if ($count_new == $count_old)
 			{
@@ -120,7 +120,7 @@ class Controller_Upgradeajax extends Controller_Template
 	public function action_upgrade_characters()
 	{
 		// change the user model to prevent NULL values
-		Jelly::meta('user')->fields('join')->auto_now_create = FALSE;
+		Jelly::meta('user')->field('join')->auto_now_create = FALSE;
 		
 		try {
 			// get the characters
@@ -143,7 +143,7 @@ class Controller_Upgradeajax extends Controller_Template
 					'section' => 1,
 					'order' => 4,
 					'form' => 'bio',
-					'label' => 'Languages',
+					'label' => 'Languages'
 				))
 				->save();
 			
@@ -216,17 +216,18 @@ class Controller_Upgradeajax extends Controller_Template
 				DBForge::optimize('users');
 				
 				// get the preferences
-				$prefs = Jelly::select('userpref')->execute();
+				$prefs = Jelly::query('userpref')->select();
 				
 				// loop through and create the preferences for the user
 				foreach ($prefs as $p)
 				{
-					$prefvalues = Jelly::insert('userprefvalue')
+					$prefvalues = Jelly::factory('userprefvalue')
 						->set(array(
 							'user' => $useraction->id(),
 							'key' => $p->key,
 							'value' => $p->default
-						));
+						))
+						->save();
 				}
 				
 				// keeping track of user ids
@@ -244,19 +245,19 @@ class Controller_Upgradeajax extends Controller_Template
 				// create the character
 				$characteraction = Jelly::factory('character')
 					->set(array(
-						'id'			=> $c->crewid,
-						'user'			=> (!empty($c->email)) ? $charIDs[$c->email] : NULL,
-						'fname'			=> $c->firstName,
-						'mname'			=> $c->middleName,
-						'lname'			=> $c->lastName,
-						'status'		=> ($c->crewType == 'npc') ? 'active' : $c->crewType,
-						'images' 		=> $c->image,
-						'activate' 		=> $c->joinDate,
-						'deactivate' 	=> $c->leaveDate,
-						'rank'			=> $c->rankid,
-						'position1'		=> $c->positionid,
-						'position2' 	=> $c->positionid2,
-						'last_post' 	=> $c->lastPost
+						'id' => $c->crewid,
+						'user' => (!empty($c->email)) ? $charIDs[$c->email] : NULL,
+						'fname' => $c->firstName,
+						'mname' => $c->middleName,
+						'lname' => $c->lastName,
+						'status' => ($c->crewType == 'npc') ? 'active' : $c->crewType,
+						'images' => $c->image,
+						'activate' => $c->joinDate,
+						'deactivate' => $c->leaveDate,
+						'rank' => $c->rankid,
+						'position1' => $c->positionid,
+						'position2' => $c->positionid2,
+						'last_post' => $c->lastPost
 					))
 					->save();
 				
@@ -296,11 +297,11 @@ class Controller_Upgradeajax extends Controller_Template
 					// insert the character data
 					$fieldata = Jelly::factory('formdata')
 						->set(array(
-							'form'		=> 'bio',
+							'form' => 'bio',
 							'character' => $characteraction->id(),
-							'user' 		=> (!empty($c->email)) ? $charIDs[$c->email] : NULL,
-							'field' 	=> $field,
-							'value' 	=> $value
+							'user' => (!empty($c->email)) ? $charIDs[$c->email] : NULL,
+							'field' => $field,
+							'value' => $value
 						))
 						->save();
 						
@@ -410,10 +411,10 @@ class Controller_Upgradeajax extends Controller_Template
 			$password = Auth::hash($password);
 			
 			// update everyone
-			Jelly::update('user')->set(array('password' => $password))->execute();
+			Jelly::query('user')->set(array('password' => $password))->update();
 			
 			// find out how many users don't have the right password
-			$count = Jelly::select('user')->where('password', '!=', $password)->count();
+			$count = Jelly::query('user')->where('password', '!=', $password)->count();
 			
 			if ($count > 0)
 			{
@@ -453,9 +454,7 @@ class Controller_Upgradeajax extends Controller_Template
 			
 			foreach ($roles as $r)
 			{
-				$user = Jelly::select('user', $r);
-				$user->role = 1;
-				$user->save();
+				$user = Jelly::factory('user', $r)->set(array('role' => 1))->save();
 				$saved[] = $user->saved();
 			}
 			
@@ -560,7 +559,7 @@ class Controller_Upgradeajax extends Controller_Template
 			$this->db->query(NULL, "ALTER TABLE ".$this->db->table_prefix()."personal_logs MODIFY COLUMN `log_id` INT(5) auto_increment primary key", TRUE);
 			
 			// get the new count of logs
-			$count_new = Jelly::select('personallog')->count();
+			$count_new = Jelly::query('personallog')->count();
 			
 			if ($count_new == 0)
 			{
@@ -756,10 +755,10 @@ class Controller_Upgradeajax extends Controller_Template
 			$this->db->query(NULL, 'ALTER TABLE '.$this->db->table_prefix().'posts MODIFY COLUMN `post_id` INT(8) auto_increment primary key', TRUE);
 			
 			// count the missions
-			$count_missions_new = Jelly::select('mission')->count();
+			$count_missions_new = Jelly::query('mission')->count();
 			
 			// count the posts
-			$count_posts_new = Jelly::select('post')->count();
+			$count_posts_new = Jelly::query('post')->count();
 			
 			if ($count_missions_new == 0 && $count_posts_new == 0)
 			{
@@ -977,10 +976,10 @@ class Controller_Upgradeajax extends Controller_Template
 			$this->db->query(NULL, "ALTER TABLE ".$this->db->table_prefix()."news MODIFY COLUMN `news_id` INT(8) auto_increment primary key", TRUE);
 			
 			// count the news items
-			$count_news_new = Jelly::select('news')->count();
+			$count_news_new = Jelly::query('news')->count();
 			
 			// count the news categories
-			$count_cats_new = Jelly::select('newscategory')->count();
+			$count_cats_new = Jelly::query('newscategory')->count();
 			
 			if ($count_news_new == 0 && $count_cats_new == 0)
 			{
@@ -1149,10 +1148,10 @@ class Controller_Upgradeajax extends Controller_Template
 			$dir_skins = count($dir);
 			
 			// get the catalogue count for ranks
-			$db_ranks = Jelly::select('cataloguerank')->count();
+			$db_ranks = Jelly::query('cataloguerank')->count();
 			
 			// get the catalogue count for skins
-			$db_skins = Jelly::select('catalogueskin')->count();
+			$db_skins = Jelly::query('catalogueskin')->count();
 
 			if ($dir_ranks == $db_ranks && $dir_skins == $db_skins)
 			{
@@ -1216,27 +1215,31 @@ class Controller_Upgradeajax extends Controller_Template
 		foreach ($result as $r)
 		{
 			// sim name
-			$item = Jelly::select('setting')->where('key', '=', 'sim_name')->load();
-			$item->value = $r->shipPrefix.' '.$r->shipName.' '.$r->shipRegistry;
-			$item->save();
+			$id = Jelly::query('setting')->key('sim_name')->select()->id;
+			$item = Jelly::factory('setting', $id)
+				->set(array('value' => $r->shipPrefix.' '.$r->shipName.' '.$r->shipRegistry))
+				->save();
 			$settings[] = $item->saved();
 			
 			// sim year
-			$item = Jelly::select('setting')->where('key', '=', 'sim_year')->load();
-			$item->value = $r->simmYear;
-			$item->save();
+			$id = Jelly::query('setting')->key('sim_year')->select()->id;
+			$item = Jelly::factory('setting', $id)
+				->set(array('value' => $r->simmYear))
+				->save();
 			$settings[] = $item->saved();
 			
 			// posting requirement
-			$item = Jelly::select('setting')->where('key', '=', 'post_count_format')->load();
-			$item->value = ($r->jpCount == 'y') ? 'multiple' : 'single';
-			$item->save();
+			$id = Jelly::query('setting')->key('post_count_format')->select()->id;
+			$item = Jelly::factory('setting', $id)
+				->set(array('value' => ($r->jpCount == 'y') ? 'multiple' : 'single'))
+				->save();
 			$settings[] = $item->saved();
 			
-			// sim name
-			$item = Jelly::select('setting')->where('key', '=', 'email_subject')->load();
-			$item->value = $r->emailSubject;
-			$item->save();
+			// email subject
+			$id = Jelly::query('setting')->key('email_subject')->select()->id;
+			$item = Jelly::factory('setting', $id)
+				->set(array('value' => $r->emailSubject))
+				->save();
 			$settings[] = $item->saved();
 		}
 		
@@ -1246,39 +1249,45 @@ class Controller_Upgradeajax extends Controller_Template
 		foreach ($result as $r)
 		{
 			// welcome message
-			$item = Jelly::select('message')->where('key', '=', 'welcome_msg')->load();
-			$item->value = $r->welcomeMessage;
-			$item->save();
+			$id = Jelly::query('message')->key('welcome_msg')->select()->id;
+			$item = Jelly::factory('message', $id)
+				->set(array('value' => $r->welcomeMessage))
+				->save();
 			$messages[] = $item->saved();
 			
 			// sim message
-			$item = Jelly::select('message')->where('key', '=', 'sim')->load();
-			$item->value = $r->simmMessage;
-			$item->save();
+			$id = Jelly::query('message')->key('sim')->select()->id;
+			$item = Jelly::factory('message', $id)
+				->set(array('value' => $r->simmMessage))
+				->save();
 			$messages[] = $item->saved();
 			
 			// join disclaimer
-			$item = Jelly::select('message')->where('key', '=', 'join_disclaimer')->load();
-			$item->value = $r->joinDisclaimer;
-			$item->save();
+			$id = Jelly::query('message')->key('join_disclaimer')->select()->id;
+			$item = Jelly::factory('message', $id)
+				->set(array('value' => $r->joinDisclaimer))
+				->save();
 			$messages[] = $item->saved();
 			
 			// acceptance message
-			$item = Jelly::select('message')->where('key', '=', 'accept_message')->load();
-			$item->value = $r->acceptMessage;
-			$item->save();
+			$id = Jelly::query('message')->key('accept_message')->select()->id;
+			$item = Jelly::factory('message', $id)
+				->set(array('value' => $r->acceptMessage))
+				->save();
 			$messages[] = $item->saved();
 			
 			// rejection message
-			$item = Jelly::select('message')->where('key', '=', 'reject_message')->load();
-			$item->value = $r->rejectMessage;
-			$item->save();
+			$id = Jelly::query('message')->key('reject_message')->select()->id;
+			$item = Jelly::factory('message', $id)
+				->set(array('value' => $r->rejectMessage))
+				->save();
 			$messages[] = $item->saved();
 			
 			// join post
-			$item = Jelly::select('message')->where('key', '=', 'join_post')->load();
-			$item->value = $r->samplePostQuestion;
-			$item->save();
+			$id = Jelly::query('message')->key('join_post')->select()->id;
+			$item = Jelly::factory('message', $id)
+				->set(array('value' => $r->samplePostQuestion))
+				->save();
 			$messages[] = $item->saved();
 		}
 		
@@ -1330,7 +1339,7 @@ class Controller_Upgradeajax extends Controller_Template
 			// create the spec item
 			Jelly::factory('spec')
 				->set(array(
-					'name' => Jelly::select('setting')->key('sim_name')->load()->value,
+					'name' => Jelly::query('setting')->key('sim_name')->limit(1)->select()->value,
 					'order' => 0,
 				))
 				->save();
@@ -1744,7 +1753,7 @@ class Controller_Upgradeajax extends Controller_Template
 	public function action_upgrade_user_awards()
 	{
 		// change the awards received model to prevent NULL values
-		Jelly::meta('awardrec')->fields('date')->auto_now_create = FALSE;
+		Jelly::meta('awardrec')->field('date')->auto_now_create = FALSE;
 		
 		try {
 			// get the crew from the sms table
@@ -1755,7 +1764,7 @@ class Controller_Upgradeajax extends Controller_Template
 			
 			foreach ($result as $c)
 			{
-				$user = Jelly::select('character', $c->crewid)->user;
+				$user = Jelly::query('character', $c->crewid)->select()->user;
 				
 				if (!empty($c->awards))
 				{
@@ -1832,24 +1841,24 @@ class Controller_Upgradeajax extends Controller_Template
 	{
 		try {
 			// get the total number of users
-			$users = Jelly::select('user')->count();
+			$users = Jelly::query('user')->count();
 			
 			// get the total number of characters
-			$characters = Jelly::select('character')->count();
+			$characters = Jelly::query('character')->count();
 			
 			if ($users > 0 && $characters > 0)
 			{
 				// pull the defaults for skins and ranks
 				$defaults = array(
-					'skin_main'		=> Jelly::select('catalogueskinsec')->defaultskin('main')->load()->skin,
-					'skin_admin'	=> Jelly::select('catalogueskinsec')->defaultskin('admin')->load()->skin,
-					'skin_wiki'		=> Jelly::select('catalogueskinsec')->defaultskin('wiki')->load()->skin,
-					'rank'			=> Jelly::select('cataloguerank')->defaultrank()->load()->location,
+					'skin_main'		=> Jelly::query('catalogueskinsec')->defaultskin('main')->select()->skin,
+					'skin_admin'	=> Jelly::query('catalogueskinsec')->defaultskin('admin')->select()->skin,
+					'skin_wiki'		=> Jelly::query('catalogueskinsec')->defaultskin('wiki')->select()->skin,
+					'rank'			=> Jelly::query('cataloguerank')->defaultrank()->select()->location,
 					'links'			=> '',
 				);
 				
 				// update all users
-				Jelly::update('user')->set($defaults)->execute();
+				Jelly::query('user')->set($defaults)->update();
 				
 				$retval = array(
 					'code' => 1,
@@ -1885,17 +1894,20 @@ class Controller_Upgradeajax extends Controller_Template
 			
 			foreach ($result as $c)
 			{
-				$user = Jelly::select('character', $c->crewid)->user;
+				$user = Jelly::query('character', $c->crewid)->select()->user;
 				
 				if (!is_null($user) && $user->id > 0)
 				{
 					// update the personal logs
-					$logs = Jelly::update('personallog')->where('author_character', '=', $c->crewid)->set(array('author_user' => $user->id));
+					$logs = Jelly::query('personallog')
+						->where('author_character', '=', $c->crewid)
+						->set(array('author_user' => $user->id))
+						->update();
 				}
 			}
 			
 			// count the number of personal logs that don't have a user (there shouldn't be any)
-			$blank = Jelly::select('personallog')->where('author_user', '=', '')->count();
+			$blank = Jelly::query('personallog')->where('author_user', '=', '')->count();
 			
 			if ($blank > 0)
 			{
@@ -1932,17 +1944,20 @@ class Controller_Upgradeajax extends Controller_Template
 			
 			foreach ($result as $c)
 			{
-				$user = Jelly::select('character', $c->crewid)->user;
+				$user = Jelly::query('character', $c->crewid)->select()->user;
 				
 				if (!is_null($user) && $user->id > 0)
 				{
 					// update the news items
-					$news = Jelly::update('news')->where('author_character', '=', $c->crewid)->set(array('author_user' => $user->id));
+					$news = Jelly::query('news')
+						->where('author_character', '=', $c->crewid)
+						->set(array('author_user' => $user->id))
+						->update();
 				}
 			}
 			
 			// count the number of news items without a user (there shouldn't be any)
-			$blank = Jelly::select('news')->where('author_user', '=', '')->count();
+			$blank = Jelly::query('news')->where('author_user', '=', '')->count();
 			
 			if ($blank > 0)
 			{
@@ -1975,7 +1990,7 @@ class Controller_Upgradeajax extends Controller_Template
 	{
 		try {
 			// get all the posts
-			$posts = Jelly::select('post')->execute();
+			$posts = Jelly::query('post')->select();
 			
 			// set a temp array to collect saves
 			$saved = array();
@@ -1993,7 +2008,7 @@ class Controller_Upgradeajax extends Controller_Template
 					if ($a > 0)
 					{
 						// get the user id
-						$user = Jelly::select('character', $a)->user;
+						$user = Jelly::query('character', $a)->select()->user;
 					
 						if (!is_null($user) && !in_array($user->id, $array))
 						{
@@ -2006,9 +2021,9 @@ class Controller_Upgradeajax extends Controller_Template
 				$users = implode(',', $array);
 				
 				// update the post
-				$post = Jelly::select('post', $p->id);
-				$post->author_users = $users;
-				$post->save();
+				$post = Jelly::factory('post', $p->id)
+					->set(array('author_users' => $users))
+					->save();
 				$saved[] = $post->saved();
 			}
 			
@@ -2043,8 +2058,8 @@ class Controller_Upgradeajax extends Controller_Template
 	{
 		try {
 			// update the welcome page header
-			$msg = Jelly::select('message')->where('key', '=', 'welcome_head')->load();
-			$msg->value = 'Welcome to the '.Jelly::select('setting')->where('key', '=', 'sim_name')->load()->value.'!';
+			$msg = Jelly::query('message')->key('welcome_head')->select();
+			$msg->value = 'Welcome to the '.Jelly::query('setting')->key('sim_name')->select()->value.'!';
 			$msg->save();
 			
 			if ($msg->saved())

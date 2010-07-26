@@ -388,7 +388,7 @@ class Controller_Upgrade extends Controller_Template
 				$data->options = array();
 				
 				// get all active users
-				$all = Jelly::select('user')->where('status', '=', 'active')->execute();
+				$all = Jelly::query('user')->where('status', '=', 'active')->select();
 				
 				foreach ($all as $a)
 				{
