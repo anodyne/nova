@@ -1051,22 +1051,23 @@ return array
 				
 				// set the loading image
 				$data->loading = array(
-					'src' => location::image('loading-circle-large.gif', NULL, 'install', 'image'),
+					'src' => MODFOLDER.'/nova/install/views/install/images/loading-circle-large.gif',
 					'attr' => array(
 						'class' => 'image'),
 				);
 				
 				// get the default rank set
-				$rankdefault = Jelly::select('setting')->where('key', '=', 'display_rank')->load()->value;
+				$rankdefault = Jelly::query('setting')->where('key', '=', 'display_rank')->limit(1)->select()->value;
 				
 				// grab the rank catalogue
-				$catalogue = Jelly::select('cataloguerank')->where('location', '=', $rankdefault)->load();
+				$catalogue = Jelly::query('cataloguerank')->where('location', '=', $rankdefault)->limit(1)->select();
 				
 				// pull the rank record
-				$rank = Jelly::select('rank', $session->get('rank', 1));
+				$rank = Jelly::query('rank', $session->get('rank', 1))->select();
 				
 				$data->default_rank = array(
-					'src' => location::image($rank->image.$catalogue->extension, NULL, $catalogue->location, 'rank'),
+					//'src' => location::image($rank->image.$catalogue->extension, NULL, $catalogue->location, 'rank'),
+					'src' => APPFOLDER.'/assets/common/'.Kohana::config('nova.genre').'/ranks/'.$rankdefault.'/'.$rank->image.$catalogue->extension,
 					'attr' => array(
 						'class' => 'image'),
 				);
@@ -1117,61 +1118,97 @@ return array
 						$rank = trim(security::xss_clean($_POST['rank']));
 						
 						// update the settings
-						$upSettings = Jelly::select('setting')->where('key', '=', 'sim_name')->load();
-						$upSettings->value = $simname;
-						$upSettings->save();
-						
-						$upSettings = Jelly::select('setting')->where('key', '=', 'email_subject')->load();
-						$upSettings->value = '['.$simname.']';
-						$upSettings->save();
+						Jelly::query('setting')
+							->where('key', '=', 'sim_name')
+							->limit(1)
+							->set(array(
+								'value' => $simname
+							))
+							->update();
+							
+						Jelly::query('setting')
+							->where('key', '=', 'email_subject')
+							->limit(1)
+							->set(array(
+								'value' => '['.$simname.']'
+							))
+							->update();
 						
 						// create the user
-						$crUser = Jelly::factory('user')
-							->set(array(
-								'status'		=> 'active',
-								'name'			=> $name,
-								'email'			=> $email,
-								'password'		=> Auth::hash($password),
-								'role'			=> 1,
-								'sysadmin'		=> 'y',
-								'gm'			=> 'y',
-								'webmaster'		=> 'y',
-								'skin_main'		=> Jelly::select('catalogueskinsec')->defaultskin('main')->load()->skin,
-								'skin_wiki'		=> Jelly::select('catalogueskinsec')->defaultskin('wiki')->load()->skin,
-								'skin_admin'	=> Jelly::select('catalogueskinsec')->defaultskin('admin')->load()->skin,
-								'rank'			=> Jelly::select('cataloguerank')->defaultrank()->load()->location,
+						$crUser = Jelly::query('user')
+							->columns(array(
+								'status',
+								'name',
+								'email',
+								'password',
+								'role',
+								'sysadmin',
+								'gm',
+								'webmaster',
+								'skin_main',
+								'skin_wiki',
+								'skin_admin',
+								'rank'
 							))
-							->save();
+							->values(array(
+								'active',
+								$name,
+								$email,
+								Auth::hash($password),
+								1,
+								'y',
+								'y',
+								'y',
+								Jelly::query('catalogueskinsec')->defaultskin('main')->limit(1)->select()->skin,
+								Jelly::query('catalogueskinsec')->defaultskin('wiki')->limit(1)->select()->skin,
+								Jelly::query('catalogueskinsec')->defaultskin('admin')->limit(1)->select()->skin,
+								Jelly::query('cataloguerank')->defaultrank()->limit(1)->select()->location,
+							))
+							->insert();
 						
 						// create the character
-						$crCharacter = Jelly::factory('character')
-							->set(array(
-								'user'			=> $crUser->id,
-								'fname'			=> $first_name,
-								'lname'			=> $last_name,
-								'position1'		=> $position,
-								'rank'			=> $rank,
-								'type'			=> 'active',
-								'activate'		=> date::now(),
+						$crCharacter = Jelly::query('character')
+							->columns(array(
+								'user',
+								'fname',
+								'lname',
+								'position1',
+								'rank',
+								'status',
+								'activate'
 							))
-							->save();
+							->values(array(
+								$crUser[0],
+								$first_name,
+								$last_name,
+								$position,
+								$rank,
+								'active',
+								date::now()
+							))
+							->insert();
 						
 						// update the user with the character info
-						$crUser->main_char = $crCharacter->id;
-						$crUser->save();
+						Jelly::query('user', $crUser[0])->set(array('main_char' => $crCharacter[0]))->update();
 						
 						// get the preferences
-						$prefs = Jelly::select('userpref')->execute();
+						$prefs = Jelly::query('userpref')->select();
 						
 						// loop through and create the preferences for the user
 						foreach ($prefs as $p)
 						{
-							$prefvalues = Jelly::insert('userprefvalue')
-								->set(array(
-									'user' => $crUser->id,
-									'key' => $p->key,
-									'value' => $p->default
-								));
+							$prefvalues = Jelly::query('userprefvalue')
+								->columns(array(
+									'user',
+									'key',
+									'value'
+								))
+								->values(array(
+									$crUser[0],
+									$p->key,
+									$p->default
+								))
+								->insert();
 						}
 						
 						// do the quick installs
