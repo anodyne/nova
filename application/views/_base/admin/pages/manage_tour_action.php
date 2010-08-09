@@ -37,6 +37,7 @@
 			<p>
 				<kbd><?php echo $label['spec_item'];?></kbd>
 				<?php echo form_dropdown('tour_spec_item', $specs, $inputs['spec_item']);?>
+				<a rel="tooltip" title="<?php echo $label['specitem_select'];?>" class="image"><?php echo img($images['help']);?></a>
 			</p>
 		<?php endif;?>
 		

@@ -4863,6 +4863,10 @@ class Manage_base extends Controller {
 				'src' => img_location('loading-circle.gif', $this->skin, 'admin'),
 				'alt' => lang('actions_loading'),
 				'class' => 'image'),
+			'help' => array(
+				'src' => img_location('help.png', $this->skin, 'admin'),
+				'alt' => '[?]',
+				'class' => 'image'),
 		);
 		
 		$data['image_instructions'] = sprintf(
@@ -4884,9 +4888,10 @@ class Manage_base extends Controller {
 			'on' => ucfirst(lang('labels_on')),
 			'off' => ucfirst(lang('labels_off')),
 			'spec_item' => ucwords(lang('global_specification') .' '. lang('labels_item')),
-			'summary' => ucfirst(lang('labels_summary')) .': ',
+			'summary' => ucfirst(lang('labels_summary')),
 			'back' => LARROW .' '. ucfirst(lang('actions_back')) .' '. lang('labels_to') .' '. ucwords(lang('global_touritems')),
 			'images_later' => sprintf(lang('add_images_later'), lang('global_touritem')),
+			'specitem_select' => lang('specitem_select'),
 		);
 		
 		$data['buttons'] = array(
