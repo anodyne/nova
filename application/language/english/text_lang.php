@@ -176,6 +176,7 @@ $lang['date_format'] = "The date format is the same as the PHP date function. To
 $lang['sample_output'] = 'Sample Output';
 $lang['add_images_later'] = 'You will be able to add and edit images for this %s after the item has been created.';
 $lang['character_change'] = "%s will need to log out and log back in for the changes to take affect.";
+$lang['specitem_select'] = "If you don't want this tour item associated with a spec item, leave this set to 'Please Choose An Item'.";
 
 /*
 |---------------------------------------------------------------
