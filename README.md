@@ -19,6 +19,7 @@ Anodyne Production's next-generation RPG management system combines popular feat
 * updated the image upload system to be able to handle spec images as well
 * updated the specifications model with new methods for handling spec items
 * updated the mission groups listing with a style fix
+* updated jquery ui to version 1.8.4
 * fixed bug where ordered and unordered lists weren't properly styled in Thresher
 * fixed bug in mission group pages where missions didn't respect the mission order that was set for them
 

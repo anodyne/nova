@@ -262,6 +262,12 @@ $this->db->update('system_components', array(
 ));
 
 /**
+ * update the jquery ui version info
+ */
+$this->db->where('comp_name', 'jQuery UI');
+$this->db->update('system_components', array('comp_version' => '1.8.4'));
+
+/**
  * add the system version info
  */
 $this->load->model('system_model', 'sys');
