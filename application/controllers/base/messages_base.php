@@ -5,11 +5,10 @@
 |---------------------------------------------------------------
 |
 | File: controllers/messages_base.php
-| System Version: 1.0.6
+| System Version: 1.1
 |
-| Changes: updated the select menu to separate active and inactive
-|	characters to make it easier to get to the users who are actively
-|	using the system
+| Changes: fixed bug where replying to a message wouldn't populate
+|	the dropdown with the author being replied to
 |
 */
 
@@ -675,8 +674,35 @@ class Messages_base extends Controller {
 				/* set the subject value */
 				$data['inputs']['subject']['value'] = lang('abbr_reply') .': '. $row->privmsgs_subject;
 				
-				/* grab the key for the array */
-				$data['key'] = (array_key_exists($row->privmsgs_author_user, $data['characters'])) ? $row->privmsgs_author_user : 0;
+				// set the user
+				$selected = $row->privmsgs_author_user;
+				
+				// set the arrays
+				$active = array();
+				$inactive = array();
+				
+				if (isset($data['characters'][ucwords(lang('status_active') .' '. lang('global_characters'))]))
+				{
+					$active = $data['characters'][ucwords(lang('status_active') .' '. lang('global_characters'))];
+				}
+				
+				if (isset($data['characters'][ucwords(lang('status_inactive') .' '. lang('global_characters'))]))
+				{
+					$inactive = $data['characters'][ucwords(lang('status_inactive') .' '. lang('global_characters'))];
+				}
+				
+				// grab the key for the array
+				$key = (array_key_exists($selected, $active)) ? $selected : 0;
+				
+				if ($key == 0)
+				{
+					$key = (array_key_exists($selected, $inactive)) ? $selected : 0;
+				}
+				
+				// set the key
+				$data['key'] = $key;
+					
+				$this->load->helper('debug');
 				
 				/* set the header */
 				$data['header'] = ucfirst(lang('actions_reply')) .' '. lang('labels_to') 

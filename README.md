@@ -23,6 +23,7 @@ Anodyne Production's next-generation RPG management system combines popular feat
 * updated jquery ui to version 1.8.4
 * fixed bug where ordered and unordered lists weren't properly styled in Thresher
 * fixed bug in mission group pages where missions didn't respect the mission order that was set for them
+* fixed bug where the private message dropdown didn't populate with an author when replying to a message
 
 ## Version History
 
