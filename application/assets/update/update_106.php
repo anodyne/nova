@@ -110,7 +110,7 @@ $fields_specs = array(
 
 if (!is_null($add_tables))
 {
-	foreach ($add_table as $key => $value)
+	foreach ($add_tables as $key => $value)
 	{
 		$this->dbforge->add_field($$value['fields']);
 		$this->dbforge->add_key($value['id'], TRUE);
