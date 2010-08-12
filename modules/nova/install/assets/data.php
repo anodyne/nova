@@ -2298,7 +2298,7 @@ $settings = array(
 		'setting_user_created' => 'n'),
 	array(
 		'setting_key' => 'updates',
-		'setting_value' => 'all',
+		'setting_value' => '4',
 		'setting_user_created' => 'n'),
 	array(
 		'setting_key' => 'show_news',
