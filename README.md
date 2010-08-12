@@ -14,6 +14,7 @@ Anodyne Production's next-generation RPG management system combines popular feat
 * added the fancybox plugin
 * added the jquery reflection plugin
 * added _specitem\_select_ language item in the text\_lang file
+* added _specitem\_empty\_fields_ lanuage item in the text\_lang file
 * removed the colorbox plugin
 * removed the reflection.js plugin
 * updated the system to use the new jquery reflection plugin instead of reflection.js

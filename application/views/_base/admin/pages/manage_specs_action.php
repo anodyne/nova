@@ -38,6 +38,8 @@
 		</p><br />
 		
 		<?php if (isset($specs)): ?>
+			<?php echo text_output($label['specitem_empty_fields'], 'p', 'gray bold');?>
+			
 			<?php foreach ($specs as $s): ?>
 				<?php echo text_output($s['name'], 'h3', 'page-subhead');?>
 				

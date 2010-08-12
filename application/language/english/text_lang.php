@@ -4,9 +4,9 @@
 | LANGUAGE FILE - ENGLISH
 |---------------------------------------------------------------
 | File: application/language/english/long_text_lang.php
-| System Version: 1.0.3
+| System Version: 1.1
 |
-| Changes: added character_change
+| Changes: added specitem_select; added specitem_empty_fields
 |
 | English language file for the system. Punctuation constants are
 | defined in ./application/config/constants.php
@@ -177,6 +177,7 @@ $lang['sample_output'] = 'Sample Output';
 $lang['add_images_later'] = 'You will be able to add and edit images for this %s after the item has been created.';
 $lang['character_change'] = "%s will need to log out and log back in for the changes to take affect.";
 $lang['specitem_select'] = "If you don't want this tour item associated with a spec item, leave this set to 'Please Choose An Item'.";
+$lang['specitem_empty_fields'] = "If you don't want to display a field, you can simply leave it blank and it won't be displayed on the specs page.";
 
 /*
 |---------------------------------------------------------------
