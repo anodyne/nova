@@ -232,21 +232,28 @@ if (!is_null($drop_column))
 |---------------------------------------------------------------
 */
 
-/**
- * update all the specs data to point to the first specification item
- */
-$this->db->update('specs_data', array('data_item' => 1));
+// get the specs data
+$specs = $this->db->get_where('specs_data', array('data_value !=' => ''));
 
-/**
- * create a new specification item from the sim name
- */
-$name = $this->db->get_where('settings', array('setting_key' => 'sim_name'));
-$name = ($name->num_rows() > 0) ? $name->row : FALSE;
-$specitem = array(
-	'specs_name' => $name->setting_value,
-	'specs_summary' => 'Summary for the '. $name->setting_value,
-);
-$this->db->insert('specs', $specitem);
+// if there is specs data, then continue with updating it
+if ($specs->num_rows() > 0)
+{
+	/**
+	 * update all the specs data to point to the first specification item
+	 */
+	$this->db->update('specs_data', array('data_item' => 1));
+	
+	/**
+	 * create a new specification item from the sim name
+	 */
+	$name = $this->db->get_where('settings', array('setting_key' => 'sim_name'));
+	$name = ($name->num_rows() > 0) ? $name->row() : FALSE;
+	$specitem = array(
+		'specs_name' => $name->setting_value,
+		'specs_summary' => 'Summary for the '. $name->setting_value,
+	);
+	$this->db->insert('specs', $specitem);
+}
 
 /**
  * remove the colorbox plugin from the list of components
