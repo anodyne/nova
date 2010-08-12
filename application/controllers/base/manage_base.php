@@ -4435,6 +4435,7 @@ class Manage_base extends Controller {
 			'summary' => ucfirst(lang('labels_summary')) .': ',
 			'back' => LARROW .' '. ucfirst(lang('actions_back')) .' '. lang('labels_to') .' '. ucwords(lang('global_specification') .' '. lang('labels_items')),
 			'images_later' => sprintf(lang('add_images_later'), lang('global_specification') .' '. lang('labels_item')),
+			'specitem_empty_fields' => lang('specitem_empty_fields'),
 		);
 		
 		$data['buttons'] = array(
@@ -4797,10 +4798,13 @@ class Manage_base extends Controller {
 			$tour = $this->tour->get_tour_items('');
 			$specs = $this->specs->get_spec_items();
 			
-			if ($specs->num_rows() > 0)
+			if ($tour->num_rows() > 0)
 			{
 				$data['items'][0] = ucwords(lang('labels_general') .' '. lang('labels_items'));
-				
+			}
+			
+			if ($specs->num_rows() > 0)
+			{
 				foreach ($specs->result() as $s)
 				{
 					$data['items'][$s->specs_id] = $s->specs_name;

@@ -1690,10 +1690,13 @@ class Sim_base extends Controller {
 			$tour = $this->tour->get_tour_items();
 			$specs = $this->specs->get_spec_items();
 			
-			if ($specs->num_rows() > 0)
+			if ($tour->num_rows() > 0)
 			{
 				$data['items'][0] = ucwords(lang('labels_general') .' '. lang('labels_items'));
-				
+			}
+			
+			if ($specs->num_rows() > 0)
+			{
 				foreach ($specs->result() as $s)
 				{
 					$data['items'][$s->specs_id] = $s->specs_name;
