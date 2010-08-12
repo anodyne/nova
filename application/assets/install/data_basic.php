@@ -2456,6 +2456,30 @@ $system_versions = array(
 * fixed bug where turning off update notification still attempted to run the check (before running in to another check)
 * fixed bug where a user's email preferences remained active even after the user was set to inactive
 * fixed bug where a user's email preferences weren't deleted when the user was deleted"),
+	array(
+		'version' => '1.1.0',
+		'version_major' => '1',
+		'version_minor' => '1',
+		'version_update' => '0',
+		'version_date' => 1279148400,
+		'version_launch'	=> "Nova 1.1 is the first update to Nova that adds additional features to the system. Included in this release is the ability to create multiple specification items and to associate tour items with specific specification items as well as bug fixes (a bug where editing existing tour items wouldn't update the current item, but the first item). A full changelog can be found on AnodyneDocs or from the System and Versions report once Nova has been updated. This update is recommended for all users.",
+		'version_changes'	=> "* added the 1.1 update file
+* added the ability to have multiple specification items
+* added the ability to associate tour items with a specification item
+* added the fancybox plugin
+* added the jquery reflection plugin
+* added _specitem\_select_ language item in the text\_lang file
+* added _specitem\_empty\_fields_ lanuage item in the text\_lang file
+* removed the colorbox plugin
+* removed the reflection.js plugin
+* updated the system to use the new jquery reflection plugin instead of reflection.js
+* updated the image upload system to be able to handle spec images as well
+* updated the specifications model with new methods for handling spec items
+* updated the mission groups listing with a style fix
+* updated jquery ui to version 1.8.4
+* fixed bug where ordered and unordered lists weren't properly styled in Thresher
+* fixed bug in mission group pages where missions didn't respect the mission order that was set for them
+* fixed bug where the private message dropdown didn't populate with an author when replying to a message"),
 );
 
 $tour_fields = array(

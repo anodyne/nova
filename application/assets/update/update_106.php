@@ -26,8 +26,24 @@ $system_versions = array(
 	'version_minor'		=> 1,
 	'version_update'	=> 0,
 	'version_date'		=> 1275865200,
-	'version_launch'	=> "Nova 1.1 is the first feature update Nova 1. In addition to continuing to fix bugs in the system, version 1.1 includes the ability to create as many specification items as you want as well as the ability to associate tour items with specification items. A full changelog can be found on AnodyneDocs or from the System and Versions report once Nova has been updated. This update is recommended for all users.",
-	'version_changes'	=> ""
+	'version_launch'	=> "Nova 1.1 is the first update to Nova that adds additional features to the system. Included in this release is the ability to create multiple specification items and to associate tour items with specific specification items as well as bug fixes (a bug where editing existing tour items wouldn't update the current item, but the first item). A full changelog can be found on AnodyneDocs or from the System and Versions report once Nova has been updated. This update is recommended for all users.",
+	'version_changes'	=> "* added the 1.1 update file
+* added the ability to have multiple specification items
+* added the ability to associate tour items with a specification item
+* added the fancybox plugin
+* added the jquery reflection plugin
+* added _specitem\_select_ language item in the text\_lang file
+* added _specitem\_empty\_fields_ lanuage item in the text\_lang file
+* removed the colorbox plugin
+* removed the reflection.js plugin
+* updated the system to use the new jquery reflection plugin instead of reflection.js
+* updated the image upload system to be able to handle spec images as well
+* updated the specifications model with new methods for handling spec items
+* updated the mission groups listing with a style fix
+* updated jquery ui to version 1.8.4
+* fixed bug where ordered and unordered lists weren't properly styled in Thresher
+* fixed bug in mission group pages where missions didn't respect the mission order that was set for them
+* fixed bug where the private message dropdown didn't populate with an author when replying to a message"
 );
 
 $system_info = array(
