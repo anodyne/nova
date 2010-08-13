@@ -91,13 +91,32 @@ class Controller_Update extends Controller_Template
 		$this->request->response = $this->template;
 	}
 	
+	# TODO: need to figure out a better way to figure out if the server can talk to the update file
+	
 	public function action_check()
 	{
+		// check for updates
+		$upd = $this->check_version();
+		
+		// set the flash message variable
+		$flash = $upd['flash'];
+		
+		// set the update message variable
+		$update = $upd['update'];
+		
 		// create a new content view
 		$this->template->layout->content = View::factory('update/pages/update_check');
 		
 		// assign the object a shorter variable to use in the method
 		$data = $this->template->layout->content;
+		
+		// set the content
+		$data->message = (property_exists('update', 'notes')) ? $update->notes : FALSE;
+		
+		// set the flash message
+		$this->template->layout->flash_message = View::factory('update/pages/flash');
+		$this->template->layout->flash_message->status = $flash->status;
+		$this->template->layout->flash_message->message = $flash->message;
 		
 		// content
 		$this->template->title.= __('Check for Updates');
@@ -268,71 +287,98 @@ class Controller_Update extends Controller_Template
 				break;
 				
 			case 1:
-				// grab the version info from the db and build the version string
-				$ver = Jelly::query('system', 1)->select();
-				
-				// build the version string
-				$version = $ver->version_major.$ver->version_minor.$ver->version_update;
-				
-				// get the directory listing
-				$dir = Utility::directory_map(MODFOLDER.'/nova/update/assets', TRUE);
-				
-				if (is_array($dir))
+				if (isset($_POST['next']))
 				{
-					// make sure we only have the items we absolutely need from the directory listing
-					foreach ($dir as $key => $value)
+					// build the version string
+					$version = $ver->version_major.$ver->version_minor.$ver->version_update;
+					
+					// get the directory listing
+					$dir = Utility::directory_map(MODFOLDER.'/nova/update/assets', TRUE);
+					
+					if (is_array($dir))
 					{
-						// make sure the index.html and versions files aren't in the array
-						if ($value == 'index.html' || $value == 'versions.php')
+						// make sure we only have the items we absolutely need from the directory listing
+						foreach ($dir as $key => $value)
 						{
-							unset($dir[$key]);
-						}
-						else
-						{
-							$file = str_replace('_', '', $value);
-							
-							if ($file < $version)
+							// make sure the index.html and versions files aren't in the array
+							if ($value == 'index.html' || $value == 'versions.php')
 							{
 								unset($dir[$key]);
 							}
+							else
+							{
+								$file = str_replace('_', '', $value);
+								
+								if ($file < $version)
+								{
+									unset($dir[$key]);
+								}
+							}
 						}
 					}
-				}
-				else
-				{
-					// pull in the versions file
-					include_once MODPATH.'nova/update/assets/versions'.EXT;
-					
-					// make sure we're not doing more work than we need to
-					foreach ($version_array as $k => $v)
+					else
 					{
-						if ($v < $version)
+						// pull in the versions file
+						include_once MODPATH.'nova/update/assets/versions'.EXT;
+						
+						// make sure we're not doing more work than we need to
+						foreach ($version_array as $k => $v)
 						{
-							unset($version_array[$k]);
+							if ($v < $version)
+							{
+								unset($version_array[$k]);
+							}
 						}
 					}
+					
+					// loop through the final listing and do the updates
+					foreach ($dir as $d)
+					{
+						// make the schema changes
+						include_once(MODPATH.'nova/update/assets/'.$d.'/schema'.EXT);
+						
+						// make the data changes
+						include_once(MODPATH.'nova/update/assets/'.$d.'/data'.EXT);
+						
+						// pause the script for a second
+						sleep(1);
+					}
+					
+					// update the system info
+					$info = Jelly::factory('system');
+					$info->last_update = $system_info['last_update'];
+					$info->version_major = $system_info['version_major'];
+					$info->version_minor = $system_info['version_minor'];
+					$info->version_update = $system_info['version_update'];
+					$info->save(1);
 				}
 				
-				// loop through the final listing and do the updates
-				foreach ($dir as $d)
-				{
-					// make the schema changes
-					include_once(MODPATH.'nova/update/assets/'.$d.'/schema'.EXT);
-					
-					// make the data changes
-					include_once(MODPATH.'nova/update/assets/'.$d.'/data'.EXT);
-					
-					// pause the script for a second
-					sleep(1);
-				}
+				// create a new content view
+				$this->template->layout->content = View::factory('update/pages/update_step1');
 				
-				// update the system info
-				$info = Jelly::factory('system');
-				$info->last_update = $system_info['last_update'];
-				$info->version_major = $system_info['version_major'];
-				$info->version_minor = $system_info['version_minor'];
-				$info->version_update = $system_info['version_update'];
-				$info->save(1);
+				// assign the object a shorter variable to use in the method
+				$data = $this->template->layout->content;
+				
+				// make sure the proper message is displayed
+				$data->message = nl2br(__('update1.message'));
+				
+				// content
+				$this->template->title.= __('Update Nova');
+				$this->template->layout->label = __('Finishing Up');
+				
+				// create the javascript view
+				$this->template->javascript = View::factory('update/js/update_step1_js');
+				
+				// build the next step button
+				$next = array(
+					'type' => 'submit',
+					'class' => 'btn-main',
+					'id' => 'next',
+				);
+				
+				// build the next step control
+				$this->template->layout->controls = form::open('main/index').form::button('next', __('Back to Site'), $next).form::close();
+				$this->template->layout->controls_text = __("Go back to your freshly updated site");
 				
 				break;
 		}
@@ -341,39 +387,10 @@ class Controller_Update extends Controller_Template
 		$this->request->response = $this->template;
 	}
 	
-	public function action_test()
-	{
-		// get the system information
-		$system = Jelly::query('system', 1)->select();
-		
-		// get the info config data
-		$conf = Kohana::config('info');
-		
-		// create a new class
-		$version = new stdClass;
-		
-		// create the files object
-		$version->files = new stdClass;
-		$version->files->full = $conf->app_version_major.'.'.$conf->app_version_minor.'.'.$conf->app_version_update;
-		$version->files->major = $conf->app_version_major;
-		$version->files->minor = $conf->app_version_minor;
-		$version->files->update = $conf->app_version_update;
-		
-		// create the database object
-		$version->db = new stdClass;
-		$version->db->full = $system->version_major.'.'.$system->version_minor.'.'.$system->version_update;
-		$version->db->major = $system->version_major;
-		$version->db->minor = $system->version_minor;
-		$version->db->update = $system->version_update;
-		
-		echo Kohana::debug($version);
-		exit();
-	}
-	
 	protected function check_version()
 	{
 		/**
-		 * Types of udpates:
+		 * Severity of udpates:
 		 *
 		 * 1 - major update (1.0 => 2.0)
 		 * 2 - minor update (2.0 => 2.1)
@@ -429,65 +446,42 @@ class Controller_Update extends Controller_Template
 			$update = new stdClass;
 			$flash = new stdClass;
 			
-			// make sure the severity lines up with what the user wants to be notified of
-			if ($upd <= $content['severity'])
+			if (version_compare($version->files->full, $content['version'], '<') || version_compare($version->db->full, $content['version'], '<'))
 			{
-				if (version_compare($version->files->full, $content['version'], '<') || version_compare($version->db->full, $content['version'], '<'))
-				{
-					$update->version	= $content['version'];
-					$update->notes		= $content['notes'];
-					$update->severity	= $content['severity'];
-					$update->link 		= $content['link'];
-				}
-				
-				if (version_compare($version->db->full, $version->files->full, '>'))
-				{
-					$flash->status = 'info';
-					$flash->message = sprintf(
-						lang('update_outofdate_files'),
-						$version->files->full,
-						$version->db->full
-					);
-				}
-				elseif (version_compare($version->db->full, $version->files->full, '<'))
-				{
-					$flash['status'] = 'info';
-					$flash['message'] = sprintf(
-						lang('update_outofdate_database'),
-						$version->db->full,
-						$version->files->full
-					);
-				}
-				elseif ($update !== FALSE)
-				{
-					$yourversion = sprintf(
-						lang('update_your_version'),
-						$conf->app_name,
-						$version->files->full);
-						
-					$flash['status'] = 'info';
-					$flash['message'] = sprintf(
-						lang('update_available'),
-						$conf->app_name,
-						$update->version,
-						$yourversion
-					);
-				}
-				else
-				{
-					$flash->status = '';
-					$flash->message = '';
-				}
-				
-				$retval = array(
-					'flash' => $flash,
-					'update' => $update
-				);
-				
-				return $retval;
+				$update->version	= $content['version'];
+				$update->notes		= $content['notes'];
+				$update->severity	= $content['severity'];
+				$update->link 		= $content['link'];
 			}
 			
-			return FALSE;
+			if (version_compare($version->db->full, $version->files->full, '>'))
+			{
+				$flash->status = 'info';
+				$flash->message = __('check.files_outofdate', array(':files' => $version->files->full, ':db' => $version->db->full));
+			}
+			elseif (version_compare($version->db->full, $version->files->full, '<'))
+			{
+				$flash->status = 'info';
+				$flash->message = __('check.db_outofdate', array(':files' => $version->files->full, ':db' => $version->db->full));
+			}
+			elseif (property_exists('update', 'version'))
+			{
+				$yourversion = __('check.your_version', array(':app' => $conf->app_name, ':version' => $version->files->full));
+				$flash->status = 'info';
+				$flash->message = __('check.update_available', array(':app' => $conf->app_name, ':version' => $content['version'], ':extra' => $yourversion));
+			}
+			else
+			{
+				$flash->status = 'success';
+				$flash->message = __('check.no_updates', array(':app' => $conf->app_name));
+			}
+			
+			$retval = array(
+				'flash' => $flash,
+				'update' => $update
+			);
+			
+			return $retval;
 		}
 		
 		return FALSE;
