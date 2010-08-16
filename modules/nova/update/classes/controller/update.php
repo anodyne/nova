@@ -111,7 +111,89 @@ class Controller_Update extends Controller_Template
 		$data = $this->template->layout->content;
 		
 		// set the content
-		$data->message = (property_exists('update', 'notes')) ? $update->notes : FALSE;
+		$data->message = (property_exists($update, 'notes')) ? $update->notes : FALSE;
+		
+		if (property_exists($update, 'notes'))
+		{
+			// figure out if they're coming from a nova 1 installation
+			$ver = Jelly::query('system', 1)->select();
+			
+			// build the version string
+			$version = $ver->version_major.$ver->version_minor.$ver->version_update;
+			
+			// get the directory listing
+			$dir = Utility::directory_map(MODFOLDER.'/nova/update/assets', TRUE);
+			
+			if (is_array($dir))
+			{
+				// sort the array
+				sort($dir);
+				
+				// make sure we only have the items we absolutely need from the directory listing
+				foreach ($dir as $key => $value)
+				{
+					// make sure the index.html and versions files aren't in the array
+					if ($value == 'index.html' || $value == 'versions.php' || $value == 'version.yaml')
+					{
+						unset($dir[$key]);
+					}
+					else
+					{
+						$file = str_replace('_', '', $value);
+						
+						if ((int) $file < (int) $version)
+						{
+							unset($dir[$key]);
+						}
+					}
+				}
+			}
+			else
+			{
+				// pull in the versions file
+				include_once MODPATH.'nova/update/assets/versions'.EXT;
+				
+				// make sure we're not doing more work than we need to
+				foreach ($version_array as $k => $v)
+				{
+					if ($v < $version)
+					{
+						unset($version_array[$k]);
+					}
+				}
+			}
+			
+			// find the markdown library
+			$path = Kohana::find_file('vendor', 'markdown/markdown');
+			
+			// load the markdown library
+			Kohana::load($path);
+			
+			// start the changes array
+			$changes = array();
+			
+			// loop through the final listing and do the updates
+			foreach ($dir as $d)
+			{
+				// reset the content variable
+				$content = NULL;
+				
+				// load the YAML data into an array
+				$content = Markdown(file_get_contents(MODPATH.'nova/update/assets/'.$d.'/changes.md'));
+				
+				// build the proper version string
+				$proper_version = str_replace('_', '.', $d);
+				
+				// build the changes array
+				$changes[$proper_version] = $content;
+			}
+			
+			// pass the changes to the view
+			$data->changes = $changes;
+			
+			// send the version across
+			$data->version = $ver->version_major.'.'.$ver->version_minor.'.'.$ver->version_update;
+		}
 		
 		// set the flash message
 		$this->template->layout->flash_message = View::factory('update/pages/flash');
@@ -182,7 +264,7 @@ class Controller_Update extends Controller_Template
 					foreach ($dir as $key => $value)
 					{
 						// make sure the index.html and versions files aren't in the array
-						if ($value == 'index.html' || $value == 'versions.php')
+						if ($value == 'index.html' || $value == 'versions.php' || $value == 'version.yaml')
 						{
 							unset($dir[$key]);
 						}
@@ -301,7 +383,7 @@ class Controller_Update extends Controller_Template
 						foreach ($dir as $key => $value)
 						{
 							// make sure the index.html and versions files aren't in the array
-							if ($value == 'index.html' || $value == 'versions.php')
+							if ($value == 'index.html' || $value == 'versions.php' || $value == 'version.yaml')
 							{
 								unset($dir[$key]);
 							}
@@ -464,7 +546,7 @@ class Controller_Update extends Controller_Template
 				$flash->status = 'info';
 				$flash->message = __('check.db_outofdate', array(':files' => $version->files->full, ':db' => $version->db->full));
 			}
-			elseif (property_exists('update', 'version'))
+			elseif (property_exists($update, 'version'))
 			{
 				$yourversion = __('check.your_version', array(':app' => $conf->app_name, ':version' => $version->files->full));
 				$flash->status = 'info';
