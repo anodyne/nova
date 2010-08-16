@@ -48,7 +48,7 @@ $system_versions = array(
 );
 
 $system_info = array(
-	'last_update'		=> now(),
+	'last_update'		=> date::now(),
 	'version_major'		=> 1,
 	'version_minor'		=> 0,
 	'version_update'	=> 6
