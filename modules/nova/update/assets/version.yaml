@@ -1,0 +1,8 @@
+version: 2.0.1
+version_major: 2
+version_minor: 0
+version_update: 1
+severity: 3
+notes: Nova 2.0.1 is the second maintenance release for Nova 2 and addresses several launch day issues that came up. Among the bugs fixed are a random display issue where a sparkling pink dolphin may appear on random pages. The damned thing got loose at the end of development and we couldn't capture it before release. But, we finally captured it and you shouldn't see him any more.
+date: 30 April 2010
+link: http://www.anodyne-productions.com
