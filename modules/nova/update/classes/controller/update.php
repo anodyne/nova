@@ -208,13 +208,39 @@ class Controller_Update extends Controller_Template
 		$this->request->response = $this->template;
 	}
 	
+	# TODO: uh-oh. there are a whole slew of potential issues here
+		# 1 - how do we know if nova 1 is installed and nova 2 isn't?
+		# 2 - how do we prevent duplicating the table prefix?
+		# 3 - do we overwrite existing tables or create new ones?
+			# 3a - what happens if they don't have a whole lot of database space?
+	
 	public function action_nova1($step = 0)
 	{
 		// make sure the script doesn't time out
 		set_time_limit(0);
 		
-		// get the version info
-		$ver = Jelly::query('system', 1)->select();
+		// get an instance of the database
+		$db = Database::instance();
+		
+		// get an instance of the session
+		$session = Session::instance();
+		
+		// figure out if the system is installed
+		$tables = $db->list_tables();
+		
+		// is installation allowed?
+		$allowed = TRUE;
+		
+		if (Kohana::config('nova.genre') == '')
+		{
+			// installation not allowed
+			$allowed = FALSE;
+			
+			// show the flash message
+			$this->template->layout->flash_message = View::factory('update/pages/flash');
+			$this->template->layout->flash_message->status = 'error';
+			$this->template->layout->flash_message->message = __('step.error_no_genre', array(':path' => APPFOLDER.'/config/nova'.EXT));
+		}
 		
 		switch ($step)
 		{
@@ -226,94 +252,254 @@ class Controller_Update extends Controller_Template
 				$data = $this->template->layout->content;
 				
 				// make sure the proper message is displayed
-				$data->message = nl2br(__('nova1_update0.message', array(':nova1' => $ver->version_major.'.'.$ver->version_minor.'.'.$ver->version_update)));
+				$data->message = nl2br(__('step0.inst'));
 				
 				// content
-				$this->template->title.= __('Update From Nova 1');
+				$this->template->title.= __('Update to Nova 2');
 				$this->template->layout->label = __('Getting Started');
 				
 				// create the javascript view
 				$this->template->javascript = View::factory('update/js/update_nova1_step0_js');
 				
-				// build the next step button
-				$next = array(
-					'type' => 'submit',
-					'class' => 'btn-main',
-					'id' => 'next',
-				);
-				
-				// build the next step control
-				$this->template->layout->controls = form::open('update/step/1').form::button('next', __('Start Update'), $next).form::close();
-				$this->template->layout->controls_text = __("Run the Nova update to get the latest and greatest");
+				if ($allowed === TRUE)
+				{
+					// build the next step button
+					$next = array(
+						'type' => 'submit',
+						'class' => 'btn-main',
+						'id' => 'next',
+					);
+					
+					// build the next step control
+					$this->template->layout->controls = form::open('update/nova1/1').form::button('next', __('Start Update'), $next).form::close();
+					$this->template->layout->controls_text = __("Start the update to get the latest and greatest version of Nova");
+				}
 				
 				break;
 				
 			case 1:
-				// grab the version info from the db and build the version string
-				$ver = Jelly::query('system', 1)->select();
-				
-				// build the version string
-				$version = $ver->version_major.$ver->version_minor.$ver->version_update;
-				
-				// get the directory listing
-				$dir = Utility::directory_map(MODFOLDER.'/nova/update/assets', TRUE);
-				
-				if (is_array($dir))
+				if (isset($_POST['next']))
 				{
-					// make sure we only have the items we absolutely need from the directory listing
-					foreach ($dir as $key => $value)
+					// update the character set
+					$dbconfig = Kohana::config('database');
+					$db->set_charset($dbconfig['default']['charset']);
+					
+					// initialize the forge
+					$forge = new DBForge;
+					
+					// pull in the field information
+					include_once MODPATH.'nova/install/assets/fields'.EXT;
+					
+					foreach ($data as $key => $value)
 					{
-						// make sure the index.html and versions files aren't in the array
-						if ($value == 'index.html' || $value == 'versions.php' || $value == 'version.yaml')
+						DBForge::add_field($$value['fields']);
+						DBForge::add_key($value['id'], TRUE);
+						
+						if (isset($value['index']))
 						{
-							unset($dir[$key]);
-						}
-						else
-						{
-							$file = str_replace('_', '', $value);
-							
-							if ($file < $version)
+							foreach ($value['index'] as $index)
 							{
-								unset($dir[$key]);
+								DBForge::add_key($index);
+							}
+						}
+						
+						DBForge::create_table($key, TRUE);
+					}
+					
+					// pause the script for a second
+					sleep(1);
+					
+					// wipe out the data from inserting the tables
+					$data = NULL;
+					
+					// pull in the basic data
+					include_once MODPATH.'nova/install/assets/data'.EXT;
+					
+					$insert = array();
+					
+					foreach ($data as $value)
+					{
+						foreach ($$value as $k => $v)
+						{
+							$sql = db::insert($value)
+								->columns(array_keys($v))
+								->values(array_values($v))
+								->compile($db);
+								
+							$insert[$value] = $db->query(Database::INSERT, $sql, TRUE);
+						}
+					}
+					
+					// pause the script for a second
+					sleep(1);
+					
+					// wipe out the data from insert the data
+					$data = NULL;
+					
+					// pull in the genre data
+					include_once MODPATH.'nova/install/assets/genres/'.strtolower(Kohana::config('nova.genre')).EXT;
+					
+					$genre = array();
+					
+					foreach ($data as $key_d => $value_d)
+					{
+						foreach ($$value_d as $k => $v)
+						{
+							$sql = db::insert($key_d)
+								->columns(array_keys($v))
+								->values(array_values($v))
+								->compile($db);
+								
+							$genre[$key_d] = $db->query(Database::INSERT, $sql, TRUE);
+						}
+					}
+					
+					if (Kohana::config('install.dev'))
+					{
+						// pause the script for a second
+						sleep(1);
+						
+						// wipe out the data from insert the data
+						$data = NULL;
+						
+						// pull in the development test data
+						include_once MODPATH.'nova/install/assets/dev'.EXT;
+						
+						$insert = array();
+						
+						foreach ($data as $value)
+						{
+							foreach ($$value as $k => $v)
+							{
+								$sql = db::insert($value)
+									->columns(array_keys($v))
+									->values(array_values($v))
+									->compile($db);
+									
+								$insert[$value] = $db->query(Database::INSERT, $sql, TRUE);
 							}
 						}
 					}
 				}
-				else
+				
+				// get the number of tables
+				$tables = $db->list_tables();
+				
+				// create a new content view
+				$this->template->layout->content = View::factory('update/pages/upgrade_step1');
+				
+				// assign the object a shorter variable to use in the method
+				$data = $this->template->layout->content;
+				
+				// set the loading image
+				$data->loading = array(
+					'src' => location::image('loading-circle-large.gif', NULL, 'upgrade', 'image'),
+					'attr' => array(
+						'class' => 'image'),
+				);
+				
+				// content
+				$this->template->title.= __('Upgrading to Nova');
+				$this->template->layout->label = __('Upgrading to Nova');
+				
+				// create the javascript view
+				$this->template->javascript = View::factory('update/js/upgrade_step1_js');
+				
+				// build the next step button
+				$next = array(
+					'type' => 'submit',
+					'class' => 'btn-main',
+					'id' => 'start',
+				);
+				
+				// build the next step control
+				$this->template->layout->controls = (count($tables) < $this->_tables) ? FALSE : form::button('next', __('Upgrade'), $next).form::close();
+				$this->template->layout->controls_text = __('Upgrade SMS data to Nova. <strong>Warning:</strong> this may take several minutes');
+				
+				break;
+				
+			case 2:
+				// create a new content view
+				$this->template->layout->content = View::factory('update/pages/upgrade_step2');
+				
+				// assign the object a shorter variable to use in the method
+				$data = $this->template->layout->content;
+				
+				// content
+				$this->template->title.= __('Cleaning Up Data');
+				$this->template->layout->label = __('Cleaning Up Data');
+				
+				// create the javascript view
+				$this->template->javascript = View::factory('update/js/upgrade_step2_js');
+				
+				// set the loading image
+				$data->loading = array(
+					'src' => location::image('loading-circle-large.gif', NULL, 'update', 'image'),
+					'attr' => array(
+						'class' => 'image'),
+				);
+				
+				// build the next step button
+				$next = array(
+					'type' => 'submit',
+					'class' => 'btn-main',
+					'id' => 'start',
+				);
+				
+				// build the next step control
+				$this->template->layout->controls = form::button('next', __('Run'), $next).form::close();
+				$this->template->layout->controls_text = __('Run the upgrade processes now. <strong>Warning:</strong> this may take several minutes');
+				
+				break;
+				
+			case 3:
+				if (isset($_POST['submit']))
 				{
-					// pull in the versions file
-					include_once MODPATH.'nova/update/assets/versions'.EXT;
-					
-					// make sure we're not doing more work than we need to
-					foreach ($version_array as $k => $v)
-					{
-						if ($v < $version)
-						{
-							unset($version_array[$k]);
-						}
-					}
+					// do the registration
+					//$this->_register();
 				}
 				
-				// loop through the final listing and do the updates
-				foreach ($dir as $d)
+				// create a new content view
+				$this->template->layout->content = View::factory('update/pages/upgrade_step3');
+				
+				// assign the object a shorter variable to use in the method
+				$data = $this->template->layout->content;
+				
+				// an empty array for user info
+				$data->options = array();
+				
+				// get all active users
+				$all = Jelly::query('user')->where('status', '=', 'active')->select();
+				
+				foreach ($all as $a)
 				{
-					// make the schema changes
-					include_once(MODPATH.'nova/update/assets/'.$d.'/schema'.EXT);
-					
-					// make the data changes
-					include_once(MODPATH.'nova/update/assets/'.$d.'/data'.EXT);
-					
-					// pause the script for a second
-					sleep(1);
+					$data->options[$a->id] = $a->name.' ('.$a->email.')';
 				}
 				
-				// update the system info
-				$info = Jelly::factory('system');
-				$info->last_update = $system_info['last_update'];
-				$info->version_major = $system_info['version_major'];
-				$info->version_minor = $system_info['version_minor'];
-				$info->version_update = $system_info['version_update'];
-				$info->save(1);
+				// content
+				$this->template->title.= __('Passwords and Admin Rights');
+				$this->template->layout->label = __('Passwords and Admin Rights');
+				
+				// create the javascript view
+				$this->template->javascript = View::factory('update/js/upgrade_step3_js');
+				
+				// set the loading image
+				$data->loading = array(
+					'src' => location::image('loading-circle-large.gif', NULL, 'update', 'image'),
+					'attr' => array(
+						'class' => 'image'),
+				);
+				
+				// build the next step button
+				$next = array(
+					'type' => 'submit',
+					'class' => 'btn-main',
+					'id' => 'start',
+				);
+				
+				// build the next step control
+				$this->template->layout->controls = form::button('next', __('Finalize'), $next).form::close();
+				$this->template->layout->controls_text = __('Set the passwords and access roles for Nova now');
 				
 				break;
 		}
