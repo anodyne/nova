@@ -44,6 +44,10 @@ _fgCharting requires the HTML5 canvas element which is not supported by Internet
     * wrong database: Unknown database 'foo'
     * wrong host: mysql_connect() [<a href='function.mysql-connect'>function.mysql-connect</a>]: php_network_getaddresses: getaddrinfo failed: No such host is known. 
 
+# KO3 Flash Messages
+
+* http://github.com/synapsestudios/kohana-notices
+
 # KO3 and GoDaddy
 
 * http://forum.kohanaframework.org/comments.php?DiscussionID=4390
