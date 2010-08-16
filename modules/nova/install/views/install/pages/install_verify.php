@@ -1,4 +1,4 @@
-<p><?php echo __('verify.text');?></p>
+<p class="fontMedium"><?php echo __('verify.text');?></p>
 
 <hr />
 
@@ -22,7 +22,7 @@
 
 <?php if (!isset($verify['failure']) && !isset($verify['info'])): ?>
 	<div class="flash-message flash-success">
-		<h1><?php echo __('verify.success_header');?></h1>
+		<h1><?php echo __("You're All Set!");?></h1>
 		<p><?php echo __('verify.success_text');?></p>
 	</div>
 <?php endif;?>

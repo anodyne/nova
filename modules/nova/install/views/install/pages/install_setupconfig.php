@@ -7,32 +7,32 @@
 	
 	<?php echo form::open('install/setupconfig/2');?>
 		<p>
-			<kbd><?php echo __('setup.step1_dbname');?></kbd>
-			<span class="fontSmall subtle"><?php echo __('setup.step1_dbname_desc');?></span><br />
+			<kbd><?php echo __('Database Name');?></kbd>
+			<span class="fontSmall subtle"><?php echo __('The name of the database you want me to install Nova into');?></span><br />
 			<?php echo form::input('dbName', Session::instance()->get('dbName', 'nova'));?>
 		</p>
 	
 		<p>
-			<kbd><?php echo __('setup.step1_dbuser');?></kbd>
-			<span class="fontSmall subtle"><?php echo __('setup.step1_dbuser_desc');?></span><br />
+			<kbd><?php echo __('Username');?></kbd>
+			<span class="fontSmall subtle"><?php echo __('Your database username');?></span><br />
 			<?php echo form::input('dbUser', Session::instance()->get('dbUser', 'username'));?>
 		</p>
 	
 		<p>
-			<kbd><?php echo __('setup.step1_dbpass');?></kbd>
-			<span class="fontSmall subtle"><?php echo __('setup.step1_dbpass_desc');?></span><br />
+			<kbd><?php echo __('Password');?></kbd>
+			<span class="fontSmall subtle"><?php echo __('Your database password');?></span><br />
 			<?php echo form::input('dbPass', Session::instance()->get('dbPass', 'password'));?>
 		</p>
 	
 		<p>
-			<kbd><?php echo __('setup.step1_dbhost');?></kbd>
-			<span class="fontSmall subtle"><?php echo __('setup.step1_dbhost_desc');?></span><br />
+			<kbd><?php echo __('Database Host');?></kbd>
+			<span class="fontSmall subtle"><?php echo __("There's a 99% chance you won't need to change this");?></span><br />
 			<?php echo form::input('dbHost', Session::instance()->get('dbHost', 'localhost'));?>
 		</p>
 	
 		<p>
-			<kbd><?php echo __('setup.step1_prefix');?></kbd>
-			<span class="fontSmall subtle"><?php echo __('setup.step1_prefix_desc');?></span><br />
+			<kbd><?php echo __('Table Prefix');?></kbd>
+			<span class="fontSmall subtle"><?php echo __('The database table prefix I should use');?></span><br />
 			<?php echo form::input('prefix', Session::instance()->get('prefix', 'nova_'));?>
 		</p>
 <?php elseif ($step == 2): ?>

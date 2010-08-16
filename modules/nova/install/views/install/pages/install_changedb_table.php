@@ -8,11 +8,11 @@
 <p>
 	<span class="hidden error-table">
 		<?php echo html::image(MODFOLDER.'/nova/install/views/install/images/exclamation-red.png', array('class' => 'inline-image-left'));?>
-		<strong class="error"><?php echo __('changedb.failure_table');?></strong>
+		<strong class="error"><?php echo __('Table creation failed');?></strong>
 	</span>
 	
 	<span class="hidden success-table">
 		<?php echo html::image(MODFOLDER.'/nova/install/views/install/images/tick-circle.png', array('class' => 'inline-image-left'));?>
-		<strong class="success"><?php echo __('changedb.success_table');?></strong>
+		<strong class="success"><?php echo __('Table created');?></strong>
 	</span>
 </p>

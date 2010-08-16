@@ -93,8 +93,8 @@ class Controller_Install extends Controller_Template
 		$data->installed = Utility::install_status();
 		
 		// content
-		$this->template->title.= __('index.title');
-		$this->template->layout->label = __('index.label');
+		$this->template->title.= __('Installation Center');
+		$this->template->layout->label = __('Installation Center');
 		
 		// send the response
 		$this->request->response = $this->template;
@@ -116,7 +116,7 @@ class Controller_Install extends Controller_Template
 			'loading' => array(
 				'src' => MODFOLDER.'/nova/install/views/install/images/loading-circle-large.gif',
 				'attr' => array(
-					'alt' => __('action.processing'),
+					'alt' => __('processing'),
 					'class' => '')),
 		);
 		
@@ -127,7 +127,7 @@ class Controller_Install extends Controller_Template
 		{
 			case 'table':
 				// set the header
-				$data->header = __('changedb.table_header');
+				$data->header = __('Add Database Table');
 				
 				// set the message
 				$data->message = __('changedb.table_inst');
@@ -140,15 +140,15 @@ class Controller_Install extends Controller_Template
 				);
 				
 				// build the next step control
-				$this->template->layout->controls = form::button('back', __('changedb.button_table'), $next);
+				$this->template->layout->controls = form::button('back', __('Create Table'), $next);
 				
 				// build the controls text
-				$this->template->layout->controls_text = __('changedb.button_table_text');
+				$this->template->layout->controls_text = __('Create a new database table in the Nova database');
 				break;
 				
 			case 'field':
 				// set the header
-				$data->header = __('changedb.field_header');
+				$data->header = __('Add Database Field');
 				
 				// set the message
 				$data->message = __('changedb.field_inst');
@@ -192,15 +192,15 @@ class Controller_Install extends Controller_Template
 				);
 				
 				// build the next step control
-				$this->template->layout->controls = form::button('back', __('changedb.button_field'), $next);
+				$this->template->layout->controls = form::button('back', __('Create Field'), $next);
 				
 				// build the controls text
-				$this->template->layout->controls_text = __('changedb.button_field_text');
+				$this->template->layout->controls_text = __('Create a new field in the Nova database table you selected');
 				break;
 				
 			case 'query':
 				// set the header
-				$data->header = __('changedb.query_header');
+				$data->header = __('Run a MySQL Query');
 				
 				// set the message
 				$data->message = __('changedb.query_inst');
@@ -213,10 +213,10 @@ class Controller_Install extends Controller_Template
 				);
 				
 				// build the next step control
-				$this->template->layout->controls = form::button('back', __('changedb.button_query'), $next);
+				$this->template->layout->controls = form::button('back', __('Run Query'), $next);
 				
 				// build the controls text
-				$this->template->layout->controls_text = __('changedb.button_query_text');
+				$this->template->layout->controls_text = __('Execute the MySQL query in the text field above');
 				break;
 			
 			default:
@@ -231,15 +231,15 @@ class Controller_Install extends Controller_Template
 				);
 				
 				// build the next step control
-				$this->template->layout->controls = form::open('install/index').form::button('back', __('changedb.button_install'), $next).form::close();
+				$this->template->layout->controls = form::open('install/index').form::button('back', __('Install Center'), $next).form::close();
 				
 				// build the controls text
-				$this->template->layout->controls_text = __('changedb.button_install_text');
+				$this->template->layout->controls_text = __('Go back to the Installation Center to do another operation');
 		}
 		
 		// content
-		$this->template->title.= __('changedb.title');
-		$this->template->layout->label = __('changedb.label');
+		$this->template->title.= __('Change Database');
+		$this->template->layout->label = __('Change Database');
 		
 		if ($showbutton === TRUE)
 		{
@@ -251,10 +251,10 @@ class Controller_Install extends Controller_Template
 			);
 			
 			// build the next step control
-			$this->template->layout->controls = form::open('install/changedb').form::button('back', __('changedb.button_back'), $next).form::close();
+			$this->template->layout->controls = form::open('install/changedb').form::button('back', __('Back to Change Database Panel'), $next).form::close();
 			
 			// build the controls text
-			$this->template->layout->controls_text = __('changedb.button_back_text');
+			$this->template->layout->controls_text = __('Go back to the Change Database Panel to do another operation');
 		}
 		
 		// send the response
@@ -319,13 +319,13 @@ class Controller_Install extends Controller_Template
 			'loading' => array(
 				'src' => location::image('loading-circle-large.gif', NULL, 'install', 'image'),
 				'attr' => array(
-					'alt' => __('action.processing'),
+					'alt' => __('processing'),
 					'class' => '')),
 		);
 		
 		// content
-		$this->template->title.= __('genre.title');
-		$this->template->layout->label = __('genre.label');
+		$this->template->title.= __('The Genre Panel');
+		$this->template->layout->label = __('The Genre Panel');
 		
 		// send the response
 		$this->request->response = $this->template;
@@ -356,8 +356,8 @@ class Controller_Install extends Controller_Template
 		}
 		
 		// content
-		$this->template->title.= __('index.title');
-		$this->template->layout->label = __('index.label');
+		$this->template->title.= __('Installation Center');
+		$this->template->layout->label = __('Installation Center');
 		
 		// load the javascript
 		$this->template->javascript = View::factory('install/js/verify_js');
@@ -372,8 +372,8 @@ class Controller_Install extends Controller_Template
 		$data = $this->template->layout->content;
 		
 		// content
-		$this->template->title.= __('readme.title');
-		$this->template->layout->label = __('readme.label');
+		$this->template->title.= __('Nova Readme');
+		$this->template->layout->label = __('Nova Readme');
 		
 		// build the next step button
 		$next = array(
@@ -383,10 +383,10 @@ class Controller_Install extends Controller_Template
 		);
 		
 		// build the next step control
-		$this->template->layout->controls = form::open('install/index').form::button('install', __('readme.button_install'), $next).form::close();
+		$this->template->layout->controls = form::open('install/index').form::button('install', __('Back to Install Center'), $next).form::close();
 		
 		// build the control text
-		$this->template->layout->controls_text = __('readme.button_install_text');
+		$this->template->layout->controls_text = __('Go back to the Installation Center to do another operation');
 		
 		// send the response
 		$this->request->response = $this->template;
@@ -447,10 +447,10 @@ class Controller_Install extends Controller_Template
 			);
 			
 			// build the next step control
-			$this->template->layout->controls = form::open('install/index').form::button('install', __('remove.button_reinstall'), $next).form::close();
+			$this->template->layout->controls = form::open('install/index').form::button('install', __('Install Center'), $next).form::close();
 			
 			// build the control text
-			$this->template->layout->controls_text = __('remove.button_reinstall_text');
+			$this->template->layout->controls_text = __('Go back to the Installation Center to re-install Nova');
 		}
 		else
 		{
@@ -465,15 +465,15 @@ class Controller_Install extends Controller_Template
 			);
 			
 			// build the next step control
-			$this->template->layout->controls = form::open('install/remove').form::button('submit', __('remove.button'), $next).form::close();
+			$this->template->layout->controls = form::open('install/remove').form::button('submit', __('Uninstall'), $next).form::close();
 			
 			// build the control text
-			$this->template->layout->controls_text = __('remove.button_text');
+			$this->template->layout->controls_text = __('Yes, I want to remove all traces of Nova from my database');
 		}
 		
 		// content
-		$this->template->title.= __('remove.title');
-		$this->template->layout->label = __('remove.label');
+		$this->template->title.= __('Uninstall Nova');
+		$this->template->layout->label = __('Uninstall Nova');
 		
 		// send the response
 		$this->request->response = $this->template;
@@ -510,7 +510,7 @@ class Controller_Install extends Controller_Template
 			{
 				if (version_compare(PHP_VERSION, '5.2.4', '<'))
 				{
-					$data->message = __('setup.php_version', array(':php' => PHP_VERSION));
+					$data->message = __('Your server is running PHP version :php but Nova requires at least PHP 5.2.4.', array(':php' => PHP_VERSION));
 				}
 				else
 				{
@@ -528,8 +528,8 @@ class Controller_Install extends Controller_Template
 							
 							if (extension_loaded('mysql'))
 							{
-								$this->template->layout->controls = form::open('install/setupconfig/1').form::button('next', __('setup.step0_button'), $next).form::close();
-								$this->template->layout->controls_text = __('setup.step0_button_text');
+								$this->template->layout->controls = form::open('install/setupconfig/1').form::button('next', __('Next Step'), $next).form::close();
+								$this->template->layout->controls_text = __('If you have your database information, continue the setup process');
 							}
 							else
 							{
@@ -546,14 +546,13 @@ class Controller_Install extends Controller_Template
 								'class' => 'btn-main',
 								'id' => 'next',
 							);
-							$text = ucwords(__('order.next').' '.__('label.step'));
 							
 							// set the message
-							$data->message = __('setup.step1_text');
+							$data->message = __("Enter your database connection details below. If you're not sure about these, contact your web host.");
 
 							// build the next step control
-							$this->template->layout->controls = form::button('next', __('setup.step1_button'), $next).form::close();
-							$this->template->layout->controls_text = __('setup.step1_button_text');
+							$this->template->layout->controls = form::button('next', __('Next Step'), $next).form::close();
+							$this->template->layout->controls_text = __('Use these settings to verify your database connection');
 							break;
 						
 						case 2:
@@ -597,11 +596,10 @@ class Controller_Install extends Controller_Template
 									'class' => 'btn-main',
 									'id' => 'next',
 								);
-								$text = __('setup.step2_write_file');
 								
 								// write the controls
-								$this->template->layout->controls = form::open('install/setupconfig/3').form::button('next', $text, $next).form::close();
-								$this->template->layout->controls_text = __('setup.step2_write_file_text');
+								$this->template->layout->controls = form::open('install/setupconfig/3').form::button('next', __('Next Step'), $next).form::close();
+								$this->template->layout->controls_text = __('Time to write the database connection file');
 							} catch (Exception $e) {
 								$msg = (string) $e->getMessage();
 								
@@ -628,11 +626,10 @@ class Controller_Install extends Controller_Template
 									'class' => 'btn-main',
 									'id' => 'next',
 								);
-								$text = __('setup.step2_start_over');
 								
 								// write the controls
-								$this->template->layout->controls = form::open('install/setupconfig/1').form::button('next', $text, $next).form::close();
-								$this->template->layout->controls_text = __('setup.step2_start_over_text');
+								$this->template->layout->controls = form::open('install/setupconfig/1').form::button('next', __('Start Over'), $next).form::close();
+								$this->template->layout->controls_text = __('Go back to the connection settings page to try and enter your settings again');
 							}
 							break;
 							
@@ -749,11 +746,10 @@ return array
 										'class' => 'btn-main',
 										'id' => 'next',
 									);
-									$text = __('setup.step3_install');
 									
 									// write the controls
-									$this->template->layout->controls = form::open('install/index').form::button('next', $text, $next).form::close();
-									$this->template->layout->controls_text = __('setup.step3_install_text');
+									$this->template->layout->controls = form::open('install/index').form::button('next', __('Install Center'), $next).form::close();
+									$this->template->layout->controls_text = __('Go to the Installation Center to continue installing Nova');
 								}
 								else
 								{
@@ -767,11 +763,10 @@ return array
 										'class' => 'btn-main',
 										'id' => 'next',
 									);
-									$text = __('setup.step3_retest');
 									
 									// write the controls
-									$this->template->layout->controls = form::open('install/setupconfig/4').form::button('next', $text, $next).form::close();
-									$this->template->layout->controls_text = __('setup.step3_retest_text');
+									$this->template->layout->controls = form::open('install/setupconfig/4').form::button('next', __('Re-Test'), $next).form::close();
+									$this->template->layout->controls_text = __('Re-Test your database connection with the new settings');
 								}
 							}
 							else
@@ -789,8 +784,8 @@ return array
 								$text = __('setup.step3_retest');
 								
 								// write the controls
-								$this->template->layout->controls = form::open('install/setupconfig/4').form::button('next', $text, $next).form::close();
-								$this->template->layout->controls_text = __('setup.step3_retest_text');
+								$this->template->layout->controls = form::open('install/setupconfig/4').form::button('next', __('Re-Test'), $next).form::close();
+								$this->template->layout->controls_text = __('Re-Test your database connection with the new settings');
 							}
 							break;
 							
@@ -813,8 +808,8 @@ return array
 								$text = __('setup.step3_install');
 								
 								// write the controls
-								$this->template->layout->controls = form::open('install/index').form::button('next', $text, $next).form::close();
-								$this->template->layout->controls_text = __('setup.step3_install_text');
+								$this->template->layout->controls = form::open('install/index').form::button('next', __('Install Center'), $next).form::close();
+								$this->template->layout->controls_text = __('Go to the Installation Center to continue installing Nova');
 								
 								// clear the session
 								$session->destroy();
@@ -844,11 +839,10 @@ return array
 									'class' => 'btn-main',
 									'id' => 'next',
 								);
-								$text = __('setup.step2_start_over');
 								
 								// write the controls
-								$this->template->layout->controls = form::open('install/setupconfig/1').form::button('next', $text, $next).form::close();
-								$this->template->layout->controls_text = __('setup.step2_start_over_text');
+								$this->template->layout->controls = form::open('install/setupconfig/1').form::button('next', __('Start Over'), $next).form::close();
+								$this->template->layout->controls_text = __('Go back to the connection settings page to try and enter your settings again');
 							}
 							break;
 					}
@@ -857,14 +851,13 @@ return array
 		}
 		
 		// content
-		$this->template->title.= __('setup.title');
-		$this->template->layout->label = __('setup.title');
+		$this->template->title.= __('Config File Setup');
+		$this->template->layout->label = __('Config File Setup');
 		
 		// send the response
 		$this->request->response = $this->template;
 	}
 	
-	# TODO: need better styling for the progress bar
 	public function action_step($step = 0)
 	{
 		// make sure the script doesn't time out
@@ -890,7 +883,7 @@ return array
 			// show the flash message
 			$this->template->layout->flash_message = View::factory('install/pages/flash');
 			$this->template->layout->flash_message->status = 'error';
-			$this->template->layout->flash_message->message = __('step.error_no_genre', array(':path' => APPFOLDER.'/config/nova'.EXT));
+			$this->template->layout->flash_message->message = __('install.error_no_genre', array(':path' => APPFOLDER.'/config/nova'.EXT));
 		}
 		
 		switch ($step)
@@ -906,8 +899,8 @@ return array
 				$data->message = nl2br(__('step0.inst'));
 				
 				// content
-				$this->template->title.= __('step0.title');
-				$this->template->layout->label = __('step0.label');
+				$this->template->title.= __('Install Nova');
+				$this->template->layout->label = __('Getting Started');
 				
 				// create the javascript view
 				$this->template->javascript = View::factory('install/js/install_step0_js');
@@ -922,8 +915,8 @@ return array
 					);
 					
 					// build the next step control
-					$this->template->layout->controls = form::open('install/step/1').form::button('next', __('step0.button'), $next).form::close();
-					$this->template->layout->controls_text = __('step0.button_text');
+					$this->template->layout->controls = form::open('install/step/1').form::button('next', __('Start Install'), $next).form::close();
+					$this->template->layout->controls_text = __("Start by installing Nova's database tables and some basic data");
 				}
 				break;
 				
@@ -1053,7 +1046,8 @@ return array
 				$data->loading = array(
 					'src' => MODFOLDER.'/nova/install/views/install/images/loading-circle-large.gif',
 					'attr' => array(
-						'class' => 'image'),
+						'class' => 'image',
+						'alt' => ''),
 				);
 				
 				// get the default rank set
@@ -1065,16 +1059,19 @@ return array
 				// pull the rank record
 				$rank = Jelly::query('rank', $session->get('rank', 1))->select();
 				
+				# FIXME: what's going on with this?
+				
 				$data->default_rank = array(
 					//'src' => location::image($rank->image.$catalogue->extension, NULL, $catalogue->location, 'rank'),
 					'src' => APPFOLDER.'/assets/common/'.Kohana::config('nova.genre').'/ranks/'.$rankdefault.'/'.$rank->image.$catalogue->extension,
 					'attr' => array(
-						'class' => 'image'),
+						'class' => 'image',
+						'alt' => ''),
 				);
 				
 				// content
-				$this->template->title.= __('step1.title');
-				$this->template->layout->label = __('step1.label');
+				$this->template->title.= __('Install Nova: Basic Information');
+				$this->template->layout->label = __('Just the Basics');
 				
 				// create the javascript view
 				$this->template->javascript = View::factory('install/js/install_step1_js');
@@ -1087,8 +1084,8 @@ return array
 				);
 				
 				// build the next step control
-				$this->template->layout->controls = (count($tables) < $this->_tables) ? FALSE : form::button('next', __('step1.button'), $next).form::close();
-				$this->template->layout->controls_text = __('step1.button_text');
+				$this->template->layout->controls = (count($tables) < $this->_tables) ? FALSE : form::button('next', __('Next Step'), $next).form::close();
+				$this->template->layout->controls_text = __('Update Nova with the basic information above');
 				
 				break;
 				
@@ -1135,61 +1132,38 @@ return array
 							->update();
 						
 						// create the user
-						$crUser = Jelly::query('user')
-							->columns(array(
-								'status',
-								'name',
-								'email',
-								'password',
-								'role',
-								'sysadmin',
-								'gm',
-								'webmaster',
-								'skin_main',
-								'skin_wiki',
-								'skin_admin',
-								'rank'
+						$crUser = Jelly::factory('user')
+							->set(array(
+								'status' => 'active',
+								'name' => $name,
+								'email' => $email,
+								'password' => Auth::hash($password),
+								'role' => 1,
+								'sysadmin' => 'y',
+								'gm' => 'y',
+								'webmaster' => 'y',
+								'skin_main' => Jelly::query('catalogueskinsec')->defaultskin('main')->limit(1)->select()->skin,
+								'skin_wiki' => Jelly::query('catalogueskinsec')->defaultskin('wiki')->limit(1)->select()->skin,
+								'skin_admin' => Jelly::query('catalogueskinsec')->defaultskin('admin')->limit(1)->select()->skin,
+								'rank' => Jelly::query('cataloguerank')->defaultrank()->limit(1)->select()->location,
 							))
-							->values(array(
-								'active',
-								$name,
-								$email,
-								Auth::hash($password),
-								1,
-								'y',
-								'y',
-								'y',
-								Jelly::query('catalogueskinsec')->defaultskin('main')->limit(1)->select()->skin,
-								Jelly::query('catalogueskinsec')->defaultskin('wiki')->limit(1)->select()->skin,
-								Jelly::query('catalogueskinsec')->defaultskin('admin')->limit(1)->select()->skin,
-								Jelly::query('cataloguerank')->defaultrank()->limit(1)->select()->location,
-							))
-							->insert();
+							->save();
 						
 						// create the character
-						$crCharacter = Jelly::query('character')
-							->columns(array(
-								'user',
-								'fname',
-								'lname',
-								'position1',
-								'rank',
-								'status',
-								'activate'
+						$crCharacter = Jelly::factory('character')
+							->set(array(
+								'user' => $crUser->id,
+								'fname' => $first_name,
+								'lname' => $last_name,
+								'position1' => $position,
+								'rank' => $rank,
+								'status' => 'active',
+								'activate' => date::now(),
 							))
-							->values(array(
-								$crUser[0],
-								$first_name,
-								$last_name,
-								$position,
-								$rank,
-								'active',
-								date::now()
-							))
-							->insert();
+							->save();
 						
 						// update the user with the character info
-						Jelly::query('user', $crUser[0])->set(array('main_char' => $crCharacter[0]))->update();
+						Jelly::query('user', $crUser->id)->set(array('main_char' => $crCharacter->id))->update();
 						
 						// get the preferences
 						$prefs = Jelly::query('userpref')->select();
@@ -1198,17 +1172,12 @@ return array
 						foreach ($prefs as $p)
 						{
 							$prefvalues = Jelly::query('userprefvalue')
-								->columns(array(
-									'user',
-									'key',
-									'value'
+								->set(array(
+									'user' => $crUser->id,
+									'key' => $p->key,
+									'value' => $p->default
 								))
-								->values(array(
-									$crUser[0],
-									$p->key,
-									$p->default
-								))
-								->insert();
+								->save();
 						}
 						
 						// do the quick installs
@@ -1246,8 +1215,8 @@ return array
 				$data->message = __('step2.message');
 				
 				// content
-				$this->template->title.= __('step2.title');
-				$this->template->layout->label = __('step2.label');
+				$this->template->title.= __('Nova Installed!');
+				$this->template->layout->label = __('All Finished');
 				
 				// create the javascript view
 				$this->template->javascript = View::factory('install/js/install_step2_js');
@@ -1260,8 +1229,8 @@ return array
 				);
 				
 				// build the next step control
-				$this->template->layout->controls = form::open('main/index').form::button('next', __('step2.button'), $next).form::close();
-				$this->template->layout->controls_text = __('step2.button_text');
+				$this->template->layout->controls = form::open('main/index').form::button('next', __('Finish'), $next).form::close();
+				$this->template->layout->controls_text = __('Nova is installed and ready to use, so head over to your site now');
 				
 				break;
 		}
@@ -1294,15 +1263,13 @@ return array
 			);
 			
 			// build the next step control
-			$this->template->layout->controls = form::open('install/step').form::button('install', __('verify.button_install'), $next).form::close();
-			
-			// build the control text
-			$this->template->layout->controls_text = __('verify.button_install_text');
+			$this->template->layout->controls = form::open('install/step').form::button('install', __('Start Install'), $next).form::close();
+			$this->template->layout->controls_text = __('Start installing Nova into your database');
 		}
 		
 		// content
-		$this->template->title.= __('verify.title');
-		$this->template->layout->label = __('verify.title');
+		$this->template->title.= __('Verify Server Requirements');
+		$this->template->layout->label = __('Verify Server Requirements');
 	}
 	
 	private function _register()

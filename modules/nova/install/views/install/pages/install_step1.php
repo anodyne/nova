@@ -3,23 +3,23 @@
 <hr />
 
 <?php echo form::open('install/step/2');?>
-	<h3><?php echo __('step1.sim_info');?></h3>
+	<h3><?php echo __('Sim Information');?></h3>
 	<div class="indent-left">
 		<p>
-			<kbd><?php echo __('step1.sim_name');?></kbd>
+			<kbd><?php echo __('Sim Name');?></kbd>
 			<?php echo form::input('sim_name', Session::instance()->get('sim_name', ''));?>
 		</p>
 	</div><br />
 	
-	<h3><?php echo __('step1.your_info');?></h3>
+	<h3><?php echo __('Your Information');?></h3>
 	<div class="indent-left">
 		<p>
-			<kbd><?php echo __('step1.name');?></kbd>
+			<kbd><?php echo __('Your Name');?></kbd>
 			<?php echo form::input('name', Session::instance()->get('name', ''));?>
 		</p>
 		
 		<p>
-			<kbd><?php echo __('step1.email');?></kbd>
+			<kbd><?php echo __('Your Email Address');?></kbd>
 			<?php if ($errors !== FALSE && array_key_exists('email', $errors)): ?>
 				<p class="bold error">
 					<?php echo html::image(location::image('exclamation-red.png', NULL, 'install', 'image'), array('class' => 'inline-image-left'));?>
@@ -30,7 +30,7 @@
 		</p>
 		
 		<p>
-			<kbd><?php echo __('step1.password');?></kbd>
+			<kbd><?php echo __('Your Password');?></kbd>
 			<?php if ($errors !== FALSE && array_key_exists('password', $errors)): ?>
 				<p class="bold error">
 					<?php echo html::image(location::image('exclamation-red.png', NULL, 'install', 'image'), array('class' => 'inline-image-left'));?>
@@ -41,7 +41,7 @@
 		</p>
 		
 		<p>
-			<kbd><?php echo __('step1.password_confirm');?></kbd>
+			<kbd><?php echo __('Confirm Your Password');?></kbd>
 			<?php if ($errors !== FALSE && array_key_exists('password_confirm', $errors)): ?>
 				<p class="bold error">
 					<?php echo html::image(location::image('exclamation-red.png', NULL, 'install', 'image'), array('class' => 'inline-image-left'));?>
@@ -52,27 +52,27 @@
 		</p>
 	</div><br />
 	
-	<h3><?php echo __('step1.character_info');?></h3>
+	<h3><?php echo __('Character Information');?></h3>
 	<div class="indent-left">
 		<p>
-			<kbd><?php echo __('step1.char_fname');?></kbd>
+			<kbd><?php echo __('First Name');?></kbd>
 			<?php echo form::input('first_name', Session::instance()->get('first_name', ''));?>
 		</p>
 		
 		<p>
-			<kbd><?php echo __('step1.char_lname');?></kbd>
+			<kbd><?php echo __('Last Name');?></kbd>
 			<?php echo form::input('last_name', Session::instance()->get('last_name', ''));?>
 		</p>
 		
 		<p>
-			<kbd><?php echo __('step1.char_position');?></kbd>
+			<kbd><?php echo ucfirst(__('position'));?></kbd>
 			<?php echo form::select_position('position', Session::instance()->get('position', NULL), array('id' => 'position'));?>
 			&nbsp; <span id="loading_update" class="hidden fontSmall subtle"><?php echo html::image($loading['src'], $loading['attr']);?></span>
 			<p id="position_desc" class="subtle"></p>
 		</p>
 		
 		<p>
-			<kbd><?php echo __('step1.char_rank');?></kbd>
+			<kbd><?php echo ucfirst(__('rank'));?></kbd>
 			<?php echo form::select_rank('rank', Session::instance()->get('rank', NULL), array('id' => 'rank'));?>
 			&nbsp; <span id="loading_update_rank" class="hidden fontSmall subtle"><?php echo html::image($loading['src'], $loading['attr']);?></span>
 			<p id="rank_img" class="subtle"><?php echo html::image($default_rank['src'], $default_rank['attr']);?></p>

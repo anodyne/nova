@@ -9,7 +9,7 @@
 		<div id="loading" class="hidden">
 			<img src="<?php echo url::base().APPFOLDER;?>/views/_base/install/images/loading-circle-large.gif" alt="" />
 			<br />
-			<strong><?php echo ucfirst(__('action.processing'));?>...</strong>
+			<strong><?php echo ucfirst(__('processing'));?>...</strong>
 		</div>
 		
 		<div id="loaded" class="UITheme">
