@@ -5,7 +5,10 @@
 |---------------------------------------------------------------
 |
 | File: models/base/news_model.php
-| System Version: 1.0
+| System Version: 1.1
+|
+| Changes: fixed bug where news item next/previous links could be
+|	wrong under certain circumstances
 |
 | Model used to access the news, news categories, and news
 | comments tables.
@@ -69,11 +72,12 @@ class News_model_base extends Model {
 			{
 				case 'next':
 					$this->db->where('news_date >', $fetch->news_date);
+					$this->db->order_by('news_date', 'asc');
 					break;
 				
 				case 'prev':
 					$this->db->where('news_date <', $fetch->news_date);
-					$this->db->order_by('news_id', 'desc');
+					$this->db->order_by('news_date', 'desc');
 					break;
 			}
 			

@@ -5,11 +5,13 @@
 |---------------------------------------------------------------
 |
 | File: models/personallogs_model_base.php
-| System Version: 1.0.4
+| System Version: 1.1
 |
 | Changes: fixed bug where saved personal logs would be shown
 |	along with activated logs for users with multiple characters
-|	tied to their account because of the way the query was built
+|	tied to their account because of the way the query was built;
+|	fixed bug where log next/previous links could be wrong under
+|	certain circumstances
 |
 | Model used to access the personal logs and personal logs comments tables.
 |
@@ -89,11 +91,12 @@ class Personallogs_model_base extends Model {
 			{
 				case 'next':
 					$this->db->where('log_date >', $fetch->log_date);
+					$this->db->order_by('log_date', 'asc');
 					break;
 				
 				case 'prev':
 					$this->db->where('log_date <', $fetch->log_date);
-					$this->db->order_by('log_id', 'desc');
+					$this->db->order_by('log_date', 'desc');
 					break;
 			}
 			

@@ -5,12 +5,13 @@
 |---------------------------------------------------------------
 |
 | File: models/posts_model_base.php
-| System Version: 1.0.3
+| System Version: 1.1
 |
 | Changes: added parameter to get_unattended_posts for pulling
 |	specific statuses back; updated the get_unattended_posts
 |	method with better logic for single characters being passed
-|	in to the method
+|	in to the method; fixed bug where post next/previous links
+|	could be wrong under certain circumstances
 |
 | Model used to access the posts and posts comments tables.
 |
@@ -155,11 +156,12 @@ class Posts_model_base extends Model {
 			{
 				case 'next':
 					$this->db->where('post_date >', $fetch->post_date);
+					$this->db->order_by('post_date', 'asc');
 					break;
 				
 				case 'prev':
 					$this->db->where('post_date <', $fetch->post_date);
-					$this->db->order_by('post_id', 'desc');
+					$this->db->order_by('post_date', 'desc');
 					break;
 			}
 			

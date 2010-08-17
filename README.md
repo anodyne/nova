@@ -25,6 +25,9 @@ Anodyne Production's next-generation RPG management system combines popular feat
 * fixed bug where ordered and unordered lists weren't properly styled in Thresher
 * fixed bug in mission group pages where missions didn't respect the mission order that was set for them
 * fixed bug where the private message dropdown didn't populate with an author when replying to a message
+* fixed bug where mission post next/previous links could be wrong under certain circumstances
+* fixed bug where news item next/previous links could be wrong under certain circumstances
+* fixed bug where personal log next/previous links could be wrong under certain circumstances
 
 ## Version History
 
