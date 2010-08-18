@@ -64,41 +64,25 @@ body {
 .content a:hover { color: #466b8c; }
 
 .lower {
-	height: 38px;
-	line-height: 38px;
-	margin: 1em 2em;
+	height: 45px;
+	margin: 0 2em;
+}
+.control {
+	float: right;
+	height: 45px;
+	line-height: 42px;
+	width: 230px;
 	
-	text-align: right;
-	border: 1px solid #c8c8c8;
-	background: #e8e8e8;
+	background: rgba(180, 180, 180, .5);
+	text-align: center;
 	
 	border-radius: 3px;
 	-moz-border-radius: 3px;
 	-webkit-border-radius: 3px;
-}
-.control {
-	float: right;
-	height: 38px;
-	width: 218px; /* needs to be 12 pixel smaller than .control-text */
-	padding: 0 .5em;
 	
-	background: #d8d8d8;
-	text-align: center;
-	
-	border-radius: 0 3px 3px 0;
-	-moz-border-radius: 0 3px 3px 0;
-	-webkit-border-top-right-radius: 3px;
-	-webkit-border-bottom-right-radius: 3px;
-}
-.control-text {
-	margin: 0 230px 0 0;
-	padding: 0 .5em;
-	
-	text-align: left;
-	font-size: 90%;
-	font-style: italic;
-	color: #777;
-	border-right: 1px solid #c8c8c8;
+	box-shadow: inset 0 1px 0 rgba(0, 0, 0, .2), inset 0 0 2px rgba(0, 0, 0, .25);
+	-moz-box-shadow: inset 0 1px 0 rgba(0, 0, 0, .2), inset 0 0 2px rgba(0, 0, 0, .25);
+	-webkit-box-shadow: inset 0 1px 0 rgba(0, 0, 0, .2), inset 0 0 2px rgba(0, 0, 0, .25);
 }
 
 .footer {
@@ -144,73 +128,81 @@ h3 { font-size: 133%; }
 
 #loaded { position: relative; }
 
+#progress-container {
+	position: relative;
+	float: left;
+	width: 390px;
+	height: 20px;
+	line-height: 20px;
+	margin: -1px -1px 0 9px;
+	padding: 0 5px;
+	
+	background: #ddd;
+	border: 1px solid #bbb;
+	
+	border-radius: 10px;
+	-moz-border-radius: 10px;
+	-webkit-border-radius: 10px;
+}
 #progress {
-	width: 400px;
-	padding: 0;
+	width: 390px;
+	padding: 4px 0;
+	float: left;
 	
 	border: 0 !important;
-	background: #858585 !important;
-	background: -moz-linear-gradient(
-					center top,
-					#a5a5a5 20%,
-					#858585 100%
-				) !important;
-	background: -webkit-gradient(
-					linear,
-					left top,
-					left bottom,
-					color-stop(.2, #a5a5a5),
-					color-stop(1, #858585)
-				);
-				
-	box-shadow: inset 0px 1px 2px #666, inset 0px 0px 4px #aaa;
-	-moz-box-shadow: inset 0px 1px 2px #666, inset 0px 0px 4px #aaa;
-	-webkit-box-shadow: inset 0px 1px 2px #666, inset 0px 0px 4px #aaa;
+}
+
+#percent {
+	float: left;
+	width: 65px;
+	display: block;
+	
+	font-size: 90%;
+	color: #666;
+	text-align: center;
 }
 
 #amount {
-	width: 50px;
-	height: 23px;
-	line-height: 23px;
+	width: 475px;
+	height: 20px;
+	line-height: 20px;
 	margin: 6px 0;
 	
 	color: #fff;
 	color: rgba(0, 0, 0, .65);
 	font-weight: bold;
 	font-size: 120%;
-	text-align: center;
 	text-shadow: 0px 1px 0px rgba(255, 255, 255, .25);
+	background: #f4f4f4;
+	border: 1px solid #bbb;
+	text-indent: 1em;
+	
+	border-radius: 10px;
+	-moz-border-radius: 10px;
+	-webkit-border-radius: 10px;
 }
 
 .UITheme .ui-progressbar {
 	height: 12px !important;
 	
-	border-radius: 12px;
-	-moz-border-radius: 12px;
-	-webkit-border-radius: 12px;
+	background: transparent;
+	
+	border-radius: 6px;
+	-moz-border-radius: 6px;
+	-webkit-border-radius: 6px;
 }
 .UITheme .ui-progressbar-value {
 	height: 10px !important;
 	margin: 0 !important;
 	
 	border-color: #f5a12a;
-	background: #7c7c7c;
-	background: -webkit-gradient(
-					linear,
-					left top,
-					left bottom,
-					color-stop(.2, #f8e400),
-					color-stop(1, #f5a12a)
-				);
-	background: -moz-linear-gradient(
-					center top,
-					#f8e400 20%,
-					#f5a12a 100%
-				);
+	background: #f8e400;
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(.2, #f8e400), color-stop(1, #f5a12a));
+	background: -moz-linear-gradient(center top, #f8e400 20%, #f5a12a 100%);
 	
-	border-radius: 12px;
-	-moz-border-radius: 12px;
-	-webkit-border-radius: 12px;
+	border-radius: 6px;
+	-moz-border-radius: 6px;
+	-webkit-border-radius: 6px;
 	
 	box-shadow: inset 0px 1px 1px #fde255;
 	-moz-box-shadow: inset 0px 1px 1px #fde255;

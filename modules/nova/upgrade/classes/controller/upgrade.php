@@ -75,7 +75,6 @@ class Controller_Upgrade extends Controller_Template
 		$this->template->layout->label			= FALSE;
 		$this->template->layout->flash_message	= FALSE;
 		$this->template->layout->controls		= FALSE;
-		$this->template->layout->controls_text	= FALSE;
 	}
 	
 	public function action_index()
@@ -126,9 +125,6 @@ class Controller_Upgrade extends Controller_Template
 		
 		// build the next step control
 		$this->template->layout->controls = form::open('upgrade/index').form::button('install', __('Upgrade Center'), $next).form::close();
-		
-		// build the control text
-		$this->template->layout->controls_text = __('Go back to the Upgrade Center');
 		
 		// send the response
 		$this->request->response = $this->template;
@@ -192,8 +188,8 @@ class Controller_Upgrade extends Controller_Template
 					
 					// build the next step control
 					$this->template->layout->controls = form::open('upgrade/step/1').form::button('next', __('Start Upgrade'), $next).form::close();
-					$this->template->layout->controls_text = __("Start the upgrade by installing Nova's database tables and basic data");
 				}
+				
 				break;
 				
 			case 1:
@@ -333,7 +329,6 @@ class Controller_Upgrade extends Controller_Template
 				
 				// build the next step control
 				$this->template->layout->controls = (count($tables) < $this->_tables) ? FALSE : form::button('next', __('Upgrade'), $next).form::close();
-				$this->template->layout->controls_text = __('Upgrade SMS data to Nova. <strong>Warning:</strong> this may take several minutes');
 				
 				break;
 				
@@ -367,7 +362,6 @@ class Controller_Upgrade extends Controller_Template
 				
 				// build the next step control
 				$this->template->layout->controls = form::button('next', __('Run'), $next).form::close();
-				$this->template->layout->controls_text = __('Run the upgrade processes now. <strong>Warning:</strong> this may take several minutes');
 				
 				break;
 				
@@ -418,7 +412,6 @@ class Controller_Upgrade extends Controller_Template
 				
 				// build the next step control
 				$this->template->layout->controls = form::button('next', __('Finalize'), $next).form::close();
-				$this->template->layout->controls_text = __('Set the passwords and access roles for Nova now');
 				
 				break;
 		}
@@ -452,9 +445,6 @@ class Controller_Upgrade extends Controller_Template
 			
 			// build the next step control
 			$this->template->layout->controls = form::open('upgrade/step').form::button('install', __('Start Upgrade'), $next).form::close();
-			
-			// build the control text
-			$this->template->layout->controls_text = __('Upgrade from SMS to Nova now');
 		}
 		
 		// content
