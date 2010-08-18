@@ -72,7 +72,6 @@ class Controller_Update extends Controller_Template
 		$this->template->layout->label			= FALSE;
 		$this->template->layout->flash_message	= FALSE;
 		$this->template->layout->controls		= FALSE;
-		$this->template->layout->controls_text	= FALSE;
 	}
 	
 	public function action_index()
@@ -272,7 +271,6 @@ class Controller_Update extends Controller_Template
 					
 					// build the next step control
 					$this->template->layout->controls = form::open('update/nova1/1').form::button('next', __('Start Update'), $next).form::close();
-					$this->template->layout->controls_text = __("Start the update to get the latest and greatest version of Nova");
 				}
 				
 				break;
@@ -414,7 +412,6 @@ class Controller_Update extends Controller_Template
 				
 				// build the next step control
 				$this->template->layout->controls = (count($tables) < $this->_tables) ? FALSE : form::button('next', __('Upgrade'), $next).form::close();
-				$this->template->layout->controls_text = __('Upgrade SMS data to Nova. <strong>Warning:</strong> this may take several minutes');
 				
 				break;
 				
@@ -448,7 +445,6 @@ class Controller_Update extends Controller_Template
 				
 				// build the next step control
 				$this->template->layout->controls = form::button('next', __('Run'), $next).form::close();
-				$this->template->layout->controls_text = __('Run the upgrade processes now. <strong>Warning:</strong> this may take several minutes');
 				
 				break;
 				
@@ -499,7 +495,6 @@ class Controller_Update extends Controller_Template
 				
 				// build the next step control
 				$this->template->layout->controls = form::button('next', __('Finalize'), $next).form::close();
-				$this->template->layout->controls_text = __('Set the passwords and access roles for Nova now');
 				
 				break;
 		}
@@ -550,7 +545,6 @@ class Controller_Update extends Controller_Template
 				
 				// build the next step control
 				$this->template->layout->controls = form::open('update/step/1').form::button('next', __('Start Update'), $next).form::close();
-				$this->template->layout->controls_text = __("Run the Nova update to get the latest changes and fixes");
 				
 				break;
 				
@@ -646,7 +640,6 @@ class Controller_Update extends Controller_Template
 				
 				// build the next step control
 				$this->template->layout->controls = form::open('main/index').form::button('next', __('Back to Site'), $next).form::close();
-				$this->template->layout->controls_text = __("Go back to your freshly updated site");
 				
 				break;
 		}

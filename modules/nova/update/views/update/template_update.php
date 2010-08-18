@@ -14,8 +14,12 @@
 		
 		<div id="loaded" class="UITheme">
 			<?php if (Request::instance()->action == 'step' && Request::instance()->param('id') > 0): ?>
-				<div id="progress"></div>
-				<div id="amount"><span id="percent">0%</span></div>
+				<div id="amount">
+					<span id="percent">0%</span>
+					<div id="progress-container">
+						<div id="progress"></div>
+					</div>
+				</div>
 				<div style="clear:both;"></div>
 			<?php endif;?>
 		
@@ -27,7 +31,6 @@
 	<?php if ($controls !== FALSE): ?>	
 		<div class="lower">
 			<div class="control"><?php echo $controls;?></div>
-			<div class="control-text"><?php echo $controls_text;?></div>
 		</div>
 	<?php endif;?>
 	
