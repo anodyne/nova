@@ -5,9 +5,11 @@
 |---------------------------------------------------------------
 |
 | File: models/users_model_base.php
-| System Version: 1.0.6
+| System Version: 1.1
 |
-| Changes: new model method for deleting user preferences
+| Changes: fixed bugs where the command staff, game master and
+|	webmaster email methods pulled all users instead of active
+|	users
 |
 */
 
@@ -152,7 +154,11 @@ class Users_model_base extends Model {
 					{
 						if (!empty($char->user))
 						{ /* put the characters into the array */
-							$email = $this->db->get_where('users', array('userid' => $char->user));
+							$this->db->from('users');
+							$this->db->where('userid', $char->user);
+							$this->db->where('status', 'active');
+							
+							$email = $this->db->get();
 							$row = $email->row();
 							
 							if (!in_array($row->email, $users))
@@ -298,7 +304,11 @@ class Users_model_base extends Model {
 	
 	function get_gm_emails()
 	{
-		$query = $this->db->get_where('users', array('is_game_master' => 'y'));
+		$this->db->from('users');
+		$this->db->where('is_game_master', 'y');
+		$this->db->where('status', 'active');
+		
+		$query = $this->db->get();
 		
 		if ($query->num_rows() > 0)
 		{
@@ -512,7 +522,11 @@ class Users_model_base extends Model {
 	
 	function get_webmasters_emails()
 	{
-		$query = $this->db->get_where('users', array('is_webmaster' => 'y'));
+		$this->db->from('users');
+		$this->db->where('is_webmaster', 'y');
+		$this->db->where('status', 'active');
+		
+		$query = $this->db->get();
 		
 		if ($query->num_rows() > 0)
 		{

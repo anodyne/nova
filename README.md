@@ -28,6 +28,7 @@ Anodyne Production's next-generation RPG management system combines popular feat
 * fixed bug where mission post next/previous links could be wrong under certain circumstances
 * fixed bug where news item next/previous links could be wrong under certain circumstances
 * fixed bug where personal log next/previous links could be wrong under certain circumstances
+* fixed bug where the command staff, game master and webmaster get email methods pulled all users, not just active users
 
 ## Version History
 
