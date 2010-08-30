@@ -34,7 +34,7 @@ abstract class Nova_Email
 		// send the message
 		$result = $mailer->send($message);
 		
-		//return $result;
+		return $result;
 	}
 	
 	/**
