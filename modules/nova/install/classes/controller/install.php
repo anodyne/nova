@@ -538,6 +538,7 @@ class Controller_Install extends Controller_Template
 							$dbPass		= trim(Security::xss_clean($_POST['dbPass']));
 							$dbHost		= trim(Security::xss_clean($_POST['dbHost']));
 							$prefix		= trim(Security::xss_clean($_POST['prefix']));
+							$type		= trim(Security::xss_clean($_POST['installType']));
 							
 							// set the session variables
 							$session->set('dbName', $dbName);
@@ -561,20 +562,38 @@ class Controller_Install extends Controller_Template
 							$db = Database::instance('custom', $dbconfig);
 							
 							try {
-								$tables = $db->list_tables();
+								$tables = $db->list_tables($prefix.'%');
 								
-								// write the message
-								$data->message = __('setup.step2_success');
-								
-								// build the next step button
-								$next = array(
-									'type' => 'submit',
-									'class' => 'btn-main',
-									'id' => 'next',
-								);
-								
-								// write the controls
-								$this->template->layout->controls = form::open('install/setupconfig/3').form::button('next', __('Next Step'), $next).form::close();
+								if ($type == 'nova1' && count($tables) > 0)
+								{
+									// write the message
+									$data->message = __('setup.step2_nova1_failure');
+									
+									// build the next step button
+									$next = array(
+										'type' => 'submit',
+										'class' => 'btn-main',
+										'id' => 'next',
+									);
+									
+									// write the controls
+									$this->template->layout->controls = form::open('install/setupconfig/1').form::button('next', __('Start Over'), $next).form::close();
+								}
+								else
+								{
+									// write the message
+									$data->message = __('setup.step2_success');
+									
+									// build the next step button
+									$next = array(
+										'type' => 'submit',
+										'class' => 'btn-main',
+										'id' => 'next',
+									);
+									
+									// write the controls
+									$this->template->layout->controls = form::open('install/setupconfig/3').form::button('next', __('Next Step'), $next).form::close();
+								}
 							} catch (Exception $e) {
 								$msg = (string) $e->getMessage();
 								
@@ -819,6 +838,9 @@ return array
 				}
 			}
 		}
+		
+		// create the javascript view
+		$this->template->javascript = View::factory('install/js/install_setupconfig_js');
 		
 		// content
 		$this->template->title.= __('Config File Setup');
@@ -1154,7 +1176,7 @@ return array
 						Utility::install_skins();
 						
 						// do the registration
-						//$this->_register();
+						$this->_register();
 					}
 					else
 					{
@@ -1257,13 +1279,11 @@ return array
 				$_SERVER['REMOTE_ADDR'],
 				$_SERVER['SERVER_ADDR'],
 				phpversion(),
-				'db platform',
-				'db platform version',
-				'install',
+				'upgrade',
 				Kohana::config('nova.genre'),
 			);
 			
-			$insert = "INSERT INTO www_installs (product, version, url, ip_client, ip_server, php, db_platform, db_version, type, date, genre) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %d, %s);";
+			$insert = "INSERT INTO www_installs (product, version, url, ip_client, ip_server, php, type, date, genre) VALUES (%s, %s, %s, %s, %s, %s, %s, %d, %s);";
 			
 			$data['message'] = sprintf(
 				$insert,
@@ -1275,8 +1295,6 @@ return array
 				$db->escape($request[5]),
 				$db->escape($request[6]),
 				$db->escape($request[7]),
-				$db->escape($request[8]),
-				$db->escape($request[9]),
 				$db->escape(date::now())
 			);
 			
