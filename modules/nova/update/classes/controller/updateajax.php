@@ -23,6 +23,97 @@ class Controller_Updateajax extends Controller_Template
 		
 		// get an instance of the database
 		$this->db = Database::instance();
+		
+		// get the n1 prefix
+		$this->n1pref = Session::instance()->get('n1pref');
+	}
+	
+	public function action_update_users()
+	{
+		// get the users from n1
+		$n1Users = $this->db->query(Database::SELECT, "SELECT * FROM ".$this->n1pref.'users', TRUE);
+		
+		// figure out how many users we have tos tart
+		$n1UsersCount= $n1Users->count();
+		
+		try {
+			// set up the saved array
+			$saved = array();
+			
+			// run through the data
+			foreach ($n1Users as $u)
+			{
+				$item = Jelly::factory('user')
+					->set(array(
+						'id' => $u->userid,
+						'status' => $u->status,
+						'name' => $u->name,
+						'email' => $u->email,
+						'password' => $u->password,
+						'date_of_birth' => $u->date_of_birth,
+						'instant_message' => $u->instant_message,
+						'main_char' => $u->main_char,
+						'sysadmin' => $u->is_sysadmin,
+						'gm' => $u->is_game_master,
+						'webmaster' => $u->is_webmaster,
+						'timezone' => $this->_translate_timezone($u->timezone),
+						'dst' => $u->daylight_savings,
+						
+					))
+					->save();
+				$saved[] = $item->saved();
+			}
+		} catch (Exception $e) {
+			
+		}
+	}
+	
+	private function _translate_timezone($zone)
+	{
+		$timezones = array(
+			'UM12'		=> 'Pacific/Kiritimati',
+			'UM11'		=> 'Pacific/Midway',
+			'UM10'		=> 'Pacific/Honolulu',
+			'UM95'		=> 'Pacific/Marquesas',
+			'UM9'		=> 'America/Juneau',
+			'UM8'		=> 'America/Los_Angeles',
+			'UM7'		=> 'America/Denver',
+			'UM6'		=> 'America/Chicago',
+			'UM5'		=> 'America/New_York',
+			'UM45'		=> 'America/Caracas',
+			'UM4'		=> 'America/Puerto_Rico',
+			'UM35'		=> 'America/St_Johns',
+			'UM3'		=> 'America/Buenos_Aires',
+			'UM2'		=> 'Atlantic/St_Helena',
+			'UM1'		=> 'Atlantic/Azores',
+			'UTC'		=> 'UTC',
+			'UP1'		=> 'Europe/Berlin',
+			'UP2'		=> 'Europe/Athens',
+			'UP3'		=> 'Europe/Moscow',
+			'UP35'		=> 'Asia/Tehran',
+			'UP4'		=> 'Asia/Dubai',
+			'UP45'		=> 'Asia/Kabul',
+			'UP5'		=> 'Asia/Ashgabat',
+			'UP55'		=> 'Asia/Kolkata',
+			'UP575'		=> 'Asia/Kathmandu',
+			'UP6'		=> 'Asia/Karachi',
+			'UP65'		=> 'Asia/Rangoon',
+			'UP7'		=> 'Asia/Jakarta',
+			'UP8'		=> 'Asia/Hong_Kong',
+			'UP875'		=> 'Australia/Eucla',
+			'UP9'		=> 'Asia/Tokyo',
+			'UP95'		=> 'Australia/Adelaide',
+			'UP10'		=> 'Australia/Sydney',
+			'UP105'		=> 'Australia/Lord_Howe',
+			'UP11'		=> 'Pacific/Guadalcanal',
+			'UP115'		=> 'Pacific/Norfolk',
+			'UP12'		=> 'Pacific/Fiji',
+			'UP1275'	=> 'Pacific/Chatham',
+			'UP13'		=> 'Pacific/Enderbury',
+			'UP14'		=> 'Pacific/Kiritimati'
+		);
+		
+		return $timezones[$zone];
 	}
 	
 	public function action_upgrade_awards()

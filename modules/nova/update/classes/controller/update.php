@@ -7,8 +7,6 @@
  * @author		Anodyne Productions
  */
 
-# TODO: uncomment $this->_register
-
 class Controller_Update extends Controller_Template
 {
 	/**
@@ -251,7 +249,7 @@ class Controller_Update extends Controller_Template
 				$data = $this->template->layout->content;
 				
 				// make sure the proper message is displayed
-				$data->message = nl2br(__('step0.inst'));
+				$data->message = nl2br(__('nova1_update0.message'));
 				
 				// content
 				$this->template->title.= __('Update to Nova 2');
@@ -270,7 +268,7 @@ class Controller_Update extends Controller_Template
 					);
 					
 					// build the next step control
-					$this->template->layout->controls = form::open('update/nova1/1').form::button('next', __('Start Update'), $next).form::close();
+					$this->template->layout->controls = form::button('next', __('Start Update'), $next).form::close();
 				}
 				
 				break;
@@ -278,6 +276,12 @@ class Controller_Update extends Controller_Template
 			case 1:
 				if (isset($_POST['next']))
 				{
+					// get the nova 1 prefix
+					$n1pref = trim(security::xss_clean($_POST['nova1prefix']));
+					
+					// set the prefix in the session
+					$session->set('n1pref', $n1pref);
+					
 					// update the character set
 					$dbconfig = Kohana::config('database');
 					$db->set_charset($dbconfig['default']['charset']);
@@ -381,10 +385,11 @@ class Controller_Update extends Controller_Template
 				}
 				
 				// get the number of tables
-				$tables = $db->list_tables();
+				$dbconfig = Kohana::config('database');
+				$tables = $db->list_tables($dbconfig['default']['table_prefix'].'%');
 				
 				// create a new content view
-				$this->template->layout->content = View::factory('update/pages/upgrade_step1');
+				$this->template->layout->content = View::factory('update/pages/update_nova1_step1');
 				
 				// assign the object a shorter variable to use in the method
 				$data = $this->template->layout->content;
@@ -397,11 +402,11 @@ class Controller_Update extends Controller_Template
 				);
 				
 				// content
-				$this->template->title.= __('Upgrading to Nova');
-				$this->template->layout->label = __('Upgrading to Nova');
+				$this->template->title.= __('Updating to Nova 2');
+				$this->template->layout->label = __('Updating to Nova 2');
 				
 				// create the javascript view
-				$this->template->javascript = View::factory('update/js/upgrade_step1_js');
+				$this->template->javascript = View::factory('update/js/update_nova1_step1_js');
 				
 				// build the next step button
 				$next = array(
@@ -411,7 +416,7 @@ class Controller_Update extends Controller_Template
 				);
 				
 				// build the next step control
-				$this->template->layout->controls = (count($tables) < $this->_tables) ? FALSE : form::button('next', __('Upgrade'), $next).form::close();
+				$this->template->layout->controls = (count($tables) < $this->_tables) ? FALSE : form::button('next', __('Update'), $next).form::close();
 				
 				break;
 				
@@ -452,7 +457,7 @@ class Controller_Update extends Controller_Template
 				if (isset($_POST['submit']))
 				{
 					// do the registration
-					//$this->_register();
+					$this->_register();
 				}
 				
 				// create a new content view
@@ -613,6 +618,9 @@ class Controller_Update extends Controller_Template
 					$info->version_minor = $system_info['version_minor'];
 					$info->version_update = $system_info['version_update'];
 					$info->save(1);
+					
+					// do the registration
+					$this->_register();
 				}
 				
 				// create a new content view
@@ -766,13 +774,11 @@ class Controller_Update extends Controller_Template
 				$_SERVER['REMOTE_ADDR'],
 				$_SERVER['SERVER_ADDR'],
 				phpversion(),
-				$this->db->platform(),
-				$this->db->version(),
 				'upgrade',
 				Kohana::config('nova.genre'),
 			);
 			
-			$insert = "INSERT INTO www_installs (product, version, url, ip_client, ip_server, php, db_platform, db_version, type, date, genre) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %d, %s);";
+			$insert = "INSERT INTO www_installs (product, version, url, ip_client, ip_server, php, type, date, genre) VALUES (%s, %s, %s, %s, %s, %s, %s, %d, %s);";
 			
 			$data['message'] = sprintf(
 				$insert,
@@ -784,13 +790,11 @@ class Controller_Update extends Controller_Template
 				$db->escape($request[5]),
 				$db->escape($request[6]),
 				$db->escape($request[7]),
-				$db->escape($request[8]),
-				$db->escape($request[9]),
 				$db->escape(date::now())
 			);
 			
 			// send the email
-			$email = email::install_register($data);
+			//$email = email::install_register($data);
 		}
 	}
 }
