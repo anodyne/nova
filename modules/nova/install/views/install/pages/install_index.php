@@ -6,6 +6,11 @@
 		<em><?php echo __('index.fresh_text');?></em>
 	</a>
 	
+	<a href="<?php echo url::site('update/nova1');?>" class="install-options">
+		<span><?php echo __('Update From Nova 1');?></span>
+		<em><?php echo __('index.nova1_text');?></em>
+	</a>
+	
 	<a href="<?php echo url::site('upgrade/index');?>" class="install-options">
 		<span><?php echo __('Upgrade From SMS 2');?></span>
 		<em><?php echo __('index.upg_text');?></em>
