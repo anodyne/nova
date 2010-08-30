@@ -10,6 +10,7 @@
 # TODO: change the login redirect to admin/index after the ACP is finished
 # TODO: reset password
 # TODO: attempted login lockout
+# TODO: uncomment login code in install, update and upgrade modules
 
 class Controller_Nova_Login extends Controller_Nova_Base
 {
