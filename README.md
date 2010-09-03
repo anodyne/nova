@@ -29,6 +29,7 @@ Anodyne Production's next-generation RPG management system combines popular feat
 * fixed bug where news item next/previous links could be wrong under certain circumstances
 * fixed bug where personal log next/previous links could be wrong under certain circumstances
 * fixed bug where the command staff, game master and webmaster get email methods pulled all users, not just active users
+* fixed error thrown with an undefined class method when deleting uploaded items
 
 ## Version History
 
@@ -37,7 +38,7 @@ Anodyne Production's next-generation RPG management system combines popular feat
 		<th>Version</th><th>Release Date</th>
 	</tr>
 	<tr>
-		<td>1.1</td><td>-</td>
+		<td>1.1</td><td>4 September 2010</td>
 	</tr>
 	<tr>
 		<td>1.0.6</td><td>14 July 2010</td>
