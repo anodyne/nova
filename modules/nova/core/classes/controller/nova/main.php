@@ -51,10 +51,10 @@ class Controller_Nova_Main extends Controller_Nova_Base
 	public function action_index()
 	{
 		// create a new content view
-		$this->template->layout->content = View::factory(location::view('main_index', $this->skin, 'main', 'pages'));
+		$this->template->layout->content = View::factory(Location::view('main_index', $this->skin, 'main', 'pages'));
 		
 		// create the javascript view
-		$this->template->javascript = View::factory(location::view('main_index_js', $this->skin, 'main', 'js'));
+		$this->template->javascript = View::factory(Location::view('main_index_js', $this->skin, 'main', 'js'));
 		
 		// assign the object a shorter variable to use in the method
 		$data = $this->template->layout->content;
@@ -98,7 +98,7 @@ class Controller_Nova_Main extends Controller_Nova_Base
 		$id = (!is_numeric($id)) ? FALSE : $id;
 		
 		// create a new content view
-		$this->template->layout->content = View::factory(location::view('main_viewnews', $this->skin, 'main', 'pages'));
+		$this->template->layout->content = View::factory(Location::view('main_viewnews', $this->skin, 'main', 'pages'));
 		
 		// assign the object a shorter variable to use in the method
 		$data = $this->template->layout->content;
@@ -172,18 +172,18 @@ class Controller_Nova_Main extends Controller_Nova_Base
 			// build the images portion of the object
 			$data->images = array(
 				'rss' => array(
-					'src' => location::image($this->images['main.rss'], $this->skin, 'main', 'image'),
+					'src' => Location::image($this->images['main.rss'], $this->skin, 'main', 'image'),
 					'attr' => array(
 						'alt' => __('abbr.rss'),
 						'class' => '')),
 				'prev' => array(
-					'src' => location::image($this->images['main.previous'], $this->skin, 'main', 'image'),
+					'src' => Location::image($this->images['main.previous'], $this->skin, 'main', 'image'),
 					'attr' => array(
 						'alt' => __('word.previous'),
 						'title' => ucfirst(__('word.previous')),
 						'class' => '')),
 				'next' => array(
-					'src' => location::image($this->images['main.next'], $this->skin, 'main', 'image'),
+					'src' => Location::image($this->images['main.next'], $this->skin, 'main', 'image'),
 					'attr' => array(
 						'alt' => __('word.next'),
 						'title' => ucfirst(__('word.next')),

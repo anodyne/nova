@@ -34,7 +34,7 @@ class Controller_Nova_Ajax extends Controller_Nova_Base
 		$this->template = NULL;
 		
 		// set the POST variable
-		$position = security::xss_clean($_POST['position']);
+		$position = Security::xss_clean($_POST['position']);
 		$position = (is_numeric($position)) ? $position : FALSE;
 		
 		// grab the position details
@@ -52,8 +52,8 @@ class Controller_Nova_Ajax extends Controller_Nova_Base
 		$this->template = NULL;
 		
 		// set the POST variables
-		$rank = security::xss_clean($_POST['rank']);
-		$location = security::xss_clean($_POST['location']);
+		$rank = Security::xss_clean($_POST['rank']);
+		$location = Security::xss_clean($_POST['location']);
 		
 		// a little sanity check
 		$rank = (is_numeric($rank)) ? $rank : FALSE;
@@ -65,7 +65,7 @@ class Controller_Nova_Ajax extends Controller_Nova_Base
 		$rank = Jelly::query('rank', $rank)->select();
 		
 		// set the output
-		$output = (count($rank) > 0) ? location::image($rank->image.$catalogue->extension, NULL, $location, 'rank') : FALSE;
+		$output = (count($rank) > 0) ? Location::image($rank->image.$catalogue->extension, NULL, $location, 'rank') : FALSE;
 		
 		echo html::image($output);
 	}
@@ -82,11 +82,11 @@ class Controller_Nova_Ajax extends Controller_Nova_Base
 		$forge = new DBForge;
 		
 		// grab the fields
-		$table = trim(security::xss_clean($_POST['table']));
-		$name = trim(security::xss_clean($_POST['name']));
-		$type = trim(security::xss_clean($_POST['type']));
-		$constraint = trim(security::xss_clean($_POST['constraint']));
-		$default = trim(security::xss_clean($_POST['def']));
+		$table = trim(Security::xss_clean($_POST['table']));
+		$name = trim(Security::xss_clean($_POST['name']));
+		$type = trim(Security::xss_clean($_POST['type']));
+		$constraint = trim(Security::xss_clean($_POST['constraint']));
+		$default = trim(Security::xss_clean($_POST['def']));
 		
 		// build the array for creating the field
 		$field = array(
@@ -126,7 +126,7 @@ class Controller_Nova_Ajax extends Controller_Nova_Base
 		$forge = new DBForge;
 		
 		// grab the genre variable
-		$genre = trim(security::xss_clean($_POST['genre']));
+		$genre = trim(Security::xss_clean($_POST['genre']));
 		
 		// pull in the schema data
 		include_once MODPATH.'install/assets/fields'.EXT;
@@ -191,7 +191,7 @@ class Controller_Nova_Ajax extends Controller_Nova_Base
 		$db = Database::instance();
 		
 		// grab the fields
-		$query = trim(security::xss_clean($_POST['query']));
+		$query = trim(Security::xss_clean($_POST['query']));
 		
 		// explode the query to find out what type of query it is
 		$queryarray = explode(' ', $query);
@@ -248,7 +248,7 @@ class Controller_Nova_Ajax extends Controller_Nova_Base
 		$forge = new DBForge;
 		
 		// grab the genre variable
-		$table = trim(security::xss_clean($_POST['table']));
+		$table = trim(Security::xss_clean($_POST['table']));
 		
 		// add an id field to keep everything happy
 		DBForge::add_field('id');
@@ -278,7 +278,7 @@ class Controller_Nova_Ajax extends Controller_Nova_Base
 		$forge = new DBForge;
 		
 		// grab the genre variable
-		$genre = trim(security::xss_clean($_POST['genre']));
+		$genre = trim(Security::xss_clean($_POST['genre']));
 		
 		// drop the tables
 		DBForge::drop_table('departments_'.$genre);

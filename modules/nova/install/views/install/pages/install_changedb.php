@@ -12,13 +12,13 @@
 
 <?php if (Request::instance()->param('id') == 'table'): ?>
 	<?php $data_array = array('images' => $images);?>
-	<?php echo View::factory(location::view('install_changedb_table', NULL, 'install', 'pages'), $data_array)->render();?>
+	<?php echo View::factory(Location::view('install_changedb_table', NULL, 'install', 'pages'), $data_array)->render();?>
 <?php elseif (Request::instance()->param('id') == 'field'): ?>
 	<?php $data_array = array('images' => $images, 'options' => $options, 'fieldtypes' => $fieldtypes);?>
-	<?php echo View::factory(location::view('install_changedb_field', NULL, 'install', 'pages'), $data_array)->render();?>
+	<?php echo View::factory(Location::view('install_changedb_field', NULL, 'install', 'pages'), $data_array)->render();?>
 <?php elseif (Request::instance()->param('id') == 'query'): ?>
 	<?php $data_array = array('images' => $images);?>
-	<?php echo View::factory(location::view('install_changedb_query', NULL, 'install', 'pages'), $data_array)->render();?>
+	<?php echo View::factory(Location::view('install_changedb_query', NULL, 'install', 'pages'), $data_array)->render();?>
 <?php else: ?>
 	<a href="<?php echo url::site('install/changedb/table');?>" class="install-secoptions">
 		<span class="secoptions-dbtable"><?php echo __('Create new database table');?></span>

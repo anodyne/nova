@@ -303,7 +303,7 @@ class Controller_Install extends Controller_Template
 		// set the loading image
 		$data->images = array(
 			'loading' => array(
-				'src' => location::image('loading-circle-large.gif', NULL, 'install', 'image'),
+				'src' => Location::image('loading-circle-large.gif', NULL, 'install', 'image'),
 				'attr' => array(
 					'alt' => __('processing'),
 					'class' => '')),
@@ -1054,7 +1054,7 @@ return array
 				# FIXME: what's going on with this?
 				
 				$data->default_rank = array(
-					//'src' => location::image($rank->image.$catalogue->extension, NULL, $catalogue->location, 'rank'),
+					//'src' => Location::image($rank->image.$catalogue->extension, NULL, $catalogue->location, 'rank'),
 					'src' => APPFOLDER.'/assets/common/'.Kohana::config('nova.genre').'/ranks/'.$rankdefault.'/'.$rank->image.$catalogue->extension,
 					'attr' => array(
 						'class' => 'image',
@@ -1096,14 +1096,14 @@ return array
 						$session->destroy();
 						
 						// get the data
-						$simname = trim(security::xss_clean($_POST['sim_name']));
-						$name = trim(security::xss_clean($_POST['name']));
-						$email = trim(security::xss_clean($_POST['email']));
-						$password = trim(security::xss_clean($_POST['password']));
-						$first_name = trim(security::xss_clean($_POST['first_name']));
-						$last_name = trim(security::xss_clean($_POST['last_name']));
-						$position = trim(security::xss_clean($_POST['position']));
-						$rank = trim(security::xss_clean($_POST['rank']));
+						$simname = trim(Security::xss_clean($_POST['sim_name']));
+						$name = trim(Security::xss_clean($_POST['name']));
+						$email = trim(Security::xss_clean($_POST['email']));
+						$password = trim(Security::xss_clean($_POST['password']));
+						$first_name = trim(Security::xss_clean($_POST['first_name']));
+						$last_name = trim(Security::xss_clean($_POST['last_name']));
+						$position = trim(Security::xss_clean($_POST['position']));
+						$rank = trim(Security::xss_clean($_POST['rank']));
 						
 						// update the settings
 						Jelly::query('setting')
@@ -1181,14 +1181,14 @@ return array
 					else
 					{
 						// set the session variables
-						$session->set('sim_name', security::xss_clean($_POST['sim_name']));
-						$session->set('name', security::xss_clean($_POST['name']));
-						$session->set('email', security::xss_clean($_POST['email']));
-						$session->set('password', security::xss_clean($_POST['password']));
-						$session->set('first_name', security::xss_clean($_POST['first_name']));
-						$session->set('last_name', security::xss_clean($_POST['last_name']));
-						$session->set('position', security::xss_clean($_POST['position']));
-						$session->set('rank', security::xss_clean($_POST['rank']));
+						$session->set('sim_name', Security::xss_clean($_POST['sim_name']));
+						$session->set('name', Security::xss_clean($_POST['name']));
+						$session->set('email', Security::xss_clean($_POST['email']));
+						$session->set('password', Security::xss_clean($_POST['password']));
+						$session->set('first_name', Security::xss_clean($_POST['first_name']));
+						$session->set('last_name', Security::xss_clean($_POST['last_name']));
+						$session->set('position', Security::xss_clean($_POST['position']));
+						$session->set('rank', Security::xss_clean($_POST['rank']));
 						$session->set('errors', $validate->errors('register'));
 						
 						// redirect back to step 1

@@ -35,7 +35,7 @@ abstract class Nova_Submit
 			}
 			else
 			{
-				$array[$key] = security::xss_clean($value);
+				$array[$key] = Security::xss_clean($value);
 			}
 		}
 		
@@ -65,7 +65,7 @@ abstract class Nova_Submit
 	public static function show_flash($result, $item, $action, $skin, $section, $extra = '', $plural = FALSE)
 	{
 		// grab the flash partial
-		$flash = View::factory(location::view('flash', $skin, $section, 'pages'));
+		$flash = View::factory(Location::view('flash', $skin, $section, 'pages'));
 		
 		if ($result > 0)
 		{

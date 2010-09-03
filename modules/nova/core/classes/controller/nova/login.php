@@ -44,10 +44,10 @@ class Controller_Nova_Login extends Controller_Nova_Base
 	public function action_index()
 	{
 		// create a new content view
-		$this->template->layout->content = View::factory(location::view('login_index', $this->skin, 'login', 'pages'));
+		$this->template->layout->content = View::factory(Location::view('login_index', $this->skin, 'login', 'pages'));
 		
 		// javascript view
-		$this->template->javascript = View::factory(location::view('login_index_js', $this->skin, 'login', 'js'));
+		$this->template->javascript = View::factory(Location::view('login_index_js', $this->skin, 'login', 'js'));
 		
 		// assign the object a shorter variable to use in the method
 		$data = $this->template->layout->content;
@@ -79,9 +79,9 @@ class Controller_Nova_Login extends Controller_Nova_Base
 		if (isset($_POST['submit']))
 		{
 			// grab the POST data
-			$email = trim(security::xss_clean($_POST['email']));
-			$password = trim(security::xss_clean($_POST['password']));
-			$remember = (isset($_POST['remember'])) ? trim(security::xss_clean($_POST['remember'])) : FALSE;
+			$email = trim(Security::xss_clean($_POST['email']));
+			$password = trim(Security::xss_clean($_POST['password']));
+			$remember = (isset($_POST['remember'])) ? trim(Security::xss_clean($_POST['remember'])) : FALSE;
 			
 			// do the login
 			$login = Auth::login($email, $password, $remember);
@@ -99,10 +99,10 @@ class Controller_Nova_Login extends Controller_Nova_Base
 			}
 			
 			// create a new content view
-			$this->template->layout->content = View::factory(location::view('login_success', $this->skin, 'login', 'pages'));
+			$this->template->layout->content = View::factory(Location::view('login_success', $this->skin, 'login', 'pages'));
 			
 			// javascript view
-			$this->template->javascript = View::factory(location::view('login_index_js', $this->skin, 'login', 'js'));
+			$this->template->javascript = View::factory(Location::view('login_index_js', $this->skin, 'login', 'js'));
 			
 			// set the redirect
 			$this->template->_redirect = array('time' => 5, 'url' => url::site('main/index'));
@@ -128,7 +128,7 @@ class Controller_Nova_Login extends Controller_Nova_Base
 	public function action_error($error = 0)
 	{
 		// create a new content view
-		$this->template->layout->content = View::factory(location::view('login_error', $this->skin, 'login', 'pages'));
+		$this->template->layout->content = View::factory(Location::view('login_error', $this->skin, 'login', 'pages'));
 		
 		// assign the object a shorter variable to use in the method
 		$data = $this->template->layout->content;
@@ -158,10 +158,10 @@ class Controller_Nova_Login extends Controller_Nova_Base
 		Auth::logout();
 		
 		// create a new content view
-		$this->template->layout->content = View::factory(location::view('login_logout', $this->skin, 'login', 'pages'));
+		$this->template->layout->content = View::factory(Location::view('login_logout', $this->skin, 'login', 'pages'));
 		
 		// javascript view
-		$this->template->javascript = View::factory(location::view('login_logout_js', $this->skin, 'login', 'js'));
+		$this->template->javascript = View::factory(Location::view('login_logout_js', $this->skin, 'login', 'js'));
 		
 		// set the redirect
 		$this->template->_redirect = array('time' => 5, 'url' => url::site('main/index'));

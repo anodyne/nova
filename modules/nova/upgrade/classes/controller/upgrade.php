@@ -306,7 +306,7 @@ class Controller_Upgrade extends Controller_Template
 				
 				// set the loading image
 				$data->loading = array(
-					'src' => location::image('loading-circle-large.gif', NULL, 'upgrade', 'image'),
+					'src' => Location::image('loading-circle-large.gif', NULL, 'upgrade', 'image'),
 					'attr' => array(
 						'class' => 'image'),
 				);
@@ -346,7 +346,7 @@ class Controller_Upgrade extends Controller_Template
 				
 				// set the loading image
 				$data->loading = array(
-					'src' => location::image('loading-circle-large.gif', NULL, 'upgrade', 'image'),
+					'src' => Location::image('loading-circle-large.gif', NULL, 'upgrade', 'image'),
 					'attr' => array(
 						'class' => 'image'),
 				);
@@ -396,7 +396,7 @@ class Controller_Upgrade extends Controller_Template
 				
 				// set the loading image
 				$data->loading = array(
-					'src' => location::image('loading-circle-large.gif', NULL, 'upgrade', 'image'),
+					'src' => Location::image('loading-circle-large.gif', NULL, 'upgrade', 'image'),
 					'attr' => array(
 						'class' => 'image'),
 				);

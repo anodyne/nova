@@ -49,10 +49,10 @@ class Controller_Nova_Search extends Controller_Nova_Base
 	public function action_index()
 	{
 		// create a new content view
-		$this->template->layout->content = View::factory(location::view('search_index', $this->skin, 'main', 'pages'));
+		$this->template->layout->content = View::factory(Location::view('search_index', $this->skin, 'main', 'pages'));
 		
 		// create the javascript view
-		$this->template->javascript = View::factory(location::view('search_index_js', $this->skin, 'main', 'js'));
+		$this->template->javascript = View::factory(Location::view('search_index_js', $this->skin, 'main', 'js'));
 		
 		// assign the object a shorter variable to use in the method
 		$data = $this->template->layout->content;

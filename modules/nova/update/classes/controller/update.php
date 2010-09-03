@@ -277,7 +277,7 @@ class Controller_Update extends Controller_Template
 				if (isset($_POST['next']))
 				{
 					// get the nova 1 prefix
-					$n1pref = trim(security::xss_clean($_POST['nova1prefix']));
+					$n1pref = trim(Security::xss_clean($_POST['nova1prefix']));
 					
 					// set the prefix in the session
 					$session->set('n1pref', $n1pref);
@@ -396,7 +396,7 @@ class Controller_Update extends Controller_Template
 				
 				// set the loading image
 				$data->loading = array(
-					'src' => location::image('loading-circle-large.gif', NULL, 'upgrade', 'image'),
+					'src' => Location::image('loading-circle-large.gif', NULL, 'upgrade', 'image'),
 					'attr' => array(
 						'class' => 'image'),
 				);
@@ -436,7 +436,7 @@ class Controller_Update extends Controller_Template
 				
 				// set the loading image
 				$data->loading = array(
-					'src' => location::image('loading-circle-large.gif', NULL, 'update', 'image'),
+					'src' => Location::image('loading-circle-large.gif', NULL, 'update', 'image'),
 					'attr' => array(
 						'class' => 'image'),
 				);
@@ -486,7 +486,7 @@ class Controller_Update extends Controller_Template
 				
 				// set the loading image
 				$data->loading = array(
-					'src' => location::image('loading-circle-large.gif', NULL, 'update', 'image'),
+					'src' => Location::image('loading-circle-large.gif', NULL, 'update', 'image'),
 					'attr' => array(
 						'class' => 'image'),
 				);

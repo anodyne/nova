@@ -15,7 +15,7 @@ abstract class Nova_Location
 	 * current skin. If the image isn't found there, it moves through the modules. Finally, if it can't be
 	 * found in the modules, it checks the nova module where it should find the image in question.
 	 *
-	 *     echo location::image('feed.png', 'default', 'main', 'image');
+	 *     echo Location::image('feed.png', 'default', 'main', 'image');
 	 *
 	 * @param	string	the image to find
 	 * @param	string	the skin to look in
@@ -146,8 +146,8 @@ abstract class Nova_Location
 	 * current skin. If the view file isn't found there, it moves through the modules. Finally, if it can't be
 	 * found in the modules, it checks the nova module where it should find the file in question.
 	 *
-	 *     echo location::view('main_index', 'default', 'main', 'pages');
-	 *     echo location::view('main_index_js', 'default', 'main', 'js');
+	 *     echo Location::view('main_index', 'default', 'main', 'pages');
+	 *     echo Location::view('main_index_js', 'default', 'main', 'js');
 	 *
 	 * @param	string	the view file
 	 * @param	string	the skin to search in
