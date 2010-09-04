@@ -7,7 +7,8 @@
 | File: controllers/upload_base.php
 | System Version: 1.1
 |
-| Changes: added the ability to upload specs images to the server
+| Changes: added the ability to upload specs images to the server;
+|	fixed an error with an undefined class method
 |
 */
 
@@ -265,7 +266,7 @@ class Upload_base extends Controller {
 				
 				$delete += $this->sys->delete_upload_record($r);
 				
-				if ($this->ftp->hostname != 'ftp.example.com' && $this->config->get_item('attempt_delete') === TRUE)
+				if ($this->ftp->hostname != 'ftp.example.com' && $this->config->item('attempt_delete') === TRUE)
 				{
 					$path = APPPATH .'assets/'. $location .'/'. $info->upload_filename;
 					$delete_file += $this->ftp->delete_file($path);
