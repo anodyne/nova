@@ -34,7 +34,7 @@ class Controller_Updateajax extends Controller_Template
 		$n1Users = $this->db->query(Database::SELECT, "SELECT * FROM ".$this->n1pref.'users', TRUE);
 		
 		// figure out how many users we have tos tart
-		$n1UsersCount= $n1Users->count();
+		$n1UsersCount = $n1Users->count();
 		
 		try {
 			// set up the saved array
@@ -58,14 +58,62 @@ class Controller_Updateajax extends Controller_Template
 						'webmaster' => $u->is_webmaster,
 						'timezone' => $this->_translate_timezone($u->timezone),
 						'dst' => $u->daylight_savings,
-						
+						'language' => $u->language,
+						'join' => $u->join_date,
+						'leave' => $u->leave_date,
+						'last_update' => $u->last_update,
+						'last_post' => $u->last_post,
+						'last_login' => $u->last_login,
+						'loa' => $u->loa,
+						'rank' => $u->display_rank,
+						'skin_main' => $u->skin_main,
+						'skin_wiki' => $u->skin_wiki,
+						'skin_admin' => $u->skin_admin,
+						'location' => $u->location,
+						'bio' => $u->interests."\r\n\r\n".$u->bio,
+						'security_question' => $u->security_question,
+						'security_answer' => $u->security_answer,
+						'password_reset' => $u->password_reset
 					))
 					->save();
-				$saved[] = $item->saved();
+				$saved[] = (int) $item->saved();
+				
+				# TODO: need to fill in the moderation table once the schema's been built
+			}
+			
+			if (in_array(FALSE, $saved) && !in_array(TRUE, $saved))
+			{
+				$retval = array(
+					'code' => 0,
+					'message' => __("Users were not successfully updated")
+				);
+			}
+			elseif (in_array(FALSE, $saved) && in_array(TRUE, $saved))
+			{
+				// get an array with the counts of the different values
+				$unique = array_count_values($saved);
+				
+				$retval = array(
+					'code' => 2,
+					'message' => __(":success of :total users were updated, but the remaining records could not be updated",
+						array(':success' => $unique[1], ':total' => $n1UsersCount))
+				);
+			}
+			else
+			{
+				$retval = array(
+					'code' => 1,
+					'message' => ""
+				);
 			}
 		} catch (Exception $e) {
-			
+			$retval = array(
+				'code' => 0,
+				'message' => 'ERROR: '.$e->getMessage().' - line '.$e->getLine().' of '.$e->getFile()
+			);
 		}
+		
+		echo json_encode($retval);
 	}
 	
 	private function _translate_timezone($zone)
