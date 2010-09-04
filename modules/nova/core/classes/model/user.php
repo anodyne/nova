@@ -58,6 +58,7 @@ class Model_User extends Jelly_Model
 				'default' => 'n'
 			)),
 			'timezone' => Jelly::field('string', array(
+				'column' => 'timezone',
 				'default' => 'UTC'
 			)),
 			'dst' => Jelly::field('integer', array(
