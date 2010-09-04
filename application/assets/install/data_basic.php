@@ -2461,7 +2461,7 @@ $system_versions = array(
 		'version_major' => '1',
 		'version_minor' => '1',
 		'version_update' => '0',
-		'version_date' => 1279148400,
+		'version_date' => 1283635800,
 		'version_launch'	=> "Nova 1.1 is the first update to Nova that adds additional features to the system. Included in this release is the ability to create multiple specification items and to associate tour items with specific specification items as well as bug fixes (a bug where editing existing tour items wouldn't update the current item, but the first item). A full changelog can be found on AnodyneDocs or from the System and Versions report once Nova has been updated. This update is recommended for all users.",
 		'version_changes'	=> "* added the 1.1 update file
 * added the ability to have multiple specification items
@@ -2482,7 +2482,9 @@ $system_versions = array(
 * fixed bug where the private message dropdown didn't populate with an author when replying to a message
 * fixed bug where mission post next/previous links could be wrong under certain circumstances
 * fixed bug where news item next/previous links could be wrong under certain circumstances
-* fixed bug where personal log next/previous links could be wrong under certain circumstances"),
+* fixed bug where personal log next/previous links could be wrong under certain circumstances
+* fixed bug where the command staff, game master and webmaster get email methods pulled all users, not just active users
+* fixed error thrown with an undefined class method when deleting uploaded items"),
 );
 
 $tour_fields = array(
