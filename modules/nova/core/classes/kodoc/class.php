@@ -1,6 +1,7 @@
 <?php defined('SYSPATH') or die('No direct script access.');
 
 class Kodoc_Class extends Kohana_Kodoc_Class {
+	
 	/**
 	 * Gets a list of the class properties as [Kodoc_Method] objects.
 	 *
