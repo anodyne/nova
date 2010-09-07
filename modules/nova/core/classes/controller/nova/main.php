@@ -7,8 +7,8 @@
  * @author		Anodyne Productions
  */
 
-class Controller_Nova_Main extends Controller_Nova_Base
-{
+class Controller_Nova_Main extends Controller_Nova_Base {
+	
 	public function before()
 	{
 		parent::before();
@@ -274,7 +274,7 @@ class Controller_Nova_Main extends Controller_Nova_Base
 							$output[] = form::radio($f->field_html_name, $v->value_html_value, (bool) $v->value_selected, $attr).' '.form::label($v->value_html_id, $v->value_content);
 						}
 					}
-					break;
+				break;
 					
 				case 'checkbox':
 					if (count($values) > 0)
@@ -289,7 +289,7 @@ class Controller_Nova_Main extends Controller_Nova_Base
 							$check[] = form::checkbox($v->value_html_name, $v->value_html_value, (bool) $v->value_selected, $attr).' '.form::label($v->value_html_id, $v->value_content);
 						}
 					}
-					break;
+				break;
 			}
 		}
 		
@@ -321,11 +321,11 @@ class Controller_Nova_Main extends Controller_Nova_Base
 							$output[] = form::radio($f->html_name, $v->field_value, $v->selected, $attr).' '.form::label($v->html_id, $v->content);
 						}
 					}
-					break;
+				break;
 				
 				default:
 					# code...
-					break;
+				break;
 			}
 		}
 	}

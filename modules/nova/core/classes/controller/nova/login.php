@@ -12,8 +12,8 @@
 # TODO: attempted login lockout
 # TODO: uncomment login code in install, update and upgrade modules
 
-class Controller_Nova_Login extends Controller_Nova_Base
-{
+class Controller_Nova_Login extends Controller_Nova_Base {
+	
 	public function before()
 	{
 		parent::before();
@@ -142,10 +142,11 @@ class Controller_Nova_Login extends Controller_Nova_Base
 		{
 			case 6:
 				$data->message = __('error.login_'.$error, array(':minutes' => (Auth::$lockout_time/60), ':extra' => ''));
-				break;
+			break;
 			
 			default:
 				$data->message = __('error.login_'.$error);
+			break;
 		}
 		
 		// send the response

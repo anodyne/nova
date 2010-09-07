@@ -4,11 +4,11 @@
  *
  * @package		Nova
  * @category	Controllers
- * @autor		Anodyne Productions
+ * @author		Anodyne Productions
  */
 
-class Controller_Search extends Controller_Nova_Search
-{
+class Controller_Search extends Controller_Nova_Search {
+	
 	public function before()
 	{
 		parent::before();

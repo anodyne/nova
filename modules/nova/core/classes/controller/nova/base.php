@@ -7,8 +7,8 @@
  * @author		Anodyne Productions
  */
 
-abstract class Controller_Nova_Base extends Controller_Template
-{
+abstract class Controller_Nova_Base extends Controller_Template {
+	
 	// these libraries should be globally available
 	public $auth;
 	public $session;

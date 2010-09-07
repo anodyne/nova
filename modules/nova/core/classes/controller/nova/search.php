@@ -7,8 +7,8 @@
  * @author		Anodyne Productions
  */
 
-class Controller_Nova_Search extends Controller_Nova_Base
-{
+class Controller_Nova_Search extends Controller_Nova_Base {
+	
 	public function before()
 	{
 		parent::before();
