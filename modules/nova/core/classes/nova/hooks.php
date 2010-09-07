@@ -7,8 +7,8 @@
  * @author		Anodyne Productions
  */
 
-abstract class Nova_Hooks
-{
+abstract class Nova_Hooks {
+	
 	/**
 	 * The browser hook grabs the user's browser and version from the user agent and then
 	 * checks it against the list of acceptable browser versions. Nova 2 requires users

@@ -7,8 +7,8 @@
  * @author		Anodyne Productions
  */
 
-abstract class Nova_Menu
-{
+abstract class Nova_Menu {
+	
 	/**
 	 * Initializes the library and sets a debug message.
 	 *
@@ -38,15 +38,15 @@ abstract class Nova_Menu
 		{
 			case 'main':
 				return self::_build_main($type, $cat);
-				break;
+			break;
 				
 			case 'sub':
 				return self::_build_sub($type, $cat);
-				break;
+			break;
 				
 			case 'adminsub':
 				return self::_build_sub_admin($type, $cat);
-				break;
+			break;
 		}
 		
 		return FALSE;
@@ -255,7 +255,7 @@ abstract class Nova_Menu
 					}
 				}
 				
-				break;
+			break;
 				
 			case 'main':
 				foreach ($data as $k => $item)
@@ -312,7 +312,7 @@ abstract class Nova_Menu
 					}
 				}
 				
-				break;
+			break;
 				
 			case 'sub':
 				foreach ($data as $item)
@@ -359,7 +359,7 @@ abstract class Nova_Menu
 					}
 				}
 			
-				break;
+			break;
 		}
 		
 		$output.= '</ul>';

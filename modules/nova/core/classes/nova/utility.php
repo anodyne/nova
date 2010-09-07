@@ -7,8 +7,8 @@
  * @author		Anodyne Productions
  */
 
-abstract class Nova_Utility
-{
+abstract class Nova_Utility {
+	
 	/**
 	 * Initializes the class and sets a debug message.
 	 *

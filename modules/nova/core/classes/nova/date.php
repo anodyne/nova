@@ -9,8 +9,8 @@
  * @author		Anodyne Productions
  */
 
-abstract class Nova_Date extends Kohana_Date
-{
+abstract class Nova_Date extends Kohana_Date {
+	
 	/**
 	 * Makes the date from a UNIX timestamp with the format provided. Date formats should
 	 * be in the PHP date() format unlike Nova 1.0 which uses the MySQL format.

@@ -12,8 +12,8 @@
  * @author		Anodyne Productions
  */
 
-abstract class Nova_Html extends Kohana_Html
-{
+abstract class Nova_Html extends Kohana_Html {
+	
 	/**
 	 * Creates an audio element. Takes an associative array of attributes in the first
 	 * parameter. More information about the audio tag can be found [here](http://www.w3schools.com/html5/tag_audio.asp).

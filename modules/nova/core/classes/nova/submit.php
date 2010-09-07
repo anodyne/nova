@@ -8,8 +8,8 @@
  * @author		Anodyne Productions
  */
 
-abstract class Nova_Submit
-{
+abstract class Nova_Submit {
+	
 	/**
 	 * Executes a create submission that loops through the arrays, does the XSS clean,
 	 * removes items from the array and merges it with any additional fields passed

@@ -8,8 +8,8 @@
  * @author		Anodyne Productions
  */
 
-abstract class Nova_Location
-{
+abstract class Nova_Location {
+	
 	/**
 	 * Looks for the location of the image file throughout the system. The first place this will look is in the
 	 * current skin. If the image isn't found there, it moves through the modules. Finally, if it can't be
@@ -74,7 +74,7 @@ abstract class Nova_Location
 								
 								return implode('/', $path);
 							}
-							break;
+						break;
 							
 						default:
 							if (is_file($l.'/views/'.$section.'/images/'.$image))
@@ -84,10 +84,11 @@ abstract class Nova_Location
 								
 								return implode('/', $path);
 							}
+						break;
 					}
 				}
 				
-				break;
+			break;
 				
 			case 'asset':
 				// exclude these modules
@@ -133,11 +134,11 @@ abstract class Nova_Location
 				
 				return FALSE;
 				
-				break;
+			break;
 				
 			case 'rank':
 				return APPFOLDER.'/assets/common/'.Kohana::config('nova.genre').'/ranks/'.$section.'/'.$image;
-				break;
+			break;
 		}
 	}
 	
@@ -201,7 +202,7 @@ abstract class Nova_Location
 						
 						return implode('/', $path);
 					}
-					break;
+				break;
 					
 				default:
 					if (is_file($l.'/views/'.$section.'/'.$type.'/'.$view.$ext))
@@ -210,6 +211,7 @@ abstract class Nova_Location
 						
 						return implode('/', $path);
 					}
+				break;
 			}
 		}
 		

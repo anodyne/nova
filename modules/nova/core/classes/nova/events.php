@@ -13,8 +13,8 @@
  * @author		Anodyne Productions
  */
 
-abstract class Nova_Events
-{
+abstract class Nova_Events {
+	
 	/**
 	 * Executes the class methods at the specified times in the request process. The
 	 * event system has 8 event hooks: preCreate, postCreate, preExecute, postExecute,

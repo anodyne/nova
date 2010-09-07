@@ -11,8 +11,8 @@
  * @author		Anodyne Productions
  */
 
-abstract class Nova_Form extends Kohana_Form
-{
+abstract class Nova_Form extends Kohana_Form {
+	
 	/**
 	 * Creates a color picker input field. Currently, no browsers support this field type.
 	 * The HTML5 spec calls for it though, so at some point, it will be supported.
@@ -283,7 +283,7 @@ abstract class Nova_Form extends Kohana_Form
 						'value' => 'active'
 					),
 				);
-				break;
+			break;
 			
 			case 'inactive':
 				$args['where'] = array(
@@ -292,7 +292,7 @@ abstract class Nova_Form extends Kohana_Form
 						'value' => 'inactive'
 					),
 				);
-				break;
+			break;
 				
 			case 'npc':
 				$args['where'] = array(
@@ -301,7 +301,7 @@ abstract class Nova_Form extends Kohana_Form
 						'value' => 'npc'
 					),
 				);
-				break;
+			break;
 				
 			case 'user_npc':
 				$args = array(
@@ -318,7 +318,7 @@ abstract class Nova_Form extends Kohana_Form
 						),
 					),
 				);
-				break;
+			break;
 				
 			case 'pending':
 				$args['where'] = array(
@@ -327,7 +327,7 @@ abstract class Nova_Form extends Kohana_Form
 						'value' => 'pending'
 					),
 				);
-				break;
+			break;
 				
 			case 'has_user':
 				$args['where'] = array(
@@ -337,7 +337,7 @@ abstract class Nova_Form extends Kohana_Form
 						'operand' => '>',
 					),
 				);
-				break;
+			break;
 				
 			case 'no_user':
 				$args = array(
@@ -354,11 +354,11 @@ abstract class Nova_Form extends Kohana_Form
 						),
 					),
 				);
-				break;
+			break;
 				
 			case 'all':
 				$args = array();
-				break;
+			break;
 		}
 		
 		$args['order_by'] = array(
@@ -382,19 +382,19 @@ abstract class Nova_Form extends Kohana_Form
 					{
 						case 'active':
 							$label = ucwords(__('status.playing').' '.__('global.characters'));
-							break;
+						break;
 							
 						case 'npc':
 							$label = ucwords(__('status.nonplaying').' '.__('global.characters'));
-							break;
+						break;
 							
 						case 'inactive':
 							$label = ucwords(__('status.inactive').' '.__('global.characters'));
-							break;
+						break;
 							
 						case 'pending':
 							$label = ucwords(__('status.pending').' '.__('global.characters'));
-							break;
+						break;
 					}
 					
 					$options[$label][$a->charid] = Utility::print_character_name($a->charid, TRUE);
@@ -496,7 +496,7 @@ abstract class Nova_Form extends Kohana_Form
 					}
 				}
 			
-				break;
+			break;
 				
 			case 'main':
 				// build the query
@@ -534,7 +534,7 @@ abstract class Nova_Form extends Kohana_Form
 					}
 				}
 				
-				break;
+			break;
 		}
 		
 		if (isset($options))

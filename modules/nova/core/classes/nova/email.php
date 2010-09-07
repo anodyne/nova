@@ -9,8 +9,8 @@
 
 # TODO: uncomment $result return in install_register
 
-abstract class Nova_Email
-{
+abstract class Nova_Email {
+	
 	/**
 	 * Send the installation registration email.
 	 *
@@ -54,18 +54,18 @@ abstract class Nova_Email
 		{
 			case 'mail':
 				$transport = Swift_MailTransport::newInstance();
-				break;
+			break;
 				
 			case 'sendmail':
 				$transport = Swift_SendmailTransport::newInstance($email->sendmail_path);
-				break;
+			break;
 				
 			case 'smtp':
 				$transport = Swift_SmtpTransport::newInstance($email->smtp_server, $email->smtp_port)
 					->setUsername($email->smtp_username)
 					->setPassword($email->smtp_password);
 				
-				break;
+			break;
 		}
 		
 		// create the mailer

@@ -11,8 +11,8 @@
  * @author		Anodyne Productions
  */
 
-abstract class Nova_Auth
-{	
+abstract class Nova_Auth {
+	
 	/**
 	 * @var	integer	Number of attempts allowed before lockout
 	 */

@@ -8,8 +8,8 @@
  * @author		Anodyne Productions
  */
 
-abstract class Nova_URL extends Kohana_URL
-{
+abstract class Nova_URL extends Kohana_URL {
+	
 	/**
 	 * Creates an HTML anchor tag to a page if the condition is TRUE.
 	 *
