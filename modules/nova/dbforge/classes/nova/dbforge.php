@@ -12,8 +12,8 @@
  * @author		Anodyne Productions
  */
 
-abstract class Nova_DBForge
-{
+abstract class Nova_DBForge {
+	
 	/**
 	 * @var		array 	an array of fields
 	 */
