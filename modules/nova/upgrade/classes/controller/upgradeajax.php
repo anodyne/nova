@@ -7,8 +7,8 @@
  * @author		Anodyne Productions
  */
 
-class Controller_Upgradeajax extends Controller_Template
-{
+class Controller_Upgradeajax extends Controller_Template {
+	
 	public $db;
 	
 	public function before()
@@ -251,7 +251,6 @@ class Controller_Upgradeajax extends Controller_Template
 						'mname' => $c->middleName,
 						'lname' => $c->lastName,
 						'status' => ($c->crewType == 'npc') ? 'active' : $c->crewType,
-						'images' => $c->image,
 						'activate' => $c->joinDate,
 						'deactivate' => $c->leaveDate,
 						'rank' => $c->rankid,
@@ -263,6 +262,20 @@ class Controller_Upgradeajax extends Controller_Template
 				
 				// store whether or not the save worked
 				$saved['characters'][] = $characteraction->saved();
+				
+				// explode the images string
+				$images = explode(',', $c->image);
+				
+				foreach ($images as $i)
+				{
+					$item = Jelly::factory('characterimage')
+						->set(array(
+							'user' => (!empty($c->email)) ? $charIDs[$c->email] : NULL,
+							'character' => $c->charid,
+							'image' => $i
+						))
+						->save();
+				}
 				
 				// optimize the table
 				DBForge::optimize('characters');

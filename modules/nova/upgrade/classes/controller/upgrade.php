@@ -7,12 +7,12 @@
  * @author		Anodyne Productions
  */
 
-class Controller_Upgrade extends Controller_Template
-{
+class Controller_Upgrade extends Controller_Template {
+	
 	/**
 	 * @var	integer	the number of database tables in the system
 	 */
-	public $_tables = 57;
+	public $_tables = 58;
 	
 	public function before()
 	{
@@ -187,8 +187,7 @@ class Controller_Upgrade extends Controller_Template
 					// build the next step control
 					$this->template->layout->controls = form::open('upgrade/step/1').form::button('next', __('Start Upgrade'), $next).form::close();
 				}
-				
-				break;
+			break;
 				
 			case 1:
 				if (isset($_POST['next']))
@@ -327,8 +326,7 @@ class Controller_Upgrade extends Controller_Template
 				
 				// build the next step control
 				$this->template->layout->controls = (count($tables) < $this->_tables) ? FALSE : form::button('next', __('Upgrade'), $next).form::close();
-				
-				break;
+			break;
 				
 			case 2:
 				// create a new content view
@@ -360,8 +358,7 @@ class Controller_Upgrade extends Controller_Template
 				
 				// build the next step control
 				$this->template->layout->controls = form::button('next', __('Run'), $next).form::close();
-				
-				break;
+			break;
 				
 			case 3:
 				if (isset($_POST['submit']))
@@ -410,8 +407,7 @@ class Controller_Upgrade extends Controller_Template
 				
 				// build the next step control
 				$this->template->layout->controls = form::button('next', __('Finalize'), $next).form::close();
-				
-				break;
+			break;
 		}
 		
 		// send the response
