@@ -36,6 +36,7 @@ $data = array(
 	'catalogue_skinsecs'		=> array('id' => 'skinsec_id', 'fields' => 'fields_catalogue_skinsecs'),
 	//'catalogue_widgets'			=> array('id' => 'widget_id', 'fields' => 'fields_catalogue_widgets'),
 	'characters'				=> array('id' => 'charid', 'fields' => 'fields_characters'),
+	'characters_images'			=> array('id' => 'charimageid', 'fields' => 'fields_characters_images'),
 	'characters_promotions'		=> array('id' => 'prom_id', 'fields' => 'fields_characters_promotions'),
 	'coc'						=> array('id' => 'coc_id', 'fields' => 'fields_coc'),
 	'departments_'.$_genre		=> array('id' => 'dept_id', 'fields' => 'fields_departments'),
@@ -382,8 +383,6 @@ $fields_characters = array(
 	'date_deactivate' => array(
 		'type' => $date_type,
 		'constraint' => $date_constraint),
-	'images' => array(
-		'type' => 'TEXT'),
 	'rank' => array(
 		'type' => 'INT',
 		'constraint' => 10,
@@ -399,6 +398,31 @@ $fields_characters = array(
 		'type' => $date_type,
 		'constraint' => $date_constraint),
 	'last_update' => array(
+		'type' => $date_type,
+		'constraint' => $date_constraint),
+);
+
+$fields_characters_images = array(
+	'charimageid' => array(
+		'type' => 'BIGINT',
+		'constraint' => 20,
+		'auto_increment' => TRUE),
+	'user' => array(
+		'type' => $user_id_type,
+		'constraint' => $user_id_constraint),
+	'character' => array(
+		'type' => $character_id_type,
+		'constraint' => $character_id_constraint),
+	'image' => array(
+		'type' => 'TEXT'),
+	'primary_image' => array(
+		'type' => 'ENUM',
+		'constraint' => "'y','n'",
+		'default' => 'n'),
+	'created_by' => array(
+		'type' => $user_id_type,
+		'constraint' => $user_id_constraint),
+	'created_at' => array(
 		'type' => $date_type,
 		'constraint' => $date_constraint),
 );

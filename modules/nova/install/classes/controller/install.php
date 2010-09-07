@@ -9,12 +9,12 @@
 
 # TODO: uncomment the redirects in the before() method after the login controller is built
 
-class Controller_Install extends Controller_Template
-{
+class Controller_Install extends Controller_Template {
+	
 	/**
 	 * @var	integer	the number of database tables in the system
 	 */
-	public $_tables = 57;
+	public $_tables = 58;
 	
 	public function before()
 	{
@@ -140,7 +140,7 @@ class Controller_Install extends Controller_Template
 				
 				// build the next step control
 				$this->template->layout->controls = form::button('back', __('Create Table'), $next);
-				break;
+			break;
 				
 			case 'field':
 				// set the header
@@ -190,7 +190,7 @@ class Controller_Install extends Controller_Template
 				// build the next step control
 				$this->template->layout->controls = form::button('back', __('Create Field'), $next);
 				
-				break;
+			break;
 				
 			case 'query':
 				// set the header
@@ -209,7 +209,7 @@ class Controller_Install extends Controller_Template
 				// build the next step control
 				$this->template->layout->controls = form::button('back', __('Run Query'), $next);
 				
-				break;
+			break;
 			
 			default:
 				// set the message
@@ -224,6 +224,7 @@ class Controller_Install extends Controller_Template
 				
 				// build the next step control
 				$this->template->layout->controls = form::open('install/index').form::button('back', __('Install Center'), $next).form::close();
+			break;
 		}
 		
 		// content
@@ -513,7 +514,7 @@ class Controller_Install extends Controller_Template
 								$this->template->layout->flash_message->status = 'error';
 								$this->template->layout->flash_message->message = __('setup.nodb');
 							}
-							break;
+						break;
 						
 						case 1:
 							// build the next step button
@@ -529,7 +530,7 @@ class Controller_Install extends Controller_Template
 							// build the next step control
 							$this->template->layout->controls = form::button('next', __('Next Step'), $next).form::close();
 							
-							break;
+						break;
 						
 						case 2:
 							// set the variables to use
@@ -624,7 +625,7 @@ class Controller_Install extends Controller_Template
 								// write the controls
 								$this->template->layout->controls = form::open('install/setupconfig/1').form::button('next', __('Start Over'), $next).form::close();
 							}
-							break;
+						break;
 							
 						case 3:
 							// grab the disabled functions
@@ -653,19 +654,23 @@ class Controller_Install extends Controller_Template
 									{
 										case "'database":
 											$file[$line_num] = str_replace("nova", $session->get('dbName'), $line);
-											break;
+										break;
+										
 										case "'username":
 											$file[$line_num] = str_replace("FALSE", "'".$session->get('dbUser')."'", $line);
-											break;
+										break;
+										
 										case "'password":
 											$file[$line_num] = str_replace("FALSE", "'".$session->get('dbPass')."'", $line);
-											break;
+										break;
+										
 										case "'hostname":
 											$file[$line_num] = str_replace("localhost", $session->get('dbHost'), $line);
-											break;
+										break;
+										
 										case "'table_pr":
 											$file[$line_num] = str_replace("''", "'".$session->get('prefix')."'", $line);
-											break;
+										break;
 									}
 								}
 								
@@ -777,7 +782,7 @@ return array
 								// write the controls
 								$this->template->layout->controls = form::open('install/setupconfig/4').form::button('next', __('Re-Test'), $next).form::close();
 							}
-							break;
+						break;
 							
 						case 4:
 							// get an instance of the database
@@ -833,7 +838,7 @@ return array
 								$this->template->layout->controls = form::open('install/setupconfig/1').form::button('next', __('Start Over'), $next).form::close();
 							}
 							
-							break;
+						break;
 					}
 				}
 			}
@@ -910,7 +915,7 @@ return array
 					$this->template->layout->controls = form::open('install/step/1').form::button('next', __('Start Install'), $next).form::close();
 				}
 				
-				break;
+			break;
 				
 			case 1:
 				if (isset($_POST['next']))
@@ -1078,7 +1083,7 @@ return array
 				// build the next step control
 				$this->template->layout->controls = (count($tables) < $this->_tables) ? FALSE : form::button('next', __('Next Step'), $next).form::close();
 				
-				break;
+			break;
 				
 			case 2:
 				if (isset($_POST['next']))
@@ -1222,7 +1227,7 @@ return array
 				// build the next step control
 				$this->template->layout->controls = form::open('main/index').form::button('next', __('Finish'), $next).form::close();
 				
-				break;
+			break;
 		}
 		
 		// send the response
