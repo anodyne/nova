@@ -25,7 +25,7 @@
 		// users
 		$.ajaxq('queue', {
 			beforeSend: function(){
-				$('table tbody tr:eq(1) td:eq(1) .loading').removeClass('hidden');
+				$('table tbody tr:eq(0) td:eq(1) .loading').removeClass('hidden');
 			},
 			type: "POST",
 			url: "<?php echo url::site('updateajax/update_users');?>",
@@ -49,6 +49,39 @@
 				{
 					$('table tbody tr:eq(0) td:eq(1) .warning').removeClass('hidden');
 					$('table tbody tr:eq(0) td:eq(1) .warning img').attr('title', function(){
+						return data.message
+					});
+				}
+			}
+		});
+		
+		// characters
+		$.ajaxq('queue', {
+			beforeSend: function(){
+				$('table tbody tr:eq(1) td:eq(1) .loading').removeClass('hidden');
+			},
+			type: "POST",
+			url: "<?php echo url::site('updateajax/update_characters');?>",
+			data: send,
+			dataType: 'json',
+			success: function(data){
+				$('table tbody tr:eq(1) td:eq(1) .loading').addClass('hidden');
+				
+				if (data.code == 1)
+				{
+					$('table tbody tr:eq(1) td:eq(1) .success').removeClass('hidden');
+				}
+				else if (data.code == 0)
+				{
+					$('table tbody tr:eq(1) td:eq(1) .failure').removeClass('hidden');
+					$('table tbody tr:eq(1) td:eq(1) .failure img').attr('title', function(){
+						return data.message
+					});
+				}
+				else if (data.code == 2)
+				{
+					$('table tbody tr:eq(1) td:eq(1) .warning').removeClass('hidden');
+					$('table tbody tr:eq(1) td:eq(1) .warning img').attr('title', function(){
 						return data.message
 					});
 				}

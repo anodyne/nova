@@ -23,5 +23,18 @@
 					<span class="loading hidden"><?php echo html::image(MODFOLDER.'/nova/update/views/update/images/loading-circle-large.gif');?></span>
 				</td>
 			</tr>
+			<tr>
+				<td class="fontMedium bold"><?php echo __('Update Characters &amp; Data');?></td>
+				<td class="col-30 align-center">
+					<span class="success hidden"><?php echo html::image(MODFOLDER.'/nova/update/views/update/images/tick-circle.png');?></span>
+					<span class="failure hidden">
+						<?php echo html::image(MODFOLDER.'/nova/update/views/update/images/exclamation-red.png', array('title' => ''));?>
+					</span>
+					<span class="warning hidden">
+						<?php echo html::image(MODFOLDER.'/nova/update/views/update/images/exclamation.png', array('title' => ''));?>
+					</span>
+					<span class="loading hidden"><?php echo html::image(MODFOLDER.'/nova/update/views/update/images/loading-circle-large.gif');?></span>
+				</td>
+			</tr>
 		</tbody>
 	</table>

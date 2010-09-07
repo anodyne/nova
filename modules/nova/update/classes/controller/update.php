@@ -7,12 +7,12 @@
  * @author		Anodyne Productions
  */
 
-class Controller_Update extends Controller_Template
-{
+class Controller_Update extends Controller_Template {
+	
 	/**
 	 * @var	integer	the number of database tables in the system
 	 */
-	public $_tables = 57;
+	public $_tables = 58;
 	
 	public function before()
 	{
@@ -270,8 +270,7 @@ class Controller_Update extends Controller_Template
 					// build the next step control
 					$this->template->layout->controls = form::button('next', __('Start Update'), $next).form::close();
 				}
-				
-				break;
+			break;
 				
 			case 1:
 				if (isset($_POST['next']))
@@ -417,8 +416,7 @@ class Controller_Update extends Controller_Template
 				
 				// build the next step control
 				$this->template->layout->controls = (count($tables) < $this->_tables) ? FALSE : form::button('next', __('Update'), $next).form::close();
-				
-				break;
+			break;
 				
 			case 2:
 				// create a new content view
@@ -450,8 +448,7 @@ class Controller_Update extends Controller_Template
 				
 				// build the next step control
 				$this->template->layout->controls = form::button('next', __('Run'), $next).form::close();
-				
-				break;
+			break;
 				
 			case 3:
 				if (isset($_POST['submit']))
@@ -500,8 +497,7 @@ class Controller_Update extends Controller_Template
 				
 				// build the next step control
 				$this->template->layout->controls = form::button('next', __('Finalize'), $next).form::close();
-				
-				break;
+			break;
 		}
 		
 		// send the response
@@ -550,8 +546,7 @@ class Controller_Update extends Controller_Template
 				
 				// build the next step control
 				$this->template->layout->controls = form::open('update/step/1').form::button('next', __('Start Update'), $next).form::close();
-				
-				break;
+			break;
 				
 			case 1:
 				if (isset($_POST['next']))
@@ -648,8 +643,7 @@ class Controller_Update extends Controller_Template
 				
 				// build the next step control
 				$this->template->layout->controls = form::open('main/index').form::button('next', __('Back to Site'), $next).form::close();
-				
-				break;
+			break;
 		}
 		
 		// send the response
