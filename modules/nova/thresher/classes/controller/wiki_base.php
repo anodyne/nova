@@ -308,7 +308,7 @@ class Wiki_base extends Controller {
 					/* write everything to the template */
 					$this->template->write_view('flash_message', '_base/wiki/pages/flash', $flash);
 					
-					break;
+				break;
 					
 				case 'delete':
 					$id = $this->input->post('id', TRUE);
@@ -344,7 +344,7 @@ class Wiki_base extends Controller {
 					/* write everything to the template */
 					$this->template->write_view('flash_message', '_base/wiki/pages/flash', $flash);
 					
-					break;
+				break;
 					
 				case 'edit':
 					$id = $this->input->post('id', TRUE);
@@ -386,7 +386,7 @@ class Wiki_base extends Controller {
 					/* write everything to the template */
 					$this->template->write_view('flash_message', '_base/wiki/pages/flash', $flash);
 					
-					break;
+				break;
 			}
 		}
 		
@@ -516,7 +516,7 @@ class Wiki_base extends Controller {
 						/* write everything to the template */
 						$this->template->write_view('flash_message', '_base/wiki/pages/flash', $flash);
 						
-						break;
+					break;
 				}
 			}
 		}
@@ -668,7 +668,7 @@ class Wiki_base extends Controller {
 						$flash['message'] = text_output($message);
 					}
 					
-					break;
+				break;
 					
 				case 'edit':
 					foreach ($_POST as $key => $value)
@@ -738,7 +738,7 @@ class Wiki_base extends Controller {
 						$flash['message'] = text_output($message);
 					}
 				
-					break;
+				break;
 			}
 			
 			/* write everything to the template */
@@ -933,7 +933,7 @@ class Wiki_base extends Controller {
 				
 				$data['header'] = ucwords(lang('global_wiki') .' - '. lang('status_recently') .' '. lang('actions_updated'));
 				
-				break;
+			break;
 				
 			case 'created':
 				/* grab the recently updated items */
@@ -955,7 +955,7 @@ class Wiki_base extends Controller {
 				
 				$data['header'] = ucwords(lang('global_wiki') .' - '. lang('status_recently') .' '. lang('actions_created'));
 				
-				break;
+			break;
 		}
 		
 		$data['label'] = array(
@@ -1155,14 +1155,15 @@ class Wiki_base extends Controller {
 		{
 			case 'comment':
 				$js_data['tab'] = 2;
-				break;
+			break;
 				
 			case 'revert':
 				$js_data['tab'] = 1;
-				break;
+			break;
 				
 			default:
 				$js_data['tab'] = 0;
+			break;
 		}
 		
 		/* set the date format */
@@ -1461,7 +1462,7 @@ class Wiki_base extends Controller {
 				$this->email->subject($this->options['email_subject'] .' '. $email_data['email_subject']);
 				$this->email->message($message);
 				
-				break;
+			break;
 				
 			case 'comment_pending':
 				/* run the methods */
@@ -1495,7 +1496,7 @@ class Wiki_base extends Controller {
 				$this->email->subject($this->options['email_subject'] .' '. $email_data['email_subject']);
 				$this->email->message($message);
 				
-				break;
+			break;
 		}
 		
 		/* send the email */

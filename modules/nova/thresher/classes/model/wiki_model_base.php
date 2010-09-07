@@ -259,12 +259,12 @@ class Wiki_model_base extends Model {
 			case 'title':
 				$this->db->from('wiki_drafts');
 				$this->db->like('draft_title', $input);
-				break;
+			break;
 				
 			case 'content':
 				$this->db->from('wiki_drafts');
 				$this->db->like('draft_content', $input);
-				break;
+			break;
 		}
 		
 		$query = $this->db->get();
@@ -367,13 +367,11 @@ class Wiki_model_base extends Model {
 		{
 			case 'comment':
 				$this->db->where('wcomment_id', $id);
-			
-				break;
+			break;
 				
 			case 'page':
 				$this->db->where('wcomment_page', $id);
-			
-				break;
+			break;
 		}
 		
 		$query = $this->db->delete('wiki_comments');
@@ -395,8 +393,7 @@ class Wiki_model_base extends Model {
 						$this->db->or_where('draft_id', $i);
 					}
 				}
-			
-				break;
+			break;
 				
 			case 'array_page':
 				if (is_array($id))
@@ -406,18 +403,15 @@ class Wiki_model_base extends Model {
 						$this->db->or_where('draft_page', $i);
 					}
 				}
-			
-				break;
+			break;
 				
 			case 'draft':
 				$this->db->where('draft_id', $id);
-			
-				break;
+			break;
 				
 			case 'page':
 				$this->db->where('draft_page', $id);
-			
-				break;
+			break;
 		}
 		
 		$query = $this->db->delete('wiki_drafts');
