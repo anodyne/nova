@@ -1,13 +1,13 @@
 <?php defined('SYSPATH') or die('No direct script access.');
 /**
- * Awards Received Model
+ * Character Promotions Model
  *
  * @package		Nova
  * @category	Models
  * @author		Anodyne Productions
  */
  
-class Model_Awardrec extends Jelly_Model {
+class Model_Characterpromotion extends Jelly_Model {
 	
 	/**
 	 * Initialize the model with Jelly_Meta data
@@ -16,35 +16,37 @@ class Model_Awardrec extends Jelly_Model {
 	 */
 	public static function initialize(Jelly_Meta $meta)
 	{
-		$meta->table('awards_received');
+		$meta->table('characters_promotions');
 		$meta->fields(array(
 			'id' => Jelly::field('primary', array(
-				'column' => 'awardrec_id'
+				'column' => 'prom_id'
 			)),
 			'user' => Jelly::field('belongsto', array(
-				'column' => 'awardrec_user',
+				'column' => 'prom_user',
 				'foreign' => 'user'
 			)),
 			'character' => Jelly::field('belongsto', array(
-				'column' => 'awardrec_character',
+				'column' => 'prom_char',
 				'foreign' => 'character'
 			)),
-			'nominated' => Jelly::field('integer', array(
-				'column' => 'awardrec_nominated_by',
+			'old_order' => Jelly::field('integer', array(
+				'column' => 'prom_old_order'
 			)),
-			'award' => Jelly::field('belongsto', array(
-				'column' => 'awardrec_award',
-				'foreign' => 'award'
+			'old_rank' => Jelly::field('string', array(
+				'column' => 'prom_old_rank'
+			)),
+			'new_order' => Jelly::field('integer', array(
+				'column' => 'prom_new_order'
+			)),
+			'new_rank' => Jelly::field('string', array(
+				'column' => 'prom_new_rank'
 			)),
 			'date' => Jelly::field('timestamp', array(
-				'column' => 'awardrec_date',
+				'column' => 'prom_date',
 				'auto_now_create' => TRUE,
 				'auto_now_update' => FALSE,
 				'null' => TRUE,
 				'default' => date::now()
-			)),
-			'reason' => Jelly::field('text', array(
-				'column' => 'awardrec_reason'
 			)),
 		));
 	}

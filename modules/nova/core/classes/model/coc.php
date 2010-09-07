@@ -1,13 +1,13 @@
 <?php defined('SYSPATH') or die('No direct script access.');
 /**
- * Mission Groups Model
+ * Chain of Command Model
  *
  * @package		Nova
  * @category	Models
  * @author		Anodyne Productions
  */
  
-class Model_Missiongroup extends Jelly_Model {
+class Model_Coc extends Jelly_Model {
 	
 	/**
 	 * Initialize the model with Jelly_Meta data
@@ -16,19 +16,17 @@ class Model_Missiongroup extends Jelly_Model {
 	 */
 	public static function initialize(Jelly_Meta $meta)
 	{
-		$meta->table('mission_groups');
+		$meta->table('coc');
 		$meta->fields(array(
 			'id' => Jelly::field('primary', array(
-				'column' => 'misgroup_id'
+				'column' => 'coc_id'
 			)),
-			'name' => Jelly::field('string', array(
-				'column' => 'misgroup_name'
+			'character' => Jelly::field('belongsto', array(
+				'column' => 'coc_crew',
+				'foreign' => 'character'
 			)),
 			'order' => Jelly::field('integer', array(
-				'column' => 'misgroup_order'
-			)),
-			'desc' => Jelly::field('text', array(
-				'column' => 'misgroup_desc'
+				'column' => 'coc_order'
 			)),
 		));
 	}

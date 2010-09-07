@@ -7,8 +7,8 @@
  * @author		Anodyne Productions
  */
  
-class Model_Accessrole extends Jelly_Model
-{
+class Model_Accessrole extends Jelly_Model {
+	
 	/**
 	 * Initialize the model with Jelly_Meta data
 	 *

@@ -7,8 +7,8 @@
  * @author		Anodyne Productions
  */
  
-class Model_Builder_Message extends Jelly_Builder
-{
+class Model_Builder_Message extends Jelly_Builder {
+	
 	/**
 	 * Creates a where statement based on the message key value. Since we're trying pull
 	 * a specific key and the keys are supposed to be unique, this also creates a LIMIT 1

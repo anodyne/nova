@@ -7,8 +7,8 @@
  * @author		Anodyne Productions
  */
  
-class Model_Builder_Character extends Jelly_Builder
-{
+class Model_Builder_Character extends Jelly_Builder {
+	
 	/**
 	 * Pulls active characters from the database.
 	 *

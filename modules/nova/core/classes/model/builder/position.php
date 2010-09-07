@@ -7,8 +7,8 @@
  * @author		Anodyne Productions
  */
  
-class Model_Builder_Position extends Jelly_Builder
-{
+class Model_Builder_Position extends Jelly_Builder {
+	
 	/**
 	 * Pulls open positions from the database.
 	 *

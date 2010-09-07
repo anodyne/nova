@@ -7,8 +7,8 @@
  * @author		Anodyne Productions
  */
  
-class Model_Character extends Jelly_Model
-{
+class Model_Character extends Jelly_Model {
+	
 	/**
 	 * Initialize the model with Jelly_Meta data
 	 *
@@ -54,9 +54,6 @@ class Model_Character extends Jelly_Model
 				'auto_now_update' => FALSE,
 				'null' => TRUE,
 				'default' => date::now()
-			)),
-			'images' => Jelly::field('text', array(
-				'column' => 'images'
 			)),
 			'rank' => Jelly::field('belongsto', array(
 				'column' => 'rank',

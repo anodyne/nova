@@ -7,8 +7,13 @@
  * @author		Anodyne Productions
  */
  
-class Model_User extends Jelly_Model
-{
+class Model_User extends Jelly_Model {
+	
+	/**
+	 * Initialize the model with Jelly_Meta data
+	 *
+	 * @return	void
+	 */
 	public static function initialize(Jelly_Meta $meta)
 	{
 		$meta->fields(array(

@@ -7,8 +7,8 @@
  * @author		Anodyne Productions
  */
  
-class Model_Builder_Catalogueskinsec extends Jelly_Builder
-{
+class Model_Builder_Catalogueskinsec extends Jelly_Builder {
+	
 	/**
 	 * Creates a where statement for figuring out the system default skin for a section.
 	 *

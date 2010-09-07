@@ -1,13 +1,13 @@
 <?php defined('SYSPATH') or die('No direct script access.');
 /**
- * Awards Received Model
+ * Character Images Model
  *
  * @package		Nova
  * @category	Models
  * @author		Anodyne Productions
  */
  
-class Model_Awardrec extends Jelly_Model {
+class Model_Characterimage extends Jelly_Model {
 	
 	/**
 	 * Initialize the model with Jelly_Meta data
@@ -16,35 +16,37 @@ class Model_Awardrec extends Jelly_Model {
 	 */
 	public static function initialize(Jelly_Meta $meta)
 	{
-		$meta->table('awards_received');
+		$meta->table('characters_images');
 		$meta->fields(array(
 			'id' => Jelly::field('primary', array(
-				'column' => 'awardrec_id'
+				'column' => 'charimageid'
 			)),
 			'user' => Jelly::field('belongsto', array(
-				'column' => 'awardrec_user',
+				'column' => 'user',
 				'foreign' => 'user'
 			)),
 			'character' => Jelly::field('belongsto', array(
-				'column' => 'awardrec_character',
+				'column' => 'character',
 				'foreign' => 'character'
 			)),
-			'nominated' => Jelly::field('integer', array(
-				'column' => 'awardrec_nominated_by',
+			'image' => Jelly::field('string', array(
+				'column' => 'image'
 			)),
-			'award' => Jelly::field('belongsto', array(
-				'column' => 'awardrec_award',
-				'foreign' => 'award'
+			'primary' => Jelly::field('enum', array(
+				'column' => 'primary_image',
+				'choices' => array('y', 'n'),
+				'default' => 'n'
 			)),
-			'date' => Jelly::field('timestamp', array(
-				'column' => 'awardrec_date',
+			'created_by' => Jelly::field('belongsto', array(
+				'column' => 'created_by',
+				'foreign' => 'user'
+			)),
+			'created_at' => Jelly::field('timestamp', array(
+				'column' => 'created_at',
 				'auto_now_create' => TRUE,
 				'auto_now_update' => FALSE,
 				'null' => TRUE,
 				'default' => date::now()
-			)),
-			'reason' => Jelly::field('text', array(
-				'column' => 'awardrec_reason'
 			)),
 		));
 	}
