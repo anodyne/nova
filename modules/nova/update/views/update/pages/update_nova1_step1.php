@@ -36,5 +36,174 @@
 					<span class="loading hidden"><?php echo html::image(MODFOLDER.'/nova/update/views/update/images/loading-circle-large.gif');?></span>
 				</td>
 			</tr>
+			<tr>
+				<td class="fontMedium bold"><?php echo __('Awards &amp; Received Award Records');?></td>
+				<td class="col-30 align-center">
+					<span class="success hidden"><?php echo html::image(MODFOLDER.'/nova/update/views/update/images/tick-circle.png');?></span>
+					<span class="failure hidden">
+						<?php echo html::image(MODFOLDER.'/nova/update/views/update/images/exclamation-red.png', array('title' => ''));?>
+					</span>
+					<span class="warning hidden">
+						<?php echo html::image(MODFOLDER.'/nova/update/views/update/images/exclamation.png', array('title' => ''));?>
+					</span>
+					<span class="loading hidden"><?php echo html::image(MODFOLDER.'/nova/update/views/update/images/loading-circle-large.gif');?></span>
+				</td>
+			</tr>
+			<tr>
+				<td class="fontMedium bold"><?php echo __('Missions &amp; Mission Groups');?></td>
+				<td class="col-30 align-center">
+					<span class="success hidden"><?php echo html::image(MODFOLDER.'/nova/update/views/update/images/tick-circle.png');?></span>
+					<span class="failure hidden">
+						<?php echo html::image(MODFOLDER.'/nova/update/views/update/images/exclamation-red.png', array('title' => ''));?>
+					</span>
+					<span class="warning hidden">
+						<?php echo html::image(MODFOLDER.'/nova/update/views/update/images/exclamation.png', array('title' => ''));?>
+					</span>
+					<span class="loading hidden"><?php echo html::image(MODFOLDER.'/nova/update/views/update/images/loading-circle-large.gif');?></span>
+				</td>
+			</tr>
+			<tr>
+				<td class="fontMedium bold"><?php echo __('Mission Posts &amp; Comments');?></td>
+				<td class="col-30 align-center">
+					<span class="success hidden"><?php echo html::image(MODFOLDER.'/nova/update/views/update/images/tick-circle.png');?></span>
+					<span class="failure hidden">
+						<?php echo html::image(MODFOLDER.'/nova/update/views/update/images/exclamation-red.png', array('title' => ''));?>
+					</span>
+					<span class="warning hidden">
+						<?php echo html::image(MODFOLDER.'/nova/update/views/update/images/exclamation.png', array('title' => ''));?>
+					</span>
+					<span class="loading hidden"><?php echo html::image(MODFOLDER.'/nova/update/views/update/images/loading-circle-large.gif');?></span>
+				</td>
+			</tr>
+			<tr>
+				<td class="fontMedium bold"><?php echo __('Personal Logs &amp; Comments');?></td>
+				<td class="col-30 align-center">
+					<span class="success hidden"><?php echo html::image(MODFOLDER.'/nova/update/views/update/images/tick-circle.png');?></span>
+					<span class="failure hidden">
+						<?php echo html::image(MODFOLDER.'/nova/update/views/update/images/exclamation-red.png', array('title' => ''));?>
+					</span>
+					<span class="warning hidden">
+						<?php echo html::image(MODFOLDER.'/nova/update/views/update/images/exclamation.png', array('title' => ''));?>
+					</span>
+					<span class="loading hidden"><?php echo html::image(MODFOLDER.'/nova/update/views/update/images/loading-circle-large.gif');?></span>
+				</td>
+			</tr>
+			<tr>
+				<td class="fontMedium bold"><?php echo __('News Items, Categories &amp; Comments');?></td>
+				<td class="col-30 align-center">
+					<span class="success hidden"><?php echo html::image(MODFOLDER.'/nova/update/views/update/images/tick-circle.png');?></span>
+					<span class="failure hidden">
+						<?php echo html::image(MODFOLDER.'/nova/update/views/update/images/exclamation-red.png', array('title' => ''));?>
+					</span>
+					<span class="warning hidden">
+						<?php echo html::image(MODFOLDER.'/nova/update/views/update/images/exclamation.png', array('title' => ''));?>
+					</span>
+					<span class="loading hidden"><?php echo html::image(MODFOLDER.'/nova/update/views/update/images/loading-circle-large.gif');?></span>
+				</td>
+			</tr>
+			<tr>
+				<td class="fontMedium bold"><?php echo __('Private Messages');?></td>
+				<td class="col-30 align-center">
+					<span class="success hidden"><?php echo html::image(MODFOLDER.'/nova/update/views/update/images/tick-circle.png');?></span>
+					<span class="failure hidden">
+						<?php echo html::image(MODFOLDER.'/nova/update/views/update/images/exclamation-red.png', array('title' => ''));?>
+					</span>
+					<span class="warning hidden">
+						<?php echo html::image(MODFOLDER.'/nova/update/views/update/images/exclamation.png', array('title' => ''));?>
+					</span>
+					<span class="loading hidden"><?php echo html::image(MODFOLDER.'/nova/update/views/update/images/loading-circle-large.gif');?></span>
+				</td>
+			</tr>
+			<tr>
+				<td class="fontMedium bold"><?php echo __('Tour Items');?></td>
+				<td class="col-30 align-center">
+					<span class="success hidden"><?php echo html::image(MODFOLDER.'/nova/update/views/update/images/tick-circle.png');?></span>
+					<span class="failure hidden">
+						<?php echo html::image(MODFOLDER.'/nova/update/views/update/images/exclamation-red.png', array('title' => ''));?>
+					</span>
+					<span class="warning hidden">
+						<?php echo html::image(MODFOLDER.'/nova/update/views/update/images/exclamation.png', array('title' => ''));?>
+					</span>
+					<span class="loading hidden"><?php echo html::image(MODFOLDER.'/nova/update/views/update/images/loading-circle-large.gif');?></span>
+				</td>
+			</tr>
+			<tr>
+				<td class="fontMedium bold"><?php echo __('Specification Items');?></td>
+				<td class="col-30 align-center">
+					<span class="success hidden"><?php echo html::image(MODFOLDER.'/nova/update/views/update/images/tick-circle.png');?></span>
+					<span class="failure hidden">
+						<?php echo html::image(MODFOLDER.'/nova/update/views/update/images/exclamation-red.png', array('title' => ''));?>
+					</span>
+					<span class="warning hidden">
+						<?php echo html::image(MODFOLDER.'/nova/update/views/update/images/exclamation.png', array('title' => ''));?>
+					</span>
+					<span class="loading hidden"><?php echo html::image(MODFOLDER.'/nova/update/views/update/images/loading-circle-large.gif');?></span>
+				</td>
+			</tr>
+			<tr>
+				<td class="fontMedium bold"><?php echo __('Wiki Categories, Pages, Drafts &amp; Comments');?></td>
+				<td class="col-30 align-center">
+					<span class="success hidden"><?php echo html::image(MODFOLDER.'/nova/update/views/update/images/tick-circle.png');?></span>
+					<span class="failure hidden">
+						<?php echo html::image(MODFOLDER.'/nova/update/views/update/images/exclamation-red.png', array('title' => ''));?>
+					</span>
+					<span class="warning hidden">
+						<?php echo html::image(MODFOLDER.'/nova/update/views/update/images/exclamation.png', array('title' => ''));?>
+					</span>
+					<span class="loading hidden"><?php echo html::image(MODFOLDER.'/nova/update/views/update/images/loading-circle-large.gif');?></span>
+				</td>
+			</tr>
+			<tr>
+				<td class="fontMedium bold"><?php echo __('Settings &amp; Messages');?></td>
+				<td class="col-30 align-center">
+					<span class="success hidden"><?php echo html::image(MODFOLDER.'/nova/update/views/update/images/tick-circle.png');?></span>
+					<span class="failure hidden">
+						<?php echo html::image(MODFOLDER.'/nova/update/views/update/images/exclamation-red.png', array('title' => ''));?>
+					</span>
+					<span class="warning hidden">
+						<?php echo html::image(MODFOLDER.'/nova/update/views/update/images/exclamation.png', array('title' => ''));?>
+					</span>
+					<span class="loading hidden"><?php echo html::image(MODFOLDER.'/nova/update/views/update/images/loading-circle-large.gif');?></span>
+				</td>
+			</tr>
+			<tr>
+				<td class="fontMedium bold"><?php echo __('Application Records');?></td>
+				<td class="col-30 align-center">
+					<span class="success hidden"><?php echo html::image(MODFOLDER.'/nova/update/views/update/images/tick-circle.png');?></span>
+					<span class="failure hidden">
+						<?php echo html::image(MODFOLDER.'/nova/update/views/update/images/exclamation-red.png', array('title' => ''));?>
+					</span>
+					<span class="warning hidden">
+						<?php echo html::image(MODFOLDER.'/nova/update/views/update/images/exclamation.png', array('title' => ''));?>
+					</span>
+					<span class="loading hidden"><?php echo html::image(MODFOLDER.'/nova/update/views/update/images/loading-circle-large.gif');?></span>
+				</td>
+			</tr>
+			<tr>
+				<td class="fontMedium bold"><?php echo __('Uploads');?></td>
+				<td class="col-30 align-center">
+					<span class="success hidden"><?php echo html::image(MODFOLDER.'/nova/update/views/update/images/tick-circle.png');?></span>
+					<span class="failure hidden">
+						<?php echo html::image(MODFOLDER.'/nova/update/views/update/images/exclamation-red.png', array('title' => ''));?>
+					</span>
+					<span class="warning hidden">
+						<?php echo html::image(MODFOLDER.'/nova/update/views/update/images/exclamation.png', array('title' => ''));?>
+					</span>
+					<span class="loading hidden"><?php echo html::image(MODFOLDER.'/nova/update/views/update/images/loading-circle-large.gif');?></span>
+				</td>
+			</tr>
+			<tr>
+				<td class="fontMedium bold"><?php echo __('Docked Items');?></td>
+				<td class="col-30 align-center">
+					<span class="success hidden"><?php echo html::image(MODFOLDER.'/nova/update/views/update/images/tick-circle.png');?></span>
+					<span class="failure hidden">
+						<?php echo html::image(MODFOLDER.'/nova/update/views/update/images/exclamation-red.png', array('title' => ''));?>
+					</span>
+					<span class="warning hidden">
+						<?php echo html::image(MODFOLDER.'/nova/update/views/update/images/exclamation.png', array('title' => ''));?>
+					</span>
+					<span class="loading hidden"><?php echo html::image(MODFOLDER.'/nova/update/views/update/images/loading-circle-large.gif');?></span>
+				</td>
+			</tr>
 		</tbody>
 	</table>

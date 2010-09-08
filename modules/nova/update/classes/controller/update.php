@@ -12,7 +12,7 @@ class Controller_Update extends Controller_Template {
 	/**
 	 * @var	integer	the number of database tables in the system
 	 */
-	public $_tables = 58;
+	public $_tables = 59;
 	
 	public function before()
 	{

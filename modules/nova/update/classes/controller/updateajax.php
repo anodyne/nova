@@ -28,6 +28,290 @@ class Controller_Updateajax extends Controller_Template {
 		$this->n1pref = Session::instance()->get('n1pref');
 	}
 	
+	public function update_accessroles()
+	{
+		# roles
+		# access groups
+		# access pages
+	}
+	
+	public function action_update_applications()
+	{
+		// get the application data from n1
+		$n1Apps = $this->db->query(Database::SELECT, "SELECT * FROM ".$this->n1pref.'applications', TRUE);
+		
+		// get the counts
+		$n1AppsCount = $n1Apps->count();
+		
+		try {
+			// set up the saved array
+			$saved = array();
+			
+			// run through the data
+			foreach ($n1Apps as $n)
+			{
+				$item = Jelly::factory('application')
+					->set(array(
+						'email' => $n->app_email,
+						'user' => $n->app_user,
+						'name' => $n->app_user_name,
+						'character' => $n->app_character,
+						'charname' => $n->app_character_name,
+						'position' => $n->app_position,
+						'date' => $n->app_date,
+						'action' => $n->app_action,
+						'message' => $n->app_message,
+					))
+					->save();
+				$saved[] = (int) $item->saved();
+			}
+			
+			if (in_array(FALSE, $saved) && ! in_array(TRUE, $saved))
+			{
+				$retval = array(
+					'code' => 0,
+					'message' => __("Your application records could not be updated.")
+				);
+			}
+			elseif (in_array(FALSE, $saved) && in_array(TRUE, $saved))
+			{
+				// get an array with the counts of the different values
+				$unique = array_count_values($saved);
+				
+				$retval = array(
+					'code' => 2,
+					'message' => __("Only :success of :total application records could be updated.",
+						array(':success' => $unique[1], ':total' => $n1AppsCount))
+				);
+			}
+			else
+			{
+				$retval = array(
+					'code' => 1,
+					'message' => ""
+				);
+			}
+		} catch (Exception $e) {
+			$retval = array(
+				'code' => 0,
+				'message' => 'ERROR: '.$e->getMessage().' - line '.$e->getLine().' of '.$e->getFile()
+			);
+		}
+		
+		echo json_encode($retval);
+	}
+	
+	public function action_update_awards()
+	{
+		// get the awards data from n1
+		$n1Awards = $this->db->query(Database::SELECT, "SELECT * FROM ".$this->n1pref.'awards', TRUE);
+		$n1AwardsRec = $this->db->query(Database::SELECT, "SELECT * FROM ".$this->n1pref.'awards_received', TRUE);
+		$n1AwardsQueue = $this->db->query(Database::SELECT, "SELECT * FROM ".$this->n1pref.'awards_queue', TRUE);
+		
+		// get the counts
+		$n1AwardsCount = $n1Awards->count();
+		$n1AwardsRecCount = $n1AwardsRec->count();
+		
+		try {
+			// set up the saved arrays
+			$savedAwards = array();
+			$savedAwardsRec = array();
+			
+			// run through the data
+			foreach ($n1Awards as $n)
+			{
+				$item = Jelly::factory('award')
+					->set(array(
+						'id' => $n->award_id,
+						'name' => $n->award_name,
+						'image' => $n->award_image,
+						'order' => $n->award_order,
+						'desc' => $n->award_desc,
+						'category' => $n->award_cat,
+						'display' => $n->award_display,
+					))
+					->save();
+				$savedAwards[] = (int) $item->saved();
+			}
+			
+			// do the received awards
+			foreach ($n1AwardsRec as $r)
+			{
+				$item = Jelly::factory('awardrec')
+					->set(array(
+						'user' => $r->awardrec_user,
+						'character' => $r->awardrec_character,
+						'nominated' => $r->awardrec_nominated_by,
+						'award' => $r->awardrec_award,
+						'date' => $r->awardrec_date,
+						'reason' => $r->awardrec_reason,
+					))
+					->save();
+				$savedAwardsRec[] = (int) $item->saved();
+			}
+			
+			// do the awards queue
+			foreach ($n1AwardsQueue as $q)
+			{
+				$item = Jelly::factory('awardqueue')
+					->set(array(
+						'user' => $q->queue_receive_user,
+						'character' => $q->queue_receive_character,
+						'nominated' => $q->queue_nominate,
+						'award' => $q->queue_award,
+						'date' => $q->queue_date,
+						'reason' => $q->queue_reason,
+						'status' => $q->queue_status
+					))
+					->save();
+			}
+			
+			if (count($savedAwards) > 0)
+			{
+				if ( ! in_array(FALSE, $savedAwards))
+				{
+					if (count($savedAwardsRec) > 0)
+					{
+						if ( ! in_array(FALSE, $savedAwardsRec))
+						{
+							$retval = array(
+								'code' => 1,
+								'message' => ""
+							);
+						}
+						
+						if ( ! in_array(TRUE, $savedAwardsRec))
+						{
+							$retval = array(
+								'code' => 2,
+								'message' => __("All of your awards were updated, but none of your received award records could be updated.")
+							);
+						}
+						
+						if (in_array(TRUE, $savedAwardsRec) && in_array(FALSE, $savedAwardsRec))
+						{
+							// get an array with the counts of the different values
+							$unique = array_count_values($savedAwardsRec);
+							
+							$retval = array(
+								'code' => 2,
+								'message' => __("All of your awards were updated, but only :success of :total received award records could be updated.",
+									array(':success' => $unique[1], ':total' => $n1AwardsRecCount))
+							);
+						}
+					}
+					else
+					{
+						$retval = array(
+							'code' => 1,
+							'message' => ""
+						);
+					}
+				}
+				elseif ( ! in_array(TRUE, $savedAwards))
+				{
+					if (count($savedAwardsRec) > 0)
+					{
+						if ( ! in_array(FALSE, $savedAwardsRec))
+						{
+							$retval = array(
+								'code' => 2,
+								'message' => __("None of your awards could be updated, but all of your received award records were updated.")
+							);
+						}
+						
+						if ( ! in_array(TRUE, $savedAwardsRec))
+						{
+							$retval = array(
+								'code' => 0,
+								'message' => __("None of your awards or received award records could be updated.")
+							);
+						}
+						
+						if (in_array(TRUE, $savedAwardsRec) && in_array(FALSE, $savedAwardsRec))
+						{
+							// get an array with the counts of the different values
+							$unique = array_count_values($savedAwardsRec);
+							
+							$retval = array(
+								'code' => 2,
+								'message' => __("None of your awards could be updated and only :success of :total received award records could be updated.",
+									array(':success' => $unique[1], ':total' => $n1AwardsRecCount))
+							);
+						}
+					}
+					else
+					{
+						$retval = array(
+							'code' => 0,
+							'message' => __("None of your awards could be updated.")
+						);
+					}
+				}
+				elseif (in_array(TRUE, $savedAwards) && in_array(FALSE, $savedAwards))
+				{
+					// get an array with the counts of the different values
+					$unique = array_count_values($savedAwards);
+					
+					if (count($savedAwardsRec) > 0)
+					{
+						if ( ! in_array(FALSE, $savedAwardsRec))
+						{
+							$retval = array(
+								'code' => 2,
+								'message' => __("Only :success of :total awards were updated, but all of your received award records were updated.",
+									array(':success' => $unique[1], ':total' => $n1AwardsCount))
+							);
+						}
+						
+						if ( ! in_array(TRUE, $savedAwardsRec))
+						{
+							$retval = array(
+								'code' => 2,
+								'message' => __("Only :success of :total awards were updated and none of your received award records could be updated.",
+									array(':success' => $unique[1], ':total' => $n1AwardsCount))
+							);
+						}
+						
+						if (in_array(TRUE, $savedAwardsRec) && in_array(FALSE, $savedAwardsRec))
+						{
+							// get an array with the counts of the different values
+							$uniqueRec = array_count_values($savedAwardsRec);
+							
+							$retval = array(
+								'code' => 2,
+								'message' => __("Only :success of :total awards and :successRec of :totalRec received award records could be updated.",
+									array(':success' => $unique[1], ':total' => $n1AwardsCount, ':successRec' => $uniqueRec[1], ':totalRec' => $n1AwardsRecCount))
+							);
+						}
+					}
+					else
+					{
+						$retval = array(
+							'code' => 2,
+							'message' => __("Only :success of :total awards could be updated.",
+								array(':success' => $unique[1], ':total' => $n1AwardsCount))
+						);
+					}
+				}
+			}
+			else
+			{
+				$retval = array(
+					'code' => 1,
+					'message' => ""
+				);
+			}
+		} catch (Exception $e) {
+			$retval = array(
+				'code' => 0,
+				'message' => 'ERROR: '.$e->getMessage().' - line '.$e->getLine().' of '.$e->getFile()
+			);
+		}
+		
+		echo json_encode($retval);
+	}
+	
 	public function action_update_characters()
 	{
 		// get the characters from n1
@@ -40,8 +324,15 @@ class Controller_Updateajax extends Controller_Template {
 		$n1CharsData = $this->db->query(Database::SELECT, "SELECT * FROM ".$this->n1pref.'characters_data', TRUE);
 		$n1CharsCOC = $this->db->query(Database::SELECT, "SELECT * FROM ".$this->n1pref.'coc', TRUE);
 		
-		// figure out how many characters we have tos tart
+		// get the counts
 		$n1CharsCount = $n1Chars->count();
+		$n1CharsPromCount = $n1CharsProm->count();
+		$n1CharsTabsCount = $n1CharsTabs->count();
+		$n1CharsSectionsCount = $n1CharsSections->count();
+		$n1CharsFormCount = $n1CharsForm->count();
+		$n1CharsValuesCount = $n1CharsValues->count();
+		$n1CharsDataCount = $n1CharsData->count();
+		$n1CharsCOCCount = $n1CharsCOC->count();
 		
 		try {
 			// set up the saved arrays
@@ -53,6 +344,19 @@ class Controller_Updateajax extends Controller_Template {
 			$savedFormValues = array();
 			$savedFormData = array();
 			$savedCOC = array();
+			
+			// get the db prefix
+			$dbconfig = Kohana::config('database.default');
+			
+			// clear out the tables
+			$this->db->query(NULL, "TRUNCATE TABLE ".$dbconfig['table_prefix']."characters", TRUE);
+			$this->db->query(NULL, "TRUNCATE TABLE ".$dbconfig['table_prefix']."characters_promotions", TRUE);
+			$this->db->query(NULL, "TRUNCATE TABLE ".$dbconfig['table_prefix']."forms_tabs", TRUE);
+			$this->db->query(NULL, "TRUNCATE TABLE ".$dbconfig['table_prefix']."forms_sections", TRUE);
+			$this->db->query(NULL, "TRUNCATE TABLE ".$dbconfig['table_prefix']."forms_fields", TRUE);
+			$this->db->query(NULL, "TRUNCATE TABLE ".$dbconfig['table_prefix']."forms_values", TRUE);
+			$this->db->query(NULL, "TRUNCATE TABLE ".$dbconfig['table_prefix']."forms_data", TRUE);
+			$this->db->query(NULL, "TRUNCATE TABLE ".$dbconfig['table_prefix']."coc", TRUE);
 			
 			// run through the data
 			foreach ($n1Chars as $n)
@@ -82,7 +386,7 @@ class Controller_Updateajax extends Controller_Template {
 				// insert the image records
 				foreach ($images as $i)
 				{
-					if (!empty($i))
+					if ( ! empty($i))
 					{
 						$item = Jelly::factory('characterimage')
 							->set(array(
@@ -216,36 +520,31 @@ class Controller_Updateajax extends Controller_Template {
 				$savedCOC[] = (int) $item->saved();
 			}
 			
-			/*if (in_array(FALSE, $saved) && !in_array(TRUE, $saved))
+			if ( ! in_array(TRUE, $savedChars) && ! in_array(TRUE, $savedCharsProm) && ! in_array(TRUE, $savedFormTabs)
+					&& ! in_array(TRUE, $savedFormSections) && ! in_array(TRUE, $savedFormFields) && ! in_array(TRUE, $savedFormValues)
+					&& ! in_array(TRUE, $savedFormData) && ! in_array(TRUE, $savedCOC))
 			{
 				$retval = array(
 					'code' => 0,
-					'message' => __("Users were not successfully updated")
+					'message' => __("None of your character data or bio form could be updated. Due to the high volume of information that needs to be udpated, a more detailed description isn't available.")
 				);
 			}
-			elseif (in_array(FALSE, $saved) && in_array(TRUE, $saved))
-			{
-				// get an array with the counts of the different values
-				$unique = array_count_values($saved);
-				
-				$retval = array(
-					'code' => 2,
-					'message' => __(":success of :total users were updated, but the remaining records could not be updated",
-						array(':success' => $unique[1], ':total' => $n1UsersCount))
-				);
-			}
-			else
+			elseif ( ! in_array(FALSE, $savedChars) && ! in_array(FALSE, $savedCharsProm) && ! in_array(FALSE, $savedFormTabs)
+					&& ! in_array(FALSE, $savedFormSections) && ! in_array(FALSE, $savedFormFields) && ! in_array(FALSE, $savedFormValues)
+					&& ! in_array(FALSE, $savedFormData) && ! in_array(FALSE, $savedCOC))
 			{
 				$retval = array(
 					'code' => 1,
 					'message' => ""
 				);
-			}*/
-			
-			$retval = array(
-				'code' => 1,
-				'message' => ""
-			);
+			}
+			else
+			{
+				$retval = array(
+					'code' => 2,
+					'message' => __("Only some of your character data and bio form could be updated. Due to the high volume of information that needs to be updated, a more detailed description isn't available.")
+				);
+			}
 		} catch (Exception $e) {
 			$retval = array(
 				'code' => 0,
@@ -256,10 +555,951 @@ class Controller_Updateajax extends Controller_Template {
 		echo json_encode($retval);
 	}
 	
+	public function update_docking()
+	{
+		# docked items
+		# docking sections
+		# docking form
+		# docking form values
+		# docking form data
+	}
+	
+	public function action_update_missions()
+	{
+		// get the data from n1
+		$n1Mis = $this->db->query(Database::SELECT, "SELECT * FROM ".$this->n1pref.'missions', TRUE);
+		$n1MisGroups = $this->db->query(Database::SELECT, "SELECT * FROM ".$this->n1pref.'mission_groups', TRUE);
+		
+		// get the counts
+		$n1MisCount = $n1Mis->count();
+		$n1MisGroupCount = $n1MisGroups->count();
+		
+		try {
+			// set up the saved arrays
+			$savedMis = array();
+			$savedMisGroups = array();
+			
+			// run through the data
+			foreach ($n1Mis as $n)
+			{
+				$item = Jelly::factory('mission')
+					->set(array(
+						'id' => $n->mission_id,
+						'title' => $n->mission_title,
+						'images' => $n->mission_images,
+						'order' => $n->mission_order,
+						'desc' => $n->mission_desc,
+						'group' => $n->mission_group,
+						'status' => $n->mission_status,
+						'start' => $n->mission_start,
+						'end' => $n->mission_end,
+						'summary' => $n->mission_summary,
+						'notes' => $n->mission_notes,
+						'notes_updated' => $n->mission_notes_updated
+					))
+					->save();
+				$savedMis[] = (int) $item->saved();
+			}
+			
+			// do the mission groups
+			foreach ($n1MisGroups as $g)
+			{
+				$item = Jelly::factory('missiongroup')
+					->set(array(
+						'id' => $g->misgroup_id,
+						'name' => $g->misgroup_name,
+						'order' => $g->misgroup_order,
+						'desc' => $g->misgroup_desc,
+					))
+					->save();
+				$savedMisGroups[] = (int) $item->saved();
+			}
+			
+			if (count($savedMis) > 0)
+			{
+				if ( ! in_array(FALSE, $savedMis))
+				{
+					if (count($savedMisGroups) > 0)
+					{
+						if ( ! in_array(FALSE, $savedMisGroups))
+						{
+							$retval = array(
+								'code' => 1,
+								'message' => ""
+							);
+						}
+						
+						if ( ! in_array(TRUE, $savedMisGroups))
+						{
+							$retval = array(
+								'code' => 2,
+								'message' => __("All of your missions were updated, but none of your mission groups could be updated.")
+							);
+						}
+						
+						if (in_array(TRUE, $savedMisGroups) && in_array(FALSE, $savedMisGroups))
+						{
+							// get an array with the counts of the different values
+							$unique = array_count_values($savedMisGroups);
+							
+							$retval = array(
+								'code' => 2,
+								'message' => __("All of your missions were updated, but only :success of :total mission groups could be updated.",
+									array(':success' => $unique[1], ':total' => $n1MisGroupsCount))
+							);
+						}
+					}
+					else
+					{
+						$retval = array(
+							'code' => 1,
+							'message' => ""
+						);
+					}
+				}
+				elseif ( ! in_array(TRUE, $savedMis))
+				{
+					if (count($savedMisGroups) > 0)
+					{
+						if ( ! in_array(FALSE, $savedMisGroups))
+						{
+							$retval = array(
+								'code' => 2,
+								'message' => __("None of your missions could be updated, but all of your mission groups were updated.")
+							);
+						}
+						
+						if ( ! in_array(TRUE, $savedMisGroups))
+						{
+							$retval = array(
+								'code' => 0,
+								'message' => __("None of your missions or mission groups could be updated.")
+							);
+						}
+						
+						if (in_array(TRUE, $savedMisGroups) && in_array(FALSE, $savedMisGroups))
+						{
+							// get an array with the counts of the different values
+							$unique = array_count_values($savedMisGroups);
+							
+							$retval = array(
+								'code' => 2,
+								'message' => __("None of your missions could be updated and only :success of :total mission groups could be updated.",
+									array(':success' => $unique[1], ':total' => $n1MisGroupsCount))
+							);
+						}
+					}
+					else
+					{
+						$retval = array(
+							'code' => 0,
+							'message' => __("None of your missions or mission groups could be updated.")
+						);
+					}
+				}
+				elseif (in_array(TRUE, $savedMis) && in_array(FALSE, $savedMis))
+				{
+					// get an array with the counts of the different values
+					$unique = array_count_values($savedMis);
+					
+					if (count($savedMisGroups) > 0)
+					{
+						if ( ! in_array(FALSE, $savedMisGroups))
+						{
+							$retval = array(
+								'code' => 2,
+								'message' => __("Only :success of :total missions were updated, but all of your mission groups were updated.",
+									array(':success' => $unique[1], ':total' => $n1MisCount))
+							);
+						}
+						
+						if ( ! in_array(TRUE, $savedMisGroups))
+						{
+							$retval = array(
+								'code' => 2,
+								'message' => __("Only :success of :total missions were updated and none of your mission groups could be updated.",
+									array(':success' => $unique[1], ':total' => $n1MisCount))
+							);
+						}
+						
+						if (in_array(TRUE, $savedMisGroups) && in_array(FALSE, $savedMisGroups))
+						{
+							// get an array with the counts of the different values
+							$uniqueGrp = array_count_values($savedMisGroups);
+							
+							$retval = array(
+								'code' => 2,
+								'message' => __("Only :success of :total missions and :successGrp of :totalGrp mission groups could be updated.",
+									array(':success' => $unique[1], ':total' => $n1MisCount, ':successRec' => $uniqueGrp[1], ':totalRec' => $n1MisGroupsCount))
+							);
+						}
+					}
+					else
+					{
+						$retval = array(
+							'code' => 2,
+							'message' => __("Only :success of :total missions could be updated.",
+								array(':success' => $unique[1], ':total' => $n1MisCount))
+						);
+					}
+				}
+			}
+			else
+			{
+				$retval = array(
+					'code' => 1,
+					'message' => ""
+				);
+			}
+		} catch (Exception $e) {
+			$retval = array(
+				'code' => 0,
+				'message' => 'ERROR: '.$e->getMessage().' - line '.$e->getLine().' of '.$e->getFile()
+			);
+		}
+		
+		echo json_encode($retval);
+	}
+	
+	public function action_update_news()
+	{
+		// get the data from n1
+		$n1News = $this->db->query(Database::SELECT, "SELECT * FROM ".$this->n1pref.'news', TRUE);
+		$n1NewsCom = $this->db->query(Database::SELECT, "SELECT * FROM ".$this->n1pref.'news_comments', TRUE);
+		$n1NewsCats = $this->db->query(Database::SELECT, "SELECT * FROM ".$this->n1pref.'news_categories', TRUE);
+		
+		// get the counts
+		$n1NewsCount = $n1News->count();
+		$n1NewsComCount = $n1NewsCom->count();
+		$n1NewsCatsCount = $n1NewsCats->count();
+		
+		try {
+			// set up the saved arrays
+			$savedNews = array();
+			$savedNewsCom = array();
+			
+			// get the db prefix
+			$dbconfig = Kohana::config('database.default');
+			
+			// clear out the tables
+			$this->db->query(NULL, "TRUNCATE TABLE ".$dbconfig['table_prefix']."news_categories", TRUE);
+			
+			// run through the data
+			foreach ($n1News as $n)
+			{
+				$item = Jelly::factory('news')
+					->set(array(
+						'id' => $n->news_id,
+						'title' => $n->news_title,
+						'date' => $n->news_date,
+						'author_user' => $n->news_author_character,
+						'author_character' => $n->news_author_user,
+						'status' => $n->news_status,
+						'content' => $n->news_content,
+						'tags' => $n->news_tags,
+						'last_update' => $n->news_last_update,
+						'category' => $n->news_cat,
+						'private' => $n->news_private,
+					))
+					->save();
+				$savedNews[] = (int) $item->saved();
+			}
+			
+			// do the news comments
+			foreach ($n1NewsCom as $c)
+			{
+				$item = Jelly::factory('newscomment')
+					->set(array(
+						'id' => $c->ncomment_id,
+						'author_user' => $c->ncomment_author_user,
+						'author_character' => $c->ncomment_author_character,
+						'news' => $c->ncomment_news,
+						'date' => $c->ncomment_date,
+						'status' => $c->ncomment_status,
+						'content' => $c->ncomment_content,
+					))
+					->save();
+				$savedNewsCom[] = (int) $item->saved();
+			}
+			
+			// do the news categories
+			foreach ($n1NewsCats as $c)
+			{
+				$item = Jelly::factory('newscategory')
+					->set(array(
+						'id' => $c->newscat_id,
+						'name' => $c->newscat_name,
+						'display' => $c->newscat_display,
+					))
+					->save();
+			}
+			
+			if (count($savedNews) > 0)
+			{
+				if ( ! in_array(FALSE, $savedNews))
+				{
+					if (count($savedNewsCom) > 0)
+					{
+						if ( ! in_array(FALSE, $savedNewsCom))
+						{
+							$retval = array(
+								'code' => 1,
+								'message' => ""
+							);
+						}
+						
+						if ( ! in_array(TRUE, $savedNewsCom))
+						{
+							$retval = array(
+								'code' => 2,
+								'message' => __("All of your news items were updated, but none of your news comments could be updated.")
+							);
+						}
+						
+						if (in_array(TRUE, $savedNewsCom) && in_array(FALSE, $savedNewsCom))
+						{
+							// get an array with the counts of the different values
+							$unique = array_count_values($savedNewsCom);
+							
+							$retval = array(
+								'code' => 2,
+								'message' => __("All of your news items were updated, but only :success of :total news comments could be updated.",
+									array(':success' => $unique[1], ':total' => $n1NewsComCount))
+							);
+						}
+					}
+					else
+					{
+						$retval = array(
+							'code' => 1,
+							'message' => ""
+						);
+					}
+				}
+				elseif ( ! in_array(TRUE, $savedNews))
+				{
+					if (count($savedNewsCom) > 0)
+					{
+						if ( ! in_array(FALSE, $savedNewsCom))
+						{
+							$retval = array(
+								'code' => 2,
+								'message' => __("None of your news items could be updated, but all of your news comments were updated.")
+							);
+						}
+						
+						if ( ! in_array(TRUE, $savedNewsCom))
+						{
+							$retval = array(
+								'code' => 0,
+								'message' => __("None of your news items or news comments could be updated.")
+							);
+						}
+						
+						if (in_array(TRUE, $savedNewsCom) && in_array(FALSE, $savedNewsCom))
+						{
+							// get an array with the counts of the different values
+							$unique = array_count_values($savedNewsCom);
+							
+							$retval = array(
+								'code' => 2,
+								'message' => __("None of your news items could be updated and only :success of :total news comments could be updated.",
+									array(':success' => $unique[1], ':total' => $n1NewsComCount))
+							);
+						}
+					}
+					else
+					{
+						$retval = array(
+							'code' => 0,
+							'message' => __("None of your news items could be updated.")
+						);
+					}
+				}
+				elseif (in_array(TRUE, $savedNews) && in_array(FALSE, $savedNews))
+				{
+					// get an array with the counts of the different values
+					$unique = array_count_values($savedNews);
+					
+					if (count($savedNewsCom) > 0)
+					{
+						if ( ! in_array(FALSE, $savedNewsCom))
+						{
+							$retval = array(
+								'code' => 2,
+								'message' => __("Only :success of :total news items were updated, but all of your news comments were updated.",
+									array(':success' => $unique[1], ':total' => $n1NewsCount))
+							);
+						}
+						
+						if ( ! in_array(TRUE, $savedNewsCom))
+						{
+							$retval = array(
+								'code' => 2,
+								'message' => __("Only :success of :total news items were updated and none of your news comments could be updated.",
+									array(':success' => $unique[1], ':total' => $n1NewsCount))
+							);
+						}
+						
+						if (in_array(TRUE, $savedNewsCom) && in_array(FALSE, $savedNewsCom))
+						{
+							// get an array with the counts of the different values
+							$uniqueCom = array_count_values($savedNewsCom);
+							
+							$retval = array(
+								'code' => 2,
+								'message' => __("Only :success of :total news items and :successCom of :totalCom news comments could be updated.",
+									array(':success' => $unique[1], ':total' => $n1NewsCount, ':successRec' => $uniqueCom[1], ':totalRec' => $n1NewsComCount))
+							);
+						}
+					}
+					else
+					{
+						$retval = array(
+							'code' => 2,
+							'message' => __("Only :success of :total news items could be updated.",
+								array(':success' => $unique[1], ':total' => $n1NewsCount))
+						);
+					}
+				}
+			}
+			else
+			{
+				$retval = array(
+					'code' => 1,
+					'message' => ""
+				);
+			}
+		} catch (Exception $e) {
+			$retval = array(
+				'code' => 0,
+				'message' => 'ERROR: '.$e->getMessage().' - line '.$e->getLine().' of '.$e->getFile()
+			);
+		}
+		
+		echo json_encode($retval);
+	}
+	
+	public function action_update_logs()
+	{
+		// get the data from n1
+		$n1Logs = $this->db->query(Database::SELECT, "SELECT * FROM ".$this->n1pref.'personallogs', TRUE);
+		$n1LogsCom = $this->db->query(Database::SELECT, "SELECT * FROM ".$this->n1pref.'personallogs_comments', TRUE);
+		
+		// get the counts
+		$n1LogsCount = $n1Logs->count();
+		$n1LogsComCount = $n1LogsCom->count();
+		
+		try {
+			// set up the saved arrays
+			$savedLogs = array();
+			$savedLogsCom = array();
+			
+			// run through the data
+			foreach ($n1Logs as $n)
+			{
+				$item = Jelly::factory('personallog')
+					->set(array(
+						'id' => $n->log_id,
+						'title' => $n->log_title,
+						'date' => $n->log_date,
+						'author_user' => $n->log_author_character,
+						'author_character' => $n->log_author_user,
+						'status' => $n->log_status,
+						'content' => $n->log_content,
+						'tags' => $n->log_tags,
+						'last_update' => $n->log_last_update,
+					))
+					->save();
+				$savedLogs[] = (int) $item->saved();
+			}
+			
+			// do the log comments
+			foreach ($n1LogsCom as $c)
+			{
+				$item = Jelly::factory('personallogcomment')
+					->set(array(
+						'id' => $c->lcomment_id,
+						'author_user' => $c->lcomment_author_user,
+						'author_character' => $c->lcomment_author_character,
+						'log' => $c->lcomment_log,
+						'date' => $c->lcomment_date,
+						'status' => $c->lcomment_status,
+						'content' => $c->lcomment_content,
+					))
+					->save();
+				$savedLogsCom[] = (int) $item->saved();
+			}
+			
+			if (count($savedLogs) > 0)
+			{
+				if ( ! in_array(FALSE, $savedLogs))
+				{
+					if (count($savedLogsCom) > 0)
+					{
+						if ( ! in_array(FALSE, $savedLogsCom))
+						{
+							$retval = array(
+								'code' => 1,
+								'message' => ""
+							);
+						}
+						
+						if ( ! in_array(TRUE, $savedLogsCom))
+						{
+							$retval = array(
+								'code' => 2,
+								'message' => __("All of your personal logs were updated, but none of your log comments could be updated.")
+							);
+						}
+						
+						if (in_array(TRUE, $savedLogsCom) && in_array(FALSE, $savedLogsCom))
+						{
+							// get an array with the counts of the different values
+							$unique = array_count_values($savedLogsCom);
+							
+							$retval = array(
+								'code' => 2,
+								'message' => __("All of your personal logs were updated, but only :success of :total log comments could be updated.",
+									array(':success' => $unique[1], ':total' => $n1LogsComCount))
+							);
+						}
+					}
+					else
+					{
+						$retval = array(
+							'code' => 1,
+							'message' => ""
+						);
+					}
+				}
+				elseif ( ! in_array(TRUE, $savedLogs))
+				{
+					if (count($savedLogsCom) > 0)
+					{
+						if ( ! in_array(FALSE, $savedLogsCom))
+						{
+							$retval = array(
+								'code' => 2,
+								'message' => __("None of your personal logs could be updated, but all of your log comments were updated.")
+							);
+						}
+						
+						if ( ! in_array(TRUE, $savedLogsCom))
+						{
+							$retval = array(
+								'code' => 0,
+								'message' => __("None of your personal logs or log comments could be updated.")
+							);
+						}
+						
+						if (in_array(TRUE, $savedLogsCom) && in_array(FALSE, $savedLogsCom))
+						{
+							// get an array with the counts of the different values
+							$unique = array_count_values($savedLogsCom);
+							
+							$retval = array(
+								'code' => 2,
+								'message' => __("None of your personal logs could be updated and only :success of :total log comments could be updated.",
+									array(':success' => $unique[1], ':total' => $n1LogsComCount))
+							);
+						}
+					}
+					else
+					{
+						$retval = array(
+							'code' => 0,
+							'message' => __("None of your personal logs could be updated.")
+						);
+					}
+				}
+				elseif (in_array(TRUE, $savedLogs) && in_array(FALSE, $savedLogs))
+				{
+					// get an array with the counts of the different values
+					$unique = array_count_values($savedLogs);
+					
+					if (count($savedLogsCom) > 0)
+					{
+						if ( ! in_array(FALSE, $savedLogsCom))
+						{
+							$retval = array(
+								'code' => 2,
+								'message' => __("Only :success of :total personal logs were updated, but all of your log comments were updated.",
+									array(':success' => $unique[1], ':total' => $n1LogsCount))
+							);
+						}
+						
+						if ( ! in_array(TRUE, $savedLogsCom))
+						{
+							$retval = array(
+								'code' => 2,
+								'message' => __("Only :success of :total personal logs were updated and none of your log comments could be updated.",
+									array(':success' => $unique[1], ':total' => $n1LogsCount))
+							);
+						}
+						
+						if (in_array(TRUE, $savedLogsCom) && in_array(FALSE, $savedLogsCom))
+						{
+							// get an array with the counts of the different values
+							$uniqueCom = array_count_values($savedLogsCom);
+							
+							$retval = array(
+								'code' => 2,
+								'message' => __("Only :success of :total personal logs and :successCom of :totalCom log comments could be updated.",
+									array(':success' => $unique[1], ':total' => $n1LogsCount, ':successRec' => $uniqueCom[1], ':totalRec' => $n1LogsComCount))
+							);
+						}
+					}
+					else
+					{
+						$retval = array(
+							'code' => 2,
+							'message' => __("Only :success of :total personal logs could be updated.",
+								array(':success' => $unique[1], ':total' => $n1LogsCount))
+						);
+					}
+				}
+			}
+			else
+			{
+				$retval = array(
+					'code' => 1,
+					'message' => ""
+				);
+			}
+		} catch (Exception $e) {
+			$retval = array(
+				'code' => 0,
+				'message' => 'ERROR: '.$e->getMessage().' - line '.$e->getLine().' of '.$e->getFile()
+			);
+		}
+		
+		echo json_encode($retval);
+	}
+	
+	public function action_update_posts()
+	{
+		// get the data from n1
+		$n1Posts = $this->db->query(Database::SELECT, "SELECT * FROM ".$this->n1pref.'posts', TRUE);
+		$n1PostsCom = $this->db->query(Database::SELECT, "SELECT * FROM ".$this->n1pref.'posts_comments', TRUE);
+		
+		// get the counts
+		$n1PostsCount = $n1Posts->count();
+		$n1PostsComCount = $n1PostsCom->count();
+		
+		try {
+			// set up the saved arrays
+			$savedPosts = array();
+			$savedPostsCom = array();
+			
+			// run through the data
+			foreach ($n1Posts as $n)
+			{
+				$item = Jelly::factory('post')
+					->set(array(
+						'id' => $n->post_id,
+						'title' => $n->post_title,
+						'location' => $n->post_location,
+						'timeline' => $n->post_timeline,
+						'date' => $n->post_date,
+						'authors' => $n->post_authors,
+						'author_users' => $n->post_authors_users,
+						'mission' => $n->post_mission,
+						'saved' => $n->post_saved,
+						'status' => $n->post_status,
+						'content' => $n->post_content,
+						'tags' => $n->post_tags,
+						'last_update' => $n->post_last_update,
+					))
+					->save();
+				$savedPosts[] = (int) $item->saved();
+			}
+			
+			// do the post comments
+			foreach ($n1PostsCom as $c)
+			{
+				$item = Jelly::factory('postcomment')
+					->set(array(
+						'id' => $c->pcomment_id,
+						'author_user' => $c->pcomment_author_user,
+						'author_character' => $c->pcomment_author_character,
+						'post' => $c->pcomment_post,
+						'date' => $c->pcomment_date,
+						'status' => $c->pcomment_status,
+						'content' => $c->pcomment_content,
+					))
+					->save();
+				$savedPostsCom[] = (int) $item->saved();
+			}
+			
+			if (count($savedPosts) > 0)
+			{
+				if ( ! in_array(FALSE, $savedPosts))
+				{
+					if (count($savedPostsCom) > 0)
+					{
+						if ( ! in_array(FALSE, $savedPostsCom))
+						{
+							$retval = array(
+								'code' => 1,
+								'message' => ""
+							);
+						}
+						
+						if ( ! in_array(TRUE, $savedPostsCom))
+						{
+							$retval = array(
+								'code' => 2,
+								'message' => __("All of your posts were updated, but none of your post comments could be updated.")
+							);
+						}
+						
+						if (in_array(TRUE, $savedPostsCom) && in_array(FALSE, $savedPostsCom))
+						{
+							// get an array with the counts of the different values
+							$unique = array_count_values($savedPostsCom);
+							
+							$retval = array(
+								'code' => 2,
+								'message' => __("All of your posts were updated, but only :success of :total post comments could be updated.",
+									array(':success' => $unique[1], ':total' => $n1PostsComCount))
+							);
+						}
+					}
+					else
+					{
+						$retval = array(
+							'code' => 1,
+							'message' => ""
+						);
+					}
+				}
+				elseif ( ! in_array(TRUE, $savedPosts))
+				{
+					if (count($savedPostsCom) > 0)
+					{
+						if ( ! in_array(FALSE, $savedPostsCom))
+						{
+							$retval = array(
+								'code' => 2,
+								'message' => __("None of your posts could be updated, but all of your post comments were updated.")
+							);
+						}
+						
+						if ( ! in_array(TRUE, $savedPostsCom))
+						{
+							$retval = array(
+								'code' => 0,
+								'message' => __("None of your posts or post comments could be updated.")
+							);
+						}
+						
+						if (in_array(TRUE, $savedPostsCom) && in_array(FALSE, $savedPostsCom))
+						{
+							// get an array with the counts of the different values
+							$unique = array_count_values($savedPostsCom);
+							
+							$retval = array(
+								'code' => 2,
+								'message' => __("None of your posts could be updated and only :success of :total post comments could be updated.",
+									array(':success' => $unique[1], ':total' => $n1PostsComCount))
+							);
+						}
+					}
+					else
+					{
+						$retval = array(
+							'code' => 0,
+							'message' => __("None of your posts could be updated.")
+						);
+					}
+				}
+				elseif (in_array(TRUE, $savedPosts) && in_array(FALSE, $savedPosts))
+				{
+					// get an array with the counts of the different values
+					$unique = array_count_values($savedPosts);
+					
+					if (count($savedPostsCom) > 0)
+					{
+						if ( ! in_array(FALSE, $savedPostsCom))
+						{
+							$retval = array(
+								'code' => 2,
+								'message' => __("Only :success of :total posts were updated, but all of your post comments were updated.",
+									array(':success' => $unique[1], ':total' => $n1PostsCount))
+							);
+						}
+						
+						if ( ! in_array(TRUE, $savedPostsCom))
+						{
+							$retval = array(
+								'code' => 2,
+								'message' => __("Only :success of :total posts were updated and none of your post comments could be updated.",
+									array(':success' => $unique[1], ':total' => $n1PostsCount))
+							);
+						}
+						
+						if (in_array(TRUE, $savedPostsCom) && in_array(FALSE, $savedPostsCom))
+						{
+							// get an array with the counts of the different values
+							$uniqueCom = array_count_values($savedPostsCom);
+							
+							$retval = array(
+								'code' => 2,
+								'message' => __("Only :success of :total posts and :successCom of :totalCom post comments could be updated.",
+									array(':success' => $unique[1], ':total' => $n1PostsCount, ':successRec' => $uniqueCom[1], ':totalRec' => $n1PostsComCount))
+							);
+						}
+					}
+					else
+					{
+						$retval = array(
+							'code' => 2,
+							'message' => __("Only :success of :total posts could be updated.",
+								array(':success' => $unique[1], ':total' => $n1PostsCount))
+						);
+					}
+				}
+			}
+			else
+			{
+				$retval = array(
+					'code' => 1,
+					'message' => ""
+				);
+			}
+		} catch (Exception $e) {
+			$retval = array(
+				'code' => 0,
+				'message' => 'ERROR: '.$e->getMessage().' - line '.$e->getLine().' of '.$e->getFile()
+			);
+		}
+		
+		echo json_encode($retval);
+	}
+	
+	public function action_update_privmsgs()
+	{
+		// get the data from n1
+		$n1PM = $this->db->query(Database::SELECT, "SELECT * FROM ".$this->n1pref.'privmsgs', TRUE);
+		$n1PMTo = $this->db->query(Database::SELECT, "SELECT * FROM ".$this->n1pref.'privmsgs_to', TRUE);
+		
+		// get the counts
+		$n1PMCount = $n1PM->count();
+		$n1PMToCount = $n1PMTo->count();
+		
+		try {
+			// set up the saved arrays
+			$saved = array();
+			
+			// run through the data
+			foreach ($n1PM as $n)
+			{
+				$item = Jelly::factory('privatemessage')
+					->set(array(
+						'id' => $n->privmsgs_id,
+						'user' => $n->privmsgs_author_user,
+						'character' => $n->privmsgs_author_character,
+						'date' => $n->privmsgs_date,
+						'subject' => $n->privmsgs_subject,
+						'content' => $n->privmsgs_content,
+						'display' => $n->privmsgs_author_display,
+					))
+					->save();
+				$saved[] = $item->saved();
+			}
+			
+			// do the pm to table
+			foreach ($n1PMTo as $p)
+			{
+				$item = Jelly::factory('privatemessageto')
+					->set(array(
+						'id' => $p->pmto_id,
+						'message' => $p->pmto_message,
+						'user' => $p->pmto_recipient_user,
+						'character' => $p->pmto_recipient_character,
+						'display' => $p->pmto_display,
+						'unread' => $p->pmto_unread,
+					))
+					->save();
+				$saved[] = $item->saved();
+			}
+			
+			if (count($saved) > 0)
+			{
+				if ( ! in_array(FALSE, $saved))
+				{
+					$retval = array(
+						'code' => 1,
+						'message' => ""
+					);
+				}
+				elseif ( ! in_array(TRUE, $saved))
+				{
+					$retval = array(
+						'code' => 0,
+						'message' => __("None of your private messages could be updated.")
+					);
+				}
+				elseif (in_array(TRUE, $saved) && in_array(FALSE, $saved))
+				{
+					$retval = array(
+						'code' => 2,
+						'message' => __("Some of your private messages could not be updated.")
+					);
+				}
+			}
+			else
+			{
+				$retval = array(
+					'code' => 1,
+					'message' => ""
+				);
+			}
+		} catch (Exception $e) {
+			$retval = array(
+				'code' => 0,
+				'message' => 'ERROR: '.$e->getMessage().' - line '.$e->getLine().' of '.$e->getFile()
+			);
+		}
+		
+		echo json_encode($retval);
+	}
+	
+	public function update_settings()
+	{
+		# settings
+		# messages
+	}
+	
+	public function update_specs()
+	{
+		# spec items
+		# spec sections
+		# spec form
+		# spec form values
+		# spec form data
+	}
+	
+	public function update_tour()
+	{
+		# tour items
+		# tour form
+		# tour form values
+		# tour form data
+		# decks
+	}
+	
+	public function update_uploads()
+	{
+		# uploads
+	}
+	
 	public function action_update_users()
 	{
 		// get the users from n1
 		$n1Users = $this->db->query(Database::SELECT, "SELECT * FROM ".$this->n1pref.'users', TRUE);
+		$n1UsersLOA = $this->db->query(Database::SELECT, "SELECT * FROM ".$this->n1pref.'user_loa', TRUE);
 		
 		// figure out how many users we have tos tart
 		$n1UsersCount = $n1Users->count();
@@ -301,19 +1541,68 @@ class Controller_Updateajax extends Controller_Template {
 						'bio' => $u->interests."\r\n\r\n".$u->bio,
 						'security_question' => $u->security_question,
 						'security_answer' => $u->security_answer,
-						'password_reset' => $u->password_reset
+						'password_reset' => $u->password_reset,
+						'role' => $this->_translate_roles($u->access_role)
 					))
 					->save();
 				$saved[] = (int) $item->saved();
 				
-				# TODO: need to fill in the moderation table once the schema's been built
+				if ($u->moderate_posts == 'y')
+				{
+					$item = Jelly::factory('moderation')->set(array('type' => 'posts', 'user' => $u->userid))->save();
+				}
+				
+				if ($u->moderate_logs == 'y')
+				{
+					$item = Jelly::factory('moderation')->set(array('type' => 'logs', 'user' => $u->userid))->save();
+				}
+				
+				if ($u->moderate_news == 'y')
+				{
+					$item = Jelly::factory('moderation')->set(array('type' => 'news', 'user' => $u->userid))->save();
+				}
+				
+				if ($u->moderate_post_comments == 'y')
+				{
+					$item = Jelly::factory('moderation')->set(array('type' => 'post_comments', 'user' => $u->userid))->save();
+				}
+				
+				if ($u->moderate_log_comments == 'y')
+				{
+					$item = Jelly::factory('moderation')->set(array('type' => 'log_comments', 'user' => $u->userid))->save();
+				}
+				
+				if ($u->moderate_news_comments == 'y')
+				{
+					$item = Jelly::factory('moderation')->set(array('type' => 'news_comments', 'user' => $u->userid))->save();
+				}
+				
+				if ($u->moderate_wiki_comments == 'y')
+				{
+					$item = Jelly::factory('moderation')->set(array('type' => 'wiki_comments', 'user' => $u->userid))->save();
+				}
 			}
 			
-			if (in_array(FALSE, $saved) && !in_array(TRUE, $saved))
+			// transfer the loa records
+			foreach ($n1UsersLOA as $l)
+			{
+				$item = Jelly::factory('userloa')
+					->set(array(
+						'user' => $l->loa_user,
+						'start' => $l->loa_start_date,
+						'end' => $l->loa_end_date,
+						'duration' => $l->loa_duration,
+						'reason' => $l->loa_reason,
+						'type' => $l->loa_type,
+					))
+					->save();
+			}
+			
+			if (in_array(FALSE, $saved) && ! in_array(TRUE, $saved))
 			{
 				$retval = array(
 					'code' => 0,
-					'message' => __("Users were not successfully updated")
+					'message' => __("Your users could not be updated.")
 				);
 			}
 			elseif (in_array(FALSE, $saved) && in_array(TRUE, $saved))
@@ -323,7 +1612,7 @@ class Controller_Updateajax extends Controller_Template {
 				
 				$retval = array(
 					'code' => 2,
-					'message' => __(":success of :total users were updated, but the remaining records could not be updated",
+					'message' => __("Only :success of :total users could be updated.",
 						array(':success' => $unique[1], ':total' => $n1UsersCount))
 				);
 			}
@@ -342,6 +1631,27 @@ class Controller_Updateajax extends Controller_Template {
 		}
 		
 		echo json_encode($retval);
+	}
+	
+	public function update_wiki()
+	{
+		# categories
+		# comments
+		# drafts
+		# pages
+	}
+	
+	private function _translate_roles($old)
+	{
+		$roles = array(
+			1 => 1,
+			2 => 2,
+			3 => 3,
+			4 => 4,
+			5 => 5
+		);
+		
+		return $roles[$old];
 	}
 	
 	private function _translate_timezone($zone)

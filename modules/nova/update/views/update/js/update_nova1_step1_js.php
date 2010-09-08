@@ -88,6 +88,204 @@
 			}
 		});
 		
+		// awards
+		$.ajaxq('queue', {
+			beforeSend: function(){
+				$('table tbody tr:eq(2) td:eq(1) .loading').removeClass('hidden');
+			},
+			type: "POST",
+			url: "<?php echo url::site('updateajax/update_awards');?>",
+			data: send,
+			dataType: 'json',
+			success: function(data){
+				$('table tbody tr:eq(2) td:eq(1) .loading').addClass('hidden');
+				
+				if (data.code == 1)
+				{
+					$('table tbody tr:eq(2) td:eq(1) .success').removeClass('hidden');
+				}
+				else if (data.code == 0)
+				{
+					$('table tbody tr:eq(2) td:eq(1) .failure').removeClass('hidden');
+					$('table tbody tr:eq(2) td:eq(1) .failure img').attr('title', function(){
+						return data.message
+					});
+				}
+				else if (data.code == 2)
+				{
+					$('table tbody tr:eq(2) td:eq(1) .warning').removeClass('hidden');
+					$('table tbody tr:eq(2) td:eq(1) .warning img').attr('title', function(){
+						return data.message
+					});
+				}
+			}
+		});
+		
+		// missions
+		$.ajaxq('queue', {
+			beforeSend: function(){
+				$('table tbody tr:eq(3) td:eq(1) .loading').removeClass('hidden');
+			},
+			type: "POST",
+			url: "<?php echo url::site('updateajax/update_missions');?>",
+			data: send,
+			dataType: 'json',
+			success: function(data){
+				$('table tbody tr:eq(3) td:eq(1) .loading').addClass('hidden');
+				
+				if (data.code == 1)
+				{
+					$('table tbody tr:eq(3) td:eq(1) .success').removeClass('hidden');
+				}
+				else if (data.code == 0)
+				{
+					$('table tbody tr:eq(3) td:eq(1) .failure').removeClass('hidden');
+					$('table tbody tr:eq(3) td:eq(1) .failure img').attr('title', function(){
+						return data.message
+					});
+				}
+				else if (data.code == 2)
+				{
+					$('table tbody tr:eq(3) td:eq(1) .warning').removeClass('hidden');
+					$('table tbody tr:eq(3) td:eq(1) .warning img').attr('title', function(){
+						return data.message
+					});
+				}
+			}
+		});
+		
+		// posts and post comments
+		$.ajaxq('queue', {
+			beforeSend: function(){
+				$('table tbody tr:eq(4) td:eq(1) .loading').removeClass('hidden');
+			},
+			type: "POST",
+			url: "<?php echo url::site('updateajax/update_posts');?>",
+			data: send,
+			dataType: 'json',
+			success: function(data){
+				$('table tbody tr:eq(4) td:eq(1) .loading').addClass('hidden');
+				
+				if (data.code == 1)
+				{
+					$('table tbody tr:eq(4) td:eq(1) .success').removeClass('hidden');
+				}
+				else if (data.code == 0)
+				{
+					$('table tbody tr:eq(4) td:eq(1) .failure').removeClass('hidden');
+					$('table tbody tr:eq(4) td:eq(1) .failure img').attr('title', function(){
+						return data.message
+					});
+				}
+				else if (data.code == 2)
+				{
+					$('table tbody tr:eq(4) td:eq(1) .warning').removeClass('hidden');
+					$('table tbody tr:eq(4) td:eq(1) .warning img').attr('title', function(){
+						return data.message
+					});
+				}
+			}
+		});
+		
+		// logs and log comments
+		$.ajaxq('queue', {
+			beforeSend: function(){
+				$('table tbody tr:eq(5) td:eq(1) .loading').removeClass('hidden');
+			},
+			type: "POST",
+			url: "<?php echo url::site('updateajax/update_logs');?>",
+			data: send,
+			dataType: 'json',
+			success: function(data){
+				$('table tbody tr:eq(5) td:eq(1) .loading').addClass('hidden');
+				
+				if (data.code == 1)
+				{
+					$('table tbody tr:eq(5) td:eq(1) .success').removeClass('hidden');
+				}
+				else if (data.code == 0)
+				{
+					$('table tbody tr:eq(5) td:eq(1) .failure').removeClass('hidden');
+					$('table tbody tr:eq(5) td:eq(1) .failure img').attr('title', function(){
+						return data.message
+					});
+				}
+				else if (data.code == 2)
+				{
+					$('table tbody tr:eq(5) td:eq(1) .warning').removeClass('hidden');
+					$('table tbody tr:eq(5) td:eq(1) .warning img').attr('title', function(){
+						return data.message
+					});
+				}
+			}
+		});
+		
+		// news, news categories and news comments
+		$.ajaxq('queue', {
+			beforeSend: function(){
+				$('table tbody tr:eq(6) td:eq(1) .loading').removeClass('hidden');
+			},
+			type: "POST",
+			url: "<?php echo url::site('updateajax/update_news');?>",
+			data: send,
+			dataType: 'json',
+			success: function(data){
+				$('table tbody tr:eq(6) td:eq(1) .loading').addClass('hidden');
+				
+				if (data.code == 1)
+				{
+					$('table tbody tr:eq(6) td:eq(1) .success').removeClass('hidden');
+				}
+				else if (data.code == 0)
+				{
+					$('table tbody tr:eq(6) td:eq(1) .failure').removeClass('hidden');
+					$('table tbody tr:eq(6) td:eq(1) .failure img').attr('title', function(){
+						return data.message
+					});
+				}
+				else if (data.code == 2)
+				{
+					$('table tbody tr:eq(6) td:eq(1) .warning').removeClass('hidden');
+					$('table tbody tr:eq(6) td:eq(1) .warning img').attr('title', function(){
+						return data.message
+					});
+				}
+			}
+		});
+		
+		// private messages
+		$.ajaxq('queue', {
+			beforeSend: function(){
+				$('table tbody tr:eq(7) td:eq(1) .loading').removeClass('hidden');
+			},
+			type: "POST",
+			url: "<?php echo url::site('updateajax/update_privmsgs');?>",
+			data: send,
+			dataType: 'json',
+			success: function(data){
+				$('table tbody tr:eq(7) td:eq(1) .loading').addClass('hidden');
+				
+				if (data.code == 1)
+				{
+					$('table tbody tr:eq(7) td:eq(1) .success').removeClass('hidden');
+				}
+				else if (data.code == 0)
+				{
+					$('table tbody tr:eq(7) td:eq(1) .failure').removeClass('hidden');
+					$('table tbody tr:eq(7) td:eq(1) .failure img').attr('title', function(){
+						return data.message
+					});
+				}
+				else if (data.code == 2)
+				{
+					$('table tbody tr:eq(7) td:eq(1) .warning').removeClass('hidden');
+					$('table tbody tr:eq(7) td:eq(1) .warning img').attr('title', function(){
+						return data.message
+					});
+				}
+			}
+		});
+		
 		$('#progress').ajaxStop(function(){
 			$("#progress").progressbar({ value: 75 });
 			$('#percent').text($('#progress').progressbar('option', 'value') + '%');
