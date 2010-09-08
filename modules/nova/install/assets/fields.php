@@ -53,7 +53,7 @@ $data = array(
 	'messages'					=> array('id' => 'message_id', 'fields' => 'fields_messages'),
 	'mission_groups'			=> array('id' => 'misgroup_id', 'fields' => 'fields_mission_groups'),
 	'missions'					=> array('id' => 'mission_id', 'fields' => 'fields_missions'),
-	//'moderation'				=> array('id' => 'moderation_id', 'fields' => 'fields_moderation'),
+	'moderation'				=> array('id' => 'moderation_id', 'fields' => 'fields_moderation'),
 	'news'						=> array('id' => 'news_id', 'fields' => 'fields_news'),
 	'news_categories'			=> array('id' => 'newscat_id', 'fields' => 'fields_news_categories'),
 	'news_comments'				=> array('id' => 'ncomment_id', 'fields' => 'fields_news_comments'),
@@ -62,8 +62,8 @@ $data = array(
 	'positions_'.$_genre		=> array('id' => 'pos_id', 'fields' => 'fields_positions'),
 	'posts'						=> array('id' => 'post_id', 'fields' => 'fields_posts'),
 	'posts_comments'			=> array('id' => 'pcomment_id', 'fields' => 'fields_posts_comments'),
-	'privmsgs'					=> array('id' => 'privmsgs_id', 'fields' => 'fields_privmsgs'),
-	'privmsgs_to'				=> array('id' => 'pmto_id', 'fields' => 'fields_privmsgs_to'),
+	'private_messages'			=> array('id' => 'privmsgs_id', 'fields' => 'fields_private_messages'),
+	'private_messages_to'		=> array('id' => 'pmto_id', 'fields' => 'fields_private_messages_to'),
 	'ranks_'.$_genre			=> array('id' => 'rank_id', 'fields' => 'fields_ranks'),
 	'security_questions'		=> array('id' => 'question_id', 'fields' => 'fields_security_questions'),	
 	'settings'					=> array('id' => 'setting_id', 'fields' => 'fields_settings'),
@@ -1106,6 +1106,26 @@ $fields_missions = array(
 		'constraint' => $date_constraint)
 );
 
+$fields_moderation = array(
+	'moderation_id' => array(
+		'type' => 'INT',
+		'constraint' => 8,
+		'auto_increment' => TRUE),
+	'moderation_user' => array(
+		'type' => $user_id_type,
+		'constraint' => $user_id_constraint),
+	'moderation_character' => array(
+		'type' => $character_id_type,
+		'constraint' => $character_id_constraint),
+	'moderation_type' => array(
+		'type' => 'VARCHAR',
+		'constraint' => 100,
+		'default' => ''),
+	'moderation_date' => array(
+		'type' => $date_type,
+		'constraint' => $date_constraint),
+);
+
 $fields_news = array(
 	'news_id' => array(
 		'type' => 'INT',
@@ -1341,7 +1361,7 @@ $fields_posts_comments = array(
 		'default' => 'activated')
 );
 
-$fields_privmsgs = array(
+$fields_private_messages = array(
 	'privmsgs_id' => array(
 		'type' => 'BIGINT',
 		'constraint' => 20,
@@ -1367,7 +1387,7 @@ $fields_privmsgs = array(
 		'default' => 'y')
 );
 
-$fields_privmsgs_to = array(
+$fields_private_messages_to = array(
 	'pmto_id' => array(
 		'type' => 'BIGINT',
 		'constraint' => 20,
