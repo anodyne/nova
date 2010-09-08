@@ -24,3 +24,8 @@
 * nova\_users
     * remove the moderation fields
     * update timezone format from UMXX to XX/YY
+
+## Not Updated
+
+* nova\_user\_prefs
+* nova\_user\_prefs\_values
