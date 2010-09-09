@@ -392,9 +392,6 @@ class Controller_Install extends Controller_Template {
 			// get the database config
 			$dbconf = Kohana::config('database.default');
 			
-			// initialize the forge
-			$forge = new DBForge;
-			
 			// get an array of the tables
 			$tables = $db->list_tables();
 			
@@ -923,9 +920,6 @@ return array
 					// update the character set
 					$dbconfig = Kohana::config('database');
 					$db->set_charset($dbconfig['default']['charset']);
-					
-					// initialize the forge
-					$forge = new DBForge;
 					
 					// pull in the field information
 					include_once MODPATH.'nova/install/assets/fields'.EXT;

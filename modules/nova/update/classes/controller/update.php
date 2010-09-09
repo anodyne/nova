@@ -285,9 +285,6 @@ class Controller_Update extends Controller_Template {
 					$dbconfig = Kohana::config('database');
 					$db->set_charset($dbconfig['default']['charset']);
 					
-					// initialize the forge
-					$forge = new DBForge;
-					
 					// pull in the field information
 					include_once MODPATH.'nova/install/assets/fields'.EXT;
 					

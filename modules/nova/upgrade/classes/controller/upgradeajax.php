@@ -31,9 +31,6 @@ class Controller_Upgradeajax extends Controller_Template {
 		$c = $this->db->query(Database::SELECT, "SELECT awardid FROM sms_awards", TRUE);
 		$count_old = $c->count();
 		
-		// load the dbforge
-		$forge = new DBForge;
-		
 		// drop the nova version of the table
 		DBForge::drop_table('awards');
 		
@@ -507,9 +504,6 @@ class Controller_Upgradeajax extends Controller_Template {
 	
 	public function action_upgrade_logs()
 	{
-		// load the forge
-		$forge = new DBForge;
-		
 		// get the number of logs in the sms table
 		$c = $this->db->query(Database::SELECT, "SELECT logid FROM sms_personallogs", TRUE);
 		$count_old = $c->count();
@@ -614,9 +608,6 @@ class Controller_Upgradeajax extends Controller_Template {
 	
 	public function action_upgrade_missions()
 	{
-		// load the forge
-		$forge = new DBForge;
-		
 		// get the number of news items in the sms table
 		$c = $this->db->query(Database::SELECT, "SELECT missionid FROM sms_missions", TRUE);
 		$count_missions_old = $c->count();
@@ -881,9 +872,6 @@ class Controller_Upgradeajax extends Controller_Template {
 	
 	public function action_upgrade_news()
 	{
-		// load the dbforge
-		$forge = new DBForge;
-		
 		// get the number of news items in the sms table
 		$c = $this->db->query(Database::SELECT, "SELECT newsid FROM sms_news", TRUE);
 		$count_news_old = $c->count();
