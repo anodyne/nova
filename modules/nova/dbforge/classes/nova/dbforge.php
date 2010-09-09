@@ -7,8 +7,7 @@
  * *Use great caution when using the DBForge class as it can cause irreversible damage to your
  * database and its data!*
  *
- * @package		Nova
- * @category	Classes
+ * @package		DBForge
  * @author		Anodyne Productions
  */
 
@@ -62,11 +61,12 @@ abstract class Nova_DBForge {
 	protected static $swap_pre;
 	
 	/**
-	 * Initializes the DBForge
+	 * Initializes the DBForge. It isn't necessary to directly call this method as it's called
+	 * automatically when the class is used.
 	 *
-	 * @return 	void
+	 * @return	void
 	 */
-	public function __construct()
+	public static function initialize()
 	{
 		// get an instance of the database
 		self::$db = Database::instance();
@@ -153,7 +153,14 @@ abstract class Nova_DBForge {
 	/**
 	 * Add fields to the database
 	 *
-	 *     DBForge::add_field(array('field' => array('type' => 'varchar', 'constraint' => 32)));
+	 *     $field = array(
+	 *         'field' => array(
+	 *              'type' => 'VARCHAR',
+	 *              'constraint' => 32
+	 *         ),
+	 *     );
+	 *     
+	 *     DBForge::add_field($field);
 	 *
 	 * @uses	DBForge::add_field
 	 * @uses	DBForge::add_key
@@ -308,7 +315,14 @@ abstract class Nova_DBForge {
 	/**
 	 * Adds a column to the database table
 	 *
-	 *     DBForge::add_column('foo', array('new_field' => array('type' => 'varchar', 'constraint' => 32)));
+	 *     $field = array(
+	 *         'new_field' => array(
+	 *             'type' => 'VARCHAR',
+	 *             'constraint' => 32
+	 *         ),
+	 *     );
+	 *     
+	 *     DBForge::add_column('foo', $field);
 	 *
 	 * @uses	Database::query
 	 * @uses	DBForge::add_field
@@ -375,7 +389,14 @@ abstract class Nova_DBForge {
 	/**
 	 * Modify a database table column
 	 *
-	 *     DBForge::modify_column('foo', array('old_name' => array('name' => 'new_name', 'type' => 'text')));
+	 *     $field = array(
+	 *         'old_name' => array(
+	 *             'name' => 'new_name',
+	 *             'type' => 'TEXT'
+	 *         ),
+	 *     );
+	 *     
+	 *     DBForge::modify_column('foo', $field);
 	 *
 	 * @uses	Database::query
 	 * @uses	DBForge::add_field
