@@ -115,7 +115,7 @@
 				</td>
 			</tr>
 			<tr>
-				<td class="fontMedium bold"><?php echo __('Tour Items');?></td>
+				<td class="fontMedium bold"><?php echo __('Tour Items &amp; Decks');?></td>
 				<td class="col-30 align-center">
 					<span class="success hidden"><?php echo html::image(MODFOLDER.'/nova/update/views/update/images/tick-circle.png');?></span>
 					<span class="failure hidden">

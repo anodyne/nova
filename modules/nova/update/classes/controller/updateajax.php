@@ -1481,13 +1481,150 @@ class Controller_Updateajax extends Controller_Template {
 		# spec form data
 	}
 	
-	public function update_tour()
+	public function action_update_tour()
 	{
 		# tour items
 		# tour form
 		# tour form values
 		# tour form data
 		# decks
+		
+		// get the characters from n1
+		$n1Tour = $this->db->query(Database::SELECT, "SELECT * FROM ".$this->n1pref.'tour', TRUE);
+		$n1TourFields = $this->db->query(Database::SELECT, "SELECT * FROM ".$this->n1pref.'tour_fields', TRUE);
+		$n1TourValues = $this->db->query(Database::SELECT, "SELECT * FROM ".$this->n1pref.'tour_values', TRUE);
+		$n1TourData = $this->db->query(Database::SELECT, "SELECT * FROM ".$this->n1pref.'tour_data', TRUE);
+		$n1TourDecks = $this->db->query(Database::SELECT, "SELECT * FROM ".$this->n1pref.'tour_decks', TRUE);
+		
+		// get the counts
+		$n1TourCount = $n1Tour->count();
+		$n1TourFormCount = $n1TourFields->count() + $n1TourValues->count() + $n1TourData->count();
+		$n1TourDecksCount = $n1TourDecks->count();
+		
+		try {
+			// set up the saved arrays
+			$savedTour = array();
+			$savedTourForm = array();
+			$savedTourDecks = array();
+			
+			// run through the data
+			foreach ($n1Tour as $n)
+			{
+				$item = Jelly::factory('tour')
+					->set(array(
+						'id' => $n->tour_id,
+						'name' => $n->tour_name,
+						'order' => $n->tour_order,
+						'display' => $n->tour_display,
+						'images' => $n->tour_images,
+						'summary' => $n->tour_summary,
+					))
+					->save();
+				$savedTour[] = (int) $item->saved();
+			}
+			
+			// translation arrays
+			$translateFields = array();
+			
+			// do the form fields
+			foreach ($n1TourFields as $f)
+			{
+				$item = Jelly::factory('formfield')
+					->set(array(
+						'form' => 'tour',
+						'type' => $f->field_type,
+						'html_name' => $f->field_name,
+						'html_id' => $f->field_fid,
+						'html_class' => $f->field_class,
+						'html_rows' => $f->field_rows,
+						'value' => $f->field_value,
+						'label' => $f->field_label_page,
+						'order' => $f->field_order,
+						'display' => $f->field_display,
+					))
+					->save();
+				$savedTourForm[] = (int) $item->saved();
+					
+				$translateFields[$f->field_id] = $item->id();
+			}
+			
+			// do the form values
+			foreach ($n1TourValues as $v)
+			{
+				$item = Jelly::factory('formvalue')
+					->set(array(
+						'field' => $translateFields[$v->value_field],
+						'html_value' => $v->value_field_value,
+						'selected' => $v->value_selected,
+						'content' => $v->value_content,
+						'order' => $v->value_order,
+					))
+					->save();
+				$savedTourForm[] = (int) $item->saved();
+			}
+			
+			// do the form data
+			foreach ($n1TourData as $d)
+			{
+				$item = Jelly::factory('formdata')
+					->set(array(
+						'form' => 'tour',
+						'field' => $translateFields[$d->data_field],
+						'item' => $d->data_item,
+						'value' => $d->data_value,
+						'last_update' => $d->data_updated
+					))
+					->save();
+				$savedTourForm[] = (int) $item->saved();
+			}
+			
+			// do the decks
+			foreach ($n1TourDecks as $d)
+			{
+				$item = Jelly::factory('tourdeck')
+					->set(array(
+						'id' => $d->deck_id,
+						'name' => $d->deck_name,
+						'order' => $d->deck_order,
+						'content' => $d->deck_content,
+					))
+					->save();
+				$savedTourDecks[] = (int) $item->saved();
+			}
+			
+			if ( ! in_array(TRUE, $savedChars) && ! in_array(TRUE, $savedCharsProm) && ! in_array(TRUE, $savedFormTabs)
+					&& ! in_array(TRUE, $savedFormSections) && ! in_array(TRUE, $savedFormFields) && ! in_array(TRUE, $savedFormValues)
+					&& ! in_array(TRUE, $savedFormData) && ! in_array(TRUE, $savedCOC))
+			{
+				$retval = array(
+					'code' => 0,
+					'message' => __("None of your character data or bio form could be updated. Due to the high volume of information that needs to be udpated, a more detailed description isn't available.")
+				);
+			}
+			elseif ( ! in_array(FALSE, $savedChars) && ! in_array(FALSE, $savedCharsProm) && ! in_array(FALSE, $savedFormTabs)
+					&& ! in_array(FALSE, $savedFormSections) && ! in_array(FALSE, $savedFormFields) && ! in_array(FALSE, $savedFormValues)
+					&& ! in_array(FALSE, $savedFormData) && ! in_array(FALSE, $savedCOC))
+			{
+				$retval = array(
+					'code' => 1,
+					'message' => ""
+				);
+			}
+			else
+			{
+				$retval = array(
+					'code' => 2,
+					'message' => __("Only some of your character data and bio form could be updated. Due to the high volume of information that needs to be updated, a more detailed description isn't available.")
+				);
+			}
+		} catch (Exception $e) {
+			$retval = array(
+				'code' => 0,
+				'message' => 'ERROR: '.$e->getMessage().' - line '.$e->getLine().' of '.$e->getFile()
+			);
+		}
+		
+		echo json_encode($retval);
 	}
 	
 	public function update_uploads()
