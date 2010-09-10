@@ -82,6 +82,7 @@ $base_modules = array(
 	'jelly'			=> MODPATH.'kohana/jelly',
 	'userguide'		=> MODPATH.'kohana/userguide',
 	'dbforge'		=> MODPATH.'nova/dbforge',
+	//'xml'			=> MODPATH.'kohana/xml',
 );
 
 // merge the base modules with whatever is in the modules section of the nova config file
