@@ -11,8 +11,7 @@
  *     );
  */
 
-return array
-(
+return array(
 	'preCreate'	=> array(),
 	'postCreate' => array(),
 	

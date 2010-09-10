@@ -1,7 +1,6 @@
 <?php defined('SYSPATH') OR die('No direct access allowed.');
 
-return array
-(
+return array(
 	/**
 	 * The protocol to use for sending email messages. The default is to use
 	 * PHP's built-in mail function but you can also use sendmail or smtp.

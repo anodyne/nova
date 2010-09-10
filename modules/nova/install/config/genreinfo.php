@@ -1,7 +1,6 @@
 <?php defined('SYSPATH') OR die('No direct access allowed.');
 
-return array
-(
+return array(
 	'baj'	=> "Star Trek: Bajorans",
 	'bl5'	=> "Babylon 5",
 	'blank'	=> "Blank Genre",

@@ -1,6 +1,5 @@
 <?php defined('SYSPATH') OR die('No direct access allowed.');
 
-return array
-(
+return array(
 	'dev' => FALSE,
 );
