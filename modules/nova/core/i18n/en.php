@@ -11,8 +11,7 @@
  * replaced with underscores (_).
  */
 
-return array
-(
+return array(
 	/**
 	 * Global Language Items
 	 */

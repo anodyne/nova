@@ -1,7 +1,6 @@
 <?php
 
-return array
-(
+return array(
 	/**
 	 * upgrade step 1
 	 */
