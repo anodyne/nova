@@ -6,10 +6,6 @@ Thresher is Anodyne Productions' mini-wiki application integrated into Nova. For
 
 Release 2
 
-## Latest Changes
-
-* created readme file
-
 ## History
 
 <table>

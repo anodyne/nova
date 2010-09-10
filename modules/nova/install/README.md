@@ -6,22 +6,6 @@ The Nova 2 install module provides functionality to create the database config f
 
 1.0
 
-## Latest Changes
-
-* updated the data file to reflect the removal of colorbox and addition of fancybox
-* updated the controller to pull the system defaults for skin sections and ranks
-* created readme file
-* updated the install process to create user preferences
-
-## TODO
-
-* uncomment the redirects in the _before()_ method after the login controller is completed
-* better styling for the progress bar
-* clean up the install registration
-* test the quick install
-* rank image names (and)
-* change i18n over to the newer format
-
 ## History
 
 <table>

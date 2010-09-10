@@ -6,13 +6,6 @@ The Nova 2 upgrade module provides functionality to upgrade SMS 2 (must have at 
 
 1.0
 
-## TODO
-
-* uncomment the redirects in the _before()_ method after the login controller is completed
-* uncomment the registration code
-* clean up the upgrade registration
-* change i18n over to the newer format
-
 ## History
 
 <table>
