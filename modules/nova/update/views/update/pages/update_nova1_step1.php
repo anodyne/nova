@@ -11,7 +11,7 @@
 		</thead>
 		<tbody>
 			<tr>
-				<td class="fontMedium bold"><?php echo __('Update Users');?></td>
+				<td class="fontMedium bold"><?php echo __('Users');?></td>
 				<td class="col-30 align-center">
 					<span class="success hidden"><?php echo html::image(MODFOLDER.'/nova/update/views/update/images/tick-circle.png');?></span>
 					<span class="failure hidden">
@@ -24,7 +24,7 @@
 				</td>
 			</tr>
 			<tr>
-				<td class="fontMedium bold"><?php echo __('Update Characters &amp; Data');?></td>
+				<td class="fontMedium bold"><?php echo __('Characters, Bio Form &amp; Data');?></td>
 				<td class="col-30 align-center">
 					<span class="success hidden"><?php echo html::image(MODFOLDER.'/nova/update/views/update/images/tick-circle.png');?></span>
 					<span class="failure hidden">
@@ -115,7 +115,7 @@
 				</td>
 			</tr>
 			<tr>
-				<td class="fontMedium bold"><?php echo __('Tour Items &amp; Decks');?></td>
+				<td class="fontMedium bold"><?php echo __('Tour Items, Tour Form &amp; Decks');?></td>
 				<td class="col-30 align-center">
 					<span class="success hidden"><?php echo html::image(MODFOLDER.'/nova/update/views/update/images/tick-circle.png');?></span>
 					<span class="failure hidden">
@@ -128,7 +128,7 @@
 				</td>
 			</tr>
 			<tr>
-				<td class="fontMedium bold"><?php echo __('Specification Items');?></td>
+				<td class="fontMedium bold"><?php echo __('Specification Items &amp; Specifications Form');?></td>
 				<td class="col-30 align-center">
 					<span class="success hidden"><?php echo html::image(MODFOLDER.'/nova/update/views/update/images/tick-circle.png');?></span>
 					<span class="failure hidden">
@@ -193,7 +193,7 @@
 				</td>
 			</tr>
 			<tr>
-				<td class="fontMedium bold"><?php echo __('Docked Items');?></td>
+				<td class="fontMedium bold"><?php echo __('Docked Items &amp; Docking Form');?></td>
 				<td class="col-30 align-center">
 					<span class="success hidden"><?php echo html::image(MODFOLDER.'/nova/update/views/update/images/tick-circle.png');?></span>
 					<span class="failure hidden">

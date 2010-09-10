@@ -526,7 +526,7 @@ class Controller_Updateajax extends Controller_Template {
 			{
 				$retval = array(
 					'code' => 0,
-					'message' => __("None of your character data or bio form could be updated. Due to the high volume of information that needs to be udpated, a more detailed description isn't available.")
+					'message' => __("None of your character data or bio form could be updated. Due to the high volume of information that needs to be updated, a more detailed description isn't available.")
 				);
 			}
 			elseif ( ! in_array(FALSE, $savedChars) && ! in_array(FALSE, $savedCharsProm) && ! in_array(FALSE, $savedFormTabs)
@@ -1245,7 +1245,6 @@ class Controller_Updateajax extends Controller_Template {
 								'message' => ""
 							);
 						}
-						
 						if ( ! in_array(TRUE, $savedPostsCom))
 						{
 							$retval = array(
@@ -1253,7 +1252,6 @@ class Controller_Updateajax extends Controller_Template {
 								'message' => __("All of your posts were updated, but none of your post comments could be updated.")
 							);
 						}
-						
 						if (in_array(TRUE, $savedPostsCom) && in_array(FALSE, $savedPostsCom))
 						{
 							// get an array with the counts of the different values
@@ -1285,7 +1283,6 @@ class Controller_Updateajax extends Controller_Template {
 								'message' => __("None of your posts could be updated, but all of your post comments were updated.")
 							);
 						}
-						
 						if ( ! in_array(TRUE, $savedPostsCom))
 						{
 							$retval = array(
@@ -1293,7 +1290,6 @@ class Controller_Updateajax extends Controller_Template {
 								'message' => __("None of your posts or post comments could be updated.")
 							);
 						}
-						
 						if (in_array(TRUE, $savedPostsCom) && in_array(FALSE, $savedPostsCom))
 						{
 							// get an array with the counts of the different values
@@ -1329,7 +1325,6 @@ class Controller_Updateajax extends Controller_Template {
 									array(':success' => $unique[1], ':total' => $n1PostsCount))
 							);
 						}
-						
 						if ( ! in_array(TRUE, $savedPostsCom))
 						{
 							$retval = array(
@@ -1338,7 +1333,6 @@ class Controller_Updateajax extends Controller_Template {
 									array(':success' => $unique[1], ':total' => $n1PostsCount))
 							);
 						}
-						
 						if (in_array(TRUE, $savedPostsCom) && in_array(FALSE, $savedPostsCom))
 						{
 							// get an array with the counts of the different values
@@ -1483,12 +1477,6 @@ class Controller_Updateajax extends Controller_Template {
 	
 	public function action_update_tour()
 	{
-		# tour items
-		# tour form
-		# tour form values
-		# tour form data
-		# decks
-		
 		// get the characters from n1
 		$n1Tour = $this->db->query(Database::SELECT, "SELECT * FROM ".$this->n1pref.'tour', TRUE);
 		$n1TourFields = $this->db->query(Database::SELECT, "SELECT * FROM ".$this->n1pref.'tour_fields', TRUE);
@@ -1592,29 +1580,215 @@ class Controller_Updateajax extends Controller_Template {
 				$savedTourDecks[] = (int) $item->saved();
 			}
 			
-			if ( ! in_array(TRUE, $savedChars) && ! in_array(TRUE, $savedCharsProm) && ! in_array(TRUE, $savedFormTabs)
-					&& ! in_array(TRUE, $savedFormSections) && ! in_array(TRUE, $savedFormFields) && ! in_array(TRUE, $savedFormValues)
-					&& ! in_array(TRUE, $savedFormData) && ! in_array(TRUE, $savedCOC))
+			if (count($savedTour) > 0)
 			{
-				$retval = array(
-					'code' => 0,
-					'message' => __("None of your character data or bio form could be updated. Due to the high volume of information that needs to be udpated, a more detailed description isn't available.")
-				);
-			}
-			elseif ( ! in_array(FALSE, $savedChars) && ! in_array(FALSE, $savedCharsProm) && ! in_array(FALSE, $savedFormTabs)
-					&& ! in_array(FALSE, $savedFormSections) && ! in_array(FALSE, $savedFormFields) && ! in_array(FALSE, $savedFormValues)
-					&& ! in_array(FALSE, $savedFormData) && ! in_array(FALSE, $savedCOC))
-			{
-				$retval = array(
-					'code' => 1,
-					'message' => ""
-				);
+				if ( ! in_array(FALSE, $savedTour))
+				{
+					if ( ! in_array(FALSE, $savedTourForm) && ! in_array(FALSE, $savedTourDecks))
+					{
+						$retval = array(
+							'code' => 1,
+							'message' => ""
+						);
+					}
+					if ( ! in_array(FALSE, $savedTourForm) && (in_array(FALSE, $savedTourDecks) && in_array(TRUE, $savedTourDecks)))
+					{
+						$retval = array(
+							'code' => 2,
+							'message' => __("Your tour items and tour form information were updated, but only some of your decks could be updated.")
+						);
+					}
+					if ( ! in_array(TRUE, $savedTourForm) && (in_array(FALSE, $savedTourDecks) && in_array(TRUE, $savedTourDecks)))
+					{
+						$retval = array(
+							'code' => 2,
+							'message' => __("Your tour items were updated, but none of your tour form information and only some of your decks could be updated.")
+						);
+					}
+					if ((in_array(FALSE, $savedTourForm) && in_array(TRUE, $savedTourForm)) && ! in_array(FALSE, $savedTourDecks))
+					{
+						$retval = array(
+							'code' => 2,
+							'message' => __("Your tour items and decks were updated, but only some of your tour form information could be updated.")
+						);
+					}
+					if ((in_array(FALSE, $savedTourForm) && in_array(TRUE, $savedTourForm)) && ! in_array(TRUE, $savedTourDecks))
+					{
+						$retval = array(
+							'code' => 2,
+							'message' => __("Your tour items were updated, but none of your decks were updated and only some of your tour form information could be updated.")
+						);
+					}
+					if ((in_array(FALSE, $savedTourForm) && in_array(TRUE, $savedTourForm)) && 
+							(in_array(FALSE, $savedTourDecks) && in_array(TRUE, $savedTourDecks)))
+					{
+						$retval = array(
+							'code' => 2,
+							'message' => __("Your tour items were updated, but only some of your decks and tour form information could be updated.")
+						);
+					}
+					if ( ! in_array(FALSE, $savedTourForm) && ! in_array(TRUE, $savedTourDecks))
+					{
+						$retval = array(
+							'code' => 2,
+							'message' => __("Your tour items and tour form information were updated, but none of your decks could be updated.")
+						);
+					}
+					if ( ! in_array(TRUE, $savedTourForm) && ! in_array(FALSE, $savedTourDecks))
+					{
+						$retval = array(
+							'code' => 2,
+							'message' => __("Your tour items and decks were updated, but none of your tour form information could be updated.")
+						);
+					}
+					if ( ! in_array(TRUE, $savedTourForm) && ! in_array(TRUE, $savedTourDecks))
+					{
+						$retval = array(
+							'code' => 2,
+							'message' => __("Your tour items were updated, but none of your tour form information or decks could be updated.")
+						);
+					}
+				}
+				elseif ( ! in_array(TRUE, $savedTour))
+				{
+					if ( ! in_array(FALSE, $savedTourForm) && ! in_array(FALSE, $savedTourDecks))
+					{
+						$retval = array(
+							'code' => 2,
+							'message' => __("Your tour form information and decks were updated, but none of your tour items could be updated.")
+						);
+					}
+					if ( ! in_array(FALSE, $savedTourForm) && (in_array(FALSE, $savedTourDecks) && in_array(TRUE, $savedTourDecks)))
+					{
+						$retval = array(
+							'code' => 2,
+							'message' => __("Your tour form information was updated, but none of your tour items and only some of your decks could be updated.")
+						);
+					}
+					if ( ! in_array(TRUE, $savedTourForm) && (in_array(FALSE, $savedTourDecks) && in_array(TRUE, $savedTourDecks)))
+					{
+						$retval = array(
+							'code' => 2,
+							'message' => __("None of your tour items or tour form information were updated and only some of your decks could be updated.")
+						);
+					}
+					if ((in_array(FALSE, $savedTourForm) && in_array(TRUE, $savedTourForm)) && ! in_array(FALSE, $savedTourDecks))
+					{
+						$retval = array(
+							'code' => 2,
+							'message' => __("Your decks were updated, but none of your tour items and only some of your tour form information could be updated.")
+						);
+					}
+					if ((in_array(FALSE, $savedTourForm) && in_array(TRUE, $savedTourForm)) && ! in_array(TRUE, $savedTourDecks))
+					{
+						$retval = array(
+							'code' => 2,
+							'message' => __("None of your tour items or decks were updated and only some of your tour form information could be updated.")
+						);
+					}
+					if ((in_array(FALSE, $savedTourForm) && in_array(TRUE, $savedTourForm)) && 
+							(in_array(FALSE, $savedTourDecks) && in_array(TRUE, $savedTourDecks)))
+					{
+						$retval = array(
+							'code' => 2,
+							'message' => __("None of your tour items were updated and only some of your tour form information and decks could be updated.")
+						);
+					}
+					if ( ! in_array(FALSE, $savedTourForm) && ! in_array(TRUE, $savedTourDecks))
+					{
+						$retval = array(
+							'code' => 2,
+							'message' => __("Your tour form information was updated, but none of your tour items or decks could be updated.")
+						);
+					}
+					if ( ! in_array(TRUE, $savedTourForm) && ! in_array(FALSE, $savedTourDecks))
+					{
+						$retval = array(
+							'code' => 2,
+							'message' => __("Your decks were updated, but none of your tour items or tour form information could be updated.")
+						);
+					}
+					if ( ! in_array(TRUE, $savedTourForm) && ! in_array(TRUE, $savedTourDecks))
+					{
+						$retval = array(
+							'code' => 0,
+							'message' => __("None of your tour items, tour form information or decks were updated.")
+						);
+					}
+				}
+				elseif (in_array(FALSE, $savedTour) && in_array(TRUE, $savedTour))
+				{
+					if ( ! in_array(FALSE, $savedTourForm) && ! in_array(FALSE, $savedTourDecks))
+					{
+						$retval = array(
+							'code' => 2,
+							'message' => __("Your tour form information and decks were updated, but only some of your tour items could be updated.")
+						);
+					}
+					if ( ! in_array(FALSE, $savedTourForm) && (in_array(FALSE, $savedTourDecks) && in_array(TRUE, $savedTourDecks)))
+					{
+						$retval = array(
+							'code' => 2,
+							'message' => __("Your tour form information was updated, but only some of your tour items and decks could be updated.")
+						);
+					}
+					if ( ! in_array(TRUE, $savedTourForm) && (in_array(FALSE, $savedTourDecks) && in_array(TRUE, $savedTourDecks)))
+					{
+						$retval = array(
+							'code' => 2,
+							'message' => __("None of your tour form information was updated and only some of your tour items and decks could be updated.")
+						);
+					}
+					if ((in_array(FALSE, $savedTourForm) && in_array(TRUE, $savedTourForm)) && ! in_array(FALSE, $savedTourDecks))
+					{
+						$retval = array(
+							'code' => 2,
+							'message' => __("Your decks were updated, but only some of your tour items and tour form information could be updated.")
+						);
+					}
+					if ((in_array(FALSE, $savedTourForm) && in_array(TRUE, $savedTourForm)) && ! in_array(TRUE, $savedTourDecks))
+					{
+						$retval = array(
+							'code' => 2,
+							'message' => __("None of your decks were updated and only some of your tour items and tour form information could be updated.")
+						);
+					}
+					if ((in_array(FALSE, $savedTourForm) && in_array(TRUE, $savedTourForm)) && 
+							(in_array(FALSE, $savedTourDecks) && in_array(TRUE, $savedTourDecks)))
+					{
+						$retval = array(
+							'code' => 2,
+							'message' => __("Only some of your tour items, tour form information and decks could be updated.")
+						);
+					}
+					if ( ! in_array(FALSE, $savedTourForm) && ! in_array(TRUE, $savedTourDecks))
+					{
+						$retval = array(
+							'code' => 2,
+							'message' => __("Your tour form information was updated, but none of your decks and only some of your tour items could be updated.")
+						);
+					}
+					if ( ! in_array(TRUE, $savedTourForm) && ! in_array(FALSE, $savedTourDecks))
+					{
+						$retval = array(
+							'code' => 2,
+							'message' => __("Your decks were updated, but none of your tour form information and only some of your tour items could be updated.")
+						);
+					}
+					if ( ! in_array(TRUE, $savedTourForm) && ! in_array(TRUE, $savedTourDecks))
+					{
+						$retval = array(
+							'code' => 0,
+							'message' => __("None of your tour form information or decks were updated and only some of your tour items could be updated.")
+						);
+					}
+				}
 			}
 			else
 			{
 				$retval = array(
-					'code' => 2,
-					'message' => __("Only some of your character data and bio form could be updated. Due to the high volume of information that needs to be updated, a more detailed description isn't available.")
+					'code' => 1,
+					'message' => ""
 				);
 			}
 		} catch (Exception $e) {
