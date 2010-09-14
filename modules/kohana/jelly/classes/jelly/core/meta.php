@@ -42,6 +42,16 @@ abstract class Jelly_Core_Meta
 	 * @var  string  The foreign key for use in other tables. This can be referenced in query building as :foreign_key
 	 */
 	protected $_foreign_key = '';
+	
+	/**
+	 * @var  string  The polymorphic key for the model tree.
+	 */
+	protected $_polymorphic_key = NULL;
+	
+	/**
+	 * @var  array  An array of this model's children
+	 */
+	protected $_children = array();
 
 	/**
 	 * @var  array  An array of ordering options for SELECTs
@@ -93,6 +103,11 @@ abstract class Jelly_Core_Meta
 	 * @var  array  Behaviors attached to this model
 	 */
 	protected $_behaviors = array();
+	
+	/**
+	 * @var  string  The parent model of this model
+	 */
+	protected $_parent = NULL;
 
 	/**
 	 * This is called after initialization to
@@ -169,17 +184,21 @@ abstract class Jelly_Core_Meta
 			{
 				$this->_primary_key = $column;
 			}
+			
+			// Search for a polymorphic key
+			if ( ! empty($field->polymorphic))
+			{
+				$this->_polymorphic_key = $field->name;
+				
+				// Add this class as a child if it hasn't been added yet
+				if ( ! in_array($this->_model, $this->_children))	
+				{
+					$this->_children[] = $this->_model;
+				}
+			}
 
 			// Set the defaults so they're actually persistent
 			$this->_defaults[$column] = $field->default;
-
-			// Set the columns, so that we can access reverse database results properly
-			if ( ! array_key_exists($field->column, $this->_columns))
-			{
-				$this->_columns[$field->column] = array();
-			}
-
-			$this->_columns[$field->column][] = $column;
 		}
 
 		// Meta object is initialized and no longer writable
@@ -366,30 +385,6 @@ abstract class Jelly_Core_Meta
 	}
 
 	/**
-	 * Returns all of the columns for this meta object.
-	 *
-	 * Each key in the array is a column's name, while the value
-	 * is an array of fields the column maps to.
-	 *
-	 * If $name is specified, only the particular column is returned.
-	 *
-	 * @param   string  $name
-	 * @return  array
-	 */
-	public function columns($name = NULL)
-	{
-		if (func_num_args() == 0)
-		{
-			return $this->_columns;
-		}
-
-		if (isset($this->_columns[$name]))
-		{
-			return $this->_columns[$name];
-		}
-	}
-
-	/**
 	 * Returns the defaults for the object.
 	 *
 	 * If $name is specified, then the defaults
@@ -510,6 +505,33 @@ abstract class Jelly_Core_Meta
 		}
 
 		return $this->_foreign_key;
+	}
+	
+	/**
+	 * Gets the model's polymorphic key.
+	 * @param   string  $value
+	 * @return  string
+	 */
+	public function polymorphic_key($value = NULL)
+	{
+		return $this->_polymorphic_key;
+	}
+	
+	/**
+	 * Gets the model's child models
+	 *
+	 * @param   array  $children 
+	 * @return  array
+	 */
+	public function children($children = array())
+	{
+		if (func_num_args() AND ! $this->_initialized)
+		{
+			$this->_children += $children;
+			return $this;
+		}
+		
+		return $this->_children;
 	}
 
 	/**

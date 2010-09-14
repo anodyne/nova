@@ -156,6 +156,7 @@ abstract class Jelly_Core_Validator extends Validate
 	 *          // The data is valid, do something here
 	 *     }
 	 *
+	 * @param   bool  $allow_empty
 	 * @return  boolean
 	 */
 	public function check($allow_empty = FALSE)
