@@ -373,18 +373,12 @@ abstract class Nova_Auth {
 	 */
 	protected static function _autologin()
 	{
-		// load the core model
-		$mCore = new Model_Core;
-		
-		// get the uid from the database
-		$args = array(
-			'where' => array(
-				array(
-					'field' => 'sys_id',
-					'value' => 1)
-				),
-			);
-		$uid = $mCore->get('system_info', $args, 'sys_uid');
+		// get the UID
+		$uid = Jelly::query('system')
+			->where('id', '=', 1)
+			->limit(1)
+			->select()
+			->uid;
 		
 		// get the cookie
 		$cookie = cookie::get('nova_'.$uid, FALSE, TRUE);
