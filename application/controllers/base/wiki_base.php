@@ -5,12 +5,10 @@
 |---------------------------------------------------------------
 |
 | File: controllers/wiki_base.php
-| System Version: 1.0.5
+| System Version: 1.1.1
 |
-| Changes: updated Thresher to use the proper template regions; updated the 
-|	constructor to show an error if someone isn't running PHP 5 due to a bug
-|	somewhere in the code causing 500 errors; fixed errors that were thrown
-|	when editing a wiki page
+| Changes: fixed bug where nova wouldn't display because it couldn't
+|	find the template file
 |
 */
 
@@ -75,9 +73,11 @@ class Wiki_base extends Controller {
 		$this->timezone = $this->options['timezone'];
 		$this->dst = (bool) $this->options['daylight_savings'];
 		
-		if ($this->auth->is_logged_in() === TRUE)
-		{ /* if there's a session, set the variables appropriately */
-			$this->skin = $this->session->userdata('skin_wiki');
+		if ($this->auth->is_logged_in())
+		{
+			$this->skin = (file_exists(APPPATH .'views/'.$this->session->userdata('skin_wiki').'/template_wiki'.EXT))
+				? $this->session->userdata('skin_wiki')
+				: $this->skin;
 			$this->rank = $this->session->userdata('display_rank');
 			$this->timezone = $this->session->userdata('timezone');
 			$this->dst = (bool) $this->session->userdata('dst');
@@ -95,7 +95,7 @@ class Wiki_base extends Controller {
 		$this->template->write('nav_sub', $this->menu->build('sub', 'wiki'), TRUE);
 		$this->template->write('title', $this->options['sim_name'] . ' :: ');
 		
-		if ($this->auth->is_logged_in() === TRUE)
+		if ($this->auth->is_logged_in())
 		{
 			/* create the user panels */
 			$this->template->write('panel_1', $this->user_panel->panel_1(), TRUE);

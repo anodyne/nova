@@ -5,14 +5,15 @@
 |---------------------------------------------------------------
 |
 | File: controllers/manage_base.php
-| System Version: 1.1
+| System Version: 1.1.1
 |
 | Changes: added the ability to have multiple specification items;
 |	fixed bug in the tour management where updating a tour item
 |	would only update the first item and not the one selected;
 |	added the ability to tie a tour item to a specification item;
 |	added the ability to display tour items based on the
-|	specification item they're associated with
+|	specification item they're associated with; fixed bug where
+|	nova wouldn't display because it couldn't find the template file
 |
 */
 
@@ -71,9 +72,11 @@ class Manage_base extends Controller {
 		$this->timezone = $this->options['timezone'];
 		$this->dst = (bool) $this->options['daylight_savings'];
 		
-		if ($this->auth->is_logged_in() === TRUE)
-		{ /* if there's a session, set the variables appropriately */
-			$this->skin = $this->session->userdata('skin_admin');
+		if ($this->auth->is_logged_in())
+		{
+			$this->skin = (file_exists(APPPATH .'views/'.$this->session->userdata('skin_admin').'/template_admin'.EXT))
+				? $this->session->userdata('skin_admin')
+				: $this->skin;
 			$this->rank = $this->session->userdata('display_rank');
 			$this->timezone = $this->session->userdata('timezone');
 			$this->dst = (bool) $this->session->userdata('dst');

@@ -5,10 +5,11 @@
 |---------------------------------------------------------------
 |
 | File: controllers/messages_base.php
-| System Version: 1.1
+| System Version: 1.1.1
 |
 | Changes: fixed bug where replying to a message wouldn't populate
-|	the dropdown with the author being replied to
+|	the dropdown with the author being replied to; fixed bug where
+|	nova wouldn't load because it couldn't find the template file
 |
 */
 
@@ -65,9 +66,11 @@ class Messages_base extends Controller {
 		$this->timezone = $this->options['timezone'];
 		$this->dst = (bool) $this->options['daylight_savings'];
 		
-		if ($this->auth->is_logged_in() === TRUE)
-		{ /* if there's a session, set the variables appropriately */
-			$this->skin = $this->session->userdata('skin_admin');
+		if ($this->auth->is_logged_in())
+		{
+			$this->skin = (file_exists(APPPATH .'views/'.$this->session->userdata('skin_admin').'/template_admin'.EXT))
+				? $this->session->userdata('skin_admin')
+				: $this->skin;
 			$this->rank = $this->session->userdata('display_rank');
 			$this->timezone = $this->session->userdata('timezone');
 			$this->dst = (bool) $this->session->userdata('dst');

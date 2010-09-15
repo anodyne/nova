@@ -5,18 +5,10 @@
 |---------------------------------------------------------------
 |
 | File: controllers/characters_base.php
-| System Version: 1.0.6
+| System Version: 1.1.1
 |
-| Changes: updated the NPC management page to do all the deletions
-|	on its own page instead of using the character management
-|	deletion functionality (could be confusing to users); fixed errors
-|	thrown when users with an access level less than 2 try to update
-|	a character; fixed bug where acceptance and rejection messages
-|	were sent without any of the changes an admin added; fixed bug
-|	where characters changing status to and from active wouldn't
-|	set the number of open slots for their position(s); fixed error
-|	thrown when attempting to delete a character; fixed bug where
-|	the rank history tab wasn't being populated
+| Changes: fixed bug where nova wouldn't display if the template
+|	file couldn't be found
 |
 */
 
@@ -74,9 +66,11 @@ class Characters_base extends Controller {
 		$this->timezone = $this->options['timezone'];
 		$this->dst = (bool) $this->options['daylight_savings'];
 		
-		if ($this->auth->is_logged_in() === TRUE)
-		{ /* if there's a session, set the variables appropriately */
-			$this->skin = $this->session->userdata('skin_admin');
+		if ($this->auth->is_logged_in())
+		{
+			$this->skin = (file_exists(APPPATH .'views/'.$this->session->userdata('skin_admin').'/template_admin'.EXT))
+				? $this->session->userdata('skin_admin')
+				: $this->skin;
 			$this->rank = $this->session->userdata('display_rank');
 			$this->timezone = $this->session->userdata('timezone');
 			$this->dst = (bool) $this->session->userdata('dst');

@@ -5,10 +5,10 @@
 |---------------------------------------------------------------
 |
 | File: controllers/archive.php
-| System Version: 1.0.4
+| System Version: 1.1.1
 |
-| Changes: updated the constructor to show an error if someone isn't running PHP 5
-|	due to a bug somewhere in the code causing 500 errors
+| Changes: fixed bug where nova wouldn't display if the template
+|	file couldn't be found
 |
 */
 
@@ -70,8 +70,10 @@ class Archive_base extends Controller {
 		$this->dst = (bool) $this->options['daylight_savings'];
 		
 		if ($this->auth->is_logged_in())
-		{ /* if there's a session, set the variables appropriately */
-			$this->skin = $this->session->userdata('skin_main');
+		{
+			$this->skin = (file_exists(APPPATH .'views/'.$this->session->userdata('skin_main').'/template_main'.EXT))
+				? $this->session->userdata('skin_main')
+				: $this->skin;
 			$this->rank = $this->session->userdata('display_rank');
 			$this->timezone = $this->session->userdata('timezone');
 			$this->dst = (bool) $this->session->userdata('dst');

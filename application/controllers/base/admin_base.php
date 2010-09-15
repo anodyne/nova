@@ -5,13 +5,10 @@
 |---------------------------------------------------------------
 |
 | File: controllers/admin_base.php
-| System Version: 1.0.6
+| System Version: 1.1.1
 |
-| Changes: attempting a fix for the remember me issue which
-|	updates the cookie set when the password is changed; added
-|	messages for the different panel tabs in the event there's
-|	nothing in the tab; fixed bug where turning off update
-|	notification still tried to run the check
+| Changes: fixed bug where nova wouldn't display if the template
+|	file couldn't be found
 |
 */
 
@@ -71,9 +68,11 @@ class Admin_base extends Controller {
 		$this->timezone = $this->options['timezone'];
 		$this->dst = (bool) $this->options['daylight_savings'];
 		
-		if ($this->auth->is_logged_in() === TRUE)
-		{ /* if there's a session, set the variables appropriately */
-			$this->skin = $this->session->userdata('skin_admin');
+		if ($this->auth->is_logged_in())
+		{
+			$this->skin = (file_exists(APPPATH .'views/'.$this->session->userdata('skin_admin').'/template_admin'.EXT))
+				? $this->session->userdata('skin_admin')
+				: $this->skin;
 			$this->rank = $this->session->userdata('display_rank');
 			$this->timezone = $this->session->userdata('timezone');
 			$this->dst = (bool) $this->session->userdata('dst');

@@ -5,7 +5,10 @@
 |---------------------------------------------------------------
 |
 | File: controllers/base/search_base.php
-| System Version: 1.0
+| System Version: 1.1.1
+|
+| Changes: fixed a bug where nova wouldn't display because it
+|	couldn't find the template file
 |
 */
 
@@ -60,9 +63,11 @@ class Search_base extends Controller {
 		$this->timezone = $this->options['timezone'];
 		$this->dst = (bool) $this->options['daylight_savings'];
 		
-		if ($this->auth->is_logged_in() === TRUE)
-		{ /* if there's a session, set the variables appropriately */
-			$this->skin = $this->session->userdata('skin_main');
+		if ($this->auth->is_logged_in())
+		{
+			$this->skin = (file_exists(APPPATH .'views/'.$this->session->userdata('skin_main').'/template_main'.EXT))
+				? $this->session->userdata('skin_main')
+				: $this->skin;
 			$this->rank = $this->session->userdata('display_rank');
 			$this->timezone = $this->session->userdata('timezone');
 			$this->dst = (bool) $this->session->userdata('dst');
@@ -79,7 +84,7 @@ class Search_base extends Controller {
 		$this->template->write('nav_sub', $this->menu->build('sub', 'main'), TRUE);
 		$this->template->write('title', $this->options['sim_name'] . ' :: ');
 		
-		if ($this->auth->is_logged_in() === TRUE)
+		if ($this->auth->is_logged_in())
 		{
 			/* create the user panels */
 			$this->template->write('panel_1', $this->user_panel->panel_1(), TRUE);

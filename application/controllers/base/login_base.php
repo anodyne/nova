@@ -5,11 +5,9 @@
 |---------------------------------------------------------------
 |
 | File: controllers/base/login_base.php
-| System Version: 1.0.2
+| System Version: 1.1.1
 |
-| Changes: updated the index page to handle the new error message
-|	thrown when a pending user tries to log in; fixed presentation
-|	issue with error #6
+| Changes: minor updates to the comments
 |
 */
 
@@ -62,8 +60,8 @@ class Login_base extends Controller {
 		$this->timezone = $this->options['timezone'];
 		$this->dst = (bool) $this->options['daylight_savings'];
 		
-		if ($this->auth->is_logged_in() === TRUE)
-		{ /* if there's a session, set the variables appropriately */
+		if ($this->auth->is_logged_in())
+		{
 			$this->rank = $this->session->userdata('display_rank');
 			$this->timezone = $this->session->userdata('timezone');
 			$this->dst = (bool) $this->session->userdata('dst');

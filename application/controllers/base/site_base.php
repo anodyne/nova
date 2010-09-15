@@ -5,13 +5,10 @@
 |---------------------------------------------------------------
 |
 | File: controllers/site_base.php
-| System Version: 1.0.5
+| System Version: 1.1.1
 |
-| Changes: updated the catalogue ranks pages to add and update
-|	the genre in the database table; updated the dynamic form
-|	management pages to display notices if there are no fields
-|	in a section (bio, specs, docking); fixed bug where unlinked
-|	NPCs wouldn't be able to use newly created fields
+| Changes: fixed bug where nova wouldn't load because it couldn't
+|	find the template file
 |
 */
 
@@ -67,9 +64,11 @@ class Site_base extends Controller {
 		$this->timezone = $this->options['timezone'];
 		$this->dst = (bool) $this->options['daylight_savings'];
 		
-		if ($this->auth->is_logged_in() === TRUE)
-		{ /* if there's a session, set the variables appropriately */
-			$this->skin = $this->session->userdata('skin_admin');
+		if ($this->auth->is_logged_in())
+		{
+			$this->skin = (file_exists(APPPATH .'views/'.$this->session->userdata('skin_admin').'/template_admin'.EXT))
+				? $this->session->userdata('skin_admin')
+				: $this->skin;
 			$this->rank = $this->session->userdata('display_rank');
 			$this->timezone = $this->session->userdata('timezone');
 			$this->dst = (bool) $this->session->userdata('dst');

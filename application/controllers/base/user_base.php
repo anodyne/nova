@@ -5,21 +5,10 @@
 |---------------------------------------------------------------
 |
 | File: controllers/user_base.php
-| System Version: 1.0.6
+| System Version: 1.1.1
 |
-| Changes: updated the account page to update a user's cookie
-|	if they've elected for nova to remember them; updated the
-|	user deactivation process to also deactivate the users'
-|	remaining active characters; fixed error thrown for level 1
-|	users when updating their account (status and loa hidden items);
-|	fixed bug where the status change email wasn't populated
-|	properly; fixed error thrown when changing a user to inactive;
-|	fixed bug where there wasn't a sanity check for the type of
-|	variable the system was expecting; fixed bug where site options
-|	didn't allow skin admins to select in development skins; fixed
-|	bug where user email preferences remained active after they were
-|	made inactive; fixed bug where user preferences weren't removed
-|	when a user was deleted
+| Changes: fixed bug where nova wouldn't display because it couldn't
+|	find the template file
 |
 */
 
@@ -78,9 +67,11 @@ class User_base extends Controller {
 		$this->timezone = $this->options['timezone'];
 		$this->dst = (bool) $this->options['daylight_savings'];
 		
-		if ($this->auth->is_logged_in() === TRUE)
-		{ /* if there's a session, set the variables appropriately */
-			$this->skin = $this->session->userdata('skin_admin');
+		if ($this->auth->is_logged_in())
+		{
+			$this->skin = (file_exists(APPPATH .'views/'.$this->session->userdata('skin_admin').'/template_admin'.EXT))
+				? $this->session->userdata('skin_admin')
+				: $this->skin;
 			$this->rank = $this->session->userdata('display_rank');
 			$this->timezone = $this->session->userdata('timezone');
 			$this->dst = (bool) $this->session->userdata('dst');

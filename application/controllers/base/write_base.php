@@ -5,13 +5,10 @@
 |---------------------------------------------------------------
 |
 | File: controllers/write_base.php
-| System Version: 1.0.3
+| System Version: 1.1.1
 |
-| Changes: fixed bug where authors were being dropped off of posts
-|	because of faulty logic; updated the write news item page to
-|	not allow a news item to be submitted without a category;
-|	updated the write mission post to pass the mission ID to the
-|	view when it exists; fixed an error being thrown
+| Changes: fixed bug where nova wouldn't display because it couldn't
+|	find the template file
 |
 */
 
@@ -69,9 +66,11 @@ class Write_base extends Controller {
 		$this->timezone = $this->options['timezone'];
 		$this->dst = (bool) $this->options['daylight_savings'];
 		
-		if ($this->auth->is_logged_in() === TRUE)
-		{ /* if there's a session, set the variables appropriately */
-			$this->skin = $this->session->userdata('skin_admin');
+		if ($this->auth->is_logged_in())
+		{
+			$this->skin = (file_exists(APPPATH .'views/'.$this->session->userdata('skin_admin').'/template_admin'.EXT))
+				? $this->session->userdata('skin_admin')
+				: $this->skin;
 			$this->rank = $this->session->userdata('display_rank');
 			$this->timezone = $this->session->userdata('timezone');
 			$this->dst = (bool) $this->session->userdata('dst');

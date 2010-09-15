@@ -5,14 +5,15 @@
 |---------------------------------------------------------------
 |
 | File: controllers/base/sim_base.php
-| System Version: 1.1
+| System Version: 1.1.1
 |
 | Changes: added the ability to display multiple specification
 |	items; added the ability to display tour items based on the
 |	specification item they're associated with; updated the
 |	image reflection classes; fixed bug with mission group pages
 |	where missions in the group didn't respect the mission order
-|	that was set for them
+|	that was set for them; fixed bug where nova wouldn't display
+|	because it couldn't find the template file
 |
 */
 
@@ -74,9 +75,11 @@ class Sim_base extends Controller {
 		$this->timezone = $this->options['timezone'];
 		$this->dst = (bool) $this->options['daylight_savings'];
 		
-		if ($this->auth->is_logged_in() === TRUE)
-		{ /* if there's a session, set the variables appropriately */
-			$this->skin = $this->session->userdata('skin_main');
+		if ($this->auth->is_logged_in())
+		{
+			$this->skin = (file_exists(APPPATH .'views/'.$this->session->userdata('skin_main').'/template_main'.EXT))
+				? $this->session->userdata('skin_main')
+				: $this->skin;
 			$this->rank = $this->session->userdata('display_rank');
 			$this->timezone = $this->session->userdata('timezone');
 			$this->dst = (bool) $this->session->userdata('dst');

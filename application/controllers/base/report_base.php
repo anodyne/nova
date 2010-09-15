@@ -5,7 +5,10 @@
 |---------------------------------------------------------------
 |
 | File: controllers/report_base.php
-| System Version: 1.0
+| System Version: 1.1.1
+|
+| Changes: fixed a bug where nova wouldn't display because it
+|	couldn't find the template file
 |
 */
 
@@ -62,9 +65,11 @@ class Report_base extends Controller {
 		$this->timezone = $this->options['timezone'];
 		$this->dst = (bool) $this->options['daylight_savings'];
 		
-		if ($this->auth->is_logged_in() === TRUE)
-		{ /* if there's a session, set the variables appropriately */
-			$this->skin = $this->session->userdata('skin_admin');
+		if ($this->auth->is_logged_in())
+		{
+			$this->skin = (file_exists(APPPATH .'views/'.$this->session->userdata('skin_admin').'/template_admin'.EXT))
+				? $this->session->userdata('skin_admin')
+				: $this->skin;
 			$this->rank = $this->session->userdata('display_rank');
 			$this->timezone = $this->session->userdata('timezone');
 			$this->dst = (bool) $this->session->userdata('dst');
