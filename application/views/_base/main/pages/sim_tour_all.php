@@ -11,6 +11,7 @@
 	<?php foreach ($items as $key => $value): ?>
 		<table class="table100 zebra-even">
 			<tbody>
+			<?php if (isset($tour[$key])): ?>
 				<tr>
 					<td colspan="4">
 						<?php echo text_output($value, 'span', 'fontLarge bold page-subhead');?>
@@ -20,25 +21,20 @@
 						<?php endif;?>
 					</td>
 				</tr>
-				
-				<?php if (isset($tour[$key])): ?>
-					<?php foreach ($tour[$key] as $t): ?>
-						<tr>
-							<td height="35" class="col_15"></td>
-							<td class="col_40pct bold"><?php echo anchor('sim/tour/'. $t['id'], $t['name'], array('class' => 'bold'));?></td>
-							<td class="col_30">&nbsp;</td>
-							<td><?php echo text_output($t['summary'], '');?></td>
-						</tr>
-					<?php endforeach;?>
-				<?php else: ?>
+				<?php foreach ($tour[$key] as $t): ?>
 					<tr>
 						<td height="35" class="col_15"></td>
-						<td colspan="3"><?php echo text_output($label['notour_all'], 'span', 'fontMedium bold orange');?></td>
+						<td class="col_40pct bold"><?php echo anchor('sim/tour/'. $t['id'], $t['name'], array('class' => 'bold'));?></td>
+						<td class="col_30">&nbsp;</td>
+						<td><?php echo text_output($t['summary'], '');?></td>
 					</tr>
-				<?php endif;?>
+				<?php endforeach;?>
+			<?php endif;?>
 			</tbody>
 		</table><br />
 	<?php endforeach;?>
-<?php else: ?>
+<?php endif;?>
+
+<?php if (!isset($tour)): ?>
 	<?php echo text_output($label['notour_all'], 'h3', 'orange');?>
 <?php endif; ?>
