@@ -4,7 +4,7 @@ Thresher is Anodyne Productions' mini-wiki application integrated into Nova. For
 
 ## Version
 
-Release 2
+Release 3
 
 ## History
 
@@ -13,7 +13,10 @@ Release 2
 		<th>Module Version</th><th>Nova Version</th><th>Description</th>
 	</tr>
 	<tr>
-		<td>Release 2</td><td>2.0</td><td>Moved to core module</td>
+		<td>Release 3</td><td>2.0</td><td>Moved to core module</td>
+	</tr>
+	<tr>
+		<td>Release 2</td><td>1.3</td><td>-</td>
 	</tr>
 	<tr>
 		<td>Release 1</td><td>1.0</td><td>Initial release</td>
