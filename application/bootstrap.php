@@ -75,6 +75,7 @@ Kohana::$config->attach(new Kohana_Config_File);
  */
 $base_modules = array(
 	'nova'			=> MODPATH.'nova/core',
+	'thresher'		=> MODPATH.'nova/thresher',
 	'override'		=> MODPATH.'override',
 	'install'		=> MODPATH.'nova/install',
 	'update'		=> MODPATH.'nova/update',
