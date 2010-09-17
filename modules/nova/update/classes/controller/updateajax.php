@@ -28,16 +28,9 @@ class Controller_Updateajax extends Controller_Template {
 		$this->n1pref = Session::instance()->get('n1pref');
 	}
 	
-	public function update_accessroles()
-	{
-		# roles
-		# access groups
-		# access pages
-	}
-	
 	public function action_update_applications()
 	{
-		// get the application data from n1
+		// get the data from n1
 		$n1Apps = $this->db->query(Database::SELECT, "SELECT * FROM ".$this->n1pref.'applications', TRUE);
 		
 		// get the counts
@@ -103,7 +96,7 @@ class Controller_Updateajax extends Controller_Template {
 	
 	public function action_update_awards()
 	{
-		// get the awards data from n1
+		// get the data from n1
 		$n1Awards = $this->db->query(Database::SELECT, "SELECT * FROM ".$this->n1pref.'awards', TRUE);
 		$n1AwardsRec = $this->db->query(Database::SELECT, "SELECT * FROM ".$this->n1pref.'awards_received', TRUE);
 		$n1AwardsQueue = $this->db->query(Database::SELECT, "SELECT * FROM ".$this->n1pref.'awards_queue', TRUE);
@@ -314,7 +307,7 @@ class Controller_Updateajax extends Controller_Template {
 	
 	public function action_update_characters()
 	{
-		// get the characters from n1
+		// get the data from n1
 		$n1Chars = $this->db->query(Database::SELECT, "SELECT * FROM ".$this->n1pref.'characters', TRUE);
 		$n1CharsProm = $this->db->query(Database::SELECT, "SELECT * FROM ".$this->n1pref.'characters_promotions', TRUE);
 		$n1CharsTabs = $this->db->query(Database::SELECT, "SELECT * FROM ".$this->n1pref.'characters_tabs', TRUE);
@@ -555,13 +548,205 @@ class Controller_Updateajax extends Controller_Template {
 		echo json_encode($retval);
 	}
 	
-	public function update_docking()
+	public function action_update_docking()
 	{
-		# docked items
-		# docking sections
-		# docking form
-		# docking form values
-		# docking form data
+		// get the data from n1
+		$n1Docking = $this->db->query(Database::SELECT, "SELECT * FROM ".$this->n1pref.'docking', TRUE);
+		$n1DockingSections = $this->db->query(Database::SELECT, "SELECT * FROM ".$this->n1pref.'docking_sections', TRUE);
+		$n1DockingFields = $this->db->query(Database::SELECT, "SELECT * FROM ".$this->n1pref.'docking_fields', TRUE);
+		$n1DockingValues = $this->db->query(Database::SELECT, "SELECT * FROM ".$this->n1pref.'docking_values', TRUE);
+		$n1DockingData = $this->db->query(Database::SELECT, "SELECT * FROM ".$this->n1pref.'docking_data', TRUE);
+		
+		// get the counts
+		$n1DockingCount = $n1Docking->count();
+		$n1DockingFormCount = $n1DockingSections->count() + $n1DockingFields->count() + $n1DockingValues->count() + $n1DockingData->count();
+		
+		try {
+			// set up the saved arrays
+			$savedDocking = array();
+			$savedDockingForm = array();
+			
+			// run through the data
+			foreach ($n1Docking as $n)
+			{
+				$item = Jelly::factory('docking')
+					->set(array(
+						'id' => $n->docking_id,
+						'sim' => $n->docking_sim_name,
+						'url' => $n->docking_sim_url,
+						'gm' => $n->docking_gm_name,
+						'email' => $n->docking_gm_email,
+						'status' => $n->docking_status,
+						'date' => $n->docking_date,
+					))
+					->save();
+				$savedDocking[] = (int) $item->saved();
+			}
+			
+			// translation arrays
+			$translateSections = array();
+			
+			// do the form sections
+			foreach ($n1DockingSections as $s)
+			{
+				$item = Jelly::factory('formsection')
+					->set(array(
+						'form' => 'docking',
+						'name' => $s->section_name,
+						'order' => $s->section_order,
+					))
+					->save();
+				$savedDockingForm[] = (int) $item->saved();
+					
+				$translateSections[$s->section_id] = $item->id();
+			}
+			
+			// translation arrays
+			$translateFields = array();
+			
+			// do the form fields
+			foreach ($n1DockingFields as $f)
+			{
+				$item = Jelly::factory('formfield')
+					->set(array(
+						'form' => 'docking',
+						'type' => $f->field_type,
+						'html_name' => $f->field_name,
+						'html_id' => $f->field_fid,
+						'html_class' => $f->field_class,
+						'html_rows' => $f->field_rows,
+						'value' => $f->field_value,
+						'label' => $f->field_label_page,
+						'order' => $f->field_order,
+						'display' => $f->field_display,
+						'section' => $translateSections[$f->field_section],
+					))
+					->save();
+				$savedDockingForm[] = (int) $item->saved();
+					
+				$translateFields[$f->field_id] = $item->id();
+			}
+			
+			// do the form values
+			foreach ($n1DockingValues as $v)
+			{
+				$item = Jelly::factory('formvalue')
+					->set(array(
+						'field' => $translateFields[$v->value_field],
+						'html_value' => $v->value_field_value,
+						'selected' => $v->value_selected,
+						'content' => $v->value_content,
+						'order' => $v->value_order,
+					))
+					->save();
+				$savedDockingForm[] = (int) $item->saved();
+			}
+			
+			// do the form data
+			foreach ($n1DockingData as $d)
+			{
+				$item = Jelly::factory('formdata')
+					->set(array(
+						'form' => 'docking',
+						'field' => $translateFields[$d->data_field],
+						'item' => $d->data_docking_item,
+						'value' => $d->data_value,
+						'last_update' => $d->data_updated
+					))
+					->save();
+				$savedDockingForm[] = (int) $item->saved();
+			}
+			
+			if (count($savedDocking) > 0)
+			{
+				if ( ! in_array(FALSE, $savedDocking))
+				{
+					if ( ! in_array(FALSE, $savedDockingForm))
+					{
+						$retval = array(
+							'code' => 1,
+							'message' => ""
+						);
+					}
+					if ( ! in_array(TRUE, $savedDockingForm))
+					{
+						$retval = array(
+							'code' => 2,
+							'message' => __("Your docking items were updated but none of your docking form information could be updated."),
+						);
+					}
+					if (in_array(FALSE, $savedDockingForm) && in_array(TRUE, $savedDockingForm))
+					{
+						$retval = array(
+							'code' => 2,
+							'message' => __("Your docking items were updated but only some your docking form information could be updated."),
+						);
+					}
+				}
+				elseif ( ! in_array(TRUE, $savedDocking))
+				{
+					if ( ! in_array(FALSE, $savedDockingForm))
+					{
+						$retval = array(
+							'code' => 2,
+							'message' => "Your docking form information was updated but none of your docking items could be updated."
+						);
+					}
+					if ( ! in_array(TRUE, $savedDockingForm))
+					{
+						$retval = array(
+							'code' => 0,
+							'message' => __("None of your docking items or docking form information could be updated."),
+						);
+					}
+					if (in_array(FALSE, $savedDockingForm) && in_array(TRUE, $savedDockingForm))
+					{
+						$retval = array(
+							'code' => 2,
+							'message' => __("Your docking items were not updated and only some your docking form information could be updated."),
+						);
+					}
+				}
+				elseif (in_array(FALSE, $savedDocking) && in_array(TRUE, $savedDocking))
+				{
+					if ( ! in_array(FALSE, $savedDockingForm))
+					{
+						$retval = array(
+							'code' => 2,
+							'message' => "Your docking form information was updated but only some of your docking items could be updated."
+						);
+					}
+					if ( ! in_array(TRUE, $savedDockingForm))
+					{
+						$retval = array(
+							'code' => 2,
+							'message' => __("None of your docking form information was updated and only some of your docking items were updated."),
+						);
+					}
+					if (in_array(FALSE, $savedDockingForm) && in_array(TRUE, $savedDockingForm))
+					{
+						$retval = array(
+							'code' => 2,
+							'message' => __("Only some of your docking items and docking form information could be updated."),
+						);
+					}
+				}
+			}
+			else
+			{
+				$retval = array(
+					'code' => 1,
+					'message' => ""
+				);
+			}
+		} catch (Exception $e) {
+			$retval = array(
+				'code' => 0,
+				'message' => 'ERROR: '.$e->getMessage().' - line '.$e->getLine().' of '.$e->getFile()
+			);
+		}
+		
+		echo json_encode($retval);
 	}
 	
 	public function action_update_missions()
@@ -1460,24 +1645,209 @@ class Controller_Updateajax extends Controller_Template {
 		echo json_encode($retval);
 	}
 	
-	public function update_settings()
+	public function action_update_specs()
 	{
-		# settings
-		# messages
-	}
-	
-	public function update_specs()
-	{
-		# spec items
-		# spec sections
-		# spec form
-		# spec form values
-		# spec form data
+		// get the data from n1
+		$n1Specs = $this->db->query(Database::SELECT, "SELECT * FROM ".$this->n1pref.'specs', TRUE);
+		$n1SpecsSections = $this->db->query(Database::SELECT, "SELECT * FROM ".$this->n1pref.'specs_sections', TRUE);
+		$n1SpecsFields = $this->db->query(Database::SELECT, "SELECT * FROM ".$this->n1pref.'specs_fields', TRUE);
+		$n1SpecsValues = $this->db->query(Database::SELECT, "SELECT * FROM ".$this->n1pref.'specs_values', TRUE);
+		$n1SpecsData = $this->db->query(Database::SELECT, "SELECT * FROM ".$this->n1pref.'specs_data', TRUE);
+		
+		// get the counts
+		$n1SpecsCount = $n1Specs->count();
+		$n1SpecsFormCount = $n1SpecsSections->count() + $n1SpecsFields->count() + $n1SpecsValues->count() + $n1SpecsData->count();
+		
+		try {
+			// set up the saved arrays
+			$savedSpecs = array();
+			$savedSpecsForm = array();
+			
+			// run through the data
+			foreach ($n1Specs as $n)
+			{
+				$item = Jelly::factory('spec')
+					->set(array(
+						'id' => $n->specs_id,
+						'name' => $n->specs_name,
+						'order' => $n->specs_order,
+						'display' => $n->specs_display,
+						'images' => $n->specs_images,
+						'summary' => $n->specs_summary,
+					))
+					->save();
+				$savedSpecs[] = (int) $item->saved();
+			}
+			
+			// translation arrays
+			$translateSections = array();
+			
+			// do the form sections
+			foreach ($n1SpecsSections as $s)
+			{
+				$item = Jelly::factory('formsection')
+					->set(array(
+						'form' => 'specs',
+						'name' => $s->section_name,
+						'order' => $s->section_order,
+					))
+					->save();
+				$savedSpecsForm[] = (int) $item->saved();
+					
+				$translateSections[$s->section_id] = $item->id();
+			}
+			
+			// translation arrays
+			$translateFields = array();
+			
+			// do the form fields
+			foreach ($n1SpecsFields as $f)
+			{
+				$item = Jelly::factory('formfield')
+					->set(array(
+						'form' => 'specs',
+						'type' => $f->field_type,
+						'html_name' => $f->field_name,
+						'html_id' => $f->field_fid,
+						'html_class' => $f->field_class,
+						'html_rows' => $f->field_rows,
+						'value' => $f->field_value,
+						'label' => $f->field_label_page,
+						'order' => $f->field_order,
+						'display' => $f->field_display,
+						'section' => $translateSections[$f->field_section],
+					))
+					->save();
+				$savedSpecsForm[] = (int) $item->saved();
+					
+				$translateFields[$f->field_id] = $item->id();
+			}
+			
+			// do the form values
+			foreach ($n1SpecsValues as $v)
+			{
+				$item = Jelly::factory('formvalue')
+					->set(array(
+						'field' => $translateFields[$v->value_field],
+						'html_value' => $v->value_field_value,
+						'selected' => $v->value_selected,
+						'content' => $v->value_content,
+						'order' => $v->value_order,
+					))
+					->save();
+				$savedSpecsForm[] = (int) $item->saved();
+			}
+			
+			// do the form data
+			foreach ($n1SpecsData as $d)
+			{
+				$item = Jelly::factory('formdata')
+					->set(array(
+						'form' => 'specs',
+						'field' => $translateFields[$d->data_field],
+						'item' => $d->data_item,
+						'value' => $d->data_value,
+						'last_update' => $d->data_updated
+					))
+					->save();
+				$savedSpecsForm[] = (int) $item->saved();
+			}
+			
+			if (count($savedSpecs) > 0)
+			{
+				if ( ! in_array(FALSE, $savedSpecs))
+				{
+					if ( ! in_array(FALSE, $savedSpecsForm))
+					{
+						$retval = array(
+							'code' => 1,
+							'message' => ""
+						);
+					}
+					if ( ! in_array(TRUE, $savedSpecsForm))
+					{
+						$retval = array(
+							'code' => 2,
+							'message' => __("Your specification items were updated but none of your specification form information could be updated."),
+						);
+					}
+					if (in_array(FALSE, $savedSpecsForm) && in_array(TRUE, $savedSpecsForm))
+					{
+						$retval = array(
+							'code' => 2,
+							'message' => __("Your specification items were updated but only some your specification form information could be updated."),
+						);
+					}
+				}
+				elseif ( ! in_array(TRUE, $savedSpecs))
+				{
+					if ( ! in_array(FALSE, $savedSpecsForm))
+					{
+						$retval = array(
+							'code' => 2,
+							'message' => "Your specification form information was updated but none of your specification items could be updated."
+						);
+					}
+					if ( ! in_array(TRUE, $savedSpecsForm))
+					{
+						$retval = array(
+							'code' => 0,
+							'message' => __("None of your specification items or specification form information could be updated."),
+						);
+					}
+					if (in_array(FALSE, $savedSpecsForm) && in_array(TRUE, $savedSpecsForm))
+					{
+						$retval = array(
+							'code' => 2,
+							'message' => __("Your specification items were not updated and only some your specification form information could be updated."),
+						);
+					}
+				}
+				elseif (in_array(FALSE, $savedSpecs) && in_array(TRUE, $savedSpecs))
+				{
+					if ( ! in_array(FALSE, $savedSpecsForm))
+					{
+						$retval = array(
+							'code' => 2,
+							'message' => "Your specification form information was updated but only some of your specification items could be updated."
+						);
+					}
+					if ( ! in_array(TRUE, $savedSpecsForm))
+					{
+						$retval = array(
+							'code' => 2,
+							'message' => __("None of your specification form information was updated and only some of your specification items were updated."),
+						);
+					}
+					if (in_array(FALSE, $savedSpecsForm) && in_array(TRUE, $savedSpecsForm))
+					{
+						$retval = array(
+							'code' => 2,
+							'message' => __("Only some of your specification items and specification form information could be updated."),
+						);
+					}
+				}
+			}
+			else
+			{
+				$retval = array(
+					'code' => 1,
+					'message' => ""
+				);
+			}
+		} catch (Exception $e) {
+			$retval = array(
+				'code' => 0,
+				'message' => 'ERROR: '.$e->getMessage().' - line '.$e->getLine().' of '.$e->getFile()
+			);
+		}
+		
+		echo json_encode($retval);
 	}
 	
 	public function action_update_tour()
 	{
-		// get the characters from n1
+		// get the data from n1
 		$n1Tour = $this->db->query(Database::SELECT, "SELECT * FROM ".$this->n1pref.'tour', TRUE);
 		$n1TourFields = $this->db->query(Database::SELECT, "SELECT * FROM ".$this->n1pref.'tour_fields', TRUE);
 		$n1TourValues = $this->db->query(Database::SELECT, "SELECT * FROM ".$this->n1pref.'tour_values', TRUE);
@@ -1558,7 +1928,7 @@ class Controller_Updateajax extends Controller_Template {
 					->set(array(
 						'form' => 'tour',
 						'field' => $translateFields[$d->data_field],
-						'item' => $d->data_item,
+						'item' => $d->data_tour_item,
 						'value' => $d->data_value,
 						'last_update' => $d->data_updated
 					))
@@ -1801,14 +2171,83 @@ class Controller_Updateajax extends Controller_Template {
 		echo json_encode($retval);
 	}
 	
-	public function update_uploads()
+	public function action_update_uploads()
 	{
-		# uploads
+		// get the data from n1
+		$n1Uploads = $this->db->query(Database::SELECT, "SELECT * FROM ".$this->n1pref.'uploads', TRUE);
+		
+		// get the counts
+		$n1UploadsCount = $n1Uploads->count();
+		
+		try {
+			// set up the saved array
+			$saved = array();
+			
+			// run through the data
+			foreach ($n1Uploads as $n)
+			{
+				$item = Jelly::factory('upload')
+					->set(array(
+						'id' => $n->upload_id,
+						'filename' => $n->upload_filename,
+						'mime' => $n->upload_mime_type,
+						'resource' => $n->upload_resource_type,
+						'user' => $n->upload_user,
+						'ip' => $n->upload_ip,
+						'date' => $n->upload_date,
+					))
+					->save();
+				$saved[] = (int) $item->saved();
+			}
+			
+			if (count($saved) > 0)
+			{
+				if ( ! in_array(FALSE, $saved))
+				{
+					$retval = array(
+						'code' => 1,
+						'message' => ""
+					);
+				}
+				elseif ( ! in_array(TRUE, $saved))
+				{
+					$retval = array(
+						'code' => 0,
+						'message' => __("Your upload records could not be updated.")
+					);
+				}
+				else
+				{
+					// get an array with the counts of the different values
+					$unique = array_count_values($saved);
+					
+					$retval = array(
+						'code' => 2,
+						'message' => __("Only :success of :total upload records could be updated.",
+							array(':success' => $unique[1], ':total' => $n1UploadsCount))
+					);
+				}
+			}
+			else
+			{
+				$retval = array(
+					'code' => 1,
+					'message' => ""
+				);
+			}
+		} catch (Exception $e) {
+			$retval = array(
+				'code' => 0,
+				'message' => 'ERROR: '.$e->getMessage().' - line '.$e->getLine().' of '.$e->getFile()
+			);
+		}
+		
+		echo json_encode($retval);
 	}
 	
 	public function action_update_users()
 	{
-		// get the users from n1
+		// get the data from n1
 		$n1Users = $this->db->query(Database::SELECT, "SELECT * FROM ".$this->n1pref.'users', TRUE);
 		$n1UsersLOA = $this->db->query(Database::SELECT, "SELECT * FROM ".$this->n1pref.'user_loa', TRUE);
 		
@@ -1944,12 +2383,136 @@ class Controller_Updateajax extends Controller_Template {
 		echo json_encode($retval);
 	}
 	
-	public function update_wiki()
+	public function action_update_wiki()
 	{
-		# categories
-		# comments
-		# drafts
-		# pages
+		// get the data from n1
+		$n1WikiPages = $this->db->query(Database::SELECT, "SELECT * FROM ".$this->n1pref.'wiki_pages', TRUE);
+		$n1WikiDrafts = $this->db->query(Database::SELECT, "SELECT * FROM ".$this->n1pref.'wiki_drafts', TRUE);
+		$n1WikiComments = $this->db->query(Database::SELECT, "SELECT * FROM ".$this->n1pref.'wiki_comments', TRUE);
+		$n1WikiCats = $this->db->query(Database::SELECT, "SELECT * FROM ".$this->n1pref.'wiki_categories', TRUE);
+		
+		// get the counts
+		$n1WikiPageCount = $n1WikiPages->count();
+		$n1WikiDraftCount = $n1WikiDrafts->count();
+		$n1WikiCommentsCount = $n1WikiComments->count();
+		$n1WikiCatsCount = $n1WikiCats->count();
+		
+		try {
+			// set up the saved arrays
+			$savedPages = array();
+			$savedDrafts = array();
+			$savedComments = array();
+			$savedCats = array();
+			
+			// run through the data
+			foreach ($n1WikiPages as $n)
+			{
+				$item = Jelly::factory('wikipage')
+					->set(array(
+						'id' => $n->page_id,
+						'draft' => $n->page_draft,
+						'created_at' => $n->page_created_at,
+						'created_by_user' => $n->page_created_by_user,
+						'created_by_character' => $n->page_created_by_character,
+						'updated_at' => $n->page_updated_at,
+						'updated_by_user' => $n->page_updated_by_user,
+						'updated_by_character' => $n->page_updated_by_character,
+						'page_comments' => $n->page_comments,
+					))
+					->save();
+				$savedPages[] = (int) $item->saved();
+			}
+			
+			// do the categories
+			foreach ($n1WikiCats as $c)
+			{
+				$item = Jelly::factory('wikicategory')
+					->set(array(
+						'id' => $c->wikicat_id,
+						'name' => $c->wikicat_name,
+						'desc' => $c->wikicat_desc,
+					))
+					->save();
+				$savedCats[] = (int) $item->saved();
+			}
+			
+			// do the drafts
+			foreach ($n1WikiDrafts as $d)
+			{
+				$item = Jelly::factory('wikidraft')
+					->set(array(
+						'id' => $d->draft_id,
+						'old_id' => $d->draft_old_id,
+						'title' => $d->draft_title,
+						'author_user' => $d->draft_author_user,
+						'author_character' => $d->draft_author_character,
+						'summary' => $d->draft_summary,
+						'content' => $d->draft_content,
+						'page' => $d->draft_page,
+						'created_at' => $d->draft_created_at,
+						'categories' => $d->draft_categories,
+						'change_comments' => $d->draft_changed_comments,
+					))
+					->save();
+				$savedDrafts[] = (int) $item->saved();
+			}
+			
+			// do the comments
+			foreach ($n1WikiComments as $c)
+			{
+				$item = Jelly::factory('wikicomment')
+					->set(array(
+						'id' => $c->wcomment_id,
+						'author_user' => $c->wcomment_author_user,
+						'author_character' => $c->wcomment_author_character,
+						'page' => $c->wcomment_page,
+						'date' => $c->wcomment_date,
+						'content' => $c->wcomment_content,
+						'status' => $c->wcomment_status,
+					))
+					->save();
+				$savedComments[] = (int) $item->saved();
+			}
+			
+			if (count($savedPages) > 0)
+			{
+				if ( ! in_array(TRUE, $savedPages) && ! in_array(TRUE, $savedDrafts) && ! in_array(TRUE, $savedCats) && ! in_array(TRUE, $savedComments))
+				{
+					$retval = array(
+						'code' => 0,
+						'message' => __("None of your wiki data could be updated. Due to the high volume of information that needs to be updated, a more detailed description isn't available.")
+					);
+				}
+				elseif ( ! in_array(FALSE, $savedPages) && ! in_array(FALSE, $savedDrafts) && ! in_array(FALSE, $savedCats) && ! in_array(FALSE, $savedComments))
+				{
+					$retval = array(
+						'code' => 1,
+						'message' => ""
+					);
+				}
+				else
+				{
+					$retval = array(
+						'code' => 2,
+						'message' => __("Only some of your wiki data could be updated. Due to the high volume of information that needs to be updated, a more detailed description isn't available.")
+					);
+				}
+			}
+			else
+			{
+				$retval = array(
+					'code' => 1,
+					'message' => ""
+				);
+			}
+		} catch (Exception $e) {
+			$retval = array(
+				'code' => 0,
+				'message' => 'ERROR: '.$e->getMessage().' - line '.$e->getLine().' of '.$e->getFile()
+			);
+		}
+		
+		echo json_encode($retval);
 	}
 	
 	private function _translate_roles($old)

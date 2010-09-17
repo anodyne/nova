@@ -319,6 +319,171 @@
 			}
 		});
 		
+		// spec items and specs form
+		$.ajaxq('queue', {
+			beforeSend: function(){
+				$('table tbody tr:eq(9) td:eq(1) .loading').removeClass('hidden');
+			},
+			type: "POST",
+			url: "<?php echo url::site('updateajax/update_specs');?>",
+			data: send,
+			dataType: 'json',
+			success: function(data){
+				$('table tbody tr:eq(9) td:eq(1) .loading').addClass('hidden');
+				
+				if (data.code == 1)
+				{
+					$('table tbody tr:eq(9) td:eq(1) .success').removeClass('hidden');
+				}
+				else if (data.code == 0)
+				{
+					$('table tbody tr:eq(9) td:eq(1) .failure').removeClass('hidden');
+					$('table tbody tr:eq(9) td:eq(1) .failure img').attr('title', function(){
+						return data.message
+					});
+				}
+				else if (data.code == 2)
+				{
+					$('table tbody tr:eq(9) td:eq(1) .warning').removeClass('hidden');
+					$('table tbody tr:eq(9) td:eq(1) .warning img').attr('title', function(){
+						return data.message
+					});
+				}
+			}
+		});
+		
+		// wiki data
+		$.ajaxq('queue', {
+			beforeSend: function(){
+				$('table tbody tr:eq(10) td:eq(1) .loading').removeClass('hidden');
+			},
+			type: "POST",
+			url: "<?php echo url::site('updateajax/update_wiki');?>",
+			data: send,
+			dataType: 'json',
+			success: function(data){
+				$('table tbody tr:eq(10) td:eq(1) .loading').addClass('hidden');
+				
+				if (data.code == 1)
+				{
+					$('table tbody tr:eq(10) td:eq(1) .success').removeClass('hidden');
+				}
+				else if (data.code == 0)
+				{
+					$('table tbody tr:eq(10) td:eq(1) .failure').removeClass('hidden');
+					$('table tbody tr:eq(10) td:eq(1) .failure img').attr('title', function(){
+						return data.message
+					});
+				}
+				else if (data.code == 2)
+				{
+					$('table tbody tr:eq(10) td:eq(1) .warning').removeClass('hidden');
+					$('table tbody tr:eq(10) td:eq(1) .warning img').attr('title', function(){
+						return data.message
+					});
+				}
+			}
+		});
+		
+		// applications
+		$.ajaxq('queue', {
+			beforeSend: function(){
+				$('table tbody tr:eq(11) td:eq(1) .loading').removeClass('hidden');
+			},
+			type: "POST",
+			url: "<?php echo url::site('updateajax/update_applications');?>",
+			data: send,
+			dataType: 'json',
+			success: function(data){
+				$('table tbody tr:eq(11) td:eq(1) .loading').addClass('hidden');
+				
+				if (data.code == 1)
+				{
+					$('table tbody tr:eq(11) td:eq(1) .success').removeClass('hidden');
+				}
+				else if (data.code == 0)
+				{
+					$('table tbody tr:eq(11) td:eq(1) .failure').removeClass('hidden');
+					$('table tbody tr:eq(11) td:eq(1) .failure img').attr('title', function(){
+						return data.message
+					});
+				}
+				else if (data.code == 2)
+				{
+					$('table tbody tr:eq(11) td:eq(1) .warning').removeClass('hidden');
+					$('table tbody tr:eq(11) td:eq(1) .warning img').attr('title', function(){
+						return data.message
+					});
+				}
+			}
+		});
+		
+		// uploads
+		$.ajaxq('queue', {
+			beforeSend: function(){
+				$('table tbody tr:eq(12) td:eq(1) .loading').removeClass('hidden');
+			},
+			type: "POST",
+			url: "<?php echo url::site('updateajax/update_uploads');?>",
+			data: send,
+			dataType: 'json',
+			success: function(data){
+				$('table tbody tr:eq(12) td:eq(1) .loading').addClass('hidden');
+				
+				if (data.code == 1)
+				{
+					$('table tbody tr:eq(12) td:eq(1) .success').removeClass('hidden');
+				}
+				else if (data.code == 0)
+				{
+					$('table tbody tr:eq(12) td:eq(1) .failure').removeClass('hidden');
+					$('table tbody tr:eq(12) td:eq(1) .failure img').attr('title', function(){
+						return data.message
+					});
+				}
+				else if (data.code == 2)
+				{
+					$('table tbody tr:eq(12) td:eq(1) .warning').removeClass('hidden');
+					$('table tbody tr:eq(12) td:eq(1) .warning img').attr('title', function(){
+						return data.message
+					});
+				}
+			}
+		});
+		
+		// docking
+		$.ajaxq('queue', {
+			beforeSend: function(){
+				$('table tbody tr:eq(13) td:eq(1) .loading').removeClass('hidden');
+			},
+			type: "POST",
+			url: "<?php echo url::site('updateajax/update_docking');?>",
+			data: send,
+			dataType: 'json',
+			success: function(data){
+				$('table tbody tr:eq(13) td:eq(1) .loading').addClass('hidden');
+				
+				if (data.code == 1)
+				{
+					$('table tbody tr:eq(13) td:eq(1) .success').removeClass('hidden');
+				}
+				else if (data.code == 0)
+				{
+					$('table tbody tr:eq(13) td:eq(1) .failure').removeClass('hidden');
+					$('table tbody tr:eq(13) td:eq(1) .failure img').attr('title', function(){
+						return data.message
+					});
+				}
+				else if (data.code == 2)
+				{
+					$('table tbody tr:eq(13) td:eq(1) .warning').removeClass('hidden');
+					$('table tbody tr:eq(13) td:eq(1) .warning img').attr('title', function(){
+						return data.message
+					});
+				}
+			}
+		});
+		
 		$('#progress').ajaxStop(function(){
 			$("#progress").progressbar({ value: 75 });
 			$('#percent').text($('#progress').progressbar('option', 'value') + '%');
