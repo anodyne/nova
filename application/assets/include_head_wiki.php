@@ -5,7 +5,10 @@
 |---------------------------------------------------------------
 |
 | File: application/assets/include_head_wiki.php
-| System Version: 1.1
+| System Version: 1.1.1
+|
+| Changes: fixed bug with skins that have a panel handle showing
+|	bullets and having funky spacing
 |
 */
 
@@ -37,6 +40,9 @@ $parse = $this->config->item('parsetype');
 			ul li, ol li { margin: 2px; }
 			ul { list-style: disc; }
 			ol { list-style: decimal; }
+			
+			.panel-handle ul, .panel-handle ol { margin: 0; padding: 0; list-style: none; }
+			.panel-handle ul li, .panel-handle ol li { margin: 0; }
 		</style>
 			
 		<script type="text/javascript" src="<?php echo base_url() . APPFOLDER .'/assets/js/jquery.js';?>"></script>
