@@ -58,8 +58,8 @@ abstract class Controller_Nova_Base extends Controller_Template {
 			'display_rank',
 			'timezone',
 			'daylight_savings',
-			'sim_name',
 			'date_format',
+			'sim_name',
 			'system_email'
 		);
 	}
