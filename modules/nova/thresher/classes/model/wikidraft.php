@@ -22,7 +22,7 @@ class Model_Wikidraft extends Jelly_Model {
 				'column' => 'draft_id'
 			)),
 			'old_id' => Jelly::field('integer', array(
-				'column' => 'draft_old_id'
+				'column' => 'draft_id_old'
 			)),
 			'title' => Jelly::field('string', array(
 				'column' => 'draft_title'
