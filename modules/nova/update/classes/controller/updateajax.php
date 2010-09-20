@@ -59,6 +59,9 @@ class Controller_Updateajax extends Controller_Template {
 				$saved[] = (int) $item->saved();
 			}
 			
+			// optmize the tables
+			DBForge::optimize('applications');
+			
 			if (in_array(FALSE, $saved) && ! in_array(TRUE, $saved))
 			{
 				$retval = array(
@@ -158,6 +161,11 @@ class Controller_Updateajax extends Controller_Template {
 					))
 					->save();
 			}
+			
+			// optmize the tables
+			DBForge::optimize('awards');
+			DBForge::optimize('awards_queue');
+			DBForge::optimize('awards_received');
 			
 			if (count($savedAwards) > 0)
 			{
@@ -513,6 +521,17 @@ class Controller_Updateajax extends Controller_Template {
 				$savedCOC[] = (int) $item->saved();
 			}
 			
+			// optimize the tables
+			DBForge::optimize('characters');
+			DBForge::optimize('characters_images');
+			DBForge::optimize('characters_promotions');
+			DBForge::optimize('coc');
+			DBForge::optimize('forms_data');
+			DBForge::optimize('forms_fields');
+			DBForge::optimize('forms_sections');
+			DBForge::optimize('forms_tabs');
+			DBForge::optimize('forms_values');
+			
 			if ( ! in_array(TRUE, $savedChars) && ! in_array(TRUE, $savedCharsProm) && ! in_array(TRUE, $savedFormTabs)
 					&& ! in_array(TRUE, $savedFormSections) && ! in_array(TRUE, $savedFormFields) && ! in_array(TRUE, $savedFormValues)
 					&& ! in_array(TRUE, $savedFormData) && ! in_array(TRUE, $savedCOC))
@@ -657,6 +676,13 @@ class Controller_Updateajax extends Controller_Template {
 				$savedDockingForm[] = (int) $item->saved();
 			}
 			
+			// optimize the tables
+			DBForge::optimize('docking');
+			DBForge::optimize('forms_data');
+			DBForge::optimize('forms_fields');
+			DBForge::optimize('forms_sections');
+			DBForge::optimize('forms_values');
+			
 			if (count($savedDocking) > 0)
 			{
 				if ( ! in_array(FALSE, $savedDocking))
@@ -799,6 +825,10 @@ class Controller_Updateajax extends Controller_Template {
 					->save();
 				$savedMisGroups[] = (int) $item->saved();
 			}
+			
+			// optimize the tables
+			DBForge::optimize('missions');
+			DBForge::optimize('mission_groups');
 			
 			if (count($savedMis) > 0)
 			{
@@ -1019,6 +1049,11 @@ class Controller_Updateajax extends Controller_Template {
 					->save();
 			}
 			
+			// optimize the tables
+			DBForge::optimize('news');
+			DBForge::optimize('news_categories');
+			DBForge::optimize('news_comments');
+			
 			if (count($savedNews) > 0)
 			{
 				if ( ! in_array(FALSE, $savedNews))
@@ -1215,6 +1250,10 @@ class Controller_Updateajax extends Controller_Template {
 					->save();
 				$savedLogsCom[] = (int) $item->saved();
 			}
+			
+			// optimize the tables
+			DBForge::optimize('personal_logs');
+			DBForge::optimize('personal_logs_comments');
 			
 			if (count($savedLogs) > 0)
 			{
@@ -1417,6 +1456,10 @@ class Controller_Updateajax extends Controller_Template {
 				$savedPostsCom[] = (int) $item->saved();
 			}
 			
+			// optimize the tables
+			DBForge::optimize('posts');
+			DBForge::optimize('posts_comments');
+			
 			if (count($savedPosts) > 0)
 			{
 				if ( ! in_array(FALSE, $savedPosts))
@@ -1604,6 +1647,10 @@ class Controller_Updateajax extends Controller_Template {
 				$saved[] = $item->saved();
 			}
 			
+			// optimize the tables
+			DBForge::optimize('private_messages');
+			DBForge::optimize('private_messages_to');
+			
 			if (count($saved) > 0)
 			{
 				if ( ! in_array(FALSE, $saved))
@@ -1633,6 +1680,98 @@ class Controller_Updateajax extends Controller_Template {
 				$retval = array(
 					'code' => 1,
 					'message' => ""
+				);
+			}
+		} catch (Exception $e) {
+			$retval = array(
+				'code' => 0,
+				'message' => 'ERROR: '.$e->getMessage().' - line '.$e->getLine().' of '.$e->getFile()
+			);
+		}
+		
+		echo json_encode($retval);
+	}
+	
+	public function action_update_settings()
+	{
+		try {
+			// set up the array of items we want to update
+			$values = array(
+				'setting' => array(
+					'sim_name' => 'sim_name',
+					'sim_year' => 'sim_year',
+					'email_subject' => 'email_subject',
+				),
+				'message' => array(
+					'welcome_msg' => 'welcome_msg',
+					'sim' => 'sim',
+					'join_disclaimer' => 'join_disclaimer',
+					'join_post' => 'join_post',
+					'accept_message' => 'accept_message',
+					'reject_message' => 'reject_message',
+				),
+			);
+			
+			// set up the saved array
+			$saved = array();
+			
+			foreach ($values as $key => $value)
+			{
+				// set the n1 table
+				$table = ($key == 'setting') ? 'settings' : 'messages';
+				
+				// set the n1 field
+				$field = ($key == 'setting') ? 'setting_key' : 'message_key';
+				
+				// set the n1 value field
+				$fieldvalue = ($key == 'setting') ? 'setting_value' : 'message_content';
+				
+				foreach ($value as $n1 => $n2)
+				{
+					// get the data from n1
+					$n = $this->db->query(Database::SELECT, "SELECT * FROM ".$this->n1pref.$table.' WHERE '.$field.' = "'.$n1.'" LIMIT 1', TRUE)->current();
+					
+					// pull the record and do the update
+					$item = Jelly::query($key)->where('key', '=', $n2)->limit(1)->select();
+					$item->value = $n->$fieldvalue;
+					$item->save();
+					$saved[] = $item->saved();
+				}
+			}
+			
+			// optmize the tables
+			DBForge::optimize('settings');
+			DBForge::optimize('messages');
+			
+			if (count($saved) > 0)
+			{
+				if ( ! in_array(FALSE, $saved))
+				{
+					$retval = array(
+						'code' => 1,
+						'message' => ''
+					);
+				}
+				elseif ( ! in_array(TRUE, $saved))
+				{
+					$retval = array(
+						'code' => 0,
+						'message' => __("None of your settings were updated.")
+					);
+				}
+				elseif (in_array(FALSE, $saved) && in_array(TRUE, $saved))
+				{
+					$retval = array(
+						'code' => 2,
+						'message' => __("Only some of your settings could be updated.")
+					);
+				}
+			}
+			else
+			{
+				$retval = array(
+					'code' => 0,
+					'message' => __("Your settings could not be updated.")
 				);
 			}
 		} catch (Exception $e) {
@@ -1752,6 +1891,13 @@ class Controller_Updateajax extends Controller_Template {
 					->save();
 				$savedSpecsForm[] = (int) $item->saved();
 			}
+			
+			// optimize the tables
+			DBForge::optimize('specs');
+			DBForge::optimize('forms_data');
+			DBForge::optimize('forms_fields');
+			DBForge::optimize('forms_sections');
+			DBForge::optimize('forms_values');
 			
 			if (count($savedSpecs) > 0)
 			{
@@ -1949,6 +2095,14 @@ class Controller_Updateajax extends Controller_Template {
 					->save();
 				$savedTourDecks[] = (int) $item->saved();
 			}
+			
+			// optimize the tables
+			DBForge::optimize('tour');
+			DBForge::optimize('tour_decks');
+			DBForge::optimize('forms_data');
+			DBForge::optimize('forms_fields');
+			DBForge::optimize('forms_sections');
+			DBForge::optimize('forms_values');
 			
 			if (count($savedTour) > 0)
 			{
@@ -2200,6 +2354,9 @@ class Controller_Updateajax extends Controller_Template {
 				$saved[] = (int) $item->saved();
 			}
 			
+			// optimize the tables
+			DBForge::optimize('uploads');
+			
 			if (count($saved) > 0)
 			{
 				if ( ! in_array(FALSE, $saved))
@@ -2348,6 +2505,13 @@ class Controller_Updateajax extends Controller_Template {
 					->save();
 			}
 			
+			// optimize the tables
+			DBForge::optimize('users');
+			DBForge::optimize('user_loa');
+			DBForge::optimize('user_prefs');
+			DBForge::optimize('user_prefs_values');
+			DBForge::optimize('moderation');
+			
 			if (in_array(FALSE, $saved) && ! in_array(TRUE, $saved))
 			{
 				$retval = array(
@@ -2442,7 +2606,7 @@ class Controller_Updateajax extends Controller_Template {
 				$item = Jelly::factory('wikidraft')
 					->set(array(
 						'id' => $d->draft_id,
-						'old_id' => $d->draft_old_id,
+						'old_id' => $d->draft_id_old,
 						'title' => $d->draft_title,
 						'author_user' => $d->draft_author_user,
 						'author_character' => $d->draft_author_character,
@@ -2473,6 +2637,12 @@ class Controller_Updateajax extends Controller_Template {
 					->save();
 				$savedComments[] = (int) $item->saved();
 			}
+			
+			// optimize the tables
+			DBForge::optimize('wiki_pages');
+			DBForge::optimize('wiki_comments');
+			DBForge::optimize('wiki_drafts');
+			DBForge::optimize('wiki_categories');
 			
 			if (count($savedPages) > 0)
 			{

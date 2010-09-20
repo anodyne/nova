@@ -417,17 +417,20 @@ class Controller_Update extends Controller_Template {
 				
 			case 2:
 				// create a new content view
-				$this->template->layout->content = View::factory('update/pages/upgrade_step2');
+				$this->template->layout->content = View::factory('update/pages/update_nova1_step2');
 				
 				// assign the object a shorter variable to use in the method
 				$data = $this->template->layout->content;
 				
 				// content
-				$this->template->title.= __('Cleaning Up Data');
-				$this->template->layout->label = __('Cleaning Up Data');
+				$this->template->title.= __('Update Complete');
+				$this->template->layout->label = __('Update Complete');
+				
+				// make sure the proper message is displayed
+				$data->message = nl2br(__('nova1_update2.message'));
 				
 				// create the javascript view
-				$this->template->javascript = View::factory('update/js/upgrade_step2_js');
+				$this->template->javascript = View::factory('update/js/update_nova1_step2_js');
 				
 				// set the loading image
 				$data->loading = array(
@@ -440,60 +443,11 @@ class Controller_Update extends Controller_Template {
 				$next = array(
 					'type' => 'submit',
 					'class' => 'btn-main',
-					'id' => 'start',
+					'id' => 'next',
 				);
 				
 				// build the next step control
-				$this->template->layout->controls = form::button('next', __('Run'), $next).form::close();
-			break;
-				
-			case 3:
-				if (isset($_POST['submit']))
-				{
-					// do the registration
-					$this->_register();
-				}
-				
-				// create a new content view
-				$this->template->layout->content = View::factory('update/pages/upgrade_step3');
-				
-				// assign the object a shorter variable to use in the method
-				$data = $this->template->layout->content;
-				
-				// an empty array for user info
-				$data->options = array();
-				
-				// get all active users
-				$all = Jelly::query('user')->where('status', '=', 'active')->select();
-				
-				foreach ($all as $a)
-				{
-					$data->options[$a->id] = $a->name.' ('.$a->email.')';
-				}
-				
-				// content
-				$this->template->title.= __('Passwords and Admin Rights');
-				$this->template->layout->label = __('Passwords and Admin Rights');
-				
-				// create the javascript view
-				$this->template->javascript = View::factory('update/js/upgrade_step3_js');
-				
-				// set the loading image
-				$data->loading = array(
-					'src' => Location::image('loading-circle-large.gif', NULL, 'update', 'image'),
-					'attr' => array(
-						'class' => 'image'),
-				);
-				
-				// build the next step button
-				$next = array(
-					'type' => 'submit',
-					'class' => 'btn-main',
-					'id' => 'start',
-				);
-				
-				// build the next step control
-				$this->template->layout->controls = form::button('next', __('Finalize'), $next).form::close();
+				$this->template->layout->controls = form::open('main/index').form::button('next', __('Go to Your Site'), $next).form::close();
 			break;
 		}
 		
