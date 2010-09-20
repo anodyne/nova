@@ -18,8 +18,8 @@ class Model_Builder_Message extends Jelly_Builder {
 	 *
 	 * @return	object Jelly_Builder object
 	 */
-	public function key($value)
-	{
-		return $this->where('key', '=', $value)->limit(1);
-	}
+	//public function key($value)
+	//{
+	//	return $this->where('key', '=', $value)->limit(1);
+	//}
 }
