@@ -268,7 +268,7 @@ class Controller_Upgradeajax extends Controller_Template {
 					$item = Jelly::factory('characterimage')
 						->set(array(
 							'user' => (!empty($c->email)) ? $charIDs[$c->email] : NULL,
-							'character' => $c->charid,
+							'character' => $c->crewid,
 							'image' => $i
 						))
 						->save();
@@ -1216,31 +1216,27 @@ class Controller_Upgradeajax extends Controller_Template {
 		foreach ($result as $r)
 		{
 			// sim name
-			$id = Jelly::query('setting')->key('sim_name')->select()->id;
-			$item = Jelly::factory('setting', $id)
-				->set(array('value' => $r->shipPrefix.' '.$r->shipName.' '.$r->shipRegistry))
-				->save();
+			$item = Jelly::query('setting')->where('key', '=', 'sim_name')->limit(1)->select();
+			$item->value = $r->shipPrefix.' '.$r->shipName.' '.$r->shipRegistry;
+			$item->save();
 			$settings[] = $item->saved();
 			
 			// sim year
-			$id = Jelly::query('setting')->key('sim_year')->select()->id;
-			$item = Jelly::factory('setting', $id)
-				->set(array('value' => $r->simmYear))
-				->save();
+			$item = Jelly::query('setting')->where('key', '=', 'sim_year')->limit(1)->select();
+			$item->value = $r->simmYear;
+			$item->save();
 			$settings[] = $item->saved();
 			
 			// posting requirement
-			$id = Jelly::query('setting')->key('post_count_format')->select()->id;
-			$item = Jelly::factory('setting', $id)
-				->set(array('value' => ($r->jpCount == 'y') ? 'multiple' : 'single'))
-				->save();
+			$item = Jelly::query('setting')->where('key', '=', 'post_count')->limit(1)->select();
+			$item->value = ($r->jpCount == 'y') ? 'multiple' : 'single';
+			$item->save();
 			$settings[] = $item->saved();
 			
 			// email subject
-			$id = Jelly::query('setting')->key('email_subject')->select()->id;
-			$item = Jelly::factory('setting', $id)
-				->set(array('value' => $r->emailSubject))
-				->save();
+			$item = Jelly::query('setting')->where('key', '=', 'email_subject')->limit(1)->select();
+			$item->value = $r->emailSubject;
+			$item->save();
 			$settings[] = $item->saved();
 		}
 		
@@ -1250,45 +1246,39 @@ class Controller_Upgradeajax extends Controller_Template {
 		foreach ($result as $r)
 		{
 			// welcome message
-			$id = Jelly::query('message')->key('welcome_msg')->select()->id;
-			$item = Jelly::factory('message', $id)
-				->set(array('value' => $r->welcomeMessage))
-				->save();
+			$item = Jelly::query('message')->where('key', '=', 'welcome_msg')->limit(1)->select();
+			$item->value = $r->welcomeMessage;
+			$item->save();
 			$messages[] = $item->saved();
 			
 			// sim message
-			$id = Jelly::query('message')->key('sim')->select()->id;
-			$item = Jelly::factory('message', $id)
-				->set(array('value' => $r->simmMessage))
-				->save();
+			$item = Jelly::query('message')->where('key', '=', 'sim')->limit(1)->select();
+			$item->value = $r->simmMessage;
+			$item->save();
 			$messages[] = $item->saved();
 			
 			// join disclaimer
-			$id = Jelly::query('message')->key('join_disclaimer')->select()->id;
-			$item = Jelly::factory('message', $id)
-				->set(array('value' => $r->joinDisclaimer))
-				->save();
+			$item = Jelly::query('message')->where('key', '=', 'join_disclaimer')->limit(1)->select();
+			$item->value = $r->joinDisclaimer;
+			$item->save();
 			$messages[] = $item->saved();
 			
 			// acceptance message
-			$id = Jelly::query('message')->key('accept_message')->select()->id;
-			$item = Jelly::factory('message', $id)
-				->set(array('value' => $r->acceptMessage))
-				->save();
+			$item = Jelly::query('message')->where('key', '=', 'accept_message')->limit(1)->select();
+			$item->value = $r->acceptMessage;
+			$item->save();
 			$messages[] = $item->saved();
 			
 			// rejection message
-			$id = Jelly::query('message')->key('reject_message')->select()->id;
-			$item = Jelly::factory('message', $id)
-				->set(array('value' => $r->rejectMessage))
-				->save();
+			$item = Jelly::query('message')->where('key', '=', 'reject_message')->limit(1)->select();
+			$item->value = $r->rejectMessage;
+			$item->save();
 			$messages[] = $item->saved();
 			
 			// join post
-			$id = Jelly::query('message')->key('join_post')->select()->id;
-			$item = Jelly::factory('message', $id)
-				->set(array('value' => $r->samplePostQuestion))
-				->save();
+			$item = Jelly::query('message')->where('key', '=', 'join_post')->limit(1)->select();
+			$item->value = $r->samplePostQuestion;
+			$item->save();
 			$messages[] = $item->saved();
 		}
 		
