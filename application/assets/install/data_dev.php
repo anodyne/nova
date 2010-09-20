@@ -5,7 +5,7 @@
 |---------------------------------------------------------------
 |
 | File: assets/install/install_data_dev.php
-| System Version: 1.1
+| System Version: 1.1.1
 |
 | Data file that includes all the data being inserted into the
 | database after creating the tables.
@@ -3996,6 +3996,19 @@ $system_versions = array(
 * fixed bug where personal log next/previous links could be wrong under certain circumstances
 * fixed bug where the command staff, game master and webmaster get email methods pulled all users, not just active users
 * fixed error thrown with an undefined class method when deleting uploaded items"),
+	array(
+		'version' => '1.1.1',
+		'version_major' => '1',
+		'version_minor' => '1',
+		'version_update' => '1',
+		'version_date' => 1283635800,
+		'version_launch'	=> "Nova 1.1.1 is a maintenance update addressing several outstanding issues with Nova 1.1. This update to Nova bumps the jQuery UI to version 1.8.5 and fixes an issue with tour item display when there are no general tour items available. In addition, we've taken steps to address a bug where CodeIgniter wouldn't be able to load the template files and would throw an error. Finally, a presentation issue with skins with a dashboard panel trigger has been fixed as well. A full changelog can be found on AnodyneDocs or from the System and Versions report once Nova has been updated. This update is recommended for all users.",
+		'version_changes'	=> "* added the 1.1.1 update file
+* updated the comments in the login controller
+* updated jquery ui to version 1.8.5
+* fixed bug where nova wouldn't display if the template file couldn't be found
+* fixed bug where the general tour items category would be shown even if there weren't any general tour items
+* fixed bug where skins with dashboard handles were showing bullets and having weird spacing issues"),
 );
 
 $tour = array(
