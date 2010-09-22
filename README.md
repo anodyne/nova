@@ -14,6 +14,7 @@ Anodyne Production's next-generation RPG management system combines popular feat
 * fixed bug where nova wouldn't display if the template file couldn't be found
 * fixed bug where the general tour items category would be shown even if there weren't any general tour items
 * fixed bug where skins with dashboard handles were showing bullets and having weird spacing issues
+* fixed bug where sub departments toggle links didn't display properly
 
 ## Version History
 
