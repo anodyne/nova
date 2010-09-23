@@ -41,7 +41,7 @@
 						<p><?php echo $sub['desc'];?></p>
 						
 						<?php if (isset($sub['positions'])): ?>
-							<p><?php echo anchor('#', $label['showhide'], array('myID' => $sub['id'], 'class' => 'toggle bold'));?></p>
+							<p><?php echo anchor('#', $label['toggle'], array('myID' => $sub['id'], 'class' => 'toggle bold'));?></p>
 							
 							<div id="<?php echo $sub['id'];?>" class="hidden">
 								<table class="table100 zebra" cellspacing="0" cellpadding="3">
