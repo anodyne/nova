@@ -6,7 +6,7 @@ We've already talked about what Jelly is, what an ORM is, why Nova's using Jelly
 
 Let's use a concrete example here so it makes sense. We're going to pull information about a specific character and then print out the character's rank, name and position.
 
-<pre>$item = Jelly::select('character', 1);</pre>
+<pre>$item = Jelly::query('character', 1)->select();</pre>
 
 That's it.
 
