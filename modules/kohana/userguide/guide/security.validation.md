@@ -105,11 +105,13 @@ Note that all array parameters must still be wrapped in an array! Without the wr
 
 Any custom rules can be added using a [PHP callback](http://php.net/manual/language.pseudo-types.php#language.types.callback]:
 
-    $post->rule('username', array($model, 'unique_username'));
+    $post->rule('username', 'User_Model::unique_username');
 
-The method `$model->unique_username()` would be defined similar to:
+[!!] Currently (v3.0.7) it is not possible to use an object for a rule, only static methods and functions.
 
-    public function unique_username($username)
+The method `User_Model::unique_username()` would be defined similar to:
+
+    public static function unique_username($username)
     {
         // Check if the username already exists in the database
         return ! DB::select(array(DB::expr('COUNT(username)'), 'total'))
@@ -126,8 +128,6 @@ The method `$model->unique_username()` would be defined similar to:
 All validation callbacks are defined as a field name and a method or function (using the [PHP callback](http://php.net/manual/language.pseudo-types.php#language.types.callback) syntax):
 
     $object->callback($field, $callback);
-
-[!!] Unlike filters and rules, no parameters can be passed to a callback.
 
 The user password must be hashed if it validates, so we will hash it using a callback:
 
@@ -209,7 +209,7 @@ Next, we need a controller and action to process the registration, which will be
                 $user->register($post);
 
                 // Always redirect after a successful POST to prevent refresh warnings
-                URL::redirect('user/profile');
+                $this->request->redirect('user/profile');
             }
 
             // Validation failed, collect the errors

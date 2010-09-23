@@ -54,7 +54,7 @@ Naam van de regel         | Functie
 [Validate::color]         | Waarde moet een geldige HEX kleurencode zijn
 [Validate::matches]       | Waarde moet gelijk zijn aan een ander veld
 
-[!!] Iedere methode dat bestaat binnenin de [Validate] class kan gebruikt worden als validatie-regel zonder een volledige callback te definiëren. Bijvoorbeeld, `'not_empty'` toevoegen is hetzelfde als `array('Validate', 'not_empty')`.
+[!!] Iedere methode dat bestaat binnenin de [Validate] class kan gebruikt worden als validatie-regel zonder een volledige callback te definiÃ«ren. Bijvoorbeeld, `'not_empty'` toevoegen is hetzelfde als `array('Validate', 'not_empty')`.
 
 ## Toevoegen van filters
 
@@ -102,11 +102,13 @@ Merk op dat alle array parameters steeds moeten "verpakt" worden door een array!
 
 Je kan eigen regels toevoegen met behulp van een [PHP callback](http://php.net/manual/language.pseudo-types.php#language.types.callback]:
 
-    $post->rule('username', array($model, 'unique_username'));
+    $post->rule('username', 'User_Model::unique_username');
 
-De methode `$model->unique_username()` zal ongeveer gedefinieerd worden als:
+[!!] Momenteel (v3.0.7) is het niet mogelijk om een object te gebruiken als rule, enkel statische methodes en functies.
 
-    public function unique_username($username)
+De methode `User_Model::unique_username()` zal ongeveer gedefinieerd worden als:
+
+    public static function unique_username($username)
     {
         // Controleer of de username al bestaat in de database
         return ! DB::select(array(DB::expr('COUNT(username)'), 'total'))
@@ -206,7 +208,7 @@ Vervolgens hebben we een controller nodig en een actie om de registratie uit te 
                 $user->register($post);
 
                 // Altijd een redirect uitvoeren na een succesvolle POST om herladingsberichten te voorkomen.
-                URL::redirect('user/profile');
+                $this->request->redirect('user/profile');
             }
 
             // Validatie is fout gelopen, verzamel alle errors

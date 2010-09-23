@@ -1,24 +1,24 @@
-# Conventions
+# Regeln
 
-It is encouraged to follow Kohana's [coding style](http://dev.kohanaframework.org/wiki/kohana2/CodingStyle). This uses [BSD/Allman style](http://en.wikipedia.org/wiki/Indent_style#BSD.2FAllman_style) bracing, among other things.
+Es wird dazu ermutigt, dem Kohana [Programmierstil](http://dev.kohanaframework.org/wiki/kohana2/CodingStyle) zu folgen. Dieser benutzt den [Allman/BSD](http://de.wikipedia.org/wiki/Einr%C3%BCckungsstil#Allman_.2F_BSD_.2F_.E2.80.9EEast_Coast.E2.80.9C_.2F_Horstmann)-Stil.
 
-## Class Names and File Location {#classes}
+## Klassennamen und Dateilage {#classes}
 
-Class names in Kohana follow a strict convention to facilitate [autoloading](using.autoloading). Class names should have uppercase first letters with underscores to separate words. Underscores are significant as they directly reflect the file location in the filesystem.
+Das automatische Laden von Klassen wird durch ihre strengen Namensregeln ermöglicht. Die Klassen beginnen mit einem Großbuchstaben und ihre Wšrter werden durch Unterstriche getrennt. Diese sind entscheidend, an welcher Stelle die Klasse im Dateisystem gefunden wird. 
 
-The following conventions apply:
+Folgende Regeln gelten:
 
-1. CamelCased class names should not be used, except when it is undesirable to create a new directory level.
-2. All class file names and directory names are lowercase.
-3. All classes should be in the `classes` directory. This may be at any level in the [cascading filesystem](about.filesystem).
+1. Binnenversalien (camelCase) sollten nicht benutzt werden, außer wenn eine weitere Ordner-Ebene unerwünscht ist
+2. alle Datei- und Verzeichnisnamen in Kleinbuchstaben
+3. alle Klassen werden im `classes`-Verzeichnis in jeder Ebene des [Kaskaden-Dateisystem](about.filesystem) zusammengefasst
 
-[!!] Unlike Kohana v2.x, there is no separation between "controllers", "models", "libraries" and "helpers". All classes are placed in the "classes/" directory, regardless if they are static "helpers" or object "libraries". You can use whatever kind of class design you want: static, singleton, adapter, etc.
+[!!] Im Gegensatz zu Kohana v2.x besteht keine Unterteilung zwischen "Controllern", "Models", "Bibliotheken" und "Helfern". Alle Klassen befinden sich im "classes/"-Verzeichnis, unabhängig ob es statische "Helfer" oder Objekt-"Bibliotheken" sind. Man kann irgendeinen Klassen-Aufbau (statische Klasse, Singleton, Adapter) verwenden, den man mag.
 
-## Examples
+## Beispiele
 
-Remember that in a class, an underscore means a new directory. Consider the following examples:
+Denk daran, dass der Unterstrich in Klassennamen eine tiefere Verzeichnisebene bedeutet. Beachte folgende Beispiele:
 
-Class Name            | File Path
+Klassenname           | Dateipfad
 ----------------------|-------------------------------
 Controller_Template   | classes/controller/template.php
 Model_User            | classes/model/user.php
@@ -26,18 +26,25 @@ Database              | classes/database.php
 Database_Query        | classes/database/query.php
 Form                  | classes/form.php
 
-## Coding Standards {#coding_standards}
+## Programmierstil {#coding_standards}
 
-In order to produce highly consistent source code, we ask that everyone follow the coding standards as closely as possible.
+Um einen sehr konsistenten Quelltext zu produzieren, bitten wir jeden den folgenden Programmierstil so genau wie möglich umzusetzen.
 
-### Brackets
-Please use [BSD/Allman Style](http://en.wikipedia.org/wiki/Indent_style#BSD.2FAllman_style) bracketing.
+### Klammerung
 
-### Naming Conventions
+Bitte benutze den den [Allman/BSD](http://de.wikipedia.org/wiki/Einr%C3%BCckungsstil#Allman_.2F_BSD_.2F_.E2.80.9EEast_Coast.E2.80.9C_.2F_Horstmann)-Stil.
 
-Kohana uses under_score naming, not camelCase naming.
+### Namensregeln
 
-#### Classes
+Kohana benutzt für Namen Unter_striche, keine BinnenVersalien (camelCase).
+
+#### Klassen
+
+	// Libary
+	class Beer {
+
+	// Libary extension, uses Kohana_ prefix
+	class Beer extends Kohana_Beer {
 
 	// Controller class, uses Controller_ prefix
 	class Controller_Apple extends Controller {
@@ -45,10 +52,10 @@ Kohana uses under_score naming, not camelCase naming.
 	// Model class, uses Model_ prefix
 	class Model_Cheese extends Model {
 
-	// Regular class
-	class Peanut {
+	// Helper class, cf. libary
+	class peanut {
 
-When creating an instance of a class, don't use parentheses if you're not passing something on to the constructor:
+Benutze keine Klammern, wenn eine Klasseninstanz erstellt, aber keine Parameter übergibt:
 
 	// Correct:
 	$db = new Database;
@@ -56,16 +63,16 @@ When creating an instance of a class, don't use parentheses if you're not passin
 	// Incorrect:
 	$db = new Database();
 
-#### Functions and Methods
+#### Funktionen und Methoden
 
-Functions should be all lowercase, and use under_scores to separate words:
+Funktionen sollten kleingeschrieben sein und Unter_striche zur Worttrennung benutzen:
 
 	function drink_beverage($beverage)
 	{
 
-#### Variables
+#### Variablen
 
-All variables should be lowercase and use under_score, not camelCase:
+Alle Variablen sollten ebenfalls kleingeschrieben sein und Unter_striche benutzen, keine BinnenVersalien (camelCase):
 
 	// Correct:
 	$foo = 'bar';
@@ -74,11 +81,11 @@ All variables should be lowercase and use under_score, not camelCase:
 	// Incorrect:
 	$weDontWantThis = 'understood?';
 
-### Indentation
+### Einrückung
 
-You must use tabs to indent your code. Using spaces for tabbing is strictly forbidden.
+Du musst zur Einrückung deines Quelltextes Tabulatoren benutzen. Leerzeichen für Tabellarisierung zu verwenden, ist strengstens verboten.
 
-Vertical spacing (for multi-line) is done with spaces. Tabs are not good for vertical alignment because different people have different tab widths.
+Vertikaler Abstand (bei Mehrzeiligkeit) wird mit Leerzeichen gemacht. Tabulatoren sind schlecht für die vertikale Ausrichtung, weil verschiedene Leute unterschiedliche Tabulatoren-Breiten haben.
 
 	$text = 'this is a long text block that is wrapped. Normally, we aim for '
 		  . 'wrapping at 80 chars. Vertical alignment is very important for '
@@ -86,9 +93,9 @@ Vertical spacing (for multi-line) is done with spaces. Tabs are not good for ver
 		  . 'but vertical alignment should be completed with spaces, after '
 		  . 'indenting with tabs.';
 
-### String concatenation
+### Zeichenkettenverknüpfung
 
-Don't put spaces around the concatenation operator:
+Setze keine Leerzeichen um den Verknüpfungsoperator:
 
 	// Correct:
 	$str = 'one'.$var.'two';
@@ -97,9 +104,9 @@ Don't put spaces around the concatenation operator:
 	$str = 'one'. $var .'two';
 	$str = 'one' . $var . 'two';
 
-### Single Line Statements
+### Einzeilige Ausdrücke
 
-Single-line IF statements should only be used when breaking normal execution (e.g. return or continue):
+Einzeilige IF-Bedingungen sollten nur bei Anweisungen benutzt werden, die die normale Verarbeitung unterbrechen (z.B. return oder continue):
 
 	// Acceptable:
 	if ($foo == $bar)
@@ -118,9 +125,9 @@ Single-line IF statements should only be used when breaking normal execution (e.
 	if ($baz == $bun)
 		$baz = $bar + 2;
 
-### Comparison Operations
+### Vergleichsoperatoren
 
-Please use OR and AND for comparison:
+Bitte benutze OR and AND:
 
 	// Correct:
 	if (($foo AND $bar) OR ($b AND $c))
@@ -128,7 +135,7 @@ Please use OR and AND for comparison:
 	// Incorrect:
 	if (($foo && $bar) || ($b && $c))
 	
-Please use elseif, not else if:
+Bitte benutze elseif, nicht else if:
 
 	// Correct:
 	elseif ($bar)
