@@ -16,6 +16,8 @@ The Nova 2 [install guide](http://docs.anodyne-productions.com/index.php/nova2/o
 
 The Nova 2 [upgrade guide](http://docs.anodyne-productions.com/index.php/nova2/overview/upgrade) is a step-by-step guide through upgrading from SMS 2 (at least version 2.6.9) to Nova 2 and any issues you may encounter. Please reference that for doing an upgrade with the Nova 2 development builds.
 
+The Nova 2 [update guide](http://docs.anodyne-productions.com/index.php/nova2/overview/update) is a step-by-step guide through updating Nova 2 (either from 2.x to 2.x+1 or Nova 1 to Nova 2) and any issues you may encounter. Please reference that for doing an update with the Nova 2 development builds.
+
 ## Version History
 
 <table>
