@@ -12,11 +12,12 @@ class Kohana_Pagination {
 
 	// Merged configuration settings
 	protected $config = array(
-		'current_page'   => array('source' => 'query_string', 'key' => 'page'),
-		'total_items'    => 0,
-		'items_per_page' => 10,
-		'view'           => 'pagination/basic',
-		'auto_hide'      => TRUE,
+		'current_page'      => array('source' => 'query_string', 'key' => 'page'),
+		'total_items'       => 0,
+		'items_per_page'    => 10,
+		'view'              => 'pagination/basic',
+		'auto_hide'         => TRUE,
+		'first_page_in_url' => FALSE,
 	);
 
 	// Current page number
@@ -187,7 +188,7 @@ class Kohana_Pagination {
 		$page = max(1, (int) $page);
 
 		// No page number in URLs to first page
-		if ($page === 1)
+		if ($page === 1 AND ! $this->config['first_page_in_url'])
 		{
 			$page = NULL;
 		}
