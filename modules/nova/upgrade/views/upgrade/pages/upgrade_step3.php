@@ -13,7 +13,7 @@
 		<span class="hidden loading-password"><?php echo html::image(MODFOLDER.'/nova/upgrade/views/upgrade/images/loading-circle-large.gif');?></span>
 		
 		<span class="hidden error-password">
-			<?php echo html::image(MODFOLDER.'/nova/upgrade/views/upgrade/images/exclamation-red.png', array('title' => ''));?>
+			<?php echo html::image(MODFOLDER.'/nova/upgrade/views/upgrade/images/exclamation-red.png', array('class' => 'tiptip', 'title' => ''));?>
 		</span>
 		
 		<span class="hidden success-password">
@@ -33,7 +33,7 @@
 		<span class="hidden loading-admins"><?php echo html::image(MODFOLDER.'/nova/upgrade/views/upgrade/images/loading-circle-large.gif');?></span>
 		
 		<span class="hidden error-admins">
-			<?php echo html::image(MODFOLDER.'/nova/upgrade/views/upgrade/images/exclamation-red.png', array('title' => ''));?>
+			<?php echo html::image(MODFOLDER.'/nova/upgrade/views/upgrade/images/exclamation-red.png', array('class' => 'tiptip', 'title' => ''));?>
 		</span>
 		
 		<span class="hidden success-admins">

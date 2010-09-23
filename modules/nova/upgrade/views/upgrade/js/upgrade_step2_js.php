@@ -1,8 +1,7 @@
 <script type="text/javascript" src="<?php echo url::base().MODFOLDER;?>/assets/js/jquery.ajaxq.js"></script>
-<script type="text/javascript" src="<?php echo url::base().MODFOLDER;?>/assets/js/jquery.ui.position.min.js"></script>
-<script type="text/javascript" src="<?php echo url::base().MODFOLDER;?>/assets/js/jquery.ui.tooltip.min.js"></script>
+<script type="text/javascript" src="<?php echo url::base().MODFOLDER;?>/assets/js/jquery.tipTip.js"></script>
 
-<link rel="stylesheet" href="<?php echo url::base().MODFOLDER;?>/assets/css/jquery.ui.tooltip.css" />
+<link rel="stylesheet" href="<?php echo url::base().MODFOLDER;?>/assets/css/jquery.tipTip.css" />
 
 <script type="text/javascript">
 	$(document).ready(function(){
@@ -20,6 +19,11 @@
 		
 		$('#start').live('click', function(){
 			var send;
+			
+			var tipOpts = {
+				defaultPosition: 'right',
+				edgeOffset: 8
+			}
 			
 			// user defaults
 			$.ajaxq('queue', {
@@ -43,6 +47,7 @@
 						$('table tbody tr:eq(0) td:eq(1) .failure img').attr('title', function(){
 							return data.message
 						});
+						$('.tiptip').tipTip(tipOpts);
 					}
 				}
 			});
@@ -69,6 +74,7 @@
 						$('table tbody tr:eq(1) td:eq(1) .failure img').attr('title', function(){
 							return data.message
 						});
+						$('.tiptip').tipTip(tipOpts);
 					}
 				}
 			});
@@ -95,6 +101,7 @@
 						$('table tbody tr:eq(2) td:eq(1) .failure img').attr('title', function(){
 							return data.message
 						});
+						$('.tiptip').tipTip(tipOpts);
 					}
 					else if (data.code == 2)
 					{
@@ -102,6 +109,7 @@
 						$('table tbody tr:eq(2) td:eq(1) .warning img').attr('title', function(){
 							return data.message
 						});
+						$('.tiptip').tipTip(tipOpts);
 					}
 				}
 			});
@@ -128,6 +136,7 @@
 						$('table tbody tr:eq(3) td:eq(1) .failure img').attr('title', function(){
 							return data.message
 						});
+						$('.tiptip').tipTip(tipOpts);
 					}
 				}
 			});
@@ -154,6 +163,7 @@
 						$('table tbody tr:eq(4) td:eq(1) .failure img').attr('title', function(){
 							return data.message
 						});
+						$('.tiptip').tipTip(tipOpts);
 					}
 				}
 			});
@@ -180,6 +190,7 @@
 						$('table tbody tr:eq(5) td:eq(1) .failure img').attr('title', function(){
 							return data.message
 						});
+						$('.tiptip').tipTip(tipOpts);
 					}
 				}
 			});
@@ -206,6 +217,7 @@
 						$('table tbody tr:eq(6) td:eq(1) .failure img').attr('title', function(){
 							return data.message
 						});
+						$('.tiptip').tipTip(tipOpts);
 					}
 					else if (data.code == 2)
 					{
@@ -213,6 +225,7 @@
 						$('table tbody tr:eq(6) td:eq(1) .warning img').attr('title', function(){
 							return data.message
 						});
+						$('.tiptip').tipTip(tipOpts);
 					}
 				}
 			});

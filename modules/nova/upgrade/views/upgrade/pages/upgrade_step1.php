@@ -16,10 +16,10 @@
 				<td class="col-30 align-center">
 					<span class="success hidden"><?php echo html::image(MODFOLDER.'/nova/upgrade/views/upgrade/images/tick-circle.png');?></span>
 					<span class="failure hidden">
-						<?php echo html::image(MODFOLDER.'/nova/upgrade/views/upgrade/images/exclamation-red.png', array('title' => ''));?>
+						<?php echo html::image(MODFOLDER.'/nova/upgrade/views/upgrade/images/exclamation-red.png', array('class' => 'tiptip', 'title' => ''));?>
 					</span>
 					<span class="warning hidden">
-						<?php echo html::image(MODFOLDER.'/nova/upgrade/views/upgrade/images/exclamation.png', array('title' => ''));?>
+						<?php echo html::image(MODFOLDER.'/nova/upgrade/views/upgrade/images/exclamation.png', array('class' => 'tiptip', 'title' => ''));?>
 					</span>
 					<span class="loading hidden"><?php echo html::image(MODFOLDER.'/nova/upgrade/views/upgrade/images/loading-circle-large.gif');?></span>
 				</td>
@@ -31,7 +31,7 @@
 				<td class="col-30 align-center">
 					<span class="success hidden"><?php echo html::image(MODFOLDER.'/nova/upgrade/views/upgrade/images/tick-circle.png');?></span>
 					<span class="failure hidden">
-						<?php echo html::image(MODFOLDER.'/nova/upgrade/views/upgrade/images/exclamation-red.png', array('title' => ''));?>
+						<?php echo html::image(MODFOLDER.'/nova/upgrade/views/upgrade/images/exclamation-red.png', array('class' => 'tiptip', 'title' => ''));?>
 					</span>
 					<span class="loading hidden"><?php echo html::image(MODFOLDER.'/nova/upgrade/views/upgrade/images/loading-circle-large.gif');?></span>
 				</td>
@@ -43,10 +43,10 @@
 				<td class="col-30 align-center">
 					<span class="success hidden"><?php echo html::image(MODFOLDER.'/nova/upgrade/views/upgrade/images/tick-circle.png');?></span>
 					<span class="failure hidden">
-						<?php echo html::image(MODFOLDER.'/nova/upgrade/views/upgrade/images/exclamation-red.png', array('title' => ''));?>
+						<?php echo html::image(MODFOLDER.'/nova/upgrade/views/upgrade/images/exclamation-red.png', array('class' => 'tiptip', 'title' => ''));?>
 					</span>
 					<span class="warning hidden">
-						<?php echo html::image(MODFOLDER.'/nova/upgrade/views/upgrade/images/exclamation.png', array('title' => ''));?>
+						<?php echo html::image(MODFOLDER.'/nova/upgrade/views/upgrade/images/exclamation.png', array('class' => 'tiptip', 'title' => ''));?>
 					</span>
 					<span class="loading hidden"><?php echo html::image(MODFOLDER.'/nova/upgrade/views/upgrade/images/loading-circle-large.gif');?></span>
 				</td>
@@ -58,10 +58,10 @@
 				<td class="col-30 align-center">
 					<span class="success hidden"><?php echo html::image(MODFOLDER.'/nova/upgrade/views/upgrade/images/tick-circle.png');?></span>
 					<span class="failure hidden">
-						<?php echo html::image(MODFOLDER.'/nova/upgrade/views/upgrade/images/exclamation-red.png', array('title' => ''));?>
+						<?php echo html::image(MODFOLDER.'/nova/upgrade/views/upgrade/images/exclamation-red.png', array('class' => 'tiptip', 'title' => ''));?>
 					</span>
 					<span class="warning hidden">
-						<?php echo html::image(MODFOLDER.'/nova/upgrade/views/upgrade/images/exclamation.png', array('title' => ''));?>
+						<?php echo html::image(MODFOLDER.'/nova/upgrade/views/upgrade/images/exclamation.png', array('class' => 'tiptip', 'title' => ''));?>
 					</span>
 					<span class="loading hidden"><?php echo html::image(MODFOLDER.'/nova/upgrade/views/upgrade/images/loading-circle-large.gif');?></span>
 				</td>
@@ -73,10 +73,10 @@
 				<td class="col-30 align-center">
 					<span class="success hidden"><?php echo html::image(MODFOLDER.'/nova/upgrade/views/upgrade/images/tick-circle.png');?></span>
 					<span class="failure hidden">
-						<?php echo html::image(MODFOLDER.'/nova/upgrade/views/upgrade/images/exclamation-red.png', array('title' => ''));?>
+						<?php echo html::image(MODFOLDER.'/nova/upgrade/views/upgrade/images/exclamation-red.png', array('class' => 'tiptip', 'title' => ''));?>
 					</span>
 					<span class="warning hidden">
-						<?php echo html::image(MODFOLDER.'/nova/upgrade/views/upgrade/images/exclamation.png', array('title' => ''));?>
+						<?php echo html::image(MODFOLDER.'/nova/upgrade/views/upgrade/images/exclamation.png', array('class' => 'tiptip', 'title' => ''));?>
 					</span>
 					<span class="loading hidden"><?php echo html::image(MODFOLDER.'/nova/upgrade/views/upgrade/images/loading-circle-large.gif');?></span>
 				</td>
@@ -88,10 +88,10 @@
 				<td class="col-30 align-center">
 					<span class="success hidden"><?php echo html::image(MODFOLDER.'/nova/upgrade/views/upgrade/images/tick-circle.png');?></span>
 					<span class="failure hidden">
-						<?php echo html::image(MODFOLDER.'/nova/upgrade/views/upgrade/images/exclamation-red.png', array('title' => ''));?>
+						<?php echo html::image(MODFOLDER.'/nova/upgrade/views/upgrade/images/exclamation-red.png', array('class' => 'tiptip', 'title' => ''));?>
 					</span>
 					<span class="warning hidden">
-						<?php echo html::image(MODFOLDER.'/nova/upgrade/views/upgrade/images/exclamation.png', array('title' => ''));?>
+						<?php echo html::image(MODFOLDER.'/nova/upgrade/views/upgrade/images/exclamation.png', array('class' => 'tiptip', 'title' => ''));?>
 					</span>
 					<span class="loading hidden"><?php echo html::image(MODFOLDER.'/nova/upgrade/views/upgrade/images/loading-circle-large.gif');?></span>
 				</td>
@@ -103,10 +103,10 @@
 				<td class="col-30 align-center">
 					<span class="success hidden"><?php echo html::image(MODFOLDER.'/nova/upgrade/views/upgrade/images/tick-circle.png');?></span>
 					<span class="failure hidden">
-						<?php echo html::image(MODFOLDER.'/nova/upgrade/views/upgrade/images/exclamation-red.png', array('title' => ''));?>
+						<?php echo html::image(MODFOLDER.'/nova/upgrade/views/upgrade/images/exclamation-red.png', array('class' => 'tiptip', 'title' => ''));?>
 					</span>
 					<span class="warning hidden">
-						<?php echo html::image(MODFOLDER.'/nova/upgrade/views/upgrade/images/exclamation.png', array('title' => ''));?>
+						<?php echo html::image(MODFOLDER.'/nova/upgrade/views/upgrade/images/exclamation.png', array('class' => 'tiptip', 'title' => ''));?>
 					</span>
 					<span class="loading hidden"><?php echo html::image(MODFOLDER.'/nova/upgrade/views/upgrade/images/loading-circle-large.gif');?></span>
 				</td>
@@ -118,10 +118,10 @@
 				<td class="col-30 align-center">
 					<span class="success hidden"><?php echo html::image(MODFOLDER.'/nova/upgrade/views/upgrade/images/tick-circle.png');?></span>
 					<span class="failure hidden">
-						<?php echo html::image(MODFOLDER.'/nova/upgrade/views/upgrade/images/exclamation-red.png', array('title' => ''));?>
+						<?php echo html::image(MODFOLDER.'/nova/upgrade/views/upgrade/images/exclamation-red.png', array('class' => 'tiptip', 'title' => ''));?>
 					</span>
 					<span class="warning hidden">
-						<?php echo html::image(MODFOLDER.'/nova/upgrade/views/upgrade/images/exclamation.png', array('title' => ''));?>
+						<?php echo html::image(MODFOLDER.'/nova/upgrade/views/upgrade/images/exclamation.png', array('class' => 'tiptip', 'title' => ''));?>
 					</span>
 					<span class="loading hidden"><?php echo html::image(MODFOLDER.'/nova/upgrade/views/upgrade/images/loading-circle-large.gif');?></span>
 				</td>

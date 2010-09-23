@@ -1,23 +1,48 @@
 <?php
 
 $specsarray = Database::instance()->list_columns('sms_specs', NULL, FALSE);
-$specshash = md5(implode('', array_keys($specsarray)));
-
 $tourarray = Database::instance()->list_columns('sms_tour', NULL, FALSE);
+
+$keep = array('type', 'column_name', 'column_default', 'data_type', 'extra', 'key');
+
+foreach ($specsarray as $key => $value)
+{
+	ksort($specsarray);
+	
+	foreach ($value as $k => $v)
+	{
+		if ( ! in_array($k, $keep))
+		{
+			unset($specsarray[$key][$k]);
+		}
+	}
+}
+
+foreach ($tourarray as $key => $value)
+{
+	ksort($tourarray);
+	
+	foreach ($value as $k => $v)
+	{
+		if ( ! in_array($k, $keep))
+		{
+			unset($tourarray[$key][$k]);
+		}
+	}
+}
+
+$specshash = md5(implode('', array_keys($specsarray)));
 $tourhash = md5(implode('', array_keys($tourarray)));
 
 ?><script type="text/javascript" src="<?php echo url::base().MODFOLDER;?>/assets/js/jquery.ajaxq.js"></script>
-<script type="text/javascript" src="<?php echo url::base().MODFOLDER;?>/assets/js/jquery.ui.position.min.js"></script>
-<script type="text/javascript" src="<?php echo url::base().MODFOLDER;?>/assets/js/jquery.ui.tooltip.min.js"></script>
+<script type="text/javascript" src="<?php echo url::base().MODFOLDER;?>/assets/js/jquery.tipTip.js"></script>
 
-<link rel="stylesheet" href="<?php echo url::base().MODFOLDER;?>/assets/css/jquery.ui.tooltip.css" />
+<link rel="stylesheet" href="<?php echo url::base().MODFOLDER;?>/assets/css/jquery.tipTip.css" />
 
 <script type="text/javascript">
 	$(document).ready(function(){
 		var specshash = '<?php echo $specshash;?>';
 		var tourhash = '<?php echo $tourhash;?>';
-		
-		$("[title]").tooltip();
 		
 		$("#progress").progressbar({ value: 25 });
 		$('#percent').text($('#progress').progressbar('option', 'value') + '%');
@@ -31,13 +56,13 @@ $tourhash = md5(implode('', array_keys($tourarray)));
 			});
 		});
 		
-		if (specshash != 'e0027b9e9dd498d4c01b0ffd4e186646')
+		if (specshash != '5dbd1bfed7a4f67ecde6ad82e83ad0eb')
 		{
 			$('input[name=upgrade_specs]:nth(1)').attr("checked", true);
 			$('input[name=upgrade_specs]').attr("disabled", "disabled");
 		}
 		
-		if (tourhash != 'a03805aeed42e0c41f9f6f25c757e099')
+		if (tourhash != '95f4c7150d7629995765dba73a9f344b')
 		{
 			$('input[name=upgrade_tour]:nth(1)').attr("checked", true);
 			$('input[name=upgrade_tour]').attr("disabled", "disabled");
@@ -72,6 +97,11 @@ $tourhash = md5(implode('', array_keys($tourarray)));
 		});
 		
 		$('#start').live('click', function(){
+			var tipOpts = {
+				defaultPosition: 'right',
+				edgeOffset: 8
+			}
+			
 			// characters and users
 			if ($('input[name=upgrade_characters_users]:checked').val() == 1)
 			{
@@ -98,6 +128,7 @@ $tourhash = md5(implode('', array_keys($tourarray)));
 							$('table tbody tr:eq(0) td:eq(1) .failure img').attr('title', function(){
 								return data.message
 							});
+							$('.tiptip').tipTip(tipOpts);
 						}
 						else if (data.code == 2)
 						{
@@ -105,6 +136,7 @@ $tourhash = md5(implode('', array_keys($tourarray)));
 							$('table tbody tr:eq(0) td:eq(1) .warning img').attr('title', function(){
 								return data.message
 							});
+							$('.tiptip').tipTip(tipOpts);
 						}
 					}
 				});
@@ -136,6 +168,7 @@ $tourhash = md5(implode('', array_keys($tourarray)));
 							$('table tbody tr:eq(1) td:eq(1) .failure img').attr('title', function(){
 								return data.message
 							});
+							$('.tiptip').tipTip(tipOpts);
 						}
 					}
 				});
@@ -167,6 +200,7 @@ $tourhash = md5(implode('', array_keys($tourarray)));
 							$('table tbody tr:eq(2) td:eq(1) .failure img').attr('title', function(){
 								return data.message
 							});
+							$('.tiptip').tipTip(tipOpts);
 						}
 						else if (data.code == 2)
 						{
@@ -174,6 +208,7 @@ $tourhash = md5(implode('', array_keys($tourarray)));
 							$('table tbody tr:eq(2) td:eq(1) .warning img').attr('title', function(){
 								return data.message
 							});
+							$('.tiptip').tipTip(tipOpts);
 						}
 					}
 				});
@@ -205,6 +240,7 @@ $tourhash = md5(implode('', array_keys($tourarray)));
 							$('table tbody tr:eq(3) td:eq(1) .failure img').attr('title', function(){
 								return data.message
 							});
+							$('.tiptip').tipTip(tipOpts);
 						}
 						else if (data.code == 2)
 						{
@@ -212,6 +248,7 @@ $tourhash = md5(implode('', array_keys($tourarray)));
 							$('table tbody tr:eq(3) td:eq(1) .warning img').attr('title', function(){
 								return data.message
 							});
+							$('.tiptip').tipTip(tipOpts);
 						}
 					}
 				});
@@ -243,6 +280,7 @@ $tourhash = md5(implode('', array_keys($tourarray)));
 							$('table tbody tr:eq(4) td:eq(1) .failure img').attr('title', function(){
 								return data.message
 							});
+							$('.tiptip').tipTip(tipOpts);
 						}
 						else if (data.code == 2)
 						{
@@ -250,6 +288,7 @@ $tourhash = md5(implode('', array_keys($tourarray)));
 							$('table tbody tr:eq(4) td:eq(1) .warning img').attr('title', function(){
 								return data.message
 							});
+							$('.tiptip').tipTip(tipOpts);
 						}
 					}
 				});
@@ -281,6 +320,7 @@ $tourhash = md5(implode('', array_keys($tourarray)));
 							$('table tbody tr:eq(5) td:eq(1) .failure img').attr('title', function(){
 								return data.message
 							});
+							$('.tiptip').tipTip(tipOpts);
 						}
 						else if (data.code == 2)
 						{
@@ -288,6 +328,7 @@ $tourhash = md5(implode('', array_keys($tourarray)));
 							$('table tbody tr:eq(5) td:eq(1) .warning img').attr('title', function(){
 								return data.message
 							});
+							$('.tiptip').tipTip(tipOpts);
 						}
 					}
 				});
@@ -319,6 +360,7 @@ $tourhash = md5(implode('', array_keys($tourarray)));
 							$('table tbody tr:eq(6) td:eq(1) .failure img').attr('title', function(){
 								return data.message
 							});
+							$('.tiptip').tipTip(tipOpts);
 						}
 						else if (data.code == 2)
 						{
@@ -326,6 +368,7 @@ $tourhash = md5(implode('', array_keys($tourarray)));
 							$('table tbody tr:eq(6) td:eq(1) .warning img').attr('title', function(){
 								return data.message
 							});
+							$('.tiptip').tipTip(tipOpts);
 						}
 					}
 				});
@@ -357,6 +400,7 @@ $tourhash = md5(implode('', array_keys($tourarray)));
 							$('table tbody tr:eq(7) td:eq(1) .failure img').attr('title', function(){
 								return data.message
 							});
+							$('.tiptip').tipTip(tipOpts);
 						}
 						else if (data.code == 2)
 						{
@@ -364,6 +408,7 @@ $tourhash = md5(implode('', array_keys($tourarray)));
 							$('table tbody tr:eq(7) td:eq(1) .warning img').attr('title', function(){
 								return data.message
 							});
+							$('.tiptip').tipTip(tipOpts);
 						}
 					}
 				});

@@ -85,7 +85,7 @@ class Controller_Upgradeajax extends Controller_Template {
 			
 			// get the number of records in the new table
 			$count_new = Jelly::query('award')->count();
-	
+			
 			if ($count_new == $count_old)
 			{
 				$retval = array(

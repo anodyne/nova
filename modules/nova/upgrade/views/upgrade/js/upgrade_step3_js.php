@@ -1,4 +1,7 @@
 <script type="text/javascript" src="<?php echo url::base().MODFOLDER;?>/assets/js/jquery.ajaxq.js"></script>
+<script type="text/javascript" src="<?php echo url::base().MODFOLDER;?>/assets/js/jquery.tipTip.js"></script>
+
+<link rel="stylesheet" href="<?php echo url::base().MODFOLDER;?>/assets/css/jquery.tipTip.css" />
 
 <script type="text/javascript">
 	$(document).ready(function(){
@@ -14,6 +17,11 @@
 		
 		$('#start').live('click', function(){
 			var send;
+			
+			var tipOpts = {
+				defaultPosition: 'right',
+				edgeOffset: 8
+			}
 			
 			// get the password
 			var password = $('input[name=password]').val();
@@ -40,6 +48,7 @@
 						$('.failure-password img').attr('title', function(){
 							return data.message
 						});
+						$('.tiptip').tipTip(tipOpts);
 					}
 				}
 			});
@@ -69,6 +78,7 @@
 						$('.failure-admin img').attr('title', function(){
 							return data.message
 						});
+						$('.tiptip').tipTip(tipOpts);
 					}
 				}
 			});
