@@ -1,5 +1,14 @@
 <?php
-
+/**
+ * TestCase for unittesting
+ *
+ * @package    Kohana/Unittest
+ * @author     Kohana Team
+ * @author     BRMatt <matthew@sigswitch.com>
+ * @author	   Paul Banks
+ * @copyright  (c) 2008-2009 Kohana Team
+ * @license    http://kohanaphp.com/license
+ */
 Abstract Class Kohana_Unittest_TestCase extends PHPUnit_Framework_TestCase
 {
 	/**
@@ -9,10 +18,11 @@ Abstract Class Kohana_Unittest_TestCase extends PHPUnit_Framework_TestCase
 	protected $backupGlobals = TRUE;
 
 	/**
-	 * A backup of the environment
-	 * @var array
+	 * A set of unittest helpers that are shared between normal / database
+	 * testcases
+	 * @var Kohana_Unittest_Helpers
 	 */
-	protected $environmentBackup = array();
+	protected $_helpers = NULL;
 
 	/**
 	 * A default set of environment to be applied before each test
@@ -26,8 +36,10 @@ Abstract Class Kohana_Unittest_TestCase extends PHPUnit_Framework_TestCase
 	 * Extending classes that have their own setUp() should call
 	 * parent::setUp()
 	 */
-	function setUp()
+	public function setUp()
 	{
+		$this->_helpers = new Kohana_Unittest_Helpers;
+
 		$this->setEnvironment($this->environmentDefault);
 	}
 
@@ -37,13 +49,33 @@ Abstract Class Kohana_Unittest_TestCase extends PHPUnit_Framework_TestCase
 	 * Extending classes that have their own tearDown()
 	 * should call parent::tearDown()
 	 */
-	function tearDown()
+	public function tearDown()
 	{
-		$this->setEnvironment($this->environmentBackup);
+		$this->_helpers->restore_environment();
 	}
 
 	/**
-	 * Allows easy setting & backing up of conviroment config
+	 * Removes all kohana related cache files in the cache directory
+	 */
+	public function cleanCacheDir()
+	{
+		return Kohana_Unittest_Helpers::clean_cache_dir();
+	}
+
+	/**
+	 * Helper function that replaces all occurences of '/' with
+	 * the OS-specific directory separator
+	 *
+	 * @param string $path The path to act on
+	 * @return string
+	 */
+	public function dirSeparator($path)
+	{
+		return Kohana_Unittest_Helpers::dir_separator($path);
+	}
+
+	/**
+	 * Allows easy setting & backing up of enviroment config
 	 *
 	 * Option types are checked in the following order:
 	 *
@@ -53,66 +85,18 @@ Abstract Class Kohana_Unittest_TestCase extends PHPUnit_Framework_TestCase
 	 *
 	 * @param array $environment List of environment to set
 	 */
-	function setEnvironment(array $environment)
+	public function setEnvironment(array $environment)
 	{
-		if ( ! count($environment))
-			return FALSE;
-
-		foreach ($environment as $option => $value)
-		{
-			$backup_needed = ! array_key_exists($option, $this->environmentBackup);
-
-			// Handle changing superglobals
-			if (in_array($option, array('_GET', '_POST', '_SERVER', '_FILES')))
-			{
-				// For some reason we need to do this in order to change the superglobals
-				global $$option;
-
-				if($backup_needed)
-				{
-					$this->environmentBackup[$option] = $$option;
-				}
-
-				// PHPUnit makes a backup of superglobals automatically
-				$$option = $value;
-			}
-			// If this is a static property i.e. Html::$windowed_urls
-			elseif (strpos($option, '::$') !== FALSE)
-			{
-				list($class, $var) = explode('::$', $option, 2);
-
-				$class = new ReflectionClass($class);
-
-				if ($backup_needed)
-				{
-					$this->environmentBackup[$option] = $class->getStaticPropertyValue($var);
-				}
-
-				$class->setStaticPropertyValue($var, $value);
-			}
-			// If this is an environment variable
-			elseif (preg_match('/^[A-Z_-]+$/', $option) OR isset($_SERVER[$option]))
-			{
-				if($backup_needed)
-				{
-					$this->environmentBackup[$option] = isset($_SERVER[$option]) ? $_SERVER[$option] : '';
-				}
-				
-				$_SERVER[$option] = $value;
-			}
-			// Else we assume this is a config option
-			else
-			{
-				if ($backup_needed)
-				{
-					$this->environmentBackup[$option] = Kohana::config($option);
-				}
-
-				list($group, $var) = explode('.', $option, 2);
-
-				Kohana::config($group)->set($var, $value);
-			}
-		}
+		return $this->_helpers->set_environment($environment);
 	}
 
+	/**
+	 * Check for internet connectivity
+	 *
+	 * @return boolean Whether an internet connection is available
+	 */
+	public function hasInternet()
+	{
+		return Kohana_Unittest_Helpers::has_internet();
+	}
 }
