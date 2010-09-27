@@ -2241,7 +2241,7 @@ It was built using the jQuery library and is licensed under both MIT and GPL lic
 		'comp_url' => 'http://rikrikrik.com/jquery/quicksearch/'),
 	array(
 		'comp_name' => 'markItUp!',
-		'comp_version' => '1.1.7',
+		'comp_version' => '1.1.8',
 		'comp_desc' => "markItUp! is a JavaScript plugin built on the jQuery library that allows you to turn any textarea into a markup editor.",
 		'comp_url' => 'http://markitup.jaysalvat.com/home/'),
 	array(
@@ -2495,6 +2495,7 @@ $system_versions = array(
 		'version_changes'	=> "* added the 1.1.1 update file
 * updated the comments in the login controller
 * updated jquery ui to version 1.8.5
+* updated markitup plugin to version 1.1.8
 * fixed bug where nova wouldn't display if the template file couldn't be found
 * fixed bug where the general tour items category would be shown even if there weren't any general tour items
 * fixed bug where skins with dashboard handles were showing bullets and having weird spacing issues"),

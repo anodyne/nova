@@ -30,6 +30,7 @@ $system_versions = array(
 	'version_changes'	=> "* added the 1.1.1 update file
 * updated the comments in the login controller
 * updated jquery ui to version 1.8.5
+* updated markitup plugin to version 1.1.8
 * fixed bug where nova wouldn't display if the template file couldn't be found
 * fixed bug where the general tour items category would be shown even if there weren't any general tour items
 * fixed bug where skins with dashboard handles were showing bullets and having weird spacing issues"
@@ -185,6 +186,12 @@ if (!is_null($drop_column))
  */
 $this->db->where('comp_name', 'jQuery UI');
 $this->db->update('system_components', array('comp_version' => '1.8.5'));
+
+/**
+ * update the markitup version info
+ */
+$this->db->where('comp_name', 'markItUp!');
+$this->db->update('system_components', array('comp_version' => '1.1.8'));
 
 /**
  * add the system version info
