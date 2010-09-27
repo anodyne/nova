@@ -2277,7 +2277,7 @@ $system_info = array(
 		'sys_install_date' => now(),
 		'sys_version_major' => 1,
 		'sys_version_minor' => 1,
-		'sys_version_update' => 0)
+		'sys_version_update' => 1)
 );
 
 $system_versions = array(
