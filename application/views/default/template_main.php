@@ -46,7 +46,7 @@
 	<div class="wrapper">
 		<!-- SUB NAVIGATION -->
 		<div class="nav-sub">
-			<h1><?php echo Jelly::query('setting')->key('sim_name')->limit(1)->select()->value;?></h1>
+			<h1><?php echo Jelly::query('setting')->where('key', '=', 'sim_name')->limit(1)->select()->value;?></h1>
 			<hr />
 			<?php echo $nav_sub;?>
 		</div>
