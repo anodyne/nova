@@ -1,10 +1,10 @@
 # Nova RPG Management System
 
-Anodyne Production's next-generation RPG management system combines popular features from the SIMM Management System as well as new features like internationalization, developer enhancements, commenting on entries, dynamic forms, multiple characters per player and much more to make Nova the premier web-based solution for managing your RPG game.
+Anodyne Production's next-generation RPG management system combines popular features from the SIMM Management System as well as new features like internationalization, developer enhancements, commenting on entries, dynamic forms, multiple characters per player and much more to make Nova the premier web-based solution for managing your online RPG.
 
 ## Disclaimer
 
-Nova 2 is currently in heavy, active development. We do our best to keep bugs out of the repository, but with alpha software, it's inevitable. We don't recommend using Nova 2 on a production site at this point and offer no guarantee of any sort with the software nor do we offer support for it until it's final release.
+Nova 2 is currently in heavy, active development. As with any alpha software, bugs are to be expected. If you find a bug, we encourage you to report it through the [issue tracker](http://github.com/anodyne/nova/issues) or on the [Anodyne forums](http://forums.anodyne-productions.com/index.php). We don't recommend using Nova 2 on a production site at this point and offer no guarantee of any sort with the software nor do we offer support for it until its final release.
 
 ## Current Version
 
