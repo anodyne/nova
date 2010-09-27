@@ -19,7 +19,7 @@ class Controller_Update extends Controller_Template {
 		parent::before();
 		
 		// make sure the database config file exists
-		if (!file_exists(APPPATH.'config/database'.EXT))
+		if ( ! file_exists(APPPATH.'config/database'.EXT))
 		{
 			$this->request->redirect('install/setupconfig');
 		}
@@ -130,7 +130,7 @@ class Controller_Update extends Controller_Template {
 				foreach ($dir as $key => $value)
 				{
 					// make sure the index.html and versions files aren't in the array
-					if ($value == 'index.html' || $value == 'versions.php' || $value == 'version.yaml')
+					if ($value == 'index.html' OR $value == 'versions.php' OR $value == 'version.yaml')
 					{
 						unset($dir[$key]);
 					}
@@ -514,7 +514,7 @@ class Controller_Update extends Controller_Template {
 						foreach ($dir as $key => $value)
 						{
 							// make sure the index.html and versions files aren't in the array
-							if ($value == 'index.html' || $value == 'versions.php' || $value == 'version.yaml')
+							if ($value == 'index.html' OR $value == 'versions.php' OR $value == 'version.yaml')
 							{
 								unset($dir[$key]);
 							}
@@ -618,7 +618,7 @@ class Controller_Update extends Controller_Template {
 			$classes = get_declared_classes();
 			
 			// if sfYaml hasn't been loaded, then load it
-			if (!in_array('sfYaml', $classes))
+			if ( ! in_array('sfYaml', $classes))
 			{
 				// find the sfYAML library
 				$path = Kohana::find_file('vendor', 'sfYaml/sfYaml');
@@ -660,7 +660,7 @@ class Controller_Update extends Controller_Template {
 			$update = new stdClass;
 			$flash = new stdClass;
 			
-			if (version_compare($version->files->full, $content['version'], '<') || version_compare($version->db->full, $content['version'], '<'))
+			if (version_compare($version->files->full, $content['version'], '<') OR version_compare($version->db->full, $content['version'], '<'))
 			{
 				$update->version	= $content['version'];
 				$update->notes		= $content['notes'];

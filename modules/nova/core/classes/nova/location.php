@@ -44,7 +44,7 @@ abstract class Nova_Location {
 				{
 					$mod = str_replace(MODPATH, '', $m);
 					
-					if (!in_array($mod, $exclude))
+					if ( ! in_array($mod, $exclude))
 					{
 						$loc = MODFOLDER.'/'.$mod;
 						$loc = (substr($loc, -1, 1) == "\\") ? substr_replace($loc, '', -1, 1) : $loc;
@@ -107,7 +107,7 @@ abstract class Nova_Location {
 				{
 					$mod = str_replace(MODPATH, '', $m);
 					
-					if (!in_array($mod, $exclude))
+					if ( ! in_array($mod, $exclude))
 					{
 						$loc = MODFOLDER.'/'.$mod;
 						$locations[$loc] = $m;
@@ -175,7 +175,7 @@ abstract class Nova_Location {
 		{
 			$mod = str_replace(MODPATH, '', $m);
 			
-			if (!in_array($mod, $exclude))
+			if ( ! in_array($mod, $exclude))
 			{
 				$loc = MODFOLDER.'/'.$mod;
 				$locations[$loc] = $m;

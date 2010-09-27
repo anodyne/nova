@@ -149,7 +149,7 @@ abstract class Nova_Html extends Kohana_Html {
 			if (isset($source['media']))
 				$html.= ' media="'.$source['media'].'"';
 			 
-			if (isset($source['attr']) && !empty($source['attr']))
+			if (isset($source['attr']) AND ! empty($source['attr']))
 				$html.= ' '.html::attributes($source['attr']);
 			 
 			$html.= ' />';

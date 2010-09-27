@@ -20,7 +20,7 @@
 		
 		<p>
 			<kbd><?php echo __('Your Email Address');?></kbd>
-			<?php if ($errors !== FALSE && array_key_exists('email', $errors)): ?>
+			<?php if ($errors !== FALSE AND array_key_exists('email', $errors)): ?>
 				<p class="bold error">
 					<?php echo html::image(Location::image('exclamation-red.png', NULL, 'install', 'image'), array('class' => 'inline-image-left'));?>
 					<?php echo ucfirst($errors['email']);?>
@@ -31,7 +31,7 @@
 		
 		<p>
 			<kbd><?php echo __('Your Password');?></kbd>
-			<?php if ($errors !== FALSE && array_key_exists('password', $errors)): ?>
+			<?php if ($errors !== FALSE AND array_key_exists('password', $errors)): ?>
 				<p class="bold error">
 					<?php echo html::image(Location::image('exclamation-red.png', NULL, 'install', 'image'), array('class' => 'inline-image-left'));?>
 					<?php echo ucfirst($errors['password']);?>
@@ -42,7 +42,7 @@
 		
 		<p>
 			<kbd><?php echo __('Confirm Your Password');?></kbd>
-			<?php if ($errors !== FALSE && array_key_exists('password_confirm', $errors)): ?>
+			<?php if ($errors !== FALSE AND array_key_exists('password_confirm', $errors)): ?>
 				<p class="bold error">
 					<?php echo html::image(Location::image('exclamation-red.png', NULL, 'install', 'image'), array('class' => 'inline-image-left'));?>
 					<?php echo ucfirst($errors['password_confirm']);?>

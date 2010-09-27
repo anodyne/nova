@@ -33,13 +33,13 @@ abstract class Controller_Nova_Base extends Controller_Template {
 		parent::before();
 		
 		// if the config file isn't set
-		if (!file_exists(APPPATH.'config/database'.EXT))
+		if ( ! file_exists(APPPATH.'config/database'.EXT))
 		{
 			$this->request->redirect('install/setupconfig');
 		}
 		
 		// make sure the system is installed
-		if (!Utility::install_status())
+		if ( ! Utility::install_status())
 		{
 			$this->request->redirect('install/index');
 		}

@@ -23,12 +23,12 @@
 				<?php endif;?>
 				<td class="bold"><?php echo $g['name'];?></td>
 				<td class="align-center">
-					<strong class="success<?php if (!$g['installed']){ echo ' hidden'; }?>"><?php echo ucfirst(__('installed'));?></strong>
+					<strong class="success<?php if ( ! $g['installed']){ echo ' hidden'; }?>"><?php echo ucfirst(__('installed'));?></strong>
 					<strong class="error<?php if ($g['installed']){ echo ' hidden'; }?>"><?php echo ucwords(__('not installed'));?></strong>
 				</td>
 				<td class="col-150 align-center">
 					<?php if ($key != Kohana::config('nova.genre')): ?>
-						<button myGenre="<?php echo $key;?>" class="do-uninstall button-small<?php if (!$g['installed']){ echo ' hidden'; }?>"><?php echo ucfirst(__('uninstall'));?></button>
+						<button myGenre="<?php echo $key;?>" class="do-uninstall button-small<?php if ( ! $g['installed']){ echo ' hidden'; }?>"><?php echo ucfirst(__('uninstall'));?></button>
 					<?php endif;?>
 					<button myGenre="<?php echo $key;?>" class="do-install button-small<?php if ($g['installed']){ echo ' hidden'; }?>"><?php echo ucfirst(__('install'));?></button>
 					<span class="loading hidden"><?php echo html::image($images['loading']['src'], $images['loading']['attr']);?></span>
@@ -45,12 +45,12 @@
 				<?php endif;?>
 				<td class="bold"><?php echo $a['name'];?></td>
 				<td class="align-center">
-					<strong class="success<?php if (!$a['installed']){ echo ' hidden'; }?>"><?php echo ucfirst(__('installed'));?></strong>
+					<strong class="success<?php if ( ! $a['installed']){ echo ' hidden'; }?>"><?php echo ucfirst(__('installed'));?></strong>
 					<strong class="error<?php if ($a['installed']){ echo ' hidden'; }?>"><?php echo ucfirst(__('not installed'));?></strong>
 				</td>
 				<td class="col-150 align-center">
 					<?php if ($key != Kohana::config('nova.genre')): ?>
-						<button myGenre="<?php echo $key;?>" class="do-uninstall button-small<?php if (!$a['installed']){ echo ' hidden'; }?>"><?php echo ucfirst(__('uninstall'));?></button>
+						<button myGenre="<?php echo $key;?>" class="do-uninstall button-small<?php if ( ! $a['installed']){ echo ' hidden'; }?>"><?php echo ucfirst(__('uninstall'));?></button>
 					<?php endif;?>
 					<button myGenre="<?php echo $key;?>" class="do-install button-small<?php if ($a['installed']){ echo ' hidden'; }?>"><?php echo ucfirst(__('install'));?></button>
 					<span class="loading hidden"><?php echo html::image($images['loading']['src'], $images['loading']['attr']);?></span>

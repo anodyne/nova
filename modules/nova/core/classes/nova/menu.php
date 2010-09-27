@@ -194,13 +194,13 @@ abstract class Nova_Menu {
 			case 'adminsub':
 				foreach ($data as $key => $value)
 				{
-					if (isset($value['menu']) && count($value['menu']) > 0)
+					if (isset($value['menu']) AND count($value['menu']) > 0)
 					{
 						$output.= '<li class="menu-category">'. $value['name'] .'</li>';
 						
 						foreach ($value['menu'] as $item)
 						{
-							if ($item->group != 0 && $item->order == 0)
+							if ($item->group != 0 AND $item->order == 0)
 							{
 								$output.= '<li class="spacer"></li>';
 							}
@@ -219,7 +219,7 @@ abstract class Nova_Menu {
 							$access = Auth::check_access($item->access, FALSE);
 							$level = Auth::get_access_level($item->access);
 							
-							if (($item->useaccess == 'y' && $access === TRUE && ($item->level > 0 && $level >= $item->level || $item->level == 0)) || $item->useaccess == 'n')
+							if (($item->useaccess == 'y' AND $access === TRUE AND ($item->level > 0 AND $level >= $item->level OR $item->level == 0)) OR $item->useaccess == 'n')
 							{
 								$output.= '<li><a href="' . $link .'"' . $target . '><span>' . $item->name . '</span></a></li>';
 							}
@@ -236,14 +236,14 @@ abstract class Nova_Menu {
 				{
 					$display = FALSE;
 		
-					if (($item->login == 'y' && Auth::is_logged_in()) || ($item->login == 'n' && !Auth::is_logged_in()) || $item->login == 'none')
+					if (($item->login == 'y' AND Auth::is_logged_in()) OR ($item->login == 'n' AND ! Auth::is_logged_in()) OR $item->login == 'none')
 					{
 						if ($item->login == 'y')
 						{
 							$access = Auth::check_access($item->access, FALSE);
 							$level = Auth::get_access_level($item->access);
 		
-							if (($item->useaccess == 'y' && $access === TRUE && ($item->level > 0 && $level >= $item->level || $item->level == 0)) || $item->useaccess == 'n')
+							if (($item->useaccess == 'y' AND $access === TRUE AND ($item->level > 0 AND $level >= $item->level OR $item->level == 0)) OR $item->useaccess == 'n')
 							{
 								$display = TRUE;
 							}
@@ -293,7 +293,7 @@ abstract class Nova_Menu {
 				{
 					$display = FALSE;
 	
-					if ($item->group != 0 && $item->order == 0)
+					if ($item->group != 0 AND $item->order == 0)
 					{
 						$output.= '<li class="spacer"></li>';
 					}
@@ -309,14 +309,14 @@ abstract class Nova_Menu {
 						$link = url::site($item->link);
 					}
 	
-					if (($item->login == 'y' && Auth::is_logged_in()) || ($item->login == 'n' && !Auth::is_logged_in()) || $item->login == 'none')
+					if (($item->login == 'y' AND Auth::is_logged_in()) OR ($item->login == 'n' AND ! Auth::is_logged_in()) OR $item->login == 'none')
 					{
 						if ($item->login == 'y')
 						{
 							$access = Auth::check_access($item->access, FALSE);
 							$level = Auth::get_access_level($item->access);
 	
-							if (($item->useaccess == 'y' && $access === TRUE && ($item->level > 0 && $level >= $item->level || $item->level == 0)) || $item->useaccess == 'n')
+							if (($item->useaccess == 'y' AND $access === TRUE AND ($item->level > 0 AND $level >= $item->level OR $item->level == 0)) OR $item->useaccess == 'n')
 							{
 								$display = TRUE;
 							}

@@ -62,14 +62,14 @@ class Controller_Updateajax extends Controller_Template {
 			// optmize the tables
 			DBForge::optimize('applications');
 			
-			if (in_array(FALSE, $saved) && ! in_array(TRUE, $saved))
+			if (in_array(FALSE, $saved) AND ! in_array(TRUE, $saved))
 			{
 				$retval = array(
 					'code' => 0,
 					'message' => __("Your application records could not be updated.")
 				);
 			}
-			elseif (in_array(FALSE, $saved) && in_array(TRUE, $saved))
+			elseif (in_array(FALSE, $saved) AND in_array(TRUE, $saved))
 			{
 				// get an array with the counts of the different values
 				$unique = array_count_values($saved);
@@ -189,7 +189,7 @@ class Controller_Updateajax extends Controller_Template {
 							);
 						}
 						
-						if (in_array(TRUE, $savedAwardsRec) && in_array(FALSE, $savedAwardsRec))
+						if (in_array(TRUE, $savedAwardsRec) AND in_array(FALSE, $savedAwardsRec))
 						{
 							// get an array with the counts of the different values
 							$unique = array_count_values($savedAwardsRec);
@@ -229,7 +229,7 @@ class Controller_Updateajax extends Controller_Template {
 							);
 						}
 						
-						if (in_array(TRUE, $savedAwardsRec) && in_array(FALSE, $savedAwardsRec))
+						if (in_array(TRUE, $savedAwardsRec) AND in_array(FALSE, $savedAwardsRec))
 						{
 							// get an array with the counts of the different values
 							$unique = array_count_values($savedAwardsRec);
@@ -249,7 +249,7 @@ class Controller_Updateajax extends Controller_Template {
 						);
 					}
 				}
-				elseif (in_array(TRUE, $savedAwards) && in_array(FALSE, $savedAwards))
+				elseif (in_array(TRUE, $savedAwards) AND in_array(FALSE, $savedAwards))
 				{
 					// get an array with the counts of the different values
 					$unique = array_count_values($savedAwards);
@@ -274,7 +274,7 @@ class Controller_Updateajax extends Controller_Template {
 							);
 						}
 						
-						if (in_array(TRUE, $savedAwardsRec) && in_array(FALSE, $savedAwardsRec))
+						if (in_array(TRUE, $savedAwardsRec) AND in_array(FALSE, $savedAwardsRec))
 						{
 							// get an array with the counts of the different values
 							$uniqueRec = array_count_values($savedAwardsRec);
@@ -532,18 +532,18 @@ class Controller_Updateajax extends Controller_Template {
 			DBForge::optimize('forms_tabs');
 			DBForge::optimize('forms_values');
 			
-			if ( ! in_array(TRUE, $savedChars) && ! in_array(TRUE, $savedCharsProm) && ! in_array(TRUE, $savedFormTabs)
-					&& ! in_array(TRUE, $savedFormSections) && ! in_array(TRUE, $savedFormFields) && ! in_array(TRUE, $savedFormValues)
-					&& ! in_array(TRUE, $savedFormData) && ! in_array(TRUE, $savedCOC))
+			if ( ! in_array(TRUE, $savedChars) AND ! in_array(TRUE, $savedCharsProm) AND ! in_array(TRUE, $savedFormTabs)
+					AND ! in_array(TRUE, $savedFormSections) AND ! in_array(TRUE, $savedFormFields) AND ! in_array(TRUE, $savedFormValues)
+					AND ! in_array(TRUE, $savedFormData) AND ! in_array(TRUE, $savedCOC))
 			{
 				$retval = array(
 					'code' => 0,
 					'message' => __("None of your character data or bio form could be updated. Due to the high volume of information that needs to be updated, a more detailed description isn't available.")
 				);
 			}
-			elseif ( ! in_array(FALSE, $savedChars) && ! in_array(FALSE, $savedCharsProm) && ! in_array(FALSE, $savedFormTabs)
-					&& ! in_array(FALSE, $savedFormSections) && ! in_array(FALSE, $savedFormFields) && ! in_array(FALSE, $savedFormValues)
-					&& ! in_array(FALSE, $savedFormData) && ! in_array(FALSE, $savedCOC))
+			elseif ( ! in_array(FALSE, $savedChars) AND ! in_array(FALSE, $savedCharsProm) AND ! in_array(FALSE, $savedFormTabs)
+					AND ! in_array(FALSE, $savedFormSections) AND ! in_array(FALSE, $savedFormFields) AND ! in_array(FALSE, $savedFormValues)
+					AND ! in_array(FALSE, $savedFormData) AND ! in_array(FALSE, $savedCOC))
 			{
 				$retval = array(
 					'code' => 1,
@@ -701,7 +701,7 @@ class Controller_Updateajax extends Controller_Template {
 							'message' => __("Your docking items were updated but none of your docking form information could be updated."),
 						);
 					}
-					if (in_array(FALSE, $savedDockingForm) && in_array(TRUE, $savedDockingForm))
+					if (in_array(FALSE, $savedDockingForm) AND in_array(TRUE, $savedDockingForm))
 					{
 						$retval = array(
 							'code' => 2,
@@ -725,7 +725,7 @@ class Controller_Updateajax extends Controller_Template {
 							'message' => __("None of your docking items or docking form information could be updated."),
 						);
 					}
-					if (in_array(FALSE, $savedDockingForm) && in_array(TRUE, $savedDockingForm))
+					if (in_array(FALSE, $savedDockingForm) AND in_array(TRUE, $savedDockingForm))
 					{
 						$retval = array(
 							'code' => 2,
@@ -733,7 +733,7 @@ class Controller_Updateajax extends Controller_Template {
 						);
 					}
 				}
-				elseif (in_array(FALSE, $savedDocking) && in_array(TRUE, $savedDocking))
+				elseif (in_array(FALSE, $savedDocking) AND in_array(TRUE, $savedDocking))
 				{
 					if ( ! in_array(FALSE, $savedDockingForm))
 					{
@@ -749,7 +749,7 @@ class Controller_Updateajax extends Controller_Template {
 							'message' => __("None of your docking form information was updated and only some of your docking items were updated."),
 						);
 					}
-					if (in_array(FALSE, $savedDockingForm) && in_array(TRUE, $savedDockingForm))
+					if (in_array(FALSE, $savedDockingForm) AND in_array(TRUE, $savedDockingForm))
 					{
 						$retval = array(
 							'code' => 2,
@@ -852,7 +852,7 @@ class Controller_Updateajax extends Controller_Template {
 							);
 						}
 						
-						if (in_array(TRUE, $savedMisGroups) && in_array(FALSE, $savedMisGroups))
+						if (in_array(TRUE, $savedMisGroups) AND in_array(FALSE, $savedMisGroups))
 						{
 							// get an array with the counts of the different values
 							$unique = array_count_values($savedMisGroups);
@@ -892,7 +892,7 @@ class Controller_Updateajax extends Controller_Template {
 							);
 						}
 						
-						if (in_array(TRUE, $savedMisGroups) && in_array(FALSE, $savedMisGroups))
+						if (in_array(TRUE, $savedMisGroups) AND in_array(FALSE, $savedMisGroups))
 						{
 							// get an array with the counts of the different values
 							$unique = array_count_values($savedMisGroups);
@@ -912,7 +912,7 @@ class Controller_Updateajax extends Controller_Template {
 						);
 					}
 				}
-				elseif (in_array(TRUE, $savedMis) && in_array(FALSE, $savedMis))
+				elseif (in_array(TRUE, $savedMis) AND in_array(FALSE, $savedMis))
 				{
 					// get an array with the counts of the different values
 					$unique = array_count_values($savedMis);
@@ -937,7 +937,7 @@ class Controller_Updateajax extends Controller_Template {
 							);
 						}
 						
-						if (in_array(TRUE, $savedMisGroups) && in_array(FALSE, $savedMisGroups))
+						if (in_array(TRUE, $savedMisGroups) AND in_array(FALSE, $savedMisGroups))
 						{
 							// get an array with the counts of the different values
 							$uniqueGrp = array_count_values($savedMisGroups);
@@ -1076,7 +1076,7 @@ class Controller_Updateajax extends Controller_Template {
 							);
 						}
 						
-						if (in_array(TRUE, $savedNewsCom) && in_array(FALSE, $savedNewsCom))
+						if (in_array(TRUE, $savedNewsCom) AND in_array(FALSE, $savedNewsCom))
 						{
 							// get an array with the counts of the different values
 							$unique = array_count_values($savedNewsCom);
@@ -1116,7 +1116,7 @@ class Controller_Updateajax extends Controller_Template {
 							);
 						}
 						
-						if (in_array(TRUE, $savedNewsCom) && in_array(FALSE, $savedNewsCom))
+						if (in_array(TRUE, $savedNewsCom) AND in_array(FALSE, $savedNewsCom))
 						{
 							// get an array with the counts of the different values
 							$unique = array_count_values($savedNewsCom);
@@ -1136,7 +1136,7 @@ class Controller_Updateajax extends Controller_Template {
 						);
 					}
 				}
-				elseif (in_array(TRUE, $savedNews) && in_array(FALSE, $savedNews))
+				elseif (in_array(TRUE, $savedNews) AND in_array(FALSE, $savedNews))
 				{
 					// get an array with the counts of the different values
 					$unique = array_count_values($savedNews);
@@ -1161,7 +1161,7 @@ class Controller_Updateajax extends Controller_Template {
 							);
 						}
 						
-						if (in_array(TRUE, $savedNewsCom) && in_array(FALSE, $savedNewsCom))
+						if (in_array(TRUE, $savedNewsCom) AND in_array(FALSE, $savedNewsCom))
 						{
 							// get an array with the counts of the different values
 							$uniqueCom = array_count_values($savedNewsCom);
@@ -1277,7 +1277,7 @@ class Controller_Updateajax extends Controller_Template {
 							);
 						}
 						
-						if (in_array(TRUE, $savedLogsCom) && in_array(FALSE, $savedLogsCom))
+						if (in_array(TRUE, $savedLogsCom) AND in_array(FALSE, $savedLogsCom))
 						{
 							// get an array with the counts of the different values
 							$unique = array_count_values($savedLogsCom);
@@ -1317,7 +1317,7 @@ class Controller_Updateajax extends Controller_Template {
 							);
 						}
 						
-						if (in_array(TRUE, $savedLogsCom) && in_array(FALSE, $savedLogsCom))
+						if (in_array(TRUE, $savedLogsCom) AND in_array(FALSE, $savedLogsCom))
 						{
 							// get an array with the counts of the different values
 							$unique = array_count_values($savedLogsCom);
@@ -1337,7 +1337,7 @@ class Controller_Updateajax extends Controller_Template {
 						);
 					}
 				}
-				elseif (in_array(TRUE, $savedLogs) && in_array(FALSE, $savedLogs))
+				elseif (in_array(TRUE, $savedLogs) AND in_array(FALSE, $savedLogs))
 				{
 					// get an array with the counts of the different values
 					$unique = array_count_values($savedLogs);
@@ -1362,7 +1362,7 @@ class Controller_Updateajax extends Controller_Template {
 							);
 						}
 						
-						if (in_array(TRUE, $savedLogsCom) && in_array(FALSE, $savedLogsCom))
+						if (in_array(TRUE, $savedLogsCom) AND in_array(FALSE, $savedLogsCom))
 						{
 							// get an array with the counts of the different values
 							$uniqueCom = array_count_values($savedLogsCom);
@@ -1480,7 +1480,7 @@ class Controller_Updateajax extends Controller_Template {
 								'message' => __("All of your posts were updated, but none of your post comments could be updated.")
 							);
 						}
-						if (in_array(TRUE, $savedPostsCom) && in_array(FALSE, $savedPostsCom))
+						if (in_array(TRUE, $savedPostsCom) AND in_array(FALSE, $savedPostsCom))
 						{
 							// get an array with the counts of the different values
 							$unique = array_count_values($savedPostsCom);
@@ -1518,7 +1518,7 @@ class Controller_Updateajax extends Controller_Template {
 								'message' => __("None of your posts or post comments could be updated.")
 							);
 						}
-						if (in_array(TRUE, $savedPostsCom) && in_array(FALSE, $savedPostsCom))
+						if (in_array(TRUE, $savedPostsCom) AND in_array(FALSE, $savedPostsCom))
 						{
 							// get an array with the counts of the different values
 							$unique = array_count_values($savedPostsCom);
@@ -1538,7 +1538,7 @@ class Controller_Updateajax extends Controller_Template {
 						);
 					}
 				}
-				elseif (in_array(TRUE, $savedPosts) && in_array(FALSE, $savedPosts))
+				elseif (in_array(TRUE, $savedPosts) AND in_array(FALSE, $savedPosts))
 				{
 					// get an array with the counts of the different values
 					$unique = array_count_values($savedPosts);
@@ -1561,7 +1561,7 @@ class Controller_Updateajax extends Controller_Template {
 									array(':success' => $unique[1], ':total' => $n1PostsCount))
 							);
 						}
-						if (in_array(TRUE, $savedPostsCom) && in_array(FALSE, $savedPostsCom))
+						if (in_array(TRUE, $savedPostsCom) AND in_array(FALSE, $savedPostsCom))
 						{
 							// get an array with the counts of the different values
 							$uniqueCom = array_count_values($savedPostsCom);
@@ -1667,7 +1667,7 @@ class Controller_Updateajax extends Controller_Template {
 						'message' => __("None of your private messages could be updated.")
 					);
 				}
-				elseif (in_array(TRUE, $saved) && in_array(FALSE, $saved))
+				elseif (in_array(TRUE, $saved) AND in_array(FALSE, $saved))
 				{
 					$retval = array(
 						'code' => 2,
@@ -1759,7 +1759,7 @@ class Controller_Updateajax extends Controller_Template {
 						'message' => __("None of your settings were updated.")
 					);
 				}
-				elseif (in_array(FALSE, $saved) && in_array(TRUE, $saved))
+				elseif (in_array(FALSE, $saved) AND in_array(TRUE, $saved))
 				{
 					$retval = array(
 						'code' => 2,
@@ -1917,7 +1917,7 @@ class Controller_Updateajax extends Controller_Template {
 							'message' => __("Your specification items were updated but none of your specification form information could be updated."),
 						);
 					}
-					if (in_array(FALSE, $savedSpecsForm) && in_array(TRUE, $savedSpecsForm))
+					if (in_array(FALSE, $savedSpecsForm) AND in_array(TRUE, $savedSpecsForm))
 					{
 						$retval = array(
 							'code' => 2,
@@ -1941,7 +1941,7 @@ class Controller_Updateajax extends Controller_Template {
 							'message' => __("None of your specification items or specification form information could be updated."),
 						);
 					}
-					if (in_array(FALSE, $savedSpecsForm) && in_array(TRUE, $savedSpecsForm))
+					if (in_array(FALSE, $savedSpecsForm) AND in_array(TRUE, $savedSpecsForm))
 					{
 						$retval = array(
 							'code' => 2,
@@ -1949,7 +1949,7 @@ class Controller_Updateajax extends Controller_Template {
 						);
 					}
 				}
-				elseif (in_array(FALSE, $savedSpecs) && in_array(TRUE, $savedSpecs))
+				elseif (in_array(FALSE, $savedSpecs) AND in_array(TRUE, $savedSpecs))
 				{
 					if ( ! in_array(FALSE, $savedSpecsForm))
 					{
@@ -1965,7 +1965,7 @@ class Controller_Updateajax extends Controller_Template {
 							'message' => __("None of your specification form information was updated and only some of your specification items were updated."),
 						);
 					}
-					if (in_array(FALSE, $savedSpecsForm) && in_array(TRUE, $savedSpecsForm))
+					if (in_array(FALSE, $savedSpecsForm) AND in_array(TRUE, $savedSpecsForm))
 					{
 						$retval = array(
 							'code' => 2,
@@ -2108,64 +2108,64 @@ class Controller_Updateajax extends Controller_Template {
 			{
 				if ( ! in_array(FALSE, $savedTour))
 				{
-					if ( ! in_array(FALSE, $savedTourForm) && ! in_array(FALSE, $savedTourDecks))
+					if ( ! in_array(FALSE, $savedTourForm) AND ! in_array(FALSE, $savedTourDecks))
 					{
 						$retval = array(
 							'code' => 1,
 							'message' => ""
 						);
 					}
-					if ( ! in_array(FALSE, $savedTourForm) && (in_array(FALSE, $savedTourDecks) && in_array(TRUE, $savedTourDecks)))
+					if ( ! in_array(FALSE, $savedTourForm) AND (in_array(FALSE, $savedTourDecks) AND in_array(TRUE, $savedTourDecks)))
 					{
 						$retval = array(
 							'code' => 2,
 							'message' => __("Your tour items and tour form information were updated, but only some of your decks could be updated.")
 						);
 					}
-					if ( ! in_array(TRUE, $savedTourForm) && (in_array(FALSE, $savedTourDecks) && in_array(TRUE, $savedTourDecks)))
+					if ( ! in_array(TRUE, $savedTourForm) AND (in_array(FALSE, $savedTourDecks) AND in_array(TRUE, $savedTourDecks)))
 					{
 						$retval = array(
 							'code' => 2,
 							'message' => __("Your tour items were updated, but none of your tour form information and only some of your decks could be updated.")
 						);
 					}
-					if ((in_array(FALSE, $savedTourForm) && in_array(TRUE, $savedTourForm)) && ! in_array(FALSE, $savedTourDecks))
+					if ((in_array(FALSE, $savedTourForm) AND in_array(TRUE, $savedTourForm)) AND ! in_array(FALSE, $savedTourDecks))
 					{
 						$retval = array(
 							'code' => 2,
 							'message' => __("Your tour items and decks were updated, but only some of your tour form information could be updated.")
 						);
 					}
-					if ((in_array(FALSE, $savedTourForm) && in_array(TRUE, $savedTourForm)) && ! in_array(TRUE, $savedTourDecks))
+					if ((in_array(FALSE, $savedTourForm) AND in_array(TRUE, $savedTourForm)) AND ! in_array(TRUE, $savedTourDecks))
 					{
 						$retval = array(
 							'code' => 2,
 							'message' => __("Your tour items were updated, but none of your decks were updated and only some of your tour form information could be updated.")
 						);
 					}
-					if ((in_array(FALSE, $savedTourForm) && in_array(TRUE, $savedTourForm)) && 
-							(in_array(FALSE, $savedTourDecks) && in_array(TRUE, $savedTourDecks)))
+					if ((in_array(FALSE, $savedTourForm) AND in_array(TRUE, $savedTourForm)) AND 
+							(in_array(FALSE, $savedTourDecks) AND in_array(TRUE, $savedTourDecks)))
 					{
 						$retval = array(
 							'code' => 2,
 							'message' => __("Your tour items were updated, but only some of your decks and tour form information could be updated.")
 						);
 					}
-					if ( ! in_array(FALSE, $savedTourForm) && ! in_array(TRUE, $savedTourDecks))
+					if ( ! in_array(FALSE, $savedTourForm) AND ! in_array(TRUE, $savedTourDecks))
 					{
 						$retval = array(
 							'code' => 2,
 							'message' => __("Your tour items and tour form information were updated, but none of your decks could be updated.")
 						);
 					}
-					if ( ! in_array(TRUE, $savedTourForm) && ! in_array(FALSE, $savedTourDecks))
+					if ( ! in_array(TRUE, $savedTourForm) AND ! in_array(FALSE, $savedTourDecks))
 					{
 						$retval = array(
 							'code' => 2,
 							'message' => __("Your tour items and decks were updated, but none of your tour form information could be updated.")
 						);
 					}
-					if ( ! in_array(TRUE, $savedTourForm) && ! in_array(TRUE, $savedTourDecks))
+					if ( ! in_array(TRUE, $savedTourForm) AND ! in_array(TRUE, $savedTourDecks))
 					{
 						$retval = array(
 							'code' => 2,
@@ -2175,64 +2175,64 @@ class Controller_Updateajax extends Controller_Template {
 				}
 				elseif ( ! in_array(TRUE, $savedTour))
 				{
-					if ( ! in_array(FALSE, $savedTourForm) && ! in_array(FALSE, $savedTourDecks))
+					if ( ! in_array(FALSE, $savedTourForm) AND ! in_array(FALSE, $savedTourDecks))
 					{
 						$retval = array(
 							'code' => 2,
 							'message' => __("Your tour form information and decks were updated, but none of your tour items could be updated.")
 						);
 					}
-					if ( ! in_array(FALSE, $savedTourForm) && (in_array(FALSE, $savedTourDecks) && in_array(TRUE, $savedTourDecks)))
+					if ( ! in_array(FALSE, $savedTourForm) AND (in_array(FALSE, $savedTourDecks) AND in_array(TRUE, $savedTourDecks)))
 					{
 						$retval = array(
 							'code' => 2,
 							'message' => __("Your tour form information was updated, but none of your tour items and only some of your decks could be updated.")
 						);
 					}
-					if ( ! in_array(TRUE, $savedTourForm) && (in_array(FALSE, $savedTourDecks) && in_array(TRUE, $savedTourDecks)))
+					if ( ! in_array(TRUE, $savedTourForm) AND (in_array(FALSE, $savedTourDecks) AND in_array(TRUE, $savedTourDecks)))
 					{
 						$retval = array(
 							'code' => 2,
 							'message' => __("None of your tour items or tour form information were updated and only some of your decks could be updated.")
 						);
 					}
-					if ((in_array(FALSE, $savedTourForm) && in_array(TRUE, $savedTourForm)) && ! in_array(FALSE, $savedTourDecks))
+					if ((in_array(FALSE, $savedTourForm) AND in_array(TRUE, $savedTourForm)) AND ! in_array(FALSE, $savedTourDecks))
 					{
 						$retval = array(
 							'code' => 2,
 							'message' => __("Your decks were updated, but none of your tour items and only some of your tour form information could be updated.")
 						);
 					}
-					if ((in_array(FALSE, $savedTourForm) && in_array(TRUE, $savedTourForm)) && ! in_array(TRUE, $savedTourDecks))
+					if ((in_array(FALSE, $savedTourForm) AND in_array(TRUE, $savedTourForm)) AND ! in_array(TRUE, $savedTourDecks))
 					{
 						$retval = array(
 							'code' => 2,
 							'message' => __("None of your tour items or decks were updated and only some of your tour form information could be updated.")
 						);
 					}
-					if ((in_array(FALSE, $savedTourForm) && in_array(TRUE, $savedTourForm)) && 
-							(in_array(FALSE, $savedTourDecks) && in_array(TRUE, $savedTourDecks)))
+					if ((in_array(FALSE, $savedTourForm) AND in_array(TRUE, $savedTourForm)) AND 
+							(in_array(FALSE, $savedTourDecks) AND in_array(TRUE, $savedTourDecks)))
 					{
 						$retval = array(
 							'code' => 2,
 							'message' => __("None of your tour items were updated and only some of your tour form information and decks could be updated.")
 						);
 					}
-					if ( ! in_array(FALSE, $savedTourForm) && ! in_array(TRUE, $savedTourDecks))
+					if ( ! in_array(FALSE, $savedTourForm) AND ! in_array(TRUE, $savedTourDecks))
 					{
 						$retval = array(
 							'code' => 2,
 							'message' => __("Your tour form information was updated, but none of your tour items or decks could be updated.")
 						);
 					}
-					if ( ! in_array(TRUE, $savedTourForm) && ! in_array(FALSE, $savedTourDecks))
+					if ( ! in_array(TRUE, $savedTourForm) AND ! in_array(FALSE, $savedTourDecks))
 					{
 						$retval = array(
 							'code' => 2,
 							'message' => __("Your decks were updated, but none of your tour items or tour form information could be updated.")
 						);
 					}
-					if ( ! in_array(TRUE, $savedTourForm) && ! in_array(TRUE, $savedTourDecks))
+					if ( ! in_array(TRUE, $savedTourForm) AND ! in_array(TRUE, $savedTourDecks))
 					{
 						$retval = array(
 							'code' => 0,
@@ -2240,66 +2240,66 @@ class Controller_Updateajax extends Controller_Template {
 						);
 					}
 				}
-				elseif (in_array(FALSE, $savedTour) && in_array(TRUE, $savedTour))
+				elseif (in_array(FALSE, $savedTour) AND in_array(TRUE, $savedTour))
 				{
-					if ( ! in_array(FALSE, $savedTourForm) && ! in_array(FALSE, $savedTourDecks))
+					if ( ! in_array(FALSE, $savedTourForm) AND ! in_array(FALSE, $savedTourDecks))
 					{
 						$retval = array(
 							'code' => 2,
 							'message' => __("Your tour form information and decks were updated, but only some of your tour items could be updated.")
 						);
 					}
-					if ( ! in_array(FALSE, $savedTourForm) && (in_array(FALSE, $savedTourDecks) && in_array(TRUE, $savedTourDecks)))
+					if ( ! in_array(FALSE, $savedTourForm) AND (in_array(FALSE, $savedTourDecks) AND in_array(TRUE, $savedTourDecks)))
 					{
 						$retval = array(
 							'code' => 2,
 							'message' => __("Your tour form information was updated, but only some of your tour items and decks could be updated.")
 						);
 					}
-					if ( ! in_array(TRUE, $savedTourForm) && (in_array(FALSE, $savedTourDecks) && in_array(TRUE, $savedTourDecks)))
+					if ( ! in_array(TRUE, $savedTourForm) AND (in_array(FALSE, $savedTourDecks) AND in_array(TRUE, $savedTourDecks)))
 					{
 						$retval = array(
 							'code' => 2,
 							'message' => __("None of your tour form information was updated and only some of your tour items and decks could be updated.")
 						);
 					}
-					if ((in_array(FALSE, $savedTourForm) && in_array(TRUE, $savedTourForm)) && ! in_array(FALSE, $savedTourDecks))
+					if ((in_array(FALSE, $savedTourForm) AND in_array(TRUE, $savedTourForm)) AND ! in_array(FALSE, $savedTourDecks))
 					{
 						$retval = array(
 							'code' => 2,
 							'message' => __("Your decks were updated, but only some of your tour items and tour form information could be updated.")
 						);
 					}
-					if ((in_array(FALSE, $savedTourForm) && in_array(TRUE, $savedTourForm)) && ! in_array(TRUE, $savedTourDecks))
+					if ((in_array(FALSE, $savedTourForm) AND in_array(TRUE, $savedTourForm)) AND ! in_array(TRUE, $savedTourDecks))
 					{
 						$retval = array(
 							'code' => 2,
 							'message' => __("None of your decks were updated and only some of your tour items and tour form information could be updated.")
 						);
 					}
-					if ((in_array(FALSE, $savedTourForm) && in_array(TRUE, $savedTourForm)) && 
-							(in_array(FALSE, $savedTourDecks) && in_array(TRUE, $savedTourDecks)))
+					if ((in_array(FALSE, $savedTourForm) AND in_array(TRUE, $savedTourForm)) AND 
+							(in_array(FALSE, $savedTourDecks) AND in_array(TRUE, $savedTourDecks)))
 					{
 						$retval = array(
 							'code' => 2,
 							'message' => __("Only some of your tour items, tour form information and decks could be updated.")
 						);
 					}
-					if ( ! in_array(FALSE, $savedTourForm) && ! in_array(TRUE, $savedTourDecks))
+					if ( ! in_array(FALSE, $savedTourForm) AND ! in_array(TRUE, $savedTourDecks))
 					{
 						$retval = array(
 							'code' => 2,
 							'message' => __("Your tour form information was updated, but none of your decks and only some of your tour items could be updated.")
 						);
 					}
-					if ( ! in_array(TRUE, $savedTourForm) && ! in_array(FALSE, $savedTourDecks))
+					if ( ! in_array(TRUE, $savedTourForm) AND ! in_array(FALSE, $savedTourDecks))
 					{
 						$retval = array(
 							'code' => 2,
 							'message' => __("Your decks were updated, but none of your tour form information and only some of your tour items could be updated.")
 						);
 					}
-					if ( ! in_array(TRUE, $savedTourForm) && ! in_array(TRUE, $savedTourDecks))
+					if ( ! in_array(TRUE, $savedTourForm) AND ! in_array(TRUE, $savedTourDecks))
 					{
 						$retval = array(
 							'code' => 0,
@@ -2512,14 +2512,14 @@ class Controller_Updateajax extends Controller_Template {
 			DBForge::optimize('user_prefs_values');
 			DBForge::optimize('moderation');
 			
-			if (in_array(FALSE, $saved) && ! in_array(TRUE, $saved))
+			if (in_array(FALSE, $saved) AND ! in_array(TRUE, $saved))
 			{
 				$retval = array(
 					'code' => 0,
 					'message' => __("Your users could not be updated.")
 				);
 			}
-			elseif (in_array(FALSE, $saved) && in_array(TRUE, $saved))
+			elseif (in_array(FALSE, $saved) AND in_array(TRUE, $saved))
 			{
 				// get an array with the counts of the different values
 				$unique = array_count_values($saved);
@@ -2646,14 +2646,14 @@ class Controller_Updateajax extends Controller_Template {
 			
 			if (count($savedPages) > 0)
 			{
-				if ( ! in_array(TRUE, $savedPages) && ! in_array(TRUE, $savedDrafts) && ! in_array(TRUE, $savedCats) && ! in_array(TRUE, $savedComments))
+				if ( ! in_array(TRUE, $savedPages) AND ! in_array(TRUE, $savedDrafts) AND ! in_array(TRUE, $savedCats) AND ! in_array(TRUE, $savedComments))
 				{
 					$retval = array(
 						'code' => 0,
 						'message' => __("None of your wiki data could be updated. Due to the high volume of information that needs to be updated, a more detailed description isn't available.")
 					);
 				}
-				elseif ( ! in_array(FALSE, $savedPages) && ! in_array(FALSE, $savedDrafts) && ! in_array(FALSE, $savedCats) && ! in_array(FALSE, $savedComments))
+				elseif ( ! in_array(FALSE, $savedPages) AND ! in_array(FALSE, $savedDrafts) AND ! in_array(FALSE, $savedCats) AND ! in_array(FALSE, $savedComments))
 				{
 					$retval = array(
 						'code' => 1,

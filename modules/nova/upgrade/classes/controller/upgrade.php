@@ -19,7 +19,7 @@ class Controller_Upgrade extends Controller_Template {
 		parent::before();
 		
 		// make sure the database config file exists
-		if (!file_exists(APPPATH.'config/database'.EXT))
+		if ( ! file_exists(APPPATH.'config/database'.EXT))
 		{
 			$this->request->redirect('install/setupconfig');
 		}
@@ -29,7 +29,7 @@ class Controller_Upgrade extends Controller_Template {
 			$safesegs = array('step', 'index', 'verify', 'readme');
 			
 			// make sure the system is installed
-			if (count(Database::instance()->list_tables()) < $this->_tables && !(in_array($this->request->action, $safesegs)))
+			if (count(Database::instance()->list_tables()) < $this->_tables AND ! (in_array($this->request->action, $safesegs)))
 			{
 				$this->request->redirect('install/index');
 			}
@@ -425,7 +425,7 @@ class Controller_Upgrade extends Controller_Template {
 		// the verification table
 		$data->verify = Utility::verify_server();
 		
-		if ($data->verify === FALSE || !isset($data->verify['failure']))
+		if ($data->verify === FALSE OR ! isset($data->verify['failure']))
 		{
 			// build the next step button
 			$next = array(

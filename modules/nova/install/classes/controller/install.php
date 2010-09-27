@@ -21,7 +21,7 @@ class Controller_Install extends Controller_Template {
 		parent::before();
 		
 		// make sure the database config file exists
-		if (!file_exists(APPPATH.'config/database'.EXT))
+		if ( ! file_exists(APPPATH.'config/database'.EXT))
 		{
 			if ($this->request->action != 'setupconfig')
 			{
@@ -34,7 +34,7 @@ class Controller_Install extends Controller_Template {
 			$safesegs = array('step', 'index', 'main', 'verify', 'readme');
 			
 			// make sure the system is installed
-			if (count(Database::instance()->list_tables()) < $this->_tables && !(in_array($this->request->action, $safesegs)))
+			if (count(Database::instance()->list_tables()) < $this->_tables AND ! (in_array($this->request->action, $safesegs)))
 			{
 				$this->request->redirect('install/index');
 			}
@@ -335,7 +335,7 @@ class Controller_Install extends Controller_Template {
 		// figure out if the system is installed or not
 		$data->installed = Utility::install_status();
 		
-		if ((is_numeric($error) && $error > 0))
+		if ((is_numeric($error) AND $error > 0))
 		{
 			$this->template->layout->flash_message = View::factory('install/pages/flash');
 			$this->template->layout->flash_message->status = ($error == 1) ? 'info' : 'error';
@@ -471,7 +471,7 @@ class Controller_Install extends Controller_Template {
 		// pass the step over to the view file
 		$data->step = $step;
 		
-		if (!file_exists(MODPATH.'assets/database/db.mysql'.EXT))
+		if ( ! file_exists(MODPATH.'assets/database/db.mysql'.EXT))
 		{
 			$data->message = __('setup.no_config_file', array(':modules' => MODFOLDER, ':ext' => EXT));
 		}
@@ -562,7 +562,7 @@ class Controller_Install extends Controller_Template {
 							try {
 								$tables = $db->list_tables($prefix.'%');
 								
-								if ($type == 'nova1' && count($tables) > 0)
+								if ($type == 'nova1' AND count($tables) > 0)
 								{
 									// write the message
 									$data->message = __('setup.step2_nova1_failure');
@@ -1242,7 +1242,7 @@ return array
 		// the verification table
 		$data->verify = Utility::verify_server();
 		
-		if ($data->verify === FALSE || !isset($data->verify['failure']))
+		if ($data->verify === FALSE OR ! isset($data->verify['failure']))
 		{
 			// build the next step button
 			$next = array(

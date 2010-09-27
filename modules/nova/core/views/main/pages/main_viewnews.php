@@ -1,4 +1,4 @@
-<?php if (isset($news) && ($next !== NULL || $prev !== NULL)): ?>
+<?php if (isset($news) AND ($next !== NULL OR $prev !== NULL)): ?>
 	<div class="float-right">
 		<?php if ($prev !== NULL): ?>
 			<?php echo html::anchor('main/viewnews/'.$prev, html::image($images['prev']['src'], $images['prev']['attr']), array('class' => 'image'));?>
@@ -29,7 +29,7 @@
 	<p class="fontSmall info">
 		<strong><?php echo ucfirst(__('label.category')).':</strong> '.$news->category->name;?>
 		
-		<?php if (!empty($news->tags)): ?>
+		<?php if ( ! empty($news->tags)): ?>
 			<br /><strong><?php echo ucfirst(__('label.tags')).':</strong> '. $news->tags;?>
 		<?php endif; ?>
 	</p>
@@ -40,7 +40,7 @@
 	
 	<p>&nbsp;</p>
 	
-	<?php if ($next !== NULL || $prev !== NULL): ?>
+	<?php if ($next !== NULL OR $prev !== NULL): ?>
 		<div class="float-right">
 			<?php if ($prev !== NULL): ?>
 				<?php echo html::anchor('main/viewnews/'.$prev, html::image($images['prev']['src'], $images['prev']['attr']), array('class' => 'image'));?>
@@ -70,7 +70,7 @@
 		<?php endforeach; ?>
 	<?php endif;?>
 	
-	<?php if (!Auth::is_logged_in()): ?>
+	<?php if ( ! Auth::is_logged_in()): ?>
 		<div class="comment-add">
 			<?php echo form::open('main/viewnews/'.$news->id);?>
 				<?php echo form::textarea($inputs['content']['name'], $inputs['content']['value'], $inputs['content']['attr']);?>

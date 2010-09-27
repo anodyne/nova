@@ -538,7 +538,7 @@ class Wiki_base extends Controller {
 				$data['pages'][$p->page_id]['id'] = $p->page_id;
 				$data['pages'][$p->page_id]['title'] = $p->draft_title;
 				$data['pages'][$p->page_id]['created'] = $this->char->get_character_name($p->page_created_by_character, TRUE);
-				$data['pages'][$p->page_id]['updated'] = (!empty($p->page_updated_by_character)) ? $this->char->get_character_name($p->page_updated_by_character, TRUE) : FALSE;
+				$data['pages'][$p->page_id]['updated'] = ( ! empty($p->page_updated_by_character)) ? $this->char->get_character_name($p->page_updated_by_character, TRUE) : FALSE;
 				$data['pages'][$p->page_id]['created_date'] = mdate($datestring, $created);
 				$data['pages'][$p->page_id]['updated_date'] = mdate($datestring, $updated);
 			}
@@ -619,7 +619,7 @@ class Wiki_base extends Controller {
 						}
 					}
 					
-					$category_string = (isset($category_array) && is_array($category_array)) ? implode(',', $category_array) : '';
+					$category_string = (isset($category_array) AND is_array($category_array)) ? implode(',', $category_array) : '';
 					
 					/* create the array of draft data */
 					$draft_array = array(
@@ -679,7 +679,7 @@ class Wiki_base extends Controller {
 						}
 					}
 					
-					$category_string = (isset($category_array) && is_array($category_array)) ? implode(',', $category_array) : FALSE;
+					$category_string = (isset($category_array) AND is_array($category_array)) ? implode(',', $category_array) : FALSE;
 					
 					/* create the array of draft data */
 					$draft_array = array(
@@ -807,13 +807,13 @@ class Wiki_base extends Controller {
 						'title' => array(
 							'name' => 'title',
 							'id' => 'title',
-							'value' => (!empty($p->draft_title)) ? $p->draft_title : ''),
+							'value' => ( ! empty($p->draft_title)) ? $p->draft_title : ''),
 						'content' => array(
 							'name' => 'content',
 							'id' => 'content',
 							'class' => 'markitup',
 							'rows' => 30,
-							'value' => (!empty($p->draft_content)) ? $p->draft_content : ''),
+							'value' => ( ! empty($p->draft_content)) ? $p->draft_content : ''),
 						'comments_open' => array(
 							'name' => 'comments',
 							'id' => 'comments_open',
@@ -834,7 +834,7 @@ class Wiki_base extends Controller {
 							'id' => 'summary',
 							'class' => 'full-width',
 							'rows' => 2,
-							'value' => (!empty($p->draft_summary)) ? $p->draft_summary : ''),
+							'value' => ( ! empty($p->draft_summary)) ? $p->draft_summary : ''),
 					);
 				}
 			}
@@ -1000,7 +1000,7 @@ class Wiki_base extends Controller {
 		/* load the library and pass the config items in */
 		$this->load->library('thresher', $c);
 		
-		if (isset($_POST['submit']) && $this->auth->is_logged_in())
+		if (isset($_POST['submit']) AND $this->auth->is_logged_in())
 		{
 			if ($action == 'revert')
 			{
@@ -1043,7 +1043,7 @@ class Wiki_base extends Controller {
 					
 					$update = $this->wiki->update_page($page, $update_array);
 					
-					if ($insert > 0 && $update > 0)
+					if ($insert > 0 AND $update > 0)
 					{
 						$message = sprintf(
 							lang('flash_success'),
@@ -1087,7 +1087,7 @@ class Wiki_base extends Controller {
 			{
 				$comment_text = $this->input->post('comment_text');
 				
-				if (!empty($comment_text))
+				if ( ! empty($comment_text))
 				{
 					$status = $this->user->checking_moderation('wiki_comment', $this->session->userdata('userid'));
 					
@@ -1185,7 +1185,7 @@ class Wiki_base extends Controller {
 					
 					$count = substr_count($d->draft_categories, ',');
 					
-					if ($count === 0 && empty($d->draft_categories))
+					if ($count === 0 AND empty($d->draft_categories))
 					{
 						$string = sprintf(
 							lang('error_not_found'),
@@ -1243,7 +1243,7 @@ class Wiki_base extends Controller {
 
 					$count = substr_count($p->draft_categories, ',');
 					
-					if ($count === 0 && empty($p->draft_categories))
+					if ($count === 0 AND empty($p->draft_categories))
 					{
 						$string = sprintf(
 							lang('error_not_found'),
@@ -1267,7 +1267,7 @@ class Wiki_base extends Controller {
 					$data['page'] = array(
 						'content' => $this->thresher->parse($p->draft_content),
 						'created' => $this->char->get_character_name($p->page_created_by_character, TRUE),
-						'updated' => (!empty($p->page_updated_by_character)) ? $this->char->get_character_name($p->page_updated_by_character, TRUE) : FALSE,
+						'updated' => ( ! empty($p->page_updated_by_character)) ? $this->char->get_character_name($p->page_updated_by_character, TRUE) : FALSE,
 						'created_date' => mdate($datestring, $created),
 						'updated_date' => mdate($datestring, $updated),
 						'categories' => $string,
@@ -1278,7 +1278,7 @@ class Wiki_base extends Controller {
 			
 			if ($this->auth->is_logged_in())
 			{
-				if ($level == 3 || $level == 2 || ($level == 1 && ($p->page_created_by_user == $this->session->userdata('userid'))))
+				if ($level == 3 OR $level == 2 OR ($level == 1 AND ($p->page_created_by_user == $this->session->userdata('userid'))))
 				{
 					$data['edit'] = TRUE;
 				}
@@ -1316,7 +1316,7 @@ class Wiki_base extends Controller {
 						'content' => $this->thresher->parse($d->draft_content),
 						'created' => $this->char->get_character_name($d->draft_author_character),
 						'created_date' => mdate($datestring, $created),
-						'old_id' => (!empty($d->draft_id_old)) ? $d->draft_id_old : FALSE,
+						'old_id' => ( ! empty($d->draft_id_old)) ? $d->draft_id_old : FALSE,
 						'page' => $d->draft_page,
 						'changes' => $d->draft_changed_comments,
 						'page_draft' => ($row !== FALSE) ? $row->page_draft : FALSE,

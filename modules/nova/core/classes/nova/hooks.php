@@ -49,7 +49,7 @@ abstract class Nova_Hooks {
 	public static function maintenance()
 	{
 		// if the config file isn't set
-		if (file_exists(APPPATH.'config/database'.EXT) && Utility::install_status())
+		if (file_exists(APPPATH.'config/database'.EXT) AND Utility::install_status())
 		{
 			// get an instance of the request object
 			$request = Request::instance();
@@ -60,7 +60,7 @@ abstract class Nova_Hooks {
 			// figure out which controllers to ignore
 			$ignore = array('install', 'update', 'upgrade', 'upgradeajax', 'login');
 			
-			if (!in_array($request->controller, $ignore))
+			if ( ! in_array($request->controller, $ignore))
 			{
 				$maint = null;
 				// get the maintenance setting
@@ -69,9 +69,9 @@ abstract class Nova_Hooks {
 				//$maint = Jelly::query('setting')->where('key', '=', 'maintenance')->select();
 				//$maint = Jelly::query('post', 1)->select();
 				
-				if ($maint == 'on' && $request->controller != 'login')
+				if ($maint == 'on' AND $request->controller != 'login')
 				{
-					if (!Auth::is_type('sysadmin', $session->get('userid')))
+					if ( ! Auth::is_type('sysadmin', $session->get('userid')))
 					{
 						// redirect to the login page
 						$request->redirect('login/maintenance');

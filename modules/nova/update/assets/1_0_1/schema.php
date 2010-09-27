@@ -42,7 +42,7 @@ $drop_column		= NULL;
 |---------------------------------------------------------------
 */
 
-if (!is_null($add_tables))
+if ( ! is_null($add_tables))
 {
 	foreach ($add_tables as $key => $value)
 	{
@@ -60,7 +60,7 @@ if (!is_null($add_tables))
 |---------------------------------------------------------------
 */
 
-if (!is_null($drop_tables))
+if ( ! is_null($drop_tables))
 {
 	foreach ($drop_tables as $value)
 	{
@@ -76,7 +76,7 @@ if (!is_null($drop_tables))
 |---------------------------------------------------------------
 */
 
-if (!is_null($rename_tables))
+if ( ! is_null($rename_tables))
 {
 	foreach ($rename_tables as $key => $value)
 	{
@@ -108,7 +108,7 @@ $add_column = array(
 	)
 );
 
-if (!is_null($add_column))
+if ( ! is_null($add_column))
 {
 	foreach ($add_column as $key => $value)
 	{
@@ -187,7 +187,7 @@ $modify_column = array(
 	)
 );
 
-if (!is_null($modify_column))
+if ( ! is_null($modify_column))
 {
 	foreach ($modify_column as $key => $value)
 	{
@@ -205,7 +205,7 @@ if (!is_null($modify_column))
 |---------------------------------------------------------------
 */
 
-if (!is_null($drop_column))
+if ( ! is_null($drop_column))
 {
 	foreach ($drop_column as $key => $value)
 	{

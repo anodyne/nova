@@ -46,7 +46,7 @@ abstract class Nova_URL extends Kohana_URL {
 	 */
 	public static function link_to_unless($condition, $uri, $title, $attributes = array())
 	{
-		if (!$condition)
+		if ( ! $condition)
 		{
 			return html::anchor($uri, $title, $attributes);
 		}

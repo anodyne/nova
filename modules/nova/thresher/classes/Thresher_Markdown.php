@@ -55,7 +55,7 @@ function Markdown($text) {
 #
 	# Setup static parser variable.
 	static $parser;
-	if (!isset($parser)) {
+	if ( ! isset($parser)) {
 		$parser_class = MARKDOWN_PARSER_CLASS;
 		$parser = new $parser_class;
 	}
@@ -104,7 +104,7 @@ if (isset($wp_version)) {
 	# Add a footnote id prefix to posts when inside a loop.
 	function mdwp_MarkdownPost($text) {
 		static $parser;
-		if (!$parser) {
+		if ( ! $parser) {
 			$parser_class = MARKDOWN_PARSER_CLASS;
 			$parser = new $parser_class;
 		}
@@ -140,7 +140,7 @@ if (isset($wp_version)) {
 	}
 	
 	function mdwp_add_p($text) {
-		if (!preg_match('{^$|^<(p|ul|ol|dl|pre|blockquote)>}i', $text)) {
+		if ( ! preg_match('{^$|^<(p|ul|ol|dl|pre|blockquote)>}i', $text)) {
 			$text = '<p>'.$text.'</p>';
 			$text = preg_replace('{\n{2,}}', "</p>\n\n<p>", $text);
 		}
@@ -1352,7 +1352,7 @@ class Markdown_Parser {
 		# Wrap <p> tags and unhashify HTML blocks
 		#
 		foreach ($grafs as $key => $value) {
-			if (!preg_match('/^B\x1A[0-9]+B$/', $value)) {
+			if ( ! preg_match('/^B\x1A[0-9]+B$/', $value)) {
 				# Is a paragraph.
 				$value = $this->runSpanGamut($value);
 				$value = preg_replace('/^([ ]*)/', "<p>", $value);
@@ -2190,7 +2190,7 @@ class MarkdownExtra_Parser extends Markdown_Parser {
 					}
 					
 					# Append tag content to parsed text.
-					if (!$span_mode)	$parsed .= "\n\n$block_text\n\n";
+					if ( ! $span_mode)	$parsed .= "\n\n$block_text\n\n";
 					else				$parsed .= "$block_text";
 					
 					# Start over a new block.
@@ -2622,7 +2622,7 @@ class MarkdownExtra_Parser extends Markdown_Parser {
 			
 			# Check if this should be enclosed in a paragraph.
 			# Clean tag hashes & block tag hashes are left alone.
-			$is_p = !preg_match('/^B\x1A[0-9]+B|^C\x1A[0-9]+C$/', $value);
+			$is_p = ! preg_match('/^B\x1A[0-9]+B|^C\x1A[0-9]+C$/', $value);
 			
 			if ($is_p) {
 				$value = "<p>$value</p>";
@@ -2681,7 +2681,7 @@ class MarkdownExtra_Parser extends Markdown_Parser {
 	# Replace footnote references in $text [^id] with a special text-token 
 	# which will be replaced by the actual footnote marker in appendFootnotes.
 	#
-		if (!$this->in_anchor) {
+		if ( ! $this->in_anchor) {
 			$text = preg_replace('{\[\^(.+?)\]}', "F\x1Afn:\\1\x1A:", $text);
 		}
 		return $text;
@@ -2695,7 +2695,7 @@ class MarkdownExtra_Parser extends Markdown_Parser {
 		$text = preg_replace_callback('{F\x1Afn:(.*?)\x1A:}', 
 			array(&$this, '_appendFootnotes_callback'), $text);
 	
-		if (!empty($this->footnotes_ordered)) {
+		if ( ! empty($this->footnotes_ordered)) {
 			$text .= "\n\n";
 			$text .= "<div class=\"footnotes\">\n";
 			$text .= "<hr". $this->empty_element_suffix ."\n";
@@ -2714,7 +2714,7 @@ class MarkdownExtra_Parser extends Markdown_Parser {
 			}
 			$num = 0;
 			
-			while (!empty($this->footnotes_ordered)) {
+			while ( ! empty($this->footnotes_ordered)) {
 				$footnote = reset($this->footnotes_ordered);
 				$note_id = key($this->footnotes_ordered);
 				unset($this->footnotes_ordered[$note_id]);

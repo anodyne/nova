@@ -80,7 +80,7 @@ abstract class Nova_Auth {
 		
 		if ($partial === FALSE)
 		{
-			if (!array_key_exists($uri, self::$session->get('access', array())))
+			if ( ! array_key_exists($uri, self::$session->get('access', array())))
 			{
 				if ($redirect === TRUE)
 				{
@@ -257,7 +257,7 @@ abstract class Nova_Auth {
 			// hash the password
 			$password = self::hash($password);
 			
-			if ($maintenance == 'on' && $login->sysadmin == 'n')
+			if ($maintenance == 'on' AND $login->sysadmin == 'n')
 			{
 				// maintenance mode active
 				$retval = 5;
@@ -479,7 +479,7 @@ abstract class Nova_Auth {
 		{
 			foreach ($mylinks as $value)
 			{
-				if (!empty($value) && $value !== NULL)
+				if ( ! empty($value) AND $value !== NULL)
 				{
 					// get the menu item
 					$menu = Jelly::query('menu', $value)->select();
@@ -574,7 +574,7 @@ abstract class Nova_Auth {
 			// make sure the password checks out
 			$retval = ($person->password == $password) ? 0 : 3;
 			
-			if ($retval == 0 && $object === TRUE)
+			if ($retval == 0 AND $object === TRUE)
 			{
 				return $person;
 			}

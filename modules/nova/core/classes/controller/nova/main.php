@@ -95,7 +95,7 @@ class Controller_Nova_Main extends Controller_Nova_Base {
 		# TODO: need to handle comment moderation
 		
 		// sanitize the id
-		$id = (!is_numeric($id)) ? FALSE : $id;
+		$id = ( ! is_numeric($id)) ? FALSE : $id;
 		
 		// create a new content view
 		$this->template->layout->content = View::factory(Location::view('main_viewnews', $this->skin, 'main', 'pages'));
@@ -130,7 +130,7 @@ class Controller_Nova_Main extends Controller_Nova_Base {
 			->where('id', '<', $id)
 			->order_by('id', 'desc');
 			
-		(!Auth::is_logged_in()) ? $prev->where('private', '=', 'n') : FALSE;
+		( ! Auth::is_logged_in()) ? $prev->where('private', '=', 'n') : FALSE;
 		
 		$prev = $prev->load();
 		
@@ -139,7 +139,7 @@ class Controller_Nova_Main extends Controller_Nova_Base {
 			->where('id', '>', $id)
 			->order_by('id', 'desc');
 			
-		(!Auth::is_logged_in()) ? $next->where('private', '=', 'n') : FALSE;
+		( ! Auth::is_logged_in()) ? $next->where('private', '=', 'n') : FALSE;
 		
 		$next = $next->load();
 		
@@ -198,11 +198,11 @@ class Controller_Nova_Main extends Controller_Nova_Base {
 			{
 				$level = Auth::get_access_level('manage/news');
 				
-				$data->edit = ($level == 2 || $level == 1 && ($news->news_author_user == $this->session->get('userid'))) ? TRUE : FALSE;
+				$data->edit = ($level == 2 OR ($level == 1 AND ($news->news_author_user == $this->session->get('userid')))) ? TRUE : FALSE;
 			}
 			
 			// make sure they're logged in if it's a private news item
-			if ($news->private == 'y' && !Auth::is_logged_in())
+			if ($news->private == 'y' AND ! Auth::is_logged_in())
 			{
 				$this->template->title.= ucwords(__('action.view').' '.__('global.news_item'));
 				$data->header = __('error.header');

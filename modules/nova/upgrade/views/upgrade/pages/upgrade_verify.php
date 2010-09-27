@@ -20,7 +20,7 @@
 	</div>
 <?php endif;?>
 
-<?php if (!isset($verify['failure']) && !isset($verify['info'])): ?>
+<?php if ( ! isset($verify['failure']) AND ! isset($verify['info'])): ?>
 	<div class="flash-message flash-success">
 		<h1><?php echo __('verify.success_header');?></h1>
 		<p><?php echo __('verify.success_text');?></p>

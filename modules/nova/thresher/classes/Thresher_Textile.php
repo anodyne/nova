@@ -287,13 +287,13 @@ class Textile
             return $text;
         } else {
 
-            if(!$strict) {
+            if( ! $strict) {
                 $text = $this->cleanWhiteSpace($text);
             }
 
             $text = $this->getRefs($text);
 
-            if (!$lite) {
+            if ( ! $lite) {
                 $text = $this->block($text);
             }
 
@@ -347,7 +347,7 @@ class Textile
         $id = '';
         $atts = '';
 
-        if (!empty($in)) {
+        if ( ! empty($in)) {
             $matched = $in;
             if ($element == 'td') {
                 if (preg_match("/\\\\(\d+)/", $matched, $csp)) $colspan = $csp[1];
@@ -473,7 +473,7 @@ class Textile
                 $nl = '';
                 if (preg_match("/^([#*]+)\s.*/", $nextline, $nm))
                 	$nl = $nm[1];
-                if (!isset($lists[$tl])) {
+                if ( ! isset($lists[$tl])) {
                     $lists[$tl] = true;
                     $atts = $this->pba($atts);
                     $line = "\t<" . $this->lT($tl) . "l$atts>\n\t\t<li>" . $this->graf($content);
@@ -545,10 +545,10 @@ class Textile
             else {
                 // anonymous block
                 $anon = 1;
-                if ($ext or !preg_match('/^ /', $line)) {
+                if ($ext or ! preg_match('/^ /', $line)) {
                     list($o1, $o2, $content, $c2, $c1) = $this->fBlock(array(0,$tag,$atts,$ext,$cite,$line));
                     // skip $o1/$c1 because this is part of a continuing extended block
-                    if ($tag == 'p' and !$this->hasRawText($content)) {
+                    if ($tag == 'p' and ! $this->hasRawText($content)) {
                         $line = $content;
                     }
                     else {
@@ -568,7 +568,7 @@ class Textile
             else
                 $out[] = $line;
 
-            if (!$ext) {
+            if ( ! $ext) {
                 $tag = 'p';
                 $atts = '';
                 $cite = '';
@@ -639,16 +639,16 @@ class Textile
     function graf($text)
     {
         // handle normal paragraph text
-        if (!$this->lite) {
+        if ( ! $this->lite) {
             $text = $this->noTextile($text);
             $text = $this->code($text);
         }
 
         $text = $this->links($text);
-        if (!$this->noimage)
+        if ( ! $this->noimage)
             $text = $this->image($text);
 
-        if (!$this->lite) {
+        if ( ! $this->lite) {
             $text = $this->lists($text);
             $text = $this->table($text);
         }
@@ -737,7 +737,7 @@ class Textile
         $atts = $this->pba($atts);
         $atts .= ($title != '') ? ' title="' . $this->encode_html($title) . '"' : '';
 
-        if (!$this->noimage)
+        if ( ! $this->noimage)
             $text = $this->image($text);
 
         $text = $this->span($text);
@@ -781,8 +781,8 @@ class Textile
              empty($parts['host']) and
              preg_match('/^\w/', @$parts['path']))
             $url = $this->hu.$url;
-        if ($this->restricted and !empty($parts['scheme']) and
-              !in_array($parts['scheme'], $this->url_schemes))
+        if ($this->restricted and ! empty($parts['scheme']) and
+              ! in_array($parts['scheme'], $this->url_schemes))
             return '#';
         return $url;
     }
@@ -1009,7 +1009,7 @@ class Textile
 
          $text = preg_split("/(<.*>)/U", $text, -1, PREG_SPLIT_DELIM_CAPTURE);
          foreach($text as $line) {
-             if (!preg_match("/<.*>/", $line)) {
+             if ( ! preg_match("/<.*>/", $line)) {
                  $line = preg_replace($glyph_search, $glyph_replace, $line);
              }
               $glyph_out[] = $line;

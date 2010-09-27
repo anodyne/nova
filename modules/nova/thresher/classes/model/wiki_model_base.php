@@ -65,9 +65,9 @@ class Wiki_model_base extends Model {
 		
 		$row = ($query->num_rows() > 0) ? $query->row() : FALSE;
 		
-		if (!empty($return) && $row !== FALSE)
+		if ( ! empty($return) AND $row !== FALSE)
 		{
-			if (!is_array($return))
+			if ( ! is_array($return))
 			{
 				return $row->$return;
 			}
@@ -93,9 +93,9 @@ class Wiki_model_base extends Model {
 		
 		$row = ($query->num_rows() > 0) ? $query->row() : FALSE;
 		
-		if (!empty($return) && $row !== FALSE)
+		if ( ! empty($return) AND $row !== FALSE)
 		{
-			if (!is_array($return))
+			if ( ! is_array($return))
 			{
 				return $row->$return;
 			}
@@ -119,12 +119,12 @@ class Wiki_model_base extends Model {
 	{
 		$this->db->from('wiki_comments');
 		
-		if (!empty($id))
+		if ( ! empty($id))
 		{
 			$this->db->where('wcomment_page', $id);
 		}
 		
-		if (!empty($status))
+		if ( ! empty($status))
 		{
 			$this->db->where('wcomment_status', $status);
 		}
@@ -170,7 +170,7 @@ class Wiki_model_base extends Model {
 		$this->db->from('wiki_pages');
 		$this->db->join('wiki_drafts', 'wiki_drafts.draft_id = wiki_pages.page_draft');
 		
-		if (!is_null($category))
+		if ( ! is_null($category))
 		{
 			if ($category == 0)
 			{
@@ -238,7 +238,7 @@ class Wiki_model_base extends Model {
 		$this->db->from('wiki_comments');
 		$this->db->where('wcomment_status', $status);
 		
-		if (!empty($id))
+		if ( ! empty($id))
 		{
 			$this->db->where('wcomment_page', $id);
 		}

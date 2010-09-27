@@ -11,7 +11,7 @@ if (count($missions) > 0):
 
 		<h4><?php echo html::anchor('sim/mission/'.$m->id, $m->title);?></h4>
 		
-		<?php if (!empty($m->group->name)): ?>
+		<?php if ( ! empty($m->group->name)): ?>
 			<p class="subtle fontSmall bold">
 				<?php echo ucfirst(__('label.in')).' '.$m->group->name;?>
 			</p>

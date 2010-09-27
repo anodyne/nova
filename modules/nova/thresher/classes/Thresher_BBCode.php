@@ -33,7 +33,7 @@ function bbcode($text = '')
 {
 	$text = trim($text);
 	
-	if (!function_exists('escape'))
+	if ( ! function_exists('escape'))
 	{
 		function escape($s)
 		{
@@ -92,7 +92,7 @@ function bbcode($text = '')
 	
 	/* clean some tags to remain strict */
 	/* not very elegant, but it works. No time to do better ;) */
-	if (!function_exists('removeBr'))
+	if ( ! function_exists('removeBr'))
 	{
 		function removeBr($s)
 		{

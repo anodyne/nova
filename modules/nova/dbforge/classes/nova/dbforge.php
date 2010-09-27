@@ -247,7 +247,7 @@ abstract class Nova_DBForge {
 			$sql.= ",\n\tPRIMARY KEY ".$key_name." (" . implode(', ', self::$primary_keys) . ")";
 		}
 
-		if (is_array(self::$keys) && count(self::$keys) > 0)
+		if (is_array(self::$keys) AND count(self::$keys) > 0)
 		{
 			foreach (self::$keys as $key)
 			{
@@ -566,7 +566,7 @@ abstract class Nova_DBForge {
 					$sql.= '('.$attributes['CONSTRAINT'].')';
 				}
 	
-				if (array_key_exists('UNSIGNED', $attributes) && $attributes['UNSIGNED'] === TRUE)
+				if (array_key_exists('UNSIGNED', $attributes) AND $attributes['UNSIGNED'] === TRUE)
 				{
 					$sql.= ' UNSIGNED';
 				}
@@ -581,7 +581,7 @@ abstract class Nova_DBForge {
 					$sql.= ($attributes['NULL'] === TRUE) ? ' NULL' : ' NOT NULL';
 				}
 	
-				if (array_key_exists('AUTO_INCREMENT', $attributes) && $attributes['AUTO_INCREMENT'] === TRUE)
+				if (array_key_exists('AUTO_INCREMENT', $attributes) AND $attributes['AUTO_INCREMENT'] === TRUE)
 				{
 					$sql.= ' AUTO_INCREMENT';
 				}
@@ -707,7 +707,7 @@ abstract class Nova_DBForge {
 				}
 
 				// Verify table prefix and replace if necessary
-				if (self::$swap_pre != '' && strncmp($parts[$i], self::$swap_pre, strlen(self::$swap_pre)) === 0)
+				if (self::$swap_pre != '' AND strncmp($parts[$i], self::$swap_pre, strlen(self::$swap_pre)) === 0)
 				{
 					$parts[$i] = preg_replace("/^".self::$swap_pre."(\S+?)/", self::$dbconfig['table_prefix']."\\1", $parts[$i]);
 				}
@@ -734,7 +734,7 @@ abstract class Nova_DBForge {
 		if (self::$dbconfig['table_prefix'] != '')
 		{
 			// Verify table prefix and replace if necessary
-			if (self::$swap_pre != '' && strncmp($item, self::$swap_pre, strlen(self::$swap_pre)) === 0)
+			if (self::$swap_pre != '' AND strncmp($item, self::$swap_pre, strlen(self::$swap_pre)) === 0)
 			{
 				$item = preg_replace("/^".self::$swap_pre."(\S+?)/", self::$dbconfig['table_prefix']."\\1", $item);
 			}

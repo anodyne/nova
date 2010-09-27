@@ -455,7 +455,7 @@ abstract class Nova_Form extends Kohana_Form {
 					
 					foreach ($depts as $dept)
 					{
-						if (!empty($exclude) && $exclude == $dept->dept_id)
+						if ( ! empty($exclude) AND $exclude == $dept->dept_id)
 						{
 							// don't do anything
 						}
@@ -483,7 +483,7 @@ abstract class Nova_Form extends Kohana_Form {
 						{
 							foreach ($subd as $sub)
 							{
-								if (!empty($exclude) && $exclude == $sub->dept_id)
+								if ( ! empty($exclude) AND $exclude == $sub->dept_id)
 								{
 									// don't do anything
 								}
@@ -523,7 +523,7 @@ abstract class Nova_Form extends Kohana_Form {
 					
 					foreach ($depts as $dept)
 					{
-						if (!empty($exclude) && $exclude == $dept->dept_id)
+						if ( ! empty($exclude) AND $exclude == $dept->dept_id)
 						{
 							// don't do anything
 						}
@@ -576,7 +576,7 @@ abstract class Nova_Form extends Kohana_Form {
 		}
 		
 		// set the display parameter
-		(!empty($display)) ? $positions->where('display', '=', $display) : FALSE;
+		( ! empty($display)) ? $positions->where('display', '=', $display) : FALSE;
 		
 		$positions = $positions->select();
 		
@@ -588,11 +588,11 @@ abstract class Nova_Form extends Kohana_Form {
 			
 			foreach ($positions as $pos)
 			{
-				if (($dept_type == 'playing' && $pos->dept->type == 'playing') ||
-						($dept_type == 'nonplaying' && $pos->dept->type == 'nonplaying') ||
+				if (($dept_type == 'playing' AND $pos->dept->type == 'playing') OR
+						($dept_type == 'nonplaying' AND $pos->dept->type == 'nonplaying') OR
 						$pos->dept->display == 'y')
 				{
-					if ($type == 'all' || $type == 'open')
+					if ($type == 'all' OR $type == 'open')
 					{
 						$options[$pos->dept->name][$pos->id] = $pos->name;
 					}

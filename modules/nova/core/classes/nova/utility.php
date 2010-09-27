@@ -48,12 +48,12 @@ abstract class Nova_Utility {
 			
 			while (FALSE !== ($file = readdir($fp)))
 			{
-				if (($hidden == FALSE && strncmp($file, '.', 1) == 0) OR ($file == '.' OR $file == '..'))
+				if (($hidden == FALSE AND strncmp($file, '.', 1) == 0) OR ($file == '.' OR $file == '..'))
 				{
 					continue;
 				}
 				
-				if ($top_level_only == FALSE && @is_dir($source_dir.$file))
+				if ($top_level_only == FALSE AND @is_dir($source_dir.$file))
 				{
 					$temp_array = array();
 				
@@ -119,7 +119,7 @@ abstract class Nova_Utility {
 		$classes = get_declared_classes();
 		
 		// if sfYaml hasn't been loaded, then load it
-		if (!in_array('sfYaml', $classes))
+		if ( ! in_array('sfYaml', $classes))
 		{
 			// find the sfYAML library
 			$path = Kohana::find_file('vendor', 'sfYaml/sfYaml');
@@ -220,7 +220,7 @@ abstract class Nova_Utility {
 		$classes = get_declared_classes();
 		
 		// if sfYaml hasn't been loaded, then load it
-		if (!in_array('sfYaml', $classes))
+		if ( ! in_array('sfYaml', $classes))
 		{
 			// find the sfYAML library
 			$path = Kohana::find_file('vendor', 'sfYaml/sfYaml');
@@ -416,7 +416,7 @@ abstract class Nova_Utility {
 				'text' => __('verify.spl_text'),
 				'failure' => TRUE),
 			'mbstring_overload' => array(
-				'eval' => extension_loaded('mbstring') && !(ini_get('mbstring.func_overload') & MB_OVERLOAD_STRING),
+				'eval' => extension_loaded('mbstring') AND ! (ini_get('mbstring.func_overload') & MB_OVERLOAD_STRING),
 				'header' => 'mbstring Is Overloaded',
 				'text' => __('verify.mbstring_overload_text'),
 				'failure' => TRUE),

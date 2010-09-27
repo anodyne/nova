@@ -96,7 +96,7 @@ class Controller_Nova_Ajax extends Controller_Nova_Base {
 			),
 		);
 		
-		if (!empty($default))
+		if ( ! empty($default))
 		{
 			$field[$name]['default'] = $default;
 		}
