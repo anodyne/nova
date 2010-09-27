@@ -25,7 +25,7 @@ $system_versions = array(
 	'version_major'		=> 1,
 	'version_minor'		=> 1,
 	'version_update'	=> 1,
-	'version_date'		=> 1283635800,
+	'version_date'		=> 1285628400,
 	'version_launch'	=> "Nova 1.1.1 is a maintenance update addressing several outstanding issues with Nova 1.1. This update to Nova bumps the jQuery UI to version 1.8.5 and fixes an issue with tour item display when there are no general tour items available. In addition, we've taken steps to address a bug where CodeIgniter wouldn't be able to load the template files and would throw an error. Finally, a presentation issue with skins with a dashboard panel trigger has been fixed as well. A full changelog can be found on AnodyneDocs or from the System and Versions report once Nova has been updated. This update is recommended for all users.",
 	'version_changes'	=> "* added the 1.1.1 update file
 * updated the comments in the login controller
