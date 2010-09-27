@@ -92,6 +92,7 @@ $base_modules = array(
 	'jelly'			=> MODPATH.'kohana/jelly',
 	'userguide'		=> MODPATH.'kohana/userguide',
 	'dbforge'		=> MODPATH.'nova/dbforge',
+	'assets'		=> MODPATH.'assets',
 	//'xml'			=> MODPATH.'kohana/xml',
 );
 
