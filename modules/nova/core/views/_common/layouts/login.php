@@ -4,12 +4,12 @@
 		<title><?php echo $title;?></title>
 		
 		<meta charset="utf-8" />
-		<meta name="description" content="<?php echo Kohana::config('nova.meta_desc');?>" />
-		<meta name="keywords" content="<?php echo Kohana::config('nova.meta_keywords');?>" />
-		<meta name="author" content="<?php echo Kohana::config('nova.meta_author');?>" />
+		<meta name="description" content="<?php echo Kohana::config('nova.meta_desc');?>"/>
+		<meta name="keywords" content="<?php echo Kohana::config('nova.meta_keywords');?>"/>
+		<meta name="author" content="<?php echo Kohana::config('nova.meta_author');?>"/>
 		
-		<?php if (isset($_redirect)): ?>
-			<meta http-equiv="refresh" content="<?php echo $_redirect['time'];?>;url=<?php echo $_redirect['url'];?>" />
+		<?php if (isset($redirect)): ?>
+			<meta http-equiv="refresh" content="<?php echo $redirect['time'];?>;url=<?php echo $redirect['url'];?>"/>
 		<?php endif;?>
 		
 		<!-- STYLESHEETS -->
@@ -17,7 +17,7 @@
 		<?php echo html::style(APPFOLDER.'/views/'.$skin.'/'.$sec.'/css/main.css');?>
 		
 		<!-- JAVASCRIPT -->
-		<?php echo html::script(APPFOLDER.'/assets/js/jquery.js');?>
+		<?php echo html::script(MODFOLDER.'/assets/js/jquery.js');?>
 		<?php echo $javascript;?>
 	</head>
 	<body>

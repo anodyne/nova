@@ -1,4 +1,4 @@
-<?php defined('SYSPATH') OR die('No direct access allowed.');
+<?php defined('SYSPATH') or die('No direct script access.');
 /**
  * The HTML class extends Kohana's native Form class to add additional methods for handling
  * HTML5 content like video, audio and canvas. If you use these items, it's important to

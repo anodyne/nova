@@ -1,4 +1,4 @@
-<?php defined('SYSPATH') OR die('No direct access allowed.');
+<?php defined('SYSPATH') or die('No direct script access.');
 /**
  * The Date class extends Kohana's native Data class to provide additional functionality that's
  * specific to Nova. Extended methods include a make date method and a method for accurately

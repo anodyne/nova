@@ -1,4 +1,4 @@
-<?php defined('SYSPATH') OR die('No direct access allowed.');
+<?php defined('SYSPATH') or die('No direct script access.');
 /**
  * The URL class extends Kohana's native URL class to provide additional methods for showing links
  * based on whether a condition is TRUE or FALSE.

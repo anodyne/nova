@@ -1,4 +1,4 @@
-<?php defined('SYSPATH') OR die('No direct access allowed.');
+<?php defined('SYSPATH') or die('No direct script access.');
 /**
  * The Auth class is responsible for managing authentication in Nova. Included in the class
  * are methods for checking access, getting access levels, hashing passwords, checking whether
@@ -292,7 +292,7 @@ abstract class Nova_Auth {
 					'ip' => Request::$client_ip,
 					'email' => $email
 				))
-				->update();
+				->save();
 		}
 		
 		return $retval;

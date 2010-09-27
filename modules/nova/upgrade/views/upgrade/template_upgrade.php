@@ -9,7 +9,7 @@
 		<div id="loading" class="hidden">
 			<img src="<?php echo url::base().MODFOLDER;?>/nova/upgrade/views/upgrade/images/loading-circle-large.gif" alt="" />
 			<br />
-			<strong><?php echo ucfirst(__('action.processing'));?>...</strong>
+			<strong><?php echo ucfirst(__('processing'));?>...</strong>
 		</div>
 		
 		<div id="loaded" class="UITheme">
@@ -23,7 +23,7 @@
 				<div style="clear:both;"></div>
 			<?php endif;?>
 		
-			<?php echo $flash_message;?>
+			<?php echo $flash;?>
 			<?php echo $content;?>
 		</div>
 	</div>

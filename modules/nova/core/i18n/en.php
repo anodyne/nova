@@ -13,105 +13,11 @@
 
 return array(
 	/**
-	 * Global Language Items
-	 */
-	'global.award' => 'award',
-	'global.awards' => 'awards',
-	'global.character' => 'character',
-	'global.characters' => 'characters',
-	'global.command_staff' => 'command staff',
-	'global.deck' => 'deck',
-	'global.decks' => 'decks',
-	'global.department' => 'department',
-	'global.departments' => 'departments',
-	'global.game_master' => 'game master',
-	'global.log' => 'log',
-	'global.logs' => 'logs',
-	'global.mission' => 'mission',
-	'global.missions' => 'missions',
-	'global.mission_post' => 'mission_post',
-	'global.mission_posts' => 'mission posts',
-	'global.news' => 'news',
-	'global.news_item' => 'news item',
-	'global.news_items' => 'news items',
-	'global.personal_log' => 'personal log',
-	'global.personal logs' => 'personal logs',
-	'global.position' => 'position',
-	'global.positions' => 'positions',
-	'global.post' => 'post',
-	'global.posts' => 'posts',
-	'global.private_message' => 'private message',
-	'global.private_messages' => 'private messages',
-	'global.rank' => 'rank',
-	'global.ranks' => 'ranks',
-	'global.sim' => 'sim',
-	'global.sims' => 'sims',
-	'global.specification' => 'specification',
-	'global.specifications' => 'specifications',
-	'global.specs' => 'specs',
-	'global.sub_department' => 'sub department',
-	'global.sub_departments' => 'sub departments',
-	'global.system_admin' => 'system administrator',
-	'global.tour' => 'tour',
-	'global.tour_item' => 'tour item',
-	'global.tour_items' => 'tour items',
-	'global.user' => 'user',
-	'global.users' => 'users',
-	'global.users_poss' => "user's",
-	'global.webmaster' => 'webmaster',
-	'global.wiki' => 'wiki',
-	
-	/**
-	 * Action Language Items
-	 */
-	'action.added' => 'added',
-	'action.delete' => 'delete',
-	'action.edited' => 'edited',
-	'action.posted' => 'posted',
-	'action.processing' => 'processing',
-	'action.said' => 'said',
-	'action.submit' => 'submit',
-	'action.view' => 'view',
-	
-	/**
-	 * Labels
-	 */
-	'label.by' => 'by',
-	'label.category' => 'category',
-	'label.comment' => 'comment',
-	'label.comments' => 'comments',
-	'label.in' => 'in',
-	'label.none' => 'none',
-	'label.off' => 'off',
-	'label.on' => 'on',
-	'label.step' => 'step',
-	'label.tags' => 'tags',
-	
-	/**
-	 * Ordering
-	 */
-	'order.next' => 'next',
-	'order.previous' => 'previous',
-	
-	/**
-	 * Statuses
-	 */
-	'status.inactive' => 'inactive',
-	'status.nonplaying' => 'non-playing',
-	'status.pending' => 'pending',
-	'status.playing' => 'playing',
-	'status.progress' => 'progress',
-	
-	/**
-	 * Abbreviations
-	 */
-	'abbr.rss' => 'RSS',
-	
-	/**
 	 * Login
 	 */
+	'login.index_text' => "Placeholder text for the main login page.",
 	'login.logout' => "You have successfully logged out. You can :login or proceed to the :main. You will be redirected in <span id='countdown'></span>&nbsp;seconds.",
-	'login.success' => "Log in successful. Redirecting to the Control Panel in <span id='countdown'></span>&nbsp;seconds...",
+	'login.success' => "Log in successful. Redirecting to the :acp in <span id='countdown'></span>&nbsp;seconds...",
 	
 	/**
 	 * Error Messages

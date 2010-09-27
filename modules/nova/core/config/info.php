@@ -1,4 +1,4 @@
-<?php defined('SYSPATH') OR die('No direct access allowed.');
+<?php defined('SYSPATH') or die('No direct script access.');
 
 return array(
 	/**
@@ -11,7 +11,7 @@ return array(
 	 */
 	 
 	'app_name' => 'Nova',
-	'app_version_full' => '2.0-m1.2',
+	'app_version_full' => '2.0-m2.1',
 	'app_version_major' => 2,
 	'app_version_minor' => 0,
 	'app_version_update' => 0,

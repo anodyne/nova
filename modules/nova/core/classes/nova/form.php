@@ -1,4 +1,4 @@
-<?php defined('SYSPATH') OR die('No direct access allowed.');
+<?php defined('SYSPATH') or die('No direct script access.');
 /**
  * The Form class extends Kohana's native Form class to add additional methods specific to Nova.
  * The methods added to the Form class allow developers to generate select menus with position,

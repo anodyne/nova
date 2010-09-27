@@ -1,4 +1,4 @@
-<?php defined('SYSPATH') OR die('No direct access allowed.');
+<?php defined('SYSPATH') or die('No direct script access.');
 /**
  * The Events class is a method of executing code at different points during the request
  * flow. All event calls are specified in the APPPATH/bootstrap.php file. You should not

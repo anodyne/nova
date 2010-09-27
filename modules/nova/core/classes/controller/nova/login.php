@@ -1,4 +1,4 @@
-<?php defined('SYSPATH') OR die('No direct access allowed.');
+<?php defined('SYSPATH') or die('No direct script access.');
 /**
  * Login Controller
  *
@@ -7,8 +7,6 @@
  * @author		Anodyne Productions
  */
 
-# TODO: change the login redirect to admin/index after the ACP is finished
-# TODO: reset password
 # TODO: attempted login lockout
 # TODO: uncomment login code in install, update and upgrade modules
 
@@ -29,16 +27,26 @@ class Controller_Nova_Login extends Controller_Nova_Base {
 		$this->timezone	= $this->options->timezone;
 		$this->dst		= $this->options->daylight_savings;
 		
+		// set the values to be passed to the views
+		$vars = array(
+			'template' => array(
+				'skin' => $this->skin,
+				'sec' => 'login'),
+			'layout' => array(
+				'skin'	=> $this->skin,
+				'sec'	=> 'login',
+				'name'	=> $this->options->sim_name),
+		);
+		
 		// set the shell
-		$this->template = View::factory('_common/layouts/login', array('skin' => $this->skin, 'sec' => 'login'));
+		$this->template = View::factory('_common/layouts/login', $vars['template']);
 		
 		// set the variables in the template
-		$this->template->title 					= $this->options->sim_name.' :: ';
-		$this->template->javascript				= FALSE;
-		$this->template->layout					= View::factory($this->skin.'/template_login', array('skin' => $this->skin, 'sec' => 'login', 'name' => $this->options->sim_name));
-		$this->template->layout->ajax 			= FALSE;
-		$this->template->layout->flash_message	= FALSE;
-		$this->template->layout->content		= FALSE;
+		$this->template->title 				= $this->options->sim_name.' :: ';
+		$this->template->javascript			= FALSE;
+		$this->template->layout				= View::factory($this->skin.'/template_login', $vars['layout']);
+		$this->template->layout->flash		= FALSE;
+		$this->template->layout->content	= FALSE;
 	}
 	
 	public function action_index()
@@ -55,11 +63,12 @@ class Controller_Nova_Login extends Controller_Nova_Base {
 		// content
 		$this->template->title.= ucwords(__('log in'));
 		$data->header = ucwords(__('log in'));
+		$data->text = __('login.index_text');
 		
 		// inputs
 		$data->inputs = array(
 			'button' => array(
-				'class' => 'button-main'),
+				'class' => 'btn-main'),
 			'email' => array(
 				'id' => 'email',
 				'placeholder' => ucwords(__('email address'))),
@@ -89,7 +98,7 @@ class Controller_Nova_Login extends Controller_Nova_Base {
 			if ($login > 0)
 			{
 				// grab the UID
-				$uid = Jelly::select('system', 1)->uid;
+				$uid = Jelly::query('system', 1)->select()->uid;
 				
 				// set the email address as session data to check login attempts
 				$this->session->set('nova_'.$uid.'_email', $email);
@@ -102,18 +111,19 @@ class Controller_Nova_Login extends Controller_Nova_Base {
 			$this->template->layout->content = View::factory(Location::view('login_success', $this->skin, 'login', 'pages'));
 			
 			// javascript view
-			$this->template->javascript = View::factory(Location::view('login_index_js', $this->skin, 'login', 'js'));
+			$this->template->javascript = View::factory(Location::view('login_success_js', $this->skin, 'login', 'js'));
 			
+			# TODO: change this to redirect to the admin index when it's been built
 			// set the redirect
-			$this->template->_redirect = array('time' => 5, 'url' => url::site('main/index'));
-			//$this->template->_redirect = array('time' => 5, 'url' => url::site('admin/index'));
+			$this->template->redirect = array('time' => 5, 'url' => url::site('main/index'));
+			//$this->template->redirect = array('time' => 5, 'url' => url::site('admin/index'));
 			
 			// assign the object a shorter variable to use in the method
 			$data = $this->template->layout->content;
 			
 			// set the content
 			$data->header = ucwords(__('logging in'));
-			$data->message = __('login.success');
+			$data->message = __('login.success', array(':acp' => html::anchor('main/index', ucwords(__('control panel')))));
 		}
 		else
 		{
@@ -187,7 +197,7 @@ class Controller_Nova_Login extends Controller_Nova_Base {
 		# code...
 	}
 	
-	public function reset_password()
+	public function reset()
 	{
 		/*
 		if ($this->options['system_email'] == 'off')

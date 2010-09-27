@@ -1,4 +1,4 @@
-<?php defined('SYSPATH') OR die('No direct access allowed.');
+<?php defined('SYSPATH') or die('No direct script access.');
 /**
  * The DBForge class provides a means of easily manipulating the database. This class only works
  * with MySQL through the standard Database drivers. The DBForge class has been ported from

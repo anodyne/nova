@@ -1,4 +1,4 @@
-<?php defined('SYSPATH') OR die('No direct access allowed.');
+<?php defined('SYSPATH') or die('No direct script access.');
 /**
  * The Submit class allows developers to quickly and easily submit to the database for simple create,
  * update and delete actions as well as displaying flash messages based on those actions.

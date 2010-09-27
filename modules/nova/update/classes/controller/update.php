@@ -1,4 +1,4 @@
-<?php defined('SYSPATH') OR die('No direct access allowed.');
+<?php defined('SYSPATH') or die('No direct script access.');
 /**
  * Update Controller
  *
@@ -46,13 +46,13 @@ class Controller_Update extends Controller_Template {
 					// if they aren't, send them away
 					if ($sysadmin === FALSE)
 					{
-						//$this->request->redirect('login/index/error/1');
+						//$this->request->redirect('login/error/1');
 					}
 				}
 				else
 				{
 					// no session? send them away
-					//$this->request->redirect('login/index/error/1');
+					//$this->request->redirect('login/error/1');
 				}
 			}
 		}
@@ -68,7 +68,7 @@ class Controller_Update extends Controller_Template {
 		$this->template->javascript				= FALSE;
 		$this->template->layout					= View::factory('update/template_update');
 		$this->template->layout->label			= FALSE;
-		$this->template->layout->flash_message	= FALSE;
+		$this->template->layout->flash	= FALSE;
 		$this->template->layout->controls		= FALSE;
 	}
 	
@@ -193,9 +193,9 @@ class Controller_Update extends Controller_Template {
 		}
 		
 		// set the flash message
-		$this->template->layout->flash_message = View::factory('update/pages/flash');
-		$this->template->layout->flash_message->status = $flash->status;
-		$this->template->layout->flash_message->message = $flash->message;
+		$this->template->layout->flash = View::factory('update/pages/flash');
+		$this->template->layout->flash->status = $flash->status;
+		$this->template->layout->flash->message = $flash->message;
 		
 		// content
 		$this->template->title.= __('Check for Updates');
@@ -234,9 +234,9 @@ class Controller_Update extends Controller_Template {
 			$allowed = FALSE;
 			
 			// show the flash message
-			$this->template->layout->flash_message = View::factory('update/pages/flash');
-			$this->template->layout->flash_message->status = 'error';
-			$this->template->layout->flash_message->message = __('step.error_no_genre', array(':path' => APPFOLDER.'/config/nova'.EXT));
+			$this->template->layout->flash = View::factory('update/pages/flash');
+			$this->template->layout->flash->status = 'error';
+			$this->template->layout->flash->message = __('step.error_no_genre', array(':path' => APPFOLDER.'/config/nova'.EXT));
 		}
 		
 		switch ($step)

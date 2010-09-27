@@ -7,7 +7,7 @@
 	
 	<div class="content">
 		<div id="loading" class="hidden">
-			<img src="<?php echo url::base().APPFOLDER;?>/views/_base/install/images/loading-circle-large.gif" alt="" />
+			<img src="<?php echo url::base().MODFOLDER;?>/nova/install/views/install/images/loading-circle-large.gif" alt="" />
 			<br />
 			<strong><?php echo ucfirst(__('processing'));?>...</strong>
 		</div>
@@ -23,7 +23,7 @@
 				<div style="clear:both;"></div>
 			<?php endif;?>
 		
-			<?php echo $flash_message;?>
+			<?php echo $flash;?>
 			<?php echo $content;?>
 		</div>
 	</div>

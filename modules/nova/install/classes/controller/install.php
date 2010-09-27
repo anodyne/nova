@@ -1,4 +1,4 @@
-<?php defined('SYSPATH') OR die('No direct access allowed.');
+<?php defined('SYSPATH') or die('No direct script access.');
 /**
  * Install Controller
  *
@@ -6,8 +6,6 @@
  * @category	Controllers
  * @author		Anodyne Productions
  */
-
-# TODO: uncomment the redirects in the before() method after the login controller is built
 
 class Controller_Install extends Controller_Template {
 	
@@ -54,13 +52,13 @@ class Controller_Install extends Controller_Template {
 					// if they aren't, send them away
 					if ($sysadmin === FALSE)
 					{
-						//$this->request->redirect('login/index/error/1');
+						//$this->request->redirect('login/error/1');
 					}
 				}
 				else
 				{
 					// no session? send them away
-					//$this->request->redirect('login/index/error/1');
+					//$this->request->redirect('login/error/1');
 				}
 			}
 		}
@@ -72,12 +70,12 @@ class Controller_Install extends Controller_Template {
 		$this->template = View::factory('_common/layouts/install');
 		
 		// set the variables in the template
-		$this->template->title 					= 'Nova :: ';
-		$this->template->javascript				= FALSE;
-		$this->template->layout					= View::factory('install/template_install');
-		$this->template->layout->label			= FALSE;
-		$this->template->layout->flash_message	= FALSE;
-		$this->template->layout->controls		= FALSE;
+		$this->template->title 				= 'Nova :: ';
+		$this->template->javascript			= FALSE;
+		$this->template->layout				= View::factory('install/template_install');
+		$this->template->layout->label		= FALSE;
+		$this->template->layout->flash		= FALSE;
+		$this->template->layout->controls	= FALSE;
 	}
 	
 	public function action_index()
@@ -337,9 +335,9 @@ class Controller_Install extends Controller_Template {
 		
 		if ((is_numeric($error) AND $error > 0))
 		{
-			$this->template->layout->flash_message = View::factory('install/pages/flash');
-			$this->template->layout->flash_message->status = ($error == 1) ? 'info' : 'error';
-			$this->template->layout->flash_message->message = __('install.error.error_'.$error);
+			$this->template->layout->flash = View::factory('install/pages/flash');
+			$this->template->layout->flash->status = ($error == 1) ? 'info' : 'error';
+			$this->template->layout->flash->message = __('install.error.error_'.$error);
 		}
 		
 		// content
@@ -507,9 +505,9 @@ class Controller_Install extends Controller_Template {
 							}
 							else
 							{
-								$this->template->layout->flash_message = View::factory('install/pages/flash');
-								$this->template->layout->flash_message->status = 'error';
-								$this->template->layout->flash_message->message = __('setup.nodb');
+								$this->template->layout->flash = View::factory('install/pages/flash');
+								$this->template->layout->flash->status = 'error';
+								$this->template->layout->flash->message = __('setup.nodb');
 							}
 						break;
 						
@@ -875,9 +873,9 @@ return array
 			$allowed = FALSE;
 			
 			// show the flash message
-			$this->template->layout->flash_message = View::factory('install/pages/flash');
-			$this->template->layout->flash_message->status = 'error';
-			$this->template->layout->flash_message->message = __('install.error_no_genre', array(':path' => APPFOLDER.'/config/nova'.EXT));
+			$this->template->layout->flash = View::factory('install/pages/flash');
+			$this->template->layout->flash->status = 'error';
+			$this->template->layout->flash->message = __('install.error_no_genre', array(':path' => APPFOLDER.'/config/nova'.EXT));
 		}
 		
 		switch ($step)
@@ -1161,7 +1159,7 @@ return array
 						// loop through and create the preferences for the user
 						foreach ($prefs as $p)
 						{
-							$prefvalues = Jelly::query('userprefvalue')
+							$prefvalues = Jelly::factory('userprefvalue')
 								->set(array(
 									'user' => $crUser->id,
 									'key' => $p->key,
