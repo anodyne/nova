@@ -5,7 +5,7 @@
 |---------------------------------------------------------------
 |
 | File: assets/install/fields.php
-| System Version: 1.1
+| System Version: 1.2
 |
 | File that contains all of the arrays with the data for inserting
 | the database fields for the system to use.
@@ -38,6 +38,7 @@ $data = array(
 	'awards'					=> array('id' => 'award_id', 'fields' => 'fields_awards'),
 	'awards_queue'				=> array('id' => 'queue_id', 'fields' => 'fields_awards_queue'),
 	'awards_received'			=> array('id' => 'awardrec_id', 'fields' => 'fields_awards_received'),
+	'bans'						=> array('id' => 'ban_id', 'fields' => 'fields_bans'),
 	'catalogue_ranks'			=> array('id' => 'rankcat_id', 'fields' => 'fields_catalogue_ranks'),
 	'catalogue_skins'			=> array('id' => 'skin_id', 'fields' => 'fields_catalogue_skins'),
 	'catalogue_skinsecs'		=> array('id' => 'skinsec_id', 'fields' => 'fields_catalogue_skinsecs'),
@@ -169,6 +170,10 @@ $fields_applications = array(
 		'type' => 'VARCHAR',
 		'constraint' => 255,
 		'default' => ''),
+	'app_ip' => array(
+		'type' => 'VARCHAR',
+		'constraint' => 16,
+		'default' => ''),
 	'app_user' => array(
 		'type' => $user_id_type,
 		'constraint' => $user_id_constraint),
@@ -276,6 +281,29 @@ $fields_awards_received = array(
 		'constraint' => $date_constraint),
 	'awardrec_reason' => array(
 		'type' => 'TEXT')
+);
+
+$fields_bans = array(
+	'ban_id' => array(
+		'type' => 'INT',
+		'constraint' => 5,
+		'auto_increment' => TRUE),
+	'ban_level' => array(
+		'type' => 'INT',
+		'constraint' => 1),
+	'ban_ip' => array(
+		'type' => 'VARCHAR',
+		'constraint' => 16,
+		'default' => ''),
+	'ban_email' => array(
+		'type' => 'VARCHAR',
+		'constraint' => 100,
+		'default' => ''),
+	'ban_reason' => array(
+		'type' => 'TEXT'),
+	'ban_date' => array(
+		'type' => $date_type,
+		'constraint'=> $date_constraint),
 );
 
 $fields_catalogue_ranks = array(

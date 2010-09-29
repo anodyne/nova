@@ -5,7 +5,7 @@
 |---------------------------------------------------------------
 |
 | File: assets/install/install_data_basic.php
-| System Version: 1.1.2
+| System Version: 1.2
 |
 | Data file that includes all the data being inserted into the
 | database after creating the tables.
@@ -80,7 +80,7 @@ $access_groups = array(
 $access_roles = array(
 	array(
 		'role_name' => 'System Administrator',
-		'role_access' => '1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,31,33,35,36,37,38,39,40,41,42,43,44,45,46,49,50,53,55,56,58,60,63,64',
+		'role_access' => '1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,31,33,35,36,37,38,39,40,41,42,43,44,45,46,49,50,53,55,56,58,60,63,64,65',
 		'role_desc' => 'System administrators can take any action in the system. Only give this access level out to people you implicitly trust.'),
 	array(
 		'role_name' => 'Basic Administrator',
@@ -449,6 +449,12 @@ $access_pages = array(
 		'page_url' => 'wiki/categories',
 		'page_group' => 8,
 		'page_desc' => "Can create, delete and edit wiki categories"),
+		
+	array(
+		'page_name' => "Ban Controls",
+		'page_url' => 'site/bans',
+		'page_group' => 3,
+		'page_desc' => "Can add or remove site bans"),
 );
 
 $catalogue_skins = array(
@@ -1218,6 +1224,16 @@ $menu_items = array(
 		'menu_cat' => 'site',
 		'menu_use_access' => 'y',
 		'menu_access' => 'site/roles'),
+	array(
+		'menu_name' => 'Ban Controls',
+		'menu_group' => 0,
+		'menu_order' => 4,
+		'menu_link' => 'site/bans',
+		'menu_sim_type' => 1,
+		'menu_type' => 'adminsub',
+		'menu_cat' => 'site',
+		'menu_use_access' => 'y',
+		'menu_access' => 'site/bans'),
 	array(
 		'menu_name' => 'Bio Form',
 		'menu_group' => 1,
@@ -2276,8 +2292,8 @@ $system_info = array(
 		'sys_uid' => random_string('alnum', 32),
 		'sys_install_date' => now(),
 		'sys_version_major' => 1,
-		'sys_version_minor' => 1,
-		'sys_version_update' => 2)
+		'sys_version_minor' => 2,
+		'sys_version_update' => 0)
 );
 
 $system_versions = array(
