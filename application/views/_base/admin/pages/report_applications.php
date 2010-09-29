@@ -26,7 +26,9 @@
 				<td>
 					<?php echo text_output($a['user'], 'strong');?><br />
 					<span class="fontSmall gray">
-						<?php echo text_output($label['date'], 'strong') .': '. $a['date'];?>
+						<?php echo text_output($label['date'], 'strong') .': '. $a['date'];?><br />
+						<?php echo text_output($label['email'], 'strong') .': '. $a['email'];?><br />
+						<?php echo text_output($label['ipaddr'], 'strong') .': '. $a['ipaddr'];?>
 					</span>
 				</td>
 				<td class="col_30 align_center fontSmall bold">

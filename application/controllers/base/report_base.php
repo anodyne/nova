@@ -5,10 +5,10 @@
 |---------------------------------------------------------------
 |
 | File: controllers/report_base.php
-| System Version: 1.1.1
+| System Version: 1.2
 |
-| Changes: fixed a bug where nova wouldn't display because it
-|	couldn't find the template file
+| Changes: updated the applications report with the IP address and
+|	email address of an applicant
 |
 */
 
@@ -212,6 +212,8 @@ class Report_base extends Controller {
 					'id' => $a->app_id,
 					'character' => $a->app_character_name,
 					'user' => $a->app_user_name,
+					'email' => $a->app_email,
+					'ipaddr' => $a->app_ip,
 					'position' => $a->app_position,
 					'action' => $a->app_action,
 					'date' => mdate($this->options['date_format'], $date)
@@ -257,6 +259,8 @@ class Report_base extends Controller {
 			'action' => ucfirst(lang('actions_action')),
 			'character' => ucfirst(lang('global_character')),
 			'date' => ucfirst(lang('labels_date')),
+			'email' => ucfirst(lang('labels_email')),
+			'ipaddr' => ucwords(lang('labels_ipaddr')),
 			'none' => ucfirst(lang('labels_no') .' '. lang('labels_applications') .' '. lang('actions_found')),
 			'user' => ucfirst(lang('global_user')),
 			'position' => ucfirst(lang('global_position')),
