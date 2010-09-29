@@ -34,16 +34,19 @@
 			var hidden = $('#authors_hidden').val();
 			var name = $("option[value='" + user + "']").html();
 			
-			if (hidden == 0)
+			if (user != 0 && $("#all option[value='" + user + "']").is(':disabled') == false)
 			{
-				hidden = '';
+				if (hidden == 0)
+				{
+					hidden = '';
+				}
+				
+				$('#authors_hidden').val(hidden + ',' + user + ',');
+				
+				$('#authors').append('<span class="' + user + '"><a href="#" id="remove_author" class="image" myID="' + user + '" myName="' + name + '"><?php echo $remove;?></a>' + name + '<br /></span>');
+				
+				$("#all option[value='" + user + "']").attr('disabled', 'yes');
 			}
-			
-			$('#authors_hidden').val(hidden + ',' + user + ',');
-			
-			$('#authors').append('<span class="' + user + '"><a href="#" id="remove_author" class="image" myID="' + user + '" myName="' + name + '"><?php echo $remove;?></a>' + name + '<br /></span>');
-			
-			$("#all option[value='" + user + "']").attr('disabled', 'yes');
 			
 			return false;
 		});

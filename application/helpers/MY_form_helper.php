@@ -72,6 +72,87 @@ if ( ! function_exists('form_button'))
 // ------------------------------------------------------------------------
 
 /**
+ * Drop-down Menu
+ *
+ * @access	public
+ * @param	string
+ * @param	array
+ * @param	string
+ * @param	string
+ * @param	string
+ * @return	string
+ */
+if ( ! function_exists('form_dropdown'))
+{
+	function form_dropdown($name = '', $options = array(), $selected = array(), $extra = '', $disabled = '')
+	{
+		if ( ! is_array($selected))
+		{
+			$selected = array($selected);
+		}
+		
+		// run the check for disabled items
+		$disabled = ($disabled != '0') ? preg_split("/[\s,]+/", $disabled) : FALSE;
+		
+		if ( ! is_array($disabled))
+		{
+			$disabled = array($disabled);
+		}
+
+		// If no selected state was submitted we will attempt to set it automatically
+		if (count($selected) === 0)
+		{
+			// If the form name appears in the $_POST array we have a winner!
+			if (isset($_POST[$name]))
+			{
+				$selected = array($_POST[$name]);
+			}
+		}
+
+		if ($extra != '') $extra = ' '.$extra;
+
+		$multiple = (count($selected) > 1 && strpos($extra, 'multiple') === FALSE) ? ' multiple="multiple"' : '';
+
+		$form = '<select name="'.$name.'"'.$extra.$multiple.">\n";
+
+		foreach ($options as $key => $val)
+		{
+			$key = (string) $key;
+
+			if (is_array($val))
+			{
+				$form .= '<optgroup label="'.$key.'">'."\n";
+
+				foreach ($val as $optgroup_key => $optgroup_val)
+				{
+					$sel = (in_array($optgroup_key, $selected)) ? ' selected="selected"' : '';
+					
+					$dis = (in_array($optgroup_key, $disabled)) ? ' disabled="disabled"' : '';
+
+					$form .= '<option value="'.$optgroup_key.'"'.$sel.$dis.'>'.(string) $optgroup_val."</option>\n";
+				}
+
+				$form .= '</optgroup>'."\n";
+			}
+			else
+			{
+				$sel = (in_array($key, $selected)) ? ' selected="selected"' : '';
+				
+				$dis = (in_array($key, $disabled)) ? ' disabled="disabled"' : '';
+
+				$form .= '<option value="'.$key.'"'.$sel.$dis.'>'.(string) $val."</option>\n";
+			}
+		}
+
+		$form .= '</select>';
+
+		return $form;
+	}
+}
+
+// ------------------------------------------------------------------------
+
+/**
  * Department Drop-down Menu
  *
  * @access	public

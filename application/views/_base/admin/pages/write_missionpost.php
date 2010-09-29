@@ -27,7 +27,7 @@
 			<p>
 				<kbd><?php echo $label['authors'];?></kbd>
 				
-				<?php echo form_dropdown('authors', $all, $key['all'], 'id = "all"');?>
+				<?php echo form_dropdown('authors', $all, $key['all'], 'id = "all"', $to);?>
 				&nbsp;
 				<a href="#" id="add_author" class="fontSmall"><?php echo $label['addauthor'];?></a>
 				<input type="hidden" name="to" id="authors_hidden" value="<?php echo $to;?>" />
