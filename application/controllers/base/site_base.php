@@ -5,10 +5,11 @@
 |---------------------------------------------------------------
 |
 | File: controllers/site_base.php
-| System Version: 1.1.1
+| System Version: 1.1.2
 |
 | Changes: fixed bug where nova wouldn't load because it couldn't
-|	find the template file
+|	find the template file; fixed bug where nova would try to update
+|	a user's profile with a field that doesn't exist
 |
 */
 
@@ -1720,7 +1721,7 @@ class Site_base extends Controller {
 							
 							/* update the database */
 							$delete = $this->sys->delete_skin_section($id);
-							$update = $this->user->update_all_users($user_data, $user_where);
+							$update = ($section != 'login') ? $this->user->update_all_users($user_data, $user_where) : FALSE;
 									
 							if ($delete > 0)
 							{
