@@ -5,11 +5,10 @@
 |---------------------------------------------------------------
 |
 | File: controllers/site_base.php
-| System Version: 1.1.2
+| System Version: 1.2
 |
-| Changes: fixed bug where nova wouldn't load because it couldn't
-|	find the template file; fixed bug where nova would try to update
-|	a user's profile with a field that doesn't exist
+| Changes: added the ability to ban users from applying or even
+|	viewing the site altogether
 |
 */
 
@@ -95,6 +94,197 @@ class Site_base extends Controller {
 	function index()
 	{
 		/* don't do anything */
+	}
+	
+	function bans()
+	{
+		// check access
+		$this->auth->check_access();
+		
+		if (isset($_POST['submit']))
+		{
+			switch ($this->uri->segment(3))
+			{
+				case 'add':
+					$level = $this->input->post('ban_level', TRUE);
+					$email = $this->input->post('ban_email', TRUE);
+					$ipaddr = $this->input->post('ban_ip', TRUE);
+					$reason = $this->input->post('ban_reason', TRUE);
+					
+					$insert_array = array(
+						'ban_level' => $level,
+						'ban_email' => $email,
+						'ban_ip' => $ipaddr,
+						'ban_reason' => $reason,
+						'ban_date' => now(),
+					);
+					
+					/* insert the record */
+					$insert = $this->sys->add_ban($insert_array);
+					
+					if ($insert > 0)
+					{
+						$message = sprintf(
+							lang('flash_success'),
+							ucfirst(lang('labels_site') .' '. lang('labels_ban')),
+							lang('actions_added'),
+							''
+						);
+
+						$flash['status'] = 'success';
+						$flash['message'] = text_output($message);
+					}
+					else
+					{
+						$message = sprintf(
+							lang('flash_failure'),
+							ucfirst(lang('labels_site') .' '. lang('labels_ban')),
+							lang('actions_added'),
+							''
+						);
+
+						$flash['status'] = 'error';
+						$flash['message'] = text_output($message);
+					}
+					
+					/* write everything to the template */
+					$this->template->write_view('flash_message', '_base/admin/pages/flash', $flash);
+				break;
+				
+				case 'delete':
+					$id = $this->input->post('id', TRUE);
+				
+					/* insert the record */
+					$delete = $this->sys->delete_ban($id);
+					
+					if ($delete > 0)
+					{
+						$message = sprintf(
+							lang('flash_success'),
+							ucfirst(lang('labels_site') .' '. lang('labels_ban')),
+							lang('actions_deleted'),
+							''
+						);
+
+						$flash['status'] = 'success';
+						$flash['message'] = text_output($message);
+					}
+					else
+					{
+						$message = sprintf(
+							lang('flash_failure'),
+							ucfirst(lang('labels_site') .' '. lang('labels_ban')),
+							lang('actions_deleted'),
+							''
+						);
+
+						$flash['status'] = 'error';
+						$flash['message'] = text_output($message);
+					}
+					
+					/* write everything to the template */
+					$this->template->write_view('flash_message', '_base/admin/pages/flash', $flash);
+				break;
+			}
+		}
+		
+		$data['inputs'] = array(
+			'level_1' => array(
+				'name' => 'ban_level',
+				'id' => 'level_1',
+				'value' => 1),
+			'level_2' => array(
+				'name' => 'ban_level',
+				'id' => 'level_2',
+				'value' => 2),
+			'reason' => array(
+				'name' => 'ban_reason',
+				'id' => 'ban_reason',
+				'rows' => 2),
+			'email' => array(
+				'name' => 'ban_email',
+				'id' => 'ban_email'),
+			'ip' => array(
+				'name' => 'ban_ip',
+				'id' => 'ban_ip')
+		);
+		
+		// get the list of bans
+		$bans = $this->sys->get_bans();
+		
+		if ($bans !== FALSE)
+		{
+			/* set the date format */
+			$datestring = $this->options['date_format'];
+			
+			foreach ($bans as $b)
+			{
+				$date = gmt_to_local($b->ban_date, $this->timezone, $this->dst);
+				
+				$data['bans'][$b->ban_level][$b->ban_id] = array(
+					'id' => $b->ban_id,
+					'ip' => $b->ban_ip,
+					'email' => $b->ban_email,
+					'reason' => $b->ban_reason,
+					'date' => mdate($datestring, $date),
+					'span' => timespan_short($b->ban_date, now())
+				);
+			}
+		}
+		
+		$data['images'] = array(
+			'delete' => array(
+				'src' => img_location('icon-delete.png', $this->skin, 'admin'),
+				'class' => 'image',
+				'alt' => lang('actions_delete')),
+			'add' => array(
+				'src' => img_location('icon-add.png', $this->skin, 'admin'),
+				'class' => 'image inline_img_left',
+				'alt' => ''),
+		);
+				
+		/* figure out where the view should be coming from */
+		$view_loc = view_location('site_bans', $this->skin, 'admin');
+		
+		/* set the header */
+		$data['header'] = ucwords(lang('labels_site') .' '. lang('labels_bans'));
+		$data['text'] = lang('text_bans');
+		
+		$data['label'] = array(
+			'add' => ucwords(lang('actions_add') .' '. lang('labels_ban')),
+			'date' => '<strong>'.ucfirst(lang('labels_date')).':</strong> ',
+			'email' => ucwords(lang('labels_email_address')),
+			'email_note' => lang('misc_level1_only'),
+			'ip' => ucwords(lang('labels_ipaddr')),
+			'level' => ucwords(lang('labels_ban') .' '. lang('labels_level')),
+			'level_1' => ucwords(lang('labels_level').' 1 '.lang('labels_bans')),
+			'level_1_label' => ucfirst(lang('labels_level').' 1'),
+			'level_2' => ucwords(lang('labels_level').' 2 '.lang('labels_bans')),
+			'level_2_label' => ucfirst(lang('labels_level').' 2'),
+			'no_bans' => sprintf(lang('error_not_found'), lang('labels_bans')),
+			'reason' => ucfirst(lang('labels_reason')),
+			'type' => ucwords(lang('labels_ban') .' '. lang('labels_type')),
+		);
+		
+		/* submit button */
+		$data['buttons'] = array(
+			'add' => array(
+				'type' => 'submit',
+				'class' => 'button-main',
+				'name' => 'submit',
+				'value' => 'submit',
+				'content' => ucwords(lang('actions_add'))),
+		);
+		
+		$js_loc = js_location('site_bans_js', $this->skin, 'admin');
+		
+		/* write the data to the template */
+		$this->template->write('title', $data['header']);
+		$this->template->write_view('content', $view_loc, $data);
+		$this->template->write_view('javascript', $js_loc);
+		
+		/* render the template */
+		$this->template->render();
 	}
 	
 	function bioform()

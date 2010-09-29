@@ -5,7 +5,10 @@
 |---------------------------------------------------------------
 |
 | File: models/system_model_base.php
-| System Version: 1.0
+| System Version: 1.2
+|
+| Changes: added methods to create, retrieve and delete site bans
+|	from the database
 |
 | Model used to access the system table.
 |
@@ -80,6 +83,67 @@ class System_model_base extends Model {
 		$query = $this->db->get();
 		
 		return $query;
+	}
+	
+	function get_ban($id = '', $return = '')
+	{
+		$query = $this->db->get_where('bans', array('ban_id' => $id));
+		
+		$row = ($query->num_rows() > 0) ? $query->row() : FALSE;
+		
+		if (!empty($return) && $row !== FALSE)
+		{
+			if (!is_array($return))
+			{
+				return $row->$return;
+			}
+			else
+			{
+				$array = array();
+				
+				foreach ($return as $r)
+				{
+					$array[$r] = $row->$r;
+				}
+				
+				return $array;
+			}
+		}
+		
+		return $row;
+	}
+	
+	function get_bans($level = '', $returnall = TRUE)
+	{
+		$this->db->from('bans');
+		
+		if ( ! empty($level))
+		{
+			$this->db->where('ban_level', $level);
+		}
+		
+		$query = $this->db->get();
+		
+		if ($query->num_rows() > 0)
+		{
+			if ($returnall === TRUE)
+			{
+				return $query->result();
+			}
+			else
+			{
+				$array = array();
+				
+				foreach ($query->result() as $q)
+				{
+					$array[] = $q->ban_ip;
+				}
+				
+				return $array;
+			}
+		}
+		
+		return FALSE;
 	}
 	
 	function get_current_version()
@@ -357,6 +421,15 @@ class System_model_base extends Model {
 	|---------------------------------------------------------------
 	*/
 	
+	function add_ban($data = '')
+	{
+		$query = $this->db->insert('bans', $data);
+		
+		$this->dbutil->optimize_table('bans');
+		
+		return $query;
+	}
+	
 	function add_login_attempt($data = '')
 	{
 		$query = $this->db->insert('login_attempts', $data);
@@ -525,6 +598,15 @@ class System_model_base extends Model {
 	| DELETE METHODS
 	|---------------------------------------------------------------
 	*/
+	
+	function delete_ban($id = '')
+	{
+		$query = $this->db->delete('bans', array('ban_id' => $id));
+		
+		$this->dbutil->optimize_table('bans');
+		
+		return $query;
+	}
 	
 	function delete_login_attempts($email = '')
 	{
