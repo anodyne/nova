@@ -5,7 +5,9 @@
 |---------------------------------------------------------------
 |
 | File: hooks/Utility.php
-| System Version: 1.0
+| System Version: 1.2
+|
+| Changes: added a hook to check for level 2 bans while the site is spinning up
 |
 */
 
@@ -17,6 +19,28 @@ class Utility {
 		log_message('info', 'Utility Hook Initialized');
 	}
 	
+	/**
+	 * Checks the ban list to see if there are any level 2 bans that should be acted on
+	 */
+	function bans()
+	{
+		$ci =& get_instance();
+		
+		// load the system model
+		$ci->load->model('system_model', 'sys');
+		
+		// run the method
+		$bans = $ci->sys->get_bans(2, FALSE);
+		
+		if (in_array($ci->input->ip_address(), $bans))
+		{
+			if ($ci->uri->segment(1) != 'main' && $ci->uri->segment(2) != 'contact')
+			{
+				header('Location:'.base_url().'banned.php');
+			}
+		}
+	}
+	 
 	/**
 	 * Checks to see if a user is using IE6 and redirects them to a notice page if they are
 	 */

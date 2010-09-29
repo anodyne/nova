@@ -20,6 +20,14 @@ $hook['post_controller_constructor'][] = array(
 
 $hook['post_controller_constructor'][] = array(
 	'class'		=> 'Utility',
+	'function'	=> 'bans',
+	'filename'	=> 'Utility.php',
+	'filepath'	=> 'hooks',
+	'params'	=> ''
+);
+
+$hook['post_controller_constructor'][] = array(
+	'class'		=> 'Utility',
 	'function'	=> 'maintenance',
 	'filename'	=> 'Utility.php',
 	'filepath'	=> 'hooks',
