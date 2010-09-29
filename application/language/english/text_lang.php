@@ -4,9 +4,10 @@
 | LANGUAGE FILE - ENGLISH
 |---------------------------------------------------------------
 | File: application/language/english/long_text_lang.php
-| System Version: 1.1
+| System Version: 1.2
 |
-| Changes: added specitem_select; added specitem_empty_fields
+| Changes: added specitem_select; added specitem_empty_fields;
+|	added text_bans; added text_ban_join
 |
 | English language file for the system. Punctuation constants are
 | defined in ./application/config/constants.php
@@ -147,6 +148,10 @@ $lang['text_dynamic_emails'] = "This message includes in the ability to set seve
 $lang['text_mission_groups'] = "%s groups are a new way to organize your %s to make it easier to find related missions. Whether the %s are consecutive or not, you can assign them to groups to display them together on the %s Groups page and give players the ability to quickly see and move through groups of similar %s.";
 
 $lang['text_create_mission_onfly'] = "You do not have any current %s right now. In order to post, you need to have at least one current %s. You can create a new current %s right now or choose an upcoming %s to make the current one. You can change any of these values from the %s management page.";
+
+$lang['text_bans'] = "Nova provided the ability to ban pesky users from continually applying to the sim through site ban controls. There are two different levels of bans. A level 1 ban simply prevents a banned user's application from going through. The user will be notified that they've been banned in the message when they attempt to submit the application. Level 1 bans can be executed by either IP address or email address. A level 2 ban prevents a user from gaining access to the site altogether and can only be executed by IP address. Use level 2 bans sparingly as doing so can have a detrimental affect on site performance.";
+
+$lang['text_ban_join'] = "Your application could not be submitted because you have been banned from applying to this %s. Questions about this ban should be directed to the %s.";
 
 /*
 |---------------------------------------------------------------

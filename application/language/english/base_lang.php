@@ -4,9 +4,11 @@
 | LANGUAGE FILE - ENGLISH
 |---------------------------------------------------------------
 | File: application/language/english/base_lang.php
-| System Version: 1.0.6
+| System Version: 1.2
 |
 | Changes: added labels_genre; added labels_you; added labels_from
+|	added labels_ban; added labels_bans; added labels_ipaddr;
+|	added misc_level1_only
 |
 | English language file for the system. Punctuation constants are
 | defined in ./application/config/constants.php
@@ -206,6 +208,7 @@ $lang['misc_server_dir']		= 'Server Directory';
 $lang['misc_development']		= 'In Development';
 $lang['misc_login_y']			= 'Must be logged in';
 $lang['misc_login_n']			= 'Must be logged out';
+$lang['misc_level1_only']		= 'Level 1 Only';
 
 /*
 |---------------------------------------------------------------
@@ -336,6 +339,8 @@ $lang['labels_author']			= 'author';
 $lang['labels_authors']			= 'authors';
 $lang['labels_available']		= 'available';
 $lang['labels_average']			= 'average';
+$lang['labels_ban']				= 'ban';
+$lang['labels_bans']			= 'bans';
 $lang['labels_basic']			= 'basic';
 $lang['labels_bio']				= 'bio';
 $lang['labels_biography']		= 'biography';
@@ -406,6 +411,7 @@ $lang['labels_inbox']			= 'inbox';
 $lang['labels_info']			= 'info';
 $lang['labels_information']		= 'information';
 $lang['labels_interests']		= 'interests';
+$lang['labels_ipaddr']			= 'IP address';
 $lang['labels_item']			= 'item';
 $lang['labels_items']			= 'items';
 $lang['labels_key'] 			= 'key';
