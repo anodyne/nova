@@ -4,24 +4,24 @@ Anodyne Production's next-generation RPG management system combines popular feat
 
 ## Current Version
 
-1.1.1
+1.1.2-pre
 
-## Changes in 1.1.1
+## Changes in 1.1.2
 
-* added the 1.1.1 update file
-* updated the comments in the login controller
-* updated jquery ui to version 1.8.5
-* updated markitup plugin to version 1.1.8
-* fixed bug where nova wouldn't display if the template file couldn't be found
-* fixed bug where the general tour items category would be shown even if there weren't any general tour items
-* fixed bug where skins with dashboard handles were showing bullets and having weird spacing issues
-* fixed bug where sub departments toggle links didn't display properly
+* added the 1.1.2 update file
+* updated the form helper to extend the form\_dropdown function
+* updated the write/missionpost and manage/posts pages to take saved/activated posts in to account for the author selection dropdown (thanks to Patrick for helping with this)
+* fixed bug with the add author selection in manage/posts and write/missionpost (thanks to Patrick for this fix)
+* fixed bug where nova would try to update a user's profile with a field that doesn't exist
 
 ## Version History
 
 <table>
 	<tr>
 		<th>Version</th><th>Release Date</th>
+	</tr>
+	<tr>
+		<td>1.1.2</td><td>-</td>
 	</tr>
 	<tr>
 		<td>1.1.1</td><td>27 September 2010</td>

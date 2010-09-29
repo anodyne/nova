@@ -5,7 +5,7 @@
 |---------------------------------------------------------------
 |
 | File: assets/install/install_data_basic.php
-| System Version: 1.1.1
+| System Version: 1.1.2
 |
 | Data file that includes all the data being inserted into the
 | database after creating the tables.
@@ -2277,7 +2277,7 @@ $system_info = array(
 		'sys_install_date' => now(),
 		'sys_version_major' => 1,
 		'sys_version_minor' => 1,
-		'sys_version_update' => 1)
+		'sys_version_update' => 2)
 );
 
 $system_versions = array(

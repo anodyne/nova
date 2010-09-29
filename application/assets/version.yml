@@ -1,9 +1,9 @@
-version: 1.1.1
+version: 1.1.2
 version_major: 1
 version_minor: 1
-version_update: 1
+version_update: 2
 severity: minor
 notes: |
-  Nova 1.1.1 is a maintenance update addressing several outstanding issues with Nova 1.1. This update to Nova bumps the jQuery UI to version 1.8.5 and fixes an issue with tour item display when there are no general tour items available. In addition, we've taken steps to address a bug where CodeIgniter wouldn't be able to load the template files and would throw an error. Finally, a presentation issue with skins with a dashboard panel trigger has been fixed as well. A full changelog can be found on AnodyneDocs or from the System and Versions report once Nova has been updated. This update is recommended for all users.
+  Nova 1.1.2 is a maintenance update addressing several issues with Nova 1.1. This update fixes a bug with the author selection process for mission posts (both when posting and when managing) and a bug where Nova would throw an error when deleting skin sections from the skin catalogue because of a field that doesn't exist in the user profile. Thanks to Patrick for fixing the author selection bug. A full changelog can be found on AnodyneDocs or from the System and Versions report once Nova has been updated. This update is recommended for all users.
 date: 27 September 2010
 link: http://www.anodyne-productions.com
