@@ -4,21 +4,31 @@ Anodyne Production's next-generation RPG management system combines popular feat
 
 ## Current Version
 
-1.1.2-pre
+1.2-pre
 
-## Changes in 1.1.2
+## Changes in 1.2
 
-* added the 1.1.2 update file
-* updated the form helper to extend the form\_dropdown function
-* updated the write/missionpost and manage/posts pages to take saved/activated posts in to account for the author selection dropdown (thanks to Patrick for helping with this)
-* fixed bug with the add author selection in manage/posts and write/missionpost (thanks to Patrick for this fix)
-* fixed bug where nova would try to update a user's profile with a field that doesn't exist
+* added the 1.2 update file
+* added the ability to ban users from applying or even getting to the site
+* added a page that level 2 bans are redirected to
+* updated the applications report to show email address and IP address of the user who applied
+* updated the email sent to the game master from the join form to show the IP address of the applicant
+* updated the language files
+    * [base\_lang] added _labels\_ban_
+    * [base\_lang] added _labels\_bans_
+    * [base\_lang] added _labels\_ipaddr_
+    * [base\_lang] added _misc\_level1\_only_
+    * [text\_lang] added _text\_bans_
+    * [text\_lang] added _text\_ban\_join_
 
 ## Version History
 
 <table>
 	<tr>
 		<th>Version</th><th>Release Date</th>
+	</tr>
+	<tr>
+		<td>1.2</td><td>-</td>
 	</tr>
 	<tr>
 		<td>1.1.2</td><td>-</td>
