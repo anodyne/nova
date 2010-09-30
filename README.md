@@ -13,6 +13,7 @@ Anodyne Production's next-generation RPG management system combines popular feat
 * updated the write/missionpost and manage/posts pages to take saved/activated posts in to account for the author selection dropdown (thanks to Patrick for helping with this)
 * fixed bug with the add author selection in manage/posts and write/missionpost (thanks to Patrick for this fix)
 * fixed bug where nova would try to update a user's profile with a field that doesn't exist
+* fixed bug where, under very strange circumstances, quick install wouldn't work the way it's supposed to
 
 ## Version History
 

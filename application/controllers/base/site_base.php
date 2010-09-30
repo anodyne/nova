@@ -9,7 +9,9 @@
 |
 | Changes: fixed bug where nova wouldn't load because it couldn't
 |	find the template file; fixed bug where nova would try to update
-|	a user's profile with a field that doesn't exist
+|	a user's profile with a field that doesn't exist; fixed bug with
+|	quick install where, under some strange circumstances, quick install
+|	would fail
 |
 */
 
@@ -1431,9 +1433,9 @@ class Site_base extends Controller {
 					
 					/* create the skin array */
 					$skin = array(
-						'skin_name'		=> $array['skin'],
-						'skin_location'	=> $array['location'],
-						'skin_credits'	=> $array['credits']
+						'skin_name'		=> trim($array['skin']),
+						'skin_location'	=> trim($array['location']),
+						'skin_credits'	=> trim($array['credits'])
 					);
 					
 					/* insert the record */
@@ -1442,9 +1444,9 @@ class Site_base extends Controller {
 					foreach ($array['sections'] as $value)
 					{
 						$section = array(
-							'skinsec_section'			=> $value['type'],
-							'skinsec_skin'				=> $array['location'],
-							'skinsec_image_preview'		=> $value['preview'],
+							'skinsec_section'			=> trim($value['type']),
+							'skinsec_skin'				=> trim($array['location']),
+							'skinsec_image_preview'		=> trim($value['preview']),
 							'skinsec_status'			=> 'active',
 							'skinsec_default'			=> 'n'
 						);
