@@ -29,14 +29,20 @@ class Utility {
 		// load the system model
 		$ci->load->model('system_model', 'sys');
 		
-		// run the method
-		$bans = $ci->sys->get_bans(2, FALSE);
+		// check the install status
+		$installed = $ci->sys->check_install_status();
 		
-		if (in_array($ci->input->ip_address(), $bans))
+		if ($installed === TRUE)
 		{
-			if ($ci->uri->segment(1) != 'main' && $ci->uri->segment(2) != 'contact')
+			// run the method
+			$bans = $ci->sys->get_bans(2, FALSE);
+		
+			if (in_array($ci->input->ip_address(), $bans))
 			{
-				header('Location:'.base_url().'banned.php');
+				if ($ci->uri->segment(1) != 'main' && $ci->uri->segment(2) != 'contact')
+				{
+					header('Location:'.base_url().'banned.php');
+				}
 			}
 		}
 	}
