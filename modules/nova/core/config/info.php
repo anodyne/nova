@@ -32,4 +32,9 @@ return array(
 	 
 	'version_info' => MODPATH.'nova/update/assets/version.yaml',
 	//'version_info' => 'http://www.anodyne-productions.com/feeds/version_nova.yaml',
+	
+	/**
+	 * System Information
+	 */
+	'app_db_tables' => 59,
 );

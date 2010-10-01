@@ -9,11 +9,6 @@
 
 class Controller_Update extends Controller_Template {
 	
-	/**
-	 * @var	integer	the number of database tables in the system
-	 */
-	public $_tables = 59;
-	
 	public function before()
 	{
 		parent::before();
@@ -25,34 +20,46 @@ class Controller_Update extends Controller_Template {
 		}
 		else
 		{
+			// you need to be logged in for these pages
+			$protectedsegs = array('check', 'step');
+			
+			// get an instance of the database
+			$db = Database::instance();
+			
+			// get the number of tables
+			$tables = Kohana::config('info.app_db_tables');
+			
 			// make sure the system is installed
-			if (count(Database::instance()->list_tables()) < $this->_tables)
+			if (count($db->list_tables($db->table_prefix().'%')) < $tables)
 			{
 				$this->request->redirect('install/index');
 			}
 			
 			// if the system is installed, make sure the user is logged in and a sysadmin
-			if (count(Database::instance()->list_tables()) == $this->_tables)
+			if (count($db->list_tables($db->table_prefix().'%')) == $tables)
 			{
-				// get an instance of the session
-				$session = Session::instance();
-				
-				// make sure there's a session
-				if ($session->get('userid'))
+				if (in_array($this->request->action, $protectedsegs))
 				{
-					// are they a sysadmin?
-					$sysadmin = Auth::is_type('sysadmin', $session->get('userid'));
+					// get an instance of the session
+					$session = Session::instance();
 					
-					// if they aren't, send them away
-					if ($sysadmin === FALSE)
+					// make sure there's a session
+					if ($session->get('userid'))
 					{
-						//$this->request->redirect('login/error/1');
+						// are they a sysadmin?
+						$sysadmin = Auth::is_type('sysadmin', $session->get('userid'));
+						
+						// if they aren't, send them away
+						if ($sysadmin === FALSE)
+						{
+							$this->request->redirect('login/error/1');
+						}
 					}
-				}
-				else
-				{
-					// no session? send them away
-					//$this->request->redirect('login/error/1');
+					else
+					{
+						// no session? send them away
+						$this->request->redirect('login/error/1');
+					}
 				}
 			}
 		}
@@ -64,12 +71,12 @@ class Controller_Update extends Controller_Template {
 		$this->template = View::factory('_common/layouts/update');
 		
 		// set the variables in the template
-		$this->template->title 					= 'Nova :: ';
-		$this->template->javascript				= FALSE;
-		$this->template->layout					= View::factory('update/template_update');
-		$this->template->layout->label			= FALSE;
-		$this->template->layout->flash	= FALSE;
-		$this->template->layout->controls		= FALSE;
+		$this->template->title 				= 'Nova :: ';
+		$this->template->javascript			= FALSE;
+		$this->template->layout				= View::factory('update/template_update');
+		$this->template->layout->label		= FALSE;
+		$this->template->layout->flash		= FALSE;
+		$this->template->layout->controls	= FALSE;
 	}
 	
 	public function action_index()

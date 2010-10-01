@@ -8,7 +8,7 @@
  */
 
 # TODO: attempted login lockout
-# TODO: uncomment login code in install, update and upgrade modules
+# TODO: need documentation on how to override the default maintenance page
 
 class Controller_Nova_Login extends Controller_Nova_Base {
 	
@@ -192,9 +192,20 @@ class Controller_Nova_Login extends Controller_Nova_Base {
 		$this->request->response = $this->template;
 	}
 	
-	public function maintenance()
+	public function action_maintenance()
 	{
-		# code...
+		if (file_exists(APPPATH.'views/maintenance'.EXT))
+		{
+			// use the non-templated maintenance page
+			$this->template = View::factory('maintenance');
+			
+			// send the response
+			$this->request->response = $this->template;
+		}
+		else
+		{
+			$this->request->redirect('login/error/5');
+		}
 	}
 	
 	public function reset()

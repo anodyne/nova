@@ -9,11 +9,6 @@
 
 class Controller_Upgrade extends Controller_Template {
 	
-	/**
-	 * @var	integer	the number of database tables in the system
-	 */
-	public $_tables = 59;
-	
 	public function before()
 	{
 		parent::before();
@@ -28,35 +23,16 @@ class Controller_Upgrade extends Controller_Template {
 			// you're allowed to go to these segments if the system isn't installed
 			$safesegs = array('step', 'index', 'verify', 'readme');
 			
-			// make sure the system is installed
-			if (count(Database::instance()->list_tables()) < $this->_tables AND ! (in_array($this->request->action, $safesegs)))
+			// get an instance of the database
+			$db = Database::instance();
+			
+			// get the number of tables
+			$tables = Kohana::config('info.app_db_tables');
+			
+			// we're upgrading from sms, so make sure the system isn't installed
+			if (count($db->list_tables($db->table_prefix().'%')) == $tables)
 			{
 				$this->request->redirect('install/index');
-			}
-			
-			// if the system is installed, make sure the user is logged in and a sysadmin
-			if (count(Database::instance()->list_tables()) == $this->_tables)
-			{
-				// get an instance of the session
-				$session = Session::instance();
-				
-				// make sure there's a session
-				if ($session->get('userid'))
-				{
-					// are they a sysadmin?
-					$sysadmin = Auth::is_type('sysadmin', $session->get('userid'));
-					
-					// if they aren't, send them away
-					if ($sysadmin === FALSE)
-					{
-						//$this->request->redirect('login/error/1');
-					}
-				}
-				else
-				{
-					// no session? send them away
-					//$this->request->redirect('login/error/1');
-				}
 			}
 		}
 		
@@ -441,28 +417,6 @@ class Controller_Upgrade extends Controller_Template {
 		// content
 		$this->template->title.= __('verify.title');
 		$this->template->layout->label = __('verify.title');
-	}
-	
-	public function action_test()
-	{
-		$fullarray = Database::instance()->list_columns('sms_tour', NULL, FALSE);
-		$obj = (object) array('flat' => array());
-		array_walk_recursive($fullarray, create_function('&$v, $k, &$t', '$t->flat[] = $v;'), $obj);
-		
-		echo Kohana::debug(array_keys($fullarray));
-		echo Kohana::debug(md5(implode('', array_keys($fullarray))));
-		
-		$buttons = "";
-		
-		$buttons.= form::button('primary', 'Primary Button', array('class' => 'btn-main')).'<br /><br />';
-		
-		$buttons.= form::button('secondary', 'Secondary Button', array('class' => 'btn-sec')).'<br /><br />';
-		
-		$buttons.= form::button('tertiary', 'Tertiary Button', array('class' => 'btn-ter')).'<br /><br />';
-		
-		$buttons.= form::button('disabled', 'Disabled Button', array('class' => 'btn-ter', 'disabled' => 'disabled'));
-		
-		$this->template->layout->content = $buttons;
 	}
 	
 	private function _register()
