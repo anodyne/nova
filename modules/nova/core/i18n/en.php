@@ -3,12 +3,8 @@
  * English Language File
  *
  * @package		Nova Core
- * @subpackage	I18n
+ * @category	I18n
  * @author		Anodyne Productions
- * @version		2.0
- *
- * The contention for language keys is GROUP.WORD where spaces are
- * replaced with underscores (_).
  */
 
 return array(
@@ -18,6 +14,7 @@ return array(
 	'login.index_text' => "Placeholder text for the main login page.",
 	'login.logout' => "You have successfully logged out. You can :login or proceed to the :main. You will be redirected in <span id='countdown'></span>&nbsp;seconds.",
 	'login.success' => "Log in successful. Redirecting to the :acp in <span id='countdown'></span>&nbsp;seconds...",
+	'login.reset_message' => "Don't worry, forgetting your password happens to the best of us. Using the fields below, you can request a new password. Simply enter your email address and the security question you set up for your account then your answer to the question. Once I've got that information, I'll be able to reset your password and email you your new one. The first time you log in to the system, you'll be prompted to change your password to something you can remember.",
 	
 	/**
 	 * Error Messages
@@ -31,7 +28,18 @@ return array(
 	'error.login_5' => "Maintenance mode has been activated! Only system administrators are allowed to login. Please try again later.",
 	'error.login_6' => "You've attempted to login more times than the system allows. You must wait :minutes minutes before attempting to login again! :extra",
 	'error.login_7' => "Your account is currently under review. You will not be allowed to login until your application has been accepted. Please contact the game master if you have questions.",
+	'error.login.wrong_security_question' => "The security question you selected doesn't match our records. Please try again.",
+	'error.login.wrong_security_answer' => "The security answer you provided doesn't match our records. Please try again. Remember that you have to type your security answer exactly as you did when you set it.",
+	'error.login.reset_success' => "Your password was successfully reset. Make sure you change your password to something you can remember when you log in.",
+	'error.login.reset_failure' => "Your password wasn't reset. Please try again. If the problem persists, please contact your system administrator.",
 	'error.sysadmin' => "You must be a system administrator to continue.",
+	'error.email_disabled_failure' => "System email has been disabled by the system administrator and this form cannot be submitted.",
+	
+	/**
+	 * Email Messages
+	 */
+	'email.subject.reset_password' => "Password Reset",
+	'email.content.reset_password' => "Your password has been reset and is listed below. Next time you log in, you will be prompted to change your password to something else.\r\n\r\nNew password: :password\r\n\r\n<a href=':site'>Click here</a> to login to site now.",
 	
 	/**
 	 * Phrases
@@ -45,44 +53,3 @@ return array(
 	
 	'search.text' => "Searching through Nova has never been simpler than it is right now. Instead of giving users tons of options they have to wade through, we've reduced search down to it's most basic element: the search field. By default, Nova will search through :posts for your search terms. Instead of just searching through one area, Nova will search through all the areas listed above the field. If you don't want all the areas searched, just click on the ones you don't want searched and Nova will ignore them. If you'd prefer to search for something besides :posts, simply click on the icon in the field and select the new item you want to search for.",
 );
-
-/*$translations['UM12']	= '(UTC -12:00) Baker/Howland Island';
-$translations['UM11']	= '(UTC -11:00) Samoa Time Zone, Niue';
-$translations['UM10']	= '(UTC -10:00) Hawaii-Aleutian Standard Time, Cook Islands, Tahiti';
-$translations['UM95']	= '(UTC -9:30) Marquesas Islands';
-$translations['UM9']	= '(UTC -9:00) Alaska Standard Time, Gambier Islands';
-$translations['UM8']	= '(UTC -8:00) Pacific Standard Time, Clipperton Island';
-$translations['UM7']	= '(UTC -7:00) Mountain Standard Time';
-$translations['UM6']	= '(UTC -6:00) Central Standard Time';
-$translations['UM5']	= '(UTC -5:00) Eastern Standard Time, Western Caribbean Standard Time';
-$translations['UM45']	= '(UTC -4:30) Venezuelan Standard Time';
-$translations['UM4']	= '(UTC -4:00) Atlantic Standard Time, Eastern Caribbean Standard Time';
-$translations['UM35']	= '(UTC -3:30) Newfoundland Standard Time';
-$translations['UM3']	= '(UTC -3:00) Argentina, Brazil, French Guiana, Uruguay';
-$translations['UM2']	= '(UTC -2:00) South Georgia/South Sandwich Islands';
-$translations['UM1']	= '(UTC -1:00) Azores, Cape Verde Islands';
-$translations['UTC']	= '(UTC) Greenwich Mean Time, Western European Time';
-$translations['UP1']	= '(UTC +1:00) Central European Time, West Africa Time';
-$translations['UP2']	= '(UTC +2:00) Central Africa Time, Eastern European Time, Kaliningrad Time';
-$translations['UP3']	= '(UTC +3:00) Moscow Time, East Africa Time';
-$translations['UP35']	= '(UTC +3:30) Iran Standard Time';
-$translations['UP4']	= '(UTC +4:00) Azerbaijan Standard Time, Samara Time';
-$translations['UP45']	= '(UTC +4:30) Afghanistan';
-$translations['UP5']	= '(UTC +5:00) Pakistan Standard Time, Yekaterinburg Time';
-$translations['UP55']	= '(UTC +5:30) Indian Standard Time, Sri Lanka Time';
-$translations['UP575']	= '(UTC +5:45) Nepal Time';
-$translations['UP6']	= '(UTC +6:00) Bangladesh Standard Time, Bhutan Time, Omsk Time';
-$translations['UP65']	= '(UTC +6:30) Cocos Islands, Myanmar';
-$translations['UP7']	= '(UTC +7:00) Krasnoyarsk Time, Cambodia, Laos, Thailand, Vietnam';
-$translations['UP8']	= '(UTC +8:00) Australian Western Standard Time, Beijing Time, Irkutsk Time';
-$translations['UP875']	= '(UTC +8:45) Australian Central Western Standard Time';
-$translations['UP9']	= '(UTC +9:00) Japan Standard Time, Korea Standard Time, Yakutsk Time';
-$translations['UP95']	= '(UTC +9:30) Australian Central Standard Time';
-$translations['UP10']	= '(UTC +10:00) Australian Eastern Standard Time, Vladivostok Time';
-$translations['UP105']	= '(UTC +10:30) Lord Howe Island';
-$translations['UP11']	= '(UTC +11:00) Magadan Time, Solomon Islands, Vanuatu';
-$translations['UP115']	= '(UTC +11:30) Norfolk Island';
-$translations['UP12']	= '(UTC +12:00) Fiji, Gilbert Islands, Kamchatka Time, New Zealand Standard Time';
-$translations['UP1275']	= '(UTC +12:45) Chatham Islands Standard Time';
-$translations['UP13']	= '(UTC +13:00) Phoenix Islands Time, Tonga';
-$translations['UP14']	= '(UTC +14:00) Line Islands';*/

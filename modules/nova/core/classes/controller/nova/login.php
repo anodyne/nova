@@ -7,9 +7,6 @@
  * @author		Anodyne Productions
  */
 
-# TODO: attempted login lockout
-# TODO: need documentation on how to override the default maintenance page
-
 class Controller_Nova_Login extends Controller_Nova_Base {
 	
 	public function before()
@@ -17,7 +14,14 @@ class Controller_Nova_Login extends Controller_Nova_Base {
 		parent::before();
 		
 		// pull these additional setting keys that'll be available in every method
-		$this->settingsArray[] = 'skin_login';
+		$additionalSettings = array(
+			'skin_login',
+			'default_email_name',
+			'default_email_address'
+		);
+		
+		// merge the settings arrays
+		$this->settingsArray = array_merge($this->settingsArray, $additionalSettings);
 		
 		// pull the settings and put them into the options object
 		$this->options = Jelly::factory('setting')->get_settings($this->settingsArray);
@@ -60,6 +64,30 @@ class Controller_Nova_Login extends Controller_Nova_Base {
 		// assign the object a shorter variable to use in the method
 		$data = $this->template->layout->content;
 		
+		// grab the UID
+		$uid = Jelly::query('system', 1)->select()->uid;
+		
+		// is the session data for a lockout available?
+		$lockout = $this->session->get('nova_'.$uid.'_lockout_time');
+		
+		// there is lockout data
+		if ($lockout !== NULL)
+		{
+			// find out how long it's been
+			$timeframe = date::now() - $lockout;
+			
+			// if it hasn't been long enough, show an error
+			if ($timeframe < Auth::$lockout_time)
+			{
+				// find out how much time is left
+				$timeleft = Auth::$lockout_time - $timeframe;
+				
+				$this->template->layout->flash = View::factory(Location::view('flash', $this->skin, 'login', 'pages'));
+				$this->template->layout->flash->status = 'error';
+				$this->template->layout->flash->message = __('error.login_6', array(':minutes' => round(ceil($timeleft/60), 0), ':extra' => ''));
+			}
+		}
+		
 		// content
 		$this->template->title.= ucwords(__('log in'));
 		$data->header = ucwords(__('log in'));
@@ -97,12 +125,6 @@ class Controller_Nova_Login extends Controller_Nova_Base {
 			
 			if ($login > 0)
 			{
-				// grab the UID
-				$uid = Jelly::query('system', 1)->select()->uid;
-				
-				// set the email address as session data to check login attempts
-				$this->session->set('nova_'.$uid.'_email', $email);
-				
 				// redirect to the error page
 				$this->request->redirect('login/error/'.$login);
 			}
@@ -150,6 +172,10 @@ class Controller_Nova_Login extends Controller_Nova_Base {
 		// set the error message
 		switch ($error)
 		{
+			case 5:
+				$this->request->redirect('login/maintenance');
+			break;
+			
 			case 6:
 				$data->message = __('error.login_'.$error, array(':minutes' => (Auth::$lockout_time/60), ':extra' => ''));
 			break;
@@ -208,121 +234,190 @@ class Controller_Nova_Login extends Controller_Nova_Base {
 		}
 	}
 	
-	public function reset()
+	public function action_reset()
 	{
-		/*
-		if ($this->options['system_email'] == 'off')
-		{
-			$flash['status'] = 'info';
-			$flash['message'] = lang_output('flash_system_email_off_disabled');
-			
-			$this->template->write_view('flash_message', '_base/login/pages/flash', $flash);
-		}
-		
 		if (isset($_POST['submit']))
 		{
-			$email = $this->input->post('email', TRUE);
-			$question = $this->input->post('question', TRUE);
-			$answer = $this->input->post('answer', TRUE);
+			// set the variables
+			$email		= trim(Security::xss_clean($_POST['email']));
+			$question	= trim(Security::xss_clean($_POST['question']));
+			$answer		= trim(Security::xss_clean($_POST['answer']));
 			
-			$info = $this->user->get_user_details_by_email($email);
+			// get the user details
+			$info = Jelly::query('user')->where('email', '=', $email)->select();
 			
-			if ($info->num_rows() == 1)
+			if (count($info) == 1)
 			{
-				$row = $info->row();
+				// grab the user object
+				$user = $info->current();
 				
-				if ($row->security_question == $question)
+				// make sure the security question matches
+				if ($user->security_question->id == $question)
 				{
-					if (sha1($answer) == $row->security_answer)
+					// make sure the security answer matches
+					if (sha1($answer) == $user->security_answer)
 					{
-						$reset = $this->_reset($email);
+						// generate a new password
+						$newpass = Text::random('alnum');
 						
-						if ($reset == 0)
+						// update the user's record
+						$user->password = Auth::hash($newpass);
+						$user->password_reset = 1;
+						$user->save();
+						
+						// make sure the record was saved
+						if ($user->saved())
 						{
-							$flash['status'] = 'error';
-							$flash['message'] = lang_output('flash_reset_fail');
+							// set the data for the email
+							$emaildata = new stdClass;
+							$emaildata->email = $email;
+							$emaildata->password = $newpass;
+							$emaildata->name = $user->name;
+							
+							// send the email
+							$email = $this->_email('reset', $emaildata);
+							
+							// set the flash message
+							$this->template->layout->flash = View::factory(Location::view('flash', $this->skin, 'login', 'pages'));
+							$this->template->layout->flash->status = 'success';
+							$this->template->layout->flash->message = __('error.login.reset_success');
 						}
 						else
 						{
-							$flash['status'] = 'success';
-							$flash['message'] = lang_output('flash_reset_success');
+							$this->template->layout->flash = View::factory(Location::view('flash', $this->skin, 'login', 'pages'));
+							$this->template->layout->flash->status = 'error';
+							$this->template->layout->flash->message = __('error.login.reset_failure');
 						}
 					}
 					else
 					{
-						$flash['status'] = 'error';
-						$flash['message'] = lang_output('flash_reset_error_3');
+						$this->template->layout->flash = View::factory(Location::view('flash', $this->skin, 'login', 'pages'));
+						$this->template->layout->flash->status = 'error';
+						$this->template->layout->flash->message = __('error.login.wrong_security_answer');
 					}
 				}
 				else
 				{
-					$flash['status'] = 'error';
-					$flash['message'] = lang_output('flash_reset_error_2');
+					$this->template->layout->flash = View::factory(Location::view('flash', $this->skin, 'login', 'pages'));
+					$this->template->layout->flash->status = 'error';
+					$this->template->layout->flash->message = __('error.login.wrong_security_question');
 				}
 			}
-			elseif ($info->num_rows() > 1)
+			elseif (count($info) > 1)
 			{
-				$flash['status'] = 'error';
-				$flash['message'] = lang_output('flash_reset_error_4');
+				$this->template->layout->flash = View::factory(Location::view('flash', $this->skin, 'login', 'pages'));
+				$this->template->layout->flash->status = 'error';
+				$this->template->layout->flash->message = __('error.login_4');
 			}
-			elseif ($info->num_rows() < 1)
+			elseif (count($info) < 1)
 			{
-				$flash['status'] = 'error';
-				$flash['message'] = lang_output('flash_reset_error_1');
+				$this->template->layout->flash = View::factory(Location::view('flash', $this->skin, 'login', 'pages'));
+				$this->template->layout->flash->status = 'error';
+				$this->template->layout->flash->message = __('error.login_2');
+			}
+		}
+		
+		// create a new content view
+		$this->template->layout->content = View::factory(Location::view('login_reset', $this->skin, 'login', 'pages'));
+		
+		// assign the object a shorter variable to use in the method
+		$data = $this->template->layout->content;
+		
+		// set the title
+		$this->template->title.= ucwords(__('reset password'));
+		
+		// set the header
+		$data->header = ucwords(__('reset password'));
+		
+		// set the page as enabled
+		$data->enabled = TRUE;
+		
+		if ($this->options->system_email == 'off')
+		{
+			// set the message
+			$data->message = __("error.email_disabled_failure");
+			$data->message_class = 'fontMedium warning';
+			
+			// disabled
+			$data->enabled = FALSE;
+		}
+		else
+		{
+			// set the message
+			$data->message = __("login.reset_message");
+			$data->message_class = FALSE;
+			
+			// get the security questions
+			$questions = Jelly::query('securityquestion')->select();
+			
+			// set the initial question
+			$data->questions = array(
+				0 => ucfirst(__("Please select your security question"))
+			);
+			
+			// pull in the questions from the database
+			if (count($questions) > 0)
+			{
+				foreach ($questions as $q)
+				{
+					$data->questions[$q->id] = $q->value;
+				}
 			}
 			
-			$this->template->write_view('flash_message', '_base/login/pages/flash', $flash);
+			// set the button options
+			$data->button = array(
+				'submit' => array(
+					'type' => 'submit',
+					'class' => 'btn-main',
+					'id' => 'submit'),
+			);
 		}
 		
-		$questions = $this->sys->get_security_questions();
+		// send the response
+		$this->request->response = $this->template;
+	}
+	
+	private function _email($type, $data)
+	{
+		// set the email variable that'll be returned
+		$email = FALSE;
 		
-		$data['questions'][0] = lang('login_questions_selectone');
-		
-		if ($questions->num_rows() > 0)
+		// make sure system email is turned on
+		if ($this->options->system_email == 'on')
 		{
-			foreach ($questions->result() as $row)
+			// set up the mailer
+			$mailer = Email::setup_mailer();
+			
+			// create a new message
+			$message = Email::setup_message();
+			
+			switch ($type)
 			{
-				$data['questions'][$row->question_id] = $row->question_value;
+				case 'reset':
+					// data for the view files
+					$view = new stdClass;
+					$view->subject = __("email.subject.reset_password");
+					$view->content = __("email.content.reset_password", array(':password' => $data->password, ':site' => url::site('login/index')));
+					
+					// set the html version
+					$html = View::factory(Location::view('login_reset_em_html', $this->skin, 'login', 'email'), $view);
+					
+					// set the text version
+					$text = View::factory(Location::view('login_reset_em_text', $this->skin, 'login', 'email'), $view);
+					
+					// set the message data
+					$message->setSubject(__("email.subject.reset_password"));
+					$message->setFrom(array($this->options->default_email_address => $this->options->default_email_name));
+					$message->setTo($data->email);
+					$message->setBody($primary->render(), 'text/html');
+					$message->addPart($secondary->render(), 'text/plain');
+				break;
 			}
+			
+			// send the message
+			$email = $mailer->send($message);
 		}
 		
-		$data['header'] = lang('head_login_resetpass');
-		$data['message'] = lang('login_reset_message');
-		
-		$data['inputs'] = array(
-			'answer' => array(
-				'name' => 'answer',
-				'id' => 'answer'),
-			'email' => array(
-				'name' => 'email',
-				'id' => 'email')
-		);
-		
-		$data['button_submit'] = array(
-			'type' => 'submit',
-			'class' => 'button-main',
-			'name' => 'submit',
-			'value' => 'submit',
-			'content' => ucwords(lang('actions_submit'))
-		);
-		
-		$data['label'] = array(
-			'email' => ucwords(lang('labels_email_address')),
-			'question' => ucwords(lang('labels_security') .' '. lang('labels_question')),
-			'answer' => ucfirst(lang('labels_answer'))
-		);
-		
-		if ($this->options['system_email'] == 'off')
-		{
-			$data['button_submit']['disabled'] = 'yes';
-		}
-		
-		$view_loc = view_location('login_resetpass', $this->skin, 'login');
-		
-		$this->template->write('title', lang('head_login_resetpass'));
-		$this->template->write_view('content', $view_loc, $data);
-		
-		$this->template->render();
-		*/
+		return $email;
 	}
 }

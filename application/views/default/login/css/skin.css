@@ -152,7 +152,8 @@ a:hover {
 }
 
 input[type=text],
-input[type=password] {
+input[type=password],
+select {
 	border: 1px solid #181818;
 	color: #acacac;
 	font-family: "lucida grande", verdana, arial, sans-serif;
@@ -170,17 +171,6 @@ textarea {
 	font-family: "lucida grande", verdana, arial, sans-serif;
 	border: 1px solid #111;
 	color: #acacac;
-	background: #222;
-	
-	border-radius: 2px;
-	-moz-border-radius: 2px;
-	-webkit-border-radius: 2px;
-}
-
-select {
-	border: 1px solid #111;
-	color: #acacac;
-	font-family: "lucida grande", verdana, arial, sans-serif;
 	background: #222;
 	
 	border-radius: 2px;
@@ -347,31 +337,48 @@ button[disabled], button:hover[disabled], button:active[disabled] {
 }
 
 .flash-message {
+	margin-bottom: 15px !important;
+	
 	font-weight: bold;
 	font-size: .9em;
 	
-	border-radius: 2px;
-	-moz-border-radius: 2px;
-	-webkit-border-radius: 2px;
+	border-radius: 3px;
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
 	
 	box-shadow: 1px 1px 2px rgba(0, 0, 0, .1);
 	-moz-box-shadow: 1px 1px 2px rgba(0, 0, 0, .1);
 	-webkit-box-shadow: 1px 1px 2px rgba(0, 0, 0, .1);
 }
 .flash-success {
-	border: 1px solid #a4c897;
-	background: #ccecc5 url('../images/flash-bg.png') repeat-x top left;
-	color: #376b0e;
+	border: 1px solid #008000;
+	background: #008000 url('../images/gradient-30-hard-short.png') repeat-x top left;
+	color: #fff;
+	text-shadow: 0 1px 0 rgba(0, 0, 0, .4);
+	
+	box-shadow: inset 0 1px 0 rgba(255, 255, 255, .2);
+	-moz-box-shadow: inset 0 1px 0 rgba(255, 255, 255, .2);
+	-webkit-box-shadow: inset 0 1px 0 rgba(255, 255, 255, .2);
 }
 .flash-error {
-	border: 1px solid #c89797; 
-	background: #ecc5c5 url('../images/flash-bg.png') repeat-x top left;
-	color: #6b0f0e;
+	border: 1px solid #c00; 
+	background: #c00 url('../images/gradient-30-hard-short.png') repeat-x top left;
+	color: #fff;
+	text-shadow: 0 1px 0 rgba(0, 0, 0, .4);
+	
+	box-shadow: inset 0 1px 0 rgba(255, 255, 255, .2);
+	-moz-box-shadow: inset 0 1px 0 rgba(255, 255, 255, .2);
+	-webkit-box-shadow: inset 0 1px 0 rgba(255, 255, 255, .2);
 }
 .flash-info {
-	border: 1px solid #97a5c8;
-	background: #c5d6ec url('../images/flash-bg.png') repeat-x top left;
-	color: #0e2d6b;
+	border: 1px solid #406ceb;
+	background: #406ceb url('../images/gradient-30-hard-short.png') repeat-x top left;
+	color: #fff;
+	text-shadow: 0 1px 0 rgba(0, 0, 0, .4);
+	
+	box-shadow: inset 0 1px 0 rgba(255, 255, 255, .2);
+	-moz-box-shadow: inset 0 1px 0 rgba(255, 255, 255, .2);
+	-webkit-box-shadow: inset 0 1px 0 rgba(255, 255, 255, .2);
 }
 
 hr {
