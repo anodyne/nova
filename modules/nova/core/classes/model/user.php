@@ -126,8 +126,9 @@ class Model_User extends Jelly_Model {
 			'bio' => Jelly::field('text', array(
 				'column' => 'bio'
 			)),
-			'security_question' => Jelly::field('integer', array(
-				'column' => 'security_question'
+			'security_question' => Jelly::field('belongsto', array(
+				'column' => 'security_question',
+				'foreign' => 'securityquestion'
 			)),
 			'security_answer' => Jelly::field('string', array(
 				'column' => 'security_answer'
