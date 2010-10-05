@@ -20,10 +20,10 @@ abstract class Nova_Email {
 	public static function install_register(array $data)
 	{
 		// set up the mailer
-		$mailer = self::setup();
+		$mailer = self::setup_mailer();
 		
 		// get a new instance of SwiftMailer
-		$message = Swift_Message::newInstance();
+		$message = self::setup_message();
 		
 		// set the data for the message
 		$message->setSubject('Nova Registration');
@@ -44,7 +44,7 @@ abstract class Nova_Email {
 	 * @uses	Kohana::config
 	 * @return	object	an instance of the mailer object
 	 */
-	protected static function setup()
+	public static function setup_mailer()
 	{
 		// get the email config
 		$email = Kohana::config('email');
@@ -64,7 +64,6 @@ abstract class Nova_Email {
 				$transport = Swift_SmtpTransport::newInstance($email->smtp_server, $email->smtp_port)
 					->setUsername($email->smtp_username)
 					->setPassword($email->smtp_password);
-				
 			break;
 		}
 		
@@ -73,4 +72,14 @@ abstract class Nova_Email {
 		
 		return $mailer;
 	}
-} // End Email
+	
+	/**
+	 * Sets up the SwiftMail message and returns the instance.
+	 *
+	 * @return	object	an instance of the message object
+	 */
+	public function setup_message()
+	{
+		return Swift_Message::newInstance();
+	}
+}
