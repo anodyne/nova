@@ -16,12 +16,12 @@ abstract class Nova_Auth {
 	/**
 	 * @var	integer	Number of attempts allowed before lockout
 	 */
-	public static $allowed_login_attempts = 5;
+	public static $allowed_login_attempts = 2;
 	
 	/**
 	 * @var	integer	Number of seconds the lockout lasts
 	 */
-	public static $lockout_time = 1800;
+	public static $lockout_time = 120;
 	
 	/**
 	 * @var	object	an instance of the session for use throughout the class
@@ -29,17 +29,12 @@ abstract class Nova_Auth {
 	protected static $session;
 	
 	/**
-	 * Initializes the Auth class if necessary. The constructor will also
-	 * get an instance of the session and store it in the class variable
-	 * and set a Kohana debug log item to notify that the library has been
-	 * initialized.
+	 * Initializes the Auth class. It isn't necessary to directly call this
+	 * method as it's called automatically when the class is used.
 	 *
-	 * *This class is initialized in the base controller and should only be
-	 * initialized in your own work if you're not using the base controller.*
-	 *
-	 * @return 	void
+	 * @return	void
 	 */
-	public function __construct()
+	public static function initialize()
 	{
 		// get an instance of the session library
 		self::$session = Session::instance();
@@ -353,14 +348,33 @@ abstract class Nova_Auth {
 		}
 		else
 		{
-			//$item = $sys->get_last_login_attempt($email);
+			// grab an instance of the session
+			$session = Session::instance();
 			
-			//$timeframe = now() - $item->login_time;
+			// grab the nova uid
+			$uid = Jelly::query('system', 1)->select()->uid;
 			
+			// get the last login attempt record
+			$item = Jelly::query('loginattempt')
+				->where('email', '=', $email)
+				->order_by('date', 'desc')
+				->limit(1)
+				->select();
+			
+			// calculate how long it's been since their last attempt
+			$timeframe = date::now() - $item->date;
+			
+			// make sure they're allowed to log in
 			if ($timeframe > self::$lockout_time)
 			{
+				// clear the session data
+				$session->delete('nova_'.$uid.'_lockout_time');
+				
 				return TRUE;
 			}
+			
+			// set the lockout time as session data to check login attempts
+			$session->set('nova_'.$uid.'_lockout_time', $item->date);
 			
 			return FALSE;
 		}
@@ -374,18 +388,14 @@ abstract class Nova_Auth {
 	protected static function _autologin()
 	{
 		// get the UID
-		$uid = Jelly::query('system')
-			->where('id', '=', 1)
-			->limit(1)
-			->select()
-			->uid;
+		$uid = Jelly::query('system', 1)->select()->uid;
 		
 		// get the cookie
 		$cookie = cookie::get('nova_'.$uid, FALSE, TRUE);
 		
 		if ($cookie !== FALSE)
 		{
-			$login = $this->login($cookie['email'], $cookie['password']);
+			$login = self::login($cookie['email'], $cookie['password']);
 			
 			return $login;
 		}

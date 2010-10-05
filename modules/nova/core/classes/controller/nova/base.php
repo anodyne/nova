@@ -10,7 +10,6 @@
 abstract class Controller_Nova_Base extends Controller_Template {
 	
 	// these libraries should be globally available
-	public $auth;
 	public $session;
 	
 	// the options object
@@ -46,9 +45,6 @@ abstract class Controller_Nova_Base extends Controller_Template {
 		
 		// load the session library
 		$this->session = Session::instance();
-		
-		// load the auth library
-		$this->auth = new Auth;
 		
 		// set the locale
 		i18n::lang($this->session->get('language', 'en-us'));
