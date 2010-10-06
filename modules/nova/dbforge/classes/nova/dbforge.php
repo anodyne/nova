@@ -137,7 +137,7 @@ abstract class Nova_DBForge {
 	
 		if ($key == '')
 		{
-			throw new Kohana_Exception(__('Key information is required for that operation.'));
+			throw new Kohana_Exception(__("Key information is required for that operation."));
 		}
 		
 		if ($primary === TRUE)
@@ -171,7 +171,7 @@ abstract class Nova_DBForge {
 	{
 		if ($field == '')
 		{
-			throw new Kohana_Exception(__('Field information is required.'));
+			throw new Kohana_Exception(__("Field information is required."));
 		}
 		
 		if (is_string($field))
@@ -191,7 +191,7 @@ abstract class Nova_DBForge {
 			{
 				if (strpos($field, ' ') === FALSE)
 				{
-					throw new Kohana_Exception(__('Field information is required for that operation.'));
+					throw new Kohana_Exception(__("Field information is required for that operation."));
 				}
 				
 				self::$fields[] = $field;
@@ -221,12 +221,12 @@ abstract class Nova_DBForge {
 	{	
 		if ($table == '')
 		{
-			throw new Kohana_Exception(__('A table name is required for that operation'));
+			throw new Kohana_Exception(__("A table name is required for that operation."));
 		}
 			
 		if (count(self::$fields) == 0)
 		{
-			throw new Kohana_Exception(__('Field information is required.'));
+			throw new Kohana_Exception(__("Field information is required."));
 		}
 		
 		$sql = 'CREATE TABLE ';
@@ -304,7 +304,7 @@ abstract class Nova_DBForge {
 	{
 		if ($table == '' OR $newtable == '')
 		{
-			throw new Kohana_Exception(__('A table name is required for that operation.'));
+			throw new Kohana_Exception(__("A table name is required for that operation."));
 		}
 		
 		$sql = 'ALTER TABLE '.self::_protect_identifiers(self::$dbconfig['table_prefix'].$table)." RENAME TO ".self::_protect_identifiers(self::$dbconfig['table_prefix'].$newtable);
@@ -337,7 +337,7 @@ abstract class Nova_DBForge {
 	{
 		if ($table == '')
 		{
-			throw new Kohana_Exception(__('A table name is required for that operation'));
+			throw new Kohana_Exception(__("A table name is required for that operation."));
 		}
 
 		// add field info into field array, but we can only do one at a time so we cycle through
@@ -347,7 +347,7 @@ abstract class Nova_DBForge {
 
 			if (count(self::$fields) == 0)
 			{
-				throw new Kohana_Exception(__('Field information is required.'));
+				throw new Kohana_Exception(__("Field information is required."));
 			}
 			
 			$sql = self::_alter_table('ADD', self::$dbconfig['table_prefix'].$table, self::$fields, $after_field);
@@ -373,12 +373,12 @@ abstract class Nova_DBForge {
 	{
 		if ($table == '')
 		{
-			throw new Kohana_Exception(_('A table name is required for that operation.'));
+			throw new Kohana_Exception(__("A table name is required for that operation."));
 		}
 
 		if ($column_name == '')
 		{
-			throw new Kohana_Exception(__('A column name is required for that operation.'));
+			throw new Kohana_Exception(__("A column name is required for that operation."));
 		}
 
 		$sql = self::_alter_table('DROP', self::$dbconfig['table_prefix'].$table, $column_name);
@@ -410,7 +410,7 @@ abstract class Nova_DBForge {
 	{
 		if ($table == '')
 		{
-			throw new Kohana_Exception(__('A table name is required for that operation.'));
+			throw new Kohana_Exception(__("A table name is required for that operation."));
 		}
 
 		// add field info into field array, but we can only do one at a time so we cycle through
@@ -420,7 +420,7 @@ abstract class Nova_DBForge {
 
 			if (count(self::$fields) == 0)
 			{
-				throw new Kohana_Exception(__('Field information is required.'));
+				throw new Kohana_Exception(__("Field information is required."));
 			}
 		
 			$sql = self::_alter_table('CHANGE', self::$dbconfig['table_prefix'].$table, self::$fields);
@@ -765,4 +765,4 @@ abstract class Nova_DBForge {
 		self::$keys = array();
 		self::$primary_keys = array();
 	}
-} // End DBForge
+}
