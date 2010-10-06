@@ -2090,13 +2090,18 @@ $messages = array(
 	array(
 		'message_key' => 'credits_perm',
 		'message_label' => 'Permanent Credits',
-		'message_content' => "Nova has been developed on the <a href='http://www.codeigniter.com' target='_blank'>CodeIgniter</a> PHP framework by <a href='http://www.ellislab.com' target='_blank'>EllisLab</a>.\r\n\r\nIcons used throughout Nova were created by <a href='http://www.famfamfam.com'>FamFamFam</a> and <a href='http://www.pinvoke.com'>Pinvoke</a>.",
+		'message_content' => "Nova 2 has been developed on the elegant HMVC PHP5 framework <a href='http://www.http://kohanaframework.org/' target='_blank'>Kohana 3</a>.\r\n\r\nMany of the icons used throughout Nova were created by <a href='http://http://p.yusukekamiyamane.com/'>Yusuke Kamiyamane</a> as part of the Fugue icon set.",
 		'message_protected' => 'y',
 		'message_type' => 'message'),
 	array(
 		'message_key' => 'credits',
 		'message_label' => 'Credits',
 		'message_content' => "Define your site credits through the Site Messages page.",
+		'message_type' => 'message'),
+	array(
+		'message_key' => 'contact',
+		'message_label' => 'Contact Page Message',
+		'message_content' => "Have a question about the sim? Need to get in touch with the game master? Use the form below to drop us a message with your question or comment and we'll get back to you as soon as possible.",
 		'message_type' => 'message'),
 	array(
 		'message_key' => 'join_disclaimer',
