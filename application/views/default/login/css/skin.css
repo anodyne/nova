@@ -169,9 +169,11 @@ select {
 textarea {
 	font-size: 100%;
 	font-family: "lucida grande", verdana, arial, sans-serif;
-	border: 1px solid #111;
+	border: 1px solid #181818;
 	color: #acacac;
-	background: #222;
+	background: #343434;
+	background: -moz-linear-gradient(center top, #2c2c2c 20%, #343434 100%);
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(.2, #2c2c2c), color-stop(1, #343434));
 	
 	border-radius: 2px;
 	-moz-border-radius: 2px;
