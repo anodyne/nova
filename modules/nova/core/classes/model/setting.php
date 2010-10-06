@@ -12,13 +12,11 @@ class Model_Setting extends Jelly_Model {
 	/**
 	 * Initialize the model with Jelly_Meta data
 	 *
-	 * *This model is automatically initialized by the base controller as <code>$this->mSettings</code>. The only time you
-	 * need to initialize this class is in the event you are not working with the base controller.*
-	 *
 	 * @return	void
 	 */
 	public static function initialize(Jelly_Meta $meta)
 	{
+		$meta->name_key('key');
 		$meta->fields(array(
 			'id' => Jelly::field('primary', array(
 				'column' => 'setting_id'
@@ -41,10 +39,10 @@ class Model_Setting extends Jelly_Model {
 	}
 	
 	/**
-	 * Pulls back specific settings from the database based on their setting key.
+	 * Pulls back specific settings from the database based on their key(s).
 	 *
-	 *     $settings = $this->mSettings->get_settings('sim_name');
-	 *     $settings = $this->mSettings->get_settings(array('sim_name', 'sim_year'));
+	 *     $settings = Jelly::factory('setting')->get_settings('sim_name');
+	 *     $settings = Jelly::factory('setting')->get_settings(array('sim_name', 'sim_year'));
 	 *
 	 * @param	mixed	key(s) to pull back from the database
 	 * @return	array 	an array of setting keys
@@ -77,5 +75,24 @@ class Model_Setting extends Jelly_Model {
 		}
 		
 		return $obj;
+	}
+	
+	/**
+	 * Overrides the unique key functionality so that the model will understand
+	 * both numeric values for primary keys and string values for the name key.
+	 *
+	 * @param	mixed	value to use as the unique key
+	 * @return	object	the primary key or name key object
+	 */
+	public function unique_key($value)
+	{
+		if (is_numeric($value))
+		{
+			return $this->_meta->primary_key();
+		}
+		else
+		{
+			return $this->_meta->name_key();
+		}
 	}
 }

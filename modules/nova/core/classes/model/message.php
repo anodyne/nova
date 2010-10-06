@@ -12,13 +12,11 @@ class Model_Message extends Jelly_Model {
 	/**
 	 * Initialize the model with Jelly_Meta data
 	 *
-	 * *This model is automatically initialized by the base controller as <code>$this->mMessages</code>. The only time you
-	 * need to initialize this class is in the event you are not working with the base controller.*
-	 *
 	 * @return	void
 	 */
 	public static function initialize(Jelly_Meta $meta)
 	{
+		$meta->name_key('key');
 		$meta->fields(array(
 			'id' => Jelly::field('primary', array(
 				'column' => 'message_id'
@@ -44,17 +42,21 @@ class Model_Message extends Jelly_Model {
 	}
 	
 	/**
-	 * Pulls back a message from the database based on its message key.
+	 * Overrides the unique key functionality so that the model will understand
+	 * both numeric values for primary keys and string values for the name key.
 	 *
-	 *     echo $this->mMessages->get_message('message_key');
-	 *
-	 * @param	string	the message key
-	 * @return	string	the message
+	 * @param	mixed	value to use as the unique key
+	 * @return	object	the primary key or name key object
 	 */
-	public function get_message($key)
+	public function unique_key($value)
 	{
-		$query = Jelly::select('message')->where('key', '=', $key)->load();
-		
-		return $query->value;
+		if (is_numeric($value))
+		{
+			return $this->_meta->primary_key();
+		}
+		else
+		{
+			return $this->_meta->name_key();
+		}
 	}
 }
