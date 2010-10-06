@@ -38,6 +38,7 @@ return array(
 	/**
 	 * Email Messages
 	 */
+	'email.subject.contact' => "Site Contact from :name",
 	'email.subject.reset_password' => "Password Reset",
 	'email.content.reset_password' => "Your password has been reset and is listed below. Next time you log in, you will be prompted to change your password to something else.\r\n\r\nNew password: :password\r\n\r\n<a href=':site'>Click here</a> to login to site now.",
 	

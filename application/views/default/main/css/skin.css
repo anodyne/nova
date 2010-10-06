@@ -288,55 +288,61 @@ a:hover {
 	border-bottom: 1px solid;
 }
 
+a.edit {
+	font-weight: bold;
+	color: #555;
+}
+a.edit:hover {
+	border-bottom: 0;
+	color: #777;
+}
+
 /*
 |---------------------------------------------------------------
 | INPUTS
 |---------------------------------------------------------------
 */
 input[type=text],
-input[type=password] {
-	border: 1px solid #d8d8d8;
-	color: #777;
+input[type=password],
+input[type=email],
+select {
+	border: 1px solid #181818;
+	color: #acacac;
 	font-family: "lucida grande", verdana, arial, sans-serif;
+	background: #343434;
+	background: -moz-linear-gradient(center top, #2c2c2c 20%, #343434 100%);
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(.2, #2c2c2c), color-stop(1, #343434));
 	
 	border-radius: 2px;
 	-moz-border-radius: 2px;
 	-webkit-border-radius: 2px;
-}
-input[type=text]:focus,
-input[type=password]:focus {
-	color: #444;
-	border: 1px solid #777;
 }
 
 textarea {
 	font-size: 100%;
 	font-family: "lucida grande", verdana, arial, sans-serif;
-	border: 1px solid #d8d8d8;
-	color: #666;
+	border: 1px solid #181818;
+	color: #acacac;
+	background: #343434;
+	background: -moz-linear-gradient(center top, #2c2c2c 20%, #343434 100%);
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(.2, #2c2c2c), color-stop(1, #343434));
 	
 	border-radius: 2px;
 	-moz-border-radius: 2px;
 	-webkit-border-radius: 2px;
-}
-textarea:focus {
-	color: #444;
-	border: 1px solid #b8b8b8;
 }
 
-select {
-	border: 1px solid #d8d8d8;
-	color: #777;
-	font-family: "lucida grande", verdana, arial, sans-serif;
-	
-	border-radius: 2px;
-	-moz-border-radius: 2px;
-	-webkit-border-radius: 2px;
-}
+input[type=text]:focus,
+input[type=password]:focus,
+input[type=email]:focus,
+textarea:focus,
 select:focus,
 select:hover {
-	color: #444;
-	border: 1px solid #777;
+	color: #eee;
+	
+	box-shadow: 0 0 5px #52a8e8;
+	-moz-box-shadow: 0 0 5px #52a8e8;
+	-webkit-box-shadow: 0 0 5px #52a8e8;
 }
 
 kbd { font-family: "lucida grande", verdana, arial, sans-serif; }
@@ -583,8 +589,12 @@ button[disabled], button:hover[disabled], button:active[disabled] {
 |---------------------------------------------------------------
 */
 hr {
-	border: 1px solid #e7e7e7;
-	border-width: 1px 0 0;
+	border-top: 1px solid #222525;
+	border-top: 1px solid rgba(0, 0, 0, .65);
+	border-bottom: 1px solid #6a6e6f;
+	border-bottom: 1px solid rgba(255, 255, 255, .11);
+	border-left: 0;
+	border-right: 0;
 }
 
 .loader { text-align: center; }

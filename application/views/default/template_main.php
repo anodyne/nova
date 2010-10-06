@@ -53,7 +53,7 @@
 		
 		<!-- PAGE CONTENT -->
 		<div class="content">
-			<?php echo $flash_message;?>
+			<?php echo $flash;?>
 			<?php echo $content;?>
 			<?php echo $ajax;?>
 			

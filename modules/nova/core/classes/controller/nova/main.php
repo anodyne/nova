@@ -14,7 +14,13 @@ class Controller_Nova_Main extends Controller_Nova_Base {
 		parent::before();
 		
 		// pull these additional setting keys that'll be available in every method
-		$this->settingsArray[] = 'skin_main';
+		$additionalSettings = array(
+			'skin_main',
+			'email_subject',
+		);
+		
+		// merge the settings arrays
+		$this->settingsArray = array_merge($this->settingsArray, $additionalSettings);
 		
 		// pull the settings and put them into the options object
 		$this->options = Jelly::factory('setting')->get_settings($this->settingsArray);
@@ -25,10 +31,18 @@ class Controller_Nova_Main extends Controller_Nova_Base {
 		$this->timezone	= $this->session->get('timezone', $this->options->timezone);
 		$this->dst		= $this->session->get('dst', $this->options->daylight_savings);
 		
-		//$this->skin = 'default';
+		// set the values to be passed to the views
+		$vars = array(
+			'template' => array(
+				'skin' => $this->skin,
+				'sec' => 'main'),
+			'layout' => array(
+				'skin'	=> $this->skin,
+				'sec'	=> 'main'),
+		);
 		
 		// set the shell
-		$this->template = View::factory('_common/layouts/main', array('skin' => $this->skin, 'sec' => 'main'));
+		$this->template = View::factory('_common/layouts/main', $vars['template']);
 		
 		// grab the image index
 		$this->images = Utility::get_image_index($this->skin);
@@ -36,11 +50,11 @@ class Controller_Nova_Main extends Controller_Nova_Base {
 		// set the variables in the template
 		$this->template->title 					= $this->options->sim_name.' :: ';
 		$this->template->javascript				= FALSE;
-		$this->template->layout					= View::factory($this->skin.'/template_main', array('skin' => $this->skin, 'sec' => 'main'));
+		$this->template->layout					= View::factory($this->skin.'/template_main', $vars['layout']);
 		$this->template->layout->nav_main 		= Menu::build('main', 'main');
 		$this->template->layout->nav_sub 		= Menu::build('sub', 'main');
 		$this->template->layout->ajax 			= FALSE;
-		$this->template->layout->flash_message	= FALSE;
+		$this->template->layout->flash			= FALSE;
 		$this->template->layout->content		= FALSE;
 		$this->template->layout->panel_1		= FALSE;
 		$this->template->layout->panel_2		= FALSE;
@@ -60,7 +74,7 @@ class Controller_Nova_Main extends Controller_Nova_Base {
 		$data = $this->template->layout->content;
 		
 		// content
-		$this->template->title.= 'Main';
+		$this->template->title.= ucfirst(__("main"));
 		$data->header = Jelly::query('message', 'welcome_head')->limit(1)->select()->value;
 		$data->message = Jelly::query('message', 'welcome_msg')->limit(1)->select()->value;
 		
@@ -68,27 +82,238 @@ class Controller_Nova_Main extends Controller_Nova_Base {
 		$this->request->response = $this->template;
 	}
 	
-	/*public function contact()
+	public function action_contact()
 	{
-		# code...
+		if (isset($_POST['submit']))
+		{
+			$validate = Validate::factory($_POST)
+				->rule('email', 'not_empty')
+				->rule('email', 'email')
+				->rule('name', 'not_empty')
+				->rule('message', 'not_empty'));
+				
+			if ($validate->check())
+			{
+				// clear the errors (if there are any)
+				$this->session->delete('errors');
+				
+				// set the data for the email
+				$emaildata = new stdClass;
+				$emaildata->name = trim(Security::xss_clean($_POST['name']));
+				$emaildata->email = trim(Security::xss_clean($_POST['email']));
+				$emaildata->message = trim(Security::xss_clean($_POST['message']));
+				$emaildata->cc = trim(Security::xss_clean($_POST['ccme']));
+				
+				// send the email
+				$email = $this->_email('contact', $emaildata);
+				
+				// set the flash message
+				$this->template->layout->flash = Submit::show_flash( (int) $email, __("your information"), __("submitted"), $this->skin, 'main');
+			}
+			else
+			{
+				// set the errors
+				$session->set('errors', $validate->errors('register'));
+			}
+		}
+		
+		// create a new content view
+		$this->template->layout->content = View::factory(Location::view('main_contact', $this->skin, 'main', 'pages'));
+		
+		// assign the object a shorter variable to use in the method
+		$data = $this->template->layout->content;
+		
+		// content
+		$this->template->title.= ucwords(__("contact us"));
+		$data->header = ucwords(__("contact us"));
+		$data->message = Jelly::query('message', 'contact')->limit(1)->select()->value;
+		
+		// fields
+		$data->inputs = array(
+			'name' => array(
+				'id' => 'name',
+				'placeholder' => ucfirst(__("name"))),
+			'email' => array(
+				'type' => 'email',
+				'id' => 'email',
+				'placeholder' => ucfirst(__("email address"))),
+			'message' => array(
+				'id' => 'message',
+				'placeholder' => ucfirst(__("let us know what your comment or question is")),
+				'rows' => 12),
+			'submit' => array(
+				'type' => 'submit',
+				'class' => 'btn-main',
+				'id' => 'submit'),
+		);
+		
+		// send the response
+		$this->request->response = $this->template;
+		
+		
+		
+		
+		
+		
+		
+		/*
+		if (isset($_POST['submit']))
+		{
+		
+			$array = array(
+				'to'		=> $this->input->post('to'),
+				'name'		=> $this->input->post('name'),
+				'email'		=> $this->input->post('email'),
+				'subject'	=> $this->input->post('subject'),
+				'message'	=> $this->input->post('message')
+			);
+			
+			if ($array['to'] == FALSE || $array['email'] == FALSE || $array['message'] == FALSE || $array['to'] == '0')
+			{
+				$flash['status'] = 'error';
+				
+				if ($array['to'] == '0')
+				{
+					$flash['message'] = lang_output('flash_contact_recipient');
+				}
+				else
+				{
+					$message = sprintf(
+						lang('flash_empty_fields'),
+						lang('flash_fields_all'),
+						lang('actions_send'),
+						lang('labels_email')
+					);
+					
+					$flash['message'] = text_output($message);
+				}
+			}
+			else
+			{
+				
+				$email = ($this->options['system_email'] == 'on') ? $this->_email('contact', $array) : FALSE;
+				
+				if ($email === FALSE)
+				{
+					$message = sprintf(
+						lang('flash_failure'),
+						ucfirst(lang('labels_contact')),
+						lang('actions_sent'),
+						''
+					);
+					
+					$flash['status'] = 'error';
+					$flash['message'] = text_output($message);
+				}
+				else
+				{
+					$message = sprintf(
+						lang('flash_success'),
+						ucfirst(lang('labels_contact')),
+						lang('actions_sent'),
+						''
+					);
+					
+					$flash['status'] = 'success';
+					$flash['message'] = text_output($message);
+				}
+			}
+			
+			
+			$this->template->write_view('flash_message', '_base/main/pages/flash', $flash);
+		}
+		
+		
+		$data['header'] = ucwords(lang('actions_contact') .' '. lang('labels_us'));
+		$data['msg'] = $this->msgs->get_message('contact');
+		
+		$data['button'] = array(
+			'submit' => array(
+				'type' => 'submit',
+				'class' => 'button-main',
+				'name' => 'submit',
+				'value' => 'submit',
+				'content' => ucwords(lang('actions_submit'))),
+		);
+		
+		if ($this->options['system_email'] == 'off')
+		{
+			$data['button']['submit']['disabled'] = 'disabled';
+		}
+		
+		$data['inputs'] = array(
+			'name' => array(
+				'name' => 'name',
+				'id' => 'name'),
+			'email' => array(
+				'name' => 'email',
+				'id' => 'email'),
+			'subject' => array(
+				'name' => 'subject',
+				'id' => 'subject'),
+			'message' => array(
+				'name' => 'message',
+				'id' => 'message',
+				'rows' => 12)
+		);
+		
+		$data['values']['to'] = array(
+			0 => ucwords(lang('labels_please') .' '. lang('actions_choose') .' '. lang('order_one')),
+			1 => ucwords(lang('global_game_master')),
+			2 => ucwords(lang('global_command_staff')),
+			3 => ucwords(lang('global_webmaster')),
+		);
+		
+		$data['label'] = array(
+			'send' => ucwords(lang('actions_send') .' '. lang('labels_to')),
+			'name' => ucwords(lang('labels_name')),
+			'email' => ucwords(lang('labels_email_address')),
+			'subject' => ucwords(lang('labels_subject')),
+			'message' => ucwords(lang('labels_message')),
+			'nosubmit' => lang('flash_system_email_off_disabled'),
+		);
+		*/
 	}
 	
-	public function credits()
+	public function action_credits()
 	{
-		# code...
+		// create a new content view
+		$this->template->layout->content = View::factory(Location::view('main_credits', $this->skin, 'main', 'pages'));
+		
+		// assign the object a shorter variable to use in the method
+		$data = $this->template->layout->content;
+		
+		// content
+		$this->template->title.= ucwords(__("site credits"));
+		$data->header = ucwords(__("site credits"));
+		
+		// non-editable credits
+		$credits_perm = Jelly::query('message', 'credits_perm')->limit(1)->select()->value;
+		$credits_perm.= "\r\n\r\n".Jelly::query('catalogueskinsec')->defaultskin('main')->select()->skin->credits;
+		$credits_perm.= "\r\n\r\n".Jelly::query('cataloguerank', $this->rank)->limit(1)->select()->credits;
+		
+		// credits
+		$data->credits_perm = nl2br($credits_perm);
+		$data->credits = Jelly::query('message', 'credits')->limit(1)->select()->value;
+		
+		// should we show an edit link?
+		$data->edit = (Auth::is_logged_in() AND Auth::check_access('site/messages', FALSE))
+			? TRUE
+			: FALSE;
+		
+		// send the response
+		$this->request->response = $this->template;
 	}
 	
 	public function join()
 	{
-		// pull in the additional setting items we need for this method
-		$args = array('where' => array('setting_key' => 'use_sample_post'));
-		$this->options['use_sample_post'] = $this->mCore->get('settings', $args, 'setting_value');
+		# code...
 	}
 	
 	public function news()
 	{
 		# code...
-	}*/
+	}
 	
 	public function action_viewnews($id = '')
 	{
@@ -246,116 +471,47 @@ class Controller_Nova_Main extends Controller_Nova_Base {
 		);
 	}
 	
-	public function action_test($id = 1)
+	protected function _email($type, $data)
 	{
-		/*$field = Jelly::select('formfield')
-			->where('form', '=', 1)
-			->where('display', '=', 'y')
-				->execute();*/
-			
-		$field = db::select()->from('forms_fields')->where('field_form', '=', 1)->where('field_display', '=', 'y')->as_object()->execute();
+		// set the email variable that'll be returned
+		$email = FALSE;
 		
-		foreach ($field as $f)
+		// make sure system email is turned on
+		if ($this->options->system_email == 'on')
 		{
-			$values = db::select()->from('forms_values')->where('value_field', '=', $f->field_id)->as_object()->execute();
+			// set up the mailer
+			$mailer = Email::setup_mailer();
 			
-			switch ($f->field_type)
+			// create a new message
+			$message = Email::setup_message();
+			
+			switch ($type)
 			{
-				case 'radio':
-					if (count($values) > 0)
-					{
-						foreach ($values as $v)
-						{
-							$attr = array(
-								'id' => $v->value_html_id,
-								'class' => $f->field_html_class
-							);
-							
-							$output[] = form::radio($f->field_html_name, $v->value_html_value, (bool) $v->value_selected, $attr).' '.form::label($v->value_html_id, $v->value_content);
-						}
-					}
-				break;
+				case 'contact':
+					// data for the view files
+					$view = new stdClass;
+					$view->subject = $this->options->email_subject.' '.__("email.subject.contact", array(':name' => $data->name));
+					$view->content = $data->message;
 					
-				case 'checkbox':
-					if (count($values) > 0)
-					{
-						foreach ($values as $v)
-						{
-							$attr = array(
-								'id' => $v->value_html_id,
-								'class' => $f->field_html_class
-							);
-								
-							$check[] = form::checkbox($v->value_html_name, $v->value_html_value, (bool) $v->value_selected, $attr).' '.form::label($v->value_html_id, $v->value_content);
-						}
-					}
+					// set the html version
+					$html = View::factory(Location::view('main_contact_em_html', $this->skin, 'main', 'email'), $view);
+					
+					// set the text version
+					$text = View::factory(Location::view('main_contact_em_text', $this->skin, 'main', 'email'), $view);
+					
+					// set the message data
+					$message->setSubject($view->subject);
+					$message->setFrom(array($data->email => $data->name));
+					$message->setTo($data->email);
+					$message->setBody($html->render(), 'text/html');
+					$message->addPart($text->render(), 'text/plain');
 				break;
 			}
-		}
-		
-		echo Kohana::debug($output);
-		echo implode(' ', $output);
-		
-		echo Kohana::debug($check);
-		echo implode(' ', $check);
-		exit();
 			
-		foreach ($field as $f)
-		{
-			$values = Jelly::select('formvalue')
-				->where('field', '=', $f->id)
-				->execute();
-				
-			switch ($f->type)
-			{
-				case 'radio':
-					if (count($values) > 0)
-					{
-						foreach ($values as $v)
-						{
-							$attr = array(
-								'id' => $v->html_id,
-								'class' => $f->html_class
-							);
-							
-							$output[] = form::radio($f->html_name, $v->field_value, $v->selected, $attr).' '.form::label($v->html_id, $v->content);
-						}
-					}
-				break;
-				
-				default:
-					# code...
-				break;
-			}
-		}
-	}
-	
-	public function action_test2()
-	{
-		$field = Jelly::select('formfield', 2);
-		
-		foreach ($field->values as $v)
-		{
-			echo Kohana::debug($v->content);
+			// send the message
+			$email = $mailer->send($message);
 		}
 		
-		echo Kohana::debug(count($field->values));
-		exit();
+		return $email;
 	}
-	
-	public function action_test3()
-	{
-		echo Kohana::debug(Database::instance()->list_columns('sms_specs', NULL, FALSE));
-		exit();
-	}
-	
-	/*private function _email()
-	{
-		// pull in the additional setting items we need for this method
-		$array = array('default_email_name', 'default_email_address', 'email_subject');
-		$this->options[] = $this->mSettings->get_settings($array);
-	}*/
 }
-
-// End of file main.php
-// Location: modules/nova/classes/controller/nova/main.php
