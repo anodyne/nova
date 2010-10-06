@@ -377,7 +377,7 @@ class Controller_Nova_Login extends Controller_Nova_Base {
 		$this->request->response = $this->template;
 	}
 	
-	private function _email($type, $data)
+	protected function _email($type, $data)
 	{
 		// set the email variable that'll be returned
 		$email = FALSE;
@@ -409,8 +409,8 @@ class Controller_Nova_Login extends Controller_Nova_Base {
 					$message->setSubject(__("email.subject.reset_password"));
 					$message->setFrom(array($this->options->default_email_address => $this->options->default_email_name));
 					$message->setTo($data->email);
-					$message->setBody($primary->render(), 'text/html');
-					$message->addPart($secondary->render(), 'text/plain');
+					$message->setBody($html->render(), 'text/html');
+					$message->addPart($text->render(), 'text/plain');
 				break;
 			}
 			
