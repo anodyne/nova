@@ -24,8 +24,9 @@ class Model_Catalogueskinsec extends Jelly_Model {
 			'section' => Jelly::field('string', array(
 				'column' => 'skinsec_section'
 			)),
-			'skin' => Jelly::field('string', array(
+			'skin' => Jelly::field('belongsto', array(
 				'column' => 'skinsec_skin',
+				'foreign' => 'catalogueskin.location'
 			)),
 			'image' => Jelly::field('string', array(
 				'column' => 'skinsec_image_preview'

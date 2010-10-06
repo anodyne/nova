@@ -17,6 +17,7 @@ class Model_Cataloguerank extends Jelly_Model {
 	public static function initialize(Jelly_Meta $meta)
 	{
 		$meta->table('catalogue_ranks');
+		$meta->name_key('location');
 		$meta->fields(array(
 			'id' => Jelly::field('primary', array(
 				'column' => 'rankcat_id'
