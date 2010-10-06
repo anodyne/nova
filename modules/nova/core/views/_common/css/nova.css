@@ -53,19 +53,14 @@ a.image, a.image:hover {
 	text-decoration: none;
 }
 
-a.edit {
-	color: #999;
-	border: none;
-}
-a.edit:hover { color: #008000; }
-
 /*
 |---------------------------------------------------------------
 | FORM INPUTS
 |---------------------------------------------------------------
 */
 input[type=text],
-input[type=password] {
+input[type=password],
+input[type=email] {
 	margin: 0;
 	padding: 3px;
 	width: 325px;
