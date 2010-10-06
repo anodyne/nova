@@ -89,9 +89,9 @@ class Controller_Nova_Login extends Controller_Nova_Base {
 		}
 		
 		// content
-		$this->template->title.= ucwords(__('log in'));
-		$data->header = ucwords(__('log in'));
-		$data->text = __('login.index_text');
+		$this->template->title.= ucwords(__("log in"));
+		$data->header = ucwords(__("log in"));
+		$data->text = __("login.index_text");
 		
 		// inputs
 		$data->inputs = array(
@@ -99,10 +99,10 @@ class Controller_Nova_Login extends Controller_Nova_Base {
 				'class' => 'btn-main'),
 			'email' => array(
 				'id' => 'email',
-				'placeholder' => ucwords(__('email address'))),
+				'placeholder' => ucwords(__("email address"))),
 			'password' => array(
 				'id' => 'password',
-				'placeholder' => ucfirst(__('password'))),
+				'placeholder' => ucfirst(__("password"))),
 			'remember' => array(
 				'id' => 'remember'),
 		);
@@ -144,8 +144,8 @@ class Controller_Nova_Login extends Controller_Nova_Base {
 			$data = $this->template->layout->content;
 			
 			// set the content
-			$data->header = ucwords(__('logging in'));
-			$data->message = __('login.success', array(':acp' => html::anchor('main/index', ucwords(__('control panel')))));
+			$data->header = ucwords(__("logging in"));
+			$data->message = __("login.success", array(':acp' => html::anchor('main/index', ucwords(__("control panel")))));
 		}
 		else
 		{
@@ -166,8 +166,8 @@ class Controller_Nova_Login extends Controller_Nova_Base {
 		$data = $this->template->layout->content;
 		
 		// content
-		$this->template->title.= ucfirst(__('error'));
-		$data->header = ucfirst(__('error'));
+		$this->template->title.= ucfirst(__("error"));
+		$data->header = ucfirst(__("error"));
 		
 		// set the error message
 		switch ($error)
@@ -177,11 +177,11 @@ class Controller_Nova_Login extends Controller_Nova_Base {
 			break;
 			
 			case 6:
-				$data->message = __('error.login_'.$error, array(':minutes' => (Auth::$lockout_time/60), ':extra' => ''));
+				$data->message = __("error.login_".$error, array(':minutes' => (Auth::$lockout_time/60), ':extra' => ''));
 			break;
 			
 			default:
-				$data->message = __('error.login_'.$error);
+				$data->message = __("error.login_".$error);
 			break;
 		}
 		
@@ -207,11 +207,11 @@ class Controller_Nova_Login extends Controller_Nova_Base {
 		$data = $this->template->layout->content;
 		
 		// content
-		$this->template->title.= ucfirst(__('logout'));
-		$data->header = ucwords(__('logging out'));
-		$data->message = __('login.logout', array(
-			':login' => html::anchor('login/index', __('log in again')),
-			':main' => html::anchor('main/index', __('main site')))
+		$this->template->title.= ucfirst(__("logout"));
+		$data->header = ucwords(__("logging out"));
+		$data->message = __("login.logout", array(
+			':login' => html::anchor('login/index', __("log in again")),
+			':main' => html::anchor('main/index', __("main site")))
 		);
 		
 		// send the response
@@ -280,40 +280,40 @@ class Controller_Nova_Login extends Controller_Nova_Base {
 							// set the flash message
 							$this->template->layout->flash = View::factory(Location::view('flash', $this->skin, 'login', 'pages'));
 							$this->template->layout->flash->status = 'success';
-							$this->template->layout->flash->message = __('error.login.reset_success');
+							$this->template->layout->flash->message = __("error.login.reset_success");
 						}
 						else
 						{
 							$this->template->layout->flash = View::factory(Location::view('flash', $this->skin, 'login', 'pages'));
 							$this->template->layout->flash->status = 'error';
-							$this->template->layout->flash->message = __('error.login.reset_failure');
+							$this->template->layout->flash->message = __("error.login.reset_failure");
 						}
 					}
 					else
 					{
 						$this->template->layout->flash = View::factory(Location::view('flash', $this->skin, 'login', 'pages'));
 						$this->template->layout->flash->status = 'error';
-						$this->template->layout->flash->message = __('error.login.wrong_security_answer');
+						$this->template->layout->flash->message = __("error.login.wrong_security_answer");
 					}
 				}
 				else
 				{
 					$this->template->layout->flash = View::factory(Location::view('flash', $this->skin, 'login', 'pages'));
 					$this->template->layout->flash->status = 'error';
-					$this->template->layout->flash->message = __('error.login.wrong_security_question');
+					$this->template->layout->flash->message = __("error.login.wrong_security_question");
 				}
 			}
 			elseif (count($info) > 1)
 			{
 				$this->template->layout->flash = View::factory(Location::view('flash', $this->skin, 'login', 'pages'));
 				$this->template->layout->flash->status = 'error';
-				$this->template->layout->flash->message = __('error.login_4');
+				$this->template->layout->flash->message = __("error.login_4");
 			}
 			elseif (count($info) < 1)
 			{
 				$this->template->layout->flash = View::factory(Location::view('flash', $this->skin, 'login', 'pages'));
 				$this->template->layout->flash->status = 'error';
-				$this->template->layout->flash->message = __('error.login_2');
+				$this->template->layout->flash->message = __("error.login_2");
 			}
 		}
 		
@@ -324,10 +324,10 @@ class Controller_Nova_Login extends Controller_Nova_Base {
 		$data = $this->template->layout->content;
 		
 		// set the title
-		$this->template->title.= ucwords(__('reset password'));
+		$this->template->title.= ucwords(__("reset password"));
 		
 		// set the header
-		$data->header = ucwords(__('reset password'));
+		$data->header = ucwords(__("reset password"));
 		
 		// set the page as enabled
 		$data->enabled = TRUE;
