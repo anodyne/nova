@@ -358,7 +358,7 @@ abstract class Nova_Utility {
 		$session = Session::instance();
 		
 		// get the date format
-		$format = Jelly::query('setting')->where('key', '=', 'date_format')->limit(1)->select()->value;
+		$format = Jelly::query('setting', 'date_format')->limit(1)->select()->value;
 		
 		// set the timezone
 		$timezone = $session->get('timezone', 'GMT');

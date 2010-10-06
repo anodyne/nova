@@ -1047,7 +1047,7 @@ return array
 				);
 				
 				// get the default rank set
-				$rankdefault = Jelly::query('setting')->where('key', '=', 'display_rank')->limit(1)->select()->value;
+				$rankdefault = Jelly::query('setting', 'display_rank')->limit(1)->select()->value;
 				
 				// grab the rank catalogue
 				$catalogue = Jelly::query('cataloguerank')->where('location', '=', $rankdefault)->limit(1)->select();

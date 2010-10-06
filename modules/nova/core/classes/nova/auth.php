@@ -234,7 +234,7 @@ abstract class Nova_Auth {
 	{
 		// set the variables
 		$retval = 0;
-		$maintenance = Jelly::query('setting')->where('key', '=', 'maintenance')->limit(1)->select()->value;
+		$maintenance = Jelly::query('setting', 'maintenance')->limit(1)->select()->value;
 		
 		// check the login attempts
 		$attempts = self::_check_login_attempts($email);

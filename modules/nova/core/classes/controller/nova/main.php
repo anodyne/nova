@@ -61,8 +61,8 @@ class Controller_Nova_Main extends Controller_Nova_Base {
 		
 		// content
 		$this->template->title.= 'Main';
-		$data->header = Jelly::query('message')->key('welcome_head')->limit(1)->select()->value;
-		$data->message = Jelly::query('message', 'welcome_msg')->select()->value;
+		$data->header = Jelly::query('message', 'welcome_head')->limit(1)->select()->value;
+		$data->message = Jelly::query('message', 'welcome_msg')->limit(1)->select()->value;
 		
 		// send the response
 		$this->request->response = $this->template;

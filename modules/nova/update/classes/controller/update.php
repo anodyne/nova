@@ -640,9 +640,6 @@ class Controller_Update extends Controller_Template {
 			// get the system information
 			$system = Jelly::query('system', 1)->select();
 			
-			// get the update settings
-			$upd = Jelly::query('setting')->key('updates')->select();
-			
 			// get the info config data
 			$conf = Kohana::config('info');
 			

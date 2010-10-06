@@ -62,12 +62,8 @@ abstract class Nova_Hooks {
 			
 			if ( ! in_array($request->controller, $ignore))
 			{
-				$maint = null;
 				// get the maintenance setting
-				//$maint = Jelly::select('setting')->key('maintenance')->load()->value;
-				//$maint = Jelly::query('setting')->key('maintenance')->select()->value;
-				//$maint = Jelly::query('setting')->where('key', '=', 'maintenance')->select();
-				//$maint = Jelly::query('post', 1)->select();
+				$maint = Jelly::query('setting', 'maintenance')->limit(1)->select()->value;
 				
 				if ($maint == 'on' AND $request->controller != 'login')
 				{

@@ -1216,25 +1216,25 @@ class Controller_Upgradeajax extends Controller_Template {
 		foreach ($result as $r)
 		{
 			// sim name
-			$item = Jelly::query('setting')->where('key', '=', 'sim_name')->limit(1)->select();
+			$item = Jelly::query('setting', 'sim_name')->limit(1)->select();
 			$item->value = $r->shipPrefix.' '.$r->shipName.' '.$r->shipRegistry;
 			$item->save();
 			$settings[] = $item->saved();
 			
 			// sim year
-			$item = Jelly::query('setting')->where('key', '=', 'sim_year')->limit(1)->select();
+			$item = Jelly::query('setting', 'sim_year')->limit(1)->select();
 			$item->value = $r->simmYear;
 			$item->save();
 			$settings[] = $item->saved();
 			
 			// posting requirement
-			$item = Jelly::query('setting')->where('key', '=', 'post_count')->limit(1)->select();
+			$item = Jelly::query('setting', 'post_count')->limit(1)->select();
 			$item->value = ($r->jpCount == 'y') ? 'multiple' : 'single';
 			$item->save();
 			$settings[] = $item->saved();
 			
 			// email subject
-			$item = Jelly::query('setting')->where('key', '=', 'email_subject')->limit(1)->select();
+			$item = Jelly::query('setting', 'email_subject')->limit(1)->select();
 			$item->value = $r->emailSubject;
 			$item->save();
 			$settings[] = $item->saved();
@@ -1246,37 +1246,37 @@ class Controller_Upgradeajax extends Controller_Template {
 		foreach ($result as $r)
 		{
 			// welcome message
-			$item = Jelly::query('message')->where('key', '=', 'welcome_msg')->limit(1)->select();
+			$item = Jelly::query('message', 'welcome_msg')->limit(1)->select();
 			$item->value = $r->welcomeMessage;
 			$item->save();
 			$messages[] = $item->saved();
 			
 			// sim message
-			$item = Jelly::query('message')->where('key', '=', 'sim')->limit(1)->select();
+			$item = Jelly::query('message', 'sim')->limit(1)->select();
 			$item->value = $r->simmMessage;
 			$item->save();
 			$messages[] = $item->saved();
 			
 			// join disclaimer
-			$item = Jelly::query('message')->where('key', '=', 'join_disclaimer')->limit(1)->select();
+			$item = Jelly::query('message', 'join_disclaimer')->limit(1)->select();
 			$item->value = $r->joinDisclaimer;
 			$item->save();
 			$messages[] = $item->saved();
 			
 			// acceptance message
-			$item = Jelly::query('message')->where('key', '=', 'accept_message')->limit(1)->select();
+			$item = Jelly::query('message', 'accept_message')->limit(1)->select();
 			$item->value = $r->acceptMessage;
 			$item->save();
 			$messages[] = $item->saved();
 			
 			// rejection message
-			$item = Jelly::query('message')->where('key', '=', 'reject_message')->limit(1)->select();
+			$item = Jelly::query('message', 'reject_message')->limit(1)->select();
 			$item->value = $r->rejectMessage;
 			$item->save();
 			$messages[] = $item->saved();
 			
 			// join post
-			$item = Jelly::query('message')->where('key', '=', 'join_post')->limit(1)->select();
+			$item = Jelly::query('message', 'join_post')->limit(1)->select();
 			$item->value = $r->samplePostQuestion;
 			$item->save();
 			$messages[] = $item->saved();
@@ -1330,7 +1330,7 @@ class Controller_Upgradeajax extends Controller_Template {
 			// create the spec item
 			Jelly::factory('spec')
 				->set(array(
-					'name' => Jelly::query('setting')->key('sim_name')->limit(1)->select()->value,
+					'name' => Jelly::query('setting', 'sim_name')->limit(1)->select()->value,
 					'order' => 0,
 				))
 				->save();
@@ -2049,8 +2049,8 @@ class Controller_Upgradeajax extends Controller_Template {
 	{
 		try {
 			// update the welcome page header
-			$msg = Jelly::query('message')->key('welcome_head')->select();
-			$msg->value = 'Welcome to the '.Jelly::query('setting')->key('sim_name')->select()->value.'!';
+			$msg = Jelly::query('message', 'welcome_head')->limit(1)->select();
+			$msg->value = 'Welcome to the '.Jelly::query('setting', 'sim_name')->limit(1)->select()->value.'!';
 			$msg->save();
 			
 			if ($msg->saved())
