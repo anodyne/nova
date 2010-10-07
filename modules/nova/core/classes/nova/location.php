@@ -48,6 +48,7 @@ abstract class Nova_Location {
 					{
 						$loc = MODFOLDER.'/'.$mod;
 						$loc = (substr($loc, -1, 1) == "\\") ? substr_replace($loc, '', -1, 1) : $loc;
+						$loc = str_replace('\\', '/', $loc); // fixes an issue on windows machines
 						$locations[$loc] = $m;
 					}
 				}
