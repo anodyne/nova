@@ -86,21 +86,25 @@ class Controller_Nova_Main extends Controller_Nova_Base {
 	{
 		if (isset($_POST['submit']))
 		{
+			// clear the errors (if there are any)
+			$this->session->delete('errors');
+			
+			// set the validation rules
 			$validate = Validate::factory($_POST)
 				->rule('email', 'not_empty')
 				->rule('email', 'email')
 				->rule('name', 'not_empty')
-				->rule('message', 'not_empty'));
-				
+				->rule('subject', 'not_empty')
+				->rule('message', 'not_empty');
+			
+			// run the check to make sure everything is validated like it should be
 			if ($validate->check())
 			{
-				// clear the errors (if there are any)
-				$this->session->delete('errors');
-				
 				// set the data for the email
 				$emaildata = new stdClass;
 				$emaildata->name = trim(Security::xss_clean($_POST['name']));
 				$emaildata->email = trim(Security::xss_clean($_POST['email']));
+				$emaildata->subject = trim(Security::xss_clean($_POST['subject']));
 				$emaildata->message = trim(Security::xss_clean($_POST['message']));
 				$emaildata->cc = trim(Security::xss_clean($_POST['ccme']));
 				
@@ -113,7 +117,7 @@ class Controller_Nova_Main extends Controller_Nova_Base {
 			else
 			{
 				// set the errors
-				$session->set('errors', $validate->errors('register'));
+				$this->session->set('errors', $validate->errors('register'));
 			}
 		}
 		
@@ -131,15 +135,14 @@ class Controller_Nova_Main extends Controller_Nova_Base {
 		// fields
 		$data->inputs = array(
 			'name' => array(
-				'id' => 'name',
-				'placeholder' => ucfirst(__("name"))),
+				'id' => 'name'),
 			'email' => array(
 				'type' => 'email',
-				'id' => 'email',
-				'placeholder' => ucfirst(__("email address"))),
+				'id' => 'email'),
+			'subject' => array(
+				'id' => 'subject'),
 			'message' => array(
 				'id' => 'message',
-				'placeholder' => ucfirst(__("let us know what your comment or question is")),
 				'rows' => 12),
 			'submit' => array(
 				'type' => 'submit',
@@ -147,132 +150,11 @@ class Controller_Nova_Main extends Controller_Nova_Base {
 				'id' => 'submit'),
 		);
 		
+		// set the validation errors
+		$data->errors = ($this->session->get('errors')) ? $this->session->get('errors') : FALSE;
+		
 		// send the response
 		$this->request->response = $this->template;
-		
-		
-		
-		
-		
-		
-		
-		/*
-		if (isset($_POST['submit']))
-		{
-		
-			$array = array(
-				'to'		=> $this->input->post('to'),
-				'name'		=> $this->input->post('name'),
-				'email'		=> $this->input->post('email'),
-				'subject'	=> $this->input->post('subject'),
-				'message'	=> $this->input->post('message')
-			);
-			
-			if ($array['to'] == FALSE || $array['email'] == FALSE || $array['message'] == FALSE || $array['to'] == '0')
-			{
-				$flash['status'] = 'error';
-				
-				if ($array['to'] == '0')
-				{
-					$flash['message'] = lang_output('flash_contact_recipient');
-				}
-				else
-				{
-					$message = sprintf(
-						lang('flash_empty_fields'),
-						lang('flash_fields_all'),
-						lang('actions_send'),
-						lang('labels_email')
-					);
-					
-					$flash['message'] = text_output($message);
-				}
-			}
-			else
-			{
-				
-				$email = ($this->options['system_email'] == 'on') ? $this->_email('contact', $array) : FALSE;
-				
-				if ($email === FALSE)
-				{
-					$message = sprintf(
-						lang('flash_failure'),
-						ucfirst(lang('labels_contact')),
-						lang('actions_sent'),
-						''
-					);
-					
-					$flash['status'] = 'error';
-					$flash['message'] = text_output($message);
-				}
-				else
-				{
-					$message = sprintf(
-						lang('flash_success'),
-						ucfirst(lang('labels_contact')),
-						lang('actions_sent'),
-						''
-					);
-					
-					$flash['status'] = 'success';
-					$flash['message'] = text_output($message);
-				}
-			}
-			
-			
-			$this->template->write_view('flash_message', '_base/main/pages/flash', $flash);
-		}
-		
-		
-		$data['header'] = ucwords(lang('actions_contact') .' '. lang('labels_us'));
-		$data['msg'] = $this->msgs->get_message('contact');
-		
-		$data['button'] = array(
-			'submit' => array(
-				'type' => 'submit',
-				'class' => 'button-main',
-				'name' => 'submit',
-				'value' => 'submit',
-				'content' => ucwords(lang('actions_submit'))),
-		);
-		
-		if ($this->options['system_email'] == 'off')
-		{
-			$data['button']['submit']['disabled'] = 'disabled';
-		}
-		
-		$data['inputs'] = array(
-			'name' => array(
-				'name' => 'name',
-				'id' => 'name'),
-			'email' => array(
-				'name' => 'email',
-				'id' => 'email'),
-			'subject' => array(
-				'name' => 'subject',
-				'id' => 'subject'),
-			'message' => array(
-				'name' => 'message',
-				'id' => 'message',
-				'rows' => 12)
-		);
-		
-		$data['values']['to'] = array(
-			0 => ucwords(lang('labels_please') .' '. lang('actions_choose') .' '. lang('order_one')),
-			1 => ucwords(lang('global_game_master')),
-			2 => ucwords(lang('global_command_staff')),
-			3 => ucwords(lang('global_webmaster')),
-		);
-		
-		$data['label'] = array(
-			'send' => ucwords(lang('actions_send') .' '. lang('labels_to')),
-			'name' => ucwords(lang('labels_name')),
-			'email' => ucwords(lang('labels_email_address')),
-			'subject' => ucwords(lang('labels_subject')),
-			'message' => ucwords(lang('labels_message')),
-			'nosubmit' => lang('flash_system_email_off_disabled'),
-		);
-		*/
 	}
 	
 	public function action_credits()
@@ -490,7 +372,7 @@ class Controller_Nova_Main extends Controller_Nova_Base {
 				case 'contact':
 					// data for the view files
 					$view = new stdClass;
-					$view->subject = $this->options->email_subject.' '.__("email.subject.contact", array(':name' => $data->name));
+					$view->subject = __("email.subject.contact", array(':name' => $data->name));
 					$view->content = $data->message;
 					
 					// set the html version
@@ -499,10 +381,13 @@ class Controller_Nova_Main extends Controller_Nova_Base {
 					// set the text version
 					$text = View::factory(Location::view('main_contact_em_text', $this->skin, 'main', 'email'), $view);
 					
+					// figure out who gets the email
+					$to = implode(',', Jelly::factory('user')->get_gm_data('email'));
+					
 					// set the message data
-					$message->setSubject($view->subject);
+					$message->setSubject($this->options->email_subject.' '.$view->subject);
 					$message->setFrom(array($data->email => $data->name));
-					$message->setTo($data->email);
+					$message->setTo($to);
 					$message->setBody($html->render(), 'text/html');
 					$message->addPart($text->render(), 'text/plain');
 				break;
