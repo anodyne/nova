@@ -274,6 +274,8 @@ body {
 }
 .page-subhead { color: #f3b907; }
 
+.error { color: #f00 !important; }
+
 /*
 |---------------------------------------------------------------
 | LINKS
