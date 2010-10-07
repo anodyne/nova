@@ -42,6 +42,14 @@ We've done this because it allows transposable queries, which is especially usef
 	
 	// Or update them:
 	$post->get('comments')->set('approved', 1)->update();
+
+#### Inserting a Record
+
+       // Insert a new comment
+       Jelly::query('comments')
+           ->columns(array('content'))
+           ->values(array('This is the content of my comment.'))
+           ->insert();
 	
 #### The filters, rules, and callbacks declaration syntax has changed slightly
 
@@ -74,6 +82,22 @@ For reference here is the old style that remains acceptable:
 		($object, $method),
 		'Class::method',
 	)
+	
+#### Jelly_Model->validate() has changed slightly
+
+`Jelly_Model->validate()` used to accept an array of data to validate. It now only accepts a primary key as all of the other methods do.
+
+    // Validate this model assuming it's loaded, so that only changed data is validated
+	$model->validate($id);
+	
+If you need to perform validation of arbitrary bits of data, you now have direct access to the validator used:
+
+	$validator = $model->validator($data);
+
+	if ($data->check())
+	{
+		// Do stuff
+	}
 	
 #### Jelly_Builder->load() has been removed
 
