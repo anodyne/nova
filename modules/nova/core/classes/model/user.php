@@ -144,4 +144,44 @@ class Model_User extends Jelly_Model {
 			)),
 		));
 	}
+	
+	/**
+	 * Pulls game master data back from the users table.
+	 *
+	 * @param	string	the type of data to pull back (all, email, id)
+	 * @return	mixed	an array of data or FALSE if there are no GMs
+	 */
+	public function get_gm_data($type = 'all')
+	{
+		// get all the game masters
+		$query = Jelly::query('user')->where('gm', '=', 'y')->select();
+		
+		if (count($query) > 0)
+		{
+			// create an array for storing the data
+			$array = array();
+			
+			foreach ($query as $row)
+			{
+				switch ($type)
+				{
+					case 'all':
+						$array[] = $row;
+					break;
+					
+					case 'email':
+						$array[] = $row->email;
+					break;
+					
+					case 'id':
+						$array[] = $row->id;
+					break;
+				}
+			}
+			
+			return $array;
+		}
+		
+		return FALSE;
+	}
 }
