@@ -1080,8 +1080,9 @@ return array
 				);
 				
 				// build the next step control
-				$this->template->layout->controls = (count($tables) < $this->_tables) ? FALSE : form::button('next', __('Next Step'), $next).form::close();
-				
+				$this->template->layout->controls = (count($tables) < Kohana::config('info.app_db_tables')) 
+					? FALSE 
+					: form::button('next', __('Next Step'), $next).form::close();
 			break;
 				
 			case 2:
