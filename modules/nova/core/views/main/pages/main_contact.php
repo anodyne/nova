@@ -7,14 +7,42 @@
 <?php echo form::open('main/contact');?>
 	<p>
 		<kbd><?php echo ucwords(__("your name"));?></kbd>
+		<?php if ($errors !== FALSE AND array_key_exists('name', $errors)): ?>
+			<p class="bold error">
+				<?php echo html::image(Location::image('exclamation-red.png', NULL, 'main', 'image'), array('class' => 'inline-image-left'));?>
+				<?php echo ucfirst($errors['name']);?>
+			</p>
+		<?php endif;?>
 		<?php echo form::input('name', NULL, $inputs['name']);?>
 	</p>
 	<p>
-		<kbd><?php echo ucwords(__("your email address"));?></kbd>
+		<kbd><?php echo ucwords(__("email address"));?></kbd>
+		<?php if ($errors !== FALSE AND array_key_exists('email', $errors)): ?>
+			<p class="bold error">
+				<?php echo html::image(Location::image('exclamation-red.png', NULL, 'main', 'image'), array('class' => 'inline-image-left'));?>
+				<?php echo ucfirst($errors['email']);?>
+			</p>
+		<?php endif;?>
 		<?php echo form::input('email', NULL, $inputs['email']);?>
 	</p>
 	<p>
+		<kbd><?php echo ucwords(__("subject"));?></kbd>
+		<?php if ($errors !== FALSE AND array_key_exists('subject', $errors)): ?>
+			<p class="bold error">
+				<?php echo html::image(Location::image('exclamation-red.png', NULL, 'main', 'image'), array('class' => 'inline-image-left'));?>
+				<?php echo ucfirst($errors['subject']);?>
+			</p>
+		<?php endif;?>
+		<?php echo form::input('subject', NULL, $inputs['subject']);?>
+	</p>
+	<p>
 		<kbd><?php echo ucwords(__("your message"));?></kbd>
+		<?php if ($errors !== FALSE AND array_key_exists('message', $errors)): ?>
+			<p class="bold error">
+				<?php echo html::image(Location::image('exclamation-red.png', NULL, 'main', 'image'), array('class' => 'inline-image-left'));?>
+				<?php echo ucfirst($errors['message']);?>
+			</p>
+		<?php endif;?>
 		<?php echo form::textarea('message', NULL, $inputs['message']);?>
 	</p>
 	<p>
