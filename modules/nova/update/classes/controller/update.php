@@ -230,7 +230,7 @@ class Controller_Update extends Controller_Template {
 		$session = Session::instance();
 		
 		// figure out if the system is installed
-		$tables = $db->list_tables();
+		$tables = $db->list_tables($db->table_prefix().'%');
 		
 		// is installation allowed?
 		$allowed = TRUE;
@@ -388,8 +388,7 @@ class Controller_Update extends Controller_Template {
 				}
 				
 				// get the number of tables
-				$dbconfig = Kohana::config('database');
-				$tables = $db->list_tables($dbconfig['default']['table_prefix'].'%');
+				$tables = $db->list_tables($db->table_prefix().'%');
 				
 				// create a new content view
 				$this->template->layout->content = View::factory('update/pages/update_nova1_step1');
@@ -419,7 +418,9 @@ class Controller_Update extends Controller_Template {
 				);
 				
 				// build the next step control
-				$this->template->layout->controls = (count($tables) < $this->_tables) ? FALSE : form::button('next', __('Update'), $next).form::close();
+				$this->template->layout->controls = (count($tables) < Kohana::config('info.app_db_tables'))
+					? FALSE 
+					: form::button('next', __('Update'), $next).form::close();
 			break;
 				
 			case 2:
