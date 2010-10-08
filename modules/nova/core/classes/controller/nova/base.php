@@ -47,7 +47,7 @@ abstract class Controller_Nova_Base extends Controller_Template {
 		$this->session = Session::instance();
 		
 		// set the locale
-		i18n::lang($this->session->get('language', 'en-us'));
+		I18n::lang($this->session->get('language', 'en-us'));
 		
 		// these are the setting items we need to pull for this controller
 		$this->settingsArray = array(
