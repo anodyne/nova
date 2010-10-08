@@ -150,6 +150,15 @@ class Controller_Nova_Main extends Controller_Nova_Base {
 				'id' => 'submit'),
 		);
 		
+		// images
+		$data->images = array(
+			'error' => array(
+				'src' => Location::image($this->images['main.error'], $this->skin, 'main', 'image'),
+				'attr' => array(
+					'alt' => '!',
+					'class' => 'inline-image-left')),
+		);
+		
 		// set the validation errors
 		$data->errors = ($this->session->get('errors')) ? $this->session->get('errors') : FALSE;
 		

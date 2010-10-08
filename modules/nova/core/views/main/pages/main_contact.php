@@ -9,7 +9,7 @@
 		<kbd><?php echo ucwords(__("your name"));?></kbd>
 		<?php if ($errors !== FALSE AND array_key_exists('name', $errors)): ?>
 			<p class="bold error">
-				<?php echo html::image(Location::image('exclamation-red.png', NULL, 'main', 'image'), array('class' => 'inline-image-left'));?>
+				<?php echo html::image($images['error']);?>
 				<?php echo ucfirst($errors['name']);?>
 			</p>
 		<?php endif;?>
@@ -19,7 +19,7 @@
 		<kbd><?php echo ucwords(__("email address"));?></kbd>
 		<?php if ($errors !== FALSE AND array_key_exists('email', $errors)): ?>
 			<p class="bold error">
-				<?php echo html::image(Location::image('exclamation-red.png', NULL, 'main', 'image'), array('class' => 'inline-image-left'));?>
+				<?php echo html::image($images['error']);?>
 				<?php echo ucfirst($errors['email']);?>
 			</p>
 		<?php endif;?>
@@ -29,7 +29,7 @@
 		<kbd><?php echo ucwords(__("subject"));?></kbd>
 		<?php if ($errors !== FALSE AND array_key_exists('subject', $errors)): ?>
 			<p class="bold error">
-				<?php echo html::image(Location::image('exclamation-red.png', NULL, 'main', 'image'), array('class' => 'inline-image-left'));?>
+				<?php echo html::image($images['error']);?>
 				<?php echo ucfirst($errors['subject']);?>
 			</p>
 		<?php endif;?>
@@ -39,7 +39,7 @@
 		<kbd><?php echo ucwords(__("your message"));?></kbd>
 		<?php if ($errors !== FALSE AND array_key_exists('message', $errors)): ?>
 			<p class="bold error">
-				<?php echo html::image(Location::image('exclamation-red.png', NULL, 'main', 'image'), array('class' => 'inline-image-left'));?>
+				<?php echo html::image($images['error']);?>
 				<?php echo ucfirst($errors['message']);?>
 			</p>
 		<?php endif;?>
