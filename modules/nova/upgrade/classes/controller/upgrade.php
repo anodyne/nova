@@ -30,7 +30,7 @@ class Controller_Upgrade extends Controller_Template {
 			$tables = Kohana::config('info.app_db_tables');
 			
 			// we're upgrading from sms, so make sure the system isn't installed
-			if (count($db->list_tables($db->table_prefix().'%')) == $tables)
+			if ($this->request->action != 'step' AND (count($db->list_tables($db->table_prefix().'%')) == $tables))
 			{
 				$this->request->redirect('install/index');
 			}
@@ -268,7 +268,7 @@ class Controller_Upgrade extends Controller_Template {
 				}
 				
 				// get the number of tables
-				$tables = $db->list_tables();
+				$tables = $db->list_tables($db->table_prefix().'%');
 				
 				// create a new content view
 				$this->template->layout->content = View::factory('upgrade/pages/upgrade_step1');
@@ -298,7 +298,9 @@ class Controller_Upgrade extends Controller_Template {
 				);
 				
 				// build the next step control
-				$this->template->layout->controls = (count($tables) < $this->_tables) ? FALSE : form::button('next', __('Upgrade'), $next).form::close();
+				$this->template->layout->controls = (count($tables) < Kohana::config('info.app_db_tables'))
+					? FALSE 
+					: form::button('next', __('Upgrade'), $next).form::close();
 			break;
 				
 			case 2:
