@@ -610,6 +610,12 @@ abstract class Jelly_Core_Model
 			// Trigger callbacks to ensure we proceed
 			if (NULL === ($result = $this->_meta->behaviors()->before_model_delete($this, $key)))
 			{
+				// Trigger field callbacks
+				foreach ($this->_meta->fields() as $field)
+				{
+					$field->delete($this, $key);
+				}
+				
 				$result = Jelly::query($this, $key)->delete();
 			}
 		}
@@ -621,6 +627,27 @@ abstract class Jelly_Core_Model
 		$this->clear();
 
 		return (boolean) $result;
+	}
+	
+	/**
+	 * Removes any changes made to a model.
+	 *
+	 * This method only works on loaded models.
+	 * 
+	 * @return $this
+	 */
+	public function revert()
+	{
+		if ($this->_loaded)
+		{
+			$this->_loaded = 
+			$this->_saved  = TRUE;
+
+			$this->_changed   =
+			$this->_retrieved = array();
+		}
+		
+		return $this;
 	}
 
 	/**
