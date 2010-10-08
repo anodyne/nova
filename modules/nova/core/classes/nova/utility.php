@@ -97,7 +97,7 @@ abstract class Nova_Utility {
 		$skin_index = Kohana::load($skin);
 		
 		// merge the files into an array
-		$image_index = array_merge((array)$common_index, (array)$skin_index);
+		$image_index = array_merge( (array) $common_index, (array) $skin_index);
 		
 		return $image_index;
 	}
