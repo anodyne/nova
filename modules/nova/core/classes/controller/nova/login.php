@@ -24,7 +24,7 @@ class Controller_Nova_Login extends Controller_Nova_Base {
 		$this->settingsArray = array_merge($this->settingsArray, $additionalSettings);
 		
 		// pull the settings and put them into the options object
-		$this->options = Jelly::factory('setting')->get_settings($this->settingsArray);
+		$this->options = Jelly::query('setting')->get_settings($this->settingsArray);
 		
 		// set the variables
 		$this->skin		= $this->options->skin_login;

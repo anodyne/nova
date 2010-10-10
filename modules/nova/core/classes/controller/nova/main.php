@@ -23,7 +23,7 @@ class Controller_Nova_Main extends Controller_Nova_Base {
 		$this->settingsArray = array_merge($this->settingsArray, $additionalSettings);
 		
 		// pull the settings and put them into the options object
-		$this->options = Jelly::factory('setting')->get_settings($this->settingsArray);
+		$this->options = Jelly::query('setting')->get_settings($this->settingsArray);
 		
 		// set the variables
 		$this->skin		= $this->session->get('skin_main', $this->options->skin_main);

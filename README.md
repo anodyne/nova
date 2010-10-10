@@ -25,7 +25,7 @@ The Nova 2 [update guide](http://docs.anodyne-productions.com/index.php/nova2/ov
 		<th>Version</th><th>Description</th><th>Start Date</th><th>End Date</th>
 	</tr>
 	<tr>
-		<td>M2</td><td>Development start</td><td>27 September 2010</td><td>-</td>
+		<td>M2</td><td>Logging in, unauthenticated system</td><td>27 September 2010</td><td>-</td>
 	</tr>
 	<tr>
 		<td>M1</td><td>Development start</td><td>10 February 2010</td><td>27 September 2010</td>

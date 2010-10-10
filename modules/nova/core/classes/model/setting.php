@@ -37,43 +37,4 @@ class Model_Setting extends Jelly_Model {
 			)),
 		));
 	}
-	
-	/**
-	 * Pulls back specific settings from the database based on their key(s).
-	 *
-	 *     $settings = Jelly::factory('setting')->get_settings('sim_name');
-	 *     $settings = Jelly::factory('setting')->get_settings(array('sim_name', 'sim_year'));
-	 *
-	 * @param	mixed	key(s) to pull back from the database
-	 * @return	array 	an array of setting keys
-	 */
-	public static function get_settings($value)
-	{
-		// create a new class
-		$obj = new stdClass;
-		
-		if (is_array($value))
-		{
-			$select = $value;
-		}
-		else
-		{
-			$select[] = $value;
-		}
-		
-		$query = Jelly::query('setting')->select();
-		
-		if ($query)
-		{
-			foreach ($query as $i)
-			{
-				if (in_array($i->key, $select))
-				{
-					$obj->{$i->key} = $i->value;
-				}
-			}
-		}
-		
-		return $obj;
-	}
 }
