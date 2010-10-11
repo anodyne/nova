@@ -36,5 +36,5 @@ return array(
 	/**
 	 * System Information
 	 */
-	'app_db_tables' => 59,
+	'app_db_tables' => 60,
 );
