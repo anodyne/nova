@@ -16,7 +16,7 @@ abstract class Nova_Utility {
 	 */
 	public function __construct()
 	{
-		Kohana_Log::instance()->add('debug', 'Auth library initialized.');
+		Kohana_Log::instance()->add('debug', 'Utility library initialized.');
 	}
 	
 	/**
@@ -338,6 +338,95 @@ abstract class Nova_Utility {
 		$retval = (count($tables) > 0) ? TRUE : FALSE;
 		
 		return $retval;
+	}
+	
+	/**
+	 * Uses the widget.yml file to quickly install a widget
+	 *
+	 *     Utility::install_widget();
+	 *
+	 * @uses	Utility::directory_map()
+	 * @uses	Kohana::find_file()
+	 * @uses	Kohana::load()
+	 * @param	string	the value of a specific rank set to install
+	 * @return	void
+	 */
+	public static function install_widgets($value = NULL)
+	{
+		// get the list of classes that have been loaded
+		$classes = get_declared_classes();
+		
+		// if sfYaml hasn't been loaded, then load it
+		if ( ! in_array('sfYaml', $classes))
+		{
+			// find the sfYAML library
+			$path = Kohana::find_file('vendor', 'sfYaml/sfYaml');
+			
+			// load the sfYAML library
+			Kohana::load($path);
+		}
+		
+		// get the directory listing
+		$dir = self::directory_map(MODPATH.'nova/core/views/_common/widgets/', TRUE);
+		
+		// get all the installed widgets
+		$widgets = Jelly::query('cataloguewidget')->select();
+		
+		if (count($widgets) > 0)
+		{
+			// start by removing anything that's already installed
+			foreach ($widgets as $w)
+			{
+				// find the location in the directory listing
+				$key = array_search($w->location, $dir);
+				
+				if ($key !== FALSE)
+				{
+					unset($dir[$key]);
+				}
+			}
+		}
+		
+		// set the items to be pulled out of the listing
+		$pop = array('index.html');
+		
+		// remove unwanted items
+		foreach ($pop as $value)
+		{
+			// find the locations in the directory listing
+			$key = array_search($value, $dir);
+			
+			if ($key !== FALSE)
+			{
+				unset($dir[$key]);
+			}
+		}
+		
+		// loop through the directories now
+		foreach ($dir as $key => $value)
+		{
+			// assign our path to a variable
+			$file = MODPATH.'nova/core/views/_common/widgets/'.$value.'/widget.yml';
+			
+			// make sure the file exists first
+			if (file_exists($file))
+			{
+				// load the YAML data into an array
+				$content = sfYaml::load($file);
+				
+				// add the item to the database
+				$add = Jelly::factory('cataloguewidget')
+					->set(array(
+						'name' => $content['name'],
+						'location' => $content['location'],
+						'page' => $content['page'],
+						'zone' => $content['zone'],
+						'status' => 'active',
+						'credits'=> $content['credits']
+					))
+					->save();
+			}
+		}
 	}
 	
 	/**
