@@ -2,28 +2,48 @@
 
 <p><?php echo $message;?></p><br />
 
-<div id="nova-panel">
-	<div class="nova-panel-nav">
-		<div class="nova-panel-nav-links">
-			<ul>
-				<li><a href="#one"><span>Sim News</span></a></li>
-				<li><a href="#two"><span>Mission Info</span></a></li>
-				<li><a href="#three"><span>Recent Activity</span></a></li>
-			</ul>
-		</div>
-		<h1 class="page-subhead">Sim News</h1>
-	</div>
-	<div class="nova-panel-content">
-		<div class="nova-panel-content-one">
-			<?php echo View::factory('_common/widgets/sim_news')->render();?>
-		</div>
+<?php if (isset($widgets)): ?>
+	<div id="widgets">
+		<ul>
+		<?php if (isset($widgets[1])): ?>
+			<li><a href="#one"><span><?php echo $widgets[1]->name;?></span></a></li>
+		<?php endif;?>
 		
-		<div class="nova-panel-content-two">
-			<?php echo View::factory('_common/widgets/mission_info')->render();?>
-		</div>
+		<?php if (isset($widgets[2])): ?>
+			<li><a href="#two"><span><?php echo $widgets[2]->name;?></span></a></li>
+		<?php endif;?>
 		
-		<div class="nova-panel-content-three">
-			
-		</div>
+		<?php if (isset($widgets[3])): ?>
+			<li><a href="#three"><span><?php echo $widgets[3]->name;?></span></a></li>
+		<?php endif;?>
+		
+		<?php if (isset($widgets[4])): ?>
+			<li><a href="#four"><span><?php echo $widgets[4]->name;?></span></a></li>
+		<?php endif;?>
+		</ul>
+		
+		<?php if (isset($widgets[1])): ?>
+			<div id="one">
+				<?php echo View::factory('_common/widgets/'.$widgets[1]->location.'/widget')->render();?>
+			</div>
+		<?php endif;?>
+		
+		<?php if (isset($widgets[2])): ?>
+			<div id="two">
+				<?php echo View::factory('_common/widgets/'.$widgets[2]->location.'/widget')->render();?>
+			</div>
+		<?php endif;?>
+		
+		<?php if (isset($widgets[3])): ?>
+			<div id="three">
+				<?php echo View::factory('_common/widgets/'.$widgets[3]->location.'/widget')->render();?>
+			</div>
+		<?php endif;?>
+		
+		<?php if (isset($widgets[4])): ?>
+			<div id="four">
+				<?php echo View::factory('_common/widgets/'.$widgets[4]->location.'/widget')->render();?>
+			</div>
+		<?php endif;?>
 	</div>
-</div>
+<?php endif;?>

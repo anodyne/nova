@@ -73,6 +73,21 @@ class Controller_Nova_Main extends Controller_Nova_Base {
 		// assign the object a shorter variable to use in the method
 		$data = $this->template->layout->content;
 		
+		// get all of the widgets for the page
+		$widgets = Jelly::query('cataloguewidget')->where('page', '=', 'main/index')->select();
+		
+		if (count($widgets) > 0)
+		{
+			// set the widgets array
+			$data->widgets = array();
+			
+			// loop through the widgets and pass the info to the view
+			foreach ($widgets as $w)
+			{
+				$data->widgets[$w->zone] = $w;
+			}
+		}
+		
 		// content
 		$this->template->title.= ucfirst(__("main"));
 		$data->header = Jelly::query('message', 'welcome_head')->limit(1)->select()->value;
