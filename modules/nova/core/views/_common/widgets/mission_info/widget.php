@@ -21,7 +21,9 @@ if (count($missions) > 0):
 		
 <?php
 
-	endforeach;	
+	endforeach;
+else:
+	echo '<h3 class="warning">'.__("No mission information found").'</h3>';
 endif;
 
 ?>

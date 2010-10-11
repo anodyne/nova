@@ -24,7 +24,9 @@ if (count($news) > 0):
 		
 <?php
 
-	endforeach;	
+	endforeach;
+else:
+	echo '<h3 class="warning">'.__("No sim news found").'</h3>';
 endif;
 
 ?>
