@@ -1035,7 +1035,7 @@ return array
 				
 				// make sure the proper message is displayed
 				$data->message = ($data->errors === FALSE)
-					? (count($tables) < $this->_tables) ? __('step1.failure') : __('step1.success')
+					? (count($tables) < Kohana::config('info.app_db_tables')) ? __('step1.failure') : __('step1.success')
 					: __('step1.errors');
 				
 				// set the loading image
@@ -1179,6 +1179,7 @@ return array
 						// do the quick installs
 						Utility::install_ranks();
 						Utility::install_skins();
+						Utility::install_widgets();
 						
 						// do the registration
 						$this->_register();
