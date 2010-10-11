@@ -34,7 +34,7 @@ $data = array(
 	'catalogue_ranks'			=> array('id' => 'rankcat_id', 'fields' => 'fields_catalogue_ranks'),
 	'catalogue_skins'			=> array('id' => 'skin_id', 'fields' => 'fields_catalogue_skins'),
 	'catalogue_skinsecs'		=> array('id' => 'skinsec_id', 'fields' => 'fields_catalogue_skinsecs'),
-	//'catalogue_widgets'			=> array('id' => 'widget_id', 'fields' => 'fields_catalogue_widgets'),
+	'catalogue_widgets'			=> array('id' => 'widget_id', 'fields' => 'fields_catalogue_widgets'),
 	'characters'				=> array('id' => 'charid', 'fields' => 'fields_characters'),
 	'characters_images'			=> array('id' => 'charimageid', 'fields' => 'fields_characters_images'),
 	'characters_promotions'		=> array('id' => 'prom_id', 'fields' => 'fields_characters_promotions'),
@@ -347,6 +347,34 @@ $fields_catalogue_skinsecs = array(
 		'type' => 'ENUM',
 		'constraint' => "'y','n'",
 		'default' => 'n')
+);
+
+$fields_catalogue_widgets = array(
+	'widget_id' => array(
+		'type' => 'INT',
+		'constraint' => 5,
+		'auto_increment' => TRUE),
+	'widget_name' => array(
+		'type' => 'VARCHAR',
+		'constraint' => 255,
+		'default' => ''),
+	'widget_location' => array(
+		'type' => 'VARCHAR',
+		'constraint' => 255,
+		'default' => ''),
+	'widget_page' => array(
+		'type' => 'VARCHAR',
+		'constraint' => 100,
+		'default' => ''),
+	'widget_zone' => array(
+		'type' => 'INT',
+		'constraint' => 3),
+	'widget_status' => array(
+		'type' => 'ENUM',
+		'constraint' => "'active','inactive','development'",
+		'default' => 'active'),
+	'widget_credits' => array(
+		'type' => 'TEXT')
 );
 
 $fields_characters = array(
