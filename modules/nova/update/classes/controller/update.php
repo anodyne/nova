@@ -387,6 +387,11 @@ class Controller_Update extends Controller_Template {
 					}
 				}
 				
+				// do the quick installs
+				Utility::install_ranks();
+				Utility::install_skins();
+				Utility::install_widgets();
+				
 				// get the number of tables
 				$tables = $db->list_tables($db->table_prefix().'%');
 				
