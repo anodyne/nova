@@ -209,10 +209,10 @@ class Main_base extends Controller {
 					$flash['status'] = 'success';
 					$flash['message'] = text_output($message);
 				}
+				
+				/* write everything to the template */
+				$this->template->write_view('flash_message', '_base/main/pages/flash', $flash);
 			}
-			
-			/* write everything to the template */
-			$this->template->write_view('flash_message', '_base/main/pages/flash', $flash);
 		}
 		
 		/*set the title, header and content variables */
