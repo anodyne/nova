@@ -271,6 +271,7 @@ ul.padding1 { padding: .5em 1em; }
 hr {
 	height: 0;
 	width: 100%;
+	margin: 1.5em auto;
 }
 
 img { border: none; }

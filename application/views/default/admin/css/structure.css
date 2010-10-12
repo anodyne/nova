@@ -331,8 +331,9 @@ ul.padding1, ol.padding1 { padding: .5em 1em; }
 .float_right { float: right; }
 
 hr {
-    height: 0;
-    width: 100%;
+	height: 0;
+	width: 100%;
+	margin: 1.5em auto;
 }
 
 img { border: none; }
