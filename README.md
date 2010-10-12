@@ -11,8 +11,10 @@ Anodyne Production's next-generation RPG management system combines popular feat
 * added the 1.2 update file
 * added the ability to ban users from applying or even getting to the site
 * added a page that level 2 bans are redirected to
+* added the validation error image to the assets directory
 * updated the applications report to show email address and IP address of the user who applied
 * updated the email sent to the game master from the join form to show the IP address of the applicant
+* updated the contact form to be simpler and use proper form validation
 * updated the language files
     * [base\_lang] added _labels\_ban_
     * [base\_lang] added _labels\_bans_
