@@ -8,7 +8,8 @@
 |
 | Changes: added labels_genre; added labels_you; added labels_from
 |	added labels_ban; added labels_bans; added labels_ipaddr;
-|	added misc_level1_only
+|	added misc_level1_only; added labels_manifests; added labels_unassigned;
+|	added labels_refresh
 |
 | English language file for the system. Punctuation constants are
 | defined in ./application/config/constants.php
@@ -430,6 +431,7 @@ $lang['labels_login']			= 'login';
 $lang['labels_main'] 			= 'main';
 $lang['labels_maintanance']		= 'maintanance';
 $lang['labels_manifest']		= 'manifest';
+$lang['labels_manifests']		= 'manifests';
 $lang['labels_me']				= 'me';
 $lang['labels_menu']			= 'menu';
 $lang['labels_menus']			= 'menus';
@@ -481,6 +483,7 @@ $lang['labels_queue']			= 'queue';
 $lang['labels_reason'] 			= 'reason';
 $lang['labels_recipient']		= 'recipient';
 $lang['labels_records']			= 'records';
+$lang['labels_refresh']			= 'refresh';
 $lang['labels_request']			= 'request';
 $lang['labels_requests']		= 'requests';
 $lang['labels_requirement']		= 'requirement';
@@ -536,6 +539,7 @@ $lang['labels_unlinked']		= 'unlinked';
 $lang['labels_update']			= 'update';
 $lang['labels_updates']			= 'updates';
 $lang['labels_uploads']			= 'uploads';
+$lang['labels_unassigned']		= 'unassigned';
 $lang['labels_us']				= 'us';
 $lang['labels_user']			= 'user';
 $lang['labels_users']			= 'users';

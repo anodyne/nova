@@ -7,7 +7,8 @@
 | System Version: 1.2
 |
 | Changes: added specitem_select; added specitem_empty_fields;
-|	added text_bans; added text_ban_join
+|	added text_bans; added text_ban_join; added text_manifest_delete_departments;
+|	added text_manifest; added text_manifest_assign
 |
 | English language file for the system. Punctuation constants are
 | defined in ./application/config/constants.php
@@ -152,6 +153,12 @@ $lang['text_create_mission_onfly'] = "You do not have any current %s right now. 
 $lang['text_bans'] = "Nova provided the ability to ban pesky users from continually applying to the sim through site ban controls. There are two different levels of bans. A level 1 ban simply prevents a banned user's application from going through. The user will be notified that they've been banned in the message when they attempt to submit the application. Level 1 bans can be executed by either IP address or email address. A level 2 ban prevents a user from gaining access to the site altogether and can only be executed by IP address. Use level 2 bans sparingly as doing so can have a detrimental affect on site performance.";
 
 $lang['text_ban_join'] = "Your application could not be submitted because you have been banned from applying to this %s. Questions about this ban should be directed to the %s.";
+
+$lang['text_manifest'] = "%s are an easy way to organize %s on your %s. You can create a %s for just about anything and assign %s to the %s. When you view your different %s, you'll only see the %s, their %s and the %s associated that specific %s. To get started, you can create new %s and then click on the assign link to associate specific %s with your %s.";
+
+$lang['text_manifest_assign'] = "From here you can assign %s to a specific %s. To do so, simply drag the %s to the %s. If things get a little too cluttered, you can use the link below to refresh the page and clean up how the %s are displayed in the %s.";
+
+$lang['text_manifest_delete_departments'] = " There was a problem reassigning the %s associated with this %s. Make sure there are no %s associated with this %s and try again.";
 
 /*
 |---------------------------------------------------------------
