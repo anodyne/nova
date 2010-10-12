@@ -124,6 +124,11 @@ class Users_model_base extends Model {
 		return 'activated';
 	}
 	
+	/**
+	 * As of Nova 1.2, this function is depracated and will be removed from Nova in
+	 * version 1.3. If you need this function for your own work, please copy it from
+	 * this file to application/models/user_model.php
+	 */
 	function get_command_staff_emails()
 	{
 		/* get all positions that have a type of senior */
@@ -520,6 +525,11 @@ class Users_model_base extends Model {
 		return $query;
 	}
 	
+	/**
+	 * As of Nova 1.2, this function is depracated and will be removed from Nova in
+	 * version 1.3. If you need this function for your own work, please copy it from
+	 * this file to application/models/user_model.php
+	 */
 	function get_webmasters_emails()
 	{
 		$this->db->from('users');
