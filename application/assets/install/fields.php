@@ -57,6 +57,7 @@ $data = array(
 	'docking_sections'			=> array('id' => 'section_id', 'fields' => 'fields_docking_sections'),
 	'docking_values'			=> array('id' => 'value_id', 'fields' => 'fields_docking_values'),
 	'login_attempts'			=> array('id' => 'login_id', 'fields' => 'fields_login_attempts'),
+	'manifests'					=> array('id' => 'manifest_id', 'fields' => 'fields_manifests'),
 	'menu_categories'			=> array('id' => 'menucat_id', 'fields' => 'fields_menu_categories'),
 	'menu_items'				=> array('id' => 'menu_id', 'fields' => 'fields_menu_items'),
 	'messages'					=> array('id' => 'message_id', 'fields' => 'fields_messages'),
@@ -637,7 +638,11 @@ $fields_departments = array(
 	'dept_parent' => array(
 		'type' => 'INT',
 		'constraint' => 10,
-		'default' => 0)
+		'default' => 0),
+	'dept_manifest' => array(
+		'type' => 'INT',
+		'constraint' => 5,
+		'default' => 0),
 );
 
 $fields_docking = array(
@@ -784,6 +789,22 @@ $fields_login_attempts = array(
 		'type' => $date_type,
 		'constraint' => $date_constraint,
 		'default' => 0)
+);
+
+$fields_manifests = array(
+	'manifest_id' => array(
+		'type' => 'INT',
+		'constraint' => 5,
+		'auto_increment' => TRUE),
+	'manifest_name' => array(
+		'type' => 'VARCHAR',
+		'constraint' => 255,
+		'default' => ''),
+	'manifest_order' => array(
+		'type' => 'INT',
+		'constraint' => 5),
+	'manifest_desc' => array(
+		'type' => 'TEXT')
 );
 
 $fields_menu_categories = array(
