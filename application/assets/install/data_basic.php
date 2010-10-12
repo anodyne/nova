@@ -2515,6 +2515,19 @@ $system_versions = array(
 * fixed bug where nova wouldn't display if the template file couldn't be found
 * fixed bug where the general tour items category would be shown even if there weren't any general tour items
 * fixed bug where skins with dashboard handles were showing bullets and having weird spacing issues"),
+	array(
+		'version' => '1.1.2',
+		'version_major' => '1',
+		'version_minor' => '1',
+		'version_update' => '2',
+		'version_date' => 1287010800,
+		'version_launch'	=> "Nova 1.1.2 is a maintenance update addressing several issues with Nova 1.1. This update fixes issues with Quick Install, an error thrown when updating a user profile and usability issues with the character picking process with writing and managing mission posts. A full changelog can be found on AnodyneDocs or from the System and Versions report once Nova has been updated. This update is recommended for all users.",
+		'version_changes'	=> "* added the 1.1.2 update file
+* updated the form helper to extend the form\_dropdown function
+* updated the write/missionpost and manage/posts pages to take saved/activated posts in to account for the author selection dropdown (thanks to Patrick for helping with this)
+* fixed bug with the add author selection in manage/posts and write/missionpost (thanks to Patrick for this fix)
+* fixed bug where nova would try to update a user's profile with a field that doesn't exist
+* fixed bug where, under very strange circumstances, quick install wouldn't work the way it's supposed to"),
 );
 
 $tour_fields = array(

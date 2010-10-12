@@ -4,6 +4,6 @@ version_minor: 1
 version_update: 2
 severity: minor
 notes: |
-  Nova 1.1.2 is a maintenance update addressing several issues with Nova 1.1. This update fixes a bug with the author selection process for mission posts (both when posting and when managing) and a bug where Nova would throw an error when deleting skin sections from the skin catalogue because of a field that doesn't exist in the user profile. Thanks to Patrick for fixing the author selection bug. A full changelog can be found on AnodyneDocs or from the System and Versions report once Nova has been updated. This update is recommended for all users.
-date: 27 September 2010
+  Nova 1.1.2 is a maintenance update addressing several issues with Nova 1.1. This update fixes issues with Quick Install, an error thrown when updating a user profile and usability issues with the character picking process with writing and managing mission posts. A full changelog can be found on AnodyneDocs or from the System and Versions report once Nova has been updated. This update is recommended for all users.
+date: 13 October 2010
 link: http://www.anodyne-productions.com
