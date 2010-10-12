@@ -9,7 +9,9 @@
 |
 | Changes: updated the join application email sent to the game
 |	game master to store the applicant's IP address; updated the
-|	join form to take level 1 bans in to account
+|	join form to take level 1 bans in to account; updated the
+|	contact form to be simpler and line up with nova 2's new
+|	contact form
 |
 */
 
@@ -156,38 +158,29 @@ class Main_base extends Controller {
 	
 	function contact()
 	{
+		// load the validation library
+		$this->load->library('form_validation');
+		
+		// make sure the error messages are using the proper syntax
+		$this->form_validation->set_error_delimiters('<span class="red bold error-icon">', '</span><br />');
+		
+		// set the validation rules
+		$this->form_validation->set_rules('name', 'lang:labels_name', 'required');
+		$this->form_validation->set_rules('email', 'lang:labels_email_address', 'required|valid_email');
+		$this->form_validation->set_rules('subject', 'lang:labels_subject', 'required');
+		$this->form_validation->set_rules('message', 'lang:labels_message', 'required');
+		
 		if (isset($_POST['submit']))
 		{
 			/* set the variables */
 			$array = array(
-				'to'		=> $this->input->post('to'),
 				'name'		=> $this->input->post('name'),
 				'email'		=> $this->input->post('email'),
 				'subject'	=> $this->input->post('subject'),
 				'message'	=> $this->input->post('message')
 			);
 			
-			if ($array['to'] == FALSE || $array['email'] == FALSE || $array['message'] == FALSE || $array['to'] == '0')
-			{
-				$flash['status'] = 'error';
-				
-				if ($array['to'] == '0')
-				{
-					$flash['message'] = lang_output('flash_contact_recipient');
-				}
-				else
-				{
-					$message = sprintf(
-						lang('flash_empty_fields'),
-						lang('flash_fields_all'),
-						lang('actions_send'),
-						lang('labels_email')
-					);
-					
-					$flash['message'] = text_output($message);
-				}
-			}
-			else
+			if ($this->form_validation->run())
 			{
 				/* execute the email method */
 				$email = ($this->options['system_email'] == 'on') ? $this->_email('contact', $array) : FALSE;
@@ -243,24 +236,21 @@ class Main_base extends Controller {
 		$data['inputs'] = array(
 			'name' => array(
 				'name' => 'name',
-				'id' => 'name'),
+				'id' => 'name',
+				'value' => set_value('name')),
 			'email' => array(
 				'name' => 'email',
-				'id' => 'email'),
+				'id' => 'email',
+				'value' => set_value('email')),
 			'subject' => array(
 				'name' => 'subject',
-				'id' => 'subject'),
+				'id' => 'subject',
+				'value' => set_value('subject')),
 			'message' => array(
 				'name' => 'message',
 				'id' => 'message',
-				'rows' => 12)
-		);
-		
-		$data['values']['to'] = array(
-			0 => ucwords(lang('labels_please') .' '. lang('actions_choose') .' '. lang('order_one')),
-			1 => ucwords(lang('global_game_master')),
-			2 => ucwords(lang('global_command_staff')),
-			3 => ucwords(lang('global_webmaster')),
+				'rows' => 12,
+				'value' => set_value('message'))
 		);
 		
 		$data['label'] = array(
@@ -1112,35 +1102,11 @@ class Main_base extends Controller {
 				/* parse the message */
 				$message = $this->parser->parse($em_loc, $email_data, TRUE);
 				
-				switch ($data['to'])
-				{ /* figure out who the emails are going to */
-					case 1:
-						/* get the game masters */
-						$gm = $this->user->get_gm_emails();
-						
-						/* set the TO variable */
-						$to = implode(',', $gm);
-						
-						break;
-						
-					case 2:
-						/* get the command staff */	
-						$command = $this->user->get_command_staff_emails();
-						
-						/* set the TO variable */
-						$to = implode(',', $command);
-						
-						break;
-						
-					case 3:
-						/* get the webmasters */
-						$webmaster = $this->user->get_webmasters_emails();
-						
-						/* set the TO variable */
-						$to = implode(',', $webmaster);
-						
-						break;
-				}
+				/* get the game masters */
+				$gm = $this->user->get_gm_emails();
+				
+				/* set the TO variable */
+				$to = implode(',', $gm);
 				
 				/* set the parameters for sending the email */
 				$this->email->from($data['email'], $data['name']);
