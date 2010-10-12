@@ -3609,6 +3609,52 @@ class Ajax_base extends Controller {
 		$this->template->render();
 	}
 	
+	function del_manifest()
+	{
+		// load the resources
+		$this->load->model('depts_model', 'dept');
+		
+		$head = sprintf(
+			lang('fbx_head'),
+			ucwords(lang('actions_delete')),
+			ucwords(lang('labels_manifest'))
+		);
+		
+		/* data being sent to the facebox */
+		$data['header'] = $head;
+		$data['id'] = $this->uri->segment(3, 0, TRUE);
+		
+		$item = $this->dept->get_manifest($data['id'], 'manifest_name');
+		
+		$data['text'] = sprintf(
+			lang('fbx_content_del_entry'),
+			lang('labels_manifest'),
+			$item
+		);
+		
+		/* input parameters */
+		$data['inputs'] = array(
+			'submit' => array(
+				'type' => 'submit',
+				'class' => 'hud_button',
+				'name' => 'submit',
+				'value' => 'submit',
+				'content' => ucwords(lang('actions_submit')))
+		);
+		
+		/* figure out the skin */
+		$skin = $this->session->userdata('skin_admin');
+		
+		/* figure out where the view should come from */
+		$ajax = ajax_location('del_manifest', $skin, 'admin');
+		
+		/* write the data to the template */
+		$this->template->write_view('content', $ajax, $data);
+		
+		/* render the template */
+		$this->template->render();
+	}
+	
 	function del_menu_cat()
 	{
 		/* load the resources */
@@ -7034,6 +7080,34 @@ class Ajax_base extends Controller {
 			}
 			
 			echo $output;
+		}
+	}
+	
+	function save_dept_manifest()
+	{
+		if (IS_AJAX)
+		{
+			// load the resources
+			$this->load->model('depts_model', 'dept');
+			
+			// set the variables
+			$manifest = $this->input->post('manifest', TRUE);
+			$dept = $this->input->post('dept', TRUE);
+			
+			// set the array of items to update
+			$update_array = array('dept_manifest' => $manifest);
+			
+			// do the update
+			$update = $this->dept->update_dept($dept, $update_array);
+			
+			if ($update > 0)
+			{
+				echo "1";
+			}
+			else
+			{
+				echo "0";
+			}
 		}
 	}
 	

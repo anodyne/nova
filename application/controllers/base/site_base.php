@@ -8,7 +8,8 @@
 | System Version: 1.2
 |
 | Changes: added the ability to ban users from applying or even
-|	viewing the site altogether
+|	viewing the site altogether; added the ability to use multiple
+|	manifests
 |
 */
 
@@ -2849,6 +2850,325 @@ class Site_base extends Controller {
 		$this->template->write_view('javascript', $js_loc);
 		
 		/* render the template */
+		$this->template->render();
+	}
+	
+	function manifests()
+	{
+		// load the resources
+		$this->load->model('depts_model', 'dept');
+		$this->load->helper('debug');
+		
+		// set the variables
+		$action = $this->uri->segment(3);
+		
+		if (isset($_POST['submit']))
+		{
+			switch ($action)
+			{
+				case 'add':
+					// dynamically assign the POST variables to the insert array
+					foreach ($_POST as $key => $value)
+					{
+						$insert_array[$key] = $this->input->xss_clean($value);
+					}
+					
+					// pop off the button
+					unset($insert_array['submit']);
+					
+					// insert the record
+					$insert = $this->dept->add_manifest($insert_array);
+					
+					if ($insert > 0)
+					{
+						$message = sprintf(
+							lang('flash_success'),
+							ucfirst(lang('labels_site').' '.lang('labels_manifest')),
+							lang('actions_created'),
+							''
+						);
+
+						$flash['status'] = 'success';
+						$flash['message'] = text_output($message);
+					}
+					else
+					{
+						$message = sprintf(
+							lang('flash_failure'),
+							ucfirst(lang('labels_site').' '.lang('labels_manifest')),
+							lang('actions_created'),
+							''
+						);
+
+						$flash['status'] = 'error';
+						$flash['message'] = text_output($message);
+					}
+					
+					// write everything to the template
+					$this->template->write_view('flash_message', '_base/admin/pages/flash', $flash);
+				break;
+					
+				case 'delete':
+					$id = $this->input->post('id', TRUE);
+					
+					// get all departments assigned to the manifest
+					$this->db->where('dept_manifest', $id);
+					$depts = $this->dept->get_all_depts('asc', NULL);
+					
+					if ($depts->num_rows() > 0)
+					{
+						$update = 0;
+						
+						// reassign the departments to unassigned
+						foreach ($depts->result() as $d)
+						{
+							$update += $this->dept->update_dept($d->dept_id, array('dept_manifest' => 0));
+						}
+						
+						if ($depts->num_rows() == $update)
+						{
+							// delete the manifest
+							$delete = $this->dept->delete_manifest($id);
+							
+							if ($delete > 0)
+							{
+								$message = sprintf(
+									lang('flash_success'),
+									ucfirst(lang('labels_site').' '.lang('labels_manifest')),
+									lang('actions_deleted'),
+									''
+								);
+		
+								$flash['status'] = 'success';
+								$flash['message'] = text_output($message);
+							}
+							else
+							{
+								$message = sprintf(
+									lang('flash_failure'),
+									ucfirst(lang('labels_site').' '.lang('labels_manifest')),
+									lang('actions_deleted'),
+									''
+								);
+		
+								$flash['status'] = 'error';
+								$flash['message'] = text_output($message);
+							}
+						}
+						else
+						{
+							$message = sprintf(
+								lang('flash_failure'),
+								ucfirst(lang('labels_site').' '.lang('labels_manifest')),
+								lang('actions_deleted'),
+								sprintf(
+									lang('text_manifest_delete_departments'),
+									lang('global_departments'),
+									lang('labels_manifest'),
+									lang('global_departments'),
+									lang('labels_manifest')
+								)
+							);
+	
+							$flash['status'] = 'error';
+							$flash['message'] = text_output($message);
+						}
+					}
+					else
+					{
+						// delete the manifest
+						$delete = $this->dept->delete_manifest($id);
+						
+						if ($delete > 0)
+						{
+							$message = sprintf(
+								lang('flash_success'),
+								ucfirst(lang('labels_site').' '.lang('labels_manifest')),
+								lang('actions_deleted'),
+								''
+							);
+	
+							$flash['status'] = 'success';
+							$flash['message'] = text_output($message);
+						}
+						else
+						{
+							$message = sprintf(
+								lang('flash_failure'),
+								ucfirst(lang('labels_site').' '.lang('labels_manifest')),
+								lang('actions_deleted'),
+								''
+							);
+	
+							$flash['status'] = 'error';
+							$flash['message'] = text_output($message);
+						}
+					}
+					
+					// write everything to the template
+					$this->template->write_view('flash_message', '_base/admin/pages/flash', $flash);
+				break;
+					
+				case 'edit':
+					# code...
+				break;
+			}
+		}
+		
+		if ($action == 'assign')
+		{
+			// get all the manifests
+			$manifests = $this->dept->get_all_manifests();
+			
+			if ($manifests->num_rows() > 0)
+			{
+				foreach ($manifests->result() as $m)
+				{
+					$data['manifests'][$m->manifest_id] = array('manifest' => $m->manifest_name);
+				}
+			}
+			
+			// get all the departments
+			$depts = $this->dept->get_all_depts('asc', NULL);
+			
+			if ($depts->num_rows() > 0)
+			{
+				foreach ($depts->result() as $d)
+				{
+					if ($d->dept_manifest == 0)
+					{
+						$data['unassigned'][$d->dept_id] = array(
+							'name' => $d->dept_name,
+							'desc' => $d->dept_desc,
+						);
+					}
+					else
+					{
+						$data['manifests'][$d->dept_manifest]['depts'][$d->dept_id] = array(
+							'name' => $d->dept_name,
+							'desc' => $d->dept_desc,
+						);
+					}
+				}
+			}
+			
+			$data['text'] = sprintf(
+				lang('text_manifest_assign'),
+				lang('global_departments'),
+				lang('labels_manifest'),
+				lang('global_department'),
+				lang('labels_manifest'),
+				lang('global_departments'),
+				lang('labels_manifests')
+			);
+			
+			// figure out where the view should be coming from
+			$view_loc = view_location('site_manifests_assign', $this->skin, 'admin');
+		}
+		else
+		{
+			// get all the manifests
+			$manifests = $this->dept->get_all_manifests();
+			
+			if ($manifests->num_rows() > 0)
+			{
+				foreach ($manifests->result() as $m)
+				{
+					$data['manifests'][$m->manifest_id] = array(
+						'id' => $m->manifest_id,
+						'name' => $m->manifest_name,
+						'desc' => $m->manifest_desc,
+					);
+				}
+			}
+			
+			$data['inputs'] = array(
+				'name' => array(
+					'name' => 'manifest_name',
+					'id' => 'manifest_name'),
+				'order' => array(
+					'name' => 'manifest_order',
+					'id' => 'manifest_order',
+					'class' => 'small',
+					'value' => 99),
+				'desc' => array(
+					'name' => 'manifest_desc',
+					'id' => 'manifest_desc',
+					'rows' => 3),
+				'button' => array(
+					'type' => 'submit',
+					'class' => 'button-main',
+					'name' => 'submit',
+					'value' => 'submit',
+					'content' => ucwords(lang('actions_submit'))),
+			);
+			
+			$data['text'] = sprintf(
+				lang('text_manifest'),
+				ucfirst(lang('labels_site').' '.lang('labels_manifests')),
+				lang('global_characters'),
+				lang('global_sim'),
+				lang('labels_manifest'),
+				lang('global_departments'),
+				lang('labels_manifest'),
+				lang('labels_manifests'),
+				lang('global_departments'),
+				lang('global_positions'),
+				lang('global_characters'),
+				lang('labels_manifest'),
+				lang('labels_manifests'),
+				lang('global_departments'),
+				lang('labels_manifests')
+			);
+			
+			// figure out where the view should be coming from
+			$view_loc = view_location('site_manifests', $this->skin, 'admin');
+		}
+		
+		$data['images'] = array(
+			'add' => array(
+				'src' => img_location('icon-add.png', $this->skin, 'admin'),
+				'class' => 'image inline_img_left',
+				'alt' => ''),
+			'edit' => array(
+				'src' => img_location('icon-edit.png', $this->skin, 'admin'),
+				'class' => 'image',
+				'alt' => ucfirst(lang('actions_edit'))),
+			'delete' => array(
+				'src' => img_location('icon-delete.png', $this->skin, 'admin'),
+				'class' => 'image',
+				'alt' => ucfirst(lang('actions_delete'))),
+			'assign' => array(
+				'src' => img_location('property-import.png', $this->skin, 'admin'),
+				'alt' => '',
+				'class' => 'image inline_img_left'),
+			'refresh' => array(
+				'src' => img_location('arrow-circle-double-135.png', $this->skin, 'admin'),
+				'alt' => '',
+				'class' => 'image inline_img_left'),
+		);
+		
+		$data['label'] = array(
+			'add' => ucwords(lang('actions_add').' '.lang('labels_manifest')),
+			'assign' => ucwords(lang('actions_assign').' '.lang('global_departments')),
+			'back' => LARROW.' '.ucfirst(lang('actions_back')).' '.lang('labels_to').' '.ucwords(lang('labels_site').' '.lang('labels_manifests')),
+			'manifest_desc' => ucwords(lang('labels_manifest').' '.lang('labels_desc')),
+			'manifest_name' => ucwords(lang('labels_manifest').' '.lang('labels_name')),
+			'manifest_order' => ucwords(lang('labels_manifest').' '.lang('labels_order')),
+			'refresh' => ucwords(lang('labels_refresh').' '.lang('labels_page')),
+			'sitemanifests' => ucwords(lang('labels_site').' '.lang('labels_manifests')),
+			'unassigned' => ucwords(lang('labels_unassigned').' '.lang('global_departments')),
+		);
+		
+		// the javascript view
+		$js_loc = js_location('site_manifests_js', $this->skin, 'admin');
+		
+		// write the data to the template
+		$this->template->write('title', $data['label']['sitemanifests']);
+		$this->template->write_view('content', $view_loc, $data);
+		$this->template->write_view('javascript', $js_loc);
+		
+		// render the template
 		$this->template->render();
 	}
 	
