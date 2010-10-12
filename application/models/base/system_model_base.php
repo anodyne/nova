@@ -143,7 +143,7 @@ class System_model_base extends Model {
 			}
 		}
 		
-		return FALSE;
+		return array();
 	}
 	
 	function get_current_version()
