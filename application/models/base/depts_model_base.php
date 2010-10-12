@@ -5,7 +5,7 @@
 |---------------------------------------------------------------
 |
 | File: models/base/depts_model.php
-| System Version: 1.0
+| System Version: 1.2
 |
 | Model used to access the ranks table
 |
@@ -48,9 +48,47 @@ class Depts_model_base extends Model {
 		return $query;
 	}
 	
+	function get_all_manifests($sort = 'asc', $sort_col = 'manifest_order')
+	{
+		$this->db->from('manifests');
+		$this->db->order_by($sort_col, $sort);
+		
+		$query = $this->db->get();
+		
+		return $query;
+	}
+	
 	function get_dept($id = '', $return = '')
 	{
 		$query = $this->db->get_where('departments_'. GENRE, array('dept_id' => $id));
+		
+		$row = ($query->num_rows() > 0) ? $query->row() : FALSE;
+		
+		if (!empty($return) && $row !== FALSE)
+		{
+			if (!is_array($return))
+			{
+				return $row->$return;
+			}
+			else
+			{
+				$array = array();
+				
+				foreach ($return as $r)
+				{
+					$array[$r] = $row->$r;
+				}
+				
+				return $array;
+			}
+		}
+		
+		return $row;
+	}
+	
+	function get_manifest($id = '', $return = '')
+	{
+		$query = $this->db->get_where('manifests', array('manifest_id' => $id));
 		
 		$row = ($query->num_rows() > 0) ? $query->row() : FALSE;
 		
@@ -108,6 +146,15 @@ class Depts_model_base extends Model {
 		return $query;
 	}
 	
+	function add_manifest($data = '')
+	{
+		$query = $this->db->insert('manifests', $data);
+		
+		$this->dbutil->optimize_table('manifests');
+		
+		return $query;
+	}
+	
 	/*
 	|---------------------------------------------------------------
 	| UPDATE METHODS
@@ -124,6 +171,16 @@ class Depts_model_base extends Model {
 		return $query;
 	}
 	
+	function update_manifest($id = '', $data = '')
+	{
+		$this->db->where('manifest_id', $id);
+		$query = $this->db->update('manifests', $data);
+		
+		$this->dbutil->optimize_table('manifests');
+		
+		return $query;
+	}
+	
 	/*
 	|---------------------------------------------------------------
 	| DELETE METHODS
@@ -135,6 +192,15 @@ class Depts_model_base extends Model {
 		$query = $this->db->delete('departments_'. GENRE, array('dept_id' => $id));
 		
 		$this->dbutil->optimize_table('departments_'. GENRE);
+		
+		return $query;
+	}
+	
+	function delete_manifest($id = '')
+	{
+		$query = $this->db->delete('manifests', array('manifest_id' => $id));
+		
+		$this->dbutil->optimize_table('manifests');
 		
 		return $query;
 	}
