@@ -19,6 +19,10 @@
 			<kbd><?php echo $label['manifest_desc'];?></kbd>
 			<?php echo form_textarea($inputs['desc']);?>
 		</p>
+		<p>
+			<kbd><?php echo $label['manifest_header'];?></kbd>
+			<?php echo form_textarea($inputs['header']);?>
+		</p>
 		<p><?php echo form_button($inputs['button']);?></p>
 	<?php echo form_close();?>
 </div>

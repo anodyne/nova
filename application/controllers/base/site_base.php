@@ -2855,6 +2855,9 @@ class Site_base extends Controller {
 	
 	function manifests()
 	{
+		// check access
+		$this->auth->check_access();
+		
 		// load the resources
 		$this->load->model('depts_model', 'dept');
 		$this->load->helper('debug');
@@ -3010,7 +3013,49 @@ class Site_base extends Controller {
 				break;
 					
 				case 'edit':
-					# code...
+					// get the ID
+					$id = $this->input->post('id', TRUE);
+					
+					// dynamically assign the POST variables to the insert array
+					foreach ($_POST as $key => $value)
+					{
+						$update_array[$key] = $this->input->xss_clean($value);
+					}
+					
+					// pop off the button
+					unset($update_array['submit']);
+					unset($update_array['id']);
+					
+					// insert the record
+					$update = $this->dept->update_manifest($id, $update_array);
+					
+					if ($update > 0)
+					{
+						$message = sprintf(
+							lang('flash_success'),
+							ucfirst(lang('labels_site').' '.lang('labels_manifest')),
+							lang('actions_updated'),
+							''
+						);
+
+						$flash['status'] = 'success';
+						$flash['message'] = text_output($message);
+					}
+					else
+					{
+						$message = sprintf(
+							lang('flash_failure'),
+							ucfirst(lang('labels_site').' '.lang('labels_manifest')),
+							lang('actions_updated'),
+							''
+						);
+
+						$flash['status'] = 'error';
+						$flash['message'] = text_output($message);
+					}
+					
+					// write everything to the template
+					$this->template->write_view('flash_message', '_base/admin/pages/flash', $flash);
 				break;
 			}
 		}
@@ -3095,6 +3140,10 @@ class Site_base extends Controller {
 					'name' => 'manifest_desc',
 					'id' => 'manifest_desc',
 					'rows' => 3),
+				'header' => array(
+					'name' => 'manifest_header_content',
+					'id' => 'manifest_header_content',
+					'rows' => 10),
 				'button' => array(
 					'type' => 'submit',
 					'class' => 'button-main',
@@ -3153,6 +3202,7 @@ class Site_base extends Controller {
 			'assign' => ucwords(lang('actions_assign').' '.lang('global_departments')),
 			'back' => LARROW.' '.ucfirst(lang('actions_back')).' '.lang('labels_to').' '.ucwords(lang('labels_site').' '.lang('labels_manifests')),
 			'manifest_desc' => ucwords(lang('labels_manifest').' '.lang('labels_desc')),
+			'manifest_header' => ucwords(lang('labels_manifest').' '.lang('labels_header').' '.lang('labels_content')),
 			'manifest_name' => ucwords(lang('labels_manifest').' '.lang('labels_name')),
 			'manifest_order' => ucwords(lang('labels_manifest').' '.lang('labels_order')),
 			'refresh' => ucwords(lang('labels_refresh').' '.lang('labels_page')),

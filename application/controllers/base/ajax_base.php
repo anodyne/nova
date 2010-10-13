@@ -5585,6 +5585,87 @@ class Ajax_base extends Controller {
 		$this->template->render();
 	}
 	
+	function edit_manifest()
+	{
+		// load the resources
+		$this->load->model('depts_model', 'dept');
+		
+		$head = sprintf(
+			lang('fbx_head'),
+			ucwords(lang('actions_edit')),
+			ucwords(lang('labels_site').' '.lang('labels_manifest'))
+		);
+		
+		// data being sent to the facebox
+		$data['header'] = $head;
+		$data['id'] = $this->uri->segment(3, 0, TRUE);
+		
+		// get the manifest data
+		$item = $this->dept->get_manifest($data['id']);
+		
+		// input parameters
+		$data['inputs'] = array(
+			'name' => array(
+				'name' => 'manifest_name',
+				'class' => 'hud',
+				'value' => $item->manifest_name),
+			'desc' => array(
+				'name' => 'manifest_desc',
+				'class' => 'hud',
+				'value' => $item->manifest_desc,
+				'rows' => 3),
+			'header' => array(
+				'name' => 'manifest_header_content',
+				'class' => 'hud',
+				'value' => $item->manifest_header_content,
+				'rows' => 10),
+			'order' => array(
+				'name' => 'manifest_order',
+				'class' => 'hud small',
+				'value' => $item->manifest_order),
+			'display_y' => array(
+				'name' => 'manifest_display',
+				'id' => 'display_y',
+				'class' => 'hud',
+				'value' => 'y',
+				'checked' => ($item->manifest_display == 'y') ? TRUE : FALSE),
+			'display_n' => array(
+				'name' => 'manifest_display',
+				'id' => 'display_n',
+				'class' => 'hud',
+				'value' => 'n',
+				'checked' => ($item->manifest_display == 'n') ? TRUE : FALSE),
+			'submit' => array(
+				'type' => 'submit',
+				'class' => 'hud_button',
+				'name' => 'submit',
+				'value' => 'submit',
+				'content' => ucwords(lang('actions_submit'))),
+		);
+		
+		$data['label'] = array(
+			'desc' => ucfirst(lang('labels_desc')),
+			'display' => ucfirst(lang('labels_display')),
+			'header' => ucwords(lang('labels_header').' '.lang('labels_content')),
+			'name' => ucwords(lang('labels_manifest').' '.lang('labels_name')),
+			'off' => ucfirst(lang('labels_off')),
+			'on' => ucfirst(lang('labels_on')),
+			'order' => ucfirst(lang('labels_order')),
+		);
+		
+		/* figure out the skin */
+		$skin = $this->session->userdata('skin_admin');
+		
+		/* figure out where the view should come from */
+		$ajax = ajax_location('edit_manifest', $skin, 'admin');
+		
+		/* write the data to the template */
+		$this->template->write_view('content', $ajax, $data);
+		
+		/* render the template */
+		$this->template->render();
+	}
+	
 	function edit_menu_cat()
 	{
 		/* load the resources */
