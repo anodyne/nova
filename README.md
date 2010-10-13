@@ -17,10 +17,12 @@ Anodyne Production's next-generation RPG management system combines popular feat
 * updated the email sent to the game master from the join form to show the IP address of the applicant
 * updated the contact form to be simpler and use proper form validation
 * updated the departments model with methods for handling multiple manifests
+* updated jquery to version 1.4.3
 * updated the language files
     * [base\_lang] added _labels\_ban_
     * [base\_lang] added _labels\_bans_
     * [base\_lang] added _labels\_ipaddr_
+    * [base\_lang] added _labels\_header_
     * [base\_lang] added _labels\_manifests_
     * [base\_lang] added _labels\_refresh_
     * [base\_lang] added _labels\_unassigned_
