@@ -804,7 +804,13 @@ $fields_manifests = array(
 		'type' => 'INT',
 		'constraint' => 5),
 	'manifest_desc' => array(
-		'type' => 'TEXT')
+		'type' => 'TEXT'),
+	'manifest_header_content' => array(
+		'type' => 'TEXT'),
+	'manifest_display' => array(
+		'type' => 'ENUM',
+		'constraint' => "'y','n'",
+		'default' => 'y'),
 );
 
 $fields_menu_categories = array(

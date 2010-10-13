@@ -80,7 +80,7 @@ $access_groups = array(
 $access_roles = array(
 	array(
 		'role_name' => 'System Administrator',
-		'role_access' => '1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,31,33,35,36,37,38,39,40,41,42,43,44,45,46,49,50,53,55,56,58,60,63,64,65',
+		'role_access' => '1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,31,33,35,36,37,38,39,40,41,42,43,44,45,46,49,50,53,55,56,58,60,63,64,65,66',
 		'role_desc' => 'System administrators can take any action in the system. Only give this access level out to people you implicitly trust.'),
 	array(
 		'role_name' => 'Basic Administrator',
@@ -455,6 +455,11 @@ $access_pages = array(
 		'page_url' => 'site/bans',
 		'page_group' => 3,
 		'page_desc' => "Can add or remove site bans"),
+	array(
+		'page_name' => "Site Manifests",
+		'page_url' => 'site/manifests',
+		'page_group' => 3,
+		'page_desc' => "Can create, delete and edit site manifests"),
 );
 
 $catalogue_skins = array(
@@ -1234,6 +1239,16 @@ $menu_items = array(
 		'menu_cat' => 'site',
 		'menu_use_access' => 'y',
 		'menu_access' => 'site/bans'),
+	array(
+		'menu_name' => 'Site Manifests',
+		'menu_group' => 0,
+		'menu_order' => 5,
+		'menu_link' => 'site/manifests',
+		'menu_sim_type' => 1,
+		'menu_type' => 'adminsub',
+		'menu_cat' => 'site',
+		'menu_use_access' => 'y',
+		'menu_access' => 'site/manifests'),
 	array(
 		'menu_name' => 'Bio Form',
 		'menu_group' => 1,
