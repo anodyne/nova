@@ -2535,7 +2535,7 @@ $system_versions = array(
 		'version_major' => '1',
 		'version_minor' => '1',
 		'version_update' => '2',
-		'version_date' => 1287010800,
+		'version_date' => 1287097200,
 		'version_launch'	=> "Nova 1.1.2 is a maintenance update addressing several issues with Nova 1.1. This update fixes issues with Quick Install, an error thrown when updating a user profile and usability issues with the character picking process with writing and managing mission posts. A full changelog can be found on AnodyneDocs or from the System and Versions report once Nova has been updated. This update is recommended for all users.",
 		'version_changes'	=> "* added the 1.1.2 update file
 * updated the form helper to extend the form\_dropdown function
