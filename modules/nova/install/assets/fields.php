@@ -293,8 +293,6 @@ $fields_catalogue_ranks = array(
 		'default' => 'active'),
 	'rankcat_credits' => array(
 		'type' => 'TEXT'),
-	'rankcat_url' => array(
-		'type' => 'TEXT'),
 	'rankcat_default' => array(
 		'type' => 'ENUM',
 		'constraint' => "'y','n'",
@@ -319,7 +317,11 @@ $fields_catalogue_skins = array(
 		'constraint' => 100,
 		'default' => ''),
 	'skin_credits' => array(
-		'type' => 'TEXT')
+		'type' => 'TEXT'),
+	'skin_version' => array(
+		'type' => 'VARCHAR',
+		'constraint' => 10,
+		'default' => ''),
 );
 
 $fields_catalogue_skinsecs = array(

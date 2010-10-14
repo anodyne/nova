@@ -500,9 +500,5 @@ $catalogue_ranks = array(
 		'rankcat_name' => 'Duty Ranks',
 		'rankcat_location' => 'default',
 		'rankcat_credits' => "The Andromeda Duty rank set was created by Fedhog of Kuro-RPG. The rankset can be found at <a href='http://www.kuro-rpg.net' target='_blank'>Kuro-RPG</a>. Please do not copy or modify the images.",
-		'rankcat_default' => 'y',
-		'rankcat_url' => 'http://www.kuro-rpg.net/')
+		'rankcat_default' => 'y')
 );
-
-/* End of file install_data_and.php */
-/* Location: ./application/assets/install/install_data_and.php */

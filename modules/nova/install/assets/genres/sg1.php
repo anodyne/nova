@@ -1,4 +1,4 @@
-<?php defined('SYSPATH') OR die('No direct access allowed.');
+<?php defined('SYSPATH') or die('No direct script access.');
 /**
  * Genre Install Data (SG1)
  *
@@ -702,6 +702,5 @@ $catalogue_ranks = array(
 		'rankcat_location' => 'default',
 		'rankcat_credits' => "The Stargate ranks used in Nova are the US Military sets created by James Arnhem. The rankset can be found at <a href='http://www.kuro-rpg.net' target='_blank'>Kuro-RPG</a>. Please do not copy or modify the images.",
 		'rankcat_default' => 'y',
-		'rankcat_url' => 'http://www.kuro-rpg.net/',
 		'rankcat_genre' => $g)
 );

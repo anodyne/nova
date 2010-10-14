@@ -45,9 +45,6 @@ class Model_Cataloguerank extends Jelly_Model {
 			'credits' => Jelly::field('text', array(
 				'column' => 'rankcat_credits'
 			)),
-			'url' => Jelly::field('text', array(
-				'column' => 'rankcat_url'
-			)),
 			'default' => Jelly::field('enum', array(
 				'column' => 'rankcat_default',
 				'choices' => array('y','n'),

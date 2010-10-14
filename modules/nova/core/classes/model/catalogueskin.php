@@ -30,6 +30,9 @@ class Model_Catalogueskin extends Jelly_Model {
 			'credits' => Jelly::field('text', array(
 				'column' => 'skin_credits'
 			)),
+			'version' => Jelly::field('string', array(
+				'column' => 'skin_version',
+			)),
 		));
 	}
 }

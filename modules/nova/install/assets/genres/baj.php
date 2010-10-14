@@ -1,4 +1,4 @@
-<?php defined('SYSPATH') OR die('No direct access allowed.');
+<?php defined('SYSPATH') or die('No direct script access.');
 /**
  * Genre Install Data (BAJ)
  *
@@ -842,6 +842,5 @@ $catalogue_ranks = array(
 		'rankcat_location' => 'default',
 		'rankcat_credits' => "The Bajoran rank set was created by Kuro-chan of Kuro-RPG. The rankset (and others) can be found at <a href='http://www.kuro-rpg.net' target='_blank'>Kuro-RPG</a>. Please do not copy or modify the images.",
 		'rankcat_default' => 'y',
-		'rankcat_url' => 'http://www.kuro-rpg.net/',
 		'rankcat_genre' => $g)
 );

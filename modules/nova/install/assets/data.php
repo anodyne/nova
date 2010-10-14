@@ -440,9 +440,10 @@ $access_pages = array(
 
 $catalogue_skins = array(
 	array(
-		'skin_name' => 'Pulsar',
+		'skin_name' => 'Beta',
 		'skin_location' => 'default',
-		'skin_credits' => 'The Pulsar skin was created by Anodyne Productions. Edits are permissible as long as original credits stay intact. The Pulsar skin includes the jQuery BlockUI plugin by Malsup. More information can be found at <a href="http://malsup.com/jquery/block/">http://malsup.com/jquery/block/</a>.'),
+		'skin_credits' => 'The Beta skin was created by Anodyne Productions. Edits are permissible provided the original credits remain intact.',
+		'skin_version' => '1.0'),
 );
 
 $catalogue_skinsecs = array(

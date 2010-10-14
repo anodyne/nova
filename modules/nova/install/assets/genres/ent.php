@@ -1,4 +1,4 @@
-<?php defined('SYSPATH') OR die('No direct access allowed.');
+<?php defined('SYSPATH') or die('No direct script access.');
 /**
  * Genre Install Data (ENT)
  *
@@ -983,6 +983,5 @@ $catalogue_ranks = array(
 		'rankcat_name' => 'Duty Uniform',
 		'rankcat_location' => 'default',
 		'rankcat_credits' => "The Enterprise rank sets used in Nova were created by Kuro-chan of Kuro-RPG. The ranksets can be found at <a href='http://www.kuro-rpg.net' target='_blank''>Kuro-RPG</a>. Please do not copy or modify the images.",
-		'rankcat_default' => 'y',
 		'rankcat_genre' => $g)
 );
