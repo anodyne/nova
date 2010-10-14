@@ -10,16 +10,6 @@
 abstract class Nova_Utility {
 	
 	/**
-	 * Initializes the class and sets a debug message.
-	 *
-	 * @return 	void
-	 */
-	public function __construct()
-	{
-		Kohana_Log::instance()->add('debug', 'Utility library initialized.');
-	}
-	
-	/**
 	 * Reads the directory path specified in the first parameter and builds an array representation
 	 * of it and its contained files.
 	 *
@@ -103,217 +93,234 @@ abstract class Nova_Utility {
 	}
 	
 	/**
-	 * Uses the rank.yml file to quickly install a rank set
+	 * Uses the rank.json file to quickly install a rank set. If no value is
+	 * passed to the method then the method will attempt to find all uninstalled
+	 * ranks and install them.
 	 *
-	 *     Utility::install_ranks();
+	 *     Utility::install_rank();
+	 *     Utility::install_rank('location');
 	 *
 	 * @uses	Utility::directory_map()
-	 * @uses	Kohana::find_file()
-	 * @uses	Kohana::load()
-	 * @param	string	the value of a specific rank set to install
+	 * @param	string	the location of a specific rank set to install
 	 * @return	void
 	 */
-	public static function install_ranks($value = NULL)
+	public static function install_rank($location = NULL)
 	{
-		// get the list of classes that have been loaded
-		$classes = get_declared_classes();
-		
-		// if sfYaml hasn't been loaded, then load it
-		if ( ! in_array('sfYaml', $classes))
+		if ($location === NULL)
 		{
-			// find the sfYAML library
-			$path = Kohana::find_file('vendor', 'sfYaml/sfYaml');
+			// get the directory listing for the genre
+			$dir = self::directory_map(APPPATH.'assets/common/'.Kohana::config('nova.genre').'/ranks/', TRUE);
 			
-			// load the sfYAML library
-			Kohana::load($path);
-		}
-		
-		// get the directory listing for the genre
-		$dir = self::directory_map(APPPATH.'assets/common/'.Kohana::config('nova.genre').'/ranks/', TRUE);
-		
-		// get all the rank sets locations
-		$ranks = Jelly::query('cataloguerank')->where('genre', '=', Kohana::config('nova.genre'))->select();
-		
-		if (count($ranks) > 0)
-		{
-			// start by removing anything that's already installed
-			foreach ($ranks as $rank)
+			// get all the rank sets locations
+			$ranks = Jelly::query('cataloguerank')->where('genre', '=', Kohana::config('nova.genre'))->select();
+			
+			if (count($ranks) > 0)
 			{
-				// find the location in the directory listing
-				$key = array_search($rank->location, $dir);
-				
-				if ($key !== FALSE)
+				// start by removing anything that's already installed
+				foreach ($ranks as $rank)
 				{
-					unset($dir[$key]);
-				}
-			}
-			
-			// set the items to be pulled out of the listing
-			$pop = array('index.html');
-			
-			// remove unwanted items
-			foreach ($pop as $value)
-			{
-				// find the locations in the directory listing
-				$key = array_search($value, $dir);
-				
-				if ($key !== FALSE)
-				{
-					unset($dir[$key]);
-				}
-			}
-			
-			// loop through the directories now
-			foreach ($dir as $key => $value)
-			{
-				// assign our path to a variable
-				$file = APPPATH.'assets/common/'.Kohana::config('nova.genre').'/ranks/'.$value.'/rank.yml';
-				
-				// make sure the file exists first
-				if (file_exists($file))
-				{
-					// load the YAML data into an array
-					$content = sfYaml::load($file);
+					// find the location in the directory listing
+					$key = array_search($rank->location, $dir);
 					
-					// add the item to the database
-					$add = Jelly::query('cataloguerank')
-						->columns(array(
-							'name',
-							'location',
-							'credits',
-							'preview',
-							'blank',
-							'extension',
-							'url',
-							'genre'
-						))
-						->values(array(
-							$content['rank'],
-							$content['location'],
-							$content['credits'],
-							$content['preview'],
-							$content['blank'],
-							$content['extension'],
-							$content['url'],
-							$content['genre']
-						))
-						->insert();
+					if ($key !== FALSE)
+					{
+						unset($dir[$key]);
+					}
 				}
+				
+				// set the items to be pulled out of the listing
+				$pop = array('index.html');
+				
+				// remove unwanted items
+				foreach ($pop as $value)
+				{
+					// find the locations in the directory listing
+					$key = array_search($value, $dir);
+					
+					if ($key !== FALSE)
+					{
+						unset($dir[$key]);
+					}
+				}
+				
+				// loop through the directories now
+				foreach ($dir as $key => $value)
+				{
+					// assign our path to a variable
+					$file = APPPATH.'assets/common/'.Kohana::config('nova.genre').'/ranks/'.$value.'/rank.json';
+					
+					// make sure the file exists first
+					if (file_exists($file))
+					{
+						$content = file_get_contents($file);
+						$data = json_decode($content);
+						
+						Jelly::factory('cataloguerank')
+							->set(array(
+								'name'		=> $data->name,
+								'location'	=> $data->location,
+								'credits'	=> $data->credits,
+								'preview'	=> $data->preview,
+								'blank'		=> $data->blank,
+								'extension'	=> $data->extension,
+								'genre'		=> $data->genre
+							))
+							->save();
+					}
+				}
+			}
+		}
+		else
+		{
+			// assign our path to a variable
+			$file = APPPATH.'assets/common/'.Kohana::config('nova.genre').'/ranks/'.$location.'/rank.json';
+			
+			// make sure the file exists first
+			if (file_exists($file))
+			{
+				// get the contents and decode the JSON
+				$content = file_get_contents($file);
+				$data = json_decode($content);
+				
+				Jelly::factory('cataloguerank')
+					->set(array(
+						'name'		=> $data->name,
+						'location'	=> $data->location,
+						'credits'	=> $data->credits,
+						'preview'	=> $data->preview,
+						'blank'		=> $data->blank,
+						'extension'	=> $data->extension,
+						'genre'		=> $data->genre
+					))
+					->save();
 			}
 		}
 	}
 	
 	/**
-	 * Uses the skin.yml file to quickly install a skin
+	 * Uses the skin.json file to quickly install a skin. If no value is passed
+	 * to the method then the method will attempt to find all uninstalled skins
+	 * and install them.
 	 *
-	 *     Utility::install_skins();
+	 *     Utility::install_skin();
+	 *     Utility::install_skin('location');
 	 *
 	 * @uses	Utility::directory_map()
-	 * @uses	Kohana::find_file()
-	 * @uses	Kohana::load()
-	 * @param	string	the value of a specific skin set to install
+	 * @param	string	the location of a skin to install
 	 * @return	void
 	 */
-	public static function install_skins($value = '')
+	public static function install_skin($location = NULL)
 	{
-		// get the list of classes that have been loaded
-		$classes = get_declared_classes();
-		
-		// if sfYaml hasn't been loaded, then load it
-		if ( ! in_array('sfYaml', $classes))
+		if ($location === NULL)
 		{
-			// find the sfYAML library
-			$path = Kohana::find_file('vendor', 'sfYaml/sfYaml');
+			// get the listing of the directory
+			$dir = self::directory_map(APPPATH.'views/', TRUE);
 			
-			// load the sfYAML library
-			Kohana::load($path);
-		}
-		
-		// get the listing of the directory
-		$dir = self::directory_map(APPPATH.'views/', TRUE);
-		
-		// get all the skin catalogue items
-		$skins = Jelly::query('catalogueskin')->select();
-		
-		if (count($skins) > 0)
-		{
-			// start by removing anything that's already installed
-			foreach ($skins as $skin)
+			// get all the skin catalogue items
+			$skins = Jelly::query('catalogueskin')->select();
+			
+			if (count($skins) > 0)
 			{
-				// find the location in the directory listing
-				$key = array_search($skin->location, $dir);
-				
-				if ($key !== FALSE)
+				// start by removing anything that's already installed
+				foreach ($skins as $skin)
 				{
-					unset($dir[$key]);
-				}
-			}
-			
-			// create an array of items to remove
-			$pop = array('index.html');
-			
-			# TODO: remove this after the application directory has been cleaned out
-			$pop[] = '_base';
-			$pop[] = 'template.php';
-			
-			// remove the items
-			foreach ($pop as $value)
-			{
-				// find the location in the directory listing
-				$key = array_search($value, $dir);
-				
-				if ($key !== FALSE)
-				{
-					unset($dir[$key]);
-				}
-			}
-			
-			// now loop through the directories and install the skins
-			foreach ($dir as $key => $value)
-			{
-				// assign our path to a variable
-				$file = APPPATH.'views/'.$value.'/skin.yml';
-				
-				// make sure the file exists first
-				if (file_exists($file))
-				{
-					// load the YAML data into an array
-					$content = sfYaml::load($file);
+					// find the location in the directory listing
+					$key = array_search($skin->location, $dir);
 					
-					// add the skin to the database
-					Jelly::query('catalogueskin')
-						->columns(array(
-							'name',
-							'location',
-							'credits'
-						))
-						->values(array(
-							$content['skin'],
-							$content['location'],
-							$content['credits'],
-						))
-						->insert();
-					
-					// go through and add the sections
-					foreach ($content['sections'] as $v)
+					if ($key !== FALSE)
 					{
-						Jelly::query('catalogueskinsec')
-							->columns(array(
-								'section',
-								'skin',
-								'preview',
-								'status',
-								'default'
-							))
-							->values(array(
-								$v['type'],
-								$content['location'],
-								$v['preview'],
-								'active',
-								'n'
-							))
-							->insert();
+						unset($dir[$key]);
 					}
+				}
+				
+				// create an array of items to remove
+				$pop = array('index.html', 'template.php');
+				
+				// remove the items
+				foreach ($pop as $p)
+				{
+					// find the location in the directory listing
+					$key = array_search($p, $dir);
+					
+					if ($key !== FALSE)
+					{
+						unset($dir[$key]);
+					}
+				}
+				
+				// now loop through the directories and install the skins
+				foreach ($dir as $key => $value)
+				{
+					// assign our path to a variable
+					$file = APPPATH.'views/'.$value.'/skin.json';
+					
+					// make sure the file exists first
+					if (file_exists($file))
+					{
+						$content = file_get_contents($file);
+						$data = json_decode($content);
+						
+						// add the skin to the database
+						Jelly::factory('catalogueskin')
+							->set(array(
+								'name' => $data->name,
+								'location' => $data->location,
+								'credits' => $data->credits,
+								'version' => $data->version
+							))
+							->save();
+						
+						// go through and add the sections
+						foreach ($data->sections as $v)
+						{
+							Jelly::factory('catalogueskinsec')
+								->set(array(
+									'section' => $v->type,
+									'skin' => $data->location,
+									'preview' => $v->preview,
+									'status' => 'active',
+									'default' => 'n'
+								))
+								->save();
+						}
+					}
+				}
+			}
+		}
+		else
+		{
+			// assign our path to a variable
+			$file = APPPATH.'views/'.$location.'/skin.json';
+			
+			// make sure the file exists first
+			if (file_exists($file))
+			{
+				// get the contents and decode the JSON
+				$content = file_get_contents($file);
+				$data = json_decode($content);
+				
+				// add the skin to the database
+				Jelly::factory('catalogueskin')
+					->set(array(
+						'name' => $data->name,
+						'location' => $data->location,
+						'credits' => $data->credits,
+						'version' => $data->version
+					))
+					->save();
+				
+				// go through and add the sections
+				foreach ($data->sections as $v)
+				{
+					Jelly::factory('catalogueskinsec')
+						->set(array(
+							'section' => $v->type,
+							'skin' => $data->location,
+							'preview' => $v->preview,
+							'status' => 'active',
+							'default' => 'n'
+						))
+						->save();
 				}
 			}
 		}
@@ -341,88 +348,105 @@ abstract class Nova_Utility {
 	}
 	
 	/**
-	 * Uses the widget.yml file to quickly install a widget
+	 * Uses the widget.json file to quickly install a widget. If no value is
+	 * passed to the method then the method will attempt to find all uninstalled
+	 * widgets and install them.
 	 *
 	 *     Utility::install_widget();
+	 *     Utility::install_widget('location');
 	 *
 	 * @uses	Utility::directory_map()
-	 * @uses	Kohana::find_file()
-	 * @uses	Kohana::load()
-	 * @param	string	the value of a specific rank set to install
+	 * @param	string	the location of a specific widget to install
 	 * @return	void
 	 */
-	public static function install_widgets($value = NULL)
+	public static function install_widget($location = NULL)
 	{
-		// get the list of classes that have been loaded
-		$classes = get_declared_classes();
-		
-		// if sfYaml hasn't been loaded, then load it
-		if ( ! in_array('sfYaml', $classes))
+		if ($location === NULL)
 		{
-			// find the sfYAML library
-			$path = Kohana::find_file('vendor', 'sfYaml/sfYaml');
+			// get the directory listing
+			$dir = self::directory_map(MODPATH.'nova/core/views/_common/widgets/', TRUE);
 			
-			// load the sfYAML library
-			Kohana::load($path);
-		}
-		
-		// get the directory listing
-		$dir = self::directory_map(MODPATH.'nova/core/views/_common/widgets/', TRUE);
-		
-		// get all the installed widgets
-		$widgets = Jelly::query('cataloguewidget')->select();
-		
-		if (count($widgets) > 0)
-		{
-			// start by removing anything that's already installed
-			foreach ($widgets as $w)
+			// get all the installed widgets
+			$widgets = Jelly::query('cataloguewidget')->select();
+			
+			if (count($widgets) > 0)
 			{
-				// find the location in the directory listing
-				$key = array_search($w->location, $dir);
+				// start by removing anything that's already installed
+				foreach ($widgets as $w)
+				{
+					// find the location in the directory listing
+					$key = array_search($w->location, $dir);
+					
+					if ($key !== FALSE)
+					{
+						unset($dir[$key]);
+					}
+				}
+			}
+			
+			// set the items to be pulled out of the listing
+			$pop = array('index.html');
+			
+			// remove unwanted items
+			foreach ($pop as $value)
+			{
+				// find the locations in the directory listing
+				$key = array_search($value, $dir);
 				
 				if ($key !== FALSE)
 				{
 					unset($dir[$key]);
 				}
 			}
-		}
-		
-		// set the items to be pulled out of the listing
-		$pop = array('index.html');
-		
-		// remove unwanted items
-		foreach ($pop as $value)
-		{
-			// find the locations in the directory listing
-			$key = array_search($value, $dir);
 			
-			if ($key !== FALSE)
+			// loop through the directories now
+			foreach ($dir as $key => $value)
 			{
-				unset($dir[$key]);
+				// assign our path to a variable
+				$file = MODPATH.'nova/core/views/_common/widgets/'.$value.'/widget.json';
+				
+				// make sure the file exists first
+				if (file_exists($file))
+				{
+					// get the contents and decode the JSON
+					$content = file_get_contents($file);
+					$data = json_decode($content);
+					
+					// add the item to the database
+					Jelly::factory('cataloguewidget')
+						->set(array(
+							'name'		=> $data->name,
+							'location'	=> $data->location,
+							'page'		=> $data->page,
+							'zone'		=> $data->zone,
+							'status'	=> 'active',
+							'credits'	=> $data->credits
+						))
+						->save();
+				}
 			}
 		}
-		
-		// loop through the directories now
-		foreach ($dir as $key => $value)
+		else
 		{
 			// assign our path to a variable
-			$file = MODPATH.'nova/core/views/_common/widgets/'.$value.'/widget.yml';
+			$file = MODPATH.'nova/core/views/_common/widgets/'.$location.'/widget.json';
 			
 			// make sure the file exists first
 			if (file_exists($file))
 			{
-				// load the YAML data into an array
-				$content = sfYaml::load($file);
+				// get the contents and decode the JSON
+				$content = file_get_contents($file);
+				$data = json_decode($content);
 				
 				// add the item to the database
-				$add = Jelly::factory('cataloguewidget')
+				Jelly::factory('cataloguewidget')
 					->set(array(
-						'name' => $content['name'],
-						'location' => $content['location'],
-						'page' => $content['page'],
-						'zone' => $content['zone'],
-						'status' => 'active',
-						'credits'=> $content['credits']
+						'name'		=> $data->name,
+						'location'	=> $data->location,
+						'page'		=> $data->page,
+						'zone'		=> $data->zone,
+						'status'	=> 'active',
+						'credits'	=> $data->credits
 					))
 					->save();
 			}

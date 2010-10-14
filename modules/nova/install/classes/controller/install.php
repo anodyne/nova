@@ -1177,9 +1177,9 @@ return array
 						}
 						
 						// do the quick installs
-						Utility::install_ranks();
-						Utility::install_skins();
-						Utility::install_widgets();
+						Utility::install_rank();
+						Utility::install_skin();
+						Utility::install_widget();
 						
 						// do the registration
 						$this->_register();
