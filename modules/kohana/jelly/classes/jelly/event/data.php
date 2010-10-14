@@ -1,6 +1,6 @@
 <?php defined('SYSPATH') or die('No direct script access.');
 
-class Jelly_Behavior_Result extends Jelly_Core_Behavior_Result
+class Jelly_Event_Data extends Jelly_Core_Event_Data
 {
 
 }
