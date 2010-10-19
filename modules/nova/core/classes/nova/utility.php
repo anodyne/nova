@@ -454,32 +454,6 @@ abstract class Nova_Utility {
 	}
 	
 	/**
-	 * Prints a date in the proper format and with the right timezone
-	 *
-	 *     echo utility::print_date(1271393940);
-	 *     // would produce: Thur Apr 15th 2010 @ 11:59pm
-	 *
-	 * @uses	Session::instance
-	 * @uses	Session::get
-	 * @uses	Date::mdate
-	 * @param	integer	the UNIX timestamp to print out
-	 * @return	string	the formatted date string
-	 */
-	public static function print_date($time)
-	{
-		// get an instance of the session
-		$session = Session::instance();
-		
-		// get the date format
-		$format = Jelly::query('setting', 'date_format')->limit(1)->select()->value;
-		
-		// set the timezone
-		$timezone = $session->get('timezone', 'GMT');
-		
-		return date::mdate($format, $time, $timezone);
-	}
-	
-	/**
 	 * Verifies that the server can run Nova
 	 *
 	 * @return	mixed	an array if there are any warnings or failures or FALSE if everything checks out
