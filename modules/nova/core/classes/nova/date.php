@@ -12,38 +12,66 @@
 abstract class Nova_Date extends Kohana_Date {
 	
 	/**
-	 * Makes the date from a UNIX timestamp with the format provided. Date formats should
-	 * be in the PHP date() format unlike Nova 1.0 which uses the MySQL format.
+	 * Makes a human readable date from a UNIX timestamp. The format is pulled
+	 * from the database (done in the PHP date() format) and the timezone is
+	 * pulled from the session if it exists or the database if a session doesn't
+	 * exist.
 	 *
-	 *     echo mdate('D M jS Y', 946706400);
-	 *     // would produce Sat Jan 1st 2000
+	 *     echo Date::mdate(946706400);
+	 *     // would produce: Sat Jan 1st 2000
 	 *
-	 * @param	string	the format to use for the date
+	 *     echo Date::mdate(946706400, 'Y/m/d');
+	 *     // would produce: 2000/01/01
+	 *
 	 * @param	integer	the UNIX timestamp to convert
-	 * @param	string	the timezone to use for converting the timestamp
+	 * @param	string	a PHP date() formatted string for the format of the date
 	 * @return	string	the formatted date string
 	 */
-	public static function mdate($format, $time, $timezone = 'GMT')
+	public static function mdate($time, $format = NULL)
 	{
+		// get an instance of the session
+		$session = Session::instance();
+		
+		// only get the date format from the database if an override isn't specified
+		if ($format === NULL)
+		{
+			$format = Jelly::query('setting', 'date_format')->limit(1)->select()->value;
+		}
+		
+		// get the default timezone from the database
+		$tz = Jelly::query('setting', 'timezone')->limit(1)->select()->value;
+		
+		// set the timezone
+		$timezone = $session->get('timezone', $tz);
+		
+		// get a new DateTime object based on the time
 		$date = new DateTime('@'.$time, new DateTimeZone($timezone));
 		
 		return $date->format($format);
 	}
 	
 	/**
-	 * Returns the current time with the timezone specified.
+	 * Returns the current time based on either the timezone in the session,
+	 * or if the session doesn't exist, from the default timezone in the
+	 * database.
 	 *
 	 *     // get the current time
-	 *     $time = date::now();
+	 *     $time = Date::now();
 	 *
-	 *     // get the current time in New York
-	 *     $time = date::now('America/New_York');
-	 *
-	 * @param	string	the timezone to use for creating the current timestamp (GMT default)
 	 * @return	integer	the UNIX timestamp of the current time
 	 */
 	public static function now($timezone = 'GMT')
 	{
+		// get an instance of the session
+		$session = Session::instance();
+		
+		// get the default timezone from the database
+		$tz = Jelly::query('setting', 'timezone')->limit(1)->select()->value;
+		
+		// set the timezone
+		$timezone = $session->get('timezone', $tz);
+		
+		// get a new DateTime object based on the timezone
 		$now = new DateTime('now', new DateTimeZone($timezone));
 		
 		return $now->format('U');
