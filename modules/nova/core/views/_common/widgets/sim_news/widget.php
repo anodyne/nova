@@ -15,18 +15,18 @@ if (count($news) > 0):
 ?>
 
 		<h4><?php echo html::anchor('main/viewnews/'.$n->id, $n->title);?></h4>
-		<p class="subtle fontSmall bold">
-			<?php echo ucfirst(__('action.posted')).' '.Utility::print_date($n->date);?>
-			<?php echo $n->author_character->print_name();?>
-			<?php echo __('label.in').' '.$n->category->name;?>
-		</p>
-		<p><?php echo nl2br($n->content);?></p>
+		<span class="subtle fontSmall">
+			<strong><?php echo ucfirst(__("author"));?>:</strong> <?php echo $n->author_character->print_name();?><br />
+			<strong><?php echo ucfirst(__("category"));?>:</strong> <?php echo $n->category->name;?><br />
+			<?php echo Date::mdate($n->date);?>
+		</span>
+		<p><?php echo Text::limit_words($n->content, 50, '...');?></p>
 		
 <?php
 
 	endforeach;
 else:
-	echo '<h3 class="warning">'.__("No sim news found").'</h3>';
+	echo '<h3 class="warning">'.__("error.not_found", array(':item' => __("news items"))).'</h3>';
 endif;
 
 ?>
