@@ -43,7 +43,7 @@
 | Menu: custom library used to build the menus out of the database
 */
 
-$autoload['libraries'] = array('database', 'template', 'menu', 'input', 'auth', 'user_panel');
+$autoload['libraries'] = array('database', 'template', 'menu', 'auth', 'user_panel');
 
 
 /*
