@@ -15,22 +15,20 @@
 <?php echo $message;?>
 
 <?php if (isset($news)): ?>
-	<p class="fontSmall info">
-		<strong>
-			<?php echo ucfirst(__('action.posted')).' '.Utility::print_date($news->date);?>
-			<?php //echo __('word.by').' '.Utility::print_character_name($news->author_character);?>
-		</strong>
+	<p class="fontSmall subtle">
+		<strong><?php echo ucfirst(__("author"));?>:</strong> <?php echo $news->author_character->print_name();?><br />
+		<?php echo Date::mdate($news->date);?>
 		
 		<?php if ($news->last_update !== NULL): ?>
-			<br /><?php echo ucfirst(__('action.edited')).' '.Utility::print_date($news->last_update);?><br />
+			<br /><em><?php echo ucwords(__("Last Updated")).': '.Date::mdate($news->last_update);?></em>
 		<?php endif;?>
 	</p>
 	
-	<p class="fontSmall info">
-		<strong><?php echo ucfirst(__('label.category')).':</strong> '.$news->category->name;?>
+	<p class="fontSmall subtle">
+		<strong><?php echo ucfirst(__("category"));?>:</strong> <?php echo $news->category->name;?>
 		
 		<?php if ( ! empty($news->tags)): ?>
-			<br /><strong><?php echo ucfirst(__('label.tags')).':</strong> '. $news->tags;?>
+			<br /><strong><?php echo ucfirst(__("tags"));?></strong> <?php echo $news->tags;?>
 		<?php endif; ?>
 	</p>
 	
@@ -54,14 +52,14 @@
 	
 	<p><?php echo html::anchor('feed/news', html::image($images['rss']['src'], $images['rss']['attr'], FALSE), array('class' => 'image'));?></p>
 	
-	<h4><?php echo count($comments);?> <?php echo (count($comments) == 1) ? ucfirst(__('label.comment')) : ucfirst(__('label.comments'));?></h4>
+	<h4><?php echo count($news->comments);?> <?php echo (count($news->comments) == 1) ? ucfirst(__("comment")) : ucfirst(__("comments"));?></h4>
 	
-	<?php if (count($comments) > 0): ?>
-		<?php foreach ($comments as $c): ?>
+	<?php if (count($news->comments) > 0): ?>
+		<?php foreach ($news->comments as $c): ?>
 			<div class="comment">
 				<div class="header">
-					<div class="float-right subtle"><?php echo Utility::print_date($c->date);?></div>
-					<strong><?php //echo Utility::print_character_name($c->author_character);?></strong> <?php echo __('action.said');?>:
+					<div class="float-right subtle"><?php echo Date::mdate($c->date);?></div>
+					<strong><?php echo $c->author_character->print_name();?></strong> <?php echo __('said');?>:
 				</div>
 				<div class="message">
 					<p><?php echo nl2br($c->content);?></p>

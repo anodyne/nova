@@ -216,12 +216,76 @@ class Controller_Nova_Main extends Controller_Nova_Base {
 		# code...
 	}
 	
-	public function news()
+	public function action_news()
 	{
-		# code...
+		// create a new content view
+		$this->template->layout->content = View::factory(Location::view('main_news', $this->skin, 'main', 'pages'));
+		
+		// create the javascript view
+		$this->template->javascript = View::factory(Location::view('main_news_js', $this->skin, 'main', 'js'));
+		
+		// assign the object a shorter variable to use in the method
+		$data = $this->template->layout->content;
+		
+		// get all the news items
+		$news = Jelly::query('news')->where('status', '=', 'activated')->order_by('date', 'desc');
+		
+		// if the user isn't logged in, only pull public news items
+		( ! Auth::is_logged_in()) ? $news->where('private', '=', 'n') : FALSE;
+		
+		// run the query
+		$news = $news->select();
+		
+		// make sure there are news items
+		if (count($news) > 0)
+		{
+			// set the variable being used by the news items
+			$data->news = FALSE;
+			
+			// send the timezone to the view
+			$data->timezone = $this->timezone;
+			
+			// loop through all the items and pass them to the view
+			foreach ($news as $n)
+			{
+				$data->news[$n->id] = $n;
+			}
+		}
+		
+		// get the categories
+		$cats = Jelly::query('newscategory')->select();
+		
+		// make sure there are news categories
+		if (count($cats) > 0)
+		{
+			// set the variables being used by the news categories
+			$data->categories = FALSE;
+			$data->lastcategory = FALSE;
+			
+			// set the counter
+			$i = 0;
+			
+			// loop through all the categories and pass them to the view
+			foreach ($cats as $c)
+			{
+				// increment the count
+				++$i;
+				
+				$data->categories[$c->id] = $c;
+				
+				$data->lastcategory[$c->id] = (count($cats) == $i) ? TRUE : FALSE;
+			}
+		}
+		
+		// content
+		$this->template->title.= ucwords(__("news"));
+		$data->header = ucwords(__("news"));
+		
+		// send the response
+		$this->request->response = $this->template;
 	}
 	
-	public function action_viewnews($id = '')
+	public function action_viewnews($id = NULL)
 	{
 		# TODO: need to handle comment moderation
 		
@@ -254,47 +318,26 @@ class Controller_Nova_Main extends Controller_Nova_Base {
 		}
 		
 		// grab the news item referenced in the url
-		$news = Jelly::select('news', $id);
+		$news = Jelly::query('news', $id)->limit(1)->select();
 		
 		// figure out what the previous item is
-		$prev = Jelly::select('news')
-			->where('id', '<', $id)
-			->order_by('id', 'desc');
+		$prev = Jelly::query('news')->where('id', '<', $id)->order_by('id', 'desc')->limit(1);
 			
 		( ! Auth::is_logged_in()) ? $prev->where('private', '=', 'n') : FALSE;
 		
-		$prev = $prev->load();
+		$prev = $prev->select();
 		
 		// figure out what the next item is
-		$next = Jelly::select('news')
-			->where('id', '>', $id)
-			->order_by('id', 'desc');
+		$next = Jelly::query('news')->where('id', '>', $id)->order_by('id', 'desc')->limit(1);
 			
 		( ! Auth::is_logged_in()) ? $next->where('private', '=', 'n') : FALSE;
 		
-		$next = $next->load();
+		$next = $next->select();
 		
-		if ($news->loaded())
+		if (count($news) > 0)
 		{
 			// grab the news object
 			$data->news = $news;
-			
-			// grab the news comments for this news item
-			$comments = Jelly::select('newscomment')
-				->where('news', '=', $id)
-				->where('status', '=', 'activated')
-				->order_by('date', 'desc')
-				->execute();
-			
-			if ($comments)
-			{
-				$data->comments = array();
-				
-				foreach ($comments as $c)
-				{
-					$data->comments[] = $c;
-				}
-			}
 			
 			// build the prev/next items
 			$data->prev = $prev->id;
