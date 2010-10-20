@@ -5,10 +5,10 @@
 |---------------------------------------------------------------
 |
 | File: controllers/admin_base.php
-| System Version: 1.1.1
+| System Version: 1.2
 |
-| Changes: fixed bug where nova wouldn't display if the template
-|	file couldn't be found
+| Changes: fixed bug where users with no active characters would
+|	be shown in the activity warning list in the ACP
 |
 */
 
@@ -243,7 +243,7 @@ class Admin_base extends Controller {
 		|---------------------------------------------------------------
 		*/
 		
-		$all = $this->user->get_users();
+		$all = $this->user->get_users_from_characters();
 		
 		$now = now();
 		$threshold = $now - ($this->options['posting_requirement'] * 86400);
@@ -251,9 +251,9 @@ class Admin_base extends Controller {
 		/* set activity as an empty array to avoid errors */
 		$data['activity'] = array();
 		
-		if ($all->num_rows() > 0)
+		if ($all !== FALSE)
 		{
-			foreach ($all->result() as $a)
+			foreach ($all as $a)
 			{
 				if ($threshold > $a->last_post)
 				{
