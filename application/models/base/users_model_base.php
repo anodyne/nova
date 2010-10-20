@@ -5,11 +5,10 @@
 |---------------------------------------------------------------
 |
 | File: models/users_model_base.php
-| System Version: 1.1
+| System Version: 1.2
 |
-| Changes: fixed bugs where the command staff, game master and
-|	webmaster email methods pulled all users instead of active
-|	users
+| Changes: added method to pull user information based on the status of
+| the characters in the database
 |
 */
 
@@ -523,6 +522,33 @@ class Users_model_base extends Model {
 		$query = $this->db->get();
 		
 		return $query;
+	}
+	
+	/**
+	 * Pulls the user information from the database based on the
+	 * crew_type of characters.
+	 *
+	 * @param	string	the status of the characters to pull
+	 * @return	mixed	FALSE if there are no characters, an array of objects if there are
+	 */
+	function get_users_from_characters($status = 'active')
+	{
+		// pull the characters
+		$chars = $this->db->get_where('characters', array('crew_type' => $status));
+		
+		// make sure there are characters to pull
+		if ($chars->num_rows() > 0)
+		{
+			// loop through the characters and pull user info
+			foreach ($chars->result() as $c)
+			{
+				$user[] = $this->get_user($c->user);
+			}
+			
+			return $user;
+		}
+		
+		return FALSE;
 	}
 	
 	/**
