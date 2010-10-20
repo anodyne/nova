@@ -114,6 +114,10 @@ $fields_manifests = array(
 		'type' => 'ENUM',
 		'constraint' => "'y','n'",
 		'default' => 'y'),
+	'manifest_default' => array(
+		'type' => 'ENUM',
+		'constraint' => "'y','n'",
+		'default' => 'n'),
 );
 
 if (!is_null($add_tables))

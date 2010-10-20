@@ -19,6 +19,7 @@ Anodyne Production's next-generation RPG management system combines popular feat
 * updated the departments model with methods for handling multiple manifests
 * updated jquery to version 1.4.3
 * updated the autoload config item to not try and autoload the input library since CI loads it by default
+* updated the user model with a method to pull user information based on characters in the database
 * updated the language files
     * [base\_lang] added _labels\_ban_
     * [base\_lang] added _labels\_bans_
@@ -33,6 +34,7 @@ Anodyne Production's next-generation RPG management system combines popular feat
     * [text\_lang] added _text\_manifest\_delete\_departments_
     * [text\_lang] added _text\_manifest_
     * [text\_lang] added _text\_manifest\_assign_
+* fixed bug where users without an active character would be shown in the activity warning panel on the ACP
 
 ## Version History
 

@@ -811,6 +811,10 @@ $fields_manifests = array(
 		'type' => 'ENUM',
 		'constraint' => "'y','n'",
 		'default' => 'y'),
+	'manifest_default' => array(
+		'type' => 'ENUM',
+		'constraint' => "'y','n'",
+		'default' => 'n'),
 );
 
 $fields_menu_categories = array(
