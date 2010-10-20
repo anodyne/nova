@@ -6,6 +6,23 @@
 </div>
 
 <div id="manifest" class="hidden">
+	<?php if (isset($manifests)): ?>
+		<div class="fontSmall line_height_18">
+			<strong><?php echo $label['manifests'];?> &mdash;</strong>
+			<?php $i = 1;?>
+			<?php foreach ($manifests as $m): ?>
+				<?php echo anchor('personnel/index/'.$m['id'], $m['name'], array('rel' => 'tooltip', 'tooltip' => $m['desc']));?>
+				<?php if ($i < count($manifests)): ?>
+					&middot;
+				<?php endif;?>
+				<?php ++$i;?>
+			<?php endforeach;?>
+		</div>
+		<hr />
+	<?php endif;?>
+	
+	<?php echo text_output($manifest_header);?>
+	
 	<!-- manifest navigation table -->
 	<div class="fontSmall line_height_18">
 		<strong><?php echo $label['show'];?></strong> &mdash;

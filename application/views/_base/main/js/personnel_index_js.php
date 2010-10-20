@@ -29,6 +29,8 @@ if(isset($display))
 
 ?>
 
+<script type="text/javascript" src="<?php echo base_url().APPFOLDER;?>/assets/js/jquery.qtip.js"></script>
+
 <script type="text/javascript">
 	$(document).ready(function() {
 		<?php echo $manifest_default_values; ?>
@@ -86,6 +88,26 @@ if(isset($display))
 		$('#toggle_npc').click(function() {
 			$('tr.npc').toggle();
 			return false;
+		});
+		
+		$('[rel=tooltip]').each(function(){
+			$(this).qtip({
+				content: $(this).attr('tooltip'),
+				position: {
+					corner: {
+						tooltip: 'bottomLeft',
+						target: 'topRight'
+					}
+				},
+				style: { 
+					border: {
+						width: 1,
+						radius: 4,
+					},
+					name: 'dark',
+					fontSize: '90%'
+				}
+			});
 		});
 		
 		$('#loader').hide(); /* hide the loader */

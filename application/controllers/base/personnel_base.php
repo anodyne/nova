@@ -5,12 +5,9 @@
 |---------------------------------------------------------------
 |
 | File: controllers/base/personnel_base.php
-| System Version: 1.1.1
+| System Version: 1.2
 |
-| Changes: updated the image reflection classes; fixed a bug where
-|	nova wouldn't load because it couldn't find the template file;
-|	updated the constructor to use the proper method of checking
-|	whether a user was logged in or not
+| Changes: updated for multiple manifests
 |
 */
 
@@ -99,214 +96,239 @@ class Personnel_base extends Controller {
 	
 	function index()
 	{
-		/* load the models */
+		// load the models
 		$this->load->model('depts_model', 'dept');
 		$this->load->model('ranks_model', 'ranks');
 		$this->load->model('positions_model', 'pos');
 		
-		/* run the methods */
-		$depts = $this->dept->get_all_depts();
-		$rank = $this->ranks->get_rankcat($this->rank);
+		// get the variables
+		$manifest = $this->uri->segment(3, $this->dept->get_default_manifest());
 		
-		/* build the blank image array */
-		$blank_img = array(
-			'src' => rank_location($this->rank, 'blank', $rank->rankcat_extension),
-			'alt' => '',
-			'class' => 'image');
+		// pull all the manifests
+		$manifests = $this->dept->get_all_manifests();
 		
-		if ($depts->num_rows() > 0)
+		if ($manifests->num_rows() > 0)
 		{
-			$a = 1;
-			foreach ($depts->result() as $depts)
+			if ($manifests->num_rows() > 1)
 			{
-				/* set the dept id as a variable */
-				$dept = $depts->dept_id;
-				
-				/* set the dept name */
-				$data['depts'][$dept]['name'] = $depts->dept_name;
-				$data['depts'][$dept]['type'] = $depts->dept_type;
-				
-				/* get the sub depts */
-				$subdepts = $this->dept->get_sub_depts($dept);
-				
-				if ($subdepts->num_rows() > 0)
+				foreach ($manifests->result() as $m)
 				{
-					$a = 1;
-					foreach ($subdepts->result() as $sub)
+					$data['manifests'][$m->manifest_id] = array(
+						'id' => $m->manifest_id,
+						'name' => $m->manifest_name,
+						'desc' => $m->manifest_desc,
+					);
+				}
+			}
+			
+			// get the content for the top of the manifest
+			$data['manifest_header'] = $this->dept->get_manifest($manifest, 'manifest_header_content');
+			
+			// run the methods
+			$this->db->where('dept_manifest', $manifest);
+			$depts = $this->dept->get_all_depts();
+			$rank = $this->ranks->get_rankcat($this->rank);
+			
+			/* build the blank image array */
+			$blank_img = array(
+				'src' => rank_location($this->rank, 'blank', $rank->rankcat_extension),
+				'alt' => '',
+				'class' => 'image');
+			
+			if ($depts->num_rows() > 0)
+			{
+				$a = 1;
+				foreach ($depts->result() as $depts)
+				{
+					/* set the dept id as a variable */
+					$dept = $depts->dept_id;
+					
+					/* set the dept name */
+					$data['depts'][$dept]['name'] = $depts->dept_name;
+					$data['depts'][$dept]['type'] = $depts->dept_type;
+					
+					/* get the sub depts */
+					$subdepts = $this->dept->get_sub_depts($dept);
+					
+					if ($subdepts->num_rows() > 0)
 					{
-						/* set the name of the sub dept */
-						$data['depts'][$dept]['sub'][$a]['name'] = $sub->dept_name;
-						$data['depts'][$dept]['sub'][$a]['type'] = $sub->dept_type;
-						
-						/* grab the positions for the sub dept */
-						$positions = $this->pos->get_dept_positions($sub->dept_id);
-				
-						if ($positions->num_rows() > 0)
+						$a = 1;
+						foreach ($subdepts->result() as $sub)
 						{
-							$b = 1;
-							foreach ($positions->result() as $pos)
+							/* set the name of the sub dept */
+							$data['depts'][$dept]['sub'][$a]['name'] = $sub->dept_name;
+							$data['depts'][$dept]['sub'][$a]['type'] = $sub->dept_type;
+							
+							/* grab the positions for the sub dept */
+							$positions = $this->pos->get_dept_positions($sub->dept_id);
+					
+							if ($positions->num_rows() > 0)
 							{
-								/* set the sub dept position data */
-								$data['depts'][$dept]['sub'][$a]['pos'][$b]['name'] = $pos->pos_name;
-								$data['depts'][$dept]['sub'][$a]['pos'][$b]['pos_id'] = $pos->pos_id;
-								$data['depts'][$dept]['sub'][$a]['pos'][$b]['open'] = $pos->pos_open;
-								$data['depts'][$dept]['sub'][$a]['pos'][$b]['blank_img'] = $blank_img;
-								
-								$order = array(
-									'position_1' => 'desc',
-									'position_2' => 'desc',
-									'rank' => 'asc'
-								);
-								/* get any characters in a position in a sub dept */
-								$characters = $this->char->get_characters_for_position($pos->pos_id, $order);
-						
-								if ($characters->num_rows() > 0)
+								$b = 1;
+								foreach ($positions->result() as $pos)
 								{
-									$c = 1;
-									foreach ($characters->result() as $char)
+									/* set the sub dept position data */
+									$data['depts'][$dept]['sub'][$a]['pos'][$b]['name'] = $pos->pos_name;
+									$data['depts'][$dept]['sub'][$a]['pos'][$b]['pos_id'] = $pos->pos_id;
+									$data['depts'][$dept]['sub'][$a]['pos'][$b]['open'] = $pos->pos_open;
+									$data['depts'][$dept]['sub'][$a]['pos'][$b]['blank_img'] = $blank_img;
+									
+									$order = array(
+										'position_1' => 'desc',
+										'position_2' => 'desc',
+										'rank' => 'asc'
+									);
+									/* get any characters in a position in a sub dept */
+									$characters = $this->char->get_characters_for_position($pos->pos_id, $order);
+							
+									if ($characters->num_rows() > 0)
 									{
-										/* grab the rank data we need */
-										$rankdata = $this->ranks->get_rank($char->rank, array('rank_name', 'rank_image'));
-										
-										/* build the rank image array */
-										$rank_img = array(
-											'src' => rank_location(
-												$this->rank, 
-												$rankdata['rank_image'],
-												$rank->rankcat_extension),
-											'alt' => $rankdata['rank_name'],
-											'class' => 'image');
-											
-										/* set the color */
-										$color = '';
-										
-										if ($char->user > 0)
+										$c = 1;
+										foreach ($characters->result() as $char)
 										{
-											$color = ($this->user->get_loa($char->user) == 'loa') ? '_loa' : $color;
-											$color = ($this->user->get_loa($char->user) == 'eloa') ? '_eloa' : $color;
-										}
-										
-										$color = ($char->crew_type == 'npc') ? '_npc' : $color;
-								
-										/* build the combadge image array */
-										$cb_img = array(
-											'src' => cb_location('combadge'. $color .'.png', $this->skin, 'main'),
-											'alt' => ucwords(lang('actions_view') 
-												.' '. lang('labels_bio')),
-											'class' => 'image'
-										);
+											/* grab the rank data we need */
+											$rankdata = $this->ranks->get_rank($char->rank, array('rank_name', 'rank_image'));
 											
-										/* get the character name and rank */
-										$name = $this->char->get_character_name($char->charid, TRUE);
-										
-										if ($char->crew_type == 'active' && empty($char->user))
-										{
-											/* don't do anything */
-										}
-										else
-										{
-											/* set the data for the characters in a position in a sub dept */
-											$data['depts'][$dept]['sub'][$a]['pos'][$b]['chars'][$c]['char_id'] = $char->charid;
-											$data['depts'][$dept]['sub'][$a]['pos'][$b]['chars'][$c]['name'] = $name;
-											$data['depts'][$dept]['sub'][$a]['pos'][$b]['chars'][$c]['rank_img'] = $rank_img;
-											$data['depts'][$dept]['sub'][$a]['pos'][$b]['chars'][$c]['crew_type'] = $char->crew_type;
-											$data['depts'][$dept]['sub'][$a]['pos'][$b]['chars'][$c]['combadge'] = $cb_img;
+											/* build the rank image array */
+											$rank_img = array(
+												'src' => rank_location(
+													$this->rank, 
+													$rankdata['rank_image'],
+													$rank->rankcat_extension),
+												'alt' => $rankdata['rank_name'],
+												'class' => 'image');
+												
+											/* set the color */
+											$color = '';
 											
-											++$c;
+											if ($char->user > 0)
+											{
+												$color = ($this->user->get_loa($char->user) == 'loa') ? '_loa' : $color;
+												$color = ($this->user->get_loa($char->user) == 'eloa') ? '_eloa' : $color;
+											}
+											
+											$color = ($char->crew_type == 'npc') ? '_npc' : $color;
+									
+											/* build the combadge image array */
+											$cb_img = array(
+												'src' => cb_location('combadge'. $color .'.png', $this->skin, 'main'),
+												'alt' => ucwords(lang('actions_view') 
+													.' '. lang('labels_bio')),
+												'class' => 'image'
+											);
+												
+											/* get the character name and rank */
+											$name = $this->char->get_character_name($char->charid, TRUE);
+											
+											if ($char->crew_type == 'active' && empty($char->user))
+											{
+												/* don't do anything */
+											}
+											else
+											{
+												/* set the data for the characters in a position in a sub dept */
+												$data['depts'][$dept]['sub'][$a]['pos'][$b]['chars'][$c]['char_id'] = $char->charid;
+												$data['depts'][$dept]['sub'][$a]['pos'][$b]['chars'][$c]['name'] = $name;
+												$data['depts'][$dept]['sub'][$a]['pos'][$b]['chars'][$c]['rank_img'] = $rank_img;
+												$data['depts'][$dept]['sub'][$a]['pos'][$b]['chars'][$c]['crew_type'] = $char->crew_type;
+												$data['depts'][$dept]['sub'][$a]['pos'][$b]['chars'][$c]['combadge'] = $cb_img;
+												
+												++$c;
+											}
 										}
 									}
-								}
-								
-								++$b;
-							}
-						}
-						
-						++$a;
-					}
-				}
-				
-				/* get the positions for the dept */
-				$positions = $this->pos->get_dept_positions($dept);
-				
-				if ($positions->num_rows() > 0)
-				{
-					$b = 1;
-					foreach ($positions->result() as $pos)
-					{
-						/* set the data for the dept positions */
-						$data['depts'][$dept]['pos'][$b]['name'] = $pos->pos_name;
-						$data['depts'][$dept]['pos'][$b]['pos_id'] = $pos->pos_id;
-						$data['depts'][$dept]['pos'][$b]['open'] = $pos->pos_open;
-						$data['depts'][$dept]['pos'][$b]['blank_img'] = $blank_img;
-						
-						$order = array(
-							'position_1' => 'desc',
-							'position_2' => 'desc',
-							'rank' => 'asc'
-						);
-						
-						/* get any characters in a position in the dept */
-						$characters = $this->char->get_characters_for_position($pos->pos_id, $order);
-						
-						if ($characters->num_rows() > 0)
-						{
-							$c = 1;
-							foreach ($characters->result() as $char)
-							{
-								/* get the rank data we need */
-								$ranksdata = $this->ranks->get_rank($char->rank, array('rank_name', 'rank_image'));
-								
-								/* build the rank image array */
-								$rank_img = array(
-									'src' => rank_location(
-										$this->rank,
-										$ranksdata['rank_image'],
-										$rank->rankcat_extension),
-									'alt' => $ranksdata['rank_name'],
-									'class' => 'image');
-								
-								/* set the color */
-								$color = '';
-								
-								if ($char->user > 0)
-								{
-									$color = ($this->user->get_loa($char->user) == 'loa') ? '_loa' : $color;
-									$color = ($this->user->get_loa($char->user) == 'eloa') ? '_eloa' : $color;
-								}
-								
-								$color = ($char->crew_type == 'inactive') ? '' : $color;
-								$color = ($char->crew_type == 'npc') ? '_npc' : $color;
-								
-								/* build the combadge image array */
-								$cb_img = array(
-									'src' => cb_location('combadge'. $color .'.png', $this->skin, 'main'),
-									'alt' => ucwords(lang('actions_view') 
-										.' '. lang('labels_bio')),
-									'class' => 'image'
-								);
-								
-								/* get the character name and rank */
-								$name = $this->char->get_character_name($char->charid, TRUE);
-								
-								if ($char->crew_type == 'active' && empty($char->user))
-								{
-									/* don't do anything */
-								}
-								else
-								{
-									/* set the data for characters in a position in the dept */
-									$data['depts'][$dept]['pos'][$b]['chars'][$c]['char_id'] = $char->charid;
-									$data['depts'][$dept]['pos'][$b]['chars'][$c]['name'] = $name;
-									$data['depts'][$dept]['pos'][$b]['chars'][$c]['rank_img'] = $rank_img;
-									$data['depts'][$dept]['pos'][$b]['chars'][$c]['crew_type'] = $char->crew_type;
-									$data['depts'][$dept]['pos'][$b]['chars'][$c]['combadge'] = $cb_img;
 									
-									++$c;
+									++$b;
 								}
 							}
+							
+							++$a;
 						}
-						
-						++$b;
+					}
+					
+					/* get the positions for the dept */
+					$positions = $this->pos->get_dept_positions($dept);
+					
+					if ($positions->num_rows() > 0)
+					{
+						$b = 1;
+						foreach ($positions->result() as $pos)
+						{
+							/* set the data for the dept positions */
+							$data['depts'][$dept]['pos'][$b]['name'] = $pos->pos_name;
+							$data['depts'][$dept]['pos'][$b]['pos_id'] = $pos->pos_id;
+							$data['depts'][$dept]['pos'][$b]['open'] = $pos->pos_open;
+							$data['depts'][$dept]['pos'][$b]['blank_img'] = $blank_img;
+							
+							$order = array(
+								'position_1' => 'desc',
+								'position_2' => 'desc',
+								'rank' => 'asc'
+							);
+							
+							/* get any characters in a position in the dept */
+							$characters = $this->char->get_characters_for_position($pos->pos_id, $order);
+							
+							if ($characters->num_rows() > 0)
+							{
+								$c = 1;
+								foreach ($characters->result() as $char)
+								{
+									/* get the rank data we need */
+									$ranksdata = $this->ranks->get_rank($char->rank, array('rank_name', 'rank_image'));
+									
+									/* build the rank image array */
+									$rank_img = array(
+										'src' => rank_location(
+											$this->rank,
+											$ranksdata['rank_image'],
+											$rank->rankcat_extension),
+										'alt' => $ranksdata['rank_name'],
+										'class' => 'image');
+									
+									/* set the color */
+									$color = '';
+									
+									if ($char->user > 0)
+									{
+										$color = ($this->user->get_loa($char->user) == 'loa') ? '_loa' : $color;
+										$color = ($this->user->get_loa($char->user) == 'eloa') ? '_eloa' : $color;
+									}
+									
+									$color = ($char->crew_type == 'inactive') ? '' : $color;
+									$color = ($char->crew_type == 'npc') ? '_npc' : $color;
+									
+									/* build the combadge image array */
+									$cb_img = array(
+										'src' => cb_location('combadge'. $color .'.png', $this->skin, 'main'),
+										'alt' => ucwords(lang('actions_view') 
+											.' '. lang('labels_bio')),
+										'class' => 'image'
+									);
+									
+									/* get the character name and rank */
+									$name = $this->char->get_character_name($char->charid, TRUE);
+									
+									if ($char->crew_type == 'active' && empty($char->user))
+									{
+										/* don't do anything */
+									}
+									else
+									{
+										/* set the data for characters in a position in the dept */
+										$data['depts'][$dept]['pos'][$b]['chars'][$c]['char_id'] = $char->charid;
+										$data['depts'][$dept]['pos'][$b]['chars'][$c]['name'] = $name;
+										$data['depts'][$dept]['pos'][$b]['chars'][$c]['rank_img'] = $rank_img;
+										$data['depts'][$dept]['pos'][$b]['chars'][$c]['crew_type'] = $char->crew_type;
+										$data['depts'][$dept]['pos'][$b]['chars'][$c]['combadge'] = $cb_img;
+										
+										++$c;
+									}
+								}
+							}
+							
+							++$b;
+						}
 					}
 				}
 			}
@@ -342,6 +364,7 @@ class Personnel_base extends Controller {
 			'apply' => ucwords(lang('global_position') .' '. lang('status_open') .' '. NDASH
 				.' '. lang('actions_apply') .' '. lang('time_now')),
 			'npc' => lang('abbr_npc'),
+			'manifests' => ucwords(lang('labels_site').' '.lang('labels_manifests')),
 		);
 		
 		/* write the data to the template */
