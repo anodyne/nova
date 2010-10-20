@@ -22,6 +22,14 @@
 				</td>
 			</tr>
 			<tr>
+				<td class="cell-label"><?php echo $label['default'];?></td>
+				<td class="cell-spacer"></td>
+				<td>
+					<?php echo form_radio($inputs['default_y']) .' '. form_label($label['yes'], 'default_y');?>
+					<?php echo form_radio($inputs['default_n']) .' '. form_label($label['no'], 'default_n');?>
+				</td>
+			</tr>
+			<tr>
 				<td class="cell-label"><?php echo $label['desc'];?></td>
 				<td class="cell-spacer"></td>
 				<td><?php echo form_textarea($inputs['desc']);?></td>

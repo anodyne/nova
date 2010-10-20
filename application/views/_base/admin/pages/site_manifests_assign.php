@@ -28,19 +28,24 @@
 
 <?php if (isset($manifests)): ?>
 	<div class="UITheme">
+		<?php echo text_output($label['unassigned'], 'h2', 'page-subhead');?>
+		
+		<div mid="0" class="droppable info-full">
 		<?php if (isset($unassigned)): ?>
-			<?php echo text_output($label['unassigned'], 'h2', 'page-subhead');?>
-			
-			<div mid="0" class="droppable info-full">
 			<?php foreach ($unassigned as $id => $d): ?>
 				<span class="draggable ui-widget-header" did="<?php echo $id;?>" rel="tooltip" tooltip="<?php echo $d['desc'];?>"><?php echo $d['name'];?></span>
 			<?php endforeach;?>
-			</div>
 		<?php endif;?>
+		</div>
 		
 		<?php if (isset($manifests)): ?>
 			<?php foreach ($manifests as $id => $m): ?>
-				<h2 class="page-subhead"><?php echo $m['manifest'];?></h2>
+				<h2 class="page-subhead">
+					<?php echo $m['manifest'];?>
+					<?php if ($m['display'] == 'n'): ?>
+						<span class="gray fontSmall">[ <?php echo $label['off'];?> ]</span>
+					<?php endif;?>
+				</h2>
 				
 				<div mid="<?php echo $id;?>" class="droppable info-full">
 				<?php if (isset($m['depts'])): ?>

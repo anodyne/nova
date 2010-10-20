@@ -3026,7 +3026,13 @@ class Site_base extends Controller {
 					unset($update_array['submit']);
 					unset($update_array['id']);
 					
-					// insert the record
+					// clear out the manifest default
+					if ($update_array['manifest_default'] == 'y')
+					{
+						$this->dept->update_manifest_default();
+					}
+					
+					// update the record
 					$update = $this->dept->update_manifest($id, $update_array);
 					
 					if ($update > 0)
@@ -3063,13 +3069,16 @@ class Site_base extends Controller {
 		if ($action == 'assign')
 		{
 			// get all the manifests
-			$manifests = $this->dept->get_all_manifests();
+			$manifests = $this->dept->get_all_manifests(NULL);
 			
 			if ($manifests->num_rows() > 0)
 			{
 				foreach ($manifests->result() as $m)
 				{
-					$data['manifests'][$m->manifest_id] = array('manifest' => $m->manifest_name);
+					$data['manifests'][$m->manifest_id] = array(
+						'manifest' => $m->manifest_name,
+						'display' => $m->manifest_display,
+					);
 				}
 			}
 			
@@ -3113,7 +3122,7 @@ class Site_base extends Controller {
 		else
 		{
 			// get all the manifests
-			$manifests = $this->dept->get_all_manifests();
+			$manifests = $this->dept->get_all_manifests(NULL);
 			
 			if ($manifests->num_rows() > 0)
 			{
@@ -3123,6 +3132,7 @@ class Site_base extends Controller {
 						'id' => $m->manifest_id,
 						'name' => $m->manifest_name,
 						'desc' => $m->manifest_desc,
+						'display' => $m->manifest_display,
 					);
 				}
 			}
@@ -3205,6 +3215,7 @@ class Site_base extends Controller {
 			'manifest_header' => ucwords(lang('labels_manifest').' '.lang('labels_header').' '.lang('labels_content')),
 			'manifest_name' => ucwords(lang('labels_manifest').' '.lang('labels_name')),
 			'manifest_order' => ucwords(lang('labels_manifest').' '.lang('labels_order')),
+			'off' => strtoupper(lang('labels_off')),
 			'refresh' => ucwords(lang('labels_refresh').' '.lang('labels_page')),
 			'sitemanifests' => ucwords(lang('labels_site').' '.lang('labels_manifests')),
 			'unassigned' => ucwords(lang('labels_unassigned').' '.lang('global_departments')),

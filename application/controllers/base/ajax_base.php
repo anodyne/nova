@@ -5635,6 +5635,18 @@ class Ajax_base extends Controller {
 				'class' => 'hud',
 				'value' => 'n',
 				'checked' => ($item->manifest_display == 'n') ? TRUE : FALSE),
+			'default_y' => array(
+				'name' => 'manifest_default',
+				'id' => 'default_y',
+				'class' => 'hud',
+				'value' => 'y',
+				'checked' => ($item->manifest_default == 'y') ? TRUE : FALSE),
+			'default_n' => array(
+				'name' => 'manifest_default',
+				'id' => 'default_n',
+				'class' => 'hud',
+				'value' => 'n',
+				'checked' => ($item->manifest_default == 'n') ? TRUE : FALSE),
 			'submit' => array(
 				'type' => 'submit',
 				'class' => 'hud_button',
@@ -5644,13 +5656,16 @@ class Ajax_base extends Controller {
 		);
 		
 		$data['label'] = array(
+			'default' => ucwords(lang('labels_default').' '.lang('labels_manifest')),
 			'desc' => ucfirst(lang('labels_desc')),
 			'display' => ucfirst(lang('labels_display')),
 			'header' => ucwords(lang('labels_header').' '.lang('labels_content')),
 			'name' => ucwords(lang('labels_manifest').' '.lang('labels_name')),
+			'no' => ucfirst(lang('labels_no')),
 			'off' => ucfirst(lang('labels_off')),
 			'on' => ucfirst(lang('labels_on')),
 			'order' => ucfirst(lang('labels_order')),
+			'yes' => ucfirst(lang('labels_yes')),
 		);
 		
 		/* figure out the skin */

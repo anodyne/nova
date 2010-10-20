@@ -35,7 +35,12 @@
 		<?php foreach ($manifests as $m): ?>
 			<tr>
 				<td>
-					<strong><?php echo $m['name'];?></strong><br />
+					<strong>
+						<?php if ($m['display'] == 'n'): ?>
+							<span class="fontSmall red">[ <?php echo $label['off'];?> ]</span>
+						<?php endif;?>
+						<?php echo $m['name'];?>
+					</strong><br />
 					<span class="fontSmall gray">
 						<?php echo $m['desc'];?>
 					</span>
