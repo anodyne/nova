@@ -48,14 +48,34 @@ class Depts_model_base extends Model {
 		return $query;
 	}
 	
-	function get_all_manifests($sort = 'asc', $sort_col = 'manifest_order')
+	function get_all_manifests($display = 'y', $sort = 'asc', $sort_col = 'manifest_order')
 	{
 		$this->db->from('manifests');
+		
+		if ( ! empty($display))
+		{
+			$this->db->where('manifest_display', $display);
+		}
+		
 		$this->db->order_by($sort_col, $sort);
 		
 		$query = $this->db->get();
 		
 		return $query;
+	}
+	
+	function get_default_manifest()
+	{
+		$query = $this->db->get_where('manifests', array('manifest_default' => 'y'));
+		
+		$row = ($query->num_rows() > 0) ? $query->row() : FALSE;
+		
+		if ($row !== FALSE)
+		{
+			return $row->manifest_id;
+		}
+		
+		return FALSE;
 	}
 	
 	function get_dept($id = '', $return = '')
@@ -175,6 +195,16 @@ class Depts_model_base extends Model {
 	{
 		$this->db->where('manifest_id', $id);
 		$query = $this->db->update('manifests', $data);
+		
+		$this->dbutil->optimize_table('manifests');
+		
+		return $query;
+	}
+	
+	function update_manifest_default($old = 'y', $new = 'n')
+	{
+		$this->db->where('manifest_default', $old);
+		$query = $this->db->update('manifests', array('manifest_default' => $new));
 		
 		$this->dbutil->optimize_table('manifests');
 		
