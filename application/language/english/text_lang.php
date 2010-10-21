@@ -8,7 +8,8 @@
 |
 | Changes: added specitem_select; added specitem_empty_fields;
 |	added text_bans; added text_ban_join; added text_manifest_delete_departments;
-|	added text_manifest; added text_manifest_assign
+|	added text_manifest; added text_manifest_assign; added text_duplicate_dept;
+|	updated text_manage_depts
 |
 | English language file for the system. Punctuation constants are
 | defined in ./application/config/constants.php
@@ -48,7 +49,7 @@ $lang['text_manage_decks'] = "You can change the order of your %s listing by dra
 
 $lang['text_manage_positions'] = "%s are the heart and soul of Nova". RSQUO ."s character system and from here, you can update the %s available. We". RSQUO ."ve worked hard to move the things you don". RSQUO ."t need out of the way, so we only show the most used elements: the name and open slots (edited through a simple slider from 0 to 50). You can update those elements, or if you want to edit the rest of the %s entry, you can click on the More button to see the rest of the information. Once you have updated all the %s you want, you can click Update to run the update for all the %s on the page.\r\n\r\n<strong class='red'>Deleting and updating positions will affect characters. Proceed with caution!</strong>";
 
-$lang['text_manage_depts'] = "From here, you can create, update and delete the %s available to put your %s into. Once you have updated all the %s you want, you can click Update to run the update for all the %s on the page.\r\n\r\n<strong class='red'>Deleting and updating departments will affect positions and characters. Proceed with caution!</strong>";
+$lang['text_manage_depts'] = "From here, you can create, update and delete the %s available to put your %s into. Once you've updated all the %s you want, you can click Update to run the update for all the %s on the page. If you would like to copy a %s and its %s for use in another manifest, you can use the duplicate button. Once you've duplicated a %s, you should change the description to make it clear which manifest it's associated with.\r\n\r\n<strong class='red'>Deleting and updating %s will affect %s and %s. Proceed with caution!</strong>";
 $lang['text_manage_dept_reassign'] = "If you want to reassign these %s to be parent level elements, please select none.";
 
 $lang['text_manage_ranks'] = "From here, you can create, update and delete the %s available to assign to %s on the %s. Once you have updated all the %s you want, you can click Update to run the update for all the %s on the page. To delete a %s, simply check the delete box.\r\n\r\n<strong class='red'>Deleting and updating ranks will affect characters. Proceed with caution!</strong>\r\n\r\nThe box below contains all the %s and their %s available. Clicking one of the images will change the %s or %s to let you view the contents of the respective element.";
@@ -159,6 +160,8 @@ $lang['text_manifest'] = "%s are an easy way to organize %s on your %s. You can 
 $lang['text_manifest_assign'] = "From here you can assign %s to a specific %s. To do so, simply drag the %s to the %s. If things get a little too cluttered, you can use the link below to refresh the page and clean up how the %s are displayed in the %s.";
 
 $lang['text_manifest_delete_departments'] = " There was a problem reassigning the %s associated with this %s. Make sure there are no %s associated with this %s and try again.";
+
+$lang['text_duplicate_dept'] = "You are about to duplicate the <strong>%s</strong> %s. Doing so will copy the %s information as well as all of the %s. Click %s to continue.";
 
 /*
 |---------------------------------------------------------------
