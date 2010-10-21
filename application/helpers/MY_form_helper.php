@@ -251,7 +251,7 @@ if ( ! function_exists('form_dropdown_dept'))
 		{
 			case 'all':
 				$depts = $ci->dept->get_all_depts('asc', $display);
-		
+				
 				if ($depts->num_rows() > 0)
 				{
 					if ($blank_option === TRUE)
@@ -267,7 +267,10 @@ if ( ! function_exists('form_dropdown_dept'))
 						}
 						else
 						{
-							$options[$dept->dept_id] = $dept->dept_name;
+							$name = $ci->dept->get_manifest($dept->dept_manifest, 'manifest_name');
+							$manifest = ($name == '') ? FALSE : ' ('.$name.')';
+							
+							$options[$dept->dept_id] = $dept->dept_name.$manifest;
 						}
 						
 						$subd = $ci->dept->get_sub_depts($dept->dept_id, 'asc', $display);
@@ -309,7 +312,10 @@ if ( ! function_exists('form_dropdown_dept'))
 						}
 						else
 						{
-							$options[$dept->dept_id] = $dept->dept_name;
+							$name = $ci->dept->get_manifest($dept->dept_manifest, 'manifest_name');
+							$manifest = ($name == '') ? FALSE : ' ('.$name.')';
+							
+							$options[$dept->dept_id] = $dept->dept_name.$manifest;
 						}
 					}
 				}
@@ -418,7 +424,11 @@ if ( ! function_exists('form_dropdown_position'))
 			
 			foreach ($positions->result() as $pos)
 			{
-				$dept = $ci->dept->get_dept($pos->pos_dept, array('dept_name', 'dept_type', 'dept_display'));
+				$dept = $ci->dept->get_dept($pos->pos_dept, array('dept_name', 'dept_type', 'dept_display', 'dept_manifest'));
+				
+				$name = $ci->dept->get_manifest($dept['dept_manifest'], 'manifest_name');
+				$manifest = ($name == '') ? FALSE : ' ('.$name.')';
+				$fullname = $dept['dept_name'].$manifest;
 				
 				if (($dept_type == 'playing' && $dept['dept_type'] == 'playing') ||
 						($dept_type == 'nonplaying' && $dept['dept_type'] == 'nonplaying') ||
@@ -426,7 +436,7 @@ if ( ! function_exists('form_dropdown_position'))
 				{
 					if ($type == 'all' || $type == 'open')
 					{
-						$options[$dept['dept_name']][$pos->pos_id] = $pos->pos_name;
+						$options[$fullname][$pos->pos_id] = $pos->pos_name;
 					}
 					else
 					{
