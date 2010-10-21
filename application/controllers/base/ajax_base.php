@@ -7,7 +7,8 @@
 | File: controllers/base/ajax_base.php
 | System Version: 1.2
 |
-| Changes: added method for handling deleting a ban
+| Changes: added method for handling deleting a ban; added method for
+|	duplicating a department confirmation
 |
 */
 
@@ -842,12 +843,23 @@ class Ajax_base extends Controller {
 		$depts = $this->dept->get_all_depts('asc', '');
 		
 		$data['values']['depts'][0] = ucfirst(lang('labels_none'));
+		$data['values']['manifest'][0] = ucfirst(lang('labels_none'));
 		
 		if ($depts->num_rows() > 0)
 		{
 			foreach ($depts->result() as $dept)
 			{
 				$data['values']['depts'][$dept->dept_id] = $dept->dept_name;
+			}
+		}
+		
+		$manifests = $this->dept->get_all_manifests(NULL);
+		
+		if ($manifests->num_rows() > 0)
+		{
+			foreach ($manifests->result() as $m)
+			{
+				$data['values']['manifest'][$m->manifest_id] = $m->manifest_name;
 			}
 		}
 		
@@ -864,7 +876,8 @@ class Ajax_base extends Controller {
 			'on' => ucfirst(lang('labels_on')),
 			'off' => ucfirst(lang('labels_off')),
 			'order' => ucfirst(lang('labels_order')),
-			'parent' => ucwords(lang('labels_parent') .' '. lang('global_department'))
+			'parent' => ucwords(lang('labels_parent') .' '. lang('global_department')),
+			'manifest' => ucfirst(lang('labels_manifest')),
 		);
 		
 		/* figure out the skin */
@@ -4776,6 +4789,53 @@ class Ajax_base extends Controller {
 		
 		/* figure out where the view should come from */
 		$ajax = ajax_location('del_wiki_page', $skin, 'wiki');
+		
+		/* write the data to the template */
+		$this->template->write_view('content', $ajax, $data);
+		
+		/* render the template */
+		$this->template->render();
+	}
+	
+	function duplicate_dept()
+	{
+		/* load the resources */
+		$this->load->model('depts_model', 'dept');
+		
+		$data['id'] = $this->uri->segment(3, 0, TRUE);
+		
+		$head = sprintf(
+			lang('fbx_head'),
+			ucwords(lang('actions_duplicate')),
+			ucwords(lang('global_department'))
+		);
+		
+		/* data being sent to the facebox */
+		$data['header'] = $head;
+		$data['text'] = sprintf(
+			lang('text_duplicate_dept'),
+			$this->dept->get_dept($data['id'], 'dept_name'),
+			lang('global_department'),
+			lang('global_department'),
+			lang('global_positions'),
+			ucwords(lang('actions_submit'))
+		);
+		
+		/* input parameters */
+		$data['inputs'] = array(
+			'submit' => array(
+				'type' => 'submit',
+				'class' => 'hud_button',
+				'name' => 'submit',
+				'value' => 'submit',
+				'content' => ucwords(lang('actions_submit')))
+		);
+		
+		/* figure out the skin */
+		$skin = $this->session->userdata('skin_admin');
+		
+		/* figure out where the view should come from */
+		$ajax = ajax_location('dup_dept', $skin, 'admin');
 		
 		/* write the data to the template */
 		$this->template->write_view('content', $ajax, $data);

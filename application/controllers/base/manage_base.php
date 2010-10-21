@@ -5,15 +5,10 @@
 |---------------------------------------------------------------
 |
 | File: controllers/manage_base.php
-| System Version: 1.1.1
+| System Version: 1.2
 |
-| Changes: added the ability to have multiple specification items;
-|	fixed bug in the tour management where updating a tour item
-|	would only update the first item and not the one selected;
-|	added the ability to tie a tour item to a specification item;
-|	added the ability to display tour items based on the
-|	specification item they're associated with; fixed bug where
-|	nova wouldn't display because it couldn't find the template file
+| Changes: updated department management to allow for duplicating
+|	departments and their positions
 |
 */
 
@@ -882,6 +877,9 @@ class Manage_base extends Controller {
 		/* load the resources */
 		$this->load->model('depts_model', 'dept');
 		
+		// set the variables
+		$section = $this->uri->segment(4, 'assigned');
+		
 		if (isset($_POST['submit']))
 		{
 			switch ($this->uri->segment(3))
@@ -894,10 +892,14 @@ class Manage_base extends Controller {
 						'dept_display' => $this->input->post('dept_display', TRUE),
 						'dept_desc' => $this->input->post('dept_desc', TRUE),
 						'dept_parent' => $this->input->post('dept_parent', TRUE),
+						'dept_manifest' => $this->input->post('dept_manifest', TRUE),
 					);
 					
 					/* insert the record */
 					$insert = $this->dept->add_dept($insert_array);
+					
+					// optimize the table
+					$this->sys->optimize_table('departments_'.GENRE);
 					
 					if ($insert > 0)
 					{
@@ -1063,12 +1065,92 @@ class Manage_base extends Controller {
 					$this->template->write_view('flash_message', '_base/admin/pages/flash', $flash);
 					
 					break;
+					
+				case 'duplicate':
+					$id = $this->input->post('id', TRUE);
+					
+					// load the positions model
+					$this->load->model('positions_model', 'pos');
+					
+					// get the department information
+					$dpt = $this->dept->get_dept($id);
+					
+					// clear out the department id
+					unset($dpt->dept_id);
+					
+					// make sure the manifest and parent values are reset
+					$dpt->dept_manifest = 0;
+					$dpt->dept_parent = 0;
+					
+					// create the new department
+					$insert = $this->dept->add_dept($dpt);
+					$deptid = $this->db->insert_id();
+					
+					// optimize the table
+					$this->sys->optimize_table('departments_'.GENRE);
+					
+					// get all positions for the original department
+					$positions = $this->pos->get_dept_positions($id, NULL);
+					
+					if ($positions->num_rows() > 0)
+					{
+						foreach ($positions->result() as $p)
+						{
+							// put the data into an array
+							$insert_array = array(
+								'pos_name' => $p->pos_name,
+								'pos_desc' => $p->pos_desc,
+								'pos_dept' => $deptid,
+								'pos_order' => $p->pos_order,
+								'pos_open' => $p->pos_open,
+								'pos_display' => $p->pos_display,
+								'pos_type' => $p->pos_type,
+							);
+							
+							// create the position
+							$insert += $this->pos->add_position($insert_array);
+						}
+					}
+					
+					// total count
+					$count = 1 + $positions->num_rows();
+					
+					if ($insert == $count)
+					{
+						$message = sprintf(
+							lang('flash_success'),
+							ucfirst(lang('global_department')),
+							lang('actions_duplicated'),
+							''
+						);
+
+						$flash['status'] = 'success';
+						$flash['message'] = text_output($message);
+					}
+					else
+					{
+						$message = sprintf(
+							lang('flash_failure'),
+							ucfirst(lang('global_department')),
+							lang('actions_duplicated'),
+							''
+						);
+
+						$flash['status'] = 'error';
+						$flash['message'] = text_output($message);
+					}
+					
+					// write everything to the template
+					$this->template->write_view('flash_message', '_base/admin/pages/flash', $flash);
+				break;
 			}
 		}
 		
 		$departments = $this->dept->get_all_depts('asc', '');
+		$manifests = $this->dept->get_all_manifests(NULL);
 		
 		$data['parent'][0] = ucfirst(lang('labels_none'));
+		$data['manifest'][0] = ucfirst(lang('labels_none'));
 		
 		if ($departments->num_rows() > 0)
 		{
@@ -1088,6 +1170,14 @@ class Manage_base extends Controller {
 				}
 			}
 			
+			if ($manifests->num_rows() > 0)
+			{
+				foreach ($manifests->result() as $m)
+				{
+					$data['manifest'][$m->manifest_id] = $m->manifest_name;
+				}
+			}
+			
 			foreach ($dept as $key => $value)
 			{
 				$item = $this->dept->get_dept($key);
@@ -1098,25 +1188,21 @@ class Manage_base extends Controller {
 						'name' => array(
 							'name' => $item->dept_id .'_name',
 							'id' => $item->dept_id .'_name',
-							'value' => $item->dept_name
-						),
+							'value' => $item->dept_name),
 						'desc' => array(
 							'name' => $item->dept_id .'_desc',
 							'id' => $item->dept_id .'_desc',
 							'value' => $item->dept_desc,
-							'rows' => 6
-						),
+							'rows' => 8),
 						'order' => array(
 							'name' => $item->dept_id .'_order',
 							'id' => $item->dept_id .'_order',
 							'value' => $item->dept_order,
-							'class' => 'small'
-						),
+							'class' => 'small'),
 						'delete' => array(
 							'name' => 'delete[]',
 							'id' => $item->dept_id .'_id',
-							'value' => $item->dept_id
-						)
+							'value' => $item->dept_id)
 					);
 					
 					$data['values'][$item->dept_id]['display'] = array(
@@ -1129,10 +1215,15 @@ class Manage_base extends Controller {
 						'nonplaying' => ucwords(lang('status_nonplaying')),
 					);
 					
-					$data['depts'][$item->dept_id]['id'] = $item->dept_id;
-					$data['depts'][$item->dept_id]['display'] = $item->dept_display;
-					$data['depts'][$item->dept_id]['type'] = $item->dept_type;
-					$data['depts'][$item->dept_id]['parent'] = $item->dept_parent;
+					$status = ($item->dept_manifest === NULL || $item->dept_manifest == 0)
+						? 'unassigned'
+						: 'assigned';
+					
+					$data['depts'][$status][$item->dept_id]['id'] = $item->dept_id;
+					$data['depts'][$status][$item->dept_id]['display'] = $item->dept_display;
+					$data['depts'][$status][$item->dept_id]['type'] = $item->dept_type;
+					$data['depts'][$status][$item->dept_id]['parent'] = $item->dept_parent;
+					$data['depts'][$status][$item->dept_id]['manifest'] = $item->dept_manifest;
 				}
 			}
 		}
@@ -1147,8 +1238,13 @@ class Manage_base extends Controller {
 			lang('global_departments'),
 			lang('global_positions'),
 			lang('global_departments'),
+			lang('global_departments'),
 			lang('global_department'),
-			lang('global_departments')
+			lang('global_positions'),
+			lang('global_department'),
+			lang('global_departments'),
+			lang('global_positions'),
+			lang('global_characters')
 		);
 		
 		$data['label'] = array(
@@ -1160,7 +1256,11 @@ class Manage_base extends Controller {
 			'display' => ucfirst(lang('labels_display')),
 			'type' => ucfirst(lang('labels_type')),
 			'desc' => ucfirst(lang('labels_desc')),
-			'parent' => ucwords(lang('labels_parent') .' '. lang('global_department'))
+			'parent' => ucwords(lang('labels_parent') .' '. lang('global_department')),
+			'duplicate' => ucfirst(lang('actions_duplicate')),
+			'assigned' => ucwords(lang('actions_assigned').' '.lang('global_departments')),
+			'unassigned' => ucwords(lang('labels_unassigned').' '.lang('global_departments')),
+			'manifest' => ucfirst(lang('labels_manifest')),
 		);
 		
 		$data['images'] = array(
@@ -1179,10 +1279,12 @@ class Manage_base extends Controller {
 				'content' => ucwords(lang('actions_update'))),
 		);
 		
+		$js_data['tab'] = ($section == 'assigned') ? 0 : 1;
+		
 		/* write the data to the template */
 		$this->template->write('title', $data['header']);
 		$this->template->write_view('content', $view_loc, $data);
-		$this->template->write_view('javascript', $js_loc);
+		$this->template->write_view('javascript', $js_loc, $js_data);
 		
 		/* render the template */
 		$this->template->render();

@@ -23,6 +23,11 @@
 				<td class="cell-spacer"></td>
 				<td><?php echo form_dropdown('dept_parent', $values['depts'], '0', 'class="hud"');?></td>
 			</tr>
+			<tr>
+				<td class="cell-label"><?php echo $label['manifest'];?></td>
+				<td class="cell-spacer"></td>
+				<td><?php echo form_dropdown('dept_manifest', $values['manifest'], '0', 'class="hud"');?></td>
+			</tr>
 			
 			<?php echo table_row_spacer(3, 10);?>
 			
