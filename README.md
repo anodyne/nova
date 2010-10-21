@@ -13,6 +13,7 @@ Anodyne Production's next-generation RPG management system combines popular feat
 * added a page that level 2 bans are redirected to
 * added the validation error image to the assets directory
 * added the assignment image to the admin \_base directory
+* added seaquest dsv to the available genres
 * updated the applications report to show email address and IP address of the user who applied
 * updated the email sent to the game master from the join form to show the IP address of the applicant
 * updated the contact form to be simpler and use proper form validation
@@ -34,6 +35,8 @@ Anodyne Production's next-generation RPG management system combines popular feat
     * [text\_lang] added _text\_manifest\_delete\_departments_
     * [text\_lang] added _text\_manifest_
     * [text\_lang] added _text\_manifest\_assign_
+    * [text\_lang] added _text\_duplicate\_dept_
+    * [text\_lang] updated _text\_manage\_depts_
 * fixed bug where users without an active character would be shown in the activity warning panel on the ACP
 
 ## Version History
