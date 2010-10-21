@@ -5,15 +5,10 @@
 |---------------------------------------------------------------
 |
 | File: controllers/base/sim_base.php
-| System Version: 1.1.1
+| System Version: 1.2
 |
-| Changes: added the ability to display multiple specification
-|	items; added the ability to display tour items based on the
-|	specification item they're associated with; updated the
-|	image reflection classes; fixed bug with mission group pages
-|	where missions in the group didn't respect the mission order
-|	that was set for them; fixed bug where nova wouldn't display
-|	because it couldn't find the template file
+| Changes: updated the department listing to show which manifest
+|	the department is associated with
 |
 */
 
@@ -370,7 +365,10 @@ class Sim_base extends Controller {
 			$i = 1;
 			foreach ($depts_data->result() as $row)
 			{ /* populate main dept data */
-				$data['depts'][$i]['name'] = $row->dept_name;
+				$name = $this->dept->get_manifest($row->dept_manifest, 'manifest_name');
+				$manifest = ($name == '') ? FALSE : ' <span class="fontTiny gray">('.$name.')</span>';
+				
+				$data['depts'][$i]['name'] = $row->dept_name.$manifest;
 				$data['depts'][$i]['desc'] = $row->dept_desc;
 				$data['depts'][$i]['id'] = $row->dept_id;
 				
