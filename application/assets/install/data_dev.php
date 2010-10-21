@@ -35,6 +35,7 @@ $data = array(
 	'coc',
 	'docking_fields',
 	'docking_sections',
+	'manifests',
 	'menu_categories',
 	'menu_items',
 	'messages',
@@ -1041,6 +1042,30 @@ $docking_sections = array(
 	array(
 		'section_name' => 'Details',
 		'section_order' => 0)
+);
+
+$manifests = array(
+	array(
+		'manifest_name' => 'Primary Manifest',
+		'manifest_desc' => "This is the primary manifest used by the sim.",
+		'manifest_header_content' => "Update your manifest header content from the manifest management page.",
+		'manifest_order' => 0,
+		'manifest_display' => 'y',
+		'manifest_default' => 'y'),
+	array(
+		'manifest_name' => 'Secondary Manifest',
+		'manifest_desc' => "This is the secondary manifest used by the sim.",
+		'manifest_header_content' => "Update your manifest header content from the manifest management page.",
+		'manifest_order' => 1,
+		'manifest_display' => 'y',
+		'manifest_default' => 'n'),
+	array(
+		'manifest_name' => 'Tertiary Manifest',
+		'manifest_desc' => "This is the tertiary manifest used by the sim.",
+		'manifest_header_content' => "Update your manifest header content from the manifest management page.",
+		'manifest_order' => 0,
+		'manifest_display' => 'y',
+		'manifest_default' => 'n'),
 );
 
 $menu_categories = array(

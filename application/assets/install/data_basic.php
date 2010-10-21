@@ -27,6 +27,7 @@ $data = array(
 	'characters_sections',
 	'characters_tabs',
 	'characters_values',
+	'manifests',
 	'menu_categories',
 	'menu_items',
 	'messages',
@@ -724,6 +725,16 @@ $characters_values = array(
 		'value_field_value' => 'Neuter',
 		'value_content' => 'Neuter',
 		'value_order' => 4)
+);
+
+$manifests = array(
+	array(
+		'manifest_name' => 'Primary Manifest',
+		'manifest_desc' => "This is the primary manifest used by the sim.",
+		'manifest_header_content' => "Update your manifest header content from the manifest management page.",
+		'manifest_order' => 0,
+		'manifest_display' => 'y',
+		'manifest_default' => 'y'),
 );
 
 $menu_categories = array(

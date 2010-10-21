@@ -110,6 +110,8 @@ $fields_manifests = array(
 		'constraint' => 5),
 	'manifest_desc' => array(
 		'type' => 'TEXT'),
+	'manifest_header_content' => array(
+		'type' => 'TEXT'),
 	'manifest_display' => array(
 		'type' => 'ENUM',
 		'constraint' => "'y','n'",
@@ -318,6 +320,26 @@ $menu = array(
 $this->db->insert('menu_items', $menu);
 
 /**
+ * add the primary manifest
+ */
+$manifests = array(
+	'manifest_name' => 'Primary Manifest',
+	'manifest_desc' => "This is the primary manifest used by the sim.",
+	'manifest_header_content' => "Update your manifest header content from the manifest management page.",
+	'manifest_order' => 0,
+	'manifest_display' => 'y',
+	'manifest_default' => 'y'
+);
+$this->db->insert('manifests', $manifests);
+$deptid = $this->db->insert_id();
+
+/**
+ * update the database with the right manifest id
+ */
+$this->db->where('dept_manifest', 0);
+$this->db->update('departments_'.GENRE, array('dept_manifest' => $deptid));
+
+/**
  * add the system version info
  */
 $this->load->model('system_model', 'sys');
@@ -352,6 +374,10 @@ foreach ($tables as $key => $value)
 		
 		// add the column to all of the department tables
 		$this->dbforge->add_column($table, $add_column[$t]);
+		
+		// update the manifest field
+		$this->db->where('dept_manifest', 0);
+		$this->db->update($table, array('dept_manifest' => $deptid));
 	}
 }
 
