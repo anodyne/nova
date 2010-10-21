@@ -161,8 +161,6 @@ class Depts_model_base extends Model {
 	{
 		$query = $this->db->insert('departments_'. GENRE, $data);
 		
-		$this->dbutil->optimize_table('departments_'. GENRE);
-		
 		return $query;
 	}
 	

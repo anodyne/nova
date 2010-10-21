@@ -72,9 +72,9 @@ class Positions_model_base extends Model {
 				
 				return $array;
 			}
-			
-			return FALSE;
 		}
+		
+		return FALSE;
 	}
 	
 	function get_open_positions($display = 'y')
