@@ -5,7 +5,7 @@
 |---------------------------------------------------------------
 |
 | File: assets/install_data_rom.php
-| System Version: 1.0
+| System Version: 1.2
 |
 | Genre data compiled by Hasahnaithiau Nghymru
 |
@@ -34,51 +34,63 @@ $depts = array(
 	array(
 		'dept_name' => 'Command',
 		'dept_desc' => "As on most space-faring vessels the Command Department is made up of those officers deemed to be in the day-to-day control of the Warbird.  The Apart from the Commanding Officer, other members of the Command Staff also serve in other faculties/ departments.",
-		'dept_order' => 0),
+		'dept_order' => 0,
+		'dept_manifest' => 1),
 	array(
 		'dept_name' => 'Scientific Research',
 		'dept_desc' => "Responsible for all the scientific data the warbird collects, and the distribution of such data to specific section within the department for analysis. They are also responsible with providing the ship's captain with scientific information needed for command decisions.",
-		'dept_order' => 1),
+		'dept_order' => 1,
+		'dept_manifest' => 1),
 	array(
 		'dept_name' => 'Medical Sciences',
 		'dept_desc' => "Responsible for the physical health of the entire crew, but does more than patch up injured crew members. Their function is to ensure that they do not get sick or injured to begin with, and to this end monitors their health and conditioning with regular check ups. If necessary, the Leader of Medical Sciences can remove anyone from duty, excluding the Commander. Besides this they available to provide medical advice to any individual who requests it. Additionally the Seniors of the 3 bracnhes of Medical Sciences as well as the Leader of the Department are also responsible for all aspect of the medical deck, such as the Medical labs, Surgical suites, Psychiatric treatment areas.",
-		'dept_order' => 2),
+		'dept_order' => 2,
+		'dept_manifest' => 1),
 	array(
 		'dept_name' => 'Research &amp; Development',
 		'dept_desc' => "This department is of an oddity only found within the Romulan Star Empire.  The entire purpose of this department is to take alien technology (e.g. Starfleet) and backwards engineer it and to create something similiar to the original but allowing it to be compatible with other Romulan Technologies.",
-		'dept_order' => 3),
+		'dept_order' => 3,
+		'dept_manifest' => 1),
 	array(
 		'dept_name' => 'Flight Control',
 		'dept_desc' => "A Flight Controller must always be present on the bridge of a starship, and every vessel has a number of Flight Control Officers to allow shift rotations. They plot courses, supervises the computers piloting, corrects any flight deviations and pilots the ship manually when needed.",
-		'dept_order' => 4),
+		'dept_order' => 4,
+		'dept_manifest' => 1),
 	array(
 		'dept_name' => 'Warbird Control',
 		'dept_desc' => "Responsibility of ensuring that ship functions, such as the use of the lateral sensor array, do not interfere with one and another. They must prioritize resource allocations, so that the most critical activities can have every chance of success. If so required, they can curtail shipboard functions if they thinks they will interfere with the ship's current mission or routine operations.",
-		'dept_order' => 5),
+		'dept_order' => 5,
+		'dept_manifest' => 1),
 	array(
 		'dept_name' => 'Singularity Control',
 		'dept_desc' => "Responsible for the condition of all systems and equipment on board the Warbird. They oversee maintenance, repairs and upgrades of all equipment. They control the output and maintain the operational status of the Singularity Drive. They also responsible for the many repairs teams during crisis situations.",
-		'dept_order' => 6),
+		'dept_order' => 6,
+		'dept_manifest' => 1),
 	array(
 		'dept_name' => 'Cloaking Control',
 		'dept_desc' => "Responsible for the smooth operation of the Cloaking Device and other related systems, unlike other Control departments, Cloaking Control is a very small department, with members usually having served for many tours within an Singularity Control Department, and then undergoing specialist Cloaking Technology Training Programmes. The department only contains 3 staff members.",
-		'dept_order' => 7),
+		'dept_order' => 7,
+		'dept_manifest' => 1),
 	array(
 		'dept_name' => 'Communications Control',
 		'dept_desc' => "Monitors any and all transmissions aboard the warbird, as well as externally. Communications Officers are experienced linguist, proficient in many different languages.",
-		'dept_order' => 8),
+		'dept_order' => 8,
+		'dept_manifest' => 1),
 	array(
 		'dept_name' => 'Weapons Control',
 		'dept_desc' => "They are the vessels gunman.They responsible for the ships weapon system, and is also the COs tactical advisor in Star Ship Combat matters. Very often Weapons Officers are also trained in ground combat and small unit tactics. There is much more to Weapons Control than simply overseeing the weapons console on the bridge. Weapons Control maintains the weapons systems aboard the warbird, maintaining and reloading photons magazines. Tactical planning and current Intelligence analysis (if no Intelligence operatives are aboard) is also overseen by the tactical department.",
-		'dept_order' => 9),
+		'dept_order' => 9,
+		'dept_manifest' => 1),
 	array(
 		'dept_name' => 'Tal Diann',
 		'dept_desc' => "Responsible for collected and collating all information that they deem appropriate for delivery to the Command Staff.  Unlike most departments the Tal Diann are considered a seperate force within the Galae in the same manner as the Tal Shi'ar.  They are often at odds with the Tal Shi'ar Agent on-board the warbird.",
-		'dept_order' => 10),
+		'dept_order' => 10,
+		'dept_manifest' => 1),
 	array(
 		'dept_name' => 'Reman Commando Corps',
 		'dept_desc' => "It is their duty is to ensure the safety of ship and crew. The Commando Commander takes it as their personal duty to protect the Commanding Officer on landing parties. They are also responsible for people under arrest and the safety of guests, liked or not. They are also required to take command of any special ground operations. The Reman Commando Corps is the only branch of the Galae to have an enlisted service.  The RCC is always controlled by Galae Officers, but the rank and file is made up of Remans who are considered too inferior to hold a commissioned rank.",
-		'dept_order' => 11)
+		'dept_order' => 11,
+		'dept_manifest' => 1)
 );
 
 $ranks= array(

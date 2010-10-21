@@ -1,15 +1,12 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
-/*
-|---------------------------------------------------------------
-| INSTALL - GENRE DATA (SQ)
-|---------------------------------------------------------------
-|
-| File: assets/install/genres/sq_data.php
-| System Version: 1.2
-|
-| Genre data compiled by David VanScott
-|
-*/
+/**
+ * Genre install data for seaQuest DSV genre.
+ *
+ * @package		Nova
+ * @category	Install
+ * @author		Anodyne Productions
+ * @since		1.2
+ */
 
 # electronics technician
 # fire control technician
@@ -17,18 +14,14 @@
 # mess management specialist
 # missile technician
 
-/*
-|---------------------------------------------------------------
-| Genre Variables
-|---------------------------------------------------------------
-*/
+/**
+ * genre variable
+ */
 $g = 'sq';
 
-/*
-|---------------------------------------------------------------
-| Genre Table Data (BSG)
-|---------------------------------------------------------------
-*/
+/**
+ * genre table data
+ */
 $data = array(
 	'departments_'. $g 	=> 'depts',
 	'ranks_'. $g		=> 'ranks',
@@ -40,43 +33,53 @@ $depts = array(
 	array(
 		'dept_name' => 'Command',
 		'dept_desc' => "The Command Department consists of the Commanding Officer and the Executive Officer. The CO is ultimately responsible for the safety and welfare of the entire crew. S/he has final authority on all decisions regarding the ship and her mission. The XO is the CO's immediate subordinate, and is also his/her successor should the need arise. The Command Department is responsible for carrying out the orders of the UEO.",
-		'dept_order' => 0),
+		'dept_order' => 0,
+		'dept_manifest' => 1),
 	array(
 		'dept_name' => 'Helm',
 		'dept_desc' => "The Helm Department is responsible for the navigation and driving of the ship. In addition, the Helm Department can be called upon to drive the various mini-subs assigned to the ship as needed.",
-		'dept_order' => 1),
+		'dept_order' => 1,
+		'dept_manifest' => 1),
 	array(
 		'dept_name' => 'Sonar',
 		'dept_desc' => "The Sonar Department is responsible for all sonar equipment used aboard the ship, including the operation and maintenance of the ship's Wireless Sea Knowledge Retrieval Satellites (WSKRS).",
-		'dept_order' => 2),
+		'dept_order' => 2,
+		'dept_manifest' => 1),
 	array(
 		'dept_name' => 'Communications',
 		'dept_desc' => "The Communications Department is responsible for all communications in and out of the ship, including orders from UEO. In addition to standard communication channels, the Communications Department is responsible for the monitoring and use of military communication channels as well. In most cases, Communications Officers are multi-lingual in order to communicate with the various federations and factions throughout the world.",
-		'dept_order' => 3),
+		'dept_order' => 3,
+		'dept_manifest' => 1),
 	array(
 		'dept_name' => 'EVA',
 		'dept_desc' => "The EVA Department is responsible for all extra vehicular activities launched from the ship. This includes the control of all mini-subs assigned to the ship as well as any additional equipment for use outside of the ship. The EVA Department interfaces regularly with the Helm Department and works closely to train other members of the crew on safe EVA procedures as well as operation of the EVA equipment.",
-		'dept_order' => 4),
+		'dept_order' => 4,
+		'dept_manifest' => 1),
 	array(
 		'dept_name' => 'Weapons',
 		'dept_desc' => "The Weapons Department is responsible for all ordinance stored aboard the ship as well as the targeting and executing of ordiance release at the order of the Commanding Officer.",
-		'dept_order' => 5),
+		'dept_order' => 5,
+		'dept_manifest' => 1),
 	array(
 		'dept_name' => 'Security',
 		'dept_desc' => "The Security Department is responsible for the security aboard the ship as well as escorts for missions off the ship. Members of the Security Department are responsible for securing sensitive areas of the ship such as Engineering, Weapons Control, the Bridge and any other areas the Commanding Officer sees fit.",
-		'dept_order' => 6),
+		'dept_order' => 6,
+		'dept_manifest' => 1),
 	array(
 		'dept_name' => 'Engineering',
 		'dept_desc' => "The Engineering Department is responsible for the general upkeep and maintaince of the ship as well as any repairs that need to be done while the ship is at sea.",
-		'dept_order' => 7),
+		'dept_order' => 7,
+		'dept_manifest' => 1),
 	array(
 		'dept_name' => 'Science/Medical',
 		'dept_desc' => "While the UEO is a peacekeeping organization, one of its primary focuses is on exploration of the oceans. Nearly every UEO vessel has some sort of Science Department that is responsible for scientific experiments while the ship is at sea. The Science Department is also called on for their expertise with undersea topography and general scientific knowledge for the successful completion of many of the UEO's missions.",
-		'dept_order' => 8),
+		'dept_order' => 8,
+		'dept_manifest' => 1),
 	array(
 		'dept_name' => 'Marine Detachment',
 		'dept_desc' => "Despite being a peaceful organization, the UEO Marine Corps is responsible for both defensive and offensive missions at the orders of the UEO President. Because of hightening tensions between confederations, many UEO ships carry a Marine detachment for any type of missions that may require the additional muscle the Marine Corps brings with it.",
-		'dept_order' => 9),
+		'dept_order' => 9,
+		'dept_manifest' => 1),
 );
 
 $ranks = array(

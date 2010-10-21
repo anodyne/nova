@@ -5,7 +5,7 @@
 |---------------------------------------------------------------
 |
 | File: assets/install_data_baj.php
-| System Version: 1.0
+| System Version: 1.2
 |
 | Genre data compiled by David VanScott
 |
@@ -34,44 +34,54 @@ $depts = array(
 	array(
 		'dept_name' => 'Command',
 		'dept_desc' => "The Command division of the Bajoran Militia is made up of experienced officers that are responsible for carrying out the orders of the Bajoran Provisional Government and the Bajoran Militia. Members of the Command division have undergone training at the Bajoran Military Academy's Command School before accepting positions in the fleet.",
-		'dept_order' => 0),
+		'dept_order' => 0,
+		'dept_manifest' => 1),
 	array(
 		'dept_name' => 'Aerial Operations',
 		'dept_desc' => "The Aerial Operations division is comprised of pilots of both large vessels as well as single-seat fighters and atmospheric vessels. The Aerial Operations division is responsible for the safe navigation of all vessels in the Bajoran Militia including operation of Aerial Guard Fighter Detachments.",
-		'dept_order' => 1),
+		'dept_order' => 1,
+		'dept_manifest' => 1),
 	array(
 		'dept_name' => 'Operations',
 		'dept_desc' => "The Operations division is responsible for keeping systems functioning properly, rerouting power, bypassing relays and doing whatever else is necessary to keep the systems operating at peak efficiency. Most Operations graduates of the Bajoran Military Academy are also highly skilled in engineering skills as well.",
-		'dept_order' => 2),
+		'dept_order' => 2,
+		'dept_manifest' => 1),
 	array(
 		'dept_name' => 'Engineering',
 		'dept_desc' => "The Engineering division has the enormous task of keeping the vessel working; they are responsible for making repairs, fixing problems and ensuring the vessel is ready for anything. In addition to maintaining the larger vessels, the Engineering division also works closely with the Aerial Guard to maintain the Aerial Guard Fighter Detachments as well.",
-		'dept_order' => 3),
+		'dept_order' => 3,
+		'dept_manifest' => 1),
 	array(
 		'dept_name' => 'Security &amp; Tactical',
 		'dept_desc' => "Comprised of veterans of the Cardassian Occupation and Dominion War, the Security &amp; Tactical division of the Bajoran Militia is responsible for the safety of the personnel aboard a ship or base as well as the tactical planning, preparation, maintenance and execution of tactical tasks.",
-		'dept_order' => 4),
+		'dept_order' => 4,
+		'dept_manifest' => 1),
 	array(
 		'dept_name' => 'Medical',
 		'dept_desc' => "The healers of the Bajoran Militia, the Medical division on a ship or base are among some of the best trained medical personnel in the quadrant. After completing required coursework at the Bajoran Military Academy, medical students spend great amounts of time at several of Bajor's premier medical facilities before accepting positions in the Militia.",
-		'dept_order' => 5),
+		'dept_order' => 5,
+		'dept_manifest' => 1),
 	array(
 		'dept_name' => 'Science',
 		'dept_desc' => "Over the years, Bajoran scientists have been at the forefront of many significant scientific breakthroughs. Though they have to attend the Bajoran Military Academy to gain a commission in the Bajoran Militia, many Militia scientists spend time on Earth and Vulcan working with their Federation counterparts before taking posts in the Militia.",
-		'dept_order' => 6),
+		'dept_order' => 6,
+		'dept_manifest' => 1),
 	array(
 		'dept_name' => 'Aerial Guard Fighter Detachment',
 		'dept_desc' => "Originally conceived as planetary air defense, the Aerial Guard division of the Bajoran Militia has evolved to take on the role of space superiority as well. While not as adept at space superiority as Starfleet, Bajoran fighter pilots have innate tenacity from the Cardassian Occupation as well as conflicts throughout their history.",
-		'dept_order' => 7),
+		'dept_order' => 7,
+		'dept_manifest' => 1),
 	array(
 		'dept_name' => 'Bajoran Religious Order',
 		'dept_desc' => "Faith permeates the entire Bajoran culture through a stratified religious order that holds significant cultural and political influence on Bajor.",
-		'dept_order' => 8),
+		'dept_order' => 8,
+		'dept_manifest' => 1),
 	array(
 		'dept_name' => 'Vedek Assembly',
 		'dept_desc' => "The Vedek Assembly is the governing body of the Bajoran religion and holds great political influence as well. The Assembly is led by the Kai, the leading religious figure on Bajor.",
 		'dept_order' => 0,
-		'dept_parent' => 9),
+		'dept_parent' => 9,
+		'dept_manifest' => 1),
 );
 
 $ranks= array(

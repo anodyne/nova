@@ -5,7 +5,7 @@
 |---------------------------------------------------------------
 |
 | File: assets/install_data_and.php
-| System Version: 1.0
+| System Version: 1.2
 |
 | Genre data compiled by Moss (Anodyne forums) and David VanScott
 |
@@ -36,35 +36,43 @@ $depts = array(
 	array(
 		'dept_name' => 'Command',
 		'dept_desc' => "The Command department is ultimately responsible for the ship and its crew and those within the department are responsible for commanding the vessel and representing the interests of the High Guard.",
-		'dept_order' => 0),
+		'dept_order' => 0,
+		'dept_manifest' => 1),
 	array(
 		'dept_name' => 'Pilots',
 		'dept_desc' => "Responsible for the navigation and flight control of a vessel and its auxiliary craft, the Pilots division includes pilots trained in both starship and auxiliary craft piloting.",
-		'dept_order' => 1),
+		'dept_order' => 1,
+		'dept_manifest' => 1),
 	array(
 		'dept_name' => 'Weapons',
 		'dept_desc' => "Given the highly tactical role the High Guard plays, the Weapons division is responsible for all ship-to-ship security and tactical operations as well as maintaining the vast ordinance armament onboard High Guard ships.",
-		'dept_order' => 2),
+		'dept_order' => 2,
+		'dept_manifest' => 1),
 	array(
 		'dept_name' => 'Engineering',
 		'dept_desc' => "The Engineering division has the enormous task of keeping the vessel working. They are responsible for making repairs, fixing problems and making sure that the ship is ready for anything.",
-		'dept_order' => 3),	
+		'dept_order' => 3,
+		'dept_manifest' => 1),	
 	array(
 		'dept_name' => 'Science',
 		'dept_desc' => "From sensor readings to figuring out a way to enter a strange spacial anomaly, the Science division is responsible for recording data, testing new ideas out and making discoveries.",
-		'dept_order' => 4),
+		'dept_order' => 4,
+		'dept_manifest' => 1),
 	array(
 		'dept_name' => 'Medical',
 		'dept_desc' => "The Medical division is responsible for the mental and physical health of the crew. This includes everything from running annual physicals to combatting a strange plague afflicting the crew to helping a crew member deal with the loss of a loved one.",
-		'dept_order' => 5),
+		'dept_order' => 5,
+		'dept_manifest' => 1),
 	array(
 		'dept_name' => 'Communications',
 		'dept_desc' => "The Communications division is responsible for external and internal communications on the ship.",
-		'dept_order' => 6),
+		'dept_order' => 6,
+		'dept_manifest' => 1),
 	array(
 		'dept_name' => 'Lancer Detachment',
 		'dept_desc' => "When the standard security detail is not enough, the Lancers come in and clean up. The Lancer Detachment is a powerful tactical addition to any High Guard vessel, responsible for partaking in personal combat, from sniping to melee.",
-		'dept_order' => 7),
+		'dept_order' => 7,
+		'dept_manifest' => 1),
 );
 
 $ranks = array(

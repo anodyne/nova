@@ -5,7 +5,7 @@
 |---------------------------------------------------------------
 |
 | File: assets/install_data_bl5.php
-| System Version: 1.0
+| System Version: 1.2
 |
 | Genre data compiled by Rycon (Anodyne forums)
 |
@@ -35,39 +35,48 @@ $depts = array(
 	array(
 		'dept_name' => 'Command',
 		'dept_desc' => "The Command department is ultimately responsible for the ship and its crew, and those within the department are responsible for commanding the vessel.",
-		'dept_order' => 0),
+		'dept_order' => 0,
+		'dept_manifest' => 1),
 	array(
 		'dept_name' => 'Pilots',
 		'dept_desc' => "The best pilots anywhere, they are responsible for piloting the StarFury fighters in ship-to-ship battles, as well as providing escort.",
-		'dept_order' => 1),
+		'dept_order' => 1,
+		'dept_manifest' => 1),
 	array(
 		'dept_name' => 'Security',
 		'dept_desc' => "The security department is ultimately responsible for the security of the ship and being prepared for anything to happen.",
-		'dept_order' => 2),
+		'dept_order' => 2,
+		'dept_manifest' => 1),
 	array(
 		'dept_name' => 'Engineering',
 		'dept_desc' => "The engineering department has the enormous task of keeping the ship working; they are responsible for making repairs, fixing problems, and making sure that the ship is ready for anything.",
-		'dept_order' => 3),
+		'dept_order' => 3,
+		'dept_manifest' => 1),
 	array(
 		'dept_name' => 'Medical',
 		'dept_desc' => "The medical department is responsible for the mental and physical health of the crew, from running annual physicals to combatting a strange plague that is afflicting the crew to helping a crew member deal with the loss of a loved one.",
-		'dept_order' => 4),
+		'dept_order' => 4,
+		'dept_manifest' => 1),
 	array(
 		'dept_name' => 'Communications',
 		'dept_desc' => "The Communications department is responsible for the operation of the communications systems to ensure timely and accurate communications both within and outside the vessel.",
-		'dept_order' => 5),
+		'dept_order' => 5,
+		'dept_manifest' => 1),
 	array(
 		'dept_name' => 'Marines',
 		'dept_desc' => "When the standard security detail is not enough, marines come in and clean up; the marine detachment is a powerful tactical addition to any ship, responsible for partaking in personal combat, from sniping to melee.",
-		'dept_order' => 6),
+		'dept_order' => 6,
+		'dept_manifest' => 1),
 	array(
 		'dept_name' => 'Weapons Control',
 		'dept_desc' => "The Weapons Control department is responsible for controlling both small and large arms aboard the vessel, be that personal sidearms, the armaments of the StarFury fighters and even the vessel itself.",
-		'dept_order' => 7),
+		'dept_order' => 7,
+		'dept_manifest' => 1),
 	array(
 		'dept_name' => 'Tactical',
 		'dept_desc' => "The Tactiacl department is responsible for the tactical readiness of the vessel and manning the weapon system during combat as well as coordinating StarFury craft as they engage in ship-to-ship combat.",
-		'dept_order' => 8)
+		'dept_order' => 8,
+		'dept_manifest' => 1)
 );
 
 $ranks= array(

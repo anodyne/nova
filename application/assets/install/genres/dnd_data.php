@@ -5,7 +5,7 @@
 |---------------------------------------------------------------
 |
 | File: assets/install_data_dnd.php
-| System Version: 1.0
+| System Version: 1.2
 |
 | Genre data compiled by Wade Duerkes
 |
@@ -34,23 +34,28 @@ $depts = array(
 	array(
 		'dept_name' => 'Game Administrators',
 		'dept_desc' => "Game Administrators are those who organize and run the various adventures. These are non-playing characters. Posts from a Game Administrator should be viewed as out of character unless otherwise instructed.",
-		'dept_order' => 0),
+		'dept_order' => 0,
+		'dept_manifest' => 1),
 	array(
 		'dept_name' => 'Warriors',
 		'dept_desc' => "A class made up of characters who have exceptional combat capability and unequaled skill with weapons.",
-		'dept_order' => 1),
+		'dept_order' => 1,
+		'dept_manifest' => 1),
 	array(
 		'dept_name' => 'Magic Users',
 		'dept_desc' => "A class made up of characters who are schooled in the arcane arts.",
-		'dept_order' => 2),
+		'dept_order' => 2,
+		'dept_manifest' => 1),
 	array(
 		'dept_name' => 'Priests',
 		'dept_desc' => "A class made up of characters who cast divine spells and are also capable in combat.",
-		'dept_order' => 3),
+		'dept_order' => 3,
+		'dept_manifest' => 1),
 	array(
 		'dept_name' => 'Thieves',
 		'dept_desc' => "A class made up of characters who primarily rely on stealth rather than brute force or magical ability.",
-		'dept_order' => 4),
+		'dept_order' => 4,
+		'dept_manifest' => 1),
 );
 
 $ranks = array(

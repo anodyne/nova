@@ -5,7 +5,7 @@
 |---------------------------------------------------------------
 |
 | File: assets/install_data_crd.php
-| System Version: 1.0
+| System Version: 1.2
 |
 | Genre data compiled by Hasahnaithiau Nghymru
 |
@@ -34,47 +34,58 @@ $depts = array(
 	array(
 		'dept_name' => 'Command',
 		'dept_desc' => "All positions in this department are singular.  The Commanding Officer of the vessel is always a member of the Space Forces, unless the vessel serves as the Lead Ship of an Order, then the Commanding Officer can be a member of the Militia. Members of the Command Staff do not hold any other responsibilities on board the vessel.",
-		'dept_order' => 0),
+		'dept_order' => 0,
+		'dept_manifest' => 1),
 	array(
 		'dept_name' => 'Ship Control',
 		'dept_desc' => "Also known as a Helm Officer, one must always be present in operations of the vessel, and every vessel has a number of Space Control Officers to allow shift rotations. They plot courses, supervises the computers piloting, corrects any flight deviations and pilots the ship manually when needed.",
-		'dept_order' => 1),
+		'dept_order' => 1,
+		'dept_manifest' => 1),
 	array(
 		'dept_name' => 'Engineering &amp; Maintenance',
 		'dept_desc' => "Responsibility of ensuring that ship functions, such as the use of the lateral sensor array, do not interfere with one and another. They must prioritize resource allocations, so that the most critical activities can have every chance of success. If so required, they can curtail shipboard functions if they thinks they will interfere with the ship's current mission or routine operations. responsible for the condition of all systems and equipment on board the ship. They oversee maintenance, repairs and upgrades of all equipment. They control the output and maintain the operational status of the Warp Core. They also responsible for the many repairs teams during crisis situations.",
-		'dept_order' => 2),
+		'dept_order' => 2,
+		'dept_manifest' => 1),
 	array(
 		'dept_name' => 'Communications Control',
 		'dept_desc' => "Monitors any and all transmissions aboard the ship, as well as externally. Communications Officers are experienced linguist, proficient in many different languages.",
-		'dept_order' => 3),
+		'dept_order' => 3,
+		'dept_manifest' => 1),
 	array(
 		'dept_name' => 'Warfare',
 		'dept_desc' => "They are the vessels gunman and security. They responsible for the ships weapon system, and is also the COs tactical advisor in Star Ship Combat matters. Very often Warfare Officers are also trained in ground combat and small unit tactics. There is much more to Warfare than simply overseeing the weapons console on the bridge. Warfare maintains the weapons systems aboard the ship, maintaining and reloading photons magazines. Tactical planning and current Intelligence analysis (if no Intelligence operatives are aboard) and manning all secure areas of the vessel.",
-		'dept_order' => 4),
+		'dept_order' => 4,
+		'dept_manifest' => 1),
 	array(
 		'dept_name' => 'Militia Infantry',
 		'dept_desc' => "It is their duty is to ensure the safety of ship and crew. The Infantry Commander takes it as their personal duty to protect the Commanding Officer on landing parties. They are also responsible for people under arrest and the safety of guests, liked or not. They are also required to take command of any special ground operations.",
-		'dept_order' => 5),
+		'dept_order' => 5,
+		'dept_manifest' => 1),
 	array(
 		'dept_name' => 'Science Staff',
 		'dept_desc' => "Responsible for all the scientific data the vessel collects, and the distribution of such data to specific section amongst the staff for study. Scientists are seen with something bordering on contempt within the Cardassian Union, and are seen by the Central Command to serve one purpose; for the benefit of the military.  Members of the Science Staff are not technically members of either the Space Forces or the Militia, but are part of the Military but rather the Military Sciencetific Order, and are seen as seconded to a particular Order/Vessel.  Due to the specialist nature of the department, everyone within the Sciences has carried out their required Military Service, and has elected to continue within the Military and specialized in sciences.  Due to the gender biased within the Cardassian Union, the majority of Scientists appear to be female.",
-		'dept_order' => 6),
+		'dept_order' => 6,
+		'dept_manifest' => 1),
 	array(
 		'dept_name' => 'Medical Staff',
 		'dept_desc' => "Responsible for the physical health of the entire crew, but does more than patch up injured crew members. Their function is to ensure that they do not get sick or injured to begin with, and to this end monitors their health and conditioning with regular check ups. Unlike a Starfleet vessel a Cardassian Doctor cannot relieve the vessel's Commander of duty. Besides this they available to provide medical advice to any individual who requests it. As with the Sciences, the Medical Staff are not members of the Space Forces or Militia, but rather are members of the Military Medical Order and are seen as on seconded duty with the particular Order of the vessel on which they serve.",
-		'dept_order' => 7),
+		'dept_order' => 7,
+		'dept_manifest' => 1),
 	array(
 		'dept_name' => 'Political Staff',
 		'dept_desc' => "This department is of an oddity of the Cardassian Union.  The entire purpose of this department is to ensure that the vessel and her crew follow the will of the Central Command at all times.  Duty to the state is something that is programmed into the Cardassian psyche, and the Political Staff ensure they follow this programming.  As with the Sciences and Medical Staff members of the Political Staff are neither Space Force nor Militia Officers, but rather are directly answerable to the Central Command. In situations of First Contact or meetings with Alien species, a Political Officer can supersede the vessel's Commanding Officer is s/he believes that the Commanding Officer is not doing what is best for the Union or the Central Command. They are seen as a nasty necessity to life serving the Union.",
-		'dept_order' => 8),
+		'dept_order' => 8,
+		'dept_manifest' => 1),
 	array(
 		'dept_name' => '5th Order',
 		'dept_desc' => "The Fifth Order, also known as the 'Jade Order' (Cairhail Terapha), comprises the Central Command's military intelligence division. Central Command maintains the Fifth Order so it does not have to depend entirely on the Obsidian Order for military intelligence. The Jade Order is far smaller than the Obsidian Order, and has a fierce rivalry with its larger 'civilian' competitor. As with the above departments, the Officers of the Jade Order are not considered Space Forces or Militia, but are rather on seconded duty to the particular order of the vessel on which they serve.",
-		'dept_order' => 9),
+		'dept_order' => 9,
+		'dept_manifest' => 1),
 	array(
 		'dept_name' => 'Logistics',
 		'dept_desc' => "The logistics department keeps track of all matters coming in and off the vessel, also when carrying out private freight the Logistics Officer along with the Commanding Officer takes a percentage of any profit for doing so.",
-		'dept_order' => 10)
+		'dept_order' => 10,
+		'dept_manifest' => 1)
 );
 
 $ranks= array(

@@ -5,7 +5,7 @@
 |---------------------------------------------------------------
 |
 | File: assets/install_data_halo.php
-| System Version: 1.0
+| System Version: 1.2
 |
 | Data asset file for the HALO genre.
 |

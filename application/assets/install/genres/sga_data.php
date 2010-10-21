@@ -5,7 +5,7 @@
 |---------------------------------------------------------------
 |
 | File: assets/install_data_sga.php
-| System Version: 1.0
+| System Version: 1.2
 |
 | Data asset file for the STARGATE ATLANTIS genre.
 |
@@ -34,47 +34,58 @@ $depts = array(
 	array(
 		'dept_name' => 'Command',
 		'dept_desc' => "The Command Department consists of the Commander and the Executive Officer. The Commander is ultimately responsible for the safety and welfare of the SG Team. S/he has final authority on all decisions regarding the ship and her mission. The Executive officer or XO is the commander's immediate subordinate, and is also his/her successor should the need arise.",
-		'dept_order' => 0),
+		'dept_order' => 0,
+		'dept_manifest' => 1),
 	array(
 		'dept_name' => 'Archeology',
 		'dept_desc' => "The Branch of anthropology studies people and their cultures on off world planets and catalogs them back on base for further study of the culture and its people.  Civilans play an important role in this department because Armed forces usually don't have jobs in Archeology.",
-		'dept_order' => 1),
+		'dept_order' => 1,
+		'dept_manifest' => 1),
 	array(
 		'dept_name' => 'Linguistics',
 		'dept_desc' => "Linguists are the people that can communicate in different languages with other cultures.  Both Military and Civilians are employed to do this.",
-		'dept_order' => 2),
+		'dept_order' => 2,
+		'dept_manifest' => 1),
 	array(
 		'dept_name' => 'Engineering',
 		'dept_desc' => "When something needs fixing these are the people men and women, military and civilian that get called.   Engineers are responsible for the fixing computer systems, to the stargate, and even sending in UAVs & MALPs.",
-		'dept_order' => 3),
+		'dept_order' => 3,
+		'dept_manifest' => 1),
 	array(
 		'dept_name' => 'Science',
 		'dept_desc' => "The Science department is always making discoveries on survival, coming up with new ideas on how to help the team, and cataloging information on current off world discoveries and events.",
-		'dept_order' => 4),
+		'dept_order' => 4,
+		'dept_manifest' => 1),
 	array(
 		'dept_name' => 'Medical',
 		'dept_desc' => "When a person is either hurt or sick the medical department will always be there.  These skilled men and women are doctors and medics either staying in the infirmary or going out in the fields with teams.",
-		'dept_order' => 5),
+		'dept_order' => 5,
+		'dept_manifest' => 1),
 	array(
 		'dept_name' => 'Diplomatic Liaisons',
 		'dept_desc' => "Representing Earth and Humans alike the diplomat Liaisons stay on base or travel out with teams making sure the human race is not seen in a negative right.",
-		'dept_order' => 6),
+		'dept_order' => 6,
+		'dept_manifest' => 1),
 	array(
 		'dept_name' => 'Jumper Squadron',
 		'dept_desc' => "The Jumper Squadron is a fast travel to close place or can fly through the gate and be a means of travel for the team.",
-		'dept_order' => 7),
+		'dept_order' => 7,
+		'dept_manifest' => 1),
 	array(
 		'dept_name' => 'Military',
 		'dept_desc' => "Your Military personnel in an SG Team are trained combat warriors from all branch all over the world.  In some times things get sticky and military is there to back it up with expert combat knowledge and firepower.",
-		'dept_order' => 8),
+		'dept_order' => 8,
+		'dept_manifest' => 1),
 	array(
 		'dept_name' => 'Alpha Team',
 		'dept_desc' => "The Alpha Team of Atlantis.  Capable of carrying out missions and orders directed to them.",
-		'dept_order' => 9),
+		'dept_order' => 9,
+		'dept_manifest' => 1),
 	array(
 		'dept_name' => 'Bravo Team',
 		'dept_desc' => "The Bravo Team of Atlantis.  Capable of carrying out missions and orders directed to them.",
-		'dept_order' => 10)
+		'dept_order' => 10,
+		'dept_manifest' => 1)
 );
 
 $ranks= array(

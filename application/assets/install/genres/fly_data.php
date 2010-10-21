@@ -5,7 +5,7 @@
 |---------------------------------------------------------------
 |
 | File: assets/install_data_fly.php
-| System Version: 1.0
+| System Version: 1.2
 |
 | Genre data compiled by Indigo (Anodyne forums)
 |
@@ -34,11 +34,13 @@ $depts = array(
 	array(
 		'dept_name' => 'Crew',
 		'dept_desc' => "Individuals who live and work on the ship.",
-		'dept_order' => 0),
+		'dept_order' => 0,
+		'dept_manifest' => 1),
 	array(
 		'dept_name' => 'Passengers',
 		'dept_desc' => "Individuals who pay for passage and are not considered part of the crew.",
-		'dept_order' => 1)
+		'dept_order' => 1,
+		'dept_manifest' => 1)
 );
 
 $ranks = array(

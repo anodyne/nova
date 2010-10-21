@@ -5,7 +5,7 @@
 |---------------------------------------------------------------
 |
 | File: assets/install_data_blank.php
-| System Version: 1.0
+| System Version: 1.2
 |
 */
 
@@ -32,7 +32,8 @@ $depts = array(
 	array(
 		'dept_name' => 'Department',
 		'dept_desc' => "This is a blank department to be used as an example of what should be included in a department record. Please edit this record to match your sim's style and needs or remove the record altogether.",
-		'dept_order' => 0),
+		'dept_order' => 0,
+		'dept_manifest' => 1),
 );
 
 $ranks = array(

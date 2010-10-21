@@ -5,9 +5,7 @@
 |---------------------------------------------------------------
 |
 | File: assets/install/genres/sto_data.php
-| System Version: 1.0
-|
-| Genre data compiled by David VanScott
+| System Version: 1.2
 |
 */
 
@@ -34,55 +32,68 @@ $depts = array(
 	array(
 		'dept_name' => 'Command',
 		'dept_desc' => "The Command department is ultimately responsible for the ship and its crew, and those within the department are responsible for commanding the vessel and representing the interests of Starfleet.",
-		'dept_order' => 0),
+		'dept_order' => 0,
+		'dept_manifest' => 1),
 	array(
 		'dept_name' => 'Flight Control',
 		'dept_desc' => "Responsible for the navigation and flight control of a vessel and its auxiliary craft, the Flight Control department includes pilots trained in both starship and auxiliary craft piloting. Note that the Flight Control department does not include Fighter pilots.",
-		'dept_order' => 1),
+		'dept_order' => 1,
+		'dept_manifest' => 1),
 	array(
 		'dept_name' => 'Strategic Operations',
 		'dept_desc' => "The Strategic Operations department acts as an advisory to the command staff, as well as a resource of knowledge and information concerning hostile races in the operational zone of the ship, as well as combat strategies and other such things.",
-		'dept_order' => 2),
+		'dept_order' => 2,
+		'dept_manifest' => 1),
 	array(
 		'dept_name' => 'Security &amp; Tactical',
 		'dept_desc' => "Merging the responsibilities of ship-to-ship and personnel combat into a single department, the security & tactical department is responsible for the tactical readiness of the vessel and the security of the ship.",
-		'dept_order' => 3),
+		'dept_order' => 3,
+		'dept_manifest' => 1),
 	array(
 		'dept_name' => 'Operations',
 		'dept_desc' => "The operations department is responsible for keeping ship systems functioning properly, rerouting power, bypassing relays, and doing whatever else is necessary to keep the ship operating at peak efficiency.",
-		'dept_order' => 4),
+		'dept_order' => 4,
+		'dept_manifest' => 1),
 	array(
 		'dept_name' => 'Engineering',
 		'dept_desc' => "The engineering department has the enormous task of keeping the ship working; they are responsible for making repairs, fixing problems, and making sure that the ship is ready for anything.",
-		'dept_order' => 5),
+		'dept_order' => 5,
+		'dept_manifest' => 1),
 	array(
 		'dept_name' => 'Science',
 		'dept_desc' => "From sensor readings to figuring out a way to enter the strange spacial anomaly, the science department is responsible for recording data, testing new ideas out, and making discoveries.",
-		'dept_order' => 6),
+		'dept_order' => 6,
+		'dept_manifest' => 1),
 	array(
 		'dept_name' => 'Medical &amp; Counseling',
 		'dept_desc' => "The medical & counseling department is responsible for the mental and physical health of the crew, from running annual physicals to combatting a strange plague that is afflicting the crew to helping a crew member deal with the loss of a loved one.",
-		'dept_order' => 7),
+		'dept_order' => 7,
+		'dept_manifest' => 1),
 	array(
 		'dept_name' => 'Intelligence',
 		'dept_desc' => "The Intelligence department is responsible for gathering and providing intelligence as it becomes possible during a mission; during covert missions, the intelligence department also takes a more active role, providing the necessary classified and other information.",
-		'dept_order' => 8),
+		'dept_order' => 8,
+		'dept_manifest' => 1),
 	array(
 		'dept_name' => 'Diplomatic Detachment',
 		'dept_desc' => "Responsible for representing the Federation and its interest, members of the Diplomatic Corps are members of the civilian branch of the Federation.",
-		'dept_order' => 9),
+		'dept_order' => 9,
+		'dept_manifest' => 1),
 	array(
 		'dept_name' => 'Marine Detachment',
 		'dept_desc' => "When the standard security detail is not enough, marines come in and clean up; the marine detachment is a powerful tactical addition to any ship, responsible for partaking in personal combat, from sniping to melee.",
-		'dept_order' => 10),
+		'dept_order' => 10,
+		'dept_manifest' => 1),
 	array(
 		'dept_name' => 'Starfighter Wing',
 		'dept_desc' => "The best pilots in Starfleet, they are responsible for piloting the starfighters in ship-to-ship battles, as well as providing escort for shuttles, and runabouts.",
-		'dept_order' => 11),
+		'dept_order' => 11,
+		'dept_manifest' => 1),
 	array(
 		'dept_name' => 'Civilian Affairs',
 		'dept_desc' => "Civilians play an important role in Starfleet. Many civilian specialists across a number of fields work on occasion with Starfleet personnel as a Mission Specialist. In other cases, extra ship and station duties, such as running the ship's lounge, are outsourced to a civilian contract.",
-		'dept_order' => 12)
+		'dept_order' => 12,
+		'dept_manifest' => 1)
 );
 
 $ranks = array(

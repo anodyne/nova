@@ -5,7 +5,7 @@
 |---------------------------------------------------------------
 |
 | File: assets/install_data_kli.php
-| System Version: 1.0
+| System Version: 1.2
 |
 | Genre data compiled by David VanScott
 |
@@ -34,27 +34,33 @@ $depts = array(
 	array(
 		'dept_name' => 'Command',
 		'dept_desc' => "The Command division on a Klingon vessel is made up of the seniormost Klingon officers. Commanding a ship, base or other vessel is considered an honor worthy of song and carries with it the responsibilities of running the ship, base or vessel and carrying out the orders of the Klingon Defense Force.",
-		'dept_order' => 0),
+		'dept_order' => 0,
+		'dept_manifest' => 1),
 	array(
 		'dept_name' => 'Tactical',
 		'dept_desc' => "When it comes to space battles, there are no finer tacticians and gunners than Klingons. All officers in the Klingon Defense Force undergo signficant tactical training before being given their officer status by the Klingon Oversight Council. Great honor can come from being an excellent tactical officer.",
-		'dept_order' => 1),
+		'dept_order' => 1,
+		'dept_manifest' => 1),
 	array(
 		'dept_name' => 'Navigation',
 		'dept_desc' => "Much like any warrior in the Tactical division, the Navigation division are known for their bold and innovative battle maneuvers. Warriors in the Navigation division work closely with the Tactical division and understand battle tactics better than most.",
-		'dept_order' => 2),
+		'dept_order' => 2,
+		'dept_manifest' => 1),
 	array(
 		'dept_name' => 'Engineering',
 		'dept_desc' => "The Klingon Empire isn't known for its engineers. Despite that though, the Klingon Defense Force Order of Engineers is an honorable one with a long history of keeping vessels in battles for greater glory.",
-		'dept_order' => 3),
+		'dept_order' => 3,
+		'dept_manifest' => 1),
 	array(
 		'dept_name' => 'Medical',
 		'dept_desc' => "Medical and Science services are sparse in the Klingon Empire and as such are in high demand on ships, bases and vessels near the front lines of a conflict. Besides dealing with medical problems, all Klingon physicians also double as science officers for the ship, base or vessel.",
-		'dept_order' => 4),
+		'dept_order' => 4,
+		'dept_manifest' => 1),
 	array(
 		'dept_name' => 'Warriors',
 		'dept_desc' => "Klingon Warriors are feared throughout the galaxy for their ferocity. There are few other better warriors than a Klingon, even half drunk. Being a warrior and dying honorably in combat is the highest honor a Klingon can achieve.",
-		'dept_order' => 5)
+		'dept_order' => 5,
+		'dept_manifest' => 1)
 );
 
 $ranks= array(

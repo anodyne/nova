@@ -5,7 +5,7 @@
 |---------------------------------------------------------------
 |
 | File: assets/install_data_bsg.php
-| System Version: 1.0
+| System Version: 1.2
 |
 | Genre data compiled by ladythorne (Anodyne forums)
 |
@@ -34,39 +34,48 @@ $depts = array(
 	array(
 		'dept_name' => 'Command',
 		'dept_desc' => "The Command Department consists of the Commander and the Executive Officer. The Commander is ultimately responsible for the safety and welfare of the entire crew. S/he has final authority on all decisions regarding the ship and her mission. The Executive officer or XO is the commander's immediate subordinate, and is also his/her successor should the need arise.",
-		'dept_order' => 0),
+		'dept_order' => 0,
+		'dept_manifest' => 1),
 	array(
 		'dept_name' => 'Combat Information Center Staff',
 		'dept_desc' => "The CIC Staff consists of the FTL officers, techs and various other systems techs that keep a battlestar and her systems running smoothly.",
-		'dept_order' => 1),
+		'dept_order' => 1,
+		'dept_manifest' => 1),
 	array(
 		'dept_name' => 'Viper Wing',
 		'dept_desc' => "The Viper Wing is responsible for engaging the enemy in ship to ship battles, as well as providing escort for military vessels.",
-		'dept_order' => 2),
+		'dept_order' => 2,
+		'dept_manifest' => 1),
 	array(
 		'dept_name' => 'Raptor Wing',
 		'dept_desc' => "The Raptor Wing often takes on jobs of reconnaissance, rescue, scouting, and transportation.",
-		'dept_order' => 3),
+		'dept_order' => 3,
+		'dept_manifest' => 1),
 	array(
 		'dept_name' => 'Hangar Deck Staff',
 		'dept_desc' => "The Hangar Deck Staff repairs Vipers and Raptors between missions.",
-		'dept_order' => 4),
+		'dept_order' => 4,
+		'dept_manifest' => 1),
 	array(
 		'dept_name' => 'Medical',
 		'dept_desc' => "The medical department is responsible for the physical health of the crew, from running annual physicals to treating a wide variety of wounds and diseases.",
-		'dept_order' => 5),
+		'dept_order' => 5,
+		'dept_manifest' => 1),
 	array(
 		'dept_name' => 'Engineering',
 		'dept_desc' => "The engineering department has the enormous task of keeping the ship working; they are responsible for making repairs, fixing problems, and making sure that the ship is ready for anything.",
-		'dept_order' => 6),
+		'dept_order' => 6,
+		'dept_manifest' => 1),
 	array(
 		'dept_name' => 'Marine Detachment',
 		'dept_desc' => "A Marine's duties include guarding the CIC and the brig as well as other critical areas on the ship, and assisting the Master-at-Arms and are part of Raptor boarding parties. They are also responsible for stopping enemy boarding actions.",
-		'dept_order' => 7),
+		'dept_order' => 7,
+		'dept_manifest' => 1),
 	array(
 		'dept_name' => 'Civilians',
 		'dept_desc' => "Civilians fill positions that are not related to the Colonial military. Their jobs may help serve military forces in some form.",
-		'dept_order' => 8),
+		'dept_order' => 8,
+		'dept_manifest' => 1),
 );
 
 $ranks = array(
