@@ -11,7 +11,8 @@
 |	game master to store the applicant's IP address; updated the
 |	join form to take level 1 bans in to account; updated the
 |	contact form to be simpler and line up with nova 2's new
-|	contact form
+|	contact form; fixed bug where the sample post was just one
+|	massive wall of text
 |
 */
 
@@ -1301,7 +1302,7 @@ class Main_base extends Controller {
 				}
 				
 				$email_data['sample_post_label'] = ucwords(lang('labels_sample_post'));
-				$email_data['sample_post'] = $data['sample_post'];
+				$email_data['sample_post'] = ($this->email->mailtype == 'html') ? nl2br($data['sample_post']) : $data['sample_post'];
 				
 				/* where should the email be coming from */
 				$em_loc = email_location('main_join_gm', $this->email->mailtype);

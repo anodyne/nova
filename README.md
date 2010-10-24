@@ -38,6 +38,7 @@ Anodyne Production's next-generation RPG management system combines popular feat
     * [text\_lang] added _text\_duplicate\_dept_
     * [text\_lang] updated _text\_manage\_depts_
 * fixed bug where users without an active character would be shown in the activity warning panel on the ACP
+* fixed bug where the sample post in the join application email was just a massive wall of text
 
 ## Version History
 
