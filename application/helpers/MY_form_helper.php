@@ -267,8 +267,8 @@ if ( ! function_exists('form_dropdown_dept'))
 						}
 						else
 						{
-							$name = $ci->dept->get_manifest($dept->dept_manifest, 'manifest_name');
-							$manifest = ($name == '') ? FALSE : ' ('.$name.')';
+							$manifestname = $ci->dept->get_manifest($dept->dept_manifest, 'manifest_name');
+							$manifest = ($manifestname == '') ? FALSE : ' ('.$manifestname.')';
 							
 							$options[$dept->dept_id] = $dept->dept_name.$manifest;
 						}
@@ -312,8 +312,8 @@ if ( ! function_exists('form_dropdown_dept'))
 						}
 						else
 						{
-							$name = $ci->dept->get_manifest($dept->dept_manifest, 'manifest_name');
-							$manifest = ($name == '') ? FALSE : ' ('.$name.')';
+							$manifestname = $ci->dept->get_manifest($dept->dept_manifest, 'manifest_name');
+							$manifest = ($manifestname == '') ? FALSE : ' ('.$manifestname.')';
 							
 							$options[$dept->dept_id] = $dept->dept_name.$manifest;
 						}
@@ -426,8 +426,8 @@ if ( ! function_exists('form_dropdown_position'))
 			{
 				$dept = $ci->dept->get_dept($pos->pos_dept, array('dept_name', 'dept_type', 'dept_display', 'dept_manifest'));
 				
-				$name = $ci->dept->get_manifest($dept['dept_manifest'], 'manifest_name');
-				$manifest = ($name == '') ? FALSE : ' ('.$name.')';
+				$manifestname = $ci->dept->get_manifest($dept['dept_manifest'], 'manifest_name');
+				$manifest = ($manifestname == '') ? FALSE : ' ('.$manifestname.')';
 				$fullname = $dept['dept_name'].$manifest;
 				
 				if (($dept_type == 'playing' && $dept['dept_type'] == 'playing') ||
