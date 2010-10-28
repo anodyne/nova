@@ -9,3 +9,8 @@ application/assets/images/missions/
 !application/assets/images/missions/index.html
 application/assets/images/tour/
 !application/assets/images/tour/index.html
+
+*~
+*.bak
+Thumbs.db
+.DS_Store
