@@ -5,10 +5,10 @@
 |---------------------------------------------------------------
 |
 | File: controllers/base/upgrade_base.php
-| System Version: 1.1
+| System Version: 1.2
 |
-| Changes: updated the upgrade script to handle upgrading from SMS
-|	to the new specs and tour formats
+| Changes: fixed bug where the spec items weren't properly upgraded
+|	during the upgrade process
 |
 */
 
@@ -1131,98 +1131,122 @@ class Upgrade_base extends Controller {
 						1 => array(
 							'data_value' => $row->shipClass,
 							'data_item' => 1,
+							'data_field' => 1,
 							'data_updated' => now()),
 						2 => array(
 							'data_value' => $row->shipRole,
 							'data_item' => 1,
+							'data_field' => 2,
 							'data_updated' => now()),
 						3 => array(
 							'data_value' => $row->duration,
 							'data_item' => 1,
+							'data_field' => 3,
 							'data_updated' => now()),
 						4 => array(
 							'data_value' => $row->refit .' '. $row->refitUnit,
 							'data_item' => 1,
+							'data_field' => 4,
 							'data_updated' => now()),
 						5 => array(
 							'data_value' => $row->resupply .' '. $row->resupplyUnit,
 							'data_item' => 1,
+							'data_field' => 5,
 							'data_updated' => now()),
 						6 => array(
 							'data_value' => $row->length,
 							'data_item' => 1,
+							'data_field' => 6,
 							'data_updated' => now()),
 						7 => array(
 							'data_value' => $row->width,
 							'data_item' => 1,
+							'data_field' => 7,
 							'data_updated' => now()),
 						8 => array(
 							'data_value' => $row->height,
 							'data_item' => 1,
+							'data_field' => 8,
 							'data_updated' => now()),
 						9 => array(
 							'data_value' => $row->decks,
 							'data_item' => 1,
+							'data_field' => 9,
 							'data_updated' => now()),
 						10 => array(
 							'data_value' => $row->complimentOfficers,
 							'data_item' => 1,
+							'data_field' => 10,
 							'data_updated' => now()),
 						11 => array(
 							'data_value' => $row->complimentEnlisted,
 							'data_item' => 1,
+							'data_field' => 11,
 							'data_updated' => now()),
 						12 => array(
 							'data_value' => $row->complimentMarines,
 							'data_item' => 1,
+							'data_field' => 12,
 							'data_updated' => now()),
 						13 => array(
 							'data_value' => $row->complimentCivilians,
 							'data_item' => 1,
+							'data_field' => 13,
 							'data_updated' => now()),
 						14 => array(
 							'data_value' => $row->complimentEmergency,
 							'data_item' => 1,
+							'data_field' => 14,
 							'data_updated' => now()),
 						15 => array(
 							'data_value' => $row->warpCruise,
 							'data_item' => 1,
+							'data_field' => 15,
 							'data_updated' => now()),
 						16 => array(
 							'data_value' => $row->warpMaxCruise .' '. $row->warpMaxTime,
 							'data_item' => 1,
+							'data_field' => 16,
 							'data_updated' => now()),
 						17 => array(
 							'data_value' => $row->warpEmergency .' '. $row->warpEmergencyTime,
 							'data_item' => 1,
+							'data_field' => 17,
 							'data_updated' => now()),
 						18 => array(
 							'data_value' => $row->shields,
 							'data_item' => 1,
+							'data_field' => 18,
 							'data_updated' => now()),
 						19 => array(
 							'data_value' => $row->defensive,
 							'data_item' => 1,
+							'data_field' => 19,
 							'data_updated' => now()),
 						20 => array(
 							'data_value' => $row->phasers ."\r\n\r\n". $row->torpedoLaunchers ."\r\n\r\n". $row->torpedoCompliment,
 							'data_item' => 1,
+							'data_field' => 20,
 							'data_updated' => now()),
 						21 => array(
 							'data_value' => $row->shuttlebays,
 							'data_item' => 1,
+							'data_field' => 21,
 							'data_updated' => now()),
 						22 => array(
 							'data_value' => $row->shuttles,
 							'data_item' => 1,
+							'data_field' => 22,
 							'data_updated' => now()),
 						23 => array(
 							'data_value' => $row->fighters,
 							'data_item' => 1,
+							'data_field' => 23,
 							'data_updated' => now()),
 						24 => array(
 							'data_value' => $row->runabouts,
 							'data_item' => 1,
+							'data_field' => 24,
 							'data_updated' => now()),
 					);
 					
@@ -1230,7 +1254,8 @@ class Upgrade_base extends Controller {
 					
 					foreach ($specs as $key => $value)
 					{
-						$count += $this->specs->update_spec_field_data($key, $value);
+						//$count += $this->specs->update_spec_field_data($key, $value);
+						$count += $this->specs->add_spec_field_data($value);
 					}
 					
 					/* set the message */
