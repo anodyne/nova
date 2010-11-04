@@ -10,6 +10,13 @@ application/assets/images/missions/
 application/assets/images/tour/
 !application/assets/images/tour/index.html
 
+application/views/
+!application/views/_base/
+!application/views/_base_override/
+!application/views/default/
+!application/views/index.html
+!application/views/template.php
+
 *~
 *.bak
 Thumbs.db
