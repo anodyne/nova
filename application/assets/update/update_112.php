@@ -253,6 +253,12 @@ $this->db->where('comp_name', 'jQuery');
 $this->db->update('system_components', array('comp_version' => '1.4.3'));
 
 /**
+ * update the jquery ui version info
+ */
+$this->db->where('comp_name', 'jQuery UI');
+$this->db->update('system_components', array('comp_version' => '1.8.6'));
+
+/**
  * add the new access page information
  */
 $page = array(
