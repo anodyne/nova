@@ -8,7 +8,8 @@
 | System Version: 1.2
 |
 | Changes: updated department management to allow for duplicating
-|	departments and their positions
+|	departments and their positions; updated department management
+|	to display departments better
 |
 */
 
@@ -928,36 +929,35 @@ class Manage_base extends Controller {
 					
 					/* write everything to the template */
 					$this->template->write_view('flash_message', '_base/admin/pages/flash', $flash);
-					
-					break;
+				break;
 					
 				case 'edit':
-					$array = array();
-					$update = 0;
+					// grab the ID
+					$id = $this->input->post('id', TRUE);
+					$id = ( ! is_numeric($id)) ? FALSE : $id;
 					
-					foreach ($_POST as $key => $value)
-					{
-						$loc = strpos($key, '_');
-						
-						if ($loc !== FALSE)
-						{
-							$loc_pos = substr($key, 0, $loc);
-							
-							$new_key = 'dept_'. substr($key, ($loc+1));
-							$array[$loc_pos][$new_key] = $value;
-						}
-					}
+					// build the array to update the record with
+					$update_array = array(
+						'dept_name' => $this->input->post('dept_name', TRUE),
+						'dept_type' => $this->input->post('dept_type', TRUE),
+						'dept_order' => $this->input->post('dept_order', TRUE),
+						'dept_display' => $this->input->post('dept_display', TRUE),
+						'dept_desc' => $this->input->post('dept_desc', TRUE),
+						'dept_parent' => $this->input->post('dept_parent', TRUE),
+						'dept_manifest' => $this->input->post('dept_manifest', TRUE),
+					);
 					
-					foreach ($array as $a => $b)
-					{ /* update the positions */
-						$update += $this->dept->update_dept($a, $b);
-					}
+					// update the record
+					$update = $this->dept->update_dept($id, $update_array);
+					
+					// optimize the table
+					$this->sys->optimize_table('departments_'.GENRE);
 					
 					if ($update > 0)
 					{
 						$message = sprintf(
-							lang('flash_success_plural'),
-							ucfirst(lang('global_departments')),
+							lang('flash_success'),
+							ucfirst(lang('global_department')),
 							lang('actions_updated'),
 							''
 						);
@@ -968,8 +968,8 @@ class Manage_base extends Controller {
 					else
 					{
 						$message = sprintf(
-							lang('flash_failure_plural'),
-							ucfirst(lang('global_departments')),
+							lang('flash_failure'),
+							ucfirst(lang('global_department')),
 							lang('actions_updated'),
 							''
 						);
@@ -978,10 +978,9 @@ class Manage_base extends Controller {
 						$flash['message'] = text_output($message);
 					}
 					
-					/* write everything to the template */
+					// write everything to the template
 					$this->template->write_view('flash_message', '_base/admin/pages/flash', $flash);
-					
-					break;
+				break;
 					
 				case 'delete':
 					$all = $this->input->post('delete', TRUE);
@@ -1063,8 +1062,7 @@ class Manage_base extends Controller {
 					
 					/* write everything to the template */
 					$this->template->write_view('flash_message', '_base/admin/pages/flash', $flash);
-					
-					break;
+				break;
 					
 				case 'duplicate':
 					$id = $this->input->post('id', TRUE);
@@ -1149,84 +1147,27 @@ class Manage_base extends Controller {
 		$departments = $this->dept->get_all_depts('asc', '');
 		$manifests = $this->dept->get_all_manifests(NULL);
 		
-		$data['parent'][0] = ucfirst(lang('labels_none'));
-		$data['manifest'][0] = ucfirst(lang('labels_none'));
-		
 		if ($departments->num_rows() > 0)
 		{
-			foreach ($departments->result() as $department)
+			foreach ($departments->result() as $d)
 			{
-				$dept[$department->dept_id] = $department->dept_name;
-				$data['parent'][$department->dept_id] = $department->dept_name;
+				// make sure we have the manifest ID set properly
+				$manifest = ($d->dept_manifest === NULL) ? 0 : $d->dept_manifest;
 				
-				$sub = $this->dept->get_sub_depts($department->dept_id, 'asc', '');
-				
-				if ($sub->num_rows() > 0)
-				{
-					foreach ($sub->result() as $s)
-					{
-						$dept[$s->dept_id] = $s->dept_name;
-					}
-				}
+				$data['depts'][$manifest][$d->dept_id] = $d;
 			}
 			
 			if ($manifests->num_rows() > 0)
 			{
 				foreach ($manifests->result() as $m)
 				{
-					$data['manifest'][$m->manifest_id] = $m->manifest_name;
-				}
-			}
-			
-			foreach ($dept as $key => $value)
-			{
-				$item = $this->dept->get_dept($key);
-				
-				if ($item !== FALSE)
-				{
-					$data['inputs'][$item->dept_id] = array(
-						'name' => array(
-							'name' => $item->dept_id .'_name',
-							'id' => $item->dept_id .'_name',
-							'value' => $item->dept_name),
-						'desc' => array(
-							'name' => $item->dept_id .'_desc',
-							'id' => $item->dept_id .'_desc',
-							'value' => $item->dept_desc,
-							'rows' => 8),
-						'order' => array(
-							'name' => $item->dept_id .'_order',
-							'id' => $item->dept_id .'_order',
-							'value' => $item->dept_order,
-							'class' => 'small'),
-						'delete' => array(
-							'name' => 'delete[]',
-							'id' => $item->dept_id .'_id',
-							'value' => $item->dept_id)
-					);
-					
-					$data['values'][$item->dept_id]['display'] = array(
-						'y' => ucwords(lang('labels_yes')),
-						'n' => ucwords(lang('labels_no')),
-					);
-					
-					$data['values'][$item->dept_id]['type'] = array(
-						'playing' => ucwords(lang('status_playing')),
-						'nonplaying' => ucwords(lang('status_nonplaying')),
-					);
-					
-					$status = ($item->dept_manifest === NULL || $item->dept_manifest == 0)
-						? 'unassigned'
-						: 'assigned';
-					
-					$data['depts'][$status][$item->dept_id]['id'] = $item->dept_id;
-					$data['depts'][$status][$item->dept_id]['display'] = $item->dept_display;
-					$data['depts'][$status][$item->dept_id]['type'] = $item->dept_type;
-					$data['depts'][$status][$item->dept_id]['parent'] = $item->dept_parent;
-					$data['depts'][$status][$item->dept_id]['manifest'] = $item->dept_manifest;
+					$data['manifests'][$m->manifest_id] = $m->manifest_name;
 				}
 			}
 		}
+		
+		$data['parent'][0] = ucfirst(lang('labels_none'));
+		$data['manifest'][0] = ucfirst(lang('labels_none'));
 		
 		/* figure out where the view should be coming from */
 		$view_loc = view_location('manage_depts', $this->skin, 'admin');
@@ -1257,10 +1198,10 @@ class Manage_base extends Controller {
 			'type' => ucfirst(lang('labels_type')),
 			'desc' => ucfirst(lang('labels_desc')),
 			'parent' => ucwords(lang('labels_parent') .' '. lang('global_department')),
-			'duplicate' => ucfirst(lang('actions_duplicate')),
 			'assigned' => ucwords(lang('actions_assigned').' '.lang('global_departments')),
 			'unassigned' => ucwords(lang('labels_unassigned').' '.lang('global_departments')),
 			'manifest' => ucfirst(lang('labels_manifest')),
+			'no_unassigned' => sprintf(lang('error_not_found'), lang('labels_unassigned').' '.lang('global_departments')),
 		);
 		
 		$data['images'] = array(
@@ -1268,6 +1209,21 @@ class Manage_base extends Controller {
 				'src' => img_location('icon-add.png', $this->skin, 'admin'),
 				'alt' => '',
 				'class' => 'inline_img_left'),
+			'delete' => array(
+				'src' => img_location('icon-delete.png', $this->skin, 'admin'),
+				'alt' => lang('actions_delete'),
+				'title' => ucfirst(lang('actions_delete')),
+				'class' => 'image'),
+			'edit' => array(
+				'src' => img_location('icon-edit.png', $this->skin, 'admin'),
+				'alt' => lang('actions_edit'),
+				'title' => ucfirst(lang('actions_edit')),
+				'class' => 'image'),
+			'duplicate' => array(
+				'src' => img_location('icon-duplicate.png', $this->skin, 'admin'),
+				'alt' => lang('actions_duplicate'),
+				'title' => ucfirst(lang('actions_duplicate')),
+				'class' => 'image'),
 		);
 		
 		$data['buttons'] = array(

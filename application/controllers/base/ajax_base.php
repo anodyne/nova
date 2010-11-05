@@ -8,7 +8,8 @@
 | System Version: 1.2
 |
 | Changes: added method for handling deleting a ban; added method for
-|	duplicating a department confirmation
+|	duplicating a department confirmation; added method for editing
+|	a department
 |
 */
 
@@ -5512,6 +5513,117 @@ class Ajax_base extends Controller {
 		
 		/* figure out where the view should come from */
 		$ajax = ajax_location('edit_deck', $skin, 'admin');
+		
+		/* write the data to the template */
+		$this->template->write_view('content', $ajax, $data);
+		
+		/* render the template */
+		$this->template->render();
+	}
+	
+	function edit_dept()
+	{
+		/* load the resources */
+		$this->load->model('depts_model', 'dept');
+		
+		$head = sprintf(
+			lang('fbx_head'),
+			ucwords(lang('actions_edit')),
+			ucwords(lang('global_department'))
+		);
+		
+		/* data being sent to the facebox */
+		$data['header'] = $head;
+		$data['id'] = $this->uri->segment(3, 0, TRUE);
+		
+		// get the department information
+		$dept = $this->dept->get_dept($data['id']);
+		
+		/* input parameters */
+		$data['inputs'] = array(
+			'name' => array(
+				'name' => 'dept_name',
+				'class' => 'hud',
+				'value' => $dept->dept_name),
+			'order' => array(
+				'name' => 'dept_order',
+				'class' => 'hud small',
+				'value' => $dept->dept_order),
+			'desc' => array(
+				'name' => 'dept_desc',
+				'class' => 'hud',
+				'rows' => 6,
+				'value' => $dept->dept_desc),
+			'display_y' => array(
+				'name' => 'dept_display',
+				'id' => 'display_y',
+				'class' => 'hud',
+				'value' => 'y',
+				'checked' => ($dept->dept_display == 'y') ? TRUE : FALSE),
+			'display_n' => array(
+				'name' => 'dept_display',
+				'id' => 'display_n',
+				'class' => 'hud',
+				'value' => 'n',
+				'checked' => ($dept->dept_display == 'n') ? TRUE : FALSE),
+			'submit' => array(
+				'type' => 'submit',
+				'class' => 'hud_button',
+				'name' => 'submit',
+				'value' => 'submit',
+				'content' => ucwords(lang('actions_submit')))
+		);
+		
+		$depts = $this->dept->get_all_depts('asc', '');
+		
+		$data['values']['depts'][0] = ucfirst(lang('labels_none'));
+		$data['values']['manifest'][0] = ucfirst(lang('labels_none'));
+		
+		if ($depts->num_rows() > 0)
+		{
+			foreach ($depts->result() as $d)
+			{
+				$data['values']['depts'][$d->dept_id] = $d->dept_name;
+			}
+		}
+		
+		$manifests = $this->dept->get_all_manifests(NULL);
+		
+		if ($manifests->num_rows() > 0)
+		{
+			foreach ($manifests->result() as $m)
+			{
+				$data['values']['manifest'][$m->manifest_id] = $m->manifest_name;
+			}
+		}
+		
+		$data['values']['type'] = array(
+			'playing' => ucfirst(lang('status_playing')),
+			'nonplaying' => ucfirst(lang('status_nonplaying'))
+		);
+		
+		// set the defaults
+		$data['default']['type'] = $dept->dept_type;
+		$data['default']['parent'] = $dept->dept_parent;
+		$data['default']['manifest'] = $dept->dept_manifest;
+		
+		$data['label'] = array(
+			'name' => ucfirst(lang('labels_name')),
+			'type' => ucfirst(lang('labels_type')),
+			'desc' => ucfirst(lang('labels_desc')),
+			'display' => ucfirst(lang('labels_display')),
+			'on' => ucfirst(lang('labels_on')),
+			'off' => ucfirst(lang('labels_off')),
+			'order' => ucfirst(lang('labels_order')),
+			'parent' => ucwords(lang('labels_parent') .' '. lang('global_department')),
+			'manifest' => ucfirst(lang('labels_manifest')),
+		);
+		
+		/* figure out the skin */
+		$skin = $this->session->userdata('skin_admin');
+		
+		/* figure out where the view should come from */
+		$ajax = ajax_location('edit_dept', $skin, 'admin');
 		
 		/* write the data to the template */
 		$this->template->write_view('content', $ajax, $data);

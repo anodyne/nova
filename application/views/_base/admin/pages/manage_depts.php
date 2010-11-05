@@ -3,7 +3,7 @@
 <?php echo text_output($text);?>
 
 <p class="bold">
-	<a href="#" rel="facebox" class="image"><?php echo img($images['add']) .' '. $label['add_dept'];?></a>
+	<a href="#" rel="facebox" myaction="add" class="image"><?php echo img($images['add']) .' '. $label['add_dept'];?></a>
 </p><br />
 
 <?php if (isset($depts)): ?>
@@ -14,151 +14,67 @@
 		</ul>
 		
 		<div id="one">
-			<div class="zebra">
-			<?php echo form_open('manage/depts/edit/assigned');?>
-			
-				<?php foreach ($depts['assigned'] as $d): ?>
-					<div id="<?php echo $d['id'];?>" class="padding_p5_0_p5_0">
-						<table class="table100">
+			<?php foreach ($depts as $key => $value): ?>
+				<?php if ($key > 0): ?>
+					<?php echo text_output($manifests[$key], 'h2', 'page-subhead');?>
+					
+					<table class="table100 zebra">
+						<tbody>
+						<?php foreach ($value as $d): ?>
 							<tr>
-								<td class="col_40pct" colspan="3">
-									<strong><?php echo $label['name'];?></strong><br />
-									<?php echo form_input($inputs[$d['id']]['name']);?>
+								<td class="col_15"></td>
+								<td>
+									<strong class="fontMedium"><?php echo $d->dept_name;?></strong><br />
+									<span class="gray fontSmall"><?php echo $d->dept_desc;?></span>
 								</td>
-								<td class="col_5"></td>
-								<td class="align_top" colspan="2" rowspan="3">
-									<strong><?php echo $label['desc'];?></strong><br />
-									<?php echo form_textarea($inputs[$d['id']]['desc']);?>
-								</td>
-							</tr>
-							
-							<tr>
-								<td class="col_40pct" colspan="3">
-									<strong><?php echo $label['parent'];?></strong><br />
-									<?php echo form_dropdown($d['id'] .'_parent', $parent, $d['parent']);?>
-								</td>
-								<td class="col_5"></td>
-							</tr>
-							
-							<tr>
-								<td class="col_40pct" colspan="3">
-									<strong><?php echo $label['manifest'];?></strong><br />
-									<?php echo form_dropdown($d['id'] .'_manifest', $manifest, $d['manifest']);?>
-								</td>
-								<td class="col_5"></td>
-							</tr>
-							
-							<tr>
-								<td class="align_top">
-									<strong><?php echo $label['type'];?></strong><br />
-									<?php echo form_dropdown($d['id'] .'_type', $values[$d['id']]['type'], $d['type']);?>
-								</td>
-								<td class="align_top">
-									<strong><?php echo $label['order'];?></strong><br />
-								<?php echo form_input($inputs[$d['id']]['order']);?>
-								</td>
-								<td class="align_top">
-									<strong><?php echo $label['display'];?></strong><br />
-									<?php echo form_dropdown($d['id'] .'_display', $values[$d['id']]['display'], $d['display']);?>
-								</td>
-								<td class="col_5"></td>
-								<td class="align_right align_middle UITheme">
-									<button action="duplicate" class="button-small" id="<?php echo $d['id'];?>">
-										<span class="ui-icon ui-icon-copy float_right" style="margin-top:-1px"></span>
-										<span class="text"><?php echo $label['duplicate'];?></span>&nbsp;
-									</button>
-									
+								<td class="col_30"></td>
+								<td class="col_75 align_right">
+									<a href="#" rel="facebox" myid="<?php echo $d->dept_id;?>" myaction="duplicate" class="image"><?php echo img($images['duplicate']);?></a>
 									&nbsp;
-									
-									<button action="delete" class="button-small" id="<?php echo $d['id'];?>">
-										<span class="ui-icon ui-icon-close float_right" style="margin-top:-1px"></span>
-										<span class="text"><?php echo $label['delete'];?></span>&nbsp;
-									</button>
+									<a href="#" rel="facebox" myid="<?php echo $d->dept_id;?>" myaction="delete" class="image"><?php echo img($images['delete']);?></a>
+									&nbsp;
+									<a href="#" rel="facebox" myid="<?php echo $d->dept_id;?>" myaction="edit" class="image"><?php echo img($images['edit']);?></a>
 								</td>
-								<td class="col_5"></td>
 							</tr>
-						</table>
-					</div>
-				<?php endforeach;?>
-				
-				<br />
-				<?php echo form_button($buttons['update']);?>
-			<?php echo form_close();?>
-			</div>
+						<?php endforeach;?>
+						</tbody>
+					</table>
+				<?php endif;?>
+			<?php endforeach;?>
 		</div>
 		
 		<div id="two">
-			<div class="zebra">
-			<?php echo form_open('manage/depts/edit/unassigned');?>
-			
-				<?php foreach ($depts['unassigned'] as $d): ?>
-					<div id="<?php echo $d['id'];?>" class="padding_p5_0_p5_0">
-						<table class="table100">
-							<tr>
-								<td class="col_40pct" colspan="3">
-									<strong><?php echo $label['name'];?></strong><br />
-									<?php echo form_input($inputs[$d['id']]['name']);?>
-								</td>
-								<td class="col_5"></td>
-								<td class="align_top" colspan="2" rowspan="3">
-									<strong><?php echo $label['desc'];?></strong><br />
-									<?php echo form_textarea($inputs[$d['id']]['desc']);?>
-								</td>
-							</tr>
-							
-							<tr>
-								<td class="col_40pct" colspan="3">
-									<strong><?php echo $label['parent'];?></strong><br />
-									<?php echo form_dropdown($d['id'] .'_parent', $parent, $d['parent']);?>
-								</td>
-								<td class="col_5"></td>
-							</tr>
-							
-							<tr>
-								<td class="col_40pct" colspan="3">
-									<strong><?php echo $label['manifest'];?></strong><br />
-									<?php echo form_dropdown($d['id'] .'_manifest', $manifest, $d['manifest']);?>
-								</td>
-								<td class="col_5"></td>
-							</tr>
-							
-							<tr>
-								<td class="align_top">
-									<strong><?php echo $label['type'];?></strong><br />
-									<?php echo form_dropdown($d['id'] .'_type', $values[$d['id']]['type'], $d['type']);?>
-								</td>
-								<td class="align_top">
-									<strong><?php echo $label['order'];?></strong><br />
-								<?php echo form_input($inputs[$d['id']]['order']);?>
-								</td>
-								<td class="align_top">
-									<strong><?php echo $label['display'];?></strong><br />
-									<?php echo form_dropdown($d['id'] .'_display', $values[$d['id']]['display'], $d['display']);?>
-								</td>
-								<td class="col_5"></td>
-								<td class="align_right align_middle UITheme">
-									<button action="duplicate" class="button-small" id="<?php echo $d['id'];?>">
-										<span class="ui-icon ui-icon-copy float_right" style="margin-top:-1px"></span>
-										<span class="text"><?php echo $label['duplicate'];?></span>&nbsp;
-									</button>
-									
-									&nbsp;
-									
-									<button action="delete" class="button-small" id="<?php echo $d['id'];?>">
-										<span class="ui-icon ui-icon-close float_right" style="margin-top:-1px"></span>
-										<span class="text"><?php echo $label['delete'];?></span>&nbsp;
-									</button>
-								</td>
-								<td class="col_5"></td>
-							</tr>
+			<?php if (isset($key[0])): ?>
+				<?php foreach ($depts as $key => $value): ?>
+					<?php if ($key == 0): ?>
+						<?php echo text_output($manifests[$key], 'h2', 'page-subhead');?>
+						
+						<table class="table100 zebra">
+							<tbody>
+							<?php foreach ($value as $d): ?>
+								<tr>
+									<td class="col_15"></td>
+									<td>
+										<strong class="fontMedium"><?php echo $d->dept_name;?></strong><br />
+										<span class="gray fontSmall"><?php echo $d->dept_desc;?></span>
+									</td>
+									<td class="col_30"></td>
+									<td class="col_75 align_right">
+										<a href="#" rel="facebox" myid="<?php echo $d->dept_id;?>" myaction="duplicate" class="image"><?php echo img($images['duplicate']);?></a>
+										&nbsp;
+										<a href="#" rel="facebox" myid="<?php echo $d->dept_id;?>" myaction="delete" class="image"><?php echo img($images['delete']);?></a>
+										&nbsp;
+										<a href="#" rel="facebox" myid="<?php echo $d->dept_id;?>" myaction="edit" class="image"><?php echo img($images['edit']);?></a>
+									</td>
+								</tr>
+							<?php endforeach;?>
+							</tbody>
 						</table>
-					</div>
+					<?php endif;?>
 				<?php endforeach;?>
-				
-				<br />
-				<?php echo form_button($buttons['update']);?>
-			<?php echo form_close();?>
-			</div>
+			<?php else: ?>
+				<?php echo text_output($label['no_unassigned'], 'h3', 'orange');?>
+			<?php endif;?>
 		</div>
 	</div>
 <?php endif;?>
