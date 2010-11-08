@@ -32,7 +32,7 @@ class Utility {
 		// check the install status
 		$installed = $ci->sys->check_install_status();
 		
-		if ($installed === TRUE)
+		if ($installed === TRUE && $ci->db->table_exists('bans'))
 		{
 			// run the method
 			$bans = $ci->sys->get_bans(2, FALSE);
