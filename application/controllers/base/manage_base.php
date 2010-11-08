@@ -9,7 +9,8 @@
 |
 | Changes: updated department management to allow for duplicating
 |	departments and their positions; updated department management
-|	to display departments better
+|	to display departments better; updated position management to
+|	split departments out by manifest
 |
 */
 
@@ -3196,14 +3197,14 @@ class Manage_base extends Controller {
 	
 	function positions()
 	{
-		/* check access */
+		// check access
 		$this->auth->check_access();
 		
-		/* load the resources */
+		// load the resources
 		$this->load->model('positions_model', 'pos');
 		$this->load->model('depts_model', 'dept');
 		
-		/* set the variables */
+		// set the variables
 		$g_dept = $this->uri->segment(3, 1, TRUE);
 		
 		if (isset($_POST['submit']))
@@ -3317,28 +3318,37 @@ class Manage_base extends Controller {
 			}
 		}
 		
-		$positions = $this->pos->get_dept_positions($g_dept, '');
-		$departments = $this->dept->get_all_depts('asc', '');
+		// get the positions for the current department
+		$positions = $this->pos->get_dept_positions($g_dept, NULL);
+		
+		// get all the departments
+		$departments = $this->dept->get_all_depts('asc', NULL);
 		
 		if ($departments->num_rows() > 0)
 		{
-			foreach ($departments->result() as $dept)
+			foreach ($departments->result() as $d)
 			{
-				$data['depts'][$dept->dept_id] = $dept->dept_name;
+				$name = ($d->dept_manifest > 0 && $d->dept_manifest !== NULL)
+					? $this->dept->get_manifest($d->dept_manifest, 'manifest_name')
+					: ucwords(lang('labels_unassigned').' '.lang('global_departments'));
+					
+				$data['depts'][$d->dept_manifest]['name'] = $name;
+				$data['depts'][$d->dept_manifest]['items'][$d->dept_id] = $d->dept_name;
 				
-				$subd = $this->dept->get_sub_depts($dept->dept_id, 'asc', '');
+				$data['deptnames'][$d->dept_id] = $d->dept_name;
+				
+				$subd = $this->dept->get_sub_depts($d->dept_id, 'asc', NULL);
 				
 				if ($subd->num_rows() > 0)
 				{
-					foreach ($subd->result() as $sub)
+					foreach ($subd->result() as $s)
 					{
-						$data['depts'][$sub->dept_id] = $sub->dept_name;
+						$data['depts'][$d->dept_manifest]['items'][$s->dept_id] = $s->dept_name;
+						$data['deptnames'][$s->dept_id] = $s->dept_name;
 					}
 				}
 			}
 		}
-		
-		$data['dept_count'] = count($data['depts']);
 		
 		if ($positions->num_rows() > 0)
 		{
@@ -3415,7 +3425,7 @@ class Manage_base extends Controller {
 			'type' => ucfirst(lang('labels_type')),
 			'desc' => ucfirst(lang('labels_desc')),
 			'dept' => ucfirst(lang('global_department')),
-			'depts' => ucfirst(lang('global_departments')) .':',
+			'depts' => ucfirst(lang('global_departments')),
 			'more' => ucfirst(lang('labels_more'))
 		);
 		

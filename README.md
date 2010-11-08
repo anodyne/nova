@@ -23,6 +23,7 @@ Anodyne Production's next-generation RPG management system combines popular feat
 * updated the autoload config item to not try and autoload the input library since CI loads it by default
 * updated the user model with a method to pull user information based on characters in the database
 * updated department management with a better interface for working with departments
+* updated position management to split departments out by manifest
 * updated the language files
     * [base\_lang] added _labels\_ban_
     * [base\_lang] added _labels\_bans_

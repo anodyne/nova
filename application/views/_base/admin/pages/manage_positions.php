@@ -3,17 +3,25 @@
 <?php echo text_output($text);?>
 
 <div class="info-full">
-	<p class="bold">
-		<?php echo $label['depts'];?><br />
-		<?php $i = 1;?>
-		<?php foreach ($depts as $key => $value): ?>
-			<?php echo anchor('manage/positions/'. $key, $value);?>
-			<?php if ($i != $dept_count): ?>
-				&middot;
-			<?php endif;?>
-			<?php ++$i;?>
+	<?php echo text_output($label['depts'], 'h4');?>
+	
+	<?php if (isset($depts)): ?>
+		<?php foreach ($depts as $d): ?>
+			<p><strong><?php echo $d['name'];?></strong></p>
+			
+			<p class="fontSmall">
+			<?php $count = count($d['items']);?>
+			<?php $i = 1;?>
+			<?php foreach ($d['items'] as $key => $value): ?>
+				<?php echo anchor('manage/positions/'. $key, $value);?>
+				<?php if ($i != $count): ?>
+					&middot;
+				<?php endif;?>
+				<?php ++$i;?>
+			<?php endforeach;?>
+			</p>
 		<?php endforeach;?>
-	</p>
+	<?php endif;?>
 </div>
 
 <p class="bold">
@@ -25,7 +33,7 @@
 <br /> <hr /> <br />
 
 <?php if (isset($positions)): ?>
-	<?php echo text_output($depts[$g_dept], 'h2');?>
+	<?php echo text_output($deptnames[$g_dept], 'h2');?>
 	<div class="zebra">
 	<?php echo form_open('manage/positions/'. $g_dept .'/edit');?>
 	
