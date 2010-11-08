@@ -44,7 +44,7 @@
 		</div>
 		
 		<div id="two">
-			<?php if (isset($key[0])): ?>
+			<?php if (isset($depts[0])): ?>
 				<?php foreach ($depts as $key => $value): ?>
 					<?php if ($key == 0): ?>
 						<?php echo text_output($manifests[$key], 'h2', 'page-subhead');?>
