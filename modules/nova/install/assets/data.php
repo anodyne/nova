@@ -2100,6 +2100,11 @@ $messages = array(
 		'message_content' => "Define your site credits through the Site Messages page.",
 		'message_type' => 'message'),
 	array(
+		'message_key' => 'footer',
+		'message_label' => 'Footer Information',
+		'message_content' => "",
+		'message_type' => 'message'),
+	array(
 		'message_key' => 'contact',
 		'message_label' => 'Contact Page Message',
 		'message_content' => "Have a question about the sim? Need to get in touch with the game master? Use the form below to drop us a message with your question or comment and we'll get back to you as soon as possible.",

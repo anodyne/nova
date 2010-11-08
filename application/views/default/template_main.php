@@ -2,31 +2,8 @@
 	<div class="system_warning"><?php echo __("You need to have Javascript turned on to use all of Nova 2's features.");?></div>
 </noscript>
 
-<?php if (Auth::is_logged_in()): ?>
-	<!-- USER PANEL -->
-	<div id="panel">
-		<div class="panel-body">
-			<div class="wrapper">
-				<table class="table100">
-					<tbody>
-						<tr>
-							<td class="panel_1 align_top"><?php echo $panel_1;?></td>
-							<td class="panel_spacer"></td>
-							<td class="panel_2 align_top"><?php echo $panel_2;?></td>
-							<td class="panel_spacer"></td>
-							<td class="panel_3 align_top"><?php echo $panel_3;?></td>
-						</tr>
-					</tbody>
-				</table>
-			</div>
-		</div>
-		<div class="panel-handle UITheme">
-			<div class="wrapper">
-				<?php echo $panel_workflow;?>
-			</div>
-		</div>
-	</div>
-<?php endif; ?>
+<!-- USER PANEL -->
+<?php echo $panel;?>
 
 <!-- HEAD -->
 <div id="head-top"></div>
@@ -36,7 +13,7 @@
 	<div class="wrapper">
 		<div class="nav-main">
 			<?php echo html::image('application/views/'.$skin.'/'.$sec.'/images/menu-nova.png', array('class' => 'float-right'));?>
-			<?php echo $nav_main;?>
+			<?php echo $navmain;?>
 		</div>
 	</div>
 </div>
@@ -48,7 +25,7 @@
 		<div class="nav-sub">
 			<h1><?php echo Jelly::query('setting')->where('key', '=', 'sim_name')->limit(1)->select()->value;?></h1>
 			<hr />
-			<?php echo $nav_sub;?>
+			<?php echo $navsub;?>
 		</div>
 		
 		<!-- PAGE CONTENT -->
@@ -61,8 +38,7 @@
 			
 			<!-- FOOTER -->
 			<div id="footer">
-				Powered by <strong>Nova</strong> from <a href="http://www.anodyne-productions.com" target="_blank">Anodyne Productions</a> | 
-				<?php echo html::anchor('main/credits', 'Site Credits');?>
+				<?php echo $footer;?>
 			</div>
 		</div>
 	</div>
