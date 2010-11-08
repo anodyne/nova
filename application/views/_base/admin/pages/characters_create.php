@@ -71,3 +71,4 @@
 	
 	<br /><?php echo form_button($button['submit']);?>
 <?php echo form_close();?>
+</div>

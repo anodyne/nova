@@ -42,6 +42,7 @@ Anodyne Production's next-generation RPG management system combines popular feat
 * fixed bug where users without an active character would be shown in the activity warning panel on the ACP
 * fixed bug where the sample post in the join application email was just a massive wall of text
 * fixed bug where the specifications weren't properly upgraded during the sms upgrade process
+* fixed bug with a missing closing tag on the create characters page
 
 ## Version History
 
