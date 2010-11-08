@@ -1,0 +1,436 @@
+/*
+|---------------------------------------------------------------
+| RESET
+|---------------------------------------------------------------
+*/
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outline:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+/*
+|---------------------------------------------------------------
+| HEADINGS
+|---------------------------------------------------------------
+*/
+h1, h2, h3, h4, p { margin: 8px 0; }
+
+h1 { font-size: 200%; }
+h2 { font-size: 150%; }
+h3 { font-size: 133%; }
+h4 { font-size: 117%; }
+
+p {
+	font-size: 100%;
+	line-height: 1.6;
+}
+
+/*
+|---------------------------------------------------------------
+| FONT SIZES
+|---------------------------------------------------------------
+*/
+.fontLarge	{ font-size: 133%; }
+.fontMedium	{ font-size: 117%; }
+.fontNormal { font-size: 100%; }
+.fontSmall	{ font-size: 92%; }
+.fontTiny	{ font-size: 80%; }
+
+/*
+|---------------------------------------------------------------
+| FONT PRESENTATION
+|---------------------------------------------------------------
+*/
+.nobold	{ font-weight: normal; }
+.bold	{ font-weight: bold; }
+.italic	{ font-style: italic; }
+
+.align_right { text-align: right; }
+
+.uppercase { text-transform: uppercase; }
+.lowercase { text-transform: lowercase; }
+
+/*
+|---------------------------------------------------------------
+| LINKS
+|---------------------------------------------------------------
+*/
+a { outline: 0; }
+
+a.image, a.image:hover {
+	border: none;
+	text-decoration: none;
+}
+
+/*
+|---------------------------------------------------------------
+| INPUTS
+|---------------------------------------------------------------
+*/
+input[type=text],
+input[type=password] {
+	margin: 0;
+	padding: 3px;
+	width: 275px;
+}
+input.small		{ width: 50px; }
+input.medium	{ width: 100px; }
+input.medium-large	{ width: 150px; }
+
+textarea {
+	margin: 0;
+	padding: 3px;
+	width: 500px;
+}
+
+select {
+	margin: 0;
+	padding: 2px;
+}
+select:focus,
+select:hover {
+	outline: 0;
+}
+
+kbd {
+	display: block;
+	margin: 0 0 5px 0;
+}
+
+.cell-label { width: 130px; }
+.cell-spacer { width: 20px; }
+
+/*
+|---------------------------------------------------------------
+| TABLES
+|---------------------------------------------------------------
+*/
+table { font-size: 100%; }
+
+.table100	{ width: 100%; }
+.table75	{ width: 75%; }
+.table50    { width: 50%; }
+
+.table560px	{ width: 560px; }
+
+td {
+	padding: 3px;
+	vertical-align: middle;
+}
+
+tr.height_40 { height: 40px; }
+tr.height_50 { height: 50px; }
+tr.height_60 { height: 60px; }
+.col_5 { width: 5px; }
+.col_15 { width: 15px; }
+.col_30 { width: 30px; }
+.col_40 { width: 40px; }
+.col_50 { width: 50px; }
+.col_75 { width: 75px; }
+.col_100 { width: 100px; }
+.col_150 { width: 150px; }
+.col_200 { width: 200px; }
+.col_245 { width: 245px; }
+.col_260 { width: 260px; }
+.col_300 { width: 300px; }
+
+.col_20pct { width: 20%; }
+.col_25pct { width: 25%; }
+.col_30pct { width: 30%; }
+.col_40pct { width: 40%; }
+.col_50pct { width: 50%; }
+.col_60pct { width: 60%; }
+
+td.align_top { vertical-align: top; }
+td.align_bottom { vertical-align: bottom; }
+td.align_middle { vertical-align: middle; }
+td.align_left { text-align: left; }
+td.align_right { text-align: right; }
+td.align_center { text-align: center; }
+
+/*
+|---------------------------------------------------------------
+| BUTTONS
+|---------------------------------------------------------------
+*/
+
+button {
+	height: 25px;
+	padding: 0 15px 1px 15px;
+	
+	outline: 0 !important;
+}
+button.button-sec {
+	margin: 0 8px;
+	padding: 0 2px 1px 2px !important;
+}
+
+button.button-small {
+	height: 20px !important;
+	padding: 0 0 1px 6px !important;
+	outline: 0 !important;
+}
+
+input.button-main,
+input.button-sec {
+	height: 25px;
+	padding: 0 10px;
+}
+
+/*
+|---------------------------------------------------------------
+| jQUERY AIDS
+|---------------------------------------------------------------
+*/
+.hidden {
+	display: none;
+	height: auto;
+}
+
+.clear_both		{ clear: both; }
+.clear_right	{ clear: right; }
+.clear_left		{ clear: left; }
+
+/*
+|---------------------------------------------------------------
+| COMMENTS AND BOXES
+|---------------------------------------------------------------
+*/
+#comments, #news_blocks { padding: .5em 0; }
+#comments p, #news_blocks p { padding: .5em; }
+
+.post_info {
+	padding: .6em;
+	width: 300px;
+}
+
+.info-full {
+    padding: 0 .6em;
+    width: 98%;
+}
+
+#notes {
+	padding: 0 .5em;
+	margin: 0 0 1em 0;
+}
+.notes_content { padding: 1px .5em .5em .5em; }
+
+/*
+|---------------------------------------------------------------
+| LISTS
+|---------------------------------------------------------------
+*/
+ul.margin0, ol.margin0 { margin: 0; }
+ul.margin1, ol.margin1 { margin: 1em; }
+
+ul.padding0, ol.padding0 { padding: 0; }
+ul.padding1, ol.padding1 { padding: .5em 1em; }
+
+#list li {
+	margin: 2px 0;
+	padding: 0 5px;
+	height: 22px;
+	line-height: 22px;
+	width: 350px;
+}
+
+#list-grid {
+	margin: 0;
+	padding: 0;
+}
+#list-grid li {
+	margin: 3px 3px 3px 0;
+	padding: 3px 3px 3px 0;
+	float: left;
+	width: 150px;
+	height: 150px;
+}
+
+#accordion ul {
+	margin: 0 1em;
+	padding: 0 1em;
+	line-height: 1.5;
+	
+	list-style: disc;
+}
+
+/*
+|---------------------------------------------------------------
+| IMAGES
+|---------------------------------------------------------------
+*/
+.inline_img_left {
+    float: left;
+    margin: 2px 6px 0 0;
+}
+.inline_img_right {
+    float: right;
+    margin: 0 0 0 6px;
+
+}
+
+/*
+|---------------------------------------------------------------
+| FLASH MESSAGES
+|---------------------------------------------------------------
+*/
+.flash_message {
+	margin: 0 0 5px 0;
+	padding: .3em 0;
+	line-height: 1;
+}
+.flash_message p {
+	margin: 0;
+	padding: 3px 5px;
+}
+
+/*
+|---------------------------------------------------------------
+| PADDINGS
+|---------------------------------------------------------------
+*/
+.top_p5em	{ padding-top: .5em; }
+.top_1em	{ padding-top: 1em; }
+
+.right_p5em	{ padding-right: .5em; }
+.right_1em	{ padding-right: 1em; }
+
+.left_p5em	{ padding-right: .5em; }
+.left_1em	{ padding-right: 1em; }
+
+.padding_all_p5em { padding: .5em; }
+
+.padding_p5_0_p5_0 { padding: .5em 0; }
+.padding_1_0_1_0 { padding: 1em 0; }
+/*
+|---------------------------------------------------------------
+| MISC
+|---------------------------------------------------------------
+*/
+
+.line_height_13 { line-height: 1.3; }
+.line_height_18 { line-height: 1.8; }
+
+.bio_main_image {
+	float: right;
+	max-width: 200px;
+	max-height: 250px;
+}
+
+.float_left { float: left; }
+.float_right { float: right; }
+
+hr {
+	height: 0;
+	width: 100%;
+}
+
+img { border: none; }
+
+.loader { height: 50px; }
+#loading_circle {
+	height: 20px;
+	width: 20px;
+}
+
+.system_warning {
+	height: 22px;
+	line-height: 22px;
+}
+
+.image-height-100 {
+	display: block;
+	max-height: 100px;
+}
+.award-small { width: 65px; }
+
+.indent-left { padding: 0 0 0 1.5em; }
+
+/*
+|---------------------------------------------------------------
+| ACP PANEL
+|---------------------------------------------------------------
+*/
+.panelnav {
+	float: left;
+	width: 220px;
+	min-height: 175px;
+	padding: 1em 0;
+}
+.panel {
+	margin-left: 220px;
+	min-height: 175px;
+	padding: 1em;
+}
+#panelmenu {
+	margin: 0;
+	padding: 0;
+}
+#panelmenu li { margin: 0 0 7px 0; }
+#panelmenu li a span {
+	display: block;
+	padding: 5px 10px;
+	margin-right: -1px;
+}
+
+#online {
+	margin: 0 0 2em 0;
+	padding: .5em;
+}
+
+.count {
+	float: right;
+	padding: 1px 7px;
+	margin: -1px 0 0 0;
+}
+
+.col1 { width: 65px; }
+
+/*
+|---------------------------------------------------------------
+| DASHBOARD
+|---------------------------------------------------------------
+*/
+.panel-handle a, .panel-handle a:hover {
+	outline: 0;
+	margin: 0;
+	padding: 0;
+	display: block;
+}
+.panel-handle a span {
+	display: block;
+	padding: 0 1em;
+}
+.panel-handle .ui-icon {
+	margin: 3px 0 0 4px;
+	padding: 0;
+}
+
+#panel .panel-body {
+	display: none;
+	padding: 0 0 1em 0;
+}
+
+.panel-handle {
+	height: 22px;
+	line-height: 22px;
+}
+
+.panel-trigger {
+	display: block;
+	float: right;
+	width: 115px;
+}
+
+#panel-handle-left { width: auto; }
+#panel-handle-left li {
+	float: left;
+	margin: 0 2px 0 0;
+}
+
+.panel-notify-icon {
+	float: left;
+	margin: 6px 6px 0 0;
+}
+
+.panel-clear { clear: both; }
+
+.panel_1, .panel_2, .panel_3 { width: 300px; }
+.panel_spacer { width: 30px; }
