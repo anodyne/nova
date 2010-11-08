@@ -387,5 +387,26 @@ foreach ($tables as $key => $value)
 	}
 }
 
+/**
+ * there is a bug in nova 1.1 where specification items aren't
+ * properly associated with their data. to fix this, we need
+ * to update all of the spec data. this only fixes people who
+ * updated from nova 1.0. if you upgraded from sms to nova 1.1
+ * none of your data was pulled over and you'll need to reinsert it
+ */
+
+$sdata = $this->db->get('specs_data');
+
+if ($sdata->num_rows() > 0)
+{
+	foreach ($sdata->result() as $s)
+	{
+		$uarray = array('data_item' => 1);
+		
+		$this->db->where('data_item', 0);
+		$this->db->update('specs_data', $uarray);
+	}
+}
+
 /* End of file update_112.php */
 /* Location: ./application/assets/update/update_112.php */
