@@ -14,6 +14,7 @@ application/views/
 !application/views/_base/
 !application/views/_base_override/
 !application/views/default/
+!application/views/titan/
 !application/views/index.html
 !application/views/template.php
 
