@@ -1254,7 +1254,6 @@ class Upgrade_base extends Controller {
 					
 					foreach ($specs as $key => $value)
 					{
-						//$count += $this->specs->update_spec_field_data($key, $value);
 						$count += $this->specs->add_spec_field_data($value);
 					}
 					
