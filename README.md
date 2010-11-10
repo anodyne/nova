@@ -44,6 +44,7 @@ Anodyne Production's next-generation RPG management system combines popular feat
 * fixed bug where the sample post in the join application email was just a massive wall of text
 * fixed bug where the specifications weren't properly upgraded during the sms upgrade process
 * fixed bug with a missing closing tag on the create characters page
+* fixed bug where timezone menu in site/settings pulled the wrong value to populate the field with
 
 ## Version History
 

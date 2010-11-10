@@ -70,7 +70,7 @@
 				</p>
 				<p>
 					<kbd><?php echo $label['timezone'];?></kbd>
-					<?php echo timezone_menu($this->timezone, '', 'timezone');?>
+					<?php echo timezone_menu($default['timezone'], '', 'timezone');?>
 				</p>
 				<p>
 					<kbd><?php echo $label['dst'];?></kbd>

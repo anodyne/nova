@@ -9,7 +9,8 @@
 |
 | Changes: added the ability to ban users from applying or even
 |	viewing the site altogether; added the ability to use multiple
-|	manifests
+|	manifests; fixed bug where the timezone menu pulled the wrong
+|	value to populate the field with
 |
 */
 
@@ -5199,6 +5200,7 @@ class Site_base extends Controller {
 			$data['default']['sim_type'] = $setting['sim_type'];
 			$data['default']['updates'] = $setting['updates'];
 			$data['default']['date_format'] = $setting['date_format'];
+			$data['default']['timezone'] = $setting['timezone'];
 			
 			/*
 			|---------------------------------------------------------------
