@@ -3762,7 +3762,7 @@ $system_components = array(
 		'comp_url' => 'http://www.williamsconcepts.com/ci/codeigniter/libraries/template/index.html'),
 	array(
 		'comp_name' => 'jQuery',
-		'comp_version' => '1.4.3',
+		'comp_version' => '1.4.4',
 		'comp_url' => 'http://www.jquery.com/',
 		'comp_desc' => 'jQuery is a lightweight JavaScript library that emphasizes interaction between JavaScript and HTML.'),
 	array(

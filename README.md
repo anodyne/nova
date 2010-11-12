@@ -18,7 +18,7 @@ Anodyne Production's next-generation RPG management system combines popular feat
 * updated the email sent to the game master from the join form to show the IP address of the applicant
 * updated the contact form to be simpler and use proper form validation
 * updated the departments model with methods for handling multiple manifests
-* updated jquery to version 1.4.3
+* updated jquery to version 1.4.4
 * updated jquery ui to version 1.8.6
 * updated the autoload config item to not try and autoload the input library since CI loads it by default
 * updated the user model with a method to pull user information based on characters in the database

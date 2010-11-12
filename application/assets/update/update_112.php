@@ -250,7 +250,7 @@ if (!is_null($drop_column))
  * update the jquery version info
  */
 $this->db->where('comp_name', 'jQuery');
-$this->db->update('system_components', array('comp_version' => '1.4.3'));
+$this->db->update('system_components', array('comp_version' => '1.4.4'));
 
 /**
  * update the jquery ui version info
