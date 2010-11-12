@@ -20,9 +20,8 @@
 			});
 		});
 		
-		$('a.cb').fancybox({
-			overlayOpacity:		'0.5',
-			titlePosition:		'over'
+		$("a[rel^='prettyPhoto']").prettyPhoto({
+			theme: 'dark_rounded'
 		});
 		
 		$('select.skins').change(function(){

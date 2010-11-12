@@ -20,13 +20,12 @@
 <?php if (isset($character['image']['src'])): ?>
 	<div class="bio_main_image" id="gallery">
 		<div class="fontTiny gray"><?php echo $label['gallery'];?></div><br />
-		<a href="<?php echo $character['image']['src'];?>" class="image" rel="gallery">
-			<span><?php echo img($character['image']);?></span>
-		</a>
+		<a href="<?php echo $character['image']['src'];?>" class="image" rel="prettyPhoto[gallery]"><?php echo img($character['image']);?></a>
+		
 		<div class="hidden">
 			<?php if (count($character['image_array']) > 0): ?>
 				<?php foreach ($character['image_array'] as $image): ?>
-					<a href="<?php echo $image['src'];?>" class="image" rel="gallery"><?php echo img($image);?></a>
+					<a href="<?php echo $image['src'];?>" class="image" rel="prettyPhoto[gallery]"><?php echo img($image);?></a>
 				<?php endforeach; ?>
 			<?php endif; ?>
 		</div>
