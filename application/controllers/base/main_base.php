@@ -12,7 +12,8 @@
 |	join form to take level 1 bans in to account; updated the
 |	contact form to be simpler and line up with nova 2's new
 |	contact form; fixed bug where the sample post was just one
-|	massive wall of text
+|	massive wall of text; fixed bug where the join page was
+|	calling an image from the wrong section
 |
 */
 
@@ -713,7 +714,7 @@ class Main_base extends Controller {
 		$data['header'] = ucfirst(lang('actions_join'));
 		
 		$data['loading'] = array(
-			'src' => img_location('loading-circle.gif', $this->skin, 'admin'),
+			'src' => img_location('loading-circle.gif', $this->skin, 'main'),
 			'alt' => lang('actions_loading'),
 			'class' => 'image'
 		);
