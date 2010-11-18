@@ -5,10 +5,9 @@
 |---------------------------------------------------------------
 |
 | File: controllers/user_base.php
-| System Version: 1.1.1
+| System Version: 1.2
 |
-| Changes: fixed bug where nova wouldn't display because it couldn't
-|	find the template file
+| Changes: fixed bug where an error was thrown on the all users page
 |
 */
 
@@ -735,6 +734,7 @@ class User_base extends Controller {
 			'left' => ucfirst(lang('labels_left')),
 			'name' => ucfirst(lang('labels_name')),
 			'pending' => ucwords(lang('status_pending') .' '. lang('global_users')),
+			'loading' => ucfirst(lang('actions_loading')).'...',
 		);
 		
 		/* figure out where the view files should be coming from */
