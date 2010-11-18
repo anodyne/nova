@@ -1165,6 +1165,8 @@ class Manage_base extends Controller {
 					$data['manifests'][$m->manifest_id] = $m->manifest_name;
 				}
 			}
+			
+			$data['manifests'][0] = ucwords(lang('labels_unassigned').' '.lang('global_departments'));
 		}
 		
 		$data['parent'][0] = ucfirst(lang('labels_none'));
