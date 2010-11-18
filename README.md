@@ -46,6 +46,13 @@ Anodyne Production's next-generation RPG management system combines popular feat
 * fixed bug with a missing closing tag on the create characters page
 * fixed bug where timezone menu in site/settings pulled the wrong value to populate the field with
 * fixed bug where the join page was pulling an image from the wrong location
+* fixed spacing bug in access role management
+* fixed spacing bug in news item management
+* fixed spacing bug in log management
+* fixed spacing bug in post management
+* fixed spacing bug in department management
+* fixed some errors being thrown throughout the system
+* fixed bug where the flash message view couldn't be overridden with seamless substitution
 
 ## Version History
 
