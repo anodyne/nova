@@ -23,7 +23,7 @@
 			<tr>
 				<td class="col_30pct"><strong><?php echo $value['name'];?></strong></td>
 				<td class="fontSmall"><?php echo $value['desc'];?></td>
-				<td class="col_75 align_right">
+				<td class="col_100 align_right">
 					<a href="#" rel="facebox" class="image" title="<?php echo $label['view'];?>" myID="<?php echo $value['id'];?>" myAction="view"><?php echo img($images['view']);?></a>
 					&nbsp;
 					<a href="#" rel="facebox" class="delete image" title="<?php echo $label['delete'];?>" myID="<?php echo $value['id'];?>" myAction="delete"><?php echo img($images['delete']);?></a>

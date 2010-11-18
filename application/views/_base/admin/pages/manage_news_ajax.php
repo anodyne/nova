@@ -17,7 +17,7 @@
 					</span>
 				</td>
 				<td class="col_200 align_center fontSmall"><?php echo $e['date'];?></td>
-				<td class="col_100 align_right">
+				<td class="col_150 align_right">
 					<?php echo anchor('main/viewnews/'. $e['id'], img($images['view']), array('class' => 'image'));?>
 					&nbsp;
 					<?php if ($e['status'] == 'pending'): ?>
