@@ -5,9 +5,10 @@
 |---------------------------------------------------------------
 |
 | File: controllers/base/login_base.php
-| System Version: 1.1.1
+| System Version: 1.2
 |
-| Changes: minor updates to the comments
+| Changes: fixed bug where the flash view couldn't be overridden
+|	with seamless substitution
 |
 */
 
@@ -100,8 +101,11 @@ class Login_base extends Controller {
 			$flash['status'] = 'info';
 			$flash['message'] = lang_output('error_login_5');
 			
+			// set the location of the flash view
+			$loc = view_location('flash', $this->skin, 'login');
+			
 			/* write everything to the template */
-			$this->template->write_view('flash_message', '_base/login/pages/flash', $flash);
+			$this->template->write_view('flash_message', $loc, $flash);
 		}
 		
 		/* set the number of attempts to zero to start */
@@ -141,8 +145,11 @@ class Login_base extends Controller {
 				);
 				$flash['message'] = text_output($message);
 			
+				// set the location of the flash view
+				$loc = view_location('flash', $this->skin, 'login');
+				
 				/* write everything to the template */
-				$this->template->write_view('flash_message', '_base/login/pages/flash', $flash);
+				$this->template->write_view('flash_message', $loc, $flash);
 			}
 		}
 		
@@ -178,8 +185,11 @@ class Login_base extends Controller {
 					break;
 			}
 			
+			// set the location of the flash view
+			$loc = view_location('flash', $this->skin, 'login');
+			
 			/* write everything to the template */
-			$this->template->write_view('flash_message', '_base/login/pages/flash', $flash);
+			$this->template->write_view('flash_message', $loc, $flash);
 		}
 		
 		/* inputs */
@@ -305,8 +315,11 @@ class Login_base extends Controller {
 			$flash['status'] = 'info';
 			$flash['message'] = lang_output('flash_system_email_off_disabled');
 			
+			// set the location of the flash view
+			$loc = view_location('flash', $this->skin, 'login');
+			
 			/* write everything to the template */
-			$this->template->write_view('flash_message', '_base/login/pages/flash', $flash);
+			$this->template->write_view('flash_message', $loc, $flash);
 		}
 		
 		if (isset($_POST['submit']))
@@ -365,8 +378,11 @@ class Login_base extends Controller {
 				$flash['message'] = lang_output('flash_reset_error_1');
 			}
 			
+			// set the location of the flash view
+			$loc = view_location('flash', $this->skin, 'login');
+			
 			/* write everything to the template */
-			$this->template->write_view('flash_message', '_base/login/pages/flash', $flash);
+			$this->template->write_view('flash_message', $loc, $flash);
 		}
 		
 		/* run the methods */
