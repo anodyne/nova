@@ -1,3 +1,5 @@
+* added the changed files and changelog files to the repository
+* added a notes document with information about git commands to generate a list of changed files as well as a changelog
 * updated the readme
 * fixed some spacing bugs in the admin section view files
 * fixed bug where an error was thrown on the all users page

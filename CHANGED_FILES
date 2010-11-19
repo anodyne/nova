@@ -1,4 +1,6 @@
 M	.gitignore
+A	CHANGED_FILES
+A	CHANGELOG
 M	README.md
 A	application/assets/images/exclamation-red.png
 M	application/assets/install/data_basic.php
@@ -270,4 +272,5 @@ A	application/views/titan/wiki/index.html
 A	application/views/titan/wiki/js/index.html
 A	application/views/titan/wiki/pages/index.html
 A	banned.php
+A	docs/notes.md
 A	exclamation.png
