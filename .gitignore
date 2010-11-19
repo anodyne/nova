@@ -18,3 +18,5 @@ application/views/apollo/
 *.bak
 Thumbs.db
 .DS_Store
+
+update.sh
