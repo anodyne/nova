@@ -1,0 +1,79 @@
+* updated the readme
+* fixed some spacing bugs in the admin section view files
+* fixed bug where an error was thrown on the all users page
+* fixed error thrown in department management
+* fixed bug where the flash message view file couldn't be overridden with seamless substitution
+* fixed bug where the join page was trying to pull an image from the wrong location
+* updated the gitignore file
+* updated jquery to version 1.4.4
+* fixed bug where the timezone menu in site/settings pulled the wrong value to populate the field with
+* put a fix in place for orphaned specs data from the nova 1.1 bug
+* removed a reference to the old way of upgrading specs
+* fixed potential error where the hook would try to connect to a table that doesn't exist
+* updated position management to display departments based on their manifest
+* fixed error being thrown with the new department management page
+* added the view and icon file for editing and duplicating departments
+* need to be more specific with the gitignore file since specifying the views directory won't show untracked changes regardless what the rules are
+* added the titan skin to the repository
+* fixed bug with a missing closing div tag on the create character page
+* updated the gitignore file
+* updated the department management interface to make it easier to manage departments
+* Merge branch '1.x' of github.com:anodyne/nova into 1.x
+* updated the gitignore file to ignore skins that may be in development in the repo
+* updated the install and update files to reflect the jquery ui update
+* updated jquery ui to version 1.8.6
+* fixed bug where the specifications weren't properly updated during the sms upgrade process
+* added some standard files to the ignore file
+* fixed bug where the updated dropdown functions were overriding the name field and throwing errors when updating the database
+* fixed bug in the join application email where the sample post was just a massive wall of text
+* updated the readme
+* model updates
+* updates to the language files
+* updated the form helper to make sure the manifest name is printed with the department name
+* make sure the departments listing shows the manifest the department is associated with
+* duplicating a department
+* updated the genre files with the site manifest information
+* updating the basic and dev install data and making sure that the proper data gets inserted and updated during the udpate to 1.2
+* updated the install fields and 1.2 update files
+* updated the site manifest mangement piece
+* updated the personnel index with code for multiple manifests
+* added a method for pulling users based on active characters to the users model
+* updates to the departments model for 1.2
+* fixed bug where users without an active character would be displayed in the activity warning panel on the ACP
+* Merge branch '1.x' of github.com:anodyne/nova into 1.x
+* efficiency update to not allow nova to attempt to autoload the input library since CI automatically loads that library by default
+* updated the install and update documents to reflect the jquery version change
+* updated jquery to version 1.4.3
+* merging the support-1.1 branch into the 1.x branch
+* updating the readme
+* finishing up work on managing site manifests
+* testing out jquery 1.4.3rc2
+* updates to the 1.2 update process
+* basic install data and schema updates
+* updated the readme
+* changing the database schema with the multiple manifest support
+* updating the departments model to handle multiple manifests
+* adding a few images to the admin section
+* updating the hr tag for the default skin
+* adding the ability to use manage multiple manifests
+* updated the language files
+* adding the draggable and droppable jquery ui plugins
+* fixed error thrown when the validation library throws an error and doesn't have data for the flash message
+* fixed error being thrown during the ban check hook
+* updated the readme
+* updated the user model with messages about deprecating two methods
+* updated main/contact to use a simpler layout and proper form validation
+* Merge branch 'support-1.1' into 1.x
+* merging changes from support-1.1 back in to develop
+* Merge branch '1.2' of github.com:anodyne/nova into 1.2
+* adding the seaquest data file
+* fixed bug where the ban hook would fail if the system wasn't installed
+* updated the readme
+* added the 1.2 update file
+* updated the database schema and install data
+* updated the version info in the constants file
+* quick update to the database file in the repo
+* added ban controls to nova
+* updated the utility hook to check for level 2 bans after the browser hook has finished running
+* updated the language files
+* updated the application report to show email address and ip address for each applicant (ip address only applies to new applications)
