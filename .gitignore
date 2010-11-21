@@ -11,8 +11,8 @@ application/assets/images/tour/
 !application/assets/images/tour/index.html
 
 application/views/quixly/
-application/views/fresh/
 application/views/apollo/
+application/views/lcars/
 
 *~
 *.bak
