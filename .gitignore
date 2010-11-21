@@ -28,3 +28,8 @@ application/logs/
 *.bak
 Thumbs.db
 .DS_Store
+
+update.sh
+
+application/views/apollo/
+application/views/quixly/
