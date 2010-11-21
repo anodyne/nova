@@ -36,6 +36,9 @@ ini_set('unserialize_callback_func', 'spl_autoload_call');
 
 //-- Configuration and initialization -----------------------------------------
 
+// set the Kohana environment
+Kohana::$environment = Kohana::DEVELOPMENT;
+
 /**
  * Set Kohana::$environment if $_ENV['KOHANA_ENV'] has been supplied.
  * 
@@ -66,7 +69,7 @@ Kohana::init(array(
 	'base_url'		=> $url,
 	'index_file'	=> 'index.php',
 	'error'			=> TRUE,
-	'profile'		=> TRUE,
+	'profile'		=> (Kohana::$environment == 'production') ? FALSE : TRUE,
 ));
 
 /**
@@ -124,7 +127,29 @@ if ( ! defined('SUPPRESS_REQUEST'))
 	Events::event('postCreate');
 
 	Events::event('preExecute');
-	$request->execute();
+	
+	if (Kohana::$environment == 'production')
+	{
+		try {
+			$request->execute();
+		}
+		catch (Exception $e)
+		{
+			switch ($e->getCode())
+			{
+				case -1:
+				case 0:
+				case 404:
+					$request = Request::factory('error/404')->execute();
+				break;
+			}
+		}
+	}
+	else
+	{
+		$request->execute();
+	}
+	
 	Events::event('postExecute');
 
 	Events::event('preHeaders');
