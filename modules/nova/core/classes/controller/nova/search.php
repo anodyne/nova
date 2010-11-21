@@ -14,10 +14,15 @@ class Controller_Nova_Search extends Controller_Nova_Base {
 		parent::before();
 		
 		// pull these additional setting keys that'll be available in every method
-		$this->settingsArray[] = 'skin_main';
+		$additionalSettings = array(
+			'skin_main',
+		);
+		
+		// merge the settings arrays
+		$this->settingsArray = array_merge($this->settingsArray, $additionalSettings);
 		
 		// pull the settings and put them into the options object
-		$this->options = Jelly::factory('setting')->get_settings($this->settingsArray);
+		$this->options = Jelly::query('setting')->get_settings($this->settingsArray);
 		
 		// set the variables
 		$this->skin		= $this->session->get('skin_main', $this->options->skin_main);
@@ -25,25 +30,45 @@ class Controller_Nova_Search extends Controller_Nova_Base {
 		$this->timezone	= $this->session->get('timezone', $this->options->timezone);
 		$this->dst		= $this->session->get('dst', $this->options->daylight_savings);
 		
+		// set the values to be passed to the views
+		$vars = array(
+			'template' => array(
+				'skin' => $this->skin,
+				'sec' => 'main'),
+			'layout' => array(
+				'skin'	=> $this->skin,
+				'sec'	=> 'main'),
+		);
+		
 		// set the shell
-		$this->template = View::factory('_common/layouts/main', array('skin' => $this->skin, 'sec' => 'main'));
+		$this->template = View::factory('_common/layouts/main', $vars['template']);
 		
 		// grab the image index
 		$this->images = Utility::get_image_index($this->skin);
 		
 		// set the variables in the template
-		$this->template->title 					= $this->options->sim_name.' :: ';
-		$this->template->javascript				= FALSE;
-		$this->template->layout					= View::factory($this->skin.'/template_main', array('skin' => $this->skin, 'sec' => 'main'));
-		$this->template->layout->nav_main 		= Menu::build('main', 'main');
-		$this->template->layout->nav_sub 		= Menu::build('sub', 'main');
-		$this->template->layout->ajax 			= FALSE;
-		$this->template->layout->flash_message	= FALSE;
-		$this->template->layout->content		= FALSE;
-		$this->template->layout->panel_1		= FALSE;
-		$this->template->layout->panel_2		= FALSE;
-		$this->template->layout->panel_3		= FALSE;
-		$this->template->layout->panel_workflow	= FALSE;
+		$this->template->title 						= $this->options->sim_name.' :: ';
+		$this->template->javascript					= FALSE;
+		$this->template->layout						= View::factory($this->skin.'/template_main', $vars['layout']);
+		$this->template->layout->navmain 			= Menu::build('main', 'main');
+		$this->template->layout->ajax 				= FALSE;
+		$this->template->layout->flash				= FALSE;
+		$this->template->layout->content			= FALSE;
+		
+		$this->template->layout->panel				= View::factory('_common/partials/panel');
+		$this->template->layout->panel->panel1		= FALSE;
+		$this->template->layout->panel->panel2		= FALSE;
+		$this->template->layout->panel->panel3		= FALSE;
+		$this->template->layout->panel->workflow	= FALSE;
+		
+		$this->template->layout->navsub 			= View::factory('_common/partials/navsub');
+		$this->template->layout->navsub->menu		= Menu::build('sub', 'main');
+		$this->template->layout->navsub->widget1	= FALSE;
+		$this->template->layout->navsub->widget2	= FALSE;
+		$this->template->layout->navsub->widget3	= FALSE;
+		
+		$this->template->layout->footer				= View::factory('_common/partials/footer');
+		$this->template->layout->footer->extra 		= Jelly::query('message', 'footer')->limit(1)->select()->value;
 	}
 	
 	public function action_index()
