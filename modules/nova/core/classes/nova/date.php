@@ -58,19 +58,11 @@ abstract class Nova_Date extends Kohana_Date {
 	 *     // get the current time
 	 *     $time = Date::now();
 	 *
+	 * @param	string	the timezone to use when creating the new datetime object
 	 * @return	integer	the UNIX timestamp of the current time
 	 */
 	public static function now($timezone = 'GMT')
 	{
-		// get an instance of the session
-		$session = Session::instance();
-		
-		// get the default timezone from the database
-		$tz = Jelly::query('setting', 'timezone')->limit(1)->select()->value;
-		
-		// set the timezone
-		$timezone = $session->get('timezone', $tz);
-		
 		// get a new DateTime object based on the timezone
 		$now = new DateTime('now', new DateTimeZone($timezone));
 		
