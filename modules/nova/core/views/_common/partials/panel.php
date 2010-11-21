@@ -18,7 +18,7 @@
 		</div>
 		<div class="panel-handle UITheme">
 			<div class="wrapper">
-				<?php echo $panel_workflow;?>
+				<?php echo $workflow;?>
 			</div>
 		</div>
 	</div>
