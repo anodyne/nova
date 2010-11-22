@@ -135,10 +135,8 @@ class Controller_Nova_Login extends Controller_Nova_Base {
 			// javascript view
 			$this->template->javascript = View::factory(Location::view('login_success_js', $this->skin, 'login', 'js'));
 			
-			# TODO: change this to redirect to the admin index when it's been built
 			// set the redirect
-			$this->template->redirect = array('time' => 5, 'url' => url::site('main/index'));
-			//$this->template->redirect = array('time' => 5, 'url' => url::site('admin/index'));
+			$this->template->redirect = array('time' => 5, 'url' => url::site('admin/index'));
 			
 			// assign the object a shorter variable to use in the method
 			$data = $this->template->layout->content;
