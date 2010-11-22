@@ -6,9 +6,11 @@ Anodyne Production's next-generation RPG management system combines popular feat
 
 Nova 2 is currently in heavy, active development. As with any alpha software, bugs are to be expected. If you find a bug, we encourage you to report it through the [issue tracker](http://github.com/anodyne/nova/issues) or on the [Anodyne forums](http://forums.anodyne-productions.com/index.php). We don't recommend using Nova 2 on a production site at this point and offer no guarantee of any sort with the software nor do we offer support for it until its final release.
 
-## Current Version
+## Current Milestone
 
-M2.1-pre (2.0-alpha)
+Milestone 2
+
+The milestone [roadmap](https://github.com/anodyne/nova/wiki/Nova-2-Milestones) describes in greater detail the development work going in to specific milestones.
 
 ## Important Information
 
@@ -25,7 +27,7 @@ The Nova 2 [update guide](http://docs.anodyne-productions.com/index.php/nova2/ov
 		<th>Version</th><th>Description</th><th>Start Date</th><th>End Date</th>
 	</tr>
 	<tr>
-		<td>M2</td><td>Logging in, unauthenticated system</td><td>27 September 2010</td><td>-</td>
+		<td>M2</td><td>System authentication, password resets, main page, main admin page</td><td>27 September 2010</td><td>-</td>
 	</tr>
 	<tr>
 		<td>M1</td><td>Development start</td><td>10 February 2010</td><td>27 September 2010</td>
