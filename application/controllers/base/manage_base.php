@@ -765,16 +765,22 @@ class Manage_base extends Controller {
 		
 		/* load the resources */
 		$this->load->model('tour_model', 'tour');
+		$this->load->model('specs_model', 'specs');
+		
+		// get the deck from the URI
+		$deck = $this->uri->segment(3, 0, TRUE);
 		
 		if (isset($_POST['submit']))
 		{
 			$name = $this->input->post('deck_name', TRUE);
 			$content = $this->input->post('deck_content', TRUE);
+			$item = $this->input->post('deck_item', TRUE);
 			$id = $this->input->post('id', TRUE);
 			
 			$update_array = array(
 				'deck_name' => $name,
-				'deck_content' => $content
+				'deck_content' => $content,
+				'deck_item' => $item,
 			);
 			
 			$update = $this->tour->update_deck($id, $update_array);
@@ -808,13 +814,29 @@ class Manage_base extends Controller {
 			$this->template->write_view('flash_message', '_base/admin/pages/flash', $flash);
 		}
 		
-		$decks = $this->tour->get_decks();
-		
-		if ($decks->num_rows() > 0)
+		if ($deck == 0)
 		{
-			foreach ($decks->result() as $deck)
+			// get the specification items
+			$specs = $this->specs->get_spec_items(NULL);
+			
+			if ($specs->num_rows() > 0)
 			{
-				$data['decks'][$deck->deck_id] = $deck->deck_name;
+				foreach ($specs->result() as $s)
+				{
+					$data['specs'][$s->specs_id] = $s->specs_name;
+				}
+			}
+		}
+		else
+		{
+			$decks = $this->tour->get_decks($deck);
+			
+			if ($decks->num_rows() > 0)
+			{
+				foreach ($decks->result() as $deck)
+				{
+					$data['decks'][$deck->deck_id] = $deck->deck_name;
+				}
 			}
 		}
 		
@@ -822,7 +844,7 @@ class Manage_base extends Controller {
 		$view_loc = view_location('manage_decks', $this->skin, 'admin');
 		$js_loc = js_location('manage_decks_js', $this->skin, 'admin');
 		
-		$data['header'] = ucwords(lang('global_deck') .' '. lang('labels_listing'));
+		$data['header'] = ucwords(lang('global_deck') .' '. lang('labels_listings'));
 		$data['text'] = sprintf(
 			lang('text_manage_decks'),
 			lang('global_deck'),
@@ -834,6 +856,19 @@ class Manage_base extends Controller {
 			'name' => 'deck',
 			'id' => 'deck'
 		);
+		
+		// get the specification items
+		$specs = $this->specs->get_spec_items(NULL);
+		
+		$data['values']['specs'][0] = ucwords(lang('actions_choose').' '.lang('labels_a').' '.lang('global_specification').' '.lang('labels_item'));
+		
+		if ($specs->num_rows() > 0)
+		{
+			foreach ($specs->result() as $s)
+			{
+				$data['values']['specs'][$s->specs_id] = $s->specs_name;
+			}
+		}
 		
 		$data['buttons'] = array(
 			'submit' => array(
@@ -860,6 +895,8 @@ class Manage_base extends Controller {
 		
 		$data['label'] = array(
 			'processing' => ucfirst(lang('actions_processing')) .'...',
+			'back' => LARROW.' '.ucfirst(lang('actions_back')).' '.lang('labels_to').' '.
+				ucwords(lang('labels_all').' '.lang('global_deck').' '.lang('labels_listings')),
 		);
 		
 		/* write the data to the template */

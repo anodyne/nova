@@ -759,11 +759,13 @@ class Ajax_base extends Controller {
 			}
 			
 			$deck = $this->input->post('deck', TRUE);
+			$item = $this->input->post('item', TRUE);
 			
 			$insert_array = array(
 				'deck_name' => $deck,
 				'deck_order' => (isset($order)) ? $order : 0,
-				'deck_content' => ''
+				'deck_content' => '',
+				'deck_item' => $item,
 			);
 				
 			$insert = $this->tour->add_deck($insert_array);
@@ -5472,6 +5474,7 @@ class Ajax_base extends Controller {
 	{
 		/* load the resources */
 		$this->load->model('tour_model', 'tour');
+		$this->load->model('specs_model', 'specs');
 		
 		$head = sprintf(
 			lang('fbx_head'),
@@ -5491,6 +5494,7 @@ class Ajax_base extends Controller {
 				'name' => 'deck_name',
 				'class' => 'hud',
 				'value' => $item->deck_name),
+			'item' => $item->deck_item,
 			'content' => array(
 				'name' => 'deck_content',
 				'class' => 'hud',
@@ -5503,9 +5507,23 @@ class Ajax_base extends Controller {
 				'content' => ucwords(lang('actions_submit')))
 		);
 		
+		// get the specification items
+		$specs = $this->specs->get_spec_items(NULL);
+		
+		$data['values']['specs'][0] = ucwords(lang('actions_choose').' '.lang('labels_a').' '.lang('global_specification').' '.lang('labels_item'));
+		
+		if ($specs->num_rows() > 0)
+		{
+			foreach ($specs->result() as $s)
+			{
+				$data['values']['specs'][$s->specs_id] = $s->specs_name;
+			}
+		}
+		
 		$data['label'] = array(
 			'content' => ucfirst(lang('labels_content')),
 			'name' => ucfirst(lang('labels_name')),
+			'item' => ucwords(lang('global_specification').' '.lang('labels_item')),
 		);
 		
 		/* figure out the skin */

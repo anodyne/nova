@@ -71,7 +71,10 @@
 		
 		$('#add').live('click', function(){
 			var parent = $(this).parent().parent().attr('class');
-			var value = $('#deck').val();
+			var send = {
+				deck: $('#deck').val(),
+				item: $('select[name=item] option:selected').val()
+			};
 			
 			$.ajax({
 				beforeSend: function(){
@@ -80,7 +83,7 @@
 				},
 				type: "POST",
 				url: "<?php echo site_url('ajax/add_deck');?>",
-				data: { deck: value },
+				data: send,
 				success: function(data){
 					$('#list').append(data).fadeIn('slow');
 				},

@@ -5,9 +5,10 @@
 |---------------------------------------------------------------
 |
 | File: models/tour_model_base.php
-| System Version: 1.0
+| System Version: 1.2
 |
-| Model used to access the tour tables.
+| Changes: fixed issue from 1.1 update where you couldn't have
+|	a deck listing for each specification item you'd created
 |
 */
 
@@ -36,9 +37,15 @@ class Tour_model_base extends Model {
 		return $row;
 	}
 	
-	function get_decks()
+	function get_decks($item = '')
 	{
 		$this->db->from('tour_decks');
+		
+		if ( ! empty($item))
+		{
+			$this->db->where('deck_item', $item);
+		}
+		
 		$this->db->order_by('deck_order', 'asc');
 		
 		$query = $this->db->get();
