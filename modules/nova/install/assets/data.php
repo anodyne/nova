@@ -1182,7 +1182,7 @@ $menu_items = array(
 		'menu_link' => 'main/index',
 		'menu_sim_type' => 1,
 		'menu_cat' => 'main'),
-	array(
+	/*array(
 		'menu_name' => 'Personnel',
 		'menu_group' => 0,
 		'menu_order' => 1,
@@ -1210,7 +1210,7 @@ $menu_items = array(
 		'menu_order' => 4,
 		'menu_link' => 'search/index',
 		'menu_sim_type' => 1,
-		'menu_cat' => 'main'),
+			'menu_cat' => 'main'),*/
 	array(
 		'menu_name' => 'Control Panel',
 		'menu_group' => 0,
@@ -1244,7 +1244,7 @@ $menu_items = array(
 		'menu_sim_type' => 1,
 		'menu_type' => 'sub',
 		'menu_cat' => 'main'),
-	array(
+	/*array(
 		'menu_name' => 'News',
 		'menu_group' => 0,
 		'menu_order' => 1,
@@ -1259,7 +1259,7 @@ $menu_items = array(
 		'menu_link' => 'main/contact',
 		'menu_sim_type' => 1,
 		'menu_type' => 'sub',
-		'menu_cat' => 'main'),
+			'menu_cat' => 'main'),*/
 	array(
 		'menu_name' => 'Credits',
 		'menu_group' => 0,
@@ -1268,7 +1268,7 @@ $menu_items = array(
 		'menu_sim_type' => 1,
 		'menu_type' => 'sub',
 		'menu_cat' => 'main'),
-	array(
+	/*array(
 		'menu_name' => 'Join',
 		'menu_group' => 0,
 		'menu_order' => 4,
@@ -1479,7 +1479,7 @@ $menu_items = array(
 		'menu_use_access' => 'y',
 		'menu_access' => 'wiki/page',
 		'menu_need_login' => 'y',
-		'menu_cat' => 'wiki'),
+			'menu_cat' => 'wiki'),*/
 		
 	array(
 		'menu_name' => 'Control Panel',
@@ -1491,7 +1491,7 @@ $menu_items = array(
 		'menu_cat' => 'admin',
 		'menu_use_access' => 'y',
 		'menu_access' => 'admin/index'),
-	array(
+	/*array(
 		'menu_name' => "What's New",
 		'menu_group' => 0,
 		'menu_order' => 1,
@@ -2069,7 +2069,7 @@ $menu_items = array(
 		'menu_type' => 'adminsub',
 		'menu_cat' => 'report',
 		'menu_use_access' => 'y',
-		'menu_access' => 'report/versions'),
+			'menu_access' => 'report/versions'),*/
 );
 
 $messages = array(
