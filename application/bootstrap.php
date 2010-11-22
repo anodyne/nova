@@ -8,7 +8,7 @@
  * @see  http://kohanaframework.org/guide/using.configuration
  * @see  http://php.net/timezones
  */
-date_default_timezone_set('America/New_York');
+date_default_timezone_set('GMT');
 
 /**
  * Set the default locale.
