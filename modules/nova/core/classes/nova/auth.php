@@ -188,7 +188,7 @@ abstract class Nova_Auth {
 			
 			if ($redirect === TRUE)
 			{
-				Request::instance()->redirect('login/index/error/1');
+				Request::instance()->redirect('login/error/1');
 			}
 			
 			return FALSE;
