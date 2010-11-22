@@ -9,7 +9,7 @@
 | Changes: added labels_genre; added labels_you; added labels_from
 |	added labels_ban; added labels_bans; added labels_ipaddr;
 |	added misc_level1_only; added labels_manifests; added labels_unassigned;
-|	added labels_refresh; added labels_header
+|	added labels_refresh; added labels_header; added labels_listings
 |
 | English language file for the system. Punctuation constants are
 | defined in ./application/config/constants.php
@@ -427,6 +427,7 @@ $lang['labels_linked']			= 'linked';
 $lang['labels_links']			= 'links';
 $lang['labels_list']			= 'list';
 $lang['labels_listing']			= 'listing';
+$lang['labels_listings']		= 'listings';
 $lang['labels_location'] 		= 'location';
 $lang['labels_login']			= 'login';
 $lang['labels_main'] 			= 'main';
