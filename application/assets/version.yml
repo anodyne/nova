@@ -1,8 +1,8 @@
-version: 1.1.2
+version: 1.2.0
 version_major: 1
-version_minor: 1
-version_update: 2
-severity: minor
+version_minor: 2
+version_update: 0
+severity: major
 notes: |
   Nova 1.1.2 is a maintenance update addressing several issues with Nova 1.1. This update fixes issues with Quick Install, an error thrown when updating a user profile and usability issues with the character picking process with writing and managing mission posts. A full changelog can be found on AnodyneDocs or from the System and Versions report once Nova has been updated. This update is recommended for all users.
 date: 14 October 2010
