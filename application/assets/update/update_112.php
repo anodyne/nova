@@ -190,6 +190,11 @@ $add_column = array(
 			'type' => 'INT',
 			'constraint' => 5,
 			'default' => 0)),
+	'tour_decks' => array(
+		'deck_item' => array(
+			'type' => 'INT',
+			'constraint' => 5,
+			'default' => 0)),
 );
 
 if (!is_null($add_column))

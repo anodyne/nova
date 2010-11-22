@@ -1691,7 +1691,11 @@ $fields_tour_decks = array(
 		'type' => 'INT',
 		'constraint' => 10),
 	'deck_content' => array(
-		'type' => 'TEXT')
+		'type' => 'TEXT'),
+	'deck_item' => array(
+		'type' => 'INT',
+		'constraint' => 5,
+		'default' => 0),
 );
 
 $fields_user_loa = array(
