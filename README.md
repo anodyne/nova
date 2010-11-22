@@ -29,6 +29,7 @@ Anodyne Production's next-generation RPG management system combines popular feat
     * [base\_lang] added _labels\_bans_
     * [base\_lang] added _labels\_ipaddr_
     * [base\_lang] added _labels\_header_
+    * [base\_lang] added _labels\_listings_
     * [base\_lang] added _labels\_manifests_
     * [base\_lang] added _labels\_refresh_
     * [base\_lang] added _labels\_unassigned_
