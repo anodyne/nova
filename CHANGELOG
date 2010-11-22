@@ -1,3 +1,11 @@
+* updated the base language file with the labels_listings key
+* updated the deck listing feature to allow for deck listings for multiple items
+* updated the version YAML file
+* updated the database schema to include the specification item identifier for deck listing items
+* updated the readme
+* updated the gitignore file
+* updated the changed files listing and the changelog
+* updated the gitignore file to ignore the bash script to automatically generate the changelog and changed files list
 * added the changed files and changelog files to the repository
 * added a notes document with information about git commands to generate a list of changed files as well as a changelog
 * updated the readme
