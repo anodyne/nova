@@ -83,8 +83,10 @@ class Controller_Nova_Main extends Controller_Nova_Base {
 		// assign the object a shorter variable to use in the method
 		$data = $this->template->layout->content;
 		
+		# TODO: when widgets are worked on, this will need to uncommented
 		// get all of the widgets for the page
-		$widgets = Jelly::query('cataloguewidget')->where('page', '=', 'main/index')->select();
+		//$widgets = Jelly::query('cataloguewidget')->where('page', '=', 'main/index')->select();
+		$widgets = array();
 		
 		if (count($widgets) > 0)
 		{
@@ -106,7 +108,7 @@ class Controller_Nova_Main extends Controller_Nova_Base {
 		// send the response
 		$this->request->response = $this->template;
 	}
-	
+	/*
 	public function action_contact()
 	{
 		if (isset($_POST['submit']))
@@ -190,7 +192,7 @@ class Controller_Nova_Main extends Controller_Nova_Base {
 		// send the response
 		$this->request->response = $this->template;
 	}
-	
+	*/
 	public function action_credits()
 	{
 		// create a new content view
@@ -220,7 +222,7 @@ class Controller_Nova_Main extends Controller_Nova_Base {
 		// send the response
 		$this->request->response = $this->template;
 	}
-	
+	/*
 	public function join()
 	{
 		# code...
@@ -476,4 +478,5 @@ class Controller_Nova_Main extends Controller_Nova_Base {
 		
 		return $email;
 	}
+	*/
 }
