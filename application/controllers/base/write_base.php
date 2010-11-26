@@ -5,10 +5,11 @@
 |---------------------------------------------------------------
 |
 | File: controllers/write_base.php
-| System Version: 1.1.1
+| System Version: 1.2
 |
-| Changes: fixed bug where nova wouldn't display because it couldn't
-|	find the template file
+| Changes: fixed bug where posts with secondary characters would
+|	be sent out with the name of the user's primary character even
+|	if that character wasn't a part of the post
 |
 */
 
@@ -2209,21 +2210,18 @@ class Write_base extends Controller {
 				$timeline = lang('email_content_post_timeline') . $data['timeline'];
 				$location = lang('email_content_post_location') . $data['location'];
 				
-				/* figure out who it needs to come from */
-				$my_chars = array();
+				// get an array of authors
+				$authors = explode(',', $data['authors']);
 				
-				/* find out how many of the submitter's characters are in the string */
-				foreach ($this->session->userdata('characters') as $value)
-				{
-					if (strstr($data['authors'], $value) !== FALSE)
-					{
-						$my_chars[] = $value;
-					}
-				}
+				// find out what's the same
+				$same = array_values(array_intersect($authors, $this->session->userdata('characters')));
+				
+				// figure out who it should come from
+				$from = (in_array($this->session->userdata('main_char'), $same)) ? $this->session->userdata('main_char') : $same[0];
 				
 				/* set who the email is coming from */
-				$from_name = $this->char->get_character_name($my_chars[0], TRUE, TRUE);
-				$from_email = $this->user->get_email_address('character', $my_chars[0]);
+				$from_name = $this->char->get_character_name($from, TRUE, TRUE);
+				$from_email = $this->user->get_email_address('character', $from);
 				
 				/* set the content */
 				$content = sprintf(
@@ -2264,21 +2262,18 @@ class Write_base extends Controller {
 				/* set some variables */
 				$subject = lang('email_subject_deleted_post');
 
-				/* figure out who it needs to come from */
-				$my_chars = array();
-
-				/* find out how many of the submitter's characters are in the string */
-				foreach ($this->session->userdata('characters') as $value)
-				{
-					if (strstr($data['authors'], $value) !== FALSE)
-					{
-						$my_chars[] = $value;
-					}
-				}
-
+				// get an array of authors
+				$authors = explode(',', $data['authors']);
+				
+				// find out what's the same
+				$same = array_values(array_intersect($authors, $this->session->userdata('characters')));
+				
+				// figure out who it should come from
+				$from = (in_array($this->session->userdata('main_char'), $same)) ? $this->session->userdata('main_char') : $same[0];
+				
 				/* set who the email is coming from */
-				$from_name = $this->char->get_character_name($my_chars[0], TRUE, TRUE);
-				$from_email = $this->user->get_email_address('character', $my_chars[0]);
+				$from_name = $this->char->get_character_name($from, TRUE, TRUE);
+				$from_email = $this->user->get_email_address('character', $from);
 
 				/* set the content */
 				$content = sprintf(
@@ -2327,10 +2322,18 @@ class Write_base extends Controller {
 				break;
 				
 			case 'post_pending':
-				$chars = explode(',', $data['authors']);
+				// get an array of authors
+				$authors = explode(',', $data['authors']);
 				
-				$from_name = $this->char->get_character_name($chars[0], TRUE, TRUE);
-				$from_email = $this->user->get_email_address('character', $chars[0]);
+				// find out what's the same
+				$same = array_values(array_intersect($authors, $this->session->userdata('characters')));
+				
+				// figure out who it should come from
+				$from = (in_array($this->session->userdata('main_char'), $same)) ? $this->session->userdata('main_char') : $same[0];
+				
+				/* set who the email is coming from */
+				$from_name = $this->char->get_character_name($from, TRUE, TRUE);
+				$from_email = $this->user->get_email_address('character', $from);
 				$subject = $data['mission'] ." - ". $data['title'];
 
 				/* set the content */
@@ -2377,21 +2380,18 @@ class Write_base extends Controller {
 				$timeline = lang('email_content_post_timeline') . $data['timeline'];
 				$location = lang('email_content_post_location') . $data['location'];
 				
-				/* figure out who it needs to come from */
-				$my_chars = array();
+				// get an array of authors
+				$authors = explode(',', $data['authors']);
 				
-				/* find out how many of the submitter's characters are in the string */
-				foreach ($this->session->userdata('characters') as $value)
-				{
-					if (strstr($data['authors'], $value) !== FALSE)
-					{
-						$my_chars[] = $value;
-					}
-				}
+				// find out what's the same
+				$same = array_values(array_intersect($authors, $this->session->userdata('characters')));
+				
+				// figure out who it should come from
+				$from = (in_array($this->session->userdata('main_char'), $same)) ? $this->session->userdata('main_char') : $same[0];
 				
 				/* set who the email is coming from */
-				$from_name = $this->char->get_character_name($my_chars[0], TRUE, TRUE);
-				$from_email = $this->user->get_email_address('character', $my_chars[0]);
+				$from_name = $this->char->get_character_name($from, TRUE, TRUE);
+				$from_email = $this->user->get_email_address('character', $from);
 				
 				/* set the content */
 				$content = sprintf(

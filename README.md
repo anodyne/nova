@@ -54,6 +54,7 @@ Anodyne Production's next-generation RPG management system combines popular feat
 * fixed spacing bug in department management
 * fixed some errors being thrown throughout the system
 * fixed bug where the flash message view couldn't be overridden with seamless substitution
+* fixed bug where post emails were sent out with the user's primary character name attached even if the primary character wasn't associated with the post
 
 ## Version History
 
