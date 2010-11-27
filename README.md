@@ -34,6 +34,7 @@ Anodyne Production's next-generation RPG management system combines popular feat
     * [base\_lang] added _labels\_refresh_
     * [base\_lang] added _labels\_unassigned_
     * [base\_lang] added _misc\_level1\_only_
+    * [email\_lang] updated _email\_content\_private\_message_
     * [text\_lang] added _text\_bans_
     * [text\_lang] added _text\_ban\_join_
     * [text\_lang] added _text\_manifest\_delete\_departments_
@@ -55,6 +56,7 @@ Anodyne Production's next-generation RPG management system combines popular feat
 * fixed some errors being thrown throughout the system
 * fixed bug where the flash message view couldn't be overridden with seamless substitution
 * fixed bug where post emails were sent out with the user's primary character name attached even if the primary character wasn't associated with the post
+* fixed bug where the private message email didn't contain the content of the private message
 
 ## Version History
 

@@ -5,11 +5,10 @@
 |---------------------------------------------------------------
 |
 | File: controllers/messages_base.php
-| System Version: 1.1.1
+| System Version: 1.2
 |
-| Changes: fixed bug where replying to a message wouldn't populate
-|	the dropdown with the author being replied to; fixed bug where
-|	nova wouldn't load because it couldn't find the template file
+| Changes: fixed bug where the email sent out didn't contain the
+|	content of the private message
 |
 */
 
@@ -554,7 +553,7 @@ class Messages_base extends Controller {
 				
 				if ($insert > 0)
 				{
-					$message = sprintf(
+					$flashmsg = sprintf(
 						lang('flash_success'),
 						ucfirst(lang('global_privatemessage')),
 						lang('actions_sent'),
@@ -562,7 +561,7 @@ class Messages_base extends Controller {
 					);
 					
 					$flash['status'] = 'success';
-					$flash['message'] = text_output($message);
+					$flash['message'] = text_output($flashmsg);
 					
 					/* set the array of data for the email */
 					$email_data = array(

@@ -4,7 +4,9 @@
 | LANGUAGE FILE - ENGLISH
 |---------------------------------------------------------------
 | File: application/language/english/email_lang.php
-| System Version: 1.0
+| System Version: 1.2
+|
+| Changes: updated the email_content_private_message key
 |
 | English language file for the system. Punctuation constants are
 | defined in ./application/config/constants.php
@@ -107,7 +109,7 @@ New password: %s
 
 <a href='%s'>Click here</a> to login to site now.";
 
-$lang['email_content_private_message'] = "This private message was sent to you from %s. Please log in to view your private messages and reply to this message.
+$lang['email_content_private_message'] = "This private message was sent to you from %s. Please log in to reply to this message.
 
 %s
 
