@@ -10,7 +10,9 @@
 | Changes: added the ability to ban users from applying or even
 |	viewing the site altogether; added the ability to use multiple
 |	manifests; fixed bug where the timezone menu pulled the wrong
-|	value to populate the field with
+|	value to populate the field with; fixed bug where changing a
+|	dynamic form field from text/textarea to dropdown wouldn't let
+|	an admin create values for the dropdown
 |
 */
 
@@ -768,6 +770,8 @@ class Site_base extends Controller {
 			if ($row->field_type == 'select')
 			{
 				$values = $this->char->get_bio_values($row->field_id);
+				
+				$data['select'] = FALSE;
 				
 				if ($values->num_rows() > 0)
 				{
@@ -6063,6 +6067,8 @@ class Site_base extends Controller {
 			{
 				$values = $this->specs->get_spec_values($row->field_id);
 				
+				$data['select'] = FALSE;
+				
 				if ($values->num_rows() > 0)
 				{
 					foreach ($values->result() as $value)
@@ -6755,6 +6761,8 @@ class Site_base extends Controller {
 			if ($row->field_type == 'select')
 			{
 				$values = $this->tour->get_tour_values($row->field_id);
+				
+				$data['select'] = FALSE;
 				
 				if ($values->num_rows() > 0)
 				{
