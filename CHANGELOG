@@ -1,3 +1,5 @@
+* Merge branch 'feature/prettyphoto' into 1.x
+* updated the changelog and changed files list
 * fixed bug where the private message email didn't contain the content of the private message
 * fixed bug where post emails were sent out with the user's primary character name when the primary character wasn't even part of the post
 * updated the changelog and changed files listing
@@ -18,6 +20,12 @@
 * fixed bug where the flash message view file couldn't be overridden with seamless substitution
 * fixed bug where the join page was trying to pull an image from the wrong location
 * updated the gitignore file
+* updated the readme
+* fixed bug where the wrong menu item was set to the default my link
+* updated the install and update files to correct for the change to prettyPhoto
+* changed all references to fancybox in the system to prettyPhoto
+* removed the jquery fancybox plugin
+* added the jquery prettyPhoto plugin
 * updated jquery to version 1.4.4
 * fixed bug where the timezone menu in site/settings pulled the wrong value to populate the field with
 * put a fix in place for orphaned specs data from the nova 1.1 bug
