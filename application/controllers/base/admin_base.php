@@ -8,7 +8,8 @@
 | System Version: 1.2
 |
 | Changes: fixed bug where users with no active characters would
-|	be shown in the activity warning list in the ACP
+|	be shown in the activity warning list in the ACP; fixed errors
+|	thrown on the ACP when a user doesn't have a character assigned
 |
 */
 
@@ -193,18 +194,36 @@ class Admin_base extends Controller {
 		|---------------------------------------------------------------
 		*/
 		
-		$data['posts'] = array(
-			'entries' => $this->posts->count_character_posts($this->session->userdata('characters')),
-			'comments' => $this->posts->count_user_post_comments($this->session->userdata('userid'))
-		);
-		$data['logs'] = array(
-			'entries' => $this->logs->count_character_logs($this->session->userdata('characters')),
-			'comments' => $this->logs->count_user_log_comments($this->session->userdata('userid'))
-		);
-		$data['news'] = array(
-			'entries' => $this->news->count_character_news($this->session->userdata('characters')),
-			'comments' => $this->news->count_user_news_comments($this->session->userdata('userid'))
-		);
+		if (is_array($this->session->userdata('characters')) && count($this->session->userdata('characters')) > 0)
+		{
+			$data['posts'] = array(
+				'entries' => $this->posts->count_character_posts($this->session->userdata('characters')),
+				'comments' => $this->posts->count_user_post_comments($this->session->userdata('userid'))
+			);
+			$data['logs'] = array(
+				'entries' => $this->logs->count_character_logs($this->session->userdata('characters')),
+				'comments' => $this->logs->count_user_log_comments($this->session->userdata('userid'))
+			);
+			$data['news'] = array(
+				'entries' => $this->news->count_character_news($this->session->userdata('characters')),
+				'comments' => $this->news->count_user_news_comments($this->session->userdata('userid'))
+			);
+		}
+		else
+		{
+			$data['posts'] = array(
+				'entries' => 0,
+				'comments' => $this->posts->count_user_post_comments($this->session->userdata('userid'))
+			);
+			$data['logs'] = array(
+				'entries' => 0,
+				'comments' => $this->logs->count_user_log_comments($this->session->userdata('userid'))
+			);
+			$data['news'] = array(
+				'entries' => 0,
+				'comments' => $this->news->count_user_news_comments($this->session->userdata('userid'))
+			);
+		}
 		
 		/*
 		|---------------------------------------------------------------
@@ -212,8 +231,16 @@ class Admin_base extends Controller {
 		|---------------------------------------------------------------
 		*/
 		
+		if (is_array($this->session->userdata('characters')) && count($this->session->userdata('characters')) > 0)
+		{
+			$data['notification']['saved_posts'] = $this->posts->count_character_posts($this->session->userdata('characters'), 'saved');
+		}
+		else
+		{
+			$data['notification']['saved_posts'] = 0;
+		}
+		
 		$data['notification'] = array(
-			'saved_posts'		=> $this->posts->count_character_posts($this->session->userdata('characters'), 'saved'),
 			'saved_logs'		=> $this->logs->count_user_logs($this->session->userdata('userid'), 'saved'),
 			'saved_news' 		=> $this->news->count_user_news($this->session->userdata('userid'), 'saved'),
 			'unread_pms' 		=> $this->pm->count_unread_pms($this->session->userdata('userid')),

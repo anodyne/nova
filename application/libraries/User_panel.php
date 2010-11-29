@@ -5,7 +5,10 @@
 |---------------------------------------------------------------
 |
 | File: libraries/User_panel.php
-| System Version: 1.0
+| System Version: 1.2
+|
+| Changes: fixed errors thrown when a user doesn't have a character
+|	assigned to their account
 |
 | Library that handles generating the user panel.
 |
@@ -118,9 +121,17 @@ class User_panel {
 		$data['unreadpm'] = $this->ci->pm->count_unread_pms($this->ci->session->userdata('userid'));
 		$data['unreadpm_icon'] = ($data['unreadpm'] > 0) ? 'green' : 'gray';
 		
-		$data['unreadjp'] = $this->ci->posts->count_unattended_posts($this->ci->session->userdata('characters'));
+		if (is_array($this->ci->session->userdata('characters')) && count($this->ci->session->userdata('characters')) > 0)
+		{
+			$data['unreadjp'] = $this->ci->posts->count_unattended_posts($this->ci->session->userdata('characters'));
+			$posts = $this->ci->posts->count_character_posts($this->ci->session->userdata('characters'), 'saved');
+		}
+		else
+		{
+			$data['unreadjp'] = 0;
+			$posts = 0;
+		}
 		
-		$posts = $this->ci->posts->count_character_posts($this->ci->session->userdata('characters'), 'saved');
 		$logs = $this->ci->logs->count_user_logs($this->ci->session->userdata('userid'), 'saved');
 		$news = $this->ci->news->count_user_news($this->ci->session->userdata('userid'), 'saved');
 		
@@ -252,9 +263,17 @@ class User_panel {
 				'class' => 'image'),
 		);
 		
-		$unreadjp = $this->ci->posts->count_unattended_posts($this->ci->session->userdata('characters'));
+		if (is_array($this->ci->session->userdata('characters')) && count($this->ci->session->userdata('characters')) > 0)
+		{
+			$unreadjp = $this->ci->posts->count_unattended_posts($this->ci->session->userdata('characters'));
+			$posts = $this->ci->posts->count_character_posts($this->ci->session->userdata('characters'), 'saved');
+		}
+		else
+		{
+			$unreadjp = 0;
+			$posts = 0;
+		}
 		
-		$posts = $this->ci->posts->count_character_posts($this->ci->session->userdata('characters'), 'saved');
 		$logs = $this->ci->logs->count_user_logs($this->ci->session->userdata('userid'), 'saved');
 		$news = $this->ci->news->count_user_news($this->ci->session->userdata('userid'), 'saved');
 		
