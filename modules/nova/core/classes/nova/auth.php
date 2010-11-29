@@ -513,12 +513,17 @@ abstract class Nova_Auth {
 		self::$session->set('access', self::_set_access($person->role->id));
 		self::$session->set('my_links', $links);
 		
-		// set first launch in the flashdata
-		//self::$session->set_flash('first_launch', $person->is_firstlaunch);
-		//self::$session->set_flash('password_reset', $person->password_reset);
+		// set the password reset session variable if it needs to be set
+		if ($person->password_reset == 1)
+		{
+			self::$session->set('password_reset', $person->password_reset);
+		}
 		
-		// set the session data
-		//self::$session->set($array);
+		// set the first launch session variable if it needs to be set
+		if ($person->is_firstlaunch == 1)
+		{
+			self::$session->set('first_launch', $person->is_firstlaunch);
+		}
 		
 		# TODO: need to optimize the table
 	}
