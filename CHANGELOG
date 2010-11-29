@@ -1,3 +1,6 @@
+* fixed bug where the private message email didn't contain the content of the private message
+* fixed bug where post emails were sent out with the user's primary character name when the primary character wasn't even part of the post
+* updated the changelog and changed files listing
 * updated the base language file with the labels_listings key
 * updated the deck listing feature to allow for deck listings for multiple items
 * updated the version YAML file
