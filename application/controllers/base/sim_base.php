@@ -1539,7 +1539,7 @@ class Sim_base extends Controller {
 			'edit_form' => '[ '. ucwords(lang('actions_edit') .' '. lang('global_specs') .' '. lang('labels_form')) .' ]',
 			'info' => ucwords(lang('labels_addtl_info')),
 			'name' => ucfirst(lang('labels_name')),
-			'nospecs' => lang('error_no_specs'),
+			'nospecs_all' => lang('error_no_specs'),
 			'opengallery' => lang('open_gallery'),
 			'summary' => ucfirst(lang('labels_summary')),
 		);
