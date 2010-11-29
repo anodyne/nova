@@ -617,6 +617,8 @@ hr {
 | PANEL
 |---------------------------------------------------------------
 */
+#panel, .panel-handle { display: none; }
+
 .panel-handle a, .panel-handle a:hover {
 	text-decoration: none;
 	border: none;
@@ -818,4 +820,19 @@ hr {
 	width: 20px;
 	margin: 0 8px 0 4px;
 	float: left;
+}
+
+.info-panel {
+	padding: 0 10px;
+	
+	color: #fff;
+	background: #333333;
+	background: -moz-linear-gradient(top, #333333 0%, #111111 100%);
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#333333), color-stop(100%,#111111));
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#333333', endColorstr='#111111',GradientType=0 );
+	border: 1px solid #000;
+	text-shadow: 0 1px 0 rgba(0, 0, 0, .3);
+	
+	border-radius: 3px;
+	-moz-border-radius: 3px;
 }
