@@ -4,9 +4,9 @@
 | LANGUAGE FILE - ENGLISH
 |---------------------------------------------------------------
 | File: application/language/english/error_lang.php
-| System Version: 1.0.2
+| System Version: 1.2
 |
-| Changes: added error_login_7
+| Changes: added error_wcp_1
 |
 | English language file for the system. Punctuation constants are
 | defined in ./application/config/constants.php
@@ -121,6 +121,8 @@ $lang['error_admin_4'] = 'You are only authorized to take action on saved item y
 $lang['error_admin_5'] = 'You are not authorized to take action on items that are pending or have been activated. If you believe you have received this message in error, please contact the game master.';
 $lang['error_admin_6'] = 'You are not authorized to edit entries where you are not one of the authors. If you believe you have received this message in error, please contact the game master.';
 $lang['error_admin_7'] = 'You are not authorized to update any accounts except your own. If you believe you have received this message in error, please contact the game master.';
+
+$lang['error_wcp_1'] = 'You do not have a %s associated with your account. Without a %s associated with your account, you cannot continue. Please have the system administrator assign a %s to your account, log out, log back in and try again.';
 
 $lang['error_generic'] = 'An error has occurred that prevented your request from being completed. Please try your request again. If the problem persists, please contact the system administrator.';
 

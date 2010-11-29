@@ -9,7 +9,9 @@
 |
 | Changes: fixed bug where posts with secondary characters would
 |	be sent out with the name of the user's primary character even
-|	if that character wasn't a part of the post
+|	if that character wasn't a part of the post; added a check to
+|	the constructor to redirect to an error page in the event a user
+|	doesn't have a character associated with their account
 |
 */
 
@@ -92,6 +94,11 @@ class Write_base extends Controller {
 		$this->template->write('panel_3', $this->user_panel->panel_3(), TRUE);
 		$this->template->write('panel_workflow', $this->user_panel->panel_workflow(), TRUE);
 		$this->template->write('title', $this->options['sim_name'] . ' :: ');
+		
+		if ( ! is_array($this->session->userdata('characters')) && $this->uri->segment(2) != 'error')
+		{
+			redirect('write/error/1');
+		}
 	}
 
 	function index()
@@ -343,6 +350,34 @@ class Write_base extends Controller {
 		$this->template->write('title', $data['header']);
 		
 		/* render the template */
+		$this->template->render();
+	}
+	
+	function error()
+	{
+		$id = $this->uri->segment(3);
+		
+		switch ($id)
+		{
+			case 1:
+				$error = sprintf(
+					lang('error_wcp_1'),
+					lang('global_character'),
+					lang('global_character'),
+					lang('global_character')
+				);
+			break;
+		}
+		
+		$data['header'] = lang('head_admin_error');
+		
+		$data['error'] = $error;
+		
+		$view_loc = view_location('error', $this->skin, 'admin');
+		
+		$this->template->write('title', lang('head_admin_error'));
+		$this->template->write_view('content', $view_loc, $data);
+		
 		$this->template->render();
 	}
 	
