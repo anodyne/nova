@@ -143,7 +143,7 @@ class Controller_Nova_Login extends Controller_Nova_Base {
 			
 			// set the content
 			$data->header = ucwords(__("logging in"));
-			$data->message = __("login.success", array(':acp' => html::anchor('main/index', ucwords(__("control panel")))));
+			$data->message = __("login.success", array(':acp' => html::anchor('admin/index', ucwords(__("control panel")))));
 		}
 		else
 		{
