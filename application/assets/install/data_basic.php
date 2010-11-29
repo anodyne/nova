@@ -2246,11 +2246,10 @@ $system_components = array(
 		'comp_url' => 'http://jqueryui.com/',
 		'comp_desc' => 'jQuery UI is a lightweight, easily customizable interface library for the jQuery Javascript library.'),
 	array(
-		'comp_name' => 'FancyBox',
-		'comp_version' => '1.3.1',
-		'comp_desc' => "FancyBox is a tool for displaying images, HTML content and multi-media in a Mac-style 'lightbox' that floats overtop of web page. 
-It was built using the jQuery library and is licensed under both MIT and GPL licenses.",
-		'comp_url' => 'http://fancybox.net/home'),
+		'comp_name' => 'prettyPhoto',
+		'comp_version' => '3.0',
+		'comp_desc' => "prettyPhoto is a jQuery lightbox clone. Not only does it support images, it also support for videos, flash, YouTube, iframes. It's a full blown media lightbox.",
+		'comp_url' => 'http://www.no-margin-for-errors.com/projects/prettyphoto-jquery-lightbox-clone/'),
 	array(
 		'comp_name' => 'Facebox',
 		'comp_version' => '1.2',

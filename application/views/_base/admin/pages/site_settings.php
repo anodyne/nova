@@ -140,17 +140,17 @@
 				<p>
 					<kbd><?php echo $label['skin_main'];?></kbd>
 					<?php echo form_dropdown('skin_main', $themes['main'], $default['skin_main'], 'class="skins" myType="main"');?>
-					&nbsp;<a href="#" class="image cb preview-main"><?php echo img($images['view']);?></a>
+					&nbsp;<a href="#" class="image preview-main" rel="prettyPhoto"><?php echo img($images['view']);?></a>
 				</p>
 				<p>
 					<kbd><?php echo $label['skin_login'];?></kbd>
 					<?php echo form_dropdown('skin_login', $themes['login'], $default['skin_login'], 'class="skins" myType="login"');?>
-					&nbsp;<a href="#" class="image cb preview-login"><?php echo img($images['view']);?></a>
+					&nbsp;<a href="#" class="image preview-login" rel="prettyPhoto"><?php echo img($images['view']);?></a>
 				</p>
 				<p>
 					<kbd><?php echo $label['skin_wiki'];?></kbd>
 					<?php echo form_dropdown('skin_wiki', $themes['wiki'], $default['skin_wiki'], 'class="skins" myType="wiki"');?>
-					&nbsp;<a href="#" class="image cb preview-wiki"><?php echo img($images['view']);?></a>
+					&nbsp;<a href="#" class="image preview-wiki" rel="prettyPhoto"><?php echo img($images['view']);?></a>
 				</p>
 			</div><br />
 			

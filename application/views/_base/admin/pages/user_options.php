@@ -12,17 +12,17 @@
 			<p>
 				<kbd><?php echo $label['skin_main'];?></kbd>
 				<?php echo form_dropdown('skin_main', $themes['main'], $default['skin_main'], 'class="skins" myType="main"');?>
-				&nbsp;<a href="#" class="image cb preview-main"><?php echo img($images['view']);?></a>
+				&nbsp;<a href="#" class="image preview-main" rel="prettyPhoto"><?php echo img($images['view']);?></a>
 			</p>
 			<p>
 				<kbd><?php echo $label['skin_admin'];?></kbd>
 				<?php echo form_dropdown('skin_admin', $themes['admin'], $default['skin_admin'], 'class="skins" myType="admin"');?>
-				&nbsp;<a href="#" class="image cb preview-admin"><?php echo img($images['view']);?></a>
+				&nbsp;<a href="#" class="image preview-admin" rel="prettyPhoto"><?php echo img($images['view']);?></a>
 			</p>
 			<p>
 				<kbd><?php echo $label['skin_wiki'];?></kbd>
 				<?php echo form_dropdown('skin_wiki', $themes['wiki'], $default['skin_wiki'], 'class="skins" myType="wiki"');?>
-				&nbsp;<a href="#" class="image cb preview-wiki"><?php echo img($images['view']);?></a>
+				&nbsp;<a href="#" class="image preview-wiki" rel="prettyPhoto"><?php echo img($images['view']);?></a>
 			</p><br />
 			
 			<p><?php echo form_button($buttons['update']);?></p>

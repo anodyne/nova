@@ -5,17 +5,11 @@
 |---------------------------------------------------------------
 |
 | File: application/assets/include_head_main.php
-| System Version: 1.1
+| System Version: 1.2
 |
 */
 
 ?><style type="text/css">
-			<?php if (!is_file(APPPATH .'views/'. $current_skin .'/main/css/jquery.fancybox.css')): ?>
-				<?php $fancybox_css = base_url() . APPFOLDER .'/assets/js/css/jquery.fancybox.css';?>
-			<?php else: ?>
-				<?php $fancybox_css = base_url() . APPFOLDER .'/views/'. $current_skin .'/main/css/jquery.fancybox.css';?>
-			<?php endif;?>
-			
 			<?php if (!is_file(APPPATH .'views/'. $current_skin .'/main/css/jquery.facebox.css')): ?>
 				@import url("<?php echo base_url() . APPFOLDER .'/assets/js/css/jquery.facebox.css';?>");
 			<?php else: ?>
@@ -42,10 +36,10 @@
 		<script type="text/javascript">
 			$(document).ready(function(){
 				$.lazy({					
-					src: '<?php echo base_url() . APPFOLDER;?>/assets/js/jquery.fancybox.js',
-					name: 'fancybox',
+					src: '<?php echo base_url() . APPFOLDER;?>/assets/js/jquery.prettyPhoto.js',
+					name: 'prettyPhoto',
 					dependencies: {
-						css: ['<?php echo $fancybox_css;?>']
+						css: ['<?php echo base_url() . APPFOLDER;?>/assets/js/css/jquery.prettyPhoto.css']
 					},
 					cache: true
 				});

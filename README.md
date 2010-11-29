@@ -14,6 +14,8 @@ Anodyne Production's next-generation RPG management system combines popular feat
 * added the validation error image to the assets directory
 * added the assignment image to the admin \_base directory
 * added seaquest dsv to the available genres
+* added prettyPhoto jquery plugin to replace fancybox
+* removed fancybox jquery plugin
 * updated the applications report to show email address and IP address of the user who applied
 * updated the email sent to the game master from the join form to show the IP address of the applicant
 * updated the contact form to be simpler and use proper form validation

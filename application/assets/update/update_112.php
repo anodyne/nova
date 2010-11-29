@@ -264,6 +264,23 @@ $this->db->where('comp_name', 'jQuery UI');
 $this->db->update('system_components', array('comp_version' => '1.8.6'));
 
 /**
+ * remove the fancybox plugin from the list of components
+ */
+$this->db->where('comp_name', 'FancyBox');
+$this->db->delete('system_components');
+
+/**
+ * add the prettyPhoto plugin to the list of components
+ */
+$additem = array(
+	'comp_name' => 'prettyPhoto',
+	'comp_version' => '3.0',
+	'comp_desc' => "prettyPhoto is a jQuery lightbox clone. Not only does it support images, it also support for videos, flash, YouTube, iframes. It's a full blown media lightbox.",
+	'comp_url' => 'http://www.no-margin-for-errors.com/projects/prettyphoto-jquery-lightbox-clone/'
+);
+$this->db->insert('system_components', $additem);
+
+/**
  * add the new access page information
  */
 $page = array(

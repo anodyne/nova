@@ -11,20 +11,19 @@
 <?php if (isset($mission_img['src'])): ?>
 	<div id="gallery">
 		<?php echo text_output($label['open_gallery'], 'p', 'fontSmall gray bold');?>
-		<a href="<?php echo base_url() . $mission_img['src'];?>" class="image" rel="gallery">
-			<span><?php echo img($mission_img);?></span>
-		</a>
+		<a href="<?php echo base_url() . $mission_img['src'];?>" class="image" rel="prettyPhoto[gallery]"><?php echo img($mission_img);?></a>
+		
 		<div class="hidden">
 			<?php if (count($image_array) > 0): ?>
 				<?php foreach ($image_array as $image): ?>
-					<a href="<?php echo base_url() . $image['src'];?>" class="image" rel="gallery"><?php echo img($image);?></a>
+					<a href="<?php echo base_url() . $image['src'];?>" class="image" rel="prettyPhoto[gallery]"><?php echo img($image);?></a>
 				<?php endforeach; ?>
 			<?php endif; ?>
 		</div>
 	</div>
 <?php endif; ?>
 
-<div id="tabs" class="flora">
+<div id="tabs">
 	<ul>
 		<li><a href="#one"><span><?php echo $label['basicinfo'];?></span></a></li>
 		<li><a href="#two"><span><?php echo $label['posts'];?></span></a></li>

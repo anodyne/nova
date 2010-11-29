@@ -8,7 +8,8 @@
 | System Version: 1.2
 |
 | Changes: added methods to create, retrieve and delete site bans
-|	from the database
+|	from the database; updated method that automatically sets the
+|	first My Link
 |
 | Model used to access the system table.
 |
@@ -518,7 +519,7 @@ class System_model_base extends Model {
 		return $query;
 	}
 	
-	function update_my_links($id = '', $status = 'active', $items = '81')
+	function update_my_links($id = '', $status = 'active', $items = '83')
 	{
 		/* sets the default to Site Options link */
 		$update = array('my_links' => $items);
