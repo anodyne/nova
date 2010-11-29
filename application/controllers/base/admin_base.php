@@ -231,15 +231,6 @@ class Admin_base extends Controller {
 		|---------------------------------------------------------------
 		*/
 		
-		if (is_array($this->session->userdata('characters')) && count($this->session->userdata('characters')) > 0)
-		{
-			$data['notification']['saved_posts'] = $this->posts->count_character_posts($this->session->userdata('characters'), 'saved');
-		}
-		else
-		{
-			$data['notification']['saved_posts'] = 0;
-		}
-		
 		$data['notification'] = array(
 			'saved_logs'		=> $this->logs->count_user_logs($this->session->userdata('userid'), 'saved'),
 			'saved_news' 		=> $this->news->count_user_news($this->session->userdata('userid'), 'saved'),
@@ -252,6 +243,15 @@ class Admin_base extends Controller {
 			'pending_awards' 	=> $this->awards->count_award_noms('pending'),
 			'pending_docked' 	=> $this->docking->count_docked_items('pending'),
 		);
+		
+		if (is_array($this->session->userdata('characters')) && count($this->session->userdata('characters')) > 0)
+		{
+			$data['notification']['saved_posts'] = $this->posts->count_character_posts($this->session->userdata('characters'), 'saved');
+		}
+		else
+		{
+			$data['notification']['saved_posts'] = 0;
+		}
 		
 		/* set the count to zero by default */
 		$data['notifycount'] = 0;
