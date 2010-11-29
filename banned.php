@@ -23,7 +23,6 @@
 				
 				border-radius: 4px;
 				-moz-border-radius: 4px;
-				-webkit-border-radius: 4px;
 				
 				box-shadow: inset 0 1px 0 rgba(255, 255, 255, .55), 0 2px 7px rgba(0, 0, 0, .2);
 				-moz-box-shadow: inset 0 1px 0 rgba(255, 255, 255, .55), 0 2px 7px rgba(0, 0, 0, .2);
