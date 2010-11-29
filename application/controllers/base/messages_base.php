@@ -8,7 +8,8 @@
 | System Version: 1.2
 |
 | Changes: fixed bug where the email sent out didn't contain the
-|	content of the private message
+|	content of the private message; fixed bug where pending users
+|	would appear in the dropdown for potential recipients of a PM
 |
 */
 
@@ -609,11 +610,14 @@ class Messages_base extends Controller {
 			
 			foreach ($characters->result() as $item)
 			{
-				$type = ($item->status == 'active')
-					? ucwords(lang('status_active') .' '. lang('global_characters')) 
-					: ucwords(lang('status_inactive') .' '. lang('global_characters'));
-					
-				$data['characters'][$type][$item->userid] = $this->char->get_character_name($item->main_char, TRUE);
+				if ($item->status != 'pending')
+				{
+					$type = ($item->status == 'active')
+						? ucwords(lang('status_active') .' '. lang('global_characters')) 
+						: ucwords(lang('status_inactive') .' '. lang('global_characters'));
+						
+					$data['characters'][$type][$item->userid] = $this->char->get_character_name($item->main_char, TRUE);
+				}
 			}
 			
 			/* make sure there's something in the inactive section */
