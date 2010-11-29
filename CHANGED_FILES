@@ -137,7 +137,9 @@ M	application/helpers/MY_form_helper.php
 M	application/hooks/Utility.php
 M	application/language/english/base_lang.php
 M	application/language/english/email_lang.php
+M	application/language/english/error_lang.php
 M	application/language/english/text_lang.php
+M	application/libraries/User_panel.php
 M	application/models/base/depts_model_base.php
 M	application/models/base/positions_model_base.php
 M	application/models/base/system_model_base.php

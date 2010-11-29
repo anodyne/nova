@@ -1,3 +1,15 @@
+* updated the readme
+* fixed bug where personal logs weren't given the proper date when they were saved first
+* fixed bug where changing a dynamic form field from text/textarea to dropdown wouldn't trigger the dropdown values section to open, making the field pretty much useless
+* fixed a bug where the specs page wouldn't give any feedback in the event there were no specification items in the database
+* fixed bug where pending users would appear in the dropdown for potential recipients of a private message
+* fixed quick issue where the saved posts were being wiped out by redeclaring the notification array
+* updated the styles for the banned notification page
+* updated the write controller to check and see if the user has a character and if they don't redirects them to an error page
+* fixed some errors thrown when a user without a character moved through the system
+* updated the readme
+* updated whitespace in the gitignore file
+* updated the changelog and changed files listing
 * Merge branch 'feature/prettyphoto' into 1.x
 * updated the changelog and changed files list
 * fixed bug where the private message email didn't contain the content of the private message
