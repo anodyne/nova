@@ -62,6 +62,9 @@ Anodyne Production's next-generation RPG management system combines popular feat
 * fixed bug where post emails were sent out with the user's primary character name attached even if the primary character wasn't associated with the post
 * fixed bug where the private message email didn't contain the content of the private message
 * fixed some errors thrown through the system when a user without a character tried moving through the system
+* fixed bug where personal logs don't have the right date when they're saved first
+* fixed bug where pending users would appear in the dropdown of potential recipients for a PM
+* fixed bug where changing a dynamic form field from text/textarea to dropdown wouldn't trigger the dropdown values section to open, rendering the field pretty much useless
 
 ## Version History
 
