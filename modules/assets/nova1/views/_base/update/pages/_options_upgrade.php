@@ -23,7 +23,7 @@
 	</li>
 </ul>
 
-<?php if ($installed === FALSE): ?>
+<?php if ($installed === false): ?>
 	<?php echo lang_output('upd_index_options_whatsnext', 'h2');?>
 	
 	<ul>

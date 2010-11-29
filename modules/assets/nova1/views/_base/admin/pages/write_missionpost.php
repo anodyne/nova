@@ -1,6 +1,6 @@
 <?php echo text_output($header, 'h1', 'page-head');?>
 
-<?php if (isset($missions) && $missions === FALSE): ?>
+<?php if (isset($missions) && $missions === false): ?>
 	<?php echo text_output($label['no_mission'], 'p', 'bold');?>
 <?php else: ?>
 	<?php if ($this->options['use_mission_notes'] == 'y'): ?>
@@ -82,7 +82,7 @@
 			&nbsp;
 			<?php echo form_button($inputs['save']);?>
 		
-			<?php if ($this->uri->segment(3) !== FALSE): ?>
+			<?php if ($this->uri->segment(3) !== false): ?>
 				&nbsp;
 				<?php echo form_button($inputs['delete']);?>
 			<?php endif; ?>

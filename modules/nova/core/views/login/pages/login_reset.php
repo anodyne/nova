@@ -2,7 +2,7 @@
 
 <p class="<?php echo $message_class;?>"><?php echo $message;?></p>
 
-<?php if ($enabled === TRUE): ?>
+<?php if ($enabled === true): ?>
 	<hr />
 	
 	<?php echo form::open('login/reset');?>

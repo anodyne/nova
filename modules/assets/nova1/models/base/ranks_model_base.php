@@ -53,7 +53,7 @@ class Ranks_model_base extends Model {
 			{
 				if ($i > 0)
 				{
-					$or = " OR ";
+					$or = " or ";
 				}
 				else
 				{
@@ -63,7 +63,7 @@ class Ranks_model_base extends Model {
 				$string.= $or . "rankcat_status = '$status[$i]'";
 			}
 			
-			$this->db->where("($string)", NULL);
+			$this->db->where("($string)", null);
 		}
 		
 		$query = $this->db->get();
@@ -85,9 +85,9 @@ class Ranks_model_base extends Model {
 	{
 		$query = $this->db->get_where('ranks_'. GENRE, array('rank_id' => $id));
 		
-		$row = ($query->num_rows() > 0) ? $query->row() : FALSE;
+		$row = ($query->num_rows() > 0) ? $query->row() : false;
 		
-		if (!empty($return) && $row !== FALSE)
+		if (!empty($return) && $row !== false)
 		{
 			if (!is_array($return))
 			{
@@ -125,7 +125,7 @@ class Ranks_model_base extends Model {
 			return $row->rankcat_location;
 		}
 		
-		return FALSE;
+		return false;
 	}
 	
 	function get_rankcat($id = '', $identifier = 'rankcat_location', $return = '')
@@ -136,9 +136,9 @@ class Ranks_model_base extends Model {
 		
 		$query = $this->db->get();
 		
-		$row = ($query->num_rows() > 0) ? $query->row() : FALSE;
+		$row = ($query->num_rows() > 0) ? $query->row() : false;
 		
-		if (!empty($return) && $row !== FALSE)
+		if (!empty($return) && $row !== false)
 		{
 			if (!is_array($return))
 			{

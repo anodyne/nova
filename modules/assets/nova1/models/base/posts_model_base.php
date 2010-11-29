@@ -85,7 +85,7 @@ class Posts_model_base extends Model {
 			return $array;
 		}
 		
-		return FALSE;
+		return false;
 	}
 	
 	function get_character_posts($character = '', $limit = 0)
@@ -108,23 +108,23 @@ class Posts_model_base extends Model {
 			{
 				if ($i > 0)
 				{
-					$or = " OR ";
+					$or = " or ";
 				}
 				else
 				{
 					$or = "";
 				}
 				
-				$string.= $or . "(post_authors LIKE '%,$character[$i]' OR post_authors LIKE '$character[$i],%' OR post_authors LIKE '%,$character[$i],%' OR post_authors = $character[$i])";
+				$string.= $or . "(post_authors LIKE '%,$character[$i]' or post_authors LIKE '$character[$i],%' or post_authors LIKE '%,$character[$i],%' or post_authors = $character[$i])";
 			}
 			
-			$this->db->where("($string)", NULL);
+			$this->db->where("($string)", null);
 		}
 		else
 		{
-			$string = "(post_authors LIKE '%,$character' OR post_authors LIKE '$character,%' OR post_authors = '%,$character,%' OR post_authors = $character)";
+			$string = "(post_authors LIKE '%,$character' or post_authors LIKE '$character,%' or post_authors = '%,$character,%' or post_authors = $character)";
 			
-			$this->db->where("$string", NULL);
+			$this->db->where("$string", null);
 		}
 		
 		$this->db->order_by('post_date', 'desc');
@@ -174,16 +174,16 @@ class Posts_model_base extends Model {
 			}
 		}
 		
-		return FALSE;
+		return false;
 	}
 	
 	function get_post($id = '', $return = '')
 	{
 		$query = $this->db->get_where('posts', array('post_id' => $id));
 		
-		$row = ($query->num_rows() > 0) ? $query->row() : FALSE;
+		$row = ($query->num_rows() > 0) ? $query->row() : false;
 		
-		if (!empty($return) && $row !== FALSE)
+		if (!empty($return) && $row !== false)
 		{
 			if (!is_array($return))
 			{
@@ -209,9 +209,9 @@ class Posts_model_base extends Model {
 	{
 		$query = $this->db->get_where('posts_comments', array('pcomment_id' => $id));
 		
-		$row = ($query->num_rows() > 0) ? $query->row() : FALSE;
+		$row = ($query->num_rows() > 0) ? $query->row() : false;
 		
-		if (!empty($return) && $row !== FALSE)
+		if (!empty($return) && $row !== false)
 		{
 			if (!is_array($return))
 			{
@@ -304,17 +304,17 @@ class Posts_model_base extends Model {
 				{
 					if ($i > 0)
 					{
-						$or = " OR ";
+						$or = " or ";
 					}
 					else
 					{
 						$or = "";
 					}
 					
-					$string.= $or . "(post_authors LIKE '%,$id[$i]' OR post_authors LIKE '$id[$i],%' OR post_authors LIKE '%,$id[$i],%' OR post_authors = $id[$i])";
+					$string.= $or . "(post_authors LIKE '%,$id[$i]' or post_authors LIKE '$id[$i],%' or post_authors LIKE '%,$id[$i],%' or post_authors = $id[$i])";
 				}
 				
-				$this->db->where("($string)", NULL);
+				$this->db->where("($string)", null);
 			}
 			else
 			{
@@ -390,18 +390,18 @@ class Posts_model_base extends Model {
 			
 			for ($i=0; $i < $count; $i++)
 			{
-				$or = ($i > 0) ? ' OR ' : '';
+				$or = ($i > 0) ? ' or ' : '';
 				
-				$string.= $or . "(post_authors LIKE '%,$character[$i]' OR post_authors LIKE '$character[$i],%' OR post_authors LIKE '%,$character[$i],%' OR post_authors = $character[$i])";
+				$string.= $or . "(post_authors LIKE '%,$character[$i]' or post_authors LIKE '$character[$i],%' or post_authors LIKE '%,$character[$i],%' or post_authors = $character[$i])";
 			}
 			
-			$this->db->where("($string)", NULL);
+			$this->db->where("($string)", null);
 		}
 		else
 		{
-			$string = "(post_authors LIKE '%,$character' OR post_authors LIKE '$character,%' OR post_authors = '%,$character,%' OR post_authors = $character)";
+			$string = "(post_authors LIKE '%,$character' or post_authors LIKE '$character,%' or post_authors = '%,$character,%' or post_authors = $character)";
 			
-			$this->db->where("$string", NULL);
+			$this->db->where("$string", null);
 		}
 		
 		$count_final += $this->db->count_all_results();
@@ -531,21 +531,21 @@ class Posts_model_base extends Model {
 				
 				for ($i=0; $i < $count; $i++)
 				{
-					$or = ($i > 0) ? ' OR ' : '';
-					$and = ($i > 0) ? ' AND ' : '';
+					$or = ($i > 0) ? ' or ' : '';
+					$and = ($i > 0) ? ' and ' : '';
 					
-					$string.= $or . "(post_authors LIKE '%,$id[$i]' OR post_authors LIKE '$id[$i],%' OR post_authors LIKE '%,$id[$i],%' OR post_authors = $id[$i])";
+					$string.= $or . "(post_authors LIKE '%,$id[$i]' or post_authors LIKE '$id[$i],%' or post_authors LIKE '%,$id[$i],%' or post_authors = $id[$i])";
 					$string2.= $and . "post_saved != '$id[$i]'";
 				}
 				
-				$this->db->where("($string)", NULL);
-				$this->db->where("($string2)", NULL);
+				$this->db->where("($string)", null);
+				$this->db->where("($string2)", null);
 			}
 			else
 			{
-				$string.= $or . "(post_authors LIKE '%,$id' OR post_authors LIKE '$id,%' OR post_authors LIKE '%,$id,%' OR post_authors = $id)";
+				$string.= $or . "(post_authors LIKE '%,$id' or post_authors LIKE '$id,%' or post_authors LIKE '%,$id,%' or post_authors = $id)";
 				
-				$this->db->where("($string)", NULL);
+				$this->db->where("($string)", null);
 				$this->db->where('post_saved !=', $id);
 			}
 		}
@@ -578,9 +578,9 @@ class Posts_model_base extends Model {
 			$this->db->where('post_date >=', $timeframe);
 		}
 		
-		$string = "(post_authors_users LIKE '%,$id' OR post_authors_users LIKE '$id,%' OR post_authors_users LIKE '%,$id,%' OR post_authors_users = $id)";
+		$string = "(post_authors_users LIKE '%,$id' or post_authors_users LIKE '$id,%' or post_authors_users LIKE '%,$id,%' or post_authors_users = $id)";
 			
-		$this->db->where("($string)", NULL);
+		$this->db->where("($string)", null);
 			
 		$count = $this->db->count_all_results();
 		

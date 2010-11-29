@@ -66,7 +66,7 @@ class Privmsgs_model_base extends Model {
 			return $array;
 		}
 		
-		return FALSE;
+		return false;
 	}
 	
 	function get_message($id = '')

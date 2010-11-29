@@ -36,7 +36,7 @@ class User_base extends Controller {
 		$this->load->model('system_model', 'sys');
 		$installed = $this->sys->check_install_status();
 		
-		if ($installed === FALSE)
+		if ($installed === false)
 		{ /* check whether the system is installed */
 			redirect('install/index', 'refresh');
 		}
@@ -49,7 +49,7 @@ class User_base extends Controller {
 		$this->load->model('users_model', 'user');
 		
 		/* check to see if they are logged in */
-		$this->auth->is_logged_in(TRUE);
+		$this->auth->is_logged_in(true);
 		
 		/* an array of the global we want to retrieve */
 		$settings_array = array(
@@ -74,7 +74,7 @@ class User_base extends Controller {
 		$this->timezone = $this->options['timezone'];
 		$this->dst = (bool) $this->options['daylight_savings'];
 		
-		if ($this->auth->is_logged_in() === TRUE)
+		if ($this->auth->is_logged_in() === true)
 		{ /* if there's a session, set the variables appropriately */
 			$this->skin = $this->session->userdata('skin_admin');
 			$this->rank = $this->session->userdata('display_rank');
@@ -90,12 +90,12 @@ class User_base extends Controller {
 		$this->template->set_master_template($this->skin .'/template_admin.php');
 		
 		/* write the common elements to the template */
-		$this->template->write('nav_main', $this->menu->build('main', 'main'), TRUE);
-		$this->template->write('nav_sub', $this->menu->build('adminsub', 'user'), TRUE);
-		$this->template->write('panel_1', $this->user_panel->panel_1(), TRUE);
-		$this->template->write('panel_2', $this->user_panel->panel_2(), TRUE);
-		$this->template->write('panel_3', $this->user_panel->panel_3(), TRUE);
-		$this->template->write('panel_workflow', $this->user_panel->panel_workflow(), TRUE);
+		$this->template->write('nav_main', $this->menu->build('main', 'main'), true);
+		$this->template->write('nav_sub', $this->menu->build('adminsub', 'user'), true);
+		$this->template->write('panel_1', $this->user_panel->panel_1(), true);
+		$this->template->write('panel_2', $this->user_panel->panel_2(), true);
+		$this->template->write('panel_3', $this->user_panel->panel_3(), true);
+		$this->template->write('panel_workflow', $this->user_panel->panel_workflow(), true);
 		$this->template->write('title', $this->options['sim_name'] . ' :: ');
 	}
 
@@ -110,7 +110,7 @@ class User_base extends Controller {
 		
 		$level = $this->auth->get_access_level();
 		$id = $this->session->userdata('userid');
-		$id = ($level == 2) ? $this->uri->segment(3, $id, TRUE) : $id;
+		$id = ($level == 2) ? $this->uri->segment(3, $id, true) : $id;
 		
 		if (isset($_POST['submit']))
 		{
@@ -121,7 +121,7 @@ class User_base extends Controller {
 			 
 			if ($_POST['submit'] == 'Update')
 			{
-				$user = $this->uri->segment(3, 0, TRUE);
+				$user = $this->uri->segment(3, 0, true);
 				
 				if ($level == 1 && $user != $this->session->userdata('userid'))
 				{
@@ -202,7 +202,7 @@ class User_base extends Controller {
 
 					if ($old_status == 'inactive' && $array['status'] != 'inactive')
 					{
-						$array['leave_date'] = NULL;
+						$array['leave_date'] = null;
 					}
 				}
 				
@@ -219,7 +219,7 @@ class User_base extends Controller {
 				{
 					if ($array['loa'] != $old_loa)
 					{
-						$loa = $this->user->get_last_loa($user, TRUE);
+						$loa = $this->user->get_last_loa($user, true);
 				
 						if ($loa->num_rows() > 0)
 						{
@@ -268,7 +268,7 @@ class User_base extends Controller {
 						/* grab the cookie */
 						$cookie = get_cookie('nova_'. $uid);
 						
-						if ($cookie !== FALSE)
+						if ($cookie !== false)
 						{
 							/* set the cookie data */
 							$c_data = array(
@@ -309,7 +309,7 @@ class User_base extends Controller {
 		/* grab the user details */
 		$details = $this->user->get_user($id);
 		
-		if ($details !== FALSE)
+		if ($details !== false)
 		{
 			$data['inputs'] = array(
 				'id' => $details->userid,
@@ -360,112 +360,112 @@ class User_base extends Controller {
 					'name' => 'daylight_savings',
 					'id' => 'dst_y',
 					'value' => '1',
-					'checked' => ($details->daylight_savings == '1') ? TRUE : FALSE),
+					'checked' => ($details->daylight_savings == '1') ? true : false),
 				'dst_n' => array(
 					'name' => 'daylight_savings',
 					'id' => 'dst_n',
 					'value' => '0',
-					'checked' => ($details->daylight_savings == '0') ? TRUE : FALSE),
+					'checked' => ($details->daylight_savings == '0') ? true : false),
 				'admin_y' => array(
 					'name' => 'is_sysadmin',
 					'id' => 'admin_y',
 					'value' => 'y',
-					'checked' => ($details->is_sysadmin == 'y') ? TRUE : FALSE),
+					'checked' => ($details->is_sysadmin == 'y') ? true : false),
 				'admin_n' => array(
 					'name' => 'is_sysadmin',
 					'id' => 'admin_n',
 					'value' => 'n',
-					'checked' => ($details->is_sysadmin == 'n') ? TRUE : FALSE),
+					'checked' => ($details->is_sysadmin == 'n') ? true : false),
 				'gm_y' => array(
 					'name' => 'is_game_master',
 					'id' => 'gm_y',
 					'value' => 'y',
-					'checked' => ($details->is_game_master == 'y') ? TRUE : FALSE),
+					'checked' => ($details->is_game_master == 'y') ? true : false),
 				'gm_n' => array(
 					'name' => 'is_game_master',
 					'id' => 'gm_n',
 					'value' => 'n',
-					'checked' => ($details->is_game_master == 'n') ? TRUE : FALSE),
+					'checked' => ($details->is_game_master == 'n') ? true : false),
 				'webmaster_y' => array(
 					'name' => 'is_webmaster',
 					'id' => 'webmaster_y',
 					'value' => 'y',
-					'checked' => ($details->is_webmaster == 'y') ? TRUE : FALSE),
+					'checked' => ($details->is_webmaster == 'y') ? true : false),
 				'webmaster_n' => array(
 					'name' => 'is_webmaster',
 					'id' => 'webmaster_n',
 					'value' => 'n',
-					'checked' => ($details->is_webmaster == 'n') ? TRUE : FALSE),
+					'checked' => ($details->is_webmaster == 'n') ? true : false),
 				'mod_posts_y' => array(
 					'name' => 'moderate_posts',
 					'id' => 'mod_posts_y',
 					'value' => 'y',
-					'checked' => ($details->moderate_posts == 'y') ? TRUE : FALSE),
+					'checked' => ($details->moderate_posts == 'y') ? true : false),
 				'mod_posts_n' => array(
 					'name' => 'moderate_posts',
 					'id' => 'mod_posts_n',
 					'value' => 'n',
-					'checked' => ($details->moderate_posts == 'n') ? TRUE : FALSE),
+					'checked' => ($details->moderate_posts == 'n') ? true : false),
 				'mod_logs_y' => array(
 					'name' => 'moderate_logs',
 					'id' => 'mod_logs_y',
 					'value' => 'y',
-					'checked' => ($details->moderate_logs == 'y') ? TRUE : FALSE),
+					'checked' => ($details->moderate_logs == 'y') ? true : false),
 				'mod_logs_n' => array(
 					'name' => 'moderate_logs',
 					'id' => 'mod_logs_n',
 					'value' => 'n',
-					'checked' => ($details->moderate_logs == 'n') ? TRUE : FALSE),
+					'checked' => ($details->moderate_logs == 'n') ? true : false),
 				'mod_news_y' => array(
 					'name' => 'moderate_news',
 					'id' => 'mod_news_y',
 					'value' => 'y',
-					'checked' => ($details->moderate_news == 'y') ? TRUE : FALSE),
+					'checked' => ($details->moderate_news == 'y') ? true : false),
 				'mod_news_n' => array(
 					'name' => 'moderate_news',
 					'id' => 'mod_news_n',
 					'value' => 'n',
-					'checked' => ($details->moderate_news == 'n') ? TRUE : FALSE),
+					'checked' => ($details->moderate_news == 'n') ? true : false),
 				'mod_pcomment_y' => array(
 					'name' => 'moderate_post_comments',
 					'id' => 'mod_pcomment_y',
 					'value' => 'y',
-					'checked' => ($details->moderate_post_comments == 'y') ? TRUE : FALSE),
+					'checked' => ($details->moderate_post_comments == 'y') ? true : false),
 				'mod_pcomment_n' => array(
 					'name' => 'moderate_post_comments',
 					'id' => 'mod_pcomment_n',
 					'value' => 'n',
-					'checked' => ($details->moderate_post_comments == 'n') ? TRUE : FALSE),
+					'checked' => ($details->moderate_post_comments == 'n') ? true : false),
 				'mod_lcomment_y' => array(
 					'name' => 'moderate_log_comments',
 					'id' => 'mod_lcomment_y',
 					'value' => 'y',
-					'checked' => ($details->moderate_log_comments == 'y') ? TRUE : FALSE),
+					'checked' => ($details->moderate_log_comments == 'y') ? true : false),
 				'mod_lcomment_n' => array(
 					'name' => 'moderate_log_comments',
 					'id' => 'mod_lcomment_n',
 					'value' => 'n',
-					'checked' => ($details->moderate_log_comments == 'n') ? TRUE : FALSE),
+					'checked' => ($details->moderate_log_comments == 'n') ? true : false),
 				'mod_ncomment_y' => array(
 					'name' => 'moderate_news_comments',
 					'id' => 'mod_ncomment_y',
 					'value' => 'y',
-					'checked' => ($details->moderate_news_comments == 'y') ? TRUE : FALSE),
+					'checked' => ($details->moderate_news_comments == 'y') ? true : false),
 				'mod_ncomment_n' => array(
 					'name' => 'moderate_news_comments',
 					'id' => 'mod_ncomment_n',
 					'value' => 'n',
-					'checked' => ($details->moderate_news_comments == 'n') ? TRUE : FALSE),
+					'checked' => ($details->moderate_news_comments == 'n') ? true : false),
 				'mod_wcomment_y' => array(
 					'name' => 'moderate_wiki_comments',
 					'id' => 'mod_wcomment_y',
 					'value' => 'y',
-					'checked' => ($details->moderate_wiki_comments == 'y') ? TRUE : FALSE),
+					'checked' => ($details->moderate_wiki_comments == 'y') ? true : false),
 				'mod_wcomment_n' => array(
 					'name' => 'moderate_wiki_comments',
 					'id' => 'mod_wcomment_n',
 					'value' => 'n',
-					'checked' => ($details->moderate_wiki_comments == 'n') ? TRUE : FALSE),
+					'checked' => ($details->moderate_wiki_comments == 'n') ? true : false),
 			);
 		}
 		
@@ -480,14 +480,14 @@ class User_base extends Controller {
 						'name' => 'p_'. $p->pref_key,
 						'id' => 'p_'. $p->pref_key,
 						'value' => 'y',
-						'checked' => ($this->user->get_pref($p->pref_key, $id) == 'y') ? TRUE : FALSE),
+						'checked' => ($this->user->get_pref($p->pref_key, $id) == 'y') ? true : false),
 					'label' => $p->pref_label
 				);
 			}
 		}
 		
 		/* grab the directory map of the language folder */
-		$dir = directory_map(APPFOLDER .'/language', TRUE);
+		$dir = directory_map(APPFOLDER .'/language', true);
 		
 		/* loop through the directory map and create the dropdown array */
 		foreach ($dir as $key => $value)
@@ -633,8 +633,8 @@ class User_base extends Controller {
 			switch ($action)
 			{
 				case 'delete':
-					$id = $this->input->post('id', TRUE);
-					$id = (is_numeric($id)) ? $id : FALSE;
+					$id = $this->input->post('id', true);
+					$id = (is_numeric($id)) ? $id : false;
 					
 					$delete = $this->user->delete_user($id);
 					
@@ -644,7 +644,7 @@ class User_base extends Controller {
 						
 						if (count($chars) > 0)
 						{
-							$update_array = array('user' => NULL);
+							$update_array = array('user' => null);
 							
 							foreach ($chars as $c)
 							{
@@ -690,7 +690,7 @@ class User_base extends Controller {
 			{
 				$data['users'][$p->status][$p->userid] = array(
 					'id' => $p->userid,
-					'main_char' => $this->char->get_character_name($p->main_char, TRUE),
+					'main_char' => $this->char->get_character_name($p->main_char, true),
 					'email' => $p->email,
 					'name' => $p->name,
 					'left' => (!empty($p->leave_date)) ? timespan($p->leave_date, now()) : '',
@@ -753,17 +753,17 @@ class User_base extends Controller {
 		
 		if ($level == 2)
 		{
-			$user = $this->uri->segment(3, 0, TRUE);
+			$user = $this->uri->segment(3, 0, true);
 			$data['user'] = $user;
 			
 			switch ($this->uri->segment(4))
 			{
 				case 'add':
-					$id = $this->uri->segment(5, 0, TRUE);
+					$id = $this->uri->segment(5, 0, true);
 					
 					/* get all the characters and make sure it isn't blank */
 					$chars_raw = $this->char->get_user_characters($user, '', 'array');
-					$chars = ($chars_raw !== FALSE) ? $chars_raw : array();
+					$chars = ($chars_raw !== false) ? $chars_raw : array();
 					
 					$type = array(
 						'active' => 0,
@@ -784,7 +784,7 @@ class User_base extends Controller {
 					
 					$key = array_search($id, $chars);
 					
-					if ($key === FALSE)
+					if ($key === false)
 					{
 						/* set up the data array with the user info */
 						$data_array = array('data_user' => $data['user']);
@@ -841,7 +841,7 @@ class User_base extends Controller {
 							/* get the user's main character */
 							$main = $this->user->get_user($user, 'main_char');
 							
-							if ($chars_raw === FALSE || empty($main))
+							if ($chars_raw === false || empty($main))
 							{ /* if they don't have any characters or don't have a main character */
 								$update_array['main_char'] = $id;
 							}
@@ -875,13 +875,13 @@ class User_base extends Controller {
 					break;
 					
 				case 'remove':
-					$id = $this->uri->segment(5, 0, TRUE);
+					$id = $this->uri->segment(5, 0, true);
 					
 					/* get an array of the user's characters */
 					$chars = $this->char->get_user_characters($user, 'active_npc', 'array');
 					
-					/* new main is NULL until something overwrites it in the event the main char is removed */
-					$newmain = NULL;
+					/* new main is null until something overwrites it in the event the main char is removed */
+					$newmain = null;
 					
 					if (count($chars) > 0)
 					{
@@ -902,10 +902,10 @@ class User_base extends Controller {
 					/* search the array */
 					$key = array_search($id, $chars);
 					
-					if ($key !== FALSE)
+					if ($key !== false)
 					{
 						/* set up the data array with the user info */
-						$data_array = array('data_user' => NULL);
+						$data_array = array('data_user' => null);
 						
 						/* update all the character data to point to the user */
 						$update_data = $this->char->update_character_data_all($id, 'data_char', $data_array);
@@ -915,7 +915,7 @@ class User_base extends Controller {
 						/* set the deactivate date and user ID */
 						$char_deactivate = array(
 							'date_deactivate' => now(),
-							'user' => NULL,
+							'user' => null,
 						);
 						
 						/* run the update */
@@ -968,7 +968,7 @@ class User_base extends Controller {
 					break;
 					
 				case 'set':
-					$id = $this->uri->segment(5, 0, TRUE);
+					$id = $this->uri->segment(5, 0, true);
 					
 					/* grab the current main character */
 					$char = $this->user->get_user($user, 'main_char');
@@ -1036,7 +1036,7 @@ class User_base extends Controller {
 				$all = $this->char->get_user_characters($user, '', 'array');
 				
 				/* get the user's current characters */
-				$chars = ($all !== FALSE) ? $all : array();
+				$chars = ($all !== false) ? $all : array();
 				
 				/* get all characters that don't have a user assigned to them */
 				$unassigned = $this->char->get_all_characters('no_user');
@@ -1056,10 +1056,10 @@ class User_base extends Controller {
 						$d = $this->char->get_character($c, array('crew_type', 'position_1'));
 						
 						$data['chars'][$c] = array(
-							'name' => $this->char->get_character_name($c, TRUE),
+							'name' => $this->char->get_character_name($c, true),
 							'position' => $this->pos->get_position($d['position_1'], 'pos_name'),
 							'type' => ($d['crew_type'] == 'npc') ? strtoupper($d['crew_type']) : ucfirst($d['crew_type']),
-							'main' => ($this->user->get_main_character($user) != $c) ? FALSE : TRUE,
+							'main' => ($this->user->get_main_character($user) != $c) ? false : true,
 						);
 						
 						if ($d['crew_type'] == 'npc')
@@ -1082,7 +1082,7 @@ class User_base extends Controller {
 					foreach ($unassigned->result() as $u)
 					{
 						$data['unassigned'][$u->crew_type][$u->charid] = array(
-							'name' => $this->char->get_character_name($u->charid, TRUE),
+							'name' => $this->char->get_character_name($u->charid, true),
 							'position' => $this->pos->get_position($u->position_1, 'pos_name')
 						);
 					}
@@ -1200,10 +1200,10 @@ class User_base extends Controller {
 				case 'queue':
 					if ($this->auth->get_access_level() > 1)
 					{
-						$action = $this->input->post('action', TRUE);
+						$action = $this->input->post('action', true);
 						
-						$id = $this->input->post('id', TRUE);
-						$id = (is_numeric($id)) ? $id : FALSE;
+						$id = $this->input->post('id', true);
+						$id = (is_numeric($id)) ? $id : false;
 						
 						switch ($action)
 						{
@@ -1295,8 +1295,8 @@ class User_base extends Controller {
 					break;
 					
 				default:
-					$character = $this->input->post('character', TRUE);
-					$awardid = $this->input->post('award', TRUE);
+					$character = $this->input->post('character', true);
+					$awardid = $this->input->post('award', true);
 					
 					$award = $this->awards->get_award($awardid);
 					
@@ -1305,7 +1305,7 @@ class User_base extends Controller {
 						'queue_receive_user' => $this->char->get_character($character, 'user'),
 						'queue_nominate' => $this->session->userdata('main_char'),
 						'queue_award' => $awardid,
-						'queue_reason' => $this->input->post('reason', TRUE),
+						'queue_reason' => $this->input->post('reason', true),
 						'queue_status' => 'pending',
 						'queue_date' => now()
 					);
@@ -1332,7 +1332,7 @@ class User_base extends Controller {
 							'nominate' => $insert_array['queue_nominate']
 						);
 						
-						$email = ($this->options['system_email'] == 'on') ? $this->_email('nominate', $email_data) : FALSE;
+						$email = ($this->options['system_email'] == 'on') ? $this->_email('nominate', $email_data) : false;
 					}
 					else
 					{
@@ -1380,8 +1380,8 @@ class User_base extends Controller {
 					$date = gmt_to_local($n->queue_date, $this->timezone, $this->dst);
 					
 					$data['nominations'][$nid] = array(
-						'awardee' => $this->char->get_character_name($n->queue_receive_character, TRUE),
-						'nominator' => $this->char->get_character_name($n->queue_nominate, TRUE),
+						'awardee' => $this->char->get_character_name($n->queue_receive_character, true),
+						'nominator' => $this->char->get_character_name($n->queue_nominate, true),
 						'award' => $this->awards->get_award($n->queue_award, 'award_name'),
 						'reason' => $n->queue_reason,
 						'date' => mdate($datestring, $date),
@@ -1538,7 +1538,7 @@ class User_base extends Controller {
 					break;
 					
 				case 'ranks':
-					$rank = $this->input->post('rank', TRUE);
+					$rank = $this->input->post('rank', true);
 					
 					$update_array = array(
 						'display_rank' => $rank,
@@ -1585,9 +1585,9 @@ class User_base extends Controller {
 					break;
 					
 				case 'skins':
-					$skin_admin = $this->input->post('skin_admin', TRUE);
-					$skin_main = $this->input->post('skin_main', TRUE);
-					$skin_wiki = $this->input->post('skin_wiki', TRUE);
+					$skin_admin = $this->input->post('skin_admin', true);
+					$skin_main = $this->input->post('skin_main', true);
+					$skin_wiki = $this->input->post('skin_wiki', true);
 					
 					$update_array = array(
 						'skin_admin' => $skin_admin,
@@ -1739,8 +1739,8 @@ class User_base extends Controller {
 		| RANKS
 		|---------------------------------------------------------------
 		*/
-		$r_access = $this->auth->check_access('site/catalogueranks', FALSE);
-		$rank_access = ($r_access === TRUE) ? array('active', 'development') : 'active';
+		$r_access = $this->auth->check_access('site/catalogueranks', false);
+		$rank_access = ($r_access === true) ? array('active', 'development') : 'active';
 		
 		$ranks = $this->ranks->get_all_rank_sets($rank_access);
 		
@@ -1758,7 +1758,7 @@ class User_base extends Controller {
 						'name' => 'rank',
 						'id' => 'rank_'. $r->rankcat_id,
 						'value' => $r->rankcat_location,
-						'checked' => ($this->session->userdata('display_rank') == $r->rankcat_location) ? TRUE : FALSE),
+						'checked' => ($this->session->userdata('display_rank') == $r->rankcat_location) ? true : false),
 				);
 			}
 		}
@@ -1826,7 +1826,7 @@ class User_base extends Controller {
 		
 		if (isset($_POST['submit']))
 		{
-			$status = strtolower($this->input->post('status', TRUE));
+			$status = strtolower($this->input->post('status', true));
 			
 			$update_data = array('loa' => $status);
 			
@@ -1834,7 +1834,7 @@ class User_base extends Controller {
 			
 			if ($update > 0)
 			{
-				$loa = $this->user->get_last_loa($this->session->userdata('userid'), TRUE);
+				$loa = $this->user->get_last_loa($this->session->userdata('userid'), true);
 				
 				if ($loa->num_rows() > 0)
 				{
@@ -1852,8 +1852,8 @@ class User_base extends Controller {
 							'loa_user' => $this->session->userdata('userid'),
 							'loa_start_date' => now(),
 							'loa_type' => $status,
-							'loa_duration' => $this->input->post('duration', TRUE),
-							'loa_reason' => $this->input->post('reason', TRUE)
+							'loa_duration' => $this->input->post('duration', true),
+							'loa_reason' => $this->input->post('reason', true)
 						);
 						
 						$this->user->create_loa_record($loa_array);
@@ -1872,12 +1872,12 @@ class User_base extends Controller {
 					
 				$email_data = array(
 					'requestor' => $this->session->userdata('main_char'),
-					'reason' => $this->input->post('reason', TRUE),
-					'duration' => $this->input->post('duration', TRUE),
-					'status' => $this->input->post('status', TRUE)
+					'reason' => $this->input->post('reason', true),
+					'duration' => $this->input->post('duration', true),
+					'status' => $this->input->post('status', true)
 				);
 				
-				$email = ($this->options['system_email'] == 'on') ? $this->_email('status', $email_data) : FALSE;
+				$email = ($this->options['system_email'] == 'on') ? $this->_email('status', $email_data) : false;
 			}
 			else
 			{
@@ -1953,7 +1953,7 @@ class User_base extends Controller {
 		$this->load->library('parser');
 		
 		/* define the variables */
-		$email = FALSE;
+		$email = false;
 		
 		switch ($type)
 		{
@@ -1967,7 +1967,7 @@ class User_base extends Controller {
 				$subject = lang('email_subject_award_nomination');
 				
 				/* set who the email is coming from */
-				$from_name = $this->char->get_character_name($data['nominate'], TRUE, TRUE);
+				$from_name = $this->char->get_character_name($data['nominate'], true, true);
 				$from_email = $this->user->get_email_address('character', $data['nominate']);
 				
 				if ($data['cat'] == 'ooc')
@@ -1977,7 +1977,7 @@ class User_base extends Controller {
 				}
 				else
 				{
-					$to_name = $this->char->get_character_name($data['receive'], TRUE, TRUE);
+					$to_name = $this->char->get_character_name($data['receive'], true, true);
 				}
 				
 				/* set the content */
@@ -2002,7 +2002,7 @@ class User_base extends Controller {
 				$em_loc = email_location('user_nominate', $this->email->mailtype);
 				
 				/* parse the message */
-				$message = $this->parser->parse($em_loc, $email_data, TRUE);
+				$message = $this->parser->parse($em_loc, $email_data, true);
 				
 				/* make a string of email addresses */
 				$to = implode(',', $this->user->get_emails_with_access('user/nominate', 2));
@@ -2020,7 +2020,7 @@ class User_base extends Controller {
 				$subject = lang('email_subject_user_status_change');
 				
 				/* set who the email is coming from */
-				$from_name = $this->char->get_character_name($data['requestor'], TRUE, TRUE);
+				$from_name = $this->char->get_character_name($data['requestor'], true, true);
 				$from_email = $this->user->get_email_address('character', $data['requestor']);
 				
 				/* set the content */
@@ -2044,7 +2044,7 @@ class User_base extends Controller {
 				$em_loc = email_location('user_status_change', $this->email->mailtype);
 				
 				/* parse the message */
-				$message = $this->parser->parse($em_loc, $email_data, FALSE);
+				$message = $this->parser->parse($em_loc, $email_data, false);
 				
 				/* make a string of email addresses */
 				$to = implode(',', $this->user->get_gm_emails());

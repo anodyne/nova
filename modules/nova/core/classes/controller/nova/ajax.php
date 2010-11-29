@@ -25,23 +25,23 @@ class Controller_Nova_Ajax extends Controller_Nova_Base {
 		$this->template = View::factory('_common/layouts/ajax', array('skin' => $this->skin, 'sec' => 'main'));
 		
 		// set the variables in the template
-		$this->template->content = FALSE;
+		$this->template->content = false;
 	}
 	
 	public function action_info_show_position_desc()
 	{
 		// we don't need the template, just the output from the method
-		$this->template = NULL;
+		$this->template = null;
 		
 		// set the POST variable
 		$position = Security::xss_clean($_POST['position']);
-		$position = (is_numeric($position)) ? $position : FALSE;
+		$position = (is_numeric($position)) ? $position : false;
 		
 		// grab the position details
 		$item = Jelly::query('position', $position)->select();
 		
 		// set the output
-		$output = (count($item) > 0) ? $item->desc : FALSE;
+		$output = (count($item) > 0) ? $item->desc : false;
 		
 		echo nl2br($output);
 	}
@@ -49,14 +49,14 @@ class Controller_Nova_Ajax extends Controller_Nova_Base {
 	public function action_info_show_rank_image()
 	{
 		// we don't need the template, just the output from the method
-		$this->template = NULL;
+		$this->template = null;
 		
 		// set the POST variables
 		$rank = Security::xss_clean($_POST['rank']);
 		$location = Security::xss_clean($_POST['location']);
 		
 		// a little sanity check
-		$rank = (is_numeric($rank)) ? $rank : FALSE;
+		$rank = (is_numeric($rank)) ? $rank : false;
 		
 		// grab the rank catalogue
 		$catalogue = Jelly::query('cataloguerank')->where('location', '=', $location)->limit(1)->select();
@@ -65,7 +65,7 @@ class Controller_Nova_Ajax extends Controller_Nova_Base {
 		$rank = Jelly::query('rank', $rank)->select();
 		
 		// set the output
-		$output = (count($rank) > 0) ? Location::image($rank->image.$catalogue->extension, NULL, $location, 'rank') : FALSE;
+		$output = (count($rank) > 0) ? Location::image($rank->image.$catalogue->extension, null, $location, 'rank') : false;
 		
 		echo html::image($output);
 	}
@@ -73,7 +73,7 @@ class Controller_Nova_Ajax extends Controller_Nova_Base {
 	public function action_install_field()
 	{
 		// we don't need the template, just the output from the method
-		$this->template = NULL;
+		$this->template = null;
 		
 		// grab an instance of the database
 		$db = Database::instance();
@@ -117,7 +117,7 @@ class Controller_Nova_Ajax extends Controller_Nova_Base {
 	public function action_install_genre()
 	{
 		// we don't need the template, just the output from the method
-		$this->template = NULL;
+		$this->template = null;
 		
 		// grab an instance of the database
 		$db = Database::instance();
@@ -147,8 +147,8 @@ class Controller_Nova_Ajax extends Controller_Nova_Base {
 		foreach ($tables as $key => $value)
 		{
 			DBForge::add_field($value['fields']);
-			DBForge::add_key($value['id'], TRUE);
-			DBForge::create_table($key, TRUE);
+			DBForge::add_key($value['id'], true);
+			DBForge::create_table($key, true);
 		}
 		
 		// pause the script for a second
@@ -168,7 +168,7 @@ class Controller_Nova_Ajax extends Controller_Nova_Base {
 					->values(array_values($v))
 					->compile($db);
 					
-				$insert[$key] = $db->query(Database::INSERT, $sql, TRUE);
+				$insert[$key] = $db->query(Database::INSERT, $sql, true);
 			}
 		}
 		
@@ -185,7 +185,7 @@ class Controller_Nova_Ajax extends Controller_Nova_Base {
 	public function action_install_query()
 	{
 		// we don't need the template, just the output from the method
-		$this->template = NULL;
+		$this->template = null;
 		
 		// grab an instance of the database
 		$db = Database::instance();
@@ -199,7 +199,7 @@ class Controller_Nova_Ajax extends Controller_Nova_Base {
 		if (strtolower($queryarray[0]) == 'insert')
 		{
 			try {
-				$result = $db->query(Database::INSERT, $query, TRUE);
+				$result = $db->query(Database::INSERT, $query, true);
 				$return = ($result[1] > 0) ? '1' : '2';
 			} catch (Exception $e) {
 				$return = '0';
@@ -208,7 +208,7 @@ class Controller_Nova_Ajax extends Controller_Nova_Base {
 		elseif (strtolower($queryarray[0]) == 'update')
 		{
 			try {
-				$result = $db->query(Database::UPDATE, $query, TRUE);
+				$result = $db->query(Database::UPDATE, $query, true);
 				$return = ($result > 0) ? '1' : '2';
 			} catch (Exception $e) {
 				$return = '0';
@@ -217,7 +217,7 @@ class Controller_Nova_Ajax extends Controller_Nova_Base {
 		elseif (strtolower($queryarray[0]) == 'delete')
 		{
 			try {
-				$result = $db->query(Database::DELETE, $query, TRUE);
+				$result = $db->query(Database::DELETE, $query, true);
 				$return = ($result > 0) ? '1' : '2';
 			} catch (Exception $e) {
 				$return = '0';
@@ -226,7 +226,7 @@ class Controller_Nova_Ajax extends Controller_Nova_Base {
 		else
 		{
 			try {
-				$result = $db->query(NULL, $query, TRUE);
+				$result = $db->query(null, $query, true);
 				echo '3';
 			} catch (Exception $e) {
 				$return = '0';
@@ -239,7 +239,7 @@ class Controller_Nova_Ajax extends Controller_Nova_Base {
 	public function action_install_table()
 	{
 		// we don't need the template, just the output from the method
-		$this->template = NULL;
+		$this->template = null;
 		
 		// grab an instance of the database
 		$db = Database::instance();
@@ -254,7 +254,7 @@ class Controller_Nova_Ajax extends Controller_Nova_Base {
 		DBForge::add_field('id');
 		
 		// add the table
-		DBForge::create_table($table, TRUE);
+		DBForge::create_table($table, true);
 		
 		if (count($db->list_tables('%_'.$table)) > 0)
 		{
@@ -269,7 +269,7 @@ class Controller_Nova_Ajax extends Controller_Nova_Base {
 	public function action_uninstall_genre()
 	{
 		// we don't need the template, just the output from the method
-		$this->template = NULL;
+		$this->template = null;
 		
 		// grab an instance of the database
 		$db = Database::instance();

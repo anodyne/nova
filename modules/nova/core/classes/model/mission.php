@@ -40,15 +40,15 @@ class Model_Mission extends Jelly_Model {
 			)),
 			'start' => Jelly::field('timestamp', array(
 				'column' => 'mission_start',
-				'auto_now_create' => FALSE,
-				'auto_now_update' => FALSE,
-				'null' => TRUE
+				'auto_now_create' => false,
+				'auto_now_update' => false,
+				'null' => true
 			)),
 			'end' => Jelly::field('timestamp', array(
 				'column' => 'mission_end',
-				'auto_now_create' => FALSE,
-				'auto_now_update' => FALSE,
-				'null' => TRUE
+				'auto_now_create' => false,
+				'auto_now_update' => false,
+				'null' => true
 			)),
 			'desc' => Jelly::field('text', array(
 				'column' => 'mission_desc'
@@ -61,9 +61,9 @@ class Model_Mission extends Jelly_Model {
 			)),
 			'notes_update' => Jelly::field('timestamp', array(
 				'column' => 'mission_notes_updated',
-				'auto_now_create' => FALSE,
-				'auto_now_update' => FALSE,
-				'null' => TRUE
+				'auto_now_create' => false,
+				'auto_now_update' => false,
+				'null' => true
 			)),
 			'posts' => Jelly::field('hasmany', array(
 				'foreign' => 'posts.post_mission'

@@ -27,7 +27,7 @@ class Auth {
 		log_message('debug', 'Auth Library Initialized');
 	}
 	
-	function check_access($uri = '', $redirect = TRUE, $partial = FALSE)
+	function check_access($uri = '', $redirect = true, $partial = false)
 	{
 		/* get an instance of CI */
 		$this->ci =& get_instance();
@@ -38,17 +38,17 @@ class Auth {
 			$uri = $this->ci->uri->segment(1) .'/'. $this->ci->uri->segment(2);
 		}
 		
-		if ($partial === TRUE)
+		if ($partial === true)
 		{
 			$array = explode('/', $uri);
 			$uri = $array[0];
 		}
 		
-		if ($partial === FALSE)
+		if ($partial === false)
 		{
 			if (!array_key_exists($uri, $this->ci->session->userdata('access')))
 			{
-				if ($redirect === TRUE)
+				if ($redirect === true)
 				{
 					$this->ci->session->set_flashdata('referer', $uri);
 					
@@ -56,7 +56,7 @@ class Auth {
 				}
 				else
 				{
-					return FALSE;
+					return false;
 				}
 			}
 		}
@@ -64,18 +64,18 @@ class Auth {
 		{
 			foreach ($this->ci->session->userdata('access') as $a => $b)
 			{
-				if (strpos($a, $uri) !== FALSE)
+				if (strpos($a, $uri) !== false)
 				{
-					return TRUE;
+					return true;
 				}
 				else
 				{
-					return FALSE;
+					return false;
 				}
 			}
 		}
 		
-		return TRUE;
+		return true;
 	}
 	
 	function get_access_level($uri = '')
@@ -97,7 +97,7 @@ class Auth {
 			return $session[$segments];
 		}
 		
-		return FALSE;
+		return false;
 	}
 	
 	function hash($string = '')
@@ -130,37 +130,37 @@ class Auth {
 		
 		$gm = $this->ci->user->get_user($user, 'is_game_master');
 		
-		$retval = ($gm == 'y') ? TRUE : FALSE;
+		$retval = ($gm == 'y') ? true : false;
 		
 		return $retval;
 	}
 	
-	function is_logged_in($redirect = FALSE)
+	function is_logged_in($redirect = false)
 	{
 		/* get an instance of CI */
 		$this->ci =& get_instance();
 		
-		if ($this->ci->session->userdata('userid') === FALSE)
+		if ($this->ci->session->userdata('userid') === false)
 		{
 			$auto = $this->_autologin();
 			
-			if ($auto !== FALSE)
+			if ($auto !== false)
 			{ /* if the autologin was successful */
 				log_message('error', 'AUTOLOGIN DEBUG - Autologin attempt was successful');
-				return TRUE;
+				return true;
 			}
 			
 			log_message('error', 'AUTOLOGIN DEBUG - Autologin attempt was not successful');
 			
-			if ($redirect === TRUE)
+			if ($redirect === true)
 			{
 				redirect('login/index/error/1');
 			}
 			
-			return FALSE;
+			return false;
 		}
 		
-		return TRUE;
+		return true;
 	}
 	
 	function is_sysadmin($user = '')
@@ -173,7 +173,7 @@ class Auth {
 		
 		$admin = $this->ci->user->get_user($user, 'is_sysadmin');
 		
-		$retval = ($admin == 'y') ? TRUE : FALSE;
+		$retval = ($admin == 'y') ? true : false;
 		
 		return $retval;
 	}
@@ -188,7 +188,7 @@ class Auth {
 		
 		$web = $this->ci->user->get_user($user, 'is_webmaster');
 		
-		$retval = ($web == 'y') ? TRUE : FALSE;
+		$retval = ($web == 'y') ? true : false;
 		
 		return $retval;
 	}
@@ -225,7 +225,7 @@ class Auth {
 		
 		$attempts = $this->_check_login_attempts($email);
 		
-		if ($attempts === FALSE)
+		if ($attempts === false)
 		{
 			$retval = 6;
 			return $retval;
@@ -373,7 +373,7 @@ class Auth {
 		
 		if ($attempts < $this->allowed_login_attempts)
 		{
-			return TRUE;
+			return true;
 		}
 		else
 		{
@@ -386,11 +386,11 @@ class Auth {
 				/* clear the login attempts if there are any */
 				$this->ci->sys->delete_login_attempts($email);
 					
-				return TRUE;
+				return true;
 			}
 			else
 			{
-				return FALSE;
+				return false;
 			}
 		}
 	}
@@ -410,9 +410,9 @@ class Auth {
 		$uid = $this->ci->sys->get_nova_uid();
 		
 		/* get the cookie */
-		$cookie = get_cookie('nova_'. $uid, TRUE);
+		$cookie = get_cookie('nova_'. $uid, true);
 		
-		if ($cookie !== FALSE)
+		if ($cookie !== false)
 		{
 			log_message('error', 'AUTOLOGIN DEBUG - Attempting autologin for '. $cookie['email'] .' with password hash '. $cookie['password']);
 			
@@ -421,7 +421,7 @@ class Auth {
 			return $login;
 		}
 		
-		return FALSE;
+		return false;
 	}
 	
 	function _destroy_cookie()

@@ -47,10 +47,10 @@ class Controller_Nova_Login extends Controller_Nova_Base {
 		
 		// set the variables in the template
 		$this->template->title 				= $this->options->sim_name.' :: ';
-		$this->template->javascript			= FALSE;
+		$this->template->javascript			= false;
 		$this->template->layout				= View::factory($this->skin.'/template_login', $vars['layout']);
-		$this->template->layout->flash		= FALSE;
-		$this->template->layout->content	= FALSE;
+		$this->template->layout->flash		= false;
+		$this->template->layout->content	= false;
 	}
 	
 	public function action_index()
@@ -71,7 +71,7 @@ class Controller_Nova_Login extends Controller_Nova_Base {
 		$lockout = $this->session->get('nova_'.$uid.'_lockout_time');
 		
 		// there is lockout data
-		if ($lockout !== NULL)
+		if ($lockout !== null)
 		{
 			// find out how long it's been
 			$timeframe = date::now() - $lockout;
@@ -118,7 +118,7 @@ class Controller_Nova_Login extends Controller_Nova_Base {
 			// grab the POST data
 			$email = trim(Security::xss_clean($_POST['email']));
 			$password = trim(Security::xss_clean($_POST['password']));
-			$remember = (isset($_POST['remember'])) ? trim(Security::xss_clean($_POST['remember'])) : FALSE;
+			$remember = (isset($_POST['remember'])) ? trim(Security::xss_clean($_POST['remember'])) : false;
 			
 			// do the login
 			$login = Auth::login($email, $password, $remember);
@@ -328,7 +328,7 @@ class Controller_Nova_Login extends Controller_Nova_Base {
 		$data->header = ucwords(__("reset password"));
 		
 		// set the page as enabled
-		$data->enabled = TRUE;
+		$data->enabled = true;
 		
 		if ($this->options->system_email == 'off')
 		{
@@ -337,13 +337,13 @@ class Controller_Nova_Login extends Controller_Nova_Base {
 			$data->message_class = 'fontMedium warning';
 			
 			// disabled
-			$data->enabled = FALSE;
+			$data->enabled = false;
 		}
 		else
 		{
 			// set the message
 			$data->message = __("login.reset_message");
-			$data->message_class = FALSE;
+			$data->message_class = false;
 			
 			// get the security questions
 			$questions = Jelly::query('securityquestion')->select();
@@ -378,7 +378,7 @@ class Controller_Nova_Login extends Controller_Nova_Base {
 	protected function _email($type, $data)
 	{
 		// set the email variable that'll be returned
-		$email = FALSE;
+		$email = false;
 		
 		// make sure system email is turned on
 		if ($this->options->system_email == 'on')

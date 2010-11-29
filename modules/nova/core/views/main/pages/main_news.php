@@ -10,7 +10,7 @@
 				
 				<?php foreach ($categories as $c): ?>
 					<?php echo html::anchor('#', $c->name, array('myid' => $c->id, 'class' => 'category-chooser'));?>
-					<?php if ($lastcategory[$c->id] !== TRUE): ?>
+					<?php if ($lastcategory[$c->id] !== true): ?>
 						&middot;
 					<?php endif;?>
 				<?php endforeach;?>

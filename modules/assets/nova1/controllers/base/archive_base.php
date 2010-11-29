@@ -37,7 +37,7 @@ class Archive_base extends Controller {
 		$this->load->model('system_model', 'sys');
 		$installed = $this->sys->check_install_status();
 		
-		if ($installed === FALSE)
+		if ($installed === false)
 		{ /* check whether the system is installed */
 			redirect('install/index', 'refresh');
 		}
@@ -86,17 +86,17 @@ class Archive_base extends Controller {
 		$this->template->set_master_template($this->skin . '/template_main.php');
 		
 		/* write the common elements to the template */
-		$this->template->write('nav_main', $this->menu->build('main', 'main'), TRUE);
-		$this->template->write('nav_sub', $this->menu->build('sub', 'main'), TRUE);
+		$this->template->write('nav_main', $this->menu->build('main', 'main'), true);
+		$this->template->write('nav_sub', $this->menu->build('sub', 'main'), true);
 		$this->template->write('title', $this->options['sim_name'] . ' :: ');
 		
 		if ($this->auth->is_logged_in())
 		{
 			/* create the user panels */
-			$this->template->write('panel_1', $this->user_panel->panel_1(), TRUE);
-			$this->template->write('panel_2', $this->user_panel->panel_2(), TRUE);
-			$this->template->write('panel_3', $this->user_panel->panel_3(), TRUE);
-			$this->template->write('panel_workflow', $this->user_panel->panel_workflow(), TRUE);
+			$this->template->write('panel_1', $this->user_panel->panel_1(), true);
+			$this->template->write('panel_2', $this->user_panel->panel_2(), true);
+			$this->template->write('panel_3', $this->user_panel->panel_3(), true);
+			$this->template->write('panel_workflow', $this->user_panel->panel_workflow(), true);
 		}
 	}
 
@@ -108,7 +108,7 @@ class Archive_base extends Controller {
 		/* run the methods */
 		$sms = $this->arc->get_sms_version();
 		
-		if ($sms === FALSE)
+		if ($sms === false)
 		{
 			$data['message'] = 'SMS is not installed in this database and the archive feature cannot be used!';
 		}
@@ -161,9 +161,9 @@ class Archive_base extends Controller {
 		$this->load->model('archive_model', 'arc');
 		
 		/* set the variables */
-		$id = $this->uri->segment(3, FALSE, TRUE);
+		$id = $this->uri->segment(3, false, true);
 		
-		if ($id === FALSE)
+		if ($id === false)
 		{
 			/* run the methods */
 			$entries = $this->arc->get_all_db_entries();

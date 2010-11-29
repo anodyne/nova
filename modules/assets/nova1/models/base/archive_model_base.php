@@ -40,11 +40,11 @@ class Archive_model_base extends Model {
 		
 		$dStatement = "SELECT deptid, deptName FROM sms_departments WHERE deptDisplay = 'y' ORDER BY deptOrder ASC";
 		
-		$pStatement = "SELECT positionid, positionName, positionDept FROM sms_positions WHERE positionDept = ? AND ";
+		$pStatement = "SELECT positionid, positionName, positionDept FROM sms_positions WHERE positionDept = ? and ";
 		$pStatement.= "positionDisplay = 'y' ORDER BY positionOrder ASC";
 		
-		$cStatement = "SELECT c.*, r.* FROM sms_crew AS c, sms_ranks AS r WHERE c.crewType = ? AND (c.positionid = ? OR c.positionid2 = ?) ";
-		$cStatement.= "AND c.rankid = r.rankid ORDER BY c.rankid ASC";
+		$cStatement = "SELECT c.*, r.* FROM sms_crew AS c, sms_ranks AS r WHERE c.crewType = ? and (c.positionid = ? or c.positionid2 = ?) ";
+		$cStatement.= "and c.rankid = r.rankid ORDER BY c.rankid ASC";
 		
 		$dQuery = $this->db->query($dStatement);
 		
@@ -118,7 +118,7 @@ class Archive_model_base extends Model {
 			return $row->sysVersion;
 		}
 		
-		return FALSE;
+		return false;
 	}
 }
 

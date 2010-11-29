@@ -111,7 +111,7 @@
 		<ul id="list-grid">
 		<?php if (is_array($inputs['images']) && count($inputs['images']) > 0): ?>
 			<?php foreach ($inputs['images'] as $i): ?>
-				<?php if (strpos($i, '://') === FALSE): ?>
+				<?php if (strpos($i, '://') === false): ?>
 					<?php $image = array('src' => base_url() . asset_location('images/characters', $i), 'height' => 140);?>
 				<?php else: ?>
 					<?php $image = array('src' => $i, 'height' => 140);?>

@@ -39,7 +39,7 @@ class Messages_model_base extends Model {
 			return $row->message_content;
 		}
 		
-		return FALSE;
+		return false;
 	}
 	
 	function get_message_label($message_id = '')

@@ -8,8 +8,8 @@
  * @author		Anodyne Productions
  */
 
-$system_versions	= NULL;
-$system_info		= NULL;
+$system_versions	= null;
+$system_info		= null;
 
 /**
  * Build the data used by the system for version info

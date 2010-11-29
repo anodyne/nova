@@ -44,7 +44,7 @@ class Users_model_base extends Model {
 			return $row->userid;
 		}
 		
-		return FALSE;
+		return false;
 	}
 	
 	function check_password($email = '', $password = '')
@@ -84,35 +84,35 @@ class Users_model_base extends Model {
 				switch ($type)
 				{
 					case 'post':
-						$retval = ($row->moderate_posts == 'y') ? TRUE : FALSE;
+						$retval = ($row->moderate_posts == 'y') ? true : false;
 						break;
 						
 					case 'log':
-						$retval = ($row->moderate_logs == 'y') ? TRUE : FALSE;
+						$retval = ($row->moderate_logs == 'y') ? true : false;
 						break;
 						
 					case 'news':
-						$retval = ($row->moderate_news == 'y') ? TRUE : FALSE;
+						$retval = ($row->moderate_news == 'y') ? true : false;
 						break;
 						
 					case 'post_comment':
-						$retval = ($row->moderate_post_comments == 'y') ? TRUE : FALSE;
+						$retval = ($row->moderate_post_comments == 'y') ? true : false;
 						break;
 						
 					case 'log_comment':
-						$retval = ($row->moderate_log_comments == 'y') ? TRUE : FALSE;
+						$retval = ($row->moderate_log_comments == 'y') ? true : false;
 						break;
 						
 					case 'news_comment':
-						$retval = ($row->moderate_news_comments == 'y') ? TRUE : FALSE;
+						$retval = ($row->moderate_news_comments == 'y') ? true : false;
 						break;
 						
 					case 'wiki_comment':
-						$retval = ($row->moderate_wiki_comments == 'y') ? TRUE : FALSE;
+						$retval = ($row->moderate_wiki_comments == 'y') ? true : false;
 						break;
 				}
 				
-				if ($retval === TRUE)
+				if ($retval === true)
 				{
 					return 'pending';
 				}
@@ -167,10 +167,10 @@ class Users_model_base extends Model {
 			return $users;
 		}
 		
-		return FALSE;
+		return false;
 	}
 	
-	function get_crew_emails($email_prefs = FALSE, $pref_name = '')
+	function get_crew_emails($email_prefs = false, $pref_name = '')
 	{
 		$this->db->from('users');
 		$this->db->where('status', 'active');
@@ -184,7 +184,7 @@ class Users_model_base extends Model {
 				$array[$a->userid] = $a->email;
 			}
 			
-			if ($email_prefs === TRUE)
+			if ($email_prefs === true)
 			{
 				foreach ($array as $k => $v)
 				{
@@ -205,7 +205,7 @@ class Users_model_base extends Model {
 			return $array;
 		}
 		
-		return FALSE;
+		return false;
 	}
 	
 	function get_email_address($referer = '', $id = '')
@@ -233,7 +233,7 @@ class Users_model_base extends Model {
 			return $row->email;
 		}
 		
-		return FALSE;
+		return false;
 	}
 	
 	function get_emails_with_access($access = '', $level = '')
@@ -263,7 +263,7 @@ class Users_model_base extends Model {
 				
 				foreach ($roles->result() as $role)
 				{
-					if (strstr($role->role_access, $access_id) !== FALSE)
+					if (strstr($role->role_access, $access_id) !== false)
 					{
 						$array[] = $role->role_id;
 					}
@@ -287,13 +287,13 @@ class Users_model_base extends Model {
 					return $people;
 				}
 				
-				return FALSE;
+				return false;
 			}
 			
-			return FALSE;
+			return false;
 		}
 		
-		return FALSE;
+		return false;
 	}
 	
 	function get_gm_emails()
@@ -310,17 +310,17 @@ class Users_model_base extends Model {
 			return $array;
 		}
 		
-		return FALSE;
+		return false;
 	}
 	
-	function get_last_loa($user = '', $blank = FALSE)
+	function get_last_loa($user = '', $blank = false)
 	{
 		$this->db->from('user_loa');
 		$this->db->where('loa_user', $user);
 		
-		if ($blank === TRUE)
+		if ($blank === true)
 		{
-			$this->db->where('loa_end_date', NULL);
+			$this->db->where('loa_end_date', null);
 		}
 		
 		$query = $this->db->get();
@@ -343,7 +343,7 @@ class Users_model_base extends Model {
 			return $row->loa;
 		}
 		
-		return FALSE;
+		return false;
 	}
 	
 	function get_main_character($id = '')
@@ -357,7 +357,7 @@ class Users_model_base extends Model {
 			return $row->main_char;
 		}
 		
-		return FALSE;
+		return false;
 	}
 	
 	function get_main_characters()
@@ -382,7 +382,7 @@ class Users_model_base extends Model {
 			return $array;
 		}
 		
-		return FALSE;
+		return false;
 	}
 	
 	function get_online_users($time = 5)
@@ -427,16 +427,16 @@ class Users_model_base extends Model {
 			return $row->prefvalue_value;
 		}
 		
-		return FALSE;
+		return false;
 	}
 	
 	function get_user($id = '', $return = '')
 	{
 		$query = $this->db->get_where('users', array('userid' => $id));
 		
-		$row = ($query->num_rows() > 0) ? $query->row() : FALSE;
+		$row = ($query->num_rows() > 0) ? $query->row() : false;
 		
-		if (!empty($return) && $row !== FALSE)
+		if (!empty($return) && $row !== false)
 		{
 			if (!is_array($return))
 			{
@@ -479,7 +479,7 @@ class Users_model_base extends Model {
 			return $row->user;
 		}
 		
-		return FALSE;
+		return false;
 	}
 	
 	function get_userid_from_email($email = '')
@@ -493,7 +493,7 @@ class Users_model_base extends Model {
 			return $row->userid;
 		}
 		
-		return FALSE;
+		return false;
 	}
 	
 	function get_users($status = 'active')
@@ -524,7 +524,7 @@ class Users_model_base extends Model {
 			return $array;
 		}
 		
-		return FALSE;
+		return false;
 	}
 	
 	/*

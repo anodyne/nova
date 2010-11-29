@@ -61,7 +61,7 @@
 			<?php endforeach; ?>
 		<?php endif; ?>
 		
-		<?php if ($missionCount == 0 && $authorized === TRUE): ?>
+		<?php if ($missionCount == 0 && $authorized === true): ?>
 			$.facebox(function(){
 				$.get('<?php echo site_url('ajax/add_mission');?>/<?php echo $string;?>', function(data) {
 					$.facebox(data);

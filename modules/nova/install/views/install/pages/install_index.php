@@ -1,6 +1,6 @@
 <h3><?php echo __('Please select from the following options');?>:</h3>
 
-<?php if ($installed === FALSE): ?>
+<?php if ($installed === false): ?>
 	<a href="<?php echo url::site('install/main');?>" class="install-options">
 		<span><?php echo __('Fresh Install');?></span>
 		<em><?php echo __('index.fresh_text');?></em>
@@ -18,7 +18,7 @@
 <?php endif;?>
 
 
-<?php if ($installed === TRUE): ?>
+<?php if ($installed === true): ?>
 	<a href="<?php echo url::site('update/index');?>" class="install-options">
 		<span><?php echo __('Update Nova');?></span>
 		<em><?php echo __('index.upd_text');?></em>

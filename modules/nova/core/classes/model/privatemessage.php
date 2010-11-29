@@ -31,9 +31,9 @@ class Model_Privatemessage extends Jelly_Model {
 			)),
 			'date' => Jelly::field('timestamp', array(
 				'column' => 'privmsgs_date',
-				'auto_now_create' => TRUE,
-				'auto_now_update' => FALSE,
-				'null' => TRUE,
+				'auto_now_create' => true,
+				'auto_now_update' => false,
+				'null' => true,
 				'default' => date::now()
 			)),
 			'subject' => Jelly::field('string', array(

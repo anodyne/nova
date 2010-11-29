@@ -19,31 +19,31 @@ abstract class Nova_Utility {
 	 *     $map = Utility::directory_map('./mydirectory/');
 	 *
 	 *     // this will not map sub-folders
-	 *     $map = Utility::directory_map('./mydirectory/', TRUE);
+	 *     $map = Utility::directory_map('./mydirectory/', true);
 	 *
 	 *     // this will map hidden files as well
-	 *     $map = Utility::directory_map('./mydirectory/', TRUE, TRUE);
+	 *     $map = Utility::directory_map('./mydirectory/', true, true);
 	 *
 	 * @param	string	the path to map
 	 * @param	boolean	show the top level only?
 	 * @param	boolean	show hidden files?
 	 * @return	array 	an array of the directory structure
 	 */
-	public static function directory_map($source_dir, $top_level_only = FALSE, $hidden = FALSE)
+	public static function directory_map($source_dir, $top_level_only = false, $hidden = false)
 	{	
 		if ($fp = @opendir($source_dir))
 		{
 			$source_dir = rtrim($source_dir, DIRECTORY_SEPARATOR).DIRECTORY_SEPARATOR;		
 			$filedata = array();
 			
-			while (FALSE !== ($file = readdir($fp)))
+			while (false !== ($file = readdir($fp)))
 			{
-				if (($hidden == FALSE AND strncmp($file, '.', 1) == 0) OR ($file == '.' OR $file == '..'))
+				if (($hidden == false and strncmp($file, '.', 1) == 0) or ($file == '.' or $file == '..'))
 				{
 					continue;
 				}
 				
-				if ($top_level_only == FALSE AND @is_dir($source_dir.$file))
+				if ($top_level_only == false and @is_dir($source_dir.$file))
 				{
 					$temp_array = array();
 				
@@ -62,7 +62,7 @@ abstract class Nova_Utility {
 		}
 		else
 		{
-			return FALSE;
+			return false;
 		}
 	}
 	
@@ -104,12 +104,12 @@ abstract class Nova_Utility {
 	 * @param	string	the location of a specific rank set to install
 	 * @return	void
 	 */
-	public static function install_rank($location = NULL)
+	public static function install_rank($location = null)
 	{
-		if ($location === NULL)
+		if ($location === null)
 		{
 			// get the directory listing for the genre
-			$dir = self::directory_map(APPPATH.'assets/common/'.Kohana::config('nova.genre').'/ranks/', TRUE);
+			$dir = self::directory_map(APPPATH.'assets/common/'.Kohana::config('nova.genre').'/ranks/', true);
 			
 			// get all the rank sets locations
 			$ranks = Jelly::query('cataloguerank')->where('genre', '=', Kohana::config('nova.genre'))->select();
@@ -122,7 +122,7 @@ abstract class Nova_Utility {
 					// find the location in the directory listing
 					$key = array_search($rank->location, $dir);
 					
-					if ($key !== FALSE)
+					if ($key !== false)
 					{
 						unset($dir[$key]);
 					}
@@ -137,7 +137,7 @@ abstract class Nova_Utility {
 					// find the locations in the directory listing
 					$key = array_search($value, $dir);
 					
-					if ($key !== FALSE)
+					if ($key !== false)
 					{
 						unset($dir[$key]);
 					}
@@ -209,12 +209,12 @@ abstract class Nova_Utility {
 	 * @param	string	the location of a skin to install
 	 * @return	void
 	 */
-	public static function install_skin($location = NULL)
+	public static function install_skin($location = null)
 	{
-		if ($location === NULL)
+		if ($location === null)
 		{
 			// get the listing of the directory
-			$dir = self::directory_map(APPPATH.'views/', TRUE);
+			$dir = self::directory_map(APPPATH.'views/', true);
 			
 			// get all the skin catalogue items
 			$skins = Jelly::query('catalogueskin')->select();
@@ -227,7 +227,7 @@ abstract class Nova_Utility {
 					// find the location in the directory listing
 					$key = array_search($skin->location, $dir);
 					
-					if ($key !== FALSE)
+					if ($key !== false)
 					{
 						unset($dir[$key]);
 					}
@@ -242,7 +242,7 @@ abstract class Nova_Utility {
 					// find the location in the directory listing
 					$key = array_search($p, $dir);
 					
-					if ($key !== FALSE)
+					if ($key !== false)
 					{
 						unset($dir[$key]);
 					}
@@ -342,7 +342,7 @@ abstract class Nova_Utility {
 		$tables = Database::instance()->list_tables($dbconf['table_prefix'].'%');
 		
 		// make sure there aren't any tables in there
-		$retval = (count($tables) > 0) ? TRUE : FALSE;
+		$retval = (count($tables) > 0) ? true : false;
 		
 		return $retval;
 	}
@@ -359,12 +359,12 @@ abstract class Nova_Utility {
 	 * @param	string	the location of a specific widget to install
 	 * @return	void
 	 */
-	public static function install_widget($location = NULL)
+	public static function install_widget($location = null)
 	{
-		if ($location === NULL)
+		if ($location === null)
 		{
 			// get the directory listing
-			$dir = self::directory_map(MODPATH.'nova/core/views/_common/widgets/', TRUE);
+			$dir = self::directory_map(MODPATH.'nova/core/views/_common/widgets/', true);
 			
 			// get all the installed widgets
 			$widgets = Jelly::query('cataloguewidget')->select();
@@ -377,7 +377,7 @@ abstract class Nova_Utility {
 					// find the location in the directory listing
 					$key = array_search($w->location, $dir);
 					
-					if ($key !== FALSE)
+					if ($key !== false)
 					{
 						unset($dir[$key]);
 					}
@@ -393,7 +393,7 @@ abstract class Nova_Utility {
 				// find the locations in the directory listing
 				$key = array_search($value, $dir);
 				
-				if ($key !== FALSE)
+				if ($key !== false)
 				{
 					unset($dir[$key]);
 				}
@@ -456,7 +456,7 @@ abstract class Nova_Utility {
 	/**
 	 * Verifies that the server can run Nova
 	 *
-	 * @return	mixed	an array if there are any warnings or failures or FALSE if everything checks out
+	 * @return	mixed	an array if there are any warnings or failures or false if everything checks out
 	 */
 	public static function verify_server()
 	{
@@ -471,69 +471,69 @@ abstract class Nova_Utility {
 				'eval' => version_compare('5.2.4', PHP_VERSION, '<'),
 				'header' => 'PHP',
 				'text' => __('verify.php_text', array(':php_req' => '5.2.4', ':php_act' => PHP_VERSION)),
-				'failure' => TRUE),
+				'failure' => true),
 			'db' => array(
 				'eval' => ('mysql' == $dbconf['type']),
 				'header' => 'MySQL',
 				'text' => __('verify.db_text'),
-				'failure' => TRUE),
+				'failure' => true),
 			'dbver' => array(
 				'eval' => version_compare('4.1', $version['ver'], '<'),
 				'header' => 'MySQL Version',
 				'text' => __('verify.dbver_text', array(':db_req' => '4.1', ':db_act' => $version['ver'])),
-				'failure' => TRUE),
+				'failure' => true),
 			'reflection' => array(
 				'eval' => class_exists('ReflectionClass'),
 				'header' => 'Reflection Class',
 				'text' => __('verify.reflection_text'),
-				'failure' => TRUE),
+				'failure' => true),
 			'filters' => array(
 				'eval' => function_exists('filter_list'),
 				'header' => 'Filters Enabled',
 				'text' => __('verify.filters_text'),
-				'failure' => TRUE),
+				'failure' => true),
 			'iconv' => array(
 				'eval' => extension_loaded('iconv'),
 				'header' => 'Iconv Enabled',
 				'text' => __('verify.iconv_text'),
-				'failure' => FALSE),
+				'failure' => false),
 			'spl' => array(
 				'eval' => function_exists('spl_autoload_register'),
 				'header' => 'SPL Autoloading',
 				'text' => __('verify.spl_text'),
-				'failure' => TRUE),
+				'failure' => true),
 			'mbstring_overload' => array(
-				'eval' => extension_loaded('mbstring') AND ! (ini_get('mbstring.func_overload') & MB_OVERLOAD_STRING),
+				'eval' => extension_loaded('mbstring') and ! (ini_get('mbstring.func_overload') & MB_OVERLOAD_STRING),
 				'header' => 'mbstring Is Overloaded',
 				'text' => __('verify.mbstring_overload_text'),
-				'failure' => TRUE),
+				'failure' => true),
 			'pcre_utf8' => array(
 				'eval' => @preg_match('/^.$/u', 'ñ'),
 				'header' => 'PCRE UTF-8',
 				'text' => __('verify.pcre_text'),
-				'failure' => FALSE),
+				'failure' => false),
 			'pcre_unicode' => array(
 				'eval' => @preg_match('/^\pL$/u', 'ñ'),
 				'header' => 'PCRE Unicode',
 				'text' => __('verify.pcre_text'),
-				'failure' => FALSE),
+				'failure' => false),
 			'fopen' => array(
-				'eval' => strpos(ini_get('disable_functions'), 'fopen') === FALSE,
+				'eval' => strpos(ini_get('disable_functions'), 'fopen') === false,
 				'header' => 'File Handling',
 				'text' => __('verify.fopen_text'),
-				'failure' => TRUE),
+				'failure' => true),
 			'fwrite' => array(
-				'eval' => strpos(ini_get('disable_functions'), 'fwrite') === FALSE,
+				'eval' => strpos(ini_get('disable_functions'), 'fwrite') === false,
 				'header' => 'File Writing',
 				'text' => __('verify.fwrite_text'),
-				'failure' => FALSE),
+				'failure' => false),
 		);
 		
 		foreach ($items as $key => $value)
 		{
-			if ($value['eval'] === FALSE)
+			if ($value['eval'] === false)
 			{
-				$type = ($value['failure'] === TRUE) ? 'failure' : 'info';
+				$type = ($value['failure'] === true) ? 'failure' : 'info';
 				
 				$verify[$type][$value['header']] = $value['text'];
 			}
@@ -544,6 +544,6 @@ abstract class Nova_Utility {
 			return $verify;
 		}
 		
-		return FALSE;
+		return false;
 	}
 } // End Utility

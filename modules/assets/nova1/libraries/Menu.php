@@ -114,27 +114,27 @@ class Menu {
 		
 		foreach ($array as $k => $v)
 		{
-			$display = FALSE;
+			$display = false;
 			
-			if (($v['login'] == 'y' && $this->ci->auth->is_logged_in()) || ($v['login'] == 'n' && $this->ci->auth->is_logged_in() === FALSE) || $v['login'] == 'none')
+			if (($v['login'] == 'y' && $this->ci->auth->is_logged_in()) || ($v['login'] == 'n' && $this->ci->auth->is_logged_in() === false) || $v['login'] == 'none')
 			{
 				if ($v['login'] == 'y')
 				{
-					$access = $this->ci->auth->check_access($v['access'], FALSE);
+					$access = $this->ci->auth->check_access($v['access'], false);
 					$level = $this->ci->auth->get_access_level($v['access']);
 					
-					if (($v['use_access'] == 'y' && $access === TRUE && ($v['level'] > 0 && $level >= $v['level'] || $v['level'] == 0)) || $v['use_access'] == 'n')
+					if (($v['use_access'] == 'y' && $access === true && ($v['level'] > 0 && $level >= $v['level'] || $v['level'] == 0)) || $v['use_access'] == 'n')
 					{
-						$display = TRUE;
+						$display = true;
 					}
 				}
 				else
 				{
-					$display = TRUE;
+					$display = true;
 				}
 			}
 			
-			if ($display === TRUE)
+			if ($display === true)
 			{
 				$this->output.= '<li>';
 			
@@ -147,7 +147,7 @@ class Menu {
 			
 				if ($v['link_type'] == 'onsite')
 				{
-					$target = NULL;
+					$target = null;
 					$url = site_url($v['link']);
 				}
 				else
@@ -187,7 +187,7 @@ class Menu {
 			
 			foreach ($menu_items->result() as $item)
 			{
-				$display = FALSE;
+				$display = false;
 				
 				if ($item->menu_group != 0 && $item->menu_order == 0)
 				{
@@ -201,29 +201,29 @@ class Menu {
 				}
 				else
 				{
-					$target = NULL;
+					$target = null;
 					$link = site_url($item->menu_link);
 				}
 				
-				if (($item->menu_need_login == 'y' && $this->ci->auth->is_logged_in()) || ($item->menu_need_login == 'n' && $this->ci->auth->is_logged_in() === FALSE) || $item->menu_need_login == 'none')
+				if (($item->menu_need_login == 'y' && $this->ci->auth->is_logged_in()) || ($item->menu_need_login == 'n' && $this->ci->auth->is_logged_in() === false) || $item->menu_need_login == 'none')
 				{
 					if ($item->menu_need_login == 'y')
 					{
-						$access = $this->ci->auth->check_access($item->menu_access, FALSE);
+						$access = $this->ci->auth->check_access($item->menu_access, false);
 						$level = $this->ci->auth->get_access_level($item->menu_access);
 						
-						if (($item->menu_use_access == 'y' && $access === TRUE && ($item->menu_access_level > 0 && $level >= $item->menu_access_level || $item->menu_access_level == 0)) || $item->menu_use_access == 'n')
+						if (($item->menu_use_access == 'y' && $access === true && ($item->menu_access_level > 0 && $level >= $item->menu_access_level || $item->menu_access_level == 0)) || $item->menu_use_access == 'n')
 						{
-							$display = TRUE;
+							$display = true;
 						}
 					}
 					else
 					{
-						$display = TRUE;
+						$display = true;
 					}
 				}
 				
-				if ($display === TRUE)
+				if ($display === true)
 				{
 					$this->output.= '<li><a href="' . $link .'"' . $target . '><span>' . $item->menu_name . '</span></a></li>';
 				}
@@ -261,10 +261,10 @@ class Menu {
 					{
 						if ($item->menu_cat == $cat->menucat_menu_cat)
 						{
-							$access = $this->ci->auth->check_access($item->menu_access, FALSE);
+							$access = $this->ci->auth->check_access($item->menu_access, false);
 							$level = $this->ci->auth->get_access_level($item->menu_access);
 							
-							if (($item->menu_use_access == 'y' && $access === TRUE && ($item->menu_access_level > 0 && $level >= $item->menu_access_level || $item->menu_access_level == 0)) || $item->menu_use_access == 'n')
+							if (($item->menu_use_access == 'y' && $access === true && ($item->menu_access_level > 0 && $level >= $item->menu_access_level || $item->menu_access_level == 0)) || $item->menu_use_access == 'n')
 							{
 								$retval[$cat->menucat_menu_cat]['menu'][] = $item;
 							}
@@ -301,14 +301,14 @@ class Menu {
 					}
 					else
 					{
-						$target = NULL;
+						$target = null;
 						$link = site_url($item->menu_link);
 					}
 					
-					$access = $this->ci->auth->check_access($item->menu_access, FALSE);
+					$access = $this->ci->auth->check_access($item->menu_access, false);
 					$level = $this->ci->auth->get_access_level($item->menu_access);
 					
-					if (($item->menu_use_access == 'y' && $access === TRUE && ($item->menu_access_level > 0 && $level >= $item->menu_access_level || $item->menu_access_level == 0)) || $item->menu_use_access == 'n')
+					if (($item->menu_use_access == 'y' && $access === true && ($item->menu_access_level > 0 && $level >= $item->menu_access_level || $item->menu_access_level == 0)) || $item->menu_use_access == 'n')
 					{
 						$this->output.= '<li><a href="' . $link .'"' . $target . '><span>' . $item->menu_name . '</span></a></li>';
 					}

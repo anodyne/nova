@@ -13,7 +13,7 @@
 <?php echo text_output($title, 'h1', 'page-head');?>
 
 <p>
-	<?php echo link_to_if(in_array(TRUE, $valid), 'manage/posts/edit/'. $post_id, $label['edit'], array('class' => 'edit fontSmall bold'));?>
+	<?php echo link_to_if(in_array(true, $valid), 'manage/posts/edit/'. $post_id, $label['edit'], array('class' => 'edit fontSmall bold'));?>
 </p>
 
 <p class="fontSmall bold gray">
@@ -60,7 +60,7 @@
 
 <p><?php echo anchor('feed/posts', img($images['feed']), array('class' => 'image'));?></p>
 
-<?php if ($this->auth->is_logged_in() === TRUE): ?>
+<?php if ($this->auth->is_logged_in() === true): ?>
 	<p class="bold">
 		<a href="#" id="add_comment" myID="<?php echo $post_id;?>" rel="facebox" class="image">
 			<?php echo img($images['comment']) .' '. $label['addcomment'];?>

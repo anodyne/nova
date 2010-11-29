@@ -1,6 +1,6 @@
 <p class="fontMedium"><?php echo $message;?></p>
 
-<?php if (isset($changes) AND count($changes) > 0): ?>
+<?php if (isset($changes) and count($changes) > 0): ?>
 	<hr />
 	
 	<p class="fontMedium">

@@ -1,10 +1,10 @@
-<?php if (isset($news) AND ($next !== NULL OR $prev !== NULL)): ?>
+<?php if (isset($news) and ($next !== null or $prev !== null)): ?>
 	<div class="float-right">
-		<?php if ($prev !== NULL): ?>
+		<?php if ($prev !== null): ?>
 			<?php echo html::anchor('main/viewnews/'.$prev, html::image($images['prev']['src'], $images['prev']['attr']), array('class' => 'image'));?>
 		<?php endif; ?>
 		
-		<?php if ($next !== NULL): ?>
+		<?php if ($next !== null): ?>
 			<?php echo html::anchor('main/viewnews/'.$next, html::image($images['next']['src'], $images['next']['attr']), array('class' => 'image'));?>
 		<?php endif; ?>
 	</div>
@@ -19,7 +19,7 @@
 		<strong><?php echo ucfirst(__("author"));?>:</strong> <?php echo $news->author_character->print_name();?><br />
 		<?php echo Date::mdate($news->date);?>
 		
-		<?php if ($news->last_update !== NULL): ?>
+		<?php if ($news->last_update !== null): ?>
 			<br /><em><?php echo ucwords(__("Last Updated")).': '.Date::mdate($news->last_update);?></em>
 		<?php endif;?>
 	</p>
@@ -38,19 +38,19 @@
 	
 	<p>&nbsp;</p>
 	
-	<?php if ($next !== NULL OR $prev !== NULL): ?>
+	<?php if ($next !== null or $prev !== null): ?>
 		<div class="float-right">
-			<?php if ($prev !== NULL): ?>
+			<?php if ($prev !== null): ?>
 				<?php echo html::anchor('main/viewnews/'.$prev, html::image($images['prev']['src'], $images['prev']['attr']), array('class' => 'image'));?>
 			<?php endif; ?>
 			
-			<?php if ($next !== NULL): ?>
+			<?php if ($next !== null): ?>
 				<?php echo html::anchor('main/viewnews/'.$next, html::image($images['next']['src'], $images['next']['attr']), array('class' => 'image'));?>
 			<?php endif; ?>
 		</div>
 	<?php endif; ?>
 	
-	<p><?php echo html::anchor('feed/news', html::image($images['rss']['src'], $images['rss']['attr'], FALSE), array('class' => 'image'));?></p>
+	<p><?php echo html::anchor('feed/news', html::image($images['rss']['src'], $images['rss']['attr'], false), array('class' => 'image'));?></p>
 	
 	<h4><?php echo count($news->comments);?> <?php echo (count($news->comments) == 1) ? ucfirst(__("comment")) : ucfirst(__("comments"));?></h4>
 	

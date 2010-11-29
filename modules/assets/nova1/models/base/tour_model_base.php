@@ -31,7 +31,7 @@ class Tour_model_base extends Model {
 	{
 		$query = $this->db->get_where('tour_decks', array('deck_id' => $id));
 		
-		$row = ($query->num_rows() > 0) ? $query->row() : FALSE;
+		$row = ($query->num_rows() > 0) ? $query->row() : false;
 		
 		return $row;
 	}
@@ -59,7 +59,7 @@ class Tour_model_base extends Model {
 			return $query->row();
 		}
 		
-		return FALSE;
+		return false;
 	}
 	
 	function get_tour_field_details($id = '')

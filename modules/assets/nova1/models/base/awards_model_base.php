@@ -57,9 +57,9 @@ class Awards_model_base extends Model {
 	{
 		$query = $this->db->get_where('awards', array('award_id' => $id));
 		
-		$row = ($query->num_rows() > 0) ? $query->row() : FALSE;
+		$row = ($query->num_rows() > 0) ? $query->row() : false;
 		
-		if (!empty($return) && $row !== FALSE)
+		if (!empty($return) && $row !== false)
 		{
 			if (!is_array($return))
 			{

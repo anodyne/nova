@@ -18,7 +18,7 @@ class Controller_Nova_Error extends Controller_Template {
 		
 		// set the variables in the template
 		$this->template->title 		= 'Error';
-		$this->template->content	= FALSE;
+		$this->template->content	= false;
 	}
 	
 	public function action_404()

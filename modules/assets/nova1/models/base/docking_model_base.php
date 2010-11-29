@@ -42,7 +42,7 @@ class Docking_model_base extends Model {
 			return $row;
 		}
 		
-		return FALSE;
+		return false;
 	}
 	
 	function get_docked_items()
@@ -68,7 +68,7 @@ class Docking_model_base extends Model {
 			return $query->row();
 		}
 		
-		return FALSE;
+		return false;
 	}
 	
 	function get_docking_field_details($id = '')

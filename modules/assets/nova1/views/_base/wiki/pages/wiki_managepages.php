@@ -24,7 +24,7 @@
 					<span class="fontTiny"><?php echo $p['created_date'];?></span>
 				</td>
 				<td class="fontSmall gray">
-					<?php if ($p['updated'] !== FALSE): ?>
+					<?php if ($p['updated'] !== false): ?>
 						<?php echo $p['updated'];?><br />
 						<span class="fontTiny"><?php echo $p['updated_date'];?></span>
 					<?php endif;?>

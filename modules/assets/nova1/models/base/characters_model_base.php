@@ -59,7 +59,7 @@ class Characters_model_base extends Model {
 				break;
 				
 			case 'no_user':
-				$this->db->where('user', NULL);
+				$this->db->where('user', null);
 				$this->db->orwhere('user', 0);
 				
 			case 'all':
@@ -84,16 +84,16 @@ class Characters_model_base extends Model {
 		return $query;
 	}
 	
-	function get_authors($character = '', $rank = TRUE)
+	function get_authors($character = '', $rank = true)
 	{
 		$characters = explode(',', $character);
 		$characters_final = array();
 		
 		foreach ($characters as $key)
 		{
-			$name = $this->get_character_name($key, TRUE);
+			$name = $this->get_character_name($key, true);
 			
-			if ($name !== FALSE)
+			if ($name !== false)
 			{
 				$characters_final[] = $name;
 			}
@@ -106,7 +106,7 @@ class Characters_model_base extends Model {
 			return $character_string;
 		}
 		
-		return FALSE;
+		return false;
 	}
 	
 	function get_bio_fields($section = '', $type = '')
@@ -201,9 +201,9 @@ class Characters_model_base extends Model {
 	{
 		$query = $this->db->get_where('characters', array('charid' => $id));
 		
-		$row = ($query->num_rows() > 0) ? $query->row() : FALSE;
+		$row = ($query->num_rows() > 0) ? $query->row() : false;
 		
-		if (!empty($return) && $row !== FALSE)
+		if (!empty($return) && $row !== false)
 		{
 			if (!is_array($return))
 			{
@@ -260,11 +260,11 @@ class Characters_model_base extends Model {
 		return $array;
 	}
 	
-	function get_character_name($character = '', $rank = FALSE, $short_rank = FALSE)
+	function get_character_name($character = '', $rank = false, $short_rank = false)
 	{
 		$this->db->from('characters');
 		
-		if ($rank == TRUE)
+		if ($rank == true)
 		{
 			$this->db->join('ranks_'. GENRE, 'ranks_'. GENRE .'.rank_id = characters.rank');
 		}
@@ -277,8 +277,8 @@ class Characters_model_base extends Model {
 		{
 			$item = $query->row();
 		
-			$array['rank'] = ($rank == TRUE) ? $item->rank_name : FALSE;
-			$array['rank'] = ($short_rank == TRUE) ? $item->rank_short_name : $array['rank'];
+			$array['rank'] = ($rank == true) ? $item->rank_name : false;
+			$array['rank'] = ($short_rank == true) ? $item->rank_short_name : $array['rank'];
 			$array['first_name'] = $item->first_name;
 			$array['last_name'] = $item->last_name;
 			$array['suffix'] = $item->suffix;
@@ -296,7 +296,7 @@ class Characters_model_base extends Model {
 			return $string;
 		}
 		
-		return FALSE;
+		return false;
 	}
 	
 	function get_characters_for_position($position = '', $order = '')
@@ -384,11 +384,11 @@ class Characters_model_base extends Model {
 					break;
 					
 				case 'active_npc':
-					$string = "`crew_type` = 'active' OR `crew_type` = 'npc'";
+					$string = "`crew_type` = 'active' or `crew_type` = 'npc'";
 					break;
 			}
 			
-			$this->db->where("($string)", NULL);
+			$this->db->where("($string)", null);
 		}
 		
 		$query = $this->db->get();
@@ -410,7 +410,7 @@ class Characters_model_base extends Model {
 			}
 		}
 		
-		return FALSE;
+		return false;
 	}
 	
 	function get_rank_history($user = '')
@@ -552,7 +552,7 @@ class Characters_model_base extends Model {
 			return $insert;
 		}
 		
-		return FALSE;
+		return false;
 	}
 	
 	function create_character_data($data = '')

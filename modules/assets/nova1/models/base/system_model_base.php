@@ -49,10 +49,10 @@ class System_model_base extends Model {
 		/* check to see if there are tables or not */
 		if (count($data) > 0)
 		{
-			return TRUE;
+			return true;
 		}
 		
-		return FALSE;
+		return false;
 	}
 	
 	function get_all_skins()
@@ -117,9 +117,9 @@ class System_model_base extends Model {
 	{
 		$query = $this->db->get_where($table, array($key => $id));
 		
-		$row = ($query->num_rows() > 0) ? $query->row() : FALSE;
+		$row = ($query->num_rows() > 0) ? $query->row() : false;
 		
-		if (!empty($return) && $row !== FALSE)
+		if (!empty($return) && $row !== false)
 		{
 			if (!is_array($return))
 			{
@@ -149,7 +149,7 @@ class System_model_base extends Model {
 		
 		$query = $this->db->get();
 		
-		$row = ($query->num_rows() > 0) ? $query->row() : FALSE;
+		$row = ($query->num_rows() > 0) ? $query->row() : false;
 		
 		return $row;
 	}
@@ -180,7 +180,7 @@ class System_model_base extends Model {
 			return $row->sys_uid;
 		}
 		
-		return FALSE;
+		return false;
 	}
 	
 	function get_preferences()
@@ -220,7 +220,7 @@ class System_model_base extends Model {
 			return $row->skinsec_skin;
 		}
 		
-		return FALSE;
+		return false;
 	}
 	
 	function get_skin_info($id = '', $field = 'skin_location')
@@ -231,7 +231,7 @@ class System_model_base extends Model {
 		
 		$query = $this->db->get();
 		
-		$row = ($query->num_rows() > 0) ? $query->row() : FALSE;
+		$row = ($query->num_rows() > 0) ? $query->row() : false;
 		
 		return $row;
 	}
@@ -240,9 +240,9 @@ class System_model_base extends Model {
 	{
 		$query = $this->db->get_where('catalogue_skins', array('skin_id' => $id));
 		
-		$row = ($query->num_rows() > 0) ? $query->row() : FALSE;
+		$row = ($query->num_rows() > 0) ? $query->row() : false;
 		
-		if ($row !== FALSE)
+		if ($row !== false)
 		{
 			return $row->skin_name;
 		}
@@ -258,7 +258,7 @@ class System_model_base extends Model {
 		
 		$query = $this->db->get();
 		
-		$row = ($query->num_rows() > 0) ? $query->row() : FALSE;
+		$row = ($query->num_rows() > 0) ? $query->row() : false;
 		
 		return $row;
 	}
@@ -289,7 +289,7 @@ class System_model_base extends Model {
 			{
 				if ($i > 0)
 				{
-					$or = " OR ";
+					$or = " or ";
 				}
 				else
 				{
@@ -299,7 +299,7 @@ class System_model_base extends Model {
 				$string.= $or . "skinsec_status LIKE '$status[$i]'";
 			}
 			
-			$this->db->where("($string)", NULL);
+			$this->db->where("($string)", null);
 		}
 		
 		$query = $this->db->get();
@@ -320,7 +320,7 @@ class System_model_base extends Model {
 		
 		$query = $this->db->get();
 		
-		$row = ($query->num_rows() > 0) ? $query->row() : FALSE;
+		$row = ($query->num_rows() > 0) ? $query->row() : false;
 		
 		return $row;
 	}
@@ -334,7 +334,7 @@ class System_model_base extends Model {
 			return $query->row();
 		}
 		
-		return FALSE;
+		return false;
 	}
 	
 	function get_uploaded_images($type = '')
@@ -585,7 +585,7 @@ class System_model_base extends Model {
 		}
 		else
 		{
-			return FALSE;
+			return false;
 		}
 	}
 }

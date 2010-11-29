@@ -33,7 +33,7 @@ class Site_base extends Controller {
 		$this->load->model('system_model', 'sys');
 		$installed = $this->sys->check_install_status();
 		
-		if ($installed === FALSE)
+		if ($installed === false)
 		{ /* check whether the system is installed */
 			redirect('install/index', 'refresh');
 		}
@@ -46,7 +46,7 @@ class Site_base extends Controller {
 		$this->load->model('users_model', 'user');
 		
 		/* check to see if they are logged in */
-		$this->auth->is_logged_in(TRUE);
+		$this->auth->is_logged_in(true);
 		
 		/* an array of the global we want to retrieve */
 		$settings_array = array(
@@ -68,7 +68,7 @@ class Site_base extends Controller {
 		$this->timezone = $this->options['timezone'];
 		$this->dst = (bool) $this->options['daylight_savings'];
 		
-		if ($this->auth->is_logged_in() === TRUE)
+		if ($this->auth->is_logged_in() === true)
 		{ /* if there's a session, set the variables appropriately */
 			$this->skin = $this->session->userdata('skin_admin');
 			$this->rank = $this->session->userdata('display_rank');
@@ -84,12 +84,12 @@ class Site_base extends Controller {
 		$this->template->set_master_template($this->skin .'/template_admin.php');
 		
 		/* write the common elements to the template */
-		$this->template->write('nav_main', $this->menu->build('main', 'main'), TRUE);
-		$this->template->write('nav_sub', $this->menu->build('adminsub', 'site'), TRUE);
-		$this->template->write('panel_1', $this->user_panel->panel_1(), TRUE);
-		$this->template->write('panel_2', $this->user_panel->panel_2(), TRUE);
-		$this->template->write('panel_3', $this->user_panel->panel_3(), TRUE);
-		$this->template->write('panel_workflow', $this->user_panel->panel_workflow(), TRUE);
+		$this->template->write('nav_main', $this->menu->build('main', 'main'), true);
+		$this->template->write('nav_sub', $this->menu->build('adminsub', 'site'), true);
+		$this->template->write('panel_1', $this->user_panel->panel_1(), true);
+		$this->template->write('panel_2', $this->user_panel->panel_2(), true);
+		$this->template->write('panel_3', $this->user_panel->panel_3(), true);
+		$this->template->write('panel_workflow', $this->user_panel->panel_workflow(), true);
 		$this->template->write('title', $this->options['sim_name'] . ' :: ');
 	}
 
@@ -108,16 +108,16 @@ class Site_base extends Controller {
 			switch ($this->uri->segment(3))
 			{
 				case 'add':
-					$type = $this->input->post('field_type', TRUE);
-					$section = $this->input->post('field_section', TRUE);
-					$label = $this->input->post('field_label_page', TRUE);
-					$name = $this->input->post('field_name', TRUE);
-					$id = $this->input->post('field_fid', TRUE);
-					$class = $this->input->post('field_class', TRUE);
-					$rows = $this->input->post('field_rows', TRUE);
-					$order = $this->input->post('field_order', TRUE);
-					$display = $this->input->post('field_display', TRUE);
-					$select = $this->input->post('select_values', TRUE);
+					$type = $this->input->post('field_type', true);
+					$section = $this->input->post('field_section', true);
+					$label = $this->input->post('field_label_page', true);
+					$name = $this->input->post('field_name', true);
+					$id = $this->input->post('field_fid', true);
+					$class = $this->input->post('field_class', true);
+					$rows = $this->input->post('field_rows', true);
+					$order = $this->input->post('field_order', true);
+					$display = $this->input->post('field_display', true);
+					$select = $this->input->post('select_values', true);
 			
 					$insert_array = array(
 						'field_name' => $name,
@@ -209,7 +209,7 @@ class Site_base extends Controller {
 					break;
 					
 				case 'delete':
-					$id = (is_numeric($this->input->post('id', TRUE))) ? $this->input->post('id', TRUE) : 0;
+					$id = (is_numeric($this->input->post('id', true))) ? $this->input->post('id', true) : 0;
 							
 					/* update the database */
 					$delete = $this->char->delete_bio_field($id);
@@ -256,16 +256,16 @@ class Site_base extends Controller {
 					break;
 					
 				case 'edit':
-					$type = $this->input->post('field_type', TRUE);
-					$section = $this->input->post('field_section', TRUE);
-					$label = $this->input->post('field_label_page', TRUE);
-					$name = $this->input->post('field_name', TRUE);
-					$fid = $this->input->post('field_fid', TRUE);
-					$class = $this->input->post('field_class', TRUE);
-					$rows = $this->input->post('field_rows', TRUE);
-					$order = $this->input->post('field_order', TRUE);
-					$display = $this->input->post('field_display', TRUE);
-					$id = $this->input->post('field_id', TRUE);
+					$type = $this->input->post('field_type', true);
+					$section = $this->input->post('field_section', true);
+					$label = $this->input->post('field_label_page', true);
+					$name = $this->input->post('field_name', true);
+					$fid = $this->input->post('field_fid', true);
+					$class = $this->input->post('field_class', true);
+					$rows = $this->input->post('field_rows', true);
+					$order = $this->input->post('field_order', true);
+					$display = $this->input->post('field_display', true);
+					$id = $this->input->post('field_id', true);
 					
 					$update_array = array(
 						'field_name' => $name,
@@ -313,10 +313,10 @@ class Site_base extends Controller {
 					break;
 					
 				case 'editval':
-					$value = $this->input->post('value_field_value', TRUE);
-					$content = $this->input->post('value_content', TRUE);
-					$field = $this->input->post('value_field', TRUE);
-					$id = $this->input->post('id', TRUE);
+					$value = $this->input->post('value_field_value', true);
+					$content = $this->input->post('value_content', true);
+					$field = $this->input->post('value_field', true);
+					$id = $this->input->post('id', true);
 
 					$update_array = array(
 						'value_field_value' => $value,
@@ -359,7 +359,7 @@ class Site_base extends Controller {
 			}
 		}
 		
-		$id = $this->uri->segment(4, 0, TRUE);
+		$id = $this->uri->segment(4, 0, true);
 		
 		if ($id == 0)
 		{
@@ -417,9 +417,9 @@ class Site_base extends Controller {
 									break;
 									
 								case 'select':
-									$value = FALSE;
-									$values = FALSE;
-									$input = FALSE;
+									$value = false;
+									$values = false;
+									$input = false;
 									
 									$values = $this->char->get_bio_values($field->field_id);
 									
@@ -510,12 +510,12 @@ class Site_base extends Controller {
 						'name' => 'field_display',
 						'id' => 'field_display_y',
 						'value' => 'y',
-						'checked' => ($row->field_display == 'y') ? TRUE : FALSE),
+						'checked' => ($row->field_display == 'y') ? true : false),
 					'display_n' => array(
 						'name' => 'field_display',
 						'id' => 'field_display_n',
 						'value' => 'n',
-						'checked' => ($row->field_display == 'n') ? TRUE : FALSE),
+						'checked' => ($row->field_display == 'n') ? true : false),
 					'rows' => array(
 						'name' => 'field_rows',
 						'id' => 'field_rows',
@@ -643,9 +643,9 @@ class Site_base extends Controller {
 			switch ($this->uri->segment(3))
 			{
 				case 'add':
-					$name = $this->input->post('section_name', TRUE);
-					$order = $this->input->post('section_order', TRUE);
-					$tab = $this->input->post('section_tab', TRUE);
+					$name = $this->input->post('section_name', true);
+					$order = $this->input->post('section_order', true);
+					$tab = $this->input->post('section_tab', true);
 			
 					$insert_array = array(
 						'section_name' => $name,
@@ -687,8 +687,8 @@ class Site_base extends Controller {
 					break;
 					
 				case 'delete':
-					$old_id = $this->input->post('id', TRUE);
-					$new_id = $this->input->post('new_sec', TRUE);
+					$old_id = $this->input->post('id', true);
+					$new_id = $this->input->post('new_sec', true);
 					
 					/* update the database */
 					$delete = $this->char->delete_bio_section($old_id);
@@ -725,10 +725,10 @@ class Site_base extends Controller {
 					break;
 					
 				case 'edit':
-					$name = $this->input->post('section_name', TRUE);
-					$order = $this->input->post('section_order', TRUE);
-					$tab = $this->input->post('section_tab', TRUE);
-					$id = $this->input->post('id', TRUE);
+					$name = $this->input->post('section_name', true);
+					$order = $this->input->post('section_order', true);
+					$tab = $this->input->post('section_tab', true);
+					$id = $this->input->post('id', true);
 			
 					$update_array = array(
 						'section_name' => $name,
@@ -856,10 +856,10 @@ class Site_base extends Controller {
 			switch ($this->uri->segment(3))
 			{
 				case 'add':
-					$name = $this->input->post('tab_name', TRUE);
-					$order = $this->input->post('tab_order', TRUE);
-					$display = $this->input->post('tab_display', TRUE);
-					$link = $this->input->post('tab_link_id', TRUE);
+					$name = $this->input->post('tab_name', true);
+					$order = $this->input->post('tab_order', true);
+					$display = $this->input->post('tab_display', true);
+					$link = $this->input->post('tab_link_id', true);
 			
 					$insert_array = array(
 						'tab_name' => $name,
@@ -902,8 +902,8 @@ class Site_base extends Controller {
 					break;
 					
 				case 'delete':
-					$old_id = $this->input->post('id', TRUE);
-					$new_id = $this->input->post('new_tab', TRUE);
+					$old_id = $this->input->post('id', true);
+					$new_id = $this->input->post('new_tab', true);
 					
 					/* update the database */
 					$delete = $this->char->delete_bio_tab($old_id);
@@ -940,11 +940,11 @@ class Site_base extends Controller {
 					break;
 					
 				case 'edit':
-					$name = $this->input->post('tab_name', TRUE);
-					$order = $this->input->post('tab_order', TRUE);
-					$display = $this->input->post('tab_display', TRUE);
-					$link = $this->input->post('tab_link_id', TRUE);
-					$id = $this->input->post('tab_id', TRUE);
+					$name = $this->input->post('tab_name', true);
+					$order = $this->input->post('tab_order', true);
+					$display = $this->input->post('tab_display', true);
+					$link = $this->input->post('tab_link_id', true);
+					$id = $this->input->post('tab_id', true);
 			
 					$update_array = array(
 						'tab_name' => $name,
@@ -1068,7 +1068,7 @@ class Site_base extends Controller {
 			{
 				case 'install':
 					/* set the variable */
-					$selection = $this->input->post('install_rank', TRUE);
+					$selection = $this->input->post('install_rank', true);
 					
 					/* load the yaml parser */
 					$this->load->helper('yayparser');
@@ -1125,15 +1125,15 @@ class Site_base extends Controller {
 					break;
 					
 				case 'add':
-					$name = $this->input->post('rank_name', TRUE);
-					$location = $this->input->post('rank_location', TRUE);
-					$preview = $this->input->post('rank_preview', TRUE);
-					$blank = $this->input->post('rank_blank', TRUE);
-					$extension = $this->input->post('rank_extension', TRUE);
-					$status = $this->input->post('rank_status', TRUE);
-					$credits = $this->input->post('rank_credits', TRUE);
-					$default = $this->input->post('rank_default', TRUE);
-					$genre = $this->input->post('rank_genre', TRUE);
+					$name = $this->input->post('rank_name', true);
+					$location = $this->input->post('rank_location', true);
+					$preview = $this->input->post('rank_preview', true);
+					$blank = $this->input->post('rank_blank', true);
+					$extension = $this->input->post('rank_extension', true);
+					$status = $this->input->post('rank_status', true);
+					$credits = $this->input->post('rank_credits', true);
+					$default = $this->input->post('rank_default', true);
+					$genre = $this->input->post('rank_genre', true);
 					
 					if ($default == 'y')
 					{
@@ -1188,8 +1188,8 @@ class Site_base extends Controller {
 					break;
 					
 				case 'delete':
-					$old_id = $this->input->post('id', TRUE);
-					$new = $this->input->post('new_rank', TRUE);
+					$old_id = $this->input->post('id', true);
+					$new = $this->input->post('new_rank', true);
 					
 					$item = $this->ranks->get_rankcat($old_id, 'rankcat_id');
 					
@@ -1237,16 +1237,16 @@ class Site_base extends Controller {
 					break;
 					
 				case 'edit':
-					$name = $this->input->post('rank_name', TRUE);
-					$location = $this->input->post('rank_location', TRUE);
-					$preview = $this->input->post('rank_preview', TRUE);
-					$blank = $this->input->post('rank_blank', TRUE);
-					$extension = $this->input->post('rank_extension', TRUE);
-					$status = $this->input->post('rank_status', TRUE);
-					$credits = $this->input->post('rank_credits', TRUE);
-					$default = $this->input->post('rank_default', TRUE);
-					$genre = $this->input->post('rank_genre', TRUE);
-					$id = $this->input->post('id', TRUE);
+					$name = $this->input->post('rank_name', true);
+					$location = $this->input->post('rank_location', true);
+					$preview = $this->input->post('rank_preview', true);
+					$blank = $this->input->post('rank_blank', true);
+					$extension = $this->input->post('rank_extension', true);
+					$status = $this->input->post('rank_status', true);
+					$credits = $this->input->post('rank_credits', true);
+					$default = $this->input->post('rank_default', true);
+					$genre = $this->input->post('rank_genre', true);
+					$id = $this->input->post('id', true);
 					
 					if ($default == 'y')
 					{
@@ -1302,7 +1302,7 @@ class Site_base extends Controller {
 			}
 		}
 		
-		$dir = directory_map(APPPATH .'assets/common/'. GENRE .'/ranks/', TRUE);
+		$dir = directory_map(APPPATH .'assets/common/'. GENRE .'/ranks/', true);
 		
 		$ranks = $this->ranks->get_all_rank_sets('');
 		
@@ -1318,7 +1318,7 @@ class Site_base extends Controller {
 				
 				$key = array_search($rank->rankcat_location, $dir);
 				
-				if ($key !== FALSE)
+				if ($key !== false)
 				{
 					unset($dir[$key]);
 				}
@@ -1332,7 +1332,7 @@ class Site_base extends Controller {
 			{
 				$key = array_search($value, $dir);
 				
-				if ($key !== FALSE)
+				if ($key !== false)
 				{
 					unset($dir[$key]);
 				}
@@ -1419,7 +1419,7 @@ class Site_base extends Controller {
 			{
 				case 'install':
 					/* set the variable */
-					$selection = $this->input->post('install_skin', TRUE);
+					$selection = $this->input->post('install_skin', true);
 					
 					/* load the yaml parser */
 					$this->load->helper('yayparser');
@@ -1490,9 +1490,9 @@ class Site_base extends Controller {
 					switch ($this->uri->segment(4))
 					{
 						case 'add':
-							$name = $this->input->post('skin_name', TRUE);
-							$location = $this->input->post('skin_location', TRUE);
-							$credits = $this->input->post('skin_credits', TRUE);
+							$name = $this->input->post('skin_name', true);
+							$location = $this->input->post('skin_location', true);
+							$credits = $this->input->post('skin_credits', true);
 					
 							$insert_array = array(
 								'skin_name' => $name,
@@ -1534,8 +1534,8 @@ class Site_base extends Controller {
 							break;
 							
 						case 'delete':
-							$id = $this->input->post('id', TRUE);
-							$id = (is_numeric($id)) ? $id : FALSE;
+							$id = $this->input->post('id', true);
+							$id = (is_numeric($id)) ? $id : false;
 							
 							$info = $this->sys->get_skin_info($id, 'skin_id');
 							$sections = $this->sys->get_skin_sections($info->skin_location);
@@ -1582,10 +1582,10 @@ class Site_base extends Controller {
 							break;
 							
 						case 'edit':
-							$name = $this->input->post('skin_name', TRUE);
-							$location = $this->input->post('skin_location', TRUE);
-							$credits = $this->input->post('skin_credits', TRUE);
-							$id = $this->input->post('id', TRUE);
+							$name = $this->input->post('skin_name', true);
+							$location = $this->input->post('skin_location', true);
+							$credits = $this->input->post('skin_credits', true);
+							$id = $this->input->post('id', true);
 					
 							$update_array = array(
 								'skin_name' => $name,
@@ -1632,11 +1632,11 @@ class Site_base extends Controller {
 					switch ($this->uri->segment(4))
 					{
 						case 'add':
-							$section = $this->input->post('section', TRUE);
-							$skin = $this->input->post('skin', TRUE);
-							$preview = $this->input->post('preview', TRUE);
-							$status = $this->input->post('status', TRUE);
-							$default = $this->input->post('default', TRUE);
+							$section = $this->input->post('section', true);
+							$skin = $this->input->post('skin', true);
+							$preview = $this->input->post('preview', true);
+							$status = $this->input->post('status', true);
+							$default = $this->input->post('default', true);
 							
 							if ($default == 'y')
 							{
@@ -1691,16 +1691,16 @@ class Site_base extends Controller {
 							
 						case 'delete':
 							/* theme section we're handling */
-							$section = $this->input->post('section', TRUE);
+							$section = $this->input->post('section', true);
 							
 							/* skin location we're changing to */
-							$new_skin = $this->input->post('new_skin', TRUE);
+							$new_skin = $this->input->post('new_skin', true);
 							
 							/* theme ID we're deleting */
-							$id = $this->input->post('id', TRUE);
+							$id = $this->input->post('id', true);
 							
 							/* skin location we're changing from */
-							$old_skin = $this->input->post('old_skin', TRUE);
+							$old_skin = $this->input->post('old_skin', true);
 							
 							/* get the current skin for the section we're playing with */
 							$theme = $this->settings->get_setting('skin_'. $section);
@@ -1755,12 +1755,12 @@ class Site_base extends Controller {
 							break;
 							
 						case 'edit':
-							$section = $this->input->post('section', TRUE);
-							$skin = $this->input->post('skin', TRUE);
-							$preview = $this->input->post('preview', TRUE);
-							$status = $this->input->post('status', TRUE);
-							$default = $this->input->post('default', TRUE);
-							$id = $this->input->post('id', TRUE);
+							$section = $this->input->post('section', true);
+							$skin = $this->input->post('skin', true);
+							$preview = $this->input->post('preview', true);
+							$status = $this->input->post('status', true);
+							$default = $this->input->post('default', true);
+							$id = $this->input->post('id', true);
 							
 							if ($default == 'y')
 							{
@@ -1831,7 +1831,7 @@ class Site_base extends Controller {
 		
 		$check = array();
 		
-		$viewdirs = directory_map(APPPATH .'views/', TRUE);
+		$viewdirs = directory_map(APPPATH .'views/', true);
 		
 		$skins = $this->sys->get_all_skins();
 		
@@ -1847,7 +1847,7 @@ class Site_base extends Controller {
 				
 				$key = array_search($skin->skin_location, $viewdirs);
 				
-				if ($key !== FALSE)
+				if ($key !== false)
 				{
 					unset($viewdirs[$key]);
 				}
@@ -1881,7 +1881,7 @@ class Site_base extends Controller {
 		{
 			$key = array_search($value, $viewdirs);
 			
-			if ($key !== FALSE)
+			if ($key !== false)
 			{
 				unset($viewdirs[$key]);
 			}
@@ -2059,7 +2059,7 @@ class Site_base extends Controller {
 					break;
 					
 				case 'delete':
-					$id = (is_numeric($this->input->post('id', TRUE))) ? $this->input->post('id', TRUE) : 0;
+					$id = (is_numeric($this->input->post('id', true))) ? $this->input->post('id', true) : 0;
 							
 					/* update the database */
 					$delete = $this->docking->delete_docking_field($id);
@@ -2160,10 +2160,10 @@ class Site_base extends Controller {
 					unset($update_array['id']);
 					unset($update_array['submit']);
 					
-					$value = $this->input->post('value_field_value', TRUE);
-					$content = $this->input->post('value_content', TRUE);
-					$field = $this->input->post('value_field', TRUE);
-					$id = $this->input->post('id', TRUE);
+					$value = $this->input->post('value_field_value', true);
+					$content = $this->input->post('value_content', true);
+					$field = $this->input->post('value_field', true);
+					$id = $this->input->post('id', true);
 
 					$update_array = array(
 						'value_field_value' => $value,
@@ -2206,9 +2206,9 @@ class Site_base extends Controller {
 			}
 		}
 		
-		$id = $this->uri->segment(4, FALSE, TRUE);
+		$id = $this->uri->segment(4, false, true);
 		
-		if ($id === FALSE)
+		if ($id === false)
 		{
 			$sections = $this->docking->get_docking_sections();
 			
@@ -2258,9 +2258,9 @@ class Site_base extends Controller {
 									break;
 											
 								case 'select':
-									$value = FALSE;
-									$values = FALSE;
-									$input = FALSE;
+									$value = false;
+									$values = false;
+									$input = false;
 											
 									$values = $this->docking->get_docking_values($field->field_id);
 											
@@ -2347,12 +2347,12 @@ class Site_base extends Controller {
 						'name' => 'field_display',
 						'id' => 'field_display_y',
 						'value' => 'y',
-						'checked' => ($row->field_display == 'y') ? TRUE : FALSE),
+						'checked' => ($row->field_display == 'y') ? true : false),
 					'display_n' => array(
 						'name' => 'field_display',
 						'id' => 'field_display_n',
 						'value' => 'n',
-						'checked' => ($row->field_display == 'n') ? TRUE : FALSE),
+						'checked' => ($row->field_display == 'n') ? true : false),
 					'rows' => array(
 						'name' => 'field_rows',
 						'id' => 'field_rows',
@@ -2522,8 +2522,8 @@ class Site_base extends Controller {
 					break;
 					
 				case 'delete':
-					$old_id = $this->input->post('id', TRUE);
-					$new_id = $this->input->post('new_sec', TRUE);
+					$old_id = $this->input->post('id', true);
+					$new_id = $this->input->post('new_sec', true);
 					
 					/* update the database */
 					$delete = $this->docking->delete_docking_section($old_id);
@@ -2679,20 +2679,20 @@ class Site_base extends Controller {
 			switch ($this->uri->segment(3))
 			{
 				case 'add':
-					$name = $this->input->post('menu_name', TRUE);
-					$group = $this->input->post('menu_group', TRUE);
-					$order = $this->input->post('menu_order', TRUE);
-					$link = $this->input->post('menu_link', TRUE);
-					$link_type = $this->input->post('menu_link_type', TRUE);
-					$need_login = $this->input->post('menu_need_login', TRUE);
-					$use_access = $this->input->post('menu_use_access', TRUE);
-					$access = $this->input->post('menu_access', TRUE);
-					$level = $this->input->post('menu_access_level', TRUE);
-					$type = $this->input->post('menu_type', TRUE);
-					$cat = $this->input->post('menu_cat', TRUE);
-					$display = $this->input->post('menu_display', TRUE);
-					$sim_type = $this->input->post('menu_sim_type', TRUE);
-					$js_data['tab'] = $this->input->post('tab', TRUE);
+					$name = $this->input->post('menu_name', true);
+					$group = $this->input->post('menu_group', true);
+					$order = $this->input->post('menu_order', true);
+					$link = $this->input->post('menu_link', true);
+					$link_type = $this->input->post('menu_link_type', true);
+					$need_login = $this->input->post('menu_need_login', true);
+					$use_access = $this->input->post('menu_use_access', true);
+					$access = $this->input->post('menu_access', true);
+					$level = $this->input->post('menu_access_level', true);
+					$type = $this->input->post('menu_type', true);
+					$cat = $this->input->post('menu_cat', true);
+					$display = $this->input->post('menu_display', true);
+					$sim_type = $this->input->post('menu_sim_type', true);
+					$js_data['tab'] = $this->input->post('tab', true);
 					
 					if (empty($name) || empty($link) || empty($type) || empty($cat))
 					{
@@ -2763,8 +2763,8 @@ class Site_base extends Controller {
 					break;
 					
 				case 'delete':
-					$id = $this->input->post('id', TRUE);
-					$js_data['tab'] = $this->input->post('tab', TRUE);
+					$id = $this->input->post('id', true);
+					$js_data['tab'] = $this->input->post('tab', true);
 				
 					/* insert the record */
 					$delete = $this->menu_model->delete_menu_item($id);
@@ -2800,21 +2800,21 @@ class Site_base extends Controller {
 					break;
 					
 				case 'edit':
-					$name = $this->input->post('menu_name', TRUE);
-					$group = $this->input->post('menu_group', TRUE);
-					$order = $this->input->post('menu_order', TRUE);
-					$link = $this->input->post('menu_link', TRUE);
-					$link_type = $this->input->post('menu_link_type', TRUE);
-					$need_login = $this->input->post('menu_need_login', TRUE);
-					$use_access = $this->input->post('menu_use_access', TRUE);
-					$access = $this->input->post('menu_access', TRUE);
-					$level = $this->input->post('menu_access_level', TRUE);
-					$type = $this->input->post('menu_type', TRUE);
-					$cat = $this->input->post('menu_cat', TRUE);
-					$display = $this->input->post('menu_display', TRUE);
-					$sim_type = $this->input->post('menu_sim_type', TRUE);
-					$id = $this->input->post('id', TRUE);
-					$js_data['tab'] = $this->input->post('tab', TRUE);
+					$name = $this->input->post('menu_name', true);
+					$group = $this->input->post('menu_group', true);
+					$order = $this->input->post('menu_order', true);
+					$link = $this->input->post('menu_link', true);
+					$link_type = $this->input->post('menu_link_type', true);
+					$need_login = $this->input->post('menu_need_login', true);
+					$use_access = $this->input->post('menu_use_access', true);
+					$access = $this->input->post('menu_access', true);
+					$level = $this->input->post('menu_access_level', true);
+					$type = $this->input->post('menu_type', true);
+					$cat = $this->input->post('menu_cat', true);
+					$display = $this->input->post('menu_display', true);
+					$sim_type = $this->input->post('menu_sim_type', true);
+					$id = $this->input->post('id', true);
+					$js_data['tab'] = $this->input->post('tab', true);
 					
 					if (empty($name) || empty($link) || empty($type) || empty($cat))
 					{
@@ -3000,10 +3000,10 @@ class Site_base extends Controller {
 			switch ($this->uri->segment(3))
 			{
 				case 'add':
-					$name = $this->input->post('menucat_name', TRUE);
-					$order = $this->input->post('menucat_order', TRUE);
-					$cat = $this->input->post('menucat_menu_cat', TRUE);
-					$type = $this->input->post('menucat_type', TRUE);
+					$name = $this->input->post('menucat_name', true);
+					$order = $this->input->post('menucat_order', true);
+					$cat = $this->input->post('menucat_menu_cat', true);
+					$type = $this->input->post('menucat_type', true);
 					
 					if (empty($name) || empty($cat))
 					{
@@ -3065,7 +3065,7 @@ class Site_base extends Controller {
 					break;
 					
 				case 'delete':
-					$id = $this->input->post('id', TRUE);
+					$id = $this->input->post('id', true);
 				
 					/* insert the record */
 					$delete = $this->menu_model->delete_menu_category($id);
@@ -3101,11 +3101,11 @@ class Site_base extends Controller {
 					break;
 					
 				case 'edit':
-					$name = $this->input->post('menucat_name', TRUE);
-					$order = $this->input->post('menucat_order', TRUE);
-					$cat = $this->input->post('menucat_menu_cat', TRUE);
-					$id = $this->input->post('id', TRUE);
-					$type = $this->input->post('menucat_type', TRUE);
+					$name = $this->input->post('menucat_name', true);
+					$order = $this->input->post('menucat_order', true);
+					$cat = $this->input->post('menucat_menu_cat', true);
+					$id = $this->input->post('id', true);
+					$type = $this->input->post('menucat_type', true);
 					
 					if (empty($name) || empty($cat))
 					{
@@ -3242,10 +3242,10 @@ class Site_base extends Controller {
 			switch ($this->uri->segment(3))
 			{
 				case 'add':
-					$label = $this->input->post('message_label', TRUE);
-					$key = $this->input->post('message_key', TRUE);
-					$content = $this->input->post('message_content', TRUE);
-					$type = $this->input->post('message_type', TRUE);
+					$label = $this->input->post('message_label', true);
+					$key = $this->input->post('message_key', true);
+					$content = $this->input->post('message_content', true);
+					$type = $this->input->post('message_type', true);
 					
 					if (empty($label) || empty($key) || empty($content) || empty($type))
 					{
@@ -3267,7 +3267,7 @@ class Site_base extends Controller {
 					{
 						$check = $this->msgs->get_message($key);
 						
-						if ($check === FALSE)
+						if ($check === false)
 						{
 							$content = str_replace('&', '&amp;', $content);
 							$label = str_replace('&', '&amp;', $label);
@@ -3325,7 +3325,7 @@ class Site_base extends Controller {
 					break;
 					
 				case 'delete':
-					$id = $this->input->post('id', TRUE);
+					$id = $this->input->post('id', true);
 				
 					/* insert the record */
 					$delete = $this->msgs->delete_message($id);
@@ -3361,11 +3361,11 @@ class Site_base extends Controller {
 					break;
 					
 				case 'edit':
-					$label = $this->input->post('message_label', TRUE);
-					$key = $this->input->post('message_key', TRUE);
-					$content = $this->input->post('message_content', TRUE);
-					$type = $this->input->post('message_type', TRUE);
-					$old_key = $this->input->post('old_key', TRUE);
+					$label = $this->input->post('message_label', true);
+					$key = $this->input->post('message_key', true);
+					$content = $this->input->post('message_content', true);
+					$type = $this->input->post('message_type', true);
+					$old_key = $this->input->post('old_key', true);
 					
 					if (empty($label) || empty($key) || empty($content) || empty($type))
 					{
@@ -3535,8 +3535,8 @@ class Site_base extends Controller {
 			switch ($this->uri->segment(3))
 			{
 				case 'add':
-					$name = $this->input->post('group_name', TRUE);
-					$order = $this->input->post('group_order', TRUE);
+					$name = $this->input->post('group_name', true);
+					$order = $this->input->post('group_order', true);
 					
 					if (empty($name))
 					{
@@ -3596,8 +3596,8 @@ class Site_base extends Controller {
 					break;
 					
 				case 'delete':
-					$id = $this->input->post('id', TRUE);
-					$new_group = $this->input->post('new_group', TRUE);
+					$id = $this->input->post('id', true);
+					$new_group = $this->input->post('new_group', true);
 				
 					/* insert the record */
 					$delete = $this->access->delete_group($id);
@@ -3638,9 +3638,9 @@ class Site_base extends Controller {
 					break;
 					
 				case 'edit':
-					$name = $this->input->post('group_name', TRUE);
-					$order = $this->input->post('group_order', TRUE);
-					$id = $this->input->post('id', TRUE);
+					$name = $this->input->post('group_name', true);
+					$order = $this->input->post('group_order', true);
+					$id = $this->input->post('id', true);
 					
 					if (empty($name))
 					{
@@ -3776,11 +3776,11 @@ class Site_base extends Controller {
 			switch ($this->uri->segment(3))
 			{
 				case 'add':
-					$name = $this->input->post('page_name', TRUE);
-					$url = $this->input->post('page_url', TRUE);
-					$level = $this->input->post('page_level', TRUE);
-					$group = $this->input->post('page_group', TRUE);
-					$desc = $this->input->post('page_desc', TRUE);
+					$name = $this->input->post('page_name', true);
+					$url = $this->input->post('page_url', true);
+					$level = $this->input->post('page_level', true);
+					$group = $this->input->post('page_group', true);
+					$desc = $this->input->post('page_desc', true);
 					
 					if (empty($name) || empty($url))
 					{
@@ -3843,7 +3843,7 @@ class Site_base extends Controller {
 					break;
 					
 				case 'delete':
-					$id = $this->input->post('id', TRUE);
+					$id = $this->input->post('id', true);
 				
 					/* insert the record */
 					$delete = $this->access->delete_page($id);
@@ -3856,7 +3856,7 @@ class Site_base extends Controller {
 						{
 							foreach ($roles->result() as $role)
 							{
-								if (strstr($role->role_access, $id) !== FALSE)
+								if (strstr($role->role_access, $id) !== false)
 								{
 									$string = str_replace($id, '', $role->role_access);
 									$string = str_replace(',,', ',', $string);
@@ -3907,12 +3907,12 @@ class Site_base extends Controller {
 					break;
 					
 				case 'edit':
-					$name = $this->input->post('page_name', TRUE);
-					$url = $this->input->post('page_url', TRUE);
-					$level = $this->input->post('page_level', TRUE);
-					$group = $this->input->post('page_group', TRUE);
-					$desc = $this->input->post('page_desc', TRUE);
-					$id = $this->input->post('id', TRUE);
+					$name = $this->input->post('page_name', true);
+					$url = $this->input->post('page_url', true);
+					$level = $this->input->post('page_level', true);
+					$group = $this->input->post('page_group', true);
+					$desc = $this->input->post('page_desc', true);
+					$id = $this->input->post('id', true);
 					
 					if (empty($name) || empty($url))
 					{
@@ -4051,16 +4051,16 @@ class Site_base extends Controller {
 		
 		/* set the variables */
 		$values = array('add', 'delete', 'edit', 'duplicate');
-		$action = $this->uri->segment(3, FALSE, FALSE, $values);
-		$id = $this->uri->segment(4, FALSE, TRUE);
+		$action = $this->uri->segment(3, false, false, $values);
+		$id = $this->uri->segment(4, false, true);
 		
 		if (isset($_POST['submit']))
 		{
 			switch ($action)
 			{
 				case 'add':
-					$name = $this->input->post('role_name', TRUE);
-					$desc = $this->input->post('role_desc', TRUE);
+					$name = $this->input->post('role_name', true);
+					$desc = $this->input->post('role_desc', true);
 					
 					foreach ($_POST as $key => $value)
 					{
@@ -4111,8 +4111,8 @@ class Site_base extends Controller {
 					break;
 					
 				case 'delete':
-					$id = $this->input->post('id', TRUE);
-					$new_role = $this->input->post('new_role', TRUE);
+					$id = $this->input->post('id', true);
+					$new_role = $this->input->post('new_role', true);
 				
 					/* insert the record */
 					$delete = $this->access->delete_role($id);
@@ -4153,8 +4153,8 @@ class Site_base extends Controller {
 					break;
 					
 				case 'edit':
-					$name = $this->input->post('role_name', TRUE);
-					$desc = $this->input->post('role_desc', TRUE);
+					$name = $this->input->post('role_name', true);
+					$desc = $this->input->post('role_desc', true);
 					
 					foreach ($_POST as $key => $value)
 					{
@@ -4205,9 +4205,9 @@ class Site_base extends Controller {
 					break;
 					
 				case 'duplicate':
-					$new_name = $this->input->post('name', TRUE);
-					$new_desc = $this->input->post('desc', TRUE);
-					$old_role = $this->input->post('role', TRUE);
+					$new_name = $this->input->post('name', true);
+					$new_desc = $this->input->post('desc', true);
+					$old_role = $this->input->post('role', true);
 					
 					$role = $this->access->get_role($old_role);
 					
@@ -4271,7 +4271,7 @@ class Site_base extends Controller {
 					$data['pages']['group'][$page->page_group]['pages'][$page->page_id]['name'] = $page->page_name;
 					$data['pages']['group'][$page->page_group]['pages'][$page->page_id]['url'] = $page->page_url;
 					$data['pages']['group'][$page->page_group]['pages'][$page->page_id]['desc'] = $page->page_desc;
-					$data['pages']['group'][$page->page_group]['pages'][$page->page_id]['checked'] = (in_array($page->page_id, $page_array) ? TRUE : FALSE);
+					$data['pages']['group'][$page->page_group]['pages'][$page->page_id]['checked'] = (in_array($page->page_id, $page_array) ? true : false);
 				}
 				
 				$data['inputs'] = array(
@@ -4416,8 +4416,8 @@ class Site_base extends Controller {
 			
 			if ($update > 0)
 			{
-				$new_type = $this->input->post('sim_type', TRUE);
-				$old_type = $this->input->post('old_sim_type', TRUE);
+				$new_type = $this->input->post('sim_type', true);
+				$old_type = $this->input->post('old_sim_type', true);
 				
 				if ($new_type != $old_type)
 				{
@@ -4535,12 +4535,12 @@ class Site_base extends Controller {
 					'name' => 'system_email',
 					'id' => 'sys_email_on',
 					'value' => 'on',
-					'checked' => ($setting['system_email'] == 'on') ? TRUE : FALSE),
+					'checked' => ($setting['system_email'] == 'on') ? true : false),
 				'sys_email_off' => array(
 					'name' => 'system_email',
 					'id' => 'sys_email_off',
 					'value' => 'off',
-					'checked' => ($setting['system_email'] == 'off') ? TRUE : FALSE),
+					'checked' => ($setting['system_email'] == 'off') ? true : false),
 				'email_subject' => array(
 					'name' => 'email_subject',
 					'id' => 'email_subject',
@@ -4559,22 +4559,22 @@ class Site_base extends Controller {
 					'name' => 'maintenance',
 					'id' => 'maintenance_on',
 					'value' => 'on',
-					'checked' => ($setting['maintenance'] == 'on') ? TRUE : FALSE),
+					'checked' => ($setting['maintenance'] == 'on') ? true : false),
 				'maintenance_off' => array(
 					'name' => 'maintenance',
 					'id' => 'maintenance_off',
 					'value' => 'off',
-					'checked' => ($setting['maintenance'] == 'off') ? TRUE : FALSE),
+					'checked' => ($setting['maintenance'] == 'off') ? true : false),
 				'dst_y' => array(
 					'name' => 'daylight_savings',
 					'id' => 'dst_y',
-					'value' => 'TRUE',
-					'checked' => ($setting['daylight_savings'] == 'TRUE') ? TRUE : FALSE),
+					'value' => 'true',
+					'checked' => ($setting['daylight_savings'] == 'true') ? true : false),
 				'dst_n' => array(
 					'name' => 'daylight_savings',
 					'id' => 'dst_n',
-					'value' => 'FALSE',
-					'checked' => ($setting['daylight_savings'] == 'FALSE') ? TRUE : FALSE),
+					'value' => 'false',
+					'checked' => ($setting['daylight_savings'] == 'false') ? true : false),
 				'email_name' => array(
 					'name' => 'default_email_name',
 					'id' => 'default_email_name',
@@ -4685,42 +4685,42 @@ class Site_base extends Controller {
 					'name' => 'show_news',
 					'id' => 'show_news_y',
 					'value' => 'y',
-					'checked' => ($setting['show_news'] == 'y') ? TRUE : FALSE),
+					'checked' => ($setting['show_news'] == 'y') ? true : false),
 				'show_news_n' => array(
 					'name' => 'show_news',
 					'id' => 'show_news_n',
 					'value' => 'n',
-					'checked' => ($setting['show_news'] == 'n') ? TRUE : FALSE),
+					'checked' => ($setting['show_news'] == 'n') ? true : false),
 				'use_mission_notes_y' => array(
 					'name' => 'use_mission_notes',
 					'id' => 'use_mission_notes_y',
 					'value' => 'y',
-					'checked' => ($setting['use_mission_notes'] == 'y') ? TRUE : FALSE),
+					'checked' => ($setting['use_mission_notes'] == 'y') ? true : false),
 				'use_mission_notes_n' => array(
 					'name' => 'use_mission_notes',
 					'id' => 'use_mission_notes_n',
 					'value' => 'n',
-					'checked' => ($setting['use_mission_notes'] == 'n') ? TRUE : FALSE),
+					'checked' => ($setting['use_mission_notes'] == 'n') ? true : false),
 				'use_sample_post_y' => array(
 					'name' => 'use_sample_post',
 					'id' => 'use_sample_post_y',
 					'value' => 'y',
-					'checked' => ($setting['use_sample_post'] == 'y') ? TRUE : FALSE),
+					'checked' => ($setting['use_sample_post'] == 'y') ? true : false),
 				'use_sample_post_n' => array(
 					'name' => 'use_sample_post',
 					'id' => 'use_sample_post_n',
 					'value' => 'n',
-					'checked' => ($setting['use_sample_post'] == 'n') ? TRUE : FALSE),
+					'checked' => ($setting['use_sample_post'] == 'n') ? true : false),
 				'post_count_multi' => array(
 					'name' => 'post_count_format',
 					'id' => 'post_count_multi',
 					'value' => 'multiple',
-					'checked' => ($setting['post_count_format'] == 'multiple') ? TRUE : FALSE),
+					'checked' => ($setting['post_count_format'] == 'multiple') ? true : false),
 				'post_count_single' => array(
 					'name' => 'post_count_format',
 					'id' => 'post_count_single',
 					'value' => 'single',
-					'checked' => ($setting['post_count_format'] == 'single') ? TRUE : FALSE),
+					'checked' => ($setting['post_count_format'] == 'single') ? true : false),
 			);
 			
 			$data['default']['skin_main'] = $setting['skin_main'];
@@ -4836,7 +4836,7 @@ class Site_base extends Controller {
 		);
 		
 		/* set the js data */
-		$js_data['tab'] = $this->uri->segment(3, 0, TRUE);
+		$js_data['tab'] = $this->uri->segment(3, 0, true);
 		
 		/* figure out where the view should be coming from */
 		$view_loc = view_location('site_settings', $this->skin, 'admin');
@@ -4861,7 +4861,7 @@ class Site_base extends Controller {
 			{
 				case 'add':
 					$insert_array = array(
-						'simtype_name' => $this->input->post('simtype_name', TRUE),
+						'simtype_name' => $this->input->post('simtype_name', true),
 					);
 					
 					/* insert the record */
@@ -4906,7 +4906,7 @@ class Site_base extends Controller {
 					{
 						$loc = strpos($key, '_');
 						
-						if ($loc !== FALSE)
+						if ($loc !== false)
 						{
 							$loc_pos = substr($key, 0, $loc);
 							
@@ -5042,16 +5042,16 @@ class Site_base extends Controller {
 			switch ($this->uri->segment(3))
 			{
 				case 'add':
-					$type = $this->input->post('field_type', TRUE);
-					$label = $this->input->post('field_label_page', TRUE);
-					$name = $this->input->post('field_name', TRUE);
-					$id = $this->input->post('field_fid', TRUE);
-					$class = $this->input->post('field_class', TRUE);
-					$rows = $this->input->post('field_rows', TRUE);
-					$order = $this->input->post('field_order', TRUE);
-					$display = $this->input->post('field_display', TRUE);
-					$select = $this->input->post('select_values', TRUE);
-					$section = $this->input->post('field_section', TRUE);
+					$type = $this->input->post('field_type', true);
+					$label = $this->input->post('field_label_page', true);
+					$name = $this->input->post('field_name', true);
+					$id = $this->input->post('field_fid', true);
+					$class = $this->input->post('field_class', true);
+					$rows = $this->input->post('field_rows', true);
+					$order = $this->input->post('field_order', true);
+					$display = $this->input->post('field_display', true);
+					$select = $this->input->post('select_values', true);
+					$section = $this->input->post('field_section', true);
 			
 					$insert_array = array(
 						'field_name' => $name,
@@ -5133,7 +5133,7 @@ class Site_base extends Controller {
 					break;
 					
 				case 'delete':
-					$id = (is_numeric($this->input->post('id', TRUE))) ? $this->input->post('id', TRUE) : 0;
+					$id = (is_numeric($this->input->post('id', true))) ? $this->input->post('id', true) : 0;
 							
 					/* update the database */
 					$delete = $this->specs->delete_spec_field($id);
@@ -5180,16 +5180,16 @@ class Site_base extends Controller {
 					break;
 					
 				case 'edit':
-					$type = $this->input->post('field_type', TRUE);
-					$label = $this->input->post('field_label_page', TRUE);
-					$name = $this->input->post('field_name', TRUE);
-					$fid = $this->input->post('field_fid', TRUE);
-					$class = $this->input->post('field_class', TRUE);
-					$rows = $this->input->post('field_rows', TRUE);
-					$order = $this->input->post('field_order', TRUE);
-					$display = $this->input->post('field_display', TRUE);
-					$id = $this->input->post('field_id', TRUE);
-					$section = $this->input->post('field_section', TRUE);
+					$type = $this->input->post('field_type', true);
+					$label = $this->input->post('field_label_page', true);
+					$name = $this->input->post('field_name', true);
+					$fid = $this->input->post('field_fid', true);
+					$class = $this->input->post('field_class', true);
+					$rows = $this->input->post('field_rows', true);
+					$order = $this->input->post('field_order', true);
+					$display = $this->input->post('field_display', true);
+					$id = $this->input->post('field_id', true);
+					$section = $this->input->post('field_section', true);
 					
 					$update_array = array(
 						'field_name' => $name,
@@ -5237,10 +5237,10 @@ class Site_base extends Controller {
 					break;
 					
 				case 'editval':
-					$value = $this->input->post('value_field_value', TRUE);
-					$content = $this->input->post('value_content', TRUE);
-					$field = $this->input->post('value_field', TRUE);
-					$id = $this->input->post('id', TRUE);
+					$value = $this->input->post('value_field_value', true);
+					$content = $this->input->post('value_content', true);
+					$field = $this->input->post('value_field', true);
+					$id = $this->input->post('id', true);
 
 					$update_array = array(
 						'value_field_value' => $value,
@@ -5283,7 +5283,7 @@ class Site_base extends Controller {
 			}
 		}
 		
-		$id = $this->uri->segment(4, 0, TRUE);
+		$id = $this->uri->segment(4, 0, true);
 		
 		if ($id == 0)
 		{
@@ -5335,9 +5335,9 @@ class Site_base extends Controller {
 									break;
 											
 								case 'select':
-									$value = FALSE;
-									$values = FALSE;
-									$input = FALSE;
+									$value = false;
+									$values = false;
+									$input = false;
 											
 									$values = $this->specs->get_spec_values($field->field_id);
 											
@@ -5424,12 +5424,12 @@ class Site_base extends Controller {
 						'name' => 'field_display',
 						'id' => 'field_display_y',
 						'value' => 'y',
-						'checked' => ($row->field_display == 'y') ? TRUE : FALSE),
+						'checked' => ($row->field_display == 'y') ? true : false),
 					'display_n' => array(
 						'name' => 'field_display',
 						'id' => 'field_display_n',
 						'value' => 'n',
-						'checked' => ($row->field_display == 'n') ? TRUE : FALSE),
+						'checked' => ($row->field_display == 'n') ? true : false),
 					'rows' => array(
 						'name' => 'field_rows',
 						'id' => 'field_rows',
@@ -5559,8 +5559,8 @@ class Site_base extends Controller {
 			switch ($this->uri->segment(3))
 			{
 				case 'add':
-					$name = $this->input->post('section_name', TRUE);
-					$order = $this->input->post('section_order', TRUE);
+					$name = $this->input->post('section_name', true);
+					$order = $this->input->post('section_order', true);
 			
 					$insert_array = array(
 						'section_name' => $name,
@@ -5601,8 +5601,8 @@ class Site_base extends Controller {
 					break;
 					
 				case 'delete':
-					$old_id = $this->input->post('id', TRUE);
-					$new_id = $this->input->post('new_sec', TRUE);
+					$old_id = $this->input->post('id', true);
+					$new_id = $this->input->post('new_sec', true);
 					
 					/* update the database */
 					$delete = $this->specs->delete_spec_section($old_id);
@@ -5639,9 +5639,9 @@ class Site_base extends Controller {
 					break;
 					
 				case 'edit':
-					$name = $this->input->post('section_name', TRUE);
-					$order = $this->input->post('section_order', TRUE);
-					$id = $this->input->post('id', TRUE);
+					$name = $this->input->post('section_name', true);
+					$order = $this->input->post('section_order', true);
+					$id = $this->input->post('id', true);
 			
 					$update_array = array(
 						'section_name' => $name,
@@ -5753,15 +5753,15 @@ class Site_base extends Controller {
 			switch ($this->uri->segment(3))
 			{
 				case 'add':
-					$type = $this->input->post('field_type', TRUE);
-					$label = $this->input->post('field_label_page', TRUE);
-					$name = $this->input->post('field_name', TRUE);
-					$id = $this->input->post('field_fid', TRUE);
-					$class = $this->input->post('field_class', TRUE);
-					$rows = $this->input->post('field_rows', TRUE);
-					$order = $this->input->post('field_order', TRUE);
-					$display = $this->input->post('field_display', TRUE);
-					$select = $this->input->post('select_values', TRUE);
+					$type = $this->input->post('field_type', true);
+					$label = $this->input->post('field_label_page', true);
+					$name = $this->input->post('field_name', true);
+					$id = $this->input->post('field_fid', true);
+					$class = $this->input->post('field_class', true);
+					$rows = $this->input->post('field_rows', true);
+					$order = $this->input->post('field_order', true);
+					$display = $this->input->post('field_display', true);
+					$select = $this->input->post('select_values', true);
 			
 					$insert_array = array(
 						'field_name' => $name,
@@ -5851,7 +5851,7 @@ class Site_base extends Controller {
 					break;
 					
 				case 'delete':
-					$id = (is_numeric($this->input->post('id', TRUE))) ? $this->input->post('id', TRUE) : 0;
+					$id = (is_numeric($this->input->post('id', true))) ? $this->input->post('id', true) : 0;
 							
 					/* update the database */
 					$delete = $this->tour->delete_tour_field($id);
@@ -5898,15 +5898,15 @@ class Site_base extends Controller {
 					break;
 					
 				case 'edit':
-					$type = $this->input->post('field_type', TRUE);
-					$label = $this->input->post('field_label_page', TRUE);
-					$name = $this->input->post('field_name', TRUE);
-					$fid = $this->input->post('field_fid', TRUE);
-					$class = $this->input->post('field_class', TRUE);
-					$rows = $this->input->post('field_rows', TRUE);
-					$order = $this->input->post('field_order', TRUE);
-					$display = $this->input->post('field_display', TRUE);
-					$id = $this->input->post('field_id', TRUE);
+					$type = $this->input->post('field_type', true);
+					$label = $this->input->post('field_label_page', true);
+					$name = $this->input->post('field_name', true);
+					$fid = $this->input->post('field_fid', true);
+					$class = $this->input->post('field_class', true);
+					$rows = $this->input->post('field_rows', true);
+					$order = $this->input->post('field_order', true);
+					$display = $this->input->post('field_display', true);
+					$id = $this->input->post('field_id', true);
 					
 					$update_array = array(
 						'field_name' => $name,
@@ -5953,10 +5953,10 @@ class Site_base extends Controller {
 					break;
 					
 				case 'editval':
-					$value = $this->input->post('value_field_value', TRUE);
-					$content = $this->input->post('value_content', TRUE);
-					$field = $this->input->post('value_field', TRUE);
-					$id = $this->input->post('id', TRUE);
+					$value = $this->input->post('value_field_value', true);
+					$content = $this->input->post('value_content', true);
+					$field = $this->input->post('value_field', true);
+					$id = $this->input->post('id', true);
 
 					$update_array = array(
 						'value_field_value' => $value,
@@ -5999,7 +5999,7 @@ class Site_base extends Controller {
 			}
 		}
 		
-		$id = $this->uri->segment(4, 0, TRUE);
+		$id = $this->uri->segment(4, 0, true);
 		
 		if ($id == 0)
 		{
@@ -6045,9 +6045,9 @@ class Site_base extends Controller {
 							break;
 									
 						case 'select':
-							$value = FALSE;
-							$values = FALSE;
-							$input = FALSE;
+							$value = false;
+							$values = false;
+							$input = false;
 									
 							$values = $this->tour->get_tour_values($field->field_id);
 									
@@ -6128,12 +6128,12 @@ class Site_base extends Controller {
 						'name' => 'field_display',
 						'id' => 'field_display_y',
 						'value' => 'y',
-						'checked' => ($row->field_display == 'y') ? TRUE : FALSE),
+						'checked' => ($row->field_display == 'y') ? true : false),
 					'display_n' => array(
 						'name' => 'field_display',
 						'id' => 'field_display_n',
 						'value' => 'n',
-						'checked' => ($row->field_display == 'n') ? TRUE : FALSE),
+						'checked' => ($row->field_display == 'n') ? true : false),
 					'rows' => array(
 						'name' => 'field_rows',
 						'id' => 'field_rows',
@@ -6245,9 +6245,9 @@ class Site_base extends Controller {
 			switch ($this->uri->segment(3))
 			{
 				case 'add':
-					$label = $this->input->post('setting_label', TRUE);
-					$key = $this->input->post('setting_key', TRUE);
-					$value = $this->input->post('setting_value', TRUE);
+					$label = $this->input->post('setting_label', true);
+					$key = $this->input->post('setting_key', true);
+					$value = $this->input->post('setting_value', true);
 					
 					if (empty($label) || empty($key))
 					{
@@ -6268,7 +6268,7 @@ class Site_base extends Controller {
 					{
 						$check = $this->settings->get_setting($key);
 						
-						if ($check === FALSE)
+						if ($check === false)
 						{
 							$insert_array = array(
 								'setting_key' => $key,
@@ -6322,7 +6322,7 @@ class Site_base extends Controller {
 					break;
 					
 				case 'delete':
-					$id = $this->input->post('id', TRUE);
+					$id = $this->input->post('id', true);
 					
 					$get = $this->settings->get_setting_details($id, 'setting_id');
 					
@@ -6373,10 +6373,10 @@ class Site_base extends Controller {
 					break;
 					
 				case 'edit':
-					$label = $this->input->post('setting_label', TRUE);
-					$key = $this->input->post('setting_key', TRUE);
-					$content = $this->input->post('setting_value', TRUE);
-					$id = $this->input->post('id', TRUE);
+					$label = $this->input->post('setting_label', true);
+					$key = $this->input->post('setting_key', true);
+					$content = $this->input->post('setting_value', true);
+					$id = $this->input->post('id', true);
 					
 					if (empty($label) || empty($key) || empty($content))
 					{

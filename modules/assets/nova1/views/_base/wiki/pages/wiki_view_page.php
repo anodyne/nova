@@ -24,7 +24,7 @@
 			<?php echo ucfirst($label['created']) .' '. $label['by'] .' '. $page['created'] .' '. $label['on'] .' '. $page['created_date'];?>
 		</p>
 		
-		<?php echo text_output($page['content'], 'p', '', FALSE);?>
+		<?php echo text_output($page['content'], 'p', '', false);?>
 		
 		<br />
 		<div class="info-full fontSmall">
@@ -41,7 +41,7 @@
 				<?php foreach ($history as $h): ?>
 					<tr>
 						<td>
-							<?php if ($h['old_id'] === FALSE): ?>
+							<?php if ($h['old_id'] === false): ?>
 								<?php echo $h['created'] .' '. $label['created'] .' '. anchor('wiki/view/draft/'. $h['draft'], text_output($h['title'], 'strong')) .' '. $label['on'] .' '. $h['created_date'];?>
 							<?php else: ?>
 								<?php echo $h['created'] .' '. $label['reverted'] .' '. $label['to'] .' '. anchor('wiki/view/draft/'. $h['old_id'], text_output($h['title'], 'strong')) .' '. $label['on'] .' '. $h['created_date'];?>

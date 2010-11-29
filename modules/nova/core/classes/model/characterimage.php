@@ -43,9 +43,9 @@ class Model_Characterimage extends Jelly_Model {
 			)),
 			'created_at' => Jelly::field('timestamp', array(
 				'column' => 'created_at',
-				'auto_now_create' => TRUE,
-				'auto_now_update' => FALSE,
-				'null' => TRUE,
+				'auto_now_create' => true,
+				'auto_now_update' => false,
+				'null' => true,
 				'default' => date::now()
 			)),
 		));

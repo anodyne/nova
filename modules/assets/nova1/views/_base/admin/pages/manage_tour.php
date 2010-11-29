@@ -2,7 +2,7 @@
 
 <?php echo text_output($text);?>
 
-<?php if ($this->auth->check_access('site/tourform', FALSE) !== FALSE): ?>
+<?php if ($this->auth->check_access('site/tourform', false) !== false): ?>
 	<p class="bold">
 		<?php echo anchor('site/tourform', img($images['form']) .' '. $label['form'], array('class' => 'image'));?>
 	</p>

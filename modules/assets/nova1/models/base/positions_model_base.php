@@ -73,7 +73,7 @@ class Positions_model_base extends Model {
 				return $array;
 			}
 			
-			return FALSE;
+			return false;
 		}
 	}
 	
@@ -94,9 +94,9 @@ class Positions_model_base extends Model {
 	{
 		$query = $this->db->get_where('positions_'. GENRE, array('pos_id' => $id));
 		
-		$row = ($query->num_rows() > 0) ? $query->row() : FALSE;
+		$row = ($query->num_rows() > 0) ? $query->row() : false;
 		
-		if (!empty($return) && $row !== FALSE)
+		if (!empty($return) && $row !== false)
 		{
 			if (!is_array($return))
 			{
@@ -164,7 +164,7 @@ class Positions_model_base extends Model {
 			return $query;
 		}
 		
-		return FALSE;
+		return false;
 	}
 	
 	function update_position($position = '', $data = '')

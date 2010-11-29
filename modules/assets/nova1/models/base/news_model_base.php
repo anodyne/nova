@@ -41,7 +41,7 @@ class News_model_base extends Model {
 			$this->db->where('news_cat', $c);
 		}
 		
-		if ($session === FALSE)
+		if ($session === false)
 		{
 			$this->db->where('news_private', 'n');
 		}
@@ -77,7 +77,7 @@ class News_model_base extends Model {
 					break;
 			}
 			
-			if ($session === FALSE)
+			if ($session === false)
 			{
 				$this->db->where('news_private', 'n');
 			}
@@ -93,7 +93,7 @@ class News_model_base extends Model {
 			}
 		}
 		
-		return FALSE;
+		return false;
 	}
 	
 	function get_news_categories($display = 'y')
@@ -117,9 +117,9 @@ class News_model_base extends Model {
 		
 		$query = $this->db->get();
 		
-		$row = ($query->num_rows() > 0) ? $query->row() : FALSE;
+		$row = ($query->num_rows() > 0) ? $query->row() : false;
 		
-		if (!empty($return) && $row !== FALSE)
+		if (!empty($return) && $row !== false)
 		{
 			if (!is_array($return))
 			{
@@ -145,9 +145,9 @@ class News_model_base extends Model {
 	{
 		$query = $this->db->get_where('news_comments', array('ncomment_id' => $id));
 		
-		$row = ($query->num_rows() > 0) ? $query->row() : FALSE;
+		$row = ($query->num_rows() > 0) ? $query->row() : false;
 		
-		if (!empty($return) && $row !== FALSE)
+		if (!empty($return) && $row !== false)
 		{
 			if (!is_array($return))
 			{
@@ -200,9 +200,9 @@ class News_model_base extends Model {
 		
 		$query = $this->db->get();
 		
-		$row = ($query->num_rows() > 0) ? $query->row() : FALSE;
+		$row = ($query->num_rows() > 0) ? $query->row() : false;
 		
-		if (!empty($return) && $row !== FALSE)
+		if (!empty($return) && $row !== false)
 		{
 			if (!is_array($return))
 			{
@@ -230,7 +230,7 @@ class News_model_base extends Model {
 		$this->db->join('news_categories', 'news_categories.newscat_id = news.news_cat');
 		$this->db->where('news_status', 'activated');
 		
-		if ($session === FALSE)
+		if ($session === false)
 		{
 			$this->db->where('news_private', 'n');
 		}

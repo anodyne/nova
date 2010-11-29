@@ -1,4 +1,4 @@
-<?php if ($edit === TRUE): ?>
+<?php if ($edit === true): ?>
 	<span class="float-right fontSmall">
 		<?php echo html::anchor('site/messages', '[ '.ucfirst(__("edit")).' ]', array('class' => 'edit'));?>
 	</span>

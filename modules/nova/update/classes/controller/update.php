@@ -50,7 +50,7 @@ class Controller_Update extends Controller_Template {
 						$sysadmin = Auth::is_type('sysadmin', $session->get('userid'));
 						
 						// if they aren't, send them away
-						if ($sysadmin === FALSE)
+						if ($sysadmin === false)
 						{
 							$this->request->redirect('login/error/1');
 						}
@@ -72,11 +72,11 @@ class Controller_Update extends Controller_Template {
 		
 		// set the variables in the template
 		$this->template->title 				= 'Nova :: ';
-		$this->template->javascript			= FALSE;
+		$this->template->javascript			= false;
 		$this->template->layout				= View::factory('update/template_update');
-		$this->template->layout->label		= FALSE;
-		$this->template->layout->flash		= FALSE;
-		$this->template->layout->controls	= FALSE;
+		$this->template->layout->label		= false;
+		$this->template->layout->flash		= false;
+		$this->template->layout->controls	= false;
 	}
 	
 	public function action_index()
@@ -115,7 +115,7 @@ class Controller_Update extends Controller_Template {
 		$data = $this->template->layout->content;
 		
 		// set the content
-		$data->message = (property_exists($update, 'notes')) ? $update->notes : FALSE;
+		$data->message = (property_exists($update, 'notes')) ? $update->notes : false;
 		
 		if (property_exists($update, 'notes'))
 		{
@@ -126,7 +126,7 @@ class Controller_Update extends Controller_Template {
 			$version = $ver->version_major.$ver->version_minor.$ver->version_update;
 			
 			// get the directory listing
-			$dir = Utility::directory_map(MODFOLDER.'/nova/update/assets', TRUE);
+			$dir = Utility::directory_map(MODFOLDER.'/nova/update/assets', true);
 			
 			if (is_array($dir))
 			{
@@ -137,7 +137,7 @@ class Controller_Update extends Controller_Template {
 				foreach ($dir as $key => $value)
 				{
 					// make sure the index.html and versions files aren't in the array
-					if ($value == 'index.html' OR $value == 'versions.php' OR $value == 'version.yaml')
+					if ($value == 'index.html' or $value == 'versions.php' or $value == 'version.yaml')
 					{
 						unset($dir[$key]);
 					}
@@ -180,7 +180,7 @@ class Controller_Update extends Controller_Template {
 			foreach ($dir as $d)
 			{
 				// reset the content variable
-				$content = NULL;
+				$content = null;
 				
 				// load the YAML data into an array
 				$content = Markdown(file_get_contents(MODPATH.'nova/update/assets/'.$d.'/changes.md'));
@@ -233,12 +233,12 @@ class Controller_Update extends Controller_Template {
 		$tables = $db->list_tables($db->table_prefix().'%');
 		
 		// is installation allowed?
-		$allowed = TRUE;
+		$allowed = true;
 		
 		if (Kohana::config('nova.genre') == '')
 		{
 			// installation not allowed
-			$allowed = FALSE;
+			$allowed = false;
 			
 			// show the flash message
 			$this->template->layout->flash = View::factory('update/pages/flash');
@@ -265,7 +265,7 @@ class Controller_Update extends Controller_Template {
 				// create the javascript view
 				$this->template->javascript = View::factory('update/js/update_nova1_step0_js');
 				
-				if ($allowed === TRUE)
+				if ($allowed === true)
 				{
 					// build the next step button
 					$next = array(
@@ -298,7 +298,7 @@ class Controller_Update extends Controller_Template {
 					foreach ($data as $key => $value)
 					{
 						DBForge::add_field($$value['fields']);
-						DBForge::add_key($value['id'], TRUE);
+						DBForge::add_key($value['id'], true);
 						
 						if (isset($value['index']))
 						{
@@ -308,14 +308,14 @@ class Controller_Update extends Controller_Template {
 							}
 						}
 						
-						DBForge::create_table($key, TRUE);
+						DBForge::create_table($key, true);
 					}
 					
 					// pause the script for a second
 					sleep(1);
 					
 					// wipe out the data from inserting the tables
-					$data = NULL;
+					$data = null;
 					
 					// pull in the basic data
 					include_once MODPATH.'nova/install/assets/data'.EXT;
@@ -331,7 +331,7 @@ class Controller_Update extends Controller_Template {
 								->values(array_values($v))
 								->compile($db);
 								
-							$insert[$value] = $db->query(Database::INSERT, $sql, TRUE);
+							$insert[$value] = $db->query(Database::INSERT, $sql, true);
 						}
 					}
 					
@@ -339,7 +339,7 @@ class Controller_Update extends Controller_Template {
 					sleep(1);
 					
 					// wipe out the data from insert the data
-					$data = NULL;
+					$data = null;
 					
 					// pull in the genre data
 					include_once MODPATH.'nova/install/assets/genres/'.strtolower(Kohana::config('nova.genre')).EXT;
@@ -355,7 +355,7 @@ class Controller_Update extends Controller_Template {
 								->values(array_values($v))
 								->compile($db);
 								
-							$genre[$key_d] = $db->query(Database::INSERT, $sql, TRUE);
+							$genre[$key_d] = $db->query(Database::INSERT, $sql, true);
 						}
 					}
 					
@@ -365,7 +365,7 @@ class Controller_Update extends Controller_Template {
 						sleep(1);
 						
 						// wipe out the data from insert the data
-						$data = NULL;
+						$data = null;
 						
 						// pull in the development test data
 						include_once MODPATH.'nova/install/assets/dev'.EXT;
@@ -381,7 +381,7 @@ class Controller_Update extends Controller_Template {
 									->values(array_values($v))
 									->compile($db);
 									
-								$insert[$value] = $db->query(Database::INSERT, $sql, TRUE);
+								$insert[$value] = $db->query(Database::INSERT, $sql, true);
 							}
 						}
 					}
@@ -403,7 +403,7 @@ class Controller_Update extends Controller_Template {
 				
 				// set the loading image
 				$data->loading = array(
-					'src' => Location::image('loading-circle-large.gif', NULL, 'upgrade', 'image'),
+					'src' => Location::image('loading-circle-large.gif', null, 'upgrade', 'image'),
 					'attr' => array(
 						'class' => 'image'),
 				);
@@ -424,7 +424,7 @@ class Controller_Update extends Controller_Template {
 				
 				// build the next step control
 				$this->template->layout->controls = (count($tables) < Kohana::config('info.app_db_tables'))
-					? FALSE 
+					? false 
 					: form::button('next', __('Update'), $next).form::close();
 			break;
 				
@@ -447,7 +447,7 @@ class Controller_Update extends Controller_Template {
 				
 				// set the loading image
 				$data->loading = array(
-					'src' => Location::image('loading-circle-large.gif', NULL, 'update', 'image'),
+					'src' => Location::image('loading-circle-large.gif', null, 'update', 'image'),
 					'attr' => array(
 						'class' => 'image'),
 				);
@@ -519,7 +519,7 @@ class Controller_Update extends Controller_Template {
 					$version = $ver->version_major.$ver->version_minor.$ver->version_update;
 					
 					// get the directory listing
-					$dir = Utility::directory_map(MODFOLDER.'/nova/update/assets', TRUE);
+					$dir = Utility::directory_map(MODFOLDER.'/nova/update/assets', true);
 					
 					if (is_array($dir))
 					{
@@ -527,7 +527,7 @@ class Controller_Update extends Controller_Template {
 						foreach ($dir as $key => $value)
 						{
 							// make sure the index.html and versions files aren't in the array
-							if ($value == 'index.html' OR $value == 'versions.php' OR $value == 'version.yaml')
+							if ($value == 'index.html' or $value == 'versions.php' or $value == 'version.yaml')
 							{
 								unset($dir[$key]);
 							}
@@ -670,7 +670,7 @@ class Controller_Update extends Controller_Template {
 			$update = new stdClass;
 			$flash = new stdClass;
 			
-			if (version_compare($version->files->full, $content['version'], '<') OR version_compare($version->db->full, $content['version'], '<'))
+			if (version_compare($version->files->full, $content['version'], '<') or version_compare($version->db->full, $content['version'], '<'))
 			{
 				$update->version	= $content['version'];
 				$update->notes		= $content['notes'];
@@ -708,7 +708,7 @@ class Controller_Update extends Controller_Template {
 			return $retval;
 		}
 		
-		return FALSE;
+		return false;
 	}
 	
 	private function _register()

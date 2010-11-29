@@ -27,7 +27,7 @@
 <?php echo form::open('search/results');?>
 	<div class="search-field">
 		<span class="search-field-options options-posts"></span>
-		<?php echo form::input('search', NULL, array('class' => 'search-field-input', 'placeholder' => __("Search Mission Posts")));?>
+		<?php echo form::input('search', null, array('class' => 'search-field-input', 'placeholder' => __("Search Mission Posts")));?>
 	</div>
 	
 	<?php echo form::hidden('type', 'posts');?>

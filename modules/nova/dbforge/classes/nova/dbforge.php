@@ -51,7 +51,7 @@ abstract class Nova_DBForge {
 	/**
 	 * @var		boolean	should identifiers be protected
 	 */
-	protected static $_protect_identifiers	= TRUE;
+	protected static $_protect_identifiers	= true;
 	
 	/**
 	 * @var		array 	identifiers that should NOT be escaped
@@ -91,7 +91,7 @@ abstract class Nova_DBForge {
 	{
 		$sql = "CREATE DATABASE ".$name;
 		
-		return self::$db->query(NULL, $sql, TRUE);
+		return self::$db->query(null, $sql, true);
 	}
 	
 	/**
@@ -110,20 +110,20 @@ abstract class Nova_DBForge {
 	{
 		$sql = "DROP DATABASE ".$name;
 		
-		return self::$db->query(NULL, $sql, TRUE);
+		return self::$db->query(null, $sql, true);
 	}
 	
 	/**
 	 * Add keys to the database
 	 *
-	 *     DBForge::add_key('table_field', TRUE);
+	 *     DBForge::add_key('table_field', true);
 	 *
 	 * @uses	DBForge::add_key
 	 * @param	mixed	the key(s) to add
 	 * @param	boolean	whether the key is a primary key or not
 	 * @return	void
 	 */
-	public static function add_key($key, $primary = FALSE)
+	public static function add_key($key, $primary = false)
 	{
 		if (is_array($key))
 		{
@@ -140,7 +140,7 @@ abstract class Nova_DBForge {
 			throw new Kohana_Exception(__("Key information is required for that operation."));
 		}
 		
-		if ($primary === TRUE)
+		if ($primary === true)
 		{
 			self::$primary_keys[] = $key;
 		}
@@ -182,14 +182,14 @@ abstract class Nova_DBForge {
 					'id' => array(
 						'type' => 'INT',
 						'constraint' => 9,
-						'auto_increment' => TRUE
+						'auto_increment' => true
 					)
 				));
-				self::add_key('id', TRUE);
+				self::add_key('id', true);
 			}
 			else
 			{
-				if (strpos($field, ' ') === FALSE)
+				if (strpos($field, ' ') === false)
 				{
 					throw new Kohana_Exception(__("Field information is required for that operation."));
 				}
@@ -207,7 +207,7 @@ abstract class Nova_DBForge {
 	/**
 	 * Create a table in the database.
 	 *
-	 *     DBForge::create_table('foo', TRUE);
+	 *     DBForge::create_table('foo', true);
 	 *
 	 * @uses	Database::query
 	 * @uses	DBForge::_escape_identifiers
@@ -217,7 +217,7 @@ abstract class Nova_DBForge {
 	 * @param	boolean	IF NOT EXISTS statement
 	 * @return	object	result object
 	 */
-	public static function create_table($table, $if_not_exists = FALSE)
+	public static function create_table($table, $if_not_exists = false)
 	{	
 		if ($table == '')
 		{
@@ -231,7 +231,7 @@ abstract class Nova_DBForge {
 		
 		$sql = 'CREATE TABLE ';
 		
-		if ($if_not_exists === TRUE)
+		if ($if_not_exists === true)
 		{
 			$sql.= 'IF NOT EXISTS ';
 		}
@@ -247,7 +247,7 @@ abstract class Nova_DBForge {
 			$sql.= ",\n\tPRIMARY KEY ".$key_name." (" . implode(', ', self::$primary_keys) . ")";
 		}
 
-		if (is_array(self::$keys) AND count(self::$keys) > 0)
+		if (is_array(self::$keys) and count(self::$keys) > 0)
 		{
 			foreach (self::$keys as $key)
 			{
@@ -270,7 +270,7 @@ abstract class Nova_DBForge {
 		
 		self::_reset();
 		
-		return self::$db->query(NULL, $sql, TRUE);
+		return self::$db->query(null, $sql, true);
 	}
 	
 	/**
@@ -286,7 +286,7 @@ abstract class Nova_DBForge {
 	{
 		$sql = "DROP TABLE IF EXISTS ".self::_escape_identifiers(self::$dbconfig['table_prefix'].$table);
 		
-		return self::$db->query(NULL, $sql, TRUE);
+		return self::$db->query(null, $sql, true);
 	}
 	
 	/**
@@ -302,14 +302,14 @@ abstract class Nova_DBForge {
 	 */
 	public static function rename_table($table, $newtable)
 	{
-		if ($table == '' OR $newtable == '')
+		if ($table == '' or $newtable == '')
 		{
 			throw new Kohana_Exception(__("A table name is required for that operation."));
 		}
 		
 		$sql = 'ALTER TABLE '.self::_protect_identifiers(self::$dbconfig['table_prefix'].$table)." RENAME TO ".self::_protect_identifiers(self::$dbconfig['table_prefix'].$newtable);
 		
-		return self::$db->query(NULL, $sql, TRUE);
+		return self::$db->query(null, $sql, true);
 	}
 	
 	/**
@@ -354,7 +354,7 @@ abstract class Nova_DBForge {
 
 			self::_reset();
 			
-			self::$db->query(NULL, $sql, TRUE);
+			self::$db->query(null, $sql, true);
 		}
 	}
 	
@@ -383,7 +383,7 @@ abstract class Nova_DBForge {
 
 		$sql = self::_alter_table('DROP', self::$dbconfig['table_prefix'].$table, $column_name);
 		
-		return self::$db->query(NULL, $sql, TRUE);
+		return self::$db->query(null, $sql, true);
 	}
 	
 	/**
@@ -427,7 +427,7 @@ abstract class Nova_DBForge {
 
 			self::_reset();
 			
-			self::$db->query(NULL, $sql, TRUE);
+			self::$db->query(null, $sql, true);
 		}
 	}
 	
@@ -441,19 +441,19 @@ abstract class Nova_DBForge {
 	 * @param	boolean	whether or not to append the table prefix
 	 * @return	void
 	 */
-	public static function optimize($table, $prefix = TRUE)
+	public static function optimize($table, $prefix = true)
 	{
 		// get an instance of the database
 		$db = Database::instance();
 		
 		// attach the prefix if necessary
-		if ($prefix === TRUE)
+		if ($prefix === true)
 		{
 			$table = $db->table_prefix().$table;
 		}
 		
 		// optimize the table
-		$db->query(NULL, "OPTIMIZE TABLE `$table`", TRUE);
+		$db->query(null, "OPTIMIZE TABLE `$table`", true);
 	}
 	
 	/**
@@ -502,7 +502,7 @@ abstract class Nova_DBForge {
 
 		foreach (self::$_reserved_identifiers as $id)
 		{
-			if (strpos($item, '.'.$id) !== FALSE)
+			if (strpos($item, '.'.$id) !== false)
 			{
 				$str = self::$_escape_char. str_replace('.', self::$_escape_char.'.', $item);  
 				
@@ -511,7 +511,7 @@ abstract class Nova_DBForge {
 			}		
 		}
 		
-		if (strpos($item, '.') !== FALSE)
+		if (strpos($item, '.') !== false)
 		{
 			$str = self::$_escape_char.str_replace('.', self::$_escape_char.'.'.self::$_escape_char, $item).self::$_escape_char;			
 		}
@@ -566,7 +566,7 @@ abstract class Nova_DBForge {
 					$sql.= '('.$attributes['CONSTRAINT'].')';
 				}
 	
-				if (array_key_exists('UNSIGNED', $attributes) AND $attributes['UNSIGNED'] === TRUE)
+				if (array_key_exists('UNSIGNED', $attributes) and $attributes['UNSIGNED'] === true)
 				{
 					$sql.= ' UNSIGNED';
 				}
@@ -576,12 +576,12 @@ abstract class Nova_DBForge {
 					$sql.= ' DEFAULT \''.$attributes['DEFAULT'].'\'';
 				}
 	
-				if (array_key_exists('NULL', $attributes))
+				if (array_key_exists('null', $attributes))
 				{
-					$sql.= ($attributes['NULL'] === TRUE) ? ' NULL' : ' NOT NULL';
+					$sql.= ($attributes['null'] === true) ? ' null' : ' NOT null';
 				}
 	
-				if (array_key_exists('AUTO_INCREMENT', $attributes) AND $attributes['AUTO_INCREMENT'] === TRUE)
+				if (array_key_exists('AUTO_INCREMENT', $attributes) and $attributes['AUTO_INCREMENT'] === true)
 				{
 					$sql.= ' AUTO_INCREMENT';
 				}
@@ -607,7 +607,7 @@ abstract class Nova_DBForge {
 	 * @param	boolean
 	 * @return	mixed
 	 */
-	protected static function _protect_identifiers($item, $prefix_single = FALSE, $protect_identifiers = NULL, $field_exists = TRUE)
+	protected static function _protect_identifiers($item, $prefix_single = false, $protect_identifiers = null, $field_exists = true)
 	{
 		if ( ! is_bool($protect_identifiers))
 		{
@@ -632,7 +632,7 @@ abstract class Nova_DBForge {
 		// If the item has an alias declaration we remove it and set it aside.
 		// Basically we remove everything to the right of the first space
 		$alias = '';
-		if (strpos($item, ' ') !== FALSE)
+		if (strpos($item, ' ') !== false)
 		{
 			$alias = strstr($item, " ");
 			$item = substr($item, 0, - strlen($alias));
@@ -642,7 +642,7 @@ abstract class Nova_DBForge {
 		// If a parenthesis is found we know that we do not need to 
 		// escape the data or add a prefix.  There's probably a more graceful
 		// way to deal with this, but I'm not thinking of it -- Rick
-		if (strpos($item, '(') !== FALSE)
+		if (strpos($item, '(') !== false)
 		{
 			return $item.$alias;
 		}
@@ -650,7 +650,7 @@ abstract class Nova_DBForge {
 		// Break the string apart if it contains periods, then insert the table prefix
 		// in the correct location, assuming the period doesn't indicate that we're dealing
 		// with an alias. While we're at it, we will escape the components
-		if (strpos($item, '.') !== FALSE)
+		if (strpos($item, '.') !== false)
 		{
 			$parts	= explode('.', $item);
 			
@@ -660,7 +660,7 @@ abstract class Nova_DBForge {
 			// we have nothing more to do other than escape the item
 			if (in_array($parts[0], $this->ar_aliased_tables))
 			{
-				if ($protect_identifiers === TRUE)
+				if ($protect_identifiers === true)
 				{
 					foreach ($parts as $key => $val)
 					{
@@ -701,13 +701,13 @@ abstract class Nova_DBForge {
 				
 				// This flag is set when the supplied $item does not contain a field name.
 				// This can happen when this function is being called from a JOIN.
-				if ($field_exists == FALSE)
+				if ($field_exists == false)
 				{
 					$i++;
 				}
 
 				// Verify table prefix and replace if necessary
-				if (self::$swap_pre != '' AND strncmp($parts[$i], self::$swap_pre, strlen(self::$swap_pre)) === 0)
+				if (self::$swap_pre != '' and strncmp($parts[$i], self::$swap_pre, strlen(self::$swap_pre)) === 0)
 				{
 					$parts[$i] = preg_replace("/^".self::$swap_pre."(\S+?)/", self::$dbconfig['table_prefix']."\\1", $parts[$i]);
 				}
@@ -722,7 +722,7 @@ abstract class Nova_DBForge {
 				$item = implode('.', $parts);
 			}
 			
-			if ($protect_identifiers === TRUE)
+			if ($protect_identifiers === true)
 			{
 				$item = self::_escape_identifiers($item);
 			}
@@ -734,19 +734,19 @@ abstract class Nova_DBForge {
 		if (self::$dbconfig['table_prefix'] != '')
 		{
 			// Verify table prefix and replace if necessary
-			if (self::$swap_pre != '' AND strncmp($item, self::$swap_pre, strlen(self::$swap_pre)) === 0)
+			if (self::$swap_pre != '' and strncmp($item, self::$swap_pre, strlen(self::$swap_pre)) === 0)
 			{
 				$item = preg_replace("/^".self::$swap_pre."(\S+?)/", self::$dbconfig['table_prefix']."\\1", $item);
 			}
 
 			// Do we prefix an item with no segments?
-			if ($prefix_single == TRUE AND substr($item, 0, strlen(self::$dbconfig['table_prefix'])) != self::$dbconfig['table_prefix'])
+			if ($prefix_single == true and substr($item, 0, strlen(self::$dbconfig['table_prefix'])) != self::$dbconfig['table_prefix'])
 			{
 				$item = self::$dbconfig['table_prefix'].$item;
 			}		
 		}
 
-		if ($protect_identifiers === TRUE AND ! in_array($item, self::$_reserved_identifiers))
+		if ($protect_identifiers === true and ! in_array($item, self::$_reserved_identifiers))
 		{
 			$item = self::_escape_identifiers($item);
 		}

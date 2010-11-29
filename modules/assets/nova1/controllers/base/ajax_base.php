@@ -88,7 +88,7 @@ class Ajax_base extends Controller {
 				'name' => 'field_display',
 				'id' => 'field_display_y',
 				'value' => 'y',
-				'checked' => TRUE),
+				'checked' => true),
 			'display_n' => array(
 				'name' => 'field_display',
 				'id' => 'field_display_n',
@@ -158,9 +158,9 @@ class Ajax_base extends Controller {
 			/* load the resources */
 			$this->load->model('characters_model', 'char');
 			
-			$value = $this->input->post('value', TRUE);
-			$content = $this->input->post('content', TRUE);
-			$field = $this->input->post('field', TRUE);
+			$value = $this->input->post('value', true);
+			$content = $this->input->post('content', true);
+			$field = $this->input->post('field', true);
 			$order = 0;
 			
 			$values = $this->char->get_bio_values($field);
@@ -201,7 +201,7 @@ class Ajax_base extends Controller {
 				$flash['status'] = 'error';
 				$flash['message'] = text_output($message);
 					
-				$output = $this->load->view('_base/admin/pages/flash', $flash, TRUE);
+				$output = $this->load->view('_base/admin/pages/flash', $flash, true);
 			}
 			
 			echo $output;
@@ -298,7 +298,7 @@ class Ajax_base extends Controller {
 				'name' => 'tab_display',
 				'id' => 'tab_display_y',
 				'value' => 'y',
-				'checked' => TRUE),
+				'checked' => true),
 			'display_n' => array(
 				'name' => 'tab_display',
 				'id' => 'tab_display_n',
@@ -381,7 +381,7 @@ class Ajax_base extends Controller {
 						'name' => 'rank_default',
 						'id' => 'rank_default_n',
 						'value' => 'n',
-						'checked' => TRUE),
+						'checked' => true),
 					'submit' => array(
 						'type' => 'submit',
 						'class' => 'hud_button',
@@ -464,7 +464,7 @@ class Ajax_base extends Controller {
 						'name' => 'default',
 						'id' => 'skin_default_n',
 						'value' => 'n',
-						'checked' => TRUE),
+						'checked' => true),
 					'submit' => array(
 						'type' => 'submit',
 						'class' => 'hud_button',
@@ -543,7 +543,7 @@ class Ajax_base extends Controller {
 				$order = $last->coc_order + 1;
 			}
 			
-			$user = $this->input->post('user', TRUE);
+			$user = $this->input->post('user', true);
 			
 			$insert_array = array(
 				'coc_crew' => $user,
@@ -564,7 +564,7 @@ class Ajax_base extends Controller {
 				$flash['status'] = 'success';
 				$flash['message'] = text_output($message);
 					
-				$output = $this->load->view('_base/admin/pages/flash', $flash, TRUE);
+				$output = $this->load->view('_base/admin/pages/flash', $flash, true);
 			}
 			else
 			{
@@ -578,7 +578,7 @@ class Ajax_base extends Controller {
 				$flash['status'] = 'error';
 				$flash['message'] = text_output($message);
 					
-				$output = $this->load->view('_base/admin/pages/flash', $flash, TRUE);
+				$output = $this->load->view('_base/admin/pages/flash', $flash, true);
 			}
 			
 			echo $output;
@@ -760,7 +760,7 @@ class Ajax_base extends Controller {
 				$order = $last->deck_order + 1;
 			}
 			
-			$deck = $this->input->post('deck', TRUE);
+			$deck = $this->input->post('deck', true);
 			
 			$insert_array = array(
 				'deck_name' => $deck,
@@ -790,7 +790,7 @@ class Ajax_base extends Controller {
 				$flash['status'] = 'error';
 				$flash['message'] = text_output($message);
 					
-				$output = $this->load->view('_base/admin/pages/flash', $flash, TRUE);
+				$output = $this->load->view('_base/admin/pages/flash', $flash, true);
 			}
 			
 			echo $output;
@@ -829,7 +829,7 @@ class Ajax_base extends Controller {
 				'id' => 'display_y',
 				'class' => 'hud',
 				'value' => 'y',
-				'checked' => TRUE),
+				'checked' => true),
 			'display_n' => array(
 				'name' => 'dept_display',
 				'id' => 'display_n',
@@ -923,7 +923,7 @@ class Ajax_base extends Controller {
 				'name' => 'field_display',
 				'id' => 'field_display_y',
 				'value' => 'y',
-				'checked' => TRUE),
+				'checked' => true),
 			'display_n' => array(
 				'name' => 'field_display',
 				'id' => 'field_display_n',
@@ -993,9 +993,9 @@ class Ajax_base extends Controller {
 			/* load the resources */
 			$this->load->model('docking_model', 'docking');
 			
-			$value = $this->input->post('value', TRUE);
-			$content = $this->input->post('content', TRUE);
-			$field = $this->input->post('field', TRUE);
+			$value = $this->input->post('value', true);
+			$content = $this->input->post('content', true);
+			$field = $this->input->post('field', true);
 			
 			$values = $this->docking->get_docking_values($field);
 			
@@ -1034,7 +1034,7 @@ class Ajax_base extends Controller {
 				$flash['status'] = 'error';
 				$flash['message'] = text_output($message);
 					
-				$output = $this->load->view('_base/admin/pages/flash', $flash, TRUE);
+				$output = $this->load->view('_base/admin/pages/flash', $flash, true);
 			}
 			
 			echo $output;
@@ -1171,7 +1171,7 @@ class Ajax_base extends Controller {
 		/* data being sent to the facebox */
 		$data['header'] = $head;
 		$data['text'] = lang('fbx_content_add_menu');
-		$data['tab'] = $this->uri->segment(3, 0, TRUE);
+		$data['tab'] = $this->uri->segment(3, 0, true);
 		
 		/* input parameters */
 		$data['inputs'] = array(
@@ -1194,7 +1194,7 @@ class Ajax_base extends Controller {
 				'id' => 'link_type_on',
 				'class' => 'hud',
 				'value' => 'onsite',
-				'checked' => TRUE),
+				'checked' => true),
 			'link_type_off' => array(
 				'name' => 'menu_link_type',
 				'id' => 'link_type_off',
@@ -1210,13 +1210,13 @@ class Ajax_base extends Controller {
 				'id' => 'use_access_n',
 				'class' => 'hud',
 				'value' => 'n',
-				'checked' => TRUE),
+				'checked' => true),
 			'display_y' => array(
 				'name' => 'menu_display',
 				'id' => 'display_y',
 				'class' => 'hud',
 				'value' => 'y',
-				'checked' => TRUE),
+				'checked' => true),
 			'display_n' => array(
 				'name' => 'menu_display',
 				'id' => 'display_n',
@@ -1392,7 +1392,7 @@ class Ajax_base extends Controller {
 			/* load the resources */
 			$this->load->model('missions_model', 'mis');
 			
-			$option = $this->input->post('option', TRUE);
+			$option = $this->input->post('option', true);
 			
 			if ($option == 0)
 			{
@@ -1409,8 +1409,8 @@ class Ajax_base extends Controller {
 				}
 				
 				$data = array(
-					'mission_title' => $this->input->post('title', TRUE),
-					'mission_desc' => $this->input->post('desc', TRUE),
+					'mission_title' => $this->input->post('title', true),
+					'mission_desc' => $this->input->post('desc', true),
 					'mission_start' => now(),
 					'mission_status' => 'current',
 					'mission_order' => $order
@@ -1445,7 +1445,7 @@ class Ajax_base extends Controller {
 		
 		/* data being sent to the facebox */
 		$data['header'] = $head;
-		$data['g_dept'] = $this->uri->segment(3, 1, TRUE);
+		$data['g_dept'] = $this->uri->segment(3, 1, true);
 		
 		/* input parameters */
 		$data['inputs'] = array(
@@ -1469,7 +1469,7 @@ class Ajax_base extends Controller {
 				'id' => 'display_y',
 				'class' => 'hud',
 				'value' => 'y',
-				'checked' => TRUE),
+				'checked' => true),
 			'display_n' => array(
 				'name' => 'pos_display',
 				'id' => 'display_n',
@@ -1546,7 +1546,7 @@ class Ajax_base extends Controller {
 		);
 		
 		$data['set'] = $this->uri->segment(3, 'default');
-		$data['class'] = $this->uri->segment(4, 1, TRUE);
+		$data['class'] = $this->uri->segment(4, 1, true);
 		
 		$data['ext'] = $this->ranks->get_rankcat($data['set'], 'rankcat_id', 'rankcat_extension');
 		
@@ -1578,7 +1578,7 @@ class Ajax_base extends Controller {
 				'id' => 'display_y',
 				'class' => 'hud',
 				'value' => 'y',
-				'checked' => TRUE),
+				'checked' => true),
 			'display_n' => array(
 				'name' => 'rank_display',
 				'id' => 'display_n',
@@ -1627,7 +1627,7 @@ class Ajax_base extends Controller {
 		/* data being sent to the facebox */
 		$data['header'] = $head;
 		$data['text'] = lang('fbx_content_add_role_group');
-		$data['id'] = $this->uri->segment(3, 0, TRUE);
+		$data['id'] = $this->uri->segment(3, 0, true);
 		
 		/* input parameters */
 		$data['inputs'] = array(
@@ -1833,7 +1833,7 @@ class Ajax_base extends Controller {
 				'name' => 'field_display',
 				'id' => 'field_display_y',
 				'value' => 'y',
-				'checked' => TRUE),
+				'checked' => true),
 			'display_n' => array(
 				'name' => 'field_display',
 				'id' => 'field_display_n',
@@ -1903,9 +1903,9 @@ class Ajax_base extends Controller {
 			/* load the resources */
 			$this->load->model('specs_model', 'specs');
 			
-			$value = $this->input->post('value', TRUE);
-			$content = $this->input->post('content', TRUE);
-			$field = $this->input->post('field', TRUE);
+			$value = $this->input->post('value', true);
+			$content = $this->input->post('content', true);
+			$field = $this->input->post('field', true);
 			
 			$values = $this->specs->get_spec_values($field);
 			
@@ -1944,7 +1944,7 @@ class Ajax_base extends Controller {
 				$flash['status'] = 'error';
 				$flash['message'] = text_output($message);
 					
-				$output = $this->load->view('_base/admin/pages/flash', $flash, TRUE);
+				$output = $this->load->view('_base/admin/pages/flash', $flash, true);
 			}
 			
 			echo $output;
@@ -2039,7 +2039,7 @@ class Ajax_base extends Controller {
 				'name' => 'field_display',
 				'id' => 'field_display_y',
 				'value' => 'y',
-				'checked' => TRUE),
+				'checked' => true),
 			'display_n' => array(
 				'name' => 'field_display',
 				'id' => 'field_display_n',
@@ -2099,9 +2099,9 @@ class Ajax_base extends Controller {
 			/* load the resources */
 			$this->load->model('tour_model', 'tour');
 			
-			$value = $this->input->post('value', TRUE);
-			$content = $this->input->post('content', TRUE);
-			$field = $this->input->post('field', TRUE);
+			$value = $this->input->post('value', true);
+			$content = $this->input->post('content', true);
+			$field = $this->input->post('field', true);
 			
 			$values = $this->tour->get_tour_values($field);
 			
@@ -2140,7 +2140,7 @@ class Ajax_base extends Controller {
 				$flash['status'] = 'error';
 				$flash['message'] = text_output($message);
 					
-				$output = $this->load->view('_base/admin/pages/flash', $flash, TRUE);
+				$output = $this->load->view('_base/admin/pages/flash', $flash, true);
 			}
 			
 			echo $output;
@@ -2199,8 +2199,8 @@ class Ajax_base extends Controller {
 	
 	function approve()
 	{
-		$data['type'] = $this->uri->segment(3, FALSE);
-		$data['id'] = $this->uri->segment(4, 0, TRUE);
+		$data['type'] = $this->uri->segment(3, false);
+		$data['id'] = $this->uri->segment(4, 0, true);
 		
 		/* figure out the skin */
 		$skin = $this->session->userdata('skin_admin');
@@ -2224,7 +2224,7 @@ class Ajax_base extends Controller {
 					lang('global_missionpost'),
 					$item->post_title,
 					' '. lang('labels_by') .' '.
-						$this->char->get_authors($item->post_authors, TRUE)
+						$this->char->get_authors($item->post_authors, true)
 				);
 				
 				$data['form'] = 'manage/posts/pending/0/approve';
@@ -2245,7 +2245,7 @@ class Ajax_base extends Controller {
 					lang('global_personallog'),
 					$item->log_title,
 					' '. lang('labels_by') .' '.
-						$this->char->get_character_name($item->log_author_character, TRUE)
+						$this->char->get_character_name($item->log_author_character, true)
 				);
 				
 				$data['form'] = 'manage/logs/pending/0/approve';
@@ -2266,7 +2266,7 @@ class Ajax_base extends Controller {
 					lang('global_newsitem'),
 					$item->news_title,
 					' '. lang('labels_by') .' '.
-						$this->char->get_character_name($item->news_author_character, TRUE)
+						$this->char->get_character_name($item->news_author_character, true)
 				);
 				
 				$data['form'] = 'manage/news/pending/0/approve';
@@ -2287,7 +2287,7 @@ class Ajax_base extends Controller {
 						lang('labels_on'),
 					$this->posts->get_post($item['pcomment_post'], 'post_title'),
 					' '. lang('labels_by') .' '.
-						$this->char->get_character_name($item['pcomment_author_character'], TRUE)
+						$this->char->get_character_name($item['pcomment_author_character'], true)
 				);
 				
 				$data['form'] = 'manage/comments/posts/activated/0/approve';
@@ -2308,7 +2308,7 @@ class Ajax_base extends Controller {
 						lang('labels_on'),
 					$this->logs->get_log($item['lcomment_log'], 'log_title'),
 					' '. lang('labels_by') .' '.
-						$this->char->get_character_name($item['lcomment_author_character'], TRUE)
+						$this->char->get_character_name($item['lcomment_author_character'], true)
 				);
 				
 				$data['form'] = 'manage/comments/logs/activated/0/approve';
@@ -2329,7 +2329,7 @@ class Ajax_base extends Controller {
 						lang('labels_on'),
 					$this->news->get_news_item($item['ncomment_news'], 'news_title'),
 					' '. lang('labels_by') .' '.
-						$this->char->get_character_name($item['ncomment_author_character'], TRUE)
+						$this->char->get_character_name($item['ncomment_author_character'], true)
 				);
 				
 				$data['form'] = 'manage/comments/news/activated/0/approve';
@@ -2355,7 +2355,7 @@ class Ajax_base extends Controller {
 						lang('global_wiki') .' '. lang('labels_comment') .' '. lang('labels_on'),
 						$row->draft_title,
 						' '. lang('labels_by') .' '.
-							$this->char->get_character_name($item['wcomment_author_character'], TRUE)
+							$this->char->get_character_name($item['wcomment_author_character'], true)
 					);
 				}
 				
@@ -2380,7 +2380,7 @@ class Ajax_base extends Controller {
 				}
 				else
 				{
-					$name = $this->char->get_character_name($nom->queue_receive_character, TRUE);
+					$name = $this->char->get_character_name($nom->queue_receive_character, true);
 				}
 				
 				$data['text'] = sprintf(
@@ -2548,7 +2548,7 @@ class Ajax_base extends Controller {
 		
 		/* data being sent to the facebox */
 		$data['header'] = $head;
-		$data['id'] = $this->uri->segment(3, 0, TRUE);
+		$data['id'] = $this->uri->segment(3, 0, true);
 		
 		$item = $this->awards->get_award($data['id'], 'award_name');
 		
@@ -2598,7 +2598,7 @@ class Ajax_base extends Controller {
 		
 		$field = $this->char->get_bio_field_details($data['id']);
 		
-		$item = ($field->num_rows() > 0) ? $field->row() : FALSE;
+		$item = ($field->num_rows() > 0) ? $field->row() : false;
 		
 		$data['text'] = sprintf(
 			lang('fbx_content_del_bio_field'),
@@ -2635,7 +2635,7 @@ class Ajax_base extends Controller {
 			/* load the resources */
 			$this->load->model('characters_model', 'char');
 			
-			$id = (is_numeric($this->input->post('field'))) ? $this->input->post('field', TRUE) : 0;
+			$id = (is_numeric($this->input->post('field'))) ? $this->input->post('field', true) : 0;
 			
 			$delete = $this->char->delete_bio_field_value($id);
 			
@@ -2651,7 +2651,7 @@ class Ajax_base extends Controller {
 				$flash['status'] = 'success';
 				$flash['message'] = text_output($message);
 					
-				$output = $this->load->view('_base/admin/pages/flash', $flash, TRUE);
+				$output = $this->load->view('_base/admin/pages/flash', $flash, true);
 			}
 			else
 			{
@@ -2665,7 +2665,7 @@ class Ajax_base extends Controller {
 				$flash['status'] = 'error';
 				$flash['message'] = text_output($message);
 					
-				$output = $this->load->view('_base/admin/pages/flash', $flash, TRUE);
+				$output = $this->load->view('_base/admin/pages/flash', $flash, true);
 			}
 			
 			echo $output;
@@ -2690,7 +2690,7 @@ class Ajax_base extends Controller {
 		$sec = $this->char->get_bio_section_details($data['id']);
 		$sections = $this->char->get_bio_sections();
 		
-		$item = ($sec->num_rows() > 0) ? $sec->row() : FALSE;
+		$item = ($sec->num_rows() > 0) ? $sec->row() : false;
 		
 		$data['text'] = sprintf(
 			lang('fbx_content_del_bio_sec'),
@@ -2756,7 +2756,7 @@ class Ajax_base extends Controller {
 		$tab = $this->char->get_bio_tab_details($data['id']);
 		$tabs = $this->char->get_bio_tabs();
 		
-		$item = ($tab->num_rows() > 0) ? $tab->row() : FALSE;
+		$item = ($tab->num_rows() > 0) ? $tab->row() : false;
 		
 		$data['text'] = sprintf(
 			lang('fbx_content_del_bio_tab'),
@@ -2807,7 +2807,7 @@ class Ajax_base extends Controller {
 	function del_catalogue()
 	{
 		$type = $this->uri->segment(3);
-		$data['id'] = $this->uri->segment(4, 0, TRUE);
+		$data['id'] = $this->uri->segment(4, 0, true);
 		
 		/* load the resources */
 		$this->load->model('ranks_model', 'ranks');
@@ -2960,7 +2960,7 @@ class Ajax_base extends Controller {
 		
 		/* data being sent to the facebox */
 		$data['header'] = $head;
-		$data['id'] = $this->uri->segment(3, 0, TRUE);
+		$data['id'] = $this->uri->segment(3, 0, true);
 		
 		$item = $this->char->get_character($data['id']);
 		
@@ -3012,7 +3012,7 @@ class Ajax_base extends Controller {
 			/* load the resources */
 			$this->load->model('awards_model', 'awards');
 			
-			$id = $this->input->post('award', TRUE);
+			$id = $this->input->post('award', true);
 			
 			$delete = $this->awards->delete_received_award($id);
 			
@@ -3029,7 +3029,7 @@ class Ajax_base extends Controller {
 			
 			/* set the variables */
 			$id = $this->uri->segment(3);
-			$image = $this->input->post('image', TRUE);
+			$image = $this->input->post('image', true);
 			
 			$image = str_replace('\.', '.', $image);
 			
@@ -3041,7 +3041,7 @@ class Ajax_base extends Controller {
 				
 				$key = array_search($image, $imagesArray);
 				
-				if ($key !== FALSE)
+				if ($key !== false)
 				{
 					unset($imagesArray[$key]);
 					$imageStr = implode(',', $imagesArray);
@@ -3059,7 +3059,7 @@ class Ajax_base extends Controller {
 			/* load the resources */
 			$this->load->model('characters_model', 'char');
 			
-			$id = (is_numeric($this->input->post('coc'))) ? $this->input->post('coc', TRUE) : 0;
+			$id = (is_numeric($this->input->post('coc'))) ? $this->input->post('coc', true) : 0;
 			
 			$delete = $this->char->delete_coc_entry($id);
 			
@@ -3075,7 +3075,7 @@ class Ajax_base extends Controller {
 				$flash['status'] = 'success';
 				$flash['message'] = text_output($message);
 					
-				$output = $this->load->view('_base/admin/pages/flash', $flash, TRUE);
+				$output = $this->load->view('_base/admin/pages/flash', $flash, true);
 			}
 			else
 			{
@@ -3089,7 +3089,7 @@ class Ajax_base extends Controller {
 				$flash['status'] = 'error';
 				$flash['message'] = text_output($message);
 					
-				$output = $this->load->view('_base/admin/pages/flash', $flash, TRUE);
+				$output = $this->load->view('_base/admin/pages/flash', $flash, true);
 			}
 			
 			echo $output;
@@ -3098,10 +3098,10 @@ class Ajax_base extends Controller {
 	
 	function del_comment()
 	{
-		$data['type'] = $this->uri->segment(3, FALSE);
-		$data['status'] = $this->uri->segment(4, FALSE);
-		$data['page'] = $this->uri->segment(5, 0, TRUE);
-		$data['id'] = $this->uri->segment(6, 0, TRUE);
+		$data['type'] = $this->uri->segment(3, false);
+		$data['status'] = $this->uri->segment(4, false);
+		$data['page'] = $this->uri->segment(5, 0, true);
+		$data['id'] = $this->uri->segment(6, 0, true);
 		
 		switch ($data['type'])
 		{
@@ -3149,7 +3149,7 @@ class Ajax_base extends Controller {
 				}
 				else
 				{
-					$item = FALSE;
+					$item = false;
 				}
 				
 				break;
@@ -3197,7 +3197,7 @@ class Ajax_base extends Controller {
 			/* load the resources */
 			$this->load->model('tour_model', 'tour');
 			
-			$id = (is_numeric($this->input->post('deck'))) ? $this->input->post('deck', TRUE) : 0;
+			$id = (is_numeric($this->input->post('deck'))) ? $this->input->post('deck', true) : 0;
 			
 			$delete = $this->tour->delete_deck($id);
 			
@@ -3213,7 +3213,7 @@ class Ajax_base extends Controller {
 				$flash['status'] = 'success';
 				$flash['message'] = text_output($message);
 					
-				$output = $this->load->view('_base/admin/pages/flash', $flash, TRUE);
+				$output = $this->load->view('_base/admin/pages/flash', $flash, true);
 			}
 			else
 			{
@@ -3227,7 +3227,7 @@ class Ajax_base extends Controller {
 				$flash['status'] = 'error';
 				$flash['message'] = text_output($message);
 					
-				$output = $this->load->view('_base/admin/pages/flash', $flash, TRUE);
+				$output = $this->load->view('_base/admin/pages/flash', $flash, true);
 			}
 			
 			echo $output;
@@ -3246,7 +3246,7 @@ class Ajax_base extends Controller {
 		);
 		
 		/* set the id */
-		$data['id'] = $this->uri->segment(3, 0, TRUE);
+		$data['id'] = $this->uri->segment(3, 0, true);
 		
 		/* grab the departments */
 		$depts = $this->dept->get_all_depts();
@@ -3331,7 +3331,7 @@ class Ajax_base extends Controller {
 		
 		/* data being sent to the facebox */
 		$data['header'] = $head;
-		$data['id'] = $this->uri->segment(3, 0, TRUE);
+		$data['id'] = $this->uri->segment(3, 0, true);
 		
 		$item = $this->docking->get_docked_item($data['id']);
 		
@@ -3381,7 +3381,7 @@ class Ajax_base extends Controller {
 		
 		$field = $this->docking->get_docking_field_details($data['id']);
 		
-		$item = ($field->num_rows() > 0) ? $field->row() : FALSE;
+		$item = ($field->num_rows() > 0) ? $field->row() : false;
 		
 		$data['text'] = sprintf(
 			lang('fbx_content_del_docking_field'),
@@ -3418,7 +3418,7 @@ class Ajax_base extends Controller {
 			/* load the resources */
 			$this->load->model('docking_model', 'docking');
 			
-			$id = (is_numeric($this->input->post('field'))) ? $this->input->post('field', TRUE) : 0;
+			$id = (is_numeric($this->input->post('field'))) ? $this->input->post('field', true) : 0;
 			
 			$delete = $this->docking->delete_docking_field_value($id);
 			
@@ -3434,7 +3434,7 @@ class Ajax_base extends Controller {
 				$flash['status'] = 'success';
 				$flash['message'] = text_output($message);
 					
-				$output = $this->load->view('_base/admin/pages/flash', $flash, TRUE);
+				$output = $this->load->view('_base/admin/pages/flash', $flash, true);
 			}
 			else
 			{
@@ -3448,7 +3448,7 @@ class Ajax_base extends Controller {
 				$flash['status'] = 'error';
 				$flash['message'] = text_output($message);
 					
-				$output = $this->load->view('_base/admin/pages/flash', $flash, TRUE);
+				$output = $this->load->view('_base/admin/pages/flash', $flash, true);
 			}
 			
 			echo $output;
@@ -3473,7 +3473,7 @@ class Ajax_base extends Controller {
 		$sec = $this->docking->get_docking_section_details($data['id']);
 		$sections = $this->docking->get_docking_sections();
 		
-		$item = ($sec->num_rows() > 0) ? $sec->row() : FALSE;
+		$item = ($sec->num_rows() > 0) ? $sec->row() : false;
 		
 		$data['text'] = sprintf(
 			lang('fbx_content_del_docking_sec'),
@@ -3535,8 +3535,8 @@ class Ajax_base extends Controller {
 		/* data being sent to the facebox */
 		$data['header'] = $head;
 		$data['status'] = $this->uri->segment(3, 'activated');
-		$data['page'] = $this->uri->segment(4, 0, TRUE);
-		$data['id'] = $this->uri->segment(5, 0, TRUE);
+		$data['page'] = $this->uri->segment(4, 0, true);
+		$data['id'] = $this->uri->segment(5, 0, true);
 		
 		$item = $this->logs->get_log($data['id'], 'log_title');
 		
@@ -3582,7 +3582,7 @@ class Ajax_base extends Controller {
 		
 		/* data being sent to the facebox */
 		$data['header'] = $head;
-		$data['id'] = $this->uri->segment(3, 0, TRUE);
+		$data['id'] = $this->uri->segment(3, 0, true);
 		
 		$cat = $this->menu_model->get_menu_category($data['id'], 'menucat_id');
 		
@@ -3627,12 +3627,12 @@ class Ajax_base extends Controller {
 		
 		/* data being sent to the facebox */
 		$data['header'] = $head;
-		$data['id'] = $this->uri->segment(3, 0, TRUE);
-		$data['tab'] = $this->uri->segment(4, 0, TRUE);
+		$data['id'] = $this->uri->segment(3, 0, true);
+		$data['tab'] = $this->uri->segment(4, 0, true);
 		
 		$menu = $this->menu_model->get_menu_item($data['id']);
 		
-		$item = ($menu->num_rows() > 0) ? $menu->row() : FALSE;
+		$item = ($menu->num_rows() > 0) ? $menu->row() : false;
 		
 		$data['text'] = sprintf(
 			lang('fbx_content_del_menu'),
@@ -3675,7 +3675,7 @@ class Ajax_base extends Controller {
 		
 		/* data being sent to the facebox */
 		$data['header'] = $head;
-		$data['id'] = $this->uri->segment(3, 0, TRUE);
+		$data['id'] = $this->uri->segment(3, 0, true);
 		
 		$item = $this->mis->get_mission($data['id'], array('mission_title', 'mission_status'));
 		
@@ -3719,7 +3719,7 @@ class Ajax_base extends Controller {
 			
 			/* set the variables */
 			$id = $this->uri->segment(3);
-			$image = $this->input->post('image', TRUE);
+			$image = $this->input->post('image', true);
 			
 			$image = str_replace('\.', '.', $image);
 			
@@ -3731,7 +3731,7 @@ class Ajax_base extends Controller {
 				
 				$key = array_search($image, $imagesArray);
 				
-				if ($key !== FALSE)
+				if ($key !== false)
 				{
 					unset($imagesArray[$key]);
 					$imageStr = implode(',', $imagesArray);
@@ -3756,8 +3756,8 @@ class Ajax_base extends Controller {
 		/* data being sent to the facebox */
 		$data['header'] = $head;
 		$data['status'] = $this->uri->segment(3, 'activated');
-		$data['page'] = $this->uri->segment(4, 0, TRUE);
-		$data['id'] = $this->uri->segment(5, 0, TRUE);
+		$data['page'] = $this->uri->segment(4, 0, true);
+		$data['id'] = $this->uri->segment(5, 0, true);
 		
 		$item = $this->news->get_news_item($data['id'], 'news_title');
 		
@@ -3804,7 +3804,7 @@ class Ajax_base extends Controller {
 		
 		/* data being sent to the facebox */
 		$data['header'] = $head;
-		$data['id'] = $this->uri->segment(3, 0, TRUE);
+		$data['id'] = $this->uri->segment(3, 0, true);
 		
 		$item = $this->char->get_character($data['id']);
 		
@@ -3860,8 +3860,8 @@ class Ajax_base extends Controller {
 		/* data being sent to the facebox */
 		$data['header'] = $head;
 		$data['status'] = $this->uri->segment(3, 'activated');
-		$data['page'] = $this->uri->segment(4, 0, TRUE);
-		$data['id'] = $this->uri->segment(5, 0, TRUE);
+		$data['page'] = $this->uri->segment(4, 0, true);
+		$data['id'] = $this->uri->segment(5, 0, true);
 		$data['refer'] = $this->uri->segment(6, 'posts');
 		
 		$item = $this->posts->get_post($data['id'], 'post_title');
@@ -3908,7 +3908,7 @@ class Ajax_base extends Controller {
 		
 		/* data being sent to the facebox */
 		$data['header'] = $head;
-		$data['id'] = $this->uri->segment(3, 0, TRUE);
+		$data['id'] = $this->uri->segment(3, 0, true);
 		
 		$item = $this->access->get_role($data['id']);
 		$roles = $this->access->get_roles();
@@ -3969,7 +3969,7 @@ class Ajax_base extends Controller {
 		
 		/* data being sent to the facebox */
 		$data['header'] = $head;
-		$data['id'] = $this->uri->segment(3, 0, TRUE);
+		$data['id'] = $this->uri->segment(3, 0, true);
 		$data['text'] = sprintf(
 			lang('fbx_content_del_role_group'),
 			$this->access->get_group($data['id'], 'group_name')
@@ -4111,7 +4111,7 @@ class Ajax_base extends Controller {
 		
 		$field = $this->specs->get_spec_field_details($data['id']);
 		
-		$item = ($field->num_rows() > 0) ? $field->row() : FALSE;
+		$item = ($field->num_rows() > 0) ? $field->row() : false;
 		
 		$data['text'] = sprintf(
 			lang('fbx_content_del_specs_field'),
@@ -4148,7 +4148,7 @@ class Ajax_base extends Controller {
 			/* load the resources */
 			$this->load->model('specs_model', 'specs');
 			
-			$id = (is_numeric($this->input->post('field'))) ? $this->input->post('field', TRUE) : 0;
+			$id = (is_numeric($this->input->post('field'))) ? $this->input->post('field', true) : 0;
 			
 			$delete = $this->specs->delete_spec_field_value($id);
 			
@@ -4164,7 +4164,7 @@ class Ajax_base extends Controller {
 				$flash['status'] = 'success';
 				$flash['message'] = text_output($message);
 					
-				$output = $this->load->view('_base/admin/pages/flash', $flash, TRUE);
+				$output = $this->load->view('_base/admin/pages/flash', $flash, true);
 			}
 			else
 			{
@@ -4178,7 +4178,7 @@ class Ajax_base extends Controller {
 				$flash['status'] = 'error';
 				$flash['message'] = text_output($message);
 					
-				$output = $this->load->view('_base/admin/pages/flash', $flash, TRUE);
+				$output = $this->load->view('_base/admin/pages/flash', $flash, true);
 			}
 			
 			echo $output;
@@ -4203,7 +4203,7 @@ class Ajax_base extends Controller {
 		$sec = $this->specs->get_spec_section_details($data['id']);
 		$sections = $this->specs->get_spec_sections();
 		
-		$item = ($sec->num_rows() > 0) ? $sec->row() : FALSE;
+		$item = ($sec->num_rows() > 0) ? $sec->row() : false;
 		
 		$data['text'] = sprintf(
 			lang('fbx_content_del_specs_sec'),
@@ -4268,7 +4268,7 @@ class Ajax_base extends Controller {
 		
 		$field = $this->tour->get_tour_field_details($data['id']);
 		
-		$item = ($field->num_rows() > 0) ? $field->row() : FALSE;
+		$item = ($field->num_rows() > 0) ? $field->row() : false;
 		
 		$data['text'] = sprintf(
 			lang('fbx_content_del_tour_field'),
@@ -4305,7 +4305,7 @@ class Ajax_base extends Controller {
 			/* load the resources */
 			$this->load->model('tour_model', 'tour');
 			
-			$id = (is_numeric($this->input->post('field'))) ? $this->input->post('field', TRUE) : 0;
+			$id = (is_numeric($this->input->post('field'))) ? $this->input->post('field', true) : 0;
 			
 			$delete = $this->tour->delete_tour_value($id);
 			
@@ -4321,7 +4321,7 @@ class Ajax_base extends Controller {
 				$flash['status'] = 'success';
 				$flash['message'] = text_output($message);
 					
-				$output = $this->load->view('_base/admin/pages/flash', $flash, TRUE);
+				$output = $this->load->view('_base/admin/pages/flash', $flash, true);
 			}
 			else
 			{
@@ -4335,7 +4335,7 @@ class Ajax_base extends Controller {
 				$flash['status'] = 'error';
 				$flash['message'] = text_output($message);
 					
-				$output = $this->load->view('_base/admin/pages/flash', $flash, TRUE);
+				$output = $this->load->view('_base/admin/pages/flash', $flash, true);
 			}
 			
 			echo $output;
@@ -4351,7 +4351,7 @@ class Ajax_base extends Controller {
 			
 			/* set the variables */
 			$id = $this->uri->segment(3);
-			$image = $this->input->post('image', TRUE);
+			$image = $this->input->post('image', true);
 			
 			$image = str_replace('\.', '.', $image);
 			
@@ -4369,7 +4369,7 @@ class Ajax_base extends Controller {
 					
 					$key = array_search($image, $imagesArray);
 					
-					if ($key !== FALSE)
+					if ($key !== false)
 					{
 						unset($imagesArray[$key]);
 						$imageStr = implode(',', $imagesArray);
@@ -4394,11 +4394,11 @@ class Ajax_base extends Controller {
 		
 		/* data being sent to the facebox */
 		$data['header'] = $head;
-		$data['id'] = $this->uri->segment(3, 0, TRUE);
+		$data['id'] = $this->uri->segment(3, 0, true);
 		
 		$field = $this->tour->get_tour_item($data['id']);
 		
-		$item = ($field->num_rows() > 0) ? $field->row() : FALSE;
+		$item = ($field->num_rows() > 0) ? $field->row() : false;
 		
 		$data['text'] = sprintf(
 			lang('fbx_content_del_entry'),
@@ -4442,7 +4442,7 @@ class Ajax_base extends Controller {
 		
 		/* data being sent to the facebox */
 		$data['header'] = $head;
-		$data['id'] = $this->uri->segment(3, 0, TRUE);
+		$data['id'] = $this->uri->segment(3, 0, true);
 		
 		$item = $this->user->get_user($data['id']);
 		
@@ -4708,7 +4708,7 @@ class Ajax_base extends Controller {
 			}
 		}
 		
-		$item = ($value->num_rows() > 0) ? $value->row() : FALSE;
+		$item = ($value->num_rows() > 0) ? $value->row() : false;
 		
 		/* input parameters */
 		$data['inputs'] = array(
@@ -4769,7 +4769,7 @@ class Ajax_base extends Controller {
 		$tabs = $this->char->get_bio_tabs();
 		$sec = $this->char->get_bio_section_details($data['id']);
 		
-		$item = ($sec->num_rows() > 0) ? $sec->row() : FALSE;
+		$item = ($sec->num_rows() > 0) ? $sec->row() : false;
 		
 		$data['values']['tabs'][0] = ucwords(lang('labels_please') .' '. lang('actions_choose')
 			.' '. lang('order_one'));
@@ -4838,7 +4838,7 @@ class Ajax_base extends Controller {
 		
 		$tab = $this->char->get_bio_tab_details($data['id']);
 		
-		$item = ($tab->num_rows() > 0) ? $tab->row() : FALSE;
+		$item = ($tab->num_rows() > 0) ? $tab->row() : false;
 		
 		/* input parameters */
 		$data['inputs'] = array(
@@ -4858,12 +4858,12 @@ class Ajax_base extends Controller {
 				'name' => 'tab_display',
 				'id' => 'tab_display_y',
 				'value' => 'y',
-				'checked' => ($item->tab_display == 'y') ? TRUE : FALSE),
+				'checked' => ($item->tab_display == 'y') ? true : false),
 			'display_n' => array(
 				'name' => 'tab_display',
 				'id' => 'tab_display_n',
 				'value' => 'n',
-				'checked' => ($item->tab_display == 'n') ? TRUE : FALSE),
+				'checked' => ($item->tab_display == 'n') ? true : false),
 			'submit' => array(
 				'type' => 'submit',
 				'class' => 'hud_button',
@@ -4897,7 +4897,7 @@ class Ajax_base extends Controller {
 	function edit_catalogue()
 	{
 		$type = $this->uri->segment(3);
-		$data['id'] = $this->uri->segment(4, 0, TRUE);
+		$data['id'] = $this->uri->segment(4, 0, true);
 		
 		/* load the resources */
 		$this->load->model('ranks_model', 'ranks');
@@ -4953,12 +4953,12 @@ class Ajax_base extends Controller {
 						'name' => 'rank_default',
 						'id' => 'rank_default_y',
 						'value' => 'y',
-						'checked' => ($item->rankcat_default == 'y') ? TRUE : FALSE),
+						'checked' => ($item->rankcat_default == 'y') ? true : false),
 					'default_n' => array(
 						'name' => 'rank_default',
 						'id' => 'rank_default_n',
 						'value' => 'n',
-						'checked' => ($item->rankcat_default == 'n') ? TRUE : FALSE),
+						'checked' => ($item->rankcat_default == 'n') ? true : false),
 					'submit' => array(
 						'type' => 'submit',
 						'class' => 'hud_button',
@@ -5040,12 +5040,12 @@ class Ajax_base extends Controller {
 						'name' => 'default',
 						'id' => 'skin_default_y',
 						'value' => 'y',
-						'checked' => ($item->skinsec_default == 'y') ? TRUE : FALSE),
+						'checked' => ($item->skinsec_default == 'y') ? true : false),
 					'default_n' => array(
 						'name' => 'default',
 						'id' => 'skin_default_n',
 						'value' => 'n',
-						'checked' => ($item->skinsec_default == 'n') ? TRUE : FALSE),
+						'checked' => ($item->skinsec_default == 'n') ? true : false),
 					'submit' => array(
 						'type' => 'submit',
 						'class' => 'hud_button',
@@ -5120,10 +5120,10 @@ class Ajax_base extends Controller {
 	
 	function edit_comment()
 	{
-		$data['type'] = $this->uri->segment(3, FALSE);
-		$data['status'] = $this->uri->segment(4, FALSE);
-		$data['page'] = $this->uri->segment(5, 0, TRUE);
-		$data['id'] = $this->uri->segment(6, 0, TRUE);
+		$data['type'] = $this->uri->segment(3, false);
+		$data['status'] = $this->uri->segment(4, false);
+		$data['page'] = $this->uri->segment(5, 0, true);
+		$data['id'] = $this->uri->segment(6, 0, true);
 		
 		switch ($data['type'])
 		{
@@ -5141,7 +5141,7 @@ class Ajax_base extends Controller {
 						'class' => 'hud',
 						'rows' => 10,
 						'value' => $item['pcomment_content']),
-					'author' => $this->char->get_character_name($item['pcomment_author_character'], TRUE)
+					'author' => $this->char->get_character_name($item['pcomment_author_character'], true)
 				);
 				
 				break;
@@ -5160,7 +5160,7 @@ class Ajax_base extends Controller {
 						'class' => 'hud',
 						'rows' => 10,
 						'value' => $item['lcomment_content']),
-					'author' => $this->char->get_character_name($item['lcomment_author_character'], TRUE)
+					'author' => $this->char->get_character_name($item['lcomment_author_character'], true)
 				);
 				
 				break;
@@ -5179,7 +5179,7 @@ class Ajax_base extends Controller {
 						'class' => 'hud',
 						'rows' => 10,
 						'value' => $item['ncomment_content']),
-					'author' => $this->char->get_character_name($item['ncomment_author_character'], TRUE)
+					'author' => $this->char->get_character_name($item['ncomment_author_character'], true)
 				);
 				
 				break;
@@ -5198,7 +5198,7 @@ class Ajax_base extends Controller {
 						'class' => 'hud',
 						'rows' => 10,
 						'value' => $item['wcomment_content']),
-					'author' => $this->char->get_character_name($item['wcomment_author_character'], TRUE)
+					'author' => $this->char->get_character_name($item['wcomment_author_character'], true)
 				);
 				
 				break;
@@ -5318,7 +5318,7 @@ class Ajax_base extends Controller {
 			}
 		}
 		
-		$item = ($value->num_rows() > 0) ? $value->row() : FALSE;
+		$item = ($value->num_rows() > 0) ? $value->row() : false;
 		
 		/* input parameters */
 		$data['inputs'] = array(
@@ -5378,7 +5378,7 @@ class Ajax_base extends Controller {
 		
 		$sec = $this->docking->get_docking_section_details($data['id']);
 		
-		$item = ($sec->num_rows() > 0) ? $sec->row() : FALSE;
+		$item = ($sec->num_rows() > 0) ? $sec->row() : false;
 		
 		/* input parameters */
 		$data['inputs'] = array(
@@ -5429,7 +5429,7 @@ class Ajax_base extends Controller {
 		
 		/* data being sent to the facebox */
 		$data['header'] = $head;
-		$data['id'] = $this->uri->segment(3, 0, TRUE);
+		$data['id'] = $this->uri->segment(3, 0, true);
 		
 		$item = $this->menu_model->get_menu_category($data['id'], 'menucat_id');
 		
@@ -5502,12 +5502,12 @@ class Ajax_base extends Controller {
 		
 		/* data being sent to the facebox */
 		$data['header'] = $head;
-		$data['id'] = $this->uri->segment(3, 0, TRUE);
-		$data['tab'] = $this->uri->segment(4, 0, TRUE);
+		$data['id'] = $this->uri->segment(3, 0, true);
+		$data['tab'] = $this->uri->segment(4, 0, true);
 		
 		$menu = $this->menu_model->get_menu_item($data['id']);
 		
-		$item = ($menu->num_rows() > 0) ? $menu->row() : FALSE;
+		$item = ($menu->num_rows() > 0) ? $menu->row() : false;
 		
 		/* input parameters */
 		$data['inputs'] = array(
@@ -5532,37 +5532,37 @@ class Ajax_base extends Controller {
 				'id' => 'link_type_on',
 				'class' => 'hud',
 				'value' => 'onsite',
-				'checked' => ($item->menu_link_type == 'onsite') ? TRUE : FALSE),
+				'checked' => ($item->menu_link_type == 'onsite') ? true : false),
 			'link_type_off' => array(
 				'name' => 'menu_link_type',
 				'id' => 'link_type_off',
 				'class' => 'hud',
 				'value' => 'offsite',
-				'checked' => ($item->menu_link_type == 'offsite') ? TRUE : FALSE),
+				'checked' => ($item->menu_link_type == 'offsite') ? true : false),
 			'use_access_y' => array(
 				'name' => 'menu_use_access',
 				'id' => 'use_access_y',
 				'class' => 'hud',
 				'value' => 'y',
-				'checked' => ($item->menu_use_access == 'y') ? TRUE : FALSE),
+				'checked' => ($item->menu_use_access == 'y') ? true : false),
 			'use_access_n' => array(
 				'name' => 'menu_use_access',
 				'id' => 'use_access_n',
 				'class' => 'hud',
 				'value' => 'n',
-				'checked' => ($item->menu_use_access == 'n') ? TRUE : FALSE),
+				'checked' => ($item->menu_use_access == 'n') ? true : false),
 			'display_y' => array(
 				'name' => 'menu_display',
 				'id' => 'display_y',
 				'class' => 'hud',
 				'value' => 'y',
-				'checked' => ($item->menu_display == 'y') ? TRUE : FALSE),
+				'checked' => ($item->menu_display == 'y') ? true : false),
 			'display_n' => array(
 				'name' => 'menu_display',
 				'id' => 'display_n',
 				'class' => 'hud',
 				'value' => 'n',
-				'checked' => ($item->menu_display == 'n') ? TRUE : FALSE),
+				'checked' => ($item->menu_display == 'n') ? true : false),
 			'access' => array(
 				'name' => 'menu_access',
 				'class' => 'hud',
@@ -5676,7 +5676,7 @@ class Ajax_base extends Controller {
 		
 		/* data being sent to the facebox */
 		$data['header'] = $head;
-		$data['id'] = $this->uri->segment(3, 0, TRUE);
+		$data['id'] = $this->uri->segment(3, 0, true);
 		
 		$group = $this->access->get_group($data['id']);
 		
@@ -5729,7 +5729,7 @@ class Ajax_base extends Controller {
 		
 		/* data being sent to the facebox */
 		$data['header'] = $head;
-		$data['id'] = $this->uri->segment(3, 0, TRUE);
+		$data['id'] = $this->uri->segment(3, 0, true);
 		
 		$page = $this->access->get_page($data['id']);
 		$groups = $this->access->get_page_groups();
@@ -5954,7 +5954,7 @@ class Ajax_base extends Controller {
 			}
 		}
 		
-		$item = ($value->num_rows() > 0) ? $value->row() : FALSE;
+		$item = ($value->num_rows() > 0) ? $value->row() : false;
 		
 		/* input parameters */
 		$data['inputs'] = array(
@@ -6014,7 +6014,7 @@ class Ajax_base extends Controller {
 		
 		$sec = $this->specs->get_spec_section_details($data['id']);
 		
-		$item = ($sec->num_rows() > 0) ? $sec->row() : FALSE;
+		$item = ($sec->num_rows() > 0) ? $sec->row() : false;
 		
 		/* input parameters */
 		$data['inputs'] = array(
@@ -6079,7 +6079,7 @@ class Ajax_base extends Controller {
 			}
 		}
 		
-		$item = ($value->num_rows() > 0) ? $value->row() : FALSE;
+		$item = ($value->num_rows() > 0) ? $value->row() : false;
 		
 		/* input parameters */
 		$data['inputs'] = array(
@@ -6246,7 +6246,7 @@ class Ajax_base extends Controller {
 	
 	function info_format_date()
 	{
-		$format = $this->input->post('format', TRUE);
+		$format = $this->input->post('format', true);
 		
 		echo mdate($format, now());
 	}
@@ -6265,7 +6265,7 @@ class Ajax_base extends Controller {
 		
 		/* data being sent to the facebox */
 		$data['header'] = $head;
-		$data['id'] = $this->uri->segment(3, 0, TRUE);
+		$data['id'] = $this->uri->segment(3, 0, true);
 		
 		$role = $this->access->get_role($data['id']);
 		
@@ -6280,7 +6280,7 @@ class Ajax_base extends Controller {
 		{
 			foreach ($users as $p)
 			{
-				$data['list'][] = $this->char->get_character_name($p, TRUE);
+				$data['list'][] = $this->char->get_character_name($p, true);
 			}
 		}
 		
@@ -6303,13 +6303,13 @@ class Ajax_base extends Controller {
 		$this->load->model('awards_model', 'awards');
 		
 		/* set the POST variable */
-		$award = $this->input->post('award', TRUE);
+		$award = $this->input->post('award', true);
 		
 		/* grab the position details */
 		$item = $this->awards->get_award($award, 'award_desc');
 		
 		/* set the output */
-		$output = ($item !== FALSE) ? $item : '';
+		$output = ($item !== false) ? $item : '';
 		
 		echo text_output($output, '');
 	}
@@ -6321,11 +6321,11 @@ class Ajax_base extends Controller {
 		$this->load->model('characters_model', 'char');
 		
 		/* set the POST variable */
-		$award = $this->input->post('award', TRUE);
+		$award = $this->input->post('award', true);
 		
 		$type = $this->awards->get_award($award, 'award_cat');
 		
-		if ($type !== FALSE)
+		if ($type !== false)
 		{
 			switch ($type)
 			{
@@ -6349,13 +6349,13 @@ class Ajax_base extends Controller {
 		$this->load->model('positions_model', 'pos');
 		
 		/* set the POST variable */
-		$position = $this->input->post('position', TRUE);
+		$position = $this->input->post('position', true);
 		
 		/* grab the position details */
 		$item = $this->pos->get_position($position, 'pos_desc');
 		
 		/* set the output */
-		$output = ($item !== FALSE) ? $item : '';
+		$output = ($item !== false) ? $item : '';
 		
 		echo text_output($output, '');
 	}
@@ -6366,15 +6366,15 @@ class Ajax_base extends Controller {
 		$this->load->model('ranks_model', 'rank');
 		
 		/* set the POST variable */
-		$rank = $this->input->post('rank', TRUE);
-		$location = $this->input->post('location', TRUE);
+		$rank = $this->input->post('rank', true);
+		$location = $this->input->post('location', true);
 		
 		/* grab the position details */
 		$item = $this->rank->get_rank($rank, 'rank_image');
 		$ext = $this->rank->get_rankcat($location, 'rankcat_location', 'rankcat_extension');
 		
 		/* set the output */
-		$output = ($item !== FALSE) ? array('src' => base_url() . rank_location($location, $item, $ext)) : '';
+		$output = ($item !== false) ? array('src' => base_url() . rank_location($location, $item, $ext)) : '';
 		
 		echo img($output);
 	}
@@ -6385,13 +6385,13 @@ class Ajax_base extends Controller {
 		$this->load->model('ranks_model', 'rank');
 		
 		/* set the POST variable */
-		$rank = $this->input->post('rank', TRUE);
+		$rank = $this->input->post('rank', true);
 		
 		/* grab the position details */
 		$preview = $this->rank->get_rankcat($rank, 'rankcat_location', 'rankcat_preview');
 		
 		/* set the output */
-		$output = ($preview !== FALSE) ? array('src' => base_url() . rank_location($rank, $preview, '')) : '';
+		$output = ($preview !== false) ? array('src' => base_url() . rank_location($rank, $preview, '')) : '';
 		
 		echo img($output);
 	}
@@ -6399,8 +6399,8 @@ class Ajax_base extends Controller {
 	function info_show_skin_preview_image()
 	{
 		/* set the POST variables */
-		$location = $this->input->post('skin', TRUE);
-		$section = $this->input->post('section', TRUE);
+		$location = $this->input->post('skin', true);
+		$section = $this->input->post('section', true);
 		
 		$where = array(
 			'skinsec_section' => $section,
@@ -6411,7 +6411,7 @@ class Ajax_base extends Controller {
 		$item = $this->sys->get_skinsec($where);
 		
 		/* set the output */
-		$output = ($item !== FALSE) ? base_url() . APPFOLDER .'/views/'. $location .'/'. $item->skinsec_image_preview : '';
+		$output = ($item !== false) ? base_url() . APPFOLDER .'/views/'. $location .'/'. $item->skinsec_image_preview : '';
 		
 		echo $output;
 	}
@@ -6419,8 +6419,8 @@ class Ajax_base extends Controller {
 	function info_show_skin_preview()
 	{
 		/* set the POST variables */
-		$location = $this->input->post('skin', TRUE);
-		$section = $this->input->post('section', TRUE);
+		$location = $this->input->post('skin', true);
+		$section = $this->input->post('section', true);
 		
 		$where = array(
 			'skinsec_section' => $section,
@@ -6431,7 +6431,7 @@ class Ajax_base extends Controller {
 		$item = $this->sys->get_skinsec($where);
 		
 		/* set the output */
-		$output = ($item !== FALSE) ? array('src' => base_url() . APPFOLDER .'/views/'. $location .'/'. $item->skinsec_image_preview) : '';
+		$output = ($item !== false) ? array('src' => base_url() . APPFOLDER .'/views/'. $location .'/'. $item->skinsec_image_preview) : '';
 		
 		echo img($output);
 	}
@@ -6475,8 +6475,8 @@ class Ajax_base extends Controller {
 	
 	function reject()
 	{
-		$data['type'] = $this->uri->segment(3, FALSE);
-		$data['id'] = $this->uri->segment(4, 0, TRUE);
+		$data['type'] = $this->uri->segment(3, false);
+		$data['id'] = $this->uri->segment(4, 0, true);
 		
 		/* figure out the skin */
 		$skin = $this->session->userdata('skin_admin');
@@ -6513,7 +6513,7 @@ class Ajax_base extends Controller {
 				}
 				else
 				{
-					$name = $this->char->get_character_name($nom->queue_receive_character, TRUE);
+					$name = $this->char->get_character_name($nom->queue_receive_character, true);
 				}
 				
 				$data['text'] = sprintf(
@@ -6661,7 +6661,7 @@ class Ajax_base extends Controller {
 		{
 			/* set the variables */
 			$id = $this->uri->segment(3);
-			$image = $this->input->post('image', TRUE);
+			$image = $this->input->post('image', true);
 			
 			$image = str_replace('\.', '.', $image);
 			
@@ -6677,7 +6677,7 @@ class Ajax_base extends Controller {
 				
 				$key = array_search($image, $imagesArray);
 				
-				if ($key === FALSE)
+				if ($key === false)
 				{
 					/* add the image to the array */
 					$imagesArray[] = $image;
@@ -6726,7 +6726,7 @@ class Ajax_base extends Controller {
 		if (IS_AJAX)
 		{
 			/* set the variables */
-			$images = $this->input->post('img', TRUE);
+			$images = $this->input->post('img', true);
 			$id = $this->uri->segment(3);
 			
 			foreach ($images as $i)
@@ -6751,7 +6751,7 @@ class Ajax_base extends Controller {
 			/* load the resources */
 			$this->load->model('characters_model', 'char');
 			
-			$coc = $this->input->post('coc', TRUE);
+			$coc = $this->input->post('coc', true);
 			
 			$empty = $this->char->empty_coc();
 			
@@ -6783,7 +6783,7 @@ class Ajax_base extends Controller {
 				$flash['status'] = 'success';
 				$flash['message'] = text_output($message);
 					
-				$output = $this->load->view('_base/admin/pages/flash', $flash, TRUE);
+				$output = $this->load->view('_base/admin/pages/flash', $flash, true);
 			}
 			else
 			{
@@ -6797,7 +6797,7 @@ class Ajax_base extends Controller {
 				$flash['status'] = 'error';
 				$flash['message'] = text_output($message);
 					
-				$output = $this->load->view('_base/admin/pages/flash', $flash, TRUE);
+				$output = $this->load->view('_base/admin/pages/flash', $flash, true);
 			}
 			
 			echo $output;
@@ -6811,7 +6811,7 @@ class Ajax_base extends Controller {
 			/* load the resources */
 			$this->load->model('characters_model', 'char');
 			
-			$post = $this->input->post('value', TRUE);
+			$post = $this->input->post('value', true);
 			
 			$i = 0;
 			$count = 0;
@@ -6838,7 +6838,7 @@ class Ajax_base extends Controller {
 				$flash['status'] = 'success';
 				$flash['message'] = text_output($message);
 					
-				$output = $this->load->view('_base/admin/pages/flash', $flash, TRUE);
+				$output = $this->load->view('_base/admin/pages/flash', $flash, true);
 			}
 			else
 			{
@@ -6852,7 +6852,7 @@ class Ajax_base extends Controller {
 				$flash['status'] = 'error';
 				$flash['message'] = text_output($message);
 					
-				$output = $this->load->view('_base/admin/pages/flash', $flash, TRUE);
+				$output = $this->load->view('_base/admin/pages/flash', $flash, true);
 			}
 			
 			echo $output;
@@ -6866,7 +6866,7 @@ class Ajax_base extends Controller {
 			/* load the resources */
 			$this->load->model('tour_model', 'tour');
 			
-			$post = $this->input->post('decks', TRUE);
+			$post = $this->input->post('decks', true);
 			
 			$i = 0;
 			$count = 0;
@@ -6893,7 +6893,7 @@ class Ajax_base extends Controller {
 				$flash['status'] = 'success';
 				$flash['message'] = text_output($message);
 					
-				$output = $this->load->view('_base/admin/pages/flash', $flash, TRUE);
+				$output = $this->load->view('_base/admin/pages/flash', $flash, true);
 			}
 			else
 			{
@@ -6907,7 +6907,7 @@ class Ajax_base extends Controller {
 				$flash['status'] = 'error';
 				$flash['message'] = text_output($message);
 					
-				$output = $this->load->view('_base/admin/pages/flash', $flash, TRUE);
+				$output = $this->load->view('_base/admin/pages/flash', $flash, true);
 			}
 			
 			echo $output;
@@ -6921,7 +6921,7 @@ class Ajax_base extends Controller {
 			/* load the resources */
 			$this->load->model('docking_model', 'docking');
 			
-			$post = $this->input->post('value', TRUE);
+			$post = $this->input->post('value', true);
 			
 			$i = 0;
 			$count = 0;
@@ -6948,7 +6948,7 @@ class Ajax_base extends Controller {
 				$flash['status'] = 'success';
 				$flash['message'] = text_output($message);
 					
-				$output = $this->load->view('_base/admin/pages/flash', $flash, TRUE);
+				$output = $this->load->view('_base/admin/pages/flash', $flash, true);
 			}
 			else
 			{
@@ -6962,7 +6962,7 @@ class Ajax_base extends Controller {
 				$flash['status'] = 'error';
 				$flash['message'] = text_output($message);
 					
-				$output = $this->load->view('_base/admin/pages/flash', $flash, TRUE);
+				$output = $this->load->view('_base/admin/pages/flash', $flash, true);
 			}
 			
 			echo $output;
@@ -6972,7 +6972,7 @@ class Ajax_base extends Controller {
 	function save_ignore_update_version()
 	{
 		/* grab the version from the POST */
-		$version = $this->input->post('version', TRUE);
+		$version = $this->input->post('version', true);
 		
 		/* build the array used by AR */
 		$update = array('sys_version_ignore' => $version);
@@ -6987,7 +6987,7 @@ class Ajax_base extends Controller {
 		{
 			/* set the variables */
 			$id = $this->uri->segment(3);
-			$image = $this->input->post('image', TRUE);
+			$image = $this->input->post('image', true);
 			
 			$image = str_replace('\.', '.', $image);
 			
@@ -7003,7 +7003,7 @@ class Ajax_base extends Controller {
 				
 				$key = array_search($image, $imagesArray);
 				
-				if ($key === FALSE)
+				if ($key === false)
 				{
 					/* add the image to the array */
 					$imagesArray[] = $image;
@@ -7052,7 +7052,7 @@ class Ajax_base extends Controller {
 		if (IS_AJAX)
 		{
 			/* set the variables */
-			$images = $this->input->post('img', TRUE);
+			$images = $this->input->post('img', true);
 			$id = $this->uri->segment(3);
 			
 			foreach ($images as $i)
@@ -7077,7 +7077,7 @@ class Ajax_base extends Controller {
 			/* load the resources */
 			$this->load->model('specs_model', 'specs');
 			
-			$post = $this->input->post('value', TRUE);
+			$post = $this->input->post('value', true);
 			
 			$i = 0;
 			$count = 0;
@@ -7104,7 +7104,7 @@ class Ajax_base extends Controller {
 				$flash['status'] = 'success';
 				$flash['message'] = text_output($message);
 					
-				$output = $this->load->view('_base/admin/pages/flash', $flash, TRUE);
+				$output = $this->load->view('_base/admin/pages/flash', $flash, true);
 			}
 			else
 			{
@@ -7118,7 +7118,7 @@ class Ajax_base extends Controller {
 				$flash['status'] = 'error';
 				$flash['message'] = text_output($message);
 					
-				$output = $this->load->view('_base/admin/pages/flash', $flash, TRUE);
+				$output = $this->load->view('_base/admin/pages/flash', $flash, true);
 			}
 			
 			echo $output;
@@ -7132,7 +7132,7 @@ class Ajax_base extends Controller {
 			/* load the resources */
 			$this->load->model('tour_model', 'tour');
 			
-			$post = $this->input->post('value', TRUE);
+			$post = $this->input->post('value', true);
 			
 			$i = 0;
 			$count = 0;
@@ -7159,7 +7159,7 @@ class Ajax_base extends Controller {
 				$flash['status'] = 'success';
 				$flash['message'] = text_output($message);
 					
-				$output = $this->load->view('_base/admin/pages/flash', $flash, TRUE);
+				$output = $this->load->view('_base/admin/pages/flash', $flash, true);
 			}
 			else
 			{
@@ -7173,7 +7173,7 @@ class Ajax_base extends Controller {
 				$flash['status'] = 'error';
 				$flash['message'] = text_output($message);
 					
-				$output = $this->load->view('_base/admin/pages/flash', $flash, TRUE);
+				$output = $this->load->view('_base/admin/pages/flash', $flash, true);
 			}
 			
 			echo $output;
@@ -7186,7 +7186,7 @@ class Ajax_base extends Controller {
 		{
 			/* set the variables */
 			$id = $this->uri->segment(3);
-			$image = $this->input->post('image', TRUE);
+			$image = $this->input->post('image', true);
 			
 			$image = str_replace('\.', '.', $image);
 			
@@ -7208,7 +7208,7 @@ class Ajax_base extends Controller {
 					
 					$key = array_search($image, $imagesArray);
 					
-					if ($key === FALSE)
+					if ($key === false)
 					{
 						/* add the image to the array */
 						$imagesArray[] = $image;
@@ -7258,7 +7258,7 @@ class Ajax_base extends Controller {
 		if (IS_AJAX)
 		{
 			/* set the variables */
-			$images = $this->input->post('img', TRUE);
+			$images = $this->input->post('img', true);
 			$id = $this->uri->segment(3);
 			
 			foreach ($images as $i)

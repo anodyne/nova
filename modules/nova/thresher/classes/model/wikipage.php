@@ -27,9 +27,9 @@ class Model_Wikipage extends Jelly_Model {
 			)),
 			'created_at' => Jelly::field('timestamp', array(
 				'column' => 'page_created_at',
-				'auto_now_create' => TRUE,
-				'auto_now_update' => FALSE,
-				'null' => TRUE,
+				'auto_now_create' => true,
+				'auto_now_update' => false,
+				'null' => true,
 				'default' => date::now()
 			)),
 			'created_by_user' => Jelly::field('belongsto', array(
@@ -42,9 +42,9 @@ class Model_Wikipage extends Jelly_Model {
 			)),
 			'updated_at' => Jelly::field('timestamp', array(
 				'column' => 'page_updated_at',
-				'auto_now_create' => FALSE,
-				'auto_now_update' => TRUE,
-				'null' => TRUE,
+				'auto_now_create' => false,
+				'auto_now_update' => true,
+				'null' => true,
 				'default' => date::now()
 			)),
 			'updated_by_user' => Jelly::field('belongsto', array(

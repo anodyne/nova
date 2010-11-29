@@ -27,16 +27,16 @@ class Model_Userloa extends Jelly_Model {
 			)),
 			'start' => Jelly::field('timestamp', array(
 				'column' => 'loa_start_date',
-				'auto_now_create' => FALSE,
-				'auto_now_update' => FALSE,
-				'null' => TRUE,
+				'auto_now_create' => false,
+				'auto_now_update' => false,
+				'null' => true,
 				'default' => date::now()
 			)),
 			'end' => Jelly::field('timestamp', array(
 				'column' => 'loa_end_date',
-				'auto_now_create' => FALSE,
-				'auto_now_update' => FALSE,
-				'null' => TRUE,
+				'auto_now_create' => false,
+				'auto_now_update' => false,
+				'null' => true,
 				'default' => date::now()
 			)),
 			'duration' => Jelly::field('text', array(

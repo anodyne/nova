@@ -9,7 +9,7 @@
 	<div id="acp-panel">
 		<div class="panelnav">
 			<ul id="panelmenu" class="UITheme ui-widget">
-				<?php if ($update !== FALSE): ?>
+				<?php if ($update !== false): ?>
 					<li><a href="#" id="update"><span>
 						<?php if ($update['severity'] == 'red'): ?>
 							<div class="count ui-state-error"><div class="ui-icon ui-icon-notice"></div></div>
@@ -21,7 +21,7 @@
 					<div class="count ui-state-highlight"><?php echo $notifycount;?></div>
 				<?php endif;?><?php echo $label['mynotify'];?></span></a></li>
 				
-				<?php if ($this->auth->is_gamemaster($this->session->userdata('userid')) === TRUE && $activitycount > 0): ?>
+				<?php if ($this->auth->is_gamemaster($this->session->userdata('userid')) === true && $activitycount > 0): ?>
 					<li><a href="#" id="activity"><span>
 						<div class="count ui-state-highlight"><?php echo $activitycount;?></div>
 						<?php echo $label['activity'];?></span></a></li>
@@ -34,7 +34,7 @@
 			</ul>
 		</div>
 		<div class="panel">
-			<?php if ($update !== FALSE): ?>
+			<?php if ($update !== false): ?>
 				<div class="update hidden">
 					<span class="bold fontMedium <?php echo $update['severity'];?>"><?php echo $update['version'];?></span>
 					

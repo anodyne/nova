@@ -62,7 +62,7 @@ abstract class Nova_Submit {
 	 * @param	boolean	whether the verb should be pluralized or not (was/were)
 	 * @return	string	the string result of the flash message
 	 */
-	public static function show_flash($result, $item, $action, $skin, $section, $extra = '', $plural = FALSE)
+	public static function show_flash($result, $item, $action, $skin, $section, $extra = '', $plural = false)
 	{
 		// grab the flash partial
 		$flash = View::factory(Location::view('flash', $skin, $section, 'pages'));
@@ -71,7 +71,7 @@ abstract class Nova_Submit {
 		{
 			$flash->status = 'success';
 			
-			if ($plural === FALSE)
+			if ($plural === false)
 			{
 				$flash->message = ucfirst(__('phrase.flash_success', array(':item' => $item, ':action' => $action, ':extra' => $extra)));
 			}
@@ -84,7 +84,7 @@ abstract class Nova_Submit {
 		{
 			$flash->status = 'failure';
 			
-			if ($plural === FALSE)
+			if ($plural === false)
 			{
 				$flash->message = ucfirst(__('phrase.flash_failure', array(':item' => $item, ':action' => $action, ':extra' => $extra)));
 			}

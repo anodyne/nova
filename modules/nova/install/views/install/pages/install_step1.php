@@ -20,9 +20,9 @@
 		
 		<p>
 			<kbd><?php echo __('Your Email Address');?></kbd>
-			<?php if ($errors !== FALSE AND array_key_exists('email', $errors)): ?>
+			<?php if ($errors !== false and array_key_exists('email', $errors)): ?>
 				<p class="bold error">
-					<?php echo html::image(Location::image('exclamation-red.png', NULL, 'install', 'image'), array('class' => 'inline-image-left'));?>
+					<?php echo html::image(Location::image('exclamation-red.png', null, 'install', 'image'), array('class' => 'inline-image-left'));?>
 					<?php echo ucfirst($errors['email']);?>
 				</p>
 			<?php endif;?>
@@ -31,9 +31,9 @@
 		
 		<p>
 			<kbd><?php echo __('Your Password');?></kbd>
-			<?php if ($errors !== FALSE AND array_key_exists('password', $errors)): ?>
+			<?php if ($errors !== false and array_key_exists('password', $errors)): ?>
 				<p class="bold error">
-					<?php echo html::image(Location::image('exclamation-red.png', NULL, 'install', 'image'), array('class' => 'inline-image-left'));?>
+					<?php echo html::image(Location::image('exclamation-red.png', null, 'install', 'image'), array('class' => 'inline-image-left'));?>
 					<?php echo ucfirst($errors['password']);?>
 				</p>
 			<?php endif;?>
@@ -42,9 +42,9 @@
 		
 		<p>
 			<kbd><?php echo __('Confirm Your Password');?></kbd>
-			<?php if ($errors !== FALSE AND array_key_exists('password_confirm', $errors)): ?>
+			<?php if ($errors !== false and array_key_exists('password_confirm', $errors)): ?>
 				<p class="bold error">
-					<?php echo html::image(Location::image('exclamation-red.png', NULL, 'install', 'image'), array('class' => 'inline-image-left'));?>
+					<?php echo html::image(Location::image('exclamation-red.png', null, 'install', 'image'), array('class' => 'inline-image-left'));?>
 					<?php echo ucfirst($errors['password_confirm']);?>
 				</p>
 			<?php endif;?>
@@ -66,14 +66,14 @@
 		
 		<p>
 			<kbd><?php echo ucfirst(__('position'));?></kbd>
-			<?php echo form::select_position('position', Session::instance()->get('position', NULL), array('id' => 'position'));?>
+			<?php echo form::select_position('position', Session::instance()->get('position', null), array('id' => 'position'));?>
 			&nbsp; <span id="loading_update" class="hidden fontSmall subtle"><?php echo html::image($loading['src'], $loading['attr']);?></span>
 			<p id="position_desc" class="subtle"></p>
 		</p>
 		
 		<p>
 			<kbd><?php echo ucfirst(__('rank'));?></kbd>
-			<?php echo form::select_rank('rank', Session::instance()->get('rank', NULL), array('id' => 'rank'));?>
+			<?php echo form::select_rank('rank', Session::instance()->get('rank', null), array('id' => 'rank'));?>
 			&nbsp; <span id="loading_update_rank" class="hidden fontSmall subtle"><?php echo html::image($loading['src'], $loading['attr']);?></span>
 			<p id="rank_img" class="subtle"><?php echo html::image($default_rank['src'], $default_rank['attr']);?></p>
 		</p>

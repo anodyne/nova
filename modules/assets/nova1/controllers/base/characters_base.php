@@ -34,7 +34,7 @@ class Characters_base extends Controller {
 		$this->load->model('system_model', 'sys');
 		$installed = $this->sys->check_install_status();
 		
-		if ($installed === FALSE)
+		if ($installed === false)
 		{ /* check whether the system is installed */
 			redirect('install/index', 'refresh');
 		}
@@ -47,7 +47,7 @@ class Characters_base extends Controller {
 		$this->load->model('users_model', 'user');
 		
 		/* check to see if they are logged in */
-		$this->auth->is_logged_in(TRUE);
+		$this->auth->is_logged_in(true);
 		
 		/* an array of the global we want to retrieve */
 		$settings_array = array(
@@ -71,7 +71,7 @@ class Characters_base extends Controller {
 		$this->timezone = $this->options['timezone'];
 		$this->dst = (bool) $this->options['daylight_savings'];
 		
-		if ($this->auth->is_logged_in() === TRUE)
+		if ($this->auth->is_logged_in() === true)
 		{ /* if there's a session, set the variables appropriately */
 			$this->skin = $this->session->userdata('skin_admin');
 			$this->rank = $this->session->userdata('display_rank');
@@ -87,12 +87,12 @@ class Characters_base extends Controller {
 		$this->template->set_master_template($this->skin .'/template_admin.php');
 		
 		/* write the common elements to the template */
-		$this->template->write('nav_main', $this->menu->build('main', 'main'), TRUE);
-		$this->template->write('nav_sub', $this->menu->build('adminsub', 'characters'), TRUE);
-		$this->template->write('panel_1', $this->user_panel->panel_1(), TRUE);
-		$this->template->write('panel_2', $this->user_panel->panel_2(), TRUE);
-		$this->template->write('panel_3', $this->user_panel->panel_3(), TRUE);
-		$this->template->write('panel_workflow', $this->user_panel->panel_workflow(), TRUE);
+		$this->template->write('nav_main', $this->menu->build('main', 'main'), true);
+		$this->template->write('nav_sub', $this->menu->build('adminsub', 'characters'), true);
+		$this->template->write('panel_1', $this->user_panel->panel_1(), true);
+		$this->template->write('panel_2', $this->user_panel->panel_2(), true);
+		$this->template->write('panel_3', $this->user_panel->panel_3(), true);
+		$this->template->write('panel_workflow', $this->user_panel->panel_workflow(), true);
 		$this->template->write('title', $this->options['sim_name'] . ' :: ');
 	}
 
@@ -112,26 +112,26 @@ class Characters_base extends Controller {
 			switch ($this->uri->segment(3))
 			{
 				case 'delete':
-					$id = $this->input->post('id', TRUE);
-					$id = (is_numeric($id)) ? $id : FALSE;
+					$id = $this->input->post('id', true);
+					$id = (is_numeric($id)) ? $id : false;
 					
 					/* get the user id */
 					$userid = $this->char->get_character($id, array('user', 'crew_type'));
 					
-					if ($userid !== FALSE)
+					if ($userid !== false)
 					{
 						/* grab the user data */
 						$user = $this->user->get_user($userid['user']);
 						
 						/* temp variable for setting a new main character */
-						$newmain = NULL;
+						$newmain = null;
 						
-						if ($user !== FALSE)
+						if ($user !== false)
 						{
 							$characters = implode(',', $this->session->userdata('characters'));
 							$main = $user->main_char;
 							
-							if (strstr($characters, $id) !== FALSE)
+							if (strstr($characters, $id) !== false)
 							{ /* if the ID is in the characters string, remove it */
 								$carray = explode(',', $characters);
 								
@@ -212,10 +212,10 @@ class Characters_base extends Controller {
 					break;
 					
 				case 'pending':
-					$id = $this->input->post('id', TRUE);
-					$id = (is_numeric($id)) ? $id : FALSE;
+					$id = $this->input->post('id', true);
+					$id = (is_numeric($id)) ? $id : false;
 					
-					$action = $this->input->post('action', TRUE);
+					$action = $this->input->post('action', true);
 					
 					$info = $this->char->get_character($id);
 					$user = $this->user->get_user($info->user);
@@ -225,11 +225,11 @@ class Characters_base extends Controller {
 					if ($action == 'approve')
 					{
 						$c_update = array(
-							'position_1' => $this->input->post('position', TRUE),
-							'rank' => $this->input->post('rank', TRUE),
+							'position_1' => $this->input->post('position', true),
+							'rank' => $this->input->post('rank', true),
 							'crew_type' => 'active',
 							'date_activate' => (empty($info->date_activate)) ? now() : $info->date_activate,
-							'user' => ($count > $this->options['allowed_chars_playing']) ? NULL : $info->user,
+							'user' => ($count > $this->options['allowed_chars_playing']) ? null : $info->user,
 						);
 						
 						$update = $this->char->update_character($id, $c_update);
@@ -266,8 +266,8 @@ class Characters_base extends Controller {
 						{ /* updated the users table if necessary */
 							$p_update = array(
 								'status' => 'active',
-								'leave_date' => NULL,
-								'access_role' => $this->input->post('role', TRUE)
+								'leave_date' => null,
+								'access_role' => $this->input->post('role', true)
 							);
 							
 							$update += $this->user->update_user($user->userid, $p_update);
@@ -300,7 +300,7 @@ class Characters_base extends Controller {
 								'character' => $args['character']
 							);
 							
-							$email = ($this->options['system_email'] == 'on') ? $this->_email('accept', $email_data) : FALSE;
+							$email = ($this->options['system_email'] == 'on') ? $this->_email('accept', $email_data) : false;
 						}
 						else
 						{
@@ -368,7 +368,7 @@ class Characters_base extends Controller {
 								'character' => $args['character']
 							);
 							
-							$email = ($this->options['system_email'] == 'on') ? $this->_email('reject', $email_data) : FALSE;
+							$email = ($this->options['system_email'] == 'on') ? $this->_email('reject', $email_data) : false;
 						}
 						else
 						{
@@ -425,13 +425,13 @@ class Characters_base extends Controller {
 					
 					$pos = $this->pos->get_position($a->position_1);
 					
-					if ($pos !== FALSE && array_key_exists($pos->pos_dept, $data['characters']) === FALSE)
+					if ($pos !== false && array_key_exists($pos->pos_dept, $data['characters']) === false)
 					{
 						$cdept = $this->dept->get_dept($pos->pos_dept, 'dept_parent');
 					}
 					else
 					{
-						$cdept = ($pos !== FALSE) ? $pos->pos_dept : '';
+						$cdept = ($pos !== false) ? $pos->pos_dept : '';
 					}
 					
 					$p = $this->user->get_user($a->user, array('status', 'email'));
@@ -440,7 +440,7 @@ class Characters_base extends Controller {
 						'id' => $a->charid,
 						'uid' => $a->user,
 						'name' => parse_name($name),
-						'position_1' => ($pos !== FALSE) ? $pos->pos_name : '',
+						'position_1' => ($pos !== false) ? $pos->pos_name : '',
 						'position_2' => $this->pos->get_position($a->position_2, 'pos_name'),
 						'pstatus' => $p['status'],
 						'email' => $p['email']
@@ -569,16 +569,16 @@ class Characters_base extends Controller {
 		$this->load->helper('utility');
 		
 		/* set the variables */
-		$id = $this->uri->segment(3, FALSE, TRUE);
+		$id = $this->uri->segment(3, false, true);
 		
 		if (isset($_POST['submit']))
 		{
 			/* set the character ID and do some sanity checking */
-			$id = $this->input->post('id', TRUE);
-			$id = (is_numeric($id)) ? $id : FALSE;
+			$id = $this->input->post('id', true);
+			$id = (is_numeric($id)) ? $id : false;
 			
 			/* set the award id */
-			$award = $this->input->post('award', TRUE);
+			$award = $this->input->post('award', true);
 			
 			/* get info about the award */
 			$info = $this->awards->get_award($award);
@@ -588,7 +588,7 @@ class Characters_base extends Controller {
 				'awardrec_award' => $award,
 				'awardrec_character' => ($info->award_cat == 'ooc') ? 0 : $id,
 				'awardrec_user' => $this->char->get_character($id, 'user'),
-				'awardrec_reason' => $this->input->post('reason', TRUE),
+				'awardrec_reason' => $this->input->post('reason', true),
 				'awardrec_date' => now(),
 				'awardrec_nominated_by' => $this->session->userdata('main_char'),
 			);
@@ -625,7 +625,7 @@ class Characters_base extends Controller {
 			$this->template->write_view('flash_message', '_base/admin/pages/flash', $flash);
 		}
 		
-		if ($id === FALSE)
+		if ($id === false)
 		{
 			$characters = $this->char->get_all_characters('all');
 			
@@ -799,23 +799,23 @@ class Characters_base extends Controller {
 		
 		/* grab the level and character ID */
 		$data['level'] = $this->auth->get_access_level();
-		$data['id'] = $this->uri->segment(3, FALSE, TRUE);
+		$data['id'] = $this->uri->segment(3, false, true);
 		
-		if ($data['id'] === FALSE && count($this->session->userdata('characters')) > 1)
+		if ($data['id'] === false && count($this->session->userdata('characters')) > 1)
 		{
 			redirect('characters/select');
 		}
-		elseif ($data['id'] === FALSE && count($this->session->userdata('characters')) <= 1)
+		elseif ($data['id'] === false && count($this->session->userdata('characters')) <= 1)
 		{
 			$data['id'] = $this->session->userdata('main_char');
 		}
 		
-		$allowed = FALSE;
+		$allowed = false;
 		
 		switch ($data['level'])
 		{
 			case 1:
-				$allowed = (in_array($data['id'], $this->session->userdata('characters'))) ? TRUE : FALSE;
+				$allowed = (in_array($data['id'], $this->session->userdata('characters'))) ? true : false;
 				break;
 				
 			case 2:
@@ -823,16 +823,16 @@ class Characters_base extends Controller {
 				
 				if (in_array($data['id'], $this->session->userdata('characters')) || $type == 'npc')
 				{
-					$allowed = TRUE;
+					$allowed = true;
 				}
 				break;
 				
 			case 3:
-				$allowed = TRUE;
+				$allowed = true;
 				break;
 		}
 		
-		if ($allowed === FALSE)
+		if ($allowed === false)
 		{
 			redirect('admin/error/1');
 		}
@@ -844,9 +844,9 @@ class Characters_base extends Controller {
 		
 		if (isset($_POST['submit']))
 		{
-			/* get the user ID and figure out if it should be NULL or not */
+			/* get the user ID and figure out if it should be null or not */
 			$user = $this->char->get_character($data['id'], array('user', 'crew_type'));
-			$p = (empty($user['user'])) ? NULL : $user['user'];
+			$p = (empty($user['user'])) ? null : $user['user'];
 			
 			foreach ($_POST as $key => $value)
 			{
@@ -888,7 +888,7 @@ class Characters_base extends Controller {
 					
 					if ($array['character']['crew_type'] != 'inactive' && $user['crew_type'] == 'inactive')
 					{ /* wipe out the deactivate date if they're being reactivated */
-						$array['character']['date_deactivate'] = NULL;
+						$array['character']['date_deactivate'] = null;
 					}
 				}
 			}
@@ -923,7 +923,7 @@ class Characters_base extends Controller {
 							$posnew = $this->pos->get_position($array['character']['position_1']);
 							$posold = $this->pos->get_position($position1_old);
 							
-							if ($posnew !== FALSE)
+							if ($posnew !== false)
 							{
 								/* build the update array */
 								$position_update['new'] = array('pos_open' => ($posnew->pos_open == 0) ? 0 : ($posnew->pos_open - 1));
@@ -932,7 +932,7 @@ class Characters_base extends Controller {
 								$posnew_update = $this->pos->update_position($array['character']['position_1'], $position_update['new']);
 							}
 							
-							if ($posold !== FALSE)
+							if ($posold !== false)
 							{
 								/* build the update array */
 								$position_update['old'] = array('pos_open' => $posold->pos_open + 1);
@@ -947,7 +947,7 @@ class Characters_base extends Controller {
 							$posnew = $this->pos->get_position($array['character']['position_2']);
 							$posold = $this->pos->get_position($position2_old);
 							
-							if ($posnew !== FALSE)
+							if ($posnew !== false)
 							{
 								/* build the update array */
 								$position_update['new'] = array('pos_open' => ($posnew->pos_open == 0) ? 0 : ($posnew->pos_open - 1));
@@ -956,7 +956,7 @@ class Characters_base extends Controller {
 								$posnew_update = $this->pos->update_position($array['character']['position_2'], $position_update['new']);
 							}
 							
-							if ($posold !== FALSE)
+							if ($posold !== false)
 							{
 								/* build the update array */
 								$position_update['old'] = array('pos_open' => $posold->pos_open + 1);
@@ -1013,7 +1013,7 @@ class Characters_base extends Controller {
 						$data['join'][$sid]['fields'][$f_id]['field_label'] = $field->field_label_page;
 						
 						$info = $this->char->get_field_data($field->field_id, $data['id']);
-						$row = ($info->num_rows() > 0) ? $info->row() : FALSE;
+						$row = ($info->num_rows() > 0) ? $info->row() : false;
 						
 						switch ($field->field_type)
 						{
@@ -1022,7 +1022,7 @@ class Characters_base extends Controller {
 									'name' => $field->field_id,
 									'id' => $field->field_fid,
 									'class' => $field->field_class,
-									'value' => ($row !== FALSE) ? $row->data_value : '',
+									'value' => ($row !== false) ? $row->data_value : '',
 								);
 								
 								$data['join'][$sid]['fields'][$f_id]['input'] = form_input($input);
@@ -1034,7 +1034,7 @@ class Characters_base extends Controller {
 									'name' => $field->field_id,
 									'id' => $field->field_fid,
 									'class' => $field->field_class,
-									'value' => ($row !== FALSE) ? $row->data_value : '',
+									'value' => ($row !== false) ? $row->data_value : '',
 									'rows' => $field->field_rows
 								);
 								
@@ -1043,12 +1043,12 @@ class Characters_base extends Controller {
 								break;
 								
 							case 'select':
-								$value = FALSE;
-								$values = FALSE;
-								$input = FALSE;
+								$value = false;
+								$values = false;
+								$input = false;
 							
 								$values = $this->char->get_bio_values($field->field_id);
-								$data_val = ($row !== FALSE) ? $row->data_value : '';
+								$data_val = ($row !== false) ? $row->data_value : '';
 								
 								if ($values->num_rows() > 0)
 								{
@@ -1092,10 +1092,10 @@ class Characters_base extends Controller {
 				'value' => $char->suffix),
 			'position1_id' => $char->position_1,
 			'position2_id' => $char->position_2,
-			'position1_name' => ($pos1 !== FALSE) ? $pos1->pos_name : '',
-			'position2_name' => ($pos2 !== FALSE) ? $pos2->pos_name : '',
-			'position1_desc' => ($pos1 !== FALSE) ? $pos1->pos_desc : '',
-			'position2_desc' => ($pos2 !== FALSE) ? $pos2->pos_desc : '',
+			'position1_name' => ($pos1 !== false) ? $pos1->pos_name : '',
+			'position2_name' => ($pos2 !== false) ? $pos2->pos_name : '',
+			'position1_desc' => ($pos1 !== false) ? $pos1->pos_desc : '',
+			'position2_desc' => ($pos2 !== false) ? $pos2->pos_desc : '',
 			'rank_id' => $char->rank,
 			'rank_name' => $rank->rank_name,
 			'rank' => array(
@@ -1235,7 +1235,7 @@ class Characters_base extends Controller {
 		{
 			foreach ($coc->result() as $c)
 			{
-				$data['coc'][$c->coc_crew] = $this->char->get_character_name($c->coc_crew, TRUE);
+				$data['coc'][$c->coc_crew] = $this->char->get_character_name($c->coc_crew, true);
 			}
 		}
 		
@@ -1367,7 +1367,7 @@ class Characters_base extends Controller {
 			}
 			
 			/* create the fields in the data table */
-			$create = $this->char->create_character_data_fields($cid, NULL);
+			$create = $this->char->create_character_data_fields($cid, null);
 			
 			foreach ($array['fields'] as $k => $v)
 			{
@@ -1388,7 +1388,7 @@ class Characters_base extends Controller {
 					);
 					
 					/* execute the email method */
-					$email_gm = ($this->options['system_email'] == 'on') ? $this->_email('pending', $gm_data) : FALSE;
+					$email_gm = ($this->options['system_email'] == 'on') ? $this->_email('pending', $gm_data) : false;
 				}
 					
 				$message = sprintf(
@@ -1470,9 +1470,9 @@ class Characters_base extends Controller {
 								break;
 								
 							case 'select':
-								$value = FALSE;
-								$values = FALSE;
-								$input = FALSE;
+								$value = false;
+								$values = false;
+								$input = false;
 							
 								$values = $this->char->get_bio_values($field->field_id);
 								
@@ -1600,8 +1600,8 @@ class Characters_base extends Controller {
 			switch ($this->uri->segment(3))
 			{
 				case 'delete':
-					$id = $this->input->post('id', TRUE);
-					$id = (is_numeric($id)) ? $id : FALSE;
+					$id = $this->input->post('id', true);
+					$id = (is_numeric($id)) ? $id : false;
 					
 					/* get the user id */
 					$userid = $this->char->get_character($id, 'user');
@@ -1623,7 +1623,7 @@ class Characters_base extends Controller {
 							lang('flash_success'),
 							ucfirst(lang('global_character')),
 							lang('actions_deleted'),
-							($userid == 0 || $userid === NULL || $userid === FALSE) ? '' : ' '. $submsg
+							($userid == 0 || $userid === null || $userid === false) ? '' : ' '. $submsg
 						);
 		
 						$flash['status'] = 'success';
@@ -1755,7 +1755,7 @@ class Characters_base extends Controller {
 				{
 					$pos = $this->pos->get_position($a->position_1);
 					
-					if (array_key_exists($pos->pos_dept, $data['characters']) === FALSE)
+					if (array_key_exists($pos->pos_dept, $data['characters']) === false)
 					{
 						$cdept = $this->pos->get_position($a->position_2, 'pos_dept');
 					}
@@ -1768,13 +1768,13 @@ class Characters_base extends Controller {
 				{
 					$pos = $this->pos->get_position($a->position_1);
 					
-					if ($pos !== FALSE && array_key_exists($pos->pos_dept, $data['characters']) === FALSE)
+					if ($pos !== false && array_key_exists($pos->pos_dept, $data['characters']) === false)
 					{
 						$cdept = $this->dept->get_dept($pos->pos_dept, 'dept_parent');
 					}
 					else
 					{
-						$cdept = ($pos !== FALSE) ? $pos->pos_dept : '';
+						$cdept = ($pos !== false) ? $pos->pos_dept : '';
 					}
 				}
 				
@@ -1790,7 +1790,7 @@ class Characters_base extends Controller {
 						'id' => $a->charid,
 						'uid' => $a->user,
 						'name' => parse_name($name),
-						'position_1' => ($pos !== FALSE) ? $pos->pos_name : '',
+						'position_1' => ($pos !== false) ? $pos->pos_name : '',
 						'position_2' => (!empty($a->position_2)) ? $this->pos->get_position($a->position_2, 'pos_name') : '',
 						'pstatus' => $p['status'],
 						'email' => $p['email']
@@ -1914,7 +1914,7 @@ class Characters_base extends Controller {
 		$this->load->library('parser');
 		
 		/* define the variables */
-		$email = FALSE;
+		$email = false;
 		
 		switch ($type)
 		{
@@ -1929,7 +1929,7 @@ class Characters_base extends Controller {
 				
 				$em_loc = email_location('character_action', $this->email->mailtype);
 				
-				$message = $this->parser->parse($em_loc, $email_data, TRUE);
+				$message = $this->parser->parse($em_loc, $email_data, true);
 				
 				$this->email->from($data['email'], $data['name']);
 				$this->email->to($data['email']);
@@ -1950,7 +1950,7 @@ class Characters_base extends Controller {
 				
 				$em_loc = email_location('character_action', $this->email->mailtype);
 				
-				$message = $this->parser->parse($em_loc, $email_data, TRUE);
+				$message = $this->parser->parse($em_loc, $email_data, true);
 				
 				$this->email->from($data['email'], $data['name']);
 				$this->email->to($data['email']);
@@ -2037,7 +2037,7 @@ class Characters_base extends Controller {
 				$em_loc = email_location('main_join_gm', $this->email->mailtype);
 				
 				/* parse the message */
-				$message = $this->parser->parse($em_loc, $email_data, TRUE);
+				$message = $this->parser->parse($em_loc, $email_data, true);
 				
 				/* get the game masters email addresses */
 				$gm = $this->user->get_gm_emails();

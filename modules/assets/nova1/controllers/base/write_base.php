@@ -34,7 +34,7 @@ class Write_base extends Controller {
 		$this->load->model('system_model', 'sys');
 		$installed = $this->sys->check_install_status();
 		
-		if ($installed === FALSE)
+		if ($installed === false)
 		{ /* check whether the system is installed */
 			redirect('install/index', 'refresh');
 		}
@@ -47,7 +47,7 @@ class Write_base extends Controller {
 		$this->load->model('users_model', 'user');
 		
 		/* check to see if they are logged in */
-		$logged_in = $this->auth->is_logged_in(TRUE);
+		$logged_in = $this->auth->is_logged_in(true);
 		
 		/* an array of the global we want to retrieve */
 		$settings_array = array(
@@ -71,7 +71,7 @@ class Write_base extends Controller {
 		$this->timezone = $this->options['timezone'];
 		$this->dst = (bool) $this->options['daylight_savings'];
 		
-		if ($this->auth->is_logged_in() === TRUE)
+		if ($this->auth->is_logged_in() === true)
 		{ /* if there's a session, set the variables appropriately */
 			$this->skin = $this->session->userdata('skin_admin');
 			$this->rank = $this->session->userdata('display_rank');
@@ -87,12 +87,12 @@ class Write_base extends Controller {
 		$this->template->set_master_template($this->skin .'/template_admin.php');
 		
 		/* write the common elements to the template */
-		$this->template->write('nav_main', $this->menu->build('main', 'main'), TRUE);
-		$this->template->write('nav_sub', $this->menu->build('adminsub', 'write'), TRUE);
-		$this->template->write('panel_1', $this->user_panel->panel_1(), TRUE);
-		$this->template->write('panel_2', $this->user_panel->panel_2(), TRUE);
-		$this->template->write('panel_3', $this->user_panel->panel_3(), TRUE);
-		$this->template->write('panel_workflow', $this->user_panel->panel_workflow(), TRUE);
+		$this->template->write('nav_main', $this->menu->build('main', 'main'), true);
+		$this->template->write('nav_sub', $this->menu->build('adminsub', 'write'), true);
+		$this->template->write('panel_1', $this->user_panel->panel_1(), true);
+		$this->template->write('panel_2', $this->user_panel->panel_2(), true);
+		$this->template->write('panel_3', $this->user_panel->panel_3(), true);
+		$this->template->write('panel_workflow', $this->user_panel->panel_workflow(), true);
 		$this->template->write('title', $this->options['sim_name'] . ' :: ');
 	}
 
@@ -169,7 +169,7 @@ class Write_base extends Controller {
 				$data['logs_saved'][$i]['title'] = $l->log_title;
 				$data['logs_saved'][$i]['log_id'] = $l->log_id;
 				$data['logs_saved'][$i]['date'] = mdate($datestring, gmt_to_local($l->log_date, $this->timezone, $this->dst));
-				$data['logs_saved'][$i]['author'] = $this->char->get_character_name($l->log_author_character, TRUE);
+				$data['logs_saved'][$i]['author'] = $this->char->get_character_name($l->log_author_character, true);
 				
 				++$i;
 			}
@@ -229,7 +229,7 @@ class Write_base extends Controller {
 				$data['logs'][$i]['title'] = $l->log_title;
 				$data['logs'][$i]['log_id'] = $l->log_id;
 				$data['logs'][$i]['date'] = mdate($datestring, gmt_to_local($l->log_date, $this->timezone, $this->dst));
-				$data['logs'][$i]['author'] = $this->char->get_character_name($l->log_author_character, TRUE);
+				$data['logs'][$i]['author'] = $this->char->get_character_name($l->log_author_character, true);
 				
 				++$i;
 			}
@@ -284,7 +284,7 @@ class Write_base extends Controller {
 				$data['logs_all'][$i]['title'] = $l->log_title;
 				$data['logs_all'][$i]['log_id'] = $l->log_id;
 				$data['logs_all'][$i]['date'] = mdate($datestring, gmt_to_local($l->log_date, $this->timezone, $this->dst));
-				$data['logs_all'][$i]['author'] = $this->char->get_character_name($l->log_author_character, TRUE);
+				$data['logs_all'][$i]['author'] = $this->char->get_character_name($l->log_author_character, true);
 				
 				++$i;
 			}
@@ -298,7 +298,7 @@ class Write_base extends Controller {
 				$data['news_all'][$i]['title'] = $n->news_title;
 				$data['news_all'][$i]['news_id'] = $n->news_id;
 				$data['news_all'][$i]['category'] = $n->newscat_name;
-				$data['news_all'][$i]['author'] = $this->char->get_character_name($n->news_author_character, TRUE);
+				$data['news_all'][$i]['author'] = $this->char->get_character_name($n->news_author_character, true);
 				$data['news_all'][$i]['date'] = mdate($datestring, gmt_to_local($n->news_date, $this->timezone, $this->dst));
 				
 				++$i;
@@ -367,7 +367,7 @@ class Write_base extends Controller {
 		}
 		
 		/* set the variables */
-		$id = $this->uri->segment(3, FALSE, TRUE);
+		$id = $this->uri->segment(3, false, true);
 		
 		$data['key'] = array(
 			'all' => '0',
@@ -376,30 +376,30 @@ class Write_base extends Controller {
 		
 		$data['to'] = '0';
 		
-		$content = FALSE;
-		$title = FALSE;
-		$tags = FALSE;
-		$timeline = FALSE;
-		$location = FALSE;
-		$mission = FALSE;
+		$content = false;
+		$title = false;
+		$tags = false;
+		$timeline = false;
+		$location = false;
+		$mission = false;
 		
 		if (isset($_POST['submit']))
 		{
 			/* define the POST variables */
-			$tags = $this->input->post('tags', TRUE);
-			$title = $this->input->post('title', TRUE);
-			$content = $this->input->post('content', TRUE);
-			$mission = $this->input->post('mission', TRUE);
-			$timeline = $this->input->post('timeline', TRUE);
-			$location = $this->input->post('location', TRUE);
+			$tags = $this->input->post('tags', true);
+			$title = $this->input->post('title', true);
+			$content = $this->input->post('content', true);
+			$mission = $this->input->post('mission', true);
+			$timeline = $this->input->post('timeline', true);
+			$location = $this->input->post('location', true);
 			
-			$authors = $this->input->post('authors', TRUE);
-			$authors_list = $this->input->post('to', TRUE);
+			$authors = $this->input->post('authors', true);
+			$authors_list = $this->input->post('to', true);
 			
-			$action = strtolower($this->input->post('submit', TRUE));
-			$status = FALSE;
-			$flash = FALSE;
-			$illegalpost = FALSE;
+			$action = strtolower($this->input->post('submit', true));
+			$status = false;
+			$flash = false;
+			$illegalpost = false;
 			
 			if ($this->uri->segment(3) != 'missionCreate')
 			{
@@ -434,7 +434,7 @@ class Write_base extends Controller {
 						$pid = $this->sys->get_item('characters', 'charid', $value, 'user');
 						
 						/* put the users into an array */
-						$users[] = ($pid !== FALSE) ? $pid : NULL;
+						$users[] = ($pid !== false) ? $pid : null;
 					}
 					
 					foreach ($users as $a => $b)
@@ -455,7 +455,7 @@ class Write_base extends Controller {
 					/* make sure the person posting is actually part of the post */
 					if (!in_array($this->session->userdata('userid'), $users))
 					{
-						$illegalpost = TRUE;
+						$illegalpost = true;
 						$action = lang('actions_save');
 					}
 					
@@ -465,7 +465,7 @@ class Write_base extends Controller {
 							/* get the log information */
 							$row = $this->posts->get_post($id);
 							
-							if ($row !== FALSE)
+							if ($row !== false)
 							{
 								if ($row->post_status == 'saved')
 								{
@@ -473,17 +473,17 @@ class Write_base extends Controller {
 				
 									foreach ($this->session->userdata('characters') as $check)
 									{
-										if (strstr($row->post_authors, $check) === FALSE)
+										if (strstr($row->post_authors, $check) === false)
 										{
-											$valid[] = FALSE;
+											$valid[] = false;
 										}
 										else
 										{
-											$valid[] = TRUE;
+											$valid[] = true;
 										}
 									}
 									
-									if (!in_array(TRUE, $valid))
+									if (!in_array(true, $valid))
 									{
 										redirect('admin/error/4');
 									}
@@ -512,7 +512,7 @@ class Write_base extends Controller {
 											);
 											
 											/* send the email */
-											$email = ($this->options['system_email'] == 'on') ? $this->_email('post_delete', $email_data) : FALSE;
+											$email = ($this->options['system_email'] == 'on') ? $this->_email('post_delete', $email_data) : false;
 										}
 									}
 									else
@@ -536,7 +536,7 @@ class Write_base extends Controller {
 							break;
 							
 						case 'save':
-							if ($id !== FALSE)
+							if ($id !== false)
 							{ /* if there is an ID, it is a previously saved post */
 								$update_array = array(
 									'post_authors' => $authors_string,
@@ -561,7 +561,7 @@ class Write_base extends Controller {
 										lang('flash_success'),
 										ucfirst(lang('global_missionpost')),
 										lang('actions_saved'),
-										($illegalpost === TRUE) ? ' '. lang('error_illegal_post') : ''
+										($illegalpost === true) ? ' '. lang('error_illegal_post') : ''
 									);
 	
 									$flash['status'] = 'success';
@@ -573,7 +573,7 @@ class Write_base extends Controller {
 										lang('flash_failure'),
 										ucfirst(lang('global_missionpost')),
 										lang('actions_saved'),
-										($illegalpost === TRUE) ? ' '. lang('error_illegal_post') : ''
+										($illegalpost === true) ? ' '. lang('error_illegal_post') : ''
 									);
 	
 									$flash['status'] = 'error';
@@ -612,7 +612,7 @@ class Write_base extends Controller {
 										lang('flash_success'),
 										ucfirst(lang('global_missionpost')),
 										lang('actions_saved'),
-										($illegalpost === TRUE) ? ' '. lang('error_illegal_post') : ''
+										($illegalpost === true) ? ' '. lang('error_illegal_post') : ''
 									);
 	
 									$flash['status'] = 'success';
@@ -624,7 +624,7 @@ class Write_base extends Controller {
 										lang('flash_failure'),
 										ucfirst(lang('global_missionpost')),
 										lang('actions_saved'),
-										($illegalpost === TRUE) ? ' '. lang('error_illegal_post') : ''
+										($illegalpost === true) ? ' '. lang('error_illegal_post') : ''
 									);
 	
 									$flash['status'] = 'error';
@@ -648,16 +648,16 @@ class Write_base extends Controller {
 								);
 								
 								/* send the email */
-								$email = ($this->options['system_email'] == 'on') ? $this->_email('post_save', $email_data) : FALSE;
+								$email = ($this->options['system_email'] == 'on') ? $this->_email('post_save', $email_data) : false;
 							}
 							
 							/* reset the fields if everything worked */
-							$content = FALSE;
-							$title = FALSE;
-							$tags = FALSE;
-							$timeline = FALSE;
-							$location = FALSE;
-							$mission = FALSE;
+							$content = false;
+							$title = false;
+							$tags = false;
+							$timeline = false;
+							$location = false;
+							$mission = false;
 							
 							break;
 							
@@ -665,7 +665,7 @@ class Write_base extends Controller {
 							/* check the moderation status */
 							$status = $this->user->checking_moderation('post', $authors_string);
 							
-							if ($id !== FALSE)
+							if ($id !== false)
 							{ /* if there is an ID, it is a previously saved post */
 								$update_array = array(
 									'post_authors' => $authors_string,
@@ -720,12 +720,12 @@ class Write_base extends Controller {
 									if ($status == 'pending')
 									{
 										/* send the email */
-										$email = ($this->options['system_email'] == 'on') ? $this->_email('post_pending', $email_data) : FALSE;
+										$email = ($this->options['system_email'] == 'on') ? $this->_email('post_pending', $email_data) : false;
 									}
 									else
 									{
 										/* send the email */
-										$email = ($this->options['system_email'] == 'on') ? $this->_email('post', $email_data) : FALSE;
+										$email = ($this->options['system_email'] == 'on') ? $this->_email('post', $email_data) : false;
 									}
 								}
 								else
@@ -796,20 +796,20 @@ class Write_base extends Controller {
 									if ($status == 'pending')
 									{
 										/* send the email */
-										$email = ($this->options['system_email'] == 'on') ? $this->_email('post_pending', $email_data) : FALSE;
+										$email = ($this->options['system_email'] == 'on') ? $this->_email('post_pending', $email_data) : false;
 									}
 									else
 									{
 										/* send the email */
-										$email = ($this->options['system_email'] == 'on') ? $this->_email('post', $email_data) : FALSE;
+										$email = ($this->options['system_email'] == 'on') ? $this->_email('post', $email_data) : false;
 									}
 									
 									/* reset the fields if everything worked */
-									$content = FALSE;
-									$title = FALSE;
-									$tags = FALSE;
-									$timeline = FALSE;
-									$location = FALSE;
+									$content = false;
+									$title = false;
+									$tags = false;
+									$timeline = false;
+									$location = false;
 								}
 								else
 								{
@@ -875,7 +875,7 @@ class Write_base extends Controller {
 				}
 				
 				/* toss them in the array */
-				$allchars[$label][$a->charid] = $this->char->get_character_name($a->charid, TRUE);
+				$allchars[$label][$a->charid] = $this->char->get_character_name($a->charid, true);
 			}
 			
 			$data['all'] = array(
@@ -908,7 +908,7 @@ class Write_base extends Controller {
 		}
 		else
 		{
-			$data['all'] = FALSE;
+			$data['all'] = false;
 		}
 		
 		/* build the remove image */
@@ -922,25 +922,25 @@ class Write_base extends Controller {
 		$js_data['remove'] = img($remove);
 		
 		/* get the data if it is not a new PM */
-		$row = ($id !== FALSE) ? $this->posts->get_post($id) : FALSE;
+		$row = ($id !== false) ? $this->posts->get_post($id) : false;
 		
-		if ($row !== FALSE)
+		if ($row !== false)
 		{ /* make sure the info object exists */
 			$valid = array();
 			
 			foreach ($this->session->userdata('characters') as $check)
 			{
-				if (strstr($row->post_authors, $check) === FALSE)
+				if (strstr($row->post_authors, $check) === false)
 				{
-					$valid[] = FALSE;
+					$valid[] = false;
 				}
 				else
 				{
-					$valid[] = TRUE;
+					$valid[] = true;
 				}
 			}
 			
-			if (!in_array(TRUE, $valid))
+			if (!in_array(true, $valid))
 			{ /* sorry, you aren't one of the others, so you have to leave */
 				redirect('admin/error/4');
 			}
@@ -962,7 +962,7 @@ class Write_base extends Controller {
 			$i = 1;
 			foreach ($to_array as $value)
 			{
-				$to_name = $this->char->get_character_name($value, TRUE);
+				$to_name = $this->char->get_character_name($value, true);
 				
 				$data['recipient_list'][$i] = '<span class="'. $value .'">';
 				$data['recipient_list'][$i].= '<a href="#" id="remove_author" class="image" myID="'. $value .'" myName="'.  $to_name .'">';
@@ -1003,7 +1003,7 @@ class Write_base extends Controller {
 				'name' => 'location',
 				'id' => 'location',
 				'value' => $location),
-			'mission' => ($id !== FALSE && $row !== FALSE) ? $row->post_mission : FALSE,
+			'mission' => ($id !== false && $row !== false) ? $row->post_mission : false,
 			'post' => array(
 				'type' => 'submit',
 				'class' => 'button-main',
@@ -1052,7 +1052,7 @@ class Write_base extends Controller {
 		}
 		else
 		{
-			$data['missions'] = FALSE;
+			$data['missions'] = false;
 			$data['inputs']['post']['disabled'] = 'yes';
 			$data['inputs']['save']['disabled'] = 'yes';
 			$data['inputs']['delete']['disabled'] = 'yes';
@@ -1060,7 +1060,7 @@ class Write_base extends Controller {
 			$js_data['missionCount'] = 0;
 		}
 		
-		$js_data['authorized'] = $this->auth->check_access('manage/missions', FALSE);
+		$js_data['authorized'] = $this->auth->check_access('manage/missions', false);
 		
 		$nomission = sprintf(
 			lang('error_no_mission_fail'),
@@ -1073,7 +1073,7 @@ class Write_base extends Controller {
 		$data['header'] = ucwords(lang('actions_write') .' '. lang('global_missionpost'));
 		
 		/* set the form location */
-		$data['form_action'] = ($id !== FALSE) ? 'write/missionpost/'. $id : 'write/missionpost';
+		$data['form_action'] = ($id !== false) ? 'write/missionpost/'. $id : 'write/missionpost';
 		
 		$data['label'] = array(
 			'addauthor' => ucwords(lang('actions_add') .' '. lang('labels_author')),
@@ -1123,25 +1123,25 @@ class Write_base extends Controller {
 		}
 		
 		/* set the variables */
-		$id = $this->uri->segment(3, FALSE, TRUE);
+		$id = $this->uri->segment(3, false, true);
 		$data['key'] = array('private' => 'n', 'cat' => 0);
-		$content = FALSE;
-		$title = FALSE;
-		$tags = FALSE;
-		$private = FALSE;
+		$content = false;
+		$title = false;
+		$tags = false;
+		$private = false;
 		
 		if (isset($_POST['submit']))
 		{
 			/* define the POST variables */
-			$title = $this->input->post('title', TRUE);
-			$content = $this->input->post('content', TRUE);
-			$author = $this->input->post('author', TRUE);
-			$tags = $this->input->post('tags', TRUE);
-			$action = strtolower($this->input->post('submit', TRUE));
-			$category = $this->input->post('newscat', TRUE);
-			$private = $this->input->post('private', TRUE);
-			$status = FALSE;
-			$flash = FALSE;
+			$title = $this->input->post('title', true);
+			$content = $this->input->post('content', true);
+			$author = $this->input->post('author', true);
+			$tags = $this->input->post('tags', true);
+			$action = strtolower($this->input->post('submit', true));
+			$category = $this->input->post('newscat', true);
+			$private = $this->input->post('private', true);
+			$status = false;
+			$flash = false;
 			
 			switch ($action)
 			{
@@ -1149,7 +1149,7 @@ class Write_base extends Controller {
 					/* get the log information */
 					$row = $this->news->get_news_item($id);
 					
-					if ($row !== FALSE)
+					if ($row !== false)
 					{
 						if ($row->news_status == 'saved' &&
 								$row->news_author_user == $this->session->userdata('userid'))
@@ -1194,7 +1194,7 @@ class Write_base extends Controller {
 					break;
 					
 				case 'save':
-					if ($id !== FALSE)
+					if ($id !== false)
 					{ /* if there is an ID, it is a previously saved post */
 						$update_array = array(
 							'news_author_user' => $this->session->userdata('userid'),
@@ -1273,9 +1273,9 @@ class Write_base extends Controller {
 							$flash['message'] = text_output($message);
 							
 							/* reset the fields if everything worked */
-							$content = FALSE;
-							$title = FALSE;
-							$tags = FALSE;
+							$content = false;
+							$title = false;
+							$tags = false;
 							$data['key'] = array('private' => 'n', 'cat' => 0);
 						}
 						else
@@ -1301,7 +1301,7 @@ class Write_base extends Controller {
 					/* check the moderation status */
 					$status = $this->user->checking_moderation('news', $this->session->userdata('userid'));
 					
-					if ($id !== FALSE)
+					if ($id !== false)
 					{ /* if there is an ID, it is a previously saved post */
 						$update_array = array(
 							'news_author_user' => $this->session->userdata('userid'),
@@ -1341,12 +1341,12 @@ class Write_base extends Controller {
 							if ($status == 'pending')
 							{
 								/* send the email */
-								$email = ($this->options['system_email'] == 'on') ? $this->_email('news_pending', $email_data) : FALSE;
+								$email = ($this->options['system_email'] == 'on') ? $this->_email('news_pending', $email_data) : false;
 							}
 							else
 							{
 								/* send the email */
-								$email = ($this->options['system_email'] == 'on') ? $this->_email('news', $email_data) : FALSE;
+								$email = ($this->options['system_email'] == 'on') ? $this->_email('news', $email_data) : false;
 							}
 						}
 						else
@@ -1403,18 +1403,18 @@ class Write_base extends Controller {
 							if ($status == 'pending')
 							{
 								/* send the email */
-								$email = ($this->options['system_email'] == 'on') ? $this->_email('news_pending', $email_data) : FALSE;
+								$email = ($this->options['system_email'] == 'on') ? $this->_email('news_pending', $email_data) : false;
 							}
 							else
 							{
 								/* send the email */
-								$email = ($this->options['system_email'] == 'on') ? $this->_email('news', $email_data) : FALSE;
+								$email = ($this->options['system_email'] == 'on') ? $this->_email('news', $email_data) : false;
 							}
 							
 							/* reset the fields if everything worked */
-							$content = FALSE;
-							$title = FALSE;
-							$tags = FALSE;
+							$content = false;
+							$title = false;
+							$tags = false;
 							$data['key'] = array('private' => 'n', 'cat' => 0);
 						}
 						else
@@ -1444,12 +1444,12 @@ class Write_base extends Controller {
 		
 		/* set the ID and name */
 		$data['character']['id'] = $this->session->userdata('main_char');
-		$data['character']['name'] = $this->char->get_character_name($this->session->userdata('main_char'), TRUE);
+		$data['character']['name'] = $this->char->get_character_name($this->session->userdata('main_char'), true);
 		
 		/* get the data */
-		$row = ($id !== FALSE) ? $this->news->get_news_item($id) : FALSE;
+		$row = ($id !== false) ? $this->news->get_news_item($id) : false;
 		
-		if ($row !== FALSE)
+		if ($row !== false)
 		{
 			if ($row->news_author_user != $this->session->userdata('userid'))
 			{ /* sorry, if you aren't the author, you're not allowed here */
@@ -1527,7 +1527,7 @@ class Write_base extends Controller {
 		$data['header'] = ucwords(lang('actions_write') .' '. lang('global_newsitem'));
 		
 		/* set the form location */
-		$data['form_action'] = ($id !== FALSE) ? 'write/newsitem/'. $id : 'write/newsitem';
+		$data['form_action'] = ($id !== false) ? 'write/newsitem/'. $id : 'write/newsitem';
 		
 		$data['label'] = array(
 			'author' => ucfirst(lang('labels_author')),
@@ -1570,22 +1570,22 @@ class Write_base extends Controller {
 		}
 		
 		/* set the variables */
-		$id = $this->uri->segment(3, FALSE, TRUE);
+		$id = $this->uri->segment(3, false, true);
 		$data['key'] = '';
-		$content = FALSE;
-		$title = FALSE;
-		$tags = FALSE;
+		$content = false;
+		$title = false;
+		$tags = false;
 		
 		if (isset($_POST['submit']))
 		{
 			/* define the POST variables */
-			$title = $this->input->post('title', TRUE);
-			$content = $this->input->post('content', TRUE);
-			$author = $this->input->post('author', TRUE);
-			$tags = $this->input->post('tags', TRUE);
-			$action = strtolower($this->input->post('submit', TRUE));
-			$status = FALSE;
-			$flash = FALSE;
+			$title = $this->input->post('title', true);
+			$content = $this->input->post('content', true);
+			$author = $this->input->post('author', true);
+			$tags = $this->input->post('tags', true);
+			$action = strtolower($this->input->post('submit', true));
+			$status = false;
+			$flash = false;
 			
 			if ($author == 0)
 			{
@@ -1603,7 +1603,7 @@ class Write_base extends Controller {
 						/* get the log information */
 						$row = $this->logs->get_log($id);
 						
-						if ($row !== FALSE)
+						if ($row !== false)
 						{
 							if ($row->log_status == 'saved' &&
 									$row->log_author_user == $this->session->userdata('userid'))
@@ -1648,7 +1648,7 @@ class Write_base extends Controller {
 						break;
 						
 					case 'save':
-						if ($id !== FALSE)
+						if ($id !== false)
 						{ /* if there is an ID, it is a previously saved post */
 							$update_array = array(
 								'log_author_user' => $this->session->userdata('userid'),
@@ -1723,9 +1723,9 @@ class Write_base extends Controller {
 								$flash['message'] = text_output($message);
 								
 								/* reset the fields if everything worked */
-								$content = FALSE;
-								$title = FALSE;
-								$tags = FALSE;
+								$content = false;
+								$title = false;
+								$tags = false;
 							}
 							else
 							{
@@ -1750,7 +1750,7 @@ class Write_base extends Controller {
 						/* check the moderation status */
 						$status = $this->user->checking_moderation('log', $this->session->userdata('userid'));
 						
-						if ($id !== FALSE)
+						if ($id !== false)
 						{ /* if there is an ID, it is a previously saved post */
 							$update_array = array(
 								'log_author_user' => $this->session->userdata('userid'),
@@ -1792,12 +1792,12 @@ class Write_base extends Controller {
 								if ($status == 'pending')
 								{
 									/* send the email */
-									$email = ($this->options['system_email'] == 'on') ? $this->_email('log_pending', $email_data) : FALSE;
+									$email = ($this->options['system_email'] == 'on') ? $this->_email('log_pending', $email_data) : false;
 								}
 								else
 								{
 									/* send the email */
-									$email = ($this->options['system_email'] == 'on') ? $this->_email('log', $email_data) : FALSE;
+									$email = ($this->options['system_email'] == 'on') ? $this->_email('log', $email_data) : false;
 								}
 							}
 							else
@@ -1856,18 +1856,18 @@ class Write_base extends Controller {
 								if ($status == 'pending')
 								{
 									/* send the email */
-									$email = ($this->options['system_email'] == 'on') ? $this->_email('log_pending', $email_data) : FALSE;
+									$email = ($this->options['system_email'] == 'on') ? $this->_email('log_pending', $email_data) : false;
 								}
 								else
 								{
 									/* send the email */
-									$email = ($this->options['system_email'] == 'on') ? $this->_email('log', $email_data) : FALSE;
+									$email = ($this->options['system_email'] == 'on') ? $this->_email('log', $email_data) : false;
 								}
 								
 								/* reset the fields if everything worked */
-								$content = FALSE;
-								$title = FALSE;
-								$tags = FALSE;
+								$content = false;
+								$title = false;
+								$tags = false;
 							}
 							else
 							{
@@ -1919,7 +1919,7 @@ class Write_base extends Controller {
 					}
 					
 					/* toss them in the array */
-					$data['characters'][$label][$item] = $this->char->get_character_name($item, TRUE);
+					$data['characters'][$label][$item] = $this->char->get_character_name($item, true);
 				}
 			}
 		}
@@ -1927,13 +1927,13 @@ class Write_base extends Controller {
 		{
 			/* set the ID and name */
 			$data['character']['id'] = $char[0];
-			$data['character']['name'] = $this->char->get_character_name($char[0], TRUE);
+			$data['character']['name'] = $this->char->get_character_name($char[0], true);
 		}
 		
 		/* get the data if it is not a new PM */
-		$row = ($id !== FALSE) ? $this->logs->get_log($id) : FALSE;
+		$row = ($id !== false) ? $this->logs->get_log($id) : false;
 		
-		if ($row !== FALSE)
+		if ($row !== false)
 		{
 			if ($row->log_author_user != $this->session->userdata('userid'))
 			{ /* sorry, if you aren't the author, you're not allowed here */
@@ -2006,7 +2006,7 @@ class Write_base extends Controller {
 		$data['header'] = ucwords(lang('actions_write') .' '. lang('global_personallog'));
 		
 		/* set the form location */
-		$data['form_action'] = ($id !== FALSE) ? 'write/personallog/'. $id : 'write/personallog';
+		$data['form_action'] = ($id !== false) ? 'write/personallog/'. $id : 'write/personallog';
 		
 		$data['label'] = array(
 			'author' => ucwords(lang('labels_author')),
@@ -2036,13 +2036,13 @@ class Write_base extends Controller {
 		$this->load->library('parser');
 		
 		/* define the variables */
-		$email = FALSE;
+		$email = false;
 		
 		switch ($type)
 		{
 			case 'news':
 				/* set some variables */
-				$from_name = $this->char->get_character_name($data['author'], TRUE, TRUE);
+				$from_name = $this->char->get_character_name($data['author'], true, true);
 				$from_email = $this->user->get_email_address('character', $data['author']);
 				$subject = $data['category'] .' - '. $data['title'];
 				
@@ -2063,10 +2063,10 @@ class Write_base extends Controller {
 				$em_loc = email_location('write_newsitem', $this->email->mailtype);
 				
 				/* parse the message */
-				$message = $this->parser->parse($em_loc, $email_data, TRUE);
+				$message = $this->parser->parse($em_loc, $email_data, true);
 				
 				/* get the email addresses */
-				$emails = $this->user->get_crew_emails(TRUE, 'email_news_items');
+				$emails = $this->user->get_crew_emails(true, 'email_news_items');
 				
 				/* make a string of email addresses */
 				$to = implode(',', $emails);
@@ -2081,7 +2081,7 @@ class Write_base extends Controller {
 				
 			case 'news_pending':
 				/* set some variables */
-				$from_name = $this->char->get_character_name($data['author'], TRUE, TRUE);
+				$from_name = $this->char->get_character_name($data['author'], true, true);
 				$from_email = $this->user->get_email_address('character', $data['author']);
 				$subject = $data['category'] .' - '. $data['title'];
 
@@ -2107,10 +2107,10 @@ class Write_base extends Controller {
 				$em_loc = email_location('entry_pending', $this->email->mailtype);
 
 				/* parse the message */
-				$message = $this->parser->parse($em_loc, $email_data, TRUE);
+				$message = $this->parser->parse($em_loc, $email_data, true);
 
 				/* get the email addresses */
-				$emails = $this->user->get_crew_emails(TRUE, 'email_news_items');
+				$emails = $this->user->get_crew_emails(true, 'email_news_items');
 
 				/* make a string of email addresses */
 				$to = implode(',', $this->user->get_emails_with_access('manage/news', 2));
@@ -2125,7 +2125,7 @@ class Write_base extends Controller {
 				
 			case 'log':
 				/* set some variables */
-				$from_name = $this->char->get_character_name($data['author'], TRUE, TRUE);
+				$from_name = $this->char->get_character_name($data['author'], true, true);
 				$from_email = $this->user->get_email_address('character', $data['author']);
 				$subject = $from_name ."'s ". lang('email_subject_personal_log') ." - ". $data['title'];
 				
@@ -2146,10 +2146,10 @@ class Write_base extends Controller {
 				$em_loc = email_location('write_personallog', $this->email->mailtype);
 				
 				/* parse the message */
-				$message = $this->parser->parse($em_loc, $email_data, TRUE);
+				$message = $this->parser->parse($em_loc, $email_data, true);
 				
 				/* get the email addresses */
-				$emails = $this->user->get_crew_emails(TRUE, 'email_personal_logs');
+				$emails = $this->user->get_crew_emails(true, 'email_personal_logs');
 				
 				/* make a string of email addresses */
 				$to = implode(',', $emails);
@@ -2164,7 +2164,7 @@ class Write_base extends Controller {
 				
 			case 'log_pending':
 				/* set some variables */
-				$from_name = $this->char->get_character_name($data['author'], TRUE, TRUE);
+				$from_name = $this->char->get_character_name($data['author'], true, true);
 				$from_email = $this->user->get_email_address('character', $data['author']);
 				$subject = $from_name ."'s ". lang('email_subject_personal_log') ." - ". $data['title'];
 
@@ -2191,7 +2191,7 @@ class Write_base extends Controller {
 				$em_loc = email_location('entry_pending', $this->email->mailtype);
 
 				/* parse the message */
-				$message = $this->parser->parse($em_loc, $email_data, TRUE);
+				$message = $this->parser->parse($em_loc, $email_data, true);
 
 				/* get the email addresses */
 				$to = implode(',', $this->user->get_emails_with_access('manage/logs', 2));
@@ -2208,7 +2208,7 @@ class Write_base extends Controller {
 				/* set some variables */
 				$subject = $data['mission'] ." - ". $data['title'];
 				$mission = lang('email_content_post_mission') . $data['mission'];
-				$authors = lang('email_content_post_author') . $this->char->get_authors($data['authors'], TRUE);
+				$authors = lang('email_content_post_author') . $this->char->get_authors($data['authors'], true);
 				$timeline = lang('email_content_post_timeline') . $data['timeline'];
 				$location = lang('email_content_post_location') . $data['location'];
 				
@@ -2218,14 +2218,14 @@ class Write_base extends Controller {
 				/* find out how many of the submitter's characters are in the string */
 				foreach ($this->session->userdata('characters') as $value)
 				{
-					if (strstr($data['authors'], $value) !== FALSE)
+					if (strstr($data['authors'], $value) !== false)
 					{
 						$my_chars[] = $value;
 					}
 				}
 				
 				/* set who the email is coming from */
-				$from_name = $this->char->get_character_name($my_chars[0], TRUE, TRUE);
+				$from_name = $this->char->get_character_name($my_chars[0], true, true);
 				$from_email = $this->user->get_email_address('character', $my_chars[0]);
 				
 				/* set the content */
@@ -2247,10 +2247,10 @@ class Write_base extends Controller {
 				$em_loc = email_location('write_missionpost', $this->email->mailtype);
 				
 				/* parse the message */
-				$message = $this->parser->parse($em_loc, $email_data, TRUE);
+				$message = $this->parser->parse($em_loc, $email_data, true);
 				
 				/* get the email addresses */
-				$emails = $this->user->get_crew_emails(TRUE, 'email_mission_posts');
+				$emails = $this->user->get_crew_emails(true, 'email_mission_posts');
 				
 				/* make a string of email addresses */
 				$to = implode(',', $emails);
@@ -2273,14 +2273,14 @@ class Write_base extends Controller {
 				/* find out how many of the submitter's characters are in the string */
 				foreach ($this->session->userdata('characters') as $value)
 				{
-					if (strstr($data['authors'], $value) !== FALSE)
+					if (strstr($data['authors'], $value) !== false)
 					{
 						$my_chars[] = $value;
 					}
 				}
 
 				/* set who the email is coming from */
-				$from_name = $this->char->get_character_name($my_chars[0], TRUE, TRUE);
+				$from_name = $this->char->get_character_name($my_chars[0], true, true);
 				$from_email = $this->user->get_email_address('character', $my_chars[0]);
 
 				/* set the content */
@@ -2299,7 +2299,7 @@ class Write_base extends Controller {
 				$em_loc = email_location('write_missionpost_deleted', $this->email->mailtype);
 
 				/* parse the message */
-				$message = $this->parser->parse($em_loc, $email_data, TRUE);
+				$message = $this->parser->parse($em_loc, $email_data, true);
 
 				/* get the email addresses */
 				$emails = $this->char->get_character_emails($data['authors']);
@@ -2332,7 +2332,7 @@ class Write_base extends Controller {
 			case 'post_pending':
 				$chars = explode(',', $data['authors']);
 				
-				$from_name = $this->char->get_character_name($chars[0], TRUE, TRUE);
+				$from_name = $this->char->get_character_name($chars[0], true, true);
 				$from_email = $this->user->get_email_address('character', $chars[0]);
 				$subject = $data['mission'] ." - ". $data['title'];
 
@@ -2359,7 +2359,7 @@ class Write_base extends Controller {
 				$em_loc = email_location('entry_pending', $this->email->mailtype);
 
 				/* parse the message */
-				$message = $this->parser->parse($em_loc, $email_data, TRUE);
+				$message = $this->parser->parse($em_loc, $email_data, true);
 
 				/* get the email addresses */
 				$to = implode(',', $this->user->get_emails_with_access('manage/posts', 2));
@@ -2376,7 +2376,7 @@ class Write_base extends Controller {
 				/* set some variables */
 				$subject = $data['mission'] ." - ". $data['title'] . lang('email_subject_saved_post');
 				$mission = lang('email_content_post_mission') . $data['mission'];
-				$authors = lang('email_content_post_author') . $this->char->get_authors($data['authors'], TRUE);
+				$authors = lang('email_content_post_author') . $this->char->get_authors($data['authors'], true);
 				$timeline = lang('email_content_post_timeline') . $data['timeline'];
 				$location = lang('email_content_post_location') . $data['location'];
 				
@@ -2386,14 +2386,14 @@ class Write_base extends Controller {
 				/* find out how many of the submitter's characters are in the string */
 				foreach ($this->session->userdata('characters') as $value)
 				{
-					if (strstr($data['authors'], $value) !== FALSE)
+					if (strstr($data['authors'], $value) !== false)
 					{
 						$my_chars[] = $value;
 					}
 				}
 				
 				/* set who the email is coming from */
-				$from_name = $this->char->get_character_name($my_chars[0], TRUE, TRUE);
+				$from_name = $this->char->get_character_name($my_chars[0], true, true);
 				$from_email = $this->user->get_email_address('character', $my_chars[0]);
 				
 				/* set the content */
@@ -2417,7 +2417,7 @@ class Write_base extends Controller {
 				$em_loc = email_location('write_missionpost_saved', $this->email->mailtype);
 				
 				/* parse the message */
-				$message = $this->parser->parse($em_loc, $email_data, TRUE);
+				$message = $this->parser->parse($em_loc, $email_data, true);
 				
 				/* get the email addresses */
 				$emails = $this->char->get_character_emails($data['authors']);

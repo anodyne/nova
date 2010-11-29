@@ -44,7 +44,7 @@ class MY_Loader extends CI_Loader {
 		
 		if ( ! isset($autoload))
 		{
-			return FALSE;
+			return false;
 		}
 		
 		// Load any custom config file
@@ -60,7 +60,7 @@ class MY_Loader extends CI_Loader {
 		// Autoload plugins, helpers and languages
 		foreach (array('helper', 'plugin', 'language') as $type)
 		{			
-			if (isset($autoload[$type]) AND count($autoload[$type]) > 0)
+			if (isset($autoload[$type]) and count($autoload[$type]) > 0)
 			{
 				$this->$type($autoload[$type]);
 			}		
@@ -74,7 +74,7 @@ class MY_Loader extends CI_Loader {
 		}
 		
 		// Load libraries
-		if (isset($autoload['libraries']) AND count($autoload['libraries']) > 0)
+		if (isset($autoload['libraries']) and count($autoload['libraries']) > 0)
 		{
 			// Load the database driver.
 			if (in_array('database', $autoload['libraries']))

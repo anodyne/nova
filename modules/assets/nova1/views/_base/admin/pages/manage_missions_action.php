@@ -2,11 +2,11 @@
 
 <p class="bold"><?php echo anchor('manage/missions', $label['back']);?></p>
 
-<?php if ($id === FALSE): ?>
+<?php if ($id === false): ?>
 	<?php echo text_output($label['images_later'], 'p', 'bold orange');?>
 <?php endif;?>
 
-<?php if ($id !== FALSE): ?>
+<?php if ($id !== false): ?>
 	<div id="tabs">
 		<ul>
 			<li><a href="#one"><span><?php echo $label['info'];?></span></a></li>
@@ -16,7 +16,7 @@
 
 	<?php echo form_open('manage/missions/'. $form);?>
 	
-<?php if ($id !== FALSE): ?>
+<?php if ($id !== false): ?>
 	<div id="one">
 <?php endif;?>
 		<p>
@@ -67,7 +67,7 @@
 			<kbd><?php echo $label['notes'];?></kbd>
 			<?php echo form_textarea($inputs['notes']);?>
 		</p>
-<?php if ($id !== FALSE): ?>
+<?php if ($id !== false): ?>
 	</div>
 	
 	<div id="two">
@@ -114,6 +114,6 @@
 	
 	<?php echo form_close();?>
 
-<?php if ($id !== FALSE): ?>
+<?php if ($id !== false): ?>
 	</div>
 <?php endif;?>

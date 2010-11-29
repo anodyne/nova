@@ -28,7 +28,7 @@
 	<p class="fontMedium"><?php echo __("step3.admin");?></p>
 	
 	<p>
-		<?php echo form::select('admins', $options, NULL, array('multiple' => 'multiple', 'size' => 10));?> &nbsp;
+		<?php echo form::select('admins', $options, null, array('multiple' => 'multiple', 'size' => 10));?> &nbsp;
 		
 		<span class="hidden loading-admins"><?php echo html::image(MODFOLDER.'/nova/upgrade/views/upgrade/images/loading-circle-large.gif');?></span>
 		

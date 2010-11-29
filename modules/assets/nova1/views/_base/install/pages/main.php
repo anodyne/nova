@@ -33,7 +33,7 @@
 			</a>
 		</li>
 		
-		<?php if ($installed === TRUE): ?>
+		<?php if ($installed === true): ?>
 			<li>
 				<a href="<?php echo site_url('install/remove');?>">
 					<span class="icon ui-icon ui-icon-trash"></span>
@@ -46,7 +46,7 @@
 	<?php echo text_output($label['whatsnext'], 'h2', 'page-subhead');?>
 	
 	<ul class="fontLarge none">
-		<?php if ($installed === FALSE): ?>
+		<?php if ($installed === false): ?>
 			<li>
 				<a href="<?php echo site_url('install/step/1');?>" id="install">
 					<span class="icon ui-icon ui-icon-newwin"></span>
@@ -61,7 +61,7 @@
 			</li>
 		<?php endif;?>
 		
-		<?php if ($installed === TRUE): ?>
+		<?php if ($installed === true): ?>
 			<li>
 				<a href="<?php echo site_url('update/index');?>">
 					<span class="icon ui-icon ui-icon-signal-diag"></span>

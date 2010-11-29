@@ -19,7 +19,7 @@ class Controller_Upgradeajax extends Controller_Template {
 		$this->template = View::factory('_common/layouts/ajax');
 		
 		// set the variables in the template
-		$this->template->content = FALSE;
+		$this->template->content = false;
 		
 		// get an instance of the database
 		$this->db = Database::instance();
@@ -28,7 +28,7 @@ class Controller_Upgradeajax extends Controller_Template {
 	public function action_upgrade_awards()
 	{
 		// start by getting a count of the number of items in the awards table
-		$c = $this->db->query(Database::SELECT, "SELECT awardid FROM sms_awards", TRUE);
+		$c = $this->db->query(Database::SELECT, "SELECT awardid FROM sms_awards", true);
 		$count_old = $c->count();
 		
 		// drop the nova version of the table
@@ -36,7 +36,7 @@ class Controller_Upgradeajax extends Controller_Template {
 		
 		try {
 			// copy the sms version of the table along with all its data
-			$this->db->query(NULL, "CREATE TABLE ".$this->db->table_prefix()."awards SELECT * FROM sms_awards", TRUE);
+			$this->db->query(null, "CREATE TABLE ".$this->db->table_prefix()."awards SELECT * FROM sms_awards", true);
 			
 			// rename the fields
 			$fields = array(
@@ -81,7 +81,7 @@ class Controller_Upgradeajax extends Controller_Template {
 			DBForge::add_column('awards', $add);
 			
 			// make award_id auto increment and the primary key
-			$this->db->query(NULL, "ALTER TABLE ".$this->db->table_prefix()."awards MODIFY COLUMN `award_id` INT(5) auto_increment primary key", TRUE);
+			$this->db->query(null, "ALTER TABLE ".$this->db->table_prefix()."awards MODIFY COLUMN `award_id` INT(5) auto_increment primary key", true);
 			
 			// get the number of records in the new table
 			$count_new = Jelly::query('award')->count();
@@ -116,12 +116,12 @@ class Controller_Upgradeajax extends Controller_Template {
 	
 	public function action_upgrade_characters()
 	{
-		// change the user model to prevent NULL values
-		Jelly::meta('user')->field('join')->auto_now_create = FALSE;
+		// change the user model to prevent null values
+		Jelly::meta('user')->field('join')->auto_now_create = false;
 		
 		try {
 			// get the characters
-			$result = $this->db->query(Database::SELECT, 'SELECT * FROM sms_crew', TRUE);
+			$result = $this->db->query(Database::SELECT, 'SELECT * FROM sms_crew', true);
 			
 			// the user array
 			$userarray = array();
@@ -155,9 +155,9 @@ class Controller_Upgradeajax extends Controller_Template {
 					$users[$r->email] = array(
 						'name'				=> $r->realName,
 						'email'				=> $r->email,
-						'join'				=> FALSE,
+						'join'				=> false,
 						'leave'				=> $r->leaveDate,
-						'status'			=> ($r->crewType != 'active' AND $r->crewType != 'pending') ? 'inactive' : $r->crewType,
+						'status'			=> ($r->crewType != 'active' and $r->crewType != 'pending') ? 'inactive' : $r->crewType,
 						'password_reset'	=> 1,
 						'role'				=> 4,
 					);
@@ -190,7 +190,7 @@ class Controller_Upgradeajax extends Controller_Template {
 						}
 					}
 					
-					if ($users[$r->email]['join'] === FALSE)
+					if ($users[$r->email]['join'] === false)
 					{
 						// if the join date isn't set yet, set it
 						$users[$r->email]['join'] = $r->joinDate;
@@ -237,13 +237,13 @@ class Controller_Upgradeajax extends Controller_Template {
 			foreach ($result as $c)
 			{
 				// make sure the fields array is empty
-				$fields = FALSE;
+				$fields = false;
 				
 				// create the character
 				$characteraction = Jelly::factory('character')
 					->set(array(
 						'id' => $c->crewid,
-						'user' => ( ! empty($c->email)) ? $charIDs[$c->email] : NULL,
+						'user' => ( ! empty($c->email)) ? $charIDs[$c->email] : null,
 						'fname' => $c->firstName,
 						'mname' => $c->middleName,
 						'lname' => $c->lastName,
@@ -267,7 +267,7 @@ class Controller_Upgradeajax extends Controller_Template {
 				{
 					$item = Jelly::factory('characterimage')
 						->set(array(
-							'user' => ( ! empty($c->email)) ? $charIDs[$c->email] : NULL,
+							'user' => ( ! empty($c->email)) ? $charIDs[$c->email] : null,
 							'character' => $c->crewid,
 							'image' => $i
 						))
@@ -309,7 +309,7 @@ class Controller_Upgradeajax extends Controller_Template {
 						->set(array(
 							'form' => 'bio',
 							'character' => $characteraction->id(),
-							'user' => ( ! empty($c->email)) ? $charIDs[$c->email] : NULL,
+							'user' => ( ! empty($c->email)) ? $charIDs[$c->email] : null,
 							'field' => $field,
 							'value' => $value
 						))
@@ -324,11 +324,11 @@ class Controller_Upgradeajax extends Controller_Template {
 			}
 			
 			// set the count variables
-			$count_users = (in_array(FALSE, $saved['users'])) ? FALSE : TRUE;
-			$count_characters = (in_array(FALSE, $saved['characters'])) ? FALSE : TRUE;
-			$count_formdata = (in_array(FALSE, $saved['formdata'])) ? FALSE : TRUE;
+			$count_users = (in_array(false, $saved['users'])) ? false : true;
+			$count_characters = (in_array(false, $saved['characters'])) ? false : true;
+			$count_formdata = (in_array(false, $saved['formdata'])) ? false : true;
 			
-			if ($count_users === TRUE AND $count_characters === TRUE AND $count_formdata === TRUE)
+			if ($count_users === true and $count_characters === true and $count_formdata === true)
 			{
 				$retval = array(
 					'code' => 1,
@@ -337,7 +337,7 @@ class Controller_Upgradeajax extends Controller_Template {
 			}
 			else
 			{
-				if ($count_users === FALSE AND $count_characters === TRUE AND $count_formdata === TRUE)
+				if ($count_users === false and $count_characters === true and $count_formdata === true)
 				{
 					$retval = array(
 						'code' => 2,
@@ -345,7 +345,7 @@ class Controller_Upgradeajax extends Controller_Template {
 					);
 				}
 				
-				if ($count_users === FALSE AND $count_characters === FALSE AND $count_formdata === TRUE)
+				if ($count_users === false and $count_characters === false and $count_formdata === true)
 				{
 					$retval = array(
 						'code' => 2,
@@ -353,7 +353,7 @@ class Controller_Upgradeajax extends Controller_Template {
 					);
 				}
 				
-				if ($count_users === TRUE AND $count_characters === FALSE AND $count_formdata === TRUE)
+				if ($count_users === true and $count_characters === false and $count_formdata === true)
 				{
 					$retval = array(
 						'code' => 2,
@@ -361,7 +361,7 @@ class Controller_Upgradeajax extends Controller_Template {
 					);
 				}
 				
-				if ($count_users === TRUE AND $count_characters === TRUE AND $count_formdata === FALSE)
+				if ($count_users === true and $count_characters === true and $count_formdata === false)
 				{
 					$retval = array(
 						'code' => 2,
@@ -369,7 +369,7 @@ class Controller_Upgradeajax extends Controller_Template {
 					);
 				}
 				
-				if ($count_users === FALSE AND $count_characters === TRUE AND $count_formdata === FALSE)
+				if ($count_users === false and $count_characters === true and $count_formdata === false)
 				{
 					$retval = array(
 						'code' => 2,
@@ -377,7 +377,7 @@ class Controller_Upgradeajax extends Controller_Template {
 					);
 				}
 				
-				if ($count_users === TRUE AND $count_characters === FALSE AND $count_formdata === FALSE)
+				if ($count_users === true and $count_characters === false and $count_formdata === false)
 				{
 					$retval = array(
 						'code' => 2,
@@ -385,7 +385,7 @@ class Controller_Upgradeajax extends Controller_Template {
 					);
 				}
 				
-				if ($count_users === FALSE AND $count_characters === FALSE AND $count_formdata === FALSE)
+				if ($count_users === false and $count_characters === false and $count_formdata === false)
 				{
 					$retval = array(
 						'code' => 0,
@@ -468,14 +468,14 @@ class Controller_Upgradeajax extends Controller_Template {
 				$saved[] = $user->saved();
 			}
 			
-			if ( ! in_array(TRUE, $saved))
+			if ( ! in_array(true, $saved))
 			{
 				$retval = array(
 					'code' => 0,
 					'message' => __("None of your administrators were set")
 				);
 			}
-			elseif (in_array(FALSE, $saved) AND in_array(TRUE, $saved))
+			elseif (in_array(false, $saved) and in_array(true, $saved))
 			{
 				$retval = array(
 					'code' => 0,
@@ -505,7 +505,7 @@ class Controller_Upgradeajax extends Controller_Template {
 	public function action_upgrade_logs()
 	{
 		// get the number of logs in the sms table
-		$c = $this->db->query(Database::SELECT, "SELECT logid FROM sms_personallogs", TRUE);
+		$c = $this->db->query(Database::SELECT, "SELECT logid FROM sms_personallogs", true);
 		$count_old = $c->count();
 		
 		try {
@@ -513,7 +513,7 @@ class Controller_Upgradeajax extends Controller_Template {
 			DBForge::drop_table('personal_logs');
 			
 			// copy the sms version of the table along with all its data
-			$this->db->query(NULL, "CREATE TABLE ".$this->db->table_prefix()."personal_logs SELECT * FROM sms_personallogs", TRUE);
+			$this->db->query(null, "CREATE TABLE ".$this->db->table_prefix()."personal_logs SELECT * FROM sms_personallogs", true);
 			
 			// rename the fields to appropriate names
 			$fields = array(
@@ -563,7 +563,7 @@ class Controller_Upgradeajax extends Controller_Template {
 			DBForge::add_column('personal_logs', $add);
 			
 			// make sure the auto increment and primary key are right
-			$this->db->query(NULL, "ALTER TABLE ".$this->db->table_prefix()."personal_logs MODIFY COLUMN `log_id` INT(5) auto_increment primary key", TRUE);
+			$this->db->query(null, "ALTER TABLE ".$this->db->table_prefix()."personal_logs MODIFY COLUMN `log_id` INT(5) auto_increment primary key", true);
 			
 			// get the new count of logs
 			$count_new = Jelly::query('personallog')->count();
@@ -576,7 +576,7 @@ class Controller_Upgradeajax extends Controller_Template {
 					'message' => __("None of your personal logs were able to be upgraded")
 				);
 			}
-			elseif ($count_new > 0 AND $count_new != $count_old)
+			elseif ($count_new > 0 and $count_new != $count_old)
 			{
 				// catch the exception
 				$retval = array(
@@ -609,11 +609,11 @@ class Controller_Upgradeajax extends Controller_Template {
 	public function action_upgrade_missions()
 	{
 		// get the number of news items in the sms table
-		$c = $this->db->query(Database::SELECT, "SELECT missionid FROM sms_missions", TRUE);
+		$c = $this->db->query(Database::SELECT, "SELECT missionid FROM sms_missions", true);
 		$count_missions_old = $c->count();
 		
 		// get the number of news categories in the sms table
-		$c = $this->db->query(Database::SELECT, "SELECT postid FROM sms_posts", TRUE);
+		$c = $this->db->query(Database::SELECT, "SELECT postid FROM sms_posts", true);
 		$count_posts_old = $c->count();
 		
 		try {
@@ -621,7 +621,7 @@ class Controller_Upgradeajax extends Controller_Template {
 			DBForge::drop_table('missions');
 			
 			// copy the sms version of the table along with all its data
-			$this->db->query(NULL, 'CREATE TABLE '.$this->db->table_prefix().'missions SELECT * FROM sms_missions', TRUE);
+			$this->db->query(null, 'CREATE TABLE '.$this->db->table_prefix().'missions SELECT * FROM sms_missions', true);
 			
 			// rename the fields to appropriate names
 			$fields = array(
@@ -681,13 +681,13 @@ class Controller_Upgradeajax extends Controller_Template {
 			DBForge::add_column('missions', $add);
 			
 			// make sure the auto increment and primary key are right
-			$this->db->query(NULL, 'ALTER TABLE '.$this->db->table_prefix().'missions MODIFY COLUMN `mission_id` INT(8) auto_increment primary key', TRUE);
+			$this->db->query(null, 'ALTER TABLE '.$this->db->table_prefix().'missions MODIFY COLUMN `mission_id` INT(8) auto_increment primary key', true);
 			
 			// drop the nova version of the table
 			DBForge::drop_table('posts');
 			
 			// copy the sms version of the table along with all its data
-			$this->db->query(NULL, 'CREATE TABLE '.$this->db->table_prefix().'posts SELECT * FROM sms_posts', TRUE);
+			$this->db->query(null, 'CREATE TABLE '.$this->db->table_prefix().'posts SELECT * FROM sms_posts', true);
 			
 			// rename the fields to appropriate names
 			$fields = array(
@@ -756,7 +756,7 @@ class Controller_Upgradeajax extends Controller_Template {
 			DBForge::drop_column('posts', 'postTag');
 			
 			// make sure the auto increment and primary key are correct
-			$this->db->query(NULL, 'ALTER TABLE '.$this->db->table_prefix().'posts MODIFY COLUMN `post_id` INT(8) auto_increment primary key', TRUE);
+			$this->db->query(null, 'ALTER TABLE '.$this->db->table_prefix().'posts MODIFY COLUMN `post_id` INT(8) auto_increment primary key', true);
 			
 			// count the missions
 			$count_missions_new = Jelly::query('mission')->count();
@@ -764,7 +764,7 @@ class Controller_Upgradeajax extends Controller_Template {
 			// count the posts
 			$count_posts_new = Jelly::query('post')->count();
 			
-			if ($count_missions_new == 0 AND $count_posts_new == 0)
+			if ($count_missions_new == 0 and $count_posts_new == 0)
 			{
 				// catch the exception
 				$retval = array(
@@ -772,7 +772,7 @@ class Controller_Upgradeajax extends Controller_Template {
 					'message' => __("None of your missions or mission posts were able to be upgraded")
 				);
 			}
-			elseif ($count_missions_new > 0 AND $count_posts_new == 0)
+			elseif ($count_missions_new > 0 and $count_posts_new == 0)
 			{
 				if ($count_missions_new != $count_missions_old)
 				{
@@ -793,7 +793,7 @@ class Controller_Upgradeajax extends Controller_Template {
 					);
 				}
 			}
-			elseif ($count_missions_new == 0 AND $count_posts_new > 0)
+			elseif ($count_missions_new == 0 and $count_posts_new > 0)
 			{
 				if ($count_posts_new != $count_posts_old)
 				{
@@ -816,7 +816,7 @@ class Controller_Upgradeajax extends Controller_Template {
 			}
 			else
 			{
-				if ($count_missions_new == $count_missions_old AND $count_posts_new == $count_posts_old)
+				if ($count_missions_new == $count_missions_old and $count_posts_new == $count_posts_old)
 				{
 					// catch the exception
 					$retval = array(
@@ -824,7 +824,7 @@ class Controller_Upgradeajax extends Controller_Template {
 						'message' => ''
 					);
 				}
-				elseif ($count_missions_new == $count_missions_old AND $count_posts_new != $count_posts_old)
+				elseif ($count_missions_new == $count_missions_old and $count_posts_new != $count_posts_old)
 				{
 					// catch the exception
 					$retval = array(
@@ -834,7 +834,7 @@ class Controller_Upgradeajax extends Controller_Template {
 						),
 					);
 				}
-				elseif ($count_missions_new != $count_missions_old AND $count_posts_new == $count_posts_old)
+				elseif ($count_missions_new != $count_missions_old and $count_posts_new == $count_posts_old)
 				{
 					// catch the exception
 					$retval = array(
@@ -844,7 +844,7 @@ class Controller_Upgradeajax extends Controller_Template {
 						),
 					);
 				}
-				elseif ($count_missions_new != $count_missions_old AND $count_posts_new != $count_posts_old)
+				elseif ($count_missions_new != $count_missions_old and $count_posts_new != $count_posts_old)
 				{
 					// catch the exception
 					$retval = array(
@@ -873,11 +873,11 @@ class Controller_Upgradeajax extends Controller_Template {
 	public function action_upgrade_news()
 	{
 		// get the number of news items in the sms table
-		$c = $this->db->query(Database::SELECT, "SELECT newsid FROM sms_news", TRUE);
+		$c = $this->db->query(Database::SELECT, "SELECT newsid FROM sms_news", true);
 		$count_news_old = $c->count();
 		
 		// get the number of news categories in the sms table
-		$c = $this->db->query(Database::SELECT, "SELECT catid FROM sms_news_categories", TRUE);
+		$c = $this->db->query(Database::SELECT, "SELECT catid FROM sms_news_categories", true);
 		$count_cats_old = $c->count();
 		
 		try {
@@ -886,7 +886,7 @@ class Controller_Upgradeajax extends Controller_Template {
 			DBForge::drop_table('news_categories');
 			
 			// copy the sms version of the table along with all its data
-			$this->db->query(NULL, "CREATE TABLE ".$this->db->table_prefix()."news_categories SELECT * FROM sms_news_categories", TRUE);
+			$this->db->query(null, "CREATE TABLE ".$this->db->table_prefix()."news_categories SELECT * FROM sms_news_categories", true);
 			
 			// rename the fields to appropriate names
 			$fields = array(
@@ -912,10 +912,10 @@ class Controller_Upgradeajax extends Controller_Template {
 			DBForge::drop_column('news_categories', 'catUserLevel');
 			
 			// make sure the auto increment and primary id are correct
-			$this->db->query(NULL, "ALTER TABLE ".$this->db->table_prefix()."news_categories MODIFY COLUMN `newscat_id` INT(5) auto_increment primary key", TRUE);
+			$this->db->query(null, "ALTER TABLE ".$this->db->table_prefix()."news_categories MODIFY COLUMN `newscat_id` INT(5) auto_increment primary key", true);
 			
 			// copy the sms version of the table along with all its data
-			$this->db->query(NULL, "CREATE TABLE ".$this->db->table_prefix()."news SELECT * FROM sms_news", TRUE);
+			$this->db->query(null, "CREATE TABLE ".$this->db->table_prefix()."news SELECT * FROM sms_news", true);
 			
 			// rename the fields to appropriate names
 			$fields = array(
@@ -974,7 +974,7 @@ class Controller_Upgradeajax extends Controller_Template {
 			DBForge::add_column('news', $add);
 			
 			// make sure the auto increment and primary key are right
-			$this->db->query(NULL, "ALTER TABLE ".$this->db->table_prefix()."news MODIFY COLUMN `news_id` INT(8) auto_increment primary key", TRUE);
+			$this->db->query(null, "ALTER TABLE ".$this->db->table_prefix()."news MODIFY COLUMN `news_id` INT(8) auto_increment primary key", true);
 			
 			// count the news items
 			$count_news_new = Jelly::query('news')->count();
@@ -982,7 +982,7 @@ class Controller_Upgradeajax extends Controller_Template {
 			// count the news categories
 			$count_cats_new = Jelly::query('newscategory')->count();
 			
-			if ($count_news_new == 0 AND $count_cats_new == 0)
+			if ($count_news_new == 0 and $count_cats_new == 0)
 			{
 				// catch the exception
 				$retval = array(
@@ -990,7 +990,7 @@ class Controller_Upgradeajax extends Controller_Template {
 					'message' => __("None of your news categories or news item were able to be upgraded")
 				);
 			}
-			elseif ($count_news_new > 0 AND $count_cats_new == 0)
+			elseif ($count_news_new > 0 and $count_cats_new == 0)
 			{
 				if ($count_news_new != $count_news_old)
 				{
@@ -1011,7 +1011,7 @@ class Controller_Upgradeajax extends Controller_Template {
 					);
 				}
 			}
-			elseif ($count_news_new == 0 AND $count_cats_new > 0)
+			elseif ($count_news_new == 0 and $count_cats_new > 0)
 			{
 				if ($count_cats_new != $count_cats_old)
 				{
@@ -1034,7 +1034,7 @@ class Controller_Upgradeajax extends Controller_Template {
 			}
 			else
 			{
-				if ($count_news_new == $count_news_old AND $count_cats_new == $count_cats_old)
+				if ($count_news_new == $count_news_old and $count_cats_new == $count_cats_old)
 				{
 					// catch the exception
 					$retval = array(
@@ -1042,7 +1042,7 @@ class Controller_Upgradeajax extends Controller_Template {
 						'message' => ''
 					);
 				}
-				elseif ($count_news_new == $count_news_old AND $count_cats_new != $count_cats_old)
+				elseif ($count_news_new == $count_news_old and $count_cats_new != $count_cats_old)
 				{
 					// catch the exception
 					$retval = array(
@@ -1052,7 +1052,7 @@ class Controller_Upgradeajax extends Controller_Template {
 						),
 					);
 				}
-				elseif ($count_news_new != $count_news_old AND $count_cats_new == $count_cats_old)
+				elseif ($count_news_new != $count_news_old and $count_cats_new == $count_cats_old)
 				{
 					// catch the exception
 					$retval = array(
@@ -1062,7 +1062,7 @@ class Controller_Upgradeajax extends Controller_Template {
 						),
 					);
 				}
-				elseif ($count_news_new != $count_news_old AND $count_cats_new != $count_cats_old)
+				elseif ($count_news_new != $count_news_old and $count_cats_new != $count_cats_old)
 				{
 					// catch the exception
 					$retval = array(
@@ -1096,7 +1096,7 @@ class Controller_Upgradeajax extends Controller_Template {
 			Utility::install_skins();
 			
 			// get the directory listing for the genre
-			$dir = Utility::directory_map(APPPATH.'assets/common/'.Kohana::config('nova.genre').'/ranks/', TRUE);
+			$dir = Utility::directory_map(APPPATH.'assets/common/'.Kohana::config('nova.genre').'/ranks/', true);
 			
 			// set the items to be pulled out of the listing
 			$pop = array('index.html');
@@ -1107,7 +1107,7 @@ class Controller_Upgradeajax extends Controller_Template {
 				// find the item in the directory listing
 				$key = array_search($value, $dir);
 				
-				if ($key !== FALSE)
+				if ($key !== false)
 				{
 					unset($dir[$key]);
 				}
@@ -1120,11 +1120,11 @@ class Controller_Upgradeajax extends Controller_Template {
 			sleep(1);
 			
 			// reset the variables
-			$pop = NULL;
-			$dir = NULL;
+			$pop = null;
+			$dir = null;
 			
 			// get the listing of the directory
-			$dir = Utility::directory_map(APPPATH.'views/', TRUE);
+			$dir = Utility::directory_map(APPPATH.'views/', true);
 			
 			// create an array of items to remove
 			$pop = array('index.html');
@@ -1139,7 +1139,7 @@ class Controller_Upgradeajax extends Controller_Template {
 				// find the location in the directory listing
 				$key = array_search($value, $dir);
 				
-				if ($key !== FALSE)
+				if ($key !== false)
 				{
 					unset($dir[$key]);
 				}
@@ -1154,28 +1154,28 @@ class Controller_Upgradeajax extends Controller_Template {
 			// get the catalogue count for skins
 			$db_skins = Jelly::query('catalogueskin')->count();
 
-			if ($dir_ranks == $db_ranks AND $dir_skins == $db_skins)
+			if ($dir_ranks == $db_ranks and $dir_skins == $db_skins)
 			{
 				$retval = array(
 					'code' => 1,
 					'message' => ''
 				);
 			}
-			elseif ($dir_ranks != $db_ranks AND $dir_skins == $db_skins)
+			elseif ($dir_ranks != $db_ranks and $dir_skins == $db_skins)
 			{
 				$retval = array(
 					'code' => 2,
 					'message' => __("Your skins were installed but not all of your rank sets were installed. Please try to install your ranks sets manually from the rank catalogue page.")
 				);
 			}
-			elseif ($dir_ranks == $db_ranks AND $dir_skins != $db_skins)
+			elseif ($dir_ranks == $db_ranks and $dir_skins != $db_skins)
 			{
 				$retval = array(
 					'code' => 2,
 					'message' => __("Your rank sets were installed but not all of your skins were installed. Please try to install your skins manually from the skin catalogue page.")
 				);
 			}
-			elseif ($dir_ranks != $db_ranks AND $dir_skins != $db_skins)
+			elseif ($dir_ranks != $db_ranks and $dir_skins != $db_skins)
 			{
 				$retval = array(
 					'code' => 0,
@@ -1202,11 +1202,11 @@ class Controller_Upgradeajax extends Controller_Template {
 		// figure out what the name of the settings table is
 		if (count($this->db->list_tables('sms_settings')) > 0)
 		{
-			$result = $this->db->query(Database::SELECT, "SELECT * FROM sms_settings WHERE globalid = 1", TRUE);
+			$result = $this->db->query(Database::SELECT, "SELECT * FROM sms_settings WHERE globalid = 1", true);
 		}
 		else
 		{
-			$result = $this->db->query(Database::SELECT, "SELECT * FROM sms_globals WHERE globalid = 1", TRUE);
+			$result = $this->db->query(Database::SELECT, "SELECT * FROM sms_globals WHERE globalid = 1", true);
 		}
 		
 		// create arrays for checking to see if everything was saved
@@ -1241,7 +1241,7 @@ class Controller_Upgradeajax extends Controller_Template {
 		}
 		
 		// get the messages
-		$result = $this->db->query(Database::SELECT, "SELECT * FROM sms_messages WHERE messageid = 1", TRUE);
+		$result = $this->db->query(Database::SELECT, "SELECT * FROM sms_messages WHERE messageid = 1", true);
 		
 		foreach ($result as $r)
 		{
@@ -1287,10 +1287,10 @@ class Controller_Upgradeajax extends Controller_Template {
 		DBForge::optimize('messages');
 		
 		// check to see if everything worked
-		$settings_count = (in_array(FALSE, $settings)) ? FALSE : TRUE;
-		$messages_count = (in_array(FALSE, $messages)) ? FALSE : TRUE;
+		$settings_count = (in_array(false, $settings)) ? false : true;
+		$messages_count = (in_array(false, $messages)) ? false : true;
 		
-		if ($settings_count === TRUE AND $messages_count === TRUE)
+		if ($settings_count === true and $messages_count === true)
 		{
 			$retval = array(
 				'code' => 1,
@@ -1299,19 +1299,19 @@ class Controller_Upgradeajax extends Controller_Template {
 		}
 		else
 		{
-			if ($settings_count === TRUE AND $messages_count === FALSE)
+			if ($settings_count === true and $messages_count === false)
 			{
 				$retval['code'] = 2;
 				$retval['message'] = __("All of your settings were upgraded, but some of your messages couldn't be upgraded");
 			}
 			
-			if ($settings_count === FALSE AND $messages_count === TRUE)
+			if ($settings_count === false and $messages_count === true)
 			{
 				$retval['code'] = 2;
 				$retval['message'] = __("All of your messages were upgraded, but some of your settings couldn't be upgraded");
 			}
 			
-			if ($settings_count === FALSE AND $messages_count === FALSE)
+			if ($settings_count === false and $messages_count === false)
 			{
 				$retval['code'] = 0;
 				$retval['message'] = __("None of your settings or messages could be upgraded");
@@ -1325,7 +1325,7 @@ class Controller_Upgradeajax extends Controller_Template {
 	{
 		try {
 			// get the specs from the sms table
-			$result = $this->db->query(Database::SELECT, 'SELECT * FROM sms_specs WHERE specid = 1', TRUE);
+			$result = $this->db->query(Database::SELECT, 'SELECT * FROM sms_specs WHERE specid = 1', true);
 			
 			// create the spec item
 			Jelly::factory('spec')
@@ -1605,14 +1605,14 @@ class Controller_Upgradeajax extends Controller_Template {
 				$specs[] = $item->saved();
 			}
 			
-			if (in_array(FALSE, $specs) AND ! in_array(TRUE, $specs))
+			if (in_array(false, $specs) and ! in_array(true, $specs))
 			{
 				$retval = array(
 					'code' => 0,
 					'message' => __("Your specifications were not upgraded")
 				);
 			}
-			elseif (in_array(FALSE, $specs) AND in_array(TRUE, $specs))
+			elseif (in_array(false, $specs) and in_array(true, $specs))
 			{
 				$retval = array(
 					'code' => 2,
@@ -1645,7 +1645,7 @@ class Controller_Upgradeajax extends Controller_Template {
 	{
 		try {
 			// get the tour items
-			$result = $this->db->query(Database::SELECT, 'SELECT * FROM sms_tour', TRUE);
+			$result = $this->db->query(Database::SELECT, 'SELECT * FROM sms_tour', true);
 			
 			// create an array for validating
 			$tour = array();
@@ -1705,14 +1705,14 @@ class Controller_Upgradeajax extends Controller_Template {
 				$tour[] = $dataitem->saved();
 			}
 			
-			if (in_array(FALSE, $tour) AND ! in_array(TRUE, $tour))
+			if (in_array(false, $tour) and ! in_array(true, $tour))
 			{
 				$retval = array(
 					'code' => 0,
 					'message' => __("Your tour items were not upgraded")
 				);
 			}
-			elseif (in_array(FALSE, $tour) AND in_array(TRUE, $tour))
+			elseif (in_array(false, $tour) and in_array(true, $tour))
 			{
 				$retval = array(
 					'code' => 2,
@@ -1743,12 +1743,12 @@ class Controller_Upgradeajax extends Controller_Template {
 	
 	public function action_upgrade_user_awards()
 	{
-		// change the awards received model to prevent NULL values
-		Jelly::meta('awardrec')->field('date')->auto_now_create = FALSE;
+		// change the awards received model to prevent null values
+		Jelly::meta('awardrec')->field('date')->auto_now_create = false;
 		
 		try {
 			// get the crew from the sms table
-			$result = $this->db->query(Database::SELECT, 'SELECT * FROM sms_crew', TRUE);
+			$result = $this->db->query(Database::SELECT, 'SELECT * FROM sms_crew', true);
 			
 			// create an array for saved entries
 			$saved = array();
@@ -1763,7 +1763,7 @@ class Controller_Upgradeajax extends Controller_Template {
 					
 					foreach ($awards as $a)
 					{
-						if (strstr($a, '|') !== FALSE)
+						if (strstr($a, '|') !== false)
 						{
 							$x = explode('|', $a);
 							
@@ -1785,7 +1785,7 @@ class Controller_Upgradeajax extends Controller_Template {
 									'character' => $c->crewid,
 									'user' => $user->id,
 									'award' => $a,
-									'date' => NULL
+									'date' => null
 								))
 								->save();
 							$saved[] = $awardaction->saved();
@@ -1794,14 +1794,14 @@ class Controller_Upgradeajax extends Controller_Template {
 				}
 			}
 			
-			if ( ! in_array(TRUE, $saved))
+			if ( ! in_array(true, $saved))
 			{
 				$retval = array(
 					'code' => 0,
 					'message' => __("Your given awards could not be upgraded")
 				);
 			}
-			elseif (in_array(TRUE, $saved) AND in_array(FALSE, $saved))
+			elseif (in_array(true, $saved) and in_array(false, $saved))
 			{
 				$retval = array(
 					'code' => 2,
@@ -1837,7 +1837,7 @@ class Controller_Upgradeajax extends Controller_Template {
 			// get the total number of characters
 			$characters = Jelly::query('character')->count();
 			
-			if ($users > 0 AND $characters > 0)
+			if ($users > 0 and $characters > 0)
 			{
 				// pull the defaults for skins and ranks
 				$defaults = array(
@@ -1881,13 +1881,13 @@ class Controller_Upgradeajax extends Controller_Template {
 	{
 		try {
 			// get the crew from the sms table
-			$result = $this->db->query(Database::SELECT, 'SELECT * FROM sms_crew', TRUE);
+			$result = $this->db->query(Database::SELECT, 'SELECT * FROM sms_crew', true);
 			
 			foreach ($result as $c)
 			{
 				$user = Jelly::query('character', $c->crewid)->select()->user;
 				
-				if ( ! is_null($user) AND $user->id > 0)
+				if ( ! is_null($user) and $user->id > 0)
 				{
 					// update the personal logs
 					$logs = Jelly::query('personallog')
@@ -1931,13 +1931,13 @@ class Controller_Upgradeajax extends Controller_Template {
 	{
 		try {
 			// get the crew from the sms table
-			$result = $this->db->query(Database::SELECT, 'SELECT * FROM sms_crew', TRUE);
+			$result = $this->db->query(Database::SELECT, 'SELECT * FROM sms_crew', true);
 			
 			foreach ($result as $c)
 			{
 				$user = Jelly::query('character', $c->crewid)->select()->user;
 				
-				if ( ! is_null($user) AND $user->id > 0)
+				if ( ! is_null($user) and $user->id > 0)
 				{
 					// update the news items
 					$news = Jelly::query('news')
@@ -2001,7 +2001,7 @@ class Controller_Upgradeajax extends Controller_Template {
 						// get the user id
 						$user = Jelly::query('character', $a)->select()->user;
 					
-						if ( ! is_null($user) AND ! in_array($user->id, $array))
+						if ( ! is_null($user) and ! in_array($user->id, $array))
 						{
 							$array[] = $user->id;
 						}
@@ -2018,7 +2018,7 @@ class Controller_Upgradeajax extends Controller_Template {
 				$saved[] = $post->saved();
 			}
 			
-			if ( ! in_array(FALSE, $saved))
+			if ( ! in_array(false, $saved))
 			{
 				$retval = array(
 					'code' => 1,

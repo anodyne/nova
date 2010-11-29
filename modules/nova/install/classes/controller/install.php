@@ -36,7 +36,7 @@ class Controller_Install extends Controller_Template {
 			$tables = Kohana::config('info.app_db_tables');
 			
 			// make sure the system is installed
-			if (count($db->list_tables($db->table_prefix().'%')) < $tables AND ! (in_array($this->request->action, $safesegs)))
+			if (count($db->list_tables($db->table_prefix().'%')) < $tables and ! (in_array($this->request->action, $safesegs)))
 			{
 				$this->request->redirect('install/index');
 			}
@@ -56,7 +56,7 @@ class Controller_Install extends Controller_Template {
 						$sysadmin = Auth::is_type('sysadmin', $session->get('userid'));
 						
 						// if they aren't, send them away
-						if ($sysadmin === FALSE)
+						if ($sysadmin === false)
 						{
 							$this->request->redirect('login/error/1');
 						}
@@ -78,11 +78,11 @@ class Controller_Install extends Controller_Template {
 		
 		// set the variables in the template
 		$this->template->title 				= 'Nova :: ';
-		$this->template->javascript			= FALSE;
+		$this->template->javascript			= false;
 		$this->template->layout				= View::factory('install/template_install');
-		$this->template->layout->label		= FALSE;
-		$this->template->layout->flash		= FALSE;
-		$this->template->layout->controls	= FALSE;
+		$this->template->layout->label		= false;
+		$this->template->layout->flash		= false;
+		$this->template->layout->controls	= false;
 	}
 	
 	public function action_index()
@@ -125,7 +125,7 @@ class Controller_Install extends Controller_Template {
 		);
 		
 		// show the back button?
-		$showbutton = FALSE;
+		$showbutton = false;
 		
 		switch ($view)
 		{
@@ -236,7 +236,7 @@ class Controller_Install extends Controller_Template {
 		$this->template->title.= __('Change Database');
 		$this->template->layout->label = __('Change Database');
 		
-		if ($showbutton === TRUE)
+		if ($showbutton === true)
 		{
 			// build the button attributes
 			$next = array(
@@ -287,7 +287,7 @@ class Controller_Install extends Controller_Template {
 			{
 				$genres[$value] = array(
 					'name' => $info[$value],
-					'installed' => (Database::instance()->list_tables('%_'.$value)) ? TRUE : FALSE
+					'installed' => (Database::instance()->list_tables('%_'.$value)) ? true : false
 				);
 				
 				// clear out the item from the map
@@ -297,19 +297,19 @@ class Controller_Install extends Controller_Template {
 			{
 				$additional[$value] = array(
 					'name' => $value,
-					'installed' => (Database::instance()->list_tables('%_'.$value)) ? TRUE : FALSE
+					'installed' => (Database::instance()->list_tables('%_'.$value)) ? true : false
 				);
 			}
 		}
 		
 		// set the genres list
-		$data->genres = (isset($genres)) ? $genres : FALSE;
-		$data->additional = (isset($additional)) ? $additional : FALSE;
+		$data->genres = (isset($genres)) ? $genres : false;
+		$data->additional = (isset($additional)) ? $additional : false;
 		
 		// set the loading image
 		$data->images = array(
 			'loading' => array(
-				'src' => Location::image('loading-circle-large.gif', NULL, 'install', 'image'),
+				'src' => Location::image('loading-circle-large.gif', null, 'install', 'image'),
 				'attr' => array(
 					'alt' => __('processing'),
 					'class' => '')),
@@ -340,7 +340,7 @@ class Controller_Install extends Controller_Template {
 		// figure out if the system is installed or not
 		$data->installed = Utility::install_status();
 		
-		if ((is_numeric($error) AND $error > 0))
+		if ((is_numeric($error) and $error > 0))
 		{
 			$this->template->layout->flash = View::factory('install/pages/flash');
 			$this->template->layout->flash->status = ($error == 1) ? 'info' : 'error';
@@ -567,7 +567,7 @@ class Controller_Install extends Controller_Template {
 							try {
 								$tables = $db->list_tables($prefix.'%');
 								
-								if ($type == 'nova1' AND count($tables) > 0)
+								if ($type == 'nova1' and count($tables) > 0)
 								{
 									// write the message
 									$data->message = __('setup.step2_nova1_failure');
@@ -600,15 +600,15 @@ class Controller_Install extends Controller_Template {
 							} catch (Exception $e) {
 								$msg = (string) $e->getMessage();
 								
-								if (stripos($msg, 'No such host is known') !== FALSE)
+								if (stripos($msg, 'No such host is known') !== false)
 								{
 									$data->message = __('setup.step2_db_host');
 								}
-								elseif (stripos($msg, 'Access denied for user') !== FALSE)
+								elseif (stripos($msg, 'Access denied for user') !== false)
 								{
 									$data->message = __('setup.step2_db_userpass');
 								}
-								elseif (stripos($msg, 'Unknown database') !== FALSE)
+								elseif (stripos($msg, 'Unknown database') !== false)
 								{
 									$data->message = __('setup.step2_db_name', array(':dbname' => $dbName));
 								}
@@ -659,11 +659,11 @@ class Controller_Install extends Controller_Template {
 										break;
 										
 										case "'username":
-											$file[$line_num] = str_replace("FALSE", "'".$session->get('dbUser')."'", $line);
+											$file[$line_num] = str_replace("false", "'".$session->get('dbUser')."'", $line);
 										break;
 										
 										case "'password":
-											$file[$line_num] = str_replace("FALSE", "'".$session->get('dbPass')."'", $line);
+											$file[$line_num] = str_replace("false", "'".$session->get('dbPass')."'", $line);
 										break;
 										
 										case "'hostname":
@@ -676,7 +676,7 @@ class Controller_Install extends Controller_Template {
 									}
 								}
 								
-								$code = FALSE;
+								$code = false;
 								
 								foreach ($file as $value)
 								{
@@ -685,7 +685,7 @@ class Controller_Install extends Controller_Template {
 							}
 							else
 							{
-								$code = htmlentities("<?php defined('SYSPATH') OR die('No direct access allowed.');
+								$code = htmlentities("<?php defined('SYSPATH') or die('No direct access allowed.');
 
 return array
 (
@@ -696,15 +696,15 @@ return array
 'hostname' => '".$session->get('dbHost')."',
 'username' => '".$session->get('dbUser')."',
 'password' => '".$session->get('dbPass')."',
-'persistent' => FALSE,
+'persistent' => false,
 'database' => '".$session->get('dbName')."',
 ),
 
 'table_prefix' => '".$session->get('prefix')."',
 'charset' => 'utf8',
 'collate' => 'utf8_general_ci',
-'caching' => FALSE,
-'profiling' => TRUE,
+'caching' => false,
+'profiling' => true,
 ),
 );");
 							}
@@ -718,7 +718,7 @@ return array
 								$handle = fopen(APPPATH.'config/database'.EXT, 'w');
 								
 								// figure out if the write was successful
-								$write = FALSE;
+								$write = false;
 							
 								// write the file line by line
 								foreach ($file as $line)
@@ -732,7 +732,7 @@ return array
 								// try to chmod the file to the proper permissions
 								chmod(APPPATH.'config/database'.EXT, 0666);
 								
-								if ($write !== FALSE)
+								if ($write !== false)
 								{
 									// set the success message
 									$data->message = __('setup.step3_write');
@@ -812,15 +812,15 @@ return array
 							} catch (Exception $e) {
 								$msg = (string) $e->getMessage();
 								
-								if (stripos($msg, 'No such host is known') !== FALSE)
+								if (stripos($msg, 'No such host is known') !== false)
 								{
 									$data->message = __('setup.step2_db_host');
 								}
-								elseif (stripos($msg, 'Access denied for user') !== FALSE)
+								elseif (stripos($msg, 'Access denied for user') !== false)
 								{
 									$data->message = __('setup.step2_db_userpass');
 								}
-								elseif (stripos($msg, 'Unknown database') !== FALSE)
+								elseif (stripos($msg, 'Unknown database') !== false)
 								{
 									$data->message = __('setup.step2_db_name', array(':dbname' => $dbName));
 								}
@@ -872,12 +872,12 @@ return array
 		$tables = $db->list_tables();
 		
 		// is installation allowed?
-		$allowed = TRUE;
+		$allowed = true;
 		
 		if (Kohana::config('nova.genre') == '')
 		{
 			// installation not allowed
-			$allowed = FALSE;
+			$allowed = false;
 			
 			// show the flash message
 			$this->template->layout->flash = View::factory('install/pages/flash');
@@ -904,7 +904,7 @@ return array
 				// create the javascript view
 				$this->template->javascript = View::factory('install/js/install_step0_js');
 				
-				if ($allowed === TRUE)
+				if ($allowed === true)
 				{
 					// build the next step button
 					$next = array(
@@ -932,7 +932,7 @@ return array
 					foreach ($data as $key => $value)
 					{
 						DBForge::add_field($$value['fields']);
-						DBForge::add_key($value['id'], TRUE);
+						DBForge::add_key($value['id'], true);
 						
 						if (isset($value['index']))
 						{
@@ -942,14 +942,14 @@ return array
 							}
 						}
 						
-						DBForge::create_table($key, TRUE);
+						DBForge::create_table($key, true);
 					}
 					
 					// pause the script for a second
 					sleep(1);
 					
 					// wipe out the data from inserting the tables
-					$data = NULL;
+					$data = null;
 					
 					// pull in the basic data
 					include_once MODPATH.'nova/install/assets/data'.EXT;
@@ -965,7 +965,7 @@ return array
 								->values(array_values($v))
 								->compile($db);
 								
-							$insert[$value] = $db->query(Database::INSERT, $sql, TRUE);
+							$insert[$value] = $db->query(Database::INSERT, $sql, true);
 						}
 					}
 					
@@ -973,7 +973,7 @@ return array
 					sleep(1);
 					
 					// wipe out the data from insert the data
-					$data = NULL;
+					$data = null;
 					
 					// pull in the genre data
 					include_once MODPATH.'nova/install/assets/genres/'.strtolower(Kohana::config('nova.genre')).EXT;
@@ -989,7 +989,7 @@ return array
 								->values(array_values($v))
 								->compile($db);
 								
-							$genre[$key_d] = $db->query(Database::INSERT, $sql, TRUE);
+							$genre[$key_d] = $db->query(Database::INSERT, $sql, true);
 						}
 					}
 					
@@ -999,7 +999,7 @@ return array
 						sleep(1);
 						
 						// wipe out the data from insert the data
-						$data = NULL;
+						$data = null;
 						
 						// pull in the development test data
 						include_once MODPATH.'nova/install/assets/dev'.EXT;
@@ -1015,7 +1015,7 @@ return array
 									->values(array_values($v))
 									->compile($db);
 									
-								$insert[$value] = $db->query(Database::INSERT, $sql, TRUE);
+								$insert[$value] = $db->query(Database::INSERT, $sql, true);
 							}
 						}
 					}
@@ -1031,10 +1031,10 @@ return array
 				$data = $this->template->layout->content;
 				
 				// set the validation errors
-				$data->errors = ($session->get('errors')) ? $session->get('errors') : FALSE;
+				$data->errors = ($session->get('errors')) ? $session->get('errors') : false;
 				
 				// make sure the proper message is displayed
-				$data->message = ($data->errors === FALSE)
+				$data->message = ($data->errors === false)
 					? (count($tables) < Kohana::config('info.app_db_tables')) ? __('step1.failure') : __('step1.success')
 					: __('step1.errors');
 				
@@ -1058,7 +1058,7 @@ return array
 				# FIXME: what's going on with this?
 				
 				$data->default_rank = array(
-					//'src' => Location::image($rank->image.$catalogue->extension, NULL, $catalogue->location, 'rank'),
+					//'src' => Location::image($rank->image.$catalogue->extension, null, $catalogue->location, 'rank'),
 					'src' => APPFOLDER.'/assets/common/'.Kohana::config('nova.genre').'/ranks/'.$rankdefault.'/'.$rank->image.$catalogue->extension,
 					'attr' => array(
 						'class' => 'image',
@@ -1081,7 +1081,7 @@ return array
 				
 				// build the next step control
 				$this->template->layout->controls = (count($tables) < Kohana::config('info.app_db_tables')) 
-					? FALSE 
+					? false 
 					: form::button('next', __('Next Step'), $next).form::close();
 			break;
 				
@@ -1249,7 +1249,7 @@ return array
 		// the verification table
 		$data->verify = Utility::verify_server();
 		
-		if ($data->verify === FALSE OR ! isset($data->verify['failure']))
+		if ($data->verify === false or ! isset($data->verify['failure']))
 		{
 			// build the next step button
 			$next = array(

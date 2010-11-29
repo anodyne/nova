@@ -101,8 +101,8 @@ class MY_Template extends CI_Template {
 	 
 	function add_redirect($location = '', $time = 5)
 	{
-		$success = TRUE;
-		$redirect = NULL;
+		$success = true;
+		$redirect = null;
 		
 		$this->CI->load->helper('url');
 		
@@ -111,7 +111,7 @@ class MY_Template extends CI_Template {
 		$redirect = '<meta http-equiv="refresh" content="'. $time .';url='. $url .'" />';
 		
 		// Add to redirect array if it doesn't already exist
-		if ($redirect != NULL && !in_array($redirect, $this->redirect))
+		if ($redirect != null && !in_array($redirect, $this->redirect))
 		{
 			$this->redirect[] = $redirect;
 			$this->write('_redirect', $redirect);

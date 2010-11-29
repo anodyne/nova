@@ -8,8 +8,8 @@
  * @author		Anodyne Productions
  */
 
-$system_versions	= NULL;
-$system_info		= NULL;
+$system_versions	= null;
+$system_info		= null;
 
 /**
  * Build the data used by the system for version info
@@ -102,7 +102,7 @@ if ($specs->num_rows() > 0)
 	 * create a new specification item from the sim name
 	 */
 	$name = $this->db->get_where('settings', array('setting_key' => 'sim_name'));
-	$name = ($name->num_rows() > 0) ? $name->row() : FALSE;
+	$name = ($name->num_rows() > 0) ? $name->row() : false;
 	$specitem = array(
 		'specs_name' => $name->setting_value,
 		'specs_summary' => 'Summary for the '. $name->setting_value,

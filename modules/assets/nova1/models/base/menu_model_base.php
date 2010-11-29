@@ -81,7 +81,7 @@ class Menu_model_base extends Model {
 	{
 		$query = $this->db->get_where('menu_categories', array($cat_field => $cat_data));
 		
-		$row = ($query->num_rows() > 0) ? $query->row() : FALSE;
+		$row = ($query->num_rows() > 0) ? $query->row() : false;
 		
 		return $row;
 	}

@@ -1,4 +1,4 @@
-<?php defined('SYSPATH') OR die('No direct access allowed.');
+<?php defined('SYSPATH') or die('No direct access allowed.');
 /**
  * Wiki Controller
  *
@@ -33,17 +33,17 @@ class Controller_Nova_Wiki extends Controller_Nova_Base {
 		
 		// set the variables in the template
 		$this->template->title 					= $this->options->sim_name.' :: ';
-		$this->template->javascript				= FALSE;
+		$this->template->javascript				= false;
 		$this->template->layout					= View::factory($this->skin.'/template_wiki', array('skin' => $this->skin, 'sec' => 'wiki'));
 		$this->template->layout->nav_main 		= Menu::build('main', 'main');
 		$this->template->layout->nav_sub 		= Menu::build('sub', 'wiki');
-		$this->template->layout->ajax 			= FALSE;
-		$this->template->layout->flash_message	= FALSE;
-		$this->template->layout->content		= FALSE;
-		$this->template->layout->panel_1		= FALSE;
-		$this->template->layout->panel_2		= FALSE;
-		$this->template->layout->panel_3		= FALSE;
-		$this->template->layout->panel_workflow	= FALSE;
+		$this->template->layout->ajax 			= false;
+		$this->template->layout->flash_message	= false;
+		$this->template->layout->content		= false;
+		$this->template->layout->panel_1		= false;
+		$this->template->layout->panel_2		= false;
+		$this->template->layout->panel_3		= false;
+		$this->template->layout->panel_workflow	= false;
 	}
 	
 	public function action_index()

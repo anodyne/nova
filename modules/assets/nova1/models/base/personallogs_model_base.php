@@ -49,12 +49,12 @@ class Personallogs_model_base extends Model {
 			
 			for ($i=0; $i < $count; $i++)
 			{
-				$or = ($i > 0) ? ' OR ' : '';
+				$or = ($i > 0) ? ' or ' : '';
 				
 				$string.= $or ."log_author_character = '$id[$i]'";
 			}
 			
-			$this->db->where("($string)", NULL);
+			$this->db->where("($string)", null);
 		}
 		else
 		{
@@ -108,16 +108,16 @@ class Personallogs_model_base extends Model {
 			}
 		}
 		
-		return FALSE;
+		return false;
 	}
 
 	function get_log($id = '', $return = '')
 	{
 		$query = $this->db->get_where('personallogs', array('log_id' => $id));
 		
-		$row = ($query->num_rows() > 0) ? $query->row() : FALSE;
+		$row = ($query->num_rows() > 0) ? $query->row() : false;
 		
-		if (!empty($return) && $row !== FALSE)
+		if (!empty($return) && $row !== false)
 		{
 			if (!is_array($return))
 			{
@@ -143,9 +143,9 @@ class Personallogs_model_base extends Model {
 	{
 		$query = $this->db->get_where('personallogs_comments', array('lcomment_id' => $id));
 		
-		$row = ($query->num_rows() > 0) ? $query->row() : FALSE;
+		$row = ($query->num_rows() > 0) ? $query->row() : false;
 		
-		if (!empty($return) && $row !== FALSE)
+		if (!empty($return) && $row !== false)
 		{
 			if (!is_array($return))
 			{
@@ -229,7 +229,7 @@ class Personallogs_model_base extends Model {
 				{
 					if ($i > 0)
 					{
-						$or = " OR ";
+						$or = " or ";
 					}
 					else
 					{
@@ -239,7 +239,7 @@ class Personallogs_model_base extends Model {
 					$string.= $or . "log_author_character = '$id[$i]'";
 				}
 				
-				$this->db->where("($string)", NULL);
+				$this->db->where("($string)", null);
 			}
 			else
 			{

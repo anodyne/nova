@@ -30,7 +30,7 @@ class Controller_Upgrade extends Controller_Template {
 			$tables = Kohana::config('info.app_db_tables');
 			
 			// we're upgrading from sms, so make sure the system isn't installed
-			if ($this->request->action != 'step' AND (count($db->list_tables($db->table_prefix().'%')) == $tables))
+			if ($this->request->action != 'step' and (count($db->list_tables($db->table_prefix().'%')) == $tables))
 			{
 				$this->request->redirect('install/index');
 			}
@@ -44,11 +44,11 @@ class Controller_Upgrade extends Controller_Template {
 		
 		// set the variables in the template
 		$this->template->title 					= 'Nova :: ';
-		$this->template->javascript				= FALSE;
+		$this->template->javascript				= false;
 		$this->template->layout					= View::factory('upgrade/template_upgrade');
-		$this->template->layout->label			= FALSE;
-		$this->template->layout->flash	= FALSE;
-		$this->template->layout->controls		= FALSE;
+		$this->template->layout->label			= false;
+		$this->template->layout->flash	= false;
+		$this->template->layout->controls		= false;
 	}
 	
 	public function action_index()
@@ -119,12 +119,12 @@ class Controller_Upgrade extends Controller_Template {
 		$tables = $db->list_tables();
 		
 		// is installation allowed?
-		$allowed = TRUE;
+		$allowed = true;
 		
 		if (Kohana::config('nova.genre') == '')
 		{
 			// installation not allowed
-			$allowed = FALSE;
+			$allowed = false;
 			
 			// show the flash message
 			$this->template->layout->flash = View::factory('upgrade/pages/flash');
@@ -151,7 +151,7 @@ class Controller_Upgrade extends Controller_Template {
 				// create the javascript view
 				$this->template->javascript = View::factory('upgrade/js/upgrade_step0_js');
 				
-				if ($allowed === TRUE)
+				if ($allowed === true)
 				{
 					// build the next step button
 					$next = array(
@@ -178,7 +178,7 @@ class Controller_Upgrade extends Controller_Template {
 					foreach ($data as $key => $value)
 					{
 						DBForge::add_field($$value['fields']);
-						DBForge::add_key($value['id'], TRUE);
+						DBForge::add_key($value['id'], true);
 						
 						if (isset($value['index']))
 						{
@@ -188,14 +188,14 @@ class Controller_Upgrade extends Controller_Template {
 							}
 						}
 						
-						DBForge::create_table($key, TRUE);
+						DBForge::create_table($key, true);
 					}
 					
 					// pause the script for a second
 					sleep(1);
 					
 					// wipe out the data from inserting the tables
-					$data = NULL;
+					$data = null;
 					
 					// pull in the basic data
 					include_once MODPATH.'nova/install/assets/data'.EXT;
@@ -211,7 +211,7 @@ class Controller_Upgrade extends Controller_Template {
 								->values(array_values($v))
 								->compile($db);
 								
-							$insert[$value] = $db->query(Database::INSERT, $sql, TRUE);
+							$insert[$value] = $db->query(Database::INSERT, $sql, true);
 						}
 					}
 					
@@ -219,7 +219,7 @@ class Controller_Upgrade extends Controller_Template {
 					sleep(1);
 					
 					// wipe out the data from insert the data
-					$data = NULL;
+					$data = null;
 					
 					// pull in the genre data
 					include_once MODPATH.'nova/install/assets/genres/'.strtolower(Kohana::config('nova.genre')).EXT;
@@ -235,7 +235,7 @@ class Controller_Upgrade extends Controller_Template {
 								->values(array_values($v))
 								->compile($db);
 								
-							$genre[$key_d] = $db->query(Database::INSERT, $sql, TRUE);
+							$genre[$key_d] = $db->query(Database::INSERT, $sql, true);
 						}
 					}
 					
@@ -245,7 +245,7 @@ class Controller_Upgrade extends Controller_Template {
 						sleep(1);
 						
 						// wipe out the data from insert the data
-						$data = NULL;
+						$data = null;
 						
 						// pull in the development test data
 						include_once MODPATH.'nova/install/assets/dev'.EXT;
@@ -261,7 +261,7 @@ class Controller_Upgrade extends Controller_Template {
 									->values(array_values($v))
 									->compile($db);
 									
-								$insert[$value] = $db->query(Database::INSERT, $sql, TRUE);
+								$insert[$value] = $db->query(Database::INSERT, $sql, true);
 							}
 						}
 					}
@@ -283,7 +283,7 @@ class Controller_Upgrade extends Controller_Template {
 				
 				// set the loading image
 				$data->loading = array(
-					'src' => Location::image('loading-circle-large.gif', NULL, 'upgrade', 'image'),
+					'src' => Location::image('loading-circle-large.gif', null, 'upgrade', 'image'),
 					'attr' => array(
 						'class' => 'image'),
 				);
@@ -304,7 +304,7 @@ class Controller_Upgrade extends Controller_Template {
 				
 				// build the next step control
 				$this->template->layout->controls = (count($tables) < Kohana::config('info.app_db_tables'))
-					? FALSE 
+					? false 
 					: form::button('next', __('Upgrade'), $next).form::close();
 			break;
 				
@@ -324,7 +324,7 @@ class Controller_Upgrade extends Controller_Template {
 				
 				// set the loading image
 				$data->loading = array(
-					'src' => Location::image('loading-circle-large.gif', NULL, 'upgrade', 'image'),
+					'src' => Location::image('loading-circle-large.gif', null, 'upgrade', 'image'),
 					'attr' => array(
 						'class' => 'image'),
 				);
@@ -373,7 +373,7 @@ class Controller_Upgrade extends Controller_Template {
 				
 				// set the loading image
 				$data->loading = array(
-					'src' => Location::image('loading-circle-large.gif', NULL, 'upgrade', 'image'),
+					'src' => Location::image('loading-circle-large.gif', null, 'upgrade', 'image'),
 					'attr' => array(
 						'class' => 'image'),
 				);
@@ -408,7 +408,7 @@ class Controller_Upgrade extends Controller_Template {
 		// the verification table
 		$data->verify = Utility::verify_server();
 		
-		if ($data->verify === FALSE OR ! isset($data->verify['failure']))
+		if ($data->verify === false or ! isset($data->verify['failure']))
 		{
 			// build the next step button
 			$next = array(

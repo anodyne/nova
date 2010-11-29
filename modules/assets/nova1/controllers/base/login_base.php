@@ -32,7 +32,7 @@ class Login_base extends Controller {
 		$this->load->model('system_model', 'sys');
 		$installed = $this->sys->check_install_status();
 		
-		if ($installed === FALSE)
+		if ($installed === false)
 		{ /* check whether the system is installed */
 			redirect('install/index', 'refresh');
 		}
@@ -64,7 +64,7 @@ class Login_base extends Controller {
 		$this->timezone = $this->options['timezone'];
 		$this->dst = (bool) $this->options['daylight_savings'];
 		
-		if ($this->auth->is_logged_in() === TRUE)
+		if ($this->auth->is_logged_in() === true)
 		{ /* if there's a session, set the variables appropriately */
 			$this->rank = $this->session->userdata('display_rank');
 			$this->timezone = $this->session->userdata('timezone');
@@ -115,7 +115,7 @@ class Login_base extends Controller {
 		$email_flash = $this->session->flashdata('email');
 		
 		/* if there's something in the flashdata, let's check how many times they've tried */
-		if ($email_flash !== FALSE)
+		if ($email_flash !== false)
 		{
 			$attempt_num = $this->sys->count_login_attempts($email_flash);
 		}
@@ -124,7 +124,7 @@ class Login_base extends Controller {
 		$attempt = $this->sys->get_last_login_attempt($this->input->ip_address(), 'login_ip');
 		
 		/* make sure we only show this error if they've reached the allowed login attempts */
-		if ($attempt !== FALSE && $attempt_num >= $this->auth->allowed_login_attempts)
+		if ($attempt !== false && $attempt_num >= $this->auth->allowed_login_attempts)
 		{
 			$timeframe = now() - $attempt->login_time;
 			$timeframe_mins = $timeframe / 60;
@@ -316,9 +316,9 @@ class Login_base extends Controller {
 		if (isset($_POST['submit']))
 		{
 			/* set the variables */
-			$email = $this->input->post('email', TRUE);
-			$question = $this->input->post('question', TRUE);
-			$answer = $this->input->post('answer', TRUE);
+			$email = $this->input->post('email', true);
+			$question = $this->input->post('question', true);
+			$answer = $this->input->post('answer', true);
 			
 			/* run the methods */
 			$info = $this->user->get_user_details_by_email($email);
@@ -438,7 +438,7 @@ class Login_base extends Controller {
 		$this->load->library('parser');
 		
 		/* define the variables */
-		$email = FALSE;
+		$email = false;
 		
 		switch ($type)
 		{
@@ -461,7 +461,7 @@ class Login_base extends Controller {
 				$em_loc = email_location('reset_password', $this->email->mailtype);
 				
 				/* parse the message */
-				$message = $this->parser->parse($em_loc, $email_data, TRUE);
+				$message = $this->parser->parse($em_loc, $email_data, true);
 				
 				/* set the parameters for sending the email */
 				$this->email->from($data['email'], $data['name']);
@@ -482,8 +482,8 @@ class Login_base extends Controller {
 	function _reset($email = '')
 	{
 		/* set the variables */
-		$id = FALSE;
-		$name = FALSE;
+		$id = false;
+		$name = false;
 		
 		/* run the methods */
 		$info = $this->user->get_user_details_by_email($email);
@@ -517,7 +517,7 @@ class Login_base extends Controller {
 		);
 		
 		/* send the email */
-		$email = ($this->options['system_email'] == 'on') ? $this->_email('reset', $data) : FALSE;
+		$email = ($this->options['system_email'] == 'on') ? $this->_email('reset', $data) : false;
 		
 		return $update;
 	}

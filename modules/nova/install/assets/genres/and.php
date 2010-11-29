@@ -1,7 +1,7 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 /*
 |---------------------------------------------------------------
-| INSTALL - GENRE DATA (AND)
+| INSTALL - GENRE DATA (and)
 |---------------------------------------------------------------
 |
 | File: assets/install_data_and.php
@@ -22,7 +22,7 @@ $g = 'and';
 
 /*
 |---------------------------------------------------------------
-| Genre Table Data (AND)
+| Genre Table Data (and)
 |---------------------------------------------------------------
 */
 $data = array(

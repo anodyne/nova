@@ -32,7 +32,7 @@ class Sim_base extends Controller {
 		$this->load->model('system_model', 'sys');
 		$installed = $this->sys->check_install_status();
 		
-		if ($installed === FALSE)
+		if ($installed === false)
 		{ /* check whether the system is installed */
 			redirect('install/index', 'refresh');
 		}
@@ -73,7 +73,7 @@ class Sim_base extends Controller {
 		$this->timezone = $this->options['timezone'];
 		$this->dst = (bool) $this->options['daylight_savings'];
 		
-		if ($this->auth->is_logged_in() === TRUE)
+		if ($this->auth->is_logged_in() === true)
 		{ /* if there's a session, set the variables appropriately */
 			$this->skin = $this->session->userdata('skin_main');
 			$this->rank = $this->session->userdata('display_rank');
@@ -88,17 +88,17 @@ class Sim_base extends Controller {
 		$this->template->set_master_template($this->skin . '/template_main.php');
 		
 		/* write the common elements to the template */
-		$this->template->write('nav_main', $this->menu->build('main', 'main'), TRUE);
-		$this->template->write('nav_sub', $this->menu->build('sub', 'sim'), TRUE);
+		$this->template->write('nav_main', $this->menu->build('main', 'main'), true);
+		$this->template->write('nav_sub', $this->menu->build('sub', 'sim'), true);
 		$this->template->write('title', $this->options['sim_name'] . ' :: ');
 		
 		if ($this->auth->is_logged_in())
 		{
 			/* create the user panels */
-			$this->template->write('panel_1', $this->user_panel->panel_1(), TRUE);
-			$this->template->write('panel_2', $this->user_panel->panel_2(), TRUE);
-			$this->template->write('panel_3', $this->user_panel->panel_3(), TRUE);
-			$this->template->write('panel_workflow', $this->user_panel->panel_workflow(), TRUE);
+			$this->template->write('panel_1', $this->user_panel->panel_1(), true);
+			$this->template->write('panel_2', $this->user_panel->panel_2(), true);
+			$this->template->write('panel_3', $this->user_panel->panel_3(), true);
+			$this->template->write('panel_workflow', $this->user_panel->panel_workflow(), true);
 		}
 	}
 
@@ -128,7 +128,7 @@ class Sim_base extends Controller {
 		$this->load->helper('inflector');
 		
 		/* make sure the award id is legit */
-		$award = $this->uri->segment(3, 0, TRUE);
+		$award = $this->uri->segment(3, 0, true);
 		
 		if ($award == 0)
 		{
@@ -171,7 +171,7 @@ class Sim_base extends Controller {
 			$award_row = $this->awards->get_award($award);
 			$awardees = $this->awards->get_awardees($award);
 			
-			if ($award_row !== FALSE)
+			if ($award_row !== false)
 			{
 				$award_img = array(
 					'src' => asset_location('images/awards', $award_row->award_image),
@@ -182,9 +182,9 @@ class Sim_base extends Controller {
 				$data['name'] = $award_row->award_name;
 				$data['id'] = $award_row->award_id;
 				$data['desc'] = $award_row->award_desc;
-				$data['img'] = FALSE;
+				$data['img'] = false;
 				
-				if ($award_img['src'] != FALSE)
+				if ($award_img['src'] != false)
 				{
 					$data['img'] = $award_img;
 				}
@@ -272,13 +272,13 @@ class Sim_base extends Controller {
 		}
 		
 		/* determine if they can edit the log */
-		if ($this->auth->is_logged_in() === TRUE && $this->auth->check_access('manage/awards', FALSE) === TRUE)
+		if ($this->auth->is_logged_in() === true && $this->auth->check_access('manage/awards', false) === true)
 		{
-			$data['edit_valid'] = TRUE;
+			$data['edit_valid'] = true;
 		}
 		else
 		{
-			$data['edit_valid'] = FALSE;
+			$data['edit_valid'] = false;
 		}
 		
 		$data['label'] = array(
@@ -325,13 +325,13 @@ class Sim_base extends Controller {
 		$data['header'] = ucwords(lang('global_deck') .' '. lang('labels_listing'));
 		
 		/* determine if they can edit the log */
-		if ($this->auth->is_logged_in() === TRUE && $this->auth->check_access('manage/decks', FALSE) === TRUE)
+		if ($this->auth->is_logged_in() === true && $this->auth->check_access('manage/decks', false) === true)
 		{
-			$data['edit_valid'] = TRUE;
+			$data['edit_valid'] = true;
 		}
 		else
 		{
-			$data['edit_valid'] = FALSE;
+			$data['edit_valid'] = false;
 		}
 		
 		$data['label'] = array(
@@ -429,23 +429,23 @@ class Sim_base extends Controller {
 		}
 		
 		/* determine if they can edit the log */
-		if ($this->auth->is_logged_in() === TRUE && $this->auth->check_access('manage/depts', FALSE) === TRUE)
+		if ($this->auth->is_logged_in() === true && $this->auth->check_access('manage/depts', false) === true)
 		{
-			$data['edit_valid_dept'] = TRUE;
+			$data['edit_valid_dept'] = true;
 		}
 		else
 		{
-			$data['edit_valid_dept'] = FALSE;
+			$data['edit_valid_dept'] = false;
 		}
 		
 		/* determine if they can edit the log */
-		if ($this->auth->is_logged_in() === TRUE && $this->auth->check_access('manage/positions', FALSE) === TRUE)
+		if ($this->auth->is_logged_in() === true && $this->auth->check_access('manage/positions', false) === true)
 		{
-			$data['edit_valid_pos'] = TRUE;
+			$data['edit_valid_pos'] = true;
 		}
 		else
 		{
-			$data['edit_valid_pos'] = FALSE;
+			$data['edit_valid_pos'] = false;
 		}
 		
 		$data['label'] = array(
@@ -473,14 +473,14 @@ class Sim_base extends Controller {
 		/* load the resources */
 		$this->load->model('docking_model', 'docking');
 		
-		$id = $this->uri->segment(3, FALSE, TRUE);
+		$id = $this->uri->segment(3, false, true);
 		
-		if ($id !== FALSE)
+		if ($id !== false)
 		{
 			/* grab the docked item */
 			$item = $this->docking->get_docked_item($id);
 			
-			if ($item !== FALSE)
+			if ($item !== false)
 			{
 				/* set the date format */
 				$datestring = $this->options['date_format'];
@@ -616,7 +616,7 @@ class Sim_base extends Controller {
 		
 		if (isset($_POST['submit']))
 		{
-			$check = $this->input->post('check', TRUE);
+			$check = $this->input->post('check', true);
 			
 			if (!empty($check))
 			{
@@ -683,12 +683,12 @@ class Sim_base extends Controller {
 					$flash['message'] = text_output($message);
 					
 					$email_data = array(
-						'name' => $this->input->post('docking_gm_name', TRUE),
-						'email' => $this->input->post('docking_gm_email', TRUE)
+						'name' => $this->input->post('docking_gm_name', true),
+						'email' => $this->input->post('docking_gm_email', true)
 					);
 					
-					$email = ($this->options['system_email'] == 'on') ? $this->_email('docking_user', $email_data) : FALSE;
-					$email = ($this->options['system_email'] == 'on') ? $this->_email('docking_gm', $dock_id) : FALSE;
+					$email = ($this->options['system_email'] == 'on') ? $this->_email('docking_user', $email_data) : false;
+					$email = ($this->options['system_email'] == 'on') ? $this->_email('docking_gm', $dock_id) : false;
 				}
 				else
 				{
@@ -760,9 +760,9 @@ class Sim_base extends Controller {
 								break;
 								
 							case 'select':
-								$value = FALSE;
-								$values = FALSE;
-								$input = FALSE;
+								$value = false;
+								$values = false;
+								$input = false;
 							
 								$values = $this->docking->get_docking_values($field->field_id);
 								
@@ -848,8 +848,8 @@ class Sim_base extends Controller {
 		$this->load->model('personallogs_model', 'logs');
 		
 		/* define the variables */
-		$data = FALSE;
-		$offset = $this->uri->segment(3, 0, TRUE);
+		$data = false;
+		$offset = $this->uri->segment(3, 0, true);
 		
 		/* set the pagination configs */
 		$config['base_url'] = site_url('sim/listlogs');
@@ -877,7 +877,7 @@ class Sim_base extends Controller {
 				
 				$data['logs'][$log->log_id]['id'] = $log->log_id;
 				$data['logs'][$log->log_id]['title'] = $log->log_title;
-				$data['logs'][$log->log_id]['author'] = $this->char->get_character_name($log->log_author_character, TRUE);
+				$data['logs'][$log->log_id]['author'] = $this->char->get_character_name($log->log_author_character, true);
 				$data['logs'][$log->log_id]['date'] = mdate($datestring, $date);
 			}
 		}
@@ -926,9 +926,9 @@ class Sim_base extends Controller {
 	function listposts()
 	{
 		/* define the variables */
-		$data = FALSE;
-		$mission = FALSE;
-		$mission = $this->uri->segment(4, FALSE, TRUE);
+		$data = false;
+		$mission = false;
+		$mission = $this->uri->segment(4, false, true);
 		
 		/* get the title */
 		$title = ucwords(lang('global_missionposts'));
@@ -940,9 +940,9 @@ class Sim_base extends Controller {
 		/* load the libraries */
 		$this->load->library('pagination');
 		
-		if ($mission === FALSE)
+		if ($mission === false)
 		{
-			$offset = $this->uri->segment(3, 0, TRUE);
+			$offset = $this->uri->segment(3, 0, true);
 		
 			/* set the pagination configs */
 			$config['base_url'] = site_url('sim/listposts/');
@@ -962,7 +962,7 @@ class Sim_base extends Controller {
 		}
 		else
 		{
-			$offset = $this->uri->segment(5, 0, TRUE);
+			$offset = $this->uri->segment(5, 0, true);
 		
 			/* set the pagination configs */
 			$config['base_url'] = site_url('sim/listposts/mission/'. $mission .'/');
@@ -992,13 +992,13 @@ class Sim_base extends Controller {
 				
 				$data['posts'][$post->post_id]['id'] = $post->post_id;
 				$data['posts'][$post->post_id]['title'] = $post->post_title;
-				$data['posts'][$post->post_id]['author'] = $this->char->get_authors($post->post_authors, TRUE);
+				$data['posts'][$post->post_id]['author'] = $this->char->get_authors($post->post_authors, true);
 				$data['posts'][$post->post_id]['date'] = mdate($datestring, $date);
 				$data['posts'][$post->post_id]['mission'] = $this->mis->get_mission($post->post_mission, 'mission_title');
 				$data['posts'][$post->post_id]['mission_id'] = $post->post_mission;
 			}
 			
-			if ($mission == FALSE)
+			if ($mission == false)
 			{ /* if no mission is specified */
 				$this->template->write('title', $title);
 				$data['header'] = $title;
@@ -1072,7 +1072,7 @@ class Sim_base extends Controller {
 	{
 		/* set the variables */
 		$type = $this->uri->segment(3);
-		$id = $this->uri->segment(4, FALSE, TRUE);
+		$id = $this->uri->segment(4, false, true);
 		
 		/* load the models */
 		$this->load->model('missions_model', 'mis');
@@ -1086,7 +1086,7 @@ class Sim_base extends Controller {
 		switch ($type)
 		{
 			case 'id':
-				if ($id === FALSE)
+				if ($id === false)
 				{
 					$missions = $this->mis->get_all_missions('current');
 					
@@ -1097,11 +1097,11 @@ class Sim_base extends Controller {
 					}
 				}
 				
-				if ($id !== FALSE)
+				if ($id !== false)
 				{
 					$row = (!isset($row)) ? $this->mis->get_mission($id) : $row;
 					
-					if ($row !== FALSE)
+					if ($row !== false)
 					{
 						$this->template->write('title', $title .' - '. $row->mission_title);
 						
@@ -1143,7 +1143,7 @@ class Sim_base extends Controller {
 						$data['basic']['desc'] = $row->mission_desc;
 						$data['basic']['status'] = ucfirst($row->mission_status);
 						$data['basic']['start'] = mdate($this->options['date_format'], gmt_to_local($row->mission_start, $this->timezone, $this->dst));
-						$data['basic']['end'] = NULL;
+						$data['basic']['end'] = null;
 						$data['basic']['group'] = $this->mis->get_mission_group($row->mission_group, array('misgroup_id', 'misgroup_name'));
 						
 						if (!empty($row->mission_end))
@@ -1194,7 +1194,7 @@ class Sim_base extends Controller {
 				break;
 				
 			case 'group':
-				if ($id === FALSE)
+				if ($id === false)
 				{
 					$groups = $this->mis->get_all_mission_groups();
 					
@@ -1224,7 +1224,7 @@ class Sim_base extends Controller {
 				{
 					$group = $this->mis->get_mission_group($id);
 					
-					if ($group !== FALSE)
+					if ($group !== false)
 					{
 						$data['group'] = array(
 							'id' => $group->misgroup_id,
@@ -1314,13 +1314,13 @@ class Sim_base extends Controller {
 				/* other data used by the view */
 				$data['header'] = $title;
 				
-				if ($this->auth->is_logged_in() === TRUE && $this->auth->check_access('manage/missions', FALSE) === TRUE)
+				if ($this->auth->is_logged_in() === true && $this->auth->check_access('manage/missions', false) === true)
 				{
-					$data['edit_valid'] = TRUE;
+					$data['edit_valid'] = true;
 				}
 				else
 				{
-					$data['edit_valid'] = FALSE;
+					$data['edit_valid'] = false;
 				}
 				
 				/* figure out where the view should be coming from */
@@ -1422,22 +1422,22 @@ class Sim_base extends Controller {
 		/* set the header */
 		$data['header'] = $title;
 		
-		if ($this->auth->is_logged_in() === TRUE && $this->auth->check_access('manage/specs', FALSE) === TRUE)
+		if ($this->auth->is_logged_in() === true && $this->auth->check_access('manage/specs', false) === true)
 		{
-			$data['edit_valid'] = TRUE;
+			$data['edit_valid'] = true;
 		}
 		else
 		{
-			$data['edit_valid'] = FALSE;
+			$data['edit_valid'] = false;
 		}
 		
-		if ($this->auth->is_logged_in() === TRUE && $this->auth->check_access('site/specsform', FALSE) === TRUE)
+		if ($this->auth->is_logged_in() === true && $this->auth->check_access('site/specsform', false) === true)
 		{
-			$data['edit_valid_form'] = TRUE;
+			$data['edit_valid_form'] = true;
 		}
 		else
 		{
-			$data['edit_valid_form'] = FALSE;
+			$data['edit_valid_form'] = false;
 		}
 		
 		$data['label'] = array(
@@ -1475,19 +1475,19 @@ class Sim_base extends Controller {
 		
 		/* this month */
 		$this_month_mysql = $today['year'] .'-'. $today['mon'] .'-01 00:00:00';
-		$this_month = human_to_unix($this_month_mysql, TRUE);
+		$this_month = human_to_unix($this_month_mysql, true);
 		
 		/* last month */
 		$year = ($today['mon'] == 1) ? $today['year'] - 1 : $today['year'];
 		$month = ($today['mon'] == 1) ? 12 : $today['mon'] - 1;
 		$last_month_mysql = $year .'-'. $month .'-01 00:00:00';
-		$last_month = human_to_unix($last_month_mysql, TRUE);
+		$last_month = human_to_unix($last_month_mysql, true);
 		
 		/* next month */
 		$year = ($today['mon'] == 12) ? $today['year'] + 1 : $today['year'];
 		$month = ($today['mon'] == 12) ? '01' : $today['mon'] + 1;
 		$next_month_mysql = $year .'-'. $month .'-01 00:00:00';
-		$next_month = human_to_unix($next_month_mysql, TRUE);
+		$next_month = human_to_unix($next_month_mysql, true);
 		
 		/* days in the months */
 		$days = date('t');
@@ -1588,9 +1588,9 @@ class Sim_base extends Controller {
 		$this->load->model('tour_model', 'tour');
 		
 		/* set the variables */
-		$id = $this->uri->segment(3, FALSE, TRUE);
+		$id = $this->uri->segment(3, false, true);
 		
-		if ($id === FALSE)
+		if ($id === false)
 		{
 			/* run the methods */
 			$tour = $this->tour->get_tour_items();
@@ -1665,7 +1665,7 @@ class Sim_base extends Controller {
 						
 						/* put the data into the data array */
 						$data['fields'][$field->field_id]['label'] = $field->field_label_page;
-						$data['fields'][$field->field_id]['data'] = (!empty($info->data_value)) ? $info->data_value : FALSE;
+						$data['fields'][$field->field_id]['data'] = (!empty($info->data_value)) ? $info->data_value : false;
 					}
 				}
 				
@@ -1692,22 +1692,22 @@ class Sim_base extends Controller {
 			}
 		}
 		
-		if ($this->auth->is_logged_in() === TRUE && $this->auth->check_access('manage/tour', FALSE) === TRUE)
+		if ($this->auth->is_logged_in() === true && $this->auth->check_access('manage/tour', false) === true)
 		{
-			$data['edit_valid'] = TRUE;
+			$data['edit_valid'] = true;
 		}
 		else
 		{
-			$data['edit_valid'] = FALSE;
+			$data['edit_valid'] = false;
 		}
 		
-		if ($this->auth->is_logged_in() === TRUE && $this->auth->check_access('site/tourform', FALSE) === TRUE)
+		if ($this->auth->is_logged_in() === true && $this->auth->check_access('site/tourform', false) === true)
 		{
-			$data['edit_valid_form'] = TRUE;
+			$data['edit_valid_form'] = true;
 		}
 		else
 		{
-			$data['edit_valid_form'] = FALSE;
+			$data['edit_valid_form'] = false;
 		}
 		
 		$data['label'] = array(
@@ -1738,12 +1738,12 @@ class Sim_base extends Controller {
 	function viewlog()
 	{
 		/* set the some variables */
-		$id = $this->uri->segment(3, FALSE, TRUE);
+		$id = $this->uri->segment(3, false, true);
 		
 		/* load the model */
 		$this->load->model('personallogs_model', 'logs');
 		
-		if ($this->session->userdata('userid') !== FALSE && isset($_POST['submit']))
+		if ($this->session->userdata('userid') !== false && isset($_POST['submit']))
 		{
 			$comment_text = $this->input->post('comment_text');
 			
@@ -1785,7 +1785,7 @@ class Sim_base extends Controller {
 							'comment' => $comment_text);
 						
 						/* send the email */
-						$email = ($this->options['system_email'] == 'on') ? $this->_email('log_comment_pending', $email_data) : FALSE;
+						$email = ($this->options['system_email'] == 'on') ? $this->_email('log_comment_pending', $email_data) : false;
 					}
 					else
 					{
@@ -1804,7 +1804,7 @@ class Sim_base extends Controller {
 								'comment' => $comment_text);
 							
 							/* send the email */
-							$email = ($this->options['system_email'] == 'on') ? $this->_email('log_comment', $email_data) : FALSE;
+							$email = ($this->options['system_email'] == 'on') ? $this->_email('log_comment', $email_data) : false;
 						}
 					}
 				}
@@ -1835,7 +1835,7 @@ class Sim_base extends Controller {
 		$logs = $this->logs->get_log($id);
 		$comments = $this->logs->get_log_comments($id);
 		
-		if ($logs !== FALSE)
+		if ($logs !== false)
 		{
 			/* grab the next and previous IDs */
 			$next = $this->logs->get_link_id($id);
@@ -1857,26 +1857,26 @@ class Sim_base extends Controller {
 			$data['title'] = $logs->log_title;
 			$data['content'] = $logs->log_content;
 			$data['date'] = mdate($datestring, $date);
-			$data['author'] = $this->char->get_character_name($logs->log_author_character, TRUE);
-			$data['tags'] = (!empty($logs->log_tags)) ? $logs->log_tags : NULL;
+			$data['author'] = $this->char->get_character_name($logs->log_author_character, true);
+			$data['tags'] = (!empty($logs->log_tags)) ? $logs->log_tags : null;
 			
 			/* determine if they can edit the log */
-			if ($this->auth->is_logged_in() === TRUE && ( ($this->auth->get_access_level('manage/logs') == 2) ||
+			if ($this->auth->is_logged_in() === true && ( ($this->auth->get_access_level('manage/logs') == 2) ||
 				($this->auth->get_access_level('manage/logs') == 1 && $this->session->userdata('userid') == $logs->log_author_user)))
 			{
-				$data['edit_valid'] = TRUE;
+				$data['edit_valid'] = true;
 			}
 			else
 			{
-				$data['edit_valid'] = FALSE;
+				$data['edit_valid'] = false;
 			}
 			
-			if ($next !== FALSE)
+			if ($next !== false)
 			{
 				$data['next'] = $next;
 			}
 			
-			if ($prev !== FALSE)
+			if ($prev !== false)
 			{
 				$data['prev'] = $prev;
 			}
@@ -1911,7 +1911,7 @@ class Sim_base extends Controller {
 			{
 				$date = gmt_to_local($c->lcomment_date, $this->timezone, $this->dst);
 				
-				$data['comments'][$i]['author'] = $this->char->get_character_name($c->lcomment_author_character, TRUE);
+				$data['comments'][$i]['author'] = $this->char->get_character_name($c->lcomment_author_character, true);
 				$data['comments'][$i]['content'] = $c->lcomment_content;
 				$data['comments'][$i]['date'] = mdate($datestring, $date);
 				
@@ -1949,13 +1949,13 @@ class Sim_base extends Controller {
 	function viewpost()
 	{
 		/* set the some variables */
-		$id = $this->uri->segment(3, FALSE, TRUE);
+		$id = $this->uri->segment(3, false, true);
 		
 		/* load the models */
 		$this->load->model('posts_model', 'posts');
 		$this->load->model('missions_model', 'mis');
 		
-		if ($this->session->userdata('userid') !== FALSE && isset($_POST['submit']))
+		if ($this->session->userdata('userid') !== false && isset($_POST['submit']))
 		{
 			$comment_text = $this->input->post('comment_text');
 			
@@ -1997,7 +1997,7 @@ class Sim_base extends Controller {
 							'comment' => $comment_text);
 						
 						/* send the email */
-						$email = ($this->options['system_email'] == 'on') ? $this->_email('post_comment_pending', $email_data) : FALSE;
+						$email = ($this->options['system_email'] == 'on') ? $this->_email('post_comment_pending', $email_data) : false;
 					}
 					else
 					{
@@ -2008,7 +2008,7 @@ class Sim_base extends Controller {
 							'comment' => $comment_text);
 						
 						/* send the email */
-						$email = ($this->options['system_email'] == 'on') ? $this->_email('post_comment', $email_data) : FALSE;
+						$email = ($this->options['system_email'] == 'on') ? $this->_email('post_comment', $email_data) : false;
 					}
 				}
 				else
@@ -2041,7 +2041,7 @@ class Sim_base extends Controller {
 		/* set the date format */
 		$datestring = $this->options['date_format'];
 		
-		if ($row !== FALSE)
+		if ($row !== false)
 		{
 			$date = gmt_to_local($row->post_date, $this->timezone, $this->dst);
 			
@@ -2067,12 +2067,12 @@ class Sim_base extends Controller {
 			$data['timeline'] = $row->post_timeline;
 			$data['post_id'] = $id;
 			
-			if ($next !== FALSE)
+			if ($next !== false)
 			{
 				$data['next'] = $next;
 			}
 			
-			if ($prev !== FALSE)
+			if ($prev !== false)
 			{
 				$data['prev'] = $prev;
 			}
@@ -2144,7 +2144,7 @@ class Sim_base extends Controller {
 			$this->template->write('title', lang('error_pagetitle'));
 		}
 		
-		if ($this->auth->is_logged_in() === TRUE && $this->auth->get_access_level('manage/posts') == 1)
+		if ($this->auth->is_logged_in() === true && $this->auth->get_access_level('manage/posts') == 1)
 		{
 			$data['valid'] = array();
 			
@@ -2152,20 +2152,20 @@ class Sim_base extends Controller {
 			
 			if (in_array($this->session->userdata('userid'), $users))
 			{
-				$data['valid'][] = TRUE;
+				$data['valid'][] = true;
 			}
 			else
 			{
-				$data['valid'][] = FALSE;
+				$data['valid'][] = false;
 			}
 		}
-		elseif ($this->auth->is_logged_in() === TRUE && $this->auth->get_access_level('manage/posts') == 2)
+		elseif ($this->auth->is_logged_in() === true && $this->auth->get_access_level('manage/posts') == 2)
 		{
-			$data['valid'][] = TRUE;
+			$data['valid'][] = true;
 		}
 		else
 		{
-			$data['valid'][] = FALSE;
+			$data['valid'][] = false;
 		}
 		
 		$data['label'] = array(
@@ -2199,7 +2199,7 @@ class Sim_base extends Controller {
 		$this->load->library('parser');
 		
 		/* define the variables */
-		$email = FALSE;
+		$email = false;
 		
 		switch ($type)
 		{
@@ -2231,7 +2231,7 @@ class Sim_base extends Controller {
 				$em_loc = email_location('sim_log_comment', $this->email->mailtype);
 				
 				/* parse the message */
-				$message = $this->parser->parse($em_loc, $email_data, TRUE);
+				$message = $this->parser->parse($em_loc, $email_data, true);
 				
 				/* set the parameters for sending the email */
 				$this->email->from($from, $name);
@@ -2271,7 +2271,7 @@ class Sim_base extends Controller {
 				$em_loc = email_location('comment_pending', $this->email->mailtype);
 				
 				/* parse the message */
-				$message = $this->parser->parse($em_loc, $email_data, TRUE);
+				$message = $this->parser->parse($em_loc, $email_data, true);
 				
 				/* set the parameters for sending the email */
 				$this->email->from($from, $name);
@@ -2330,7 +2330,7 @@ class Sim_base extends Controller {
 				$em_loc = email_location('sim_post_comment', $this->email->mailtype);
 				
 				/* parse the message */
-				$message = $this->parser->parse($em_loc, $email_data, TRUE);
+				$message = $this->parser->parse($em_loc, $email_data, true);
 				
 				/* set the parameters for sending the email */
 				$this->email->from($from, $name);
@@ -2370,7 +2370,7 @@ class Sim_base extends Controller {
 				$em_loc = email_location('comment_pending', $this->email->mailtype);
 				
 				/* parse the message */
-				$message = $this->parser->parse($em_loc, $email_data, TRUE);
+				$message = $this->parser->parse($em_loc, $email_data, true);
 				
 				/* set the parameters for sending the email */
 				$this->email->from($from, $name);
@@ -2398,7 +2398,7 @@ class Sim_base extends Controller {
 				$em_loc = email_location('sim_docking_user', $this->email->mailtype);
 				
 				/* parse the message */
-				$message = $this->parser->parse($em_loc, $email_data, TRUE);
+				$message = $this->parser->parse($em_loc, $email_data, true);
 				
 				/* set the parameters for sending the email */
 				$this->email->from($this->options['default_email_address'], $this->options['default_email_name']);
@@ -2477,7 +2477,7 @@ class Sim_base extends Controller {
 					$em_loc = email_location('sim_docking_gm', $this->email->mailtype);
 					
 					/* parse the message */
-					$message = $this->parser->parse($em_loc, $email_data, TRUE);
+					$message = $this->parser->parse($em_loc, $email_data, true);
 					
 					/* get the game masters email addresses */
 					$gm = $this->user->get_gm_emails();

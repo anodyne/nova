@@ -47,9 +47,9 @@ class Model_Wikidraft extends Jelly_Model {
 			)),
 			'created_at' => Jelly::field('timestamp', array(
 				'column' => 'draft_created_at',
-				'auto_now_create' => TRUE,
-				'auto_now_update' => FALSE,
-				'null' => TRUE,
+				'auto_now_create' => true,
+				'auto_now_update' => false,
+				'null' => true,
 				'default' => date::now()
 			)),
 			'categories' => Jelly::field('text', array(

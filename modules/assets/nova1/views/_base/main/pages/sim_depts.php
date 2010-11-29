@@ -1,6 +1,6 @@
 <?php echo text_output($header, 'h1', 'page-head');?>
 
-<?php if ($edit_valid_dept === TRUE || $edit_valid_pos === TRUE): ?>
+<?php if ($edit_valid_dept === true || $edit_valid_pos === true): ?>
 	<p>
 	<?php echo link_to_if($edit_valid_dept, 'manage/depts', $label['edit_dept'], array('class' => 'edit fontSmall bold'));?>
 	<?php echo link_to_if($edit_valid_pos, 'manage/positions', $label['edit_pos'], array('class' => 'edit fontSmall bold'));?>

@@ -6,7 +6,7 @@
 	<?php echo $label['draft'] .' '. $label['created'] .' '. $label['by'] .' '. $draft['created'] .' '. $label['on'] .' '. $draft['created_date'];?>
 </p>
 
-<?php echo text_output($draft['content'], 'p', '', FALSE);?>
+<?php echo text_output($draft['content'], 'p', '', false);?>
 
 <br />
 <div class="info-full fontSmall">

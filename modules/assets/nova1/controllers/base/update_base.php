@@ -28,7 +28,7 @@ class Update_base extends Controller {
 		$this->load->model('system_model', 'sys');
 		$installed = $this->sys->check_install_status();
 		
-		if ($installed === FALSE)
+		if ($installed === false)
 		{ /* check whether the system is installed */
 			redirect('install/index', 'refresh');
 		}
@@ -80,7 +80,7 @@ class Update_base extends Controller {
 		$code = 0;
 		
 		/* go through and check for errors */
-		$code = ($data['installed'] === FALSE) ? 1 : $code;
+		$code = ($data['installed'] === false) ? 1 : $code;
 		$code = ($this->options['maintenance'] == 'off') ? 2 : $code;
 		
 		if ($code > 0)
@@ -141,8 +141,8 @@ class Update_base extends Controller {
 		if (isset($_POST['submit']))
 		{
 			/* set the POST variables */
-			$email = $this->input->post('email', TRUE);
-			$password = $this->input->post('password', TRUE);
+			$email = $this->input->post('email', true);
+			$password = $this->input->post('password', true);
 			
 			/* verify their email/password combo is right */
 			$verify = $this->auth->verify($email, $password);
@@ -153,7 +153,7 @@ class Update_base extends Controller {
 			/* verify they're a sys admin */
 			$sysadmin = $this->auth->is_sysadmin($user);
 			
-			if ($verify == 0 && $sysadmin === TRUE)
+			if ($verify == 0 && $sysadmin === true)
 			{
 				/* do the version check */
 				$update = $this->_check_version();
@@ -162,7 +162,7 @@ class Update_base extends Controller {
 				if ($update['flash']['message'] != '')
 				{
 					$flash = $update['flash'];
-					$data['link'] = FALSE;
+					$data['link'] = false;
 				}
 				else
 				{
@@ -196,7 +196,7 @@ class Update_base extends Controller {
 			{
 				$flash['status'] = 'error';
 				
-				if ($sysadmin === FALSE)
+				if ($sysadmin === false)
 				{
 					$flash['message'] = lang('error_update_2');
 				}
@@ -352,7 +352,7 @@ class Update_base extends Controller {
 	function step()
 	{
 		/* set the step */
-		$step = $this->uri->segment(3, 1, TRUE);
+		$step = $this->uri->segment(3, 1, true);
 		
 		switch ($step)
 		{
@@ -370,7 +370,7 @@ class Update_base extends Controller {
 				$db_size = file_size($this->sys->get_database_size());
 				$memory = check_memory($db_size);
 				
-				if ($memory === TRUE)
+				if ($memory === true)
 				{ /* if there's enough memory, continue */
 					/* grab today's date info */
 					$today = getdate();
@@ -380,7 +380,7 @@ class Update_base extends Controller {
 						
 					$backup = backup_database($prefix, 'save', $filename);
 					
-					if ($backup === TRUE)
+					if ($backup === true)
 					{
 						if (is_file(APPPATH .'assets/backups/'. $filename .'.zip'))
 						{
@@ -394,7 +394,7 @@ class Update_base extends Controller {
 					else
 					{
 						$message = lang('upd_step1_nofields');
-						$data['next']['disabled'] = TRUE;
+						$data['next']['disabled'] = true;
 					}
 				}
 				else
@@ -585,7 +585,7 @@ class Update_base extends Controller {
 				),
 			);
 			
-			$update = FALSE;
+			$update = false;
 			
 			if (version_compare($version['files']['full'], $array['version'], '<') || version_compare($version['database']['full'], $array['version'], '<'))
 			{
@@ -613,7 +613,7 @@ class Update_base extends Controller {
 					$version['files']['full']
 				);
 			}
-			elseif ($update !== FALSE)
+			elseif ($update !== false)
 			{
 				$yourversion = sprintf(
 					lang('update_your_version'),
@@ -642,7 +642,7 @@ class Update_base extends Controller {
 			return $retval;
 		}
 		
-		return FALSE;
+		return false;
 	}
 	
 	function _register()

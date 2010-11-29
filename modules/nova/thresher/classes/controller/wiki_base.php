@@ -33,7 +33,7 @@ class Wiki_base extends Controller {
 		$this->load->model('system_model', 'sys');
 		$installed = $this->sys->check_install_status();
 		
-		if ($installed === FALSE)
+		if ($installed === false)
 		{ /* check whether the system is installed */
 			redirect('install/index', 'refresh');
 		}
@@ -77,7 +77,7 @@ class Wiki_base extends Controller {
 		$this->timezone = $this->options['timezone'];
 		$this->dst = (bool) $this->options['daylight_savings'];
 		
-		if ($this->auth->is_logged_in() === TRUE)
+		if ($this->auth->is_logged_in() === true)
 		{ /* if there's a session, set the variables appropriately */
 			$this->skin = $this->session->userdata('skin_wiki');
 			$this->rank = $this->session->userdata('display_rank');
@@ -93,17 +93,17 @@ class Wiki_base extends Controller {
 		$this->template->set_master_template($this->skin . '/template_wiki.php');
 		
 		/* write the common elements to the template */
-		$this->template->write('nav_main', $this->menu->build('main', 'main'), TRUE);
-		$this->template->write('nav_sub', $this->menu->build('sub', 'wiki'), TRUE);
+		$this->template->write('nav_main', $this->menu->build('main', 'main'), true);
+		$this->template->write('nav_sub', $this->menu->build('sub', 'wiki'), true);
 		$this->template->write('title', $this->options['sim_name'] . ' :: ');
 		
-		if ($this->auth->is_logged_in() === TRUE)
+		if ($this->auth->is_logged_in() === true)
 		{
 			/* create the user panels */
-			$this->template->write('panel_1', $this->user_panel->panel_1(), TRUE);
-			$this->template->write('panel_2', $this->user_panel->panel_2(), TRUE);
-			$this->template->write('panel_3', $this->user_panel->panel_3(), TRUE);
-			$this->template->write('panel_workflow', $this->user_panel->panel_workflow(), TRUE);
+			$this->template->write('panel_1', $this->user_panel->panel_1(), true);
+			$this->template->write('panel_2', $this->user_panel->panel_2(), true);
+			$this->template->write('panel_3', $this->user_panel->panel_3(), true);
+			$this->template->write('panel_workflow', $this->user_panel->panel_workflow(), true);
 		}
 	}
 
@@ -173,7 +173,7 @@ class Wiki_base extends Controller {
 	function categories()
 	{
 		/* check the user's access */
-		$data['access'] = ($this->auth->is_logged_in()) ? $this->auth->check_access('wiki/categories', FALSE) : FALSE;
+		$data['access'] = ($this->auth->is_logged_in()) ? $this->auth->check_access('wiki/categories', false) : false;
 		
 		/* grab the categories */
 		$categories = $this->wiki->get_categories();
@@ -220,11 +220,11 @@ class Wiki_base extends Controller {
 	function category()
 	{
 		/* set the variables */
-		$id = $this->uri->segment(3, 0, TRUE);
+		$id = $this->uri->segment(3, 0, true);
 		
 		/* get the category name */
 		$category = $this->wiki->get_category($id, 'wikicat_name');
-		$category = ($category === FALSE) ? ucfirst(lang('labels_uncategorized')) : $category;
+		$category = ($category === false) ? ucfirst(lang('labels_uncategorized')) : $category;
 		
 		/* grab the pages */
 		$pages = $this->wiki->get_pages($id);
@@ -273,8 +273,8 @@ class Wiki_base extends Controller {
 			{
 				case 'add':
 					$insert_array = array(
-						'wikicat_name' => $this->input->post('name', TRUE),
-						'wikicat_desc' => $this->input->post('desc', TRUE),
+						'wikicat_name' => $this->input->post('name', true),
+						'wikicat_desc' => $this->input->post('desc', true),
 					);
 					
 					/* insert the record */
@@ -311,7 +311,7 @@ class Wiki_base extends Controller {
 				break;
 					
 				case 'delete':
-					$id = $this->input->post('id', TRUE);
+					$id = $this->input->post('id', true);
 				
 					/* insert the record */
 					$delete = $this->wiki->delete_category($id);
@@ -347,12 +347,12 @@ class Wiki_base extends Controller {
 				break;
 					
 				case 'edit':
-					$id = $this->input->post('id', TRUE);
-					$id = (is_numeric($id)) ? $id : FALSE;
+					$id = $this->input->post('id', true);
+					$id = (is_numeric($id)) ? $id : false;
 					
 					$update_array = array(
-						'wikicat_name' => $this->input->post('name', TRUE),
-						'wikicat_desc' => $this->input->post('desc', TRUE)
+						'wikicat_name' => $this->input->post('name', true),
+						'wikicat_desc' => $this->input->post('desc', true)
 					);
 					
 					/* insert the record */
@@ -483,7 +483,7 @@ class Wiki_base extends Controller {
 				switch ($this->uri->segment(3))
 				{
 					case 'delete':
-						$id = $this->input->post('id', TRUE);
+						$id = $this->input->post('id', true);
 					
 						/* insert the record */
 						$delete = $this->wiki->delete_page($id);
@@ -537,8 +537,8 @@ class Wiki_base extends Controller {
 			
 				$data['pages'][$p->page_id]['id'] = $p->page_id;
 				$data['pages'][$p->page_id]['title'] = $p->draft_title;
-				$data['pages'][$p->page_id]['created'] = $this->char->get_character_name($p->page_created_by_character, TRUE);
-				$data['pages'][$p->page_id]['updated'] = ( ! empty($p->page_updated_by_character)) ? $this->char->get_character_name($p->page_updated_by_character, TRUE) : FALSE;
+				$data['pages'][$p->page_id]['created'] = $this->char->get_character_name($p->page_created_by_character, true);
+				$data['pages'][$p->page_id]['updated'] = ( ! empty($p->page_updated_by_character)) ? $this->char->get_character_name($p->page_updated_by_character, true) : false;
 				$data['pages'][$p->page_id]['created_date'] = mdate($datestring, $created);
 				$data['pages'][$p->page_id]['updated_date'] = mdate($datestring, $updated);
 			}
@@ -589,7 +589,7 @@ class Wiki_base extends Controller {
 		$this->auth->check_access('wiki/page');
 		
 		/* set the variables */
-		$id = $this->uri->segment(3, 0, TRUE);
+		$id = $this->uri->segment(3, 0, true);
 		
 		if (isset($_POST['submit']))
 		{
@@ -601,7 +601,7 @@ class Wiki_base extends Controller {
 						'page_created_at' => now(),
 						'page_created_by_user' => $this->session->userdata('userid'),
 						'page_created_by_character' => $this->session->userdata('main_char'),
-						'page_comments' => $this->input->post('comments', TRUE)
+						'page_comments' => $this->input->post('comments', true)
 					);
 					
 					/* put the page information into the database */
@@ -619,18 +619,18 @@ class Wiki_base extends Controller {
 						}
 					}
 					
-					$category_string = (isset($category_array) AND is_array($category_array)) ? implode(',', $category_array) : '';
+					$category_string = (isset($category_array) and is_array($category_array)) ? implode(',', $category_array) : '';
 					
 					/* create the array of draft data */
 					$draft_array = array(
 						'draft_author_user' => $this->session->userdata('userid'),
 						'draft_author_character' => $this->session->userdata('main_char'),
-						'draft_content' => $this->input->post('content', TRUE),
-						'draft_title' => $this->input->post('title', TRUE),
+						'draft_content' => $this->input->post('content', true),
+						'draft_title' => $this->input->post('title', true),
 						'draft_created_at' => now(),
 						'draft_page' => $pageid,
 						'draft_categories' => $category_string,
-						'draft_summary' => $this->input->post('summary', TRUE),
+						'draft_summary' => $this->input->post('summary', true),
 					);
 					
 					/* put the draft information into the database */
@@ -679,19 +679,19 @@ class Wiki_base extends Controller {
 						}
 					}
 					
-					$category_string = (isset($category_array) AND is_array($category_array)) ? implode(',', $category_array) : FALSE;
+					$category_string = (isset($category_array) and is_array($category_array)) ? implode(',', $category_array) : false;
 					
 					/* create the array of draft data */
 					$draft_array = array(
 						'draft_author_user' => $this->session->userdata('userid'),
 						'draft_author_character' => $this->session->userdata('main_char'),
-						'draft_content' => $this->input->post('content', TRUE),
-						'draft_title' => $this->input->post('title', TRUE),
+						'draft_content' => $this->input->post('content', true),
+						'draft_title' => $this->input->post('title', true),
 						'draft_created_at' => now(),
 						'draft_page' => $id,
 						'draft_categories' => $category_string,
-						'draft_summary' => $this->input->post('summary', TRUE),
-						'draft_changed_comments' => $this->input->post('changes', TRUE),
+						'draft_summary' => $this->input->post('summary', true),
+						'draft_changed_comments' => $this->input->post('changes', true),
 					);
 					
 					/* put the draft information into the database */
@@ -706,7 +706,7 @@ class Wiki_base extends Controller {
 						'page_updated_at' => now(),
 						'page_updated_by_user' => $this->session->userdata('userid'),
 						'page_updated_by_character' => $this->session->userdata('main_char'),
-						'page_comments' => $this->input->post('comments', TRUE),
+						'page_comments' => $this->input->post('comments', true),
 						'page_draft' => $draftid
 					);
 					
@@ -761,7 +761,7 @@ class Wiki_base extends Controller {
 					'name' => 'comments',
 					'id' => 'comments_open',
 					'value' => 'open',
-					'checked' => TRUE),
+					'checked' => true),
 				'comments_closed' => array(
 					'name' => 'comments',
 					'id' => 'comments_closed',
@@ -818,12 +818,12 @@ class Wiki_base extends Controller {
 							'name' => 'comments',
 							'id' => 'comments_open',
 							'value' => 'open',
-							'checked' => ($p->page_comments == 'open') ? TRUE : FALSE),
+							'checked' => ($p->page_comments == 'open') ? true : false),
 						'comments_closed' => array(
 							'name' => 'comments',
 							'id' => 'comments_closed',
 							'value' => 'closed',
-							'checked' => ($p->page_comments == 'closed') ? TRUE : FALSE),
+							'checked' => ($p->page_comments == 'closed') ? true : false),
 						'changes' => array(
 							'name' => 'changes',
 							'id' => 'changes',
@@ -855,7 +855,7 @@ class Wiki_base extends Controller {
 						'id' => $c->wikicat_id,
 						'name' => $c->wikicat_name,
 						'desc' => $c->wikicat_desc,
-						'checked' => (in_array($c->wikicat_id, $cats)) ? TRUE : FALSE,
+						'checked' => (in_array($c->wikicat_id, $cats)) ? true : false,
 					);
 				}
 			}
@@ -984,15 +984,15 @@ class Wiki_base extends Controller {
 	function view()
 	{
 		/* check to see if they have access */
-		$access = ($this->auth->is_logged_in()) ? $this->auth->check_access('wiki/page', FALSE) : FALSE;
+		$access = ($this->auth->is_logged_in()) ? $this->auth->check_access('wiki/page', false) : false;
 		
 		/* get the access level */
-		$level = ($this->auth->is_logged_in()) ? $this->auth->get_access_level('wiki/page') : FALSE;
+		$level = ($this->auth->is_logged_in()) ? $this->auth->get_access_level('wiki/page') : false;
 		
 		/* set the variables */
 		$type = $this->uri->segment(3, 'page');
-		$id = $this->uri->segment(4, 0, TRUE);
-		$action = $this->uri->segment(5, FALSE);
+		$id = $this->uri->segment(4, 0, true);
+		$action = $this->uri->segment(5, false);
 		
 		/* assign the config array to a variable */
 		$c = $this->config->item('thresher');
@@ -1000,13 +1000,13 @@ class Wiki_base extends Controller {
 		/* load the library and pass the config items in */
 		$this->load->library('thresher', $c);
 		
-		if (isset($_POST['submit']) AND $this->auth->is_logged_in())
+		if (isset($_POST['submit']) and $this->auth->is_logged_in())
 		{
 			if ($action == 'revert')
 			{
 				/* get the POST variables */
-				$page = $this->input->post('page', TRUE);
-				$draft = $this->input->post('draft', TRUE);
+				$page = $this->input->post('page', true);
+				$draft = $this->input->post('draft', true);
 				
 				/* get the draft we're reverting to */
 				$draft = $this->wiki->get_draft($draft);
@@ -1043,7 +1043,7 @@ class Wiki_base extends Controller {
 					
 					$update = $this->wiki->update_page($page, $update_array);
 					
-					if ($insert > 0 AND $update > 0)
+					if ($insert > 0 and $update > 0)
 					{
 						$message = sprintf(
 							lang('flash_success'),
@@ -1125,7 +1125,7 @@ class Wiki_base extends Controller {
 						$emailaction = ($status == 'pending') ? 'comment_pending' : 'comment';
 						
 						/* send the email */
-						$email = ($this->options['system_email'] == 'on') ? $this->_email($emailaction, $email_data) : FALSE;
+						$email = ($this->options['system_email'] == 'on') ? $this->_email($emailaction, $email_data) : false;
 					}
 					else
 					{
@@ -1185,7 +1185,7 @@ class Wiki_base extends Controller {
 					
 					$count = substr_count($d->draft_categories, ',');
 					
-					if ($count === 0 AND empty($d->draft_categories))
+					if ($count === 0 and empty($d->draft_categories))
 					{
 						$string = sprintf(
 							lang('error_not_found'),
@@ -1208,7 +1208,7 @@ class Wiki_base extends Controller {
 					
 					$data['draft'] = array(
 						'content' => $this->thresher->parse($d->draft_content),
-						'created' => $this->char->get_character_name($d->draft_author_character, TRUE),
+						'created' => $this->char->get_character_name($d->draft_author_character, true),
 						'created_date' => mdate($datestring, $created),
 						'page' => $d->draft_page,
 						'categories' => $string,
@@ -1243,7 +1243,7 @@ class Wiki_base extends Controller {
 
 					$count = substr_count($p->draft_categories, ',');
 					
-					if ($count === 0 AND empty($p->draft_categories))
+					if ($count === 0 and empty($p->draft_categories))
 					{
 						$string = sprintf(
 							lang('error_not_found'),
@@ -1266,8 +1266,8 @@ class Wiki_base extends Controller {
 					
 					$data['page'] = array(
 						'content' => $this->thresher->parse($p->draft_content),
-						'created' => $this->char->get_character_name($p->page_created_by_character, TRUE),
-						'updated' => ( ! empty($p->page_updated_by_character)) ? $this->char->get_character_name($p->page_updated_by_character, TRUE) : FALSE,
+						'created' => $this->char->get_character_name($p->page_created_by_character, true),
+						'updated' => ( ! empty($p->page_updated_by_character)) ? $this->char->get_character_name($p->page_updated_by_character, true) : false,
 						'created_date' => mdate($datestring, $created),
 						'updated_date' => mdate($datestring, $updated),
 						'categories' => $string,
@@ -1278,18 +1278,18 @@ class Wiki_base extends Controller {
 			
 			if ($this->auth->is_logged_in())
 			{
-				if ($level == 3 OR $level == 2 OR ($level == 1 AND ($p->page_created_by_user == $this->session->userdata('userid'))))
+				if ($level == 3 or $level == 2 or ($level == 1 and ($p->page_created_by_user == $this->session->userdata('userid'))))
 				{
-					$data['edit'] = TRUE;
+					$data['edit'] = true;
 				}
 				else
 				{
-					$data['edit'] = FALSE;
+					$data['edit'] = false;
 				}
 			}
 			else
 			{
-				$data['edit'] = FALSE;
+				$data['edit'] = false;
 			}
 			
 			/*
@@ -1308,7 +1308,7 @@ class Wiki_base extends Controller {
 					$created = gmt_to_local($d->draft_created_at, $this->timezone, $this->dst);
 					
 					$page = $this->wiki->get_page($d->draft_page);
-					$row = ($page->num_rows() > 0) ? $page->row() : FALSE;
+					$row = ($page->num_rows() > 0) ? $page->row() : false;
 					
 					$data['history'][$d->draft_id] = array(
 						'draft' => $d->draft_id,
@@ -1316,10 +1316,10 @@ class Wiki_base extends Controller {
 						'content' => $this->thresher->parse($d->draft_content),
 						'created' => $this->char->get_character_name($d->draft_author_character),
 						'created_date' => mdate($datestring, $created),
-						'old_id' => ( ! empty($d->draft_id_old)) ? $d->draft_id_old : FALSE,
+						'old_id' => ( ! empty($d->draft_id_old)) ? $d->draft_id_old : false,
 						'page' => $d->draft_page,
 						'changes' => $d->draft_changed_comments,
-						'page_draft' => ($row !== FALSE) ? $row->page_draft : FALSE,
+						'page_draft' => ($row !== false) ? $row->page_draft : false,
 					);
 				}
 			}
@@ -1339,7 +1339,7 @@ class Wiki_base extends Controller {
 				{
 					$date = gmt_to_local($cm->wcomment_date, $this->timezone, $this->dst);
 					
-					$data['comments'][$cm->wcomment_id]['author'] = $this->char->get_character_name($cm->wcomment_author_character, TRUE);
+					$data['comments'][$cm->wcomment_id]['author'] = $this->char->get_character_name($cm->wcomment_author_character, true);
 					$data['comments'][$cm->wcomment_id]['content'] = $cm->wcomment_content;
 					$data['comments'][$cm->wcomment_id]['date'] = mdate($datestring, $date);
 				}
@@ -1409,7 +1409,7 @@ class Wiki_base extends Controller {
 		$this->load->library('parser');
 		
 		/* define the variables */
-		$email = FALSE;
+		$email = false;
 		
 		/* run the methods */
 		$page = $this->wiki->get_page($data['page']);
@@ -1454,7 +1454,7 @@ class Wiki_base extends Controller {
 				$em_loc = email_location('wiki_comment', $this->email->mailtype);
 				
 				/* parse the message */
-				$message = $this->parser->parse($em_loc, $email_data, TRUE);
+				$message = $this->parser->parse($em_loc, $email_data, true);
 				
 				/* set the parameters for sending the email */
 				$this->email->from($from, $name);
@@ -1488,7 +1488,7 @@ class Wiki_base extends Controller {
 				$em_loc = email_location('comment_pending', $this->email->mailtype);
 				
 				/* parse the message */
-				$message = $this->parser->parse($em_loc, $email_data, TRUE);
+				$message = $this->parser->parse($em_loc, $email_data, true);
 				
 				/* set the parameters for sending the email */
 				$this->email->from($from, $name);

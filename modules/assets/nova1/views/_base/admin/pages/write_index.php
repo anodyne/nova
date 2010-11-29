@@ -1,14 +1,14 @@
 <?php echo text_output($header, 'h1', 'page-head');?>
 
-<?php if ($this->auth->check_access('write/missionpost', FALSE) === TRUE): ?>
+<?php if ($this->auth->check_access('write/missionpost', false) === true): ?>
 	<p><?php echo anchor('write/missionpost', img($images['post']) .' '. $label['write_post'], array('class' => 'image bold'));?></p>
 <?php endif; ?>
 
-<?php if ($this->auth->check_access('write/personallog', FALSE) === TRUE): ?>
+<?php if ($this->auth->check_access('write/personallog', false) === true): ?>
 	<p><?php echo anchor('write/personallog', img($images['log']) .' '. $label['write_log'], array('class' => 'image bold'));?></p>
 <?php endif; ?>
 
-<?php if ($this->auth->check_access('write/newsitem', FALSE) === TRUE): ?>
+<?php if ($this->auth->check_access('write/newsitem', false) === true): ?>
 	<p><?php echo anchor('write/newsitem', img($images['news']) .' '. $label['write_news'], array('class' => 'image bold'));?></p>
 <?php endif; ?>
 

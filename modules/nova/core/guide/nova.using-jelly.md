@@ -21,8 +21,8 @@ Seems pretty easy to me, but wait, it gets easier.
 
 <pre>echo $item->print_name();// Captain John Doe
 
-echo $item->print_name(FALSE); // John Doe
+echo $item->print_name(false); // John Doe
 
-echo $item->print_name(TRUE, TRUE); // CAPT John Doe
+echo $item->print_name(true, true); // CAPT John Doe
 
-echo $item->print_name(TRUE, FALSE, TRUE); // Captain John William Doe</pre>
+echo $item->print_name(true, false, true); // Captain John William Doe</pre>

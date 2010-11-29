@@ -44,9 +44,9 @@ class Model_Formdata extends Jelly_Model {
 			)),
 			'last_update' => Jelly::field('timestamp', array(
 				'column' => 'data_last_update',
-				'auto_now_create' => FALSE,
-				'auto_now_update' => TRUE,
-				'null' => TRUE,
+				'auto_now_create' => false,
+				'auto_now_update' => true,
+				'null' => true,
 				'default' => date::now()
 			)),
 		));

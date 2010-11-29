@@ -28,7 +28,7 @@ class Messages_base extends Controller {
 		$this->load->model('system_model', 'sys');
 		$installed = $this->sys->check_install_status();
 		
-		if ($installed === FALSE)
+		if ($installed === false)
 		{ /* check whether the system is installed */
 			redirect('install/index', 'refresh');
 		}
@@ -41,7 +41,7 @@ class Messages_base extends Controller {
 		$this->load->model('users_model', 'user');
 		
 		/* check to see if they are logged in */
-		$this->auth->is_logged_in(TRUE);
+		$this->auth->is_logged_in(true);
 		
 		/* an array of the global we want to retrieve */
 		$settings_array = array(
@@ -64,7 +64,7 @@ class Messages_base extends Controller {
 		$this->timezone = $this->options['timezone'];
 		$this->dst = (bool) $this->options['daylight_savings'];
 		
-		if ($this->auth->is_logged_in() === TRUE)
+		if ($this->auth->is_logged_in() === true)
 		{ /* if there's a session, set the variables appropriately */
 			$this->skin = $this->session->userdata('skin_admin');
 			$this->rank = $this->session->userdata('display_rank');
@@ -80,12 +80,12 @@ class Messages_base extends Controller {
 		$this->template->set_master_template($this->skin .'/template_admin.php');
 		
 		/* write the common elements to the template */
-		$this->template->write('nav_main', $this->menu->build('main', 'main'), TRUE);
-		$this->template->write('nav_sub', $this->menu->build('adminsub', 'messages'), TRUE);
-		$this->template->write('panel_1', $this->user_panel->panel_1(), TRUE);
-		$this->template->write('panel_2', $this->user_panel->panel_2(), TRUE);
-		$this->template->write('panel_3', $this->user_panel->panel_3(), TRUE);
-		$this->template->write('panel_workflow', $this->user_panel->panel_workflow(), TRUE);
+		$this->template->write('nav_main', $this->menu->build('main', 'main'), true);
+		$this->template->write('nav_sub', $this->menu->build('adminsub', 'messages'), true);
+		$this->template->write('panel_1', $this->user_panel->panel_1(), true);
+		$this->template->write('panel_2', $this->user_panel->panel_2(), true);
+		$this->template->write('panel_3', $this->user_panel->panel_3(), true);
+		$this->template->write('panel_workflow', $this->user_panel->panel_workflow(), true);
 		$this->template->write('title', $this->options['sim_name'] . ' :: ');
 	}
 
@@ -256,11 +256,11 @@ class Messages_base extends Controller {
 				$date = gmt_to_local($item->privmsgs_date, $this->timezone, $this->dst);
 				
 				$data['inbox'][$item->pmto_id]['id'] = $item->privmsgs_id;
-				$data['inbox'][$item->pmto_id]['author'] = $this->char->get_character_name($item->privmsgs_author_character, TRUE);
+				$data['inbox'][$item->pmto_id]['author'] = $this->char->get_character_name($item->privmsgs_author_character, true);
 				$data['inbox'][$item->pmto_id]['subject'] = $item->privmsgs_subject;
 				$data['inbox'][$item->pmto_id]['blurb'] = word_limiter($item->privmsgs_content, 15);
 				$data['inbox'][$item->pmto_id]['date'] = mdate($datestring, $date);
-				$data['inbox'][$item->pmto_id]['unread'] = ($item->pmto_unread == 'y') ? img($data['images']['unread']) : FALSE;
+				$data['inbox'][$item->pmto_id]['unread'] = ($item->pmto_unread == 'y') ? img($data['images']['unread']) : false;
 				$data['inbox'][$item->pmto_id]['checkbox'] = array(
 					'name' => 'inbox_'. $item->pmto_id,
 					'value' => $item->pmto_id,
@@ -289,7 +289,7 @@ class Messages_base extends Controller {
 					
 					foreach ($messages->result() as $msg)
 					{
-						$array[] = $this->char->get_character_name($msg->pmto_recipient_character, TRUE);
+						$array[] = $this->char->get_character_name($msg->pmto_recipient_character, true);
 					}
 				}
 				
@@ -351,7 +351,7 @@ class Messages_base extends Controller {
 		$this->auth->check_access('messages/index');
 		
 		/* set the variables */
-		$id = $this->uri->segment(3, FALSE, TRUE);
+		$id = $this->uri->segment(3, false, true);
 		
 		/* load the resources */
 		$this->load->model('privmsgs_model', 'pm');
@@ -381,11 +381,11 @@ class Messages_base extends Controller {
 				$data['header'] = text_output($row->privmsgs_subject, 'h1', 'page-head');
 				$data['content'] = $row->privmsgs_content;
 				$data['date'] = mdate($datestring, $date);
-				$data['author'] = $this->char->get_character_name($row->privmsgs_author_character, TRUE);
+				$data['author'] = $this->char->get_character_name($row->privmsgs_author_character, true);
 				
 				foreach ($recips as $rec)
 				{
-					$array[] = $this->char->get_character_name($this->user->get_main_character($rec), TRUE);
+					$array[] = $this->char->get_character_name($this->user->get_main_character($rec), true);
 				}
 				
 				$to = implode(' &amp; ', $array);
@@ -474,19 +474,19 @@ class Messages_base extends Controller {
 		$action_array = array('reply', 'replyall', 'forward');
 		
 		/* set the variables */
-		$action = (in_array($this->uri->segment(3), $action_array)) ? $this->uri->segment(3) : FALSE;
-		$id = $this->uri->segment(4, FALSE, TRUE);
+		$action = (in_array($this->uri->segment(3), $action_array)) ? $this->uri->segment(3) : false;
+		$id = $this->uri->segment(4, false, true);
 		$data['key'] = '';
-		$message = FALSE;
-		$subject = FALSE;
+		$message = false;
+		$subject = false;
 		
 		if (isset($_POST['submit']))
 		{
 			/* define the POST variables */
-			$subject = $this->input->post('subject', TRUE);
-			$message = $this->input->post('message', TRUE);
-			$author = $this->input->post('recipients', TRUE);
-			$authors = $this->input->post('to', TRUE);
+			$subject = $this->input->post('subject', true);
+			$message = $this->input->post('message', true);
+			$author = $this->input->post('recipients', true);
+			$authors = $this->input->post('to', true);
 			
 			if ($author == 0 && $authors == 0)
 			{
@@ -569,7 +569,7 @@ class Messages_base extends Controller {
 					);
 					
 					/* send the email */
-					$email = ($this->options['system_email'] == 'on') ? $this->_email($email_data) : FALSE;
+					$email = ($this->options['system_email'] == 'on') ? $this->_email($email_data) : false;
 				}
 				else
 				{
@@ -589,8 +589,8 @@ class Messages_base extends Controller {
 			}
 			
 			/* reset the message and subject variables */
-			$message = FALSE;
-			$subject = FALSE;
+			$message = false;
+			$subject = false;
 		}
 		
 		/* run the methods */
@@ -602,7 +602,7 @@ class Messages_base extends Controller {
 			
 			foreach ($characters->result() as $item)
 			{
-				$data['characters'][$item->userid] = $this->char->get_character_name($item->main_char, TRUE);
+				$data['characters'][$item->userid] = $this->char->get_character_name($item->main_char, true);
 			}
 		}
 		
@@ -636,12 +636,12 @@ class Messages_base extends Controller {
 		$js_data['remove'] = img($remove);
 		
 		/* get the data if it is not a new PM */
-		$info = ($action !== FALSE) ? $this->pm->get_message($id) : FALSE;
-		$row = ($info !== FALSE && $info->num_rows() > 0) ? $info->row() : FALSE;
-		$recipient_list = ($action == 'reply' || $action == 'replyall') ? $this->pm->get_message_recipients($id) : FALSE;
+		$info = ($action !== false) ? $this->pm->get_message($id) : false;
+		$row = ($info !== false && $info->num_rows() > 0) ? $info->row() : false;
+		$recipient_list = ($action == 'reply' || $action == 'replyall') ? $this->pm->get_message_recipients($id) : false;
 		
 		/* make sure the person is allowed to be replying */
-		if ($recipient_list !== FALSE)
+		if ($recipient_list !== false)
 		{
 			if (!in_array($this->session->userdata('userid'), $recipient_list) &&
 					!($this->session->userdata('userid') == $row->privmsgs_author_user))
@@ -691,7 +691,7 @@ class Messages_base extends Controller {
 				$i = 1;
 				foreach ($to_array as $value)
 				{
-					$to_name = $this->char->get_character_name($this->user->get_main_character($value), TRUE);
+					$to_name = $this->char->get_character_name($this->user->get_main_character($value), true);
 					
 					$data['recipient_list'][$i] = '<span class="'. $value .'">';
 					$data['recipient_list'][$i].= '<a href="#" id="remove_recipient" class="image" myID="'. $value .'" myName="'.  $to_name .'">';
@@ -729,7 +729,7 @@ class Messages_base extends Controller {
 				
 				foreach ($to_array as $rec)
 				{
-					$array[] = $this->char->get_character_name($this->user->get_main_character($rec), TRUE);
+					$array[] = $this->char->get_character_name($this->user->get_main_character($rec), true);
 				}
 				
 				/* create a string of character names */
@@ -741,7 +741,7 @@ class Messages_base extends Controller {
 				/* set the textarea value */
 				$data['inputs']['message']['value'] = "\r\n\r\n\r\n==========\r\n\r\n";
 				$data['inputs']['message']['value'].= ucfirst(lang('time_from')) .': ';
-				$data['inputs']['message']['value'].= $this->char->get_character_name($row->privmsgs_author_character, TRUE);
+				$data['inputs']['message']['value'].= $this->char->get_character_name($row->privmsgs_author_character, true);
 				$data['inputs']['message']['value'].= "\r\n". ucfirst(lang('labels_to')) .': '. $to;
 				$data['inputs']['message']['value'].= "\r\n". ucfirst(lang('labels_on')) .' ';
 				$data['inputs']['message']['value'].= mdate($this->options['date_format'], $date);
@@ -791,7 +791,7 @@ class Messages_base extends Controller {
 		$this->load->library('parser');
 		
 		/* define the variables */
-		$email = FALSE;
+		$email = false;
 		
 		/* load the models */
 		$this->load->model('users_model', 'user');
@@ -811,7 +811,7 @@ class Messages_base extends Controller {
 		
 		foreach ($emails as $key => $email)
 		{ /* get the character names and narrow the email array based on prefs */
-			$array[] = $this->char->get_character_name($this->user->get_main_character($key), TRUE, TRUE);
+			$array[] = $this->char->get_character_name($this->user->get_main_character($key), true, true);
 			
 			/* get their prefs */
 			$pref = $this->user->get_pref('email_private_message', $key);
@@ -827,7 +827,7 @@ class Messages_base extends Controller {
 		}
 		
 		/* set some variables */
-		$from_name = $this->char->get_character_name($data['author'], TRUE, TRUE);
+		$from_name = $this->char->get_character_name($data['author'], true, true);
 		$from_email = $this->user->get_email_address('character', $data['author']);
 		$subject = $this->options['email_subject'] .' '. lang('email_subject_private_message') .' - '. $data['subject'];
 		$to_names = implode(', ', $array);
@@ -852,7 +852,7 @@ class Messages_base extends Controller {
 		$em_loc = email_location('messages_new', $this->email->mailtype);
 		
 		/* parse the message */
-		$message = $this->parser->parse($em_loc, $email_data, TRUE);
+		$message = $this->parser->parse($em_loc, $email_data, true);
 		
 		/* for use by the email library */
 		$to = implode(',', $emails);

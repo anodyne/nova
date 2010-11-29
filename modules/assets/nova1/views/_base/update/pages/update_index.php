@@ -26,7 +26,7 @@
 		</li>
 	</ul>
 	
-	<?php if ($installed === TRUE): ?>
+	<?php if ($installed === true): ?>
 		<?php echo text_output($label['whatsnext'], 'h2', 'page-subhead');?>
 		
 		<ul class="fontLarge none">

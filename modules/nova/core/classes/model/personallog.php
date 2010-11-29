@@ -34,9 +34,9 @@ class Model_Personallog extends Jelly_Model {
 			)),
 			'date' => Jelly::field('timestamp', array(
 				'column' => 'log_date',
-				'auto_now_create' => FALSE,
-				'auto_now_update' => FALSE,
-				'null' => TRUE,
+				'auto_now_create' => false,
+				'auto_now_update' => false,
+				'null' => true,
 				'default' => date::now()
 			)),
 			'content' => Jelly::field('text', array(
@@ -51,9 +51,9 @@ class Model_Personallog extends Jelly_Model {
 			)),
 			'last_update' => Jelly::field('timestamp', array(
 				'column' => 'log_last_update',
-				'auto_now_create' => FALSE,
-				'auto_now_update' => TRUE,
-				'null' => TRUE,
+				'auto_now_create' => false,
+				'auto_now_update' => true,
+				'null' => true,
 				'default' => date::now()
 			)),
 			'comments' => Jelly::field('hasmany', array(

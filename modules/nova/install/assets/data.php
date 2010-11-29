@@ -1,4 +1,4 @@
-<?php defined('SYSPATH') OR die('No direct access allowed.');
+<?php defined('SYSPATH') or die('No direct access allowed.');
 /**
  * Database Data
  *
@@ -2289,7 +2289,7 @@ $settings = array(
 		'setting_user_created' => 'n'),
 	array(
 		'setting_key' => 'daylight_savings',
-		'setting_value' => 'FALSE',
+		'setting_value' => 'false',
 		'setting_user_created' => 'n'),
 	array(
 		'setting_key' => 'date_format',

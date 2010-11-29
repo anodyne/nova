@@ -27,13 +27,13 @@ abstract class Nova_Date extends Kohana_Date {
 	 * @param	string	a PHP date() formatted string for the format of the date
 	 * @return	string	the formatted date string
 	 */
-	public static function mdate($time, $format = NULL)
+	public static function mdate($time, $format = null)
 	{
 		// get an instance of the session
 		$session = Session::instance();
 		
 		// only get the date format from the database if an override isn't specified
-		if ($format === NULL)
+		if ($format === null)
 		{
 			$format = Jelly::query('setting', 'date_format')->limit(1)->select()->value;
 		}

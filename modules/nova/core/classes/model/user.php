@@ -31,7 +31,7 @@ class Model_User extends Jelly_Model {
 				'column' => 'email'
 			)),
 			'password' => Jelly::field('password', array(
-				'hash_with' => FALSE,
+				'hash_with' => false,
 			)),
 			'date_of_birth' => Jelly::field('string', array(
 				'column' => 'date_of_birth'
@@ -74,34 +74,34 @@ class Model_User extends Jelly_Model {
 			)),
 			'join' => Jelly::field('timestamp', array(
 				'column' => 'join_date',
-				'auto_now_create' => TRUE,
-				'auto_now_update' => FALSE,
-				'null' => TRUE,
+				'auto_now_create' => true,
+				'auto_now_update' => false,
+				'null' => true,
 				'default' => date::now()
 			)),
 			'leave' => Jelly::field('timestamp', array(
 				'column' => 'leave_date',
-				'auto_now_create' => FALSE,
-				'auto_now_update' => FALSE,
-				'null' => TRUE,
+				'auto_now_create' => false,
+				'auto_now_update' => false,
+				'null' => true,
 				'default' => date::now()
 			)),
 			'last_update' => Jelly::field('timestamp', array(
-				'auto_now_create' => TRUE,
-				'auto_now_update' => TRUE,
-				'null' => TRUE,
+				'auto_now_create' => true,
+				'auto_now_update' => true,
+				'null' => true,
 				'default' => date::now()
 			)),
 			'last_post' => Jelly::field('timestamp', array(
-				'auto_now_create' => FALSE,
-				'auto_now_update' => FALSE,
-				'null' => TRUE,
+				'auto_now_create' => false,
+				'auto_now_update' => false,
+				'null' => true,
 				'default' => date::now()
 			)),
 			'last_login' => Jelly::field('timestamp', array(
-				'auto_now_create' => FALSE,
-				'auto_now_update' => FALSE,
-				'null' => TRUE,
+				'auto_now_create' => false,
+				'auto_now_update' => false,
+				'null' => true,
 				'default' => date::now()
 			)),
 			'loa' => Jelly::field('enum', array(
@@ -149,7 +149,7 @@ class Model_User extends Jelly_Model {
 	 * Pulls game master data back from the users table.
 	 *
 	 * @param	string	the type of data to pull back (all, email, id)
-	 * @return	mixed	an array of data or FALSE if there are no GMs
+	 * @return	mixed	an array of data or false if there are no GMs
 	 */
 	public function get_gm_data($type = 'all')
 	{
@@ -182,6 +182,6 @@ class Model_User extends Jelly_Model {
 			return $array;
 		}
 		
-		return FALSE;
+		return false;
 	}
 }

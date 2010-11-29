@@ -35,7 +35,7 @@ class Model_Systemversion extends Jelly_Model {
 			)),
 			'date' => Jelly::field('timestamp', array(
 				'column' => 'version_date',
-				'null' => TRUE,
+				'null' => true,
 				'default' => date::now()
 			)),
 			'launch' => Jelly::field('text', array(

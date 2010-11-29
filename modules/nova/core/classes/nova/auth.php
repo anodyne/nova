@@ -45,62 +45,62 @@ abstract class Nova_Auth {
 	 * to access the page. If no URI is given in the first parameter, Nova will
 	 * attempt to figure out what the current URI is and use that in its place.
 	 *
-	 *     // check the user's access to the page and redirects if FALSE
+	 *     // check the user's access to the page and redirects if false
 	 *     Auth::check_access('admin/index');
 	 *
 	 *     // check the user's access to the page and doesn't redirect
-	 *     Auth::check_access('main/index', FALSE);
+	 *     Auth::check_access('main/index', false);
 	 *
-	 *     // no URI given, will auto-detect and redirect if FALSE
+	 *     // no URI given, will auto-detect and redirect if false
 	 *     Auth::check_access();
 	 *
 	 *     // no URI given, will auto-detect and not redirect
-	 *     Auth::check_access(NULL, FALSE);
+	 *     Auth::check_access(null, false);
 	 *
 	 * @param	string	the URI to check in the access session array
 	 * @param	boolean	whether to redirect to the login page (default: true)
 	 * @param	boolean	whether to search for a partial match (default: false)
 	 * @return	boolean	a boolean value of whether the user is allowed to access the page
 	 */
-	public static function check_access($uri = NULL, $redirect = TRUE, $partial = FALSE)
+	public static function check_access($uri = null, $redirect = true, $partial = false)
 	{
 		// make sure the uri is set properly
-		$uri = ($uri === NULL) ? self::_set_uri() : $uri;
+		$uri = ($uri === null) ? self::_set_uri() : $uri;
 		
-		if ($partial === TRUE)
+		if ($partial === true)
 		{
 			$array = explode('/', $uri);
 			$uri = $array[0];
 		}
 		
-		if ($partial === FALSE)
+		if ($partial === false)
 		{
 			if ( ! array_key_exists($uri, self::$session->get('access', array())))
 			{
-				if ($redirect === TRUE)
+				if ($redirect === true)
 				{
 					self::$session->set_flash('referer', $uri);
 					
 					Request::instance()->redirect('admin/error/1');
 				}
 				
-				return FALSE;
+				return false;
 			}
 		}
 		else
 		{
 			foreach (self::$session->get('access') as $a => $b)
 			{
-				if (strpos($a, $uri) !== FALSE)
+				if (strpos($a, $uri) !== false)
 				{
-				    return TRUE;
+				    return true;
 				}
 				
-				return FALSE;
+				return false;
 			}
 		}
 		
-		return TRUE;
+		return true;
 	}
 	
 	/**
@@ -115,12 +115,12 @@ abstract class Nova_Auth {
 	 *     $level = Auth::get_access_level('admin/index');
 	 *
 	 * @param	string	the URI to check
-	 * @return	mixed	the access level for a given page or FALSE if no access
+	 * @return	mixed	the access level for a given page or false if no access
 	 */
-	public static function get_access_level($uri = NULL)
+	public static function get_access_level($uri = null)
 	{
 		// make sure the uri is set properly
-		$uri = ($uri === NULL) ? self::_set_uri() : $uri;
+		$uri = ($uri === null) ? self::_set_uri() : $uri;
 		
 		// grab the session
 		$session = self::$session->get('access', array());
@@ -133,7 +133,7 @@ abstract class Nova_Auth {
 			return $session[$segments];
 		}
 		
-		return FALSE;
+		return false;
 	}
 	
 	/**
@@ -163,38 +163,38 @@ abstract class Nova_Auth {
 	}
 	
 	/**
-	 * Checks to see if someone is logged in or not. If the parameter is TRUE, Nova will
+	 * Checks to see if someone is logged in or not. If the parameter is true, Nova will
 	 * redirect the user to the login page.
 	 *
 	 *     // is the user logged in?
 	 *     Auth::is_logged_in();
 	 *
 	 *     // if the user isn't logged in, send them to the login page
-	 *     Auth::is_logged_in(TRUE);
+	 *     Auth::is_logged_in(true);
 	 *
 	 * @param	boolean	whether a failure should redirect the user to the login page
 	 * @return	boolean
 	 */
-	public static function is_logged_in($redirect = FALSE)
+	public static function is_logged_in($redirect = false)
 	{
 		if (is_null(self::$session->get('userid')))
 		{
 			$auto = self::_autologin();
 			
-			if ($auto !== FALSE)
+			if ($auto !== false)
 			{
-				return TRUE;
+				return true;
 			}
 			
-			if ($redirect === TRUE)
+			if ($redirect === true)
 			{
 				Request::instance()->redirect('login/error/1');
 			}
 			
-			return FALSE;
+			return false;
 		}
 		
-		return TRUE;
+		return true;
 	}
 	
 	/**
@@ -213,7 +213,7 @@ abstract class Nova_Auth {
 		$is = Jelly::query('user', $id)->select()->$type;
 		
 		// figure out whether it's true or false
-		$retval = ($is == 'y') ? TRUE : FALSE;
+		$retval = ($is == 'y') ? true : false;
 		
 		return $retval;
 	}
@@ -239,20 +239,20 @@ abstract class Nova_Auth {
 		// check the login attempts
 		$attempts = self::_check_login_attempts($email);
 		
-		if ($attempts === FALSE)
+		if ($attempts === false)
 		{
 			return 6;
 		}
 		
 		// do the legwork
-		$login = self::_verify($email, $password, TRUE);
+		$login = self::_verify($email, $password, true);
 		
 		if (is_object($login))
 		{
 			// hash the password
 			$password = self::hash($password);
 			
-			if ($maintenance == 'on' AND $login->sysadmin == 'n')
+			if ($maintenance == 'on' and $login->sysadmin == 'n')
 			{
 				// maintenance mode active
 				$retval = 5;
@@ -318,15 +318,15 @@ abstract class Nova_Auth {
 	 *     $login = Auth::verify('me@example.com', 'password');
 	 *
 	 *     // verify the login credentials and return the person object on success
-	 *     $login = Auth::verify('me@example.com', 'password', TRUE);
+	 *     $login = Auth::verify('me@example.com', 'password', true);
 	 *
 	 * @uses	Auth::_verify
 	 * @param	string	the email address
 	 * @param	string	the password
-	 * @param	boolean	whether or not to return the person object (TRUE) or the login code (FALSE)
+	 * @param	boolean	whether or not to return the person object (true) or the login code (false)
 	 * @return	mixed	an integer with the error code (0 means successful login) or the person object
 	 */
-	public static function verify($email, $password, $object = FALSE)
+	public static function verify($email, $password, $object = false)
 	{
 		return self::_verify($email, $password, $object);
 	}
@@ -344,7 +344,7 @@ abstract class Nova_Auth {
 		
 		if ($attempts->count() < self::$allowed_login_attempts)
 		{
-			return TRUE;
+			return true;
 		}
 		else
 		{
@@ -370,20 +370,20 @@ abstract class Nova_Auth {
 				// clear the session data
 				$session->delete('nova_'.$uid.'_lockout_time');
 				
-				return TRUE;
+				return true;
 			}
 			
 			// set the lockout time as session data to check login attempts
 			$session->set('nova_'.$uid.'_lockout_time', $item->date);
 			
-			return FALSE;
+			return false;
 		}
 	}
 	
 	/**
 	 * Initiate the autologin process
 	 *
-	 * @return	mixed	the login error code (0 is successful) or FALSE if the user didn't want to be remembered
+	 * @return	mixed	the login error code (0 is successful) or false if the user didn't want to be remembered
 	 */
 	protected static function _autologin()
 	{
@@ -391,16 +391,16 @@ abstract class Nova_Auth {
 		$uid = Jelly::query('system', 1)->select()->uid;
 		
 		// get the cookie
-		$cookie = cookie::get('nova_'.$uid, FALSE, TRUE);
+		$cookie = cookie::get('nova_'.$uid, false, true);
 		
-		if ($cookie !== FALSE)
+		if ($cookie !== false)
 		{
 			$login = self::login($cookie['email'], $cookie['password']);
 			
 			return $login;
 		}
 		
-		return FALSE;
+		return false;
 	}
 	
 	/**
@@ -489,7 +489,7 @@ abstract class Nova_Auth {
 		{
 			foreach ($mylinks as $value)
 			{
-				if ( ! empty($value) AND $value !== NULL)
+				if ( ! empty($value) and $value !== null)
 				{
 					// get the menu item
 					$menu = Jelly::query('menu', $value)->select();
@@ -546,10 +546,10 @@ abstract class Nova_Auth {
 	 *
 	 * @param	string	the email address
 	 * @param	string	the password
-	 * @param	boolean	whether or not to return the person object (TRUE) or the login code (FALSE)
+	 * @param	boolean	whether or not to return the person object (true) or the login code (false)
 	 * @return	mixed	an integer with the error code (0 means successful login) or the person object
 	 */
-	protected static function _verify($email, $password, $object = FALSE)
+	protected static function _verify($email, $password, $object = false)
 	{
 		// set the default return value
 		$retval = 0;
@@ -584,7 +584,7 @@ abstract class Nova_Auth {
 			// make sure the password checks out
 			$retval = ($person->password == $password) ? 0 : 3;
 			
-			if ($retval == 0 AND $object === TRUE)
+			if ($retval == 0 and $object === true)
 			{
 				return $person;
 			}

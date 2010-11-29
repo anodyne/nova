@@ -23,7 +23,7 @@
 					</span>
 					<span class="loading hidden"><?php echo html::image(MODFOLDER.'/nova/upgrade/views/upgrade/images/loading-circle-large.gif');?></span>
 				</td>
-				<td class="align-center"><?php echo form::radio('upgrade_characters_users', 1, TRUE);?></td>
+				<td class="align-center"><?php echo form::radio('upgrade_characters_users', 1, true);?></td>
 				<td class="align-center"><?php echo form::radio('upgrade_characters_users', 0);?></td>
 			</tr>
 			<tr>
@@ -35,7 +35,7 @@
 					</span>
 					<span class="loading hidden"><?php echo html::image(MODFOLDER.'/nova/upgrade/views/upgrade/images/loading-circle-large.gif');?></span>
 				</td>
-				<td class="align-center"><?php echo form::radio('upgrade_awards', 1, TRUE);?></td>
+				<td class="align-center"><?php echo form::radio('upgrade_awards', 1, true);?></td>
 				<td class="align-center"><?php echo form::radio('upgrade_awards', 0);?></td>
 			</tr>
 			<tr>
@@ -50,7 +50,7 @@
 					</span>
 					<span class="loading hidden"><?php echo html::image(MODFOLDER.'/nova/upgrade/views/upgrade/images/loading-circle-large.gif');?></span>
 				</td>
-				<td class="align-center"><?php echo form::radio('upgrade_settings', 1, TRUE);?></td>
+				<td class="align-center"><?php echo form::radio('upgrade_settings', 1, true);?></td>
 				<td class="align-center"><?php echo form::radio('upgrade_settings', 0);?></td>
 			</tr>
 			<tr>
@@ -65,7 +65,7 @@
 					</span>
 					<span class="loading hidden"><?php echo html::image(MODFOLDER.'/nova/upgrade/views/upgrade/images/loading-circle-large.gif');?></span>
 				</td>
-				<td class="align-center"><?php echo form::radio('upgrade_logs', 1, TRUE);?></td>
+				<td class="align-center"><?php echo form::radio('upgrade_logs', 1, true);?></td>
 				<td class="align-center"><?php echo form::radio('upgrade_logs', 0);?></td>
 			</tr>
 			<tr>
@@ -80,7 +80,7 @@
 					</span>
 					<span class="loading hidden"><?php echo html::image(MODFOLDER.'/nova/upgrade/views/upgrade/images/loading-circle-large.gif');?></span>
 				</td>
-				<td class="align-center"><?php echo form::radio('upgrade_news', 1, TRUE);?></td>
+				<td class="align-center"><?php echo form::radio('upgrade_news', 1, true);?></td>
 				<td class="align-center"><?php echo form::radio('upgrade_news', 0);?></td>
 			</tr>
 			<tr>
@@ -95,7 +95,7 @@
 					</span>
 					<span class="loading hidden"><?php echo html::image(MODFOLDER.'/nova/upgrade/views/upgrade/images/loading-circle-large.gif');?></span>
 				</td>
-				<td class="align-center"><?php echo form::radio('upgrade_missions', 1, TRUE);?></td>
+				<td class="align-center"><?php echo form::radio('upgrade_missions', 1, true);?></td>
 				<td class="align-center"><?php echo form::radio('upgrade_missions', 0);?></td>
 			</tr>
 			<tr>
@@ -110,7 +110,7 @@
 					</span>
 					<span class="loading hidden"><?php echo html::image(MODFOLDER.'/nova/upgrade/views/upgrade/images/loading-circle-large.gif');?></span>
 				</td>
-				<td class="align-center"><?php echo form::radio('upgrade_specs', 1, TRUE);?></td>
+				<td class="align-center"><?php echo form::radio('upgrade_specs', 1, true);?></td>
 				<td class="align-center"><?php echo form::radio('upgrade_specs', 0);?></td>
 			</tr>
 			<tr>
@@ -125,7 +125,7 @@
 					</span>
 					<span class="loading hidden"><?php echo html::image(MODFOLDER.'/nova/upgrade/views/upgrade/images/loading-circle-large.gif');?></span>
 				</td>
-				<td class="align-center"><?php echo form::radio('upgrade_tour', 1, TRUE);?></td>
+				<td class="align-center"><?php echo form::radio('upgrade_tour', 1, true);?></td>
 				<td class="align-center"><?php echo form::radio('upgrade_tour', 0);?></td>
 			</tr>
 		</tbody>

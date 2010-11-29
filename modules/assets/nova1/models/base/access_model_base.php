@@ -31,9 +31,9 @@ class Access_model_base extends Model {
 	{
 		$query = $this->db->get_where('access_groups', array('group_id' => $id));
 		
-		$row = ($query->num_rows() > 0) ? $query->row() : FALSE;
+		$row = ($query->num_rows() > 0) ? $query->row() : false;
 		
-		if (!empty($return) && $row !== FALSE)
+		if (!empty($return) && $row !== false)
 		{
 			if (!is_array($return))
 			{
@@ -59,9 +59,9 @@ class Access_model_base extends Model {
 	{
 		$query = $this->db->get_where('access_pages', array('page_id' => $id));
 		
-		$row = ($query->num_rows() > 0) ? $query->row() : FALSE;
+		$row = ($query->num_rows() > 0) ? $query->row() : false;
 		
-		if (!empty($return) && $row !== FALSE)
+		if (!empty($return) && $row !== false)
 		{
 			if (!is_array($return))
 			{
@@ -134,14 +134,14 @@ class Access_model_base extends Model {
 			return $array;
 		}
 		
-		return FALSE;
+		return false;
 	}
 	
 	function get_role($id = '')
 	{
 		$query = $this->db->get_where('access_roles', array('role_id' => $id));
 		
-		$row = ($query->num_rows() > 0) ? $query->row() : FALSE;
+		$row = ($query->num_rows() > 0) ? $query->row() : false;
 		
 		return $row;
 	}
@@ -157,7 +157,7 @@ class Access_model_base extends Model {
 			return $row->role_access;
 		}
 		
-		return FALSE;
+		return false;
 	}
 	
 	function get_role_pages()

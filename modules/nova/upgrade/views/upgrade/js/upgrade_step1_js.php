@@ -1,7 +1,7 @@
 <?php
 
-$specsarray = Database::instance()->list_columns('sms_specs', NULL, FALSE);
-$tourarray = Database::instance()->list_columns('sms_tour', NULL, FALSE);
+$specsarray = Database::instance()->list_columns('sms_specs', null, false);
+$tourarray = Database::instance()->list_columns('sms_tour', null, false);
 
 $keep = array('type', 'column_name', 'column_default', 'data_type', 'extra', 'key');
 

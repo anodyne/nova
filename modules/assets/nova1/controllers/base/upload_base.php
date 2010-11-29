@@ -33,7 +33,7 @@ class Upload_base extends Controller {
 		$this->load->model('system_model', 'sys');
 		$installed = $this->sys->check_install_status();
 		
-		if ($installed === FALSE)
+		if ($installed === false)
 		{ /* check whether the system is installed */
 			redirect('install/index', 'refresh');
 		}
@@ -46,7 +46,7 @@ class Upload_base extends Controller {
 		$this->load->model('users_model', 'user');
 		
 		/* check to see if they are logged in */
-		$this->auth->is_logged_in(TRUE);
+		$this->auth->is_logged_in(true);
 		
 		/* an array of the global we want to retrieve */
 		$settings_array = array(
@@ -68,7 +68,7 @@ class Upload_base extends Controller {
 		$this->timezone = $this->options['timezone'];
 		$this->dst = (bool) $this->options['daylight_savings'];
 		
-		if ($this->auth->is_logged_in() === TRUE)
+		if ($this->auth->is_logged_in() === true)
 		{ /* if there's a session, set the variables appropriately */
 			$this->skin = $this->session->userdata('skin_admin');
 			$this->rank = $this->session->userdata('display_rank');
@@ -84,12 +84,12 @@ class Upload_base extends Controller {
 		$this->template->set_master_template($this->skin .'/template_admin.php');
 		
 		/* write the common elements to the template */
-		$this->template->write('nav_main', $this->menu->build('main', 'main'), TRUE);
-		$this->template->write('nav_sub', $this->menu->build('adminsub', 'manage'), TRUE);
-		$this->template->write('panel_1', $this->user_panel->panel_1(), TRUE);
-		$this->template->write('panel_2', $this->user_panel->panel_2(), TRUE);
-		$this->template->write('panel_3', $this->user_panel->panel_3(), TRUE);
-		$this->template->write('panel_workflow', $this->user_panel->panel_workflow(), TRUE);
+		$this->template->write('nav_main', $this->menu->build('main', 'main'), true);
+		$this->template->write('nav_sub', $this->menu->build('adminsub', 'manage'), true);
+		$this->template->write('panel_1', $this->user_panel->panel_1(), true);
+		$this->template->write('panel_2', $this->user_panel->panel_2(), true);
+		$this->template->write('panel_3', $this->user_panel->panel_3(), true);
+		$this->template->write('panel_workflow', $this->user_panel->panel_workflow(), true);
 		$this->template->write('title', $this->options['sim_name'] . ' :: ');
 	}
 
@@ -105,7 +105,7 @@ class Upload_base extends Controller {
 			$_FILES['userfile']['name'] = str_replace('=', '', $_FILES['userfile']['name']);
 			
 			$upload_data = array(
-				'type' => $this->input->post('type', TRUE),
+				'type' => $this->input->post('type', true),
 				'field' => 'userfile',
 			);
 			
@@ -182,22 +182,22 @@ class Upload_base extends Controller {
 		
 		$data['values']['type'] = array();
 		
-		if ($this->auth->check_access('manage/awards', FALSE))
+		if ($this->auth->check_access('manage/awards', false))
 		{
 			$data['values']['type']['award'] = $data['label']['img_awards'];
 		}
 		
-		if ($this->auth->check_access('characters/bio', FALSE))
+		if ($this->auth->check_access('characters/bio', false))
 		{
 			$data['values']['type']['bio'] = $data['label']['img_char'];
 		}
 		
-		if ($this->auth->check_access('manage/missions', FALSE))
+		if ($this->auth->check_access('manage/missions', false))
 		{
 			$data['values']['type']['mission'] = $data['label']['img_mission'];
 		}
 		
-		if ($this->auth->check_access('manage/tour', FALSE))
+		if ($this->auth->check_access('manage/tour', false))
 		{
 			$data['values']['type']['tour'] = $data['label']['img_tour'];
 		}
@@ -260,7 +260,7 @@ class Upload_base extends Controller {
 				
 				$delete += $this->sys->delete_upload_record($r);
 				
-				if ($this->ftp->hostname != 'ftp.example.com' && $this->config->get_item('attempt_delete') === TRUE)
+				if ($this->ftp->hostname != 'ftp.example.com' && $this->config->get_item('attempt_delete') === true)
 				{
 					$path = APPPATH .'assets/'. $location .'/'. $info->upload_filename;
 					$delete_file += $this->ftp->delete_file($path);
@@ -349,7 +349,7 @@ class Upload_base extends Controller {
 						'value' => $d->upload_id),
 					'filename' => $d->upload_filename,
 					'id' => $d->upload_id,
-					'is_file' => (!is_file(APPPATH .'assets/'. $location .'/'. $d->upload_filename)) ? FALSE : TRUE,
+					'is_file' => (!is_file(APPPATH .'assets/'. $location .'/'. $d->upload_filename)) ? false : true,
 					'user' => (empty($user['name'])) ? $user['email'] : $user['name'],
 					'date' => mdate($this->options['date_format'], $date),
 				);
@@ -385,10 +385,10 @@ class Upload_base extends Controller {
 		}
 		
 		$data['access'] = array(
-			'awards' => ($this->auth->check_access('manage/awards', FALSE)) ? TRUE : FALSE,
-			'bio' => ($this->auth->check_access('characters/bio', FALSE)) ? TRUE : FALSE,
-			'missions' => ($this->auth->check_access('manage/missions', FALSE)) ? TRUE : FALSE,
-			'tour' => ($this->auth->check_access('manage/tour', FALSE)) ? TRUE : FALSE,
+			'awards' => ($this->auth->check_access('manage/awards', false)) ? true : false,
+			'bio' => ($this->auth->check_access('characters/bio', false)) ? true : false,
+			'missions' => ($this->auth->check_access('manage/missions', false)) ? true : false,
+			'tour' => ($this->auth->check_access('manage/tour', false)) ? true : false,
 		);
 		
 		$data['button'] = array(

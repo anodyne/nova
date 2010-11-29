@@ -1,7 +1,7 @@
 <?php defined('SYSPATH') or die('No direct script access.');
 /**
  * The URL class extends Kohana's native URL class to provide additional methods for showing links
- * based on whether a condition is TRUE or FALSE.
+ * based on whether a condition is true or false.
  *
  * @package		Nova
  * @category	Classes
@@ -11,7 +11,7 @@
 abstract class Nova_URL extends Kohana_URL {
 	
 	/**
-	 * Creates an HTML anchor tag to a page if the condition is TRUE.
+	 * Creates an HTML anchor tag to a page if the condition is true.
 	 *
 	 *     echo html:link_to_if($foo == 'y', 'page/foo', 'Foo');
 	 *
@@ -20,7 +20,7 @@ abstract class Nova_URL extends Kohana_URL {
 	 * @param	string	the URI to link to
 	 * @param	string	the text of the link
 	 * @param	array	additional attributes
-	 * @return	mixed	the anchor or FALSE if the condition is FALSE
+	 * @return	mixed	the anchor or false if the condition is false
 	 */
 	public static function link_to_if($condition, $uri, $title, $attributes = array())
 	{
@@ -29,11 +29,11 @@ abstract class Nova_URL extends Kohana_URL {
 			return html::anchor($uri, $title, $attributes);
 		}
 		
-		return FALSE;
+		return false;
 	}
 	
 	/**
-	 * Creates an HTML anchor tag to a page if the condition is FALSE.
+	 * Creates an HTML anchor tag to a page if the condition is false.
 	 *
 	 *     echo html::link_to_unless($foo == 'y', 'page/foo', 'Foo');
 	 *
@@ -42,7 +42,7 @@ abstract class Nova_URL extends Kohana_URL {
 	 * @param	string	the URI to link to
 	 * @param	string	the text of the link
 	 * @param	array	additional attributes
-	 * @return	mixed	the anchor or FALSE if the condition is TRUE
+	 * @return	mixed	the anchor or false if the condition is true
 	 */
 	public static function link_to_unless($condition, $uri, $title, $attributes = array())
 	{
@@ -51,7 +51,7 @@ abstract class Nova_URL extends Kohana_URL {
 			return html::anchor($uri, $title, $attributes);
 		}
 
-		return FALSE;
+		return false;
 	}
 }
 

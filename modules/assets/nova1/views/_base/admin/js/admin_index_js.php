@@ -1,7 +1,7 @@
 <?php
 
 /* set the location variable */
-$location = FALSE;
+$location = false;
 
 $string = random_string('alnum', 8);
 
@@ -16,7 +16,7 @@ elseif ($first_launch == 1)
 
 ?><script type="text/javascript">
 	$(document).ready(function(){
-		<?php if ($location !== FALSE): ?>
+		<?php if ($location !== false): ?>
 			$.facebox(function() {
 				$.get('<?php echo $location;?>', function(data) {
 					$.facebox(data);

@@ -6,15 +6,15 @@ return array(
 
 'connection' => array(
 'dsn' => 'mysql:host=localhost;dbname=nova',
-'username' => FALSE,
-'password' => FALSE,
-'persistent' => FALSE,
+'username' => false,
+'password' => false,
+'persistent' => false,
 ),
 
 'table_prefix' => '',
 'charset' => 'utf8',
 'collate' => 'utf8_general_ci',
-'caching' => FALSE,
-'profiling' => TRUE,
+'caching' => false,
+'profiling' => true,
 ),
 );

@@ -27,9 +27,9 @@ class MY_URI extends CI_URI {
 	 * @param	bool
 	 * @return	string
 	 */
-	function segment($n, $no_result = FALSE, $numeric = FALSE, $values = NULL)
+	function segment($n, $no_result = false, $numeric = false, $values = null)
 	{
-		if ($numeric === TRUE)
+		if ($numeric === true)
 		{
 			if (isset($this->segments[$n]))
 			{
@@ -39,7 +39,7 @@ class MY_URI extends CI_URI {
 			return $no_result;
 		}
 		
-		if ($values !== NULL)
+		if ($values !== null)
 		{
 			if (isset($this->segments[$n]))
 			{

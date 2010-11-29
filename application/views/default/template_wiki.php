@@ -69,7 +69,7 @@ echo "<?xml version='1.0' encoding='UTF-8'?>\r\n";
 			<div class="system_warning"><?php echo lang_output('text_javascript_off', '');?></div>
 		</noscript>
 		
-		<?php if ($this->session->userdata('userid') !== FALSE): ?>
+		<?php if ($this->session->userdata('userid') !== false): ?>
 			<!-- USER PANEL -->
 			<div id="panel">
 				<div class="panel-body">
@@ -100,7 +100,7 @@ echo "<?xml version='1.0' encoding='UTF-8'?>\r\n";
 			<div class="head_top"></div>
 			<div class="wrapper">
 				<div class="head_content">
-					<?php echo img(APPFOLDER .'/views/'. $current_skin .'/'. $sec .'/images/head-logo.png', FALSE);?>
+					<?php echo img(APPFOLDER .'/views/'. $current_skin .'/'. $sec .'/images/head-logo.png', false);?>
 				</div>
 			</div>
 		</div>

@@ -35,9 +35,9 @@ class Model_Wikicomment extends Jelly_Model {
 			)),
 			'date' => Jelly::field('timestamp', array(
 				'column' => 'wcomment_date',
-				'auto_now_create' => TRUE,
-				'auto_now_update' => FALSE,
-				'null' => TRUE,
+				'auto_now_create' => true,
+				'auto_now_update' => false,
+				'null' => true,
 				'default' => date::now()
 			)),
 			'content' => Jelly::field('text', array(

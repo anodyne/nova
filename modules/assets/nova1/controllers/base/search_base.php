@@ -28,7 +28,7 @@ class Search_base extends Controller {
 		$this->load->model('system_model', 'sys');
 		$installed = $this->sys->check_install_status();
 		
-		if ($installed === FALSE)
+		if ($installed === false)
 		{ /* check whether the system is installed */
 			redirect('install/index', 'refresh');
 		}
@@ -62,7 +62,7 @@ class Search_base extends Controller {
 		$this->timezone = $this->options['timezone'];
 		$this->dst = (bool) $this->options['daylight_savings'];
 		
-		if ($this->auth->is_logged_in() === TRUE)
+		if ($this->auth->is_logged_in() === true)
 		{ /* if there's a session, set the variables appropriately */
 			$this->skin = $this->session->userdata('skin_main');
 			$this->rank = $this->session->userdata('display_rank');
@@ -77,17 +77,17 @@ class Search_base extends Controller {
 		$this->template->set_master_template($this->skin . '/template_main.php');
 		
 		/* write the common elements to the template */
-		$this->template->write('nav_main', $this->menu->build('main', 'main'), TRUE);
-		$this->template->write('nav_sub', $this->menu->build('sub', 'main'), TRUE);
+		$this->template->write('nav_main', $this->menu->build('main', 'main'), true);
+		$this->template->write('nav_sub', $this->menu->build('sub', 'main'), true);
 		$this->template->write('title', $this->options['sim_name'] . ' :: ');
 		
-		if ($this->auth->is_logged_in() === TRUE)
+		if ($this->auth->is_logged_in() === true)
 		{
 			/* create the user panels */
-			$this->template->write('panel_1', $this->user_panel->panel_1(), TRUE);
-			$this->template->write('panel_2', $this->user_panel->panel_2(), TRUE);
-			$this->template->write('panel_3', $this->user_panel->panel_3(), TRUE);
-			$this->template->write('panel_workflow', $this->user_panel->panel_workflow(), TRUE);
+			$this->template->write('panel_1', $this->user_panel->panel_1(), true);
+			$this->template->write('panel_2', $this->user_panel->panel_2(), true);
+			$this->template->write('panel_3', $this->user_panel->panel_3(), true);
+			$this->template->write('panel_workflow', $this->user_panel->panel_workflow(), true);
 		}
 	}
 
@@ -150,13 +150,13 @@ class Search_base extends Controller {
 		$this->load->helper('inflector');
 		
 		/* set the search POST value to a variable */
-		$search = $this->input->post('search', TRUE);
+		$search = $this->input->post('search', true);
 		
-		if ($search != FALSE)
+		if ($search != false)
 		{ /* if the search variable is set */
-			$type = $this->input->post('type', TRUE);
-			$component = $this->input->post('component', TRUE);
-			$input = $this->input->post('input', TRUE);
+			$type = $this->input->post('type', true);
+			$component = $this->input->post('component', true);
+			$input = $this->input->post('input', true);
 			
 			switch ($type)
 			{ /* move through the types and take the right action */
@@ -262,9 +262,9 @@ class Search_base extends Controller {
 							break;
 						case 'wiki':
 							$page = $this->wiki->get_page($item->draft_page);
-							$row = ($page->num_rows() > 0) ? $page->row() : FALSE;
+							$row = ($page->num_rows() > 0) ? $page->row() : false;
 							
-							if ($row !== FALSE)
+							if ($row !== false)
 							{
 								$data['results'][$i]['content'] = $row->draft_content;
 								$data['results'][$i]['link'] = anchor('wiki/page/view/'. $item->draft_page, $row->draft_title);

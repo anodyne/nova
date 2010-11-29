@@ -24,7 +24,7 @@
 			<?php foreach ($chars as $key => $c): ?>
 				<tr>
 					<td>
-						<?php if ($c['main'] === TRUE): ?>
+						<?php if ($c['main'] === true): ?>
 							<?php echo img($images['main']) .' ';?>
 						<?php elseif ($c['type'] == 'Inactive'): ?>
 							<?php echo img($images['inactive']) .' ';?>
@@ -41,7 +41,7 @@
 					<td class="cell-spacer"></td>
 					<td class="col_30 align_right"><?php echo anchor('user/characterlink/'. $user .'/remove/'. $key, img($images['remove']), array('class' => 'image'));?></td>
 					<td class="col_30 align_right">
-						<?php if ($c['main'] === FALSE && $c['type'] == 'Active'): ?>
+						<?php if ($c['main'] === false && $c['type'] == 'Active'): ?>
 							<?php echo anchor('user/characterlink/'. $user .'/set/'. $key, img($images['star']), array('class' => 'image'));?>
 						<?php endif;?>
 					</td>

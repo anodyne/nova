@@ -43,16 +43,16 @@ class Model_Character extends Jelly_Model {
 			)),
 			'activate' => Jelly::field('timestamp', array(
 				'column' => 'date_activate',
-				'auto_now_create' => FALSE,
-				'auto_now_update' => FALSE,
-				'null' => TRUE,
+				'auto_now_create' => false,
+				'auto_now_update' => false,
+				'null' => true,
 				'default' => date::now()
 			)),
 			'deactivate' => Jelly::field('timestamp', array(
 				'column' => 'date_deactivate',
-				'auto_now_create' => FALSE,
-				'auto_now_update' => FALSE,
-				'null' => TRUE,
+				'auto_now_create' => false,
+				'auto_now_update' => false,
+				'null' => true,
 				'default' => date::now()
 			)),
 			'rank' => Jelly::field('belongsto', array(
@@ -68,15 +68,15 @@ class Model_Character extends Jelly_Model {
 				'foreign' => 'position'
 			)),
 			'last_post' => Jelly::field('timestamp', array(
-				'auto_now_create' => FALSE,
-				'auto_now_update' => FALSE,
-				'null' => TRUE,
+				'auto_now_create' => false,
+				'auto_now_update' => false,
+				'null' => true,
 				'default' => date::now()
 			)),
 			'last_update' => Jelly::field('timestamp', array(
-				'auto_now_create' => FALSE,
-				'auto_now_update' => TRUE,
-				'null' => TRUE,
+				'auto_now_create' => false,
+				'auto_now_update' => true,
+				'null' => true,
 				'default' => date::now()
 			))
 		));
@@ -90,14 +90,14 @@ class Model_Character extends Jelly_Model {
 	 * @param	boolean	whether to show the middle name
 	 * @return 	string	the character name
 	 */
-	public function print_name($rank = TRUE, $shortrank = FALSE, $mname = FALSE)
+	public function print_name($rank = true, $shortrank = false, $mname = false)
 	{
 		$array = array(
-			($rank === TRUE)
-				? ($shortrank === TRUE) ? $this->rank->shortname : $this->rank->name
-				: FALSE,
+			($rank === true)
+				? ($shortrank === true) ? $this->rank->shortname : $this->rank->name
+				: false,
 			$this->fname,
-			($mname === TRUE) ? $this->mname : FALSE,
+			($mname === true) ? $this->mname : false,
 			$this->lname,
 		);
 		

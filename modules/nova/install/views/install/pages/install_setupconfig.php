@@ -9,9 +9,9 @@
 		<p>
 			<kbd><?php echo __('Installation Type');?></kbd>
 			<span class="fontSmall subtle"><?php echo __('Which type of Nova installation are you going to do?');?></span><br />
-			<?php echo form::radio('installType', 'fresh', FALSE, array('id' => 'typeInstall'));?> <label for="typeInstall"><?php echo __('Fresh Install');?></label>
-			<?php echo form::radio('installType', 'nova1', FALSE, array('id' => 'typeNova1'));?> <label for="typeNova1"><?php echo __('Update from Nova 1');?></label>
-			<?php echo form::radio('installType', 'upgrade', FALSE, array('id' => 'typeUpgrade'));?> <label for="typeUpgrade"><?php echo __('Upgrade from SMS');?></label>
+			<?php echo form::radio('installType', 'fresh', false, array('id' => 'typeInstall'));?> <label for="typeInstall"><?php echo __('Fresh Install');?></label>
+			<?php echo form::radio('installType', 'nova1', false, array('id' => 'typeNova1'));?> <label for="typeNova1"><?php echo __('Update from Nova 1');?></label>
+			<?php echo form::radio('installType', 'upgrade', false, array('id' => 'typeUpgrade'));?> <label for="typeUpgrade"><?php echo __('Upgrade from SMS');?></label>
 		</p>
 		<p>
 			<kbd><?php echo __('Database Name');?></kbd>

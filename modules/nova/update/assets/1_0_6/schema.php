@@ -8,12 +8,12 @@
  * @author		Anodyne Productions
  */
 
-$add_tables			= NULL;
-$drop_tables		= NULL;
-$rename_tables		= NULL;
-$add_column			= NULL;
-$modify_column		= NULL;
-$drop_column		= NULL;
+$add_tables			= null;
+$drop_tables		= null;
+$rename_tables		= null;
+$add_column			= null;
+$modify_column		= null;
+$drop_column		= null;
 
 /*
 |---------------------------------------------------------------
@@ -29,7 +29,7 @@ $drop_column		= NULL;
 |	'table_id' => array(
 |		'type' => 'INT',
 |		'constraint' => 6,
-|		'auto_increment' => TRUE),
+|		'auto_increment' => true),
 |	'table_field_1' => array(
 |		'type' => 'VARCHAR',
 |		'constraint' => 255,
@@ -52,7 +52,7 @@ $fields_specs = array(
 	'specs_id' => array(
 		'type' => 'INT',
 		'constraint' => 5,
-		'auto_increment' => TRUE),
+		'auto_increment' => true),
 	'specs_name' => array(
 		'type' => 'VARCHAR',
 		'constraint' => 255,
@@ -75,8 +75,8 @@ if ( ! is_null($add_tables))
 	foreach ($add_tables as $key => $value)
 	{
 		DBForge::add_field($$value['fields']);
-		DBForge::add_key($value['id'], TRUE);
-		DBForge::create_table($key, TRUE);
+		DBForge::add_key($value['id'], true);
+		DBForge::create_table($key, true);
 	}
 }
 

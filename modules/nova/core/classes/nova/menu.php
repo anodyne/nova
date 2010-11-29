@@ -30,7 +30,7 @@ abstract class Nova_Menu {
 	 *
 	 * @param	string	the type of menu to build (main, sub, adminsub)
 	 * @param	string	the category of menu to build
-	 * @return 	mixed	an unordered list with all the menu items or FALSE if an invalid type is supplied
+	 * @return 	mixed	an unordered list with all the menu items or false if an invalid type is supplied
 	 */
 	public static function build($type, $cat)
 	{
@@ -49,7 +49,7 @@ abstract class Nova_Menu {
 			break;
 		}
 		
-		return FALSE;
+		return false;
 	}
 	
 	private static function _build_main($type = '', $cat = '')
@@ -79,7 +79,7 @@ abstract class Nova_Menu {
 			return self::_render($type, $data);
 		}
 		
-		return FALSE;
+		return false;
 	}
 	
 	private static function _build_sub($type = '', $cat = '')
@@ -109,7 +109,7 @@ abstract class Nova_Menu {
 			return self::_render($type, $data);
 		}
 		
-		return FALSE;
+		return false;
 	}
 	
 	private static function _build_sub_admin($type = '', $cat = '')
@@ -182,7 +182,7 @@ abstract class Nova_Menu {
 			return self::_render($type, $data);
 		}
 		
-		return FALSE;
+		return false;
 	}
 	
 	private static function _render($type = '', $data = '')
@@ -194,13 +194,13 @@ abstract class Nova_Menu {
 			case 'adminsub':
 				foreach ($data as $key => $value)
 				{
-					if (isset($value['menu']) AND count($value['menu']) > 0)
+					if (isset($value['menu']) and count($value['menu']) > 0)
 					{
 						$output.= '<li class="menu-category">'. $value['name'] .'</li>';
 						
 						foreach ($value['menu'] as $item)
 						{
-							if ($item->group != 0 AND $item->order == 0)
+							if ($item->group != 0 and $item->order == 0)
 							{
 								$output.= '<li class="spacer"></li>';
 							}
@@ -212,14 +212,14 @@ abstract class Nova_Menu {
 							}
 							else
 							{
-								$target = NULL;
+								$target = null;
 								$link = url::site($item->link);
 							}
 							
-							$access = Auth::check_access($item->access, FALSE);
+							$access = Auth::check_access($item->access, false);
 							$level = Auth::get_access_level($item->access);
 							
-							if (($item->useaccess == 'y' AND $access === TRUE AND ($item->level > 0 AND $level >= $item->level OR $item->level == 0)) OR $item->useaccess == 'n')
+							if (($item->useaccess == 'y' and $access === true and ($item->level > 0 and $level >= $item->level or $item->level == 0)) or $item->useaccess == 'n')
 							{
 								$output.= '<li><a href="' . $link .'"' . $target . '><span>' . $item->name . '</span></a></li>';
 							}
@@ -234,27 +234,27 @@ abstract class Nova_Menu {
 			case 'main':
 				foreach ($data as $k => $item)
 				{
-					$display = FALSE;
+					$display = false;
 		
-					if (($item->login == 'y' AND Auth::is_logged_in()) OR ($item->login == 'n' AND ! Auth::is_logged_in()) OR $item->login == 'none')
+					if (($item->login == 'y' and Auth::is_logged_in()) or ($item->login == 'n' and ! Auth::is_logged_in()) or $item->login == 'none')
 					{
 						if ($item->login == 'y')
 						{
-							$access = Auth::check_access($item->access, FALSE);
+							$access = Auth::check_access($item->access, false);
 							$level = Auth::get_access_level($item->access);
 		
-							if (($item->useaccess == 'y' AND $access === TRUE AND ($item->level > 0 AND $level >= $item->level OR $item->level == 0)) OR $item->useaccess == 'n')
+							if (($item->useaccess == 'y' and $access === true and ($item->level > 0 and $level >= $item->level or $item->level == 0)) or $item->useaccess == 'n')
 							{
-								$display = TRUE;
+								$display = true;
 							}
 						}
 						else
 						{
-							$display = TRUE;
+							$display = true;
 						}
 					}
 		
-					if ($display === TRUE)
+					if ($display === true)
 					{
 						$output.= '<li>';
 						
@@ -270,7 +270,7 @@ abstract class Nova_Menu {
 								$class[] = 'active';
 							}
 							
-							$target = NULL;
+							$target = null;
 							$url = url::site($item->link);
 						}
 						else
@@ -291,9 +291,9 @@ abstract class Nova_Menu {
 			case 'sub':
 				foreach ($data as $item)
 				{
-					$display = FALSE;
+					$display = false;
 	
-					if ($item->group != 0 AND $item->order == 0)
+					if ($item->group != 0 and $item->order == 0)
 					{
 						$output.= '<li class="spacer"></li>';
 					}
@@ -305,29 +305,29 @@ abstract class Nova_Menu {
 					}
 					else
 					{
-						$target = NULL;
+						$target = null;
 						$link = url::site($item->link);
 					}
 	
-					if (($item->login == 'y' AND Auth::is_logged_in()) OR ($item->login == 'n' AND ! Auth::is_logged_in()) OR $item->login == 'none')
+					if (($item->login == 'y' and Auth::is_logged_in()) or ($item->login == 'n' and ! Auth::is_logged_in()) or $item->login == 'none')
 					{
 						if ($item->login == 'y')
 						{
-							$access = Auth::check_access($item->access, FALSE);
+							$access = Auth::check_access($item->access, false);
 							$level = Auth::get_access_level($item->access);
 	
-							if (($item->useaccess == 'y' AND $access === TRUE AND ($item->level > 0 AND $level >= $item->level OR $item->level == 0)) OR $item->useaccess == 'n')
+							if (($item->useaccess == 'y' and $access === true and ($item->level > 0 and $level >= $item->level or $item->level == 0)) or $item->useaccess == 'n')
 							{
-								$display = TRUE;
+								$display = true;
 							}
 						}
 						else
 						{
-							$display = TRUE;
+							$display = true;
 						}
 					}
 	
-					if ($display === TRUE)
+					if ($display === true)
 					{
 						$output.= '<li><a href="' . $link .'"' . $target . '><span>' . $item->name . '</span></a></li>';
 					}

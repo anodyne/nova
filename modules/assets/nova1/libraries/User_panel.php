@@ -32,8 +32,8 @@ class User_panel {
 		$user = $this->ci->user->get_user($this->ci->session->userdata('userid'));
 		$count = $this->ci->pm->count_unread_pms($this->ci->session->userdata('userid'));
 		
-		$data['count'] = ($count > 0) ? ' <strong>('. $count .')</strong>' : FALSE;
-		$data['name'] = ($user !== FALSE) ? $user->name : '';
+		$data['count'] = ($count > 0) ? ' <strong>('. $count .')</strong>' : false;
+		$data['name'] = ($user !== false) ? $user->name : '';
 		
 		$data['label'] = array(
 			'edit_account' => ucwords(lang('actions_edit') .' '. lang('labels_account')),
@@ -43,7 +43,7 @@ class User_panel {
 		);
 		
 		/* parse the content */
-		$content = $this->ci->parser->parse('_base/ajax/userpanel_1', $data, TRUE);
+		$content = $this->ci->parser->parse('_base/ajax/userpanel_1', $data, true);
 		
 		return $content;
 	}
@@ -62,13 +62,13 @@ class User_panel {
 		/* set the variables */
 		$data = array();
 		
-		if ($characters !== FALSE)
+		if ($characters !== false)
 		{
 			foreach ($characters as $char)
 			{
 				$data['panel_characters'][] = array(
 					'id' => $char,
-					'name' => $this->ci->char->get_character_name($char, TRUE, TRUE)
+					'name' => $this->ci->char->get_character_name($char, true, true)
 				);
 			}
 		}
@@ -78,7 +78,7 @@ class User_panel {
 		);
 		
 		/* parse the content */
-		$content = $this->ci->parser->parse('_base/ajax/userpanel_2', $data, TRUE);
+		$content = $this->ci->parser->parse('_base/ajax/userpanel_2', $data, true);
 		
 		return $content;
 	}
@@ -98,7 +98,7 @@ class User_panel {
 		);
 		
 		/* parse the content */
-		$content = $this->ci->parser->parse('_base/ajax/userpanel_3', $data, TRUE);
+		$content = $this->ci->parser->parse('_base/ajax/userpanel_3', $data, true);
 		
 		return $content;
 	}
@@ -151,12 +151,12 @@ class User_panel {
 		);
 		
 		/* parse the content */
-		$content = $this->ci->parser->parse('_base/ajax/userpanel_workflow', $data, TRUE);
+		$content = $this->ci->parser->parse('_base/ajax/userpanel_workflow', $data, true);
 		
 		return $content;
 	}
 	
-	function workflow_dashboard($text = TRUE, $content = '')
+	function workflow_dashboard($text = true, $content = '')
 	{
 		$output = '<a href="#" id="userpanel" title="'. ucfirst(lang('labels_dashboard')) .'"><span>';
 		
@@ -164,7 +164,7 @@ class User_panel {
 		{
 			$output.= $content;
 		}
-		elseif (empty($content) && $text === TRUE)
+		elseif (empty($content) && $text === true)
 		{
 			$output.= ucfirst(lang('labels_dashboard'));
 		}
@@ -174,7 +174,7 @@ class User_panel {
 		return $output;
 	}
 	
-	function workflow_inbox($icon = TRUE, $text = TRUE, $count = TRUE, $count_dec = '(x)', $content = '')
+	function workflow_inbox($icon = true, $text = true, $count = true, $count_dec = '(x)', $content = '')
 	{
 		$this->ci =& get_instance();
 		
@@ -196,7 +196,7 @@ class User_panel {
 		
 		$output = '<a href="'. site_url('messages/index') .'" title="'. ucfirst(lang('labels_inbox')) .'"><span>';
 		
-		if ($icon === TRUE)
+		if ($icon === true)
 		{
 			if ($unread > 0)
 			{
@@ -212,12 +212,12 @@ class User_panel {
 		{
 			$output.= ' '. $content;
 		}
-		elseif (empty($content) && $text === TRUE)
+		elseif (empty($content) && $text === true)
 		{
 			$output.= ' '. ucfirst(lang('labels_inbox'));
 		}
 		
-		if ($count === TRUE && $unread > 0)
+		if ($count === true && $unread > 0)
 		{
 			$string = str_replace('x', $unread, $count_dec);
 			$output.= ' '. $string;
@@ -228,7 +228,7 @@ class User_panel {
 		return $output;
 	}
 	
-	function workflow_writing($icon = TRUE, $text = TRUE, $count = TRUE, $count_dec = '(x)', $content = '')
+	function workflow_writing($icon = true, $text = true, $count = true, $count_dec = '(x)', $content = '')
 	{
 		$this->ci =& get_instance();
 		
@@ -262,7 +262,7 @@ class User_panel {
 		
 		$output = '<a href="'. site_url('write/index') .'" title="'. ucwords(lang('labels_writing') .' '. lang('labels_entries')) .'"><span>';
 		
-		if ($icon === TRUE)
+		if ($icon === true)
 		{
 			$icon_status = ($saveditems > 0) ? 'yellow' : 'gray';
 			$icon_status = ($unreadjp > 0) ? 'green' : $icon_status;
@@ -274,12 +274,12 @@ class User_panel {
 		{
 			$output.= ' '. $content;
 		}
-		elseif (empty($content) && $text === TRUE)
+		elseif (empty($content) && $text === true)
 		{
 			$output.= ' '. ucwords(lang('labels_writing') .' '. lang('labels_entries'));
 		}
 		
-		if ($count === TRUE && $saveditems > 0)
+		if ($count === true && $saveditems > 0)
 		{
 			$string = str_replace('x', $unread, $count_dec);
 			$output.= ' '. $string;

@@ -6,24 +6,24 @@
 
 <div id="tabs">
 	<ul>
-		<?php if ($access['bio'] === TRUE): ?>
+		<?php if ($access['bio'] === true): ?>
 			<li><a href="#one"><span><?php echo $label['bioimages'];?></span></a></li>
 		<?php endif;?>
 		
-		<?php if ($access['awards'] === TRUE): ?>
+		<?php if ($access['awards'] === true): ?>
 			<li><a href="#two"><span><?php echo $label['awardimages'];?></span></a></li>
 		<?php endif;?>
 		
-		<?php if ($access['missions'] === TRUE): ?>
+		<?php if ($access['missions'] === true): ?>
 			<li><a href="#three"><span><?php echo $label['missionimages'];?></span></a></li>
 		<?php endif;?>
 		
-		<?php if ($access['tour'] === TRUE): ?>
+		<?php if ($access['tour'] === true): ?>
 			<li><a href="#four"><span><?php echo $label['tourimages'];?></span></a></li>
 		<?php endif;?>
 	</ul>
 	
-	<?php if ($access['bio'] === TRUE): ?>
+	<?php if ($access['bio'] === true): ?>
 		<div id="one">
 			<?php echo form_open('upload/manage/bio');?>
 			<?php if (isset($directory['bio'])): ?>
@@ -58,7 +58,7 @@
 		</div>
 	<?php endif;?>
 		
-	<?php if ($access['awards'] === TRUE): ?>
+	<?php if ($access['awards'] === true): ?>
 		<div id="two">
 			<?php echo form_open('upload/manage/awards');?>
 			<?php if (isset($directory['award'])): ?>
@@ -93,7 +93,7 @@
 		</div>
 	<?php endif;?>
 	
-	<?php if ($access['missions'] === TRUE): ?>
+	<?php if ($access['missions'] === true): ?>
 		<div id="three">
 			<?php echo form_open('upload/manage/missions');?>
 			<?php if (isset($directory['mission'])): ?>
@@ -128,7 +128,7 @@
 		</div>
 	<?php endif;?>
 	
-	<?php if ($access['tour'] === TRUE): ?>
+	<?php if ($access['tour'] === true): ?>
 		<div id="four">
 			<?php echo form_open('upload/manage/tour');?>
 			<?php if (isset($directory['tour'])): ?>

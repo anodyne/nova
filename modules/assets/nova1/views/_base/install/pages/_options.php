@@ -22,7 +22,7 @@
 		</a>
 	</li>
 	
-	<?php if ($installed === TRUE): ?>
+	<?php if ($installed === true): ?>
 		<li>
 			<a href="<?php echo site_url('install/remove');?>">
 				<?php echo lang('install_index_options_remove');?>
@@ -34,7 +34,7 @@
 <?php echo lang_output('install_index_options_whatsnext', 'h3');?>
 
 <ul>
-	<?php if ($installed === FALSE): ?>
+	<?php if ($installed === false): ?>
 		<li>
 			<a href="<?php echo site_url('install/step/1');?>" id="install">
 				<?php echo lang('install_index_options_install');?>
@@ -47,7 +47,7 @@
 		</li>
 	<?php endif;?>
 	
-	<?php if ($installed === TRUE): ?>
+	<?php if ($installed === true): ?>
 		<li>
 			<a href="<?php echo site_url('update/index');?>">
 				<?php echo lang('install_index_options_update');?>

@@ -19,11 +19,11 @@ return array(
 		array(
 			'class' => 'Hooks',
 			'method' => 'browser',
-			'param' => FALSE),
+			'param' => false),
 		array(
 			'class' => 'Hooks',
 			'method' => 'maintenance',
-			'param' => FALSE),
+			'param' => false),
 	),
 	'postExecute' => array(),
 	

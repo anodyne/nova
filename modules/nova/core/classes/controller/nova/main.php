@@ -49,24 +49,24 @@ class Controller_Nova_Main extends Controller_Nova_Base {
 		
 		// set the variables in the template
 		$this->template->title 						= $this->options->sim_name.' :: ';
-		$this->template->javascript					= FALSE;
+		$this->template->javascript					= false;
 		$this->template->layout						= View::factory($this->skin.'/template_main', $vars['layout']);
 		$this->template->layout->navmain 			= Menu::build('main', 'main');
-		$this->template->layout->ajax 				= FALSE;
-		$this->template->layout->flash				= FALSE;
-		$this->template->layout->content			= FALSE;
+		$this->template->layout->ajax 				= false;
+		$this->template->layout->flash				= false;
+		$this->template->layout->content			= false;
 		
 		$this->template->layout->panel				= View::factory('_common/partials/panel');
-		$this->template->layout->panel->panel1		= FALSE;
-		$this->template->layout->panel->panel2		= FALSE;
-		$this->template->layout->panel->panel3		= FALSE;
-		$this->template->layout->panel->workflow	= FALSE;
+		$this->template->layout->panel->panel1		= false;
+		$this->template->layout->panel->panel2		= false;
+		$this->template->layout->panel->panel3		= false;
+		$this->template->layout->panel->workflow	= false;
 		
 		$this->template->layout->navsub 			= View::factory('_common/partials/navsub');
 		$this->template->layout->navsub->menu		= Menu::build('sub', 'main');
-		$this->template->layout->navsub->widget1	= FALSE;
-		$this->template->layout->navsub->widget2	= FALSE;
-		$this->template->layout->navsub->widget3	= FALSE;
+		$this->template->layout->navsub->widget1	= false;
+		$this->template->layout->navsub->widget2	= false;
+		$this->template->layout->navsub->widget3	= false;
 		
 		$this->template->layout->footer				= View::factory('_common/partials/footer');
 		$this->template->layout->footer->extra 		= Jelly::query('message', 'footer')->limit(1)->select()->value;
@@ -187,7 +187,7 @@ class Controller_Nova_Main extends Controller_Nova_Base {
 		);
 		
 		// set the validation errors
-		$data->errors = ($this->session->get('errors')) ? $this->session->get('errors') : FALSE;
+		$data->errors = ($this->session->get('errors')) ? $this->session->get('errors') : false;
 		
 		// send the response
 		$this->request->response = $this->template;
@@ -215,9 +215,9 @@ class Controller_Nova_Main extends Controller_Nova_Base {
 		$data->credits = Jelly::query('message', 'credits')->limit(1)->select()->value;
 		
 		// should we show an edit link?
-		$data->edit = (Auth::is_logged_in() AND Auth::check_access('site/messages', FALSE))
-			? TRUE
-			: FALSE;
+		$data->edit = (Auth::is_logged_in() and Auth::check_access('site/messages', false))
+			? true
+			: false;
 		
 		// send the response
 		$this->request->response = $this->template;
@@ -243,7 +243,7 @@ class Controller_Nova_Main extends Controller_Nova_Base {
 		$news = Jelly::query('news')->where('status', '=', 'activated')->order_by('date', 'desc');
 		
 		// if the user isn't logged in, only pull public news items
-		( ! Auth::is_logged_in()) ? $news->where('private', '=', 'n') : FALSE;
+		( ! Auth::is_logged_in()) ? $news->where('private', '=', 'n') : false;
 		
 		// run the query
 		$news = $news->select();
@@ -252,7 +252,7 @@ class Controller_Nova_Main extends Controller_Nova_Base {
 		if (count($news) > 0)
 		{
 			// set the variable being used by the news items
-			$data->news = FALSE;
+			$data->news = false;
 			
 			// send the timezone to the view
 			$data->timezone = $this->timezone;
@@ -271,8 +271,8 @@ class Controller_Nova_Main extends Controller_Nova_Base {
 		if (count($cats) > 0)
 		{
 			// set the variables being used by the news categories
-			$data->categories = FALSE;
-			$data->lastcategory = FALSE;
+			$data->categories = false;
+			$data->lastcategory = false;
 			
 			// set the counter
 			$i = 0;
@@ -285,7 +285,7 @@ class Controller_Nova_Main extends Controller_Nova_Base {
 				
 				$data->categories[$c->id] = $c;
 				
-				$data->lastcategory[$c->id] = (count($cats) == $i) ? TRUE : FALSE;
+				$data->lastcategory[$c->id] = (count($cats) == $i) ? true : false;
 			}
 		}
 		
@@ -297,12 +297,12 @@ class Controller_Nova_Main extends Controller_Nova_Base {
 		$this->request->response = $this->template;
 	}
 	
-	public function action_viewnews($id = NULL)
+	public function action_viewnews($id = null)
 	{
 		# TODO: need to handle comment moderation
 		
 		// sanitize the id
-		$id = ( ! is_numeric($id)) ? FALSE : $id;
+		$id = ( ! is_numeric($id)) ? false : $id;
 		
 		// create a new content view
 		$this->template->layout->content = View::factory(Location::view('main_viewnews', $this->skin, 'main', 'pages'));
@@ -335,14 +335,14 @@ class Controller_Nova_Main extends Controller_Nova_Base {
 		// figure out what the previous item is
 		$prev = Jelly::query('news')->where('id', '<', $id)->order_by('id', 'desc')->limit(1);
 			
-		( ! Auth::is_logged_in()) ? $prev->where('private', '=', 'n') : FALSE;
+		( ! Auth::is_logged_in()) ? $prev->where('private', '=', 'n') : false;
 		
 		$prev = $prev->select();
 		
 		// figure out what the next item is
 		$next = Jelly::query('news')->where('id', '>', $id)->order_by('id', 'desc')->limit(1);
 			
-		( ! Auth::is_logged_in()) ? $next->where('private', '=', 'n') : FALSE;
+		( ! Auth::is_logged_in()) ? $next->where('private', '=', 'n') : false;
 		
 		$next = $next->select();
 		
@@ -378,17 +378,17 @@ class Controller_Nova_Main extends Controller_Nova_Base {
 			);
 			
 			// figure out if they're allowed to manage news items
-			$data->edit = FALSE;
+			$data->edit = false;
 			
-			if (Auth::check_access('manage/news', FALSE))
+			if (Auth::check_access('manage/news', false))
 			{
 				$level = Auth::get_access_level('manage/news');
 				
-				$data->edit = ($level == 2 OR ($level == 1 AND ($news->news_author_user == $this->session->get('userid')))) ? TRUE : FALSE;
+				$data->edit = ($level == 2 or ($level == 1 and ($news->news_author_user == $this->session->get('userid')))) ? true : false;
 			}
 			
 			// make sure they're logged in if it's a private news item
-			if ($news->private == 'y' AND ! Auth::is_logged_in())
+			if ($news->private == 'y' and ! Auth::is_logged_in())
 			{
 				$this->template->title.= ucwords(__('action.view').' '.__('global.news_item'));
 				$data->header = __('error.header');
@@ -399,8 +399,8 @@ class Controller_Nova_Main extends Controller_Nova_Base {
 			{
 				$this->template->title.= ucwords(__('action.view').' '.__('global.news_item')).' - '. $news->title;
 				$data->header = $news->title;
-				$data->headerclass = NULL;
-				$data->message = NULL;
+				$data->headerclass = null;
+				$data->message = null;
 			}
 		}
 		else
@@ -435,7 +435,7 @@ class Controller_Nova_Main extends Controller_Nova_Base {
 	protected function _email($type, $data)
 	{
 		// set the email variable that'll be returned
-		$email = FALSE;
+		$email = false;
 		
 		// make sure system email is turned on
 		if ($this->options->system_email == 'on')

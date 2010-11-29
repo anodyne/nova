@@ -32,9 +32,9 @@ class Kohana_Database_PDO extends Database {
 		// Extract the connection parameters, adding required variabels
 		extract($this->_config['connection'] + array(
 			'dsn'        => '',
-			'username'   => NULL,
-			'password'   => NULL,
-			'persistent' => FALSE,
+			'username'   => null,
+			'password'   => null,
+			'persistent' => false,
 		));
 
 		// Clear the connection parameters for security
@@ -46,7 +46,7 @@ class Kohana_Database_PDO extends Database {
 		if ( ! empty($persistent))
 		{
 			// Make the connection persistent
-			$attrs[PDO::ATTR_PERSISTENT] = TRUE;
+			$attrs[PDO::ATTR_PERSISTENT] = true;
 		}
 
 		try
@@ -73,9 +73,9 @@ class Kohana_Database_PDO extends Database {
 	public function disconnect()
 	{
 		// Destroy the PDO object
-		$this->_connection = NULL;
+		$this->_connection = null;
 
-		return TRUE;
+		return true;
 	}
 
 	public function set_charset($charset)
@@ -130,7 +130,7 @@ class Kohana_Database_PDO extends Database {
 		if ($type === Database::SELECT)
 		{
 			// Convert the result into an array, as PDOStatement::rowCount is not reliable
-			if ($as_object === FALSE)
+			if ($as_object === false)
 			{
 				$result->setFetchMode(PDO::FETCH_ASSOC);
 			}
@@ -163,13 +163,13 @@ class Kohana_Database_PDO extends Database {
 		}
 	}
 
-	public function list_tables($like = NULL)
+	public function list_tables($like = null)
 	{
 		throw new Kohana_Exception('Database method :method is not supported by :class',
 			array(':method' => __FUNCTION__, ':class' => __CLASS__));
 	}
 
-	public function list_columns($table, $like = NULL, $add_prefix = TRUE)
+	public function list_columns($table, $like = null, $add_prefix = true)
 	{
 		throw new Kohana_Exception('Database method :method is not supported by :class',
 			array(':method' => __FUNCTION__, ':class' => __CLASS__));

@@ -1,6 +1,6 @@
 <?php echo text_output($label['choose'], 'h3');?>
 
-<?php if ($installed === FALSE): ?>
+<?php if ($installed === false): ?>
 	<a href="<?php echo site_url('install/main');?>" class="install-options">
 		<span><?php echo $label['title_fresh'];?></span>
 		<em><?php echo $label['text_fresh'];?></em>
@@ -12,7 +12,7 @@
 	</a>
 <?php endif;?>
 
-<?php if ($installed === TRUE): ?>
+<?php if ($installed === true): ?>
 	<a href="<?php echo site_url('update/index');?>" class="install-options">
 		<span><?php echo $label['title_upd'];?></span>
 		<em><?php echo $label['text_upd'];?></em>

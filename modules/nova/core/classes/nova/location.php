@@ -133,7 +133,7 @@ abstract class Nova_Location {
 					}
 				}
 				
-				return FALSE;
+				return false;
 				
 			break;
 				
@@ -216,6 +216,6 @@ abstract class Nova_Location {
 			}
 		}
 		
-		return FALSE;
+		return false;
 	}
 } // End Location

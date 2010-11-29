@@ -25,7 +25,7 @@ abstract class Nova_Form extends Kohana_Form {
 	 * @param	array 	an array of attributes
 	 * @return	string	the complete field
 	 */
-	public static function color($name, $value = NULL, array $attributes = NULL)
+	public static function color($name, $value = null, array $attributes = null)
 	{
 		// set the type
 		$attributes['type'] = 'color';
@@ -59,7 +59,7 @@ abstract class Nova_Form extends Kohana_Form {
 	 * @param	array 	an array of attributes
 	 * @return	string	the complete field
 	 */
-	public static function datalist($name, array $values, array $attributes = NULL)
+	public static function datalist($name, array $values, array $attributes = null)
 	{
 		// set the initial element
 		$html = '<datalist name="'.$name.'" '.html::attributes($attributes).'>';
@@ -87,7 +87,7 @@ abstract class Nova_Form extends Kohana_Form {
 	 * @param	array 	an array of attributes
 	 * @return	string	the complete field
 	 */
-	public static function date($name, $value = NULL, array $attributes = NULL)
+	public static function date($name, $value = null, array $attributes = null)
 	{
 		// set the type
 		$attributes['type'] = 'date';
@@ -109,7 +109,7 @@ abstract class Nova_Form extends Kohana_Form {
 	 * @param	array 	an array of attributes
 	 * @return	string	the complete field
 	 */
-	public static function datetime($name, $value = NULL, array $attributes = NULL)
+	public static function datetime($name, $value = null, array $attributes = null)
 	{
 		// set the type
 		$attributes['type'] = 'datetime';
@@ -131,7 +131,7 @@ abstract class Nova_Form extends Kohana_Form {
 	 * @param	array 	an array of attributes
 	 * @return	string	the complete field
 	 */
-	public static function datetime_local($name, $value = NULL, array $attributes = NULL)
+	public static function datetime_local($name, $value = null, array $attributes = null)
 	{
 		// set the type
 		$attributes['type'] = 'datetime-local';
@@ -154,7 +154,7 @@ abstract class Nova_Form extends Kohana_Form {
 	 * @param	array 	an array of attributes
 	 * @return	string	the complete field
 	 */
-	public static function email($name, $value = NULL, array $attributes = NULL)
+	public static function email($name, $value = null, array $attributes = null)
 	{
 		// set the type
 		$attributes['type'] = 'email';
@@ -176,7 +176,7 @@ abstract class Nova_Form extends Kohana_Form {
 	 * @param	array 	an array of attributes
 	 * @return	string	the complete field
 	 */
-	public static function month($name, $value = NULL, array $attributes = NULL)
+	public static function month($name, $value = null, array $attributes = null)
 	{
 		// set the type
 		$attributes['type'] = 'month';
@@ -197,7 +197,7 @@ abstract class Nova_Form extends Kohana_Form {
 	 *         'step' => 1 // increments the number can go in
 	 *     );
 	 *
-	 *     echo form::number('number', NULL, $attributes);
+	 *     echo form::number('number', null, $attributes);
 	 *
 	 * @uses	form::input
 	 * @param	string	the name of the field
@@ -205,7 +205,7 @@ abstract class Nova_Form extends Kohana_Form {
 	 * @param	array 	an array of attributes
 	 * @return	string	the complete field
 	 */
-	public static function number($name, $value = NULL, array $attributes = NULL)
+	public static function number($name, $value = null, array $attributes = null)
 	{
 		// set the type
 		$attributes['type'] = 'number';
@@ -228,7 +228,7 @@ abstract class Nova_Form extends Kohana_Form {
 	 * @param	array 	an array of attributes
 	 * @return	string	the complete field
 	 */
-	public static function range($name, $value = NULL, array $attributes = NULL)
+	public static function range($name, $value = null, array $attributes = null)
 	{
 		// set the type
 		$attributes['type'] = 'range';
@@ -250,7 +250,7 @@ abstract class Nova_Form extends Kohana_Form {
 	 * @param	array 	an array of attributes
 	 * @return	string	the complete field
 	 */
-	public static function search($name, $value = NULL, array $attributes = NULL)
+	public static function search($name, $value = null, array $attributes = null)
 	{
 		// set the type
 		$attributes['type'] = 'search';
@@ -269,7 +269,7 @@ abstract class Nova_Form extends Kohana_Form {
 	 * @param	boolean	whether to print a NONE option at the top of the menu
 	 * @return			a dropdown output from form::dropdown
 	 */
-	/*public static function dropdown_characters($name = '', $selected = array(), $extra = '', $type = 'active', $blank_option = FALSE)
+	/*public static function dropdown_characters($name = '', $selected = array(), $extra = '', $type = 'active', $blank_option = false)
 	{
 		// load the core model
 		$mCore = new Core_Model;
@@ -344,7 +344,7 @@ abstract class Nova_Form extends Kohana_Form {
 					'where' => array(
 						array(
 							'field' => 'user',
-							'value' => NULL
+							'value' => null
 						),
 					),
 					'or_where' => array(
@@ -369,7 +369,7 @@ abstract class Nova_Form extends Kohana_Form {
 		
 		if ($all)
 		{
-			if ($blank_option === TRUE)
+			if ($blank_option === true)
 			{
 				$options[0] = ucfirst(__('word.none'));
 			}
@@ -397,18 +397,18 @@ abstract class Nova_Form extends Kohana_Form {
 						break;
 					}
 					
-					$options[$label][$a->charid] = Utility::print_character_name($a->charid, TRUE);
+					$options[$label][$a->charid] = Utility::print_character_name($a->charid, true);
 				}
 				else
 				{
-					$options[$a->charid] = Utility::print_character_name($a->charid, TRUE);
+					$options[$a->charid] = Utility::print_character_name($a->charid, true);
 				}
 			}
 			
 			return form::dropdown($name, $options, $selected, $extra);
 		}
 		
-		return FALSE;
+		return false;
 	}*/
 	
 	/**
@@ -423,7 +423,7 @@ abstract class Nova_Form extends Kohana_Form {
 	 * @param	boolean	whether to print a NONE option at the top of the dropdown
 	 * @return			a select menu output from form::select
 	 */
-	/*public static function dropdown_dept($name = '', $selected = array(), $extra = NULL, $type = 'all', $display = 'y', $exclude = '', $blank_option = FALSE)
+	/*public static function dropdown_dept($name = '', $selected = array(), $extra = null, $type = 'all', $display = 'y', $exclude = '', $blank_option = false)
 	{
 		// load the core model
 		$mCore = new Core_Model;
@@ -448,14 +448,14 @@ abstract class Nova_Form extends Kohana_Form {
 		
 				if ($depts)
 				{
-					if ($blank_option === TRUE)
+					if ($blank_option === true)
 					{
 						$options[0] = ucfirst(__('word.none'));
 					}
 					
 					foreach ($depts as $dept)
 					{
-						if ( ! empty($exclude) AND $exclude == $dept->dept_id)
+						if ( ! empty($exclude) and $exclude == $dept->dept_id)
 						{
 							// don't do anything
 						}
@@ -483,7 +483,7 @@ abstract class Nova_Form extends Kohana_Form {
 						{
 							foreach ($subd as $sub)
 							{
-								if ( ! empty($exclude) AND $exclude == $sub->dept_id)
+								if ( ! empty($exclude) and $exclude == $sub->dept_id)
 								{
 									// don't do anything
 								}
@@ -516,14 +516,14 @@ abstract class Nova_Form extends Kohana_Form {
 		
 				if ($depts)
 				{
-					if ($blank_option === TRUE)
+					if ($blank_option === true)
 					{
 						$options[0] = ucfirst(__('word.none'));
 					}
 					
 					foreach ($depts as $dept)
 					{
-						if ( ! empty($exclude) AND $exclude == $dept->dept_id)
+						if ( ! empty($exclude) and $exclude == $dept->dept_id)
 						{
 							// don't do anything
 						}
@@ -542,7 +542,7 @@ abstract class Nova_Form extends Kohana_Form {
 			return form::dropdown($name, $options, $selected, $extra);
 		}
 		
-		return FALSE;
+		return false;
 	}*/
 	
 	/**
@@ -559,7 +559,7 @@ abstract class Nova_Form extends Kohana_Form {
 	 * @param	string	the department type to pull
 	 * @return	string	a select menu output from form::select
 	 */
-	public static function select_position($name, $selected = array(), $extra = NULL, $type = 'all', $display = 'y', $dept_type = '')
+	public static function select_position($name, $selected = array(), $extra = null, $type = 'all', $display = 'y', $dept_type = '')
 	{
 		// grab the positions
 		if ($type == 'open')
@@ -576,7 +576,7 @@ abstract class Nova_Form extends Kohana_Form {
 		}
 		
 		// set the display parameter
-		( ! empty($display)) ? $positions->where('display', '=', $display) : FALSE;
+		( ! empty($display)) ? $positions->where('display', '=', $display) : false;
 		
 		$positions = $positions->select();
 		
@@ -584,15 +584,15 @@ abstract class Nova_Form extends Kohana_Form {
 		{
 			$options[0] = __('phrase.please_choose_one');
 			
-			$valid = FALSE;
+			$valid = false;
 			
 			foreach ($positions as $pos)
 			{
-				if (($dept_type == 'playing' AND $pos->dept->type == 'playing') OR
-						($dept_type == 'nonplaying' AND $pos->dept->type == 'nonplaying') OR
+				if (($dept_type == 'playing' and $pos->dept->type == 'playing') or
+						($dept_type == 'nonplaying' and $pos->dept->type == 'nonplaying') or
 						$pos->dept->display == 'y')
 				{
-					if ($type == 'all' OR $type == 'open')
+					if ($type == 'all' or $type == 'open')
 					{
 						$options[$pos->dept->name][$pos->id] = $pos->name;
 					}
@@ -606,7 +606,7 @@ abstract class Nova_Form extends Kohana_Form {
 			return form::select($name, $options, $selected, $extra);
 		}
 		
-		return FALSE;
+		return false;
 	}
 	
 	/**
@@ -620,7 +620,7 @@ abstract class Nova_Form extends Kohana_Form {
 	 * @param	array	any extra attributes to add to the select menu
 	 * @return	string	a select menu from form::select
 	 */
-	public static function select_rank($name, $selected = array(), $extra = NULL)
+	public static function select_rank($name, $selected = array(), $extra = null)
 	{
 		// grab the ranks
 		$ranks = Jelly::query('rank')
@@ -639,7 +639,7 @@ abstract class Nova_Form extends Kohana_Form {
 			return form::select($name, $options, $selected, $extra);
 		}
 		
-		return FALSE;
+		return false;
 	}
 	
 	/**
@@ -656,7 +656,7 @@ abstract class Nova_Form extends Kohana_Form {
 	 * @param	array 	an array of attributes
 	 * @return	string	the complete field
 	 */
-	public static function tel($name, $value = NULL, array $attributes = NULL)
+	public static function tel($name, $value = null, array $attributes = null)
 	{
 		// set the type
 		$attributes['type'] = 'tel';
@@ -678,7 +678,7 @@ abstract class Nova_Form extends Kohana_Form {
 	 * @param	array 	an array of attributes
 	 * @return	string	the complete field
 	 */
-	public static function time($name, $value = NULL, array $attributes = NULL)
+	public static function time($name, $value = null, array $attributes = null)
 	{
 		// set the type
 		$attributes['type'] = 'time';
@@ -701,7 +701,7 @@ abstract class Nova_Form extends Kohana_Form {
 	 * @param	array 	an array of attributes
 	 * @return	string	the complete field
 	 */
-	public static function url($name, $value = NULL, array $attributes = NULL)
+	public static function url($name, $value = null, array $attributes = null)
 	{
 		// set the type
 		$attributes['type'] = 'url';
@@ -723,7 +723,7 @@ abstract class Nova_Form extends Kohana_Form {
 	 * @param	array 	an array of attributes
 	 * @return	string	the complete field
 	 */
-	public static function week($name, $value = NULL, array $attributes = NULL)
+	public static function week($name, $value = null, array $attributes = null)
 	{
 		// set the type
 		$attributes['type'] = 'week';

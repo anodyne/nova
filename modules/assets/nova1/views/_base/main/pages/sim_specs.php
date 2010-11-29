@@ -1,6 +1,6 @@
 <?php echo text_output($header, 'h1', 'page-head');?>
 
-<?php if ($edit_valid === TRUE || $edit_valid_form === TRUE): ?>
+<?php if ($edit_valid === true || $edit_valid_form === true): ?>
 	<p>
 		<?php echo link_to_if($edit_valid, 'manage/specs', $label['edit'], array('class' => 'edit fontSmall bold'));?>
 		<?php echo link_to_if($edit_valid_form, 'site/specsform', $label['edit_form'], array('class' => 'edit fontSmall bold'));?>

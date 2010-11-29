@@ -19,7 +19,7 @@
 				<strong><?php echo $label['reassign_sub'];?></strong><br />
 				<?php echo text_output($reassign_text, 'span', 'fontSmall orange');?>
 			</p>
-			<p><?php echo form_dropdown_dept('subdept', '', 'class="hud"', 'main', '', $id, TRUE);?></p>
+			<p><?php echo form_dropdown_dept('subdept', '', 'class="hud"', 'main', '', $id, true);?></p>
 		<?php endif;?>
 		
 		<br />

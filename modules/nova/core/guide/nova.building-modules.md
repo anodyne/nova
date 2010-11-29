@@ -30,7 +30,7 @@ Now that we have our folders, we can put our two files in. Create a blank file c
 
 Just like Nova 1, Nova 2 uses controllers to generate pages. Our module here is going to be pretty simple and only use one controller and one method (you could make a much more advanced module that has lots of controllers, libraries, models and views if you wanted to).
 
-<pre><code>&lt;?php defined('SYSPATH') OR die('No direct access allowed.');
+<pre><code>&lt;?php defined('SYSPATH') or die('No direct access allowed.');
 
 class Controller_Aboutnova extends Controller_Nova_Main
 {

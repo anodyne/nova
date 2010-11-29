@@ -54,7 +54,7 @@ class MY_Input extends CI_Input {
 	* @param	string
 	* @return	string
 	*/
-	function xss_clean($str, $is_image = FALSE)
+	function xss_clean($str, $is_image = false)
 	{
 		/*
 		* Is the string an array?
@@ -145,7 +145,7 @@ class MY_Input extends CI_Input {
 		*
 		*/
 
- 		if (strpos($str, "\t") !== FALSE)
+ 		if (strpos($str, "\t") !== false)
 		{
 			$str = str_replace("\t", ' ', $str);
 		}
@@ -179,7 +179,7 @@ class MY_Input extends CI_Input {
 		* But it doesn't seem to pose a problem.
 		*
 		*/
-		if ($is_image === TRUE)
+		if ($is_image === true)
 		{
 			// Images have a tendency to have the PHP short opening and closing tags every so often
 			// so we skip those and only do the long opening tags.
@@ -231,7 +231,7 @@ class MY_Input extends CI_Input {
 				$str = preg_replace_callback("#<img\s+([^>]*?)(\s?/?>|$)#si", array($this, '_js_img_removal'), $str);
 			}
 
-			if (preg_match("/script/i", $str) OR preg_match("/xss/i", $str))
+			if (preg_match("/script/i", $str) or preg_match("/xss/i", $str))
 			{
 				$str = preg_replace("#<(/*)(script|xss)(.*?)\>#si", '[removed]', $str);
 			}
@@ -250,7 +250,7 @@ class MY_Input extends CI_Input {
 		*/
 		$event_handlers = array('[^a-z_\-]on\w*','xmlns');
 
-		if ($is_image === TRUE)
+		if ($is_image === true)
 		{
 			/*
 			* Adobe Photoshop puts XML metadata into JFIF images, including namespacing, 
@@ -309,20 +309,20 @@ class MY_Input extends CI_Input {
 		/*
 		*  Images are Handled in a Special Way
 		*  - Essentially, we want to know that after all of the character conversion is done whether
-		*  any unwanted, likely XSS, code was found.  If not, we return TRUE, as the image is clean.
+		*  any unwanted, likely XSS, code was found.  If not, we return true, as the image is clean.
 		*  However, if the string post-conversion does not matched the string post-removal of XSS,
 		*  then it fails, as there was unwanted XSS code found and removed/changed during processing.
 		*/
 
-		if ($is_image === TRUE)
+		if ($is_image === true)
 		{
 			if ($str == $converted_string)
 			{
-				return TRUE;
+				return true;
 			}
 			else
 			{
-				return FALSE;
+				return false;
 			}
 		}
 

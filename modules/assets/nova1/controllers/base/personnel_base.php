@@ -28,7 +28,7 @@ class Personnel_base extends Controller {
 		$this->load->model('system_model', 'sys');
 		$installed = $this->sys->check_install_status();
 		
-		if ($installed === FALSE)
+		if ($installed === false)
 		{ /* check whether the system is installed */
 			redirect('install/index', 'refresh');
 		}
@@ -63,7 +63,7 @@ class Personnel_base extends Controller {
 		$this->timezone = $this->options['timezone'];
 		$this->dst = (bool) $this->options['daylight_savings'];
 		
-		if ($this->auth->is_logged_in() === TRUE)
+		if ($this->auth->is_logged_in() === true)
 		{ /* if there's a session, set the variables appropriately */
 			$this->skin = $this->session->userdata('skin_main');
 			$this->rank = $this->session->userdata('display_rank');
@@ -78,17 +78,17 @@ class Personnel_base extends Controller {
 		$this->template->set_master_template($this->skin . '/template_main.php');
 		
 		/* write the common elements to the template */
-		$this->template->write('nav_main', $this->menu->build('main', 'main'), TRUE);
-		$this->template->write('nav_sub', $this->menu->build('sub', 'personnel'), TRUE);
+		$this->template->write('nav_main', $this->menu->build('main', 'main'), true);
+		$this->template->write('nav_sub', $this->menu->build('sub', 'personnel'), true);
 		$this->template->write('title', $this->options['sim_name'] . ' :: ');
 		
-		if ($this->session->userdata('userid') !== FALSE)
+		if ($this->session->userdata('userid') !== false)
 		{
 			/* create the user panels */
-			$this->template->write('panel_1', $this->user_panel->panel_1(), TRUE);
-			$this->template->write('panel_2', $this->user_panel->panel_2(), TRUE);
-			$this->template->write('panel_3', $this->user_panel->panel_3(), TRUE);
-			$this->template->write('panel_workflow', $this->user_panel->panel_workflow(), TRUE);
+			$this->template->write('panel_1', $this->user_panel->panel_1(), true);
+			$this->template->write('panel_2', $this->user_panel->panel_2(), true);
+			$this->template->write('panel_3', $this->user_panel->panel_3(), true);
+			$this->template->write('panel_workflow', $this->user_panel->panel_workflow(), true);
 		}
 	}
 	
@@ -192,7 +192,7 @@ class Personnel_base extends Controller {
 										);
 											
 										/* get the character name and rank */
-										$name = $this->char->get_character_name($char->charid, TRUE);
+										$name = $this->char->get_character_name($char->charid, true);
 										
 										if ($char->crew_type == 'active' && empty($char->user))
 										{
@@ -281,7 +281,7 @@ class Personnel_base extends Controller {
 								);
 								
 								/* get the character name and rank */
-								$name = $this->char->get_character_name($char->charid, TRUE);
+								$name = $this->char->get_character_name($char->charid, true);
 								
 								if ($char->crew_type == 'active' && empty($char->user))
 								{
@@ -397,7 +397,7 @@ class Personnel_base extends Controller {
 				{
 					/* data being passed to the view */
 					$data['coc'][$item->charid]['id'] = $item->charid;
-					$data['coc'][$item->charid]['name'] = $this->char->get_character_name($item->charid, TRUE);
+					$data['coc'][$item->charid]['name'] = $this->char->get_character_name($item->charid, true);
 					$data['coc'][$item->charid]['position'] = $item->pos_name;
 					$data['coc'][$item->charid]['img_rank'] = $images['rank'];
 					$data['coc'][$item->charid]['img_bio'] = $images['bio'];
@@ -409,13 +409,13 @@ class Personnel_base extends Controller {
 			$data['error'] = lang('error_no_coc');
 		}
 		
-		if ($this->auth->is_logged_in() === TRUE && $this->auth->check_access('characters/coc', FALSE) === TRUE)
+		if ($this->auth->is_logged_in() === true && $this->auth->check_access('characters/coc', false) === true)
 		{
-			$data['edit_valid'] = TRUE;
+			$data['edit_valid'] = true;
 		}
 		else
 		{
-			$data['edit_valid'] = FALSE;
+			$data['edit_valid'] = false;
 		}
 		
 		/* page header */
@@ -448,12 +448,12 @@ class Personnel_base extends Controller {
 		$this->load->model('awards_model', 'awards');
 		
 		/* set the variables */
-		$id = $this->uri->segment(3, FALSE, TRUE);
+		$id = $this->uri->segment(3, false, true);
 		
 		/* grab the character info */
 		$character = $this->char->get_character($id);
 		
-		if ($character !== FALSE)
+		if ($character !== false)
 		{
 			$data['postcount'] = $this->posts->count_character_posts($id);
 			$data['logcount'] = $this->logs->count_character_logs($id);
@@ -508,7 +508,7 @@ class Personnel_base extends Controller {
 				$images = explode(',', $character->images);
 				$images_count = count($images);
 			
-				if (strstr($images[0], 'http://') !== FALSE)
+				if (strstr($images[0], 'http://') !== false)
 				{ /* make sure it is not an external image */
 					$src = $images[0];
 				}
@@ -527,7 +527,7 @@ class Personnel_base extends Controller {
 				
 				for ($i=1; $i < $images_count; $i++)
 				{
-					if (strstr($images[$i], 'http://') !== FALSE)
+					if (strstr($images[$i], 'http://') !== false)
 					{ /* make sure it is not an external image */
 						$src = trim($images[$i]);
 					}
@@ -577,7 +577,7 @@ class Personnel_base extends Controller {
 						foreach ($fields->result() as $field)
 						{
 							$data['fields'][$sec->section_id][$j]['label'] = $field->field_label_page;
-							$data['fields'][$sec->section_id][$j]['value'] = FALSE;
+							$data['fields'][$sec->section_id][$j]['value'] = false;
 							
 							$info = $this->char->get_field_data($field->field_id, $id);
 							
@@ -624,22 +624,22 @@ class Personnel_base extends Controller {
 			$this->template->write('title', lang('error_pagetitle'));
 		}
 		
-		if ($this->auth->is_logged_in() === TRUE)
+		if ($this->auth->is_logged_in() === true)
 		{
-			if ($this->auth->check_access('site/bioform', FALSE) === TRUE)
+			if ($this->auth->check_access('site/bioform', false) === true)
 			{
-				$data['edit_valid_form'] = TRUE;
+				$data['edit_valid_form'] = true;
 			}
 			else
 			{
-				$data['edit_valid_form'] = FALSE;
+				$data['edit_valid_form'] = false;
 			}
 			
-			if ($this->auth->check_access('characters/bio', FALSE) === TRUE)
+			if ($this->auth->check_access('characters/bio', false) === true)
 			{
 				if ($this->auth->get_access_level('characters/bio') == 3)
 				{
-					$data['edit_valid'] = TRUE;
+					$data['edit_valid'] = true;
 				}
 				elseif ($this->auth->get_access_level('characters/bio') == 2)
 				{
@@ -647,11 +647,11 @@ class Personnel_base extends Controller {
 					
 					if (in_array($id, $characters) || $character->crew_type == 'npc')
 					{
-						$data['edit_valid'] = TRUE;
+						$data['edit_valid'] = true;
 					}
 					else
 					{
-						$data['edit_valid'] = FALSE;
+						$data['edit_valid'] = false;
 					}
 				}
 				elseif ($this->auth->get_access_level('characters/bio') == 1)
@@ -660,27 +660,27 @@ class Personnel_base extends Controller {
 					
 					if (in_array($id, $characters))
 					{
-						$data['edit_valid'] = TRUE;
+						$data['edit_valid'] = true;
 					}
 					else
 					{
-						$data['edit_valid'] = FALSE;
+						$data['edit_valid'] = false;
 					}
 				}
 				else
 				{
-					$data['edit_valid'] = FALSE;
+					$data['edit_valid'] = false;
 				}
 			}
 			else
 			{
-				$data['edit_valid'] = FALSE;
+				$data['edit_valid'] = false;
 			}
 		}
 		else
 		{
-			$data['edit_valid'] = FALSE;
-			$data['edit_valid_form'] = FALSE;
+			$data['edit_valid'] = false;
+			$data['edit_valid_form'] = false;
 		}
 		
 		$data['label'] = array(
@@ -709,11 +709,11 @@ class Personnel_base extends Controller {
 	
 	function user()
 	{
-		$this->auth->is_logged_in(TRUE);
+		$this->auth->is_logged_in(true);
 		
 		/* set the variables */
-		$user = $this->uri->segment(3, FALSE, TRUE);
-		$js_data['tab'] = $this->uri->segment(4, 0, TRUE);
+		$user = $this->uri->segment(3, false, true);
+		$js_data['tab'] = $this->uri->segment(4, 0, true);
 		
 		/* load the resources */
 		$this->load->model('ranks_model', 'ranks');
@@ -734,7 +734,7 @@ class Personnel_base extends Controller {
 		/* set the datestring */
 		$datestring = $this->options['date_format'];
 		
-		if ($row !== FALSE)
+		if ($row !== false)
 		{
 			/* calculate the timezone difference */
 			$pl_timezone = timezones($row->timezone);
@@ -822,13 +822,13 @@ class Personnel_base extends Controller {
 			|---------------------------------------------------------------
 			*/
 			
-			$data['rank_history'] = FALSE;
+			$data['rank_history'] = false;
 			
 			if ($rankhistory->num_rows() > 0)
 			{
 				foreach ($rankhistory->result() as $rank)
 				{
-					$data['rank_history'][$rank->prom_char]['name'] = $this->char->get_character_name($rank->prom_char, TRUE);
+					$data['rank_history'][$rank->prom_char]['name'] = $this->char->get_character_name($rank->prom_char, true);
 					$data['rank_history'][$rank->prom_char]['history'][] = array(
 						'old_order' => $rank->prom_old_order,
 						'old_rank' => $rank->prom_old_rank,
@@ -870,7 +870,7 @@ class Personnel_base extends Controller {
 			/* calculate the time in weeks */
 			$total_time = now() - $row->join_date;
 			$days = $total_time / 86400; /* number of days */
-			$weeks = ($days >= 7) ? $days / 7 : FALSE;
+			$weeks = ($days >= 7) ? $days / 7 : false;
 			$time = round($weeks);
 			
 			/* send the data to the view */
@@ -910,7 +910,7 @@ class Personnel_base extends Controller {
 					$data['logs'][$i]['title'] = $l->log_title;
 					$data['logs'][$i]['log_id'] = $l->log_id;
 					$data['logs'][$i]['date'] = mdate($datestring, gmt_to_local($l->log_date, $this->timezone, $this->dst));
-					$data['logs'][$i]['author'] = $this->char->get_character_name($l->log_author_character, TRUE);
+					$data['logs'][$i]['author'] = $this->char->get_character_name($l->log_author_character, true);
 					
 					++$i;
 				}
@@ -933,7 +933,7 @@ class Personnel_base extends Controller {
 					$data['awards'][$i]['award_id'] = $a->awardrec_award;
 					$data['awards'][$i]['reason'] = $a->awardrec_reason;
 					$data['awards'][$i]['given'] = mdate($datestring, gmt_to_local($a->awardrec_date, $this->timezone, $this->dst));
-					$data['awards'][$i]['name'] = (empty($a->awardrec_character)) ? $row->name : $this->char->get_character_name($a->awardrec_character, TRUE);
+					$data['awards'][$i]['name'] = (empty($a->awardrec_character)) ? $row->name : $this->char->get_character_name($a->awardrec_character, true);
 					
 					++$i;
 				}
@@ -952,21 +952,21 @@ class Personnel_base extends Controller {
 			$this->template->write('title', lang('error_pagetitle'));
 		}
 		
-		if ($this->auth->is_logged_in() === TRUE)
+		if ($this->auth->is_logged_in() === true)
 		{
-			if ($this->auth->check_access('user/account', FALSE) === TRUE && 
+			if ($this->auth->check_access('user/account', false) === true && 
 				$this->auth->get_access_level('user/account') == 1 && $user == $this->session->userdata('userid'))
 			{
-				$data['edit_valid'] = TRUE;
+				$data['edit_valid'] = true;
 			}
-			elseif ($this->auth->check_access('user/account', FALSE) === TRUE && 
+			elseif ($this->auth->check_access('user/account', false) === true && 
 				$this->auth->get_access_level('user/account') == 2)
 			{
-				$data['edit_valid'] = TRUE;
+				$data['edit_valid'] = true;
 			}
 			else
 			{
-				$data['edit_valid'] = FALSE;
+				$data['edit_valid'] = false;
 			}
 		}
 		
@@ -1043,7 +1043,7 @@ class Personnel_base extends Controller {
 	{
 		/* define some variables */
 		$type = $this->uri->segment(3, 'default');
-		$id = $this->uri->segment(4, FALSE, TRUE);
+		$id = $this->uri->segment(4, false, true);
 		
 		/* load the models */
 		$this->load->model('awards_model', 'awards');
@@ -1055,7 +1055,7 @@ class Personnel_base extends Controller {
 				$item = $this->user->get_user($id);
 				$data['user'] = $id;
 
-				if ($item !== FALSE)
+				if ($item !== false)
 				{
 					/* get the awards info */
 					$awards = $this->awards->get_awards_for_id($id, 'user');
@@ -1079,13 +1079,13 @@ class Personnel_base extends Controller {
 							
 							if ($row->awardrec_character >= 1)
 							{
-								$data['char'][$row->awardrec_character]['character'] = $this->char->get_character_name($row->awardrec_character, TRUE);
+								$data['char'][$row->awardrec_character]['character'] = $this->char->get_character_name($row->awardrec_character, true);
 								$data['char'][$row->awardrec_character]['awards'][$i]['award_id'] = $row->award_id;
 								$data['char'][$row->awardrec_character]['awards'][$i]['award'] = $row->award_name;
 								$data['char'][$row->awardrec_character]['awards'][$i]['date'] = mdate($datestring, $date);
 								$data['char'][$row->awardrec_character]['awards'][$i]['reason'] = $row->awardrec_reason;
 								$data['char'][$row->awardrec_character]['awards'][$i]['img'] = $award_img;
-								$data['char'][$row->awardrec_character]['awards'][$i]['nom'] = $this->char->get_character_name($row->awardrec_nominated_by, TRUE);
+								$data['char'][$row->awardrec_character]['awards'][$i]['nom'] = $this->char->get_character_name($row->awardrec_nominated_by, true);
 							}
 							else
 							{
@@ -1094,7 +1094,7 @@ class Personnel_base extends Controller {
 								$data['awards'][$i]['date'] = mdate($datestring, $date);
 								$data['awards'][$i]['reason'] = $row->awardrec_reason;
 								$data['awards'][$i]['img'] = $award_img;
-								$data['awards'][$i]['nom'] = $this->char->get_character_name($row->awardrec_nominated_by, TRUE);
+								$data['awards'][$i]['nom'] = $this->char->get_character_name($row->awardrec_nominated_by, true);
 							}
 							
 							++$i;
@@ -1145,7 +1145,7 @@ class Personnel_base extends Controller {
 				/* run the model methods */
 				$char_row = $this->char->get_character($id);
 
-				if ($char_row !== FALSE)
+				if ($char_row !== false)
 				{
 					/* get the awards info */
 					$awards = $this->awards->get_awards_for_id($id);
@@ -1172,7 +1172,7 @@ class Personnel_base extends Controller {
 							$data['awards'][$i]['date'] = mdate($datestring, $date);
 							$data['awards'][$i]['reason'] = $row->awardrec_reason;
 							$data['awards'][$i]['img'] = $award_img;
-							$data['awards'][$i]['nom'] = $this->char->get_character_name($row->awardrec_nominated_by, TRUE);
+							$data['awards'][$i]['nom'] = $this->char->get_character_name($row->awardrec_nominated_by, true);
 
 							++$i;
 						}
@@ -1255,8 +1255,8 @@ class Personnel_base extends Controller {
 	{
 		/* set the variables */
 		$type = $this->uri->segment(3, 'default');
-		$id = $this->uri->segment(4, FALSE, TRUE);
-		$data = FALSE;
+		$id = $this->uri->segment(4, false, true);
+		$data = false;
 		
 		/* load the models */
 		$this->load->model('personallogs_model', 'logs');
@@ -1271,7 +1271,7 @@ class Personnel_base extends Controller {
 				$row = $this->user->get_user($id);
 				$data['user'] = $id;
 				
-				if ($row !== FALSE)
+				if ($row !== false)
 				{
 					/* get the user's characters */
 					$characters = $this->char->get_user_characters($row->userid, 'active', 'array');
@@ -1279,7 +1279,7 @@ class Personnel_base extends Controller {
 					foreach ($characters as $char)
 					{
 						/* set the character name info */
-						$data['char'][$char]['character'] = $this->char->get_character_name($char, TRUE);
+						$data['char'][$char]['character'] = $this->char->get_character_name($char, true);
 						
 						/* grab all the character posts */
 						$logs = $this->logs->get_character_logs($char);
@@ -1328,7 +1328,7 @@ class Personnel_base extends Controller {
 				/* run the model methods */
 				$char_check = $this->char->get_character($id);
 
-				if ($char_check !== FALSE)
+				if ($char_check !== false)
 				{ /* if there is a character, run the method and continue */
 					$logs = $this->logs->get_character_logs($id);
 
@@ -1420,8 +1420,8 @@ class Personnel_base extends Controller {
 	{
 		/* set the variables */
 		$type = $this->uri->segment(3, 'default');
-		$id = $this->uri->segment(4, FALSE, TRUE);
-		$data = FALSE;
+		$id = $this->uri->segment(4, false, true);
+		$data = false;
 		
 		/* load the models */
 		$this->load->model('posts_model', 'posts');
@@ -1434,7 +1434,7 @@ class Personnel_base extends Controller {
 				$row = $this->user->get_user($id);
 				$data['user'] = $id;
 				
-				if ($row !== FALSE)
+				if ($row !== false)
 				{
 					/* get the user's characters */
 					$characters = $this->char->get_user_characters($row->userid, 'active', 'array');
@@ -1442,7 +1442,7 @@ class Personnel_base extends Controller {
 					foreach ($characters as $char)
 					{
 						/* set the character name info */
-						$data['char'][$char]['character'] = $this->char->get_character_name($char, TRUE);
+						$data['char'][$char]['character'] = $this->char->get_character_name($char, true);
 						
 						/* grab all the character posts */
 						$posts = $this->posts->get_character_posts($char);
@@ -1492,7 +1492,7 @@ class Personnel_base extends Controller {
 				/* run the model methods */
 				$char_check = $this->char->get_character($id);
 
-				if ($char_check !== FALSE)
+				if ($char_check !== false)
 				{ /* if there is a character, run the method and continue */
 					$posts = $this->posts->get_character_posts($id);
 

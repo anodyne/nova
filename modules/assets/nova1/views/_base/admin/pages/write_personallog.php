@@ -32,7 +32,7 @@
 		&nbsp;
 		<?php echo form_button($inputs['save']);?>
 		
-		<?php if ($this->uri->segment(3) !== FALSE): ?>
+		<?php if ($this->uri->segment(3) !== false): ?>
 			&nbsp;
 			<?php echo form_button($inputs['delete']);?>
 		<?php endif; ?>

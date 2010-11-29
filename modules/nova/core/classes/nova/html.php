@@ -37,10 +37,10 @@ abstract class Nova_Html extends Kohana_Html {
 	 * @param	string	a message to display if the feature isn't supported
 	 * @return	string	the complete audio tag
 	 */
-	public static function audio(array $attributes, array $sources, $no_support = FALSE)
+	public static function audio(array $attributes, array $sources, $no_support = false)
 	{
 		// set the default no support message
-		$no_support = ($no_support === FALSE) ? __('Your browser does not support the HTML5 audio tag') : $no_support;
+		$no_support = ($no_support === false) ? __('Your browser does not support the HTML5 audio tag') : $no_support;
 		
 		// set the initial audio element
 		$html = "<audio ".html::attributes($attributes).">";
@@ -70,10 +70,10 @@ abstract class Nova_Html extends Kohana_Html {
 	 * @param	string	a message to display if the feature isn't supported
 	 * @return	string	the complete canvas tag
 	 */
-	public static function canvas(array $attributes, $no_support = FALSE)
+	public static function canvas(array $attributes, $no_support = false)
 	{
 		// set the default no support message
-		$no_support = ($no_support === FALSE) ? __('Your browser does not support the HTML5 canvas tag') : $no_support;
+		$no_support = ($no_support === false) ? __('Your browser does not support the HTML5 canvas tag') : $no_support;
 		
 		return '<canvas '.html::attributes($attributes).'>'.$no_support.'</canvas>';
 	}
@@ -102,10 +102,10 @@ abstract class Nova_Html extends Kohana_Html {
 	 * @param	string	a message to display if the feature isn't supported
 	 * @return	string	the complete video tag
 	 */
-	public static function video(array $attributes, array $sources, $no_support = FALSE)
+	public static function video(array $attributes, array $sources, $no_support = false)
 	{
 		// set the default no support message
-		$no_support = ($no_support === FALSE) ? __('Your browser does not support the HTML5 video tag') : $no_support;
+		$no_support = ($no_support === false) ? __('Your browser does not support the HTML5 video tag') : $no_support;
 		
 		// set the initial video element
 		$html = "<video ".html::attributes($attributes).">";
@@ -129,14 +129,14 @@ abstract class Nova_Html extends Kohana_Html {
 	 */
 	protected static function _parse_sources(array $sources)
 	{
-		// if there's nothing in the array, return NULL
+		// if there's nothing in the array, return null
 		if (count($sources) == 0)
 		{
-			return NULL;
+			return null;
 		}
 		
 		// set the initial HTML element	
-		$html = NULL;
+		$html = null;
 		
 		// loop through the sources
 		foreach ($sources as $source)
@@ -149,7 +149,7 @@ abstract class Nova_Html extends Kohana_Html {
 			if (isset($source['media']))
 				$html.= ' media="'.$source['media'].'"';
 			 
-			if (isset($source['attr']) AND ! empty($source['attr']))
+			if (isset($source['attr']) and ! empty($source['attr']))
 				$html.= ' '.html::attributes($source['attr']);
 			 
 			$html.= ' />';

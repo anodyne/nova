@@ -36,15 +36,15 @@ class MY_Email extends CI_Email {
 	 */
 	function _send_with_mail()
 	{
-		if ($this->_safe_mode == TRUE)
+		if ($this->_safe_mode == true)
 		{
 			if ( ! mail($this->_recipients, $this->_subject, $this->_finalbody, $this->_header_str))
 			{
-				return FALSE;
+				return false;
 			}
 			else
 			{
-				return TRUE;
+				return true;
 			}
 		}
 		else
@@ -53,11 +53,11 @@ class MY_Email extends CI_Email {
 			// we've encountered servers that seem to require it to be in place.
 			if ( ! mail($this->_recipients, $this->_subject, $this->_finalbody, $this->_header_str))
 			{
-				return FALSE;
+				return false;
 			}
 			else
 			{
-				return TRUE;
+				return true;
 			}
 		}
 	}

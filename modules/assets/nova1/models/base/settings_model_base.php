@@ -49,7 +49,7 @@ class Settings_model_base extends Model {
 			return $row->setting_value;
 		}
 		
-		return FALSE;
+		return false;
 	}
 	
 	function get_setting_details($value = '', $identifier = 'setting_key')
@@ -70,12 +70,12 @@ class Settings_model_base extends Model {
 			return $row->setting_label;
 		}
 		
-		return FALSE;
+		return false;
 	}
 	
 	function get_settings($value = '')
 	{
-		$array = FALSE;
+		$array = false;
 		
 		if (is_array($value))
 		{ /* if the value is array, do nothing */

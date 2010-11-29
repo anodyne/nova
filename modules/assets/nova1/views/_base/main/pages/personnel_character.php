@@ -1,6 +1,6 @@
 <?php echo text_output($header, 'h1', 'page-head');?>
 
-<?php if ($edit_valid === TRUE || $edit_valid_form === TRUE): ?>
+<?php if ($edit_valid === true || $edit_valid_form === true): ?>
 	<p>
 		<?php echo link_to_if($edit_valid, 'characters/bio/'. $character['id'], $label['edit'], array('class' => 'edit fontSmall bold'));?>
 		<?php echo link_to_if($edit_valid_form, 'site/bioform', $label['edit_form'], array('class' => 'edit fontSmall bold'));?>
@@ -40,7 +40,7 @@
 	
 	<?php echo table_row_spacer(3, 10);?>
 	
-	<?php if ($this->auth->is_logged_in() === TRUE && !is_null($character['user'])): ?>
+	<?php if ($this->auth->is_logged_in() === true && !is_null($character['user'])): ?>
 	<tr>
 		<td colspan="2"></td>
 		<td>

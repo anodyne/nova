@@ -79,9 +79,9 @@ class Kodoc extends Kohana_Kodoc
 	 * @param   array   array of files, obtained using Kohana::list_files
 	 * @return  array   an array of all the class names
 	 */
-	public static function classes(array $list = NULL)
+	public static function classes(array $list = null)
 	{
-		if ($list === NULL)
+		if ($list === null)
 		{
 			$list = Kohana::list_files('classes');
 		}
@@ -90,7 +90,7 @@ class Kodoc extends Kohana_Kodoc
 
 		foreach ($list as $name => $path)
 		{
-			if (strpos($name, 'index.html') === FALSE)
+			if (strpos($name, 'index.html') === false)
 			{
 				if (is_array($path))
 				{
@@ -120,7 +120,7 @@ class Kodoc extends Kohana_Kodoc
 	 * >     ~bluehawk
 	 *
 	 */
-	public static function class_methods(array $list = NULL)
+	public static function class_methods(array $list = null)
 	{
 		$list = Kodoc::classes($list);
 		

@@ -48,7 +48,7 @@
 
 <p><?php echo anchor('feed/logs', img($images['feed']), array('class' => 'image'));?></p>
 
-<?php if ($this->auth->is_logged_in() === TRUE): ?>
+<?php if ($this->auth->is_logged_in() === true): ?>
 	<p class="bold">
 		<a href="#" id="add_comment" rel="facebox" myID="<?php echo $id;?>" class="image">
 			<?php echo img($images['comment']) .' '. $label['addcomment'];?>

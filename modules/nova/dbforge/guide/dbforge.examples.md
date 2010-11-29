@@ -12,7 +12,7 @@ Creating a table with the DBForge is easy, but does require three steps in order
 	'id' => array(
 		'type' => 'INT',
 		'constraint' => 5,
-		'auto_increment' => TRUE),
+		'auto_increment' => true),
 	'name' => array(
 		'type' => 'VARCHAR',
 		'constraint' => 100,
@@ -49,7 +49,7 @@ Our last field is the description which we'll make a text field. It's important 
 
 Now that we've added our fields, we need to define any keys we want to use. At the very least, you'll need to define a primary key for the table which can you do using the _add\_key()_ method's second boolean parameter.
 
-<pre><code>DBForge::add_key('id', TRUE);</code></pre>
+<pre><code>DBForge::add_key('id', true);</code></pre>
 
 The last step is to take all the compiled information and create the table. Running this method will create a table with the name passed to the method and will also prepend the database table prefix to the table name.
 

@@ -30,7 +30,7 @@
 						
 						<td width="25%">
 							<div class="inline_img_left">
-								<?php echo form_checkbox('cat_'. $c['id'], $c['id'], FALSE, 'id="cat_'. $c['id'] .'"');?>
+								<?php echo form_checkbox('cat_'. $c['id'], $c['id'], false, 'id="cat_'. $c['id'] .'"');?>
 							</div>
 							<label for="cat_<?php echo $c['id'];?>">
 								<?php echo $c['name'];?>

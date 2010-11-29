@@ -49,7 +49,7 @@ class Wiki_model_base extends Model {
 			return $retval;
 		}
 		
-		return FALSE;
+		return false;
 	}
 	
 	function get_categories()
@@ -63,9 +63,9 @@ class Wiki_model_base extends Model {
 	{
 		$query = $this->db->get_where('wiki_categories', array('wikicat_id' => $id));
 		
-		$row = ($query->num_rows() > 0) ? $query->row() : FALSE;
+		$row = ($query->num_rows() > 0) ? $query->row() : false;
 		
-		if ( ! empty($return) AND $row !== FALSE)
+		if ( ! empty($return) and $row !== false)
 		{
 			if ( ! is_array($return))
 			{
@@ -91,9 +91,9 @@ class Wiki_model_base extends Model {
 	{
 		$query = $this->db->get_where('wiki_comments', array('wcomment_id' => $id));
 		
-		$row = ($query->num_rows() > 0) ? $query->row() : FALSE;
+		$row = ($query->num_rows() > 0) ? $query->row() : false;
 		
-		if ( ! empty($return) AND $row !== FALSE)
+		if ( ! empty($return) and $row !== false)
 		{
 			if ( ! is_array($return))
 			{
@@ -165,7 +165,7 @@ class Wiki_model_base extends Model {
 		return $query;
 	}
 	
-	function get_pages($category = NULL, $order = 'wiki_drafts.draft_title', $sort = 'asc')
+	function get_pages($category = null, $order = 'wiki_drafts.draft_title', $sort = 'asc')
 	{
 		$this->db->from('wiki_pages');
 		$this->db->join('wiki_drafts', 'wiki_drafts.draft_id = wiki_pages.page_draft');
@@ -180,9 +180,9 @@ class Wiki_model_base extends Model {
 			{
 				$table = $this->db->dbprefix('wiki_drafts');
 				
-				$string = "(". $table .".draft_categories LIKE '%,$category' OR ". $table .".draft_categories LIKE '$category,%' OR ". $table .".draft_categories = $category)";
+				$string = "(". $table .".draft_categories LIKE '%,$category' or ". $table .".draft_categories LIKE '$category,%' or ". $table .".draft_categories = $category)";
 			
-				$this->db->where("($string)", NULL);
+				$this->db->where("($string)", null);
 			}
 		}
 		

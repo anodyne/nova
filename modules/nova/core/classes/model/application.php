@@ -42,9 +42,9 @@ class Model_Application extends Jelly_Model {
 			)),
 			'date' => Jelly::field('timestamp', array(
 				'column' => 'app_date',
-				'auto_now_create' => FALSE,
-				'auto_now_update' => FALSE,
-				'null' => TRUE,
+				'auto_now_create' => false,
+				'auto_now_update' => false,
+				'null' => true,
 				'default' => date::now()
 			)),
 			'action' => Jelly::field('string', array(

@@ -53,13 +53,13 @@ if (isset($_ENV['KOHANA_ENV']))
  *
  * The following options are available:
  *
- * - string   base_url    path, and optionally domain, of your application   NULL
+ * - string   base_url    path, and optionally domain, of your application   null
  * - string   index_file  name of your index file, usually "index.php"       index.php
  * - string   charset     internal character set used for input and output   utf-8
  * - string   cache_dir   set the internal cache directory                   APPPATH/cache
- * - boolean  errors      enable or disable error handling                   TRUE
- * - boolean  profile     enable or disable internal profiling               TRUE
- * - boolean  caching     enable or disable internal caching                 FALSE
+ * - boolean  errors      enable or disable error handling                   true
+ * - boolean  profile     enable or disable internal profiling               true
+ * - boolean  caching     enable or disable internal caching                 false
  */
 $url = $_SERVER['SCRIPT_NAME'];
 $url = substr($url, 0, strpos($url, '.php'));
@@ -68,8 +68,8 @@ $url = substr($url, 0, (strlen($url) - strpos(strrev($url), '/')));
 Kohana::init(array(
 	'base_url'		=> $url,
 	'index_file'	=> 'index.php',
-	'error'			=> TRUE,
-	'profile'		=> (Kohana::$environment == 'production') ? FALSE : TRUE,
+	'error'			=> true,
+	'profile'		=> (Kohana::$environment == 'production') ? false : true,
 ));
 
 /**

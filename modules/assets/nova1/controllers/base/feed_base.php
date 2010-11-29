@@ -67,7 +67,7 @@ class Feed_base extends Controller {
 				$data['entries'][$i]['date'] = $log->log_date;
 				
 				$log_header = ucfirst(lang('labels_a') .' '. lang('personallog') .' '. lang('labels_by'));
-				$log_header.= ' '. $this->char->get_character_name($log->log_author_character, TRUE) ."\r\n\r\n";
+				$log_header.= ' '. $this->char->get_character_name($log->log_author_character, true) ."\r\n\r\n";
 				
 				$data['entries'][$i]['content'] = nl2br($log_header . $log->log_content);
 				
@@ -107,7 +107,7 @@ class Feed_base extends Controller {
 				$data['entries'][$i]['date'] = $item->news_date;
 				
 				$news_header = ucfirst(lang('labels_a') .' '. lang('newsitem') .' '. lang('labels_by'));
-				$news_header.= ' '. $this->char->get_character_name($item->news_author_character, TRUE) ."\r\n";
+				$news_header.= ' '. $this->char->get_character_name($item->news_author_character, true) ."\r\n";
 				$news_header.= "<b>". ucfirst(lang('labels_category')) ."</b> - ". $item->newscat_name ."\r\n\r\n";
 				
 				$data['entries'][$i]['content'] = nl2br($news_header . $item->news_content);
@@ -153,7 +153,7 @@ class Feed_base extends Controller {
 				
 				foreach ($authors as $value)
 				{ /* grab the character names for each author */
-					$authors['full_names'][] = $this->char->get_character_name($value, TRUE);
+					$authors['full_names'][] = $this->char->get_character_name($value, true);
 				}
 				
 				/* break the array into a string */

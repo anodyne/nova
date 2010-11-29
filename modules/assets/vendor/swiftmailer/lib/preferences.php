@@ -2,7 +2,7 @@
 
 /****************************************************************************/
 /*                                                                          */
-/* YOU MAY WISH TO MODIFY OR REMOVE THE FOLLOWING LINES WHICH SET DEFAULTS  */
+/* YOU MAY WISH TO MODIFY or REMOVE THE FOLLOWING LINES WHICH SET DEFAULTS  */
 /*                                                                          */
 /****************************************************************************/
 

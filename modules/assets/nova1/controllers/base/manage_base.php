@@ -34,7 +34,7 @@ class Manage_base extends Controller {
 		$this->load->model('system_model', 'sys');
 		$installed = $this->sys->check_install_status();
 		
-		if ($installed === FALSE)
+		if ($installed === false)
 		{ /* check whether the system is installed */
 			redirect('install/index', 'refresh');
 		}
@@ -47,7 +47,7 @@ class Manage_base extends Controller {
 		$this->load->model('users_model', 'user');
 		
 		/* check to see if they are logged in */
-		$this->auth->is_logged_in(TRUE);
+		$this->auth->is_logged_in(true);
 		
 		/* an array of the global we want to retrieve */
 		$settings_array = array(
@@ -72,7 +72,7 @@ class Manage_base extends Controller {
 		$this->timezone = $this->options['timezone'];
 		$this->dst = (bool) $this->options['daylight_savings'];
 		
-		if ($this->auth->is_logged_in() === TRUE)
+		if ($this->auth->is_logged_in() === true)
 		{ /* if there's a session, set the variables appropriately */
 			$this->skin = $this->session->userdata('skin_admin');
 			$this->rank = $this->session->userdata('display_rank');
@@ -88,12 +88,12 @@ class Manage_base extends Controller {
 		$this->template->set_master_template($this->skin .'/template_admin.php');
 		
 		/* write the common elements to the template */
-		$this->template->write('nav_main', $this->menu->build('main', 'main'), TRUE);
-		$this->template->write('nav_sub', $this->menu->build('adminsub', 'manage'), TRUE);
-		$this->template->write('panel_1', $this->user_panel->panel_1(), TRUE);
-		$this->template->write('panel_2', $this->user_panel->panel_2(), TRUE);
-		$this->template->write('panel_3', $this->user_panel->panel_3(), TRUE);
-		$this->template->write('panel_workflow', $this->user_panel->panel_workflow(), TRUE);
+		$this->template->write('nav_main', $this->menu->build('main', 'main'), true);
+		$this->template->write('nav_sub', $this->menu->build('adminsub', 'manage'), true);
+		$this->template->write('panel_1', $this->user_panel->panel_1(), true);
+		$this->template->write('panel_2', $this->user_panel->panel_2(), true);
+		$this->template->write('panel_3', $this->user_panel->panel_3(), true);
+		$this->template->write('panel_workflow', $this->user_panel->panel_workflow(), true);
 		$this->template->write('title', $this->options['sim_name'] . ' :: ');
 	}
 
@@ -120,12 +120,12 @@ class Manage_base extends Controller {
 			{
 				case 'add':
 					$insert_array = array(
-						'award_name' => $this->input->post('award_name', TRUE),
-						'award_order' => $this->input->post('award_order', TRUE),
-						'award_display' => $this->input->post('award_display', TRUE),
-						'award_cat' => $this->input->post('award_cat', TRUE),
-						'award_desc' => $this->input->post('award_desc', TRUE),
-						'award_image' => $this->input->post('award_image', TRUE),
+						'award_name' => $this->input->post('award_name', true),
+						'award_order' => $this->input->post('award_order', true),
+						'award_display' => $this->input->post('award_display', true),
+						'award_cat' => $this->input->post('award_cat', true),
+						'award_desc' => $this->input->post('award_desc', true),
+						'award_image' => $this->input->post('award_image', true),
 					);
 					
 					/* insert the record */
@@ -162,8 +162,8 @@ class Manage_base extends Controller {
 					break;
 					
 				case 'delete':
-					$id = $this->input->post('id', TRUE);
-					$id = (is_numeric($id)) ? $id : FALSE;
+					$id = $this->input->post('id', true);
+					$id = (is_numeric($id)) ? $id : false;
 					
 					$delete = $this->awards->delete_award($id);
 					
@@ -198,8 +198,8 @@ class Manage_base extends Controller {
 					break;
 					
 				case 'edit':
-					$id = $this->input->post('id', TRUE);
-					$id = (is_numeric($id)) ? $id : FALSE;
+					$id = $this->input->post('id', true);
+					$id = (is_numeric($id)) ? $id : false;
 					
 					foreach ($_POST as $key => $value)
 					{
@@ -245,7 +245,7 @@ class Manage_base extends Controller {
 		
 		if ($action == 'add' || $action == 'edit')
 		{
-			$item = ($action == 'edit') ? $this->sys->get_item('awards', 'award_id', $id) : FALSE;
+			$item = ($action == 'edit') ? $this->sys->get_item('awards', 'award_id', $id) : false;
 			
 			$data['header'] = ucwords(lang('actions_'. $action) .' '. lang('global_award'));
 			$data['header'].= ($action == 'edit') ? ' - '. $item->award_name : '';
@@ -253,15 +253,15 @@ class Manage_base extends Controller {
 			$data['inputs'] = array(
 				'name' => array(
 					'name' => 'award_name',
-					'value' => ($item === FALSE) ? '' : $item->award_name),
+					'value' => ($item === false) ? '' : $item->award_name),
 				'order' => array(
 					'name' => 'award_order',
 					'class' => 'small',
-					'value' => ($item === FALSE) ? 99 : $item->award_order),
+					'value' => ($item === false) ? 99 : $item->award_order),
 				'desc' => array(
 					'name' => 'award_desc',
 					'rows' => 10,
-					'value' => ($item === FALSE) ? '' : $item->award_desc),
+					'value' => ($item === false) ? '' : $item->award_desc),
 				'images' => array(
 					'name' => 'award_image',
 					'id' => 'images',
@@ -270,13 +270,13 @@ class Manage_base extends Controller {
 					'name' => 'award_display',
 					'id' => 'display_y',
 					'value' => 'y',
-					'checked' => ($item !== FALSE && $item->award_display == 'y') ? TRUE : FALSE),
+					'checked' => ($item !== false && $item->award_display == 'y') ? true : false),
 				'display_n' => array(
 					'name' => 'award_display',
 					'id' => 'display_n',
 					'value' => 'n',
-					'checked' => ($item !== FALSE && $item->award_display == 'n') ? TRUE : FALSE),
-				'cat' => ($item === FALSE) ? '' : $item->award_cat,
+					'checked' => ($item !== false && $item->award_display == 'n') ? true : false),
+				'cat' => ($item === false) ? '' : $item->award_cat,
 				'submit' => array(
 					'type' => 'submit',
 					'class' => 'button-main',
@@ -285,9 +285,9 @@ class Manage_base extends Controller {
 					'content' => ucwords(lang('actions_submit'))),
 			);
 			
-			if ($item === FALSE)
+			if ($item === false)
 			{
-				$data['inputs']['display_y']['checked'] = TRUE;
+				$data['inputs']['display_y']['checked'] = true;
 			}
 			
 			$data['values']['cat'] = array(
@@ -416,9 +416,9 @@ class Manage_base extends Controller {
 		
 		$types = array('posts', 'logs', 'news', 'wiki');
 		$values = array('activated', 'pending', 'edit');
-		$type = $this->uri->segment(3, 'posts', FALSE, $types);
-		$section = $this->uri->segment(4, 'activated', FALSE, $values);
-		$offset = $this->uri->segment(5, 0, TRUE);
+		$type = $this->uri->segment(3, 'posts', false, $types);
+		$section = $this->uri->segment(4, 'activated', false, $values);
+		$offset = $this->uri->segment(5, 0, true);
 		
 		/* load the resources */
 		$this->load->model('posts_model', 'posts');
@@ -431,8 +431,8 @@ class Manage_base extends Controller {
 			switch ($this->uri->segment(6))
 			{
 				case 'approve':
-					$id = $this->input->post('id', TRUE);
-					$id = (is_numeric($id)) ? $id : FALSE;
+					$id = $this->input->post('id', true);
+					$id = (is_numeric($id)) ? $id : false;
 					
 					switch ($type)
 					{
@@ -522,7 +522,7 @@ class Manage_base extends Controller {
 						$flash['message'] = text_output($message);
 						
 						/* send the email */
-						$email = ($this->options['system_email'] == 'on') ? $this->_email($email_type, $email_data) : FALSE;
+						$email = ($this->options['system_email'] == 'on') ? $this->_email($email_type, $email_data) : false;
 					}
 					else
 					{
@@ -540,8 +540,8 @@ class Manage_base extends Controller {
 					break;
 					
 				case 'delete':
-					$id = $this->input->post('id', TRUE);
-					$id = (is_numeric($id)) ? $id : FALSE;
+					$id = $this->input->post('id', true);
+					$id = (is_numeric($id)) ? $id : false;
 					$delete = 0;
 					
 					switch ($type)
@@ -571,7 +571,7 @@ class Manage_base extends Controller {
 							break;
 					}
 					
-					$id = FALSE;
+					$id = false;
 					
 					if ($delete > 0)
 					{
@@ -601,14 +601,14 @@ class Manage_base extends Controller {
 					break;
 					
 				case 'edit':
-					$id = $this->input->post('id', TRUE);
-					$id = (is_numeric($id)) ? $id : FALSE;
+					$id = $this->input->post('id', true);
+					$id = (is_numeric($id)) ? $id : false;
 					$delete = 0;
 					
 					switch ($type)
 					{
 						case 'posts':
-							$update_array = array('pcomment_content' => $this->input->post('pcomment_content', TRUE));
+							$update_array = array('pcomment_content' => $this->input->post('pcomment_content', true));
 							
 							$update = $this->posts->update_post_comment($id, $update_array);
 							$item = ucfirst(lang('global_missionpost'));
@@ -616,7 +616,7 @@ class Manage_base extends Controller {
 							break;
 							
 						case 'logs':
-							$update_array = array('lcomment_content' => $this->input->post('lcomment_content', TRUE));
+							$update_array = array('lcomment_content' => $this->input->post('lcomment_content', true));
 							
 							$update = $this->logs->update_log_comment($id, $update_array);
 							$item = ucfirst(lang('global_personllog'));
@@ -624,7 +624,7 @@ class Manage_base extends Controller {
 							break;
 							
 						case 'news':
-							$update_array = array('ncomment_content' => $this->input->post('ncomment_content', TRUE));
+							$update_array = array('ncomment_content' => $this->input->post('ncomment_content', true));
 							
 							$update = $this->news->update_news_comment($id, $update_array);
 							$item = ucfirst(lang('global_newsitem'));
@@ -632,7 +632,7 @@ class Manage_base extends Controller {
 							break;
 							
 						case 'wiki':
-							$update_array = array('wcomment_content' => $this->input->post('wcomment_content', TRUE));
+							$update_array = array('wcomment_content' => $this->input->post('wcomment_content', true));
 							
 							$update = $this->wiki->update_comment($id, $update_array);
 							$item = ucfirst(lang('global_wiki'));
@@ -640,7 +640,7 @@ class Manage_base extends Controller {
 							break;
 					}
 					
-					$id = FALSE;
+					$id = false;
 					
 					if ($update > 0)
 					{
@@ -769,9 +769,9 @@ class Manage_base extends Controller {
 		
 		if (isset($_POST['submit']))
 		{
-			$name = $this->input->post('deck_name', TRUE);
-			$content = $this->input->post('deck_content', TRUE);
-			$id = $this->input->post('id', TRUE);
+			$name = $this->input->post('deck_name', true);
+			$content = $this->input->post('deck_content', true);
+			$id = $this->input->post('id', true);
 			
 			$update_array = array(
 				'deck_name' => $name,
@@ -886,12 +886,12 @@ class Manage_base extends Controller {
 			{
 				case 'add':
 					$insert_array = array(
-						'dept_name' => $this->input->post('dept_name', TRUE),
-						'dept_type' => $this->input->post('dept_type', TRUE),
-						'dept_order' => $this->input->post('dept_order', TRUE),
-						'dept_display' => $this->input->post('dept_display', TRUE),
-						'dept_desc' => $this->input->post('dept_desc', TRUE),
-						'dept_parent' => $this->input->post('dept_parent', TRUE),
+						'dept_name' => $this->input->post('dept_name', true),
+						'dept_type' => $this->input->post('dept_type', true),
+						'dept_order' => $this->input->post('dept_order', true),
+						'dept_display' => $this->input->post('dept_display', true),
+						'dept_desc' => $this->input->post('dept_desc', true),
+						'dept_parent' => $this->input->post('dept_parent', true),
 					);
 					
 					/* insert the record */
@@ -935,7 +935,7 @@ class Manage_base extends Controller {
 					{
 						$loc = strpos($key, '_');
 						
-						if ($loc !== FALSE)
+						if ($loc !== false)
 						{
 							$loc_pos = substr($key, 0, $loc);
 							
@@ -980,10 +980,10 @@ class Manage_base extends Controller {
 					break;
 					
 				case 'delete':
-					$all = $this->input->post('delete', TRUE);
-					$deptid = $this->input->post('dept', TRUE);
-					$id = $this->input->post('id', TRUE);
-					$subdept = (isset($_POST['subdept'])) ? $this->input->post('subdept', TRUE) : FALSE;
+					$all = $this->input->post('delete', true);
+					$deptid = $this->input->post('dept', true);
+					$id = $this->input->post('id', true);
+					$subdept = (isset($_POST['subdept'])) ? $this->input->post('subdept', true) : false;
 					
 					/* load the positions model */
 					$this->load->model('positions_model', 'pos');
@@ -1014,7 +1014,7 @@ class Manage_base extends Controller {
 						}
 					}
 					
-					if ($subdept !== FALSE)
+					if ($subdept !== false)
 					{
 						$subs = $this->dept->get_sub_depts($id, 'asc', '');
 						
@@ -1090,7 +1090,7 @@ class Manage_base extends Controller {
 			{
 				$item = $this->dept->get_dept($key);
 				
-				if ($item !== FALSE)
+				if ($item !== false)
 				{
 					$data['inputs'][$item->dept_id] = array(
 						'name' => array(
@@ -1201,8 +1201,8 @@ class Manage_base extends Controller {
 			switch ($section)
 			{
 				case 'delete':
-					$id = $this->input->post('id', TRUE);
-					$id = (is_numeric($id)) ? $id : FALSE;
+					$id = $this->input->post('id', true);
+					$id = (is_numeric($id)) ? $id : false;
 					
 					$delete = $this->docking->delete_docked_item($id);
 					
@@ -1251,7 +1251,7 @@ class Manage_base extends Controller {
 					unset($update_array['submit']);
 					unset($update_array['action_id']);
 					
-					$action_id = $this->input->post('action_id', TRUE);
+					$action_id = $this->input->post('action_id', true);
 					
 					/* put the record into the database */
 					$update = $this->docking->update_docking_record($update_array, $action_id);
@@ -1302,10 +1302,10 @@ class Manage_base extends Controller {
 					break;
 					
 				case 'pending':
-					$id = $this->input->post('id', TRUE);
-					$id = (is_numeric($id)) ? $id : FALSE;
+					$id = $this->input->post('id', true);
+					$id = (is_numeric($id)) ? $id : false;
 					
-					$action = $this->input->post('action', TRUE);
+					$action = $this->input->post('action', true);
 					
 					if ($action == 'approve')
 					{
@@ -1347,7 +1347,7 @@ class Manage_base extends Controller {
 								'sim' => $item->docking_sim_name
 							);
 							
-							$email = ($this->options['system_email'] == 'on') ? $this->_email('docking_accept', $email_data) : FALSE;
+							$email = ($this->options['system_email'] == 'on') ? $this->_email('docking_accept', $email_data) : false;
 						}
 						else
 						{
@@ -1403,7 +1403,7 @@ class Manage_base extends Controller {
 								'sim' => $item->docking_sim_name
 							);
 							
-							$email = ($this->options['system_email'] == 'on') ? $this->_email('docking_reject', $email_data) : FALSE;
+							$email = ($this->options['system_email'] == 'on') ? $this->_email('docking_reject', $email_data) : false;
 						}
 						else
 						{
@@ -1429,7 +1429,7 @@ class Manage_base extends Controller {
 		if ($section == 'edit')
 		{
 			/* grab the ID from the URL */
-			$id = $this->uri->segment(4, FALSE, TRUE);
+			$id = $this->uri->segment(4, false, true);
 			
 			/* grab the post data */
 			$row = $this->docking->get_docked_item($id);
@@ -1486,7 +1486,7 @@ class Manage_base extends Controller {
 							
 							$field_data = $this->docking->get_field_data($f_id, $id);
 
-							$frow = ($field_data->num_rows() > 0) ? $field_data->row() : FALSE;
+							$frow = ($field_data->num_rows() > 0) ? $field_data->row() : false;
 							
 							switch ($field->field_type)
 							{
@@ -1516,9 +1516,9 @@ class Manage_base extends Controller {
 									break;
 									
 								case 'select':
-									$value = FALSE;
-									$values = FALSE;
-									$input = FALSE;
+									$value = false;
+									$values = false;
+									$input = false;
 								
 									$values = $this->docking->get_docking_values($field->field_id);
 									
@@ -1659,16 +1659,16 @@ class Manage_base extends Controller {
 		$this->load->model('personallogs_model', 'logs');
 		
 		$values = array('activated', 'saved', 'pending', 'edit');
-		$section = $this->uri->segment(3, 'activated', FALSE, $values);
-		$offset = $this->uri->segment(4, 0, TRUE);
+		$section = $this->uri->segment(3, 'activated', false, $values);
+		$offset = $this->uri->segment(4, 0, true);
 		
 		if (isset($_POST['submit']))
 		{
 			switch ($this->uri->segment(5))
 			{
 				case 'approve':
-					$id = $this->input->post('id', TRUE);
-					$id = (is_numeric($id)) ? $id : FALSE;
+					$id = $this->input->post('id', true);
+					$id = (is_numeric($id)) ? $id : false;
 					
 					/* set the array data */
 					$approve_array = array('log_status' => 'activated');
@@ -1699,7 +1699,7 @@ class Manage_base extends Controller {
 						);
 						
 						/* send the email */
-						$email = ($this->options['system_email'] == 'on') ? $this->_email('log', $email_data) : FALSE;
+						$email = ($this->options['system_email'] == 'on') ? $this->_email('log', $email_data) : false;
 					}
 					else
 					{
@@ -1720,8 +1720,8 @@ class Manage_base extends Controller {
 					break;
 					
 				case 'delete':
-					$id = $this->input->post('id', TRUE);
-					$id = (is_numeric($id)) ? $id : FALSE;
+					$id = $this->input->post('id', true);
+					$id = (is_numeric($id)) ? $id : false;
 					
 					$delete = $this->logs->delete_log($id);
 					
@@ -1755,15 +1755,15 @@ class Manage_base extends Controller {
 					break;
 					
 				case 'update':
-					$id = $this->uri->segment(4, 0, TRUE);
+					$id = $this->uri->segment(4, 0, true);
 					
 					$update_array = array(
-						'log_title' => $this->input->post('log_title', TRUE),
-						'log_tags' => $this->input->post('log_tags', TRUE),
-						'log_content' => $this->input->post('log_content', TRUE),
-						'log_status' => $this->input->post('log_status', TRUE),
+						'log_title' => $this->input->post('log_title', true),
+						'log_tags' => $this->input->post('log_tags', true),
+						'log_content' => $this->input->post('log_content', true),
+						'log_status' => $this->input->post('log_status', true),
 						'log_author_user' => $this->user->get_userid($this->input->post('log_author')),
-						'log_author_character' => $this->input->post('log_author', TRUE),
+						'log_author_character' => $this->input->post('log_author', true),
 						'log_last_update' => now()
 					);
 					
@@ -1804,7 +1804,7 @@ class Manage_base extends Controller {
 		if ($section == 'edit')
 		{
 			/* grab the ID from the URL */
-			$id = $this->uri->segment(4, 0, TRUE);
+			$id = $this->uri->segment(4, 0, true);
 			
 			/* grab the post data */
 			$row = $this->logs->get_log($id);
@@ -1836,7 +1836,7 @@ class Manage_base extends Controller {
 						}
 						
 						/* toss them in the array */
-						$data['all'][$label][$a->charid] = $this->char->get_character_name($a->charid, TRUE);
+						$data['all'][$label][$a->charid] = $this->char->get_character_name($a->charid, true);
 					}
 				}
 			}
@@ -1854,7 +1854,7 @@ class Manage_base extends Controller {
 					'name' => 'log_tags',
 					'value' => $row->log_tags),
 				'author' => $row->log_author_character,
-				'character' => $this->char->get_character_name($row->log_author_character, TRUE),
+				'character' => $this->char->get_character_name($row->log_author_character, true),
 				'status' => $row->log_status,
 			);
 			
@@ -2006,7 +2006,7 @@ class Manage_base extends Controller {
 					{
 						$loc = strpos($key, '_');
 						
-						if ($loc !== FALSE)
+						if ($loc !== false)
 						{
 							$loc_pos = substr($key, 0, $loc);
 							
@@ -2027,7 +2027,7 @@ class Manage_base extends Controller {
 					{
 						$delete = $this->mis->delete_mission_group($del);
 						
-						$array = array('mission_group' => NULL);
+						$array = array('mission_group' => null);
 						$this->mis->update_mission('', $array, array('mission_group' => $del));
 					}
 					
@@ -2177,20 +2177,20 @@ class Manage_base extends Controller {
 			switch ($this->uri->segment(3))
 			{
 				case 'add':
-					$start = (empty($_POST['mission_start'])) ? '' : human_to_unix($this->input->post('mission_start', TRUE) . $time);
-					$end = (empty($_POST['mission_end'])) ? '' : human_to_unix($this->input->post('mission_end', TRUE) . $time);
+					$start = (empty($_POST['mission_start'])) ? '' : human_to_unix($this->input->post('mission_start', true) . $time);
+					$end = (empty($_POST['mission_end'])) ? '' : human_to_unix($this->input->post('mission_end', true) . $time);
 					
 					$insert_array = array(
-						'mission_title' => $this->input->post('mission_title', TRUE),
-						'mission_status' => $this->input->post('mission_status', TRUE),
-						'mission_order' => $this->input->post('mission_order', TRUE),
-						'mission_desc' => $this->input->post('mission_desc', TRUE),
-						'mission_images' => $this->input->post('mission_images', TRUE),
+						'mission_title' => $this->input->post('mission_title', true),
+						'mission_status' => $this->input->post('mission_status', true),
+						'mission_order' => $this->input->post('mission_order', true),
+						'mission_desc' => $this->input->post('mission_desc', true),
+						'mission_images' => $this->input->post('mission_images', true),
 						'mission_start' => $start,
 						'mission_end' => $end,
-						'mission_notes' => $this->input->post('mission_notes', TRUE),
-						'mission_summary' => $this->input->post('mission_summary', TRUE),
-						'mission_group' => $this->input->post('mission_group', TRUE),
+						'mission_notes' => $this->input->post('mission_notes', true),
+						'mission_summary' => $this->input->post('mission_summary', true),
+						'mission_group' => $this->input->post('mission_group', true),
 					);
 					
 					/* insert the record */
@@ -2227,8 +2227,8 @@ class Manage_base extends Controller {
 					break;
 					
 				case 'delete':
-					$id = $this->input->post('id', TRUE);
-					$id = (is_numeric($id)) ? $id : FALSE;
+					$id = $this->input->post('id', true);
+					$id = (is_numeric($id)) ? $id : false;
 					
 					$delete = $this->mis->delete_mission($id);
 					
@@ -2263,14 +2263,14 @@ class Manage_base extends Controller {
 					break;
 					
 				case 'edit':
-					$id = $this->input->post('id', TRUE);
-					$id = (is_numeric($id)) ? $id : FALSE;
+					$id = $this->input->post('id', true);
+					$id = (is_numeric($id)) ? $id : false;
 					
 					foreach ($_POST as $key => $value)
 					{
 						$loc = strpos($key, '_');
 						
-						if ($loc !== FALSE)
+						if ($loc !== false)
 						{
 							$loc_pos = substr($key, 0, $loc);
 							
@@ -2369,11 +2369,11 @@ class Manage_base extends Controller {
 			
 			$item = $this->mis->get_mission($id);
 			
-			$start = ($item === FALSE) ? $date : '';
+			$start = ($item === false) ? $date : '';
 			$start = (empty($item->mission_start)) ? '' : unix_to_human($item->mission_start);
 			$start = (!empty($start)) ? substr_replace($start, '', strpos($start, ' ')) : '';
 			
-			$end = ($item === FALSE || empty($item->mission_end)) ? '' : unix_to_human($item->mission_end);
+			$end = ($item === false || empty($item->mission_end)) ? '' : unix_to_human($item->mission_end);
 			$end = (!empty($end)) ? substr_replace($end, '', strpos($end, ' ')) : '';
 			
 			$js_data['start'] = $start;
@@ -2385,11 +2385,11 @@ class Manage_base extends Controller {
 			$data['inputs'] = array(
 				'title' => array(
 					'name' => 'mission_title',
-					'value' => ($item === FALSE) ? '' : $item->mission_title),
+					'value' => ($item === false) ? '' : $item->mission_title),
 				'order' => array(
 					'name' => 'mission_order',
 					'class' => 'small',
-					'value' => ($item === FALSE) ? 99 : $item->mission_order),
+					'value' => ($item === false) ? 99 : $item->mission_order),
 				'start' => array(
 					'name' => 'mission_start',
 					'class' => 'medium datepick'),
@@ -2399,17 +2399,17 @@ class Manage_base extends Controller {
 				'desc' => array(
 					'name' => 'mission_desc',
 					'rows' => 6,
-					'value' => ($item == FALSE) ? '' : $item->mission_desc),
-				'status' => ($item === FALSE) ? '' : $item->mission_status,
+					'value' => ($item == false) ? '' : $item->mission_desc),
+				'status' => ($item === false) ? '' : $item->mission_status,
 				'summary' => array(
 					'name' => 'mission_summary',
 					'rows' => 12,
-					'value' => ($item == FALSE) ? '' : $item->mission_summary),
+					'value' => ($item == false) ? '' : $item->mission_summary),
 				'notes' => array(
 					'name' => 'mission_notes',
 					'rows' => 12,
-					'value' => ($item == FALSE) ? '' : $item->mission_notes),
-				'group' => ($item === FALSE) ? '' : $item->mission_group,
+					'value' => ($item == false) ? '' : $item->mission_notes),
+				'group' => ($item === false) ? '' : $item->mission_group,
 				'images' => (!empty($item->mission_images)) ? explode(',', $item->mission_images) : '',
 			);
 			
@@ -2513,8 +2513,8 @@ class Manage_base extends Controller {
 				}
 			}
 			
-			$js_data['start'] = FALSE;
-			$js_data['end'] = FALSE;
+			$js_data['start'] = false;
+			$js_data['end'] = false;
 			
 			$data['header'] = ucwords(lang('actions_manage') .' '. lang('global_missions'));
 			
@@ -2645,16 +2645,16 @@ class Manage_base extends Controller {
 		$this->load->model('news_model', 'news');
 		
 		$values = array('activated', 'saved', 'pending', 'edit');
-		$section = $this->uri->segment(3, 'activated', FALSE, $values);
-		$offset = $this->uri->segment(4, 0, TRUE);
+		$section = $this->uri->segment(3, 'activated', false, $values);
+		$offset = $this->uri->segment(4, 0, true);
 		
 		if (isset($_POST['submit']))
 		{
 			switch ($this->uri->segment(5))
 			{
 				case 'approve':
-					$id = $this->input->post('id', TRUE);
-					$id = (is_numeric($id)) ? $id : FALSE;
+					$id = $this->input->post('id', true);
+					$id = (is_numeric($id)) ? $id : false;
 					
 					/* set the array data */
 					$approve_array = array('news_status' => 'activated');
@@ -2686,7 +2686,7 @@ class Manage_base extends Controller {
 						);
 						
 						/* send the email */
-						$email = ($this->options['system_email'] == 'on') ? $this->_email('news', $email_data) : FALSE;
+						$email = ($this->options['system_email'] == 'on') ? $this->_email('news', $email_data) : false;
 					}
 					else
 					{
@@ -2707,8 +2707,8 @@ class Manage_base extends Controller {
 					break;
 					
 				case 'delete':
-					$id = $this->input->post('id', TRUE);
-					$id = (is_numeric($id)) ? $id : FALSE;
+					$id = $this->input->post('id', true);
+					$id = (is_numeric($id)) ? $id : false;
 					
 					$delete = $this->news->delete_news_item($id);
 					
@@ -2742,17 +2742,17 @@ class Manage_base extends Controller {
 					break;
 					
 				case 'update':
-					$id = $this->uri->segment(4, 0, TRUE);
+					$id = $this->uri->segment(4, 0, true);
 					
 					$update_array = array(
-						'news_title' => $this->input->post('news_title', TRUE),
-						'news_tags' => $this->input->post('news_tags', TRUE),
-						'news_content' => $this->input->post('news_content', TRUE),
-						'news_author_character' => $this->input->post('news_author', TRUE),
+						'news_title' => $this->input->post('news_title', true),
+						'news_tags' => $this->input->post('news_tags', true),
+						'news_content' => $this->input->post('news_content', true),
+						'news_author_character' => $this->input->post('news_author', true),
 						'news_author_user' => $this->user->get_userid($this->input->post('news_author')),
-						'news_status' => $this->input->post('news_status', TRUE),
-						'news_cat' => $this->input->post('news_cat', TRUE),
-						'news_private' => $this->input->post('news_private', TRUE),
+						'news_status' => $this->input->post('news_status', true),
+						'news_cat' => $this->input->post('news_cat', true),
+						'news_private' => $this->input->post('news_private', true),
 						'news_last_update' => now()
 					);
 					
@@ -2793,7 +2793,7 @@ class Manage_base extends Controller {
 		if ($section == 'edit')
 		{
 			/* grab the ID from the URL */
-			$id = $this->uri->segment(4, 0, TRUE);
+			$id = $this->uri->segment(4, 0, true);
 			
 			/* grab the post data */
 			$row = $this->news->get_news_item($id);
@@ -2822,7 +2822,7 @@ class Manage_base extends Controller {
 			{
 				foreach ($all->result() as $a)
 				{
-					$data['all'][$a->charid] = $this->char->get_character_name($a->charid, TRUE);
+					$data['all'][$a->charid] = $this->char->get_character_name($a->charid, true);
 				}
 			}
 			
@@ -2839,7 +2839,7 @@ class Manage_base extends Controller {
 					'name' => 'news_tags',
 					'value' => $row->news_tags),
 				'author' => $row->news_author_character,
-				'character' => $this->char->get_character_name($row->news_author_character, TRUE),
+				'character' => $this->char->get_character_name($row->news_author_character, true),
 				'status' => $row->news_status,
 				'category' => $row->news_cat,
 				'category_name' => $this->news->get_news_category($row->news_cat, 'newscat_name'),
@@ -2951,7 +2951,7 @@ class Manage_base extends Controller {
 			{
 				case 'add':
 					$insert_array = array(
-						'newscat_name' => $this->input->post('newscat_name', TRUE),
+						'newscat_name' => $this->input->post('newscat_name', true),
 						'newscat_display' => 'y',
 					);
 					
@@ -2997,7 +2997,7 @@ class Manage_base extends Controller {
 					{
 						$loc = strpos($key, '_');
 						
-						if ($loc !== FALSE)
+						if ($loc !== false)
 						{
 							$loc_pos = substr($key, 0, $loc);
 							
@@ -3144,7 +3144,7 @@ class Manage_base extends Controller {
 		$this->load->model('depts_model', 'dept');
 		
 		/* set the variables */
-		$g_dept = $this->uri->segment(3, 1, TRUE);
+		$g_dept = $this->uri->segment(3, 1, true);
 		
 		if (isset($_POST['submit']))
 		{
@@ -3152,13 +3152,13 @@ class Manage_base extends Controller {
 			{
 				case 'add':
 					$insert_array = array(
-						'pos_name' => $this->input->post('pos_name', TRUE),
-						'pos_type' => $this->input->post('pos_type', TRUE),
-						'pos_dept' => $this->input->post('pos_dept', TRUE),
-						'pos_order' => $this->input->post('pos_order', TRUE),
-						'pos_display' => $this->input->post('pos_display', TRUE),
-						'pos_open' => $this->input->post('pos_open', TRUE),
-						'pos_desc' => $this->input->post('pos_desc', TRUE),
+						'pos_name' => $this->input->post('pos_name', true),
+						'pos_type' => $this->input->post('pos_type', true),
+						'pos_dept' => $this->input->post('pos_dept', true),
+						'pos_order' => $this->input->post('pos_order', true),
+						'pos_display' => $this->input->post('pos_display', true),
+						'pos_open' => $this->input->post('pos_open', true),
+						'pos_desc' => $this->input->post('pos_desc', true),
 					);
 					
 					/* insert the record */
@@ -3203,7 +3203,7 @@ class Manage_base extends Controller {
 					{
 						$loc = strpos($key, '_');
 						
-						if ($loc !== FALSE)
+						if ($loc !== false)
 						{
 							$loc_pos = substr($key, 0, $loc);
 							
@@ -3392,16 +3392,16 @@ class Manage_base extends Controller {
 		$this->load->model('missions_model', 'mis');
 		
 		$values = array('activated', 'saved', 'pending', 'edit');
-		$section = $this->uri->segment(3, 'activated', FALSE, $values);
-		$offset = $this->uri->segment(4, 0, TRUE);
+		$section = $this->uri->segment(3, 'activated', false, $values);
+		$offset = $this->uri->segment(4, 0, true);
 		
 		if (isset($_POST['submit']))
 		{
 			switch ($this->uri->segment(5))
 			{
 				case 'approve':
-					$id = $this->input->post('id', TRUE);
-					$id = (is_numeric($id)) ? $id : FALSE;
+					$id = $this->input->post('id', true);
+					$id = (is_numeric($id)) ? $id : false;
 					
 					/* set the array data */
 					$approve_array = array('post_status' => 'activated');
@@ -3435,7 +3435,7 @@ class Manage_base extends Controller {
 						);
 						
 						/* send the email */
-						$email = ($this->options['system_email'] == 'on') ? $this->_email('post', $email_data) : FALSE;
+						$email = ($this->options['system_email'] == 'on') ? $this->_email('post', $email_data) : false;
 					}
 					else
 					{
@@ -3456,8 +3456,8 @@ class Manage_base extends Controller {
 					break;
 					
 				case 'delete':
-					$id = $this->input->post('id', TRUE);
-					$id = (is_numeric($id)) ? $id : FALSE;
+					$id = $this->input->post('id', true);
+					$id = (is_numeric($id)) ? $id : false;
 					
 					$delete = $this->posts->delete_post($id);
 					
@@ -3491,16 +3491,16 @@ class Manage_base extends Controller {
 					break;
 					
 				case 'update':
-					$id = $this->uri->segment(4, 0, TRUE);
+					$id = $this->uri->segment(4, 0, true);
 					
 					$update_array = array(
-						'post_title' => $this->input->post('post_title', TRUE),
-						'post_location' => $this->input->post('post_location', TRUE),
-						'post_timeline' => $this->input->post('post_timeline', TRUE),
-						'post_tags' => $this->input->post('post_tags', TRUE),
-						'post_content' => $this->input->post('post_content', TRUE),
-						'post_mission' => $this->input->post('post_mission', TRUE),
-						'post_status' => $this->input->post('post_status', TRUE),
+						'post_title' => $this->input->post('post_title', true),
+						'post_location' => $this->input->post('post_location', true),
+						'post_timeline' => $this->input->post('post_timeline', true),
+						'post_tags' => $this->input->post('post_tags', true),
+						'post_content' => $this->input->post('post_content', true),
+						'post_mission' => $this->input->post('post_mission', true),
+						'post_status' => $this->input->post('post_status', true),
 						'post_last_update' => now(),
 					);
 					
@@ -3517,7 +3517,7 @@ class Manage_base extends Controller {
 						$uid = $this->sys->get_item('characters', 'charid', $b, 'user');
 						
 						/* put the users into an array */
-						$users[] = ($uid !== FALSE) ? $uid : NULL;
+						$users[] = ($uid !== false) ? $uid : null;
 					}
 					
 					foreach ($users as $k => $v)
@@ -3571,7 +3571,7 @@ class Manage_base extends Controller {
 		if ($section == 'edit')
 		{
 			/* grab the ID from the URL */
-			$id = $this->uri->segment(4, 0, TRUE);
+			$id = $this->uri->segment(4, 0, true);
 			
 			/* grab the post data */
 			$row = $this->posts->get_post($id);
@@ -3582,17 +3582,17 @@ class Manage_base extends Controller {
 				
 				foreach ($this->session->userdata('characters') as $check)
 				{
-					if (strstr($row->post_authors, $check) === FALSE)
+					if (strstr($row->post_authors, $check) === false)
 					{
-						$valid[] = FALSE;
+						$valid[] = false;
 					}
 					else
 					{
-						$valid[] = TRUE;
+						$valid[] = true;
 					}
 				}
 				
-				if (!in_array(TRUE, $valid) || $row->post_status == 'pending')
+				if (!in_array(true, $valid) || $row->post_status == 'pending')
 				{
 					redirect('admin/error/6');
 				}
@@ -3623,7 +3623,7 @@ class Manage_base extends Controller {
 						}
 						
 						/* toss them in the array */
-						$data['all'][$label][$a->charid] = $this->char->get_character_name($a->charid, TRUE);
+						$data['all'][$label][$a->charid] = $this->char->get_character_name($a->charid, true);
 					}
 				}
 			}
@@ -3639,7 +3639,7 @@ class Manage_base extends Controller {
 			$js_data['remove'] = img($remove);
 			$js_data['tab'] = 0;
 			
-			if ($row !== FALSE)
+			if ($row !== false)
 			{
 				/* set the hidden TO field */
 				$data['to'] = $row->post_authors;
@@ -3650,7 +3650,7 @@ class Manage_base extends Controller {
 				$i = 1;
 				foreach ($to_array as $value)
 				{
-					$to_name = $this->char->get_character_name($value, TRUE);
+					$to_name = $this->char->get_character_name($value, true);
 					
 					$data['recipient_list'][$i] = '<span class="'. $value .'">';
 					$data['recipient_list'][$i].= '<a href="#" id="remove_author" class="image" myID="'. $value .'" myName="'.  $to_name .'">';
@@ -3765,7 +3765,7 @@ class Manage_base extends Controller {
 			
 			$data['header'] = ucwords(lang('actions_manage') .' '. lang('global_missionposts'));
 			
-			$js_data['remove'] = FALSE;
+			$js_data['remove'] = false;
 			
 			/* figure out where the view should be coming from */
 			$view_loc = view_location('manage_posts', $this->skin, 'admin');
@@ -3791,7 +3791,7 @@ class Manage_base extends Controller {
 		
 		/* set the variables */
 		$set = $this->uri->segment(3, 'default');
-		$class = $this->uri->segment(4, 1, TRUE);
+		$class = $this->uri->segment(4, 1, true);
 		
 		if (isset($_POST['submit']))
 		{
@@ -3799,12 +3799,12 @@ class Manage_base extends Controller {
 			{
 				case 'add':
 					$insert_array = array(
-						'rank_name' => $this->input->post('rank_name', TRUE),
-						'rank_order' => $this->input->post('rank_order', TRUE),
-						'rank_display' => $this->input->post('rank_display', TRUE),
-						'rank_class' => $this->input->post('rank_class', TRUE),
-						'rank_short_name' => $this->input->post('rank_short_name', TRUE),
-						'rank_image' => $this->input->post('rank_image', TRUE),
+						'rank_name' => $this->input->post('rank_name', true),
+						'rank_order' => $this->input->post('rank_order', true),
+						'rank_display' => $this->input->post('rank_display', true),
+						'rank_class' => $this->input->post('rank_class', true),
+						'rank_short_name' => $this->input->post('rank_short_name', true),
+						'rank_image' => $this->input->post('rank_image', true),
 					);
 					
 					/* insert the record */
@@ -3849,7 +3849,7 @@ class Manage_base extends Controller {
 					{
 						$loc = strpos($key, '_');
 						
-						if ($loc !== FALSE)
+						if ($loc !== false)
 						{
 							$loc_pos = substr($key, 0, $loc);
 							
@@ -3907,7 +3907,7 @@ class Manage_base extends Controller {
 		$ranks = $this->ranks->get_ranks($class, '');
 		
 		/* grab all the rank sets */
-		$setstatus = ($this->auth->check_access('site/catalogueranks', FALSE) === TRUE) ? array('active','development') : 'active';
+		$setstatus = ($this->auth->check_access('site/catalogueranks', false) === true) ? array('active','development') : 'active';
 		$allranks = $this->ranks->get_all_rank_sets($setstatus);
 		$allclasses = $this->ranks->get_group_ranks(0, 'rank_order');
 		
@@ -4067,7 +4067,7 @@ class Manage_base extends Controller {
 				if (is_numeric($key))
 				{
 					$field_data = $this->specs->get_field_data($key);
-					$row = ($field_data->num_rows() > 0) ? $field_data->row() : FALSE;
+					$row = ($field_data->num_rows() > 0) ? $field_data->row() : false;
 					
 					if ($row->data_value != $value)
 					{
@@ -4137,13 +4137,13 @@ class Manage_base extends Controller {
 						{
 							case 'text':
 								$field_data = $this->specs->get_field_data($field->field_id);
-								$row = ($field_data->num_rows() > 0) ? $field_data->row() : FALSE;
+								$row = ($field_data->num_rows() > 0) ? $field_data->row() : false;
 								
 								$input = array(
 									'name' => $field->field_id,
 									'id' => $field->field_fid,
 									'class' => $field->field_class,
-									'value' => ($row !== FALSE) ? $row->data_value : ''
+									'value' => ($row !== false) ? $row->data_value : ''
 								);
 								
 								$data['specs'][$sid]['fields'][$f_id]['input'] = form_input($input);
@@ -4152,13 +4152,13 @@ class Manage_base extends Controller {
 								
 							case 'textarea':
 								$field_data = $this->specs->get_field_data($field->field_id);
-								$row = ($field_data->num_rows() > 0) ? $field_data->row() : FALSE;
+								$row = ($field_data->num_rows() > 0) ? $field_data->row() : false;
 								
 								$input = array(
 									'name' => $field->field_id,
 									'id' => $field->field_fid,
 									'class' => $field->field_class,
-									'value' => ($row !== FALSE) ? $row->data_value : '',
+									'value' => ($row !== false) ? $row->data_value : '',
 									'rows' => $field->field_rows
 								);
 								
@@ -4167,15 +4167,15 @@ class Manage_base extends Controller {
 								break;
 								
 							case 'select':
-								$value = FALSE;
-								$values = FALSE;
-								$input = FALSE;
+								$value = false;
+								$values = false;
+								$input = false;
 							
 								$values = $this->specs->get_spec_values($field->field_id);
 								
 								$field_data = $this->specs->get_field_data($field->field_id);
-								$row = ($field_data->num_rows() > 0) ? $field_data->row() : FALSE;
-								$default = ($row !== FALSE) ? $row->data_value : '';
+								$row = ($field_data->num_rows() > 0) ? $field_data->row() : false;
+								$default = ($row !== false) ? $row->data_value : '';
 								
 								if ($values->num_rows() > 0)
 								{
@@ -4239,7 +4239,7 @@ class Manage_base extends Controller {
 		
 		/* set the variables */
 		$action = $this->uri->segment(3);
-		$id = $this->uri->segment(4, FALSE, TRUE);
+		$id = $this->uri->segment(4, false, true);
 		
 		if (isset($_POST['submit']))
 		{
@@ -4307,8 +4307,8 @@ class Manage_base extends Controller {
 					break;
 					
 				case 'delete':
-					$id = $this->input->post('id', TRUE);
-					$id = (is_numeric($id)) ? $id : FALSE;
+					$id = $this->input->post('id', true);
+					$id = (is_numeric($id)) ? $id : false;
 					
 					$delete = $this->tour->delete_tour_item($id);
 					
@@ -4345,8 +4345,8 @@ class Manage_base extends Controller {
 					break;
 					
 				case 'edit':
-					$id = $this->input->post('id', TRUE);
-					$id = (is_numeric($id)) ? $id : FALSE;
+					$id = $this->input->post('id', true);
+					$id = (is_numeric($id)) ? $id : false;
 					
 					foreach ($_POST as $key => $value)
 					{
@@ -4405,7 +4405,7 @@ class Manage_base extends Controller {
 		
 		if ($action == 'add' || $action == 'edit')
 		{
-			$item = ($action == 'edit') ? $this->sys->get_item('tour', 'tour_id', $id) : FALSE;
+			$item = ($action == 'edit') ? $this->sys->get_item('tour', 'tour_id', $id) : false;
 			
 			$data['header'] = ucwords(lang('actions_'. $action) .' '. lang('global_touritem'));
 			$data['header'].= ($action == 'edit') ? ' - '. $item->tour_name : '';
@@ -4413,31 +4413,31 @@ class Manage_base extends Controller {
 			$data['inputs'] = array(
 				'name' => array(
 					'name' => 'tour_name',
-					'value' => ($item === FALSE) ? '' : $item->tour_name),
+					'value' => ($item === false) ? '' : $item->tour_name),
 				'order' => array(
 					'name' => 'tour_order',
 					'class' => 'small',
-					'value' => ($item === FALSE) ? '' : $item->tour_order),
+					'value' => ($item === false) ? '' : $item->tour_order),
 				'display_y' => array(
 					'name' => 'tour_display',
 					'id' => 'display_y',
 					'value' => 'y',
-					'checked' => ($item !== FALSE && $item->tour_display == 'y') ? TRUE : FALSE),
+					'checked' => ($item !== false && $item->tour_display == 'y') ? true : false),
 				'display_n' => array(
 					'name' => 'tour_display',
 					'id' => 'display_n',
 					'value' => 'n',
-					'checked' => ($item !== FALSE && $item->tour_display == 'n') ? TRUE : FALSE),
+					'checked' => ($item !== false && $item->tour_display == 'n') ? true : false),
 				'summary' => array(
 					'name' => 'tour_summary',
 					'rows' => 6,
-					'value' => ($item === FALSE) ? '' : $item->tour_summary),
+					'value' => ($item === false) ? '' : $item->tour_summary),
 				'images' => (!empty($item->tour_images)) ? explode(',', $item->tour_images) : '',
 			);
 			
-			if ($item === FALSE)
+			if ($item === false)
 			{
-				$data['inputs']['display_y']['checked'] = TRUE;
+				$data['inputs']['display_y']['checked'] = true;
 			}
 			
 			$tour = $this->tour->get_tour_fields();
@@ -4460,7 +4460,7 @@ class Manage_base extends Controller {
 								'name' => $field->field_id,
 								'id' => $field->field_fid,
 								'class' => $field->field_class,
-								'value' => ($row === FALSE) ? '' : $row->data_value
+								'value' => ($row === false) ? '' : $row->data_value
 							);
 							
 							$data['inputs']['fields'][$tid]['input'] = form_input($input);
@@ -4474,7 +4474,7 @@ class Manage_base extends Controller {
 								'name' => $field->field_id,
 								'id' => $field->field_fid,
 								'class' => $field->field_class,
-								'value' => ($row === FALSE) ? '' : $row->data_value,
+								'value' => ($row === false) ? '' : $row->data_value,
 								'rows' => $field->field_rows
 							);
 							
@@ -4483,14 +4483,14 @@ class Manage_base extends Controller {
 							break;
 							
 						case 'select':
-							$value = FALSE;
-							$values = FALSE;
-							$input = FALSE;
+							$value = false;
+							$values = false;
+							$input = false;
 						
 							$values = $this->tour->get_tour_values($tid);
 							
 							$row = $this->tour->get_tour_data($id, $tid);
-							$default = ($row === FALSE) ? '' : $row->data_value;
+							$default = ($row === false) ? '' : $row->data_value;
 							
 							if ($values->num_rows() > 0)
 							{
@@ -4658,14 +4658,14 @@ class Manage_base extends Controller {
 				$this->load->model('posts_model', 'posts');
 				
 				$config['base_url'] = site_url('manage/comments/posts/'. $status .'/');
-				$config['uri_segment'] = ($offset > 0) ? 5 : FALSE;
+				$config['uri_segment'] = ($offset > 0) ? 5 : false;
 				$config['per_page'] = 15;
 				$config['full_tag_open'] = '<p class="fontMedium bold">';
 				$config['full_tag_close'] = '</p>';
 				
 				$posts = $this->posts->get_post_comments('', $status, 'pcomment_date', 'desc');
 				
-				$data['entries'] = NULL;
+				$data['entries'] = null;
 				
 				if ($posts->num_rows() > 0)
 				{
@@ -4677,7 +4677,7 @@ class Manage_base extends Controller {
 								
 						$data['entries'][$p->pcomment_id]['id'] = $p->pcomment_id;
 						$data['entries'][$p->pcomment_id]['content'] = ($p->pcomment_status == 'pending') ? $p->pcomment_content : word_limiter($p->pcomment_content, 25);
-						$data['entries'][$p->pcomment_id]['author'] = $this->char->get_authors($p->pcomment_author_character, TRUE);
+						$data['entries'][$p->pcomment_id]['author'] = $this->char->get_authors($p->pcomment_author_character, true);
 						$data['entries'][$p->pcomment_id]['date'] = mdate($datestring, $date);
 						$data['entries'][$p->pcomment_id]['source'] = anchor('sim/viewpost/'. $p->pcomment_post, $this->posts->get_post($p->pcomment_post, 'post_title'));
 						$data['entries'][$p->pcomment_id]['status'] = $p->pcomment_status;
@@ -4699,14 +4699,14 @@ class Manage_base extends Controller {
 				$this->load->model('personallogs_model', 'logs');
 				
 				$config['base_url'] = site_url('manage/comments/logs/'. $status .'/');
-				$config['uri_segment'] = ($offset > 0) ? 5 : FALSE;
+				$config['uri_segment'] = ($offset > 0) ? 5 : false;
 				$config['per_page'] = 15;
 				$config['full_tag_open'] = '<p class="fontMedium bold">';
 				$config['full_tag_close'] = '</p>';
 				
 				$logs = $this->logs->get_log_comments('', $status, 'lcomment_date', 'desc');
 				
-				$data['entries'] = NULL;
+				$data['entries'] = null;
 				
 				if ($logs->num_rows() > 0)
 				{
@@ -4718,7 +4718,7 @@ class Manage_base extends Controller {
 								
 						$data['entries'][$l->lcomment_id]['id'] = $l->lcomment_id;
 						$data['entries'][$l->lcomment_id]['content'] = ($l->lcomment_status == 'pending') ? $l->lcomment_content : word_limiter($l->lcomment_content, 25);
-						$data['entries'][$l->lcomment_id]['author'] = $this->char->get_authors($l->lcomment_author_character, TRUE);
+						$data['entries'][$l->lcomment_id]['author'] = $this->char->get_authors($l->lcomment_author_character, true);
 						$data['entries'][$l->lcomment_id]['date'] = mdate($datestring, $date);
 						$data['entries'][$l->lcomment_id]['source'] = anchor('sim/viewlog/'. $l->lcomment_log, $this->logs->get_log($l->lcomment_log, 'log_title'));
 						$data['entries'][$l->lcomment_id]['status'] = $l->lcomment_status;
@@ -4740,14 +4740,14 @@ class Manage_base extends Controller {
 				$this->load->model('news_model', 'news');
 				
 				$config['base_url'] = site_url('manage/comments/news/'. $status .'/');
-				$config['uri_segment'] = ($offset > 0) ? 5 : FALSE;
+				$config['uri_segment'] = ($offset > 0) ? 5 : false;
 				$config['per_page'] = 15;
 				$config['full_tag_open'] = '<p class="fontMedium bold">';
 				$config['full_tag_close'] = '</p>';
 				
 				$news = $this->news->get_news_comments('', $status, 'ncomment_date', 'desc');
 				
-				$data['entries'] = NULL;
+				$data['entries'] = null;
 				
 				if ($news->num_rows() > 0)
 				{
@@ -4759,7 +4759,7 @@ class Manage_base extends Controller {
 								
 						$data['entries'][$n->ncomment_id]['id'] = $n->ncomment_id;
 						$data['entries'][$n->ncomment_id]['content'] = ($n->ncomment_status == 'pending') ? $n->ncomment_content : word_limiter($n->ncomment_content, 25);
-						$data['entries'][$n->ncomment_id]['author'] = $this->char->get_authors($n->ncomment_author_character, TRUE);
+						$data['entries'][$n->ncomment_id]['author'] = $this->char->get_authors($n->ncomment_author_character, true);
 						$data['entries'][$n->ncomment_id]['date'] = mdate($datestring, $date);
 						$data['entries'][$n->ncomment_id]['source'] = anchor('main/viewnews/'. $n->ncomment_news, $this->news->get_news_item($n->ncomment_news, 'news_title'));
 						$data['entries'][$n->ncomment_id]['status'] = $n->ncomment_status;
@@ -4781,14 +4781,14 @@ class Manage_base extends Controller {
 				$this->load->model('wiki_model', 'wiki');
 				
 				$config['base_url'] = site_url('manage/comments/wiki/'. $status .'/');
-				$config['uri_segment'] = ($offset > 0) ? 5 : FALSE;
+				$config['uri_segment'] = ($offset > 0) ? 5 : false;
 				$config['per_page'] = 15;
 				$config['full_tag_open'] = '<p class="fontMedium bold">';
 				$config['full_tag_close'] = '</p>';
 				
 				$wiki = $this->wiki->get_comments('', $status);
 				
-				$data['entries'] = NULL;
+				$data['entries'] = null;
 				
 				if ($wiki->num_rows() > 0)
 				{
@@ -4811,7 +4811,7 @@ class Manage_base extends Controller {
 								
 							$data['entries'][$wid]['id'] = $wid;
 							$data['entries'][$wid]['content'] = ($w->wcomment_status == 'pending') ? $w->wcomment_content : word_limiter($w->wcomment_content, 25);
-							$data['entries'][$wid]['author'] = $this->char->get_authors($w->wcomment_author_character, TRUE);
+							$data['entries'][$wid]['author'] = $this->char->get_authors($w->wcomment_author_character, true);
 							$data['entries'][$wid]['date'] = mdate($datestring, $date);
 							$data['entries'][$wid]['source'] = anchor('wiki/view/page/'. $row->page_id, $row->draft_title);
 							$data['entries'][$wid]['status'] = $w->wcomment_status;
@@ -4872,7 +4872,7 @@ class Manage_base extends Controller {
 	    $loc = view_location('manage_comments_ajax', $this->skin, 'admin');
 	    
 	    /* parse the message */
-		$message = $this->parser->parse($loc, $data, TRUE);
+		$message = $this->parser->parse($loc, $data, true);
 
 	    return $message;
 	}
@@ -4884,13 +4884,13 @@ class Manage_base extends Controller {
 		$this->load->library('parser');
 		
 		/* define the variables */
-		$email = FALSE;
+		$email = false;
 		
 		switch ($type)
 		{
 			case 'news':
 				/* set some variables */
-				$from_name = $this->char->get_character_name($data['author'], TRUE, TRUE);
+				$from_name = $this->char->get_character_name($data['author'], true, true);
 				$from_email = $this->user->get_email_address('character', $data['author']);
 				$subject = $data['category'] .' - '. $data['title'];
 				
@@ -4911,10 +4911,10 @@ class Manage_base extends Controller {
 				$em_loc = email_location('write_newsitem', $this->email->mailtype);
 				
 				/* parse the message */
-				$message = $this->parser->parse($em_loc, $email_data, TRUE);
+				$message = $this->parser->parse($em_loc, $email_data, true);
 				
 				/* get the email addresses */
-				$emails = $this->user->get_crew_emails(TRUE, 'email_news_items');
+				$emails = $this->user->get_crew_emails(true, 'email_news_items');
 				
 				/* make a string of email addresses */
 				$to = implode(',', $emails);
@@ -4929,7 +4929,7 @@ class Manage_base extends Controller {
 				
 			case 'log':
 				/* set some variables */
-				$from_name = $this->char->get_character_name($data['author'], TRUE, TRUE);
+				$from_name = $this->char->get_character_name($data['author'], true, true);
 				$from_email = $this->user->get_email_address('character', $data['author']);
 				$subject = $from_name ."'s ". lang('email_subject_personal_log') ." - ". $data['title'];
 				
@@ -4950,10 +4950,10 @@ class Manage_base extends Controller {
 				$em_loc = email_location('write_personallog', $this->email->mailtype);
 				
 				/* parse the message */
-				$message = $this->parser->parse($em_loc, $email_data, TRUE);
+				$message = $this->parser->parse($em_loc, $email_data, true);
 				
 				/* get the email addresses */
-				$emails = $this->user->get_crew_emails(TRUE, 'email_personal_logs');
+				$emails = $this->user->get_crew_emails(true, 'email_personal_logs');
 				
 				/* make a string of email addresses */
 				$to = implode(',', $emails);
@@ -4970,7 +4970,7 @@ class Manage_base extends Controller {
 				/* set some variables */
 				$subject = $data['mission'] ." - ". $data['title'];
 				$mission = lang('email_content_post_mission') . $data['mission'];
-				$authors = lang('email_content_post_author') . $this->char->get_authors($data['authors'], TRUE);
+				$authors = lang('email_content_post_author') . $this->char->get_authors($data['authors'], true);
 				$timeline = lang('email_content_post_timeline') . $data['timeline'];
 				$location = lang('email_content_post_location') . $data['location'];
 				
@@ -4980,14 +4980,14 @@ class Manage_base extends Controller {
 				/* find out how many of the submitter's characters are in the string */
 				foreach ($this->session->userdata('characters') as $value)
 				{
-					if (strstr($data['authors'], $value) !== FALSE)
+					if (strstr($data['authors'], $value) !== false)
 					{
 						$my_chars[] = $value;
 					}
 				}
 				
 				/* set who the email is coming from */
-				$from_name = $this->char->get_character_name($my_chars[0], TRUE, TRUE);
+				$from_name = $this->char->get_character_name($my_chars[0], true, true);
 				$from_email = $this->user->get_email_address('character', $my_chars[0]);
 				
 				/* set the content */
@@ -5009,10 +5009,10 @@ class Manage_base extends Controller {
 				$em_loc = email_location('write_missionpost', $this->email->mailtype);
 				
 				/* parse the message */
-				$message = $this->parser->parse($em_loc, $email_data, TRUE);
+				$message = $this->parser->parse($em_loc, $email_data, true);
 				
 				/* get the email addresses */
-				$emails = $this->user->get_crew_emails(TRUE, 'email_mission_posts');
+				$emails = $this->user->get_crew_emails(true, 'email_mission_posts');
 				
 				/* make a string of email addresses */
 				$to = implode(',', $emails);
@@ -5053,7 +5053,7 @@ class Manage_base extends Controller {
 				$em_loc = email_location('sim_log_comment', $this->email->mailtype);
 				
 				/* parse the message */
-				$message = $this->parser->parse($em_loc, $email_data, TRUE);
+				$message = $this->parser->parse($em_loc, $email_data, true);
 				
 				/* set the parameters for sending the email */
 				$this->email->from($from, $name);
@@ -5091,7 +5091,7 @@ class Manage_base extends Controller {
 				$em_loc = email_location('main_news_comment', $this->email->mailtype);
 				
 				/* parse the message */
-				$message = $this->parser->parse($em_loc, $email_data, TRUE);
+				$message = $this->parser->parse($em_loc, $email_data, true);
 				
 				/* set the parameters for sending the email */
 				$this->email->from($from, $name);
@@ -5139,7 +5139,7 @@ class Manage_base extends Controller {
 				
 				$em_loc = email_location('sim_post_comment', $this->email->mailtype);
 				
-				$message = $this->parser->parse($em_loc, $email_data, TRUE);
+				$message = $this->parser->parse($em_loc, $email_data, true);
 				
 				$this->email->from($from, $name);
 				$this->email->to($to);
@@ -5192,7 +5192,7 @@ class Manage_base extends Controller {
 				$em_loc = email_location('wiki_comment', $this->email->mailtype);
 				
 				/* parse the message */
-				$message = $this->parser->parse($em_loc, $email_data, TRUE);
+				$message = $this->parser->parse($em_loc, $email_data, true);
 				
 				/* set the parameters for sending the email */
 				$this->email->from($from, $name);
@@ -5213,7 +5213,7 @@ class Manage_base extends Controller {
 				
 				$em_loc = email_location('docked_action', $this->email->mailtype);
 				
-				$message = $this->parser->parse($em_loc, $email_data, TRUE);
+				$message = $this->parser->parse($em_loc, $email_data, true);
 				
 				$this->email->from($this->options['default_email_address'], $this->options['sim_name']);
 				$this->email->to($data['email']);
@@ -5234,7 +5234,7 @@ class Manage_base extends Controller {
 				
 				$em_loc = email_location('docked_action', $this->email->mailtype);
 				
-				$message = $this->parser->parse($em_loc, $email_data, TRUE);
+				$message = $this->parser->parse($em_loc, $email_data, true);
 				
 				$this->email->from($this->options['default_email_address'], $this->options['sim_name']);
 				$this->email->to($data['email']);
@@ -5265,14 +5265,14 @@ class Manage_base extends Controller {
 				$this->load->model('posts_model', 'posts');
 				
 				$config['base_url'] = site_url('manage/posts/'. $status .'/');
-				$config['uri_segment'] = ($offset > 0) ? 4 : FALSE;
+				$config['uri_segment'] = ($offset > 0) ? 4 : false;
 				$config['per_page'] = 15;
 				$config['full_tag_open'] = '<p class="fontMedium bold">';
 				$config['full_tag_close'] = '</p>';
 				
 				$posts = $this->posts->get_post_list('', 'desc', $config['per_page'], $offset, $status);
 				
-				$data['entries'] = NULL;
+				$data['entries'] = null;
 				
 				if ($posts->num_rows() > 0)
 				{
@@ -5288,21 +5288,21 @@ class Manage_base extends Controller {
 							{
 								if (strstr($p->post_authors, $c))
 								{
-									$valid[] = TRUE;
+									$valid[] = true;
 								}
 								else
 								{
-									$valid[] = FALSE;
+									$valid[] = false;
 								}
 							}
 							
-							if (in_array(TRUE, $valid))
+							if (in_array(true, $valid))
 							{
 								$date = gmt_to_local($p->post_date, $this->timezone, $this->dst);
 								
 								$data['entries'][$p->post_id]['id'] = $p->post_id;
 								$data['entries'][$p->post_id]['title'] = $p->post_title;
-								$data['entries'][$p->post_id]['author'] = $this->char->get_authors($p->post_authors, TRUE);
+								$data['entries'][$p->post_id]['author'] = $this->char->get_authors($p->post_authors, true);
 								$data['entries'][$p->post_id]['date'] = mdate($datestring, $date);
 								$data['entries'][$p->post_id]['mission'] = $this->mis->get_mission($p->post_mission, 'mission_title');
 								$data['entries'][$p->post_id]['status'] = $p->post_status;
@@ -5314,7 +5314,7 @@ class Manage_base extends Controller {
 							
 							$data['entries'][$p->post_id]['id'] = $p->post_id;
 							$data['entries'][$p->post_id]['title'] = $p->post_title;
-							$data['entries'][$p->post_id]['author'] = $this->char->get_authors($p->post_authors, TRUE);
+							$data['entries'][$p->post_id]['author'] = $this->char->get_authors($p->post_authors, true);
 							$data['entries'][$p->post_id]['date'] = mdate($datestring, $date);
 							$data['entries'][$p->post_id]['mission'] = $this->mis->get_mission($p->post_mission, 'mission_title');
 							$data['entries'][$p->post_id]['status'] = $p->post_status;
@@ -5362,14 +5362,14 @@ class Manage_base extends Controller {
 				$this->load->model('personallogs_model', 'logs');
 				
 				$config['base_url'] = site_url('manage/logs/'. $status .'/');
-				$config['uri_segment'] = ($offset > 0) ? 4 : FALSE;
+				$config['uri_segment'] = ($offset > 0) ? 4 : false;
 				$config['per_page'] = 15;
 				$config['full_tag_open'] = '<p class="fontMedium bold">';
 				$config['full_tag_close'] = '</p>';
 				
 				$logs = $this->logs->get_log_list($config['per_page'], $offset, $status);
 				
-				$data['entries'] = NULL;
+				$data['entries'] = null;
 				
 				if ($logs->num_rows() > 0)
 				{
@@ -5385,7 +5385,7 @@ class Manage_base extends Controller {
 								
 								$data['entries'][$l->log_id]['id'] = $l->log_id;
 								$data['entries'][$l->log_id]['title'] = $l->log_title;
-								$data['entries'][$l->log_id]['author'] = $this->char->get_character_name($l->log_author_character, TRUE);
+								$data['entries'][$l->log_id]['author'] = $this->char->get_character_name($l->log_author_character, true);
 								$data['entries'][$l->log_id]['date'] = mdate($datestring, $date);
 								$data['entries'][$l->log_id]['status'] = $l->log_status;
 							}
@@ -5396,7 +5396,7 @@ class Manage_base extends Controller {
 							
 							$data['entries'][$l->log_id]['id'] = $l->log_id;
 							$data['entries'][$l->log_id]['title'] = $l->log_title;
-							$data['entries'][$l->log_id]['author'] = $this->char->get_character_name($l->log_author_character, TRUE);
+							$data['entries'][$l->log_id]['author'] = $this->char->get_character_name($l->log_author_character, true);
 							$data['entries'][$l->log_id]['date'] = mdate($datestring, $date);
 							$data['entries'][$l->log_id]['status'] = $l->log_status;
 						}
@@ -5441,14 +5441,14 @@ class Manage_base extends Controller {
 				$this->load->model('news_model', 'news');
 				
 				$config['base_url'] = site_url('manage/news/'. $status .'/');
-				$config['uri_segment'] = ($offset > 0) ? 4 : FALSE;
+				$config['uri_segment'] = ($offset > 0) ? 4 : false;
 				$config['per_page'] = 15;
 				$config['full_tag_open'] = '<p class="fontMedium bold">';
 				$config['full_tag_close'] = '</p>';
 				
 				$news = $this->news->get_news_list($config['per_page'], $offset, $status);
 				
-				$data['entries'] = NULL;
+				$data['entries'] = null;
 				
 				if ($news->num_rows() > 0)
 				{
@@ -5465,7 +5465,7 @@ class Manage_base extends Controller {
 								
 								$data['entries'][$nid]['id'] = $nid;
 								$data['entries'][$nid]['title'] = $n->news_title;
-								$data['entries'][$nid]['author'] = $this->char->get_character_name($n->news_author_character, TRUE);
+								$data['entries'][$nid]['author'] = $this->char->get_character_name($n->news_author_character, true);
 								$data['entries'][$nid]['date'] = mdate($datestring, $date);
 								$data['entries'][$nid]['category'] = $n->newscat_name;
 								$data['entries'][$nid]['status'] = $n->news_status;
@@ -5478,7 +5478,7 @@ class Manage_base extends Controller {
 							
 							$data['entries'][$nid]['id'] = $nid;
 							$data['entries'][$nid]['title'] = $n->news_title;
-							$data['entries'][$nid]['author'] = $this->char->get_character_name($n->news_author_character, TRUE);
+							$data['entries'][$nid]['author'] = $this->char->get_character_name($n->news_author_character, true);
 							$data['entries'][$nid]['date'] = mdate($datestring, $date);
 							$data['entries'][$nid]['category'] = $n->newscat_name;
 							$data['entries'][$nid]['status'] = $n->news_status;
@@ -5537,7 +5537,7 @@ class Manage_base extends Controller {
 	    );
 	    
 	    /* parse the message */
-		$message = $this->parser->parse($loc, $data, TRUE);
+		$message = $this->parser->parse($loc, $data, true);
 
 	    return $message;
 	}

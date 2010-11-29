@@ -5,7 +5,7 @@ $news = Jelly::query('news')
 	->order_by('date', 'desc')
 	->limit(5);
 	
-( ! Auth::is_logged_in()) ? $news->where('private', '=', 'n') : FALSE;
+( ! Auth::is_logged_in()) ? $news->where('private', '=', 'n') : false;
 
 $news = $news->select();
 

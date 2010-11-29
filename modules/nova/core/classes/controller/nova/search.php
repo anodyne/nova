@@ -48,24 +48,24 @@ class Controller_Nova_Search extends Controller_Nova_Base {
 		
 		// set the variables in the template
 		$this->template->title 						= $this->options->sim_name.' :: ';
-		$this->template->javascript					= FALSE;
+		$this->template->javascript					= false;
 		$this->template->layout						= View::factory($this->skin.'/template_main', $vars['layout']);
 		$this->template->layout->navmain 			= Menu::build('main', 'main');
-		$this->template->layout->ajax 				= FALSE;
-		$this->template->layout->flash				= FALSE;
-		$this->template->layout->content			= FALSE;
+		$this->template->layout->ajax 				= false;
+		$this->template->layout->flash				= false;
+		$this->template->layout->content			= false;
 		
 		$this->template->layout->panel				= View::factory('_common/partials/panel');
-		$this->template->layout->panel->panel1		= FALSE;
-		$this->template->layout->panel->panel2		= FALSE;
-		$this->template->layout->panel->panel3		= FALSE;
-		$this->template->layout->panel->workflow	= FALSE;
+		$this->template->layout->panel->panel1		= false;
+		$this->template->layout->panel->panel2		= false;
+		$this->template->layout->panel->panel3		= false;
+		$this->template->layout->panel->workflow	= false;
 		
 		$this->template->layout->navsub 			= View::factory('_common/partials/navsub');
 		$this->template->layout->navsub->menu		= Menu::build('sub', 'main');
-		$this->template->layout->navsub->widget1	= FALSE;
-		$this->template->layout->navsub->widget2	= FALSE;
-		$this->template->layout->navsub->widget3	= FALSE;
+		$this->template->layout->navsub->widget1	= false;
+		$this->template->layout->navsub->widget2	= false;
+		$this->template->layout->navsub->widget3	= false;
 		
 		$this->template->layout->footer				= View::factory('_common/partials/footer');
 		$this->template->layout->footer->extra 		= Jelly::query('message', 'footer')->limit(1)->select()->value;

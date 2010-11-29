@@ -33,7 +33,7 @@ class Main_base extends Controller {
 		$this->load->model('system_model', 'sys');
 		$installed = $this->sys->check_install_status();
 		
-		if ($installed === FALSE)
+		if ($installed === false)
 		{ /* check whether the system is installed */
 			redirect('install/index', 'refresh');
 		}
@@ -73,7 +73,7 @@ class Main_base extends Controller {
 		$this->timezone = $this->options['timezone'];
 		$this->dst = (bool) $this->options['daylight_savings'];
 		
-		if ($this->auth->is_logged_in() === TRUE)
+		if ($this->auth->is_logged_in() === true)
 		{ /* if there's a session, set the variables appropriately */
 			$this->skin = $this->session->userdata('skin_main');
 			$this->rank = $this->session->userdata('display_rank');
@@ -88,17 +88,17 @@ class Main_base extends Controller {
 		$this->template->set_master_template($this->skin . '/template_main.php');
 		
 		/* write the common elements to the template */
-		$this->template->write('nav_main', $this->menu->build('main', 'main'), TRUE);
-		$this->template->write('nav_sub', $this->menu->build('sub', 'main'), TRUE);
+		$this->template->write('nav_main', $this->menu->build('main', 'main'), true);
+		$this->template->write('nav_sub', $this->menu->build('sub', 'main'), true);
 		$this->template->write('title', $this->options['sim_name'] . ' :: ');
 		
-		if ($this->auth->is_logged_in() === TRUE)
+		if ($this->auth->is_logged_in() === true)
 		{
 			/* create the user panels */
-			$this->template->write('panel_1', $this->user_panel->panel_1(), TRUE);
-			$this->template->write('panel_2', $this->user_panel->panel_2(), TRUE);
-			$this->template->write('panel_3', $this->user_panel->panel_3(), TRUE);
-			$this->template->write('panel_workflow', $this->user_panel->panel_workflow(), TRUE);
+			$this->template->write('panel_1', $this->user_panel->panel_1(), true);
+			$this->template->write('panel_2', $this->user_panel->panel_2(), true);
+			$this->template->write('panel_3', $this->user_panel->panel_3(), true);
+			$this->template->write('panel_workflow', $this->user_panel->panel_workflow(), true);
 		}
 	}
 
@@ -124,7 +124,7 @@ class Main_base extends Controller {
 				$data['news'][$i]['content'] = $row->news_content;
 				$data['news'][$i]['date'] = mdate($datestring, $date);
 				$data['news'][$i]['category'] = $row->newscat_name;
-				$data['news'][$i]['author'] = $this->char->get_character_name($row->news_author_character, TRUE);
+				$data['news'][$i]['author'] = $this->char->get_character_name($row->news_author_character, true);
 				
 				++$i;
 			}
@@ -168,7 +168,7 @@ class Main_base extends Controller {
 				'message'	=> $this->input->post('message')
 			);
 			
-			if ($array['to'] == FALSE || $array['email'] == FALSE || $array['message'] == FALSE || $array['to'] == '0')
+			if ($array['to'] == false || $array['email'] == false || $array['message'] == false || $array['to'] == '0')
 			{
 				$flash['status'] = 'error';
 				
@@ -191,9 +191,9 @@ class Main_base extends Controller {
 			else
 			{
 				/* execute the email method */
-				$email = ($this->options['system_email'] == 'on') ? $this->_email('contact', $array) : FALSE;
+				$email = ($this->options['system_email'] == 'on') ? $this->_email('contact', $array) : false;
 				
-				if ($email === FALSE)
+				if ($email === false)
 				{
 					$message = sprintf(
 						lang('flash_failure'),
@@ -299,13 +299,13 @@ class Main_base extends Controller {
 		$data['msg_credits_perm'].= "\r\n\r\n". $skin_info->skin_credits;
 		$data['msg_credits_perm'].= "\r\n\r\n". $rank_info;
 		
-		if ($this->auth->is_logged_in() === TRUE && $this->auth->check_access('site/messages', FALSE) === TRUE)
+		if ($this->auth->is_logged_in() === true && $this->auth->check_access('site/messages', false) === true)
 		{
-			$data['edit_valid'] = TRUE;
+			$data['edit_valid'] = true;
 		}
 		else
 		{
-			$data['edit_valid'] = FALSE;
+			$data['edit_valid'] = false;
 		}
 		
 		$data['label'] = array(
@@ -332,29 +332,29 @@ class Main_base extends Controller {
 		$this->load->helper('utility');
 		
 		/* set the variables */
-		$agree = $this->input->post('agree', TRUE);
-		$submit = $this->input->post('submit', TRUE);
-		$selected_pos = $this->input->post('position', TRUE);
+		$agree = $this->input->post('agree', true);
+		$submit = $this->input->post('submit', true);
+		$selected_pos = $this->input->post('position', true);
 		
 		$data['selected_position'] = (is_numeric($selected_pos) && $selected_pos > 0) ? $selected_pos : 0;
 		$desc = $this->pos->get_position($data['selected_position'], 'pos_desc');
-		$data['pos_desc'] = ($desc !== FALSE) ? $desc : FALSE;
+		$data['pos_desc'] = ($desc !== false) ? $desc : false;
 		
-		if ($submit != FALSE)
+		if ($submit != false)
 		{
 			/* user POST variables */
-			$email = $this->input->post('email', TRUE);
-			$real_name = $this->input->post('name',TRUE);
-			$im = $this->input->post('instant_message', TRUE);
-			$dob = $this->input->post('date_of_birth', TRUE);
-			$password = $this->input->post('password', TRUE);
+			$email = $this->input->post('email', true);
+			$real_name = $this->input->post('name',true);
+			$im = $this->input->post('instant_message', true);
+			$dob = $this->input->post('date_of_birth', true);
+			$password = $this->input->post('password', true);
 			
 			/* character POST variables */
-			$first_name = $this->input->post('first_name',TRUE);
-			$middle_name = $this->input->post('middle_name', TRUE);
-			$last_name = $this->input->post('last_name', TRUE);
-			$suffix = $this->input->post('suffix',TRUE);
-			$position = $this->input->post('position_1',TRUE);
+			$first_name = $this->input->post('first_name',true);
+			$middle_name = $this->input->post('middle_name', true);
+			$last_name = $this->input->post('last_name', true);
+			$suffix = $this->input->post('suffix',true);
+			$position = $this->input->post('position_1',true);
 			
 			if ($position == 0 || $first_name == '')
 			{
@@ -376,7 +376,7 @@ class Main_base extends Controller {
 				/* grab the user id */
 				$check_user = $this->user->check_email($email);
 				
-				if ($check_user === FALSE)
+				if ($check_user === false)
 				{
 					/* build the users data array */
 					$user_array = array(
@@ -401,7 +401,7 @@ class Main_base extends Controller {
 				}
 				
 				/* set the user id */
-				$user = ($check_user === FALSE) ? $user_id : $check_user;
+				$user = ($check_user === false) ? $user_id : $check_user;
 				
 				/* build the characters data array */
 				$character_array = array(
@@ -419,7 +419,7 @@ class Main_base extends Controller {
 				$character_id = $this->db->insert_id();
 				
 				/* update the main character if this is their first app */
-				if ($check_user === FALSE)
+				if ($check_user === false)
 				{
 					$main_char = array('main_char' => $character_id);
 					$update_main = $this->user->update_user($user, $main_char);
@@ -484,7 +484,7 @@ class Main_base extends Controller {
 					);
 					
 					/* execute the email method */
-					$email_user = ($this->options['system_email'] == 'on') ? $this->_email('join_user', $user_data) : FALSE;
+					$email_user = ($this->options['system_email'] == 'on') ? $this->_email('join_user', $user_data) : false;
 					
 					$gm_data = array(
 						'email' => $email,
@@ -495,7 +495,7 @@ class Main_base extends Controller {
 					);
 					
 					/* execute the email method */
-					$email_gm = ($this->options['system_email'] == 'on') ? $this->_email('join_gm', $gm_data) : FALSE;
+					$email_gm = ($this->options['system_email'] == 'on') ? $this->_email('join_gm', $gm_data) : false;
 					
 					$message = sprintf(
 						lang('flash_success'),
@@ -521,11 +521,11 @@ class Main_base extends Controller {
 			$this->template->write_view('flash_message', '_base/main/pages/flash', $flash);
 		}
 		
-		if ($agree == FALSE && $submit == FALSE)
+		if ($agree == false && $submit == false)
 		{ /* if they try to come straight to the join page, make them agree */
 			$data['msg'] = $this->msgs->get_message('join_disclaimer');
 			
-			if ($this->uri->segment(3) != FALSE)
+			if ($this->uri->segment(3) != false)
 			{
 				$data['position'] = $this->uri->segment(3);
 			}
@@ -587,9 +587,9 @@ class Main_base extends Controller {
 									break;
 									
 								case 'select':
-									$value = FALSE;
-									$values = FALSE;
-									$input = FALSE;
+									$value = false;
+									$values = false;
+									$input = false;
 								
 									$values = $this->char->get_bio_values($field->field_id);
 									
@@ -719,7 +719,7 @@ class Main_base extends Controller {
 	function news()
 	{
 		/* set any variables */
-		$category = $this->uri->segment(3, 0, TRUE);
+		$category = $this->uri->segment(3, 0, true);
 		
 		/* load the resources */
 		$this->load->model('news_model', 'news');
@@ -770,7 +770,7 @@ class Main_base extends Controller {
 				$data['news'][$i]['date'] = mdate($datestring, $date);
 				$data['news'][$i]['cat_id'] = $row->news_cat;
 				$data['news'][$i]['category'] = $row->newscat_name;
-				$data['news'][$i]['author'] = $this->char->get_character_name($row->news_author_character, TRUE);
+				$data['news'][$i]['author'] = $this->char->get_character_name($row->news_author_character, true);
 				$data['news'][$i]['comment_count'] = $this->news->count_news_comments($row->news_id);
 				
 				++$i;
@@ -818,9 +818,9 @@ class Main_base extends Controller {
 		/* load the models */
 		$this->load->model('news_model', 'news');
 		
-		$id = $this->uri->segment(3, FALSE, TRUE);
+		$id = $this->uri->segment(3, false, true);
 		
-		if ($this->session->userdata('userid') !== FALSE && isset($_POST['submit']))
+		if ($this->session->userdata('userid') !== false && isset($_POST['submit']))
 		{
 			$comment_text = $this->input->post('comment_text');
 			
@@ -862,7 +862,7 @@ class Main_base extends Controller {
 							'comment' => $comment_text);
 						
 						/* send the email */
-						$email = ($this->options['system_email'] == 'on') ? $this->_email('news_comment_pending', $email_data) : FALSE;
+						$email = ($this->options['system_email'] == 'on') ? $this->_email('news_comment_pending', $email_data) : false;
 					}
 					else
 					{
@@ -881,7 +881,7 @@ class Main_base extends Controller {
 								'comment' => $comment_text);
 							
 							/* send the email */
-							$email = ($this->options['system_email'] == 'on') ? $this->_email('news_comment', $email_data) : FALSE;
+							$email = ($this->options['system_email'] == 'on') ? $this->_email('news_comment', $email_data) : false;
 						}
 					}
 				}
@@ -915,7 +915,7 @@ class Main_base extends Controller {
 		/* set the date format */
 		$datestring = $this->options['date_format'];
 		
-		if ($row !== FALSE)
+		if ($row !== false)
 		{
 			/* set the date */
 			$date = gmt_to_local($row->news_date, $this->timezone, $this->dst);
@@ -935,29 +935,29 @@ class Main_base extends Controller {
 			$data['title'] = $row->news_title;
 			$data['content'] = $row->news_content;
 			$data['date'] = mdate($datestring, $date);
-			$data['author'] = $this->char->get_character_name($row->news_author_character, TRUE);
+			$data['author'] = $this->char->get_character_name($row->news_author_character, true);
 			$data['category'] = $row->newscat_name;
 			$data['tags'] = $row->news_tags;
 			$data['news_id'] = $id;
 			$data['private'] = $row->news_private;
 			
 			/* determine if they can edit the log */
-			if ($this->auth->is_logged_in() === TRUE && ( ($this->auth->get_access_level('manage/news') == 2) ||
+			if ($this->auth->is_logged_in() === true && ( ($this->auth->get_access_level('manage/news') == 2) ||
 				($this->auth->get_access_level('manage/news') == 1 && $this->session->userdata('userid') == $row->news_author_user)))
 			{
-				$data['edit_valid'] = TRUE;
+				$data['edit_valid'] = true;
 			}
 			else
 			{
-				$data['edit_valid'] = FALSE;
+				$data['edit_valid'] = false;
 			}
 			
-			if ($next !== FALSE)
+			if ($next !== false)
 			{ /* if there is a next ID, set it */
 				$data['next'] = $next;
 			}
 			
-			if ($prev !== FALSE)
+			if ($prev !== false)
 			{ /* if there is a previous ID, set it */
 				$data['prev'] = $prev;
 			}
@@ -1007,7 +1007,7 @@ class Main_base extends Controller {
 		}
 		else
 		{
-			if ($id === FALSE)
+			if ($id === false)
 			{
 				$data['title'] = lang('error_title_invalid_id');
 				$data['msg_error'] = lang('error_msg_news_id_numeric');
@@ -1033,7 +1033,7 @@ class Main_base extends Controller {
 			{
 				$date = gmt_to_local($c->ncomment_date, $this->timezone, $this->dst);
 				
-				$data['comments'][$i]['author'] = $this->char->get_character_name($c->ncomment_author_character, TRUE);
+				$data['comments'][$i]['author'] = $this->char->get_character_name($c->ncomment_author_character, true);
 				$data['comments'][$i]['content'] = $c->ncomment_content;
 				$data['comments'][$i]['date'] = mdate($datestring, $date);
 				
@@ -1072,7 +1072,7 @@ class Main_base extends Controller {
 		$this->load->library('parser');
 		
 		/* define the variables */
-		$email = FALSE;
+		$email = false;
 		
 		switch ($type)
 		{
@@ -1088,7 +1088,7 @@ class Main_base extends Controller {
 				$em_loc = email_location('main_contact', $this->email->mailtype);
 				
 				/* parse the message */
-				$message = $this->parser->parse($em_loc, $email_data, TRUE);
+				$message = $this->parser->parse($em_loc, $email_data, true);
 				
 				switch ($data['to'])
 				{ /* figure out who the emails are going to */
@@ -1156,7 +1156,7 @@ class Main_base extends Controller {
 				$em_loc = email_location('main_news_comment', $this->email->mailtype);
 				
 				/* parse the message */
-				$message = $this->parser->parse($em_loc, $email_data, TRUE);
+				$message = $this->parser->parse($em_loc, $email_data, true);
 				
 				/* set the parameters for sending the email */
 				$this->email->from($from, $name);
@@ -1196,7 +1196,7 @@ class Main_base extends Controller {
 				$em_loc = email_location('comment_pending', $this->email->mailtype);
 				
 				/* parse the message */
-				$message = $this->parser->parse($em_loc, $email_data, TRUE);
+				$message = $this->parser->parse($em_loc, $email_data, true);
 				
 				/* set the parameters for sending the email */
 				$this->email->from($from, $name);
@@ -1226,7 +1226,7 @@ class Main_base extends Controller {
 				$em_loc = email_location('main_join_user', $this->email->mailtype);
 				
 				/* parse the message */
-				$message = $this->parser->parse($em_loc, $email_data, TRUE);
+				$message = $this->parser->parse($em_loc, $email_data, true);
 				
 				/* set the parameters for sending the email */
 				$this->email->from($this->options['default_email_address'], $this->options['default_email_name']);
@@ -1316,7 +1316,7 @@ class Main_base extends Controller {
 				$em_loc = email_location('main_join_gm', $this->email->mailtype);
 				
 				/* parse the message */
-				$message = $this->parser->parse($em_loc, $email_data, TRUE);
+				$message = $this->parser->parse($em_loc, $email_data, true);
 				
 				/* get the game masters email addresses */
 				$gm = $this->user->get_gm_emails();

@@ -33,7 +33,7 @@ class Admin_base extends Controller {
 		$this->load->model('system_model', 'sys');
 		$installed = $this->sys->check_install_status();
 		
-		if ($installed === FALSE)
+		if ($installed === false)
 		{ /* check whether the system is installed */
 			redirect('install/index', 'refresh');
 		}
@@ -46,7 +46,7 @@ class Admin_base extends Controller {
 		$this->load->model('users_model', 'user');
 		
 		/* check to see if they are logged in */
-		$this->auth->is_logged_in(TRUE);
+		$this->auth->is_logged_in(true);
 		
 		/* an array of the global we want to retrieve */
 		$settings_array = array(
@@ -72,7 +72,7 @@ class Admin_base extends Controller {
 		$this->timezone = $this->options['timezone'];
 		$this->dst = (bool) $this->options['daylight_savings'];
 		
-		if ($this->auth->is_logged_in() === TRUE)
+		if ($this->auth->is_logged_in() === true)
 		{ /* if there's a session, set the variables appropriately */
 			$this->skin = $this->session->userdata('skin_admin');
 			$this->rank = $this->session->userdata('display_rank');
@@ -88,12 +88,12 @@ class Admin_base extends Controller {
 		$this->template->set_master_template($this->skin .'/template_admin.php');
 		
 		/* write the common elements to the template */
-		$this->template->write('nav_main', $this->menu->build('main', 'main'), TRUE);
-		$this->template->write('nav_sub', $this->menu->build('adminsub', 'admin'), TRUE);
-		$this->template->write('panel_1', $this->user_panel->panel_1(), TRUE);
-		$this->template->write('panel_2', $this->user_panel->panel_2(), TRUE);
-		$this->template->write('panel_3', $this->user_panel->panel_3(), TRUE);
-		$this->template->write('panel_workflow', $this->user_panel->panel_workflow(), TRUE);
+		$this->template->write('nav_main', $this->menu->build('main', 'main'), true);
+		$this->template->write('nav_sub', $this->menu->build('adminsub', 'admin'), true);
+		$this->template->write('panel_1', $this->user_panel->panel_1(), true);
+		$this->template->write('panel_2', $this->user_panel->panel_2(), true);
+		$this->template->write('panel_3', $this->user_panel->panel_3(), true);
+		$this->template->write('panel_workflow', $this->user_panel->panel_workflow(), true);
 		$this->template->write('title', $this->options['sim_name'] . ' :: ');
 	}
 
@@ -114,12 +114,12 @@ class Admin_base extends Controller {
 		
 		if (isset($_POST['submit']))
 		{
-			$action = $this->input->post('action', TRUE);
+			$action = $this->input->post('action', true);
 			
 			if ($action == 'password_change')
 			{
-				$password = $this->input->post('password', TRUE);
-				$user = $this->input->post('user', TRUE);
+				$password = $this->input->post('password', true);
+				$user = $this->input->post('user', true);
 				
 				/* make sure the person submitting the form is the person logged in */
 				if ($user == $this->session->userdata('userid'))
@@ -153,7 +153,7 @@ class Admin_base extends Controller {
 						/* grab the cookie */
 						$cookie = get_cookie('nova_'. $uid);
 						
-						if ($cookie !== FALSE)
+						if ($cookie !== false)
 						{
 							/* set the cookie data */
 							$c_data = array(
@@ -186,7 +186,7 @@ class Admin_base extends Controller {
 				}
 			}
 			
-			$update = FALSE;
+			$update = false;
 		}
 		
 		/*
@@ -262,7 +262,7 @@ class Admin_base extends Controller {
 					$data['activity'][$a->userid] = array(
 						'post' => (!empty($a->last_post)) ? $a->last_post : lang('error_no_last_post'),
 						'login' => (!empty($a->last_login)) ? $a->last_login : lang('error_no_last_login'),
-						'name' => $this->char->get_character_name($a->main_char, TRUE)
+						'name' => $this->char->get_character_name($a->main_char, true)
 					);
 				}
 				
@@ -294,7 +294,7 @@ class Admin_base extends Controller {
 				if ($time <= 12)
 				{
 					$data['milestones'][] = array(
-						'name' => $this->char->get_character_name($m['char'], TRUE),
+						'name' => $this->char->get_character_name($m['char'], true),
 						'months' => floor($time),
 						'years' => 0,
 						'timespan' => timespan($m['join'], $now)
@@ -308,7 +308,7 @@ class Admin_base extends Controller {
 					$months = floor($time - $subt);
 					
 					$data['milestones'][] = array(
-						'name' => $this->char->get_character_name($m['char'], TRUE),
+						'name' => $this->char->get_character_name($m['char'], true),
 						'months' => $months,
 						'years' => $years,
 						'timespan' => timespan($m['join'], $now)
@@ -365,7 +365,7 @@ class Admin_base extends Controller {
 				$data['logs_all'][$i]['title'] = $l->log_title;
 				$data['logs_all'][$i]['log_id'] = $l->log_id;
 				$data['logs_all'][$i]['date'] = mdate($datestring, gmt_to_local($l->log_date, $this->timezone, $this->dst));
-				$data['logs_all'][$i]['author'] = $this->char->get_character_name($l->log_author_character, TRUE);
+				$data['logs_all'][$i]['author'] = $this->char->get_character_name($l->log_author_character, true);
 				
 				++$i;
 			}
@@ -379,7 +379,7 @@ class Admin_base extends Controller {
 				$data['news_all'][$i]['title'] = $n->news_title;
 				$data['news_all'][$i]['news_id'] = $n->news_id;
 				$data['news_all'][$i]['category'] = $n->newscat_name;
-				$data['news_all'][$i]['author'] = $this->char->get_character_name($n->news_author_character, TRUE);
+				$data['news_all'][$i]['author'] = $this->char->get_character_name($n->news_author_character, true);
 				$data['news_all'][$i]['date'] = mdate($datestring, gmt_to_local($n->news_date, $this->timezone, $this->dst));
 				
 				++$i;
@@ -392,7 +392,7 @@ class Admin_base extends Controller {
 		|---------------------------------------------------------------
 		*/
 		
-		$data['update'] = FALSE;
+		$data['update'] = false;
 		
 		if ($this->auth->is_sysadmin($this->session->userdata('userid')))
 		{
@@ -431,7 +431,7 @@ class Admin_base extends Controller {
 		}
 		
 		/* set the panel */
-		$js_data['panel'] = ($data['update'] !== FALSE) ? 'update' : $js_data['panel'];
+		$js_data['panel'] = ($data['update'] !== false) ? 'update' : $js_data['panel'];
 		
 		/* view data */
 		$data['header'] = lang('head_admin_index');
@@ -514,7 +514,7 @@ class Admin_base extends Controller {
 	{
 		/* set the variables */
 		$error = $this->uri->segment(3, 0);
-		$page = ($this->session->flashdata('referer')) ? $this->session->flashdata('referer') : FALSE;
+		$page = ($this->session->flashdata('referer')) ? $this->session->flashdata('referer') : false;
 		
 		$data['header'] = lang('head_admin_error');
 		
@@ -603,7 +603,7 @@ class Admin_base extends Controller {
 			/* grab the updates setting */
 			$type = $this->options['updates'];
 			
-			$update = FALSE;
+			$update = false;
 			
 			switch ($type)
 			{
@@ -702,7 +702,7 @@ class Admin_base extends Controller {
 			return $retval;
 		}
 		
-		return FALSE;
+		return false;
 	}
 }
 

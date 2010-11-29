@@ -26,12 +26,12 @@ class Model_System extends Jelly_Model {
 			)),
 			'install_date' => Jelly::field('timestamp', array(
 				'column' => 'sys_install_date',
-				'null' => TRUE,
+				'null' => true,
 				'default' => date::now()
 			)),
 			'last_update' => Jelly::field('timestamp', array(
 				'column' => 'sys_last_update',
-				'null' => TRUE,
+				'null' => true,
 				'default' => date::now()
 			)),
 			'version_major' => Jelly::field('integer', array(

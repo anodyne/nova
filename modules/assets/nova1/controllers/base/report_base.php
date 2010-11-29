@@ -28,7 +28,7 @@ class Report_base extends Controller {
 		$this->load->model('system_model', 'sys');
 		$installed = $this->sys->check_install_status();
 		
-		if ($installed === FALSE)
+		if ($installed === false)
 		{ /* check whether the system is installed */
 			redirect('install/index', 'refresh');
 		}
@@ -41,7 +41,7 @@ class Report_base extends Controller {
 		$this->load->model('users_model', 'user');
 		
 		/* check to see if they are logged in */
-		$this->auth->is_logged_in(TRUE);
+		$this->auth->is_logged_in(true);
 		
 		/* an array of the global we want to retrieve */
 		$settings_array = array(
@@ -64,7 +64,7 @@ class Report_base extends Controller {
 		$this->timezone = $this->options['timezone'];
 		$this->dst = (bool) $this->options['daylight_savings'];
 		
-		if ($this->auth->is_logged_in() === TRUE)
+		if ($this->auth->is_logged_in() === true)
 		{ /* if there's a session, set the variables appropriately */
 			$this->skin = $this->session->userdata('skin_admin');
 			$this->rank = $this->session->userdata('display_rank');
@@ -80,12 +80,12 @@ class Report_base extends Controller {
 		$this->template->set_master_template($this->skin .'/template_admin.php');
 		
 		/* write the common elements to the template */
-		$this->template->write('nav_main', $this->menu->build('main', 'main'), TRUE);
-		$this->template->write('nav_sub', $this->menu->build('adminsub', 'report'), TRUE);
-		$this->template->write('panel_1', $this->user_panel->panel_1(), TRUE);
-		$this->template->write('panel_2', $this->user_panel->panel_2(), TRUE);
-		$this->template->write('panel_3', $this->user_panel->panel_3(), TRUE);
-		$this->template->write('panel_workflow', $this->user_panel->panel_workflow(), TRUE);
+		$this->template->write('nav_main', $this->menu->build('main', 'main'), true);
+		$this->template->write('nav_sub', $this->menu->build('adminsub', 'report'), true);
+		$this->template->write('panel_1', $this->user_panel->panel_1(), true);
+		$this->template->write('panel_2', $this->user_panel->panel_2(), true);
+		$this->template->write('panel_3', $this->user_panel->panel_3(), true);
+		$this->template->write('panel_workflow', $this->user_panel->panel_workflow(), true);
 		$this->template->write('title', $this->options['sim_name'] . ' :: ');
 	}
 
@@ -120,7 +120,7 @@ class Report_base extends Controller {
 			{
 				$data['users'][$p->userid] = array(
 					'name' => $p->name,
-					'main_char' => $this->char->get_character_name($p->main_char, TRUE),
+					'main_char' => $this->char->get_character_name($p->main_char, true),
 					'email' => $p->email,
 					'id' => $p->userid,
 					'charid' => $p->main_char,
@@ -182,7 +182,7 @@ class Report_base extends Controller {
 		$this->load->model('applications_model', 'apps');
 		
 		/* set the variables */
-		$offset = $this->uri->segment(3, 0, TRUE);
+		$offset = $this->uri->segment(3, 0, true);
 	
 		/* set the pagination configs */
 		$config['base_url'] = site_url('report/applications/');
@@ -281,7 +281,7 @@ class Report_base extends Controller {
 		$this->load->model('awards_model', 'awards');
 		
 		/* set the variables */
-		$offset = $this->uri->segment(3, 0, TRUE);
+		$offset = $this->uri->segment(3, 0, true);
 	
 		/* set the pagination configs */
 		$config['base_url'] = site_url('report/awardnominations/');
@@ -305,7 +305,7 @@ class Report_base extends Controller {
 				$date = gmt_to_local($n->queue_date, $this->timezone, $this->dst);
 				
 				$data['nominations'][$n->queue_id] = array(
-					'nominate' => $this->char->get_character_name($n->queue_nominate, TRUE),
+					'nominate' => $this->char->get_character_name($n->queue_nominate, true),
 					'awardid' => $n->queue_award,
 					'charid' => $n->queue_nominate,
 					'award' => $this->awards->get_award($n->queue_award, 'award_name'),
@@ -317,12 +317,12 @@ class Report_base extends Controller {
 				if (empty($n->queue_receive_character))
 				{
 					$charid = $this->user->get_user($n->queue_receive_user, 'main_char');
-					$data['nominations'][$n->queue_id]['name'] = $this->char->get_character_name($charid, TRUE);
+					$data['nominations'][$n->queue_id]['name'] = $this->char->get_character_name($charid, true);
 				}
 				else
 				{
 					$charid = $n->queue_receive_character;
-					$data['nominations'][$n->queue_id]['name'] = $this->char->get_character_name($charid, TRUE);
+					$data['nominations'][$n->queue_id]['name'] = $this->char->get_character_name($charid, true);
 				}
 			}
 		}
@@ -384,7 +384,7 @@ class Report_base extends Controller {
 		$this->load->library('pagination');
 		
 		/* set the variables */
-		$offset = $this->uri->segment(3, 0, TRUE);
+		$offset = $this->uri->segment(3, 0, true);
 	
 		/* set the pagination configs */
 		$config['base_url'] = site_url('report/loa/');
@@ -465,7 +465,7 @@ class Report_base extends Controller {
 				$date = gmt_to_local($p->join_date, $this->timezone, $this->dst);
 				
 				$data['users'][$p->userid] = array(
-					'name' => $this->char->get_character_name($p->main_char, TRUE),
+					'name' => $this->char->get_character_name($p->main_char, true),
 					'id' => $p->userid,
 					'charid' => $p->main_char,
 					'join_date' => mdate($this->options['date_format'], $date),
@@ -507,7 +507,7 @@ class Report_base extends Controller {
 			foreach ($users->result() as $p)
 			{
 				$data['users'][$p->userid] = array(
-					'name' => $this->char->get_character_name($p->main_char, TRUE),
+					'name' => $this->char->get_character_name($p->main_char, true),
 					'id' => $p->userid,
 					'charid' => $p->main_char,
 					'posts' => ($p->moderate_posts == 'y') ? 'red' : 'green',
@@ -700,19 +700,19 @@ class Report_base extends Controller {
 		
 		/* this month */
 		$this_month_mysql = $today['year'] .'-'. $today['mon'] .'-01 00:00:00';
-		$this_month = human_to_unix($this_month_mysql, TRUE);
+		$this_month = human_to_unix($this_month_mysql, true);
 		
 		/* last month */
 		$year = ($today['mon'] == 1) ? $today['year'] - 1 : $today['year'];
 		$month = ($today['mon'] == 1) ? 12 : $today['mon'] - 1;
 		$last_month_mysql = $year .'-'. $month .'-01 00:00:00';
-		$last_month = human_to_unix($last_month_mysql, TRUE);
+		$last_month = human_to_unix($last_month_mysql, true);
 		
 		/* next month */
 		$year = ($today['mon'] == 12) ? $today['year'] + 1 : $today['year'];
 		$month = ($today['mon'] == 12) ? '01' : $today['mon'] + 1;
 		$next_month_mysql = $year .'-'. $month .'-01 00:00:00';
-		$next_month = human_to_unix($next_month_mysql, TRUE);
+		$next_month = human_to_unix($next_month_mysql, true);
 		
 		/* days in the months */
 		$days = date('t');
@@ -890,7 +890,7 @@ class Report_base extends Controller {
 		$this->load->model('applications_model', 'apps');
 		
 		/* set the variables */
-		$id = $this->uri->segment(3, 0, TRUE);
+		$id = $this->uri->segment(3, 0, true);
 	
 		$application = $this->apps->get_application($id);
 		
