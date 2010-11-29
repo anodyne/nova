@@ -76,6 +76,46 @@ class Controller_Nova_Admin extends Controller_Nova_Base {
 	
 	public function action_index()
 	{
+		if (isset($_POST['submit']))
+		{
+			$validate = Validate::factory($_POST)
+				->rule('password', 'not_empty')
+				->rule('password_confirm', 'matches', array('password'));
+				
+			if ($validate->check())
+			{
+				// get the data
+				$newpassword = trim(Security::xss_clean($_POST['password']));
+				
+				$change = Jelly::factory('user', $this->session->get('userid'));
+				$change->password = Auth::hash($newpassword);
+				$change->password_reset = 0;
+				$change->save();
+				
+				if ($change->saved())
+				{
+					// show the flash message
+					$this->template->layout->flash = View::factory('admin/pages/flash');
+					$this->template->layout->flash->status = 'success';
+					$this->template->layout->flash->message = __('Password was successfully changed.');
+					
+					// clear the session variable
+					$this->session->delete('password_reset');
+				}
+				else
+				{
+					// show the flash message
+					$this->template->layout->flash = View::factory('admin/pages/flash');
+					$this->template->layout->flash->status = 'error';
+					$this->template->layout->flash->message = __('Password was not successfully changed. Please try again.');
+				}
+			}
+			else
+			{
+				$errors = $validate->errors('validate');
+			}
+		}
+		
 		// create a new content view
 		$this->template->layout->content = View::factory(Location::view('admin_index', $this->skin, 'admin', 'pages'));
 		
@@ -84,6 +124,17 @@ class Controller_Nova_Admin extends Controller_Nova_Base {
 		
 		// assign the object a shorter variable to use in the method
 		$data = $this->template->layout->content;
+		
+		// no reset by default
+		$data->reset = false;
+		
+		if ($this->session->get('password_reset'))
+		{
+			$data->reset = true;
+			
+			// set the validation errors
+			$data->errors = (isset($errors)) ? $errors : false;
+		}
 		
 		// content
 		$this->template->title.= ucfirst(__("admin"));
