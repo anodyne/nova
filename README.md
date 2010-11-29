@@ -26,6 +26,7 @@ Anodyne Production's next-generation RPG management system combines popular feat
 * updated the user model with a method to pull user information based on characters in the database
 * updated department management with a better interface for working with departments
 * updated position management to split departments out by manifest
+* updated the write controller to check for whether a user has a character associated with their account and if they don't redirct them to an error page
 * updated the language files
     * [base\_lang] added _labels\_ban_
     * [base\_lang] added _labels\_bans_
@@ -37,6 +38,7 @@ Anodyne Production's next-generation RPG management system combines popular feat
     * [base\_lang] added _labels\_unassigned_
     * [base\_lang] added _misc\_level1\_only_
     * [email\_lang] updated _email\_content\_private\_message_
+    * [error\_lang] added _error\_wcp\_1_
     * [text\_lang] added _text\_bans_
     * [text\_lang] added _text\_ban\_join_
     * [text\_lang] added _text\_manifest\_delete\_departments_
@@ -59,6 +61,7 @@ Anodyne Production's next-generation RPG management system combines popular feat
 * fixed bug where the flash message view couldn't be overridden with seamless substitution
 * fixed bug where post emails were sent out with the user's primary character name attached even if the primary character wasn't associated with the post
 * fixed bug where the private message email didn't contain the content of the private message
+* fixed some errors thrown through the system when a user without a character tried moving through the system
 
 ## Version History
 
