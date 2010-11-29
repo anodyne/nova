@@ -11,7 +11,9 @@
 |	be sent out with the name of the user's primary character even
 |	if that character wasn't a part of the post; added a check to
 |	the constructor to redirect to an error page in the event a user
-|	doesn't have a character associated with their account
+|	doesn't have a character associated with their account; fixed
+|	bug where personal logs weren't having the proper date set
+|	when saving a personal log first
 |
 */
 
@@ -1691,6 +1693,7 @@ class Write_base extends Controller {
 								'log_tags' => $tags,
 								'log_status' => 'saved',
 								'log_last_update' => now(),
+								'log_date' => now(),
 							);
 							
 							/* do the update */
@@ -1731,7 +1734,8 @@ class Write_base extends Controller {
 								'log_content' => $content,
 								'log_tags' => $tags,
 								'log_status' => 'saved',
-								'log_last_update' => now()
+								'log_last_update' => now(),
+								'log_date' => now(),
 							);
 							
 							/* do the insert */
