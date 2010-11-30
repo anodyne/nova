@@ -280,7 +280,7 @@ $this->db->delete('system_components');
  */
 $additem = array(
 	'comp_name' => 'prettyPhoto',
-	'comp_version' => '3.0',
+	'comp_version' => '3.0.1',
 	'comp_desc' => "prettyPhoto is a jQuery lightbox clone. Not only does it support images, it also support for videos, flash, YouTube, iframes. It's a full blown media lightbox.",
 	'comp_url' => 'http://www.no-margin-for-errors.com/projects/prettyphoto-jquery-lightbox-clone/'
 );
