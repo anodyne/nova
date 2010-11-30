@@ -264,6 +264,12 @@ $this->db->where('comp_name', 'jQuery UI');
 $this->db->update('system_components', array('comp_version' => '1.8.6'));
 
 /**
+ * update the markItUp! version info
+ */
+$this->db->where('comp_name', 'markItUp!');
+$this->db->update('system_components', array('comp_version' => '1.1.9'));
+
+/**
  * remove the fancybox plugin from the list of components
  */
 $this->db->where('comp_name', 'FancyBox');
