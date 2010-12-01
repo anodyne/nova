@@ -1126,6 +1126,22 @@ return array
 								'value' => '['.$simname.']'
 							))
 							->update();
+							
+						Jelly::query('setting')
+							->where('key', '=', 'default_email_address')
+							->limit(1)
+							->set(array(
+								'value' => 'donotreply@'.strtolower($simname)
+							))
+							->update();
+							
+						Jelly::query('setting')
+							->where('key', '=', 'default_email_name')
+							->limit(1)
+							->set(array(
+								'value' => $simname
+							))
+							->update();
 						
 						// create the user
 						$crUser = Jelly::factory('user')

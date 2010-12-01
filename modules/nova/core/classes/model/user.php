@@ -69,6 +69,10 @@ class Model_User extends Jelly_Model {
 			'dst' => Jelly::field('integer', array(
 				'column' => 'daylight_savings'
 			)),
+			'email_format' => Jelly::field('string', array(
+				'column' => 'email_format',
+				'default' => 'html'
+			)),
 			'language' => Jelly::field('string', array(
 				'column' => 'language'
 			)),
