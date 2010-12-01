@@ -95,19 +95,7 @@ kbd {
 | BUTTONS
 |---------------------------------------------------------------
 */
-button {
-	height: 25px;
-	padding: 0 10px 1px 10px;
-	outline: 0 !important;
-	
-	font-weight: bold;
-}
-
-button.button-small {
-	height: 20px !important;
-	padding: 0 0 1px 6px !important;
-	outline: 0 !important;
-}
+button, button.btn-small { outline: 0 !important; }
 
 /*
 |---------------------------------------------------------------
