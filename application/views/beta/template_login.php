@@ -2,24 +2,24 @@
 	<div class="system_warning"><?php echo __("You need to have Javascript turned on to use all of Nova 2's features.");?></div>
 </noscript>
 
-<!-- HEAD -->
-<div id="head-top"></div>
-
-<!-- BODY -->
-<div id="body">
+<!-- MENU -->
+<div id="menu">
 	<div class="wrapper">
-		<!-- SUB NAVIGATION -->
-		<div class="nav-sub">
-			<h1><?php echo $name;?></h1>
-			<hr />
+		<div class="nav">
 			<ul>
 				<li><?php echo html::anchor('login/index', '<span>'.ucwords(__('log in')).'</span>');?></li>
 				<li><?php echo html::anchor('login/reset', '<span>'.ucwords(__('reset password')).'</span>');?></li>
-				<li class="spacer"></li>
 				<li><?php echo html::anchor('main/index', '<span>'.__('Back to Site').'</span>');?></li>
 			</ul>
 		</div>
 		
+		<div class="name"><?php echo $name;?></div>
+	</div>
+</div>
+
+<!-- BODY -->
+<div id="body">
+	<div class="wrapper">
 		<!-- PAGE CONTENT -->
 		<div class="content">
 			<?php echo $flash;?>
