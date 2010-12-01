@@ -36,17 +36,4 @@ return array(
 	'rss_description' => "Nova, Anodyne Productions' premier RPG management software",
 	'rss_feed_lang' => 'en-us',
 	'rss_creator_email' => 'john.doe@example.com',
-	
-	/**
-	 * Modules
-	 *
-	 * This is the list of additional modules that should be loaded after
-	 * the core modules have been loaded. Use the sameple below as a starting
-	 * point for adding your own modules to the load order.
-	 */
-	'modules' => array(
-		'upgrade' => MODPATH.'nova/upgrade',
-		//'your_mod' => MODPATH.'third_party/your_mod',
-		'about_nova' => MODPATH.'third_party/about_nova',
-	),
 );
