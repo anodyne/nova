@@ -27,6 +27,9 @@ The Nova 2 [update guide](http://docs.anodyne-productions.com/index.php/nova2/ov
 		<th>Version</th><th>Description</th><th>Start Date</th><th>End Date</th>
 	</tr>
 	<tr>
+		<td>M3</td><td>User and character systems</td><td>-</td><td>-</td>
+	</tr>
+	<tr>
 		<td>M2</td><td>System authentication, password resets, main page, main admin page</td><td>27 September 2010</td><td>-</td>
 	</tr>
 	<tr>
