@@ -485,6 +485,11 @@ $catalogue_skinsecs = array(
 		'skinsec_skin' => 'beta',
 		'skinsec_image_preview' => 'preview-login.jpg',
 		'skinsec_default' => 'y'),
+	array(
+		'skinsec_section' => 'admin',
+		'skinsec_skin' => 'beta',
+		'skinsec_image_preview' => 'preview-admin.jpg',
+		'skinsec_default' => 'y'),
 );
 
 $forms = array(
@@ -2263,19 +2268,19 @@ $settings = array(
 		'setting_user_created' => 'n'),
 	array(
 		'setting_key' => 'skin_main',
-		'setting_value' => 'default',
+		'setting_value' => 'beta',
 		'setting_user_created' => 'n'),
 	array(
 		'setting_key' => 'skin_admin',
-		'setting_value' => 'default',
+		'setting_value' => 'beta',
 		'setting_user_created' => 'n'),
 	array(
 		'setting_key' => 'skin_wiki',
-		'setting_value' => 'default',
+		'setting_value' => 'beta',
 		'setting_user_created' => 'n'),
 	array(
 		'setting_key' => 'skin_login',
-		'setting_value' => 'default',
+		'setting_value' => 'beta',
 		'setting_user_created' => 'n'),
 	array(
 		'setting_key' => 'display_rank',
