@@ -13,6 +13,6 @@
         - [Getting Started with Jelly](nova.started-jelly)
         - [Using Jelly](nova.using-jelly)
     - __Development__
-        - [Milestones](dev.milestones)
         - [Roadmap](dev.roadmap)
+        - [Notable Changes](dev.changes)
    - [API Browser](api)
