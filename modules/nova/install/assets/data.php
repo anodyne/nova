@@ -441,7 +441,7 @@ $access_pages = array(
 $catalogue_skins = array(
 	array(
 		'skin_name' => 'Beta',
-		'skin_location' => 'default',
+		'skin_location' => 'beta',
 		'skin_credits' => 'The Beta skin was created by Anodyne Productions. Edits are permissible provided the original credits remain intact.',
 		'skin_version' => '1.0'),
 );
@@ -449,22 +449,12 @@ $catalogue_skins = array(
 $catalogue_skinsecs = array(
 	array(
 		'skinsec_section' => 'main',
-		'skinsec_skin' => 'default',
+		'skinsec_skin' => 'beta',
 		'skinsec_image_preview' => 'preview-main.jpg',
 		'skinsec_default' => 'y'),
 	array(
-		'skinsec_section' => 'admin',
-		'skinsec_skin' => 'default',
-		'skinsec_image_preview' => 'preview-admin.jpg',
-		'skinsec_default' => 'y'),
-	array(
-		'skinsec_section' => 'wiki',
-		'skinsec_skin' => 'default',
-		'skinsec_image_preview' => 'preview-wiki.jpg',
-		'skinsec_default' => 'y'),
-	array(
 		'skinsec_section' => 'login',
-		'skinsec_skin' => 'default',
+		'skinsec_skin' => 'beta',
 		'skinsec_image_preview' => 'preview-login.jpg',
 		'skinsec_default' => 'y'),
 );
