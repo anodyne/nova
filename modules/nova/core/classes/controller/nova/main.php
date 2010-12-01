@@ -219,6 +219,9 @@ class Controller_Nova_Main extends Controller_Nova_Base {
 			? true
 			: false;
 		
+		# TODO: remove this after the site messages management stuff is done
+		$data->edit = false;
+		
 		// send the response
 		$this->request->response = $this->template;
 	}
