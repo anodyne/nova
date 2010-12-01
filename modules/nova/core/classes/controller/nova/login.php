@@ -17,7 +17,8 @@ class Controller_Nova_Login extends Controller_Nova_Base {
 		$additionalSettings = array(
 			'skin_login',
 			'default_email_name',
-			'default_email_address'
+			'default_email_address',
+			'email_subject'
 		);
 		
 		// merge the settings arrays
@@ -271,6 +272,7 @@ class Controller_Nova_Login extends Controller_Nova_Base {
 							$emaildata->email = $email;
 							$emaildata->password = $newpass;
 							$emaildata->name = $user->name;
+							$emaildata->user = $user->id;
 							
 							// send the email
 							$email = $this->_email('reset', $emaildata);
@@ -392,23 +394,37 @@ class Controller_Nova_Login extends Controller_Nova_Base {
 			switch ($type)
 			{
 				case 'reset':
+					// find out how to send the email
+					$format = Jelly::query('user', $data->user)->select()->email_format;
+					
 					// data for the view files
 					$view = new stdClass;
 					$view->subject = __("email.subject.reset_password");
 					$view->content = __("email.content.reset_password", array(':password' => $data->password, ':site' => url::site('login/index')));
 					
-					// set the html version
-					$html = View::factory(Location::view('login_reset_em_html', $this->skin, 'login', 'email'), $view);
+					if ($format == 'html')
+					{
+						// set the html version
+						$html = View::factory(Location::view('login_reset_em_html', $this->skin, 'login', 'email'), $view);
+					}
 					
 					// set the text version
 					$text = View::factory(Location::view('login_reset_em_text', $this->skin, 'login', 'email'), $view);
 					
+					// set the primary delivery method and type
+					$primary_format = ($format == 'html') ? $html->render() : $text->render();
+					$primary_type = ($format == 'html') ? 'text/html' : 'text/plain';
+					
 					// set the message data
-					$message->setSubject(__("email.subject.reset_password"));
+					$message->setSubject($this->options->email_subject.' '.__("email.subject.reset_password"));
 					$message->setFrom(array($this->options->default_email_address => $this->options->default_email_name));
 					$message->setTo($data->email);
-					$message->setBody($html->render(), 'text/html');
-					$message->addPart($text->render(), 'text/plain');
+					$message->setBody($primary_format, $primary_type);
+					
+					if ($format == 'html')
+					{
+						$message->addPart($text->render(), 'text/plain');
+					}
 				break;
 			}
 			
