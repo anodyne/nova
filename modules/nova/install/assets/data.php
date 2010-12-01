@@ -441,14 +441,6 @@ $access_pages = array(
 
 $catalogue_modules = array(
 	array(
-		'module_name' => 'Nova Userguide',
-		'module_short_name' => 'userguide',
-		'module_location' => 'kohana/userguide',
-		'module_desc' => "The Nova Userguide is a compilation of articles and an API Browser for Nova.",
-		'module_protected' => 'y',
-		'module_status' => 'active',
-		'module_credits' => "The Nova Userguide module is built off of Kohana's userguide module. Information within the Nova Userguide was written by Anodyne Productions."),
-	array(
 		'module_name' => 'SMS Upgrade',
 		'module_short_name' => 'upgrade',
 		'module_location' => 'nova/upgrade',

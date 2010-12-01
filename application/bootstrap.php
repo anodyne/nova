@@ -87,13 +87,15 @@ Kohana::$config->attach(new Kohana_Config_File);
  */
 Kohana::modules(array(
 	'nova'			=> MODPATH.'nova/core',
-	'thresher'		=> MODPATH.'nova/thresher',
+	//'thresher'		=> MODPATH.'nova/thresher',
 	'override'		=> MODPATH.'override',
 	'install'		=> MODPATH.'nova/install',
 	'update'		=> MODPATH.'nova/update',
 	'database'		=> MODPATH.'kohana/database',
 	'jelly'			=> MODPATH.'kohana/jelly',
 	'assets'		=> MODPATH.'assets',
+	'userguide'		=> MODPATH.'kohana/userguide',
+	'dbforge'		=> MODPATH.'nova/dbforge',
 ));
 
 /**

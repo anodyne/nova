@@ -26,15 +26,6 @@ class Controller_Updateajax extends Controller_Template {
 		
 		// get the n1 prefix
 		$this->n1pref = Session::instance()->get('n1pref');
-		
-		// set the new set of modules
-		$loadmodules = array('dbforge' => MODPATH.'nova/dbforge');
-		
-		// merge the two sets of modules
-		$modules = array_merge(Kohana::modules(), $loadmodules);
-		
-		// load the dbforge module
-		Kohana::modules($modules);
 	}
 	
 	public function action_update_applications()

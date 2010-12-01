@@ -77,15 +77,6 @@ class Controller_Update extends Controller_Template {
 		$this->template->layout->label		= false;
 		$this->template->layout->flash		= false;
 		$this->template->layout->controls	= false;
-		
-		// set the new set of modules
-		$loadmodules = array('dbforge' => MODPATH.'nova/dbforge');
-		
-		// merge the two sets of modules
-		$modules = array_merge(Kohana::modules(), $loadmodules);
-		
-		// load the dbforge module
-		Kohana::modules($modules);
 	}
 	
 	public function action_index()
