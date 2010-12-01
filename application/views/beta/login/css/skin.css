@@ -123,3 +123,6 @@ textarea {
 	border-radius: 3px;
 	-moz-border-radius: 3px;
 }
+
+a { color: #1e5799; }
+a:hover { color: #666; }
