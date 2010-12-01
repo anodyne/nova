@@ -10,6 +10,18 @@
 abstract class Nova_Hooks {
 	
 	/**
+	 * The bans hook goes through the database list of level 2 bans and then gets the
+	 * incoming user's IP address to compare it. If someone with a level 2 ban is found
+	 * they'll be redirected to the ban page.
+	 *
+	 * @return	void
+	 */
+	public static function bans()
+	{
+		# code...
+	}
+	
+	/**
 	 * The browser hook grabs the user's browser and version from the user agent and then
 	 * checks it against the list of acceptable browser versions. Nova 2 requires users
 	 * to have IE 8+, Safari 4+, Firefox 3+ or Chrome 3+.
@@ -46,6 +58,21 @@ abstract class Nova_Hooks {
 		}
 	}
 	
+	/**
+	 * The maintenance hook checks the database to find out if maintenance mode is
+	 * currently active. If it is, it'll check to make sure A) the user is logged
+	 * in and B) the user is a system administrators in order to let them continue
+	 * on to the system. Otherwise, the user will be redirected to the login page
+	 * or the maintenance page.
+	 *
+	 * @uses	Utility::install_status
+	 * @uses	Request::instance
+	 * @uses	Request::redirect
+	 * @uses	Session::instance
+	 * @uses	Jelly::query
+	 * @uses	Auth::is_type
+	 * @return	void
+	 */
 	public static function maintenance()
 	{
 		// if the config file isn't set
@@ -76,4 +103,4 @@ abstract class Nova_Hooks {
 			}
 		}
 	}
-} // End hooks
+}

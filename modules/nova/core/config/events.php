@@ -22,6 +22,10 @@ return array(
 			'param' => false),
 		array(
 			'class' => 'Hooks',
+			'method' => 'bans',
+			'param' => false),
+		array(
+			'class' => 'Hooks',
 			'method' => 'maintenance',
 			'param' => false),
 	),
