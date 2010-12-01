@@ -2382,7 +2382,7 @@ $sim_type = array(
 $system_components = array(
 	array(
 		'comp_name' => 'Kohana',
-		'comp_version' => '3.0.5',
+		'comp_version' => '3.0.8',
 		'comp_url' => 'http://kohanaframework.org/',
 		'comp_desc' => 'Kohana is an elegant HMVC PHP5 framework that provides a rich set of components for building web applications. It requires very little configuration, fully supports UTF-8 and I18N, and provides many of the tools that a developer needs within a highly flexible system. The integrated class auto-loading, cascading filesystem, highly consistent API, and easy integration with vendor libraries make it viable for any project, large or small.'),
 	array(
@@ -2392,7 +2392,7 @@ $system_components = array(
 		'comp_desc' => "Thresher is Anodyne Productions' integrated mini-wiki for Nova."),
 	array(
 		'comp_name' => 'Jelly',
-		'comp_version' => '0.9.6.2',
+		'comp_version' => '1.0',
 		'comp_desc' => "Jelly is a compact but powerful object relational mapper for Kohana 3. Its small, clean and well-documented codebase makes it incredibly lightweight and with complete support for column aliases and an extensible field architecture, Jelly makes database interaction a breeze.",
 		'comp_url' => 'http://jelly.jonathan-geiger.com/'),
 	array(
@@ -2402,22 +2402,17 @@ $system_components = array(
 		'comp_url' => 'http://swiftmailer.org/'),
 	array(
 		'comp_name' => 'jQuery',
-		'comp_version' => '1.4.2',
+		'comp_version' => '1.4.4',
 		'comp_url' => 'http://www.jquery.com/',
 		'comp_desc' => 'jQuery is a lightweight JavaScript library that emphasizes interaction between JavaScript and HTML.'),
 	array(
 		'comp_name' => 'jQuery UI',
-		'comp_version' => '1.9-m2',
+		'comp_version' => '1.9-m3',
 		'comp_url' => 'http://jqueryui.com/',
 		'comp_desc' => 'jQuery UI is a lightweight, easily customizable interface library for the jQuery Javascript library.'),
 	array(
-		'comp_name' => 'FancyBox',
-		'comp_version' => '1.3.1',
-		'comp_desc' => "FancyBox is a tool for displaying images, html content and multi-media in a Mac-style 'lightbox' that floats overtop of web page. It was built using the jQuery library and licensed under both MIT and GPL licenses.",
-		'comp_url' => 'http://fancybox.net/home'),
-	array(
 		'comp_name' => 'Facebox',
-		'comp_version' => '1.2',
+		'comp_version' => '1.3',
 		'comp_desc' => "Facebox is a jQuery-based lightbox which can display images, divs, or entire remote pages.",
 		'comp_url' => 'http://famspam.com/facebox'),
 	array(
