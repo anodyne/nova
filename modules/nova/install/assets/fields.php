@@ -31,6 +31,7 @@ $data = array(
 	'awards'					=> array('id' => 'award_id', 'fields' => 'fields_awards'),
 	'awards_queue'				=> array('id' => 'queue_id', 'fields' => 'fields_awards_queue'),
 	'awards_received'			=> array('id' => 'awardrec_id', 'fields' => 'fields_awards_received'),
+	'catalogue_modules'			=> array('id' => 'module_id', 'fields' => 'fields_catalogue_modules'),
 	'catalogue_ranks'			=> array('id' => 'rankcat_id', 'fields' => 'fields_catalogue_ranks'),
 	'catalogue_skins'			=> array('id' => 'skin_id', 'fields' => 'fields_catalogue_skins'),
 	'catalogue_skinsecs'		=> array('id' => 'skinsec_id', 'fields' => 'fields_catalogue_skinsecs'),
@@ -260,6 +261,37 @@ $fields_awards_received = array(
 		'constraint' => $date_constraint),
 	'awardrec_reason' => array(
 		'type' => 'TEXT')
+);
+
+$fields_catalogue_modules = array(
+	'module_id' => array(
+		'type' => 'INT',
+		'constraint' => 5,
+		'auto_increment' => true),
+	'module_name' => array(
+		'type' => 'VARCHAR',
+		'constraint' => 100,
+		'default' => ''),
+	'module_short_name' => array(
+		'type' => 'VARCHAR',
+		'constraint' => 50,
+		'default' => ''),
+	'module_location' => array(
+		'type' => 'VARCHAR',
+		'constraint' => 255,
+		'default' => ''),
+	'module_desc' => array(
+		'type' => 'TEXT'),
+	'module_protected' => array(
+		'type' => 'ENUM',
+		'constraint' => "'y','n'",
+		'default' => 'n'),
+	'module_status' => array(
+		'type' => 'ENUM',
+		'constraint' => "'active','inactive'",
+		'default' => 'active'),
+	'module_credits' => array(
+		'type' => 'TEXT'),
 );
 
 $fields_catalogue_ranks = array(

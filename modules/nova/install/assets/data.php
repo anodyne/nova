@@ -14,6 +14,7 @@ $data = array(
 	'access_groups',
 	'access_pages',
 	'access_roles',
+	'catalogue_modules',
 	'catalogue_skins',
 	'catalogue_skinsecs',
 	'forms',
@@ -436,6 +437,33 @@ $access_pages = array(
 		'page_url' => 'wiki/categories',
 		'page_group' => 8,
 		'page_desc' => "Can create, delete and edit wiki categories"),
+);
+
+$catalogue_modules = array(
+	array(
+		'module_name' => 'Nova Userguide',
+		'module_short_name' => 'userguide',
+		'module_location' => 'kohana/userguide',
+		'module_desc' => "The Nova Userguide is a compilation of articles and an API Browser for Nova.",
+		'module_protected' => 'y',
+		'module_status' => 'active',
+		'module_credits' => "The Nova Userguide module is built off of Kohana's userguide module. Information within the Nova Userguide was written by Anodyne Productions."),
+	array(
+		'module_name' => 'SMS Upgrade',
+		'module_short_name' => 'upgrade',
+		'module_location' => 'nova/upgrade',
+		'module_desc' => "The SMS Upgrade module allows for upgrading from SMS 2.6.9 or higher to Nova 2.",
+		'module_protected' => 'y',
+		'module_status' => 'active',
+		'module_credits' => "The SMS Upgrade module was developed by Anodyne Productions."),
+	array(
+		'module_name' => 'About Nova',
+		'module_short_name' => 'about_nova',
+		'module_location' => 'third_party/about_nova',
+		'module_desc' => "The About Nova module is a test 3rd party module that should be used as a guide for how to develop modules for Nova 2.",
+		'module_protected' => 'n',
+		'module_status' => 'inactive',
+		'module_credits' => "The About Nova module was developed by Anodyne Productions."),
 );
 
 $catalogue_skins = array(
