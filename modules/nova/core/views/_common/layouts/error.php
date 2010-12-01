@@ -1,9 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 	<head>
-		<title><?php echo $title;?></title>
-		
 		<meta charset="utf-8">
+		<title><?php echo $title;?></title>
 		
 		<!-- STYLESHEETS -->
 		<?php echo html::style(MODFOLDER.'/nova/core/views/_common/css/nova.css');?>

@@ -1,15 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
 	<head>
+		<meta charset="utf-8">
 		<title><?php echo $title;?></title>
 		
-		<meta charset="utf-8" />
-		<meta name="description" content="<?php echo Kohana::config('nova.meta_desc');?>"/>
-		<meta name="keywords" content="<?php echo Kohana::config('nova.meta_keywords');?>"/>
-		<meta name="author" content="<?php echo Kohana::config('nova.meta_author');?>"/>
+		<meta name="description" content="<?php echo Kohana::config('nova.meta_desc');?>">
+		<meta name="keywords" content="<?php echo Kohana::config('nova.meta_keywords');?>">
+		<meta name="author" content="<?php echo Kohana::config('nova.meta_author');?>">
 		
 		<?php if (isset($redirect)): ?>
-			<meta http-equiv="refresh" content="<?php echo $redirect['time'];?>;url=<?php echo $redirect['url'];?>"/>
+			<meta http-equiv="refresh" content="<?php echo $redirect['time'];?>;url=<?php echo $redirect['url'];?>">
 		<?php endif;?>
 		
 		<!-- STYLESHEETS -->
