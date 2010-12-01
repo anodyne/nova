@@ -23,6 +23,15 @@ class Controller_Upgradeajax extends Controller_Template {
 		
 		// get an instance of the database
 		$this->db = Database::instance();
+		
+		// set the new set of modules
+		$loadmodules = array('dbforge' => MODPATH.'nova/dbforge');
+		
+		// merge the two sets of modules
+		$modules = array_merge(Kohana::modules(), $loadmodules);
+		
+		// load the dbforge module
+		Kohana::modules($modules);
 	}
 	
 	public function action_upgrade_awards()
