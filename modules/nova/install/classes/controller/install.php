@@ -1208,6 +1208,13 @@ return array
 						Utility::install_skin();
 						Utility::install_widget();
 						
+						// deactivate the upgrade module
+						Jelly::query('cataloguemodule')
+							->where('shortname', '=', 'upgrade')
+							->limit(1)
+							->set(array('status' => 'inactive'))
+							->update();
+						
 						// do the registration
 						$this->_register();
 					}

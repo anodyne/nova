@@ -392,6 +392,13 @@ class Controller_Update extends Controller_Template {
 				Utility::install_skin();
 				Utility::install_widget();
 				
+				// deactivate the upgrade module
+				Jelly::query('cataloguemodule')
+					->where('shortname', '=', 'upgrade')
+					->limit(1)
+					->set(array('status' => 'inactive'))
+					->update();
+				
 				// get the number of tables
 				$tables = $db->list_tables($db->table_prefix().'%');
 				
