@@ -449,6 +449,14 @@ $catalogue_modules = array(
 		'module_status' => 'active',
 		'module_credits' => "The SMS Upgrade module was developed by Anodyne Productions."),
 	array(
+		'module_name' => 'Nova User Guide',
+		'module_short_name' => 'userguide',
+		'module_location' => 'kohana/userguide',
+		'module_desc' => "The Nova User Guide is meant for getting quick information about Nova and for developers looking for a full blown API Browser for Nova's various classes.",
+		'module_protected' => 'y',
+		'module_status' => 'active',
+		'module_credits' => "The Nova User Guide was developed by Anodyne Productions."),
+	array(
 		'module_name' => 'About Nova',
 		'module_short_name' => 'about_nova',
 		'module_location' => 'third_party/about_nova',
