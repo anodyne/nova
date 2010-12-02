@@ -14,11 +14,21 @@ The milestone [roadmap](https://github.com/anodyne/nova/wiki/Nova-2-Milestones) 
 
 ## Important Information
 
-The Nova 2 [install guide](http://docs.anodyne-productions.com/index.php/nova2/overview/install) is a step-by-step guide through installing Nova 2 and any issues you may encounter. Please reference that for doing a clean install of the Nova 2 development builds.
+As of M2, you can do the following with Nova 2:
 
-The Nova 2 [upgrade guide](http://docs.anodyne-productions.com/index.php/nova2/overview/upgrade) is a step-by-step guide through upgrading from SMS 2 (at least version 2.6.9) to Nova 2 and any issues you may encounter. Please reference that for doing an upgrade with the Nova 2 development builds.
-
-The Nova 2 [update guide](http://docs.anodyne-productions.com/index.php/nova2/overview/update) is a step-by-step guide through updating Nova 2 (either from 2.x to 2.x+1 or Nova 1 to Nova 2) and any issues you may encounter. Please reference that for doing an update with the Nova 2 development builds.
+* Fresh Install
+    * The Nova 2 [install guide](http://docs.anodyne-productions.com/index.php/nova2/overview/install) is a step-by-step guide through installing Nova 2 and any issues you may encounter. Please reference that for doing a clean install of the Nova 2 development builds.
+* Upgrade from SMS
+    * The Nova 2 [upgrade guide](http://docs.anodyne-productions.com/index.php/nova2/overview/upgrade) is a step-by-step guide through upgrading from SMS 2 (at least version 2.6.9) to Nova 2 and any issues you may encounter. Please reference that for doing an upgrade with the Nova 2 development builds.
+* Update from Nova 1
+    *The Nova 2 [update guide](http://docs.anodyne-productions.com/index.php/nova2/overview/update) is a step-by-step guide through updating Nova 2 (either from 2.x to 2.x+1 or Nova 1 to Nova 2) and any issues you may encounter. Please reference that for doing an update with the Nova 2 development builds.
+* Update within Nova 2 (not applicable)
+* Log in to Nova
+    * Reset password
+    * Change password once you've logged in after resetting your password
+    * View the main page
+    * View the admin page (no difference between this and the main page)
+    * View site credits
 
 ## Version History
 
@@ -27,10 +37,7 @@ The Nova 2 [update guide](http://docs.anodyne-productions.com/index.php/nova2/ov
 		<th>Version</th><th>Description</th><th>Start Date</th><th>End Date</th>
 	</tr>
 	<tr>
-		<td>M3</td><td>User and character systems</td><td>-</td><td>-</td>
-	</tr>
-	<tr>
-		<td>M2</td><td>System authentication, password resets, main page, main admin page</td><td>27 September 2010</td><td>-</td>
+		<td>M2</td><td>System authentication, password resets, main page, main admin page</td><td>27 September 2010</td><td>02 December 2010</td>
 	</tr>
 	<tr>
 		<td>M1</td><td>Development start</td><td>10 February 2010</td><td>27 September 2010</td>
