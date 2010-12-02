@@ -1092,8 +1092,8 @@ class Controller_Upgradeajax extends Controller_Template {
 	{
 		try {
 			// do the quick installs
-			Utility::install_ranks();
-			Utility::install_skins();
+			Utility::install_rank();
+			Utility::install_skin();
 			
 			// get the directory listing for the genre
 			$dir = Utility::directory_map(APPPATH.'assets/common/'.Kohana::config('nova.genre').'/ranks/', true);
@@ -1841,11 +1841,13 @@ class Controller_Upgradeajax extends Controller_Template {
 			{
 				// pull the defaults for skins and ranks
 				$defaults = array(
-					'skin_main'		=> Jelly::query('catalogueskinsec')->defaultskin('main')->select()->skin,
-					'skin_admin'	=> Jelly::query('catalogueskinsec')->defaultskin('admin')->select()->skin,
-					'skin_wiki'		=> Jelly::query('catalogueskinsec')->defaultskin('wiki')->select()->skin,
+					'skin_main'		=> Jelly::query('catalogueskinsec')->defaultskin('main')->select()->skin->location,
+					'skin_admin'	=> Jelly::query('catalogueskinsec')->defaultskin('admin')->select()->skin->location,
+					'skin_wiki'		=> Jelly::query('catalogueskinsec')->defaultskin('wiki')->select()->skin->location,
 					'rank'			=> Jelly::query('cataloguerank')->defaultrank()->select()->location,
 					'links'			=> '',
+					'language'		=> 'en-us',
+					'dst'			=> 0,
 				);
 				
 				// update all users
