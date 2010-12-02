@@ -69,7 +69,6 @@ abstract class Nova_Hooks {
 	 * @uses	Request::instance
 	 * @uses	Request::redirect
 	 * @uses	Session::instance
-	 * @uses	Jelly::query
 	 * @uses	Auth::is_type
 	 * @return	void
 	 */
@@ -101,6 +100,58 @@ abstract class Nova_Hooks {
 					}
 				}
 			}
+		}
+	}
+	
+	/**
+	 * The module hook pulls information from the database (if the system is installed)
+	 * about which modules to load. If the system isn't installed, it will manually
+	 * load the upgrade and userguide modules so they can be used to view the user
+	 * guide or upgrade from SMS.
+	 *
+	 * @uses	Utility::install_status
+	 * @uses	Kohana::modules
+	 * @return	void
+	 */
+	public static function modules()
+	{
+		// check the install status of the system
+		$installed = Utility::install_status();
+		
+		if ($installed)
+		{
+			// get the modules from the catalogue
+			$modules = Jelly::query('cataloguemodule')->where('status', '=', 'active')->select();
+			
+			// make sure we have modules to go through
+			if (count($modules) > 0)
+			{
+				// loop through the active modules and add them to an array
+				foreach ($modules as $m)
+				{
+					$addmodules[$m->shortname] = MODPATH.$m->location;
+				}
+				
+				// merge the list of modules from the database with the core modules
+				$newmodules = array_merge(Kohana::modules(), $addmodules);
+				
+				// set the new list of modules
+				Kohana::modules($newmodules);
+			}
+		}
+		else
+		{
+			// add the upgrade and userguide modules manually if the system isn't installed
+			$addmodules = array(
+				'upgrade' 	=> MODPATH.'nova/upgrade',
+				'userguide'	=> MODPATH.'kohana/userguide'
+			);
+			
+			// merge the list of modules from the database with the core modules
+			$newmodules = array_merge(Kohana::modules(), $addmodules);
+			
+			// set the new list of modules
+			Kohana::modules($newmodules);
 		}
 	}
 }

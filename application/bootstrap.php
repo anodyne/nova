@@ -94,7 +94,6 @@ Kohana::modules(array(
 	'database'		=> MODPATH.'kohana/database',
 	'jelly'			=> MODPATH.'kohana/jelly',
 	'assets'		=> MODPATH.'assets',
-	'userguide'		=> MODPATH.'kohana/userguide',
 	'dbforge'		=> MODPATH.'nova/dbforge',
 ));
 

@@ -58,24 +58,5 @@ abstract class Controller_Nova_Base extends Controller_Template {
 			'sim_name',
 			'system_email'
 		);
-		
-		// get the modules from the catalogue
-		$modules = Jelly::query('cataloguemodule')->where('status', '=', 'active')->select();
-		
-		// make sure we have modules to go through
-		if (count($modules) > 0)
-		{
-			// loop through the active modules and add them to an array
-			foreach ($modules as $m)
-			{
-				$addmodules[$m->shortname] = MODPATH.$m->location;
-			}
-			
-			// merge the list of modules from the database with the core modules
-			$newmodules = array_merge(Kohana::modules(), $addmodules);
-			
-			// set the new list of modules
-			Kohana::modules($newmodules);
-		}
 	}
 }
