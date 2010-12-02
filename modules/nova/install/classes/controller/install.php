@@ -729,8 +729,19 @@ return array
 								// close the file
 								fclose($handle);
 								
-								// try to chmod the file to the proper permissions
-								chmod(APPPATH.'config/database'.EXT, 0666);
+								try {
+									// try to chmod the file to the proper permissions
+									chmod(APPPATH.'config/database'.EXT, 0666);
+								} catch (Exception $e) {
+									// get an instance of the log class
+									$log = Kohana_Log::instance();
+									
+									// add the message
+									$log->add('error', 'Could not change file permissions of the database configuration file to 0666. Please do so manually.');
+									
+									// write the message to the log file
+									$log->write();
+								}
 								
 								if ($write !== false)
 								{
