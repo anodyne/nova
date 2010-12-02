@@ -1,0 +1,60 @@
+.ui-tabs {
+	position: relative;
+	padding: .2em;
+	zoom: 1;
+}
+.ui-tabs .ui-tabs-nav {
+	margin: 0;
+	padding: .2em 0;
+	height: 28px;
+	
+	border-bottom: 3px solid #666;
+}
+.ui-tabs .ui-tabs-nav li {
+	float: left;
+	position: relative;
+	top: 1px;
+	margin: 0 5px 1px 0;
+	padding: 0;
+	white-space: nowrap;
+	height: 29px;
+	line-height: 29px;
+	
+	list-style: none;
+}
+.ui-tabs .ui-tabs-nav li a {
+	float: left;
+	padding: 0 15px;
+	
+	text-decoration: none;
+	
+	border-radius: 3px 3px 0 0;
+	-moz-border-radius: 3px 3px 0 0;
+}
+.ui-tabs .ui-tabs-nav a:hover {
+	background: #ddd;
+}
+.ui-tabs .ui-tabs-nav li.ui-tabs-selected {
+	margin-bottom: 0;
+	padding-bottom: 1px;
+}
+.ui-tabs .ui-tabs-nav li.ui-tabs-selected a {
+	background: #666;
+	color: #fff;
+}
+.ui-tabs .ui-tabs-nav li.ui-tabs-selected a,
+.ui-tabs .ui-tabs-nav li.ui-state-disabled a,
+.ui-tabs .ui-tabs-nav li.ui-state-processing a {
+	cursor: text;
+}
+.ui-tabs .ui-tabs-nav li a,
+.ui-tabs.ui-tabs-collapsible .ui-tabs-nav li.ui-tabs-selected a {
+	cursor: pointer;
+}
+.ui-tabs .ui-tabs-panel {
+	clear: both;
+	padding: 1em;
+	
+	background: none;
+}
+.ui-tabs .ui-tabs-hide { display: none !important; }
