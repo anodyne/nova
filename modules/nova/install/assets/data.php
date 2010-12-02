@@ -2124,8 +2124,8 @@ $messages = array(
 		'message_type' => 'message'),
 	array(
 		'message_key' => 'footer',
-		'message_label' => 'Footer Information',
-		'message_content' => "",
+		'message_label' => 'Additional Footer Information',
+		'message_content' => "New to Nova 2 is the ability to add additional information to the footer, like important credits or even banner exchanges, without having to edit any files. Just plug your code into the 'Additional Footer Information' site message!",
 		'message_type' => 'message'),
 	array(
 		'message_key' => 'contact',
