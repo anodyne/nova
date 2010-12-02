@@ -8,7 +8,7 @@ Nova 2 is currently in heavy, active development. As with any alpha software, bu
 
 ## Current Milestone
 
-Milestone 2
+Milestone 3
 
 The milestone [roadmap](https://github.com/anodyne/nova/wiki/Nova-2-Milestones) describes in greater detail the development work going in to specific milestones.
 
@@ -35,6 +35,9 @@ As of M2, you can do the following with Nova 2:
 <table>
 	<tr>
 		<th>Version</th><th>Description</th><th>Start Date</th><th>End Date</th>
+	</tr>
+	<tr>
+		<td>M3</td><td>User and character systems</td><td>02 December 2010</td><td>-</td>
 	</tr>
 	<tr>
 		<td>M2</td><td>System authentication, password resets, main page, main admin page</td><td>27 September 2010</td><td>02 December 2010</td>
