@@ -1,4 +1,4 @@
-<p class="fontMedium"><?php echo __("step3.text");?></p>
+<p class="fontMedium"><?php echo nl2br(__("step3.text"));?></p>
 
 <hr />
 
