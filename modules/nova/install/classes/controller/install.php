@@ -1041,6 +1041,20 @@ return array
 				// assign the object a shorter variable to use in the method
 				$data = $this->template->layout->content;
 				
+				// get the questions from the db
+				$questions = Jelly::query('securityquestion')->select();
+				
+				// set the questions variable
+				$data->questions = array('' => __('Please Select One'));
+				
+				if (count($questions) > 0)
+				{
+					foreach ($questions as $q)
+					{
+						$data->questions[$q->id] = $q->value;
+					}
+				}
+				
 				// set the validation errors
 				$data->errors = ($session->get('errors')) ? $session->get('errors') : false;
 				
@@ -1104,7 +1118,9 @@ return array
 						->rule('email', 'email')
 						->rule('password', 'not_empty')
 						->rule('password_confirm', 'not_empty')
-						->rule('password_confirm', 'matches', array('password'));
+						->rule('password_confirm', 'matches', array('password'))
+						->rule('security_question', 'not_empty')
+						->rule('security_answer', 'not_empty');
 						
 					if ($validate->check())
 					{
@@ -1116,6 +1132,8 @@ return array
 						$name = trim(Security::xss_clean($_POST['name']));
 						$email = trim(Security::xss_clean($_POST['email']));
 						$password = trim(Security::xss_clean($_POST['password']));
+						$question = trim(Security::xss_clean($_POST['security_question']));
+						$answer = trim(Security::xss_clean($_POST['security_answer']));
 						$first_name = trim(Security::xss_clean($_POST['first_name']));
 						$last_name = trim(Security::xss_clean($_POST['last_name']));
 						$position = trim(Security::xss_clean($_POST['position']));
@@ -1169,6 +1187,8 @@ return array
 								'skin_wiki' => Jelly::query('catalogueskinsec')->defaultskin('wiki')->limit(1)->select()->skin->location,
 								'skin_admin' => Jelly::query('catalogueskinsec')->defaultskin('admin')->limit(1)->select()->skin->location,
 								'rank' => Jelly::query('cataloguerank')->defaultrank()->limit(1)->select()->location,
+								'security_question' => $question,
+								'security_answer' => sha1($answer),
 							))
 							->save();
 						
@@ -1225,6 +1245,8 @@ return array
 						$session->set('name', Security::xss_clean($_POST['name']));
 						$session->set('email', Security::xss_clean($_POST['email']));
 						$session->set('password', Security::xss_clean($_POST['password']));
+						$session->set('security_question', Security::xss_clean($_POST['security_question']));
+						$session->set('security_answer', Security::xss_clean($_POST['security_answer']));
 						$session->set('first_name', Security::xss_clean($_POST['first_name']));
 						$session->set('last_name', Security::xss_clean($_POST['last_name']));
 						$session->set('position', Security::xss_clean($_POST['position']));

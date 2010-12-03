@@ -16,6 +16,9 @@ return array(
 	'app_version_minor' => 0,
 	'app_version_update' => 0,
 	
+	# TODO: remove this for final release
+	'app_dev_build' => '20101203',
+	
 	/**
 	 * Thresher Information
 	 */
