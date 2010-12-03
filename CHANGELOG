@@ -1,3 +1,6 @@
+* updated prettyPhoto plugin to version 3.0.1
+* updated markItUp! plugin to version 1.1.9
+* updated the changelog and changed files listing
 * updated the readme
 * fixed bug where personal logs weren't given the proper date when they were saved first
 * fixed bug where changing a dynamic form field from text/textarea to dropdown wouldn't trigger the dropdown values section to open, making the field pretty much useless
