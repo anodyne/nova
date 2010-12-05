@@ -335,16 +335,31 @@ abstract class Nova_Utility {
 	 */
 	public static function install_status()
 	{
-		// get the database config
-		$dbconf = Kohana::config('database.default');
-		
-		// get an array of the tables in the system
-		$tables = Database::instance()->list_tables($dbconf['table_prefix'].'%');
-		
-		// make sure there aren't any tables in there
-		$retval = (count($tables) > 0) ? true : false;
-		
-		return $retval;
+		// make sure the database config file is there first
+		if ( ! file_exists(APPPATH.'config/database'.EXT))
+		{
+			// get an instance of the request
+			$request = Request::instance();
+			
+			// make sure we take in to account the controllers this needs to ignore
+			if (($request->controller != 'install') or ($request->controller != 'upgrade') or ($request->controller != 'update'))
+			{
+				$request->redirect('install/setupconfig');
+			}
+		}
+		else
+		{
+			// get the database config
+			$dbconf = Kohana::config('database.default');
+			
+			// get an array of the tables in the system
+			$tables = Database::instance()->list_tables($dbconf['table_prefix'].'%');
+			
+			// make sure there aren't any tables in there
+			$retval = (count($tables) > 0) ? true : false;
+			
+			return $retval;
+		}
 	}
 	
 	/**
