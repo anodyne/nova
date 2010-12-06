@@ -342,7 +342,7 @@ abstract class Nova_Utility {
 			$request = Request::instance();
 			
 			// make sure we take in to account the controllers this needs to ignore
-			if (($request->controller != 'install') or ($request->controller != 'upgrade') or ($request->controller != 'update'))
+			if (($request->controller != 'install') and ($request->controller != 'upgrade') and ($request->controller != 'update'))
 			{
 				$request->redirect('install/setupconfig');
 			}
