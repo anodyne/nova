@@ -3747,7 +3747,7 @@ $specs_sections = array(
 $system_components = array(
 	array(
 		'comp_name' => 'CodeIgniter',
-		'comp_version' => '1.7.2',
+		'comp_version' => '1.7.3',
 		'comp_url' => 'http://codeigniter.com/',
 		'comp_desc' => 'CodeIgniter is an open source web application framework for use in building dynamic web sites with PHP. It enables developers to build applications faster - compared to coding from scratch - by providing a rich set of libraries for commonly needed tasks, as well as a simple interface and a logical structure to access these libraries.'),
 	array(

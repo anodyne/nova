@@ -254,6 +254,12 @@ if (!is_null($drop_column))
 /**
  * update the jquery version info
  */
+$this->db->where('comp_name', 'CodeIgniter');
+$this->db->update('system_components', array('comp_version' => '1.7.3'));
+
+/**
+ * update the jquery version info
+ */
 $this->db->where('comp_name', 'jQuery');
 $this->db->update('system_components', array('comp_version' => '1.4.4'));
 
