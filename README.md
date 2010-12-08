@@ -4,7 +4,7 @@ Anodyne Production's next-generation RPG management system combines popular feat
 
 ## Current Version
 
-1.2-pre
+1.2.0
 
 ## Changes in 1.2
 
@@ -20,6 +20,7 @@ Anodyne Production's next-generation RPG management system combines popular feat
 * updated the email sent to the game master from the join form to show the IP address of the applicant
 * updated the contact form to be simpler and use proper form validation
 * updated the departments model with methods for handling multiple manifests
+* updated codeigniter to version 1.7.3
 * updated jquery to version 1.4.4
 * updated jquery ui to version 1.8.6
 * updated markItUp! plugin to version 1.1.9
@@ -29,6 +30,7 @@ Anodyne Production's next-generation RPG management system combines popular feat
 * updated position management to split departments out by manifest
 * updated the write controller to check for whether a user has a character associated with their account and if they don't redirct them to an error page
 * updated some of the model methods to correct for situations where the user or character ID might not be present and throw errors
+* updated the basic and dev install data to fix a typo
 * updated the language files
     * [base\_lang] added _labels\_ban_
     * [base\_lang] added _labels\_bans_
@@ -75,7 +77,7 @@ Anodyne Production's next-generation RPG management system combines popular feat
 		<th>Version</th><th>Release Date</th>
 	</tr>
 	<tr>
-		<td>1.2</td><td>-</td>
+		<td>1.2</td><td>17 December 2010</td>
 	</tr>
 	<tr>
 		<td>1.1.2</td><td>14 October 2010</td>
