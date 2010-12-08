@@ -28,6 +28,7 @@ Anodyne Production's next-generation RPG management system combines popular feat
 * updated department management with a better interface for working with departments
 * updated position management to split departments out by manifest
 * updated the write controller to check for whether a user has a character associated with their account and if they don't redirct them to an error page
+* updated some of the model methods to correct for situations where the user or character ID might not be present and throw errors
 * updated the language files
     * [base\_lang] added _labels\_ban_
     * [base\_lang] added _labels\_bans_

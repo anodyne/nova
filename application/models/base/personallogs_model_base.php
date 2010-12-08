@@ -5,13 +5,10 @@
 |---------------------------------------------------------------
 |
 | File: models/personallogs_model_base.php
-| System Version: 1.1
+| System Version: 1.2
 |
-| Changes: fixed bug where saved personal logs would be shown
-|	along with activated logs for users with multiple characters
-|	tied to their account because of the way the query was built;
-|	fixed bug where log next/previous links could be wrong under
-|	certain circumstances
+| Changes: updated some of the methods to avoid situations where
+|	errors could be thrown if a character or user ID wasn't present
 |
 | Model used to access the personal logs and personal logs comments tables.
 |
@@ -297,24 +294,27 @@ class Personallogs_model_base extends Model {
 	{
 		$count = 0;
 		
-		if (is_array($character))
+		if ( ! empty($character) && $character !== FALSE && $character !== NULL)
 		{
-			foreach ($character as $value)
+			if (is_array($character))
+			{
+				foreach ($character as $value)
+				{
+					$this->db->where('log_status', $status);
+					$this->db->where('log_author_character', $value);
+					$this->db->from('personallogs');
+				
+					$count += $this->db->count_all_results();
+				}
+			}
+			else
 			{
 				$this->db->where('log_status', $status);
-				$this->db->where('log_author_character', $value);
+				$this->db->where('log_author_character', $character);
 				$this->db->from('personallogs');
-				
+			
 				$count += $this->db->count_all_results();
 			}
-		}
-		else
-		{
-			$this->db->where('log_status', $status);
-			$this->db->where('log_author_character', $character);
-			$this->db->from('personallogs');
-			
-			$count += $this->db->count_all_results();
 		}
 		
 		return $count;
@@ -336,11 +336,14 @@ class Personallogs_model_base extends Model {
 	{
 		$count = 0;
 		
-		$this->db->from('personallogs_comments');
-		$this->db->where('lcomment_status', 'activated');
-		$this->db->where('lcomment_author_user', $user);
+		if ( ! empty($user) && $user !== FALSE && $user !== NULL)
+		{
+			$this->db->from('personallogs_comments');
+			$this->db->where('lcomment_status', 'activated');
+			$this->db->where('lcomment_author_user', $user);
 			
-		$count = $this->db->count_all_results();
+			$count = $this->db->count_all_results();
+		}
 		
 		return $count;
 	}
@@ -349,21 +352,24 @@ class Personallogs_model_base extends Model {
 	{
 		$count = 0;
 		
-		$this->db->from('personallogs');
-		
-		if (!empty($status))
+		if ( ! empty($id) && $id !== FALSE && $id !== NULL)
 		{
-			$this->db->where('log_status', $status);
-		}
+			$this->db->from('personallogs');
 		
-		if (!empty($timeframe))
-		{
-			$this->db->where('log_date >=', $timeframe);
-		}
+			if (!empty($status))
+			{
+				$this->db->where('log_status', $status);
+			}
 		
-		$this->db->where('log_author_user', $id);
+			if (!empty($timeframe))
+			{
+				$this->db->where('log_date >=', $timeframe);
+			}
+		
+			$this->db->where('log_author_user', $id);
 			
-		$count = $this->db->count_all_results();
+			$count = $this->db->count_all_results();
+		}
 		
 		return $count;
 	}

@@ -5,10 +5,10 @@
 |---------------------------------------------------------------
 |
 | File: models/base/news_model.php
-| System Version: 1.1
+| System Version: 1.2
 |
-| Changes: fixed bug where news item next/previous links could be
-|	wrong under certain circumstances
+| Changes: updated some of the methods to avoid situations where
+|	errors could be thrown if a character or user ID wasn't present
 |
 | Model used to access the news, news categories, and news
 | comments tables.
@@ -358,17 +358,20 @@ class News_model_base extends Model {
 	{
 		$count = 0;
 		
-		$this->db->from('news');
-		$this->db->where('news_status', $status);
-		
-		if (!empty($timeframe))
+		if ( ! empty($id) && $id !== FALSE && $id !== NULL)
 		{
-			$this->db->where('news_date >=', $timeframe);
-		}
+			$this->db->from('news');
+			$this->db->where('news_status', $status);
 		
-		$this->db->where('news_author_user', $id);
+			if (!empty($timeframe))
+			{
+				$this->db->where('news_date >=', $timeframe);
+			}
+		
+			$this->db->where('news_author_user', $id);
 			
-		$count = $this->db->count_all_results();
+			$count = $this->db->count_all_results();
+		}
 		
 		return $count;
 	}
@@ -377,11 +380,14 @@ class News_model_base extends Model {
 	{
 		$count = 0;
 		
-		$this->db->from('news_comments');
-		$this->db->where('ncomment_status', 'activated');
-		$this->db->where('ncomment_author_user', $user);
+		if ( ! empty($user) && $user !== FALSE && $user !== NULL)
+		{
+			$this->db->from('news_comments');
+			$this->db->where('ncomment_status', 'activated');
+			$this->db->where('ncomment_author_user', $user);
 			
-		$count = $this->db->count_all_results();
+			$count = $this->db->count_all_results();
+		}
 		
 		return $count;
 	}

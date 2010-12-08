@@ -5,13 +5,10 @@
 |---------------------------------------------------------------
 |
 | File: models/posts_model_base.php
-| System Version: 1.1
+| System Version: 1.2
 |
-| Changes: added parameter to get_unattended_posts for pulling
-|	specific statuses back; updated the get_unattended_posts
-|	method with better logic for single characters being passed
-|	in to the method; fixed bug where post next/previous links
-|	could be wrong under certain circumstances
+| Changes: updated some of the methods to avoid situations where
+|	errors could be thrown if a character or user ID wasn't present
 |
 | Model used to access the posts and posts comments tables.
 |
@@ -347,7 +344,7 @@ class Posts_model_base extends Model {
 		$this->db->from('posts_comments');
 		$this->db->where('pcomment_status', $status);
 		
-		if (!empty($id))
+		if ( ! empty($id))
 		{
 			$this->db->where('pcomment_post', $id);
 		}
@@ -376,37 +373,40 @@ class Posts_model_base extends Model {
 	{
 		$count_final = 0;
 		
-		$this->db->from('posts');
-		$this->db->where('post_status', $status);
-		
-		if (is_array($character))
+		if ( ! empty($character) && $character !== FALSE && $character !== NULL)
 		{
-			/* make sure the keys are set up right */
-			$character = array_values($character);
-			
-			/* count the items in the array */
-			$count = count($character);
-			
-			/* set the initial string */
-			$string = "";
-			
-			for ($i=0; $i < $count; $i++)
+			$this->db->from('posts');
+			$this->db->where('post_status', $status);
+		
+			if (is_array($character))
 			{
-				$or = ($i > 0) ? ' OR ' : '';
+				/* make sure the keys are set up right */
+				$character = array_values($character);
+			
+				/* count the items in the array */
+				$count = count($character);
+			
+				/* set the initial string */
+				$string = "";
+			
+				for ($i=0; $i < $count; $i++)
+				{
+					$or = ($i > 0) ? ' OR ' : '';
 				
-				$string.= $or . "(post_authors LIKE '%,$character[$i]' OR post_authors LIKE '$character[$i],%' OR post_authors LIKE '%,$character[$i],%' OR post_authors = $character[$i])";
+					$string.= $or . "(post_authors LIKE '%,$character[$i]' OR post_authors LIKE '$character[$i],%' OR post_authors LIKE '%,$character[$i],%' OR post_authors = $character[$i])";
+				}
+			
+				$this->db->where("($string)", NULL);
 			}
+			else
+			{
+				$string = "(post_authors LIKE '%,$character' OR post_authors LIKE '$character,%' OR post_authors = '%,$character,%' OR post_authors = $character)";
 			
-			$this->db->where("($string)", NULL);
-		}
-		else
-		{
-			$string = "(post_authors LIKE '%,$character' OR post_authors LIKE '$character,%' OR post_authors = '%,$character,%' OR post_authors = $character)";
-			
-			$this->db->where("$string", NULL);
-		}
+				$this->db->where("$string", NULL);
+			}
 		
-		$count_final += $this->db->count_all_results();
+			$count_final += $this->db->count_all_results();
+		}
 		
 		return $count_final;
 	}
@@ -517,7 +517,7 @@ class Posts_model_base extends Model {
 		$this->db->from('posts');
 		$this->db->where('post_status', $status);
 		
-		if (!empty($id))
+		if ( ! empty($id))
 		{
 			if (is_array($id))
 			{
@@ -559,11 +559,14 @@ class Posts_model_base extends Model {
 	{
 		$count = 0;
 		
-		$this->db->from('posts_comments');
-		$this->db->where('pcomment_status', 'activated');
-		$this->db->where('pcomment_author_user', $user);
+		if ( ! empty($user) && $user !== FALSE && $user !== NULL)
+		{
+			$this->db->from('posts_comments');
+			$this->db->where('pcomment_status', 'activated');
+			$this->db->where('pcomment_author_user', $user);
 			
-		$count = $this->db->count_all_results();
+			$count = $this->db->count_all_results();
+		}
 		
 		return $count;
 	}
@@ -572,19 +575,22 @@ class Posts_model_base extends Model {
 	{
 		$count = 0;
 		
-		$this->db->from('posts');
-		$this->db->where('post_status', $status);
-		
-		if (!empty($timeframe))
+		if ( ! empty($id) && $id !== FALSE && $id !== NULL)
 		{
-			$this->db->where('post_date >=', $timeframe);
-		}
+			$this->db->from('posts');
+			$this->db->where('post_status', $status);
 		
-		$string = "(post_authors_users LIKE '%,$id' OR post_authors_users LIKE '$id,%' OR post_authors_users LIKE '%,$id,%' OR post_authors_users = $id)";
+			if (!empty($timeframe))
+			{
+				$this->db->where('post_date >=', $timeframe);
+			}
+		
+			$string = "(post_authors_users LIKE '%,$id' OR post_authors_users LIKE '$id,%' OR post_authors_users LIKE '%,$id,%' OR post_authors_users = $id)";
 			
-		$this->db->where("($string)", NULL);
+			$this->db->where("($string)", NULL);
 			
-		$count = $this->db->count_all_results();
+			$count = $this->db->count_all_results();
+		}
 		
 		return $count;
 	}
