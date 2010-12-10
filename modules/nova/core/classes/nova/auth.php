@@ -16,12 +16,12 @@ abstract class Nova_Auth {
 	/**
 	 * @var	integer	Number of attempts allowed before lockout
 	 */
-	public static $allowed_login_attempts = 2;
+	public static $allowed_login_attempts = 5;
 	
 	/**
 	 * @var	integer	Number of seconds the lockout lasts
 	 */
-	public static $lockout_time = 120;
+	public static $lockout_time = 1800;
 	
 	/**
 	 * @var	object	an instance of the session for use throughout the class
