@@ -13,6 +13,7 @@ application/assets/images/tour/
 application/views/quixly/
 application/views/apollo/
 application/views/lcars/
+application/views/rocket/
 
 *~
 *.bak
