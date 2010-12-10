@@ -512,6 +512,7 @@ abstract class Nova_Auth {
 		self::$session->set('characters', $chars);
 		self::$session->set('access', self::_set_access($person->role->id));
 		self::$session->set('my_links', $links);
+		self::$session->set('status', $person->get_status());
 		
 		// set the password reset session variable if it needs to be set
 		if ($person->password_reset == 1)
@@ -525,7 +526,8 @@ abstract class Nova_Auth {
 			self::$session->set('first_launch', $person->is_firstlaunch);
 		}
 		
-		# TODO: need to optimize the table
+		// optimize the table
+		DBForge::optimize('sessions');
 	}
 	
 	/**
