@@ -32,6 +32,7 @@ class Controller_Nova_Admin_Users extends Controller_Nova_Base {
 		$this->rank		= $this->session->get('display_rank', $this->options->display_rank);
 		$this->timezone	= $this->session->get('timezone', $this->options->timezone);
 		$this->dst		= $this->session->get('dst', $this->options->daylight_savings);
+		$this->section	= 'admin';
 		
 		// set the values to be passed to the views
 		$vars = array(
@@ -103,11 +104,91 @@ class Controller_Nova_Admin_Users extends Controller_Nova_Base {
 			}
 		}
 		
+		// images
+		$data->images = array(
+			'approve' => array(
+				'src' => Location::image($this->images['admin.approve'], $this->skin, $this->section),
+				'attr' => array(
+					'alt' => 'approve',
+					'title' => ucfirst(__('approve')))),
+			'edit' => array(
+				'src' => Location::image($this->images['admin.edit'], $this->skin, $this->section),
+				'attr' => array(
+					'alt' => 'edit',
+					'title' => ucfirst(__('edit')))),
+			'delete' => array(
+				'src' => Location::image($this->images['admin.delete'], $this->skin, $this->section),
+				'attr' => array(
+					'alt' => 'delete',
+					'title' => ucfirst(__('delete')))),
+			'link' => array(
+				'src' => Location::image($this->images['admin.link'], $this->skin, $this->section),
+				'attr' => array(
+					'alt' => 'link',
+					'title' => ucfirst(__('link')))),
+			'reject' => array(
+				'src' => Location::image($this->images['admin.reject'], $this->skin, $this->section),
+				'attr' => array(
+					'alt' => 'reject',
+					'title' => ucfirst(__('reject')))),
+		);
+		
 		// content
 		$data->header = ucwords(__("all :users", array(':users' => __('users'))));
 		$this->template->title.= $data->header;
 		
 		// send the response
 		$this->request->response = $this->template;
+	}
+	
+	public function action_account($id = null)
+	{
+		// if there is no ID, set it to the current user
+		$id = ($id === null) ? $this->session->get('userid') : $id;
+		
+		if ($id != $this->session->get('userid') and Auth::get_access_level() < 2)
+		{
+			// nope, nice try though
+			// $this->request->redirect();
+		}
+		
+		// create a new content view
+		$this->template->layout->content = View::factory(Location::view('users_account', $this->skin, $this->section, 'pages'));
+		
+		// create the javascript view
+		$this->template->javascript = View::factory(Location::view('users_account_js', $this->skin, $this->section, 'js'));
+		
+		// assign the object a shorter variable to use in the method
+		$data = $this->template->layout->content;
+		
+		// send the ID over
+		$data->id = $id;
+		
+		// get the user requested in the URI
+		$data->user = Jelly::query('user', $id)->select();
+		
+		// content
+		$data->header = ($id == $this->session->get('userid'))
+			? ucwords(__(':my :account', array(':my' => __('my'), ':account' => __('account'))))
+			: ucwords(__(":user :account", array(':user' => __('user'), ':account' => __('account'))));
+		$this->template->title.= $data->header;
+		
+		// send the response
+		$this->request->response = $this->template;
+	}
+	
+	public function link($id = null)
+	{
+		# code...
+	}
+	
+	public function nominate()
+	{
+		# code...
+	}
+	
+	public function status()
+	{
+		# code...
 	}
 }
