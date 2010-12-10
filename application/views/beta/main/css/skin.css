@@ -120,6 +120,22 @@ hr {
 	color: #fff;
 }
 
+kbd { font-family: helvetica, arial, sans-serif; }
+
+input[type=text],
+input[type=password],
+input[type=email],
+select,
+textarea {
+	border: 1px solid #bbb;
+	font-size: 110%;
+	font-family: helvetica, arial, sans-serif;
+	color: #444;
+	
+	border-radius: 3px;
+	-moz-border-radius: 3px;
+}
+
 #panel, .panel-handle { display: none; }
 
 a { color: #1e5799; }
