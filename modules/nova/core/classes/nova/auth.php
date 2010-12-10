@@ -119,18 +119,18 @@ abstract class Nova_Auth {
 	 */
 	public static function get_access_level($uri = null)
 	{
+		// get an instance of the request object
+		$request = Request::instance();
+		
 		// make sure the uri is set properly
 		$uri = ($uri === null) ? self::_set_uri() : $uri;
 		
 		// grab the session
-		$session = self::$session->get('access', array());
-		
-		// break out the segments
-		$segments = (is_array($uri)) ? $uri[1] .'/'. $uri[2] : $uri;
+		$access = self::$session->get('access', array());
 			
-		if (array_key_exists($segments, $session))
+		if (array_key_exists($uri, $access))
 		{
-			return $session[$segments];
+			return $access[$uri];
 		}
 		
 		return false;
@@ -533,15 +533,24 @@ abstract class Nova_Auth {
 	/**
 	 * Set the URI (called from the get_access_level and check_access methods)
 	 *
+	 * @param	boolean	whether to include the directory at the start of the URI
 	 * @return	string	a string with the URI properly set
 	 */
-	protected static function _set_uri()
+	protected static function _set_uri($directory = false)
 	{
-		// slice the current uri to only the first 2 segments
-		$uri = array_slice(explode('/', Request::instance()->uri()), 0, 2);
+		// get an instance of the request object
+		$request = Request::instance();
 		
-		// if there's only one array key, push INDEX on to the end
-		$uri = (count($uri) == 1) ? array_push($uri, 'index') : $uri;
+		if ($directory === true)
+		{
+			$uri[] = $request->directory;
+		}
+		
+		// add the controller
+		$uri[] = $request->controller;
+		
+		// add the action
+		$uri[] = (empty($request->action)) ? 'index' : $request->action;
 		
 		// return the string
 		return implode('/', $uri);
