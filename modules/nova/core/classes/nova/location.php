@@ -218,4 +218,4 @@ abstract class Nova_Location {
 		
 		return false;
 	}
-} // End Location
+}
