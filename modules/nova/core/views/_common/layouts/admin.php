@@ -34,6 +34,8 @@
 		
 		<script type="text/javascript">
 			$(document).ready(function(){
+				$('table.zebra tbody > tr:nth-child(odd)').addClass('alt');
+				
 				$.lazy({
 					src: '<?php echo url::base().MODFOLDER;?>/assets/js/jquery.ui.tabs.min.js',
 					name: 'tabs',
