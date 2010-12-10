@@ -1,3 +1,6 @@
+* fixing the merge conflicts
+* updated some of the model methods to avoid situations where the user or character ID might not be present. this was fixed in the controllers and libraries for the most part, but this continues to work through the issue at its source.
+* updated the changelog
 * updated the install and update files
 * updated the changelog and changed files listing
 * updated codeigniter to version 1.7.3

@@ -146,7 +146,10 @@ M	application/language/english/error_lang.php
 M	application/language/english/text_lang.php
 M	application/libraries/User_panel.php
 M	application/models/base/depts_model_base.php
+M	application/models/base/news_model_base.php
+M	application/models/base/personallogs_model_base.php
 M	application/models/base/positions_model_base.php
+M	application/models/base/posts_model_base.php
 M	application/models/base/system_model_base.php
 M	application/models/base/tour_model_base.php
 M	application/models/base/users_model_base.php
