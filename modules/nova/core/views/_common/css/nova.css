@@ -7,6 +7,13 @@ html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abb
 
 /*
 |---------------------------------------------------------------
+| BODY
+|---------------------------------------------------------------
+*/
+body { font: 75%/1.6 helvetica, arial, sans-serif; }
+
+/*
+|---------------------------------------------------------------
 | FONTS
 |---------------------------------------------------------------
 */
@@ -86,8 +93,7 @@ kbd {
 	display: block;
 	margin: 0 0 5px 0;
 	
-	font-weight: bold;
-	font-size: 115%;
+	font: bold 115% helvetica, arial, sans-serif;
 }
 
 /*
@@ -102,7 +108,11 @@ button, button.btn-small { outline: 0 !important; }
 | TABLES
 |---------------------------------------------------------------
 */
-table { font-size: 100%; }
+table {
+	position: relative;
+	
+	font-size: 100%;
+}
 
 .table100	{ width: 100%; }
 .table75	{ width: 75%; }
@@ -116,6 +126,7 @@ td {
 	padding: 3px;
 	vertical-align: middle;
 }
+td img { vertical-align: middle; }
 
 .col-15		{ width: 15px; }
 .col-30		{ width: 30px; }
