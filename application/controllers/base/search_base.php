@@ -5,10 +5,10 @@
 |---------------------------------------------------------------
 |
 | File: controllers/base/search_base.php
-| System Version: 1.1.1
+| System Version: 1.2
 |
-| Changes: fixed a bug where nova wouldn't display because it
-|	couldn't find the template file
+| Changes: fixed a bug where wiki search results used a wrong link
+|	to send users to the wiki page
 |
 */
 
@@ -270,7 +270,7 @@ class Search_base extends Controller {
 							if ($row !== FALSE)
 							{
 								$data['results'][$i]['content'] = $row->draft_content;
-								$data['results'][$i]['link'] = anchor('wiki/page/view/'. $item->draft_page, $row->draft_title);
+								$data['results'][$i]['link'] = anchor('wiki/view/page/'. $item->draft_page, $row->draft_title);
 							}
 							
 							break;
