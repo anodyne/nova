@@ -267,7 +267,7 @@ $this->db->update('system_components', array('comp_version' => '1.4.4'));
  * update the jquery ui version info
  */
 $this->db->where('comp_name', 'jQuery UI');
-$this->db->update('system_components', array('comp_version' => '1.8.6'));
+$this->db->update('system_components', array('comp_version' => '1.8.7'));
 
 /**
  * update the markItUp! version info

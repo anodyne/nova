@@ -13,7 +13,6 @@ Anodyne Production's next-generation RPG management system combines popular feat
 * added a page that level 2 bans are redirected to
 * added the validation error image to the assets directory
 * added the assignment image to the admin \_base directory
-* added seaquest dsv to the available genres
 * added prettyPhoto jquery plugin to replace fancybox
 * removed fancybox jquery plugin
 * updated the applications report to show email address and IP address of the user who applied
@@ -22,7 +21,7 @@ Anodyne Production's next-generation RPG management system combines popular feat
 * updated the departments model with methods for handling multiple manifests
 * updated codeigniter to version 1.7.3
 * updated jquery to version 1.4.4
-* updated jquery ui to version 1.8.6
+* updated jquery ui to version 1.8.7
 * updated markItUp! plugin to version 1.1.9
 * updated the autoload config item to not try and autoload the input library since CI loads it by default
 * updated the user model with a method to pull user information based on characters in the database
