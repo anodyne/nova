@@ -5,7 +5,7 @@
  * @package		Nova
  * @category	Install
  * @author		Anodyne Productions
- * @since		1.2
+ * @since		1.3
  */
 
 # electronics technician
@@ -843,18 +843,18 @@ $positions = array(
 		'pos_type' => 'officer'),
 		
 	array(
-		'pos_name' => 'Chief of the Deck',
-		'pos_desc' => "The Deck Chief is responsible the overall repair and readiness of all combat spacecraft on a battlestar.",
+		'pos_name' => 'Chief EVA Officer',
+		'pos_desc' => "The Chief EVA Officer is responsible for all extra vehicular activity that goes on outside of the ship. This often includes working with the Helm department to coordinate mini-sub missions, oversight of the launch bay and use of any other EVA equipment. In addition, the Chief EVA Officer is responsible for the safe execution of all EVA missions from the ship. The Chief EVA Officer must be certified in the use of all EVA equipment aboard the ship and routinely trains the crew and other EVA department personnel on the EVA equipment.",
 		'pos_dept' => 5,
 		'pos_order' => 0,
 		'pos_open' => 1,
 		'pos_type' => 'senior'),
 	array(
-		'pos_name' => 'Landing Signal Officer',
-		'pos_desc' => "The Landing Signal Officer (LSO) is the officer who is responsible for all flight operations on the flight pods of battlestars and other military vessels. This includes the landing of all vessels, from Vipers and Raptors to small liners, as well as the operation of the launch tubes.",
+		'pos_name' => 'EVA Operator',
+		'pos_desc' => "EVA Operators are responsible for operating much of the EVA equipment aboard the ship. While the Helm department handles driving mini-subs most of the time, the EVA Operators are also capable of piloting the craft. In most cases, the EVA Operators only have general certification on the equipment and must defer to the Chief EVA Officer or EVA Equipment Specialist for ",
 		'pos_dept' => 5,
-		'pos_order' => 5,
-		'pos_open' => 2,
+		'pos_order' => 1,
+		'pos_open' => 5,
 		'pos_type' => 'officer'),
 	array(
 		'pos_name' => 'Deckhand',
@@ -863,6 +863,7 @@ $positions = array(
 		'pos_order' => 10,
 		'pos_open' => 5,
 		'pos_type' => 'enlisted'),
+		
 	array(
 		'pos_name' => 'Chief Medical Officer',
 		'pos_desc' => "The Chief Medical Officer is responsible for the physical health of the entire crew, but does more than patch up injured crew members. His/her function is to ensure that they do not get sick or injured to begin with, and to this end monitors their health and conditioning with regular check ups. If necessary, the Chief Medical Officer can remove anyone from duty, even a Commanding Officer. Besides this s/he is available to provide medical advice to any individual who requests it.\r\n\r\nS/he also is a department head and a member of the Senior Staff and responsible for all the crew members in her/his department and duty rosters.",
