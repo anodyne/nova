@@ -94,6 +94,10 @@ A	application/assets/js/images/prettyPhoto/light_square/index.html
 A	application/assets/js/images/prettyPhoto/light_square/loader.gif
 A	application/assets/js/images/prettyPhoto/light_square/sprite.png
 D	application/assets/js/images/ui-anim_basic_16x16.gif
+D	application/assets/js/images/ui-bg_flat_75_ffffff_40x100.png
+A	application/assets/js/images/ui-bg_glass_75_ffffff_1x400.png
+D	application/assets/js/images/ui-bg_glass_95_fef1ec_1x400.png
+A	application/assets/js/images/ui-bg_inset-soft_95_fef1ec_1x100.png
 M	application/assets/js/images/ui-icons_222222_256x240.png
 M	application/assets/js/images/ui-icons_2e83ff_256x240.png
 M	application/assets/js/images/ui-icons_454545_256x240.png
