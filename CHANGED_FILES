@@ -369,6 +369,7 @@ A	application/views/titan/wiki/index.html
 A	application/views/titan/wiki/js/index.html
 A	application/views/titan/wiki/pages/index.html
 A	banned.php
+A	batch/update.sh
 M	core/codeigniter/Base4.php
 M	core/codeigniter/Base5.php
 M	core/codeigniter/CodeIgniter.php
