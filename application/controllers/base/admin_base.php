@@ -1,17 +1,15 @@
 <?php
-/*
-|---------------------------------------------------------------
-| ADMIN CONTROLLER
-|---------------------------------------------------------------
-|
-| File: controllers/admin_base.php
-| System Version: 1.2
-|
-| Changes: fixed bug where users with no active characters would
-|	be shown in the activity warning list in the ACP; fixed errors
-|	thrown on the ACP when a user doesn't have a character assigned
-|
-*/
+/**
+ * Admin controller
+ *
+ * @package		Nova
+ * @category	Controller
+ * @author		Anodyne Productions
+ * @copyright	2010-11 Anodyne Productions
+ * @version		1.3
+ *
+ * Updated the flash messages so they can be overridden by seamless substitution
+ */
 
 class Admin_base extends Controller {
 
@@ -180,8 +178,11 @@ class Admin_base extends Controller {
 						$flash['message'] = text_output($message);
 					}
 					
+					// set the location of the flash view
+					$flashloc = view_location('flash', $this->skin, 'admin');
+					
 					/* write everything to the template */
-					$this->template->write_view('flash_message', '_base/admin/pages/flash', $flash);
+					$this->template->write_view('flash_message', $flashloc, $flash);
 				}
 			}
 			
@@ -442,15 +443,15 @@ class Admin_base extends Controller {
 				{
 					case 'critical':
 						$data['update']['severity'] = 'red';
-						break;
+					break;
 					
 					case 'major':
 						$data['update']['severity'] = 'orange';
-						break;
+					break;
 						
 					case 'minor':
 						$data['update']['severity'] = 'blue';
-						break;
+					break;
 				}
 			}
 		}
@@ -641,8 +642,7 @@ class Admin_base extends Controller {
 						$update['severity']		= $array['severity'];
 						$update['link']			= $array['link'];
 					}
-				
-					break;
+				break;
 					
 				case 'minor':
 				
@@ -653,8 +653,7 @@ class Admin_base extends Controller {
 						$update['severity']		= $array['severity'];
 						$update['link']			= $array['link'];
 					}
-					
-					break;
+				break;
 					
 				case 'update':
 				
@@ -665,8 +664,7 @@ class Admin_base extends Controller {
 						$update['severity']		= $array['severity'];
 						$update['link']			= $array['link'];
 					}
-					
-					break;
+				break;
 					
 				case 'all':
 				
@@ -677,8 +675,7 @@ class Admin_base extends Controller {
 						$update['severity']		= $array['severity'];
 						$update['link']			= $array['link'];
 					}
-				
-					break;
+				break;
 			}
 			
 			if (version_compare($version['database']['full'], $version['files']['full'], '>'))
@@ -730,6 +727,3 @@ class Admin_base extends Controller {
 		return FALSE;
 	}
 }
-
-/* End of file admin_base.php */
-/* Location: ./application/controllers/admin_base.php */

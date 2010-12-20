@@ -1,17 +1,15 @@
 <?php
-/*
-|---------------------------------------------------------------
-| ADMIN - MESSAGES CONTROLLER
-|---------------------------------------------------------------
-|
-| File: controllers/messages_base.php
-| System Version: 1.2
-|
-| Changes: fixed bug where the email sent out didn't contain the
-|	content of the private message; fixed bug where pending users
-|	would appear in the dropdown for potential recipients of a PM
-|
-*/
+/**
+ * Messages controller
+ *
+ * @package		Nova
+ * @category	Controller
+ * @author		Anodyne Productions
+ * @copyright	2010-11 Anodyne Productions
+ * @version		1.3
+ *
+ * Updated the flash messages so they can be overridden by seamless substitution
+ */
 
 class Messages_base extends Controller {
 
@@ -156,8 +154,11 @@ class Messages_base extends Controller {
 					$flash['message'] = text_output($message);
 				}
 				
+				// set the location of the flash view
+				$flashloc = view_location('flash', $this->skin, 'admin');
+				
 				/* write everything to the template */
-				$this->template->write_view('flash_message', '_base/admin/pages/flash', $flash);
+				$this->template->write_view('flash_message', $flashloc, $flash);
 			}
 			
 			if (isset($_POST['outbox']))
@@ -207,8 +208,11 @@ class Messages_base extends Controller {
 					$flash['message'] = text_output($message);
 				}
 				
+				// set the location of the flash view
+				$flashloc = view_location('flash', $this->skin, 'admin');
+				
 				/* write everything to the template */
-				$this->template->write_view('flash_message', '_base/admin/pages/flash', $flash);
+				$this->template->write_view('flash_message', $flashloc, $flash);
 			}
 		}
 		
@@ -470,8 +474,11 @@ class Messages_base extends Controller {
 			$flash['status'] = 'info';
 			$flash['message'] = lang_output('flash_system_email_off');
 			
+			// set the location of the flash view
+			$flashloc = view_location('flash', $this->skin, 'admin');
+			
 			/* write everything to the template */
-			$this->template->write_view('flash_message', '_base/admin/pages/flash', $flash);
+			$this->template->write_view('flash_message', $flashloc, $flash);
 		}
 		
 		/* set the action array */
@@ -497,8 +504,11 @@ class Messages_base extends Controller {
 				$flash['status'] = 'error';
 				$flash['message'] = lang_output('flash_privmsgs_no_recipient');
 				
+				// set the location of the flash view
+				$flashloc = view_location('flash', $this->skin, 'admin');
+				
 				/* write everything to the template */
-				$this->template->write_view('flash_message', '_base/admin/pages/flash', $flash);
+				$this->template->write_view('flash_message', $flashloc, $flash);
 			}
 			else
 			{
@@ -588,8 +598,11 @@ class Messages_base extends Controller {
 					$flash['message'] = text_output($message);
 				}
 				
+				// set the location of the flash view
+				$flashloc = view_location('flash', $this->skin, 'admin');
+				
 				/* write everything to the template */
-				$this->template->write_view('flash_message', '_base/admin/pages/flash', $flash);
+				$this->template->write_view('flash_message', $flashloc, $flash);
 			}
 			
 			/* reset the message and subject variables */
@@ -723,8 +736,7 @@ class Messages_base extends Controller {
 					'date' => mdate($this->options['date_format'], $date),
 					'content' => $row->privmsgs_content
 				);
-				
-				break;
+			break;
 			
 			case 'replyall':
 				/* set the hidden TO field */
@@ -765,8 +777,7 @@ class Messages_base extends Controller {
 					'date' => mdate($this->options['date_format'], $date),
 					'content' => $row->privmsgs_content
 				);
-				
-				break;
+			break;
 				
 			case 'forward':
 				/* set the hidden TO field */
@@ -800,12 +811,12 @@ class Messages_base extends Controller {
 				
 				/* set the header */
 				$data['header'] = ucfirst(lang('actions_forward')) .' '. ucwords(lang('global_privatemessage'));
-				
-				break;
+			break;
 				
 			default:
 				$data['to'] = 0;
 				$data['header'] = ucwords(lang('actions_write') .' '. lang('global_privatemessage'));
+			break;
 		}
 		
 		$data['label'] = array(
@@ -918,6 +929,3 @@ class Messages_base extends Controller {
 		return $email;
 	}
 }
-
-/* End of file messages_base.php */
-/* Location: ./application/controllers/messages_base.php */

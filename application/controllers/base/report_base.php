@@ -1,16 +1,16 @@
 <?php
-/*
-|---------------------------------------------------------------
-| ADMIN - REPORT CONTROLLER
-|---------------------------------------------------------------
-|
-| File: controllers/report_base.php
-| System Version: 1.2
-|
-| Changes: updated the applications report with the IP address and
-|	email address of an applicant
-|
-*/
+/**
+ * Report controller
+ *
+ * @package		Nova
+ * @category	Controller
+ * @author		Anodyne Productions
+ * @copyright	2010-11 Anodyne Productions
+ * @version		1.2
+ *
+ * Updated the applications report with the IP address and email address
+ *	of an applicant
+ */
 
 class Report_base extends Controller {
 
@@ -946,6 +946,3 @@ class Report_base extends Controller {
 		$this->template->render();
 	}
 }
-
-/* End of file report_base.php */
-/* Location: ./application/controllers/report_base.php */

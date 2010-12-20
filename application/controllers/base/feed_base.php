@@ -1,13 +1,13 @@
 <?php
-/*
-|---------------------------------------------------------------
-| RSS FEED CONTROLLER
-|---------------------------------------------------------------
-|
-| File: controllers/base/feed_base.php
-| System Version: 1.0
-|
-*/
+/**
+ * RSS feed controller
+ *
+ * @package		Nova
+ * @category	Controller
+ * @author		Anodyne Productions
+ * @copyright	2010-11 Anodyne Productions
+ * @version		1.0
+ */
 
 class Feed_base extends Controller {
 	
@@ -178,6 +178,3 @@ class Feed_base extends Controller {
 		$this->template->render();
 	}
 }
-
-/* End of file feed_base.php */
-/* Location: ./application/controllers/base/feed_base.php */

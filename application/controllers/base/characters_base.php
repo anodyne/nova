@@ -1,16 +1,15 @@
 <?php
-/*
-|---------------------------------------------------------------
-| ADMIN - CHARACTERS CONTROLLER
-|---------------------------------------------------------------
-|
-| File: controllers/characters_base.php
-| System Version: 1.1.1
-|
-| Changes: fixed bug where nova wouldn't display if the template
-|	file couldn't be found
-|
-*/
+/**
+ * Characters controller
+ *
+ * @package		Nova
+ * @category	Controller
+ * @author		Anodyne Productions
+ * @copyright	2010-11 Anodyne Productions
+ * @version		1.3
+ *
+ * Updated the flash messages so they can be overridden by seamless substitution
+ */
 
 class Characters_base extends Controller {
 
@@ -203,10 +202,12 @@ class Characters_base extends Controller {
 						$flash['message'] = text_output($message);
 					}
 					
-					/* write everything to the template */
-					$this->template->write_view('flash_message', '_base/admin/pages/flash', $flash);
+					// set the location of the flash view
+					$flashloc = view_location('flash', $this->skin, 'admin');
 					
-					break;
+					/* write everything to the template */
+					$this->template->write_view('flash_message', $flashloc, $flash);
+				break;
 					
 				case 'pending':
 					$id = $this->input->post('id', TRUE);
@@ -375,10 +376,12 @@ class Characters_base extends Controller {
 						}
 					}
 					
-					/* write everything to the template */
-					$this->template->write_view('flash_message', '_base/admin/pages/flash', $flash);
+					// set the location of the flash view
+					$flashloc = view_location('flash', $this->skin, 'admin');
 					
-					break;
+					/* write everything to the template */
+					$this->template->write_view('flash_message', $flashloc, $flash);
+				break;
 			}
 		}
 		
@@ -525,14 +528,15 @@ class Characters_base extends Controller {
 		{
 			case 'inactive':
 				$js_data['tab'] = 1;
-				break;
+			break;
 				
 			case 'pending':
 				$js_data['tab'] = 2;
-				break;
+			break;
 				
 			default:
 				$js_data['tab'] = 0;
+			break;
 		}
 		
 		$js_data['tab'] = ($data['count']['pending'] > 0) ? 2 : $js_data['tab'];
@@ -612,8 +616,11 @@ class Characters_base extends Controller {
 				$flash['message'] = text_output($message);
 			}
 			
+			// set the location of the flash view
+			$flashloc = view_location('flash', $this->skin, 'admin');
+			
 			/* write everything to the template */
-			$this->template->write_view('flash_message', '_base/admin/pages/flash', $flash);
+			$this->template->write_view('flash_message', $flashloc, $flash);
 		}
 		
 		if ($id === FALSE)
@@ -807,7 +814,7 @@ class Characters_base extends Controller {
 		{
 			case 1:
 				$allowed = (in_array($data['id'], $this->session->userdata('characters'))) ? TRUE : FALSE;
-				break;
+			break;
 				
 			case 2:
 				$type = $this->char->get_character($data['id'], 'crew_type');
@@ -816,11 +823,11 @@ class Characters_base extends Controller {
 				{
 					$allowed = TRUE;
 				}
-				break;
+			break;
 				
 			case 3:
 				$allowed = TRUE;
-				break;
+			break;
 		}
 		
 		if ($allowed === FALSE)
@@ -1046,8 +1053,11 @@ class Characters_base extends Controller {
 				$flash['message'] = text_output($message);
 			}
 			
+			// set the location of the flash view
+			$flashloc = view_location('flash', $this->skin, 'admin');
+			
 			/* write everything to the template */
-			$this->template->write_view('flash_message', '_base/admin/pages/flash', $flash);
+			$this->template->write_view('flash_message', $flashloc, $flash);
 		}
 		
 		/* grab the character info */
@@ -1091,8 +1101,7 @@ class Characters_base extends Controller {
 								);
 								
 								$data['join'][$sid]['fields'][$f_id]['input'] = form_input($input);
-								
-								break;
+							break;
 								
 							case 'textarea':
 								$input = array(
@@ -1104,8 +1113,7 @@ class Characters_base extends Controller {
 								);
 								
 								$data['join'][$sid]['fields'][$f_id]['input'] = form_textarea($input);
-								
-								break;
+							break;
 								
 							case 'select':
 								$value = FALSE;
@@ -1124,7 +1132,7 @@ class Characters_base extends Controller {
 								}
 								
 								$data['join'][$sid]['fields'][$f_id]['input'] = form_dropdown($field->field_id, $input, $data_val);
-								break;
+							break;
 						}
 					}
 				}
@@ -1484,8 +1492,11 @@ class Characters_base extends Controller {
 				$flash['message'] = text_output($message);
 			}
 			
+			// set the location of the flash view
+			$flashloc = view_location('flash', $this->skin, 'admin');
+			
 			/* write everything to the template */
-			$this->template->write_view('flash_message', '_base/admin/pages/flash', $flash);
+			$this->template->write_view('flash_message', $flashloc, $flash);
 		}
 		
 		/* grab the join fields */
@@ -1523,8 +1534,7 @@ class Characters_base extends Controller {
 								);
 								
 								$data['join'][$sid]['fields'][$f_id]['input'] = form_input($input);
-								
-								break;
+							break;
 								
 							case 'textarea':
 								$input = array(
@@ -1536,8 +1546,7 @@ class Characters_base extends Controller {
 								);
 								
 								$data['join'][$sid]['fields'][$f_id]['input'] = form_textarea($input);
-								
-								break;
+							break;
 								
 							case 'select':
 								$value = FALSE;
@@ -1555,7 +1564,7 @@ class Characters_base extends Controller {
 								}
 								
 								$data['join'][$sid]['fields'][$f_id]['input'] = form_dropdown($field->field_id, $input);
-								break;
+							break;
 						}
 					}
 				}
@@ -1712,10 +1721,12 @@ class Characters_base extends Controller {
 						$flash['message'] = text_output($message);
 					}
 					
-					/* write everything to the template */
-					$this->template->write_view('flash_message', '_base/admin/pages/flash', $flash);
+					// set the location of the flash view
+					$flashloc = view_location('flash', $this->skin, 'admin');
 					
-					break;
+					/* write everything to the template */
+					$this->template->write_view('flash_message', $flashloc, $flash);
+				break;
 			}
 		}
 		
@@ -1745,8 +1756,7 @@ class Characters_base extends Controller {
 				
 				/* get all the NPCs */
 				$all = $this->char->get_all_characters('npc');
-				
-				break;
+			break;
 				
 			case 2:
 				/* get the user's main character information */
@@ -1780,8 +1790,7 @@ class Characters_base extends Controller {
 				
 				/* get all the NPCs */
 				$all = $this->char->get_all_characters('npc');
-				
-				break;
+			break;
 				
 			case 3:
 				/* get all the departments */
@@ -1798,8 +1807,7 @@ class Characters_base extends Controller {
 				
 				/* get all the NPCs */
 				$all = $this->char->get_all_characters('npc');
-				
-				break;
+			break;
 		}
 		
 		$data['count'] = 0;
@@ -2006,8 +2014,7 @@ class Characters_base extends Controller {
 				$this->email->cc($cc);
 				$this->email->subject($this->options['email_subject'] .' '. $email_data['email_subject']);
 				$this->email->message($message);
-				
-				break;
+			break;
 				
 			case 'reject':
 				$cc = implode(',', $this->user->get_emails_with_access('characters/index'));
@@ -2027,8 +2034,7 @@ class Characters_base extends Controller {
 				$this->email->cc($cc);
 				$this->email->subject($this->options['email_subject'] .' '. $email_data['email_subject']);
 				$this->email->message($message);
-				
-				break;
+			break;
 				
 			case 'pending':
 				/* load the models */
@@ -2120,8 +2126,7 @@ class Characters_base extends Controller {
 				$this->email->to($to);
 				$this->email->subject($this->options['email_subject'] .' '. $email_data['email_subject']);
 				$this->email->message($message);
-				
-				break;
+			break;
 		}
 		
 		/* send the email */
@@ -2131,6 +2136,3 @@ class Characters_base extends Controller {
 		return $email;
 	}
 }
-
-/* End of file characters_base.php */
-/* Location: ./application/controllers/characters_base.php */

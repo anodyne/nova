@@ -1,17 +1,13 @@
 <?php
-/*
-|---------------------------------------------------------------
-| AJAX CONTROLLER
-|---------------------------------------------------------------
-|
-| File: controllers/base/ajax_base.php
-| System Version: 1.2
-|
-| Changes: added method for handling deleting a ban; added method for
-|	duplicating a department confirmation; added method for editing
-|	a department
-|
-*/
+/**
+ * Ajax Controller
+ *
+ * @package		Nova
+ * @category	Controller
+ * @author		Anodyne Productions
+ * @copyright	2010-11 Anodyne Productions
+ * @version		1.3
+ */
 
 class Ajax_base extends Controller {
 	
@@ -399,8 +395,7 @@ class Ajax_base extends Controller {
 					'inactive' => ucfirst(lang('status_inactive')),
 					'development' => lang('misc_development')
 				);
-		
-				break;
+			break;
 				
 			case 'skins':
 				/* figure out the skin */
@@ -433,8 +428,7 @@ class Ajax_base extends Controller {
 						'value' => 'submit',
 						'content' => ucwords(lang('actions_submit')))
 				);
-		
-				break;
+			break;
 				
 			case 'skinsecs':
 				/* figure out the skin */
@@ -493,8 +487,7 @@ class Ajax_base extends Controller {
 						$data['skins'][$skin->skin_location] = $skin->skin_name;
 					}
 				}
-		
-				break;
+			break;
 		}
 		
 		/* data being sent to the facebox */
@@ -2240,8 +2233,7 @@ class Ajax_base extends Controller {
 				);
 				
 				$data['form'] = 'manage/posts/pending/0/approve';
-				
-				break;
+			break;
 				
 			case 'logs':
 				$this->load->model('personallogs_model', 'logs');
@@ -2261,8 +2253,7 @@ class Ajax_base extends Controller {
 				);
 				
 				$data['form'] = 'manage/logs/pending/0/approve';
-				
-				break;
+			break;
 				
 			case 'news':
 				$this->load->model('news_model', 'news');
@@ -2282,8 +2273,7 @@ class Ajax_base extends Controller {
 				);
 				
 				$data['form'] = 'manage/news/pending/0/approve';
-				
-				break;
+			break;
 				
 			case 'posts_comment':
 				$this->load->model('posts_model', 'posts');
@@ -2303,8 +2293,7 @@ class Ajax_base extends Controller {
 				);
 				
 				$data['form'] = 'manage/comments/posts/activated/0/approve';
-				
-				break;
+			break;
 				
 			case 'logs_comment':
 				$this->load->model('personallogs_model', 'logs');
@@ -2324,8 +2313,7 @@ class Ajax_base extends Controller {
 				);
 				
 				$data['form'] = 'manage/comments/logs/activated/0/approve';
-				
-				break;
+			break;
 				
 			case 'news_comment':
 				$this->load->model('news_model', 'news');
@@ -2345,8 +2333,7 @@ class Ajax_base extends Controller {
 				);
 				
 				$data['form'] = 'manage/comments/news/activated/0/approve';
-				
-				break;
+			break;
 				
 			case 'wiki_comment':
 				$this->load->model('wiki_model', 'wiki');
@@ -2372,8 +2359,7 @@ class Ajax_base extends Controller {
 				}
 				
 				$data['form'] = 'manage/comments/wiki/activated/0/approve';
-				
-				break;
+			break;
 				
 			case 'award_nomination':
 				/* load the resources */
@@ -2406,8 +2392,7 @@ class Ajax_base extends Controller {
 				
 				/* figure out where the view should come from */
 				$view = ajax_location('approve_awardnom', $skin, 'admin');
-				
-				break;
+			break;
 				
 			case 'character':
 				$this->load->model('characters_model', 'char');
@@ -2443,8 +2428,7 @@ class Ajax_base extends Controller {
 				
 				/* figure out where the view should come from */
 				$view = ajax_location('approve_character', $skin, 'admin');
-				
-				break;
+			break;
 				
 			case 'docking':
 				$this->load->model('docking_model', 'docking');
@@ -2471,8 +2455,7 @@ class Ajax_base extends Controller {
 				
 				/* figure out where the view should come from */
 				$view = ajax_location('approve_docking', $skin, 'admin');
-				
-				break;
+			break;
 		}
 		
 		$data['header'] = sprintf(
@@ -2910,8 +2893,7 @@ class Ajax_base extends Controller {
 						'value' => 'submit',
 						'content' => ucwords(lang('actions_submit')))
 				);
-				
-				break;
+			break;
 				
 			case 'skins':
 				/* figure out the skin */
@@ -2941,8 +2923,7 @@ class Ajax_base extends Controller {
 						'value' => 'submit',
 						'content' => ucwords(lang('actions_submit')))
 				);
-				
-				break;
+			break;
 				
 			case 'skinsecs':
 				/* figure out the skin */
@@ -2988,8 +2969,7 @@ class Ajax_base extends Controller {
 						'value' => 'submit',
 						'content' => ucwords(lang('actions_submit')))
 				);
-				
-				break;
+			break;
 		}
 		
 		/* data being sent to the facebox */
@@ -3167,8 +3147,7 @@ class Ajax_base extends Controller {
 				$type = lang('global_missionpost');
 				
 				$item = $this->posts->get_post($this->posts->get_post_comment($data['id'], 'pcomment_post'), 'post_title');
-				
-				break;
+			break;
 				
 			case 'logs':
 				$this->load->model('personallogs_model', 'logs');
@@ -3176,8 +3155,7 @@ class Ajax_base extends Controller {
 				$type = lang('global_personallog');
 				
 				$item = $this->logs->get_log($this->logs->get_log_comment($data['id'], 'lcomment_log'), 'log_title');
-				
-				break;
+			break;
 				
 			case 'news':
 				$this->load->model('news_model', 'news');
@@ -3185,8 +3163,7 @@ class Ajax_base extends Controller {
 				$type = lang('global_newsitem');
 				
 				$item = $this->news->get_news_item($this->news->get_news_comment($data['id'], 'ncomment_news'), 'news_title');
-				
-				break;
+			break;
 				
 			case 'wiki':
 				$this->load->model('wiki_model', 'wiki');
@@ -3207,8 +3184,7 @@ class Ajax_base extends Controller {
 				{
 					$item = FALSE;
 				}
-				
-				break;
+			break;
 		}
 		
 		$data['header'] = sprintf(
@@ -5206,8 +5182,7 @@ class Ajax_base extends Controller {
 				);
 				
 				$data['default']['status'] = $item->rankcat_status;
-		
-				break;
+			break;
 				
 			case 'skins':
 				/* figure out the skin */
@@ -5245,8 +5220,7 @@ class Ajax_base extends Controller {
 						'value' => 'submit',
 						'content' => ucwords(lang('actions_submit')))
 				);
-		
-				break;
+			break;
 				
 			case 'skinsecs':
 				/* figure out the skin */
@@ -5317,8 +5291,7 @@ class Ajax_base extends Controller {
 				$data['default']['status'] = $item->skinsec_status;
 				$data['default']['section'] = $item->skinsec_section;
 				$data['default']['skin'] = $item->skinsec_skin;
-		
-				break;
+			break;
 		}
 		
 		/* data being sent to the facebox */
@@ -5375,8 +5348,7 @@ class Ajax_base extends Controller {
 						'value' => $item['pcomment_content']),
 					'author' => $this->char->get_character_name($item['pcomment_author_character'], TRUE)
 				);
-				
-				break;
+			break;
 				
 			case 'logs':
 				$this->load->model('personallogs_model', 'logs');
@@ -5394,8 +5366,7 @@ class Ajax_base extends Controller {
 						'value' => $item['lcomment_content']),
 					'author' => $this->char->get_character_name($item['lcomment_author_character'], TRUE)
 				);
-				
-				break;
+			break;
 				
 			case 'news':
 				$this->load->model('news_model', 'news');
@@ -5413,8 +5384,7 @@ class Ajax_base extends Controller {
 						'value' => $item['ncomment_content']),
 					'author' => $this->char->get_character_name($item['ncomment_author_character'], TRUE)
 				);
-				
-				break;
+			break;
 				
 			case 'wiki':
 				$this->load->model('wiki_model', 'wiki');
@@ -5432,8 +5402,7 @@ class Ajax_base extends Controller {
 						'value' => $item['wcomment_content']),
 					'author' => $this->char->get_character_name($item['wcomment_author_character'], TRUE)
 				);
-				
-				break;
+			break;
 		}
 		
 		$data['header'] = sprintf(
@@ -6315,7 +6284,7 @@ class Ajax_base extends Controller {
 						lang('text_dynamic_emails'),
 						implode('<br />', $op)
 					);
-					break;
+				break;
 					
 				case 'reject_message':
 					$op = array(
@@ -6329,7 +6298,7 @@ class Ajax_base extends Controller {
 						lang('text_dynamic_emails'),
 						implode('<br />', $op)
 					);
-					break;
+				break;
 					
 				case 'docking_accept_message':
 					$op = array(
@@ -6342,7 +6311,7 @@ class Ajax_base extends Controller {
 						lang('text_dynamic_emails'),
 						implode('<br />', $op)
 					);
-					break;
+				break;
 					
 				case 'docking_reject_message':
 					$op = array(
@@ -6355,10 +6324,11 @@ class Ajax_base extends Controller {
 						lang('text_dynamic_emails'),
 						implode('<br />', $op)
 					);
-					break;
+				break;
 				
 				default:
 					$data['text'] = '';
+				break;
 			}
 		}
 		
@@ -6786,10 +6756,11 @@ class Ajax_base extends Controller {
 			{
 				case 'ic':
 					$chars = 'user_npc';
-					break;
+				break;
 					
 				default:
 					$chars = 'active';
+				break;
 			}
 			
 			echo form_dropdown_characters('character', '', '', $chars);
@@ -6981,8 +6952,7 @@ class Ajax_base extends Controller {
 				
 				/* figure out where the view should come from */
 				$view = ajax_location('reject_awardnom', $skin, 'admin');
-				
-				break;
+			break;
 				
 			case 'character':
 				$type = lang('global_character');
@@ -6997,8 +6967,7 @@ class Ajax_base extends Controller {
 				);
 				
 				$data['form'] = 'characters/index/pending/'. $data['id'];
-				
-				break;
+			break;
 				
 			case 'docking':
 				$this->load->model('docking_model', 'docking');
@@ -7025,8 +6994,7 @@ class Ajax_base extends Controller {
 				
 				/* figure out where the view should come from */
 				$view = ajax_location('reject_docking', $skin, 'admin');
-				
-				break;
+			break;
 		}
 		
 		$data['header'] = sprintf(
@@ -7897,6 +7865,3 @@ class Ajax_base extends Controller {
 		$this->template->render();
 	}
 }
-
-/* End of file ajax_base.php */
-/* Location: ./application/controllers/base/ajax_base.php */

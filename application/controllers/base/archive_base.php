@@ -1,16 +1,15 @@
 <?php
-/*
-|---------------------------------------------------------------
-| ARCHIVE CONTROLLER
-|---------------------------------------------------------------
-|
-| File: controllers/archive.php
-| System Version: 1.1.1
-|
-| Changes: fixed bug where nova wouldn't display if the template
-|	file couldn't be found
-|
-*/
+/**
+ * Archive controller
+ *
+ * @package		Nova
+ * @category	Controller
+ * @author		Anodyne Productions
+ * @copyright	2010-11 Anodyne Productions
+ * @version		1.1.1
+ *
+ * Fixed bug where Nova wouldn't display if the template couldn't be found
+ */
 
 class Archive_base extends Controller {
 
@@ -321,6 +320,3 @@ class Archive_base extends Controller {
 		$this->template->render();
 	}
 }
-
-/* End of file archive.php */
-/* Location: ./application/controllers/base/archive_base.php */

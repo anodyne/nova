@@ -1,20 +1,15 @@
 <?php
-/*
-|---------------------------------------------------------------
-| ADMIN - SITE CONTROLLER
-|---------------------------------------------------------------
-|
-| File: controllers/site_base.php
-| System Version: 1.2
-|
-| Changes: added the ability to ban users from applying or even
-|	viewing the site altogether; added the ability to use multiple
-|	manifests; fixed bug where the timezone menu pulled the wrong
-|	value to populate the field with; fixed bug where changing a
-|	dynamic form field from text/textarea to dropdown wouldn't let
-|	an admin create values for the dropdown
-|
-*/
+/**
+ * Site controller
+ *
+ * @package		Nova
+ * @category	Controller
+ * @author		Anodyne Productions
+ * @copyright	2010-11 Anodyne Productions
+ * @version		1.3
+ *
+ * Updated the flash message so they can be overridden by seamless substitution
+ */
 
 class Site_base extends Controller {
 
@@ -151,8 +146,11 @@ class Site_base extends Controller {
 						$flash['message'] = text_output($message);
 					}
 					
+					// set the location of the flash view
+					$flashloc = view_location('flash', $this->skin, 'admin');
+					
 					/* write everything to the template */
-					$this->template->write_view('flash_message', '_base/admin/pages/flash', $flash);
+					$this->template->write_view('flash_message', $flashloc, $flash);
 				break;
 				
 				case 'delete':
@@ -186,8 +184,11 @@ class Site_base extends Controller {
 						$flash['message'] = text_output($message);
 					}
 					
+					// set the location of the flash view
+					$flashloc = view_location('flash', $this->skin, 'admin');
+					
 					/* write everything to the template */
-					$this->template->write_view('flash_message', '_base/admin/pages/flash', $flash);
+					$this->template->write_view('flash_message', $flashloc, $flash);
 				break;
 			}
 		}
@@ -396,10 +397,12 @@ class Site_base extends Controller {
 						$flash['message'] = text_output($message);
 					}
 											
-					/* write everything to the template */
-					$this->template->write_view('flash_message', '_base/admin/pages/flash', $flash);
+					// set the location of the flash view
+					$flashloc = view_location('flash', $this->skin, 'admin');
 					
-					break;
+					/* write everything to the template */
+					$this->template->write_view('flash_message', $flashloc, $flash);
+				break;
 					
 				case 'delete':
 					$id = (is_numeric($this->input->post('id', TRUE))) ? $this->input->post('id', TRUE) : 0;
@@ -443,10 +446,12 @@ class Site_base extends Controller {
 						$flash['message'] = text_output($message);
 					}
 											
-					/* write everything to the template */
-					$this->template->write_view('flash_message', '_base/admin/pages/flash', $flash);
+					// set the location of the flash view
+					$flashloc = view_location('flash', $this->skin, 'admin');
 					
-					break;
+					/* write everything to the template */
+					$this->template->write_view('flash_message', $flashloc, $flash);
+				break;
 					
 				case 'edit':
 					$type = $this->input->post('field_type', TRUE);
@@ -500,10 +505,12 @@ class Site_base extends Controller {
 						$flash['message'] = text_output($message);
 					}
 											
-					/* write everything to the template */
-					$this->template->write_view('flash_message', '_base/admin/pages/flash', $flash);
+					// set the location of the flash view
+					$flashloc = view_location('flash', $this->skin, 'admin');
 					
-					break;
+					/* write everything to the template */
+					$this->template->write_view('flash_message', $flashloc, $flash);
+				break;
 					
 				case 'editval':
 					$value = $this->input->post('value_field_value', TRUE);
@@ -545,10 +552,12 @@ class Site_base extends Controller {
 						$flash['message'] = text_output($message);
 					}
 
+					// set the location of the flash view
+					$flashloc = view_location('flash', $this->skin, 'admin');
+					
 					/* write everything to the template */
-					$this->template->write_view('flash_message', '_base/admin/pages/flash', $flash);
-
-					break;
+					$this->template->write_view('flash_message', $flashloc, $flash);
+				break;
 			}
 		}
 		
@@ -592,8 +601,7 @@ class Site_base extends Controller {
 									
 									$data['join'][$sid]['fields'][$f_id]['input'] = form_input($input);
 									$data['join'][$sid]['fields'][$f_id]['id'] = $field->field_id;
-									
-									break;
+								break;
 									
 								case 'textarea':
 									$input = array(
@@ -606,8 +614,7 @@ class Site_base extends Controller {
 									
 									$data['join'][$sid]['fields'][$f_id]['input'] = form_textarea($input);
 									$data['join'][$sid]['fields'][$f_id]['id'] = $field->field_id;
-									
-									break;
+								break;
 									
 								case 'select':
 									$value = FALSE;
@@ -626,7 +633,7 @@ class Site_base extends Controller {
 									
 									$data['join'][$sid]['fields'][$f_id]['input'] = form_dropdown($field->field_id, $input);
 									$data['join'][$sid]['fields'][$f_id]['id'] = $field->field_id;
-									break;
+								break;
 							}
 						}
 					}
@@ -876,10 +883,12 @@ class Site_base extends Controller {
 						$flash['message'] = text_output($message);
 					}
 											
-					/* write everything to the template */
-					$this->template->write_view('flash_message', '_base/admin/pages/flash', $flash);
+					// set the location of the flash view
+					$flashloc = view_location('flash', $this->skin, 'admin');
 					
-					break;
+					/* write everything to the template */
+					$this->template->write_view('flash_message', $flashloc, $flash);
+				break;
 					
 				case 'delete':
 					$old_id = $this->input->post('id', TRUE);
@@ -914,10 +923,12 @@ class Site_base extends Controller {
 						$flash['message'] = text_output($message);
 					}
 											
-					/* write everything to the template */
-					$this->template->write_view('flash_message', '_base/admin/pages/flash', $flash);
+					// set the location of the flash view
+					$flashloc = view_location('flash', $this->skin, 'admin');
 					
-					break;
+					/* write everything to the template */
+					$this->template->write_view('flash_message', $flashloc, $flash);
+				break;
 					
 				case 'edit':
 					$name = $this->input->post('section_name', TRUE);
@@ -959,10 +970,12 @@ class Site_base extends Controller {
 						$flash['message'] = text_output($message);
 					}
 											
-					/* write everything to the template */
-					$this->template->write_view('flash_message', '_base/admin/pages/flash', $flash);
+					// set the location of the flash view
+					$flashloc = view_location('flash', $this->skin, 'admin');
 					
-					break;
+					/* write everything to the template */
+					$this->template->write_view('flash_message', $flashloc, $flash);
+				break;
 			}
 		}
 		
@@ -1091,10 +1104,12 @@ class Site_base extends Controller {
 						$flash['message'] = text_output($message);
 					}
 											
-					/* write everything to the template */
-					$this->template->write_view('flash_message', '_base/admin/pages/flash', $flash);
+					// set the location of the flash view
+					$flashloc = view_location('flash', $this->skin, 'admin');
 					
-					break;
+					/* write everything to the template */
+					$this->template->write_view('flash_message', $flashloc, $flash);
+				break;
 					
 				case 'delete':
 					$old_id = $this->input->post('id', TRUE);
@@ -1129,10 +1144,12 @@ class Site_base extends Controller {
 						$flash['message'] = text_output($message);
 					}
 											
-					/* write everything to the template */
-					$this->template->write_view('flash_message', '_base/admin/pages/flash', $flash);
+					// set the location of the flash view
+					$flashloc = view_location('flash', $this->skin, 'admin');
 					
-					break;
+					/* write everything to the template */
+					$this->template->write_view('flash_message', $flashloc, $flash);
+				break;
 					
 				case 'edit':
 					$name = $this->input->post('tab_name', TRUE);
@@ -1176,10 +1193,12 @@ class Site_base extends Controller {
 						$flash['message'] = text_output($message);
 					}
 											
-					/* write everything to the template */
-					$this->template->write_view('flash_message', '_base/admin/pages/flash', $flash);
+					// set the location of the flash view
+					$flashloc = view_location('flash', $this->skin, 'admin');
 					
-					break;
+					/* write everything to the template */
+					$this->template->write_view('flash_message', $flashloc, $flash);
+				break;
 			}
 		}
 		
@@ -1314,10 +1333,12 @@ class Site_base extends Controller {
 						$flash['message'] = text_output($message);
 					}
 					
+					// set the location of the flash view
+					$flashloc = view_location('flash', $this->skin, 'admin');
+					
 					/* write everything to the template */
-					$this->template->write_view('flash_message', '_base/admin/pages/flash', $flash);
-				
-					break;
+					$this->template->write_view('flash_message', $flashloc, $flash);
+				break;
 					
 				case 'add':
 					$name = $this->input->post('rank_name', TRUE);
@@ -1377,10 +1398,12 @@ class Site_base extends Controller {
 						$flash['message'] = text_output($message);
 					}
 											
-					/* write everything to the template */
-					$this->template->write_view('flash_message', '_base/admin/pages/flash', $flash);
+					// set the location of the flash view
+					$flashloc = view_location('flash', $this->skin, 'admin');
 					
-					break;
+					/* write everything to the template */
+					$this->template->write_view('flash_message', $flashloc, $flash);
+				break;
 					
 				case 'delete':
 					$old_id = $this->input->post('id', TRUE);
@@ -1426,10 +1449,12 @@ class Site_base extends Controller {
 						$flash['message'] = text_output($message);
 					}
 											
-					/* write everything to the template */
-					$this->template->write_view('flash_message', '_base/admin/pages/flash', $flash);
+					// set the location of the flash view
+					$flashloc = view_location('flash', $this->skin, 'admin');
 					
-					break;
+					/* write everything to the template */
+					$this->template->write_view('flash_message', $flashloc, $flash);
+				break;
 					
 				case 'edit':
 					$name = $this->input->post('rank_name', TRUE);
@@ -1490,10 +1515,12 @@ class Site_base extends Controller {
 						$flash['message'] = text_output($message);
 					}
 											
-					/* write everything to the template */
-					$this->template->write_view('flash_message', '_base/admin/pages/flash', $flash);
+					// set the location of the flash view
+					$flashloc = view_location('flash', $this->skin, 'admin');
 					
-					break;
+					/* write everything to the template */
+					$this->template->write_view('flash_message', $flashloc, $flash);
+				break;
 			}
 		}
 		
@@ -1676,10 +1703,12 @@ class Site_base extends Controller {
 						$flash['message'] = text_output($message);
 					}
 					
+					// set the location of the flash view
+					$flashloc = view_location('flash', $this->skin, 'admin');
+					
 					/* write everything to the template */
-					$this->template->write_view('flash_message', '_base/admin/pages/flash', $flash);
-				
-					break;
+					$this->template->write_view('flash_message', $flashloc, $flash);
+				break;
 					
 				case 'skin':
 					switch ($this->uri->segment(4))
@@ -1723,10 +1752,12 @@ class Site_base extends Controller {
 								$flash['message'] = text_output($message);
 							}
 													
-							/* write everything to the template */
-							$this->template->write_view('flash_message', '_base/admin/pages/flash', $flash);
+							// set the location of the flash view
+							$flashloc = view_location('flash', $this->skin, 'admin');
 							
-							break;
+							/* write everything to the template */
+							$this->template->write_view('flash_message', $flashloc, $flash);
+						break;
 							
 						case 'delete':
 							$id = $this->input->post('id', TRUE);
@@ -1771,10 +1802,12 @@ class Site_base extends Controller {
 								}
 							}
 													
-							/* write everything to the template */
-							$this->template->write_view('flash_message', '_base/admin/pages/flash', $flash);
+							// set the location of the flash view
+							$flashloc = view_location('flash', $this->skin, 'admin');
 							
-							break;
+							/* write everything to the template */
+							$this->template->write_view('flash_message', $flashloc, $flash);
+						break;
 							
 						case 'edit':
 							$name = $this->input->post('skin_name', TRUE);
@@ -1816,12 +1849,14 @@ class Site_base extends Controller {
 								$flash['message'] = text_output($message);
 							}
 													
-							/* write everything to the template */
-							$this->template->write_view('flash_message', '_base/admin/pages/flash', $flash);
+							// set the location of the flash view
+							$flashloc = view_location('flash', $this->skin, 'admin');
 							
-							break;
+							/* write everything to the template */
+							$this->template->write_view('flash_message', $flashloc, $flash);
+						break;
 					}
-					break;
+				break;
 					
 				case 'section':
 					switch ($this->uri->segment(4))
@@ -1879,10 +1914,12 @@ class Site_base extends Controller {
 								$flash['message'] = text_output($message);
 							}
 													
-							/* write everything to the template */
-							$this->template->write_view('flash_message', '_base/admin/pages/flash', $flash);
+							// set the location of the flash view
+							$flashloc = view_location('flash', $this->skin, 'admin');
 							
-							break;
+							/* write everything to the template */
+							$this->template->write_view('flash_message', $flashloc, $flash);
+						break;
 							
 						case 'delete':
 							/* theme section we're handling */
@@ -1944,10 +1981,12 @@ class Site_base extends Controller {
 								$flash['message'] = text_output($message);
 							}
 													
-							/* write everything to the template */
-							$this->template->write_view('flash_message', '_base/admin/pages/flash', $flash);
+							// set the location of the flash view
+							$flashloc = view_location('flash', $this->skin, 'admin');
 							
-							break;
+							/* write everything to the template */
+							$this->template->write_view('flash_message', $flashloc, $flash);
+						break;
 							
 						case 'edit':
 							$section = $this->input->post('section', TRUE);
@@ -2003,12 +2042,14 @@ class Site_base extends Controller {
 								$flash['message'] = text_output($message);
 							}
 													
-							/* write everything to the template */
-							$this->template->write_view('flash_message', '_base/admin/pages/flash', $flash);
+							// set the location of the flash view
+							$flashloc = view_location('flash', $this->skin, 'admin');
 							
-							break;
+							/* write everything to the template */
+							$this->template->write_view('flash_message', $flashloc, $flash);
+						break;
 					}
-					break;
+				break;
 			}
 			
 			/* get the admin section default */
@@ -2099,7 +2140,11 @@ class Site_base extends Controller {
 			$flash['status'] = 'info';
 			$flash['message'] = lang_output('error_skin_defaults');
 			
-			$this->template->write_view('flash_message', '_base/admin/pages/flash', $flash);
+			// set the location of the flash view
+			$flashloc = view_location('flash', $this->skin, 'admin');
+			
+			/* write everything to the template */
+			$this->template->write_view('flash_message', $flashloc, $flash);
 		}
 		
 		$data['images'] = array(
@@ -2248,10 +2293,12 @@ class Site_base extends Controller {
 						$flash['message'] = text_output($message);
 					}
 											
-					/* write everything to the template */
-					$this->template->write_view('flash_message', '_base/admin/pages/flash', $flash);
+					// set the location of the flash view
+					$flashloc = view_location('flash', $this->skin, 'admin');
 					
-					break;
+					/* write everything to the template */
+					$this->template->write_view('flash_message', $flashloc, $flash);
+				break;
 					
 				case 'delete':
 					$id = (is_numeric($this->input->post('id', TRUE))) ? $this->input->post('id', TRUE) : 0;
@@ -2295,10 +2342,12 @@ class Site_base extends Controller {
 						$flash['message'] = text_output($message);
 					}
 											
-					/* write everything to the template */
-					$this->template->write_view('flash_message', '_base/admin/pages/flash', $flash);
+					// set the location of the flash view
+					$flashloc = view_location('flash', $this->skin, 'admin');
 					
-					break;
+					/* write everything to the template */
+					$this->template->write_view('flash_message', $flashloc, $flash);
+				break;
 					
 				case 'edit':
 					foreach ($_POST as $key => $value)
@@ -2339,10 +2388,12 @@ class Site_base extends Controller {
 						$flash['message'] = text_output($message);
 					}
 											
-					/* write everything to the template */
-					$this->template->write_view('flash_message', '_base/admin/pages/flash', $flash);
+					// set the location of the flash view
+					$flashloc = view_location('flash', $this->skin, 'admin');
 					
-					break;
+					/* write everything to the template */
+					$this->template->write_view('flash_message', $flashloc, $flash);
+				break;
 					
 				case 'editval':
 					foreach ($_POST as $key => $value)
@@ -2394,10 +2445,12 @@ class Site_base extends Controller {
 						$flash['message'] = text_output($message);
 					}
 
+					// set the location of the flash view
+					$flashloc = view_location('flash', $this->skin, 'admin');
+					
 					/* write everything to the template */
-					$this->template->write_view('flash_message', '_base/admin/pages/flash', $flash);
-
-					break;
+					$this->template->write_view('flash_message', $flashloc, $flash);
+				break;
 			}
 		}
 		
@@ -2435,8 +2488,7 @@ class Site_base extends Controller {
 									
 									$data['docking']['sections'][$sec->section_id]['fields'][$fid]['input'] = form_input($input);
 									$data['docking']['sections'][$sec->section_id]['fields'][$fid]['id'] = $field->field_id;
-											
-									break;
+								break;
 											
 								case 'textarea':
 									$input = array(
@@ -2449,8 +2501,7 @@ class Site_base extends Controller {
 											
 									$data['docking']['sections'][$sec->section_id]['fields'][$fid]['input'] = form_textarea($input);
 									$data['docking']['sections'][$sec->section_id]['fields'][$fid]['id'] = $field->field_id;
-											
-									break;
+								break;
 											
 								case 'select':
 									$value = FALSE;
@@ -2469,7 +2520,7 @@ class Site_base extends Controller {
 											
 									$data['docking']['sections'][$sec->section_id]['fields'][$fid]['input'] = form_dropdown($field->field_id, $input);
 									$data['docking']['sections'][$sec->section_id]['fields'][$fid]['id'] = $field->field_id;
-									break;
+								break;
 							}
 						}
 					}
@@ -2711,10 +2762,12 @@ class Site_base extends Controller {
 						$flash['message'] = text_output($message);
 					}
 											
-					/* write everything to the template */
-					$this->template->write_view('flash_message', '_base/admin/pages/flash', $flash);
+					// set the location of the flash view
+					$flashloc = view_location('flash', $this->skin, 'admin');
 					
-					break;
+					/* write everything to the template */
+					$this->template->write_view('flash_message', $flashloc, $flash);
+				break;
 					
 				case 'delete':
 					$old_id = $this->input->post('id', TRUE);
@@ -2749,10 +2802,12 @@ class Site_base extends Controller {
 						$flash['message'] = text_output($message);
 					}
 											
-					/* write everything to the template */
-					$this->template->write_view('flash_message', '_base/admin/pages/flash', $flash);
+					// set the location of the flash view
+					$flashloc = view_location('flash', $this->skin, 'admin');
 					
-					break;
+					/* write everything to the template */
+					$this->template->write_view('flash_message', $flashloc, $flash);
+				break;
 					
 				case 'edit':
 					foreach ($_POST as $key => $value)
@@ -2793,10 +2848,12 @@ class Site_base extends Controller {
 						$flash['message'] = text_output($message);
 					}
 											
-					/* write everything to the template */
-					$this->template->write_view('flash_message', '_base/admin/pages/flash', $flash);
+					// set the location of the flash view
+					$flashloc = view_location('flash', $this->skin, 'admin');
 					
-					break;
+					/* write everything to the template */
+					$this->template->write_view('flash_message', $flashloc, $flash);
+				break;
 			}
 		}
 		
@@ -2912,8 +2969,11 @@ class Site_base extends Controller {
 						$flash['message'] = text_output($message);
 					}
 					
-					// write everything to the template
-					$this->template->write_view('flash_message', '_base/admin/pages/flash', $flash);
+					// set the location of the flash view
+					$flashloc = view_location('flash', $this->skin, 'admin');
+					
+					/* write everything to the template */
+					$this->template->write_view('flash_message', $flashloc, $flash);
 				break;
 					
 				case 'delete':
@@ -3013,8 +3073,11 @@ class Site_base extends Controller {
 						}
 					}
 					
-					// write everything to the template
-					$this->template->write_view('flash_message', '_base/admin/pages/flash', $flash);
+					// set the location of the flash view
+					$flashloc = view_location('flash', $this->skin, 'admin');
+					
+					/* write everything to the template */
+					$this->template->write_view('flash_message', $flashloc, $flash);
 				break;
 					
 				case 'edit':
@@ -3065,8 +3128,11 @@ class Site_base extends Controller {
 						$flash['message'] = text_output($message);
 					}
 					
-					// write everything to the template
-					$this->template->write_view('flash_message', '_base/admin/pages/flash', $flash);
+					// set the location of the flash view
+					$flashloc = view_location('flash', $this->skin, 'admin');
+					
+					/* write everything to the template */
+					$this->template->write_view('flash_message', $flashloc, $flash);
 				break;
 			}
 		}
@@ -3282,8 +3348,11 @@ class Site_base extends Controller {
 						$flash['status'] = 'error';
 						$flash['message'] = text_output($message);
 						
+						// set the location of the flash view
+						$flashloc = view_location('flash', $this->skin, 'admin');
+						
 						/* write everything to the template */
-						$this->template->write_view('flash_message', '_base/admin/pages/flash', $flash);
+						$this->template->write_view('flash_message', $flashloc, $flash);
 					}
 					else
 					{
@@ -3331,11 +3400,13 @@ class Site_base extends Controller {
 							$flash['message'] = text_output($message);
 						}
 						
+						// set the location of the flash view
+						$flashloc = view_location('flash', $this->skin, 'admin');
+						
 						/* write everything to the template */
-						$this->template->write_view('flash_message', '_base/admin/pages/flash', $flash);
+						$this->template->write_view('flash_message', $flashloc, $flash);
 					}
-					
-					break;
+				break;
 					
 				case 'delete':
 					$id = $this->input->post('id', TRUE);
@@ -3369,10 +3440,12 @@ class Site_base extends Controller {
 						$flash['message'] = text_output($message);
 					}
 					
-					/* write everything to the template */
-					$this->template->write_view('flash_message', '_base/admin/pages/flash', $flash);
+					// set the location of the flash view
+					$flashloc = view_location('flash', $this->skin, 'admin');
 					
-					break;
+					/* write everything to the template */
+					$this->template->write_view('flash_message', $flashloc, $flash);
+				break;
 					
 				case 'edit':
 					$name = $this->input->post('menu_name', TRUE);
@@ -3404,8 +3477,11 @@ class Site_base extends Controller {
 						$flash['status'] = 'error';
 						$flash['message'] = text_output($message);
 						
+						// set the location of the flash view
+						$flashloc = view_location('flash', $this->skin, 'admin');
+						
 						/* write everything to the template */
-						$this->template->write_view('flash_message', '_base/admin/pages/flash', $flash);
+						$this->template->write_view('flash_message', $flashloc, $flash);
 					}
 					else
 					{
@@ -3453,11 +3529,13 @@ class Site_base extends Controller {
 							$flash['message'] = text_output($message);
 						}
 						
+						// set the location of the flash view
+						$flashloc = view_location('flash', $this->skin, 'admin');
+						
 						/* write everything to the template */
-						$this->template->write_view('flash_message', '_base/admin/pages/flash', $flash);
+						$this->template->write_view('flash_message', $flashloc, $flash);
 					}
-					
-					break;
+				break;
 			}
 		}
 		
@@ -3475,8 +3553,7 @@ class Site_base extends Controller {
 						$data['menus'][$m->menu_type][$m->menu_id]['name'] = $m->menu_name;
 						$data['menus'][$m->menu_type][$m->menu_id]['link'] = $m->menu_link;
 						$data['menus'][$m->menu_type][$m->menu_id]['display'] = $m->menu_display;
-						
-						break;
+					break;
 						
 					case 'sub':
 						$data['menus'][$m->menu_type][$m->menu_cat]['category'] = ucfirst($m->menu_cat);
@@ -3484,8 +3561,7 @@ class Site_base extends Controller {
 						$data['menus'][$m->menu_type][$m->menu_cat]['items'][$m->menu_id]['name'] = $m->menu_name;
 						$data['menus'][$m->menu_type][$m->menu_cat]['items'][$m->menu_id]['link'] = $m->menu_link;
 						$data['menus'][$m->menu_type][$m->menu_cat]['items'][$m->menu_id]['display'] = $m->menu_display;
-						
-						break;
+					break;
 						
 					case 'adminsub':
 						$cat = $this->menu_model->get_menu_category($m->menu_cat);
@@ -3495,8 +3571,7 @@ class Site_base extends Controller {
 						$data['menus'][$m->menu_type][$m->menu_cat]['items'][$m->menu_id]['name'] = $m->menu_name;
 						$data['menus'][$m->menu_type][$m->menu_cat]['items'][$m->menu_id]['link'] = $m->menu_link;
 						$data['menus'][$m->menu_type][$m->menu_cat]['items'][$m->menu_id]['display'] = $m->menu_display;
-						
-						break;
+					break;
 				}
 			}
 		}
@@ -3593,8 +3668,11 @@ class Site_base extends Controller {
 						$flash['status'] = 'error';
 						$flash['message'] = text_output($message);
 						
+						// set the location of the flash view
+						$flashloc = view_location('flash', $this->skin, 'admin');
+						
 						/* write everything to the template */
-						$this->template->write_view('flash_message', '_base/admin/pages/flash', $flash);
+						$this->template->write_view('flash_message', $flashloc, $flash);
 					}
 					else
 					{
@@ -3633,11 +3711,13 @@ class Site_base extends Controller {
 							$flash['message'] = text_output($message);
 						}
 						
+						// set the location of the flash view
+						$flashloc = view_location('flash', $this->skin, 'admin');
+						
 						/* write everything to the template */
-						$this->template->write_view('flash_message', '_base/admin/pages/flash', $flash);
+						$this->template->write_view('flash_message', $flashloc, $flash);
 					}
-					
-					break;
+				break;
 					
 				case 'delete':
 					$id = $this->input->post('id', TRUE);
@@ -3670,10 +3750,12 @@ class Site_base extends Controller {
 						$flash['message'] = text_output($message);
 					}
 					
-					/* write everything to the template */
-					$this->template->write_view('flash_message', '_base/admin/pages/flash', $flash);
+					// set the location of the flash view
+					$flashloc = view_location('flash', $this->skin, 'admin');
 					
-					break;
+					/* write everything to the template */
+					$this->template->write_view('flash_message', $flashloc, $flash);
+				break;
 					
 				case 'edit':
 					$name = $this->input->post('menucat_name', TRUE);
@@ -3695,8 +3777,11 @@ class Site_base extends Controller {
 						$flash['status'] = 'error';
 						$flash['message'] = text_output($message);
 						
+						// set the location of the flash view
+						$flashloc = view_location('flash', $this->skin, 'admin');
+						
 						/* write everything to the template */
-						$this->template->write_view('flash_message', '_base/admin/pages/flash', $flash);
+						$this->template->write_view('flash_message', $flashloc, $flash);
 					}
 					else
 					{
@@ -3735,11 +3820,13 @@ class Site_base extends Controller {
 							$flash['message'] = text_output($message);
 						}
 						
+						// set the location of the flash view
+						$flashloc = view_location('flash', $this->skin, 'admin');
+						
 						/* write everything to the template */
-						$this->template->write_view('flash_message', '_base/admin/pages/flash', $flash);
+						$this->template->write_view('flash_message', $flashloc, $flash);
 					}
-					
-					break;
+				break;
 			}
 		}
 		
@@ -3835,8 +3922,11 @@ class Site_base extends Controller {
 						$flash['status'] = 'error';
 						$flash['message'] = text_output($message);
 						
+						// set the location of the flash view
+						$flashloc = view_location('flash', $this->skin, 'admin');
+						
 						/* write everything to the template */
-						$this->template->write_view('flash_message', '_base/admin/pages/flash', $flash);
+						$this->template->write_view('flash_message', $flashloc, $flash);
 					}
 					else
 					{
@@ -3893,11 +3983,13 @@ class Site_base extends Controller {
 							$flash['message'] = text_output($message);
 						}
 						
+						// set the location of the flash view
+						$flashloc = view_location('flash', $this->skin, 'admin');
+						
 						/* write everything to the template */
-						$this->template->write_view('flash_message', '_base/admin/pages/flash', $flash);
+						$this->template->write_view('flash_message', $flashloc, $flash);
 					}
-					
-					break;
+				break;
 					
 				case 'delete':
 					$id = $this->input->post('id', TRUE);
@@ -3930,10 +4022,12 @@ class Site_base extends Controller {
 						$flash['message'] = text_output($message);
 					}
 					
-					/* write everything to the template */
-					$this->template->write_view('flash_message', '_base/admin/pages/flash', $flash);
+					// set the location of the flash view
+					$flashloc = view_location('flash', $this->skin, 'admin');
 					
-					break;
+					/* write everything to the template */
+					$this->template->write_view('flash_message', $flashloc, $flash);
+				break;
 					
 				case 'edit':
 					$label = $this->input->post('message_label', TRUE);
@@ -3955,8 +4049,11 @@ class Site_base extends Controller {
 						$flash['status'] = 'error';
 						$flash['message'] = text_output($message);
 						
+						// set the location of the flash view
+						$flashloc = view_location('flash', $this->skin, 'admin');
+						
 						/* write everything to the template */
-						$this->template->write_view('flash_message', '_base/admin/pages/flash', $flash);
+						$this->template->write_view('flash_message', $flashloc, $flash);
 					}
 					else
 					{
@@ -3998,11 +4095,13 @@ class Site_base extends Controller {
 							$flash['message'] = text_output($message);
 						}
 						
+						// set the location of the flash view
+						$flashloc = view_location('flash', $this->skin, 'admin');
+						
 						/* write everything to the template */
-						$this->template->write_view('flash_message', '_base/admin/pages/flash', $flash);
+						$this->template->write_view('flash_message', $flashloc, $flash);
 					}
-					
-					break;
+				break;
 			}
 		}
 		
@@ -4012,15 +4111,15 @@ class Site_base extends Controller {
 			{
 				case 'title':
 					$js_data['tab'] = 0;
-					break;
+				break;
 					
 				case 'message':
 					$js_data['tab'] = 1;
-					break;
+				break;
 					
 				case 'other':
 					$js_data['tab'] = 2;
-					break;
+				break;
 			}
 		}
 		else
@@ -4126,8 +4225,11 @@ class Site_base extends Controller {
 						$flash['status'] = 'error';
 						$flash['message'] = text_output($message);
 						
+						// set the location of the flash view
+						$flashloc = view_location('flash', $this->skin, 'admin');
+						
 						/* write everything to the template */
-						$this->template->write_view('flash_message', '_base/admin/pages/flash', $flash);
+						$this->template->write_view('flash_message', $flashloc, $flash);
 					}
 					else
 					{
@@ -4164,11 +4266,13 @@ class Site_base extends Controller {
 							$flash['message'] = text_output($message);
 						}
 						
+						// set the location of the flash view
+						$flashloc = view_location('flash', $this->skin, 'admin');
+						
 						/* write everything to the template */
-						$this->template->write_view('flash_message', '_base/admin/pages/flash', $flash);
+						$this->template->write_view('flash_message', $flashloc, $flash);
 					}
-					
-					break;
+				break;
 					
 				case 'delete':
 					$id = $this->input->post('id', TRUE);
@@ -4207,10 +4311,12 @@ class Site_base extends Controller {
 						$flash['message'] = text_output($message);
 					}
 					
-					/* write everything to the template */
-					$this->template->write_view('flash_message', '_base/admin/pages/flash', $flash);
+					// set the location of the flash view
+					$flashloc = view_location('flash', $this->skin, 'admin');
 					
-					break;
+					/* write everything to the template */
+					$this->template->write_view('flash_message', $flashloc, $flash);
+				break;
 					
 				case 'edit':
 					$name = $this->input->post('group_name', TRUE);
@@ -4230,8 +4336,11 @@ class Site_base extends Controller {
 						$flash['status'] = 'error';
 						$flash['message'] = text_output($message);
 						
+						// set the location of the flash view
+						$flashloc = view_location('flash', $this->skin, 'admin');
+						
 						/* write everything to the template */
-						$this->template->write_view('flash_message', '_base/admin/pages/flash', $flash);
+						$this->template->write_view('flash_message', $flashloc, $flash);
 					}
 					else
 					{
@@ -4268,11 +4377,13 @@ class Site_base extends Controller {
 							$flash['message'] = text_output($message);
 						}
 						
+						// set the location of the flash view
+						$flashloc = view_location('flash', $this->skin, 'admin');
+						
 						/* write everything to the template */
-						$this->template->write_view('flash_message', '_base/admin/pages/flash', $flash);
+						$this->template->write_view('flash_message', $flashloc, $flash);
 					}
-					
-					break;
+				break;
 			}
 		}
 		
@@ -4370,8 +4481,11 @@ class Site_base extends Controller {
 						$flash['status'] = 'error';
 						$flash['message'] = text_output($message);
 						
+						// set the location of the flash view
+						$flashloc = view_location('flash', $this->skin, 'admin');
+						
 						/* write everything to the template */
-						$this->template->write_view('flash_message', '_base/admin/pages/flash', $flash);
+						$this->template->write_view('flash_message', $flashloc, $flash);
 					}
 					else
 					{
@@ -4411,11 +4525,13 @@ class Site_base extends Controller {
 							$flash['message'] = text_output($message);
 						}
 						
+						// set the location of the flash view
+						$flashloc = view_location('flash', $this->skin, 'admin');
+						
 						/* write everything to the template */
-						$this->template->write_view('flash_message', '_base/admin/pages/flash', $flash);
+						$this->template->write_view('flash_message', $flashloc, $flash);
 					}
-					
-					break;
+				break;
 					
 				case 'delete':
 					$id = $this->input->post('id', TRUE);
@@ -4476,10 +4592,12 @@ class Site_base extends Controller {
 						$flash['message'] = text_output($message);
 					}
 					
-					/* write everything to the template */
-					$this->template->write_view('flash_message', '_base/admin/pages/flash', $flash);
+					// set the location of the flash view
+					$flashloc = view_location('flash', $this->skin, 'admin');
 					
-					break;
+					/* write everything to the template */
+					$this->template->write_view('flash_message', $flashloc, $flash);
+				break;
 					
 				case 'edit':
 					$name = $this->input->post('page_name', TRUE);
@@ -4502,8 +4620,11 @@ class Site_base extends Controller {
 						$flash['status'] = 'error';
 						$flash['message'] = text_output($message);
 						
+						// set the location of the flash view
+						$flashloc = view_location('flash', $this->skin, 'admin');
+						
 						/* write everything to the template */
-						$this->template->write_view('flash_message', '_base/admin/pages/flash', $flash);
+						$this->template->write_view('flash_message', $flashloc, $flash);
 					}
 					else
 					{
@@ -4543,11 +4664,13 @@ class Site_base extends Controller {
 							$flash['message'] = text_output($message);
 						}
 						
+						// set the location of the flash view
+						$flashloc = view_location('flash', $this->skin, 'admin');
+						
 						/* write everything to the template */
-						$this->template->write_view('flash_message', '_base/admin/pages/flash', $flash);
+						$this->template->write_view('flash_message', $flashloc, $flash);
 					}
-					
-					break;
+				break;
 			}
 		}
 		
@@ -4680,10 +4803,12 @@ class Site_base extends Controller {
 						$flash['message'] = text_output($message);
 					}
 					
-					/* write everything to the template */
-					$this->template->write_view('flash_message', '_base/admin/pages/flash', $flash);
+					// set the location of the flash view
+					$flashloc = view_location('flash', $this->skin, 'admin');
 					
-					break;
+					/* write everything to the template */
+					$this->template->write_view('flash_message', $flashloc, $flash);
+				break;
 					
 				case 'delete':
 					$id = $this->input->post('id', TRUE);
@@ -4722,10 +4847,12 @@ class Site_base extends Controller {
 						$flash['message'] = text_output($message);
 					}
 					
-					/* write everything to the template */
-					$this->template->write_view('flash_message', '_base/admin/pages/flash', $flash);
+					// set the location of the flash view
+					$flashloc = view_location('flash', $this->skin, 'admin');
 					
-					break;
+					/* write everything to the template */
+					$this->template->write_view('flash_message', $flashloc, $flash);
+				break;
 					
 				case 'edit':
 					$name = $this->input->post('role_name', TRUE);
@@ -4774,10 +4901,12 @@ class Site_base extends Controller {
 						$flash['message'] = text_output($message);
 					}
 					
-					/* write everything to the template */
-					$this->template->write_view('flash_message', '_base/admin/pages/flash', $flash);
+					// set the location of the flash view
+					$flashloc = view_location('flash', $this->skin, 'admin');
 					
-					break;
+					/* write everything to the template */
+					$this->template->write_view('flash_message', $flashloc, $flash);
+				break;
 					
 				case 'duplicate':
 					$new_name = $this->input->post('name', TRUE);
@@ -4819,10 +4948,12 @@ class Site_base extends Controller {
 						$flash['message'] = text_output($message);
 					}
 					
-					/* write everything to the template */
-					$this->template->write_view('flash_message', '_base/admin/pages/flash', $flash);
+					// set the location of the flash view
+					$flashloc = view_location('flash', $this->skin, 'admin');
 					
-					break;
+					/* write everything to the template */
+					$this->template->write_view('flash_message', $flashloc, $flash);
+				break;
 			}
 		}
 		
@@ -4900,16 +5031,17 @@ class Site_base extends Controller {
 			case 'add':
 				$data['header'] = ucwords(lang('actions_add') .' '. lang('labels_role'));
 				$data['text'] = lang('text_roles');
-				break;
+			break;
 				
 			case 'edit':
 				$data['header'] = ucwords(lang('actions_edit') .' '. lang('labels_role'));
 				$data['text'] = lang('text_roles');
-				break;
+			break;
 				
 			default:
 				$data['header'] = ucfirst(lang('labels_roles'));
 				$data['text'] = lang('text_roles');
+			break;
 		}
 		
 		$data['images'] = array(
@@ -5026,8 +5158,11 @@ class Site_base extends Controller {
 				$flash['message'] = text_output($message);
 			}
 			
+			// set the location of the flash view
+			$flashloc = view_location('flash', $this->skin, 'admin');
+			
 			/* write everything to the template */
-			$this->template->write_view('flash_message', '_base/admin/pages/flash', $flash);
+			$this->template->write_view('flash_message', $flashloc, $flash);
 		}
 		
 		/* grab all settings */
@@ -5468,10 +5603,12 @@ class Site_base extends Controller {
 						$flash['message'] = text_output($message);
 					}
 					
-					/* write everything to the template */
-					$this->template->write_view('flash_message', '_base/admin/pages/flash', $flash);
+					// set the location of the flash view
+					$flashloc = view_location('flash', $this->skin, 'admin');
 					
-					break;
+					/* write everything to the template */
+					$this->template->write_view('flash_message', $flashloc, $flash);
+				break;
 					
 				case 'edit':
 					$array = array();
@@ -5529,10 +5666,12 @@ class Site_base extends Controller {
 						$flash['message'] = text_output($message);
 					}
 					
-					/* write everything to the template */
-					$this->template->write_view('flash_message', '_base/admin/pages/flash', $flash);
+					// set the location of the flash view
+					$flashloc = view_location('flash', $this->skin, 'admin');
 					
-					break;
+					/* write everything to the template */
+					$this->template->write_view('flash_message', $flashloc, $flash);
+				break;
 			}
 		}
 		
@@ -5703,10 +5842,12 @@ class Site_base extends Controller {
 						$flash['message'] = text_output($message);
 					}
 											
-					/* write everything to the template */
-					$this->template->write_view('flash_message', '_base/admin/pages/flash', $flash);
+					// set the location of the flash view
+					$flashloc = view_location('flash', $this->skin, 'admin');
 					
-					break;
+					/* write everything to the template */
+					$this->template->write_view('flash_message', $flashloc, $flash);
+				break;
 					
 				case 'delete':
 					$id = (is_numeric($this->input->post('id', TRUE))) ? $this->input->post('id', TRUE) : 0;
@@ -5750,10 +5891,12 @@ class Site_base extends Controller {
 						$flash['message'] = text_output($message);
 					}
 											
-					/* write everything to the template */
-					$this->template->write_view('flash_message', '_base/admin/pages/flash', $flash);
+					// set the location of the flash view
+					$flashloc = view_location('flash', $this->skin, 'admin');
 					
-					break;
+					/* write everything to the template */
+					$this->template->write_view('flash_message', $flashloc, $flash);
+				break;
 					
 				case 'edit':
 					$type = $this->input->post('field_type', TRUE);
@@ -5807,10 +5950,12 @@ class Site_base extends Controller {
 						$flash['message'] = text_output($message);
 					}
 											
-					/* write everything to the template */
-					$this->template->write_view('flash_message', '_base/admin/pages/flash', $flash);
+					// set the location of the flash view
+					$flashloc = view_location('flash', $this->skin, 'admin');
 					
-					break;
+					/* write everything to the template */
+					$this->template->write_view('flash_message', $flashloc, $flash);
+				break;
 					
 				case 'editval':
 					$value = $this->input->post('value_field_value', TRUE);
@@ -5852,10 +5997,12 @@ class Site_base extends Controller {
 						$flash['message'] = text_output($message);
 					}
 
+					// set the location of the flash view
+					$flashloc = view_location('flash', $this->skin, 'admin');
+					
 					/* write everything to the template */
-					$this->template->write_view('flash_message', '_base/admin/pages/flash', $flash);
-
-					break;
+					$this->template->write_view('flash_message', $flashloc, $flash);
+				break;
 			}
 		}
 		
@@ -5893,8 +6040,7 @@ class Site_base extends Controller {
 									
 									$data['specs']['sections'][$sec->section_id]['fields'][$fid]['input'] = form_input($input);
 									$data['specs']['sections'][$sec->section_id]['fields'][$fid]['id'] = $field->field_id;
-											
-									break;
+								break;
 											
 								case 'textarea':
 									$input = array(
@@ -5907,8 +6053,7 @@ class Site_base extends Controller {
 											
 									$data['specs']['sections'][$sec->section_id]['fields'][$fid]['input'] = form_textarea($input);
 									$data['specs']['sections'][$sec->section_id]['fields'][$fid]['id'] = $field->field_id;
-											
-									break;
+								break;
 											
 								case 'select':
 									$value = FALSE;
@@ -5927,7 +6072,7 @@ class Site_base extends Controller {
 											
 									$data['specs']['sections'][$sec->section_id]['fields'][$fid]['input'] = form_dropdown($field->field_id, $input);
 									$data['specs']['sections'][$sec->section_id]['fields'][$fid]['id'] = $field->field_id;
-									break;
+								break;
 							}
 						}
 					}
@@ -6173,10 +6318,12 @@ class Site_base extends Controller {
 						$flash['message'] = text_output($message);
 					}
 											
-					/* write everything to the template */
-					$this->template->write_view('flash_message', '_base/admin/pages/flash', $flash);
+					// set the location of the flash view
+					$flashloc = view_location('flash', $this->skin, 'admin');
 					
-					break;
+					/* write everything to the template */
+					$this->template->write_view('flash_message', $flashloc, $flash);
+				break;
 					
 				case 'delete':
 					$old_id = $this->input->post('id', TRUE);
@@ -6211,10 +6358,12 @@ class Site_base extends Controller {
 						$flash['message'] = text_output($message);
 					}
 											
-					/* write everything to the template */
-					$this->template->write_view('flash_message', '_base/admin/pages/flash', $flash);
+					// set the location of the flash view
+					$flashloc = view_location('flash', $this->skin, 'admin');
 					
-					break;
+					/* write everything to the template */
+					$this->template->write_view('flash_message', $flashloc, $flash);
+				break;
 					
 				case 'edit':
 					$name = $this->input->post('section_name', TRUE);
@@ -6254,10 +6403,12 @@ class Site_base extends Controller {
 						$flash['message'] = text_output($message);
 					}
 											
-					/* write everything to the template */
-					$this->template->write_view('flash_message', '_base/admin/pages/flash', $flash);
+					// set the location of the flash view
+					$flashloc = view_location('flash', $this->skin, 'admin');
 					
-					break;
+					/* write everything to the template */
+					$this->template->write_view('flash_message', $flashloc, $flash);
+				break;
 			}
 		}
 		
@@ -6423,10 +6574,12 @@ class Site_base extends Controller {
 						$flash['message'] = text_output($message);
 					}
 											
-					/* write everything to the template */
-					$this->template->write_view('flash_message', '_base/admin/pages/flash', $flash);
+					// set the location of the flash view
+					$flashloc = view_location('flash', $this->skin, 'admin');
 					
-					break;
+					/* write everything to the template */
+					$this->template->write_view('flash_message', $flashloc, $flash);
+				break;
 					
 				case 'delete':
 					$id = (is_numeric($this->input->post('id', TRUE))) ? $this->input->post('id', TRUE) : 0;
@@ -6470,10 +6623,12 @@ class Site_base extends Controller {
 						$flash['message'] = text_output($message);
 					}
 											
-					/* write everything to the template */
-					$this->template->write_view('flash_message', '_base/admin/pages/flash', $flash);
+					// set the location of the flash view
+					$flashloc = view_location('flash', $this->skin, 'admin');
 					
-					break;
+					/* write everything to the template */
+					$this->template->write_view('flash_message', $flashloc, $flash);
+				break;
 					
 				case 'edit':
 					$type = $this->input->post('field_type', TRUE);
@@ -6525,10 +6680,12 @@ class Site_base extends Controller {
 						$flash['message'] = text_output($message);
 					}
 											
-					/* write everything to the template */
-					$this->template->write_view('flash_message', '_base/admin/pages/flash', $flash);
+					// set the location of the flash view
+					$flashloc = view_location('flash', $this->skin, 'admin');
 					
-					break;
+					/* write everything to the template */
+					$this->template->write_view('flash_message', $flashloc, $flash);
+				break;
 					
 				case 'editval':
 					$value = $this->input->post('value_field_value', TRUE);
@@ -6570,10 +6727,12 @@ class Site_base extends Controller {
 						$flash['message'] = text_output($message);
 					}
 
+					// set the location of the flash view
+					$flashloc = view_location('flash', $this->skin, 'admin');
+					
 					/* write everything to the template */
-					$this->template->write_view('flash_message', '_base/admin/pages/flash', $flash);
-
-					break;
+					$this->template->write_view('flash_message', $flashloc, $flash);
+				break;
 			}
 		}
 		
@@ -6605,8 +6764,7 @@ class Site_base extends Controller {
 							
 							$data['tour'][$fid]['input'] = form_input($input);
 							$data['tour'][$fid]['id'] = $field->field_id;
-									
-							break;
+						break;
 									
 						case 'textarea':
 							$input = array(
@@ -6619,8 +6777,7 @@ class Site_base extends Controller {
 									
 							$data['tour'][$fid]['input'] = form_textarea($input);
 							$data['tour'][$fid]['id'] = $field->field_id;
-									
-							break;
+						break;
 									
 						case 'select':
 							$value = FALSE;
@@ -6639,7 +6796,7 @@ class Site_base extends Controller {
 									
 							$data['tour'][$fid]['input'] = form_dropdown($field->field_id, $input);
 							$data['tour'][$fid]['id'] = $field->field_id;
-							break;
+						break;
 					}
 				}
 			}
@@ -6841,8 +6998,11 @@ class Site_base extends Controller {
 						$flash['status'] = 'error';
 						$flash['message'] = text_output($message);
 						
+						// set the location of the flash view
+						$flashloc = view_location('flash', $this->skin, 'admin');
+						
 						/* write everything to the template */
-						$this->template->write_view('flash_message', '_base/admin/pages/flash', $flash);
+						$this->template->write_view('flash_message', $flashloc, $flash);
 					}
 					else
 					{
@@ -6895,11 +7055,13 @@ class Site_base extends Controller {
 							$flash['message'] = text_output($message);
 						}
 						
+						// set the location of the flash view
+						$flashloc = view_location('flash', $this->skin, 'admin');
+						
 						/* write everything to the template */
-						$this->template->write_view('flash_message', '_base/admin/pages/flash', $flash);
+						$this->template->write_view('flash_message', $flashloc, $flash);
 					}
-					
-					break;
+				break;
 					
 				case 'delete':
 					$id = $this->input->post('id', TRUE);
@@ -6946,11 +7108,13 @@ class Site_base extends Controller {
 							$flash['message'] = lang_output('flash_settings_delete_nonuser');
 						}
 						
+						// set the location of the flash view
+						$flashloc = view_location('flash', $this->skin, 'admin');
+						
 						/* write everything to the template */
-						$this->template->write_view('flash_message', '_base/admin/pages/flash', $flash);
+						$this->template->write_view('flash_message', $flashloc, $flash);
 					}
-				
-					break;
+				break;
 					
 				case 'edit':
 					$label = $this->input->post('setting_label', TRUE);
@@ -6971,8 +7135,11 @@ class Site_base extends Controller {
 						$flash['status'] = 'error';
 						$flash['message'] = text_output($message);
 						
+						// set the location of the flash view
+						$flashloc = view_location('flash', $this->skin, 'admin');
+						
 						/* write everything to the template */
-						$this->template->write_view('flash_message', '_base/admin/pages/flash', $flash);
+						$this->template->write_view('flash_message', $flashloc, $flash);
 					}
 					else
 					{
@@ -7024,12 +7191,14 @@ class Site_base extends Controller {
 								$flash['message'] = lang_output('flash_settings_edit_nonuser');
 							}
 							
+							// set the location of the flash view
+							$flashloc = view_location('flash', $this->skin, 'admin');
+							
 							/* write everything to the template */
-							$this->template->write_view('flash_message', '_base/admin/pages/flash', $flash);
+							$this->template->write_view('flash_message', $flashloc, $flash);
 						}
 					}
-					
-					break;
+				break;
 			}
 		}
 		
@@ -7087,6 +7256,3 @@ class Site_base extends Controller {
 		$this->template->render();
 	}
 }
-
-/* End of file site_base.php */
-/* Location: ./application/controllers/site_base.php */

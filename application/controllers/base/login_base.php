@@ -1,16 +1,15 @@
 <?php
-/*
-|---------------------------------------------------------------
-| LOGIN CONTROLLER
-|---------------------------------------------------------------
-|
-| File: controllers/base/login_base.php
-| System Version: 1.2
-|
-| Changes: fixed bug where the flash view couldn't be overridden
-|	with seamless substitution
-|
-*/
+/**
+ * Login controller
+ *
+ * @package		Nova
+ * @category	Controller
+ * @author		Anodyne Productions
+ * @copyright	2010-11 Anodyne Productions
+ * @version		1.3
+ *
+ * Updated the flash messages so they can be overridden by seamless substitution
+ */
 
 class Login_base extends Controller {
 	
@@ -102,10 +101,10 @@ class Login_base extends Controller {
 			$flash['message'] = lang_output('error_login_5');
 			
 			// set the location of the flash view
-			$loc = view_location('flash', $this->skin, 'login');
+			$flashloc = view_location('flash', $this->skin, 'login');
 			
 			/* write everything to the template */
-			$this->template->write_view('flash_message', $loc, $flash);
+			$this->template->write_view('flash_message', $flashloc, $flash);
 		}
 		
 		/* set the number of attempts to zero to start */
@@ -146,10 +145,10 @@ class Login_base extends Controller {
 				$flash['message'] = text_output($message);
 			
 				// set the location of the flash view
-				$loc = view_location('flash', $this->skin, 'login');
+				$flashloc = view_location('flash', $this->skin, 'login');
 				
 				/* write everything to the template */
-				$this->template->write_view('flash_message', $loc, $flash);
+				$this->template->write_view('flash_message', $flashloc, $flash);
 			}
 		}
 		
@@ -168,7 +167,7 @@ class Login_base extends Controller {
 					);
 					
 					$flash['message'] = text_output($message);
-					break;
+				break;
 					
 				case 7:
 					$message = sprintf(
@@ -178,18 +177,18 @@ class Login_base extends Controller {
 					);
 					
 					$flash['message'] = text_output($message);
-					break;
+				break;
 				
 				default:
 					$flash['message'] = lang_output('error_login_' . $this->uri->segment(4));
-					break;
+				break;
 			}
 			
 			// set the location of the flash view
-			$loc = view_location('flash', $this->skin, 'login');
+			$flashloc = view_location('flash', $this->skin, 'login');
 			
 			/* write everything to the template */
-			$this->template->write_view('flash_message', $loc, $flash);
+			$this->template->write_view('flash_message', $flashloc, $flash);
 		}
 		
 		/* inputs */
@@ -316,10 +315,10 @@ class Login_base extends Controller {
 			$flash['message'] = lang_output('flash_system_email_off_disabled');
 			
 			// set the location of the flash view
-			$loc = view_location('flash', $this->skin, 'login');
+			$flashloc = view_location('flash', $this->skin, 'login');
 			
 			/* write everything to the template */
-			$this->template->write_view('flash_message', $loc, $flash);
+			$this->template->write_view('flash_message', $flashloc, $flash);
 		}
 		
 		if (isset($_POST['submit']))
@@ -379,10 +378,10 @@ class Login_base extends Controller {
 			}
 			
 			// set the location of the flash view
-			$loc = view_location('flash', $this->skin, 'login');
+			$flashloc = view_location('flash', $this->skin, 'login');
 			
 			/* write everything to the template */
-			$this->template->write_view('flash_message', $loc, $flash);
+			$this->template->write_view('flash_message', $flashloc, $flash);
 		}
 		
 		/* run the methods */
@@ -480,8 +479,7 @@ class Login_base extends Controller {
 				$this->email->to($data['email']);
 				$this->email->subject($this->options['email_subject'] .' '. $email_data['email_subject']);
 				$this->email->message($message);
-				
-				break;
+			break;
 		}
 		
 		/* send the email */
@@ -534,6 +532,3 @@ class Login_base extends Controller {
 		return $update;
 	}
 }
-
-/* End of file login_base.php */
-/* Location: ./application/controllers/base/login_base.php */

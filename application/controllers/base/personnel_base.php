@@ -1,15 +1,15 @@
 <?php
-/*
-|---------------------------------------------------------------
-| PERSONNEL CONTROLLER
-|---------------------------------------------------------------
-|
-| File: controllers/base/personnel_base.php
-| System Version: 1.2
-|
-| Changes: updated for multiple manifests
-|
-*/
+/**
+ * Personnel controller
+ *
+ * @package		Nova
+ * @category	Controller
+ * @author		Anodyne Productions
+ * @copyright	2010-11 Anodyne Productions
+ * @version		1.3
+ *
+ * Updated the flash message so they can be overridden by seamless substitution
+ */
 
 class Personnel_base extends Controller {
 
@@ -1605,6 +1605,3 @@ class Personnel_base extends Controller {
 		$this->template->render();
 	}
 }
-
-/* End of file personnel_base.php */
-/* Location: ./application/controllers/base/personnel_base.php */

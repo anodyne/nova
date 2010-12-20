@@ -1,13 +1,13 @@
 <?php
-/*
-|---------------------------------------------------------------
-| INSTALL CONTROLLER
-|---------------------------------------------------------------
-|
-| File: controllers/base/install_base.php
-| System Version: 1.0.5
-|
-*/
+/**
+ * Install controller
+ *
+ * @package		Nova
+ * @category	Controller
+ * @author		Anodyne Productions
+ * @copyright	2010-11 Anodyne Productions
+ * @version		1.0.5
+ */
 
 class Install_base extends Controller {
 
@@ -117,8 +117,7 @@ class Install_base extends Controller {
 									$this->db->dbprefix . $table
 								);
 							}
-							
-							break;
+						break;
 							
 						case 'field':
 							/* get the table name */
@@ -179,8 +178,7 @@ class Install_base extends Controller {
 								$flash['status'] = 'error';
 								$flash['message'] = lang_output('install_changedb_field_notable');
 							}
-							
-							break;
+						break;
 					}
 					
 					/* write everything to the template */
@@ -198,8 +196,7 @@ class Install_base extends Controller {
 					);
 					
 					$control = form_button($submit) . form_close();
-					
-					break;
+				break;
 					
 				case 'verify':
 					/* load the resources */
@@ -268,8 +265,7 @@ class Install_base extends Controller {
 						
 						$control = form_button($submit) . form_close();
 					}
-					
-					break;
+				break;
 			}
 		}
 		else
@@ -430,8 +426,7 @@ class Install_base extends Controller {
 					);
 					
 					$control = form_button($submit) . form_close();
-					
-					break;
+				break;
 					
 				case 'verify':
 					/* load the resources */
@@ -509,8 +504,7 @@ class Install_base extends Controller {
 						
 						$control = form_button($submit) . form_close();
 					}
-					
-					break;
+				break;
 			}
 		}
 		else
@@ -814,8 +808,7 @@ class Install_base extends Controller {
 				/* set the title and label */
 				$this->template->write('title', lang('install_step1_title'));
 				$this->template->write('label', lang('install_step1_label'));
-				
-				break;
+			break;
 				
 			case 2:
 				/* pull in the install data asset file */
@@ -876,8 +869,7 @@ class Install_base extends Controller {
 				/* set the title and label */
 				$this->template->write('title', lang('install_step2_title'));
 				$this->template->write('label', lang('install_step2_label'));
-				
-				break;
+			break;
 				
 			case 3:
 				/* pull in the install genre data asset file */
@@ -998,8 +990,7 @@ class Install_base extends Controller {
 				/* set the title */
 				$this->template->write('title', lang('install_step3_title'));
 				$this->template->write('label', lang('install_step3_label'));
-				
-				break;
+			break;
 				
 			case 4:
 				/* set the variables */
@@ -1192,8 +1183,7 @@ class Install_base extends Controller {
 				/* set the title */
 				$this->template->write('title', lang('install_step4_title'));
 				$this->template->write('label', lang('install_step4_label'));
-				
-				break;
+			break;
 				
 			case 5:
 				/* set the variables */
@@ -1269,8 +1259,7 @@ class Install_base extends Controller {
 				/* set the title */
 				$this->template->write('title', lang('install_step5_title'));
 				$this->template->write('label', lang('install_step5_label'));
-				
-				break;
+			break;
 		}
 		
 		/* write the data to the template */
@@ -1611,6 +1600,3 @@ class Install_base extends Controller {
 		$email = $this->email->send();
 	}
 }
-
-/* End of file install_base.php */
-/* Location: ./application/controllers/base/install_base.php */

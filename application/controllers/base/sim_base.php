@@ -1,16 +1,15 @@
 <?php
-/*
-|---------------------------------------------------------------
-| SIM CONTROLLER
-|---------------------------------------------------------------
-|
-| File: controllers/base/sim_base.php
-| System Version: 1.2
-|
-| Changes: updated the department listing to show which manifest
-|	the department is associated with
-|
-*/
+/**
+ * Sim controller
+ *
+ * @package		Nova
+ * @category	Controller
+ * @author		Anodyne Productions
+ * @copyright	2010-11 Anodyne Productions
+ * @version		1.3
+ *
+ * Updated the flash message so they can be overridden by seamless substitution
+ */
 
 class Sim_base extends Controller {
 	
@@ -192,15 +191,15 @@ class Sim_base extends Controller {
 				{ /* set the category */
 					case 'both':
 						$data['cat'] = ucfirst($award_row->award_cat);
-						break;
+					break;
 					
 					case 'ic':
 						$data['cat'] = lang('labels_ic');
-						break;
+					break;
 						
 					case 'ooc':
 						$data['cat'] = lang('labels_ooc');
-						break;
+					break;
 				}
 				
 				if ($awardees->num_rows() > 0)
@@ -219,15 +218,15 @@ class Sim_base extends Controller {
 						{ /* determine whether the user name or character name should be displayed */
 							case 'both':
 								$data['awardees'][$i]['person'] = $this->char->get_character_name($item->awardrec_character);
-								break;
+							break;
 								
 							case 'ic':
 								$data['awardees'][$i]['person'] = $this->char->get_character_name($item->awardrec_character);
-								break;
+							break;
 								
 							case 'ooc':
 								$data['awardees'][$i]['person'] = $this->user->get_user($item->awardrec_user, 'name');
-								break;
+							break;
 						}
 						
 						++$i;
@@ -612,8 +611,11 @@ class Sim_base extends Controller {
 			$flash['status'] = 'info';
 			$flash['message'] = lang_output('flash_system_email_off');
 			
+			// set the location of the flash view
+			$flashloc = view_location('flash', $this->skin, 'main');
+			
 			/* write everything to the template */
-			$this->template->write_view('flash_message', '_base/main/pages/flash', $flash);
+			$this->template->write_view('flash_message', $flashloc, $flash);
 		}
 		
 		if (isset($_POST['submit']))
@@ -706,8 +708,11 @@ class Sim_base extends Controller {
 				}
 			}
 			
+			// set the location of the flash view
+			$flashloc = view_location('flash', $this->skin, 'main');
+			
 			/* write everything to the template */
-			$this->template->write_view('flash_message', '_base/main/pages/flash', $flash);
+			$this->template->write_view('flash_message', $flashloc, $flash);
 		}
 		
 		/* grab the join fields */
@@ -745,8 +750,7 @@ class Sim_base extends Controller {
 								);
 								
 								$data['docking'][$sid]['fields'][$f_id]['input'] = form_input($input);
-								
-								break;
+							break;
 								
 							case 'textarea':
 								$input = array(
@@ -758,8 +762,7 @@ class Sim_base extends Controller {
 								);
 								
 								$data['docking'][$sid]['fields'][$f_id]['input'] = form_textarea($input);
-								
-								break;
+							break;
 								
 							case 'select':
 								$value = FALSE;
@@ -777,7 +780,7 @@ class Sim_base extends Controller {
 								}
 								
 								$data['docking'][$sid]['fields'][$f_id]['input'] = form_dropdown($field->field_id, $input);
-								break;
+							break;
 						}
 					}
 				}
@@ -1195,8 +1198,7 @@ class Sim_base extends Controller {
 						$this->template->write('title', lang('error_pagetitle'));
 					}
 				}
-		
-				break;
+			break;
 				
 			case 'group':
 				if ($id === FALSE)
@@ -1279,8 +1281,7 @@ class Sim_base extends Controller {
 					/* set the page title */
 					$this->template->write('title', $title);
 				}
-				
-				break;
+			break;
 			
 			default:
 				$missions = $this->mis->get_all_missions();
@@ -1342,6 +1343,7 @@ class Sim_base extends Controller {
 				
 				/* write the data to the template */
 				$this->template->write('title', $title);
+			break;
 		}
 		
 		$data['label'] += array(
@@ -1952,8 +1954,11 @@ class Sim_base extends Controller {
 				$flash['message'] = lang_output('flash_add_comment_empty_body');
 			}
 			
+			// set the location of the flash view
+			$flashloc = view_location('flash', $this->skin, 'main');
+			
 			/* write everything to the template */
-			$this->template->write_view('flash_message', '_base/main/pages/flash', $flash);
+			$this->template->write_view('flash_message', $flashloc, $flash);
 		}
 		
 		/* fire the methods to get the log and its comments */
@@ -2155,8 +2160,11 @@ class Sim_base extends Controller {
 				$flash['message'] = lang_output('flash_add_comment_empty_body');
 			}
 			
+			// set the location of the flash view
+			$flashloc = view_location('flash', $this->skin, 'main');
+			
 			/* write everything to the template */
-			$this->template->write_view('flash_message', '_base/main/pages/flash', $flash);
+			$this->template->write_view('flash_message', $flashloc, $flash);
 		}
 		
 		/* get the news item */
@@ -2363,8 +2371,7 @@ class Sim_base extends Controller {
 				$this->email->to($to);
 				$this->email->subject($this->options['email_subject'] .' '. $email_data['email_subject']);
 				$this->email->message($message);
-				
-				break;
+			break;
 				
 			case 'log_comment_pending':
 				/* load the models */
@@ -2403,8 +2410,7 @@ class Sim_base extends Controller {
 				$this->email->to($to);
 				$this->email->subject($this->options['email_subject'] .' '. $email_data['email_subject']);
 				$this->email->message($message);
-				
-				break;
+			break;
 				
 			case 'post_comment':
 				/* load the models */
@@ -2462,8 +2468,7 @@ class Sim_base extends Controller {
 				$this->email->to($to);
 				$this->email->subject($this->options['email_subject'] .' '. $email_data['email_subject']);
 				$this->email->message($message);
-				
-				break;
+			break;
 				
 			case 'post_comment_pending':
 				/* load the models */
@@ -2502,8 +2507,7 @@ class Sim_base extends Controller {
 				$this->email->to($to);
 				$this->email->subject($this->options['email_subject'] .' '. $email_data['email_subject']);
 				$this->email->message($message);
-				
-				break;
+			break;
 				
 			case 'docking_user':
 				/* set the content */	
@@ -2530,8 +2534,7 @@ class Sim_base extends Controller {
 				$this->email->to($data['email']);
 				$this->email->subject($this->options['email_subject'] .' '. $email_data['email_subject']);
 				$this->email->message($message);
-				
-				break;
+			break;
 				
 			case 'docking_gm':
 				/* load the models */
@@ -2614,8 +2617,7 @@ class Sim_base extends Controller {
 						$this->email->message($message);
 					}
 				}
-				
-				break;
+			break;
 		}
 		
 		/* send the email */
@@ -2625,6 +2627,3 @@ class Sim_base extends Controller {
 		return $email;
 	}
 }
-
-/* End of file sim_base.php */
-/* Location: ./application/controllers/base/sim_base.php */

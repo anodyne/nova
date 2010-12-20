@@ -1,21 +1,15 @@
 <?php
-/*
-|---------------------------------------------------------------
-| MAIN CONTROLLER
-|---------------------------------------------------------------
-|
-| File: controllers/base/main_base.php
-| System Version: 1.2
-|
-| Changes: updated the join application email sent to the game
-|	game master to store the applicant's IP address; updated the
-|	join form to take level 1 bans in to account; updated the
-|	contact form to be simpler and line up with nova 2's new
-|	contact form; fixed bug where the sample post was just one
-|	massive wall of text; fixed bug where the join page was
-|	calling an image from the wrong section
-|
-*/
+/**
+ * Main controller
+ *
+ * @package		Nova
+ * @category	Controller
+ * @author		Anodyne Productions
+ * @copyright	2010-11 Anodyne Productions
+ * @version		1.3
+ *
+ * Updated the flash messages so they can be overridden by seamless substitution
+ */
 
 class Main_base extends Controller {
 	
@@ -212,8 +206,11 @@ class Main_base extends Controller {
 					$flash['message'] = text_output($message);
 				}
 				
+				// set the location of the flash view
+				$flashloc = view_location('flash', $this->skin, 'main');
+				
 				/* write everything to the template */
-				$this->template->write_view('flash_message', '_base/main/pages/flash', $flash);
+				$this->template->write_view('flash_message', $flashloc, $flash);
 			}
 		}
 		
@@ -520,16 +517,22 @@ class Main_base extends Controller {
 				}
 			}
 			
+			// set the location of the flash view
+			$flashloc = view_location('flash', $this->skin, 'main');
+			
 			/* write everything to the template */
-			$this->template->write_view('flash_message', '_base/main/pages/flash', $flash);
+			$this->template->write_view('flash_message', $flashloc, $flash);
 		}
 		elseif ($this->options['system_email'] == 'off')
 		{
 			$flash['status'] = 'info';
 			$flash['message'] = lang_output('flash_system_email_off');
 			
+			// set the location of the flash view
+			$flashloc = view_location('flash', $this->skin, 'main');
+			
 			/* write everything to the template */
-			$this->template->write_view('flash_message', '_base/main/pages/flash', $flash);
+			$this->template->write_view('flash_message', $flashloc, $flash);
 		}
 		
 		if ($agree == FALSE && $submit == FALSE)
@@ -581,8 +584,7 @@ class Main_base extends Controller {
 									);
 									
 									$data['join'][$sid]['fields'][$f_id]['input'] = form_input($input);
-									
-									break;
+								break;
 									
 								case 'textarea':
 									$input = array(
@@ -594,8 +596,7 @@ class Main_base extends Controller {
 									);
 									
 									$data['join'][$sid]['fields'][$f_id]['input'] = form_textarea($input);
-									
-									break;
+								break;
 									
 								case 'select':
 									$value = FALSE;
@@ -613,7 +614,7 @@ class Main_base extends Controller {
 									}
 									
 									$data['join'][$sid]['fields'][$f_id]['input'] = form_dropdown($field->field_id, $input);
-									break;
+								break;
 							}
 						}
 					}
@@ -918,8 +919,11 @@ class Main_base extends Controller {
 				$flash['message'] = lang_output('flash_add_comment_empty_body');
 			}
 			
+			// set the location of the flash view
+			$flashloc = view_location('flash', $this->skin, 'main');
+			
 			/* write everything to the template */
-			$this->template->write_view('flash_message', '_base/main/pages/flash', $flash);
+			$this->template->write_view('flash_message', $flashloc, $flash);
 		}
 		
 		/* get the news item */
@@ -1115,8 +1119,7 @@ class Main_base extends Controller {
 				$this->email->to($to);
 				$this->email->subject($this->options['email_subject'] .' '. $data['subject']);
 				$this->email->message($message);
-				
-				break;
+			break;
 				
 			case 'news_comment':
 				/* load the models */
@@ -1153,8 +1156,7 @@ class Main_base extends Controller {
 				$this->email->to($to);
 				$this->email->subject($this->options['email_subject'] .' '. $email_data['email_subject']);
 				$this->email->message($message);
-				
-				break;
+			break;
 				
 			case 'news_comment_pending':
 				/* load the models */
@@ -1193,8 +1195,7 @@ class Main_base extends Controller {
 				$this->email->to($to);
 				$this->email->subject($this->options['email_subject'] .' '. $email_data['email_subject']);
 				$this->email->message($message);
-				
-				break;
+			break;
 				
 			case 'join_user':
 				/* set the content */	
@@ -1223,8 +1224,7 @@ class Main_base extends Controller {
 				$this->email->to($data['email']);
 				$this->email->subject($this->options['email_subject'] .' '. $email_data['email_subject']);
 				$this->email->message($message);
-				
-				break;
+			break;
 				
 			case 'join_gm':
 				/* load the models */
@@ -1322,8 +1322,7 @@ class Main_base extends Controller {
 				$this->email->to($to);
 				$this->email->subject($this->options['email_subject'] .' '. $email_data['email_subject']);
 				$this->email->message($message);
-				
-				break;
+			break;
 		}
 		
 		/* send the email */
@@ -1333,6 +1332,3 @@ class Main_base extends Controller {
 		return $email;
 	}
 }
-
-/* End of file main_base.php */
-/* Location: ./application/controllers/base/main_base.php */
