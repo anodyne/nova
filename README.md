@@ -68,6 +68,7 @@ Anodyne Production's next-generation RPG management system combines popular feat
 * fixed bug where personal logs don't have the right date when they're saved first
 * fixed bug where pending users would appear in the dropdown of potential recipients for a PM
 * fixed bug where changing a dynamic form field from text/textarea to dropdown wouldn't trigger the dropdown values section to open, rendering the field pretty much useless
+* fixed bug where the wiki search used a wrong link to send users to the wiki pages in the search results
 
 ## Version History
 
