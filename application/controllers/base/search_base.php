@@ -267,7 +267,7 @@ class Search_base extends Controller {
 							if ($row !== FALSE)
 							{
 								$data['results'][$i]['content'] = $row->draft_content;
-								$data['results'][$i]['link'] = anchor('wiki/page/view/'. $item->draft_page, $row->draft_title);
+								$data['results'][$i]['link'] = anchor('wiki/view/page/'. $item->draft_page, $row->draft_title);
 							}
 						break;
 					}
