@@ -5,10 +5,10 @@
 |---------------------------------------------------------------
 |
 | File: controllers/base/search_base.php
-| System Version: 1.1.1
+| System Version: 1.2
 |
-| Changes: fixed a bug where nova wouldn't display because it
-|	couldn't find the template file
+| Changes: fixed bug where the wiki search used a wrong link to send
+|	users to the wiki pages in the search results
 |
 */
 
@@ -176,19 +176,19 @@ class Search_base extends Controller {
 						case 'title':
 							$comp = $prefix .'title';
 							$title = 'post_title';
-							break;
+						break;
 						case 'content':
 							$comp = $prefix .'content';
 							$content = 'post_content';
-							break;
+						break;
 						case 'tags':
 							$comp = $prefix .'tags';
 							$tags = 'post_tags';
-							break;
+						break;
 					}
 					
 					$result = $this->posts->search_posts($comp, $input);
-					break;
+				break;
 				
 				case 'logs':
 					/* load the model */
@@ -201,17 +201,17 @@ class Search_base extends Controller {
 					{
 						case 'title':
 							$comp = $prefix .'title';
-							break;
+						break;
 						case 'content':
 							$comp = $prefix .'content';
-							break;
+						break;
 						case 'tags':
 							$comp = $prefix .'tags';
-							break;
+						break;
 					}
 					
 					$result = $this->logs->search_logs($comp, $input);
-					break;
+				break;
 					
 				case 'news':
 					/* load the model */
@@ -224,24 +224,24 @@ class Search_base extends Controller {
 					{
 						case 'title':
 							$comp = $prefix .'title';
-							break;
+						break;
 						case 'content':
 							$comp = $prefix .'content';
-							break;
+						break;
 						case 'tags':
 							$comp = $prefix .'tags';
-							break;
+						break;
 					}
 					
 					$result = $this->news->search_news($comp, $input);
-					break;
+				break;
 					
 				case 'wiki':
 					/* load the model */
 					$this->load->model('wiki_model', 'wiki');
 					
 					$result = $this->wiki->search_pages($component, $input);
-					break;
+				break;
 			}
 			
 			if ($result->num_rows() > 0)
@@ -254,15 +254,15 @@ class Search_base extends Controller {
 						case 'posts':
 							$data['results'][$i]['content'] = $item->post_content;
 							$data['results'][$i]['link'] = anchor('sim/viewpost/'. $item->post_id, $item->post_title);
-							break;
+						break;
 						case 'logs':
 							$data['results'][$i]['content'] = $item->log_content;
 							$data['results'][$i]['link'] = anchor('sim/viewlog/'. $item->log_id, $item->log_title);
-							break;
+						break;
 						case 'news':
 							$data['results'][$i]['content'] = $item->news_content;
 							$data['results'][$i]['link'] = anchor('main/viewnews/'. $item->news_id, $item->news_title);
-							break;
+						break;
 						case 'wiki':
 							$page = $this->wiki->get_page($item->draft_page);
 							$row = ($page->num_rows() > 0) ? $page->row() : FALSE;
@@ -270,10 +270,9 @@ class Search_base extends Controller {
 							if ($row !== FALSE)
 							{
 								$data['results'][$i]['content'] = $row->draft_content;
-								$data['results'][$i]['link'] = anchor('wiki/page/view/'. $item->draft_page, $row->draft_title);
+								$data['results'][$i]['link'] = anchor('wiki/view/page/'. $item->draft_page, $row->draft_title);
 							}
-							
-							break;
+						break;
 					}
 					
 					++$i;
