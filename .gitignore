@@ -1,22 +1,20 @@
 application/config/database.php
 
 application/assets/images/awards/
-!application/assets/images/awards/index.html
-
 application/assets/images/characters/
-!application/assets/images/characters/index.html
-
 application/assets/images/missions/
-!application/assets/images/missions/index.html
-
 application/assets/images/specs/
-!application/assets/images/specs/index.html
-
 application/assets/images/tour/
+!application/assets/images/awards/index.html
+!application/assets/images/characters/index.html
+!application/assets/images/missions/index.html
+!application/assets/images/specs/index.html
 !application/assets/images/tour/index.html
 
 application/cache/
+application/cache/unittest/
 !application/cache/index.html
+!application/cache/unittest/index.html
 
 application/logs/
 !application/logs/index.html
@@ -25,8 +23,6 @@ application/logs/
 *.bak
 Thumbs.db
 .DS_Store
-
-update.sh
 
 application/views/apollo/
 application/views/quixly/
