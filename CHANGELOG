@@ -1,3 +1,8 @@
+* updated the install data and update files with the final content for the 1.2 release
+* updated the git ignore file to address some of the nova 2.0 development work
+* updated the database connection file
+* updated the readme
+* updated the changelog and changed files listing
 * updated the changelog
 * updated the git ignore file
 * added the update bash script that will automatically generate the changelog and changed files listing
