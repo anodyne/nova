@@ -36,18 +36,6 @@ ini_set('unserialize_callback_func', 'spl_autoload_call');
 
 //-- Configuration and initialization -----------------------------------------
 
-// set the Kohana environment
-Kohana::$environment = Kohana::DEVELOPMENT;
-
-/**
- * Set Kohana::$environment if $_ENV['KOHANA_ENV'] has been supplied.
- * 
- */
-if (isset($_ENV['KOHANA_ENV']))
-{
-	Kohana::$environment = $_ENV['KOHANA_ENV'];
-}
-
 /**
  * Initialize Kohana, setting the default options.
  *
@@ -67,9 +55,7 @@ $url = substr($url, 0, (strlen($url) - strpos(strrev($url), '/')));
 
 Kohana::init(array(
 	'base_url'		=> $url,
-	'index_file'	=> 'index.php',
-	'error'			=> true,
-	'profile'		=> (Kohana::$environment == 'production') ? false : true,
+	'profile'		=> (Kohana::$environment == Kohana::PRODUCTION) ? false : true,
 ));
 
 /**
@@ -81,6 +67,18 @@ Kohana::$log->attach(new Kohana_Log_File(APPPATH.'logs'));
  * Attach a file reader to config. Multiple readers are supported.
  */
 Kohana::$config->attach(new Kohana_Config_File);
+
+// set the Kohana environment
+Kohana::$environment = Kohana::config('info.environment');
+
+/**
+ * Set Kohana::$environment if $_ENV['KOHANA_ENV'] has been supplied.
+ * 
+ */
+if (isset($_ENV['KOHANA_ENV']))
+{
+	Kohana::$environment = $_ENV['KOHANA_ENV'];
+}
 
 /**
  * Enable modules. Modules are referenced by a relative or absolute path.
@@ -95,6 +93,8 @@ Kohana::modules(array(
 	'jelly'			=> MODPATH.'kohana/jelly',
 	'assets'		=> MODPATH.'assets',
 	'dbforge'		=> MODPATH.'nova/dbforge',
+	
+	'unittest'		=> MODPATH.'kohana/unittest',
 ));
 
 /**
@@ -120,7 +120,7 @@ if ( ! defined('SUPPRESS_REQUEST'))
 
 	Events::event('preExecute');
 	
-	if (Kohana::$environment == 'production')
+	if (Kohana::$environment == Kohana::PRODUCTION)
 	{
 		try {
 			$request->execute();
