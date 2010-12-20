@@ -40,4 +40,5 @@ return array(
 	 * System Information
 	 */
 	'app_db_tables' => 61,
+	'environment' => Kohana::DEVELOPMENT,
 );
