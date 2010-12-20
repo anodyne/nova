@@ -1,6 +1,9 @@
 core/logs/
 !core/logs/index.html
 
+application/cache/
+application/logs/
+
 application/assets/images/awards/
 !application/assets/images/awards/index.html
 application/assets/images/characters/
