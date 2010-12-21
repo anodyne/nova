@@ -1,15 +1,13 @@
 <?php
-/*
-|---------------------------------------------------------------
-| PHP & DB ERROR REPORTING LEVEL
-|---------------------------------------------------------------
-|
-| 0 : No error reporting
-| 1 : PHP fatal errors & DB errors
-| 2 : PHP compiler errors and DB errors
-| 3 : All PHP errors, warnings & notices and DB errors
-|
-*/
+/**
+ * PHP & Database Error Reporting
+ *
+ * 0: No error reporting
+ * 1: PHP fatal errors & database errors
+ * 2: PHP compiler errors & database errors
+ * 3: All PHP errors, warnings, noties & database errors
+ */
+ 
 $debug_errors = 1;
 
 switch ($debug_errors)
@@ -18,63 +16,53 @@ switch ($debug_errors)
 		ini_set('display_errors', 1);
 		error_reporting(E_ERROR);
 		define('NOVA_DB_DEBUG', TRUE);
-		
-		break;
+	break;
 		
 	case 2:
 		ini_set('display_errors', 1);
 		error_reporting(E_ERROR | E_PARSE);
 		define('NOVA_DB_DEBUG', TRUE);
-		
-		break;
+	break;
 		
 	case 3:
 		ini_set('display_errors', 1);
 		error_reporting(E_ALL);
 		define('NOVA_DB_DEBUG', TRUE);
-		
-		break;
+	break;
 	
 	default:
 		ini_set('display_errors', 0);
 		error_reporting(E_ERROR);
 		define('NOVA_DB_DEBUG', FALSE);
-		
-		break;
+	break;
 }
 
-/*
-|---------------------------------------------------------------
-| SYSTEM FOLDER NAME
-|---------------------------------------------------------------
-|
-| This variable must contain the name of your "system" folder.
-| Include the path if the folder is not in the same  directory
-| as this file.
-|
-| NO TRAILING SLASH!
-|
-*/
-$system_folder = "core";
+/**
+ * System folder name
+ *
+ * This variable must contain the name of your "system" folder. Include the path
+ * if the folder is not in the same directory as this file.
+ *
+ * NO TRAILING SLASH!
+ */
+ 
+$system_folder = 'core';
 
-/*
-|---------------------------------------------------------------
-| APPLICATION FOLDER NAME
-|---------------------------------------------------------------
-|
-| If you want this front controller to use a different "application"
-| folder then the default one you can set its name here. The folder 
-| can also be renamed or relocated anywhere on your server.
-| For more info please see the user guide:
-| http://codeigniter.com/user_guide/general/managing_apps.html
-|
-| NO TRAILING SLASH!
-|
-*/
+/**
+ * Application folder name
+ *
+ * If you want this front controller to use a different "application" folder than
+ * the default one, you can set its name here. The folder can also be renamed or
+ * relocated anywhere on your server. For more information please see the user
+ * guide - http://codeigniter.com/user_guide/general/managing_apps.html
+ *
+ * NO TRAILING SLASH!
+ */
+ 
 $abspath = getcwd();
-$app_folder = "application";
+$app_folder = 'application';
 
-$application_folder = $abspath . "/" . $app_folder;
+$application_folder = $abspath.'/'.$app_folder;
 
 /*
 |===============================================================
