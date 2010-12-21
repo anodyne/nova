@@ -1,5 +1,7 @@
 <script type="text/javascript">
 	$(document).ready(function() {
+		$('#message').elastic();
+		
 		$('a#add_recipient').click(function() {
 			var user = $('#recip').val();
 			var hidden = $('#to_hidden').val();

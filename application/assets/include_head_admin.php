@@ -1,13 +1,16 @@
 <?php
-/*
-|---------------------------------------------------------------
-| INCLUDE - HEADER DATA
-|---------------------------------------------------------------
-|
-| File: application/assets/include_head_admin.php
-| System Version: 1.2
-|
-*/
+/**
+ * Admin Header
+ *
+ * @package		Nova
+ * @category	Include
+ * @author		Anodyne Productions
+ * @copyright	2010-11 Anodyne Productions
+ * @version		1.3
+ *
+ * Updated the lazy load with the jquery.elastic plugin, added the max-height
+ * attribute to the style tag
+ */
 
 ?><style type="text/css">
 			<?php if (!is_file(APPPATH .'views/'. $current_skin .'/admin/css/jquery.facebox.css')): ?>
@@ -23,6 +26,8 @@
 			<?php else: ?>
 				@import url("<?php echo base_url() . APPFOLDER .'/views/'. $current_skin .'/admin/css/jquery.ui.theme.css';?>");
 			<?php endif;?>
+			
+			#content, #message { max-height: 650px; }
 		</style>
 		
 		<script type="text/javascript" src="<?php echo base_url() . APPFOLDER .'/assets/js/jquery.js';?>"></script>
@@ -69,6 +74,12 @@
 					dependencies: {
 						css: ['<?php echo base_url() . APPFOLDER;?>/assets/js/css/jquery.ui.accordion.css']
 					},
+					cache: true
+				});
+				
+				$.lazy({					
+					src: '<?php echo base_url() . APPFOLDER;?>/assets/js/jquery.elastic.js',
+					name: 'elastic',
 					cache: true
 				});
 				

@@ -15,6 +15,8 @@
 			return confirm('<?php echo lang('confirm_post_missionpost');?>');
 		});
 		
+		$('#content').elastic();
+		
 		$('a#add_author').click(function() {
 			var user = $('#all').val();
 			var hidden = $('#authors_hidden').val();

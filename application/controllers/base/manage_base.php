@@ -8,7 +8,9 @@
  * @copyright	2010-11 Anodyne Productions
  * @version		1.3
  *
- * Updated the flash messages so they can be overridden by seamless substitution
+ * Updated the flash messages so they can be overridden by seamless substitution,
+ * updated the post/log/news management pages to include an ID on the textareas so
+ * we can target it with the jquery.elastic plugin
  */
 
 class Manage_base extends Controller {
@@ -1959,6 +1961,7 @@ class Manage_base extends Controller {
 					'value' => $row->log_title),
 				'content' => array(
 					'name' => 'log_content',
+					'id' => 'content',
 					'rows' => 20,
 					'value' => $row->log_content),
 				'tags' => array(
@@ -2957,6 +2960,7 @@ class Manage_base extends Controller {
 					'value' => $row->news_title),
 				'content' => array(
 					'name' => 'news_content',
+					'id' => 'content',
 					'rows' => 20,
 					'value' => $row->news_content),
 				'tags' => array(
@@ -3814,6 +3818,7 @@ class Manage_base extends Controller {
 					'value' => $row->post_title),
 				'content' => array(
 					'name' => 'post_content',
+					'id' => 'content',
 					'rows' => 20,
 					'value' => $row->post_content),
 				'tags' => array(
