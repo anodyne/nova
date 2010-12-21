@@ -8,9 +8,14 @@ Anodyne Production's next-generation RPG management system combines popular feat
 
 ## Changes in 1.3
 
+* added the jquery elastic plugin
+* removed deprecated methods from the users model
+* updated the jquery lazy plugin to version 1.5
 * updated the flash messages so they can be overridden with seamless substitution
 * updated many of the system files with PHPDoc-type comment blocks
-* updated many of the system files to adhere to some of the new Anodyne coding standards
+* updated many of the system files to adhere to some of the new Anodyne coding standards we're putting in place for nova 2
+* updated the admin system to use elastic textareas in several spots
+* updated the head include files to clean up some code
 
 ## Version History
 
