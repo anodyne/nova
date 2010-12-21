@@ -1,18 +1,16 @@
-<?php if (!defined('BASEPATH')) exit('No direct script access allowed');
-/*
-|---------------------------------------------------------------
-| USER PANEL LIBRARY
-|---------------------------------------------------------------
-|
-| File: libraries/User_panel.php
-| System Version: 1.2
-|
-| Changes: fixed errors thrown when a user doesn't have a character
-|	assigned to their account
-|
-| Library that handles generating the user panel.
-|
-*/
+<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+/**
+ * User panel library
+ *
+ * @package		Nova
+ * @category	Library
+ * @author		Anodyne Productions
+ * @copyright	2010-11 Anodyne Productions
+ * @version		1.2
+ *
+ * Fixed errors thrown when a user doesn't have a character assigned to
+ * their account
+ */
 
 class User_panel {
 	
@@ -309,6 +307,3 @@ class User_panel {
 		return $output;
 	}
 }
-
-/* End of file User_panel.php */
-/* Location: ./application/libraries/User_panel.php */

@@ -1,21 +1,18 @@
-<?php if (!defined('BASEPATH')) exit('No direct script access allowed'); 
-/*
-|---------------------------------------------------------------
-| AUTHENTICATION LIBRARY
-|---------------------------------------------------------------
-|
-| File: libraries/Auth.php
-| System Version: 1.0.6
-|
-| Changes: check to see if a user is pending and if they are,
-|	don't allow them to log in; attmpted fix for the issue with
-|	always being locked out of an account; added some debugging
-|	code to help track down the remember me bug; removed some
-|	debug code since the autologin issue seems to have been solved
-|
-| Library for all things authentication
-|
-*/
+<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+/**
+ * Authentication library
+ *
+ * @package		Nova
+ * @category	Library
+ * @author		Anodyne Productions
+ * @copyright	2010-11 Anodyne Productions
+ * @version		1.0.6
+ *
+ * Check to see if a user is pending and if they are don't allow them to log in,
+ * attempted fix for the issue with always being locked out of an account, added
+ * some debugging code to help track down the remember me bug, removed some debug
+ * code since the autologin issues seem to have been solved
+ */
 
 class Auth {
 	
@@ -560,6 +557,3 @@ class Auth {
 		$this->ci->dbutil->optimize_table('sessions');
 	}
 }
-
-/* End of file Auth.php */
-/* Location: ./application/libraries/Auth.php */

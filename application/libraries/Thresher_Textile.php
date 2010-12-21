@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Example: get XHTML from a given Textile-markup string ($string)
  *
@@ -1208,4 +1207,4 @@ class Textile
 	}
 
 
-} // end class
+}

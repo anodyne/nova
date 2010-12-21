@@ -120,6 +120,3 @@ class MY_Template extends CI_Template {
 		return $success;
 	}
 }
-
-/* End of file MY_Template.php */
-/* Location: ./application/libraries/MY_Template.php */

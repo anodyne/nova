@@ -61,6 +61,3 @@ class MY_URI extends CI_URI {
 
 	// --------------------------------------------------------------------
 }
-
-/* End of file URI.php */
-/* Location: ./system/libraries/URI.php */

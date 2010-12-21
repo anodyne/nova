@@ -117,6 +117,3 @@ class MY_Loader extends CI_Loader {
 	
 	// --------------------------------------------------------------------
 }
-
-/* End of file MY_Loader.php */
-/* Location: ./application/libraries/MY_Loader.php */

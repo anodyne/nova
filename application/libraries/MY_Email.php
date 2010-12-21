@@ -64,7 +64,3 @@ class MY_Email extends CI_Email {
   
 	// --------------------------------------------------------------------
 }
-// END MY_Email class
-
-/* End of file MY_Email.php */
-/* Location: ./application/libraries/MY_Email.php */

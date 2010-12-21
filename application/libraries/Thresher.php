@@ -1,15 +1,13 @@
-<?php if (!defined('BASEPATH')) exit('No direct script access allowed'); 
-/*
-|---------------------------------------------------------------
-| THRESHER LIBRARY
-|---------------------------------------------------------------
-|
-| File: libraries/Thresher.php
-| System Version: 1.0
-|
-| Library for parsing text for Thresher
-|
-*/
+<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed'); 
+/**
+ * Thresher library
+ *
+ * @package		Nova
+ * @category	Library
+ * @author		Anodyne Productions
+ * @copyright	2010-11 Anodyne Productions
+ * @version		1.0
+ */
 
 class Thresher {
 	
@@ -37,19 +35,19 @@ class Thresher {
 		{
 			case 'bbcode':
 				$retval = $this->_bbcode($text);
-				break;
+			break;
 				
 			case 'html':
 				$retval = $this->_html($text);
-				break;
+			break;
 				
 			case 'markdown':
 				$retval = $this->_markdown($text);
-				break;
+			break;
 				
 			case 'textile':
 				$retval = $this->_textile($text);
-				break;
+			break;
 		}
 		
 		return $retval;
@@ -83,6 +81,3 @@ class Thresher {
 		return $textile->TextileThis($text);
 	}
 }
-
-/* End of file Thresher.php */
-/* Location: ./application/libraries/Thresher.php */

@@ -1,38 +1,21 @@
-<?php if (!defined('BASEPATH')) exit('No direct script access allowed');
-/*
-|---------------------------------------------------------------
-| MENU LIBRARY
-|---------------------------------------------------------------
-|
-| File: libraries/Menu.php
-| System Version: 1.0.1
-|
-| Changes: Fixed bug where the library wouldn't respect access
-|	control set on main navigation and sub navigation menu items
-|
-| Library that handles generating the system menus from the database.
-|
-*/
-
-/*
-TYPE
-	main
-	sub
-	adminsub
-
-CAT
-	main
-	personnel
-	sim
-	wiki
-	acp
-	site
-	manage
-	reports
-	user
-	write
-	messages
-*/
+<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+/**
+ * Menu library
+ *
+ * @package		Nova
+ * @category	Library
+ * @author		Anodyne Productions
+ * @copyright	2010-11 Anodyne Productions
+ * @version		1.0.1
+ *
+ * Fixed bug where the library wouldn't respect access control set on main
+ * navigation and sub navigation items
+ *
+ * Available types: main, sub, adminsub
+ *
+ * Available cats: main, personnel, sim, wiki, acp, site, manage, reports,
+ * user, write, messages
+ */
 
 class Menu {
     
@@ -58,15 +41,15 @@ class Menu {
 		{
 			case 'main':
 				$this->_build_main();
-				break;
+			break;
 				
 			case 'sub':
 				$this->_build_sub();
-				break;
+			break;
 				
 			case 'adminsub':
 				$this->_build_sub_admin();
-				break;
+			break;
 		}
 		
 		return $this->output;
@@ -321,6 +304,3 @@ class Menu {
 		$this->output.= '</ul>';
 	}
 }
-
-/* End of file Menu.php */
-/* Location: ./application/libraries/Menu.php */
