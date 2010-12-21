@@ -1,18 +1,17 @@
 <?php
-/*
-|---------------------------------------------------------------
-| UPDATE CONTROLLER
-|---------------------------------------------------------------
-|
-| File: controllers/base/update_base.php
-| System Version: 1.0.6
-|
-| Changes: updated the update process to try and grab the directory
-|	listing and use that as a baseline first instead of the
-|	versions file; fixed a bug where some users were getting errors
-|	while updating the system
-|
-*/
+/**
+ * Update controller
+ *
+ * @package		Nova
+ * @category	Controller
+ * @author		Anodyne Productions
+ * @copyright	2010-11 Anodyne Productions
+ * @version		1.0.6
+ *
+ * Updated the update process to try and grab the directory listing and use
+ *	that as a baseline first instead of the versions file, fixed a bug where
+ *	some users were getting errors while updating the system
+ */
 
 class Update_base extends Controller {
 	
@@ -412,8 +411,7 @@ class Update_base extends Controller {
 				$this->template->write('label', lang('upd_step1_title'));
 				
 				$control = '<a href="'. site_url('update/step/2') .'" class="btn" id="next">'. lang('button_next') .'</a>';
-				
-				break;
+			break;
 				
 			case 2:
 				/* load the resources */
@@ -511,8 +509,7 @@ class Update_base extends Controller {
 				$this->template->write('label', lang('upd_step2_title'));
 				
 				$control = '<a href="'. site_url('main/index') .'" class="btn" id="next">'. lang('upd_step2_site') .'</a>';
-				
-				break;
+			break;
 		}
 		
 		/* write the data to the template */
@@ -770,6 +767,3 @@ class Update_base extends Controller {
 		$email = $this->email->send();
 	}
 }
-
-/* End of file update_base.php */
-/* Location: controllers/base/update_base.php */

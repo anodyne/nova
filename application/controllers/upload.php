@@ -1,18 +1,6 @@
 <?php
-/*
-|---------------------------------------------------------------
-| ADMIN - UPLOAD CONTROLLER
-|---------------------------------------------------------------
-|
-| File: controllers/upload.php
-| System Version: 1.0
-|
-| Controller that handles uploading files and management of all
-| uploaded files
-|
-*/
 
-require_once APPPATH . 'controllers/base/upload_base.php';
+require_once APPPATH.'controllers/base/upload_base.php';
 
 class Upload extends Upload_base {
 
@@ -21,8 +9,7 @@ class Upload extends Upload_base {
 		parent::Upload_base();
 	}
 	
-	/** your methods here **/
+	/**
+	 * Put your own methods below this...
+	 */
 }
-
-/* End of file upload.php */
-/* Location: ./application/controllers/upload.php */

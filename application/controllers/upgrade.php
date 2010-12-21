@@ -1,17 +1,6 @@
 <?php
-/*
-|---------------------------------------------------------------
-| UPGRADE CONTROLLER
-|---------------------------------------------------------------
-|
-| File: controllers/upgrade.php
-| System Version: 1.0
-|
-| Controller that handles the upgrading SMS to Nova
-|
-*/
 
-require_once APPPATH . 'controllers/base/upgrade_base.php';
+require_once APPPATH.'controllers/base/upgrade_base.php';
 
 class Upgrade extends Upgrade_base {
 	
@@ -20,8 +9,7 @@ class Upgrade extends Upgrade_base {
 		parent::Upgrade_base();
 	}
 	
-	/** your methods here **/
+	/**
+	 * Put your own methods below this...
+	 */
 }
-
-/* End of file upgrade.php */
-/* Location: controllers/upgrade.php */

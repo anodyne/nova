@@ -1,17 +1,6 @@
 <?php
-/*
-|---------------------------------------------------------------
-| ADMIN - USER CONTROLLER
-|---------------------------------------------------------------
-|
-| File: controllers/user.php
-| System Version: 1.0
-|
-| Controller that handles the USER section of the admin system.
-|
-*/
 
-require_once APPPATH . 'controllers/base/user_base.php';
+require_once APPPATH.'controllers/base/user_base.php';
 
 class User extends User_base {
 
@@ -20,8 +9,7 @@ class User extends User_base {
 		parent::User_base();
 	}
 	
-	/** your methods here **/
+	/**
+	 * Put your own methods below this...
+	 */
 }
-
-/* End of file user.php */
-/* Location: ./application/controllers/user.php */

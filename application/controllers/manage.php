@@ -1,17 +1,6 @@
 <?php
-/*
-|---------------------------------------------------------------
-| ADMIN - MANAGE CONTROLLER
-|---------------------------------------------------------------
-|
-| File: controllers/manage.php
-| System Version: 1.0
-|
-| Controller that handles the MANAGE section of the admin system.
-|
-*/
 
-require_once APPPATH . 'controllers/base/manage_base.php';
+require_once APPPATH.'controllers/base/manage_base.php';
 
 class Manage extends Manage_base {
 
@@ -20,8 +9,7 @@ class Manage extends Manage_base {
 		parent::Manage_base();
 	}
 	
-	/** your methods here **/
+	/**
+	 * Put your own methods below this...
+	 */
 }
-
-/* End of file manage.php */
-/* Location: ./application/controllers/manage.php */

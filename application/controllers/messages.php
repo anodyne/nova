@@ -1,17 +1,6 @@
 <?php
-/*
-|---------------------------------------------------------------
-| ADMIN - MESSAGES CONTROLLER
-|---------------------------------------------------------------
-|
-| File: controllers/messages.php
-| System Version: 1.0
-|
-| Controller that handles the MESSAGES section of the admin system.
-|
-*/
 
-require_once APPPATH . 'controllers/base/messages_base.php';
+require_once APPPATH.'controllers/base/messages_base.php';
 
 class Messages extends Messages_base {
 
@@ -20,8 +9,7 @@ class Messages extends Messages_base {
 		parent::Messages_base();
 	}
 	
-	/** your methods here **/
+	/**
+	 * Put your own methods below this...
+	 */
 }
-
-/* End of file write.php */
-/* Location: ./application/controllers/messages.php */

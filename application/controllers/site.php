@@ -1,17 +1,6 @@
 <?php
-/*
-|---------------------------------------------------------------
-| ADMIN - SITE CONTROLLER
-|---------------------------------------------------------------
-|
-| File: controllers/site.php
-| System Version: 1.0
-|
-| Controller that handles the SITE section of the admin system.
-|
-*/
 
-require_once APPPATH . 'controllers/base/site_base.php';
+require_once APPPATH.'controllers/base/site_base.php';
 
 class Site extends Site_base {
 
@@ -20,8 +9,7 @@ class Site extends Site_base {
 		parent::Site_base();
 	}
 	
-	/** your methods here **/
+	/**
+	 * Put your own methods below this...
+	 */
 }
-
-/* End of file site.php */
-/* Location: ./application/controllers/site.php */

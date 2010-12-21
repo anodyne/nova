@@ -1,17 +1,6 @@
 <?php
-/*
-|---------------------------------------------------------------
-| PERSONNEL CONTROLLER
-|---------------------------------------------------------------
-|
-| File: controllers/personnel.php
-| System Version: 1.0
-|
-| Controller that handles the PERSONNEL section of the system.
-|
-*/
 
-require_once APPPATH . 'controllers/base/personnel_base.php';
+require_once APPPATH.'controllers/base/personnel_base.php';
 
 class Personnel extends Personnel_base {
 
@@ -20,8 +9,7 @@ class Personnel extends Personnel_base {
 		parent::Personnel_base();
 	}
 	
-	/** your methods here **/
+	/**
+	 * Put your own methods below this...
+	 */
 }
-
-/* End of file personnel.php */
-/* Location: ./application/controllers/personnel.php */

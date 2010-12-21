@@ -1,17 +1,15 @@
 <?php
-/*
-|---------------------------------------------------------------
-| ADMIN - UPLOAD CONTROLLER
-|---------------------------------------------------------------
-|
-| File: controllers/upload_base.php
-| System Version: 1.1.1
-|
-| Changes: added the ability to upload specs images to the server;
-|	fixed an error with an undefined class method; fixed bug where
-|	nova wouldn't display because it couldn't find the template file
-|
-*/
+/**
+ * Upload controller
+ *
+ * @package		Nova
+ * @category	Controller
+ * @author		Anodyne Productions
+ * @copyright	2010-11 Anodyne Productions
+ * @version		1.3
+ *
+ * Updated the flash message so they can be overridden by seamless substitution
+ */
 
 class Upload_base extends Controller {
 
@@ -146,8 +144,11 @@ class Upload_base extends Controller {
 				$flash['message'] = text_output($message);
 			}
 			
-			/* write everything to the template */
-			$this->template->write_view('flash_message', '_base/admin/pages/flash', $flash);
+			// set the location of the flash view
+			$flashloc = view_location('flash', $this->skin, 'admin');
+			
+			// write everything to the template
+			$this->template->write_view('flash_message', $flashloc, $flash);
 		}
 		
 		$data['button'] = array(
@@ -248,23 +249,23 @@ class Upload_base extends Controller {
 				{
 					case 'bio':
 						$location = 'images/characters';
-						break;
+					break;
 						
 					case 'award':
 						$location = 'images/awards';
-						break;
+					break;
 						
 					case 'mission':
 						$location = 'images/missions';
-						break;
+					break;
 						
 					case 'specs':
 						$location = 'images/specs';
-						break;
+					break;
 						
 					case 'tour':
 						$location = 'images/tour';
-						break;
+					break;
 				}
 				
 				$delete += $this->sys->delete_upload_record($r);
@@ -312,8 +313,11 @@ class Upload_base extends Controller {
 				$flash['message'] = '';
 			}
 			
-			/* write everything to the template */
-			$this->template->write_view('flash_message', '_base/admin/pages/flash', $flash);
+			// set the location of the flash view
+			$flashloc = view_location('flash', $this->skin, 'admin');
+			
+			// write everything to the template
+			$this->template->write_view('flash_message', $flashloc, $flash);
 		}
 		
 		$data['directory'] = array();
@@ -328,23 +332,23 @@ class Upload_base extends Controller {
 				{
 					case 'bio':
 						$location = 'images/characters';
-						break;
+					break;
 						
 					case 'award':
 						$location = 'images/awards';
-						break;
+					break;
 						
 					case 'mission':
 						$location = 'images/missions';
-						break;
+					break;
 						
 					case 'specs':
 						$location = 'images/specs';
-						break;
+					break;
 						
 					case 'tour':
 						$location = 'images/tour';
-						break;
+					break;
 				}
 				
 				$user = $this->user->get_user($d->upload_user, array('name', 'email'));
@@ -378,27 +382,25 @@ class Upload_base extends Controller {
 		switch ($this->uri->segment(3))
 		{
 			case 'bio':
+			default:
 				$js_data['tab'] = 0;
-				break;
+			break;
 				
 			case 'awards':
 				$js_data['tab'] = 1;
-				break;
+			break;
 				
 			case 'missions':
 				$js_data['tab'] = 2;
-				break;
+			break;
 				
 			case 'specs':
 				$js_data['tab'] = 3;
-				break;
+			break;
 				
 			case 'tour':
 				$js_data['tab'] = 4;
-				break;
-				
-			default:
-				$js_data['tab'] = 0;
+			break;
 		}
 		
 		$data['access'] = array(
@@ -459,23 +461,23 @@ class Upload_base extends Controller {
 		{
 			case 'award':
 				$path = APPPATH .'assets/images/awards/';
-				break;
+			break;
 				
 			case 'bio':
 				$path = APPPATH .'assets/images/characters/';
-				break;
+			break;
 				
 			case 'mission':
 				$path = APPPATH .'assets/images/missions/';
-				break;
+			break;
 				
 			case 'specs':
 				$path = APPPATH .'assets/images/specs/';
-				break;
+			break;
 				
 			case 'tour':
 				$path = APPPATH .'assets/images/tour/';
-				break;
+			break;
 		}
 		
 		$this->upload->upload_path = $path;
@@ -489,6 +491,3 @@ class Upload_base extends Controller {
 		return $retval;
 	}
 }
-
-/* End of file upload_base.php */
-/* Location: ./application/controllers/upload_base.php */

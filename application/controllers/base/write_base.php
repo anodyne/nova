@@ -1,21 +1,15 @@
 <?php
-/*
-|---------------------------------------------------------------
-| ADMIN - WRITE CONTROLLER
-|---------------------------------------------------------------
-|
-| File: controllers/write_base.php
-| System Version: 1.2
-|
-| Changes: fixed bug where posts with secondary characters would
-|	be sent out with the name of the user's primary character even
-|	if that character wasn't a part of the post; added a check to
-|	the constructor to redirect to an error page in the event a user
-|	doesn't have a character associated with their account; fixed
-|	bug where personal logs weren't having the proper date set
-|	when saving a personal log first
-|
-*/
+/**
+ * Write controller
+ *
+ * @package		Nova
+ * @category	Controller
+ * @author		Anodyne Productions
+ * @copyright	2010-11 Anodyne Productions
+ * @version		1.3
+ *
+ * Updated the flash message so they can be overridden by seamless substitution
+ */
 
 class Write_base extends Controller {
 
@@ -397,8 +391,11 @@ class Write_base extends Controller {
 			$flash['status'] = 'info';
 			$flash['message'] = lang_output('flash_system_email_off');
 			
-			/* write everything to the template */
-			$this->template->write_view('flash_message', '_base/admin/pages/flash', $flash);
+			// set the location of the flash view
+			$flashloc = view_location('flash', $this->skin, 'admin');
+			
+			// write everything to the template
+			$this->template->write_view('flash_message', $flashloc, $flash);
 		}
 		
 		/* set the variables */
@@ -443,8 +440,11 @@ class Write_base extends Controller {
 					$flash['status'] = 'error';
 					$flash['message'] = lang_output('flash_missionposts_no_author');
 					
-					/* write everything to the template */
-					$this->template->write_view('flash_message', '_base/admin/pages/flash', $flash);
+					// set the location of the flash view
+					$flashloc = view_location('flash', $this->skin, 'admin');
+					
+					// write everything to the template
+					$this->template->write_view('flash_message', $flashloc, $flash);
 				}
 				else
 				{
@@ -567,8 +567,7 @@ class Write_base extends Controller {
 								/* add an automatic redirect */
 								$this->template->add_redirect('write/index');
 							}
-							
-							break;
+						break;
 							
 						case 'save':
 							if ($id !== FALSE)
@@ -693,8 +692,7 @@ class Write_base extends Controller {
 							$timeline = FALSE;
 							$location = FALSE;
 							$mission = FALSE;
-							
-							break;
+						break;
 							
 						case 'post':
 							/* check the moderation status */
@@ -859,16 +857,19 @@ class Write_base extends Controller {
 									$flash['message'] = text_output($message);
 								}
 							}
-							
-							break;
+						break;
 							
 						default:
 							$flash['status'] = 'error';
 							$flash['message'] = lang_output('error_generic', '');
+						break;
 					}
 					
-					/* write everything to the template */
-					$this->template->write_view('flash_message', '_base/admin/pages/flash', $flash);
+					// set the location of the flash view
+					$flashloc = view_location('flash', $this->skin, 'admin');
+					
+					// write everything to the template
+					$this->template->write_view('flash_message', $flashloc, $flash);
 				}
 			}
 		}
@@ -1153,8 +1154,11 @@ class Write_base extends Controller {
 			$flash['status'] = 'info';
 			$flash['message'] = lang_output('flash_system_email_off');
 			
-			/* write everything to the template */
-			$this->template->write_view('flash_message', '_base/admin/pages/flash', $flash);
+			// set the location of the flash view
+			$flashloc = view_location('flash', $this->skin, 'admin');
+			
+			// write everything to the template
+			$this->template->write_view('flash_message', $flashloc, $flash);
 		}
 		
 		/* set the variables */
@@ -1225,8 +1229,7 @@ class Write_base extends Controller {
 						/* add an automatic redirect */
 						$this->template->add_redirect('write/index');
 					}
-					
-					break;
+				break;
 					
 				case 'save':
 					if ($id !== FALSE)
@@ -1329,8 +1332,7 @@ class Write_base extends Controller {
 						/* add a quick redirect */
 						$this->template->add_redirect('write/newsitem/'. $insert_id);
 					}
-					
-					break;
+				break;
 					
 				case 'post':
 					/* check the moderation status */
@@ -1465,16 +1467,19 @@ class Write_base extends Controller {
 							$flash['message'] = text_output($message);
 						}
 					}
-					
-					break;
+				break;
 					
 				default:
-						$flash['status'] = 'error';
-						$flash['message'] = lang_output('error_generic', '');
+					$flash['status'] = 'error';
+					$flash['message'] = lang_output('error_generic', '');
+				break;
 			}
 			
-			/* write everything to the template */
-			$this->template->write_view('flash_message', '_base/admin/pages/flash', $flash);
+			// set the location of the flash view
+			$flashloc = view_location('flash', $this->skin, 'admin');
+			
+			// write everything to the template
+			$this->template->write_view('flash_message', $flashloc, $flash);
 		}
 		
 		/* set the ID and name */
@@ -1600,8 +1605,11 @@ class Write_base extends Controller {
 			$flash['status'] = 'info';
 			$flash['message'] = lang_output('flash_system_email_off');
 			
-			/* write everything to the template */
-			$this->template->write_view('flash_message', '_base/admin/pages/flash', $flash);
+			// set the location of the flash view
+			$flashloc = view_location('flash', $this->skin, 'admin');
+			
+			// write everything to the template
+			$this->template->write_view('flash_message', $flashloc, $flash);
 		}
 		
 		/* set the variables */
@@ -1627,8 +1635,11 @@ class Write_base extends Controller {
 				$flash['status'] = 'error';
 				$flash['message'] = lang_output('flash_personallogs_no_author');
 				
-				/* write everything to the template */
-				$this->template->write_view('flash_message', '_base/admin/pages/flash', $flash);
+				// set the location of the flash view
+				$flashloc = view_location('flash', $this->skin, 'admin');
+				
+				// write everything to the template
+				$this->template->write_view('flash_message', $flashloc, $flash);
 			}
 			else
 			{
@@ -1679,8 +1690,7 @@ class Write_base extends Controller {
 							/* add an automatic redirect */
 							$this->template->add_redirect('write/index');
 						}
-						
-						break;
+					break;
 						
 					case 'save':
 						if ($id !== FALSE)
@@ -1780,8 +1790,7 @@ class Write_base extends Controller {
 							/* add a quick redirect */
 							$this->template->add_redirect('write/personallog/'. $insert_id);
 						}
-						
-						break;
+					break;
 						
 					case 'post':
 						/* check the moderation status */
@@ -1919,16 +1928,19 @@ class Write_base extends Controller {
 								$flash['message'] = text_output($message);
 							}
 						}
-						
-						break;
+					break;
 						
 					default:
 						$flash['status'] = 'error';
 						$flash['message'] = lang_output('error_generic', '');
+					break;
 				}
 				
-				/* write everything to the template */
-				$this->template->write_view('flash_message', '_base/admin/pages/flash', $flash);
+				// set the location of the flash view
+				$flashloc = view_location('flash', $this->skin, 'admin');
+				
+				// write everything to the template
+				$this->template->write_view('flash_message', $flashloc, $flash);
 			}
 		}
 		
@@ -2113,8 +2125,7 @@ class Write_base extends Controller {
 				$this->email->to($to);
 				$this->email->subject($this->options['email_subject'] .' '. $subject);
 				$this->email->message($message);
-				
-				break;
+			break;
 				
 			case 'news_pending':
 				/* set some variables */
@@ -2157,8 +2168,7 @@ class Write_base extends Controller {
 				$this->email->to($to);
 				$this->email->subject($this->options['email_subject'] .' '. lang('email_subject_news_pending'));
 				$this->email->message($message);
-
-				break;
+			break;
 				
 			case 'log':
 				/* set some variables */
@@ -2196,8 +2206,7 @@ class Write_base extends Controller {
 				$this->email->to($to);
 				$this->email->subject($this->options['email_subject'] .' '. $subject);
 				$this->email->message($message);
-				
-				break;
+			break;
 				
 			case 'log_pending':
 				/* set some variables */
@@ -2238,8 +2247,7 @@ class Write_base extends Controller {
 				$this->email->to($to);
 				$this->email->subject($this->options['email_subject'] .' '. lang('email_subject_log_pending'));
 				$this->email->message($message);
-
-				break;
+			break;
 				
 			case 'post':
 				/* set some variables */
@@ -2294,8 +2302,7 @@ class Write_base extends Controller {
 				$this->email->to($to);
 				$this->email->subject($this->options['email_subject'] .' '. $subject);
 				$this->email->message($message);
-				
-				break;
+			break;
 				
 			case 'post_delete':
 				/* set some variables */
@@ -2357,8 +2364,7 @@ class Write_base extends Controller {
 				$this->email->to($to);
 				$this->email->subject($this->options['email_subject'] .' '. $subject);
 				$this->email->message($message);
-
-				break;
+			break;
 				
 			case 'post_pending':
 				// get an array of authors
@@ -2408,8 +2414,7 @@ class Write_base extends Controller {
 				$this->email->to($to);
 				$this->email->subject($this->options['email_subject'] .' '. lang('email_subject_post_pending'));
 				$this->email->message($message);
-
-				break;
+			break;
 				
 			case 'post_save':
 				/* set some variables */
@@ -2480,8 +2485,7 @@ class Write_base extends Controller {
 				$this->email->to($to);
 				$this->email->subject($this->options['email_subject'] .' '. $subject);
 				$this->email->message($message);
-				
-				break;
+			break;
 		}
 		
 		/* send the email */
@@ -2491,6 +2495,3 @@ class Write_base extends Controller {
 		return $email;
 	}
 }
-
-/* End of file write_base.php */
-/* Location: ./application/controllers/write_base.php */

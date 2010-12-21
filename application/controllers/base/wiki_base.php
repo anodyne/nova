@@ -1,16 +1,15 @@
 <?php
-/*
-|---------------------------------------------------------------
-| WIKI CONTROLLER
-|---------------------------------------------------------------
-|
-| File: controllers/wiki_base.php
-| System Version: 1.1.1
-|
-| Changes: fixed bug where nova wouldn't display because it couldn't
-|	find the template file
-|
-*/
+/**
+ * Wiki controller
+ *
+ * @package		Nova
+ * @category	Controller
+ * @author		Anodyne Productions
+ * @copyright	2010-11 Anodyne Productions
+ * @version		1.3
+ *
+ * Updated the flash message so they can be overridden by seamless substitution
+ */
 
 class Wiki_base extends Controller {
 
@@ -303,10 +302,12 @@ class Wiki_base extends Controller {
 						$flash['message'] = text_output($message);
 					}
 					
-					/* write everything to the template */
-					$this->template->write_view('flash_message', '_base/wiki/pages/flash', $flash);
+					// set the location of the flash view
+					$flashloc = view_location('flash', $this->skin, 'wiki');
 					
-					break;
+					// write everything to the template
+					$this->template->write_view('flash_message', $flashloc, $flash);
+				break;
 					
 				case 'delete':
 					$id = $this->input->post('id', TRUE);
@@ -339,10 +340,12 @@ class Wiki_base extends Controller {
 						$flash['message'] = text_output($message);
 					}
 					
-					/* write everything to the template */
-					$this->template->write_view('flash_message', '_base/wiki/pages/flash', $flash);
+					// set the location of the flash view
+					$flashloc = view_location('flash', $this->skin, 'wiki');
 					
-					break;
+					// write everything to the template
+					$this->template->write_view('flash_message', $flashloc, $flash);
+				break;
 					
 				case 'edit':
 					$id = $this->input->post('id', TRUE);
@@ -381,10 +384,12 @@ class Wiki_base extends Controller {
 						$flash['message'] = text_output($message);
 					}
 					
-					/* write everything to the template */
-					$this->template->write_view('flash_message', '_base/wiki/pages/flash', $flash);
+					// set the location of the flash view
+					$flashloc = view_location('flash', $this->skin, 'wiki');
 					
-					break;
+					// write everything to the template
+					$this->template->write_view('flash_message', $flashloc, $flash);
+				break;
 			}
 		}
 		
@@ -511,10 +516,12 @@ class Wiki_base extends Controller {
 							$flash['message'] = text_output($message);
 						}
 						
-						/* write everything to the template */
-						$this->template->write_view('flash_message', '_base/wiki/pages/flash', $flash);
+						// set the location of the flash view
+						$flashloc = view_location('flash', $this->skin, 'wiki');
 						
-						break;
+						// write everything to the template
+						$this->template->write_view('flash_message', $flashloc, $flash);
+					break;
 				}
 			}
 		}
@@ -665,8 +672,7 @@ class Wiki_base extends Controller {
 						$flash['status'] = 'error';
 						$flash['message'] = text_output($message);
 					}
-					
-					break;
+				break;
 					
 				case 'edit':
 					foreach ($_POST as $key => $value)
@@ -735,12 +741,14 @@ class Wiki_base extends Controller {
 						$flash['status'] = 'error';
 						$flash['message'] = text_output($message);
 					}
-				
-					break;
+				break;
 			}
 			
-			/* write everything to the template */
-			$this->template->write_view('flash_message', '_base/wiki/pages/flash', $flash);
+			// set the location of the flash view
+			$flashloc = view_location('flash', $this->skin, 'wiki');
+			
+			// write everything to the template
+			$this->template->write_view('flash_message', $flashloc, $flash);
 		}
 		
 		if ($id == 0)
@@ -930,8 +938,7 @@ class Wiki_base extends Controller {
 				}
 				
 				$data['header'] = ucwords(lang('global_wiki') .' - '. lang('status_recently') .' '. lang('actions_updated'));
-				
-				break;
+			break;
 				
 			case 'created':
 				/* grab the recently updated items */
@@ -952,8 +959,7 @@ class Wiki_base extends Controller {
 				}
 				
 				$data['header'] = ucwords(lang('global_wiki') .' - '. lang('status_recently') .' '. lang('actions_created'));
-				
-				break;
+			break;
 		}
 		
 		$data['label'] = array(
@@ -1077,8 +1083,11 @@ class Wiki_base extends Controller {
 					$flash['message'] = text_output($message);
 				}
 				
-				/* write everything to the template */
-				$this->template->write_view('flash_message', '_base/wiki/pages/flash', $flash);
+				// set the location of the flash view
+				$flashloc = view_location('flash', $this->skin, 'wiki');
+				
+				// write everything to the template
+				$this->template->write_view('flash_message', $flashloc, $flash);
 			}
 			
 			if ($action == 'comment')
@@ -1144,8 +1153,11 @@ class Wiki_base extends Controller {
 					$flash['message'] = lang_output('flash_add_comment_empty_body');
 				}
 				
-				/* write everything to the template */
-				$this->template->write_view('flash_message', '_base/wiki/pages/flash', $flash);
+				// set the location of the flash view
+				$flashloc = view_location('flash', $this->skin, 'wiki');
+				
+				// write everything to the template
+				$this->template->write_view('flash_message', $flashloc, $flash);
 			}
 		}
 		
@@ -1153,14 +1165,15 @@ class Wiki_base extends Controller {
 		{
 			case 'comment':
 				$js_data['tab'] = 2;
-				break;
+			break;
 				
 			case 'revert':
 				$js_data['tab'] = 1;
-				break;
+			break;
 				
 			default:
 				$js_data['tab'] = 0;
+			break;
 		}
 		
 		/* set the date format */
@@ -1458,8 +1471,7 @@ class Wiki_base extends Controller {
 				$this->email->to($to);
 				$this->email->subject($this->options['email_subject'] .' '. $email_data['email_subject']);
 				$this->email->message($message);
-				
-				break;
+			break;
 				
 			case 'comment_pending':
 				/* run the methods */
@@ -1492,8 +1504,7 @@ class Wiki_base extends Controller {
 				$this->email->to($to);
 				$this->email->subject($this->options['email_subject'] .' '. $email_data['email_subject']);
 				$this->email->message($message);
-				
-				break;
+			break;
 		}
 		
 		/* send the email */
@@ -1503,6 +1514,3 @@ class Wiki_base extends Controller {
 		return $email;
 	}
 }
-
-/* End of file wiki_base.php */
-/* Location: ./application/controllers/wiki_base.php */

@@ -1,17 +1,6 @@
 <?php
-/*
-|---------------------------------------------------------------
-| AJAX CONTROLLER
-|---------------------------------------------------------------
-|
-| File: controllers/ajax.php
-| System Version: 1.0
-|
-| Controller that handles the AJAX work of the system
-|
-*/
 
-require_once APPPATH . 'controllers/base/ajax_base.php';
+require_once APPPATH.'controllers/base/ajax_base.php';
 
 class Ajax extends Ajax_base {
 	
@@ -20,8 +9,7 @@ class Ajax extends Ajax_base {
 		parent::Ajax_base();
 	}
 	
-	/** your methods here **/
+	/**
+	 * Put your own methods below this...
+	 */
 }
-
-/* End of file ajax.php */
-/* Location: ./application/controllers/ajax.php */

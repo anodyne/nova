@@ -1,16 +1,15 @@
 <?php
-/*
-|---------------------------------------------------------------
-| UPGRADE CONTROLLER
-|---------------------------------------------------------------
-|
-| File: controllers/base/upgrade_base.php
-| System Version: 1.2
-|
-| Changes: fixed bug where the spec items weren't properly upgraded
-|	during the upgrade process
-|
-*/
+/**
+ * Upgrade controller
+ *
+ * @package		Nova
+ * @category	Controller
+ * @author		Anodyne Productions
+ * @copyright	2010-11 Anodyne Productions
+ * @version		1.2
+ *
+ * Fixed bug where the spec items weren't properly upgraded
+ */
 
 class Upgrade_base extends Controller {
 	
@@ -335,8 +334,7 @@ class Upgrade_base extends Controller {
 				/* set the title and label */
 				$this->template->write('title', lang('upg_step1_title'));
 				$this->template->write('label', lang('upg_step1_label'));
-				
-				break;
+			break;
 				
 			case 2:
 				/*
@@ -388,8 +386,7 @@ class Upgrade_base extends Controller {
 				/* set the title and label */
 				$this->template->write('title', lang('upg_step2_title'));
 				$this->template->write('label', lang('upg_step2_label'));
-				
-				break;
+			break;
 				
 			case 3:
 				/* 
@@ -438,8 +435,7 @@ class Upgrade_base extends Controller {
 				/* set the title and label */
 				$this->template->write('title', lang('upg_step3_title'));
 				$this->template->write('label', lang('upg_step3_label'));
-				
-				break;
+			break;
 				
 			case 4:
 				/*
@@ -488,8 +484,7 @@ class Upgrade_base extends Controller {
 				/* set the title */
 				$this->template->write('title', lang('upg_step4_title'));
 				$this->template->write('label', lang('upg_step4_label'));
-				
-				break;
+			break;
 				
 			case 5:
 				/*
@@ -579,8 +574,7 @@ class Upgrade_base extends Controller {
 				/* set the title */
 				$this->template->write('title', lang('upg_step5_title'));
 				$this->template->write('label', lang('upg_step5_label'));
-				
-				break;
+			break;
 				
 			case 6:
 				/*
@@ -667,8 +661,7 @@ class Upgrade_base extends Controller {
 				/* set the title */
 				$this->template->write('title', lang('upg_step6_title'));
 				$this->template->write('label', lang('upg_step6_label'));
-				
-				break;
+			break;
 				
 			case 7:
 				/*
@@ -769,8 +762,7 @@ class Upgrade_base extends Controller {
 				/* set the title */
 				$this->template->write('title', lang('upg_step7_title'));
 				$this->template->write('label', lang('upg_step7_label'));
-				
-				break;
+			break;
 				
 			case 8:
 				/*
@@ -902,8 +894,7 @@ class Upgrade_base extends Controller {
 				/* set the title */
 				$this->template->write('title', lang('upg_step8_title'));
 				$this->template->write('label', lang('upg_step8_label'));
-				
-				break;
+			break;
 				
 			case 9:
 				/*
@@ -993,8 +984,7 @@ class Upgrade_base extends Controller {
 				/* set the title */
 				$this->template->write('title', lang('upg_step9_title'));
 				$this->template->write('label', lang('upg_step9_label'));
-				
-				break;
+			break;
 				
 			case 10:
 				/*
@@ -1103,8 +1093,7 @@ class Upgrade_base extends Controller {
 				/* set the title */
 				$this->template->write('title', lang('upg_step10_title'));
 				$this->template->write('label', lang('upg_step10_label'));
-				
-				break;
+			break;
 				
 			case 11:
 				/*
@@ -1277,8 +1266,7 @@ class Upgrade_base extends Controller {
 				/* set the title */
 				$this->template->write('title', lang('upg_step11_title'));
 				$this->template->write('label', lang('upg_step11_label'));
-				
-				break;
+			break;
 				
 			case 12:
 				/*
@@ -1367,8 +1355,7 @@ class Upgrade_base extends Controller {
 				/* set the title */
 				$this->template->write('title', lang('upg_step12_title'));
 				$this->template->write('label', lang('upg_step12_label'));
-				
-				break;
+			break;
 				
 			case 13:
 				/*
@@ -1617,8 +1604,7 @@ class Upgrade_base extends Controller {
 				/* set the title */
 				$this->template->write('title', lang('upg_step13_title'));
 				$this->template->write('label', lang('upg_step13_label'));
-			
-				break;
+			break;
 				
 			case 14:
 				/*
@@ -1796,8 +1782,7 @@ class Upgrade_base extends Controller {
 				/* set the title */
 				$this->template->write('title', lang('upg_step14_title'));
 				$this->template->write('label', lang('upg_step14_label'));
-				
-				break;
+			break;
 		}
 		
 		/* write the data to the template */
@@ -2108,6 +2093,3 @@ class Upgrade_base extends Controller {
 		$email = $this->email->send();
 	}
 }
-
-/* End of file upgrade_base.php */
-/* Location: controllers/base/upgrade_base.php */
