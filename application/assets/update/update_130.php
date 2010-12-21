@@ -176,7 +176,12 @@ if (!is_null($drop_column))
 */
 
 /**
- * update the jquery version info
+ * add the jquery elastic plugin to the list of components
  */
-$this->db->where('comp_name', 'CodeIgniter');
-$this->db->update('system_components', array('comp_version' => '1.7.3'));
+$additem = array(
+	'comp_name' => 'Elastic',
+	'comp_version' => '1.6.4',
+	'comp_desc' => "jQuery Elastic is a plugin that makes your textareas grow and shrink to fit its content and was inspired by the auto-growing textareas on Facebook.",
+	'comp_url' => 'http://www.unwrongest.com/projects/elastic/'
+);
+$this->db->insert('system_components', $additem);

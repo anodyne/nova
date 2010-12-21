@@ -1,16 +1,13 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
-/*
-|---------------------------------------------------------------
-| INSTALL - DEV DATA
-|---------------------------------------------------------------
-|
-| File: assets/install/install_data_dev.php
-| System Version: 1.2
-|
-| Data file that includes all the data being inserted into the
-| database after creating the tables.
-|
-*/
+/**
+ * Development install data
+ *
+ * @package		Nova
+ * @category	Install
+ * @author		Anodyne Productions
+ * @copyright	2010-11 Anodyne Productions
+ * @version		1.3
+ */
 
 /*
 |---------------------------------------------------------------
@@ -3795,6 +3792,11 @@ $system_components = array(
 		'comp_version' => '1.3.1',
 		'comp_desc' => "Lazy is an on-demand jQuery plugin loader, also known as a lazy loader. Instead of downloading all jQuery plugins you might or might not need when the page loads, Lazy downloads the plugins when you actually use them. Lazy is very lightweight, super fast, and smart. Lazy will keep track of all your plugins and dependencies and make sure that they are only downloaded once.",
 		'comp_url' => 'http://www.unwrongest.com/projects/lazy/'),
+	array(
+		'comp_name' => 'Elastic',
+		'comp_version' => '1.6.4',
+		'comp_desc' => "jQuery Elastic is a plugin that makes your textareas grow and shrink to fit its content and was inspired by the auto-growing textareas on Facebook.",
+		'comp_url' => 'http://www.unwrongest.com/projects/elastic/'),
 	array(
 		'comp_name' => 'jQuery Reflection',
 		'comp_version' => '1.0.3',
