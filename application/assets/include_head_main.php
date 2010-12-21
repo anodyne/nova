@@ -1,40 +1,44 @@
 <?php
-/*
-|---------------------------------------------------------------
-| INCLUDE - HEADER DATA
-|---------------------------------------------------------------
-|
-| File: application/assets/include_head_main.php
-| System Version: 1.2
-|
-*/
+/**
+ * Main Header
+ *
+ * @package		Nova
+ * @category	Include
+ * @author		Anodyne Productions
+ * @copyright	2010-11 Anodyne Productions
+ * @version		1.3
+ *
+ * Cleaned up the file a little bit
+ */
+
+$faceboxcss = ( ! is_file(APPPATH.'views/'.$current_skin.'/main/css/jquery.facebox.css'))
+	? base_url().APPFOLDER.'/assets/js/css/jquery.facebox.css'
+	: base_url().APPFOLDER.'/views/'.$current_skin.'/main/css/jquery.facebox.css';
+	
+$uiTheme = ( ! is_file(APPPATH .'views/'.$current_skin.'/main/css/jquery.ui.theme.css'))
+	? base_url().APPFOLDER.'/assets/js/css/jquery.ui.theme.css'
+	: base_url().APPFOLDER.'/views/'.$current_skin.'/main/css/jquery.ui.theme.css';
 
 ?><style type="text/css">
-			<?php if (!is_file(APPPATH .'views/'. $current_skin .'/main/css/jquery.facebox.css')): ?>
-				@import url("<?php echo base_url() . APPFOLDER .'/assets/js/css/jquery.facebox.css';?>");
-			<?php else: ?>
-				@import url("<?php echo base_url() . APPFOLDER .'/views/'. $current_skin .'/main/css/jquery.facebox.css';?>");
-			<?php endif;?>
-			
 			@import url("<?php echo base_url() . APPFOLDER .'/assets/js/css/jquery.ui.core.css';?>");
-			
-			<?php if (!is_file(APPPATH .'views/'. $current_skin .'/main/css/jquery.ui.theme.css')): ?>
-				@import url("<?php echo base_url() . APPFOLDER .'/assets/js/css/jquery.ui.theme.css';?>");
-			<?php else: ?>
-				@import url("<?php echo base_url() . APPFOLDER .'/views/'. $current_skin .'/main/css/jquery.ui.theme.css';?>");
-			<?php endif;?>
+			@import url('<?php echo $faceboxcss;?>');
+			@import url('<?php echo $uiTheme;?>');
 		</style>
 		
-		<script type="text/javascript" src="<?php echo base_url() . APPFOLDER .'/assets/js/jquery.js';?>"></script>
-		<script type="text/javascript" src="<?php echo base_url() . APPFOLDER .'/assets/js/jquery.lazy.js';?>"></script>
-		<script type="text/javascript" src="<?php echo base_url() . APPFOLDER .'/assets/js/jquery.ui.core.min.js';?>"></script>
-		<script type="text/javascript" src="<?php echo base_url() . APPFOLDER .'/assets/js/jquery.ui.widget.min.js';?>"></script>
-		<script type="text/javascript" src="<?php echo base_url() . APPFOLDER .'/assets/js/jquery.ui.tabs.min.js';?>"></script>
-		<script type="text/javascript" src="<?php echo base_url() . APPFOLDER .'/assets/js/reflection.js';?>"></script>
-		<script type="text/javascript" src="<?php echo base_url() . APPFOLDER .'/assets/js/jquery.facebox.js';?>"></script>
-		
+		<script type="text/javascript" src="<?php echo base_url().APPFOLDER .'/assets/js/jquery.js';?>"></script>
+		<script type="text/javascript" src="<?php echo base_url().APPFOLDER .'/assets/js/jquery.lazy.js';?>"></script>
+		<script type="text/javascript" src="<?php echo base_url().APPFOLDER .'/assets/js/jquery.ui.core.min.js';?>"></script>
+		<script type="text/javascript" src="<?php echo base_url().APPFOLDER .'/assets/js/jquery.ui.widget.min.js';?>"></script>
+		<script type="text/javascript" src="<?php echo base_url().APPFOLDER .'/assets/js/reflection.js';?>"></script>
+		<script type="text/javascript" src="<?php echo base_url().APPFOLDER .'/assets/js/jquery.facebox.js';?>"></script>
 		<script type="text/javascript">
 			$(document).ready(function(){
+				$.lazy({					
+					src: '<?php echo base_url().APPFOLDER;?>/assets/js/jquery.ui.tabs.min.js',
+					name: 'tabs',
+					cache: true
+				});
+				
 				$.lazy({					
 					src: '<?php echo base_url() . APPFOLDER;?>/assets/js/jquery.prettyPhoto.js',
 					name: 'prettyPhoto',
@@ -60,8 +64,6 @@
 				
 				$.facebox.settings.loadingImage = '<?php echo base_url() . APPFOLDER;?>/assets/js/images/facebox-loading.gif';
 				
-				$('.reflect').reflect({
-					opacity: '0.3'
-				});
+				$('.reflect').reflect({ opacity: '0.3' });
 			});
 		</script>

@@ -9,37 +9,41 @@
  * @version		1.3
  *
  * Updated the lazy load with the jquery.elastic plugin, added the max-height
- * attribute to the style tag
+ * attribute to the style tag, cleaned up the file to use the lazy load a little
+ * more than we were
  */
 
+$faceboxcss = ( ! is_file(APPPATH.'views/'.$current_skin.'/admin/css/jquery.facebox.css'))
+	? base_url().APPFOLDER.'/assets/js/css/jquery.facebox.css'
+	: base_url().APPFOLDER.'/views/'.$current_skin.'/admin/css/jquery.facebox.css';
+	
+$uiTheme = ( ! is_file(APPPATH .'views/'.$current_skin.'/admin/css/jquery.ui.theme.css'))
+	? base_url().APPFOLDER.'/assets/js/css/jquery.ui.theme.css'
+	: base_url().APPFOLDER.'/views/'.$current_skin.'/admin/css/jquery.ui.theme.css';
+
+
 ?><style type="text/css">
-			<?php if (!is_file(APPPATH .'views/'. $current_skin .'/admin/css/jquery.facebox.css')): ?>
-				@import url("<?php echo base_url() . APPFOLDER .'/assets/js/css/jquery.facebox.css';?>");
-			<?php else: ?>
-				@import url("<?php echo base_url() . APPFOLDER .'/views/'. $current_skin .'/admin/css/jquery.facebox.css';?>");
-			<?php endif;?>
-			
-			@import url("<?php echo base_url() . APPFOLDER .'/assets/js/css/jquery.ui.core.css';?>");
-			
-			<?php if (!is_file(APPPATH .'views/'. $current_skin .'/admin/css/jquery.ui.theme.css')): ?>
-				@import url("<?php echo base_url() . APPFOLDER .'/assets/js/css/jquery.ui.theme.css';?>");
-			<?php else: ?>
-				@import url("<?php echo base_url() . APPFOLDER .'/views/'. $current_skin .'/admin/css/jquery.ui.theme.css';?>");
-			<?php endif;?>
+			@import url('<?php echo base_url().APPFOLDER;?>/assets/js/css/jquery.ui.core.css');
+			@import url('<?php echo $faceboxcss;?>');
+			@import url('<?php echo $uiTheme;?>');
 			
 			#content, #message { max-height: 650px; }
 		</style>
 		
-		<script type="text/javascript" src="<?php echo base_url() . APPFOLDER .'/assets/js/jquery.js';?>"></script>
-		<script type="text/javascript" src="<?php echo base_url() . APPFOLDER .'/assets/js/jquery.lazy.js';?>"></script>
-		<script type="text/javascript" src="<?php echo base_url() . APPFOLDER .'/assets/js/jquery.ui.core.min.js';?>"></script>
-		<script type="text/javascript" src="<?php echo base_url() . APPFOLDER .'/assets/js/jquery.ui.widget.min.js';?>"></script>
-		<script type="text/javascript" src="<?php echo base_url() . APPFOLDER .'/assets/js/jquery.ui.tabs.min.js';?>"></script>
-		<script type="text/javascript" src="<?php echo base_url() . APPFOLDER .'/assets/js/reflection.js';?>"></script>
-		<script type="text/javascript" src="<?php echo base_url() . APPFOLDER .'/assets/js/jquery.facebox.js';?>"></script>
-		
+		<script type="text/javascript" src="<?php echo base_url().APPFOLDER.'/assets/js/jquery.js';?>"></script>
+		<script type="text/javascript" src="<?php echo base_url().APPFOLDER.'/assets/js/jquery.lazy.js';?>"></script>
+		<script type="text/javascript" src="<?php echo base_url().APPFOLDER.'/assets/js/jquery.ui.core.min.js';?>"></script>
+		<script type="text/javascript" src="<?php echo base_url().APPFOLDER.'/assets/js/jquery.ui.widget.min.js';?>"></script>
+		<script type="text/javascript" src="<?php echo base_url().APPFOLDER.'/assets/js/reflection.js';?>"></script>
+		<script type="text/javascript" src="<?php echo base_url().APPFOLDER.'/assets/js/jquery.facebox.js';?>"></script>
 		<script type="text/javascript">
 			$(document).ready(function(){
+				$.lazy({					
+					src: '<?php echo base_url().APPFOLDER;?>/assets/js/jquery.ui.tabs.min.js',
+					name: 'tabs',
+					cache: true
+				});
+				
 				$.lazy({					
 					src: '<?php echo base_url() . APPFOLDER;?>/assets/js/jquery.prettyPhoto.js',
 					name: 'prettyPhoto',
@@ -99,8 +103,6 @@
 				
 				$.facebox.settings.loadingImage = '<?php echo base_url() . APPFOLDER;?>/assets/js/images/facebox-loading.gif';
 				
-				$('.reflect').reflect({
-					opacity: '0.3'
-				});
+				$('.reflect').reflect({ opacity: '0.3' });
 			});
 		</script>
