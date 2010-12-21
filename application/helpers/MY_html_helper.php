@@ -46,6 +46,3 @@ if ( ! function_exists('table_row_spacer'))
 }
 
 // ------------------------------------------------------------------------
-
-/* End of file MY_html_helper.php */
-/* Location: ./application/helpers/MY_html_helper.php */

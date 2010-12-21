@@ -99,6 +99,3 @@ if ( ! function_exists('text_output'))
 }
 
 // ------------------------------------------------------------------------
-
-/* End of file MY_language_helper.php */
-/* Location: ./application/helpers/language_helper.php */

@@ -192,19 +192,19 @@ if ( ! function_exists('form_dropdown_characters'))
 					{
 						case 'active':
 							$label = ucwords($ci->lang->line('status_playing') .' '. $ci->lang->line('global_characters'));
-							break;
+						break;
 							
 						case 'npc':
 							$label = ucwords($ci->lang->line('status_nonplaying') .' '. $ci->lang->line('global_characters'));
-							break;
+						break;
 							
 						case 'inactive':
 							$label = ucwords($ci->lang->line('status_inactive') .' '. $ci->lang->line('global_characters'));
-							break;
+						break;
 							
 						case 'pending':
 							$label = ucwords($ci->lang->line('status_pending') .' '. $ci->lang->line('global_characters'));
-							break;
+						break;
 					}
 					
 					$options[$label][$a->charid] = $ci->char->get_character_name($a->charid, TRUE);
@@ -291,8 +291,7 @@ if ( ! function_exists('form_dropdown_dept'))
 						}
 					}
 				}
-			
-				break;
+			break;
 				
 			case 'main':
 				$depts = $ci->dept->get_all_depts('asc', $display);
@@ -319,8 +318,7 @@ if ( ! function_exists('form_dropdown_dept'))
 						}
 					}
 				}
-				
-				break;
+			break;
 		}
 		
 		if ( ! is_array($selected))
@@ -518,6 +516,3 @@ if ( ! function_exists('form_dropdown_rank'))
 		return $form;
 	}
 }
-
-/* End of file MY_form_helper.php */
-/* Location: ./application/helpers/MY_form_helper.php */

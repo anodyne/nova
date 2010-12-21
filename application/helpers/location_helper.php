@@ -265,6 +265,3 @@ if ( ! function_exists('ajax_location'))
 }
 	
 // ------------------------------------------------------------------------
-
-/* End of file location_helper.php */
-/* Location: ./application/helpers/location_helper.php */

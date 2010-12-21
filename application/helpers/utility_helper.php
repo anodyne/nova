@@ -577,6 +577,3 @@ if ( ! function_exists('dbforge_type_translation'))
 }
 
 // ------------------------------------------------------------------------
-
-/* End of file utility_helper.php */
-/* Location: ./application/helpers/utility_helper.php */

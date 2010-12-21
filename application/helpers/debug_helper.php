@@ -42,16 +42,15 @@ if ( ! function_exists('print_var'))
 		{
 			case 'array':
 				print_r($variable);
-				break;
+			break;
 				
 			case 'object':
 				print_r($variable);
-				break;
+			break;
 				
 			case 'variable':
 				echo $variable;
-				
-				break;
+			break;
 		}
 		
 		echo _after();
@@ -146,6 +145,3 @@ function _after()
 }
 
 //------------------------------------------------------------------------------
-
-/* End of file debug_helper.php */
-/* Location: ./application/helpers/debug_helper.php */

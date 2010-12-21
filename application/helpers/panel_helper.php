@@ -84,6 +84,3 @@ if ( ! function_exists('panel_writing'))
 }
 	
 // ------------------------------------------------------------------------
-
-/* End of file panel_helper.php */
-/* Location: ./application/helpers/panel_helper.php */

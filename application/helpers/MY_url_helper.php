@@ -110,6 +110,3 @@ if ( ! function_exists('link_to_unless'))
 }
 
 // ------------------------------------------------------------------------
-
-/* End of file MY_url_helper.php */
-/* Location: ./application/helpers/MY_url_helper.php */

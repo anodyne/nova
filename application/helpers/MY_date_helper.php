@@ -141,6 +141,3 @@ if ( ! function_exists('timespan_short'))
 		}
 	}
 }
-
-/* End of file MY_date_helper.php */
-/* Location: ./application/helpers/MY_date_helper.php */
