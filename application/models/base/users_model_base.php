@@ -1,16 +1,15 @@
 <?php
-/*
-|---------------------------------------------------------------
-| USERS MODEL
-|---------------------------------------------------------------
-|
-| File: models/users_model_base.php
-| System Version: 1.2
-|
-| Changes: added method to pull user information based on the status of
-| the characters in the database
-|
-*/
+/**
+ * Users model
+ *
+ * @package		Nova
+ * @category	Model
+ * @author		Anodyne Productions
+ * @copyright	2010-11 Anodyne Productions
+ * @version		1.3
+ *
+ * Removed deprecated methods
+ */
 
 class Users_model_base extends Model {
 
@@ -22,11 +21,9 @@ class Users_model_base extends Model {
 		$this->load->dbutil();
 	}
 	
-	/*
-	|---------------------------------------------------------------
-	| RETRIEVE METHODS
-	|---------------------------------------------------------------
-	*/
+	/**
+	 * Retrieve methods
+	 */
 	
 	function check_email($email = '')
 	{
@@ -86,31 +83,31 @@ class Users_model_base extends Model {
 				{
 					case 'post':
 						$retval = ($row->moderate_posts == 'y') ? TRUE : FALSE;
-						break;
+					break;
 						
 					case 'log':
 						$retval = ($row->moderate_logs == 'y') ? TRUE : FALSE;
-						break;
+					break;
 						
 					case 'news':
 						$retval = ($row->moderate_news == 'y') ? TRUE : FALSE;
-						break;
+					break;
 						
 					case 'post_comment':
 						$retval = ($row->moderate_post_comments == 'y') ? TRUE : FALSE;
-						break;
+					break;
 						
 					case 'log_comment':
 						$retval = ($row->moderate_log_comments == 'y') ? TRUE : FALSE;
-						break;
+					break;
 						
 					case 'news_comment':
 						$retval = ($row->moderate_news_comments == 'y') ? TRUE : FALSE;
-						break;
+					break;
 						
 					case 'wiki_comment':
 						$retval = ($row->moderate_wiki_comments == 'y') ? TRUE : FALSE;
-						break;
+					break;
 				}
 				
 				if ($retval === TRUE)
@@ -121,63 +118,6 @@ class Users_model_base extends Model {
 		}
 		
 		return 'activated';
-	}
-	
-	/**
-	 * As of Nova 1.2, this function is depracated and will be removed from Nova in
-	 * version 1.3. If you need this function for your own work, please copy it from
-	 * this file to application/models/user_model.php
-	 */
-	function get_command_staff_emails()
-	{
-		/* get all positions that have a type of senior */
-		$p_query = $this->db->get_where('positions_'. GENRE, array('pos_type' => 'senior'));
-		
-		if ($p_query->num_rows() > 0)
-		{
-			foreach ($p_query->result() as $position)
-			{ /* dump the positions into an array */
-				$positions[] = $position->pos_id;
-			}
-			
-			/* set the users array */
-			$users = array();
-			
-			foreach ($positions as $a)
-			{ /* get all characters with senior positions */
-				$this->db->from('characters');
-				$this->db->where('crew_type', 'active');
-				$this->db->where('position_1', $a);
-				$this->db->or_where('position_2', $a);
-				
-				$c_query = $this->db->get();
-				
-				if ($c_query->num_rows() > 0)
-				{
-					foreach ($c_query->result() as $char)
-					{
-						if (!empty($char->user))
-						{ /* put the characters into the array */
-							$this->db->from('users');
-							$this->db->where('userid', $char->user);
-							$this->db->where('status', 'active');
-							
-							$email = $this->db->get();
-							$row = $email->row();
-							
-							if (!in_array($row->email, $users))
-								{ /* if it isn't in the array already, put it there */
-								$users[] = $row->email;
-							}
-						}
-					}
-				}
-			}
-			
-			return $users;
-		}
-		
-		return FALSE;
 	}
 	
 	function get_crew_emails($email_prefs = FALSE, $pref_name = '')
@@ -552,36 +492,8 @@ class Users_model_base extends Model {
 	}
 	
 	/**
-	 * As of Nova 1.2, this function is depracated and will be removed from Nova in
-	 * version 1.3. If you need this function for your own work, please copy it from
-	 * this file to application/models/user_model.php
+	 * Count methods
 	 */
-	function get_webmasters_emails()
-	{
-		$this->db->from('users');
-		$this->db->where('is_webmaster', 'y');
-		$this->db->where('status', 'active');
-		
-		$query = $this->db->get();
-		
-		if ($query->num_rows() > 0)
-		{
-			foreach ($query->result() as $item)
-			{ /* put them into an array */
-				$array[] = $item->email;
-			}
-			
-			return $array;
-		}
-		
-		return FALSE;
-	}
-	
-	/*
-	|---------------------------------------------------------------
-	| COUNT METHODS
-	|---------------------------------------------------------------
-	*/
 	
 	function count_all_users($status = 'active')
 	{
@@ -612,11 +524,9 @@ class Users_model_base extends Model {
 		return $query->num_rows();
 	}
 	
-	/*
-	|---------------------------------------------------------------
-	| CREATE METHODS
-	|---------------------------------------------------------------
-	*/
+	/**
+	 * Create methods
+	 */
 	
 	function create_loa_record($data = '')
 	{
@@ -664,11 +574,9 @@ class Users_model_base extends Model {
 		return $insert;
 	}
 	
-	/*
-	|---------------------------------------------------------------
-	| UPDATE METHODS
-	|---------------------------------------------------------------
-	*/
+	/**
+	 * Update methods
+	 */
 	
 	function update_all_user_prefs($id = '', $value = 'n')
 	{
@@ -754,11 +662,9 @@ class Users_model_base extends Model {
 		return $query;
 	}
 	
-	/*
-	|---------------------------------------------------------------
-	| DELETE METHODS
-	|---------------------------------------------------------------
-	*/
+	/**
+	 * Delete methods
+	 */
 	
 	function delete_user($id = '')
 	{
@@ -778,6 +684,3 @@ class Users_model_base extends Model {
 		return $query;
 	}
 }
-
-/* End of file users_model_base.php */
-/* Location: ./application/models/base/users_model_base.php */

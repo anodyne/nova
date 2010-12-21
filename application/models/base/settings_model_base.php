@@ -1,16 +1,13 @@
 <?php
-/*
-|---------------------------------------------------------------
-| SETTINGS MODEL
-|---------------------------------------------------------------
-|
-| File: models/base/settings_model.php
-| System Version: 1.0
-|
-| Model used to access the config table and pull the system global
-| variables for use by the controllers and views.
-|
-*/
+/**
+ * Settings model
+ *
+ * @package		Nova
+ * @category	Model
+ * @author		Anodyne Productions
+ * @copyright	2010-11 Anodyne Productions
+ * @version		1.0
+ */
 
 class Settings_model_base extends Model {
 
@@ -22,11 +19,9 @@ class Settings_model_base extends Model {
 		$this->load->dbutil();
 	}
 	
-	/*
-	|---------------------------------------------------------------
-	| GET METHODS
-	|---------------------------------------------------------------
-	*/
+	/**
+	 * Retrieve methods
+	 */
 	
 	function get_all_settings($user = 'n')
 	{
@@ -114,11 +109,23 @@ class Settings_model_base extends Model {
 		return $query;
 	}
 	
-	/*
-	|---------------------------------------------------------------
-	| UPDATE METHODS
-	|---------------------------------------------------------------
-	*/
+	/**
+	 * Create methods
+	 */
+	
+	function add_new_setting($data = '')
+	{
+		$query = $this->db->insert('settings', $data);
+		
+		/* optimize the table */
+		$this->dbutil->optimize_table('settings');
+		
+		return $query;
+	}
+	
+	/**
+	 * Update methods
+	 */
 	
 	function update_setting($field = '', $data = '', $identifier = 'setting_key')
 	{
@@ -131,27 +138,9 @@ class Settings_model_base extends Model {
 		return $query;
 	}
 	
-	/*
-	|---------------------------------------------------------------
-	| CREATE METHODS
-	|---------------------------------------------------------------
-	*/
-	
-	function add_new_setting($data = '')
-	{
-		$query = $this->db->insert('settings', $data);
-		
-		/* optimize the table */
-		$this->dbutil->optimize_table('settings');
-		
-		return $query;
-	}
-	
-	/*
-	|---------------------------------------------------------------
-	| DELETE METHODS
-	|---------------------------------------------------------------
-	*/
+	/**
+	 * Delete methods
+	 */
 	
 	function delete_setting($id = '')
 	{
@@ -164,6 +153,3 @@ class Settings_model_base extends Model {
 		return $query;
 	}
 }
-
-/* End of file settings_model.php */
-/* Location: ./application/models/base/settings_model.php */

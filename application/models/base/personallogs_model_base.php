@@ -1,18 +1,16 @@
 <?php
-/*
-|---------------------------------------------------------------
-| PERSONAL LOGS MODEL
-|---------------------------------------------------------------
-|
-| File: models/personallogs_model_base.php
-| System Version: 1.2
-|
-| Changes: updated some of the methods to avoid situations where
-|	errors could be thrown if a character or user ID wasn't present
-|
-| Model used to access the personal logs and personal logs comments tables.
-|
-*/
+/**
+ * Personal logs model
+ *
+ * @package		Nova
+ * @category	Model
+ * @author		Anodyne Productions
+ * @copyright	2010-11 Anodyne Productions
+ * @version		1.2
+ *
+ * Updated some of the methods to avoid situations where errors could be
+ * thrown if a character or user ID wasn't present
+ */
 
 class Personallogs_model_base extends Model {
 
@@ -24,11 +22,9 @@ class Personallogs_model_base extends Model {
 		$this->load->dbutil();
 	}
 	
-	/*
-	|---------------------------------------------------------------
-	| RETRIEVE METHODS
-	|---------------------------------------------------------------
-	*/
+	/**
+	 * Retrieve methods
+	 */
 	
 	function get_character_logs($id = '', $limit = 0)
 	{
@@ -89,12 +85,12 @@ class Personallogs_model_base extends Model {
 				case 'next':
 					$this->db->where('log_date >', $fetch->log_date);
 					$this->db->order_by('log_date', 'asc');
-					break;
+				break;
 				
 				case 'prev':
 					$this->db->where('log_date <', $fetch->log_date);
 					$this->db->order_by('log_date', 'desc');
-					break;
+				break;
 			}
 			
 			$this->db->limit(1);
@@ -259,11 +255,9 @@ class Personallogs_model_base extends Model {
 		return $query;
 	}
 	
-	/*
-	|---------------------------------------------------------------
-	| COUNT METHODS
-	|---------------------------------------------------------------
-	*/
+	/**
+	 * Count methods
+	 */
 	
 	function count_all_log_comments($status = 'activated', $id = '')
 	{
@@ -374,11 +368,9 @@ class Personallogs_model_base extends Model {
 		return $count;
 	}
 	
-	/*
-	|---------------------------------------------------------------
-	| SEARCH METHODS
-	|---------------------------------------------------------------
-	*/
+	/**
+	 * Search methods
+	 */
 	
 	function search_logs($component = '', $input = '')
 	{
@@ -391,11 +383,9 @@ class Personallogs_model_base extends Model {
 		return $query;
 	}
 	
-	/*
-	|---------------------------------------------------------------
-	| CREATE METHODS
-	|---------------------------------------------------------------
-	*/
+	/**
+	 * Create methods
+	 */
 	
 	function add_log_comment($data = '')
 	{
@@ -415,11 +405,9 @@ class Personallogs_model_base extends Model {
 		return $query;
 	}
 	
-	/*
-	|---------------------------------------------------------------
-	| UPDATE METHODS
-	|---------------------------------------------------------------
-	*/
+	/**
+	 * Update methods
+	 */
 	
 	function update_log($id = '', $data = '', $identifier = 'log_id')
 	{
@@ -441,11 +429,9 @@ class Personallogs_model_base extends Model {
 		return $query;
 	}
 	
-	/*
-	|---------------------------------------------------------------
-	| DELETE METHODS
-	|---------------------------------------------------------------
-	*/
+	/**
+	 * Delete methods
+	 */
 	
 	function delete_log($id = '')
 	{
@@ -479,6 +465,3 @@ class Personallogs_model_base extends Model {
 		return $query;
 	}
 }
-
-/* End of file personallogs_model_base.php */
-/* Location: ./application/models/base/personallogs_model_base.php */

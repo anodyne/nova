@@ -1,19 +1,16 @@
 <?php
-/*
-|---------------------------------------------------------------
-| NEWS MODEL
-|---------------------------------------------------------------
-|
-| File: models/base/news_model.php
-| System Version: 1.2
-|
-| Changes: updated some of the methods to avoid situations where
-|	errors could be thrown if a character or user ID wasn't present
-|
-| Model used to access the news, news categories, and news
-| comments tables.
-|
-*/
+/**
+ * News model
+ *
+ * @package		Nova
+ * @category	Model
+ * @author		Anodyne Productions
+ * @copyright	2010-11 Anodyne Productions
+ * @version		1.2
+ *
+ * Updated some of the methods to avoid situations where errors could be
+ * thrown if a character or user ID wasn't present
+ */
 
 class News_model_base extends Model {
 
@@ -25,11 +22,9 @@ class News_model_base extends Model {
 		$this->load->dbutil();
 	}
 	
-	/*
-	|---------------------------------------------------------------
-	| RETRIEVE METHODS
-	|---------------------------------------------------------------
-	*/
+	/**
+	 * Retrieve methods
+	 */
 	
 	function get_category_news($c = '', $session = '')
 	{
@@ -73,12 +68,12 @@ class News_model_base extends Model {
 				case 'next':
 					$this->db->where('news_date >', $fetch->news_date);
 					$this->db->order_by('news_date', 'asc');
-					break;
+				break;
 				
 				case 'prev':
 					$this->db->where('news_date <', $fetch->news_date);
 					$this->db->order_by('news_date', 'desc');
-					break;
+				break;
 			}
 			
 			if ($session === FALSE)
@@ -288,11 +283,9 @@ class News_model_base extends Model {
 		return $query;
 	}
 	
-	/*
-	|---------------------------------------------------------------
-	| COUNT METHODS
-	|---------------------------------------------------------------
-	*/
+	/**
+	 * Count methods
+	 */
 	
 	function count_character_news($character = '', $status = 'activated')
 	{
@@ -392,11 +385,9 @@ class News_model_base extends Model {
 		return $count;
 	}
 	
-	/*
-	|---------------------------------------------------------------
-	| SEARCH METHODS
-	|---------------------------------------------------------------
-	*/
+	/**
+	 * Search methods
+	 */
 	
 	function search_news($component = '', $input = '')
 	{
@@ -409,11 +400,9 @@ class News_model_base extends Model {
 		return $query;
 	}
 	
-	/*
-	|---------------------------------------------------------------
-	| CREATE METHODS
-	|---------------------------------------------------------------
-	*/
+	/**
+	 * Create methods
+	 */
 	
 	function add_news_category($data = '')
 	{
@@ -442,11 +431,9 @@ class News_model_base extends Model {
 		return $this->db->affected_rows();
 	}
 	
-	/*
-	|---------------------------------------------------------------
-	| UPDATE METHODS
-	|---------------------------------------------------------------
-	*/
+	/**
+	 * Update methods
+	 */
 	
 	function update_news_category($id = '', $data = '')
 	{
@@ -478,11 +465,9 @@ class News_model_base extends Model {
 		return $query;
 	}
 	
-	/*
-	|---------------------------------------------------------------
-	| DELETE METHODS
-	|---------------------------------------------------------------
-	*/
+	/**
+	 * Delete methods
+	 */
 	
 	function delete_news_category($id = '')
 	{
@@ -525,6 +510,3 @@ class News_model_base extends Model {
 		return $query;
 	}
 }
-
-/* End of file news_model.php */
-/* Location: ./application/models/base/news_model.php */

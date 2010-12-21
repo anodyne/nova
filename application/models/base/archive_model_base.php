@@ -1,15 +1,13 @@
 <?php
-/*
-|---------------------------------------------------------------
-| ARCHIVE MODEL
-|---------------------------------------------------------------
-|
-| File: models/base/archive_model_base.php
-| System Version: 1.0
-|
-| Model used to access the old SMS installation
-|
-*/
+/**
+ * Archive model
+ *
+ * @package		Nova
+ * @category	Model
+ * @author		Anodyne Productions
+ * @copyright	2010-11 Anodyne Productions
+ * @version		1.0
+ */
 
 class Archive_model_base extends Model {
 
@@ -21,11 +19,9 @@ class Archive_model_base extends Model {
 		$this->load->dbutil();
 	}
 	
-	/*
-	|---------------------------------------------------------------
-	| RETRIEVE METHODS
-	|---------------------------------------------------------------
-	*/
+	/**
+	 * Retrieve methods
+	 */
 	
 	function get_all_db_entries()
 	{
@@ -121,6 +117,3 @@ class Archive_model_base extends Model {
 		return FALSE;
 	}
 }
-
-/* End of file archive_model.php */
-/* Location: ./application/models/base/archive_model_base.php */

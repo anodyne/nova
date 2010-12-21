@@ -1,19 +1,16 @@
 <?php
-/*
-|---------------------------------------------------------------
-| SYSTEM MODEL
-|---------------------------------------------------------------
-|
-| File: models/system_model_base.php
-| System Version: 1.2
-|
-| Changes: added methods to create, retrieve and delete site bans
-|	from the database; updated method that automatically sets the
-|	first My Link
-|
-| Model used to access the system table.
-|
-*/
+/**
+ * System model
+ *
+ * @package		Nova
+ * @category	Model
+ * @author		Anodyne Productions
+ * @copyright	2010-11 Anodyne Productions
+ * @version		1.2
+ *
+ * Added methods to create, retrieve and delete site bans from the database,
+ * updated method that automatically sets the first My Link
+ */
 
 class System_model_base extends Model {
 
@@ -25,11 +22,9 @@ class System_model_base extends Model {
 		$this->load->dbutil();
 	}
 	
-	/*
-	|---------------------------------------------------------------
-	| RETRIEVE METHODS
-	|---------------------------------------------------------------
-	*/
+	/**
+	 * Retrieve methods
+	 */
 	
 	function check_install_status()
 	{
@@ -416,11 +411,28 @@ class System_model_base extends Model {
 		return $query;
 	}
 	
-	/*
-	|---------------------------------------------------------------
-	| CREATE METHODS
-	|---------------------------------------------------------------
-	*/
+	/**
+	 * Count methods
+	 */
+	
+	function count_loa_records()
+	{
+		$this->db->from('user_loa');
+		
+		return $this->db->count_all_results();
+	}
+	
+	function count_login_attempts($email = '')
+	{
+		$this->db->from('login_attempts');
+		$this->db->where('login_email', $email);
+		
+		return $this->db->count_all_results();
+	}
+	
+	/**
+	 * Create methods
+	 */
 	
 	function add_ban($data = '')
 	{
@@ -485,32 +497,9 @@ class System_model_base extends Model {
 		return $query;
 	}
 	
-	/*
-	|---------------------------------------------------------------
-	| COUNT METHODS
-	|---------------------------------------------------------------
-	*/
-	
-	function count_loa_records()
-	{
-		$this->db->from('user_loa');
-		
-		return $this->db->count_all_results();
-	}
-	
-	function count_login_attempts($email = '')
-	{
-		$this->db->from('login_attempts');
-		$this->db->where('login_email', $email);
-		
-		return $this->db->count_all_results();
-	}
-	
-	/*
-	|---------------------------------------------------------------
-	| UPDATE METHODS
-	|---------------------------------------------------------------
-	*/
+	/**
+	 * Update methods
+	 */
 	
 	function update_database_charset()
 	{
@@ -594,11 +583,9 @@ class System_model_base extends Model {
 		return $query;
 	}
 	
-	/*
-	|---------------------------------------------------------------
-	| DELETE METHODS
-	|---------------------------------------------------------------
-	*/
+	/**
+	 * Delete methods
+	 */
 	
 	function delete_ban($id = '')
 	{
@@ -654,11 +641,9 @@ class System_model_base extends Model {
 		return $query;
 	}
 	
-	/*
-	|---------------------------------------------------------------
-	| MISC METHODS
-	|---------------------------------------------------------------
-	*/
+	/**
+	 * Miscellaneous methods
+	 */
 	
 	function optimize_table($table = '')
 	{
@@ -672,6 +657,3 @@ class System_model_base extends Model {
 		}
 	}
 }
-
-/* End of file system_model_base.php */
-/* Location: ./application/models/base/system_model_base.php */

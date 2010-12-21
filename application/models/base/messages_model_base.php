@@ -1,16 +1,13 @@
 <?php
-/*
-|---------------------------------------------------------------
-| MESSAGES MODEL
-|---------------------------------------------------------------
-|
-| File: models/messages_model_base.php
-| System Version: 1.0
-|
-| Model used to access the messages table to retrieve and update
-| messages used by the system.
-|
-*/
+/**
+ * Messages model
+ *
+ * @package		Nova
+ * @category	Model
+ * @author		Anodyne Productions
+ * @copyright	2010-11 Anodyne Productions
+ * @version		1.0
+ */
 
 class Messages_model_base extends Model {
 
@@ -22,11 +19,9 @@ class Messages_model_base extends Model {
 		$this->load->dbutil();
 	}
 	
-	/*
-	|---------------------------------------------------------------
-	| RETRIEVE METHODS
-	|---------------------------------------------------------------
-	*/
+	/**
+	 * Retrieve methods
+	 */
 
 	function get_message($message_key = '')
 	{
@@ -56,15 +51,15 @@ class Messages_model_base extends Model {
 		{
 			case 'key':
 				$field = 'message_key';
-				break;
+			break;
 				
 			case 'id':
 				$field = 'message_id';
-				break;
+			break;
 				
 			case 'label':
 				$field = 'message_label';
-				break;
+			break;
 		}
 		
 		$this->db->from('messages');
@@ -83,11 +78,9 @@ class Messages_model_base extends Model {
 		return $query;
 	}
 	
-	/*
-	|---------------------------------------------------------------
-	| CREATE METHODS
-	|---------------------------------------------------------------
-	*/
+	/**
+	 * Create methods
+	 */
 
 	function insert_new_message($data = '')
 	{
@@ -98,11 +91,9 @@ class Messages_model_base extends Model {
 		return $this->db->affected_rows();
 	}
 	
-	/*
-	|---------------------------------------------------------------
-	| UPDATE METHODS
-	|---------------------------------------------------------------
-	*/
+	/**
+	 * Update methods
+	 */
 
 	function update_message($data = '', $id = '', $type = 'key')
 	{
@@ -110,15 +101,15 @@ class Messages_model_base extends Model {
 		{
 			case 'key':
 				$field = 'message_key';
-				break;
+			break;
 				
 			case 'id':
 				$field = 'message_id';
-				break;
+			break;
 				
 			case 'label':
 				$field = 'message_label';
-				break;
+			break;
 		}
 		
 		$this->db->where($field, $id);
@@ -129,11 +120,9 @@ class Messages_model_base extends Model {
 		return $this->db->affected_rows();
 	}
 	
-	/*
-	|---------------------------------------------------------------
-	| DELETE METHODS
-	|---------------------------------------------------------------
-	*/
+	/**
+	 * Delete methods
+	 */
 
 	function delete_message($id = '')
 	{
@@ -144,6 +133,3 @@ class Messages_model_base extends Model {
 		return $this->db->affected_rows();
 	}
 }
-
-/* End of file messages_model_base.php */
-/* Location: ./application/models/base/messages_model_base.php */

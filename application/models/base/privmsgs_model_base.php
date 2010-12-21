@@ -1,15 +1,13 @@
 <?php
-/*
-|---------------------------------------------------------------
-| PRIVATE MESSAGES MODEL
-|---------------------------------------------------------------
-|
-| File: models/privmsgs_model_base.php
-| System Version: 1.0
-|
-| Model used to access the private message tables.
-|
-*/
+/**
+ * Private messages model
+ *
+ * @package		Nova
+ * @category	Model
+ * @author		Anodyne Productions
+ * @copyright	2010-11 Anodyne Productions
+ * @version		1.0
+ */
 
 class Privmsgs_model_base extends Model {
 
@@ -21,11 +19,9 @@ class Privmsgs_model_base extends Model {
 		$this->load->dbutil();
 	}
 
-	/*
-	|---------------------------------------------------------------
-	| RETRIEVE METHODS
-	|---------------------------------------------------------------
-	*/
+	/**
+	 * Retrieve methods
+	 */
 	
 	function get_inbox($id = '')
 	{
@@ -87,11 +83,9 @@ class Privmsgs_model_base extends Model {
 		return $query;
 	}
 	
-	/*
-	|---------------------------------------------------------------
-	| COUNT METHODS
-	|---------------------------------------------------------------
-	*/
+	/**
+	 * Count methods
+	 */
 	
 	function count_unread_pms($id = '')
 	{
@@ -103,11 +97,9 @@ class Privmsgs_model_base extends Model {
 		return $this->db->count_all_results();
 	}
 	
-	/*
-	|---------------------------------------------------------------
-	| CREATE METHODS
-	|---------------------------------------------------------------
-	*/
+	/**
+	 * Create methods
+	 */
 	
 	function insert_pm_recipients($data = '')
 	{
@@ -128,11 +120,9 @@ class Privmsgs_model_base extends Model {
 		return $this->db->affected_rows();
 	}
 	
-	/*
-	|---------------------------------------------------------------
-	| UPDATE METHODS
-	|---------------------------------------------------------------
-	*/
+	/**
+	 * Update methods
+	 */
 	
 	function update_message($id = '', $user = '', $data = '')
 	{
@@ -160,6 +150,3 @@ class Privmsgs_model_base extends Model {
 		return $query;
 	}
 }
-
-/* End of file privmsgs_model_base.php */
-/* Location: ./application/models/base/privmsgs_model_base.php */

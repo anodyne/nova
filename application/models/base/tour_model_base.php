@@ -1,16 +1,16 @@
 <?php
-/*
-|---------------------------------------------------------------
-| TOUR MODEL
-|---------------------------------------------------------------
-|
-| File: models/tour_model_base.php
-| System Version: 1.2
-|
-| Changes: fixed issue from 1.1 update where you couldn't have
-|	a deck listing for each specification item you'd created
-|
-*/
+/**
+ * Tour model
+ *
+ * @package		Nova
+ * @category	Model
+ * @author		Anodyne Productions
+ * @copyright	2010-11 Anodyne Productions
+ * @version		1.2
+ *
+ * Fixed bug from 1.1 update where you couldn't have a deck listing for
+ * each specification item you've created
+ */
 
 class Tour_model_base extends Model {
 
@@ -22,11 +22,9 @@ class Tour_model_base extends Model {
 		$this->load->dbutil();
 	}
 	
-	/*
-	|---------------------------------------------------------------
-	| RETRIEVE METHODS
-	|---------------------------------------------------------------
-	*/
+	/**
+	 * Retrieve methods
+	 */
 	
 	function get_deck_details($id = '')
 	{
@@ -142,11 +140,9 @@ class Tour_model_base extends Model {
 		return $query;
 	}
 	
-	/*
-	|---------------------------------------------------------------
-	| CREATE METHODS
-	|---------------------------------------------------------------
-	*/
+	/**
+	 * Create methods
+	 */
 	
 	function add_deck($data = '')
 	{
@@ -185,62 +181,9 @@ class Tour_model_base extends Model {
 		return $query;
 	}
 	
-	/*
-	|---------------------------------------------------------------
-	| DELETE METHODS
-	|---------------------------------------------------------------
-	*/
-	
-	function delete_deck($id = '')
-	{
-		$query = $this->db->delete('tour_decks', array('deck_id' => $id));
-		
-		$this->dbutil->optimize_table('tour_decks');
-		
-		return $query;
-	}
-	
-	function delete_tour_field($id = '')
-	{
-		$query = $this->db->delete('tour_fields', array('field_id' => $id));
-		
-		$this->dbutil->optimize_table('tour_fields');
-		
-		return $query;
-	}
-	
-	function delete_tour_field_data($value = '', $identifier = 'data_field')
-	{
-		$query = $this->db->delete('tour_data', array($identifier => $value));
-		
-		$this->dbutil->optimize_table('tour_data');
-		
-		return $query;
-	}
-	
-	function delete_tour_item($id = '')
-	{
-		$query = $this->db->delete('tour', array('tour_id' => $id));
-		
-		$this->dbutil->optimize_table('tour');
-		
-		return $query;
-	}
-	
-	function delete_tour_value($id = '')
-	{
-		$query = $this->db->delete('tour_values', array('value_id' => $id));
-		
-		$this->dbutil->optimize_table('tour_values');
-		
-		return $query;
-	}
-	
-	/*
-	|---------------------------------------------------------------
-	| UPDATE METHODS
-	|---------------------------------------------------------------
-	*/
+	/**
+	 * Update methods
+	 */
 	
 	function update_deck($id = '', $data = '')
 	{
@@ -292,7 +235,53 @@ class Tour_model_base extends Model {
 		
 		return $query;
 	}
+	
+	/**
+	 * Delete methods
+	 */
+	
+	function delete_deck($id = '')
+	{
+		$query = $this->db->delete('tour_decks', array('deck_id' => $id));
+		
+		$this->dbutil->optimize_table('tour_decks');
+		
+		return $query;
+	}
+	
+	function delete_tour_field($id = '')
+	{
+		$query = $this->db->delete('tour_fields', array('field_id' => $id));
+		
+		$this->dbutil->optimize_table('tour_fields');
+		
+		return $query;
+	}
+	
+	function delete_tour_field_data($value = '', $identifier = 'data_field')
+	{
+		$query = $this->db->delete('tour_data', array($identifier => $value));
+		
+		$this->dbutil->optimize_table('tour_data');
+		
+		return $query;
+	}
+	
+	function delete_tour_item($id = '')
+	{
+		$query = $this->db->delete('tour', array('tour_id' => $id));
+		
+		$this->dbutil->optimize_table('tour');
+		
+		return $query;
+	}
+	
+	function delete_tour_value($id = '')
+	{
+		$query = $this->db->delete('tour_values', array('value_id' => $id));
+		
+		$this->dbutil->optimize_table('tour_values');
+		
+		return $query;
+	}
 }
-
-/* End of file tour_model_base.php */
-/* Location: ./application/models/base/tour_model_base.php */

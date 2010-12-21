@@ -1,17 +1,6 @@
 <?php
-/*
-|---------------------------------------------------------------
-| ARCHIVE MODEL
-|---------------------------------------------------------------
-|
-| File: models/archive_model.php
-| System Version: 1.0
-|
-| Model used to access the access roles and access pages tables.
-|
-*/
 
-require_once APPPATH . 'models/base/archive_model_base.php';
+require_once APPPATH.'models/base/archive_model_base.php';
 
 class Archive_model extends Archive_model_base {
 
@@ -20,7 +9,7 @@ class Archive_model extends Archive_model_base {
 		parent::Archive_model_base();
 	}
 	
+	/**
+	 * Put your own methods below this...
+	 */
 }
-
-/* End of file archive_model.php */
-/* Location: ./application/models/archive_model.php */

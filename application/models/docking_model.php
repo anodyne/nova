@@ -1,17 +1,6 @@
 <?php
-/*
-|---------------------------------------------------------------
-| DOCKING MODEL
-|---------------------------------------------------------------
-|
-| File: models/docking_model.php
-| System Version: 1.0
-|
-| Model used to access the docking tables.
-|
-*/
 
-require_once APPPATH . 'models/base/docking_model_base.php';
+require_once APPPATH.'models/base/docking_model_base.php';
 
 class Docking_model extends Docking_model_base {
 
@@ -19,7 +8,8 @@ class Docking_model extends Docking_model_base {
 	{
 		parent::Docking_model_base();
 	}
+	
+	/**
+	 * Put your own methods below this...
+	 */
 }
-
-/* End of file docking_model.php */
-/* Location: ./application/models/docking_model.php */

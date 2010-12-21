@@ -1,17 +1,6 @@
 <?php
-/*
-|---------------------------------------------------------------
-| APPLICATIONS MODEL
-|---------------------------------------------------------------
-|
-| File: models/applications_model.php
-| System Version: 1.0
-|
-| Model used to access the application tables
-|
-*/
 
-require_once APPPATH . 'models/base/applications_model_base.php';
+require_once APPPATH.'models/base/applications_model_base.php';
 
 class Applications_model extends Applications_model_base {
 
@@ -20,7 +9,7 @@ class Applications_model extends Applications_model_base {
 		parent::Applications_model_base();
 	}
 	
+	/**
+	 * Put your own methods below this...
+	 */
 }
-
-/* End of file applications_model.php */
-/* Location: ./application/models/applications_model.php */

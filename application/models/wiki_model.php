@@ -1,17 +1,6 @@
 <?php
-/*
-|---------------------------------------------------------------
-| WIKI MODEL
-|---------------------------------------------------------------
-|
-| File: models/wiki_model.php
-| System Version: 1.0
-|
-| Model used to access the wiki tables.
-|
-*/
 
-require_once APPPATH . 'models/base/wiki_model_base.php';
+require_once APPPATH.'models/base/wiki_model_base.php';
 
 class Wiki_model extends Wiki_model_base {
 
@@ -19,7 +8,8 @@ class Wiki_model extends Wiki_model_base {
 	{
 		parent::Wiki_model_base();
 	}
+	
+	/**
+	 * Put your own methods below this...
+	 */
 }
-
-/* End of file wiki_model.php */
-/* Location: ./application/models/wiki_model.php */

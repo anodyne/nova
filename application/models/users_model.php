@@ -1,17 +1,6 @@
 <?php
-/*
-|---------------------------------------------------------------
-| USERS MODEL
-|---------------------------------------------------------------
-|
-| File: models/users_model.php
-| System Version: 1.0
-|
-| Model used to access the users table.
-|
-*/
 
-require_once APPPATH . 'models/base/users_model_base.php';
+require_once APPPATH.'models/base/users_model_base.php';
 
 class Users_model extends Users_model_base {
 
@@ -19,7 +8,8 @@ class Users_model extends Users_model_base {
 	{
 		parent::Users_model_base();
 	}
+	
+	/**
+	 * Put your own methods below this...
+	 */
 }
-
-/* End of file users_model.php */
-/* Location: ./application/models/users_model.php */

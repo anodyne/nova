@@ -1,15 +1,13 @@
 <?php
-/*
-|---------------------------------------------------------------
-| MENU MODEL
-|---------------------------------------------------------------
-|
-| File: models/menu_model_base.php
-| System Version: 1.0
-|
-| Model used to access the menu table.
-|
-*/
+/**
+ * Menu model
+ *
+ * @package		Nova
+ * @category	Model
+ * @author		Anodyne Productions
+ * @copyright	2010-11 Anodyne Productions
+ * @version		1.0
+ */
 
 class Menu_model_base extends Model {
 
@@ -21,11 +19,9 @@ class Menu_model_base extends Model {
 		$this->load->dbutil();
 	}
 	
-	/*
-	|---------------------------------------------------------------
-	| RETRIEVE METHODS
-	|---------------------------------------------------------------
-	*/
+	/**
+	 * Retrieve methods
+	 */
 	
 	function get_menu_items($type = '', $cat = '', $display = 'y')
 	{
@@ -111,11 +107,9 @@ class Menu_model_base extends Model {
 		return $query;
 	}
 	
-	/*
-	|---------------------------------------------------------------
-	| CREATE METHODS
-	|---------------------------------------------------------------
-	*/
+	/**
+	 * Create methods
+	 */
 	
 	function add_menu_item($data = '')
 	{
@@ -135,11 +129,9 @@ class Menu_model_base extends Model {
 		return $query;
 	}
 	
-	/*
-	|---------------------------------------------------------------
-	| UPDATE METHODS
-	|---------------------------------------------------------------
-	*/
+	/**
+	 * Update methods
+	 */
 	
 	function update_menu_item($data = '', $where_data = '', $where_field = 'menu_id')
 	{
@@ -161,11 +153,9 @@ class Menu_model_base extends Model {
 		return $query;
 	}
 	
-	/*
-	|---------------------------------------------------------------
-	| DELETE METHODS
-	|---------------------------------------------------------------
-	*/
+	/**
+	 * Delete methods
+	 */
 	
 	function delete_menu_item($id = '')
 	{
@@ -185,6 +175,3 @@ class Menu_model_base extends Model {
 		return $query;
 	}
 }
-
-/* End of file menu_model_base.php */
-/* Location: ./application/models/base/menu_model_base.php */

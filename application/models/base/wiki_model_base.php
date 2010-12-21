@@ -1,18 +1,16 @@
 <?php
-/*
-|---------------------------------------------------------------
-| WIKI MODEL
-|---------------------------------------------------------------
-|
-| File: models/wiki_model_base.php
-| System Version: 1.0.3
-|
-| Changes: fixed bug where pages were being put into the
-|	uncategorized section even if they had a category
-|
-| Model used to access the wiki tables.
-|
-*/
+/**
+ * Wiki model
+ *
+ * @package		Nova
+ * @category	Model
+ * @author		Anodyne Productions
+ * @copyright	2010-11 Anodyne Productions
+ * @version		1.0.3
+ *
+ * Fixed bug where pages were being put into the uncategorized section
+ * even if they had a category
+ */
 
 class Wiki_model_base extends Model {
 
@@ -24,11 +22,9 @@ class Wiki_model_base extends Model {
 		$this->load->dbutil();
 	}
 	
-	/*
-	|---------------------------------------------------------------
-	| RETRIEVE METHODS
-	|---------------------------------------------------------------
-	*/
+	/**
+	 * Retrieve methods
+	 */
 	
 	function get_all_contributors($id = '')
 	{
@@ -227,11 +223,9 @@ class Wiki_model_base extends Model {
 		return $query;
 	}
 	
-	/*
-	|---------------------------------------------------------------
-	| COUNT METHODS
-	|---------------------------------------------------------------
-	*/
+	/**
+	 * Count methods
+	 */
 	
 	function count_all_comments($status = 'activated', $id = '')
 	{
@@ -246,11 +240,9 @@ class Wiki_model_base extends Model {
 		return $this->db->count_all_results();
 	}
 	
-	/*
-	|---------------------------------------------------------------
-	| SEARCH METHODS
-	|---------------------------------------------------------------
-	*/
+	/**
+	 * Search methods
+	 */
 	
 	function search_pages($component = '', $input = '')
 	{
@@ -259,12 +251,12 @@ class Wiki_model_base extends Model {
 			case 'title':
 				$this->db->from('wiki_drafts');
 				$this->db->like('draft_title', $input);
-				break;
+			break;
 				
 			case 'content':
 				$this->db->from('wiki_drafts');
 				$this->db->like('draft_content', $input);
-				break;
+			break;
 		}
 		
 		$query = $this->db->get();
@@ -272,11 +264,9 @@ class Wiki_model_base extends Model {
 		return $query;
 	}
 	
-	/*
-	|---------------------------------------------------------------
-	| CREATE METHODS
-	|---------------------------------------------------------------
-	*/
+	/**
+	 * Create methods
+	 */
 	
 	function create_category($data = '')
 	{
@@ -310,11 +300,9 @@ class Wiki_model_base extends Model {
 		return $query;
 	}
 	
-	/*
-	|---------------------------------------------------------------
-	| UPDATE METHODS
-	|---------------------------------------------------------------
-	*/
+	/**
+	 * Update methods
+	 */
 	
 	function update_category($id = '', $data = '')
 	{
@@ -346,11 +334,9 @@ class Wiki_model_base extends Model {
 		return $query;
 	}
 	
-	/*
-	|---------------------------------------------------------------
-	| DELETE METHODS
-	|---------------------------------------------------------------
-	*/
+	/**
+	 * Delete methods
+	 */
 	
 	function delete_category($id = '')
 	{
@@ -367,13 +353,11 @@ class Wiki_model_base extends Model {
 		{
 			case 'comment':
 				$this->db->where('wcomment_id', $id);
-			
-				break;
+			break;
 				
 			case 'page':
 				$this->db->where('wcomment_page', $id);
-			
-				break;
+			break;
 		}
 		
 		$query = $this->db->delete('wiki_comments');
@@ -395,8 +379,7 @@ class Wiki_model_base extends Model {
 						$this->db->or_where('draft_id', $i);
 					}
 				}
-			
-				break;
+			break;
 				
 			case 'array_page':
 				if (is_array($id))
@@ -406,18 +389,15 @@ class Wiki_model_base extends Model {
 						$this->db->or_where('draft_page', $i);
 					}
 				}
-			
-				break;
+			break;
 				
 			case 'draft':
 				$this->db->where('draft_id', $id);
-			
-				break;
+			break;
 				
 			case 'page':
 				$this->db->where('draft_page', $id);
-			
-				break;
+			break;
 		}
 		
 		$query = $this->db->delete('wiki_drafts');
@@ -442,6 +422,3 @@ class Wiki_model_base extends Model {
 		return $query;
 	}
 }
-
-/* End of file wiki_model_base.php */
-/* Location: ./application/models/base/wiki_model_base.php */

@@ -1,17 +1,6 @@
 <?php
-/*
-|---------------------------------------------------------------
-| TOUR MODEL
-|---------------------------------------------------------------
-|
-| File: models/tour_model.php
-| System Version: 1.0
-|
-| Model used to access the tour tables.
-|
-*/
 
-require_once APPPATH . 'models/base/tour_model_base.php';
+require_once APPPATH.'models/base/tour_model_base.php';
 
 class Tour_model extends Tour_model_base {
 
@@ -19,7 +8,8 @@ class Tour_model extends Tour_model_base {
 	{
 		parent::Tour_model_base();
 	}
+	
+	/**
+	 * Put your own methods below this...
+	 */
 }
-
-/* End of file tour_model.php */
-/* Location: ./application/models/tour_model.php */

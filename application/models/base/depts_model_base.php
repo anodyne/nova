@@ -1,15 +1,13 @@
 <?php
-/*
-|---------------------------------------------------------------
-| DEPARTMENTS MODEL
-|---------------------------------------------------------------
-|
-| File: models/base/depts_model.php
-| System Version: 1.2
-|
-| Model used to access the ranks table
-|
-*/
+/**
+ * Departments model
+ *
+ * @package		Nova
+ * @category	Model
+ * @author		Anodyne Productions
+ * @copyright	2010-11 Anodyne Productions
+ * @version		1.2
+ */
 
 class Depts_model_base extends Model {
 
@@ -21,11 +19,9 @@ class Depts_model_base extends Model {
 		$this->load->dbutil();
 	}
 	
-	/*
-	|---------------------------------------------------------------
-	| GET METHODS
-	|---------------------------------------------------------------
-	*/
+	/**
+	 * Retrieve methods
+	 */
 	
 	function get_all_depts($sort = 'asc', $display = 'y', $parent = 0, $sort_col = 'dept_order')
 	{
@@ -151,11 +147,9 @@ class Depts_model_base extends Model {
 		return $query;
 	}
 	
-	/*
-	|---------------------------------------------------------------
-	| CREATE METHODS
-	|---------------------------------------------------------------
-	*/
+	/**
+	 * Create methods
+	 */
 	
 	function add_dept($data = '')
 	{
@@ -173,11 +167,9 @@ class Depts_model_base extends Model {
 		return $query;
 	}
 	
-	/*
-	|---------------------------------------------------------------
-	| UPDATE METHODS
-	|---------------------------------------------------------------
-	*/
+	/**
+	 * Update methods
+	 */
 	
 	function update_dept($dept = '', $data = '')
 	{
@@ -209,11 +201,9 @@ class Depts_model_base extends Model {
 		return $query;
 	}
 	
-	/*
-	|---------------------------------------------------------------
-	| DELETE METHODS
-	|---------------------------------------------------------------
-	*/
+	/**
+	 * Delete methods
+	 */
 	
 	function delete_dept($id = '')
 	{
@@ -233,6 +223,3 @@ class Depts_model_base extends Model {
 		return $query;
 	}
 }
-
-/* End of file depts_model.php */
-/* Location: ./application/models/base/depts_model.php */

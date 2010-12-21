@@ -1,18 +1,16 @@
 <?php
-/*
-|---------------------------------------------------------------
-| POSTS MODEL
-|---------------------------------------------------------------
-|
-| File: models/posts_model_base.php
-| System Version: 1.2
-|
-| Changes: updated some of the methods to avoid situations where
-|	errors could be thrown if a character or user ID wasn't present
-|
-| Model used to access the posts and posts comments tables.
-|
-*/
+/**
+ * Posts model
+ *
+ * @package		Nova
+ * @category	Model
+ * @author		Anodyne Productions
+ * @copyright	2010-11 Anodyne Productions
+ * @version		1.2
+ *
+ * Updated some of the methods to avoid situations where errors could be
+ * thrown if a character or user ID wasn't present
+ */
 
 class Posts_model_base extends Model {
 
@@ -24,11 +22,9 @@ class Posts_model_base extends Model {
 		$this->load->dbutil();
 	}
 
-	/*
-	|---------------------------------------------------------------
-	| RETRIEVE METHODS
-	|---------------------------------------------------------------
-	*/
+	/**
+	 * Retrieve methods
+	 */
 	
 	function get_author_emails($post = '')
 	{
@@ -154,12 +150,12 @@ class Posts_model_base extends Model {
 				case 'next':
 					$this->db->where('post_date >', $fetch->post_date);
 					$this->db->order_by('post_date', 'asc');
-					break;
+				break;
 				
 				case 'prev':
 					$this->db->where('post_date <', $fetch->post_date);
 					$this->db->order_by('post_date', 'desc');
-					break;
+				break;
 			}
 			
 			$this->db->limit(1);
@@ -333,11 +329,9 @@ class Posts_model_base extends Model {
 		return $query;
 	}
 	
-	/*
-	|---------------------------------------------------------------
-	| COUNT METHODS
-	|---------------------------------------------------------------
-	*/
+	/**
+	 * Count methods
+	 */
 	
 	function count_all_post_comments($status = 'activated', $id = '')
 	{
@@ -425,8 +419,7 @@ class Posts_model_base extends Model {
 			{ /* take action based on how nova is set up to count posts */
 				case 'single':
 					$count = $query->num_rows();
-					
-					break;
+				break;
 					
 				case 'multiple':
 					$array = array();
@@ -449,8 +442,7 @@ class Posts_model_base extends Model {
 					}
 					
 					$count = count($array);
-				
-					break;
+				break;
 			}
 		}
 		
@@ -480,8 +472,7 @@ class Posts_model_base extends Model {
 			{ /* take action based on how nova is set up to count posts */
 				case 'single':
 					$count = $query->num_rows();
-					
-					break;
+				break;
 					
 				case 'multiple':
 					$array = array();
@@ -504,8 +495,7 @@ class Posts_model_base extends Model {
 					}
 					
 					$count = count($array);
-				
-					break;
+				break;
 			}
 		}
 		
@@ -595,11 +585,9 @@ class Posts_model_base extends Model {
 		return $count;
 	}
 	
-	/*
-	|---------------------------------------------------------------
-	| SEARCH METHODS
-	|---------------------------------------------------------------
-	*/
+	/**
+	 * Search methods
+	 */
 	
 	function search_posts($component = '', $input = '')
 	{
@@ -612,11 +600,9 @@ class Posts_model_base extends Model {
 		return $query;
 	}
 	
-	/*
-	|---------------------------------------------------------------
-	| CREATE METHODS
-	|---------------------------------------------------------------
-	*/
+	/**
+	 * Create methods
+	 */
 	
 	function add_post_comment($data = '')
 	{
@@ -639,11 +625,9 @@ class Posts_model_base extends Model {
 		return $this->db->affected_rows();
 	}
 	
-	/*
-	|---------------------------------------------------------------
-	| UPDATE METHODS
-	|---------------------------------------------------------------
-	*/
+	/**
+	 * Update methods
+	 */
 	
 	function update_post($id = '', $data = '')
 	{
@@ -665,11 +649,9 @@ class Posts_model_base extends Model {
 		return $query;
 	}
 	
-	/*
-	|---------------------------------------------------------------
-	| DELETE METHODS
-	|---------------------------------------------------------------
-	*/
+	/**
+	 * Delete methods
+	 */
 	
 	function delete_post($id = '')
 	{
@@ -703,6 +685,3 @@ class Posts_model_base extends Model {
 		return $query;
 	}
 }
-
-/* End of file posts_model_base.php */
-/* Location: ./application/models/base/posts_model_base.php */

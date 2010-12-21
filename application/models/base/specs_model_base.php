@@ -1,15 +1,13 @@
 <?php
-/*
-|---------------------------------------------------------------
-| SPECS MODEL
-|---------------------------------------------------------------
-|
-| File: models/specs_model_base.php
-| System Version: 1.0
-|
-| Model used to access the specs tables.
-|
-*/
+/**
+ * Specs model
+ *
+ * @package		Nova
+ * @category	Model
+ * @author		Anodyne Productions
+ * @copyright	2010-11 Anodyne Productions
+ * @version		1.0
+ */
 
 class Specs_model_base extends Model {
 
@@ -21,11 +19,9 @@ class Specs_model_base extends Model {
 		$this->load->dbutil();
 	}
 	
-	/*
-	|---------------------------------------------------------------
-	| RETRIEVE METHODS
-	|---------------------------------------------------------------
-	*/
+	/**
+	 * Retrieve methods
+	 */
 	
 	function get_field_data($id = 0, $field = '')
 	{
@@ -143,11 +139,9 @@ class Specs_model_base extends Model {
 		return $query;
 	}
 	
-	/*
-	|---------------------------------------------------------------
-	| CREATE METHODS
-	|---------------------------------------------------------------
-	*/
+	/**
+	 * Create methods
+	 */
 	
 	function add_spec_field($data = '')
 	{
@@ -188,62 +182,9 @@ class Specs_model_base extends Model {
 		return $query;
 	}
 	
-	/*
-	|---------------------------------------------------------------
-	| DELETE METHODS
-	|---------------------------------------------------------------
-	*/
-	
-	function delete_spec_field($id = '')
-	{
-		$query = $this->db->delete('specs_fields', array('field_id' => $id));
-		
-		$this->dbutil->optimize_table('specs_fields');
-		
-		return $query;
-	}
-	
-	function delete_spec_field_data($value = '', $identifier = 'data_field')
-	{
-		$query = $this->db->delete('specs_data', array($identifier => $value));
-		
-		$this->dbutil->optimize_table('specs_data');
-		
-		return $query;
-	}
-	
-	function delete_spec_field_value($id = '')
-	{
-		$query = $this->db->delete('specs_values', array('value_id' => $id));
-		
-		$this->dbutil->optimize_table('specs_values');
-		
-		return $query;
-	}
-	
-	function delete_spec_item($id = '')
-	{
-		$query = $this->db->delete('specs', array('specs_id' => $id));
-		
-		$this->dbutil->optimize_table('specs');
-		
-		return $query;
-	}
-	
-	function delete_spec_section($id = '')
-	{
-		$query = $this->db->delete('specs_sections', array('section_id' => $id));
-		
-		$this->dbutil->optimize_table('specs_sections');
-		
-		return $query;
-	}
-	
-	/*
-	|---------------------------------------------------------------
-	| UPDATE METHODS
-	|---------------------------------------------------------------
-	*/
+	/**
+	 * Update methods
+	 */
 	
 	function update_field_sections($old_id = '', $new_id = '')
 	{
@@ -317,7 +258,53 @@ class Specs_model_base extends Model {
 		
 		return $query;
 	}
+	
+	/**
+	 * Delete methods
+	 */
+	
+	function delete_spec_field($id = '')
+	{
+		$query = $this->db->delete('specs_fields', array('field_id' => $id));
+		
+		$this->dbutil->optimize_table('specs_fields');
+		
+		return $query;
+	}
+	
+	function delete_spec_field_data($value = '', $identifier = 'data_field')
+	{
+		$query = $this->db->delete('specs_data', array($identifier => $value));
+		
+		$this->dbutil->optimize_table('specs_data');
+		
+		return $query;
+	}
+	
+	function delete_spec_field_value($id = '')
+	{
+		$query = $this->db->delete('specs_values', array('value_id' => $id));
+		
+		$this->dbutil->optimize_table('specs_values');
+		
+		return $query;
+	}
+	
+	function delete_spec_item($id = '')
+	{
+		$query = $this->db->delete('specs', array('specs_id' => $id));
+		
+		$this->dbutil->optimize_table('specs');
+		
+		return $query;
+	}
+	
+	function delete_spec_section($id = '')
+	{
+		$query = $this->db->delete('specs_sections', array('section_id' => $id));
+		
+		$this->dbutil->optimize_table('specs_sections');
+		
+		return $query;
+	}
 }
-
-/* End of file specs_model_base.php */
-/* Location: ./application/models/base/specs_model_base.php */

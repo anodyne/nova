@@ -1,15 +1,13 @@
 <?php
-/*
-|---------------------------------------------------------------
-| MISSIONS MODEL
-|---------------------------------------------------------------
-|
-| File: models/missions_model_base.php
-| System Version: 1.0
-|
-| Model used to access the missions table
-|
-*/
+/**
+ * Missions model
+ *
+ * @package		Nova
+ * @category	Model
+ * @author		Anodyne Productions
+ * @copyright	2010-11 Anodyne Productions
+ * @version		1.0
+ */
 
 class Missions_model_base extends Model {
 
@@ -21,11 +19,9 @@ class Missions_model_base extends Model {
 		$this->load->dbutil();
 	}
 	
-	/*
-	|---------------------------------------------------------------
-	| RETRIEVE METHODS
-	|---------------------------------------------------------------
-	*/
+	/**
+	 * Retrieve methods
+	 */
 	
 	function get_all_mission_groups()
 	{
@@ -128,11 +124,9 @@ class Missions_model_base extends Model {
 		return $query;
 	}
 	
-	/*
-	|---------------------------------------------------------------
-	| CREATE METHODS
-	|---------------------------------------------------------------
-	*/
+	/**
+	 * Create methods
+	 */
 	
 	function add_mission($data = '')
 	{
@@ -152,11 +146,9 @@ class Missions_model_base extends Model {
 		return $query;
 	}
 	
-	/*
-	|---------------------------------------------------------------
-	| UPDATE METHODS
-	|---------------------------------------------------------------
-	*/
+	/**
+	 * Update methods
+	 */
 	
 	function update_mission($id = '', $data = '', $where = '')
 	{
@@ -189,11 +181,9 @@ class Missions_model_base extends Model {
 		return $query;
 	}
 	
-	/*
-	|---------------------------------------------------------------
-	| DELETE METHODS
-	|---------------------------------------------------------------
-	*/
+	/**
+	 * Delete methods
+	 */
 	
 	function delete_mission($id = '')
 	{
@@ -213,6 +203,3 @@ class Missions_model_base extends Model {
 		return $query;
 	}
 }
-
-/* End of file missions_model_base.php */
-/* Location: ./application/models/base/missions_model_base.php */

@@ -1,15 +1,13 @@
 <?php
-/*
-|---------------------------------------------------------------
-| DOCKING MODEL
-|---------------------------------------------------------------
-|
-| File: models/docking_model_base.php
-| System Version: 1.0
-|
-| Model used to access the docking tables.
-|
-*/
+/**
+ * Docking model
+ *
+ * @package		Nova
+ * @category	Model
+ * @author		Anodyne Productions
+ * @copyright	2010-11 Anodyne Productions
+ * @version		1.0
+ */
 
 class Docking_model_base extends Model {
 
@@ -21,11 +19,9 @@ class Docking_model_base extends Model {
 		$this->load->dbutil();
 	}
 	
-	/*
-	|---------------------------------------------------------------
-	| RETRIEVE METHODS
-	|---------------------------------------------------------------
-	*/
+	/**
+	 * Retrieve methods
+	 */
 	
 	function get_docked_item($id = '')
 	{
@@ -146,11 +142,21 @@ class Docking_model_base extends Model {
 		return $query;
 	}
 	
-	/*
-	|---------------------------------------------------------------
-	| CREATE METHODS
-	|---------------------------------------------------------------
-	*/
+	/**
+	 * Count methods
+	 */
+	
+	function count_docked_items($status = '')
+	{
+		$this->db->from('docking');
+		$this->db->where('docking_status', $status);
+		
+		return $this->db->count_all_results();
+	}
+	
+	/**
+	 * Create methods
+	 */
 	
 	function add_docking_field($data = '')
 	{
@@ -201,62 +207,9 @@ class Docking_model_base extends Model {
 		return $query;
 	}
 	
-	/*
-	|---------------------------------------------------------------
-	| DELETE METHODS
-	|---------------------------------------------------------------
-	*/
-	
-	function delete_docked_item($id = '')
-	{
-		$query = $this->db->delete('docking', array('docking_id' => $id));
-		
-		$this->dbutil->optimize_table('docking');
-		
-		return $query;
-	}
-	
-	function delete_docking_field($id = '')
-	{
-		$query = $this->db->delete('docking_fields', array('field_id' => $id));
-		
-		$this->dbutil->optimize_table('docking_fields');
-		
-		return $query;
-	}
-	
-	function delete_docking_field_data($value = '', $identifier = 'data_field')
-	{
-		$query = $this->db->delete('docking_data', array($identifier => $value));
-		
-		$this->dbutil->optimize_table('docking_data');
-		
-		return $query;
-	}
-	
-	function delete_docking_field_value($id = '')
-	{
-		$query = $this->db->delete('docking_values', array('value_id' => $id));
-		
-		$this->dbutil->optimize_table('docking_values');
-		
-		return $query;
-	}
-	
-	function delete_docking_section($id = '')
-	{
-		$query = $this->db->delete('docking_sections', array('section_id' => $id));
-		
-		$this->dbutil->optimize_table('docking_sections');
-		
-		return $query;
-	}
-	
-	/*
-	|---------------------------------------------------------------
-	| UPDATE METHODS
-	|---------------------------------------------------------------
-	*/
+	/**
+	 * Update methods
+	 */
 	
 	function update_docking_data($data = '', $id = '', $field = '')
 	{
@@ -321,20 +274,52 @@ class Docking_model_base extends Model {
 		return $query;
 	}
 	
-	/*
-	|---------------------------------------------------------------
-	| COUNT METHODS
-	|---------------------------------------------------------------
-	*/
+	/**
+	 * Delete methods
+	 */
 	
-	function count_docked_items($status = '')
+	function delete_docked_item($id = '')
 	{
-		$this->db->from('docking');
-		$this->db->where('docking_status', $status);
+		$query = $this->db->delete('docking', array('docking_id' => $id));
 		
-		return $this->db->count_all_results();
+		$this->dbutil->optimize_table('docking');
+		
+		return $query;
+	}
+	
+	function delete_docking_field($id = '')
+	{
+		$query = $this->db->delete('docking_fields', array('field_id' => $id));
+		
+		$this->dbutil->optimize_table('docking_fields');
+		
+		return $query;
+	}
+	
+	function delete_docking_field_data($value = '', $identifier = 'data_field')
+	{
+		$query = $this->db->delete('docking_data', array($identifier => $value));
+		
+		$this->dbutil->optimize_table('docking_data');
+		
+		return $query;
+	}
+	
+	function delete_docking_field_value($id = '')
+	{
+		$query = $this->db->delete('docking_values', array('value_id' => $id));
+		
+		$this->dbutil->optimize_table('docking_values');
+		
+		return $query;
+	}
+	
+	function delete_docking_section($id = '')
+	{
+		$query = $this->db->delete('docking_sections', array('section_id' => $id));
+		
+		$this->dbutil->optimize_table('docking_sections');
+		
+		return $query;
 	}
 }
-
-/* End of file docking_model_base.php */
-/* Location: ./application/models/base/docking_model_base.php */

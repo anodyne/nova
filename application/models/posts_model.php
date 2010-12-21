@@ -1,17 +1,6 @@
 <?php
-/*
-|---------------------------------------------------------------
-| POSTS MODEL
-|---------------------------------------------------------------
-|
-| File: models/posts_model.php
-| System Version: 1.0
-|
-| Model used to access the posts and posts comments tables.
-|
-*/
 
-require_once APPPATH . 'models/base/posts_model_base.php';
+require_once APPPATH.'models/base/posts_model_base.php';
 
 class Posts_model extends Posts_model_base {
 
@@ -19,7 +8,8 @@ class Posts_model extends Posts_model_base {
 	{
 		parent::Posts_model_base();
 	}
+	
+	/**
+	 * Put your own methods below this...
+	 */
 }
-
-/* End of file posts_model.php */
-/* Location: ./application/models/posts_model.php */

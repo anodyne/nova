@@ -1,19 +1,17 @@
 <?php
-/*
-|---------------------------------------------------------------
-| RANKS MODEL
-|---------------------------------------------------------------
-|
-| File: models/ranks_model_base.php
-| System Version: 1.0.2
-|
-| Changes: updated get_group_ranks() to allow for an identifier;
-|	updated several methods to pull the genre information when
-|	getting items from the rank catalogue
-|
-| Model used to access the ranks table
-|
-*/
+/**
+ * Ranks model
+ *
+ * @package		Nova
+ * @category	Model
+ * @author		Anodyne Productions
+ * @copyright	2010-11 Anodyne Productions
+ * @version		1.0.2
+ *
+ * Updated get_group_ranks() to allow for an identifier, updated several
+ * methods to pull the genre information when getting items from the rank
+ * catalogue
+ */
 
 class Ranks_model_base extends Model {
 
@@ -25,11 +23,9 @@ class Ranks_model_base extends Model {
 		$this->load->dbutil();
 	}
 	
-	/*
-	|---------------------------------------------------------------
-	| RETRIEVE METHODS
-	|---------------------------------------------------------------
-	*/
+	/**
+	 * Retrieve methods
+	 */
 	
 	function get_all_rank_sets($status = 'active')
 	{
@@ -181,11 +177,9 @@ class Ranks_model_base extends Model {
 		return $query;
 	}
 	
-	/*
-	|---------------------------------------------------------------
-	| CREATE METHODS
-	|---------------------------------------------------------------
-	*/
+	/**
+	 * Create methods
+	 */
 	
 	function add_rank($data = '')
 	{
@@ -205,11 +199,9 @@ class Ranks_model_base extends Model {
 		return $query;
 	}
 	
-	/*
-	|---------------------------------------------------------------
-	| UPDATE METHODS
-	|---------------------------------------------------------------
-	*/
+	/**
+	 * Update methods
+	 */
 	
 	function update_rank($id = '', $data = '')
 	{
@@ -243,11 +235,9 @@ class Ranks_model_base extends Model {
 		return $query;
 	}
 	
-	/*
-	|---------------------------------------------------------------
-	| DELETE METHODS
-	|---------------------------------------------------------------
-	*/
+	/**
+	 * Delete methods
+	 */
 	
 	function delete_rank($id = '')
 	{
@@ -267,6 +257,3 @@ class Ranks_model_base extends Model {
 		return $query;
 	}
 }
-
-/* End of file ranks_model_base.php */
-/* Location: ./application/models/base/ranks_model_base.php */

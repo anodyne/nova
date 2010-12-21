@@ -1,15 +1,13 @@
 <?php
-/*
-|---------------------------------------------------------------
-| AWARDS MODEL
-|---------------------------------------------------------------
-|
-| File: models/base/awards_model.php
-| System Version: 1.0
-|
-| Model used to access the awards tables
-|
-*/
+/**
+ * Awards model
+ *
+ * @package		Nova
+ * @category	Model
+ * @author		Anodyne Productions
+ * @copyright	2010-11 Anodyne Productions
+ * @version		1.0
+ */
 
 class Awards_model_base extends Model {
 
@@ -21,11 +19,9 @@ class Awards_model_base extends Model {
 		$this->load->dbutil();
 	}
 	
-	/*
-	|---------------------------------------------------------------
-	| RETRIEVE METHODS
-	|---------------------------------------------------------------
-	*/
+	/**
+	 * Retrieve methods
+	 */
 
 	function get_all_awards($order = 'asc', $display = 'y', $cat = '')
 	{
@@ -138,11 +134,11 @@ class Awards_model_base extends Model {
 		{ /* make sure we're querying the right field */
 			case 'user':
 				$field = 'awardrec_user';
-				break;
+			break;
 			
 			default:
 				$field = 'awardrec_character';
-				break;
+			break;
 		}
 		
 		$this->db->from('awards_received');
@@ -154,11 +150,9 @@ class Awards_model_base extends Model {
 		return $query;
 	}
 	
-	/*
-	|---------------------------------------------------------------
-	| COUNT METHODS
-	|---------------------------------------------------------------
-	*/
+	/**
+	 * Count methods
+	 */
 	
 	function count_award_noms($status = 'accepted')
 	{
@@ -180,11 +174,9 @@ class Awards_model_base extends Model {
 		return $this->db->count_all_results();
 	}
 	
-	/*
-	|---------------------------------------------------------------
-	| CREATE METHODS
-	|---------------------------------------------------------------
-	*/
+	/**
+	 * Create methods
+	 */
 	
 	function add_award($data = '')
 	{
@@ -213,11 +205,9 @@ class Awards_model_base extends Model {
 		return $query;
 	}
 	
-	/*
-	|---------------------------------------------------------------
-	| UPDATE METHODS
-	|---------------------------------------------------------------
-	*/
+	/**
+	 * Update methods
+	 */
 	
 	function update_award($id = '', $data = '')
 	{
@@ -239,11 +229,9 @@ class Awards_model_base extends Model {
 		return $query;
 	}
 	
-	/*
-	|---------------------------------------------------------------
-	| DELETE METHODS
-	|---------------------------------------------------------------
-	*/
+	/**
+	 * Delete methods
+	 */
 	
 	function delete_award($id = '')
 	{
@@ -263,6 +251,3 @@ class Awards_model_base extends Model {
 		return $query;
 	}
 }
-
-/* End of file awards_model.php */
-/* Location: ./application/models/base/awards_model.php */

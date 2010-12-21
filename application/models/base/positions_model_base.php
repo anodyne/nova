@@ -1,15 +1,13 @@
 <?php
-/*
-|---------------------------------------------------------------
-| POSITIONS MODEL
-|---------------------------------------------------------------
-|
-| File: models/positions_model_base.php
-| System Version: 1.0
-|
-| Model used to access the positions table
-|
-*/
+/**
+ * Positions model
+ *
+ * @package		Nova
+ * @category	Model
+ * @author		Anodyne Productions
+ * @copyright	2010-11 Anodyne Productions
+ * @version		1.0
+ */
 
 class Positions_model_base extends Model {
 
@@ -21,11 +19,9 @@ class Positions_model_base extends Model {
 		$this->load->dbutil();
 	}
 	
-	/*
-	|---------------------------------------------------------------
-	| RETRIEVE METHODS
-	|---------------------------------------------------------------
-	*/
+	/**
+	 * Retrieve methods
+	 */
 	
 	function get_all_positions($sort = 'asc', $display = 'y')
 	{
@@ -118,11 +114,9 @@ class Positions_model_base extends Model {
 		return $row;
 	}
 	
-	/*
-	|---------------------------------------------------------------
-	| CREATE METHODS
-	|---------------------------------------------------------------
-	*/
+	/**
+	 * Create methods
+	 */
 	
 	function add_position($data = '')
 	{
@@ -133,11 +127,9 @@ class Positions_model_base extends Model {
 		return $query;
 	}
 	
-	/*
-	|---------------------------------------------------------------
-	| UPDATE METHODS
-	|---------------------------------------------------------------
-	*/
+	/**
+	 * Update methods
+	 */
 	
 	function update_open_slots($position = '', $direction = '')
 	{
@@ -177,11 +169,9 @@ class Positions_model_base extends Model {
 		return $query;
 	}
 	
-	/*
-	|---------------------------------------------------------------
-	| DELETE METHODS
-	|---------------------------------------------------------------
-	*/
+	/**
+	 * Delete methods
+	 */
 	
 	function delete_position($id = '')
 	{
@@ -192,6 +182,3 @@ class Positions_model_base extends Model {
 		return $query;
 	}
 }
-
-/* End of file positions_model_base.php */
-/* Location: ./application/models/base/positions_model_base.php */

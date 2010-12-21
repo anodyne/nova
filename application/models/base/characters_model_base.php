@@ -1,17 +1,15 @@
 <?php
-/*
-|---------------------------------------------------------------
-| CHARACTERS MODEL
-|---------------------------------------------------------------
-|
-| File: models/base/characters_model_base.php
-| System Version: 1.0.6
-|
-| Changes: added method for inserting character promotion records
-|
-| Model used to access the characters table.
-|
-*/
+/**
+ * Characters model
+ *
+ * @package		Nova
+ * @category	Model
+ * @author		Anodyne Productions
+ * @copyright	2010-11 Anodyne Productions
+ * @version		1.0.6
+ *
+ * Added method for inserting character promotion records
+ */
 
 class Characters_model_base extends Model {
 
@@ -23,11 +21,9 @@ class Characters_model_base extends Model {
 		$this->load->dbutil();
 	}
 	
-	/*
-	|---------------------------------------------------------------
-	| RETRIEVE METHODS
-	|---------------------------------------------------------------
-	*/
+	/**
+	 * Retrieve methods
+	 */
 	
 	function get_all_characters($status = 'active', $order = '')
 	{
@@ -37,35 +33,36 @@ class Characters_model_base extends Model {
 		{
 			case 'active':
 				$this->db->where('crew_type', 'active');
-				break;
+			break;
 			
 			case 'inactive':
 				$this->db->where('crew_type', 'inactive');
-				break;
+			break;
 				
 			case 'npc':
 				$this->db->where('crew_type', 'npc');
-				break;
+			break;
 				
 			case 'user_npc':
 				$this->db->where('crew_type', 'active');
 				$this->db->or_where('crew_type', 'npc');
-				break;
+			break;
 				
 			case 'pending':
 				$this->db->where('crew_type', 'pending');
-				break;
+			break;
 				
 			case 'has_user':
 				$this->db->where('user >', '');
-				break;
+			break;
 				
 			case 'no_user':
 				$this->db->where('user', NULL);
 				$this->db->orwhere('user', 0);
+			break;
 				
 			case 'all':
-				break;
+			break;
 		}
 		
 		if (empty($order))
@@ -371,23 +368,23 @@ class Characters_model_base extends Model {
 				case 'active':
 				default:
 					$string = "`crew_type` = 'active'";
-					break;
+				break;
 					
 				case 'inactive':
 					$string = "`crew_type` = 'inactive'";
-					break;
+				break;
 					
 				case 'pending':
 					$string = "`crew_type` = 'pending'";
-					break;
+				break;
 					
 				case 'npc':
 					$string = "`crew_type` = 'npc'";
-					break;
+				break;
 					
 				case 'active_npc':
 					$string = "`crew_type` = 'active' OR `crew_type` = 'npc'";
-					break;
+				break;
 			}
 			
 			$this->db->where("($string)", NULL);
@@ -426,11 +423,9 @@ class Characters_model_base extends Model {
 		return $query;
 	}
 	
-	/*
-	|---------------------------------------------------------------
-	| COUNT METHODS
-	|---------------------------------------------------------------
-	*/
+	/**
+	 * Count methods
+	 */
 	
 	function count_characters($type = 'active', $timeframe = 'current', $this_month = '', $last_month = '')
 	{
@@ -472,11 +467,9 @@ class Characters_model_base extends Model {
 		return $query->num_rows();
 	}
 	
-	/*
-	|---------------------------------------------------------------
-	| CREATE METHODS
-	|---------------------------------------------------------------
-	*/
+	/**
+	 * Create methods
+	 */
 	
 	function add_bio_field($data = '')
 	{
@@ -587,98 +580,9 @@ class Characters_model_base extends Model {
 		return $query;
 	}
 	
-	/*
-	|---------------------------------------------------------------
-	| DELETE METHODS
-	|---------------------------------------------------------------
-	*/
-	
-	function delete_bio_field($id = '')
-	{
-		$query = $this->db->delete('characters_fields', array('field_id' => $id));
-		
-		$this->dbutil->optimize_table('characters_fields');
-		
-		return $query;
-	}
-	
-	function delete_bio_field_value($id = '')
-	{
-		$query = $this->db->delete('characters_values', array('value_id' => $id));
-		
-		$this->dbutil->optimize_table('characters_values');
-		
-		return $query;
-	}
-	
-	function delete_bio_section($id = '')
-	{
-		$query = $this->db->delete('characters_sections', array('section_id' => $id));
-		
-		$this->dbutil->optimize_table('characters_sections');
-		
-		return $query;
-	}
-	
-	function delete_bio_tab($id = '')
-	{
-		$query = $this->db->delete('characters_tabs', array('tab_id' => $id));
-		
-		$this->dbutil->optimize_table('characters_tabs');
-		
-		return $query;
-	}
-	
-	function delete_character($id = '')
-	{
-		$query = $this->db->delete('characters', array('charid' => $id));
-		
-		$this->dbutil->optimize_table('characters');
-		
-		return $query;
-	}
-	
-	function delete_character_data($id = '', $identifier = '')
-	{
-		$query = $this->db->delete('characters_data', array($identifier => $id));
-		
-		$this->dbutil->optimize_table('characters_data');
-		
-		return $query;
-	}
-	
-	function delete_character_field_data($field = '')
-	{
-		$query = $this->db->delete('characters_data', array('data_field' => $field));
-		
-		$this->dbutil->optimize_table('characters_data');
-		
-		return $query;
-	}
-	
-	function delete_coc_entry($id = '')
-	{
-		$query = $this->db->delete('coc', array('coc_crew' => $id));
-		
-		$this->dbutil->optimize_table('coc');
-		
-		return $query;
-	}
-	
-	function empty_coc()
-	{
-		$query = $this->db->truncate('coc');
-		
-		$this->dbutil->optimize_table('coc');
-		
-		return $query;
-	}
-	
-	/*
-	|---------------------------------------------------------------
-	| UPDATE METHODS
-	|---------------------------------------------------------------
-	*/
+	/**
+	 * Update methods
+	 */
 	
 	function update_bio_field($id = '', $data = '')
 	{
@@ -774,7 +678,89 @@ class Characters_model_base extends Model {
 		
 		return $query;
 	}
+	
+	/**
+	 * Delete methods
+	 */
+	
+	function delete_bio_field($id = '')
+	{
+		$query = $this->db->delete('characters_fields', array('field_id' => $id));
+		
+		$this->dbutil->optimize_table('characters_fields');
+		
+		return $query;
+	}
+	
+	function delete_bio_field_value($id = '')
+	{
+		$query = $this->db->delete('characters_values', array('value_id' => $id));
+		
+		$this->dbutil->optimize_table('characters_values');
+		
+		return $query;
+	}
+	
+	function delete_bio_section($id = '')
+	{
+		$query = $this->db->delete('characters_sections', array('section_id' => $id));
+		
+		$this->dbutil->optimize_table('characters_sections');
+		
+		return $query;
+	}
+	
+	function delete_bio_tab($id = '')
+	{
+		$query = $this->db->delete('characters_tabs', array('tab_id' => $id));
+		
+		$this->dbutil->optimize_table('characters_tabs');
+		
+		return $query;
+	}
+	
+	function delete_character($id = '')
+	{
+		$query = $this->db->delete('characters', array('charid' => $id));
+		
+		$this->dbutil->optimize_table('characters');
+		
+		return $query;
+	}
+	
+	function delete_character_data($id = '', $identifier = '')
+	{
+		$query = $this->db->delete('characters_data', array($identifier => $id));
+		
+		$this->dbutil->optimize_table('characters_data');
+		
+		return $query;
+	}
+	
+	function delete_character_field_data($field = '')
+	{
+		$query = $this->db->delete('characters_data', array('data_field' => $field));
+		
+		$this->dbutil->optimize_table('characters_data');
+		
+		return $query;
+	}
+	
+	function delete_coc_entry($id = '')
+	{
+		$query = $this->db->delete('coc', array('coc_crew' => $id));
+		
+		$this->dbutil->optimize_table('coc');
+		
+		return $query;
+	}
+	
+	function empty_coc()
+	{
+		$query = $this->db->truncate('coc');
+		
+		$this->dbutil->optimize_table('coc');
+		
+		return $query;
+	}
 }
-
-/* End of file characters_model_base.php */
-/* Location: ./application/models/base/characters_model_base.php */

@@ -1,17 +1,6 @@
 <?php
-/*
-|---------------------------------------------------------------
-| NEWS MODEL
-|---------------------------------------------------------------
-|
-| File: models/news_model.php
-| System Version: 1.0
-|
-| Model used to access the news, news categories, and news comments tables.
-|
-*/
 
-require_once APPPATH . 'models/base/news_model_base.php';
+require_once APPPATH.'models/base/news_model_base.php';
 
 class News_model extends News_model_base {
 
@@ -20,7 +9,7 @@ class News_model extends News_model_base {
 		parent::News_model_base();
 	}
 	
+	/**
+	 * Put your own methods below this...
+	 */
 }
-
-/* End of file news_model.php */
-/* Location: ./application/models/news_model.php */

@@ -1,15 +1,13 @@
 <?php
-/*
-|---------------------------------------------------------------
-| ACCESS MODEL
-|---------------------------------------------------------------
-|
-| File: models/base/access_model.php
-| System Version: 1.0
-|
-| Model used to access the access roles and access pages tables.
-|
-*/
+/**
+ * Access model
+ *
+ * @package		Nova
+ * @category	Model
+ * @author		Anodyne Productions
+ * @copyright	2010-11 Anodyne Productions
+ * @version		1.0
+ */
 
 class Access_model_base extends Model {
 
@@ -21,11 +19,9 @@ class Access_model_base extends Model {
 		$this->load->dbutil();
 	}
 	
-	/*
-	|---------------------------------------------------------------
-	| RETRIEVE METHODS
-	|---------------------------------------------------------------
-	*/
+	/**
+	 * Retrieve methods
+	 */
 	
 	function get_group($id = '', $return = '')
 	{
@@ -174,45 +170,9 @@ class Access_model_base extends Model {
 		return $query;
 	}
 	
-	/*
-	|---------------------------------------------------------------
-	| DELETE METHODS
-	|---------------------------------------------------------------
-	*/
-	
-	function delete_group($id = '')
-	{
-		$query = $this->db->delete('access_groups', array('group_id' => $id));
-		
-		$this->dbutil->optimize_table('access_groups');
-		
-		return $query;
-	}
-	
-	function delete_page($id = '')
-	{
-		$query = $this->db->delete('access_pages', array('page_id' => $id));
-		
-		/* optimize the table */
-		$this->dbutil->optimize_table('access_pages');
-		
-		return $query;
-	}
-	
-	function delete_role($id = '')
-	{
-		$query = $this->db->delete('access_roles', array('role_id' => $id));
-		
-		$this->dbutil->optimize_table('access_roles');
-		
-		return $query;
-	}
-	
-	/*
-	|---------------------------------------------------------------
-	| CREATE METHODS
-	|---------------------------------------------------------------
-	*/
+	/**
+	 * Create methods
+	 */
 	
 	function insert_group($data = '')
 	{
@@ -242,11 +202,9 @@ class Access_model_base extends Model {
 		return $query;
 	}
 	
-	/*
-	|---------------------------------------------------------------
-	| UPDATE METHODS
-	|---------------------------------------------------------------
-	*/
+	/**
+	 * Update methods
+	 */
 	
 	function update_group($id = '', $data = '')
 	{
@@ -291,7 +249,36 @@ class Access_model_base extends Model {
 		
 		return $query;
 	}
+	
+	/**
+	 * Delete methods
+	 */
+	
+	function delete_group($id = '')
+	{
+		$query = $this->db->delete('access_groups', array('group_id' => $id));
+		
+		$this->dbutil->optimize_table('access_groups');
+		
+		return $query;
+	}
+	
+	function delete_page($id = '')
+	{
+		$query = $this->db->delete('access_pages', array('page_id' => $id));
+		
+		/* optimize the table */
+		$this->dbutil->optimize_table('access_pages');
+		
+		return $query;
+	}
+	
+	function delete_role($id = '')
+	{
+		$query = $this->db->delete('access_roles', array('role_id' => $id));
+		
+		$this->dbutil->optimize_table('access_roles');
+		
+		return $query;
+	}
 }
-
-/* End of file access_model.php */
-/* Location: ./application/models/base/access_model.php */

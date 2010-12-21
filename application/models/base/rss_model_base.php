@@ -1,16 +1,13 @@
 <?php
-/*
-|---------------------------------------------------------------
-| RSS FEED MODEL
-|---------------------------------------------------------------
-|
-| File: models/rss_model_base.php
-| System Version: 1.0
-|
-| Model used to access the database for retrieving information that
-| should be fed into the RSS feeds.
-|
-*/
+/**
+ * RSS feed model
+ *
+ * @package		Nova
+ * @category	Model
+ * @author		Anodyne Productions
+ * @copyright	2010-11 Anodyne Productions
+ * @version		1.0
+ */
 
 class Rss_model_base extends Model {
 
@@ -19,11 +16,9 @@ class Rss_model_base extends Model {
 		parent::Model();
 	}
 	
-	/*
-	|---------------------------------------------------------------
-	| RETRIEVE METHODS
-	|---------------------------------------------------------------
-	*/
+	/**
+	 * Retrieve methods
+	 */
 	
 	function get_logs($limit = 25)
 	{
@@ -63,6 +58,3 @@ class Rss_model_base extends Model {
 		return $query;
 	}
 }
-
-/* End of file rss_model_base.php */
-/* Location: ./application/models/base/rss_model_base.php */

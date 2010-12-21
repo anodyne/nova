@@ -1,15 +1,13 @@
 <?php
-/*
-|---------------------------------------------------------------
-| APPLICATIONS MODEL
-|---------------------------------------------------------------
-|
-| File: models/base/applications_model_base.php
-| System Version: 1.0
-|
-| Model used to access the applications tables
-|
-*/
+/**
+ * Applications model
+ *
+ * @package		Nova
+ * @category	Model
+ * @author		Anodyne Productions
+ * @copyright	2010-11 Anodyne Productions
+ * @version		1.0
+ */
 
 class Applications_model_base extends Model {
 
@@ -21,11 +19,9 @@ class Applications_model_base extends Model {
 		$this->load->dbutil();
 	}
 	
-	/*
-	|---------------------------------------------------------------
-	| RETRIEVE METHODS
-	|---------------------------------------------------------------
-	*/
+	/**
+	 * Retrieve methods
+	 */
 
 	function get_application($id = '')
 	{
@@ -44,11 +40,9 @@ class Applications_model_base extends Model {
 		return $query;
 	}
 	
-	/*
-	|---------------------------------------------------------------
-	| COUNT METHODS
-	|---------------------------------------------------------------
-	*/
+	/**
+	 * Count methods
+	 */
 	
 	function count_applications()
 	{
@@ -57,11 +51,9 @@ class Applications_model_base extends Model {
 		return $this->db->count_all_results();
 	}
 	
-	/*
-	|---------------------------------------------------------------
-	| CREATE METHODS
-	|---------------------------------------------------------------
-	*/
+	/**
+	 * Create methods
+	 */
 
 	function insert_application($data = '')
 	{
@@ -72,11 +64,9 @@ class Applications_model_base extends Model {
 		return $query;
 	}
 	
-	/*
-	|---------------------------------------------------------------
-	| UPDATE METHODS
-	|---------------------------------------------------------------
-	*/
+	/**
+	 * Update methods
+	 */
 
 	function update_application($id = '', $data = '', $identifier = 'app_character')
 	{
@@ -88,6 +78,3 @@ class Applications_model_base extends Model {
 		return $query;
 	}
 }
-
-/* End of file applications_model_base.php */
-/* Location: ./application/models/base/applications_model_base.php */

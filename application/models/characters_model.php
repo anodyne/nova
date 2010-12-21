@@ -1,17 +1,6 @@
 <?php
-/*
-|---------------------------------------------------------------
-| CHARACTERS MODEL
-|---------------------------------------------------------------
-|
-| File: models/characters_model.php
-| System Version: 1.0
-|
-| Model used to access the characters table.
-|
-*/
 
-require_once APPPATH . 'models/base/characters_model_base.php';
+require_once APPPATH.'models/base/characters_model_base.php';
 
 class Characters_model extends Characters_model_base {
 
@@ -19,7 +8,8 @@ class Characters_model extends Characters_model_base {
 	{
 		parent::Characters_model_base();
 	}
+	
+	/**
+	 * Put your own methods below this...
+	 */
 }
-
-/* End of file characters_model.php */
-/* Location: ./application/models/characters_model.php */
