@@ -3789,7 +3789,7 @@ $system_components = array(
 		'comp_url' => 'http://craigsworks.com/projects/qtip/'),
 	array(
 		'comp_name' => 'Lazy',
-		'comp_version' => '1.3.1',
+		'comp_version' => '1.5',
 		'comp_desc' => "Lazy is an on-demand jQuery plugin loader, also known as a lazy loader. Instead of downloading all jQuery plugins you might or might not need when the page loads, Lazy downloads the plugins when you actually use them. Lazy is very lightweight, super fast, and smart. Lazy will keep track of all your plugins and dependencies and make sure that they are only downloaded once.",
 		'comp_url' => 'http://www.unwrongest.com/projects/lazy/'),
 	array(

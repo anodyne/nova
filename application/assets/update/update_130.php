@@ -176,6 +176,12 @@ if (!is_null($drop_column))
 */
 
 /**
+ * update the lazy version info
+ */
+$this->db->where('comp_name', 'Lazy');
+$this->db->update('system_components', array('comp_version' => '1.5'));
+
+/**
  * add the jquery elastic plugin to the list of components
  */
 $additem = array(
