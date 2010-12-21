@@ -1,15 +1,15 @@
-<?php if (!defined('BASEPATH')) exit('No direct script access allowed'); 
-/*
-|---------------------------------------------------------------
-| UTILITY HOOK
-|---------------------------------------------------------------
-|
-| File: hooks/Utility.php
-| System Version: 1.2
-|
-| Changes: added a hook to check for level 2 bans while the site is spinning up
-|
-*/
+<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+/**
+ * Utility hook
+ *
+ * @package		Nova
+ * @category	Hook
+ * @author		Anodyne Productions
+ * @copyright	2010-11 Anodyne Productions
+ * @version		1.2
+ *
+ * Added a hook to check for level 2 bans while the site is spinning up
+ */
 
 class Utility {
 	
@@ -98,6 +98,3 @@ class Utility {
 		}
 	}
 }
-
-/* End of file Utility.php */
-/* Location: ./application/hooks/Utility.php */
