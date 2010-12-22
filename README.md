@@ -17,9 +17,13 @@ Anodyne Production's next-generation RPG management system combines popular feat
 * updated many of the system files to adhere to some of the new Anodyne coding standards we're putting in place for nova 2
 * updated the admin system to use elastic textareas in several spots
 * updated the head include files to clean up some code
+* updated thresher to be able to clean up old drafts
 * updated the language files
     * [base\_lang] added _actions\_cleanup_
     * [base\_lang] added _labels\_drafts_
+    * [base\_lang] added _status\_older_
+    * [base\_lang] added _misc\_draft\_cleanup_
+    * [facebox\_lang] added _fbx\_content\_draft\_cleanup_
 
 ## Version History
 
