@@ -1,3 +1,5 @@
+M	CHANGED_FILES
+M	CHANGELOG
 M	README.md
 M	application/assets/include_head_admin.php
 M	application/assets/include_head_login.php
@@ -62,6 +64,8 @@ M	application/helpers/panel_helper.php
 M	application/helpers/utility_helper.php
 M	application/helpers/yayparser_helper.php
 M	application/hooks/Utility.php
+M	application/language/english/base_lang.php
+M	application/language/english/facebox_lang.php
 M	application/libraries/Auth.php
 M	application/libraries/MY_Email.php
 M	application/libraries/MY_Input.php
@@ -128,5 +132,11 @@ M	application/views/_base/admin/js/messages_write_js.php
 M	application/views/_base/admin/js/write_missionpost_js.php
 M	application/views/_base/admin/js/write_newsitem_js.php
 M	application/views/_base/admin/js/write_personallog_js.php
+A	application/views/_base/wiki/ajax/draft_cleanup.php
+A	application/views/_base/wiki/images/broom.png
+M	application/views/_base/wiki/js/wiki_managepages_js.php
+M	application/views/_base/wiki/pages/wiki_managepages.php
 M	batch/update.sh
 M	index.php
+M	license_codeigniter.txt
+M	license_nova.txt
