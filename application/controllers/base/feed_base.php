@@ -5,7 +5,9 @@
 |---------------------------------------------------------------
 |
 | File: controllers/base/feed_base.php
-| System Version: 1.0
+| System Version: 1.2.1
+|
+| Changes: fixed error thrown on the RSS feed page
 |
 */
 
@@ -31,7 +33,7 @@ class Feed_base extends Controller {
 		$this->head['rss_encoding']			= $this->config->item('rss_encoding');
 		$this->head['rss_feed_name']		= $this->options['sim_name'];
 		$this->head['rss_feed_url']			= site_url();
-		$this->head['rss_feed_desc']		= $this->config->item('rss_description');
+		$this->head['rss_description']		= $this->config->item('rss_description');
 		$this->head['rss_feed_lang']		= $this->config->item('rss_feed_lang');
 		$this->head['rss_creator_email']	= $this->config->item('rss_creator_email');
 		
