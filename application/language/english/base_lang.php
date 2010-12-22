@@ -6,7 +6,8 @@
 | File: application/language/english/base_lang.php
 | System Version: 1.3
 |
-| Changes: added actions_cleanup, added labels_drafts
+| Changes: added actions_cleanup, added labels_drafts, added status_older,
+|	added misc_draft_cleanup
 |
 | English language file for the system. Punctuation constants are
 | defined in ./application/config/constants.php
@@ -156,6 +157,7 @@ $lang['status_minor']			= 'minor';
 $lang['status_new']				= 'new';
 $lang['status_nonplaying']		= 'non-playing';
 $lang['status_old']				= 'old';
+$lang['status_older']			= 'older';
 $lang['status_open']			= 'open';
 $lang['status_pending']			= 'pending';
 $lang['status_playing']			= 'playing';
@@ -207,6 +209,7 @@ $lang['misc_development']		= 'In Development';
 $lang['misc_login_y']			= 'Must be logged in';
 $lang['misc_login_n']			= 'Must be logged out';
 $lang['misc_level1_only']		= 'Level 1 Only';
+$lang['misc_draft_cleanup']		= 'All drafts not associated with a page';
 
 /*
 |---------------------------------------------------------------

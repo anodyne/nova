@@ -8,7 +8,9 @@
  * @copyright	2010-11 Anodyne Productions
  * @version		1.3
  *
- * Updated the flash message so they can be overridden by seamless substitution
+ * Updated the flash message so they can be overridden by seamless substitution,
+ * updated the wiki page management method to be able to clean up old drafts based
+ * on what the admin selects for clean up
  */
 
 class Wiki_base extends Controller {
@@ -513,6 +515,87 @@ class Wiki_base extends Controller {
 							);
 	
 							$flash['status'] = 'error';
+							$flash['message'] = text_output($message);
+						}
+						
+						// set the location of the flash view
+						$flashloc = view_location('flash', $this->skin, 'wiki');
+						
+						// write everything to the template
+						$this->template->write_view('flash_message', $flashloc, $flash);
+					break;
+					
+					case 'cleanup':
+						// get the timeframe
+						$timeframe = $this->input->post('time');
+						
+						// calculate the date we need to use
+						$threshold = (is_numeric($timeframe)) ? now() - ($timeframe * 86400) : FALSE;
+						
+						// start by getting all the pages
+						$pages = $this->wiki->get_pages();
+						
+						// set the delete start number
+						$delete = 0;
+						
+						if ($pages->num_rows() > 0)
+						{
+							// create an array for storing the "safe" drafts
+							$safe = array();
+							
+							foreach ($pages->result() as $p)
+							{
+								// get a list of all the "safe" drafts
+								$safe[] = $p->page_draft;
+							}
+							
+							// get all the drafts
+							$drafts = $this->wiki->get_drafts(NULL);
+							
+							if ($drafts->num_rows() > 0)
+							{
+								foreach ($drafts->result() as $d)
+								{
+									if ( ! in_array($d->draft_id, $safe))
+									{
+										if ($timeframe == 'all')
+										{
+											$delete += $this->wiki->delete_draft($d->draft_id);
+										}
+										else
+										{
+											if ($d->draft_created_at < $threshold)
+											{
+												$delete += $this->wiki->delete_draft($d->draft_id);
+											}
+										}
+									}
+								}
+							}
+						}
+						
+						if ($delete > 0)
+						{
+							$message = sprintf(
+								lang('flash_success_plural'),
+								$delete.' '.lang('global_wiki') .' '. lang('labels_drafts'),
+								lang('actions_removed'),
+								''
+							);
+	
+							$flash['status'] = 'success';
+							$flash['message'] = text_output($message);
+						}
+						else
+						{
+							$message = sprintf(
+								lang('flash_success_plural'),
+								$delete.' '.lang('global_wiki') .' '. lang('labels_drafts'),
+								lang('actions_removed'),
+								''
+							);
+	
+							$flash['status'] = 'info';
 							$flash['message'] = text_output($message);
 						}
 						

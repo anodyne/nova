@@ -8,7 +8,12 @@
 		
 		$("a[rel*=facebox]").click(function() {
 			var id = $(this).attr('myID');
-			var location = '<?php echo site_url('ajax/del_wiki_page');?>/' + id + '/<?php echo $string;?>';
+			var action = $(this).attr('myAction');
+			
+			if (action == 'delete')
+				var location = '<?php echo site_url('ajax/del_wiki_page');?>/' + id + '/<?php echo $string;?>';
+			if (action == 'cleanup')
+				var location = '<?php echo site_url('ajax/wiki_draft_cleanup');?>/<?php echo $string;?>';
 			
 			$.facebox(function() {
 				$.get(location, function(data) {

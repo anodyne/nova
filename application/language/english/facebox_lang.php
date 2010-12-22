@@ -4,7 +4,9 @@
 | LANGUAGE FILE - ENGLISH
 |---------------------------------------------------------------
 | File: application/language/english/facebox_lang.php
-| System Version: 1.0
+| System Version: 1.3
+|
+| Changes: added fbx_content_draft_cleanup
 |
 | English language file for the system. Punctuation constants are
 | defined in ./application/config/constants.php
@@ -87,6 +89,8 @@ $lang['fbx_content_del_entry'] = "Are you sure you want to delete the %s <strong
 $lang['fbx_content_del_character'] = "Are you sure you want to delete the %s <strong>%s</strong>? This action is permanent and cannot be undone! If this %s is associated with an account, it will be removed. If this %s is someone". RSQUO ."s main %s, Nova will automatically assign them a new main %s from their list of %s.";
 
 $lang['fbx_content_approve_entry'] = "Are you sure you want to approve the %s <strong>%s</strong>%s?";
+
+$lang['fbx_content_draft_cleanup'] = "Like most wiki software, Thresher stores each saved version of a wiki page as a draft. This allows you to do a bunch of work, and if you don't like it, revert back to the previous version of the page. If you have a lot of pages and drafts, your database can get pretty large. If you're concerned about the size of your database, you can clean up some of the wiki drafts. Use the dropdown below to select which drafts you want to clean up.\r\n\r\n<strong class='red'>Warning:</strong> Removing old drafts will clear the history for each page and you won't be able to revert to old versions. Proceed with caution!";
 
 /* End of file facebox_lang.php */
 /* Location: ./application/language/english/facebox_lang.php */

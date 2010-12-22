@@ -6,10 +6,10 @@
  * @category	Model
  * @author		Anodyne Productions
  * @copyright	2010-11 Anodyne Productions
- * @version		1.0.3
+ * @version		1.3
  *
- * Fixed bug where pages were being put into the uncategorized section
- * even if they had a category
+ * Updated the get_drafts method to allow for pulling all drafts in the
+ * the database instead of just one page
  */
 
 class Wiki_model_base extends Model {
@@ -139,10 +139,21 @@ class Wiki_model_base extends Model {
 		return $query;
 	}
 	
+	/**
+	 * Get all the drafts for a specific page or all the drafts in the database.
+	 *
+	 * @param	mixed	the ID of the page to pull the drafts for
+	 * @return	object
+	 */
 	function get_drafts($id = '')
 	{
 		$this->db->from('wiki_drafts');
-		$this->db->where('draft_page', $id);
+		
+		if ( ! empty($id))
+		{
+			$this->db->where('draft_page', $id);
+		}
+		
 		$this->db->order_by('draft_created_at', 'desc');
 		
 		$query = $this->db->get();

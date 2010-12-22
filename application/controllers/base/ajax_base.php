@@ -7864,4 +7864,46 @@ class Ajax_base extends Controller {
 		/* render the template */
 		$this->template->render();
 	}
+	
+	function wiki_draft_cleanup()
+	{
+		$head = sprintf(
+			lang('fbx_head'),
+			ucwords(lang('actions_cleanup')),
+			ucwords(lang('labels_wiki').' '.lang('labels_drafts'))
+		);
+		
+		/* data being sent to the facebox */
+		$data['header'] = $head;
+		$data['text'] = lang('fbx_content_draft_cleanup');
+		
+		/* input parameters */
+		$data['inputs'] = array(
+			'submit' => array(
+				'type' => 'submit',
+				'class' => 'hud_button',
+				'name' => 'submit',
+				'value' => 'submit',
+				'content' => ucwords(lang('actions_submit')))
+		);
+		
+		$data['time'] = array(
+			'30' => ucwords(lang('status_older').' '.lang('labels_than').' 30 '.lang('time_days')),
+			'60' => ucwords(lang('status_older').' '.lang('labels_than').' 60 '.lang('time_days')),
+			'90' => ucwords(lang('status_older').' '.lang('labels_than').' 90 '.lang('time_days')),
+			'all' => lang('misc_draft_cleanup'),
+		);
+		
+		/* figure out the skin */
+		$skin = $this->session->userdata('skin_wiki');
+		
+		/* figure out where the view should come from */
+		$ajax = ajax_location('draft_cleanup', $skin, 'wiki');
+		
+		/* write the data to the template */
+		$this->template->write_view('content', $ajax, $data);
+		
+		/* render the template */
+		$this->template->render();
+	}
 }
