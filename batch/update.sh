@@ -1,6 +1,6 @@
 #!/bin/bash
 
-old="support-1.2"
+old="master"
 new="1.x"
 
 git diff $old..$new --name-status > CHANGED_FILES
