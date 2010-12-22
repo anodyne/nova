@@ -5,11 +5,12 @@
 |---------------------------------------------------------------
 |
 | File: controllers/base/ajax_base.php
-| System Version: 1.2
+| System Version: 1.2.1
 |
 | Changes: added method for handling deleting a ban; added method for
 |	duplicating a department confirmation; added method for editing
-|	a department
+|	a department; fixed error thrown when trying to update character
+|	images when there aren't any images there
 |
 */
 
@@ -7184,12 +7185,18 @@ class Ajax_base extends Controller {
 			$images = $this->input->post('img', TRUE);
 			$id = $this->uri->segment(3);
 			
-			foreach ($images as $i)
-			{
-				$imageArray[] = str_replace('\.', '.', $i);
-			}
+			// set the initial image string
+			$imageStr = '';
 			
-			$imageStr = implode(',', $imageArray);
+			if (is_array($images))
+			{
+				foreach ($images as $i)
+				{
+					$imageArray[] = str_replace('\.', '.', $i);
+				}
+				
+				$imageStr = implode(',', $imageArray);
+			}
 			
 			/* load the resources */
 			$this->load->model('characters_model', 'char');
