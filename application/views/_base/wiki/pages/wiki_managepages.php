@@ -5,6 +5,10 @@
 </p>
 
 <?php if (isset($pages)): ?>
+	<p class="bold">
+		<?php echo anchor('wiki/managepages/clean', img($images['clean']) .' '. $label['clean'], array('class' => 'image'));?>
+	</p>
+	
 	<br /><div class="search_pages"></div><br />
 	
 	<table class="zebra table100 pages_search">

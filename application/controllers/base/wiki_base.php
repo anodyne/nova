@@ -562,11 +562,16 @@ class Wiki_base extends Controller {
 			'edit' => array(
 				'src' => img_location('page-edit.png', $this->skin, 'wiki'),
 				'alt' => ''),
+			'clean' => array(
+				'src' => img_location('broom.png', $this->skin, 'wiki'),
+				'alt' => '',
+				'class' => 'image inline_img_left'),
 		);
 		
 		$data['label'] = array(
 			'add' => ucwords(lang('actions_create') .' '. lang('status_new') .' '. 
 				lang('global_wiki') .' '. lang('labels_page') .' '. RARROW),
+			'clean' => ucwords(lang('actions_cleanup').' '.lang('labels_drafts')),
 			'created' => ucwords(lang('actions_created') .' '. lang('labels_by')),
 			'name' => ucwords(lang('labels_page') .' '. lang('labels_name')),
 			'nopages' => sprintf(

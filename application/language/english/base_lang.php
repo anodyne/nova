@@ -4,12 +4,9 @@
 | LANGUAGE FILE - ENGLISH
 |---------------------------------------------------------------
 | File: application/language/english/base_lang.php
-| System Version: 1.2
+| System Version: 1.3
 |
-| Changes: added labels_genre; added labels_you; added labels_from
-|	added labels_ban; added labels_bans; added labels_ipaddr;
-|	added misc_level1_only; added labels_manifests; added labels_unassigned;
-|	added labels_refresh; added labels_header; added labels_listings
+| Changes: added actions_cleanup, added labels_drafts
 |
 | English language file for the system. Punctuation constants are
 | defined in ./application/config/constants.php
@@ -235,6 +232,7 @@ $lang['actions_back']			= 'back';
 $lang['actions_change']			= 'change';
 $lang['actions_changes']		= 'changes';
 $lang['actions_choose']			= 'choose';
+$lang['actions_cleanup']		= 'clean up';
 $lang['actions_confirm']		= 'confirm';
 $lang['actions_contact']		= 'contact';
 $lang['actions_create']			= 'create';
@@ -378,6 +376,7 @@ $lang['labels_desc'] 			= 'description';
 $lang['labels_details'] 		= 'details';
 $lang['labels_display'] 		= 'display';
 $lang['labels_draft']			= 'draft';
+$lang['labels_drafts']			= 'drafts';
 $lang['labels_dropdown']		= 'dropdown';
 $lang['labels_duration'] 		= 'duration';
 $lang['labels_email'] 			= 'email';
