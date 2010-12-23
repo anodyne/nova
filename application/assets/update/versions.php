@@ -5,7 +5,7 @@
 |---------------------------------------------------------------
 |
 | File: assets/update/versions.php
-| System Version: 1.2
+| System Version: 1.2.1
 |
 | File containing all the versions the system can updated from
 |
@@ -14,7 +14,7 @@
 */
 
 $version_array = array(
-	'100', '101', '102', '103', '104', '105', '106', '110', '111', '112'
+	'100', '101', '102', '103', '104', '105', '106', '110', '111', '112', '120'
 );
 
 /* End of file versions.php */
