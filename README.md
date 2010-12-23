@@ -11,6 +11,7 @@ Anodyne Production's next-generation RPG management system combines popular feat
 * added the 1.2.1 update file
 * fixed bug where positions would disappear when being updated
 * fixed errors thrown when trying to update character images when there aren't any images present
+* fixed error thrown from the RSS feed
 
 ## Version History
 

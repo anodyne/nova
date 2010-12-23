@@ -1,3 +1,5 @@
+M	CHANGED_FILES
+M	CHANGELOG
 M	README.md
 M	application/assets/install/data_basic.php
 M	application/assets/install/data_dev.php
@@ -6,3 +8,4 @@ M	application/assets/update/versions.php
 M	application/controllers/base/ajax_base.php
 M	application/controllers/base/feed_base.php
 M	application/views/_base/admin/pages/manage_positions.php
+M	batch/update.sh
