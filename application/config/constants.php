@@ -63,6 +63,7 @@ define('AMP',		'&amp;');		/* left double arrow */
 */
 
 define('APP_NAME',				'Nova');
+
 define('APP_VERSION',			'1.3.0');
 define('APP_VERSION_MAJOR',		1);
 define('APP_VERSION_MINOR',		3);

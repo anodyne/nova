@@ -7152,12 +7152,18 @@ class Ajax_base extends Controller {
 			$images = $this->input->post('img', TRUE);
 			$id = $this->uri->segment(3);
 			
-			foreach ($images as $i)
-			{
-				$imageArray[] = str_replace('\.', '.', $i);
-			}
+			// set the initial image string
+			$imageStr = '';
 			
-			$imageStr = implode(',', $imageArray);
+			if (is_array($images))
+			{
+				foreach ($images as $i)
+				{
+					$imageArray[] = str_replace('\.', '.', $i);
+				}
+				
+				$imageStr = implode(',', $imageArray);
+			}
 			
 			/* load the resources */
 			$this->load->model('characters_model', 'char');

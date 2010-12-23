@@ -87,7 +87,7 @@
 						<tr>
 							<td colspan="2">
 								<strong><?php echo $label['dept'];?></strong><br />
-								<?php echo form_dropdown($p['id'] .'_dept', $depts, $p['dept']);?>
+								<?php echo form_dropdown_dept($p['id'] .'_dept', $p['dept']);?>
 							</td>
 						</tr>
 					</table>
