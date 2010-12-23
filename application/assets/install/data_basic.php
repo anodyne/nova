@@ -2620,6 +2620,17 @@ $system_versions = array(
 * fixed bug where personal logs don't have the right date when they're saved first
 * fixed bug where pending users would appear in the dropdown of potential recipients for a PM
 * fixed bug where changing a dynamic form field from text/textarea to dropdown wouldn't trigger the dropdown values section to open, rendering the field pretty much useless"),
+	array(
+		'version' => '1.2.1',
+		'version_major' => '1',
+		'version_minor' => '2',
+		'version_update' => '1',
+		'version_date' => 1293121800,
+		'version_launch'	=> "Nova 1.2.1 is the first maintenance release for Nova 1.2 and addresses several bugs discovered after the initial release of the new version. Bugs fixed in this release include a bug where positions would disappear after being updated and errors thrown throughout the system. More information about these features and a full changelog can be found at AnodyneDocs. This update is recommended for all users.",
+		'version_changes'	=> "* added the 1.2.1 update file
+* fixed bug where positions would disappear when being updated
+* fixed errors thrown when trying to update character images when there aren't any images present
+* fixed error thrown from the RSS feed"),
 );
 
 $tour_fields = array(
