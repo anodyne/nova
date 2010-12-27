@@ -36,6 +36,26 @@
 									<a href="#" rel="facebox" myid="<?php echo $d->dept_id;?>" myaction="edit" class="image"><?php echo img($images['edit']);?></a>
 								</td>
 							</tr>
+							<?php if (isset($subs[$d->dept_id])): ?>
+								<?php foreach ($subs[$d->dept_id] as $k => $v): ?>
+									<tr>
+										<td class="col_15"></td>
+										<td>
+											<strong class="fontMedium"><?php echo $v['data']->dept_name;?></strong><br />
+											<strong class="fontSmall gray"><?php echo $label['sub_of'].$v['parent']?></strong><br />
+											<span class="gray fontSmall"><?php echo $v['data']->dept_desc;?></span>
+										</td>
+										<td class="col_30"></td>
+										<td class="col_100 align_right">
+											<a href="#" rel="facebox" myid="<?php echo $v['data']->dept_id;?>" myaction="duplicate" class="image"><?php echo img($images['duplicate']);?></a>
+											&nbsp;
+											<a href="#" rel="facebox" myid="<?php echo $v['data']->dept_id;?>" myaction="delete" class="image"><?php echo img($images['delete']);?></a>
+											&nbsp;
+											<a href="#" rel="facebox" myid="<?php echo $v['data']->dept_id;?>" myaction="edit" class="image"><?php echo img($images['edit']);?></a>
+										</td>
+									</tr>
+								<?php endforeach;?>
+							<?php endif;?>
 						<?php endforeach;?>
 						</tbody>
 					</table>

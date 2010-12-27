@@ -5,12 +5,13 @@
 |---------------------------------------------------------------
 |
 | File: controllers/manage_base.php
-| System Version: 1.2
+| System Version: 1.2.2
 |
 | Changes: updated department management to allow for duplicating
 |	departments and their positions; updated department management
 |	to display departments better; updated position management to
-|	split departments out by manifest
+|	split departments out by manifest; fixed bug where sub departments
+|	weren't shown in department management
 |
 */
 
@@ -1193,6 +1194,17 @@ class Manage_base extends Controller {
 				$manifest = ($d->dept_manifest === NULL) ? 0 : $d->dept_manifest;
 				
 				$data['depts'][$manifest][$d->dept_id] = $d;
+				
+				$subs = $this->dept->get_sub_depts($d->dept_id);
+				
+				if ($subs->num_rows() > 0)
+				{
+					foreach ($subs->result() as $s)
+					{
+						$data['subs'][$d->dept_id][$s->dept_id]['data'] = $s;
+						$data['subs'][$d->dept_id][$s->dept_id]['parent'] = $this->dept->get_dept($s->dept_parent, 'dept_name');
+					}
+				}
 			}
 			
 			if ($manifests->num_rows() > 0)
@@ -1242,6 +1254,7 @@ class Manage_base extends Controller {
 			'unassigned' => ucwords(lang('labels_unassigned').' '.lang('global_departments')),
 			'manifest' => ucfirst(lang('labels_manifest')),
 			'no_unassigned' => sprintf(lang('error_not_found'), lang('labels_unassigned').' '.lang('global_departments')),
+			'sub_of' => ucfirst(lang('global_subdepartment').' '.lang('labels_of').' '),
 		);
 		
 		$data['images'] = array(
