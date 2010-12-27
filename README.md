@@ -4,20 +4,21 @@ Anodyne Production's next-generation RPG management system combines popular feat
 
 ## Current Version
 
-1.2.1
+1.2.2
 
 ## Changes in 1.2
 
-* added the 1.2.1 update file
-* fixed bug where positions would disappear when being updated
-* fixed errors thrown when trying to update character images when there aren't any images present
-* fixed error thrown from the RSS feed
+* added the 1.2.2 update file
+* fixed bug where sub departments couldn't be managed from the department management page
 
 ## Version History
 
 <table>
 	<tr>
 		<th>Version</th><th>Release Date</th>
+	</tr>
+	<tr>
+		<td>1.2.2</td><td>-</td>
 	</tr>
 	<tr>
 		<td>1.2.1</td><td>23 December 2010</td>
