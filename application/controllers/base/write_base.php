@@ -2490,6 +2490,12 @@ class Write_base extends Controller {
 		/* return the email variable */
 		return $email;
 	}
+	
+	function test()
+	{
+		echo $this->char->get_authors('1,2,3', TRUE);
+		exit();
+	}
 }
 
 /* End of file write_base.php */
