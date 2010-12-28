@@ -94,17 +94,12 @@
     -webkit-border-radius: 20px;
 }
 
-.ui-tabs-disabled a {
+.ui-state-disabled a, .ui-state-disabled a:hover {
     outline: 0; /* prevent dotted border in Firefox */
     
-    background-color: #ccc;
-    color: #1b1b1b;
-}
-.ui-tabs-disabled a:hover {
-    outline: 0; /* prevent dotted border in Firefox */
-    
-    background-color: #ccc;
-    color: #1b1b1b;
+    background-color: transparent;
+    color: #444;
+    cursor: default !important;
 }
 
 .ui-tabs-nav a,
@@ -144,7 +139,6 @@
 .ui-tabs-nav a:focus,
 .ui-tabs-nav a:active { cursor: pointer; }
 
-.ui-tabs-nav .ui-tabs-disabled { opacity: .4; }
 .ui-tabs-panel {
     padding: .5em 8px;
     
