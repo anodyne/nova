@@ -7897,6 +7897,7 @@ class Ajax_base extends Controller {
 			'30' => ucwords(lang('status_older').' '.lang('labels_than').' 30 '.lang('time_days')),
 			'60' => ucwords(lang('status_older').' '.lang('labels_than').' 60 '.lang('time_days')),
 			'90' => ucwords(lang('status_older').' '.lang('labels_than').' 90 '.lang('time_days')),
+			'180' => ucwords(lang('status_older').' '.lang('labels_than').' 6 '.lang('time_months')),
 			'all' => lang('misc_draft_cleanup'),
 		);
 		
