@@ -23,7 +23,13 @@ Anodyne Production's next-generation RPG management system combines popular feat
     * [base\_lang] added _labels\_drafts_
     * [base\_lang] added _status\_older_
     * [base\_lang] added _misc\_draft\_cleanup_
+    * [base\_lang] added _time\_months_
+    * [base\_lang] added _labels\_standard_
     * [facebox\_lang] added _fbx\_content\_draft\_cleanup_
+* updated the default skin
+    * [wiki] fixed bugs with disabled tabs in the jquery.ui.tabs stylesheet
+* updated the titan skin
+    * [wiki] fixed bugs with disabled tabs in the jquery.ui.tabs stylesheet
 
 ## Version History
 
