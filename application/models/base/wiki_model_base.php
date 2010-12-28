@@ -177,11 +177,12 @@ class Wiki_model_base extends Model {
 		$this->db->from('wiki_pages');
 		$this->db->join('wiki_drafts', 'wiki_drafts.draft_id = wiki_pages.page_draft');
 		
-		if (!is_null($category))
+		if ($category !== NULL)
 		{
 			if ($category == 0)
 			{
 				$this->db->where('wiki_drafts.draft_categories', '');
+				$this->db->or_where('wiki_drafts.draft_categories', '0');
 			}
 			else
 			{
@@ -232,6 +233,29 @@ class Wiki_model_base extends Model {
 		$query = $this->db->get();
 		
 		return $query;
+	}
+	
+	/**
+	 * Get a system page by its key
+	 *
+	 * @since	1.3
+	 * @param	string	the key of the system page to pull
+	 * @return	object
+	 */
+	function get_system_page($key)
+	{
+		$this->db->from('wiki_pages');
+		$this->db->join('wiki_drafts', 'wiki_drafts.draft_id = wiki_pages.page_draft');
+		$this->db->where('page_key', $key);
+		
+		$query = $this->db->get();
+		
+		if ($query->num_rows() > 0)
+		{
+			return $query->row();
+		}
+		
+		return FALSE;
 	}
 	
 	/**

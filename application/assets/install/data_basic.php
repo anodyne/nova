@@ -39,6 +39,8 @@ $data = array(
 	'system_info',
 	'system_versions',
 	'tour_fields',
+	'wiki_drafts',
+	'wiki_pages'
 );
 
 /*
@@ -2653,5 +2655,56 @@ $tour_fields = array(
 		'field_rows' => 8),
 );
 
-/* End of file install_data_basic.php */
-/* Location: ./application/assets/install/install_data_basic.php */
+$wiki_drafts = array(
+	array(
+		'draft_title' => 'Welcome to Thresher',
+		'draft_author_user' => 0,
+		'draft_author_character' => 0,
+		'draft_summary' => "This is the main wiki system page.",
+		'draft_content' => "<p>Welcome to Thresher R2. Thresher is Nova's built-in mini-wiki to help your RPG collaborate and share information easily. You can change this message by editing the system page from the Wiki Page Management page.</p>",
+		'draft_page' => 1,
+		'draft_created_at' => now()),
+	array(
+		'draft_title' => 'Create Wiki Page',
+		'draft_author_user' => 0,
+		'draft_author_character' => 0,
+		'draft_summary' => "This is the create wiki page system page.",
+		'draft_content' => "",
+		'draft_page' => 2,
+		'draft_created_at' => now()),
+	array(
+		'draft_title' => 'Edit Wiki Page',
+		'draft_author_user' => 0,
+		'draft_author_character' => 0,
+		'draft_summary' => "This is the edit wiki page system page.",
+		'draft_content' => "",
+		'draft_page' => 3,
+		'draft_created_at' => now()),
+);
+
+$wiki_pages = array(
+	array(
+		'page_draft' => 1,
+		'page_created_at' => now(),
+		'page_created_by_user' => 0,
+		'page_created_by_character' => 0,
+		'page_comments' => 'closed',
+		'page_type' => 'system',
+		'page_key' => 'index'),
+	array(
+		'page_draft' => 2,
+		'page_created_at' => now(),
+		'page_created_by_user' => 0,
+		'page_created_by_character' => 0,
+		'page_comments' => 'closed',
+		'page_type' => 'system',
+		'page_key' => 'create'),
+	array(
+		'page_draft' => 3,
+		'page_created_at' => now(),
+		'page_created_by_user' => 0,
+		'page_created_by_character' => 0,
+		'page_comments' => 'closed',
+		'page_type' => 'system',
+		'page_key' => 'edit'),
+);

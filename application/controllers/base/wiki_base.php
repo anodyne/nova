@@ -10,7 +10,8 @@
  *
  * Updated the flash message so they can be overridden by seamless substitution,
  * updated the wiki page management method to be able to clean up old drafts based
- * on what the admin selects for clean up
+ * on what the admin selects for clean up, updated thresher with system pages and
+ * the ability to edit and revert system pages
  */
 
 class Wiki_base extends Controller {
@@ -35,15 +36,14 @@ class Wiki_base extends Controller {
 			redirect('install/index', 'refresh');
 		}
 		
+		if (floor(phpversion()) < 5)
+		{
+			show_error("Due to a bug in Thresher we have been unable to identify, you must be running at least PHP 5.0 or higher on your server in order to use Nova's mini-wiki feature. We apologize for this inconvenience and will continue to troubleshoot the bug to find a resolution that will allow PHP 4 servers to run Thresher. If you have any questions, please contact <a href='http://www.anodyne-productions.com' target='_blank'>Anodyne Productions</a>.");
+		}
+		
 		/* load the libraries */
 		$this->load->library('session');
 		$this->load->library('thresher');
-		
-		if (floor(phpversion()) < 5)
-		{
-			$error = "Due to a bug in Thresher we have been unable to identify, you must be running at least PHP 5.0 or higher on your server in order to use Nova's mini-wiki feature. We apologize for this inconvenience and will continue to troubleshoot the bug to find a resolution that will allow PHP 4 servers to run Thresher. If you have any questions, please contact <a href='http://www.anodyne-productions.com' target='_blank'>Anodyne Productions</a>.";
-			show_error($error);
-		}
 		
 		/* load the models */
 		$this->load->model('characters_model', 'char');
@@ -108,6 +108,13 @@ class Wiki_base extends Controller {
 
 	function index()
 	{
+		// pull the system page
+		$syspage = $this->wiki->get_system_page('index');
+		
+		// send the system page to the view
+		$data['title'] = $syspage->draft_title;
+		$data['syspage'] = $syspage->draft_content;
+		
 		/* grab the recently updated items */
 		$updated = $this->wiki->get_recently_updated();
 		
@@ -121,6 +128,7 @@ class Wiki_base extends Controller {
 					'author' => $this->char->get_character_name($u->page_updated_by_character),
 					'timespan' => timespan_short($u->page_updated_at, now()),
 					'comments' => $u->draft_changed_comments,
+					'type' => $u->page_type,
 				);
 			}
 		}
@@ -138,13 +146,12 @@ class Wiki_base extends Controller {
 					'author' => $this->char->get_character_name($c->page_created_by_character),
 					'timespan' => timespan_short($c->page_created_at, now()),
 					'summary' => $c->draft_summary,
+					'type' => $c->page_type,
 				);
 			}
 		}
 		
 		$data['header'] = ucwords(lang('global_wiki') .' - '. lang('labels_main') .' '. lang('labels_page'));
-		
-		$data['text'] = $this->msgs->get_message('wiki_main');
 		
 		$data['label'] = array(
 			'ago' => lang('time_ago'),
@@ -153,6 +160,7 @@ class Wiki_base extends Controller {
 			'recent_created' => ucwords(lang('status_recently') .' '. lang('actions_created')),
 			'recent_updates' => ucwords(lang('status_recently') .' '. lang('actions_updated')),
 			'summary' => ucfirst(lang('labels_summary')),
+			'system' => ucfirst(lang('labels_system')),
 			'updates' => ucwords(lang('actions_update') .' '. lang('labels_summary')),
 		);
 		
@@ -173,6 +181,13 @@ class Wiki_base extends Controller {
 	{
 		/* check the user's access */
 		$data['access'] = ($this->auth->is_logged_in()) ? $this->auth->check_access('wiki/categories', FALSE) : FALSE;
+		
+		// pull the system page
+		$syspage = $this->wiki->get_system_page('categories');
+		
+		// send the system page to the view
+		$data['title'] = $syspage->draft_title;
+		$data['syspage'] = $syspage->draft_content;
 		
 		/* grab the categories */
 		$categories = $this->wiki->get_categories();
@@ -232,10 +247,13 @@ class Wiki_base extends Controller {
 		{
 			foreach ($pages->result() as $p)
 			{
-				$data['pages'][$p->page_id]['id'] = $p->page_id;
-				$data['pages'][$p->page_id]['title'] = $p->draft_title;
-				$data['pages'][$p->page_id]['author'] = $this->char->get_character_name($p->draft_author_character);
-				$data['pages'][$p->page_id]['summary'] = $p->draft_summary;
+				if ($p->page_type == 'standard')
+				{
+					$data['pages'][$p->page_id]['id'] = $p->page_id;
+					$data['pages'][$p->page_id]['title'] = $p->draft_title;
+					$data['pages'][$p->page_id]['author'] = $this->char->get_character_name($p->draft_author_character);
+					$data['pages'][$p->page_id]['summary'] = $p->draft_summary;
+				}
 			}
 		}
 		
@@ -625,6 +643,7 @@ class Wiki_base extends Controller {
 			
 				$data['pages'][$p->page_id]['id'] = $p->page_id;
 				$data['pages'][$p->page_id]['title'] = $p->draft_title;
+				$data['pages'][$p->page_id]['type'] = $p->page_type;
 				$data['pages'][$p->page_id]['created'] = $this->char->get_character_name($p->page_created_by_character, TRUE);
 				$data['pages'][$p->page_id]['updated'] = (!empty($p->page_updated_by_character)) ? $this->char->get_character_name($p->page_updated_by_character, TRUE) : FALSE;
 				$data['pages'][$p->page_id]['created_date'] = mdate($datestring, $created);
@@ -649,6 +668,10 @@ class Wiki_base extends Controller {
 				'src' => img_location('broom.png', $this->skin, 'wiki'),
 				'alt' => '',
 				'class' => 'image inline_img_left'),
+			'history' => array(
+				'src' => img_location('clock-history.png', $this->skin, 'wiki'),
+				'alt' => '',
+				'title' => ucfirst(lang('labels_history'))),
 		);
 		
 		$data['label'] = array(
@@ -661,6 +684,11 @@ class Wiki_base extends Controller {
 				lang('error_not_found'),
 				lang('global_wiki') .' '. lang('labels_pages')
 			),
+			'pages' => ucfirst(lang('labels_pages')),
+			'show' => ucfirst(lang('actions_show').': '),
+			'show_all' => ucfirst(lang('labels_all')),
+			'show_std' => ucfirst(lang('labels_standard')),
+			'system' => ucfirst(lang('labels_system')),
 			'updated' => ucwords(lang('actions_updated') .' '. lang('labels_by')),
 		);
 		
@@ -793,12 +821,15 @@ class Wiki_base extends Controller {
 					/* optimize the table */
 					$this->sys->optimize_table('wiki_drafts');
 					
+					// get the comments item
+					$comments = $this->input->post('comments', TRUE);
+					
 					/* create the array of page data */
 					$page_array = array(
 						'page_updated_at' => now(),
 						'page_updated_by_user' => $this->session->userdata('userid'),
 						'page_updated_by_character' => $this->session->userdata('main_char'),
-						'page_comments' => $this->input->post('comments', TRUE),
+						'page_comments' => ($comments === FALSE) ? 'closed' : $comments,
 						'page_draft' => $draftid
 					);
 					
@@ -936,6 +967,9 @@ class Wiki_base extends Controller {
 			/* set the id */
 			$data['id'] = $id;
 			
+			// what type of page is it?
+			$data['type'] = $p->page_type;
+			
 			/* build the category list */
 			$cats = explode(',', $p->draft_categories);
 			
@@ -1021,6 +1055,7 @@ class Wiki_base extends Controller {
 							'author' => $this->char->get_character_name($u->page_updated_by_character),
 							'timespan' => timespan_short($u->page_updated_at, now()),
 							'comments' => $u->draft_changed_comments,
+							'type' => $u->page_type,
 						);
 					}
 				}
@@ -1042,6 +1077,7 @@ class Wiki_base extends Controller {
 							'author' => $this->char->get_character_name($c->page_created_by_character),
 							'timespan' => timespan_short($c->page_created_at, now()),
 							'summary' => $c->draft_summary,
+							'type' => $c->page_type,
 						);
 					}
 				}
@@ -1057,6 +1093,7 @@ class Wiki_base extends Controller {
 			'created' => ucwords(lang('actions_show') .' '. lang('status_recently') .' '. lang('actions_created')),
 			'updates' => ucwords(lang('actions_show') .' '. lang('status_recently') .' '. lang('actions_updated')),
 			'summary' => ucfirst(lang('labels_summary')),
+			'system' => ucfirst(lang('labels_system')),
 			'update_summary' => ucwords(lang('actions_update') .' '. lang('labels_summary')),
 		);
 		
@@ -1331,47 +1368,50 @@ class Wiki_base extends Controller {
 			
 			if ($page->num_rows() > 0)
 			{
-				foreach ($page->result() as $p)
-				{
-					/* set the date */
-					$created = gmt_to_local($p->page_created_at, $this->timezone, $this->dst);
-					$updated = gmt_to_local($p->page_updated_at, $this->timezone, $this->dst);
-					
-					$data['header'] = $p->draft_title;
+				// get the row
+				$p = $page->row();
+				
+				/* set the date */
+				$created = gmt_to_local($p->page_created_at, $this->timezone, $this->dst);
+				$updated = gmt_to_local($p->page_updated_at, $this->timezone, $this->dst);
+				
+				$data['header'] = $p->draft_title;
 
-					$count = substr_count($p->draft_categories, ',');
-					
-					if ($count === 0 && empty($p->draft_categories))
-					{
-						$string = sprintf(
-							lang('error_not_found'),
-							lang('labels_categories')
-						);
-					}
-					else
-					{
-						$categories = explode(',', $p->draft_categories);
-						
-						foreach ($categories as $c)
-						{
-							$name = $this->wiki->get_category($c, 'wikicat_name');
-							
-							$cat[] = anchor('wiki/category/'. $c, $name);
-						}
-						
-						$string = implode(' | ', $cat);
-					}
-					
-					$data['page'] = array(
-						'content' => $this->thresher->parse($p->draft_content),
-						'created' => $this->char->get_character_name($p->page_created_by_character, TRUE),
-						'updated' => (!empty($p->page_updated_by_character)) ? $this->char->get_character_name($p->page_updated_by_character, TRUE) : FALSE,
-						'created_date' => mdate($datestring, $created),
-						'updated_date' => mdate($datestring, $updated),
-						'categories' => $string,
-						'summary' => $p->draft_summary,
+				$count = substr_count($p->draft_categories, ',');
+				
+				if ($count === 0 && empty($p->draft_categories))
+				{
+					$string = sprintf(
+						lang('error_not_found'),
+						lang('labels_categories')
 					);
 				}
+				else
+				{
+					$categories = explode(',', $p->draft_categories);
+					
+					foreach ($categories as $c)
+					{
+						$name = $this->wiki->get_category($c, 'wikicat_name');
+						
+						$cat[] = anchor('wiki/category/'. $c, $name);
+					}
+					
+					$string = implode(' | ', $cat);
+				}
+				
+				$data['page'] = array(
+					'content' => $this->thresher->parse($p->draft_content),
+					'created' => $this->char->get_character_name($p->page_created_by_character, TRUE),
+					'updated' => (!empty($p->page_updated_by_character)) ? $this->char->get_character_name($p->page_updated_by_character, TRUE) : FALSE,
+					'created_date' => mdate($datestring, $created),
+					'updated_date' => mdate($datestring, $updated),
+					'categories' => $string,
+					'summary' => $p->draft_summary,
+				);
+				
+				// pass the type of page to the js view
+				$js_data['type'] = $p->page_type;
 			}
 			
 			if ($this->auth->is_logged_in())

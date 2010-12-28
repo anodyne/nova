@@ -1,5 +1,7 @@
 <?php echo text_output($header, 'h1', 'page-head');?>
 
+<?php echo $syspage;?>
+
 <?php if (isset($pages)): ?>
 	<br /><div class="search_cat"></div>
 	

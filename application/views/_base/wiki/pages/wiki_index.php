@@ -1,6 +1,6 @@
-<?php echo text_output($header, 'h1', 'page-head');?>
+<?php echo text_output($title, 'h1', 'page-head');?>
 
-<?php echo text_output($text);?>
+<?php echo $syspage;?>
 <br />
 
 <?php if (isset($recent['updates'])): ?>
@@ -18,14 +18,23 @@
 		<?php foreach ($recent['updates'] as $r): ?>
 			<tr>
 				<td class="col_40pct">
-					<strong><?php echo anchor('wiki/view/page/'. $r['id'], $r['title']);?></strong><br />
+					<?php if ($r['type'] == 'system'): ?>
+						<?php echo text_output($label['system'], 'span', 'label-system');?>
+					<?php endif;?>
+					<strong>
+						<?php if ($r['type'] == 'system'): ?>
+							<?php echo $r['title'];?>
+						<?php else: ?>
+							<?php echo anchor('wiki/view/page/'. $r['id'], $r['title']);?>
+						<?php endif;?>
+					</strong><br />
 					<span class="fontSmall gray">
 						<?php echo $label['by'] .' '. $r['author'] .' '. $r['timespan'] .' '. $label['ago'];?>
 					</span>
 				</td>
 				<td class="cell-spacer"></td>
 				<td class="gray fontSmall">
-					<?php if (!empty($r['comments'])): ?>
+					<?php if ( ! empty($r['comments'])): ?>
 						<em><?php echo text_output($r['comments'], '');?></em>
 					<?php endif;?>
 				</td>
@@ -50,14 +59,27 @@
 		<?php foreach ($recent['created'] as $r): ?>
 			<tr>
 				<td class="col_40pct">
-					<strong><?php echo anchor('wiki/view/page/'. $r['id'], $r['title']);?></strong><br />
-					<span class="fontSmall gray">
-						<?php echo $label['by'] .' '. $r['author'] .' '. $r['timespan'] .' '. $label['ago'];?>
-					</span>
+					<?php if ($r['type'] == 'system'): ?>
+						<?php echo text_output($label['system'], 'span', 'label-system');?>
+					<?php endif;?>
+					<strong>
+						<?php if ($r['type'] == 'system'): ?>
+							<?php echo $r['title'];?>
+						<?php else: ?>
+							<?php echo anchor('wiki/view/page/'. $r['id'], $r['title']);?>
+						<?php endif;?>
+					</strong>
+					
+					<?php if ($r['type'] == 'standard'): ?>
+						<br />
+						<span class="fontSmall gray">
+							<?php echo $label['by'] .' '. $r['author'] .' '. $r['timespan'] .' '. $label['ago'];?>
+						</span>
+					<?php endif;?>
 				</td>
 				<td class="cell-spacer"></td>
 				<td class="gray fontSmall">
-					<?php if (!empty($r['summary'])): ?>
+					<?php if ( ! empty($r['summary'])): ?>
 						<em><?php echo text_output($r['summary'], '');?></em>
 					<?php endif;?>
 				</td>

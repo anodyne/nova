@@ -1,22 +1,14 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
-/*
-|---------------------------------------------------------------
-| INSTALL - DATABASE FIELDS
-|---------------------------------------------------------------
-|
-| File: assets/install/fields.php
-| System Version: 1.2
-|
-| File that contains all of the arrays with the data for inserting
-| the database fields for the system to use.
-|
-*/
+/**
+ * Database Schema
+ *
+ * @package		Nova
+ * @category	Install
+ * @author		Anodyne Productions
+ * @copyright	2010-11 Anodyne Productions
+ * @version		1.3
+ */
 
-/*
-|---------------------------------------------------------------
-| Widely used items
-|---------------------------------------------------------------
-*/
 $user_id_type				= 'INT';
 $user_id_constraint			= 8;
 $character_id_type			= 'INT';
@@ -24,12 +16,10 @@ $character_id_constraint	= 8;
 $date_type					= 'BIGINT';
 $date_constraint			= 20;
 
-/*
-|---------------------------------------------------------------
-| Master Array with name, primary key, and name of the array
-| being used to insert the data into the database
-|---------------------------------------------------------------
-*/
+/**
+ * Master array with name, primary key and name of the array
+ * that's used to insert the data into the database
+ */
 $data = array(
 	'access_groups'				=> array('id' => 'group_id', 'fields' => 'fields_access_groups'),
 	'access_pages'				=> array('id' => 'page_id', 'fields' => 'fields_access_pages'),
@@ -102,11 +92,9 @@ $data = array(
 	'uploads'					=> array('id' => 'upload_id', 'fields' => 'fields_uploads')
 );
 
-/*
-|---------------------------------------------------------------
-| Field arrays with all the data necessary to create the system
-|---------------------------------------------------------------
-*/
+/**
+ * Field arrays with all th edata necessary to create the system
+ */
 $fields_access_groups = array(
 	'group_id' => array(
 		'type' => 'INT',
@@ -2001,7 +1989,15 @@ $fields_wiki_pages = array(
 	'page_comments' => array(
 		'type' => 'ENUM',
 		'constraint' => "'open','closed'",
-		'default' => 'open')
+		'default' => 'open'),
+	'page_type' => array(
+		'type' => 'ENUM',
+		'constraint' => "'standard','system'",
+		'default' => 'standard'),
+	'page_key' => array(
+		'type' => 'VARCHAR',
+		'constraint' => 100,
+		'default' => ''),
 );
 
 $fields_uploads = array(
@@ -2030,6 +2026,3 @@ $fields_uploads = array(
 		'type' => $date_type,
 		'constraint' => $date_constraint),
 );
-
-/* End of file fields.php */
-/* Location: ./application/assets/install/fields.php */

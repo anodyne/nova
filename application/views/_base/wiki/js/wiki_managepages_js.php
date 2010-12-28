@@ -32,5 +32,19 @@
 			loaderText: '',
 			stripeRowClass: ['alt', '']
 		});
+		
+		$('a[rel=toggle]').click(function(){
+			var type = $(this).attr('id');
+			
+			$('tr.standard').show();
+			$('tr.system').show();
+			
+			if (type == 'show_sys')
+				$('tr.standard').hide();
+			else if (type == 'show_std')
+				$('tr.system').hide();
+				
+			return false;
+		});
 	});
 </script>

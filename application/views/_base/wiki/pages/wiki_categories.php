@@ -1,5 +1,8 @@
 <?php echo text_output($header, 'h1', 'page-head');?>
 
+<?php echo $syspage;?>
+<br />
+
 <p class="bold fontSmall"><?php echo link_to_if($access, 'wiki/managecategories', $label['edit']);?></p>
 
 <?php echo text_output($label['text']);?>

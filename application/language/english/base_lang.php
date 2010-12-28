@@ -7,7 +7,7 @@
 | System Version: 1.3
 |
 | Changes: added actions_cleanup, added labels_drafts, added status_older,
-|	added misc_draft_cleanup
+|	added misc_draft_cleanup, added time_months, added labels_standard
 |
 | English language file for the system. Punctuation constants are
 | defined in ./application/config/constants.php
@@ -187,6 +187,7 @@ $lang['time_last_month']		= 'last month';
 $lang['time_minute']			= 'minute';
 $lang['time_minutes']			= 'minutes';
 $lang['time_month']				= 'month';
+$lang['time_months']			= 'months';
 $lang['time_now']				= 'now';
 $lang['time_per_week']			= 'per week';
 $lang['time_hours_same']		= 'same timezone as you are';
@@ -512,6 +513,7 @@ $lang['labels_skin']			= 'skin';
 $lang['labels_skins']			= 'skins';
 $lang['labels_slots'] 			= 'slots';
 $lang['labels_sorting']			= 'sorting';
+$lang['labels_standard']		= 'standard';
 $lang['labels_stats'] 			= 'stats';
 $lang['labels_status'] 			= 'status';
 $lang['labels_step'] 			= 'step';

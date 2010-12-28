@@ -5,6 +5,10 @@
 		$tabs = $('#tabs').tabs();
 		$tabs.tabs('select', <?php echo $tab;?>);
 		
+		<?php if ($type == 'system'): ?>
+			$tabs.tabs('option', 'disabled', [0, 2]);
+		<?php endif;?>
+		
 		$('table.zebra tbody > tr:nth-child(odd)').addClass('alt');
 		
 		$("a[rel*=facebox]").click(function(){

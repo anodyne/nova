@@ -1,10 +1,7 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
-/*
-|---------------------------------------------------------------
-| UPDATE - 1.2.x => 1.3
-|---------------------------------------------------------------
-*/
-
+/**
+ * Update Nova from 1.2.x to 1.3
+ */
 $system_versions	= NULL;
 $system_info		= NULL;
 $add_tables			= NULL;
@@ -14,12 +11,9 @@ $add_column			= NULL;
 $modify_column		= NULL;
 $drop_column		= NULL;
 
-/*
-|---------------------------------------------------------------
-| VERSION INFO FOR THE DATABASE
-|---------------------------------------------------------------
-*/
-
+/**
+ * Version info for the database
+ */
 $system_versions = array(
 	'version'			=> '1.3.0',
 	'version_major'		=> 1,
@@ -64,7 +58,7 @@ $system_info = array(
 |---------------------------------------------------------------
 */
 
-if (!is_null($add_tables))
+if ($add_tables !== NULL)
 {
 	foreach ($add_tables as $key => $value)
 	{
@@ -82,7 +76,7 @@ if (!is_null($add_tables))
 |---------------------------------------------------------------
 */
 
-if (!is_null($drop_tables))
+if ($drop_tables !== NULL)
 {
 	foreach ($drop_tables as $value)
 	{
@@ -98,7 +92,7 @@ if (!is_null($drop_tables))
 |---------------------------------------------------------------
 */
 
-if (!is_null($rename_tables))
+if ($rename_tables !== NULL)
 {
 	foreach ($rename_tables as $key => $value)
 	{
@@ -121,7 +115,20 @@ if (!is_null($rename_tables))
 |---------------------------------------------------------------
 */
 
-if (!is_null($add_column))
+$add_column = array(
+	'wiki_pages' => array(
+		'page_type' => array(
+			'type' => 'ENUM',
+			'constraint' => "'standard','system'",
+			'default' => 'standard'),
+		'page_key' => array(
+			'type' => 'VARCHAR',
+			'constraint' => 100,
+			'default' => ''),
+	)
+);
+
+if ($add_column !== NULL)
 {
 	foreach ($add_column as $key => $value)
 	{
@@ -143,7 +150,7 @@ if (!is_null($add_column))
 |---------------------------------------------------------------
 */
 
-if (!is_null($modify_column))
+if ($modify_column !== NULL)
 {
 	foreach ($modify_column as $key => $value)
 	{
@@ -161,7 +168,7 @@ if (!is_null($modify_column))
 |---------------------------------------------------------------
 */
 
-if (!is_null($drop_column))
+if ($drop_column !== NULL)
 {
 	foreach ($drop_column as $key => $value)
 	{
@@ -169,21 +176,15 @@ if (!is_null($drop_column))
 	}
 }
 
-/*
-|---------------------------------------------------------------
-| DATA TO INSERT/UPDATE/DELETE
-|---------------------------------------------------------------
-*/
-
 /**
- * update the lazy version info
+ * Data to insert/update/delete
  */
+
+// update the lazy version info
 $this->db->where('comp_name', 'Lazy');
 $this->db->update('system_components', array('comp_version' => '1.5'));
 
-/**
- * add the jquery elastic plugin to the list of components
- */
+// add the elastic plugin to the list of components
 $additem = array(
 	'comp_name' => 'Elastic',
 	'comp_version' => '1.6.4',
