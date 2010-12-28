@@ -5,7 +5,7 @@
 |---------------------------------------------------------------
 |
 | File: controllers/write_base.php
-| System Version: 1.2
+| System Version: 1.2.2
 |
 | Changes: fixed bug where posts with secondary characters would
 |	be sent out with the name of the user's primary character even
@@ -13,7 +13,8 @@
 |	the constructor to redirect to an error page in the event a user
 |	doesn't have a character associated with their account; fixed
 |	bug where personal logs weren't having the proper date set
-|	when saving a personal log first
+|	when saving a personal log first; fixed bug where the post emails
+|	sent out didn't have the authors listed properly
 |
 */
 
@@ -2250,10 +2251,10 @@ class Write_base extends Controller {
 				$location = lang('email_content_post_location') . $data['location'];
 				
 				// get an array of authors
-				$authors = explode(',', $data['authors']);
+				$authorsArr = explode(',', $data['authors']);
 				
 				// find out what's the same
-				$same = array_values(array_intersect($authors, $this->session->userdata('characters')));
+				$same = array_values(array_intersect($authorsArr, $this->session->userdata('characters')));
 				
 				// figure out who it should come from
 				$from = (in_array($this->session->userdata('main_char'), $same)) ? $this->session->userdata('main_char') : $same[0];
@@ -2420,10 +2421,10 @@ class Write_base extends Controller {
 				$location = lang('email_content_post_location') . $data['location'];
 				
 				// get an array of authors
-				$authors = explode(',', $data['authors']);
+				$authorsArr = explode(',', $data['authors']);
 				
 				// find out what's the same
-				$same = array_values(array_intersect($authors, $this->session->userdata('characters')));
+				$same = array_values(array_intersect($authorsArr, $this->session->userdata('characters')));
 				
 				// figure out who it should come from
 				$from = (in_array($this->session->userdata('main_char'), $same)) ? $this->session->userdata('main_char') : $same[0];
@@ -2489,12 +2490,6 @@ class Write_base extends Controller {
 		
 		/* return the email variable */
 		return $email;
-	}
-	
-	function test()
-	{
-		echo $this->char->get_authors('1,2,3', TRUE);
-		exit();
 	}
 }
 
