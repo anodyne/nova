@@ -10,6 +10,7 @@ Anodyne Production's next-generation RPG management system combines popular feat
 
 * added the 1.2.2 update file
 * fixed bug where sub departments couldn't be managed from the department management page
+* fixed bug where post emails sent out didn't display the authors properly
 
 ## Version History
 
@@ -18,7 +19,7 @@ Anodyne Production's next-generation RPG management system combines popular feat
 		<th>Version</th><th>Release Date</th>
 	</tr>
 	<tr>
-		<td>1.2.2</td><td>-</td>
+		<td>1.2.2</td><td>30 December 2010</td>
 	</tr>
 	<tr>
 		<td>1.2.1</td><td>23 December 2010</td>

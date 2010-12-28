@@ -25,9 +25,11 @@ $system_versions = array(
 	'version_major'		=> 1,
 	'version_minor'		=> 2,
 	'version_update'	=> 2,
-	'version_date'		=> 1293121800,
-	'version_launch'	=> "Nova 1.2.2 is the second maintenance release for Nova 1.2 and addresses several bugs discovered after the initial release of the new version. Bugs fixed in this release include a bug where positions would disappear after being updated and errors thrown throughout the system. More information about these features and a full changelog can be found at AnodyneDocs. This update is recommended for all users.",
-	'version_changes'	=> ""
+	'version_date'		=> 1293753600,
+	'version_launch'	=> "Nova 1.2.2 is the second maintenance release for Nova 1.2 and two bugs discovered after the release of Nova 1.2.1. Bugs fixed in this release include a bug where sub departments couldn't be managed from the department management page and a bug with the display of post authors in emails. More information about these features and a full changelog can be found at AnodyneDocs. This update is recommended for all users.",
+	'version_changes'	=> "* added the 1.2.2 update file
+* fixed bug where sub departments couldn't be managed from the department management page
+* fixed bug where post emails sent out didn't display the authors properly"
 );
 
 $system_info = array(
