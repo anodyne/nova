@@ -505,7 +505,7 @@ class Wiki_base extends Controller {
 			{
 				switch ($this->uri->segment(3))
 				{
-					case 'delete':
+					case 'deletepage':
 						$id = $this->input->post('id', TRUE);
 					
 						/* insert the record */
@@ -528,6 +528,44 @@ class Wiki_base extends Controller {
 							$message = sprintf(
 								lang('flash_failure'),
 								ucfirst(lang('global_wiki') .' '. lang('labels_page')),
+								lang('actions_deleted'),
+								''
+							);
+	
+							$flash['status'] = 'error';
+							$flash['message'] = text_output($message);
+						}
+						
+						// set the location of the flash view
+						$flashloc = view_location('flash', $this->skin, 'wiki');
+						
+						// write everything to the template
+						$this->template->write_view('flash_message', $flashloc, $flash);
+					break;
+					
+					case 'deletedraft':
+						$id = $this->input->post('id', TRUE);
+					
+						/* insert the record */
+						$delete = $this->wiki->delete_draft($id);
+						
+						if ($delete > 0)
+						{
+							$message = sprintf(
+								lang('flash_success'),
+								ucfirst(lang('global_wiki') .' '. lang('labels_draft')),
+								lang('actions_deleted'),
+								''
+							);
+	
+							$flash['status'] = 'success';
+							$flash['message'] = text_output($message);
+						}
+						else
+						{
+							$message = sprintf(
+								lang('flash_failure'),
+								ucfirst(lang('global_wiki') .' '. lang('labels_draft')),
 								lang('actions_deleted'),
 								''
 							);
@@ -623,12 +661,109 @@ class Wiki_base extends Controller {
 						// write everything to the template
 						$this->template->write_view('flash_message', $flashloc, $flash);
 					break;
+					
+					case 'revert':
+						/* get the POST variables */
+						$page = $this->input->post('page', TRUE);
+						$draft = $this->input->post('draft', TRUE);
+						
+						/* get the draft we're reverting to */
+						$draft = $this->wiki->get_draft($draft);
+						
+						if ($draft->num_rows() > 0)
+						{
+							$row = $draft->row();
+							
+							$insert_array = array(
+								'draft_id_old' => $row->draft_id,
+								'draft_title' => $row->draft_title,
+								'draft_author_user' => $this->session->userdata('userid'),
+								'draft_author_character' => $this->session->userdata('main_char'),
+								'draft_summary' => $row->draft_summary,
+								'draft_content' => $row->draft_content,
+								'draft_page' => $page,
+								'draft_created_at' => now(),
+								'draft_categories' => $row->draft_categories,
+								'draft_changed_comments' => lang('wiki_reverted')
+							);
+							
+							$insert = $this->wiki->create_draft($insert_array);
+							$draftid = $this->db->insert_id();
+							
+							/* optimize the table */
+							$this->sys->optimize_table('wiki_drafts');
+							
+							$update_array = array(
+								'page_draft' => $draftid,
+								'page_updated_by_user' => $this->session->userdata('userid'),
+								'page_updated_by_character' => $this->session->userdata('main_char'),
+								'page_updated_at' => now()
+							);
+							
+							$update = $this->wiki->update_page($page, $update_array);
+							
+							if ($insert > 0 && $update > 0)
+							{
+								$message = sprintf(
+									lang('flash_success'),
+									ucfirst(lang('global_wiki') .' '. lang('labels_page')),
+									lang('actions_reverted'),
+									''
+								);
+		
+								$flash['status'] = 'success';
+								$flash['message'] = text_output($message);
+							}
+							else
+							{
+								$message = sprintf(
+									lang('flash_failure'),
+									ucfirst(lang('global_wiki') .' '. lang('labels_page')),
+									lang('actions_reverted'),
+									''
+								);
+		
+								$flash['status'] = 'error';
+								$flash['message'] = text_output($message);
+							}
+						}
+						else
+						{
+							$message = sprintf(
+								lang('error_not_found'),
+								lang('labels_draft')
+							);
+		
+							$flash['status'] = 'error';
+							$flash['message'] = text_output($message);
+						}
+						
+						// set the location of the flash view
+						$flashloc = view_location('flash', $this->skin, 'wiki');
+						
+						// write everything to the template
+						$this->template->write_view('flash_message', $flashloc, $flash);
+					break;
 				}
 			}
 		}
 		
-		/* grab the pages */
-		$pages = $this->wiki->get_pages();
+		// grab the pages
+		$pages = $this->wiki->get_pages(NULL, 'wiki_drafts.draft_created_at', 'desc');
+		
+		// get all the page restrictions
+		$restr = $this->wiki->get_page_restrictions();
+		
+		// set up the restrictions array
+		$restrictions = array();
+		
+		if ($restr->num_rows() > 0)
+		{
+			foreach ($restr->result() as $r)
+			{
+				$restrictions[] = $r->restr_page;
+			}
+		}
 		
 		/* set the date format */
 		$datestring = $this->options['date_format'];
@@ -644,52 +779,77 @@ class Wiki_base extends Controller {
 				$data['pages'][$p->page_id]['id'] = $p->page_id;
 				$data['pages'][$p->page_id]['title'] = $p->draft_title;
 				$data['pages'][$p->page_id]['type'] = $p->page_type;
-				$data['pages'][$p->page_id]['created'] = $this->char->get_character_name($p->page_created_by_character, TRUE);
-				$data['pages'][$p->page_id]['updated'] = (!empty($p->page_updated_by_character)) ? $this->char->get_character_name($p->page_updated_by_character, TRUE) : FALSE;
+				$data['pages'][$p->page_id]['created'] = ($p->page_created_by_user == 0) 
+					? ucfirst(lang('labels_system')) 
+					: $this->char->get_character_name($p->page_created_by_character, TRUE);
+				$data['pages'][$p->page_id]['updated'] = ( ! empty($p->page_updated_by_character)) 
+					? $this->char->get_character_name($p->page_updated_by_character, TRUE) 
+					: FALSE;
 				$data['pages'][$p->page_id]['created_date'] = mdate($datestring, $created);
 				$data['pages'][$p->page_id]['updated_date'] = mdate($datestring, $updated);
+				$data['pages'][$p->page_id]['restrictions'] = (in_array($p->page_id, $restrictions)) ? 'restricted' : FALSE;
 			}
 		}
 		
-		$data['header'] = ucwords(lang('actions_manage') .' '. lang('global_wiki') .' '. lang('labels_pages'));
+		$data['header'] = ucwords(lang('actions_manage').' '.lang('global_wiki').' '.lang('labels_pages'));
 		
 		$data['images'] = array(
 			'add' => array(
-				'src' => img_location('page-add.png', $this->skin, 'wiki'),
+				'src' => img_location('icon-add.png', $this->skin, 'wiki'),
 				'alt' => '',
-				'class' => 'image inline_img_left'),
+				'class' => 'image subnav-icon'),
 			'delete' => array(
 				'src' => img_location('page-delete.png', $this->skin, 'wiki'),
-				'alt' => ''),
+				'alt' => '',
+				'title' => ucfirst(lang('actions_delete'))),
 			'edit' => array(
 				'src' => img_location('page-edit.png', $this->skin, 'wiki'),
-				'alt' => ''),
+				'alt' => '',
+				'title' => ucfirst(lang('actions_edit'))),
 			'clean' => array(
 				'src' => img_location('broom.png', $this->skin, 'wiki'),
 				'alt' => '',
-				'class' => 'image inline_img_left'),
+				'class' => 'image subnav-icon'),
 			'history' => array(
 				'src' => img_location('clock-history.png', $this->skin, 'wiki'),
 				'alt' => '',
 				'title' => ucfirst(lang('labels_history'))),
+			'lock' => array(
+				'src' => img_location('lock.png', $this->skin, 'wiki'),
+				'alt' => '',
+				'title' => ucfirst(lang('labels_restrictions'))),
+			'info' => array(
+				'src' => img_location('information.png', $this->skin, 'wiki'),
+				'alt' => '',
+				'title' => ucfirst(lang('labels_information'))),
+			'view' => array(
+				'src' => img_location('magnifier.png', $this->skin, 'wiki'),
+				'alt' => '',
+				'title' => ucfirst(lang('actions_view'))),
+			'eye' => array(
+				'src' => img_location('eye.png', $this->skin, 'wiki'),
+				'alt' => '',
+				'class' => 'image subnav-icon-right'),
+			'loading' => array(
+				'src' => img_location('loading.gif', $this->skin, 'wiki'),
+				'alt' => lang('actions_loading')),
 		);
 		
 		$data['label'] = array(
-			'add' => ucwords(lang('actions_create') .' '. lang('status_new') .' '. 
-				lang('global_wiki') .' '. lang('labels_page') .' '. RARROW),
+			'add' => ucwords(lang('status_new').' '.lang('labels_page')),
 			'clean' => ucwords(lang('actions_cleanup').' '.lang('labels_drafts')),
-			'created' => ucwords(lang('actions_created') .' '. lang('labels_by')),
+			'created' => ucfirst(lang('actions_created') .' '. lang('labels_by')),
+			'loading' => ucfirst(lang('actions_loading')).'...',
 			'name' => ucwords(lang('labels_page') .' '. lang('labels_name')),
-			'nopages' => sprintf(
-				lang('error_not_found'),
-				lang('global_wiki') .' '. lang('labels_pages')
-			),
+			'nopages' => sprintf(lang('error_not_found'), lang('global_wiki').' '.lang('labels_pages')),
+			'on' => lang('labels_on'),
 			'pages' => ucfirst(lang('labels_pages')),
-			'show' => ucfirst(lang('actions_show').': '),
+			'restrict'=> ucfirst(lang('labels_restricted')),
+			'show' => ucwords(lang('actions_show').' '.lang('labels_filters')),
 			'show_all' => ucfirst(lang('labels_all')),
 			'show_std' => ucfirst(lang('labels_standard')),
 			'system' => ucfirst(lang('labels_system')),
-			'updated' => ucwords(lang('actions_updated') .' '. lang('labels_by')),
+			'updated' => ucfirst(lang('order_last').' '.lang('actions_updated').' '.lang('labels_by')),
 		);
 		
 		/* figure out where the view files should be coming from */
@@ -1131,90 +1291,6 @@ class Wiki_base extends Controller {
 		
 		if (isset($_POST['submit']) && $this->auth->is_logged_in())
 		{
-			if ($action == 'revert')
-			{
-				/* get the POST variables */
-				$page = $this->input->post('page', TRUE);
-				$draft = $this->input->post('draft', TRUE);
-				
-				/* get the draft we're reverting to */
-				$draft = $this->wiki->get_draft($draft);
-				
-				if ($draft->num_rows() > 0)
-				{
-					$row = $draft->row();
-					
-					$insert_array = array(
-						'draft_id_old' => $row->draft_id,
-						'draft_title' => $row->draft_title,
-						'draft_author_user' => $this->session->userdata('userid'),
-						'draft_author_character' => $this->session->userdata('main_char'),
-						'draft_summary' => $row->draft_summary,
-						'draft_content' => $row->draft_content,
-						'draft_page' => $page,
-						'draft_created_at' => now(),
-						'draft_categories' => $row->draft_categories,
-						'draft_changed_comments' => lang('wiki_reverted')
-					);
-					
-					$insert = $this->wiki->create_draft($insert_array);
-					$draftid = $this->db->insert_id();
-					
-					/* optimize the table */
-					$this->sys->optimize_table('wiki_drafts');
-					
-					$update_array = array(
-						'page_draft' => $draftid,
-						'page_updated_by_user' => $this->session->userdata('userid'),
-						'page_updated_by_character' => $this->session->userdata('main_char'),
-						'page_updated_at' => now()
-					);
-					
-					$update = $this->wiki->update_page($page, $update_array);
-					
-					if ($insert > 0 && $update > 0)
-					{
-						$message = sprintf(
-							lang('flash_success'),
-							ucfirst(lang('global_wiki') .' '. lang('labels_page')),
-							lang('actions_reverted'),
-							''
-						);
-
-						$flash['status'] = 'success';
-						$flash['message'] = text_output($message);
-					}
-					else
-					{
-						$message = sprintf(
-							lang('flash_failure'),
-							ucfirst(lang('global_wiki') .' '. lang('labels_page')),
-							lang('actions_reverted'),
-							''
-						);
-
-						$flash['status'] = 'error';
-						$flash['message'] = text_output($message);
-					}
-				}
-				else
-				{
-					$message = sprintf(
-						lang('error_not_found'),
-						lang('labels_draft')
-					);
-
-					$flash['status'] = 'error';
-					$flash['message'] = text_output($message);
-				}
-				
-				// set the location of the flash view
-				$flashloc = view_location('flash', $this->skin, 'wiki');
-				
-				// write everything to the template
-				$this->template->write_view('flash_message', $flashloc, $flash);
-			}
-			
 			if ($action == 'comment')
 			{
 				$comment_text = $this->input->post('comment_text');
@@ -1290,10 +1366,6 @@ class Wiki_base extends Controller {
 		{
 			case 'comment':
 				$js_data['tab'] = 2;
-			break;
-				
-			case 'revert':
-				$js_data['tab'] = 1;
 			break;
 				
 			default:

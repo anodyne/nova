@@ -201,6 +201,27 @@ class Wiki_model_base extends Model {
 		return $query;
 	}
 	
+	/**
+	 * Pull back the page restrictions for a specific page or for all pages.
+	 *
+	 * @since	1.3
+	 * @param	integer	the page id
+	 * @return	object
+	 */
+	function get_page_restrictions($id = NULL)
+	{
+		$this->db->from('wiki_restrictions');
+		
+		if ($id !== NULL)
+		{
+			$this->db->where('restr_page', $id);
+		}
+		
+		$query = $this->db->get();
+		
+		return $query;
+	}
+	
 	function get_recently_created($limit = 10)
 	{
 		$this->db->from('wiki_pages');
@@ -331,6 +352,20 @@ class Wiki_model_base extends Model {
 	function create_page($data = '')
 	{
 		$query = $this->db->insert('wiki_pages', $data);
+		
+		return $query;
+	}
+	
+	/**
+	 * Create a page restriction record in the database.
+	 *
+	 * @since	1.3
+	 * @param	mixed	an array or object of information to go into the database
+	 * @return	object
+	 */
+	function create_page_restriction($data = '')
+	{
+		$query = $this->db->insert('wiki_restrictions', $data);
 		
 		return $query;
 	}

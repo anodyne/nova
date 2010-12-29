@@ -4718,6 +4718,59 @@ class Ajax_base extends Controller {
 		$this->template->render();
 	}
 	
+	function del_wiki_draft()
+	{
+		/* load the resources */
+		$this->load->model('wiki_model', 'wiki');
+		
+		$head = sprintf(
+			lang('fbx_head'),
+			ucwords(lang('actions_delete')),
+			ucwords(lang('global_wiki') .' '. lang('labels_draft'))
+		);
+		
+		/* data being sent to the facebox */
+		$data['header'] = $head;
+		$data['id'] = (is_numeric($this->uri->segment(3))) ? $this->uri->segment(3) : 0;
+		
+		// grab the draft we're deleting
+		$draft = $this->wiki->get_draft($data['id']);
+		
+		// get the draft object
+		$d = ($draft->num_rows() > 0) ? $draft->row() : FALSE;
+		
+		// get the title
+		$title = ($d !== FALSE) ? $d->draft_title : '';
+		
+		$data['text'] = sprintf(
+			lang('fbx_content_del_entry'),
+			lang('global_wiki') .' '. lang('labels_draft'),
+			$title
+		);
+		
+		/* input parameters */
+		$data['inputs'] = array(
+			'submit' => array(
+				'type' => 'submit',
+				'class' => 'hud_button',
+				'name' => 'submit',
+				'value' => 'submit',
+				'content' => ucwords(lang('actions_submit')))
+		);
+		
+		/* figure out the skin */
+		$skin = $this->session->userdata('skin_wiki');
+		
+		/* figure out where the view should come from */
+		$ajax = ajax_location('del_wiki_draft', $skin, 'wiki');
+		
+		/* write the data to the template */
+		$this->template->write_view('content', $ajax, $data);
+		
+		/* render the template */
+		$this->template->render();
+	}
+	
 	function del_wiki_page()
 	{
 		/* load the resources */
@@ -7912,5 +7965,174 @@ class Ajax_base extends Controller {
 		
 		/* render the template */
 		$this->template->render();
+	}
+	
+	function wiki_get_page_drafts()
+	{
+		if (IS_AJAX)
+		{
+			// get the page ID
+			$id = $this->uri->segment(3);
+			
+			// load the resources
+			$this->load->model('wiki_model', 'wiki');
+			$this->load->model('characters_model', 'char');
+			
+			// get the drafts for the page
+			$drafts = $this->wiki->get_drafts($id);
+			
+			// get the page
+			$page = $this->wiki->get_page($id);
+			$row = ($page->num_rows() > 0) ? $page->row() : FALSE;
+			
+			// get the timezone and dst
+			$timezone = ($this->auth->is_logged_in()) ? $this->session->userdata('timezone') : $this->settings->get_setting('timezone');
+			$dst = ($this->auth->is_logged_in()) ? (bool) $this->session->userdata('dst') : (bool) $this->settings->get_setting('daylight_savings');
+			
+			if ($drafts->num_rows() > 0)
+			{
+				// get the settings
+				$datestring = $this->settings->get_setting('date_format');
+				
+				foreach ($drafts->result() as $d)
+				{
+					$created = gmt_to_local($d->draft_created_at, $timezone, $dst);
+					
+					$data['drafts'][$d->draft_id] = array(
+						'draft' 		=> $d->draft_id,
+						'title' 		=> $d->draft_title,
+						'created' 		=> ($d->draft_author_user == 0)
+							? ucfirst(lang('labels_system'))
+							: $this->char->get_character_name($d->draft_author_character),
+						'created_date' 	=> mdate($datestring, $created),
+						'page' 			=> $d->draft_page,
+						'old_id' 		=> ( ! empty($d->draft_id_old)) ? $d->draft_id_old : FALSE,
+						'page_draft' 	=> ($row !== FALSE) ? $row->page_draft : FALSE,
+					);
+				}
+				
+				$data['label'] = array(
+					'by' => lang('labels_by'),
+					'created' => lang('actions_created'),
+					'delete' => ucfirst(lang('actions_delete')),
+					'draft' => ucfirst(lang('labels_draft')),
+					'on' => lang('labels_on'),
+					'page' => ucfirst(lang('labels_page')),
+					'revert' => ucfirst(lang('actions_revert')),
+					'reverted' => lang('actions_reverted'),
+					'to' => lang('labels_to'),
+				);
+				
+				// figure out the skin
+				$skin = $this->session->userdata('skin_wiki');
+				
+				// figure out where the view should come from
+				$ajax = ajax_location('get_page_drafts', $skin, 'wiki');
+				
+				// generate the view
+				$view = $this->load->view($ajax, $data, TRUE);
+				
+				echo $view;
+			}
+			else
+			{
+				// generate the error message
+				$error = sprintf(
+					lang('error_not_found'),
+					lang('global_wiki').' '.lang('labels_drafts')
+				);
+				
+				echo '<strong class="orange">'.$error.'</strong>';
+			}
+		}
+	}
+	
+	function wiki_get_page_restrictions()
+	{
+		if (IS_AJAX)
+		{
+			// get the page ID
+			$id = $this->uri->segment(3);
+			
+			// load the resources
+			$this->load->model('wiki_model', 'wiki');
+			$this->load->model('access_model', 'access');
+			
+			// get the access roles
+			$roles = $this->access->get_roles();
+			
+			if ($roles->num_rows() > 0)
+			{
+				foreach ($roles->result() as $a)
+				{
+					$data['roles'][$a->role_id] = $a->role_name;
+				}
+			}
+			
+			// set up the array of checking values
+			$data['checked'] = array();
+			
+			// get the drafts for the page
+			$res = $this->wiki->get_page_restrictions($id);
+			
+			$data['label'] = array(
+				'no_roles' => sprintf(lang('error_not_found'), lang('labels_access').' '.lang('labels_roles')),
+				'roles' => ucwords(lang('actions_restrict').' '.lang('labels_access').' '.lang('labels_to').' '.
+					lang('labels_these').' '.lang('labels_access').' '.lang('labels_roles')).':',
+			);
+			
+			$data['submit'] = array(
+				'id' => 'submit',
+				'name' => 'submit',
+				'class' => 'button-main',
+				'rel' => $id,
+				'content' => ucfirst(lang('actions_update')),
+			);
+			
+			if ($res->num_rows() > 0)
+			{
+				// get the row
+				$r = $res->row();
+				
+				// find out what the restrictions are
+				$data['checked'] = explode(',', $r->restrictions);
+			}
+			
+			// figure out the skin
+			$skin = $this->session->userdata('skin_wiki');
+			
+			// figure out where the view should come from
+			$ajax = ajax_location('get_page_restrictions', $skin, 'wiki');
+			
+			// generate the view
+			$view = $this->load->view($ajax, $data, TRUE);
+			
+			echo $view;
+		}
+	}
+	
+	function wiki_set_page_restrictions()
+	{
+		if (IS_AJAX)
+		{
+			// get the POST information
+			$page = $this->input->post('page', TRUE);
+			$roles = $this->input->post('roles', TRUE);
+			
+			// load the resources
+			$this->load->model('wiki_model', 'wiki');
+			
+			if (is_array($roles))
+			{
+				$insert_array = array(
+					'restr_page' => $page,
+					'restr_created_by' => $this->session->userdata('user'),
+					'restr_created_at' => now(),
+					'restrictions' => implode(',', $roles)
+				);
+				
+				$insert = $this->wiki->insert_page_restriction($insert_array);
+			}
+		}
 	}
 }
