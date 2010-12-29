@@ -7,7 +7,9 @@
 | System Version: 1.3
 |
 | Changes: added actions_cleanup, added labels_drafts, added status_older,
-|	added misc_draft_cleanup, added time_months, added labels_standard
+|	added misc_draft_cleanup, added time_months, added labels_standard,
+|	added labels_restricted, added labels_filters, added labels_restrictions,
+|	added actions_restrict, added labels_these
 |
 | English language file for the system. Punctuation constants are
 | defined in ./application/config/constants.php
@@ -289,6 +291,7 @@ $lang['actions_removed']		= 'removed';
 $lang['actions_reply']			= 'reply';
 $lang['actions_request']		= 'request';
 $lang['actions_reset']			= 'reset';
+$lang['actions_restrict']		= 'restrict';
 $lang['actions_revert']			= 'revert';
 $lang['actions_reverted']		= 'reverted';
 $lang['actions_run']			= 'run';
@@ -395,6 +398,7 @@ $lang['labels_field']			= 'field';
 $lang['labels_fields']			= 'fields';
 $lang['labels_file']			= 'file';
 $lang['labels_files']			= 'files';
+$lang['labels_filters']			= 'filters';
 $lang['labels_for'] 			= 'for';
 $lang['labels_form']			= 'form';
 $lang['labels_format']			= 'format';
@@ -493,6 +497,8 @@ $lang['labels_request']			= 'request';
 $lang['labels_requests']		= 'requests';
 $lang['labels_requirement']		= 'requirement';
 $lang['labels_requirements']	= 'requirements';
+$lang['labels_restricted']		= 'restricted';
+$lang['labels_restrictions']	= 'restrictions';
 $lang['labels_result']			= 'result';
 $lang['labels_results']			= 'results';
 $lang['labels_role']			= 'role';
@@ -529,6 +535,7 @@ $lang['labels_text']			= 'text';
 $lang['labels_than']			= 'than';
 $lang['labels_thank_you'] 		= 'thank you';
 $lang['labels_the'] 			= 'the';
+$lang['labels_these']			= 'these';
 $lang['labels_this']			= 'this';
 $lang['labels_timeline']		= 'timeline';
 $lang['labels_times']			= 'times';
