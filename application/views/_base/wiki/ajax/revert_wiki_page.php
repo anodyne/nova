@@ -2,7 +2,7 @@
 <?php echo text_output($text);?>
 
 <p>
-	<?php echo form_open('wiki/view/page/'. $page .'/revert');?>
+	<?php echo form_open('wiki/managepages/revert');?>
 		<?php echo form_hidden('page', $page);?><br />
 		<?php echo form_hidden('draft', $draft);?><br />
 		<?php echo form_button($inputs['submit']);?>
