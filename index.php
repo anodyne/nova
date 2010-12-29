@@ -8,7 +8,7 @@
  * 3: All PHP errors, warnings, noties & database errors
  */
  
-$debug_errors = 1;
+$debug_errors = 3;
 
 switch ($debug_errors)
 {
