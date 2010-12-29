@@ -10,6 +10,7 @@ Anodyne Production's next-generation RPG management system combines popular feat
 
 * added the jquery elastic plugin
 * added broom icon to the wiki section
+* added some images to the wiki section
 * removed deprecated methods from the users model
 * updated the jquery lazy plugin to version 1.5
 * updated the flash messages so they can be overridden with seamless substitution
@@ -18,6 +19,7 @@ Anodyne Production's next-generation RPG management system combines popular feat
 * updated the admin system to use elastic textareas in several spots
 * updated the head include files to clean up some code
 * updated thresher to be able to clean up old drafts
+* updated thresher page management to have a much better UX
 * updated the language files
     * [base\_lang] added _actions\_cleanup_
     * [base\_lang] added _labels\_drafts_
@@ -25,11 +27,17 @@ Anodyne Production's next-generation RPG management system combines popular feat
     * [base\_lang] added _misc\_draft\_cleanup_
     * [base\_lang] added _time\_months_
     * [base\_lang] added _labels\_standard_
+    * [base\_lang] added _labels\_restricted_
+    * [base\_lang] added _labels\_filters_
+    * [base\_lang] added _labels\_restrictions_
+    * [base\_lang] added _actions\_restrict_
+    * [base\_lang] added _labels\_these_
     * [facebox\_lang] added _fbx\_content\_draft\_cleanup_
 * updated the default skin
     * [wiki] fixed bugs with disabled tabs in the jquery.ui.tabs stylesheet
 * updated the titan skin
     * [wiki] fixed bugs with disabled tabs in the jquery.ui.tabs stylesheet
+* fixed error thrown under certain circumstances related to the wrong type of parameter being passed to a PHP function
 
 ## Version History
 
