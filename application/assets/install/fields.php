@@ -81,6 +81,7 @@ $data = array(
 	'tour_fields'				=> array('id' => 'field_id', 'fields' => 'fields_tour_fields'),
 	'tour_values'				=> array('id' => 'value_id', 'fields' => 'fields_tour_values'),
 	'tour_decks'				=> array('id' => 'deck_id', 'fields' => 'fields_tour_decks'),
+	'uploads'					=> array('id' => 'upload_id', 'fields' => 'fields_uploads'),
 	'user_loa'					=> array('id' => 'loa_id', 'fields' => 'fields_user_loa'),
 	'user_prefs'				=> array('id' => 'pref_id', 'fields' => 'fields_user_prefs'),
 	'user_prefs_values'			=> array('id' => 'prefvalue_id', 'fields' => 'fields_user_prefs_values'),
@@ -89,7 +90,7 @@ $data = array(
 	'wiki_comments'				=> array('id' => 'wcomment_id', 'fields' => 'fields_wiki_comments'),
 	'wiki_drafts'				=> array('id' => 'draft_id', 'fields' => 'fields_wiki_drafts'),
 	'wiki_pages'				=> array('id' => 'page_id', 'fields' => 'fields_wiki_pages'),
-	'uploads'					=> array('id' => 'upload_id', 'fields' => 'fields_uploads')
+	'wiki_restrictions'			=> array('id' => 'restr_id', 'fields' => 'fields_wiki_restrictions'),
 );
 
 /**
@@ -1686,6 +1687,33 @@ $fields_tour_decks = array(
 		'default' => 0),
 );
 
+$fields_uploads = array(
+	'upload_id' => array(
+		'type' => 'BIGINT',
+		'constraint' => 20,
+		'auto_increment' => TRUE),
+	'upload_filename' => array(
+		'type' => 'TEXT'),
+	'upload_mime_type' => array(
+		'type' => 'VARCHAR',
+		'constraint' => 255,
+		'default' => ''),
+	'upload_resource_type' => array(
+		'type' => 'VARCHAR',
+		'constraint' => 100,
+		'default' => ''),
+	'upload_user' => array(
+		'type' => $user_id_type,
+		'constraint' => $user_id_constraint),
+	'upload_ip' => array(
+		'type' => 'VARCHAR',
+		'constraint' => 100,
+		'default' => ''),
+	'upload_date' => array(
+		'type' => $date_type,
+		'constraint' => $date_constraint),
+);
+
 $fields_user_loa = array(
 	'loa_id' => array(
 		'type' => 'INT',
@@ -2000,29 +2028,20 @@ $fields_wiki_pages = array(
 		'default' => ''),
 );
 
-$fields_uploads = array(
-	'upload_id' => array(
-		'type' => 'BIGINT',
-		'constraint' => 20,
+$fields_wiki_restrictions = array(
+	'restr_id' => array(
+		'type' => 'INT',
+		'constraint' => 10,
 		'auto_increment' => TRUE),
-	'upload_filename' => array(
-		'type' => 'TEXT'),
-	'upload_mime_type' => array(
-		'type' => 'VARCHAR',
-		'constraint' => 255,
-		'default' => ''),
-	'upload_resource_type' => array(
-		'type' => 'VARCHAR',
-		'constraint' => 100,
-		'default' => ''),
-	'upload_user' => array(
-		'type' => $user_id_type,
-		'constraint' => $user_id_constraint),
-	'upload_ip' => array(
-		'type' => 'VARCHAR',
-		'constraint' => 100,
-		'default' => ''),
-	'upload_date' => array(
+	'restr_page' => array(
+		'type' => 'INT',
+		'constraint' => 10),
+	'restr_created_at' => array(
 		'type' => $date_type,
 		'constraint' => $date_constraint),
+	'restr_created_by' => array(
+		'type' => $user_id_type,
+		'constraint' => $user_id_constraint),
+	'restrictions' => array(
+		'type' => 'TEXT'),
 );
