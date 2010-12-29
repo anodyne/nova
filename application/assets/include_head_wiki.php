@@ -39,19 +39,6 @@ $uiTheme = ( ! is_file(APPPATH .'views/'.$current_skin.'/wiki/css/jquery.ui.them
 			
 			.panel-handle ul, .panel-handle ol, .panel-body ul { margin: 0; padding: 0; list-style: none; }
 			.panel-handle ul li, .panel-handle ol li { margin: 0; }
-			
-			.label-system {
-				padding: 1px 3px;
-				
-				background: #2d90c3;
-				color: #fff;
-				text-shadow: 0 1px 0 rgba(0, 0, 0, .3);
-				font-size: 75%;
-				border: 1px solid #26749c;
-				
-				border-radius: 2px;
-				-moz-border-radius: 2px;
-			}
 		</style>
 			
 		<script type="text/javascript" src="<?php echo base_url().APPFOLDER.'/assets/js/jquery.js';?>"></script>
