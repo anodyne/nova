@@ -6,12 +6,10 @@
  * @category	Library
  * @author		Anodyne Productions
  * @copyright	2010-11 Anodyne Productions
- * @version		1.0.6
+ * @version		1.3
  *
- * Check to see if a user is pending and if they are don't allow them to log in,
- * attempted fix for the issue with always being locked out of an account, added
- * some debugging code to help track down the remember me bug, removed some debug
- * code since the autologin issues seem to have been solved
+ * Fixed error being thrown under certain circumstances with a wrong type of
+ * parameter being passed to an array_key_exists function
  */
 
 class Auth {
@@ -44,7 +42,10 @@ class Auth {
 		
 		if ($partial === FALSE)
 		{
-			if (!array_key_exists($uri, $this->ci->session->userdata('access')))
+			$access = $this->ci->session->userdata('access');
+			$access = ($access === FALSE) ? array() : $access;
+			
+			if ( ! array_key_exists($uri, $access))
 			{
 				if ($redirect === TRUE)
 				{
