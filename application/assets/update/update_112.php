@@ -380,6 +380,7 @@ $row = ($query->num_rows() > 0) ? $query->row() : FALSE;
 if ($row !== FALSE)
 {
 	$role = array('role_access' => $row->role_access.','.$ban_pageid.','.$manifests_pageid);
+	$this->db->where('role_id', $row->role_id);
 	$this->db->update('access_roles', $role);
 }
 
