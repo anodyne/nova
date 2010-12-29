@@ -5,10 +5,6 @@
 		$tabs = $('#tabs').tabs();
 		$tabs.tabs('select', <?php echo $tab;?>);
 		
-		<?php if ($type == 'system'): ?>
-			$tabs.tabs('option', 'disabled', [0, 2]);
-		<?php endif;?>
-		
 		$('table.zebra tbody > tr:nth-child(odd)').addClass('alt');
 		
 		$("a[rel*=facebox]").click(function(){
@@ -20,13 +16,6 @@
 				var id = $(this).attr('myID');
 				
 				location = '<?php echo site_url('ajax/add_comment_wiki');?>/' + id + '/<?php echo $string;?>';
-			}
-			else if (action == 'revert')
-			{
-				var page = $(this).attr('myPage');
-				var draft = $(this).attr('myDraft');
-				
-				location = '<?php echo site_url('ajax/revert_wiki_page');?>/' + page + '/' + draft + '/<?php echo $string;?>';
 			}
 			
 			$.facebox(function() {
