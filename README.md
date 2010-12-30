@@ -20,6 +20,11 @@ Anodyne Production's next-generation RPG management system combines popular feat
 * updated the head include files to clean up some code
 * updated thresher to be able to clean up old drafts
 * updated thresher page management to have a much better UX
+* updated thresher view page to have a better UI
+* updated thresher to be able to set restrictions on a wiki page based on access role
+* updated the auth library to store the user's access role ID in the session
+* updated the thresher main page to not show recently created and updated, just the system page
+* updated the RSS feed controller to have a feed for created wiki pages and updated wiki pages
 * updated the language files
     * [base\_lang] added _actions\_cleanup_
     * [base\_lang] added _labels\_drafts_
@@ -33,11 +38,16 @@ Anodyne Production's next-generation RPG management system combines popular feat
     * [base\_lang] added _actions\_restrict_
     * [base\_lang] added _labels\_these_
     * [facebox\_lang] added _fbx\_content\_draft\_cleanup_
+    * [error\_lang] added _error\_wiki\_1_
+    * [error\_lang] added _error\_wiki\_2_
 * updated the default skin
-    * [wiki] fixed bugs with disabled tabs in the jquery.ui.tabs stylesheet
+    * [wiki/css] fixed bugs with disabled tabs in the jquery.ui.tabs stylesheet
+    * [wiki/css] updated the jquery.ui.tabs stylesheet to use the new styles
+    * [wiki/css] updated the skin stylesheet with styles for the page management overhaul
 * updated the titan skin
-    * [wiki] fixed bugs with disabled tabs in the jquery.ui.tabs stylesheet
+    * [wiki/css] fixed bugs with disabled tabs in the jquery.ui.tabs stylesheet
 * fixed error thrown under certain circumstances related to the wrong type of parameter being passed to a PHP function
+* fixed major issues with the existing RSS feeds
 
 ## Version History
 
