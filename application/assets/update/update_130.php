@@ -192,3 +192,8 @@ $additem = array(
 	'comp_url' => 'http://www.unwrongest.com/projects/elastic/'
 );
 $this->db->insert('system_components', $additem);
+
+// update the level 3 wiki page item
+$this->db->where('page_url', 'wiki/page');
+$this->db->where('page_level', 3);
+$this->db->update('access_pages', array('page_desc' => "Can create, delete and edit all wiki pages (including system pages), including viewing history and reverting to previous drafts. Level 3 permissions can bypass all access restrictions on a wiki page."));

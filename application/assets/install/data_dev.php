@@ -463,7 +463,7 @@ $access_pages = array(
 		'page_url' => 'wiki/page',
 		'page_group' => 8,
 		'page_level' => 3,
-		'page_desc' => "Can create, delete and edit all wiki pages, including viewing history and reverting to previous drafts"),
+		'page_desc' => "Can create, delete and edit all wiki pages (including system pages), including viewing history and reverting to previous drafts. Level 3 permissions can bypass all access restrictions on a wiki page."),
 	array(
 		'page_name' => "Wiki Categories",
 		'page_url' => 'wiki/categories',
