@@ -8,7 +8,7 @@
 </div>
 
 <?php if (isset($recent['updates'])): ?>
-	<br />	
+	<br />
 	<table class="table100 zebra">
 		<thead>
 			<tr>
@@ -44,7 +44,8 @@
 			</tr>
 		<?php endforeach;?>
 		</tbody>
-	</table>
+	</table><br />
+	<p><?php echo anchor('feed/wiki/updated', img($images['feed']), array('class' => 'image'));?></p>
 <?php endif;?>
 
 <?php if (isset($recent['created'])): ?>
@@ -88,5 +89,6 @@
 			</tr>
 		<?php endforeach;?>
 		</tbody>
-	</table>
+	</table><br />
+	<p><?php echo anchor('feed/wiki/created', img($images['feed']), array('class' => 'image'));?></p>
 <?php endif;?>
