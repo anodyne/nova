@@ -357,11 +357,11 @@ class Wiki_model_base extends Model {
 	}
 	
 	/**
-	 * Create a page restriction record in the database.
+	 * Create a page restriction record.
 	 *
 	 * @since	1.3
 	 * @param	mixed	an array or object of information to go into the database
-	 * @return	object
+	 * @return	integer
 	 */
 	function create_page_restriction($data = '')
 	{
@@ -400,6 +400,24 @@ class Wiki_model_base extends Model {
 		$query = $this->db->update('wiki_pages', $data);
 		
 		$this->dbutil->optimize_table('wiki_pages');
+		
+		return $query;
+	}
+	
+	/**
+	 * Update a page restriction record.
+	 *
+	 * @since	1.3
+	 * @param	integer the page ID to update
+	 * @param	mixed	the array/object of data to update with
+	 * @return	integer
+	 */
+	function update_page_restriction($id, $data)
+	{
+		$this->db->where('restr_page', $id);
+		$query = $this->db->update('wiki_restrictions', $data);
+		
+		$this->dbutil->optimize_table('wiki_restrictions');
 		
 		return $query;
 	}
@@ -488,6 +506,22 @@ class Wiki_model_base extends Model {
 		$query = $this->db->delete('wiki_pages', array('page_id' => $id));
 		
 		$this->dbutil->optimize_table('wiki_pages');
+		
+		return $query;
+	}
+	
+	/**
+	 * Delete a page restriction.
+	 *
+	 * @since	1.3
+	 * @param	integer	the page ID to remove
+	 * @return	integer
+	 */
+	function delete_page_restriction($id)
+	{
+		$query = $this->db->delete('wiki_restrictions', array('restr_page' => $id));
+		
+		$this->dbutil->optimize_table('wiki_restrictions');
 		
 		return $query;
 	}
