@@ -9,7 +9,8 @@
  * @version		1.3
  *
  * Fixed error being thrown under certain circumstances with a wrong type of
- * parameter being passed to an array_key_exists function
+ * parameter being passed to an array_key_exists function, updated the session
+ * to store the user's access role ID
  */
 
 class Auth {
@@ -524,6 +525,7 @@ class Auth {
 		$array['dst'] = $person->daylight_savings;
 		$array['main_char'] = $person->main_char;
 		$array['characters'] = $characters;
+		$array['role'] = $person->access_role;
 		$array['access'] = $this->_set_access($person->access_role);
 		
 		/* put my links into an array */
