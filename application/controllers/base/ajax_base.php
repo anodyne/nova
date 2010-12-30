@@ -8101,6 +8101,18 @@ class Ajax_base extends Controller {
 			// figure out the skin
 			$skin = $this->session->userdata('skin_wiki');
 			
+			$data['images'] = array(
+				'loading' => array(
+					'src' => img_location('loading.gif', $skin, 'wiki'),
+					'alt' => ''),
+				'success' => array(
+					'src' => img_location('tick-circle.png', $skin, 'wiki'),
+					'alt' => ''),
+				'failure' => array(
+					'src' => img_location('exclamation-red.png', $skin, 'wiki'),
+					'alt' => ''),
+			);
+			
 			// figure out where the view should come from
 			$ajax = ajax_location('get_page_restrictions', $skin, 'wiki');
 			
@@ -8124,15 +8136,46 @@ class Ajax_base extends Controller {
 			
 			if (is_array($roles))
 			{
-				$insert_array = array(
-					'restr_page' => $page,
-					'restr_created_by' => $this->session->userdata('user'),
-					'restr_created_at' => now(),
-					'restrictions' => implode(',', $roles)
-				);
+				// check for the existence of a record
+				$exist = $this->wiki->get_page_restrictions($page);
 				
-				$insert = $this->wiki->insert_page_restriction($insert_array);
+				if ($exist->num_rows() > 0)
+				{
+					$update_array = array(
+						'restr_updated_by' => $this->session->userdata('userid'),
+						'restr_updated_at' => now(),
+						'restrictions' => implode(',', $roles)
+					);
+					
+					$update = $this->wiki->update_page_restriction($page, $update_array);
+					
+					// figure out what to send back to the browser
+					$retval = ($update > 0) ? '1' : '0';
+				}
+				else
+				{
+					$insert_array = array(
+						'restr_page' => $page,
+						'restr_created_by' => $this->session->userdata('userid'),
+						'restr_created_at' => now(),
+						'restrictions' => implode(',', $roles)
+					);
+					
+					$insert = $this->wiki->create_page_restriction($insert_array);
+					
+					// figure out what to send back to the browser
+					$retval = ($insert > 0) ? '1' : '0';
+				}
 			}
+			else
+			{
+				$delete = $this->wiki->delete_page_restriction($page);
+				
+				// figure out what to send back to the browser
+				$retval = ($delete > 0) ? '1' : '0';
+			}
+			
+			echo $retval;
 		}
 	}
 }
