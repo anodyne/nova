@@ -1,156 +1,60 @@
-/* Caution! Ensure accessibility in print and other media types... */
-@media projection, screen { /* Use class for showing/hiding tab content */
-    .ui-tabs-hide {
-        display: none;
-    }
+.ui-tabs {
+	position: relative;
+	margin: .5em 0 0 0;
+	padding: .5em;
+	zoom: 1;
 }
-
-/* Hide useless elements in print layouts... */
-@media print {
-    .ui-tabs-nav {
-        display: none;
-    }
+.ui-tabs .ui-tabs-nav {
+	margin: 0;
+	padding: .2em 0;
+	height: 23px;
 }
-
-#tabs {
+.ui-tabs .ui-tabs-nav li {
 	float: left;
-	width: 100%;
-	margin: 1em 0;
-}
-
-#one, #two, #three, #four, #five,
-#six, #seven, #eight, #nine, #ten,
-#eleven, #twelve { clear: left; }
-
-/* Skin */
-.ui-tabs-nav {
-    margin: 0;
-    padding: 0;
-    height: 28px;
-	line-height: 28px;
-    
-    list-style: none;
-    border: 1px solid #ddd !important;
-    background: #eee url('../images/gradient-soft-30.png') repeat-x top left !important;
-    
-    border-radius: 3px;
-    -moz-border-radius: 3px;
-    -webkit-border-radius: 3px;
-}
-.ui-tabs-nav:after { /* clearing without presentational markup, IE gets extra treatment */
-    display: block;
-    clear: both;
-    content: " ";
-}
-.ui-tabs-nav li {
-    float: left;
-    margin: 4px !important;
-    min-width: 84px; /* be nice to Opera */
-}
-.ui-tabs-nav a, .ui-tabs-nav a span {
-    display: block;
-    padding: 0 !important;
-}
-.ui-tabs-nav a {
-    position: relative;
-    z-index: 2;
-    padding-left: 0;
-    line-height: 1.4;
-    
-    font-weight: bold;
-    text-align: center;
-    text-decoration: none;
-    white-space: nowrap; /* required in IE 6 */
-    background: transparent;
-    color: #999;
-    border: 0;
-    font-size: 85%;
-    
-    border-radius: 20px;
-    -moz-border-radius: 20px;
-    -webkit-border-radius: 20px;
-}
-.ui-tabs-nav .ui-tabs-selected,
-.ui-tabs-nav .ui-tabs-selected a,
-.ui-tabs-nav .ui-tabs-selected a:hover {
-    outline: 0; /* prevent dotted border in Firefox */
+	position: relative;
+	top: 1px;
+	margin: 0 5px 0 0;
+	padding: 0 0 1px 0;
+	padding: 0;
+	white-space: nowrap;
+	height: 24px;
+	line-height: 24px;
 	
-	background: #888;
-    border: 0;
-    color: #fff;
+	list-style: none;
+	border: 1px solid transparent;
 	
-    border-radius: 20px;
-	-moz-border-radius: 20px;
-    -webkit-border-radius: 20px;
-    
-    box-shadow: -1px 1px 2px rgba(255, 255, 255, .4);
-    -moz-box-shadow: -1px 1px 2px rgba(255, 255, 255, .4);
-    -webkit-box-shadow: -1px 1px 2px rgba(255, 255, 255, .4);
+	border-radius: 6px;
+	-moz-border-radius: 6px;
 }
-.ui-tabs-nav a:hover, .ui-tabs-nav a:active {
-    outline: 0; /* prevent dotted border in Firefox */
-    
-    background-color: #bbb;
-	color: #fff;
+.ui-tabs .ui-tabs-nav li a {
+	float: left;
+	padding: 0 10px;
+	margin: 2px 0 0 0;
+	
+	text-decoration: none;
 	border: 0;
+}
+.ui-tabs .ui-tabs-nav li.ui-state-hover {
+	background: #f8f8f8;
+}
+.ui-tabs .ui-tabs-nav li.ui-state-hover a {}
+.ui-tabs .ui-tabs-nav li.ui-tabs-selected {
+	background: #f5f5f5;
+	border: 1px solid #e5e5e5;
+}
+.ui-tabs .ui-tabs-nav li.ui-tabs-selected a {}
+.ui-tabs .ui-tabs-nav li.ui-tabs-selected a,
+.ui-tabs .ui-tabs-nav li.ui-state-disabled a,
+.ui-tabs .ui-tabs-nav li.ui-state-processing a {
+	cursor: text;
+}
+.ui-tabs .ui-tabs-nav li a,
+.ui-tabs.ui-tabs-collapsible .ui-tabs-nav li.ui-tabs-selected a {
+	cursor: pointer;
+}
+.ui-tabs .ui-tabs-panel {
+	padding: .5em;
 	
-	border-radius: 20px;
-	-moz-border-radius: 20px;
-    -webkit-border-radius: 20px;
+	background: none;
 }
-
-.ui-state-disabled a, .ui-state-disabled a:hover {
-    outline: 0; /* prevent dotted border in Firefox */
-    
-    background-color: transparent;
-    color: #bbb;
-    cursor: default !important;
-}
-
-.ui-tabs-nav a,
-.ui-tabs-nav .ui-state-disabled a:hover,
-.ui-tabs-nav .ui-state-disabled a:focus,
-.ui-tabs-nav .ui-state-disabled a:active {}
-
-.ui-tabs-nav a span {
-    min-width: 64px;
-    height: 20px; /* IE 6 treats height as min-height */
-    min-height: 20px;
-    line-height: 19px;
-    padding: 0 10px !important;
-}
-*>.ui-tabs-nav a span { /* hide from IE 6 */
-    width: auto;
-    height: auto;
-}
-.ui-tabs-nav .ui-tabs-selected a span { padding-top: 4px; }
-
-.ui-tabs-nav .ui-tabs-selected a span, 
-.ui-tabs-nav a:hover span,
-.ui-tabs-nav a:focus span,
-.ui-tabs-nav a:active span {}
-
-.ui-tabs-nav a span,
-.ui-tabs-nav .ui-state-disabled a:hover span,
-.ui-tabs-nav .ui-state-disabled a:focus span,
-.ui-tabs-nav .ui-state-disabled a:active span {}
-
-.ui-tabs-nav .ui-tabs-selected a:link,
-.ui-tabs-nav .ui-tabs-selected a:visited,
-.ui-tabs-nav .ui-tabs-disabled a:link,
-.ui-tabs-nav .ui-tabs-disabled a:visited { cursor: pointer; }
-
-.ui-tabs-nav a:hover,
-.ui-tabs-nav a:focus,
-.ui-tabs-nav a:active { cursor: pointer; }
-
-.ui-tabs-panel {
-    padding: .5em 8px;
-    
-    background: #fcfcfc; /* declare background color for container to avoid distorted fonts in IE while fading */
-}
-.ui-tabs-loading em {
-    padding: 0 0 0 20px;
-    
-    background: url(../images/loading.gif) no-repeat 0 50%;
-}
+.ui-tabs .ui-tabs-hide { display: none !important; }
