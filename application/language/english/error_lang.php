@@ -4,9 +4,9 @@
 | LANGUAGE FILE - ENGLISH
 |---------------------------------------------------------------
 | File: application/language/english/error_lang.php
-| System Version: 1.2
+| System Version: 1.3
 |
-| Changes: added error_wcp_1
+| Changes: added error_wiki_1, added error_wiki_2
 |
 | English language file for the system. Punctuation constants are
 | defined in ./application/config/constants.php
@@ -131,6 +131,9 @@ $lang['error_skin_defaults'] = 'You do not have defaults set for each skin secti
 $lang['error_no_mission_fail'] = "No current %s exist! In order to create a %s, you must first create a %s.";
 
 $lang['error_illegal_post'] = 'Your entry was not posted because you are not a member of the post.';
+
+$lang['error_wiki_1'] = "The wiki page you attempted to view is a restricted page that you are not authorized to view. If you believe you've received this message in error, please contact the %s.";
+$lang['error_wiki_2'] = "The wiki page draft you attempted to view is associated with a restricted wiki page which you are not authorized to view. If you believe you've received this message in error, please contact the %s.";
 
 /* End of file error_lang.php */
 /* Location: ./application/language/english/error_lang.php */
