@@ -2042,6 +2042,12 @@ $fields_wiki_restrictions = array(
 	'restr_created_by' => array(
 		'type' => $user_id_type,
 		'constraint' => $user_id_constraint),
+	'restr_updated_at' => array(
+		'type' => $date_type,
+		'constraint' => $date_constraint),
+	'restr_updated_by' => array(
+		'type' => $user_id_type,
+		'constraint' => $user_id_constraint),
 	'restrictions' => array(
 		'type' => 'TEXT'),
 );
