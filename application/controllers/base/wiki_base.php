@@ -16,7 +16,7 @@
 
 class Wiki_base extends Controller {
 
-	/* set the variables */
+	// set the variables
 	var $options;
 	var $skin;
 	var $rank;
@@ -27,12 +27,12 @@ class Wiki_base extends Controller {
 	{
 		parent::Controller();
 		
-		/* load the system model */
+		// load the system model
 		$this->load->model('system_model', 'sys');
 		$installed = $this->sys->check_install_status();
 		
 		if ($installed === FALSE)
-		{ /* check whether the system is installed */
+		{
 			redirect('install/index', 'refresh');
 		}
 		
@@ -41,19 +41,19 @@ class Wiki_base extends Controller {
 			show_error("Due to a bug in Thresher we have been unable to identify, you must be running at least PHP 5.0 or higher on your server in order to use Nova's mini-wiki feature. We apologize for this inconvenience and will continue to troubleshoot the bug to find a resolution that will allow PHP 4 servers to run Thresher. If you have any questions, please contact <a href='http://www.anodyne-productions.com' target='_blank'>Anodyne Productions</a>.");
 		}
 		
-		/* load the libraries */
+		// load the libraries
 		$this->load->library('session');
 		$this->load->library('thresher');
 		
-		/* load the models */
+		// load the models
 		$this->load->model('characters_model', 'char');
 		$this->load->model('users_model', 'user');
 		$this->load->model('wiki_model', 'wiki');
 		
-		/* check to see if they are logged in */
+		// check to see if they are logged in
 		$this->auth->is_logged_in();
 		
-		/* an array of the global we want to retrieve */
+		// an array of the global we want to retrieve
 		$settings_array = array(
 			'skin_wiki',
 			'display_rank',
@@ -65,10 +65,10 @@ class Wiki_base extends Controller {
 			'email_subject'
 		);
 		
-		/* grab the settings */
+		// grab the settings
 		$this->options = $this->settings->get_settings($settings_array);
 		
-		/* set the variables */
+		// set the variables
 		$this->skin = $this->options['skin_wiki'];
 		$this->rank = $this->options['display_rank'];
 		$this->timezone = $this->options['timezone'];
@@ -84,21 +84,21 @@ class Wiki_base extends Controller {
 			$this->dst = (bool) $this->session->userdata('dst');
 		}
 		
-		/* set and load the language file needed */
+		// set and load the language file needed
 		$this->lang->load('app', $this->session->userdata('language'));
 		
-		/* set the template */
+		// set the template
 		$this->template->set_template('wiki');
 		$this->template->set_master_template($this->skin . '/template_wiki.php');
 		
-		/* write the common elements to the template */
+		// write the common elements to the template
 		$this->template->write('nav_main', $this->menu->build('main', 'main'), TRUE);
 		$this->template->write('nav_sub', $this->menu->build('sub', 'wiki'), TRUE);
 		$this->template->write('title', $this->options['sim_name'] . ' :: ');
 		
 		if ($this->auth->is_logged_in())
 		{
-			/* create the user panels */
+			// create the user panels
 			$this->template->write('panel_1', $this->user_panel->panel_1(), TRUE);
 			$this->template->write('panel_2', $this->user_panel->panel_2(), TRUE);
 			$this->template->write('panel_3', $this->user_panel->panel_3(), TRUE);
@@ -112,68 +112,20 @@ class Wiki_base extends Controller {
 		$syspage = $this->wiki->get_system_page('index');
 		
 		// send the system page to the view
-		$data['title'] = $syspage->draft_title;
+		$data['header'] = $syspage->draft_title;
 		$data['syspage'] = $syspage->draft_content;
 		
-		/* grab the recently updated items */
-		$updated = $this->wiki->get_recently_updated();
+		// build the page title
+		$pagetitle = ucwords(lang('global_wiki').' - '.lang('labels_main').' '.lang('labels_page'));
 		
-		if ($updated->num_rows() > 0)
-		{
-			foreach ($updated->result() as $u)
-			{
-				$data['recent']['updates'][] = array(
-					'id' => $u->page_id,
-					'title' => $u->draft_title,
-					'author' => $this->char->get_character_name($u->page_updated_by_character),
-					'timespan' => timespan_short($u->page_updated_at, now()),
-					'comments' => $u->draft_changed_comments,
-					'type' => $u->page_type,
-				);
-			}
-		}
-		
-		/* grab the recently updated items */
-		$created = $this->wiki->get_recently_created();
-		
-		if ($created->num_rows() > 0)
-		{
-			foreach ($created->result() as $c)
-			{
-				$data['recent']['created'][] = array(
-					'id' => $c->page_id,
-					'title' => $c->draft_title,
-					'author' => $this->char->get_character_name($c->page_created_by_character),
-					'timespan' => timespan_short($c->page_created_at, now()),
-					'summary' => $c->draft_summary,
-					'type' => $c->page_type,
-				);
-			}
-		}
-		
-		$data['header'] = ucwords(lang('global_wiki') .' - '. lang('labels_main') .' '. lang('labels_page'));
-		
-		$data['label'] = array(
-			'ago' => lang('time_ago'),
-			'by' => lang('labels_by'),
-			'page' => ucfirst(lang('labels_page')),
-			'recent_created' => ucwords(lang('status_recently') .' '. lang('actions_created')),
-			'recent_updates' => ucwords(lang('status_recently') .' '. lang('actions_updated')),
-			'summary' => ucfirst(lang('labels_summary')),
-			'system' => ucfirst(lang('labels_system')),
-			'updates' => ucwords(lang('actions_update') .' '. lang('labels_summary')),
-		);
-		
-		/* figure out where the view files should be coming from */
+		// figure out where the view files should be coming from
 		$view_loc = view_location('wiki_index', $this->skin, 'wiki');
-		$js_loc = js_location('wiki_index_js', $this->skin, 'wiki');
 		
-		/* write the data to the template */
+		// write the data to the template
 		$this->template->write_view('content', $view_loc, $data);
-		$this->template->write_view('javascript', $js_loc);
-		$this->template->write('title', $data['header']);
+		$this->template->write('title', $pagetitle);
 		
-		/* render the template */
+		// render the template
 		$this->template->render();
 	}
 	
@@ -277,6 +229,37 @@ class Wiki_base extends Controller {
 		$this->template->write('title', $data['header']);
 		
 		/* render the template */
+		$this->template->render();
+	}
+	
+	/**
+	 * Error page that used by the new page restriction code.
+	 *
+	 * 1 - This is a restricted wiki page that you are not authorized to view
+	 * 2 - This draft is associated with a restricted wiki page that you are not authorized to view
+	 *
+	 * @since	1.3
+	 * @param	integer	the error code
+	 */
+	function error($code = 0)
+	{
+		// set the header
+		$data['header'] = ucfirst(lang('error_pagetitle'));
+		
+		// build the error message
+		$data['message'] = sprintf(
+			lang('error_wiki_'.$code),
+			lang('global_game_master')
+		);
+		
+		// figure out where the view files should be coming from
+		$view_loc = view_location('wiki_error', $this->skin, 'wiki');
+		
+		// write the data to the template
+		$this->template->write_view('content', $view_loc, $data);
+		$this->template->write('title', $data['header']);
+		
+		// render the template
 		$this->template->render();
 	}
 	
@@ -1257,6 +1240,12 @@ class Wiki_base extends Controller {
 			'update_summary' => ucwords(lang('actions_update') .' '. lang('labels_summary')),
 		);
 		
+		$data['images'] = array(
+			'feed' => array(
+				'src' => img_location('feed.png', $this->skin, 'wiki'),
+				'alt' => ''),
+		);
+		
 		/* figure out where the view files should be coming from */
 		$view_loc = view_location('wiki_recent', $this->skin, 'wiki');
 		$js_loc = js_location('wiki_recent_js', $this->skin, 'wiki');
@@ -1381,52 +1370,92 @@ class Wiki_base extends Controller {
 			/* grab the information about the page */
 			$draft = $this->wiki->get_draft($id);
 			
-			if ($draft->num_rows() > 0)
+			// get the draft object
+			$d = ($draft->num_rows() > 0) ? $draft->row() : FALSE;
+			
+			if ($d !== FALSE)
 			{
-				foreach ($draft->result() as $d)
+				// check page restrictions
+				$restrict = $this->wiki->get_page_restrictions($d->draft_page);
+				
+				if ($restrict->num_rows() > 0)
 				{
-					/* set the date */
-					$created = gmt_to_local($d->draft_created_at, $this->timezone, $this->dst);
+					// get the row that contains the data
+					$r = $restrict->row();
 					
-					$data['header'] = ucfirst(lang('labels_draft')) .' - '. $d->draft_title;
+					// make an array of the restrictions
+					$allowed = explode(',', $r->restrictions);
 					
-					$count = substr_count($d->draft_categories, ',');
-					
-					if ($count === 0 && empty($d->draft_categories))
+					if ($level < 3)
 					{
-						$string = sprintf(
-							lang('error_not_found'),
-							lang('labels_categories')
-						);
-					}
-					else
-					{
-						$categories = explode(',', $d->draft_categories);
-						
-						foreach ($categories as $c)
+						if ( ! $this->auth->is_logged_in() || ! in_array($this->session->userdata('role'), $allowed))
 						{
-							$name = $this->wiki->get_category($c, 'wikicat_name');
-							
-							$cat[] = anchor('wiki/category/'. $c, $name);
+							redirect('wiki/error/2');
 						}
-						
-						$string = implode(' | ', $cat);
 					}
-					
-					$data['draft'] = array(
-						'content' => $this->thresher->parse($d->draft_content),
-						'created' => $this->char->get_character_name($d->draft_author_character, TRUE),
-						'created_date' => mdate($datestring, $created),
-						'page' => $d->draft_page,
-						'categories' => $string,
+				}
+				
+				/* set the date */
+				$created = gmt_to_local($d->draft_created_at, $this->timezone, $this->dst);
+				
+				$data['header'] = ucfirst(lang('labels_draft')) .' - '. $d->draft_title;
+				
+				$count = substr_count($d->draft_categories, ',');
+				
+				if ($count === 0 && empty($d->draft_categories))
+				{
+					$string = sprintf(
+						lang('error_not_found'),
+						lang('labels_categories')
 					);
 				}
+				else
+				{
+					$categories = explode(',', $d->draft_categories);
+					
+					foreach ($categories as $c)
+					{
+						$name = $this->wiki->get_category($c, 'wikicat_name');
+						
+						$cat[] = anchor('wiki/category/'. $c, $name);
+					}
+					
+					$string = implode(' | ', $cat);
+				}
+				
+				$data['draft'] = array(
+					'content' => $this->thresher->parse($d->draft_content),
+					'created' => $this->char->get_character_name($d->draft_author_character, TRUE),
+					'created_date' => mdate($datestring, $created),
+					'page' => $d->draft_page,
+					'categories' => $string,
+				);
 			}
 			
 			$view_loc = view_location('wiki_view_draft', $this->skin, 'wiki');
 		}
 		else
 		{
+			// check page restrictions
+			$restrict = $this->wiki->get_page_restrictions($id);
+			
+			if ($restrict->num_rows() > 0)
+			{
+				// get the row that contains the data
+				$r = $restrict->row();
+				
+				// make an array of the restrictions
+				$allowed = explode(',', $r->restrictions);
+				
+				if ($level < 3)
+				{
+					if ( ! $this->auth->is_logged_in() || ! in_array($this->session->userdata('role'), $allowed))
+					{
+						redirect('wiki/error/1');
+					}
+				}
+			}
+			
 			$data['id'] = $id;
 			
 			/*
@@ -1561,18 +1590,30 @@ class Wiki_base extends Controller {
 		}
 		
 		$data['images'] = array(
-			'revert' => array(
-				'src' => img_location('page-revert.png', $this->skin, 'wiki'),
-				'alt' => '',
-				'title' => ucfirst(lang('actions_revert'))),
 			'view' => array(
-				'src' => img_location('page-view.png', $this->skin, 'wiki'),
+				'src' => img_location('magnifier.png', $this->skin, 'wiki'),
 				'alt' => '',
 				'title' => ucfirst(lang('actions_view'))),
+			'edit' => array(
+				'src' => img_location('icon-edit.png', $this->skin, 'wiki'),
+				'alt' => '',
+				'class' => 'image subnav-icon'),
 			'comment' => array(
 				'src' => img_location('comment-add.png', $this->skin, 'wiki'),
 				'alt' => '',
-				'class' => 'inline_img_left image'),
+				'class' => 'image subnav-icon'),
+			'page' => array(
+				'src' => img_location('page.png', $this->skin, 'wiki'),
+				'alt' => '',
+				'title' => ucfirst(lang('labels_page'))),
+			'history' => array(
+				'src' => img_location('clock-history.png', $this->skin, 'wiki'),
+				'alt' => '',
+				'title' => ucfirst(lang('labels_history'))),
+			'comments' => array(
+				'src' => img_location('comment-add.png', $this->skin, 'wiki'),
+				'alt' => '',
+				'title' => ucfirst(lang('labels_comments'))),
 		);
 		
 		$data['label'] = array(
@@ -1584,7 +1625,7 @@ class Wiki_base extends Controller {
 			'comments' => ucfirst(lang('labels_comments')),
 			'created' => lang('actions_created'),
 			'draft' => ucfirst(lang('labels_draft')),
-			'edit' => '[ '. ucfirst(lang('actions_edit')) .' ]',
+			'edit' => ucfirst(lang('actions_edit')),
 			'history' => ucfirst(lang('labels_history')),
 			'nocomments' => sprintf(
 				lang('error_not_found'),

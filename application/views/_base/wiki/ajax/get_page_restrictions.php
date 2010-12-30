@@ -10,7 +10,7 @@
 			<?php endif;?>
 					
 					<td>
-						<?php echo form_checkbox('roles[]', $key, in_array($role, $checked), 'id="'.$key.'"');?>
+						<?php echo form_checkbox('roles[]', $key, in_array($key, $checked), 'id="'.$key.'"');?>
 						<label for="<?php echo $key;?>"><?php echo $role;?></label>
 					</td>
 					
@@ -30,6 +30,10 @@
 	</table><br />
 	
 	<?php echo form_button($submit);?>
+	&nbsp;
+	<span id="submit-loading" class="hidden"><?php echo img($images['loading']);?></span>
+	<span id="submit-success" class="hidden"><?php echo img($images['success']);?></span>
+	<span id="submit-failure" class="hidden"><?php echo img($images['failure']);?></span>
 <?php else: ?>
 	<?php echo text_output($label['no_roles'], 'h3', 'orange');?>
 <?php endif;?>

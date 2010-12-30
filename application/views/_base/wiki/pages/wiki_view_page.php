@@ -1,22 +1,31 @@
 <?php echo text_output($header, 'h1', 'page-head');?>
 
 <?php if ($this->auth->is_logged_in()): ?>
-	<p class="bold">
-		<a href="#" myAction="comment" rel="facebox" myID="<?php echo $id;?>" class="image">
-			<?php echo img($images['comment']) .' '. $label['addcomment'];?>
-		</a>
-	</p>
+	<div class="wiki-subnav">
+		<div class="subnav-options"></div>
+		<div class="subnav-content">
+			<ul>
+				<li>
+					<a href="#" myAction="comment" rel="facebox" myID="<?php echo $id;?>" class="image">
+						<?php echo img($images['comment']) .' '. $label['addcomment'];?>
+					</a>
+				</li>
+				
+				<?php if ($edit): ?>
+					<li>
+						<?php echo anchor('wiki/page/'.$id.'/edit', img($images['edit']).' '.$label['edit'], array('class' => 'image'));?>
+					</li>
+				<?php endif;?>
+			</ul>
+		</div>
+	</div>
 <?php endif;?>
-
-<p class="bold fontSmall"><?php echo link_to_if($edit, 'wiki/page/'. $id .'/edit', $label['edit'], array('class' => 'edit'));?></p>
-
-<?php echo text_output($page['summary'], 'p', 'gray italic');?>
 
 <div id="tabs">
 	<ul>
-		<li><a href="#one"><span><?php echo $label['page'];?></span></a></li>
-		<li><a href="#two"><span><?php echo $label['history'];?></span></a></li>
-		<li><a href="#three"><span><?php echo $label['comments'];?> (<?php echo $comment_count;?>)</span></a></li>
+		<li><a href="#one"><?php echo img($images['page']);?></a></li>
+		<li><a href="#two"><?php echo img($images['history']);?></a></li>
+		<li><a href="#three"><?php echo img($images['comments']);?></a></li>
 	</ul>
 	
 	<div id="one">

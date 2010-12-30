@@ -155,9 +155,22 @@
 			});
 			
 			$.ajax({
+				beforeSend: function(){
+					$('#page-' + item + ' .page-supplemental .page-restrictions .loaded #submit-success').hide();
+					$('#page-' + item + ' .page-supplemental .page-restrictions .loaded #submit-failure').hide();
+					$('#page-' + item + ' .page-supplemental .page-restrictions .loaded #submit-loading').show();
+				},
 				type: "POST",
 				url: "<?php echo site_url('ajax/wiki_set_page_restrictions').'/'.$string;?>",
-				data: { page: item, roles: roles }
+				data: { page: item, roles: roles },
+				success: function(data){
+					$('#page-' + item + ' .page-supplemental .page-restrictions .loaded #submit-loading').hide();
+					
+					if (data == '1')
+						$('#page-' + item + ' .page-supplemental .page-restrictions .loaded #submit-success').show();
+					else
+						$('#page-' + item + ' .page-supplemental .page-restrictions .loaded #submit-failure').show();
+				}
 			});
 			
 			return false;
