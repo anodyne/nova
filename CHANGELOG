@@ -1,6 +1,9 @@
-* updated the batch file, changelog and changed files listing
-* updated the readme
-* updated the install files and 1.2.1 update file
-* fixed bug where positions were disappearing when updating them
-* fixed error thrown from the rss feed template
-* fixed errors being thrown when trying to save character images under certain circumstances
+* updating the install and 1.2.2 update file
+* fixed bug in the 1.1.2 to 1.2 update file that would cause access issues
+* updated the install files, version YAML file and the 1.2.2 update file
+* fixed bug where post emails weren't display authors correctly
+* updated the version file and install data
+* starting to figure out what's going on with post emails
+* updated the version info in the constants config file
+* fixed bug where sub departments couldn't be managed from the department management page
+* added the 1.2.2 update file
