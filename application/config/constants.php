@@ -84,6 +84,3 @@ define('APP_DATA_SRC', 'basic');
 define('IS_AJAX', isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest');
 
 /* CI_VERSION is available as a constant and is defined in ./core/codeigniter/CodeIgniter.php */
-
-/* End of file constants.php */
-/* Location: ./application/config/constants.php */

@@ -2258,10 +2258,10 @@ class Write_base extends Controller {
 				$location = lang('email_content_post_location') . $data['location'];
 				
 				// get an array of authors
-				$authors = explode(',', $data['authors']);
+				$authorsArr = explode(',', $data['authors']);
 				
 				// find out what's the same
-				$same = array_values(array_intersect($authors, $this->session->userdata('characters')));
+				$same = array_values(array_intersect($authorsArr, $this->session->userdata('characters')));
 				
 				// figure out who it should come from
 				$from = (in_array($this->session->userdata('main_char'), $same)) ? $this->session->userdata('main_char') : $same[0];
@@ -2425,10 +2425,10 @@ class Write_base extends Controller {
 				$location = lang('email_content_post_location') . $data['location'];
 				
 				// get an array of authors
-				$authors = explode(',', $data['authors']);
+				$authorsArr = explode(',', $data['authors']);
 				
 				// find out what's the same
-				$same = array_values(array_intersect($authors, $this->session->userdata('characters')));
+				$same = array_values(array_intersect($authorsArr, $this->session->userdata('characters')));
 				
 				// figure out who it should come from
 				$from = (in_array($this->session->userdata('main_char'), $same)) ? $this->session->userdata('main_char') : $same[0];

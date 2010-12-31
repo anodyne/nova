@@ -1,9 +1,9 @@
-version: 1.2.1
+version: 1.2.2
 version_major: 1
 version_minor: 2
-version_update: 1
+version_update: 2
 severity: minor
 notes: |
-  Nova 1.2.1 is the first maintenance release for Nova 1.2 and addresses several bugs discovered after the initial release of the new version. Bugs fixed in this release include a bug where positions would disappear after being updated and errors thrown throughout the system. More information about these features and a full changelog can be found at AnodyneDocs. This update is recommended for all users.
-date: 23 December 2010
+  Nova 1.2.2 is the second maintenance release for Nova 1.2 and two bugs discovered after the release of Nova 1.2.1. Bugs fixed in this release include a bug where sub departments couldn't be managed from the department management page and a bug with the display of post authors in emails. More information about these features and a full changelog can be found at AnodyneDocs. This update is recommended for all users.
+date: 30 December 2010
 link: http://www.anodyne-productions.com
