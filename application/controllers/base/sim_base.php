@@ -5,10 +5,11 @@
 |---------------------------------------------------------------
 |
 | File: controllers/base/sim_base.php
-| System Version: 1.2
+| System Version: 1.2.3
 |
 | Changes: updated the department listing to show which manifest
-|	the department is associated with
+|	the department is associated with; fixed bug where the deck
+|	listing didn't break up decks by specification item
 |
 */
 
@@ -307,16 +308,42 @@ class Sim_base extends Controller {
 	{
 		/* load the models */
 		$this->load->model('tour_model', 'tour');
+		$this->load->model('specs_model', 'specs');
 		
-		/* run the methods */
-		$decks = $this->tour->get_decks();
+		// get the variables
+		$item = $this->uri->segment(3);
 		
-		if ($decks->num_rows() > 0)
+		if ($item !== FALSE)
 		{
-			foreach ($decks->result() as $row)
-			{ /* build the decks array */
-				$data['decks'][$row->deck_id]['name'] = $row->deck_name;
-				$data['decks'][$row->deck_id]['content'] = $row->deck_content;
+			// run the methods
+			$decks = $this->tour->get_decks($item);
+			
+			if ($decks->num_rows() > 0)
+			{
+				foreach ($decks->result() as $row)
+				{
+					$data['decks'][$row->deck_id]['name'] = $row->deck_name;
+					$data['decks'][$row->deck_id]['content'] = $row->deck_content;
+				}
+			}
+		}
+		else
+		{
+			// get all the specification items
+			$specs = $this->specs->get_spec_items();
+			
+			// start with an empty array
+			$data['specs'] = array();
+			
+			if ($specs->num_rows() > 0)
+			{
+				foreach ($specs->result() as $s)
+				{
+					$data['specs'][$s->specs_id] = array(
+						'name' => $s->specs_name,
+						'desc' => $s->specs_summary
+					);
+				}
 			}
 		}
 		
