@@ -1,9 +1,9 @@
-version: 1.2.2
+version: 1.2.3
 version_major: 1
 version_minor: 2
-version_update: 2
+version_update: 3
 severity: minor
 notes: |
-  Nova 1.2.2 is the second maintenance release for Nova 1.2 and two bugs discovered after the release of Nova 1.2.1. Bugs fixed in this release include a bug where sub departments couldn't be managed from the department management page and a bug with the display of post authors in emails. More information about these features and a full changelog can be found at AnodyneDocs. This update is recommended for all users.
-date: 30 December 2010
+  Nova 1.2.3 is the third maintenance release for Nova 1.2 and fixes a bug with handling deck listings with multiple specification items. More information about these features and a full changelog can be found at AnodyneDocs. This update is recommended for all users.
+date: 04 January 2011
 link: http://www.anodyne-productions.com

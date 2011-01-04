@@ -4,20 +4,21 @@ Anodyne Production's next-generation RPG management system combines popular feat
 
 ## Current Version
 
-1.2.2
+1.2.3
 
-## Changes in 1.2
+## Changes in 1.2.3
 
-* added the 1.2.2 update file
-* fixed bug where sub departments couldn't be managed from the department management page
-* fixed bug where post emails sent out didn't display the authors properly
-* fixed bug in the 1.1.2 to 1.2 update file that would cause access issues
+* added the 1.2.3 update file
+* fixed bug with handling deck listings and multiple specification items
 
 ## Version History
 
 <table>
 	<tr>
 		<th>Version</th><th>Release Date</th>
+	</tr>
+	<tr>
+		<td>1.2.3</td><td>04 January 2011</td>
 	</tr>
 	<tr>
 		<td>1.2.2</td><td>30 December 2010</td>
