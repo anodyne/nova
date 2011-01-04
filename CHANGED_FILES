@@ -10,8 +10,7 @@ M	application/assets/install/data_dev.php
 M	application/assets/install/fields.php
 A	application/assets/js/jquery.elastic.js
 M	application/assets/js/jquery.lazy.js
-M	application/assets/update/update_112.php
-D	application/assets/update/update_121.php
+D	application/assets/update/update_122.php
 A	application/assets/update/update_130.php
 M	application/assets/update/versions.php
 M	application/assets/version.yml
@@ -138,7 +137,7 @@ M	application/views/_base/admin/js/messages_write_js.php
 M	application/views/_base/admin/js/write_missionpost_js.php
 M	application/views/_base/admin/js/write_newsitem_js.php
 M	application/views/_base/admin/js/write_personallog_js.php
-M	application/views/_base/admin/pages/manage_depts.php
+M	application/views/_base/main/pages/sim_decks.php
 M	application/views/_base/rss_items.php
 A	application/views/_base/wiki/ajax/del_wiki_draft.php
 M	application/views/_base/wiki/ajax/del_wiki_page.php

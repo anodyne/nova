@@ -3845,7 +3845,7 @@ $system_info = array(
 		'sys_install_date' => now(),
 		'sys_version_major' => 1,
 		'sys_version_minor' => 2,
-		'sys_version_update' => 2)
+		'sys_version_update' => 3)
 );
 
 $system_versions = array(
@@ -4169,6 +4169,15 @@ $system_versions = array(
 * fixed bug where sub departments couldn't be managed from the department management page
 * fixed bug where post emails sent out didn't display the authors properly
 * fixed bug in the 1.1.2 to 1.2 update file that would cause access issues"),
+	array(
+		'version'			=> '1.2.3',
+		'version_major'		=> 1,
+		'version_minor'		=> 2,
+		'version_update'	=> 3,
+		'version_date'		=> 1294185600,
+		'version_launch'	=> "Nova 1.2.3 is the third maintenance release for Nova 1.2 and fixes a bug with handling deck listings with multiple specification items. More information about these features and a full changelog can be found at AnodyneDocs. This update is recommended for all users.",
+		'version_changes'	=> "* added the 1.2.3 update file
+	* fixed bug with handling deck listings and multiple specification items"),
 );
 
 $tour = array(
