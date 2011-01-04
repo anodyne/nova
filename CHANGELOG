@@ -1,9 +1,2 @@
-* updating the install and 1.2.2 update file
-* fixed bug in the 1.1.2 to 1.2 update file that would cause access issues
-* updated the install files, version YAML file and the 1.2.2 update file
-* fixed bug where post emails weren't display authors correctly
-* updated the version file and install data
-* starting to figure out what's going on with post emails
-* updated the version info in the constants config file
-* fixed bug where sub departments couldn't be managed from the department management page
-* added the 1.2.2 update file
+* updated the install data and 1.2.3 update file
+* fixed bug with deck listings and multiple specification items
