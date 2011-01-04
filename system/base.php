@@ -31,7 +31,7 @@ if ( ! defined('KOHANA_START_MEMORY'))
  * @param   string  source language
  * @return  string
  */
-function __($string, array $values = NULL, $source = 'en-us')
+function __($string, array $values = NULL, $source = 'nova')
 {
 	if ( ! $source)
 	{
