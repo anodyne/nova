@@ -5,6 +5,8 @@
  * @package		Upgrade
  * @category	Controllers
  * @author		Anodyne Productions
+ * @copyright	2010-11 Anodyne Productions
+ * @since		2.0
  */
 
 class Controller_Upgrade extends Controller_Template {
@@ -27,7 +29,7 @@ class Controller_Upgrade extends Controller_Template {
 			$db = Database::instance();
 			
 			// get the number of tables
-			$tables = Kohana::config('info.app_db_tables');
+			$tables = Kohana::config('nova.app_db_tables');
 			
 			// we're upgrading from sms, so make sure the system isn't installed
 			if ($this->request->action != 'step' and (count($db->list_tables($db->table_prefix().'%')) == $tables))
@@ -303,7 +305,7 @@ class Controller_Upgrade extends Controller_Template {
 				);
 				
 				// build the next step control
-				$this->template->layout->controls = (count($tables) < Kohana::config('info.app_db_tables'))
+				$this->template->layout->controls = (count($tables) < Kohana::config('nova.app_db_tables'))
 					? false 
 					: form::button('next', __('Upgrade'), $next).form::close();
 			break;
@@ -438,8 +440,8 @@ class Controller_Upgrade extends Controller_Template {
 			
 			// build the data we need
 			$request = array(
-				Kohana::config('info.app_name'),
-				Kohana::config('info.app_version_full'),
+				Kohana::config('nova.app_name'),
+				Kohana::config('nova.app_version_full'),
 				url::site(),
 				$_SERVER['REMOTE_ADDR'],
 				$_SERVER['SERVER_ADDR'],

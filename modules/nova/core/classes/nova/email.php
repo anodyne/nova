@@ -5,6 +5,8 @@
  * @package		Nova
  * @category	Classes
  * @author		Anodyne Productions
+ * @copyright	2010-11 Anodyne Productions
+ * @since		2.0
  */
 
 # TODO: uncomment $result return in install_register

@@ -9,6 +9,8 @@
  * @package		Nova
  * @category	Classes
  * @author		Anodyne Productions
+ * @copyright	2010-11 Anodyne Productions
+ * @since		2.0
  */
 
 abstract class Nova_Form extends Kohana_Form {
@@ -731,4 +733,4 @@ abstract class Nova_Form extends Kohana_Form {
 		// create the element
 		return form::input($name, $value, $attributes);
 	}
-} // End Form
+}

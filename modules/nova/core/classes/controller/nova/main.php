@@ -5,6 +5,8 @@
  * @package		Nova
  * @category	Controllers
  * @author		Anodyne Productions
+ * @copyright	2010-11 Anodyne Productions
+ * @since		2.0
  */
 
 class Controller_Nova_Main extends Controller_Nova_Base {

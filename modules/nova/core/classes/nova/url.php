@@ -6,6 +6,8 @@
  * @package		Nova
  * @category	Classes
  * @author		Anodyne Productions
+ * @copyright	2010-11 Anodyne Productions
+ * @since		2.0
  */
 
 abstract class Nova_URL extends Kohana_URL {
@@ -54,6 +56,3 @@ abstract class Nova_URL extends Kohana_URL {
 		return false;
 	}
 }
-
-// End of file url.php
-// Location: modules/nova/classes/nova/url.php

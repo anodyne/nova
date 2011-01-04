@@ -11,6 +11,8 @@
  * @package		Nova
  * @category	Classes
  * @author		Anodyne Productions
+ * @copyright	2010-11 Anodyne Productions
+ * @since		2.0
  */
 
 abstract class Nova_Events {
@@ -47,4 +49,4 @@ abstract class Nova_Events {
 			}
 		}
 	}
-} // End events
+}

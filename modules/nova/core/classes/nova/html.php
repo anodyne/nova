@@ -10,6 +10,8 @@
  * @package		Nova
  * @category	Classes
  * @author		Anodyne Productions
+ * @copyright	2010-11 Anodyne Productions
+ * @since		2.0
  */
 
 abstract class Nova_Html extends Kohana_Html {
@@ -157,4 +159,4 @@ abstract class Nova_Html extends Kohana_Html {
 	
 		return $html;
 	}
-} // End Html
+}

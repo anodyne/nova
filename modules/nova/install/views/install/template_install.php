@@ -35,6 +35,6 @@
 	<?php endif;?>
 	
 	<div class="footer">
-		Powered by <strong><?php echo Kohana::config('info.app_name').' '.Kohana::config('info.app_version_major');?></strong>
+		Powered by <strong><?php echo Kohana::config('nova.app_name').' '.Kohana::config('nova.app_version_major');?></strong>
 	</div>
 </div>
