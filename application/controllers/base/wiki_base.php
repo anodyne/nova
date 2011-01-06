@@ -118,11 +118,46 @@ class Wiki_base extends Controller {
 		// build the page title
 		$pagetitle = ucwords(lang('global_wiki').' - '.lang('labels_main').' '.lang('labels_page'));
 		
+		// set the input data
+		$data['inputs'] = array(
+			'search' => array(
+				'name' => 'input',
+				'id' => 'input',
+				'placeholder' => ucwords(lang('actions_search').' '.lang('global_wiki').' '.lang('labels_pages'))),
+			'submit' => array(
+				'type' => 'submit',
+				'class' => 'button-main',
+				'name' => 'search',
+				'value' => 'search',
+				'content' => ucwords(lang('actions_search')))
+		);
+		
+		$data['component'] = array(
+			'title' => ucwords(lang('labels_title')),
+			'content' => ucwords(lang('labels_content')),
+		);
+		
+		$data['label'] = array(
+			'type' => ucwords(lang('labels_type')),
+			'search_in' => ucwords(lang('actions_search').' '.lang('labels_in')),
+			'search_for' => ucwords(lang('actions_search').' '.lang('labels_for')),
+			'search' => ucfirst(lang('actions_search')),
+		);
+		
+		$data['images'] = array(
+			'search' => array(
+				'src' => img_location('magnifier.png', $this->skin, 'wiki'),
+				'alt' => '',
+				'title' => ucfirst(lang('actions_search'))),
+		);
+		
 		// figure out where the view files should be coming from
 		$view_loc = view_location('wiki_index', $this->skin, 'wiki');
+		$js_loc = js_location('wiki_index_js', $this->skin, 'wiki');
 		
 		// write the data to the template
 		$this->template->write_view('content', $view_loc, $data);
+		$this->template->write_view('javascript', $js_loc);
 		$this->template->write('title', $pagetitle);
 		
 		// render the template
