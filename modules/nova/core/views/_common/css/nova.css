@@ -118,11 +118,14 @@ table {
 .table75	{ width: 75%; }
 
 th {
+	position: relative;
+	
 	text-align: center;
 	font-size: 120%;
 }
 
 td {
+	position: relative;
 	padding: 3px;
 	vertical-align: middle;
 }
@@ -146,15 +149,6 @@ td img { vertical-align: middle; }
 .col-40pct	{ width: 40%; }
 .col-50pct	{ width: 50%; }
 .col-60pct	{ width: 60%; }
-
-.cell-label {
-	width: 130px;
-	
-	font-weight: bold;
-	font-size: 100%;
-	text-align: right;
-}
-.cell-spacer { width: 20px; }
 
 /*
 |---------------------------------------------------------------

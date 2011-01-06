@@ -91,8 +91,15 @@ class Controller_Nova_Admin_Users extends Controller_Nova_Base {
 		// get all the users
 		$users = Jelly::query('user')->select();
 		
-		// start with an empty variable
+		// start with empty variables
 		$data->users = false;
+		$data->actions = false;
+		
+		// set up the language strings that'll be used by the actions menu
+		$actionsmenu = new stdClass;
+		$actionsmenu->edit = ucwords(__(':edit :user', array(':edit' => __('edit'), ':user' => __('user'))));
+		$actionsmenu->delete = ucwords(__(':del :user', array(':del' => __('delete'), ':user' => __('user'))));
+		$actionsmenu->link = ucwords(__(':link :characters', array(':link' => __('link'), ':characters' => __('characters'))));
 		
 		if (count($users) > 0)
 		{
@@ -103,37 +110,15 @@ class Controller_Nova_Admin_Users extends Controller_Nova_Base {
 				
 				// put the user in the right arrray
 				$data->users[$status][$u->id] = $u;
+				
+				// build the actions array
+				$data->actions[$u->id] = array(
+					html::anchor('admin/users/edit/'.$u->id, $actionsmenu->edit),
+					'<a href="#" action="delete" actionid="'.$u->id.'">'.$actionsmenu->delete.'</a>',
+					html::anchor('admin/users/link/'.$u->id, $actionsmenu->link),
+				);
 			}
 		}
-		
-		// images
-		$data->images = array(
-			'approve' => array(
-				'src' => Location::image($this->images['admin.approve'], $this->skin, $this->section),
-				'attr' => array(
-					'alt' => 'approve',
-					'title' => ucfirst(__('approve')))),
-			'edit' => array(
-				'src' => Location::image($this->images['admin.edit'], $this->skin, $this->section),
-				'attr' => array(
-					'alt' => 'edit',
-					'title' => ucfirst(__('edit')))),
-			'delete' => array(
-				'src' => Location::image($this->images['admin.delete'], $this->skin, $this->section),
-				'attr' => array(
-					'alt' => 'delete',
-					'title' => ucfirst(__('delete')))),
-			'link' => array(
-				'src' => Location::image($this->images['admin.link'], $this->skin, $this->section),
-				'attr' => array(
-					'alt' => 'link',
-					'title' => ucfirst(__('link')))),
-			'reject' => array(
-				'src' => Location::image($this->images['admin.reject'], $this->skin, $this->section),
-				'attr' => array(
-					'alt' => 'reject',
-					'title' => ucfirst(__('reject')))),
-		);
 		
 		// content
 		$data->header = ucwords(__("all :users", array(':users' => __('users'))));

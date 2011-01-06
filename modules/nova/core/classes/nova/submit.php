@@ -10,7 +10,28 @@
  * @since		2.0
  */
 
+# TODO: need to move the actions button and menu out of here and into another class
+
 abstract class Nova_Submit {
+	
+	public static function action(array $values = null)
+	{
+		$output = '<button class="btn-action">Action</button>';
+		$output.= "<div class='action-menu-container'>";
+			$output.= "<div class='action-menu'>";
+				$output.= "<ul>";
+				
+				foreach ($values as $value)
+				{
+					$output.= '<li>'.$value.'</li>';
+				}
+				
+				$output.= "</ul>";
+			$output.= "</div>";
+		$output.= "</div>";
+		
+		return $output;
+	}
 	
 	/**
 	 * Executes a create submission that loops through the arrays, does the XSS clean,

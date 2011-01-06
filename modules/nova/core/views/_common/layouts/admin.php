@@ -12,6 +12,11 @@
 		
 		<!-- STYLESHEETS -->
 		<?php echo html::style(MODFOLDER.'/nova/core/views/_common/css/nova.css');?>
+		
+		<?php if (is_file(APPPATH.'views/'.$skin.'/foundation.css')): ?>
+			<?php echo html::style(APPFOLDER.'/views/'.$skin.'/foundation.css');?>
+		<?php endif;?>
+		
 		<?php echo html::style(APPFOLDER.'/views/'.$skin.'/'.$sec.'/css/main.css');?>
 		
 		<!-- jQUERY UI THEME STYLESHEET -->

@@ -15,13 +15,7 @@
 				<?php foreach ($users['active'] as $u): ?>
 					<tr>
 						<td><?php echo $u->name;?></td>
-						<td class="col-100 align-center">
-							<?php echo html::image($images['link']['src'], $images['link']['attr']);?>
-							&nbsp;
-							<?php echo html::image($images['delete']['src'], $images['delete']['attr']);?>
-							&nbsp;
-							<?php echo html::image($images['edit']['src'], $images['edit']['attr']);?>
-						</td>
+						<td class="col-100 align-right"><?php echo Submit::action($actions[$u->id]);?></td>
 					</tr>
 				<?php endforeach;?>
 				</tbody>
@@ -38,13 +32,7 @@
 				<?php foreach ($users['inactive'] as $u): ?>
 					<tr>
 						<td><?php echo $u->name;?></td>
-						<td class="col-100 align-center">
-							<?php echo html::image($images['link']['src'], $images['link']['attr']);?>
-							&nbsp;
-							<?php echo html::image($images['delete']['src'], $images['delete']['attr']);?>
-							&nbsp;
-							<?php echo html::image($images['edit']['src'], $images['edit']['attr']);?>
-						</td>
+						<td class="col-100 align-right"><?php echo Submit::action($actions[$u->id]);?></td>
 					</tr>
 				<?php endforeach;?>
 				</tbody>
@@ -61,13 +49,7 @@
 				<?php foreach ($users['retired'] as $u): ?>
 					<tr>
 						<td><?php echo $u->name;?></td>
-						<td class="col-100 align-center">
-							<?php echo html::image($images['link']['src'], $images['link']['attr']);?>
-							&nbsp;
-							<?php echo html::image($images['delete']['src'], $images['delete']['attr']);?>
-							&nbsp;
-							<?php echo html::image($images['edit']['src'], $images['edit']['attr']);?>
-						</td>
+						<td class="col-100 align-right"><?php echo Submit::action($actions[$u->id]);?></td>
 					</tr>
 				<?php endforeach;?>
 				</tbody>
@@ -84,15 +66,7 @@
 				<?php foreach ($users['pending'] as $u): ?>
 					<tr>
 						<td><?php echo $u->name;?></td>
-						<td class="col-100 align-center">
-							<?php echo html::image($images['approve']['src'], $images['approve']['attr']);?>
-							&nbsp;
-							<?php echo html::image($images['reject']['src'], $images['reject']['attr']);?>
-							&nbsp;
-							<?php echo html::image($images['delete']['src'], $images['delete']['attr']);?>
-							&nbsp;
-							<?php echo html::image($images['edit']['src'], $images['edit']['attr']);?>
-						</td>
+						<td class="col-100 align-right"><?php echo Submit::action($actions[$u->id]);?></td>
 					</tr>
 				<?php endforeach;?>
 				</tbody>
