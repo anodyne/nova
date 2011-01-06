@@ -5,6 +5,8 @@
  * @package		Nova
  * @category	Models
  * @author		Anodyne Productions
+ * @copyright	2010-11 Anodyne Productions
+ * @since		2.0
  */
  
 class Model_Coc extends Jelly_Model {

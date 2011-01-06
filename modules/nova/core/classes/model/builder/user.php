@@ -5,6 +5,8 @@
  * @package		Nova
  * @category	Model Builders
  * @author		Anodyne Productions
+ * @copyright	2010-11 Anodyne Productions
+ * @since		2.0
  */
  
 class Model_Builder_User extends Jelly_Builder {
