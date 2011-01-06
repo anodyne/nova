@@ -9,7 +9,8 @@
  * @version		1.3
  *
  * Updated the get_drafts method to allow for pulling all drafts in the
- * the database instead of just one page
+ * the database instead of just one page, updated the search method to
+ * only pull back results that are standard pages and a latest draft
  */
 
 class Wiki_model_base extends Model {
@@ -21,10 +22,6 @@ class Wiki_model_base extends Model {
 		/* load the db utility library */
 		$this->load->dbutil();
 	}
-	
-	/**
-	 * Retrieve methods
-	 */
 	
 	function get_all_contributors($id = '')
 	{
@@ -279,10 +276,6 @@ class Wiki_model_base extends Model {
 		return FALSE;
 	}
 	
-	/**
-	 * Count methods
-	 */
-	
 	function count_all_comments($status = 'activated', $id = '')
 	{
 		$this->db->from('wiki_comments');
@@ -297,32 +290,70 @@ class Wiki_model_base extends Model {
 	}
 	
 	/**
-	 * Search methods
-	 */
-	
+	  * Run through the wiki pages and execute a search on a component to find
+	  * a given string.
+	  *
+	  * @since	1.0
+	  * @param	string	the field to search (title or content)
+	  * @param	string	the string to search for
+	  * @return	object	query object
+	  */
 	function search_pages($component = '', $input = '')
 	{
+		// get all the pages
+		$pages = $this->get_pages();
+		
+		if ($pages->num_rows() > 0)
+		{
+			foreach ($pages->result() as $p)
+			{
+				if ($p->page_type == 'standard')
+				{
+					$allpages[] = $p->page_draft;
+				}
+			}
+			
+			// make a string of latest drafts
+			$drafts = implode(', ', $allpages);
+		}
+		
 		switch ($component)
 		{
 			case 'title':
-				$this->db->from('wiki_drafts');
-				$this->db->like('draft_title', $input);
+				// set the table name
+				$table = $this->db->dbprefix('wiki_drafts');
+				
+				if (isset($drafts))
+				{
+					$sql = "SELECT * FROM $table WHERE draft_title LIKE '%$input%' AND draft_id IN ($drafts)";
+				}
+				else
+				{
+					$sql = "SELECT * FROM $table WHERE draft_title LIKE '%$input%'";
+				}
+				
+				$query = $this->db->query($sql);
 			break;
 				
 			case 'content':
-				$this->db->from('wiki_drafts');
-				$this->db->like('draft_content', $input);
+				// set the table name
+				$table = $this->db->dbprefix('wiki_drafts');
+				
+				if (isset($drafts))
+				{
+					$sql = "SELECT * FROM $table WHERE draft_content LIKE '%$input%' AND draft_id IN ($drafts)";
+				}
+				else
+				{
+					$sql = "SELECT * FROM $table WHERE draft_content LIKE '%$input%'";
+				}
+				
+				$query = $this->db->query($sql);
 			break;
 		}
 		
-		$query = $this->db->get();
-		
 		return $query;
 	}
-	
-	/**
-	 * Create methods
-	 */
 	
 	function create_category($data = '')
 	{
@@ -369,10 +400,6 @@ class Wiki_model_base extends Model {
 		
 		return $query;
 	}
-	
-	/**
-	 * Update methods
-	 */
 	
 	function update_category($id = '', $data = '')
 	{
@@ -421,10 +448,6 @@ class Wiki_model_base extends Model {
 		
 		return $query;
 	}
-	
-	/**
-	 * Delete methods
-	 */
 	
 	function delete_category($id = '')
 	{
