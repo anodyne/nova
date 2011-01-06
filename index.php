@@ -40,7 +40,7 @@ define('EXT', '.php');
  *
  * In a production environment, it is safe to ignore notices and strict warnings.
  * Disable them by using: E_ALL ^ E_NOTICE
- * 
+ *
  * When using a legacy application with PHP >= 5.3, it is recommended to disable
  * deprecated notices. Disable with: E_ALL & ~E_DEPRECATED
  */
@@ -87,22 +87,112 @@ if (file_exists('install'.EXT))
 	return include 'install'.EXT;
 }
 
-// Load the base, low-level functions
-require SYSPATH.'base'.EXT;
-
-// Load the core Kohana class
-require SYSPATH.'classes/kohana/core'.EXT;
-
-if (is_file(APPPATH.'classes/kohana'.EXT))
+/**
+ * Define the start time of the application, used for profiling.
+ */
+if ( ! defined('KOHANA_START_TIME'))
 {
-	// Application extends the core
-	require APPPATH.'classes/kohana'.EXT;
+	define('KOHANA_START_TIME', microtime(TRUE));
 }
-else
+
+/**
+ * Define the memory usage at the start of the application, used for profiling.
+ */
+if ( ! defined('KOHANA_START_MEMORY'))
 {
-	// Load empty core extension
-	require SYSPATH.'classes/kohana'.EXT;
+	define('KOHANA_START_MEMORY', memory_get_usage());
 }
 
 // Bootstrap the application
 require APPPATH.'bootstrap'.EXT;
+
+/**
+ * Execute the main request. A source of the URI can be passed, eg: $_SERVER['PATH_INFO'].
+ * If no source is specified, the URI will be automatically detected.
+ */
+/*Events::event('preCreate');
+$request = Request::factory();
+Events::event('postCreate');
+
+Events::event('preExecute');
+
+if (Kohana::$environment == Kohana::PRODUCTION)
+{
+	try {
+		$request->execute()->send_headers();
+	}
+	catch (Exception $e)
+	{
+		switch ($e->getCode())
+		{
+			case -1:
+			case 0:
+			case 404:
+				$request = Request::factory('error/404')->execute();
+			break;
+		}
+	}
+}
+else
+{
+	echo $request->execute();
+}
+
+Response::factory()->send_headers();
+
+echo $request->body();
+
+Events::event('postExecute');*/
+
+
+
+Events::event('preCreate');
+$request = Request::factory();
+Events::event('postCreate');
+
+Events::event('preExecute');
+
+if (Kohana::$environment == Kohana::PRODUCTION)
+{
+	try {
+		$request->execute();
+	}
+	catch (Exception $e)
+	{
+		switch ($e->getCode())
+		{
+			case -1:
+			case 0:
+			case 404:
+				$request = Request::factory('error/404')->execute();
+			break;
+		}
+	}
+}
+else
+{
+	$request->execute();
+}
+
+Events::event('postExecute');
+
+Events::event('preHeaders');
+Response::factory()->send_headers();
+Events::event('postHeaders');
+
+Events::event('preResponse');
+echo $request->body();
+Events::event('postResponse');
+
+
+
+
+
+/*Events::event('preResponse');
+echo $request->body();
+Events::event('postResponse');*/
+
+/*echo Request::factory()
+	->execute()
+	->send_headers()
+		->body();*/

@@ -18,7 +18,7 @@ class Controller_Install extends Controller_Template {
 		// make sure the database config file exists
 		if ( ! file_exists(APPPATH.'config/database'.EXT))
 		{
-			if ($this->request->action != 'setupconfig')
+			if ($this->request->action() != 'setupconfig')
 			{
 				$this->request->redirect('install/setupconfig');
 			}
@@ -26,7 +26,7 @@ class Controller_Install extends Controller_Template {
 		else
 		{
 			// you're allowed to go to these segments if the system isn't installed
-			$safesegs = array('step', 'index', 'main', 'verify', 'readme', 'setupconfig');
+			$safesegs = array('step', 'index', 'main', 'verify', 'readme', 'setupconfig', 'test');
 			
 			// you need to be logged in for these pages
 			$protectedsegs = array('changedb', 'genre', 'remove');
@@ -85,6 +85,7 @@ class Controller_Install extends Controller_Template {
 		$this->template->layout->label		= false;
 		$this->template->layout->flash		= false;
 		$this->template->layout->controls	= false;
+		$this->template->layout->content	= false;
 	}
 	
 	public function action_index()
@@ -867,7 +868,7 @@ return array
 		$this->template->layout->label = __('Config File Setup');
 		
 		// send the response
-		$this->request->response = $this->template;
+		$this->response->body($this->template);
 	}
 	
 	public function action_step($step = 0)

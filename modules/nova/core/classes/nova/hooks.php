@@ -80,7 +80,7 @@ abstract class Nova_Hooks {
 		if (file_exists(APPPATH.'config/database'.EXT) and Utility::install_status())
 		{
 			// get an instance of the request object
-			$request = Request::instance();
+			$request = Request::factory();
 			
 			// get an instance of the session object
 			$session = Session::instance();

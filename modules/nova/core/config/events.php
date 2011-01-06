@@ -16,13 +16,15 @@ return array(
 	'postCreate' => array(),
 	
 	'preExecute' => array(
-		array(
-			'class' => 'Hooks',
-			'method' => 'modules',
-			'param' => false),
-		array(
+		/*array(
 			'class' => 'Hooks',
 			'method' => 'browser',
+				'param' => false),*/
+	),
+	'postExecute' => array(
+		/*array(
+			'class' => 'Hooks',
+			'method' => 'modules',
 			'param' => false),
 		array(
 			'class' => 'Hooks',
@@ -31,9 +33,8 @@ return array(
 		array(
 			'class' => 'Hooks',
 			'method' => 'maintenance',
-			'param' => false),
+				'param' => false),*/
 	),
-	'postExecute' => array(),
 	
 	'preHeaders' => array(),
 	'postHeaders' => array(),

@@ -331,7 +331,7 @@ abstract class Nova_Utility {
 	/**
 	 * Checks to see if the system is installed.
 	 *
-	 *     $check = Utiliity::install_status();
+	 *     $check = Utility::install_status();
 	 *
 	 * @return	boolean	is the system installed?
 	 */
@@ -341,10 +341,10 @@ abstract class Nova_Utility {
 		if ( ! file_exists(APPPATH.'config/database'.EXT))
 		{
 			// get an instance of the request
-			$request = Request::instance();
+			$request = Request::initial();
 			
 			// make sure we take in to account the controllers this needs to ignore
-			if (($request->controller != 'install') and ($request->controller != 'upgrade') and ($request->controller != 'update'))
+			if (($request->controller() != 'install') and ($request->controller() != 'upgrade') and ($request->controller() != 'update'))
 			{
 				$request->redirect('install/setupconfig');
 			}
