@@ -110,42 +110,6 @@ require APPPATH.'bootstrap'.EXT;
  * Execute the main request. A source of the URI can be passed, eg: $_SERVER['PATH_INFO'].
  * If no source is specified, the URI will be automatically detected.
  */
-/*Events::event('preCreate');
-$request = Request::factory();
-Events::event('postCreate');
-
-Events::event('preExecute');
-
-if (Kohana::$environment == Kohana::PRODUCTION)
-{
-	try {
-		$request->execute()->send_headers();
-	}
-	catch (Exception $e)
-	{
-		switch ($e->getCode())
-		{
-			case -1:
-			case 0:
-			case 404:
-				$request = Request::factory('error/404')->execute();
-			break;
-		}
-	}
-}
-else
-{
-	echo $request->execute();
-}
-
-Response::factory()->send_headers();
-
-echo $request->body();
-
-Events::event('postExecute');*/
-
-
-
 Events::event('preCreate');
 $request = Request::factory();
 Events::event('postCreate');
@@ -155,7 +119,7 @@ Events::event('preExecute');
 if (Kohana::$environment == Kohana::PRODUCTION)
 {
 	try {
-		$request->execute();
+		$response = $request->execute();
 	}
 	catch (Exception $e)
 	{
@@ -171,26 +135,18 @@ if (Kohana::$environment == Kohana::PRODUCTION)
 }
 else
 {
-	$request->execute();
+	$response = $request->execute();
 }
 
 Events::event('postExecute');
 
 Events::event('preHeaders');
-Response::factory()->send_headers();
+$response->send_headers();
 Events::event('postHeaders');
 
 Events::event('preResponse');
-echo $request->body();
+echo $response->body();
 Events::event('postResponse');
-
-
-
-
-
-/*Events::event('preResponse');
-echo $request->body();
-Events::event('postResponse');*/
 
 /*echo Request::factory()
 	->execute()
