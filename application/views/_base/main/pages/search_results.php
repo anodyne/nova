@@ -11,7 +11,7 @@
 <?php endif; ?>
 
 <?php if (isset($results)): ?>
-	<ul class="square line_height_18">
+	<ul class="line_height_18">
 		<?php foreach ($results as $result): ?>
 			<li>
 				<strong><?php echo $result['link'];?></strong>
