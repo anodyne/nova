@@ -25,6 +25,7 @@ Anodyne Production's next-generation RPG management system combines popular feat
 * updated the auth library to store the user's access role ID in the session
 * updated the thresher main page to not show recently created and updated, just the system page
 * updated the RSS feed controller to have a feed for created wiki pages and updated wiki pages
+* updated thresher's main page to have a section for searching for wiki pages
 * updated the language files
     * [base\_lang] added _actions\_cleanup_
     * [base\_lang] added _labels\_drafts_
@@ -48,6 +49,7 @@ Anodyne Production's next-generation RPG management system combines popular feat
     * [wiki/css] fixed bugs with disabled tabs in the jquery.ui.tabs stylesheet
 * fixed error thrown under certain circumstances related to the wrong type of parameter being passed to a PHP function
 * fixed major issues with the existing RSS feeds
+* fixed bug where wiki search would pull back all drafts instead of just latest drafts
 
 ## Version History
 
