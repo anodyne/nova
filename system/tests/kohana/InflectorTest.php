@@ -12,7 +12,7 @@
  * @copyright  (c) 2008-2010 Kohana Team
  * @license    http://kohanaframework.org/license
  */
-class Kohana_InflectorTest extends Kohana_Unittest_TestCase
+class Kohana_InflectorTest extends Unittest_TestCase
 {
 	/**
 	 * Provides test data for test_lang()
@@ -25,6 +25,9 @@ class Kohana_InflectorTest extends Kohana_Unittest_TestCase
 			// $value, $result
 			array('fish', TRUE),
 			array('cat', FALSE),
+			array('deer', TRUE),
+			array('bison', TRUE),
+			array('friend', FALSE),
 		);
 	}
 
