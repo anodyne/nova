@@ -8,3 +8,9 @@ input[type=password],
 input[type=email] {
 	padding: 5px;
 }
+
+table, table tbody, table tbody tr, table tbody tr td {
+	position: relative;
+}
+
+.ui-tabs .ui-tabs-panel { position: relative; }
