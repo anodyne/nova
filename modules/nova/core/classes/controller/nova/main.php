@@ -108,7 +108,7 @@ class Controller_Nova_Main extends Controller_Nova_Base {
 		$data->message = Jelly::query('message', 'welcome_msg')->limit(1)->select()->value;
 		
 		// send the response
-		$this->request->response = $this->template;
+		$this->response->body($this->template);
 	}
 	/*
 	public function action_contact()
@@ -225,7 +225,7 @@ class Controller_Nova_Main extends Controller_Nova_Base {
 		$data->edit = false;
 		
 		// send the response
-		$this->request->response = $this->template;
+		$this->response->body($this->template);
 	}
 	/*
 	public function join()
@@ -456,7 +456,7 @@ class Controller_Nova_Main extends Controller_Nova_Base {
 				case 'contact':
 					// data for the view files
 					$view = new stdClass;
-					$view->subject = __("email.subject.contact", array(':name' => $data->name));
+					$view->subject = __("Site Contact from :name", array(':name' => $data->name));
 					$view->content = $data->message;
 					
 					// set the html version

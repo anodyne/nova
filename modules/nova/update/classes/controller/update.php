@@ -6,7 +6,7 @@
  * @category	Controllers
  * @author		Anodyne Productions
  * @copyright	2010-11 Anodyne Productions
- * @since		2.0
+ * @version		2.0
  */
 
 class Controller_Update extends Controller_Template {
@@ -40,7 +40,7 @@ class Controller_Update extends Controller_Template {
 			// if the system is installed, make sure the user is logged in and a sysadmin
 			if (count($db->list_tables($db->table_prefix().'%')) == $tables)
 			{
-				if (in_array($this->request->action, $protectedsegs))
+				if (in_array($this->request->action(), $protectedsegs))
 				{
 					// get an instance of the session
 					$session = Session::instance();

@@ -2401,6 +2401,11 @@ $system_components = array(
 		'comp_desc' => "Swift Mailer integrates into any web app written in PHP 5, offering a flexible and elegant object-oriented approach to sending emails with a multitude of features.",
 		'comp_url' => 'http://swiftmailer.org/'),
 	array(
+		'comp_name' => 'HTMLPurifier',
+		'comp_version' => '4.2.0',
+		'comp_desc' => "HTML Purifier is a standards-compliant HTML filter library written in PHP that will not only remove all malicious code (better known as XSS) with a thoroughly audited, secure yet permissive whitelist, it will also make sure your documents are standards compliant.",
+		'comp_url' => 'http://htmlpurifier.org/'),
+	array(
 		'comp_name' => 'jQuery',
 		'comp_version' => '1.4.4',
 		'comp_url' => 'http://www.jquery.com/',

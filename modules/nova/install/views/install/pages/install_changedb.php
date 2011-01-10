@@ -4,19 +4,19 @@
 
 <p class="fontMedium"><?php echo $message;?></p>
 
-<?php if (Request::instance()->param('id') != ''): ?>
+<?php if (Request::current()->param('id') != ''): ?>
 	<p class="fontMedium bold"><?php echo html::anchor('install/changedb', '&laquo; '.__('Back to Change Database Panel'));?></p>
 <?php endif;?>
 
 <hr />
 
-<?php if (Request::instance()->param('id') == 'table'): ?>
+<?php if (Request::current()->param('id') == 'table'): ?>
 	<?php $data_array = array('images' => $images);?>
 	<?php echo View::factory(Location::view('install_changedb_table', null, 'install', 'pages'), $data_array)->render();?>
-<?php elseif (Request::instance()->param('id') == 'field'): ?>
+<?php elseif (Request::current()->param('id') == 'field'): ?>
 	<?php $data_array = array('images' => $images, 'options' => $options, 'fieldtypes' => $fieldtypes);?>
 	<?php echo View::factory(Location::view('install_changedb_field', null, 'install', 'pages'), $data_array)->render();?>
-<?php elseif (Request::instance()->param('id') == 'query'): ?>
+<?php elseif (Request::current()->param('id') == 'query'): ?>
 	<?php $data_array = array('images' => $images);?>
 	<?php echo View::factory(Location::view('install_changedb_query', null, 'install', 'pages'), $data_array)->render();?>
 <?php else: ?>

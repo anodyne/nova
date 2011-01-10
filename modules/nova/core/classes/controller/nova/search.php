@@ -86,8 +86,9 @@ class Controller_Nova_Search extends Controller_Nova_Base {
 		
 		// content
 		$this->template->title.= ucfirst(__('search'));
+		$data->header = ucfirst(__("search"));
 		
 		// send the response
-		$this->request->response = $this->template;
+		$this->response->body($this->template);
 	}
 }

@@ -144,7 +144,7 @@ class Controller_Nova_Admin extends Controller_Nova_Base {
 		$data->message = Jelly::query('message', 'welcome_msg')->limit(1)->select()->value;
 		
 		// send the response
-		$this->request->response = $this->template;
+		$this->response->body($this->template);
 	}
 	
 	public function action_manage($action = 'index')

@@ -83,7 +83,7 @@ abstract class Nova_Auth {
 				{
 					self::$session->set_flash('referer', $uri);
 					
-					Request::instance()->redirect('admin/error/1');
+					Request::current()->redirect('admin/error/1');
 				}
 				
 				return false;
@@ -122,7 +122,7 @@ abstract class Nova_Auth {
 	public static function get_access_level($uri = null)
 	{
 		// get an instance of the request object
-		$request = Request::instance();
+		$request = Request::current();
 		
 		// make sure the uri is set properly
 		$uri = ($uri === null) ? self::_set_uri() : $uri;
@@ -190,7 +190,7 @@ abstract class Nova_Auth {
 			
 			if ($redirect === true)
 			{
-				Request::instance()->redirect('login/error/1');
+				Request::current()->redirect('login/error/1');
 			}
 			
 			return false;
@@ -541,7 +541,7 @@ abstract class Nova_Auth {
 	protected static function _set_uri($directory = false)
 	{
 		// get an instance of the request object
-		$request = Request::instance();
+		$request = Request::current();
 		
 		if ($directory === true)
 		{
@@ -549,10 +549,11 @@ abstract class Nova_Auth {
 		}
 		
 		// add the controller
-		$uri[] = $request->controller;
+		$uri[] = $request->controller();
 		
 		// add the action
-		$uri[] = (empty($request->action)) ? 'index' : $request->action;
+		$action = $request->action();
+		$uri[] = (empty($action)) ? 'index' : $action;
 		
 		// return the string
 		return implode('/', $uri);

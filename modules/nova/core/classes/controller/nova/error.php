@@ -19,7 +19,7 @@ class Controller_Nova_Error extends Controller_Template {
 		$this->template = View::factory('_common/layouts/error');
 		
 		// set the variables in the template
-		$this->template->title 		= 'Error';
+		$this->template->title 		= ucfirst(__('error'));
 		$this->template->content	= false;
 	}
 	
@@ -28,6 +28,6 @@ class Controller_Nova_Error extends Controller_Template {
 		$this->template->content = View::factory('_common/error_404');
 		
 		// send the response
-		$this->request->response = $this->template;
+		$this->response->body($this->template);
 	}
 }

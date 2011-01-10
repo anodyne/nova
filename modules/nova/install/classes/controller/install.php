@@ -6,7 +6,7 @@
  * @category	Controllers
  * @author		Anodyne Productions
  * @copyright	2010-11 Anodyne Productions
- * @since		2.0
+ * @version		2.0
  */
 
 class Controller_Install extends Controller_Template {
@@ -38,7 +38,7 @@ class Controller_Install extends Controller_Template {
 			$tables = Kohana::config('nova.app_db_tables');
 			
 			// make sure the system is installed
-			if (count($db->list_tables($db->table_prefix().'%')) < $tables and ! (in_array($this->request->action, $safesegs)))
+			if (count($db->list_tables($db->table_prefix().'%')) < $tables and ! (in_array($this->request->action(), $safesegs)))
 			{
 				$this->request->redirect('install/index');
 			}
@@ -46,7 +46,7 @@ class Controller_Install extends Controller_Template {
 			// if the system is installed, make sure the user is logged in and a sysadmin
 			if (count($db->list_tables($db->table_prefix().'%')) == $tables)
 			{
-				if (in_array($this->request->action, $protectedsegs))
+				if (in_array($this->request->action(), $protectedsegs))
 				{
 					// get an instance of the session
 					$session = Session::instance();
@@ -137,7 +137,7 @@ class Controller_Install extends Controller_Template {
 				$data->header = __('Add Database Table');
 				
 				// set the message
-				$data->message = __('changedb.table_inst');
+				$data->message = __("I can create a new database table for you, all you need to do is tell me what you want to call the table. Don't worry about adding the table prefix, I'll do that for you before I create the table as well as an ID field for you. If you want to change the ID field, you'll have to do that from inside the database.");
 				
 				// build the button attributes
 				$next = array(
