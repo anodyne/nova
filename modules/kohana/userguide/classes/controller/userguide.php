@@ -261,18 +261,17 @@ class Controller_Userguide extends Controller_Template {
 			$this->request->check_cache(sha1($this->request->uri).filemtime($file));
 			
 			// Send the file content as the response
-			$this->request->response = file_get_contents($file);
+			$this->response->body = file_get_contents($file);
+
+			// Set the proper headers to allow caching
+			$this->response->headers('content-type',  File::mime_by_ext($ext));
+			$this->response->headers('last-modified', date('r', filemtime($file)));
 		}
 		else
 		{
 			// Return a 404 status
-			$this->request->status = 404;
+			$this->response->status = 404;
 		}
-
-		// Set the proper headers to allow caching
-		$this->request->headers['Content-Type']   = File::mime_by_ext($ext);
-		$this->request->headers['Content-Length'] = filesize($file);
-		$this->request->headers['Last-Modified']  = date('r', filemtime($file));
 	}
 
 	public function after()
