@@ -128,7 +128,7 @@ if (Kohana::$environment == Kohana::PRODUCTION)
 			case -1:
 			case 0:
 			case 404:
-				$request = Request::factory('error/404')->execute();
+				$response = Request::factory('error/404')->execute();
 			break;
 		}
 	}
