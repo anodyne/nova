@@ -12,9 +12,7 @@ application/assets/images/tour/
 !application/assets/images/tour/index.html
 
 application/cache/
-application/cache/unittest/
 !application/cache/index.html
-!application/cache/unittest/index.html
 
 application/logs/
 !application/logs/index.html
