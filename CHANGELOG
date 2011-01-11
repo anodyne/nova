@@ -1,3 +1,8 @@
+* updated the wiki main page to have a search section for quick access to searching for a wiki page
+* updated the readme
+* fixed a bug where searching for wiki pages would search all drafts instead of just latest drafts
+* fixed some formatting issues on the search results page
+* Merge branch 'master' into 1.x
 * merged the 1.2.2 changes into 1.3
 * updated the readme
 * removed the wiki main page js view since it isn't needed any more

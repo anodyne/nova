@@ -1,6 +1,6 @@
 #!/bin/bash
 
-old="master"
+old="1.2.3"
 new="1.x"
 
 git diff $old..$new --name-status > CHANGED_FILES

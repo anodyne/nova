@@ -10,10 +10,7 @@ M	application/assets/install/data_dev.php
 M	application/assets/install/fields.php
 A	application/assets/js/jquery.elastic.js
 M	application/assets/js/jquery.lazy.js
-D	application/assets/update/update_122.php
 A	application/assets/update/update_130.php
-M	application/assets/update/versions.php
-M	application/assets/version.yml
 M	application/config/constants.php
 M	application/controllers/admin.php
 M	application/controllers/ajax.php
@@ -137,7 +134,7 @@ M	application/views/_base/admin/js/messages_write_js.php
 M	application/views/_base/admin/js/write_missionpost_js.php
 M	application/views/_base/admin/js/write_newsitem_js.php
 M	application/views/_base/admin/js/write_personallog_js.php
-M	application/views/_base/main/pages/sim_decks.php
+M	application/views/_base/main/pages/search_results.php
 M	application/views/_base/rss_items.php
 A	application/views/_base/wiki/ajax/del_wiki_draft.php
 M	application/views/_base/wiki/ajax/del_wiki_page.php
@@ -161,7 +158,7 @@ D	application/views/_base/wiki/images/page-revert.png
 D	application/views/_base/wiki/images/page-view.png
 A	application/views/_base/wiki/images/page.png
 A	application/views/_base/wiki/images/tick-circle.png
-D	application/views/_base/wiki/js/wiki_index_js.php
+M	application/views/_base/wiki/js/wiki_index_js.php
 M	application/views/_base/wiki/js/wiki_managepages_js.php
 M	application/views/_base/wiki/js/wiki_view_js.php
 M	application/views/_base/wiki/pages/wiki_categories.php
