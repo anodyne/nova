@@ -394,7 +394,7 @@ class Upgrade_base extends Controller {
 				 */
 				 
 				/* pull in the install data asset file */
-				include_once(APPPATH .'assets/install/data_basic.php');
+				include_once APPPATH.'assets/install/data_basic'.EXT;
 				
 				$insert = array();
 				

@@ -79,6 +79,7 @@ define('VERSION_FEED', 'http://www.anodyne-productions.com/feeds/version_nova.ym
 
 /* figure out whether to install the bare essentials or the dev stuff */
 define('APP_DATA_SRC', 'basic');
+define('APP_DATA_DEV', FALSE);
 
 /* figure out if the request is an ajax request */
 define('IS_AJAX', isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest');

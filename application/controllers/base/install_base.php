@@ -812,7 +812,7 @@ class Install_base extends Controller {
 				
 			case 2:
 				/* pull in the install data asset file */
-				include_once(APPPATH .'assets/install/data_'. APP_DATA_SRC .'.php');
+				include_once APPPATH.'assets/install/data_basic'.EXT;
 				
 				$insert = array();
 				
@@ -821,6 +821,20 @@ class Install_base extends Controller {
 					foreach ($$value as $k => $v)
 					{
 						$insert[] = $this->db->insert($value, $v);
+					}
+				}
+				
+				if (APP_DATA_DEV !== FALSE)
+				{
+					// pull in the dev data
+					include_once APPPATH.'assets/install/data_dev'.EXT;
+					
+					foreach ($data as $value)
+					{
+						foreach ($$value as $k => $v)
+						{
+							$insert[] = $this->db->insert($value, $v);
+						}
 					}
 				}
 				
