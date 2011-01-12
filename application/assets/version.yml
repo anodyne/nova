@@ -1,9 +1,0 @@
-version: 1.2.3
-version_major: 1
-version_minor: 2
-version_update: 3
-severity: minor
-notes: |
-  Nova 1.2.3 is the third maintenance release for Nova 1.2 and fixes a bug with handling deck listings with multiple specification items. More information about these features and a full changelog can be found at AnodyneDocs. This update is recommended for all users.
-date: 04 January 2011
-link: http://www.anodyne-productions.com
