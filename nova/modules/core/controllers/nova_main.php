@@ -22,7 +22,6 @@ class Nova_main extends Nova_main_controller {
 
 	public function index()
 	{
-		echo APP_NAME;
 		$this->load->model('news_model', 'news');
 		
 		$news = $this->news->get_news_items(5, $this->session->userdata('userid'));
