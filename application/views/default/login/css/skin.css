@@ -1,0 +1,260 @@
+/*
+|---------------------------------------------------------------
+| MASTER BODY STYLES
+|---------------------------------------------------------------
+*/
+body {
+	margin: 0;
+	padding: 0;
+	
+	background: #e7eee4;
+	color: #444;
+	font: 75%/1.5 "lucida grande", verdana, arial, sans-serif;
+	text-align: center;
+}
+
+/*
+|---------------------------------------------------------------
+| WRAPPER STYLES
+|---------------------------------------------------------------
+*/
+.wrapper {
+	width: 850px;
+	margin: 0 auto;
+	
+	text-align: left;
+}
+
+/*
+|---------------------------------------------------------------
+| BODY STYLES
+|---------------------------------------------------------------
+*/
+#body { text-align: left; }
+
+.upper {
+	height: 150px;
+	
+	background: #d2e0cc;
+	border-bottom: 1px solid #a8b3a3;
+	border-bottom: 1px solid rgba(0, 0, 0, .2);
+}
+
+.name {
+	padding: 100px 0 0 0;
+	font-size: 250%;
+	font-weight: bold;
+}
+
+.content { line-height: 1.4; }
+
+/*
+|---------------------------------------------------------------
+| FOOTER STYLES
+|---------------------------------------------------------------
+*/
+#footer {
+	clear: both;
+	margin: 2em 0 0 0;
+	
+	text-align: center;
+	font-size: 90%;
+	color: #999;
+}
+
+/*
+|---------------------------------------------------------------
+| FONT COLOR CLASSES
+|---------------------------------------------------------------
+*/
+.page-head { color: #5b7444; }
+.page-subhead	{ color: #5b7444; }
+
+.red { color: #c00; }
+
+/*
+|---------------------------------------------------------------
+| LINKS
+|---------------------------------------------------------------
+*/
+a {
+	text-decoration: none; 
+	color: #777;
+	border-bottom: 1px solid;
+}
+a:hover {
+	color: #555;
+	border-bottom: 1px solid;
+}
+
+/*
+|---------------------------------------------------------------
+| INPUT STYLES
+|---------------------------------------------------------------
+*/
+input[type=text],
+input[type=password] {
+	border: 1px solid #999;
+	background: #e7eee4;
+	color: #444;
+	font-family: inherit;
+	font-size: 110%;
+	
+	border-radius: 3px;
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
+}
+input[type=text]:focus,
+input[type=password]:focus {
+	color: #444;
+	background: #e7eee4;
+	
+	box-shadow: 0px 0px 4px rgba(0, 0, 0, .4);
+	-moz-box-shadow: 0px 0px 4px rgba(0, 0, 0, .4);
+	-webkit-box-shadow: 0px 0px 4px rgba(0, 0, 0, .4);
+}
+
+select {
+	border: 1px solid #999;
+	background: #e7eee4;
+	color: #444;
+	font-family: inherit;
+	font-size: 110%;
+	
+	border-radius: 3px;
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
+}
+select:focus,
+select:hover {
+	color: #444;
+	background: #e7eee4;
+	
+	box-shadow: 0px 0px 4px rgba(0, 0, 0, .4);
+	-moz-box-shadow: 0px 0px 4px rgba(0, 0, 0, .4);
+	-webkit-box-shadow: 0px 0px 4px rgba(0, 0, 0, .4);
+}
+
+/*
+|---------------------------------------------------------------
+| TABLE STYLES
+|---------------------------------------------------------------
+*/
+table.verify { border: 1px solid #aaa; }
+table.verify th {
+	font-weight: bold;
+	font-size: 125%;
+	background-color: #666;
+	color: #fff;
+}
+table.verify td { font-size: 115%; }
+
+tr.alt td { background-color: #eee; }
+
+/*
+|---------------------------------------------------------------
+| BUTTONS
+|---------------------------------------------------------------
+*/
+button {
+	border-radius: 3px;
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
+	
+	font-weight: bold;
+	font-family: "lucida grande", verdana, arial, sans-serif;
+}
+
+button.button-main {
+	background: #e5e5e5 url('../images/gradient-soft-50.png') repeat-x top left;
+	color: #888;
+	border: 1px solid #c0c0c0;
+	text-shadow: 0px 1px 0px rgba(255, 255, 255, .55);
+	font-size: 100%;
+}
+button.button-main:hover {
+	border: 1px solid #76896e;
+	background: #4a6440 url('../images/menu-bg-active.png') repeat-x center left;
+	color: #fff;
+	text-shadow: 0 1px 1px rgba(0, 0, 0, .4);
+}
+
+input.button-main {
+	background: #e5e5e5 url('../images/gradient-soft-50.png') repeat-x top left;
+	color: #888;
+	border: 1px solid #c0c0c0;
+	font-weight: bold;
+	font-size: 120%;
+}
+input.button-main:hover {
+	border: 1px solid #76896e;
+	background: #4a6440 url('../images/menu-bg-active.png') repeat-x center left;
+	color: #fff;
+}
+
+button[disabled],
+button[disabled]:hover,
+input.button-main[disabled],
+input.button-main[disabled]:hover {
+	opacity: .65;
+	filter:alpha(opacity='70');
+	
+	background: #e5e5e5 url('../images/gradient-soft-50.png') repeat-x top left;
+	color: #888;
+	border: 1px solid #c0c0c0;
+	text-shadow: 0px 1px 0px rgba(255, 255, 255, .55);
+	font-size: 100%;
+}
+
+/*
+|---------------------------------------------------------------
+| LIST STYLES
+|---------------------------------------------------------------
+*/
+ul.square { list-style: square; }
+ul.none { list-style: none; }
+ol.roman { list-style: upper-roman; }
+
+/*
+|---------------------------------------------------------------
+| FLASH MESSAGES
+|---------------------------------------------------------------
+*/
+.flash_message {
+	font-weight: bold;
+	font-size: 1em;
+	
+	border-radius: 4px;
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+}
+.flash-success {
+	border: 1px solid #a4c897;
+	background: #ccecc5 url('../images/gradient-soft-50.png') repeat-x 0 0;
+	color: #376b0e;
+}
+.flash-error {
+	border: 1px solid #c89797; 
+	background: #ecc5c5 url('../images/gradient-soft-50.png') repeat-x 0 0;
+	color: #6b0f0e;
+}
+.flash-info {
+	border: 1px solid #97a5c8;
+	background: #c5d6ec url('../images/gradient-soft-50.png') repeat-x 0 0;
+	color: #0e2d6b;
+}
+
+/*
+|---------------------------------------------------------------
+| MISC
+|---------------------------------------------------------------
+*/
+hr {
+	border: 1px solid #ddd;
+	border-width: 1px 0 0;
+}
+
+.remember {
+	font-size: 90%;
+	font-weight: bold;
+}

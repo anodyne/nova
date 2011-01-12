@@ -1,0 +1,60 @@
+.ui-tabs {
+	position: relative;
+	margin: .5em 0 0 0;
+	padding: .5em;
+	zoom: 1;
+}
+.ui-tabs .ui-tabs-nav {
+	margin: 0;
+	padding: .2em 0;
+	height: 23px;
+}
+.ui-tabs .ui-tabs-nav li {
+	float: left;
+	position: relative;
+	top: 1px;
+	margin: 0 5px 0 0;
+	padding: 0 0 1px 0;
+	padding: 0;
+	white-space: nowrap;
+	height: 24px;
+	line-height: 24px;
+	
+	list-style: none;
+	border: 1px solid transparent;
+	
+	border-radius: 6px;
+	-moz-border-radius: 6px;
+}
+.ui-tabs .ui-tabs-nav li a {
+	float: left;
+	padding: 0 10px;
+	margin: 2px 0 0 0;
+	
+	text-decoration: none;
+	border: 0;
+}
+.ui-tabs .ui-tabs-nav li.ui-state-hover {
+	background: #f8f8f8;
+}
+.ui-tabs .ui-tabs-nav li.ui-state-hover a {}
+.ui-tabs .ui-tabs-nav li.ui-tabs-selected {
+	background: #f5f5f5;
+	border: 1px solid #e5e5e5;
+}
+.ui-tabs .ui-tabs-nav li.ui-tabs-selected a {}
+.ui-tabs .ui-tabs-nav li.ui-tabs-selected a,
+.ui-tabs .ui-tabs-nav li.ui-state-disabled a,
+.ui-tabs .ui-tabs-nav li.ui-state-processing a {
+	cursor: text;
+}
+.ui-tabs .ui-tabs-nav li a,
+.ui-tabs.ui-tabs-collapsible .ui-tabs-nav li.ui-tabs-selected a {
+	cursor: pointer;
+}
+.ui-tabs .ui-tabs-panel {
+	padding: .5em;
+	
+	background: none;
+}
+.ui-tabs .ui-tabs-hide { display: none !important; }

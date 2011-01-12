@@ -1,0 +1,1 @@
+<?php echo text_output($label['inst_step1'], 'p', 'fontMedium');?>

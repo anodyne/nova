@@ -1,0 +1,540 @@
+/*
+|---------------------------------------------------------------
+| MASTER BODY STYLES
+|---------------------------------------------------------------
+*/
+html, body, #wrap { height: 100%; }
+
+body {
+	margin: 0;
+	padding: 0;
+	
+	background: #000;
+	color: #ccc;
+	font: 75%/1.5 "lucida grande", verdana, arial, sans-serif;
+	text-align: center;
+}
+
+/*
+|---------------------------------------------------------------
+| WRAPPER STYLES
+|---------------------------------------------------------------
+| The wrapper controls the width and centering of the layout
+*/
+.wrapper {
+	min-width: 960px;
+	max-width: 1280px;
+	padding: 0 60px;
+	margin: 0 auto;
+	
+	text-align: left;
+}
+
+#body { padding-bottom: 35px; }
+
+body > #wrap {
+	height: auto;
+	min-height: 100%;
+}
+
+/*
+|---------------------------------------------------------------
+| HEAD STYLES
+|---------------------------------------------------------------
+*/
+#head {
+	margin: 0;
+	padding: 0;
+	height: 120px;
+	
+	background: #202020 url('../images/gradient-head.png') repeat-x top left;
+	color: #fff;
+	border: 1px solid #444;
+	border-top: 0;
+	
+	border-radius: 0 0 10px 10px;
+	-moz-border-radius: 0 0 10px 10px;
+	-webkit-border-bottom-left-radius: 10px;
+	-webkit-border-bottom-right-radius: 10px;
+}
+#head .head_content {
+	height: 58px;
+	padding: .5em 1em;
+	
+	font-weight: bold;
+}
+#head .head_content h1 {
+	margin: 0 !important;
+	padding: 0 0 0 55px !important;
+	line-height: 55px;
+}
+
+/*
+|---------------------------------------------------------------
+| MENU STYLES
+|---------------------------------------------------------------
+*/
+#menu {
+	height: 32px;
+	line-height: 32px;
+	
+	background: #3c76bd url('../images/gradient-menu.png') repeat-x 0 0;
+	border-top: 1px solid #aed2ff;
+	border-bottom: 1px solid #122338;
+	border-bottom: 1px solid rgba(0, 0, 0, .7);
+	font-size: 110%;
+	
+	box-shadow: 0 2px 4px rgba(0, 0, 0, .45);
+	-moz-box-shadow: 0 2px 4px rgba(0, 0, 0, .45);
+	-webkit-box-shadow: 0 2px 4px rgba(0, 0, 0, .45);
+}
+#menu .nav-main {}
+#menu .nav-main ul {
+	margin: 0 5px;
+	padding: 0;
+	
+	list-style-type: none;
+}
+#menu .nav-main ul li {
+	float: left;
+	margin: 0 2px;
+	padding: 0;
+}
+#menu .nav-main ul li a {
+	display: block;
+	
+	text-decoration: none;
+	color: #eee;
+	font-weight: bold;
+	border-left: 1px solid transparent;
+	border-right: 1px solid transparent;
+	text-shadow: 1px 1px 1px rgba(0, 0, 0, .3);
+}
+#menu .nav-main ul li a span { padding: 12px; }
+#menu .nav-main ul li a:hover,
+#menu .nav-main ul li a.active {
+	background: #5f9de9 url('../images/gradient-menu-active.png') repeat-x top left;
+	color: #1a467b;
+	text-shadow: 1px 1px 1px rgba(255, 255, 255, .7);
+	border-left: 1px solid #bbd5f6;
+	boder-right: 1px solid #bbd5f6;
+	border-left: 1px solid rgba(255, 255, 255, .3);
+	border-right: 1px solid rgba(255, 255, 255, .3);
+	border-bottom: 0;
+}
+
+/*
+|---------------------------------------------------------------
+| BODY STYLES
+|---------------------------------------------------------------
+*/
+#body {
+	position: relative;
+	margin: 2em 0;
+	padding: .5em 1em 0 1em;
+	
+	background: #000 url('../images/gradient-body.png') repeat-x 0 0;
+	
+	border-radius: 10px 10px 0 0;
+	-moz-border-radius: 10px 10px 0 0;
+	-webkit-border-top-left-radius: 10px;
+	-webkit-border-top-right-radius: 10px;
+}
+
+.nav-sub {
+	float: right;
+	width: 160px;
+	margin: 0 0 10px 0;
+	
+	text-align: right;
+	font-size: 95%;
+	border-left: 1px solid #000;
+}
+.nav-sub ul {
+	margin: 0;
+	padding: 0;
+	
+	list-style: none;
+}
+.nav-sub ul li {
+	padding: 0;
+	margin: 0;
+	line-height: 2;
+}
+.nav-sub ul li a {
+	display: block;
+	
+	text-decoration: none;
+	font-weight: bold;
+}
+.nav-sub ul li a span { padding: 2px 5px; }
+.nav-sub ul li.spacer {
+	height: 12px;
+	
+	border: none;
+}
+
+.content {
+	margin-right: 210px;
+	line-height: 1.4;
+}
+
+/*
+|---------------------------------------------------------------
+| FOOTER STYLES
+|---------------------------------------------------------------
+*/
+#footer {
+	position: relative;
+	margin: -35px auto 0 auto !important;
+	height: 35px;
+	line-height: 35px;
+	clear: both;
+	
+	text-align: center;
+	font-size: 90%;
+	border-top: 1px solid #222;
+	border-left: 1px solid #111;
+	border-right: 1px solid #171717;
+	color: #666;
+	background: #0c0c0c;
+	
+	border-radius: 10px 10px 0 0;
+	-moz-border-radius: 10px 10px 0 0;
+	-webkit-border-top-left-radius: 10px;
+	-webkit-border-top-right-radius: 10px;
+}
+
+/*
+|---------------------------------------------------------------
+| FONT COLOR CLASSES
+|---------------------------------------------------------------
+*/
+.page-head 		{ color: #f3b907; }
+.page-subhead	{ color: #bbd5f6; }
+
+.gray	{ color: #777; }
+.red	{ color: #c00; }
+.orange	{ color: #e99e1c; }
+.green	{ color: #008000; }
+.blue	{ color: lightblue; }
+
+/*
+|---------------------------------------------------------------
+| LINKS
+|---------------------------------------------------------------
+*/
+a {
+	text-decoration: none; 
+	color: #1b6cae;
+}
+a:hover { color: #f3b907; }
+
+/*
+|---------------------------------------------------------------
+| INPUT STYLES
+|---------------------------------------------------------------
+*/
+input[type=text],
+input[type=password] {
+	border: 1px solid #333;
+	color: #888;
+	font-family: "lucida grande", verdana, arial, sans-serif;
+	background: #000;
+	font-size: 120%;
+	
+	border-radius: 2px;
+	-moz-border-radius: 2px;
+	-webkit-border-radius: 2px;
+}
+input[type=text]:focus,
+input[type=password]:focus {
+	color: #eee;
+	border: 1px solid #444;
+	background: #080808;
+}
+
+textarea {
+	font-size: 100%;
+	font-family: "lucida grande", verdana, arial, sans-serif;
+	border: 1px solid #333;
+	color: #888;
+	background: #000;
+	
+	border-radius: 2px;
+	-moz-border-radius: 2px;
+	-webkit-border-radius: 2px;
+}
+textarea:focus {
+	color: #eee;
+	border: 1px solid #444;
+	background: #080808;
+}
+
+select {
+	border: 1px solid #333;
+	color: #888;
+	font-family: "lucida grande", verdana, arial, sans-serif;
+	background: #000;
+	
+	border-radius: 2px;
+	-moz-border-radius: 2px;
+	-webkit-border-radius: 2px;
+}
+select:focus,
+select:hover {
+	color: #eee;
+	border: 1px solid #444;
+	background: #080808;
+}
+
+kbd {
+	font-weight: bold;
+	font-family: "lucida grande", verdana, arial, sans-serif;
+	font-size: 110%;
+}
+
+.cell-label {
+	font-weight: bold;
+	font-size: 100%;
+	text-align: right;
+}
+
+/*
+|---------------------------------------------------------------
+| TABLE STYLES
+|---------------------------------------------------------------
+*/
+tr.alt td { background-color: #0b0b0b; }
+tr.light_gray { background-color: #0b0b0b; }
+
+th {
+	text-align: center;
+	font-size: 120%;
+}
+
+/*
+|---------------------------------------------------------------
+| BUTTONS
+|---------------------------------------------------------------
+*/
+button {
+	border-radius: 25px;
+	-moz-border-radius: 25px;
+	-webkit-border-radius: 25px;
+	
+	font-weight: bold;
+	font-size: 105%;
+}
+
+button.button-main {
+	border: 1px solid #333;
+	background: #000 url('../images/gradient-hard-30.png') repeat-x center left;
+	color: #ccc;
+}
+button.button-main:hover {
+	border: 1px solid #333;
+	background: #111 url('../images/gradient-hard-50.png') repeat-x center left;
+	color: #fff;
+}
+
+button.button-sec {
+	border: 1px solid transparent;
+	color: #555;
+	background: transparent;
+}
+button.button-sec:hover {
+	color: #aaa;
+	border: 1px solid #222;
+	background: #111 url('../images/gradient-hard-30.png') repeat-x center left;
+}
+
+button.button-small {
+	border: 1px solid #666;
+	background: #111 url('../images/gradient-soft-30.png') repeat-x center left;
+	color: #ddd;
+	font-weight: normal !important;
+	font-size: 90%;
+}
+button.button-small:hover {
+	border: 1px solid #888;
+	background: #222 url('../images/gradient-soft-30.png') repeat-x center left;
+	color: #ddd;
+}
+
+input.button-main {
+	font-weight: bold;
+	font-size: 120%;
+	border: 1px solid #333;
+	background: #000 url('../images/gradient-hard-30.png') repeat-x center left;
+	color: #ccc;
+}
+input.button-main:hover {
+	border: 1px solid #333;
+	background: #111 url('../images/gradient-hard-50.png') repeat-x center left;
+	color: #fff;
+}
+
+input.button-sec {
+	font-weight: bold;
+	font-size: 120%;
+	border: 1px solid transparent;
+	color: #555;
+	background: transparent;
+}
+input.button-sec:hover {
+	color: #aaa;
+	border: 1px solid #222;
+	background: #111 url('../images/gradient-hard-30.png') repeat-x center left;
+}
+
+button[disabled],
+button[disabled]:hover,
+input.button-main[disabled],
+input.button-main[disabled]:hover {
+	opacity: .5;
+	filter:alpha(opacity='70');
+	
+	border: 1px solid #333;
+	background: #000 url('../images/gradient-hard-30.png') repeat-x center left;
+	color: #ccc;
+}
+
+/*
+|---------------------------------------------------------------
+| COMMENT STYLES
+|---------------------------------------------------------------
+*/
+#comments p, #news_blocks p, .post_info, .info-full, #notes {
+    background-color: #0b0b0b;
+    border: 1px solid transparent;
+    
+    border-radius: 3px;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+}
+
+/*
+|---------------------------------------------------------------
+| LIST STYLES
+|---------------------------------------------------------------
+*/
+ul.square { list-style: square; }
+ul.none, ol.none { list-style: none; }
+ol.roman { list-style: upper-roman; }
+
+/*
+|---------------------------------------------------------------
+| FLASH MESSAGES
+|---------------------------------------------------------------
+*/
+.flash_message {
+	font-weight: bold;
+	font-size: .9em;
+	
+	border-radius: 5px;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+}
+.flash-success {
+	border: 1px solid #108500;
+	background: #108500 url('../images/gradient-soft-30.png') repeat-x center left;
+	color: #fff;
+}
+.flash-error {
+	border: 1px solid #cd0a0a; 
+	background: #cd0a0a url('../images/gradient-soft-30.png') repeat-x center left;
+	color: #fff;
+}
+.flash-info {
+	border: 1px solid #406ceb;
+	background: #406ceb url('../images/gradient-soft-30.png') repeat-x center left;
+	color: #fff;
+}
+
+/*
+|---------------------------------------------------------------
+| MISC
+|---------------------------------------------------------------
+*/
+hr {
+	border: 1px solid #333;
+	border-width: 1px 0 0;
+}
+
+.loader { text-align: center; }
+
+.system_warning {
+	font-weight: bold;
+	text-align: center;
+}
+
+/*
+|---------------------------------------------------------------
+| PANEL
+|---------------------------------------------------------------
+*/
+.panel-handle a, .panel-handle a:hover {
+	text-decoration: none;
+	border: none;
+	color: #aaa;
+}
+.panel-handle a span {
+	border-left: 1px solid transparent;
+	border-right: 1px solid transparent;
+	font-weight: bold;
+}
+.panel-handle a:hover span {
+	background: #333;
+	color: #eee;
+	border-left: 1px solid #222;
+	border-right: 1px solid #222;
+}
+
+#panel .panel-body {
+	padding: 1em;
+	
+	background: #444;
+	color: #fff;
+	border: 1px solid #444;
+	border-bottom: 1px solid #777;
+	border-top: 0;
+}
+
+.panel-handle {
+	background: #555;
+	border-bottom: 1px solid #222;
+	text-align: center;
+	font-size: 85%;
+}
+
+.panel-trigger span { text-align: center; }
+
+.panel_1 a, .panel_2 a, .panel_3 a {
+	color: #fff;
+	border-bottom: 1px solid;
+}
+
+.panel_1 a.edit, .panel_2 a.edit, .panel_3 a.edit {
+	color: #999;
+	border-bottom: 0;
+	font-weight: bold;
+}
+.panel_1 a.edit:hover, .panel_2 a.edit:hover, .panel_3 a.edit:hover { color: #ddd; }
+
+.panel-controls {
+	float: right;
+	margin: -7px 0 0 0;
+	padding: .3em .5em;
+	
+	background: #444;
+	border-bottom: 1px solid #696969;
+	border-left: 1px solid #606060;
+	border-right: 1px solid #606060;
+	
+	border-radius: 0 0 6px 6px;
+	-moz-border-radius: 0 0 6px 6px;
+	-webkit-border-bottom-left-radius: 6px;
+	-webkit-border-bottom-right-radius: 6px;
+}
+.panel-controls a:hover { border: 0; }
