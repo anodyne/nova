@@ -1,12 +1,12 @@
 <?php
 
-require_once APPPATH.'controllers/base/archive_base.php';
+require_once MODPATH.'core/controllers/nova_archive'.EXT;
 
-class Archive extends Archive_base {
+class Archive extends Nova_archive {
 
-	function Archive()
+	public function __construct()
 	{
-		parent::Archive_base();
+		parent::__construct();
 	}
 	
 	/**

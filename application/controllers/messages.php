@@ -1,12 +1,12 @@
 <?php
 
-require_once APPPATH.'controllers/base/messages_base.php';
+require_once MODPATH.'core/controllers/nova_messages'.EXT;
 
-class Messages extends Messages_base {
+class Messages extends Nova_messages {
 
-	function Messages()
+	public function __construct()
 	{
-		parent::Messages_base();
+		parent::__construct();
 	}
 	
 	/**

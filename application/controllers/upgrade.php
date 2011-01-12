@@ -1,12 +1,12 @@
 <?php
 
-require_once APPPATH.'controllers/base/upgrade_base.php';
+require_once MODPATH.'core/controllers/nova_upgrade'.EXT;
 
-class Upgrade extends Upgrade_base {
+class Upgrade extends Nova_upgrade {
 	
-	function Upgrade()
+	public function __construct()
 	{
-		parent::Upgrade_base();
+		parent::__construct();
 	}
 	
 	/**

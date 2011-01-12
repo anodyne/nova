@@ -1,12 +1,12 @@
 <?php
 
-require_once APPPATH.'controllers/base/upload_base.php';
+require_once MODPATH.'core/controllers/nova_upload'.EXT;
 
-class Upload extends Upload_base {
+class Upload extends Nova_upload {
 
-	function Upload()
+	public function __construct()
 	{
-		parent::Upload_base();
+		parent::__construct();
 	}
 	
 	/**

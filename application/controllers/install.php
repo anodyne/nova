@@ -1,12 +1,12 @@
 <?php
 
-require_once APPPATH.'controllers/base/install_base.php';
+require_once MODPATH.'core/controllers/nova_install'.EXT;
 
-class Install extends Install_base {
+class Install extends Nova_install {
 
-	function Install()
+	public function __construct()
 	{
-		parent::Install_base();
+		parent::__construct();
 	}
 	
 	/**

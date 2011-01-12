@@ -1,12 +1,12 @@
 <?php
 
-require_once APPPATH.'controllers/base/manage_base.php';
+require_once MODPATH.'core/controllers/nova_manage'.EXT;
 
-class Manage extends Manage_base {
+class Manage extends Nova_manage {
 
-	function Manage()
+	public function __construct()
 	{
-		parent::Manage_base();
+		parent::__construct();
 	}
 	
 	/**

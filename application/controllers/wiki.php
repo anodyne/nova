@@ -1,12 +1,12 @@
 <?php
 
-require_once APPPATH.'controllers/base/wiki_base.php';
+require_once MODPATH.'core/controllers/nova_wiki'.EXT;
 
-class Wiki extends Wiki_base {
+class Wiki extends Nova_wiki {
 
-	function Wiki()
+	public function __construct()
 	{
-		parent::Wiki_base();
+		parent::__construct();
 	}
 	
 	/**

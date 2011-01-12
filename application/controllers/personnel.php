@@ -1,12 +1,12 @@
 <?php
 
-require_once APPPATH.'controllers/base/personnel_base.php';
+require_once MODPATH.'core/controllers/nova_personnel'.EXT;
 
-class Personnel extends Personnel_base {
+class Personnel extends Nova_personnel {
 
-	function Personnel()
+	public function __construct()
 	{
-		parent::Personnel_base();
+		parent::__construct();
 	}
 	
 	/**

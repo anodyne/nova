@@ -1,12 +1,12 @@
 <?php
 
-require_once APPPATH.'controllers/base/sim_base.php';
+require_once MODPATH.'core/controllers/nova_sim'.EXT;
 
-class Sim extends Sim_base {
+class Sim extends Nova_sim {
 	
-	function Sim()
+	public function __construct()
 	{
-		parent::Sim_base();
+		parent::__construct();
 	}
 	
 	/**

@@ -1,12 +1,12 @@
 <?php
 
-require_once APPPATH.'controllers/base/site_base.php';
+require_once MODPATH.'core/controllers/nova_site'.EXT;
 
-class Site extends Site_base {
+class Site extends Nova_site {
 
-	function Site()
+	public function __construct()
 	{
-		parent::Site_base();
+		parent::__construct();
 	}
 	
 	/**

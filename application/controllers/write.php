@@ -1,12 +1,12 @@
 <?php
 
-require_once APPPATH.'controllers/base/write_base.php';
+require_once MODPATH.'core/controllers/nova_write'.EXT;
 
-class Write extends Write_base {
+class Write extends Nova_write {
 
-	function Write()
+	public function __construct()
 	{
-		parent::Write_base();
+		parent::__construct();
 	}
 	
 	/**

@@ -1,12 +1,12 @@
 <?php
 
-require_once APPPATH.'controllers/base/search_base.php';
+require_once MODPATH.'core/controllers/nova_search'.EXT;
 
-class Search extends Search_base {
+class Search extends Nova_search {
 	
-	function Search()
+	public function __construct()
 	{
-		parent::Search_base();
+		parent::__construct();
 	}
 	
 	/**

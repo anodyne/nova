@@ -4,9 +4,9 @@ require_once APPPATH.'controllers/base/admin_base.php';
 
 class Admin extends Admin_base {
 
-	function Admin()
+	public function __construct()
 	{
-		parent::Admin_base();
+		parent::__construct();
 	}
 	
 	/**

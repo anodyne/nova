@@ -1,12 +1,12 @@
 <?php
 
-require_once APPPATH.'controllers/base/login_base.php';
+require_once MODPATH.'core/controllers/nova_login'.EXT;
 
-class Login extends Login_base {
+class Login extends Nova_login {
 	
-	function Login()
+	public function __construct()
 	{
-		parent::Login_base();
+		parent::__construct();
 	}
 	
 	/**

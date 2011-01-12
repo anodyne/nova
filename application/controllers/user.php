@@ -1,12 +1,12 @@
 <?php
 
-require_once APPPATH.'controllers/base/user_base.php';
+require_once MODPATH.'core/controllers/nova_user'.EXT;
 
-class User extends User_base {
+class User extends Nova_user {
 
-	function User()
+	public function __construct()
 	{
-		parent::User_base();
+		parent::__construct();
 	}
 	
 	/**

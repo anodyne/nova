@@ -1,12 +1,12 @@
 <?php
 
-require_once APPPATH.'controllers/base/characters_base.php';
+require_once MODPATH.'core/controllers/nova_characters'.EXT;
 
-class Characters extends Characters_base {
+class Characters extends Nova_characters {
 
-	function Characters()
+	public function __construct()
 	{
-		parent::Characters_base();
+		parent::__construct();
 	}
 	
 	/**

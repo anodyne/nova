@@ -1,12 +1,12 @@
 <?php
 
-require_once APPPATH.'controllers/base/update_base.php';
+require_once MODPATH.'core/controllers/nova_update'.EXT;
 
-class Update extends Update_base {
+class Update extends Nova_update {
 	
-	function Update()
+	public function __construct()
 	{
-		parent::Update_base();
+		parent::__construct();
 	}
 	
 	/**

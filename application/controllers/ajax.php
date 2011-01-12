@@ -1,12 +1,12 @@
 <?php
 
-require_once APPPATH.'controllers/base/ajax_base.php';
+require_once MODPATH.'core/controllers/nova_ajax'.EXT;
 
-class Ajax extends Ajax_base {
+class Ajax extends Nova_ajax {
 	
-	function Ajax()
+	public function __construct()
 	{
-		parent::Ajax_base();
+		parent::__construct();
 	}
 	
 	/**

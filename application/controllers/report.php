@@ -1,12 +1,12 @@
 <?php
 
-require_once APPPATH.'controllers/base/report_base.php';
+require_once MODPATH.'core/controllers/nova_report'.EXT;
 
-class Report extends Report_base {
+class Report extends Nova_report {
 
-	function Report()
+	public function __construct()
 	{
-		parent::Report_base();
+		parent::__construct();
 	}
 	
 	/**

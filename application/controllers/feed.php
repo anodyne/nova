@@ -1,12 +1,12 @@
 <?php
 
-require_once APPPATH.'controllers/base/feed_base.php';
+require_once MODPATH.'core/controllers/nova_feed'.EXT;
 
-class Feed extends Feed_base {
+class Feed extends Nova_feed {
 	
-	function Feed()
+	public function __construct()
 	{
-		parent::Feed_base();
+		parent::__construct();
 	}
 	
 	/**
