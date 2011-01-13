@@ -1,8 +1,13 @@
-<!DOCTYPE html>
+<?php
+
+// get the type of message
+$type = (isset($_GET['type'])) ? $_GET['type'] : false;
+
+?><!DOCTYPE html>
 <html lang="en">
 	<head>
-		<title>Banned!</title>
-		<meta charset="utf-8" />
+		<meta charset="utf-8">
+		<title>Nova Maintenance</title>
 		
 		<style>
 			body {
@@ -31,7 +36,6 @@
 			#container h1 {
 				padding: 0 0 0 45px;
 				
-				color: #c00;
 				background: transparent url('exclamation.png') no-repeat center left;
 				text-shadow: 0 1px 0 rgba(255, 255, 255, .55);
 			}
@@ -42,14 +46,28 @@
 			}
 			#container a { color: #000; }
 			#container a:hover { color: #06c; }
+			
+			.error { color: #c00; }
+			.notice { color: #406ceb; }
 		</style>
 	</head>
 	<body>
 		<div id="container">
-			<h1>Uh oh!</h1>
-			<p>Looks like you've been naughty and the game master has completely banned you from viewing the site.
-				This ban can be lifted by the game master, but you'll need to <a href="index.php/main/contact">contact
-				them</a> to do so.</p>
+			<?php if ($type == 'php'): ?>
+				<h1 class="error">Uh oh!</h1>
+				<p>Unforunately, your server isn't running a compatible version of PHP. Please check the server requirements
+					and contact your host if necessary. Additional support is available from <a href="http://forums.anodyne-productions.com" target="_blank">
+					Anodyne Productions</a>.</p>
+			<?php elseif ($type == 'maintenance'): ?>
+				<h1 class="notice">Nova Maintenance</h1>
+				<p>We're doing some maintenance on the site right now and it isn't available. This shouldn't take very long, 
+					so please try again in a little while.</p>
+			<?php elseif ($type == 'banned'): ?>
+				<h1 class="error">Uh oh!</h1>
+				<p>Looks like you've been naughty and the game master has completely banned you from viewing the site.
+					This ban can be lifted by the game master, but you'll need to <a href="index.php/main/contact">contact
+					them</a> to do so.</p>
+			<?php endif;?>
 		</div>
 	</body>
 </html>
