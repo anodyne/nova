@@ -24,7 +24,7 @@
 $config['strict']  = false;
 
 // Module directories
-$config['paths']   = array(MODPATH);
+$config['paths']   = array(APPPATH.'modules', MODPATH);
 
 // Advanced: Files excluded from caller detection
 $config['callers'] = array();
