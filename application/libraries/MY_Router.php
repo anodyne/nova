@@ -22,9 +22,9 @@
 
 class MY_Router extends CI_Router {
 
-	// {{{ Matchbox
-
+	var $_mb_default = FALSE;
 	var $_mb_module  = FALSE;
+	var $_mb_routes  = array();
 	var $module      = FALSE;
 
 	function MY_Router()
@@ -94,47 +94,123 @@ class MY_Router extends CI_Router {
 		$this->_mb_strict  = $strict;
 	}
 
-	function _mb_module($module)
+	/**
+	 * Sets the Route
+	 *
+	 * This function takes an array of URI segments as
+	 * input, and sets the current class/method
+	 */
+	function _mb_route($segments)
 	{
-		foreach ($this->_mb_paths as $path) {
+		// Does a module exist that matches the request?
+		$module = $segments[0];
+
+		// Loop through the paths in search of the elusive module!
+		foreach ($this->_mb_paths as $path)
+		{
 			if (is_dir($path.$module))
 			{
 				$this->_mb_module = $path.$module.'/';
-				$this->module     = $module;
+				$this->module     = $module;			// UNNECESSARY?
 			}
 		}
 
+		// If the module doesn't exist then it's a regular request
 		if ($this->_mb_module === FALSE)
 		{
-			return FALSE;
+			return $segments;
 		}
 
-		// Fetch and ready module routing data
-		@include($this->_mb_module.'config/routes'.EXT);
-		if (isset($route) && is_array($route)) {
-			$this->routes = array_merge($this->routes, $route);
-		}
-		unset($route);
+		$segments = array_slice($segments, 1);
 
-		// Default controller
-		if (isset($this->routes['default_controller']) && $this->routes['default_controller'] !== '')
+		if (file_exists($this->_mb_module.'config/routes'.EXT))
 		{
-			$this->_mb_default_controller = strtolower($this->routes['default_controller']);
-		} else {
-			$this->_mb_default_controller = FALSE;
+			include_once($this->_mb_module.'config/routes'.EXT);
+
+			$this->_mb_routes  = ( ! isset($route) OR ! is_array($route)) ? array() : $route;
+			$this->_mb_default = ( ! isset($this->_mb_routes['default_controller']) OR $this->_mb_routes['default_controller'] == '') ? FALSE : strtolower($this->_mb_routes['default_controller']);	
 		}
 
-		return TRUE;
+		if ($this->_mb_strict === TRUE && $this->_mb_default === FALSE)
+		{
+			$this->_mb_default = $module;
+		}
+
+		// Is it the default controller?
+		if (count($segments) < 2)
+		{
+			if ($this->_mb_default === FALSE)
+			{
+				show_error("Matchbox: Unable to determine what should be displayed. A default module route has not been specified in the module's routing file.");
+			}
+
+			// Are blah?
+			if (strpos($this->_mb_default, '/') !== FALSE)
+			{
+				$x = explode('/', $this->_mb_default);
+
+				$this->set_class(end($x));
+				$this->set_method('index');
+				$segments = $x;
+			}
+			else
+			{
+				$this->set_class($this->_mb_default);
+				$this->set_method('index');
+				$segments = array($this->_mb_default, 'index');
+			}
+
+			$this->uri->_reindex_segments();
+
+			log_message('debug', "Matchbox: Only module present in URI. Default module controller set.");
+			return $segments;
+		}
+		unset($this->_mb_routes['default_controller']);
+
+		// Do we even have any custom routing to deal with?
+		// There is a default scaffolding trigger, so we'll look just for 1
+		if (count($this->_mb_routes) == 1 && key($this->_mb_routes) === 'scaffolding_trigger')
+		{
+			return $segments;
+		}
+
+		// Turn the segment array into a URI string
+		$uri = implode('/', $segments);
+
+		// Is there a literal match?  If so we're done
+		if (isset($this->_mb_routes[$uri]))
+		{
+			return explode('/', $this->_mb_routes[$uri]);
+		}
+
+		// Loop through the route array looking for wild-cards
+		foreach ($this->_mb_routes as $from => $to)
+		{
+			// Convert wild-cards to RegEx
+			$from = str_replace(':any', '.+', str_replace(':num', '[0-9]+', $from));
+
+			// Does the RegEx match?
+			if (preg_match('#^'.$from.'$#', $uri))
+			{
+				// Do we have a back-reference?
+				if (strpos($to, '$') !== FALSE AND strpos($from, '(') !== FALSE)
+				{
+					$to = preg_replace('#^'.$from.'$#', $to, $uri);
+				}
+
+				$segments = explode('/', $to);
+				break;
+			}
+		}
+
+		return $segments;
 	}
 
-	function _validate_request($segments)
+	/**
+	 * Locate controller
+	 */
+	function _mb_locate($segments)
 	{
-		// Regular non-modular requests are handled by stock CI code
-		if ($this->_mb_module === FALSE)
-		{
-			return parent::_validate_request($segments);
-		}
-
 		// Now we need to find the relative path to the module
 		$path  = '../';
 		$path1 = explode('/', trim(str_replace("\\", "/", realpath(APPPATH)), '/'));
@@ -160,12 +236,18 @@ class MY_Router extends CI_Router {
 			return $segments;
 		}
 
-		// At this point, the controller can only be in a sub-directory
+		// Strict mode off falls back to just module name as controller
 		if ( ! is_dir($directory.$segments[0]))
 		{
+			if ($this->_mb_strict === FALSE && file_exists($directory.$segments[0].EXT))
+			{
+				return $segments;
+			}
+
 			show_404($directory.$segments[0]);
 		}
 
+		// At this point, the controller can only be in a sub-directory
 		$this->set_directory($this->fetch_directory().$segments[0]);
 		$directory .= $segments[0].'/';
 		$segments  = array_slice($segments, 1);
@@ -179,10 +261,10 @@ class MY_Router extends CI_Router {
 		}
 		else
 		{
-			$this->set_class($this->_mb_default_controller);
+			$this->set_class($this->_mb_default);
 			$this->set_method('index');
 
-			if ( ! file_exists($directory.$this->_mb_default_controller.EXT))
+			if ( ! file_exists($directory.$this->_mb_default.EXT))
 			{
 				$this->directory2 = '';
 				return array();
@@ -192,143 +274,28 @@ class MY_Router extends CI_Router {
 		return $segments;
 	}
 
-	// }}}
-
-	function _set_routing()
+	function _set_request($segments)
 	{
-		// Are query strings enabled in the config file?
-		// If so, we're done since segment based URIs are not used with query strings.
-		if ($this->config->item('enable_query_strings') === TRUE AND isset($_GET[$this->config->item('controller_trigger')]))
-		{
-			$this->set_class(trim($this->uri->_filter_uri($_GET[$this->config->item('controller_trigger')])));
+		$segments = $this->_mb_route($segments);
 
-			if (isset($_GET[$this->config->item('function_trigger')]))
-			{
-				$this->set_method(trim($this->uri->_filter_uri($_GET[$this->config->item('function_trigger')])));
-			}
-
-			return;
-		}
-
-		// Load the routes.php file.
-		@include(APPPATH.'config/routes'.EXT);
-		$this->routes = ( ! isset($route) OR ! is_array($route)) ? array() : $route;
-		unset($route);
-
-		// Set the default controller so we can display it in the event
-		// the URI doesn't correlated to a valid controller.
-		$this->default_controller = ( ! isset($this->routes['default_controller']) OR $this->routes['default_controller'] == '') ? FALSE : strtolower($this->routes['default_controller']);	
-
-		// Fetch the complete URI string
-		$this->uri->_fetch_uri_string();
-
-		// Is there a URI string? If not, the default controller specified in the "routes" file will be shown.
-		if ($this->uri->uri_string == '')
-		{
-			if ($this->default_controller === FALSE)
-			{
-				show_error("Unable to determine what should be displayed. A default route has not been specified in the routing file.");
-			}
-
-			// {{{ Matchbox
-
-			if (strpos($this->default_controller, '/') !== FALSE)
-			{
-				$x = explode('/', $this->default_controller);
-
-				if ($this->_mb_module($x[0]))
-				{
-					$x = array_slice($x, 1);
-				}
-
-				$this->set_class(end($x));
-				$this->set_method('index');
-				$this->_set_request($x);
-			}
-			else
-			{
-				$this->set_class($this->default_controller);
-				$x = array($this->default_controller, 'index');
-
-				if ($this->_mb_module($this->default_controller))
-				{
-					$x = explode('/', $this->_mb_default_controller);
-					$this->set_class(end($x));
-				}
-
-				$this->set_method('index');
-				$this->_set_request($x);
-			}
-
-			// }}}
-
-			// re-index the routed segments array so it starts with 1 rather than 0
-			$this->uri->_reindex_segments();
-
-			log_message('debug', "No URI present. Default controller set.");
-			return;
-		}
-		unset($this->routes['default_controller']);
-
-		// Do we need to remove the URL suffix?
-		$this->uri->_remove_url_suffix();
-
-		// Compile the segments into an array
-		$this->uri->_explode_segments();
-
-		// {{{ Matchbox
-
-		$segments = $this->uri->segments;
-		$module   = $segments[0].'/';
-
-		if ($this->_mb_module($segments[0]))
-		{
-			$this->uri->segments  = array_slice($this->uri->segments, 1);
-
-			if (count($segments) < 2)
-			{
-
-				if ($this->_mb_default_controller === FALSE)
-				{
-					if ($this->_mb_strict === TRUE)
-					{
-						show_error("Matchbox: Unable to determine what should be displayed. A default module route has not been specified in the module's routing file.");
-					}
-
-					$this->_mb_default_controller = $this->module;
-				}
-
-				if (strpos($this->_mb_default_controller, '/') !== FALSE)
-				{
-					$x = explode('/', $this->_mb_default_controller);
-
-					$this->set_class(end($x));
-					$this->set_method('index');
-					$this->_set_request($x);
-				}
-				else
-				{
-					$this->set_class($this->_mb_default_controller);
-					$this->set_method('index');
-					$this->_set_request(array($this->_mb_default_controller, 'index'));
-				}
-
-				$this->uri->_reindex_segments();
-
-				log_message('debug', "Matchbox: Only module present in URI. Default module controller set.");
-				return;
-			}
-		}
-
-		// }}}
-
-		// Parse any custom routing that may exist
-		$this->_parse_routes();		
-
-		// Re-index the segment array so that it starts with 1 rather than 0
-		$this->uri->_reindex_segments();
+		return parent::_set_request($segments);
 	}
 
+	function _validate_request($segments)
+	{
+		if ($this->_mb_module !== FALSE)
+		{
+			return $this->_mb_locate($segments);
+		}
+
+		// Otherwise run stock code
+		return parent::_validate_request($segments);
+	}
+
+	function set_directory($dir)
+	{
+		$this->directory = $dir.'/';
+	}
 }
 
 /* End of file MY_Router.php */
