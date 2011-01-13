@@ -52,17 +52,6 @@ switch ($debug_errors)
  $system_folder = INSTALL_ROOT."codeigniter";
 
 /**
- * Modules folder name
- *
- * This variable must contain the name of your "modules" folder.
- *
- * NO TRAILING SLASH!
- */
-
-$mods_folder = 'modules';
-$modules_folder = INSTALL_ROOT.$mods_folder;
-	
-/**
  * Application folder name
  *
  * If you want this front controller to use a different "application" folder than
@@ -77,6 +66,18 @@ $abspath = getcwd();
 $app_folder = 'application';
 
 $application_folder = $abspath.'/'.$app_folder;
+
+/**
+ * Modules folder name
+ *
+ * This variable must contain the name of your "modules" folder.
+ *
+ * NO TRAILING SLASH!
+ */
+
+$mods_folder = 'modules';
+$modules_folder = INSTALL_ROOT.$mods_folder;
+$app_modules_folder = $application_folder.'/'.$mods_folder;
 
 /*
 |===============================================================
@@ -172,6 +173,20 @@ else
 	}
 
 	define('MODPATH', INSTALL_ROOT.$modules_folder.'/');
+}
+
+if (is_dir($app_modules_folder))
+{
+	define('APPMODPATH', $app_modules_folder.'/');
+}
+else
+{
+	if ($modules_folder == '')
+	{
+		$modules_folder = 'modules';
+	}
+
+	define('APPMODPATH', $app_modules_folder.'/');
 }
 
 /**
