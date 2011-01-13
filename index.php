@@ -84,32 +84,34 @@ $application_folder = $abspath.'/'.$app_folder;
 |===============================================================
 */
 
-/*
-|---------------------------------------------------------------
-| DEFAULT TIMEZONE
-|---------------------------------------------------------------
-|
-| Set the default timezone for date/time functions to use if
-| none is set on the server. This prevents PHP 5.3 from throwing
-| errors.
-|
-*/
-if ( ! ini_get('date.timezone') && phpversion() >= '5.1')
+if (phpversion() < '5.1')
+{
+	header('Location: message.php?type=php');
+	exit();
+}
+
+/**
+ * Default timezone
+ *
+ * Set the default timezone for date/time functions to use if
+ * none is set on the server. This prevents PHP 5.3+ from
+ * throwing errors.
+ */
+
+if ( ! ini_get('date.timezone'))
 {
 	date_default_timezone_set('GMT');
 }
 
-/*
-|---------------------------------------------------------------
-| SET THE SERVER PATH
-|---------------------------------------------------------------
-|
-| Let's attempt to determine the full-server path to the "system"
-| folder in order to reduce the possibility of path problems.
-| Note: We only attempt this if the user hasn't specified a 
-| full server path.
-|
-*/
+/**
+ * Set the server path
+ *
+ * Let's attempt to determine the full server path to the CodeIgniter
+ * core folder in order to reduce the possibility of path problems.
+ * Note: We only attempt this if the user hasn't specified a full
+ * server path.
+ */
+
 if (strpos($system_folder, '/') === FALSE)
 {
 	if (function_exists('realpath') AND @realpath(dirname(__FILE__)) !== FALSE)
@@ -123,18 +125,19 @@ else
 	$system_folder = str_replace("\\", "/", $system_folder); 
 }
 
-/*
-|---------------------------------------------------------------
-| DEFINE APPLICATION CONSTANTS
-|---------------------------------------------------------------
-|
-| EXT		- The file extension.  Typically ".php"
-| FCPATH	- The full server path to THIS file
-| SELF		- The name of THIS file (typically "index.php)
-| BASEPATH	- The full server path to the "system" folder
-| APPPATH	- The full server path to the "application" folder
-|
-*/
+/**
+ * Define Application Constants
+ *
+ * EXT		- The file extension. Typically ".php"
+ * FCPATH	- The full server path to THIS file
+ * SELF		- The name of THIS file (typically "index.php")
+ * BASEPATH	- The full server path to the CodeIgniter core files
+ * APPPATH	- The full server path to the "application" folder
+ * MODPATH	- The full server path to the core "modules" folder
+ * APPFOLDER- The name of the "application" folder
+ * MODFOLDER- The name of the core "modules" folder
+ */
+
 define('EXT', '.'.pathinfo(__FILE__, PATHINFO_EXTENSION));
 define('FCPATH', __FILE__);
 define('SELF', pathinfo(__FILE__, PATHINFO_BASENAME));
@@ -171,12 +174,18 @@ else
 	define('MODPATH', INSTALL_ROOT.$modules_folder.'/');
 }
 
-/*
-|---------------------------------------------------------------
-| LOAD THE FRONT CONTROLLER
-|---------------------------------------------------------------
-|
-| And away we go...
-|
-*/
-require_once BASEPATH.'codeigniter/CodeIgniter'.EXT;
+/**
+ * If the nova directory doesn't exist, it means that we're doing
+ * maintenance on the site and should show the maintenance page.
+ * If the directory does exist, then it's time to start executing
+ * everything...
+ */
+
+if ( ! is_dir(INSTALL_ROOT))
+{
+	header('Location: message'.EXT.'?type=maintenance');
+}
+else
+{
+	require_once BASEPATH.'codeigniter/CodeIgniter'.EXT;
+}

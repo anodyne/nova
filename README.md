@@ -8,8 +8,10 @@ Anodyne Production's next-generation RPG management system combines popular feat
 
 ## Changes in 2.0
 
+* added the message.php file to handle notification of bans, a missing "nova" directory and incompatible PHP version
 * updated seamless substitution to be able to override email view files
 * refactored the location helper into a full-blown class with static methods
+* removed the banned.php file
 * fixed bug with seamless substitution of images where they wouldn't work when they were in the _base_override directory
 
 ## Version History
