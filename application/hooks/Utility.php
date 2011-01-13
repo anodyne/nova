@@ -41,7 +41,7 @@ class Utility {
 			{
 				if ($ci->uri->segment(1) != 'main' && $ci->uri->segment(2) != 'contact')
 				{
-					header('Location:'.base_url().'banned.php');
+					header('Location:'.base_url().'message.php?type=banned');
 				}
 			}
 		}
