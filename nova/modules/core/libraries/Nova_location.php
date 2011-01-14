@@ -78,8 +78,12 @@ abstract class Nova_location {
 		{
 			return APPFOLDER.'/views/'.$skin.'/'.$section.'/images/'.$img;
 		}
+		elseif (is_file(APPPATH.'assets/common/'.GENRE.'/images/'.$img))
+		{
+			return APPFOLDER.'/assets/common/'.GENRE.'/images/'.$img;
+		}
 		
-		return APPFOLDER.'/assets/common/'.GENRE.'/images/'.$img;
+		return MODFOLDER.'/core/views/_base/'.$section.'/images/'.$img;
 	}
 	
 	/**
@@ -197,25 +201,37 @@ abstract class Nova_location {
 	{
 		$ci =& get_instance();
 		
-		$obj = new stdClass;
-		$obj->view = $view;
-		$obj->sec = $section;
-		
-		if (is_file(APPPATH.'views/'.$skin.'/'.$section.'/pages/'.$view.EXT))
+		if ($skin === null and $section === null)
 		{
-			$obj->skin = $skin;
-		}
-		elseif (is_file(APPPATH.'views/_base_override/'.$section.'/pages/'.$view.EXT))
-		{
-			$obj->skin = '_base_override';
+			$location = $view;
 		}
 		else
 		{
-			$obj->skin = '_base';
+			$obj = new stdClass;
+			$obj->view = $view;
+			$obj->sec = $section;
+			
+			if (is_file(APPPATH.'views/'.$skin.'/'.$section.'/pages/'.$view.EXT))
+			{
+				$obj->skin = $skin;
+			}
+			elseif (is_file(APPPATH.'views/_base_override/'.$section.'/pages/'.$view.EXT))
+			{
+				$obj->skin = '_base_override';
+			}
+			else
+			{
+				$obj->skin = '_base';
+			}
+			
+			$location = $obj->skin.'/'.$obj->sec.'/pages/'.$obj->view;
 		}
 		
-		$location = $obj->skin.'/'.$obj->sec.'/pages/'.$obj->view;
+		if ($data !== null)
+		{
+			return $ci->load->view($location, $data, true);
+		}
 		
-		return $ci->load->view($location, $data, true);
+		return $location;
 	}
 }
