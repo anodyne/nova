@@ -70,9 +70,9 @@ class Utility {
 	{
 		$ci =& get_instance();
 		
-		$ignore = array('install', 'login', 'update', 'upgrade');
+		$ignore = array('install', 'login', 'update', 'upgrade', 'feed');
 		
-		if (!in_array($ci->uri->segment(1), $ignore))
+		if ( ! in_array($ci->uri->segment(1), $ignore))
 		{
 			if ($ci->settings->get_setting('maintenance') == 'on' && $ci->uri->segment(1) != 'login')
 			{
