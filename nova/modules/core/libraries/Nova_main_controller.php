@@ -28,9 +28,9 @@ class Nova_main_controller extends Controller {
 	public $dst;
 	
 	/**
-	 * The prefix to use before the page title
+	 * Variable to store all the information about template regions
 	 */
-	public $titleprefix;
+	protected $_regions = array();
 	
 	public function __construct()
 	{
@@ -65,7 +65,11 @@ class Nova_main_controller extends Controller {
 			'default_email_name',
 			'default_email_address',
 			'email_subject',
-			'system_email'
+			'system_email',
+			'manifest_defaults',
+			'list_logs_num',
+			'list_posts_num',
+			'post_count_format',
 		);
 		
 		// set the options
@@ -95,7 +99,7 @@ class Nova_main_controller extends Controller {
 		Template::$file = $this->skin.'/template_main';
 		
 		// assign all of the items to the template with false values to prevent errors
-		Template::assign(array(
+		$this->_regions += array(
 			'nav_main'		=> Menu::build('main', 'main'),
 			'nav_sub'		=> false,
 			'content'		=> false,
@@ -103,21 +107,18 @@ class Nova_main_controller extends Controller {
 			'ajax'			=> false,
 			'flash_message'	=> false,
 			'_redirect'		=> false,
-			'title'			=> false,
-		));
+			'title'			=> $this->options['sim_name'].' :: ',
+		);
 		
 		// set up the user panel if the user is logged in
 		if (Auth::is_logged_in())
 		{
-			Template::assign(array(
+			$this->_regions += array(
 				'panel_1'			=> $this->user_panel->panel_1(),
 				'panel_2'			=> $this->user_panel->panel_2(),
 				'panel_3'			=> $this->user_panel->panel_3(),
 				'panel_workflow'	=> $this->user_panel->panel_workflow(),
-			));
+			);
 		}
-		
-		// set up the title prefix
-		$this->titleprefix = $this->options['sim_name'].' :: ';
 	}
 }
