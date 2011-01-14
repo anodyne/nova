@@ -17,7 +17,7 @@ class Nova_main extends Nova_main_controller {
 	{
 		parent::__construct();
 		
-		Template::assign('nav_sub', Menu::build('sub', 'main'));
+		$this->_regions['nav_sub'] = Menu::build('sub', 'main');
 	}
 
 	public function index()
@@ -58,11 +58,11 @@ class Nova_main extends Nova_main_controller {
 			'in' => lang('labels_in'),
 		);
 		
-		Template::assign(array(
-			'content'		=> Location::view('main_index', $this->skin, 'main', $data),
-			'javascript'	=> Location::js('main_index_js', $this->skin, 'main'),
-			'title'			=> $this->titleprefix.ucfirst(lang('labels_main')),
-		));
+		$this->_regions['content'] = Location::view('main_index', $this->skin, 'main', $data);
+		$this->_regions['javascript'] = Location::js('main_index_js', $this->skin, 'main');
+		$this->_regions['title'].= ucfirst(lang('labels_main'));
+		
+		Template::assign($this->_regions);
 		
 		Template::render();
 	}
@@ -119,8 +119,7 @@ class Nova_main extends Nova_main_controller {
 					$flash['message'] = text_output($message);
 				}
 				
-				// write everything to the template
-				Template::assign('flash_message', Location::view('flash', $this->skin, 'main', $flash));
+				$this->_regions['flash_message'] = Location::view('flash', $this->skin, 'main', $flash);
 			}
 		}
 		
@@ -171,10 +170,10 @@ class Nova_main extends Nova_main_controller {
 			'nosubmit' => lang('flash_system_email_off_disabled'),
 		);
 		
-		Template::assign(array(
-			'content'		=> Location::view('main_contact', $this->skin, 'main', $data),
-			'title'			=> $this->titleprefix.$data['header'],
-		));
+		$this->_regions['content'] = Location::view('main_contact', $this->skin, 'main', $data);
+		$this->_regions['title'].= $data['header'];
+		
+		Template::assign($this->_regions);
 		
 		Template::render();
 	}
@@ -200,10 +199,10 @@ class Nova_main extends Nova_main_controller {
 			'edit' => '[ '. ucfirst(lang('actions_edit')) .' ]',
 		);
 		
-		Template::assign(array(
-			'content'		=> Location::view('main_credits', $this->skin, 'main', $data),
-			'title'			=> $this->titleprefix.$data['header'],
-		));
+		$this->_regions['content'] = Location::view('main_credits', $this->skin, 'main', $data);
+		$this->_regions['title'].= $data['header'];
+		
+		Template::assign($this->_regions);
 		
 		Template::render();
 	}
@@ -412,16 +411,14 @@ class Nova_main extends Nova_main_controller {
 				}
 			}
 			
-			// write everything to the template
-			Template::assign('flash_message', Location::view('flash', $this->skin, 'main', $flash));
+			$this->_regions['flash_message'] = Location::view('flash', $this->skin, 'main', $flash);
 		}
 		elseif ($this->options['system_email'] == 'off')
 		{
 			$flash['status'] = 'info';
 			$flash['message'] = lang_output('flash_system_email_off');
 			
-			// write everything to the template
-			Template::assign('flash_message', Location::view('flash', $this->skin, 'main', $flash));
+			$this->_regions['flash_message'] = Location::view('flash', $this->skin, 'main', $flash);
 		}
 		
 		if ($agree == FALSE && $submit == FALSE)
@@ -608,11 +605,11 @@ class Nova_main extends Nova_main_controller {
 			'class' => 'image'
 		);
 		
-		Template::assign(array(
-			'content'		=> Location::view($view_loc, $this->skin, 'main', $data),
-			'javascript'	=> Location::js('main_join_js', $this->skin, 'main'),
-			'title'			=> $this->titleprefix.$data['header'],
-		));
+		$this->_regions['content'] = Location::view($view_loc, $this->skin, 'main', $data);
+		$this->_regions['javascript'] = Location::js('main_join_js', $this->skin, 'main');
+		$this->_regions['title'].= $data['header'];
+		
+		Template::assign($this->_regions);
 		
 		Template::render();
 	}
@@ -698,12 +695,12 @@ class Nova_main extends Nova_main_controller {
 			'loading' => ucfirst(lang('actions_loading')),
 			'nonews' => lang('error_msg_no_news'),
 		);
-			
-		Template::assign(array(
-			'content'		=> Location::view('main_news', $this->skin, 'main', $data),
-			'javascript'	=> Location::js('main_news_js', $this->skin, 'main'),
-			'title'			=> $this->titleprefix.ucfirst(lang('global_news')),
-		));
+		
+		$this->_regions['content'] = Location::view('main_news', $this->skin, 'main', $data);
+		$this->_regions['javascript'] = Location::js('main_news_js', $this->skin, 'main');
+		$this->_regions['title'].= ucfirst(lang('global_news'));
+		
+		Template::assign($this->_regions);
 		
 		Template::render();
 	}
@@ -798,8 +795,7 @@ class Nova_main extends Nova_main_controller {
 				$flash['message'] = lang_output('flash_add_comment_empty_body');
 			}
 			
-			// write everything to the template
-			Template::assign('flash_message', Location::view('flash', $this->skin, 'main', $flash));
+			$this->_regions['flash_message'] = Location::view('flash', $this->skin, 'main', $flash);
 		}
 		
 		// get the news item
@@ -951,11 +947,11 @@ class Nova_main extends Nova_main_controller {
 			'edit' => '[ '. ucfirst(lang('actions_edit')) .' ]',
 		);
 		
-		Template::assign(array(
-			'content'		=> Location::view($view_loc, $this->skin, 'main', $data),
-			'javascript'	=> ($js_loc) ? Location::js($js_loc, $this->skin, 'main') : false,
-			'title'			=> $this->titleprefix.ucwords(lang('actions_view').' '.lang('global_news')),
-		));
+		$this->_regions['content'] = Location::view($view_loc, $this->skin, 'main', $data);
+		$this->_regions['javascript'] = ($js_loc) ? Location::js($js_loc, $this->skin, 'main') : false;
+		$this->_regions['title'].= ucwords(lang('actions_view').' '.lang('global_news'));
+		
+		Template::assign($this->_regions);
 		
 		Template::render();
 	}
