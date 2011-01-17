@@ -1,16 +1,16 @@
-<?php
+<?php defined('SYSPATH') or die('No direct script access.');
+
 /**
  * PHPUnit testsuite for kohana application
  *
- * @package    Kohana/Unittest
+ * @package    Kohana/UnitTest
  * @author     Kohana Team
  * @author     BRMatt <matthew@sigswitch.com>
  * @author	   Paul Banks
  * @copyright  (c) 2008-2009 Kohana Team
  * @license    http://kohanaphp.com/license
  */
-class Kohana_Tests
-{
+class Kohana_Unittest_Tests {
 	static protected $cache = array();
 
 	/**
@@ -56,7 +56,6 @@ class Kohana_Tests
 			{
 				include_once 'PHPUnit/Framework.php';
 			}
-			
 		}
 
 		// Allow PHPUnit to handle exceptions and errors
@@ -66,12 +65,12 @@ class Kohana_Tests
 			restore_error_handler();
 		}
 
-		spl_autoload_register(array('Kohana_Tests', 'autoload'));
+		spl_autoload_register(array('Unittest_tests', 'autoload'));
 
-		Kohana_Tests::$cache = (($cache = Kohana::cache('unittest_whitelist_cache')) === NULL) ? array() : $cache;
-		
 		// As of PHPUnit v3.5 there are slight differences in the way files are black|whitelisted
 		self::$phpunit_v35 = function_exists('phpunit_autoload');
+
+		Unittest_tests::$cache = (($cache = Kohana::cache('unittest_whitelist_cache')) === NULL) ? array() : $cache;
 
 		$config = Kohana::config('unittest');
 
@@ -82,7 +81,7 @@ class Kohana_Tests
 
 		if ($do_blacklist AND count($config['blacklist']))
 		{
-			Kohana_Tests::blacklist($config->blacklist);
+			Unittest_tests::blacklist($config->blacklist);
 		}
 	}
 
@@ -159,7 +158,7 @@ class Kohana_Tests
 					{
 						require_once($file);
 					}
-					
+
 					if (isset($filter))
 					{
 						$filter->addFileToBlacklist($file);
@@ -307,17 +306,17 @@ class Kohana_Tests
 			}
 			else
 			{
-				if ( ! isset(Kohana_Tests::$cache[$file]))
+				if ( ! isset(Unittest_tests::$cache[$file]))
 				{
 					$relative_path = substr($file, strrpos($file, 'classes'.DIRECTORY_SEPARATOR) + 8, -strlen(EXT));
 					$cascading_file = Kohana::find_file('classes', $relative_path);
 
 					// The theory is that if this file is the highest one in the cascading filesystem
 					// then it's safe to whitelist
-					Kohana_Tests::$cache[$file] =  ($cascading_file === $file);
+					Unittest_tests::$cache[$file] =  ($cascading_file === $file);
 				}
 
-				if (Kohana_Tests::$cache[$file])
+				if (Unittest_tests::$cache[$file])
 				{
 					if (isset($filter))
 					{

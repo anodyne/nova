@@ -1,8 +1,18 @@
+### From the command line
+
+	$ phpunit --bootstrap=index.php modules/unittest/tests.php
+
+Of course, you'll need to make sure the path to the tests.php file is correct.  If you want you can copy it to a more accessible location
+
+### From the web
+
+Just navigate to http://example.com/unittest. You may need to use http://example.com/index.php/unittest if you have not enabled url rewriting in your .htaccess.
+
 ## Writing tests
 
-If you're writing a test for your application, place it in `application/tests`.  Similarly, if you're writing a test for a module place it in `modules/<modulefolder>/tests`.
+If you're writing a test for your application, place it in "application/tests".  Similarly, if you're writing a test for a module place it in modules/[modulefolder]/tests
 
-Rather than tell you how to write tests I'll point you in the direction of the [PHPUnit Manual](http://www.phpunit.de/manual/3.4/en/index.html).  One thing you should bear in mind when writing tests is that testcases should extend [Kohana_Unittest_Testcase] rather than `PHPUnit_Framework_TestCase`.
+Rather than tell you how to write tests I'll point you in the direction of the [PHPUnit Manual](http://www.phpunit.de/manual/3.4/en/index.html).  One thing you should bear in mind when writing tests is that testcases should extend Unittest_Testcase rather than PHPUnit_Framework_TestCase, doing so gives you access to useful kohana specific helpers such as `setEnvironment()`.
 
 Here's a taster of some of the cool things you can do with phpunit:
 
@@ -14,7 +24,7 @@ Ordinarily you could use a foreach loop to iterate over an array of test data, h
 
 	<?php
 
-	Class ReallyCoolTest extends Kohana_Unittest_TestCase
+	Class ReallyCoolTest extends Unittest_TestCase
 	{
 		function providerStrLen()
 		{
@@ -57,7 +67,7 @@ To allow users to selectively run tests you need to organise your tests into gro
 	 * @group somegroup
 	 * @group somegroup.morespecific
 	 */
-	Class AnotherReallyCoolTest extends Kohana_Unittest_TestCase
+	Class AnotherReallyCoolTest extends Unittest_TestCase
 	{
 		/**
 		 * Tests can also be grouped too!

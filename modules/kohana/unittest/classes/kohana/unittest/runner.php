@@ -1,16 +1,16 @@
 <?php
+
 /**
  * PHPUnit test runner for kohana
  *
- * @package    Kohana/Unittest
+ * @package    Kohana/UnitTest
  * @author     Kohana Team
  * @author     BRMatt <matthew@sigswitch.com>
  * @author	   Paul Banks
  * @copyright  (c) 2008-2009 Kohana Team
  * @license    http://kohanaphp.com/license
  */
-Class Kohana_Unittest_Runner implements PHPUnit_Framework_TestListener
-{
+class Kohana_Unittest_Runner implements PHPUnit_Framework_TestListener {
 	/**
 	 * Results
 	 * @var array
@@ -226,7 +226,6 @@ Class Kohana_Unittest_Runner implements PHPUnit_Framework_TestListener
 		$this->totals['errors']++;
 		$this->current['result'] = 'errors';
 		$this->current['message'] = $test->getStatusMessage();
-
 	}
 
 	public function addFailure(PHPUnit_Framework_Test $test, PHPUnit_Framework_AssertionFailedError $e, $time)
