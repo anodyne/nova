@@ -1,6 +1,6 @@
 <?php defined('SYSPATH') or die('No direct script access.');
 /**
- * MySQL database result.   See [Results](/database/results) for usage and examples.
+ * MySQL database result.
  *
  * @package    Kohana/Database
  * @category   Query/Result
@@ -46,7 +46,7 @@ class Kohana_Database_MySQL_Result extends Database_Result {
 	public function current()
 	{
 		if ($this->_current_row !== $this->_internal_row AND ! $this->seek($this->_current_row))
-			return FALSE;
+			return NULL;
 
 		// Increment internal row for optimization assuming rows are fetched in order
 		$this->_internal_row++;

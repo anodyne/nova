@@ -1,6 +1,6 @@
 <?php defined('SYSPATH') or die('No direct script access.');
 /**
- * Database query builder. See [Query Builder](/database/query/builder) for usage and examples.
+ * Database query builder.
  *
  * @package    Kohana/Database
  * @category   Query
@@ -125,7 +125,7 @@ abstract class Kohana_Database_Query_Builder extends Database_Query {
 					if ($column)
 					{
 						// Apply proper quoting to the column
-						$column = $db->quote_identifier($column);
+						$column = $db->quote_column($column);
 					}
 
 					// Append the statement to the query
@@ -155,7 +155,7 @@ abstract class Kohana_Database_Query_Builder extends Database_Query {
 			list ($column, $value) = $group;
 
 			// Quote the column name
-			$column = $db->quote_identifier($column);
+			$column = $db->quote_column($column);
 
 			if (is_string($value) AND array_key_exists($value, $this->_parameters))
 			{
@@ -183,19 +183,13 @@ abstract class Kohana_Database_Query_Builder extends Database_Query {
 		{
 			list ($column, $direction) = $group;
 
-			if ($direction)
+			if ( ! empty($direction))
 			{
 				// Make the direction uppercase
-				$direction = strtoupper($direction);
+				$direction = ' '.strtoupper($direction);
 			}
 
-			if ($column)
-			{
-				// Quote the column, if it has a value
-				$column = $db->quote_identifier($column);
-			}
-
-			$sort[] = trim($column.' '.$direction);
+			$sort[] = $db->quote_column($column).$direction;
 		}
 
 		return 'ORDER BY '.implode(', ', $sort);

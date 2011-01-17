@@ -1,14 +1,8 @@
 <?php defined('SYSPATH') or die('No direct script access.');
 /**
- * Database connection wrapper/helper.
- *
- * You may get a database instance using `Database::instance('name')` where
- * name is the [config](database/config) group. 
- *
- * This class provides connection instance management via Database Drivers, as
- * well as quoting, escaping and other related functions. Querys are done using
- * [Database_Query] and [Database_Query_Builder] objects, which can be easily
- * created using the [DB] helper class.
+ * Database connection wrapper. All database object instances are referenced
+ * by a name. Queries are typically handled by [Database_Query], rather than
+ * using the database object directly.
  *
  * @package    Kohana/Database
  * @category   Base
@@ -196,51 +190,47 @@ abstract class Kohana_Database {
 	abstract public function query($type, $sql, $as_object = FALSE, array $params = NULL);
 
 	/**
-	 * Count the number of records in the last query, without LIMIT or OFFSET applied.
+	 * Start a SQL transaction
 	 *
-	 *     // Get the total number of records that match the last query
-	 *     $count = $db->count_last_query();
+	 *     // Start the transactions
+	 *     $db->begin();
 	 *
-	 * @deprecated  since v3.0.9
-	 * @return  integer
+	 *     try {
+	 *          DB::insert('users')->values($user1)...
+	 *          DB::insert('users')->values($user2)...
+	 *          // Insert successful commit the changes
+	 *          $db->commit();
+	 *     }
+	 *     catch (Database_Exception $e)
+	 *     {
+	 *          // Insert failed. Rolling back changes...
+	 *          $db->rollback();
+	 *      }
+	 *
+	 * @param string transaction mode
+	 * @return  boolean
 	 */
-	public function count_last_query()
-	{
-		if ($sql = $this->last_query)
-		{
-			$sql = trim($sql);
-			if (stripos($sql, 'SELECT') !== 0)
-			{
-				return FALSE;
-			}
+	abstract public function begin($mode = NULL);
 
-			if (stripos($sql, 'LIMIT') !== FALSE)
-			{
-				// Remove LIMIT from the SQL
-				$sql = preg_replace('/\sLIMIT\s+[^a-z]+/i', ' ', $sql);
-			}
+	/**
+	 * Commit the current transaction
+	 *
+	 *     // Commit the database changes
+	 *     $db->commit();
+	 *
+	 * @return  boolean
+	 */
+	abstract public function commit();
 
-			if (stripos($sql, 'OFFSET') !== FALSE)
-			{
-				// Remove OFFSET from the SQL
-				$sql = preg_replace('/\sOFFSET\s+\d+/i', '', $sql);
-			}
-
-			// Get the total rows from the last query executed
-			$result = $this->query
-			(
-				Database::SELECT,
-				'SELECT COUNT(*) AS '.$this->quote_identifier('total_rows').' '
-				.'FROM ('.$sql.') AS '.$this->quote_table('counted_results'),
-				TRUE
-			);
-
-			// Return the total number of rows from the query
-			return (int) $result->current()->total_rows;
-		}
-
-		return FALSE;
-	}
+	/**
+	 * Abort the current transaction
+	 *
+	 *     // Undo the changes
+	 *     $db->rollback();
+	 *
+	 * @return  boolean
+	 */
+	abstract public function rollback();
 
 	/**
 	 * Count the number of records in a table.
@@ -254,7 +244,7 @@ abstract class Kohana_Database {
 	public function count_records($table)
 	{
 		// Quote the table name
-		$table = $this->quote_identifier($table);
+		$table = $this->quote_table($table);
 
 		return $this->query(Database::SELECT, 'SELECT COUNT(*) AS total_row_count FROM '.$table, FALSE)
 			->get('total_row_count');
@@ -472,6 +462,93 @@ abstract class Kohana_Database {
 	}
 
 	/**
+	 * Quote a database column name and add the table prefix if needed.
+	 *
+	 *     $column = $db->quote_column($column);
+	 *
+	 * You can also use SQL methods within identifiers.
+	 *
+	 *     // The value of "column" will be quoted
+	 *     $column = $db->quote_column('COUNT("column")');
+	 *
+	 * @param   mixed   column name or array(column, alias)
+	 * @return  string
+	 * @uses    Database::quote_identifier
+	 * @uses    Database::table_prefix
+	 */
+	public function quote_column($column)
+	{
+		if (is_array($column))
+		{
+			list($column, $alias) = $column;
+		}
+
+		if ( ! is_string($column))
+		{
+			if ($column instanceof Database_Query)
+			{
+				// Create a sub-query
+				return '('.$column->compile($this).')';
+			}
+			elseif ($column instanceof Database_Expression)
+			{
+				// Use a raw expression
+				return $column->value();
+			}
+			else
+			{
+				// Convert to a string
+				$column = (string) $column;
+			}
+		}
+
+		if ($column === '*')
+		{
+			return $column;
+		}
+		elseif (strpos($column, '"') !== FALSE)
+		{
+			// Quote the column in FUNC("column") identifiers
+			$column = preg_replace('/"(.+?)"/e', '$this->quote_column("$1")', $column);
+		}
+		elseif (strpos($column, '.') !== FALSE)
+		{
+			$parts = explode('.', $column);
+
+			if ($prefix = $this->table_prefix())
+			{
+				// Get the offset of the table name, 2nd-to-last part
+				$offset = count($parts) - 2;
+
+				// Add the table prefix to the table name
+				$parts[$offset] = $prefix.$parts[$offset];
+			}
+
+			foreach ($parts as & $part)
+			{
+				if ($part !== '*')
+				{
+					// Quote each of the parts
+					$part = $this->_identifier.$part.$this->_identifier;
+				}
+			}
+
+			$column = implode('.', $parts);
+		}
+		else
+		{
+			$column = $this->_identifier.$column.$this->_identifier;
+		}
+
+		if (isset($alias))
+		{
+			$column .= ' AS '.$this->_identifier.$alias.$this->_identifier;
+		}
+
+		return $column;
+	}
+
+	/**
 	 * Quote a database table name and adds the table prefix if needed.
 	 *
 	 *     $table = $db->quote_table($table);
@@ -481,40 +558,70 @@ abstract class Kohana_Database {
 	 * @uses    Database::quote_identifier
 	 * @uses    Database::table_prefix
 	 */
-	public function quote_table($value)
+	public function quote_table($table)
 	{
-		// Assign the table by reference from the value
-		if (is_array($value))
+		if (is_array($table))
 		{
-			$table =& $value[0];
+			list($table, $alias) = $table;
+		}
 
-			// Attach table prefix to alias
-			$value[1] = $this->table_prefix().$value[1];
+		if ( ! is_string($table))
+		{
+			if ($table instanceof Database_Query)
+			{
+				// Create a sub-query
+				return '('.$table->compile($this).')';
+			}
+			elseif ($table instanceof Database_Expression)
+			{
+				// Use a raw expression
+				return $table->value();
+			}
+			else
+			{
+				// Convert to a string
+				$table = (string) $table;
+			}
+		}
+
+		if (strpos($table, '.') !== FALSE)
+		{
+			$parts = explode('.', $table);
+
+			if ($prefix = $this->table_prefix())
+			{
+				// Get the offset of the table name, last part
+				$offset = count($parts) - 1;
+
+				// Add the table prefix to the table name
+				$parts[$offset] = $prefix.$parts[$offset];
+			}
+
+			foreach ($parts as & $part)
+			{
+				// Quote each of the parts
+				$part = $this->_identifier.$part.$this->_identifier;
+			}
+
+			$table = implode('.', $parts);
 		}
 		else
 		{
-			$table =& $value;
+			// Add the table prefix
+			$table = $this->_identifier.$this->table_prefix().$table.$this->_identifier;
 		}
 
-		if (is_string($table) AND strpos($table, '.') === FALSE)
+		if (isset($alias))
 		{
-			// Add the table prefix for tables
-			$table = $this->table_prefix().$table;
+			// Attach table prefix to alias
+			$table .= ' AS '.$this->_identifier.$this->table_prefix().$alias.$this->_identifier;
 		}
 
-		return $this->quote_identifier($value);
+		return $table;
 	}
 
 	/**
-	 * Quote a database identifier, such as a column name. Adds the
-	 * table prefix to the identifier if a table name is present.
-	 *
-	 *     $column = $db->quote_identifier($column);
-	 *
-	 * You can also use SQL methods within identifiers.
-	 *
-	 *     // The value of "column" will be quoted
-	 *     $column = $db->quote_identifier('COUNT("column")');
+	 * Quote a database identifier
 	 *
 	 * Objects passed to this function will be converted to strings.
 	 * [Database_Expression] objects will use the value of the expression.
@@ -523,15 +630,15 @@ abstract class Kohana_Database {
 	 *
 	 * @param   mixed   any identifier
 	 * @return  string
-	 * @uses    Database::table_prefix
 	 */
 	public function quote_identifier($value)
 	{
-		if ($value === '*')
+		if (is_array($value))
 		{
-			return $value;
+			list($value, $alias) = $value;
 		}
-		elseif (is_object($value))
+
+		if ( ! is_string($value))
 		{
 			if ($value instanceof Database_Query)
 			{
@@ -545,45 +652,34 @@ abstract class Kohana_Database {
 			}
 			else
 			{
-				// Convert the object to a string
-				return $this->quote_identifier( (string) $value);
+				// Convert to a string
+				$value = (string) $value;
 			}
 		}
-		elseif (is_array($value))
-		{
-			// Separate the column and alias
-			list ($value, $alias) = $value;
 
-			return $this->quote_identifier($value).' AS '.$this->quote_identifier($alias);
-		}
-
-		if (strpos($value, '"') !== FALSE)
+		if (strpos($value, '.') !== FALSE)
 		{
-			// Quote the column in FUNC("ident") identifiers
-			return preg_replace('/"(.+?)"/e', '$this->quote_identifier("$1")', $value);
-		}
-		elseif (strpos($value, '.') !== FALSE)
-		{
-			// Split the identifier into the individual parts
 			$parts = explode('.', $value);
 
-			if ($prefix = $this->table_prefix())
+			foreach ($parts as & $part)
 			{
-				// Get the offset of the table name, 2nd-to-last part
-				// This works for databases that can have 3 identifiers (Postgre)
-				$offset = count($parts) - 2;
-
-				// Add the table prefix to the table name
-				$parts[$offset] = $prefix.$parts[$offset];
+				// Quote each of the parts
+				$part = $this->_identifier.$part.$this->_identifier;
 			}
 
-			// Quote each of the parts
-			return implode('.', array_map(array($this, __FUNCTION__), $parts));
+			$value = implode('.', $parts);
 		}
 		else
 		{
-			return $this->_identifier.$value.$this->_identifier;
+			$value = $this->_identifier.$value.$this->_identifier;
 		}
+
+		if (isset($alias))
+		{
+			$value .= ' AS '.$this->_identifier.$alias.$this->_identifier;
+		}
+
+		return $value;
 	}
 
 	/**
