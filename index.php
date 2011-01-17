@@ -145,7 +145,7 @@ define('SELF', pathinfo(__FILE__, PATHINFO_BASENAME));
 define('BASEPATH', $system_folder.'/');
 
 define('APPFOLDER', $app_folder);
-define('MODFOLDER', $mods_folder);
+define('MODFOLDER', 'nova/'.$mods_folder);
 
 if (is_dir($application_folder))
 {
