@@ -11,8 +11,8 @@ return array(
 	 */
 	 
 	'app_name' => 'Nova',
-	'app_version_full' => '2.0m3',
-	'app_version_major' => 2,
+	'app_version_full' => '3.0m3',
+	'app_version_major' => 3,
 	'app_version_minor' => 0,
 	'app_version_update' => 0,
 	
