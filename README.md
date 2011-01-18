@@ -4,24 +4,24 @@ Anodyne Production's next-generation RPG management system combines popular feat
 
 ## Disclaimer
 
-Nova 2 is currently in heavy, active development. As with any alpha software, bugs are to be expected. If you find a bug, we encourage you to report it through the [issue tracker](http://github.com/anodyne/nova/issues) or on the [Anodyne forums](http://forums.anodyne-productions.com/index.php). We don't recommend using Nova 2 on a production site at this point and offer no guarantee of any sort with the software nor do we offer support for it until its final release.
+Nova 3 is currently in heavy, active development. As with any alpha software, bugs are to be expected. If you find a bug, we encourage you to report it through the [issue tracker](http://github.com/anodyne/nova/issues) or on the [Anodyne forums](http://forums.anodyne-productions.com/index.php). We don't recommend using Nova 3 on a production site at this point and offer no guarantee of any sort with the software nor do we offer support for it until its final release.
 
 ## Current Milestone
 
 Milestone 3
 
-The milestone [roadmap](https://github.com/anodyne/nova/wiki/Nova-2-Milestones) describes in greater detail the development work going in to specific milestones.
+The milestone [roadmap](https://github.com/anodyne/nova/wiki/Nova-3-Milestones) describes in greater detail the development work going in to specific milestones.
 
 ## Important Information
 
-As of M2, you can do the following with Nova 2:
+As of M2, you can do the following with Nova 3:
 
 * Fresh Install
-    * The Nova 2 [install guide](http://docs.anodyne-productions.com/index.php/nova2/overview/install) is a step-by-step guide through installing Nova 2 and any issues you may encounter. Please reference that for doing a clean install of the Nova 2 development builds.
+    * The Nova 3 [install guide](http://docs.anodyne-productions.com/index.php/nova2/overview/install) is a step-by-step guide through installing Nova 3 and any issues you may encounter. Please reference that for doing a clean install of the Nova 3 development builds.
 * Upgrade from SMS
-    * The Nova 2 [upgrade guide](http://docs.anodyne-productions.com/index.php/nova2/overview/upgrade) is a step-by-step guide through upgrading from SMS 2 (at least version 2.6.9) to Nova 2 and any issues you may encounter. Please reference that for doing an upgrade with the Nova 2 development builds.
+    * The Nova 3 [upgrade guide](http://docs.anodyne-productions.com/index.php/nova2/overview/upgrade) is a step-by-step guide through upgrading from SMS 2 (at least version 2.6.9) to Nova 3 and any issues you may encounter. Please reference that for doing an upgrade with the Nova 3 development builds.
 * Update from Nova 1
-    *The Nova 2 [update guide](http://docs.anodyne-productions.com/index.php/nova2/overview/update) is a step-by-step guide through updating Nova 2 (either from 2.x to 2.x+1 or Nova 1 to Nova 2) and any issues you may encounter. Please reference that for doing an update with the Nova 2 development builds.
+    *The Nova 3 [update guide](http://docs.anodyne-productions.com/index.php/nova2/overview/update) is a step-by-step guide through updating Nova 3 (either from 3.x to 3.x+1 or Nova 1 to Nova 3) and any issues you may encounter. Please reference that for doing an update with the Nova 3 development builds.
 * Update within Nova 2 (not applicable)
 * Log in to Nova
     * Reset password
