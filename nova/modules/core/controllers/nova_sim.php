@@ -9,9 +9,9 @@
  * @version		2.0
  */
 
-require_once MODPATH.'core/libraries/Nova_main_controller'.EXT;
+require_once MODPATH.'core/core/Nova_controller_main'.EXT;
 
-class Nova_sim extends Nova_main_controller {
+class Nova_sim extends Nova_controller_main {
 	
 	public function __construct()
 	{
@@ -290,7 +290,7 @@ class Nova_sim extends Nova_main_controller {
 				{
 					$j = 1;
 					foreach ($subdepts->result() as $sub)
-					{ /* populate the sub dept data */
+					{
 						$data['depts'][$i]['subs'][$j]['name'] = $sub->dept_name;
 						$data['depts'][$i]['subs'][$j]['desc'] = $sub->dept_desc;
 						$data['depts'][$i]['subs'][$j]['id'] = $sub->dept_id;
@@ -344,22 +344,22 @@ class Nova_sim extends Nova_main_controller {
 	
 	function docked()
 	{
-		/* load the resources */
+		// load the resources
 		$this->load->model('docking_model', 'docking');
 		
 		$id = $this->uri->segment(3, FALSE, TRUE);
 		
 		if ($id !== FALSE)
 		{
-			/* grab the docked item */
+			// grab the docked item
 			$item = $this->docking->get_docked_item($id);
 			
 			if ($item !== FALSE)
 			{
-				/* set the date format */
+				// set the date format
 				$datestring = $this->options['date_format'];
 				
-				/* set the date */
+				// set the date
 				$date = gmt_to_local($item->docking_date, $this->timezone, $this->dst);
 				
 				$data['docked'] = array(
@@ -370,7 +370,7 @@ class Nova_sim extends Nova_main_controller {
 					'date' => mdate($datestring, $date)
 				);
 				
-				/* run the methods */
+				// run the methods
 				$sections = $this->docking->get_docking_sections();
 				
 				if ($sections->num_rows() > 0)
@@ -379,14 +379,14 @@ class Nova_sim extends Nova_main_controller {
 					{
 						$data['sections'][$sec->section_id]['title'] = $sec->section_name;
 						
-						/* get the fields */
+						// get the fields
 						$fields = $this->docking->get_docking_fields($sec->section_id);
 						
 						if ($fields->num_rows() > 0)
 						{
 							foreach ($fields->result() as $field)
 							{
-								/* grab the data for the fields */
+								// grab the data for the fields
 								$field_data = $this->docking->get_field_data($field->field_id, $data['docked']['id']);
 								
 								if ($field_data->num_rows() > 0)
@@ -404,17 +404,17 @@ class Nova_sim extends Nova_main_controller {
 					}
 				}
 				
-				/* send the variables to the view */
+				// send the variables to the view
 				$data['header'] = ucwords(lang('actions_docked') .' '. lang('global_sim') .' - '. $data['docked']['sim_name']);
 			}
 			else
 			{
-				/* send the variables to the view */
+				// send the variables to the view
 				$data['header'] = ucwords(lang('actions_docked') .' '. lang('global_sim'));
 			}
 			
-			/* figure out where the view should be coming from */
-			$view_loc = view_location('sim_docked_one', $this->skin, 'main');
+			// figure out where the view should be coming from
+			$view_loc = 'sim_docked_one';
 		}
 		else
 		{
@@ -436,19 +436,16 @@ class Nova_sim extends Nova_main_controller {
 				}
 			}
 			
-			/* figure out where the view should be coming from */
-			$view_loc = view_location('sim_docked_all', $this->skin, 'main');
+			// figure out where the view should be coming from
+			$view_loc = 'sim_docked_all';
 			
-			/* send the variables to the view */
+			// send the variables to the view
 			$data['header'] = ucwords(lang('actions_docked') .' '. lang('global_sims'));
 		}
 		
-		/* figure out where the js view should be coming from */
-		$js_loc = js_location('sim_docked_js', $this->skin, 'main');
-		
 		$data['images'] = array(
 			'view' => array(
-				'src' => img_location('icon-view.png', $this->skin, 'main'),
+				'src' => Location::img('icon-view.png', $this->skin, 'main'),
 				'alt' => lang('actions_view'),
 				'title' => ucfirst(lang('actions_view'))
 			)
@@ -464,19 +461,19 @@ class Nova_sim extends Nova_main_controller {
 			'nosim' => sprintf(lang('error_not_found'), lang('actions_docked') .' '. lang('global_sim')),
 			'received' => ucfirst(lang('actions_received')),
 		);
-	
-		/* write the data to the template */
-		$this->template->write('title', $data['header']);
-		$this->template->write_view('content', $view_loc, $data);
-		$this->template->write_view('javascript', $js_loc);
 		
-		/* render the template */
-		$this->template->render();
+		$this->_regions['content'] = Location::view($view_loc, $this->skin, 'main', $data);
+		$this->_regions['javascript'] = Location::js('sim_docked_js', $this->skin, 'main');
+		$this->_regions['title'].= $data['header'];
+		
+		Template::assign($this->_regions);
+		
+		Template::render();
 	}
 	
 	function dockingrequest()
 	{
-		/* load the resources */
+		// load the resources
 		$this->load->model('docking_model', 'docking');
 		
 		if ($this->options['system_email'] == 'off')
@@ -484,18 +481,14 @@ class Nova_sim extends Nova_main_controller {
 			$flash['status'] = 'info';
 			$flash['message'] = lang_output('flash_system_email_off');
 			
-			// set the location of the flash view
-			$flashloc = view_location('flash', $this->skin, 'main');
-			
-			/* write everything to the template */
-			$this->template->write_view('flash_message', $flashloc, $flash);
+			$this->_regions['flash_message'] = Location::view('flash', $this->skin, 'main', $flash);
 		}
 		
 		if (isset($_POST['submit']))
 		{
 			$check = $this->input->post('check', TRUE);
 			
-			if (!empty($check))
+			if ( ! empty($check))
 			{
 				$message = sprintf(
 					lang('flash_failure'),
@@ -511,7 +504,7 @@ class Nova_sim extends Nova_main_controller {
 			{
 				foreach ($_POST as $key => $value)
 				{
-					if (!is_numeric($key))
+					if ( ! is_numeric($key))
 					{
 						$insert_array[$key] = $this->input->xss_clean($value);
 					}
@@ -519,17 +512,17 @@ class Nova_sim extends Nova_main_controller {
 				
 				$insert_array['docking_date'] = now();
 				
-				/* take unnecessary items off the array */
+				// take unnecessary items off the array
 				unset($insert_array['check']);
 				unset($insert_array['submit']);
 				
-				/* put the record into the database */
+				// put the record into the database
 				$insert = $this->docking->insert_docking_record($insert_array);
 				
-				/* grab the insert ID */
+				// grab the insert ID
 				$dock_id = $this->db->insert_id();
 				
-				/* optimize the table */
+				// optimize the table
 				$this->sys->optimize_table('docking');
 				
 				foreach ($_POST as $key => $value)
@@ -581,35 +574,31 @@ class Nova_sim extends Nova_main_controller {
 				}
 			}
 			
-			// set the location of the flash view
-			$flashloc = view_location('flash', $this->skin, 'main');
-			
-			/* write everything to the template */
-			$this->template->write_view('flash_message', $flashloc, $flash);
+			$this->_regions['flash_message'] = Location::view('flash', $this->skin, 'main', $flash);
 		}
 		
-		/* grab the join fields */
+		// grab the join fields
 		$sections = $this->docking->get_docking_sections();
 		
 		if ($sections->num_rows() > 0)
 		{
 			foreach ($sections->result() as $sec)
 			{
-				$sid = $sec->section_id; /* section id */
+				$sid = $sec->section_id;
 				
-				/* set the section name */
+				// set the section name
 				$data['docking'][$sid]['name'] = $sec->section_name;
 				
-				/* grab the fields for the given section */
+				// grab the fields for the given section
 				$fields = $this->docking->get_docking_fields($sec->section_id);
 				
 				if ($fields->num_rows() > 0)
 				{
 					foreach ($fields->result() as $field)
 					{
-						$f_id = $field->field_id; /* field id */
+						$f_id = $field->field_id;
 						
-						/* set the page label */
+						// set the page label
 						$data['docking'][$sid]['fields'][$f_id]['field_label'] = $field->field_label_page;
 						
 						switch ($field->field_type)
@@ -660,14 +649,11 @@ class Nova_sim extends Nova_main_controller {
 			}
 		}
 		
-		/* figure out where the view should be coming from */
-		$view_loc = view_location('sim_dockingrequest', $this->skin, 'main');
-		
-		/* send the variables to the view */
+		// send the variables to the view
 		$data['header'] = ucwords(lang('actions_docking') .' '. lang('actions_request'));
 		$data['docking_inst'] = lang('text_sim_dockingrequest');
 		
-		/* inputs */
+		// inputs
 		$data['inputs'] = array(
 			'sim_name' => array(
 				'name' => 'docking_sim_name',
@@ -687,7 +673,7 @@ class Nova_sim extends Nova_main_controller {
 				'style' => 'background:transparent; border:1px solid transparent; color:transparent'),
 		);
 		
-		/* submit button */
+		// submit button
 		$data['button_submit'] = array(
 			'type' => 'submit',
 			'class' => 'button-main',
@@ -708,41 +694,41 @@ class Nova_sim extends Nova_main_controller {
 			'r_info' => ucwords(lang('actions_docking') .' '. lang('labels_information')),
 			'url' => ucwords(lang('global_sim') .' '. lang('abbr_url')),
 		);
-	
-		/* write the data to the template */
-		$this->template->write('title', $data['header']);
-		$this->template->write_view('content', $view_loc, $data);
 		
-		/* render the template */
-		$this->template->render();
+		$this->_regions['content'] = Location::view('sim_dockingrequest', $this->skin, 'main', $data);
+		$this->_regions['title'].= $data['header'];
+		
+		Template::assign($this->_regions);
+		
+		Template::render();
 	}
 	
 	function listlogs()
 	{
-		/* load the libraries */
+		// load the libraries
 		$this->load->library('pagination');
 		
-		/* load the model */
+		// load the model
 		$this->load->model('personallogs_model', 'logs');
 		
-		/* define the variables */
+		// define the variables
 		$data = FALSE;
 		$offset = $this->uri->segment(3, 0, TRUE);
 		
-		/* set the pagination configs */
+		// set the pagination configs
 		$config['base_url'] = site_url('sim/listlogs');
 		$config['total_rows'] = $this->logs->count_all_logs();
 		$config['per_page'] = $this->options['list_logs_num'];
 		$config['full_tag_open'] = '<p>';
 		$config['full_tag_close'] = '</p>';
 	
-		/* initialize the pagination library */
+		// initialize the pagination library
 		$this->pagination->initialize($config);
 		
-		/* create the page links */
+		// create the page links
 		$data['pagination'] = $this->pagination->create_links('logs');
 		
-		/* run the method */
+		// run the method
 		$logs = $this->logs->get_log_list($config['per_page'], $offset);
 		
 		if ($logs->num_rows() > 0)
@@ -788,61 +774,57 @@ class Nova_sim extends Nova_main_controller {
 			'title' => ucfirst(lang('labels_title')),
 		);
 		
-		/* figure out where the view file should be coming from */
-		$view_loc = view_location('sim_listlogs', $this->skin, 'main');
-		$js_loc = js_location('sim_listlogs_js', $this->skin, 'main');
+		$this->_regions['content'] = Location::view('sim_listlogs', $this->skin, 'main', $data);
+		$this->_regions['javascript'] = Location::js('sim_listlogs_js', $this->skin, 'main');
+		$this->_regions['title'].= $data['header'];
 		
-		/* write the data to the template */
-		$this->template->write('title', $data['header']);
-		$this->template->write_view('content', $view_loc, $data);
-		$this->template->write_view('javascript', $js_loc);
+		Template::assign($this->_regions);
 		
-		/* render the template */
-		$this->template->render();
+		Template::render();
 	}
 	
 	function listposts()
 	{
-		/* define the variables */
+		// define the variables
 		$data = FALSE;
 		$mission = FALSE;
 		$mission = $this->uri->segment(4, FALSE, TRUE);
 		
-		/* get the title */
+		// get the title
 		$title = ucwords(lang('global_missionposts'));
 		
-		/* load the models */
+		// load the models
 		$this->load->model('posts_model', 'posts');
 		$this->load->model('missions_model', 'mis');
 		
-		/* load the libraries */
+		// load the libraries
 		$this->load->library('pagination');
 		
 		if ($mission === FALSE)
 		{
 			$offset = $this->uri->segment(3, 0, TRUE);
 		
-			/* set the pagination configs */
+			// set the pagination configs
 			$config['base_url'] = site_url('sim/listposts/');
 			$config['total_rows'] = $this->posts->count_all_posts();
 			$config['per_page'] = $this->options['list_posts_num'];
 			$config['full_tag_open'] = '<p class="fontMedium bold">';
 			$config['full_tag_close'] = '</p>';
 		
-			/* initialize the pagination library */
+			// initialize the pagination library
 			$this->pagination->initialize($config);
 			
-			/* create the page links */
+			// create the page links
 			$data['pagination'] = $this->pagination->create_links();
 			
-			/* run the method */
+			// run the method
 			$posts = $this->posts->get_post_list('', 'desc', $config['per_page'], $offset, 'activated');
 		}
 		else
 		{
 			$offset = $this->uri->segment(5, 0, TRUE);
 		
-			/* set the pagination configs */
+			// set the pagination configs
 			$config['base_url'] = site_url('sim/listposts/mission/'. $mission .'/');
 			$config['total_rows'] = $this->posts->count_all_posts($mission);
 			$config['per_page'] = $this->options['list_posts_num'];
@@ -850,13 +832,13 @@ class Nova_sim extends Nova_main_controller {
 			$config['full_tag_open'] = '<p class="fontMedium bold">';
 			$config['full_tag_close'] = '</p>';
 		
-			/* initialize the pagination library */
+			// initialize the pagination library
 			$this->pagination->initialize($config);
 			
-			/* create the page links */
+			// create the page links
 			$data['pagination'] = $this->pagination->create_links();
 			
-			/* run the method */
+			// run the method
 			$posts = $this->posts->get_post_list($mission, 'desc', $config['per_page'], $offset, 'activated');
 		}
 		
@@ -877,33 +859,33 @@ class Nova_sim extends Nova_main_controller {
 			}
 			
 			if ($mission == FALSE)
-			{ /* if no mission is specified */
-				$this->template->write('title', $title);
+			{
+				$this->_regions['title'].= $title;
 				$data['header'] = $title;
 			}
 			else
 			{
-				/* set the mission name */
+				// set the mission name
 				$mission_name = $this->mis->get_mission($mission, 'mission_title');
 				
-				if (!is_numeric($mission) || empty($mission_name))
-				{ /* if there isn't a mission or mission name */
-					$this->template->write('title', $title);
+				if ( ! is_numeric($mission) || empty($mission_name))
+				{
+					$this->_regions['title'].= $title;
 					$data['header'] = $title;
 				}
 				else
 				{
-					$this->template->write('title', $title .' - '. $mission_name);
+					$this->_regions['title'].= $title.' - '.$mission_name;
 					$data['header'] = $mission_name;
 				}
 			}
 		}
 		else
 		{
-			/* write the title */
-			$this->template->write('title', $title);
+			// write the title
+			$this->_regions['title'].= $title;
 			
-			/* set the header */
+			// set the header
 			$data['header'] = $title;
 		}
 		
@@ -934,31 +916,27 @@ class Nova_sim extends Nova_main_controller {
 			'title' => ucfirst(lang('labels_title')),
 		);
 		
-		/* figure out where the view file should be coming from */
-		$view_loc = view_location('sim_listposts', $this->skin, 'main');
-		$js_loc = js_location('sim_listposts_js', $this->skin, 'main');
+		$this->_regions['content'] = Location::view('sim_listposts', $this->skin, 'main', $data);
+		$this->_regions['javascript'] = Location::js('sim_listposts_js', $this->skin, 'main');
 		
-		/* write the data to the template */
-		$this->template->write_view('content', $view_loc, $data);
-		$this->template->write_view('javascript', $js_loc);
+		Template::assign($this->_regions);
 		
-		/* render the template */
-		$this->template->render();
+		Template::render();
 	}
 	
 	function missions()
 	{
-		/* set the variables */
+		// set the variables
 		$type = $this->uri->segment(3);
 		$id = $this->uri->segment(4, FALSE, TRUE);
 		
-		/* load the models */
+		// load the models
 		$this->load->model('missions_model', 'mis');
 		$this->load->model('posts_model', 'posts');
 		
 		$data['label'] = array();
 		
-		/* get the title */
+		// get the title
 		$title = ucfirst(lang('global_missions'));
 		
 		switch ($type)
@@ -977,21 +955,21 @@ class Nova_sim extends Nova_main_controller {
 				
 				if ($id !== FALSE)
 				{
-					$row = (!isset($row)) ? $this->mis->get_mission($id) : $row;
+					$row = ( ! isset($row)) ? $this->mis->get_mission($id) : $row;
 					
 					if ($row !== FALSE)
 					{
-						$this->template->write('title', $title .' - '. $row->mission_title);
+						$this->_regions['title'].= $title.' - '.$row->mission_title;
 						
-						if (!empty($row->mission_images))
+						if ( ! empty($row->mission_images))
 						{
 							$images = explode(',', $row->mission_images);
 							$images_count = count($images);
 							
-							/* set the source */
-							$src = asset_location('images/missions', trim($images[0]));
+							// set the source
+							$src = Location::asset('images/missions', trim($images[0]));
 							
-							/* build the mission image array */
+							// build the mission image array
 							$data['mission_img'] = array(
 								'src' => $src,
 								'alt' => $row->mission_title,
@@ -1001,12 +979,12 @@ class Nova_sim extends Nova_main_controller {
 							// set the empty image array to avoid errors
 							$data['image_array'] = array();
 							
-							/* build the array of the rest of the images */
+							// build the array of the rest of the images
 							for ($i=1; $i < $images_count; $i++)
 							{
-								$src = asset_location('images/missions', trim($images[$i]));
+								$src = Location::asset('images/missions', trim($images[$i]));
 								
-								/* build the array */
+								// build the array
 								$data['image_array'][] = array(
 									'src' => $src,
 									'alt' => $row->mission_title,
@@ -1015,11 +993,11 @@ class Nova_sim extends Nova_main_controller {
 							}
 						}
 						
-						/* data for the view */
+						// data for the view
 						$data['header'] = $row->mission_title;
 						$data['mission'] = $row->mission_id;
 						
-						/* basic mission info */
+						// basic mission info
 						$data['info_header'] = ucwords(lang('global_mission') .' '. lang('labels_info'));
 						$data['basic']['desc'] = $row->mission_desc;
 						$data['basic']['status'] = ucfirst($row->mission_status);
@@ -1027,16 +1005,16 @@ class Nova_sim extends Nova_main_controller {
 						$data['basic']['end'] = NULL;
 						$data['basic']['group'] = $this->mis->get_mission_group($row->mission_group, array('misgroup_id', 'misgroup_name'));
 						
-						if (!empty($row->mission_end))
+						if ( ! empty($row->mission_end))
 						{
 							$data['basic']['end'] = mdate($this->options['date_format'], gmt_to_local($row->mission_end, $this->timezone, $this->dst));
 						}
 						
-						/* summary data */
+						// summary data
 						$data['summary']['title'] = ucwords(lang('global_mission') .' '. lang('labels_summary'));
 						$data['summary']['content'] = $row->mission_summary;
 						
-						/* grab the last 25 posts */
+						// grab the last 25 posts
 						$posts = $this->posts->get_post_list($row->mission_id, 'desc', 25, '', 'activated');
 						
 						if ($posts->num_rows() > 0)
@@ -1055,20 +1033,20 @@ class Nova_sim extends Nova_main_controller {
 							}
 						}
 						
-						/* figure out where the view should be coming from */
-						$view_loc = view_location('sim_missions_one', $this->skin, 'main');
+						// figure out where the view should be coming from
+						$view_loc = 'sim_missions_one';
 					}
 					else
 					{
-						/* figure out where the view should be coming from */
-						$view_loc = view_location('error', $this->skin, 'main');
+						// figure out where the view should be coming from
+						$view_loc = 'error';
 					
-						/* set the data for the view */
+						// set the data for the view
 						$data['header'] = lang('error_head_not_found');
 						$data['msg_error'] = lang('error_msg_no_mission');
 						
-						/* set the page title */
-						$this->template->write('title', lang('error_pagetitle'));
+						// set the page title
+						$this->_regions['title'].= lang('error_pagetitle');
 					}
 				}
 			break;
@@ -1094,11 +1072,11 @@ class Nova_sim extends Nova_main_controller {
 					$title = ucwords(lang('global_mission') .' '. lang('labels_groups'));
 					$data['header'] = $title;
 					
-					/* figure out where the view should be coming from */
-					$view_loc = view_location('sim_missions_groups_all', $this->skin, 'main');
+					// figure out where the view should be coming from
+					$view_loc = 'sim_missions_groups_all';
 					
-					/* set the page title */
-					$this->template->write('title', $title);
+					// set the page title
+					$this->_regions['title'].= $title;
 				}
 				else
 				{
@@ -1148,11 +1126,11 @@ class Nova_sim extends Nova_main_controller {
 						$data['header'] = $title;
 					}
 					
-					/* figure out where the view should be coming from */
-					$view_loc = view_location('sim_missions_groups_one', $this->skin, 'main');
+					// figure out where the view should be coming from
+					$view_loc = 'sim_missions_groups_one';
 					
-					/* set the page title */
-					$this->template->write('title', $title);
+					// set the page title
+					$this->_regions['title'].= $title;
 				}
 			break;
 			
@@ -1199,23 +1177,16 @@ class Nova_sim extends Nova_main_controller {
 					}
 				}
 				
-				/* other data used by the view */
+				// other data used by the view
 				$data['header'] = $title;
 				
-				if (Auth::is_logged_in() === TRUE && Auth::check_access('manage/missions', FALSE) === TRUE)
-				{
-					$data['edit_valid'] = TRUE;
-				}
-				else
-				{
-					$data['edit_valid'] = FALSE;
-				}
+				$data['edit_valid'] = (Auth::is_logged_in() and Auth::check_access('manage/missions', FALSE)) ? true : false;
 				
-				/* figure out where the view should be coming from */
-				$view_loc = view_location('sim_missions_all', $this->skin, 'main');
+				// figure out where the view should be coming from
+				$view_loc = 'sim_missions_all';
 				
-				/* write the data to the template */
-				$this->template->write('title', $title);
+				// write the data to the template
+				$this->_regions['title'].= $title;
 			break;
 		}
 		
@@ -1255,31 +1226,28 @@ class Nova_sim extends Nova_main_controller {
 				lang('global_posts') .' '. RARROW),
 		);
 		
-		/* figure out where the js view should be coming from */
-		$js_loc = js_location('sim_missions_js', $this->skin, 'main');
+		$this->_regions['content'] = Location::view($view_loc, $this->skin, 'main', $data);
+		$this->_regions['javascript'] = Location::js('sim_missions_js', $this->skin, 'main');
 		
-		/* write the data to the region */
-		$this->template->write_view('content', $view_loc, $data);
-		$this->template->write_view('javascript', $js_loc);
+		Template::assign($this->_regions);
 		
-		/* render the template */
-		$this->template->render();
+		Template::render();
 	}
 	
 	function specs()
 	{
-		/* load the models */
+		// load the models
 		$this->load->model('specs_model', 'specs');
 		
-		/* grab the title */
+		// grab the title
 		$title = ucfirst(lang('global_specifications'));
 		
-		/* set the variables */
+		// set the variables
 		$id = $this->uri->segment(3, FALSE, TRUE);
 		
 		if ($id === FALSE)
 		{
-			/* run the methods */
+			// run the methods
 			$specs = $this->specs->get_spec_items();
 			
 			if ($specs->num_rows() > 0)
@@ -1292,64 +1260,64 @@ class Nova_sim extends Nova_main_controller {
 				}
 			}
 			
-			/* set the header */
+			// set the header
 			$data['header'] = $title;
 			
-			/* figure out where the view should be coming from */
-			$view_loc = view_location('sim_specs_all', $this->skin, 'main');
+			// figure out where the view should be coming from
+			$view_loc = 'sim_specs_all';
 			
-			/* set the title */
-			$this->template->write('title', $title);
+			// set the title
+			$this->_regions['title'].= $title;
 		}
 		else
 		{
-			/* run the methods */
+			// run the methods
 			$item = $this->specs->get_spec_item($id);
 			
 			if ($item !== FALSE)
 			{
-				/* set the data being sent to the view */
+				// set the data being sent to the view
 				$data['name'] = $item->specs_name;
 				$data['summary'] = $item->specs_summary;
 				
 				if ($item->specs_images > '')
-				{ /* make sure there are actually images */
-					/* get the images */
+				{
+					// get the images
 					$images = explode(',', $item->specs_images);
 					$images_count = count($images);
 				
-					/* set the image */
+					// set the image
 					$data['images']['main_img'] = array(
-						'src' => asset_location('images/specs', trim($images[0])),
+						'src' => Location::asset('images/specs', trim($images[0])),
 						'class' => 'image reflect',
 						'width' => 400
 					);
 					
 					for ($i=1; $i < $images_count; $i++)
 					{
-						/* build the array */
+						// build the array
 						$data['images']['image_array'][] = array(
-							'src' => asset_location('images/specs', trim($images[$i])),
+							'src' => Location::asset('images/specs', trim($images[$i])),
 							'class' => 'image'
 						);
 					}
 				}
 				
-				/* run the methods */
+				// run the methods
 				$sections = $this->specs->get_spec_sections();
 				
 				if ($sections->num_rows() > 0)
 				{
 					foreach ($sections->result() as $sec)
 					{
-						/* get the fields */
+						// get the fields
 						$fields = $this->specs->get_spec_fields($sec->section_id);
 						
 						if ($fields->num_rows() > 0)
 						{
 							foreach ($fields->result() as $field)
 							{
-								/* grab the data for the fields */
+								// grab the data for the fields
 								$item = $this->specs->get_field_data($id, $field->field_id);
 								
 								if ($item !== FALSE && !empty($item->data_value))
@@ -1366,46 +1334,31 @@ class Nova_sim extends Nova_main_controller {
 					}
 				}
 				
-				/* set the header */
+				// set the header
 				$data['header'] = $title .' - '. $data['name'];
 				
-				/* figure out where the view should be coming from */
-				$view_loc = view_location('sim_specs_one', $this->skin, 'main');
+				// figure out where the view should be coming from
+				$view_loc = 'sim_specs_one';
 				
-				/* set the title */
-				$this->template->write('title', $title .' - '. $data['name']);
+				// set the title
+				$this->_regions['title'].= $title.' - '.$data['name'];
 			}
 			else
 			{
-				/* set the header */
+				// set the header
 				$data['header'] = lang('error_head_not_found');
 				$data['msg_error'] = lang('error_msg_not_found');
 				
-				/* figure out where the view should be coming from */
-				$view_loc = view_location('error', $this->skin, 'main');
+				// figure out where the view should be coming from
+				$view_loc = 'error';
 				
-				/* set the title */
-				$this->template->write('title', lang('error_pagetitle'));
+				// set the title
+				$this->_regions['title'].= lang('error_pagetitle');
 			}
 		}
 		
-		if (Auth::is_logged_in() === TRUE && Auth::check_access('manage/specs', FALSE) === TRUE)
-		{
-			$data['edit_valid'] = TRUE;
-		}
-		else
-		{
-			$data['edit_valid'] = FALSE;
-		}
-		
-		if (Auth::is_logged_in() === TRUE && Auth::check_access('site/specsform', FALSE) === TRUE)
-		{
-			$data['edit_valid_form'] = TRUE;
-		}
-		else
-		{
-			$data['edit_valid_form'] = FALSE;
-		}
+		$data['edit_valid'] = (Auth::is_logged_in() and Auth::check_access('manage/specs', FALSE)) ? true : false;
+		$data['edit_valid_form'] = (Auth::is_logged_in() and Auth::check_access('site/specsform', FALSE)) ? true : false;
 		
 		$data['label'] = array(
 			'back' => LARROW .' '. ucfirst(lang('actions_back')) .' '. lang('labels_to') .' '. ucwords(lang('global_specs')),
@@ -1419,49 +1372,46 @@ class Nova_sim extends Nova_main_controller {
 			'summary' => ucfirst(lang('labels_summary')),
 		);
 		
-		/* set the javascript location */
-		$js_loc = js_location('sim_specs_js', $this->skin, 'main');
+		$this->_regions['content'] = Location::view($view_loc, $this->skin, 'main', $data);
+		$this->_regions['javascript'] = Location::js('sim_specs_js', $this->skin, 'main');
 		
-		/* write the data to the template */
-		$this->template->write_view('content', $view_loc, $data);
-		$this->template->write_view('javascript', $js_loc);
+		Template::assign($this->_regions);
 		
-		/* render the template */
-		$this->template->render();
+		Template::render();
 	}
 	
 	function stats()
 	{
-		/* grab the title */
+		// grab the title
 		$title = ucfirst(lang('labels_stats'));
 		
-		/* load the models */
+		// load the models
 		$this->load->model('posts_model', 'posts');
 		$this->load->model('personallogs_model', 'logs');
 		
-		/* set the times */
+		// set the times
 		$today = getdate();
 		
-		/* this month */
+		// this month
 		$this_month_mysql = $today['year'] .'-'. $today['mon'] .'-01 00:00:00';
 		$this_month = human_to_unix($this_month_mysql, TRUE);
 		
-		/* last month */
+		// last month
 		$year = ($today['mon'] == 1) ? $today['year'] - 1 : $today['year'];
 		$month = ($today['mon'] == 1) ? 12 : $today['mon'] - 1;
 		$last_month_mysql = $year .'-'. $month .'-01 00:00:00';
 		$last_month = human_to_unix($last_month_mysql, TRUE);
 		
-		/* next month */
+		// next month
 		$year = ($today['mon'] == 12) ? $today['year'] + 1 : $today['year'];
 		$month = ($today['mon'] == 12) ? '01' : $today['mon'] + 1;
 		$next_month_mysql = $year .'-'. $month .'-01 00:00:00';
 		$next_month = human_to_unix($next_month_mysql, TRUE);
 		
-		/* days in the months */
+		// days in the months
 		$days = date('t');
 
-		/* run the methods */
+		// run the methods
 		$data['users'] = array(
 			'current' => $this->user->count_users('current', $this_month, $last_month),
 			'previous' => $this->user->count_users('previous', $this_month, $last_month)
@@ -1513,7 +1463,7 @@ class Nova_sim extends Nova_main_controller {
 			'total' => round((($data['post_totals']['current']) / ($today['mday'])) * $days, 2)
 		);
 		
-		/* set the header */
+		// set the header
 		$data['header'] = $title;
 		
 		$data['label'] = array(
@@ -1535,34 +1485,30 @@ class Nova_sim extends Nova_main_controller {
 			'totals' => ucwords(lang('labels_totals')),
 		);
 		
-		/* figure out where the view file should be coming from */
-		$view_loc = view_location('sim_stats', $this->skin, 'main');
-		$js_loc = js_location('sim_stats_js', $this->skin, 'main');
+		$this->_regions['content'] = Location::view('sim_status', $this->skin, 'main', $data);
+		$this->_regions['javascript'] = Location::js('sim_stats_js', $this->skin, 'main');
+		$this->_regions['title'].= $title;
 		
-		/* write the data to the template */
-		$this->template->write('title', $title);
-		$this->template->write_view('content', $view_loc, $data);
-		$this->template->write_view('javascript', $js_loc);
+		Template::assign($this->_regions);
 		
-		/* render the template */
-		$this->template->render();
+		Template::render();
 	}
 	
 	function tour()
 	{
-		/* grab the title */
+		// grab the title
 		$title = ucfirst(lang('global_tour'));
 		
-		/* load the models */
+		// load the models
 		$this->load->model('tour_model', 'tour');
 		$this->load->model('specs_model', 'specs');
 		
-		/* set the variables */
+		// set the variables
 		$id = $this->uri->segment(3, FALSE, TRUE);
 		
 		if ($id === FALSE)
 		{
-			/* run the methods */
+			// run the methods
 			$tour = $this->tour->get_tour_items();
 			$specs = $this->specs->get_spec_items();
 			
@@ -1587,7 +1533,7 @@ class Nova_sim extends Nova_main_controller {
 				foreach ($tour->result() as $item)
 				{
 					// make sure we have the right tour spec item for the array
-					$specitem = (!empty($item->tour_spec_item)) ? $item->tour_spec_item : 0;
+					$specitem = ( ! empty($item->tour_spec_item)) ? $item->tour_spec_item : 0;
 					
 					// set the order
 					$order = $item->tour_order;
@@ -1601,38 +1547,38 @@ class Nova_sim extends Nova_main_controller {
 				}
 			}
 			
-			/* set the header */
+			// set the header
 			$data['header'] = $title;
 			
-			/* figure out where the view should be coming from */
-			$view_loc = view_location('sim_tour_all', $this->skin, 'main');
+			// figure out where the view should be coming from
+			$view_loc = 'sim_tour_all';
 			
-			/* set the title */
-			$this->template->write('title', $title);
+			// set the title
+			$this->_regions['title'].= $title;
 		}
 		else
 		{
-			/* run the methods */
+			// run the methods
 			$tour = $this->tour->get_tour_item($id);
 			
 			if ($tour->num_rows() > 0)
 			{
-				/* grab the item object */
+				// grab the item object
 				$item = $tour->row();
 				
-				/* set the data being sent to the view */
+				// set the data being sent to the view
 				$data['name'] = $item->tour_name;
 				$data['summary'] = $item->tour_summary;
 				
 				if ($item->tour_images > '')
-				{ /* make sure there are actually images */
-					/* get the images */
+				{
+					// get the images
 					$images = explode(',', $item->tour_images);
 					$images_count = count($images);
 				
-					/* set the image */
+					// set the image
 					$data['images']['main_img'] = array(
-						'src' => asset_location('images/tour', trim($images[0])),
+						'src' => Location::asset('images/tour', trim($images[0])),
 						'alt' => $data['name'],
 						'class' => 'image reflect',
 						'width' => 400
@@ -1643,71 +1589,56 @@ class Nova_sim extends Nova_main_controller {
 					
 					for ($i=1; $i < $images_count; $i++)
 					{
-						/* build the array */
+						// build the array
 						$data['images']['image_array'][] = array(
-							'src' => asset_location('images/tour', trim($images[$i])),
+							'src' => Location::asset('images/tour', trim($images[$i])),
 							'alt' => $data['name'],
 							'class' => 'image'
 						);
 					}
 				}
 				
-				/* grab the dynamic elements */
+				// grab the dynamic elements
 				$fields = $this->tour->get_tour_fields();
 				
 				if ($fields->num_rows() > 0)
 				{
 					foreach ($fields->result() as $field)
 					{
-						/* get the data for this field */
+						// get the data for this field
 						$info = $this->tour->get_tour_data($id, $field->field_id);
 						
-						/* put the data into the data array */
+						// put the data into the data array
 						$data['fields'][$field->field_id]['label'] = $field->field_label_page;
-						$data['fields'][$field->field_id]['data'] = (!empty($info->data_value)) ? $info->data_value : FALSE;
+						$data['fields'][$field->field_id]['data'] = ( ! empty($info->data_value)) ? $info->data_value : FALSE;
 					}
 				}
 				
-				/* set the header */
+				// set the header
 				$data['header'] = $title .' - '. $data['name'];
 				
-				/* figure out where the view should be coming from */
-				$view_loc = view_location('sim_tour_one', $this->skin, 'main');
+				// figure out where the view should be coming from
+				$view_loc = 'sim_tour_one';
 				
-				/* set the title */
-				$this->template->write('title', $title .' - '. $data['name']);
+				// set the title
+				$this->_regions['title'].= $title.' - '.$data['name'];
 			}
 			else
 			{
-				/* set the header */
+				// set the header
 				$data['header'] = lang('error_head_not_found');
 				$data['msg_error'] = lang('error_msg_not_found');
 				
-				/* figure out where the view should be coming from */
-				$view_loc = view_location('error', $this->skin, 'main');
+				// figure out where the view should be coming from
+				$view_loc = 'error';
 				
-				/* set the title */
-				$this->template->write('title', lang('error_pagetitle'));
+				// set the title
+				$this->_regions['title'].= lang('error_pagetitle');
 			}
 		}
 		
-		if (Auth::is_logged_in() === TRUE && Auth::check_access('manage/tour', FALSE) === TRUE)
-		{
-			$data['edit_valid'] = TRUE;
-		}
-		else
-		{
-			$data['edit_valid'] = FALSE;
-		}
-		
-		if (Auth::is_logged_in() === TRUE && Auth::check_access('site/tourform', FALSE) === TRUE)
-		{
-			$data['edit_valid_form'] = TRUE;
-		}
-		else
-		{
-			$data['edit_valid_form'] = FALSE;
-		}
+		$data['edit_valid'] = (Auth::is_logged_in() and Auth::check_access('manage/tour', FALSE)) ? true : false;
+		$data['edit_valid_form'] = (Auth::is_logged_in() and Auth::check_access('site/tourform', FALSE)) ? true : false;
 		
 		$data['label'] = array(
 			'back' => LARROW .' '. ucfirst(lang('actions_back')) .' '. lang('labels_to') .' '. ucwords(lang('global_touritems')),
@@ -1724,34 +1655,31 @@ class Nova_sim extends Nova_main_controller {
 			'viewspec' => ucwords(lang('actions_view') .' '. lang('global_specifications') .' '. RARROW),
 		);
 		
-		/* set the javascript location */
-		$js_loc = js_location('sim_tour_js', $this->skin, 'main');
+		$this->_regions['content'] = Location::view($view_loc, $this->skin, 'main', $data);
+		$this->_regions['javascript'] = Location::js('sim_tour_js', $this->skin, 'main');
 		
-		/* write the data to the template */
-		$this->template->write_view('content', $view_loc, $data);
-		$this->template->write_view('javascript', $js_loc);
+		Template::assign($this->_regions);
 		
-		/* render the template */
-		$this->template->render();
+		Template::render();
 	}
 	
 	function viewlog()
 	{
-		/* set the some variables */
+		// set the some variables
 		$id = $this->uri->segment(3, FALSE, TRUE);
 		
-		/* load the model */
+		// load the model
 		$this->load->model('personallogs_model', 'logs');
 		
 		if ($this->session->userdata('userid') !== FALSE && isset($_POST['submit']))
 		{
 			$comment_text = $this->input->post('comment_text');
 			
-			if (!empty($comment_text))
+			if ( ! empty($comment_text))
 			{
 				$status = $this->user->checking_moderation('log_comment', $this->session->userdata('userid'));
 				
-				/* build the insert array */
+				// build the insert array
 				$insert = array(
 					'lcomment_content' => $comment_text,
 					'lcomment_log' => $id,
@@ -1761,7 +1689,7 @@ class Nova_sim extends Nova_main_controller {
 					'lcomment_status' => $status
 				);
 				
-				/* insert the data */
+				// insert the data
 				$add = $this->logs->add_log_comment($insert);
 				
 				if ($add > 0)
@@ -1778,32 +1706,32 @@ class Nova_sim extends Nova_main_controller {
 					
 					if ($status == 'pending')
 					{
-						/* set the array of data for the email */
+						// set the array of data for the email
 						$email_data = array(
 							'author' => $this->session->userdata('main_char'),
 							'log' => $id,
 							'comment' => $comment_text);
 						
-						/* send the email */
+						// send the email
 						$email = ($this->options['system_email'] == 'on') ? $this->_email('log_comment_pending', $email_data) : FALSE;
 					}
 					else
 					{
-						/* get the user id */
+						// get the user id
 						$user = $this->logs->get_log($id, 'log_author_user');
 						
-						/* get the author's preference */
+						// get the author's preference
 						$pref = $this->user->get_pref('email_new_log_comments', $user);
 						
 						if ($pref == 'y')
 						{
-							/* set the array of data for the email */
+							// set the array of data for the email
 							$email_data = array(
 								'author' => $this->session->userdata('main_char'),
 								'log' => $id,
 								'comment' => $comment_text);
 							
-							/* send the email */
+							// send the email
 							$email = ($this->options['system_email'] == 'on') ? $this->_email('log_comment', $email_data) : FALSE;
 						}
 					}
@@ -1827,27 +1755,23 @@ class Nova_sim extends Nova_main_controller {
 				$flash['message'] = lang_output('flash_add_comment_empty_body');
 			}
 			
-			// set the location of the flash view
-			$flashloc = view_location('flash', $this->skin, 'main');
-			
-			/* write everything to the template */
-			$this->template->write_view('flash_message', $flashloc, $flash);
+			$this->_regions['flash_message'] = Location::view('flash', $this->skin, 'main', $flash);
 		}
 		
-		/* fire the methods to get the log and its comments */
+		// fire the methods to get the log and its comments
 		$logs = $this->logs->get_log($id);
 		$comments = $this->logs->get_log_comments($id);
 		
 		if ($logs !== FALSE)
 		{
-			/* grab the next and previous IDs */
+			// grab the next and previous IDs
 			$next = $this->logs->get_link_id($id);
 			$prev = $this->logs->get_link_id($id, 'prev');
 			
-			/* set the date format */
+			// set the date format
 			$datestring = $this->options['date_format'];
 			
-			/* set the date */
+			// set the date
 			$date = gmt_to_local($logs->log_date, $this->timezone, $this->dst);
 			
 			if ($logs->log_date < $logs->log_last_update)
@@ -1861,9 +1785,9 @@ class Nova_sim extends Nova_main_controller {
 			$data['content'] = $logs->log_content;
 			$data['date'] = mdate($datestring, $date);
 			$data['author'] = $this->char->get_character_name($logs->log_author_character, TRUE);
-			$data['tags'] = (!empty($logs->log_tags)) ? $logs->log_tags : NULL;
+			$data['tags'] = ( ! empty($logs->log_tags)) ? $logs->log_tags : NULL;
 			
-			/* determine if they can edit the log */
+			// determine if they can edit the log
 			if (Auth::is_logged_in() === TRUE && ( (Auth::get_access_level('manage/logs') == 2) ||
 				(Auth::get_access_level('manage/logs') == 1 && $this->session->userdata('userid') == $logs->log_author_user)))
 			{
@@ -1885,22 +1809,22 @@ class Nova_sim extends Nova_main_controller {
 			}
 		}
 		
-		/* image parameters */
+		// image parameters
 		$data['images'] = array(
 			'next' => array(
-				'src' => img_location('next.png', $this->skin, 'main'),
+				'src' => Location::img('next.png', $this->skin, 'main'),
 				'alt' => ucfirst(lang('actions_next')),
 				'class' => 'image'),
 			'prev' => array(
-				'src' => img_location('previous.png', $this->skin, 'main'),
+				'src' => Location::img('previous.png', $this->skin, 'main'),
 				'alt' => ucfirst(lang('status_previous')),
 				'class' => 'image'),
 			'feed' => array(
-				'src' => img_location('feed.png', $this->skin, 'main'),
+				'src' => Location::img('feed.png', $this->skin, 'main'),
 				'alt' => lang('labels_subscribe'),
 				'class' => 'image'),
 			'comment' => array(
-				'src' => img_location('comment-add.png', $this->skin, 'main'),
+				'src' => Location::img('comment-add.png', $this->skin, 'main'),
 				'alt=' => '',
 				'class' => 'inline_img_left image'),
 		);
@@ -1936,25 +1860,21 @@ class Nova_sim extends Nova_main_controller {
 			'view_log' => ucwords(lang('actions_view') .' '. lang('global_log')),
 		);
 		
-		/* figure out where the view should be coming from */
-		$view_loc = view_location('sim_viewlog', $this->skin, 'main');
-		$js_loc = js_location('sim_viewlog_js', $this->skin, 'main');
+		$this->_regions['content'] = Location::view('sim_viewlog', $this->skin, 'main', $data);
+		$this->_regions['javascript'] = Location::js('sim_viewlog_js', $this->skin, 'main');
+		$this->_regions['title'].= $data['title'];
 		
-		/* write the data to the template */
-		$this->template->write('title', $data['title']);
-		$this->template->write_view('content', $view_loc, $data);
-		$this->template->write_view('javascript', $js_loc);
+		Template::assign($this->_regions);
 		
-		/* render the template */
-		$this->template->render();
+		Template::render();
 	}
 	
 	function viewpost()
 	{
-		/* set the some variables */
+		// set the some variables
 		$id = $this->uri->segment(3, FALSE, TRUE);
 		
-		/* load the models */
+		// load the models
 		$this->load->model('posts_model', 'posts');
 		$this->load->model('missions_model', 'mis');
 		
@@ -1962,11 +1882,11 @@ class Nova_sim extends Nova_main_controller {
 		{
 			$comment_text = $this->input->post('comment_text');
 			
-			if (!empty($comment_text))
+			if ( ! empty($comment_text))
 			{
 				$status = $this->user->checking_moderation('post_comment', $this->session->userdata('userid'));
 				
-				/* build the insert array */
+				// build the insert array
 				$insert = array(
 					'pcomment_content' => $comment_text,
 					'pcomment_post' => $id,
@@ -1976,7 +1896,7 @@ class Nova_sim extends Nova_main_controller {
 					'pcomment_status' => $status
 				);
 				
-				/* insert the data */
+				// insert the data
 				$add = $this->posts->add_post_comment($insert);
 				
 				if ($add > 0)
@@ -1993,24 +1913,24 @@ class Nova_sim extends Nova_main_controller {
 					
 					if ($status == 'pending')
 					{
-						/* set the array of data for the email */
+						// set the array of data for the email
 						$email_data = array(
 							'author' => $this->session->userdata('main_char'),
 							'post' => $id,
 							'comment' => $comment_text);
 						
-						/* send the email */
+						// send the email
 						$email = ($this->options['system_email'] == 'on') ? $this->_email('post_comment_pending', $email_data) : FALSE;
 					}
 					else
 					{
-						/* set the array of data for the email */
+						// set the array of data for the email
 						$email_data = array(
 							'author' => $this->session->userdata('main_char'),
 							'post' => $id,
 							'comment' => $comment_text);
 						
-						/* send the email */
+						// send the email
 						$email = ($this->options['system_email'] == 'on') ? $this->_email('post_comment', $email_data) : FALSE;
 					}
 				}
@@ -2033,18 +1953,14 @@ class Nova_sim extends Nova_main_controller {
 				$flash['message'] = lang_output('flash_add_comment_empty_body');
 			}
 			
-			// set the location of the flash view
-			$flashloc = view_location('flash', $this->skin, 'main');
-			
-			/* write everything to the template */
-			$this->template->write_view('flash_message', $flashloc, $flash);
+			$this->_regions['flash_message'] = Location::view('flash', $this->skin, 'main', $flash);
 		}
 		
-		/* get the news item */
+		// get the news item
 		$row = $this->posts->get_post($id);
 		$comments = $this->posts->get_post_comments($id);
 		
-		/* set the date format */
+		// set the date format
 		$datestring = $this->options['date_format'];
 		
 		if ($row !== FALSE)
@@ -2057,11 +1973,11 @@ class Nova_sim extends Nova_main_controller {
 				$data['update'] = mdate($datestring, $edited);
 			}
 			
-			/* grab the next and previous IDs */
+			// grab the next and previous IDs
 			$next = $this->posts->get_link_id($id);
 			$prev = $this->posts->get_link_id($id, 'prev');
 			
-			/* set the data being sent to the view */
+			// set the data being sent to the view
 			$data['mission'] = $this->mis->get_mission($row->post_mission, 'mission_title');
 			$data['mission_id'] = $row->post_mission;
 			$data['title'] = $row->post_title;
@@ -2083,11 +1999,11 @@ class Nova_sim extends Nova_main_controller {
 				$data['prev'] = $prev;
 			}
 			
-			/* figure out where the view should be coming from */
-			$view_loc = view_location('sim_viewpost', $this->skin, 'main');
-			$js_loc = js_location('sim_viewpost_js', $this->skin, 'main');
+			// set the view files
+			$view_loc = 'sim_viewpost';
+			$js_loc = 'sim_viewpost_js';
 			
-			/* grab the comment count */
+			// grab the comment count
 			$data['comment_count'] = $comments->num_rows();
 			
 			if ($comments->num_rows() > 0)
@@ -2106,29 +2022,27 @@ class Nova_sim extends Nova_main_controller {
 				}
 			}
 			
-			/* image parameters */
+			// image parameters
 			$data['images'] = array(
 				'next' => array(
-					'src' => img_location('next.png', $this->skin, 'main'),
+					'src' => Location::img('next.png', $this->skin, 'main'),
 					'alt' => ucfirst(lang('actions_next')),
 					'class' => 'image'),
 				'prev' => array(
-					'src' => img_location('previous.png', $this->skin, 'main'),
+					'src' => Location::img('previous.png', $this->skin, 'main'),
 					'alt' => ucfirst(lang('status_previous')),
 					'class' => 'image'),
 				'feed' => array(
-					'src' => img_location('feed.png', $this->skin, 'main'),
+					'src' => Location::img('feed.png', $this->skin, 'main'),
 					'alt' => lang('labels_subscribe'),
 					'class' => 'image'),
 				'comment' => array(
-					'src' => img_location('comment-add.png', $this->skin, 'main'),
+					'src' => Location::img('comment-add.png', $this->skin, 'main'),
 					'alt=' => '',
 					'class' => 'inline_img_left image')
 			);
 			
-			/* write the javascript region and title */
-			$this->template->write('title', $data['mission'] .' - '. $row->post_title);
-			$this->template->write_view('javascript', $js_loc);
+			$this->_regions['title'].= $data['mission'].' - '.$row->post_title;
 		}
 		else
 		{
@@ -2143,14 +2057,15 @@ class Nova_sim extends Nova_main_controller {
 				$data['msg_error'] = lang('error_msg_not_found');
 			}
 			
-			/* figure out where the view should be coming from */
-			$view_loc = view_location('error', $this->skin, 'main');
+			// figure out where the view should be coming from
+			$view_loc = 'error';
+			$js_loc = false;
 			
-			/* write the title */
-			$this->template->write('title', lang('error_pagetitle'));
+			// write the title
+			$this->_regions['title'].= lang('error_pagetitle');
 		}
 		
-		if (Auth::is_logged_in() === TRUE && Auth::get_access_level('manage/posts') == 1)
+		if (Auth::is_logged_in() and Auth::get_access_level('manage/posts') == 1)
 		{
 			$data['valid'] = array();
 			
@@ -2165,7 +2080,7 @@ class Nova_sim extends Nova_main_controller {
 				$data['valid'][] = FALSE;
 			}
 		}
-		elseif (Auth::is_logged_in() === TRUE && Auth::get_access_level('manage/posts') == 2)
+		elseif (Auth::is_logged_in() and Auth::get_access_level('manage/posts') == 2)
 		{
 			$data['valid'][] = TRUE;
 		}
@@ -2191,55 +2106,56 @@ class Nova_sim extends Nova_main_controller {
 			'view_log' => ucwords(lang('actions_view') .' '. lang('global_log')),
 		);
 		
-		/* write the data to the template */
-		$this->template->write_view('content', $view_loc, $data);
+		$this->_regions['content'] = Location::view($view_loc, $this->skin, 'main', $data);
+		$this->_regions['javascript'] = ($js_loc) ? Location::js('sim_listlogs_js', $this->skin, 'main') : false;
 		
-		/* render the template */
-		$this->template->render();
+		Template::assign($this->_regions);
+		
+		Template::render();
 	}
 	
 	function _email($type = '', $data = '')
 	{
-		/* load the libraries */
+		// load the libraries
 		$this->load->library('email');
 		$this->load->library('parser');
 		
-		/* define the variables */
+		// define the variables
 		$email = FALSE;
 		
 		switch ($type)
 		{
 			case 'log_comment':
-				/* load the models */
+				// load the models
 				$this->load->model('personallogs_model', 'logs');
 				
-				/* run the methods */
+				// run the methods
 				$row = $this->logs->get_log($data['log']);
 				$name = $this->char->get_character_name($data['author']);
 				$from = $this->user->get_email_address('character', $data['author']);
 				$to = $this->user->get_email_address('character', $row->log_author_character);
 				
-				/* set the content */	
+				// set the content	
 				$content = sprintf(
 					lang('email_content_log_comment_added'),
 					"<strong>". $row->log_title ."</strong>",
 					$data['comment']
 				);
 				
-				/* create the array passing the data to the email */
+				// create the array passing the data to the email
 				$email_data = array(
 					'email_subject' => lang('email_subject_log_comment_added'),
 					'email_from' => ucfirst(lang('time_from')) .': '. $name .' - '. $from,
 					'email_content' => ($this->email->mailtype == 'html') ? nl2br($content) : $content
 				);
 				
-				/* where should the email be coming from */
-				$em_loc = email_location('sim_log_comment', $this->email->mailtype);
+				// where should the email be coming from
+				$em_loc = Location::email('sim_log_comment', $this->email->mailtype);
 				
-				/* parse the message */
+				// parse the message
 				$message = $this->parser->parse($em_loc, $email_data, TRUE);
 				
-				/* set the parameters for sending the email */
+				// set the parameters for sending the email
 				$this->email->from($from, $name);
 				$this->email->to($to);
 				$this->email->subject($this->options['email_subject'] .' '. $email_data['email_subject']);
@@ -2247,16 +2163,16 @@ class Nova_sim extends Nova_main_controller {
 			break;
 				
 			case 'log_comment_pending':
-				/* load the models */
+				// load the models
 				$this->load->model('personallogs_model', 'logs');
 				
-				/* run the methods */
+				// run the methods
 				$row = $this->logs->get_log($data['log']);
 				$name = $this->char->get_character_name($data['author']);
 				$from = $this->user->get_email_address('character', $data['author']);
 				$to = implode(',', $this->user->get_emails_with_access('manage/comments'));
 				
-				/* set the content */	
+				// set the content	
 				$content = sprintf(
 					lang('email_content_comment_pending'),
 					lang('global_personallog'),
@@ -2265,20 +2181,20 @@ class Nova_sim extends Nova_main_controller {
 					site_url('login/index')
 				);
 				
-				/* create the array passing the data to the email */
+				// create the array passing the data to the email
 				$email_data = array(
 					'email_subject' => lang('email_subject_comment_pending'),
 					'email_from' => ucfirst(lang('time_from')) .': '. $name .' - '. $from,
 					'email_content' => ($this->email->mailtype == 'html') ? nl2br($content) : $content
 				);
 				
-				/* where should the email be coming from */
-				$em_loc = email_location('comment_pending', $this->email->mailtype);
+				// where should the email be coming from
+				$em_loc = Location::email('comment_pending', $this->email->mailtype);
 				
-				/* parse the message */
+				// parse the message
 				$message = $this->parser->parse($em_loc, $email_data, TRUE);
 				
-				/* set the parameters for sending the email */
+				// set the parameters for sending the email
 				$this->email->from($from, $name);
 				$this->email->to($to);
 				$this->email->subject($this->options['email_subject'] .' '. $email_data['email_subject']);
@@ -2286,25 +2202,25 @@ class Nova_sim extends Nova_main_controller {
 			break;
 				
 			case 'post_comment':
-				/* load the models */
+				// load the models
 				$this->load->model('posts_model', 'posts');
 				
-				/* run the methods */
+				// run the methods
 				$row = $this->posts->get_post($data['post']);
 				
-				/* get who the comment is from */
+				// get who the comment is from
 				$name = $this->char->get_character_name($data['author']);
 				$from = $this->user->get_email_address('character', $data['author']);
 				
-				/* get the authors' email addresses */
+				// get the authors' email addresses
 				$authors = $this->posts->get_author_emails($data['post']);
 				
 				foreach ($authors as $key => $value)
 				{
-					/* get the user id */
+					// get the user id
 					$user = $this->user->get_userid_from_email($value);
 					
-					/* get the author's preference */
+					// get the author's preference
 					$pref = $this->user->get_pref('email_new_post_comments', $user);
 					
 					if ($pref == 'n' || $pref == '')
@@ -2313,30 +2229,30 @@ class Nova_sim extends Nova_main_controller {
 					}
 				}
 				
-				/* set the TO string */
+				// set the TO string
 				$to = implode(',', $authors);
 				
-				/* set the content */	
+				// set the content	
 				$content = sprintf(
 					lang('email_content_post_comment_added'),
 					"<strong>". $row->post_title ."</strong>",
 					$data['comment']
 				);
 				
-				/* create the array passing the data to the email */
+				// create the array passing the data to the email
 				$email_data = array(
 					'email_subject' => lang('email_subject_post_comment_added'),
 					'email_from' => ucfirst(lang('time_from')) .': '. $name .' - '. $from,
 					'email_content' => ($this->email->mailtype == 'html') ? nl2br($content) : $content
 				);
 				
-				/* where should the email be coming from */
-				$em_loc = email_location('sim_post_comment', $this->email->mailtype);
+				// where should the email be coming from
+				$em_loc = Location::email('sim_post_comment', $this->email->mailtype);
 				
-				/* parse the message */
+				// parse the message
 				$message = $this->parser->parse($em_loc, $email_data, TRUE);
 				
-				/* set the parameters for sending the email */
+				// set the parameters for sending the email
 				$this->email->from($from, $name);
 				$this->email->to($to);
 				$this->email->subject($this->options['email_subject'] .' '. $email_data['email_subject']);
@@ -2344,16 +2260,16 @@ class Nova_sim extends Nova_main_controller {
 			break;
 				
 			case 'post_comment_pending':
-				/* load the models */
+				// load the models
 				$this->load->model('posts_model', 'posts');
 				
-				/* run the methods */
+				// run the methods
 				$row = $this->posts->get_post($data['post']);
 				$name = $this->char->get_character_name($data['author']);
 				$from = $this->user->get_email_address('character', $data['author']);
 				$to = implode(',', $this->user->get_emails_with_access('manage/comments'));
 				
-				/* set the content */	
+				// set the content	
 				$content = sprintf(
 					lang('email_content_comment_pending'),
 					lang('global_missionpost'),
@@ -2362,20 +2278,20 @@ class Nova_sim extends Nova_main_controller {
 					site_url('login/index')
 				);
 				
-				/* create the array passing the data to the email */
+				// create the array passing the data to the email
 				$email_data = array(
 					'email_subject' => lang('email_subject_comment_pending'),
 					'email_from' => ucfirst(lang('time_from')) .': '. $name .' - '. $from,
 					'email_content' => ($this->email->mailtype == 'html') ? nl2br($content) : $content
 				);
 				
-				/* where should the email be coming from */
-				$em_loc = email_location('comment_pending', $this->email->mailtype);
+				// where should the email be coming from
+				$em_loc = Location::email('comment_pending', $this->email->mailtype);
 				
-				/* parse the message */
+				// parse the message
 				$message = $this->parser->parse($em_loc, $email_data, TRUE);
 				
-				/* set the parameters for sending the email */
+				// set the parameters for sending the email
 				$this->email->from($from, $name);
 				$this->email->to($to);
 				$this->email->subject($this->options['email_subject'] .' '. $email_data['email_subject']);
@@ -2383,26 +2299,26 @@ class Nova_sim extends Nova_main_controller {
 			break;
 				
 			case 'docking_user':
-				/* set the content */	
+				// set the content	
 				$content = sprintf(
 					lang('email_content_docking_user'),
 					$this->options['sim_name']
 				);
 				
-				/* create the array passing the data to the email */
+				// create the array passing the data to the email
 				$email_data = array(
 					'email_subject' => lang('email_subject_docking_user'),
 					'email_from' => ucfirst(lang('time_from')) .': '. $this->options['default_email_name'] .' - '. $this->options['default_email_address'],
 					'email_content' => ($this->email->mailtype == 'html') ? nl2br($content) : $content
 				);
 				
-				/* where should the email be coming from */
-				$em_loc = email_location('sim_docking_user', $this->email->mailtype);
+				// where should the email be coming from
+				$em_loc = Location::email('sim_docking_user', $this->email->mailtype);
 				
-				/* parse the message */
+				// parse the message
 				$message = $this->parser->parse($em_loc, $email_data, TRUE);
 				
-				/* set the parameters for sending the email */
+				// set the parameters for sending the email
 				$this->email->from($this->options['default_email_address'], $this->options['default_email_name']);
 				$this->email->to($data['email']);
 				$this->email->subject($this->options['email_subject'] .' '. $email_data['email_subject']);
@@ -2410,14 +2326,14 @@ class Nova_sim extends Nova_main_controller {
 			break;
 				
 			case 'docking_gm':
-				/* load the models */
+				// load the models
 				$this->load->model('docking_model', 'docking');
 				
 				$row = $this->docking->get_docked_item($data);
 				
 				if ($row !== FALSE)
 				{
-					/* create the array passing the data to the email */
+					// create the array passing the data to the email
 					$email_data = array(
 						'email_subject' => lang('email_subject_docking_gm'),
 						'email_from' => ucfirst(lang('time_from')) .': '. $row->docking_gm_name .' - '. $row->docking_gm_email,
@@ -2439,7 +2355,7 @@ class Nova_sim extends Nova_main_controller {
 							'data' => $row->docking_gm_email)
 					);
 					
-					/* get the sections */
+					// get the sections
 					$sections = $this->docking->get_docking_sections();
 					
 					if ($sections->num_rows() > 0)
@@ -2448,7 +2364,7 @@ class Nova_sim extends Nova_main_controller {
 						{
 							$email_data['sections'][$sec->section_id]['title'] = $sec->section_name;
 							
-							/* get the section fields */
+							// get the section fields
 							$fields = $this->docking->get_docking_fields($sec->section_id);
 							
 							if ($fields->num_rows() > 0)
@@ -2460,7 +2376,7 @@ class Nova_sim extends Nova_main_controller {
 									if ($docking_data->num_rows() > 0)
 									{
 										foreach ($docking_data->result() as $d)
-										{ /* put the data into an array */
+										{
 											$email_data['sections'][$sec->section_id]['fields'][] = array(
 												'field' => $field->field_label_page,
 												'data' => text_output($d->data_value, '')
@@ -2471,19 +2387,19 @@ class Nova_sim extends Nova_main_controller {
 							}
 						}
 					
-						/* where should the email be coming from */
-						$em_loc = email_location('sim_docking_gm', $this->email->mailtype);
+						// where should the email be coming from
+						$em_loc = Location::email('sim_docking_gm', $this->email->mailtype);
 					
-						/* parse the message */
+						// parse the message
 						$message = $this->parser->parse($em_loc, $email_data, TRUE);
 					
-						/* get the game masters email addresses */
+						// get the game masters email addresses
 						$gm = $this->user->get_gm_emails();
 					
-						/* set the TO variable */
+						// set the TO variable
 						$to = implode(',', $gm);
 					
-						/* set the parameters for sending the email */
+						// set the parameters for sending the email
 						$this->email->from($row->docking_gm_email, $row->docking_gm_name);
 						$this->email->to($to);
 						$this->email->subject($this->options['email_subject'] .' '. $email_data['email_subject']);
@@ -2493,10 +2409,10 @@ class Nova_sim extends Nova_main_controller {
 			break;
 		}
 		
-		/* send the email */
+		// send the email
 		$email = $this->email->send();
 		
-		/* return the email variable */
+		// return the email variable
 		return $email;
 	}
 }

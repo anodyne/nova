@@ -9,9 +9,9 @@
  * @version		2.0
  */
 
-require_once MODPATH.'core/libraries/Nova_main_controller'.EXT;
+require_once MODPATH.'core/core/Nova_controller_main'.EXT;
 
-class Nova_personnel extends Nova_main_controller {
+class Nova_personnel extends Nova_controller_main {
 	
 	public function __construct()
 	{

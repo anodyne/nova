@@ -1997,7 +1997,7 @@ class Characters_base extends Controller {
 		switch ($type)
 		{
 			case 'accept':
-				$cc = implode(',', $this->user->get_emails_with_access('characters/index'));
+				$cc = implode(',', $this->user->get_gm_emails());
 				
 				$email_data = array(
 					'email_subject' => lang('email_subject_character_approved') .' - '. $data['character'],

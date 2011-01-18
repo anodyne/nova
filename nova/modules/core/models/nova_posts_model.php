@@ -12,11 +12,11 @@
  * thrown if a character or user ID wasn't present
  */
 
-abstract class Nova_posts_model extends Model {
+abstract class Nova_posts_model extends CI_Model {
 
 	public function __construct()
 	{
-		parent::Model();
+		parent::__construct();
 		
 		$this->load->dbutil();
 	}
@@ -404,10 +404,18 @@ abstract class Nova_posts_model extends Model {
 		return $count_final;
 	}
 	
-	function count_mission_posts($mission = '', $count_pref = '')
+	function count_mission_posts($mission = '', $count_pref = '', $status = 'activated')
 	{
+		$this->db->from('posts');
+		$this->db->where('post_mission', $mission);
+		
+		if ( ! empty($status))
+		{
+			$this->db->where('post_status', $status);
+		}
+		
 		/* run the query */
-		$query = $this->db->get_where('posts', array('post_mission' => $mission));
+		$query = $this->db->get();
 		
 		/* set the count variable */
 		$count = 0;

@@ -1,6 +1,6 @@
 <?php
 
-class Nova_main_controller extends Controller {
+class Nova_controller_wiki extends CI_Controller {
 	
 	/**
 	 * The options array that stores all the settings from the database
@@ -11,11 +11,6 @@ class Nova_main_controller extends Controller {
 	 * The current skin
 	 */
 	public $skin;
-	
-	/**
-	 * The current rank set
-	 */
-	public $rank;
 	
 	/**
 	 * The current timezone
@@ -34,14 +29,16 @@ class Nova_main_controller extends Controller {
 	
 	public function __construct()
 	{
-		parent::Controller();
+		parent::__construct();
 		
 		$this->load->library('session');
+		$this->load->library('thresher');
 		$this->load->model('settings_model', 'settings');
 		$this->load->model('messages_model', 'msgs');
 		$this->load->model('system_model', 'sys');
 		$this->load->model('characters_model', 'char');
 		$this->load->model('users_model', 'user');
+		$this->load->model('wiki_model', 'wiki');
 		
 		$installed = $this->sys->check_install_status();
 		
@@ -54,40 +51,29 @@ class Nova_main_controller extends Controller {
 		
 		// these are the options we want to pull for all main pagesg
 		$settings_array = array(
-			'skin_main',
-			'display_rank',
+			'skin_wiki',
 			'timezone',
 			'daylight_savings',
 			'sim_name',
 			'date_format',
-			'show_news',
-			'use_sample_post',
-			'default_email_name',
-			'default_email_address',
-			'email_subject',
 			'system_email',
-			'manifest_defaults',
-			'list_logs_num',
-			'list_posts_num',
-			'post_count_format',
+			'email_subject',
 		);
 		
 		// set the options
 		$this->options = $this->settings->get_settings($settings_array);
 		
 		// set the initial values
-		$this->skin = $this->options['skin_main'];
-		$this->rank = $this->options['display_rank'];
+		$this->skin = $this->options['skin_wiki'];
 		$this->timezone = $this->options['timezone'];
 		$this->dst = (bool) $this->options['daylight_savings'];
 		
 		// if the user is logged in, reset the values
 		if (Auth::is_logged_in())
 		{
-			$this->skin = (file_exists(APPPATH.'views/'.$this->session->userdata('skin_main').'/template_main'.EXT))
-				? $this->session->userdata('skin_main')
+			$this->skin = (file_exists(APPPATH.'views/'.$this->session->userdata('skin_wiki').'/template_wiki'.EXT))
+				? $this->session->userdata('skin_wiki')
 				: $this->skin;
-			$this->rank = $this->session->userdata('display_rank');
 			$this->timezone = $this->session->userdata('timezone');
 			$this->dst = (bool) $this->session->userdata('dst');
 		}
@@ -96,12 +82,12 @@ class Nova_main_controller extends Controller {
 		$this->lang->load('app', $this->session->userdata('language'));
 		
 		// set the template file
-		Template::$file = $this->skin.'/template_main';
+		Template::$file = $this->skin.'/template_wiki';
 		
 		// assign all of the items to the template with false values to prevent errors
 		$this->_regions += array(
 			'nav_main'		=> Menu::build('main', 'main'),
-			'nav_sub'		=> false,
+			'nav_sub'		=> Menu::build('sub', 'wiki'),
 			'content'		=> false,
 			'javascript'	=> false,
 			'ajax'			=> false,
