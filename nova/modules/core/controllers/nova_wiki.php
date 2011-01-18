@@ -1,4 +1,4 @@
-$<?php
+<?php
 /**
  * Wiki controller
  *
@@ -9,9 +9,9 @@ $<?php
  * @version		2.0
  */
 
-require_once MODPATH.'core/core/Nova_controller_wiki'.EXT;
+require_once MODPATH.'core/libraries/Nova_controller_wiki'.EXT;
 
-class Nova_wiki extends Nova_wiki_controller {
+class Nova_wiki extends Nova_controller_wiki {
 	
 	public function __construct()
 	{

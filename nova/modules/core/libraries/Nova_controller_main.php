@@ -1,6 +1,6 @@
 <?php
 
-class Nova_controller_main extends CI_Controller {
+class Nova_controller_main extends Controller {
 	
 	/**
 	 * The options array that stores all the settings from the database
