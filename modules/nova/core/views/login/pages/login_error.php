@@ -2,4 +2,4 @@
 
 <p class="error fontMedium"><?php echo $message;?></p>
 
-<p><strong><?php echo html::anchor('login/index', '&laquo; '.__('Back to Login Page'));?></strong></p>
+<p><strong><a href="<?php echo url::site('login/index');?>">&laquo; <?php echo __("Back to Log In");?></a></strong></p>

@@ -18,11 +18,11 @@ return array(
 	'preExecute' => array(
 		array(
 			'class' => 'Hooks',
-			'method' => 'modules',
+			'method' => 'browser',
 			'param' => false),
 		array(
 			'class' => 'Hooks',
-			'method' => 'browser',
+			'method' => 'modules',
 			'param' => false),
 		array(
 			'class' => 'Hooks',

@@ -1,6 +1,6 @@
 <?php defined('SYSPATH') or die('No direct script access.');
 /**
- * Database query wrapper.  See [Prepared Statements](database/query/prepared) for usage and examples.
+ * Database query wrapper.
  *
  * @package    Kohana/Database
  * @category   Query
@@ -14,7 +14,7 @@ class Kohana_Database_Query {
 	protected $_type;
 
 	// Cache lifetime
-	protected $_lifetime;
+	protected $_lifetime = NULL;
 
 	// SQL statement
 	protected $_sql;
@@ -55,7 +55,7 @@ class Kohana_Database_Query {
 		}
 		catch (Exception $e)
 		{
-			return Kohana::exception_text($e);
+			return Kohana_Exception::text($e);
 		}
 	}
 
@@ -72,18 +72,11 @@ class Kohana_Database_Query {
 	/**
 	 * Enables the query to be cached for a specified amount of time.
 	 *
-	 * @param   integer  number of seconds to cache or null for default
+	 * @param   integer  number of seconds to cache
 	 * @return  $this
-	 * @uses    Kohana::$cache_life
 	 */
 	public function cached($lifetime = NULL)
 	{
-		if ($lifetime === NULL)
-		{
-			// Use the global setting
-			$lifetime = Kohana::$cache_life;
-		}
-
 		$this->_lifetime = $lifetime;
 
 		return $this;
@@ -209,7 +202,7 @@ class Kohana_Database_Query {
 		// Compile the SQL query
 		$sql = $this->compile($db);
 
-		if ( ! empty($this->_lifetime) AND $this->_type === Database::SELECT)
+		if ($this->_lifetime !== NULL AND $this->_type === Database::SELECT)
 		{
 			// Set the cache key based on the database instance name and SQL
 			$cache_key = 'Database::query("'.$db.'", "'.$sql.'")';

@@ -51,3 +51,8 @@ _fgCharting requires the HTML5 canvas element which is not supported by Internet
 # KO3 and GoDaddy
 
 * http://forum.kohanaframework.org/comments.php?DiscussionID=4390
+
+# KO3 I18n and Translations
+
+* http://blog.mixu.net/2010/11/11/kohana-3-i18n-tutorial/
+* http://blog.mixu.net/2010/12/09/kohana-translate-an-i18n-module-for-collecting-translations/

@@ -6,7 +6,7 @@
  * @category	Controllers
  * @author		Anodyne Productions
  * @copyright	2010-11 Anodyne Productions
- * @since		2.0
+ * @version		2.0
  */
 
 class Controller_Upgrade extends Controller_Template {
@@ -32,7 +32,7 @@ class Controller_Upgrade extends Controller_Template {
 			$tables = Kohana::config('nova.app_db_tables');
 			
 			// we're upgrading from sms, so make sure the system isn't installed
-			if ($this->request->action != 'step' and (count($db->list_tables($db->table_prefix().'%')) == $tables))
+			if ($this->request->action() != 'step' and (count($db->list_tables($db->table_prefix().'%')) == $tables))
 			{
 				$this->request->redirect('install/index');
 			}

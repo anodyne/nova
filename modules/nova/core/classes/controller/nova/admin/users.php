@@ -125,7 +125,7 @@ class Controller_Nova_Admin_Users extends Controller_Nova_Base {
 		$this->template->title.= $data->header;
 		
 		// send the response
-		$this->request->response = $this->template;
+		$this->response->body($this->template);
 	}
 	
 	public function action_account($id = null)
@@ -161,7 +161,7 @@ class Controller_Nova_Admin_Users extends Controller_Nova_Base {
 		$this->template->title.= $data->header;
 		
 		// send the response
-		$this->request->response = $this->template;
+		$this->response->body($this->template);
 	}
 	
 	public function link($id = null)

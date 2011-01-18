@@ -1,6 +1,6 @@
 <?php defined('SYSPATH') or die('No direct script access.');
 /**
- * Database query builder for WHERE statements. See [Query Builder](/database/query/builder) for usage and examples.
+ * Database query builder for WHERE statements.
  *
  * @package    Kohana/Database
  * @category   Query

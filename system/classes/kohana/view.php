@@ -7,7 +7,7 @@
  * @package    Kohana
  * @category   Base
  * @author     Kohana Team
- * @copyright  (c) 2008-2010 Kohana Team
+ * @copyright  (c) 2008-2011 Kohana Team
  * @license    http://kohanaframework.org/license
  */
 class Kohana_View {
@@ -48,8 +48,8 @@ class Kohana_View {
 
 		if (View::$_global_data)
 		{
-			// Import the global view variables to local namespace and maintain references
-			extract(View::$_global_data, EXTR_REFS);
+			// Import the global view variables to local namespace
+			extract(View::$_global_data, EXTR_SKIP);
 		}
 
 		// Capture the view output
@@ -230,7 +230,7 @@ class Kohana_View {
 		catch (Exception $e)
 		{
 			// Display the exception message
-			Kohana::exception_handler($e);
+			Kohana_Exception::handler($e);
 
 			return '';
 		}
@@ -247,10 +247,26 @@ class Kohana_View {
 	 */
 	public function set_filename($file)
 	{
-		if (($path = Kohana::find_file('views', $file)) === FALSE)
+		// Detect if there was a file extension
+		$_file = explode('.', $file);
+
+		// If there are several components
+		if (count($_file) > 1)
+		{
+			// Take the extension
+			$ext = array_pop($_file);
+			$file = implode('.', $_file);
+		}
+		// Otherwise set the extension to the standard
+		else
+		{
+			$ext = ltrim(EXT, '.');
+		}
+
+		if (($path = Kohana::find_file('views', $file, $ext)) === FALSE)
 		{
 			throw new Kohana_View_Exception('The requested view :file could not be found', array(
-				':file' => $file,
+				':file' => $file.'.'.$ext,
 			));
 		}
 

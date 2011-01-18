@@ -1,6 +1,6 @@
 <?php defined('SYSPATH') or die('No direct script access.');
 /**
- * Database query builder for INSERT statements. See [Query Builder](/database/query/builder) for usage and examples.
+ * Database query builder for INSERT statements.
  *
  * @package    Kohana/Database
  * @category   Query
@@ -122,7 +122,7 @@ class Kohana_Database_Query_Builder_Insert extends Database_Query_Builder {
 		$query = 'INSERT INTO '.$db->quote_table($this->_table);
 
 		// Add the column names
-		$query .= ' ('.implode(', ', array_map(array($db, 'quote_identifier'), $this->_columns)).') ';
+		$query .= ' ('.implode(', ', array_map(array($db, 'quote_column'), $this->_columns)).') ';
 
 		if (is_array($this->_values))
 		{

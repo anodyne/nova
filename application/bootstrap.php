@@ -1,6 +1,20 @@
 <?php defined('SYSPATH') or die('No direct script access.');
 
-//-- Environment setup --------------------------------------------------------
+// -- Environment setup --------------------------------------------------------
+
+// Load the core Kohana class
+require SYSPATH.'classes/kohana/core'.EXT;
+
+if (is_file(APPPATH.'classes/kohana'.EXT))
+{
+	// Application extends the core
+	require APPPATH.'classes/kohana'.EXT;
+}
+else
+{
+	// Load empty core extension
+	require SYSPATH.'classes/kohana'.EXT;
+}
 
 /**
  * Set the default time zone.
@@ -34,50 +48,54 @@ spl_autoload_register(array('Kohana', 'auto_load'));
  */
 ini_set('unserialize_callback_func', 'spl_autoload_call');
 
-//-- Configuration and initialization -----------------------------------------
+// -- Configuration and initialization -----------------------------------------
+
+/**
+ * Set the default language
+ */
+I18n::lang('en-us');
 
 /**
  * Initialize Kohana, setting the default options.
  *
  * The following options are available:
  *
- * - string   base_url    path, and optionally domain, of your application   null
+ * - string   base_url    path, and optionally domain, of your application   NULL
  * - string   index_file  name of your index file, usually "index.php"       index.php
  * - string   charset     internal character set used for input and output   utf-8
  * - string   cache_dir   set the internal cache directory                   APPPATH/cache
- * - boolean  errors      enable or disable error handling                   true
- * - boolean  profile     enable or disable internal profiling               true
- * - boolean  caching     enable or disable internal caching                 false
+ * - boolean  errors      enable or disable error handling                   TRUE
+ * - boolean  profile     enable or disable internal profiling               TRUE
+ * - boolean  caching     enable or disable internal caching                 FALSE
  */
 $url = $_SERVER['SCRIPT_NAME'];
 $url = substr($url, 0, strpos($url, '.php'));
 $url = substr($url, 0, (strlen($url) - strpos(strrev($url), '/')));
 
 Kohana::init(array(
-	'base_url'		=> $url,
-	'profile'		=> (Kohana::$environment == Kohana::PRODUCTION) ? false : true,
+	'base_url'   => $url,
 ));
 
 /**
  * Attach the file write to logging. Multiple writers are supported.
  */
-Kohana::$log->attach(new Kohana_Log_File(APPPATH.'logs'));
+Kohana::$log->attach(new Log_File(APPPATH.'logs'));
 
 /**
  * Attach a file reader to config. Multiple readers are supported.
  */
-Kohana::$config->attach(new Kohana_Config_File);
+Kohana::$config->attach(new Config_File);
 
 // set the Kohana environment
-Kohana::$environment = Kohana::config('info.environment');
+Kohana::$environment = Kohana::config('nova.environment');
 
 /**
  * Set Kohana::$environment if $_ENV['KOHANA_ENV'] has been supplied.
  * 
  */
-if (isset($_ENV['KOHANA_ENV']))
+if (getenv('KOHANA_ENV') !== FALSE)
 {
-	Kohana::$environment = $_ENV['KOHANA_ENV'];
+	Kohana::$environment = getenv('KOHANA_ENV');
 }
 
 /**
@@ -91,11 +109,10 @@ Kohana::modules(array(
 	'update'		=> MODPATH.'nova/update',
 	'database'		=> MODPATH.'kohana/database',
 	'jelly'			=> MODPATH.'kohana/jelly',
+	'htmlpurifier'	=> MODPATH.'kohana/purifier',
 	'assets'		=> MODPATH.'assets',
 	'dbforge'		=> MODPATH.'nova/dbforge',
-	
-	'unittest'		=> MODPATH.'kohana/unittest',
-));
+	));
 
 /**
  * Set the routes. Each route must have a minimum of a name, a URI and a set of
@@ -106,49 +123,3 @@ Route::set('default', '(<controller>(/<action>(/<id>)))')
 		'controller' => 'main',
 		'action'     => 'index',
 	));
-
-if ( ! defined('SUPPRESS_REQUEST'))
-{
-	/**
-	 * Execute the main request. A source of the URI can be passed, eg: $_SERVER['PATH_INFO'].
-	 * If no source is specified, the URI will be automatically detected.
-	 */
-
-	Events::event('preCreate');
-	$request = Request::instance();
-	Events::event('postCreate');
-
-	Events::event('preExecute');
-	
-	if (Kohana::$environment == Kohana::PRODUCTION)
-	{
-		try {
-			$request->execute();
-		}
-		catch (Exception $e)
-		{
-			switch ($e->getCode())
-			{
-				case -1:
-				case 0:
-				case 404:
-					$request = Request::factory('error/404')->execute();
-				break;
-			}
-		}
-	}
-	else
-	{
-		$request->execute();
-	}
-	
-	Events::event('postExecute');
-
-	Events::event('preHeaders');
-	$request->send_headers();
-	Events::event('postHeaders');
-
-	Events::event('preResponse');
-	echo $request->response;
-	Events::event('postResponse');
-}

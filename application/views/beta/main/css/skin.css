@@ -140,3 +140,91 @@ textarea {
 
 a { color: #1e5799; }
 a:hover { color: #666; }
+
+.search-item:hover { cursor: pointer; }
+.search-item-cancel {
+	text-decoration: line-through;
+	opacity: .5;
+}
+
+.search-field {
+	width: 400px;
+	height: 24px;
+	line-height: 24px;
+	padding: 1px;
+	
+	border: 1px solid #bbb;
+	
+	border-radius: 3px;
+	-moz-border-radius: 3px;
+}
+.search-field-input, .search-field-input:hover, .search-field-input:focus {
+	display: inline-block;
+	height: 20px !important;
+	padding: 0 !important;
+	margin: 0 !important;
+	
+	border: 1px solid transparent !important;
+	background: transparent !important;
+	color: #444 !important;
+}
+.search-field-options {
+	float: left;
+	display: block;
+	padding: 0 0 0 3px;
+	height: 24px;
+	width: 20px;
+}
+.search-field-options:hover { cursor: pointer; }
+
+.options-posts { background: transparent url('../images/icon-posts.png') no-repeat center center; }
+.options-logs { background: transparent url('../images/icon-logs.png') no-repeat center center; }
+.options-news { background: transparent url('../images/icon-news.png') no-repeat center center; }
+.options-wiki { background: transparent url('../images/icon-wiki.png') no-repeat center center; }
+
+.search-field-options-list {
+	position: absolute;
+	top: 372px;
+	width: 150px;
+	margin: 0 0 0 3px;
+	padding: .5em 0;
+	
+	border: 1px solid #bbb;
+	background: #eee;
+	
+	border-radius: 3px;
+	-moz-border-radius: 0 0 3px 3px;
+	
+	box-shadow: 1px 1px 4px rgba(0, 0, 0, .2);
+	-moz-box-shadow: 1px 1px 4px rgba(0, 0, 0, .2);
+	-webkit-box-shadow: 1px 1px 4px rgba(0, 0, 0, .2);
+}
+.search-field-options-list ul {
+	margin: 0;
+	padding: 0;
+	
+	list-style: none;
+}
+.search-field-options-list ul li {
+	height: 22px;
+	line-height: 22px;
+}
+.search-field-options-list ul li a {
+	display: block;
+	padding: 0 4px;
+	
+	font-weight: bold;
+	font-size: 90%;
+	color: #888;
+	border: 1px solid transparent;
+	border-left: 0;
+	border-right: 0;
+	text-decoration: none;
+}
+.search-field-options-list ul li a:hover {
+	background: #237fd7;
+	background: -moz-linear-gradient(center top, #52a8e8 20%, #237fd7 100%);
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(.2, #52a8e8), color-stop(1, #237fd7));
+	color: #eee;
+	border-color: #4081af;
+}

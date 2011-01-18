@@ -264,7 +264,7 @@ abstract class Nova_Menu {
 		
 						if ($item->linktype == 'onsite')
 						{
-							$uri = explode('/', Request::instance()->uri());
+							$uri = explode('/', Request::current()->uri());
 							$cur = explode('/', $item->link);
 							
 							if ($uri[0] == $cur[0])
