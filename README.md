@@ -4,18 +4,22 @@ Anodyne Production's next-generation RPG management system combines popular feat
 
 ## Current Version
 
-1.2.3
+1.2.4
 
-## Changes in 1.2.3
+## Changes in 1.2.4
 
-* added the 1.2.3 update file
-* fixed bug with handling deck listings and multiple specification items
+* added the 1.2.4 update file
+* fixed bug where nova wasn't accurately counting mission posts
+* fixed bug where the user acceptance email was CCed to more people than it needed to be
 
 ## Version History
 
 <table>
 	<tr>
 		<th>Version</th><th>Release Date</th>
+	</tr>
+	<tr>
+		<td>1.2.4</td><td>-</td>
 	</tr>
 	<tr>
 		<td>1.2.3</td><td>04 January 2011</td>
