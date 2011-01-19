@@ -1,4 +1,4 @@
-<h2><?php echo __('Welcome to :app_name!', array(':app_name' => Kohana::config('nova.app_name')));?></h2>
+<h2><?php echo __('Welcome to :app_name!', array(':app_name' => Kohana::config('novasys.app_name')));?></h2>
 
 <p class="fontMedium"><?php echo nl2br(__('main.text'));?></p>
 
