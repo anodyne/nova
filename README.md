@@ -11,6 +11,7 @@ Anodyne Production's next-generation RPG management system combines popular feat
 * added the 1.2.4 update file
 * fixed bug where nova wasn't accurately counting mission posts
 * fixed bug where the user acceptance email was CCed to more people than it needed to be
+* fixed bug where IE7 choked on the manifest
 
 ## Version History
 
