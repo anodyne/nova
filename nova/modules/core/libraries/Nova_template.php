@@ -44,6 +44,31 @@ abstract class Nova_template
 	}
 	
 	/**
+	 * Assign a redirect to the template object
+	 *
+	 *     Template::add_redirect('controller/method')
+	 *
+	 * @access	public
+	 * @param	string	the uri to redirect to
+	 * @param	integer	the number of seconds to wait before redirecting
+	 * @return	string	the meta tag with the refresh info
+	 */
+	public static function add_redirect($location, $time = 5)
+	{
+		// get an instance of CI
+		$ci =& get_instance();
+		
+		// load the url helper
+		$ci->load->helper('url');
+		
+		// set the url we're going to
+		$url = site_url($location);
+		
+		// assign the redirection to the data array
+		return '<meta http-equiv="refresh" content="'.$time.';url='.$url.'" />';
+	}
+	
+	/**
 	 * Assign data to this template object.
 	 * 
 	 * @access	public
