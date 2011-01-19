@@ -11,7 +11,7 @@
 
 require_once MODPATH.'core/libraries/Nova_controller_wiki'.EXT;
 
-class Nova_wiki extends Nova_controller_wiki {
+abstract class Nova_wiki extends Nova_controller_wiki {
 	
 	public function __construct()
 	{

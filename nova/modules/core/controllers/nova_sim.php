@@ -11,7 +11,7 @@
 
 require_once MODPATH.'core/libraries/Nova_controller_main'.EXT;
 
-class Nova_sim extends Nova_controller_main {
+abstract class Nova_sim extends Nova_controller_main {
 	
 	public function __construct()
 	{
