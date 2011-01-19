@@ -110,6 +110,7 @@ Kohana::modules(array(
 	'database'		=> MODPATH.'kohana/database',
 	'jelly'			=> MODPATH.'kohana/jelly',
 	'htmlpurifier'	=> MODPATH.'kohana/purifier',
+	'i18n'			=> MODPATH.'kohana/i18n',
 	'assets'		=> MODPATH.'assets',
 	'dbforge'		=> MODPATH.'nova/dbforge',
 	));

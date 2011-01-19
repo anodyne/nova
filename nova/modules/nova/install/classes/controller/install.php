@@ -487,7 +487,7 @@ class Controller_Install extends Controller_Template {
 		{
 			if (file_exists(APPPATH.'config/database'.EXT))
 			{
-				$data->message = __('setup.config_exists', array(':appfolder' => APPFOLDER));
+				$data->message = ___('setup.text.exists', array(':appfolder' => APPFOLDER));
 			}
 			else
 			{
@@ -500,7 +500,7 @@ class Controller_Install extends Controller_Template {
 					switch ($step)
 					{
 						case 0:
-							$data->message = __('setup.step0_text', array(':modules' => MODFOLDER, ':appfolder' => APPFOLDER));
+							$data->message = ___('setup.text.step0', array(':modules' => MODFOLDER, ':appfolder' => APPFOLDER));
 							
 							// build the next step button
 							$next = array(
