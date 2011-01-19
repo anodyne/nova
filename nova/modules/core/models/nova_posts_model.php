@@ -12,7 +12,7 @@
  * thrown if a character or user ID wasn't present
  */
 
-abstract class Nova_posts_model extends CI_Model {
+abstract class Nova_posts_model extends Model {
 
 	public function __construct()
 	{
