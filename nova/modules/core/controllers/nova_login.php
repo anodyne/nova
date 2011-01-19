@@ -179,7 +179,7 @@ abstract class Nova_login extends Controller {
 				break;
 				
 				default:
-					$flash['message'] = lang_output('error_login_' . $this->uri->segment(4));
+					$flash['message'] = lang_output('error_login_'.$this->uri->segment(4));
 				break;
 			}
 			
@@ -231,7 +231,7 @@ abstract class Nova_login extends Controller {
 	{
 		// grab the POST data
 		$email = $this->input->post('email');
-		$password = $this->auth->hash($this->input->post('password'));
+		$password = Auth::hash($this->input->post('password'));
 		$remember = $this->input->post('remember');
 		
 		// do the login
