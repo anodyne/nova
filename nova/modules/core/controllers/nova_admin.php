@@ -6,97 +6,21 @@
  * @category	Controller
  * @author		Anodyne Productions
  * @copyright	2010-11 Anodyne Productions
- * @version		1.3
- *
- * Updated the flash messages so they can be overridden by seamless substitution
+ * @version		2.0
  */
 
-class Admin_base extends Controller {
+require_once MODPATH.'core/libraries/Nova_controller_admin'.EXT;
 
-	/* set the variables */
-	var $options;
-	var $skin;
-	var $rank;
-	var $timezone;
-	var $dst;
-
-	function Admin_base()
+abstract class Nova_admin extends Nova_controller_admin {
+	
+	public function __construct()
 	{
-		parent::Controller();
-		
-		/* load the system model */
-		$this->load->model('system_model', 'sys');
-		$installed = $this->sys->check_install_status();
-		
-		if ($installed === FALSE)
-		{ /* check whether the system is installed */
-			redirect('install/index', 'refresh');
-		}
-		
-		/* load the session library */
-		$this->load->library('session');
-		
-		/* load the models */
-		$this->load->model('characters_model', 'char');
-		$this->load->model('users_model', 'user');
-		
-		/* check to see if they are logged in */
-		$this->auth->is_logged_in(TRUE);
-		
-		/* an array of the global we want to retrieve */
-		$settings_array = array(
-			'skin_admin',
-			'display_rank',
-			'timezone',
-			'daylight_savings',
-			'sim_name',
-			'date_format',
-			'email_subject',
-			'system_email',
-			'online_timespan',
-			'posting_requirement',
-			'updates'
-		);
-		
-		/* grab the settings */
-		$this->options = $this->settings->get_settings($settings_array);
-		
-		/* set the variables */
-		$this->skin = $this->options['skin_admin'];
-		$this->rank = $this->options['display_rank'];
-		$this->timezone = $this->options['timezone'];
-		$this->dst = (bool) $this->options['daylight_savings'];
-		
-		if ($this->auth->is_logged_in())
-		{
-			$this->skin = (file_exists(APPPATH .'views/'.$this->session->userdata('skin_admin').'/template_admin'.EXT))
-				? $this->session->userdata('skin_admin')
-				: $this->skin;
-			$this->rank = $this->session->userdata('display_rank');
-			$this->timezone = $this->session->userdata('timezone');
-			$this->dst = (bool) $this->session->userdata('dst');
-		}
-		
-		/* set and load the language file needed */
-		$this->lang->load('app', $this->session->userdata('language'));
-		
-		/* set the template */
-		$this->template->set_template('admin');
-		$this->template->set_master_template($this->skin .'/template_admin.php');
-		
-		/* write the common elements to the template */
-		$this->template->write('nav_main', $this->menu->build('main', 'main'), TRUE);
-		$this->template->write('nav_sub', $this->menu->build('adminsub', 'admin'), TRUE);
-		$this->template->write('panel_1', $this->user_panel->panel_1(), TRUE);
-		$this->template->write('panel_2', $this->user_panel->panel_2(), TRUE);
-		$this->template->write('panel_3', $this->user_panel->panel_3(), TRUE);
-		$this->template->write('panel_workflow', $this->user_panel->panel_workflow(), TRUE);
-		$this->template->write('title', $this->options['sim_name'] . ' :: ');
+		parent::__construct();
 	}
 
-	function index()
+	public function index()
 	{
-		/* load the models */
+		// load the resources
 		$this->load->model('posts_model', 'posts');
 		$this->load->model('personallogs_model', 'logs');
 		$this->load->model('news_model', 'news');
@@ -105,8 +29,6 @@ class Admin_base extends Controller {
 		$this->load->model('awards_model', 'awards');
 		$this->load->model('wiki_model', 'wiki');
 		$this->load->model('docking_model', 'docking');
-		
-		/* load the helpers */
 		$this->load->helper('utility');
 		
 		if (isset($_POST['submit']))
@@ -118,11 +40,11 @@ class Admin_base extends Controller {
 				$password = $this->input->post('password', TRUE);
 				$user = $this->input->post('user', TRUE);
 				
-				/* make sure the person submitting the form is the person logged in */
+				// make sure the person submitting the form is the person logged in
 				if ($user == $this->session->userdata('userid'))
 				{
 					$update_array = array(
-						'password' => $this->auth->hash($password),
+						'password' => Auth::hash($password),
 						'password_reset' => 0,
 						'last_update' => now()
 					);
@@ -141,27 +63,27 @@ class Admin_base extends Controller {
 						$flash['status'] = 'success';
 						$flash['message'] = text_output($message);
 						
-						/* load the cookie helper */
+						// load the cookie helper
 						$this->load->helper('cookie');
 						
-						/* grab nova's unique identifier */
+						// grab nova's unique identifier
 						$uid = $this->sys->get_nova_uid();
 						
-						/* grab the cookie */
+						// grab the cookie
 						$cookie = get_cookie('nova_'. $uid);
 						
 						if ($cookie !== FALSE)
 						{
-							/* set the cookie data */
+							// set the cookie data
 							$c_data = array(
 								'password' => array(
 									'name'   => $uid .'[password]',
-									'value'  => $this->auth->hash($password),
+									'value'  => Auth::hash($password),
 									'expire' => '1209600',
 									'prefix' => 'nova_')
 							);
 							
-							/* set the cookie */
+							// set the cookie
 							set_cookie($c_data['password']);
 						}
 					}
@@ -178,15 +100,11 @@ class Admin_base extends Controller {
 						$flash['message'] = text_output($message);
 					}
 					
-					// set the location of the flash view
-					$flashloc = view_location('flash', $this->skin, 'admin');
-					
-					/* write everything to the template */
-					$this->template->write_view('flash_message', $flashloc, $flash);
+					$this->_regions['flash_message'] = Location::view('flash', $this->skin, 'admin', $flash);
 				}
 			}
 			
-			$update = FALSE;
+			$update = false;
 		}
 		
 		/*
@@ -254,15 +172,15 @@ class Admin_base extends Controller {
 			$data['notification']['saved_posts'] = 0;
 		}
 		
-		/* set the count to zero by default */
+		// set the count to zero by default
 		$data['notifycount'] = 0;
 		
 		foreach ($data['notification'] as $a)
-		{ /* count all the notifications */
+		{
 			$data['notifycount'] += $a;
 		}
 		
-		/* pass the count to the js view */
+		// pass the count to the js view
 		$js_data['panel'] = ($data['notifycount'] > 0) ? 'notifications' : 'stats';
 		
 		/*
@@ -276,7 +194,7 @@ class Admin_base extends Controller {
 		$now = now();
 		$threshold = $now - ($this->options['posting_requirement'] * 86400);
 		
-		/* set activity as an empty array to avoid errors */
+		// set activity as an empty array to avoid errors
 		$data['activity'] = array();
 		
 		if ($all !== FALSE)
@@ -286,8 +204,8 @@ class Admin_base extends Controller {
 				if ($threshold > $a->last_post)
 				{
 					$data['activity'][$a->userid] = array(
-						'post' => (!empty($a->last_post)) ? $a->last_post : lang('error_no_last_post'),
-						'login' => (!empty($a->last_login)) ? $a->last_login : lang('error_no_last_login'),
+						'post' => ( ! empty($a->last_post)) ? $a->last_post : lang('error_no_last_post'),
+						'login' => ( ! empty($a->last_login)) ? $a->last_login : lang('error_no_last_login'),
 						'name' => $this->char->get_character_name($a->main_char, TRUE)
 					);
 				}
@@ -300,7 +218,7 @@ class Admin_base extends Controller {
 			}
 		}
 		
-		/* set the count to zero by default */
+		// set the count to zero by default
 		$data['activitycount'] = count($data['activity']);
 		
 		/*
@@ -359,10 +277,10 @@ class Admin_base extends Controller {
 		|---------------------------------------------------------------
 		*/
 		
-		/* set the datestring */
+		// set the datestring
 		$datestring = $this->options['date_format'];
 		
-		/* grab the data */		
+		// grab the data
 		$posts_all = $this->posts->get_post_list('', 'desc', 10, '', 'activated');
 		$logs_all = $this->logs->get_log_list(10);
 		$news_all = $this->news->get_news_items(10, $this->session->userdata('userid'));
@@ -420,15 +338,15 @@ class Admin_base extends Controller {
 		
 		$data['update'] = FALSE;
 				
-		if ($this->auth->is_sysadmin($this->session->userdata('userid')) && $this->options['updates'] != 'none')
+		if (Auth::is_sysadmin($this->session->userdata('userid')) && $this->options['updates'] != 'none')
 		{
-			/* load the install file */
+			// load the install file
 			$this->lang->load('install', $this->session->userdata('language'));
 			
-			/* grab the ignore version */
+			// grab the ignore version
 			$ignore = $this->sys->get_item('system_info', 'sys_id', 1, 'sys_version_ignore');
 			
-			/* go check the version */
+			// go check the version
 			$check = $this->_check_version();
 			
 			if (isset($check['update']['version']) && $check['update']['version'] != $ignore)
@@ -456,13 +374,13 @@ class Admin_base extends Controller {
 			}
 		}
 		
-		/* set the panel */
+		// set the panel
 		$js_data['panel'] = ($data['update'] !== FALSE) ? 'update' : $js_data['panel'];
 		
-		/* view data */
+		// view data
 		$data['header'] = lang('head_admin_index');
 		
-		/*  javascript data */
+		// javascript data
 		$js_data['first_launch'] = $this->session->flashdata('first_launch');
 		$js_data['password_reset'] = $this->session->flashdata('password_reset');
 		$js_data['version'] = (isset($check['update']['version'])) ? $check['update']['version'] : '';
@@ -523,94 +441,86 @@ class Admin_base extends Controller {
 			'noactivity' => ucfirst(lang('labels_no') .' '. lang('labels_activity') .' '. lang('labels_notifications')),
 		);
 		
-		/* figure out where the view JS files should be coming from */
-		$view_loc = view_location('admin_index', $this->skin, 'admin');
-		$js_loc = js_location('admin_index_js', $this->skin, 'admin');
+		$this->_regions['content'] = Location::view('admin_index', $this->skin, 'admin', $data);
+		$this->_regions['javascript'] = Location::js('admin_index_js', $this->skin, 'admin', $js_data);
+		$this->_regions['title'].= lang('head_admin_index');
 		
-		/* write the data to the template */
-		$this->template->write('title', lang('head_admin_index'));
-		$this->template->write_view('content', $view_loc, $data);
-		$this->template->write_view('javascript', $js_loc, $js_data);
+		Template::assign($this->_regions);
 		
-		/* render the template */
-		$this->template->render();
+		Template::render();
 	}
 	
-	function error()
+	public function error($code = 0)
 	{
-		/* set the variables */
-		$error = $this->uri->segment(3, 0);
-		$page = ($this->session->flashdata('referer')) ? $this->session->flashdata('referer') : FALSE;
+		// sanity check
+		$code = (is_numeric($code)) ? $code : false;
 		
+		// set the referer
+		$page = ($this->session->flashdata('referer')) ? $this->session->flashdata('referer') : false;
+		
+		// set the data used by the view
 		$data['header'] = lang('head_admin_error');
+		$data['error'] = lang('error_admin_'.$code);
 		
-		/* set the data used by the view */
-		$data['error'] = lang('error_admin_'. $error);
+		$this->_regions['content'] = Location::view('error', $this->skin, 'admin', $data);
+		$this->_regions['title'].= lang('head_admin_error');
 		
-		/* figure out where the view JS files should be coming from */
-		$view_loc = view_location('error', $this->skin, 'admin');
+		Template::assign($this->_regions);
 		
-		/* write the data to the template */
-		$this->template->write('title', lang('head_admin_error'));
-		$this->template->write_view('content', $view_loc, $data);
-		
-		/* render the template */
-		$this->template->render();
+		Template::render();
 	}
 	
-	function whatsnew()
+	public function whatsnew()
 	{
-		/* pull in the markdown parser */
-		include_once APPPATH .'libraries/Thresher_Markdown.php';
+		// pull in the markdown parser
+		include_once APPPATH.'libraries/Thresher_Markdown.php';
 		
-		/* build the array of pieces we need */
+		// build the array of pieces we need
 		$version_pieces = array(
 			'sys_version_major',
 			'sys_version_minor',
 			'sys_version_update'
 		);
 		
-		/* get the current version */
+		// get the current version
 		$version = $this->sys->get_item('system_info', 'sys_id', 1, $version_pieces);
 		
-		/* put the version into a string */
+		// put the version into a string
 		$version_str = implode('.', $version);
 		
-		/* grab the what's new information */
+		// grab the what's new information
 		$item = $this->sys->get_item('system_versions', 'version', $version_str);
+		
+		// data to be used by the view
 		$data['whats_new'] = $item->version_launch;
 		$data['full_changes'] = Markdown($item->version_changes);
-		
 		$data['header'] = lang('head_admin_whatsnew');
 		
-		/* figure out where the view files should be coming from */
-		$view_loc = view_location('whats_new', $this->skin, 'admin');
+		$this->_regions['content'] = Location::view('whats_new', $this->skin, 'admin', $data);
+		$this->_regions['title'].= lang('head_admin_whatsnew');
 		
-		/* write the data to the template */
-		$this->template->write('title', lang('head_admin_whatsnew'));
-		$this->template->write_view('content', $view_loc, $data);
+		Template::assign($this->_regions);
 		
-		/* render the template */
-		$this->template->render();
+		Template::render();
 	}
 	
-	function _check_version()
+	protected function _check_version()
 	{
 		if (ini_get('allow_url_fopen'))
 		{
-			/* load the resources */
+			// load the resources
 			$this->load->helper('yayparser');
 			
-			/* get the contents of the file */
+			// get the contents of the file
 			$contents = file_get_contents(VERSION_FEED);
 					
-			/* parse the contents of the yaml file */
+			// parse the contents of the yaml file
 			$array = yayparser($contents);
 			
-			/* get the system information */
+			// get the system information
 			$system = $this->sys->get_system_info();
 			
-			/* build the array of version info */
+			// build the array of version info
 			$version = array(
 				'files' => array(
 					'full'		=> APP_VERSION_MAJOR .'.'. APP_VERSION_MINOR .'.'. APP_VERSION_UPDATE,
@@ -626,7 +536,7 @@ class Admin_base extends Controller {
 				),
 			);
 			
-			/* grab the updates setting */
+			// grab the updates setting
 			$type = $this->options['updates'];
 			
 			$update = FALSE;
@@ -724,6 +634,6 @@ class Admin_base extends Controller {
 			return $retval;
 		}
 		
-		return FALSE;
+		return false;
 	}
 }

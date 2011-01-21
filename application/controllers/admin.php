@@ -1,8 +1,8 @@
 <?php
 
-require_once APPPATH.'controllers/base/admin_base.php';
+require_once MODPATH.'core/controllers/nova_admin'.EXT;
 
-class Admin extends Admin_base {
+class Admin extends Nova_admin {
 
 	public function __construct()
 	{
