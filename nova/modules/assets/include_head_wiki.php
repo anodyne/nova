@@ -6,7 +6,7 @@
  * @category	Include
  * @author		Anodyne Productions
  * @copyright	2010-11 Anodyne Productions
- * @version		1.3
+ * @version		2.0
  *
  * Cleaned up the file a little bit
  */
@@ -18,19 +18,19 @@ $this->load->config('thresher');
 $parse = $this->config->item('parsetype');
 
 $faceboxcss = ( ! is_file(APPPATH.'views/'.$current_skin.'/wiki/css/jquery.facebox.css'))
-	? base_url().APPFOLDER.'/assets/js/css/jquery.facebox.css'
+	? base_url().MODFOLDER.'/assets/js/css/jquery.facebox.css'
 	: base_url().APPFOLDER.'/views/'.$current_skin.'/wiki/css/jquery.facebox.css';
 	
 $uiTheme = ( ! is_file(APPPATH .'views/'.$current_skin.'/wiki/css/jquery.ui.theme.css'))
-	? base_url().APPFOLDER.'/assets/js/css/jquery.ui.theme.css'
+	? base_url().MODFOLDER.'/assets/js/css/jquery.ui.theme.css'
 	: base_url().APPFOLDER.'/views/'.$current_skin.'/wiki/css/jquery.ui.theme.css';
 
 ?><style type="text/css">
-			@import url("<?php echo base_url().APPFOLDER.'/assets/js/css/jquery.ui.core.css';?>");
+			@import url("<?php echo base_url().MODFOLDER.'/assets/js/css/jquery.ui.core.css';?>");
 			@import url('<?php echo $faceboxcss;?>');
 			@import url('<?php echo $uiTheme;?>');
-			@import url("<?php echo base_url().APPFOLDER.'/assets/js/markitup/skins/simple/style.css';?>");
-			@import url("<?php echo base_url().APPFOLDER.'/assets/js/markitup/sets/'.$parse.'/style.css';?>");
+			@import url("<?php echo base_url().MODFOLDER.'/assets/js/markitup/skins/simple/style.css';?>");
+			@import url("<?php echo base_url().MODFOLDER.'/assets/js/markitup/sets/'.$parse.'/style.css';?>");
 			
 			ul, ol { margin: 1em; padding: .5em; }
 			ul li, ol li { margin: 2px; }
@@ -41,17 +41,17 @@ $uiTheme = ( ! is_file(APPPATH .'views/'.$current_skin.'/wiki/css/jquery.ui.them
 			.panel-handle ul li, .panel-handle ol li { margin: 0; }
 		</style>
 			
-		<script type="text/javascript" src="<?php echo base_url().APPFOLDER.'/assets/js/jquery.js';?>"></script>
-		<script type="text/javascript" src="<?php echo base_url().APPFOLDER.'/assets/js/jquery.lazy.js';?>"></script>
-		<script type="text/javascript" src="<?php echo base_url().APPFOLDER.'/assets/js/jquery.ui.core.min.js';?>"></script>
-		<script type="text/javascript" src="<?php echo base_url().APPFOLDER.'/assets/js/jquery.ui.widget.min.js';?>"></script>
-		<script type="text/javascript" src="<?php echo base_url().APPFOLDER.'/assets/js/jquery.facebox.js';?>"></script>
-		<script type="text/javascript" src="<?php echo base_url().APPFOLDER.'/assets/js/markitup/jquery.markitup.js';?>"></script>
-		<script type="text/javascript" src="<?php echo base_url().APPFOLDER.'/assets/js/markitup/sets/'.$parse.'/set.js';?>"></script>
+		<script type="text/javascript" src="<?php echo base_url().MODFOLDER.'/assets/js/jquery.js';?>"></script>
+		<script type="text/javascript" src="<?php echo base_url().MODFOLDER.'/assets/js/jquery.lazy.js';?>"></script>
+		<script type="text/javascript" src="<?php echo base_url().MODFOLDER.'/assets/js/jquery.ui.core.min.js';?>"></script>
+		<script type="text/javascript" src="<?php echo base_url().MODFOLDER.'/assets/js/jquery.ui.widget.min.js';?>"></script>
+		<script type="text/javascript" src="<?php echo base_url().MODFOLDER.'/assets/js/jquery.facebox.js';?>"></script>
+		<script type="text/javascript" src="<?php echo base_url().MODFOLDER.'/assets/js/markitup/jquery.markitup.js';?>"></script>
+		<script type="text/javascript" src="<?php echo base_url().MODFOLDER.'/assets/js/markitup/sets/'.$parse.'/set.js';?>"></script>
 		<script type="text/javascript">
 			$(document).ready(function(){
 				$.lazy({					
-					src: '<?php echo base_url().APPFOLDER;?>/assets/js/jquery.ui.tabs.min.js',
+					src: '<?php echo base_url().MODFOLDER;?>/assets/js/jquery.ui.tabs.min.js',
 					name: 'tabs',
 					cache: true
 				});
@@ -70,8 +70,9 @@ $uiTheme = ( ! is_file(APPPATH .'views/'.$current_skin.'/wiki/css/jquery.ui.them
 					return false;
 				});
 				
-				$.facebox.settings.loadingImage = '<?php echo base_url().APPFOLDER;?>/assets/js/images/facebox-loading.gif';
+				$.facebox.settings.loadingImage = '<?php echo base_url().MODFOLDER;?>/assets/js/images/facebox-loading.gif';
 				
 				$('.markitup').markItUp(mySettings);
 			});
 		</script>
+		
