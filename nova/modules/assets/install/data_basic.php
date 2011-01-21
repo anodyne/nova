@@ -2241,7 +2241,7 @@ $system_components = array(
 		'comp_desc' => 'jQuery is a lightweight JavaScript library that emphasizes interaction between JavaScript and HTML.'),
 	array(
 		'comp_name' => 'jQuery UI',
-		'comp_version' => '1.8.7',
+		'comp_version' => '1.8.9',
 		'comp_url' => 'http://jqueryui.com/',
 		'comp_desc' => 'jQuery UI is a lightweight, easily customizable interface library for the jQuery Javascript library.'),
 	array(
