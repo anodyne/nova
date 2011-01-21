@@ -38,6 +38,7 @@ abstract class Nova_ajax extends Controller {
 		
 		// set the default regions
 		$this->_regions['content'] = false;
+		$this->_regions['controls'] = false;
 	}
 	
 	public function add_bio_field()
@@ -592,6 +593,7 @@ abstract class Nova_ajax extends Controller {
 		$skin = $this->session->userdata('skin_main');
 		
 		$this->_regions['content'] = Location::ajax('add_log_comment', $skin, 'main', $data);
+		$this->_regions['controls'] = form_button($data['inputs']['comment_button']).form_close();
 		
 		Template::assign($this->_regions);
 		
@@ -629,6 +631,7 @@ abstract class Nova_ajax extends Controller {
 		$skin = $this->session->userdata('skin_main');
 		
 		$this->_regions['content'] = Location::ajax('add_news_comment', $skin, 'main', $data);
+		$this->_regions['controls'] = form_button($data['inputs']['comment_button']).form_close();
 		
 		Template::assign($this->_regions);
 		
@@ -666,6 +669,7 @@ abstract class Nova_ajax extends Controller {
 		$skin = $this->session->userdata('skin_main');
 		
 		$this->_regions['content'] = Location::ajax('add_post_comment', $skin, 'main', $data);
+		$this->_regions['controls'] = form_button($data['inputs']['comment_button']).form_close();
 		
 		Template::assign($this->_regions);
 		
@@ -703,6 +707,7 @@ abstract class Nova_ajax extends Controller {
 		$skin = $this->session->userdata('skin_wiki');
 		
 		$this->_regions['content'] = Location::ajax('add_wiki_comment', $skin, 'wiki', $data);
+		$this->_regions['controls'] = form_button($data['inputs']['comment_button']).form_close();
 		
 		Template::assign($this->_regions);
 		
@@ -6837,11 +6842,6 @@ abstract class Nova_ajax extends Controller {
 	public function info_show_wiki_categories()
 	{
 		$this->load->model('wiki_model', 'wiki');
-		
-		if (!public function_exists('json_encode'))
-		{
-			$this->load->library('Services_json');
-		}
 		
 		// set the empty arrays
 		$response = array();

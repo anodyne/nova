@@ -12,3 +12,9 @@
 */
 
 echo $content;
+
+?>
+
+<div class="controls">
+	<?php echo $controls;?>
+</div>
