@@ -1,3 +1,7 @@
+/**
+ * http://dribbble.com/shots/102916-Rsvp-Overlay
+ */
+
 #facebox {
     position: absolute;
     left: 50%;
@@ -6,23 +10,27 @@
     margin-left: -375px;
 	
 	text-align: left;
-    color: #333;
+    color: #444;
 }
 
 #facebox .popup {
     position: relative;
     width: 750px;
+    
+    border: 1px solid #000;
+    
+    border-radius: 4px;
+    -moz-border-radius: 4px;
 }
 
 #facebox .hud_body {
 	width: 750px;
     margin: 0 auto;
     
-    background: #eee;
+    background: #fff;
     
     border-radius: 4px;
     -moz-border-radius: 4px;
-    -webkit-border-radius: 4px;
     
     box-shadow: 4px 4px 8px rgba(0, 0, 0, .35);
     -moz-box-shadow: 4px 4px 8px rgba(0, 0, 0, .35);
@@ -30,52 +38,66 @@
 }
 
 #facebox .hud_title {
-    height: 25px;
-    line-height: 25px;
+    height: 35px;
+    line-height: 35px;
     
     text-align: center;
     font-weight: bold;
-    font-size: 110%;
-    border-bottom: 1px solid #8a7f6b;
-    background: #fcd000 url('../images/facebox-title.png') repeat-x top left;
-    color: #363636;
+    font-size: 120%;
+    border-bottom: 1px solid #000;
+    color: #fff;
+    
+    background: #444444;
+	background: -moz-linear-gradient(top, #444444 0%, #212121 100%);
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#444444), color-stop(100%,#212121));
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#444444', endColorstr='#212121',GradientType=0 );
     
     border-radius: 4px 4px 0 0;
     -moz-border-radius: 4px 4px 0 0;
-    -webkit-border-top-left-radius: 4px;
-    -webkit-border-top-right-radius: 4px;
+    
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, .15);
+    -moz-box-shadow: inset 0 1px 0 rgba(255, 255, 255, .15);
+    -webkit-box-shadow: inset 0 1px 0 rgba(255, 255, 255, .15);
 }
 
 #facebox .hud_content {
-	padding: 0 10px 10px 10px;
+	padding: 10px 10px 0 10px;
 	
-	background: #eee;
+	background: #fff;
 	
 	border-radius: 0 0 4px 4px;
     -moz-border-radius: 0 0 4px 4px;
-    -webkit-border-bottom-left-radius: 4px;
-    -webkit-border-bottom-right-radius: 4px;
+}
+
+#facebox .hud_content .controls {
+	margin: 20px -10px 0 -10px;
+	padding: 10px;
+	
+	border-top: 1px solid #d1d1d1;
+	text-align: right;
+	
+	background: #f4f4f4;
+	background: -moz-linear-gradient(top, #f4f4f4 0%, #e5e5e5 100%);
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#f4f4f4), color-stop(100%,#e5e5e5));
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f4f4f4', endColorstr='#e5e5e5',GradientType=0 );
+	
+	border-radius: 0 0 4px 4px;
+    -moz-border-radius: 0 0 4px 4px;
+	
+	box-shadow: inset 0 1px 0 #fff;
+	-moz-box-shadow: inset 0 1px 0 #fff;
+	-webkit-box-shadow: inset 0 1px 0 #fff;
 }
 
 #facebox a.close {
 	float: right;
-	height: 25px;
+	height: 35px;
 	width: 30px;
 	
 	border: none;
 	background: transparent url('../images/facebox-close-button.png') no-repeat 50% 50%;
 }
 #facebox a.close:hover { background: transparent url('../images/facebox-close-button-hover.png') no-repeat 50% 50%; }
-
-/*#facebox .close_image {
-    float: right;
-    margin: 6px 7px 0 0;
-    height: 13px;
-    width: 13px;
-    
-    border: none;
-    background: transparent url('../images/facebox-close.png') no-repeat top left;
-}*/
 
 #facebox .loading { text-align: center; }
 
@@ -111,17 +133,17 @@
 textarea.hud,
 input.hud,
 select.hud {
-	background: #eee;
-	border: 1px solid #bbb;
+	background: #fafafa;
+	border: 1px solid #ccc;
 	color: #333;
 }
 
 textarea.hud:focus,
 input.hud:focus,
 select.hud:focus {
-	background: #f2f2f2;
+	background: #fff;
 	color: #333;
-	border: 1px solid #999;
+	border: 1px solid #bbb;
 }
 
 /*
@@ -130,32 +152,31 @@ select.hud:focus {
 |---------------------------------------------------------------
 */
 #facebox button.hud_button {
-	height: 23px;
-	padding: 0 10px 1px 10px;
-	min-width: 90px;
+	padding: 5px 30px;
 	
-	border: 1px solid #aaa;
-	background: #ccc url('../images/facebox-button.png') repeat-x top left;
+	border: 1px solid #000;
 	font-weight: bold;
-	color: #333;
+	color: #fff;
 	outline: 0;
 	font-size: 90%;
 	
-	border-radius: 14px;
-	-moz-border-radius: 14px;
-	-webkit-border-radius: 14px;
+	background: #323339;
+	background: -moz-linear-gradient(top, #323339 0%, #2b2d31 50%, #26272b 51%, #202024 100%);
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#323339), color-stop(50%,#2b2d31), color-stop(51%,#26272b), color-stop(100%,#202024));
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#323339', endColorstr='#202024',GradientType=0 );
 	
-	box-shadow: 1px 1px 1px rgba(255, 255, 255, .8);
-	-moz-box-shadow: 1px 1px 1px rgba(255, 255, 255, .8);
-	-webkit-box-shadow: 1px 1px 1px rgba(255, 255, 255, .8);
+	border-radius: 4px;
+	-moz-border-radius: 4px;
+	
+	box-shadow: inset 0 1px 0 rgba(255, 255, 255, .15), inset 0 0 2px rgba(255, 255, 255, .2), 1px 1px 1px rgba(0, 0, 0, .1);
+	-moz-box-shadow: inset 0 1px 0 rgba(255, 255, 255, .15), inset 0 0 2px rgba(255, 255, 255, .2), 1px 1px 1px rgba(0, 0, 0, .1);
+	-webkit-box-shadow: inset 0 1px 0 rgba(255, 255, 255, .15), inset 0 0 2px rgba(255, 255, 255, .2), 1px 1px 1px rgba(0, 0, 0, .1);
 }
 #facebox button.hud_button:hover {
-	border: 1px solid #999;
-	background: #ccc url('../images/facebox-button-hover.png') repeat-x top left;
-	
-	box-shadow: 1px 1px 1px rgba(0, 0, 0, .1);
-	-moz-box-shadow: 1px 1px 1px rgba(0, 0, 0, .1);
-	-webkit-box-shadow: 1px 1px 1px rgba(0, 0, 0, .1);
+	background: #323339;
+	background: -moz-linear-gradient(top, #323339 0%, #2d2e33 50%, #27282d 51%, #393939 100%);
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#323339), color-stop(50%,#2d2e33), color-stop(51%,#27282d), color-stop(100%,#393939));
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#323339', endColorstr='#393939',GradientType=0 );
 }
 
 input.hud_button {
