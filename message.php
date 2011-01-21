@@ -3,11 +3,42 @@
 // get the type of message
 $type = (isset($_GET['type'])) ? $_GET['type'] : false;
 
+switch ($type)
+{
+	case 'php':
+		$title = 'Nova Notice';
+		$header = 'Uh oh!';
+		$headerClass = 'error';
+		$message = 'Unforunately, your server isn\'t running a compatible version of PHP. Please check the server requirements and contact your host if necessary. Additional support is available from <a href="http://forums.anodyne-productions.com" target="_blank">Anodyne Productions</a>.';
+	break;
+	
+	case 'maintenance':
+		$title = 'Nova Maintenance';
+		$header = 'Nova Maintenance';
+		$headerClass = 'notice';
+		$message = 'We\'re doing some maintenance on the site right now and it isn\'t available. This shouldn\'t take very long, so please try again in a little while.';
+	break;
+	
+	case 'banned':
+		$title = 'Nova Notice';
+		$header = 'Uh oh!';
+		$headerClass = 'error';
+		$message = 'Looks like you\'ve been naughty and the game master has completely banned you from viewing the site. This ban can be lifted by the game master, but you\'ll need to <a href="index.php/main/contact">contact them</a> to do so.';
+	break;
+	
+	case 'browser':
+		$title = 'Nova Notice';
+		$header = 'Uh oh!';
+		$headerClass = 'notice';
+		$message = 'Looks like you\'re running a version of Internet Explorer that isn\'t supported. In order to use this version of Nova, you need to be running Internet Explorer 7 or higher (we recommend IE 8). You can find updates to Internet Explorer in Windows Update or from <a href="http://www.microsoft.com/windows/internet-explorer/default.aspx" target="_blank">microsoft.com</a>.';
+	break;
+}
+
 ?><!DOCTYPE html>
 <html lang="en">
 	<head>
 		<meta charset="utf-8">
-		<title>Nova Maintenance</title>
+		<title><?php echo $title;?></title>
 		
 		<style>
 			body {
@@ -53,21 +84,9 @@ $type = (isset($_GET['type'])) ? $_GET['type'] : false;
 	</head>
 	<body>
 		<div id="container">
-			<?php if ($type == 'php'): ?>
-				<h1 class="error">Uh oh!</h1>
-				<p>Unforunately, your server isn't running a compatible version of PHP. Please check the server requirements
-					and contact your host if necessary. Additional support is available from <a href="http://forums.anodyne-productions.com" target="_blank">
-					Anodyne Productions</a>.</p>
-			<?php elseif ($type == 'maintenance'): ?>
-				<h1 class="notice">Nova Maintenance</h1>
-				<p>We're doing some maintenance on the site right now and it isn't available. This shouldn't take very long, 
-					so please try again in a little while.</p>
-			<?php elseif ($type == 'banned'): ?>
-				<h1 class="error">Uh oh!</h1>
-				<p>Looks like you've been naughty and the game master has completely banned you from viewing the site.
-					This ban can be lifted by the game master, but you'll need to <a href="index.php/main/contact">contact
-					them</a> to do so.</p>
-			<?php endif;?>
+			<h1 class="<?php echo $headerClass;?>"><?php echo $header;?></h1>
+			
+			<p><?php echo $message;?></p>
 		</div>
 	</body>
 </html>
