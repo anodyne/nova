@@ -180,7 +180,7 @@ if ( ! is_null($drop_column))
  * update the jquery ui version info
  */
 $this->db->where('comp_name', 'jQuery UI');
-$this->db->update('system_components', array('comp_version' => '1.8.8'));
+$this->db->update('system_components', array('comp_version' => '1.8.9'));
 
 /* End of file update_123.php */
 /* Location: ./application/assets/update/update_123.php */

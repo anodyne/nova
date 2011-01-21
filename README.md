@@ -9,7 +9,7 @@ Anodyne Production's next-generation RPG management system combines popular feat
 ## Changes in 1.2.4
 
 * added the 1.2.4 update file
-* updated the jquery ui to version 1.8.8
+* updated the jquery ui to version 1.8.9
 * fixed bug where nova wasn't accurately counting mission posts
 * fixed bug where the user acceptance email was CCed to more people than it needed to be
 * fixed bug where IE7 choked on the manifest
