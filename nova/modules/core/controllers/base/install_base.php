@@ -9,6 +9,8 @@
  * @version		1.0.5
  */
 
+# TODO: need to change the locations of the install files to the assets module
+
 class Install_base extends Controller {
 
 	var $d;

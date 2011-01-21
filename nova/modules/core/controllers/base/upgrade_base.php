@@ -11,6 +11,8 @@
  * Fixed bug where the spec items weren't properly upgraded
  */
 
+# TODO: need to change the locations of the install files to the assets module
+
 class Upgrade_base extends Controller {
 	
 	function Upgrade_base()

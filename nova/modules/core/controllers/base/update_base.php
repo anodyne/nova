@@ -13,6 +13,8 @@
  *	some users were getting errors while updating the system
  */
 
+# TODO: need to change the locations of the update files to the assets module
+
 class Update_base extends Controller {
 	
 	var $options;
