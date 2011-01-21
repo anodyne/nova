@@ -78,6 +78,8 @@ abstract class Nova_utility {
 	{
 		$ci =& get_instance();
 		
+		$ci->load->model('settings_model', 'settings');
+		
 		$ignore = array('install', 'login', 'update', 'upgrade', 'feed');
 		
 		if ( ! in_array($ci->uri->segment(1), $ignore))
