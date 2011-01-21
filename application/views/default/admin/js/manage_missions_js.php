@@ -2,7 +2,7 @@
 
 <?php $image = base_url() . img_location('calendar-day.png', $this->skin, 'admin');?>
 
-<link rel="stylesheet" type="text/css" href="<?php echo base_url() . APPFOLDER;?>/assets/js/css/jquery.ui.datepicker.css" />
+<link rel="stylesheet" type="text/css" href="<?php echo base_url() . MODFOLDER;?>/assets/js/css/jquery.ui.datepicker.css" />
 
 <style type="text/css">
 	.ui-datepicker-trigger {
@@ -22,7 +22,7 @@
 	}
 </style>
 
-<script type="text/javascript" src="<?php echo base_url() . APPFOLDER;?>/assets/js/jquery.ui.datepicker.min.js"></script>
+<script type="text/javascript" src="<?php echo base_url() . MODFOLDER;?>/assets/js/jquery.ui.datepicker.min.js"></script>
 
 <script type="text/javascript">
 	function jq(myid) { 
