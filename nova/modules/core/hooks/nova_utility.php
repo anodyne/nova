@@ -62,7 +62,7 @@ abstract class Nova_utility {
 		// load the user agent library
 		$ci->load->library('user_agent');
 		
-		if ($ci->agent->browser() != 'Internet Explorer' && $ci->agent->version() < 7)
+		if ($ci->agent->browser() == 'Internet Explorer' && $ci->agent->version() < 7)
 		{
 			header('Location:'.base_url().'message.php?type=browser');
 		}
