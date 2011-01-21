@@ -260,7 +260,7 @@ abstract class Nova_menu {
 			}
 		}
 		
-		$this->_render($retval);
+		self::_render($retval);
 	}
 	
 	protected static function _render($data)
