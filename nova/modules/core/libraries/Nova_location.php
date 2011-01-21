@@ -28,26 +28,40 @@ abstract class Nova_location {
 	 */
 	public static function ajax($view, $skin, $section, $data = null)
 	{
-		$obj = new stdClass;
-		$obj->view = $view;
-		$obj->sec = $section;
+		$ci =& get_instance();
 		
-		if (is_file(APPPATH.'views/'.$skin.'/'.$section.'/ajax/'.$view.EXT))
+		if ($skin === null and $section === null)
 		{
-			$obj->skin = $skin;
-		}
-		elseif (is_file(APPPATH.'views/_base_override/'.$section.'/ajax/'.$view.EXT))
-		{
-			$obj->skin = '_base_override';
+			$location = $view;
 		}
 		else
 		{
-			$obj->skin = '_base';
+			$obj = new stdClass;
+			$obj->view = $view;
+			$obj->sec = $section;
+			
+			if (is_file(APPPATH.'views/'.$skin.'/'.$section.'/ajax/'.$view.EXT))
+			{
+				$obj->skin = $skin;
+			}
+			elseif (is_file(APPPATH.'views/_base_override/'.$section.'/ajax/'.$view.EXT))
+			{
+				$obj->skin = '_base_override';
+			}
+			else
+			{
+				$obj->skin = '_base';
+			}
+			
+			$location = $obj->skin.'/'.$obj->sec.'/ajax/'.$obj->view;
 		}
 		
-		$location = $obj->skin.'/'.$obj->sec.'/ajax/'.$obj->view;
+		if ($data !== null)
+		{
+			return $ci->load->view($location, $data, true);
+		}
 		
-		return $ci->load->view($location, $data, true);
+		return $location;
 	}
 	
 	/**
