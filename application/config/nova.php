@@ -43,10 +43,10 @@ $config['genre'] = "BSG";
 | that into your specific skin and not into the global includes.
 */
 
-$config['include_head_main']	= APPFOLDER . "/assets/include_head_main.php";
-$config['include_head_wiki']	= APPFOLDER . "/assets/include_head_wiki.php";
-$config['include_head_admin']	= APPFOLDER . "/assets/include_head_admin.php";
-$config['include_head_login']	= APPFOLDER . "/assets/include_head_login.php";
+$config['include_head_main']	= MODFOLDER.'/assets/include_head_main.php';
+$config['include_head_wiki']	= MODFOLDER.'/assets/include_head_wiki.php';
+$config['include_head_admin']	= MODFOLDER.'/assets/include_head_admin.php';
+$config['include_head_login']	= MODFOLDER.'/assets/include_head_login.php';
 
 /*
 | -------------------------------------------------------------------
@@ -78,6 +78,3 @@ $config['rss_creator_email']	= 'john.doe@example.com';
 
 /** DO NOT EDIT BELOW THIS LINE! **/
 define('GENRE', strtolower($config['genre']));
-
-/* End of file nova.php */
-/* Location: ./application/config/nova.php */
