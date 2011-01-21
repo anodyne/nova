@@ -12,7 +12,7 @@
 */
 
 /* set the final style location */
-$style_loc = APPFOLDER . '/views/_base/update/css/skin.css';
+$style_loc = MODFOLDER . '/views/_base/update/css/skin.css';
 
 echo "<?xml version='1.0' encoding='UTF-8'?>\r\n";
 
@@ -30,18 +30,18 @@ echo "<?xml version='1.0' encoding='UTF-8'?>\r\n";
 		<?php echo $_redirect;?>
 		
 		<style type="text/css">
-			@import url("<?php echo base_url() . APPFOLDER .'/views/_base/update/css/jquery.ui.core.css';?>");
-			@import url("<?php echo base_url() . APPFOLDER .'/views/_base/update/css/jquery.ui.theme.css';?>");
-			@import url("<?php echo base_url() . APPFOLDER .'/assets/js/css/jquery.ui.progressbar.css';?>");
+			@import url("<?php echo base_url() . MODFOLDER .'/views/_base/update/css/jquery.ui.core.css';?>");
+			@import url("<?php echo base_url() . MODFOLDER .'/views/_base/update/css/jquery.ui.theme.css';?>");
+			@import url("<?php echo base_url() . MODFOLDER .'/assets/js/css/jquery.ui.progressbar.css';?>");
 		</style>
 		
 		<!-- STYLESHEETS -->
 		<?php echo link_tag($style_loc); ?>
 		
-		<script type="text/javascript" src="<?php echo base_url() . APPFOLDER .'/assets/js/jquery.js';?>"></script>
-		<script type="text/javascript" src="<?php echo base_url() . APPFOLDER .'/assets/js/jquery.ui.core.min.js';?>"></script>
-		<script type="text/javascript" src="<?php echo base_url() . APPFOLDER .'/assets/js/jquery.ui.widget.min.js';?>"></script>
-		<script type="text/javascript" src="<?php echo base_url() . APPFOLDER .'/assets/js/jquery.ui.progressbar.min.js';?>"></script>
+		<script type="text/javascript" src="<?php echo base_url() . MODFOLDER .'/assets/js/jquery.js';?>"></script>
+		<script type="text/javascript" src="<?php echo base_url() . MODFOLDER .'/assets/js/jquery.ui.core.min.js';?>"></script>
+		<script type="text/javascript" src="<?php echo base_url() . MODFOLDER .'/assets/js/jquery.ui.widget.min.js';?>"></script>
+		<script type="text/javascript" src="<?php echo base_url() . MODFOLDER .'/assets/js/jquery.ui.progressbar.min.js';?>"></script>
 		
 		<script type="text/javascript">
 			$(document).ready(function(){
@@ -90,7 +90,7 @@ echo "<?xml version='1.0' encoding='UTF-8'?>\r\n";
 			
 			<div class="content">
 				<div id="loading" class="hidden">
-					<img src="<?php echo base_url() . APPFOLDER;?>/views/_base/update/images/loading-circle-large.gif" alt="" />
+					<img src="<?php echo base_url() . MODFOLDER;?>/views/_base/update/images/loading-circle-large.gif" alt="" />
 					<br />
 					<strong><?php echo lang('global_processing');?></strong>
 				</div>

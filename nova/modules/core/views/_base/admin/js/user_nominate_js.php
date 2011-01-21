@@ -1,6 +1,6 @@
 <?php $string = random_string('alnum', 8);?>
 
-<script type="text/javascript" src="<?php echo base_url() . APPFOLDER;?>/assets/js/jquery.ajaxq.js"></script>
+<script type="text/javascript" src="<?php echo base_url() . MODFOLDER;?>/assets/js/jquery.ajaxq.js"></script>
 
 <script type="text/javascript">
 	$(document).ready(function(){
