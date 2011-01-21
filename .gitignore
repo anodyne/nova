@@ -1,3 +1,5 @@
+nova/codeigniter/cache/
+!nova/codeigniter/cache/index.html
 nova/codeigniter/logs/
 !nova/codeigniter/logs/index.html
 
