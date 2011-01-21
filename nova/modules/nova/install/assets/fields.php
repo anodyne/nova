@@ -40,6 +40,7 @@ $data = array(
 	'characters_images'			=> array('id' => 'charimageid', 'fields' => 'fields_characters_images'),
 	'characters_promotions'		=> array('id' => 'prom_id', 'fields' => 'fields_characters_promotions'),
 	'coc'						=> array('id' => 'coc_id', 'fields' => 'fields_coc'),
+	'comments'					=> array('id' => 'comment_id', 'fields' => 'fields_comments'),
 	'departments_'.$_genre		=> array('id' => 'dept_id', 'fields' => 'fields_departments'),
 	'docking'					=> array('id' => 'docking_id', 'fields' => 'fields_docking'),
 	'forms'						=> array('id' => 'form_id', 'fields' => 'fields_forms'),
@@ -57,12 +58,12 @@ $data = array(
 	'moderation'				=> array('id' => 'moderation_id', 'fields' => 'fields_moderation'),
 	'news'						=> array('id' => 'news_id', 'fields' => 'fields_news'),
 	'news_categories'			=> array('id' => 'newscat_id', 'fields' => 'fields_news_categories'),
-	'news_comments'				=> array('id' => 'ncomment_id', 'fields' => 'fields_news_comments'),
+	//'news_comments'				=> array('id' => 'ncomment_id', 'fields' => 'fields_news_comments'),
 	'personal_logs'				=> array('id' => 'log_id', 'fields' => 'fields_personal_logs'),
-	'personal_logs_comments'	=> array('id' => 'lcomment_id', 'fields' => 'fields_personal_logs_comments'),
+	//'personal_logs_comments'	=> array('id' => 'lcomment_id', 'fields' => 'fields_personal_logs_comments'),
 	'positions_'.$_genre		=> array('id' => 'pos_id', 'fields' => 'fields_positions'),
 	'posts'						=> array('id' => 'post_id', 'fields' => 'fields_posts'),
-	'posts_comments'			=> array('id' => 'pcomment_id', 'fields' => 'fields_posts_comments'),
+	//'posts_comments'			=> array('id' => 'pcomment_id', 'fields' => 'fields_posts_comments'),
 	'private_messages'			=> array('id' => 'privmsgs_id', 'fields' => 'fields_private_messages'),
 	'private_messages_to'		=> array('id' => 'pmto_id', 'fields' => 'fields_private_messages_to'),
 	'ranks_'.$_genre			=> array('id' => 'rank_id', 'fields' => 'fields_ranks'),
@@ -81,7 +82,7 @@ $data = array(
 	'user_prefs_values'			=> array('id' => 'prefvalue_id', 'fields' => 'fields_user_prefs_values'),
 	'users'						=> array('id' => 'userid', 'fields' => 'fields_users'),
 	'wiki_categories'			=> array('id' => 'wikicat_id', 'fields' => 'fields_wiki_categories'),
-	'wiki_comments'				=> array('id' => 'wcomment_id', 'fields' => 'fields_wiki_comments'),
+	//'wiki_comments'				=> array('id' => 'wcomment_id', 'fields' => 'fields_wiki_comments'),
 	'wiki_drafts'				=> array('id' => 'draft_id', 'fields' => 'fields_wiki_drafts'),
 	'wiki_pages'				=> array('id' => 'page_id', 'fields' => 'fields_wiki_pages'),
 	'uploads'					=> array('id' => 'upload_id', 'fields' => 'fields_uploads')
@@ -654,6 +655,35 @@ $fields_coc = array(
 	'coc_order' => array(
 		'type' => 'INT',
 		'constraint' => 5)
+);
+
+$fields_comments = array(
+	'comment_id' => array(
+		'type' => 'INT',
+		'constraint' => 10,
+		'auto_increment' => true),
+	'comment_author_user' => array(
+		'type' => $user_id_type,
+		'constraint' => $user_id_constraint),
+	'comment_author_character' => array(
+		'type' => $character_id_type,
+		'constraint' => $character_id_constraint),
+	'comment_type' => array(
+		'type' => 'VARCHAR',
+		'constraint' => 100,
+		'default' => ''),
+	'comment_item_id' => array(
+		'type' => 'INT',
+		'constraint' => 8),
+	'comment_content' => array(
+		'type' => 'TEXT'),
+	'comment_status' => array(
+		'type' => 'ENUM',
+		'constraint' => "'activated','pending'",
+		'default' => 'activated'),
+	'comment_date' => array(
+		'type' => $date_type,
+		'constraint' => $date_constraint),
 );
 
 $fields_departments = array(

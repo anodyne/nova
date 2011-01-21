@@ -39,6 +39,6 @@ return array(
 	/**
 	 * System Information
 	 */
-	'app_db_tables' => 61,
+	'app_db_tables' => 58,
 	'environment' => Kohana::DEVELOPMENT,
 );

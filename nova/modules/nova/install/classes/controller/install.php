@@ -100,11 +100,11 @@ class Controller_Install extends Controller_Template {
 		$data->installed = Utility::install_status();
 		
 		// content
-		$this->template->title.= __('Installation Center');
-		$this->template->layout->label = __('Installation Center');
+		$this->template->title.= ucwords(___('install center'));
+		$this->template->layout->label = ucwords(___('install center'));
 		
 		// send the response
-		$this->request->response = $this->template;
+		$this->response->body($this->template);
 	}
 	
 	public function action_changedb($view = 'main')
@@ -123,7 +123,7 @@ class Controller_Install extends Controller_Template {
 			'loading' => array(
 				'src' => MODFOLDER.'/nova/install/views/install/images/loading-circle-large.gif',
 				'attr' => array(
-					'alt' => __('processing'),
+					'alt' => ___('processing'),
 					'class' => '')),
 		);
 		
@@ -134,10 +134,10 @@ class Controller_Install extends Controller_Template {
 		{
 			case 'table':
 				// set the header
-				$data->header = __('Add Database Table');
+				$data->header = ___('change.title.addtable');
 				
 				// set the message
-				$data->message = __("I can create a new database table for you, all you need to do is tell me what you want to call the table. Don't worry about adding the table prefix, I'll do that for you before I create the table as well as an ID field for you. If you want to change the ID field, you'll have to do that from inside the database.");
+				$data->message = ___("change.text.addtable");
 				
 				// build the button attributes
 				$next = array(
@@ -147,15 +147,15 @@ class Controller_Install extends Controller_Template {
 				);
 				
 				// build the next step control
-				$this->template->layout->controls = form::button('back', __('Create Table'), $next);
+				$this->template->layout->controls = form::button('back', ucwords(__(':create table', array(':create' => ___('create')))), $next);
 			break;
 				
 			case 'field':
 				// set the header
-				$data->header = __('Add Database Field');
+				$data->header = ___('change.title.addfield');
 				
 				// set the message
-				$data->message = __('changedb.field_inst');
+				$data->message = ___('change.text.addfield');
 				
 				// set up the options
 				$data->options = array();
@@ -196,16 +196,16 @@ class Controller_Install extends Controller_Template {
 				);
 				
 				// build the next step control
-				$this->template->layout->controls = form::button('back', __('Create Field'), $next);
+				$this->template->layout->controls = form::button('back', ucwords(___(':create field', array(':create' => ___('create')))), $next);
 				
 			break;
 				
 			case 'query':
 				// set the header
-				$data->header = __('Run a MySQL Query');
+				$data->header = ___('change.title.runquery');
 				
 				// set the message
-				$data->message = __('changedb.query_inst');
+				$data->message = ___('change.text.runquery');
 				
 				// build the button attributes
 				$next = array(
@@ -215,13 +215,13 @@ class Controller_Install extends Controller_Template {
 				);
 				
 				// build the next step control
-				$this->template->layout->controls = form::button('back', __('Run Query'), $next);
+				$this->template->layout->controls = form::button('back', ucwords(___('run query')), $next);
 				
 			break;
 			
 			default:
 				// set the message
-				$data->message = __('changedb.message');
+				$data->message = ___('change.text.default');
 				
 				// build the button attributes
 				$next = array(
@@ -231,13 +231,15 @@ class Controller_Install extends Controller_Template {
 				);
 				
 				// build the next step control
-				$this->template->layout->controls = form::open('install/index').form::button('back', __('Install Center'), $next).form::close();
+				$this->template->layout->controls = form::open('install/index').
+					form::button('back', ucwords(___('install center')), $next).
+					form::close();
 			break;
 		}
 		
 		// content
-		$this->template->title.= __('Change Database');
-		$this->template->layout->label = __('Change Database');
+		$this->template->title.= ___('change.title.default');
+		$this->template->layout->label = ___('change.title.default');
 		
 		if ($showbutton === true)
 		{
@@ -249,11 +251,13 @@ class Controller_Install extends Controller_Template {
 			);
 			
 			// build the next step control
-			$this->template->layout->controls = form::open('install/changedb').form::button('back', __('Back to Change Database Panel'), $next).form::close();
+			$this->template->layout->controls = form::open('install/changedb').
+				form::button('back', ___('change.back'), $next).
+				form::close();
 		}
 		
 		// send the response
-		$this->request->response = $this->template;
+		$this->response->body($this->template);
 	}
 	
 	public function action_genre()
@@ -323,7 +327,7 @@ class Controller_Install extends Controller_Template {
 		$this->template->layout->label = __('The Genre Panel');
 		
 		// send the response
-		$this->request->response = $this->template;
+		$this->response->body($this->template);
 	}
 	
 	public function action_main($error = 0)
@@ -356,6 +360,9 @@ class Controller_Install extends Controller_Template {
 		
 		// load the javascript
 		$this->template->javascript = View::factory('install/js/verify_js');
+		
+		// send the response
+		$this->response->body($this->template);
 	}
 	
 	public function action_readme()
@@ -381,7 +388,7 @@ class Controller_Install extends Controller_Template {
 		$this->template->layout->controls = form::open('install/index').form::button('install', __('Back to Install Center'), $next).form::close();
 		
 		// send the response
-		$this->request->response = $this->template;
+		$this->response->body($this->template);
 	}
 	
 	public function action_remove()
@@ -481,7 +488,7 @@ class Controller_Install extends Controller_Template {
 		
 		if ( ! file_exists(MODPATH.'assets/database/db.mysql'.EXT))
 		{
-			$data->message = __('setup.no_config_file', array(':modules' => MODFOLDER, ':ext' => EXT));
+			$data->message = ___('setup.text.noconfig', array(':modules' => MODFOLDER, ':ext' => EXT));
 		}
 		else
 		{
@@ -493,7 +500,7 @@ class Controller_Install extends Controller_Template {
 			{
 				if (version_compare(PHP_VERSION, '5.2.4', '<'))
 				{
-					$data->message = __('Your server is running PHP version :php but Nova requires at least PHP 5.2.4.', array(':php' => PHP_VERSION));
+					$data->message = ___('setup.text.php', array(':php' => PHP_VERSION));
 				}
 				else
 				{
@@ -511,13 +518,15 @@ class Controller_Install extends Controller_Template {
 							
 							if (extension_loaded('mysql'))
 							{
-								$this->template->layout->controls = form::open('install/setupconfig/1').form::button('next', __('Next Step'), $next).form::close();
+								$this->template->layout->controls = form::open('install/setupconfig/1').
+									form::button('next', ucwords(___(':next step', array(':next' => ___('next')))), $next).
+									form::close();
 							}
 							else
 							{
 								$this->template->layout->flash = View::factory('install/pages/flash');
 								$this->template->layout->flash->status = 'error';
-								$this->template->layout->flash->message = __('setup.nodb');
+								$this->template->layout->flash->message = ___('setup.text.nodb');
 							}
 						break;
 						
@@ -530,10 +539,11 @@ class Controller_Install extends Controller_Template {
 							);
 							
 							// set the message
-							$data->message = __("Enter your database connection details below. If you're not sure about these, contact your web host.");
+							$data->message = ___('setup.text.connection');
 
 							// build the next step control
-							$this->template->layout->controls = form::button('next', __('Next Step'), $next).form::close();
+							$this->template->layout->controls = form::button('next', ucwords(___(':next step', array(':next' => ___('next')))), $next).
+								form::close();
 							
 						break;
 						
@@ -573,7 +583,7 @@ class Controller_Install extends Controller_Template {
 								if ($type == 'nova1' and count($tables) > 0)
 								{
 									// write the message
-									$data->message = __('setup.step2_nova1_failure');
+									$data->message = ___('setup.text.nova1failure');
 									
 									// build the next step button
 									$next = array(
@@ -583,12 +593,14 @@ class Controller_Install extends Controller_Template {
 									);
 									
 									// write the controls
-									$this->template->layout->controls = form::open('install/setupconfig/1').form::button('next', __('Start Over'), $next).form::close();
+									$this->template->layout->controls = form::open('install/setupconfig/1').
+										form::button('next', ucwords(___('start over')), $next).
+										form::close();
 								}
 								else
 								{
 									// write the message
-									$data->message = __('setup.step2_success');
+									$data->message = ___('setup.text.step2.success');
 									
 									// build the next step button
 									$next = array(
@@ -598,26 +610,28 @@ class Controller_Install extends Controller_Template {
 									);
 									
 									// write the controls
-									$this->template->layout->controls = form::open('install/setupconfig/3').form::button('next', __('Next Step'), $next).form::close();
+									$this->template->layout->controls = form::open('install/setupconfig/3').
+										form::button('next', ucwords(___(':next step', array(':next' => ___('next')))), $next).
+										form::close();
 								}
 							} catch (Exception $e) {
 								$msg = (string) $e->getMessage();
 								
 								if (stripos($msg, 'No such host is known') !== false)
 								{
-									$data->message = __('setup.step2_db_host');
+									$data->message = ___('setup.text.step2.nohost');
 								}
 								elseif (stripos($msg, 'Access denied for user') !== false)
 								{
-									$data->message = __('setup.step2_db_userpass');
+									$data->message = ___('setup.text.step2.userpass');
 								}
 								elseif (stripos($msg, 'Unknown database') !== false)
 								{
-									$data->message = __('setup.step2_db_name', array(':dbname' => $dbName));
+									$data->message = ___('setup.text.step2.dbname', array(':dbname' => $dbName));
 								}
 								else
 								{
-									$data->message = __('setup.step2_db_gen');
+									$data->message = ___('setup.text.step2.gen');
 								}
 								
 								// build the next step button
@@ -628,7 +642,9 @@ class Controller_Install extends Controller_Template {
 								);
 								
 								// write the controls
-								$this->template->layout->controls = form::open('install/setupconfig/1').form::button('next', __('Start Over'), $next).form::close();
+								$this->template->layout->controls = form::open('install/setupconfig/1').
+									form::button('next', ucwords(___('start over')), $next).
+									form::close();
 							}
 						break;
 							
@@ -749,7 +765,7 @@ return array
 								if ($write !== false)
 								{
 									// set the success message
-									$data->message = __('setup.step3_write');
+									$data->message = ___('setup.text.step3write');
 									
 									// wipe out the session
 									$session->destroy();
@@ -762,13 +778,15 @@ return array
 									);
 									
 									// write the controls
-									$this->template->layout->controls = form::open('install/index').form::button('next', __('Install Center'), $next).form::close();
+									$this->template->layout->controls = form::open('install/index').
+										form::button('next', ucwords(___('install center')), $next).
+										form::close();
 								}
 								else
 								{
 									$data->code = $code;
 								
-									$data->message = __('setup.step3_no_write', array(':ext' => EXT, ':appfolder' => APPFOLDER));
+									$data->message = ___('setup.text.step3nowrite', array(':ext' => EXT, ':appfolder' => APPFOLDER));
 									
 									// build the next step button
 									$next = array(
@@ -778,14 +796,16 @@ return array
 									);
 									
 									// write the controls
-									$this->template->layout->controls = form::open('install/setupconfig/4').form::button('next', __('Re-Test'), $next).form::close();
+									$this->template->layout->controls = form::open('install/setupconfig/4').
+										form::button('next', ___('Re-Test'), $next).
+										form::close();
 								}
 							}
 							else
 							{
 								$data->code = $code;
 								
-								$data->message = __('setup.step3_no_write', array(':ext' => EXT, ':appfolder' => APPFOLDER));
+								$data->message = ___('setup.text.step3nowrite', array(':ext' => EXT, ':appfolder' => APPFOLDER));
 								
 								// build the next step button
 								$next = array(
@@ -793,10 +813,11 @@ return array
 									'class' => 'btn-main',
 									'id' => 'next',
 								);
-								$text = __('setup.step3_retest');
 								
 								// write the controls
-								$this->template->layout->controls = form::open('install/setupconfig/4').form::button('next', __('Re-Test'), $next).form::close();
+								$this->template->layout->controls = form::open('install/setupconfig/4').
+									form::button('next', ___('Re-Test'), $next).
+									form::close();
 							}
 						break;
 							
@@ -808,7 +829,7 @@ return array
 								$tables = $db->list_tables();
 								
 								// write the message
-								$data->message = __('setup.step4_success');
+								$data->message = ___('setup.text.step4success');
 								
 								// build the next step button
 								$next = array(
@@ -816,10 +837,11 @@ return array
 									'class' => 'btn-main',
 									'id' => 'next',
 								);
-								$text = __('setup.step3_install');
 								
 								// write the controls
-								$this->template->layout->controls = form::open('install/index').form::button('next', __('Install Center'), $next).form::close();
+								$this->template->layout->controls = form::open('install/index').
+									form::button('next', ucwords(___('install center')), $next).
+									form::close();
 								
 								// clear the session
 								$session->destroy();
@@ -828,19 +850,19 @@ return array
 								
 								if (stripos($msg, 'No such host is known') !== false)
 								{
-									$data->message = __('setup.step2_db_host');
+									$data->message = ___('setup.text.step2.nohost');
 								}
 								elseif (stripos($msg, 'Access denied for user') !== false)
 								{
-									$data->message = __('setup.step2_db_userpass');
+									$data->message = ___('setup.text.step2.userpass');
 								}
 								elseif (stripos($msg, 'Unknown database') !== false)
 								{
-									$data->message = __('setup.step2_db_name', array(':dbname' => $dbName));
+									$data->message = ___('setup.text.step2.dbname', array(':dbname' => $dbName));
 								}
 								else
 								{
-									$data->message = __('setup.step2_db_gen');
+									$data->message = ___('setup.text.step2.gen');
 								}
 								
 								// build the next step button
@@ -851,7 +873,9 @@ return array
 								);
 								
 								// write the controls
-								$this->template->layout->controls = form::open('install/setupconfig/1').form::button('next', __('Start Over'), $next).form::close();
+								$this->template->layout->controls = form::open('install/setupconfig/1').
+									form::button('next', ucwords(___('start over')), $next).
+									form::close();
 							}
 							
 						break;
@@ -864,8 +888,8 @@ return array
 		$this->template->javascript = View::factory('install/js/install_setupconfig_js');
 		
 		// content
-		$this->template->title.= __('Config File Setup');
-		$this->template->layout->label = __('Config File Setup');
+		$this->template->title.= ___('setup.title');
+		$this->template->layout->label = ___('setup.title');
 		
 		// send the response
 		$this->response->body($this->template);
@@ -1116,7 +1140,7 @@ return array
 			case 2:
 				if (isset($_POST['next']))
 				{
-					$validate = Validate::factory($_POST)
+					$validate = Validation::factory($_POST)
 						->rule('email', 'not_empty')
 						->rule('email', 'email')
 						->rule('password', 'not_empty')
@@ -1291,7 +1315,7 @@ return array
 		}
 		
 		// send the response
-		$this->request->response = $this->template;
+		$this->response->body($this->template);
 	}
 	
 	public function action_verify()
@@ -1324,6 +1348,9 @@ return array
 		// content
 		$this->template->title.= __('Verify Server Requirements');
 		$this->template->layout->label = __('Verify Server Requirements');
+		
+		// send the response
+		$this->response->body($this->template);
 	}
 	
 	private function _register()

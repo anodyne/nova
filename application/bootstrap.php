@@ -51,11 +51,6 @@ ini_set('unserialize_callback_func', 'spl_autoload_call');
 // -- Configuration and initialization -----------------------------------------
 
 /**
- * Set the default language
- */
-I18n::lang('en-us');
-
-/**
  * Initialize Kohana, setting the default options.
  *
  * The following options are available:
