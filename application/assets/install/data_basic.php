@@ -5,7 +5,7 @@
 |---------------------------------------------------------------
 |
 | File: assets/install/install_data_basic.php
-| System Version: 1.2.3
+| System Version: 1.2.4
 |
 | Data file that includes all the data being inserted into the
 | database after creating the tables.
@@ -2242,7 +2242,7 @@ $system_components = array(
 		'comp_desc' => 'jQuery is a lightweight JavaScript library that emphasizes interaction between JavaScript and HTML.'),
 	array(
 		'comp_name' => 'jQuery UI',
-		'comp_version' => '1.8.7',
+		'comp_version' => '1.8.8',
 		'comp_url' => 'http://jqueryui.com/',
 		'comp_desc' => 'jQuery UI is a lightweight, easily customizable interface library for the jQuery Javascript library.'),
 	array(
