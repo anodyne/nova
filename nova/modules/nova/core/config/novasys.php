@@ -24,9 +24,9 @@ return array(
 	 */
 	 
 	'wiki_name' => 'Thresher',
-	'wiki_version_full' => 'Release 2',
-	'wiki_version_major' => 1,
-	'wiki_version_minor' => 1,
+	'wiki_version_full' => 'Release 3',
+	'wiki_version_major' => 2,
+	'wiki_version_minor' => 0,
 	'wiki_version_update' => 0,
 	
 	/**
