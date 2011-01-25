@@ -64,7 +64,8 @@ class Nova_controller_admin extends Controller {
 			'system_email',
 			'online_timespan',
 			'posting_requirement',
-			'updates'
+			'updates',
+			'use_mission_notes'
 		);
 		
 		// set the options
