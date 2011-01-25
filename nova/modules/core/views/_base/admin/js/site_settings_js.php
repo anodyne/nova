@@ -1,5 +1,3 @@
-<script type="text/javascript" src="<?php echo base_url() . MODFOLDER;?>/assets/js/jquery.qtip.js"></script>
-
 <script type="text/javascript">
 	function set_sample_output(value)
 	{
@@ -39,18 +37,11 @@
 			$(this).qtip({
 				content: $(this).attr('tooltip'),
 				position: {
-					corner: {
-						tooltip: 'bottomLeft',
-						target: 'topRight'
-					}
+					my: 'bottom left',
+					at: 'top right'
 				},
 				style: { 
-					border: {
-						width: 1,
-						radius: 4
-					},
-					name: 'dark',
-					fontSize: '90%'
+					classes: 'ui-tooltip-shadow ui-tooltip-dark ui-tooltip-rounded'
 				}
 			});
 		});

@@ -1,6 +1,5 @@
 <?php $string = random_string('alnum', 8);?>
 
-<script type="text/javascript" src="<?php echo base_url().MODFOLDER;?>/assets/js/jquery.qtip.js"></script>
 <script type="text/javascript" src="<?php echo base_url().MODFOLDER;?>/assets/js/jquery.ui.mouse.min.js"></script>
 <script type="text/javascript" src="<?php echo base_url().MODFOLDER;?>/assets/js/jquery.ui.draggable.min.js"></script>
 <script type="text/javascript" src="<?php echo base_url().MODFOLDER;?>/assets/js/jquery.ui.droppable.min.js"></script>
@@ -40,18 +39,11 @@
 			$(this).qtip({
 				content: $(this).attr('tooltip'),
 				position: {
-					corner: {
-						tooltip: 'bottomLeft',
-						target: 'topRight'
-					}
+					my: 'bottom left',
+					at: 'top right'
 				},
 				style: { 
-					border: {
-						width: 1,
-						radius: 4,
-					},
-					name: 'dark',
-					fontSize: '90%'
+					classes: 'ui-tooltip-shadow ui-tooltip-dark ui-tooltip-rounded'
 				}
 			});
 		});

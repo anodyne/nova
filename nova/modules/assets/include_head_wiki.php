@@ -56,6 +56,15 @@ $uiTheme = ( ! is_file(APPPATH .'views/'.$current_skin.'/wiki/css/jquery.ui.them
 					cache: true
 				});
 				
+				$.lazy({					
+					src: '<?php echo base_url() . MODFOLDER;?>/assets/js/jquery.qtip.js',
+					name: 'qtip',
+					dependencies: {
+						css: ['<?php echo base_url() . MODFOLDER;?>/assets/js/css/jquery.qtip.css']
+					},
+					cache: true
+				});
+				
 				$('a#userpanel').toggle(function(){
 					$('div.panel-body').slideDown('normal', function(){
 						$('.panel-trigger div.ui-icon').removeClass('ui-icon-triangle-1-s');
