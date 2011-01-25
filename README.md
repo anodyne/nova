@@ -10,6 +10,9 @@ Anodyne Production's next-generation RPG management system combines popular feat
 
 * added the message.php file to handle notification of bans, a missing "nova" directory and incompatible PHP version
 * updated seamless substitution to be able to override email view files
+* updated to jquery version 1.5
+* updated to uniform version 1.7.5
+* updated to qTip2
 * refactored the location helper into a full-blown class with static methods
 * removed the banned.php file
 * removed the rss model since it isn't necessary any more
@@ -20,6 +23,9 @@ Anodyne Production's next-generation RPG management system combines popular feat
 <table>
 	<tr>
 		<th>Version</th><th>Release Date</th>
+	</tr>
+	<tr>
+		<td>1.2.4</td><td>25 January 2011</td>
 	</tr>
 	<tr>
 		<td>1.2.3</td><td>04 January 2011</td>
