@@ -19,8 +19,6 @@ abstract class Nova_site extends Nova_controller_admin {
 	public function __construct()
 	{
 		parent::__construct();
-		
-		$this->load->helper('debug');
 	}
 	
 	public function bans()
