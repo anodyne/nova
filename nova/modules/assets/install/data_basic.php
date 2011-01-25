@@ -6,7 +6,7 @@
  * @category	Install
  * @author		Anodyne Productions
  * @copyright	2010-11 Anodyne Productions
- * @version		1.3
+ * @version		2.0
  */
 
 /*
@@ -2226,7 +2226,7 @@ $system_components = array(
 		'comp_desc' => 'CodeIgniter is an open source web application framework for use in building dynamic web sites with PHP. It enables developers to build applications faster - compared to coding from scratch - by providing a rich set of libraries for commonly needed tasks, as well as a simple interface and a logical structure to access these libraries.'),
 	array(
 		'comp_name' => 'Thresher',
-		'comp_version' => 'Release 1',
+		'comp_version' => 'Release 2',
 		'comp_url' => '',
 		'comp_desc' => "Thresher is Anodyne Productions' integrated mini-wiki for Nova."),
 	array(
@@ -2236,7 +2236,7 @@ $system_components = array(
 		'comp_url' => 'http://www.williamsconcepts.com/ci/codeigniter/libraries/template/index.html'),
 	array(
 		'comp_name' => 'jQuery',
-		'comp_version' => '1.4.4',
+		'comp_version' => '1.5',
 		'comp_url' => 'http://www.jquery.com/',
 		'comp_desc' => 'jQuery is a lightweight JavaScript library that emphasizes interaction between JavaScript and HTML.'),
 	array(
@@ -2261,9 +2261,9 @@ $system_components = array(
 		'comp_url' => 'http://plugins.jquery.com/project/ajaxq'),
 	array(
 		'comp_name' => 'qTip',
-		'comp_version' => '1.0-r29',
-		'comp_desc' => "qTip is an advanced tooltip plugin for the ever popular jQuery JavaScript framework. Built from the ground up to be user friendly, yet feature rich, qTip provides you with tonnes of features like rounded corners and speech bubble tips, and best of all... it's completely free under the MIT license!",
-		'comp_url' => 'http://craigsworks.com/projects/qtip/'),
+		'comp_version' => '2.0-pre',
+		'comp_desc' => "qTip2 is an advanced tooltip plugin for the ever popular jQuery JavaScript framework. Built from the ground up to be user friendly, yet feature rich, qTip2 provides you with tonnes of features like rounded corners and speech bubble tips, and best of all... it's completely free under the MIT license!",
+		'comp_url' => 'http://craigsworks.com/projects/qtip2/'),
 	array(
 		'comp_name' => 'Lazy',
 		'comp_version' => '1.5',
@@ -2311,9 +2311,9 @@ $system_components = array(
 		'comp_url' => 'http://davidwalsh.name/jquery-countdown-plugin'),
 	array(
 		'comp_name' => 'Uniform',
-		'comp_version' => '1.5',
+		'comp_version' => '1.7.5',
 		'comp_desc' => "Uniform masks your standard form controls with custom themed controls. It works in sync with your real form elements to ensure accessibility and compatibility.",
-		'comp_url' => 'http://pixelmatrixdesign.com/uniform/'),
+		'comp_url' => 'http://github.com/pixelmatrix/uniform'),
 );
 
 $system_info = array(
@@ -2654,7 +2654,7 @@ $system_versions = array(
 		'version_date'		=> 1294185600,
 		'version_launch'	=> "Nova 1.2.3 is the third maintenance release for Nova 1.2 and fixes a bug with handling deck listings with multiple specification items. More information about these features and a full changelog can be found at AnodyneDocs. This update is recommended for all users.",
 		'version_changes'	=> "* added the 1.2.3 update file
-	* fixed bug with handling deck listings and multiple specification items"),
+* fixed bug with handling deck listings and multiple specification items"),
 );
 
 $tour_fields = array(
