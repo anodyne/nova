@@ -48,6 +48,11 @@ spl_autoload_register(array('Kohana', 'auto_load'));
  */
 ini_set('unserialize_callback_func', 'spl_autoload_call');
 
+/**
+ * Set the execption handler
+ */
+set_exception_handler(array('Nova_Exception_Handler', 'handle'));
+
 // -- Configuration and initialization -----------------------------------------
 
 /**
