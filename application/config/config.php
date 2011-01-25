@@ -186,7 +186,7 @@ $config['log_threshold'] = 1;
 | system/logs/ folder.  Use a full server path with trailing slash.
 |
 */
-$config['log_path'] = '';
+$config['log_path'] = APPPATH.'logs/';
 
 /*
 |--------------------------------------------------------------------------
@@ -208,7 +208,7 @@ $config['log_date_format'] = 'Y-m-d H:i:s';
 | system/cache/ folder.  Use a full server path with trailing slash.
 |
 */
-$config['cache_path'] = '';
+$config['cache_path'] = APPPATH.'cache/';
 
 /*
 |--------------------------------------------------------------------------
