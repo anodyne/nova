@@ -6,109 +6,37 @@
  * @category	Controller
  * @author		Anodyne Productions
  * @copyright	2010-11 Anodyne Productions
- * @version		1.3
- *
- * Updated the flash message so they can be overridden by seamless substitution
+ * @version		2.0
  */
 
-class Upload_base extends Controller {
+require_once MODPATH.'core/libraries/Nova_controller_admin'.EXT;
 
-	/* set the variables */
-	var $options;
-	var $skin;
-	var $rank;
-	var $timezone;
-	var $dst;
-
-	function Upload_base()
+abstract class Nova_upload extends Nova_controller_admin {
+	
+	public function __construct()
 	{
-		parent::Controller();
-		
-		/* load the system model */
-		$this->load->model('system_model', 'sys');
-		$installed = $this->sys->check_install_status();
-		
-		if ($installed === FALSE)
-		{ /* check whether the system is installed */
-			redirect('install/index', 'refresh');
-		}
-		
-		/* load the session library */
-		$this->load->library('session');
-		
-		/* load the models */
-		$this->load->model('characters_model', 'char');
-		$this->load->model('users_model', 'user');
-		
-		/* check to see if they are logged in */
-		$this->auth->is_logged_in(TRUE);
-		
-		/* an array of the global we want to retrieve */
-		$settings_array = array(
-			'skin_admin',
-			'display_rank',
-			'timezone',
-			'daylight_savings',
-			'sim_name',
-			'date_format',
-			'system_email'
-		);
-		
-		/* grab the settings */
-		$this->options = $this->settings->get_settings($settings_array);
-		
-		/* set the variables */
-		$this->skin = $this->options['skin_admin'];
-		$this->rank = $this->options['display_rank'];
-		$this->timezone = $this->options['timezone'];
-		$this->dst = (bool) $this->options['daylight_savings'];
-		
-		if ($this->auth->is_logged_in())
-		{
-			$this->skin = (file_exists(APPPATH .'views/'.$this->session->userdata('skin_admin').'/template_admin'.EXT))
-				? $this->session->userdata('skin_admin')
-				: $this->skin;
-			$this->rank = $this->session->userdata('display_rank');
-			$this->timezone = $this->session->userdata('timezone');
-			$this->dst = (bool) $this->session->userdata('dst');
-		}
-		
-		/* set and load the language file needed */
-		$this->lang->load('app', $this->session->userdata('language'));
-		
-		/* set the template */
-		$this->template->set_template('admin');
-		$this->template->set_master_template($this->skin .'/template_admin.php');
-		
-		/* write the common elements to the template */
-		$this->template->write('nav_main', $this->menu->build('main', 'main'), TRUE);
-		$this->template->write('nav_sub', $this->menu->build('adminsub', 'manage'), TRUE);
-		$this->template->write('panel_1', $this->user_panel->panel_1(), TRUE);
-		$this->template->write('panel_2', $this->user_panel->panel_2(), TRUE);
-		$this->template->write('panel_3', $this->user_panel->panel_3(), TRUE);
-		$this->template->write('panel_workflow', $this->user_panel->panel_workflow(), TRUE);
-		$this->template->write('title', $this->options['sim_name'] . ' :: ');
+		parent::__construct();
 	}
-
-	function index()
+	
+	public function index()
 	{
-		$this->auth->check_access();
+		Auth::check_access();
 		
 		if (isset($_POST['submit']))
 		{
-			/* images can't have _, - or = because of the way jquery serializes data for the sortable plugin */
+			// images can't have _, - or = because of the way jquery serializes data for the sortable plugin
 			$_FILES['userfile']['name'] = str_replace('_', '', $_FILES['userfile']['name']);
 			$_FILES['userfile']['name'] = str_replace('-', '', $_FILES['userfile']['name']);
 			$_FILES['userfile']['name'] = str_replace('=', '', $_FILES['userfile']['name']);
 			
 			$upload_data = array(
-				'type' => $this->input->post('type', TRUE),
+				'type' => $this->input->post('type', true),
 				'field' => 'userfile',
 			);
 			
 			$upload = $this->_do_upload($upload_data);
 			
-			if (!is_array($upload))
+			if ( ! is_array($upload))
 			{
 				$message = sprintf(
 					lang('flash_failure'),
@@ -144,11 +72,8 @@ class Upload_base extends Controller {
 				$flash['message'] = text_output($message);
 			}
 			
-			// set the location of the flash view
-			$flashloc = view_location('flash', $this->skin, 'admin');
-			
-			// write everything to the template
-			$this->template->write_view('flash_message', $flashloc, $flash);
+			// set the flash message
+			$this->_regions['flash_message'] = Location::view('flash', $this->skin, 'admin', $flash);
 		}
 		
 		$data['button'] = array(
@@ -183,47 +108,43 @@ class Upload_base extends Controller {
 		
 		$data['values']['type'] = array();
 		
-		if ($this->auth->check_access('manage/awards', FALSE))
+		if (Auth::check_access('manage/awards', false))
 		{
 			$data['values']['type']['award'] = $data['label']['img_awards'];
 		}
 		
-		if ($this->auth->check_access('characters/bio', FALSE))
+		if (Auth::check_access('characters/bio', false))
 		{
 			$data['values']['type']['bio'] = $data['label']['img_char'];
 		}
 		
-		if ($this->auth->check_access('manage/missions', FALSE))
+		if (Auth::check_access('manage/missions', false))
 		{
 			$data['values']['type']['mission'] = $data['label']['img_mission'];
 		}
 		
-		if ($this->auth->check_access('manage/specs', FALSE))
+		if (Auth::check_access('manage/specs', false))
 		{
 			$data['values']['type']['specs'] = $data['label']['img_specs'];
 		}
 		
-		if ($this->auth->check_access('manage/tour', FALSE))
+		if (Auth::check_access('manage/tour', false))
 		{
 			$data['values']['type']['tour'] = $data['label']['img_tour'];
 		}
 		
-		/* figure out where the view should be coming from */
-		$view_loc = view_location('upload_index', $this->skin, 'admin');
-		$js_loc = js_location('upload_index_js', $this->skin, 'admin');
+		$this->_regions['content'] = Location::view('upload_index', $this->skin, 'admin', $data);
+		$this->_regions['javascript'] = Location::js('upload_index_js', $this->skin, 'admin');
+		$this->_regions['title'].= $data['header'];
 		
-		/* write the data to the template */
-		$this->template->write('title', $data['header']);
-		$this->template->write_view('content', $view_loc, $data);
-		$this->template->write_view('javascript', $js_loc);
+		Template::assign($this->_regions);
 		
-		/* render the template */
-		$this->template->render();
+		Template::render();
 	}
 	
-	function manage()
+	public function manage()
 	{
-		$this->auth->check_access();
+		Auth::check_access();
 		
 		if (isset($_POST['submit']))
 		{
@@ -232,12 +153,12 @@ class Upload_base extends Controller {
 			$delete = 0;
 			$delete_file = 0;
 			
-			/* load the resources */
+			// load the resources
 			$this->load->library('ftp');
 			
 			if ($this->ftp->hostname != 'ftp.example.com')
 			{
-				/* start the ftp connection */
+				// start the ftp connection
 				$this->ftp->connect();
 			}
 			
@@ -270,7 +191,7 @@ class Upload_base extends Controller {
 				
 				$delete += $this->sys->delete_upload_record($r);
 				
-				if ($this->ftp->hostname != 'ftp.example.com' && $this->config->item('attempt_delete') === TRUE)
+				if ($this->ftp->hostname != 'ftp.example.com' && $this->config->item('attempt_delete') === true)
 				{
 					$path = APPPATH .'assets/'. $location .'/'. $info->upload_filename;
 					$delete_file += $this->ftp->delete_file($path);
@@ -279,7 +200,7 @@ class Upload_base extends Controller {
 			
 			if ($this->ftp->hostname != 'ftp.example.com')
 			{
-				/* close the ftp connection */
+				// close the ftp connection
 				$this->ftp->close();
 			}
 			
@@ -313,11 +234,8 @@ class Upload_base extends Controller {
 				$flash['message'] = '';
 			}
 			
-			// set the location of the flash view
-			$flashloc = view_location('flash', $this->skin, 'admin');
-			
-			// write everything to the template
-			$this->template->write_view('flash_message', $flashloc, $flash);
+			// set the flash message
+			$this->_regions['flash_message'] = Location::view('flash', $this->skin, 'admin', $flash);
 		}
 		
 		$data['directory'] = array();
@@ -404,11 +322,11 @@ class Upload_base extends Controller {
 		}
 		
 		$data['access'] = array(
-			'awards' => ($this->auth->check_access('manage/awards', FALSE)) ? TRUE : FALSE,
-			'bio' => ($this->auth->check_access('characters/bio', FALSE)) ? TRUE : FALSE,
-			'missions' => ($this->auth->check_access('manage/missions', FALSE)) ? TRUE : FALSE,
-			'specs' => ($this->auth->check_access('manage/specs', FALSE)) ? TRUE : FALSE,
-			'tour' => ($this->auth->check_access('manage/tour', FALSE)) ? TRUE : FALSE,
+			'awards' => (Auth::check_access('manage/awards', FALSE)) ? TRUE : FALSE,
+			'bio' => (Auth::check_access('characters/bio', FALSE)) ? TRUE : FALSE,
+			'missions' => (Auth::check_access('manage/missions', FALSE)) ? TRUE : FALSE,
+			'specs' => (Auth::check_access('manage/specs', FALSE)) ? TRUE : FALSE,
+			'tour' => (Auth::check_access('manage/tour', FALSE)) ? TRUE : FALSE,
 		);
 		
 		$data['button'] = array(
@@ -439,54 +357,50 @@ class Upload_base extends Controller {
 			'upload' => ucwords(lang('actions_upload') .' '. lang('labels_images') .' '. RARROW),
 		);
 		
-		/* figure out where the view should be coming from */
-		$view_loc = view_location('upload_manage', $this->skin, 'admin');
-		$js_loc = js_location('upload_manage_js', $this->skin, 'admin');
+		$this->_regions['content'] = Location::view('upload_manage', $this->skin, 'admin', $data);
+		$this->_regions['javascript'] = Location::js('upload_manage_js', $this->skin, 'admin', $js_data);
+		$this->_regions['title'].= $data['header'];
 		
-		/* write the data to the template */
-		$this->template->write('title', $data['header']);
-		$this->template->write_view('content', $view_loc, $data);
-		$this->template->write_view('javascript', $js_loc, $js_data);
+		Template::assign($this->_regions);
 		
-		/* render the template */
-		$this->template->render();
+		Template::render();
 	}
 	
-	function _do_upload($data = '')
+	protected function _do_upload($data)
 	{
-		/* load the resources */
+		// load the resources
 		$this->load->library('upload');
 		
 		switch ($data['type'])
 		{
 			case 'award':
-				$path = APPPATH .'assets/images/awards/';
+				$path = APPPATH.'assets/images/awards/';
 			break;
 				
 			case 'bio':
-				$path = APPPATH .'assets/images/characters/';
+				$path = APPPATH.'assets/images/characters/';
 			break;
 				
 			case 'mission':
-				$path = APPPATH .'assets/images/missions/';
+				$path = APPPATH.'assets/images/missions/';
 			break;
 				
 			case 'specs':
-				$path = APPPATH .'assets/images/specs/';
+				$path = APPPATH.'assets/images/specs/';
 			break;
 				
 			case 'tour':
-				$path = APPPATH .'assets/images/tour/';
+				$path = APPPATH.'assets/images/tour/';
 			break;
 		}
 		
 		$this->upload->upload_path = $path;
 		
-		/* do the upload */
+		// do the upload
 		$upload = $this->upload->do_upload($data['field']);
 		
-		/* figure out what gets returned */
-		$retval = (!$upload) ? $this->upload->display_errors('', '') : $this->upload->data();
+		// figure out what gets returned
+		$retval = ( ! $upload) ? $this->upload->display_errors('', '') : $this->upload->data();
 	
 		return $retval;
 	}
