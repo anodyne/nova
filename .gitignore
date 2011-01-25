@@ -1,17 +1,18 @@
-nova/codeigniter/cache/
-!nova/codeigniter/cache/index.html
-nova/codeigniter/logs/
-!nova/codeigniter/logs/index.html
-
 application/cache/
+!application/cache/index.html
+
 application/logs/
+!application/logs/index.html
 
 application/assets/images/awards/
 !application/assets/images/awards/index.html
+
 application/assets/images/characters/
 !application/assets/images/characters/index.html
+
 application/assets/images/missions/
 !application/assets/images/missions/index.html
+
 application/assets/images/tour/
 !application/assets/images/tour/index.html
 
