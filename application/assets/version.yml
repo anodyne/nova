@@ -1,9 +1,9 @@
-version: 1.2.3
+version: 1.2.4
 version_major: 1
 version_minor: 2
-version_update: 3
+version_update: 4
 severity: minor
 notes: |
-  Nova 1.2.3 is the third maintenance release for Nova 1.2 and fixes a bug with handling deck listings with multiple specification items. More information about these features and a full changelog can be found at AnodyneDocs. This update is recommended for all users.
-date: 04 January 2011
+  Nova 1.2.4 is the fourth maintenance release for Nova 1.2 and fixes bugs with inaccurate mission post counts (thanks to Jordan for finding this issue), the acceptance email sent out to users and a manifest issue in Internet Explorer 7. More information about these features and a full changelog can be found at AnodyneDocs. This update is recommended for all users.
+date: 25 January 2011
 link: http://www.anodyne-productions.com
