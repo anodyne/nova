@@ -48,11 +48,6 @@ spl_autoload_register(array('Kohana', 'auto_load'));
  */
 ini_set('unserialize_callback_func', 'spl_autoload_call');
 
-/**
- * Set the execption handler
- */
-set_exception_handler(array('Nova_Exception_Handler', 'handle'));
-
 // -- Configuration and initialization -----------------------------------------
 
 /**
@@ -114,6 +109,16 @@ Kohana::modules(array(
 	'assets'		=> MODPATH.'assets',
 	'dbforge'		=> MODPATH.'nova/dbforge',
 	));
+
+/**
+ * Set the default language
+ */
+I18n::lang('en-us');
+
+/**
+ * Set the execption handler
+ */
+set_exception_handler(array('Nova_Exception_Handler', 'handle'));
 
 /**
  * Set the routes. Each route must have a minimum of a name, a URI and a set of
