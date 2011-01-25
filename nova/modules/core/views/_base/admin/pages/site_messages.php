@@ -2,7 +2,7 @@
 
 <?php echo text_output($text);?>
 
-<p class="bold"><a href="#" rel="facebox" myAction="add" myID="0"><?php echo img($images['add']) .' '. $label['add'];?></a></p>
+<p class="bold"><a href="#" rel="facebox" myAction="add" myID="0" class="image"><?php echo img($images['add']) .' '. $label['add'];?></a></p>
 
 <div id="tabs">
 	<ul>

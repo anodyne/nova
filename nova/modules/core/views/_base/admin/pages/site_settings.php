@@ -1,6 +1,6 @@
 <?php echo text_output($header, 'h1', 'page-head');?>
 
-<p class="bold"><?php echo anchor('site/usersettings', img($images['gear']) .' '. $label['manageuser']);?></p>
+<p class="bold"><?php echo anchor('site/usersettings', img($images['gear']) .' '. $label['manageuser'], array('class' => 'image'));?></p>
 
 <div id="tabs">
 	<ul>
