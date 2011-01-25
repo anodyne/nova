@@ -45,6 +45,10 @@ define('EXT', '.php');
  * deprecated notices. Disable with: E_ALL & ~E_DEPRECATED
  */
 error_reporting(E_ALL | E_STRICT);
+// error_reporting(E_ALL & ~E_NOTICE);
+
+// make sure the server displays errors (done for exception handling)
+ini_set('display_errors', true);
 
 /**
  * End of standard configuration! Changing any of the code below should only be
