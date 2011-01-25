@@ -6,102 +6,34 @@
  * @category	Controller
  * @author		Anodyne Productions
  * @copyright	2010-11 Anodyne Productions
- * @version		1.2
- *
- * Updated the applications report with the IP address and email address
- *	of an applicant
+ * @version		2.0
  */
 
-class Report_base extends Controller {
+require_once MODPATH.'core/libraries/Nova_controller_admin'.EXT;
 
-	/* set the variables */
-	var $options;
-	var $skin;
-	var $rank;
-	var $timezone;
-	var $dst;
-
-	function Report_base()
+abstract class Nova_report extends Nova_controller_admin {
+	
+	public function __construct()
 	{
-		parent::Controller();
-		
-		/* load the system model */
-		$this->load->model('system_model', 'sys');
-		$installed = $this->sys->check_install_status();
-		
-		if ($installed === FALSE)
-		{ /* check whether the system is installed */
-			redirect('install/index', 'refresh');
-		}
-		
-		/* load the session library */
-		$this->load->library('session');
-		
-		/* load the models */
-		$this->load->model('characters_model', 'char');
-		$this->load->model('users_model', 'user');
-		
-		/* check to see if they are logged in */
-		$this->auth->is_logged_in(TRUE);
-		
-		/* an array of the global we want to retrieve */
-		$settings_array = array(
-			'skin_admin',
-			'display_rank',
-			'timezone',
-			'daylight_savings',
-			'sim_name',
-			'date_format',
-			'posting_requirement',
-			'post_count_format'
-		);
-		
-		/* grab the settings */
-		$this->options = $this->settings->get_settings($settings_array);
-		
-		/* set the variables */
-		$this->skin = $this->options['skin_admin'];
-		$this->rank = $this->options['display_rank'];
-		$this->timezone = $this->options['timezone'];
-		$this->dst = (bool) $this->options['daylight_savings'];
-		
-		if ($this->auth->is_logged_in())
-		{
-			$this->skin = (file_exists(APPPATH .'views/'.$this->session->userdata('skin_admin').'/template_admin'.EXT))
-				? $this->session->userdata('skin_admin')
-				: $this->skin;
-			$this->rank = $this->session->userdata('display_rank');
-			$this->timezone = $this->session->userdata('timezone');
-			$this->dst = (bool) $this->session->userdata('dst');
-		}
-		
-		/* set and load the language file needed */
-		$this->lang->load('app', $this->session->userdata('language'));
-		
-		/* set the template */
-		$this->template->set_template('admin');
-		$this->template->set_master_template($this->skin .'/template_admin.php');
-		
-		/* write the common elements to the template */
-		$this->template->write('nav_main', $this->menu->build('main', 'main'), TRUE);
-		$this->template->write('nav_sub', $this->menu->build('adminsub', 'report'), TRUE);
-		$this->template->write('panel_1', $this->user_panel->panel_1(), TRUE);
-		$this->template->write('panel_2', $this->user_panel->panel_2(), TRUE);
-		$this->template->write('panel_3', $this->user_panel->panel_3(), TRUE);
-		$this->template->write('panel_workflow', $this->user_panel->panel_workflow(), TRUE);
-		$this->template->write('title', $this->options['sim_name'] . ' :: ');
-	}
-
-	function index()
-	{
-		/* nothing goes here */
+		parent::__construct();
 	}
 	
-	function activity()
+	public function index()
 	{
-		$this->auth->check_access();
+		$this->_regions['content'] = Location::view('upload_index', $this->skin, 'admin', $data);
+		$this->_regions['javascript'] = Location::js('upload_index_js', $this->skin, 'admin');
+		$this->_regions['title'].= $data['header'];
 		
-		/* load the resources */
+		Template::assign($this->_regions);
+		
+		Template::render();
+	}
+	
+	public function activity()
+	{
+		Auth::check_access();
+		
+		// load the resources
 		$this->load->model('personallogs_model', 'logs');
 		$this->load->model('posts_model', 'posts');
 		$this->load->model('news_model', 'news');
@@ -110,7 +42,7 @@ class Report_base extends Controller {
 		
 		if ($users->num_rows() > 0)
 		{
-			/* set the posting requirement threshold */
+			// set the posting requirement threshold
 			$requirement = now() - (86400 * $this->options['posting_requirement']);
 			
 			$timeframe = $this->options['posting_requirement'] * 86400;
@@ -123,7 +55,7 @@ class Report_base extends Controller {
 			{
 				$data['users'][$p->userid] = array(
 					'name' => $p->name,
-					'main_char' => $this->char->get_character_name($p->main_char, TRUE),
+					'main_char' => $this->char->get_character_name($p->main_char, true),
 					'email' => $p->email,
 					'id' => $p->userid,
 					'charid' => $p->main_char,
@@ -163,41 +95,37 @@ class Report_base extends Controller {
 			'totals' => ucfirst(lang('labels_totals'))
 		);
 		
-		/* figure out where the view file should be coming from */
-		$view_loc = view_location('report_activity', $this->skin, 'admin');
-		$js_loc = js_location('report_activity_js', $this->skin, 'admin');
+		$this->_regions['content'] = Location::view('report_activity', $this->skin, 'admin', $data);
+		$this->_regions['javascript'] = Location::js('report_activity_js', $this->skin, 'admin');
+		$this->_regions['title'].= $data['header'];
 		
-		/* write the data to the template */
-		$this->template->write('title', $data['header']);
-		$this->template->write_view('content', $view_loc, $data);
-		$this->template->write_view('javascript', $js_loc);
+		Template::assign($this->_regions);
 		
-		/* render the template */
-		$this->template->render();
+		Template::render();
 	}
 	
-	function applications()
+	public function applications($offset = 0)
 	{
-		$this->auth->check_access();
+		Auth::check_access();
 		
-		/* load the resources */
+		// load the resources
 		$this->load->library('pagination');
 		$this->load->model('applications_model', 'apps');
 		
-		/* set the variables */
-		$offset = $this->uri->segment(3, 0, TRUE);
+		// sanity check
+		$offset = (is_numeric($offset)) ? $offset : false;
 	
-		/* set the pagination configs */
+		// set the pagination configs
 		$config['base_url'] = site_url('report/applications/');
 		$config['total_rows'] = $this->apps->count_applications();
 		$config['per_page'] = 25;
 		$config['full_tag_open'] = '<p class="fontMedium bold">';
 		$config['full_tag_close'] = '</p>';
 	
-		/* initialize the pagination library */
+		// initialize the pagination library
 		$this->pagination->initialize($config);
 		
-		/* create the page links */
+		// create the page links
 		$data['pagination'] = $this->pagination->create_links();
 		
 		$applications = $this->apps->get_applications();
@@ -223,23 +151,23 @@ class Report_base extends Controller {
 		
 		$data['images'] = array(
 			'green' => array(
-				'src' => img_location('icon-green.png', $this->skin, 'admin'),
+				'src' => Location::img('icon-green.png', $this->skin, 'admin'),
 				'alt' => lang('actions_accepted'),
 				'class' => 'image'),
 			'red' => array(
-				'src' => img_location('icon-red.png', $this->skin, 'admin'),
+				'src' => Location::img('icon-red.png', $this->skin, 'admin'),
 				'alt' => lang('actions_rejected'),
 				'class' => 'image'),
 			'yellow' => array(
-				'src' => img_location('icon-yellow.png', $this->skin, 'admin'),
+				'src' => Location::img('icon-yellow.png', $this->skin, 'admin'),
 				'alt' => lang('status_pending'),
 				'class' => 'image'),
 			'delete' => array(
-				'src' => img_location('icon-delete.png', $this->skin, 'admin'),
+				'src' => Location::img('icon-delete.png', $this->skin, 'admin'),
 				'alt' => lang('actions_deleted'),
 				'class' => 'image'),
 			'view' => array(
-				'src' => img_location('icon-view.png', $this->skin, 'admin'),
+				'src' => Location::img('icon-view.png', $this->skin, 'admin'),
 				'alt' => lang('actions_view'),
 				'title' => ucfirst(lang('actions_view')),
 				'class' => 'image'),
@@ -266,41 +194,37 @@ class Report_base extends Controller {
 			'position' => ucfirst(lang('global_position')),
 		);
 		
-		/* figure out where the view file should be coming from */
-		$view_loc = view_location('report_applications', $this->skin, 'admin');
-		$js_loc = js_location('report_applications_js', $this->skin, 'admin');
+		$this->_regions['content'] = Location::view('report_applications', $this->skin, 'admin', $data);
+		$this->_regions['javascript'] = Location::js('report_applications_js', $this->skin, 'admin');
+		$this->_regions['title'].= $data['header'];
 		
-		/* write the data to the template */
-		$this->template->write('title', $data['header']);
-		$this->template->write_view('content', $view_loc, $data);
-		$this->template->write_view('javascript', $js_loc);
+		Template::assign($this->_regions);
 		
-		/* render the template */
-		$this->template->render();
+		Template::render();
 	}
 	
-	function awardnominations()
+	public function awardnominations($offset = 0)
 	{
-		$this->auth->check_access();
+		Auth::check_access();
 		
-		/* load the resources */
+		// load the resources
 		$this->load->library('pagination');
 		$this->load->model('awards_model', 'awards');
 		
-		/* set the variables */
-		$offset = $this->uri->segment(3, 0, TRUE);
+		// sanity check
+		$offset = (is_numeric($offset)) ? $offset : false;
 	
-		/* set the pagination configs */
+		// set the pagination configs
 		$config['base_url'] = site_url('report/awardnominations/');
 		$config['total_rows'] = $this->awards->count_award_noms('');
 		$config['per_page'] = 25;
 		$config['full_tag_open'] = '<p class="fontMedium bold">';
 		$config['full_tag_close'] = '</p>';
 	
-		/* initialize the pagination library */
+		// initialize the pagination library
 		$this->pagination->initialize($config);
 		
-		/* create the page links */
+		// create the page links
 		$data['pagination'] = $this->pagination->create_links();
 		
 		$nominations = $this->awards->get_award_noms('');
@@ -312,7 +236,7 @@ class Report_base extends Controller {
 				$date = gmt_to_local($n->queue_date, $this->timezone, $this->dst);
 				
 				$data['nominations'][$n->queue_id] = array(
-					'nominate' => $this->char->get_character_name($n->queue_nominate, TRUE),
+					'nominate' => $this->char->get_character_name($n->queue_nominate, true),
 					'awardid' => $n->queue_award,
 					'charid' => $n->queue_nominate,
 					'award' => $this->awards->get_award($n->queue_award, 'award_name'),
@@ -324,27 +248,27 @@ class Report_base extends Controller {
 				if (empty($n->queue_receive_character))
 				{
 					$charid = $this->user->get_user($n->queue_receive_user, 'main_char');
-					$data['nominations'][$n->queue_id]['name'] = $this->char->get_character_name($charid, TRUE);
+					$data['nominations'][$n->queue_id]['name'] = $this->char->get_character_name($charid, true);
 				}
 				else
 				{
 					$charid = $n->queue_receive_character;
-					$data['nominations'][$n->queue_id]['name'] = $this->char->get_character_name($charid, TRUE);
+					$data['nominations'][$n->queue_id]['name'] = $this->char->get_character_name($charid, true);
 				}
 			}
 		}
 		
 		$data['images'] = array(
 			'green' => array(
-				'src' => img_location('icon-green.png', $this->skin, 'admin'),
+				'src' => Location::img('icon-green.png', $this->skin, 'admin'),
 				'alt' => lang('actions_approved'),
 				'class' => 'image'),
 			'red' => array(
-				'src' => img_location('icon-red.png', $this->skin, 'admin'),
+				'src' => Location::img('icon-red.png', $this->skin, 'admin'),
 				'alt' => lang('actions_rejected'),
 				'class' => 'image'),
 			'yellow' => array(
-				'src' => img_location('icon-yellow.png', $this->skin, 'admin'),
+				'src' => Location::img('icon-yellow.png', $this->skin, 'admin'),
 				'alt' => lang('status_pending'),
 				'class' => 'image'),
 		);
@@ -370,43 +294,39 @@ class Report_base extends Controller {
 				lang('labels_nominations') .' '. lang('actions_found')),
 		);
 		
-		/* figure out where the view file should be coming from */
-		$view_loc = view_location('report_awardnominations', $this->skin, 'admin');
-		$js_loc = js_location('report_awardnominations_js', $this->skin, 'admin');
+		$this->_regions['content'] = Location::view('report_awardnominations', $this->skin, 'admin', $data);
+		$this->_regions['javascript'] = Location::js('report_awardnominations_js', $this->skin, 'admin');
+		$this->_regions['title'].= $data['header'];
 		
-		/* write the data to the template */
-		$this->template->write('title', $data['header']);
-		$this->template->write_view('content', $view_loc, $data);
-		$this->template->write_view('javascript', $js_loc);
+		Template::assign($this->_regions);
 		
-		/* render the template */
-		$this->template->render();
+		Template::render();
 	}
 	
-	function loa()
+	public function loa($offset = 0)
 	{
-		$this->auth->check_access();
+		Auth::check_access();
 		
-		/* load the resources */
+		// load the resources
 		$this->load->library('pagination');
 		
-		/* set the variables */
-		$offset = $this->uri->segment(3, 0, TRUE);
+		// sanity check
+		$offset = (is_numeric($offset)) ? $offset : false;
 	
-		/* set the pagination configs */
+		// set the pagination configs
 		$config['base_url'] = site_url('report/loa/');
 		$config['total_rows'] = $this->sys->count_loa_records();
 		$config['per_page'] = 25;
 		$config['full_tag_open'] = '<p class="fontMedium bold">';
 		$config['full_tag_close'] = '</p>';
 	
-		/* initialize the pagination library */
+		// initialize the pagination library
 		$this->pagination->initialize($config);
 		
-		/* create the page links */
+		// create the page links
 		$data['pagination'] = $this->pagination->create_links();
 		
-		/* run the method */
+		// run the method
 		$records = $this->sys->get_loa_records($config['per_page'], $offset);
 		
 		if ($records->num_rows() > 0)
@@ -418,14 +338,14 @@ class Report_base extends Controller {
 				$date_start = gmt_to_local($r->loa_start_date, $this->timezone, $this->dst);
 				$date_end = gmt_to_local($r->loa_end_date, $this->timezone, $this->dst);
 				
-				$end = (!empty($r->loa_end_date)) ? $r->loa_end_date : now();
+				$end = ( ! empty($r->loa_end_date)) ? $r->loa_end_date : now();
 				
 				$user = $this->user->get_user($r->loa_user);
-				$name = (!empty($user->name)) ? $user->name : $user->email;
+				$name = ( ! empty($user->name)) ? $user->name : $user->email;
 				
 				$data['loa'][$r->loa_id]['user'] = $name;
 				$data['loa'][$r->loa_id]['date_start'] = mdate($datestring, $date_start);
-				$data['loa'][$r->loa_id]['date_end'] = (!empty($r->loa_end_date)) ? mdate($datestring, $date_end) : '';
+				$data['loa'][$r->loa_id]['date_end'] = ( ! empty($r->loa_end_date)) ? mdate($datestring, $date_end) : '';
 				$data['loa'][$r->loa_id]['duration'] = $r->loa_duration;
 				$data['loa'][$r->loa_id]['duration_actual'] = timespan($r->loa_start_date, $end);
 				$data['loa'][$r->loa_id]['reason'] = $r->loa_reason;
@@ -446,22 +366,18 @@ class Report_base extends Controller {
 			'reason' => ucfirst(lang('labels_reason')),
 		);
 		
-		/* figure out where the view file should be coming from */
-		$view_loc = view_location('report_loa', $this->skin, 'admin');
-		$js_loc = js_location('report_loa_js', $this->skin, 'admin');
+		$this->_regions['content'] = Location::view('report_loa', $this->skin, 'admin', $data);
+		$this->_regions['javascript'] = Location::js('report_loa_js', $this->skin, 'admin');
+		$this->_regions['title'].= $data['header'];
 		
-		/* write the data to the template */
-		$this->template->write('title', $data['header']);
-		$this->template->write_view('content', $view_loc, $data);
-		$this->template->write_view('javascript', $js_loc);
+		Template::assign($this->_regions);
 		
-		/* render the template */
-		$this->template->render();
+		Template::render();
 	}
 	
-	function milestones()
+	public function milestones()
 	{
-		$this->auth->check_access();
+		Auth::check_access();
 		
 		$users = $this->user->get_users();
 		
@@ -472,7 +388,7 @@ class Report_base extends Controller {
 				$date = gmt_to_local($p->join_date, $this->timezone, $this->dst);
 				
 				$data['users'][$p->userid] = array(
-					'name' => $this->char->get_character_name($p->main_char, TRUE),
+					'name' => $this->char->get_character_name($p->main_char, true),
 					'id' => $p->userid,
 					'charid' => $p->main_char,
 					'join_date' => mdate($this->options['date_format'], $date),
@@ -490,22 +406,18 @@ class Report_base extends Controller {
 			'timespan' => ucfirst(lang('time_timespan')),
 		);
 		
-		/* figure out where the view file should be coming from */
-		$view_loc = view_location('report_milestones', $this->skin, 'admin');
-		$js_loc = js_location('report_milestones_js', $this->skin, 'admin');
+		$this->_regions['content'] = Location::view('report_milestones', $this->skin, 'admin', $data);
+		$this->_regions['javascript'] = Location::js('report_milestones_js', $this->skin, 'admin');
+		$this->_regions['title'].= $data['header'];
 		
-		/* write the data to the template */
-		$this->template->write('title', $data['header']);
-		$this->template->write_view('content', $view_loc, $data);
-		$this->template->write_view('javascript', $js_loc);
+		Template::assign($this->_regions);
 		
-		/* render the template */
-		$this->template->render();
+		Template::render();
 	}
 	
-	function moderation()
+	public function moderation()
 	{
-		$this->auth->check_access();
+		Auth::check_access();
 		
 		$users = $this->user->get_users();
 		
@@ -514,7 +426,7 @@ class Report_base extends Controller {
 			foreach ($users->result() as $p)
 			{
 				$data['users'][$p->userid] = array(
-					'name' => $this->char->get_character_name($p->main_char, TRUE),
+					'name' => $this->char->get_character_name($p->main_char, true),
 					'id' => $p->userid,
 					'charid' => $p->main_char,
 					'posts' => ($p->moderate_posts == 'y') ? 'red' : 'green',
@@ -532,11 +444,11 @@ class Report_base extends Controller {
 		
 		$data['images'] = array(
 			'green' => array(
-				'src' => img_location('icon-green.png', $this->skin, 'admin'),
+				'src' => Location::img('icon-green.png', $this->skin, 'admin'),
 				'alt' => '',
 				'class' => 'image'),
 			'red' => array(
-				'src' => img_location('icon-red.png', $this->skin, 'admin'),
+				'src' => Location::img('icon-red.png', $this->skin, 'admin'),
 				'alt' => lang('actions_moderated'),
 				'class' => 'image'),
 		);
@@ -561,31 +473,27 @@ class Report_base extends Controller {
 			'posts' => ucfirst(lang('global_posts')),
 		);
 		
-		/* figure out where the view file should be coming from */
-		$view_loc = view_location('report_moderation', $this->skin, 'admin');
-		$js_loc = js_location('report_moderation_js', $this->skin, 'admin');
+		$this->_regions['content'] = Location::view('report_moderation', $this->skin, 'admin', $data);
+		$this->_regions['javascript'] = Location::js('report_moderation_js', $this->skin, 'admin');
+		$this->_regions['title'].= $data['header'];
 		
-		/* write the data to the template */
-		$this->template->write('title', $data['header']);
-		$this->template->write_view('content', $view_loc, $data);
-		$this->template->write_view('javascript', $js_loc);
+		Template::assign($this->_regions);
 		
-		/* render the template */
-		$this->template->render();
+		Template::render();
 	}
 	
-	function posting()
+	public function posting()
 	{
-		$this->auth->check_access();
+		Auth::check_access();
 		
-		/* load the resources */
+		// load the resources
 		$this->load->model('personallogs_model', 'logs');
 		$this->load->model('posts_model', 'posts');
 		$this->load->model('news_model', 'news');
 		$this->load->model('ranks_model', 'ranks');
 		$this->load->helper('utility');
 		
-		/* get all the users */
+		// get all the users
 		$users = $this->user->get_users('');
 		
 		if ($users->num_rows() > 0)
@@ -601,7 +509,7 @@ class Report_base extends Controller {
 					
 					$data['users'][$p->status][$p->userid] = array(
 						'id' => $p->userid,
-						'name' => (!empty($p->name)) ? $p->name : $p->email,
+						'name' => ( ! empty($p->name)) ? $p->name : $p->email,
 						'logs' => $this->logs->count_user_logs($p->userid),
 						'news' => $this->news->count_user_news($p->userid),
 						'posts' => $this->posts->count_user_posts($p->userid),
@@ -612,7 +520,7 @@ class Report_base extends Controller {
 			}
 		}
 		
-		/* get all the users */
+		// get all the users
 		$characters = $this->char->get_all_characters('all');
 		
 		if ($characters->num_rows() > 0)
@@ -648,7 +556,7 @@ class Report_base extends Controller {
 		
 		$data['images'] = array(
 			'loading' => array(
-				'src' => img_location('loading-circle-large.gif', $this->skin, 'admin'),
+				'src' => Location::img('loading-circle-large.gif', $this->skin, 'admin'),
 				'alt' => lang('actions_loading'),
 				'class' => 'image'),
 		);
@@ -680,51 +588,47 @@ class Report_base extends Controller {
 			'search_users' => ucwords(lang('actions_search') .' '. lang('global_users')),
 		);
 		
-		/* figure out where the view file should be coming from */
-		$view_loc = view_location('report_posting', $this->skin, 'admin');
-		$js_loc = js_location('report_posting_js', $this->skin, 'admin');
+		$this->_regions['content'] = Location::view('report_posting', $this->skin, 'admin', $data);
+		$this->_regions['javascript'] = Location::js('report_posting_js', $this->skin, 'admin', $js_data);
+		$this->_regions['title'].= $data['header'];
 		
-		/* write the data to the template */
-		$this->template->write('title', $data['header']);
-		$this->template->write_view('content', $view_loc, $data);
-		$this->template->write_view('javascript', $js_loc, $js_data);
+		Template::assign($this->_regions);
 		
-		/* render the template */
-		$this->template->render();
+		Template::render();
 	}
 	
-	function stats()
+	public function stats()
 	{
-		/* grab the title */
+		// grab the title
 		$title = ucfirst(lang('labels_stats'));
 		
-		/* load the models */
+		// load the resources
 		$this->load->model('posts_model', 'posts');
 		$this->load->model('personallogs_model', 'logs');
 		
-		/* set the times */
+		// set the times
 		$today = getdate();
 		
-		/* this month */
+		// this month
 		$this_month_mysql = $today['year'] .'-'. $today['mon'] .'-01 00:00:00';
-		$this_month = human_to_unix($this_month_mysql, TRUE);
+		$this_month = human_to_unix($this_month_mysql, true);
 		
-		/* last month */
+		// last month
 		$year = ($today['mon'] == 1) ? $today['year'] - 1 : $today['year'];
 		$month = ($today['mon'] == 1) ? 12 : $today['mon'] - 1;
 		$last_month_mysql = $year .'-'. $month .'-01 00:00:00';
-		$last_month = human_to_unix($last_month_mysql, TRUE);
+		$last_month = human_to_unix($last_month_mysql, true);
 		
-		/* next month */
+		// next month
 		$year = ($today['mon'] == 12) ? $today['year'] + 1 : $today['year'];
 		$month = ($today['mon'] == 12) ? '01' : $today['mon'] + 1;
 		$next_month_mysql = $year .'-'. $month .'-01 00:00:00';
-		$next_month = human_to_unix($next_month_mysql, TRUE);
+		$next_month = human_to_unix($next_month_mysql, true);
 		
-		/* days in the months */
+		// days in the months
 		$days = date('t');
 
-		/* run the methods */
+		// run the methods
 		$data['users'] = array(
 			'current' => $this->user->count_users('current', $this_month, $last_month),
 			'previous' => $this->user->count_users('previous', $this_month, $last_month)
@@ -776,7 +680,7 @@ class Report_base extends Controller {
 			'total' => round((($data['post_totals']['current']) / ($today['mday'])) * $days, 2)
 		);
 		
-		/* set the header */
+		// set the header
 		$data['header'] = $title;
 		
 		$data['label'] = array(
@@ -798,23 +702,19 @@ class Report_base extends Controller {
 			'totals' => ucwords(lang('labels_totals')),
 		);
 		
-		/* figure out where the view file should be coming from */
-		$view_loc = view_location('report_stats', $this->skin, 'admin');
-		$js_loc = js_location('report_stats_js', $this->skin, 'admin');
+		$this->_regions['content'] = Location::view('report_stats', $this->skin, 'admin', $data);
+		$this->_regions['javascript'] = Location::js('report_stats_js', $this->skin, 'admin');
+		$this->_regions['title'].= $title;
 		
-		/* write the data to the template */
-		$this->template->write('title', $title);
-		$this->template->write_view('content', $view_loc, $data);
-		$this->template->write_view('javascript', $js_loc);
+		Template::assign($this->_regions);
 		
-		/* render the template */
-		$this->template->render();
+		Template::render();
 	}
 	
-	function versions()
+	public function versions()
 	{
-		/* pull in the markdown parser */
-		include_once APPPATH .'libraries/Thresher_Markdown.php';
+		// pull in the markdown parser
+		include_once APPPATH.'libraries/Thresher_Markdown.php';
 		
 		$ver = $this->sys->get_item('system_info', 'sys_id', 1);
 		
@@ -824,7 +724,7 @@ class Report_base extends Controller {
 			'database' => $ver->sys_version_major .'.'. $ver->sys_version_minor .'.'. $ver->sys_version_update
 		);
 		
-		/* grab all system version */
+		// grab all system version
 		$versions = $this->sys->get_all_system_versions();
 		
 		if ($versions->num_rows() > 0)
@@ -840,7 +740,7 @@ class Report_base extends Controller {
 			}
 		}
 		
-		/* grab all system components */
+		// grab all system components
 		$comp = $this->sys->get_all_system_components();
 		
 		if ($comp->num_rows() > 0)
@@ -860,7 +760,7 @@ class Report_base extends Controller {
 		
 		$data['images'] = array(
 			'loading' => array(
-				'src' => img_location('loading-circle-large.gif', $this->skin, 'admin'),
+				'src' => Location::img('loading-circle-large.gif', $this->skin, 'admin'),
 				'alt' => lang('actions_loading'),
 				'class' => 'image'),
 		);
@@ -876,28 +776,24 @@ class Report_base extends Controller {
 			'versions' => ucwords(lang('labels_version') .' '. lang('labels_history')),
 		);
 		
-		/* figure out where the view file should be coming from */
-		$view_loc = view_location('report_system', $this->skin, 'admin');
-		$js_loc = js_location('report_system_js', $this->skin, 'admin');
+		$this->_regions['content'] = Location::view('report_system', $this->skin, 'admin', $data);
+		$this->_regions['javascript'] = Location::js('report_system_js', $this->skin, 'admin');
+		$this->_regions['title'].= $data['header'];
 		
-		/* write the data to the template */
-		$this->template->write('title', $data['header']);
-		$this->template->write_view('content', $view_loc, $data);
-		$this->template->write_view('javascript', $js_loc);
+		Template::assign($this->_regions);
 		
-		/* render the template */
-		$this->template->render();
+		Template::render();
 	}
 	
-	function viewapp()
+	public function viewapp($id = 0)
 	{
-		$this->auth->check_access('report/applications');
+		Auth::check_access('report/applications');
 		
-		/* load the resources */
+		// load the resources
 		$this->load->model('applications_model', 'apps');
 		
-		/* set the variables */
-		$id = $this->uri->segment(3, 0, TRUE);
+		// sanity check
+		$id = (is_numeric($id)) ? $id : false;
 	
 		$application = $this->apps->get_application($id);
 		
@@ -933,16 +829,12 @@ class Report_base extends Controller {
 			'position' => ucfirst(lang('global_position')),
 		);
 		
-		/* figure out where the view file should be coming from */
-		$view_loc = view_location('report_viewapp', $this->skin, 'admin');
-		$js_loc = js_location('report_viewapp_js', $this->skin, 'admin');
+		$this->_regions['content'] = Location::view('report_viewapp', $this->skin, 'admin', $data);
+		$this->_regions['javascript'] = Location::js('report_viewapp_js', $this->skin, 'admin');
+		$this->_regions['title'].= $data['header'];
 		
-		/* write the data to the template */
-		$this->template->write('title', $data['header']);
-		$this->template->write_view('content', $view_loc, $data);
-		$this->template->write_view('javascript', $js_loc);
+		Template::assign($this->_regions);
 		
-		/* render the template */
-		$this->template->render();
+		Template::render();
 	}
 }
