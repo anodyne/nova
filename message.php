@@ -23,14 +23,14 @@ switch ($type)
 		$title = 'Nova Notice';
 		$header = 'Uh oh!';
 		$headerClass = 'error';
-		$message = 'Looks like you\'ve been naughty and the game master has completely banned you from viewing the site. This ban can be lifted by the game master, but you\'ll need to <a href="index.php/main/contact">contact them</a> to do so.';
+		$message = 'It looks like you\'ve been naughty and the game master has completely banned you from viewing the site. This ban can be lifted by the game master, but you\'ll need to <a href="index.php/main/contact">contact them</a> to do so.';
 	break;
 	
 	case 'browser':
 		$title = 'Nova Notice';
 		$header = 'Uh oh!';
 		$headerClass = 'notice';
-		$message = 'Looks like you\'re running a version of Internet Explorer that isn\'t supported. In order to use this version of Nova, you need to be running Internet Explorer 7 or higher (we recommend IE 8). You can find updates to Internet Explorer in Windows Update or from <a href="http://www.microsoft.com/windows/internet-explorer/default.aspx" target="_blank">microsoft.com</a>.';
+		$message = 'It looks like you\'re running a version of Internet Explorer that isn\'t supported. In order to use this version of Nova, you need to be running Internet Explorer 7 or higher (we recommend IE 8). You can find updates to Internet Explorer in Windows Update or from <a href="http://www.microsoft.com/windows/internet-explorer/default.aspx" target="_blank">microsoft.com</a>. Or better yet, give <a href="http://www.getfirefox.com" target="_blank">Firefox</a> or <a href="http://www.google.com/chrome" target="_blank">Google Chrome</a> a try.';
 	break;
 }
 
