@@ -2318,7 +2318,7 @@ $system_info = array(
 		'sys_install_date' => now(),
 		'sys_version_major' => 1,
 		'sys_version_minor' => 2,
-		'sys_version_update' => 3)
+		'sys_version_update' => 4)
 );
 
 $system_versions = array(
@@ -2651,6 +2651,18 @@ $system_versions = array(
 		'version_launch'	=> "Nova 1.2.3 is the third maintenance release for Nova 1.2 and fixes a bug with handling deck listings with multiple specification items. More information about these features and a full changelog can be found at AnodyneDocs. This update is recommended for all users.",
 		'version_changes'	=> "* added the 1.2.3 update file
 	* fixed bug with handling deck listings and multiple specification items"),
+	array(
+		'version'			=> '1.2.4',
+		'version_major'		=> 1,
+		'version_minor'		=> 2,
+		'version_update'	=> 4,
+		'version_date'		=> 1296000000,
+		'version_launch'	=> "Nova 1.2.4 is the fourth maintenance release for Nova 1.2 and fixes bugs with inaccurate mission post counts (thanks to Jordan for finding this issue), the acceptance email sent out to users and a manifest issue in Internet Explorer 7. More information about these features and a full changelog can be found at AnodyneDocs. This update is recommended for all users.",
+		'version_changes'	=> "* added the 1.2.4 update file
+* updated the jquery ui to version 1.8.9
+* fixed bug where nova wasn't accurately counting mission posts
+* fixed bug where the user acceptance email was CCed to more people than it needed to be
+* fixed bug where IE7 choked on the manifest"),
 );
 
 $tour_fields = array(
