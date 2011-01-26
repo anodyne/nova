@@ -66,7 +66,10 @@ class Nova_controller_admin extends Controller {
 			'posting_requirement',
 			'updates',
 			'use_mission_notes',
-			'post_count_format'
+			'post_count_format',
+			'allowed_chars_playing',
+			'allowed_chars_npc',
+			'default_email_address',
 		);
 		
 		// set the options
