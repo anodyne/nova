@@ -1,110 +1,30 @@
 <?php
 /**
- * User controller
+ * Users controller
  *
  * @package		Nova
  * @category	Controller
  * @author		Anodyne Productions
  * @copyright	2010-11 Anodyne Productions
- * @version		1.3
- *
- * Updated the flash message so they can be overridden by seamless substitution
+ * @version		2.0
  */
 
-class User_base extends Controller {
+require_once MODPATH.'core/libraries/Nova_controller_admin'.EXT;
 
-	/* set the variables */
-	var $options;
-	var $skin;
-	var $rank;
-	var $timezone;
-	var $dst;
-
-	function User_base()
-	{
-		parent::Controller();
-		
-		/* load the system model */
-		$this->load->model('system_model', 'sys');
-		$installed = $this->sys->check_install_status();
-		
-		if ($installed === FALSE)
-		{ /* check whether the system is installed */
-			redirect('install/index', 'refresh');
-		}
-		
-		/* load the session library */
-		$this->load->library('session');
-		
-		/* load the models */
-		$this->load->model('characters_model', 'char');
-		$this->load->model('users_model', 'user');
-		
-		/* check to see if they are logged in */
-		$this->auth->is_logged_in(TRUE);
-		
-		/* an array of the global we want to retrieve */
-		$settings_array = array(
-			'skin_admin',
-			'display_rank',
-			'timezone',
-			'daylight_savings',
-			'sim_name',
-			'date_format',
-			'system_email',
-			'email_subject',
-			'allowed_chars_playing',
-			'allowed_chars_npc'
-		);
-		
-		/* grab the settings */
-		$this->options = $this->settings->get_settings($settings_array);
-		
-		/* set the variables */
-		$this->skin = $this->options['skin_admin'];
-		$this->rank = $this->options['display_rank'];
-		$this->timezone = $this->options['timezone'];
-		$this->dst = (bool) $this->options['daylight_savings'];
-		
-		if ($this->auth->is_logged_in())
-		{
-			$this->skin = (file_exists(APPPATH .'views/'.$this->session->userdata('skin_admin').'/template_admin'.EXT))
-				? $this->session->userdata('skin_admin')
-				: $this->skin;
-			$this->rank = $this->session->userdata('display_rank');
-			$this->timezone = $this->session->userdata('timezone');
-			$this->dst = (bool) $this->session->userdata('dst');
-		}
-		
-		/* set and load the language file needed */
-		$this->lang->load('app', $this->session->userdata('language'));
-		
-		/* set the template */
-		$this->template->set_template('admin');
-		$this->template->set_master_template($this->skin .'/template_admin.php');
-		
-		/* write the common elements to the template */
-		$this->template->write('nav_main', $this->menu->build('main', 'main'), TRUE);
-		$this->template->write('nav_sub', $this->menu->build('adminsub', 'user'), TRUE);
-		$this->template->write('panel_1', $this->user_panel->panel_1(), TRUE);
-		$this->template->write('panel_2', $this->user_panel->panel_2(), TRUE);
-		$this->template->write('panel_3', $this->user_panel->panel_3(), TRUE);
-		$this->template->write('panel_workflow', $this->user_panel->panel_workflow(), TRUE);
-		$this->template->write('title', $this->options['sim_name'] . ' :: ');
-	}
-
-	function index()
-	{
-		/* nothing goes here */
-	}
+abstract class Nova_user extends Nova_controller_admin {
 	
-	function account()
+	public function __construct()
 	{
-		$this->auth->check_access();
+		parent::__construct();
+	}
+
+	public function account()
+	{
+		Auth::check_access();
 		
-		$level = $this->auth->get_access_level();
+		$level = Auth::get_access_level();
 		$id = $this->session->userdata('userid');
-		$id = ($level == 2) ? $this->uri->segment(3, $id, TRUE) : $id;
+		$id = ($level == 2) ? $this->uri->segment(3, $id, true) : $id;
 		
 		if (isset($_POST['submit']))
 		{
@@ -115,9 +35,9 @@ class User_base extends Controller {
 			 
 			if ($_POST['submit'] == 'Update')
 			{
-				$user = $this->uri->segment(3, 0, TRUE);
+				$user = $this->uri->segment(3, 0, true);
 				
-				if ($level == 1 && $user != $this->session->userdata('userid'))
+				if ($level == 1 and $user != $this->session->userdata('userid'))
 				{
 					redirect('admin/error/7');
 				}
@@ -140,11 +60,11 @@ class User_base extends Controller {
 					{
 						$array[$key] = $value;
 						
-						if ($key == 'password' || $key == 'security_answer')
+						if ($key == 'password' or $key == 'security_answer')
 						{
-							if (!empty($value))
+							if ( ! empty($value))
 							{
-								$array[$key] = ($key == 'password') ? $this->auth->hash($value) : sha1($value);
+								$array[$key] = ($key == 'password') ? Auth::hash($value) : sha1($value);
 							}
 							else
 							{
@@ -160,10 +80,10 @@ class User_base extends Controller {
 					}
 				}
 				
-				/* set the last update */
+				// set the last update
 				$array['last_update'] = now();
 				
-				/* submit needs to be removed */
+				// submit needs to be removed
 				unset($array['submit']);
 				
 				if ($level == 2)
@@ -174,15 +94,15 @@ class User_base extends Controller {
 					unset($array['loa_old']);
 					unset($array['status_old']);
 					
-					if ($old_status != 'inactive' && $array['status'] == 'inactive')
+					if ($old_status != 'inactive' and $array['status'] == 'inactive')
 					{
 						$array['leave_date'] = now();
 
 						$characters = $this->char->get_user_characters($id, 'active', 'array');
 
-						if (is_array($characters) && count($characters) > 0)
+						if (is_array($characters) and count($characters) > 0)
 						{
-							/* update all the users' active characters to inactive */
+							// update all the users' active characters to inactive
 							foreach ($characters as $c)
 							{
 								$char_array = array(
@@ -197,9 +117,9 @@ class User_base extends Controller {
 						$this->user->update_all_user_prefs($id);
 					}
 
-					if ($old_status == 'inactive' && $array['status'] != 'inactive')
+					if ($old_status == 'inactive' and $array['status'] != 'inactive')
 					{
-						$array['leave_date'] = NULL;
+						$array['leave_date'] = null;
 						
 						// update the user prefs to all be yes
 						$this->user->update_all_user_prefs($id, 'y');
@@ -219,7 +139,7 @@ class User_base extends Controller {
 				{
 					if ($array['loa'] != $old_loa)
 					{
-						$loa = $this->user->get_last_loa($user, TRUE);
+						$loa = $this->user->get_last_loa($user, true);
 				
 						if ($loa->num_rows() > 0)
 						{
@@ -256,30 +176,30 @@ class User_base extends Controller {
 					$flash['status'] = 'success';
 					$flash['message'] = text_output($message);
 					
-					/* if a user is updating their own password, update the cookie if it exists */
+					// if a user is updating their own password, update the cookie if it exists
 					if ($user == $this->session->userdata('userid'))
 					{
-						/* load the cookie helper */
+						// load the cookie helper
 						$this->load->helper('cookie');
 						
-						/* grab nova's unique identifier */
+						// grab nova's unique identifier
 						$uid = $this->sys->get_nova_uid();
 						
-						/* grab the cookie */
+						// grab the cookie
 						$cookie = get_cookie('nova_'. $uid);
 						
-						if ($cookie !== FALSE)
+						if ($cookie !== false)
 						{
-							/* set the cookie data */
+							// set the cookie data
 							$c_data = array(
 								'password' => array(
 									'name'   => $uid .'[password]',
-									'value'  => $this->auth->hash($password),
+									'value'  => Auth::hash($password),
 									'expire' => '1209600',
 									'prefix' => 'nova_')
 							);
 							
-							/* set the cookie */
+							// set the cookie
 							set_cookie($c_data['password']);
 						}
 					}
@@ -297,22 +217,19 @@ class User_base extends Controller {
 					$flash['message'] = text_output($message);
 				}
 				
-				// set the location of the flash view
-				$flashloc = view_location('flash', $this->skin, 'admin');
-				
-				// write everything to the template
-				$this->template->write_view('flash_message', $flashloc, $flash);
+				// set the flash message
+				$this->_regions['flash_message'] = Location::view('flash', $this->skin, 'admin', $flash);
 			}
 		}
 		
-		/* load the resources */
+		// load the resources
 		$this->load->helper('directory');
 		$this->load->model('access_model', 'access');
 		
-		/* grab the user details */
+		// grab the user details
 		$details = $this->user->get_user($id);
 		
-		if ($details !== FALSE)
+		if ($details !== false)
 		{
 			$data['inputs'] = array(
 				'id' => $details->userid,
@@ -363,112 +280,112 @@ class User_base extends Controller {
 					'name' => 'daylight_savings',
 					'id' => 'dst_y',
 					'value' => '1',
-					'checked' => ($details->daylight_savings == '1') ? TRUE : FALSE),
+					'checked' => ($details->daylight_savings == '1') ? true : false),
 				'dst_n' => array(
 					'name' => 'daylight_savings',
 					'id' => 'dst_n',
 					'value' => '0',
-					'checked' => ($details->daylight_savings == '0') ? TRUE : FALSE),
+					'checked' => ($details->daylight_savings == '0') ? true : false),
 				'admin_y' => array(
 					'name' => 'is_sysadmin',
 					'id' => 'admin_y',
 					'value' => 'y',
-					'checked' => ($details->is_sysadmin == 'y') ? TRUE : FALSE),
+					'checked' => ($details->is_sysadmin == 'y') ? true : false),
 				'admin_n' => array(
 					'name' => 'is_sysadmin',
 					'id' => 'admin_n',
 					'value' => 'n',
-					'checked' => ($details->is_sysadmin == 'n') ? TRUE : FALSE),
+					'checked' => ($details->is_sysadmin == 'n') ? true : false),
 				'gm_y' => array(
 					'name' => 'is_game_master',
 					'id' => 'gm_y',
 					'value' => 'y',
-					'checked' => ($details->is_game_master == 'y') ? TRUE : FALSE),
+					'checked' => ($details->is_game_master == 'y') ? true : false),
 				'gm_n' => array(
 					'name' => 'is_game_master',
 					'id' => 'gm_n',
 					'value' => 'n',
-					'checked' => ($details->is_game_master == 'n') ? TRUE : FALSE),
+					'checked' => ($details->is_game_master == 'n') ? true : false),
 				'webmaster_y' => array(
 					'name' => 'is_webmaster',
 					'id' => 'webmaster_y',
 					'value' => 'y',
-					'checked' => ($details->is_webmaster == 'y') ? TRUE : FALSE),
+					'checked' => ($details->is_webmaster == 'y') ? true : false),
 				'webmaster_n' => array(
 					'name' => 'is_webmaster',
 					'id' => 'webmaster_n',
 					'value' => 'n',
-					'checked' => ($details->is_webmaster == 'n') ? TRUE : FALSE),
+					'checked' => ($details->is_webmaster == 'n') ? true : false),
 				'mod_posts_y' => array(
 					'name' => 'moderate_posts',
 					'id' => 'mod_posts_y',
 					'value' => 'y',
-					'checked' => ($details->moderate_posts == 'y') ? TRUE : FALSE),
+					'checked' => ($details->moderate_posts == 'y') ? true : false),
 				'mod_posts_n' => array(
 					'name' => 'moderate_posts',
 					'id' => 'mod_posts_n',
 					'value' => 'n',
-					'checked' => ($details->moderate_posts == 'n') ? TRUE : FALSE),
+					'checked' => ($details->moderate_posts == 'n') ? true : false),
 				'mod_logs_y' => array(
 					'name' => 'moderate_logs',
 					'id' => 'mod_logs_y',
 					'value' => 'y',
-					'checked' => ($details->moderate_logs == 'y') ? TRUE : FALSE),
+					'checked' => ($details->moderate_logs == 'y') ? true : false),
 				'mod_logs_n' => array(
 					'name' => 'moderate_logs',
 					'id' => 'mod_logs_n',
 					'value' => 'n',
-					'checked' => ($details->moderate_logs == 'n') ? TRUE : FALSE),
+					'checked' => ($details->moderate_logs == 'n') ? true : false),
 				'mod_news_y' => array(
 					'name' => 'moderate_news',
 					'id' => 'mod_news_y',
 					'value' => 'y',
-					'checked' => ($details->moderate_news == 'y') ? TRUE : FALSE),
+					'checked' => ($details->moderate_news == 'y') ? true : false),
 				'mod_news_n' => array(
 					'name' => 'moderate_news',
 					'id' => 'mod_news_n',
 					'value' => 'n',
-					'checked' => ($details->moderate_news == 'n') ? TRUE : FALSE),
+					'checked' => ($details->moderate_news == 'n') ? true : false),
 				'mod_pcomment_y' => array(
 					'name' => 'moderate_post_comments',
 					'id' => 'mod_pcomment_y',
 					'value' => 'y',
-					'checked' => ($details->moderate_post_comments == 'y') ? TRUE : FALSE),
+					'checked' => ($details->moderate_post_comments == 'y') ? true : false),
 				'mod_pcomment_n' => array(
 					'name' => 'moderate_post_comments',
 					'id' => 'mod_pcomment_n',
 					'value' => 'n',
-					'checked' => ($details->moderate_post_comments == 'n') ? TRUE : FALSE),
+					'checked' => ($details->moderate_post_comments == 'n') ? true : false),
 				'mod_lcomment_y' => array(
 					'name' => 'moderate_log_comments',
 					'id' => 'mod_lcomment_y',
 					'value' => 'y',
-					'checked' => ($details->moderate_log_comments == 'y') ? TRUE : FALSE),
+					'checked' => ($details->moderate_log_comments == 'y') ? true : false),
 				'mod_lcomment_n' => array(
 					'name' => 'moderate_log_comments',
 					'id' => 'mod_lcomment_n',
 					'value' => 'n',
-					'checked' => ($details->moderate_log_comments == 'n') ? TRUE : FALSE),
+					'checked' => ($details->moderate_log_comments == 'n') ? true : false),
 				'mod_ncomment_y' => array(
 					'name' => 'moderate_news_comments',
 					'id' => 'mod_ncomment_y',
 					'value' => 'y',
-					'checked' => ($details->moderate_news_comments == 'y') ? TRUE : FALSE),
+					'checked' => ($details->moderate_news_comments == 'y') ? true : false),
 				'mod_ncomment_n' => array(
 					'name' => 'moderate_news_comments',
 					'id' => 'mod_ncomment_n',
 					'value' => 'n',
-					'checked' => ($details->moderate_news_comments == 'n') ? TRUE : FALSE),
+					'checked' => ($details->moderate_news_comments == 'n') ? true : false),
 				'mod_wcomment_y' => array(
 					'name' => 'moderate_wiki_comments',
 					'id' => 'mod_wcomment_y',
 					'value' => 'y',
-					'checked' => ($details->moderate_wiki_comments == 'y') ? TRUE : FALSE),
+					'checked' => ($details->moderate_wiki_comments == 'y') ? true : false),
 				'mod_wcomment_n' => array(
 					'name' => 'moderate_wiki_comments',
 					'id' => 'mod_wcomment_n',
 					'value' => 'n',
-					'checked' => ($details->moderate_wiki_comments == 'n') ? TRUE : FALSE),
+					'checked' => ($details->moderate_wiki_comments == 'n') ? true : false),
 			);
 		}
 		
@@ -483,16 +400,16 @@ class User_base extends Controller {
 						'name' => 'p_'. $p->pref_key,
 						'id' => 'p_'. $p->pref_key,
 						'value' => 'y',
-						'checked' => ($this->user->get_pref($p->pref_key, $id) == 'y') ? TRUE : FALSE),
+						'checked' => ($this->user->get_pref($p->pref_key, $id) == 'y') ? true : false),
 					'label' => $p->pref_label
 				);
 			}
 		}
 		
-		/* grab the directory map of the language folder */
-		$dir = directory_map(APPFOLDER .'/language', TRUE);
+		// grab the directory map of the language folder
+		$dir = directory_map(APPFOLDER .'/language', true);
 		
-		/* loop through the directory map and create the dropdown array */
+		// loop through the directory map and create the dropdown array
 		foreach ($dir as $key => $value)
 		{
 			if ($value != 'index.html')
@@ -523,10 +440,10 @@ class User_base extends Controller {
 			'pending' => ucwords(lang('status_pending')),
 		);
 		
-		/* get the questions from the database */
+		// get the questions from the database
 		$questions = $this->sys->get_security_questions();
 		
-		/* build the array with the questions */
+		// build the array with the questions
 		if ($questions->num_rows() > 0)
 		{
 			foreach ($questions->result() as $q)
@@ -550,11 +467,11 @@ class User_base extends Controller {
 		
 		$data['images'] = array(
 			'user' => array(
-				'src' => img_location('user.png', $this->skin, 'admin'),
+				'src' => Location::img('user.png', $this->skin, 'admin'),
 				'alt' => '',
 				'class' => 'image inline_img_left'),
 			'display' => array(
-				'src' => img_location('display.png', $this->skin, 'admin'),
+				'src' => Location::img('display.png', $this->skin, 'admin'),
 				'alt' => '',
 				'class' => 'image inline_img_left'),
 		);
@@ -605,24 +522,20 @@ class User_base extends Controller {
 			'yes' => ucfirst(lang('labels_yes')),
 		);
 		
-		/* figure out where the view files should be coming from */
-		$view_loc = view_location('user_account', $this->skin, 'admin');
-		$js_loc = js_location('user_account_js', $this->skin, 'admin');
+		$this->_regions['content'] = Location::view('user_account', $this->skin, 'admin', $data);
+		$this->_regions['javascript'] = Location::js('user_account_js', $this->skin, 'admin');
+		$this->_regions['title'].= $data['header'];
 		
-		/* write the data to the template */
-		$this->template->write('title', $data['header']);
-		$this->template->write_view('content', $view_loc, $data);
-		$this->template->write_view('javascript', $js_loc);
+		Template::assign($this->_regions);
 		
-		/* render the template */
-		$this->template->render();
+		Template::render();
 	}
 	
-	function all()
+	public function all()
 	{
-		$this->auth->check_access('user/account');
+		Auth::check_access('user/account');
 		
-		$level = $this->auth->get_access_level('user/account');
+		$level = Auth::get_access_level('user/account');
 		
 		if ($level < 2)
 		{
@@ -636,8 +549,8 @@ class User_base extends Controller {
 			switch ($action)
 			{
 				case 'delete':
-					$id = $this->input->post('id', TRUE);
-					$id = (is_numeric($id)) ? $id : FALSE;
+					$id = $this->input->post('id', true);
+					$id = (is_numeric($id)) ? $id : false;
 					
 					// remove the user's prefs
 					$delete = $this->user->delete_user_pref_values($id);
@@ -651,7 +564,7 @@ class User_base extends Controller {
 						
 						if (count($chars) > 0)
 						{
-							$update_array = array('user' => NULL);
+							$update_array = array('user' => null);
 							
 							foreach ($chars as $c)
 							{
@@ -681,14 +594,11 @@ class User_base extends Controller {
 						$flash['status'] = 'error';
 						$flash['message'] = text_output($message);
 					}
-					
-					// set the location of the flash view
-					$flashloc = view_location('flash', $this->skin, 'admin');
-					
-					// write everything to the template
-					$this->template->write_view('flash_message', $flashloc, $flash);
 				break;
 			}
+			
+			// set the flash message
+			$this->_regions['flash_message'] = Location::view('flash', $this->skin, 'admin', $flash);
 		}
 		
 		$users = $this->user->get_users('');
@@ -699,10 +609,10 @@ class User_base extends Controller {
 			{
 				$data['users'][$p->status][$p->userid] = array(
 					'id' => $p->userid,
-					'main_char' => $this->char->get_character_name($p->main_char, TRUE),
+					'main_char' => $this->char->get_character_name($p->main_char, true),
 					'email' => $p->email,
 					'name' => $p->name,
-					'left' => (!empty($p->leave_date)) ? timespan($p->leave_date, now()) : '',
+					'left' => ( ! empty($p->leave_date)) ? timespan($p->leave_date, now()) : '',
 				);
 			}
 		}
@@ -711,21 +621,21 @@ class User_base extends Controller {
 		
 		$data['images'] = array(
 			'loading' => array(
-				'src' => img_location('loading-circle-large.gif', $this->skin, 'admin'),
+				'src' => Location::img('loading-circle-large.gif', $this->skin, 'admin'),
 				'alt' => lang('actions_loading'),
 				'class' => 'image'),
 			'view' => array(
-				'src' => img_location('user-view.png', $this->skin, 'admin'),
+				'src' => Location::img('icon-view.png', $this->skin, 'admin'),
 				'alt' => lang('actions_view'),
 				'title' => ucfirst(lang('actions_view')),
 				'class' => 'image'),
 			'delete' => array(
-				'src' => img_location('user-delete.png', $this->skin, 'admin'),
+				'src' => Location::img('icon-delete.png', $this->skin, 'admin'),
 				'alt' => lang('actions_delete'),
 				'title' => ucfirst(lang('actions_delete')),
 				'class' => 'image'),
 			'edit' => array(
-				'src' => img_location('user-edit.png', $this->skin, 'admin'),
+				'src' => Location::img('icon-edit.png', $this->skin, 'admin'),
 				'alt' => lang('actions_edit'),
 				'title' => ucfirst(lang('actions_edit')),
 				'class' => 'image'),
@@ -742,38 +652,34 @@ class User_base extends Controller {
 			'loading' => ucfirst(lang('actions_loading')).'...',
 		);
 		
-		/* figure out where the view files should be coming from */
-		$view_loc = view_location('user_all', $this->skin, 'admin');
-		$js_loc = js_location('user_all_js', $this->skin, 'admin');
+		$this->_regions['content'] = Location::view('user_all', $this->skin, 'admin', $data);
+		$this->_regions['javascript'] = Location::js('user_all_js', $this->skin, 'admin');
+		$this->_regions['title'].= $data['header'];
 		
-		/* write the data to the template */
-		$this->template->write('title', $data['header']);
-		$this->template->write_view('content', $view_loc, $data);
-		$this->template->write_view('javascript', $js_loc);
+		Template::assign($this->_regions);
 		
-		/* render the template */
-		$this->template->render();
+		Template::render();
 	}
 	
-	function characterlink()
+	public function characterlink($user = 0)
 	{
-		$this->auth->check_access('user/account');
+		Auth::check_access('user/account');
 		
-		$level = $this->auth->get_access_level('user/account');
+		$level = Auth::get_access_level('user/account');
 		
 		if ($level == 2)
 		{
-			$user = $this->uri->segment(3, 0, TRUE);
-			$data['user'] = $user;
+			// sanity check
+			$data['user'] = (is_numeric($user)) ? $user : 0;
 			
 			switch ($this->uri->segment(4))
 			{
 				case 'add':
-					$id = $this->uri->segment(5, 0, TRUE);
+					$id = $this->uri->segment(5, 0, true);
 					
-					/* get all the characters and make sure it isn't blank */
+					// get all the characters and make sure it isn't blank
 					$chars_raw = $this->char->get_user_characters($user, '', 'array');
-					$chars = ($chars_raw !== FALSE) ? $chars_raw : array();
+					$chars = ($chars_raw !== false) ? $chars_raw : array();
 					
 					$type = array(
 						'active' => 0,
@@ -794,18 +700,18 @@ class User_base extends Controller {
 					
 					$key = array_search($id, $chars);
 					
-					if ($key === FALSE)
+					if ( ! $key)
 					{
-						/* set up the data array with the user info */
+						// set up the data array with the user info
 						$data_array = array('data_user' => $data['user']);
 						
-						/* update all the character data to point to the user */
+						// update all the character data to point to the user
 						$update_data = $this->char->update_character_data_all($id, 'data_char', $data_array);
 					
 						$c_type = $this->char->get_character($id, 'crew_type');
 						
-						if (($c_type == 'npc' && $type['npc'] >= $this->options['allowed_chars_npc']) ||
-							($c_type == 'active' && $type['active'] >= $this->options['allowed_chars_playing']))
+						if (($c_type == 'npc' and $type['npc'] >= $this->options['allowed_chars_npc']) or
+							($c_type == 'active' and $type['active'] >= $this->options['allowed_chars_playing']))
 						{
 							$msg = sprintf(
 								lang('flash_additional_char_quota'),
@@ -830,33 +736,33 @@ class User_base extends Controller {
 								''
 							);
 							
-							/* set the deactivate date and user ID */
+							// set the deactivate date and user ID
 							$char_activate = array(
 								'date_activate' => now(),
 								'user' => $user,
 							);
 							
-							/* run the update */
+							// run the update
 							$char_update = $this->char->update_character($id, $char_activate);
 							
-							/* push the item we're adding onto the array */
+							// push the item we're adding onto the array
 							$chars[] = $id;
 							
-							/* put the characters into a string */
+							// put the characters into a string
 							$chars_string = implode(',', $chars);
 							
-							/* create an array for updating the user record */
+							// create an array for updating the user record
 							$update_array = array('last_update' => now());
 							
-							/* get the user's main character */
+							// get the user's main character
 							$main = $this->user->get_user($user, 'main_char');
 							
-							if ($chars_raw === FALSE || empty($main))
-							{ /* if they don't have any characters or don't have a main character */
+							if ($chars_raw === false or empty($main))
+							{
 								$update_array['main_char'] = $id;
 							}
 							
-							/* run the update */
+							// run the update
 							$user_update = $this->user->update_user($user, $update_array);
 						}
 						
@@ -877,23 +783,17 @@ class User_base extends Controller {
 							$flash['status'] = 'error';
 							$flash['message'] = text_output($message);
 						}
-						
-						// set the location of the flash view
-						$flashloc = view_location('flash', $this->skin, 'admin');
-						
-						// write everything to the template
-						$this->template->write_view('flash_message', $flashloc, $flash);
 					}
 				break;
 					
 				case 'remove':
-					$id = $this->uri->segment(5, 0, TRUE);
+					$id = $this->uri->segment(5, 0, true);
 					
-					/* get an array of the user's characters */
+					// get an array of the user's characters
 					$chars = $this->char->get_user_characters($user, 'active_npc', 'array');
 					
-					/* new main is NULL until something overwrites it in the event the main char is removed */
-					$newmain = NULL;
+					// new main is null until something overwrites it in the event the main char is removed
+					$newmain = null;
 					
 					if (count($chars) > 0)
 					{
@@ -903,7 +803,7 @@ class User_base extends Controller {
 							{
 								$ctemp = $this->char->get_character($c, 'crew_type');
 								
-								if ($ctemp == 'active' && is_null($newmain))
+								if ($ctemp == 'active' and is_null($newmain))
 								{
 									$newmain = $c;
 								}
@@ -911,41 +811,41 @@ class User_base extends Controller {
 						}
 					}
 					
-					/* search the array */
+					// search the array
 					$key = array_search($id, $chars);
 					
-					if ($key !== FALSE)
+					if ($key !== false)
 					{
-						/* set up the data array with the user info */
-						$data_array = array('data_user' => NULL);
+						// set up the data array with the user info
+						$data_array = array('data_user' => null);
 						
-						/* update all the character data to point to the user */
+						// update all the character data to point to the user
 						$update_data = $this->char->update_character_data_all($id, 'data_char', $data_array);
 					
 						$main = $this->user->get_user($data['user'], 'main_char');
 						
-						/* set the deactivate date and user ID */
+						// set the deactivate date and user ID
 						$char_deactivate = array(
 							'date_deactivate' => now(),
-							'user' => NULL,
+							'user' => null,
 						);
 						
-						/* run the update */
+						// run the update
 						$char_update = $this->char->update_character($id, $char_deactivate);
 						
-						/* unset the item we're removing */
+						// unset the item we're removing
 						unset($chars[$key]);
 						
-						/* put the characters into a string */
+						// put the characters into a string
 						$chars_string = implode(',', $chars);
 						
-						/* create an array for updating the user record */
+						// create an array for updating the user record
 						$update_array = array(
 							'last_update' => now(),
 							'main_char' => ($main == $id) ? $newmain : $main
 						);
 						
-						/* run the update */
+						// run the update
 						$user_update = $this->user->update_user($user, $update_array);
 						
 						if ($user_update > 0)
@@ -972,30 +872,24 @@ class User_base extends Controller {
 							$flash['status'] = 'error';
 							$flash['message'] = text_output($message);
 						}
-						
-						// set the location of the flash view
-						$flashloc = view_location('flash', $this->skin, 'admin');
-						
-						// write everything to the template
-						$this->template->write_view('flash_message', $flashloc, $flash);
 					}
 				break;
 					
 				case 'set':
-					$id = $this->uri->segment(5, 0, TRUE);
+					$id = $this->uri->segment(5, 0, true);
 					
-					/* grab the current main character */
+					// grab the current main character
 					$char = $this->user->get_user($user, 'main_char');
 					
 					if ($char != $id)
 					{
-						/* create an array for updating the user record */
+						// create an array for updating the user record
 						$update_array = array(
 							'main_char' => $id,
 							'last_update' => now()
 						);
 						
-						/* run the update */
+						// run the update
 						$user_update = $this->user->update_user($user, $update_array);
 						
 						if ($user_update > 0)
@@ -1023,11 +917,8 @@ class User_base extends Controller {
 							$flash['message'] = text_output($message);
 						}
 						
-						// set the location of the flash view
-						$flashloc = view_location('flash', $this->skin, 'admin');
-						
-						// write everything to the template
-						$this->template->write_view('flash_message', $flashloc, $flash);
+						// set the flash message
+						$this->_regions['flash_message'] = Location::view('flash', $this->skin, 'admin', $flash);
 					}
 				break;
 			}
@@ -1040,21 +931,21 @@ class User_base extends Controller {
 				{
 					foreach ($all->result() as $a)
 					{
-						$data['all'][$a->userid] = (!empty($a->name)) ? $a->name : $a->email;
+						$data['all'][$a->userid] = ( ! empty($a->name)) ? $a->name : $a->email;
 					}
 				}
 			}
 			else
 			{
-				/* load the resources */
+				// load the resources
 				$this->load->model('positions_model', 'pos');
 				
 				$all = $this->char->get_user_characters($user, '', 'array');
 				
-				/* get the user's current characters */
-				$chars = ($all !== FALSE) ? $all : array();
+				// get the user's current characters
+				$chars = ($all !== false) ? $all : array();
 				
-				/* get all characters that don't have a user assigned to them */
+				// get all characters that don't have a user assigned to them
 				$unassigned = $this->char->get_all_characters('no_user');
 				
 				$userinfo = $this->user->get_user($user);
@@ -1072,10 +963,10 @@ class User_base extends Controller {
 						$d = $this->char->get_character($c, array('crew_type', 'position_1'));
 						
 						$data['chars'][$c] = array(
-							'name' => $this->char->get_character_name($c, TRUE),
+							'name' => $this->char->get_character_name($c, true),
 							'position' => $this->pos->get_position($d['position_1'], 'pos_name'),
 							'type' => ($d['crew_type'] == 'npc') ? strtoupper($d['crew_type']) : ucfirst($d['crew_type']),
-							'main' => ($this->user->get_main_character($user) != $c) ? FALSE : TRUE,
+							'main' => ($this->user->get_main_character($user) != $c) ? false : true,
 						);
 						
 						if ($d['crew_type'] == 'npc')
@@ -1098,7 +989,7 @@ class User_base extends Controller {
 					foreach ($unassigned->result() as $u)
 					{
 						$data['unassigned'][$u->crew_type][$u->charid] = array(
-							'name' => $this->char->get_character_name($u->charid, TRUE),
+							'name' => $this->char->get_character_name($u->charid, true),
 							'position' => $this->pos->get_position($u->position_1, 'pos_name')
 						);
 					}
@@ -1107,6 +998,7 @@ class User_base extends Controller {
 			
 			$data['header'] = ucwords(lang('labels_link') .' '. lang('global_characters')) .' '. 
 				lang('labels_to') .' '. ucfirst(lang('labels_account'));
+			
 			$data['text'] = sprintf(
 				lang('text_link_characters'),
 				lang('global_user'),
@@ -1131,31 +1023,31 @@ class User_base extends Controller {
 			
 			$data['images'] = array(
 				'remove' => array(
-					'src' => img_location('user-delete.png', $this->skin, 'admin'),
+					'src' => Location::img('icon-delete.png', $this->skin, 'admin'),
 					'alt' => lang('actions_remove'),
 					'class' => 'image'),
 				'star' => array(
-					'src' => img_location('icon-star.png', $this->skin, 'admin'),
+					'src' => Location::img('icon-star.png', $this->skin, 'admin'),
 					'alt' => '',
 					'class' => 'image'),
 				'add' => array(
-					'src' => img_location('user-add.png', $this->skin, 'admin'),
+					'src' => Location::img('icon-add.png', $this->skin, 'admin'),
 					'alt' => lang('actions_add'),
 					'class' => 'image'),
 				'main' => array(
-					'src' => img_location('icon-green-small.png', $this->skin, 'admin'),
+					'src' => Location::img('icon-green-small.png', $this->skin, 'admin'),
 					'alt' => '',
 					'class' => 'image'),
 				'npc' => array(
-					'src' => img_location('icon-gray-small.png', $this->skin, 'admin'),
+					'src' => Location::img('icon-gray-small.png', $this->skin, 'admin'),
 					'alt' => '',
 					'class' => 'image'),
 				'active' => array(
-					'src' => img_location('icon-blue-small.png', $this->skin, 'admin'),
+					'src' => Location::img('icon-blue-small.png', $this->skin, 'admin'),
 					'alt' => '',
 					'class' => 'image'),
 				'inactive' => array(
-					'src' => img_location('icon-black-small.png', $this->skin, 'admin'),
+					'src' => Location::img('icon-black-small.png', $this->skin, 'admin'),
 					'alt' => '',
 					'class' => 'image'),
 			);
@@ -1175,17 +1067,13 @@ class User_base extends Controller {
 				'remove' => ucfirst(lang('actions_remove')),
 			);
 			
-			/* figure out where the view files should be coming from */
-			$view_loc = view_location('user_characterlink', $this->skin, 'admin');
-			$js_loc = js_location('user_characterlink_js', $this->skin, 'admin');
+			$this->_regions['content'] = Location::view('user_characterlink', $this->skin, 'admin', $data);
+			$this->_regions['javascript'] = Location::js('user_characterlink_js', $this->skin, 'admin');
+			$this->_regions['title'].= $data['header'];
 			
-			/* write the data to the template */
-			$this->template->write('title', $data['header']);
-			$this->template->write_view('content', $view_loc, $data);
-			$this->template->write_view('javascript', $js_loc);
+			Template::assign($this->_regions);
 			
-			/* render the template */
-			$this->template->render();
+			Template::render();
 		}
 		else
 		{
@@ -1193,23 +1081,19 @@ class User_base extends Controller {
 		}
 	}
 	
-	function nominate()
+	public function nominate()
 	{
-		$this->auth->check_access();
+		Auth::check_access();
 		
 		if ($this->options['system_email'] == 'off')
 		{
 			$flash['status'] = 'info';
 			$flash['message'] = lang_output('flash_system_email_off');
 			
-			// set the location of the flash view
-			$flashloc = view_location('flash', $this->skin, 'admin');
-			
-			// write everything to the template
-			$this->template->write_view('flash_message', $flashloc, $flash);
+			$this->_regions['flash_message'] = Location::view('flash', $this->skin, 'admin', $flash);
 		}
 		
-		/* load the resources */
+		// load the resources
 		$this->load->model('awards_model', 'awards');
 		
 		if (isset($_POST['submit']))
@@ -1217,12 +1101,12 @@ class User_base extends Controller {
 			switch ($this->uri->segment(3))
 			{
 				case 'queue':
-					if ($this->auth->get_access_level() > 1)
+					if (Auth::get_access_level() > 1)
 					{
-						$action = $this->input->post('action', TRUE);
+						$action = $this->input->post('action', true);
 						
-						$id = $this->input->post('id', TRUE);
-						$id = (is_numeric($id)) ? $id : FALSE;
+						$id = $this->input->post('id', true);
+						$id = (is_numeric($id)) ? $id : false;
 						
 						switch ($action)
 						{
@@ -1244,7 +1128,7 @@ class User_base extends Controller {
 								
 								$insert = $this->awards->add_nominated_award($received);
 								
-								if ($update > 0 && $insert > 0)
+								if ($update > 0 and $insert > 0)
 								{
 									$message = sprintf(
 										lang('flash_success'),
@@ -1268,12 +1152,6 @@ class User_base extends Controller {
 									$flash['status'] = 'error';
 									$flash['message'] = text_output($message);
 								}
-								
-								// set the location of the flash view
-								$flashloc = view_location('flash', $this->skin, 'admin');
-								
-								// write everything to the template
-								$this->template->write_view('flash_message', $flashloc, $flash);
 							break;
 								
 							case 'reject':
@@ -1305,20 +1183,14 @@ class User_base extends Controller {
 									$flash['status'] = 'error';
 									$flash['message'] = text_output($message);
 								}
-								
-								// set the location of the flash view
-								$flashloc = view_location('flash', $this->skin, 'admin');
-								
-								// write everything to the template
-								$this->template->write_view('flash_message', $flashloc, $flash);
 							break;
 						}
 					}
 				break;
 					
 				default:
-					$character = $this->input->post('character', TRUE);
-					$awardid = $this->input->post('award', TRUE);
+					$character = $this->input->post('character', true);
+					$awardid = $this->input->post('award', true);
 					
 					$award = $this->awards->get_award($awardid);
 					
@@ -1327,7 +1199,7 @@ class User_base extends Controller {
 						'queue_receive_user' => $this->char->get_character($character, 'user'),
 						'queue_nominate' => $this->session->userdata('main_char'),
 						'queue_award' => $awardid,
-						'queue_reason' => $this->input->post('reason', TRUE),
+						'queue_reason' => $this->input->post('reason', true),
 						'queue_status' => 'pending',
 						'queue_date' => now()
 					);
@@ -1354,7 +1226,7 @@ class User_base extends Controller {
 							'nominate' => $insert_array['queue_nominate']
 						);
 						
-						$email = ($this->options['system_email'] == 'on') ? $this->_email('nominate', $email_data) : FALSE;
+						$email = ($this->options['system_email'] == 'on') ? $this->_email('nominate', $email_data) : false;
 					}
 					else
 					{
@@ -1368,17 +1240,14 @@ class User_base extends Controller {
 						$flash['status'] = 'error';
 						$flash['message'] = text_output($message);
 					}
-					
-					// set the location of the flash view
-					$flashloc = view_location('flash', $this->skin, 'admin');
-					
-					// write everything to the template
-					$this->template->write_view('flash_message', $flashloc, $flash);
 				break;
 			}
+			
+			// set the flash message
+			$this->_regions['flash_message'] = Location::view('flash', $this->skin, 'admin', $flash);
 		}
 		
-		/* grab all the awards */
+		// grab all the awards
 		$awards = $this->awards->get_all_awards();
 		
 		if ($awards->num_rows() > 0)
@@ -1392,7 +1261,7 @@ class User_base extends Controller {
 			}
 		}
 		
-		if ($this->auth->get_access_level() > 1)
+		if (Auth::get_access_level() > 1)
 		{
 			$noms = $this->awards->get_award_noms();
 			
@@ -1406,8 +1275,8 @@ class User_base extends Controller {
 					$date = gmt_to_local($n->queue_date, $this->timezone, $this->dst);
 					
 					$data['nominations'][$nid] = array(
-						'awardee' => $this->char->get_character_name($n->queue_receive_character, TRUE),
-						'nominator' => $this->char->get_character_name($n->queue_nominate, TRUE),
+						'awardee' => $this->char->get_character_name($n->queue_receive_character, true),
+						'nominator' => $this->char->get_character_name($n->queue_nominate, true),
 						'award' => $this->awards->get_award($n->queue_award, 'award_name'),
 						'reason' => $n->queue_reason,
 						'date' => mdate($datestring, $date),
@@ -1418,6 +1287,7 @@ class User_base extends Controller {
 		}
 		
 		$data['header'] = ucwords(lang('labels_crew') .' '. lang('global_award') .' '. lang('labels_nominations'));
+		
 		$data['text'] = sprintf(
 			lang('text_award_nomination'),
 			lang('global_award'),
@@ -1442,15 +1312,15 @@ class User_base extends Controller {
 		
 		$data['images'] = array(
 			'loading' => array(
-				'src' => img_location('loading-circle.gif', $this->skin, 'admin'),
+				'src' => Location::img('loading-circle.gif', $this->skin, 'admin'),
 				'alt' => ucfirst(lang('actions_loading') .'...')),
 			'reject' => array(
-				'src' => img_location('award-reject.png', $this->skin, 'admin'),
+				'src' => Location::img('icon-slash.png', $this->skin, 'admin'),
 				'alt' => lang('actions_reject'),
 				'title' => ucfirst(lang('actions_reject')),
 				'class' => 'image'),
 			'accept' => array(
-				'src' => img_location('award-approve.png', $this->skin, 'admin'),
+				'src' => Location::img('icon-check.png', $this->skin, 'admin'),
 				'alt' => lang('actions_approve'),
 				'title' => ucfirst(lang('actions_approve')),
 				'class' => 'image'),
@@ -1473,27 +1343,23 @@ class User_base extends Controller {
 		
 		$js_data['tab'] = ($this->uri->segment(3) == 'queue') ? 1 : 0;
 		
-		/* figure out where the view files should be coming from */
-		$view_loc = view_location('user_nominate', $this->skin, 'admin');
-		$js_loc = js_location('user_nominate_js', $this->skin, 'admin');
+		$this->_regions['content'] = Location::view('user_nominate', $this->skin, 'admin', $data);
+		$this->_regions['javascript'] = Location::js('user_nominate_js', $this->skin, 'admin', $js_data);
+		$this->_regions['title'].= $data['header'];
 		
-		/* write the data to the template */
-		$this->template->write('title', $data['header']);
-		$this->template->write_view('content', $view_loc, $data);
-		$this->template->write_view('javascript', $js_loc, $js_data);
+		Template::assign($this->_regions);
 		
-		/* render the template */
-		$this->template->render();
+		Template::render();
 	}
 	
-	function options()
+	public function options()
 	{
-		$this->auth->check_access('user/account');
+		Auth::check_access('user/account');
 		
-		/* set the user id */
+		// set the user id
 		$id = $this->session->userdata('userid');
 		
-		/* set the tab */
+		// set the tab
 		$js_data['tab'] = 0;
 		
 		if (isset($_POST['submit']))
@@ -1539,7 +1405,7 @@ class User_base extends Controller {
 						$flash['status'] = 'success';
 						$flash['message'] = text_output($message);
 						
-						/* change the user's session with the new rank info */
+						// change the user's session with the new rank info
 						$this->session->set_userdata('my_links', $session_array);
 					}
 					else
@@ -1556,17 +1422,11 @@ class User_base extends Controller {
 						$flash['message'] = text_output($message);
 					}
 					
-					// set the location of the flash view
-					$flashloc = view_location('flash', $this->skin, 'admin');
-					
-					// write everything to the template
-					$this->template->write_view('flash_message', $flashloc, $flash);
-					
 					$js_data['tab'] = 2;
 				break;
 					
 				case 'ranks':
-					$rank = $this->input->post('rank', TRUE);
+					$rank = $this->input->post('rank', true);
 					
 					$update_array = array(
 						'display_rank' => $rank,
@@ -1588,7 +1448,7 @@ class User_base extends Controller {
 						$flash['status'] = 'success';
 						$flash['message'] = text_output($message);
 						
-						/* change the user's session with the new rank info */
+						// change the user's session with the new rank info
 						$this->session->set_userdata('display_rank', $rank);
 					}
 					else
@@ -1605,19 +1465,13 @@ class User_base extends Controller {
 						$flash['message'] = text_output($message);
 					}
 					
-					// set the location of the flash view
-					$flashloc = view_location('flash', $this->skin, 'admin');
-					
-					// write everything to the template
-					$this->template->write_view('flash_message', $flashloc, $flash);
-					
 					$js_data['tab'] = 1;
 				break;
 					
 				case 'skins':
-					$skin_admin = $this->input->post('skin_admin', TRUE);
-					$skin_main = $this->input->post('skin_main', TRUE);
-					$skin_wiki = $this->input->post('skin_wiki', TRUE);
+					$skin_admin = $this->input->post('skin_admin', true);
+					$skin_main = $this->input->post('skin_main', true);
+					$skin_wiki = $this->input->post('skin_wiki', true);
 					
 					$update_array = array(
 						'skin_admin' => $skin_admin,
@@ -1641,7 +1495,7 @@ class User_base extends Controller {
 						$flash['status'] = 'success';
 						$flash['message'] = text_output($message);
 						
-						/* change the user's session with the new info */
+						// change the user's session with the new info
 						if ($skin_admin != $this->session->userdata('skin_admin'))
 						{
 							$this->session->set_userdata('skin_admin', $skin_admin);
@@ -1671,21 +1525,18 @@ class User_base extends Controller {
 						$flash['message'] = text_output($message);
 					}
 					
-					// set the location of the flash view
-					$flashloc = view_location('flash', $this->skin, 'admin');
-					
-					// write everything to the template
-					$this->template->write_view('flash_message', $flashloc, $flash);
-					
 					$js_data['tab'] = 0;
 				break;
 			}
+			
+			// set the flash message
+			$this->_regions['flash_message'] = Location::view('flash', $this->skin, 'admin', $flash);
 		}
 		
-		/* load the resources */
+		// load the resources
 		$this->load->model('ranks_model', 'ranks');
 		
-		/* grab the user details */
+		// grab the user details
 		$user = $this->user->get_user($id);
 		
 		/*
@@ -1715,9 +1566,9 @@ class User_base extends Controller {
 						{
 							if (
 								(
-									$item->menu_use_access == 'y' && 
+									$item->menu_use_access == 'y' and 
 									array_key_exists($item->menu_access, $this->session->userdata('access'))
-								) || 
+								) or 
 									$item->menu_use_access == 'n'
 								)
 							{
@@ -1730,6 +1581,7 @@ class User_base extends Controller {
 		}
 		
 		$links = explode(',', $user->my_links);
+		
 		$data['defaults']['links'] = array(
 			1 => (isset($links[0])) ? $links[0] : 0,
 			2 => (isset($links[1])) ? $links[1] : 0,
@@ -1750,7 +1602,7 @@ class User_base extends Controller {
 		{
 			foreach ($skins->result() as $skin)
 			{
-				$skinaccess = ($this->auth->check_access('site/catalogueskins', FALSE))
+				$skinaccess = (Auth::check_access('site/catalogueskins', false))
 					? array('active', 'development')
 					: 'active';
 				
@@ -1775,8 +1627,9 @@ class User_base extends Controller {
 		| RANKS
 		|---------------------------------------------------------------
 		*/
-		$r_access = $this->auth->check_access('site/catalogueranks', FALSE);
-		$rank_access = ($r_access === TRUE) ? array('active', 'development') : 'active';
+		
+		$r_access = Auth::check_access('site/catalogueranks', false);
+		$rank_access = ($r_access === true) ? array('active', 'development') : 'active';
 		
 		$ranks = $this->ranks->get_all_rank_sets($rank_access);
 		
@@ -1788,13 +1641,13 @@ class User_base extends Controller {
 					'id' => $r->rankcat_id,
 					'name' => $r->rankcat_name,
 					'preview' => array(
-						'src' => rank_location($r->rankcat_location, 'preview', $r->rankcat_extension),
+						'src' => Location::rank($r->rankcat_location, 'preview', $r->rankcat_extension),
 						'alt' => ''),
 					'input' => array(
 						'name' => 'rank',
 						'id' => 'rank_'. $r->rankcat_id,
 						'value' => $r->rankcat_location,
-						'checked' => ($this->session->userdata('display_rank') == $r->rankcat_location) ? TRUE : FALSE),
+						'checked' => ($this->session->userdata('display_rank') == $r->rankcat_location) ? true : false),
 				);
 			}
 		}
@@ -1812,10 +1665,10 @@ class User_base extends Controller {
 		
 		$data['images'] = array(
 			'loading' => array(
-				'src' => img_location('loading-circle.gif', $this->skin, 'admin'),
+				'src' => Location::img('loading-circle.gif', $this->skin, 'admin'),
 				'alt' => ucfirst(lang('actions_loading'))),
 			'view' => array(
-				'src' => img_location('icon-view.png', $this->skin, 'admin'),
+				'src' => Location::img('icon-view.png', $this->skin, 'admin'),
 				'alt' => '',
 				'class' => 'image'),
 		);
@@ -1834,38 +1687,30 @@ class User_base extends Controller {
 			'skin_wiki' => ucfirst(lang('global_wiki')),
 		);
 		
-		/* figure out where the view files should be coming from */
-		$view_loc = view_location('user_options', $this->skin, 'admin');
-		$js_loc = js_location('user_options_js', $this->skin, 'admin');
+		$this->_regions['content'] = Location::view('user_options', $this->skin, 'admin', $data);
+		$this->_regions['javascript'] = Location::js('user_options_js', $this->skin, 'admin', $js_data);
+		$this->_regions['title'].= $data['header'];
 		
-		/* write the data to the template */
-		$this->template->write('title', $data['header']);
-		$this->template->write_view('content', $view_loc, $data);
-		$this->template->write_view('javascript', $js_loc, $js_data);
+		Template::assign($this->_regions);
 		
-		/* render the template */
-		$this->template->render();
+		Template::render();
 	}
 	
-	function status()
+	public function status()
 	{
-		$this->auth->check_access('user/account');
+		Auth::check_access('user/account');
 		
 		if ($this->options['system_email'] == 'off')
 		{
 			$flash['status'] = 'info';
 			$flash['message'] = lang_output('flash_system_email_off');
 			
-			// set the location of the flash view
-			$flashloc = view_location('flash', $this->skin, 'admin');
-			
-			// write everything to the template
-			$this->template->write_view('flash_message', $flashloc, $flash);
+			$this->_regions['flash_message'] = Location::view('flash', $this->skin, 'admin', $flash);
 		}
 		
 		if (isset($_POST['submit']))
 		{
-			$status = strtolower($this->input->post('status', TRUE));
+			$status = strtolower($this->input->post('status', true));
 			
 			$update_data = array('loa' => $status);
 			
@@ -1873,7 +1718,7 @@ class User_base extends Controller {
 			
 			if ($update > 0)
 			{
-				$loa = $this->user->get_last_loa($this->session->userdata('userid'), TRUE);
+				$loa = $this->user->get_last_loa($this->session->userdata('userid'), true);
 				
 				if ($loa->num_rows() > 0)
 				{
@@ -1891,8 +1736,8 @@ class User_base extends Controller {
 							'loa_user' => $this->session->userdata('userid'),
 							'loa_start_date' => now(),
 							'loa_type' => $status,
-							'loa_duration' => $this->input->post('duration', TRUE),
-							'loa_reason' => $this->input->post('reason', TRUE)
+							'loa_duration' => $this->input->post('duration', true),
+							'loa_reason' => $this->input->post('reason', true)
 						);
 						
 						$this->user->create_loa_record($loa_array);
@@ -1911,12 +1756,12 @@ class User_base extends Controller {
 					
 				$email_data = array(
 					'requestor' => $this->session->userdata('main_char'),
-					'reason' => $this->input->post('reason', TRUE),
-					'duration' => $this->input->post('duration', TRUE),
-					'status' => $this->input->post('status', TRUE)
+					'reason' => $this->input->post('reason', true),
+					'duration' => $this->input->post('duration', true),
+					'status' => $this->input->post('status', true)
 				);
 				
-				$email = ($this->options['system_email'] == 'on') ? $this->_email('status', $email_data) : FALSE;
+				$email = ($this->options['system_email'] == 'on') ? $this->_email('status', $email_data) : false;
 			}
 			else
 			{
@@ -1931,11 +1776,8 @@ class User_base extends Controller {
 				$flash['message'] = text_output($message);
 			}
 			
-			// set the location of the flash view
-			$flashloc = view_location('flash', $this->skin, 'admin');
-			
-			// write everything to the template
-			$this->template->write_view('flash_message', $flashloc, $flash);
+			// set the flash message
+			$this->_regions['flash_message'] = Location::view('flash', $this->skin, 'admin', $flash);
 		}
 		
 		$data['header'] = ucwords(lang('actions_request') .' '. lang('abbr_loa'));
@@ -1949,7 +1791,7 @@ class User_base extends Controller {
 				'content' => ucwords(lang('actions_submit'))),
 		);
 		
-		/* grab the loa status of the user */
+		// grab the loa status of the user
 		$loa = $this->user->get_loa($this->session->userdata('userid'));
 		
 		$data['inputs'] = array(
@@ -1977,39 +1819,36 @@ class User_base extends Controller {
 			'text' => lang('text_loa_request'),
 		);
 		
-		/* figure out where the view files should be coming from */
-		$view_loc = view_location('user_status', $this->skin, 'admin');
+		$this->_regions['content'] = Location::view('user_status', $this->skin, 'admin', $data);
+		$this->_regions['title'].= $data['header'];
 		
-		/* write the data to the template */
-		$this->template->write('title', $data['header']);
-		$this->template->write_view('content', $view_loc, $data);
+		Template::assign($this->_regions);
 		
-		/* render the template */
-		$this->template->render();
+		Template::render();
 	}
 	
-	function _email($type = '', $data = '')
+	protected function _email($type, $data)
 	{
-		/* load the libraries */
+		// load the libraries
 		$this->load->library('email');
 		$this->load->library('parser');
 		
-		/* define the variables */
-		$email = FALSE;
+		// define the variables
+		$email = false;
 		
 		switch ($type)
 		{
 			case 'nominate':
-				/* load the resources */
+				// load the resources
 				$this->load->model('awards_model', 'awards');
 				
 				$award = $this->awards->get_award($data['award'], 'award_name');
 				
-				/* set some variables */
+				// set some variables
 				$subject = lang('email_subject_award_nomination');
 				
-				/* set who the email is coming from */
-				$from_name = $this->char->get_character_name($data['nominate'], TRUE, TRUE);
+				// set who the email is coming from
+				$from_name = $this->char->get_character_name($data['nominate'], true, true);
 				$from_email = $this->user->get_email_address('character', $data['nominate']);
 				
 				if ($data['cat'] == 'ooc')
@@ -2019,10 +1858,10 @@ class User_base extends Controller {
 				}
 				else
 				{
-					$to_name = $this->char->get_character_name($data['receive'], TRUE, TRUE);
+					$to_name = $this->char->get_character_name($data['receive'], true, true);
 				}
 				
-				/* set the content */
+				// set the content
 				$content = sprintf(
 					lang('email_content_award_nomination'),
 					$from_name,
@@ -2033,23 +1872,23 @@ class User_base extends Controller {
 					$data['reason']
 				);
 				
-				/* set the email data */
+				// set the email data
 				$email_data = array(
 					'email_content' => ($this->email->mailtype == 'html') ? nl2br($content) : $content,
 					'email_from' => '',
 					'email_subject' => ''
 				);
 				
-				/* where should the email be coming from */
-				$em_loc = email_location('user_nominate', $this->email->mailtype);
+				// where should the email be coming from
+				$em_loc = Location::email('user_nominate', $this->email->mailtype);
 				
-				/* parse the message */
-				$message = $this->parser->parse($em_loc, $email_data, TRUE);
+				// parse the message
+				$message = $this->parser->parse($em_loc, $email_data, true);
 				
-				/* make a string of email addresses */
+				// make a string of email addresses
 				$to = implode(',', $this->user->get_emails_with_access('user/nominate', 2));
 				
-				/* set the parameters for sending the email */
+				// set the parameters for sending the email
 				$this->email->from($from_email, $from_name);
 				$this->email->to($to);
 				$this->email->subject($this->options['email_subject'] .' '. $subject);
@@ -2057,14 +1896,14 @@ class User_base extends Controller {
 			break;
 				
 			case 'status':
-				/* set some variables */
+				// set some variables
 				$subject = lang('email_subject_user_status_change');
 				
-				/* set who the email is coming from */
-				$from_name = $this->char->get_character_name($data['requestor'], TRUE, TRUE);
+				// set who the email is coming from
+				$from_name = $this->char->get_character_name($data['requestor'], true, true);
 				$from_email = $this->user->get_email_address('character', $data['requestor']);
 				
-				/* set the content */
+				// set the content
 				$content = sprintf(
 					lang('email_content_user_status_change'),
 					$from_name,
@@ -2074,23 +1913,23 @@ class User_base extends Controller {
 					$data['reason']
 				);
 				
-				/* set the email data */
+				// set the email data
 				$email_data = array(
 					'email_content' => ($this->email->mailtype == 'html') ? nl2br($content) : $content,
 					'email_subject' => $subject,
 					'email_from' => $from_name,
 				);
 				
-				/* where should the email be coming from */
-				$em_loc = email_location('user_status_change', $this->email->mailtype);
+				// where should the email be coming from
+				$em_loc = Location::email('user_status_change', $this->email->mailtype);
 				
-				/* parse the message */
-				$message = $this->parser->parse($em_loc, $email_data, FALSE);
+				// parse the message
+				$message = $this->parser->parse($em_loc, $email_data, false);
 				
-				/* make a string of email addresses */
+				// make a string of email addresses
 				$to = implode(',', $this->user->get_gm_emails());
 				
-				/* set the parameters for sending the email */
+				// set the parameters for sending the email
 				$this->email->from($from_email, $from_name);
 				$this->email->to($to);
 				$this->email->subject($this->options['email_subject'] .' '. $subject);
@@ -2098,10 +1937,9 @@ class User_base extends Controller {
 			break;
 		}
 		
-		/* send the email */
+		// send the email
 		$email = $this->email->send();
 		
-		/* return the email variable */
 		return $email;
 	}
 }
