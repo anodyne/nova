@@ -5,10 +5,12 @@
 |---------------------------------------------------------------
 |
 | File: models/posts_model_base.php
-| System Version: 1.2
+| System Version: 1.2.4
 |
 | Changes: updated some of the methods to avoid situations where
-|	errors could be thrown if a character or user ID wasn't present
+|	errors could be thrown if a character or user ID wasn't present;
+|	added a parameter to count_mission_posts to query based on the
+|	status of mission posts
 |
 | Model used to access the posts and posts comments tables.
 |
@@ -411,10 +413,18 @@ class Posts_model_base extends Model {
 		return $count_final;
 	}
 	
-	function count_mission_posts($mission = '', $count_pref = '')
+	function count_mission_posts($mission = '', $count_pref = '', $status = 'activated')
 	{
+		$this->db->from('posts');
+		$this->db->where('post_mission', $mission);
+		
+		if ( ! empty($status))
+		{
+			$this->db->where('post_status', $status);
+		}
+		
 		/* run the query */
-		$query = $this->db->get_where('posts', array('post_mission' => $mission));
+		$query = $this->db->get();
 		
 		/* set the count variable */
 		$count = 0;

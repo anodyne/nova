@@ -5,10 +5,10 @@
 |---------------------------------------------------------------
 |
 | File: controllers/characters_base.php
-| System Version: 1.1.1
+| System Version: 1.2.4
 |
-| Changes: fixed bug where nova wouldn't display if the template
-|	file couldn't be found
+| Changes: fixed bug where nova would CC a larger number of people
+|	in to the acceptance email than necessary
 |
 */
 
@@ -1989,7 +1989,7 @@ class Characters_base extends Controller {
 		switch ($type)
 		{
 			case 'accept':
-				$cc = implode(',', $this->user->get_emails_with_access('characters/index'));
+				$cc = implode(',', $this->user->get_gm_emails());
 				
 				$email_data = array(
 					'email_subject' => lang('email_subject_character_approved') .' - '. $data['character'],
