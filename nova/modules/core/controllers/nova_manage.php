@@ -6,127 +6,44 @@
  * @category	Controller
  * @author		Anodyne Productions
  * @copyright	2010-11 Anodyne Productions
- * @version		1.3
- *
- * Updated the flash messages so they can be overridden by seamless substitution,
- * updated the post/log/news management pages to include an ID on the textareas so
- * we can target it with the jquery.elastic plugin
+ * @version		2.0
  */
 
-class Manage_base extends Controller {
+require_once MODPATH.'core/libraries/Nova_controller_admin'.EXT;
 
-	/* set the variables */
-	var $options;
-	var $skin;
-	var $rank;
-	var $timezone;
-	var $dst;
-
-	function Manage_base()
-	{
-		parent::Controller();
-		
-		/* load the system model */
-		$this->load->model('system_model', 'sys');
-		$installed = $this->sys->check_install_status();
-		
-		if ($installed === FALSE)
-		{ /* check whether the system is installed */
-			redirect('install/index', 'refresh');
-		}
-		
-		/* load the session library */
-		$this->load->library('session');
-		
-		/* load the models */
-		$this->load->model('characters_model', 'char');
-		$this->load->model('users_model', 'user');
-		
-		/* check to see if they are logged in */
-		$this->auth->is_logged_in(TRUE);
-		
-		/* an array of the global we want to retrieve */
-		$settings_array = array(
-			'skin_admin',
-			'display_rank',
-			'timezone',
-			'daylight_savings',
-			'sim_name',
-			'date_format',
-			'system_email',
-			'post_count_format',
-			'default_email_address',
-			'email_subject'
-		);
-		
-		/* grab the settings */
-		$this->options = $this->settings->get_settings($settings_array);
-		
-		/* set the variables */
-		$this->skin = $this->options['skin_admin'];
-		$this->rank = $this->options['display_rank'];
-		$this->timezone = $this->options['timezone'];
-		$this->dst = (bool) $this->options['daylight_savings'];
-		
-		if ($this->auth->is_logged_in())
-		{
-			$this->skin = (file_exists(APPPATH .'views/'.$this->session->userdata('skin_admin').'/template_admin'.EXT))
-				? $this->session->userdata('skin_admin')
-				: $this->skin;
-			$this->rank = $this->session->userdata('display_rank');
-			$this->timezone = $this->session->userdata('timezone');
-			$this->dst = (bool) $this->session->userdata('dst');
-		}
-		
-		/* set and load the language file needed */
-		$this->lang->load('app', $this->session->userdata('language'));
-		
-		/* set the template */
-		$this->template->set_template('admin');
-		$this->template->set_master_template($this->skin .'/template_admin.php');
-		
-		/* write the common elements to the template */
-		$this->template->write('nav_main', $this->menu->build('main', 'main'), TRUE);
-		$this->template->write('nav_sub', $this->menu->build('adminsub', 'manage'), TRUE);
-		$this->template->write('panel_1', $this->user_panel->panel_1(), TRUE);
-		$this->template->write('panel_2', $this->user_panel->panel_2(), TRUE);
-		$this->template->write('panel_3', $this->user_panel->panel_3(), TRUE);
-		$this->template->write('panel_workflow', $this->user_panel->panel_workflow(), TRUE);
-		$this->template->write('title', $this->options['sim_name'] . ' :: ');
-	}
-
-	function index()
-	{
-		/* nothing goes here... */
-	}
+abstract class Nova_manage extends Nova_controller_admin {
 	
-	function awards()
+	public function __construct()
 	{
-		/* check access */
-		$this->auth->check_access();
+		parent::__construct();
+	}
+
+	public function awards($action = false, $award = false)
+	{
+		// check access
+		Auth::check_access();
 		
-		/* load the resources */
+		// load the resources
 		$this->load->model('awards_model', 'awards');
 		
-		/* set the variables */
-		$action = $this->uri->segment(3);
-		$id = $this->uri->segment(4);
+		// sanity check
+		$award = (is_numeric($award)) ? $award : false;
 		
 		if (isset($_POST['submit']))
 		{
-			switch ($this->uri->segment(3))
+			switch ($action)
 			{
 				case 'add':
 					$insert_array = array(
-						'award_name' => $this->input->post('award_name', TRUE),
-						'award_order' => $this->input->post('award_order', TRUE),
-						'award_display' => $this->input->post('award_display', TRUE),
-						'award_cat' => $this->input->post('award_cat', TRUE),
-						'award_desc' => $this->input->post('award_desc', TRUE),
-						'award_image' => $this->input->post('award_image', TRUE),
+						'award_name' => $this->input->post('award_name', true),
+						'award_order' => $this->input->post('award_order', true),
+						'award_display' => $this->input->post('award_display', true),
+						'award_cat' => $this->input->post('award_cat', true),
+						'award_desc' => $this->input->post('award_desc', true),
+						'award_image' => $this->input->post('award_image', true),
 					);
 					
-					/* insert the record */
+					// insert the record
 					$insert = $this->awards->add_award($insert_array);
 					
 					if ($insert > 0)
@@ -153,17 +70,11 @@ class Manage_base extends Controller {
 						$flash['status'] = 'error';
 						$flash['message'] = text_output($message);
 					}
-					
-					// set the location of the flash view
-					$flashloc = view_location('flash', $this->skin, 'admin');
-					
-					/* write everything to the template */
-					$this->template->write_view('flash_message', $flashloc, $flash);
 				break;
 					
 				case 'delete':
-					$id = $this->input->post('id', TRUE);
-					$id = (is_numeric($id)) ? $id : FALSE;
+					$id = $this->input->post('id', true);
+					$id = (is_numeric($id)) ? $id : false;
 					
 					$delete = $this->awards->delete_award($id);
 					
@@ -191,17 +102,11 @@ class Manage_base extends Controller {
 						$flash['status'] = 'error';
 						$flash['message'] = text_output($message);
 					}
-					
-					// set the location of the flash view
-					$flashloc = view_location('flash', $this->skin, 'admin');
-					
-					/* write everything to the template */
-					$this->template->write_view('flash_message', $flashloc, $flash);
 				break;
 					
 				case 'edit':
-					$id = $this->input->post('id', TRUE);
-					$id = (is_numeric($id)) ? $id : FALSE;
+					$id = $this->input->post('id', true);
+					$id = (is_numeric($id)) ? $id : false;
 					
 					foreach ($_POST as $key => $value)
 					{
@@ -237,19 +142,16 @@ class Manage_base extends Controller {
 						$flash['status'] = 'error';
 						$flash['message'] = text_output($message);
 					}
-					
-					// set the location of the flash view
-					$flashloc = view_location('flash', $this->skin, 'admin');
-					
-					/* write everything to the template */
-					$this->template->write_view('flash_message', $flashloc, $flash);
 				break;
 			}
+			
+			// set the flash message
+			$this->_regions['flash_message'] = Location::view('flash', $this->skin, 'admin', $flash);
 		}
 		
-		if ($action == 'add' || $action == 'edit')
+		if ($action == 'add' or $action == 'edit')
 		{
-			$item = ($action == 'edit') ? $this->sys->get_item('awards', 'award_id', $id) : FALSE;
+			$item = ($action == 'edit') ? $this->sys->get_item('awards', 'award_id', $award) : false;
 			
 			$data['header'] = ucwords(lang('actions_'. $action) .' '. lang('global_award'));
 			$data['header'].= ($action == 'edit') ? ' - '. $item->award_name : '';
@@ -257,15 +159,15 @@ class Manage_base extends Controller {
 			$data['inputs'] = array(
 				'name' => array(
 					'name' => 'award_name',
-					'value' => ($item === FALSE) ? '' : $item->award_name),
+					'value' => ( ! $item) ? '' : $item->award_name),
 				'order' => array(
 					'name' => 'award_order',
 					'class' => 'small',
-					'value' => ($item === FALSE) ? 99 : $item->award_order),
+					'value' => ( ! $item) ? 99 : $item->award_order),
 				'desc' => array(
 					'name' => 'award_desc',
 					'rows' => 10,
-					'value' => ($item === FALSE) ? '' : $item->award_desc),
+					'value' => ( ! $item) ? '' : $item->award_desc),
 				'images' => array(
 					'name' => 'award_image',
 					'id' => 'images',
@@ -274,13 +176,13 @@ class Manage_base extends Controller {
 					'name' => 'award_display',
 					'id' => 'display_y',
 					'value' => 'y',
-					'checked' => ($item !== FALSE && $item->award_display == 'y') ? TRUE : FALSE),
+					'checked' => ($item !== false and $item->award_display == 'y') ? true : false),
 				'display_n' => array(
 					'name' => 'award_display',
 					'id' => 'display_n',
 					'value' => 'n',
-					'checked' => ($item !== FALSE && $item->award_display == 'n') ? TRUE : FALSE),
-				'cat' => ($item === FALSE) ? '' : $item->award_cat,
+					'checked' => ($item !== false and $item->award_display == 'n') ? true : false),
+				'cat' => ( ! $item) ? '' : $item->award_cat,
 				'submit' => array(
 					'type' => 'submit',
 					'class' => 'button-main',
@@ -289,9 +191,9 @@ class Manage_base extends Controller {
 					'content' => ucwords(lang('actions_submit'))),
 			);
 			
-			if ($item === FALSE)
+			if ( ! $item)
 			{
-				$data['inputs']['display_y']['checked'] = TRUE;
+				$data['inputs']['display_y']['checked'] = true;
 			}
 			
 			$data['values']['cat'] = array(
@@ -324,14 +226,14 @@ class Manage_base extends Controller {
 				}
 			}
 			
-			$data['form'] = ($action == 'edit') ? 'edit/'. $id : 'add';
-			$data['id'] = $id;
+			$data['form'] = ($action == 'edit') ? 'edit/'. $award : 'add';
+			$data['id'] = $award;
 			
-			$view_loc = view_location('manage_awards_action', $this->skin, 'admin');
+			$view_loc = 'manage_awards_action';
 		}
 		else
 		{
-			/* grab all the awards from the database */
+			// grab all the awards from the database
 			$awards = $this->awards->get_all_awards('asc', '');
 			
 			if ($awards->num_rows() > 0)
@@ -356,27 +258,24 @@ class Manage_base extends Controller {
 			
 			$data['header'] = ucfirst(lang('global_awards'));
 			
-			$view_loc = view_location('manage_awards', $this->skin, 'admin');
+			$view_loc = 'manage_awards';
 		}
-		
-		/* figure out where the view should be coming from */
-		$js_loc = js_location('manage_awards_js', $this->skin, 'admin');
 		
 		$data['images'] = array(
 			'add' => array(
-				'src' => img_location('award-add.png', $this->skin, 'admin'),
+				'src' => Location::img('icon-add.png', $this->skin, 'admin'),
 				'alt' => '',
 				'class' => 'inline_img_left'),
 			'delete' => array(
-				'src' => img_location('award-delete.png', $this->skin, 'admin'),
+				'src' => Location::img('icon-delete.png', $this->skin, 'admin'),
 				'alt' => lang('actions_delete'),
 				'title' => ucfirst(lang('actions_delete'))),
 			'edit' => array(
-				'src' => img_location('award-edit.png', $this->skin, 'admin'),
+				'src' => Location::img('icon-edit.png', $this->skin, 'admin'),
 				'alt' => lang('actions_edit'),
 				'title' => ucfirst(lang('actions_add'))),
 			'upload' => array(
-				'src' => img_location('image-upload.png', $this->skin, 'admin'),
+				'src' => Location::img('image-upload.png', $this->skin, 'admin'),
 				'alt' => lang('actions_upload'),
 				'class' => 'image'),
 		);
@@ -405,26 +304,29 @@ class Manage_base extends Controller {
 			'upload' => ucwords(lang('actions_upload') .' '. lang('labels_images') .' '. RARROW),
 		);
 		
-		/* write the data to the template */
-		$this->template->write('title', $data['header']);
-		$this->template->write_view('content', $view_loc, $data);
-		$this->template->write_view('javascript', $js_loc);
+		$this->_regions['content'] = Location::view($view_loc, $this->skin, 'admin', $data);
+		$this->_regions['javascript'] = Location::js('manage_awards_js', $this->skin, 'admin');
+		$this->_regions['title'].= $data['header'];
 		
-		/* render the template */
-		$this->template->render();
+		Template::assign($this->_regions);
+		
+		Template::render();
 	}
 	
-	function comments()
+	public function comments($type = 'posts', $section = 'activated', $offset = 0)
 	{
-		$this->auth->check_access();
+		Auth::check_access();
 		
+		// arrays to check against
 		$types = array('posts', 'logs', 'news', 'wiki');
 		$values = array('activated', 'pending', 'edit');
-		$type = $this->uri->segment(3, 'posts', FALSE, $types);
-		$section = $this->uri->segment(4, 'activated', FALSE, $values);
-		$offset = $this->uri->segment(5, 0, TRUE);
 		
-		/* load the resources */
+		// sanity checks
+		$type = (in_array($type, $types)) ? $type : 'posts';
+		$section = (in_array($section, $values)) ? $section : 'activated';
+		$offset = (is_numeric($offset)) ? $offset : 0;
+		
+		// load the resources
 		$this->load->model('posts_model', 'posts');
 		$this->load->model('personallogs_model', 'logs');
 		$this->load->model('news_model', 'news');
@@ -435,8 +337,8 @@ class Manage_base extends Controller {
 			switch ($this->uri->segment(6))
 			{
 				case 'approve':
-					$id = $this->input->post('id', TRUE);
-					$id = (is_numeric($id)) ? $id : FALSE;
+					$id = $this->input->post('id', true);
+					$id = (is_numeric($id)) ? $id : false;
 					
 					switch ($type)
 					{
@@ -521,8 +423,8 @@ class Manage_base extends Controller {
 						$flash['status'] = 'success';
 						$flash['message'] = text_output($message);
 						
-						/* send the email */
-						$email = ($this->options['system_email'] == 'on') ? $this->_email($email_type, $email_data) : FALSE;
+						// send the email
+						$email = ($this->options['system_email'] == 'on') ? $this->_email($email_type, $email_data) : false;
 					}
 					else
 					{
@@ -539,8 +441,8 @@ class Manage_base extends Controller {
 				break;
 					
 				case 'delete':
-					$id = $this->input->post('id', TRUE);
-					$id = (is_numeric($id)) ? $id : FALSE;
+					$id = $this->input->post('id', true);
+					$id = (is_numeric($id)) ? $id : false;
 					$delete = 0;
 					
 					switch ($type)
@@ -566,7 +468,7 @@ class Manage_base extends Controller {
 						break;
 					}
 					
-					$id = FALSE;
+					$id = false;
 					
 					if ($delete > 0)
 					{
@@ -595,38 +497,38 @@ class Manage_base extends Controller {
 				break;
 					
 				case 'edit':
-					$id = $this->input->post('id', TRUE);
-					$id = (is_numeric($id)) ? $id : FALSE;
+					$id = $this->input->post('id', true);
+					$id = (is_numeric($id)) ? $id : false;
 					$delete = 0;
 					
 					switch ($type)
 					{
 						case 'posts':
-							$update_array = array('pcomment_content' => $this->input->post('pcomment_content', TRUE));
+							$update_array = array('pcomment_content' => $this->input->post('pcomment_content', true));
 							$update = $this->posts->update_post_comment($id, $update_array);
 							$item = ucfirst(lang('global_missionpost'));
 						break;
 							
 						case 'logs':
-							$update_array = array('lcomment_content' => $this->input->post('lcomment_content', TRUE));
+							$update_array = array('lcomment_content' => $this->input->post('lcomment_content', true));
 							$update = $this->logs->update_log_comment($id, $update_array);
 							$item = ucfirst(lang('global_personllog'));
 						break;
 							
 						case 'news':
-							$update_array = array('ncomment_content' => $this->input->post('ncomment_content', TRUE));
+							$update_array = array('ncomment_content' => $this->input->post('ncomment_content', true));
 							$update = $this->news->update_news_comment($id, $update_array);
 							$item = ucfirst(lang('global_newsitem'));
 						break;
 							
 						case 'wiki':
-							$update_array = array('wcomment_content' => $this->input->post('wcomment_content', TRUE));
+							$update_array = array('wcomment_content' => $this->input->post('wcomment_content', true));
 							$update = $this->wiki->update_comment($id, $update_array);
 							$item = ucfirst(lang('global_wiki'));
 						break;
 					}
 					
-					$id = FALSE;
+					$id = false;
 					
 					if ($update > 0)
 					{
@@ -655,24 +557,21 @@ class Manage_base extends Controller {
 				break;
 			}
 			
-			// set the location of the flash view
-			$flashloc = view_location('flash', $this->skin, 'admin');
-			
-			/* write everything to the template */
-			$this->template->write_view('flash_message', $flashloc, $flash);
+			// set the flash message
+			$this->_regions['flash_message'] = Location::view('flash', $this->skin, 'admin', $flash);
 		}
 		
-		$p_activated = ($section == 'activated' && $type == 'posts') ? $offset : 0;
-		$p_pending = ($section == 'pending' && $type == 'posts') ? $offset : 0;
+		$p_activated = ($section == 'activated' and $type == 'posts') ? $offset : 0;
+		$p_pending = ($section == 'pending' and $type == 'posts') ? $offset : 0;
 		
-		$l_activated = ($section == 'activated' && $type == 'logs') ? $offset : 0;
-		$l_pending = ($section == 'pending' && $type == 'logs') ? $offset : 0;
+		$l_activated = ($section == 'activated' and $type == 'logs') ? $offset : 0;
+		$l_pending = ($section == 'pending' and $type == 'logs') ? $offset : 0;
 		
-		$n_activated = ($section == 'activated' && $type == 'news') ? $offset : 0;
-		$n_pending = ($section == 'pending' && $type == 'news') ? $offset : 0;
+		$n_activated = ($section == 'activated' and $type == 'news') ? $offset : 0;
+		$n_pending = ($section == 'pending' and $type == 'news') ? $offset : 0;
 		
-		$w_activated = ($section == 'activated' && $type == 'wiki') ? $offset : 0;
-		$w_pending = ($section == 'pending' && $type == 'wiki') ? $offset : 0;
+		$w_activated = ($section == 'activated' and $type == 'wiki') ? $offset : 0;
+		$w_pending = ($section == 'pending' and $type == 'wiki') ? $offset : 0;
 		
 		$data['posts'] = array(
 			'activated' => $this->_comments_ajax($p_activated, 'posts'),
@@ -695,7 +594,7 @@ class Manage_base extends Controller {
 		
 		$data['images'] = array(
 			'loading' => array(
-				'src' => img_location('loading-bar.gif', $this->skin, 'admin'),
+				'src' => Location::img('loading-bar.gif', $this->skin, 'admin'),
 				'alt' => '',
 				'class' => 'image'),
 		);
@@ -732,37 +631,32 @@ class Manage_base extends Controller {
 		
 		$js_data['section'] = ($section == 'pending') ? 1 : 0;
 		
-		/* figure out where the view should be coming from */
-		$view_loc = view_location('manage_comments', $this->skin, 'admin');
-		$js_loc = js_location('manage_comments_js', $this->skin, 'admin');
+		$this->_regions['content'] = Location::view('manage_comments', $this->skin, 'admin', $data);
+		$this->_regions['javascript'] = Location::js('manage_comments_js', $this->skin, 'admin', $js_data);
+		$this->_regions['title'].= $data['header'];
 		
-		/* write the data to the template */
-		$this->template->write('title', $data['header']);
-		$this->template->write_view('content', $view_loc, $data);
-		$this->template->write_view('javascript', $js_loc, $js_data);
+		Template::assign($this->_regions);
 		
-		/* render the template */
-		$this->template->render();
+		Template::render();
 	}
 	
-	function decks()
+	public function decks($deck = false)
 	{
-		/* check access */
-		$this->auth->check_access();
+		Auth::check_access();
 		
-		/* load the resources */
+		// load the resources
 		$this->load->model('tour_model', 'tour');
 		$this->load->model('specs_model', 'specs');
 		
-		// get the deck from the URI
-		$deck = $this->uri->segment(3, 0, TRUE);
+		// sanity check
+		$deck = (is_numeric($deck)) ? $deck : false;
 		
 		if (isset($_POST['submit']))
 		{
-			$name = $this->input->post('deck_name', TRUE);
-			$content = $this->input->post('deck_content', TRUE);
-			$item = $this->input->post('deck_item', TRUE);
-			$id = $this->input->post('id', TRUE);
+			$name = $this->input->post('deck_name', true);
+			$content = $this->input->post('deck_content', true);
+			$item = $this->input->post('deck_item', true);
+			$id = $this->input->post('id', true);
 			
 			$update_array = array(
 				'deck_name' => $name,
@@ -797,17 +691,14 @@ class Manage_base extends Controller {
 				$flash['message'] = text_output($message);
 			}
 			
-			// set the location of the flash view
-			$flashloc = view_location('flash', $this->skin, 'admin');
-			
-			/* write everything to the template */
-			$this->template->write_view('flash_message', $flashloc, $flash);
+			// set the flash message
+			$this->_regions['flash_message'] = Location::view('flash', $this->skin, 'admin', $flash);
 		}
 		
 		if ($deck == 0)
 		{
 			// get the specification items
-			$specs = $this->specs->get_spec_items(NULL);
+			$specs = $this->specs->get_spec_items(null);
 			
 			if ($specs->num_rows() > 0)
 			{
@@ -830,11 +721,8 @@ class Manage_base extends Controller {
 			}
 		}
 		
-		/* figure out where the view should be coming from */
-		$view_loc = view_location('manage_decks', $this->skin, 'admin');
-		$js_loc = js_location('manage_decks_js', $this->skin, 'admin');
-		
 		$data['header'] = ucwords(lang('global_deck') .' '. lang('labels_listings'));
+		
 		$data['text'] = sprintf(
 			lang('text_manage_decks'),
 			lang('global_deck'),
@@ -848,7 +736,7 @@ class Manage_base extends Controller {
 		);
 		
 		// get the specification items
-		$specs = $this->specs->get_spec_items(NULL);
+		$specs = $this->specs->get_spec_items(null);
 		
 		$data['values']['specs'][0] = ucwords(lang('actions_choose').' '.lang('labels_a').' '.lang('global_specification').' '.lang('labels_item'));
 		
@@ -878,7 +766,7 @@ class Manage_base extends Controller {
 		);
 		
 		$data['loading'] = array(
-			'src' => img_location('loading-bar.gif', $this->skin, 'admin'),
+			'src' => Location::img('loading-bar.gif', $this->skin, 'admin'),
 			'alt' => '',
 			'class' => 'image'
 		);
@@ -889,21 +777,20 @@ class Manage_base extends Controller {
 				ucwords(lang('labels_all').' '.lang('global_deck').' '.lang('labels_listings')),
 		);
 		
-		/* write the data to the template */
-		$this->template->write('title', $data['header']);
-		$this->template->write_view('content', $view_loc, $data);
-		$this->template->write_view('javascript', $js_loc);
+		$this->_regions['content'] = Location::view('manage_decks', $this->skin, 'admin', $data);
+		$this->_regions['javascript'] = Location::js('manage_decks_js', $this->skin, 'admin');
+		$this->_regions['title'].= $data['header'];
 		
-		/* render the template */
-		$this->template->render();
+		Template::assign($this->_regions);
+		
+		Template::render();
 	}
 	
-	function depts()
+	public function depts()
 	{
-		/* check access */
-		$this->auth->check_access();
+		Auth::check_access();
 		
-		/* load the resources */
+		// load the resources
 		$this->load->model('depts_model', 'dept');
 		
 		// set the variables
@@ -915,16 +802,16 @@ class Manage_base extends Controller {
 			{
 				case 'add':
 					$insert_array = array(
-						'dept_name' => $this->input->post('dept_name', TRUE),
-						'dept_type' => $this->input->post('dept_type', TRUE),
-						'dept_order' => $this->input->post('dept_order', TRUE),
-						'dept_display' => $this->input->post('dept_display', TRUE),
-						'dept_desc' => $this->input->post('dept_desc', TRUE),
-						'dept_parent' => $this->input->post('dept_parent', TRUE),
-						'dept_manifest' => $this->input->post('dept_manifest', TRUE),
+						'dept_name' => $this->input->post('dept_name', true),
+						'dept_type' => $this->input->post('dept_type', true),
+						'dept_order' => $this->input->post('dept_order', true),
+						'dept_display' => $this->input->post('dept_display', true),
+						'dept_desc' => $this->input->post('dept_desc', true),
+						'dept_parent' => $this->input->post('dept_parent', true),
+						'dept_manifest' => $this->input->post('dept_manifest', true),
 					);
 					
-					/* insert the record */
+					// insert the record
 					$insert = $this->dept->add_dept($insert_array);
 					
 					// optimize the table
@@ -954,28 +841,22 @@ class Manage_base extends Controller {
 						$flash['status'] = 'error';
 						$flash['message'] = text_output($message);
 					}
-					
-					// set the location of the flash view
-					$flashloc = view_location('flash', $this->skin, 'admin');
-					
-					/* write everything to the template */
-					$this->template->write_view('flash_message', $flashloc, $flash);
 				break;
 					
 				case 'edit':
 					// grab the ID
-					$id = $this->input->post('id', TRUE);
-					$id = ( ! is_numeric($id)) ? FALSE : $id;
+					$id = $this->input->post('id', true);
+					$id = ( ! is_numeric($id)) ? false : $id;
 					
 					// build the array to update the record with
 					$update_array = array(
-						'dept_name' => $this->input->post('dept_name', TRUE),
-						'dept_type' => $this->input->post('dept_type', TRUE),
-						'dept_order' => $this->input->post('dept_order', TRUE),
-						'dept_display' => $this->input->post('dept_display', TRUE),
-						'dept_desc' => $this->input->post('dept_desc', TRUE),
-						'dept_parent' => $this->input->post('dept_parent', TRUE),
-						'dept_manifest' => $this->input->post('dept_manifest', TRUE),
+						'dept_name' => $this->input->post('dept_name', true),
+						'dept_type' => $this->input->post('dept_type', true),
+						'dept_order' => $this->input->post('dept_order', true),
+						'dept_display' => $this->input->post('dept_display', true),
+						'dept_desc' => $this->input->post('dept_desc', true),
+						'dept_parent' => $this->input->post('dept_parent', true),
+						'dept_manifest' => $this->input->post('dept_manifest', true),
 					);
 					
 					// update the record
@@ -1008,24 +889,18 @@ class Manage_base extends Controller {
 						$flash['status'] = 'error';
 						$flash['message'] = text_output($message);
 					}
-					
-					// set the location of the flash view
-					$flashloc = view_location('flash', $this->skin, 'admin');
-					
-					/* write everything to the template */
-					$this->template->write_view('flash_message', $flashloc, $flash);
 				break;
 					
 				case 'delete':
-					$all = $this->input->post('delete', TRUE);
-					$deptid = $this->input->post('dept', TRUE);
-					$id = $this->input->post('id', TRUE);
-					$subdept = (isset($_POST['subdept'])) ? $this->input->post('subdept', TRUE) : FALSE;
+					$all = $this->input->post('delete', true);
+					$deptid = $this->input->post('dept', true);
+					$id = $this->input->post('id', true);
+					$subdept = (isset($_POST['subdept'])) ? $this->input->post('subdept', true) : false;
 					
-					/* load the positions model */
+					// load the positions model
 					$this->load->model('positions_model', 'pos');
 					
-					/* grab the positions for the department */
+					// grab the positions for the department
 					$positions = $this->pos->get_dept_positions($id, '');
 					
 					if ($all == 'y')
@@ -1051,7 +926,7 @@ class Manage_base extends Controller {
 						}
 					}
 					
-					if ($subdept !== FALSE)
+					if ($subdept !== false)
 					{
 						$subs = $this->dept->get_sub_depts($id, 'asc', '');
 						
@@ -1066,7 +941,7 @@ class Manage_base extends Controller {
 						}
 					}
 					
-					/* delete the department */
+					// delete the department
 					$delete = $this->dept->delete_dept($id);
 					
 					if ($delete > 0)
@@ -1093,16 +968,10 @@ class Manage_base extends Controller {
 						$flash['status'] = 'error';
 						$flash['message'] = text_output($message);
 					}
-					
-					// set the location of the flash view
-					$flashloc = view_location('flash', $this->skin, 'admin');
-					
-					/* write everything to the template */
-					$this->template->write_view('flash_message', $flashloc, $flash);
 				break;
 					
 				case 'duplicate':
-					$id = $this->input->post('id', TRUE);
+					$id = $this->input->post('id', true);
 					
 					// load the positions model
 					$this->load->model('positions_model', 'pos');
@@ -1125,7 +994,7 @@ class Manage_base extends Controller {
 					$this->sys->optimize_table('departments_'.GENRE);
 					
 					// get all positions for the original department
-					$positions = $this->pos->get_dept_positions($id, NULL);
+					$positions = $this->pos->get_dept_positions($id, null);
 					
 					if ($positions->num_rows() > 0)
 					{
@@ -1174,25 +1043,22 @@ class Manage_base extends Controller {
 						$flash['status'] = 'error';
 						$flash['message'] = text_output($message);
 					}
-					
-					// set the location of the flash view
-					$flashloc = view_location('flash', $this->skin, 'admin');
-					
-					/* write everything to the template */
-					$this->template->write_view('flash_message', $flashloc, $flash);
 				break;
 			}
+			
+			// set the flash message
+			$this->_regions['flash_message'] = Location::view('flash', $this->skin, 'admin', $flash);
 		}
 		
 		$departments = $this->dept->get_all_depts('asc', '');
-		$manifests = $this->dept->get_all_manifests(NULL);
+		$manifests = $this->dept->get_all_manifests(null);
 		
 		if ($departments->num_rows() > 0)
 		{
 			foreach ($departments->result() as $d)
 			{
 				// make sure we have the manifest ID set properly
-				$manifest = ($d->dept_manifest === NULL) ? 0 : $d->dept_manifest;
+				$manifest = ($d->dept_manifest === null) ? 0 : $d->dept_manifest;
 				
 				$data['depts'][$manifest][$d->dept_id] = $d;
 				
@@ -1221,10 +1087,6 @@ class Manage_base extends Controller {
 		
 		$data['parent'][0] = ucfirst(lang('labels_none'));
 		$data['manifest'][0] = ucfirst(lang('labels_none'));
-		
-		/* figure out where the view should be coming from */
-		$view_loc = view_location('manage_depts', $this->skin, 'admin');
-		$js_loc = js_location('manage_depts_js', $this->skin, 'admin');
 		
 		$data['header'] = ucfirst(lang('global_departments'));
 		$data['text'] = sprintf(
@@ -1260,21 +1122,21 @@ class Manage_base extends Controller {
 		
 		$data['images'] = array(
 			'add' => array(
-				'src' => img_location('icon-add.png', $this->skin, 'admin'),
+				'src' => Location::img('icon-add.png', $this->skin, 'admin'),
 				'alt' => '',
 				'class' => 'inline_img_left'),
 			'delete' => array(
-				'src' => img_location('icon-delete.png', $this->skin, 'admin'),
+				'src' => Location::img('icon-delete.png', $this->skin, 'admin'),
 				'alt' => lang('actions_delete'),
 				'title' => ucfirst(lang('actions_delete')),
 				'class' => 'image'),
 			'edit' => array(
-				'src' => img_location('icon-edit.png', $this->skin, 'admin'),
+				'src' => Location::img('icon-edit.png', $this->skin, 'admin'),
 				'alt' => lang('actions_edit'),
 				'title' => ucfirst(lang('actions_edit')),
 				'class' => 'image'),
 			'duplicate' => array(
-				'src' => img_location('icon-duplicate.png', $this->skin, 'admin'),
+				'src' => Location::img('icon-duplicate.png', $this->skin, 'admin'),
 				'alt' => lang('actions_duplicate'),
 				'title' => ucfirst(lang('actions_duplicate')),
 				'class' => 'image'),
@@ -1291,32 +1153,30 @@ class Manage_base extends Controller {
 		
 		$js_data['tab'] = ($section == 'assigned') ? 0 : 1;
 		
-		/* write the data to the template */
-		$this->template->write('title', $data['header']);
-		$this->template->write_view('content', $view_loc, $data);
-		$this->template->write_view('javascript', $js_loc, $js_data);
+		$this->_regions['content'] = Location::view('manage_depts', $this->skin, 'admin', $data);
+		$this->_regions['javascript'] = Location::js('manage_depts_js', $this->skin, 'admin', $js_data);
+		$this->_regions['title'].= $data['header'];
 		
-		/* render the template */
-		$this->template->render();
+		Template::assign($this->_regions);
+		
+		Template::render();
 	}
 	
-	function docked()
+	public function docked($section = 'active', $id = false)
 	{
-		$this->auth->check_access();
+		Auth::check_access();
 		
-		/* load the resources */
+		// load the resources
 		$this->load->model('docking_model', 'docking');
 		$this->load->helper('utility');
-		
-		$section = $this->uri->segment(3, 'active');
 		
 		if (isset($_POST['submit']))
 		{
 			switch ($section)
 			{
 				case 'delete':
-					$id = $this->input->post('id', TRUE);
-					$id = (is_numeric($id)) ? $id : FALSE;
+					$id = $this->input->post('id', true);
+					$id = (is_numeric($id)) ? $id : false;
 					
 					$delete = $this->docking->delete_docked_item($id);
 					
@@ -1346,30 +1206,24 @@ class Manage_base extends Controller {
 						$flash['status'] = 'error';
 						$flash['message'] = text_output($message);
 					}
-					
-					// set the location of the flash view
-					$flashloc = view_location('flash', $this->skin, 'admin');
-					
-					/* write everything to the template */
-					$this->template->write_view('flash_message', $flashloc, $flash);
 				break;
 					
 				case 'edit':
 					foreach ($_POST as $key => $value)
 					{
-						if (!is_numeric($key))
+						if ( ! is_numeric($key))
 						{
 							$update_array[$key] = $value;
 						}
 					}
 					
-					/* take unnecessary items off the array */
+					// take unnecessary items off the array
 					unset($update_array['submit']);
 					unset($update_array['action_id']);
 					
-					$action_id = $this->input->post('action_id', TRUE);
+					$action_id = $this->input->post('action_id', true);
 					
-					/* put the record into the database */
+					// put the record into the database
 					$update = $this->docking->update_docking_record($update_array, $action_id);
 					
 					foreach ($_POST as $key => $value)
@@ -1411,19 +1265,13 @@ class Manage_base extends Controller {
 						$flash['status'] = 'error';
 						$flash['message'] = text_output($message);
 					}
-				
-					// set the location of the flash view
-					$flashloc = view_location('flash', $this->skin, 'admin');
-					
-					/* write everything to the template */
-					$this->template->write_view('flash_message', $flashloc, $flash);
 				break;
 					
 				case 'pending':
-					$id = $this->input->post('id', TRUE);
-					$id = (is_numeric($id)) ? $id : FALSE;
+					$id = $this->input->post('id', true);
+					$id = (is_numeric($id)) ? $id : false;
 					
-					$action = $this->input->post('action', TRUE);
+					$action = $this->input->post('action', true);
 					
 					if ($action == 'approve')
 					{
@@ -1431,19 +1279,19 @@ class Manage_base extends Controller {
 						
 						$update = $this->docking->update_docking_record($update_array, $id);
 						
-						/* grab the message */
+						// grab the message
 						$message = $this->msgs->get_message('docking_accept_message');
 						
 						$item = $this->docking->get_docked_item($id);
 						
-						/* set the arguments for the message */
+						// set the arguments for the message
 						$args = array(
-							'gm_name' => (!empty($item->docking_gm_name)) ? $item->docking_gm_name : $item->docking_gm_email,
+							'gm_name' => ( ! empty($item->docking_gm_name)) ? $item->docking_gm_name : $item->docking_gm_email,
 							'sim_name' => $item->docking_sim_name,
 							'sim' => $this->options['sim_name']
 						);
 						
-						/* parse the message with the args */
+						// parse the message with the args
 						$content = parse_dynamic_message($message, $args);
 						
 						if ($update > 0)
@@ -1465,7 +1313,7 @@ class Manage_base extends Controller {
 								'sim' => $item->docking_sim_name
 							);
 							
-							$email = ($this->options['system_email'] == 'on') ? $this->_email('docking_accept', $email_data) : FALSE;
+							$email = ($this->options['system_email'] == 'on') ? $this->_email('docking_accept', $email_data) : false;
 						}
 						else
 						{
@@ -1482,23 +1330,23 @@ class Manage_base extends Controller {
 					}
 					elseif ($action == 'reject')
 					{
-						/* grab the message */
+						// grab the message
 						$message = $this->msgs->get_message('docking_reject_message');
 						
-						/* grab the info for the item being rejected */
+						// grab the info for the item being rejected
 						$item = $this->docking->get_docked_item($id);
 						
-						/* set the arguments for the message */
+						// set the arguments for the message
 						$args = array(
-							'gm_name' => (!empty($item->docking_gm_name)) ? $item->docking_gm_name : $item->docking_gm_email,
+							'gm_name' => ( ! empty($item->docking_gm_name)) ? $item->docking_gm_name : $item->docking_gm_email,
 							'sim_name' => $item->docking_sim_name,
 							'sim' => $this->options['sim_name']
 						);
 						
-						/* parse the message with the args */
+						// parse the message with the args
 						$content = parse_dynamic_message($message, $args);
 						
-						/* delete the record and its data */
+						// delete the record and its data
 						$delete = $this->docking->delete_docked_item($id);
 						$delete+= $this->docking->delete_docking_field_data($id, 'data_docking_item');
 						
@@ -1521,7 +1369,7 @@ class Manage_base extends Controller {
 								'sim' => $item->docking_sim_name
 							);
 							
-							$email = ($this->options['system_email'] == 'on') ? $this->_email('docking_reject', $email_data) : FALSE;
+							$email = ($this->options['system_email'] == 'on') ? $this->_email('docking_reject', $email_data) : false;
 						}
 						else
 						{
@@ -1536,25 +1384,22 @@ class Manage_base extends Controller {
 							$flash['message'] = text_output($message);
 						}
 					}
-					
-					// set the location of the flash view
-					$flashloc = view_location('flash', $this->skin, 'admin');
-					
-					/* write everything to the template */
-					$this->template->write_view('flash_message', $flashloc, $flash);
 				break;
 			}
+			
+			// set the flash message
+			$this->_regions['flash_message'] = Location::view('flash', $this->skin, 'admin', $flash);
 		}
 		
 		if ($section == 'edit')
 		{
-			/* grab the ID from the URL */
-			$id = $this->uri->segment(4, FALSE, TRUE);
+			// sanity check
+			$id = (is_numeric($id)) ? $id : false;
 			
-			/* grab the post data */
+			// grab the post data
 			$row = $this->docking->get_docked_item($id);
 			
-			/* set the data used by the view */
+			// set the data used by the view
 			$data['inputs'] = array(
 				'sim_name' => array(
 					'name' => 'docking_sim_name',
@@ -1580,33 +1425,33 @@ class Manage_base extends Controller {
 				'pending' => ucfirst(lang('status_pending')),
 			);
 			
-			/* grab the join fields */
+			// grab the join fields
 			$sections = $this->docking->get_docking_sections();
 			
 			if ($sections->num_rows() > 0)
 			{
 				foreach ($sections->result() as $sec)
 				{
-					$sid = $sec->section_id; /* section id */
+					$sid = $sec->section_id;
 					
-					/* set the section name */
+					// set the section name
 					$data['docking'][$sid]['name'] = $sec->section_name;
 					
-					/* grab the fields for the given section */
+					// grab the fields for the given section
 					$fields = $this->docking->get_docking_fields($sec->section_id);
 					
 					if ($fields->num_rows() > 0)
 					{
 						foreach ($fields->result() as $field)
 						{
-							$f_id = $field->field_id; /* field id */
+							$f_id = $field->field_id;
 							
-							/* set the page label */
+							// set the page label
 							$data['docking'][$sid]['fields'][$f_id]['field_label'] = $field->field_label_page;
 							
 							$field_data = $this->docking->get_field_data($f_id, $id);
 
-							$frow = ($field_data->num_rows() > 0) ? $field_data->row() : FALSE;
+							$frow = ($field_data->num_rows() > 0) ? $field_data->row() : false;
 							
 							switch ($field->field_type)
 							{
@@ -1634,9 +1479,9 @@ class Manage_base extends Controller {
 								break;
 									
 								case 'select':
-									$value = FALSE;
-									$values = FALSE;
-									$input = FALSE;
+									$value = false;
+									$values = false;
+									$input = false;
 								
 									$values = $this->docking->get_docking_values($field->field_id);
 									
@@ -1662,8 +1507,8 @@ class Manage_base extends Controller {
 			
 			$js_data['tab'] = 0;
 			
-			/* figure out where the view should be coming from */
-			$view_loc = view_location('manage_docked_edit', $this->skin, 'admin');
+			// figure out where the view should be coming from
+			$view_loc = 'manage_docked_edit';
 		}
 		else
 		{
@@ -1686,8 +1531,8 @@ class Manage_base extends Controller {
 			
 			$data['count'] = (isset($data['docking']['pending'])) ? count($data['docking']['pending']) : 0;
 			
-			/* figure out where the view should be coming from */
-			$view_loc = view_location('manage_docked', $this->skin, 'admin');
+			// figure out where the view should be coming from
+			$view_loc = 'manage_docked';
 			
 			switch ($section)
 			{
@@ -1706,9 +1551,6 @@ class Manage_base extends Controller {
 			}
 		}
 		
-		/* figure out where the view should be coming from */
-		$js_loc = js_location('manage_docked_js', $this->skin, 'admin');
-		
 		$data['buttons'] = array(
 			'update' => array(
 				'type' => 'submit',
@@ -1720,27 +1562,27 @@ class Manage_base extends Controller {
 		
 		$data['images'] = array(
 			'accept' => array(
-				'src' => img_location('icon-check.png', $this->skin, 'admin'),
+				'src' => Location::img('icon-check.png', $this->skin, 'admin'),
 				'alt' => lang('actions_accept'),
 				'class' => 'image',
 				'title' => ucfirst(lang('actions_accept'))),
 			'delete' => array(
-				'src' => img_location('icon-delete.png', $this->skin, 'admin'),
+				'src' => Location::img('icon-delete.png', $this->skin, 'admin'),
 				'alt' => lang('actions_delete'),
 				'class' => 'image',
 				'title' => ucfirst(lang('actions_delete'))),
 			'edit' => array(
-				'src' => img_location('icon-edit.png', $this->skin, 'admin'),
+				'src' => Location::img('icon-edit.png', $this->skin, 'admin'),
 				'alt' => lang('actions_edit'),
 				'class' => 'image',
 				'title' => ucfirst(lang('actions_edit'))),
 			'reject' => array(
-				'src' => img_location('icon-cross.png', $this->skin, 'admin'),
+				'src' => Location::img('icon-slash.png', $this->skin, 'admin'),
 				'alt' => lang('actions_reject'),
 				'class' => 'image',
 				'title' => ucfirst(lang('actions_reject'))),
 			'view' => array(
-				'src' => img_location('icon-view.png', $this->skin, 'admin'),
+				'src' => Location::img('icon-view.png', $this->skin, 'admin'),
 				'alt' => lang('actions_view'),
 				'class' => 'image',
 				'title' => ucfirst(lang('actions_view'))),
@@ -1761,37 +1603,40 @@ class Manage_base extends Controller {
 			'status_pending' => ucwords(lang('status_pending') .' '. lang('labels_items')),
 		);
 		
-		/* write the data to the template */
-		$this->template->write('title', $data['header']);
-		$this->template->write_view('content', $view_loc, $data);
-		$this->template->write_view('javascript', $js_loc, $js_data);
+		$this->_regions['content'] = Location::view($view_loc, $this->skin, 'admin', $data);
+		$this->_regions['javascript'] = Location::js('manage_docked_js', $this->skin, 'admin', $js_data);
+		$this->_regions['title'].= $data['header'];
 		
-		/* render the template */
-		$this->template->render();
+		Template::assign($this->_regions);
+		
+		Template::render();
 	}
 	
-	function logs()
+	public function logs($section = 'activated', $offset = 0)
 	{
-		$this->auth->check_access();
+		Auth::check_access();
 		
 		$this->load->model('personallogs_model', 'logs');
 		
+		// arrays to check uri against
 		$values = array('activated', 'saved', 'pending', 'edit');
-		$section = $this->uri->segment(3, 'activated', FALSE, $values);
-		$offset = $this->uri->segment(4, 0, TRUE);
+		
+		// sanity checks
+		$section = (in_array($section, $values)) ? $section : 'activated';
+		$offset = (is_numeric($offset)) ? $offset : 0;
 		
 		if (isset($_POST['submit']))
 		{
 			switch ($this->uri->segment(5))
 			{
 				case 'approve':
-					$id = $this->input->post('id', TRUE);
-					$id = (is_numeric($id)) ? $id : FALSE;
+					$id = $this->input->post('id', true);
+					$id = (is_numeric($id)) ? $id : false;
 					
-					/* set the array data */
+					// set the array data
 					$approve_array = array('log_status' => 'activated');
 					
-					/* approve the post */
+					// approve the post
 					$approve = $this->logs->update_log($id, $approve_array);
 					
 					if ($approve > 0)
@@ -1806,18 +1651,18 @@ class Manage_base extends Controller {
 						$flash['status'] = 'success';
 						$flash['message'] = text_output($message);
 						
-						/* grab the post details */
+						// grab the post details
 						$row = $this->logs->get_log($id);
 						
-						/* set the array of data for the email */
+						// set the array of data for the email
 						$email_data = array(
 							'author' => $row->log_author_character,
 							'title' => $row->log_title,
 							'content' => $row->log_content
 						);
 						
-						/* send the email */
-						$email = ($this->options['system_email'] == 'on') ? $this->_email('log', $email_data) : FALSE;
+						// send the email
+						$email = ($this->options['system_email'] == 'on') ? $this->_email('log', $email_data) : false;
 					}
 					else
 					{
@@ -1831,17 +1676,11 @@ class Manage_base extends Controller {
 						$flash['status'] = 'error';
 						$flash['message'] = text_output($message);
 					}
-					
-					// set the location of the flash view
-					$flashloc = view_location('flash', $this->skin, 'admin');
-					
-					/* write everything to the template */
-					$this->template->write_view('flash_message', $flashloc, $flash);
 				break;
 					
 				case 'delete':
-					$id = $this->input->post('id', TRUE);
-					$id = (is_numeric($id)) ? $id : FALSE;
+					$id = $this->input->post('id', true);
+					$id = (is_numeric($id)) ? $id : false;
 					
 					$delete = $this->logs->delete_log($id);
 					
@@ -1869,24 +1708,18 @@ class Manage_base extends Controller {
 						$flash['status'] = 'error';
 						$flash['message'] = text_output($message);
 					}
-					
-					// set the location of the flash view
-					$flashloc = view_location('flash', $this->skin, 'admin');
-					
-					/* write everything to the template */
-					$this->template->write_view('flash_message', $flashloc, $flash);
 				break;
 					
 				case 'update':
-					$id = $this->uri->segment(4, 0, TRUE);
+					$id = $this->uri->segment(4, 0, true);
 					
 					$update_array = array(
-						'log_title' => $this->input->post('log_title', TRUE),
-						'log_tags' => $this->input->post('log_tags', TRUE),
-						'log_content' => $this->input->post('log_content', TRUE),
-						'log_status' => $this->input->post('log_status', TRUE),
+						'log_title' => $this->input->post('log_title', true),
+						'log_tags' => $this->input->post('log_tags', true),
+						'log_content' => $this->input->post('log_content', true),
+						'log_status' => $this->input->post('log_status', true),
 						'log_author_user' => $this->user->get_userid($this->input->post('log_author')),
-						'log_author_character' => $this->input->post('log_author', TRUE),
+						'log_author_character' => $this->input->post('log_author', true),
 						'log_last_update' => now()
 					);
 					
@@ -1916,41 +1749,38 @@ class Manage_base extends Controller {
 						$flash['status'] = 'error';
 						$flash['message'] = text_output($message);
 					}
-					
-					// set the location of the flash view
-					$flashloc = view_location('flash', $this->skin, 'admin');
-					
-					/* write everything to the template */
-					$this->template->write_view('flash_message', $flashloc, $flash);
 				break;
 			}
+			
+			// set the flash message
+			$this->_regions['flash_message'] = Location::view('flash', $this->skin, 'admin', $flash);
 		}
 		
 		if ($section == 'edit')
 		{
-			/* grab the ID from the URL */
-			$id = $this->uri->segment(4, 0, TRUE);
+			// grab the ID from the URL
+			$id = $this->uri->segment(4, 0, true);
 			
-			/* grab the post data */
+			// grab the post data
 			$row = $this->logs->get_log($id);
 			
-			if ($this->auth->get_access_level() < 2)
+			if (Auth::get_access_level() < 2)
 			{
-				if ($this->session->userdata('userid') != $row->log_author_user || $row->log_status == 'pending')
+				if ($this->session->userdata('userid') != $row->log_author_user or $row->log_status == 'pending')
 				{
 					redirect('admin/error/6');
 				}
 			}
 			
-			/* get all characters */
+			// get all characters
 			$all = $this->char->get_all_characters('user_npc');
 			
 			if ($all->num_rows() > 0)
 			{
 				foreach ($all->result() as $a)
 				{
-					if ($a->crew_type == 'active' || $a->crew_type == 'npc')
-					{ /* split the characters out between active and npcs */
+					if ($a->crew_type == 'active' or $a->crew_type == 'npc')
+					{
 						if ($a->crew_type == 'active')
 						{
 							$label = ucwords(lang('status_playing') .' '. lang('global_characters'));
@@ -1960,13 +1790,13 @@ class Manage_base extends Controller {
 							$label = ucwords(lang('abbr_npcs'));
 						}
 						
-						/* toss them in the array */
-						$data['all'][$label][$a->charid] = $this->char->get_character_name($a->charid, TRUE);
+						// toss them in the array
+						$data['all'][$label][$a->charid] = $this->char->get_character_name($a->charid, true);
 					}
 				}
 			}
 			
-			/* set the data used by the view */
+			// set the data used by the view
 			$data['inputs'] = array(
 				'title' => array(
 					'name' => 'log_title',
@@ -1980,7 +1810,7 @@ class Manage_base extends Controller {
 					'name' => 'log_tags',
 					'value' => $row->log_tags),
 				'author' => $row->log_author_character,
-				'character' => $this->char->get_character_name($row->log_author_character, TRUE),
+				'character' => $this->char->get_character_name($row->log_author_character, true),
 				'status' => $row->log_status,
 			);
 			
@@ -2015,10 +1845,6 @@ class Manage_base extends Controller {
 			);
 			
 			$js_data['tab'] = 0;
-			
-			/* figure out where the view should be coming from */
-			$view_loc = view_location('manage_logs_edit', $this->skin, 'admin');
-			$js_loc = js_location('manage_logs_js', $this->skin, 'admin');
 		}
 		else
 		{
@@ -2054,26 +1880,25 @@ class Manage_base extends Controller {
 			
 			$data['header'] = ucwords(lang('actions_manage') .' '. lang('global_personallogs'));
 			
-			/* figure out where the view should be coming from */
+			// figure out where the view should be coming from
 			$view_loc = view_location('manage_logs', $this->skin, 'admin');
 			$js_loc = js_location('manage_logs_js', $this->skin, 'admin');
 		}
 		
-		/* write the data to the template */
-		$this->template->write('title', $data['header']);
-		$this->template->write_view('content', $view_loc, $data);
-		$this->template->write_view('javascript', $js_loc, $js_data);
+		$this->_regions['content'] = Location::view('manage_logs', $this->skin, 'admin', $data);
+		$this->_regions['javascript'] = Location::js('manage_logs_js', $this->skin, 'admin', $js_data);
+		$this->_regions['title'].= $data['header'];
 		
-		/* render the template */
-		$this->template->render();
+		Template::assign($this->_regions);
+		
+		Template::render();
 	}
 	
-	function missiongroups()
+	public function missiongroups()
 	{
-		/* check access */
-		$this->auth->check_access('manage/missions');
+		Auth::check_access('manage/missions');
 		
-		/* load the resources */
+		// load the resources
 		$this->load->model('missions_model', 'mis');
 		
 		if (isset($_POST['submit']))
@@ -2088,7 +1913,7 @@ class Manage_base extends Controller {
 					
 					unset($insert_array['submit']);
 					
-					/* insert the record */
+					// insert the record
 					$insert = $this->mis->add_mission_group($insert_array);
 					
 					if ($insert > 0)
@@ -2115,12 +1940,6 @@ class Manage_base extends Controller {
 						$flash['status'] = 'error';
 						$flash['message'] = text_output($message);
 					}
-					
-					// set the location of the flash view
-					$flashloc = view_location('flash', $this->skin, 'admin');
-					
-					/* write everything to the template */
-					$this->template->write_view('flash_message', $flashloc, $flash);
 				break;
 					
 				case 'edit':
@@ -2132,12 +1951,12 @@ class Manage_base extends Controller {
 					{
 						$loc = strpos($key, '_');
 						
-						if ($loc !== FALSE)
+						if ($loc !== false)
 						{
 							$loc_pos = substr($key, 0, $loc);
 							
-							if (!in_array($loc_pos, $delete))
-							{ /* if the item is being deleted don't add it to the update array */
+							if ( ! in_array($loc_pos, $delete))
+							{ // if the item is being deleted don't add it to the update array
 								$new_key = 'misgroup_'. substr($key, ($loc+1));
 								$array[$loc_pos][$new_key] = $value;
 							}
@@ -2153,7 +1972,7 @@ class Manage_base extends Controller {
 					{
 						$delete = $this->mis->delete_mission_group($del);
 						
-						$array = array('mission_group' => NULL);
+						$array = array('mission_group' => null);
 						$this->mis->update_mission('', $array, array('mission_group' => $del));
 					}
 					
@@ -2181,17 +2000,14 @@ class Manage_base extends Controller {
 						$flash['status'] = 'error';
 						$flash['message'] = text_output($message);
 					}
-					
-					// set the location of the flash view
-					$flashloc = view_location('flash', $this->skin, 'admin');
-					
-					/* write everything to the template */
-					$this->template->write_view('flash_message', $flashloc, $flash);
 				break;
 			}
+			
+			// set the flash message
+			$this->_regions['flash_message'] = Location::view('flash', $this->skin, 'admin', $flash);
 		}
 		
-		/* grab the mission groups */
+		// grab the mission groups
 		$groups = $this->mis->get_all_mission_groups();
 		
 		if ($groups->num_rows() > 0)
@@ -2219,7 +2035,7 @@ class Manage_base extends Controller {
 			}
 		}
 		
-		/* figure out where the view should be coming from */
+		// figure out where the view should be coming from
 		$view_loc = view_location('manage_missiongroups', $this->skin, 'admin');
 		$js_loc = js_location('manage_missiongroups_js', $this->skin, 'admin');
 		
@@ -2250,7 +2066,7 @@ class Manage_base extends Controller {
 		
 		$data['images'] = array(
 			'add' => array(
-				'src' => img_location('icon-add.png', $this->skin, 'admin'),
+				'src' => Location::img('icon-add.png', $this->skin, 'admin'),
 				'alt' => '',
 				'class' => 'inline_img_left'),
 		);
@@ -2263,27 +2079,25 @@ class Manage_base extends Controller {
 			'desc' => ucfirst(lang('labels_desc')),
 		);
 		
-		/* write the data to the template */
-		$this->template->write('title', $data['header']);
-		$this->template->write_view('content', $view_loc, $data);
-		$this->template->write_view('javascript', $js_loc);
+		$this->_regions['content'] = Location::view('manage_missiongroups', $this->skin, 'admin', $data);
+		$this->_regions['javascript'] = Location::js('manage_missiongroups_js', $this->skin, 'admin');
+		$this->_regions['title'].= $data['header'];
 		
-		/* render the template */
-		$this->template->render();
+		Template::assign($this->_regions);
+		
+		Template::render();
 	}
 	
-	function missions()
+	public function missions($action = false, $id = false)
 	{
-		/* check access */
-		$this->auth->check_access();
+		Auth::check_access();
 		
-		/* load the resources */
+		// load the resources
 		$this->load->model('missions_model', 'mis');
 		$this->load->model('posts_model', 'posts');
 		
-		/* set the variables */
-		$action = $this->uri->segment(3);
-		$id = $this->uri->segment(4);
+		// sanity check
+		$id = (is_numeric($id)) ? $id : false;
 		
 		$js_data['tab'] = 0;
 		
@@ -2291,37 +2105,37 @@ class Manage_base extends Controller {
 		{
 			$status = $this->uri->segment(5);
 			
-			/* grab the date info */
+			// grab the date info
 			$today = getdate();
 			
-			/* make sure things are formatted properly */
+			// make sure things are formatted properly
 			$hours = ($today['hours'] < 10) ? '0'. $today['hours'] : $today['hours'];
 			$minutes = ($today['minutes'] < 10) ? '0'. $today['minutes'] : $today['minutes'];
 			$seconds = ($today['seconds'] < 10) ? '0'. $today['seconds'] : $today['seconds'];
 			
-			/* set the current time */
+			// set the current time
 			$time = ' '. $hours .':'. $minutes .':'. $seconds;
 			
 			switch ($this->uri->segment(3))
 			{
 				case 'add':
-					$start = (empty($_POST['mission_start'])) ? '' : human_to_unix($this->input->post('mission_start', TRUE) . $time);
-					$end = (empty($_POST['mission_end'])) ? '' : human_to_unix($this->input->post('mission_end', TRUE) . $time);
+					$start = (empty($_POST['mission_start'])) ? '' : human_to_unix($this->input->post('mission_start', true) . $time);
+					$end = (empty($_POST['mission_end'])) ? '' : human_to_unix($this->input->post('mission_end', true) . $time);
 					
 					$insert_array = array(
-						'mission_title' => $this->input->post('mission_title', TRUE),
-						'mission_status' => $this->input->post('mission_status', TRUE),
-						'mission_order' => $this->input->post('mission_order', TRUE),
-						'mission_desc' => $this->input->post('mission_desc', TRUE),
-						'mission_images' => $this->input->post('mission_images', TRUE),
+						'mission_title' => $this->input->post('mission_title', true),
+						'mission_status' => $this->input->post('mission_status', true),
+						'mission_order' => $this->input->post('mission_order', true),
+						'mission_desc' => $this->input->post('mission_desc', true),
+						'mission_images' => $this->input->post('mission_images', true),
 						'mission_start' => $start,
 						'mission_end' => $end,
-						'mission_notes' => $this->input->post('mission_notes', TRUE),
-						'mission_summary' => $this->input->post('mission_summary', TRUE),
-						'mission_group' => $this->input->post('mission_group', TRUE),
+						'mission_notes' => $this->input->post('mission_notes', true),
+						'mission_summary' => $this->input->post('mission_summary', true),
+						'mission_group' => $this->input->post('mission_group', true),
 					);
 					
-					/* insert the record */
+					// insert the record
 					$insert = $this->mis->add_mission($insert_array);
 					
 					if ($insert > 0)
@@ -2348,17 +2162,11 @@ class Manage_base extends Controller {
 						$flash['status'] = 'error';
 						$flash['message'] = text_output($message);
 					}
-					
-					// set the location of the flash view
-					$flashloc = view_location('flash', $this->skin, 'admin');
-					
-					/* write everything to the template */
-					$this->template->write_view('flash_message', $flashloc, $flash);
 				break;
 					
 				case 'delete':
-					$id = $this->input->post('id', TRUE);
-					$id = (is_numeric($id)) ? $id : FALSE;
+					$id = $this->input->post('id', true);
+					$id = (is_numeric($id)) ? $id : false;
 					
 					$delete = $this->mis->delete_mission($id);
 					
@@ -2386,29 +2194,23 @@ class Manage_base extends Controller {
 						$flash['status'] = 'error';
 						$flash['message'] = text_output($message);
 					}
-					
-					// set the location of the flash view
-					$flashloc = view_location('flash', $this->skin, 'admin');
-					
-					/* write everything to the template */
-					$this->template->write_view('flash_message', $flashloc, $flash);
 				break;
 					
 				case 'edit':
-					$id = $this->input->post('id', TRUE);
-					$id = (is_numeric($id)) ? $id : FALSE;
+					$id = $this->input->post('id', true);
+					$id = (is_numeric($id)) ? $id : false;
 					
 					foreach ($_POST as $key => $value)
 					{
 						$loc = strpos($key, '_');
 						
-						if ($loc !== FALSE)
+						if ($loc !== false)
 						{
 							$loc_pos = substr($key, 0, $loc);
 							
 							$new_key = 'mission_'. substr($key, ($loc+1));
 							
-							if (substr($key, ($loc+1)) == 'start' || substr($key, ($loc+1)) == 'end')
+							if (substr($key, ($loc+1)) == 'start' or substr($key, ($loc+1)) == 'end')
 							{
 								$mission[$new_key] = human_to_unix($value . $time);
 							}
@@ -2423,18 +2225,18 @@ class Manage_base extends Controller {
 					
 					if ($oldstatus != $mission['mission_status'])
 					{
-						if ($oldstatus == 'upcoming' && $mission['mission_status'] == 'current')
+						if ($oldstatus == 'upcoming' and $mission['mission_status'] == 'current')
 						{
 							$mission['mission_start'] = now();
 						}
-						if ($oldstatus == 'current' && $mission['mission_status'] == 'completed')
+						if ($oldstatus == 'current' and $mission['mission_status'] == 'completed')
 						{
 							$mission['mission_end'] = now();
 						}
 					}
 					
-					unset($mission['mission_oldstatus']); /* remove the old status variable */
-					$mission['mission_notes_updated'] = now(); /* add the mission notes updated field */
+					unset($mission['mission_oldstatus']); // remove the old status variable
+					$mission['mission_notes_updated'] = now(); // add the mission notes updated field
 					
 					$update = $this->mis->update_mission($id, $mission);
 					
@@ -2462,14 +2264,11 @@ class Manage_base extends Controller {
 						$flash['status'] = 'error';
 						$flash['message'] = text_output($message);
 					}
-					
-					// set the location of the flash view
-					$flashloc = view_location('flash', $this->skin, 'admin');
-					
-					/* write everything to the template */
-					$this->template->write_view('flash_message', $flashloc, $flash);
 				break;
 			}
+			
+			// set the flash message
+			$this->_regions['flash_message'] = Location::view('flash', $this->skin, 'admin', $flash);
 			
 			switch ($status)
 			{
@@ -2490,9 +2289,9 @@ class Manage_base extends Controller {
 		
 		$data['label'] = array();
 		
-		if ($action == 'add' || $action == 'edit')
+		if ($action == 'add' or $action == 'edit')
 		{
-			/* set the date */
+			// set the date
 			$today = getdate();
 			$year = $today['year'];
 			$month = (strlen($today['mon']) < 2) ? '0'. $today['mon'] : $today['mon'];
@@ -2501,12 +2300,12 @@ class Manage_base extends Controller {
 			
 			$item = $this->mis->get_mission($id);
 			
-			$start = ($item === FALSE) ? $date : '';
+			$start = ($item === false) ? $date : '';
 			$start = (empty($item->mission_start)) ? '' : unix_to_human($item->mission_start);
-			$start = (!empty($start)) ? substr_replace($start, '', strpos($start, ' ')) : '';
+			$start = ( ! empty($start)) ? substr_replace($start, '', strpos($start, ' ')) : '';
 			
-			$end = ($item === FALSE || empty($item->mission_end)) ? '' : unix_to_human($item->mission_end);
-			$end = (!empty($end)) ? substr_replace($end, '', strpos($end, ' ')) : '';
+			$end = ($item === false or empty($item->mission_end)) ? '' : unix_to_human($item->mission_end);
+			$end = ( ! empty($end)) ? substr_replace($end, '', strpos($end, ' ')) : '';
 			
 			$js_data['start'] = $start;
 			$js_data['end'] = $end;
@@ -2517,11 +2316,11 @@ class Manage_base extends Controller {
 			$data['inputs'] = array(
 				'title' => array(
 					'name' => 'mission_title',
-					'value' => ($item === FALSE) ? '' : $item->mission_title),
+					'value' => ($item === false) ? '' : $item->mission_title),
 				'order' => array(
 					'name' => 'mission_order',
 					'class' => 'small',
-					'value' => ($item === FALSE) ? 99 : $item->mission_order),
+					'value' => ($item === false) ? 99 : $item->mission_order),
 				'start' => array(
 					'name' => 'mission_start',
 					'class' => 'medium datepick'),
@@ -2531,18 +2330,18 @@ class Manage_base extends Controller {
 				'desc' => array(
 					'name' => 'mission_desc',
 					'rows' => 6,
-					'value' => ($item == FALSE) ? '' : $item->mission_desc),
-				'status' => ($item === FALSE) ? '' : $item->mission_status,
+					'value' => ($item == false) ? '' : $item->mission_desc),
+				'status' => ($item === false) ? '' : $item->mission_status,
 				'summary' => array(
 					'name' => 'mission_summary',
 					'rows' => 12,
-					'value' => ($item == FALSE) ? '' : $item->mission_summary),
+					'value' => ($item == false) ? '' : $item->mission_summary),
 				'notes' => array(
 					'name' => 'mission_notes',
 					'rows' => 12,
-					'value' => ($item == FALSE) ? '' : $item->mission_notes),
-				'group' => ($item === FALSE) ? '' : $item->mission_group,
-				'images' => (!empty($item->mission_images)) ? explode(',', $item->mission_images) : '',
+					'value' => ($item == false) ? '' : $item->mission_notes),
+				'group' => ($item === false) ? '' : $item->mission_group,
+				'images' => ( ! empty($item->mission_images)) ? explode(',', $item->mission_images) : '',
 			);
 			
 			$groups = $this->mis->get_all_mission_groups();
@@ -2579,7 +2378,7 @@ class Manage_base extends Controller {
 			$data['form'] = ($action == 'edit') ? 'edit/'. $id : 'add';
 			$data['id'] = $id;
 			
-			$view_loc = view_location('manage_missions_action', $this->skin, 'admin');
+			$view_loc = 'manage_missions_action';
 		}
 		else
 		{
@@ -2602,12 +2401,12 @@ class Manage_base extends Controller {
 					$end = '';
 					$timespan = '';
 					
-					if (!empty($mission->mission_start))
+					if ( ! empty($mission->mission_start))
 					{
 						$start = gmt_to_local($mission->mission_start, $this->timezone, $this->dst);
 					}
 					
-					if (!empty($mission->mission_end))
+					if ( ! empty($mission->mission_end))
 					{
 						$end = gmt_to_local($mission->mission_end, $this->timezone, $this->dst);
 					}
@@ -2645,12 +2444,12 @@ class Manage_base extends Controller {
 				}
 			}
 			
-			$js_data['start'] = FALSE;
-			$js_data['end'] = FALSE;
+			$js_data['start'] = false;
+			$js_data['end'] = false;
 			
 			$data['header'] = ucwords(lang('actions_manage') .' '. lang('global_missions'));
 			
-			$view_loc = view_location('manage_missions', $this->skin, 'admin');
+			$view_loc = 'manage_missions';
 		}
 		
 		$data['label'] += array(
@@ -2693,27 +2492,27 @@ class Manage_base extends Controller {
 		
 		$data['images'] = array(
 			'add' => array(
-				'src' => img_location('icon-add.png', $this->skin, 'admin'),
+				'src' => Location::img('icon-add.png', $this->skin, 'admin'),
 				'alt' => '',
 				'class' => 'inline_img_left'),
 			'delete' => array(
-				'src' => img_location('icon-delete.png', $this->skin, 'admin'),
+				'src' => Location::img('icon-delete.png', $this->skin, 'admin'),
 				'alt' => lang('actions_delete'),
 				'title' => ucfirst(lang('actions_delete'))),
 			'edit' => array(
-				'src' => img_location('icon-edit.png', $this->skin, 'admin'),
+				'src' => Location::img('icon-edit.png', $this->skin, 'admin'),
 				'alt' => lang('actions_edit'),
 				'title' => ucfirst(lang('actions_edit'))),
 			'view' => array(
-				'src' => img_location('icon-view.png', $this->skin, 'admin'),
+				'src' => Location::img('icon-view.png', $this->skin, 'admin'),
 				'alt' => lang('actions_view'),
 				'title' => ucfirst(lang('actions_view'))),
 			'upload' => array(
-				'src' => img_location('image-upload.png', $this->skin, 'admin'),
+				'src' => Location::img('image-upload.png', $this->skin, 'admin'),
 				'alt' => lang('actions_upload'),
 				'class' => 'image'),
 			'loading' => array(
-				'src' => img_location('loading-circle.gif', $this->skin, 'admin'),
+				'src' => Location::img('loading-circle.gif', $this->skin, 'admin'),
 				'alt' => lang('actions_loading'),
 				'class' => 'image'),
 		);
@@ -2723,9 +2522,6 @@ class Manage_base extends Controller {
 			lang('global_mission')
 		);
 				
-		/* figure out where the view should be coming from */
-		$js_loc = js_location('manage_missions_js', $this->skin, 'admin');
-		
 		$data['text'] = sprintf(
 			lang('text_manage_missions'),
 			lang('global_missions'),
@@ -2761,37 +2557,40 @@ class Manage_base extends Controller {
 		
 		$js_data['id'] = $id;
 		
-		/* write the data to the template */
-		$this->template->write('title', $data['header']);
-		$this->template->write_view('content', $view_loc, $data);
-		$this->template->write_view('javascript', $js_loc, $js_data);
+		$this->_regions['content'] = Location::view($view_loc, $this->skin, 'admin', $data);
+		$this->_regions['javascript'] = Location::js('manage_missions_js', $this->skin, 'admin', $js_data);
+		$this->_regions['title'].= $data['header'];
 		
-		/* render the template */
-		$this->template->render();
+		Template::assign($this->_regions);
+		
+		Template::render();
 	}
 	
-	function news()
+	public function news($section = 'activated', $offset = 0)
 	{
-		$this->auth->check_access();
+		Auth::check_access();
 		
 		$this->load->model('news_model', 'news');
 		
+		// array to check the values in the uri against
 		$values = array('activated', 'saved', 'pending', 'edit');
-		$section = $this->uri->segment(3, 'activated', FALSE, $values);
-		$offset = $this->uri->segment(4, 0, TRUE);
+		
+		// sanity checks
+		$section = (in_array($section, $values)) ? $section : false;
+		$offset = (is_numeric($offset)) ? $offset : 0;
 		
 		if (isset($_POST['submit']))
 		{
 			switch ($this->uri->segment(5))
 			{
 				case 'approve':
-					$id = $this->input->post('id', TRUE);
-					$id = (is_numeric($id)) ? $id : FALSE;
+					$id = $this->input->post('id', true);
+					$id = (is_numeric($id)) ? $id : false;
 					
-					/* set the array data */
+					// set the array data
 					$approve_array = array('news_status' => 'activated');
 					
-					/* approve the post */
+					// approve the post
 					$approve = $this->news->update_news_item($id, $approve_array);
 					
 					if ($approve > 0)
@@ -2806,10 +2605,10 @@ class Manage_base extends Controller {
 						$flash['status'] = 'success';
 						$flash['message'] = text_output($message);
 						
-						/* grab the post details */
+						// grab the post details
 						$row = $this->news->get_news_item($id);
 						
-						/* set the array of data for the email */
+						// set the array of data for the email
 						$email_data = array(
 							'author' => $row->news_author_character,
 							'title' => $row->news_title,
@@ -2817,8 +2616,8 @@ class Manage_base extends Controller {
 							'content' => $row->news_content
 						);
 						
-						/* send the email */
-						$email = ($this->options['system_email'] == 'on') ? $this->_email('news', $email_data) : FALSE;
+						// send the email
+						$email = ($this->options['system_email'] == 'on') ? $this->_email('news', $email_data) : false;
 					}
 					else
 					{
@@ -2832,17 +2631,11 @@ class Manage_base extends Controller {
 						$flash['status'] = 'error';
 						$flash['message'] = text_output($message);
 					}
-					
-					// set the location of the flash view
-					$flashloc = view_location('flash', $this->skin, 'admin');
-					
-					/* write everything to the template */
-					$this->template->write_view('flash_message', $flashloc, $flash);
 				break;
 					
 				case 'delete':
-					$id = $this->input->post('id', TRUE);
-					$id = (is_numeric($id)) ? $id : FALSE;
+					$id = $this->input->post('id', true);
+					$id = (is_numeric($id)) ? $id : false;
 					
 					$delete = $this->news->delete_news_item($id);
 					
@@ -2870,26 +2663,20 @@ class Manage_base extends Controller {
 						$flash['status'] = 'error';
 						$flash['message'] = text_output($message);
 					}
-					
-					// set the location of the flash view
-					$flashloc = view_location('flash', $this->skin, 'admin');
-					
-					/* write everything to the template */
-					$this->template->write_view('flash_message', $flashloc, $flash);
 				break;
 					
 				case 'update':
-					$id = $this->uri->segment(4, 0, TRUE);
+					$id = $this->uri->segment(4, 0, true);
 					
 					$update_array = array(
-						'news_title' => $this->input->post('news_title', TRUE),
-						'news_tags' => $this->input->post('news_tags', TRUE),
-						'news_content' => $this->input->post('news_content', TRUE),
-						'news_author_character' => $this->input->post('news_author', TRUE),
+						'news_title' => $this->input->post('news_title', true),
+						'news_tags' => $this->input->post('news_tags', true),
+						'news_content' => $this->input->post('news_content', true),
+						'news_author_character' => $this->input->post('news_author', true),
 						'news_author_user' => $this->user->get_userid($this->input->post('news_author')),
-						'news_status' => $this->input->post('news_status', TRUE),
-						'news_cat' => $this->input->post('news_cat', TRUE),
-						'news_private' => $this->input->post('news_private', TRUE),
+						'news_status' => $this->input->post('news_status', true),
+						'news_cat' => $this->input->post('news_cat', true),
+						'news_private' => $this->input->post('news_private', true),
 						'news_last_update' => now()
 					);
 					
@@ -2919,28 +2706,25 @@ class Manage_base extends Controller {
 						$flash['status'] = 'error';
 						$flash['message'] = text_output($message);
 					}
-					
-					// set the location of the flash view
-					$flashloc = view_location('flash', $this->skin, 'admin');
-					
-					/* write everything to the template */
-					$this->template->write_view('flash_message', $flashloc, $flash);
 				break;
 			}
+			
+			// set the flash message
+			$this->_regions['flash_message'] = Location::view('flash', $this->skin, 'admin', $flash);
 		}
 		
 		if ($section == 'edit')
 		{
-			/* grab the ID from the URL */
-			$id = $this->uri->segment(4, 0, TRUE);
+			// grab the ID from the URL
+			$id = $this->uri->segment(4, 0, true);
 			
-			/* grab the post data */
+			// grab the post data
 			$row = $this->news->get_news_item($id);
 			$cats = $this->news->get_news_categories();
 			
-			if ($this->auth->get_access_level() < 2)
+			if (Auth::get_access_level() < 2)
 			{
-				if ($this->session->userdata('userid') != $row->news_author_user || $row->news_status == 'pending')
+				if ($this->session->userdata('userid') != $row->news_author_user or $row->news_status == 'pending')
 				{
 					redirect('admin/error/6');
 				}
@@ -2954,18 +2738,18 @@ class Manage_base extends Controller {
 				}
 			}
 			
-			/* get all characters */
+			// get all characters
 			$all = $this->char->get_all_characters('active');
 			
 			if ($all->num_rows() > 0)
 			{
 				foreach ($all->result() as $a)
 				{
-					$data['all'][$a->charid] = $this->char->get_character_name($a->charid, TRUE);
+					$data['all'][$a->charid] = $this->char->get_character_name($a->charid, true);
 				}
 			}
 			
-			/* set the data used by the view */
+			// set the data used by the view
 			$data['inputs'] = array(
 				'title' => array(
 					'name' => 'news_title',
@@ -2979,7 +2763,7 @@ class Manage_base extends Controller {
 					'name' => 'news_tags',
 					'value' => $row->news_tags),
 				'author' => $row->news_author_character,
-				'character' => $this->char->get_character_name($row->news_author_character, TRUE),
+				'character' => $this->char->get_character_name($row->news_author_character, true),
 				'status' => $row->news_status,
 				'category' => $row->news_cat,
 				'category_name' => $this->news->get_news_category($row->news_cat, 'newscat_name'),
@@ -3025,9 +2809,8 @@ class Manage_base extends Controller {
 			
 			$js_data['tab'] = 0;
 			
-			/* figure out where the view should be coming from */
-			$view_loc = view_location('manage_news_edit', $this->skin, 'admin');
-			$js_loc = js_location('manage_news_js', $this->skin, 'admin');
+			// figure out where the view should be coming from
+			$view_loc = 'manage_news_edit';
 		}
 		else
 		{
@@ -3063,23 +2846,22 @@ class Manage_base extends Controller {
 			
 			$data['header'] = ucwords(lang('actions_manage') .' '. lang('global_newsitems'));
 			
-			/* figure out where the view should be coming from */
-			$view_loc = view_location('manage_news', $this->skin, 'admin');
-			$js_loc = js_location('manage_news_js', $this->skin, 'admin');
+			// figure out where the view should be coming from
+			$view_loc = 'manage_news';
 		}
 		
-		/* write the data to the template */
-		$this->template->write('title', $data['header']);
-		$this->template->write_view('content', $view_loc, $data);
-		$this->template->write_view('javascript', $js_loc, $js_data);
+		$this->_regions['content'] = Location::view($view_loc, $this->skin, 'admin', $data);
+		$this->_regions['javascript'] = Location::js('manage_news_js', $this->skin, 'admin', $js_data);
+		$this->_regions['title'].= $data['header'];
 		
-		/* render the template */
-		$this->template->render();
+		Template::assign($this->_regions);
+		
+		Template::render();
 	}
 	
-	function newscats()
+	public function newscats()
 	{
-		$this->auth->check_access();
+		Auth::check_access();
 		
 		$this->load->model('news_model', 'news');
 		
@@ -3089,11 +2871,11 @@ class Manage_base extends Controller {
 			{
 				case 'add':
 					$insert_array = array(
-						'newscat_name' => $this->input->post('newscat_name', TRUE),
+						'newscat_name' => $this->input->post('newscat_name', true),
 						'newscat_display' => 'y',
 					);
 					
-					/* insert the record */
+					// insert the record
 					$insert = $this->news->add_news_category($insert_array);
 					
 					if ($insert > 0)
@@ -3120,12 +2902,6 @@ class Manage_base extends Controller {
 						$flash['status'] = 'error';
 						$flash['message'] = text_output($message);
 					}
-					
-					// set the location of the flash view
-					$flashloc = view_location('flash', $this->skin, 'admin');
-					
-					/* write everything to the template */
-					$this->template->write_view('flash_message', $flashloc, $flash);
 				break;
 					
 				case 'edit':
@@ -3137,12 +2913,12 @@ class Manage_base extends Controller {
 					{
 						$loc = strpos($key, '_');
 						
-						if ($loc !== FALSE)
+						if ($loc !== false)
 						{
 							$loc_pos = substr($key, 0, $loc);
 							
-							if (!in_array($loc_pos, $delete))
-							{ /* if the item is being deleted don't add it to the update array */
+							if ( ! in_array($loc_pos, $delete))
+							{ // if the item is being deleted don't add it to the update array
 								$new_key = 'newscat_'. substr($key, ($loc+1));
 								$array[$loc_pos][$new_key] = $value;
 							}
@@ -3150,12 +2926,12 @@ class Manage_base extends Controller {
 					}
 					
 					foreach ($array as $a => $b)
-					{ /* update the positions */
+					{
 						$update += $this->news->update_news_category($a, $b);
 					}
 					
 					foreach ($delete as $del)
-					{ /* delete the positions marked for deletion */
+					{
 						$delete = $this->news->delete_news_category($del);
 					}
 					
@@ -3183,14 +2959,11 @@ class Manage_base extends Controller {
 						$flash['status'] = 'error';
 						$flash['message'] = text_output($message);
 					}
-					
-					// set the location of the flash view
-					$flashloc = view_location('flash', $this->skin, 'admin');
-					
-					/* write everything to the template */
-					$this->template->write_view('flash_message', $flashloc, $flash);
 				break;
 			}
+			
+			// set the flash message
+			$this->_regions['flash_message'] = Location::view('flash', $this->skin, 'admin', $flash);
 		}
 		
 		$cats = $this->news->get_news_categories('');
@@ -3249,7 +3022,7 @@ class Manage_base extends Controller {
 		
 		$data['images'] = array(
 			'add' => array(
-				'src' => img_location('category-add.png', $this->skin, 'admin'),
+				'src' => Location::img('icon-add.png', $this->skin, 'admin'),
 				'alt' => '',
 				'class' => 'inline_img_left')
 		);
@@ -3263,30 +3036,25 @@ class Manage_base extends Controller {
 			lang('global_newsitems')
 		);
 		
-		/* figure out where the view should be coming from */
-		$view_loc = view_location('manage_newscats', $this->skin, 'admin');
-		$js_loc = js_location('manage_newscats_js', $this->skin, 'admin');
+		$this->_regions['content'] = Location::view('manage_newscats', $this->skin, 'admin', $data);
+		$this->_regions['javascript'] = Location::js('manage_newscats_js', $this->skin, 'admin');
+		$this->_regions['title'].= $data['header'];
 		
-		/* write the data to the template */
-		$this->template->write('title', $data['header']);
-		$this->template->write_view('content', $view_loc, $data);
-		$this->template->write_view('javascript', $js_loc);
+		Template::assign($this->_regions);
 		
-		/* render the template */
-		$this->template->render();
+		Template::render();
 	}
 	
-	function positions()
+	public function positions()
 	{
-		// check access
-		$this->auth->check_access();
+		Auth::check_access();
 		
 		// load the resources
 		$this->load->model('positions_model', 'pos');
 		$this->load->model('depts_model', 'dept');
 		
 		// set the variables
-		$g_dept = $this->uri->segment(3, 1, TRUE);
+		$g_dept = $this->uri->segment(3, 1, true);
 		
 		if (isset($_POST['submit']))
 		{
@@ -3294,16 +3062,16 @@ class Manage_base extends Controller {
 			{
 				case 'add':
 					$insert_array = array(
-						'pos_name' => $this->input->post('pos_name', TRUE),
-						'pos_type' => $this->input->post('pos_type', TRUE),
-						'pos_dept' => $this->input->post('pos_dept', TRUE),
-						'pos_order' => $this->input->post('pos_order', TRUE),
-						'pos_display' => $this->input->post('pos_display', TRUE),
-						'pos_open' => $this->input->post('pos_open', TRUE),
-						'pos_desc' => $this->input->post('pos_desc', TRUE),
+						'pos_name' => $this->input->post('pos_name', true),
+						'pos_type' => $this->input->post('pos_type', true),
+						'pos_dept' => $this->input->post('pos_dept', true),
+						'pos_order' => $this->input->post('pos_order', true),
+						'pos_display' => $this->input->post('pos_display', true),
+						'pos_open' => $this->input->post('pos_open', true),
+						'pos_desc' => $this->input->post('pos_desc', true),
 					);
 					
-					/* insert the record */
+					// insert the record
 					$insert = $this->pos->add_position($insert_array);
 					
 					if ($insert > 0)
@@ -3330,12 +3098,6 @@ class Manage_base extends Controller {
 						$flash['status'] = 'error';
 						$flash['message'] = text_output($message);
 					}
-					
-					// set the location of the flash view
-					$flashloc = view_location('flash', $this->skin, 'admin');
-					
-					/* write everything to the template */
-					$this->template->write_view('flash_message', $flashloc, $flash);
 				break;
 					
 				case 'edit':
@@ -3347,12 +3109,12 @@ class Manage_base extends Controller {
 					{
 						$loc = strpos($key, '_');
 						
-						if ($loc !== FALSE)
+						if ($loc !== false)
 						{
 							$loc_pos = substr($key, 0, $loc);
 							
-							if (!in_array($loc_pos, $delete))
-							{ /* if the item is being deleted don't add it to the update array */
+							if ( ! in_array($loc_pos, $delete))
+							{ // if the item is being deleted don't add it to the update array
 								$new_key = 'pos_'. substr($key, ($loc+1));
 								$array[$loc_pos][$new_key] = $value;
 							}
@@ -3360,12 +3122,12 @@ class Manage_base extends Controller {
 					}
 					
 					foreach ($array as $a => $b)
-					{ /* update the positions */
+					{
 						$update += $this->pos->update_position($a, $b);
 					}
 					
 					foreach ($delete as $del)
-					{ /* delete the positions marked for deletion */
+					{
 						$delete = $this->pos->delete_position($del);
 					}
 					
@@ -3393,27 +3155,24 @@ class Manage_base extends Controller {
 						$flash['status'] = 'error';
 						$flash['message'] = text_output($message);
 					}
-					
-					// set the location of the flash view
-					$flashloc = view_location('flash', $this->skin, 'admin');
-					
-					/* write everything to the template */
-					$this->template->write_view('flash_message', $flashloc, $flash);
 				break;
 			}
+			
+			// set the flash message
+			$this->_regions['flash_message'] = Location::view('flash', $this->skin, 'admin', $flash);
 		}
 		
 		// get the positions for the current department
-		$positions = $this->pos->get_dept_positions($g_dept, NULL);
+		$positions = $this->pos->get_dept_positions($g_dept, null);
 		
 		// get all the departments
-		$departments = $this->dept->get_all_depts('asc', NULL);
+		$departments = $this->dept->get_all_depts('asc', null);
 		
 		if ($departments->num_rows() > 0)
 		{
 			foreach ($departments->result() as $d)
 			{
-				$name = ($d->dept_manifest > 0 && $d->dept_manifest !== NULL)
+				$name = ($d->dept_manifest > 0 and $d->dept_manifest !== null)
 					? $this->dept->get_manifest($d->dept_manifest, 'manifest_name')
 					: ucwords(lang('labels_unassigned').' '.lang('global_departments'));
 					
@@ -3422,7 +3181,7 @@ class Manage_base extends Controller {
 				
 				$data['deptnames'][$d->dept_id] = $d->dept_name;
 				
-				$subd = $this->dept->get_sub_depts($d->dept_id, 'asc', NULL);
+				$subd = $this->dept->get_sub_depts($d->dept_id, 'asc', null);
 				
 				if ($subd->num_rows() > 0)
 				{
@@ -3484,10 +3243,6 @@ class Manage_base extends Controller {
 			}
 		}
 				
-		/* figure out where the view should be coming from */
-		$view_loc = view_location('manage_positions', $this->skin, 'admin');
-		$js_loc = js_location('manage_positions_js', $this->skin, 'admin');
-		
 		$data['header'] = ucwords(lang('actions_manage') .' '. lang('global_positions'));
 		$data['text'] = sprintf(
 			lang('text_manage_positions'),
@@ -3516,7 +3271,7 @@ class Manage_base extends Controller {
 		
 		$data['images'] = array(
 			'add' => array(
-				'src' => img_location('icon-add.png', $this->skin, 'admin'),
+				'src' => Location::img('icon-add.png', $this->skin, 'admin'),
 				'alt' => '',
 				'class' => 'inline_img_left'),
 		);
@@ -3530,38 +3285,38 @@ class Manage_base extends Controller {
 				'content' => ucwords(lang('actions_update')))
 		);
 		
-		/* write the data to the template */
-		$this->template->write('title', $data['header']);
-		$this->template->write_view('content', $view_loc, $data);
-		$this->template->write_view('javascript', $js_loc);
+		$this->_regions['content'] = Location::view('manage_positions', $this->skin, 'admin', $data);
+		$this->_regions['javascript'] = Location::js('manage_positions_js', $this->skin, 'admin');
+		$this->_regions['title'].= $data['header'];
 		
-		/* render the template */
-		$this->template->render();
+		Template::assign($this->_regions);
+		
+		Template::render();
 	}
 	
-	function posts()
+	public function posts()
 	{
-		$this->auth->check_access();
+		Auth::check_access();
 		
 		$this->load->model('posts_model', 'posts');
 		$this->load->model('missions_model', 'mis');
 		
 		$values = array('activated', 'saved', 'pending', 'edit');
-		$section = $this->uri->segment(3, 'activated', FALSE, $values);
-		$offset = $this->uri->segment(4, 0, TRUE);
+		$section = $this->uri->segment(3, 'activated', false, $values);
+		$offset = $this->uri->segment(4, 0, true);
 		
 		if (isset($_POST['submit']))
 		{
 			switch ($this->uri->segment(5))
 			{
 				case 'approve':
-					$id = $this->input->post('id', TRUE);
-					$id = (is_numeric($id)) ? $id : FALSE;
+					$id = $this->input->post('id', true);
+					$id = (is_numeric($id)) ? $id : false;
 					
-					/* set the array data */
+					// set the array data
 					$approve_array = array('post_status' => 'activated');
 					
-					/* approve the post */
+					// approve the post
 					$approve = $this->posts->update_post($id, $approve_array);
 					
 					if ($approve > 0)
@@ -3576,10 +3331,10 @@ class Manage_base extends Controller {
 						$flash['status'] = 'success';
 						$flash['message'] = text_output($message);
 						
-						/* grab the post details */
+						// grab the post details
 						$row = $this->posts->get_post($id);
 						
-						/* set the array of data for the email */
+						// set the array of data for the email
 						$email_data = array(
 							'authors' => $row->post_authors,
 							'title' => $row->post_title,
@@ -3589,8 +3344,8 @@ class Manage_base extends Controller {
 							'mission' => $this->mis->get_mission($row->post_mission, 'mission_title')
 						);
 						
-						/* send the email */
-						$email = ($this->options['system_email'] == 'on') ? $this->_email('post', $email_data) : FALSE;
+						// send the email
+						$email = ($this->options['system_email'] == 'on') ? $this->_email('post', $email_data) : false;
 					}
 					else
 					{
@@ -3604,17 +3359,11 @@ class Manage_base extends Controller {
 						$flash['status'] = 'error';
 						$flash['message'] = text_output($message);
 					}
-					
-					// set the location of the flash view
-					$flashloc = view_location('flash', $this->skin, 'admin');
-					
-					/* write everything to the template */
-					$this->template->write_view('flash_message', $flashloc, $flash);
 				break;
 					
 				case 'delete':
-					$id = $this->input->post('id', TRUE);
-					$id = (is_numeric($id)) ? $id : FALSE;
+					$id = $this->input->post('id', true);
+					$id = (is_numeric($id)) ? $id : false;
 					
 					$delete = $this->posts->delete_post($id);
 					
@@ -3642,25 +3391,19 @@ class Manage_base extends Controller {
 						$flash['status'] = 'error';
 						$flash['message'] = text_output($message);
 					}
-					
-					// set the location of the flash view
-					$flashloc = view_location('flash', $this->skin, 'admin');
-					
-					/* write everything to the template */
-					$this->template->write_view('flash_message', $flashloc, $flash);
 				break;
 					
 				case 'update':
-					$id = $this->uri->segment(4, 0, TRUE);
+					$id = $this->uri->segment(4, 0, true);
 					
 					$update_array = array(
-						'post_title' => $this->input->post('post_title', TRUE),
-						'post_location' => $this->input->post('post_location', TRUE),
-						'post_timeline' => $this->input->post('post_timeline', TRUE),
-						'post_tags' => $this->input->post('post_tags', TRUE),
-						'post_content' => $this->input->post('post_content', TRUE),
-						'post_mission' => $this->input->post('post_mission', TRUE),
-						'post_status' => $this->input->post('post_status', TRUE),
+						'post_title' => $this->input->post('post_title', true),
+						'post_location' => $this->input->post('post_location', true),
+						'post_timeline' => $this->input->post('post_timeline', true),
+						'post_tags' => $this->input->post('post_tags', true),
+						'post_content' => $this->input->post('post_content', true),
+						'post_mission' => $this->input->post('post_mission', true),
+						'post_status' => $this->input->post('post_status', true),
 						'post_last_update' => now(),
 					);
 					
@@ -3673,16 +3416,16 @@ class Manage_base extends Controller {
 							unset($to[$a]);
 						}
 						
-						/* get the user ID */
+						// get the user ID
 						$uid = $this->sys->get_item('characters', 'charid', $b, 'user');
 						
-						/* put the users into an array */
-						$users[] = ($uid !== FALSE) ? $uid : NULL;
+						// put the users into an array
+						$users[] = ($uid !== false) ? $uid : null;
 					}
 					
 					foreach ($users as $k => $v)
 					{
-						if (!is_numeric($v) || $v < 1)
+						if ( ! is_numeric($v) or $v < 1)
 						{
 							unset($users[$k]);
 						}
@@ -3720,61 +3463,58 @@ class Manage_base extends Controller {
 						$flash['status'] = 'error';
 						$flash['message'] = text_output($message);
 					}
-					
-					// set the location of the flash view
-					$flashloc = view_location('flash', $this->skin, 'admin');
-					
-					/* write everything to the template */
-					$this->template->write_view('flash_message', $flashloc, $flash);
 				break;
 			}
+			
+			// set the flash message
+			$this->_regions['flash_message'] = Location::view('flash', $this->skin, 'admin', $flash);
 		}
 		
 		if ($section == 'edit')
 		{
-			/* grab the ID from the URL */
-			$id = $this->uri->segment(4, 0, TRUE);
+			// grab the ID from the URL
+			$id = $this->uri->segment(4, 0, true);
 			
-			/* grab the post data */
+			// grab the post data
 			$row = $this->posts->get_post($id);
 			
-			if ($this->auth->get_access_level() < 2)
+			if (Auth::get_access_level() < 2)
 			{
 				$valid = array();
 				
 				foreach ($this->session->userdata('characters') as $check)
 				{
-					if (strstr($row->post_authors, $check) === FALSE)
+					if (strstr($row->post_authors, $check) === false)
 					{
-						$valid[] = FALSE;
+						$valid[] = false;
 					}
 					else
 					{
-						$valid[] = TRUE;
+						$valid[] = true;
 					}
 				}
 				
-				if (!in_array(TRUE, $valid) || $row->post_status == 'pending')
+				if ( ! in_array(true, $valid) or $row->post_status == 'pending')
 				{
 					redirect('admin/error/6');
 				}
 			}
 			
-			/* get all characters */
+			// get all characters
 			$all = $this->char->get_all_characters('user_npc');
 			
-			/* get the current missions */
+			// get the current missions
 			$missions = $this->mis->get_all_missions();
 			
 			if ($all->num_rows() > 0)
-			{ /* get the rest of the potential authors */
+			{
 				$data['all'][0] = ucwords(lang('labels_please') .' '. lang('actions_select')
 					.' '. lang('labels_an') .' '. lang('labels_author'));
 				
 				foreach ($all->result() as $a)
 				{
-					if ($a->crew_type == 'active' || $a->crew_type == 'npc')
-					{ /* split the characters out between active and npcs */
+					if ($a->crew_type == 'active' or $a->crew_type == 'npc')
+					{
 						if ($a->crew_type == 'active')
 						{
 							$label = ucwords(lang('status_playing') .' '. lang('global_characters'));
@@ -3784,35 +3524,35 @@ class Manage_base extends Controller {
 							$label = ucwords(lang('abbr_npcs'));
 						}
 						
-						/* toss them in the array */
-						$data['all'][$label][$a->charid] = $this->char->get_character_name($a->charid, TRUE);
+						// toss them in the array
+						$data['all'][$label][$a->charid] = $this->char->get_character_name($a->charid, true);
 					}
 				}
 			}
 			
-			/* build the remove image */
+			// build the remove image
 			$remove = array(
-				'src' => img_location('minus-circle.png', $this->skin, 'admin'),
+				'src' => Location::img('minus-circle.png', $this->skin, 'admin'),
 				'class' => 'image fontSmall inline_img_left',
 				'alt' => ucfirst(lang('actions_remove'))
 			);
 			
-			/* prep the data for sending to the js view */
+			// prep the data for sending to the js view
 			$js_data['remove'] = img($remove);
 			$js_data['tab'] = 0;
 			
-			if ($row !== FALSE)
+			if ($row !== false)
 			{
-				/* set the hidden TO field */
+				// set the hidden TO field
 				$data['to'] = $row->post_authors;
 				
-				/* set the recipients list */
+				// set the recipients list
 				$to_array = explode(',', $data['to']);
 				
 				$i = 1;
 				foreach ($to_array as $value)
 				{
-					$to_name = $this->char->get_character_name($value, TRUE);
+					$to_name = $this->char->get_character_name($value, true);
 					
 					$data['recipient_list'][$i] = '<span class="'. $value .'">';
 					$data['recipient_list'][$i].= '<a href="#" id="remove_author" class="image" myID="'. $value .'" myName="'.  $to_name .'">';
@@ -3823,7 +3563,7 @@ class Manage_base extends Controller {
 				}
 			}
 			
-			/* set the data used by the view */
+			// set the data used by the view
 			$data['inputs'] = array(
 				'title' => array(
 					'name' => 'post_title',
@@ -3888,9 +3628,8 @@ class Manage_base extends Controller {
 				'authors' => ucfirst(lang('labels_authors'))
 			);
 			
-			/* figure out where the view should be coming from */
-			$view_loc = view_location('manage_posts_edit', $this->skin, 'admin');
-			$js_loc = js_location('manage_posts_js', $this->skin, 'admin');
+			// figure out where the view should be coming from
+			$view_loc = 'manage_posts_edit';
 		}
 		else
 		{
@@ -3926,33 +3665,31 @@ class Manage_base extends Controller {
 			
 			$data['header'] = ucwords(lang('actions_manage') .' '. lang('global_missionposts'));
 			
-			$js_data['remove'] = FALSE;
+			$js_data['remove'] = false;
 			
-			/* figure out where the view should be coming from */
-			$view_loc = view_location('manage_posts', $this->skin, 'admin');
-			$js_loc = js_location('manage_posts_js', $this->skin, 'admin');
+			// figure out where the view should be coming from
+			$view_loc = 'manage_posts';
 		}
 		
-		/* write the data to the template */
-		$this->template->write('title', $data['header']);
-		$this->template->write_view('content', $view_loc, $data);
-		$this->template->write_view('javascript', $js_loc, $js_data);
+		$this->_regions['content'] = Location::view($view_loc, $this->skin, 'admin', $data);
+		$this->_regions['javascript'] = Location::js('manage_posts_js', $this->skin, 'admin', $js_data);
+		$this->_regions['title'].= $data['header'];
 		
-		/* render the template */
-		$this->template->render();
+		Template::assign($this->_regions);
+		
+		Template::render();
 	}
 	
-	function ranks()
+	public function ranks()
 	{
-		/* check access */
-		$this->auth->check_access();
+		Auth::check_access();
 		
-		/* load the resources */
+		// load the resources
 		$this->load->model('ranks_model', 'ranks');
 		
-		/* set the variables */
+		// set the variables
 		$set = $this->uri->segment(3, 'default');
-		$class = $this->uri->segment(4, 1, TRUE);
+		$class = $this->uri->segment(4, 1, true);
 		
 		if (isset($_POST['submit']))
 		{
@@ -3960,15 +3697,15 @@ class Manage_base extends Controller {
 			{
 				case 'add':
 					$insert_array = array(
-						'rank_name' => $this->input->post('rank_name', TRUE),
-						'rank_order' => $this->input->post('rank_order', TRUE),
-						'rank_display' => $this->input->post('rank_display', TRUE),
-						'rank_class' => $this->input->post('rank_class', TRUE),
-						'rank_short_name' => $this->input->post('rank_short_name', TRUE),
-						'rank_image' => $this->input->post('rank_image', TRUE),
+						'rank_name' => $this->input->post('rank_name', true),
+						'rank_order' => $this->input->post('rank_order', true),
+						'rank_display' => $this->input->post('rank_display', true),
+						'rank_class' => $this->input->post('rank_class', true),
+						'rank_short_name' => $this->input->post('rank_short_name', true),
+						'rank_image' => $this->input->post('rank_image', true),
 					);
 					
-					/* insert the record */
+					// insert the record
 					$insert = $this->ranks->add_rank($insert_array);
 					
 					if ($insert > 0)
@@ -3995,12 +3732,6 @@ class Manage_base extends Controller {
 						$flash['status'] = 'error';
 						$flash['message'] = text_output($message);
 					}
-					
-					// set the location of the flash view
-					$flashloc = view_location('flash', $this->skin, 'admin');
-					
-					/* write everything to the template */
-					$this->template->write_view('flash_message', $flashloc, $flash);
 				break;
 					
 				case 'edit':
@@ -4012,12 +3743,12 @@ class Manage_base extends Controller {
 					{
 						$loc = strpos($key, '_');
 						
-						if ($loc !== FALSE)
+						if ($loc !== false)
 						{
 							$loc_pos = substr($key, 0, $loc);
 							
-							if (!in_array($loc_pos, $delete))
-							{ /* if the item is being deleted don't add it to the update array */
+							if ( ! in_array($loc_pos, $delete))
+							{ // if the item is being deleted don't add it to the update array
 								$new_key = 'rank_'. substr($key, ($loc+1));
 								$array[$loc_pos][$new_key] = $value;
 							}
@@ -4025,12 +3756,12 @@ class Manage_base extends Controller {
 					}
 					
 					foreach ($array as $a => $b)
-					{ /* update the positions */
+					{
 						$update += $this->ranks->update_rank($a, $b);
 					}
 					
 					foreach ($delete as $del)
-					{ /* delete the positions marked for deletion */
+					{
 						$delete = $this->ranks->delete_rank($del);
 					}
 					
@@ -4058,26 +3789,23 @@ class Manage_base extends Controller {
 						$flash['status'] = 'error';
 						$flash['message'] = text_output($message);
 					}
-					
-					// set the location of the flash view
-					$flashloc = view_location('flash', $this->skin, 'admin');
-					
-					/* write everything to the template */
-					$this->template->write_view('flash_message', $flashloc, $flash);
 				break;
 			}
+			
+			// set the flash message
+			$this->_regions['flash_message'] = Location::view('flash', $this->skin, 'admin', $flash);
 		}
 		
 		$info = $this->ranks->get_rankcat($set);
 		$ranks = $this->ranks->get_ranks($class, '');
 		
-		/* grab all the rank sets */
-		$setstatus = ($this->auth->check_access('site/catalogueranks', FALSE) === TRUE) ? array('active','development') : 'active';
+		// grab all the rank sets
+		$setstatus = (Auth::check_access('site/catalogueranks', false)) ? array('active','development') : 'active';
 		$allranks = $this->ranks->get_all_rank_sets($setstatus);
 		$allclasses = $this->ranks->get_group_ranks(0, 'rank_order');
 		
 		if ($allranks->num_rows() > 0)
-		{ /* build the array with rank set data */
+		{
 			foreach ($allranks->result() as $allrank)
 			{
 				$data['allranks'][$allrank->rankcat_location] = array(
@@ -4089,10 +3817,10 @@ class Manage_base extends Controller {
 				);
 				
 				if ($allclasses->num_rows() > 0)
-				{ /* build the array with rank class data */
+				{
 					foreach ($allclasses->result() as $allclass)
 					{
-						if ($allclass->rank_class > 0 && $allrank->rankcat_location == $set)
+						if ($allclass->rank_class > 0 and $allrank->rankcat_location == $set)
 						{
 							$data['allclasses'][$allclass->rank_class] = array(
 								'src' => rank_location(
@@ -4114,7 +3842,7 @@ class Manage_base extends Controller {
 				$data['ranks'][$rank->rank_id] = array(
 					'id' => $rank->rank_id,
 					'img' => array(
-						'src' => rank_location($info->rankcat_location, $rank->rank_image, $info->rankcat_extension),
+						'src' => Location::rank($info->rankcat_location, $rank->rank_image, $info->rankcat_extension),
 						'alt' => $rank->rank_name),
 					'name' => array(
 						'name' => $rank->rank_id .'_name',
@@ -4153,10 +3881,6 @@ class Manage_base extends Controller {
 		$data['class'] = $class;
 		$data['ext'] = $info->rankcat_extension;
 		
-		/* figure out where the view should be coming from */
-		$view_loc = view_location('manage_ranks', $this->skin, 'admin');
-		$js_loc = js_location('manage_ranks_js', $this->skin, 'admin');
-		
 		$data['header'] = ucwords(lang('actions_manage') .' '. lang('global_ranks'));
 		$data['text'] = sprintf(
 			lang('text_manage_ranks'),
@@ -4183,7 +3907,7 @@ class Manage_base extends Controller {
 		
 		$data['images'] = array(
 			'add' => array(
-				'src' => img_location('icon-add.png', $this->skin, 'admin'),
+				'src' => Location::img('icon-add.png', $this->skin, 'admin'),
 				'alt' => '',
 				'class' => 'inline_img_left'),
 		);
@@ -4203,25 +3927,25 @@ class Manage_base extends Controller {
 			'sets' => ucwords(lang('global_rank') .' '. lang('labels_sets'))
 		);
 		
-		/* write the data to the template */
-		$this->template->write('title', $data['header']);
-		$this->template->write_view('content', $view_loc, $data);
-		$this->template->write_view('javascript', $js_loc);
+		$this->_regions['content'] = Location::view('manage_ranks', $this->skin, 'admin', $data);
+		$this->_regions['javascript'] = Location::js('manage_ranks_js', $this->skin, 'admin');
+		$this->_regions['title'].= $data['header'];
 		
-		/* render the template */
-		$this->template->render();
+		Template::assign($this->_regions);
+		
+		Template::render();
 	}
 	
-	function specs()
+	public function specs()
 	{
-		$this->auth->check_access();
+		Auth::check_access();
 		
-		/* load the resources */
+		// load the resources
 		$this->load->model('specs_model', 'specs');
 		
-		/* set the variables */
+		// set the variables
 		$action = $this->uri->segment(3);
-		$id = $this->uri->segment(4, FALSE, TRUE);
+		$id = $this->uri->segment(4, false, true);
 		
 		if (isset($_POST['submit']))
 		{
@@ -4248,7 +3972,7 @@ class Manage_base extends Controller {
 					$insert = $this->specs->add_spec_item($specs);
 					$insert_id = $this->db->insert_id();
 					
-					/* optimize the table */
+					// optimize the table
 					$this->sys->optimize_table('specs');
 					
 					foreach ($fields as $k => $v)
@@ -4282,17 +4006,11 @@ class Manage_base extends Controller {
 						$flash['status'] = 'error';
 						$flash['message'] = text_output($message);
 					}
-					
-					// set the location of the flash view
-					$flashloc = view_location('flash', $this->skin, 'admin');
-					
-					/* write everything to the template */
-					$this->template->write_view('flash_message', $flashloc, $flash);
 				break;
 					
 				case 'delete':
-					$id = $this->input->post('id', TRUE);
-					$id = (is_numeric($id)) ? $id : FALSE;
+					$id = $this->input->post('id', true);
+					$id = (is_numeric($id)) ? $id : false;
 					
 					$delete = $this->specs->delete_spec_item($id);
 					
@@ -4322,17 +4040,11 @@ class Manage_base extends Controller {
 						$flash['status'] = 'error';
 						$flash['message'] = text_output($message);
 					}
-					
-					// set the location of the flash view
-					$flashloc = view_location('flash', $this->skin, 'admin');
-					
-					/* write everything to the template */
-					$this->template->write_view('flash_message', $flashloc, $flash);
 				break;
 					
 				case 'edit':
-					$id = $this->input->post('id', TRUE);
-					$id = (is_numeric($id)) ? $id : FALSE;
+					$id = $this->input->post('id', true);
+					$id = (is_numeric($id)) ? $id : false;
 					
 					foreach ($_POST as $key => $value)
 					{
@@ -4381,19 +4093,16 @@ class Manage_base extends Controller {
 						$flash['status'] = 'error';
 						$flash['message'] = text_output($message);
 					}
-					
-					// set the location of the flash view
-					$flashloc = view_location('flash', $this->skin, 'admin');
-					
-					/* write everything to the template */
-					$this->template->write_view('flash_message', $flashloc, $flash);
 				break;
 			}
+			
+			// set the flash message
+			$this->_regions['flash_message'] = Location::view('flash', $this->skin, 'admin', $flash);
 		}
 		
-		if ($action == 'add' || $action == 'edit')
+		if ($action == 'add' or $action == 'edit')
 		{
-			$item = ($action == 'edit') ? $this->specs->get_spec_item($id) : FALSE;
+			$item = ($action == 'edit') ? $this->specs->get_spec_item($id) : false;
 			
 			$data['header'] = ucwords(lang('actions_'. $action) .' '. lang('global_specification') .' '. lang('labels_item'));
 			$data['header'].= ($action == 'edit') ? ' - '. $item->specs_name : '';
@@ -4401,31 +4110,31 @@ class Manage_base extends Controller {
 			$data['inputs'] = array(
 				'name' => array(
 					'name' => 'specs_name',
-					'value' => ($item === FALSE) ? '' : $item->specs_name),
+					'value' => ($item === false) ? '' : $item->specs_name),
 				'order' => array(
 					'name' => 'specs_order',
 					'class' => 'small',
-					'value' => ($item === FALSE) ? '' : $item->specs_order),
+					'value' => ($item === false) ? '' : $item->specs_order),
 				'display_y' => array(
 					'name' => 'specs_display',
 					'id' => 'display_y',
 					'value' => 'y',
-					'checked' => ($item !== FALSE && $item->specs_display == 'y') ? TRUE : FALSE),
+					'checked' => ($item !== false and $item->specs_display == 'y') ? true : false),
 				'display_n' => array(
 					'name' => 'specs_display',
 					'id' => 'display_n',
 					'value' => 'n',
-					'checked' => ($item !== FALSE && $item->specs_display == 'n') ? TRUE : FALSE),
+					'checked' => ($item !== false and $item->specs_display == 'n') ? true : false),
 				'summary' => array(
 					'name' => 'specs_summary',
 					'rows' => 6,
-					'value' => ($item === FALSE) ? '' : $item->specs_summary),
-				'images' => (!empty($item->specs_images)) ? explode(',', $item->specs_images) : '',
+					'value' => ($item === false) ? '' : $item->specs_summary),
+				'images' => ( ! empty($item->specs_images)) ? explode(',', $item->specs_images) : '',
 			);
 			
-			if ($item === FALSE)
+			if ($item === false)
 			{
-				$data['inputs']['display_y']['checked'] = TRUE;
+				$data['inputs']['display_y']['checked'] = true;
 			}
 			
 			$sections = $this->specs->get_spec_sections();
@@ -4434,21 +4143,21 @@ class Manage_base extends Controller {
 			{
 				foreach ($sections->result() as $sec)
 				{
-					$sid = $sec->section_id; /* section id */
+					$sid = $sec->section_id;
 					
-					/* set the section name */
+					// set the section name
 					$data['specs'][$sid]['name'] = $sec->section_name;
 					
-					/* grab the fields for the given section */
+					// grab the fields for the given section
 					$fields = $this->specs->get_spec_fields($sec->section_id);
 					
 					if ($fields->num_rows() > 0)
 					{
 						foreach ($fields->result() as $field)
 						{
-							$f_id = $field->field_id; /* field id */
+							$f_id = $field->field_id;
 							
-							/* set the page label */
+							// set the page label
 							$data['specs'][$sid]['fields'][$f_id]['field_label'] = $field->field_label_page;
 							
 							switch ($field->field_type)
@@ -4460,7 +4169,7 @@ class Manage_base extends Controller {
 										'name' => $field->field_id,
 										'id' => $field->field_fid,
 										'class' => $field->field_class,
-										'value' => ($row !== FALSE) ? $row->data_value : ''
+										'value' => ($row !== false) ? $row->data_value : ''
 									);
 									
 									$data['specs'][$sid]['fields'][$f_id]['input'] = form_input($input);
@@ -4473,7 +4182,7 @@ class Manage_base extends Controller {
 										'name' => $field->field_id,
 										'id' => $field->field_fid,
 										'class' => $field->field_class,
-										'value' => ($row !== FALSE) ? $row->data_value : '',
+										'value' => ($row !== false) ? $row->data_value : '',
 										'rows' => $field->field_rows
 									);
 									
@@ -4481,14 +4190,14 @@ class Manage_base extends Controller {
 								break;
 									
 								case 'select':
-									$value = FALSE;
-									$values = FALSE;
-									$input = FALSE;
+									$value = false;
+									$values = false;
+									$input = false;
 								
 									$values = $this->specs->get_spec_values($field->field_id);
 									
 									$row = $this->specs->get_field_data($id, $f_id);
-									$default = ($row !== FALSE) ? $row->data_value : '';
+									$default = ($row !== false) ? $row->data_value : '';
 									
 									if ($values->num_rows() > 0)
 									{
@@ -4528,7 +4237,7 @@ class Manage_base extends Controller {
 			$data['form'] = ($action == 'edit') ? 'edit/'. $id : 'add';
 			$data['id'] = $id;
 			
-			$view_loc = view_location('manage_specs_action', $this->skin, 'admin');
+			$view_loc = 'manage_specs_action';
 		}
 		else
 		{
@@ -4551,35 +4260,35 @@ class Manage_base extends Controller {
 			$data['header'] = ucwords(lang('actions_manage') .' '. lang('global_specification') .' '. lang('labels_items'));
 			$data['text'] = lang('text_manage_specs');
 			
-			$view_loc = view_location('manage_specs', $this->skin, 'admin');
+			$view_loc = 'manage_specs';
 		}
 		
 		$data['images'] = array(
 			'form' => array(
-				'src' => img_location('forms-field.png', $this->skin, 'admin'),
+				'src' => Location::img('forms-field.png', $this->skin, 'admin'),
 				'alt' => '',
 				'class' => 'image inline_img_left'),
 			'edit' => array(
-				'src' => img_location('icon-edit.png', $this->skin, 'admin'),
+				'src' => Location::img('icon-edit.png', $this->skin, 'admin'),
 				'alt' => ucfirst(lang('actions_edit')),
 				'title' => ucfirst(lang('actions_edit')),
 				'class' => 'image'),
 			'delete' => array(
-				'src' => img_location('icon-delete.png', $this->skin, 'admin'),
+				'src' => Location::img('icon-delete.png', $this->skin, 'admin'),
 				'alt' => ucfirst(lang('actions_delete')),
 				'title' => ucfirst(lang('actions_delete')),
 				'class' => 'image'),
 			'add' => array(
-				'src' => img_location('icon-add.png', $this->skin, 'admin'),
+				'src' => Location::img('icon-add.png', $this->skin, 'admin'),
 				'alt' => ucfirst(lang('actions_add')),
 				'title' => ucfirst(lang('actions_add')),
 				'class' => 'image inline_img_left'),
 			'upload' => array(
-				'src' => img_location('image-upload.png', $this->skin, 'admin'),
+				'src' => Location::img('image-upload.png', $this->skin, 'admin'),
 				'alt' => lang('actions_upload'),
 				'class' => 'image'),
 			'loading' => array(
-				'src' => img_location('loading-circle.gif', $this->skin, 'admin'),
+				'src' => Location::img('loading-circle.gif', $this->skin, 'admin'),
 				'alt' => lang('actions_loading'),
 				'class' => 'image'),
 		);
@@ -4633,29 +4342,26 @@ class Manage_base extends Controller {
 		
 		$js_data['id'] = $id;
 		
-		/* figure out where the view should be coming from */
-		$js_loc = js_location('manage_specs_js', $this->skin, 'admin');
+		$this->_regions['content'] = Location::view($view_loc, $this->skin, 'admin', $data);
+		$this->_regions['javascript'] = Location::js('manage_specs_js', $this->skin, 'admin', $js_data);
+		$this->_regions['title'].= $data['header'];
 		
-		/* write the data to the template */
-		$this->template->write('title', $data['header']);
-		$this->template->write_view('content', $view_loc, $data);
-		$this->template->write_view('javascript', $js_loc, $js_data);
+		Template::assign($this->_regions);
 		
-		/* render the template */
-		$this->template->render();
+		Template::render();
 	}
 	
-	function tour()
+	public function tour()
 	{
-		$this->auth->check_access();
+		Auth::check_access();
 		
-		/* load the resources */
+		// load the resources
 		$this->load->model('tour_model', 'tour');
 		$this->load->model('specs_model', 'specs');
 		
-		/* set the variables */
+		// set the variables
 		$action = $this->uri->segment(3);
-		$id = $this->uri->segment(4, FALSE, TRUE);
+		$id = $this->uri->segment(4, false, true);
 		
 		if (isset($_POST['submit']))
 		{
@@ -4682,7 +4388,7 @@ class Manage_base extends Controller {
 					$insert = $this->tour->add_tour_item($tour);
 					$insert_id = $this->db->insert_id();
 					
-					/* optimize the table */
+					// optimize the table
 					$this->sys->optimize_table('tour');
 					
 					foreach ($fields as $k => $v)
@@ -4716,17 +4422,11 @@ class Manage_base extends Controller {
 						$flash['status'] = 'error';
 						$flash['message'] = text_output($message);
 					}
-					
-					// set the location of the flash view
-					$flashloc = view_location('flash', $this->skin, 'admin');
-					
-					/* write everything to the template */
-					$this->template->write_view('flash_message', $flashloc, $flash);
 				break;
 					
 				case 'delete':
-					$id = $this->input->post('id', TRUE);
-					$id = (is_numeric($id)) ? $id : FALSE;
+					$id = $this->input->post('id', true);
+					$id = (is_numeric($id)) ? $id : false;
 					
 					$delete = $this->tour->delete_tour_item($id);
 					
@@ -4756,17 +4456,11 @@ class Manage_base extends Controller {
 						$flash['status'] = 'error';
 						$flash['message'] = text_output($message);
 					}
-					
-					// set the location of the flash view
-					$flashloc = view_location('flash', $this->skin, 'admin');
-					
-					/* write everything to the template */
-					$this->template->write_view('flash_message', $flashloc, $flash);
 				break;
 					
 				case 'edit':
-					$id = $this->input->post('id', TRUE);
-					$id = (is_numeric($id)) ? $id : FALSE;
+					$id = $this->input->post('id', true);
+					$id = (is_numeric($id)) ? $id : false;
 					
 					foreach ($_POST as $key => $value)
 					{
@@ -4815,19 +4509,16 @@ class Manage_base extends Controller {
 						$flash['status'] = 'error';
 						$flash['message'] = text_output($message);
 					}
-					
-					// set the location of the flash view
-					$flashloc = view_location('flash', $this->skin, 'admin');
-					
-					/* write everything to the template */
-					$this->template->write_view('flash_message', $flashloc, $flash);
 				break;
 			}
+			
+			// set the flash message
+			$this->_regions['flash_message'] = Location::view('flash', $this->skin, 'admin', $flash);
 		}
 		
-		if ($action == 'add' || $action == 'edit')
+		if ($action == 'add' or $action == 'edit')
 		{
-			$item = ($action == 'edit') ? $this->sys->get_item('tour', 'tour_id', $id) : FALSE;
+			$item = ($action == 'edit') ? $this->sys->get_item('tour', 'tour_id', $id) : false;
 			
 			$data['header'] = ucwords(lang('actions_'. $action) .' '. lang('global_touritem'));
 			$data['header'].= ($action == 'edit') ? ' - '. $item->tour_name : '';
@@ -4835,32 +4526,32 @@ class Manage_base extends Controller {
 			$data['inputs'] = array(
 				'name' => array(
 					'name' => 'tour_name',
-					'value' => ($item === FALSE) ? '' : $item->tour_name),
+					'value' => ($item === false) ? '' : $item->tour_name),
 				'order' => array(
 					'name' => 'tour_order',
 					'class' => 'small',
-					'value' => ($item === FALSE) ? '' : $item->tour_order),
+					'value' => ($item === false) ? '' : $item->tour_order),
 				'display_y' => array(
 					'name' => 'tour_display',
 					'id' => 'display_y',
 					'value' => 'y',
-					'checked' => ($item !== FALSE && $item->tour_display == 'y') ? TRUE : FALSE),
+					'checked' => ($item !== false and $item->tour_display == 'y') ? true : false),
 				'display_n' => array(
 					'name' => 'tour_display',
 					'id' => 'display_n',
 					'value' => 'n',
-					'checked' => ($item !== FALSE && $item->tour_display == 'n') ? TRUE : FALSE),
+					'checked' => ($item !== false and $item->tour_display == 'n') ? true : false),
 				'summary' => array(
 					'name' => 'tour_summary',
 					'rows' => 6,
-					'value' => ($item === FALSE) ? '' : $item->tour_summary),
-				'images' => (!empty($item->tour_images)) ? explode(',', $item->tour_images) : '',
-				'spec_item' => ($item === FALSE) ? FALSE : $item->tour_spec_item,
+					'value' => ($item === false) ? '' : $item->tour_summary),
+				'images' => ( ! empty($item->tour_images)) ? explode(',', $item->tour_images) : '',
+				'spec_item' => ($item === false) ? false : $item->tour_spec_item,
 			);
 			
-			if ($item === FALSE)
+			if ($item === false)
 			{
-				$data['inputs']['display_y']['checked'] = TRUE;
+				$data['inputs']['display_y']['checked'] = true;
 			}
 			
 			// get the spec items
@@ -4885,7 +4576,7 @@ class Manage_base extends Controller {
 				{
 					$tid = $field->field_id;
 					
-					/* set the page label */
+					// set the page label
 					$data['inputs']['fields'][$tid]['field_label'] = $field->field_label_page;
 					
 					switch ($field->field_type)
@@ -4897,7 +4588,7 @@ class Manage_base extends Controller {
 								'name' => $field->field_id,
 								'id' => $field->field_fid,
 								'class' => $field->field_class,
-								'value' => ($row === FALSE) ? '' : $row->data_value
+								'value' => ($row === false) ? '' : $row->data_value
 							);
 							
 							$data['inputs']['fields'][$tid]['input'] = form_input($input);
@@ -4910,7 +4601,7 @@ class Manage_base extends Controller {
 								'name' => $field->field_id,
 								'id' => $field->field_fid,
 								'class' => $field->field_class,
-								'value' => ($row === FALSE) ? '' : $row->data_value,
+								'value' => ($row === false) ? '' : $row->data_value,
 								'rows' => $field->field_rows
 							);
 							
@@ -4918,14 +4609,14 @@ class Manage_base extends Controller {
 						break;
 							
 						case 'select':
-							$value = FALSE;
-							$values = FALSE;
-							$input = FALSE;
+							$value = false;
+							$values = false;
+							$input = false;
 						
 							$values = $this->tour->get_tour_values($tid);
 							
 							$row = $this->tour->get_tour_data($id, $tid);
-							$default = ($row === FALSE) ? '' : $row->data_value;
+							$default = ($row === false) ? '' : $row->data_value;
 							
 							if ($values->num_rows() > 0)
 							{
@@ -4963,7 +4654,7 @@ class Manage_base extends Controller {
 			$data['form'] = ($action == 'edit') ? 'edit/'. $id : 'add';
 			$data['id'] = $id;
 			
-			$view_loc = view_location('manage_tour_action', $this->skin, 'admin');
+			$view_loc = 'manage_tour_action';
 		}
 		else
 		{
@@ -4992,13 +4683,13 @@ class Manage_base extends Controller {
 				foreach ($tour->result() as $item)
 				{
 					// make sure we have the right tour spec item for the array
-					$specitem = (!empty($item->tour_spec_item)) ? $item->tour_spec_item : 0;
+					$specitem = ( ! empty($item->tour_spec_item)) ? $item->tour_spec_item : 0;
 					
 					// set the order
 					$order = $item->tour_order;
 					
 					// make sure all of the items will show up
-					$order = (isset($data['tour'][$specitem][$order])) ? NULL : $order;
+					$order = (isset($data['tour'][$specitem][$order])) ? null : $order;
 					
 					$data['tour'][$specitem][$order]['id'] = $item->tour_id;
 					$data['tour'][$specitem][$order]['name'] = $item->tour_name;
@@ -5009,39 +4700,39 @@ class Manage_base extends Controller {
 			$data['header'] = ucwords(lang('actions_manage') .' '. lang('global_touritems'));
 			$data['text'] = lang('text_manage_specs');
 			
-			$view_loc = view_location('manage_tour', $this->skin, 'admin');
+			$view_loc = 'manage_tour';
 		}
 		
 		$data['images'] = array(
 			'form' => array(
-				'src' => img_location('forms-field.png', $this->skin, 'admin'),
+				'src' => Location::img('forms-field.png', $this->skin, 'admin'),
 				'alt' => '',
 				'class' => 'image inline_img_left'),
 			'edit' => array(
-				'src' => img_location('tour-edit.png', $this->skin, 'admin'),
+				'src' => Location::img('icon-edit.png', $this->skin, 'admin'),
 				'alt' => ucfirst(lang('actions_edit')),
 				'title' => ucfirst(lang('actions_edit')),
 				'class' => 'image'),
 			'delete' => array(
-				'src' => img_location('tour-delete.png', $this->skin, 'admin'),
+				'src' => Location::img('icon-delete.png', $this->skin, 'admin'),
 				'alt' => ucfirst(lang('actions_delete')),
 				'title' => ucfirst(lang('actions_delete')),
 				'class' => 'image'),
 			'add' => array(
-				'src' => img_location('tour-add.png', $this->skin, 'admin'),
+				'src' => Location::img('icon-add.png', $this->skin, 'admin'),
 				'alt' => ucfirst(lang('actions_add')),
 				'title' => ucfirst(lang('actions_add')),
 				'class' => 'image inline_img_left'),
 			'upload' => array(
-				'src' => img_location('image-upload.png', $this->skin, 'admin'),
+				'src' => Location::img('image-upload.png', $this->skin, 'admin'),
 				'alt' => lang('actions_upload'),
 				'class' => 'image'),
 			'loading' => array(
-				'src' => img_location('loading-circle.gif', $this->skin, 'admin'),
+				'src' => Location::img('loading-circle.gif', $this->skin, 'admin'),
 				'alt' => lang('actions_loading'),
 				'class' => 'image'),
 			'help' => array(
-				'src' => img_location('help.png', $this->skin, 'admin'),
+				'src' => Location::img('help.png', $this->skin, 'admin'),
 				'alt' => '[?]',
 				'class' => 'image'),
 		);
@@ -5096,21 +4787,18 @@ class Manage_base extends Controller {
 		
 		$js_data['id'] = $id;
 		
-		/* figure out where the view should be coming from */
-		$js_loc = js_location('manage_tour_js', $this->skin, 'admin');
+		$this->_regions['content'] = Location::view($view_loc, $this->skin, 'admin', $data);
+		$this->_regions['javascript'] = Location::js('manage_tour_js', $this->skin, 'admin', $js_data);
+		$this->_regions['title'].= $data['header'];
 		
-		/* write the data to the template */
-		$this->template->write('title', $data['header']);
-		$this->template->write_view('content', $view_loc, $data);
-		$this->template->write_view('javascript', $js_loc, $js_data);
+		Template::assign($this->_regions);
 		
-		/* render the template */
-		$this->template->render();
+		Template::render();
 	}
 	
-	function _comments_ajax($offset = 0, $type = '', $status = 'activated')
+	protected function _comments_ajax($offset = 0, $type = '', $status = 'activated')
 	{
-		/* load the resources */
+		// load the resources
 		$this->load->library('pagination');
 		$this->load->library('parser');
 		$this->load->helper('text');
@@ -5121,14 +4809,14 @@ class Manage_base extends Controller {
 				$this->load->model('posts_model', 'posts');
 				
 				$config['base_url'] = site_url('manage/comments/posts/'. $status .'/');
-				$config['uri_segment'] = ($offset > 0) ? 5 : FALSE;
+				$config['uri_segment'] = ($offset > 0) ? 5 : false;
 				$config['per_page'] = 15;
 				$config['full_tag_open'] = '<p class="fontMedium bold">';
 				$config['full_tag_close'] = '</p>';
 				
 				$posts = $this->posts->get_post_comments('', $status, 'pcomment_date', 'desc');
 				
-				$data['entries'] = NULL;
+				$data['entries'] = null;
 				
 				if ($posts->num_rows() > 0)
 				{
@@ -5139,8 +4827,10 @@ class Manage_base extends Controller {
 						$date = gmt_to_local($p->pcomment_date, $this->timezone, $this->dst);
 								
 						$data['entries'][$p->pcomment_id]['id'] = $p->pcomment_id;
-						$data['entries'][$p->pcomment_id]['content'] = ($p->pcomment_status == 'pending') ? $p->pcomment_content : word_limiter($p->pcomment_content, 25);
-						$data['entries'][$p->pcomment_id]['author'] = $this->char->get_authors($p->pcomment_author_character, TRUE);
+						$data['entries'][$p->pcomment_id]['content'] = ($p->pcomment_status == 'pending') 
+							? $p->pcomment_content 
+							: word_limiter($p->pcomment_content, 25);
+						$data['entries'][$p->pcomment_id]['author'] = $this->char->get_authors($p->pcomment_author_character, true);
 						$data['entries'][$p->pcomment_id]['date'] = mdate($datestring, $date);
 						$data['entries'][$p->pcomment_id]['source'] = anchor('sim/viewpost/'. $p->pcomment_post, $this->posts->get_post($p->pcomment_post, 'post_title'));
 						$data['entries'][$p->pcomment_id]['status'] = $p->pcomment_status;
@@ -5151,7 +4841,7 @@ class Manage_base extends Controller {
 				
 			    $this->pagination->initialize($config);
 			    
-			    /* create the page links */
+			    // create the page links
 				$data['pagination'] = $this->pagination->create_links();
 				
 				$data['subheader'] = 'header_posts';
@@ -5161,14 +4851,14 @@ class Manage_base extends Controller {
 				$this->load->model('personallogs_model', 'logs');
 				
 				$config['base_url'] = site_url('manage/comments/logs/'. $status .'/');
-				$config['uri_segment'] = ($offset > 0) ? 5 : FALSE;
+				$config['uri_segment'] = ($offset > 0) ? 5 : false;
 				$config['per_page'] = 15;
 				$config['full_tag_open'] = '<p class="fontMedium bold">';
 				$config['full_tag_close'] = '</p>';
 				
 				$logs = $this->logs->get_log_comments('', $status, 'lcomment_date', 'desc');
 				
-				$data['entries'] = NULL;
+				$data['entries'] = null;
 				
 				if ($logs->num_rows() > 0)
 				{
@@ -5179,8 +4869,10 @@ class Manage_base extends Controller {
 						$date = gmt_to_local($l->lcomment_date, $this->timezone, $this->dst);
 								
 						$data['entries'][$l->lcomment_id]['id'] = $l->lcomment_id;
-						$data['entries'][$l->lcomment_id]['content'] = ($l->lcomment_status == 'pending') ? $l->lcomment_content : word_limiter($l->lcomment_content, 25);
-						$data['entries'][$l->lcomment_id]['author'] = $this->char->get_authors($l->lcomment_author_character, TRUE);
+						$data['entries'][$l->lcomment_id]['content'] = ($l->lcomment_status == 'pending') 
+							? $l->lcomment_content 
+							: word_limiter($l->lcomment_content, 25);
+						$data['entries'][$l->lcomment_id]['author'] = $this->char->get_authors($l->lcomment_author_character, true);
 						$data['entries'][$l->lcomment_id]['date'] = mdate($datestring, $date);
 						$data['entries'][$l->lcomment_id]['source'] = anchor('sim/viewlog/'. $l->lcomment_log, $this->logs->get_log($l->lcomment_log, 'log_title'));
 						$data['entries'][$l->lcomment_id]['status'] = $l->lcomment_status;
@@ -5191,7 +4883,7 @@ class Manage_base extends Controller {
 				
 			    $this->pagination->initialize($config);
 			    
-			    /* create the page links */
+			    // create the page links
 				$data['pagination'] = $this->pagination->create_links();
 			    
 			    $data['subheader'] = 'header_logs';
@@ -5201,14 +4893,14 @@ class Manage_base extends Controller {
 				$this->load->model('news_model', 'news');
 				
 				$config['base_url'] = site_url('manage/comments/news/'. $status .'/');
-				$config['uri_segment'] = ($offset > 0) ? 5 : FALSE;
+				$config['uri_segment'] = ($offset > 0) ? 5 : false;
 				$config['per_page'] = 15;
 				$config['full_tag_open'] = '<p class="fontMedium bold">';
 				$config['full_tag_close'] = '</p>';
 				
 				$news = $this->news->get_news_comments('', $status, 'ncomment_date', 'desc');
 				
-				$data['entries'] = NULL;
+				$data['entries'] = null;
 				
 				if ($news->num_rows() > 0)
 				{
@@ -5219,8 +4911,10 @@ class Manage_base extends Controller {
 						$date = gmt_to_local($n->ncomment_date, $this->timezone, $this->dst);
 								
 						$data['entries'][$n->ncomment_id]['id'] = $n->ncomment_id;
-						$data['entries'][$n->ncomment_id]['content'] = ($n->ncomment_status == 'pending') ? $n->ncomment_content : word_limiter($n->ncomment_content, 25);
-						$data['entries'][$n->ncomment_id]['author'] = $this->char->get_authors($n->ncomment_author_character, TRUE);
+						$data['entries'][$n->ncomment_id]['content'] = ($n->ncomment_status == 'pending') 
+							? $n->ncomment_content 
+							: word_limiter($n->ncomment_content, 25);
+						$data['entries'][$n->ncomment_id]['author'] = $this->char->get_authors($n->ncomment_author_character, true);
 						$data['entries'][$n->ncomment_id]['date'] = mdate($datestring, $date);
 						$data['entries'][$n->ncomment_id]['source'] = anchor('main/viewnews/'. $n->ncomment_news, $this->news->get_news_item($n->ncomment_news, 'news_title'));
 						$data['entries'][$n->ncomment_id]['status'] = $n->ncomment_status;
@@ -5231,7 +4925,7 @@ class Manage_base extends Controller {
 				
 			    $this->pagination->initialize($config);
 			    
-			    /* create the page links */
+			    // create the page links
 				$data['pagination'] = $this->pagination->create_links();
 			    
 			    $data['subheader'] = 'header_news';
@@ -5241,14 +4935,14 @@ class Manage_base extends Controller {
 				$this->load->model('wiki_model', 'wiki');
 				
 				$config['base_url'] = site_url('manage/comments/wiki/'. $status .'/');
-				$config['uri_segment'] = ($offset > 0) ? 5 : FALSE;
+				$config['uri_segment'] = ($offset > 0) ? 5 : false;
 				$config['per_page'] = 15;
 				$config['full_tag_open'] = '<p class="fontMedium bold">';
 				$config['full_tag_close'] = '</p>';
 				
 				$wiki = $this->wiki->get_comments('', $status);
 				
-				$data['entries'] = NULL;
+				$data['entries'] = null;
 				
 				if ($wiki->num_rows() > 0)
 				{
@@ -5256,13 +4950,13 @@ class Manage_base extends Controller {
 					
 					foreach ($wiki->result() as $w)
 					{
-						/* set the comment ID */
+						// set the comment ID
 						$wid = $w->wcomment_id;
 						
-						/* set the date */
+						// set the date
 						$date = gmt_to_local($w->wcomment_date, $this->timezone, $this->dst);
 						
-						/* grab the wiki page info */
+						// grab the wiki page info
 						$page = $this->wiki->get_page($w->wcomment_page);
 						
 						if ($page->num_rows() > 0)
@@ -5270,8 +4964,10 @@ class Manage_base extends Controller {
 							$row = $page->row();
 								
 							$data['entries'][$wid]['id'] = $wid;
-							$data['entries'][$wid]['content'] = ($w->wcomment_status == 'pending') ? $w->wcomment_content : word_limiter($w->wcomment_content, 25);
-							$data['entries'][$wid]['author'] = $this->char->get_authors($w->wcomment_author_character, TRUE);
+							$data['entries'][$wid]['content'] = ($w->wcomment_status == 'pending') 
+								? $w->wcomment_content 
+								: word_limiter($w->wcomment_content, 25);
+							$data['entries'][$wid]['author'] = $this->char->get_authors($w->wcomment_author_character, true);
 							$data['entries'][$wid]['date'] = mdate($datestring, $date);
 							$data['entries'][$wid]['source'] = anchor('wiki/view/page/'. $row->page_id, $row->draft_title);
 							$data['entries'][$wid]['status'] = $w->wcomment_status;
@@ -5283,7 +4979,7 @@ class Manage_base extends Controller {
 				
 			    $this->pagination->initialize($config);
 			    
-			    /* create the page links */
+			    // create the page links
 				$data['pagination'] = $this->pagination->create_links();
 			    
 			    $data['subheader'] = 'header_wiki';
@@ -5296,17 +4992,17 @@ class Manage_base extends Controller {
 		
 		$data['images'] = array(
 	    	'edit' => array(
-	    		'src' => img_location('comment-edit.png', $this->skin, 'admin'),
+	    		'src' => Location::img('icon-edit.png', $this->skin, 'admin'),
 	    		'alt' => ucfirst(lang('actions_edit')),
 	    		'title' => ucfirst(lang('actions_edit')),
 	    		'class' => 'image'),
 	    	'delete' => array(
-	    		'src' => img_location('comment-delete.png', $this->skin, 'admin'),
+	    		'src' => Location::img('icon-delete.png', $this->skin, 'admin'),
 	    		'alt' => ucfirst(lang('actions_delete')),
 	    		'title' => ucfirst(lang('actions_delete')),
 	    		'class' => 'image'),
 	    	'approve' => array(
-	    		'src' => img_location('comment-approve.png', $this->skin, 'admin'),
+	    		'src' => Location::img('icon-check.png', $this->skin, 'admin'),
 	    		'alt' => ucfirst(lang('actions_approve')),
 	    		'title' => ucfirst(lang('actions_approve')),
 	    		'class' => 'image'),
@@ -5327,58 +5023,58 @@ class Manage_base extends Controller {
 	    		lang('actions_found')),
 	    );
 	    
-	    /* figure out where the view is coming from */
-	    $loc = view_location('manage_comments_ajax', $this->skin, 'admin');
+	    // figure out where the view is coming from
+	    $loc = Location::view('manage_comments_ajax', $this->skin, 'admin');
 	    
-	    /* parse the message */
-		$message = $this->parser->parse($loc, $data, TRUE);
+	    // parse the message
+		$message = $this->parser->parse($loc, $data, true);
 
 	    return $message;
 	}
 	
-	function _email($type = '', $data = '')
+	protected function _email($type, $data)
 	{
-		/* load the libraries */
+		// load the libraries
 		$this->load->library('email');
 		$this->load->library('parser');
 		
-		/* define the variables */
-		$email = FALSE;
+		// define the variables
+		$email = false;
 		
 		switch ($type)
 		{
 			case 'news':
-				/* set some variables */
-				$from_name = $this->char->get_character_name($data['author'], TRUE, TRUE);
+				// set some variables
+				$from_name = $this->char->get_character_name($data['author'], true, true);
 				$from_email = $this->user->get_email_address('character', $data['author']);
 				$subject = $data['category'] .' - '. $data['title'];
 				
-				/* set the content */
+				// set the content
 				$content = sprintf(
 					lang('email_content_news_item'),
 					$from_name,
 					$data['content']
 				);
 				
-				/* set the email data */
+				// set the email data
 				$email_data = array(
 					'email_subject' => $subject,
 					'email_content' => ($this->email->mailtype == 'html') ? nl2br($content) : $content
 				);
 				
-				/* where should the email be coming from */
-				$em_loc = email_location('write_newsitem', $this->email->mailtype);
+				// where should the email be coming from
+				$em_loc = Location::email('write_newsitem', $this->email->mailtype);
 				
-				/* parse the message */
-				$message = $this->parser->parse($em_loc, $email_data, TRUE);
+				// parse the message
+				$message = $this->parser->parse($em_loc, $email_data, true);
 				
-				/* get the email addresses */
-				$emails = $this->user->get_crew_emails(TRUE, 'email_news_items');
+				// get the email addresses
+				$emails = $this->user->get_crew_emails(true, 'email_news_items');
 				
-				/* make a string of email addresses */
+				// make a string of email addresses
 				$to = implode(',', $emails);
 				
-				/* set the parameters for sending the email */
+				// set the parameters for sending the email
 				$this->email->from($from_email, $from_name);
 				$this->email->to($to);
 				$this->email->subject($this->options['email_subject'] .' '. $subject);
@@ -5386,37 +5082,37 @@ class Manage_base extends Controller {
 			break;
 				
 			case 'log':
-				/* set some variables */
-				$from_name = $this->char->get_character_name($data['author'], TRUE, TRUE);
+				// set some variables
+				$from_name = $this->char->get_character_name($data['author'], true, true);
 				$from_email = $this->user->get_email_address('character', $data['author']);
 				$subject = $from_name ."'s ". lang('email_subject_personal_log') ." - ". $data['title'];
 				
-				/* set the content */
+				// set the content
 				$content = sprintf(
 					lang('email_content_personal_log'),
 					$from_name,
 					$data['content']
 				);
 				
-				/* set the email data */
+				// set the email data
 				$email_data = array(
 					'email_subject' => $subject,
 					'email_content' => ($this->email->mailtype == 'html') ? nl2br($content) : $content
 				);
 				
-				/* where should the email be coming from */
-				$em_loc = email_location('write_personallog', $this->email->mailtype);
+				// where should the email be coming from
+				$em_loc = Location::email('write_personallog', $this->email->mailtype);
 				
-				/* parse the message */
-				$message = $this->parser->parse($em_loc, $email_data, TRUE);
+				// parse the message
+				$message = $this->parser->parse($em_loc, $email_data, true);
 				
-				/* get the email addresses */
-				$emails = $this->user->get_crew_emails(TRUE, 'email_personal_logs');
+				// get the email addresses
+				$emails = $this->user->get_crew_emails(true, 'email_personal_logs');
 				
-				/* make a string of email addresses */
+				// make a string of email addresses
 				$to = implode(',', $emails);
 				
-				/* set the parameters for sending the email */
+				// set the parameters for sending the email
 				$this->email->from($from_email, $from_name);
 				$this->email->to($to);
 				$this->email->subject($this->options['email_subject'] .' '. $subject);
@@ -5424,30 +5120,30 @@ class Manage_base extends Controller {
 			break;
 				
 			case 'post':
-				/* set some variables */
+				// set some variables
 				$subject = $data['mission'] ." - ". $data['title'];
 				$mission = lang('email_content_post_mission') . $data['mission'];
-				$authors = lang('email_content_post_author') . $this->char->get_authors($data['authors'], TRUE);
+				$authors = lang('email_content_post_author') . $this->char->get_authors($data['authors'], true);
 				$timeline = lang('email_content_post_timeline') . $data['timeline'];
 				$location = lang('email_content_post_location') . $data['location'];
 				
-				/* figure out who it needs to come from */
+				// figure out who it needs to come from
 				$my_chars = array();
 				
-				/* find out how many of the submitter's characters are in the string */
+				// find out how many of the submitter's characters are in the string
 				foreach ($this->session->userdata('characters') as $value)
 				{
-					if (strstr($data['authors'], $value) !== FALSE)
+					if (strstr($data['authors'], $value) !== false)
 					{
 						$my_chars[] = $value;
 					}
 				}
 				
-				/* set who the email is coming from */
-				$from_name = $this->char->get_character_name($my_chars[0], TRUE, TRUE);
+				// set who the email is coming from
+				$from_name = $this->char->get_character_name($my_chars[0], true, true);
 				$from_email = $this->user->get_email_address('character', $my_chars[0]);
 				
-				/* set the content */
+				// set the content
 				$content = sprintf(
 					lang('email_content_mission_post'),
 					$authors,
@@ -5457,24 +5153,24 @@ class Manage_base extends Controller {
 					$data['content']
 				);
 				
-				/* set the email data */
+				// set the email data
 				$email_data = array(
 					'email_content' => ($this->email->mailtype == 'html') ? nl2br($content) : $content
 				);
 				
-				/* where should the email be coming from */
-				$em_loc = email_location('write_missionpost', $this->email->mailtype);
+				// where should the email be coming from
+				$em_loc = Location::email('write_missionpost', $this->email->mailtype);
 				
-				/* parse the message */
-				$message = $this->parser->parse($em_loc, $email_data, TRUE);
+				// parse the message
+				$message = $this->parser->parse($em_loc, $email_data, true);
 				
-				/* get the email addresses */
-				$emails = $this->user->get_crew_emails(TRUE, 'email_mission_posts');
+				// get the email addresses
+				$emails = $this->user->get_crew_emails(true, 'email_mission_posts');
 				
-				/* make a string of email addresses */
+				// make a string of email addresses
 				$to = implode(',', $emails);
 				
-				/* set the parameters for sending the email */
+				// set the parameters for sending the email
 				$this->email->from($from_email, $from_name);
 				$this->email->to($to);
 				$this->email->subject($this->options['email_subject'] .' '. $subject);
@@ -5482,36 +5178,36 @@ class Manage_base extends Controller {
 			break;
 				
 			case 'log_comment':
-				/* load the models */
+				// load the models
 				$this->load->model('personallogs_model', 'logs');
 				
-				/* run the methods */
+				// run the methods
 				$row = $this->logs->get_log($data['log']);
 				$name = $this->char->get_character_name($data['author']);
 				$from = $this->user->get_email_address('character', $data['author']);
 				$to = $this->user->get_email_address('character', $row->log_author);
 				
-				/* set the content */	
+				// set the content	
 				$content = sprintf(
 					lang('email_content_log_comment_added'),
 					"<strong>". $row->log_title ."</strong>",
 					$data['comment']
 				);
 				
-				/* create the array passing the data to the email */
+				// create the array passing the data to the email
 				$email_data = array(
 					'email_subject' => lang('email_subject_log_comment_added'),
 					'email_from' => ucfirst(lang('time_from')) .': '. $name .' - '. $from,
 					'email_content' => ($this->email->mailtype == 'html') ? nl2br($content) : $content
 				);
 				
-				/* where should the email be coming from */
-				$em_loc = email_location('sim_log_comment', $this->email->mailtype);
+				// where should the email be coming from
+				$em_loc = Location::email('sim_log_comment', $this->email->mailtype);
 				
-				/* parse the message */
-				$message = $this->parser->parse($em_loc, $email_data, TRUE);
+				// parse the message
+				$message = $this->parser->parse($em_loc, $email_data, true);
 				
-				/* set the parameters for sending the email */
+				// set the parameters for sending the email
 				$this->email->from($from, $name);
 				$this->email->to($to);
 				$this->email->subject($this->options['email_subject'] .' '. $email_data['email_subject']);
@@ -5519,36 +5215,36 @@ class Manage_base extends Controller {
 			break;
 				
 			case 'news_comment':
-				/* load the models */
+				// load the models
 				$this->load->model('news_model', 'news');
 				
-				/* run the methods */
+				// run the methods
 				$row = $this->news->get_news_item($data['news_item']);
 				$name = $this->char->get_character_name($data['author']);
 				$from = $this->user->get_email_address('character', $data['author']);
 				$to = $this->user->get_email_address('character', $row->news_author_character);
 				
-				/* set the content */	
+				// set the content	
 				$content = sprintf(
 					lang('email_content_news_comment_added'),
 					"<strong>". $row->news_title ."</strong>",
 					$data['comment']
 				);
 				
-				/* create the array passing the data to the email */
+				// create the array passing the data to the email
 				$email_data = array(
 					'email_subject' => lang('email_subject_news_comment_added'),
 					'email_from' => ucfirst(lang('time_from')) .': '. $name .' - '. $from,
 					'email_content' => ($this->email->mailtype == 'html') ? nl2br($content) : $content
 				);
 				
-				/* where should the email be coming from */
-				$em_loc = email_location('main_news_comment', $this->email->mailtype);
+				// where should the email be coming from
+				$em_loc = Location::email('main_news_comment', $this->email->mailtype);
 				
-				/* parse the message */
-				$message = $this->parser->parse($em_loc, $email_data, TRUE);
+				// parse the message
+				$message = $this->parser->parse($em_loc, $email_data, true);
 				
-				/* set the parameters for sending the email */
+				// set the parameters for sending the email
 				$this->email->from($from, $name);
 				$this->email->to($to);
 				$this->email->subject($this->options['email_subject'] .' '. $email_data['email_subject']);
@@ -5571,7 +5267,7 @@ class Manage_base extends Controller {
 					
 					$pref = $this->user->get_pref('email_new_post_comments', $user);
 					
-					if ($pref == 'n' || $pref == '')
+					if ($pref == 'n' or $pref == '')
 					{
 						unset($authors[$key]);
 					}
@@ -5591,9 +5287,9 @@ class Manage_base extends Controller {
 					'email_content' => ($this->email->mailtype == 'html') ? nl2br($content) : $content
 				);
 				
-				$em_loc = email_location('sim_post_comment', $this->email->mailtype);
+				$em_loc = Location::email('sim_post_comment', $this->email->mailtype);
 				
-				$message = $this->parser->parse($em_loc, $email_data, TRUE);
+				$message = $this->parser->parse($em_loc, $email_data, true);
 				
 				$this->email->from($from, $name);
 				$this->email->to($to);
@@ -5602,16 +5298,16 @@ class Manage_base extends Controller {
 			break;
 				
 			case 'wiki_comment':
-				/* load the models */
+				// load the models
 				$this->load->model('wiki_model', 'wiki');
 				
-				/* run the methods */
+				// run the methods
 				$page = $this->wiki->get_page($data['page']);
 				$row = $page->row();
 				$name = $this->char->get_character_name($data['author']);
 				$from = $this->user->get_email_address('character', $data['author']);
 				
-				/* get all the contributors of a wiki page */
+				// get all the contributors of a wiki page
 				$cont = $this->wiki->get_all_contributors($data['page']);
 				
 				foreach ($cont as $c)
@@ -5624,30 +5320,30 @@ class Manage_base extends Controller {
 					}
 				}
 				
-				/* set the to string */
+				// set the to string
 				$to = implode(',', $to_array);
 				
-				/* set the content */	
+				// set the content	
 				$content = sprintf(
 					lang('email_content_wiki_comment_added'),
 					"<strong>". $row->draft_title ."</strong>",
 					$data['comment']
 				);
 				
-				/* create the array passing the data to the email */
+				// create the array passing the data to the email
 				$email_data = array(
 					'email_subject' => lang('email_subject_wiki_comment_added'),
 					'email_from' => ucfirst(lang('time_from')) .': '. $name .' - '. $from,
 					'email_content' => ($this->email->mailtype == 'html') ? nl2br($content) : $content
 				);
 				
-				/* where should the email be coming from */
-				$em_loc = email_location('wiki_comment', $this->email->mailtype);
+				// where should the email be coming from
+				$em_loc = Location::email('wiki_comment', $this->email->mailtype);
 				
-				/* parse the message */
-				$message = $this->parser->parse($em_loc, $email_data, TRUE);
+				// parse the message
+				$message = $this->parser->parse($em_loc, $email_data, true);
 				
-				/* set the parameters for sending the email */
+				// set the parameters for sending the email
 				$this->email->from($from, $name);
 				$this->email->to($to);
 				$this->email->subject($this->options['email_subject'] .' '. $email_data['email_subject']);
@@ -5663,9 +5359,9 @@ class Manage_base extends Controller {
 					'email_content' => ($this->email->mailtype == 'html') ? nl2br($data['message']) : $data['message']
 				);
 				
-				$em_loc = email_location('docked_action', $this->email->mailtype);
+				$em_loc = Location::email('docked_action', $this->email->mailtype);
 				
-				$message = $this->parser->parse($em_loc, $email_data, TRUE);
+				$message = $this->parser->parse($em_loc, $email_data, true);
 				
 				$this->email->from($this->options['default_email_address'], $this->options['sim_name']);
 				$this->email->to($data['email']);
@@ -5683,9 +5379,9 @@ class Manage_base extends Controller {
 					'email_content' => ($this->email->mailtype == 'html') ? nl2br($data['message']) : $data['message']
 				);
 				
-				$em_loc = email_location('docked_action', $this->email->mailtype);
+				$em_loc = Location::email('docked_action', $this->email->mailtype);
 				
-				$message = $this->parser->parse($em_loc, $email_data, TRUE);
+				$message = $this->parser->parse($em_loc, $email_data, true);
 				
 				$this->email->from($this->options['default_email_address'], $this->options['sim_name']);
 				$this->email->to($data['email']);
@@ -5695,16 +5391,15 @@ class Manage_base extends Controller {
 			break;
 		}
 		
-		/* send the email */
+		// send the email
 		$email = $this->email->send();
 		
-		/* return the email variable */
 		return $email;
 	}
 	
-	function _entries_ajax($offset = 0, $status = 'activated', $section = '')
+	protected function _entries_ajax($offset = 0, $status = 'activated', $section = '')
 	{
-		/* load the resources */
+		// load the resources
 		$this->load->library('pagination');
 		$this->load->library('parser');
 		
@@ -5715,14 +5410,14 @@ class Manage_base extends Controller {
 				$this->load->model('posts_model', 'posts');
 				
 				$config['base_url'] = site_url('manage/posts/'. $status .'/');
-				$config['uri_segment'] = ($offset > 0) ? 4 : FALSE;
+				$config['uri_segment'] = ($offset > 0) ? 4 : false;
 				$config['per_page'] = 15;
 				$config['full_tag_open'] = '<p class="fontMedium bold">';
 				$config['full_tag_close'] = '</p>';
 				
 				$posts = $this->posts->get_post_list('', 'desc', $config['per_page'], $offset, $status);
 				
-				$data['entries'] = NULL;
+				$data['entries'] = null;
 				
 				if ($posts->num_rows() > 0)
 				{
@@ -5730,7 +5425,7 @@ class Manage_base extends Controller {
 					
 					foreach ($posts->result() as $p)
 					{
-						if ($this->auth->get_access_level('manage/posts') == 1)
+						if (Auth::get_access_level('manage/posts') == 1)
 						{
 							$valid = array();
 							
@@ -5738,33 +5433,33 @@ class Manage_base extends Controller {
 							{
 								if (strstr($p->post_authors, $c))
 								{
-									$valid[] = TRUE;
+									$valid[] = true;
 								}
 								else
 								{
-									$valid[] = FALSE;
+									$valid[] = false;
 								}
 							}
 							
-							if (in_array(TRUE, $valid))
+							if (in_array(true, $valid))
 							{
 								$date = gmt_to_local($p->post_date, $this->timezone, $this->dst);
 								
 								$data['entries'][$p->post_id]['id'] = $p->post_id;
 								$data['entries'][$p->post_id]['title'] = $p->post_title;
-								$data['entries'][$p->post_id]['author'] = $this->char->get_authors($p->post_authors, TRUE);
+								$data['entries'][$p->post_id]['author'] = $this->char->get_authors($p->post_authors, true);
 								$data['entries'][$p->post_id]['date'] = mdate($datestring, $date);
 								$data['entries'][$p->post_id]['mission'] = $this->mis->get_mission($p->post_mission, 'mission_title');
 								$data['entries'][$p->post_id]['status'] = $p->post_status;
 							}
 						}
-						elseif ($this->auth->get_access_level('manage/posts') == 2)
+						elseif (Auth::get_access_level('manage/posts') == 2)
 						{
 							$date = gmt_to_local($p->post_date, $this->timezone, $this->dst);
 							
 							$data['entries'][$p->post_id]['id'] = $p->post_id;
 							$data['entries'][$p->post_id]['title'] = $p->post_title;
-							$data['entries'][$p->post_id]['author'] = $this->char->get_authors($p->post_authors, TRUE);
+							$data['entries'][$p->post_id]['author'] = $this->char->get_authors($p->post_authors, true);
 							$data['entries'][$p->post_id]['date'] = mdate($datestring, $date);
 							$data['entries'][$p->post_id]['mission'] = $this->mis->get_mission($p->post_mission, 'mission_title');
 							$data['entries'][$p->post_id]['status'] = $p->post_status;
@@ -5774,10 +5469,10 @@ class Manage_base extends Controller {
 		
 				$config['total_rows'] = $this->posts->count_all_posts('', $status);
 				
-			    /* initialize the pagination library */
+			    // initialize the pagination library
 				$this->pagination->initialize($config);
 				
-				/* create the page links */
+				// create the page links
 				$data['pagination'] = $this->pagination->create_links();
 				
 				$data['status'] = $status;
@@ -5786,39 +5481,39 @@ class Manage_base extends Controller {
 				
 				$data['images'] = array(
 			    	'edit' => array(
-			    		'src' => img_location('write-post-edit.png', $this->skin, 'admin'),
+			    		'src' => Location::img('icon-edit.png', $this->skin, 'admin'),
 			    		'alt' => ucfirst(lang('actions_edit')),
 			    		'class' => 'image'),
 			    	'delete' => array(
-			    		'src' => img_location('write-post-delete.png', $this->skin, 'admin'),
+			    		'src' => Location::img('icon-delete.png', $this->skin, 'admin'),
 			    		'alt' => ucfirst(lang('actions_delete')),
 			    		'class' => 'image'),
 			    	'approve' => array(
-			    		'src' => img_location('write-post-approve.png', $this->skin, 'admin'),
+			    		'src' => Location::img('icon-check.png', $this->skin, 'admin'),
 			    		'alt' => ucfirst(lang('actions_approve')),
 			    		'class' => 'image'),
 			    	'view' => array(
-			    		'src' => img_location('write-post-view.png', $this->skin, 'admin'),
+			    		'src' => Location::img('icon-view.png', $this->skin, 'admin'),
 			    		'alt' => ucfirst(lang('actions_view')),
 			    		'class' => 'image'),
 			    );
 				
-				/* figure out where the view is coming from */
-	    		$loc = view_location('manage_posts_ajax', $this->skin, 'admin');
+				// figure out where the view is coming from
+	    		$loc = Location::view('manage_posts_ajax', $this->skin, 'admin');
 			break;
 				
 			case 'logs':
 				$this->load->model('personallogs_model', 'logs');
 				
 				$config['base_url'] = site_url('manage/logs/'. $status .'/');
-				$config['uri_segment'] = ($offset > 0) ? 4 : FALSE;
+				$config['uri_segment'] = ($offset > 0) ? 4 : false;
 				$config['per_page'] = 15;
 				$config['full_tag_open'] = '<p class="fontMedium bold">';
 				$config['full_tag_close'] = '</p>';
 				
 				$logs = $this->logs->get_log_list($config['per_page'], $offset, $status);
 				
-				$data['entries'] = NULL;
+				$data['entries'] = null;
 				
 				if ($logs->num_rows() > 0)
 				{
@@ -5826,7 +5521,7 @@ class Manage_base extends Controller {
 					
 					foreach ($logs->result() as $l)
 					{
-						if ($this->auth->get_access_level('manage/logs') == 1)
+						if (Auth::get_access_level('manage/logs') == 1)
 						{
 							if ($this->session->userdata('userid') == $l->log_author_user)
 							{
@@ -5834,18 +5529,18 @@ class Manage_base extends Controller {
 								
 								$data['entries'][$l->log_id]['id'] = $l->log_id;
 								$data['entries'][$l->log_id]['title'] = $l->log_title;
-								$data['entries'][$l->log_id]['author'] = $this->char->get_character_name($l->log_author_character, TRUE);
+								$data['entries'][$l->log_id]['author'] = $this->char->get_character_name($l->log_author_character, true);
 								$data['entries'][$l->log_id]['date'] = mdate($datestring, $date);
 								$data['entries'][$l->log_id]['status'] = $l->log_status;
 							}
 						}
-						elseif ($this->auth->get_access_level('manage/logs') == 2)
+						elseif (Auth::get_access_level('manage/logs') == 2)
 						{
 							$date = gmt_to_local($l->log_date, $this->timezone, $this->dst);
 							
 							$data['entries'][$l->log_id]['id'] = $l->log_id;
 							$data['entries'][$l->log_id]['title'] = $l->log_title;
-							$data['entries'][$l->log_id]['author'] = $this->char->get_character_name($l->log_author_character, TRUE);
+							$data['entries'][$l->log_id]['author'] = $this->char->get_character_name($l->log_author_character, true);
 							$data['entries'][$l->log_id]['date'] = mdate($datestring, $date);
 							$data['entries'][$l->log_id]['status'] = $l->log_status;
 						}
@@ -5856,7 +5551,7 @@ class Manage_base extends Controller {
 				
 			    $this->pagination->initialize($config);
 			    
-			    /* create the page links */
+			    // create the page links
 				$data['pagination'] = $this->pagination->create_links();
 				
 				$data['status'] = $status;
@@ -5864,39 +5559,39 @@ class Manage_base extends Controller {
 				
 				$data['images'] = array(
 			    	'edit' => array(
-			    		'src' => img_location('write-log-edit.png', $this->skin, 'admin'),
+			    		'src' => Location::img('icon-edit.png', $this->skin, 'admin'),
 			    		'alt' => ucfirst(lang('actions_edit')),
 			    		'class' => 'image'),
 			    	'delete' => array(
-			    		'src' => img_location('write-log-delete.png', $this->skin, 'admin'),
+			    		'src' => Location::img('icon-delete.png', $this->skin, 'admin'),
 			    		'alt' => ucfirst(lang('actions_delete')),
 			    		'class' => 'image'),
 			    	'approve' => array(
-			    		'src' => img_location('write-log-approve.png', $this->skin, 'admin'),
+			    		'src' => Location::img('icon-check.png', $this->skin, 'admin'),
 			    		'alt' => ucfirst(lang('actions_approve')),
 			    		'class' => 'image'),
 			    	'view' => array(
-			    		'src' => img_location('write-log-view.png', $this->skin, 'admin'),
+			    		'src' => Location::img('icon-view.png', $this->skin, 'admin'),
 			    		'alt' => ucfirst(lang('actions_view')),
 			    		'class' => 'image'),
 			    );
 				
-				/* figure out where the view is coming from */
-	    		$loc = view_location('manage_logs_ajax', $this->skin, 'admin');
+				// figure out where the view is coming from
+	    		$loc = Location::view('manage_logs_ajax', $this->skin, 'admin');
 	    	break;
 				
 			case 'news':
 				$this->load->model('news_model', 'news');
 				
 				$config['base_url'] = site_url('manage/news/'. $status .'/');
-				$config['uri_segment'] = ($offset > 0) ? 4 : FALSE;
+				$config['uri_segment'] = ($offset > 0) ? 4 : false;
 				$config['per_page'] = 15;
 				$config['full_tag_open'] = '<p class="fontMedium bold">';
 				$config['full_tag_close'] = '</p>';
 				
 				$news = $this->news->get_news_list($config['per_page'], $offset, $status);
 				
-				$data['entries'] = NULL;
+				$data['entries'] = null;
 				
 				if ($news->num_rows() > 0)
 				{
@@ -5904,7 +5599,7 @@ class Manage_base extends Controller {
 					
 					foreach ($news->result() as $n)
 					{
-						if ($this->auth->get_access_level('manage/news') == 1)
+						if (Auth::get_access_level('manage/news') == 1)
 						{
 							if ($this->session->userdata('userid') == $n->news_author_user)
 							{
@@ -5913,20 +5608,20 @@ class Manage_base extends Controller {
 								
 								$data['entries'][$nid]['id'] = $nid;
 								$data['entries'][$nid]['title'] = $n->news_title;
-								$data['entries'][$nid]['author'] = $this->char->get_character_name($n->news_author_character, TRUE);
+								$data['entries'][$nid]['author'] = $this->char->get_character_name($n->news_author_character, true);
 								$data['entries'][$nid]['date'] = mdate($datestring, $date);
 								$data['entries'][$nid]['category'] = $n->newscat_name;
 								$data['entries'][$nid]['status'] = $n->news_status;
 							}
 						}
-						elseif ($this->auth->get_access_level('manage/logs') == 2)
+						elseif (Auth::get_access_level('manage/logs') == 2)
 						{
 							$date = gmt_to_local($n->news_date, $this->timezone, $this->dst);
 							$nid = $n->news_id;
 							
 							$data['entries'][$nid]['id'] = $nid;
 							$data['entries'][$nid]['title'] = $n->news_title;
-							$data['entries'][$nid]['author'] = $this->char->get_character_name($n->news_author_character, TRUE);
+							$data['entries'][$nid]['author'] = $this->char->get_character_name($n->news_author_character, true);
 							$data['entries'][$nid]['date'] = mdate($datestring, $date);
 							$data['entries'][$nid]['category'] = $n->newscat_name;
 							$data['entries'][$nid]['status'] = $n->news_status;
@@ -5938,7 +5633,7 @@ class Manage_base extends Controller {
 				
 			    $this->pagination->initialize($config);
 			    
-			    /* create the page links */
+			    // create the page links
 				$data['pagination'] = $this->pagination->create_links();
 				
 				$data['status'] = $status;
@@ -5946,25 +5641,25 @@ class Manage_base extends Controller {
 				
 				$data['images'] = array(
 			    	'edit' => array(
-			    		'src' => img_location('write-news-edit.png', $this->skin, 'admin'),
+			    		'src' => Location::img('icon-edit.png', $this->skin, 'admin'),
 			    		'alt' => ucfirst(lang('actions_edit')),
 			    		'class' => 'image'),
 			    	'delete' => array(
-			    		'src' => img_location('write-news-delete.png', $this->skin, 'admin'),
+			    		'src' => Location::img('icon-delete.png', $this->skin, 'admin'),
 			    		'alt' => ucfirst(lang('actions_delete')),
 			    		'class' => 'image'),
 			    	'approve' => array(
-			    		'src' => img_location('write-news-approve.png', $this->skin, 'admin'),
+			    		'src' => Location::img('icon-check.png', $this->skin, 'admin'),
 			    		'alt' => ucfirst(lang('actions_approve')),
 			    		'class' => 'image'),
 			    	'view' => array(
-			    		'src' => img_location('write-news-view.png', $this->skin, 'admin'),
+			    		'src' => Location::img('icon-view.png', $this->skin, 'admin'),
 			    		'alt' => ucfirst(lang('actions_view')),
 			    		'class' => 'image'),
 			    );
 				
-				/* figure out where the view is coming from */
-	    		$loc = view_location('manage_news_ajax', $this->skin, 'admin');
+				// figure out where the view is coming from
+	    		$loc = Location::view('manage_news_ajax', $this->skin, 'admin');
 			break;
 		}
 		
@@ -5983,8 +5678,8 @@ class Manage_base extends Controller {
 	    		lang('actions_found')),
 	    );
 	    
-	    /* parse the message */
-		$message = $this->parser->parse($loc, $data, TRUE);
+	    // parse the message
+		$message = $this->parser->parse($loc, $data, true);
 
 	    return $message;
 	}
