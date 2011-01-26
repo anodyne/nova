@@ -1,6 +1,6 @@
 <?php echo text_output($header, 'h2');?>
+
 <?php echo text_output($text);?>
-<br />
 
 <?php echo form_open('site/biotabs/add');?>
 	<table class="table100">
@@ -31,13 +31,5 @@
 					<?php echo form_label($label['no'], 'tab_display_n');?>
 				</td>
 			</tr>
-			
-			<?php echo table_row_spacer(3, 15);?>
-			
-			<tr>
-				<td colspan="2"></td>
-				<td><?php echo form_button($inputs['submit']);?></td>
-			</tr>
 		</tbody>
 	</table>
-<?php echo form_close();?>

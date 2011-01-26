@@ -1,5 +1,4 @@
 <?php echo text_output($header, 'h2');?>
-<br />
 
 <?php echo form_open('site/bioform/add');?>
 	<table class="table100">
@@ -69,12 +68,5 @@
 			<tr>
 				<td colspan="3"><?php echo form_textarea($inputs['select']);?></td>
 			</tr>
-			
-			<?php echo table_row_spacer(3, 15);?>
-			
-			<tr>
-				<td colspan="3"><?php echo form_button($inputs['submit']);?></td>
-			</tr>
 		</tbody>
 	</table>
-<?php echo form_close();?>

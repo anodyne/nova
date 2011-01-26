@@ -1,6 +1,6 @@
 <?php echo text_output($header, 'h2');?>
 
-<?php echo text_output($text);?><br />
+<?php echo text_output($text);?>
 
 <?php echo form_open('write/missionpost/missionCreate');?>
 	<table class="table100">
@@ -22,12 +22,5 @@
 				<td class="cell-spacer"></td>
 				<td><?php echo form_textarea($inputs['desc']);?></td>
 			</tr>
-			
-			<?php echo table_row_spacer(3, 15);?>
-			
-			<tr>
-				<td colspan="3"><?php echo form_button($inputs['submit']);?></td>
-			</tr>
 		</tbody>
 	</table>
-<?php echo form_close();?>

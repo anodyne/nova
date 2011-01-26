@@ -80,7 +80,7 @@ abstract class Nova_ajax extends Controller {
 				'name' => 'field_display',
 				'id' => 'field_display_y',
 				'value' => 'y',
-				'checked' => TRUE),
+				'checked' => true),
 			'display_n' => array(
 				'name' => 'field_display',
 				'id' => 'field_display_n',
@@ -134,6 +134,7 @@ abstract class Nova_ajax extends Controller {
 		$skin = $this->session->userdata('skin_admin');
 		
 		$this->_regions['content'] = Location::ajax('add_bio_field', $skin, 'admin', $data);
+		$this->_regions['controls'] = form_button($data['inputs']['submit']).form_close();
 		
 		Template::assign($this->_regions);
 		
@@ -147,9 +148,9 @@ abstract class Nova_ajax extends Controller {
 			// load the resources
 			$this->load->model('characters_model', 'char');
 			
-			$value = $this->input->post('value', TRUE);
-			$content = $this->input->post('content', TRUE);
-			$field = $this->input->post('field', TRUE);
+			$value = $this->input->post('value', true);
+			$content = $this->input->post('content', true);
+			$field = $this->input->post('field', true);
 			$order = 0;
 			
 			$values = $this->char->get_bio_values($field);
@@ -253,6 +254,7 @@ abstract class Nova_ajax extends Controller {
 		$skin = $this->session->userdata('skin_admin');
 		
 		$this->_regions['content'] = Location::ajax('add_bio_sec', $skin, 'admin', $data);
+		$this->_regions['controls'] = form_button($data['inputs']['submit']).form_close();
 		
 		Template::assign($this->_regions);
 		
@@ -286,7 +288,7 @@ abstract class Nova_ajax extends Controller {
 				'name' => 'tab_display',
 				'id' => 'tab_display_y',
 				'value' => 'y',
-				'checked' => TRUE),
+				'checked' => true),
 			'display_n' => array(
 				'name' => 'tab_display',
 				'id' => 'tab_display_n',
@@ -312,6 +314,7 @@ abstract class Nova_ajax extends Controller {
 		$skin = $this->session->userdata('skin_admin');
 		
 		$this->_regions['content'] = Location::ajax('add_bio_tab', $skin, 'admin', $data);
+		$this->_regions['controls'] = form_button($data['inputs']['submit']).form_close();
 		
 		Template::assign($this->_regions);
 		
@@ -366,7 +369,7 @@ abstract class Nova_ajax extends Controller {
 						'name' => 'rank_default',
 						'id' => 'rank_default_n',
 						'value' => 'n',
-						'checked' => TRUE),
+						'checked' => true),
 					'submit' => array(
 						'type' => 'submit',
 						'class' => 'hud_button',
@@ -441,7 +444,7 @@ abstract class Nova_ajax extends Controller {
 						'name' => 'default',
 						'id' => 'skin_default_n',
 						'value' => 'n',
-						'checked' => TRUE),
+						'checked' => true),
 					'submit' => array(
 						'type' => 'submit',
 						'class' => 'hud_button',
@@ -467,9 +470,9 @@ abstract class Nova_ajax extends Controller {
 				
 				if ($skins->num_rows() > 0)
 				{
-					foreach ($skins->result() as $skin)
+					foreach ($skins->result() as $s)
 					{
-						$data['skins'][$skin->skin_location] = $skin->skin_name;
+						$data['skins'][$s->skin_location] = $s->skin_name;
 					}
 				}
 			break;
@@ -498,6 +501,7 @@ abstract class Nova_ajax extends Controller {
 		);
 		
 		$this->_regions['content'] = Location::ajax($view, $skin, 'admin', $data);
+		$this->_regions['controls'] = form_button($data['inputs']['submit']).form_close();
 		
 		Template::assign($this->_regions);
 		
@@ -519,7 +523,7 @@ abstract class Nova_ajax extends Controller {
 				$order = $last->coc_order + 1;
 			}
 			
-			$user = $this->input->post('user', TRUE);
+			$user = $this->input->post('user', true);
 			
 			$insert_array = array(
 				'coc_crew' => $user,
@@ -729,8 +733,8 @@ abstract class Nova_ajax extends Controller {
 				$order = $last->deck_order + 1;
 			}
 			
-			$deck = $this->input->post('deck', TRUE);
-			$item = $this->input->post('item', TRUE);
+			$deck = $this->input->post('deck', true);
+			$item = $this->input->post('item', true);
 			
 			$insert_array = array(
 				'deck_name' => $deck,
@@ -803,7 +807,7 @@ abstract class Nova_ajax extends Controller {
 				'id' => 'display_y',
 				'class' => 'hud',
 				'value' => 'y',
-				'checked' => TRUE),
+				'checked' => true),
 			'display_n' => array(
 				'name' => 'dept_display',
 				'id' => 'display_n',
@@ -830,7 +834,7 @@ abstract class Nova_ajax extends Controller {
 			}
 		}
 		
-		$manifests = $this->dept->get_all_manifests(NULL);
+		$manifests = $this->dept->get_all_manifests(null);
 		
 		if ($manifests->num_rows() > 0)
 		{
@@ -861,6 +865,7 @@ abstract class Nova_ajax extends Controller {
 		$skin = $this->session->userdata('skin_admin');
 		
 		$this->_regions['content'] = Location::ajax('add_dept', $skin, 'admin', $data);
+		$this->_regions['controls'] = form_button($data['inputs']['submit']).form_close();
 		
 		Template::assign($this->_regions);
 		
@@ -906,7 +911,7 @@ abstract class Nova_ajax extends Controller {
 				'name' => 'field_display',
 				'id' => 'field_display_y',
 				'value' => 'y',
-				'checked' => TRUE),
+				'checked' => true),
 			'display_n' => array(
 				'name' => 'field_display',
 				'id' => 'field_display_n',
@@ -930,6 +935,8 @@ abstract class Nova_ajax extends Controller {
 		);
 		
 		$sections = $this->docking->get_docking_sections();
+		
+		$data['values']['section'][0] = false;
 		
 		if ($sections->num_rows() > 0)
 		{
@@ -960,6 +967,7 @@ abstract class Nova_ajax extends Controller {
 		$skin = $this->session->userdata('skin_admin');
 		
 		$this->_regions['content'] = Location::ajax('add_docking_field', $skin, 'admin', $data);
+		$this->_regions['controls'] = form_button($data['inputs']['submit']).form_close();
 		
 		Template::assign($this->_regions);
 		
@@ -973,9 +981,9 @@ abstract class Nova_ajax extends Controller {
 			// load the resources
 			$this->load->model('docking_model', 'docking');
 			
-			$value = $this->input->post('value', TRUE);
-			$content = $this->input->post('content', TRUE);
-			$field = $this->input->post('field', TRUE);
+			$value = $this->input->post('value', true);
+			$content = $this->input->post('content', true);
+			$field = $this->input->post('field', true);
 			
 			$values = $this->docking->get_docking_values($field);
 			
@@ -1064,6 +1072,7 @@ abstract class Nova_ajax extends Controller {
 		$skin = $this->session->userdata('skin_admin');
 		
 		$this->_regions['content'] = Location::ajax('add_docking_sec', $skin, 'admin', $data);
+		$this->_regions['controls'] = form_button($data['inputs']['submit']).form_close();
 		
 		Template::assign($this->_regions);
 		
@@ -1128,6 +1137,7 @@ abstract class Nova_ajax extends Controller {
 		$skin = $this->session->userdata('skin_admin');
 		
 		$this->_regions['content'] = Location::ajax('add_menu_cat', $skin, 'admin', $data);
+		$this->_regions['controls'] = form_button($data['inputs']['submit']).form_close();
 		
 		Template::assign($this->_regions);
 		
@@ -1148,7 +1158,7 @@ abstract class Nova_ajax extends Controller {
 		// data being sent to the facebox
 		$data['header'] = $head;
 		$data['text'] = lang('fbx_content_add_menu');
-		$data['tab'] = $this->uri->segment(3, 0, TRUE);
+		$data['tab'] = $this->uri->segment(3, 0, true);
 		
 		// input parameters
 		$data['inputs'] = array(
@@ -1171,7 +1181,7 @@ abstract class Nova_ajax extends Controller {
 				'id' => 'link_type_on',
 				'class' => 'hud',
 				'value' => 'onsite',
-				'checked' => TRUE),
+				'checked' => true),
 			'link_type_off' => array(
 				'name' => 'menu_link_type',
 				'id' => 'link_type_off',
@@ -1187,13 +1197,13 @@ abstract class Nova_ajax extends Controller {
 				'id' => 'use_access_n',
 				'class' => 'hud',
 				'value' => 'n',
-				'checked' => TRUE),
+				'checked' => true),
 			'display_y' => array(
 				'name' => 'menu_display',
 				'id' => 'display_y',
 				'class' => 'hud',
 				'value' => 'y',
-				'checked' => TRUE),
+				'checked' => true),
 			'display_n' => array(
 				'name' => 'menu_display',
 				'id' => 'display_n',
@@ -1280,6 +1290,7 @@ abstract class Nova_ajax extends Controller {
 		$skin = $this->session->userdata('skin_admin');
 		
 		$this->_regions['content'] = Location::ajax('add_menu_item', $skin, 'admin', $data);
+		$this->_regions['controls'] = form_button($data['inputs']['submit']).form_close();
 		
 		Template::assign($this->_regions);
 		
@@ -1350,6 +1361,7 @@ abstract class Nova_ajax extends Controller {
 		$skin = $this->session->userdata('skin_admin');
 		
 		$this->_regions['content'] = Location::ajax('add_mission_simple', $skin, 'admin', $data);
+		$this->_regions['controls'] = form_button($data['inputs']['submit']).form_close();
 		
 		Template::assign($this->_regions);
 		
@@ -1363,7 +1375,7 @@ abstract class Nova_ajax extends Controller {
 			// load the resources
 			$this->load->model('missions_model', 'mis');
 			
-			$option = $this->input->post('option', TRUE);
+			$option = $this->input->post('option', true);
 			
 			if ($option == 0)
 			{
@@ -1380,8 +1392,8 @@ abstract class Nova_ajax extends Controller {
 				}
 				
 				$data = array(
-					'mission_title' => $this->input->post('title', TRUE),
-					'mission_desc' => $this->input->post('desc', TRUE),
+					'mission_title' => $this->input->post('title', true),
+					'mission_desc' => $this->input->post('desc', true),
 					'mission_start' => now(),
 					'mission_status' => 'current',
 					'mission_order' => $order
@@ -1416,7 +1428,7 @@ abstract class Nova_ajax extends Controller {
 		
 		// data being sent to the facebox
 		$data['header'] = $head;
-		$data['g_dept'] = $this->uri->segment(3, 1, TRUE);
+		$data['g_dept'] = $this->uri->segment(3, 1, true);
 		
 		// input parameters
 		$data['inputs'] = array(
@@ -1440,7 +1452,7 @@ abstract class Nova_ajax extends Controller {
 				'id' => 'display_y',
 				'class' => 'hud',
 				'value' => 'y',
-				'checked' => TRUE),
+				'checked' => true),
 			'display_n' => array(
 				'name' => 'pos_display',
 				'id' => 'display_n',
@@ -1497,6 +1509,7 @@ abstract class Nova_ajax extends Controller {
 		$skin = $this->session->userdata('skin_admin');
 		
 		$this->_regions['content'] = Location::ajax('add_position', $skin, 'admin', $data);
+		$this->_regions['controls'] = form_button($data['inputs']['submit']).form_close();
 		
 		Template::assign($this->_regions);
 		
@@ -1514,7 +1527,7 @@ abstract class Nova_ajax extends Controller {
 		);
 		
 		$data['set'] = $this->uri->segment(3, 'default');
-		$data['class'] = $this->uri->segment(4, 1, TRUE);
+		$data['class'] = $this->uri->segment(4, 1, true);
 		
 		$data['ext'] = $this->ranks->get_rankcat($data['set'], 'rankcat_id', 'rankcat_extension');
 		
@@ -1546,7 +1559,7 @@ abstract class Nova_ajax extends Controller {
 				'id' => 'display_y',
 				'class' => 'hud',
 				'value' => 'y',
-				'checked' => TRUE),
+				'checked' => true),
 			'display_n' => array(
 				'name' => 'rank_display',
 				'id' => 'display_n',
@@ -1575,6 +1588,7 @@ abstract class Nova_ajax extends Controller {
 		$skin = $this->session->userdata('skin_admin');
 		
 		$this->_regions['content'] = Location::ajax('add_rank', $skin, 'admin', $data);
+		$this->_regions['controls'] = form_button($data['inputs']['submit']).form_close();
 		
 		Template::assign($this->_regions);
 		
@@ -1592,7 +1606,7 @@ abstract class Nova_ajax extends Controller {
 		// data being sent to the facebox
 		$data['header'] = $head;
 		$data['text'] = lang('fbx_content_add_role_group');
-		$data['id'] = $this->uri->segment(3, 0, TRUE);
+		$data['id'] = $this->uri->segment(3, 0, true);
 		
 		// input parameters
 		$data['inputs'] = array(
@@ -1620,6 +1634,7 @@ abstract class Nova_ajax extends Controller {
 		$skin = $this->session->userdata('skin_admin');
 		
 		$this->_regions['content'] = Location::ajax('add_role_group', $skin, 'admin', $data);
+		$this->_regions['controls'] = form_button($data['inputs']['submit']).form_close();
 		
 		Template::assign($this->_regions);
 		
@@ -1690,6 +1705,7 @@ abstract class Nova_ajax extends Controller {
 		$skin = $this->session->userdata('skin_admin');
 		
 		$this->_regions['content'] = Location::ajax('add_role_page', $skin, 'admin', $data);
+		$this->_regions['controls'] = form_button($data['inputs']['submit']).form_close();
 		
 		Template::assign($this->_regions);
 		
@@ -1744,6 +1760,7 @@ abstract class Nova_ajax extends Controller {
 		$skin = $this->session->userdata('skin_admin');
 		
 		$this->_regions['content'] = Location::ajax('add_site_message', $skin, 'admin', $data);
+		$this->_regions['controls'] = form_button($data['inputs']['submit']).form_close();
 		
 		Template::assign($this->_regions);
 		
@@ -1789,7 +1806,7 @@ abstract class Nova_ajax extends Controller {
 				'name' => 'field_display',
 				'id' => 'field_display_y',
 				'value' => 'y',
-				'checked' => TRUE),
+				'checked' => true),
 			'display_n' => array(
 				'name' => 'field_display',
 				'id' => 'field_display_n',
@@ -1843,6 +1860,7 @@ abstract class Nova_ajax extends Controller {
 		$skin = $this->session->userdata('skin_admin');
 		
 		$this->_regions['content'] = Location::ajax('add_spec_field', $skin, 'admin', $data);
+		$this->_regions['controls'] = form_button($data['inputs']['submit']).form_close();
 		
 		Template::assign($this->_regions);
 		
@@ -1856,9 +1874,9 @@ abstract class Nova_ajax extends Controller {
 			// load the resources
 			$this->load->model('specs_model', 'specs');
 			
-			$value = $this->input->post('value', TRUE);
-			$content = $this->input->post('content', TRUE);
-			$field = $this->input->post('field', TRUE);
+			$value = $this->input->post('value', true);
+			$content = $this->input->post('content', true);
+			$field = $this->input->post('field', true);
 			
 			$values = $this->specs->get_spec_values($field);
 			
@@ -1947,6 +1965,7 @@ abstract class Nova_ajax extends Controller {
 		$skin = $this->session->userdata('skin_admin');
 		
 		$this->_regions['content'] = Location::ajax('add_spec_sec', $skin, 'admin', $data);
+		$this->_regions['controls'] = form_button($data['inputs']['submit']).form_close();
 		
 		Template::assign($this->_regions);
 		
@@ -1992,7 +2011,7 @@ abstract class Nova_ajax extends Controller {
 				'name' => 'field_display',
 				'id' => 'field_display_y',
 				'value' => 'y',
-				'checked' => TRUE),
+				'checked' => true),
 			'display_n' => array(
 				'name' => 'field_display',
 				'id' => 'field_display_n',
@@ -2036,6 +2055,7 @@ abstract class Nova_ajax extends Controller {
 		$skin = $this->session->userdata('skin_admin');
 		
 		$this->_regions['content'] = Location::ajax('add_tour_field', $skin, 'admin', $data);
+		$this->_regions['controls'] = form_button($data['inputs']['submit']).form_close();
 		
 		Template::assign($this->_regions);
 		
@@ -2049,9 +2069,9 @@ abstract class Nova_ajax extends Controller {
 			// load the resources
 			$this->load->model('tour_model', 'tour');
 			
-			$value = $this->input->post('value', TRUE);
-			$content = $this->input->post('content', TRUE);
-			$field = $this->input->post('field', TRUE);
+			$value = $this->input->post('value', true);
+			$content = $this->input->post('content', true);
+			$field = $this->input->post('field', true);
 			
 			$values = $this->tour->get_tour_values($field);
 			
@@ -2141,6 +2161,7 @@ abstract class Nova_ajax extends Controller {
 		$skin = $this->session->userdata('skin_admin');
 		
 		$this->_regions['content'] = Location::ajax('add_user_setting', $skin, 'admin', $data);
+		$this->_regions['controls'] = form_button($data['inputs']['submit']).form_close();
 		
 		Template::assign($this->_regions);
 		
@@ -2149,8 +2170,8 @@ abstract class Nova_ajax extends Controller {
 	
 	public function approve()
 	{
-		$data['type'] = $this->uri->segment(3, FALSE);
-		$data['id'] = $this->uri->segment(4, 0, TRUE);
+		$data['type'] = $this->uri->segment(3, false);
+		$data['id'] = $this->uri->segment(4, 0, true);
 		
 		// figure out the skin
 		$skin = $this->session->userdata('skin_admin');
@@ -2174,7 +2195,7 @@ abstract class Nova_ajax extends Controller {
 					lang('global_missionpost'),
 					$item->post_title,
 					' '. lang('labels_by') .' '.
-						$this->char->get_authors($item->post_authors, TRUE)
+						$this->char->get_authors($item->post_authors, true)
 				);
 				
 				$data['form'] = 'manage/posts/pending/0/approve';
@@ -2194,7 +2215,7 @@ abstract class Nova_ajax extends Controller {
 					lang('global_personallog'),
 					$item->log_title,
 					' '. lang('labels_by') .' '.
-						$this->char->get_character_name($item->log_author_character, TRUE)
+						$this->char->get_character_name($item->log_author_character, true)
 				);
 				
 				$data['form'] = 'manage/logs/pending/0/approve';
@@ -2214,7 +2235,7 @@ abstract class Nova_ajax extends Controller {
 					lang('global_newsitem'),
 					$item->news_title,
 					' '. lang('labels_by') .' '.
-						$this->char->get_character_name($item->news_author_character, TRUE)
+						$this->char->get_character_name($item->news_author_character, true)
 				);
 				
 				$data['form'] = 'manage/news/pending/0/approve';
@@ -2234,7 +2255,7 @@ abstract class Nova_ajax extends Controller {
 						lang('labels_on'),
 					$this->posts->get_post($item['pcomment_post'], 'post_title'),
 					' '. lang('labels_by') .' '.
-						$this->char->get_character_name($item['pcomment_author_character'], TRUE)
+						$this->char->get_character_name($item['pcomment_author_character'], true)
 				);
 				
 				$data['form'] = 'manage/comments/posts/activated/0/approve';
@@ -2254,7 +2275,7 @@ abstract class Nova_ajax extends Controller {
 						lang('labels_on'),
 					$this->logs->get_log($item['lcomment_log'], 'log_title'),
 					' '. lang('labels_by') .' '.
-						$this->char->get_character_name($item['lcomment_author_character'], TRUE)
+						$this->char->get_character_name($item['lcomment_author_character'], true)
 				);
 				
 				$data['form'] = 'manage/comments/logs/activated/0/approve';
@@ -2274,7 +2295,7 @@ abstract class Nova_ajax extends Controller {
 						lang('labels_on'),
 					$this->news->get_news_item($item['ncomment_news'], 'news_title'),
 					' '. lang('labels_by') .' '.
-						$this->char->get_character_name($item['ncomment_author_character'], TRUE)
+						$this->char->get_character_name($item['ncomment_author_character'], true)
 				);
 				
 				$data['form'] = 'manage/comments/news/activated/0/approve';
@@ -2299,7 +2320,7 @@ abstract class Nova_ajax extends Controller {
 						lang('global_wiki') .' '. lang('labels_comment') .' '. lang('labels_on'),
 						$row->draft_title,
 						' '. lang('labels_by') .' '.
-							$this->char->get_character_name($item['wcomment_author_character'], TRUE)
+							$this->char->get_character_name($item['wcomment_author_character'], true)
 					);
 				}
 				
@@ -2323,7 +2344,7 @@ abstract class Nova_ajax extends Controller {
 				}
 				else
 				{
-					$name = $this->char->get_character_name($nom->queue_receive_character, TRUE);
+					$name = $this->char->get_character_name($nom->queue_receive_character, true);
 				}
 				
 				$data['text'] = sprintf(
@@ -2429,6 +2450,7 @@ abstract class Nova_ajax extends Controller {
 		);
 		
 		$this->_regions['content'] = Location::ajax($view, $skin, 'admin', $data);
+		$this->_regions['controls'] = form_button($data['inputs']['submit']).form_close();
 		
 		Template::assign($this->_regions);
 		
@@ -2460,6 +2482,7 @@ abstract class Nova_ajax extends Controller {
 		$skin = $this->session->userdata('skin_admin');
 		
 		$this->_regions['content'] = Location::ajax('change_password', $skin, 'admin', $data);
+		$this->_regions['controls'] = form_button($data['inputs']['submit']).form_close();
 		
 		Template::assign($this->_regions);
 		
@@ -2479,7 +2502,7 @@ abstract class Nova_ajax extends Controller {
 		
 		// data being sent to the facebox
 		$data['header'] = $head;
-		$data['id'] = $this->uri->segment(3, 0, TRUE);
+		$data['id'] = $this->uri->segment(3, 0, true);
 		
 		$item = $this->awards->get_award($data['id'], 'award_name');
 		
@@ -2502,14 +2525,11 @@ abstract class Nova_ajax extends Controller {
 		// figure out the skin
 		$skin = $this->session->userdata('skin_admin');
 		
-		// figure out where the view should come from
-		$ajax = ajax_location('del_award', $skin, 'admin');
+		$this->_regions['content'] = Location::ajax('del_award', $skin, 'admin', $data);
 		
-		// write the data to the template
-		$this->template->write_view('content', $ajax, $data);
+		Template::assign($this->_regions);
 		
-		// render the template
-		$this->template->render();
+		Template::render();
 	}
 	
 	public function del_bio_field()
@@ -2529,7 +2549,7 @@ abstract class Nova_ajax extends Controller {
 		
 		$field = $this->char->get_bio_field_details($data['id']);
 		
-		$item = ($field->num_rows() > 0) ? $field->row() : FALSE;
+		$item = ($field->num_rows() > 0) ? $field->row() : false;
 		
 		$data['text'] = sprintf(
 			lang('fbx_content_del_bio_field'),
@@ -2549,14 +2569,11 @@ abstract class Nova_ajax extends Controller {
 		// figure out the skin
 		$skin = $this->session->userdata('skin_admin');
 		
-		// figure out where the view should come from
-		$ajax = ajax_location('del_bio_field', $skin, 'admin');
+		$this->_regions['content'] = Location::ajax('del_bio_field', $skin, 'admin', $data);
 		
-		// write the data to the template
-		$this->template->write_view('content', $ajax, $data);
+		Template::assign($this->_regions);
 		
-		// render the template
-		$this->template->render();
+		Template::render();
 	}
 	
 	public function del_bio_field_value()
@@ -2566,7 +2583,10 @@ abstract class Nova_ajax extends Controller {
 			// load the resources
 			$this->load->model('characters_model', 'char');
 			
-			$id = (is_numeric($this->input->post('field'))) ? $this->input->post('field', TRUE) : 0;
+			// figure out the skin
+			$skin = $this->session->userdata('skin_admin');
+			
+			$id = (is_numeric($this->input->post('field'))) ? $this->input->post('field', true) : 0;
 			
 			$delete = $this->char->delete_bio_field_value($id);
 			
@@ -2581,8 +2601,6 @@ abstract class Nova_ajax extends Controller {
 	
 				$flash['status'] = 'success';
 				$flash['message'] = text_output($message);
-					
-				$output = $this->load->view('_base/admin/pages/flash', $flash, TRUE);
 			}
 			else
 			{
@@ -2595,9 +2613,9 @@ abstract class Nova_ajax extends Controller {
 	
 				$flash['status'] = 'error';
 				$flash['message'] = text_output($message);
-					
-				$output = $this->load->view('_base/admin/pages/flash', $flash, TRUE);
 			}
+			
+			$output = Location::view('flash', $skin, 'admin', $flash);
 			
 			echo $output;
 		}
@@ -2621,7 +2639,7 @@ abstract class Nova_ajax extends Controller {
 		$sec = $this->char->get_bio_section_details($data['id']);
 		$sections = $this->char->get_bio_sections();
 		
-		$item = ($sec->num_rows() > 0) ? $sec->row() : FALSE;
+		$item = ($sec->num_rows() > 0) ? $sec->row() : false;
 		
 		$data['text'] = sprintf(
 			lang('fbx_content_del_bio_sec'),
@@ -2659,14 +2677,11 @@ abstract class Nova_ajax extends Controller {
 		// figure out the skin
 		$skin = $this->session->userdata('skin_admin');
 		
-		// figure out where the view should come from
-		$ajax = ajax_location('del_bio_sec', $skin, 'admin');
+		$this->_regions['content'] = Location::ajax('del_bio_sec', $skin, 'admin', $data);
 		
-		// write the data to the template
-		$this->template->write_view('content', $ajax, $data);
+		Template::assign($this->_regions);
 		
-		// render the template
-		$this->template->render();
+		Template::render();
 	}
 	
 	public function del_bio_tab()
@@ -2687,7 +2702,7 @@ abstract class Nova_ajax extends Controller {
 		$tab = $this->char->get_bio_tab_details($data['id']);
 		$tabs = $this->char->get_bio_tabs();
 		
-		$item = ($tab->num_rows() > 0) ? $tab->row() : FALSE;
+		$item = ($tab->num_rows() > 0) ? $tab->row() : false;
 		
 		$data['text'] = sprintf(
 			lang('fbx_content_del_bio_tab'),
@@ -2725,14 +2740,11 @@ abstract class Nova_ajax extends Controller {
 		// figure out the skin
 		$skin = $this->session->userdata('skin_admin');
 		
-		// figure out where the view should come from
-		$ajax = ajax_location('del_bio_tab', $skin, 'admin');
+		$this->_regions['content'] = Location::ajax('del_bio_tab', $skin, 'admin', $data);
 		
-		// write the data to the template
-		$this->template->write_view('content', $ajax, $data);
+		Template::assign($this->_regions);
 		
-		// render the template
-		$this->template->render();
+		Template::render();
 	}
 	
 	public function del_ban()
@@ -2745,7 +2757,7 @@ abstract class Nova_ajax extends Controller {
 		
 		// data being sent to the facebox
 		$data['header'] = $head;
-		$data['id'] = $this->uri->segment(3, 0, TRUE);
+		$data['id'] = $this->uri->segment(3, 0, true);
 		
 		$item = $this->sys->get_ban($data['id']);
 		$descriptor = (empty($item->ban_email)) ? $item->ban_ip : $item->ban_email;
@@ -2769,32 +2781,29 @@ abstract class Nova_ajax extends Controller {
 		// figure out the skin
 		$skin = $this->session->userdata('skin_admin');
 		
-		// figure out where the view should come from
-		$ajax = ajax_location('del_ban', $skin, 'admin');
+		$this->_regions['content'] = Location::ajax('del_ban', $skin, 'admin', $data);
 		
-		// write the data to the template
-		$this->template->write_view('content', $ajax, $data);
+		Template::assign($this->_regions);
 		
-		// render the template
-		$this->template->render();
+		Template::render();
 	}
 	
 	public function del_catalogue()
 	{
 		$type = $this->uri->segment(3);
-		$data['id'] = $this->uri->segment(4, 0, TRUE);
+		$data['id'] = $this->uri->segment(4, 0, true);
 		
 		// load the resources
 		$this->load->model('ranks_model', 'ranks');
 		
+		// figure out the skin
+		$skin = $this->session->userdata('skin_admin');
+		
 		switch ($type)
 		{
 			case 'ranks':
-				// figure out the skin
-				$skin = $this->session->userdata('skin_admin');
-				
 				// figure out where the view should come from
-				$view = ajax_location('del_catalogue_ranks', $skin, 'admin');
+				$view = 'del_catalogue_ranks';
 				
 				$item = $this->ranks->get_rankcat($data['id'], 'rankcat_id');
 				$ranks = $this->ranks->get_all_rank_sets();
@@ -2832,11 +2841,8 @@ abstract class Nova_ajax extends Controller {
 			break;
 				
 			case 'skins':
-				// figure out the skin
-				$skin = $this->session->userdata('skin_admin');
-				
 				// figure out where the view should come from
-				$view = ajax_location('del_catalogue_skins', $skin, 'admin');
+				$view = 'del_catalogue_skins';
 				
 				$item = $this->sys->get_skin_info($data['id'], 'skin_id');
 				
@@ -2862,11 +2868,8 @@ abstract class Nova_ajax extends Controller {
 			break;
 				
 			case 'skinsecs':
-				// figure out the skin
-				$skin = $this->session->userdata('skin_admin');
-				
 				// figure out where the view should come from
-				$view = ajax_location('del_catalogue_skinsec', $skin, 'admin');
+				$view = 'del_catalogue_skinsec';
 				
 				$item = $this->sys->get_skin_section_info($data['id'], 'skinsec_id');
 				$skins = $this->sys->get_all_skins();
@@ -2911,11 +2914,11 @@ abstract class Nova_ajax extends Controller {
 		// data being sent to the facebox
 		$data['header'] = $head;
 		
-		// write the data to the template
-		$this->template->write_view('content', $view, $data);
+		$this->_regions['content'] = Location::ajax($view, $skin, 'admin', $data);
 		
-		// render the template
-		$this->template->render();
+		Template::assign($this->_regions);
+		
+		Template::render();
 	}
 	
 	public function del_character()
@@ -2932,7 +2935,7 @@ abstract class Nova_ajax extends Controller {
 		
 		// data being sent to the facebox
 		$data['header'] = $head;
-		$data['id'] = $this->uri->segment(3, 0, TRUE);
+		$data['id'] = $this->uri->segment(3, 0, true);
 		
 		$item = $this->char->get_character($data['id']);
 		
@@ -2967,14 +2970,11 @@ abstract class Nova_ajax extends Controller {
 		// figure out the skin
 		$skin = $this->session->userdata('skin_admin');
 		
-		// figure out where the view should come from
-		$ajax = ajax_location('del_character', $skin, 'admin');
+		$this->_regions['content'] = Location::ajax('del_character', $skin, 'admin', $data);
 		
-		// write the data to the template
-		$this->template->write_view('content', $ajax, $data);
+		Template::assign($this->_regions);
 		
-		// render the template
-		$this->template->render();
+		Template::render();
 	}
 	
 	public function del_character_award()
@@ -2984,7 +2984,7 @@ abstract class Nova_ajax extends Controller {
 			// load the resources
 			$this->load->model('awards_model', 'awards');
 			
-			$id = $this->input->post('award', TRUE);
+			$id = $this->input->post('award', true);
 			
 			$delete = $this->awards->delete_received_award($id);
 			
@@ -3001,19 +3001,19 @@ abstract class Nova_ajax extends Controller {
 			
 			// set the variables
 			$id = $this->uri->segment(3);
-			$image = $this->input->post('image', TRUE);
+			$image = $this->input->post('image', true);
 			
 			$image = str_replace('\.', '.', $image);
 			
 			$images = $this->char->get_character($id, 'images');
 			
-			if (!empty($images))
+			if ( ! empty($images))
 			{
 				$imagesArray = explode(',', $images);
 				
 				$key = array_search($image, $imagesArray);
 				
-				if ($key !== FALSE)
+				if ($key !== false)
 				{
 					unset($imagesArray[$key]);
 					$imageStr = implode(',', $imagesArray);
@@ -3031,7 +3031,10 @@ abstract class Nova_ajax extends Controller {
 			// load the resources
 			$this->load->model('characters_model', 'char');
 			
-			$id = (is_numeric($this->input->post('coc'))) ? $this->input->post('coc', TRUE) : 0;
+			// figure out the skin
+			$skin = $this->session->userdata('skin_admin');
+			
+			$id = (is_numeric($this->input->post('coc'))) ? $this->input->post('coc', true) : 0;
 			
 			$delete = $this->char->delete_coc_entry($id);
 			
@@ -3046,8 +3049,6 @@ abstract class Nova_ajax extends Controller {
 	
 				$flash['status'] = 'success';
 				$flash['message'] = text_output($message);
-					
-				$output = $this->load->view('_base/admin/pages/flash', $flash, TRUE);
 			}
 			else
 			{
@@ -3060,9 +3061,9 @@ abstract class Nova_ajax extends Controller {
 	
 				$flash['status'] = 'error';
 				$flash['message'] = text_output($message);
-					
-				$output = $this->load->view('_base/admin/pages/flash', $flash, TRUE);
 			}
+			
+			$output = Location::view('flash', $skin, 'admin', $flash);
 			
 			echo $output;
 		}
@@ -3070,10 +3071,10 @@ abstract class Nova_ajax extends Controller {
 	
 	public function del_comment()
 	{
-		$data['type'] = $this->uri->segment(3, FALSE);
-		$data['status'] = $this->uri->segment(4, FALSE);
-		$data['page'] = $this->uri->segment(5, 0, TRUE);
-		$data['id'] = $this->uri->segment(6, 0, TRUE);
+		$data['type'] = $this->uri->segment(3, false);
+		$data['status'] = $this->uri->segment(4, false);
+		$data['page'] = $this->uri->segment(5, 0, true);
+		$data['id'] = $this->uri->segment(6, 0, true);
 		
 		switch ($data['type'])
 		{
@@ -3118,7 +3119,7 @@ abstract class Nova_ajax extends Controller {
 				}
 				else
 				{
-					$item = FALSE;
+					$item = false;
 				}
 			break;
 		}
@@ -3148,14 +3149,11 @@ abstract class Nova_ajax extends Controller {
 		// figure out the skin
 		$skin = $this->session->userdata('skin_admin');
 		
-		// figure out where the view should come from
-		$ajax = ajax_location('del_comment', $skin, 'admin');
+		$this->_regions['content'] = Location::ajax('del_comment', $skin, 'admin', $data);
 		
-		// write the data to the template
-		$this->template->write_view('content', $ajax, $data);
+		Template::assign($this->_regions);
 		
-		// render the template
-		$this->template->render();
+		Template::render();
 	}
 	
 	public function del_deck()
@@ -3165,7 +3163,10 @@ abstract class Nova_ajax extends Controller {
 			// load the resources
 			$this->load->model('tour_model', 'tour');
 			
-			$id = (is_numeric($this->input->post('deck'))) ? $this->input->post('deck', TRUE) : 0;
+			// figure out the skin
+			$skin = $this->session->userdata('skin_admin');
+			
+			$id = (is_numeric($this->input->post('deck'))) ? $this->input->post('deck', true) : 0;
 			
 			$delete = $this->tour->delete_deck($id);
 			
@@ -3180,8 +3181,6 @@ abstract class Nova_ajax extends Controller {
 	
 				$flash['status'] = 'success';
 				$flash['message'] = text_output($message);
-					
-				$output = $this->load->view('_base/admin/pages/flash', $flash, TRUE);
 			}
 			else
 			{
@@ -3194,9 +3193,9 @@ abstract class Nova_ajax extends Controller {
 	
 				$flash['status'] = 'error';
 				$flash['message'] = text_output($message);
-					
-				$output = $this->load->view('_base/admin/pages/flash', $flash, TRUE);
 			}
+			
+			$output = Location::view('flash', $skin, 'admin', $flash);
 			
 			echo $output;
 		}
@@ -3214,7 +3213,7 @@ abstract class Nova_ajax extends Controller {
 		);
 		
 		// set the id
-		$data['id'] = $this->uri->segment(3, 0, TRUE);
+		$data['id'] = $this->uri->segment(3, 0, true);
 		
 		// grab the departments
 		$depts = $this->dept->get_all_depts();
@@ -3276,14 +3275,11 @@ abstract class Nova_ajax extends Controller {
 		// figure out the skin
 		$skin = $this->session->userdata('skin_admin');
 		
-		// figure out where the view should come from
-		$ajax = ajax_location('del_dept', $skin, 'admin');
+		$this->_regions['content'] = Location::ajax('del_dept', $skin, 'admin', $data);
 		
-		// write the data to the template
-		$this->template->write_view('content', $ajax, $data);
+		Template::assign($this->_regions);
 		
-		// render the template
-		$this->template->render();
+		Template::render();
 	}
 	
 	public function del_docked_item()
@@ -3299,7 +3295,7 @@ abstract class Nova_ajax extends Controller {
 		
 		// data being sent to the facebox
 		$data['header'] = $head;
-		$data['id'] = $this->uri->segment(3, 0, TRUE);
+		$data['id'] = $this->uri->segment(3, 0, true);
 		
 		$item = $this->docking->get_docked_item($data['id']);
 		
@@ -3322,14 +3318,11 @@ abstract class Nova_ajax extends Controller {
 		// figure out the skin
 		$skin = $this->session->userdata('skin_admin');
 		
-		// figure out where the view should come from
-		$ajax = ajax_location('del_docked_item', $skin, 'admin');
+		$this->_regions['content'] = Location::ajax('del_docked_item', $skin, 'admin', $data);
 		
-		// write the data to the template
-		$this->template->write_view('content', $ajax, $data);
+		Template::assign($this->_regions);
 		
-		// render the template
-		$this->template->render();
+		Template::render();
 	}
 	
 	public function del_docking_field()
@@ -3349,7 +3342,7 @@ abstract class Nova_ajax extends Controller {
 		
 		$field = $this->docking->get_docking_field_details($data['id']);
 		
-		$item = ($field->num_rows() > 0) ? $field->row() : FALSE;
+		$item = ($field->num_rows() > 0) ? $field->row() : false;
 		
 		$data['text'] = sprintf(
 			lang('fbx_content_del_docking_field'),
@@ -3369,14 +3362,11 @@ abstract class Nova_ajax extends Controller {
 		// figure out the skin
 		$skin = $this->session->userdata('skin_admin');
 		
-		// figure out where the view should come from
-		$ajax = ajax_location('del_docking_field', $skin, 'admin');
+		$this->_regions['content'] = Location::ajax('del_docking_field', $skin, 'admin', $data);
 		
-		// write the data to the template
-		$this->template->write_view('content', $ajax, $data);
+		Template::assign($this->_regions);
 		
-		// render the template
-		$this->template->render();
+		Template::render();
 	}
 	
 	public function del_docking_field_value()
@@ -3386,7 +3376,10 @@ abstract class Nova_ajax extends Controller {
 			// load the resources
 			$this->load->model('docking_model', 'docking');
 			
-			$id = (is_numeric($this->input->post('field'))) ? $this->input->post('field', TRUE) : 0;
+			// figure out the skin
+			$skin = $this->session->userdata('skin_admin');
+			
+			$id = (is_numeric($this->input->post('field'))) ? $this->input->post('field', true) : 0;
 			
 			$delete = $this->docking->delete_docking_field_value($id);
 			
@@ -3401,8 +3394,6 @@ abstract class Nova_ajax extends Controller {
 	
 				$flash['status'] = 'success';
 				$flash['message'] = text_output($message);
-					
-				$output = $this->load->view('_base/admin/pages/flash', $flash, TRUE);
 			}
 			else
 			{
@@ -3415,9 +3406,9 @@ abstract class Nova_ajax extends Controller {
 	
 				$flash['status'] = 'error';
 				$flash['message'] = text_output($message);
-					
-				$output = $this->load->view('_base/admin/pages/flash', $flash, TRUE);
 			}
+			
+			$output = Location::view('flash', $skin, 'admin', $flash);
 			
 			echo $output;
 		}
@@ -3441,7 +3432,7 @@ abstract class Nova_ajax extends Controller {
 		$sec = $this->docking->get_docking_section_details($data['id']);
 		$sections = $this->docking->get_docking_sections();
 		
-		$item = ($sec->num_rows() > 0) ? $sec->row() : FALSE;
+		$item = ($sec->num_rows() > 0) ? $sec->row() : false;
 		
 		$data['text'] = sprintf(
 			lang('fbx_content_del_docking_sec'),
@@ -3479,14 +3470,11 @@ abstract class Nova_ajax extends Controller {
 		// figure out the skin
 		$skin = $this->session->userdata('skin_admin');
 		
-		// figure out where the view should come from
-		$ajax = ajax_location('del_docking_sec', $skin, 'admin');
+		$this->_regions['content'] = Location::ajax('del_docking_sec', $skin, 'admin', $data);
 		
-		// write the data to the template
-		$this->template->write_view('content', $ajax, $data);
+		Template::assign($this->_regions);
 		
-		// render the template
-		$this->template->render();
+		Template::render();
 	}
 	
 	public function del_log()
@@ -3503,8 +3491,8 @@ abstract class Nova_ajax extends Controller {
 		// data being sent to the facebox
 		$data['header'] = $head;
 		$data['status'] = $this->uri->segment(3, 'activated');
-		$data['page'] = $this->uri->segment(4, 0, TRUE);
-		$data['id'] = $this->uri->segment(5, 0, TRUE);
+		$data['page'] = $this->uri->segment(4, 0, true);
+		$data['id'] = $this->uri->segment(5, 0, true);
 		
 		$item = $this->logs->get_log($data['id'], 'log_title');
 		
@@ -3527,14 +3515,11 @@ abstract class Nova_ajax extends Controller {
 		// figure out the skin
 		$skin = $this->session->userdata('skin_admin');
 		
-		// figure out where the view should come from
-		$ajax = ajax_location('del_log', $skin, 'admin');
+		$this->_regions['content'] = Location::ajax('del_log', $skin, 'admin', $data);
 		
-		// write the data to the template
-		$this->template->write_view('content', $ajax, $data);
+		Template::assign($this->_regions);
 		
-		// render the template
-		$this->template->render();
+		Template::render();
 	}
 	
 	public function del_manifest()
@@ -3550,7 +3535,7 @@ abstract class Nova_ajax extends Controller {
 		
 		// data being sent to the facebox
 		$data['header'] = $head;
-		$data['id'] = $this->uri->segment(3, 0, TRUE);
+		$data['id'] = $this->uri->segment(3, 0, true);
 		
 		$item = $this->dept->get_manifest($data['id'], 'manifest_name');
 		
@@ -3573,14 +3558,11 @@ abstract class Nova_ajax extends Controller {
 		// figure out the skin
 		$skin = $this->session->userdata('skin_admin');
 		
-		// figure out where the view should come from
-		$ajax = ajax_location('del_manifest', $skin, 'admin');
+		$this->_regions['content'] = Location::ajax('del_manifest', $skin, 'admin', $data);
 		
-		// write the data to the template
-		$this->template->write_view('content', $ajax, $data);
+		Template::assign($this->_regions);
 		
-		// render the template
-		$this->template->render();
+		Template::render();
 	}
 	
 	public function del_menu_cat()
@@ -3596,7 +3578,7 @@ abstract class Nova_ajax extends Controller {
 		
 		// data being sent to the facebox
 		$data['header'] = $head;
-		$data['id'] = $this->uri->segment(3, 0, TRUE);
+		$data['id'] = $this->uri->segment(3, 0, true);
 		
 		$cat = $this->menu_model->get_menu_category($data['id'], 'menucat_id');
 		
@@ -3618,14 +3600,11 @@ abstract class Nova_ajax extends Controller {
 		// figure out the skin
 		$skin = $this->session->userdata('skin_admin');
 		
-		// figure out where the view should come from
-		$ajax = ajax_location('del_menu_cat', $skin, 'admin');
+		$this->_regions['content'] = Location::ajax('del_menu_cat', $skin, 'admin', $data);
 		
-		// write the data to the template
-		$this->template->write_view('content', $ajax, $data);
+		Template::assign($this->_regions);
 		
-		// render the template
-		$this->template->render();
+		Template::render();
 	}
 	
 	public function del_menu_item()
@@ -3641,12 +3620,12 @@ abstract class Nova_ajax extends Controller {
 		
 		// data being sent to the facebox
 		$data['header'] = $head;
-		$data['id'] = $this->uri->segment(3, 0, TRUE);
-		$data['tab'] = $this->uri->segment(4, 0, TRUE);
+		$data['id'] = $this->uri->segment(3, 0, true);
+		$data['tab'] = $this->uri->segment(4, 0, true);
 		
 		$menu = $this->menu_model->get_menu_item($data['id']);
 		
-		$item = ($menu->num_rows() > 0) ? $menu->row() : FALSE;
+		$item = ($menu->num_rows() > 0) ? $menu->row() : false;
 		
 		$data['text'] = sprintf(
 			lang('fbx_content_del_menu'),
@@ -3666,14 +3645,11 @@ abstract class Nova_ajax extends Controller {
 		// figure out the skin
 		$skin = $this->session->userdata('skin_admin');
 		
-		// figure out where the view should come from
-		$ajax = ajax_location('del_menu_item', $skin, 'admin');
+		$this->_regions['content'] = Location::ajax('del_menu_item', $skin, 'admin', $data);
 		
-		// write the data to the template
-		$this->template->write_view('content', $ajax, $data);
+		Template::assign($this->_regions);
 		
-		// render the template
-		$this->template->render();
+		Template::render();
 	}
 	
 	public function del_mission()
@@ -3689,7 +3665,7 @@ abstract class Nova_ajax extends Controller {
 		
 		// data being sent to the facebox
 		$data['header'] = $head;
-		$data['id'] = $this->uri->segment(3, 0, TRUE);
+		$data['id'] = $this->uri->segment(3, 0, true);
 		
 		$item = $this->mis->get_mission($data['id'], array('mission_title', 'mission_status'));
 		
@@ -3714,14 +3690,11 @@ abstract class Nova_ajax extends Controller {
 		// figure out the skin
 		$skin = $this->session->userdata('skin_admin');
 		
-		// figure out where the view should come from
-		$ajax = ajax_location('del_mission', $skin, 'admin');
+		$this->_regions['content'] = Location::ajax('del_mission', $skin, 'admin', $data);
 		
-		// write the data to the template
-		$this->template->write_view('content', $ajax, $data);
+		Template::assign($this->_regions);
 		
-		// render the template
-		$this->template->render();
+		Template::render();
 	}
 	
 	public function del_mission_image()
@@ -3733,19 +3706,19 @@ abstract class Nova_ajax extends Controller {
 			
 			// set the variables
 			$id = $this->uri->segment(3);
-			$image = $this->input->post('image', TRUE);
+			$image = $this->input->post('image', true);
 			
 			$image = str_replace('\.', '.', $image);
 			
 			$images = $this->mis->get_mission($id, 'mission_images');
 			
-			if (!empty($images))
+			if ( ! empty($images))
 			{
 				$imagesArray = explode(',', $images);
 				
 				$key = array_search($image, $imagesArray);
 				
-				if ($key !== FALSE)
+				if ($key !== false)
 				{
 					unset($imagesArray[$key]);
 					$imageStr = implode(',', $imagesArray);
@@ -3770,8 +3743,8 @@ abstract class Nova_ajax extends Controller {
 		// data being sent to the facebox
 		$data['header'] = $head;
 		$data['status'] = $this->uri->segment(3, 'activated');
-		$data['page'] = $this->uri->segment(4, 0, TRUE);
-		$data['id'] = $this->uri->segment(5, 0, TRUE);
+		$data['page'] = $this->uri->segment(4, 0, true);
+		$data['id'] = $this->uri->segment(5, 0, true);
 		
 		$item = $this->news->get_news_item($data['id'], 'news_title');
 		
@@ -3794,14 +3767,11 @@ abstract class Nova_ajax extends Controller {
 		// figure out the skin
 		$skin = $this->session->userdata('skin_admin');
 		
-		// figure out where the view should come from
-		$ajax = ajax_location('del_news', $skin, 'admin');
+		$this->_regions['content'] = Location::ajax('del_news', $skin, 'admin', $data);
 		
-		// write the data to the template
-		$this->template->write_view('content', $ajax, $data);
+		Template::assign($this->_regions);
 		
-		// render the template
-		$this->template->render();
+		Template::render();
 	}
 	
 	public function del_npc()
@@ -3818,7 +3788,7 @@ abstract class Nova_ajax extends Controller {
 		
 		// data being sent to the facebox
 		$data['header'] = $head;
-		$data['id'] = $this->uri->segment(3, 0, TRUE);
+		$data['id'] = $this->uri->segment(3, 0, true);
 		
 		$item = $this->char->get_character($data['id']);
 		
@@ -3848,14 +3818,11 @@ abstract class Nova_ajax extends Controller {
 		// figure out the skin
 		$skin = $this->session->userdata('skin_admin');
 		
-		// figure out where the view should come from
-		$ajax = ajax_location('del_npc', $skin, 'admin');
+		$this->_regions['content'] = Location::ajax('del_npc', $skin, 'admin', $data);
 		
-		// write the data to the template
-		$this->template->write_view('content', $ajax, $data);
+		Template::assign($this->_regions);
 		
-		// render the template
-		$this->template->render();
+		Template::render();
 	}
 	
 	
@@ -3874,8 +3841,8 @@ abstract class Nova_ajax extends Controller {
 		// data being sent to the facebox
 		$data['header'] = $head;
 		$data['status'] = $this->uri->segment(3, 'activated');
-		$data['page'] = $this->uri->segment(4, 0, TRUE);
-		$data['id'] = $this->uri->segment(5, 0, TRUE);
+		$data['page'] = $this->uri->segment(4, 0, true);
+		$data['id'] = $this->uri->segment(5, 0, true);
 		$data['refer'] = $this->uri->segment(6, 'posts');
 		
 		$item = $this->posts->get_post($data['id'], 'post_title');
@@ -3899,14 +3866,11 @@ abstract class Nova_ajax extends Controller {
 		// figure out the skin
 		$skin = $this->session->userdata('skin_admin');
 		
-		// figure out where the view should come from
-		$ajax = ajax_location('del_post', $skin, 'admin');
+		$this->_regions['content'] = Location::ajax('del_post', $skin, 'admin', $data);
 		
-		// write the data to the template
-		$this->template->write_view('content', $ajax, $data);
+		Template::assign($this->_regions);
 		
-		// render the template
-		$this->template->render();
+		Template::render();
 	}
 	
 	public function del_role()
@@ -3922,7 +3886,7 @@ abstract class Nova_ajax extends Controller {
 		
 		// data being sent to the facebox
 		$data['header'] = $head;
-		$data['id'] = $this->uri->segment(3, 0, TRUE);
+		$data['id'] = $this->uri->segment(3, 0, true);
 		
 		$item = $this->access->get_role($data['id']);
 		$roles = $this->access->get_roles();
@@ -3960,14 +3924,11 @@ abstract class Nova_ajax extends Controller {
 		// figure out the skin
 		$skin = $this->session->userdata('skin_admin');
 		
-		// figure out where the view should come from
-		$ajax = ajax_location('del_role', $skin, 'admin');
+		$this->_regions['content'] = Location::ajax('del_role', $skin, 'admin', $data);
 		
-		// write the data to the template
-		$this->template->write_view('content', $ajax, $data);
+		Template::assign($this->_regions);
 		
-		// render the template
-		$this->template->render();
+		Template::render();
 	}
 	
 	public function del_role_group()
@@ -3983,7 +3944,7 @@ abstract class Nova_ajax extends Controller {
 		
 		// data being sent to the facebox
 		$data['header'] = $head;
-		$data['id'] = $this->uri->segment(3, 0, TRUE);
+		$data['id'] = $this->uri->segment(3, 0, true);
 		$data['text'] = sprintf(
 			lang('fbx_content_del_role_group'),
 			$this->access->get_group($data['id'], 'group_name')
@@ -4017,14 +3978,11 @@ abstract class Nova_ajax extends Controller {
 		// figure out the skin
 		$skin = $this->session->userdata('skin_admin');
 		
-		// figure out where the view should come from
-		$ajax = ajax_location('del_role_group', $skin, 'admin');
+		$this->_regions['content'] = Location::ajax('del_role_group', $skin, 'admin', $data);
 		
-		// write the data to the template
-		$this->template->write_view('content', $ajax, $data);
+		Template::assign($this->_regions);
 		
-		// render the template
-		$this->template->render();
+		Template::render();
 	}
 	
 	public function del_role_page()
@@ -4059,14 +4017,11 @@ abstract class Nova_ajax extends Controller {
 		// figure out the skin
 		$skin = $this->session->userdata('skin_admin');
 		
-		// figure out where the view should come from
-		$ajax = ajax_location('del_role_page', $skin, 'admin');
+		$this->_regions['content'] = Location::ajax('del_role_page', $skin, 'admin', $data);
 		
-		// write the data to the template
-		$this->template->write_view('content', $ajax, $data);
+		Template::assign($this->_regions);
 		
-		// render the template
-		$this->template->render();
+		Template::render();
 	}
 	
 	public function del_site_message()
@@ -4098,14 +4053,11 @@ abstract class Nova_ajax extends Controller {
 		// figure out the skin
 		$skin = $this->session->userdata('skin_admin');
 		
-		// figure out where the view should come from
-		$ajax = ajax_location('del_site_message', $skin, 'admin');
+		$this->_regions['content'] = Location::ajax('del_site_message', $skin, 'admin', $data);
 		
-		// write the data to the template
-		$this->template->write_view('content', $ajax, $data);
+		Template::assign($this->_regions);
 		
-		// render the template
-		$this->template->render();
+		Template::render();
 	}
 	
 	public function del_spec_field()
@@ -4125,7 +4077,7 @@ abstract class Nova_ajax extends Controller {
 		
 		$field = $this->specs->get_spec_field_details($data['id']);
 		
-		$item = ($field->num_rows() > 0) ? $field->row() : FALSE;
+		$item = ($field->num_rows() > 0) ? $field->row() : false;
 		
 		$data['text'] = sprintf(
 			lang('fbx_content_del_specs_field'),
@@ -4145,14 +4097,11 @@ abstract class Nova_ajax extends Controller {
 		// figure out the skin
 		$skin = $this->session->userdata('skin_admin');
 		
-		// figure out where the view should come from
-		$ajax = ajax_location('del_spec_field', $skin, 'admin');
+		$this->_regions['content'] = Location::ajax('del_spec_field', $skin, 'admin', $data);
 		
-		// write the data to the template
-		$this->template->write_view('content', $ajax, $data);
+		Template::assign($this->_regions);
 		
-		// render the template
-		$this->template->render();
+		Template::render();
 	}
 	
 	public function del_spec_field_value()
@@ -4162,7 +4111,10 @@ abstract class Nova_ajax extends Controller {
 			// load the resources
 			$this->load->model('specs_model', 'specs');
 			
-			$id = (is_numeric($this->input->post('field'))) ? $this->input->post('field', TRUE) : 0;
+			// figure out the skin
+			$skin = $this->session->userdata('skin_admin');
+			
+			$id = (is_numeric($this->input->post('field'))) ? $this->input->post('field', true) : 0;
 			
 			$delete = $this->specs->delete_spec_field_value($id);
 			
@@ -4177,8 +4129,6 @@ abstract class Nova_ajax extends Controller {
 	
 				$flash['status'] = 'success';
 				$flash['message'] = text_output($message);
-					
-				$output = $this->load->view('_base/admin/pages/flash', $flash, TRUE);
 			}
 			else
 			{
@@ -4191,9 +4141,9 @@ abstract class Nova_ajax extends Controller {
 	
 				$flash['status'] = 'error';
 				$flash['message'] = text_output($message);
-					
-				$output = $this->load->view('_base/admin/pages/flash', $flash, TRUE);
 			}
+			
+			$output = Location::view('flash', $skin, 'admin', $flash);
 			
 			echo $output;
 		}
@@ -4208,23 +4158,23 @@ abstract class Nova_ajax extends Controller {
 			
 			// set the variables
 			$id = $this->uri->segment(3);
-			$image = $this->input->post('image', TRUE);
+			$image = $this->input->post('image', true);
 			
 			$image = str_replace('\.', '.', $image);
 			
 			$item = $this->specs->get_spec_item($id);
 			
-			if ($item !== FALSE)
+			if ($item !== false)
 			{
 				$images = $item->specs_images;
 				
-				if (!empty($images))
+				if ( ! empty($images))
 				{
 					$imagesArray = explode(',', $images);
 					
 					$key = array_search($image, $imagesArray);
 					
-					if ($key !== FALSE)
+					if ($key !== false)
 					{
 						unset($imagesArray[$key]);
 						$imageStr = implode(',', $imagesArray);
@@ -4249,7 +4199,7 @@ abstract class Nova_ajax extends Controller {
 		
 		// data being sent to the facebox
 		$data['header'] = $head;
-		$data['id'] = $this->uri->segment(3, 0, TRUE);
+		$data['id'] = $this->uri->segment(3, 0, true);
 		
 		$item = $this->specs->get_spec_item($data['id']);
 		
@@ -4272,14 +4222,11 @@ abstract class Nova_ajax extends Controller {
 		// figure out the skin
 		$skin = $this->session->userdata('skin_admin');
 		
-		// figure out where the view should come from
-		$ajax = ajax_location('del_spec_item', $skin, 'admin');
+		$this->_regions['content'] = Location::ajax('del_spec_item', $skin, 'admin', $data);
 		
-		// write the data to the template
-		$this->template->write_view('content', $ajax, $data);
+		Template::assign($this->_regions);
 		
-		// render the template
-		$this->template->render();
+		Template::render();
 	}
 	
 	public function del_spec_sec()
@@ -4300,7 +4247,7 @@ abstract class Nova_ajax extends Controller {
 		$sec = $this->specs->get_spec_section_details($data['id']);
 		$sections = $this->specs->get_spec_sections();
 		
-		$item = ($sec->num_rows() > 0) ? $sec->row() : FALSE;
+		$item = ($sec->num_rows() > 0) ? $sec->row() : false;
 		
 		$data['text'] = sprintf(
 			lang('fbx_content_del_specs_sec'),
@@ -4338,14 +4285,11 @@ abstract class Nova_ajax extends Controller {
 		// figure out the skin
 		$skin = $this->session->userdata('skin_admin');
 		
-		// figure out where the view should come from
-		$ajax = ajax_location('del_spec_sec', $skin, 'admin');
+		$this->_regions['content'] = Location::ajax('del_spec_sec', $skin, 'admin', $data);
 		
-		// write the data to the template
-		$this->template->write_view('content', $ajax, $data);
+		Template::assign($this->_regions);
 		
-		// render the template
-		$this->template->render();
+		Template::render();
 	}
 	
 	public function del_tour_field()
@@ -4365,7 +4309,7 @@ abstract class Nova_ajax extends Controller {
 		
 		$field = $this->tour->get_tour_field_details($data['id']);
 		
-		$item = ($field->num_rows() > 0) ? $field->row() : FALSE;
+		$item = ($field->num_rows() > 0) ? $field->row() : false;
 		
 		$data['text'] = sprintf(
 			lang('fbx_content_del_tour_field'),
@@ -4385,14 +4329,11 @@ abstract class Nova_ajax extends Controller {
 		// figure out the skin
 		$skin = $this->session->userdata('skin_admin');
 		
-		// figure out where the view should come from
-		$ajax = ajax_location('del_tour_field', $skin, 'admin');
+		$this->_regions['content'] = Location::ajax('del_tour_field', $skin, 'admin', $data);
 		
-		// write the data to the template
-		$this->template->write_view('content', $ajax, $data);
+		Template::assign($this->_regions);
 		
-		// render the template
-		$this->template->render();
+		Template::render();
 	}
 	
 	public function del_tour_field_value()
@@ -4402,7 +4343,7 @@ abstract class Nova_ajax extends Controller {
 			// load the resources
 			$this->load->model('tour_model', 'tour');
 			
-			$id = (is_numeric($this->input->post('field'))) ? $this->input->post('field', TRUE) : 0;
+			$id = (is_numeric($this->input->post('field'))) ? $this->input->post('field', true) : 0;
 			
 			$delete = $this->tour->delete_tour_value($id);
 			
@@ -4417,8 +4358,6 @@ abstract class Nova_ajax extends Controller {
 				
 				$flash['status'] = 'success';
 				$flash['message'] = text_output($message);
-					
-				$output = $this->load->view('_base/admin/pages/flash', $flash, TRUE);
 			}
 			else
 			{
@@ -4431,9 +4370,9 @@ abstract class Nova_ajax extends Controller {
 				
 				$flash['status'] = 'error';
 				$flash['message'] = text_output($message);
-					
-				$output = $this->load->view('_base/admin/pages/flash', $flash, TRUE);
 			}
+			
+			$output = Location::view('flash', $skin, 'admin', $flash);
 			
 			echo $output;
 		}
@@ -4448,7 +4387,7 @@ abstract class Nova_ajax extends Controller {
 			
 			// set the variables
 			$id = $this->uri->segment(3);
-			$image = $this->input->post('image', TRUE);
+			$image = $this->input->post('image', true);
 			
 			$image = str_replace('\.', '.', $image);
 			
@@ -4460,13 +4399,13 @@ abstract class Nova_ajax extends Controller {
 				
 				$images = $item->tour_images;
 				
-				if (!empty($images))
+				if ( ! empty($images))
 				{
 					$imagesArray = explode(',', $images);
 					
 					$key = array_search($image, $imagesArray);
 					
-					if ($key !== FALSE)
+					if ($key !== false)
 					{
 						unset($imagesArray[$key]);
 						$imageStr = implode(',', $imagesArray);
@@ -4491,11 +4430,11 @@ abstract class Nova_ajax extends Controller {
 		
 		// data being sent to the facebox
 		$data['header'] = $head;
-		$data['id'] = $this->uri->segment(3, 0, TRUE);
+		$data['id'] = $this->uri->segment(3, 0, true);
 		
 		$field = $this->tour->get_tour_item($data['id']);
 		
-		$item = ($field->num_rows() > 0) ? $field->row() : FALSE;
+		$item = ($field->num_rows() > 0) ? $field->row() : false;
 		
 		$data['text'] = sprintf(
 			lang('fbx_content_del_entry'),
@@ -4516,14 +4455,11 @@ abstract class Nova_ajax extends Controller {
 		// figure out the skin
 		$skin = $this->session->userdata('skin_admin');
 		
-		// figure out where the view should come from
-		$ajax = ajax_location('del_tour_item', $skin, 'admin');
+		$this->_regions['content'] = Location::ajax('del_tour_item', $skin, 'admin', $data);
 		
-		// write the data to the template
-		$this->template->write_view('content', $ajax, $data);
+		Template::assign($this->_regions);
 		
-		// render the template
-		$this->template->render();
+		Template::render();
 	}
 	
 	public function del_user()
@@ -4539,14 +4475,14 @@ abstract class Nova_ajax extends Controller {
 		
 		// data being sent to the facebox
 		$data['header'] = $head;
-		$data['id'] = $this->uri->segment(3, 0, TRUE);
+		$data['id'] = $this->uri->segment(3, 0, true);
 		
 		$item = $this->user->get_user($data['id']);
 		
 		$data['text'] = sprintf(
 			lang('fbx_content_del_entry'),
 			lang('global_user'),
-			(!empty($item->name)) ? $item->name : $item->email
+			( ! empty($item->name)) ? $item->name : $item->email
 		);
 		
 		// input parameters
@@ -4562,14 +4498,11 @@ abstract class Nova_ajax extends Controller {
 		// figure out the skin
 		$skin = $this->session->userdata('skin_admin');
 		
-		// figure out where the view should come from
-		$ajax = ajax_location('del_user', $skin, 'admin');
+		$this->_regions['content'] = Location::ajax('del_user', $skin, 'admin', $data);
 		
-		// write the data to the template
-		$this->template->write_view('content', $ajax, $data);
+		Template::assign($this->_regions);
 		
-		// render the template
-		$this->template->render();
+		Template::render();
 	}
 	
 	public function del_user_setting()
@@ -4601,14 +4534,11 @@ abstract class Nova_ajax extends Controller {
 		// figure out the skin
 		$skin = $this->session->userdata('skin_admin');
 		
-		// figure out where the view should come from
-		$ajax = ajax_location('del_user_setting', $skin, 'admin');
+		$this->_regions['content'] = Location::ajax('del_user_setting', $skin, 'admin', $data);
 		
-		// write the data to the template
-		$this->template->write_view('content', $ajax, $data);
+		Template::assign($this->_regions);
 		
-		// render the template
-		$this->template->render();
+		Template::render();
 	}
 	
 	public function del_wiki_category()
@@ -4644,14 +4574,11 @@ abstract class Nova_ajax extends Controller {
 		// figure out the skin
 		$skin = $this->session->userdata('skin_wiki');
 		
-		// figure out where the view should come from
-		$ajax = ajax_location('del_wiki_category', $skin, 'wiki');
+		$this->_regions['content'] = Location::ajax('del_wiki_category', $skin, 'wiki', $data);
 		
-		// write the data to the template
-		$this->template->write_view('content', $ajax, $data);
+		Template::assign($this->_regions);
 		
-		// render the template
-		$this->template->render();
+		Template::render();
 	}
 	
 	public function del_wiki_draft()
@@ -4673,10 +4600,10 @@ abstract class Nova_ajax extends Controller {
 		$draft = $this->wiki->get_draft($data['id']);
 		
 		// get the draft object
-		$d = ($draft->num_rows() > 0) ? $draft->row() : FALSE;
+		$d = ($draft->num_rows() > 0) ? $draft->row() : false;
 		
 		// get the title
-		$title = ($d !== FALSE) ? $d->draft_title : '';
+		$title = ($d !== false) ? $d->draft_title : '';
 		
 		$data['text'] = sprintf(
 			lang('fbx_content_del_entry'),
@@ -4697,14 +4624,11 @@ abstract class Nova_ajax extends Controller {
 		// figure out the skin
 		$skin = $this->session->userdata('skin_wiki');
 		
-		// figure out where the view should come from
-		$ajax = ajax_location('del_wiki_draft', $skin, 'wiki');
+		$this->_regions['content'] = Location::ajax('del_wiki_draft', $skin, 'wiki', $data);
 		
-		// write the data to the template
-		$this->template->write_view('content', $ajax, $data);
+		Template::assign($this->_regions);
 		
-		// render the template
-		$this->template->render();
+		Template::render();
 	}
 	
 	public function del_wiki_page()
@@ -4755,14 +4679,11 @@ abstract class Nova_ajax extends Controller {
 		// figure out the skin
 		$skin = $this->session->userdata('skin_wiki');
 		
-		// figure out where the view should come from
-		$ajax = ajax_location('del_wiki_page', $skin, 'wiki');
+		$this->_regions['content'] = Location::ajax('del_wiki_page', $skin, 'wiki', $data);
 		
-		// write the data to the template
-		$this->template->write_view('content', $ajax, $data);
+		Template::assign($this->_regions);
 		
-		// render the template
-		$this->template->render();
+		Template::render();
 	}
 	
 	public function duplicate_dept()
@@ -4770,7 +4691,7 @@ abstract class Nova_ajax extends Controller {
 		// load the resources
 		$this->load->model('depts_model', 'dept');
 		
-		$data['id'] = $this->uri->segment(3, 0, TRUE);
+		$data['id'] = $this->uri->segment(3, 0, true);
 		
 		$head = sprintf(
 			lang('fbx_head'),
@@ -4802,14 +4723,11 @@ abstract class Nova_ajax extends Controller {
 		// figure out the skin
 		$skin = $this->session->userdata('skin_admin');
 		
-		// figure out where the view should come from
-		$ajax = ajax_location('dup_dept', $skin, 'admin');
+		$this->_regions['content'] = Location::ajax('dup_dept', $skin, 'admin', $data);
 		
-		// write the data to the template
-		$this->template->write_view('content', $ajax, $data);
+		Template::assign($this->_regions);
 		
-		// render the template
-		$this->template->render();
+		Template::render();
 	}
 	
 	public function duplicate_role()
@@ -4862,14 +4780,11 @@ abstract class Nova_ajax extends Controller {
 		// figure out the skin
 		$skin = $this->session->userdata('skin_admin');
 		
-		// figure out where the view should come from
-		$ajax = ajax_location('dup_role', $skin, 'admin');
+		$this->_regions['content'] = Location::ajax('dup_role', $skin, 'admin', $data);
 		
-		// write the data to the template
-		$this->template->write_view('content', $ajax, $data);
+		Template::assign($this->_regions);
 		
-		// render the template
-		$this->template->render();
+		Template::render();
 	}
 	
 	public function edit_bio_field_value()
@@ -4899,7 +4814,7 @@ abstract class Nova_ajax extends Controller {
 			}
 		}
 		
-		$item = ($value->num_rows() > 0) ? $value->row() : FALSE;
+		$item = ($value->num_rows() > 0) ? $value->row() : false;
 		
 		// input parameters
 		$data['inputs'] = array(
@@ -4932,14 +4847,11 @@ abstract class Nova_ajax extends Controller {
 		// figure out the skin
 		$skin = $this->session->userdata('skin_admin');
 		
-		// figure out where the view should come from
-		$ajax = ajax_location('edit_bio_field_value', $skin, 'admin');
+		$this->_regions['content'] = Location::ajax('edit_bio_field_value', $skin, 'admin', $data);
 		
-		// write the data to the template
-		$this->template->write_view('content', $ajax, $data);
+		Template::assign($this->_regions);
 		
-		// render the template
-		$this->template->render();
+		Template::render();
 	}
 	
 	public function edit_bio_sec()
@@ -4960,7 +4872,7 @@ abstract class Nova_ajax extends Controller {
 		$tabs = $this->char->get_bio_tabs();
 		$sec = $this->char->get_bio_section_details($data['id']);
 		
-		$item = ($sec->num_rows() > 0) ? $sec->row() : FALSE;
+		$item = ($sec->num_rows() > 0) ? $sec->row() : false;
 		
 		$data['values']['tabs'][0] = ucwords(lang('labels_please') .' '. lang('actions_choose')
 			.' '. lang('order_one'));
@@ -5002,14 +4914,11 @@ abstract class Nova_ajax extends Controller {
 		// figure out the skin
 		$skin = $this->session->userdata('skin_admin');
 		
-		// figure out where the view should come from
-		$ajax = ajax_location('edit_bio_sec', $skin, 'admin');
+		$this->_regions['content'] = Location::ajax('edit_bio_sec', $skin, 'admin', $data);
 		
-		// write the data to the template
-		$this->template->write_view('content', $ajax, $data);
+		Template::assign($this->_regions);
 		
-		// render the template
-		$this->template->render();
+		Template::render();
 	}
 	
 	public function edit_bio_tab()
@@ -5029,7 +4938,7 @@ abstract class Nova_ajax extends Controller {
 		
 		$tab = $this->char->get_bio_tab_details($data['id']);
 		
-		$item = ($tab->num_rows() > 0) ? $tab->row() : FALSE;
+		$item = ($tab->num_rows() > 0) ? $tab->row() : false;
 		
 		// input parameters
 		$data['inputs'] = array(
@@ -5049,12 +4958,12 @@ abstract class Nova_ajax extends Controller {
 				'name' => 'tab_display',
 				'id' => 'tab_display_y',
 				'value' => 'y',
-				'checked' => ($item->tab_display == 'y') ? TRUE : FALSE),
+				'checked' => ($item->tab_display == 'y') ? true : false),
 			'display_n' => array(
 				'name' => 'tab_display',
 				'id' => 'tab_display_n',
 				'value' => 'n',
-				'checked' => ($item->tab_display == 'n') ? TRUE : FALSE),
+				'checked' => ($item->tab_display == 'n') ? true : false),
 			'submit' => array(
 				'type' => 'submit',
 				'class' => 'hud_button',
@@ -5075,32 +4984,29 @@ abstract class Nova_ajax extends Controller {
 		// figure out the skin
 		$skin = $this->session->userdata('skin_admin');
 		
-		// figure out where the view should come from
-		$ajax = ajax_location('edit_bio_tab', $skin, 'admin');
+		$this->_regions['content'] = Location::ajax('edit_bio_tab', $skin, 'admin', $data);
 		
-		// write the data to the template
-		$this->template->write_view('content', $ajax, $data);
+		Template::assign($this->_regions);
 		
-		// render the template
-		$this->template->render();
+		Template::render();
 	}
 	
 	public function edit_catalogue()
 	{
 		$type = $this->uri->segment(3);
-		$data['id'] = $this->uri->segment(4, 0, TRUE);
+		$data['id'] = $this->uri->segment(4, 0, true);
 		
 		// load the resources
 		$this->load->model('ranks_model', 'ranks');
 		
+		// figure out the skin
+		$skin = $this->session->userdata('skin_admin');
+		
 		switch ($type)
 		{
 			case 'ranks':
-				// figure out the skin
-				$skin = $this->session->userdata('skin_admin');
-				
 				// figure out where the view should come from
-				$view = ajax_location('edit_catalogue_ranks', $skin, 'admin');
+				$view = 'edit_catalogue_ranks';
 				
 				$item = $this->ranks->get_rankcat($data['id'], 'rankcat_id');
 				
@@ -5144,12 +5050,12 @@ abstract class Nova_ajax extends Controller {
 						'name' => 'rank_default',
 						'id' => 'rank_default_y',
 						'value' => 'y',
-						'checked' => ($item->rankcat_default == 'y') ? TRUE : FALSE),
+						'checked' => ($item->rankcat_default == 'y') ? true : false),
 					'default_n' => array(
 						'name' => 'rank_default',
 						'id' => 'rank_default_n',
 						'value' => 'n',
-						'checked' => ($item->rankcat_default == 'n') ? TRUE : FALSE),
+						'checked' => ($item->rankcat_default == 'n') ? true : false),
 					'submit' => array(
 						'type' => 'submit',
 						'class' => 'hud_button',
@@ -5168,11 +5074,8 @@ abstract class Nova_ajax extends Controller {
 			break;
 				
 			case 'skins':
-				// figure out the skin
-				$skin = $this->session->userdata('skin_admin');
-				
 				// figure out where the view should come from
-				$view = ajax_location('edit_catalogue_skins', $skin, 'admin');
+				$view = 'edit_catalogue_skins';
 				
 				$item = $this->sys->get_skin_info($data['id'], 'skin_id');
 				
@@ -5206,11 +5109,8 @@ abstract class Nova_ajax extends Controller {
 			break;
 				
 			case 'skinsecs':
-				// figure out the skin
-				$skin = $this->session->userdata('skin_admin');
-				
 				// figure out where the view should come from
-				$view = ajax_location('edit_catalogue_skinsec', $skin, 'admin');
+				$view = 'edit_catalogue_skinsec';
 				
 				$item = $this->sys->get_skin_section_info($data['id'], 'skinsec_id');
 				
@@ -5229,12 +5129,12 @@ abstract class Nova_ajax extends Controller {
 						'name' => 'default',
 						'id' => 'skin_default_y',
 						'value' => 'y',
-						'checked' => ($item->skinsec_default == 'y') ? TRUE : FALSE),
+						'checked' => ($item->skinsec_default == 'y') ? true : false),
 					'default_n' => array(
 						'name' => 'default',
 						'id' => 'skin_default_n',
 						'value' => 'n',
-						'checked' => ($item->skinsec_default == 'n') ? TRUE : FALSE),
+						'checked' => ($item->skinsec_default == 'n') ? true : false),
 					'submit' => array(
 						'type' => 'submit',
 						'class' => 'hud_button',
@@ -5299,19 +5199,19 @@ abstract class Nova_ajax extends Controller {
 			'yes' => ucfirst(lang('labels_yes')),
 		);
 		
-		// write the data to the template
-		$this->template->write_view('content', $view, $data);
+		$this->_regions['content'] = Location::ajax($view, $skin, 'admin', $data);
 		
-		// render the template
-		$this->template->render();
+		Template::assign($this->_regions);
+		
+		Template::render();
 	}
 	
 	public function edit_comment()
 	{
-		$data['type'] = $this->uri->segment(3, FALSE);
-		$data['status'] = $this->uri->segment(4, FALSE);
-		$data['page'] = $this->uri->segment(5, 0, TRUE);
-		$data['id'] = $this->uri->segment(6, 0, TRUE);
+		$data['type'] = $this->uri->segment(3, false);
+		$data['status'] = $this->uri->segment(4, false);
+		$data['page'] = $this->uri->segment(5, 0, true);
+		$data['id'] = $this->uri->segment(6, 0, true);
 		
 		switch ($data['type'])
 		{
@@ -5329,7 +5229,7 @@ abstract class Nova_ajax extends Controller {
 						'class' => 'hud',
 						'rows' => 10,
 						'value' => $item['pcomment_content']),
-					'author' => $this->char->get_character_name($item['pcomment_author_character'], TRUE)
+					'author' => $this->char->get_character_name($item['pcomment_author_character'], true)
 				);
 			break;
 				
@@ -5347,7 +5247,7 @@ abstract class Nova_ajax extends Controller {
 						'class' => 'hud',
 						'rows' => 10,
 						'value' => $item['lcomment_content']),
-					'author' => $this->char->get_character_name($item['lcomment_author_character'], TRUE)
+					'author' => $this->char->get_character_name($item['lcomment_author_character'], true)
 				);
 			break;
 				
@@ -5365,7 +5265,7 @@ abstract class Nova_ajax extends Controller {
 						'class' => 'hud',
 						'rows' => 10,
 						'value' => $item['ncomment_content']),
-					'author' => $this->char->get_character_name($item['ncomment_author_character'], TRUE)
+					'author' => $this->char->get_character_name($item['ncomment_author_character'], true)
 				);
 			break;
 				
@@ -5383,7 +5283,7 @@ abstract class Nova_ajax extends Controller {
 						'class' => 'hud',
 						'rows' => 10,
 						'value' => $item['wcomment_content']),
-					'author' => $this->char->get_character_name($item['wcomment_author_character'], TRUE)
+					'author' => $this->char->get_character_name($item['wcomment_author_character'], true)
 				);
 			break;
 		}
@@ -5412,14 +5312,11 @@ abstract class Nova_ajax extends Controller {
 		// figure out the skin
 		$skin = $this->session->userdata('skin_admin');
 		
-		// figure out where the view should come from
-		$ajax = ajax_location('edit_comment', $skin, 'admin');
+		$this->_regions['content'] = Location::ajax('edit_comment', $skin, 'admin', $data);
 		
-		// write the data to the template
-		$this->template->write_view('content', $ajax, $data);
+		Template::assign($this->_regions);
 		
-		// render the template
-		$this->template->render();
+		Template::render();
 	}
 	
 	public function edit_deck()
@@ -5460,7 +5357,7 @@ abstract class Nova_ajax extends Controller {
 		);
 		
 		// get the specification items
-		$specs = $this->specs->get_spec_items(NULL);
+		$specs = $this->specs->get_spec_items(null);
 		
 		$data['values']['specs'][0] = ucwords(lang('actions_choose').' '.lang('labels_a').' '.lang('global_specification').' '.lang('labels_item'));
 		
@@ -5481,14 +5378,11 @@ abstract class Nova_ajax extends Controller {
 		// figure out the skin
 		$skin = $this->session->userdata('skin_admin');
 		
-		// figure out where the view should come from
-		$ajax = ajax_location('edit_deck', $skin, 'admin');
+		$this->_regions['content'] = Location::ajax('edit_deck', $skin, 'admin', $data);
 		
-		// write the data to the template
-		$this->template->write_view('content', $ajax, $data);
+		Template::assign($this->_regions);
 		
-		// render the template
-		$this->template->render();
+		Template::render();
 	}
 	
 	public function edit_dept()
@@ -5504,7 +5398,7 @@ abstract class Nova_ajax extends Controller {
 		
 		// data being sent to the facebox
 		$data['header'] = $head;
-		$data['id'] = $this->uri->segment(3, 0, TRUE);
+		$data['id'] = $this->uri->segment(3, 0, true);
 		
 		// get the department information
 		$dept = $this->dept->get_dept($data['id']);
@@ -5529,13 +5423,13 @@ abstract class Nova_ajax extends Controller {
 				'id' => 'display_y',
 				'class' => 'hud',
 				'value' => 'y',
-				'checked' => ($dept->dept_display == 'y') ? TRUE : FALSE),
+				'checked' => ($dept->dept_display == 'y') ? true : false),
 			'display_n' => array(
 				'name' => 'dept_display',
 				'id' => 'display_n',
 				'class' => 'hud',
 				'value' => 'n',
-				'checked' => ($dept->dept_display == 'n') ? TRUE : FALSE),
+				'checked' => ($dept->dept_display == 'n') ? true : false),
 			'submit' => array(
 				'type' => 'submit',
 				'class' => 'hud_button',
@@ -5557,7 +5451,7 @@ abstract class Nova_ajax extends Controller {
 			}
 		}
 		
-		$manifests = $this->dept->get_all_manifests(NULL);
+		$manifests = $this->dept->get_all_manifests(null);
 		
 		if ($manifests->num_rows() > 0)
 		{
@@ -5592,14 +5486,11 @@ abstract class Nova_ajax extends Controller {
 		// figure out the skin
 		$skin = $this->session->userdata('skin_admin');
 		
-		// figure out where the view should come from
-		$ajax = ajax_location('edit_dept', $skin, 'admin');
+		$this->_regions['content'] = Location::ajax('edit_dept', $skin, 'admin', $data);
 		
-		// write the data to the template
-		$this->template->write_view('content', $ajax, $data);
+		Template::assign($this->_regions);
 		
-		// render the template
-		$this->template->render();
+		Template::render();
 	}
 	
 	public function edit_docking_field_value()
@@ -5629,7 +5520,7 @@ abstract class Nova_ajax extends Controller {
 			}
 		}
 		
-		$item = ($value->num_rows() > 0) ? $value->row() : FALSE;
+		$item = ($value->num_rows() > 0) ? $value->row() : false;
 		
 		// input parameters
 		$data['inputs'] = array(
@@ -5662,14 +5553,11 @@ abstract class Nova_ajax extends Controller {
 		// figure out the skin
 		$skin = $this->session->userdata('skin_admin');
 		
-		// figure out where the view should come from
-		$ajax = ajax_location('edit_docking_field_value', $skin, 'admin');
+		$this->_regions['content'] = Location::ajax('edit_docking_field_value', $skin, 'admin', $data);
 		
-		// write the data to the template
-		$this->template->write_view('content', $ajax, $data);
+		Template::assign($this->_regions);
 		
-		// render the template
-		$this->template->render();
+		Template::render();
 	}
 	
 	public function edit_docking_sec()
@@ -5689,7 +5577,7 @@ abstract class Nova_ajax extends Controller {
 		
 		$sec = $this->docking->get_docking_section_details($data['id']);
 		
-		$item = ($sec->num_rows() > 0) ? $sec->row() : FALSE;
+		$item = ($sec->num_rows() > 0) ? $sec->row() : false;
 		
 		// input parameters
 		$data['inputs'] = array(
@@ -5717,14 +5605,11 @@ abstract class Nova_ajax extends Controller {
 		// figure out the skin
 		$skin = $this->session->userdata('skin_admin');
 		
-		// figure out where the view should come from
-		$ajax = ajax_location('edit_docking_sec', $skin, 'admin');
+		$this->_regions['content'] = Location::ajax('edit_docking_sec', $skin, 'admin', $data);
 		
-		// write the data to the template
-		$this->template->write_view('content', $ajax, $data);
+		Template::assign($this->_regions);
 		
-		// render the template
-		$this->template->render();
+		Template::render();
 	}
 	
 	public function edit_manifest()
@@ -5740,7 +5625,7 @@ abstract class Nova_ajax extends Controller {
 		
 		// data being sent to the facebox
 		$data['header'] = $head;
-		$data['id'] = $this->uri->segment(3, 0, TRUE);
+		$data['id'] = $this->uri->segment(3, 0, true);
 		
 		// get the manifest data
 		$item = $this->dept->get_manifest($data['id']);
@@ -5770,25 +5655,25 @@ abstract class Nova_ajax extends Controller {
 				'id' => 'display_y',
 				'class' => 'hud',
 				'value' => 'y',
-				'checked' => ($item->manifest_display == 'y') ? TRUE : FALSE),
+				'checked' => ($item->manifest_display == 'y') ? true : false),
 			'display_n' => array(
 				'name' => 'manifest_display',
 				'id' => 'display_n',
 				'class' => 'hud',
 				'value' => 'n',
-				'checked' => ($item->manifest_display == 'n') ? TRUE : FALSE),
+				'checked' => ($item->manifest_display == 'n') ? true : false),
 			'default_y' => array(
 				'name' => 'manifest_default',
 				'id' => 'default_y',
 				'class' => 'hud',
 				'value' => 'y',
-				'checked' => ($item->manifest_default == 'y') ? TRUE : FALSE),
+				'checked' => ($item->manifest_default == 'y') ? true : false),
 			'default_n' => array(
 				'name' => 'manifest_default',
 				'id' => 'default_n',
 				'class' => 'hud',
 				'value' => 'n',
-				'checked' => ($item->manifest_default == 'n') ? TRUE : FALSE),
+				'checked' => ($item->manifest_default == 'n') ? true : false),
 			'submit' => array(
 				'type' => 'submit',
 				'class' => 'hud_button',
@@ -5813,14 +5698,11 @@ abstract class Nova_ajax extends Controller {
 		// figure out the skin
 		$skin = $this->session->userdata('skin_admin');
 		
-		// figure out where the view should come from
-		$ajax = ajax_location('edit_manifest', $skin, 'admin');
+		$this->_regions['content'] = Location::ajax('edit_manifest', $skin, 'admin', $data);
 		
-		// write the data to the template
-		$this->template->write_view('content', $ajax, $data);
+		Template::assign($this->_regions);
 		
-		// render the template
-		$this->template->render();
+		Template::render();
 	}
 	
 	public function edit_menu_cat()
@@ -5836,7 +5718,7 @@ abstract class Nova_ajax extends Controller {
 		
 		// data being sent to the facebox
 		$data['header'] = $head;
-		$data['id'] = $this->uri->segment(3, 0, TRUE);
+		$data['id'] = $this->uri->segment(3, 0, true);
 		
 		$item = $this->menu_model->get_menu_category($data['id'], 'menucat_id');
 		
@@ -5886,14 +5768,11 @@ abstract class Nova_ajax extends Controller {
 		// figure out the skin
 		$skin = $this->session->userdata('skin_admin');
 		
-		// figure out where the view should come from
-		$ajax = ajax_location('edit_menu_cat', $skin, 'admin');
+		$this->_regions['content'] = Location::ajax('edit_menu_cat', $skin, 'admin', $data);
 		
-		// write the data to the template
-		$this->template->write_view('content', $ajax, $data);
+		Template::assign($this->_regions);
 		
-		// render the template
-		$this->template->render();
+		Template::render();
 	}
 	
 	public function edit_menu_item()
@@ -5909,12 +5788,12 @@ abstract class Nova_ajax extends Controller {
 		
 		// data being sent to the facebox
 		$data['header'] = $head;
-		$data['id'] = $this->uri->segment(3, 0, TRUE);
-		$data['tab'] = $this->uri->segment(4, 0, TRUE);
+		$data['id'] = $this->uri->segment(3, 0, true);
+		$data['tab'] = $this->uri->segment(4, 0, true);
 		
 		$menu = $this->menu_model->get_menu_item($data['id']);
 		
-		$item = ($menu->num_rows() > 0) ? $menu->row() : FALSE;
+		$item = ($menu->num_rows() > 0) ? $menu->row() : false;
 		
 		// input parameters
 		$data['inputs'] = array(
@@ -5939,37 +5818,37 @@ abstract class Nova_ajax extends Controller {
 				'id' => 'link_type_on',
 				'class' => 'hud',
 				'value' => 'onsite',
-				'checked' => ($item->menu_link_type == 'onsite') ? TRUE : FALSE),
+				'checked' => ($item->menu_link_type == 'onsite') ? true : false),
 			'link_type_off' => array(
 				'name' => 'menu_link_type',
 				'id' => 'link_type_off',
 				'class' => 'hud',
 				'value' => 'offsite',
-				'checked' => ($item->menu_link_type == 'offsite') ? TRUE : FALSE),
+				'checked' => ($item->menu_link_type == 'offsite') ? true : false),
 			'use_access_y' => array(
 				'name' => 'menu_use_access',
 				'id' => 'use_access_y',
 				'class' => 'hud',
 				'value' => 'y',
-				'checked' => ($item->menu_use_access == 'y') ? TRUE : FALSE),
+				'checked' => ($item->menu_use_access == 'y') ? true : false),
 			'use_access_n' => array(
 				'name' => 'menu_use_access',
 				'id' => 'use_access_n',
 				'class' => 'hud',
 				'value' => 'n',
-				'checked' => ($item->menu_use_access == 'n') ? TRUE : FALSE),
+				'checked' => ($item->menu_use_access == 'n') ? true : false),
 			'display_y' => array(
 				'name' => 'menu_display',
 				'id' => 'display_y',
 				'class' => 'hud',
 				'value' => 'y',
-				'checked' => ($item->menu_display == 'y') ? TRUE : FALSE),
+				'checked' => ($item->menu_display == 'y') ? true : false),
 			'display_n' => array(
 				'name' => 'menu_display',
 				'id' => 'display_n',
 				'class' => 'hud',
 				'value' => 'n',
-				'checked' => ($item->menu_display == 'n') ? TRUE : FALSE),
+				'checked' => ($item->menu_display == 'n') ? true : false),
 			'access' => array(
 				'name' => 'menu_access',
 				'class' => 'hud',
@@ -6060,14 +5939,11 @@ abstract class Nova_ajax extends Controller {
 		// figure out the skin
 		$skin = $this->session->userdata('skin_admin');
 		
-		// figure out where the view should come from
-		$ajax = ajax_location('edit_menu_item', $skin, 'admin');
+		$this->_regions['content'] = Location::ajax('edit_menu_item', $skin, 'admin', $data);
 		
-		// write the data to the template
-		$this->template->write_view('content', $ajax, $data);
+		Template::assign($this->_regions);
 		
-		// render the template
-		$this->template->render();
+		Template::render();
 	}
 	
 	public function edit_role_group()
@@ -6083,7 +5959,7 @@ abstract class Nova_ajax extends Controller {
 		
 		// data being sent to the facebox
 		$data['header'] = $head;
-		$data['id'] = $this->uri->segment(3, 0, TRUE);
+		$data['id'] = $this->uri->segment(3, 0, true);
 		
 		$group = $this->access->get_group($data['id']);
 		
@@ -6113,14 +5989,11 @@ abstract class Nova_ajax extends Controller {
 		// figure out the skin
 		$skin = $this->session->userdata('skin_admin');
 		
-		// figure out where the view should come from
-		$ajax = ajax_location('edit_role_group', $skin, 'admin');
+		$this->_regions['content'] = Location::ajax('edit_role_group', $skin, 'admin', $data);
 		
-		// write the data to the template
-		$this->template->write_view('content', $ajax, $data);
+		Template::assign($this->_regions);
 		
-		// render the template
-		$this->template->render();
+		Template::render();
 	}
 	
 	public function edit_role_page()
@@ -6136,7 +6009,7 @@ abstract class Nova_ajax extends Controller {
 		
 		// data being sent to the facebox
 		$data['header'] = $head;
-		$data['id'] = $this->uri->segment(3, 0, TRUE);
+		$data['id'] = $this->uri->segment(3, 0, true);
 		
 		$page = $this->access->get_page($data['id']);
 		$groups = $this->access->get_page_groups();
@@ -6191,14 +6064,11 @@ abstract class Nova_ajax extends Controller {
 		// figure out the skin
 		$skin = $this->session->userdata('skin_admin');
 		
-		// figure out where the view should come from
-		$ajax = ajax_location('edit_role_page', $skin, 'admin');
+		$this->_regions['content'] = Location::ajax('edit_role_page', $skin, 'admin', $data);
 		
-		// write the data to the template
-		$this->template->write_view('content', $ajax, $data);
+		Template::assign($this->_regions);
 		
-		// render the template
-		$this->template->render();
+		Template::render();
 	}
 	
 	public function edit_site_message()
@@ -6325,14 +6195,11 @@ abstract class Nova_ajax extends Controller {
 		// figure out the skin
 		$skin = $this->session->userdata('skin_admin');
 		
-		// figure out where the view should come from
-		$ajax = ajax_location('edit_site_message', $skin, 'admin');
+		$this->_regions['content'] = Location::ajax('edit_site_message', $skin, 'admin', $data);
 		
-		// write the data to the template
-		$this->template->write_view('content', $ajax, $data);
+		Template::assign($this->_regions);
 		
-		// render the template
-		$this->template->render();
+		Template::render();
 	}
 	
 	public function edit_spec_field_value()
@@ -6362,7 +6229,7 @@ abstract class Nova_ajax extends Controller {
 			}
 		}
 		
-		$item = ($value->num_rows() > 0) ? $value->row() : FALSE;
+		$item = ($value->num_rows() > 0) ? $value->row() : false;
 		
 		// input parameters
 		$data['inputs'] = array(
@@ -6395,14 +6262,11 @@ abstract class Nova_ajax extends Controller {
 		// figure out the skin
 		$skin = $this->session->userdata('skin_admin');
 		
-		// figure out where the view should come from
-		$ajax = ajax_location('edit_spec_field_value', $skin, 'admin');
+		$this->_regions['content'] = Location::ajax('edit_spec_field_value', $skin, 'admin', $data);
 		
-		// write the data to the template
-		$this->template->write_view('content', $ajax, $data);
+		Template::assign($this->_regions);
 		
-		// render the template
-		$this->template->render();
+		Template::render();
 	}
 	
 	public function edit_spec_sec()
@@ -6422,7 +6286,7 @@ abstract class Nova_ajax extends Controller {
 		
 		$sec = $this->specs->get_spec_section_details($data['id']);
 		
-		$item = ($sec->num_rows() > 0) ? $sec->row() : FALSE;
+		$item = ($sec->num_rows() > 0) ? $sec->row() : false;
 		
 		// input parameters
 		$data['inputs'] = array(
@@ -6450,14 +6314,11 @@ abstract class Nova_ajax extends Controller {
 		// figure out the skin
 		$skin = $this->session->userdata('skin_admin');
 		
-		// figure out where the view should come from
-		$ajax = ajax_location('edit_spec_sec', $skin, 'admin');
+		$this->_regions['content'] = Location::ajax('edit_spec_sec', $skin, 'admin', $data);
 		
-		// write the data to the template
-		$this->template->write_view('content', $ajax, $data);
+		Template::assign($this->_regions);
 		
-		// render the template
-		$this->template->render();
+		Template::render();
 	}
 	
 	public function edit_tour_field_value()
@@ -6487,7 +6348,7 @@ abstract class Nova_ajax extends Controller {
 			}
 		}
 		
-		$item = ($value->num_rows() > 0) ? $value->row() : FALSE;
+		$item = ($value->num_rows() > 0) ? $value->row() : false;
 		
 		// input parameters
 		$data['inputs'] = array(
@@ -6520,14 +6381,11 @@ abstract class Nova_ajax extends Controller {
 		// figure out the skin
 		$skin = $this->session->userdata('skin_admin');
 		
-		// figure out where the view should come from
-		$ajax = ajax_location('edit_tour_field_value', $skin, 'admin');
+		$this->_regions['content'] = Location::ajax('edit_tour_field_value', $skin, 'admin', $data);
 		
-		// write the data to the template
-		$this->template->write_view('content', $ajax, $data);
+		Template::assign($this->_regions);
 		
-		// render the template
-		$this->template->render();
+		Template::render();
 	}
 	
 	public function edit_user_setting()
@@ -6581,14 +6439,11 @@ abstract class Nova_ajax extends Controller {
 		// figure out the skin
 		$skin = $this->session->userdata('skin_admin');
 		
-		// figure out where the view should come from
-		$ajax = ajax_location('edit_user_setting', $skin, 'admin');
+		$this->_regions['content'] = Location::ajax('edit_user_setting', $skin, 'admin', $data);
 		
-		// write the data to the template
-		$this->template->write_view('content', $ajax, $data);
+		Template::assign($this->_regions);
 		
-		// render the template
-		$this->template->render();
+		Template::render();
 	}
 	
 	public function edit_wiki_category()
@@ -6636,19 +6491,16 @@ abstract class Nova_ajax extends Controller {
 		// figure out the skin
 		$skin = $this->session->userdata('skin_wiki');
 		
-		// figure out where the view should come from
-		$ajax = ajax_location('edit_wiki_category', $skin, 'wiki');
+		$this->_regions['content'] = Location::ajax('edit_wiki_category', $skin, 'wiki', $data);
 		
-		// write the data to the template
-		$this->template->write_view('content', $ajax, $data);
+		Template::assign($this->_regions);
 		
-		// render the template
-		$this->template->render();
+		Template::render();
 	}
 	
 	public function info_format_date()
 	{
-		$format = $this->input->post('format', TRUE);
+		$format = $this->input->post('format', true);
 		
 		echo mdate($format, now());
 	}
@@ -6667,7 +6519,7 @@ abstract class Nova_ajax extends Controller {
 		
 		// data being sent to the facebox
 		$data['header'] = $head;
-		$data['id'] = $this->uri->segment(3, 0, TRUE);
+		$data['id'] = $this->uri->segment(3, 0, true);
 		
 		$role = $this->access->get_role($data['id']);
 		
@@ -6682,21 +6534,18 @@ abstract class Nova_ajax extends Controller {
 		{
 			foreach ($users as $p)
 			{
-				$data['list'][] = $this->char->get_character_name($p, TRUE);
+				$data['list'][] = $this->char->get_character_name($p, true);
 			}
 		}
 		
 		// figure out the skin
 		$skin = $this->session->userdata('skin_admin');
 		
-		// figure out where the view should come from
-		$ajax = ajax_location('info_users_with_role', $skin, 'admin');
+		$this->_regions['content'] = Location::ajax('info_users_with_role', $skin, 'admin', $data);
 		
-		// write the data to the template
-		$this->template->write_view('content', $ajax, $data);
+		Template::assign($this->_regions);
 		
-		// render the template
-		$this->template->render();
+		Template::render();
 	}
 	
 	public function info_show_award_desc()
@@ -6705,13 +6554,13 @@ abstract class Nova_ajax extends Controller {
 		$this->load->model('awards_model', 'awards');
 		
 		// set the POST variable
-		$award = $this->input->post('award', TRUE);
+		$award = $this->input->post('award', true);
 		
 		// grab the position details
 		$item = $this->awards->get_award($award, 'award_desc');
 		
 		// set the output
-		$output = ($item !== FALSE) ? $item : '';
+		$output = ($item !== false) ? $item : '';
 		
 		echo text_output($output, '');
 	}
@@ -6723,11 +6572,11 @@ abstract class Nova_ajax extends Controller {
 		$this->load->model('characters_model', 'char');
 		
 		// set the POST variable
-		$award = $this->input->post('award', TRUE);
+		$award = $this->input->post('award', true);
 		
 		$type = $this->awards->get_award($award, 'award_cat');
 		
-		if ($type !== FALSE)
+		if ($type !== false)
 		{
 			switch ($type)
 			{
@@ -6752,13 +6601,13 @@ abstract class Nova_ajax extends Controller {
 		$this->load->model('positions_model', 'pos');
 		
 		// set the POST variable
-		$position = $this->input->post('position', TRUE);
+		$position = $this->input->post('position', true);
 		
 		// grab the position details
 		$item = $this->pos->get_position($position, 'pos_desc');
 		
 		// set the output
-		$output = ($item !== FALSE) ? $item : '';
+		$output = ($item !== false) ? $item : '';
 		
 		echo text_output($output, '');
 	}
@@ -6769,15 +6618,15 @@ abstract class Nova_ajax extends Controller {
 		$this->load->model('ranks_model', 'rank');
 		
 		// set the POST variable
-		$rank = $this->input->post('rank', TRUE);
-		$location = $this->input->post('location', TRUE);
+		$rank = $this->input->post('rank', true);
+		$location = $this->input->post('location', true);
 		
 		// grab the position details
 		$item = $this->rank->get_rank($rank, 'rank_image');
 		$ext = $this->rank->get_rankcat($location, 'rankcat_location', 'rankcat_extension');
 		
 		// set the output
-		$output = ($item !== FALSE) ? array('src' => base_url() . rank_location($location, $item, $ext)) : '';
+		$output = ($item !== false) ? array('src' => base_url() . Location::rank($location, $item, $ext)) : '';
 		
 		echo img($output);
 	}
@@ -6788,13 +6637,13 @@ abstract class Nova_ajax extends Controller {
 		$this->load->model('ranks_model', 'rank');
 		
 		// set the POST variable
-		$rank = $this->input->post('rank', TRUE);
+		$rank = $this->input->post('rank', true);
 		
 		// grab the position details
 		$preview = $this->rank->get_rankcat($rank, 'rankcat_location', 'rankcat_preview');
 		
 		// set the output
-		$output = ($preview !== FALSE) ? array('src' => base_url() . rank_location($rank, $preview, '')) : '';
+		$output = ($preview !== false) ? array('src' => base_url() . Location::rank($rank, $preview, '')) : '';
 		
 		echo img($output);
 	}
@@ -6802,8 +6651,8 @@ abstract class Nova_ajax extends Controller {
 	public function info_show_skin_preview_image()
 	{
 		// set the POST variables
-		$location = $this->input->post('skin', TRUE);
-		$section = $this->input->post('section', TRUE);
+		$location = $this->input->post('skin', true);
+		$section = $this->input->post('section', true);
 		
 		$where = array(
 			'skinsec_section' => $section,
@@ -6814,7 +6663,7 @@ abstract class Nova_ajax extends Controller {
 		$item = $this->sys->get_skinsec($where);
 		
 		// set the output
-		$output = ($item !== FALSE) ? base_url() . APPFOLDER .'/views/'. $location .'/'. $item->skinsec_image_preview : '';
+		$output = ($item !== false) ? base_url() . APPFOLDER .'/views/'. $location .'/'. $item->skinsec_image_preview : '';
 		
 		echo $output;
 	}
@@ -6822,8 +6671,8 @@ abstract class Nova_ajax extends Controller {
 	public function info_show_skin_preview()
 	{
 		// set the POST variables
-		$location = $this->input->post('skin', TRUE);
-		$section = $this->input->post('section', TRUE);
+		$location = $this->input->post('skin', true);
+		$section = $this->input->post('section', true);
 		
 		$where = array(
 			'skinsec_section' => $section,
@@ -6834,7 +6683,7 @@ abstract class Nova_ajax extends Controller {
 		$item = $this->sys->get_skinsec($where);
 		
 		// set the output
-		$output = ($item !== FALSE) ? array('src' => base_url() . APPFOLDER .'/views/'. $location .'/'. $item->skinsec_image_preview) : '';
+		$output = ($item !== false) ? array('src' => base_url() . APPFOLDER .'/views/'. $location .'/'. $item->skinsec_image_preview) : '';
 		
 		echo img($output);
 	}
@@ -6873,14 +6722,14 @@ abstract class Nova_ajax extends Controller {
 	
 	public function reject()
 	{
-		$data['type'] = $this->uri->segment(3, FALSE);
-		$data['id'] = $this->uri->segment(4, 0, TRUE);
+		$data['type'] = $this->uri->segment(3, false);
+		$data['id'] = $this->uri->segment(4, 0, true);
 		
 		// figure out the skin
 		$skin = $this->session->userdata('skin_admin');
 		
 		// figure out where the view should come from
-		$view = ajax_location('reject', $skin, 'admin');
+		$view = 'reject';
 		
 		// input parameters
 		$data['inputs'] = array(
@@ -6911,7 +6760,7 @@ abstract class Nova_ajax extends Controller {
 				}
 				else
 				{
-					$name = $this->char->get_character_name($nom->queue_receive_character, TRUE);
+					$name = $this->char->get_character_name($nom->queue_receive_character, true);
 				}
 				
 				$data['text'] = sprintf(
@@ -6923,7 +6772,7 @@ abstract class Nova_ajax extends Controller {
 				$data['form'] = 'user/nominate/queue';
 				
 				// figure out where the view should come from
-				$view = ajax_location('reject_awardnom', $skin, 'admin');
+				$view = 'reject_awardnom';
 			break;
 				
 			case 'character':
@@ -6965,7 +6814,7 @@ abstract class Nova_ajax extends Controller {
 				$data['form'] = 'manage/docked/pending';
 				
 				// figure out where the view should come from
-				$view = ajax_location('reject_docking', $skin, 'admin');
+				$view = 'reject_docking';
 			break;
 		}
 		
@@ -6979,11 +6828,11 @@ abstract class Nova_ajax extends Controller {
 			'email' => ucfirst(lang('labels_email')),
 		);
 		
-		// write the data to the template
-		$this->template->write_view('content', $view, $data);
+		$this->_regions['content'] = Location::ajax($view, $skin, 'admin', $data);
 		
-		// render the template
-		$this->template->render();
+		Template::assign($this->_regions);
+		
+		Template::render();
 	}
 	
 	public function revert_wiki_page()
@@ -7034,14 +6883,11 @@ abstract class Nova_ajax extends Controller {
 		// figure out the skin
 		$skin = $this->session->userdata('skin_wiki');
 		
-		// figure out where the view should come from
-		$ajax = ajax_location('revert_wiki_page', $skin, 'wiki');
+		$this->_regions['content'] = Location::ajax('revert_wiki_page', $skin, 'wiki', $data);
 		
-		// write the data to the template
-		$this->template->write_view('content', $ajax, $data);
+		Template::assign($this->_regions);
 		
-		// render the template
-		$this->template->render();
+		Template::render();
 	}
 	
 	public function save_character_image()
@@ -7050,7 +6896,7 @@ abstract class Nova_ajax extends Controller {
 		{
 			// set the variables
 			$id = $this->uri->segment(3);
-			$image = $this->input->post('image', TRUE);
+			$image = $this->input->post('image', true);
 			
 			$image = str_replace('\.', '.', $image);
 			
@@ -7060,13 +6906,13 @@ abstract class Nova_ajax extends Controller {
 			// get the images
 			$images = $this->char->get_character($id, 'images');
 			
-			if (!empty($images))
+			if ( ! empty($images))
 			{
 				$imagesArray = explode(',', $images);
 				
 				$key = array_search($image, $imagesArray);
 				
-				if ($key === FALSE)
+				if ($key === false)
 				{
 					// add the image to the array
 					$imagesArray[] = $image;
@@ -7078,7 +6924,7 @@ abstract class Nova_ajax extends Controller {
 					$this->char->update_character($id, array('images' => $imagesStr));
 					
 					$array = array(
-						'src' => base_url() . asset_location('images/characters', $image),
+						'src' => base_url() . Location::asset('images/characters', $image),
 						'height' => 140
 					);
 					
@@ -7101,7 +6947,7 @@ abstract class Nova_ajax extends Controller {
 				$this->char->update_character($id, array('images' => $imagesStr));
 				
 				$array = array(
-					'src' => base_url() . asset_location('images/characters', $image),
+					'src' => base_url() . Location::asset('images/characters', $image),
 					'height' => 140
 				);
 				
@@ -7115,7 +6961,7 @@ abstract class Nova_ajax extends Controller {
 		if (IS_AJAX)
 		{
 			// set the variables
-			$images = $this->input->post('img', TRUE);
+			$images = $this->input->post('img', true);
 			$id = $this->uri->segment(3);
 			
 			// set the initial image string
@@ -7146,7 +6992,10 @@ abstract class Nova_ajax extends Controller {
 			// load the resources
 			$this->load->model('characters_model', 'char');
 			
-			$coc = $this->input->post('coc', TRUE);
+			// figure out the skin
+			$skin = $this->session->userdata('skin_admin');
+			
+			$coc = $this->input->post('coc', true);
 			
 			$empty = $this->char->empty_coc();
 			
@@ -7177,8 +7026,6 @@ abstract class Nova_ajax extends Controller {
 	
 				$flash['status'] = 'success';
 				$flash['message'] = text_output($message);
-					
-				$output = $this->load->view('_base/admin/pages/flash', $flash, TRUE);
 			}
 			else
 			{
@@ -7191,9 +7038,9 @@ abstract class Nova_ajax extends Controller {
 	
 				$flash['status'] = 'error';
 				$flash['message'] = text_output($message);
-					
-				$output = $this->load->view('_base/admin/pages/flash', $flash, TRUE);
 			}
+			
+			$output = Location::view('flash', $skin, 'admin', $flash);
 			
 			echo $output;
 		}
@@ -7206,7 +7053,10 @@ abstract class Nova_ajax extends Controller {
 			// load the resources
 			$this->load->model('characters_model', 'char');
 			
-			$post = $this->input->post('value', TRUE);
+			// figure out the skin
+			$skin = $this->session->userdata('skin_admin');
+			
+			$post = $this->input->post('value', true);
 			
 			$i = 0;
 			$count = 0;
@@ -7232,8 +7082,6 @@ abstract class Nova_ajax extends Controller {
 	
 				$flash['status'] = 'success';
 				$flash['message'] = text_output($message);
-					
-				$output = $this->load->view('_base/admin/pages/flash', $flash, TRUE);
 			}
 			else
 			{
@@ -7246,9 +7094,9 @@ abstract class Nova_ajax extends Controller {
 	
 				$flash['status'] = 'error';
 				$flash['message'] = text_output($message);
-					
-				$output = $this->load->view('_base/admin/pages/flash', $flash, TRUE);
 			}
+			
+			$output = Location::view('flash', $skin, 'admin', $flash);
 			
 			echo $output;
 		}
@@ -7261,7 +7109,10 @@ abstract class Nova_ajax extends Controller {
 			// load the resources
 			$this->load->model('tour_model', 'tour');
 			
-			$post = $this->input->post('decks', TRUE);
+			// figure out the skin
+			$skin = $this->session->userdata('skin_admin');
+			
+			$post = $this->input->post('decks', true);
 			
 			$i = 0;
 			$count = 0;
@@ -7287,8 +7138,6 @@ abstract class Nova_ajax extends Controller {
 	
 				$flash['status'] = 'success';
 				$flash['message'] = text_output($message);
-					
-				$output = $this->load->view('_base/admin/pages/flash', $flash, TRUE);
 			}
 			else
 			{
@@ -7301,9 +7150,9 @@ abstract class Nova_ajax extends Controller {
 	
 				$flash['status'] = 'error';
 				$flash['message'] = text_output($message);
-					
-				$output = $this->load->view('_base/admin/pages/flash', $flash, TRUE);
 			}
+			
+			$output = Location::view('flash', $skin, 'admin', $flash);
 			
 			echo $output;
 		}
@@ -7317,8 +7166,8 @@ abstract class Nova_ajax extends Controller {
 			$this->load->model('depts_model', 'dept');
 			
 			// set the variables
-			$manifest = $this->input->post('manifest', TRUE);
-			$dept = $this->input->post('dept', TRUE);
+			$manifest = $this->input->post('manifest', true);
+			$dept = $this->input->post('dept', true);
 			
 			// set the array of items to update
 			$update_array = array('dept_manifest' => $manifest);
@@ -7344,7 +7193,10 @@ abstract class Nova_ajax extends Controller {
 			// load the resources
 			$this->load->model('docking_model', 'docking');
 			
-			$post = $this->input->post('value', TRUE);
+			// figure out the skin
+			$skin = $this->session->userdata('skin_admin');
+			
+			$post = $this->input->post('value', true);
 			
 			$i = 0;
 			$count = 0;
@@ -7370,8 +7222,6 @@ abstract class Nova_ajax extends Controller {
 				
 				$flash['status'] = 'success';
 				$flash['message'] = text_output($message);
-					
-				$output = $this->load->view('_base/admin/pages/flash', $flash, TRUE);
 			}
 			else
 			{
@@ -7384,9 +7234,9 @@ abstract class Nova_ajax extends Controller {
 				
 				$flash['status'] = 'error';
 				$flash['message'] = text_output($message);
-					
-				$output = $this->load->view('_base/admin/pages/flash', $flash, TRUE);
 			}
+			
+			$output = Location::view('flash', $skin, 'admin', $flash);
 			
 			echo $output;
 		}
@@ -7395,7 +7245,7 @@ abstract class Nova_ajax extends Controller {
 	public function save_ignore_update_version()
 	{
 		// grab the version from the POST
-		$version = $this->input->post('version', TRUE);
+		$version = $this->input->post('version', true);
 		
 		// build the array used by AR
 		$update = array('sys_version_ignore' => $version);
@@ -7410,7 +7260,7 @@ abstract class Nova_ajax extends Controller {
 		{
 			// set the variables
 			$id = $this->uri->segment(3);
-			$image = $this->input->post('image', TRUE);
+			$image = $this->input->post('image', true);
 			
 			$image = str_replace('\.', '.', $image);
 			
@@ -7420,13 +7270,13 @@ abstract class Nova_ajax extends Controller {
 			// get the images
 			$images = $this->mis->get_mission($id, 'mission_images');
 			
-			if (!empty($images))
+			if ( ! empty($images))
 			{
 				$imagesArray = explode(',', $images);
 				
 				$key = array_search($image, $imagesArray);
 				
-				if ($key === FALSE)
+				if ($key === false)
 				{
 					// add the image to the array
 					$imagesArray[] = $image;
@@ -7475,7 +7325,7 @@ abstract class Nova_ajax extends Controller {
 		if (IS_AJAX)
 		{
 			// set the variables
-			$images = $this->input->post('img', TRUE);
+			$images = $this->input->post('img', true);
 			$id = $this->uri->segment(3);
 			
 			foreach ($images as $i)
@@ -7500,7 +7350,10 @@ abstract class Nova_ajax extends Controller {
 			// load the resources
 			$this->load->model('specs_model', 'specs');
 			
-			$post = $this->input->post('value', TRUE);
+			// figure out the skin
+			$skin = $this->session->userdata('skin_admin');
+			
+			$post = $this->input->post('value', true);
 			
 			$i = 0;
 			$count = 0;
@@ -7526,8 +7379,6 @@ abstract class Nova_ajax extends Controller {
 				
 				$flash['status'] = 'success';
 				$flash['message'] = text_output($message);
-					
-				$output = $this->load->view('_base/admin/pages/flash', $flash, TRUE);
 			}
 			else
 			{
@@ -7540,9 +7391,9 @@ abstract class Nova_ajax extends Controller {
 				
 				$flash['status'] = 'error';
 				$flash['message'] = text_output($message);
-					
-				$output = $this->load->view('_base/admin/pages/flash', $flash, TRUE);
 			}
+			
+			$output = Location::view('flash', $skin, 'admin', $flash);
 			
 			echo $output;
 		}
@@ -7554,7 +7405,7 @@ abstract class Nova_ajax extends Controller {
 		{
 			// set the variables
 			$id = $this->uri->segment(3);
-			$image = $this->input->post('image', TRUE);
+			$image = $this->input->post('image', true);
 			
 			$image = str_replace('\.', '.', $image);
 			
@@ -7564,17 +7415,17 @@ abstract class Nova_ajax extends Controller {
 			// get the images
 			$item = $this->specs->get_spec_item($id);
 			
-			if ($item !== FALSE)
+			if ($item !== false)
 			{
 				$images = $item->specs_images;
 				
-				if (!empty($images))
+				if ( ! empty($images))
 				{
 					$imagesArray = explode(',', $images);
 					
 					$key = array_search($image, $imagesArray);
 					
-					if ($key === FALSE)
+					if ($key === false)
 					{
 						// add the image to the array
 						$imagesArray[] = $image;
@@ -7624,7 +7475,7 @@ abstract class Nova_ajax extends Controller {
 		if (IS_AJAX)
 		{
 			// set the variables
-			$images = $this->input->post('img', TRUE);
+			$images = $this->input->post('img', true);
 			$id = $this->uri->segment(3);
 			
 			foreach ($images as $i)
@@ -7649,7 +7500,10 @@ abstract class Nova_ajax extends Controller {
 			// load the resources
 			$this->load->model('tour_model', 'tour');
 			
-			$post = $this->input->post('value', TRUE);
+			// figure out the skin
+			$skin = $this->session->userdata('skin_admin');
+			
+			$post = $this->input->post('value', true);
 			
 			$i = 0;
 			$count = 0;
@@ -7675,8 +7529,6 @@ abstract class Nova_ajax extends Controller {
 				
 				$flash['status'] = 'success';
 				$flash['message'] = text_output($message);
-					
-				$output = $this->load->view('_base/admin/pages/flash', $flash, TRUE);
 			}
 			else
 			{
@@ -7689,9 +7541,9 @@ abstract class Nova_ajax extends Controller {
 				
 				$flash['status'] = 'error';
 				$flash['message'] = text_output($message);
-					
-				$output = $this->load->view('_base/admin/pages/flash', $flash, TRUE);
 			}
+			
+			$output = Location::view('flash', $skin, 'admin', $flash);
 			
 			echo $output;
 		}
@@ -7703,7 +7555,7 @@ abstract class Nova_ajax extends Controller {
 		{
 			// set the variables
 			$id = $this->uri->segment(3);
-			$image = $this->input->post('image', TRUE);
+			$image = $this->input->post('image', true);
 			
 			$image = str_replace('\.', '.', $image);
 			
@@ -7719,13 +7571,13 @@ abstract class Nova_ajax extends Controller {
 				
 				$images = $item->tour_images;
 				
-				if (!empty($images))
+				if ( ! empty($images))
 				{
 					$imagesArray = explode(',', $images);
 					
 					$key = array_search($image, $imagesArray);
 					
-					if ($key === FALSE)
+					if ($key === false)
 					{
 						// add the image to the array
 						$imagesArray[] = $image;
@@ -7775,7 +7627,7 @@ abstract class Nova_ajax extends Controller {
 		if (IS_AJAX)
 		{
 			// set the variables
-			$images = $this->input->post('img', TRUE);
+			$images = $this->input->post('img', true);
 			$id = $this->uri->segment(3);
 			
 			foreach ($images as $i)
@@ -7827,14 +7679,11 @@ abstract class Nova_ajax extends Controller {
 		// figure out the skin
 		$skin = $this->session->userdata('skin_admin');
 		
-		// figure out where the view should come from
-		$ajax = ajax_location('whats_new', $skin, 'admin');
+		$this->_regions['content'] = Location::ajax('whats_new', $skin, 'admin', $data);
 		
-		// write the data to the template
-		$this->template->write_view('content', $ajax, $data);
+		Template::assign($this->_regions);
 		
-		// render the template
-		$this->template->render();
+		Template::render();
 	}
 	
 	public function wiki_draft_cleanup()
@@ -7870,14 +7719,11 @@ abstract class Nova_ajax extends Controller {
 		// figure out the skin
 		$skin = $this->session->userdata('skin_wiki');
 		
-		// figure out where the view should come from
-		$ajax = ajax_location('draft_cleanup', $skin, 'wiki');
+		$this->_regions['content'] = Location::ajax('draft_cleanup', $skin, 'wiki', $data);
 		
-		// write the data to the template
-		$this->template->write_view('content', $ajax, $data);
+		Template::assign($this->_regions);
 		
-		// render the template
-		$this->template->render();
+		Template::render();
 	}
 	
 	public function wiki_get_page_drafts()
@@ -7896,7 +7742,7 @@ abstract class Nova_ajax extends Controller {
 			
 			// get the page
 			$page = $this->wiki->get_page($id);
-			$row = ($page->num_rows() > 0) ? $page->row() : FALSE;
+			$row = ($page->num_rows() > 0) ? $page->row() : false;
 			
 			// get the timezone and dst
 			$timezone = (Auth::is_logged_in()) ? $this->session->userdata('timezone') : $this->settings->get_setting('timezone');
@@ -7919,8 +7765,8 @@ abstract class Nova_ajax extends Controller {
 							: $this->char->get_character_name($d->draft_author_character),
 						'created_date' 	=> mdate($datestring, $created),
 						'page' 			=> $d->draft_page,
-						'old_id' 		=> ( ! empty($d->draft_id_old)) ? $d->draft_id_old : FALSE,
-						'page_draft' 	=> ($row !== FALSE) ? $row->page_draft : FALSE,
+						'old_id' 		=> ( ! empty($d->draft_id_old)) ? $d->draft_id_old : false,
+						'page_draft' 	=> ($row !== false) ? $row->page_draft : false,
 					);
 				}
 				
@@ -7939,12 +7785,8 @@ abstract class Nova_ajax extends Controller {
 				// figure out the skin
 				$skin = $this->session->userdata('skin_wiki');
 				
-				// figure out where the view should come from
-				$ajax = ajax_location('get_page_drafts', $skin, 'wiki');
-				
-				// generate the view
-				$view = $this->load->view($ajax, $data, TRUE);
-				
+				$view = Location::ajax('get_page_drafts', $skin, 'wiki', $data);
+		
 				echo $view;
 			}
 			else
@@ -8026,11 +7868,7 @@ abstract class Nova_ajax extends Controller {
 					'alt' => ''),
 			);
 			
-			// figure out where the view should come from
-			$ajax = ajax_location('get_page_restrictions', $skin, 'wiki');
-			
-			// generate the view
-			$view = $this->load->view($ajax, $data, TRUE);
+			$view = Location::ajax('get_page_restrictions', $skin, 'wiki', $data);
 			
 			echo $view;
 		}
@@ -8041,8 +7879,8 @@ abstract class Nova_ajax extends Controller {
 		if (IS_AJAX)
 		{
 			// get the POST information
-			$page = $this->input->post('page', TRUE);
-			$roles = $this->input->post('roles', TRUE);
+			$page = $this->input->post('page', true);
+			$roles = $this->input->post('roles', true);
 			
 			// load the resources
 			$this->load->model('wiki_model', 'wiki');
