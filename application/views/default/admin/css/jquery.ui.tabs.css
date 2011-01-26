@@ -166,7 +166,6 @@
     
     border-radius: 3px !important;
     -moz-border-radius: 3px !important;
-    -webkit-border-radius: 3px !important;
 }
 .subtabs .ui-tabs-nav li { margin: 4px !important; }
 .subtabs .ui-tabs-nav a, .subtabs .ui-tabs-nav a span {
@@ -182,7 +181,6 @@
     
     border-radius: 20px !important;
     -moz-border-radius: 20px !important;
-    -webkit-border-radius: 20px !important;
 }
 .subtabs .ui-tabs-nav .ui-tabs-selected {}
 .subtabs .ui-tabs-nav .ui-tabs-selected a,
@@ -190,14 +188,14 @@
     background: #888 !important;
     border: 0 !important;
     color: #fff !important;
+    text-shadow: 0 -1px 0 rgba(0, 0, 0, .1) !important;
 	
     border-radius: 20px !important;
 	-moz-border-radius: 20px !important;
-    -webkit-border-radius: 20px !important;
     
-    box-shadow: -1px 1px 2px rgba(255, 255, 255, .4);
-    -moz-box-shadow: -1px 1px 2px rgba(255, 255, 255, .4);
-    -webkit-box-shadow: -1px 1px 2px rgba(255, 255, 255, .4);
+    box-shadow: 0 1px 0 rgba(255, 255, 255, .7);
+    -moz-box-shadow: 0 1px 0 rgba(255, 255, 255, .7);
+    -webkit-box-shadow: 0 1px 0 rgba(255, 255, 255, .7);
 }
 .subtabs .ui-tabs-nav a:hover, .subtabs .ui-tabs-nav a:active {
     background-color: #bbb !important;
@@ -206,7 +204,6 @@
 	
 	border-radius: 20px !important;
 	-moz-border-radius: 20px !important;
-    -webkit-border-radius: 20px !important;
 }
 
 .subtabs .ui-tabs-disabled a {
