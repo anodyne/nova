@@ -367,7 +367,7 @@ abstract class Nova_messages extends Nova_controller_admin {
 		
 		// sanity checks
 		$action = (in_array($action, $action_array)) ? $action : false;
-		$id (is_numeric($id)) ? $id : false;
+		$id = (is_numeric($id)) ? $id : false;
 		
 		// set the variables
 		$data['key'] = '';
@@ -559,8 +559,14 @@ abstract class Nova_messages extends Nova_controller_admin {
 				// set the hidden TO field
 				$data['to'] = 0;
 				
+				// is the RE: tag in the subject already?
+				$pos = strpos($row->privmsgs_subject, lang('abbr_reply'));
+				
+				// make sure the subject is set right
+				$subj = ($pos === false) ? lang('abbr_reply').': '.$row->privmsgs_subject : $row->privmsgs_subject;
+				
 				// set the subject value
-				$data['inputs']['subject']['value'] = lang('abbr_reply') .': '. $row->privmsgs_subject;
+				$data['inputs']['subject']['value'] = $subj;
 				
 				// set the user
 				$selected = $row->privmsgs_author_user;
@@ -606,6 +612,15 @@ abstract class Nova_messages extends Nova_controller_admin {
 			break;
 			
 			case 'replyall':
+				// find if the current user is listed in the recipient list
+				$key = array_search($this->session->userdata('userid'), $recipient_list);
+				
+				// drop the current user off the recipient list
+				if ($key !== false)
+				{
+					unset($recipient_list[$key]);
+				}
+				
 				// set the hidden TO field
 				$data['to'] = implode(',', $recipient_list) .','. $row->privmsgs_author_user;
 				
@@ -628,11 +643,16 @@ abstract class Nova_messages extends Nova_controller_admin {
 					++$i;
 				}
 				
-				// set the subject value
-				$data['inputs']['subject']['value'] = lang('abbr_reply') .': '. $row->privmsgs_subject;
+				// is the RE: tag in the subject already?
+				$pos = strpos($row->privmsgs_subject, lang('abbr_reply'));
 				
-				$data['header'] = ucfirst(lang('actions_reply')) .' '. lang('labels_to') 
-					.' '. ucwords(lang('global_privatemessage'));
+				// make sure the subject is set right
+				$subj = ($pos === false) ? lang('abbr_reply').': '.$row->privmsgs_subject : $row->privmsgs_subject;
+				
+				// set the subject value
+				$data['inputs']['subject']['value'] = $subj;
+				
+				$data['header'] = ucfirst(lang('actions_reply')).' '.lang('labels_to').' '.ucwords(lang('global_privatemessage'));
 				
 				$date = gmt_to_local($row->privmsgs_date, $this->timezone, $this->dst);
 				
@@ -670,8 +690,14 @@ abstract class Nova_messages extends Nova_controller_admin {
 				$data['inputs']['message']['value'].= mdate($this->options['date_format'], $date);
 				$data['inputs']['message']['value'].= "\r\n\r\n". $row->privmsgs_content;
 				
+				// is the FWD: tag in the subject already?
+				$pos = strpos($row->privmsgs_subject, lang('abbr_forward'));
+				
+				// make sure the subject is set right
+				$subj = ($pos === false) ? lang('abbr_forward').': '.$row->privmsgs_subject : $row->privmsgs_subject;
+				
 				// set the subject value
-				$data['inputs']['subject']['value'] = lang('abbr_forward') .': '. $row->privmsgs_subject;
+				$data['inputs']['subject']['value'] = $subj;
 				
 				$data['header'] = ucfirst(lang('actions_forward')) .' '. ucwords(lang('global_privatemessage'));
 			break;
