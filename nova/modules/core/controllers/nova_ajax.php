@@ -2364,6 +2364,7 @@ abstract class Nova_ajax extends Controller {
 				$this->load->model('characters_model', 'char');
 				$this->load->model('users_model', 'user');
 				$this->load->model('access_model', 'access');
+				$this->load->model('messages_model', 'msgs');
 				
 				$type = lang('global_character');
 				
@@ -6776,6 +6777,9 @@ abstract class Nova_ajax extends Controller {
 			break;
 				
 			case 'character':
+				// load the resources
+				$this->load->model('messages_model', 'msgs');
+				
 				$type = lang('global_character');
 				
 				// input parameters
