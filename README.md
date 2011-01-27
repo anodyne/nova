@@ -17,6 +17,8 @@ Anodyne Production's next-generation RPG management system combines popular feat
 * removed the banned.php file
 * removed the rss model since it isn't necessary any more
 * fixed bug with seamless substitution of images where they wouldn't work when they were in the _base_override directory
+* fixed bug with private messages where RE: and FWD: would constantly be added to message, now Nova will make sure it's only added once
+* fixed bug with private messages where the person sending the message would be on the recipient list, so any message they sent would show up in their inbox as well
 
 ## Version History
 
