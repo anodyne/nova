@@ -351,7 +351,7 @@ if ( ! function_exists('verify_server'))
 		/* build the specs array */
 		$specs = array(
 			'php' => array(
-				'req'	=> '4.3.2',
+				'req'	=> '5.1',
 				'act'	=> phpversion()),
 			'db' => array(
 				'req'	=> array('mysql', 'mysqli'),
