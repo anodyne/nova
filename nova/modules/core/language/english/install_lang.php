@@ -51,6 +51,11 @@ $lang['button_back_update'] 	= 'Back to Update Center';
 $lang['button_back_upgrade'] 	= 'Back to Upgrade Center';
 $lang['button_next']			= 'Next Step';
 $lang['button_clear']			= 'Clear Data';
+$lang['button_startover']		= 'Start Over';
+$lang['button_install']			= 'Install Center';
+$lang['button_retest']			= 'Re-Test';
+$lang['button_begin_install']	= 'Begin Installation';
+$lang['button_verify']			= 'Verify Server';
 
 $lang['global_email']			= 'Email Address';
 $lang['global_genre']			= 'Genre';
@@ -62,6 +67,31 @@ $lang['global_upgrade']			= 'upgrade';
 
 $lang['global_readme_title'] 	= 'Readme';
 $lang['global_more_options']	= 'More Options';
+
+/**
+ * Setup config
+ */
+$lang['setup.title.config'] = "Config File Setup";
+
+$lang['setup.text.no_config'] = "Sorry, I need the <code>%s</code> file to work from. Please re-upload the file from the Nova zip archive and try again.";
+$lang['setup.text.config_exists'] = "The database connection file already exists in the <code>%s</code> directory. If you need to change any of the items in this file, you can either manually edit the file or delete it and start over again.";
+$lang['setup.text.php'] = "Your server is running PHP version %s but Nova requires at least PHP 5.1.";
+$lang['setup.text.nodb'] = "Sorry, I need to have the MySQL extension loaded in order to continue with Nova's installation.";
+$lang['setup.text.connection'] = "Enter your database connection details below. If you're not sure about these, contact your web host.";
+
+$lang['setup.text.step0'] = "<p class='fontMedium'>Welcome to Nova! Before getting started, I need some information about the database. You'll need to have the following items handy before proceeding:</p><ol><li>The database name</li><li>The database username</li><li>The database password</li><li>The database host</li><li>The table prefix you want to use</li></ol><p>In all likelihood, these items were supplied to you by your web host. If you do not have this information, then you will need to contact them before you can continue.</p><p class='fontMedium'><strong>If for any reason this automatic file creation doesn't work, don't worry. All this does is fill in the database information to a configuration file. You can also open <code>%s</code>, copy its contents and paste them into a new file called <code>database.php</code> in the <code>%s</code> directory if you'd rather not use this wizard.</strong></p>";
+
+$lang['setup.text.step2success'] = "Alright sparky! I was able to connect to the database successfully, so now it's time to write the database connection file. If you're ready, click the button below...";
+$lang['setup.text.step2nohost'] = "I couldn't find the database host you provided for your database connection file. Most of the time, web hosts use <strong>localhost</strong>, but in some instances, they set up their servers differently. Check with your web host about the proper database host to use and try again.";
+$lang['setup.text.step2userpass'] = "The username and/or password you gave me doesn't seem to work. Double check your username and/or password and try again.";
+$lang['setup.text.step2dbname'] = "I was able to connect to the database server (which means your username and password are fine) but I couldn't find the <strong>%s</strong> database.</p><ul class='fontMedium'><li>Are you sure it exists?</li><li>Does the user have permission to use the <code>%s</code> database?</li><li>On some systems the name of your database is prefixed with your username, like <strong>username_%s</strong>. Could that be the problem?</li></ul><p class='fontMedium'>If you don't know how to setup a database or your database connection settings, you should <strong>contact your web host</strong>.";
+$lang['setup.text.step2gen'] = "There was an error I couldn't identify when trying to connect to the database. This could be caused by incorrect database connection settings or the database server being down. Check with your web host to see if there are any issues and try again.";
+
+$lang['setup.text.step3write'] = "I was able to successfully write the database connection configuration file. You can start to install Nova now.";
+$lang['setup.text.step3nowrite'] = "Uh-oh! I couldn't write the database connection file. This is probably because your server doesn't allow creating and writing to files. Don't worry though, you can copy the text below and paste it into a new file called <code>database.php</code> in the <code>%s</code> directory. Once you've saved and uploaded the file, you can re-test your database connection.";
+
+$lang['setup.text.step4success'] = "Alright sparky! You've finally finished. If you're ready, you can click on the button below to head over to the Installation Center and continuing installing Nova...";
+
 
 /*
 |---------------------------------------------------------------
