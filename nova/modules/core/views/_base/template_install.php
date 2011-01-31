@@ -46,7 +46,7 @@ $style_loc = MODFOLDER.'/core/views/_base/install/css/skin.css';
 			
 			<div class="content">
 				<div id="loading" class="hidden">
-					<img src="<?php echo base_url().MODFOLDER;?>/views/_base/install/images/loading-circle-large.gif" alt="" />
+					<img src="<?php echo base_url().MODFOLDER;?>/core/views/_base/install/images/loading-circle-large.gif" alt="" />
 					<br />
 					<strong><?php echo lang('global_processing');?></strong>
 				</div>
