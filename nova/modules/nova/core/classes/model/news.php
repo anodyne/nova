@@ -66,9 +66,6 @@ class Model_News extends Jelly_Model {
 				'null' => true,
 				'default' => date::now()
 			)),
-			'comments' => Jelly::field('hasmany', array(
-				'foreign' => 'newscomment.ncomment_news'
-			))
 		));
 	}
 }

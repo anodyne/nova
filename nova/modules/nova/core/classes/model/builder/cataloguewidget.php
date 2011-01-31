@@ -5,7 +5,7 @@
  * @package		Nova
  * @category	Model Builders
  * @author		Anodyne Productions
- * @copyright	2010-11 Anodyne Productions
+ * @copyright	2011 Anodyne Productions
  * @since		2.0
  */
  

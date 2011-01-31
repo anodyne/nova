@@ -5,7 +5,7 @@
  * @package		Nova
  * @category	Model Builders
  * @author		Anodyne Productions
- * @copyright	2010-11 Anodyne Productions
+ * @copyright	2011 Anodyne Productions
  * @since		2.0
  */
  
@@ -22,7 +22,6 @@ class Model_Builder_Setting extends Jelly_Builder {
 	 */
 	public function get_settings($value)
 	{
-		// create a new class
 		$obj = new stdClass;
 		
 		if (is_array($value))

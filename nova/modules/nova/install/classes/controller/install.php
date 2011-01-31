@@ -1355,43 +1355,39 @@ return array
 	
 	private function _register()
 	{
-		if ($path = Kohana::find_file('vendor', 'swiftmailer/lib/swift_required'))
-		{
-			// load the file
-			Kohana::load($path);
-			
-			// get an instance of the database
-			$db = Database::instance();
-			
-			// build the data we need
-			$request = array(
-				Kohana::config('novasys.app_name'),
-				Kohana::config('novasys.app_version_full'),
-				url::site(),
-				$_SERVER['REMOTE_ADDR'],
-				$_SERVER['SERVER_ADDR'],
-				phpversion(),
-				'upgrade',
-				Kohana::config('nova.genre'),
-			);
-			
-			$insert = "INSERT INTO www_installs (product, version, url, ip_client, ip_server, php, type, date, genre) VALUES (%s, %s, %s, %s, %s, %s, %s, %d, %s);";
-			
-			$data['message'] = sprintf(
-				$insert,
-				$db->escape($request[0]),
-				$db->escape($request[1]),
-				$db->escape($request[2]),
-				$db->escape($request[3]),
-				$db->escape($request[4]),
-				$db->escape($request[5]),
-				$db->escape($request[6]),
-				$db->escape($request[7]),
-				$db->escape(date::now())
-			);
-			
-			// send the email
-			//$email = email::install_register($data);
-		}
+		require_once Kohana::find_file('vendor', 'swiftmailer/lib/swift_required');
+		
+		$db = Database::instance();
+		
+		$request = array(
+			Kohana::config('novasys.app_name'),
+			Kohana::config('novasys.app_version_full'),
+			url::site(),
+			$_SERVER['REMOTE_ADDR'],
+			$_SERVER['SERVER_ADDR'],
+			phpversion(),
+			'install',
+			Kohana::config('nova.genre'),
+		);
+		
+		$insert = "INSERT INTO www_installs (product, version, url, ip_client, ip_server, php, type, date, genre) VALUES (%s, %s, %s, %s, %s, %s, %s, %d, %s);";
+		
+		$data['message'] = sprintf(
+			$insert,
+			$db->escape($request[0]),
+			$db->escape($request[1]),
+			$db->escape($request[2]),
+			$db->escape($request[3]),
+			$db->escape($request[4]),
+			$db->escape($request[5]),
+			$db->escape($request[6]),
+			$db->escape($request[7]),
+			$db->escape(date::now())
+		);
+		
+		//$email = Email::install_register($data);
+		$email = false;
+		
+		return $email;
 	}
 }
