@@ -31,6 +31,12 @@ class Nova_controller_wiki extends Controller {
 	{
 		parent::__construct();
 		
+		if ( ! file_exists(APPPATH.'config/database'.EXT))
+		{
+			redirect('install/setupconfig');
+		}
+		
+		$this->load->database();
 		$this->load->library('session');
 		$this->load->library('thresher');
 		$this->load->model('settings_model', 'settings');

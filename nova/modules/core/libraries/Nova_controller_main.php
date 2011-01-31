@@ -36,6 +36,12 @@ class Nova_controller_main extends Controller {
 	{
 		parent::__construct();
 		
+		if ( ! file_exists(APPPATH.'config/database'.EXT))
+		{
+			redirect('install/setupconfig');
+		}
+		
+		$this->load->database();
 		$this->load->library('session');
 		$this->load->model('settings_model', 'settings');
 		$this->load->model('messages_model', 'msgs');

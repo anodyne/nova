@@ -26,6 +26,7 @@ abstract class Nova_feed extends Controller {
 		parent::__construct();
 		
 		// load the resources
+		$this->load->database();
 		$this->load->model('settings_model', 'settings');
 		$this->load->model('characters_model', 'char');
 		$this->load->model('users_model', 'user');

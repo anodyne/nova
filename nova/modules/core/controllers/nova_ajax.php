@@ -21,6 +21,7 @@ abstract class Nova_ajax extends Controller {
 		parent::__construct();
 		
 		// load the resources
+		$this->load->database();
 		$this->load->library('session');
 		$this->load->model('system_model', 'sys');
 	
