@@ -9,6 +9,7 @@ Anodyne Production's next-generation RPG management system combines popular feat
 ## Changes in 2.0
 
 * added the message.php file to handle notification of bans, a missing "nova" directory and incompatible PHP version
+* added new process to write the database config file for you
 * updated seamless substitution to be able to override email view files
 * updated to jquery version 1.5
 * updated to uniform version 1.7.5
