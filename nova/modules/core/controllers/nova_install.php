@@ -691,8 +691,6 @@ abstract class Nova_install extends Controller {
 		Template::render();
 	}
 	
-	# TODO: need to set the session variables in the view file
-	
 	public function setupconfig($step = 0)
 	{
 		// make sure the script doesn't time out
@@ -1324,13 +1322,13 @@ abstract class Nova_install extends Controller {
 				}
 				
 				$data['loading'] = array(
-					'src' => img_location('loading-circle-small.gif', '_base', 'install'),
+					'src' => Location::img('loading-circle-small.gif', '_base', 'install'),
 					'alt' => '',
 					'class' => 'image'
 				);
 				
 				$data['default_rank'] = array(
-					'src' => base_url().rank_location('default', $rank, $ext)
+					'src' => base_url().Location::rank('default', $rank, $ext)
 				);
 		
 				$data['label'] = array(
