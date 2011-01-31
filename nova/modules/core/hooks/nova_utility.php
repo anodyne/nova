@@ -7,8 +7,6 @@
  * @author		Anodyne Productions
  * @copyright	2010-11 Anodyne Productions
  * @version		2.0
- *
- * Added a hook to check for level 2 bans while the site is spinning up
  */
 
 abstract class Nova_utility {
@@ -28,22 +26,23 @@ abstract class Nova_utility {
 	{
 		$ci =& get_instance();
 		
-		// load the system model
-		$ci->load->model('system_model', 'sys');
-		
-		// check the install status
-		$installed = $ci->sys->check_install_status();
-		
-		if ($installed === TRUE && $ci->db->table_exists('bans'))
+		if ($ci->uri->segment(1) != 'install')
 		{
-			// run the method
-			$bans = $ci->sys->get_bans(2, FALSE);
-		
-			if (in_array($ci->input->ip_address(), $bans))
+			$ci->load->database();
+			$ci->load->model('system_model', 'sys');
+			
+			$installed = $ci->sys->check_install_status();
+			
+			if ($installed === true and $ci->db->table_exists('bans'))
 			{
-				if ($ci->uri->segment(1) != 'main' && $ci->uri->segment(2) != 'contact')
+				$bans = $ci->sys->get_bans(2, FALSE);
+			
+				if (in_array($ci->input->ip_address(), $bans))
 				{
-					header('Location:'.base_url().'message.php?type=banned');
+					if ($ci->uri->segment(1) != 'main' && $ci->uri->segment(2) != 'contact')
+					{
+						header('Location:'.base_url().'message.php?type=banned');
+					}
 				}
 			}
 		}
@@ -59,7 +58,6 @@ abstract class Nova_utility {
 	{
 		$ci =& get_instance();
 		
-		// load the user agent library
 		$ci->load->library('user_agent');
 		
 		if ($ci->agent->browser() == 'Internet Explorer' && $ci->agent->version() < 7)
@@ -78,30 +76,34 @@ abstract class Nova_utility {
 	{
 		$ci =& get_instance();
 		
-		$ci->load->model('settings_model', 'settings');
-		
-		$ignore = array('install', 'login', 'update', 'upgrade', 'feed');
-		
-		if ( ! in_array($ci->uri->segment(1), $ignore))
+		if ($ci->uri->segment(1) != 'install')
 		{
-			if ($ci->settings->get_setting('maintenance') == 'on' && $ci->uri->segment(1) != 'login')
+			$ci->load->database();
+			$ci->load->model('settings_model', 'settings');
+			
+			$ignore = array('install', 'login', 'update', 'upgrade', 'feed');
+			
+			if ( ! in_array($ci->uri->segment(1), $ignore))
 			{
-				$sysadmin = $ci->auth->is_sysadmin($ci->session->userdata('userid'));
-				
-				if ($sysadmin === FALSE)
+				if ($ci->settings->get_setting('maintenance') == 'on' && $ci->uri->segment(1) != 'login')
 				{
-					$view = view_location('maintenance', $ci->settings->get_setting('skin_login'), 'login');
+					$sysadmin = $ci->auth->is_sysadmin($ci->session->userdata('userid'));
 					
-					if (file_exists(APPPATH .'views/'. $view .'.php'))
+					if ($sysadmin === FALSE)
 					{
-						$data = $ci->load->view($view, '', TRUE);
+						$view = view_location('maintenance', $ci->settings->get_setting('skin_login'), 'login');
 						
-						echo $data;
-						exit();
-					}
-					else
-					{
-						redirect('login/index');
+						if (file_exists(APPPATH .'views/'. $view .'.php'))
+						{
+							$data = $ci->load->view($view, '', TRUE);
+							
+							echo $data;
+							exit();
+						}
+						else
+						{
+							redirect('login/index');
+						}
 					}
 				}
 			}
