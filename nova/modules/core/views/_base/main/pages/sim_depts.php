@@ -24,7 +24,7 @@
 					<table class="table100 zebra" cellspacing="0" cellpadding="3">
 					<?php foreach ($value['positions'] as $pos1): ?>
 						<tr>
-							<td class="cell-label"><?php echo $pos1['name'];?></td>
+							<td class="cell-label align_top"><?php echo $pos1['name'];?></td>
 							<td class="cell-spacer"></td>
 							<td><?php echo text_output($pos1['desc'], '');?></td>
 						</tr>

@@ -1,7 +1,7 @@
 <h2>Server Requirements</h2>
 
 <ul class="square">
-	<li>PHP 4.3.2 or higher</li>
+	<li>PHP 5.1 or higher</li>
 	<li>MySQL 4.1 or higher</li>
 	<li>Apache (recommended, but any PHP-supported web server will work)</li>
 	<li>Register globals should be turned off</li>
