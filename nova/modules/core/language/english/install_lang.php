@@ -53,8 +53,10 @@ $lang['button_next']			= 'Next Step';
 $lang['button_clear']			= 'Clear Data';
 $lang['button_startover']		= 'Start Over';
 $lang['button_install']			= 'Install Center';
+$lang['button_update']			= 'Update Center';
 $lang['button_retest']			= 'Re-Test';
 $lang['button_begin_install']	= 'Begin Installation';
+$lang['button_begin_update']	= 'Begin Update';
 $lang['button_verify']			= 'Verify Server';
 
 $lang['global_email']			= 'Email Address';
