@@ -6,41 +6,50 @@
  * @category	Controller
  * @author		Anodyne Productions
  * @copyright	2010-11 Anodyne Productions
- * @version		1.0.6
- *
- * Updated the update process to try and grab the directory listing and use
- *	that as a baseline first instead of the versions file, fixed a bug where
- *	some users were getting errors while updating the system
+ * @version		2.0
  */
 
-# TODO: need to change the locations of the update files to the assets module
-
-class Update_base extends Controller {
+abstract class Nova_update extends Controller {
 	
-	var $options;
-	var $version;
+	/**
+	 * Is the system installed?
+	 */
+	public $installed = false;
 	
-	function Update_base()
+	/**
+	 * The version of the system
+	 */
+	public $version;
+	
+	/**
+	 * The options array that stores all the settings from the database
+	 */
+	public $options;
+	
+	/**
+	 * Variable to store all the information about template regions
+	 */
+	protected $_regions = array();
+	
+	public function __construct()
 	{
-		parent::Controller();
+		parent::__construct();
 		
-		/* load the system model */
-		$this->load->model('system_model', 'sys');
-		$installed = $this->sys->check_install_status();
-		
-		if ($installed === FALSE)
-		{ /* check whether the system is installed */
-			redirect('install/index', 'refresh');
+		if ( ! file_exists(APPPATH.'config/database'.EXT))
+		{
+			redirect('install/setupconfig');
 		}
 		
-		/* load the session library */
+		$this->load->database();
 		$this->load->library('session');
+		$this->load->model('settings_model', 'settings');
+		$this->load->model('system_model', 'sys');
+		$this->lang->load('install');
+		$this->lang->load('app', $this->session->userdata('language'));
 		
-		/* set the template */
-		$this->template->set_template('update');
-		$this->template->set_master_template('_base/template_update.php');
+		$this->version = APP_VERSION_MAJOR.'.'.APP_VERSION_MINOR.'.'.APP_VERSION_UPDATE;
 		
-		/* an array of the global we want to retrieve */
+		// an array of items to pull from the settings table
 		$settings_array = array(
 			'sim_name',
 			'date_format',
@@ -48,60 +57,44 @@ class Update_base extends Controller {
 			'maintenance'
 		);
 		
-		/* grab the settings */
+		// grab the settings
 		$this->options = $this->settings->get_settings($settings_array);
 		
-		/* write the common elements to the template */
-		$this->template->write('title', APP_NAME .' :: ');
+		// set the template file
+		Template::$file = '_base/template_update';
 		
-		/* set and load the language file needed */
-		$this->lang->load('install');
-		$this->lang->load('app', $this->session->userdata('language'));
-				
-		/* set the version of nova */
-		$this->version = APP_VERSION_MAJOR .'.'. APP_VERSION_MINOR .'.'. APP_VERSION_UPDATE;
+		// set the module
+		Template::$data['module'] = 'core';
 		
-		/* load the resources */
-		$this->load->model('system_model', 'sys');
-		
-		/* check to see if the system is installed */
-		$d['installed'] = $this->sys->check_install_status();
-		
-		/* build the options menu */
-		$this->template->write_view('update_options', '_base/update/pages/_options', $d);
+		// assign all of the items to the template with false values to prevent errors
+		$this->_regions = array(
+			'label'			=> false,
+			'content'		=> false,
+			'controls'		=> false,
+			'javascript'	=> false,
+			'flash_message'	=> false,
+			'_redirect'		=> false,
+			'title'			=> APP_NAME.' :: ',
+		);
 	}
 
-	function index()
+	public function index()
 	{
-		/* check to see if the system is installed */
-		$data['installed'] = $this->sys->check_install_status();
-		
-		/* set the error code */
 		$code = 0;
 		
-		/* go through and check for errors */
-		$code = ($data['installed'] === FALSE) ? 1 : $code;
+		// check for errors
+		$code = ( ! $this->installed) ? 1 : $code;
 		$code = ($this->options['maintenance'] == 'off') ? 2 : $code;
 		
 		if ($code > 0)
 		{
-			$flash['status'] = '';
-			$flash['message'] = '';
+			$flash['status'] = ($code == 1) ? 'error' : 'info';
+			$flash['message'] = lang('upd_error_'.$code);
 			
-			if ($code == 1)
-			{
-				$flash['status'] = 'error';
-				$flash['message'] = lang('upd_error_1');
-			}
-			elseif ($code == 2)
-			{
-				$flash['status'] = 'info';
-				$flash['message'] = lang('upd_error_2');
-			}
-			
-			/* write everything to the template */
-			$this->template->write_view('flash_message', '_base/update/pages/flash', $flash);
+			$this->_regions['flash_message'] = Location::view('flash', '_base', 'update', $flash);
 		}
+		
+		$data['installed'] = $this->installed;
 		
 		$data['label'] = array(
 			'options_check' => lang('upd_index_options_update'),
@@ -116,48 +109,41 @@ class Update_base extends Controller {
 			'header' => lang('upd_index_header'),
 		);
 		
-		/* figure out where the view file should be coming from */
-		$view_loc = view_location('update_index', '_base', 'update');
-		$js_loc = js_location('update_index_js', '_base', 'update');
+		$next = array(
+			'name' => 'next',
+			'type' => 'submit',
+			'class' => 'btn-main',
+			'id' => 'next',
+			'content' => lang('button_verify'),
+		);
 		
-		/* build the next step control */
-		$control = '<a href="'. site_url('update/verify') .'" class="btn">'. lang('upd_index_options_verify') .'</a>';
+		$this->_regions['content'] = Location::view('update_index', '_base', 'update', $data);
+		$this->_regions['javascript'] = Location::js('update_index_js', '_base', 'update');
+		$this->_regions['title'].= lang('upd_index_title');
+		$this->_regions['label'] = lang('upd_index_title');
+		$this->_regions['controls'] = form_open('update/verify').form_button($next).form_close();
 		
-		/* set the title */
-		$this->template->write('title', lang('upd_index_title'));
-		$this->template->write('label', lang('upd_index_title'));
-				
-		/* write the data to the template */
-		$this->template->write_view('content', $view_loc, $data);
-		$this->template->write_view('javascript', $js_loc);
-		$this->template->write('controls', $control);
+		Template::assign($this->_regions);
 		
-		/* render the template */
-		$this->template->render();
+		Template::render();
 	}
 	
-	function check()
+	public function check()
 	{
 		if (isset($_POST['submit']))
 		{
-			/* set the POST variables */
 			$email = $this->input->post('email', TRUE);
 			$password = $this->input->post('password', TRUE);
 			
-			/* verify their email/password combo is right */
-			$verify = $this->auth->verify($email, $password);
+			$verify = Auth::verify($email, $password);
 			
-			/* get their user ID */
 			$user = $this->sys->get_item('users', 'email', $email, 'userid');
 			
-			/* verify they're a sys admin */
-			$sysadmin = $this->auth->is_sysadmin($user);
+			$sysadmin = Auth::is_sysadmin($user);
 			
-			if ($verify == 0 && $sysadmin === TRUE)
+			if ($verify == 0 && $sysadmin)
 			{
-				/* do the version check */
 				$update = $this->_check_version();
-				
 				
 				if ($update['flash']['message'] != '')
 				{
@@ -185,18 +171,15 @@ class Update_base extends Controller {
 					'start_go' => anchor('update/step/1', lang('upd_check_go_start'), array('id' => 'next')),
 				);
 				
-				/* figure out where the view file should be coming from */
-				$view_loc = view_location('update_check_main', '_base', 'update');
-				$js_loc = js_location('update_check_js', '_base', 'update');
-				
-				/* build the next step control */
-				$control = '';
+				// the view files
+				$view_loc = 'update_check_main';
+				$js_loc = 'update_check_js';
 			}
 			else
 			{
 				$flash['status'] = 'error';
 				
-				if ($sysadmin === FALSE)
+				if ( ! $sysadmin)
 				{
 					$flash['message'] = lang('error_update_2');
 				}
@@ -215,7 +198,7 @@ class Update_base extends Controller {
 						'id' => 'password'),
 					'submit' => array(
 						'type' => 'submit',
-						'class' => 'button',
+						'class' => 'btn-main',
 						'name' => 'submit',
 						'value' => 'submit',
 						'content' => ucwords(lang('button_submit'))
@@ -231,16 +214,14 @@ class Update_base extends Controller {
 						lang('global_update')),
 				);
 				
-				/* figure out where the view file should be coming from */
-				$view_loc = view_location('update_check', '_base', 'update');
-				$js_loc = js_location('update_check_js', '_base', 'update');
+				// the views
+				$view_loc = 'update_check';
+				$js_loc = 'update_check_js';
 				
-				/* build the next step control */
-				$control = form_button($data['inputs']['submit']) . form_close();
+				$this->_regions['controls'] = form_button($data['inputs']['submit']).form_close();
 			}
 			
-			/* write everything to the template */
-			$this->template->write_view('flash_message', '_base/update/pages/flash', $flash);
+			$this->_regions['flash_message'] = Location::view('flash', '_base', 'update', $flash);
 		}
 		else
 		{
@@ -253,7 +234,7 @@ class Update_base extends Controller {
 					'id' => 'password'),
 				'submit' => array(
 					'type' => 'submit',
-					'class' => 'button',
+					'class' => 'btn-main',
 					'name' => 'submit',
 					'value' => 'submit',
 					'content' => ucwords(lang('button_submit'))
@@ -269,37 +250,31 @@ class Update_base extends Controller {
 					lang('global_update')),
 			);
 			
-			/* figure out where the view file should be coming from */
-			$view_loc = view_location('update_check', '_base', 'update');
-			$js_loc = js_location('update_check_js', '_base', 'update');
+			// the views
+			$view_loc = 'update_check';
+			$js_loc = 'update_check_js';
 			
-			/* build the next step control */
-			$control = form_button($data['inputs']['submit']) . form_close();
+			$this->_regions['controls'] = form_button($data['inputs']['submit']).form_close();
 		}
 		
-		/* set the title */
-		$this->template->write('title', lang('upd_index_title'));
-		$this->template->write('label', lang('upd_index_title'));
-				
-		/* write the data to the template */
-		$this->template->write_view('content', $view_loc, $data);
-		$this->template->write_view('javascript', $js_loc);
-		$this->template->write('controls', $control);
+		$this->_regions['content'] = Location::view($view_loc, '_base', 'update', $data);
+		$this->_regions['javascript'] = Location::js($js_loc, '_base', 'update');
+		$this->_regions['title'].= lang('upd_index_title');
+		$this->_regions['label'] = lang('upd_index_title');
 		
-		/* render the template */
-		$this->template->render();
+		Template::assign($this->_regions);
+		
+		Template::render();
 	}
 	
-	function error()
+	public function error($id = 0)
 	{
-		/*
-			0 - no error
-			1 - nova is not installed
-			2 - maintenance mode is not active ... system cannot be updated
-			3 - you are not a system admin, make sure you're logged in
-		*/
-		
-		$id = $this->uri->segment(3, 0);
+		/**
+		 * 0 - no error
+		 * 1 - nova is not installed
+		 * 2 - maintenance mode is not active
+		 * 3 - you are not a system admin, make sure you're logged in
+		 */
 		
 		$label = array(
 			'error_1' => lang('upd_error_1'),
@@ -308,81 +283,65 @@ class Update_base extends Controller {
 		);
 		
 		$flash['status'] = 'error';
-		$flash['message'] = $label['error_'. $id];
+		$flash['message'] = $label['error_'.$id];
 		
-		/* write everything to the template */
-		$this->template->write_view('flash_message', '_base/update/pages/flash', $flash);
+		$next = array(
+			'name' => 'next',
+			'type' => 'submit',
+			'class' => 'btn-main',
+			'id' => 'next',
+			'content' => lang('button_update'),
+		);
 		
-		/* figure out where the view file should be coming from */
-		$view_loc = view_location('update_error', '_base', 'update');
+		$this->_regions['content'] = Location::view('update_error', '_base', 'update', false);
+		$this->_regions['flash_message'] = Location::view('flash', '_base', 'update', $flash);
+		$this->_regions['controls'] = form_open('update/index').form_button($next).form_close();
+		$this->_regions['title'].= lang('upd_error_title');
+		$this->_regions['label'] = lang('upd_error_title');
 		
-		$control = '<a href="'. site_url('update/index') .'" class="btn">'. lang('button_back_update') .'</a>';
+		Template::assign($this->_regions);
 		
-		/* set the title */
-		$this->template->write('title', lang('upd_error_title'));
-		$this->template->write('label', lang('upd_error_title'));
-				
-		/* write the data to the template */
-		$this->template->write_view('content', $view_loc);
-		$this->template->write('controls', $control);
-		
-		/* render the template */
-		$this->template->render();
+		Template::render();
 	}
 	
-	function readme()
+	public function readme()
 	{
-		/* figure out where the view file should be coming from */
-		$view_loc = view_location('readme', '_base', 'update');
+		$this->_regions['content'] = Location::view('readme', '_base', 'install', 'foo');
+		$this->_regions['title'].= APP_NAME.' '.lang('global_readme_title');
+		$this->_regions['label'] = APP_NAME.' '.lang('global_readme_title');
 		
-		$control = '';
+		Template::assign($this->_regions);
 		
-		/* set the title */
-		$this->template->write('title', APP_NAME .' '. lang('global_readme_title'));
-		$this->template->write('label', APP_NAME .' '. lang('global_readme_title'));
-				
-		/* write the data to the template */
-		$this->template->write_view('content', $view_loc);
-		$this->template->write('controls', $control);
-		
-		/* render the template */
-		$this->template->render();
+		Template::render();
 	}
 	
-	function step()
+	public function step($step = 1)
 	{
-		/* set the step */
-		$step = $this->uri->segment(3, 1, TRUE);
+		// sanity check
+		$step = (is_numeric($step)) ? $step : 1;
 		
 		switch ($step)
 		{
 			case 1:
-				/* clear the memory limit to attempt the backup */
 				ini_set('memory_limit', -1);
 				
-				/* load the resources */
 				$this->load->helper('utility');
 				
-				/* set the prefix */
-				$prefix = $this->db->dbprefix;
-				
-				/* check the database size and the server memory limit */
+				// check the database size and the server memory limit
 				$db_size = file_size($this->sys->get_database_size());
 				$memory = check_memory($db_size);
 				
-				if ($memory === TRUE)
-				{ /* if there's enough memory, continue */
-					/* grab today's date info */
+				if ($memory)
+				{
 					$today = getdate();
 					
-					/* set the filename */
-					$filename = $prefix . $today['year'] . $today['mon'] . $today['mday'];
+					$filename = $this->db->dbprefix.$today['year'].$today['mon'].$today['mday'];
 						
-					$backup = backup_database($prefix, 'save', $filename);
+					$backup = backup_database($this->db->dbprefix, 'save', $filename);
 					
-					if ($backup === TRUE)
+					if ($backup)
 					{
-						if (is_file(APPPATH .'assets/backups/'. $filename .'.zip'))
+						if (is_file(APPPATH.'assets/backups/'.$filename.'.zip'))
 						{
 							$message = lang('upd_step1_success');
 						}
@@ -404,33 +363,32 @@ class Update_base extends Controller {
 				
 				$data['label']['text'] = $message;
 				
-				/* figure out where the view files should be coming from */
-				$view_loc = view_location('update_step_1', '_base', 'update');
-				$js_loc = js_location('update_step_1_js', '_base', 'update');
+				$next = array(
+					'name' => 'next',
+					'type' => 'submit',
+					'class' => 'btn-main',
+					'id' => 'next',
+					'content' => lang('button_next'),
+				);
 				
-				/* set the title and label */
-				$this->template->write('title', lang('upd_step1_title'));
-				$this->template->write('label', lang('upd_step1_title'));
-				
-				$control = '<a href="'. site_url('update/step/2') .'" class="btn" id="next">'. lang('button_next') .'</a>';
+				$this->_regions['content'] = Location::view('update_step_1', '_base', 'update', $data);
+				$this->_regions['javascript'] = Location::js('update_step_1_js', '_base', 'update');
+				$this->_regions['controls'] = form_open('update/step/2').form_button($next).form_close();
+				$this->_regions['title'].= lang('upd_step1_title');
+				$this->_regions['label'] = lang('upd_step1_title');
 			break;
 				
 			case 2:
-				/* load the resources */
 				$this->load->helper('directory');
 				
-				/* grab the version from the database */
 				$item = $this->sys->get_item('system_info', 'sys_id', 1);
 				
-				/* build the version string */
-				$version = $item->sys_version_major . $item->sys_version_minor . $item->sys_version_update;
+				$version = $item->sys_version_major.$item->sys_version_minor.$item->sys_version_update;
 				
-				/* grab the directory listing */
-				$dir = directory_map(APPFOLDER .'/assets/update');
+				$dir = directory_map(MODFOLDER.'/assets/update');
 				
 				if (is_array($dir))
 				{
-					// sort the array
 					sort($dir);
 					
 					foreach ($dir as $key => $value)
@@ -450,21 +408,17 @@ class Update_base extends Controller {
 						}
 					}
 					
-					/* loop through and do the update */
 					foreach ($dir as $d)
 					{
-						include_once(APPPATH .'assets/update/'. $d);
+						include_once(MODPATH.'assets/update/'.$d);
 						
-						/* pause the script for 1 second */
 						sleep(1);
 					}
 				}
 				else
 				{
-					/* pull in the versions file */
-					include_once(APPPATH .'assets/update/versions.php');
+					include_once(MODPATH.'assets/update/versions'.EXT);
 					
-					/* make sure we're not doing more work than we need to */
 					foreach ($version_array as $k => $v)
 					{
 						if ($v < $version)
@@ -473,23 +427,19 @@ class Update_base extends Controller {
 						}
 					}
 					
-					/* loop through and do the update */
 					foreach ($version_array as $value)
 					{
-						include_once(APPPATH .'assets/update/update_' . $value . '.php');
+						include_once(MODPATH.'assets/update/update_' .$value.EXT);
 						
-						/* pause the script for 1 second */
 						sleep(1);
 					}
 				}
 				
-				/* update the system info */
 				$this->sys->update_system_info($system_info);
 				
-				/* do the product registration */
 				$this->_register();
 				
-				/* update the users to be first launch */
+				// update the users to be first launch
 				$this->load->model('users_model', 'user');
 				$users = array('is_firstlaunch' => 'y');
 				$this->user->update_all_users($users, '');
@@ -502,33 +452,33 @@ class Update_base extends Controller {
 					'back' => lang('upd_step2_site')
 				);
 				
-				/* figure out where the view file should be coming from */
-				$view_loc = view_location('update_step_2', '_base', 'update');
-				$js_loc = js_location('update_step_2_js', '_base', 'update');
+				$next = array(
+					'name' => 'next',
+					'type' => 'submit',
+					'class' => 'btn-main',
+					'id' => 'next',
+					'content' => lang('upd_step2_site'),
+				);
 				
-				/* set the title and label */
-				$this->template->write('title', lang('upd_step2_title'));
-				$this->template->write('label', lang('upd_step2_title'));
-				
-				$control = '<a href="'. site_url('main/index') .'" class="btn" id="next">'. lang('upd_step2_site') .'</a>';
+				$this->_regions['content'] = Location::view('update_step_2', '_base', 'update', $data);
+				$this->_regions['javascript'] = Location::js('update_step_2_js', '_base', 'update');
+				$this->_regions['controls'] = form_open('main/index').form_button($next).form_close();
+				$this->_regions['title'].= lang('upd_step2_title');
+				$this->_regions['label'] = lang('upd_step2_title');
 			break;
 		}
 		
-		/* write the data to the template */
-		$this->template->write_view('content', $view_loc, $data);
-		$this->template->write_view('javascript', $js_loc);
-		$this->template->write('controls', $control);
+		Template::assign($this->_regions);
 		
-		/* render the template */
-		$this->template->render();
+		Template::render();
 	}
+
+	# TODO: fix styles for the verify table header
 	
-	function verify()
+	public function verify()
 	{
-		/* load the resources */
 		$this->load->helper('utility');
 		
-		/* load the verification data */
 		$data['table'] = verify_server();
 		
 		$data['label'] = array(
@@ -536,50 +486,52 @@ class Update_base extends Controller {
 			'text' => lang('verify_text')
 		);
 		
-		/* figure out where the view file should be coming from */
-		$view_loc = view_location('update_verify', '_base', 'update');
+		$button = array(
+			'name' => 'install',
+			'type' => 'submit',
+			'id' => 'install',
+			'class' => 'btn-main',
+			'content' => lang('button_begin_update'),
+		);
 		
-		/* build the next step control */
-		$control = '<a href="'. site_url('update/check') .'" class="btn">'. lang('upd_index_options_update') .'</a>';
+		$this->_regions['content'] = Location::view('update_verify', '_base', 'update', $data);
+		$this->_regions['javascript'] = Location::js('verify_js', '_base', 'update');
+		$this->_regions['controls'] = form_open('update/check').form_button($button).form_close();
+		$this->_regions['title'].= lang('verify_title');
+		$this->_regions['label'] = lang('verify_title');
 		
-		/* set the title */
-		$this->template->write('title', lang('verify_title'));
-		$this->template->write('label', lang('verify_title'));
-				
-		/* write the data to the template */
-		$this->template->write_view('content', $view_loc, $data);
-		$this->template->write('controls', $control);
+		Template::assign($this->_regions);
 		
-		/* render the template */
-		$this->template->render();
+		Template::render();
 	}
 	
-	function _check_version()
+	/**
+	 * Check for the latest version of the system
+	 *
+	 * @access	private
+	 * @return	array 	the array of version information and messages
+	 */
+	private function _check_version()
 	{
 		if (ini_get('allow_url_fopen'))
 		{
-			/* load the resources */
 			$this->load->helper('yayparser');
 			
-			/* get the contents of the file */
 			$contents = file_get_contents(VERSION_FEED);
-					
-			/* parse the contents of the yaml file */
+			
 			$array = yayparser($contents);
 			
-			/* get the system information */
 			$system = $this->sys->get_system_info();
 			
-			/* build the array of version info */
 			$version = array(
 				'files' => array(
-					'full'		=> APP_VERSION_MAJOR .'.'. APP_VERSION_MINOR .'.'. APP_VERSION_UPDATE,
+					'full'		=> APP_VERSION_MAJOR.'.'.APP_VERSION_MINOR.'.'.APP_VERSION_UPDATE,
 					'major'		=> APP_VERSION_MAJOR,
 					'minor'		=> APP_VERSION_MINOR,
 					'update'	=> APP_VERSION_UPDATE
 				),
 				'database' => array(
-					'full'		=> $system->sys_version_major .'.'. $system->sys_version_minor .'.'. $system->sys_version_update,
+					'full'		=> $system->sys_version_major.'.'.$system->sys_version_minor.'.'.$system->sys_version_update,
 					'major'		=> $system->sys_version_major,
 					'minor'		=> $system->sys_version_minor,
 					'update'	=> $system->sys_version_update
@@ -646,17 +598,22 @@ class Update_base extends Controller {
 		return FALSE;
 	}
 	
-	function _register()
+	/**
+	 * Register Nova
+	 *
+	 * @access	private
+	 * @return	void
+	 */
+	private function _register()
 	{
-		/* load the resources */
 		$this->load->library('xmlrpc');
 		$this->load->library('email');
 		
-		/* set up the server and method for the request */
+		// set up the server and method for the request
 		$this->xmlrpc->server('http://www.anodyne-productions.com/index.php/utility/do_registration', 80);
 		$this->xmlrpc->method('Do_Registration');
 		
-		/* build the request */
+		// build the request
 		$request = array(
 			APP_NAME,
 			APP_VERSION_MAJOR .'.'. APP_VERSION_MINOR .'.'. APP_VERSION_UPDATE,
@@ -669,13 +626,12 @@ class Update_base extends Controller {
 			'update'
 		);
 		
-		/* compile the request */
+		// compile the request
 		$this->xmlrpc->request($request);
 		
 		if (extension_loaded('xmlrpc'))
 		{
-			/* send the request or log the message if it doesn't work */
-			if (!$this->xmlrpc->send_request())
+			if ( ! $this->xmlrpc->send_request())
 			{
 				log_message('error', $this->xmlrpc->display_error());
 			}
@@ -698,13 +654,11 @@ class Update_base extends Controller {
 				$this->db->escape(now())
 			);
 			
-			/* set the parameters for sending the email */
 			$this->email->from('nova.registration@example.com');
 			$this->email->to('anodyne.nova@gmail.com');
 			$this->email->subject('Nova Registration');
 			$this->email->message($message);
 			
-			/* send the email */
 			$email = $this->email->send();
 		}
 		
