@@ -7349,7 +7349,7 @@ abstract class Nova_ajax extends Controller {
 					$this->mis->update_mission($id, array('mission_images' => $imagesStr));
 					
 					$array = array(
-						'src' => base_url() . asset_location('images/missions', $image),
+						'src' => base_url().Location::asset('images/missions', $image),
 						'width' => 130
 					);
 					
@@ -7372,7 +7372,7 @@ abstract class Nova_ajax extends Controller {
 				$this->mis->update_mission($id, array('mission_images' => $imagesStr));
 				
 				$array = array(
-					'src' => base_url() . asset_location('images/missions', $image),
+					'src' => base_url().Location::asset('images/missions', $image),
 					'width' => 130
 				);
 				
@@ -7498,7 +7498,7 @@ abstract class Nova_ajax extends Controller {
 						$this->specs->update_spec_item($id, array('specs_images' => $imagesStr));
 						
 						$array = array(
-							'src' => base_url() . asset_location('images/specs', $image),
+							'src' => base_url().Location::asset('images/specs', $image),
 							'width' => 130
 						);
 						
@@ -7521,7 +7521,7 @@ abstract class Nova_ajax extends Controller {
 					$this->specs->update_spec_item($id, array('specs_images' => $imagesStr));
 					
 					$array = array(
-						'src' => base_url() . asset_location('images/specs', $image),
+						'src' => base_url().Location::asset('images/specs', $image),
 						'width' => 130
 					);
 					
@@ -7650,7 +7650,7 @@ abstract class Nova_ajax extends Controller {
 						$this->tour->update_tour_item($id, array('tour_images' => $imagesStr));
 						
 						$array = array(
-							'src' => base_url() . asset_location('images/tour', $image),
+							'src' => base_url().Location::asset('images/tour', $image),
 							'width' => 130
 						);
 						
@@ -7673,7 +7673,7 @@ abstract class Nova_ajax extends Controller {
 					$this->tour->update_tour_item($id, array('tour_images' => $imagesStr));
 					
 					$array = array(
-						'src' => base_url() . asset_location('images/tour', $image),
+						'src' => base_url().Location::asset('images/tour', $image),
 						'width' => 130
 					);
 					
@@ -7920,13 +7920,13 @@ abstract class Nova_ajax extends Controller {
 			
 			$data['images'] = array(
 				'loading' => array(
-					'src' => img_location('loading.gif', $skin, 'wiki'),
+					'src' => Location::img('loading.gif', $skin, 'wiki'),
 					'alt' => ''),
 				'success' => array(
-					'src' => img_location('tick-circle.png', $skin, 'wiki'),
+					'src' => Location::img('tick-circle.png', $skin, 'wiki'),
 					'alt' => ''),
 				'failure' => array(
-					'src' => img_location('exclamation-red.png', $skin, 'wiki'),
+					'src' => Location::img('exclamation-red.png', $skin, 'wiki'),
 					'alt' => ''),
 			);
 			

@@ -132,8 +132,8 @@ abstract class Nova_update extends Controller {
 	{
 		if (isset($_POST['submit']))
 		{
-			$email = $this->input->post('email', TRUE);
-			$password = $this->input->post('password', TRUE);
+			$email = $this->input->post('email', true);
+			$password = $this->input->post('password', true);
 			
 			$verify = Auth::verify($email, $password);
 			
@@ -141,14 +141,14 @@ abstract class Nova_update extends Controller {
 			
 			$sysadmin = Auth::is_sysadmin($user);
 			
-			if ($verify == 0 && $sysadmin)
+			if ($verify == 0 and $sysadmin)
 			{
 				$update = $this->_check_version();
 				
 				if ($update['flash']['message'] != '')
 				{
 					$flash = $update['flash'];
-					$data['link'] = FALSE;
+					$data['link'] = false;
 				}
 				else
 				{
@@ -353,7 +353,7 @@ abstract class Nova_update extends Controller {
 					else
 					{
 						$message = lang('upd_step1_nofields');
-						$data['next']['disabled'] = TRUE;
+						$data['next']['disabled'] = true;
 					}
 				}
 				else
@@ -393,7 +393,7 @@ abstract class Nova_update extends Controller {
 					
 					foreach ($dir as $key => $value)
 					{
-						if ($value == 'index.html' || $value == 'versions.php')
+						if ($value == 'index.html' or $value == 'versions.php')
 						{
 							unset($dir[$key]);
 						}
@@ -538,9 +538,9 @@ abstract class Nova_update extends Controller {
 				),
 			);
 			
-			$update = FALSE;
+			$update = false;
 			
-			if (version_compare($version['files']['full'], $array['version'], '<') || version_compare($version['database']['full'], $array['version'], '<'))
+			if (version_compare($version['files']['full'], $array['version'], '<') or version_compare($version['database']['full'], $array['version'], '<'))
 			{
 				$update['version']		= $array['version'];
 				$update['notes']		= $array['notes'];
@@ -566,7 +566,7 @@ abstract class Nova_update extends Controller {
 					$version['files']['full']
 				);
 			}
-			elseif ($update !== FALSE)
+			elseif ($update !== false)
 			{
 				$yourversion = sprintf(
 					lang('update_your_version'),
@@ -595,7 +595,7 @@ abstract class Nova_update extends Controller {
 			return $retval;
 		}
 		
-		return FALSE;
+		return false;
 	}
 	
 	/**
