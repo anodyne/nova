@@ -2528,6 +2528,49 @@ abstract class Nova_ajax extends Controller {
 		$skin = $this->session->userdata('skin_admin');
 		
 		$this->_regions['content'] = Location::ajax('del_award', $skin, 'admin', $data);
+		$this->_regions['controls'] = form_button($data['inputs']['submit']).form_close();
+		
+		Template::assign($this->_regions);
+		
+		Template::render();
+	}
+	
+	public function del_ban()
+	{
+		$head = sprintf(
+			lang('fbx_head'),
+			ucwords(lang('actions_delete')),
+			ucwords(lang('labels_ban'))
+		);
+		
+		// data being sent to the facebox
+		$data['header'] = $head;
+		$data['id'] = $this->uri->segment(3, 0, true);
+		
+		$item = $this->sys->get_ban($data['id']);
+		$descriptor = (empty($item->ban_email)) ? $item->ban_ip : $item->ban_email;
+		
+		$data['text'] = sprintf(
+			lang('fbx_content_del_entry'),
+			lang('labels_ban') .' '. lang('labels_on'),
+			$descriptor
+		);
+		
+		// input parameters
+		$data['inputs'] = array(
+			'submit' => array(
+				'type' => 'submit',
+				'class' => 'hud_button',
+				'name' => 'submit',
+				'value' => 'submit',
+				'content' => ucwords(lang('actions_submit')))
+		);
+		
+		// figure out the skin
+		$skin = $this->session->userdata('skin_admin');
+		
+		$this->_regions['content'] = Location::ajax('del_ban', $skin, 'admin', $data);
+		$this->_regions['controls'] = form_button($data['inputs']['submit']).form_close();
 		
 		Template::assign($this->_regions);
 		
@@ -2572,6 +2615,7 @@ abstract class Nova_ajax extends Controller {
 		$skin = $this->session->userdata('skin_admin');
 		
 		$this->_regions['content'] = Location::ajax('del_bio_field', $skin, 'admin', $data);
+		$this->_regions['controls'] = form_button($data['inputs']['submit']).form_close();
 		
 		Template::assign($this->_regions);
 		
@@ -2680,6 +2724,7 @@ abstract class Nova_ajax extends Controller {
 		$skin = $this->session->userdata('skin_admin');
 		
 		$this->_regions['content'] = Location::ajax('del_bio_sec', $skin, 'admin', $data);
+		$this->_regions['controls'] = form_button($data['inputs']['submit']).form_close();
 		
 		Template::assign($this->_regions);
 		
@@ -2743,47 +2788,7 @@ abstract class Nova_ajax extends Controller {
 		$skin = $this->session->userdata('skin_admin');
 		
 		$this->_regions['content'] = Location::ajax('del_bio_tab', $skin, 'admin', $data);
-		
-		Template::assign($this->_regions);
-		
-		Template::render();
-	}
-	
-	public function del_ban()
-	{
-		$head = sprintf(
-			lang('fbx_head'),
-			ucwords(lang('actions_delete')),
-			ucwords(lang('labels_ban'))
-		);
-		
-		// data being sent to the facebox
-		$data['header'] = $head;
-		$data['id'] = $this->uri->segment(3, 0, true);
-		
-		$item = $this->sys->get_ban($data['id']);
-		$descriptor = (empty($item->ban_email)) ? $item->ban_ip : $item->ban_email;
-		
-		$data['text'] = sprintf(
-			lang('fbx_content_del_entry'),
-			lang('labels_ban') .' '. lang('labels_on'),
-			$descriptor
-		);
-		
-		// input parameters
-		$data['inputs'] = array(
-			'submit' => array(
-				'type' => 'submit',
-				'class' => 'hud_button',
-				'name' => 'submit',
-				'value' => 'submit',
-				'content' => ucwords(lang('actions_submit')))
-		);
-		
-		// figure out the skin
-		$skin = $this->session->userdata('skin_admin');
-		
-		$this->_regions['content'] = Location::ajax('del_ban', $skin, 'admin', $data);
+		$this->_regions['controls'] = form_button($data['inputs']['submit']).form_close();
 		
 		Template::assign($this->_regions);
 		
@@ -2917,6 +2922,7 @@ abstract class Nova_ajax extends Controller {
 		$data['header'] = $head;
 		
 		$this->_regions['content'] = Location::ajax($view, $skin, 'admin', $data);
+		$this->_regions['controls'] = form_button($data['inputs']['submit']).form_close();
 		
 		Template::assign($this->_regions);
 		
@@ -2973,6 +2979,7 @@ abstract class Nova_ajax extends Controller {
 		$skin = $this->session->userdata('skin_admin');
 		
 		$this->_regions['content'] = Location::ajax('del_character', $skin, 'admin', $data);
+		$this->_regions['controls'] = form_button($data['inputs']['submit']).form_close();
 		
 		Template::assign($this->_regions);
 		
@@ -3152,6 +3159,7 @@ abstract class Nova_ajax extends Controller {
 		$skin = $this->session->userdata('skin_admin');
 		
 		$this->_regions['content'] = Location::ajax('del_comment', $skin, 'admin', $data);
+		$this->_regions['controls'] = form_button($data['inputs']['submit']).form_close();
 		
 		Template::assign($this->_regions);
 		
@@ -3278,6 +3286,7 @@ abstract class Nova_ajax extends Controller {
 		$skin = $this->session->userdata('skin_admin');
 		
 		$this->_regions['content'] = Location::ajax('del_dept', $skin, 'admin', $data);
+		$this->_regions['controls'] = form_button($data['inputs']['submit']).form_close();
 		
 		Template::assign($this->_regions);
 		
@@ -3321,6 +3330,7 @@ abstract class Nova_ajax extends Controller {
 		$skin = $this->session->userdata('skin_admin');
 		
 		$this->_regions['content'] = Location::ajax('del_docked_item', $skin, 'admin', $data);
+		$this->_regions['controls'] = form_button($data['inputs']['submit']).form_close();
 		
 		Template::assign($this->_regions);
 		
@@ -3365,6 +3375,7 @@ abstract class Nova_ajax extends Controller {
 		$skin = $this->session->userdata('skin_admin');
 		
 		$this->_regions['content'] = Location::ajax('del_docking_field', $skin, 'admin', $data);
+		$this->_regions['controls'] = form_button($data['inputs']['submit']).form_close();
 		
 		Template::assign($this->_regions);
 		
@@ -3473,6 +3484,7 @@ abstract class Nova_ajax extends Controller {
 		$skin = $this->session->userdata('skin_admin');
 		
 		$this->_regions['content'] = Location::ajax('del_docking_sec', $skin, 'admin', $data);
+		$this->_regions['controls'] = form_button($data['inputs']['submit']).form_close();
 		
 		Template::assign($this->_regions);
 		
@@ -3518,6 +3530,7 @@ abstract class Nova_ajax extends Controller {
 		$skin = $this->session->userdata('skin_admin');
 		
 		$this->_regions['content'] = Location::ajax('del_log', $skin, 'admin', $data);
+		$this->_regions['controls'] = form_button($data['inputs']['submit']).form_close();
 		
 		Template::assign($this->_regions);
 		
@@ -3561,6 +3574,7 @@ abstract class Nova_ajax extends Controller {
 		$skin = $this->session->userdata('skin_admin');
 		
 		$this->_regions['content'] = Location::ajax('del_manifest', $skin, 'admin', $data);
+		$this->_regions['controls'] = form_button($data['inputs']['submit']).form_close();
 		
 		Template::assign($this->_regions);
 		
@@ -3603,6 +3617,7 @@ abstract class Nova_ajax extends Controller {
 		$skin = $this->session->userdata('skin_admin');
 		
 		$this->_regions['content'] = Location::ajax('del_menu_cat', $skin, 'admin', $data);
+		$this->_regions['controls'] = form_button($data['inputs']['submit']).form_close();
 		
 		Template::assign($this->_regions);
 		
@@ -3648,6 +3663,7 @@ abstract class Nova_ajax extends Controller {
 		$skin = $this->session->userdata('skin_admin');
 		
 		$this->_regions['content'] = Location::ajax('del_menu_item', $skin, 'admin', $data);
+		$this->_regions['controls'] = form_button($data['inputs']['submit']).form_close();
 		
 		Template::assign($this->_regions);
 		
@@ -3693,6 +3709,7 @@ abstract class Nova_ajax extends Controller {
 		$skin = $this->session->userdata('skin_admin');
 		
 		$this->_regions['content'] = Location::ajax('del_mission', $skin, 'admin', $data);
+		$this->_regions['controls'] = form_button($data['inputs']['submit']).form_close();
 		
 		Template::assign($this->_regions);
 		
@@ -3770,6 +3787,7 @@ abstract class Nova_ajax extends Controller {
 		$skin = $this->session->userdata('skin_admin');
 		
 		$this->_regions['content'] = Location::ajax('del_news', $skin, 'admin', $data);
+		$this->_regions['controls'] = form_button($data['inputs']['submit']).form_close();
 		
 		Template::assign($this->_regions);
 		
@@ -3821,13 +3839,12 @@ abstract class Nova_ajax extends Controller {
 		$skin = $this->session->userdata('skin_admin');
 		
 		$this->_regions['content'] = Location::ajax('del_npc', $skin, 'admin', $data);
+		$this->_regions['controls'] = form_button($data['inputs']['submit']).form_close();
 		
 		Template::assign($this->_regions);
 		
 		Template::render();
 	}
-	
-	
 	
 	public function del_post()
 	{
@@ -3869,6 +3886,7 @@ abstract class Nova_ajax extends Controller {
 		$skin = $this->session->userdata('skin_admin');
 		
 		$this->_regions['content'] = Location::ajax('del_post', $skin, 'admin', $data);
+		$this->_regions['controls'] = form_button($data['inputs']['submit']).form_close();
 		
 		Template::assign($this->_regions);
 		
@@ -3927,6 +3945,7 @@ abstract class Nova_ajax extends Controller {
 		$skin = $this->session->userdata('skin_admin');
 		
 		$this->_regions['content'] = Location::ajax('del_role', $skin, 'admin', $data);
+		$this->_regions['controls'] = form_button($data['inputs']['submit']).form_close();
 		
 		Template::assign($this->_regions);
 		
@@ -3981,6 +4000,7 @@ abstract class Nova_ajax extends Controller {
 		$skin = $this->session->userdata('skin_admin');
 		
 		$this->_regions['content'] = Location::ajax('del_role_group', $skin, 'admin', $data);
+		$this->_regions['controls'] = form_button($data['inputs']['submit']).form_close();
 		
 		Template::assign($this->_regions);
 		
@@ -4020,6 +4040,7 @@ abstract class Nova_ajax extends Controller {
 		$skin = $this->session->userdata('skin_admin');
 		
 		$this->_regions['content'] = Location::ajax('del_role_page', $skin, 'admin', $data);
+		$this->_regions['controls'] = form_button($data['inputs']['submit']).form_close();
 		
 		Template::assign($this->_regions);
 		
@@ -4056,6 +4077,7 @@ abstract class Nova_ajax extends Controller {
 		$skin = $this->session->userdata('skin_admin');
 		
 		$this->_regions['content'] = Location::ajax('del_site_message', $skin, 'admin', $data);
+		$this->_regions['controls'] = form_button($data['inputs']['submit']).form_close();
 		
 		Template::assign($this->_regions);
 		
@@ -4100,6 +4122,7 @@ abstract class Nova_ajax extends Controller {
 		$skin = $this->session->userdata('skin_admin');
 		
 		$this->_regions['content'] = Location::ajax('del_spec_field', $skin, 'admin', $data);
+		$this->_regions['controls'] = form_button($data['inputs']['submit']).form_close();
 		
 		Template::assign($this->_regions);
 		
@@ -4225,6 +4248,7 @@ abstract class Nova_ajax extends Controller {
 		$skin = $this->session->userdata('skin_admin');
 		
 		$this->_regions['content'] = Location::ajax('del_spec_item', $skin, 'admin', $data);
+		$this->_regions['controls'] = form_button($data['inputs']['submit']).form_close();
 		
 		Template::assign($this->_regions);
 		
@@ -4288,6 +4312,7 @@ abstract class Nova_ajax extends Controller {
 		$skin = $this->session->userdata('skin_admin');
 		
 		$this->_regions['content'] = Location::ajax('del_spec_sec', $skin, 'admin', $data);
+		$this->_regions['controls'] = form_button($data['inputs']['submit']).form_close();
 		
 		Template::assign($this->_regions);
 		
@@ -4332,6 +4357,7 @@ abstract class Nova_ajax extends Controller {
 		$skin = $this->session->userdata('skin_admin');
 		
 		$this->_regions['content'] = Location::ajax('del_tour_field', $skin, 'admin', $data);
+		$this->_regions['controls'] = form_button($data['inputs']['submit']).form_close();
 		
 		Template::assign($this->_regions);
 		
@@ -4458,6 +4484,7 @@ abstract class Nova_ajax extends Controller {
 		$skin = $this->session->userdata('skin_admin');
 		
 		$this->_regions['content'] = Location::ajax('del_tour_item', $skin, 'admin', $data);
+		$this->_regions['controls'] = form_button($data['inputs']['submit']).form_close();
 		
 		Template::assign($this->_regions);
 		
@@ -4501,6 +4528,7 @@ abstract class Nova_ajax extends Controller {
 		$skin = $this->session->userdata('skin_admin');
 		
 		$this->_regions['content'] = Location::ajax('del_user', $skin, 'admin', $data);
+		$this->_regions['controls'] = form_button($data['inputs']['submit']).form_close();
 		
 		Template::assign($this->_regions);
 		
@@ -4537,6 +4565,7 @@ abstract class Nova_ajax extends Controller {
 		$skin = $this->session->userdata('skin_admin');
 		
 		$this->_regions['content'] = Location::ajax('del_user_setting', $skin, 'admin', $data);
+		$this->_regions['controls'] = form_button($data['inputs']['submit']).form_close();
 		
 		Template::assign($this->_regions);
 		
@@ -4577,6 +4606,7 @@ abstract class Nova_ajax extends Controller {
 		$skin = $this->session->userdata('skin_wiki');
 		
 		$this->_regions['content'] = Location::ajax('del_wiki_category', $skin, 'wiki', $data);
+		$this->_regions['controls'] = form_button($data['inputs']['submit']).form_close();
 		
 		Template::assign($this->_regions);
 		
@@ -4627,6 +4657,7 @@ abstract class Nova_ajax extends Controller {
 		$skin = $this->session->userdata('skin_wiki');
 		
 		$this->_regions['content'] = Location::ajax('del_wiki_draft', $skin, 'wiki', $data);
+		$this->_regions['controls'] = form_button($data['inputs']['submit']).form_close();
 		
 		Template::assign($this->_regions);
 		
@@ -4682,6 +4713,7 @@ abstract class Nova_ajax extends Controller {
 		$skin = $this->session->userdata('skin_wiki');
 		
 		$this->_regions['content'] = Location::ajax('del_wiki_page', $skin, 'wiki', $data);
+		$this->_regions['controls'] = form_button($data['inputs']['submit']).form_close();
 		
 		Template::assign($this->_regions);
 		
@@ -4726,6 +4758,7 @@ abstract class Nova_ajax extends Controller {
 		$skin = $this->session->userdata('skin_admin');
 		
 		$this->_regions['content'] = Location::ajax('dup_dept', $skin, 'admin', $data);
+		$this->_regions['controls'] = form_button($data['inputs']['submit']).form_close();
 		
 		Template::assign($this->_regions);
 		
@@ -4783,6 +4816,7 @@ abstract class Nova_ajax extends Controller {
 		$skin = $this->session->userdata('skin_admin');
 		
 		$this->_regions['content'] = Location::ajax('dup_role', $skin, 'admin', $data);
+		$this->_regions['controls'] = form_button($data['inputs']['submit']).form_close();
 		
 		Template::assign($this->_regions);
 		
@@ -4850,6 +4884,7 @@ abstract class Nova_ajax extends Controller {
 		$skin = $this->session->userdata('skin_admin');
 		
 		$this->_regions['content'] = Location::ajax('edit_bio_field_value', $skin, 'admin', $data);
+		$this->_regions['controls'] = form_button($data['inputs']['submit']).form_close();
 		
 		Template::assign($this->_regions);
 		
@@ -4917,6 +4952,7 @@ abstract class Nova_ajax extends Controller {
 		$skin = $this->session->userdata('skin_admin');
 		
 		$this->_regions['content'] = Location::ajax('edit_bio_sec', $skin, 'admin', $data);
+		$this->_regions['controls'] = form_button($data['inputs']['submit']).form_close();
 		
 		Template::assign($this->_regions);
 		
@@ -4987,6 +5023,7 @@ abstract class Nova_ajax extends Controller {
 		$skin = $this->session->userdata('skin_admin');
 		
 		$this->_regions['content'] = Location::ajax('edit_bio_tab', $skin, 'admin', $data);
+		$this->_regions['controls'] = form_button($data['inputs']['submit']).form_close();
 		
 		Template::assign($this->_regions);
 		
@@ -5202,6 +5239,7 @@ abstract class Nova_ajax extends Controller {
 		);
 		
 		$this->_regions['content'] = Location::ajax($view, $skin, 'admin', $data);
+		$this->_regions['controls'] = form_button($data['inputs']['submit']).form_close();
 		
 		Template::assign($this->_regions);
 		
@@ -5315,6 +5353,7 @@ abstract class Nova_ajax extends Controller {
 		$skin = $this->session->userdata('skin_admin');
 		
 		$this->_regions['content'] = Location::ajax('edit_comment', $skin, 'admin', $data);
+		$this->_regions['controls'] = form_button($data['inputs']['submit']).form_close();
 		
 		Template::assign($this->_regions);
 		
@@ -5381,6 +5420,7 @@ abstract class Nova_ajax extends Controller {
 		$skin = $this->session->userdata('skin_admin');
 		
 		$this->_regions['content'] = Location::ajax('edit_deck', $skin, 'admin', $data);
+		$this->_regions['controls'] = form_button($data['inputs']['submit']).form_close();
 		
 		Template::assign($this->_regions);
 		
@@ -5489,6 +5529,7 @@ abstract class Nova_ajax extends Controller {
 		$skin = $this->session->userdata('skin_admin');
 		
 		$this->_regions['content'] = Location::ajax('edit_dept', $skin, 'admin', $data);
+		$this->_regions['controls'] = form_button($data['inputs']['submit']).form_close();
 		
 		Template::assign($this->_regions);
 		
@@ -5556,6 +5597,7 @@ abstract class Nova_ajax extends Controller {
 		$skin = $this->session->userdata('skin_admin');
 		
 		$this->_regions['content'] = Location::ajax('edit_docking_field_value', $skin, 'admin', $data);
+		$this->_regions['controls'] = form_button($data['inputs']['submit']).form_close();
 		
 		Template::assign($this->_regions);
 		
@@ -5608,6 +5650,7 @@ abstract class Nova_ajax extends Controller {
 		$skin = $this->session->userdata('skin_admin');
 		
 		$this->_regions['content'] = Location::ajax('edit_docking_sec', $skin, 'admin', $data);
+		$this->_regions['controls'] = form_button($data['inputs']['submit']).form_close();
 		
 		Template::assign($this->_regions);
 		
@@ -5701,6 +5744,7 @@ abstract class Nova_ajax extends Controller {
 		$skin = $this->session->userdata('skin_admin');
 		
 		$this->_regions['content'] = Location::ajax('edit_manifest', $skin, 'admin', $data);
+		$this->_regions['controls'] = form_button($data['inputs']['submit']).form_close();
 		
 		Template::assign($this->_regions);
 		
@@ -5771,6 +5815,7 @@ abstract class Nova_ajax extends Controller {
 		$skin = $this->session->userdata('skin_admin');
 		
 		$this->_regions['content'] = Location::ajax('edit_menu_cat', $skin, 'admin', $data);
+		$this->_regions['controls'] = form_button($data['inputs']['submit']).form_close();
 		
 		Template::assign($this->_regions);
 		
@@ -5942,6 +5987,7 @@ abstract class Nova_ajax extends Controller {
 		$skin = $this->session->userdata('skin_admin');
 		
 		$this->_regions['content'] = Location::ajax('edit_menu_item', $skin, 'admin', $data);
+		$this->_regions['controls'] = form_button($data['inputs']['submit']).form_close();
 		
 		Template::assign($this->_regions);
 		
@@ -5992,6 +6038,7 @@ abstract class Nova_ajax extends Controller {
 		$skin = $this->session->userdata('skin_admin');
 		
 		$this->_regions['content'] = Location::ajax('edit_role_group', $skin, 'admin', $data);
+		$this->_regions['controls'] = form_button($data['inputs']['submit']).form_close();
 		
 		Template::assign($this->_regions);
 		
@@ -6067,6 +6114,7 @@ abstract class Nova_ajax extends Controller {
 		$skin = $this->session->userdata('skin_admin');
 		
 		$this->_regions['content'] = Location::ajax('edit_role_page', $skin, 'admin', $data);
+		$this->_regions['controls'] = form_button($data['inputs']['submit']).form_close();
 		
 		Template::assign($this->_regions);
 		
@@ -6198,6 +6246,7 @@ abstract class Nova_ajax extends Controller {
 		$skin = $this->session->userdata('skin_admin');
 		
 		$this->_regions['content'] = Location::ajax('edit_site_message', $skin, 'admin', $data);
+		$this->_regions['controls'] = form_button($data['inputs']['submit']).form_close();
 		
 		Template::assign($this->_regions);
 		
@@ -6265,6 +6314,7 @@ abstract class Nova_ajax extends Controller {
 		$skin = $this->session->userdata('skin_admin');
 		
 		$this->_regions['content'] = Location::ajax('edit_spec_field_value', $skin, 'admin', $data);
+		$this->_regions['controls'] = form_button($data['inputs']['submit']).form_close();
 		
 		Template::assign($this->_regions);
 		
@@ -6317,6 +6367,7 @@ abstract class Nova_ajax extends Controller {
 		$skin = $this->session->userdata('skin_admin');
 		
 		$this->_regions['content'] = Location::ajax('edit_spec_sec', $skin, 'admin', $data);
+		$this->_regions['controls'] = form_button($data['inputs']['submit']).form_close();
 		
 		Template::assign($this->_regions);
 		
@@ -6384,6 +6435,7 @@ abstract class Nova_ajax extends Controller {
 		$skin = $this->session->userdata('skin_admin');
 		
 		$this->_regions['content'] = Location::ajax('edit_tour_field_value', $skin, 'admin', $data);
+		$this->_regions['controls'] = form_button($data['inputs']['submit']).form_close();
 		
 		Template::assign($this->_regions);
 		
@@ -6442,6 +6494,7 @@ abstract class Nova_ajax extends Controller {
 		$skin = $this->session->userdata('skin_admin');
 		
 		$this->_regions['content'] = Location::ajax('edit_user_setting', $skin, 'admin', $data);
+		$this->_regions['controls'] = form_button($data['inputs']['submit']).form_close();
 		
 		Template::assign($this->_regions);
 		
@@ -6494,6 +6547,7 @@ abstract class Nova_ajax extends Controller {
 		$skin = $this->session->userdata('skin_wiki');
 		
 		$this->_regions['content'] = Location::ajax('edit_wiki_category', $skin, 'wiki', $data);
+		$this->_regions['controls'] = form_button($data['inputs']['submit']).form_close();
 		
 		Template::assign($this->_regions);
 		
@@ -6834,6 +6888,7 @@ abstract class Nova_ajax extends Controller {
 		);
 		
 		$this->_regions['content'] = Location::ajax($view, $skin, 'admin', $data);
+		$this->_regions['controls'] = form_button($data['inputs']['submit']).form_close();
 		
 		Template::assign($this->_regions);
 		
@@ -6889,6 +6944,7 @@ abstract class Nova_ajax extends Controller {
 		$skin = $this->session->userdata('skin_wiki');
 		
 		$this->_regions['content'] = Location::ajax('revert_wiki_page', $skin, 'wiki', $data);
+		$this->_regions['controls'] = form_button($data['inputs']['submit']).form_close();
 		
 		Template::assign($this->_regions);
 		
@@ -7725,6 +7781,7 @@ abstract class Nova_ajax extends Controller {
 		$skin = $this->session->userdata('skin_wiki');
 		
 		$this->_regions['content'] = Location::ajax('draft_cleanup', $skin, 'wiki', $data);
+		$this->_regions['controls'] = form_button($data['inputs']['submit']).form_close();
 		
 		Template::assign($this->_regions);
 		

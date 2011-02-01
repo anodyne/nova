@@ -1,9 +1,6 @@
 <?php echo text_output($header, 'h2');?>
-<?php echo text_output($text);?><br />
 
-<p>
-	<?php echo form_open('wiki/managepages/cleanup');?>
-		<?php echo form_dropdown('time', $time, '', 'class="hud"');?><br /><br />
-		<?php echo form_button($inputs['submit']);?>
-	<?php echo form_close();?><br />
-</p>
+<?php echo text_output($text);?>
+
+<?php echo form_open('wiki/managepages/cleanup');?>
+	<?php echo form_dropdown('time', $time, '', 'class="hud"');?>

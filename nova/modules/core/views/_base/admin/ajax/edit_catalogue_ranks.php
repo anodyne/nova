@@ -75,16 +75,6 @@
 					<?php echo form_label($label['no'], 'rank_default_n');?>
 				</td>
 			</tr>
-			
-			<?php echo table_row_spacer(3, 20);?>
-			
-			<tr>
-				<td colspan="2"></td>
-				<td>
-					<?php echo form_hidden('id', $id);?>
-					<?php echo form_button($inputs['submit']);?>
-				</td>
-			</tr>
 		</tbody>
 	</table>
-<?php echo form_close();?>
+	<?php echo form_hidden('id', $id);?>
