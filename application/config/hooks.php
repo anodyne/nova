@@ -11,8 +11,3 @@
 */
 
 require_once MODPATH.'core/config/nova_hooks'.EXT;
-
-
-
-/* End of file hooks.php */
-/* Location: ./application/config/hooks.php */
