@@ -1,33 +1,33 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 /**
- * Update Nova from 1.2.x to 1.3
+ * Update Nova from 1.2.x to 2.0
  */
-$system_versions	= NULL;
-$system_info		= NULL;
-$add_tables			= NULL;
-$drop_tables		= NULL;
-$rename_tables		= NULL;
-$add_column			= NULL;
-$modify_column		= NULL;
-$drop_column		= NULL;
+$system_versions	= null;
+$system_info		= null;
+$add_tables			= null;
+$drop_tables		= null;
+$rename_tables		= null;
+$add_column			= null;
+$modify_column		= null;
+$drop_column		= null;
 
 /**
  * Version info for the database
  */
 $system_versions = array(
-	'version'			=> '1.3.0',
-	'version_major'		=> 1,
-	'version_minor'		=> 3,
+	'version'			=> '2.0.0',
+	'version_major'		=> 2,
+	'version_minor'		=> 0,
 	'version_update'	=> 0,
 	'version_date'		=> 1292889600,
-	'version_launch'	=> "Nova 1.3 is the third major update to Nova 1 and adds new functionality to the system to help admins manage their RPG. [...] More information about these features and a full changelog can be found at AnodyneDocs. This update is recommended for all users.",
+	'version_launch'	=> "You've spoken and we've listened. The feedback we constantly get about Nova is that it's great, but it's difficult to update. Nova 2 is all about fixing that very issue. With a brand new file structure, Nova 2 has never been easier to update (simply delete one folder and replace it with one from the zip archive). In addition, Nova 2 adds new functionality to the system to help admins manage their RPG. [...] More information about these features and a full changelog can be found at AnodyneDocs. This update is recommended for all users.",
 	'version_changes'	=> ""
 );
 
 $system_info = array(
 	'sys_last_update'		=> now(),
-	'sys_version_major'		=> 1,
-	'sys_version_minor'		=> 3,
+	'sys_version_major'		=> 2,
+	'sys_version_minor'		=> 0,
 	'sys_version_update'	=> 0
 );
 
@@ -58,13 +58,13 @@ $system_info = array(
 |---------------------------------------------------------------
 */
 
-if ($add_tables !== NULL)
+if ($add_tables !== null)
 {
 	foreach ($add_tables as $key => $value)
 	{
 		$this->dbforge->add_field($$value['fields']);
-		$this->dbforge->add_key($value['id'], TRUE);
-		$this->dbforge->create_table($key, TRUE);
+		$this->dbforge->add_key($value['id'], true);
+		$this->dbforge->create_table($key, true);
 	}
 }
 
@@ -76,7 +76,7 @@ if ($add_tables !== NULL)
 |---------------------------------------------------------------
 */
 
-if ($drop_tables !== NULL)
+if ($drop_tables !== null)
 {
 	foreach ($drop_tables as $value)
 	{
@@ -92,7 +92,7 @@ if ($drop_tables !== NULL)
 |---------------------------------------------------------------
 */
 
-if ($rename_tables !== NULL)
+if ($rename_tables !== null)
 {
 	foreach ($rename_tables as $key => $value)
 	{
@@ -128,7 +128,7 @@ $add_column = array(
 	)
 );
 
-if ($add_column !== NULL)
+if ($add_column !== null)
 {
 	foreach ($add_column as $key => $value)
 	{
@@ -150,7 +150,7 @@ if ($add_column !== NULL)
 |---------------------------------------------------------------
 */
 
-if ($modify_column !== NULL)
+if ($modify_column !== null)
 {
 	foreach ($modify_column as $key => $value)
 	{
@@ -168,7 +168,7 @@ if ($modify_column !== NULL)
 |---------------------------------------------------------------
 */
 
-if ($drop_column !== NULL)
+if ($drop_column !== null)
 {
 	foreach ($drop_column as $key => $value)
 	{
