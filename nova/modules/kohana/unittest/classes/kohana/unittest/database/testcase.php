@@ -2,13 +2,13 @@
 /**
  * TestCase for testing a database
  *
- * @package    Kohana/Unittest
+ * @package    Kohana/UnitTest
  * @author     Kohana Team
  * @author     BRMatt <matthew@sigswitch.com>
  * @copyright  (c) 2008-2009 Kohana Team
  * @license    http://kohanaphp.com/license
  */
-Abstract Class Kohana_Unittest_Database_TestCase extends PHPUnit_Extensions_Database_TestCase {
+abstract Class Kohana_Unittest_Database_TestCase extends PHPUnit_Extensions_Database_TestCase {
 
 	/**
 	 * Whether we should enable work arounds to make the tests compatible with phpunit 3.4
@@ -45,6 +45,11 @@ Abstract Class Kohana_Unittest_Database_TestCase extends PHPUnit_Extensions_Data
 	{
 		if(self::$_assert_type_compatability === NULL)
 		{
+			if( ! class_exists('PHPUnit_Runner_Version'))
+			{
+				require_once 'PHPUnit/Runner/Version.php';
+			}
+
 			self::$_assert_type_compatability = version_compare(PHPUnit_Runner_Version::id(), '3.5.0', '<=');
 		}
 		
