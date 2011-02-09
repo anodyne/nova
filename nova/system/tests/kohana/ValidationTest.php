@@ -6,13 +6,14 @@
  * @group kohana
  * @group kohana.validation
  *
- * @package    Unittest
+ * @package    Kohana
+ * @category   Tests
  * @author     Kohana Team
  * @author     BRMatt <matthew@sigswitch.com>
  * @copyright  (c) 2008-2011 Kohana Team
  * @license    http://kohanaframework.org/license
  */
-Class Kohana_ValidationTest extends Unittest_TestCase
+class Kohana_ValidationTest extends Unittest_TestCase
 {
 	/**
 	 * Tests Validation::factory()
@@ -233,6 +234,14 @@ Class Kohana_ValidationTest extends Unittest_TestCase
 				array('foo' => 'foo'),
 				FALSE,
 				array('foo' => '1.foo.is_string'),
+			),
+			// Test array rules use method as error name
+			array(
+				array('foo' => 'test'),
+				array('foo' => array(array(array('Valid', 'min_length'), array(':value', 10)))),
+				array(),
+				FALSE,
+				array('foo' => 'foo must be at least 10 characters long'),
 			),
 		);
 	}

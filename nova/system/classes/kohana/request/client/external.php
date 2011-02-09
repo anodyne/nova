@@ -93,29 +93,47 @@ class Kohana_Request_Client_External extends Request_Client {
 		$previous = Request::$current;
 		Request::$current = $request;
 
-		// If PECL_HTTP is present, use extension to complete request
-		if (extension_loaded('http'))
+		try
 		{
-			$this->_http_execute($request);
+			// If PECL_HTTP is present, use extension to complete request
+			if (extension_loaded('http'))
+			{
+				$this->_http_execute($request);
+			}
+			// Else if CURL is present, use extension to complete request
+			elseif (extension_loaded('curl'))
+			{
+				$this->_curl_execute($request);
+			}
+			// Else use the sloooow method
+			else
+			{
+				$this->_native_execute($request);
+			}
 		}
-		// Else if CURL is present, use extension to complete request
-		elseif (extension_loaded('curl'))
+		catch (Exception $e)
 		{
-			$this->_curl_execute($request);
+			// Restore the previous request
+			Request::$current = $previous;
+
+			if (isset($benchmark))
+			{
+				// Delete the benchmark, it is invalid
+				Profiler::delete($benchmark);
+			}
+
+			// Re-throw the exception
+			throw $e;
 		}
-		// Else use the sloooow method
-		else
-		{
-			$this->_native_execute($request);
-		}
+
+		// Restore the previous request
+		Request::$current = $previous;
 
 		if (isset($benchmark))
 		{
 			// Stop the benchmark
 			Profiler::stop($benchmark);
 		}
-
-		Request::$current = $previous;
 
 		// Cache the response if cache is available
 		if ($this->_cache instanceof Cache)
@@ -125,6 +143,35 @@ class Kohana_Request_Client_External extends Request_Client {
 
 		// Return the response
 		return $request->response();
+	}
+
+	/**
+	 * Set and get options for this request.
+	 *
+	 * @param   mixed    $key    Option name, or array of options
+	 * @param   mixed    $value  Option value
+	 * @return  mixed
+	 * @return  Request_Client_External
+	 */
+	public function options($key = NULL, $value = NULL)
+	{
+		if ($key === NULL)
+			return $this->_options;
+
+		if (is_array($key))
+		{
+			$this->_options = $key;
+		}
+		elseif ( ! $value)
+		{
+			return Arr::get($this->_options, $key);
+		}
+		else
+		{
+			$this->_options[$key] = $value;
+		}
+
+		return $this;
 	}
 
 	/**
@@ -148,6 +195,9 @@ class Kohana_Request_Client_External extends Request_Client {
 
 		// Create an http request object
 		$http_request = new HttpRequest($request->uri(), $http_method_mapping[$request->method()]);
+
+		// Set custom options
+		$http_request->setOptions($this->_options);
 
 		// Set headers
 		$http_request->setHeaders($request->headers()->getArrayCopy());
@@ -198,19 +248,14 @@ class Kohana_Request_Client_External extends Request_Client {
 		// Reset the headers
 		Request_Client_External::$_processed_headers = array();
 
-		// Load the default remote settings
-		$defaults = Kohana::config('remote')->as_array();
+		// Allow custom options to be set
+		$options = $this->_options;
 
-		if ( ! $this->_options)
-		{
-			// Use default options
-			$options = $defaults;
-		}
-		else
-		{
-			// Add default options
-			$options = $options + $defaults;
-		}
+		// Set the request method
+		$options[CURLOPT_CUSTOMREQUEST] = $request->method();
+
+		// Set the request body
+		$options[CURLOPT_POSTFIELDS] = $request->body();
 
 		// Process cookies
 		if ($cookies = $request->cookie())
@@ -293,6 +338,8 @@ class Kohana_Request_Client_External extends Request_Client {
 
 		// Create the context stream
 		$context = stream_context_create($options);
+
+		stream_context_set_option($context, $this->_options);
 
 		$stream = fopen($request->uri(), $mode, FALSE, $context);
 
