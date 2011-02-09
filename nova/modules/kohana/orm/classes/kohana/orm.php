@@ -42,7 +42,6 @@
  * @method ORM limit()
  * @method ORM offset()
  * @method ORM cached()
- * @method integer count_last_query()
  * @method Validation validation()
  *
  * @property string $object_name Name of the model
@@ -61,7 +60,7 @@
  * @property string $updated_column
  * @property string $created_column
  */
-class Kohana_ORM implements serializable {
+class Kohana_ORM extends Model implements serializable {
 
 	/**
 	 * Stores column information for ORM models
@@ -79,7 +78,6 @@ class Kohana_ORM implements serializable {
 		'and_where_close', 'or_where_close', 'distinct', 'select', 'from', 'join', 'on', 'group_by',
 		'having', 'and_having', 'or_having', 'having_open', 'and_having_open', 'or_having_open',
 		'having_close', 'and_having_close', 'or_having_close', 'order_by', 'limit', 'offset', 'cached',
-		'count_last_query'
 	);
 
 	/**
@@ -226,12 +224,6 @@ class Kohana_ORM implements serializable {
 	protected $_primary_key = 'id';
 
 	/**
-	 * Table primary value
-	 * @var string
-	 */
-	protected $_primary_val = 'name';
-
-	/**
 	 * Primary key value
 	 * @var mixed
 	 */
@@ -250,10 +242,16 @@ class Kohana_ORM implements serializable {
 	protected $_reload_on_wakeup = TRUE;
 
 	/**
-	 * Database configuration
+	 * Database Object
 	 * @var Database
 	 */
 	protected $_db = NULL;
+
+	/**
+	 * Database config group
+	 * @var String
+	 */
+	protected $_db_group = NULL;
 
 	/**
 	 * Database methods applied
@@ -343,7 +341,7 @@ class Kohana_ORM implements serializable {
 		if ( ! is_object($this->_db))
 		{
 			// Get database instance
-			$this->_db = Database::instance($this->_db);
+			$this->_db = Database::instance($this->_db_group);
 		}
 
 		if (empty($this->_table_name))
@@ -399,7 +397,8 @@ class Kohana_ORM implements serializable {
 	protected function _validation()
 	{
 		// Build the validation object with its rules
-		$this->_validation = Validation::factory($this->_object);
+		$this->_validation = Validation::factory($this->_object)
+			->bind(':model', $this);
 
 		foreach ($this->rules() as $field => $rules)
 		{
@@ -487,7 +486,9 @@ class Kohana_ORM implements serializable {
 
 		// Only reload the object if we have one to reload
 		if ($this->_loaded)
-			return $this->where($this->_primary_key, '=', $primary_key)->find();
+			return $this->clear()
+				->where($this->_table_name.'.'.$this->_primary_key, '=', $primary_key)
+				->find();
 		else
 			return $this->clear();
 	}
@@ -945,6 +946,9 @@ class Kohana_ORM implements serializable {
 	 */
 	public function find()
 	{
+		if ($this->_loaded)
+			throw new Kohana_Exception('Method find() cannot be called on loaded objects');
+
 		if ( ! empty($this->_load_with))
 		{
 			foreach ($this->_load_with as $alias)
@@ -966,6 +970,9 @@ class Kohana_ORM implements serializable {
 	 */
 	public function find_all()
 	{
+		if ($this->_loaded)
+			throw new Kohana_Exception('Method find_all() cannot be called on loaded objects');
+
 		if ( ! empty($this->_load_with))
 		{
 			foreach ($this->_load_with as $alias)
@@ -1116,11 +1123,11 @@ class Kohana_ORM implements serializable {
 	/**
 	 * Filters a value for a specific column
 	 *
-	 * @param  string $column The column name
+	 * @param  string $field  The column name
 	 * @param  string $value  The value to filter
 	 * @return string
 	 */
-	protected function run_filter($column, $value)
+	protected function run_filter($field, $value)
 	{
 		$filters = $this->filters();
 
@@ -1128,23 +1135,45 @@ class Kohana_ORM implements serializable {
 		$wildcards = empty($filters[TRUE]) ? array() : $filters[TRUE];
 
 		// Merge in the wildcards
-		$filters = empty($filters[$column]) ? $wildcards : array_merge($filters[$column], $wildcards);
+		$filters = empty($filters[$field]) ? $wildcards : array_merge($wildcards, $filters[$field]);
 
-		// Execute the filters
-		foreach ($filters as $filter => $params)
+		// Bind the field name and model so they can be used in the filter method
+		$_bound = array
+		(
+			':field' => $field,
+			':model' => $this,
+		);
+
+		foreach ($filters as $array)
 		{
-			// $params needs to be array() if NULL was specified
-			$params = (array) $params;
+			// Value needs to be bound inside the loop so we are always using the
+			// version that was modified by the filters that already ran
+			$_bound[':value'] = $value;
 
-			// Add the field value to the parameters
-			array_unshift($params, $value);
+			// Filters are defined as array($filter, $params)
+			$filter = $array[0];
+			$params = Arr::get($array, 1, array(':value'));
 
-			if (strpos($filter, '::') === FALSE)
+			foreach ($params as $key => $param)
+			{
+				if (is_string($param) AND array_key_exists($param, $_bound))
+				{
+					// Replace with bound value
+					$params[$key] = $_bound[$param];
+				}
+			}
+
+			if (is_array($filter) OR ! is_string($filter))
+			{
+				// This is either a callback as an array or a lambda
+				$value = call_user_func_array($filter, $params);
+			}
+			elseif (strpos($filter, '::') === FALSE)
 			{
 				// Use a function call
 				$function = new ReflectionFunction($filter);
 
-				// Call $function($value, $param, ...) with Reflection
+				// Call $function($this[$field], $param, ...) with Reflection
 				$value = $function->invokeArgs($params);
 			}
 			else
@@ -1155,7 +1184,7 @@ class Kohana_ORM implements serializable {
 				// Use a static method call
 				$method = new ReflectionMethod($class, $method);
 
-				// Call $Class::$method($value, $param, ...) with Reflection
+				// Call $Class::$method($this[$field], $param, ...) with Reflection
 				$value = $method->invokeArgs(NULL, $params);
 			}
 		}
@@ -1221,6 +1250,9 @@ class Kohana_ORM implements serializable {
 	 */
 	public function create(Validation $validation = NULL)
 	{
+		if ($this->_loaded)
+			throw new Kohana_Exception('Cannot create :model model because it is already loaded.', array(':model' => $this->_object_name));
+
 		// Require model validation before saving
 		if ( ! $this->_valid)
 		{
@@ -1272,6 +1304,9 @@ class Kohana_ORM implements serializable {
 	 */
 	public function update(Validation $validation = NULL)
 	{
+		if ( ! $this->_loaded)
+			throw new Kohana_Exception('Cannot update :model model because it is not loaded.', array(':model' => $this->_object_name));
+
 		if (empty($this->_changed))
 		{
 			// Nothing to update
@@ -1344,6 +1379,9 @@ class Kohana_ORM implements serializable {
 	 */
 	public function delete()
 	{
+		if ( ! $this->_loaded)
+			throw new Kohana_Exception('Cannot delete :model model because it is not loaded.', array(':model' => $this->_object_name));
+
 		// Use primary key value
 		$id = $this->pk();
 
@@ -1376,6 +1414,10 @@ class Kohana_ORM implements serializable {
 
 		// We need an array to simplify the logic
 		$far_keys = (array) $far_keys;
+
+		// Nothing to check if the model isn't loaded or we don't have any far_keys
+		if ( ! $far_keys OR ! $this->_loaded)
+			return FALSE;
 
 		$count = (int) DB::select(array('COUNT("*")', 'records_found'))
 			->from($this->_has_many[$alias]['through'])
@@ -1470,6 +1512,15 @@ class Kohana_ORM implements serializable {
 				// Ignore any selected columns for now
 				$selects[] = $method;
 				unset($this->_db_pending[$key]);
+			}
+		}
+
+		if ( ! empty($this->_load_with))
+		{
+			foreach ($this->_load_with as $alias)
+			{
+				// Bind relationship
+				$this->with($alias);
 			}
 		}
 
