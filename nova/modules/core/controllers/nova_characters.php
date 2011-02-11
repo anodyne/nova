@@ -702,7 +702,7 @@ abstract class Nova_characters extends Nova_controller_admin {
 		Auth::check_access();
 		
 		// sanity check
-		$data['id'] = (is_numeric($id)) ? $id : false;
+		$id = (is_numeric($id)) ? $id : false;
 		
 		// grab the access level
 		$data['level'] = Auth::get_access_level();
@@ -713,8 +713,10 @@ abstract class Nova_characters extends Nova_controller_admin {
 		}
 		elseif ( ! $id and count($this->session->userdata('characters')) <= 1)
 		{
-			$data['id'] = $this->session->userdata('main_char');
+			$id = $this->session->userdata('main_char');
 		}
+		
+		$data['id'] = $id;
 		
 		$allowed = false;
 		
