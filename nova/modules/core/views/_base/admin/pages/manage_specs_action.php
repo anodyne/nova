@@ -70,7 +70,7 @@
 		<ul id="list-grid">
 		<?php if (is_array($inputs['images']) && count($inputs['images']) > 0): ?>
 			<?php foreach ($inputs['images'] as $i): ?>
-				<?php $image = array('src' => base_url() . asset_location('images/specs', $i), 'width' => 130);?>
+				<?php $image = array('src' => base_url().Location::asset('images/specs', $i), 'width' => 130);?>
 				<li id="img_<?php echo str_replace('.', '\\.', $i);?>"><a href="#" class="image upload-close" remove="<?php echo str_replace('.', '\\.', $i);?>">x</a><?php echo img($image);?></li>
 			<?php endforeach;?>
 		<?php endif;?>

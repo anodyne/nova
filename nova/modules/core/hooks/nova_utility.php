@@ -91,7 +91,7 @@ abstract class Nova_utility {
 					
 					if ($sysadmin === FALSE)
 					{
-						$view = view_location('maintenance', $ci->settings->get_setting('skin_login'), 'login');
+						$view = Location::view('maintenance', $ci->settings->get_setting('skin_login'), 'login');
 						
 						if (file_exists(APPPATH .'views/'. $view .'.php'))
 						{

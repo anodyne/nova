@@ -275,7 +275,7 @@ abstract class Nova_upload extends Nova_controller_admin {
 				
 				$data['directory'][$d->upload_resource_type][$d->upload_id] = array(
 					'image' => array(
-						'src' => asset_location($location, $d->upload_filename),
+						'src' => Location::asset($location, $d->upload_filename),
 						'alt' => $d->upload_filename,
 						'class' => 'image image-height-100'),
 					'check' => array(

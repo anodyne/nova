@@ -386,7 +386,7 @@ abstract class Nova_admin extends Nova_controller_admin {
 		$js_data['version'] = (isset($check['update']['version'])) ? $check['update']['version'] : '';
 		
 		$data['loader'] = array(
-			'src' => img_location('loading-bar.gif', $this->skin, 'admin'),
+			'src' => Location::img('loading-bar.gif', $this->skin, 'admin'),
 			'alt' => lang('actions_loading'),
 		);
 		

@@ -217,7 +217,7 @@ abstract class Nova_manage extends Nova_controller_admin {
 				{
 					$data['directory'][$d->upload_id] = array(
 						'image' => array(
-							'src' => asset_location('images/awards', $d->upload_filename),
+							'src' => Location::asset('images/awards', $d->upload_filename),
 							'alt' => $d->upload_filename,
 							'class' => 'image'),
 						'file' => $d->upload_filename,
@@ -243,7 +243,7 @@ abstract class Nova_manage extends Nova_controller_admin {
 					$data['awards'][$a->award_id] = array(
 						'id' => $a->award_id,
 						'img' => array(
-							'src' => asset_location('images/awards', $a->award_image),
+							'src' => Location::asset('images/awards', $a->award_image),
 							'alt' => $a->award_name,
 							'class' => 'image'),
 						'name' => $a->award_name,
@@ -1879,10 +1879,6 @@ abstract class Nova_manage extends Nova_controller_admin {
 			);
 			
 			$data['header'] = ucwords(lang('actions_manage') .' '. lang('global_personallogs'));
-			
-			// figure out where the view should be coming from
-			$view_loc = view_location('manage_logs', $this->skin, 'admin');
-			$js_loc = js_location('manage_logs_js', $this->skin, 'admin');
 		}
 		
 		$this->_regions['content'] = Location::view('manage_logs', $this->skin, 'admin', $data);
@@ -2034,10 +2030,6 @@ abstract class Nova_manage extends Nova_controller_admin {
 				);
 			}
 		}
-		
-		// figure out where the view should be coming from
-		$view_loc = view_location('manage_missiongroups', $this->skin, 'admin');
-		$js_loc = js_location('manage_missiongroups_js', $this->skin, 'admin');
 		
 		$data['header'] = ucwords(lang('actions_manage') .' '. lang('global_mission') .' '. lang('labels_groups'));
 		$data['text'] = sprintf(
@@ -2366,7 +2358,7 @@ abstract class Nova_manage extends Nova_controller_admin {
 				{
 					$data['directory'][$d->upload_id] = array(
 						'image' => array(
-							'src' => asset_location('images/missions', $d->upload_filename),
+							'src' => Location::asset('images/missions', $d->upload_filename),
 							'alt' => $d->upload_filename,
 							'class' => 'image image-height-100'),
 						'file' => $d->upload_filename,
@@ -3809,7 +3801,7 @@ abstract class Nova_manage extends Nova_controller_admin {
 			foreach ($allranks->result() as $allrank)
 			{
 				$data['allranks'][$allrank->rankcat_location] = array(
-					'src' => rank_location(
+					'src' => Location::rank(
 						$allrank->rankcat_location,
 						$allrank->rankcat_preview,
 						''),
@@ -3823,7 +3815,7 @@ abstract class Nova_manage extends Nova_controller_admin {
 						if ($allclass->rank_class > 0 and $allrank->rankcat_location == $set)
 						{
 							$data['allclasses'][$allclass->rank_class] = array(
-								'src' => rank_location(
+								'src' => Location::rank(
 									$allrank->rankcat_location,
 									$allclass->rank_image,
 									$allrank->rankcat_extension),
@@ -4225,7 +4217,7 @@ abstract class Nova_manage extends Nova_controller_admin {
 				{
 					$data['directory'][$d->upload_id] = array(
 						'image' => array(
-							'src' => asset_location('images/specs', $d->upload_filename),
+							'src' => Location::asset('images/specs', $d->upload_filename),
 							'alt' => $d->upload_filename,
 							'class' => 'image image-height-100'),
 						'file' => $d->upload_filename,
@@ -4642,7 +4634,7 @@ abstract class Nova_manage extends Nova_controller_admin {
 				{
 					$data['directory'][$d->upload_id] = array(
 						'image' => array(
-							'src' => asset_location('images/tour', $d->upload_filename),
+							'src' => Location::asset('images/tour', $d->upload_filename),
 							'alt' => $d->upload_filename,
 							'class' => 'image image-height-100'),
 						'file' => $d->upload_filename,
