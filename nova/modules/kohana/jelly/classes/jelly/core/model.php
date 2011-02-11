@@ -344,6 +344,12 @@ abstract class Jelly_Core_Model
 			               ? $this->_changed[$field->name]
 			               : $this->_original[$field->name];
 
+			// Set an empty value to NULL for deleting relationships
+			if (($field instanceof Jelly_Field_HasMany OR $field instanceof Jelly_Field_ManyToMany) AND empty($value))
+			{
+				$value = NULL;
+			}
+
 			// Ensure data is really changed
 			if ($value === $current_value)
 			{
@@ -491,7 +497,7 @@ abstract class Jelly_Core_Model
 		// Run validation
 		if ( ! $this->validate($key))
 		{
-			throw new Validate_Exception($this->validator());
+			throw new Validation_Exception($this->validator());
 		}
 
 		// These will be processed later
@@ -844,7 +850,6 @@ abstract class Jelly_Core_Model
 		{
 			$current = $this->_changed[$name];
 		}
-
 		$changes = $this->_ids($models);
 
 		// Are we adding or removing?

@@ -10,7 +10,7 @@ Jelly query builder on a per-model basis. For example, if you need to define
 an 'active' user as one who has logged in in the last 3 months, you could do
 something like this:
 
-	$active_users = Jelly::select('user')->where('last_login', '>', strtotime('-3 month'))->execute();
+	$active_users = Jelly::query('user')->where('last_login', '>', strtotime('-3 month'))->execute();
 
 But you don't want to put this directly in your controller as it is business
 logic. Moreover, if you want to change your definition of 'active' later, you
@@ -36,7 +36,7 @@ Our active users example before is solved thus:
 	}
 
 	// Now we can do this
-	$active_users = Jelly::select('user')->active()->execute();
+	$active_users = Jelly::query('user')->active()->execute();
 
 We can also now chain our custom defined methods if necessary.
 

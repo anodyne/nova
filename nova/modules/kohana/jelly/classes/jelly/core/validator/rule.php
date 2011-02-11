@@ -5,8 +5,18 @@
  *
  * @package Jelly
  */
-class Jelly_Core_Validator_Rule extends Jelly_Validator_Callback
+class Jelly_Core_Validator_Rule
 {
+	/**
+	 * @var  callback  The callback that will be called
+	 */
+	protected $_callback = NULL;
+
+	/**
+	 * @var  array  Any params that will be added to the callback
+	 */
+	protected $_params = NULL;
+
 	/**
 	 * @var  array  Original parameters, used for generating error params
 	 */
@@ -24,18 +34,18 @@ class Jelly_Core_Validator_Rule extends Jelly_Validator_Callback
 	 */
 	public function __construct($callback, array $params = NULL)
 	{
-		$params = $params ? $params : array();
+		if ($params === NULL)
+		{
+			// Default to array(':value')
+			$params = array(':value');
+		}
 		
 		// Save the original parameters for the potential error messe
 		$this->_original_params = $params;
-		
-		// Check the parameters to see if we need to add ':value'
-		if ( ! in_array(':value', $params))
-		{
-			array_unshift($params, ':value');
-		}
-		
-		parent::__construct($callback, $params);
+
+		// Set callback and params
+		$this->_callback = $callback;
+		$this->_params   = $params;
 	}
 	
 	/**
@@ -43,16 +53,20 @@ class Jelly_Core_Validator_Rule extends Jelly_Validator_Callback
 	 * 
 	 * For rules, an error is added to the validation array if FALSE is returned.
 	 *
-	 * @param   Validate $validate 
+	 * @param   Validation $validation
 	 * @return  mixed
 	 */
-	public function call(Validate $validate)
+	public function call(Validation $validation)
 	{
-		if (parent::call($validate) === FALSE)
+		// Contextualize the callback and parameters
+		list($callback, $params) = $this->_contextualize($validation);
+
+		// Simply call the method
+		if (call_user_func_array($callback, $params) === FALSE)
 		{
 			// Determine the name of the error based on the callback
 			$error = is_array($this->_callback) ? $this->_callback[1] : $this->_callback;
-			
+
 			$params = array();
 			$i = 1;
 			
@@ -73,7 +87,7 @@ class Jelly_Core_Validator_Rule extends Jelly_Validator_Callback
 					// if $key is not a string, which indicates it should be used as a message
 					if ( ! is_string($key))
 					{
-						$param = $this->_replace_context($validate, $param);
+						$param = $this->_replace_context($validation, $param);
 					}
 				}
 				
@@ -96,12 +110,61 @@ class Jelly_Core_Validator_Rule extends Jelly_Validator_Callback
 			// Ensure :value is passed to the params
 			if ( ! isset($params[':value']))
 			{
-				$params[':value'] = $validate->context('value');
+				$params[':value'] = $validation->context('value');
 			}
 			
 			// Add it to the list
-			$validate->error($validate->context('field'), $error, $params);
+			$validation->error($validation->context('field'), $error, $params);
 		}
+	}
+
+	/**
+	 * Returns a callback and parameter list with contexts replaced.
+	 *
+	 * @param   Validation  $validation
+	 * @return  array
+	 */
+	protected function _contextualize(Validation $validation)
+	{
+		// Copy locally, because we don't want
+		// to go mucking with the originals
+		$callback = $this->_callback;
+		$params   = $this->_params;
+
+		// Check for a context to replace on the callback object
+		if (is_array($callback) AND isset($callback[0]))
+		{
+			$callback[0] = $this->_replace_context($validation, $callback[0]);
+		}
+
+		// Replace all param contexts
+		foreach ((array)$params as $key => $param)
+		{
+			$params[$key] = $this->_replace_context($validation, $param);
+		}
+
+		return array($callback, $params);
+	}
+
+	/**
+	 * Replaces a context with its actual replacement.
+	 *
+	 * If $key is not a string or does not start with ':'
+	 * the key is simply returned.
+	 *
+	 * @param   Validation  $validation
+	 * @param   mixed     $key
+	 * @return  mixed
+	 */
+	protected function _replace_context(Validation $validation, $key)
+	{
+		// Ensure we actually have a potentially valid context
+		if ( ! is_string($key) OR substr($key, 0, 1) !== ':')
+		{
+			return $key;
+		}
+
+		return $validation->context(substr($key, 1));
 	}
 
 } // End Kohana_Validate_Rule

@@ -13,23 +13,23 @@ First, let's start with a sample model:
 			// An optional database group you want to use
 			$meta->db('default');
 			
-			// The table the model is attached to.
+			// The table the model is attached to
 			// It defaults to the name of the model pluralized
 			$meta->table('posts');
 		
 			// Fields defined by the model
 			$meta->fields(array(
-				'id'      => new Jelly_Field_Primary,
-				'name'    => new Jelly_Field_String,
-				'body'    => new Jelly_Field_Text,
-				'status'  => new Jelly_Field_Enum(array(
+				'id'      => Jelly::field('primary'),
+				'name'    => Jelly::field('string'),
+				'body'    => Jelly::field('text'),
+				'status'  => Jelly::field('enum', array(
 					'choices' => array('draft', 'review', 'published')
 				)),
 				
 				// Relationships to other models
-				'author'   => new Jelly_Field_BelongsTo,
-				'comments' => new Jelly_Field_HasMany,
-				'tags'     => new Jelly_Field_ManyToMany,
+				'author'   => Jelly::field('belongsto'),
+				'comments' => Jelly::field('hasmany'),
+				'tags'     => Jelly::field('manytomany'),
 			));
 		}
 	}
@@ -44,11 +44,9 @@ The `initialize()` method is only called once per execution for each model and t
 
 ## Jelly Fields
 
-Jelly defines [many field objects](jelly.field-types) that cover the most common types of columns used in database tables.
+Jelly defines [many field objects](field-types) that cover the most common types of columns used in database tables.
 
 In Jelly, the field objects contain all the logic for retrieving, setting and saving database values.
 
 Since all relationships are handled through relationship fields, it is possible to implement custom, complex relationship
-logic in a model by [defining a custom field](jelly.extending-field).
-
-### Next [Loading and listing records](jelly.loading-and-listing)
+logic in a model by [defining a custom field](extending-field).

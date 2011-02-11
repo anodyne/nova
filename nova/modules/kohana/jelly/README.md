@@ -1,3 +1,13 @@
+IMPORTANT
+========
+
+Docs will be updated in February.
+The included Auth driver is the official [Kohana ORM](https://github.com/kohana/orm) Auth driver modified for Jelly.
+
+---
+
+
+
 Jelly is a nice little ORM for Kohana. It is currently in beta.
 
  * [View the user guide](http://jelly.jonathan-geiger.com/docs/jelly.getting-started)

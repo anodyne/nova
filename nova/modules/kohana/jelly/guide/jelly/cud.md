@@ -31,27 +31,21 @@ Because the model is loaded, Jelly knows that you want to update, rather than in
 	$post->name = 'A new name!';
 	$post->save();
 
-##### Example - Updating a record without having to load it
-
-Notice that we pass a primary key to save(). This updates the record, even if it isn't loaded.
-
-	$post = Jelly::factory('post');
-	$post->name = $new_name;
-	$post->save($id);
-
 ##### Example - Saving a record from $_POST data
 
-There is a shortcut provided for populating data in a newly instantiated model, which is useful for form processing:
-
-	Jelly::factory('post', $_POST)->save();
-
-However, one must take care to only insert the keys that are wanted, otherwise
+One must take care to only insert the keys that are wanted, otherwise
 there are significant security implications. For example, inserting the POST
 data directly would allow an attacker to update fields that weren't
 necessarily in the form.
 
-	// Extract the useful keys first
+	// Create emptymodel
+	$model = Jelly::factory('post');
+
+	// Extract the useful keys
 	$model->set(Arr::extract($_POST, array('keys', 'to', 'use')));
+
+	// Save model
+	$model->save();
 
 ### Delete
 
@@ -62,11 +56,3 @@ method on a model. The number of affected rows (1 or 0) will be returned.
 
 	$post = Jelly::query('post', 1)->select();
 	$post->delete();
-
-##### Example - Deleting a record without having to load it
-
-	// Notice we specify a unique_key for delete()
-	Jelly::factory('post')->delete($id);
-
-
-## Next [Accessing and managing relationships](jelly.relationships)

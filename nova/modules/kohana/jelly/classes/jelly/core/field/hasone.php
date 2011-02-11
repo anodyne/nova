@@ -5,7 +5,7 @@
  *
  * @package  Jelly
  */
-abstract class Jelly_Core_Field_HasOne extends Jelly_Field implements Jelly_Field_Supports_With
+abstract class Jelly_Core_Field_HasOne extends Jelly_Field implements Jelly_Field_Supports_With, Jelly_Field_Supports_Save
 {
 	/**
 	 * @var  boolean  False, since this field does not map directly to a column
@@ -138,7 +138,7 @@ abstract class Jelly_Core_Field_HasOne extends Jelly_Field implements Jelly_Fiel
 		     ->update();
 
 		// Set the new relations
-		if ( ! empty($value) AND is_array($value))
+		if ( ! empty($value))
 		{
 			// Update the ones in our list
 			Jelly::query($this->foreign['model'])

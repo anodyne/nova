@@ -17,8 +17,6 @@ abstract class Jelly_Core_Validator extends Validation
 		'filter'   => array(),
 		// Rules which verify a value
 		'rule'     => array(),
-		// Custom callbacks
-		'callback' => array(),
 	);
 	
 	/**
@@ -30,7 +28,7 @@ abstract class Jelly_Core_Validator extends Validation
 	 * @var  array  Fields that are required and will have all rules processed
 	 */
 	protected $_required = array();
-	
+
 	/**
 	 * Add a filter to a field. Each filter will be executed once.
 	 *
@@ -64,9 +62,9 @@ abstract class Jelly_Core_Validator extends Validation
 	 * @param   array   extra parameters for the callback
 	 * @return  $this
 	 */
-	public function rule($field, $callback, array $params = NULL)
+	public function rule($field, $rule, array $params = NULL)
 	{
-		return $this->_add('rule', $field, array(array($callback, $params)));
+		return $this->_add('rule', $field, array(array($rule, $params)));
 	}
 
 	/**
@@ -79,31 +77,6 @@ abstract class Jelly_Core_Validator extends Validation
 	public function rules($field, array $rules)
 	{
 		return $this->_add('rule', $field, $rules);
-	}
-	
-	/**
-	 * Add a callback to a field. Each callback will be executed once.
-	 *
-	 * @param   string  field name
-	 * @param   mixed   valid PHP callback
-	 * @param   array   extra parameters for the callback
-	 * @return  $this
-	 */
-	public function callback($field, $callback, array $params = NULL)
-	{
-		return $this->_add('callback', $field, array(array($callback, $params)));
-	}
-
-	/**
-	 * Adds multiple callbacks to a field.
-	 *
-	 * @param   string  field name
-	 * @param   array   array of callbacks
-	 * @return  $this
-	 */
-	public function callbacks($field, array $callbacks)
-	{
-		return $this->_add('callback', $field, $callbacks);
 	}
 	
 	/**
@@ -175,7 +148,7 @@ abstract class Jelly_Core_Validator extends Validation
 
 		// Only validate passed data
 		$expected = array_keys($this->getArrayCopy());
-		
+
 		// Import the validators locally
 		$validate = $this->_validate;
 
@@ -221,7 +194,7 @@ abstract class Jelly_Core_Validator extends Validation
 					if ( ! isset($this->_required[TRUE]) AND ! isset($this->_required[$field]))
 					{
 						// It's not required, so if it's empty we skip all rules
-						if ( ! Validation::rule($this[$field], 'not_empty'))
+						if ( ! Valid::not_empty($this[$field]))
 						{
 							continue;
 						}
@@ -242,7 +215,7 @@ abstract class Jelly_Core_Validator extends Validation
 						'field'    => $field,
 						'callback' => $callback,
 						'value'    => $this[$field],
-						'validate' => $this,
+						'validation' => $this,
 					));
 					
 					// Call
@@ -385,7 +358,7 @@ abstract class Jelly_Core_Validator extends Validation
 		// Set the field label to the field name if it doesn't exist
 		if ($field !== TRUE AND ! isset($this->_labels[$field]))
 		{
-			$this->_labels[$field] = inflector::humanize($field);
+			$this->_labels[$field] = preg_replace('/[^\pL]+/u', ' ', $field);
 		}
 		
 		// The class we'll be converting all callbacks to
@@ -403,8 +376,11 @@ abstract class Jelly_Core_Validator extends Validation
 			$callback = $set[0];
 			$params   = isset($set[1]) ? $set[1] : NULL;
 			
+			// Class for checking callable callbacks
+			$valid_class = new Valid;
+
 			// Are we supposed to convert this to a callback of this class?
-			if (is_string($callback) AND is_callable(array(get_class($this), $callback)))
+			if (is_string($callback) AND is_callable(array($valid_class, $callback)))
 			{
 				// Is the method one that marks the field as required?
 				if (in_array($callback, $this->_empty_rules))
@@ -413,15 +389,15 @@ abstract class Jelly_Core_Validator extends Validation
 				}
 				
 				// Test to see if the method is static or not
-				$method = new ReflectionMethod(get_class($this), $callback);
+				$method = new ReflectionMethod($valid_class, $callback);
 				
 				if ($method->isStatic())
 				{
-					$callback = array(get_class($this), $callback);
+					$callback = array($valid_class, $callback);
 				}
 				else
 				{
-					$callback = array(':validate', $callback);
+					$callback = array(':validation', $callback);
 				}
 			}
 			

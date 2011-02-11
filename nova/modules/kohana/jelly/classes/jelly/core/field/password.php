@@ -22,31 +22,31 @@ abstract class Jelly_Core_Field_Password extends Jelly_Field_String
 	 *
 	 * @param  array  $options 
 	 */
-	public function __construct($options = array())
+	public function initialize($model, $column)
 	{
-		parent::__construct($options);
-		
-		// Add a callback that hashes the password when validating
-		$this->callbacks[] = array(array($this, 'hash'), array(':validate', ':model'));
+		parent::initialize($model, $column);
+
+		// Add a rule that hashes the password when validating
+		$this->rules[] = array(array($this, 'hash'), array(':validation', ':model'));
 	}
 
 	/**
 	 * Hashes the password only if it's changed
 	 *
-	 * @param   Jelly_Validator  $validate 
+	 * @param   Jelly_Validator  $validation
 	 * @param   Jelly_Model      $model 
 	 * @return  void
 	 */
-	public function hash(Jelly_Validator $validate, Jelly_Model $model)
+	public function hash(Jelly_Validator $validation, Jelly_Model $model)
 	{
 		// No point in continuing with errors
-		if ($validate->errors()) return;
+		if ($validation->errors()) return;
 		
 		// Do we need to hash the password?
 		if ($this->hash_with AND $model->changed($this->name))
 		{
 			// Verify value has changed
-			$validate[$this->name] = call_user_func($this->hash_with, $validate[$this->name]);
+			$validation[$this->name] = call_user_func($this->hash_with, $validation[$this->name]);
 		}
 	}
 }

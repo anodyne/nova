@@ -9,4 +9,4 @@ this, you will need to look at the `Jelly_Field_Behavior_*` interfaces which
 allow fields to specify that they can be used by methods like `with()`,
 `has()`, or `add()` and `remove()`.
 
-More detailed in for now can be found in the [API docs](api/Jelly_Field_Behavior).
+More detailed in for now can be found in the [API docs](../api/Jelly_Behavior).

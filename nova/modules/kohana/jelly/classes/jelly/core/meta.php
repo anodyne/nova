@@ -413,40 +413,39 @@ abstract class Jelly_Core_Meta
 
 		return $this->field($name)->default;
 	}
-	
+
 	/**
 	 * Gets the validator attached to the model.
-	 * 
-	 * @param   Jelly_Model $model 
-	 * @param   array       $data 
-	 * @param   boolean     $new 
+	 *
+	 * @param   Jelly_Model $model
+	 * @param   array       $data
+	 * @param   boolean     $new
 	 * @return  Jelly_Validator
 	 */
 	public function validator(array $data, $new = FALSE)
 	{
 		// Allow returning an empty validator
-		if ($new) 
+		if ($new)
 		{
 			return new Jelly_Validator($data);
 		}
-		
+
 		// Create a default validator so we don't have to go through
 		// recreating all of the filters and such, which is an expensive process.
 		if ( ! $this->_validator)
 		{
 			// Create our default validator, which we will clone from
 			$this->_validator = new Jelly_Validator($data);
-			
+
 			// Add our filters, rules, and callbacks
 			foreach ($this->_fields as $name => $field)
 			{
 				$this->_validator->label($name, $field->label);
 				$this->_validator->filters($name, $field->filters);
 				$this->_validator->rules($name, $field->rules);
-				$this->_validator->callbacks($name, $field->callbacks);
 			}
 		}
-		
+
 		// Return a copy to prevent mucking with the original validator
 		return $this->_validator->copy($data);
 	}

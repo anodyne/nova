@@ -39,7 +39,7 @@ ______________
 
 #### Validation properties
 
-The following properties are available to all of the field types and mostly relate to validation. There is a more in-depth discussion of these properties on [the validation documentation](jelly.validation).
+The following properties are available to all of the field types and mostly relate to validation. There is a more in-depth discussion of these properties on [the validation documentation](validation).
 
 **`unique`** — A shortcut property for validating that the field's data is unique in the database.
 
@@ -59,7 +59,7 @@ These fields represent an actual data type that exists in the database. Extra co
 
 Represents a primary key. Each model can only have one primary key.
 
-[API documentation](api/Jelly_Field_Primary)
+[API documentation](../api/Jelly_Field_Primary)
 
 ______________
 
@@ -67,7 +67,7 @@ ______________
 
 Represents an integer. `NULL` values are allowed by default on integer fields.
 
-[API documentation](api/Jelly_Field_Integer)
+[API documentation](../api/Jelly_Field_Integer)
 
 ______________
 
@@ -77,7 +77,7 @@ Represents an integer. `NULL` values are allowed by default on integer fields.
 
  * **`places`** — Set to an integer to automatically round the value to the proper number of places.
 
-[API documentation](api/Jelly_Field_Integer)
+[API documentation](../api/Jelly_Field_Integer)
 
 ______________
 
@@ -85,7 +85,7 @@ ______________
 
 Represents a string of any length. `NULL` values are not allowed by default on this field and are simply converted to an empty string.
 
-[API documentation](api/Jelly_Field_String)
+[API documentation](../api/Jelly_Field_String)
 
 ______________
 
@@ -93,7 +93,7 @@ ______________
 
 Currently, this field behaves exactly the same as `Jelly_Field_String`. 
 
-[API documentation](api/Jelly_Field_Text)
+[API documentation](../api/Jelly_Field_Text)
 
 ______________
 
@@ -106,7 +106,7 @@ Represents a boolean. In the database, it is usually represented by a `tinyint`.
 
 [!!] An exception will be thrown if you try to set `convert_empty` to `TRUE` on this field. 
 
-[API documentation](api/Jelly_Field_Boolean)
+[API documentation](../api/Jelly_Field_Boolean)
 
 ______________
 
@@ -118,7 +118,7 @@ If you `allow_null` on this field, `NULL` will be added to the choices array if 
 
  * **`choices`** — An array of valid choices.
 
-[API documentation](api/Jelly_Field_Enum)
+[API documentation](../api/Jelly_Field_Enum)
 
 ______________
 
@@ -130,7 +130,7 @@ Represents a timestamp. This field always returns its value as a UNIX timestamp,
  * **`auto_now_create`** — If TRUE, the value will save `now()` whenever INSERTing.
  * **`auto_now_update`** — If TRUE, the field will save `now()` whenever UPDATEing.
 
-[API documentation](api/Jelly_Field_Timestamp)
+[API documentation](../api/Jelly_Field_Timestamp)
 
 ### Special fields
 
@@ -140,7 +140,7 @@ These fields still represent actual columns in the database but might do special
 
 Represents a slug, commonly used in URLs. Any value passed to this will be converted to a lowercase string, will have spaces, dashes, and underscores converted to dashes, and will be stripped of any non-alphanumeric characters (other than dashes).
 
-[API documentation](api/Jelly_Field_Slug)
+[API documentation](../api/Jelly_Field_Slug)
 
 ______________
 
@@ -148,7 +148,7 @@ ______________
 
 Represents any serialized data. Any serialized data in the database is unserialized before it's retrieved. Likewise, any data set on the field is serialized before it's saved.
 
-[API documentation](api/Jelly_Field_Serialized)
+[API documentation](../api/Jelly_Field_Serialized)
 
 ______________
 
@@ -156,7 +156,7 @@ ______________
 
 Represents an email. This automatically sets a validation rule that verifies it is a valid email address.
 
-[API documentation](api/Jelly_Field_Email)
+[API documentation](../api/Jelly_Field_Email)
 
 ______________
 
@@ -166,7 +166,7 @@ Represents an password. This automatically sets a validation callback that hashe
 
  * **`hash_with`** — A valid PHP callback to use for hashing the password. Defaults to `sha1`.
 
-[API documentation](api/Jelly_Field_Password)
+[API documentation](../api/Jelly_Field_Password)
 
 ______________
 
@@ -176,13 +176,13 @@ This field is a rather abstract type that allows you to pull a database expressi
 
 For example, if you always wanted the field to return a concatenation of two columns in the database, you can do this:
  
-	'field' => new Jelly_Field_Expression('array(
+	'field' => Jelly::field('expression', array(
 	      'column' => DB::expr("CONCAT(`first_name`, ' ', `last_name`)")
 	))
  
 [!!] Keep in mind that aliasing breaks down in Database_Expressions.
 
-[API documentation](api/Jelly_Field_Expression)
+[API documentation](../api/Jelly_Field_Expression)
 
 ______________
 
@@ -198,7 +198,7 @@ You must be careful not to pass `NULL` or some other value to this field if you 
  * **`delete_old_file`** — Whether or not to delete the old file when a new one is successfully uploaded. Defaults to `FALSE`.
  * **`types`** — Valid file extensions that the file may have.
 
-[API documentation](api/Jelly_Field_File)
+[API documentation](../api/Jelly_Field_File)
 
 #### `Jelly_Field_Image`
 
@@ -206,7 +206,7 @@ Represents an image upload. This behaves almost exactly the same as `Jelly_Field
 
 Here is an example illustrating the `thumbnails` property. All properties are optional:
 
-	new Jelly_Field_Image(array(
+	Jelly::field('image', array(
 		// ...set your other properties...
 		'thumbnails' => array (
 			// 1st thumbnail
@@ -233,11 +233,11 @@ Here is an example illustrating the `thumbnails` property. All properties are op
  * **`delete_old_file`** — Whether or not to delete the old files when a new image is successfully uploaded. Defaults to `FALSE`.
  * **`types`** — Valid file extensions that the file may have. Defaults to allowing JPEGs, GIFs, and PNGs.
 
-[API documentation](api/Jelly_Field_Image)
+[API documentation](../api/Jelly_Field_Image)
 
 ### Relationship fields
 
-These fields have been [documented elsewhere](jelly.relationships) since they encompass a large portion of Jelly's functionality.
+These fields have been [documented elsewhere](relationships) since they encompass a large portion of Jelly's functionality.
 
 ______________
 
@@ -245,4 +245,4 @@ ______________
 
 Since field objects in Jelly manage almost every aspect of setting and getting
 data for that model property, you can achieve powerful and custom model
-behavior by [extending the basic field types](jelly.extending-field).
+behavior by [extending the basic field types](extending-field).

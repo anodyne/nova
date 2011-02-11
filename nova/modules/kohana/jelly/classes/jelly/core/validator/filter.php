@@ -35,15 +35,15 @@ class Jelly_Core_Validator_Filter extends Jelly_Validator_Callback
 	 * 
 	 * For filters, the value returned replaces the value in the validation array.
 	 *
-	 * @param   Validate $validate 
+	 * @param   Validation $validation
 	 * @return  mixed
 	 */
-	public function call(Validate $validate)
+	public function call(Validation $validation)
 	{
-		$field = $validate->context('field');
+		$field = $validation->context('field');
 		
 		// Replace the current value with that which is returned
-		$validate[$field] = parent::call($validate);
+		$validation[$field] = parent::call($validation);
 	}
 
 } // End Kohana_Validate_Filter

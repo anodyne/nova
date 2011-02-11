@@ -64,6 +64,6 @@ In this case, you specify a model before the meta-alias to pull it from.
 
 ## Changing your meta-aliases
 
-Your model's primary\_key, name\_key, and foreign\_key are all defined in your initialize() method. More information can be found in the [API documentation for Jelly_Meta](api/Jelly_Meta).
+Your model's primary\_key, name\_key, and foreign\_key are all defined in your initialize() method. More information can be found in the [API documentation for Jelly_Meta](../api/Jelly_Meta).
 
-The unique\_key is a special case since a value is passed to it so that it can determine the proper field to use. To change its behaviour you must [create your model specific Jelly\_Builder](jelly.extending-builder).
+The unique\_key is a special case since a value is passed to it so that it can determine the proper field to use. To change its behaviour you must [create your model specific Jelly\_Builder](extending-builder).

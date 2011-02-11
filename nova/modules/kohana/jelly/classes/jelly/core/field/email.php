@@ -21,6 +21,9 @@ abstract class Jelly_Core_Field_Email extends Jelly_Field_String
 	{
 		parent::initialize($model, $column);
 
-		$this->rules += array('email' => NULL);
+		if ( ! isset($this->rules['email']))
+		{
+			$this->rules[] = array('email');
+		}
 	}
 }

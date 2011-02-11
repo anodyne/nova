@@ -1,7 +1,7 @@
 # Finding Records
 
 Each model has a `Jelly_Builder` attached to it that is used for all query
-operations. Models can choose to use the stock `Jelly_Builder` or to [extend Jelly_Builder](jelly.extending-builder) to add custom builder methods to their models.
+operations. Models can choose to use the stock `Jelly_Builder` or to [extend Jelly_Builder](extending-builder) to add custom builder methods to their models.
 
 ### Finding records
 
@@ -52,7 +52,17 @@ Rather than defining conditions using SQL fragments we chain methods named simil
 At any time during a query builder chain, you can call the `count()` method to
 find out how many records will be returned.
 
-	$total_posts = Jelly::select('post')->where('published', '=', 1)->count();
+	$total_posts = Jelly::query('post')->where('published', '=', 1)->count();
 
-### Next [Creating, updating and deleting records](jelly.cud)
+### Returning results as an array
 
+You can get the database results in an array using the `as_array()` method.
+
+	// Load all posts
+	$posts = Jelly::query('post')->select();
+
+	// Return the data as an array for the id, name, and body fields
+	$data = $posts->as_array(array('id', 'name', 'body'));
+
+	// Return only the names in an array
+	$data = $posts->as_array(array(NULL, 'name'));

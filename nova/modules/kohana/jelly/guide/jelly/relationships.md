@@ -15,7 +15,7 @@ This field allows one model to belong to, or be *owned by*, another model.
 For example, a post belongs to one author. In the database, the `posts` table would have an `author_id` column that contains the primary key of the author it belongs to.
 
 	// In Model_Post::initialize()
-	'author' => new Jelly_Field_BelongsTo(array(
+	'author' => Jelly::field('belongsto', array(
 		'column' => 'author_id',
 		'foreign' => 'author',
 	)),
@@ -39,13 +39,13 @@ it actually represents a column in the database. Generally, this property is goi
 	
 **Using this relationship**
 
-	$post = Jelly::factory('post', 1);
+	$post = Jelly::query('post', 1)->select();
 	
 	// Access the author's name
 	echo $post->author->name;
 	
 	// Change the author
-	$post->author = Jelly::factory('author', 1);
+	$post->author = Jelly::query('author', 1)->select();
 	$post->save();
 	
 	// Remove the relationship
@@ -63,7 +63,7 @@ the `posts` table would have an `author_id` column that contains the primary
 key of the author that owns the post.
 
 	// In Model_Author::initialize()
-	'posts' => new Jelly_Field_HasMany(array(
+	'posts' => Jelly::field('hasmany', array(
 		'foreign' => 'post',
 	)),
 	
@@ -76,13 +76,13 @@ key of the author that owns the post.
 	
 **`default`** — This works slightly differently than other fields. Default is the value that will be set on the foreign model's column when a relationship is removed. This should almost always remain 0.
 	
-**`convert_empty`** — This defaults to TRUE, unlike most other fields. Empty values are converted to the value set for `empty_value`, which defaults to `0`.
+**`convert_empty`** — This defaults to `TRUE`, unlike most other fields. Empty values are converted to the value set for `empty_value`, which defaults to `0`.
 
 **`empty_value`** — This is the default value that empty values are converted to. The default is `0`.
 	
 **Using this relationship**
 
-	$author = Jelly::factory('author', 1);
+	$author = Jelly::query('author', 1)->select();
 	
 	// Access all posts
 	foreach ($author->posts as $post)
@@ -109,7 +109,7 @@ ________________
 This is exactly the same as `has_many` with the exception that Jelly ensures that the model can only *have* one other model, instead of many.
 
 	// In Model_Author::initialize()
-	'posts' => new Jelly_Field_HasOne(array(
+	'posts' => Jelly::field('hasone', array(
 		'foreign' => 'post.author:foreign_key',
 	)),
 
@@ -126,7 +126,7 @@ This is exactly the same as `has_many` with the exception that Jelly ensures tha
 
 **Using this relationship**
 
-	$author = Jelly::factory('author', 1);
+	$author = Jelly::query('author', 1)->select();
 
 	// Access the post's name
 	$author->post->name;
@@ -153,7 +153,7 @@ belong to many different blog posts.
 This relationship requires a `through` table that connects the two models.
 
 	// In Model_Post::initialize()
-	'tags' => new Jelly_Field_ManyToMany(array(
+	'tags' => Jelly::field('manytomany', array(
 		'foreign' => 'tag',
 		'through' => 'posts_tags',
 	)),
@@ -175,7 +175,7 @@ This relationship requires a `through` table that connects the two models.
 	
 **Using this relationship**
 
-	$post = Jelly::factory('post', 1);
+	$post = Jelly::query('post', 1)->select();
 
 	// Access all tags
 	foreach ($post->tags as $tag)
@@ -187,7 +187,7 @@ This relationship requires a `through` table that connects the two models.
 	$post->get('tags')->delete();
 	
 	// Change the tags
-	$post->tags = Jelly::select('tag')->where('id', 'IN', $tags)->select();
+	$post->tags = Jelly::query('tag')->where('id', 'IN', $tags)->select();
 	$post->save();
 
 	// Remove the tags
@@ -219,7 +219,7 @@ ________________
 Relationships are very flexible in the types of data you can pass to it. For `n:1` relationships, you can pass the following:
 
  * **A primary key**: e.g. `$post->author = 1;`
- * **A loaded() model**: e.g. `$post->author = Jelly::factory('author', 1);`
+ * **A loaded() model**: e.g. `$post->author = Jelly::query('author', 1)->select();`
 	
 For `n:many` relationships, you can pass the following:
 
@@ -232,13 +232,13 @@ For `n:many` relationships, you can pass the following:
 These two methods offer fine-grained control over `n:many` relationships. You can use them to add or remove individual models from a relationship.
 
 	// Assume this author has posts 1, 5, and 7
-	$author = Jelly::factory('author', 1);
+	$author = Jelly::query('author', 1)->select();
 	
 	// Remove post 1
 	$author->remove('posts', 1);
 	
 	// Remove post 5
-	$author->remove('posts', Jelly::factory('post', 5));
+	$author->remove('posts', Jelly::query('post', 5)->select());
 	
 	// Make the changes permanent
 	$author->save();
@@ -253,7 +253,7 @@ As you can see, `add()` and `remove()` support passing all of the different type
 Has is useful to determine if a model has a relationship to a particular model or set of models. Like `add()` and `remove()`, this method only works on `n:many` relationships.
 
 	// Assume this author has posts 1, 5, and 7
-	$author = Jelly::factory('author', 1);
+	$author = Jelly::query('author', 1)->select();
 
 	// Returns TRUE
 	$author->has('posts', 1);
@@ -262,7 +262,7 @@ Has is useful to determine if a model has a relationship to a particular model o
 	$author->has('posts', array(1, 5, 7, 8));
 	
 	// Returns TRUE
-	$author->has('posts', Jelly::factory('post', 1));
+	$author->has('posts', Jelly::query('post', 1)->select());
 
 	// Returns TRUE
 	$author->has('posts', Jelly::query('post')->where('id', 'IN', array(1, 5))->select());

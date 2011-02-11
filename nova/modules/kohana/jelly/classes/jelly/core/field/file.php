@@ -39,9 +39,18 @@ abstract class Jelly_Core_Field_File extends Jelly_Field
 		parent::__construct($options);
 		
 		$this->path = $this->_check_path($this->path);
-		
-		// Add a callback to save the file when validating
-		$this->callbacks[] = array(array($this, '_upload'), array(':validate', ':model', ':field'));
+	}
+
+	/**
+	 * Adds a rule that uploads the file
+	 *
+	 */
+	public function initialize($model, $column)
+	{
+		parent::initialize($model, $column);
+
+		// Add a rule to save the file when validating
+		$this->rules[] = array(array($this, '_upload'), array(':validation', ':model', ':field'));
 	}
 
 	/**

@@ -83,11 +83,6 @@ abstract class Jelly_Core_Field
 	public $rules = array();
 
 	/**
-	* @var  array  {@link Jelly_Validator} callbacks for this field.
-	*/
-	public $callbacks = array();
-
-	/**
 	 * Sets all options
 	 *
 	 * @return  void
@@ -107,20 +102,20 @@ abstract class Jelly_Core_Field
 				$this->$name = $value;
 			}
 		}
-		
+
 		// See if we need to allow_null values because of convert_empty
 		if ($this->convert_empty AND $this->empty_value === NULL)
 		{
 			$this->allow_null = TRUE;
 		}
-		
+
 		// Default value is going to be NULL if null is true
 		// to mimic the SQL defaults
 		if ( ! array_key_exists('default', (array) $options) AND $this->allow_null)
 		{
 			$this->default = NULL;
 		}
-		
+
 		// Default the empty value to NULL when allow_null is TRUE, but be careful not
 		// to override a programmer-configured empty_value
 		if ( ! empty($options['allow_null']) AND ! array_key_exists('empty_value', (array) $options))
@@ -153,14 +148,14 @@ abstract class Jelly_Core_Field
 		// Check for a name, because we can easily provide a default
 		if ( ! $this->label)
 		{
-			$this->label = ucwords(inflector::humanize($column));
+			$this->label = Inflector::humanize($column);
 		}
-		
+
 		// Check as to whether we need to add
 		// some callbacks for shortcut properties
 		if ($this->unique === TRUE)
 		{
-			$this->rules[] = array(array($this, '_is_unique'), array(':validate', ':model', ':value', ':key'));
+			$this->rules[] = array(array($this, '_is_unique'), array(':validation', ':model', ':value', ':key'));
 		}
 	}
 
@@ -174,7 +169,7 @@ abstract class Jelly_Core_Field
 	public function set($value)
 	{
 		list($value, $return) = $this->_default($value);
-		
+
 		return $value;
 	}
 
@@ -262,12 +257,12 @@ abstract class Jelly_Core_Field
 	/**
 	 * Callback for validating that a field is unique.
 	 *
-	 * @param   Validate $data
+	 * @param   Validation $data
 	 * @param   string $field
 	 * @return  void
 	 */
-	public function _is_unique(Validate $data, Jelly_Model $model, $value, $key)
-	{	
+	public function _is_unique(Validation $data, Jelly_Model $model, $value, $key)
+	{
 		// According to the SQL standard NULL is not checked by the unique constraint
 		if ($data[$this->name] !== NULL)
 		{
