@@ -1,0 +1,423 @@
+/**
+ * Eric Meyer's CSS Reset 2.0
+ * http://meyerweb.com/eric/tools/css/reset/
+ */
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td,article,aside,canvas,details,embed,figure,figcaption,footer,header,hgroup,menu,nav,output,ruby,section,summary,time,mark,audio,video{margin:0;padding:0;border:0;font-size:100%;font:inherit;vertical-align:baseline}article,aside,details,figcaption,figure,footer,header,hgroup,menu,nav,section{display:block}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}table{border-collapse:collapse;border-spacing:0}
+
+body {
+	font: 85%/1.6 helvetica, arial, sans-serif;
+	color: #333;
+	background: #f2f2f2;
+}
+
+/**
+ * Styles for the header and main navigation
+ */
+header {
+	width: 980px;
+	height: 50px;
+	margin: 0 auto;
+	
+	background: #e2e2e2;
+	
+	border-radius: 0 0 3px 3px;
+	-moz-border-radius: 0 0 3px 3px;
+}
+header ul {
+	margin: 0;
+	padding: 0;
+	height: 50px;
+	
+	list-style: none;
+}
+header ul li a {
+	display: block;
+	float: left;
+	line-height: 50px;
+	padding: 0 20px;
+	
+	text-decoration: none;
+	font-size: 140%;
+	font-weight: bold;
+	color: #888;
+}
+header ul li a:hover { color: #444; }
+
+/**
+ * Styles for the user panel
+ */
+#panel, .panel-handle { display: none; }
+
+/**
+ * Styles for the sub navigation
+ */
+nav {
+	float: right;
+	width: 160px;
+}
+nav ul {
+	margin: 0;
+	padding: 0;
+	
+	list-style: none;
+}
+nav ul li { text-align: right; }
+nav ul li a {
+	color: #999;
+	text-decoration: none;
+	font-size: 110%;
+	font-weight: bold;
+}
+nav ul li a:hover { color: #666; }
+
+/**
+ * Styles for the main content
+ */
+section {
+	width: 960px;
+	margin: 1em auto;
+}
+.content {
+	margin-right: 180px;
+}
+
+/**
+ * Styles for the footer
+ */
+footer {
+	text-align: center;
+	font-size: 90%;
+	color: #999;
+}
+footer a { color: #999; }
+footer a:hover { color: #666; }
+footer .footer-extra {
+	margin: 1em 0;
+	
+	color: #666;
+	font-weight: bold;
+}
+
+/**
+ * Styles for all the fonts in the system
+ */
+h1, h2, h3, h4 { font-weight: bold; }
+h1, h2, h3, h4, p { margin: 8px 0; }
+
+h1 { font-size: 200%; }
+h2 { font-size: 150%; }
+h3 { font-size: 133%; }
+h4 { font-size: 117%; }
+p { font-size: 100%; }
+
+.fontLarge	{ font-size: 133%; }
+.fontMedium	{ font-size: 117%; }
+.fontNormal { font-size: 100%; }
+.fontSmall	{ font-size: 92%; }
+.fontTiny	{ font-size: 80%; }
+
+.subtle, .info { color: #888; }
+.error { color: #c00; }
+.warning { color: #e99e1c; }
+.success { color: #008000; }
+
+.nobold		{ font-weight: normal; }
+.bold		{ font-weight: bold; }
+.italic		{ font-style: italic; }
+
+.uppercase	{ text-transform: uppercase; }
+.lowercase	{ text-transform: lowercase; }
+
+/**
+ * Styles for all links in the system
+ */
+a {
+	outline: 0;
+	color: #1e5799;
+}
+a:hover { color: #666; }
+a.image, a.image:hover {
+	border: none;
+	text-decoration: none;
+}
+
+/**
+ * Styles for the forms in the system
+ */
+kbd {
+	display: block;
+	margin: 0 0 5px 0;
+	
+	font: bold 115% helvetica, arial, sans-serif;
+}
+
+input[type=text],
+input[type=password],
+input[type=email],
+select,
+textarea {
+	margin: 0;
+	padding: 5px;
+	width: 325px;
+	
+	border: 1px solid #bbb;
+	font-size: 110%;
+	font-family: helvetica, arial, sans-serif;
+	color: #444;
+	
+	border-radius: 3px;
+	-moz-border-radius: 3px;
+}
+
+textarea { width: 99%; }
+
+select:focus,
+select:hover { outline: 0; }
+
+.small { width: 75px; }
+.medium { width: 150px; }
+.medium-large { width: 250px; }
+
+/**
+ * Styles for buttons in the system
+ */
+button, button.btn-small {
+	outline: 0;
+	
+	font-family: helvetica, arial, sans-serif;
+	font-weight: bold;
+	border: 0;
+	
+	border-radius: 3px;
+	-moz-border-radius: 3px;
+}
+.btn-main {
+	padding: 5px 15px;
+	
+	background: #ccc;
+	color: #555;
+	font-size: 120%;
+}
+.btn-main:hover {
+	background: #1e5799;
+	color: #fff;
+}
+
+/**
+ * Styles for tables in the system
+ */
+table {
+	position: relative;
+	
+	font-size: 100%;
+}
+
+.table100 { width: 100%; }
+.table75 { width: 75%; }
+
+th {
+	position: relative;
+	
+	text-align: center;
+	font-size: 120%;
+}
+td {
+	position: relative;
+	padding: 3px;
+	vertical-align: middle;
+}
+td img { vertical-align: middle; }
+
+.col-15		{ width: 15px; }
+.col-30		{ width: 30px; }
+.col-40		{ width: 40px; }
+.col-50		{ width: 50px; }
+.col-75		{ width: 75px; }
+.col-100	{ width: 100px; }
+.col-150	{ width: 150px; }
+.col-200	{ width: 200px; }
+.col-245	{ width: 245px; }
+.col-260	{ width: 260px; }
+.col-300	{ width: 300px; }
+
+.col-20pct	{ width: 20%; }
+.col-25pct	{ width: 25%; }
+.col-30pct	{ width: 30%; }
+.col-40pct	{ width: 40%; }
+.col-50pct	{ width: 50%; }
+.col-60pct	{ width: 60%; }
+
+/**
+ * Styles for lists in the system
+ */
+ul, ol {
+	margin: .5em 1.5em;
+	padding: 1em;
+	line-height: 1.6;
+}
+ol { list-style-type: decimal; }
+ul { list-style-type: disc; }
+ul.square { list-style: square; }
+ol.roman { list-style: upper-roman; }
+ul.none, ol.none { list-style: none; }
+
+/**
+ * These styles are a smattering of miscellaneous things
+ */
+.hidden {
+	display: none;
+	height: auto;
+}
+
+img { border: none; }
+
+hr {
+	width: 75%;
+	margin: 2em auto;
+	
+	border-top: 1px solid #ccc;
+	border-bottom: 0;
+	border-left: 0;
+	border-right: 0;
+}
+
+.indent-left { padding: 0 0 0 1.5em; }
+.indent-right { padding: 0 1.5em 0 0; }
+
+.inline-image-left {
+    float: left;
+    margin: 2px 6px 0 0;
+}
+
+.float-left		{ float: left; }
+.float-right	{ float: right; }
+
+.clear-both		{ clear: both; }
+.clear-right	{ clear: right; }
+.clear-left		{ clear: left; }
+
+.align-left		{ text-align: left; }
+.align-right	{ text-align: right; }
+.align-center	{ text-align: center; }
+.align-top		{ vertical-align: top; }
+.align-middle	{ vertical-align: middle; }
+.align-bottom	{ vertical-align: bottom; }
+
+/**
+ * Styles for the flash messages
+ */
+.flash-message {
+	margin: 0 0 5px 0;
+	line-height: 1;
+	
+	font-weight: bold;
+	
+	border-radius: 3px;
+	-moz-border-radius: 3px;
+}
+.flash-message p {
+	margin: 0;
+	padding: 3px 5px;
+}
+.flash-success {
+	background: #008000;
+	color: #fff;
+}
+.flash-error {
+	background: #c00;
+	color: #fff;
+}
+.flash-info {
+	background: #1e5799;
+	color: #fff;
+}
+
+/**
+ * Styles for the new search page and how we're handling the styling
+ */
+.search-item:hover { cursor: pointer; }
+.search-item-cancel {
+	text-decoration: line-through;
+	opacity: .5;
+}
+.search-field {
+	width: 400px;
+	height: 24px;
+	line-height: 24px;
+	padding: 1px;
+	
+	border: 1px solid #bbb;
+	
+	border-radius: 3px;
+	-moz-border-radius: 3px;
+}
+.search-field-input, .search-field-input:hover, .search-field-input:focus {
+	display: inline-block;
+	height: 20px !important;
+	padding: 0 !important;
+	margin: 0 !important;
+	
+	border: 1px solid transparent !important;
+	background: transparent !important;
+	color: #444 !important;
+}
+.search-field-options {
+	float: left;
+	display: block;
+	padding: 0 0 0 3px;
+	height: 24px;
+	width: 20px;
+}
+.search-field-options:hover { cursor: pointer; }
+
+.options-posts { background: transparent url('../images/icon-posts.png') no-repeat center center; }
+.options-logs { background: transparent url('../images/icon-logs.png') no-repeat center center; }
+.options-news { background: transparent url('../images/icon-news.png') no-repeat center center; }
+.options-wiki { background: transparent url('../images/icon-wiki.png') no-repeat center center; }
+
+.search-field-options-list {
+	position: absolute;
+	top: 372px;
+	width: 150px;
+	margin: 0 0 0 3px;
+	padding: .5em 0;
+	
+	border: 1px solid #bbb;
+	background: #eee;
+	
+	border-radius: 3px;
+	-moz-border-radius: 0 0 3px 3px;
+	
+	box-shadow: 1px 1px 4px rgba(0, 0, 0, .2);
+	-moz-box-shadow: 1px 1px 4px rgba(0, 0, 0, .2);
+	-webkit-box-shadow: 1px 1px 4px rgba(0, 0, 0, .2);
+}
+.search-field-options-list ul {
+	margin: 0;
+	padding: 0;
+	
+	list-style: none;
+}
+.search-field-options-list ul li {
+	height: 22px;
+	line-height: 22px;
+}
+.search-field-options-list ul li a {
+	display: block;
+	padding: 0 4px;
+	
+	font-weight: bold;
+	font-size: 90%;
+	color: #888;
+	border: 1px solid transparent;
+	border-left: 0;
+	border-right: 0;
+	text-decoration: none;
+}
+.search-field-options-list ul li a:hover {
+	background: #237fd7;
+	background: -moz-linear-gradient(center top, #52a8e8 20%, #237fd7 100%);
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(.2, #52a8e8), color-stop(1, #237fd7));
+	color: #eee;
+	border-color: #4081af;
+}
