@@ -13,6 +13,28 @@
 abstract class Nova_Location {
 	
 	/**
+	 * Searches to find where to pull the file from. If the file exists in the skin, it'll use that,
+	 * otherwise, it'll use what's found in the common directory.
+	 *
+	 *     echo Location::file('main', 'default', 'templates');
+	 *     echo Location::file('main', 'default', 'layouts');
+	 *     echo Location::file('footer', 'default', 'partials');
+	 *
+	 * @param	string	the name of the layout
+	 * @param	string	the name of the current skin
+	 * @return	string	path to the layout file
+	 */
+	public static function file($file, $skin, $type)
+	{
+		if (is_file(APPPATH.'views/'.$skin.'/components/'.$type.'/'.$file.EXT))
+		{
+			return $skin.'/components/'.$type.'/'.$file;
+		}
+		
+		return '_common/'.$type.'/'.$file;
+	}
+	
+	/**
 	 * Looks for the location of the image file throughout the system. The first place this will look is in the
 	 * current skin. If the image isn't found there, it moves through the modules. Finally, if it can't be
 	 * found in the modules, it checks the nova module where it should find the image in question.
