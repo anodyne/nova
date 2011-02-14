@@ -10,9 +10,15 @@
 		
 		<?php if (isset($_redirect)): echo $_redirect; endif;?>
 		
-		<!-- STYLESHEETS -->
-		<?php echo html::style(MODFOLDER.'/nova/core/views/_common/css/nova.css');?>
-		<?php echo html::style(APPFOLDER.'/views/'.$skin.'/'.$sec.'/css/main.css');?>
+		<?php if (is_file(APPPATH.'views/'.$skin.'/design/style.css')): ?>
+			<?php echo html::style(APPFOLDER.'/views/'.$skin.'/design/style.css');?>
+		<?php else: ?>
+			<?php echo html::style(MODFOLDER.'/nova/core/views/_common/css/style.css');?>
+			
+			<?php if (is_file(APPPATH.'views/'.$skin.'/design/custom.css')): ?>
+				<?php echo html::style(APPFOLDER.'/views/'.$skin.'/design/custom.css');?>
+			<?php endif;?>
+		<?php endif;?>
 		
 		<!-- jQUERY UI TABS STYLESHEET -->
 		<?php if (is_file(APPPATH.'views/'.$skin.'/'.$sec.'/css/jquery.ui.tabs.css')): ?>
@@ -21,7 +27,10 @@
 			<?php //echo html::style(MODFOLDER.'/assets/css/jquery.ui.tabs.css');?>
 		<?php endif;?>
 		
-		<!-- JAVASCRIPT -->
+		<!--[if lt IE 9]>
+		<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+		<![endif]-->
+		
 		<?php echo html::script(MODFOLDER.'/assets/js/jquery.js');?>
 		<?php //echo html::script(MODFOLDER.'/assets/js/jquery.ui.core.min.js');?>
 		<?php //echo html::script(MODFOLDER.'/assets/js/jquery.ui.widget.min.js');?>
