@@ -35,16 +35,12 @@ class Controller_Nova_Main extends Controller_Nova_Base {
 		
 		// set the values to be passed to the views
 		$vars = array(
-			'template' => array(
-				'skin' => $this->skin,
-				'sec' => 'main'),
-			'layout' => array(
-				'skin'	=> $this->skin,
-				'sec'	=> 'main'),
+			'skin' => $this->skin,
+			'sec' => 'main'
 		);
 		
 		// set the shell
-		$this->template = View::factory('_common/layouts/main', $vars['template']);
+		$this->template = View::factory(Location::file('main', $this->skin, 'layouts'), $vars);
 		
 		// grab the image index
 		$this->images = Utility::get_image_index($this->skin);
@@ -52,25 +48,25 @@ class Controller_Nova_Main extends Controller_Nova_Base {
 		// set the variables in the template
 		$this->template->title 						= $this->options->sim_name.' :: ';
 		$this->template->javascript					= false;
-		$this->template->layout						= View::factory($this->skin.'/template_main', $vars['layout']);
+		$this->template->layout						= View::factory(Location::file('main', $this->skin, 'templates'), $vars);
 		$this->template->layout->navmain 			= Menu::build('main', 'main');
 		$this->template->layout->ajax 				= false;
 		$this->template->layout->flash				= false;
 		$this->template->layout->content			= false;
 		
-		$this->template->layout->panel				= View::factory('_common/partials/panel');
+		$this->template->layout->panel				= View::factory(Location::file('panel', $this->skin, 'partials'));
 		$this->template->layout->panel->panel1		= false;
 		$this->template->layout->panel->panel2		= false;
 		$this->template->layout->panel->panel3		= false;
 		$this->template->layout->panel->workflow	= false;
 		
-		$this->template->layout->navsub 			= View::factory('_common/partials/navsub');
+		$this->template->layout->navsub 			= View::factory(Location::file('navsub', $this->skin, 'partials'));
 		$this->template->layout->navsub->menu		= Menu::build('sub', 'main');
 		$this->template->layout->navsub->widget1	= false;
 		$this->template->layout->navsub->widget2	= false;
 		$this->template->layout->navsub->widget3	= false;
 		
-		$this->template->layout->footer				= View::factory('_common/partials/footer');
+		$this->template->layout->footer				= View::factory(Location::file('footer', $this->skin, 'partials'));
 		$this->template->layout->footer->extra 		= Jelly::query('message', 'footer')->limit(1)->select()->value;
 	}
 	
