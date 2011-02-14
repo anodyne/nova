@@ -5,18 +5,8 @@
  *
  * @package Jelly
  */
-class Jelly_Core_Validator_Rule
+class Jelly_Core_Validator_Rule extends Jelly_Validator_Callback
 {
-	/**
-	 * @var  callback  The callback that will be called
-	 */
-	protected $_callback = NULL;
-
-	/**
-	 * @var  array  Any params that will be added to the callback
-	 */
-	protected $_params = NULL;
-
 	/**
 	 * @var  array  Original parameters, used for generating error params
 	 */
@@ -43,9 +33,7 @@ class Jelly_Core_Validator_Rule
 		// Save the original parameters for the potential error messe
 		$this->_original_params = $params;
 
-		// Set callback and params
-		$this->_callback = $callback;
-		$this->_params   = $params;
+		parent::__construct($callback, $params);
 	}
 	
 	/**
@@ -58,15 +46,11 @@ class Jelly_Core_Validator_Rule
 	 */
 	public function call(Validation $validation)
 	{
-		// Contextualize the callback and parameters
-		list($callback, $params) = $this->_contextualize($validation);
-
-		// Simply call the method
-		if (call_user_func_array($callback, $params) === FALSE)
+		if (parent::call($validation) === FALSE)
 		{
 			// Determine the name of the error based on the callback
 			$error = is_array($this->_callback) ? $this->_callback[1] : $this->_callback;
-
+			
 			$params = array();
 			$i = 1;
 			
@@ -116,55 +100,6 @@ class Jelly_Core_Validator_Rule
 			// Add it to the list
 			$validation->error($validation->context('field'), $error, $params);
 		}
-	}
-
-	/**
-	 * Returns a callback and parameter list with contexts replaced.
-	 *
-	 * @param   Validation  $validation
-	 * @return  array
-	 */
-	protected function _contextualize(Validation $validation)
-	{
-		// Copy locally, because we don't want
-		// to go mucking with the originals
-		$callback = $this->_callback;
-		$params   = $this->_params;
-
-		// Check for a context to replace on the callback object
-		if (is_array($callback) AND isset($callback[0]))
-		{
-			$callback[0] = $this->_replace_context($validation, $callback[0]);
-		}
-
-		// Replace all param contexts
-		foreach ((array)$params as $key => $param)
-		{
-			$params[$key] = $this->_replace_context($validation, $param);
-		}
-
-		return array($callback, $params);
-	}
-
-	/**
-	 * Replaces a context with its actual replacement.
-	 *
-	 * If $key is not a string or does not start with ':'
-	 * the key is simply returned.
-	 *
-	 * @param   Validation  $validation
-	 * @param   mixed     $key
-	 * @return  mixed
-	 */
-	protected function _replace_context(Validation $validation, $key)
-	{
-		// Ensure we actually have a potentially valid context
-		if ( ! is_string($key) OR substr($key, 0, 1) !== ':')
-		{
-			return $key;
-		}
-
-		return $validation->context(substr($key, 1));
 	}
 
 } // End Kohana_Validate_Rule

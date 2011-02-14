@@ -19,12 +19,10 @@ class Jelly_Core_Validator_Filter extends Jelly_Validator_Callback
 	 */
 	public function __construct($callback, array $params = NULL)
 	{
-		$params = $params ? $params : array();
-		
-		// Check the parameters to see if we need to add ':value'
-		if ( ! in_array(':value', $params))
+		if ($params === NULL)
 		{
-			array_unshift($params, ':value');
+			// Default to array(':value')
+			$params = array(':value');
 		}
 		
 		parent::__construct($callback, $params);

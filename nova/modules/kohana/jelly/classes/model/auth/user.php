@@ -6,6 +6,7 @@
  * @author     creatoro
  * @copyright  (c) 2011 creatoro
  * @license    http://creativecommons.org/licenses/by-sa/3.0/legalcode
+ * @credits	   Kohana Team
  */
 class Model_Auth_User extends Jelly_Model {
 
@@ -49,6 +50,7 @@ class Model_Auth_User extends Jelly_Model {
 				'in_db' => FALSE,
 			)),
 			'logins' => Jelly::field('integer', array(
+				'default' => 0,
 				'convert_empty' => TRUE,
 				'empty_value' => 0,
 			)),
