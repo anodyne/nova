@@ -78,11 +78,11 @@ abstract class Jelly_Core_Meta
 	 *               Jelly_Builder_Modelname, if that particular class is found.
 	 */
 	protected $_builder = '';
-	
+
 	/**
-	 * @var  string  The validator attached to the object
+	 * @var  string  Rules and labels attached to the validation object
 	 */
-	protected $_validator = NULL;
+	protected $_validation_options = NULL;
 
 	/**
 	 * @var  array  A list of columns and how they relate to fields
@@ -415,39 +415,42 @@ abstract class Jelly_Core_Meta
 	}
 
 	/**
-	 * Gets the validator attached to the model.
+	 * Add rules and labels to the validation object
 	 *
-	 * @param   Jelly_Model $model
-	 * @param   array       $data
-	 * @param   boolean     $new
-	 * @return  Jelly_Validator
+	 * @param   Validation $validation
+	 * @bool	Are we updating?
+	 * @return  Validation
 	 */
-	public function validator(array $data, $new = FALSE)
+	public function validation_options(Validation $validation, $update = FALSE)
 	{
-		// Allow returning an empty validator
-		if ($new)
+		// Add validation options
+		if ( ! $this->_validation_options OR ($this->_validation_options AND $update))
 		{
-			return new Jelly_Validator($data);
-		}
+			// Set validation options
+			$this->_validation_options = $validation;
 
-		// Create a default validator so we don't have to go through
-		// recreating all of the filters and such, which is an expensive process.
-		if ( ! $this->_validator)
-		{
-			// Create our default validator, which we will clone from
-			$this->_validator = new Jelly_Validator($data);
+			// Set submitted fields
+			if ($update)
+			{
+				$submitted_fields = $validation->as_array();
+			}
 
-			// Add our filters, rules, and callbacks
+			// Add our rules and labels
 			foreach ($this->_fields as $name => $field)
 			{
-				$this->_validator->label($name, $field->label);
-				$this->_validator->filters($name, $field->filters);
-				$this->_validator->rules($name, $field->rules);
+				// If updating add only the rules for the updated fields
+				if ($update AND ! array_key_exists($name, $submitted_fields))
+				{
+					continue;
+				}
+
+				$this->_validation_options->label($name, $field->label);
+				$this->_validation_options->rules($name, $field->rules);
 			}
 		}
 
-		// Return a copy to prevent mucking with the original validator
-		return $this->_validator->copy($data);
+		// Return the validation object with rules and labels
+		return $this->_validation_options;
 	}
 	
 	/**

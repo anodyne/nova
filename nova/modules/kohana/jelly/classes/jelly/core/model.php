@@ -44,9 +44,9 @@ abstract class Jelly_Core_Model
 	protected $_meta = NULL;
 	
 	/**
-	 * @var  Jelly_Validator  A copy of this object's validator
+	 * @var  Jelly_Validation  A copy of this object's validation
 	 */
-	protected $_validator = NULL;
+	protected $_validation = NULL;
 	
 	/**
 	 * @var  Boolean  A flag that keeps track of whether or not the model is valid
@@ -359,6 +359,9 @@ abstract class Jelly_Core_Model
 			// Data has changed
 			$this->_changed[$field->name] = $value;
 
+			// Run filters after it's set as changed
+			$this->_changed[$field->name] = $this->run_filter($field, $this->_changed[$field->name]);
+
 			// Invalidate the cache
 			if (array_key_exists($field->name, $this->_retrieved))
 			{
@@ -370,6 +373,95 @@ abstract class Jelly_Core_Model
 		}
 
 		return $this;
+	}
+
+	/**
+	 * Filters a value for a specific column
+	 *
+	 * @param  string $field  The column name
+	 * @param  string $value  The value to filter
+	 * @return string
+	 * @credits Kohana Team
+	 */
+	protected function run_filter($field, $value)
+	{
+		// Set filters
+		$filters = $field->filters;
+
+		// Set the actual field
+		$field = $field->name;
+
+		// Bind the field name and model so they can be used in the filter method
+		$_bound = array
+		(
+			':field' => $field,
+			':model' => $this,
+		);
+
+		foreach ($filters as $array)
+		{
+			// Value needs to be bound inside the loop so we are always using the
+			// version that was modified by the filters that already ran
+			$_bound[':value'] = $value;
+
+			// Filters are defined as array($filter, $params)
+			$filter = $array[0];
+			$params = Arr::get($array, 1, array(':value'));
+
+			foreach ($params as $key => $param)
+			{
+				if (is_string($param) AND array_key_exists($param, $_bound))
+				{
+					// Replace with bound value
+					$params[$key] = $_bound[$param];
+				}
+			}
+
+			// Replace bound values for the filter
+			if (is_array($filter) AND ($filter[0] == ':model' OR $filter[0] == ':field') AND array_key_exists(':model', $_bound))
+			{
+				if ($filter[0] == ':model')
+				{
+					// Replace with bound value
+					$filter[0] = $_bound[$filter[0]];
+				}
+				elseif ($filter[0] == ':field')
+				{
+					// Set fields
+					$_fields = $_bound[':model']->meta()->fields();
+
+					// Replace with bound value
+					$filter[0] = $_fields[$field];
+				}
+			}
+
+			if (is_array($filter) OR ! is_string($filter))
+			{
+				// This is either a callback as an array or a lambda
+				$value = call_user_func_array($filter, $params);
+			}
+			elseif (strpos($filter, '::') === FALSE)
+			{
+				// Use a function call
+				$function = new ReflectionFunction($filter);
+
+				// Call $function($this[$field], $param, ...) with Reflection
+				$value = $function->invokeArgs($params);
+			}
+			else
+			{
+				// Split the class and method of the rule
+				list($class, $method) = explode('::', $filter, 2);
+
+				// Use a static method call
+				$method = new ReflectionMethod($class, $method);
+
+				// Call $Class::$method($this[$field], $param, ...) with Reflection
+				$value = $method->invokeArgs(NULL, $params);
+			}
+		}
+
+		return $value;
 	}
 
 	/**
@@ -430,59 +522,68 @@ abstract class Jelly_Core_Model
 	}
 
 	/**
-	 * Validates the current state of the model.
-	 * 
-	 * If the model is loaded, only what has changed
-	 * will be validated. Otherwise, is passed all data—including
-	 * original data—will be validated.
-	 * 
-	 * Otherwise, pass an array for data to validate whatever is
-	 * in the array.
-	 * 
-	 * If nothing is in the data that is to be validated, 
-	 * validation will succeed.
-	 * 
-	 * After validation has completed, any data passed will be set
-	 * back into the model to ensure anything that has been changed
-	 * by filters or callbacks is reflected in the model.
+	 * Validates the current model's data
 	 *
-	 * @param   mixed  $data
-	 * @return  void
+	 * @return Jelly
 	 */
-	public function validate()
+	public function check($extra_validation = NULL)
 	{
 		$key = $this->_original[$this->_meta->primary_key()];
-		
-		// Set our :key context, since we can't reliably determine 
-		// if the model is loaded or not by $model->loaded()
-		$this->validator()->context('key', $key);
-		
+
+		// Determine if any external validation failed
+		$extra_errors = ($extra_validation instanceof Validation AND ! $extra_validation->check());
+
 		// For loaded models, we're only checking what's changed, otherwise we check it all
 		$data = ($key) ? $this->_changed : $this->_changed + $this->_original;
-		
+
+		// Always build a new validation object
+		$this->_validation($data, (bool) $key);
+
 		// Don't validate if there isn't anything
 		if ( ! $this->_valid AND ! empty($data))
 		{
-			$validator = $this->validator($data);
-			
-			$this->_meta->events()->trigger('model.before_validate', 
-				$this, array($validator));
-			
-			if ($validator->check())
+			$array = $this->_validation;
+
+			$this->_meta->events()->trigger('model.before_validate',
+				$this, array($this->_validation));
+
+			if (($this->_valid = $array->check()) === FALSE OR $extra_errors)
 			{
-				$this->set($validator->as_array());
-				$this->_valid = TRUE;
+				$exception = new Jelly_Validation_Exception($this->_meta->model(), $array);
+
+				if ($extra_errors)
+				{
+					// Merge any possible errors from the external object
+					$exception->add_object('_external', $extra_validation);
+				}
+
+				throw $exception;
 			}
-			
-			$this->_meta->events()->trigger('model.after_validate', 
-				$this, array($validator));
+
+			$this->_meta->events()->trigger('model.after_validate',
+				$this, array($this->_validation));
 		}
 		else
 		{
 			$this->_valid = TRUE;
 		}
-		
-		return $this->_valid;
+
+		return $this;
+	}
+
+	/**
+	 * Initializes validation rules, and labels
+	 *
+	 * @return void
+	 */
+	protected function _validation($data, $update = FALSE)
+	{
+		// Build the validation object with its rules
+		$this->_validation = Jelly_Validation::factory($data)
+			->bind(':model', $this);
+
+		// Add rules and labels
+		$this->_validation = $this->_meta->validation_options($this->_validation, $update);
 	}
 
 	/**
@@ -490,14 +591,14 @@ abstract class Jelly_Core_Model
 	 *
 	 * @return  $this
 	 **/
-	public function save()
+	public function save($validation = NULL)
 	{
 		$key = $this->_original[$this->_meta->primary_key()];
 
 		// Run validation
-		if ( ! $this->validate($key))
+		if ($validation !== FALSE)
 		{
-			throw new Validation_Exception($this->validator());
+			$this->check($validation);
 		}
 
 		// These will be processed later
@@ -791,31 +892,6 @@ abstract class Jelly_Core_Model
 	public function meta()
 	{
 		return $this->_meta;
-	}
-	
-	/**
-	 * Returns a copy of the model's validator.
-	 *
-	 * @param   array  $data
-	 * @return  Jelly_Validator
-	 */
-	public function validator(array $data = NULL)
-	{
-		if ( ! $this->_validator)
-		{	
-			$this->_validator = $this->_meta->validator(array());
-			
-			// Give it $this as a model context
-			$this->_validator->context('model', $this);
-		}
-		
-		// Swap out the array if we need to
-		if ($data)
-		{
-			$this->_validator->exchangeArray($data);
-		}
-		
-		return $this->_validator;
 	}
 	
 	/**

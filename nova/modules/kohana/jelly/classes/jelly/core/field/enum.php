@@ -51,12 +51,12 @@ abstract class Jelly_Core_Field_Enum extends Jelly_Field_String
 		}
 		
 		 // Convert non-associative values to associative ones
-		if ( ! arr::is_assoc($this->choices))
+		if ( ! Arr::is_assoc($this->choices))
 		{
 			$this->choices = array_combine($this->choices, $this->choices);
 		}
-		
+
 		// Add a rule to validate that the value is proper
-		$this->rules += array('array_key_exists' => array(':value', $this->choices));
+		$this->rules[] = array('array_key_exists', array(':value', $this->choices));
 	}
 }

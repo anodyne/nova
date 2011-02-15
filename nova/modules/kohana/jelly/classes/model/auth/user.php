@@ -6,7 +6,6 @@
  * @author     creatoro
  * @copyright  (c) 2011 creatoro
  * @license    http://creativecommons.org/licenses/by-sa/3.0/legalcode
- * @credits	   Kohana Team
  */
 class Model_Auth_User extends Jelly_Model {
 
@@ -42,12 +41,8 @@ class Model_Auth_User extends Jelly_Model {
 				'rules' => array(
 					array('not_empty'),
 					array('min_length', array(':value', 8)),
-					array('matches', array(':validation', ':field', 'password_confirm')),
 				),
 				'hash_with' => array(Auth::instance(), 'hash'),
-			)),
-			'password_confirm' => Jelly::field('password', array(
-				'in_db' => FALSE,
 			)),
 			'logins' => Jelly::field('integer', array(
 				'default' => 0,
@@ -96,6 +91,19 @@ class Model_Auth_User extends Jelly_Model {
 	}
 
 	/**
+	 * Password validation for plain passwords.
+	 *
+	 * @param array $values
+	 * @return Validation
+	 */
+	public static function get_password_validation($values)
+	{
+		return Validation::factory($values)
+			->rule('password', 'min_length', array(':value', 8))
+			->rule('password_confirm', 'matches', array(':validation', ':field', 'password'));
+	}
+
+	/**
 	 * Create a new user
 	 *
 	 * Example usage:
@@ -113,7 +121,10 @@ class Model_Auth_User extends Jelly_Model {
 	 */
 	public function create_user($values, $expected)
 	{
-		return $this->set(Arr::extract($values, $expected))->save();
+		// Validation for passwords
+		$extra_validation = Model_User::get_password_validation($values);
+
+		return $this->set(Arr::extract($values, $expected))->save($extra_validation);
 	}
 
 	/**
@@ -142,7 +153,10 @@ class Model_Auth_User extends Jelly_Model {
 			unset($values['password'], $values['password_confirm']);
 		}
 
-		return $this->set(Arr::extract($values, $expected))->save();
+		// Validation for passwords
+		$extra_validation = Model_User::get_password_validation($values);
+
+		return $this->set(Arr::extract($values, $expected))->save($extra_validation);
 	}
 
 } // End Auth User Model

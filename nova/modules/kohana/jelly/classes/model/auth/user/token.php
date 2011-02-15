@@ -6,7 +6,6 @@
  * @author     creatoro
  * @copyright  (c) 2011 creatoro
  * @license    http://creativecommons.org/licenses/by-sa/3.0/legalcode
- * @credits	   Kohana Team
  */
 class Model_Auth_User_Token extends Jelly_Model {
 
@@ -70,11 +69,11 @@ class Model_Auth_User_Token extends Jelly_Model {
 		return $this;
 	}
 
-	public function save()
+	public function save($validation = NULL)
 	{
 		$this->token = $this->create_token();
 
-		return parent::save();
+		return parent::save($validation);
 	}
 
 	protected function create_token()

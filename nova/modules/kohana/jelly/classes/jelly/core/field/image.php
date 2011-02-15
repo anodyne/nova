@@ -83,15 +83,15 @@ abstract class Jelly_Core_Field_Image extends Jelly_Core_Field_File
 	 * Logic to deal with uploading the image file and generating thumbnails according to
 	 * what has been specified in the $thumbnails array.
 	 *
-	 * @param   Jelly  $model
-	 * @param   mixed  $value
-	 * @param   bool   $loaded
+	 * @param   Validation  $validation
+	 * @param   Jelly_Model      $model
+	 * @param   string           $field
 	 * @return  string|NULL
 	 */
-	public function _upload(Jelly_Validator $array, $model, $field)
+	public function _upload(Validation $validation, $model, $field)
 	{
 		// Save the original untouched
-		if ( ! parent::_upload($array, $model, $field))
+		if ( ! parent::_upload($validation, $model, $field))
 		{
 			return;
 		}
@@ -99,7 +99,7 @@ abstract class Jelly_Core_Field_Image extends Jelly_Core_Field_File
 		// Has our source file changed?
 		if ($model->changed($field))
 		{
-			$filename = $array[$field];
+			$filename = $validation[$field];
 			$source   = $this->path.$filename;
 			
 			foreach ($this->thumbnails as $thumbnail)

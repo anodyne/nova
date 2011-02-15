@@ -155,7 +155,7 @@ abstract class Jelly_Core_Field
 		// some callbacks for shortcut properties
 		if ($this->unique === TRUE)
 		{
-			$this->rules[] = array(array($this, '_is_unique'), array(':validation', ':model', ':value', ':key'));
+			$this->rules[] = array(array(':field', '_is_unique'), array(':validation', ':model', ':value', ':key'));
 		}
 	}
 

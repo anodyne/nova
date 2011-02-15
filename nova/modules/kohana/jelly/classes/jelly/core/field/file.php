@@ -50,28 +50,28 @@ abstract class Jelly_Core_Field_File extends Jelly_Field
 		parent::initialize($model, $column);
 
 		// Add a rule to save the file when validating
-		$this->rules[] = array(array($this, '_upload'), array(':validation', ':model', ':field'));
+		$this->rules[] = array(array(':field', '_upload'), array(':validation', ':model', ':field'));
 	}
 
 	/**
 	 * Logic to deal with uploading the image file and generating thumbnails according to
 	 * what has been specified in the $thumbnails array.
 	 *
-	 * @param   Jelly_Validator  $model
+	 * @param   Validation  $validation
 	 * @param   Jelly_Model      $model
 	 * @param   string           $field
 	 * @return  string|NULL
 	 */
-	public function _upload(Jelly_Validator $array, $model, $field)
+	public function _upload(Validation $validation, $model, $field)
 	{
-		if ($array->errors())
+		if ($validation->errors())
 		{
 			// Don't bother uploading
 			return FALSE;
 		}
-		
-		// Get the image from the array
-		$file = $array[$field];
+
+		// Get the image from the validation object
+		$file = $validation[$field];
 
 		if ( ! is_array($file) OR ! Upload::valid($file) OR ! Upload::not_empty($file))
 		{
@@ -81,7 +81,7 @@ abstract class Jelly_Core_Field_File extends Jelly_Field
 		// Check to see if it's a valid type
 		if ($this->types AND ! Upload::type($file, $this->types))
 		{
-			$array->error($field, 'Upload::type');
+			$validation->error($field, 'Upload::type');
 			return FALSE;
 		}
 		
@@ -107,11 +107,11 @@ abstract class Jelly_Core_Field_File extends Jelly_Field
 			$this->_delete_old_file($model->original($this->name), $this->path);
 			
 			// Set the new filename on the model
-			$array[$field] = $value;
+			$validation[$field] = $value;
 		}
 		else
 		{
-			$array->error($field, 'Upload::save');
+			$validation->error($field, 'Upload::save');
 			return FALSE;
 		}
 		

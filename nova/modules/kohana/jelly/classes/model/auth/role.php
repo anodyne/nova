@@ -6,7 +6,6 @@
  * @author     creatoro
  * @copyright  (c) 2011 creatoro
  * @license    http://creativecommons.org/licenses/by-sa/3.0/legalcode
- * @credits	   Kohana Team
  */
 class Model_Auth_Role extends Jelly_Model {
 
