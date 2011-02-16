@@ -1,20 +1,22 @@
 <?php defined('SYSPATH') or die('No direct script access.');
 /**
- * Hooks class
+ * The Hooks class provides methods that are run at different times throughout
+ * Nova's execution for various purposes. The order and timing of hooks is
+ * controlled through the events config file.
  *
  * @package		Nova
  * @category	Hooks
  * @author		Anodyne Productions
  * @copyright	2010-11 Anodyne Productions
- * @since		2.0
+ * @since		3.0
  */
 
 abstract class Nova_Hooks {
 	
 	/**
-	 * The bans hook goes through the database list of level 2 bans and then gets the
-	 * incoming user's IP address to compare it. If someone with a level 2 ban is found
-	 * they'll be redirected to the ban page.
+	 * The bans hook goes through the database list of level 2 bans and then gets
+	 * the incoming user's IP address to compare it. If someone with a level 2
+	 * ban is found they'll be redirected to the ban page.
 	 *
 	 * @return	void
 	 */
@@ -24,31 +26,29 @@ abstract class Nova_Hooks {
 	}
 	
 	/**
-	 * The browser hook grabs the user's browser and version from the user agent and then
-	 * checks it against the list of acceptable browser versions. Nova 2 requires users
-	 * to have IE 8+, Safari 4+, Firefox 3+ or Chrome 3+.
+	 * The browser hook grabs the user's browser and version from the user agent
+	 * and then checks it against the list of acceptable browser versions. Nova
+	 * 3 requires users to have IE 8+, Safari 4+, Firefox 4+ or Chrome 4+.
 	 *
+	 * @access	public
 	 * @uses	Request::user_agent
-	 * @uses	URL::base
+	 * @uses	Url::base
 	 * @return	void
 	 */
 	public static function browser()
 	{
-		// create an array of browsers and versions that we don't allow
+		// these are the browsers we allow
 		$notallowed = array(
 			'Internet Explorer'	=> 8,
-			'Safari'			=> 4,
-			'Firefox'			=> 3,
+			'Safari'			=> 5,
+			'Firefox'			=> 4,
 			'Chrome'			=> 4,
 		);
 		
-		// get the browser
 		$browser = Request::user_agent('browser');
 		
-		// get the browser version
 		$version = Request::user_agent('version');
 		
-		// make sure the index exists
 		if (isset($notallowed[$browser]))
 		{
 			// if the version requirements don't line up, redirect them
@@ -61,17 +61,21 @@ abstract class Nova_Hooks {
 	}
 	
 	/**
-	 * The maintenance hook checks the database to find out if maintenance mode is
-	 * currently active. If it is, it'll check to make sure A) the user is logged
-	 * in and B) the user is a system administrators in order to let them continue
+	 * The maintenance hook checks the database to find out if maintenance mode
+	 * is turned on. If it is, it'll check to make sure A) the user is logged in
+	 * and B) the user is a system administrators in order to let them continue
 	 * on to the system. Otherwise, the user will be redirected to the login page
 	 * or the maintenance page.
 	 *
+	 * @access	public
 	 * @uses	Utility::install_status
-	 * @uses	Request::current
+	 * @uses	Request::initial
 	 * @uses	Request::redirect
+	 * @uses	Request::controller
 	 * @uses	Session::instance
+	 * @uses	Session::get
 	 * @uses	Auth::is_type
+	 * @uses	Jelly::query
 	 * @return	void
 	 */
 	public static function maintenance()
@@ -111,8 +115,10 @@ abstract class Nova_Hooks {
 	 * load the upgrade and userguide modules so they can be used to view the user
 	 * guide or upgrade from SMS.
 	 *
+	 * @access	public
 	 * @uses	Utility::install_status
 	 * @uses	Kohana::modules
+	 * @uses	Jelly::query
 	 * @return	void
 	 */
 	public static function modules()
