@@ -24,6 +24,11 @@ $modules = 'nova/modules';
 $system = 'nova/system';
 
 /**
+ * The directory in which the application modules are located.
+ */
+$extensions = $application.'/extensions';
+
+/**
  * The default extension of resource files. If you change this, all resources
  * must be renamed to use the new extension.
  *
@@ -76,14 +81,16 @@ if ( ! is_dir($system) AND is_dir(DOCROOT.$system))
 define('APPPATH', realpath($application).DIRECTORY_SEPARATOR);
 define('MODPATH', realpath($modules).DIRECTORY_SEPARATOR);
 define('SYSPATH', realpath($system).DIRECTORY_SEPARATOR);
+define('EXTPATH', realpath($extensions).DIRECTORY_SEPARATOR);
 
 // Define the names of the configured directories
 define('APPFOLDER', $application);
 define('MODFOLDER', $modules);
 define('SYSFOLDER', $system);
+define('EXTFOLDER', $extensions);
 
 // Clean up the configuration vars
-unset($application, $modules, $system);
+unset($application, $modules, $system, $extensions);
 
 if (file_exists('install'.EXT))
 {
