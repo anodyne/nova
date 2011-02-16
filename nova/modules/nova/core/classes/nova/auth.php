@@ -1,16 +1,16 @@
 <?php defined('SYSPATH') or die('No direct script access.');
 /**
- * The Auth class is responsible for managing authentication in Nova. Included in the class
- * are methods for checking access, getting access levels, hashing passwords, checking whether
- * a user is logged in or not, verify login credentials, logging a user out, logging a user in
- * and various protected methods for setting session variables, cookies and performing the
- * autologin process.
+ * The Auth class is responsible for managing authentication in Nova. Included
+ * in the class are methods for checking access, getting access levels, hashing
+ * passwords, checking whether a user is logged in or not, verify login credentials,
+ * logging a user out, logging a user in and various protected methods for setting
+ * session variables, cookies and performing the autologin process.
  *
  * @package		Nova
  * @category	Classes
  * @author		Anodyne Productions
  * @copyright	2010-11 Anodyne Productions
- * @since		2.0
+ * @since		3.0
  */
 
 abstract class Nova_Auth {
@@ -28,18 +28,19 @@ abstract class Nova_Auth {
 	/**
 	 * @var	object	an instance of the session for use throughout the class
 	 */
-	protected static $session;
+	protected static $_session;
 	
 	/**
 	 * Initializes the Auth class. It isn't necessary to directly call this
 	 * method as it's called automatically when the class is used.
 	 *
+	 * @access	public
+	 * @uses	Session::instance
 	 * @return	void
 	 */
 	public static function initialize()
 	{
-		// get an instance of the session library
-		self::$session = Session::instance();
+		self::$_session = Session::instance();
 	}
 	
 	/**
@@ -59,6 +60,11 @@ abstract class Nova_Auth {
 	 *     // no URI given, will auto-detect and not redirect
 	 *     Auth::check_access(null, false);
 	 *
+	 * @access	public
+	 * @uses	Request::current
+	 * @uses	Request::redirect
+	 * @uses	Session::get
+	 * @uses	Session::set
 	 * @param	string	the URI to check in the access session array
 	 * @param	boolean	whether to redirect to the login page (default: true)
 	 * @param	boolean	whether to search for a partial match (default: false)
@@ -77,11 +83,11 @@ abstract class Nova_Auth {
 		
 		if ($partial === false)
 		{
-			if ( ! array_key_exists($uri, self::$session->get('access', array())))
+			if ( ! array_key_exists($uri, self::$_session->get('access', array())))
 			{
 				if ($redirect === true)
 				{
-					self::$session->set_flash('referer', $uri);
+					self::$_session->set('referer', $uri);
 					
 					Request::current()->redirect('admin/error/1');
 				}
@@ -91,7 +97,7 @@ abstract class Nova_Auth {
 		}
 		else
 		{
-			foreach (self::$session->get('access') as $a => $b)
+			foreach (self::$_session->get('access') as $a => $b)
 			{
 				if (strpos($a, $uri) !== false)
 				{
@@ -116,6 +122,9 @@ abstract class Nova_Auth {
 	 *     // get the access level for a page that isn't the current one
 	 *     $level = Auth::get_access_level('admin/index');
 	 *
+	 * @access	public
+	 * @uses	Request::current
+	 * @uses	Session::get
 	 * @param	string	the URI to check
 	 * @return	mixed	the access level for a given page or false if no access
 	 */
@@ -128,7 +137,7 @@ abstract class Nova_Auth {
 		$uri = ($uri === null) ? self::_set_uri() : $uri;
 		
 		// grab the session
-		$access = self::$session->get('access', array());
+		$access = self::$_session->get('access', array());
 			
 		if (array_key_exists($uri, $access))
 		{
@@ -142,11 +151,13 @@ abstract class Nova_Auth {
 	 * Takes a string and hashes with the system's unique identifier.
 	 *
 	 * *WARNING:* uninstalling the system and re-installing it with the same data
-	 * will break all passwords since the UID is never the same between two installations.
+	 * will break all passwords since the UID is never the same between two
+	 * installations.
 	 *
-	 *     // hash the password
 	 *     $password = Auth::hash('foo');
 	 *
+	 * @access	public
+	 * @uses	Jelly::query
 	 * @param	string	the string to hash
 	 * @return	string	the hashed string
 	 */
@@ -165,8 +176,8 @@ abstract class Nova_Auth {
 	}
 	
 	/**
-	 * Checks to see if someone is logged in or not. If the parameter is true, Nova will
-	 * redirect the user to the login page.
+	 * Checks to see if someone is logged in or not. If the parameter is true,
+	 * Nova will redirect the user to the login page.
 	 *
 	 *     // is the user logged in?
 	 *     Auth::is_logged_in();
@@ -174,12 +185,16 @@ abstract class Nova_Auth {
 	 *     // if the user isn't logged in, send them to the login page
 	 *     Auth::is_logged_in(true);
 	 *
+	 * @access	public
+	 * @uses	Request::current
+	 * @uses	Request::redirect
+	 * @uses	Session::get
 	 * @param	boolean	whether a failure should redirect the user to the login page
 	 * @return	boolean
 	 */
 	public static function is_logged_in($redirect = false)
 	{
-		if (is_null(self::$session->get('userid')))
+		if (is_null(self::$_session->get('userid')))
 		{
 			$auto = self::_autologin();
 			
@@ -202,9 +217,10 @@ abstract class Nova_Auth {
 	/**
 	 * Checks to see if the user is flagged a certain way.
 	 *
-	 *     // is the user a system administrator?
 	 *     $sysadmin = Auth::is_type('sysadmin', 1);
 	 *
+	 * @access	public
+	 * @uses	Jelly::query
 	 * @param	string	what is the type to check for (webmaster, game_master, sysadmin)
 	 * @param	integer	the user id to check
 	 * @return	boolean
@@ -221,12 +237,15 @@ abstract class Nova_Auth {
 	}
 	
 	/**
-	 * Executes the login process, sets the remember me cookie if it's been requested
-	 * and calls the method to set the session variables.
+	 * Executes the login process, sets the remember me cookie if it's been
+	 * requested and calls the method to set the session variables.
 	 *
-	 *     // do the login process
 	 *     $login = Auth::login('me@example.com', 'password', 'yes');
 	 *
+	 * @access	public
+	 * @uses	Jelly::query
+	 * @uses	Date::now
+	 * @uses	Request::$client_ip
 	 * @param	string	the email address
 	 * @param	string	the password (should NOT be hashed before)
 	 * @param	integer	whether to set the auto-login (1 - yes, 0 - no)
@@ -265,7 +284,7 @@ abstract class Nova_Auth {
 				$attempts = Jelly::query('loginattempt')->where('email', '=', $email)->delete();
 			
 				// update the login record
-				$login->last_login = date::now();
+				$login->last_login = Date::now();
 				$login->save();
 				
 				// set the session
@@ -298,10 +317,10 @@ abstract class Nova_Auth {
 	/**
 	 * Log the user out of the system, destroy their cookies and session variables.
 	 *
-	 *     // log the user out
 	 *     Auth::logout();
 	 *
-	 * @uses	Auth::_destroy_cookie
+	 * @access	public
+	 * @uses	Session::destroy
 	 * @return 	void
 	 */
 	public static function logout()
@@ -310,7 +329,7 @@ abstract class Nova_Auth {
 		self::_destroy_cookie();
 		
 		// wipe out the session
-		self::$session->destroy();
+		self::$_session->destroy();
 	}
 	
 	/**
@@ -322,7 +341,7 @@ abstract class Nova_Auth {
 	 *     // verify the login credentials and return the person object on success
 	 *     $login = Auth::verify('me@example.com', 'password', true);
 	 *
-	 * @uses	Auth::_verify
+	 * @access	public
 	 * @param	string	the email address
 	 * @param	string	the password
 	 * @param	boolean	whether or not to return the person object (true) or the login code (false)
@@ -334,8 +353,13 @@ abstract class Nova_Auth {
 	}
 	
 	/**
-	 * Checks to see how many login attempts a user has in the allowed timeframe
+	 * Checks to see how many login attempts a user has in the allowed timeframe.
 	 *
+	 * @access	protected
+	 * @uses	Jelly::query
+	 * @uses	Date::now
+	 * @uses	Session::delete
+	 * @uses	Session::set
 	 * @param	string	the email address
 	 * @return	boolean	a boolean value of whether the user is allowed to try another login attempt
 	 */
@@ -350,9 +374,6 @@ abstract class Nova_Auth {
 		}
 		else
 		{
-			// grab an instance of the session
-			$session = Session::instance();
-			
 			// grab the nova uid
 			$uid = Jelly::query('system', 1)->select()->uid;
 			
@@ -364,27 +385,30 @@ abstract class Nova_Auth {
 				->select();
 			
 			// calculate how long it's been since their last attempt
-			$timeframe = date::now() - $item->date;
+			$timeframe = Date::now() - $item->date;
 			
 			// make sure they're allowed to log in
 			if ($timeframe > self::$lockout_time)
 			{
 				// clear the session data
-				$session->delete('nova_'.$uid.'_lockout_time');
+				self::$_session->delete('nova_'.$uid.'_lockout_time');
 				
 				return true;
 			}
 			
 			// set the lockout time as session data to check login attempts
-			$session->set('nova_'.$uid.'_lockout_time', $item->date);
+			self::$_session->set('nova_'.$uid.'_lockout_time', $item->date);
 			
 			return false;
 		}
 	}
 	
 	/**
-	 * Initiate the autologin process
+	 * Initiate the autologin process.
 	 *
+	 * @access	protected
+	 * @uses	Cookie::get
+	 * @uses	Jelly::query
 	 * @return	mixed	the login error code (0 is successful) or false if the user didn't want to be remembered
 	 */
 	protected static function _autologin()
@@ -393,7 +417,7 @@ abstract class Nova_Auth {
 		$uid = Jelly::query('system', 1)->select()->uid;
 		
 		// get the cookie
-		$cookie = cookie::get('nova_'.$uid, false, true);
+		$cookie = Cookie::get('nova_'.$uid, false, true);
 		
 		if ($cookie !== false)
 		{
@@ -406,9 +430,11 @@ abstract class Nova_Auth {
 	}
 	
 	/**
-	 * Destroy the cookie (called from the logout method)
+	 * Destroy the cookie (called from the logout method).
 	 *
+	 * @access	protected
 	 * @uses	Cookie::delete
+	 * @uses	Jelly::query
 	 * @return 	void
 	 */
 	protected static function _destroy_cookie()
@@ -417,13 +443,15 @@ abstract class Nova_Auth {
 		$uid = Jelly::query('system', 1)->select()->uid;
 		
 		// destroy the cookie
-		cookie::delete('nova_'.$uid.'[email]');
-		cookie::delete('nova_'.$uid.'[password]');
+		Cookie::delete('nova_'.$uid.'[email]');
+		Cookie::delete('nova_'.$uid.'[password]');
 	}
 	
 	/**
-	 * Get the access page data to be used in the session
+	 * Get the access page data to be used in the session.
 	 *
+	 * @access	protected
+	 * @uses	Jelly::query
 	 * @param	integer	the role ID
 	 * @return 	array	the pages from the access role
 	 */
@@ -450,9 +478,12 @@ abstract class Nova_Auth {
 	}
 	
 	/**
-	 * Set the cookie if a user wants to be remembered (called from the login method)
+	 * Set the cookie if a user wants to be remembered (called from the login
+	 * method).
 	 *
+	 * @access	protected
 	 * @uses	Cookie::set
+	 * @uses	Jelly::query
 	 * @param	string	the email address
 	 * @param	string	the password
 	 * @return 	void
@@ -463,13 +494,18 @@ abstract class Nova_Auth {
 		$uid = Jelly::query('system', 1)->select()->uid;
 		
 		// set the cookie
-		cookie::set('nova_'.$uid.'[email]', $email, 1209600);
-		cookie::set('nova_'.$uid.'[password]', $password, 1209600);
+		Cookie::set('nova_'.$uid.'[email]', $email, 1209600);
+		Cookie::set('nova_'.$uid.'[password]', $password, 1209600);
 	}
 	
 	/**
-	 * Set the session variables (called from the login method)
+	 * Set the session variables (called from the login method).
 	 *
+	 * @access	protected
+	 * @uses	Html::anchor
+	 * @uses	Jelly::query
+	 * @uses	Session::set
+	 * @uses	DBForge::optimize
 	 * @param	object	an object with the user information
 	 * @return 	void
 	 */
@@ -503,38 +539,42 @@ abstract class Nova_Auth {
 		}
 		
 		// set the session data
-		self::$session->set('userid', $person->id);
-		self::$session->set('skin_main', $person->skin_main);
-		self::$session->set('skin_wiki', $person->skin_wiki);
-		self::$session->set('skin_admin', $person->skin_admin);
-		self::$session->set('display_rank', $person->rank);
-		self::$session->set('language', $person->language);
-		self::$session->set('dst', $person->dst);
-		self::$session->set('main_char', $person->main_char->id);
-		self::$session->set('characters', $chars);
-		self::$session->set('access', self::_set_access($person->role->id));
-		self::$session->set('my_links', $links);
-		self::$session->set('status', $person->get_status());
+		self::$_session->set('userid', $person->id);
+		self::$_session->set('skin_main', $person->skin_main);
+		self::$_session->set('skin_wiki', $person->skin_wiki);
+		self::$_session->set('skin_admin', $person->skin_admin);
+		self::$_session->set('display_rank', $person->rank);
+		self::$_session->set('language', $person->language);
+		self::$_session->set('dst', $person->dst);
+		self::$_session->set('main_char', $person->main_char->id);
+		self::$_session->set('characters', $chars);
+		self::$_session->set('access', self::_set_access($person->role->id));
+		self::$_session->set('my_links', $links);
+		self::$_session->set('status', $person->get_status());
 		
 		// set the password reset session variable if it needs to be set
 		if ($person->password_reset == 1)
 		{
-			self::$session->set('password_reset', $person->password_reset);
+			self::$_session->set('password_reset', $person->password_reset);
 		}
 		
 		// set the first launch session variable if it needs to be set
 		if ($person->is_firstlaunch == 1)
 		{
-			self::$session->set('first_launch', $person->is_firstlaunch);
+			self::$_session->set('first_launch', $person->is_firstlaunch);
 		}
 		
-		// optimize the table
 		DBForge::optimize('sessions');
 	}
 	
 	/**
-	 * Set the URI (called from the get_access_level and check_access methods)
+	 * Set the URI (called from the get_access_level and check_access methods).
 	 *
+	 * @access	protected
+	 * @uses	Request::current
+	 * @uses	Request::directory
+	 * @uses	Request::controller
+	 * @uses	Request::action
 	 * @param	boolean	whether to include the directory at the start of the URI
 	 * @return	string	a string with the URI properly set
 	 */
@@ -545,7 +585,7 @@ abstract class Nova_Auth {
 		
 		if ($directory === true)
 		{
-			$uri[] = $request->directory;
+			$uri[] = $request->directory();
 		}
 		
 		// add the controller
@@ -560,9 +600,11 @@ abstract class Nova_Auth {
 	}
 	
 	/**
-	 * Method that does the legwork of verifying whether a
-	 * user has the right login credentials
+	 * Method that does the legwork of verifying whether a user has the proper
+	 * login credentials.
 	 *
+	 * @access	protected
+	 * @uses	Jelly::query
 	 * @param	string	the email address
 	 * @param	string	the password
 	 * @param	boolean	whether or not to return the person object (true) or the login code (false)
