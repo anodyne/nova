@@ -56,7 +56,7 @@ abstract class Nova_Location {
 	 */
 	public static function image($image, $skin, $section, $type = 'image')
 	{
-		$locations = self::_setup_modules(array('install', 'update', 'upgrade'))
+		$locations = self::_setup_modules(array('install', 'update', 'upgrade'));
 		
 		switch ($type)
 		{
