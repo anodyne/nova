@@ -192,17 +192,20 @@ abstract class Nova_Location {
 			APPFOLDER => APPPATH,
 		);
 		
-		// flip the modules array, which we need to do to make sure things are checked in the right order
-		$modules = array_reverse(Kohana::modules());
+		// get all the modules
+		$modules = Kohana::modules();
 		
-		// go through the modules and figure out what should and shouldn't be included
 		foreach ($modules as $m)
 		{
-			$mod = str_replace(MODPATH, '', $m);
+			// figure out if it's a module or an extension
+			$modtype = (strpos($m, MODPATH) !== false) ? 'module' : 'extension';
+			
+			// make sure we're replacing the right thing based on what type of "thing" it is
+			$mod = ($modtype == 'module') ? str_replace(MODPATH, '', $m) : str_replace(EXTPATH, '', $m);
 			
 			if ( ! in_array($mod, $exclude))
 			{
-				$loc = MODFOLDER.'/'.$mod;
+				$loc = ($modtype == 'module') ? MODFOLDER.'/'.$mod : EXTFOLDER.'/'.$mod;
 				$locations[$loc] = $m;
 			}
 		}
@@ -215,23 +218,24 @@ abstract class Nova_Location {
 			'view' => $view
 		);
 		
-		// go through the locations and try to find the image
 		foreach ($locations as $key => $l)
 		{
 			switch ($key)
 			{
-				case 'application':
+				case APPFOLDER:
 					if (is_file($l.'views/'.$skin.'/'.$section.'/'.$type.'/'.$view.$ext))
 					{
-						$path['view'] = $view;
+						// add the skin to the path
+						$path['skin'] = $skin;
 						
 						return implode('/', $path);
 					}
 				break;
 					
 				default:
-					if (is_file($l.'/views/'.$section.'/'.$type.'/'.$view.$ext))
+					if (is_file($l.'views/'.$section.'/'.$type.'/'.$view.$ext))
 					{
+						// we don't need the skin key any more
 						unset($path['skin']);
 						
 						return implode('/', $path);
