@@ -1,8 +1,8 @@
 <?php defined('SYSPATH') or die('No direct script access.');
 /**
- * The email class utilizes SwiftMailer for preparing and sending all email messages.
- * The class also includes methods for some of the fringe cases used throughout the
- * system that don't fall in to normal email operations.
+ * The email class utilizes SwiftMailer for preparing and sending all email
+ * messages. The class also includes methods for some of the fringe cases used
+ * throughout the system that don't fall in to normal email operations.
  *
  *     // set up the mailer
  *     $mailer = Email::setup_mailer();
@@ -14,14 +14,15 @@
  * @category	Classes
  * @author		Anodyne Productions
  * @copyright	2011 Anodyne Productions
- * @since		2.0
+ * @since		3.0
  */
 
 abstract class Nova_Email {
 	
 	/**
-	 * Send the installation registration email
+	 * Send the installation registration email.
 	 *
+	 * @access	public
 	 * @param	array 	an array of items to use in the email
 	 * @return	object	swift mailer object
 	 */
@@ -42,8 +43,9 @@ abstract class Nova_Email {
 	
 	/**
 	 * Sets up the SwiftMailer class with the appropriate transport, creates
-	 * the mailer and returns an instance of the mailer
+	 * the mailer and returns an instance of the mailer.
 	 *
+	 * @access	public
 	 * @uses	Kohana::config
 	 * @return	object	an instance of the mailer object
 	 */
@@ -75,8 +77,9 @@ abstract class Nova_Email {
 	}
 	
 	/**
-	 * Sets up the SwiftMail message and returns the instance
+	 * Sets up the SwiftMail message and returns the instance.
 	 *
+	 * @access	public
 	 * @return	object	an instance of the message object
 	 */
 	public function setup_message()
