@@ -126,29 +126,7 @@ $request = Request::factory();
 Events::event('postCreate');
 
 Events::event('preExecute');
-
-if (Kohana::$environment == Kohana::PRODUCTION)
-{
-	try {
-		$response = $request->execute();
-	}
-	catch (Exception $e)
-	{
-		switch ($e->getCode())
-		{
-			case -1:
-			case 0:
-			case 404:
-				$response = Request::factory('error/404')->execute();
-			break;
-		}
-	}
-}
-else
-{
-	$response = $request->execute();
-}
-
+$response = $request->execute();
 Events::event('postExecute');
 
 Events::event('preHeaders');
@@ -158,8 +136,3 @@ Events::event('postHeaders');
 Events::event('preResponse');
 echo $response->body();
 Events::event('postResponse');
-
-/*echo Request::factory()
-	->execute()
-	->send_headers()
-		->body();*/
