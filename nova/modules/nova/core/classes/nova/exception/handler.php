@@ -6,37 +6,32 @@
  * @category	Classes
  * @author		Anodyne Productions
  * @copyright	2010-11 Anodyne Productions
- * @since		2.0
+ * @since		3.0
  */
 
 class Nova_Exception_Handler {
 	
 	/**
-	 * Handles exceptions
+	 * Method to handle exceptions thrown by Kohana.
 	 * 
-	 * @param Exception $e the exception to handle
-	 * @return bool
+	 * @access	public
+	 * @param	Exception	$e the exception to handle
+	 * @return	bool
 	 */
 	public static function handle(Exception $e)
 	{
 		switch (get_class($e))
 		{
 			case 'Http_Exception_404':
-			case 'ReflectionException':
-				// get a new copy of the response
+				// set up the response object
 				$response = new Response;
-				
-				// set the response status
 				$response->status(404);
 				
-				// load the error view
+				// set up the view object
 				$view = new View('_common/error/404');
-				
-				// set the content
 				$view->message = $e->getMessage();
 				$view->title = 'File Not Found';
 				
-				// echo out the response body
 				echo $response->body($view)->send_headers()->body();
 				
 				return true;
