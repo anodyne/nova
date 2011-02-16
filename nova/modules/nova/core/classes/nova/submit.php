@@ -1,13 +1,14 @@
 <?php defined('SYSPATH') or die('No direct script access.');
 /**
- * The Submit class allows developers to quickly and easily submit to the database for simple create,
- * update and delete actions as well as displaying flash messages based on those actions.
+ * The Submit class allows developers to quickly and easily submit to the database
+ * for simple create, update and delete actions as well as displaying flash messages
+ * based on those actions.
  *
  * @package		Nova
  * @category	Classes
  * @author		Anodyne Productions
  * @copyright	2010-11 Anodyne Productions
- * @since		2.0
+ * @since		3.0
  */
 
 # TODO: need to move the actions button and menu out of here and into another class
@@ -34,11 +35,13 @@ abstract class Nova_Submit {
 	}
 	
 	/**
-	 * Executes a create submission that loops through the arrays, does the XSS clean,
-	 * removes items from the array and merges it with any additional fields passed
-	 * to the method then runs the core model add method.
+	 * Executes a create submission that loops through the arrays, does the XSS
+	 * clean, removes items from the array and merges it with any additional
+	 * fields passed to the method then runs the core model add method.
 	 *
+	 * @access	public
 	 * @uses	Security::xss_clean
+	 * @uses	Jelly::factory
 	 * @param	array 	POST array
 	 * @param	string	the model to use
 	 * @param	array 	an array of additional fields to be added to the POST array
@@ -72,8 +75,10 @@ abstract class Nova_Submit {
 	}
 	
 	/**
-	 * Builds a flash message with information about either a successful or failed submission.
+	 * Builds a flash message with information about either a successful or
+	 * failed submission.
 	 *
+	 * @access	public
 	 * @uses	View::factory
 	 * @uses	Location::view
 	 * @param	integer	result from a create, update or delete query
@@ -82,7 +87,7 @@ abstract class Nova_Submit {
 	 * @param	string	the skin
 	 * @param	string	the section
 	 * @param	string	extra content to be appended to the end of the flash message
-	 * @param	boolean	whether the verb should be pluralized or not (was/were)
+	 * @param	bool	whether the verb should be pluralized or not (was/were)
 	 * @return	string	the string result of the flash message
 	 */
 	public static function show_flash($result, $item, $action, $skin, $section, $extra = '', $plural = false)
@@ -96,11 +101,11 @@ abstract class Nova_Submit {
 			
 			if ($plural === false)
 			{
-				$flash->message = ucfirst(__('phrase.flash_success', array(':item' => $item, ':action' => $action, ':extra' => $extra)));
+				$flash->message = ucfirst(___('phrase.flash_success', array(':item' => $item, ':action' => $action, ':extra' => $extra)));
 			}
 			else
 			{
-				$flash->message = ucfirst(__('phrase.flash_success_plural', array(':item' => $item, ':action' => $action, ':extra' => $extra)));
+				$flash->message = ucfirst(___('phrase.flash_success_plural', array(':item' => $item, ':action' => $action, ':extra' => $extra)));
 			}
 		}
 		else
@@ -109,11 +114,11 @@ abstract class Nova_Submit {
 			
 			if ($plural === false)
 			{
-				$flash->message = ucfirst(__('phrase.flash_failure', array(':item' => $item, ':action' => $action, ':extra' => $extra)));
+				$flash->message = ucfirst(___('phrase.flash_failure', array(':item' => $item, ':action' => $action, ':extra' => $extra)));
 			}
 			else
 			{
-				$flash->message = ucfirst(__('phrase.flash_failure_plural', array(':item' => $item, ':action' => $action, ':extra' => $extra)));
+				$flash->message = ucfirst(___('phrase.flash_failure_plural', array(':item' => $item, ':action' => $action, ':extra' => $extra)));
 			}
 		}
 		
