@@ -1,9 +1,10 @@
 <?php defined('SYSPATH') or die('No direct script access.');
 /**
- * The HTML class extends Kohana's native Form class to add additional methods for handling
- * HTML5 content like video, audio and canvas. If you use these items, it's important to
- * understand the elements and what's involved. More information about these items can be
- * found in the inline help documentation for each method.
+ * The HTML class extends Kohana's native Form class to add additional methods
+ * for handling HTML5 content like video, audio and canvas. If you use these
+ * items, it's important to understand the elements and what's involved. More
+ * information about these items can be found in the inline help documentation
+ * for each method.
  *
  * The HTML5 elements are based off of work done by Adam Fairholm for CodeIgniter 2.0.
  *
@@ -11,18 +12,20 @@
  * @category	Classes
  * @author		Anodyne Productions
  * @copyright	2010-11 Anodyne Productions
- * @since		2.0
+ * @since		3.0
  */
 
 abstract class Nova_Html extends Kohana_Html {
 	
 	/**
-	 * Creates an audio element. Takes an associative array of attributes in the first
-	 * parameter. More information about the audio tag can be found [here](http://www.w3schools.com/html5/tag_audio.asp).
+	 * Creates an audio element. Takes an associative array of attributes in the
+	 * first parameter. More information about the audio tag can be found 
+	 * [here](http://www.w3schools.com/html5/tag_audio.asp).
 	 *
-	 * The source array must be formatted in the manner below. The _src_ item is required and
-	 * the _attr_ item can be an array of attributes that'll be added to the source. More
-	 * information about source tags can be found [here](http://www.w3schools.com/html5/tag_source.asp).
+	 * The source array must be formatted in the manner below. The _src_ item 
+	 * is required and the _attr_ item can be an array of attributes that'll be 
+	 * added to the source. More information about source tags can be found 
+	 * [here](http://www.w3schools.com/html5/tag_source.asp).
 	 *
 	 *     $sources = array(
 	 *         'src' => "",
@@ -33,7 +36,8 @@ abstract class Nova_Html extends Kohana_Html {
 	 *
 	 *     echo audio($attributes, $sources);
 	 *
-	 * @uses	html::attributes
+	 * @access	public
+	 * @uses	Html::attributes
 	 * @param	array 	an associative array of attributes
 	 * @param	array 	an associative array of soruces
 	 * @param	string	a message to display if the feature isn't supported
@@ -58,16 +62,18 @@ abstract class Nova_Html extends Kohana_Html {
 	}
 	
 	/**
-	 * Creates a canvas element. Takes an associative array of attributes in the first
-	 * parameter. More information about the canvas tag can be found [here](http://www.w3schools.com/html5/tag_canvas.asp).
+	 * Creates a canvas element. Takes an associative array of attributes in the 
+	 * first parameter. More information about the canvas tag can be found 
+	 * [here](http://www.w3schools.com/html5/tag_canvas.asp).
 	 *
-	 * __Note:__ The canvas tag is not natively supported in Internet Explorer prior to version 9
-	 * and requires the use of a plugin to get it to work. You should understand the limitations
-	 * of this tag before attempting to use it.
+	 * __Note:__ The canvas tag is not natively supported in Internet Explorer 
+	 * prior to version 9 and requires the use of a plugin to get it to work. 
+	 * You should understand the limitations of this tag before attempting to use it.
 	 *
 	 *     echo canvas($attributes);
 	 *
-	 * @uses	html::attributes
+	 * @access	public
+	 * @uses	Html::attributes
 	 * @param	array 	an array of attributes
 	 * @param	string	a message to display if the feature isn't supported
 	 * @return	string	the complete canvas tag
@@ -81,13 +87,14 @@ abstract class Nova_Html extends Kohana_Html {
 	}
 	
 	/**
-	 * Creates a video element. Takes an associative array of attributes in the first parameter
-	 * and an array of sources in the second. More information about the video tag can be found
-	 * [here](http://www.w3schools.com/html5/tag_video.asp).
+	 * Creates a video element. Takes an associative array of attributes in the 
+	 * first parameter and an array of sources in the second. More information 
+	 * about the video tag can be found [here](http://www.w3schools.com/html5/tag_video.asp).
 	 *
-	 * The source array must be formatted in the manner below. The _src_ item is required and
-	 * the _attr_ item can be an array of attributes that'll be added to the source. More
-	 * information about source tags can be found [here](http://www.w3schools.com/html5/tag_source.asp).
+	 * The source array must be formatted in the manner below. The _src_ item is 
+	 * required and the _attr_ item can be an array of attributes that'll be added 
+	 * to the source. More information about source tags can be found 
+	 * [here](http://www.w3schools.com/html5/tag_source.asp).
 	 *
 	 *     $sources = array(
 	 *         'src' => "",
@@ -98,7 +105,8 @@ abstract class Nova_Html extends Kohana_Html {
 	 *
 	 *     echo video($attributes, $sources);
 	 *
-	 * @uses	html::attributes
+	 * @access	public
+	 * @uses	Html::attributes
 	 * @param	array 	an array of attributes
 	 * @param	array 	an array of sources
 	 * @param	string	a message to display if the feature isn't supported
@@ -126,6 +134,8 @@ abstract class Nova_Html extends Kohana_Html {
 	/**
 	 * Parse the sources for the HTML5 elements.
 	 *
+	 * @access	protected
+	 * @uses	Html::attributes
 	 * @param	array 	array of sources
 	 * @return	string	the source items
 	 */
