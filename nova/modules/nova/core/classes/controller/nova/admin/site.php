@@ -9,6 +9,8 @@
  * @since		2.0
  */
 
+# TODO: when a menu item is changed, we need to remove that menu type cache
+
 class Controller_Nova_Admin_Site extends Controller_Nova_Base {
 	
 	public function before()
