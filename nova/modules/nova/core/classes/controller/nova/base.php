@@ -51,6 +51,9 @@ abstract class Controller_Nova_Base extends Controller_Template {
 		// set the locale
 		I18n::lang($this->session->get('language', 'en-us'));
 		
+		// set the cache driver
+		Cache::$default = Kohana::config('cache.driver');
+		
 		// these are the setting items we need to pull for this controller
 		$this->settingsArray = array(
 			'display_rank',
