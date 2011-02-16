@@ -1,21 +1,22 @@
 <?php defined('SYSPATH') or die('No direct script access.');
 /**
- * Utility Class
+ * The Utility class contains methods for a wide variety of operations that need
+ * to be completed throughout the system.
  *
  * @package		Nova
  * @category	Classes
  * @author		Anodyne Productions
  * @copyright	2010-11 Anodyne Productions
- * @since		2.0
+ * @since		3.0
  */
 
 abstract class Nova_Utility {
 	
 	/**
-	 * Reads the directory path specified in the first parameter and builds an array representation
-	 * of it and its contained files.
+	 * Reads the directory path specified in the first parameter and builds an
+	 * array representation of it and its contained files.
 	 *
-	 * *This is a port of the CodeIgniter directory_map function.*
+	 * __This is a port of the CodeIgniter directory_map function.__
 	 *
 	 *     // this will map sub-folders as well
 	 *     $map = Utility::directory_map('./mydirectory/');
@@ -26,9 +27,10 @@ abstract class Nova_Utility {
 	 *     // this will map hidden files as well
 	 *     $map = Utility::directory_map('./mydirectory/', true, true);
 	 *
+	 * @access	public
 	 * @param	string	the path to map
-	 * @param	boolean	show the top level only?
-	 * @param	boolean	show hidden files?
+	 * @param	bool	show the top level only?
+	 * @param	bool	show hidden files?
 	 * @return	array 	an array of the directory structure
 	 */
 	public static function directory_map($source_dir, $top_level_only = false, $hidden = false)
@@ -73,6 +75,7 @@ abstract class Nova_Utility {
 	 *
 	 *     $image_index = Utility::get_image_index('default');
 	 *
+	 * @access	public
 	 * @uses	Kohana::find_file
 	 * @uses	Kohana::load
 	 * @param	string	the current skin
@@ -102,7 +105,10 @@ abstract class Nova_Utility {
 	 *     Utility::install_rank();
 	 *     Utility::install_rank('location');
 	 *
-	 * @uses	Utility::directory_map()
+	 * @access	public
+	 * @uses	Kohana::config
+	 * @uses	Jelly::query
+	 * @uses	Jelly::factory
 	 * @param	string	the location of a specific rank set to install
 	 * @return	void
 	 */
@@ -207,7 +213,9 @@ abstract class Nova_Utility {
 	 *     Utility::install_skin();
 	 *     Utility::install_skin('location');
 	 *
-	 * @uses	Utility::directory_map()
+	 * @access	public
+	 * @uses	Jelly::query
+	 * @uses	Jelly::factory
 	 * @param	string	the location of a skin to install
 	 * @return	void
 	 */
@@ -333,7 +341,14 @@ abstract class Nova_Utility {
 	 *
 	 *     $check = Utility::install_status();
 	 *
-	 * @return	boolean	is the system installed?
+	 * @access	public
+	 * @uses	Request::initial
+	 * @uses	Request::controller
+	 * @uses	Request::redirect
+	 * @uses	Kohana::config
+	 * @uses	Database::instance
+	 * @uses	Database::list_tables
+	 * @return	bool	is the system installed?
 	 */
 	public static function install_status()
 	{
@@ -372,7 +387,9 @@ abstract class Nova_Utility {
 	 *     Utility::install_widget();
 	 *     Utility::install_widget('location');
 	 *
-	 * @uses	Utility::directory_map()
+	 * @access	public
+	 * @uses	Jelly::query
+	 * @uses	Jelly::factory
 	 * @param	string	the location of a specific widget to install
 	 * @return	void
 	 */
@@ -471,8 +488,11 @@ abstract class Nova_Utility {
 	}
 	
 	/**
-	 * Verifies that the server can run Nova
+	 * Verifies that the server can run Nova.
 	 *
+	 * @access	public
+	 * @uses	Kohana::config
+	 * @uses	Db::query
 	 * @return	mixed	an array if there are any warnings or failures or false if everything checks out
 	 */
 	public static function verify_server()
