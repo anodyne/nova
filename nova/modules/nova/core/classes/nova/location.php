@@ -135,25 +135,24 @@ abstract class Nova_Location {
 	 * finally checking in the core nova module where it should find the file
 	 * in question.
 	 *
-	 *     echo Location::view('main_index', 'default', 'main', 'pages');
-	 *     echo Location::view('main_index_js', 'default', 'main', 'js');
+	 *     echo Location::view('main_contact', 'default', 'pages');
+	 *     echo Location::view('main_contact_ajax', 'default', 'ajax');
+	 *     echo Location::view('main_contact_em_html', 'default', 'email');
 	 *
 	 * @access	public
 	 * @param	string	the view file
 	 * @param	string	the skin to search in
-	 * @param	string	the section to search in
 	 * @param	string	the type of view file (pages, js, ajax)
 	 * @param	string	the extension of the view file (default: .php)
 	 * @return	string	path to the view file relative to the views directory
 	 */
-	public static function view($view, $skin, $section, $type = 'pages', $ext = EXT)
+	public static function view($view, $skin, $type = 'pages', $ext = EXT)
 	{
 		$locations = self::_setup_modules();
 		
 		// set the up the path array
 		$path = array(
-			'skin' => '',
-			'section' => $section,
+			'skin' => false,
 			'type' => $type,
 			'view' => $view
 		);
@@ -163,7 +162,7 @@ abstract class Nova_Location {
 			switch ($key)
 			{
 				case APPFOLDER:
-					if (is_file($l.'views/'.$skin.'/'.$section.'/'.$type.'/'.$view.$ext))
+					if (is_file($l.'views/'.$skin.'/views/'.$type.'/'.$view.$ext))
 					{
 						// add the skin to the path
 						$path['skin'] = $skin;
@@ -173,7 +172,7 @@ abstract class Nova_Location {
 				break;
 					
 				default:
-					if (is_file($l.'views/'.$section.'/'.$type.'/'.$view.$ext))
+					if (is_file($l.'views/views/'.$type.'/'.$view.$ext))
 					{
 						// we don't need the skin key any more
 						unset($path['skin']);
