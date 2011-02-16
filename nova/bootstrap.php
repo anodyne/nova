@@ -95,19 +95,23 @@ if (getenv('KOHANA_ENV') !== FALSE)
 
 /**
  * Enable modules. Modules are referenced by a relative or absolute path.
+ *
+ * NOTE: the array_slice in Hooks::modules should be working right, but
+ * if anything is added to the modules array, we need to verify everything
+ * is working properly with modules
  */
 Kohana::modules(array(
-	'nova'			=> MODPATH.'nova/core',
-	//'thresher'		=> MODPATH.'nova/thresher',
-	'override'		=> MODPATH.'override',
+	'override'		=> EXTPATH.'override',
+	'thresher'		=> MODPATH.'nova/thresher',
 	'install'		=> MODPATH.'nova/install',
 	'update'		=> MODPATH.'nova/update',
-	'database'		=> MODPATH.'kohana/database',
-	'jelly'			=> MODPATH.'kohana/jelly',
-	'htmlpurifier'	=> MODPATH.'kohana/purifier',
-	'i18n'			=> MODPATH.'kohana/i18n',
 	'assets'		=> MODPATH.'assets',
 	'dbforge'		=> MODPATH.'nova/dbforge',
+	'nova'			=> MODPATH.'nova/core',
+	'database'		=> MODPATH.'kohana/database',
+	'jelly'			=> MODPATH.'third_party/jelly',
+	'htmlpurifier'	=> MODPATH.'third_party/purifier',
+	'i18n'			=> MODPATH.'third_party/i18n',
 	));
 
 /**
