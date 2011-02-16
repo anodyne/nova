@@ -1,35 +1,24 @@
 <?php defined('SYSPATH') or die('No direct script access.');
 /**
- * Menu Class
+ * The Menu class handles building and rendering all of the menus found in the
+ * system.
  *
  * @package		Nova
  * @category	Classes
  * @author		Anodyne Productions
  * @copyright	2010-11 Anodyne Productions
- * @since		2.0
+ * @since		3.0
  */
 
 abstract class Nova_Menu {
 	
 	/**
-	 * Initializes the library and sets a debug message.
+	 * The only entry point into the class. This method will call one of the
+	 * private methods to do all the heavy lifting of generating the menus.
 	 *
-	 * *The base controller automatically initializes this class, so unless you're developing outside
-	 * of the base controller, you do not need to initialize this class manually.*
+	 *     echo Menu::build('sub', 'personnel');
 	 *
-	 * @return 	void
-	 */
-	public function __construct()
-	{
-		Kohana_Log::instance()->add('debug', 'Auth library initialized.');
-	}
-	
-	/**
-	 * The only entry point into the class. This method will call one of the private methods to do all
-	 * the heavy lifting of generating the menus.
-	 *
-	 *     echo menu::build('sub', 'personnel');
-	 *
+	 * @access	public
 	 * @param	string	the type of menu to build (main, sub, adminsub)
 	 * @param	string	the category of menu to build
 	 * @return 	mixed	an unordered list with all the menu items or false if an invalid type is supplied
@@ -39,11 +28,11 @@ abstract class Nova_Menu {
 		switch ($type)
 		{
 			case 'main':
-				return self::_build_main($type, $cat);
+				return self::_build_main();
 			break;
 				
 			case 'sub':
-				return self::_build_sub($type, $cat);
+				return self::_build_sub($cat);
 			break;
 				
 			case 'adminsub':
@@ -54,7 +43,16 @@ abstract class Nova_Menu {
 		return false;
 	}
 	
-	private static function _build_main($type = '', $cat = '')
+	/**
+	 * Build Nova's main menu.
+	 *
+	 * @access	private
+	 * @uses	Session::instance
+	 * @uses	Session::get
+	 * @uses	Jelly::query
+	 * @return	mixed	the menu to output or false if there are no menu items
+	 */
+	private static function _build_main()
 	{
 		// grab the session
 		$session = Session::instance();
@@ -64,7 +62,46 @@ abstract class Nova_Menu {
 		
 		// get the menu items
 		$items = Jelly::query('menu')
-			->where('type', '=', $type)
+			->where('type', '=', 'main')
+			->where('display', '=', 'y')
+			->order_by('group', 'asc')
+			->order_by('order', 'asc')
+			->select();
+		
+		if ($items)
+		{
+			foreach ($items as $item)
+			{
+				$data[$item->order] = $item;
+			}
+			
+			return self::_render('main', $data);
+		}
+		
+		return false;
+	}
+	
+	/**
+	 * Build Nova's sub navigation menu.
+	 *
+	 * @access	private
+	 * @uses	Session::instance
+	 * @uses	Session::get
+	 * @uses	Jelly::query
+	 * @param	string	the category of sub navigation to pull
+	 * @return	mixed	the menu to output or false if there are no menu items
+	 */
+	private static function _build_sub($cat)
+	{
+		// grab the session
+		$session = Session::instance();
+		
+		// get the user id from the session
+		$userid = $session->get('userid');
+		
+		// get the menu items
+		$items = Jelly::query('menu')
+			->where('type', '=', 'sub')
 			->where('cat', '=', $cat)
 			->where('display', '=', 'y')
 			->order_by('group', 'asc')
@@ -78,43 +115,23 @@ abstract class Nova_Menu {
 				$data[$item->order] = $item;
 			}
 			
-			return self::_render($type, $data);
+			return self::_render('sub', $data);
 		}
 		
 		return false;
 	}
 	
-	private static function _build_sub($type = '', $cat = '')
-	{
-		// grab the session
-		$session = Session::instance();
-		
-		// get the user id from the session
-		$userid = $session->get('userid');
-		
-		// get the menu items
-		$items = Jelly::query('menu')
-			->where('type', '=', $type)
-			->where('cat', '=', $cat)
-			->where('display', '=', 'y')
-			->order_by('group', 'asc')
-			->order_by('order', 'asc')
-			->select();
-		
-		if ($items)
-		{
-			foreach ($items as $item)
-			{
-				$data[$item->order] = $item;
-			}
-			
-			return self::_render($type, $data);
-		}
-		
-		return false;
-	}
-	
-	private static function _build_sub_admin($type = '', $cat = '')
+	/**
+	 * Build Nova's admin sub navigation menu.
+	 *
+	 * @access	private
+	 * @uses	Session::instance
+	 * @uses	Session::get
+	 * @uses	Jelly::query
+	 * @param	string	the category admin sub navigation to pull
+	 * @return	mixed	the menu to output or false if there are no menu items
+	 */
+	private static function _build_sub_admin($cat = '')
 	{
 		// grab the session
 		$session = Session::instance();
@@ -181,12 +198,26 @@ abstract class Nova_Menu {
 				}
 			}
 			
-			return self::_render($type, $data);
+			return self::_render('adminsub', $data);
 		}
 		
 		return false;
 	}
 	
+	/**
+	 * Render the specified menu.
+	 *
+	 * @access	private
+	 * @uses	Auth::check_access
+	 * @uses	Auth::get_access_level
+	 * @uses	Auth::is_logged_in
+	 * @uses	Request::current
+	 * @uses	Request::uri
+	 * @uses	Url::site
+	 * @param	string	the type of menu to render
+	 * @param	mixed	the data to use for the menu render
+	 * @return	string	the menu output
+	 */
 	private static function _render($type = '', $data = '')
 	{
 		$output = '<ul>';
