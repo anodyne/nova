@@ -19,28 +19,37 @@ abstract class Nova_Menu {
 	 *     echo Menu::build('sub', 'personnel');
 	 *
 	 * @access	public
+	 * @uses	Cache::instance
+	 * @uses	Cache::get
 	 * @param	string	the type of menu to build (main, sub, adminsub)
 	 * @param	string	the category of menu to build
 	 * @return 	mixed	an unordered list with all the menu items or false if an invalid type is supplied
 	 */
 	public static function build($type, $cat)
 	{
+		// get an instance of the cache module
+		$cache = Cache::instance();
+		
 		switch ($type)
 		{
 			case 'main':
-				return self::_build_main();
+				$menu = ($cache->get('menu_main')) ? $cache->get('menu_main') : self::_build_main();
 			break;
 				
 			case 'sub':
-				return self::_build_sub($cat);
+				$menu = ($cache->get('menu_sub')) ? $cache->get('menu_sub') : self::_build_sub($cat);
 			break;
 				
 			case 'adminsub':
-				return self::_build_sub_admin($type, $cat);
+				$menu = ($cache->get('menu_adminsub')) ? $cache->get('menu_adminsub') : self::_build_sub_admin($cat);
+			break;
+			
+			default:
+				$menu = false;
 			break;
 		}
 		
-		return false;
+		return $menu;
 	}
 	
 	/**
@@ -50,6 +59,9 @@ abstract class Nova_Menu {
 	 * @uses	Session::instance
 	 * @uses	Session::get
 	 * @uses	Jelly::query
+	 * @uses	Cache::instance
+	 * @uses	Cache::get
+	 * @uses	Cache::set
 	 * @return	mixed	the menu to output or false if there are no menu items
 	 */
 	private static function _build_main()
@@ -75,7 +87,16 @@ abstract class Nova_Menu {
 				$data[$item->order] = $item;
 			}
 			
-			return self::_render('main', $data);
+			// render the final output
+			$final = self::_render('main', $data);
+			
+			// if the main menu isn't cached, cache it
+			if ( ! Cache::instance()->get('menu_main'))
+			{
+				Cache::instance()->set('menu_main', $final);
+			}
+			
+			return $final;
 		}
 		
 		return false;
@@ -88,6 +109,9 @@ abstract class Nova_Menu {
 	 * @uses	Session::instance
 	 * @uses	Session::get
 	 * @uses	Jelly::query
+	 * @uses	Cache::instance
+	 * @uses	Cache::get
+	 * @uses	Cache::set
 	 * @param	string	the category of sub navigation to pull
 	 * @return	mixed	the menu to output or false if there are no menu items
 	 */
@@ -115,7 +139,16 @@ abstract class Nova_Menu {
 				$data[$item->order] = $item;
 			}
 			
-			return self::_render('sub', $data);
+			// render the final output
+			$final = self::_render('sub', $data);
+			
+			// if the sub menu isn't cached, cache it
+			if ( ! Cache::instance()->get('menu_sub'))
+			{
+				Cache::instance()->set('menu_sub', $final);
+			}
+			
+			return $final;
 		}
 		
 		return false;
@@ -128,10 +161,13 @@ abstract class Nova_Menu {
 	 * @uses	Session::instance
 	 * @uses	Session::get
 	 * @uses	Jelly::query
+	 * @uses	Cache::instance
+	 * @uses	Cache::get
+	 * @uses	Cache::set
 	 * @param	string	the category admin sub navigation to pull
 	 * @return	mixed	the menu to output or false if there are no menu items
 	 */
-	private static function _build_sub_admin($cat = '')
+	private static function _build_sub_admin($cat)
 	{
 		// grab the session
 		$session = Session::instance();

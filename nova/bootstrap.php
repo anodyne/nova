@@ -112,6 +112,7 @@ Kohana::modules(array(
 	'jelly'			=> MODPATH.'third_party/jelly',
 	'htmlpurifier'	=> MODPATH.'third_party/purifier',
 	'i18n'			=> MODPATH.'third_party/i18n',
+	'cache'			=> MODPATH.'kohana/cache',
 	));
 
 /**
