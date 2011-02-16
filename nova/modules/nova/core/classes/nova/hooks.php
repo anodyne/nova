@@ -122,20 +122,30 @@ abstract class Nova_Hooks {
 		
 		if ($installed)
 		{
-			// get the modules from the catalogue
-			$modules = Jelly::query('cataloguemodule')->where('status', '=', 'active')->select();
+			// grab all of the modules out of the database
+			$dbmodules = Jelly::query('cataloguemodule')->where('status', '=', 'active')->select();
 			
-			// make sure we have modules to go through
-			if (count($modules) > 0)
+			if (count($dbmodules) > 0)
 			{
-				// loop through the active modules and add them to an array
-				foreach ($modules as $m)
+				foreach ($dbmodules as $m)
 				{
-					$addmodules[$m->shortname] = MODPATH.$m->location;
+					$addmodules[$m->shortname] = EXTPATH.$m->location;
 				}
 				
-				// merge the list of modules from the database with the core modules
-				$newmodules = array_merge(Kohana::modules(), $addmodules);
+				// get all the modules
+				$allmodules = Kohana::modules();
+				
+				// find the numeric index of the core module
+				$coreposition = array_search('nova', array_keys($allmodules));
+				
+				// grab all of the modules BEFORE the core module
+				$startmodules = array_slice($allmodules, 0, $coreposition);
+				
+				// grab all of the modules AFTER (and including) the core module
+				$endmodules = array_slice($allmodules, $coreposition);
+				
+				// merge the list of modules from the database with the beginning and end core modules
+				$newmodules = array_merge($startmodules, $addmodules, $endmodules);
 				
 				// set the new list of modules
 				Kohana::modules($newmodules);
@@ -149,8 +159,20 @@ abstract class Nova_Hooks {
 				'userguide'	=> MODPATH.'kohana/userguide'
 			);
 			
-			// merge the list of modules from the database with the core modules
-			$newmodules = array_merge(Kohana::modules(), $addmodules);
+			// get all the modules
+			$allmodules = Kohana::modules();
+			
+			// find the numeric index of the core module
+			$coreposition = array_search('nova', array_keys($allmodules));
+				
+			// grab all of the modules BEFORE the core module
+			$startmodules = array_slice($allmodules, 0, $coreposition);
+			
+			// grab all of the modules AFTER (and including) the core module
+			$endmodules = array_slice($allmodules, $coreposition);
+			
+			// merge the list of modules from the database with the beginning and end core modules
+			$newmodules = array_merge($startmodules, $addmodules, $endmodules);
 			
 			// set the new list of modules
 			Kohana::modules($newmodules);
