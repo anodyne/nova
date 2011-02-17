@@ -34,7 +34,7 @@ abstract class Nova_Location {
 			return $skin.'/components/'.$type.'/'.$file;
 		}
 		
-		return '_common/'.$type.'/'.$file;
+		return 'components/'.$type.'/'.$file;
 	}
 	
 	/**
@@ -75,7 +75,7 @@ abstract class Nova_Location {
 					switch ($key)
 					{
 						case APPFOLDER:
-							if (is_file($l.'views/'.$skin.'/'.$section.'/images/'.$image))
+							if (is_file($l.'views/'.$skin.'/design/images/'.$image))
 							{
 								$path['head'] = APPFOLDER.'/views';
 								$path['skin'] = $skin;
@@ -85,7 +85,7 @@ abstract class Nova_Location {
 						break;
 							
 						default:
-							if (is_file($l.'/views/'.$section.'/images/'.$image))
+							if (is_file($l.'/views/design/images/'.$image))
 							{
 								unset($path['skin']);
 								$path['head'] = $key.'/views';
@@ -153,6 +153,7 @@ abstract class Nova_Location {
 		// set the up the path array
 		$path = array(
 			'skin' => false,
+			'folders' => 'components',
 			'type' => $type,
 			'view' => $view
 		);
@@ -162,7 +163,7 @@ abstract class Nova_Location {
 			switch ($key)
 			{
 				case APPFOLDER:
-					if (is_file($l.'views/'.$skin.'/views/'.$type.'/'.$view.$ext))
+					if (is_file($l.'views/'.$skin.'/components/'.$type.'/'.$view.$ext))
 					{
 						// add the skin to the path
 						$path['skin'] = $skin;
@@ -172,7 +173,7 @@ abstract class Nova_Location {
 				break;
 					
 				default:
-					if (is_file($l.'views/views/'.$type.'/'.$view.$ext))
+					if (is_file($l.'views/components/'.$type.'/'.$view.$ext))
 					{
 						// we don't need the skin key any more
 						unset($path['skin']);
