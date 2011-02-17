@@ -6,7 +6,7 @@
  * @category	Controllers
  * @author		Anodyne Productions
  * @copyright	2010-11 Anodyne Productions
- * @version		2.0
+ * @version		3.0
  */
 
 class Controller_Update extends Controller_Template {
@@ -70,12 +70,12 @@ class Controller_Update extends Controller_Template {
 		i18n::lang('en-us');
 		
 		// set the shell
-		$this->template = View::factory('components/structure/update');
+		$this->template = View::factory(Location::file('update', null, 'structure'));
 		
 		// set the variables in the template
-		$this->template->title 				= 'Nova :: ';
+		$this->template->title 				= Kohana::config('novasys.app_name').' :: ';
 		$this->template->javascript			= false;
-		$this->template->layout				= View::factory('update/template_update');
+		$this->template->layout				= View::factory(Location::file('update', null, 'templates'));
 		$this->template->layout->label		= false;
 		$this->template->layout->flash		= false;
 		$this->template->layout->controls	= false;
@@ -84,7 +84,7 @@ class Controller_Update extends Controller_Template {
 	public function action_index()
 	{
 		// create a new content view
-		$this->template->layout->content = View::factory('update/pages/update_index');
+		$this->template->layout->content = View::factory(Location::view('update_index'));
 		
 		// assign the object a shorter variable to use in the method
 		$data = $this->template->layout->content;
@@ -111,7 +111,7 @@ class Controller_Update extends Controller_Template {
 		$update = $upd['update'];
 		
 		// create a new content view
-		$this->template->layout->content = View::factory('update/pages/update_check');
+		$this->template->layout->content = View::factory(Location::view('update_check'));
 		
 		// assign the object a shorter variable to use in the method
 		$data = $this->template->layout->content;
@@ -202,7 +202,7 @@ class Controller_Update extends Controller_Template {
 		}
 		
 		// set the flash message
-		$this->template->layout->flash = View::factory('update/pages/flash');
+		$this->template->layout->flash = View::factory(Location::view('flash'));
 		$this->template->layout->flash->status = $flash->status;
 		$this->template->layout->flash->message = $flash->message;
 		
@@ -243,7 +243,7 @@ class Controller_Update extends Controller_Template {
 			$allowed = false;
 			
 			// show the flash message
-			$this->template->layout->flash = View::factory('update/pages/flash');
+			$this->template->layout->flash = View::factory(Location::view('flash'));
 			$this->template->layout->flash->status = 'error';
 			$this->template->layout->flash->message = __('step.error_no_genre', array(':path' => APPFOLDER.'/config/nova'.EXT));
 		}
@@ -252,7 +252,7 @@ class Controller_Update extends Controller_Template {
 		{
 			case 0:
 				// create a new content view
-				$this->template->layout->content = View::factory('update/pages/update_nova1_step0');
+				$this->template->layout->content = View::factory(Location::view('update_nova1_step0'));
 				
 				// assign the object a shorter variable to use in the method
 				$data = $this->template->layout->content;
@@ -265,7 +265,7 @@ class Controller_Update extends Controller_Template {
 				$this->template->layout->label = __('Getting Started');
 				
 				// create the javascript view
-				$this->template->javascript = View::factory('update/js/update_nova1_step0_js');
+				$this->template->javascript = View::factory(Location::view('update_nova1_step0_js', null, 'js'));
 				
 				if ($allowed === true)
 				{
@@ -405,14 +405,14 @@ class Controller_Update extends Controller_Template {
 				$tables = $db->list_tables($db->table_prefix().'%');
 				
 				// create a new content view
-				$this->template->layout->content = View::factory('update/pages/update_nova1_step1');
+				$this->template->layout->content = View::factory(Location::view('update_nova1_step1'));
 				
 				// assign the object a shorter variable to use in the method
 				$data = $this->template->layout->content;
 				
 				// set the loading image
 				$data->loading = array(
-					'src' => Location::image('loading-circle-large.gif', null, 'upgrade', 'image'),
+					'src' => MODFOLDER.'nova/update/views/design/images/loading-circle-large.gif',
 					'attr' => array(
 						'class' => 'image'),
 				);
@@ -422,7 +422,7 @@ class Controller_Update extends Controller_Template {
 				$this->template->layout->label = __('Updating to Nova 2');
 				
 				// create the javascript view
-				$this->template->javascript = View::factory('update/js/update_nova1_step1_js');
+				$this->template->javascript = View::factory(Location::view('update_nova1_step1_js', null, 'js'));
 				
 				// build the next step button
 				$next = array(
@@ -439,7 +439,7 @@ class Controller_Update extends Controller_Template {
 				
 			case 2:
 				// create a new content view
-				$this->template->layout->content = View::factory('update/pages/update_nova1_step2');
+				$this->template->layout->content = View::factory(Location::view('update_nova1_step2'));
 				
 				// assign the object a shorter variable to use in the method
 				$data = $this->template->layout->content;
@@ -452,11 +452,11 @@ class Controller_Update extends Controller_Template {
 				$data->message = nl2br(__('nova1_update2.message'));
 				
 				// create the javascript view
-				$this->template->javascript = View::factory('update/js/update_nova1_step2_js');
+				$this->template->javascript = View::factory(Location::view('update_nova1_step2_js', null, 'js'));
 				
 				// set the loading image
 				$data->loading = array(
-					'src' => Location::image('loading-circle-large.gif', null, 'update', 'image'),
+					'src' => MODFOLDER.'nova/update/views/design/images/loading-circle-large.gif',
 					'attr' => array(
 						'class' => 'image'),
 				);
@@ -495,7 +495,7 @@ class Controller_Update extends Controller_Template {
 		{
 			case 0:
 				// create a new content view
-				$this->template->layout->content = View::factory('update/pages/update_step0');
+				$this->template->layout->content = View::factory(Location::view('update_step0'));
 				
 				// assign the object a shorter variable to use in the method
 				$data = $this->template->layout->content;
@@ -508,7 +508,7 @@ class Controller_Update extends Controller_Template {
 				$this->template->layout->label = __('Getting Started');
 				
 				// create the javascript view
-				$this->template->javascript = View::factory('update/js/update_step0_js');
+				$this->template->javascript = View::factory(Location::view('update_step0_js', null, 'js'));
 				
 				// build the next step button
 				$next = array(
@@ -592,7 +592,7 @@ class Controller_Update extends Controller_Template {
 				}
 				
 				// create a new content view
-				$this->template->layout->content = View::factory('update/pages/update_step1');
+				$this->template->layout->content = View::factory(Location::view('update_step1'));
 				
 				// assign the object a shorter variable to use in the method
 				$data = $this->template->layout->content;
@@ -605,7 +605,7 @@ class Controller_Update extends Controller_Template {
 				$this->template->layout->label = __('Finishing Up');
 				
 				// create the javascript view
-				$this->template->javascript = View::factory('update/js/update_step1_js');
+				$this->template->javascript = View::factory(Location::view('update_step1_js', null, 'js'));
 				
 				// build the next step button
 				$next = array(

@@ -1,14 +1,17 @@
 body {
-	background: #666 url('../images/body-bg.jpg') repeat top left;
+	background: #666 url(images/body-bg.jpg) repeat top left;
 	font: 75%/1.5 "lucida grande", verdana, arial, sans-serif;
 }
 
-#header {
+/**
+ * Styles for the header
+ */
+header {
 	height: 85px;
 	width: 800px;
 	margin: 0 auto;
 	
-	background: transparent url('../images/logo.png') no-repeat top left;
+	background: transparent url(images/logo.png) no-repeat top left;
 }
 
 #container {
@@ -34,7 +37,7 @@ body {
 	line-height: 40px;
 	padding: 0 1em;
 	
-	background: #ddd url('../images/head-bg.png') repeat-x top left;
+	background: #ddd url(images/head-bg.png) repeat-x top left;
 	border-bottom: 1px solid #bcbcbc;
 	border-bottom: 1px solid rgba(0, 0, 0, .15);
 	
@@ -70,7 +73,10 @@ body {
 	text-align: center;
 }
 
-.footer {
+/**
+ * Styles for the footer
+ */
+footer {
 	padding: .5em 0;
 	
 	font-size: .85em;
@@ -248,7 +254,7 @@ table {
 	text-shadow: 0px 1px 0px rgba(255, 255, 255, .4);
 }
 thead {
-	background: #ccc url('../images/install-options-bg.png') repeat-x 0 0;
+	background: #ccc url(images/install-options-bg.png) repeat-x 0 0;
 	border-bottom: 1px solid #bbb;
 	font-size: 75%;
 }
@@ -367,7 +373,7 @@ kbd {
 .install-options span {
 	padding: 0 0 0 20px;
 	
-	background: transparent url('../images/arrow-000-medium.png') no-repeat center left;
+	background: transparent url(images/arrow-000-medium.png) no-repeat center left;
 	font-size: 1.65em;
 	text-shadow: 0px 1px 1px rgba(255, 255, 255, 1);
 }
@@ -381,7 +387,7 @@ kbd {
 .install-options:hover {
 	color: #466b8c !important;
 	border: 1px solid #2ebbf3 !important;
-	background: #c1dcf1 url('../images/install-options-bg.png') repeat-x top left;
+	background: #c1dcf1 url(images/install-options-bg.png) repeat-x top left;
 	
 	box-shadow: inset 0 1px 1px rgba(255, 255, 255, .6);
 	-moz-box-shadow: inset 0 1px 1px rgba(255, 255, 255, .6);
@@ -416,7 +422,7 @@ kbd {
 .install-secoptions:hover {
 	color: #555 !important;
 	border: 1px solid #bbb !important;
-	background: #ddd url('../images/install-options-bg.png') repeat-x top left;
+	background: #ddd url(images/install-options-bg.png) repeat-x top left;
 	
 	box-shadow: inset 0 1px 1px rgba(255, 255, 255, .6), inset 0 0 0 transparent, -1px 1px 1px rgba(255, 255, 255, .6);
 	-moz-box-shadow: inset 0 1px 1px rgba(255, 255, 255, .6), inset 0 0 0 transparent, -1px 1px 1px rgba(255, 255, 255, .6);
@@ -426,72 +432,72 @@ kbd {
 .install-secoptions:hover span { background-position: 0 -17px; }
 
 .secoptions-tour {
-	background-image: url('../images/binocular.png');
+	background-image: url(images/binocular.png);
 	background-repeat: no-repeat;
 	background-position: top left;
 }
 .secoptions-readme {
-	background-image: url('../images/light-bulb.png');
+	background-image: url(images/light-bulb.png);
 	background-repeat: no-repeat;
 	background-position: top left;
 }
 .secoptions-verify {
-	background-image: url('../images/tick-button.png');
+	background-image: url(images/tick-button.png);
 	background-repeat: no-repeat;
 	background-position: top left;
 }
 .secoptions-guide {
-	background-image: url('../images/book-open-bookmark.png');
+	background-image: url(images/book-open-bookmark.png);
 	background-repeat: no-repeat;
 	background-position: top left;
 }
 .secoptions-remove {
-	background-image: url('../images/slash-button.png');
+	background-image: url(images/slash-button.png);
 	background-repeat: no-repeat;
 	background-position: top left;
 }
 .secoptions-install {
-	background-image: url('../images/arrow-curve.png');
+	background-image: url(images/arrow-curve.png);
 	background-repeat: no-repeat;
 	background-position: center left;
 }
 .secoptions-update {
-	background-image: url('../images/new-text.png');
+	background-image: url(images/new-text.png);
 	background-repeat: no-repeat;
 	background-position: top left;
 }
 .secoptions-genre {
-	background-image: url('../images/category.png');
+	background-image: url(images/category.png);
 	background-repeat: no-repeat;
 	background-position: top left;
 }
 .secoptions-database {
-	background-image: url('../images/databases.png');
+	background-image: url(images/databases.png);
 	background-repeat: no-repeat;
 	background-position: top left;
 }
 .secoptions-go {
-	background-image: url('../images/arrow-curve.png');
+	background-image: url(images/arrow-curve.png);
 	background-repeat: no-repeat;
 	background-position: top left;
 }
 .secoptions-back {
-	background-image: url('../images/back.png');
+	background-image: url(images/back.png);
 	background-repeat: no-repeat;
 	background-position: top left;
 }
 .secoptions-dbtable {
-	background-image: url('../images/db-table.png');
+	background-image: url(images/db-table.png);
 	background-repeat: no-repeat;
 	background-position: top left;
 }
 .secoptions-dbfield {
-	background-image: url('../images/db-field.png');
+	background-image: url(images/db-field.png);
 	background-repeat: no-repeat;
 	background-position: top left;
 }
 .secoptions-dbquery {
-	background-image: url('../images/sql.png');
+	background-image: url(images/sql.png);
 	background-repeat: no-repeat;
 	background-position: top left;
 }
@@ -671,7 +677,7 @@ button.button-small {
 	-webkit-box-shadow: none;
 }
 button.button-small:hover {
-	background: #ccc url('../images/install-options-bg.png') repeat-x top left;
+	background: #ccc url(images/install-options-bg.png) repeat-x top left;
 	border: 1px solid #bbb;
 	color: #555;
 	
@@ -711,7 +717,7 @@ button.button-small:hover {
 .flash-success {
 	border: 1px solid #a4c897;
 	border-top: 1px solid rgba(255, 255, 255, .7);
-	background: #ccecc5 url('../images/install-btn-bg.png') repeat-x top left;
+	background: #ccecc5 url(images/install-btn-bg.png) repeat-x top left;
 	color: #376b0e;
 	
 	box-shadow: 0px -1px 0px #a4c897;
@@ -721,7 +727,7 @@ button.button-small:hover {
 .flash-error {
 	border: 1px solid #cd0a0a; 
 	border-top: 1px solid rgba(255, 255, 255, .6);
-	background: #ef2d2d url('../images/install-btn-bg.png') repeat-x top left;
+	background: #ef2d2d url(images/install-btn-bg.png) repeat-x top left;
 	color: #fff;
 	
 	box-shadow: 0px -1px 0px #cd0a0a;
@@ -731,7 +737,7 @@ button.button-small:hover {
 .flash-info {
 	border: 1px solid #f9dd34;
 	border-top: 1px solid rgba(255, 255, 255, .6);
-	background: #ffef8f url('../images/install-btn-bg.png') repeat-x top left;
+	background: #ffef8f url(images/install-btn-bg.png) repeat-x top left;
 	color: #363636;
 	
 	box-shadow: 0px -1px 0px #f9dd34;

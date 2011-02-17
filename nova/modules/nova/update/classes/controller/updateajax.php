@@ -6,7 +6,7 @@
  * @category	Controllers
  * @author		Anodyne Productions
  * @copyright	2010-11 Anodyne Productions
- * @since		2.0
+ * @since		3.0
  */
 
 class Controller_Updateajax extends Controller_Template {
@@ -18,7 +18,7 @@ class Controller_Updateajax extends Controller_Template {
 		parent::before();
 		
 		// set the shell
-		$this->template = View::factory('components/structure/ajax');
+		$this->template = View::factory(Location::file('ajax', null, 'templates'));
 		
 		// set the variables in the template
 		$this->template->content = false;
