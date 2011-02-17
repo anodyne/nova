@@ -316,7 +316,7 @@ class Controller_Install extends Controller_Template {
 		// set the loading image
 		$data->images = array(
 			'loading' => array(
-				'src' => MODFOLDER.'nova/install/design/images/loading-circle-large.gif',
+				'src' => MODFOLDER.'/nova/install/design/images/loading-circle-large.gif',
 				'attr' => array(
 					'alt' => __('processing'),
 					'class' => '')),
