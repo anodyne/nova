@@ -5,17 +5,15 @@ application/assets/images/characters/
 application/assets/images/missions/
 application/assets/images/specs/
 application/assets/images/tour/
-!application/assets/images/awards/index.html
-!application/assets/images/characters/index.html
-!application/assets/images/missions/index.html
-!application/assets/images/specs/index.html
-!application/assets/images/tour/index.html
+!application/assets/images/awards/.gitkeep
+!application/assets/images/characters/.gitkeep
+!application/assets/images/missions/.gitkeep
+!application/assets/images/specs/.gitkeep
+!application/assets/images/tour/.gitkeep
 
 application/cache/
-!application/cache/index.html
 
 application/logs/
-!application/logs/index.html
 
 *~
 *.bak
