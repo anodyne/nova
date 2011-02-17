@@ -6,7 +6,7 @@
  * @category	Controllers
  * @author		Anodyne Productions
  * @copyright	2010-11 Anodyne Productions
- * @version		2.0
+ * @version		3.0
  */
 
 class Controller_Install extends Controller_Template {
@@ -26,7 +26,7 @@ class Controller_Install extends Controller_Template {
 		else
 		{
 			// you're allowed to go to these segments if the system isn't installed
-			$safesegs = array('step', 'index', 'main', 'verify', 'readme', 'setupconfig', 'test');
+			$safesegs = array('step', 'index', 'main', 'verify', 'readme', 'setupconfig');
 			
 			// you need to be logged in for these pages
 			$protectedsegs = array('changedb', 'genre', 'remove');
@@ -76,12 +76,12 @@ class Controller_Install extends Controller_Template {
 		i18n::lang('en-us');
 		
 		// set the shell
-		$this->template = View::factory('components/structure/install');
+		$this->template = View::factory(Location::file('install', null, 'structure'));
 		
 		// set the variables in the template
-		$this->template->title 				= 'Nova :: ';
+		$this->template->title 				= Kohana::config('novasys.app_name').' :: ';
 		$this->template->javascript			= false;
-		$this->template->layout				= View::factory('install/template_install');
+		$this->template->layout				= View::factory(Location::file('install', null, 'templates'));
 		$this->template->layout->label		= false;
 		$this->template->layout->flash		= false;
 		$this->template->layout->controls	= false;
@@ -91,7 +91,7 @@ class Controller_Install extends Controller_Template {
 	public function action_index()
 	{
 		// create a new content view
-		$this->template->layout->content = View::factory('install/pages/install_index');
+		$this->template->layout->content = View::factory(Location::view('install_index'));
 		
 		// assign the object a shorter variable to use in the method
 		$data = $this->template->layout->content;
@@ -110,10 +110,10 @@ class Controller_Install extends Controller_Template {
 	public function action_changedb($view = 'main')
 	{
 		// create a new content view
-		$this->template->layout->content = View::factory('install/pages/install_changedb');
+		$this->template->layout->content = View::factory(Location::view('install_changedb'));
 		
-		// create the javascript view
-		$this->template->javascript = View::factory('install/js/install_changedb_js');
+		// create a new js view
+		$this->template->javascript = View::factory(Location::view('install_changedb_js', null, 'js'));
 		
 		// assign the object a shorter variable to use in the method
 		$data = $this->template->layout->content;
@@ -121,7 +121,7 @@ class Controller_Install extends Controller_Template {
 		// build the images
 		$data->images = array(
 			'loading' => array(
-				'src' => MODFOLDER.'/nova/install/views/install/images/loading-circle-large.gif',
+				'src' => MODFOLDER.'/nova/install/views/design/images/loading-circle-large.gif',
 				'attr' => array(
 					'alt' => ___('processing'),
 					'class' => '')),
@@ -263,10 +263,10 @@ class Controller_Install extends Controller_Template {
 	public function action_genre()
 	{
 		// create a new content view
-		$this->template->layout->content = View::factory('install/pages/install_genre');
+		$this->template->layout->content = View::factory(Location::view('install_genre'));
 		
-		// create the javascript view
-		$this->template->javascript = View::factory('install/js/install_genre_js');
+		// create a new js view
+		$this->template->javascript = View::factory(Location::view('install_genre_js', null, 'js'));
 		
 		// assign the object a shorter variable to use in the method
 		$data = $this->template->layout->content;
@@ -316,7 +316,7 @@ class Controller_Install extends Controller_Template {
 		// set the loading image
 		$data->images = array(
 			'loading' => array(
-				'src' => Location::image('loading-circle-large.gif', null, 'install', 'image'),
+				'src' => MODFOLDER.'nova/install/design/images/loading-circle-large.gif',
 				'attr' => array(
 					'alt' => __('processing'),
 					'class' => '')),
@@ -339,7 +339,10 @@ class Controller_Install extends Controller_Template {
 		 */
 		
 		// create a new content view
-		$this->template->layout->content = View::factory('install/pages/install_main');
+		$this->template->layout->content = View::factory(Location::view('install_main'));
+		
+		// create a new js view
+		$this->template->javascript = View::factory(Location::view('install_main_js', null, 'js'));
 		
 		// assign the object a shorter variable to use in the method
 		$data = $this->template->layout->content;
@@ -368,7 +371,7 @@ class Controller_Install extends Controller_Template {
 	public function action_readme()
 	{
 		// create a new content view
-		$this->template->layout->content = View::factory('install/pages/install_readme');
+		$this->template->layout->content = View::factory(Location::view('install_readme'));
 		
 		// assign the object a shorter variable to use in the method
 		$data = $this->template->layout->content;
@@ -394,7 +397,10 @@ class Controller_Install extends Controller_Template {
 	public function action_remove()
 	{
 		// create a new content view
-		$this->template->layout->content = View::factory('install/pages/install_remove');
+		$this->template->layout->content = View::factory(Location::vew('install_remove'));
+		
+		// create a new js view
+		$this->template->javascript = View::factory(Location::view('install_remove_js', null, 'js'));
 		
 		// assign the object a shorter variable to use in the method
 		$data = $this->template->layout->content;
@@ -478,7 +484,10 @@ class Controller_Install extends Controller_Template {
 		$session = Session::instance();
 		
 		// create a new content view
-		$this->template->layout->content = View::factory('install/pages/install_setupconfig');
+		$this->template->layout->content = View::factory(Location::view('install_setupconfig'));
+		
+		// create a new js view
+		$this->template->javascript = View::factory(Location::view('install_setupconfig_js', null, 'js'));
 		
 		// assign the object a shorter variable to use in the method
 		$data = $this->template->layout->content;
@@ -927,7 +936,10 @@ return array
 		{
 			case 0:
 				// create a new content view
-				$this->template->layout->content = View::factory('install/pages/install_step0');
+				$this->template->layout->content = View::factory(Location::view('install_step0'));
+				
+				// create a new js view
+				$this->template->javascript = View::factory(Location::view('install_step0_js', null, 'js'));
 				
 				// assign the object a shorter variable to use in the method
 				$data = $this->template->layout->content;
@@ -938,9 +950,6 @@ return array
 				// content
 				$this->template->title.= __('Install Nova');
 				$this->template->layout->label = __('Getting Started');
-				
-				// create the javascript view
-				$this->template->javascript = View::factory('install/js/install_step0_js');
 				
 				if ($allowed === true)
 				{
@@ -1063,7 +1072,10 @@ return array
 				$tables = $db->list_tables();
 				
 				// create a new content view
-				$this->template->layout->content = View::factory('install/pages/install_step1');
+				$this->template->layout->content = View::factory(Location::view('install_step1'));
+				
+				// create a new js view
+				$this->template->javascript = View::factory(Location::view('install_step1_js', null, 'js'));
 				
 				// assign the object a shorter variable to use in the method
 				$data = $this->template->layout->content;
@@ -1092,7 +1104,7 @@ return array
 				
 				// set the loading image
 				$data->loading = array(
-					'src' => MODFOLDER.'/nova/install/views/install/images/loading-circle-large.gif',
+					'src' => MODFOLDER.'/nova/install/views/design/images/loading-circle-large.gif',
 					'attr' => array(
 						'class' => 'image',
 						'alt' => ''),
@@ -1120,9 +1132,6 @@ return array
 				// content
 				$this->template->title.= __('Install Nova: Basic Information');
 				$this->template->layout->label = __('Just the Basics');
-				
-				// create the javascript view
-				$this->template->javascript = View::factory('install/js/install_step1_js');
 				
 				// build the next step button
 				$next = array(
@@ -1286,7 +1295,10 @@ return array
 				}
 				
 				// create a new content view
-				$this->template->layout->content = View::factory('install/pages/install_step2');
+				$this->template->layout->content = View::factory(Location::view('install_step2'));
+				
+				// create a new js view
+				$this->template->javascript = View::factory(Location::view('install_step2_js', null, 'js'));
 				
 				// assign the object a shorter variable to use in the method
 				$data = $this->template->layout->content;
@@ -1297,9 +1309,6 @@ return array
 				// content
 				$this->template->title.= __('Nova Installed!');
 				$this->template->layout->label = __('All Finished');
-				
-				// create the javascript view
-				$this->template->javascript = View::factory('install/js/install_step2_js');
 				
 				// build the next step button
 				$next = array(
@@ -1321,13 +1330,13 @@ return array
 	public function action_verify()
 	{
 		// create a new content view
-		$this->template->layout->content = View::factory('install/pages/install_verify');
+		$this->template->layout->content = View::factory(Location::view('install_verify'));
+		
+		// create a new js view
+		$this->template->javascript = View::factory(Location::view('install_verify_js', null, 'js'));
 		
 		// assign the object a shorter variable to use in the method
 		$data = $this->template->layout->content;
-		
-		// create the javascript view
-		$this->template->javascript = View::factory('install/js/verify_js');
 		
 		// the verification table
 		$data->verify = Utility::verify_server();
