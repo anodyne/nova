@@ -28,7 +28,7 @@ class Nova_Exception_Handler {
 				$response->status(404);
 				
 				// set up the view object
-				$view = new View('_common/error/404');
+				$view = new View('components/error/404');
 				$view->message = $e->getMessage();
 				$view->title = 'File Not Found';
 				

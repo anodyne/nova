@@ -70,7 +70,7 @@ class Controller_Update extends Controller_Template {
 		i18n::lang('en-us');
 		
 		// set the shell
-		$this->template = View::factory('_common/layouts/update');
+		$this->template = View::factory('components/structure/update');
 		
 		// set the variables in the template
 		$this->template->title 				= 'Nova :: ';

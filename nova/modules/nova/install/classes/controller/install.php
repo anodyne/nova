@@ -76,7 +76,7 @@ class Controller_Install extends Controller_Template {
 		i18n::lang('en-us');
 		
 		// set the shell
-		$this->template = View::factory('_common/layouts/install');
+		$this->template = View::factory('components/structure/install');
 		
 		// set the variables in the template
 		$this->template->title 				= 'Nova :: ';

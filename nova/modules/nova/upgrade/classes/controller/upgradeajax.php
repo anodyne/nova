@@ -18,7 +18,7 @@ class Controller_Upgradeajax extends Controller_Template {
 		parent::before();
 		
 		// set the shell
-		$this->template = View::factory('_common/layouts/ajax');
+		$this->template = View::factory('components/structure/ajax');
 		
 		// set the variables in the template
 		$this->template->content = false;

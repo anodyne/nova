@@ -30,25 +30,25 @@
 		
 		<?php if (isset($widgets[1])): ?>
 			<div id="one">
-				<?php echo View::factory('_common/widgets/'.$widgets[1]->location.'/widget')->render();?>
+				<?php echo View::factory('components/widgets/'.$widgets[1]->location.'/widget')->render();?>
 			</div>
 		<?php endif;?>
 		
 		<?php if (isset($widgets[2])): ?>
 			<div id="two">
-				<?php echo View::factory('_common/widgets/'.$widgets[2]->location.'/widget')->render();?>
+				<?php echo View::factory('components/widgets/'.$widgets[2]->location.'/widget')->render();?>
 			</div>
 		<?php endif;?>
 		
 		<?php if (isset($widgets[3])): ?>
 			<div id="three">
-				<?php echo View::factory('_common/widgets/'.$widgets[3]->location.'/widget')->render();?>
+				<?php echo View::factory('components/widgets/'.$widgets[3]->location.'/widget')->render();?>
 			</div>
 		<?php endif;?>
 		
 		<?php if (isset($widgets[4])): ?>
 			<div id="four">
-				<?php echo View::factory('_common/widgets/'.$widgets[4]->location.'/widget')->render();?>
+				<?php echo View::factory('components/widgets/'.$widgets[4]->location.'/widget')->render();?>
 			</div>
 		<?php endif;?>
 	</div>

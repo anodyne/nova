@@ -26,7 +26,7 @@ class Controller_Nova_Wiki extends Controller_Nova_Base {
 		$this->dst		= $this->session->get('dst', $this->options->daylight_savings);
 		
 		// set the shell
-		$this->template = View::factory('_common/layouts/wiki', array('skin' => $this->skin, 'sec' => 'wiki'));
+		$this->template = View::factory('components/structure/wiki', array('skin' => $this->skin, 'sec' => 'wiki'));
 		
 		// grab the image index
 		$this->images = Utility::get_image_index($this->skin);

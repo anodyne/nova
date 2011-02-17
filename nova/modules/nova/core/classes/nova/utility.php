@@ -84,11 +84,11 @@ abstract class Nova_Utility {
 	public static function get_image_index($skin)
 	{
 		// load the base image index
-		$common = Kohana::find_file('views', '_common/image_index');
+		$common = Kohana::find_file('views', 'images');
 		$common_index = Kohana::load($common);
 		
 		// load the skin's image index
-		$skin = Kohana::find_file('views', $skin.'/image_index');
+		$skin = Kohana::find_file('views', $skin.'/images');
 		$skin_index = Kohana::load($skin);
 		
 		// merge the files into an array
@@ -437,7 +437,7 @@ abstract class Nova_Utility {
 			foreach ($dir as $key => $value)
 			{
 				// assign our path to a variable
-				$file = MODPATH.'nova/core/views/_common/widgets/'.$value.'/widget.json';
+				$file = MODPATH.'nova/core/views/components/widgets/'.$value.'/widget.json';
 				
 				// make sure the file exists first
 				if (file_exists($file))
@@ -463,7 +463,7 @@ abstract class Nova_Utility {
 		else
 		{
 			// assign our path to a variable
-			$file = MODPATH.'nova/core/views/_common/widgets/'.$location.'/widget.json';
+			$file = MODPATH.'nova/core/views/components/widgets/'.$location.'/widget.json';
 			
 			// make sure the file exists first
 			if (file_exists($file))

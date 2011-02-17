@@ -42,7 +42,7 @@ class Controller_Upgrade extends Controller_Template {
 		i18n::lang('en-us');
 		
 		// set the shell
-		$this->template = View::factory('_common/layouts/upgrade');
+		$this->template = View::factory('components/structure/upgrade');
 		
 		// set the variables in the template
 		$this->template->title 					= 'Nova :: ';
