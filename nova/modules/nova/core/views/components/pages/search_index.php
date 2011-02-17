@@ -1,3 +1,45 @@
+<script type="text/javascript">
+	$(document).ready(function(){
+		$('.search-item').live('click', function(){
+			$(this).toggleClass('search-item-cancel');
+			return false;
+		});
+		
+		$('.search-field-options').live('click', function(){
+			$('.search-field-options-list').toggleClass('hidden');
+			return false;
+		});
+		
+		$('.opt-list-item').live('click', function(){
+			var clicked = $(this).attr('myItem');
+			
+			// reset the class for the options icon
+			$('.search-field').find('span.search-field-options').attr('class', 'search-field-options options-' + clicked);
+			
+			// change the placeholder
+			if (clicked == 'posts')
+				$('.search-field input[name=search]').attr('placeholder', '<?php echo ucwords(__("search mission posts"));?>');
+			if (clicked == 'logs')
+				$('.search-field input[name=search]').attr('placeholder', '<?php echo ucwords(__("search personal logs"));?>');
+			if (clicked == 'news')
+				$('.search-field input[name=search]').attr('placeholder', '<?php echo ucwords(__("search news items"));?>');
+			if (clicked == 'wiki')
+				$('.search-field input[name=search]').attr('placeholder', '<?php echo ucwords(__("search wiki pages"));?>');
+			
+			// hide everything
+			$('.search-container').children().addClass('hidden');
+			
+			// show what needs to be shown
+			$('.search-container .' + clicked).removeClass('hidden');
+			
+			// hide the list
+			$('.search-field-options-list').addClass('hidden');
+			
+			return false;
+		});
+	});
+</script>
+
 <h1 class="page-head"><?php echo $header;?></h1>
 
 <p><?php echo __("Searching through Nova has never been simpler than it is right now. Instead of giving users tons of options they have to wade through, we've reduced search down to its most basic element: the search field. By default, Nova will search through :item for your search terms. Instead of just searching through one area, Nova will search through all the areas listed above the field. If you don't want all the areas searched, just click on the ones you don't want searched and Nova will ignore them. If you'd prefer to search for something besides :item, simply click on the icon in the field and select the new type of item you want to search for.", array(':item' => __('mission posts')));?></p>

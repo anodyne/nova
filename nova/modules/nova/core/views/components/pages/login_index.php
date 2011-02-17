@@ -1,3 +1,9 @@
+<script type="text/javascript">
+	$(document).ready(function(){
+		$('input:first').focus();
+	});
+</script>
+
 <h1 class="page-head"><?php echo $header;?></h1>
 
 <p><?php echo __("Placeholder text for the main login page.");?></p>

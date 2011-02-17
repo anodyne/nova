@@ -1,3 +1,9 @@
+<script type="text/javascript">
+	$(document).ready(function(){
+		$('#tabs').tabs();
+	});
+</script>
+
 <h1 class="page-head"><?php echo $header;?></h1>
 
 <div id="tabs">
