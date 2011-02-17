@@ -1,4 +1,4 @@
-<div id="header"></div>
+<header></header>
 
 <div id="container">
 	<div class="head">
@@ -7,9 +7,9 @@
 	
 	<div class="content">
 		<div id="loading" class="hidden">
-			<img src="<?php echo url::base().MODFOLDER;?>/nova/upgrade/views/upgrade/images/loading-circle-large.gif" alt="" />
+			<img src="<?php echo url::base().MODFOLDER;?>/nova/upgrade/views/design/images/loading-circle-large.gif" alt="" />
 			<br />
-			<strong><?php echo ucfirst(__('processing'));?>...</strong>
+			<strong><?php echo ucfirst(___('processing'));?>...</strong>
 		</div>
 		
 		<div id="loaded" class="UITheme">
@@ -34,7 +34,7 @@
 		</div>
 	<?php endif;?>
 	
-	<div class="footer">
+	<footer>
 		Powered by <strong><?php echo Kohana::config('novasys.app_name').' '.Kohana::config('novasys.app_version_major');?></strong>
-	</div>
+	</footer>
 </div>

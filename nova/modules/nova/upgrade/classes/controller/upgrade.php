@@ -6,7 +6,7 @@
  * @category	Controllers
  * @author		Anodyne Productions
  * @copyright	2010-11 Anodyne Productions
- * @version		2.0
+ * @version		3.0
  */
 
 class Controller_Upgrade extends Controller_Template {
@@ -42,12 +42,12 @@ class Controller_Upgrade extends Controller_Template {
 		i18n::lang('en-us');
 		
 		// set the shell
-		$this->template = View::factory('components/structure/upgrade');
+		$this->template = View::factory(Location::file('upgrade', null, 'structure'));
 		
 		// set the variables in the template
-		$this->template->title 					= 'Nova :: ';
+		$this->template->title 					= Kohana::config('novasys.app_name').' :: ';
 		$this->template->javascript				= false;
-		$this->template->layout					= View::factory('upgrade/template_upgrade');
+		$this->template->layout					= View::factory(Location::file('upgrade', null, 'templates'));
 		$this->template->layout->label			= false;
 		$this->template->layout->flash			= false;
 		$this->template->layout->controls		= false;
@@ -58,13 +58,13 @@ class Controller_Upgrade extends Controller_Template {
 		// nova must be installed in the same database where sms is
 		if (count(Database::instance()->list_tables('sms_%')) == 0)
 		{
-			$this->template->layout->flash = View::factory('upgrade/pages/flash');
+			$this->template->layout->flash = View::factory(Location::view('flash'));
 			$this->template->layout->flash->status = 'error';
-			$this->template->layout->flash->message = __('Nova 2 must be installed in the same database as SMS.');
+			$this->template->layout->flash->message = __('Nova 3 must be installed in the same database as SMS.');
 		}
 		
 		// create a new content view
-		$this->template->layout->content = View::factory('upgrade/pages/upgrade_index');
+		$this->template->layout->content = View::factory(Location::view('upgrade_index'));
 		
 		// assign the object a shorter variable to use in the method
 		$data = $this->template->layout->content;
@@ -83,7 +83,7 @@ class Controller_Upgrade extends Controller_Template {
 	public function action_readme()
 	{
 		// create a new content view
-		$this->template->layout->content = View::factory('upgrade/pages/upgrade_readme');
+		$this->template->layout->content = View::factory(Location::view('upgrade_readme'));
 		
 		// assign the object a shorter variable to use in the method
 		$data = $this->template->layout->content;
@@ -129,7 +129,7 @@ class Controller_Upgrade extends Controller_Template {
 			$allowed = false;
 			
 			// show the flash message
-			$this->template->layout->flash = View::factory('upgrade/pages/flash');
+			$this->template->layout->flash = View::factory(Location::view('flash'));
 			$this->template->layout->flash->status = 'error';
 			$this->template->layout->flash->message = __('step.error_no_genre', array(':path' => APPFOLDER.'/config/nova'.EXT));
 		}
@@ -138,7 +138,7 @@ class Controller_Upgrade extends Controller_Template {
 		{
 			case 0:
 				// create a new content view
-				$this->template->layout->content = View::factory('upgrade/pages/upgrade_step0');
+				$this->template->layout->content = View::factory(Location::view('upgrade_step0'));
 				
 				// assign the object a shorter variable to use in the method
 				$data = $this->template->layout->content;
@@ -151,7 +151,7 @@ class Controller_Upgrade extends Controller_Template {
 				$this->template->layout->label = __('Getting Started');
 				
 				// create the javascript view
-				$this->template->javascript = View::factory('upgrade/js/upgrade_step0_js');
+				$this->template->javascript = View::factory(Location::view('upgrade_step0_js', null, 'js'));
 				
 				if ($allowed === true)
 				{
@@ -278,14 +278,14 @@ class Controller_Upgrade extends Controller_Template {
 				$tables = $db->list_tables($db->table_prefix().'%');
 				
 				// create a new content view
-				$this->template->layout->content = View::factory('upgrade/pages/upgrade_step1');
+				$this->template->layout->content = View::factory(Location::view('upgrade_step1'));
 				
 				// assign the object a shorter variable to use in the method
 				$data = $this->template->layout->content;
 				
 				// set the loading image
 				$data->loading = array(
-					'src' => Location::image('loading-circle-large.gif', null, 'upgrade', 'image'),
+					'src' => MODFOLDER.'/nova/upgrade/views/design/images/loading-circle-large.gif',
 					'attr' => array(
 						'class' => 'image'),
 				);
@@ -295,7 +295,7 @@ class Controller_Upgrade extends Controller_Template {
 				$this->template->layout->label = __('Upgrading to Nova');
 				
 				// create the javascript view
-				$this->template->javascript = View::factory('upgrade/js/upgrade_step1_js');
+				$this->template->javascript = View::factory(Location::view('upgrade_step1_js', null, 'js'));
 				
 				// build the next step button
 				$next = array(
@@ -312,7 +312,7 @@ class Controller_Upgrade extends Controller_Template {
 				
 			case 2:
 				// create a new content view
-				$this->template->layout->content = View::factory('upgrade/pages/upgrade_step2');
+				$this->template->layout->content = View::factory(Location::view('upgrade_step2'));
 				
 				// assign the object a shorter variable to use in the method
 				$data = $this->template->layout->content;
@@ -322,11 +322,11 @@ class Controller_Upgrade extends Controller_Template {
 				$this->template->layout->label = __('Cleaning Up Data');
 				
 				// create the javascript view
-				$this->template->javascript = View::factory('upgrade/js/upgrade_step2_js');
+				$this->template->javascript = View::factory(Location::view('upgrade_step2_js', null, 'js'));
 				
 				// set the loading image
 				$data->loading = array(
-					'src' => Location::image('loading-circle-large.gif', null, 'upgrade', 'image'),
+					'src' => MODFOLDER.'/nova/upgrade/views/design/images/loading-circle-large.gif',
 					'attr' => array(
 						'class' => 'image'),
 				);
@@ -350,7 +350,7 @@ class Controller_Upgrade extends Controller_Template {
 				}
 				
 				// create a new content view
-				$this->template->layout->content = View::factory('upgrade/pages/upgrade_step3');
+				$this->template->layout->content = View::factory(Location::view('upgrade_step3'));
 				
 				// assign the object a shorter variable to use in the method
 				$data = $this->template->layout->content;
@@ -371,11 +371,11 @@ class Controller_Upgrade extends Controller_Template {
 				$this->template->layout->label = __('Passwords and Admin Rights');
 				
 				// create the javascript view
-				$this->template->javascript = View::factory('upgrade/js/upgrade_step3_js');
+				$this->template->javascript = View::factory(Location::view('upgrade_step3_js', null, 'js'));
 				
 				// set the loading image
 				$data->loading = array(
-					'src' => Location::image('loading-circle-large.gif', null, 'upgrade', 'image'),
+					'src' => MODFOLDER.'/nova/upgrade/views/design/images/loading-circle-large.gif',
 					'attr' => array(
 						'class' => 'image'),
 				);
@@ -399,13 +399,13 @@ class Controller_Upgrade extends Controller_Template {
 	public function action_verify()
 	{
 		// create a new content view
-		$this->template->layout->content = View::factory('upgrade/pages/upgrade_verify');
+		$this->template->layout->content = View::factory(Location::view('upgrade_verify'));
 		
 		// assign the object a shorter variable to use in the method
 		$data = $this->template->layout->content;
 		
 		// create the javascript view
-		$this->template->javascript = View::factory('upgrade/js/verify_js');
+		$this->template->javascript = View::factory(Location::view('verify_js', null, 'js'));
 		
 		// the verification table
 		$data->verify = Utility::verify_server();
