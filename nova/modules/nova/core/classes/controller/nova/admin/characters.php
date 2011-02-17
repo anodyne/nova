@@ -55,37 +55,37 @@ class Controller_Nova_Admin_Characters extends Controller_Nova_Base {
 		$this->template->title 						= $this->options->sim_name.' :: ';
 		$this->template->javascript					= false;
 		$this->template->layout						= View::factory($this->skin.'/template_admin', $vars['layout']);
-		$this->template->structure->navmain 			= Menu::build('main', 'main');
-		$this->template->structure->ajax 				= false;
-		$this->template->structure->flash				= false;
-		$this->template->structure->content			= false;
+		$this->template->layout->navmain 			= Menu::build('main', 'main');
+		$this->template->layout->ajax 				= false;
+		$this->template->layout->flash				= false;
+		$this->template->layout->content			= false;
 		
-		$this->template->structure->panel				= View::factory('_common/partials/panel');
-		$this->template->structure->panel->panel1		= false;
-		$this->template->structure->panel->panel2		= false;
-		$this->template->structure->panel->panel3		= false;
-		$this->template->structure->panel->workflow	= false;
+		$this->template->layout->panel				= View::factory('_common/partials/panel');
+		$this->template->layout->panel->panel1		= false;
+		$this->template->layout->panel->panel2		= false;
+		$this->template->layout->panel->panel3		= false;
+		$this->template->layout->panel->workflow	= false;
 		
-		$this->template->structure->navsub 			= View::factory('_common/partials/navsub');
-		$this->template->structure->navsub->menu		= Menu::build('sub', 'main');
-		$this->template->structure->navsub->widget1	= false;
-		$this->template->structure->navsub->widget2	= false;
-		$this->template->structure->navsub->widget3	= false;
+		$this->template->layout->navsub 			= View::factory('_common/partials/navsub');
+		$this->template->layout->navsub->menu		= Menu::build('sub', 'main');
+		$this->template->layout->navsub->widget1	= false;
+		$this->template->layout->navsub->widget2	= false;
+		$this->template->layout->navsub->widget3	= false;
 		
-		$this->template->structure->footer				= View::factory('_common/partials/footer');
-		$this->template->structure->footer->extra 		= Jelly::query('message', 'footer')->limit(1)->select()->value;
+		$this->template->layout->footer				= View::factory('_common/partials/footer');
+		$this->template->layout->footer->extra 		= Jelly::query('message', 'footer')->limit(1)->select()->value;
 	}
 	
 	public function action_index()
 	{
 		// create a new content view
-		$this->template->structure->content = "This is the characters page";
+		$this->template->layout->content = "This is the characters page";
 		
 		// create the javascript view
 		//$this->template->javascript = View::factory(Location::view('admin_index_js', $this->skin, 'admin', 'js'));
 		
 		// assign the object a shorter variable to use in the method
-		$data = $this->template->structure->content;
+		$data = $this->template->layout->content;
 		
 		// content
 		$this->template->title.= ucfirst(__("admin"));
