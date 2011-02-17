@@ -1,36 +1,32 @@
 <noscript>
-	<div class="system_warning"><?php echo __("You need to have Javascript turned on to use all of Nova 2's features.");?></div>
+	<div class="system_warning"><?php echo ___("You need to have Javascript turned on to use all of Nova 3's features.");?></div>
 </noscript>
 
-<!-- MENU -->
-<div id="menu">
+<header>
 	<div class="wrapper">
-		<div class="nav">
+		<nav>
 			<ul>
-				<li><?php echo html::anchor('login/index', '<span>'.ucwords(__('log in')).'</span>');?></li>
-				<li><?php echo html::anchor('login/reset', '<span>'.ucwords(__('reset password')).'</span>');?></li>
-				<li><?php echo html::anchor('main/index', '<span>'.__('Back to Site').'</span>');?></li>
+				<li><a href="<?php echo url::site('login/index');?>"><span><?php echo ucwords(___('log in'));?></span></a></li>
+				<li><a href="<?php echo url::site('login/reset');?>"><span><?php echo ucwords(___('reset password'));?></span></a></li>
+				<li><a href="<?php echo url::site('main/index');?>"><span><?php echo ___('Back to Site');?></span></a></li>
 			</ul>
-		</div>
+		</nav>
 		
 		<div class="name"><?php echo $name;?></div>
 	</div>
-</div>
+</header>
 
-<!-- BODY -->
-<div id="body">
+<section>
 	<div class="wrapper">
-		<!-- PAGE CONTENT -->
 		<div class="content">
 			<?php echo $flash;?>
 			<?php echo $content;?>
 			
 			<div style="clear:both;">&nbsp;</div>
 			
-			<!-- FOOTER -->
-			<div id="footer">
+			<footer>
 				Powered by <strong>Nova</strong> from <a href="http://www.anodyne-productions.com" target="_blank">Anodyne Productions</a>
-			</div>
+			</footer>
 		</div>
 	</div>
-</div>
+</section>
