@@ -13,7 +13,7 @@
 		<?php if (is_file(APPPATH.'views/'.$skin.'/design/style.css')): ?>
 			<?php echo html::style(APPFOLDER.'/views/'.$skin.'/design/style.css');?>
 		<?php else: ?>
-			<?php echo html::style(MODFOLDER.'/nova/core/views/_common/css/style.css');?>
+			<?php echo html::style(MODFOLDER.'/nova/core/views/design/style.css');?>
 			
 			<?php if (is_file(APPPATH.'views/'.$skin.'/design/custom.css')): ?>
 				<?php echo html::style(APPFOLDER.'/views/'.$skin.'/design/custom.css');?>
