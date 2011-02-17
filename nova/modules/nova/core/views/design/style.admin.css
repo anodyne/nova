@@ -1,0 +1,71 @@
+hr {
+	width: 75%;
+	margin: 2em auto;
+}
+
+input[type=text],
+input[type=password],
+input[type=email] {
+	padding: 5px;
+}
+
+table, table tbody, table tbody tr, table tbody tr td {
+	position: relative;
+}
+
+.ui-tabs .ui-tabs-panel { position: relative; }
+
+.btn-action {
+	position: relative;
+	padding: 3px 12px;
+	
+	background: #bbb;
+	color: #444;
+	border: none;
+	font-size: 90%;
+	font-family: helvetica, arial, sans-serif;
+	font-weight: bold;
+	
+	border-radius: 3px;
+	-moz-border-radius: 3px;
+}
+.btn-action:hover {
+	background: #aaa;
+	color: #222;
+	border: none;
+}
+
+.action-menu-container {
+	position: relative;
+}
+.action-menu {
+	position: absolute;
+	top: 0;
+	right: 0;
+	z-index: 100;
+	
+	background: #eee;
+	border: 1px solid #bbb;
+	font-size: 85%;
+	
+	border-radius: 3px;
+	-moz-border-radius: 3px;
+}
+.action-menu ul {
+	margin: 0;
+	padding: 0;
+	
+	list-style: none;
+}
+.action-menu ul li {
+	text-align: left;
+}
+.action-menu ul li a {
+	display: block;
+	padding: 2px 5px;
+	
+	text-decoration: none;
+}
+.action-menu ul li a:hover {
+	background: #ddd;
+}
