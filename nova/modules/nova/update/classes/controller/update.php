@@ -412,7 +412,7 @@ class Controller_Update extends Controller_Template {
 				
 				// set the loading image
 				$data->loading = array(
-					'src' => MODFOLDER.'nova/update/views/design/images/loading-circle-large.gif',
+					'src' => MODFOLDER.'/nova/update/views/design/images/loading-circle-large.gif',
 					'attr' => array(
 						'class' => 'image'),
 				);
@@ -456,7 +456,7 @@ class Controller_Update extends Controller_Template {
 				
 				// set the loading image
 				$data->loading = array(
-					'src' => MODFOLDER.'nova/update/views/design/images/loading-circle-large.gif',
+					'src' => MODFOLDER.'/nova/update/views/design/images/loading-circle-large.gif',
 					'attr' => array(
 						'class' => 'image'),
 				);
