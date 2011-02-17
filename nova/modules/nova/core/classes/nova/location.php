@@ -11,6 +11,8 @@
  * @since		3.0
  */
 
+# TODO: need to test overriding partials in the override extension
+
 abstract class Nova_Location {
 	
 	/**
@@ -135,7 +137,7 @@ abstract class Nova_Location {
 	 * finally checking in the core nova module where it should find the file
 	 * in question.
 	 *
-	 *     echo Location::view('main_contact', 'default', 'pages');
+	 *     echo Location::view('main_contact', 'default');
 	 *     echo Location::view('main_contact_ajax', 'default', 'ajax');
 	 *     echo Location::view('main_contact_em_html', 'default', 'email');
 	 *
@@ -146,7 +148,7 @@ abstract class Nova_Location {
 	 * @param	string	the extension of the view file (default: .php)
 	 * @return	string	path to the view file relative to the views directory
 	 */
-	public static function view($view, $skin, $type = 'pages', $ext = EXT)
+	public static function view($view, $skin = null, $type = 'pages', $ext = EXT)
 	{
 		$locations = self::_setup_modules();
 		
