@@ -6,7 +6,7 @@
  * @category	Controllers
  * @author		Anodyne Productions
  * @copyright	2011 Anodyne Productions
- * @since		2.0
+ * @since		3.0
  */
 
 class Controller_Nova_Login extends Controller_Nova_Base {
@@ -36,36 +36,29 @@ class Controller_Nova_Login extends Controller_Nova_Base {
 		
 		// set the values to be passed to the views
 		$vars = array(
-			'template' => array(
-				'skin' => $this->skin,
-				'sec' => 'login'),
-			'layout' => array(
-				'skin'	=> $this->skin,
-				'sec'	=> 'login',
-				'name'	=> $this->options->sim_name),
+			'skin'	=> $this->skin,
+			'sec'	=> 'login',
+			'name'	=> $this->options->sim_name,
 		);
 		
 		// set the shell
-		$this->template = View::factory('_common/layouts/login', $vars['template']);
+		$this->template = View::factory(Location::file('login', $this->skin, 'structure'), $vars);
 		
 		// set the variables in the template
 		$this->template->title 				= $this->options->sim_name.' :: ';
 		$this->template->javascript			= false;
-		$this->template->layout				= View::factory($this->skin.'/template_login', $vars['layout']);
-		$this->template->layout->flash		= false;
-		$this->template->layout->content	= false;
+		$this->template->structure			= View::factory(Location::file('login', $this->skin, 'templates'), $vars);
+		$this->template->structure->flash	= false;
+		$this->template->structure->content	= false;
 	}
 	
 	public function action_index()
 	{
 		// create a new content view
-		$this->template->layout->content = View::factory(Location::view('login_index', $this->skin, 'login', 'pages'));
-		
-		// javascript view
-		$this->template->javascript = View::factory(Location::view('login_index_js', $this->skin, 'login', 'js'));
+		$this->template->structure->content = View::factory(Location::view('login_index', $this->skin, 'pages'));
 		
 		// assign the object a shorter variable to use in the method
-		$data = $this->template->layout->content;
+		$data = $this->template->structure->content;
 		
 		// grab the UID
 		$uid = Jelly::query('system', 1)->select()->uid;
@@ -85,9 +78,9 @@ class Controller_Nova_Login extends Controller_Nova_Base {
 				// find out how much time is left
 				$timeleft = Auth::$lockout_time - $timeframe;
 				
-				$this->template->layout->flash = View::factory(Location::view('flash', $this->skin, 'login', 'pages'));
-				$this->template->layout->flash->status = 'error';
-				$this->template->layout->flash->message = __("You've attempted to log in more times than the system allows. You must wait :minutes minutes before attempting to log in again! :extra", array(':minutes' => round(ceil($timeleft/60), 0), ':extra' => ''));
+				$this->template->structure->flash = View::factory(Location::view('flash', $this->skin, 'login', 'pages'));
+				$this->template->structure->flash->status = 'error';
+				$this->template->structure->flash->message = __("You've attempted to log in more times than the system allows. You must wait :minutes minutes before attempting to log in again! :extra", array(':minutes' => round(ceil($timeleft/60), 0), ':extra' => ''));
 			}
 		}
 		
@@ -132,16 +125,13 @@ class Controller_Nova_Login extends Controller_Nova_Base {
 			}
 			
 			// create a new content view
-			$this->template->layout->content = View::factory(Location::view('login_success', $this->skin, 'login', 'pages'));
-			
-			// javascript view
-			$this->template->javascript = View::factory(Location::view('login_success_js', $this->skin, 'login', 'js'));
+			$this->template->structure->content = View::factory(Location::view('login_success', $this->skin, 'pages'));
 			
 			// set the redirect
 			$this->template->redirect = array('time' => 5, 'url' => url::site('admin/index'));
 			
 			// assign the object a shorter variable to use in the method
-			$data = $this->template->layout->content;
+			$data = $this->template->structure->content;
 			
 			// set the content
 			$data->header = ucwords(__("logging in"));
@@ -159,10 +149,10 @@ class Controller_Nova_Login extends Controller_Nova_Base {
 	public function action_error($error = 0)
 	{
 		// create a new content view
-		$this->template->layout->content = View::factory(Location::view('login_error', $this->skin, 'login', 'pages'));
+		$this->template->structure->content = View::factory(Location::view('login_error', $this->skin, 'pages'));
 		
 		// assign the object a shorter variable to use in the method
-		$data = $this->template->layout->content;
+		$data = $this->template->structure->content;
 		
 		// content
 		$this->template->title.= ucfirst(__("error"));
@@ -212,16 +202,13 @@ class Controller_Nova_Login extends Controller_Nova_Base {
 		Auth::logout();
 		
 		// create a new content view
-		$this->template->layout->content = View::factory(Location::view('login_logout', $this->skin, 'login', 'pages'));
-		
-		// javascript view
-		$this->template->javascript = View::factory(Location::view('login_logout_js', $this->skin, 'login', 'js'));
+		$this->template->structure->content = View::factory(Location::view('login_logout', $this->skin, 'pages'));
 		
 		// set the redirect
 		$this->template->_redirect = array('time' => 5, 'url' => url::site('main/index'));
 		
 		// assign the object a shorter variable to use in the method
-		$data = $this->template->layout->content;
+		$data = $this->template->structure->content;
 		
 		// content
 		$this->template->title.= ucfirst(__("logout"));
@@ -292,51 +279,51 @@ class Controller_Nova_Login extends Controller_Nova_Base {
 							$email = $this->_email('reset', $emaildata);
 							
 							// set the flash message
-							$this->template->layout->flash = View::factory(Location::view('flash', $this->skin, 'login', 'pages'));
-							$this->template->layout->flash->status = 'success';
-							$this->template->layout->flash->message = __("Your password was successfully reset. Make sure you change your password to something you can remember when you log in.");
+							$this->template->structure->flash = View::factory(Location::view('flash', $this->skin, 'login', 'pages'));
+							$this->template->structure->flash->status = 'success';
+							$this->template->structure->flash->message = __("Your password was successfully reset. Make sure you change your password to something you can remember when you log in.");
 						}
 						else
 						{
-							$this->template->layout->flash = View::factory(Location::view('flash', $this->skin, 'login', 'pages'));
-							$this->template->layout->flash->status = 'error';
-							$this->template->layout->flash->message = __("Your password wasn't reset. Please try again. If the problem persists, please contact the system administrator.");
+							$this->template->structure->flash = View::factory(Location::view('flash', $this->skin, 'login', 'pages'));
+							$this->template->structure->flash->status = 'error';
+							$this->template->structure->flash->message = __("Your password wasn't reset. Please try again. If the problem persists, please contact the system administrator.");
 						}
 					}
 					else
 					{
-						$this->template->layout->flash = View::factory(Location::view('flash', $this->skin, 'login', 'pages'));
-						$this->template->layout->flash->status = 'error';
-						$this->template->layout->flash->message = __("The security answer you provided doesn't match our records. Please try again. Remember that you have to type your security answer exactly as you did when you set it.");
+						$this->template->structure->flash = View::factory(Location::view('flash', $this->skin, 'login', 'pages'));
+						$this->template->structure->flash->status = 'error';
+						$this->template->structure->flash->message = __("The security answer you provided doesn't match our records. Please try again. Remember that you have to type your security answer exactly as you did when you set it.");
 					}
 				}
 				else
 				{
-					$this->template->layout->flash = View::factory(Location::view('flash', $this->skin, 'login', 'pages'));
-					$this->template->layout->flash->status = 'error';
-					$this->template->layout->flash->message = __("The security question you selected doesn't match our records. Please try again.");
+					$this->template->structure->flash = View::factory(Location::view('flash', $this->skin, 'login', 'pages'));
+					$this->template->structure->flash->status = 'error';
+					$this->template->structure->flash->message = __("The security question you selected doesn't match our records. Please try again.");
 				}
 			}
 			elseif (count($info) > 1)
 			{
-				$this->template->layout->flash = View::factory(Location::view('flash', $this->skin, 'login', 'pages'));
-				$this->template->layout->flash->status = 'error';
-				$this->template->layout->flash->message = __("Multiple accounts found with your :email. Please contact the :gm to resolve this issue.", 
+				$this->template->structure->flash = View::factory(Location::view('flash', $this->skin, 'login', 'pages'));
+				$this->template->structure->flash->status = 'error';
+				$this->template->structure->flash->message = __("Multiple accounts found with your :email. Please contact the :gm to resolve this issue.", 
 					array(':email' => __("email address"), ':gm' => __("game master")));
 			}
 			elseif (count($info) < 1)
 			{
-				$this->template->layout->flash = View::factory(Location::view('flash', $this->skin, 'login', 'pages'));
-				$this->template->layout->flash->status = 'error';
-				$this->template->layout->flash->message = __(":email not found, please try again.", array(':email' => ucfirst(__("email address"))));
+				$this->template->structure->flash = View::factory(Location::view('flash', $this->skin, 'login', 'pages'));
+				$this->template->structure->flash->status = 'error';
+				$this->template->structure->flash->message = __(":email not found, please try again.", array(':email' => ucfirst(__("email address"))));
 			}
 		}
 		
 		// create a new content view
-		$this->template->layout->content = View::factory(Location::view('login_reset', $this->skin, 'login', 'pages'));
+		$this->template->structure->content = View::factory(Location::view('login_reset', $this->skin, 'pages'));
 		
 		// assign the object a shorter variable to use in the method
-		$data = $this->template->layout->content;
+		$data = $this->template->structure->content;
 		
 		// set the title
 		$this->template->title.= ucwords(__("reset password"));
@@ -420,11 +407,11 @@ class Controller_Nova_Login extends Controller_Nova_Base {
 					if ($format == 'html')
 					{
 						// set the html version
-						$html = View::factory(Location::view('login_reset_em_html', $this->skin, 'login', 'email'), $view);
+						$html = View::factory(Location::view('login_reset_em_html', $this->skin, 'email'), $view);
 					}
 					
 					// set the text version
-					$text = View::factory(Location::view('login_reset_em_text', $this->skin, 'login', 'email'), $view);
+					$text = View::factory(Location::view('login_reset_em_text', $this->skin, 'email'), $view);
 					
 					// set the primary delivery method and type
 					$primary_format = ($format == 'html') ? $html->render() : $text->render();

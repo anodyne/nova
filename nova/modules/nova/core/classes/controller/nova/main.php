@@ -6,7 +6,7 @@
  * @category	Controllers
  * @author		Anodyne Productions
  * @copyright	2011 Anodyne Productions
- * @since		2.0
+ * @since		3.0
  */
 
 class Controller_Nova_Main extends Controller_Nova_Base {
@@ -40,7 +40,7 @@ class Controller_Nova_Main extends Controller_Nova_Base {
 		);
 		
 		// set the shell
-		$this->template = View::factory(Location::file('main', $this->skin, 'layouts'), $vars);
+		$this->template = View::factory(Location::file('main', $this->skin, 'structure'), $vars);
 		
 		// grab the image index
 		$this->images = Utility::get_image_index($this->skin);
@@ -48,49 +48,46 @@ class Controller_Nova_Main extends Controller_Nova_Base {
 		// set the variables in the template
 		$this->template->title 						= $this->options->sim_name.' :: ';
 		$this->template->javascript					= false;
-		$this->template->layout						= View::factory(Location::file('main', $this->skin, 'templates'), $vars);
-		$this->template->layout->navmain 			= Menu::build('main', 'main');
-		$this->template->layout->ajax 				= false;
-		$this->template->layout->flash				= false;
-		$this->template->layout->content			= false;
+		$this->template->structure					= View::factory(Location::file('main', $this->skin, 'templates'), $vars);
+		$this->template->structure->navmain 		= Menu::build('main', 'main');
+		$this->template->structure->ajax 			= false;
+		$this->template->structure->flash			= false;
+		$this->template->structure->content			= false;
 		
-		$this->template->layout->panel				= View::factory(Location::file('panel', $this->skin, 'partials'));
-		$this->template->layout->panel->panel1		= false;
-		$this->template->layout->panel->panel2		= false;
-		$this->template->layout->panel->panel3		= false;
-		$this->template->layout->panel->workflow	= false;
+		$this->template->structure->panel			= View::factory(Location::file('panel', $this->skin, 'partials'));
+		$this->template->structure->panel->panel1	= false;
+		$this->template->structure->panel->panel2	= false;
+		$this->template->structure->panel->panel3	= false;
+		$this->template->structure->panel->workflow	= false;
 		
-		$this->template->layout->navsub 			= View::factory(Location::file('navsub', $this->skin, 'partials'));
-		$this->template->layout->navsub->menu		= Menu::build('sub', 'main');
-		$this->template->layout->navsub->widget1	= false;
-		$this->template->layout->navsub->widget2	= false;
-		$this->template->layout->navsub->widget3	= false;
+		$this->template->structure->navsub 			= View::factory(Location::file('navsub', $this->skin, 'partials'));
+		$this->template->structure->navsub->menu	= Menu::build('sub', 'main');
+		$this->template->structure->navsub->widget1	= false;
+		$this->template->structure->navsub->widget2	= false;
+		$this->template->structure->navsub->widget3	= false;
 		
-		$this->template->layout->footer				= View::factory(Location::file('footer', $this->skin, 'partials'));
-		$this->template->layout->footer->extra 		= Jelly::query('message', 'footer')->limit(1)->select()->value;
+		$this->template->structure->footer				= View::factory(Location::file('footer', $this->skin, 'partials'));
+		$this->template->structure->footer->extra 		= Jelly::query('message', 'footer')->limit(1)->select()->value;
 	}
 	
 	public function action_index()
 	{
 		// create a new content view
-		$this->template->layout->content = View::factory(Location::view('main_index', $this->skin, 'main', 'pages'));
-		
-		// create the javascript view
-		$this->template->javascript = View::factory(Location::view('main_index_js', $this->skin, 'main', 'js'));
+		$this->template->structure->content = View::factory(Location::view('main_index', $this->skin, 'pages'));
 		
 		// assign the object a shorter variable to use in the method
-		$data = $this->template->layout->content;
+		$data = $this->template->structure->content;
 		
 		# TODO: when widgets are worked on, this will need to uncommented
 		// get all of the widgets for the page
 		//$widgets = Jelly::query('cataloguewidget')->where('page', '=', 'main/index')->select();
 		$widgets = array();
 		
+		// set the widgets array
+		$data->widgets = array();
+		
 		if (count($widgets) > 0)
 		{
-			// set the widgets array
-			$data->widgets = array();
-			
 			// loop through the widgets and pass the info to the view
 			foreach ($widgets as $w)
 			{
@@ -137,7 +134,7 @@ class Controller_Nova_Main extends Controller_Nova_Base {
 				$email = $this->_email('contact', $emaildata);
 				
 				// set the flash message
-				$this->template->layout->flash = Submit::show_flash( (int) $email, __("your information"), __("submitted"), $this->skin, 'main');
+				$this->template->structure->flash = Submit::show_flash( (int) $email, __("your information"), __("submitted"), $this->skin, 'main');
 			}
 			else
 			{
@@ -147,10 +144,10 @@ class Controller_Nova_Main extends Controller_Nova_Base {
 		}
 		
 		// create a new content view
-		$this->template->layout->content = View::factory(Location::view('main_contact', $this->skin, 'main', 'pages'));
+		$this->template->structure->content = View::factory(Location::view('main_contact', $this->skin, 'main', 'pages'));
 		
 		// assign the object a shorter variable to use in the method
-		$data = $this->template->layout->content;
+		$data = $this->template->structure->content;
 		
 		// content
 		$this->template->title.= ucwords(__("contact us"));
@@ -194,10 +191,10 @@ class Controller_Nova_Main extends Controller_Nova_Base {
 	public function action_credits()
 	{
 		// create a new content view
-		$this->template->layout->content = View::factory(Location::view('main_credits', $this->skin, 'main', 'pages'));
+		$this->template->structure->content = View::factory(Location::view('main_credits', $this->skin, 'pages'));
 		
 		// assign the object a shorter variable to use in the method
-		$data = $this->template->layout->content;
+		$data = $this->template->structure->content;
 		
 		// content
 		$this->template->title.= ucwords(__("site credits"));
@@ -232,13 +229,13 @@ class Controller_Nova_Main extends Controller_Nova_Base {
 	public function action_news()
 	{
 		// create a new content view
-		$this->template->layout->content = View::factory(Location::view('main_news', $this->skin, 'main', 'pages'));
+		$this->template->structure->content = View::factory(Location::view('main_news', $this->skin, 'main', 'pages'));
 		
 		// create the javascript view
 		$this->template->javascript = View::factory(Location::view('main_news_js', $this->skin, 'main', 'js'));
 		
 		// assign the object a shorter variable to use in the method
-		$data = $this->template->layout->content;
+		$data = $this->template->structure->content;
 		
 		// get all the news items
 		$news = Jelly::query('news')->where('status', '=', 'activated')->order_by('date', 'desc');
@@ -306,10 +303,10 @@ class Controller_Nova_Main extends Controller_Nova_Base {
 		$id = ( ! is_numeric($id)) ? false : $id;
 		
 		// create a new content view
-		$this->template->layout->content = View::factory(Location::view('main_viewnews', $this->skin, 'main', 'pages'));
+		$this->template->structure->content = View::factory(Location::view('main_viewnews', $this->skin, 'main', 'pages'));
 		
 		// assign the object a shorter variable to use in the method
-		$data = $this->template->layout->content;
+		$data = $this->template->structure->content;
 		
 		if (isset($_POST['submit']))
 		{
@@ -327,7 +324,7 @@ class Controller_Nova_Main extends Controller_Nova_Base {
 			$submit = Submit::create($_POST, 'newscomment', $additional, $pop);
 			
 			// show the appropriate flash message
-			$this->template->layout->flash_message = Submit::show_flash($submit, __('label.comment'), __('action.added'), $this->skin, 'main');
+			$this->template->structure->flash_message = Submit::show_flash($submit, __('label.comment'), __('action.added'), $this->skin, 'main');
 		}
 		
 		// grab the news item referenced in the url

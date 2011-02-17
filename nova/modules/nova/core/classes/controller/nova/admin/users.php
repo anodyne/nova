@@ -56,37 +56,37 @@ class Controller_Nova_Admin_Users extends Controller_Nova_Base {
 		$this->template->title 						= $this->options->sim_name.' :: ';
 		$this->template->javascript					= false;
 		$this->template->layout						= View::factory($this->skin.'/template_admin', $vars['layout']);
-		$this->template->layout->navmain 			= Menu::build('main', 'main');
-		$this->template->layout->ajax 				= false;
-		$this->template->layout->flash				= false;
-		$this->template->layout->content			= false;
+		$this->template->structure->navmain 			= Menu::build('main', 'main');
+		$this->template->structure->ajax 				= false;
+		$this->template->structure->flash				= false;
+		$this->template->structure->content			= false;
 		
-		$this->template->layout->panel				= View::factory('_common/partials/panel');
-		$this->template->layout->panel->panel1		= false;
-		$this->template->layout->panel->panel2		= false;
-		$this->template->layout->panel->panel3		= false;
-		$this->template->layout->panel->workflow	= false;
+		$this->template->structure->panel				= View::factory('_common/partials/panel');
+		$this->template->structure->panel->panel1		= false;
+		$this->template->structure->panel->panel2		= false;
+		$this->template->structure->panel->panel3		= false;
+		$this->template->structure->panel->workflow	= false;
 		
-		$this->template->layout->navsub 			= View::factory('_common/partials/navsub');
-		$this->template->layout->navsub->menu		= Menu::build('sub', 'main');
-		$this->template->layout->navsub->widget1	= false;
-		$this->template->layout->navsub->widget2	= false;
-		$this->template->layout->navsub->widget3	= false;
+		$this->template->structure->navsub 			= View::factory('_common/partials/navsub');
+		$this->template->structure->navsub->menu		= Menu::build('sub', 'main');
+		$this->template->structure->navsub->widget1	= false;
+		$this->template->structure->navsub->widget2	= false;
+		$this->template->structure->navsub->widget3	= false;
 		
-		$this->template->layout->footer				= View::factory('_common/partials/footer');
-		$this->template->layout->footer->extra 		= Jelly::query('message', 'footer')->limit(1)->select()->value;
+		$this->template->structure->footer				= View::factory('_common/partials/footer');
+		$this->template->structure->footer->extra 		= Jelly::query('message', 'footer')->limit(1)->select()->value;
 	}
 	
 	public function action_index()
 	{
 		// create a new content view
-		$this->template->layout->content = View::factory(Location::view('users_index', $this->skin, 'admin', 'pages'));
+		$this->template->structure->content = View::factory(Location::view('users_index', $this->skin, 'admin', 'pages'));
 		
 		// create the javascript view
 		$this->template->javascript = View::factory(Location::view('users_index_js', $this->skin, 'admin', 'js'));
 		
 		// assign the object a shorter variable to use in the method
-		$data = $this->template->layout->content;
+		$data = $this->template->structure->content;
 		
 		// get all the users
 		$users = Jelly::query('user')->select();
@@ -140,13 +140,13 @@ class Controller_Nova_Admin_Users extends Controller_Nova_Base {
 		}
 		
 		// create a new content view
-		$this->template->layout->content = View::factory(Location::view('users_account', $this->skin, $this->section, 'pages'));
+		$this->template->structure->content = View::factory(Location::view('users_account', $this->skin, $this->section, 'pages'));
 		
 		// create the javascript view
 		$this->template->javascript = View::factory(Location::view('users_account_js', $this->skin, $this->section, 'js'));
 		
 		// assign the object a shorter variable to use in the method
-		$data = $this->template->layout->content;
+		$data = $this->template->structure->content;
 		
 		// send the ID over
 		$data->id = $id;
