@@ -136,21 +136,6 @@ abstract class Nova_Utility {
 					}
 				}
 				
-				// set the items to be pulled out of the listing
-				$pop = array('index.html');
-				
-				// remove unwanted items
-				foreach ($pop as $value)
-				{
-					// find the locations in the directory listing
-					$key = array_search($value, $dir);
-					
-					if ($key !== false)
-					{
-						unset($dir[$key]);
-					}
-				}
-				
 				// loop through the directories now
 				foreach ($dir as $key => $value)
 				{
@@ -244,7 +229,7 @@ abstract class Nova_Utility {
 				}
 				
 				// create an array of items to remove
-				$pop = array('index.html', 'template.php');
+				$pop = array('template.php');
 				
 				// remove the items
 				foreach ($pop as $p)
@@ -398,7 +383,7 @@ abstract class Nova_Utility {
 		if ($location === null)
 		{
 			// get the directory listing
-			$dir = self::directory_map(MODPATH.'nova/core/views/_common/widgets/', true);
+			$dir = self::directory_map(MODPATH.'nova/core/views/components/widgets/', true);
 			
 			// get all the installed widgets
 			$widgets = Jelly::query('cataloguewidget')->select();
@@ -415,21 +400,6 @@ abstract class Nova_Utility {
 					{
 						unset($dir[$key]);
 					}
-				}
-			}
-			
-			// set the items to be pulled out of the listing
-			$pop = array('index.html');
-			
-			// remove unwanted items
-			foreach ($pop as $value)
-			{
-				// find the locations in the directory listing
-				$key = array_search($value, $dir);
-				
-				if ($key !== false)
-				{
-					unset($dir[$key]);
 				}
 			}
 			
