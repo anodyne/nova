@@ -83,7 +83,7 @@ class Kohana_Request_Client_Internal extends Request_Client {
 
 		// Is this the initial request
 		$initial_request = ($request === Request::$initial);
-		
+
 		try
 		{
 			// Initiate response time
@@ -92,7 +92,7 @@ class Kohana_Request_Client_Internal extends Request_Client {
 			if ( ! class_exists($prefix.$controller))
 			{
 				throw new Http_Exception_404('The requested URL :uri was not found on this server.',
-													array(':uri' => $request->param('uri')));
+													array(':uri' => $request->uri()));
 			}
 
 			// Load the controller using reflection
@@ -105,7 +105,7 @@ class Kohana_Request_Client_Internal extends Request_Client {
 			}
 
 			// Create a new instance of the controller
-			$controller = $class->newInstance($request, $request->create_response());
+			$controller = $class->newInstance($request, $request->response() ? $request->response() : $request->create_response());
 
 			$class->getMethod('before')->invoke($controller);
 
@@ -118,7 +118,7 @@ class Kohana_Request_Client_Internal extends Request_Client {
 			if ( ! $class->hasMethod('action_'.$action))
 			{
 				throw new Http_Exception_404('The requested URL :uri was not found on this server.',
-													array(':uri' => $request->param('uri')));
+													array(':uri' => $request->uri()));
 			}
 
 			$method = $class->getMethod('action_'.$action);

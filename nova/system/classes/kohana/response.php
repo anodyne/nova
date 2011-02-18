@@ -310,7 +310,7 @@ class Kohana_Response implements Http_Response, Serializable {
 		}
 		elseif ($value === NULL)
 		{
-			return $this->_header[$key];
+			return Arr::get($this->_header, $key);
 		}
 		else
 		{
@@ -332,43 +332,51 @@ class Kohana_Response implements Http_Response, Serializable {
 
 	/**
 	 * Set and get cookies values for this response.
+	 * 
+	 *     // Get the cookies set to the response
+	 *     $cookies = $response->cookie();
+	 *     
+	 *     // Set a cookie to the response
+	 *     $response->cookie('session', array(
+	 *          'value' => $value,
+	 *          'expiration' => 12352234
+	 *     ));
 	 *
 	 * @param   mixed     cookie name, or array of cookie values
 	 * @param   string    value to set to cookie
 	 * @return  string
+	 * @return  void
 	 * @return  [Request]
 	 */
 	public function cookie($key = NULL, $value = NULL)
 	{
+		// Handle the get cookie calls
 		if ($key === NULL)
 			return $this->_cookies;
+		elseif ( ! is_array($key) AND ! $value)
+			return Arr::get($this->_cookies, $key);
 
+		// Handle the set cookie calls
 		if (is_array($key))
 		{
 			reset($key);
 			while (list($_key, $_value) = each($key))
 			{
-				$this->cookie($_key, $_value, $expiration);
+				$this->cookie($_key, $_value);
 			}
 		}
-
-		if ( ! $value)
-			return Arr::get($this->_cookies, $key);
 		else
 		{
-			// Get the expiration value
-			$expiration = $expiration ? $expiration : Cookie::$expiration;
-
 			if ( ! is_array($value))
 			{
 				$value = array(
 					'value' => $value,
-					'expiration' => $expiration
+					'expiration' => Cookie::$expiration
 				);
 			}
 			elseif ( ! isset($value['expiration']))
 			{
-				$value['expiration'] = $expiration;
+				$value['expiration'] = Cookie::$expiration;
 			}
 
 			$this->_cookies[$key] = $value;
@@ -418,6 +426,12 @@ class Kohana_Response implements Http_Response, Serializable {
 			{
 				// Default to using newer protocol
 				$protocol = strtoupper(Http::$protocol).'/'.Http::$version;
+			}
+
+			// Default to text/html; charset=utf8 if no content type set
+			if ( ! $this->_header->offsetExists('content-type'))
+			{
+				$this->_header['content-type'] = Kohana::$content_type.'; charset='.Kohana::$charset;
 			}
 
 			// Add the X-Powered-By header
@@ -568,14 +582,14 @@ class Kohana_Response implements Http_Response, Serializable {
 			}
 
 			// Range of bytes being sent
-			$this->_header['content-tange'] = 'bytes '.$start.'-'.$end.'/'.$size;
+			$this->_header['content-range'] = 'bytes '.$start.'-'.$end.'/'.$size;
 			$this->_header['accept-ranges'] = 'bytes';
 		}
 
 		// Set the headers for a download
 		$this->_header['content-disposition'] = $disposition.'; filename="'.$download.'"';
 		$this->_header['content-type']        = $mime;
-		$this->_header['content-length']      = ($end - $start) + 1;
+		$this->_header['content-length']      = (string) (($end - $start) + 1);
 
 		if (Request::user_agent('browser') === 'Internet Explorer')
 		{
@@ -680,7 +694,7 @@ class Kohana_Response implements Http_Response, Serializable {
 		if ( ! $this->_header->offsetExists('content-type'))
 		{
 			// Add the default Content-Type header if required
-			$this->_header['content-type'] = 'text/html; charset='.Kohana::$charset;
+			$this->_header['content-type'] = Kohana::$content_type.'; charset='.Kohana::$charset;
 		}
 
 		$content_length = $this->content_length();
@@ -746,13 +760,17 @@ class Kohana_Response implements Http_Response, Serializable {
 	 * @param   string   $etag Resource ETag
 	 * @param   Request  $request The request to test against
 	 * @return  Response
+	 * @throws  Kohana_Request_Exception
 	 */
-	public function check_cache($etag = NULL, Request $request)
+	public function check_cache($etag = NULL, Request $request = NULL)
 	{
 		if ( ! $etag)
 		{
 			$etag = $this->generate_etag();
 		}
+
+		if ( ! $request)
+			throw new Kohana_Request_Exception('A Request object must be supplied with an etag for evaluation');
 
 		// Set the ETag header
 		$this->_header['etag'] = $etag;
@@ -810,7 +828,7 @@ class Kohana_Response implements Http_Response, Serializable {
 
 		$serialized = serialize($to_serialize);
 
-		if (is_string($string))
+		if (is_string($serialized))
 		{
 			return $string;
 		}
