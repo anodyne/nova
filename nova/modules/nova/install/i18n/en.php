@@ -40,51 +40,41 @@ return array(
 		'back' => "Back to Change Database Panel",
 	),
 	
-	/**
-	 * install errors
-	 */
-	'install.error.error_1' => "The system is already installed. If you want to re-install the system, you must first remove all the system data and database tables.",
-	'install.error.error_2' => "You must be a system administrator to change this RPG's genre!",
-	'install.error_no_genre' => "I can't find a genre in your Nova config file (<code>:path</code>). Make sure you've specified a genre and try again.",
-	
-	/**
-	 * choose install options
-	 */
-	'index.fresh_text' => "If you don't already have Nova installed on your server and want to install a clean copy of the system, use this option. Don't try to install the system over top of an existing Nova installation. If you want to re-install Nova, you'll need to uninstall the system first then install it again.",
-	'index.upg_text' => "Nova includes an easy-to-use upgrade process that will take the information from a site running SMS 2.6.9 or higher and upgrade it to be usable by Nova. In order to do the upgrade, your SMS database has to be in the same database as where you're installing Nova.",
-	'index.nova1_text' => "Nova 2 is built with the same powerful, yet easy-to-use philosophy that Nova 1 was built with, but the underlying code is very different. Because of that, Nova includes a simple update script to move your Nova 1 information over to the Nova 2 format. In order for this process to run, you'll need to be running at least Nova 1.1.",
-	'index.upd_text' => "Anodyne is committed to providing continued support for Nova through software updates. If you need to access the Update Center to check for and apply Nova software updates, use this option.",
-	'index.genre_text' => "Nova's been built from the ground up with game flexibility in mind and allows you to install one of several genres for your RPG. If you want to install a new genre, use this option. You'll have to make manual adjustments to your characters once the new genre is installed. You must be a system administrator to install a new genre.",
-	'index.remove_text' => "If you want to remove all of your current Nova data you can uninstall the system. <strong>Warning:</strong> this action is permanent and cannot be undone! You must be a system administrator to uninstall Nova.",
-	'index.db_text' => "If you want to add new database tables or fields to your database, you can use this simple user interface to do so. For advanced operations, please use a MySQL management tool like phpMyAdmin. You must be a system administrator to change the database.",
-	
-	/**
-	 * install landing page
-	 */
-	'main.text' => "In 2005, Anodyne Productions opened its doors with a simple belief: web software can be both elegant and powerful while still being easy to use.  That principle has guided Anodyne since then and Nova is no exception. Over two years in the making, Nova represents the next evolution in RPG management software with a clean interface, powerful system engine, more robust developer tools and tons of new features that'll make life running or enjoying an RPG better than ever.\r\n\r\nTo get started, first verify your server can run Nova by using the button before or you can select another option from the More Options menu at the top.  From everyone at Anodyne Productions, thank you for choosing Nova as your RPG management tool!",
-	
-	/**
-	 * uninstall nova
-	 */
-	'remove.message' => "Whoa, hold up! Uninstalling Nova will remove all the data in the database tables (posts, logs, characters, etc.) and cannot be undone, so make absolutely sure you want to do this before continuing...",
-	'remove.success' => "Poof! I was able to successfully uninstall Nova. Now, you can go back to the Installation Center to reinstall Nova or upgrade from SMS.",
-	
-	/**
-	 * install step 0
-	 */
-	'step0.inst' => "Alright, time to get started! Nova is a dynamic, database-driven web system which means, you guessed it, I need to install the database now. Start to finish, the installation should only take a few minutes to complete and then you'll be on your way. If you have questions, you can refer to the readme that came in the Nova zip archive, check out the <a href='http://docs.anodyne-productions.com' target='_blank'>user guide</a> or drop in to our <a href='http://forums.anodyne-productions.com' target='_blank'>forums</a>.\r\n\r\nTime to get started now...",
-	
-	/**
-	 * install step 1
-	 */
-	'step1.success' => "You're pretty good at this! The database tables and some basic data have been created. Now, just fill out the information below and I'll update the system with it...",
-	'step1.failure' => "Uh oh! I ran in to a problem trying creating the database and basic data. For starters, make sure all your settings are right and try again. If you still can't install the system, drop us a line at our <a href='http://forums.anodyne-productions.com' target='_blank'>forums</a> for more help.",
-	'step1.errors' => "Uh oh! I couldn't go to the next step because there are some errors with what you filled in. Check the messages below, make any corrections and give it another try.",
-	
-	/**
-	 * install step 2
-	 */
-	'step2.message' => "I bet you were expecting more steps, huh? Sorry to disappoint you, but Nova is installed and ready to use. Head on over to your site now to check it out and start using your Nova site.",
+	'install' => array(
+		'main' => array(
+			'text' => "In 2005, Anodyne Productions opened its doors with a simple belief: web software can be both elegant and powerful while still being easy to use.  That principle has guided Anodyne since then and Nova is no exception. Over two years in the making, Nova represents the next evolution in RPG management software with a clean interface, powerful system engine, more robust developer tools and tons of new features that'll make life running or enjoying an RPG better than ever.\r\n\r\nTo get started, first verify your server can run Nova by using the button before or you can select another option from the More Options menu at the top.  From everyone at Anodyne Productions, thank you for choosing Nova as your RPG management tool!",
+		),
+		'index' => array(
+			'db' => "If you want to add new database tables or fields to your database, you can use this simple user interface to do so. For advanced operations, please use a MySQL management tool like phpMyAdmin. You must be a system administrator to change the database.",
+			'fresh' => "If you don't already have Nova installed on your server and want to install a clean copy of the system, use this option. Don't try to install the system over top of an existing Nova installation. If you want to re-install Nova, you'll need to uninstall the system first then install it again.",
+			'genre' => "Nova's been built from the ground up with game flexibility in mind and allows you to install one of several genres for your RPG. If you want to install a new genre, use this option. You'll have to make manual adjustments to your characters once the new genre is installed. You must be a system administrator to install a new genre.",
+			'nova1' => "Nova 3 is built with the same powerful, yet easy-to-use philosophy that Nova has always been built on, but the underlying code is very different. Because of that, Nova includes a simple update script to move your Nova information over to the new format. In order for this process to run, you'll need to be running either Nova 1.2.4 or Nova 2.0.5.",
+			'remove' => "If you want to remove all of your current Nova data you can uninstall the system. <strong>Warning:</strong> this action is permanent and cannot be undone! You must be a system administrator to uninstall Nova.",
+			'update' => "Anodyne is committed to providing continued support for Nova through software updates. If you need to access the Update Center to check for and apply Nova software updates, use this option.",
+			'upgrade' => "Nova includes an easy-to-use upgrade process that will take the information from a site running SMS 2.6.9 or higher and upgrade it to be usable by Nova. In order to do the upgrade, your SMS database has to be in the same database as where you're installing Nova.",
+		),
+		'remove' => array(
+			'message' => "Whoa, hold up! Uninstalling Nova will remove all the data in the database tables (posts, logs, characters, etc.) and cannot be undone, so make absolutely sure you want to do this before continuing...",
+			'success' => "Poof! I was able to successfully uninstall Nova. Now, you can go back to the Installation Center to reinstall Nova or upgrade from SMS."
+		),
+		'error' => array(
+			'error_1' => "The system is already installed. If you want to re-install the system, you must first remove all the system data and database tables.",
+			'error_2' => "You must be a system administrator to change this RPG's genre!",
+			'no_genre' => "I can't find a genre in your Nova config file (<code>:path</code>). Make sure you've specified a genre and try again.",
+			'not_logged_in' => "Oops! You aren't logged in and can't see the install options until you :login.",
+		),
+		'step0' => array(
+			'instructions' => "Alright, time to get started! Nova is a dynamic, database-driven web system which means, you guessed it, I need to install the database now. Start to finish, the installation should only take a few minutes to complete and then you'll be on your way. If you have questions, you can refer to the readme that came in the Nova zip archive, check out the <a href='http://docs.anodyne-productions.com' target='_blank'>user guide</a> or drop in to our <a href='http://forums.anodyne-productions.com' target='_blank'>forums</a>.\r\n\r\nTime to get started now...",
+		),
+		'step1' => array(
+			'success' => "You're pretty good at this! The database tables and some basic data have been created. Now, just fill out the information below and I'll update the system with it...",
+			'failure' => "Uh oh! I ran in to a problem trying creating the database and basic data. For starters, make sure all your settings are right and try again. If you still can't install the system, drop us a line at our <a href='http://forums.anodyne-productions.com' target='_blank'>forums</a> for more help.",
+			'errors' => "Uh oh! I couldn't go to the next step because there are some errors with what you filled in. Check the messages below, make any corrections and give it another try.",
+		),
+		'step2' => array(
+			'instructions' => "I bet you were expecting more steps, huh? Sorry to disappoint you, but Nova is installed and ready to use. Head on over to your site now to check it out and start using your Nova site.",
+		),
+	),
 	
 	/**
 	 * server verification

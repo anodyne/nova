@@ -8,7 +8,7 @@
 	<li>Memory limit of 8M or higher</li>
 </ul>
 
-<p>If you are new to PHP or website management, you cannot run Nova on your local machine without a web server installed.  You must have either a hosting provider with the above requirements or a local server (XAMPP, WAMP, MAMP, LAMP, etc.) to install and use Nova. If you are unsure whether your server will allow you to run Nova, you can run the <?php echo html::anchor('install/verify', 'verification tool');?> before beginning.</p>
+<p>If you are new to PHP or website management, you cannot run Nova on your local machine without a web server installed.  You must have either a hosting provider with the above requirements or a local server (XAMPP, WAMP, MAMP, LAMP, etc.) to install and use Nova. If you are unsure whether your server will allow you to run Nova, you can run the <a href="<?php echo url::site('install/verify');?>">verification tool</a> before beginning.</p>
 
 <hr />
 
@@ -23,7 +23,7 @@
 	<li>Basic information about the primary character you want to play</li>
 </ul>
 
-<p class="fontMedium bold"><?php echo html::anchor('install/main', 'Go to the Install Center &raquo;');?></p>
+<p class="fontMedium bold"><a href="<?php echo url::site('install/main');?>">Go to the Install Center &raquo;</a></p>
 
 <hr />
 
@@ -38,4 +38,4 @@
 	<li>Your database connection information you received from your host</li>
 </ul>
 
-<p class="fontMedium bold"><?php echo html::anchor('upgrade/index', 'Go to the Upgrade Center &raquo;');?></p>
+<p class="fontMedium bold"><a href="<?php echo url::site('upgrade/index');?>">Go to the Upgrade Center &raquo;</a></p>

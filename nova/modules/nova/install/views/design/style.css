@@ -106,16 +106,18 @@ p { margin: 10px 0; }
 
 h2 { font-size: 150%; }
 h3 { font-size: 133%; }
+h4 { font-size: 120%; }
+
+h1, h2, h3, h4 { font-weight: bold; }
 
 .fontMedium { font-size: 110%; }
 .fontSmall { font-size: 85%; }
 
 .bold { font-weight: bold; }
 
-.green { color: #008000; }
-.red { color: #c00; }
-.orange { color: #f7941d; }
-.gray { color: #777; }
+.error { color: #c00; }
+
+strong { font-weight: bold; }
 
 /*
 |---------------------------------------------------------------

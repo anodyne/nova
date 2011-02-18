@@ -330,14 +330,16 @@ class Controller_Install extends Controller_Template {
 		$this->response->body($this->template);
 	}
 	
+	/**
+	 * The install/main page can display several errors depending on the situation.
+	 * The following errors have been built in to the install/main page:
+	 *
+	 *     0 - no errors
+	 *     1 - the system is already installed
+	 *     2 - you must be a system administrator to update the genre
+	 */
 	public function action_main($error = 0)
 	{
-		/**
-		 * 0 - no errors
-		 * 1 - system is already installed
-		 * 2 - you must be a sysadmin to update the genre
-		 */
-		
 		// create a new content view
 		$this->template->layout->content = View::factory(Location::view('install_main'));
 		
@@ -354,15 +356,12 @@ class Controller_Install extends Controller_Template {
 		{
 			$this->template->layout->flash = View::factory('install/pages/flash');
 			$this->template->layout->flash->status = ($error == 1) ? 'info' : 'error';
-			$this->template->layout->flash->message = __('install.error.error_'.$error);
+			$this->template->layout->flash->message = ___('install.error.error_'.$error);
 		}
 		
 		// content
-		$this->template->title.= __('Installation Center');
-		$this->template->layout->label = __('Installation Center');
-		
-		// load the javascript
-		$this->template->javascript = View::factory('install/js/verify_js');
+		$this->template->title.= ___('Installation Center');
+		$this->template->layout->label = ___('Installation Center');
 		
 		// send the response
 		$this->response->body($this->template);
@@ -377,8 +376,8 @@ class Controller_Install extends Controller_Template {
 		$data = $this->template->layout->content;
 		
 		// content
-		$this->template->title.= __('Nova Readme');
-		$this->template->layout->label = __('Nova Readme');
+		$this->template->title.= ___('Nova Readme');
+		$this->template->layout->label = ___('Nova Readme');
 		
 		// build the next step button
 		$next = array(
@@ -388,7 +387,7 @@ class Controller_Install extends Controller_Template {
 		);
 		
 		// build the next step control
-		$this->template->layout->controls = form::open('install/index').form::button('install', __('Back to Install Center'), $next).form::close();
+		$this->template->layout->controls = form::open('install/index').form::button('install', ___('Back to Install Center'), $next).form::close();
 		
 		// send the response
 		$this->response->body($this->template);
@@ -397,7 +396,7 @@ class Controller_Install extends Controller_Template {
 	public function action_remove()
 	{
 		// create a new content view
-		$this->template->layout->content = View::factory(Location::vew('install_remove'));
+		$this->template->layout->content = View::factory(Location::view('install_remove'));
 		
 		// create a new js view
 		$this->template->javascript = View::factory(Location::view('install_remove_js', null, 'js'));
@@ -439,7 +438,7 @@ class Controller_Install extends Controller_Template {
 			}
 			
 			// set the failure message
-			$data->message = __('remove.success');
+			$data->message = ___('install.remove.success');
 			
 			// build the button attributes
 			$next = array(
@@ -449,12 +448,12 @@ class Controller_Install extends Controller_Template {
 			);
 			
 			// build the next step control
-			$this->template->layout->controls = form::open('install/index').form::button('install', __('Install Center'), $next).form::close();
+			$this->template->layout->controls = form::open('install/index').form::button('install', ___('Install Center'), $next).form::close();
 		}
 		else
 		{
 			// set the instructions
-			$data->message = __('remove.message');
+			$data->message = ___('install.remove.message');
 			
 			// build the button attributes
 			$next = array(
@@ -464,15 +463,15 @@ class Controller_Install extends Controller_Template {
 			);
 			
 			// build the next step control
-			$this->template->layout->controls = form::open('install/remove').form::button('submit', __('Uninstall'), $next).form::close();
+			$this->template->layout->controls = form::open('install/remove').form::button('submit', ___('Uninstall'), $next).form::close();
 		}
 		
 		// content
-		$this->template->title.= __('Uninstall Nova');
-		$this->template->layout->label = __('Uninstall Nova');
+		$this->template->title.= ___('Uninstall Nova');
+		$this->template->layout->label = ___('Uninstall Nova');
 		
 		// send the response
-		$this->request->response = $this->template;
+		$this->response->body($this->template);
 	}
 	
 	public function action_setupconfig($step = 0)
@@ -929,7 +928,7 @@ return array
 			// show the flash message
 			$this->template->layout->flash = View::factory('install/pages/flash');
 			$this->template->layout->flash->status = 'error';
-			$this->template->layout->flash->message = __('install.error_no_genre', array(':path' => APPFOLDER.'/config/nova'.EXT));
+			$this->template->layout->flash->message = ___('install.error.no_genre', array(':path' => APPFOLDER.'/config/nova'.EXT));
 		}
 		
 		switch ($step)
@@ -945,13 +944,13 @@ return array
 				$data = $this->template->layout->content;
 				
 				// make sure the proper message is displayed
-				$data->message = nl2br(__('step0.inst'));
+				$data->message = nl2br(___('install.step0.instructions'));
 				
 				// content
-				$this->template->title.= __('Install Nova');
-				$this->template->layout->label = __('Getting Started');
+				$this->template->title.= ___('Install Nova');
+				$this->template->layout->label = ___('Getting Started');
 				
-				if ($allowed === true)
+				if ($allowed)
 				{
 					// build the next step button
 					$next = array(
@@ -961,7 +960,7 @@ return array
 					);
 					
 					// build the next step control
-					$this->template->layout->controls = form::open('install/step/1').form::button('next', __('Start Install'), $next).form::close();
+					$this->template->layout->controls = form::open('install/step/1').form::button('next', ___('Start Install'), $next).form::close();
 				}
 				
 			break;
@@ -1084,7 +1083,7 @@ return array
 				$questions = Jelly::query('securityquestion')->select();
 				
 				// set the questions variable
-				$data->questions = array('' => __('Please Select One'));
+				$data->questions = array('' => ___('Please Select One'));
 				
 				if (count($questions) > 0)
 				{
@@ -1099,7 +1098,7 @@ return array
 				
 				// make sure the proper message is displayed
 				$data->message = ($data->errors === false)
-					? (count($tables) < Kohana::config('novasys.app_db_tables')) ? __('step1.failure') : __('step1.success')
+					? (count($tables) < Kohana::config('novasys.app_db_tables')) ? ___('install.step1.failure') : __('install.step1.success')
 					: __('step1.errors');
 				
 				// set the loading image
@@ -1130,8 +1129,8 @@ return array
 				);
 				
 				// content
-				$this->template->title.= __('Install Nova: Basic Information');
-				$this->template->layout->label = __('Just the Basics');
+				$this->template->title.= ___('Install Nova: Basic Information');
+				$this->template->layout->label = ___('Just the Basics');
 				
 				// build the next step button
 				$next = array(
@@ -1143,20 +1142,20 @@ return array
 				// build the next step control
 				$this->template->layout->controls = (count($tables) < Kohana::config('novasys.app_db_tables')) 
 					? false 
-					: form::button('next', __('Next Step'), $next).form::close();
+					: form::button('next', ___('Next Step'), $next).form::close();
 			break;
 				
 			case 2:
 				if (isset($_POST['next']))
 				{
 					$validate = Validation::factory($_POST)
-						->rule('email', 'not_empty')
-						->rule('email', 'email')
-						->rule('password', 'not_empty')
-						->rule('password_confirm', 'not_empty')
-						->rule('password_confirm', 'matches', array('password'))
-						->rule('security_question', 'not_empty')
-						->rule('security_answer', 'not_empty');
+						->rule('email', 'not_empty', array(':value'))
+						->rule('email', 'email', array(':value'))
+						->rule('password', 'not_empty', array(':value'))
+						->rule('password_confirm', 'not_empty', array(':value'))
+						->rule('password_confirm', 'matches', array(':validation', 'password_confirm', 'password'))
+						->rule('security_question', 'not_empty', array(':value'))
+						->rule('security_answer', 'not_empty', array(':value'));
 						
 					if ($validate->check())
 					{
@@ -1179,33 +1178,25 @@ return array
 						Jelly::query('setting')
 							->where('key', '=', 'sim_name')
 							->limit(1)
-							->set(array(
-								'value' => $simname
-							))
+							->set(array('value' => $simname))
 							->update();
 							
 						Jelly::query('setting')
 							->where('key', '=', 'email_subject')
 							->limit(1)
-							->set(array(
-								'value' => '['.$simname.']'
-							))
+							->set(array('value' => '['.$simname.']'))
 							->update();
 							
 						Jelly::query('setting')
 							->where('key', '=', 'default_email_address')
 							->limit(1)
-							->set(array(
-								'value' => 'donotreply@'.strtolower($simname)
-							))
+							->set(array('value' => 'donotreply@'.strtolower($simname)))
 							->update();
 							
 						Jelly::query('setting')
 							->where('key', '=', 'default_email_name')
 							->limit(1)
-							->set(array(
-								'value' => $simname
-							))
+							->set(array('value' => $simname))
 							->update();
 						
 						// create the user
@@ -1304,11 +1295,11 @@ return array
 				$data = $this->template->layout->content;
 				
 				// make sure the proper message is displayed
-				$data->message = __('step2.message');
+				$data->message = ___('install.step2.instructions');
 				
 				// content
-				$this->template->title.= __('Nova Installed!');
-				$this->template->layout->label = __('All Finished');
+				$this->template->title.= ___('Nova Installed!');
+				$this->template->layout->label = ___('All Finished');
 				
 				// build the next step button
 				$next = array(
@@ -1318,7 +1309,7 @@ return array
 				);
 				
 				// build the next step control
-				$this->template->layout->controls = form::open('main/index').form::button('next', __('Finish'), $next).form::close();
+				$this->template->layout->controls = form::open('main/index').form::button('next', ___('Finish'), $next).form::close();
 				
 			break;
 		}
