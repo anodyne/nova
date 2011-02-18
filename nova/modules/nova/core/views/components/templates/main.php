@@ -7,7 +7,7 @@
 <header>
 	<div class="wrapper">
 		<div class="nav-main">
-			<?php echo html::image('application/views/'.$skin.'/'.$sec.'/images/menu-nova.png', array('class' => 'float-right'));?>
+			<img src="<?php echo url::base().MODFOLDER;?>/nova/core/views/design/images/menu-nova.png" class="float-right">
 			<?php echo $navmain;?>
 		</div>
 	</div>
