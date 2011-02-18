@@ -32,8 +32,8 @@ class Model_User extends Jelly_Model {
 			'email' => Jelly::field('email', array(
 				'column' => 'email'
 			)),
-			'password' => Jelly::field('password', array(
-				'hash_with' => false,
+			'password' => Jelly::field('string', array(
+				'column' => 'password',
 			)),
 			'date_of_birth' => Jelly::field('string', array(
 				'column' => 'date_of_birth'
