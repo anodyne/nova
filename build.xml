@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="nova3" description="Build file for Nova 3" default="build">
+	
+	<!-- properties for the build -->
+	<property name="basedir" value="."/>
+	<property name="builddir" value="build"/>
+	<property name="assetsdir" value="build/assets"/>
+	<property name="releasesdir" value="build/releases"/>
+	<property name="tmpdir" value="build/tmp"/>
+	<property name="version" value="3_0_0"/>
+	<property name="genres" value="bsg"/>
+	
+	<!-- "public" targets for the build -->
+	<target name="build" description="Build the releases zip files">
+		<!--<phingcall target="_copy-core"/>-->
+		
+		<foreach list="${genres}" param="genre" target="_build-genres"/>
+	</target>
+	
+	<!-- "private" targets for the build -->
+	<target name="_build-genres">
+		<echo message="Build ${genre} genre starting..."/>
+		
+		<copy todir="${tmpdir}/application/assets/common/${genre}">
+			<fileset dir="${assetsdir}/genres/${genre}">
+				<include name="**"/>
+			</fileset>
+		</copy>
+		<copy file="${assetsdir}/config/${genre}.php" tofile="${tmpdir}/application/config/nova.php" overwrite="true"/>
+		
+		<zip destfile="${releasesdir}/nova_${version}_${genre}.zip" basedir="${tmpdir}"/>
+		
+		<echo message="Build ${genre} genre completed."/>
+		
+		<phingcall target="_clean-genre"/>
+	</target>
+	
+	<target name="_clean-core">
+		<delete dir="${tmpdir}"/>
+		<mkdir dir="${tmpdir}"/>
+	</target>
+	
+	<target name="_clean-genre">
+		<echo message="Clean ${genre} genre starting..."/>
+		
+		<echo message="Clean ${genre} genre completed."/>
+	</target>
+	
+	<target name="_copy-core">
+		<copy todir="${tmpdir}" includeemptydirs="true">
+			<fileset dir=".">
+				<include name="**"/>
+				
+				<exclude name="build/**"/>
+				<exclude name="build.xml"/>
+				<exclude name="application/common/*/**"/>
+				<exclude name="application/logs/*/**"/>
+				<exclude name="application/cache/*/**"/>
+				<exclude name="application/config/database.php"/>
+				<exclude name="**/.git/**"/>
+				<exclude name="**/.git*"/>
+			</fileset>
+		</copy>
+	</target>
+</project>
