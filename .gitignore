@@ -12,8 +12,9 @@ application/assets/images/tour/
 !application/assets/images/tour/.gitkeep
 
 application/cache/
-
 application/logs/
+
+build/
 
 *~
 *.bak
