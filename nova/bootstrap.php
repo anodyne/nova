@@ -81,18 +81,6 @@ Kohana::$log->attach(new Log_File(APPPATH.'logs'));
  */
 Kohana::$config->attach(new Config_File);
 
-// set the Kohana environment
-Kohana::$environment = Kohana::config('nova.environment');
-
-/**
- * Set Kohana::$environment if $_ENV['KOHANA_ENV'] has been supplied.
- * 
- */
-if (getenv('KOHANA_ENV') !== FALSE)
-{
-	Kohana::$environment = getenv('KOHANA_ENV');
-}
-
 /**
  * Enable modules. Modules are referenced by a relative or absolute path.
  *
@@ -120,8 +108,19 @@ Kohana::modules(array(
  */
 I18n::lang('en-us');
 
+// set the Kohana environment
+Kohana::$environment = Kohana::config('nova.environment');
+
 /**
- * Set the execption handler
+ * Set Kohana::$environment if $_ENV['KOHANA_ENV'] has been supplied.
+ */
+if (getenv('KOHANA_ENV') !== FALSE)
+{
+	Kohana::$environment = getenv('KOHANA_ENV');
+}
+
+/**
+ * Set the exception handler
  */
 set_exception_handler(array('Nova_Exception_Handler', 'handle'));
 
