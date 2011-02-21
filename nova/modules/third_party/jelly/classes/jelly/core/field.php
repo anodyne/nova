@@ -264,7 +264,8 @@ abstract class Jelly_Core_Field
 	public function _is_unique(Validation $data, Jelly_Model $model, $value, $key)
 	{
 		// According to the SQL standard NULL is not checked by the unique constraint
-		if ($data[$this->name] !== NULL)
+		// We also skip this test if the value is the same as the default value
+		if ($data[$this->name] !== NULL AND $data[$this->name] !== $this->default)
 		{
 			$query = Jelly::query($model)->where($this->name, '=', $data[$this->name]);
 
