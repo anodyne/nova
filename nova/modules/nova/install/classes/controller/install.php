@@ -892,9 +892,6 @@ return array
 			}
 		}
 		
-		// create the javascript view
-		$this->template->javascript = View::factory('install/js/install_setupconfig_js');
-		
 		// content
 		$this->template->title.= ___('setup.title');
 		$this->template->layout->label = ___('setup.title');
