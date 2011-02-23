@@ -1,65 +1,125 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project name="nova3" description="Build file for Nova 3" default="build">
+<project name="nova3" description="Build file for Nova 3" default="help">
 	
-	<!-- properties for the build -->
+	<!-- ============================================  -->
+	<!-- Properties                                    -->
+	<!-- ============================================  -->
 	<property name="basedir" value="."/>
-	<property name="builddir" value="build"/>
-	<property name="assetsdir" value="build/assets"/>
-	<property name="releasesdir" value="build/releases"/>
-	<property name="tmpdir" value="build/tmp"/>
-	<property name="version" value="3_0_0"/>
-	<property name="genres" value="bsg"/>
 	
-	<!-- "public" targets for the build -->
-	<target name="build" description="Build the releases zip files">
-		<!--<phingcall target="_copy-core"/>-->
-		
-		<foreach list="${genres}" param="genre" target="_build-genres"/>
+	<property name="dir.build" value="../build/nova3" />
+	<property name="dir.src" value="${dir.build}/src" />
+	<property name="dir.assets" value="${dir.build}/assets" />
+	<property name="dir.releases" value="${dir.build}/releases" />
+	
+	<property name="pull.repo" value="git://github.com/anodyne/nova.git" />
+	<property name="pull.branch" value="3.0/master" />
+	
+	<property name="build.version" value="3_0_0" />
+	<property name="build.genres" value="bsg" />
+	
+	<!--<property file="${dir.build}/build-ftp.properties" />-->
+	
+	<property name="deploy.dir" value="/www/nova/downloads" />
+	
+	<property name="broadcast.dir" value="/www/www/feeds/nova3/" />
+	
+	<!-- ============================================  -->
+	<!-- Target: help                                  -->
+	<!-- ============================================  -->
+	<target name="help" description="Show the available options">
+		<echo message="phing help            View the available options" />
+		<echo message="phing pull            Pull the latest source code from Github" />
+		<echo message="phing build           Build the zip archive files"/>
+		<echo message="phing deploy          Push the zip archive files to the server" />
+		<echo message="phing broadcast       Push the notification file to the server and update the documentation" />
+		<echo message="phing all             Run pull, build and deploy (broadcast must be run manually)" />
 	</target>
 	
-	<!-- "private" targets for the build -->
+	<!-- ============================================  -->
+	<!-- Target: pull                                  -->
+	<!-- ============================================  -->
+	<target name="pull" description="Clean the source directory and clone the repository from Github">
+		<phingcall target="_clean-source" />
+		<phingcall target="_pull-from-github" />
+		<phingcall target="_file-cleanup" />
+	</target>
+	
+	<target name="_clean-source">
+		<delete dir="${dir.src}" />
+		<mkdir dir="${dir.src}" />
+	</target>
+	
+	<target name="_pull-from-github">
+		<exec command="git clone ${pull.repo} src" dir="${dir.build}" />
+		<exec command="git checkout ${pull.branch}" dir="${dir.source}" />
+	</target>
+	
+	<target name="_file-cleanup">
+		<delete>
+			<fileset dir="${dir.src}">
+				<include name="build.xml" />
+				<include name="application/common/*/**" />
+				<include name="**/.git/**" />
+				<include name="**/.git*" />
+			</fileset>
+		</delete>
+	</target>
+	
+	<!-- ============================================  -->
+	<!-- Target: build                                 -->
+	<!-- ============================================  -->
+	<target name="build" description="Use the cloned repository to build the release zip archives">
+		<foreach list="${build.genres}" param="genre" target="_build-genres"/>
+	</target>
+	
 	<target name="_build-genres">
-		<echo message="Build ${genre} genre starting..."/>
-		
-		<copy todir="${tmpdir}/application/assets/common/${genre}">
-			<fileset dir="${assetsdir}/genres/${genre}">
-				<include name="**"/>
+		<copy todir="${dir.src}/application/assets/common/${genre}">
+			<fileset dir="${dir.assets}/genres/${genre}">
+				<include name="**" />
 			</fileset>
 		</copy>
-		<copy file="${assetsdir}/config/${genre}.php" tofile="${tmpdir}/application/config/nova.php" overwrite="true"/>
+		<copy file="${dir.assets}/config/${genre}.php" tofile="${dir.src}/application/config/nova.php" overwrite="true" />
 		
-		<zip destfile="${releasesdir}/nova_${version}_${genre}.zip" basedir="${tmpdir}"/>
+		<zip destfile="${dir.releases}/nova_${build.version}_${genre}.zip" basedir="${dir.src}" />
 		
-		<echo message="Build ${genre} genre completed."/>
-		
-		<phingcall target="_clean-genre"/>
-	</target>
-	
-	<target name="_clean-core">
-		<delete dir="${tmpdir}"/>
-		<mkdir dir="${tmpdir}"/>
+		<phingcall target="_clean-genre" />
 	</target>
 	
 	<target name="_clean-genre">
-		<echo message="Clean ${genre} genre starting..."/>
-		
-		<echo message="Clean ${genre} genre completed."/>
+		<delete dir="${dir.src}/application/assets/common/${genre}" />
+		<delete file="${dir.src}/application/config/nova.php" />
 	</target>
 	
-	<target name="_copy-core">
-		<copy todir="${tmpdir}" includeemptydirs="true">
-			<fileset dir=".">
-				<include name="**"/>
-				
-				<exclude name="build/**"/>
-				<exclude name="build.xml"/>
-				<exclude name="application/common/*/**"/>
-				<exclude name="application/logs/*/**"/>
-				<exclude name="application/cache/*/**"/>
-				<exclude name="application/config/database.php"/>
-				<exclude name="**/.git/**"/>
-				<exclude name="**/.git*"/>
+	<!-- ============================================  -->
+	<!-- Target: deploy                                -->
+	<!-- ============================================  -->
+	<!--<target name="deploy" description="Deploy the release zip archives to the Anodyne Productions server">
+		<ftpdeploy host="${ftp.host}" port="${ftp.port}" username="${ftp.username}" password="${ftp.password}" mode="${ftp.mode}" dir="${deploy.dir}">
+			<fileset dir="${dir.releases}">
+				<include name="*.zip" />
 			</fileset>
-		</copy>
+		</ftpdeploy>
+	</target>-->
+	
+	<!-- ============================================  -->
+	<!-- Target: broadcast                             -->
+	<!-- ============================================  -->
+	<!--<target name="broadcast" description="Push the notification file up to the server and update the documentation site">
+		<http-request url="http://docs.anodyne-productions.com/cl.php" />
+		
+		<ftpdeploy host="${ftp.host}" port="${ftp.port}" username="${ftp.username}" password="${ftp.password}" mode="${ftp.mode}" dir="${broadcast.dir}">
+			<fileset dir="${dir.src}">
+				<include name="nova/modules/nova/update/assets/version.yaml" />
+			</fileset>
+		</ftpdeploy>
+	</target>-->
+	
+	<!-- ============================================  -->
+	<!-- Target: all                                   -->
+	<!-- ============================================  -->
+	<target name="all" description="Run all the targets except the broadcast target">
+		<phingcall target="pull" />
+		<phingcall target="build" />
+		<!--<phingcall target="deploy" />-->
 	</target>
 </project>
