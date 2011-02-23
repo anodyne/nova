@@ -11,7 +11,8 @@
 	<property name="dir.assets" value="${dir.build}/assets" />
 	<property name="dir.releases" value="${dir.build}/releases" />
 	
-	<property name="pull.repo" value="git://github.com/anodyne/nova.git" />
+	<!--<property name="pull.repo" value="git://github.com/anodyne/nova.git" />-->
+	<property name="pull.repo" value="http://github.com/anodyne/nova.git" />
 	<property name="pull.branch" value="3.0/master" />
 	
 	<property name="build.version" value="3_0_0" />
@@ -41,17 +42,20 @@
 	<target name="pull" description="Clean the source directory and clone the repository from Github">
 		<phingcall target="_clean-source" />
 		<phingcall target="_pull-from-github" />
-		<phingcall target="_file-cleanup" />
+		<!--<phingcall target="_file-cleanup" />-->
 	</target>
 	
 	<target name="_clean-source">
-		<delete dir="${dir.src}" />
-		<mkdir dir="${dir.src}" />
+		<delete>
+			<fileset dir="${dir.src}">
+				<include name="*" />
+			</fileset>
+		</delete>
 	</target>
 	
 	<target name="_pull-from-github">
 		<exec command="git clone ${pull.repo} src" dir="${dir.build}" />
-		<exec command="git checkout ${pull.branch}" dir="${dir.source}" />
+		<exec command="git checkout ${pull.branch}" dir="${dir.src}" />
 	</target>
 	
 	<target name="_file-cleanup">
