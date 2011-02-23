@@ -539,8 +539,8 @@ abstract class Jelly_Core_Model
 		// Always build a new validation object
 		$this->_validation($data, (bool) $key);
 
-		// Don't validate if there isn't anything
-		if ( ! $this->_valid AND ! empty($data))
+		// Run validation
+		if ( ! $this->_valid)
 		{
 			$array = $this->_validation;
 
