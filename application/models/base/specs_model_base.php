@@ -5,7 +5,7 @@
 |---------------------------------------------------------------
 |
 | File: models/specs_model_base.php
-| System Version: 1.0
+| System Version: 1.2.5
 |
 | Model used to access the specs tables.
 |
@@ -257,11 +257,37 @@ class Specs_model_base extends Model {
 		return $query;
 	}
 	
+	/**
+	 * Update the specification data. This involves a check to make sure the data
+	 * exists first. If it does, we update the record, if it doesn't, we create
+	 * the new data record.
+	 *
+	 * @access	public
+	 * @param	integer	the item ID
+	 * @param	integer	the field ID
+	 * @param	array 	the data array to update the field with
+	 * @return	object	a result object
+	 */
 	function update_spec_data($id = '', $field = '', $data = '')
 	{
+		$this->db->from('specs_data');
 		$this->db->where('data_item', $id);
 		$this->db->where('data_field', $field);
-		$query = $this->db->update('specs_data', $data);
+		$count = $this->db->count_all_results();
+		
+		if ($count > 0)
+		{
+			$this->db->where('data_item', $id);
+			$this->db->where('data_field', $field);
+			$query = $this->db->update('specs_data', $data);
+		}
+		else
+		{
+			$data['data_item'] = $id;
+			$data['data_field'] = $field;
+			
+			$query = $this->add_spec_field_data($data);
+		}
 		
 		$this->dbutil->optimize_table('specs_data');
 		
