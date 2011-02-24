@@ -12,12 +12,12 @@
 	<property name="dir.releases" value="${dir.build}/releases" />
 	
 	<property name="pull.repo" value="git://github.com/anodyne/nova.git" />
-	<property name="pull.branch" value="3.0/master" />
+	<property name="pull.branch" value="3.0/develop" />
 	
 	<property name="build.version" value="3_0_0" />
 	<property name="build.genres" value="bsg" />
 	
-	<!--<property file="${dir.build}/build-ftp.properties" />-->
+	<property file="build-ftp.properties" />
 	
 	<property name="deploy.dir" value="/www/nova/downloads" />
 	
@@ -41,19 +41,21 @@
 	<target name="pull" description="Clean the source directory and clone the repository from Github">
 		<delete dir="${dir.src}" />
 		
-		<gitclone repository="${pull.repo}" targetPath="${dir.src}" />
+		<exec command="git clone ${pull.repo} src" dir="${dir.build}" />
 		<exec command="git checkout ${pull.branch}" dir="${dir.src}" />
 		
-		<!--<phingcall target="_file-cleanup" />-->
+		<phingcall target="_file-cleanup" />
 	</target>
 	
 	<target name="_file-cleanup">
+		<delete dir="${dir.src}/application/assets/common/bsg" />
+		<delete dir="${dir.src}/.git" />
+		
 		<delete>
 			<fileset dir="${dir.src}">
 				<include name="build.xml" />
-				<include name="application/common/*/**" />
-				<include name="**/.git/**" />
-				<include name="**/.git*" />
+				<include name="application/config/nova.php" />
+				<include name=".gitignore" />
 			</fileset>
 		</delete>
 	</target>
