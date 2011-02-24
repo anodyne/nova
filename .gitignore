@@ -15,6 +15,7 @@ application/cache/
 application/logs/
 
 build/
+build-ftp.properties
 
 *~
 *.bak
