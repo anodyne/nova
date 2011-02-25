@@ -6,56 +6,67 @@
  * @category	Controller
  * @author		Anodyne Productions
  * @copyright	2010-11 Anodyne Productions
- * @version		1.2
- *
- * Fixed bug where the spec items weren't properly upgraded
+ * @version		2.0
  */
 
 # TODO: need to change the locations of the install files to the assets module
 
-class Upgrade_base extends Controller {
+abstract class Nova_upgrade extends Controller {
 	
-	function Upgrade_base()
+	/**
+	 * Is the system installed?
+	 */
+	public $installed = false;
+	
+	/**
+	 * Variable to store all the information about template regions
+	 */
+	protected $_regions = array();
+	
+	public function __construct()
 	{
-		parent::Controller();
+		parent::__construct();
 		
-		/* load the system and archive models */
+		if ( ! file_exists(APPPATH.'config/database'.EXT))
+		{
+			redirect('install/setupconfig');
+		}
+		
+		$this->load->database();
+		$this->load->model('settings_model', 'settings');
 		$this->load->model('system_model', 'sys');
-		
-		/* set the template */
-		$this->template->set_template('update');
-		$this->template->set_master_template('_base/template_update.php');
-		
-		/* write the common elements to the template */
-		$this->template->write('title', APP_NAME .' :: ');
-		
-		/* set and load the language file needed */
-		$this->lang->load('app');
 		$this->lang->load('install');
+		$this->lang->load('app');
 		
-		/* load the resources */
-		$this->load->model('system_model', 'sys');
+		$this->installed = $this->sys->check_install_status();
 		
-		/* check to see if the system is installed */
-		$d['installed'] = $this->sys->check_install_status();
+		// set the template file
+		Template::$file = '_base/template_update';
 		
-		/* build the options menu */
-		$this->template->write_view('update_options', '_base/update/pages/_options_upgrade', $d);
+		// set the module
+		Template::$data['module'] = 'core';
+		
+		// assign all of the items to the template with false values to prevent errors
+		$this->_regions = array(
+			'label'			=> false,
+			'content'		=> false,
+			'controls'		=> false,
+			'javascript'	=> false,
+			'flash_message'	=> false,
+			'_redirect'		=> false,
+			'title'			=> APP_NAME.' :: ',
+		);
 	}
 
-	function index()
+	public function index()
 	{
-		/* load the resources */
+		// load the resources
 		$this->load->model('archive_model', 'arc');
 		
-		/* run the methods */
-		$installed = $this->sys->check_install_status();
-		$data['installed'] = $installed;
-		
-		/* grab the tables */
+		// list all the tables in the database
 		$tables = $this->db->list_tables();
 		
-		/* make sure there are SMS tables */
+		// make sure there are SMS tables
 		foreach ($tables as $key => $t)
 		{
 			if (substr($t, 0, 4) != 'sms_')
@@ -64,59 +75,53 @@ class Upgrade_base extends Controller {
 			}
 		}
 		
-		/* if there aren't SMS tables, redirect to the error page */
+		// if there aren't SMS tables, redirect to the error page
 		if (count($tables) == 0)
 		{
 			redirect('upgrade/error/2');
 		}
 		
-		/* grab the SMS version */
 		$sms = $this->arc->get_sms_version();
 		$sms_ver = str_replace('.', '', $sms);
 		$sms_const = str_replace('.', '', SMS_UPGRADE_VERSION);
 		$status = 0;
 		
-		/* determine the status */
-		$status = (GENRE != 'ds9') ? 4 : $status;
-		$status = ($sms === FALSE) ? 1 : $status;
+		$status = ( ! $sms) ? 1 : $status;
 		$status = ($sms_ver < $sms_const) ? 2 : $status;
-		$status = ($installed === TRUE) ? 3 : $status;
+		$status = ($this->installed) ? 3 : $status;
 		
 		if ($status > 0)
 		{
-			$flash['status'] = '';
-			$flash['message'] = '';
+			$flash['status'] = error;
+			$flash['message'] = false;
 			
-			if ($status == 1)
+			switch ($status)
 			{
-				$flash['status'] = 'error';
-				$flash['message'] = sprintf(
-					lang('upg_error_1'),
-					SMS_UPGRADE_VERSION,
-					SMS_UPGRADE_VERSION
-				);
-			}
-			elseif ($status == 2)
-			{
-				$flash['status'] = 'error';
-				$flash['message'] = lang('upg_error_2');
-			}
-			elseif ($status == 3)
-			{
-				$flash['status'] = 'error';
-				$flash['message'] = lang('upg_error_3');
-			}
-			elseif ($status == 4)
-			{
-				$flash['status'] = 'error';
-				$flash['message'] = sprintf(
-					lang('upg_error_4'),
-					strtoupper(GENRE)
-				);
+				case 1:
+					$flash['message'] = sprintf(
+						lang('upg_error_1'),
+						SMS_UPGRADE_VERSION,
+						SMS_UPGRADE_VERSION
+					);
+				break;
+				
+				case 2:
+					$flash['message'] = lang('upg_error_2');
+				break;
+				
+				case 3:
+					$flash['message'] = lang('upg_error_3');
+				break;
+				
+				case 4:
+					$flash['message'] = sprintf(
+						lang('upg_error_4'),
+						strtoupper(GENRE)
+					);
+				break;
 			}
 			
-			/* write everything to the template */
-			$this->template->write_view('flash_message', '_base/update/pages/flash', $flash);
+			$this->_regions['flash_message'] = Location::view('flash', '_base', 'update', $flash);
 		}
 		
 		$data['label'] = array(
@@ -132,47 +137,38 @@ class Upgrade_base extends Controller {
 			'intro' => lang('global_content_index'),
 		);
 		
-		$data['next'] = array(
+		$next = array(
 			'type' => 'submit',
-			'class' => 'button',
+			'class' => 'btn-main',
 			'name' => 'next',
 			'value' => 'next',
 			'id' => 'next',
 			'content' => ucwords(lang('button_begin'))
 		);
 		
-		/* figure out where the view file should be coming from */
-		$view_loc = view_location('upgrade_index', '_base', 'update');
-		$js_loc = js_location('upgrade_index_js', '_base', 'update');
+		$this->_regions['content'] = Location::view('upgrade_index', '_base', 'update', $data);
+		$this->_regions['javascript'] = Location::js('upgrade_index_js', '_base', 'update');
+		$this->_regions['controls'] = form_open('upgrade/verify').form_button($next).form_close();
+		$this->_regions['title'].= lang('upg_index_title');
+		$this->_regions['label'] = lang('upg_index_title');
 		
-		/* build the next step control */
-		$control = '<a href="'. site_url('upgrade/verify') .'" class="btn">'. lang('install_index_options_verify') .'</a>';
+		Template::assign($this->_regions);
 		
-		/* set the title */
-		$this->template->write('title', lang('upg_index_title'));
-		$this->template->write('label', lang('upg_index_title'));
-				
-		/* write the data to the template */
-		$this->template->write_view('content', $view_loc, $data);
-		$this->template->write_view('javascript', $js_loc);
-		$this->template->write('controls', $control);
-		
-		/* render the template */
-		$this->template->render();
+		Template::render();
 	}
 	
-	function error()
+	/**
+	 * Error page for the upgrade controller. The following error codes can be
+	 * displayed through this page:
+	 *
+	 *     0 - no errors
+	 *     1 - SMS prior to 2.6.9 installed
+	 *     2 - SMS not installed
+	 *     3 - Nova already installed
+	 *     4 - DS9 genre not being used (shouldn't matter for 2.0)
+	 */
+	public function error($id = 0)
 	{
-		/*
-			0 - no errors
-			1 - sms prior to 2.6.0
-			2 - sms not installed
-			3 - system already installed
-			4 - ds9 genre not being used
-		*/
-		
-		$id = $this->uri->segment(3, 0);
-		
 		$label = array(
 			'error_1' => sprintf(
 				lang('upg_error_1'),
@@ -188,99 +184,286 @@ class Upgrade_base extends Controller {
 			'back' => lang('upg_verify_back'),
 		);
 		
-		$flash['status'] = 'error';
-		$flash['message'] = $label['error_'. $id];
-		
-		/* write everything to the template */
-		$this->template->write_view('flash_message', '_base/update/pages/flash', $flash);
-		
-		/* figure out where the view file should be coming from */
-		$view_loc = view_location('upgrade_error', '_base', 'update');
-		
-		$control = '<a href="'. site_url('upgrade/index') .'" class="btn">'. lang('button_back_upgrade') .'</a>';
-		
-		/* set the title */
-		$this->template->write('title', lang('upg_error_title'));
-		$this->template->write('label', lang('upg_error_title'));
-				
-		/* write the data to the template */
-		$this->template->write_view('content', $view_loc);
-		$this->template->write('controls', $control);
-		
-		/* render the template */
-		$this->template->render();
-	}
-	
-	function info()
-	{
-		/* pull in the config file */
-		$this->config->load('sms');
-		
-		$data['label'] = array(
-			'text' => lang('upg_info')
+		$next = array(
+			'type' => 'submit',
+			'class' => 'btn-main',
+			'name' => 'next',
+			'value' => 'next',
+			'id' => 'next',
+			'content' => ucwords(lang('button_upgrade'))
 		);
 		
-		/* figure out where the view file should be coming from */
-		$view_loc = view_location('upgrade_info', '_base', 'update');
-		$js_loc = js_location('upgrade_info_js', '_base', 'update');
+		$flash['status'] = 'error';
+		$flash['message'] = $label['error_'.$id];
 		
-		/* build the next step control */
-		if ($this->config->item('sms_password') == 'password' || $this->config->item('sms_email') == 'me@example.com')
-		{
-			$control = '';
-			
-			$flash['status'] = 'error';
-			$flash['message'] = lang('upg_info_error');
-			
-			/* write everything to the template */
-			$this->template->write_view('flash_message', '_base/update/pages/flash', $flash);
-		}
-		else
-		{
-			$control = '<a href="'. site_url('upgrade/step/1') .'" class="btn" id="next">'. lang('button_begin') .'</a>';
-		}
+		$this->_regions['flash_message'] = Location::view('flash', '_base', 'update', $flash);
 		
-		/* set the title */
-		$this->template->write('title', lang('upg_more_info'));
-		$this->template->write('label', lang('upg_more_info'));
-				
-		/* write the data to the template */
-		$this->template->write_view('content', $view_loc, $data);
-		$this->template->write_view('javascript', $js_loc);
-		$this->template->write('controls', $control);
+		$this->_regions['controls'] = form_open('upgrade/index').form_button($next).form_close();
+		$this->_regions['title'].= lang('upg_error_title');
+		$this->_regions['label'] = lang('upg_error_title');
 		
-		/* render the template */
-		$this->template->render();
+		Template::assign($this->_regions);
+		
+		Template::render();
 	}
 	
-	function readme()
+	public function step($step = 0)
 	{
-		/* figure out where the view file should be coming from */
-		$view_loc = view_location('readme', '_base', 'update');
-		
-		/* set the title */
-		$this->template->write('title', APP_NAME .' '. lang('global_readme_title'));
-		$this->template->write('label', APP_NAME .' '. lang('global_readme_title'));
-				
-		/* write the data to the template */
-		$this->template->write_view('content', $view_loc);
-		
-		/* render the template */
-		$this->template->render();
-	}
-	
-	function step()
-	{
-		/* change the time limit */
+		// make sure the script doesn't time out
 		set_time_limit(0);
 		
-		/* load the resources */
-		$this->load->dbforge();
-		$this->config->load('sms');
+		// is installation allowed?
+		$allowed = true;
 		
-		/* set the variables */
-		$step = $this->uri->segment(3, 1);
-		$upgrade = $this->config->item('sms');
+		if (GENRE == '')
+		{
+			// installation not allowed
+			$allowed = false;
+			
+			$flash['status'] = 'error';
+			$flash['message'] = lang('error_no_genre');
+			
+			$this->_regions['flash_message'] = Location::view('flash', '_base', 'update', $flash);
+		}
+		
+		switch ($step)
+		{
+			case 0:
+				$data['message'] = nl2br(lang('upg_step0_message'));
+				
+				$this->_regions['content'] = Location::view('upgrade_step0', '_base', 'update', $data);
+				$this->_regions['javascript'] = Location::js('upgrade_step0_js', '_base', 'update');
+				$this->_regions['title'].= lang('upg_title');
+				$this->_regions['label'] = lang('upg_step0_label');
+				
+				if ($allowed)
+				{
+					$next = array(
+						'type' => 'submit',
+						'class' => 'btn-main',
+						'name' => 'next',
+						'value' => 'next',
+						'id' => 'next',
+						'content' => ucwords(lang('upg_start'))
+					);
+					
+					$this->_regions['controls'] = form_open('upgrade/step/1').form_button($next).form_close();
+				}
+			break;
+				
+			case 1:
+				if (isset($_POST['next']))
+				{
+					// load the forge
+					$this->load->dbforge();
+					
+					// update the character set
+					$this->sys->update_database_charset();
+					
+					// pull in the field information
+					include_once MODPATH.'assets/install/fields'.EXT;
+					
+					foreach ($data as $key => $value)
+					{
+						$this->dbforge->add_field($$value['fields']);
+						$this->dbforge->add_key($value['id'], true);
+						
+						if (isset($value['index']))
+						{
+							foreach ($value['index'] as $index)
+							{
+								$this->dbforge->add_key($index);
+							}
+						}
+						
+						$this->dbforge->create_table($key, true);
+					}
+					
+					// pause the script for a second
+					sleep(1);
+					
+					// wipe out the data from inserting the tables
+					$data = null;
+					
+					// pull in the basic data
+					include_once MODPATH.'assets/install/data'.EXT;
+					
+					$insert = array();
+					
+					foreach ($data as $value)
+					{
+						foreach ($$value as $k => $v)
+						{
+							$this->db->insert($value, $v);
+						}
+					}
+					
+					// pause the script for a second
+					sleep(1);
+					
+					// wipe out the data from insert the data
+					$data = null;
+					
+					// pull in the genre data
+					include_once MODPATH.'assets/install/genres/'.GENRE.EXT;
+					
+					$genre = array();
+					
+					foreach ($data as $key_d => $value_d)
+					{
+						foreach ($$value_d as $k => $v)
+						{
+							$this->db->insert($key_d, $v);
+						}
+					}
+					
+					if (APP_DATA_DEV === true)
+					{
+						// pause the script for a second
+						sleep(1);
+						
+						// wipe out the data from insert the data
+						$data = null;
+						
+						// pull in the development test data
+						include_once MODPATH.'assets/install/dev'.EXT;
+						
+						$insert = array();
+						
+						foreach ($data as $value)
+						{
+							foreach ($$value as $k => $v)
+							{
+								$this->db->insert($value, $v);
+							}
+						}
+					}
+				}
+				
+				// do the quick installs
+				$this->_install_ranks();
+				$this->_install_skins();
+				
+				$data['label'] = array(
+					'message' => lang('upg_step1_message'),
+				);
+				
+				// set the loading image
+				$data['loading'] = array(
+					'src' => MODFOLDER.'/core/views/_base/images/loading-circle-large.gif',
+					'class' => 'image',
+				);
+				
+				$next = array(
+					'type' => 'submit',
+					'class' => 'btn-main',
+					'name' => 'next',
+					'value' => 'next',
+					'id' => 'start',
+					'content' => ucwords(lang('global_upgrade'))
+				);
+				
+				$this->_regions['content'] = Location::view('upgrade_step1', '_base', 'update', $data);
+				$this->_regions['javascript'] = Location::js('upgrade_step1_js', '_base', 'update');
+				$this->_regions['controls'] = form_button($next).form_close();
+				$this->_regions['title'].= lang('upg_title');
+				$this->_regions['label'] = lang('upg_step1_label');
+			break;
+				
+			case 2:
+				// create a new content view
+				$this->template->layout->content = View::factory(Location::view('upgrade_step2'));
+				
+				// assign the object a shorter variable to use in the method
+				$data = $this->template->layout->content;
+				
+				// content
+				$this->template->title.= __('Cleaning Up Data');
+				$this->template->layout->label = __('Cleaning Up Data');
+				
+				// create the javascript view
+				$this->template->javascript = View::factory(Location::view('upgrade_step2_js', null, 'js'));
+				
+				// set the loading image
+				$data->loading = array(
+					'src' => MODFOLDER.'/nova/upgrade/views/design/images/loading-circle-large.gif',
+					'attr' => array(
+						'class' => 'image'),
+				);
+				
+				// build the next step button
+				$next = array(
+					'type' => 'submit',
+					'class' => 'btn-main',
+					'id' => 'start',
+				);
+				
+				// build the next step control
+				$this->template->layout->controls = form::button('next', __('Run'), $next).form::close();
+			break;
+				
+			case 3:
+				if (isset($_POST['submit']))
+				{
+					// do the registration
+					$this->_register();
+				}
+				
+				// create a new content view
+				$this->template->layout->content = View::factory(Location::view('upgrade_step3'));
+				
+				// assign the object a shorter variable to use in the method
+				$data = $this->template->layout->content;
+				
+				// an empty array for user info
+				$data->options = array();
+				
+				// get all active users
+				$all = Jelly::query('user')->where('status', '=', 'active')->select();
+				
+				foreach ($all as $a)
+				{
+					$data->options[$a->id] = $a->name.' ('.$a->email.')';
+				}
+				
+				// content
+				$this->template->title.= __('Passwords and Admin Rights');
+				$this->template->layout->label = __('Passwords and Admin Rights');
+				
+				// create the javascript view
+				$this->template->javascript = View::factory(Location::view('upgrade_step3_js', null, 'js'));
+				
+				// set the loading image
+				$data->loading = array(
+					'src' => MODFOLDER.'/nova/upgrade/views/design/images/loading-circle-large.gif',
+					'attr' => array(
+						'class' => 'image'),
+				);
+				
+				// build the next step button
+				$next = array(
+					'type' => 'submit',
+					'class' => 'btn-main',
+					'id' => 'start',
+				);
+				
+				// build the next step control
+				$this->template->layout->controls = form::button('next', __('Finalize'), $next).form::close();
+			break;
+		}
+		
+		Template::assign($this->_regions);
+				
+		Template::render();
+	}
+	
+	public function step_old($step = 0)
+	{
+		// reset the time limit so we don't error out
+		set_time_limit(0);
+		
+		// load the database forge to change the database
+		$this->load->dbforge();
 		
 		switch ($step)
 		{
@@ -1800,12 +1983,10 @@ class Upgrade_base extends Controller {
 		$this->template->render();
 	}
 	
-	function verify()
+	public function verify()
 	{
-		/* load the resources */
 		$this->load->helper('utility');
 		
-		/* load the verification data */
 		$data['table'] = verify_server();
 		
 		$data['label'] = array(
@@ -1813,22 +1994,24 @@ class Upgrade_base extends Controller {
 			'text' => lang('verify_text')
 		);
 		
-		/* figure out where the view file should be coming from */
-		$view_loc = view_location('upgrade_verify', '_base', 'update');
+		$next = array(
+			'type' => 'submit',
+			'class' => 'btn-main',
+			'name' => 'next',
+			'value' => 'next',
+			'id' => 'next',
+			'content' => ucwords(lang('button_next'))
+		);
 		
-		/* build the next step control */
-		$control = '<a href="'. site_url('upgrade/info') .'" class="btn">'. lang('upg_more_info') .'</a>';
+		$this->_regions['content'] = Location::view('upgrade_verify', '_base', 'update', $data);
+		$this->_regions['javascript'] = Location::js('verify_js', '_base', 'update');
+		$this->_regions['controls'] = form_open('upgrade/info').form_button($next).form_close();
+		$this->_regions['title'].= lang('verify_title');
+		$this->_regions['label'] = lang('verify_title');
 		
-		/* set the title */
-		$this->template->write('title', lang('verify_title'));
-		$this->template->write('label', lang('verify_title'));
-				
-		/* write the data to the template */
-		$this->template->write_view('content', $view_loc, $data);
-		$this->template->write('controls', $control);
+		Template::assign($this->_regions);
 		
-		/* render the template */
-		$this->template->render();
+		Template::render();
 	}
 	
 	function _install_ranks()
