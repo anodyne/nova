@@ -411,6 +411,39 @@ abstract class Nova_system_model extends Model {
 	}
 	
 	/**
+	 * Get a list of a tables columns. While CI's database driver is capable of
+	 * doing this, there's currently no way to actually strip the prefix name
+	 * off so that we can use the sms_ prefix without creating a whole new
+	 * database config group.
+	 *
+	 * @access	public
+	 * @since	2.0
+	 * @param	string	name of the name
+	 * @param	string	any LIKE statement used to pull the table columns
+	 * @param	bool	whether to prepend the table with the database prefix
+	 * @return	array 	an array of table columns
+	 */
+	public function list_table_columns($table, $like = false, $add_prefix = false)
+	{
+		$table = $this->db->protect_identifiers($table, $add_prefix);
+
+		$sql = (is_string($like)) 
+			? 'SHOW FULL COLUMNS FROM '.$table.' LIKE '.$this->db->protect_identifiers($like)
+			: 'SHOW FULL COLUMNS FROM '.$table;
+		
+		$query = $this->db->query($sql);
+		
+		$retval = array();
+		
+		foreach($query->result_array() as $row)
+		{
+			$retval[] = (isset($row['COLUMN_NAME'])) ? $row['COLUMN_NAME'] : current($row);
+		}
+		
+		return $retval;
+	}
+	
+	/**
 	 * Count methods
 	 */
 	
@@ -500,7 +533,7 @@ abstract class Nova_system_model extends Model {
 	 * Update methods
 	 */
 	
-	function update_database_charset()
+	public function update_database_charset()
 	{
 		$query = $this->db->query('ALTER DATABASE `'. $this->db->database .'` DEFAULT CHARACTER SET '. $this->db->char_set .' COLLATE '. $this->db->dbcollat .'');
 		
