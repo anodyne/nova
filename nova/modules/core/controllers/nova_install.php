@@ -1173,7 +1173,7 @@ abstract class Nova_install extends Controller {
 				
 			case 2:
 				// pull in the install data asset file
-				include_once MODPATH.'assets/install/data_basic'.EXT;
+				include_once MODPATH.'assets/install/data'.EXT;
 				
 				$insert = array();
 				
@@ -1188,7 +1188,7 @@ abstract class Nova_install extends Controller {
 				if (APP_DATA_DEV !== false)
 				{
 					// pull in the dev data
-					include_once MODPATH.'assets/install/data_dev'.EXT;
+					include_once MODPATH.'assets/install/dev'.EXT;
 					
 					foreach ($data as $value)
 					{
@@ -1245,7 +1245,7 @@ abstract class Nova_install extends Controller {
 				
 			case 3:
 				// pull in the install genre data asset file
-				include_once MODPATH.'assets/install/genres/'.GENRE.'_data'.EXT;
+				include_once MODPATH.'assets/install/genres/'.GENRE.EXT;
 				
 				$genre = array();
 				
