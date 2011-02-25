@@ -54,6 +54,7 @@ $lang['button_clear']			= 'Clear Data';
 $lang['button_startover']		= 'Start Over';
 $lang['button_install']			= 'Install Center';
 $lang['button_update']			= 'Update Center';
+$lang['button_upgrade']			= 'Upgrade Center';
 $lang['button_retest']			= 'Re-Test';
 $lang['button_begin_install']	= 'Begin Installation';
 $lang['button_begin_update']	= 'Begin Update';
@@ -66,6 +67,8 @@ $lang['global_on']				= 'On';
 $lang['global_password']		= 'Password';
 $lang['global_update']			= 'update';
 $lang['global_upgrade']			= 'upgrade';
+$lang['global_yes']				= 'Yes';
+$lang['global_no']				= 'No';
 
 $lang['global_readme_title'] 	= 'Readme';
 $lang['global_more_options']	= 'More Options';
@@ -351,6 +354,9 @@ $lang['upd_verify_back'] = LARROW .' Back to Update Center';
 |---------------------------------------------------------------
 */
 
+$lang['upg_title'] = 'Upgrade to Nova';
+$lang['upg_start'] = 'Start Upgrade';
+
 /*
  * Index
  */
@@ -372,26 +378,18 @@ $lang['upg_error_2'] = 'No version of SMS can be found in this database. In orde
 $lang['upg_error_3'] = 'Nova is already installed and the upgrade script cannot run. Please verify your database connection settings and try again.';
 $lang['upg_error_4'] = 'You can only upgrade Nova with the DS9 genre. Your genre is currently set to %s. Please change your genre in the application/config/nova.php file and try again.';
 
-/*
- * Verify
+/**
+ * Step 0
  */
-$lang['upg_more_info'] = 'Important Upgrade Info';
-
-/*
- * Important Info
- */
-$lang['upg_info'] = "<p class='fontMedium'>We know you're excited to start using Nova, but before you jump right in and start upgrading, make sure you read through everything very carefully. Nova is the product of years of work and as a result, a lot of things are different from SMS. The upgrade process should cover everything but to ensure everything is upgraded properly the first time, you should read our <a href='http://docs.anodyne-productions.com/index.php/nova/overview/upgrade' target='_blank'>upgrade guide</a> in the user guide. We realize this is a long document, but it has information crucial to properly upgrading SMS to Nova, so make sure you take the time to read it before beginning.</p><h3>Before Beginning</h3><p class='fontMedium'>There are a couple things you need to do before you even start the upgrade process.</p><ol><li>Set up your database connection file located at <strong>application/config/database.php</strong></li><li>Make sure you're using the DS9 genre (the upgrade will only work for the DS9 genre)</li><li>Make sure you've set up your SMS config preferences, upgrade password and upgrade email address located in <strong>application/config/sms.php</strong></li></ol><p class='fontMedium'>It's very important that you take the above steps before beginning otherwise you could be missing all the management tools or have errors throughout the upgrade process.</p><h3>Let's Get Started!</h3><p class='fontMedium'>Step 1 will attempt to automatically back up your SMS database before beginning the upgrade. If you have a large database and your server memory limit isn't high enough or your server doesn't support writing files to directories, you may not be able to complete the backup, but if it doesn't work, you can manually backup your database before starting. We <strong>strongly</strong> encourage you to have a backup before upgrading.</p>";
-$lang['upg_info_error'] = "Before you can continue with the upgrade, you need to change the email address and password in the SMS config file. Once you've changed the email address and password, refresh this page.";
+$lang['upg_step0_label'] = 'Getting Started';
+$lang['upg_step0_message'] = "Alright, time to get started! Nova is a dynamic, database-driven web system which means, you guessed it, I need to install the database now. Start to finish, the upgrade should only take a few minutes to complete and then you'll be on your way. If you have questions, you can refer to the readme that came in the Nova zip archive, check out the <a href='http://docs.anodyne-productions.com' target='_blank'>user guide</a> or drop in to our <a href='http://forums.anodyne-productions.com' target='_blank'>forums</a>.\r\n\r\nTime to get started now...";
 
 /*
  * Step 1
  */
-$lang['upg_step1_title'] = 'Step 1 - Backup Database';
-$lang['upg_step1_label'] = 'Step 1: Backup Database';
-$lang['upg_step1_success'] = 'You have successfully backed up your SMS database and can continue with the upgrade process. The next step will create the database tables Nova needs to run. Click <strong>Next Step</strong> to continue.';
-$lang['upg_step1_failure'] = "There was a problem backing up your SMS database. This can be caused by a variety issues, but is most likely caused by your host not allowing files to be written to the server. Please manually backup your SMS database then click <strong>Next Step</strong> to continue.";
-$lang['upg_step1_nofields'] = "The upgrade cannot continue because there are no SMS tables in this database!";
-$lang['upg_step1_memory'] = "Your server does not have a sufficient memory capacity to initiate an automatic backup of your SMS database. Please manually backup your SMS database then click <strong>Next Step</strong> to continue.";
+$lang['upg_step1_label'] = 'Upgrading to Nova';
+$lang['upg_step1_items'] = 'Items to Upgrade';
+$lang['upg_step1_message'] = "Nova now gives you the ability to upgrade only the items you want from SMS. Using the list below, please select which items you want Nova to upgrade from the SMS format to the Nova format.";
 
 /*
  * Step 2
@@ -518,7 +516,8 @@ $lang['error_verify_4'] = 'We have found more than one account with your email a
 
 $lang['install_error_1'] = 'The system is already installed. If you want to re-install the system, you must first remove all the system data and database tables.';
 $lang['install_error_2'] = 'You must be a system administrator to change this sim'. RSQUO .'s genre!';
-$lang['error_install_no_genre'] = 'You must configure your genre in <strong>applications/config/nova.php</strong>! You cannot continue until you set a genre. Once you have setup a genre, refresh this page to re-run the genre data install.';
+$lang['error_install_no_genre'] = 'You must configure your genre in <strong>application/config/nova.php</strong>! You cannot continue until you set a genre. Once you have setup a genre, refresh this page to re-run the genre data install.';
+$lang['error_no_genre'] = 'You must set your genre in <code>application/config/nova.php</code>! You cannot continue with the upgrade until you have set your genre. Once you have set your genre, refresh this page to continue.';
 
 /* End of file install_lang.php */
 /* Location: ./application/language/english/install_lang.php */
