@@ -1,6 +1,6 @@
 <?php
 
-require_once MODPATH.'core/models/nvoa_archive_model'.EXT;
+require_once MODPATH.'core/models/nova_archive_model'.EXT;
 
 class Archive_model extends Nova_archive_model {
 
