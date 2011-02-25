@@ -6,7 +6,7 @@ html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abb
 
 body {
 	background: #666 url(images/body-bg.jpg) repeat top left;
-	font: 75%/1.5 "lucida grande", verdana, arial, sans-serif;
+	font: 75%/1.6 "lucida grande", verdana, arial, sans-serif;
 }
 
 /**
@@ -43,7 +43,10 @@ header {
 	line-height: 40px;
 	padding: 0 1em;
 	
-	background: #ddd url(images/head-bg.png) repeat-x top left;
+	background: #eeeeee;
+	background: -moz-linear-gradient(top, #eeeeee 0%, #dddddd 100%);
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#eeeeee), color-stop(100%,#dddddd));
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#eeeeee', endColorstr='#dddddd',GradientType=0 );
 	border-bottom: 1px solid #bcbcbc;
 	border-bottom: 1px solid rgba(0, 0, 0, .15);
 	
@@ -250,6 +253,14 @@ ul.square {
 	
 	list-style: square;
 }
+
+ol {
+	margin: 1em;
+	padding: 0 1.5em;
+	
+	list-style: decimal;
+}
+ol li { line-height: 1.6; }
 
 /*
 |---------------------------------------------------------------

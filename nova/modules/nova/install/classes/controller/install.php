@@ -35,7 +35,7 @@ class Controller_Install extends Controller_Template {
 			$db = Database::instance();
 			
 			// get the number of tables
-			$tables = Kohana::config('novasys.app_db_tables');
+			$tables = Kohana::config('nova.app_db_tables');
 			
 			// make sure the system is installed
 			if (count($db->list_tables($db->table_prefix().'%')) < $tables and ! (in_array($this->request->action(), $safesegs)))
@@ -79,7 +79,7 @@ class Controller_Install extends Controller_Template {
 		$this->template = View::factory(Location::file('install', null, 'structure'));
 		
 		// set the variables in the template
-		$this->template->title 				= Kohana::config('novasys.app_name').' :: ';
+		$this->template->title 				= Kohana::config('nova.app_name').' :: ';
 		$this->template->javascript			= false;
 		$this->template->layout				= View::factory(Location::file('install', null, 'templates'));
 		$this->template->layout->label		= false;
@@ -1095,7 +1095,7 @@ return array
 				
 				// make sure the proper message is displayed
 				$data->message = ($data->errors === false)
-					? (count($tables) < Kohana::config('novasys.app_db_tables')) ? ___('install.step1.failure') : __('install.step1.success')
+					? (count($tables) < Kohana::config('nova.app_db_tables')) ? ___('install.step1.failure') : __('install.step1.success')
 					: __('step1.errors');
 				
 				// set the loading image
@@ -1137,7 +1137,7 @@ return array
 				);
 				
 				// build the next step control
-				$this->template->layout->controls = (count($tables) < Kohana::config('novasys.app_db_tables')) 
+				$this->template->layout->controls = (count($tables) < Kohana::config('nova.app_db_tables')) 
 					? false 
 					: form::button('next', ___('Next Step'), $next).form::close();
 			break;
@@ -1357,8 +1357,8 @@ return array
 		$db = Database::instance();
 		
 		$request = array(
-			Kohana::config('novasys.app_name'),
-			Kohana::config('novasys.app_version_full'),
+			Kohana::config('nova.app_name'),
+			Kohana::config('nova.app_version_full'),
 			url::site(),
 			$_SERVER['REMOTE_ADDR'],
 			$_SERVER['SERVER_ADDR'],
