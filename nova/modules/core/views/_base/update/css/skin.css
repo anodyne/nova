@@ -229,7 +229,17 @@ pre {
 	border-radius: 3px;
 	-moz-border-radius: 3px;
 }
-code { font-family: "consolas", courier, monaco, monospace; }
+code {
+	font-family: "consolas", courier, monaco, monospace;
+	font-size: 110%;
+}
+
+.align-left		{ text-align: left; }
+.align-right	{ text-align: right; }
+.align-center	{ text-align: center; }
+.align-top		{ vertical-align: top; }
+.align-middle	{ vertical-align: middle; }
+.align-bottom	{ vertical-align: bottom; }
 
 /*
 |---------------------------------------------------------------
@@ -261,7 +271,7 @@ table {
 	text-shadow: 0px 1px 0px rgba(255, 255, 255, .4);
 }
 thead {
-	background: #ccc url('../images/install-options-bg.png') repeat-x 0 0;
+	background: #ccc url(../images/install-options-bg.png) repeat-x 0 0;
 	border-bottom: 1px solid #bbb;
 	font-size: 75%;
 }
@@ -275,6 +285,25 @@ th, td {
 th { border-right: 1px solid #bbb; }
 
 .alt { background-color: #e5e5e5; }
+
+.col-15		{ width: 15px; }
+.col-30		{ width: 30px; }
+.col-40		{ width: 40px; }
+.col-50		{ width: 50px; }
+.col-75		{ width: 75px; }
+.col-100	{ width: 100px; }
+.col-150	{ width: 150px; }
+.col-200	{ width: 200px; }
+.col-245	{ width: 245px; }
+.col-260	{ width: 260px; }
+.col-300	{ width: 300px; }
+
+.col-20pct	{ width: 20%; }
+.col-25pct	{ width: 25%; }
+.col-30pct	{ width: 30%; }
+.col-40pct	{ width: 40%; }
+.col-50pct	{ width: 50%; }
+.col-60pct	{ width: 60%; }
 
 /*
 |---------------------------------------------------------------
