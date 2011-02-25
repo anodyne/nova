@@ -341,14 +341,10 @@ if ( ! function_exists('verify_server'))
 {
 	function verify_server()
 	{
-		/* get an instance of CI */
 		$ci =& get_instance();
-		
-		/* load the resources */
-		$ci->load->library('table');
 		$ci->lang->load('install');
 		
-		/* build the specs array */
+		// build the specs array
 		$specs = array(
 			'php' => array(
 				'req'	=> '5.1',
@@ -370,7 +366,7 @@ if ( ! function_exists('verify_server'))
 				'act'	=> (ini_get('allow_url_fopen') == 1) ? lang('global_on') : lang('global_off')),
 		);
 		
-		/* set the final result array */
+		// set the final result array
 		$final = array(
 			'php' => ($specs['php']['act'] < $specs['php']['req']) ? lang('verify_failure') : lang('verify_success'),
 			'db' => (!in_array($specs['db']['act'], $specs['db']['req'])) ? lang('verify_failure') : lang('verify_success'),
@@ -380,52 +376,57 @@ if ( ! function_exists('verify_server'))
 			'file' => ($specs['file']['act'] != $specs['file']['req']) ? lang('verify_warning') : lang('verify_success')
 		);
 		
-		/* set the table template */
-		$tmpl = array (
-			'table_open'          => '<table class="table100 fontMedium">',
-
-			'heading_row_start'   => '<tr class="fontMedium">',
-			'heading_row_end'     => '</tr>',
-			'heading_cell_start'  => '<th>',
-			'heading_cell_end'    => '</th>',
-
-			'row_start'           => '<tr>',
-			'row_end'             => '</tr>',
-			'cell_start'          => '<td>',
-			'cell_end'            => '</td>',
-
-			'row_alt_start'       => '<tr class="alt">',
-			'row_alt_end'         => '</tr>',
-			'cell_alt_start'      => '<td>',
-			'cell_alt_end'        => '</td>',
-
-			'table_close'         => '</table>'
-		);
+		$output = '<table class="table100 fontMedium zebra">';
+			$output.= '<thead>';
+				$output.= '<tr>';
+					$output.= '<th>'.lang('verify_component').'</th>';
+					$output.= '<th>'.lang('verify_required').'</th>';
+					$output.= '<th>'.lang('verify_actual').'</th>';
+					$output.= '<th>'.lang('verify_result').'</th>';
+				$output.= '</tr>';
+			$output.= '</thead>';
+			
+			$output.= '<tbody>';
+				$output.= '<tr>';
+					$output.= '<td>'.lang('verify_php').'</td>';
+					$output.= '<td>'.$specs['php']['req'].'</td>';
+					$output.= '<td>'.$specs['php']['act'].'</td>';
+					$output.= '<td>'.$final['php'].'</td>';
+				$output.= '</tr>';
+				$output.= '<tr>';
+					$output.= '<td>'.lang('verify_db').'</td>';
+					$output.= '<td>'.implode(', ', $specs['db']['req']).'</td>';
+					$output.= '<td>'.$specs['db']['act'].'</td>';
+					$output.= '<td>'.$final['db'].'</td>';
+				$output.= '</tr>';
+				$output.= '<tr>';
+					$output.= '<td>'.lang('verify_db_ver').'</td>';
+					$output.= '<td>'.implode(', ', $specs['dbver']['req']).'</td>';
+					$output.= '<td>'.$specs['dbver']['act'].'</td>';
+					$output.= '<td>'.$final['dbver'].'</td>';
+				$output.= '</tr>';
+				$output.= '<tr>';
+					$output.= '<td>'.lang('verify_regglobals').'</td>';
+					$output.= '<td>'.$specs['regglobals']['req'].'</td>';
+					$output.= '<td>'.$specs['regglobals']['act'].'</td>';
+					$output.= '<td>'.$final['regglobals'].'</td>';
+				$output.= '</tr>';
+				$output.= '<tr>';
+					$output.= '<td>'.lang('verify_mem').'</td>';
+					$output.= '<td>'.$specs['mem']['req'].'</td>';
+					$output.= '<td>'.$specs['mem']['act'].'</td>';
+					$output.= '<td>'.$final['mem'].'</td>';
+				$output.= '</tr>';
+				$output.= '<tr>';
+					$output.= '<td>'.lang('verify_file').'</td>';
+					$output.= '<td>'.$specs['file']['req'].'</td>';
+					$output.= '<td>'.$specs['file']['act'].'</td>';
+					$output.= '<td>'.$final['file'].'</td>';
+				$output.= '</tr>';
+			$output.= '</tbody>';
+		$output.= '</table><br />';
 		
-		/* apply the template */
-		$ci->table->set_template($tmpl);
-		
-		/* set the heading */
-		$heading = array(
-			lang('verify_component'),
-			lang('verify_required'),
-			lang('verify_actual'),
-			lang('verify_result')
-		);
-		
-		$ci->table->set_heading($heading);
-		
-		/* set the data */
-		$ci->table->add_row(lang('verify_php'), $specs['php']['req'], $specs['php']['act'], $final['php']);
-		$ci->table->add_row(lang('verify_db'), implode(', ', $specs['db']['req']), $specs['db']['act'], $final['db']);
-		$ci->table->add_row(lang('verify_db_ver'), implode(', ', $specs['dbver']['req']), $specs['dbver']['act'], $final['dbver']);
-		$ci->table->add_row(lang('verify_regglobals'), $specs['regglobals']['req'], $specs['regglobals']['act'], $final['regglobals']);
-		$ci->table->add_row(lang('verify_mem'), $specs['mem']['req'] .'M', $specs['mem']['act'] .'M', $final['mem']);
-		$ci->table->add_row(lang('verify_file'), $specs['file']['req'], $specs['file']['act'], $final['file']);
-		
-		$retval = $ci->table->generate();
-		
-		return $retval;
+		return $output;
 	}
 }
 
