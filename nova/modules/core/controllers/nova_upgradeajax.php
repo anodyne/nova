@@ -10,14 +10,9 @@
  */
 
 /**
- # characters
  * final_password
  * final_roles
- * logs
- * missions
- * news
  * quick_install
- * settings
  * specs
  * tour
  * user_awards
@@ -133,7 +128,7 @@ abstract class Nova_upgradeajax extends Controller {
 		
 		try {
 			// get the characters
-			$result = $this->db->query("SELECT * FROM sms_crew");
+			$query = $this->db->query("SELECT * FROM sms_crew");
 			
 			// the user array
 			$userarray = array();
@@ -159,7 +154,7 @@ abstract class Nova_upgradeajax extends Controller {
 			// create an empty users array
 			$users = array();
 			
-			foreach ($result as $r)
+			foreach ($query->result() as $r)
 			{
 				if ( ! empty($r->email))
 				{
@@ -237,12 +232,10 @@ abstract class Nova_upgradeajax extends Controller {
 			// pause the script
 			sleep(1);
 			
-			foreach ($result as $c)
+			foreach ($query->result() as $c)
 			{
 				// make sure the fields array is empty
 				$fields = false;
-				
-				var_dump($c);
 				
 				$charValues = array(
 					'charid' => $c->crewid,
@@ -259,7 +252,7 @@ abstract class Nova_upgradeajax extends Controller {
 					'last_post' => $c->lastPost,
 					'images' => $c->image,
 				);
-				$this->char->create_character($charValues);
+				$characteraction = $this->char->create_character($charValues);
 				
 				// store whether or not the save worked
 				$saved['characters'][] = ($characteraction > 0) ? true : false;
@@ -298,7 +291,7 @@ abstract class Nova_upgradeajax extends Controller {
 						'data_value' => $value,
 						'data_updated' => now()
 					);
-					$fieldata = $this->char->add_bio_field_data();
+					$fieldata = $this->char->add_bio_field_data($fieldValues);
 						
 					// store whether or not the save worked
 					$saved['formdata'][] = ($fieldata > 0) ? true : false;
@@ -485,15 +478,15 @@ abstract class Nova_upgradeajax extends Controller {
 	public function upgrade_logs()
 	{
 		// get the number of logs in the sms table
-		$c = $this->db->query(Database::SELECT, "SELECT logid FROM sms_personallogs", true);
-		$count_old = $c->count();
+		$count = $this->db->query("SELECT logid FROM sms_personallogs");
+		$count_old = $count->num_rows();
 		
 		try {
 			// drop the nova version of the table
 			$this->dbforge->drop_table('personal_logs');
 			
 			// copy the sms version of the table along with all its data
-			$this->db->query(null, "CREATE TABLE ".$this->db->dbprefix."personal_logs SELECT * FROM sms_personallogs", true);
+			$this->db->query("CREATE TABLE ".$this->db->dbprefix."personal_logs SELECT * FROM sms_personallogs");
 			
 			// rename the fields to appropriate names
 			$fields = array(
@@ -543,40 +536,35 @@ abstract class Nova_upgradeajax extends Controller {
 			$this->dbforge->add_column('personal_logs', $add);
 			
 			// make sure the auto increment and primary key are right
-			$this->db->query(null, "ALTER TABLE ".$this->db->dbprefix."personal_logs MODIFY COLUMN `log_id` INT(5) auto_increment primary key", true);
+			$this->db->query("ALTER TABLE ".$this->db->dbprefix."personal_logs MODIFY COLUMN `log_id` INT(5) auto_increment primary key");
 			
 			// get the new count of logs
-			$count_new = Jelly::query('personallog')->count();
+			$count_new = $this->db->count_all('personal_logs');
 			
 			if ($count_new == 0)
 			{
-				// catch the exception
 				$retval = array(
 					'code' => 0,
-					'message' => __("None of your personal logs were able to be upgraded")
+					'message' => "None of your personal logs were able to be upgraded"
 				);
 			}
 			elseif ($count_new > 0 and $count_new != $count_old)
 			{
-				// catch the exception
 				$retval = array(
 					'code' => 2,
-					'message' => __("Some of your personal logs were upgraded, but some where unable to be upgraded")
+					'message' => "Some of your personal logs were upgraded, but some where unable to be upgraded"
 				);
 			}
 			else
 			{
-				// catch the exception
 				$retval = array(
 					'code' => 1,
 					'message' => ''
 				);
 			}
 			
-			// optmize the tables
 			$this->dbutil->optimize_table('personal_logs');
 		} catch (Exception $e) {
-			// catch the exception
 			$retval = array(
 				'code' => 0,
 				'message' => 'ERROR: '.$e->getMessage().' - line '.$e->getLine().' of '.$e->getFile()
@@ -588,20 +576,20 @@ abstract class Nova_upgradeajax extends Controller {
 	
 	public function upgrade_missions()
 	{
-		// get the number of news items in the sms table
-		$c = $this->db->query(Database::SELECT, "SELECT missionid FROM sms_missions", true);
-		$count_missions_old = $c->count();
+		// get the number of missions in the sms table
+		$count = $this->db->query("SELECT missionid FROM sms_missions");
+		$count_missions_old = $count->num_rows();
 		
-		// get the number of news categories in the sms table
-		$c = $this->db->query(Database::SELECT, "SELECT postid FROM sms_posts", true);
-		$count_posts_old = $c->count();
+		// get the number of mission posts in the sms table
+		$count = $this->db->query("SELECT postid FROM sms_posts");
+		$count_posts_old = $count->num_rows();
 		
 		try {
 			// drop the nova version of the table
 			$this->dbforge->drop_table('missions');
 			
 			// copy the sms version of the table along with all its data
-			$this->db->query(null, 'CREATE TABLE '.$this->db->dbprefix.'missions SELECT * FROM sms_missions', true);
+			$this->db->query("CREATE TABLE ".$this->db->dbprefix."missions SELECT * FROM sms_missions");
 			
 			// rename the fields to appropriate names
 			$fields = array(
@@ -661,13 +649,13 @@ abstract class Nova_upgradeajax extends Controller {
 			$this->dbforge->add_column('missions', $add);
 			
 			// make sure the auto increment and primary key are right
-			$this->db->query(null, 'ALTER TABLE '.$this->db->dbprefix.'missions MODIFY COLUMN `mission_id` INT(8) auto_increment primary key', true);
+			$this->db->query("ALTER TABLE ".$this->db->dbprefix."missions MODIFY COLUMN `mission_id` INT(8) auto_increment primary key");
 			
 			// drop the nova version of the table
 			$this->dbforge->drop_table('posts');
 			
 			// copy the sms version of the table along with all its data
-			$this->db->query(null, 'CREATE TABLE '.$this->db->dbprefix.'posts SELECT * FROM sms_posts', true);
+			$this->db->query("CREATE TABLE ".$this->db->dbprefix."posts SELECT * FROM sms_posts");
 			
 			// rename the fields to appropriate names
 			$fields = array(
@@ -736,40 +724,35 @@ abstract class Nova_upgradeajax extends Controller {
 			$this->dbforge->drop_column('posts', 'postTag');
 			
 			// make sure the auto increment and primary key are correct
-			$this->db->query(null, 'ALTER TABLE '.$this->db->dbprefix.'posts MODIFY COLUMN `post_id` INT(8) auto_increment primary key', true);
+			$this->db->query("ALTER TABLE ".$this->db->dbprefix."posts MODIFY COLUMN `post_id` INT(8) auto_increment primary key");
 			
 			// count the missions
-			$count_missions_new = Jelly::query('mission')->count();
+			$count_missions_new = $this->db->count_all('missions');
 			
 			// count the posts
-			$count_posts_new = Jelly::query('post')->count();
+			$count_posts_new = $this->db->count_all('posts');
 			
 			if ($count_missions_new == 0 and $count_posts_new == 0)
 			{
-				// catch the exception
 				$retval = array(
 					'code' => 0,
-					'message' => __("None of your missions or mission posts were able to be upgraded")
+					'message' => "None of your missions or mission posts were able to be upgraded"
 				);
 			}
 			elseif ($count_missions_new > 0 and $count_posts_new == 0)
 			{
 				if ($count_missions_new != $count_missions_old)
 				{
-					// catch the exception
 					$retval = array(
 						'code' => 2,
-						'message' => __(":new of :old missions were upgraded, but your mission posts were not", 
-							array(':old' => $count_missions_old, ':new' => $count_missions_new)
-						),
+						'message' => $count_missions_new." of ".$count_missions_old." missions were upgraded, but your mission posts were not"
 					);
 				}
 				else
 				{
-					// catch the exception
 					$retval = array(
 						'code' => 2,
-						'message' => __("Your missions were upgraded, but your mission posts were not")
+						'message' => "Your missions were upgraded, but your mission posts were not"
 					);
 				}
 			}
@@ -777,20 +760,16 @@ abstract class Nova_upgradeajax extends Controller {
 			{
 				if ($count_posts_new != $count_posts_old)
 				{
-					// catch the exception
 					$retval = array(
 						'code' => 2,
-						'message' => __(":new of :old mission posts were upgraded, but your missions were not",
-							array(':old' => $count_posts_old, ':new' => $count_posts_new)
-						),
+						'message' => $count_posts_new." of ".$count_posts_old." mission posts were upgraded, but your missions were not"
 					);
 				}
 				else
 				{
-					// catch the exception
 					$retval = array(
 						'code' => 2,
-						'message' => __("Your mission posts were upgraded, but your missions were not")
+						'message' => "Your mission posts were upgraded, but your missions were not"
 					);
 				}
 			}
@@ -798,7 +777,6 @@ abstract class Nova_upgradeajax extends Controller {
 			{
 				if ($count_missions_new == $count_missions_old and $count_posts_new == $count_posts_old)
 				{
-					// catch the exception
 					$retval = array(
 						'code' => 1,
 						'message' => ''
@@ -806,41 +784,30 @@ abstract class Nova_upgradeajax extends Controller {
 				}
 				elseif ($count_missions_new == $count_missions_old and $count_posts_new != $count_posts_old)
 				{
-					// catch the exception
 					$retval = array(
 						'code' => 2,
-						'message' => __("All of your missions and :new of :old mission posts were upgraded",
-							array(':old' => $count_posts_old, ':new' => $count_posts_new)
-						),
+						'message' => "All of your missions and ".$count_posts_new." of ".$count_posts_old." mission posts were upgraded"
 					);
 				}
 				elseif ($count_missions_new != $count_missions_old and $count_posts_new == $count_posts_old)
 				{
-					// catch the exception
 					$retval = array(
 						'code' => 2,
-						'message' => __("All of your mission posts and :new of :old missions were upgraded",
-							array(':old' => $count_missions_old, ':new' => $count_missions_new)
-						),
+						'message' => "All of your mission posts and ".$count_missions_new." of ".$count_missions_old." missions were upgraded"
 					);
 				}
 				elseif ($count_missions_new != $count_missions_old and $count_posts_new != $count_posts_old)
 				{
-					// catch the exception
 					$retval = array(
 						'code' => 2,
-						'message' => __(":new_mis of :old_mis missions and :new_posts of :old_posts mission posts were upgraded", 
-							array(':old_posts' => $count_posts_old, ':new_posts' => $count_posts_new, ':new_mis' => $count_missions_new, ':old_mis' => $count_missions_old)
-						),
+						'message' => $count_missions_new." of ".$count_missions_old." missions and ".$count_posts_new." of ".$count_posts_old." mission posts were upgraded"
 					);
 				}
 			}
 			
-			// optmize the tables
 			$this->dbutil->optimize_table('missions');
 			$this->dbutil->optimize_table('posts');
 		} catch (Exception $e) {
-			// catch the exception
 			$retval = array(
 				'code' => 0,
 				'message' => 'ERROR: '.$e->getMessage().' - line '.$e->getLine().' of '.$e->getFile()
@@ -853,12 +820,12 @@ abstract class Nova_upgradeajax extends Controller {
 	public function upgrade_news()
 	{
 		// get the number of news items in the sms table
-		$c = $this->db->query(Database::SELECT, "SELECT newsid FROM sms_news", true);
-		$count_news_old = $c->count();
+		$count = $this->db->query("SELECT newsid FROM sms_news");
+		$count_news_old = $count->num_rows();
 		
 		// get the number of news categories in the sms table
-		$c = $this->db->query(Database::SELECT, "SELECT catid FROM sms_news_categories", true);
-		$count_cats_old = $c->count();
+		$count = $this->db->query("SELECT catid FROM sms_news_categories");
+		$count_cats_old = $count->num_rows();
 		
 		try {
 			// drop the nova versions of the tables
@@ -866,7 +833,7 @@ abstract class Nova_upgradeajax extends Controller {
 			$this->dbforge->drop_table('news_categories');
 			
 			// copy the sms version of the table along with all its data
-			$this->db->query(null, "CREATE TABLE ".$this->db->dbprefix."news_categories SELECT * FROM sms_news_categories", true);
+			$this->db->query("CREATE TABLE ".$this->db->dbprefix."news_categories SELECT * FROM sms_news_categories");
 			
 			// rename the fields to appropriate names
 			$fields = array(
@@ -892,10 +859,10 @@ abstract class Nova_upgradeajax extends Controller {
 			$this->dbforge->drop_column('news_categories', 'catUserLevel');
 			
 			// make sure the auto increment and primary id are correct
-			$this->db->query(null, "ALTER TABLE ".$this->db->dbprefix."news_categories MODIFY COLUMN `newscat_id` INT(5) auto_increment primary key", true);
+			$this->db->query("ALTER TABLE ".$this->db->dbprefix."news_categories MODIFY COLUMN `newscat_id` INT(5) auto_increment primary key");
 			
 			// copy the sms version of the table along with all its data
-			$this->db->query(null, "CREATE TABLE ".$this->db->dbprefix."news SELECT * FROM sms_news", true);
+			$this->db->query("CREATE TABLE ".$this->db->dbprefix."news SELECT * FROM sms_news");
 			
 			// rename the fields to appropriate names
 			$fields = array(
@@ -954,40 +921,35 @@ abstract class Nova_upgradeajax extends Controller {
 			$this->dbforge->add_column('news', $add);
 			
 			// make sure the auto increment and primary key are right
-			$this->db->query(null, "ALTER TABLE ".$this->db->dbprefix."news MODIFY COLUMN `news_id` INT(8) auto_increment primary key", true);
+			$this->db->query("ALTER TABLE ".$this->db->dbprefix."news MODIFY COLUMN `news_id` INT(8) auto_increment primary key");
 			
 			// count the news items
-			$count_news_new = Jelly::query('news')->count();
+			$count_news_new = $this->db->count_all('news');
 			
 			// count the news categories
-			$count_cats_new = Jelly::query('newscategory')->count();
+			$count_cats_new = $this->db->count_all('news_categories');
 			
 			if ($count_news_new == 0 and $count_cats_new == 0)
 			{
-				// catch the exception
 				$retval = array(
 					'code' => 0,
-					'message' => __("None of your news categories or news item were able to be upgraded")
+					'message' => "None of your news categories or news item were able to be upgraded"
 				);
 			}
 			elseif ($count_news_new > 0 and $count_cats_new == 0)
 			{
 				if ($count_news_new != $count_news_old)
 				{
-					// catch the exception
 					$retval = array(
 						'code' => 2,
-						'message' => __(":new of :old news items were upgraded, but your news categories were not",
-							array(':old' => $count_news_old, ':new' => $count_news_new)
-						),
+						'message' => $count_news_new." of ".$count_news_old." news items were upgraded, but your news categories were not"
 					);
 				}
 				else
 				{
-					// catch the exception
 					$retval = array(
 						'code' => 2,
-						'message' => __("Your news items were upgraded, but your news categories were not")
+						'message' => "Your news items were upgraded, but your news categories were not"
 					);
 				}
 			}
@@ -995,20 +957,16 @@ abstract class Nova_upgradeajax extends Controller {
 			{
 				if ($count_cats_new != $count_cats_old)
 				{
-					// catch the exception
 					$retval = array(
 						'code' => 2,
-						'message' => __(":new of :old news categories were upgraded, but your news items were not",
-							array(':old' => $count_cats_old, ':new' => $count_cats_new)
-						),
+						'message' => $count_cats_new." of ".$count_cats_old." news categories were upgraded, but your news items were not"
 					);
 				}
 				else
 				{
-					// catch the exception
 					$retval = array(
 						'code' => 2,
-						'message' => __("Your news categories were upgraded, but your news items were not")
+						'message' => "Your news categories were upgraded, but your news items were not"
 					);
 				}
 			}
@@ -1016,7 +974,6 @@ abstract class Nova_upgradeajax extends Controller {
 			{
 				if ($count_news_new == $count_news_old and $count_cats_new == $count_cats_old)
 				{
-					// catch the exception
 					$retval = array(
 						'code' => 1,
 						'message' => ''
@@ -1024,41 +981,30 @@ abstract class Nova_upgradeajax extends Controller {
 				}
 				elseif ($count_news_new == $count_news_old and $count_cats_new != $count_cats_old)
 				{
-					// catch the exception
 					$retval = array(
 						'code' => 2,
-						'message' => __("All of your news items and :new of :old news categories were upgraded",
-							array(':old' => $count_cats_old, ':new' => $count_cats_new)
-						),
+						'message' => "All of your news items and ".$count_cats_new." of ".$count_cats_old." news categories were upgraded"
 					);
 				}
 				elseif ($count_news_new != $count_news_old and $count_cats_new == $count_cats_old)
 				{
-					// catch the exception
 					$retval = array(
 						'code' => 2,
-						'message' => __("All of your news categories and :new of :old news items were upgraded",
-							array(':old' => $count_news_old, ':new' => $count_news_new)
-						),
+						'message' => "All of your news categories and ".$count_news_new." of ".$count_news_old." news items were upgraded"
 					);
 				}
 				elseif ($count_news_new != $count_news_old and $count_cats_new != $count_cats_old)
 				{
-					// catch the exception
 					$retval = array(
 						'code' => 2,
-						'message' => __(":new_news of :old_news news items and :new_cats of :old_cats news categories were upgraded", 
-							array(':old_cats' => $count_cats_old, ':new_cats' => $count_cats_new, ':new_news' => $count_news_new, ':old_news' => $count_news_old)
-						),
+						'message' => $count_news_new." of ".$count_news_old." news items and ".$count_cats_new." of ".$count_cats_old." news categories were upgraded"
 					);
 				}
 			}
 			
-			// optmize the tables
 			$this->dbutil->optimize_table('news');
 			$this->dbutil->optimize_table('news_categories');
 		} catch (Exception $e) {
-			// catch the exception
 			$retval = array(
 				'code' => 0,
 				'message' => 'ERROR: '.$e->getMessage().' - line '.$e->getLine().' of '.$e->getFile()
@@ -1179,87 +1125,57 @@ abstract class Nova_upgradeajax extends Controller {
 	
 	public function upgrade_settings()
 	{
-		// figure out what the name of the settings table is
-		if (count($this->db->list_tables('sms_settings')) > 0)
-		{
-			$result = $this->db->query(Database::SELECT, "SELECT * FROM sms_settings WHERE globalid = 1", true);
-		}
-		else
-		{
-			$result = $this->db->query(Database::SELECT, "SELECT * FROM sms_globals WHERE globalid = 1", true);
-		}
+		$this->load->model('settings_model', 'settings');
+		$this->load->model('messages_model', 'msgs');
+		
+		// figure out what the name of the table is
+		$sql = ($this->db->table_exists('sms_settings'))
+			? "SELECT * FROM sms_settings WHERE globalid = 1"
+			: "SELECT * FROM sms_globals WHERE globalid = 1";
+		
+		$query = $this->db->query($sql);
 		
 		// create arrays for checking to see if everything was saved
 		$settings = array();
 		$messages = array();
 		
-		foreach ($result as $r)
+		foreach ($query->result() as $r)
 		{
-			// sim name
-			$item = Jelly::query('setting', 'sim_name')->limit(1)->select();
-			$item->value = $r->shipPrefix.' '.$r->shipName.' '.$r->shipRegistry;
-			$item->save();
-			$settings[] = $item->saved();
+			$value = array('setting_value' => $r->shipPrefix.' '.$r->shipName.' '.$r->shipRegistry);
+			$settings[] = $this->settings->update_setting('sim_name', $value);
 			
-			// sim year
-			$item = Jelly::query('setting', 'sim_year')->limit(1)->select();
-			$item->value = $r->simmYear;
-			$item->save();
-			$settings[] = $item->saved();
+			$value = array('setting_value' => $r->simmYear);
+			$settings[] = $this->settings->update_setting('sim_year', $value);
 			
-			// posting requirement
-			$item = Jelly::query('setting', 'post_count')->limit(1)->select();
-			$item->value = ($r->jpCount == 'y') ? 'multiple' : 'single';
-			$item->save();
-			$settings[] = $item->saved();
+			$value = array('setting_value' => ($r->jpCount == 'y') ? 'multiple' : 'single');
+			$settings[] = $this->settings->update_setting('post_count', $value);
 			
-			// email subject
-			$item = Jelly::query('setting', 'email_subject')->limit(1)->select();
-			$item->value = $r->emailSubject;
-			$item->save();
-			$settings[] = $item->saved();
+			$value = array('setting_value' => $r->emailSubject);
+			$settings[] = $this->settings->update_setting('email_subject', $value);
 		}
 		
 		// get the messages
-		$result = $this->db->query(Database::SELECT, "SELECT * FROM sms_messages WHERE messageid = 1", true);
+		$query = $this->db->query("SELECT * FROM sms_messages WHERE messageid = 1");
 		
-		foreach ($result as $r)
+		foreach ($query->result() as $r)
 		{
-			// welcome message
-			$item = Jelly::query('message', 'welcome_msg')->limit(1)->select();
-			$item->value = $r->welcomeMessage;
-			$item->save();
-			$messages[] = $item->saved();
+			$value = array('message_content' => $r->welcomeMessage);
+			$messages[] = $this->msgs->update_message($value, 'welcome_msg');
 			
-			// sim message
-			$item = Jelly::query('message', 'sim')->limit(1)->select();
-			$item->value = $r->simmMessage;
-			$item->save();
-			$messages[] = $item->saved();
+			$value = array('message_content' => $r->simmMessage);
+			$messages[] = $this->msgs->update_message($value, 'sim');
 			
-			// join disclaimer
-			$item = Jelly::query('message', 'join_disclaimer')->limit(1)->select();
-			$item->value = $r->joinDisclaimer;
-			$item->save();
-			$messages[] = $item->saved();
+			$value = array('message_content' => $r->joinDisclaimer);
+			$messages[] = $this->msgs->update_message($value, 'join_disclaimer');
 			
-			// acceptance message
-			$item = Jelly::query('message', 'accept_message')->limit(1)->select();
-			$item->value = $r->acceptMessage;
-			$item->save();
-			$messages[] = $item->saved();
+			$value = array('message_content' => $r->acceptMessage);
+			$messages[] = $this->msgs->update_message($value, 'accept_message');
 			
-			// rejection message
-			$item = Jelly::query('message', 'reject_message')->limit(1)->select();
-			$item->value = $r->rejectMessage;
-			$item->save();
-			$messages[] = $item->saved();
+			$value = array('message_content' => $r->rejectMessage);
+			$messages[] = $this->msgs->update_message($value, 'reject_message');
 			
-			// join post
-			$item = Jelly::query('message', 'join_post')->limit(1)->select();
-			$item->value = $r->samplePostQuestion;
-			$item->save();
-			$messages[] = $item->saved();
+			$value = array('message_content' => $r->samplePostQuestion);
+			$messages[] = $this->msgs->update_message($value, 'join_post');
 		}
 		
 		// optmize the tables
@@ -1282,19 +1198,19 @@ abstract class Nova_upgradeajax extends Controller {
 			if ($settings_count === true and $messages_count === false)
 			{
 				$retval['code'] = 2;
-				$retval['message'] = __("All of your settings were upgraded, but some of your messages couldn't be upgraded");
+				$retval['message'] = "All of your settings were upgraded, but some of your messages couldn't be upgraded";
 			}
 			
 			if ($settings_count === false and $messages_count === true)
 			{
 				$retval['code'] = 2;
-				$retval['message'] = __("All of your messages were upgraded, but some of your settings couldn't be upgraded");
+				$retval['message'] = "All of your messages were upgraded, but some of your settings couldn't be upgraded";
 			}
 			
 			if ($settings_count === false and $messages_count === false)
 			{
 				$retval['code'] = 0;
-				$retval['message'] = __("None of your settings or messages could be upgraded");
+				$retval['message'] = "None of your settings or messages could be upgraded";
 			}
 		}
 		
