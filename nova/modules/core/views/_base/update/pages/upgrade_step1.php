@@ -14,7 +14,7 @@
 		<tbody>
 			<tr>
 				<td class="bold">Characters &amp; Users</td>
-				<td class="col-30 align_center">
+				<td class="col-30 align-center">
 					<span class="success hidden"><?php echo img(MODFOLDER.'/core/views/_base/update/images/tick-circle.png');?></span>
 					<span class="failure hidden">
 						<?php echo img(MODFOLDER.'/core/views/_base/update/images/exclamation-red.png', array('class' => 'tiptip', 'title' => ''));?>
