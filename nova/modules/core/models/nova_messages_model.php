@@ -22,7 +22,7 @@ abstract class Nova_messages_model extends Model {
 	 * Retrieve methods
 	 */
 
-	function get_message($message_key = '')
+	public function get_message($message_key = '')
 	{
 		$query = $this->db->get_where('messages', array('message_key' => $message_key));
 		
@@ -36,7 +36,7 @@ abstract class Nova_messages_model extends Model {
 		return FALSE;
 	}
 	
-	function get_message_label($message_id = '')
+	public function get_message_label($message_id = '')
 	{
 		$query = $this->db->get_where('messages', array('message_id' => $message_id));
 		$row = $query->row();
@@ -44,7 +44,7 @@ abstract class Nova_messages_model extends Model {
 		return $row->message_label;
 	}
 	
-	function get_message_details($identifier = '', $type = 'key')
+	public function get_message_details($identifier = '', $type = 'key')
 	{
 		switch ($type)
 		{
@@ -70,7 +70,7 @@ abstract class Nova_messages_model extends Model {
 		return $query;
 	}
 	
-	function get_all_messages()
+	public function get_all_messages()
 	{
 		$query = $this->db->get_where('messages', array('message_protected' => 'n'));
 		
@@ -81,7 +81,7 @@ abstract class Nova_messages_model extends Model {
 	 * Create methods
 	 */
 
-	function insert_new_message($data = '')
+	public function insert_new_message($data = '')
 	{
 		$query = $this->db->insert('messages', $data);
 		
@@ -93,8 +93,17 @@ abstract class Nova_messages_model extends Model {
 	/**
 	 * Update methods
 	 */
-
-	function update_message($data = '', $id = '', $type = 'key')
+	
+	/**
+	 * Update a single message
+	 *
+	 * @access	public
+	 * @param	array	an array of data to use in updating the record
+	 * @param	mixed	the record to update
+	 * @param	string	the name of the identifer to use
+	 * @return	integer	the number of affected rows (1 = success, 0 = failure)
+	 */
+	public function update_message($data = '', $id = '', $type = 'key')
 	{
 		switch ($type)
 		{
@@ -123,7 +132,7 @@ abstract class Nova_messages_model extends Model {
 	 * Delete methods
 	 */
 
-	function delete_message($id = '')
+	public function delete_message($id = '')
 	{
 		$query = $this->db->delete('messages', array('message_id' => $id)); 
 		

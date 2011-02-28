@@ -22,7 +22,7 @@ abstract class Nova_settings_model extends Model {
 	 * Retrieve methods
 	 */
 	
-	function get_all_settings($user = 'n')
+	public function get_all_settings($user = 'n')
 	{
 		$this->db->from('settings');
 		$this->db->where('setting_user_created', $user);
@@ -32,7 +32,7 @@ abstract class Nova_settings_model extends Model {
 		return $query;
 	}
 	
-	function get_setting($value = '')
+	public function get_setting($value = '')
 	{
 		$query = $this->db->get_where('settings', array('setting_key' => $value));
 		
@@ -46,14 +46,14 @@ abstract class Nova_settings_model extends Model {
 		return FALSE;
 	}
 	
-	function get_setting_details($value = '', $identifier = 'setting_key')
+	public function get_setting_details($value = '', $identifier = 'setting_key')
 	{
 		$query = $this->db->get_where('settings', array($identifier => $value));
 		
 		return $query;
 	}
 	
-	function get_setting_label($value = '', $identifier = 'setting_key')
+	public function get_setting_label($value = '', $identifier = 'setting_key')
 	{
 		$query = $this->db->get_where('settings', array($identifier => $value));
 		
@@ -67,7 +67,7 @@ abstract class Nova_settings_model extends Model {
 		return FALSE;
 	}
 	
-	function get_settings($value = '')
+	public function get_settings($value = '')
 	{
 		$array = FALSE;
 		
@@ -98,7 +98,7 @@ abstract class Nova_settings_model extends Model {
 		return $array;
 	}
 	
-	function get_sim_types($start_id = 2)
+	public function get_sim_types($start_id = 2)
 	{
 		$this->db->from('sim_type');
 		$this->db->where('simtype_id >=', $start_id);
@@ -112,7 +112,7 @@ abstract class Nova_settings_model extends Model {
 	 * Create methods
 	 */
 	
-	function add_new_setting($data = '')
+	public function add_new_setting($data = '')
 	{
 		$query = $this->db->insert('settings', $data);
 		
@@ -126,7 +126,16 @@ abstract class Nova_settings_model extends Model {
 	 * Update methods
 	 */
 	
-	function update_setting($field = '', $data = '', $identifier = 'setting_key')
+	/**
+	 * Update a single setting
+	 *
+	 * @access	public
+	 * @param	string	the key to update
+	 * @param	array 	an array of data to use in updating the record
+	 * @param	string	the name of the identifer to use
+	 * @return	integer	the number of affected rows (1 = success, 0 = failure)
+	 */
+	public function update_setting($field = '', $data = '', $identifier = 'setting_key')
 	{
 		$this->db->where($identifier, $field);
 		$query = $this->db->update('settings', $data);
@@ -141,7 +150,7 @@ abstract class Nova_settings_model extends Model {
 	 * Delete methods
 	 */
 	
-	function delete_setting($id = '')
+	public function delete_setting($id = '')
 	{
 		/* build the query */
 		$query = $this->db->delete('settings', array('setting_id' => $id));
