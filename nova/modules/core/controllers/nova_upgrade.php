@@ -2005,7 +2005,7 @@ abstract class Nova_upgrade extends Controller {
 		
 		$this->_regions['content'] = Location::view('upgrade_verify', '_base', 'update', $data);
 		$this->_regions['javascript'] = Location::js('verify_js', '_base', 'update');
-		$this->_regions['controls'] = form_open('upgrade/info').form_button($next).form_close();
+		$this->_regions['controls'] = form_open('upgrade/step/0').form_button($next).form_close();
 		$this->_regions['title'].= lang('verify_title');
 		$this->_regions['label'] = lang('verify_title');
 		
