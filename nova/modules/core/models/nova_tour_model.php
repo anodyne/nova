@@ -5,11 +5,8 @@
  * @package		Nova
  * @category	Model
  * @author		Anodyne Productions
- * @copyright	2010-11 Anodyne Productions
- * @version		1.2
- *
- * Fixed bug from 1.1 update where you couldn't have a deck listing for
- * each specification item you've created
+ * @copyright	2011 Anodyne Productions
+ * @version		2.0
  */
 
 abstract class Nova_tour_model extends Model {
@@ -21,15 +18,11 @@ abstract class Nova_tour_model extends Model {
 		$this->load->dbutil();
 	}
 	
-	/**
-	 * Retrieve methods
-	 */
-	
 	public function get_deck_details($id = '')
 	{
 		$query = $this->db->get_where('tour_decks', array('deck_id' => $id));
 		
-		$row = ($query->num_rows() > 0) ? $query->row() : FALSE;
+		$row = ($query->num_rows() > 0) ? $query->row() : false;
 		
 		return $row;
 	}
@@ -63,7 +56,7 @@ abstract class Nova_tour_model extends Model {
 			return $query->row();
 		}
 		
-		return FALSE;
+		return false;
 	}
 	
 	public function get_tour_field_details($id = '')
@@ -77,12 +70,12 @@ abstract class Nova_tour_model extends Model {
 	{
 		$this->db->from('tour_fields');
 		
-		if (!empty($display))
+		if ( ! empty($display))
 		{
 			$this->db->where('field_display', $display);
 		}
 		
-		if (!empty($type))
+		if ( ! empty($type))
 		{
 			$this->db->where('field_type', $type);
 		}
@@ -109,7 +102,7 @@ abstract class Nova_tour_model extends Model {
 	{
 		$this->db->from('tour');
 		
-		if (!empty($display))
+		if ( ! empty($display))
 		{
 			$this->db->where('tour_display', $display);
 		}
@@ -138,10 +131,6 @@ abstract class Nova_tour_model extends Model {
 		
 		return $query;
 	}
-	
-	/**
-	 * Create methods
-	 */
 	
 	public function add_deck($data = '')
 	{
@@ -179,10 +168,6 @@ abstract class Nova_tour_model extends Model {
 		
 		return $query;
 	}
-	
-	/**
-	 * Update methods
-	 */
 	
 	public function update_deck($id = '', $data = '')
 	{
@@ -234,10 +219,6 @@ abstract class Nova_tour_model extends Model {
 		
 		return $query;
 	}
-	
-	/**
-	 * Delete methods
-	 */
 	
 	public function delete_deck($id = '')
 	{

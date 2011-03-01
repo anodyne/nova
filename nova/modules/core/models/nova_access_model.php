@@ -5,8 +5,8 @@
  * @package		Nova
  * @category	Model
  * @author		Anodyne Productions
- * @copyright	2010-11 Anodyne Productions
- * @version		1.0
+ * @copyright	2011 Anodyne Productions
+ * @version		2.0
  */
 
 abstract class Nova_access_model extends Model {
@@ -18,19 +18,15 @@ abstract class Nova_access_model extends Model {
 		$this->load->dbutil();
 	}
 	
-	/**
-	 * Retrieve methods
-	 */
-	
-	function get_group($id = '', $return = '')
+	public function get_group($id = '', $return = '')
 	{
 		$query = $this->db->get_where('access_groups', array('group_id' => $id));
 		
-		$row = ($query->num_rows() > 0) ? $query->row() : FALSE;
+		$row = ($query->num_rows() > 0) ? $query->row() : false;
 		
-		if (!empty($return) && $row !== FALSE)
+		if ( ! empty($return) && $row !== false)
 		{
-			if (!is_array($return))
+			if ( ! is_array($return))
 			{
 				return $row->$return;
 			}
@@ -50,15 +46,15 @@ abstract class Nova_access_model extends Model {
 		return $row;
 	}
 	
-	function get_page($id = '', $return = '')
+	public function get_page($id = '', $return = '')
 	{
 		$query = $this->db->get_where('access_pages', array('page_id' => $id));
 		
-		$row = ($query->num_rows() > 0) ? $query->row() : FALSE;
+		$row = ($query->num_rows() > 0) ? $query->row() : false;
 		
-		if (!empty($return) && $row !== FALSE)
+		if ( ! empty($return) && $row !== false)
 		{
-			if (!is_array($return))
+			if ( ! is_array($return))
 			{
 				return $row->$return;
 			}
@@ -78,7 +74,7 @@ abstract class Nova_access_model extends Model {
 		return $row;
 	}
 	
-	function get_page_groups()
+	public function get_page_groups()
 	{
 		$this->db->from('access_groups');
 		$this->db->order_by('group_order', 'asc');
@@ -88,12 +84,10 @@ abstract class Nova_access_model extends Model {
 		return $query;
 	}
 	
-	function get_pages($data = '')
+	public function get_pages($data = '')
 	{
-		/* make the string an array */
 		$data = explode(',', $data);
 		
-		/* set the array */
 		$array = array();
 		
 		foreach ($data as $value)
@@ -111,7 +105,7 @@ abstract class Nova_access_model extends Model {
 		return $array;
 	}
 	
-	function get_users_with_role($id = '')
+	public function get_users_with_role($id = '')
 	{
 		$this->db->from('access_roles');
 		$this->db->join('users', 'users.access_role = access_roles.role_id');
@@ -129,19 +123,19 @@ abstract class Nova_access_model extends Model {
 			return $array;
 		}
 		
-		return FALSE;
+		return false;
 	}
 	
-	function get_role($id = '')
+	public function get_role($id = '')
 	{
 		$query = $this->db->get_where('access_roles', array('role_id' => $id));
 		
-		$row = ($query->num_rows() > 0) ? $query->row() : FALSE;
+		$row = ($query->num_rows() > 0) ? $query->row() : false;
 		
 		return $row;
 	}
 	
-	function get_role_data($role = '')
+	public function get_role_data($role = '')
 	{
 		$query = $this->db->get_where('access_roles', array('role_id' => $role));
 		
@@ -152,28 +146,24 @@ abstract class Nova_access_model extends Model {
 			return $row->role_access;
 		}
 		
-		return FALSE;
+		return false;
 	}
 	
-	function get_role_pages()
+	public function get_role_pages()
 	{
 		$query = $this->db->get('access_pages');
 		
 		return $query;
 	}
 	
-	function get_roles()
+	public function get_roles()
 	{
 		$query = $this->db->get('access_roles');
 		
 		return $query;
 	}
 	
-	/**
-	 * Create methods
-	 */
-	
-	function insert_group($data = '')
+	public function insert_group($data = '')
 	{
 		$query = $this->db->insert('access_groups', $data);
 		
@@ -182,17 +172,16 @@ abstract class Nova_access_model extends Model {
 		return $query;
 	}
 	
-	function insert_page($data = '')
+	public function insert_page($data = '')
 	{
 		$query = $this->db->insert('access_pages', $data);
 		
-		/* optimize the table */
 		$this->dbutil->optimize_table('access_pages');
 		
 		return $query;
 	}
 	
-	function insert_role($data = '')
+	public function insert_role($data = '')
 	{
 		$query = $this->db->insert('access_roles', $data);
 		
@@ -201,11 +190,7 @@ abstract class Nova_access_model extends Model {
 		return $query;
 	}
 	
-	/**
-	 * Update methods
-	 */
-	
-	function update_group($id = '', $data = '')
+	public function update_group($id = '', $data = '')
 	{
 		$this->db->where('group_id', $id);
 		$query = $this->db->update('access_groups', $data);
@@ -215,7 +200,7 @@ abstract class Nova_access_model extends Model {
 		return $query;
 	}
 	
-	function update_page($id = '', $data = '')
+	public function update_page($id = '', $data = '')
 	{
 		$this->db->where('page_id', $id);
 		$query = $this->db->update('access_pages', $data);
@@ -225,7 +210,7 @@ abstract class Nova_access_model extends Model {
 		return $query;
 	}
 	
-	function update_pages($data = '', $where = array('' => ''))
+	public function update_pages($data = '', $where = array('' => ''))
 	{
 		foreach ($where as $key => $value)
 		{
@@ -239,7 +224,7 @@ abstract class Nova_access_model extends Model {
 		return $query;
 	}
 	
-	function update_role($id = '', $data = '')
+	public function update_role($id = '', $data = '')
 	{
 		$this->db->where('role_id', $id);
 		$query = $this->db->update('access_roles', $data);
@@ -249,11 +234,7 @@ abstract class Nova_access_model extends Model {
 		return $query;
 	}
 	
-	/**
-	 * Delete methods
-	 */
-	
-	function delete_group($id = '')
+	public function delete_group($id = '')
 	{
 		$query = $this->db->delete('access_groups', array('group_id' => $id));
 		
@@ -262,17 +243,16 @@ abstract class Nova_access_model extends Model {
 		return $query;
 	}
 	
-	function delete_page($id = '')
+	public function delete_page($id = '')
 	{
 		$query = $this->db->delete('access_pages', array('page_id' => $id));
 		
-		/* optimize the table */
 		$this->dbutil->optimize_table('access_pages');
 		
 		return $query;
 	}
 	
-	function delete_role($id = '')
+	public function delete_role($id = '')
 	{
 		$query = $this->db->delete('access_roles', array('role_id' => $id));
 		

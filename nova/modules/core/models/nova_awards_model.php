@@ -5,8 +5,8 @@
  * @package		Nova
  * @category	Model
  * @author		Anodyne Productions
- * @copyright	2010-11 Anodyne Productions
- * @version		1.0
+ * @copyright	2011 Anodyne Productions
+ * @version		2.0
  */
 
 abstract class Nova_awards_model extends Model {
@@ -19,24 +19,24 @@ abstract class Nova_awards_model extends Model {
 	}
 	
 	/**
-	 * Retrieve methods
+	 * Get all awards from the database.
+	 *
+	 * @access	public
+	 * @param	string	the order to pull awards in (asc, desc)
+	 * @param	string	the display flag to use when pulling awards
+	 * @param	string	the category of awards to pull (ic, ooc, both)
+	 * @return	object	the result object
 	 */
-
-	function get_all_awards($order = 'asc', $display = 'y', $cat = '')
+	public function get_all_awards($order = 'asc', $display = 'y', $cat = '')
 	{
-		/*
-			param1	=> asc, desc, random
-			param2	=> y, n, all
-		*/
-		
 		$this->db->from('awards');
 		
-		if (!empty($display))
+		if ( ! empty($display))
 		{
 			$this->db->where('award_display', $display);
 		}
 		
-		if (!empty($cat))
+		if ( ! empty($cat))
 		{
 			$this->db->where('award_cat', $cat);
 		}
@@ -48,15 +48,15 @@ abstract class Nova_awards_model extends Model {
 		return $query;
 	}
 	
-	function get_award($id = '', $return = '')
+	public function get_award($id = '', $return = '')
 	{
 		$query = $this->db->get_where('awards', array('award_id' => $id));
 		
-		$row = ($query->num_rows() > 0) ? $query->row() : FALSE;
+		$row = ($query->num_rows() > 0) ? $query->row() : false;
 		
-		if (!empty($return) && $row !== FALSE)
+		if ( ! empty($return) && $row !== false)
 		{
-			if (!is_array($return))
+			if ( ! is_array($return))
 			{
 				return $row->$return;
 			}
@@ -76,11 +76,11 @@ abstract class Nova_awards_model extends Model {
 		return $row;
 	}
 	
-	function get_award_noms($status = 'pending', $order = 'desc')
+	public function get_award_noms($status = 'pending', $order = 'desc')
 	{
 		$this->db->from('awards_queue');
 		
-		if (!empty($status))
+		if ( ! empty($status))
 		{
 			$this->db->where('queue_status', $status);
 		}
@@ -92,7 +92,7 @@ abstract class Nova_awards_model extends Model {
 		return $query;
 	}
 	
-	function get_awardees($award = '')
+	public function get_awardees($award = '')
 	{
 		$this->db->from('awards_received');
 		$this->db->where('awardrec_award', $award);
@@ -103,13 +103,13 @@ abstract class Nova_awards_model extends Model {
 		return $query;
 	}
 	
-	function get_user_awards($user = '', $limit = 10, $where = array())
+	public function get_user_awards($user = '', $limit = 10, $where = array())
 	{
 		$this->db->from('awards_received');
 		$this->db->join('awards', 'awards.award_id = awards_received.awardrec_award');
 		$this->db->where('awardrec_user', $user);
 		
-		if (!empty($where))
+		if ( ! empty($where))
 		{
 			foreach ($where as $key => $value)
 			{
@@ -127,10 +127,10 @@ abstract class Nova_awards_model extends Model {
 		return $query;
 	}
 	
-	function get_awards_for_id($id = '', $type = 'character')
+	public function get_awards_for_id($id = '', $type = 'character')
 	{
 		switch ($type)
-		{ /* make sure we're querying the right field */
+		{
 			case 'user':
 				$field = 'awardrec_user';
 			break;
@@ -149,15 +149,11 @@ abstract class Nova_awards_model extends Model {
 		return $query;
 	}
 	
-	/**
-	 * Count methods
-	 */
-	
-	function count_award_noms($status = 'accepted')
+	public function count_award_noms($status = 'accepted')
 	{
 		$this->db->from('awards_queue');
 		
-		if (!empty($status))
+		if ( ! empty($status))
 		{
 			$this->db->where('queue_status', $status);
 		}
@@ -165,7 +161,7 @@ abstract class Nova_awards_model extends Model {
 		return $this->db->count_all_results();
 	}
 	
-	function count_character_awards($id = '', $field = 'awardrec_character')
+	public function count_character_awards($id = '', $field = 'awardrec_character')
 	{
 		$this->db->from('awards_received');
 		$this->db->where($field, $id);
@@ -173,11 +169,7 @@ abstract class Nova_awards_model extends Model {
 		return $this->db->count_all_results();
 	}
 	
-	/**
-	 * Create methods
-	 */
-	
-	function add_award($data = '')
+	public function add_award($data = '')
 	{
 		$query = $this->db->insert('awards', $data);
 		
@@ -186,7 +178,7 @@ abstract class Nova_awards_model extends Model {
 		return $query;
 	}
 	
-	function add_award_nomination($data = '')
+	public function add_award_nomination($data = '')
 	{
 		$query = $this->db->insert('awards_queue', $data);
 		
@@ -195,7 +187,7 @@ abstract class Nova_awards_model extends Model {
 		return $query;
 	}
 	
-	function add_nominated_award($data = '')
+	public function add_nominated_award($data = '')
 	{
 		$query = $this->db->insert('awards_received', $data);
 		
@@ -204,11 +196,7 @@ abstract class Nova_awards_model extends Model {
 		return $query;
 	}
 	
-	/**
-	 * Update methods
-	 */
-	
-	function update_award($id = '', $data = '')
+	public function update_award($id = '', $data = '')
 	{
 		$this->db->where('award_id', $id);
 		$query = $this->db->update('awards', $data);
@@ -218,7 +206,7 @@ abstract class Nova_awards_model extends Model {
 		return $query;
 	}
 	
-	function update_queue_record($id = '', $data = '')
+	public function update_queue_record($id = '', $data = '')
 	{
 		$this->db->where('queue_id', $id);
 		$query = $this->db->update('awards_queue', $data);
@@ -228,11 +216,7 @@ abstract class Nova_awards_model extends Model {
 		return $query;
 	}
 	
-	/**
-	 * Delete methods
-	 */
-	
-	function delete_award($id = '')
+	public function delete_award($id = '')
 	{
 		$query = $this->db->delete('awards', array('award_id' => $id));
 		
@@ -241,7 +225,7 @@ abstract class Nova_awards_model extends Model {
 		return $query;
 	}
 	
-	function delete_received_award($id = '')
+	public function delete_received_award($id = '')
 	{
 		$query = $this->db->delete('awards_received', array('awardrec_id' => $id));
 		

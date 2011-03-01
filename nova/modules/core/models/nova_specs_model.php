@@ -5,8 +5,8 @@
  * @package		Nova
  * @category	Model
  * @author		Anodyne Productions
- * @copyright	2010-11 Anodyne Productions
- * @version		1.0
+ * @copyright	2011 Anodyne Productions
+ * @version		2.0
  */
 
 abstract class Nova_specs_model extends Model {
@@ -17,10 +17,6 @@ abstract class Nova_specs_model extends Model {
 		
 		$this->load->dbutil();
 	}
-	
-	/**
-	 * Retrieve methods
-	 */
 	
 	public function get_field_data($id = 0, $field = '')
 	{
@@ -35,7 +31,7 @@ abstract class Nova_specs_model extends Model {
 			return $query->row();
 		}
 		
-		return FALSE;
+		return false;
 	}
 	
 	public function get_spec_field_details($id = '')
@@ -49,17 +45,17 @@ abstract class Nova_specs_model extends Model {
 	{
 		$this->db->from('specs_fields');
 		
-		if (!empty($section))
+		if ( ! empty($section))
 		{
 			$this->db->where('field_section', $section);
 		}
 		
-		if (!empty($display))
+		if ( ! empty($display))
 		{
 			$this->db->where('field_display', $display);
 		}
 		
-		if (!empty($type))
+		if ( ! empty($type))
 		{
 			$this->db->where('field_type', $type);
 		}
@@ -84,14 +80,14 @@ abstract class Nova_specs_model extends Model {
 			return $query->row();
 		}
 		
-		return FALSE;
+		return false;
 	}
 	
 	public function get_spec_items($display = 'y')
 	{
 		$this->db->from('specs');
 		
-		if (!empty($display))
+		if ( ! empty($display))
 		{
 			$this->db->where('specs_display', $display);
 		}
@@ -138,10 +134,6 @@ abstract class Nova_specs_model extends Model {
 		return $query;
 	}
 	
-	/**
-	 * Create methods
-	 */
-	
 	public function add_spec_field($data = '')
 	{
 		$query = $this->db->insert('specs_fields', $data);
@@ -180,10 +172,6 @@ abstract class Nova_specs_model extends Model {
 		
 		return $query;
 	}
-	
-	/**
-	 * Update methods
-	 */
 	
 	public function update_field_sections($old_id = '', $new_id = '')
 	{
@@ -283,10 +271,6 @@ abstract class Nova_specs_model extends Model {
 		
 		return $query;
 	}
-	
-	/**
-	 * Delete methods
-	 */
 	
 	public function delete_spec_field($id = '')
 	{

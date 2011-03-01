@@ -5,12 +5,8 @@
  * @package		Nova
  * @category	Model
  * @author		Anodyne Productions
- * @copyright	2010-11 Anodyne Productions
- * @version		1.0.2
- *
- * Updated get_group_ranks() to allow for an identifier, updated several
- * methods to pull the genre information when getting items from the rank
- * catalogue
+ * @copyright	2011 Anodyne Productions
+ * @version		2.0
  */
 
 abstract class Nova_ranks_model extends Model {
@@ -22,18 +18,14 @@ abstract class Nova_ranks_model extends Model {
 		$this->load->dbutil();
 	}
 	
-	/**
-	 * Retrieve methods
-	 */
-	
-	function get_all_rank_sets($status = 'active')
+	public function get_all_rank_sets($status = 'active')
 	{
 		$this->db->from('catalogue_ranks');
 		$this->db->where('rankcat_genre', GENRE);
 		
-		if (!empty($status))
+		if ( ! empty($status))
 		{
-			if (!is_array($status))
+			if ( ! is_array($status))
 			{
 				$status = array($status);
 			}
@@ -66,7 +58,7 @@ abstract class Nova_ranks_model extends Model {
 		return $query;
 	}
 	
-	function get_group_ranks($name_id = '', $identifier = 'rank_name')
+	public function get_group_ranks($name_id = '', $identifier = 'rank_name')
 	{
 		$this->db->from('ranks_'. GENRE);
 		$this->db->where($identifier, $name_id);
@@ -76,15 +68,15 @@ abstract class Nova_ranks_model extends Model {
 		return $query;
 	}
 	
-	function get_rank($id = '', $return = '')
+	public function get_rank($id = '', $return = '')
 	{
 		$query = $this->db->get_where('ranks_'. GENRE, array('rank_id' => $id));
 		
-		$row = ($query->num_rows() > 0) ? $query->row() : FALSE;
+		$row = ($query->num_rows() > 0) ? $query->row() : false;
 		
-		if (!empty($return) && $row !== FALSE)
+		if ( ! empty($return) && $row !== false)
 		{
-			if (!is_array($return))
+			if ( ! is_array($return))
 			{
 				return $row->$return;
 			}
@@ -104,7 +96,7 @@ abstract class Nova_ranks_model extends Model {
 		return $row;
 	}
 	
-	function get_rank_default()
+	public function get_rank_default()
 	{
 		$this->db->from('catalogue_ranks');
 		$this->db->where('rankcat_status', 'active');
@@ -120,10 +112,10 @@ abstract class Nova_ranks_model extends Model {
 			return $row->rankcat_location;
 		}
 		
-		return FALSE;
+		return false;
 	}
 	
-	function get_rankcat($id = '', $identifier = 'rankcat_location', $return = '')
+	public function get_rankcat($id = '', $identifier = 'rankcat_location', $return = '')
 	{
 		$this->db->from('catalogue_ranks');
 		$this->db->where($identifier, $id);
@@ -131,11 +123,11 @@ abstract class Nova_ranks_model extends Model {
 		
 		$query = $this->db->get();
 		
-		$row = ($query->num_rows() > 0) ? $query->row() : FALSE;
+		$row = ($query->num_rows() > 0) ? $query->row() : false;
 		
-		if (!empty($return) && $row !== FALSE)
+		if ( ! empty($return) && $row !== false)
 		{
-			if (!is_array($return))
+			if ( ! is_array($return))
 			{
 				return $row->$return;
 			}
@@ -155,16 +147,16 @@ abstract class Nova_ranks_model extends Model {
 		return $row;
 	}
 	
-	function get_ranks($class = '', $display = 'y')
+	public function get_ranks($class = '', $display = 'y')
 	{
 		$this->db->from('ranks_'. GENRE);
 		
-		if (!empty($class))
+		if ( ! empty($class))
 		{
 			$this->db->where('rank_class', $class);
 		}
 		
-		if (!empty($display))
+		if ( ! empty($display))
 		{
 			$this->db->where('rank_display', $display);
 		}
@@ -176,11 +168,7 @@ abstract class Nova_ranks_model extends Model {
 		return $query;
 	}
 	
-	/**
-	 * Create methods
-	 */
-	
-	function add_rank($data = '')
+	public function add_rank($data = '')
 	{
 		$query = $this->db->insert('ranks_'. GENRE, $data);
 		
@@ -189,7 +177,7 @@ abstract class Nova_ranks_model extends Model {
 		return $query;
 	}
 	
-	function add_rank_set($data = '')
+	public function add_rank_set($data = '')
 	{
 		$query = $this->db->insert('catalogue_ranks', $data);
 		
@@ -198,11 +186,7 @@ abstract class Nova_ranks_model extends Model {
 		return $query;
 	}
 	
-	/**
-	 * Update methods
-	 */
-	
-	function update_rank($id = '', $data = '')
+	public function update_rank($id = '', $data = '')
 	{
 		$this->db->where('rank_id', $id);
 		$query = $this->db->update('ranks_'. GENRE, $data);
@@ -212,14 +196,14 @@ abstract class Nova_ranks_model extends Model {
 		return $query;
 	}
 	
-	function update_rank_set($id = '', $data = '', $where = array())
+	public function update_rank_set($id = '', $data = '', $where = array())
 	{
-		if (!empty($id))
+		if ( ! empty($id))
 		{
 			$this->db->where('rankcat_id', $id);
 		}
 		
-		if (!empty($where))
+		if ( ! empty($where))
 		{
 			foreach ($where as $key => $value)
 			{
@@ -234,11 +218,7 @@ abstract class Nova_ranks_model extends Model {
 		return $query;
 	}
 	
-	/**
-	 * Delete methods
-	 */
-	
-	function delete_rank($id = '')
+	public function delete_rank($id = '')
 	{
 		$query = $this->db->delete('ranks_'. GENRE, array('rank_id' => $id));
 		
@@ -247,7 +227,7 @@ abstract class Nova_ranks_model extends Model {
 		return $query;
 	}
 	
-	function delete_rank_set($id = '')
+	public function delete_rank_set($id = '')
 	{
 		$query = $this->db->delete('catalogue_ranks', array('rankcat_id' => $id));
 		

@@ -5,11 +5,8 @@
  * @package		Nova
  * @category	Model
  * @author		Anodyne Productions
- * @copyright	2010-11 Anodyne Productions
- * @version		1.2
- *
- * Updated some of the methods to avoid situations where errors could be
- * thrown if a character or user ID wasn't present
+ * @copyright	2011 Anodyne Productions
+ * @version		2.0
  */
 
 abstract class Nova_news_model extends Model {
@@ -21,24 +18,19 @@ abstract class Nova_news_model extends Model {
 		$this->load->dbutil();
 	}
 	
-	/**
-	 * Retrieve methods
-	 */
-	
-	function get_category_news($c = '', $session = '')
+	public function get_category_news($c = '', $session = '')
 	{
 		$this->db->from('news');
 		$this->db->join('news_categories', 'news_categories.newscat_id = news.news_cat');
 		$this->db->join('characters', 'characters.charid = news.news_author_character');
 		$this->db->where('news_status', 'activated');
 		
-		/* determine which categories should be pulled */
 		if ($c > 0)
 		{
 			$this->db->where('news_cat', $c);
 		}
 		
-		if ($session === FALSE)
+		if ($session === false)
 		{
 			$this->db->where('news_private', 'n');
 		}
@@ -50,7 +42,7 @@ abstract class Nova_news_model extends Model {
 		return $query;
 	}
 	
-	function get_link_id($id = '', $direction = 'next', $session = '')
+	public function get_link_id($id = '', $direction = 'next', $session = '')
 	{
 		$get = $this->db->get_where('news', array('news_id' => $id));
 		
@@ -75,7 +67,7 @@ abstract class Nova_news_model extends Model {
 				break;
 			}
 			
-			if ($session === FALSE)
+			if ($session === false)
 			{
 				$this->db->where('news_private', 'n');
 			}
@@ -91,14 +83,14 @@ abstract class Nova_news_model extends Model {
 			}
 		}
 		
-		return FALSE;
+		return false;
 	}
 	
-	function get_news_categories($display = 'y')
+	public function get_news_categories($display = 'y')
 	{
 		$this->db->from('news_categories');
 		
-		if (!empty($display))
+		if ( ! empty($display))
 		{
 			$this->db->where('newscat_display', $display);
 		}
@@ -108,18 +100,18 @@ abstract class Nova_news_model extends Model {
 		return $query;
 	}
 	
-	function get_news_category($id = '', $return = '')
+	public function get_news_category($id = '', $return = '')
 	{
 		$this->db->from('news_categories');
 		$this->db->where('newscat_id', $id);
 		
 		$query = $this->db->get();
 		
-		$row = ($query->num_rows() > 0) ? $query->row() : FALSE;
+		$row = ($query->num_rows() > 0) ? $query->row() : false;
 		
-		if (!empty($return) && $row !== FALSE)
+		if ( ! empty($return) && $row !== false)
 		{
-			if (!is_array($return))
+			if ( ! is_array($return))
 			{
 				return $row->$return;
 			}
@@ -139,15 +131,15 @@ abstract class Nova_news_model extends Model {
 		return $row;
 	}
 	
-	function get_news_comment($id = '', $return = '')
+	public function get_news_comment($id = '', $return = '')
 	{
 		$query = $this->db->get_where('news_comments', array('ncomment_id' => $id));
 		
-		$row = ($query->num_rows() > 0) ? $query->row() : FALSE;
+		$row = ($query->num_rows() > 0) ? $query->row() : false;
 		
-		if (!empty($return) && $row !== FALSE)
+		if ( ! empty($return) && $row !== false)
 		{
-			if (!is_array($return))
+			if ( ! is_array($return))
 			{
 				return $row->$return;
 			}
@@ -167,11 +159,11 @@ abstract class Nova_news_model extends Model {
 		return $row;
 	}
 	
-	function get_news_comments($id = '', $status = 'activated', $order_field = 'ncomment_date', $order = 'asc')
+	public function get_news_comments($id = '', $status = 'activated', $order_field = 'ncomment_date', $order = 'asc')
 	{
 		$this->db->from('news_comments');
 		
-		if (!empty($id))
+		if ( ! empty($id))
 		{
 			$this->db->where('ncomment_news', $id);
 		}
@@ -190,7 +182,7 @@ abstract class Nova_news_model extends Model {
 		return $query;
 	}
 	
-	function get_news_item($id = '', $return = '')
+	public function get_news_item($id = '', $return = '')
 	{
 		$this->db->from('news');
 		$this->db->join('news_categories', 'news_categories.newscat_id = news.news_cat');
@@ -198,11 +190,11 @@ abstract class Nova_news_model extends Model {
 		
 		$query = $this->db->get();
 		
-		$row = ($query->num_rows() > 0) ? $query->row() : FALSE;
+		$row = ($query->num_rows() > 0) ? $query->row() : false;
 		
-		if (!empty($return) && $row !== FALSE)
+		if ( ! empty($return) && $row !== false)
 		{
-			if (!is_array($return))
+			if ( ! is_array($return))
 			{
 				return $row->$return;
 			}
@@ -222,13 +214,13 @@ abstract class Nova_news_model extends Model {
 		return $row;
 	}
 	
-	function get_news_items($limit = 5, $session = '')
+	public function get_news_items($limit = 5, $session = '')
 	{
 		$this->db->from('news');
 		$this->db->join('news_categories', 'news_categories.newscat_id = news.news_cat');
 		$this->db->where('news_status', 'activated');
 		
-		if ($session === FALSE)
+		if ($session === false)
 		{
 			$this->db->where('news_private', 'n');
 		}
@@ -241,12 +233,12 @@ abstract class Nova_news_model extends Model {
 		return $query;
 	}
 	
-	function get_news_list($num = '', $offset = 0, $status = 'activated')
+	public function get_news_list($num = '', $offset = 0, $status = 'activated')
 	{
 		$this->db->from('news');
 		$this->db->join('news_categories', 'news_categories.newscat_id = news.news_cat');
 		
-		if (!empty($status))
+		if ( ! empty($status))
 		{
 			$this->db->where('news_status', $status);
 		}
@@ -259,12 +251,12 @@ abstract class Nova_news_model extends Model {
 		return $query;
 	}
 	
-	function get_user_news($id = '', $limit = 0, $status = 'activated')
+	public function get_user_news($id = '', $limit = 0, $status = 'activated')
 	{
 		$this->db->from('news');
 		$this->db->join('news_categories', 'news_categories.newscat_id = news.news_cat');
 		
-		if (!empty($status))
+		if ( ! empty($status))
 		{
 			$this->db->where('news_status', $status);
 		}
@@ -282,11 +274,7 @@ abstract class Nova_news_model extends Model {
 		return $query;
 	}
 	
-	/**
-	 * Count methods
-	 */
-	
-	function count_character_news($character = '', $status = 'activated')
+	public function count_character_news($character = '', $status = 'activated')
 	{
 		$count = 0;
 		
@@ -313,16 +301,16 @@ abstract class Nova_news_model extends Model {
 		return $count;
 	}
 	
-	function count_news_comments($status = 'activated', $id = '')
+	public function count_news_comments($status = 'activated', $id = '')
 	{
 		$this->db->from('news_comments');
 		
-		if (!empty($status))
+		if ( ! empty($status))
 		{
 			$this->db->where('ncomment_status', $status);
 		}
 		
-		if (!empty($id))
+		if ( ! empty($id))
 		{
 			$this->db->where('ncomment_news', $id);
 		}
@@ -332,11 +320,11 @@ abstract class Nova_news_model extends Model {
 		return $count;
 	}
 	
-	function count_news_items($status = 'activated')
+	public function count_news_items($status = 'activated')
 	{
 		$this->db->from('news');
 		
-		if (!empty($status))
+		if ( ! empty($status))
 		{
 			$this->db->where('news_status', $status);
 		}
@@ -346,16 +334,16 @@ abstract class Nova_news_model extends Model {
 		return $count;
 	}
 	
-	function count_user_news($id = '', $status = 'activated', $timeframe = '')
+	public function count_user_news($id = '', $status = 'activated', $timeframe = '')
 	{
 		$count = 0;
 		
-		if ( ! empty($id) && $id !== FALSE && $id !== NULL)
+		if ( ! empty($id) && $id !== false && $id !== null)
 		{
 			$this->db->from('news');
 			$this->db->where('news_status', $status);
 		
-			if (!empty($timeframe))
+			if ( ! empty($timeframe))
 			{
 				$this->db->where('news_date >=', $timeframe);
 			}
@@ -368,11 +356,11 @@ abstract class Nova_news_model extends Model {
 		return $count;
 	}
 	
-	function count_user_news_comments($user = '')
+	public function count_user_news_comments($user = '')
 	{
 		$count = 0;
 		
-		if ( ! empty($user) && $user !== FALSE && $user !== NULL)
+		if ( ! empty($user) && $user !== false && $user !== null)
 		{
 			$this->db->from('news_comments');
 			$this->db->where('ncomment_status', 'activated');
@@ -384,11 +372,7 @@ abstract class Nova_news_model extends Model {
 		return $count;
 	}
 	
-	/**
-	 * Search methods
-	 */
-	
-	function search_news($component = '', $input = '')
+	public function search_news($component = '', $input = '')
 	{
 		$this->db->from('news');
 		$this->db->where('news_status', 'activated');
@@ -399,11 +383,7 @@ abstract class Nova_news_model extends Model {
 		return $query;
 	}
 	
-	/**
-	 * Create methods
-	 */
-	
-	function add_news_category($data = '')
+	public function add_news_category($data = '')
 	{
 		$this->db->insert('news_categories', $data);
 		
@@ -412,29 +392,23 @@ abstract class Nova_news_model extends Model {
 		return $this->db->affected_rows();
 	}
 	
-	function add_news_comment($data = '')
+	public function add_news_comment($data = '')
 	{
 		$this->db->insert('news_comments', $data);
 		
-		/* optimize the table */
 		$this->dbutil->optimize_table('news_comments');
 		
-		/* return the number of affected rows to show success/failure (should be 1) */
 		return $this->db->affected_rows();
 	}
 	
-	function create_news_item($data = '')
+	public function create_news_item($data = '')
 	{
 		$query = $this->db->insert('news', $data);
 		
 		return $this->db->affected_rows();
 	}
 	
-	/**
-	 * Update methods
-	 */
-	
-	function update_news_category($id = '', $data = '')
+	public function update_news_category($id = '', $data = '')
 	{
 		$this->db->where('newscat_id', $id);
 		$query = $this->db->update('news_categories', $data);
@@ -444,7 +418,7 @@ abstract class Nova_news_model extends Model {
 		return $query;
 	}
 	
-	function update_news_comment($id = '', $data = '')
+	public function update_news_comment($id = '', $data = '')
 	{
 		$this->db->where('ncomment_id', $id);
 		$query = $this->db->update('news_comments', $data);
@@ -454,7 +428,7 @@ abstract class Nova_news_model extends Model {
 		return $query;
 	}
 	
-	function update_news_item($id = '', $data = '', $identifier = 'news_id')
+	public function update_news_item($id = '', $data = '', $identifier = 'news_id')
 	{
 		$this->db->where($identifier, $id);
 		$query = $this->db->update('news', $data);
@@ -464,11 +438,7 @@ abstract class Nova_news_model extends Model {
 		return $query;
 	}
 	
-	/**
-	 * Delete methods
-	 */
-	
-	function delete_news_category($id = '')
+	public function delete_news_category($id = '')
 	{
 		$query = $this->db->delete('news_categories', array('newscat_id' => $id));
 		
@@ -477,7 +447,7 @@ abstract class Nova_news_model extends Model {
 		return $query;
 	}
 	
-	function delete_news_comment($id = '')
+	public function delete_news_comment($id = '')
 	{
 		$query = $this->db->delete('news_comments', array('ncomment_id' => $id));
 		
@@ -486,12 +456,10 @@ abstract class Nova_news_model extends Model {
 		return $query;
 	}
 	
-	function delete_news_item($id = '')
+	public function delete_news_item($id = '')
 	{
-		/* grab the comments associated with the log */
 		$comments = $this->db->get_where('news_comments', array('ncomment_news' => $id));
 		
-		/* loop through and the delete the comments associated with the log */
 		if ($comments->num_rows() > 0)
 		{
 			foreach ($comments->result() as $r)
@@ -500,10 +468,8 @@ abstract class Nova_news_model extends Model {
 			}
 		}
 		
-		/* now delete the log */
 		$query = $this->db->delete('news', array('news_id' => $id));
 		
-		/* optimize the table */
 		$this->dbutil->optimize_table('news');
 		
 		return $query;

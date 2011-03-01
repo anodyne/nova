@@ -5,8 +5,8 @@
  * @package		Nova
  * @category	Model
  * @author		Anodyne Productions
- * @copyright	2010-11 Anodyne Productions
- * @version		1.0
+ * @copyright	2011 Anodyne Productions
+ * @version		2.0
  */
 
 abstract class Nova_archive_model extends Model {
@@ -18,18 +18,14 @@ abstract class Nova_archive_model extends Model {
 		$this->load->dbutil();
 	}
 	
-	/**
-	 * Retrieve methods
-	 */
-	
-	function get_all_db_entries()
+	public function get_all_db_entries()
 	{
 		$query = $this->db->query('SELECT * FROM sms_database');
 		
 		return $query;
 	}
 	
-	function get_characters($type = '')
+	public function get_characters($type = '')
 	{
 		$array = array();
 		
@@ -74,35 +70,35 @@ abstract class Nova_archive_model extends Model {
 		return $array;
 	}
 	
-	function get_db_entry($id = '')
+	public function get_db_entry($id = '')
 	{
 		$query = $this->db->query("SELECT * FROM sms_database WHERE dbid = '$id' LIMIT 1");
 		
 		return $query;
 	}
 	
-	function get_deck_listing()
+	public function get_deck_listing()
 	{
 		$query = $this->db->query('SELECT * FROM sms_tour_decks');
 		
 		return $query;
 	}
 	
-	function get_departments()
+	public function get_departments()
 	{
 		$query = $this->db->query('SELECT * FROM sms_departments ORDER BY deptOrder ASC');
 		
 		return $query;
 	}
 	
-	function get_positions($dept = '1')
+	public function get_positions($dept = '1')
 	{
 		$query = $this->db->query('SELECT * FROM sms_positions WHERE positionDept = ? ORDER BY positionOrder ASC', array($dept));
 		
 		return $query;
 	}
 	
-	function get_sms_version()
+	public function get_sms_version()
 	{
 		$query = $this->db->query('SELECT * FROM sms_system WHERE sysid = 1');
 		
@@ -113,6 +109,6 @@ abstract class Nova_archive_model extends Model {
 			return $row->sysVersion;
 		}
 		
-		return FALSE;
+		return false;
 	}
 }

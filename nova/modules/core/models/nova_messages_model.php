@@ -5,8 +5,8 @@
  * @package		Nova
  * @category	Model
  * @author		Anodyne Productions
- * @copyright	2010-11 Anodyne Productions
- * @version		1.0
+ * @copyright	2011 Anodyne Productions
+ * @version		2.0
  */
 
 abstract class Nova_messages_model extends Model {
@@ -18,10 +18,6 @@ abstract class Nova_messages_model extends Model {
 		$this->load->dbutil();
 	}
 	
-	/**
-	 * Retrieve methods
-	 */
-
 	public function get_message($message_key = '')
 	{
 		$query = $this->db->get_where('messages', array('message_key' => $message_key));
@@ -33,7 +29,7 @@ abstract class Nova_messages_model extends Model {
 			return $row->message_content;
 		}
 		
-		return FALSE;
+		return false;
 	}
 	
 	public function get_message_label($message_id = '')
@@ -77,10 +73,6 @@ abstract class Nova_messages_model extends Model {
 		return $query;
 	}
 	
-	/**
-	 * Create methods
-	 */
-
 	public function insert_new_message($data = '')
 	{
 		$query = $this->db->insert('messages', $data);
@@ -89,10 +81,6 @@ abstract class Nova_messages_model extends Model {
 		
 		return $this->db->affected_rows();
 	}
-	
-	/**
-	 * Update methods
-	 */
 	
 	/**
 	 * Update a single message
@@ -128,10 +116,6 @@ abstract class Nova_messages_model extends Model {
 		return $this->db->affected_rows();
 	}
 	
-	/**
-	 * Delete methods
-	 */
-
 	public function delete_message($id = '')
 	{
 		$query = $this->db->delete('messages', array('message_id' => $id)); 

@@ -5,10 +5,8 @@
  * @package		Nova
  * @category	Model
  * @author		Anodyne Productions
- * @copyright	2010-11 Anodyne Productions
- * @version		1.0.6
- *
- * Added method for inserting character promotion records
+ * @copyright	2011 Anodyne Productions
+ * @version		2.0
  */
 
 abstract class Nova_characters_model extends Model {
@@ -20,11 +18,7 @@ abstract class Nova_characters_model extends Model {
 		$this->load->dbutil();
 	}
 	
-	/**
-	 * Retrieve methods
-	 */
-	
-	function get_all_characters($status = 'active', $order = '')
+	public function get_all_characters($status = 'active', $order = '')
 	{
 		$this->db->from('characters');
 		
@@ -82,7 +76,7 @@ abstract class Nova_characters_model extends Model {
 		return $query;
 	}
 	
-	function get_authors($character = '', $rank = TRUE)
+	public function get_authors($character = '', $rank = TRUE)
 	{
 		$characters = explode(',', $character);
 		$characters_final = array();
@@ -91,7 +85,7 @@ abstract class Nova_characters_model extends Model {
 		{
 			$name = $this->get_character_name($key, TRUE);
 			
-			if ($name !== FALSE)
+			if ($name !== false)
 			{
 				$characters_final[] = $name;
 			}
@@ -104,19 +98,19 @@ abstract class Nova_characters_model extends Model {
 			return $character_string;
 		}
 		
-		return FALSE;
+		return false;
 	}
 	
-	function get_bio_fields($section = '', $type = '')
+	public function get_bio_fields($section = '', $type = '')
 	{
 		$this->db->from('characters_fields');
 		
-		if (!empty($section))
+		if ( ! empty($section))
 		{
 			$this->db->where('field_section', $section);
 		}
 		
-		if (!empty($type))
+		if ( ! empty($type))
 		{
 			$this->db->where('field_type', $type);
 		}
@@ -129,21 +123,21 @@ abstract class Nova_characters_model extends Model {
 		return $query;
 	}
 	
-	function get_bio_field_details($id = '')
+	public function get_bio_field_details($id = '')
 	{
 		$query = $this->db->get_where('characters_fields', array('field_id' => $id));
 		
 		return $query;
 	}
 	
-	function get_bio_field_value_details($id = '')
+	public function get_bio_field_value_details($id = '')
 	{
 		$query = $this->db->get_where('characters_values', array('value_id' => $id));
 		
 		return $query;
 	}
 	
-	function get_bio_sections()
+	public function get_bio_sections()
 	{
 		$this->db->from('characters_sections');
 		$this->db->order_by('section_tab', 'asc');
@@ -154,25 +148,25 @@ abstract class Nova_characters_model extends Model {
 		return $query;
 	}
 	
-	function get_bio_section_details($id = '')
+	public function get_bio_section_details($id = '')
 	{
 		$query = $this->db->get_where('characters_sections', array('section_id' => $id));
 		
 		return $query;
 	}
 	
-	function get_bio_tab_details($id = '')
+	public function get_bio_tab_details($id = '')
 	{
 		$query = $this->db->get_where('characters_tabs', array('tab_id' => $id));
 		
 		return $query;
 	}
 	
-	function get_bio_tabs($display = 'y')
+	public function get_bio_tabs($display = 'y')
 	{
 		$this->db->from('characters_tabs');
 		
-		if (!empty($display))
+		if ( ! empty($display))
 		{
 			$this->db->where('tab_display', 'y');
 		}
@@ -184,7 +178,7 @@ abstract class Nova_characters_model extends Model {
 		return $query;
 	}
 	
-	function get_bio_values($field = '')
+	public function get_bio_values($field = '')
 	{
 		$this->db->from('characters_values');
 		$this->db->where('value_field', $field);
@@ -195,15 +189,15 @@ abstract class Nova_characters_model extends Model {
 		return $query;
 	}
 	
-	function get_character($id = '', $return = '')
+	public function get_character($id = '', $return = '')
 	{
 		$query = $this->db->get_where('characters', array('charid' => $id));
 		
-		$row = ($query->num_rows() > 0) ? $query->row() : FALSE;
+		$row = ($query->num_rows() > 0) ? $query->row() : false;
 		
-		if (!empty($return) && $row !== FALSE)
+		if ( ! empty($return) && $row !== false)
 		{
-			if (!is_array($return))
+			if ( ! is_array($return))
 			{
 				return $row->$return;
 			}
@@ -223,9 +217,9 @@ abstract class Nova_characters_model extends Model {
 		return $row;
 	}
 	
-	function get_character_emails($data = '')
+	public function get_character_emails($data = '')
 	{
-		if (!is_array($data))
+		if ( ! is_array($data))
 		{
 			$data = explode(',', $data);
 		}
@@ -258,7 +252,7 @@ abstract class Nova_characters_model extends Model {
 		return $array;
 	}
 	
-	function get_character_name($character = '', $rank = FALSE, $short_rank = FALSE)
+	public function get_character_name($character = '', $rank = false, $short_rank = false)
 	{
 		$this->db->from('characters');
 		
@@ -275,7 +269,7 @@ abstract class Nova_characters_model extends Model {
 		{
 			$item = $query->row();
 		
-			$array['rank'] = ($rank == TRUE) ? $item->rank_name : FALSE;
+			$array['rank'] = ($rank == TRUE) ? $item->rank_name : false;
 			$array['rank'] = ($short_rank == TRUE) ? $item->rank_short_name : $array['rank'];
 			$array['first_name'] = $item->first_name;
 			$array['last_name'] = $item->last_name;
@@ -294,17 +288,17 @@ abstract class Nova_characters_model extends Model {
 			return $string;
 		}
 		
-		return FALSE;
+		return false;
 	}
 	
-	function get_characters_for_position($position = '', $order = '')
+	public function get_characters_for_position($position = '', $order = '')
 	{
 		$this->db->from('characters');
 		$this->db->where('crew_type !=', 'pending');
 		$this->db->where('position_1', $position);
 		$this->db->or_where('position_2', $position);
 		
-		if (!empty($order))
+		if ( ! empty($order))
 		{
 			if (is_array($order))
 			{
@@ -320,7 +314,7 @@ abstract class Nova_characters_model extends Model {
 		return $query;
 	}
 	
-	function get_characters_minus_user($user = '')
+	public function get_characters_minus_user($user = '')
 	{
 		$this->db->from('characters');
 		$this->db->where('user >', '');
@@ -331,7 +325,7 @@ abstract class Nova_characters_model extends Model {
 		return $query;
 	}
 	
-	function get_coc()
+	public function get_coc()
 	{
 		$this->db->from('coc');
 		$this->db->join('characters', 'characters.charid = coc.coc_crew');
@@ -344,7 +338,7 @@ abstract class Nova_characters_model extends Model {
 		return $query;
 	}
 	
-	function get_field_data($field = '', $character = '')
+	public function get_field_data($field = '', $character = '')
 	{
 		$this->db->from('characters_data');
 		$this->db->where('data_char', $character);
@@ -355,12 +349,12 @@ abstract class Nova_characters_model extends Model {
 		return $query;
 	}
 	
-	function get_user_characters($user = '', $type = 'active', $return = 'object')
+	public function get_user_characters($user = '', $type = 'active', $return = 'object')
 	{
 		$this->db->from('characters');
 		$this->db->where('user', $user);
 		
-		if (!empty($type))
+		if ( ! empty($type))
 		{
 			switch ($type)
 			{
@@ -408,10 +402,10 @@ abstract class Nova_characters_model extends Model {
 			}
 		}
 		
-		return FALSE;
+		return false;
 	}
 	
-	function get_rank_history($user = '')
+	public function get_rank_history($user = '')
 	{
 		$this->db->from('characters_promotions');
 		$this->db->where('prom_user', $user);
@@ -422,19 +416,15 @@ abstract class Nova_characters_model extends Model {
 		return $query;
 	}
 	
-	/**
-	 * Count methods
-	 */
-	
-	function count_characters($type = 'active', $timeframe = 'current', $this_month = '', $last_month = '')
+	public function count_characters($type = 'active', $timeframe = 'current', $this_month = '', $last_month = '')
 	{
 		$this->db->from('characters');
 		
-		if (!empty($timeframe))
+		if ( ! empty($timeframe))
 		{
 			if ($timeframe == 'current')
 			{
-				if (!empty($type))
+				if ( ! empty($type))
 				{
 					$this->db->where('crew_type', $type);
 				}
@@ -455,7 +445,7 @@ abstract class Nova_characters_model extends Model {
 		}
 		else
 		{
-			if (!empty($type))
+			if ( ! empty($type))
 			{
 				$this->db->where('crew_type', $type);
 			}
@@ -466,18 +456,14 @@ abstract class Nova_characters_model extends Model {
 		return $query->num_rows();
 	}
 	
-	/**
-	 * Create methods
-	 */
-	
-	function add_bio_field($data = '')
+	public function add_bio_field($data = '')
 	{
 		$query = $this->db->insert('characters_fields', $data);
 		
 		return $query;
 	}
 	
-	function add_bio_field_data($data = '')
+	public function add_bio_field_data($data = '')
 	{
 		$query = $this->db->insert('characters_data', $data);
 		
@@ -486,42 +472,39 @@ abstract class Nova_characters_model extends Model {
 		return $query;
 	}
 	
-	function add_bio_field_value($data = '')
+	public function add_bio_field_value($data = '')
 	{
 		$query = $this->db->insert('characters_values', $data);
 		
 		return $query;
 	}
 	
-	function add_bio_sec($data = '')
+	public function add_bio_sec($data = '')
 	{
 		$query = $this->db->insert('characters_sections', $data);
 		
-		/* optimize the table */
 		$this->dbutil->optimize_table('characters_sections');
 		
 		return $query;
 	}
 	
-	function add_bio_tab($data = '')
+	public function add_bio_tab($data = '')
 	{
 		$query = $this->db->insert('characters_tabs', $data);
 		
-		/* optimize the table */
 		$this->dbutil->optimize_table('characters_tabs');
 		
 		return $query;
 	}
 	
-	function create_character($data = '')
+	public function create_character($data = '')
 	{
 		$query = $this->db->insert('characters', $data);
 		
-		/* this returns the number of affected rows, not the query object */
 		return $query;
 	}
 	
-	function create_character_data_fields($character = '', $user = '')
+	public function create_character_data_fields($character = '', $user = '')
 	{
 		$get = $this->db->get_where('characters_fields', array('field_display' => 'y'));
 		
@@ -540,50 +523,42 @@ abstract class Nova_characters_model extends Model {
 				$insert = $this->db->insert('characters_data', $data);
 			}
 			
-			/* optimize the table */
 			$this->dbutil->optimize_table('characters_data');
 			
 			return $insert;
 		}
 		
-		return FALSE;
+		return false;
 	}
 	
-	function create_character_data($data = '')
+	public function create_character_data($data = '')
 	{
 		$query = $this->db->insert('characters_data', $data);
 		
-		/* optimize the table */
 		$this->dbutil->optimize_table('characters_data');
 		
 		return $query;
 	}
 	
-	function create_coc_entry($data = '')
+	public function create_coc_entry($data = '')
 	{
 		$query = $this->db->insert('coc', $data);
 		
-		/* optimize the table */
 		$this->dbutil->optimize_table('coc');
 		
 		return $query;
 	}
 	
-	function create_promotion_record($data = '')
+	public function create_promotion_record($data = '')
 	{
 		$query = $this->db->insert('characters_promotions', $data);
 		
-		/* optimize the table */
 		$this->dbutil->optimize_table('characters_promotions');
 		
 		return $query;
 	}
 	
-	/**
-	 * Update methods
-	 */
-	
-	function update_bio_field($id = '', $data = '')
+	public function update_bio_field($id = '', $data = '')
 	{
 		$this->db->where('field_id', $id);
 		$query = $this->db->update('characters_fields', $data);
@@ -593,7 +568,7 @@ abstract class Nova_characters_model extends Model {
 		return $query;
 	}
 	
-	function update_bio_field_value($id = '', $data = '')
+	public function update_bio_field_value($id = '', $data = '')
 	{
 		$this->db->where('value_id', $id);
 		$query = $this->db->update('characters_values', $data);
@@ -603,7 +578,7 @@ abstract class Nova_characters_model extends Model {
 		return $query;
 	}
 	
-	function update_bio_section($id = '', $data = '')
+	public function update_bio_section($id = '', $data = '')
 	{
 		$this->db->where('section_id', $id);
 		$query = $this->db->update('characters_sections', $data);
@@ -613,7 +588,7 @@ abstract class Nova_characters_model extends Model {
 		return $query;
 	}
 	
-	function update_bio_tab($id = '', $data = '')
+	public function update_bio_tab($id = '', $data = '')
 	{
 		$this->db->where('tab_id', $id);
 		$query = $this->db->update('characters_tabs', $data);
@@ -623,7 +598,7 @@ abstract class Nova_characters_model extends Model {
 		return $query;
 	}
 	
-	function update_character($id = '', $data = '')
+	public function update_character($id = '', $data = '')
 	{
 		$this->db->where('charid', $id);
 		$query = $this->db->update('characters', $data);
@@ -633,7 +608,7 @@ abstract class Nova_characters_model extends Model {
 		return $query;
 	}
 	
-	function update_character_data($field = '', $character = '', $data = '')
+	public function update_character_data($field = '', $character = '', $data = '')
 	{
 		$this->db->where('data_field', $field);
 		$this->db->where('data_char', $character);
@@ -644,7 +619,7 @@ abstract class Nova_characters_model extends Model {
 		return $query;
 	}
 	
-	function update_character_data_all($id = '', $identifier = 'data_user', $data = '')
+	public function update_character_data_all($id = '', $identifier = 'data_user', $data = '')
 	{
 		$this->db->where($identifier, $id);
 		$query = $this->db->update('characters_data', $data);
@@ -654,7 +629,7 @@ abstract class Nova_characters_model extends Model {
 		return $query;
 	}
 	
-	function update_field_sections($old_id = '', $new_id = '')
+	public function update_field_sections($old_id = '', $new_id = '')
 	{
 		$data = array('field_section' => $new_id);
 		
@@ -666,7 +641,7 @@ abstract class Nova_characters_model extends Model {
 		return $query;
 	}
 	
-	function update_section_tabs($old_id = '', $new_id = '')
+	public function update_section_tabs($old_id = '', $new_id = '')
 	{
 		$data = array('section_tab' => $new_id);
 		
@@ -678,11 +653,7 @@ abstract class Nova_characters_model extends Model {
 		return $query;
 	}
 	
-	/**
-	 * Delete methods
-	 */
-	
-	function delete_bio_field($id = '')
+	public function delete_bio_field($id = '')
 	{
 		$query = $this->db->delete('characters_fields', array('field_id' => $id));
 		
@@ -691,7 +662,7 @@ abstract class Nova_characters_model extends Model {
 		return $query;
 	}
 	
-	function delete_bio_field_value($id = '')
+	public function delete_bio_field_value($id = '')
 	{
 		$query = $this->db->delete('characters_values', array('value_id' => $id));
 		
@@ -700,7 +671,7 @@ abstract class Nova_characters_model extends Model {
 		return $query;
 	}
 	
-	function delete_bio_section($id = '')
+	public function delete_bio_section($id = '')
 	{
 		$query = $this->db->delete('characters_sections', array('section_id' => $id));
 		
@@ -709,7 +680,7 @@ abstract class Nova_characters_model extends Model {
 		return $query;
 	}
 	
-	function delete_bio_tab($id = '')
+	public function delete_bio_tab($id = '')
 	{
 		$query = $this->db->delete('characters_tabs', array('tab_id' => $id));
 		
@@ -718,7 +689,7 @@ abstract class Nova_characters_model extends Model {
 		return $query;
 	}
 	
-	function delete_character($id = '')
+	public function delete_character($id = '')
 	{
 		$query = $this->db->delete('characters', array('charid' => $id));
 		
@@ -727,7 +698,7 @@ abstract class Nova_characters_model extends Model {
 		return $query;
 	}
 	
-	function delete_character_data($id = '', $identifier = '')
+	public function delete_character_data($id = '', $identifier = '')
 	{
 		$query = $this->db->delete('characters_data', array($identifier => $id));
 		
@@ -736,7 +707,7 @@ abstract class Nova_characters_model extends Model {
 		return $query;
 	}
 	
-	function delete_character_field_data($field = '')
+	public function delete_character_field_data($field = '')
 	{
 		$query = $this->db->delete('characters_data', array('data_field' => $field));
 		
@@ -745,7 +716,7 @@ abstract class Nova_characters_model extends Model {
 		return $query;
 	}
 	
-	function delete_coc_entry($id = '')
+	public function delete_coc_entry($id = '')
 	{
 		$query = $this->db->delete('coc', array('coc_crew' => $id));
 		
@@ -754,7 +725,7 @@ abstract class Nova_characters_model extends Model {
 		return $query;
 	}
 	
-	function empty_coc()
+	public function empty_coc()
 	{
 		$query = $this->db->truncate('coc');
 		

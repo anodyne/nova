@@ -5,8 +5,8 @@
  * @package		Nova
  * @category	Model
  * @author		Anodyne Productions
- * @copyright	2010-11 Anodyne Productions
- * @version		1.0
+ * @copyright	2011 Anodyne Productions
+ * @version		2.0
  */
 
 abstract class Nova_missions_model extends Model {
@@ -18,11 +18,7 @@ abstract class Nova_missions_model extends Model {
 		$this->load->dbutil();
 	}
 	
-	/**
-	 * Retrieve methods
-	 */
-	
-	function get_all_mission_groups()
+	public function get_all_mission_groups()
 	{
 		$this->db->from('mission_groups');
 		$this->db->order_by('misgroup_order', 'asc');
@@ -32,11 +28,11 @@ abstract class Nova_missions_model extends Model {
 		return $query;
 	}
 	
-	function get_all_missions($status = '')
+	public function get_all_missions($status = '')
 	{
 		$this->db->from('missions');
 		
-		if (!empty($status))
+		if ( ! empty($status))
 		{
 			$this->db->where('mission_status', $status);
 		}
@@ -48,15 +44,15 @@ abstract class Nova_missions_model extends Model {
 		return $query;
 	}
 	
-	function get_mission($id = '', $return = '')
+	public function get_mission($id = '', $return = '')
 	{
 		$query = $this->db->get_where('missions', array('mission_id' => $id));
 		
-		$row = ($query->num_rows() > 0) ? $query->row() : FALSE;
+		$row = ($query->num_rows() > 0) ? $query->row() : false;
 		
-		if (!empty($return) && $row !== FALSE)
+		if ( ! empty($return) && $row !== false)
 		{
-			if (!is_array($return))
+			if ( ! is_array($return))
 			{
 				return $row->$return;
 			}
@@ -76,15 +72,15 @@ abstract class Nova_missions_model extends Model {
 		return $row;
 	}
 	
-	function get_mission_group($id = '', $return = '')
+	public function get_mission_group($id = '', $return = '')
 	{
 		$query = $this->db->get_where('mission_groups', array('misgroup_id' => $id));
 		
-		$row = ($query->num_rows() > 0) ? $query->row() : FALSE;
+		$row = ($query->num_rows() > 0) ? $query->row() : false;
 		
-		if (!empty($return) && $row !== FALSE)
+		if ( ! empty($return) && $row !== false)
 		{
-			if (!is_array($return))
+			if ( ! is_array($return))
 			{
 				return $row->$return;
 			}
@@ -104,7 +100,7 @@ abstract class Nova_missions_model extends Model {
 		return $row;
 	}
 	
-	function get_mission_where($where = array(), $display = 'count')
+	public function get_mission_where($where = array(), $display = 'count')
 	{
 		$this->db->from('missions');
 		
@@ -123,11 +119,7 @@ abstract class Nova_missions_model extends Model {
 		return $query;
 	}
 	
-	/**
-	 * Create methods
-	 */
-	
-	function add_mission($data = '')
+	public function add_mission($data = '')
 	{
 		$query = $this->db->insert('missions', $data);
 		
@@ -136,7 +128,7 @@ abstract class Nova_missions_model extends Model {
 		return $query;
 	}
 	
-	function add_mission_group($data = '')
+	public function add_mission_group($data = '')
 	{
 		$query = $this->db->insert('mission_groups', $data);
 		
@@ -145,11 +137,7 @@ abstract class Nova_missions_model extends Model {
 		return $query;
 	}
 	
-	/**
-	 * Update methods
-	 */
-	
-	function update_mission($id = '', $data = '', $where = '')
+	public function update_mission($id = '', $data = '', $where = '')
 	{
 		if (is_array($where))
 		{
@@ -170,7 +158,7 @@ abstract class Nova_missions_model extends Model {
 		return $query;
 	}
 	
-	function update_mission_group($id = '', $data = '')
+	public function update_mission_group($id = '', $data = '')
 	{
 		$this->db->where('misgroup_id', $id);
 		$query = $this->db->update('mission_groups', $data);
@@ -180,11 +168,7 @@ abstract class Nova_missions_model extends Model {
 		return $query;
 	}
 	
-	/**
-	 * Delete methods
-	 */
-	
-	function delete_mission($id = '')
+	public function delete_mission($id = '')
 	{
 		$query = $this->db->delete('missions', array('mission_id' => $id));
 		
@@ -193,7 +177,7 @@ abstract class Nova_missions_model extends Model {
 		return $query;
 	}
 	
-	function delete_mission_group($id = '')
+	public function delete_mission_group($id = '')
 	{
 		$query = $this->db->delete('mission_groups', array('misgroup_id' => $id));
 		

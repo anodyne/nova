@@ -5,8 +5,8 @@
  * @package		Nova
  * @category	Model
  * @author		Anodyne Productions
- * @copyright	2010-11 Anodyne Productions
- * @version		1.0
+ * @copyright	2011 Anodyne Productions
+ * @version		2.0
  */
 
 abstract class Nova_settings_model extends Model {
@@ -17,10 +17,6 @@ abstract class Nova_settings_model extends Model {
 		
 		$this->load->dbutil();
 	}
-	
-	/**
-	 * Retrieve methods
-	 */
 	
 	public function get_all_settings($user = 'n')
 	{
@@ -37,13 +33,13 @@ abstract class Nova_settings_model extends Model {
 		$query = $this->db->get_where('settings', array('setting_key' => $value));
 		
 		if ($query->num_rows() > 0)
-		{ /* if there is at least 1 row in the result */
+		{
 			$row = $query->row();
 			
 			return $row->setting_value;
 		}
 		
-		return FALSE;
+		return false;
 	}
 	
 	public function get_setting_details($value = '', $identifier = 'setting_key')
@@ -58,43 +54,41 @@ abstract class Nova_settings_model extends Model {
 		$query = $this->db->get_where('settings', array($identifier => $value));
 		
 		if ($query->num_rows() > 0)
-		{ /* if there is at least 1 row in the result */
+		{
 			$row = $query->row();
 			
 			return $row->setting_label;
 		}
 		
-		return FALSE;
+		return false;
 	}
 	
 	public function get_settings($value = '')
 	{
-		$array = FALSE;
+		$array = false;
 		
 		if (is_array($value))
-		{ /* if the value is array, do nothing */
+		{
 			$select = $value;
 		}
 		else
-		{ /* otherwise, we need to set the string as an array value */
+		{
 			$select[] = $value;
 		}
 		
-		/* grab all the global items */
 		$query = $this->db->get('settings');
 		
 		if ($query->num_rows() > 0)
-		{ /* if there is at least 1 row in the result */
+		{
 			foreach ($query->result() as $item)
 			{
 				if (in_array($item->setting_key, $select))
-				{ /* if the key is in the array of keys we want, drop it in an array */
+				{
 					$array[$item->setting_key] = $item->setting_value;
 				}
 			}
 		}
 		
-		/* return the final settings array */
 		return $array;
 	}
 	
@@ -108,23 +102,14 @@ abstract class Nova_settings_model extends Model {
 		return $query;
 	}
 	
-	/**
-	 * Create methods
-	 */
-	
 	public function add_new_setting($data = '')
 	{
 		$query = $this->db->insert('settings', $data);
 		
-		/* optimize the table */
 		$this->dbutil->optimize_table('settings');
 		
 		return $query;
 	}
-	
-	/**
-	 * Update methods
-	 */
 	
 	/**
 	 * Update a single setting
@@ -140,22 +125,15 @@ abstract class Nova_settings_model extends Model {
 		$this->db->where($identifier, $field);
 		$query = $this->db->update('settings', $data);
 		
-		/* optimize the table */
 		$this->dbutil->optimize_table('settings');
 		
 		return $query;
 	}
 	
-	/**
-	 * Delete methods
-	 */
-	
 	public function delete_setting($id = '')
 	{
-		/* build the query */
 		$query = $this->db->delete('settings', array('setting_id' => $id));
 		
-		/* optimize the table */
 		$this->dbutil->optimize_table('settings');
 		
 		return $query;

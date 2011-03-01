@@ -5,7 +5,7 @@
  * @package		Nova
  * @category	Model
  * @author		Anodyne Productions
- * @copyright	2010-11 Anodyne Productions
+ * @copyright	2011 Anodyne Productions
  * @version		2.0
  */
 
@@ -18,18 +18,12 @@ abstract class Nova_users_model extends Model {
 		$this->load->dbutil();
 	}
 	
-	/**
-	 * Retrieve methods
-	 */
-	
 	public function check_email($email = '')
 	{
-		/* check to see if the email address exists */
 		$this->db->select('userid');
 		$this->db->from('users');
 		$this->db->where('email', $email);
 		
-		/* run the query */
 		$query = $this->db->get();
 		
 		if ($query->num_rows() > 0)
@@ -39,18 +33,16 @@ abstract class Nova_users_model extends Model {
 			return $row->userid;
 		}
 		
-		return FALSE;
+		return false;
 	}
 	
 	public function check_password($email = '', $password = '')
 	{
-		/* check to see if the email address exists */
 		$this->db->select('userid');
 		$this->db->from('users');
 		$this->db->where('email', $email);
 		$this->db->where('password', $password);
 		
-		/* run the query */
 		$query = $this->db->get();
 		
 		return $query;
@@ -58,7 +50,7 @@ abstract class Nova_users_model extends Model {
 	
 	public function checking_moderation($type = '', $data = '')
 	{
-		if (!is_array($data))
+		if ( ! is_array($data))
 		{
 			$data = explode(',', $data);
 		}
@@ -79,35 +71,35 @@ abstract class Nova_users_model extends Model {
 				switch ($type)
 				{
 					case 'post':
-						$retval = ($row->moderate_posts == 'y') ? TRUE : FALSE;
+						$retval = ($row->moderate_posts == 'y') ? true : false;
 					break;
 						
 					case 'log':
-						$retval = ($row->moderate_logs == 'y') ? TRUE : FALSE;
+						$retval = ($row->moderate_logs == 'y') ? true : false;
 					break;
 						
 					case 'news':
-						$retval = ($row->moderate_news == 'y') ? TRUE : FALSE;
+						$retval = ($row->moderate_news == 'y') ? true : false;
 					break;
 						
 					case 'post_comment':
-						$retval = ($row->moderate_post_comments == 'y') ? TRUE : FALSE;
+						$retval = ($row->moderate_post_comments == 'y') ? true : false;
 					break;
 						
 					case 'log_comment':
-						$retval = ($row->moderate_log_comments == 'y') ? TRUE : FALSE;
+						$retval = ($row->moderate_log_comments == 'y') ? true : false;
 					break;
 						
 					case 'news_comment':
-						$retval = ($row->moderate_news_comments == 'y') ? TRUE : FALSE;
+						$retval = ($row->moderate_news_comments == 'y') ? true : false;
 					break;
 						
 					case 'wiki_comment':
-						$retval = ($row->moderate_wiki_comments == 'y') ? TRUE : FALSE;
+						$retval = ($row->moderate_wiki_comments == 'y') ? true : false;
 					break;
 				}
 				
-				if ($retval === TRUE)
+				if ($retval === true)
 				{
 					return 'pending';
 				}
@@ -117,7 +109,7 @@ abstract class Nova_users_model extends Model {
 		return 'activated';
 	}
 	
-	public function get_crew_emails($email_prefs = FALSE, $pref_name = '')
+	public function get_crew_emails($email_prefs = false, $pref_name = '')
 	{
 		$this->db->from('users');
 		$this->db->where('status', 'active');
@@ -131,16 +123,15 @@ abstract class Nova_users_model extends Model {
 				$array[$a->userid] = $a->email;
 			}
 			
-			if ($email_prefs === TRUE)
+			if ($email_prefs === true)
 			{
 				foreach ($array as $k => $v)
 				{
-					/* get their prefs */
 					$pref = $this->get_pref($pref_name, $k);
 					
 					if ($pref == 'y')
 					{
-						/* don't do anything */
+						// don't do anything
 					}
 					else
 					{
@@ -152,7 +143,7 @@ abstract class Nova_users_model extends Model {
 			return $array;
 		}
 		
-		return FALSE;
+		return false;
 	}
 	
 	public function get_email_address($referer = '', $id = '')
@@ -180,12 +171,11 @@ abstract class Nova_users_model extends Model {
 			return $row->email;
 		}
 		
-		return FALSE;
+		return false;
 	}
 	
 	public function get_emails_with_access($access = '', $level = '')
 	{
-		/* first, get the access id */
 		$this->db->from('access_pages');
 		$this->db->where('page_url', $access);
 		
@@ -201,7 +191,6 @@ abstract class Nova_users_model extends Model {
 			$access_row = $access->row();
 			$access_id = $access_row->page_id;
 			
-			/* next, get all the roles with that access */
 			$roles = $this->db->get('access_roles');
 			
 			if ($roles->num_rows() > 0)
@@ -210,13 +199,12 @@ abstract class Nova_users_model extends Model {
 				
 				foreach ($roles->result() as $role)
 				{
-					if (strstr($role->role_access, $access_id) !== FALSE)
+					if (strstr($role->role_access, $access_id) !== false)
 					{
 						$array[] = $role->role_id;
 					}
 				}
 				
-				/* get all active crew */
 				$crew = $this->db->get_where('users', array('status' => 'active'));
 				
 				if ($crew->num_rows() > 0)
@@ -234,13 +222,13 @@ abstract class Nova_users_model extends Model {
 					return $people;
 				}
 				
-				return FALSE;
+				return false;
 			}
 			
-			return FALSE;
+			return false;
 		}
 		
-		return FALSE;
+		return false;
 	}
 	
 	public function get_gm_emails()
@@ -254,24 +242,24 @@ abstract class Nova_users_model extends Model {
 		if ($query->num_rows() > 0)
 		{
 			foreach ($query->result() as $item)
-			{ /* put them into an array */
+			{
 				$array[] = $item->email;
 			}
 			
 			return $array;
 		}
 		
-		return FALSE;
+		return false;
 	}
 	
-	public function get_last_loa($user = '', $blank = FALSE)
+	public function get_last_loa($user = '', $blank = false)
 	{
 		$this->db->from('user_loa');
 		$this->db->where('loa_user', $user);
 		
-		if ($blank === TRUE)
+		if ($blank === true)
 		{
-			$this->db->where('loa_end_date', NULL);
+			$this->db->where('loa_end_date', null);
 		}
 		
 		$query = $this->db->get();
@@ -294,7 +282,7 @@ abstract class Nova_users_model extends Model {
 			return $row->loa;
 		}
 		
-		return FALSE;
+		return false;
 	}
 	
 	public function get_main_character($id = '')
@@ -308,7 +296,7 @@ abstract class Nova_users_model extends Model {
 			return $row->main_char;
 		}
 		
-		return FALSE;
+		return false;
 	}
 	
 	public function get_main_characters()
@@ -333,7 +321,7 @@ abstract class Nova_users_model extends Model {
 			return $array;
 		}
 		
-		return FALSE;
+		return false;
 	}
 	
 	public function get_online_users($time = 5)
@@ -351,7 +339,7 @@ abstract class Nova_users_model extends Model {
 		{
 			foreach ($query->result() as $row)
 			{
-				if (!is_null($row->user_data))
+				if ( ! is_null($row->user_data))
 				{
 					$item = unserialize($row->user_data);
 				
@@ -378,18 +366,18 @@ abstract class Nova_users_model extends Model {
 			return $row->prefvalue_value;
 		}
 		
-		return FALSE;
+		return false;
 	}
 	
 	public function get_user($id = '', $return = '')
 	{
 		$query = $this->db->get_where('users', array('userid' => $id));
 		
-		$row = ($query->num_rows() > 0) ? $query->row() : FALSE;
+		$row = ($query->num_rows() > 0) ? $query->row() : false;
 		
-		if (!empty($return) && $row !== FALSE)
+		if ( ! empty($return) && $row !== false)
 		{
-			if (!is_array($return))
+			if ( ! is_array($return))
 			{
 				return $row->$return;
 			}
@@ -430,7 +418,7 @@ abstract class Nova_users_model extends Model {
 			return $row->user;
 		}
 		
-		return FALSE;
+		return false;
 	}
 	
 	public function get_userid_from_email($email = '')
@@ -444,14 +432,14 @@ abstract class Nova_users_model extends Model {
 			return $row->userid;
 		}
 		
-		return FALSE;
+		return false;
 	}
 	
 	public function get_users($status = 'active')
 	{
 		$this->db->from('users');
 		
-		if (!empty($status))
+		if ( ! empty($status))
 		{
 			$this->db->where('status', $status);
 		}
@@ -466,17 +454,14 @@ abstract class Nova_users_model extends Model {
 	 * crew_type of characters.
 	 *
 	 * @param	string	the status of the characters to pull
-	 * @return	mixed	FALSE if there are no characters, an array of objects if there are
+	 * @return	mixed	false if there are no characters, an array of objects if there are
 	 */
 	public function get_users_from_characters($status = 'active')
 	{
-		// pull the characters
 		$chars = $this->db->get_where('characters', array('crew_type' => $status));
 		
-		// make sure there are characters to pull
 		if ($chars->num_rows() > 0)
 		{
-			// loop through the characters and pull user info
 			foreach ($chars->result() as $c)
 			{
 				$user[] = $this->get_user($c->user);
@@ -485,12 +470,8 @@ abstract class Nova_users_model extends Model {
 			return $user;
 		}
 		
-		return FALSE;
+		return false;
 	}
-	
-	/**
-	 * Count methods
-	 */
 	
 	public function count_all_users($status = 'active')
 	{
@@ -521,17 +502,12 @@ abstract class Nova_users_model extends Model {
 		return $query->num_rows();
 	}
 	
-	/**
-	 * Create methods
-	 */
-	
 	public function create_loa_record($data = '')
 	{
 		$query = $this->db->insert('user_loa', $data);
 		
 		$this->dbutil->optimize_table('user_loa');
 		
-		/* this returns the number of affected rows, not the query object */
 		return $query;
 	}
 	
@@ -539,29 +515,25 @@ abstract class Nova_users_model extends Model {
 	{
 		$query = $this->db->insert('users', $data);
 		
-		/* this returns the number of affected rows, not the query object */
 		return $query;
 	}
 	
 	public function create_user_prefs($id = '')
 	{
-		/* get the prefs from the table */
 		$prefs = $this->db->get('user_prefs');
 		
-		/* set the number of affected rows */
 		$insert = 0;
 		
 		if ($prefs->num_rows() > 0)
 		{
 			foreach ($prefs->result() as $p)
-			{ /* create an array of pref keys */
+			{
 				$insert_array = array(
 					'prefvalue_user' => $id,
 					'prefvalue_key' => $p->pref_key,
 					'prefvalue_value' => $p->pref_default
 				);
 					
-				/* insert the data into the database */
 				$insert+= $this->db->insert('user_prefs_values', $insert_array);
 			}
 		}
@@ -570,10 +542,6 @@ abstract class Nova_users_model extends Model {
 		
 		return $insert;
 	}
-	
-	/**
-	 * Update methods
-	 */
 	
 	public function update_all_user_prefs($id = '', $value = 'n')
 	{
@@ -658,10 +626,6 @@ abstract class Nova_users_model extends Model {
 		
 		return $query;
 	}
-	
-	/**
-	 * Delete methods
-	 */
 	
 	public function delete_user($id = '')
 	{

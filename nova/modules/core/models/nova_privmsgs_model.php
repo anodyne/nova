@@ -5,8 +5,8 @@
  * @package		Nova
  * @category	Model
  * @author		Anodyne Productions
- * @copyright	2010-11 Anodyne Productions
- * @version		1.0
+ * @copyright	2011 Anodyne Productions
+ * @version		2.0
  */
 
 abstract class Nova_privmsgs_model extends Model {
@@ -18,11 +18,7 @@ abstract class Nova_privmsgs_model extends Model {
 		$this->load->dbutil();
 	}
 
-	/**
-	 * Retrieve methods
-	 */
-	
-	function get_inbox($id = '')
+	public function get_inbox($id = '')
 	{
 		$this->db->from('privmsgs_to');
 		$this->db->join('privmsgs', 'privmsgs.privmsgs_id = privmsgs_to.pmto_message');
@@ -35,7 +31,7 @@ abstract class Nova_privmsgs_model extends Model {
 		return $query;
 	}
 	
-	function get_outbox($id = '')
+	public function get_outbox($id = '')
 	{
 		$this->db->from('privmsgs');
 		$this->db->where('privmsgs_author_user', $id);
@@ -47,7 +43,7 @@ abstract class Nova_privmsgs_model extends Model {
 		return $query;
 	}
 	
-	function get_message_recipients($id = '')
+	public function get_message_recipients($id = '')
 	{
 		$query = $this->db->get_where('privmsgs_to', array('pmto_message' => $id));
 		
@@ -61,10 +57,10 @@ abstract class Nova_privmsgs_model extends Model {
 			return $array;
 		}
 		
-		return FALSE;
+		return false;
 	}
 	
-	function get_message($id = '')
+	public function get_message($id = '')
 	{
 		$this->db->from('privmsgs_to');
 		$this->db->join('privmsgs', 'privmsgs.privmsgs_id = privmsgs_to.pmto_message');
@@ -75,18 +71,14 @@ abstract class Nova_privmsgs_model extends Model {
 		return $query;
 	}
 	
-	function get_messages_for_id($id = '')
+	public function get_messages_for_id($id = '')
 	{
 		$query = $this->db->get_where('privmsgs_to', array('pmto_message' => $id));
 		
 		return $query;
 	}
 	
-	/**
-	 * Count methods
-	 */
-	
-	function count_unread_pms($id = '')
+	public function count_unread_pms($id = '')
 	{
 		$this->db->from('privmsgs_to');
 		$this->db->where('pmto_recipient_user', $id);
@@ -96,34 +88,23 @@ abstract class Nova_privmsgs_model extends Model {
 		return $this->db->count_all_results();
 	}
 	
-	/**
-	 * Create methods
-	 */
-	
-	function insert_pm_recipients($data = '')
+	public function insert_pm_recipients($data = '')
 	{
 		$query = $this->db->insert('privmsgs_to', $data);
 		
-		/* optimize the table */
 		$this->dbutil->optimize_table('privmsgs_to');
 		
-		/* return the number of affected rows to show success/failure (should be 1) */
 		return $this->db->affected_rows();
 	}
 	
-	function insert_private_message($data = '')
+	public function insert_private_message($data = '')
 	{
 		$query = $this->db->insert('privmsgs', $data);
 		
-		/* return the number of affected rows to show success/failure (should be 1) */
 		return $this->db->affected_rows();
 	}
 	
-	/**
-	 * Update methods
-	 */
-	
-	function update_message($id = '', $user = '', $data = '')
+	public function update_message($id = '', $user = '', $data = '')
 	{
 		$this->db->where('pmto_message', $id);
 		$this->db->where('pmto_recipient_user', $user);
@@ -132,7 +113,7 @@ abstract class Nova_privmsgs_model extends Model {
 		return $query;
 	}
 	
-	function update_private_message($id = '', $data = '')
+	public function update_private_message($id = '', $data = '')
 	{
 		$this->db->where('privmsgs_id', $id);
 		$query = $this->db->update('privmsgs', $data);
@@ -140,7 +121,7 @@ abstract class Nova_privmsgs_model extends Model {
 		return $query;
 	}
 	
-	function update_to_message($id = '', $user = '', $data = '')
+	public function update_to_message($id = '', $user = '', $data = '')
 	{
 		$this->db->where('pmto_id', $id);
 		$this->db->where('pmto_recipient_user', $user);

@@ -5,8 +5,8 @@
  * @package		Nova
  * @category	Model
  * @author		Anodyne Productions
- * @copyright	2010-11 Anodyne Productions
- * @version		1.0
+ * @copyright	2011 Anodyne Productions
+ * @version		2.0
  */
 
 abstract class Nova_positions_model extends Model {
@@ -18,15 +18,11 @@ abstract class Nova_positions_model extends Model {
 		$this->load->dbutil();
 	}
 	
-	/**
-	 * Retrieve methods
-	 */
-	
-	function get_all_positions($sort = 'asc', $display = 'y')
+	public function get_all_positions($sort = 'asc', $display = 'y')
 	{
 		$this->db->from('positions_'. GENRE);
 		
-		if (!empty($display))
+		if ( ! empty($display))
 		{
 			$this->db->where('pos_display', $display);
 		}
@@ -38,12 +34,12 @@ abstract class Nova_positions_model extends Model {
 		return $query;
 	}
 	
-	function get_dept_positions($dept = '', $display = 'y', $return = 'object')
+	public function get_dept_positions($dept = '', $display = 'y', $return = 'object')
 	{
 		$this->db->from('positions_'. GENRE);
 		$this->db->where('pos_dept', $dept);
 		
-		if (!empty($display))
+		if ( ! empty($display))
 		{
 			$this->db->where('pos_display', $display);
 		}
@@ -69,10 +65,10 @@ abstract class Nova_positions_model extends Model {
 			}
 		}
 		
-		return FALSE;
+		return false;
 	}
 	
-	function get_open_positions($display = 'y')
+	public function get_open_positions($display = 'y')
 	{
 		$this->db->from('positions_'. GENRE);
 		$this->db->where('pos_open >', 0);
@@ -85,15 +81,15 @@ abstract class Nova_positions_model extends Model {
 		return $query;
 	}
 	
-	function get_position($id = '', $return = '')
+	public function get_position($id = '', $return = '')
 	{
 		$query = $this->db->get_where('positions_'. GENRE, array('pos_id' => $id));
 		
-		$row = ($query->num_rows() > 0) ? $query->row() : FALSE;
+		$row = ($query->num_rows() > 0) ? $query->row() : false;
 		
-		if (!empty($return) && $row !== FALSE)
+		if ( ! empty($return) && $row !== false)
 		{
-			if (!is_array($return))
+			if ( ! is_array($return))
 			{
 				return $row->$return;
 			}
@@ -113,11 +109,7 @@ abstract class Nova_positions_model extends Model {
 		return $row;
 	}
 	
-	/**
-	 * Create methods
-	 */
-	
-	function add_position($data = '')
+	public function add_position($data = '')
 	{
 		$query = $this->db->insert('positions_'. GENRE, $data);
 		
@@ -126,11 +118,7 @@ abstract class Nova_positions_model extends Model {
 		return $query;
 	}
 	
-	/**
-	 * Update methods
-	 */
-	
-	function update_open_slots($position = '', $direction = '')
+	public function update_open_slots($position = '', $direction = '')
 	{
 		$this->db->select('pos_open');
 		$this->db->from('positions_'. GENRE);
@@ -155,10 +143,10 @@ abstract class Nova_positions_model extends Model {
 			return $query;
 		}
 		
-		return FALSE;
+		return false;
 	}
 	
-	function update_position($position = '', $data = '')
+	public function update_position($position = '', $data = '')
 	{
 		$this->db->where('pos_id', $position);
 		$query = $this->db->update('positions_'. GENRE, $data);
@@ -168,11 +156,7 @@ abstract class Nova_positions_model extends Model {
 		return $query;
 	}
 	
-	/**
-	 * Delete methods
-	 */
-	
-	function delete_position($id = '')
+	public function delete_position($id = '')
 	{
 		$query = $this->db->delete('positions_'. GENRE, array('pos_id' => $id));
 		

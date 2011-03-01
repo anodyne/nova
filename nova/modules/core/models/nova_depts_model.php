@@ -5,8 +5,8 @@
  * @package		Nova
  * @category	Model
  * @author		Anodyne Productions
- * @copyright	2010-11 Anodyne Productions
- * @version		1.2
+ * @copyright	2011 Anodyne Productions
+ * @version		2.0
  */
 
 abstract class Nova_depts_model extends Model {
@@ -18,11 +18,7 @@ abstract class Nova_depts_model extends Model {
 		$this->load->dbutil();
 	}
 	
-	/**
-	 * Retrieve methods
-	 */
-	
-	function get_all_depts($sort = 'asc', $display = 'y', $parent = 0, $sort_col = 'dept_order')
+	public function get_all_depts($sort = 'asc', $display = 'y', $parent = 0, $sort_col = 'dept_order')
 	{
 		$this->db->from('departments_'. GENRE);
 		
@@ -31,7 +27,7 @@ abstract class Nova_depts_model extends Model {
 			$this->db->where('dept_parent', 0);
 		}
 		
-		if (!empty($display))
+		if ( ! empty($display))
 		{
 			$this->db->where('dept_display', $display);
 		}
@@ -43,7 +39,7 @@ abstract class Nova_depts_model extends Model {
 		return $query;
 	}
 	
-	function get_all_manifests($display = 'y', $sort = 'asc', $sort_col = 'manifest_order')
+	public function get_all_manifests($display = 'y', $sort = 'asc', $sort_col = 'manifest_order')
 	{
 		$this->db->from('manifests');
 		
@@ -59,29 +55,29 @@ abstract class Nova_depts_model extends Model {
 		return $query;
 	}
 	
-	function get_default_manifest()
+	public function get_default_manifest()
 	{
 		$query = $this->db->get_where('manifests', array('manifest_default' => 'y'));
 		
-		$row = ($query->num_rows() > 0) ? $query->row() : FALSE;
+		$row = ($query->num_rows() > 0) ? $query->row() : false;
 		
-		if ($row !== FALSE)
+		if ($row !== false)
 		{
 			return $row->manifest_id;
 		}
 		
-		return FALSE;
+		return false;
 	}
 	
-	function get_dept($id = '', $return = '')
+	public function get_dept($id = '', $return = '')
 	{
 		$query = $this->db->get_where('departments_'. GENRE, array('dept_id' => $id));
 		
-		$row = ($query->num_rows() > 0) ? $query->row() : FALSE;
+		$row = ($query->num_rows() > 0) ? $query->row() : false;
 		
-		if (!empty($return) && $row !== FALSE)
+		if ( ! empty($return) && $row !== false)
 		{
-			if (!is_array($return))
+			if ( ! is_array($return))
 			{
 				return $row->$return;
 			}
@@ -101,15 +97,15 @@ abstract class Nova_depts_model extends Model {
 		return $row;
 	}
 	
-	function get_manifest($id = '', $return = '')
+	public function get_manifest($id = '', $return = '')
 	{
 		$query = $this->db->get_where('manifests', array('manifest_id' => $id));
 		
-		$row = ($query->num_rows() > 0) ? $query->row() : FALSE;
+		$row = ($query->num_rows() > 0) ? $query->row() : false;
 		
-		if (!empty($return) && $row !== FALSE)
+		if ( ! empty($return) && $row !== false)
 		{
-			if (!is_array($return))
+			if ( ! is_array($return))
 			{
 				return $row->$return;
 			}
@@ -129,12 +125,12 @@ abstract class Nova_depts_model extends Model {
 		return $row;
 	}
 	
-	function get_sub_depts($dept = '', $sort = 'asc', $display = 'y')
+	public function get_sub_depts($dept = '', $sort = 'asc', $display = 'y')
 	{
 		$this->db->from('departments_'. GENRE);
 		$this->db->where('dept_parent', $dept);
 		
-		if (!empty($display))
+		if ( ! empty($display))
 		{
 			$this->db->where('dept_display', $display);
 		}
@@ -146,18 +142,14 @@ abstract class Nova_depts_model extends Model {
 		return $query;
 	}
 	
-	/**
-	 * Create methods
-	 */
-	
-	function add_dept($data = '')
+	public function add_dept($data = '')
 	{
 		$query = $this->db->insert('departments_'. GENRE, $data);
 		
 		return $query;
 	}
 	
-	function add_manifest($data = '')
+	public function add_manifest($data = '')
 	{
 		$query = $this->db->insert('manifests', $data);
 		
@@ -166,11 +158,7 @@ abstract class Nova_depts_model extends Model {
 		return $query;
 	}
 	
-	/**
-	 * Update methods
-	 */
-	
-	function update_dept($dept = '', $data = '')
+	public function update_dept($dept = '', $data = '')
 	{
 		$this->db->where('dept_id', $dept);
 		$query = $this->db->update('departments_'. GENRE, $data);
@@ -180,7 +168,7 @@ abstract class Nova_depts_model extends Model {
 		return $query;
 	}
 	
-	function update_manifest($id = '', $data = '')
+	public function update_manifest($id = '', $data = '')
 	{
 		$this->db->where('manifest_id', $id);
 		$query = $this->db->update('manifests', $data);
@@ -190,7 +178,7 @@ abstract class Nova_depts_model extends Model {
 		return $query;
 	}
 	
-	function update_manifest_default($old = 'y', $new = 'n')
+	public function update_manifest_default($old = 'y', $new = 'n')
 	{
 		$this->db->where('manifest_default', $old);
 		$query = $this->db->update('manifests', array('manifest_default' => $new));
@@ -200,11 +188,7 @@ abstract class Nova_depts_model extends Model {
 		return $query;
 	}
 	
-	/**
-	 * Delete methods
-	 */
-	
-	function delete_dept($id = '')
+	public function delete_dept($id = '')
 	{
 		$query = $this->db->delete('departments_'. GENRE, array('dept_id' => $id));
 		
@@ -213,7 +197,7 @@ abstract class Nova_depts_model extends Model {
 		return $query;
 	}
 	
-	function delete_manifest($id = '')
+	public function delete_manifest($id = '')
 	{
 		$query = $this->db->delete('manifests', array('manifest_id' => $id));
 		

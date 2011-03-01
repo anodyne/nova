@@ -5,8 +5,8 @@
  * @package		Nova
  * @category	Model
  * @author		Anodyne Productions
- * @copyright	2010-11 Anodyne Productions
- * @version		1.0
+ * @copyright	2011 Anodyne Productions
+ * @version		2.0
  */
 
 abstract class Nova_menu_model extends Model {
@@ -18,25 +18,21 @@ abstract class Nova_menu_model extends Model {
 		$this->load->dbutil();
 	}
 	
-	/**
-	 * Retrieve methods
-	 */
-	
-	function get_menu_items($type = '', $cat = '', $display = 'y')
+	public function get_menu_items($type = '', $cat = '', $display = 'y')
 	{
 		$this->db->from('menu_items');
 		
-		if (!empty($type))
+		if ( ! empty($type))
 		{
 			$this->db->where('menu_type', $type);
 		}
 		
-		if (!empty($cat))
+		if ( ! empty($cat))
 		{
 			$this->db->where('menu_cat', $cat);
 		}
 		
-		if (!empty($display))
+		if ( ! empty($display))
 		{
 			$this->db->where('menu_display', 'y');
 		}
@@ -49,18 +45,18 @@ abstract class Nova_menu_model extends Model {
 		return $query;
 	}
 	
-	function get_menu_item($id = '')
+	public function get_menu_item($id = '')
 	{
 		$query = $this->db->get_where('menu_items', array('menu_id' => $id));
 		
 		return $query;
 	}
 	
-	function get_menu_categories($type = '')
+	public function get_menu_categories($type = '')
 	{
 		$this->db->from('menu_categories');
 		
-		if (!empty($type))
+		if ( ! empty($type))
 		{
 			$this->db->where('menucat_type', $type);
 		}
@@ -72,16 +68,16 @@ abstract class Nova_menu_model extends Model {
 		return $query;
 	}
 	
-	function get_menu_category($cat_data = '', $cat_field = 'menucat_menu_cat')
+	public function get_menu_category($cat_data = '', $cat_field = 'menucat_menu_cat')
 	{
 		$query = $this->db->get_where('menu_categories', array($cat_field => $cat_data));
 		
-		$row = ($query->num_rows() > 0) ? $query->row() : FALSE;
+		$row = ($query->num_rows() > 0) ? $query->row() : false;
 		
 		return $row;
 	}
 	
-	function get_all_item_categories()
+	public function get_all_item_categories()
 	{
 		$this->db->select('menu_cat');
 		$this->db->from('menu_items');
@@ -92,7 +88,7 @@ abstract class Nova_menu_model extends Model {
 		return $query;
 	}
 	
-	function get_admin_menu($type = '')
+	public function get_admin_menu($type = '')
 	{
 		$this->db->from('menu_items');
 		$this->db->join('menu_categories', 'menu_categories.menucat_menu_cat = menu_items.menu_cat');
@@ -106,11 +102,7 @@ abstract class Nova_menu_model extends Model {
 		return $query;
 	}
 	
-	/**
-	 * Create methods
-	 */
-	
-	function add_menu_item($data = '')
+	public function add_menu_item($data = '')
 	{
 		$query = $this->db->insert('menu_items', $data);
 		
@@ -119,7 +111,7 @@ abstract class Nova_menu_model extends Model {
 		return $query;
 	}
 	
-	function add_menu_category($data = '')
+	public function add_menu_category($data = '')
 	{
 		$query = $this->db->insert('menu_categories', $data);
 		
@@ -128,11 +120,7 @@ abstract class Nova_menu_model extends Model {
 		return $query;
 	}
 	
-	/**
-	 * Update methods
-	 */
-	
-	function update_menu_item($data = '', $where_data = '', $where_field = 'menu_id')
+	public function update_menu_item($data = '', $where_data = '', $where_field = 'menu_id')
 	{
 		$this->db->where($where_field, $where_data);
 		$query = $this->db->update('menu_items', $data);
@@ -142,7 +130,7 @@ abstract class Nova_menu_model extends Model {
 		return $query;
 	}
 	
-	function update_menu_category($data = '', $id = '')
+	public function update_menu_category($data = '', $id = '')
 	{
 		$this->db->where('menucat_id', $id);
 		$query = $this->db->update('menu_categories', $data);
@@ -152,11 +140,7 @@ abstract class Nova_menu_model extends Model {
 		return $query;
 	}
 	
-	/**
-	 * Delete methods
-	 */
-	
-	function delete_menu_item($id = '')
+	public function delete_menu_item($id = '')
 	{
 		$query = $this->db->delete('menu_items', array('menu_id' => $id));
 		
@@ -165,7 +149,7 @@ abstract class Nova_menu_model extends Model {
 		return $query;
 	}
 	
-	function delete_menu_category($id = '')
+	public function delete_menu_category($id = '')
 	{
 		$query = $this->db->delete('menu_categories', array('menucat_id' => $id));
 		

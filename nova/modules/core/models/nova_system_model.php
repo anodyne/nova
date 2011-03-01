@@ -5,11 +5,8 @@
  * @package		Nova
  * @category	Model
  * @author		Anodyne Productions
- * @copyright	2010-11 Anodyne Productions
- * @version		1.2
- *
- * Added methods to create, retrieve and delete site bans from the database,
- * updated method that automatically sets the first My Link
+ * @copyright	2011 Anodyne Productions
+ * @version		2.0
  */
 
 abstract class Nova_system_model extends Model {
@@ -21,21 +18,14 @@ abstract class Nova_system_model extends Model {
 		$this->load->dbutil();
 	}
 	
-	/**
-	 * Retrieve methods
-	 */
-	
-	function check_install_status()
+	public function check_install_status()
 	{
 		$prefix = $this->db->dbprefix;
 		
-		/* get an array of the tables */
 		$data = $this->db->list_tables();
 		
-		/* get the prefix length */
 		$prefix_len = strlen($prefix);
 		
-		/* go through all the tables to find out if its part of the system or not */
 		foreach ($data as $key => $value)
 		{
 			if (substr($value, 0, $prefix_len) != $prefix)
@@ -44,23 +34,22 @@ abstract class Nova_system_model extends Model {
 			}
 		}
 		
-		/* check to see if there are tables or not */
 		if (count($data) > 0)
 		{
-			return TRUE;
+			return true;
 		}
 		
-		return FALSE;
+		return false;
 	}
 	
-	function get_all_skins()
+	public function get_all_skins()
 	{
 		$query = $this->db->get('catalogue_skins');
 		
 		return $query;
 	}
 	
-	function get_all_system_components()
+	public function get_all_system_components()
 	{
 		$this->db->from('system_components');
 		$this->db->order_by('comp_id', 'asc');
@@ -70,7 +59,7 @@ abstract class Nova_system_model extends Model {
 		return $query;
 	}
 	
-	function get_all_system_versions()
+	public function get_all_system_versions()
 	{
 		$this->db->from('system_versions');
 		$this->db->order_by('version_id', 'desc');
@@ -80,15 +69,15 @@ abstract class Nova_system_model extends Model {
 		return $query;
 	}
 	
-	function get_ban($id = '', $return = '')
+	public function get_ban($id = '', $return = '')
 	{
 		$query = $this->db->get_where('bans', array('ban_id' => $id));
 		
-		$row = ($query->num_rows() > 0) ? $query->row() : FALSE;
+		$row = ($query->num_rows() > 0) ? $query->row() : false;
 		
-		if (!empty($return) && $row !== FALSE)
+		if ( ! empty($return) && $row !== false)
 		{
-			if (!is_array($return))
+			if ( ! is_array($return))
 			{
 				return $row->$return;
 			}
@@ -108,7 +97,7 @@ abstract class Nova_system_model extends Model {
 		return $row;
 	}
 	
-	function get_bans($level = '', $returnall = TRUE)
+	public function get_bans($level = '', $returnall = true)
 	{
 		$this->db->from('bans');
 		
@@ -121,7 +110,7 @@ abstract class Nova_system_model extends Model {
 		
 		if ($query->num_rows() > 0)
 		{
-			if ($returnall === TRUE)
+			if ($returnall === true)
 			{
 				return $query->result();
 			}
@@ -141,21 +130,19 @@ abstract class Nova_system_model extends Model {
 		return array();
 	}
 	
-	function get_current_version()
+	public function get_current_version()
 	{
 		$query = $this->db->get_where('system_info', array('sys_id' => 1));
 		
-		/* grab the data */
 		foreach ($query->result() as $row)
 		{
 			$data = $row->system_version_complete;
 		}
 		
-		/* return the data for use */
 		return $data;
 	}
 	
-	function get_database_size()
+	public function get_database_size()
 	{
 		$query = $this->db->query('SHOW TABLE STATUS');
 		
@@ -172,15 +159,15 @@ abstract class Nova_system_model extends Model {
 		return $dbsize;
 	}
 	
-	function get_item($table = '', $key = '', $id = '', $return = '')
+	public function get_item($table = '', $key = '', $id = '', $return = '')
 	{
 		$query = $this->db->get_where($table, array($key => $id));
 		
-		$row = ($query->num_rows() > 0) ? $query->row() : FALSE;
+		$row = ($query->num_rows() > 0) ? $query->row() : false;
 		
-		if (!empty($return) && $row !== FALSE)
+		if ( ! empty($return) && $row !== false)
 		{
-			if (!is_array($return))
+			if ( ! is_array($return))
 			{
 				return $row->$return;
 			}
@@ -200,7 +187,7 @@ abstract class Nova_system_model extends Model {
 		return $row;
 	}
 	
-	function get_last_login_attempt($data = '', $field = 'login_email')
+	public function get_last_login_attempt($data = '', $field = 'login_email')
 	{
 		$this->db->from('login_attempts');
 		$this->db->where($field, $data);
@@ -208,17 +195,17 @@ abstract class Nova_system_model extends Model {
 		
 		$query = $this->db->get();
 		
-		$row = ($query->num_rows() > 0) ? $query->row() : FALSE;
+		$row = ($query->num_rows() > 0) ? $query->row() : false;
 		
 		return $row;
 	}
 	
-	function get_loa_records($limit = 0, $offset = 0)
+	public function get_loa_records($limit = 0, $offset = 0)
 	{
 		$this->db->from('user_loa');
 		$this->db->order_by('loa_start_date', 'desc');
 		
-		if (!empty($limit))
+		if ( ! empty($limit))
 		{
 			$this->db->limit($limit, $offset);
 		}
@@ -228,7 +215,7 @@ abstract class Nova_system_model extends Model {
 		return $query;
 	}
 	
-	function get_nova_uid()
+	public function get_nova_uid()
 	{
 		$query = $this->db->get_where('system_info', array('sys_id' => 1));
 		
@@ -239,31 +226,31 @@ abstract class Nova_system_model extends Model {
 			return $row->sys_uid;
 		}
 		
-		return FALSE;
+		return false;
 	}
 	
-	function get_preferences()
+	public function get_preferences()
 	{
 		$query = $this->db->get('user_prefs');
 		
 		return $query;
 	}
 	
-	function get_security_questions()
+	public function get_security_questions()
 	{
 		$query = $this->db->get('security_questions');
 		
 		return $query;
 	}
 	
-	function get_sim_types()
+	public function get_sim_types()
 	{
 		$query = $this->db->get('sim_type');
 		
 		return $query;
 	}
 	
-	function get_skinsec_default($section = '')
+	public function get_skinsec_default($section = '')
 	{
 		$this->db->from('catalogue_skinsecs');
 		$this->db->where('skinsec_section', $section);
@@ -279,10 +266,10 @@ abstract class Nova_system_model extends Model {
 			return $row->skinsec_skin;
 		}
 		
-		return FALSE;
+		return false;
 	}
 	
-	function get_skin_info($id = '', $field = 'skin_location')
+	public function get_skin_info($id = '', $field = 'skin_location')
 	{
 		$this->db->from('catalogue_skins');
 		$this->db->where($field, $id);
@@ -290,18 +277,18 @@ abstract class Nova_system_model extends Model {
 		
 		$query = $this->db->get();
 		
-		$row = ($query->num_rows() > 0) ? $query->row() : FALSE;
+		$row = ($query->num_rows() > 0) ? $query->row() : false;
 		
 		return $row;
 	}
 	
-	function get_skin_name($id = '')
+	public function get_skin_name($id = '')
 	{
 		$query = $this->db->get_where('catalogue_skins', array('skin_id' => $id));
 		
-		$row = ($query->num_rows() > 0) ? $query->row() : FALSE;
+		$row = ($query->num_rows() > 0) ? $query->row() : false;
 		
-		if ($row !== FALSE)
+		if ($row !== false)
 		{
 			return $row->skin_name;
 		}
@@ -309,7 +296,7 @@ abstract class Nova_system_model extends Model {
 		return $row;
 	}
 	
-	function get_skin_section_info($id = '', $field = 'skinsec_section')
+	public function get_skin_section_info($id = '', $field = 'skinsec_section')
 	{
 		$this->db->from('catalogue_skinsecs');
 		$this->db->where($field, $id);
@@ -317,31 +304,29 @@ abstract class Nova_system_model extends Model {
 		
 		$query = $this->db->get();
 		
-		$row = ($query->num_rows() > 0) ? $query->row() : FALSE;
+		$row = ($query->num_rows() > 0) ? $query->row() : false;
 		
 		return $row;
 	}
 	
-	function get_skin_sections($id = '', $status = 'active')
+	public function get_skin_sections($id = '', $status = 'active')
 	{
 		$this->db->from('catalogue_skinsecs');
 		
-		if (!empty($id))
+		if ( ! empty($id))
 		{
 			$this->db->where('skinsec_skin', $id);
 		}
 		
-		if (!empty($status))
+		if ( ! empty($status))
 		{
-			if (!is_array($status))
+			if ( ! is_array($status))
 			{
 				$status = array($status);
 			}
 			
-			/* count the array */
 			$count = count($status);
 			
-			/* set the initial string */
 			$string = "";
 			
 			for ($i=0; $i < $count; $i++)
@@ -358,7 +343,7 @@ abstract class Nova_system_model extends Model {
 				$string.= $or . "skinsec_status LIKE '$status[$i]'";
 			}
 			
-			$this->db->where("($string)", NULL);
+			$this->db->where("($string)", null);
 		}
 		
 		$query = $this->db->get();
@@ -366,7 +351,7 @@ abstract class Nova_system_model extends Model {
 		return $query;
 	}
 	
-	function get_skinsec($where = '')
+	public function get_skinsec($where = '')
 	{
 		$this->db->from('catalogue_skinsecs');
 		
@@ -379,12 +364,12 @@ abstract class Nova_system_model extends Model {
 		
 		$query = $this->db->get();
 		
-		$row = ($query->num_rows() > 0) ? $query->row() : FALSE;
+		$row = ($query->num_rows() > 0) ? $query->row() : false;
 		
 		return $row;
 	}
 	
-	function get_system_info()
+	public function get_system_info()
 	{
 		$query = $this->db->get_where('system_info', array('sys_id' => 1));
 		
@@ -393,14 +378,14 @@ abstract class Nova_system_model extends Model {
 			return $query->row();
 		}
 		
-		return FALSE;
+		return false;
 	}
 	
-	function get_uploaded_images($type = '')
+	public function get_uploaded_images($type = '')
 	{
 		$this->db->from('uploads');
 		
-		if (!empty($type))
+		if ( ! empty($type))
 		{
 			$this->db->where('upload_resource_type', $type);
 		}
@@ -423,7 +408,7 @@ abstract class Nova_system_model extends Model {
 	 * @param	bool	whether to prepend the table with the database prefix
 	 * @return	array 	an array of table columns
 	 */
-	public function list_table_columns($table, $like = false, $add_prefix = false)
+	public public function list_table_columns($table, $like = false, $add_prefix = false)
 	{
 		$table = $this->db->protect_identifiers($table, $add_prefix);
 
@@ -443,18 +428,14 @@ abstract class Nova_system_model extends Model {
 		return $retval;
 	}
 	
-	/**
-	 * Count methods
-	 */
-	
-	function count_loa_records()
+	public function count_loa_records()
 	{
 		$this->db->from('user_loa');
 		
 		return $this->db->count_all_results();
 	}
 	
-	function count_login_attempts($email = '')
+	public function count_login_attempts($email = '')
 	{
 		$this->db->from('login_attempts');
 		$this->db->where('login_email', $email);
@@ -462,11 +443,7 @@ abstract class Nova_system_model extends Model {
 		return $this->db->count_all_results();
 	}
 	
-	/**
-	 * Create methods
-	 */
-	
-	function add_ban($data = '')
+	public function add_ban($data = '')
 	{
 		$query = $this->db->insert('bans', $data);
 		
@@ -475,7 +452,7 @@ abstract class Nova_system_model extends Model {
 		return $query;
 	}
 	
-	function add_login_attempt($data = '')
+	public function add_login_attempt($data = '')
 	{
 		$query = $this->db->insert('login_attempts', $data);
 		
@@ -484,7 +461,7 @@ abstract class Nova_system_model extends Model {
 		return $query;
 	}
 	
-	function add_sim_type($data = '')
+	public function add_sim_type($data = '')
 	{
 		$query = $this->db->insert('sim_type', $data);
 		
@@ -493,7 +470,7 @@ abstract class Nova_system_model extends Model {
 		return $query;
 	}
 	
-	function add_skin($data = '')
+	public function add_skin($data = '')
 	{
 		$query = $this->db->insert('catalogue_skins', $data);
 		
@@ -502,7 +479,7 @@ abstract class Nova_system_model extends Model {
 		return $query;
 	}
 	
-	function add_skin_section($data = '')
+	public function add_skin_section($data = '')
 	{
 		$query = $this->db->insert('catalogue_skinsecs', $data);
 		
@@ -511,7 +488,7 @@ abstract class Nova_system_model extends Model {
 		return $query;
 	}
 	
-	function add_system_version($data = '')
+	public function add_system_version($data = '')
 	{
 		$query = $this->db->insert('system_versions', $data);
 		
@@ -520,7 +497,7 @@ abstract class Nova_system_model extends Model {
 		return $query;
 	}
 	
-	function add_upload_record($data = '')
+	public function add_upload_record($data = '')
 	{
 		$query = $this->db->insert('uploads', $data);
 		
@@ -529,41 +506,35 @@ abstract class Nova_system_model extends Model {
 		return $query;
 	}
 	
-	/**
-	 * Update methods
-	 */
-	
-	public function update_database_charset()
+	public public function update_database_charset()
 	{
 		$query = $this->db->query('ALTER DATABASE `'. $this->db->database .'` DEFAULT CHARACTER SET '. $this->db->char_set .' COLLATE '. $this->db->dbcollat .'');
 		
 		return $query;
 	}
 	
-	function update_my_links($id = '', $status = 'active', $items = '83')
+	public function update_my_links($id = '', $status = 'active', $items = '83')
 	{
-		/* sets the default to Site Options link */
 		$update = array('my_links' => $items);
 		
-		if (!empty($id))
+		if ( ! empty($id))
 		{
 			$this->db->where('userid', $id);
 		}
 		
-		if (!empty($status))
+		if ( ! empty($status))
 		{
 			$this->db->where('status', 'active');
 		}
 		
 		$query = $this->db->update('users', $update);
 		
-		/* optimize the table */
 		$this->dbutil->optimize_table('users');
 		
 		return $query;
 	}
 	
-	function update_sim_type($id = '', $data = '')
+	public function update_sim_type($id = '', $data = '')
 	{
 		$this->db->where('simtype_id', $id);
 		$query = $this->db->update('sim_type', $data);
@@ -573,7 +544,7 @@ abstract class Nova_system_model extends Model {
 		return $query;
 	}
 	
-	function update_skin($id = '', $data = '')
+	public function update_skin($id = '', $data = '')
 	{
 		$this->db->where('skin_id', $id);
 		$query = $this->db->update('catalogue_skins', $data);
@@ -583,14 +554,14 @@ abstract class Nova_system_model extends Model {
 		return $query;
 	}
 	
-	function update_skin_section($id = '', $data = '', $where = array())
+	public function update_skin_section($id = '', $data = '', $where = array())
 	{
-		if (!empty($id))
+		if ( ! empty($id))
 		{
 			$this->db->where('skinsec_id', $id);
 		}
 		
-		if (!empty($where))
+		if ( ! empty($where))
 		{
 			foreach ($where as $key => $value)
 			{
@@ -605,7 +576,7 @@ abstract class Nova_system_model extends Model {
 		return $query;
 	}
 	
-	function update_system_info($data = '')
+	public function update_system_info($data = '')
 	{
 		$this->db->where('sys_id', 1);
 		$query = $this->db->update('system_info', $data);
@@ -615,11 +586,7 @@ abstract class Nova_system_model extends Model {
 		return $query;
 	}
 	
-	/**
-	 * Delete methods
-	 */
-	
-	function delete_ban($id = '')
+	public function delete_ban($id = '')
 	{
 		$query = $this->db->delete('bans', array('ban_id' => $id));
 		
@@ -628,7 +595,7 @@ abstract class Nova_system_model extends Model {
 		return $query;
 	}
 	
-	function delete_login_attempts($email = '')
+	public function delete_login_attempts($email = '')
 	{
 		$query = $this->db->delete('login_attempts', array('login_email' => $email));
 		
@@ -637,7 +604,7 @@ abstract class Nova_system_model extends Model {
 		return $query;
 	}
 	
-	function delete_sim_type($id = '')
+	public function delete_sim_type($id = '')
 	{
 		$query = $this->db->delete('sim_type', array('simtype_id' => $id));
 		
@@ -646,7 +613,7 @@ abstract class Nova_system_model extends Model {
 		return $query;
 	}
 	
-	function delete_skin($id = '')
+	public function delete_skin($id = '')
 	{
 		$query = $this->db->delete('catalogue_skins', array('skin_id' => $id));
 		
@@ -655,7 +622,7 @@ abstract class Nova_system_model extends Model {
 		return $query;
 	}
 	
-	function delete_skin_section($id = '')
+	public function delete_skin_section($id = '')
 	{
 		$query = $this->db->delete('catalogue_skinsecs', array('skinsec_id' => $id));
 		
@@ -664,7 +631,7 @@ abstract class Nova_system_model extends Model {
 		return $query;
 	}
 	
-	function delete_upload_record($id = '')
+	public function delete_upload_record($id = '')
 	{
 		$query = $this->db->delete('uploads', array('upload_id' => $id));
 		
@@ -673,19 +640,15 @@ abstract class Nova_system_model extends Model {
 		return $query;
 	}
 	
-	/**
-	 * Miscellaneous methods
-	 */
-	
-	function optimize_table($table = '')
+	public function optimize_table($table = '')
 	{
-		if (!empty($table))
+		if ( ! empty($table))
 		{
 			$this->dbutil->optimize_table($table);
 		}
 		else
 		{
-			return FALSE;
+			return false;
 		}
 	}
 }
