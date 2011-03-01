@@ -371,35 +371,29 @@ abstract class Nova_upgrade extends Controller {
 			break;
 				
 			case 2:
-				// create a new content view
-				$this->template->layout->content = View::factory(Location::view('upgrade_step2'));
-				
-				// assign the object a shorter variable to use in the method
-				$data = $this->template->layout->content;
-				
-				// content
-				$this->template->title.= __('Cleaning Up Data');
-				$this->template->layout->label = __('Cleaning Up Data');
-				
-				// create the javascript view
-				$this->template->javascript = View::factory(Location::view('upgrade_step2_js', null, 'js'));
-				
 				// set the loading image
-				$data->loading = array(
-					'src' => MODFOLDER.'/nova/upgrade/views/design/images/loading-circle-large.gif',
-					'attr' => array(
-						'class' => 'image'),
+				$data['loading'] = array(
+					'src' => MODFOLDER.'/core/views/_base/images/loading-circle-large.gif',
+					'class' => 'image',
 				);
+				
+				$data['message'] = lang('upg_step2_message');
 				
 				// build the next step button
 				$next = array(
 					'type' => 'submit',
 					'class' => 'btn-main',
+					'name' => 'next',
+					'value' => 'next',
 					'id' => 'start',
+					'content' => ucwords(lang('global_run'))
 				);
 				
-				// build the next step control
-				$this->template->layout->controls = form::button('next', __('Run'), $next).form::close();
+				$this->_regions['content'] = Location::view('upgrade_step2', '_base', 'update', $data);
+				$this->_regions['javascript'] = Location::js('upgrade_step2_js', '_base', 'update');
+				$this->_regions['controls'] = form_button($next).form_close();
+				$this->_regions['title'].= lang('upg_title');
+				$this->_regions['label'] = lang('upg_step2_label');
 			break;
 				
 			case 3:
@@ -409,46 +403,47 @@ abstract class Nova_upgrade extends Controller {
 					$this->_register();
 				}
 				
-				// create a new content view
-				$this->template->layout->content = View::factory(Location::view('upgrade_step3'));
-				
-				// assign the object a shorter variable to use in the method
-				$data = $this->template->layout->content;
+				$this->load->model('users_model', 'user');
 				
 				// an empty array for user info
-				$data->options = array();
+				$data['options'] = array();
 				
 				// get all active users
-				$all = Jelly::query('user')->where('status', '=', 'active')->select();
+				$all = $this->user->get_users();
 				
-				foreach ($all as $a)
+				if ($all->num_rows() > 0)
 				{
-					$data->options[$a->id] = $a->name.' ('.$a->email.')';
+					foreach ($all->result() as $a)
+					{
+						$data['options'][$a->userid] = $a->name.' ('.$a->email.')';
+					}
 				}
 				
-				// content
-				$this->template->title.= __('Passwords and Admin Rights');
-				$this->template->layout->label = __('Passwords and Admin Rights');
-				
-				// create the javascript view
-				$this->template->javascript = View::factory(Location::view('upgrade_step3_js', null, 'js'));
-				
 				// set the loading image
-				$data->loading = array(
-					'src' => MODFOLDER.'/nova/upgrade/views/design/images/loading-circle-large.gif',
-					'attr' => array(
-						'class' => 'image'),
+				$data['loading'] = array(
+					'src' => MODFOLDER.'/core/views/_base/images/loading-circle-large.gif',
+					'class' => 'image',
 				);
+				
+				$data['message'] = nl2br(lang('upg_step3_message'));
+				$data['password'] = nl2br(lang('upg_step3_password'));
+				$data['admin'] = nl2br(lang('upg_step3_admin'));
 				
 				// build the next step button
 				$next = array(
 					'type' => 'submit',
 					'class' => 'btn-main',
+					'name' => 'next',
+					'value' => 'next',
 					'id' => 'start',
+					'content' => ucwords(lang('global_finalize'))
 				);
 				
-				// build the next step control
-				$this->template->layout->controls = form::button('next', __('Finalize'), $next).form::close();
+				$this->_regions['content'] = Location::view('upgrade_step3', '_base', 'update', $data);
+				$this->_regions['javascript'] = Location::js('upgrade_step3_js', '_base', 'update');
+				$this->_regions['controls'] = form_button($next).form_close();
+				$this->_regions['title'].= lang('upg_title');
+				$this->_regions['label'] = lang('upg_step3_label');
 			break;
 		}
 		

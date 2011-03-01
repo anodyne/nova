@@ -13,8 +13,6 @@
  * final_password
  * final_roles
  * quick_install
- * specs
- * tour
  * user_awards
  * user_defaults
  * user_logs
@@ -1219,300 +1217,142 @@ abstract class Nova_upgradeajax extends Controller {
 	
 	public function upgrade_specs()
 	{
+		$this->load->model('specs_model', 'specs');
+		$this->load->model('settings_model', 'settings');
+		
 		try {
 			// get the specs from the sms table
-			$result = $this->db->query(Database::SELECT, 'SELECT * FROM sms_specs WHERE specid = 1', true);
+			$query = $this->db->query("SELECT * FROM sms_specs WHERE specid = 1");
 			
 			// create the spec item
-			Jelly::factory('spec')
-				->set(array(
-					'name' => Jelly::query('setting', 'sim_name')->limit(1)->select()->value,
-					'order' => 0,
-				))
-				->save();
+			$specValues = array(
+				'specs_name' => $this->settings->get_setting('sim_name'),
+				'specs_order' => 0
+			);
+			$this->specs->add_spec_item($specValues);
 			
 			// create an empty array for validating the specs upgrade
 			$specs = array();
 			
-			foreach ($result as $r)
+			foreach ($query->result() as $r)
 			{
-				// ship class
-				$item = Jelly::factory('formdata')
-					->set(array(
-						'field' => 23,
-						'value' => $r->shipClass,
-						'item' => 1,
-						'form' => 'specs'
-					))
-					->save();
-				$specs[] = $item->saved();
+				$specData = array(
+					array(
+						'data_field' => 1,
+						'data_value' => $r->shipClass,
+						'data_item' => 1),
+					array(
+						'data_field' => 2,
+						'data_value' => $r->shipRole,
+						'data_item' => 1),
+					array(
+						'data_field' => 3,
+						'data_value' => $r->duration,
+						'data_item' => 1),
+					array(
+						'data_field' => 4,
+						'data_value' => $r->refit.' '.$r->refitUnit,
+						'data_item' => 1),
+					array(
+						'data_field' => 5,
+						'data_value' => $r->resupply.' '.$r->resupplyUnit,
+						'data_item' => 1),
+					array(
+						'data_field' => 6,
+						'data_value' => $r->length,
+						'data_item' => 1),
+					array(
+						'data_field' => 7,
+						'data_value' => $r->width,
+						'data_item' => 1),
+					array(
+						'data_field' => 8,
+						'data_value' => $r->height,
+						'data_item' => 1),
+					array(
+						'data_field' => 9,
+						'data_value' => $r->decks,
+						'data_item' => 1),
+					array(
+						'data_field' => 10,
+						'data_value' => $r->complimentOfficers,
+						'data_item' => 1),
+					array(
+						'data_field' => 11,
+						'data_value' => $r->complimentEnlisted,
+						'data_item' => 1),
+					array(
+						'data_field' => 12,
+						'data_value' => $r->complimentMarines,
+						'data_item' => 1),
+					array(
+						'data_field' => 13,
+						'data_value' => $r->complimentCivilians,
+						'data_item' => 1),
+					array(
+						'data_field' => 14,
+						'data_value' => $r->complimentEmergency,
+						'data_item' => 1),
+					array(
+						'data_field' => 15,
+						'data_value' => $r->warpCruise,
+						'data_item' => 1),
+					array(
+						'data_field' => 16,
+						'data_value' => $r->warpMaxCruise.' '.$r->warpMaxTime,
+						'data_item' => 1),
+					array(
+						'data_field' => 17,
+						'data_value' => $r->warpEmergency.' '.$r->warpEmergencyTime,
+						'data_item' => 1),
+					array(
+						'data_field' => 18,
+						'data_value' => $r->shields."\r\n\r\n".$r->defensive,
+						'data_item' => 1),
+					array(
+						'data_field' => 19,
+						'data_value' => $r->phasers."\r\n\r\n".$r->torpedoLaunchers,
+						'data_item' => 1),
+					array(
+						'data_field' => 20,
+						'data_value' => $r->torpedoCompliment,
+						'data_item' => 1),
+					array(
+						'data_field' => 21,
+						'data_value' => $r->shuttlebays,
+						'data_item' => 1),
+					array(
+						'data_field' => 22,
+						'data_value' => $r->shuttles,
+						'data_item' => 1),
+					array(
+						'data_field' => 23,
+						'data_value' => $r->fighters,
+						'data_item' => 1),
+					array(
+						'data_field' => 24,
+						'data_value' => $r->runabouts,
+						'data_item' => 1),
+				);
 				
-				// ship role
-				$item = Jelly::factory('formdata')
-					->set(array(
-						'field' => 24,
-						'value' => $r->shipRole,
-						'item' => 1,
-						'form' => 'specs'
-					))
-					->save();
-				$specs[] = $item->saved();
-				
-				// duration
-				$item = Jelly::factory('formdata')
-					->set(array(
-						'field' => 25,
-						'value' => $r->duration,
-						'item' => 1,
-						'form' => 'specs'
-					))
-					->save();
-				$specs[] = $item->saved();
-				
-				// refit
-				$item = Jelly::factory('formdata')
-					->set(array(
-						'field' => 26,
-						'value' => $r->refit.' '.$r->refitUnit,
-						'item' => 1,
-						'form' => 'specs'
-					))
-					->save();
-				$specs[] = $item->saved();
-				
-				// resupply
-				$item = Jelly::factory('formdata')
-					->set(array(
-						'field' => 27,
-						'value' => $r->resupply.' '.$r->resupplyUnit,
-						'item' => 1,
-						'form' => 'specs'
-					))
-					->save();
-				$specs[] = $item->saved();
-				
-				// length
-				$item = Jelly::factory('formdata')
-					->set(array(
-						'field' => 28,
-						'value' => $r->length,
-						'item' => 1,
-						'form' => 'specs'
-					))
-					->save();
-				$specs[] = $item->saved();
-				
-				// width
-				$item = Jelly::factory('formdata')
-					->set(array(
-						'field' => 29,
-						'value' => $r->width,
-						'item' => 1,
-						'form' => 'specs'
-					))
-					->save();
-				$specs[] = $item->saved();
-				
-				// height
-				$item = Jelly::factory('formdata')
-					->set(array(
-						'field' => 30,
-						'value' => $r->height,
-						'item' => 1,
-						'form' => 'specs'
-					))
-					->save();
-				$specs[] = $item->saved();
-				
-				// decks
-				$item = Jelly::factory('formdata')
-					->set(array(
-						'field' => 31,
-						'value' => $r->decks,
-						'item' => 1,
-						'form' => 'specs'
-					))
-					->save();
-				$specs[] = $item->saved();
-				
-				// officers
-				$item = Jelly::factory('formdata')
-					->set(array(
-						'field' => 32,
-						'value' => $r->complimentOfficers,
-						'item' => 1,
-						'form' => 'specs'
-					))
-					->save();
-				$specs[] = $item->saved();
-				
-				// enlisted
-				$item = Jelly::factory('formdata')
-					->set(array(
-						'field' => 33,
-						'value' => $r->complimentEnlisted,
-						'item' => 1,
-						'form' => 'specs'
-					))
-					->save();
-				$specs[] = $item->saved();
-				
-				// marines
-				$item = Jelly::factory('formdata')
-					->set(array(
-						'field' => 34,
-						'value' => $r->complimentMarines,
-						'item' => 1,
-						'form' => 'specs'
-					))
-					->save();
-				$specs[] = $item->saved();
-				
-				// civilians
-				$item = Jelly::factory('formdata')
-					->set(array(
-						'field' => 35,
-						'value' => $r->complimentCivilians,
-						'item' => 1,
-						'form' => 'specs'
-					))
-					->save();
-				$specs[] = $item->saved();
-				
-				// emergency compliment
-				$item = Jelly::factory('formdata')
-					->set(array(
-						'field' => 36,
-						'value' => $r->complimentEmergency,
-						'item' => 1,
-						'form' => 'specs'
-					))
-					->save();
-				$specs[] = $item->saved();
-				
-				// warp cruise
-				$item = Jelly::factory('formdata')
-					->set(array(
-						'field' => 37,
-						'value' => $r->warpCruise,
-						'item' => 1,
-						'form' => 'specs'
-					))
-					->save();
-				$specs[] = $item->saved();
-				
-				// warp max cruise
-				$item = Jelly::factory('formdata')
-					->set(array(
-						'field' => 38,
-						'value' => $r->warpMaxCruise.' '.$r->warpMaxTime,
-						'item' => 1,
-						'form' => 'specs'
-					))
-					->save();
-				$specs[] = $item->saved();
-				
-				// warp emergency
-				$item = Jelly::factory('formdata')
-					->set(array(
-						'field' => 39,
-						'value' => $r->warpEmergency.' '.$r->warpEmergencyTime,
-						'item' => 1,
-						'form' => 'specs'
-					))
-					->save();
-				$specs[] = $item->saved();
-				
-				// defensive
-				$item = Jelly::factory('formdata')
-					->set(array(
-						'field' => 40,
-						'value' => $r->shields."\r\n\r\n".$r->defensive,
-						'item' => 1,
-						'form' => 'specs'
-					))
-					->save();
-				$specs[] = $item->saved();
-				
-				// weapons
-				$item = Jelly::factory('formdata')
-					->set(array(
-						'field' => 41,
-						'value' => $r->phasers."\r\n\r\n".$r->torpedoLaunchers,
-						'item' => 1,
-						'form' => 'specs'
-					))
-					->save();
-				$specs[] = $item->saved();
-				
-				// armament
-				$item = Jelly::factory('formdata')
-					->set(array(
-						'field' => 42,
-						'value' => $r->torpedoCompliment,
-						'item' => 1,
-						'form' => 'specs'
-					))
-					->save();
-				$specs[] = $item->saved();
-				
-				// number of shuttlebays
-				$item = Jelly::factory('formdata')
-					->set(array(
-						'field' => 43,
-						'value' => $r->shuttlebays,
-						'item' => 1,
-						'form' => 'specs'
-					))
-					->save();
-				$specs[] = $item->saved();
-				
-				// shuttles
-				$item = Jelly::factory('formdata')
-					->set(array(
-						'field' => 44,
-						'value' => $r->shuttles,
-						'item' => 1,
-						'form' => 'specs'
-					))
-					->save();
-				$specs[] = $item->saved();
-				
-				// number of fighters
-				$item = Jelly::factory('formdata')
-					->set(array(
-						'field' => 45,
-						'value' => $r->fighters,
-						'item' => 1,
-						'form' => 'specs'
-					))
-					->save();
-				$specs[] = $item->saved();
-				
-				// number of runabouts
-				$item = Jelly::factory('formdata')
-					->set(array(
-						'field' => 46,
-						'value' => $r->runabouts,
-						'item' => 1,
-						'form' => 'specs'
-					))
-					->save();
-				$specs[] = $item->saved();
+				foreach ($specData as $key => $value)
+				{
+					$specs[] = (bool) $this->specs->add_spec_field_data($value);
+				}
 			}
 			
 			if (in_array(false, $specs) and ! in_array(true, $specs))
 			{
 				$retval = array(
 					'code' => 0,
-					'message' => __("Your specifications were not upgraded")
+					'message' => "Your specifications were not upgraded"
 				);
 			}
 			elseif (in_array(false, $specs) and in_array(true, $specs))
 			{
 				$retval = array(
 					'code' => 2,
-					'message' => __("Some of your specifications were upgraded, but others were not")
+					'message' => "Some of your specifications were upgraded, but others were not"
 				);
 			}
 			else
@@ -1523,11 +1363,9 @@ abstract class Nova_upgradeajax extends Controller {
 				);
 			}
 			
-			// optmize the tables
 			$this->dbutil->optimize_table('specs');
-			$this->dbutil->optimize_table('forms_data');
+			$this->dbutil->optimize_table('specs_data');
 		} catch (Exception $e) {
-			// catch the exception
 			$retval = array(
 				'code' => 0,
 				'message' => 'ERROR: '.$e->getMessage().' - line '.$e->getLine().' of '.$e->getFile()
@@ -1539,14 +1377,16 @@ abstract class Nova_upgradeajax extends Controller {
 	
 	public function upgrade_tour()
 	{
+		$this->load->model('tour_model', 'tour');
+		
 		try {
 			// get the tour items
-			$result = $this->db->query(Database::SELECT, 'SELECT * FROM sms_tour', true);
+			$query = $this->db->query("SELECT * FROM sms_tour");
 			
 			// create an array for validating
 			$tour = array();
 			
-			foreach ($result as $r)
+			foreach ($query->result() as $r)
 			{
 				$images = array();
 				
@@ -1568,51 +1408,46 @@ abstract class Nova_upgradeajax extends Controller {
 				// make the images array a string
 				$images = implode(',', $images);
 				
-				$item = Jelly::factory('tour')
-					->set(array(
-						'name' => $r->tourName,
-						'order' => $r->tourOrder,
-						'display' => $r->tourDisplay,
-						'summary' => $r->tourSummary,
-						'images' => $images,
-						'specitem' => 1
-					))
-					->save();
-				$tour[] = $item->saved();
+				$tourValues = array(
+					'tour_name' => $r->tourName,
+					'tour_order' => $r->tourOrder,
+					'tour_display' => $r->tourDisplay,
+					'tour_summary' => $r->tourSummary,
+					'tour_images' => $images,
+					'tour_spec_item' => 1
+				);
+				$tour[] = (bool) $this->tour->add_tour_item($tourValues);
 				
-				$dataitem = Jelly::factory('formdata')
-					->set(array(
-						'field' => 47,
-						'value' => $r->tourLocation,
-						'item' => $item->id(),
-						'form' => 'tour'
-					))
-					->save();
-				$tour[] = $dataitem->saved();
+				// get the insert ID
+				$tourid = $this->db->insert_id();
 				
-				$dataitem = Jelly::factory('formdata')
-					->set(array(
-						'field' => 48,
-						'value' => $r->tourDesc,
-						'item' => $item->id(),
-						'form' => 'tour'
-					))
-					->save();
-				$tour[] = $dataitem->saved();
+				$tourData = array(
+					array(
+						'data_field' => 1,
+						'data_value' => $r->tourLocation,
+						'data_tour_item' => $tourid),
+					array(
+						'data_field' => 2,
+						'data_value' => $r->tourDesc,
+						'data_tour_item' => $tourid),
+				);
+				
+				$tour[] = (bool) $this->tour->add_tour_field_data($tourData[0]);
+				$tour[] = (bool) $this->tour->add_tour_field_data($tourData[1]);
 			}
 			
 			if (in_array(false, $tour) and ! in_array(true, $tour))
 			{
 				$retval = array(
 					'code' => 0,
-					'message' => __("Your tour items were not upgraded")
+					'message' => "Your tour items were not upgraded"
 				);
 			}
 			elseif (in_array(false, $tour) and in_array(true, $tour))
 			{
 				$retval = array(
 					'code' => 2,
-					'message' => __("Some of your tour items were upgraded, but others were not")
+					'message' => "Some of your tour items were upgraded, but others were not"
 				);
 			}
 			else
@@ -1623,11 +1458,9 @@ abstract class Nova_upgradeajax extends Controller {
 				);
 			}
 			
-			// optmize the tables
 			$this->dbutil->optimize_table('tour');
-			$this->dbutil->optimize_table('forms_data');
+			$this->dbutil->optimize_table('tour_data');
 		} catch (Exception $e) {
-			// catch the exception
 			$retval = array(
 				'code' => 0,
 				'message' => 'ERROR: '.$e->getMessage().' - line '.$e->getLine().' of '.$e->getFile()
