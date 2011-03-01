@@ -14,11 +14,9 @@
  * final_roles
  * quick_install
  * user_awards
- * user_defaults
  * user_logs
  * user_news
  * user_posts
- * welcome
  */
 
 abstract class Nova_upgradeajax extends Controller {
@@ -1559,28 +1557,32 @@ abstract class Nova_upgradeajax extends Controller {
 	
 	public function upgrade_user_defaults()
 	{
+		$this->load->model('ranks_model', 'ranks');
+		$this->load->model('system_model', 'sys');
+		$this->load->model('users_model', 'users');
+		
 		try {
 			// get the total number of users
-			$users = Jelly::query('user')->count();
+			$users = $this->db->count_all('users');
 			
 			// get the total number of characters
-			$characters = Jelly::query('character')->count();
+			$characters = $this->db->count_all('characters');
 			
 			if ($users > 0 and $characters > 0)
 			{
 				// pull the defaults for skins and ranks
 				$defaults = array(
-					'skin_main'		=> Jelly::query('catalogueskinsec')->defaultskin('main')->select()->skin->location,
-					'skin_admin'	=> Jelly::query('catalogueskinsec')->defaultskin('admin')->select()->skin->location,
-					'skin_wiki'		=> Jelly::query('catalogueskinsec')->defaultskin('wiki')->select()->skin->location,
-					'rank'			=> Jelly::query('cataloguerank')->defaultrank()->select()->location,
-					'links'			=> '',
-					'language'		=> 'en-us',
-					'dst'			=> 0,
+					'skin_main'			=> $this->sys->get_skinsec_default('main'),
+					'skin_admin'		=> $this->sys->get_skinsec_default('admin'),
+					'skin_wiki'			=> $this->sys->get_skinsec_default('wiki'),
+					'display_rank'		=> $this->ranks->get_rank_default(),
+					'my_links'			=> '',
+					'language'			=> 'english',
+					'daylight_savings'	=> 0,
 				);
 				
 				// update all users
-				Jelly::query('user')->set($defaults)->update();
+				$this->users->update_all_users($defaults);
 				
 				$retval = array(
 					'code' => 1,
@@ -1591,11 +1593,10 @@ abstract class Nova_upgradeajax extends Controller {
 			{
 				$retval = array(
 					'code' => 0,
-					'message' => __("User defaults could not be upgraded")
+					'message' => "User defaults could not be upgraded"
 				);
 			}
 			
-			// optmize the tables
 			$this->dbutil->optimize_table('characters');
 			$this->dbutil->optimize_table('users');
 		} catch (Exception $e) {
@@ -1778,13 +1779,14 @@ abstract class Nova_upgradeajax extends Controller {
 	
 	public function upgrade_welcome()
 	{
+		$this->load->model('settings_model', 'settings');
+		$this->load->model('messages_model', 'msgs');
+		
 		try {
-			// update the welcome page header
-			$msg = Jelly::query('message', 'welcome_head')->limit(1)->select();
-			$msg->value = 'Welcome to the '.Jelly::query('setting', 'sim_name')->limit(1)->select()->value.'!';
-			$msg->save();
+			$header = 'Welcome to the '.$this->settings->get_setting('sim_name').'!';
+			$msg = $this->msgs->update_message(array('message_content' => $header), 'welcome_head');
 			
-			if ($msg->saved())
+			if ($msg > 0)
 			{
 				$retval = array(
 					'code' => 1,
@@ -1795,11 +1797,10 @@ abstract class Nova_upgradeajax extends Controller {
 			{
 				$retval = array(
 					'code' => 0,
-					'message' => __("Your welcome message couldn't be upgraded, please do so manually")
+					'message' => "Your welcome message couldn't be upgraded, please do so manually"
 				);
 			}
 			
-			// optmize the tables
 			$this->dbutil->optimize_table('messages');
 		} catch (Exception $e) {
 			$retval = array(
