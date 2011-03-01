@@ -69,6 +69,8 @@ $lang['global_update']			= 'update';
 $lang['global_upgrade']			= 'upgrade';
 $lang['global_yes']				= 'Yes';
 $lang['global_no']				= 'No';
+$lang['global_run']				= 'Run';
+$lang['global_finalize']		= 'Finalize';
 
 $lang['global_readme_title'] 	= 'Readme';
 $lang['global_more_options']	= 'More Options';
@@ -394,18 +396,16 @@ $lang['upg_step1_message'] = "Nova now gives you the ability to upgrade only the
 /*
  * Step 2
  */
-$lang['upg_step2_title'] = 'Step 2 - Create Database Tables';
-$lang['upg_step2_label'] = 'Step 2: Database Structure';
-$lang['upg_step2_success'] = 'You have successfully created the database structure needed by Nova! The next step will insert some basic data into your newly created database tables for use by Nova. Click <strong>Next Step</strong> to continue.';
-$lang['upg_step2_failure'] = "There was a problem creating the database structure. Please make sure all your settings in your config file are correct and try again. If the problem persists, please contact <a href='http://forums.anodyne-productions.com' target='_blank'>Anodyne Productions</a> for additional support.";
+$lang['upg_step2_label'] = 'Upgrading to Nova';
+$lang['upg_step2_message'] = "So how about a little update? So far, I've been able to create all of the Nova database tables, put the basic data into the tables and put all the data from the items you selected into the Nova tables. Now, I need to upgrade a bunch of that data to the Nova format.";
 
 /*
  * Step 3
  */
-$lang['upg_step3_title'] = 'Step 3 - Insert Basic Data';
-$lang['upg_step3_label'] = 'Step 3: Basic Data';
-$lang['upg_step3_success'] = 'You have successfully inserted the basic system data into your database. The next step will insert all of the genre-specific data into your database. Click <strong>Next Step</strong> to continue.';
-$lang['upg_step3_failure'] = 'There was a problem inserting all of the basic data into your database. Please clear your database tables and try again. If the problem persists, please contact <a href="http://forums.anodyne-productions.com" target="_blank">Anodyne Productions</a> for additional support.';
+$lang['upg_step3_label'] = 'Passwords and Admin Rights';
+$lang['upg_step3_message'] = "So how about a little update? So far, I've been able to create all of the Nova database tables, put the basic data into the tables, upgrade all the items you selected from the SMS format to the Nova format and update posts, logs and news to behave properly in Nova. Now, the only thing left to do is update user passwords and set the game master.\r\n\r\nOnce you've finished the upgrade, there are a few things you'll want to do. First, make sure you set a security question and answer from your account page in case you need to reset your password. Second, make sure that any directories that need to be used for uploads (<code>application/assets/images</code>) have their permissions set to 777. (If you don't know how to do that, a Google search will help or you can contact your host.) Finally, make sure to contact your players and remind them to set a security question and answer as well.";
+$lang['upg_step3_password'] = "Because Nova uses a new method of securing passwords, I need to reset all of the passwords in the system. Tell me what you want the password to be (and make sure you remember to tell all your users what it is). This password is case-sensitive and users will be prompted to change their password the first time they log in.";
+$lang['upg_step3_admin'] = "Nova uses a role-based system for determining permissions, but since it's incompatible with SMS, you'll need to select the people who should have system administrator privileges. It's best to keep this list as limited as possible right now. You'll be able to add or remove people from roles once Nova is installed. To select multiple users, hold down control and click on the users you want to have system administrator rights.";
 
 /*
  * Step 4
