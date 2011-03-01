@@ -392,7 +392,6 @@ $tourhash = md5(implode('', array_keys($tourarray))); // 781e5e245d69b566979b86e
 				
 				// change the button and text
 				$('.lower .control button').attr('id', 'next').html('Next Step');
-				$('.lower .control-text').html('Move on to the next step of the upgrade process.');
 			});
 			
 			return false;
