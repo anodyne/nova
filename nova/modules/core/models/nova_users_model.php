@@ -6,9 +6,7 @@
  * @category	Model
  * @author		Anodyne Productions
  * @copyright	2010-11 Anodyne Productions
- * @version		1.3
- *
- * Removed deprecated methods
+ * @version		2.0
  */
 
 abstract class Nova_users_model extends Model {
@@ -24,7 +22,7 @@ abstract class Nova_users_model extends Model {
 	 * Retrieve methods
 	 */
 	
-	function check_email($email = '')
+	public function check_email($email = '')
 	{
 		/* check to see if the email address exists */
 		$this->db->select('userid');
@@ -44,7 +42,7 @@ abstract class Nova_users_model extends Model {
 		return FALSE;
 	}
 	
-	function check_password($email = '', $password = '')
+	public function check_password($email = '', $password = '')
 	{
 		/* check to see if the email address exists */
 		$this->db->select('userid');
@@ -58,7 +56,7 @@ abstract class Nova_users_model extends Model {
 		return $query;
 	}
 	
-	function checking_moderation($type = '', $data = '')
+	public function checking_moderation($type = '', $data = '')
 	{
 		if (!is_array($data))
 		{
@@ -119,7 +117,7 @@ abstract class Nova_users_model extends Model {
 		return 'activated';
 	}
 	
-	function get_crew_emails($email_prefs = FALSE, $pref_name = '')
+	public function get_crew_emails($email_prefs = FALSE, $pref_name = '')
 	{
 		$this->db->from('users');
 		$this->db->where('status', 'active');
@@ -157,7 +155,7 @@ abstract class Nova_users_model extends Model {
 		return FALSE;
 	}
 	
-	function get_email_address($referer = '', $id = '')
+	public function get_email_address($referer = '', $id = '')
 	{
 		$this->db->select('email');
 		$this->db->from('users');
@@ -185,7 +183,7 @@ abstract class Nova_users_model extends Model {
 		return FALSE;
 	}
 	
-	function get_emails_with_access($access = '', $level = '')
+	public function get_emails_with_access($access = '', $level = '')
 	{
 		/* first, get the access id */
 		$this->db->from('access_pages');
@@ -245,7 +243,7 @@ abstract class Nova_users_model extends Model {
 		return FALSE;
 	}
 	
-	function get_gm_emails()
+	public function get_gm_emails()
 	{
 		$this->db->from('users');
 		$this->db->where('is_game_master', 'y');
@@ -266,7 +264,7 @@ abstract class Nova_users_model extends Model {
 		return FALSE;
 	}
 	
-	function get_last_loa($user = '', $blank = FALSE)
+	public function get_last_loa($user = '', $blank = FALSE)
 	{
 		$this->db->from('user_loa');
 		$this->db->where('loa_user', $user);
@@ -281,7 +279,7 @@ abstract class Nova_users_model extends Model {
 		return $query;
 	}
 	
-	function get_loa($id = '')
+	public function get_loa($id = '')
 	{
 		$this->db->select('loa');
 		$this->db->from('users');
@@ -299,7 +297,7 @@ abstract class Nova_users_model extends Model {
 		return FALSE;
 	}
 	
-	function get_main_character($id = '')
+	public function get_main_character($id = '')
 	{
 		$query = $this->db->get_where('users', array('userid' => $id));
 		
@@ -313,7 +311,7 @@ abstract class Nova_users_model extends Model {
 		return FALSE;
 	}
 	
-	function get_main_characters()
+	public function get_main_characters()
 	{
 		$this->db->from('users');
 		$this->db->where('main_char >', 0);
@@ -323,7 +321,7 @@ abstract class Nova_users_model extends Model {
 		return $query;
 	}
 	
-	function get_my_links($id = '')
+	public function get_my_links($id = '')
 	{
 		$query = $this->db->get_where('users', array('userid' => $id));
 		
@@ -338,7 +336,7 @@ abstract class Nova_users_model extends Model {
 		return FALSE;
 	}
 	
-	function get_online_users($time = 5)
+	public function get_online_users($time = 5)
 	{
 		$final_time = now() - ($time * 60);
 		
@@ -365,7 +363,7 @@ abstract class Nova_users_model extends Model {
 		return $array;
 	}
 	
-	function get_pref($key = '', $user = '')
+	public function get_pref($key = '', $user = '')
 	{
 		$this->db->from('user_prefs_values');
 		$this->db->where('prefvalue_key', $key);
@@ -383,7 +381,7 @@ abstract class Nova_users_model extends Model {
 		return FALSE;
 	}
 	
-	function get_user($id = '', $return = '')
+	public function get_user($id = '', $return = '')
 	{
 		$query = $this->db->get_where('users', array('userid' => $id));
 		
@@ -411,7 +409,7 @@ abstract class Nova_users_model extends Model {
 		return $row;
 	}
 	
-	function get_user_details_by_email($email = '')
+	public function get_user_details_by_email($email = '')
 	{
 		$this->db->from('users');
 		$this->db->where('email', $email);
@@ -421,7 +419,7 @@ abstract class Nova_users_model extends Model {
 		return $query;
 	}
 	
-	function get_userid($character = '')
+	public function get_userid($character = '')
 	{
 		$query = $this->db->get_where('characters', array('charid' => $character));
 		
@@ -435,7 +433,7 @@ abstract class Nova_users_model extends Model {
 		return FALSE;
 	}
 	
-	function get_userid_from_email($email = '')
+	public function get_userid_from_email($email = '')
 	{
 		$query = $this->db->get_where('users', array('email' => $email));
 		
@@ -449,7 +447,7 @@ abstract class Nova_users_model extends Model {
 		return FALSE;
 	}
 	
-	function get_users($status = 'active')
+	public function get_users($status = 'active')
 	{
 		$this->db->from('users');
 		
@@ -470,7 +468,7 @@ abstract class Nova_users_model extends Model {
 	 * @param	string	the status of the characters to pull
 	 * @return	mixed	FALSE if there are no characters, an array of objects if there are
 	 */
-	function get_users_from_characters($status = 'active')
+	public function get_users_from_characters($status = 'active')
 	{
 		// pull the characters
 		$chars = $this->db->get_where('characters', array('crew_type' => $status));
@@ -494,7 +492,7 @@ abstract class Nova_users_model extends Model {
 	 * Count methods
 	 */
 	
-	function count_all_users($status = 'active')
+	public function count_all_users($status = 'active')
 	{
 		$this->db->from('users');
 		$this->db->where('status', $status);
@@ -502,7 +500,7 @@ abstract class Nova_users_model extends Model {
 		return $this->db->count_all_results();
 	}
 	
-	function count_users($timeframe = '', $this_month = '', $last_month = '')
+	public function count_users($timeframe = '', $this_month = '', $last_month = '')
 	{
 		$this->db->from('users');
 		
@@ -527,7 +525,7 @@ abstract class Nova_users_model extends Model {
 	 * Create methods
 	 */
 	
-	function create_loa_record($data = '')
+	public function create_loa_record($data = '')
 	{
 		$query = $this->db->insert('user_loa', $data);
 		
@@ -537,7 +535,7 @@ abstract class Nova_users_model extends Model {
 		return $query;
 	}
 	
-	function create_user($data = '')
+	public function create_user($data = '')
 	{
 		$query = $this->db->insert('users', $data);
 		
@@ -545,7 +543,7 @@ abstract class Nova_users_model extends Model {
 		return $query;
 	}
 	
-	function create_user_prefs($id = '')
+	public function create_user_prefs($id = '')
 	{
 		/* get the prefs from the table */
 		$prefs = $this->db->get('user_prefs');
@@ -577,7 +575,7 @@ abstract class Nova_users_model extends Model {
 	 * Update methods
 	 */
 	
-	function update_all_user_prefs($id = '', $value = 'n')
+	public function update_all_user_prefs($id = '', $value = 'n')
 	{
 		$data = array('prefvalue_value' => $value);
 		
@@ -589,7 +587,7 @@ abstract class Nova_users_model extends Model {
 		return $query;
 	}
 	
-	function update_all_users($data = '', $where = '')
+	public function update_all_users($data = '', $where = '')
 	{
 		if (is_array($where))
 		{
@@ -606,7 +604,7 @@ abstract class Nova_users_model extends Model {
 		return $query;
 	}
 	
-	function update_first_launch($id = '')
+	public function update_first_launch($id = '')
 	{
 		$data = array('first_launch' => 0);
 		
@@ -618,7 +616,7 @@ abstract class Nova_users_model extends Model {
 		return $query;
 	}
 	
-	function update_loa_record($id = '', $data = '')
+	public function update_loa_record($id = '', $data = '')
 	{
 		$this->db->where('loa_id', $id);
 		$query = $this->db->update('user_loa', $data);
@@ -628,7 +626,7 @@ abstract class Nova_users_model extends Model {
 		return $query;
 	}
 	
-	function update_login_record($id = '', $time = '')
+	public function update_login_record($id = '', $time = '')
 	{
 		$data = array('last_login' => $time);
 		
@@ -640,7 +638,7 @@ abstract class Nova_users_model extends Model {
 		return $query;
 	}
 	
-	function update_user($id = '', $data = '')
+	public function update_user($id = '', $data = '')
 	{
 		$this->db->where('userid', $id);
 		$query = $this->db->update('users', $data);
@@ -650,7 +648,7 @@ abstract class Nova_users_model extends Model {
 		return $query;
 	}
 	
-	function update_user_pref($user = '', $key = '', $data = '')
+	public function update_user_pref($user = '', $key = '', $data = '')
 	{
 		$this->db->where('prefvalue_key', $key);
 		$this->db->where('prefvalue_user', $user);
@@ -665,7 +663,7 @@ abstract class Nova_users_model extends Model {
 	 * Delete methods
 	 */
 	
-	function delete_user($id = '')
+	public function delete_user($id = '')
 	{
 		$query = $this->db->delete('users', array('userid' => $id));
 		
@@ -674,7 +672,7 @@ abstract class Nova_users_model extends Model {
 		return $query;
 	}
 	
-	function delete_user_pref_values($id = '')
+	public function delete_user_pref_values($id = '')
 	{
 		$query = $this->db->delete('user_prefs_values', array('prefvalue_user' => $id));
 		

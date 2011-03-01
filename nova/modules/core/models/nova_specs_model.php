@@ -22,7 +22,7 @@ abstract class Nova_specs_model extends Model {
 	 * Retrieve methods
 	 */
 	
-	function get_field_data($id = 0, $field = '')
+	public function get_field_data($id = 0, $field = '')
 	{
 		$this->db->from('specs_data');
 		$this->db->where('data_item', $id);
@@ -38,14 +38,14 @@ abstract class Nova_specs_model extends Model {
 		return FALSE;
 	}
 	
-	function get_spec_field_details($id = '')
+	public function get_spec_field_details($id = '')
 	{
 		$query = $this->db->get_where('specs_fields', array('field_id' => $id));
 		
 		return $query;
 	}
 	
-	function get_spec_fields($section = '', $display = 'y', $type = '')
+	public function get_spec_fields($section = '', $display = 'y', $type = '')
 	{
 		$this->db->from('specs_fields');
 		
@@ -71,7 +71,7 @@ abstract class Nova_specs_model extends Model {
 		return $query;
 	}
 	
-	function get_spec_item($id = '')
+	public function get_spec_item($id = '')
 	{
 		$this->db->from('specs');
 		$this->db->where('specs_id', $id);
@@ -87,7 +87,7 @@ abstract class Nova_specs_model extends Model {
 		return FALSE;
 	}
 	
-	function get_spec_items($display = 'y')
+	public function get_spec_items($display = 'y')
 	{
 		$this->db->from('specs');
 		
@@ -103,14 +103,14 @@ abstract class Nova_specs_model extends Model {
 		return $query;
 	}
 	
-	function get_spec_section_details($id = '')
+	public function get_spec_section_details($id = '')
 	{
 		$query = $this->db->get_where('specs_sections', array('section_id' => $id));
 		
 		return $query;
 	}
 	
-	function get_spec_sections()
+	public function get_spec_sections()
 	{
 		$this->db->from('specs_sections');
 		$this->db->order_by('section_order', 'asc');
@@ -120,14 +120,14 @@ abstract class Nova_specs_model extends Model {
 		return $query;
 	}
 	
-	function get_spec_value_details($id = '')
+	public function get_spec_value_details($id = '')
 	{
 		$query = $this->db->get_where('specs_values', array('value_id' => $id));
 		
 		return $query;
 	}
 	
-	function get_spec_values($field = '')
+	public function get_spec_values($field = '')
 	{
 		$this->db->from('specs_values');
 		$this->db->where('value_field', $field);
@@ -142,14 +142,14 @@ abstract class Nova_specs_model extends Model {
 	 * Create methods
 	 */
 	
-	function add_spec_field($data = '')
+	public function add_spec_field($data = '')
 	{
 		$query = $this->db->insert('specs_fields', $data);
 		
 		return $query;
 	}
 	
-	function add_spec_field_data($data = '')
+	public function add_spec_field_data($data = '')
 	{
 		$query = $this->db->insert('specs_data', $data);
 		
@@ -158,21 +158,21 @@ abstract class Nova_specs_model extends Model {
 		return $query;
 	}
 	
-	function add_spec_field_value($data = '')
+	public function add_spec_field_value($data = '')
 	{
 		$query = $this->db->insert('specs_values', $data);
 		
 		return $query;
 	}
 	
-	function add_spec_item($data = '')
+	public function add_spec_item($data = '')
 	{
 		$query = $this->db->insert('specs', $data);
 		
 		return $query;
 	}
 	
-	function add_spec_section($data = '')
+	public function add_spec_section($data = '')
 	{
 		$query = $this->db->insert('specs_sections', $data);
 		
@@ -185,7 +185,7 @@ abstract class Nova_specs_model extends Model {
 	 * Update methods
 	 */
 	
-	function update_field_sections($old_id = '', $new_id = '')
+	public function update_field_sections($old_id = '', $new_id = '')
 	{
 		$data = array('field_section' => $new_id);
 		
@@ -234,7 +234,7 @@ abstract class Nova_specs_model extends Model {
 		return $query;
 	}
 	
-	function update_spec_field($id = '', $data = '')
+	public function update_spec_field($id = '', $data = '')
 	{
 		$this->db->where('field_id', $id);
 		$query = $this->db->update('specs_fields', $data);
@@ -244,7 +244,7 @@ abstract class Nova_specs_model extends Model {
 		return $query;
 	}
 	
-	function update_spec_field_data($id = '', $data = '', $identifier = 'data_id')
+	public function update_spec_field_data($id = '', $data = '', $identifier = 'data_id')
 	{
 		$this->db->where($identifier, $id);
 		$query = $this->db->update('specs_data', $data);
@@ -254,7 +254,7 @@ abstract class Nova_specs_model extends Model {
 		return $query;
 	}
 	
-	function update_spec_field_value($id = '', $data = '')
+	public function update_spec_field_value($id = '', $data = '')
 	{
 		$this->db->where('value_id', $id);
 		$query = $this->db->update('specs_values', $data);
@@ -264,7 +264,7 @@ abstract class Nova_specs_model extends Model {
 		return $query;
 	}
 	
-	function update_spec_item($id = '', $data = '')
+	public function update_spec_item($id = '', $data = '')
 	{
 		$this->db->where('specs_id', $id);
 		$query = $this->db->update('specs', $data);
@@ -274,7 +274,7 @@ abstract class Nova_specs_model extends Model {
 		return $query;
 	}
 	
-	function update_spec_section($id = '', $data = '')
+	public function update_spec_section($id = '', $data = '')
 	{
 		$this->db->where('section_id', $id);
 		$query = $this->db->update('specs_sections', $data);
@@ -288,7 +288,7 @@ abstract class Nova_specs_model extends Model {
 	 * Delete methods
 	 */
 	
-	function delete_spec_field($id = '')
+	public function delete_spec_field($id = '')
 	{
 		$query = $this->db->delete('specs_fields', array('field_id' => $id));
 		
@@ -297,7 +297,7 @@ abstract class Nova_specs_model extends Model {
 		return $query;
 	}
 	
-	function delete_spec_field_data($value = '', $identifier = 'data_field')
+	public function delete_spec_field_data($value = '', $identifier = 'data_field')
 	{
 		$query = $this->db->delete('specs_data', array($identifier => $value));
 		
@@ -306,7 +306,7 @@ abstract class Nova_specs_model extends Model {
 		return $query;
 	}
 	
-	function delete_spec_field_value($id = '')
+	public function delete_spec_field_value($id = '')
 	{
 		$query = $this->db->delete('specs_values', array('value_id' => $id));
 		
@@ -315,7 +315,7 @@ abstract class Nova_specs_model extends Model {
 		return $query;
 	}
 	
-	function delete_spec_item($id = '')
+	public function delete_spec_item($id = '')
 	{
 		$query = $this->db->delete('specs', array('specs_id' => $id));
 		
@@ -324,7 +324,7 @@ abstract class Nova_specs_model extends Model {
 		return $query;
 	}
 	
-	function delete_spec_section($id = '')
+	public function delete_spec_section($id = '')
 	{
 		$query = $this->db->delete('specs_sections', array('section_id' => $id));
 		

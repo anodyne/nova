@@ -25,7 +25,7 @@ abstract class Nova_tour_model extends Model {
 	 * Retrieve methods
 	 */
 	
-	function get_deck_details($id = '')
+	public function get_deck_details($id = '')
 	{
 		$query = $this->db->get_where('tour_decks', array('deck_id' => $id));
 		
@@ -34,7 +34,7 @@ abstract class Nova_tour_model extends Model {
 		return $row;
 	}
 	
-	function get_decks($item = '')
+	public function get_decks($item = '')
 	{
 		$this->db->from('tour_decks');
 		
@@ -50,7 +50,7 @@ abstract class Nova_tour_model extends Model {
 		return $query;
 	}
 	
-	function get_tour_data($item = '', $field = '')
+	public function get_tour_data($item = '', $field = '')
 	{
 		$this->db->from('tour_data');
 		$this->db->where('data_tour_item', $item);
@@ -66,14 +66,14 @@ abstract class Nova_tour_model extends Model {
 		return FALSE;
 	}
 	
-	function get_tour_field_details($id = '')
+	public function get_tour_field_details($id = '')
 	{
 		$query = $this->db->get_where('tour_fields', array('field_id' => $id));
 		
 		return $query;
 	}
 	
-	function get_tour_fields($display = 'y', $type = '')
+	public function get_tour_fields($display = 'y', $type = '')
 	{
 		$this->db->from('tour_fields');
 		
@@ -94,7 +94,7 @@ abstract class Nova_tour_model extends Model {
 		return $query;
 	}
 	
-	function get_tour_item($id = '')
+	public function get_tour_item($id = '')
 	{
 		$this->db->from('tour');
 		$this->db->where('tour_id', $id);
@@ -105,7 +105,7 @@ abstract class Nova_tour_model extends Model {
 		return $query;
 	}
 	
-	function get_tour_items($display = 'y')
+	public function get_tour_items($display = 'y')
 	{
 		$this->db->from('tour');
 		
@@ -121,14 +121,14 @@ abstract class Nova_tour_model extends Model {
 		return $query;
 	}
 	
-	function get_tour_value_details($id = '')
+	public function get_tour_value_details($id = '')
 	{
 		$query = $this->db->get_where('tour_values', array('value_id' => $id));
 		
 		return $query;
 	}
 	
-	function get_tour_values($field = '')
+	public function get_tour_values($field = '')
 	{
 		$this->db->from('tour_values');
 		$this->db->where('value_field', $field);
@@ -143,21 +143,21 @@ abstract class Nova_tour_model extends Model {
 	 * Create methods
 	 */
 	
-	function add_deck($data = '')
+	public function add_deck($data = '')
 	{
 		$query = $this->db->insert('tour_decks', $data);
 		
 		return $query;
 	}
 	
-	function add_tour_field($data = '')
+	public function add_tour_field($data = '')
 	{
 		$query = $this->db->insert('tour_fields', $data);
 		
 		return $query;
 	}
 	
-	function add_tour_field_data($data = '')
+	public function add_tour_field_data($data = '')
 	{
 		$query = $this->db->insert('tour_data', $data);
 		
@@ -166,14 +166,14 @@ abstract class Nova_tour_model extends Model {
 		return $query;
 	}
 	
-	function add_tour_field_value($data = '')
+	public function add_tour_field_value($data = '')
 	{
 		$query = $this->db->insert('tour_values', $data);
 		
 		return $query;
 	}
 	
-	function add_tour_item($data = '')
+	public function add_tour_item($data = '')
 	{
 		$query = $this->db->insert('tour', $data);
 		
@@ -184,7 +184,7 @@ abstract class Nova_tour_model extends Model {
 	 * Update methods
 	 */
 	
-	function update_deck($id = '', $data = '')
+	public function update_deck($id = '', $data = '')
 	{
 		$this->db->where('deck_id', $id);
 		$query = $this->db->update('tour_decks', $data);
@@ -194,7 +194,7 @@ abstract class Nova_tour_model extends Model {
 		return $query;
 	}
 	
-	function update_tour_data($id = '', $field = '', $data = '')
+	public function update_tour_data($id = '', $field = '', $data = '')
 	{
 		$this->db->where('data_tour_item', $id);
 		$this->db->where('data_field', $field);
@@ -205,7 +205,7 @@ abstract class Nova_tour_model extends Model {
 		return $query;
 	}
 	
-	function update_tour_field($id = '', $data = '')
+	public function update_tour_field($id = '', $data = '')
 	{
 		$this->db->where('field_id', $id);
 		$query = $this->db->update('tour_fields', $data);
@@ -215,7 +215,7 @@ abstract class Nova_tour_model extends Model {
 		return $query;
 	}
 	
-	function update_tour_field_value($id = '', $data = '')
+	public function update_tour_field_value($id = '', $data = '')
 	{
 		$this->db->where('value_id', $id);
 		$query = $this->db->update('tour_values', $data);
@@ -225,7 +225,7 @@ abstract class Nova_tour_model extends Model {
 		return $query;
 	}
 	
-	function update_tour_item($id = '', $data = '')
+	public function update_tour_item($id = '', $data = '')
 	{
 		$this->db->where('tour_id', $id);
 		$query = $this->db->update('tour', $data);
@@ -239,7 +239,7 @@ abstract class Nova_tour_model extends Model {
 	 * Delete methods
 	 */
 	
-	function delete_deck($id = '')
+	public function delete_deck($id = '')
 	{
 		$query = $this->db->delete('tour_decks', array('deck_id' => $id));
 		
@@ -248,7 +248,7 @@ abstract class Nova_tour_model extends Model {
 		return $query;
 	}
 	
-	function delete_tour_field($id = '')
+	public function delete_tour_field($id = '')
 	{
 		$query = $this->db->delete('tour_fields', array('field_id' => $id));
 		
@@ -257,7 +257,7 @@ abstract class Nova_tour_model extends Model {
 		return $query;
 	}
 	
-	function delete_tour_field_data($value = '', $identifier = 'data_field')
+	public function delete_tour_field_data($value = '', $identifier = 'data_field')
 	{
 		$query = $this->db->delete('tour_data', array($identifier => $value));
 		
@@ -266,7 +266,7 @@ abstract class Nova_tour_model extends Model {
 		return $query;
 	}
 	
-	function delete_tour_item($id = '')
+	public function delete_tour_item($id = '')
 	{
 		$query = $this->db->delete('tour', array('tour_id' => $id));
 		
@@ -275,7 +275,7 @@ abstract class Nova_tour_model extends Model {
 		return $query;
 	}
 	
-	function delete_tour_value($id = '')
+	public function delete_tour_value($id = '')
 	{
 		$query = $this->db->delete('tour_values', array('value_id' => $id));
 		
