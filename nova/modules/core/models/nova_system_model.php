@@ -408,7 +408,7 @@ abstract class Nova_system_model extends Model {
 	 * @param	bool	whether to prepend the table with the database prefix
 	 * @return	array 	an array of table columns
 	 */
-	public public function list_table_columns($table, $like = false, $add_prefix = false)
+	public function list_table_columns($table, $like = false, $add_prefix = false)
 	{
 		$table = $this->db->protect_identifiers($table, $add_prefix);
 
@@ -506,7 +506,7 @@ abstract class Nova_system_model extends Model {
 		return $query;
 	}
 	
-	public public function update_database_charset()
+	public function update_database_charset()
 	{
 		$query = $this->db->query('ALTER DATABASE `'. $this->db->database .'` DEFAULT CHARACTER SET '. $this->db->char_set .' COLLATE '. $this->db->dbcollat .'');
 		
