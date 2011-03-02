@@ -1091,7 +1091,7 @@ abstract class Jelly_Core_Builder extends Kohana_Database_Query_Builder_Select
 		// Nothing provided, give 'em something gooood
 		if ($db === NULL)
 		{
-			return $this->_meta ? $this->_meta->db() : 'default';
+			return $this->_meta ? $this->_meta->db() : Database::$default;
 		}
 		
 		return $db;

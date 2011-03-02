@@ -20,7 +20,7 @@ abstract class Jelly_Core_Meta
 	/**
 	 * @var  string  The database key to use for connection
 	 */
-	protected $_db = 'default';
+	protected $_db;
 
 	/**
 	 * @var  string  The table this model represents, defaults to the model name pluralized
@@ -268,7 +268,7 @@ abstract class Jelly_Core_Meta
 			return $this->set('db', $value);
 		}
 
-		return $this->_db;
+		return $this->_db ? $this->_db : Database::$default;
 	}
 
 	/**

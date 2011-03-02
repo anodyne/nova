@@ -99,7 +99,7 @@ abstract class Jelly_Core_Field_Image extends Jelly_Core_Field_File
 		// Has our source file changed?
 		if ($model->changed($field))
 		{
-			$filename = $validation[$field];
+			$filename = $this->_filename;
 			$source   = $this->path.$filename;
 			
 			foreach ($this->thumbnails as $thumbnail)
