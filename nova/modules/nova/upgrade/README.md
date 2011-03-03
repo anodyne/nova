@@ -1,6 +1,6 @@
 # Nova 3 Module: Upgrade
 
-The Nova 3 upgrade module provides functionality to upgrade SMS 2 (must have at least version 2.6.9 or higher) to Nova 3. This is a core module that ships with Nova 3 and is disabled by default. To enable the module, open application/config/nova.php and uncomment the upgrade module line.
+The Nova 3 upgrade module provides functionality to upgrade SMS 2 (must have at least version 2.6.9 or higher) to Nova 3. This is a core module that ships with Nova 3 and is disabled by default.
 
 ## Version
 

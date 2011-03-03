@@ -1,6 +1,6 @@
 # Nova 3 Module: Update
 
-The Nova 3 update module provides functionality to A) update from Nova 1 to Nova 3, B) update from Nova 2 to Nova 3 and C) update between version of Nova 3. This is a core module that ships with Nova 3 and is enabled by default.
+The Nova 3 update module provides functionality to A) update from Nova 1 to Nova 3, B) update from Nova 2 to Nova 3 and C) update between versions of Nova 3. This is a core module that ships with Nova 3 and is enabled by default.
 
 ## Version
 

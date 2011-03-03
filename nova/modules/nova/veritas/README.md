@@ -1,6 +1,6 @@
-# Nova 2 Module: Veritas
+# Nova 3 Module: Veritas
 
-Veritas is Anodyne Productions' mini-forum application integrated into Nova. This is a core module that ships with Nova 2 and is enabled by default.
+Veritas is Anodyne Productions' mini-forum application integrated into Nova. This is a core module that ships with Nova 3 and is enabled by default.
 
 ## Version
 
@@ -13,6 +13,6 @@ Release 1
 		<th>Module Version</th><th>Nova Version</th><th>Description</th>
 	</tr>
 	<tr>
-		<td>Release 1</td><td>2.1</td><td>Initial release</td>
+		<td>Release 1</td><td>3.0</td><td>Initial release</td>
 	</tr>
 </table>
