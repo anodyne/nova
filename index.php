@@ -115,7 +115,7 @@ if ( ! defined('KOHANA_START_MEMORY'))
 }
 
 // Bootstrap the application
-require 'nova/bootstrap'.EXT;
+require APPPATH.'bootstrap'.EXT;
 
 /**
  * Execute the main request. A source of the URI can be passed, eg: $_SERVER['PATH_INFO'].
