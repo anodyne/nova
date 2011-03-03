@@ -5,7 +5,8 @@ $autoload['libraries'] = array(
 	'menu',
 	'auth',
 	'user_panel',
-	'location'
+	'location',
+	'util'
 );
 
 $autoload['helper'] = array(
