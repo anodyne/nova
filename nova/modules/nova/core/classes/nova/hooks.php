@@ -41,7 +41,7 @@ abstract class Nova_Hooks {
 		$notallowed = array(
 			'Internet Explorer'	=> 8,
 			'Safari'			=> 5,
-			'Firefox'			=> 4,
+			'Firefox'			=> 3,
 			'Chrome'			=> 4,
 		);
 		
