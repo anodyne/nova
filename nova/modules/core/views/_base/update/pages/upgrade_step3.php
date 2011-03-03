@@ -10,14 +10,14 @@
 	<p>
 		<?php echo form_input('password', 'default');?> &nbsp;
 		
-		<span class="hidden loading-password"><?php echo img(MODFOLDER.'/nova/upgrade/views/upgrade/images/loading-circle-large.gif');?></span>
+		<span class="hidden loading-password"><?php echo img(MODFOLDER.'/core/views/_base/update/images/loading-circle-large.gif');?></span>
 		
 		<span class="hidden error-password">
-			<?php echo img(MODFOLDER.'/nova/upgrade/views/upgrade/images/exclamation-red.png', array('class' => 'tiptip', 'title' => ''));?>
+			<?php echo img(MODFOLDER.'/core/views/_base/update/images/exclamation-red.png', array('class' => 'tiptip', 'title' => ''));?>
 		</span>
 		
 		<span class="hidden success-password">
-			<?php echo img(MODFOLDER.'/nova/upgrade/views/upgrade/images/tick-circle.png');?>
+			<?php echo img(MODFOLDER.'/core/views/_base/update/images/tick-circle.png');?>
 		</span>
 	</p>
 	
@@ -30,13 +30,13 @@
 	<p>
 		<?php echo form_dropdown('admins', $options, null, 'multiple="multiple" size="10"');?> &nbsp;
 		
-		<span class="hidden loading-admins"><?php echo img(MODFOLDER.'/nova/upgrade/views/upgrade/images/loading-circle-large.gif');?></span>
+		<span class="hidden loading-admins"><?php echo img(MODFOLDER.'/core/views/_base/update/images/loading-circle-large.gif');?></span>
 		
 		<span class="hidden error-admins">
-			<?php echo img(MODFOLDER.'/nova/upgrade/views/upgrade/images/exclamation-red.png', array('class' => 'tiptip', 'title' => ''));?>
+			<?php echo img(MODFOLDER.'/core/views/_base/update/images/exclamation-red.png', array('class' => 'tiptip', 'title' => ''));?>
 		</span>
 		
 		<span class="hidden success-admins">
-			<?php echo img(MODFOLDER.'/nova/upgrade/views/upgrade/images/tick-circle.png');?>
+			<?php echo img(MODFOLDER.'/core/views/_base/update/images/tick-circle.png');?>
 		</span>
 	</p>
