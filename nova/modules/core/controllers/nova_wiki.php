@@ -5,7 +5,7 @@
  * @package		Thresher
  * @category	Controller
  * @author		Anodyne Productions
- * @copyright	2010-11 Anodyne Productions
+ * @copyright	2011 Anodyne Productions
  * @version		2.0
  */
 

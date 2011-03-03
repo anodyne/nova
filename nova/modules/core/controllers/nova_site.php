@@ -5,11 +5,8 @@
  * @package		Nova
  * @category	Controller
  * @author		Anodyne Productions
- * @copyright	2010-11 Anodyne Productions
+ * @copyright	2011 Anodyne Productions
  * @version		2.0
- *
- * Old file - 7259 lines/214 kb
- * New file - 6535 lines/187 kb
  */
 
 require_once MODPATH.'core/libraries/Nova_controller_admin'.EXT;
