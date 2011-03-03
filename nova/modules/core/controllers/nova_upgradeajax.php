@@ -5,18 +5,8 @@
  * @package		Nova
  * @category	Controller
  * @author		Anodyne Productions
- * @copyright	2010-11 Anodyne Productions
+ * @copyright	2011 Anodyne Productions
  * @version		2.0
- */
-
-/**
- * final_password
- * final_roles
- * quick_install
- * user_awards
- * user_logs
- * user_news
- * user_posts
  */
 
 abstract class Nova_upgradeajax extends Controller {
@@ -385,21 +375,24 @@ abstract class Nova_upgradeajax extends Controller {
 		// grab the password
 		$password = $_POST['password'];
 		
+		$this->load->model('users_model', 'user');
+		
 		try {
 			// hash the password
 			$password = Auth::hash($password);
 			
 			// update everyone
-			Jelly::query('user')->set(array('password' => $password))->update();
+			$this->user->update_all_users(array('password' => $password));
 			
 			// find out how many users don't have the right password
-			$count = Jelly::query('user')->where('password', '!=', $password)->count();
+			$countQ = $this->db->from('users')->where('password !=', $password)->get();
+			$count = $countQ->num_rows();
 			
 			if ($count > 0)
 			{
 				$retval = array(
 					'code' => 0,
-					'message' => __("Not all of your users' passwords were updated")
+					'message' => "Not all of your users' passwords were updated"
 				);
 			}
 			else
@@ -410,7 +403,6 @@ abstract class Nova_upgradeajax extends Controller {
 				);
 			}
 			
-			// optmize the tables
 			$this->dbutil->optimize_table('users');
 		} catch (Exception $e) {
 			$retval = array(
@@ -427,28 +419,29 @@ abstract class Nova_upgradeajax extends Controller {
 		// grab the user IDs that should have the sys admin role
 		$roles = $_POST['roles'];
 		
+		$this->load->model('users_model', 'user');
+		
 		try {
 			// temporary array
 			$saved = array();
 			
 			foreach ($roles as $r)
 			{
-				$user = Jelly::factory('user', $r)->set(array('role' => 1))->save();
-				$saved[] = $user->saved();
+				$saved[] = $this->user->update_user($r, array('access_role' => 1));
 			}
 			
 			if ( ! in_array(true, $saved))
 			{
 				$retval = array(
 					'code' => 0,
-					'message' => __("None of your administrators were set")
+					'message' => "None of your administrators were set"
 				);
 			}
 			elseif (in_array(false, $saved) and in_array(true, $saved))
 			{
 				$retval = array(
 					'code' => 0,
-					'message' => __("Some of your administrators were set, but others were not")
+					'message' => "Some of your administrators were set, but others were not"
 				);
 			}
 			else
@@ -459,7 +452,6 @@ abstract class Nova_upgradeajax extends Controller {
 				);
 			}
 			
-			// optmize the tables
 			$this->dbutil->optimize_table('users');
 		} catch (Exception $e) {
 			$retval = array(
@@ -479,10 +471,10 @@ abstract class Nova_upgradeajax extends Controller {
 		
 		try {
 			// drop the nova version of the table
-			$this->dbforge->drop_table('personal_logs');
+			$this->dbforge->drop_table('personallogs');
 			
 			// copy the sms version of the table along with all its data
-			$this->db->query("CREATE TABLE ".$this->db->dbprefix."personal_logs SELECT * FROM sms_personallogs");
+			$this->db->query("CREATE TABLE ".$this->db->dbprefix."personallogs SELECT * FROM sms_personallogs");
 			
 			// rename the fields to appropriate names
 			$fields = array(
@@ -514,7 +506,7 @@ abstract class Nova_upgradeajax extends Controller {
 			);
 			
 			// do the modification
-			$this->dbforge->modify_column('personal_logs', $fields);
+			$this->dbforge->modify_column('personallogs', $fields);
 			
 			// add the other columns
 			$add = array(
@@ -529,13 +521,13 @@ abstract class Nova_upgradeajax extends Controller {
 			);
 			
 			// do the modification
-			$this->dbforge->add_column('personal_logs', $add);
+			$this->dbforge->add_column('personallogs', $add);
 			
 			// make sure the auto increment and primary key are right
-			$this->db->query("ALTER TABLE ".$this->db->dbprefix."personal_logs MODIFY COLUMN `log_id` INT(5) auto_increment primary key");
+			$this->db->query("ALTER TABLE ".$this->db->dbprefix."personallogs MODIFY COLUMN `log_id` INT(5) auto_increment primary key");
 			
 			// get the new count of logs
-			$count_new = $this->db->count_all('personal_logs');
+			$count_new = $this->db->count_all('personallogs');
 			
 			if ($count_new == 0)
 			{
@@ -559,7 +551,7 @@ abstract class Nova_upgradeajax extends Controller {
 				);
 			}
 			
-			$this->dbutil->optimize_table('personal_logs');
+			$this->dbutil->optimize_table('personallogs');
 		} catch (Exception $e) {
 			$retval = array(
 				'code' => 0,
@@ -1013,12 +1005,14 @@ abstract class Nova_upgradeajax extends Controller {
 	public function upgrade_quick_install()
 	{
 		try {
+			$this->load->helper('directory');
+			
 			// do the quick installs
-			Utility::install_rank();
-			Utility::install_skin();
+			Util::install_rank();
+			Util::install_skin();
 			
 			// get the directory listing for the genre
-			$dir = Utility::directory_map(APPPATH.'assets/common/'.Kohana::config('nova.genre').'/ranks/', true);
+			$dir = directory_map(APPPATH.'assets/common/'.GENRE.'/ranks/', true);
 			
 			// set the items to be pulled out of the listing
 			$pop = array('index.html');
@@ -1046,14 +1040,10 @@ abstract class Nova_upgradeajax extends Controller {
 			$dir = null;
 			
 			// get the listing of the directory
-			$dir = Utility::directory_map(APPPATH.'views/', true);
+			$dir = directory_map(APPPATH.'views/', true);
 			
 			// create an array of items to remove
-			$pop = array('index.html');
-			
-			# TODO: remove this after the application directory has been cleaned out
-			$pop[] = '_base';
-			$pop[] = 'template.php';
+			$pop = array('index.html', '_base_override');
 			
 			// remove the items
 			foreach ($pop as $value)
@@ -1071,10 +1061,10 @@ abstract class Nova_upgradeajax extends Controller {
 			$dir_skins = count($dir);
 			
 			// get the catalogue count for ranks
-			$db_ranks = Jelly::query('cataloguerank')->count();
+			$db_ranks = $this->db->count_all('catalogue_ranks');
 			
 			// get the catalogue count for skins
-			$db_skins = Jelly::query('catalogueskin')->count();
+			$db_skins = $this->db->count_all('catalogue_skins');
 
 			if ($dir_ranks == $db_ranks and $dir_skins == $db_skins)
 			{
@@ -1087,25 +1077,24 @@ abstract class Nova_upgradeajax extends Controller {
 			{
 				$retval = array(
 					'code' => 2,
-					'message' => __("Your skins were installed but not all of your rank sets were installed. Please try to install your ranks sets manually from the rank catalogue page.")
+					'message' => "Your skins were installed but not all of your rank sets were installed. Please try to install your ranks sets manually from the rank catalogue page."
 				);
 			}
 			elseif ($dir_ranks == $db_ranks and $dir_skins != $db_skins)
 			{
 				$retval = array(
 					'code' => 2,
-					'message' => __("Your rank sets were installed but not all of your skins were installed. Please try to install your skins manually from the skin catalogue page.")
+					'message' => "Your rank sets were installed but not all of your skins were installed. Please try to install your skins manually from the skin catalogue page."
 				);
 			}
 			elseif ($dir_ranks != $db_ranks and $dir_skins != $db_skins)
 			{
 				$retval = array(
 					'code' => 0,
-					'message' => __("Additional ranks and skins were not installed. Please try to do so manually from the catalogue pages.")
+					'message' => "Additional ranks and skins were not installed. Please try to do so manually from the catalogue pages."
 				);
 			}
 			
-			// optmize the tables
 			$this->dbutil->optimize_table('catalogue_ranks');
 			$this->dbutil->optimize_table('catalogue_skins');
 			$this->dbutil->optimize_table('catalogue_skinsecs');
@@ -1470,19 +1459,19 @@ abstract class Nova_upgradeajax extends Controller {
 	
 	public function upgrade_user_awards()
 	{
-		// change the awards received model to prevent null values
-		Jelly::meta('awardrec')->field('date')->auto_now_create = false;
+		$this->load->model('characters_model', 'char');
+		$this->load->model('awards_model', 'award');
 		
 		try {
 			// get the crew from the sms table
-			$result = $this->db->query(Database::SELECT, 'SELECT * FROM sms_crew', true);
+			$query = $this->db->query('SELECT * FROM sms_crew');
 			
 			// create an array for saved entries
 			$saved = array();
 			
-			foreach ($result as $c)
+			foreach ($query->result() as $c)
 			{
-				$user = Jelly::query('character', $c->crewid)->select()->user;
+				$user = $this->char->get_character($c->crewid, 'user');
 				
 				if ( ! empty($c->awards))
 				{
@@ -1494,28 +1483,24 @@ abstract class Nova_upgradeajax extends Controller {
 						{
 							$x = explode('|', $a);
 							
-							$awardaction = Jelly::factory('awardrec')
-								->set(array(
-									'character' => $c->crewid,
-									'user' => $user->id,
-									'award' => $x[0],
-									'date' => $x[1],
-									'reason' => $x[2]
-								))
-								->save();
-							$saved[] = $awardaction->saved();
+							$awardaction = array(
+								'awardrec_character' => $c->crewid,
+								'awardrec_user' => $user,
+								'awardrec_award' => $x[0],
+								'awardrec_date' => $x[1],
+								'awardrec_reason' => $x[2]
+							);
+							$saved[] = $this->award->add_nominated_award($awardaction);
 						}
 						else
 						{
-							$awardaction = Jelly::factory('awardrec')
-								->set(array(
-									'character' => $c->crewid,
-									'user' => $user->id,
-									'award' => $a,
-									'date' => null
-								))
-								->save();
-							$saved[] = $awardaction->saved();
+							$awardaction = array(
+								'awardrec_character' => $c->crewid,
+								'awardrec_user' => $user,
+								'awardrec_award' => $a,
+								'awardrec_date' => null
+							);
+							$saved[] = $this->award->add_nominated_award($awardaction);
 						}
 					}
 				}
@@ -1525,14 +1510,14 @@ abstract class Nova_upgradeajax extends Controller {
 			{
 				$retval = array(
 					'code' => 0,
-					'message' => __("Your given awards could not be upgraded")
+					'message' => "Your given awards could not be upgraded"
 				);
 			}
 			elseif (in_array(true, $saved) and in_array(false, $saved))
 			{
 				$retval = array(
 					'code' => 2,
-					'message' => __("All of your given awards could not be upgraded")
+					'message' => "All of your given awards could not be upgraded"
 				);
 			}
 			else
@@ -1543,7 +1528,6 @@ abstract class Nova_upgradeajax extends Controller {
 				);
 			}
 			
-			// optmize the tables
 			$this->dbutil->optimize_table('awards_received');
 		} catch (Exception $e) {
 			$retval = array(
@@ -1611,32 +1595,32 @@ abstract class Nova_upgradeajax extends Controller {
 	
 	public function upgrade_user_logs()
 	{
+		$this->load->model('characters_model', 'char');
+		$this->load->model('personallogs_model', 'log');
+		
 		try {
 			// get the crew from the sms table
-			$result = $this->db->query(Database::SELECT, 'SELECT * FROM sms_crew', true);
+			$query = $this->db->query('SELECT * FROM sms_crew');
 			
-			foreach ($result as $c)
+			foreach ($query->result() as $c)
 			{
-				$user = Jelly::query('character', $c->crewid)->select()->user;
+				$user = $this->char->get_character($c->crewid, 'user');
 				
-				if ( ! is_null($user) and $user->id > 0)
+				if ( ! is_null($user) and $user > 0)
 				{
-					// update the personal logs
-					$logs = Jelly::query('personallog')
-						->where('author_character', '=', $c->crewid)
-						->set(array('author_user' => $user->id))
-						->update();
+					$logs = $this->log->update_log($c->crewid, array('log_author_user' => $user), 'log_author_character');
 				}
 			}
 			
 			// count the number of personal logs that don't have a user (there shouldn't be any)
-			$blank = Jelly::query('personallog')->where('author_user', '=', '')->count();
+			$blankCount = $this->db->from('personallogs')->where('log_author_user', '')->get();
+			$blank = $blankCount->num_rows();
 			
 			if ($blank > 0)
 			{
 				$retval = array(
 					'code' => 0,
-					'message' => __("Some of your personal logs could not be upgraded and as a result, may not be associated with some users properly")
+					'message' => "Some of your personal logs could not be upgraded and as a result, may not be associated with some users properly"
 				);
 			}
 			else
@@ -1647,8 +1631,7 @@ abstract class Nova_upgradeajax extends Controller {
 				);
 			}
 			
-			// optmize the tables
-			$this->dbutil->optimize_table('personal_logs');
+			$this->dbutil->optimize_table('personallogs');
 		} catch (Exception $e) {
 			$retval = array(
 				'code' => 0,
@@ -1661,32 +1644,32 @@ abstract class Nova_upgradeajax extends Controller {
 	
 	public function upgrade_user_news()
 	{
+		$this->load->model('characters_model', 'char');
+		$this->load->model('news_model', 'news');
+		
 		try {
 			// get the crew from the sms table
-			$result = $this->db->query(Database::SELECT, 'SELECT * FROM sms_crew', true);
+			$query = $this->db->query('SELECT * FROM sms_crew');
 			
-			foreach ($result as $c)
+			foreach ($query->result() as $c)
 			{
-				$user = Jelly::query('character', $c->crewid)->select()->user;
+				$user = $this->char->get_character($c->crewid, 'user');
 				
-				if ( ! is_null($user) and $user->id > 0)
+				if ( ! is_null($user) and $user > 0)
 				{
-					// update the news items
-					$news = Jelly::query('news')
-						->where('author_character', '=', $c->crewid)
-						->set(array('author_user' => $user->id))
-						->update();
+					$news = $this->news->update_news_item($c->crewid, array('news_author_user' => $user), 'news_author_character');
 				}
 			}
 			
 			// count the number of news items without a user (there shouldn't be any)
-			$blank = Jelly::query('news')->where('author_user', '=', '')->count();
+			$blankCount = $this->db->from('news')->where('news_author_user', '')->get();
+			$blank = $blankCount->num_rows();
 			
 			if ($blank > 0)
 			{
 				$retval = array(
 					'code' => 0,
-					'message' => __("Some of your news items could not be upgraded and as a result, may not be associated with some users properly")
+					'message' => "Some of your news items could not be upgraded and as a result, may not be associated with some users properly"
 				);
 			}
 			else
@@ -1697,7 +1680,6 @@ abstract class Nova_upgradeajax extends Controller {
 				);
 			}
 			
-			// optmize the tables
 			$this->dbutil->optimize_table('news');
 		} catch (Exception $e) {
 			$retval = array(
@@ -1711,17 +1693,20 @@ abstract class Nova_upgradeajax extends Controller {
 	
 	public function upgrade_user_posts()
 	{
+		$this->load->model('characters_model', 'char');
+		$this->load->model('posts_model', 'posts');
+		
 		try {
 			// get all the posts
-			$posts = Jelly::query('post')->select();
+			$posts = $this->posts->get_post_list('', 'desc', '', '');
 			
 			// set a temp array to collect saves
 			$saved = array();
 			
-			foreach ($posts as $p)
+			foreach ($posts->result() as $p)
 			{
 				// grab the authors and put them into an array
-				$authors = explode(',', $p->authors);
+				$authors = explode(',', $p->post_authors);
 				
 				// make sure we have an array
 				$array = array();
@@ -1731,11 +1716,11 @@ abstract class Nova_upgradeajax extends Controller {
 					if ($a > 0)
 					{
 						// get the user id
-						$user = Jelly::query('character', $a)->select()->user;
+						$user = $this->char->get_character($a, 'user');
 					
-						if ( ! is_null($user) and ! in_array($user->id, $array))
+						if ( ! is_null($user) and ! in_array($user, $array))
 						{
-							$array[] = $user->id;
+							$array[] = $user;
 						}
 					}
 				}
@@ -1744,10 +1729,7 @@ abstract class Nova_upgradeajax extends Controller {
 				$users = implode(',', $array);
 				
 				// update the post
-				$post = Jelly::factory('post', $p->id)
-					->set(array('author_users' => $users))
-					->save();
-				$saved[] = $post->saved();
+				$saved[] = $this->posts->update_post($p->post_id, array('post_authors_users' => $users));
 			}
 			
 			if ( ! in_array(false, $saved))
@@ -1761,11 +1743,10 @@ abstract class Nova_upgradeajax extends Controller {
 			{
 				$retval = array(
 					'code' => 0,
-					'message' => __("Not all of your mission posts could be upgraded")
+					'message' => "Not all of your mission posts could be upgraded"
 				);
 			}
 			
-			// optmize the tables
 			$this->dbutil->optimize_table('posts');
 		} catch (Exception $e) {
 			$retval = array(
