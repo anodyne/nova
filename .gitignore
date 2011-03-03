@@ -14,9 +14,6 @@ application/assets/images/tour/
 application/cache/
 application/logs/
 
-build/
-build-ftp.properties
-
 *~
 *.bak
 Thumbs.db
