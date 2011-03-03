@@ -29,6 +29,7 @@ As of M2, you can do the following with Nova 3:
     * View the main page
     * View the admin page (no difference between this and the main page)
     * View site credits
+* Please see the [Repository Branches](https://github.com/anodyne/nova/wiki/Repository-Branches) document for information and descriptions of the branches available in the repository.
 
 ## Version History
 
