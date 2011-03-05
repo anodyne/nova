@@ -91,8 +91,10 @@ Kohana::$config->attach(new Config_File);
 Kohana::modules(array(
 	'override'		=> EXTPATH.'override',
 	'thresher'		=> MODPATH.'nova/thresher',
-	'install'		=> MODPATH.'nova/install',
-	'update'		=> MODPATH.'nova/update',
+	'veritas'		=> MODPATH.'nova/veritas',
+	//'install'		=> MODPATH.'nova/install',
+	//'update'		=> MODPATH.'nova/update',
+	'setup'			=> MODPATH.'nova/setup',
 	'assets'		=> MODPATH.'assets',
 	'dbforge'		=> MODPATH.'nova/dbforge',
 	'nova'			=> MODPATH.'nova/core',
@@ -101,6 +103,7 @@ Kohana::modules(array(
 	'htmlpurifier'	=> MODPATH.'third_party/purifier',
 	'i18n'			=> MODPATH.'third_party/i18n',
 	'cache'			=> MODPATH.'kohana/cache',
+	'email'			=> MODPATH.'third_party/email',
 	));
 
 /**
