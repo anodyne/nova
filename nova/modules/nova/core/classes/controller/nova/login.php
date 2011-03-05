@@ -381,18 +381,11 @@ class Controller_Nova_Login extends Controller_Nova_Base {
 	
 	protected function _email($type, $data)
 	{
-		// set the email variable that'll be returned
-		$email = false;
+		$mailer = false;
 		
 		// make sure system email is turned on
 		if ($this->options->system_email == 'on')
 		{
-			// set up the mailer
-			$mailer = Email::setup_mailer();
-			
-			// create a new message
-			$message = Email::setup_message();
-			
 			switch ($type)
 			{
 				case 'reset':
@@ -401,8 +394,8 @@ class Controller_Nova_Login extends Controller_Nova_Base {
 					
 					// data for the view files
 					$view = new stdClass;
-					$view->subject = __(":password Reset", array(':password' => ucfirst(__("password"))));
-					$view->content = __("Your :password has been reset and is listed below. Next time you log in, you will be prompted to change your :password to something else.\r\n\r\nNew password: :newpass\r\n\r\n<a href=':site'>Click here</a> to login to site now.", array(':password' => __("password"), ':newpass' => $data->password, ':site' => url::site('login/index')));
+					$view->subject = ___(":password Reset", array(':password' => ucfirst(___("password"))));
+					$view->content = ___("Your :password has been reset and is listed below. Next time you log in, you will be prompted to change your :password to something else.\r\n\r\nNew password: :newpass\r\n\r\n<a href=':site'>Click here</a> to login to site now.", array(':password' => ___("password"), ':newpass' => $data->password, ':site' => url::site('login/index')));
 					
 					if ($format == 'html')
 					{
@@ -418,22 +411,23 @@ class Controller_Nova_Login extends Controller_Nova_Base {
 					$primary_type = ($format == 'html') ? 'text/html' : 'text/plain';
 					
 					// set the message data
-					$message->setSubject($this->options->email_subject.' '.$view->subject);
-					$message->setFrom(array($this->options->default_email_address => $this->options->default_email_name));
-					$message->setTo($data->email);
-					$message->setBody($primary_format, $primary_type);
+					$email = Email::factory()
+						->subject($this->options->email_subject.' '.$view->subject)
+						->from(array($this->options->default_email_address => $this->options->default_email_name))
+						->to($data->email)
+						->message($primary_format, $primary_type);
 					
 					if ($format == 'html')
 					{
-						$message->addPart($text->render(), 'text/plain');
+						$email->raw_message()->addPart($text->render(), 'text/plain');
 					}
 				break;
 			}
 			
 			// send the message
-			$email = $mailer->send($message);
+			$mailer = $email->send($message);
 		}
 		
-		return $email;
+		return $mailer;
 	}
 }
