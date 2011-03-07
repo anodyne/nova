@@ -423,30 +423,26 @@ abstract class Jelly_Core_Meta
 	 */
 	public function validation_options(Validation $validation, $update = FALSE)
 	{
-		// Add validation options
-		if ( ! $this->_validation_options OR ($this->_validation_options AND $update))
+		// Set validation options
+		$this->_validation_options = $validation;
+
+		// Set submitted fields
+		if ($update)
 		{
-			// Set validation options
-			$this->_validation_options = $validation;
+			$submitted_fields = $validation->as_array();
+		}
 
-			// Set submitted fields
-			if ($update)
+		// Add our rules and labels
+		foreach ($this->_fields as $name => $field)
+		{
+			// If updating add only the rules for the updated fields
+			if ($update AND ! array_key_exists($name, $submitted_fields))
 			{
-				$submitted_fields = $validation->as_array();
+				continue;
 			}
 
-			// Add our rules and labels
-			foreach ($this->_fields as $name => $field)
-			{
-				// If updating add only the rules for the updated fields
-				if ($update AND ! array_key_exists($name, $submitted_fields))
-				{
-					continue;
-				}
-
-				$this->_validation_options->label($name, $field->label);
-				$this->_validation_options->rules($name, $field->rules);
-			}
+			$this->_validation_options->label($name, $field->label);
+			$this->_validation_options->rules($name, $field->rules);
 		}
 
 		// Return the validation object with rules and labels
