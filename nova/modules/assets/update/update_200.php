@@ -184,9 +184,13 @@ if ($drop_column !== null)
 $this->db->where('comp_name', 'Lazy');
 $this->db->update('system_components', array('comp_version' => '1.5'));
 
-// update the lazy version info
+// update the jquery version info
 $this->db->where('comp_name', 'jQuery');
-$this->db->update('system_components', array('comp_version' => '1.5'));
+$this->db->update('system_components', array('comp_version' => '1.5.1'));
+
+// update the jquery ui version info
+$this->db->where('comp_name', 'jQuery UI');
+$this->db->update('system_components', array('comp_version' => '1.8.10'));
 
 // add the elastic plugin to the list of components
 $additem = array(
