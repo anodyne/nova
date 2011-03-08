@@ -1,4 +1,13 @@
 <?php
+/**
+ * Thresher base controller
+ *
+ * @package		Nova
+ * @category	Library
+ * @author		Anodyne Productions
+ * @copyright	2011 Anodyne Productions
+ * @version		2.0
+ */
 
 class Nova_controller_wiki extends Controller {
 	

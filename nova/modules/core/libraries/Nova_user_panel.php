@@ -5,11 +5,8 @@
  * @package		Nova
  * @category	Library
  * @author		Anodyne Productions
- * @copyright	2010-11 Anodyne Productions
- * @version		1.2
- *
- * Fixed errors thrown when a user doesn't have a character assigned to
- * their account
+ * @copyright	2011 Anodyne Productions
+ * @version		2.0
  */
 
 abstract class Nova_user_panel {
