@@ -4,7 +4,7 @@
 | LANGUAGE FILE - ENGLISH
 |---------------------------------------------------------------
 | File: application/language/english/base_lang.php
-| System Version: 1.3
+| System Version: 2.0
 |
 | Changes: added actions_cleanup, added labels_drafts, added status_older,
 |	added misc_draft_cleanup, added time_months, added labels_standard,
@@ -628,7 +628,7 @@ $lang['flash_fields_role_pages'] = 'the name and URL fields';
 $lang['flash_fields_role_groups'] = 'the name field';
 $lang['flash_fields_menus'] = 'the name, link, type and category fields';
 $lang['flash_fields_menucats'] = 'the name and category fields';
-$lang['flash_fields_join'] = 'the character name and position fields';
+$lang['flash_fields_join'] = 'the character name, position, password and email fields';
 
 /* End of file base_lang.php */
 /* Location: ./application/language/english/base_lang.php */

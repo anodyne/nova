@@ -238,7 +238,7 @@ abstract class Nova_main extends Nova_controller_main {
 			$suffix = $this->input->post('suffix',TRUE);
 			$position = $this->input->post('position_1',TRUE);
 			
-			if ($position == 0 || $first_name == '')
+			if ($position == 0 || $first_name == '' || empty($password) || empty($email))
 			{
 				$message = sprintf(
 					lang('flash_empty_fields'),
