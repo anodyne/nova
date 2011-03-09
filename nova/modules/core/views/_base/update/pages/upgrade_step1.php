@@ -100,6 +100,21 @@
 				<td class="align-center"><?php echo form_radio('upgrade_missions', 0);?></td>
 			</tr>
 			<tr>
+				<td class="bold">Database Entries</td>
+				<td class="col-30 align-center">
+					<span class="success hidden"><?php echo img(MODFOLDER.'/core/views/_base/update/images/tick-circle.png');?></span>
+					<span class="failure hidden">
+						<?php echo img(MODFOLDER.'/core/views/_base/update/images/exclamation-red.png', array('class' => 'tiptip', 'title' => ''));?>
+					</span>
+					<span class="warning hidden">
+						<?php echo img(MODFOLDER.'/core/views/_base/update/images/exclamation.png', array('class' => 'tiptip', 'title' => ''));?>
+					</span>
+					<span class="loading hidden"><?php echo img(MODFOLDER.'/core/views/_base/update/images/loading-circle-large.gif');?></span>
+				</td>
+				<td class="align-center"><?php echo form_radio('upgrade_database', 1, true);?></td>
+				<td class="align-center"><?php echo form_radio('upgrade_database', 0);?></td>
+			</tr>
+			<tr>
 				<td class="bold">Specifications</td>
 				<td class="col-30 align-center">
 					<span class="success hidden"><?php echo img(MODFOLDER.'/core/views/_base/update/images/tick-circle.png');?></span>

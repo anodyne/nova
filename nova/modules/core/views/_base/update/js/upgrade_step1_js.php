@@ -306,8 +306,8 @@ $tourhash = md5(implode('', array_keys($tourarray))); // 781e5e245d69b566979b86e
 				});
 			}
 			
-			// specs
-			if ($('input[name=upgrade_specs]:checked').val() == 1)
+			// database entries
+			if ($('input[name=upgrade_database]:checked').val() == 1)
 			{
 				var send;
 				
@@ -316,7 +316,7 @@ $tourhash = md5(implode('', array_keys($tourarray))); // 781e5e245d69b566979b86e
 						$('table tbody tr:eq(6) td:eq(1) .loading').removeClass('hidden');
 					},
 					type: "POST",
-					url: "<?php echo site_url('upgradeajax/upgrade_specs');?>",
+					url: "<?php echo site_url('upgradeajax/upgrade_database');?>",
 					data: send,
 					dataType: 'json',
 					success: function(data){
@@ -346,8 +346,8 @@ $tourhash = md5(implode('', array_keys($tourarray))); // 781e5e245d69b566979b86e
 				});
 			}
 			
-			// tour items
-			if ($('input[name=upgrade_tour]:checked').val() == 1)
+			// specs
+			if ($('input[name=upgrade_specs]:checked').val() == 1)
 			{
 				var send;
 				
@@ -356,7 +356,7 @@ $tourhash = md5(implode('', array_keys($tourarray))); // 781e5e245d69b566979b86e
 						$('table tbody tr:eq(7) td:eq(1) .loading').removeClass('hidden');
 					},
 					type: "POST",
-					url: "<?php echo site_url('upgradeajax/upgrade_tour');?>",
+					url: "<?php echo site_url('upgradeajax/upgrade_specs');?>",
 					data: send,
 					dataType: 'json',
 					success: function(data){
@@ -378,6 +378,46 @@ $tourhash = md5(implode('', array_keys($tourarray))); // 781e5e245d69b566979b86e
 						{
 							$('table tbody tr:eq(7) td:eq(1) .warning').removeClass('hidden');
 							$('table tbody tr:eq(7) td:eq(1) .warning img').attr('title', function(){
+								return data.message
+							});
+							$('.tiptip').tipTip(tipOpts);
+						}
+					}
+				});
+			}
+			
+			// tour items
+			if ($('input[name=upgrade_tour]:checked').val() == 1)
+			{
+				var send;
+				
+				$.ajaxq('queue', {
+					beforeSend: function(){
+						$('table tbody tr:eq(8) td:eq(1) .loading').removeClass('hidden');
+					},
+					type: "POST",
+					url: "<?php echo site_url('upgradeajax/upgrade_tour');?>",
+					data: send,
+					dataType: 'json',
+					success: function(data){
+						$('table tbody tr:eq(8) td:eq(1) .loading').addClass('hidden');
+						
+						if (data.code == 1)
+						{
+							$('table tbody tr:eq(8) td:eq(1) .success').removeClass('hidden');
+						}
+						else if (data.code == 0)
+						{
+							$('table tbody tr:eq(8) td:eq(1) .failure').removeClass('hidden');
+							$('table tbody tr:eq(8) td:eq(1) .failure img').attr('title', function(){
+								return data.message
+							});
+							$('.tiptip').tipTip(tipOpts);
+						}
+						else if (data.code == 2)
+						{
+							$('table tbody tr:eq(8) td:eq(1) .warning').removeClass('hidden');
+							$('table tbody tr:eq(8) td:eq(1) .warning img').attr('title', function(){
 								return data.message
 							});
 							$('.tiptip').tipTip(tipOpts);

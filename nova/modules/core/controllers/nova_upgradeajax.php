@@ -370,6 +370,106 @@ abstract class Nova_upgradeajax extends Controller {
 		echo json_encode($retval);
 	}
 	
+	public function upgrade_database()
+	{
+		// start by getting a count of the number of items in the database table
+		$entries = $this->db->query("SELECT * FROM sms_database");
+		$count_old = $entries->num_rows();
+		
+		try {
+			$this->load->model('wiki_model', 'wiki');
+			
+			// set up the tracking arrays
+			$pages = array();
+			$drafts = array();
+			
+			foreach ($entries->result() as $e)
+			{
+				// create the wiki page
+				$page = array(
+					'page_created_at' => now(),
+					'page_created_by_user' => 0,
+					'page_created_by_character' => 0,
+					'page_type' => 'standard'
+				);
+				$pages[] = (bool) $this->wiki->create_page($page);
+				$pageid = $this->db->insert_id();
+				
+				// create the wiki draft
+				$draft = array(
+					'draft_title' => $e->dbTitle,
+					'draft_author_user' => 0,
+					'draft_author_character' => 0,
+					'draft_summary' => $e->dbDesc,
+					'draft_content' => ($e->dbType == 'entry') ? $e->dbContent : $e->dbURL,
+					'draft_page' => $pageid,
+					'draft_created_at' => now()
+				);
+				$drafts[] = (bool) $this->wiki->create_draft($draft);
+				$draftid = $this->db->insert_id();
+				
+				// update the wiki page with the draft ID
+				$this->wiki->update_page($pageid, array('page_draft' => $draftid));
+			}
+			
+			if ( ! in_array(false, $pages) and ! in_array(false, $drafts))
+			{
+				$retval = array(
+					'code' => 1,
+					'message' => ""
+				);
+			}
+			if ( ! in_array(false, $pages) and ! in_array(true, $drafts))
+			{
+				if ($count_old == count($pages))
+				{
+					$retval = array(
+						'code' => 2,
+						'message' => "All of your database entries were created, but drafts could not be created for the wiki pages."
+					);
+				}
+				else
+				{
+					$retval = array(
+						'code' => 2,
+						'message' => "Some, but not all, of your database entries were created, but drafts could not be created for the wiki pages."
+					);
+				}
+			}
+			if ( ! in_array(true, $pages) and ! in_array(false, $drafts))
+			{
+				if ($count_old == count($drafts))
+				{
+					$retval = array(
+						'code' => 2,
+						'message' => "Drafts were created for your content, but none of your database entries were converted to wiki pages."
+					);
+				}
+				else
+				{
+					$retval = array(
+						'code' => 2,
+						'message' => "Drafts were created for your some, but not all, of your content, but none of your database entries were converted to wiki pages."
+					);
+				}
+			}
+			if ( ! in_array(true, $pages) and ! in_array(true, $drafts))
+			{
+				$retval = array(
+					'code' => 0,
+					'message' => ""
+				);
+			}
+		} catch (Exception $e) {
+			$retval = array(
+				'code' => 0,
+				'message' => 'ERROR: '.$e->getMessage().' - line '.$e->getLine().' of '.$e->getFile()
+			);
+		}
+		
+		echo json_encode($retval);
+	}
+	
 	public function upgrade_final_password()
 	{
 		// grab the password
