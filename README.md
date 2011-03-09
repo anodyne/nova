@@ -10,12 +10,14 @@ Anodyne Production's next-generation RPG management system combines popular feat
 
 * added the message.php file to handle notification of bans, a missing "nova" directory and incompatible PHP version
 * added new process to write the database config file for you
+* added the ability to upgrade SMS Database entries to Thresher wiki pages
 * updated seamless substitution to be able to override email view files
 * updated to jquery version 1.5.1
 * updated to jquery version 1.8.10
 * updated to uniform version 1.7.5
 * updated to qTip2
 * refactored the location helper into a full-blown class with static methods
+* refactored the upgrade process to mirror what was created for nova 3
 * removed the banned.php file
 * removed the rss model since it isn't necessary any more
 * fixed bug with seamless substitution of images where they wouldn't work when they were in the _base_override directory
