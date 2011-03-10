@@ -357,8 +357,6 @@ abstract class Nova_wiki_model extends Model {
 	{
 		$query = $this->db->insert('wiki_categories', $data);
 		
-		$this->dbutil->optimize_table('wiki_categories');
-		
 		return $query;
 	}
 	

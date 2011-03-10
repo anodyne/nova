@@ -225,5 +225,9 @@ $lang['wiki_revert'] = "Are you sure you want to revert to this previous draft o
 
 $lang['wiki_search_results'] = "%s search results also take in to account different drafts of a page. If you don't see what you searched for, it's likely in another draft of the pages provided.";
 
+$lang['wiki_add_categories'] = "Please add some %s.";
+
+$lang['wiki_add_categories_supp'] = "Type the %s name and click on the [+] button.";
+
 /* End of file long_text_lang.php */
 /* Location: ./application/language/english/long_text_lang.php */

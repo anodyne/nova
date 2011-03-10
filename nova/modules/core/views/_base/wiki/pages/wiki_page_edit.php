@@ -20,46 +20,33 @@
 	<?php if ($type == 'standard'): ?>
 		<?php echo text_output($label['categories'], 'p', 'fontMedium bold');?>
 		
-		<?php if (isset($cats)): ?>
-			<?php $i = 0;?>
-			<table class="table100 zebra">
-				<tbody>
-				<?php foreach ($cats as $c): ?>
-					<?php if ($i % 4 == 0): ?>
-						<tr>
+		<div id="category-panel">
+			<?php if (Auth::check_access('wiki/categories')): ?>
+				<div class="category-panel-header">
+					<input type="text" id="category-panel-name" placeholder="<?php echo $label['addcategory'];?>" value="" />
+					<button id="category-panel-create"><span></span></button>
+				</div>
+			<?php endif;?>
+			
+			<div class="category-panel-content">
+				<div id="category-panel-content-tags">
+					<?php if (isset($cats)): ?>
+						<?php foreach ($cats as $c): ?>
+							<?php $catclass = (is_array($inputs['categories']) and in_array($c['id'], $inputs['categories'])) ? ' tag-active' : '';?>
+							<nobr><span class="tag<?php echo $catclass;?>" id="<?php echo $c['id'];?>"><?php echo $c['name'];?></span></nobr>
+						<?php endforeach;?>
+						<input type="hidden" name="categories" value=",<?php echo $inputs['category_string'];?>," />
 					<?php endif;?>
-							
-							<td width="25%">
-								<div class="inline_img_left">
-									<?php echo form_checkbox('cat_'. $c['id'], $c['id'], $c['checked'], 'id="cat_'. $c['id'] .'"');?>
-								</div>
-								<label for="cat_<?php echo $c['id'];?>">
-									<?php echo $c['name'];?>
-									<span class="fontSmall gray">
-										<?php if (!empty($c['desc'])): ?>
-											<a href="#" rel="tooltip" tooltip="<?php echo $c['desc'];?>">[?]</a>
-										<?php endif;?>
-									</span>
-								</label>
-							</td>
-							
-							<?php if($i == (count($cats) - 1)): ?>
-								<?php while (($i + 1) % 4 != 0): ?>
-									<td width="25%">&nbsp;</td>
-									<?php $i++;?>
-								<?php endwhile; ?>
-							<?php endif;?>
-							
-						<?php if (($i + 1) % 4 == 0): ?>
-							</tr>
-						<?php endif;?>
-					<?php $i++;?>
-				<?php endforeach;?>
-				</tbody>
-			</table>
-		<?php endif;?>
-		
-		<br /><br />
+				</div>
+				
+				<div id="category-panel-content-message">
+					<?php if ( ! isset($cats)): ?>
+						<h3><?php echo $label['pleaseadd'];?></h3>
+						<h4><?php echo $label['pleaseadd_supp'];?></h4>
+					<?php endif;?>
+				</div>
+			</div>
+		</div>
 	<?php endif;?>
 	
 	<?php echo text_output($label['changes'], 'p', 'fontMedium bold');?>

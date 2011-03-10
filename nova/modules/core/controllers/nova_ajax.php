@@ -7747,6 +7747,30 @@ abstract class Nova_ajax extends Controller {
 		Template::render();
 	}
 	
+	public function wiki_create_category()
+	{
+		if (IS_AJAX)
+		{
+			// grab the category name from the POST
+			$name = $_POST['category'];
+			
+			// load the models
+			$this->load->model('wiki_model', 'wiki');
+			
+			// create the category
+			$result = $this->wiki->create_category(array('wikicat_name' => $name));
+			
+			if ($result > 0)
+			{
+				echo $this->db->insert_id();
+			}
+			else
+			{
+				echo 0;
+			}
+		}
+	}
+	
 	public function wiki_draft_cleanup()
 	{
 		$head = sprintf(

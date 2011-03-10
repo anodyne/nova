@@ -759,15 +759,17 @@ abstract class Nova_wiki extends Nova_controller_wiki {
 					// optimize the table
 					$this->sys->optimize_table('wiki_pages');
 					
-					foreach ($_POST as $key => $value)
+					$categories = explode(',', $_POST['categories']);
+					
+					foreach ($categories as $key => $c)
 					{
-						if (substr($key, 0, 4) == 'cat_')
+						if (empty($c))
 						{
-							$category_array[$key] = $value;
+							unset($categories[$key]);
 						}
 					}
 					
-					$category_string = (isset($category_array) && is_array($category_array)) ? implode(',', $category_array) : '';
+					$categories = implode(',', $categories);
 					
 					// create the array of draft data
 					$draft_array = array(
@@ -777,7 +779,7 @@ abstract class Nova_wiki extends Nova_controller_wiki {
 						'draft_title' => $this->input->post('title', true),
 						'draft_created_at' => now(),
 						'draft_page' => $pageid,
-						'draft_categories' => $category_string,
+						'draft_categories' => $categories,
 						'draft_summary' => $this->input->post('summary', true),
 					);
 					
@@ -818,15 +820,17 @@ abstract class Nova_wiki extends Nova_controller_wiki {
 				break;
 					
 				case 'edit':
-					foreach ($_POST as $key => $value)
+					$categories = explode(',', $_POST['categories']);
+					
+					foreach ($categories as $key => $c)
 					{
-						if (substr($key, 0, 4) == 'cat_')
+						if (empty($c))
 						{
-							$category_array[$key] = $value;
+							unset($categories[$key]);
 						}
 					}
 					
-					$category_string = (isset($category_array) and is_array($category_array)) ? implode(',', $category_array) : false;
+					$categories = implode(',', $categories);
 					
 					// create the array of draft data
 					$draft_array = array(
@@ -836,7 +840,7 @@ abstract class Nova_wiki extends Nova_controller_wiki {
 						'draft_title' => $this->input->post('title', true),
 						'draft_created_at' => now(),
 						'draft_page' => $id,
-						'draft_categories' => $category_string,
+						'draft_categories' => $categories,
 						'draft_summary' => $this->input->post('summary', true),
 						'draft_changed_comments' => $this->input->post('changes', true),
 					);
@@ -920,6 +924,8 @@ abstract class Nova_wiki extends Nova_controller_wiki {
 					'id' => 'summary',
 					'class' => 'full-width',
 					'rows' => 2),
+				'categories' => '',
+				'category_string' => '',
 			);
 			
 			$categories = $this->wiki->get_categories();
@@ -983,6 +989,8 @@ abstract class Nova_wiki extends Nova_controller_wiki {
 							'class' => 'full-width',
 							'rows' => 2,
 							'value' => ( ! empty($p->draft_summary)) ? $p->draft_summary : ''),
+						'categories' => ( ! empty($p->draft_categories)) ? explode(',', $p->draft_categories) : '',
+						'category_string' => ( ! empty($p->draft_categories)) ? $p->draft_categories : '',
 					);
 				}
 			}
@@ -1034,12 +1042,15 @@ abstract class Nova_wiki extends Nova_controller_wiki {
 		);
 		
 		$data['label'] = array(
+			'addcategory' => ucwords(lang('actions_add').' '.lang('labels_categories').'...'),
 			'back' => LARROW .' '. ucwords(lang('actions_manage') .' '. lang('global_wiki') .' '. lang('labels_pages')),
 			'categories' => ucfirst(lang('labels_categories')),
 			'changes' => ucfirst(lang('actions_changes')),
 			'closed' => ucfirst(lang('status_closed')),
 			'comments' => ucfirst(lang('labels_comments')),
 			'open' => ucfirst(lang('status_open')),
+			'pleaseadd' => sprintf(lang('wiki_add_categories'), lang('labels_categories')),
+			'pleaseadd_supp' => sprintf(lang('wiki_add_categories_supp'), lang('labels_category')),
 			'summary' => ucfirst(lang('labels_summary')),
 			'title' => ucfirst(lang('labels_title')),
 		);
