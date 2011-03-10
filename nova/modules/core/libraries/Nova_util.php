@@ -36,46 +36,49 @@ abstract class Nova_util {
 			
 			// get the directory listing for the genre
 			$dir = directory_map(APPPATH.'assets/common/'.GENRE.'/ranks/', true);
-
-			// get all the rank sets locations
-			$ranks = $ci->ranks->get_all_rank_sets();
-
-			if ($ranks->num_rows() > 0)
+			
+			if (is_array($dir))
 			{
-				// start by removing anything that's already installed
-				foreach ($ranks->result() as $rank)
+				// get all the rank sets locations
+				$ranks = $ci->ranks->get_all_rank_sets();
+	
+				if ($ranks->num_rows() > 0)
 				{
-					// find the location in the directory listing
-					$key = array_search($rank->rankcat_location, $dir);
-
-					if ($key !== false)
+					// start by removing anything that's already installed
+					foreach ($ranks->result() as $rank)
 					{
-						unset($dir[$key]);
+						// find the location in the directory listing
+						$key = array_search($rank->rankcat_location, $dir);
+	
+						if ($key !== false)
+						{
+							unset($dir[$key]);
+						}
 					}
-				}
-
-				// loop through the directories now
-				foreach ($dir as $key => $value)
-				{
-					// assign our path to a variable
-					$file = APPPATH.'assets/common/'.GENRE.'/ranks/'.$value.'/rank.yml';
-
-					// make sure the file exists first
-					if (file_exists($file))
+	
+					// loop through the directories now
+					foreach ($dir as $key => $value)
 					{
-						$content = file_get_contents($file);
-						$data = yayparser($content);
-						
-						$addValues = array(
-							'rankcat_name' 		=> $data['rank'],
-							'rankcat_location' 	=> $data['location'],
-							'rankcat_credits' 	=> $data['credits'],
-							'rankcat_preview' 	=> $data['preview'],
-							'rankcat_blank' 	=> $data['blank'],
-							'rankcat_extension'	=> $data['extension'],
-							'rankcat_genre'		=> $data['genre']
-						);
-						$ci->ranks->add_rank_set($addValues);
+						// assign our path to a variable
+						$file = APPPATH.'assets/common/'.GENRE.'/ranks/'.$value.'/rank.yml';
+	
+						// make sure the file exists first
+						if (file_exists($file))
+						{
+							$content = file_get_contents($file);
+							$data = yayparser($content);
+							
+							$addValues = array(
+								'rankcat_name' 		=> $data['rank'],
+								'rankcat_location' 	=> $data['location'],
+								'rankcat_credits' 	=> $data['credits'],
+								'rankcat_preview' 	=> $data['preview'],
+								'rankcat_blank' 	=> $data['blank'],
+								'rankcat_extension'	=> $data['extension'],
+								'rankcat_genre'		=> $data['genre']
+							);
+							$ci->ranks->add_rank_set($addValues);
+						}
 					}
 				}
 			}
@@ -131,70 +134,73 @@ abstract class Nova_util {
 			
 			// get the listing of the directory
 			$dir = directory_map(APPPATH.'views/', true);
-
-			// get all the skin catalogue items
-			$skins = $ci->sys->get_all_skins();
-
-			if ($skins->num_rows() > 0)
+			
+			if (is_array($dir))
 			{
-				// start by removing anything that's already installed
-				foreach ($skins->result() as $skin)
+				// get all the skin catalogue items
+				$skins = $ci->sys->get_all_skins();
+	
+				if ($skins->num_rows() > 0)
 				{
-					// find the location in the directory listing
-					$key = array_search($skin->skin_location, $dir);
-
-					if ($key !== false)
+					// start by removing anything that's already installed
+					foreach ($skins->result() as $skin)
 					{
-						unset($dir[$key]);
-					}
-				}
-
-				// create an array of items to remove
-				$pop = array('template.php');
-
-				// remove the items
-				foreach ($pop as $p)
-				{
-					// find the location in the directory listing
-					$key = array_search($p, $dir);
-
-					if ($key !== false)
-					{
-						unset($dir[$key]);
-					}
-				}
-
-				// now loop through the directories and install the skins
-				foreach ($dir as $key => $value)
-				{
-					// assign our path to a variable
-					$file = APPPATH.'views/'.$value.'/skin.yml';
-
-					// make sure the file exists first
-					if (file_exists($file))
-					{
-						$content = file_get_contents($file);
-						$data = yayparser($content);
-						
-						$mainAdd = array(
-							'skin_name' 	=> $data['skin'],
-							'skin_location' => $data['location'],
-							'skin_credits' 	=> $data['credits'],
-							'skin_version' 	=> $data['version']
-						);
-						$ci->sys->add_skin($mainAdd);
-
-						// go through and add the sections
-						foreach ($data['sections'] as $v)
+						// find the location in the directory listing
+						$key = array_search($skin->skin_location, $dir);
+	
+						if ($key !== false)
 						{
-							$secAdd = array(
-								'skinsec_section' 	=> $v['type'],
-								'skinsec_skin' 		=> $data['location'],
-								'skinsec_preview' 	=> $v['preview'],
-								'status' => 		'active',
-								'default' => 		'n'
+							unset($dir[$key]);
+						}
+					}
+	
+					// create an array of items to remove
+					$pop = array('template.php');
+	
+					// remove the items
+					foreach ($pop as $p)
+					{
+						// find the location in the directory listing
+						$key = array_search($p, $dir);
+	
+						if ($key !== false)
+						{
+							unset($dir[$key]);
+						}
+					}
+	
+					// now loop through the directories and install the skins
+					foreach ($dir as $key => $value)
+					{
+						// assign our path to a variable
+						$file = APPPATH.'views/'.$value.'/skin.yml';
+	
+						// make sure the file exists first
+						if (file_exists($file))
+						{
+							$content = file_get_contents($file);
+							$data = yayparser($content);
+							
+							$mainAdd = array(
+								'skin_name' 	=> $data['skin'],
+								'skin_location' => $data['location'],
+								'skin_credits' 	=> $data['credits'],
+								'skin_version' 	=> $data['version']
 							);
-							$ci->sys->add_skin_section($secAdd);
+							$ci->sys->add_skin($mainAdd);
+	
+							// go through and add the sections
+							foreach ($data['sections'] as $v)
+							{
+								$secAdd = array(
+									'skinsec_section' 	=> $v['type'],
+									'skinsec_skin' 		=> $data['location'],
+									'skinsec_preview' 	=> $v['preview'],
+									'status' => 		'active',
+									'default' => 		'n'
+								);
+								$ci->sys->add_skin_section($secAdd);
+							}
 						}
 					}
 				}
