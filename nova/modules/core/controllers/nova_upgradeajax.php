@@ -223,13 +223,17 @@ abstract class Nova_upgradeajax extends Controller {
 				// make sure the fields array is empty
 				$fields = false;
 				
+				$type = ($c->crewType != 'npc' and $c->crewType != 'active' and $c->crewType != 'inactive' and $c->crewType != 'pending')
+					? 'inactive'
+					: $c->crewType;
+				
 				$charValues = array(
 					'charid' => $c->crewid,
 					'user' => ( ! empty($c->email)) ? $charIDs[$c->email] : null,
 					'first_name' => $c->firstName,
 					'middle_name' => $c->middleName,
 					'last_name' => $c->lastName,
-					'crew_type' => ($c->crewType == 'npc') ? 'active' : $c->crewType,
+					'crew_type' => $type,
 					'date_activate' => $c->joinDate,
 					'date_deactivate' => $c->leaveDate,
 					'rank' => $c->rankid,
