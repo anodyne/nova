@@ -1,38 +1,13 @@
 <?php
-/*
-|---------------------------------------------------------------
-| LANGUAGE FILE - ENGLISH
-|---------------------------------------------------------------
-| File: application/language/english/install_lang.php
-| System Version: 1.0
-|
-| English language file for the system. Punctuation constants are
-| defined in ./application/config/constants.php
-|
-|---------------------------------------------------------------
-| NOTES
-|---------------------------------------------------------------
-| The following should not be translated:
-|
-| NDASH		- translates to a medium dash
-| RSQUO		- translates to a right single quote
-| RARROW	- translates to a right double arrow
-| LARROW	- translates to a left double array
-| AMP		- translates to an ampersand
-|
-| Rules:
-|
-| # If you use an apostrophe (') in your translations, you shoud be
-|   using the our constant for it (RSQUO). There are examples in the
-|	translated content.
-| # If you use a dash (-) in your translations, you should be using
-|   the our constant for it (NDASH). There are examples in the
-|	translated content.
-| # All language items should be in lowercase unless the original
-|   English uses mixed case or uppercase.
-| # Do not translate the array keys (the text in the brackets), only
-|   translate what is on the right side of the equal sign (=).
-*/
+/**
+ * English language file - Install, update and upgrade text
+ *
+ * @package		Nova
+ * @category	Language
+ * @author		Anodyne Productions
+ * @copyright	2011 Anodyne Productions
+ * @version		2.0
+ */
 
 $lang['global_progress'] = 'Progress';
 $lang['global_processing'] = 'Processing, please wait...';
@@ -518,6 +493,3 @@ $lang['install_error_1'] = 'The system is already installed. If you want to re-i
 $lang['install_error_2'] = 'You must be a system administrator to change this sim'. RSQUO .'s genre!';
 $lang['error_install_no_genre'] = 'You must configure your genre in <strong>application/config/nova.php</strong>! You cannot continue until you set a genre. Once you have setup a genre, refresh this page to re-run the genre data install.';
 $lang['error_no_genre'] = 'You must set your genre in <code>application/config/nova.php</code>! You cannot continue with the upgrade until you have set your genre. Once you have set your genre, refresh this page to continue.';
-
-/* End of file install_lang.php */
-/* Location: ./application/language/english/install_lang.php */

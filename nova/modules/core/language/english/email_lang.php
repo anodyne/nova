@@ -1,40 +1,13 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
-/*
-|---------------------------------------------------------------
-| LANGUAGE FILE - ENGLISH
-|---------------------------------------------------------------
-| File: application/language/english/email_lang.php
-| System Version: 1.2
-|
-| Changes: updated the email_content_private_message key
-|
-| English language file for the system. Punctuation constants are
-| defined in ./application/config/constants.php
-|
-|---------------------------------------------------------------
-| NOTES
-|---------------------------------------------------------------
-| The following should not be translated:
-|
-| NDASH		- translates to a medium dash
-| RSQUO		- translates to a right single quote
-| RARROW	- translates to a right double arrow
-| LARROW	- translates to a left double array
-| AMP		- translates to an ampersand
-|
-| Rules:
-|
-| # If you use an apostrophe (') in your translations, you shoud be
-|   using the our constant for it (RSQUO). There are examples in the
-|	translated content.
-| # If you use a dash (-) in your translations, you should be using
-|   the our constant for it (NDASH). There are examples in the
-|	translated content.
-| # All language items should be in lowercase unless the original
-|   English uses mixed case or uppercase.
-| # Do not translate the array keys (the text in the brackets), only
-|   translate what is on the right side of the equal sign (=).
-*/
+/**
+ * English language file - Email content
+ *
+ * @package		Nova
+ * @category	Language
+ * @author		Anodyne Productions
+ * @copyright	2011 Anodyne Productions
+ * @version		2.0
+ */
 
 /*
 |---------------------------------------------------------------
@@ -185,6 +158,3 @@ This is an automatically generated email, do not reply to this message.";
 $lang['email_content_docking_gm'] = "There is currently a docking request waiting for your review. The content of the application is displayed below. You can log in to Nova to approve and reject this request.
 
 This is an automatically generated email, do not reply to this message.";
-
-/* End of file email_lang.php */
-/* Location: ./application/language/english/email_lang.php */

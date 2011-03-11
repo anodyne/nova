@@ -1,40 +1,13 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
-/*
-|---------------------------------------------------------------
-| LANGUAGE FILE - ENGLISH
-|---------------------------------------------------------------
-| File: application/language/english/facebox_lang.php
-| System Version: 1.3
-|
-| Changes: added fbx_content_draft_cleanup
-|
-| English language file for the system. Punctuation constants are
-| defined in ./application/config/constants.php
-|
-|---------------------------------------------------------------
-| NOTES
-|---------------------------------------------------------------
-| The following should not be translated:
-|
-| NDASH		- translates to a medium dash
-| RSQUO		- translates to a right single quote
-| RARROW	- translates to a right double arrow
-| LARROW	- translates to a left double array
-| AMP		- translates to an ampersand
-|
-| Rules:
-|
-| # If you use an apostrophe (') in your translations, you shoud be
-|   using the our constant for it (RSQUO). There are examples in the
-|	translated content.
-| # If you use a dash (-) in your translations, you should be using
-|   the our constant for it (NDASH). There are examples in the
-|	translated content.
-| # All language items should be in lowercase unless the original
-|   English uses mixed case or uppercase.
-| # Do not translate the array keys (the text in the brackets), only
-|   translate what is on the right side of the equal sign (=).
-*/
+/**
+ * English language file - Facebox text
+ *
+ * @package		Nova
+ * @category	Language
+ * @author		Anodyne Productions
+ * @copyright	2011 Anodyne Productions
+ * @version		2.0
+ */
 
 $lang['fbx_head'] = "%s %s";
 
@@ -91,6 +64,3 @@ $lang['fbx_content_del_character'] = "Are you sure you want to delete the %s <st
 $lang['fbx_content_approve_entry'] = "Are you sure you want to approve the %s <strong>%s</strong>%s?";
 
 $lang['fbx_content_draft_cleanup'] = "Like most wiki software, Thresher stores each saved version of a wiki page as a draft. This allows you to do a bunch of work, and if you don't like it, revert back to the previous version of the page. If you have a lot of pages and drafts, your database can get pretty large. If you're concerned about the size of your database, you can clean up some of the wiki drafts. Use the dropdown below to select which drafts you want to clean up.\r\n\r\n<strong class='red'>Warning:</strong> Removing old drafts will clear the history for each page and you won't be able to revert to old versions. Proceed with caution!";
-
-/* End of file facebox_lang.php */
-/* Location: ./application/language/english/facebox_lang.php */

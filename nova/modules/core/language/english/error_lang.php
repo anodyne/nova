@@ -1,40 +1,13 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
-/*
-|---------------------------------------------------------------
-| LANGUAGE FILE - ENGLISH
-|---------------------------------------------------------------
-| File: application/language/english/error_lang.php
-| System Version: 1.3
-|
-| Changes: added error_wiki_1, added error_wiki_2
-|
-| English language file for the system. Punctuation constants are
-| defined in ./application/config/constants.php
-|
-|---------------------------------------------------------------
-| NOTES
-|---------------------------------------------------------------
-| The following should not be translated:
-|
-| NDASH		- translates to a medium dash
-| RSQUO		- translates to a right single quote
-| RARROW	- translates to a right double arrow
-| LARROW	- translates to a left double array
-| AMP		- translates to an ampersand
-|
-| Rules:
-|
-| # If you use an apostrophe (') in your translations, you shoud be
-|   using the our constant for it (RSQUO). There are examples in the
-|	translated content.
-| # If you use a dash (-) in your translations, you should be using
-|   the our constant for it (NDASH). There are examples in the
-|	translated content.
-| # All language items should be in lowercase unless the original
-|   English uses mixed case or uppercase.
-| # Do not translate the array keys (the text in the brackets), only
-|   translate what is on the right side of the equal sign (=).
-*/
+/**
+ * English language file - Error messages
+ *
+ * @package		Nova
+ * @category	Language
+ * @author		Anodyne Productions
+ * @copyright	2011 Anodyne Productions
+ * @version		2.0
+ */
 
 $lang['error_pagetitle'] = 'Error!';
 
@@ -134,6 +107,3 @@ $lang['error_illegal_post'] = 'Your entry was not posted because you are not a m
 
 $lang['error_wiki_1'] = "The wiki page you attempted to view is a restricted page that you are not authorized to view. If you believe you've received this message in error, please contact the %s.";
 $lang['error_wiki_2'] = "The wiki page draft you attempted to view is associated with a restricted wiki page which you are not authorized to view. If you believe you've received this message in error, please contact the %s.";
-
-/* End of file error_lang.php */
-/* Location: ./application/language/english/error_lang.php */
