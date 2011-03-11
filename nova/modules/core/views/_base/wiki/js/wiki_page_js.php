@@ -27,20 +27,23 @@
 				success: function(data){
 					if (data > 0)
 					{
+						// reset the add field to have nothing in it
 						$('#category-panel-name').val('');
 						
-						if ($('#category-panel-content-tags:empty'))
+						// figure out what we've got in the tags DIV
+						var tagsContent = $('#category-panel-content-tags').find('nobr').length;
+						
+						if (tagsContent == 0)
 						{
 							$('#category-panel-content-message').fadeOut('normal', function(){
-								$('<nobr><span class="tag" id="' + data + '">' + send.category + '</span></nobr>')
-									.appendTo('#category-panel-content-tags');
-								$('<input type="hidden" name="categories" value="" />').appendTo('#category-panel-content-tags');
+								$('#category-panel-content-tags')
+									.html('<nobr><span class="tag" id="' + data + '">' + send.category + '</span></nobr>')
+									.append('<input type="hidden" name="categories" value="" />');
 							});
 						}
 						else
 						{
-							$('<nobr><span class="tag" id="' + data + '">' + send.category + '</span></nobr>')
-								.appendTo('#category-panel-content-tags');
+							$('#category-panel-content-tags').append('<nobr><span class="tag" id="' + data + '">' + send.category + '</span></nobr>');
 						}
 					}
 				}
