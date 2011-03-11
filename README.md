@@ -15,6 +15,7 @@ Anodyne Production's next-generation RPG management system combines popular feat
 * updated Thresher with a new way to create and manage categories when working on a wiki page
 * updated Thresher with a completely new user experience for managing wiki pages
 * updated Thresher with a brand new interface for viewing wiki pages
+* updated the upload instructions to include the maximum file size and maximum image dimensions from the config file for reference
 * updated to jquery version 1.5.1
 * updated to jquery version 1.8.10
 * updated to uniform version 1.7.5
@@ -33,6 +34,9 @@ Anodyne Production's next-generation RPG management system combines popular feat
 <table>
 	<tr>
 		<th>Version</th><th>Release Date</th>
+	</tr>
+	<tr>
+		<td>2.0</td><td>-</td>
 	</tr>
 	<tr>
 		<td>1.2.4</td><td>25 January 2011</td>
