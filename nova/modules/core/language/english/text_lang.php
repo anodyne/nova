@@ -1,49 +1,21 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
-/*
-|---------------------------------------------------------------
-| LANGUAGE FILE - ENGLISH
-|---------------------------------------------------------------
-| File: application/language/english/long_text_lang.php
-| System Version: 1.2
-|
-| Changes: added specitem_select; added specitem_empty_fields;
-|	added text_bans; added text_ban_join; added text_manifest_delete_departments;
-|	added text_manifest; added text_manifest_assign; added text_duplicate_dept;
-|	updated text_manage_depts
-|
-| English language file for the system. Punctuation constants are
-| defined in ./application/config/constants.php
-|
-|---------------------------------------------------------------
-| NOTES
-|---------------------------------------------------------------
-| The following should not be translated:
-|
-| NDASH		- translates to a medium dash
-| RSQUO		- translates to a right single quote
-| RARROW	- translates to a right double arrow
-| LARROW	- translates to a left double array
-| AMP		- translates to an ampersand
-|
-| Rules:
-|
-| # If you use an apostrophe (') in your translations, you shoud be
-|   using the our constant for it (RSQUO). There are examples in the
-|	translated content.
-| # If you use a dash (-) in your translations, you should be using
-|   the our constant for it (NDASH). There are examples in the
-|	translated content.
-| # All language items should be in lowercase unless the original
-|   English uses mixed case or uppercase.
-| # Do not translate the array keys (the text in the brackets), only
-|   translate what is on the right side of the equal sign (=).
-*/
+/**
+ * English language file - Long text
+ *
+ * @package		Nova
+ * @category	Language
+ * @author		Anodyne Productions
+ * @copyright	2011 Anodyne Productions
+ * @version		2.0
+ */
 
 $lang['text_im_instructions'] = 'Put each IM handle on its own line';
 
 $lang['text_image_select'] = "Click on a link or image to add the image to the %s.";
 
-$lang['text_upload_image'] = 'You can upload images to the server for use in your bios, award images, tour images or mission images. Select the type of image you'. RSQUO .'re uploading and the image and click upload.';
+$lang['text_upload_image'] = 'You can upload images to the server for use in your bios, award images, tour images or mission images. Select the type of image you'. RSQUO .'re uploading and the image and click upload. Currently, uploaded images can be no more than %dKB in size and cannot be larger than %dx%d.%s';
+
+$lang['text_upload_admin'] = " Upload settings can be changed from the <code class='fontMedium'>%s/config/upload.php</code> file.";
 
 $lang['text_manage_decks'] = "You can change the order of your %s listing by dragging the blocks below into the order you want and clicking Update. If you would like to add a %s to the end of the list, simply type its name and click Add. If you want to edit the item, click on the text in the block. To remove a %s from the listing, click the close icon on its block.";
 
@@ -228,6 +200,3 @@ $lang['wiki_search_results'] = "%s search results also take in to account differ
 $lang['wiki_add_categories'] = "Please add some %s.";
 
 $lang['wiki_add_categories_supp'] = "Type the %s name and click on the [+] button.";
-
-/* End of file long_text_lang.php */
-/* Location: ./application/language/english/long_text_lang.php */

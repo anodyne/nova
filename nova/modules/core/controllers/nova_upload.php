@@ -16,6 +16,8 @@ abstract class Nova_upload extends Nova_controller_admin {
 	public function __construct()
 	{
 		parent::__construct();
+		
+		$this->config->load('upload');
 	}
 	
 	public function index()
@@ -94,7 +96,13 @@ abstract class Nova_upload extends Nova_controller_admin {
 		
 		$data['header'] = ucwords(lang('actions_upload') .' '. lang('labels_image'));
 		
-		$data['text'] = lang('text_upload_image');
+		$data['text'] = sprintf(
+			lang('text_upload_image'),
+			$this->config->item('max_size'),
+			$this->config->item('max_width'),
+			$this->config->item('max_height'),
+			(Auth::check_access('upload/manage')) ? sprintf(lang('text_upload_admin'), APPFOLDER) : ''
+		);
 		
 		$data['label'] = array(
 			'img_awards' => ucwords(lang('global_award') .' '. lang('labels_image')),
