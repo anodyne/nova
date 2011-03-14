@@ -331,14 +331,14 @@ abstract class Nova_wiki extends Nova_controller_wiki {
 		
 		$data['images'] = array(
 			'add' => array(
-				'src' => Location::img('category-add.png', $this->skin, 'wiki'),
+				'src' => Location::img('icon-add.png', $this->skin, 'wiki'),
 				'alt' => '',
 				'class' => 'image inline_img_left'),
 			'delete' => array(
-				'src' => Location::img('category-delete.png', $this->skin, 'wiki'),
+				'src' => Location::img('icon-delete.png', $this->skin, 'wiki'),
 				'alt' => ''),
 			'edit' => array(
-				'src' => Location::img('category-edit.png', $this->skin, 'wiki'),
+				'src' => Location::img('icon-edit.png', $this->skin, 'wiki'),
 				'alt' => ''),
 		);
 		
@@ -672,11 +672,11 @@ abstract class Nova_wiki extends Nova_controller_wiki {
 				'alt' => '',
 				'class' => 'image subnav-icon'),
 			'delete' => array(
-				'src' => Location::img('page-delete.png', $this->skin, 'wiki'),
+				'src' => Location::img('icon-delete.png', $this->skin, 'wiki'),
 				'alt' => '',
 				'title' => ucfirst(lang('actions_delete'))),
 			'edit' => array(
-				'src' => Location::img('page-edit.png', $this->skin, 'wiki'),
+				'src' => Location::img('icon-edit.png', $this->skin, 'wiki'),
 				'alt' => '',
 				'title' => ucfirst(lang('actions_edit'))),
 			'clean' => array(
