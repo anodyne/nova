@@ -25,7 +25,7 @@ class Controller_Nova_Main extends Controller_Nova_Base {
 		$this->settingsArray = array_merge($this->settingsArray, $additionalSettings);
 		
 		// pull the settings and put them into the options object
-		$this->options = Jelly::query('setting')->get_settings($this->settingsArray);
+		$this->options = Model_Setting::find_all($this->settingsArray);
 		
 		// set the variables
 		$this->skin		= $this->session->get('skin_main', $this->options->skin_main);
@@ -67,7 +67,7 @@ class Controller_Nova_Main extends Controller_Nova_Base {
 		$this->template->layout->navsub->widget3	= false;
 		
 		$this->template->layout->footer				= View::factory(Location::file('footer', $this->skin, 'partials'));
-		$this->template->layout->footer->extra 		= Jelly::query('message', 'footer')->limit(1)->select()->value;
+		$this->template->layout->footer->extra 		= Model_Message::find('footer');
 	}
 	
 	public function action_index()
@@ -96,9 +96,9 @@ class Controller_Nova_Main extends Controller_Nova_Base {
 		}
 		
 		// content
-		$this->template->title.= ucfirst(__("main"));
-		$data->header = Jelly::query('message', 'welcome_head')->limit(1)->select()->value;
-		$data->message = Jelly::query('message', 'welcome_msg')->limit(1)->select()->value;
+		$this->template->title.= ucfirst(___("main"));
+		$data->header = Model_Message::find('welcome_head');
+		$data->message = Model_Message::find('welcome_msg');
 		
 		// send the response
 		$this->response->body($this->template);
@@ -134,7 +134,7 @@ class Controller_Nova_Main extends Controller_Nova_Base {
 				$email = $this->_email('contact', $emaildata);
 				
 				// set the flash message
-				$this->template->layout->flash = Submit::show_flash( (int) $email, __("your information"), __("submitted"), $this->skin, 'main');
+				$this->template->layout->flash = Submit::show_flash( (int) $email, ___("your information"), ___("submitted"), $this->skin, 'main');
 			}
 			else
 			{
@@ -150,8 +150,8 @@ class Controller_Nova_Main extends Controller_Nova_Base {
 		$data = $this->template->layout->content;
 		
 		// content
-		$this->template->title.= ucwords(__("contact us"));
-		$data->header = ucwords(__("contact us"));
+		$this->template->title.= ucwords(___("contact us"));
+		$data->header = ucwords(___("contact us"));
 		$data->message = Jelly::query('message', 'contact')->limit(1)->select()->value;
 		
 		// fields
@@ -197,28 +197,34 @@ class Controller_Nova_Main extends Controller_Nova_Base {
 		$data = $this->template->layout->content;
 		
 		// content
-		$this->template->title.= ucwords(__("site credits"));
-		$data->header = ucwords(__("site credits"));
+		$this->template->title.= ucwords(___("site credits"));
+		$data->header = ucwords(___("site credits"));
 		
 		// non-editable credits
-		$credits_perm = Jelly::query('message', 'credits_perm')->limit(1)->select()->value;
+		$credits_perm = Model_Message::find('credits_perm');
 		$credits_perm.= "\r\n\r\n".Jelly::query('catalogueskinsec')->defaultskin('main')->select()->skin->credits;
 		$credits_perm.= "\r\n\r\n".Jelly::query('cataloguerank', $this->rank)->limit(1)->select()->credits;
 		
 		// credits
 		$data->credits_perm = nl2br($credits_perm);
-		$data->credits = Jelly::query('message', 'credits')->limit(1)->select()->value;
+		$data->credits = Model_Message::find('credits');
 		
 		// should we show an edit link?
-		$data->edit = (Auth::is_logged_in() and Auth::check_access('site/messages', false))
-			? true
-			: false;
+		$data->edit = (Auth::is_logged_in() and Auth::check_access('site/messages', false)) ? true : false;
 		
 		# TODO: remove this after the site messages management stuff is done
 		$data->edit = false;
 		
 		// send the response
 		$this->response->body($this->template);
+	}
+	
+	public function action_test()
+	{
+		$user = Model_User::find(1);
+		
+		echo Debug::vars($user->get_status());
+		exit();
 	}
 	/*
 	public function join()
@@ -288,8 +294,8 @@ class Controller_Nova_Main extends Controller_Nova_Base {
 		}
 		
 		// content
-		$this->template->title.= ucwords(__("news"));
-		$data->header = ucwords(__("news"));
+		$this->template->title.= ucwords(___("news"));
+		$data->header = ucwords(___("news"));
 		
 		// send the response
 		$this->request->response = $this->template;
@@ -324,7 +330,7 @@ class Controller_Nova_Main extends Controller_Nova_Base {
 			$submit = Submit::create($_POST, 'newscomment', $additional, $pop);
 			
 			// show the appropriate flash message
-			$this->template->layout->flash_message = Submit::show_flash($submit, __('label.comment'), __('action.added'), $this->skin, 'main');
+			$this->template->layout->flash_message = Submit::show_flash($submit, ___('label.comment'), ___('action.added'), $this->skin, 'main');
 		}
 		
 		// grab the news item referenced in the url
@@ -358,19 +364,19 @@ class Controller_Nova_Main extends Controller_Nova_Base {
 				'rss' => array(
 					'src' => Location::image($this->images['main.rss'], $this->skin, 'main', 'image'),
 					'attr' => array(
-						'alt' => __('abbr.rss'),
+						'alt' => ___('abbr.rss'),
 						'class' => '')),
 				'prev' => array(
 					'src' => Location::image($this->images['main.previous'], $this->skin, 'main', 'image'),
 					'attr' => array(
-						'alt' => __('word.previous'),
-						'title' => ucfirst(__('word.previous')),
+						'alt' => ___('word.previous'),
+						'title' => ucfirst(___('word.previous')),
 						'class' => '')),
 				'next' => array(
 					'src' => Location::image($this->images['main.next'], $this->skin, 'main', 'image'),
 					'attr' => array(
-						'alt' => __('word.next'),
-						'title' => ucfirst(__('word.next')),
+						'alt' => ___('word.next'),
+						'title' => ucfirst(___('word.next')),
 						'class' => '')),
 				'comment'	=> array(),
 			);
@@ -388,14 +394,14 @@ class Controller_Nova_Main extends Controller_Nova_Base {
 			// make sure they're logged in if it's a private news item
 			if ($news->private == 'y' and ! Auth::is_logged_in())
 			{
-				$this->template->title.= ucwords(__('action.view').' '.__('global.news_item'));
-				$data->header = __('error.header');
+				$this->template->title.= ucwords(___('action.view').' '.___('global.news_item'));
+				$data->header = ___('error.header');
 				$data->headerclass = ' error';
-				$data->message = '<p class="fontMedium">'.__('error.private_news', array(':news' => __('global.news_item'),':users' => __('global.users'))).'</p>';
+				$data->message = '<p class="fontMedium">'.___('error.private_news', array(':news' => ___('global.news_item'),':users' => ___('global.users'))).'</p>';
 			}
 			else
 			{
-				$this->template->title.= ucwords(__('action.view').' '.__('global.news_item')).' - '. $news->title;
+				$this->template->title.= ucwords(___('action.view').' '.___('global.news_item')).' - '. $news->title;
 				$data->header = $news->title;
 				$data->headerclass = null;
 				$data->message = null;
@@ -403,10 +409,10 @@ class Controller_Nova_Main extends Controller_Nova_Base {
 		}
 		else
 		{
-			$this->template->title.= ucwords(__('action.view').' '.__('global.news_item'));
-			$data->header = __('error.header');
+			$this->template->title.= ucwords(___('action.view').' '.___('global.news_item'));
+			$data->header = ___('error.header');
 			$data->headerclass = ' error';
-			$data->message = '<p class="fontMedium">'.__('error.not_found', array(':item' => __('global.news_item'))).'</p>';
+			$data->message = '<p class="fontMedium">'.___('error.not_found', array(':item' => ___('global.news_item'))).'</p>';
 		}
 		
 		// build the controls for the comment box
@@ -416,14 +422,14 @@ class Controller_Nova_Main extends Controller_Nova_Base {
 				'value' => '',
 				'attr' => array(
 					'id' => 'ncomment_content',
-					'placeholder' => __('phrase.enter_your_comment', array(':item' => __('global.news_item'))),
+					'placeholder' => ___('phrase.enter_your_comment', array(':item' => ___('global.news_item'))),
 					'rows' => 6)),
 		);
 		
 		$data->buttons = array(
 			'submit' => array(
 				'name' => 'submit',
-				'value' => ucfirst(__('action.submit')),
+				'value' => ucfirst(___('action.submit')),
 				'attr' => array(
 					'type' => 'submit',
 					'class' => 'button-main')),
@@ -449,7 +455,7 @@ class Controller_Nova_Main extends Controller_Nova_Base {
 				case 'contact':
 					// data for the view files
 					$view = new stdClass;
-					$view->subject = __("Site Contact from :name", array(':name' => $data->name));
+					$view->subject = ___("Site Contact from :name", array(':name' => $data->name));
 					$view->content = $data->message;
 					
 					// set the html version

@@ -6,7 +6,7 @@
  * @category	Controllers
  * @author		Anodyne Productions
  * @copyright	2011 Anodyne Productions
- * @since		2.0
+ * @version		3.0
  */
 
 class Controller_Nova_Admin_Users extends Controller_Nova_Base {
@@ -27,7 +27,7 @@ class Controller_Nova_Admin_Users extends Controller_Nova_Base {
 		$this->settingsArray = array_merge($this->settingsArray, $additionalSettings);
 		
 		// pull the settings and put them into the options object
-		$this->options = Jelly::query('setting')->get_settings($this->settingsArray);
+		$this->options = Model_Setting::find_all($this->settingsArray);
 		
 		// set the variables
 		$this->skin		= $this->session->get('skin_admin', $this->options->skin_admin);
@@ -74,7 +74,7 @@ class Controller_Nova_Admin_Users extends Controller_Nova_Base {
 		$this->template->layout->navsub->widget3	= false;
 		
 		$this->template->layout->footer				= View::factory('_common/partials/footer');
-		$this->template->layout->footer->extra 		= Jelly::query('message', 'footer')->limit(1)->select()->value;
+		$this->template->layout->footer->extra 		= Model_Message::find('footer');
 	}
 	
 	public function action_index()
@@ -88,9 +88,6 @@ class Controller_Nova_Admin_Users extends Controller_Nova_Base {
 		// assign the object a shorter variable to use in the method
 		$data = $this->template->layout->content;
 		
-		// get all the users
-		$users = Jelly::query('user')->select();
-		
 		// start with empty variables
 		$data->users = false;
 		$data->actions = false;
@@ -101,12 +98,15 @@ class Controller_Nova_Admin_Users extends Controller_Nova_Base {
 		$actionsmenu->delete = ucwords(__(':del :user', array(':del' => __('delete'), ':user' => __('user'))));
 		$actionsmenu->link = ucwords(__(':link :characters', array(':link' => __('link'), ':characters' => __('characters'))));
 		
-		if (count($users) > 0)
+		// get all the users
+		$users = Model_User::find_all();
+		
+		if ($users)
 		{
 			foreach ($users as $u)
 			{
 				// calculate the user's status
-				$status = Jelly::query('user', $u->id)->get_status();
+				$status = Model_User::find($u->id)->get_status();
 				
 				// put the user in the right arrray
 				$data->users[$status][$u->id] = $u;
