@@ -475,6 +475,31 @@ abstract class Nova_write extends Nova_controller_admin {
 						break;
 							
 						case 'save':
+							if ($this->options['use_post_participants'] == 'y')
+							{
+								if ($id)
+								{
+									// get the participants
+									$participants = $this->posts->get_post($id, 'post_participants');
+									
+									// make an array out of the participants
+									$participant_array = explode(',', $participants);
+									
+									// add the current user
+									$participant_array[] = $this->session->userdata('userid');
+									
+									// make sure we have unique values
+									$participant_array_final = array_unique($participant_array);
+									
+									// get a string
+									$participants = implode(',', $participant_array_final);
+								}
+								else
+								{
+									$participants = $this->session->userdata('userid');
+								}
+							}
+							
 							if ($id !== false)
 							{
 								$update_array = array(
@@ -488,7 +513,8 @@ abstract class Nova_write extends Nova_controller_admin {
 									'post_timeline' => $timeline,
 									'post_location' => $location,
 									'post_mission' => $mission,
-									'post_saved' => $this->session->userdata('main_char')
+									'post_saved' => $this->session->userdata('main_char'),
+									'post_participants' => $participants,
 								);
 								
 								$update = $this->posts->update_post($id, $update_array);
@@ -532,7 +558,8 @@ abstract class Nova_write extends Nova_controller_admin {
 									'post_timeline' => $timeline,
 									'post_location' => $location,
 									'post_mission' => $mission,
-									'post_saved' => $this->session->userdata('main_char')
+									'post_saved' => $this->session->userdata('main_char'),
+									'post_participants' => $participants,
 								);
 								
 								$insert = $this->posts->create_mission_entry($insert_array);
@@ -598,6 +625,59 @@ abstract class Nova_write extends Nova_controller_admin {
 						case 'post':
 							// check the moderation status
 							$status = $this->user->checking_moderation('post', $authors_string);
+							
+							if ($this->options['use_post_participants'] == 'y')
+							{
+								if ($id)
+								{
+									// get the participants
+									$participants = $this->posts->get_post($id, 'post_participants');
+									
+									// make an array out of the participants
+									$participant_array = explode(',', $participants);
+									
+									// add the current user
+									$participant_array[] = $this->session->userdata('userid');
+									
+									// make sure we have unique values
+									$participant_array_final = array_unique($participant_array);
+									
+									// get a string
+									$participants = implode(',', $participant_array_final);
+								}
+								else
+								{
+									$participants = $this->session->userdata('userid');
+								}
+								
+								// get an array of actual participants
+								$actual_participants = explode(',', $participants);
+								
+								// get an array of who is supposed to be on the post
+								$author_participants = explode(',', $users_string);
+								
+								// get an array of people who need to be removed
+								$diffs = array_diff($author_participants, $actual_participants);
+								
+								// set the new user string
+								$users_string = implode(',', $actual_participants);
+								
+								// get an array of characters on the post
+								$author_array = explode(',', $authors_string);
+								
+								foreach ($author_array as $key => $value)
+								{
+									$userID = $this->char->get_character($value, 'user');
+									
+									if ($userID !== null and $userID > 0 and in_array($userID, $diffs))
+									{
+										unset($author_array[$key]);
+									}
+								}
+								
+								// set the new authors string
+								$authors_string = implode(',', $author_array);
+							}
 							
 							if ($id !== false)
 							{
