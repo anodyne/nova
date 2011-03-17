@@ -5,8 +5,8 @@
  * @package		Nova
  * @category	Models
  * @author		Anodyne Productions
- * @copyright	2010-11 Anodyne Productions
- * @since		2.0
+ * @copyright	2011 Anodyne Productions
+ * @since		3.0
  */
  
 class Model_User extends Jelly_Model {
@@ -149,6 +149,77 @@ class Model_User extends Jelly_Model {
 				'foreign' => 'characters.user'
 			)),
 		));
+	}
+	
+	/**
+	 * Find a single user in the database.
+	 *
+	 * @access	public
+	 * @param	int		the ID of the user to pull or FALSE to pull all users
+	 * @param	array 	an array of items to use in the where clause
+	 * @return	mixed	a Jelly_Collection if there are results or FALSE if there are no results
+	 */
+	public static function find($id = false, array $where = array())
+	{
+		if ( ! is_numeric($id) and $id !== false)
+		{
+			throw new Kohana_Exception('ID parameter must be numerical!');
+		}
+		
+		if ($id)
+		{
+			$result = Jelly::query('user', $id)->select();
+		}
+		else
+		{
+			$result = Jelly::query('user');
+			
+			if (Arr::is_array($where) and count($where) > 0)
+			{
+				foreach ($where as $field => $value)
+				{
+					$result = $result->where($field, '=', $value);
+				}
+			}
+			
+			$result = $result->select();
+		}
+		
+		if (count($result) > 0)
+		{
+			return $result;
+		}
+		
+		return false;
+	}
+	
+	/**
+	 * Find all users in the database that match the criteria.
+	 *
+	 * @access	public
+	 * @param	array 	an array of items to use in the where clause
+	 * @return	mixed	a Jelly_Collection if there are results or FALSE if there are no results
+	 */
+	public static function find_all(array $where = array())
+	{
+		$result = Jelly::query('user');
+		
+		if (Arr::is_array($where) and count($where) > 0)
+		{
+			foreach ($where as $field => $value)
+			{
+				$result = $result->where($field, '=', $value);
+			}
+		}
+		
+		$result = $result->select();
+		
+		if (count($result) > 0)
+		{
+			return $result;
+		}
+		
+		return false;
 	}
 	
 	/**

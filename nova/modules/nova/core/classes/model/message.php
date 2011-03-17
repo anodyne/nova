@@ -5,8 +5,8 @@
  * @package		Nova
  * @category	Models
  * @author		Anodyne Productions
- * @copyright	2010-11 Anodyne Productions
- * @since		2.0
+ * @copyright	2011 Anodyne Productions
+ * @since		3.0
  */
  
 class Model_Message extends Jelly_Model {
@@ -41,5 +41,30 @@ class Model_Message extends Jelly_Model {
 				'default' => 'n'
 			)),
 		));
+	}
+	
+	/**
+	 * Find a single message in the database.
+	 *
+	 * @access	public
+	 * @param	int		the key of the message to pull
+	 * @param	bool	whether to return just the value or the entire object
+	 * @return	mixed	a Jelly_Collection if there are results or FALSE if there are no results
+	 */
+	public static function find($key, $only_value = true)
+	{
+		$result = Jelly::query('message', $key)->limit(1)->select();
+		
+		if (count($result) > 0)
+		{
+			if ($only_value)
+			{
+				return $result->value;
+			}
+			
+			return $result;
+		}
+		
+		return false;
 	}
 }
