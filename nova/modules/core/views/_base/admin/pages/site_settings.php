@@ -103,6 +103,14 @@
 					<?php echo form_input($inputs['posting_req']);?>
 					<span class="gray"><?php echo $label['days'];?>
 				</p>
+				<p>
+					<kbd>
+						<?php echo $label['posts_participants'];?>&nbsp;
+						<a href="#" rel="tooltip" class="fontTiny image" tooltip="<?php echo $label['tt_posting_participants'];?>"><?php echo img($images['help']);?></a>
+					</kbd>
+					<?php echo form_radio($inputs['participants_y']) .' '. form_label($label['yes'], 'participants_y');?>
+					<?php echo form_radio($inputs['participants_n']) .' '. form_label($label['no'], 'participants_n');?>
+				</p>
 			</div><br />
 			
 			<?php echo text_output($label['header_email'], 'h2', 'page-subhead');?>

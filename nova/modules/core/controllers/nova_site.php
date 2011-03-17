@@ -4696,12 +4696,12 @@ abstract class Nova_site extends Nova_controller_admin {
 					'name' => 'daylight_savings',
 					'id' => 'dst_y',
 					'value' => 'true',
-					'checked' => ($setting['daylight_savings'] == 'true') ? true : false),
+					'checked' => (strtolower($setting['daylight_savings']) == 'true') ? true : false),
 				'dst_n' => array(
 					'name' => 'daylight_savings',
 					'id' => 'dst_n',
 					'value' => 'false',
-					'checked' => ($setting['daylight_savings'] == 'false') ? true : false),
+					'checked' => (strtolower($setting['daylight_savings']) == 'false') ? true : false),
 				'email_name' => array(
 					'name' => 'default_email_name',
 					'id' => 'default_email_name',
@@ -4723,6 +4723,16 @@ abstract class Nova_site extends Nova_controller_admin {
 					'name' => 'date_format',
 					'id' => 'date_format',
 					'value' => $setting['date_format']),
+				'participants_y' => array(
+					'name' => 'use_post_participants',
+					'id' => 'participants_y',
+					'value' => 'y',
+					'checked' => ($setting['use_post_participants'] == 'y') ? true : false),
+				'participants_n' => array(
+					'name' => 'use_post_participants',
+					'id' => 'participants_n',
+					'value' => 'n',
+					'checked' => ($setting['use_post_participants'] == 'n') ? true : false),
 			);
 			
 			$data['values']['updates'] = array(
@@ -4936,6 +4946,7 @@ abstract class Nova_site extends Nova_controller_admin {
 			'on' => ucfirst(lang('labels_on')),
 			'online' => lang('misc_label_online'),
 			'posts_num' => ucwords(lang('global_missionposts')) .' '. lang('labels_per') .' '. ucfirst(lang('labels_page')),
+			'posts_participants' => ucwords(lang('global_post').' '.lang('labels_participants')),
 			'rank' => ucwords(lang('global_rank') .' '. lang('labels_set')),
 			'requirement' => ucwords(lang('labels_posting') .' '. lang('labels_requirements')),
 			'sample_post' => ucwords(lang('actions_use') .' '. lang('labels_sample_post')) .' '. lang('labels_on') .' '.
@@ -4950,6 +4961,7 @@ abstract class Nova_site extends Nova_controller_admin {
 			'timezone' => ucfirst(lang('labels_timezone')),
 			'tt_online_timespan' => lang('info_online_timespan'),
 			'tt_post_count' => lang('info_post_count_format'),
+			'tt_posting_participants' => lang('info_posting_participants'),
 			'tt_posting_requirement' => lang('info_posting_req'),
 			'type' => ucwords(lang('global_sim') .' '. lang('labels_type')),
 			'updates' => ucwords(lang('labels_update') .' '. lang('labels_notification')),

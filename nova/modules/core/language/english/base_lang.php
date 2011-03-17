@@ -448,6 +448,7 @@ $lang['labels_page']			= 'page';
 $lang['labels_pages']			= 'pages';
 $lang['labels_parent'] 			= 'parent';
 $lang['labels_part']			= 'part';
+$lang['labels_participants']	= 'participants';
 $lang['labels_password'] 		= 'password';
 $lang['labels_per']				= 'per';
 $lang['labels_please'] 			= 'please';
