@@ -85,6 +85,7 @@ class Nova_controller_admin extends Controller {
 			'allowed_chars_playing',
 			'allowed_chars_npc',
 			'default_email_address',
+			'use_post_participants',
 		);
 		
 		// set the options
