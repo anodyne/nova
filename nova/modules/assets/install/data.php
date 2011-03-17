@@ -1978,6 +1978,10 @@ $settings = array(
 		'setting_key' => 'posting_requirement',
 		'setting_value' => 14,
 		'setting_user_created' => 'n'),
+	array(
+		'setting_key' => 'use_post_participants',
+		'setting_value' => 'y',
+		'setting_user_created' => 'n'),
 );
 
 $sim_type = array(

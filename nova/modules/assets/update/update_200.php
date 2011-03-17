@@ -125,6 +125,10 @@ $add_column = array(
 			'type' => 'VARCHAR',
 			'constraint' => 100,
 			'default' => ''),
+	),
+	'posts' => array(
+		'post_participants' => array(
+			'type' => 'TEXT'),
 	)
 );
 
@@ -200,6 +204,14 @@ $additem = array(
 	'comp_url' => 'http://www.unwrongest.com/projects/elastic/'
 );
 $this->db->insert('system_components', $additem);
+
+// add the use_post_participants setting
+$additem = array(
+	'setting_key' => 'use_post_participants',
+	'setting_value' => 'y',
+	'setting_user_created' => 'n'
+);
+$this->db->insert('settings', $additem);
 
 // update the level 3 wiki page item
 $this->db->where('page_url', 'wiki/page');

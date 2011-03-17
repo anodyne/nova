@@ -5,8 +5,8 @@
  * @package		Nova
  * @category	Install
  * @author		Anodyne Productions
- * @copyright	2010-11 Anodyne Productions
- * @version		1.3
+ * @copyright	2011 Anodyne Productions
+ * @version		2.0
  */
 
 $user_id_type				= 'INT';
@@ -1170,6 +1170,8 @@ $fields_posts = array(
 		'type' => $date_type,
 		'constraint' => $date_constraint,
 		'default' => 0),
+	'post_participants' => array(
+		'type' => 'TEXT'),
 );
 
 $fields_posts_comments = array(
