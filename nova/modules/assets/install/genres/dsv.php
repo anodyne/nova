@@ -4,20 +4,18 @@
  *
  * @package		Nova
  * @category	Install
- * @author		Anodyne Productions
- * @since		1.3
+ * @copyright	2011 Anodyne Productions
+ * @since		2.0
  */
 
-# electronics technician
-# fire control technician
-# machinist's mate
+# marines
+# support
 # mess management specialist
-# missile technician
 
 /**
  * genre variable
  */
-$g = 'sq';
+$g = 'dsv';
 
 /**
  * genre table data
@@ -79,6 +77,11 @@ $depts = array(
 		'dept_name' => 'Marine Detachment',
 		'dept_desc' => "Despite being a peaceful organization, the UEO Marine Corps is responsible for both defensive and offensive missions at the orders of the UEO President. Because of hightening tensions between confederations, many UEO ships carry a Marine detachment for any type of missions that may require the additional muscle the Marine Corps brings with it.",
 		'dept_order' => 9,
+		'dept_manifest' => 1),
+	array(
+		'dept_name' => 'Support',
+		'dept_desc' => "One of the most overlooked departments on UEO vessels, the Support department is responsible for supporting the crew and crew systems while the vessel is at sea.",
+		'dept_order' => 10,
 		'dept_manifest' => 1),
 );
 
@@ -841,7 +844,6 @@ $positions = array(
 		'pos_order' => 1,
 		'pos_open' => 5,
 		'pos_type' => 'officer'),
-		
 	array(
 		'pos_name' => 'Chief EVA Officer',
 		'pos_desc' => "The Chief EVA Officer is responsible for all extra vehicular activity that goes on outside of the ship. This often includes working with the Helm department to coordinate mini-sub missions, oversight of the launch bay and use of any other EVA equipment. In addition, the Chief EVA Officer is responsible for the safe execution of all EVA missions from the ship. The Chief EVA Officer must be certified in the use of all EVA equipment aboard the ship and routinely trains the crew and other EVA department personnel on the EVA equipment.",
@@ -851,79 +853,136 @@ $positions = array(
 		'pos_type' => 'senior'),
 	array(
 		'pos_name' => 'EVA Operator',
-		'pos_desc' => "EVA Operators are responsible for operating much of the EVA equipment aboard the ship. While the Helm department handles driving mini-subs most of the time, the EVA Operators are also capable of piloting the craft. In most cases, the EVA Operators only have general certification on the equipment and must defer to the Chief EVA Officer or EVA Equipment Specialist for ",
+		'pos_desc' => "EVA Operators are responsible for operating much of the EVA equipment aboard the ship. While the Helm department handles driving mini-subs most of the time, the EVA Operators are also capable of piloting the craft. In most cases, the EVA Operators only have general certification on the equipment and must defer to the Chief EVA Officer or EVA Equipment Specialists for more specialized knowledge.",
 		'pos_dept' => 5,
 		'pos_order' => 1,
 		'pos_open' => 5,
 		'pos_type' => 'officer'),
 	array(
-		'pos_name' => 'Deckhand',
-		'pos_desc' => "Deckhands are multi-faceted crewmembers on battlestars who prepare and maintain Colonial fighters and reconnaissance vehicles for flight and turnaround.",
+		'pos_name' => 'EVA Equipment Specialist',
+		'pos_desc' => "EVA Equipment Specialists are highly trained operators of specific EVA equipment. In most cases, vessels will carry a few EVA specialists and bring additional specialists aboard as new equipment is added.",
 		'pos_dept' => 5,
-		'pos_order' => 10,
+		'pos_order' => 2,
 		'pos_open' => 5,
 		'pos_type' => 'enlisted'),
-		
 	array(
-		'pos_name' => 'Chief Medical Officer',
-		'pos_desc' => "The Chief Medical Officer is responsible for the physical health of the entire crew, but does more than patch up injured crew members. His/her function is to ensure that they do not get sick or injured to begin with, and to this end monitors their health and conditioning with regular check ups. If necessary, the Chief Medical Officer can remove anyone from duty, even a Commanding Officer. Besides this s/he is available to provide medical advice to any individual who requests it.\r\n\r\nS/he also is a department head and a member of the Senior Staff and responsible for all the crew members in her/his department and duty rosters.",
+		'pos_name' => 'Chief Weapons Officer',
+		'pos_desc' => "The Chief Weapons Officer is responsible for the storage and release of all ordinance stored on the vessel. The Chief Weapons Officer interfaces with the Sonar department in tactical situations to establish firing solutions and provide the Commanding Officer as many tactical options as possible. Like other positions on the vessel, the Chief Weapons Officer must constantly be certifying and drilling for tactical situations that may arise.",
 		'pos_dept' => 6,
+		'pos_order' => 0,
+		'pos_open' => 1,
+		'pos_type' => 'senior'),
+	array(
+		'pos_name' => 'Fire Control Technician',
+		'pos_desc' => "UEO Fire Control Technicians report to the Chief Weapons Officer and assist in the storage and release of the ordinance stored on the vessel. While not having the breadth of knowledge the Chief Weapons Officer has, technicians tend to specialize in one type of weapon and work toward additional certifications while on tour.",
+		'pos_dept' => 6,
+		'pos_order' => 1,
+		'pos_open' => 5,
+		'pos_type' => 'officer'),
+	array(
+		'pos_name' => 'Missile Technician',
+		'pos_desc' => "Missile Technicians are highly trained specialized technicians with knowledge in the storage, targeting and release of missiles that have both nuclear and non-nuclear capabilities.",
+		'pos_dept' => 6,
+		'pos_order' => 2,
+		'pos_open' => 2,
+		'pos_type' => 'officer'),
+	array(
+		'pos_name' => 'Chief Security Officer',
+		'pos_desc' => "The Chief Security Officer is responsible for all security aboard the vessel including the safe-keeping of ordinance, weapons and personnel. In the event an away team is sent from the vessel to land or another vessel or facility, the team will often consist of several members of the Security department, usually hand-picked by the Chief Security Officer. It is not uncommon for the Chief Security Officer to be from the enlisted ranks.",
+		'pos_dept' => 7,
+		'pos_order' => 0,
+		'pos_open' => 1,
+		'pos_type' => 'senior'),
+	array(
+		'pos_name' => 'Security Officer',
+		'pos_desc' => "Reporting to the Chief Security Officer, UEO Security Officers help with all security aboard the vessel and will, at the selection of the Chief Security Officer, escort vessel personnel on missions off the vessel. Unlike most departments on the vessel, Security Officers are most often from the enlisted ranks.",
+		'pos_dept' => 7,
+		'pos_order' => 1,
+		'pos_open' => 20,
+		'pos_type' => 'enlisted'),
+	array(
+		'pos_name' => 'Master-At-Arms',
+		'pos_desc' => "The Master-at-Arms is a non-commissioned officer responsible for training security personnel aboard UEO vessels as well as discipline and law enforcement aboard the vessel. The Master-at-Arms works closely with the Chief Security Officer and ultimately reports to them.",
+		'pos_dept' => 7,
+		'pos_order' => 2,
+		'pos_open' => 1,
+		'pos_type' => 'enlisted'),
+	array(
+		'pos_name' => 'Chief Engineer',
+		'pos_desc' => "The Chief Engineer is responsible for the condition of all systems and equipment on board a UEO vessel. S/he oversees maintenance, repairs and upgrades of all equipment. S/he is also responsible for the many repairs teams during crisis situations. The Chief Engineer is not only the department head but also a senior officer, responsible for all the crew members in her/his department and maintenance of the duty rosters.",
+		'pos_dept' => 8,
+		'pos_order' => 0,
+		'pos_open' => 1,
+		'pos_type' => 'senior'),
+	array(
+		'pos_name' => 'Engineer',
+		'pos_desc' => "There are several non-specialized engineers aboard of each vessel. They are assigned to their duties by the Chief Engineer, performing a number of different tasks as required, i.e. general maintenance and repair.",
+		'pos_dept' => 8,
+		'pos_order' => 1,
+		'pos_open' => 10,
+		'pos_type' => 'enlisted'),
+	array(
+		'pos_name' => 'Electronics Technician',
+		'pos_desc' => "UEO vessels are complicated machines and one of the most important engineering technicians is the Electronics Technician. The Electronics Technicians are trained in the maintenance and report of any and all electrical systems aboard UEO vessels.",
+		'pos_dept' => 8,
+		'pos_order' => 2,
+		'pos_open' => 4,
+		'pos_type' => 'enlisted'),
+	array(
+		'pos_name' => 'Machinst',
+		'pos_desc' => "When vessels are out at sea, there's often no time to stop at a base to pick up parts. A machinist is trained in the maintenance and fabrication of parts that may be necessary when out at sea. Some things cannot be fabricated on the vessel, but those components that can be fall under the jurisdiction of the machinists.",
+		'pos_dept' => 8,
+		'pos_order' => 3,
+		'pos_open' => 2,
+		'pos_type' => 'enlisted'),
+	array(
+		'pos_name' => 'Propulsion Technician',
+		'pos_desc' => "As the UEO expands its operations, faster and more efficient propulsions systems are necessary. With more advanced propulsion systems come more to do with the maintenance and repair of those systems. Propulsion Technicians are specialized engineers who are trained in the propulsion systems used by the UEO.",
+		'pos_dept' => 8,
+		'pos_order' => 4,
+		'pos_open' => 2,
+		'pos_type' => 'enlisted'),
+	array(
+		'pos_name' => 'Chief Medical/Science Officer',
+		'pos_desc' => "The Chief Medical/Science Officer is responsible for both the physical health of the entire crew as well as all Science operations aboard the vessel. The Chief Medical/Science Officer often has to contend with the military for resources on the vessel, though ultimately is one of the most important positions due to the UEO's committment to scientific research.",
+		'pos_dept' => 9,
 		'pos_order' => 0,
 		'pos_open' => 1,
 		'pos_type' => 'senior'),
 	array(
 		'pos_name' => 'Medical Officer',
-		'pos_desc' => "Medical Officer undertake the majority of the work aboard the ship/facility, examining the crew, and administering medical care under the instruction of the Chief Medical Officer. Medical Officers also run the other Medical areas not directly overseen by the Chief Medical Officer.",
-		'pos_dept' => 6,
-		'pos_order' => 5,
-		'pos_open' => 3,
+		'pos_desc' => "Medical Officers undertake the majority of the work aboard the vessel, examining the crew, and administering medical care under the instruction of the Chief Medical/Science Officer. Medical Officers also run the other Medical areas not directly overseen by the Chief Medical Officer.",
+		'pos_dept' => 9,
+		'pos_order' => 1,
+		'pos_open' => 2,
 		'pos_type' => 'officer'),
 	array(
-		'pos_name' => 'Medic',
-		'pos_desc' => "S/he is responsible for providing first aid and trauma care on the battlefield.",
-		'pos_dept' => 6,
-		'pos_order' => 10,
-		'pos_open' => 3,
-		'pos_type' => 'enlisted'),
+		'pos_name' => 'Science Officer',
+		'pos_desc' => "Science Officers undertake the majority of the scientific work aboard the vessel, studying samples and running experiments under the instruction of the Chief Medical/Science Officer. Science Officers also run their own experiments and projects based on their specialization and the vessel they are assigned to.",
+		'pos_dept' => 9,
+		'pos_order' => 2,
+		'pos_open' => 8,
+		'pos_type' => 'officer'),
 	array(
-		'pos_name' => 'Chief Engineering Officer',
-		'pos_desc' => "The Chief Engineer is responsible for the condition of all systems and equipment on board a battlestar or facility. S/he oversees maintenance, repairs and upgrades of all equipment. S/he is also responsible for the many repairs teams during crisis situations. The Chief Engineer is not only the department head but also a senior officer, responsible for all the crew members in her/his department and maintenance of the duty rosters.",
-		'pos_dept' => 7,
-		'pos_order' => 0,
-		'pos_open' => 1,
-		'pos_type' => 'senior'),
-	array(
-		'pos_name' => 'Engineering Officer',
-		'pos_desc' => "There are several non-specialized engineers aboard of each vessel. They are assigned to their duties by the Chief Engineer and his Assistant, performing a number of different tasks as required, i.e. general maintenance and repair. Generally, engineers as assigned to more specialized engineering person to assist in there work is so requested by the specialized engineer.",
-		'pos_dept' => 7,
+		'pos_name' => 'Nurse',
+		'pos_desc' => "S/he is responsible for providing first aid and trauma care with the help of the Medical Officers.",
+		'pos_dept' => 9,
 		'pos_order' => 2,
 		'pos_open' => 3,
-		'pos_type' => 'officer'),
-	array(
-		'pos_name' => 'Communications Specialist',
-		'pos_desc' => "This engineer maintains all the communication systems throughout the battlestar.",
-		'pos_dept' => 7,
-		'pos_order' => 5,
-		'pos_open' => 3,
-		'pos_type' => 'officer'),
-	array(
-		'pos_name' => 'Master-At-Arms',
-		'pos_desc' => "The Master-at-Arms is a non-commissioned officer responsible for internal security aboard Colonial warships, including battlestars. ",
-		'pos_dept' => 8,
-		'pos_order' => 0,
-		'pos_open' => 1,
-		'pos_type' => 'senior'),
+		'pos_type' => 'enlisted'),
+
 	array(
 		'pos_name' => 'Marine',
 		'pos_desc' => "The Colonial Marine Corps is a branch of the Colonial Forces tasked with ground combat operations and ship-board security.",
-		'pos_dept' => 8,
+		'pos_dept' => 10,
 		'pos_order' => 1,
 		'pos_open' => 5,
 		'pos_type' => 'enlisted'),
+	
 	array(
 		'pos_name' => 'Priest',
 		'pos_desc' => "Priests also preside over military funerals, without regard for the beliefs of the deceased. Priests in the Twelve Colonies are apparently not required to practice celibacy, and can be male or female.",
-		'pos_dept' => 9,
+		'pos_dept' => 11,
 		'pos_order' => 0,
 		'pos_open' => 2,
 		'pos_type' => 'enlisted')
@@ -938,6 +997,3 @@ $catalogue_ranks = array(
 		'rankcat_url' => 'http://xtras.anodyne-productions.com/',
 		'rankcat_genre' => $g),
 );
-
-/* End of file install_data_sq.php */
-/* Location: ./application/assets/install/install_data_sq.php */
