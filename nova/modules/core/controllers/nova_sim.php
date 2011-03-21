@@ -1485,7 +1485,7 @@ abstract class Nova_sim extends Nova_controller_main {
 			'totals' => ucwords(lang('labels_totals')),
 		);
 		
-		$this->_regions['content'] = Location::view('sim_status', $this->skin, 'main', $data);
+		$this->_regions['content'] = Location::view('sim_stats', $this->skin, 'main', $data);
 		$this->_regions['javascript'] = Location::js('sim_stats_js', $this->skin, 'main');
 		$this->_regions['title'].= $title;
 		
