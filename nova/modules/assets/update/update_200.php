@@ -194,12 +194,12 @@ $this->db->update('system_components', array('comp_version' => '1.5.1'));
 
 // update the jquery ui version info
 $this->db->where('comp_name', 'jQuery UI');
-$this->db->update('system_components', array('comp_version' => '1.8.10'));
+$this->db->update('system_components', array('comp_version' => '1.8.11'));
 
 // add the elastic plugin to the list of components
 $additem = array(
 	'comp_name' => 'Elastic',
-	'comp_version' => '1.6.4',
+	'comp_version' => '1.6.5',
 	'comp_desc' => "jQuery Elastic is a plugin that makes your textareas grow and shrink to fit its content and was inspired by the auto-growing textareas on Facebook.",
 	'comp_url' => 'http://www.unwrongest.com/projects/elastic/'
 );

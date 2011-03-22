@@ -2240,17 +2240,17 @@ $system_components = array(
 		'comp_url' => 'http://www.williamsconcepts.com/ci/codeigniter/libraries/template/index.html'),
 	array(
 		'comp_name' => 'jQuery',
-		'comp_version' => '1.5',
+		'comp_version' => '1.5.1',
 		'comp_url' => 'http://www.jquery.com/',
 		'comp_desc' => 'jQuery is a lightweight JavaScript library that emphasizes interaction between JavaScript and HTML.'),
 	array(
 		'comp_name' => 'jQuery UI',
-		'comp_version' => '1.8.9',
+		'comp_version' => '1.8.11',
 		'comp_url' => 'http://jqueryui.com/',
 		'comp_desc' => 'jQuery UI is a lightweight, easily customizable interface library for the jQuery Javascript library.'),
 	array(
 		'comp_name' => 'prettyPhoto',
-		'comp_version' => '3.0.1',
+		'comp_version' => '3.0.3',
 		'comp_desc' => "prettyPhoto is a jQuery lightbox clone. Not only does it support images, it also support for videos, flash, YouTube, iframes. It's a full blown media lightbox.",
 		'comp_url' => 'http://www.no-margin-for-errors.com/projects/prettyphoto-jquery-lightbox-clone/'),
 	array(
@@ -2275,7 +2275,7 @@ $system_components = array(
 		'comp_url' => 'http://www.unwrongest.com/projects/lazy/'),
 	array(
 		'comp_name' => 'Elastic',
-		'comp_version' => '1.6.4',
+		'comp_version' => '1.6.5',
 		'comp_desc' => "jQuery Elastic is a plugin that makes your textareas grow and shrink to fit its content and was inspired by the auto-growing textareas on Facebook.",
 		'comp_url' => 'http://www.unwrongest.com/projects/elastic/'),
 	array(
@@ -2324,9 +2324,9 @@ $system_info = array(
 	array(
 		'sys_uid' => random_string('alnum', 32),
 		'sys_install_date' => now(),
-		'sys_version_major' => 1,
-		'sys_version_minor' => 2,
-		'sys_version_update' => 3)
+		'sys_version_major' => 2,
+		'sys_version_minor' => 0,
+		'sys_version_update' => 0)
 );
 
 $system_versions = array(
