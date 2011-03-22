@@ -121,9 +121,9 @@ p { font-size: 100%; }
 .warning { color: #e99e1c; }
 .success { color: #008000; }
 
-.nobold		{ font-weight: normal; }
-.bold		{ font-weight: bold; }
-.italic		{ font-style: italic; }
+.nobold			{ font-weight: normal; }
+strong, .bold	{ font-weight: bold; }
+em, .italic		{ font-style: italic; }
 
 .uppercase	{ text-transform: uppercase; }
 .lowercase	{ text-transform: lowercase; }
@@ -208,12 +208,13 @@ button, button.btn-small {
  */
 table {
 	position: relative;
+	width: 100%;
 	
 	font-size: 100%;
 }
 
-.table100 { width: 100%; }
-.table75 { width: 75%; }
+.tableAuto	{ width: auto; }
+.table75	{ width: 75%; }
 
 th {
 	position: relative;
@@ -302,6 +303,8 @@ hr {
 .align-top		{ vertical-align: top; }
 .align-middle	{ vertical-align: middle; }
 .align-bottom	{ vertical-align: bottom; }
+
+.alt { background: #ddd; }
 
 /**
  * Styles for the flash messages
