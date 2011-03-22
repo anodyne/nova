@@ -11,13 +11,14 @@ Anodyne Production's next-generation RPG management system combines popular feat
 * added the message.php file to handle notification of bans, a missing "nova" directory and incompatible PHP version
 * added new process to write the database config file for you
 * added the ability to upgrade SMS Database entries to Thresher wiki pages
+* added the ability for textareas to "grow" as more text is added like Facebook
 * updated seamless substitution to be able to override email view files
 * updated Thresher with a new way to create and manage categories when working on a wiki page
 * updated Thresher with a completely new user experience for managing wiki pages
 * updated Thresher with a brand new interface for viewing wiki pages
 * updated the upload instructions to include the maximum file size and maximum image dimensions from the config file for reference
 * updated to jquery version 1.5.1
-* updated to jquery version 1.8.10
+* updated to jquery version 1.8.11
 * updated to uniform version 1.7.5
 * updated to qTip2
 * refactored the location helper into a full-blown class with static methods
