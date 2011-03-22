@@ -296,4 +296,195 @@ class Controller_Nova_Ajax extends Controller_Nova_Base {
 			echo '1';
 		}
 	}
+	
+	/**
+	 * Used by users/index for user management
+	 */
+	public function action_search_users()
+	{
+		if ($this->request->is_ajax())
+		{
+			// get the string we're searching for
+			$search = Security::xss_clean($_POST['query']);
+			
+			if ( ! empty($search))
+			{
+				// what should we be searching for?
+				$only_search_email = Valid::regex($search, '(@)');
+				
+				/**
+				 * Search for email addresses that match the string
+				 */
+				$email = "SELECT userid, name, email FROM nova_users WHERE email LIKE '%$search%'";
+				$emailR = mysql_query($email);
+				$emailA = array();
+				
+				while ($row = mysql_fetch_array($emailR))
+				{
+					$emailA[] = $row;
+				}
+				
+				if (count($emailA) > 0)
+				{
+					foreach ($emailA as $key => $value)
+					{
+						$retval['email'][] = array(
+							'userid'	=> $value[0],
+							'name'		=> $value[1],
+							'email' 	=> $value[2],
+						);
+					}
+				}
+				
+				if ( ! $only_search_email)
+				{
+					/**
+					 * Search for user names that match the string
+					 */
+					$name = "SELECT userid, name, email FROM nova_users WHERE name LIKE '%$search%'";
+					$nameR = mysql_query($name);
+					$nameA = array();
+					
+					while ($row = mysql_fetch_array($nameR))
+					{
+						$nameA[] = $row;
+					}
+					
+					if (count($nameA) > 0)
+					{
+						foreach ($nameA as $key => $value)
+						{
+							$retval['name'][] = array(
+								'userid'	=> $value[0],
+								'name'		=> $value[1],
+								'email' 	=> $value[2],
+							);
+						}
+					}
+					
+					/**
+					 * Search through for characters with a name that matches the string
+					 */
+					$chars = "SELECT a.userid, a.name, a.email, b.first_name, b.last_name FROM nova_users AS a, nova_characters AS b ";
+					$chars.= "WHERE (b.first_name LIKE '%$search%' OR b.last_name LIKE '%$search%') AND a.userid = b.user";
+					$charsR = mysql_query($chars);
+					$charsA = array();
+					
+					while ($row = mysql_fetch_array($charsR))
+					{
+						$charsA[] = $row;
+					}
+					
+					if (count($charsA) > 0)
+					{
+						foreach ($charsA as $key => $value)
+						{
+							$retval['characters'][] = array(
+								'userid'	=> $value[0],
+								'name'		=> $value[1],
+								'email' 	=> $value[2],
+								'fname'		=> $value[3],
+								'lname'		=> $value[4],
+							);
+						}
+					}
+				}
+			}
+			else
+			{
+				$retval = array();
+			}
+			
+			echo json_encode($retval);
+			
+			if (Valid::regex($search, '(@)'))
+			{
+				// the string contains @ which means they're searching for an email
+				// address so we should only search for emails and return email results
+				
+				if ( ! empty($search))
+				{
+					$email = "SELECT name, email FROM nova_users WHERE email LIKE '%$search%'";
+					$emailR = mysql_query($email);
+					$emailA = array();
+					
+					while ($row = mysql_fetch_array($emailR))
+					{
+						$emailA[] = $row;
+					}
+					
+					if (count($emailA) > 0)
+					{
+						foreach ($emailA as $key => $value)
+						{
+							$retval['email'][] = array(
+								'name' => $value[0],
+								'email' => $value[1]
+							);
+						}
+					}
+				}
+				else
+				{
+					$retval = array();
+				}
+				
+				echo json_encode($retval);
+			}
+			else
+			{
+				// the string doesn't contain @ which means they're searching for
+				// everything so we should search everything and return everything
+				
+				if ( ! empty($search))
+				{
+					$name = "SELECT name, email FROM nova_users WHERE name LIKE '%$search%'";
+					$nameR = mysql_query($name);
+					$nameA = array();
+					
+					while ($row = mysql_fetch_array($nameR))
+					{
+						$nameA[] = $row;
+					}
+					
+					$email = "SELECT name, email FROM nova_users WHERE email LIKE '%$search%'";
+					$emailR = mysql_query($email);
+					$emailA = array();
+					
+					while ($row = mysql_fetch_array($emailR))
+					{
+						$emailA[] = $row;
+					}
+					
+					if (count($nameA) > 0)
+					{
+						foreach ($nameA as $key => $value)
+						{
+							$retval['name'][] = array(
+								'name' => $value[0],
+								'email' => $value[1]
+							);
+						}
+					}
+					
+					if (count($emailA) > 0)
+					{
+						foreach ($emailA as $key => $value)
+						{
+							$retval['email'][] = array(
+								'name' => $value[0],
+								'email' => $value[1]
+							);
+						}
+					}
+				}
+				else
+				{
+					$retval = array();
+				}
+				
+				echo json_encode($retval);
+			}
+		}
+	}
 }
