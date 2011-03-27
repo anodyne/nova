@@ -14,7 +14,7 @@
  * @version		1.0
  */
  
-require MODPATH.'core/libraries/REST_Controller'.EXT;
+require MODPATH.'api/libraries/REST_Controller'.EXT;
 
 abstract class Nova_api extends REST_Controller {
 	
