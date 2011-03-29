@@ -1,13 +1,4 @@
-/*
-|---------------------------------------------------------------
-| STYLESHEET - MAIN
-|---------------------------------------------------------------
-|
-| File: beta/wiki/css/main.css
-| Author: David VanScott [davidv@anodyne-productions.com]
-| Version: 1.0
-*/
-
 @import url('structure.css');
 @import url('skin.css');
+@import url('wiki.css');
 @import url('jquery.ui.tabs.css');
