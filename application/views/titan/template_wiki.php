@@ -5,7 +5,7 @@
 |---------------------------------------------------------------
 |
 | File: application/views/titan/template_wiki.php
-| Skin Version: 1.0
+| Skin Version: 1.1
 |
 | Wiki layout file used by the titan skin.
 |
@@ -68,12 +68,12 @@ echo "<?xml version='1.0' encoding='UTF-8'?>\r\n";
 		
 		<?php echo $_redirect;?>
 		
+		<?php include_once($this->config->item('include_head_wiki')); ?>
+		
 		<!-- STYLESHEETS -->
 		<?php echo link_tag($link); ?>
 		
 		<!-- JAVASCRIPT FILES -->
-		<?php include_once($this->config->item('include_head_wiki')); ?>
-		
 		<?php echo $javascript;?>
 	</head>
 	<body>

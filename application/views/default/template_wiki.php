@@ -5,7 +5,7 @@
 |---------------------------------------------------------------
 |
 | File: application/views/default/template_wiki.php
-| Skin Version: 1.0
+| Skin Version: 1.1
 |
 | Wiki layout file used by the default skin.
 |
@@ -75,12 +75,12 @@ echo "<?xml version='1.0' encoding='UTF-8'?>\r\n";
 		
 		<?php echo $_redirect;?>
 		
+		<?php include_once($this->config->item('include_head_wiki')); ?>
+		
 		<!-- STYLESHEETS -->
 		<?php echo link_tag($link); ?>
 		
 		<!-- JAVASCRIPT FILES -->
-		<?php include_once($this->config->item('include_head_wiki')); ?>
-		
 		<script type="text/javascript" src="<?php echo base_url() . APPFOLDER;?>/views/<?php echo $current_skin;?>/jquery.blockUI.js"></script>
 		
 		<?php echo $javascript;?>
