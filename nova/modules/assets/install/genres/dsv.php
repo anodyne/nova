@@ -8,10 +8,6 @@
  * @since		2.0
  */
 
-# marines
-# support
-# mess management specialist
-
 /**
  * genre variable
  */
@@ -915,31 +911,38 @@ $positions = array(
 		'pos_open' => 1,
 		'pos_type' => 'senior'),
 	array(
+		'pos_name' => 'Assistant Chief Engineer',
+		'pos_desc' => "The Assistant Chief Engineer is the Chief Engineer's right-hand man and often knows just as much about the vessel as the Chief Engineer. When the Chief Engineer isn't available or is engaged in other work, the Assistant Chief Engineer does the same type of work the Chief Engineer does.",
+		'pos_dept' => 8,
+		'pos_order' => 1,
+		'pos_open' => 1,
+		'pos_type' => 'officer'),
+	array(
 		'pos_name' => 'Engineer',
 		'pos_desc' => "There are several non-specialized engineers aboard of each vessel. They are assigned to their duties by the Chief Engineer, performing a number of different tasks as required, i.e. general maintenance and repair.",
 		'pos_dept' => 8,
-		'pos_order' => 1,
+		'pos_order' => 2,
 		'pos_open' => 10,
 		'pos_type' => 'enlisted'),
 	array(
 		'pos_name' => 'Electronics Technician',
 		'pos_desc' => "UEO vessels are complicated machines and one of the most important engineering technicians is the Electronics Technician. The Electronics Technicians are trained in the maintenance and report of any and all electrical systems aboard UEO vessels.",
 		'pos_dept' => 8,
-		'pos_order' => 2,
+		'pos_order' => 3,
 		'pos_open' => 4,
 		'pos_type' => 'enlisted'),
 	array(
-		'pos_name' => 'Machinst',
+		'pos_name' => 'Machinist',
 		'pos_desc' => "When vessels are out at sea, there's often no time to stop at a base to pick up parts. A machinist is trained in the maintenance and fabrication of parts that may be necessary when out at sea. Some things cannot be fabricated on the vessel, but those components that can be fall under the jurisdiction of the machinists.",
 		'pos_dept' => 8,
-		'pos_order' => 3,
+		'pos_order' => 4,
 		'pos_open' => 2,
 		'pos_type' => 'enlisted'),
 	array(
 		'pos_name' => 'Propulsion Technician',
 		'pos_desc' => "As the UEO expands its operations, faster and more efficient propulsions systems are necessary. With more advanced propulsion systems come more to do with the maintenance and repair of those systems. Propulsion Technicians are specialized engineers who are trained in the propulsion systems used by the UEO.",
 		'pos_dept' => 8,
-		'pos_order' => 4,
+		'pos_order' => 5,
 		'pos_open' => 2,
 		'pos_type' => 'enlisted'),
 	array(
@@ -970,22 +973,48 @@ $positions = array(
 		'pos_order' => 2,
 		'pos_open' => 3,
 		'pos_type' => 'enlisted'),
-
 	array(
-		'pos_name' => 'Marine',
-		'pos_desc' => "The Colonial Marine Corps is a branch of the Colonial Forces tasked with ground combat operations and ship-board security.",
+		'pos_name' => 'Platoon Commander',
+		'pos_desc' => "Most UEO combat-capable vessels carry a platoon (roughly 40 Marines) from the UEO Marine Corps. The Platoon Commander is responsible for all Marines aboard the vessel and coordinating with the various departments to ensure any operations that involve Marines happens smoothly and without incident.",
+		'pos_dept' => 10,
+		'pos_order' => 0,
+		'pos_open' => 1,
+		'pos_type' => 'senior'),
+	array(
+		'pos_name' => 'Platoon Sergeant',
+		'pos_desc' => "Second in command to the Platoon Commander, the Platoon Sergeant is the seniormost enlisted Marine aboard a UEO combat-capable vessel and works with the Platoon Commander to manage the Marines aboard the vessel.",
 		'pos_dept' => 10,
 		'pos_order' => 1,
-		'pos_open' => 5,
+		'pos_open' => 1,
 		'pos_type' => 'enlisted'),
-	
 	array(
-		'pos_name' => 'Priest',
-		'pos_desc' => "Priests also preside over military funerals, without regard for the beliefs of the deceased. Priests in the Twelve Colonies are apparently not required to practice celibacy, and can be male or female.",
+		'pos_name' => 'Marine',
+		'pos_desc' => "The UEO Marine Corps represents some of the most skilled combat ground forces in the world. Training to be a UEO Marine is intense with the singular goal of being a deterrent peace-keeping force.",
+		'pos_dept' => 10,
+		'pos_order' => 2,
+		'pos_open' => 30,
+		'pos_type' => 'enlisted'),
+	array(
+		'pos_name' => 'Support Supervisor',
+		'pos_desc' => "UEO Support Survisors are civilian positions and are responsible for managing all crew support personnel stationed aboard UEO vessels.",
 		'pos_dept' => 11,
 		'pos_order' => 0,
+		'pos_open' => 1,
+		'pos_type' => 'senior'),
+	array(
+		'pos_name' => 'Cook',
+		'pos_desc' => "Continuing the tradition from the US Navy, UEO cooks are some of the most skilled chefs in the world and often go on from their UEO service to cook in some of the most prestigious kitchens in the world. The cooks are responsible for stocking food supplies and preparing meals throughout the day.",
+		'pos_dept' => 11,
+		'pos_order' => 1,
+		'pos_open' => 3,
+		'pos_type' => 'other'),
+	array(
+		'pos_name' => 'Janitor',
+		'pos_desc' => "Janitors are responsible for cleaning the vessel and general upkeep (changing light bulbs, minor repairs) that the Engineering department doesn't have the time or resources to deal with.",
+		'pos_dept' => 11,
+		'pos_order' => 2,
 		'pos_open' => 2,
-		'pos_type' => 'enlisted')
+		'pos_type' => 'other'),
 );
 
 $catalogue_ranks = array(
