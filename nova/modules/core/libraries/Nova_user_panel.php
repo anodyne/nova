@@ -173,11 +173,13 @@ abstract class Nova_user_panel {
 			'green' => array(
 				'src' => Location::asset('images', 'icon-green.png'),
 				'alt' => '',
-				'class' => 'image'),
+				'class' => 'image',
+				'id' => 'workflow-inbox-notifier'),
 			'gray' => array(
 				'src' => Location::asset('images', 'icon-gray.png'),
 				'alt' => '',
-				'class' => 'image'),
+				'class' => 'image',
+				'id' => 'workflow-inbox-notifier'),
 		);
 		
 		$output = '<a href="'. site_url('messages/index') .'" title="'. ucfirst(lang('labels_inbox')) .'"><span>';
@@ -224,15 +226,18 @@ abstract class Nova_user_panel {
 			'green' => array(
 				'src' => Location::asset('images', 'icon-green.png'),
 				'alt' => '',
-				'class' => 'image'),
+				'class' => 'image',
+				'id' => 'workflow-writing-notifier'),
 			'gray' => array(
 				'src' => Location::asset('images', 'icon-gray.png'),
 				'alt' => '',
-				'class' => 'image'),
+				'class' => 'image',
+				'id' => 'workflow-writing-notifier'),
 			'yellow' => array(
 				'src' => Location::asset('images', 'icon-yellow.png'),
 				'alt' => '',
-				'class' => 'image'),
+				'class' => 'image',
+				'id' => 'workflow-writing-notifier'),
 		);
 		
 		if (is_array($this->ci->session->userdata('characters')) && count($this->ci->session->userdata('characters')) > 0)
