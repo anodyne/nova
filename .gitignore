@@ -22,8 +22,11 @@ application/views/quixly/
 application/views/apollo/
 application/views/lcars/
 application/views/rocket/
+application/views/carbon/
 
 *~
 *.bak
 Thumbs.db
 .DS_Store
+
+application/assets/common/ds9/
