@@ -29,8 +29,6 @@ $uiTheme = ( ! is_file(APPPATH .'views/'.$current_skin.'/wiki/css/jquery.ui.them
 			@import url("<?php echo base_url().MODFOLDER.'/assets/js/css/jquery.ui.core.css';?>");
 			@import url('<?php echo $faceboxcss;?>');
 			@import url('<?php echo $uiTheme;?>');
-			@import url("<?php echo base_url().MODFOLDER.'/assets/js/markitup/skins/simple/style.css';?>");
-			@import url("<?php echo base_url().MODFOLDER.'/assets/js/markitup/sets/'.$parse.'/style.css';?>");
 			
 			ul, ol { margin: 1em; padding: .5em; }
 			ul li, ol li { margin: 2px; }
@@ -46,8 +44,6 @@ $uiTheme = ( ! is_file(APPPATH .'views/'.$current_skin.'/wiki/css/jquery.ui.them
 		<script type="text/javascript" src="<?php echo base_url().MODFOLDER.'/assets/js/jquery.ui.core.min.js';?>"></script>
 		<script type="text/javascript" src="<?php echo base_url().MODFOLDER.'/assets/js/jquery.ui.widget.min.js';?>"></script>
 		<script type="text/javascript" src="<?php echo base_url().MODFOLDER.'/assets/js/jquery.facebox.js';?>"></script>
-		<script type="text/javascript" src="<?php echo base_url().MODFOLDER.'/assets/js/markitup/jquery.markitup.js';?>"></script>
-		<script type="text/javascript" src="<?php echo base_url().MODFOLDER.'/assets/js/markitup/sets/'.$parse.'/set.js';?>"></script>
 		<script type="text/javascript">
 			$(document).ready(function(){
 				$.lazy({					
@@ -61,6 +57,15 @@ $uiTheme = ( ! is_file(APPPATH .'views/'.$current_skin.'/wiki/css/jquery.ui.them
 					name: 'qtip',
 					dependencies: {
 						css: ['<?php echo base_url() . MODFOLDER;?>/assets/js/css/jquery.qtip.css']
+					},
+					cache: true
+				});
+				
+				$.lazy({					
+					src: '<?php echo base_url().MODFOLDER;?>/assets/js/jquery.wysiwyg.js',
+					name: 'wysiwyg',
+					dependencies: {
+						css: ['<?php echo base_url() . MODFOLDER;?>/assets/js/css/jquery.wysiwyg.css']
 					},
 					cache: true
 				});
@@ -81,7 +86,15 @@ $uiTheme = ( ! is_file(APPPATH .'views/'.$current_skin.'/wiki/css/jquery.ui.them
 				
 				$.facebox.settings.loadingImage = '<?php echo base_url().MODFOLDER;?>/assets/js/images/facebox-loading.gif';
 				
-				$('.markitup').markItUp(mySettings);
+				//$('.markitup').markItUp(mySettings);
+				
+				$('.markitup').wysiwyg({
+					controls: {
+						h1: { visible: false },
+						indent: { visible: false },
+						outdent: { visible: false }
+					}
+				}); 
 			});
 		</script>
 		
