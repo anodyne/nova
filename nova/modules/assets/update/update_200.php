@@ -190,11 +190,23 @@ $this->db->update('system_components', array('comp_version' => '1.5'));
 
 // update the jquery version info
 $this->db->where('comp_name', 'jQuery');
-$this->db->update('system_components', array('comp_version' => '1.5.1'));
+$this->db->update('system_components', array('comp_version' => '1.5.2'));
 
 // update the jquery ui version info
 $this->db->where('comp_name', 'jQuery UI');
 $this->db->update('system_components', array('comp_version' => '1.8.11'));
+
+// update the jquery prettyphoto info
+$this->db->where('comp_name', 'prettyPhoto');
+$this->db->update('system_components', array('comp_version' => '3.1'));
+
+// update the markItUp! info
+$this->db->where('comp_name', 'markItUp!');
+$this->db->update('system_components', array('comp_version' => '1.1.10'));
+
+// update the thresher info
+$this->db->where('comp_name', 'Thresher');
+$this->db->update('system_components', array('comp_version' => 'Release 2'));
 
 // add the elastic plugin to the list of components
 $additem = array(

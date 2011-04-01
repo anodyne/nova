@@ -5,7 +5,7 @@
  * @package		Nova
  * @category	Install
  * @author		Anodyne Productions
- * @copyright	2010-11 Anodyne Productions
+ * @copyright	2011 Anodyne Productions
  * @version		2.0
  */
 
@@ -2240,7 +2240,7 @@ $system_components = array(
 		'comp_url' => 'http://www.williamsconcepts.com/ci/codeigniter/libraries/template/index.html'),
 	array(
 		'comp_name' => 'jQuery',
-		'comp_version' => '1.5.1',
+		'comp_version' => '1.5.2',
 		'comp_url' => 'http://www.jquery.com/',
 		'comp_desc' => 'jQuery is a lightweight JavaScript library that emphasizes interaction between JavaScript and HTML.'),
 	array(
@@ -2250,7 +2250,7 @@ $system_components = array(
 		'comp_desc' => 'jQuery UI is a lightweight, easily customizable interface library for the jQuery Javascript library.'),
 	array(
 		'comp_name' => 'prettyPhoto',
-		'comp_version' => '3.0.3',
+		'comp_version' => '3.1',
 		'comp_desc' => "prettyPhoto is a jQuery lightbox clone. Not only does it support images, it also support for videos, flash, YouTube, iframes. It's a full blown media lightbox.",
 		'comp_url' => 'http://www.no-margin-for-errors.com/projects/prettyphoto-jquery-lightbox-clone/'),
 	array(
@@ -2290,7 +2290,7 @@ $system_components = array(
 		'comp_url' => 'http://rikrikrik.com/jquery/quicksearch/'),
 	array(
 		'comp_name' => 'markItUp!',
-		'comp_version' => '1.1.9',
+		'comp_version' => '1.1.10',
 		'comp_desc' => "markItUp! is a JavaScript plugin built on the jQuery library that allows you to turn any textarea into a markup editor.",
 		'comp_url' => 'http://markitup.jaysalvat.com/home/'),
 	array(
