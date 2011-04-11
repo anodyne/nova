@@ -159,6 +159,12 @@ abstract class Nova_wiki extends Nova_controller_wiki {
 			),
 		);
 		
+		// pull the system page
+		$syspage = $this->wiki->get_system_page('category');
+		
+		// send the system page to the view
+		$data['syspage'] = $syspage->draft_content;
+		
 		$this->_regions['content'] = Location::view('wiki_category', $this->skin, 'wiki', $data);
 		$this->_regions['javascript'] = Location::js('wiki_category_js', $this->skin, 'wiki');
 		$this->_regions['title'].= $data['header'];
