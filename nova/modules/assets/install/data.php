@@ -2704,6 +2704,22 @@ $wiki_drafts = array(
 		'draft_content' => "",
 		'draft_page' => 3,
 		'draft_created_at' => now()),
+	array(
+		'draft_title' => 'Wiki Categories',
+		'draft_author_user' => 0,
+		'draft_author_character' => 0,
+		'draft_summary' => "This is the wiki categories system page.",
+		'draft_content' => "",
+		'draft_page' => 4,
+		'draft_created_at' => now()),
+	array(
+		'draft_title' => 'Wiki Category Page',
+		'draft_author_user' => 0,
+		'draft_author_character' => 0,
+		'draft_summary' => "This is the wiki category listing system page.",
+		'draft_content' => "",
+		'draft_page' => 5,
+		'draft_created_at' => now()),
 );
 
 $wiki_pages = array(
@@ -2731,4 +2747,20 @@ $wiki_pages = array(
 		'page_comments' => 'closed',
 		'page_type' => 'system',
 		'page_key' => 'edit'),
+	array(
+		'page_draft' => 4,
+		'page_created_at' => now(),
+		'page_created_by_user' => 0,
+		'page_created_by_character' => 0,
+		'page_comments' => 'closed',
+		'page_type' => 'system',
+		'page_key' => 'categories'),
+	array(
+		'page_draft' => 5,
+		'page_created_at' => now(),
+		'page_created_by_user' => 0,
+		'page_created_by_character' => 0,
+		'page_comments' => 'closed',
+		'page_type' => 'system',
+		'page_key' => 'category'),
 );
