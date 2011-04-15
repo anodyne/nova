@@ -142,5 +142,43 @@ if ( ! function_exists('timespan_short'))
 	}
 }
 
+/**
+ * Converts GMT time to a localized value
+ *
+ * Takes a Unix timestamp (in GMT) as input, and returns
+ * at the local value based on the timezone and DST setting
+ * submitted
+ *
+ * This change in the code is an attempt to make sure we aren't
+ * throwing the illegal operand error message by checking that
+ * what comes back from the timezones() function is in fact
+ * an integer.
+ *
+ * @access	public
+ * @param	integer Unix timestamp
+ * @param	string	timezone
+ * @param	bool	whether DST is active
+ * @return	integer
+ */	
+function gmt_to_local($time = '', $timezone = 'UTC', $dst = FALSE)
+{			
+	if ($time == '')
+	{
+		return now();
+	}
+	
+	$zone = timezones($timezone);
+	$zone = ( ! is_numeric($zone)) ? 0 : $zone;
+	
+	$time += $zone * 3600;
+
+	if ($dst == TRUE)
+	{
+		$time += 3600;
+	}
+
+	return $time;
+}
+
 /* End of file MY_date_helper.php */
 /* Location: ./application/helpers/MY_date_helper.php */
