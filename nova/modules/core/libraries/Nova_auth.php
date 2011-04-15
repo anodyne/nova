@@ -188,7 +188,7 @@ abstract class Nova_auth {
 		return $retval;
 	}
 	
-	public static function login($email = '', $password = '', $remember = '')
+	public static function login($email = '', $password = '', $remember = '', $autologin_attempt = false)
 	{
 		// get an instance of CI
 		$ci =& get_instance();
@@ -273,15 +273,18 @@ abstract class Nova_auth {
 				// password is wrong
 				$retval = 3;
 				
-				// create the attempt array
-				$login_attempt = array(
-					'login_ip' => $ci->input->ip_address(),
-					'login_email' => $email,
-					'login_time' => now()
-				);
-				
-				// add a record to login attempt table
-				$ci->sys->add_login_attempt($login_attempt);
+				if ( ! $autologin_attempt)
+				{
+					// create the attempt array
+					$login_attempt = array(
+						'login_ip' => $ci->input->ip_address(),
+						'login_email' => $email,
+						'login_time' => now()
+					);
+					
+					// add a record to login attempt table
+					$ci->sys->add_login_attempt($login_attempt);
+				}
 			}
 		}
 		
@@ -409,7 +412,7 @@ abstract class Nova_auth {
 		
 		if ($cookie !== FALSE)
 		{
-			$login = self::login($cookie['email'], $cookie['password']);
+			$login = self::login($cookie['email'], $cookie['password'], null, true);
 			
 			return $login;
 		}
