@@ -30,3 +30,6 @@ Thumbs.db
 .DS_Store
 
 application/assets/common/ds9/
+
+nova/app/
+nova/packages/
