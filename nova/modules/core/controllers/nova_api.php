@@ -228,6 +228,8 @@ abstract class Nova_api extends REST_Controller {
 	 *     index.php/api/logs/limit/25/offset/50
 	 *     index.php/api/logs/status/saved
 	 *     index.php/api/logs/status/all
+	 *     index.php/api/logs/user/1
+	 *     index.php/api/logs/character/1
 	 *     index.php/api/logs/format/json
 	 *
 	 * @access	public
@@ -249,7 +251,24 @@ abstract class Nova_api extends REST_Controller {
 		$status = ( ! $this->get('status')) ? 'activated' : $this->get('status');
 		$status = ($status == 'all') ? '' : $status;
 		
-		$logs = $this->log->get_log_list($limit, $offset, $status);
+		$user = ( ! $this->get('user')) ? null : $this->get('user');
+		$user = ( ! is_numeric($user)) ? null : $user;
+		
+		$character = ( ! $this->get('character')) ? null : $this->get('character');
+		$character = ( ! is_numeric($character)) ? null : $character;
+		
+		if ($character !== null)
+		{
+			$logs = $this->log->get_character_logs($character, $limit, $status);
+		}
+		elseif ($user !== null)
+		{
+			$logs = $this->log->get_user_logs($user, $limit, $status);
+		}
+		else
+		{
+			$logs = $this->log->get_log_list($limit, $offset, $status);
+		}
 		
 		if ($logs->num_rows() > 0)
 		{
@@ -393,6 +412,8 @@ abstract class Nova_api extends REST_Controller {
 	 *     index.php/api/allnews/limit/25/offset/50
 	 *     index.php/api/allnews/status/saved
 	 *     index.php/api/allnews/status/all
+	 *     index.php/api/allnews/user/1
+	 *     index.php/api/allnews/character/1
 	 *     index.php/api/allnews/format/json
 	 *
 	 * @access	public
@@ -414,7 +435,24 @@ abstract class Nova_api extends REST_Controller {
 		$status = ( ! $this->get('status')) ? 'activated' : $this->get('status');
 		$status = ($status == 'all') ? '' : $status;
 		
-		$news = $this->news->get_news_list($limit, $offset, $status);
+		$user = ( ! $this->get('user')) ? null : $this->get('user');
+		$user = ( ! is_numeric($user)) ? null : $user;
+		
+		$character = ( ! $this->get('character')) ? null : $this->get('character');
+		$character = ( ! is_numeric($character)) ? null : $character;
+		
+		if ($character !== null)
+		{
+			$news = $this->news->get_character_news($character, $limit, $status);
+		}
+		elseif ($user !== null)
+		{
+			$news = $this->news->get_user_news($user, $limit, $status);
+		}
+		else
+		{
+			$news = $this->news->get_news_list($limit, $offset, $status);
+		}
 		
 		if ($news->num_rows() > 0)
 		{
@@ -517,6 +555,8 @@ abstract class Nova_api extends REST_Controller {
 	 *     index.php/api/missionposts/status/saved
 	 *     index.php/api/missionposts/order/asc
 	 *     index.php/api/missionposts/mission/2
+	 *     index.php/api/missionposts/user/1
+	 *     index.php/api/missionposts/character/1
 	 *     index.php/api/missionposts/format/json
 	 *
 	 * @access	public
@@ -541,7 +581,24 @@ abstract class Nova_api extends REST_Controller {
 		
 		$order = ( ! $this->get('order')) ? 'desc' : $this->get('order');
 		
-		$posts = $this->post->get_post_list($mission, $order, $limit, $offset, $status);
+		$user = ( ! $this->get('user')) ? null : $this->get('user');
+		$user = ( ! is_numeric($user)) ? null : $user;
+		
+		$character = ( ! $this->get('character')) ? null : $this->get('character');
+		$character = ( ! is_numeric($character)) ? null : $character;
+		
+		if ($character !== null)
+		{
+			$posts = $this->post->get_character_posts($character, $limit, $status);
+		}
+		elseif ($user !== null)
+		{
+			$posts = $this->post->get_user_posts($user, $limit, $status);
+		}
+		else
+		{
+			$posts = $this->post->get_post_list($mission, $order, $limit, $offset, $status);
+		}
 		
 		if ($posts->num_rows() > 0)
 		{
@@ -580,13 +637,15 @@ abstract class Nova_api extends REST_Controller {
 	 *
 	 * This method requires authentication in order to return any data.
 	 *
+	 * This method is not currently available in the API.
+	 *
 	 *     index.php/api/user/id/1
 	 *     index.php/api/user/id/1/format/json
 	 *
-	 * @access	public
+	 * @access	private
 	 * @since	1.0
 	 */
-	public function user_get()
+	private function user_get()
 	{
 		$this->load->model('characters_model', 'char');
 		$this->load->model('users_model', 'user');
@@ -652,16 +711,18 @@ abstract class Nova_api extends REST_Controller {
 	 *
 	 * This method requires authentication in order to return any data.
 	 *
+	 * This method is not currently available in the API.
+	 *
 	 *     index.php/api/users
 	 *     index.php/api/users/status/pending
 	 *     index.php/api/users/status/inactive
 	 *     index.php/api/users/format/json
 	 *     index.php/api/users/status/pending/format/json
 	 *
-	 * @access	public
+	 * @access	private
 	 * @since	1.0
 	 */
-	public function users_get()
+	private function users_get()
 	{
 		$this->load->model('characters_model', 'char');
 		$this->load->model('users_model', 'user');
