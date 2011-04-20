@@ -30,7 +30,11 @@ abstract class Nova_personallogs_model extends Model {
 	public function get_character_logs($id = '', $limit = 0, $status = 'activated')
 	{
 		$this->db->from('personallogs');
-		$this->db->where('log_status', $status);
+		
+		if ( ! empty($status))
+		{
+			$this->db->where('log_status', $status);
+		}
 		
 		if (is_array($id))
 		{
@@ -263,7 +267,12 @@ abstract class Nova_personallogs_model extends Model {
 	public function get_user_logs($id = '', $limit = 0, $status = 'activated')
 	{
 		$this->db->from('personallogs');
-		$this->db->where('log_status', $status);
+		
+		if ( ! empty($status))
+		{
+			$this->db->where('log_status', $status);
+		}
+		
 		$this->db->where('log_author_user', $id);
 		$this->db->order_by('log_date', 'desc');
 		
