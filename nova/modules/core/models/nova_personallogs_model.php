@@ -18,10 +18,19 @@ abstract class Nova_personallogs_model extends Model {
 		$this->load->dbutil();
 	}
 	
-	public function get_character_logs($id = '', $limit = 0)
+	/**
+	 * Get all personal logs by a specific character.
+	 *
+	 * @access	public
+	 * @param	mixed	either a character ID or an array of character IDs
+	 * @param	int		the number of records to limit the result to
+	 * @param	string	the status
+	 * @return	object	result object
+	 */
+	public function get_character_logs($id = '', $limit = 0, $status = 'activated')
 	{
 		$this->db->from('personallogs');
-		$this->db->where('log_status', 'activated');
+		$this->db->where('log_status', $status);
 		
 		if (is_array($id))
 		{
@@ -229,6 +238,33 @@ abstract class Nova_personallogs_model extends Model {
 			}
 		}
 		
+		$this->db->order_by('log_date', 'desc');
+		
+		if ($limit > 0)
+		{
+			$this->db->limit($limit);
+		}
+		
+		$query = $this->db->get();
+		
+		return $query;
+	}
+	
+	/**
+	 * Get all personal logs by a specific user.
+	 *
+	 * @access	public
+	 * @since	2.0
+	 * @param	int		a user ID
+	 * @param	int		the number of records to limit the result to
+	 * @param	string	the status
+	 * @return	object	result object
+	 */
+	public function get_user_logs($id = '', $limit = 0, $status = 'activated')
+	{
+		$this->db->from('personallogs');
+		$this->db->where('log_status', $status);
+		$this->db->where('log_author_user', $id);
 		$this->db->order_by('log_date', 'desc');
 		
 		if ($limit > 0)
