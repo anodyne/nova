@@ -55,7 +55,11 @@ abstract class Nova_news_model extends Model {
 	public function get_character_news($id = '', $limit = 0, $status = 'activated')
 	{
 		$this->db->from('news');
-		$this->db->where('news_status', $status);
+		
+		if ( ! empty($status))
+		{
+			$this->db->where('news_status', $status);
+		}
 		
 		if (is_array($id))
 		{
