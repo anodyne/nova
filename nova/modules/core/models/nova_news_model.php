@@ -42,6 +42,55 @@ abstract class Nova_news_model extends Model {
 		return $query;
 	}
 	
+	/**
+	 * Get all news items by a specific character.
+	 *
+	 * @access	public
+	 * @since	2.0
+	 * @param	mixed	either a character ID or an array of character IDs
+	 * @param	int		the number of records to limit the result to
+	 * @param	string	the status
+	 * @return	object	result object
+	 */
+	public function get_character_news($id = '', $limit = 0, $status = 'activated')
+	{
+		$this->db->from('news');
+		$this->db->where('news_status', $status);
+		
+		if (is_array($id))
+		{
+			$id = array_values($id);
+			
+			$count = count($id);
+			
+			$string = '';
+			
+			for ($i=0; $i < $count; $i++)
+			{
+				$or = ($i > 0) ? ' OR ' : '';
+				
+				$string.= $or ."news_author_character = '$id[$i]'";
+			}
+			
+			$this->db->where("($string)", null);
+		}
+		else
+		{
+			$this->db->where('news_author_character', $id);
+		}
+		
+		$this->db->order_by('news_date', 'desc');
+		
+		if ($limit > 0)
+		{
+			$this->db->limit($limit);
+		}
+		
+		$query = $this->db->get();
+		
+		return $query;
+	}
+	
 	public function get_link_id($id = '', $direction = 'next', $session = '')
 	{
 		$get = $this->db->get_where('news', array('news_id' => $id));
