@@ -71,10 +71,23 @@ abstract class Nova_posts_model extends Model {
 		return false;
 	}
 	
-	public function get_character_posts($character = '', $limit = 0)
+	/**
+	 * Get all posts from specific character(s).
+	 *
+	 * @access	public
+	 * @param	mixed	either the character ID or an array of character IDs
+	 * @param	int		the number of records to limit the result to
+	 * @param	string	the status to pull
+	 * @return	object	the result object
+	 */
+	public function get_character_posts($character = '', $limit = 0, $status = 'activated')
 	{
 		$this->db->from('posts');
-		$this->db->where('post_status', 'activated');
+		
+		if ( ! empty($status))
+		{
+			$this->db->where('post_status', $status);
+		}
 		
 		if (is_array($character))
 		{
@@ -299,6 +312,40 @@ abstract class Nova_posts_model extends Model {
 				$this->db->like('post_authors', $id);
 			}
 		}
+		
+		$this->db->order_by('post_date', 'desc');
+		
+		if ($limit > 0)
+		{
+			$this->db->limit($limit);
+		}
+		
+		$query = $this->db->get();
+		
+		return $query;
+	}
+	
+	/**
+	 * Get all posts from specific user(s).
+	 *
+	 * @access	public
+	 * @since	2.0
+	 * @param	int		either the character ID or an array of character IDs
+	 * @param	int		the number of records to limit the result to
+	 * @param	string	the status to pull
+	 * @return	object	the result object
+	 */
+	public function get_user_posts($user = '', $limit = 0, $status = 'activated')
+	{
+		$this->db->from('posts');
+		
+		if ( ! empty($status))
+		{
+			$this->db->where('post_status', $status);
+		}
+		
+		$string = "(post_authors_users LIKE '%,$user' OR post_authors_users LIKE '$user,%' OR post_authors_users = '%,$user,%' OR post_authors_users = $user)";
+		$this->db->where("$string", null);
 		
 		$this->db->order_by('post_date', 'desc');
 		
