@@ -220,7 +220,7 @@ else
 	// Is there a "remap" function?
 	if (method_exists($CI, '_remap'))
 	{
-		$CI->_remap($method);
+		$CI->_remap($method, array_slice($URI->rsegments, 2));
 	}
 	else
 	{
