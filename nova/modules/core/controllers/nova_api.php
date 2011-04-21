@@ -15,9 +15,9 @@
  * @version		1.0
  */
  
-require MODPATH.'core/libraries/REST_Controller'.EXT;
+require MODPATH.'core/libraries/Nova_REST_Controller'.EXT;
 
-abstract class Nova_api extends REST_Controller {
+abstract class Nova_api extends Nova_REST_Controller {
 	
 	/**
 	 * The version of the API.
@@ -52,6 +52,11 @@ abstract class Nova_api extends REST_Controller {
 		);
 		
 		$this->response($output, 200);
+	}
+	
+	public function info_put()
+	{
+		$this->response(null, 200);
 	}
 	
 	/**
