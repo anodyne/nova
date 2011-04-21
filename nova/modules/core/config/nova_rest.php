@@ -1,4 +1,4 @@
-<?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+<?php defined('BASEPATH') OR exit('No direct script access allowed');
 
 /*
 |--------------------------------------------------------------------------
@@ -11,6 +11,19 @@
 |
 */
 $config['rest_default_format'] = 'xml';
+
+/*
+|--------------------------------------------------------------------------
+| Enable emulate request
+|--------------------------------------------------------------------------
+|
+| Should we enable emulation of the request (e.g. used in Mootools request)?
+|
+|	Default: false
+|
+*/
+$config['enable_emulate_request'] = TRUE;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -34,7 +47,33 @@ $config['rest_realm'] = 'REST API';
 |	'' = no login required, 'basic' = unsecure login, 'digest' = more secure login
 |
 */
-$config['rest_auth'] = '';
+$config['rest_auth'] = false;
+
+/*
+|--------------------------------------------------------------------------
+| Override auth types for specific class/method
+|--------------------------------------------------------------------------
+|
+| Set specific authentication types for methods within a class (controller)
+|
+| Set as many config entries as needed.  Any methods not set will use the default 'rest_auth' config value.
+|
+| example:  
+| 
+|			$config['auth_override_class_method']['deals']['view'] = 'none';
+|			$config['auth_override_class_method']['deals']['insert'] = 'digest';
+|			$config['auth_override_class_method']['accounts']['user'] = 'basic'; 
+|
+| Here 'deals' and 'accounts' are controller names, 'view', 'insert' and 'user' are methods within. 
+| (NOTE: leave off the '_get' or '_post' from the end of the method name)
+| Acceptable values are: 'none', 'digest' and 'basic'.  
+|
+*/
+// $config['auth_override_class_method']['deals']['view'] = 'none';
+// $config['auth_override_class_method']['deals']['insert'] = 'digest';
+// $config['auth_override_class_method']['accounts']['user'] = 'basic';
+
+$config['auth_override_class_method']['api']['info_delete'] = 'none';
 
 /*
 |--------------------------------------------------------------------------
@@ -106,7 +145,7 @@ $config['rest_enable_keys'] = FALSE;
 |	Max: 40
 |
 */
-$config['rest_key_length'] = 32;
+$config['rest_key_length'] = 40;
 
 /*
 |--------------------------------------------------------------------------
@@ -206,5 +245,17 @@ $config['rest_enable_limits'] = FALSE;
 */
 $config['rest_ignore_http_accept'] = FALSE;
 
-/* End of file config.php */
-/* Location: ./system/application/config/rest.php */
+/*
+|--------------------------------------------------------------------------
+| REST AJAX Only
+|--------------------------------------------------------------------------
+|
+| Set to TRUE to only allow AJAX requests. If TRUE and the request is not 
+| coming from AJAX, a 505 response with the error message "Only AJAX 
+| requests are accepted." will be returned. This is good for production 
+| environments. Set to FALSE to also accept HTTP requests. 
+|
+|	FALSE
+|
+*/
+$config['rest_ajax_only'] = FALSE;
