@@ -359,5 +359,16 @@ class MY_Input extends CI_Input {
 		
 		return $src;
 	}
-
+	
+	/**
+	 * Is ajax Request?
+	 *
+	 * Test to see if a request contains the HTTP_X_REQUESTED_WITH header
+	 *
+	 * @return 	boolean
+	 */
+	public function is_ajax_request()
+	{
+		return ($this->server('HTTP_X_REQUESTED_WITH') === 'XMLHttpRequest');
+	}
 }
