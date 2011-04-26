@@ -9,7 +9,7 @@
  * @since		2.0
  */
 
-class Controller_Upgradeajax extends Controller_Template {
+class Controller_Setup_Smsajax extends Controller_Template {
 	
 	public $db;
 	

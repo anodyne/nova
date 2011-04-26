@@ -9,7 +9,7 @@
  * @version		3.0
  */
 
-class Controller_Install extends Controller_Template {
+class Controller_Setup_Install extends Controller_Template {
 	
 	public function before()
 	{

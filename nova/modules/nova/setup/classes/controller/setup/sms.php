@@ -9,7 +9,7 @@
  * @version		3.0
  */
 
-class Controller_Upgrade extends Controller_Template {
+class Controller_Setup_Sms extends Controller_Template {
 	
 	public function before()
 	{

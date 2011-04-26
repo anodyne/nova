@@ -1,4 +1,4 @@
-<?php defined('SYSPATH') or die('No direct script access.');
+<?php
 /**
  * Setup Controller
  *
@@ -8,8 +8,8 @@
  * @copyright	2011 Anodyne Productions
  * @version		3.0
  */
-
-class Controller_Setup extends Controller_Template {
+ 
+class Controller_Setup_Main extends Controller_Template {
 	
 	public function before()
 	{
@@ -20,7 +20,7 @@ class Controller_Setup extends Controller_Template {
 		{
 			if ($this->request->action() != 'config')
 			{
-				$this->request->redirect('setup/config');
+				$this->request->redirect('setup/main/config');
 			}
 		}
 		else
@@ -40,7 +40,7 @@ class Controller_Setup extends Controller_Template {
 			// make sure the system is installed
 			if (count($db->list_tables($db->table_prefix().'%')) < $tables and ! (in_array($this->request->action(), $safesegs)))
 			{
-				$this->request->redirect('install/index');
+				$this->request->redirect('setup/install/index');
 			}
 			
 			// if the system is installed, make sure the user is logged in and a sysadmin
@@ -73,7 +73,7 @@ class Controller_Setup extends Controller_Template {
 		}
 		
 		// set the locale
-		i18n::lang('en-us');
+		I18n::lang('en-us');
 		
 		// set the shell
 		$this->template = View::factory(Location::file('install', null, 'structure'));
@@ -423,7 +423,7 @@ return array
 									);
 									
 									// write the controls
-									$this->template->layout->controls = form::open('install/index').
+									$this->template->layout->controls = form::open('setup/install/index').
 										form::button('next', ucwords(___('install center')), $next).
 										form::close();
 								}
@@ -484,7 +484,7 @@ return array
 								);
 								
 								// write the controls
-								$this->template->layout->controls = form::open('install/index').
+								$this->template->layout->controls = form::open('setup/install/index').
 									form::button('next', ucwords(___('install center')), $next).
 									form::close();
 								
@@ -557,7 +557,7 @@ return array
 		);
 		
 		// build the next step control
-		$this->template->layout->controls = form::open('install/index').form::button('install', ___('Back to Install Center'), $next).form::close();
+		$this->template->layout->controls = form::open('setup/install/index').form::button('install', ___('Back to Install Center'), $next).form::close();
 		
 		// send the response
 		$this->response->body($this->template);
@@ -587,7 +587,7 @@ return array
 			);
 			
 			// build the next step control
-			$this->template->layout->controls = form::open('install/step').form::button('install', __('Start Install'), $next).form::close();
+			$this->template->layout->controls = form::open('setup/install/step').form::button('install', __('Start Install'), $next).form::close();
 		}
 		
 		// content

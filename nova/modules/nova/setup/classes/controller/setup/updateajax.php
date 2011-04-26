@@ -9,7 +9,7 @@
  * @since		3.0
  */
 
-class Controller_Updateajax extends Controller_Template {
+class Controller_Setup_Updateajax extends Controller_Template {
 	
 	public $db;
 	
