@@ -10,6 +10,9 @@
  */
 class Kohana_Email {
 
+	// Current module version
+	const VERSION = '1.0.0';
+
 	/**
 	 * @var  object  Swiftmailer instance
 	 */
@@ -184,17 +187,45 @@ class Kohana_Email {
 	}
 
 	/**
-	 * Add email recipients.
+	 * Add one or more email recipients..
 	 *
-	 * @param   string   email address
+	 *     // A single recipient
+	 *     $email->to('john.doe@domain.com', 'John Doe');
+	 *
+	 *     // Multiple entries
+	 *     $email->to(array(
+	 *         'frank.doe@domain.com',
+	 *         'jane.doe@domain.com' => 'Jane Doe',
+	 *     ));
+	 *
+	 * @param   mixed    single email address or an array of addresses
 	 * @param   string   full name
 	 * @param   string   recipient type: to, cc, bcc
 	 * @return  Email
 	 */
 	public function to($email, $name = NULL, $type = 'to')
 	{
-		// Call $this->_message->{add$Type}($email, $name)
-		call_user_func(array($this->_message, 'add'.ucfirst($type)), $email, $name);
+		if (is_array($email))
+		{
+			foreach ($email as $key => $value)
+			{
+				if (ctype_digit((string) $key))
+				{
+					// Only an email address, no name
+					$this->to($value, NULL, $type);
+				}
+				else
+				{
+					// Email address and name
+					$this->to($key, $value, $type);
+				}
+			}
+		}
+		else
+		{
+			// Call $this->_message->{add$Type}($email, $name)
+			call_user_func(array($this->_message, 'add'.ucfirst($type)), $email, $name);
+		}
 
 		return $this;
 	}
@@ -286,6 +317,40 @@ class Kohana_Email {
 	public function raw_message()
 	{
 		return $this->_message;
+	}
+
+	/**
+	 * Attach a file.
+	 *
+	 * @param   string  file path
+	 * @return  Email
+	 */
+	public function attach_file($path)
+	{
+		$this->_message->attach(Swift_Attachment::fromPath($path));
+
+		return $this;
+	}
+
+	/**
+	 * Attach content to be sent as a file.
+	 *
+	 * @param   binary  file contents
+	 * @param   string  file name
+	 * @param   string  mime type
+	 * @return  Email
+	 */
+	public function attach_content($data, $file, $mime = NULL)
+	{
+		if ( ! $mime)
+		{
+			// Get the mime type from the filename
+			$mime = File::mime_by_ext(pathinfo($file, PATHINFO_EXTENSION));
+		}
+
+		$this->_message->attach(Swift_Attachment::newInstance($data, $file, $mime));
+
+		return $this;
 	}
 
 	/**
