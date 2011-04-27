@@ -1,46 +1,44 @@
-<?php defined('SYSPATH') or die('No direct script access.');
+<?php
 /**
  * Form Tabs Model
+ *
+ * *NOTE:* The link_id field does not reference another field in the database,
+ * it is used by jQuery UI to build the clickable tab.
  *
  * @package		Nova
  * @category	Models
  * @author		Anodyne Productions
- * @copyright	2010-11 Anodyne Productions
- * @since		2.0
+ * @copyright	2011 Anodyne Productions
+ * @version		3.0
  */
  
-class Model_Formtab extends Jelly_Model {
+class Model_FormTab extends Orm\Model {
 	
-	/**
-	 * Initialize the model with Jelly_Meta data
-	 *
-	 * @return	void
-	 */
-	public static function initialize(Jelly_Meta $meta)
-	{
-		$meta->table('forms_tabs');
-		$meta->fields(array(
-			'id' => Jelly::field('primary', array(
-				'column' => 'tab_id'
-			)),
-			'form' => Jelly::field('belongsto', array(
-				'column' => 'tab_form',
-				'foreign' => 'form.key'
-			)),
-			'name' => Jelly::field('string', array(
-				'column' => 'tab_name'
-			)),
-			'linkid' => Jelly::field('string', array(
-				'column' => 'tab_link_id'
-			)),
-			'order' => Jelly::field('integer', array(
-				'column' => 'tab_order'
-			)),
-			'display' => Jelly::field('enum', array(
-				'column' => 'tab_display',
-				'choices' => array('y','n'),
-				'default' => 'y'
-			)),
-		));
-	}
+	public static $_table_name = 'form_tabs';
+	
+	public static $_properties = array(
+		'id' => array(
+			'type' => 'int',
+			'constraint' => 10,
+			'auto_increment' => true),
+		'form_key' => array(
+			'type' => 'string',
+			'constraint' => 20,
+			'default' => ''),
+		'name' => array(
+			'type' => 'string',
+			'constraint' => 255,
+			'default' => ''),
+		'link_id' => array(
+			'type' => 'string',
+			'constraint' => 20,
+			'default' => ''),
+		'order' => array(
+			'type' => 'int',
+			'constraint' => 5),
+		'display' => array(
+			'type' => 'tinyint',
+			'constraint' => 1,
+			'default' => 1),
+	);
 }

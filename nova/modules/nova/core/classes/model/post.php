@@ -1,72 +1,89 @@
-<?php defined('SYSPATH') or die('No direct script access.');
+<?php
 /**
  * Mission Posts Model
  *
  * @package		Nova
  * @category	Models
  * @author		Anodyne Productions
- * @copyright	2010-11 Anodyne Productions
- * @since		2.0
+ * @copyright	2011 Anodyne Productions
+ * @version		3.0
  */
  
-class Model_Post extends Jelly_Model {
+class Model_Post extends Orm\Model {
+	
+	public static $_table_name = 'posts';
+	
+	public static $_properties = array(
+		'id' => array(
+			'type' => 'int',
+			'constraint' => 8,
+			'auto_increment' => true),
+		'title' => array(
+			'type' => 'string',
+			'constraint' => 255,
+			'default' => ''),
+		'location' => array(
+			'type' => 'string',
+			'constraint' => 255,
+			'default' => ''),
+		'timeline' => array(
+			'type' => 'string',
+			'constraint' => 255,
+			'default' => ''),
+		'date' => array(
+			'type' => 'bigint',
+			'constraint' => 20),
+		'authors' => array(
+			'type' => 'text'),
+		'authors_users' => array(
+			'type' => 'text'),
+		'mission_id' => array(
+			'type' => 'int',
+			'constraint' => 8),
+		'saved_user_id' => array(
+			'type' => 'int',
+			'constriant' => 8),
+		'status' => array(
+			'type' => 'enum',
+			'constraint' => "'activated','saved','pending'",
+			'default' => 'activated'),
+		'content' => array(
+			'type' => 'text'),
+		'tags' => array(
+			'type' => 'text'),
+		'updated_at' => array(
+			'type' => 'bigint',
+			'constraint' => 20),
+	);
+	
+	public static $_belongs_to = array(
+		'mission' => array(
+			'model_to' => 'Model_Mission',
+			'key_to' => 'id',
+			'key_from' => 'mission_id',
+			'cascade_save' => false,
+			'cascade_delete' => false,
+		),
+	);
 	
 	/**
-	 * Initialize the model with Jelly_Meta data
+	 * Get all the comments for a mission entry.
 	 *
-	 * @return	void
+	 *     $post = Model_Post::find(1);
+	 *     $comments = $post->comments();
+	 *
+	 * @access	public
+	 * @param	string	the status of items to retrieve
+	 * @return	object	an object with all the comments
 	 */
-	public static function initialize(Jelly_Meta $meta)
+	public function comments($status = 'activated')
 	{
-		$meta->fields(array(
-			'id' => Jelly::field('primary', array(
-				'column' => 'post_id'
-			)),
-			'title' => Jelly::field('string', array(
-				'column' => 'post_title'
-			)),
-			'authors' => Jelly::field('text', array(
-				'column' => 'post_authors'
-			)),
-			'author_users' => Jelly::field('text', array(
-				'column' => 'post_authors_users'
-			)),
-			'date' => Jelly::field('timestamp', array(
-				'column' => 'post_date',
-				'auto_now_create' => false,
-				'auto_now_update' => false,
-				'null' => true,
-				'default' => date::now()
-			)),
-			'content' => Jelly::field('text', array(
-				'column' => 'post_content'
-			)),
-			'location' => Jelly::field('string', array(
-				'column' => 'post_location'
-			)),
-			'timeline' => Jelly::field('string', array(
-				'column' => 'post_timeline'
-			)),
-			'status' => Jelly::field('enum', array(
-				'column' => 'post_status',
-				'choices' => array('activated', 'saved', 'pending')
-			)),
-			'saved' => Jelly::field('integer', array(
-				'column' => 'post_saved'
-			)),
-			'tags' => Jelly::field('text', array(
-				'column' => 'post_tags'
-			)),
-			'last_update' => Jelly::field('timestamp', array(
-				'column' => 'post_last_update',
-				'auto_now_create' => false,
-				'auto_now_update' => true,
-				'null' => true,
-				'default' => date::now()
-			)),
-			'comments' => Jelly::field('hasmany', array(
-				'foreign' => 'postcomment.pcomment_post'
-			))
+		return static::find('all', array(
+			'where' => array(
+				array('type', 'post'),
+				array('status', $status),
+				array('item_id', $this->id)
+			),
 		));
 	}
 }

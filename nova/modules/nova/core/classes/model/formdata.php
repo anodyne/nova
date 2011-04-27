@@ -1,56 +1,64 @@
-<?php defined('SYSPATH') or die('No direct script access.');
+<?php
 /**
  * Form Data Model
  *
  * @package		Nova
  * @category	Models
  * @author		Anodyne Productions
- * @copyright	2010-11 Anodyne Productions
- * @since		2.0
+ * @copyright	2011 Anodyne Productions
+ * @version		3.0
  */
  
-class Model_Formdata extends Jelly_Model {
+class Model_FormData extends Orm\Model {
+	
+	public static $_table_name = 'form_data';
+	
+	public static $_properties = array(
+		'id' => array(
+			'type' => 'bigint',
+			'constraint' => 20,
+			'auto_increment' => true),
+		'form_key' => array(
+			'type' => 'string',
+			'constraint' => 20,
+			'default' => ''),
+		'field_id' => array(
+			'type' => 'bigint',
+			'constraint' => 20),
+		'user_id' => array(
+			'type' => 'int',
+			'constraint' => 8),
+		'character_id' => array(
+			'type' => 'string',
+			'constraint' => 8),
+		'item_id' => array(
+			'type' => 'int',
+			'constraint' => 10),
+		'value' => array(
+			'type' => 'text'),
+		'updated_at' => array(
+			'type' => 'bigint',
+			'constraint' => 20),
+	);
 	
 	/**
-	 * Initialize the model with Jelly_Meta data
+	 * Create data for a single field in the data table.
 	 *
-	 * @return	void
+	 * @access	public
+	 * @param	array 	the data array to use for creation
+	 * @return	object	the created object
 	 */
-	public static function initialize(Jelly_Meta $meta)
+	public static function create_data(array $data)
 	{
-		$meta->table('forms_data');
-		$meta->fields(array(
-			'id' => Jelly::field('primary', array(
-				'column' => 'data_id'
-			)),
-			'form' => Jelly::field('string', array(
-				'column' => 'data_form'
-			)),
-			'field' => Jelly::field('belongsto', array(
-				'column' => 'data_field',
-				'foreign' => 'formfield'
-			)),
-			'user' => Jelly::field('belongsto', array(
-				'column' => 'data_user',
-				'foreign' => 'user'
-			)),
-			'character' => Jelly::field('belongsto', array(
-				'column' => 'data_character',
-				'foreign' => 'character'
-			)),
-			'item' => Jelly::field('integer', array(
-				'column' => 'data_item'
-			)),
-			'value' => Jelly::field('text', array(
-				'column' => 'data_value'
-			)),
-			'last_update' => Jelly::field('timestamp', array(
-				'column' => 'data_last_update',
-				'auto_now_create' => false,
-				'auto_now_update' => true,
-				'null' => true,
-				'default' => date::now()
-			)),
-		));
+		$record = Model_FormData::factory();
+		
+		foreach ($data as $key => $value)
+		{
+			$record->{$key} = $value;
+		}
+		
+		$record->save();
+		
+		return $record;
 	}
 }

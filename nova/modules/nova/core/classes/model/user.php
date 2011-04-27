@@ -1,4 +1,4 @@
-<?php defined('SYSPATH') or die('No direct script access.');
+<?php
 /**
  * User Model
  *
@@ -6,259 +6,292 @@
  * @category	Models
  * @author		Anodyne Productions
  * @copyright	2011 Anodyne Productions
- * @since		3.0
+ * @version		3.0
  */
  
-class Model_User extends Jelly_Model {
+class Model_User extends Orm\Model {
+	
+	public static $_table_name = 'users';
+	
+	public static $_properties = array(
+		'id' => array(
+			'type' => 'int',
+			'constraint' => 8,
+			'auto_increment' => true),
+		'name' => array(
+			'type' => 'string',
+			'constraint' => 255,
+			'default' => ''),
+		'email' => array(
+			'type' => 'string',
+			'constraint' => 100,
+			'default' => ''),
+		'password' => array(
+			'type' => 'string',
+			'constraint' => 40,
+			'default' => ''),
+		'date_of_birth' => array(
+			'type' => 'string',
+			'constraint' => 50,
+			'default' => ''),
+		'character_id' => array(
+			'type' => 'int',
+			'constraint' => 8),
+		'role_id' => array(
+			'type' => 'int',
+			'constraint' => 5),
+		'is_sysadmin' => array(
+			'type' => 'tinyint',
+			'constraint' => 1,
+			'default' => 0),
+		'is_game_master' => array(
+			'type' => 'tinyint',
+			'constraint' => 1,
+			'default' => 0),
+		'is_webmaster' => array(
+			'type' => 'tinyint',
+			'constraint' => 1,
+			'default' => 0),
+		'is_firstlaunch' => array(
+			'type' => 'tinyint',
+			'constraint' => 1,
+			'default' => 1),
+		'timezone' => array(
+			'type' => 'string',
+			'constraint' => 5,
+			'default' => 'UTC'),
+		'daylight_savings' => array(
+			'type' => 'tinyint',
+			'constraint' => 1,
+			'default' => 0),
+		'email_format' => array(
+			'type' => 'string',
+			'constraint' => 4,
+			'default' => 'html'),
+		'language' => array(
+			'type' => 'string',
+			'constraint' => 50,
+			'default' => 'english'),
+		'join_date' => array(
+			'type' => 'bigint',
+			'constraint' => 20),
+		'leave_date' => array(
+			'type' => 'bigint',
+			'constraint' => 20),
+		'last_post' => array(
+			'type' => 'bigint',
+			'constraint' => 20),
+		'last_login' => array(
+			'type' => 'bigint',
+			'constraint' => 20),
+		'loa' => array(
+			'type' => 'enum',
+			'constraint' => "'active','loa','eloa'",
+			'default' => 'active'),
+		'display_rank' => array(
+			'type' => 'string',
+			'constraint' => 100,
+			'default' => 'default'),
+		'skin_main' => array(
+			'type' => 'string',
+			'constraint' => 255,
+			'default' => 'default'),
+		'skin_admin' => array(
+			'type' => 'string',
+			'constraint' => 255,
+			'default' => 'default'),
+		'security_question' => array(
+			'type' => 'int',
+			'constraint' => 5),
+		'security_answer' => array(
+			'type' => 'string',
+			'constraint' => 40,
+			'default' => ''),
+		'password_reset' => array(
+			'type' => 'tinyint',
+			'constraint' => 1,
+			'default' => 0),
+		'my_links' => array(
+			'type' => 'text'),
+		'updated_at' => array(
+			'type' => 'bigint',
+			'constraint' => 20),
+	);
+	
+	public static $_belongs_to = array(
+		'role' => array(
+			'model_to' => 'Model_AccessRole',
+			'key_to' => 'id',
+			'key_from' => 'role_id',
+			'cascade_save' => false,
+			'cascade_delete' => false,
+		),
+	);
+	
+	public static $_has_many = array(
+		'characters' => array(
+			'model_to' => 'Model_Character',
+			'key_to' => 'user_id',
+			'key_from' => 'id',
+			'cascade_save' => false,
+			'cascade_delete' => false,
+		),
+		'logs' => array(
+			'model_to' => 'Model_PersonalLog',
+			'key_to' => 'user_id',
+			'key_from' => 'id',
+			'cascade_save' => false,
+			'cascade_delete' => false,
+		),
+		'news' => array(
+			'model_to' => 'Model_News',
+			'key_to' => 'user_id',
+			'key_from' => 'id',
+			'cascade_save' => false,
+			'cascade_delete' => false,
+		),
+	);
 	
 	/**
-	 * Initialize the model with Jelly_Meta data
+	 * Get a user from the database based on something other than their ID.
 	 *
-	 * @return	void
+	 * @access	public
+	 * @param	string	the column to use
+	 * @param	mixed	the value to use
+	 * @return	object	a user object
 	 */
-	public static function initialize(Jelly_Meta $meta)
+	public static function get_user($column, $value)
 	{
-		$meta->fields(array(
-			'id' => Jelly::field('primary', array(
-				'column' => 'userid'
-			)),
-			'status' => Jelly::field('enum', array(
-				'choices' => array('active','inactive','pending'),
-				'default' => 'pending'
-			)),
-			'name' => Jelly::field('string', array(
-				'column' => 'name'
-			)),
-			'email' => Jelly::field('email', array(
-				'column' => 'email'
-			)),
-			'password' => Jelly::field('string', array(
-				'column' => 'password',
-			)),
-			'date_of_birth' => Jelly::field('string', array(
-				'column' => 'date_of_birth'
-			)),
-			'instant_message' => Jelly::field('text', array(
-				'column' => 'instant_message'
-			)),
-			'main_char' => Jelly::field('belongsto', array(
-				'column' => 'main_char',
-				'foreign' => 'character'
-			)),
-			'role' => Jelly::field('belongsto', array(
-				'column' => 'access_role',
-				'foreign' => 'accessrole'
-			)),
-			'sysadmin' => Jelly::field('enum', array(
-				'column' => 'is_sysadmin',
-				'choices' => array('y','n'),
-				'default' => 'n'
-			)),
-			'gm' => Jelly::field('enum', array(
-				'column' => 'is_game_master',
-				'choices' => array('y','n'),
-				'default' => 'n'
-			)),
-			'webmaster' => Jelly::field('enum', array(
-				'column' => 'is_webmaster',
-				'choices' => array('y','n'),
-				'default' => 'n'
-			)),
-			'timezone' => Jelly::field('string', array(
-				'column' => 'timezone',
-				'default' => 'UTC'
-			)),
-			'dst' => Jelly::field('integer', array(
-				'column' => 'daylight_savings'
-			)),
-			'email_format' => Jelly::field('string', array(
-				'column' => 'email_format',
-				'default' => 'html'
-			)),
-			'language' => Jelly::field('string', array(
-				'column' => 'language'
-			)),
-			'join' => Jelly::field('timestamp', array(
-				'column' => 'join_date',
-				'auto_now_create' => true,
-				'auto_now_update' => false,
-				'null' => true,
-				'default' => date::now()
-			)),
-			'leave' => Jelly::field('timestamp', array(
-				'column' => 'leave_date',
-				'auto_now_create' => false,
-				'auto_now_update' => false,
-				'null' => true,
-				'default' => date::now()
-			)),
-			'last_update' => Jelly::field('timestamp', array(
-				'auto_now_create' => true,
-				'auto_now_update' => true,
-				'null' => true,
-				'default' => date::now()
-			)),
-			'last_post' => Jelly::field('timestamp', array(
-				'auto_now_create' => false,
-				'auto_now_update' => false,
-				'null' => true,
-				'default' => date::now()
-			)),
-			'last_login' => Jelly::field('timestamp', array(
-				'auto_now_create' => false,
-				'auto_now_update' => false,
-				'null' => true,
-				'default' => date::now()
-			)),
-			'loa' => Jelly::field('enum', array(
-				'choices' => array('active','loa','eloa'),
-				'default' => 'active'
-			)),
-			'rank' => Jelly::field('string', array(
-				'column'=> 'display_rank'
-			)),
-			'skin_main' => Jelly::field('string', array(
-				'column' => 'skin_main'
-			)),
-			'skin_wiki' => Jelly::field('string', array(
-				'column' => 'skin_wiki'
-			)),
-			'skin_admin' => Jelly::field('string', array(
-				'column' => 'skin_admin'
-			)),
-			'location' => Jelly::field('text', array(
-				'column' => 'location'
-			)),
-			'bio' => Jelly::field('text', array(
-				'column' => 'bio'
-			)),
-			'security_question' => Jelly::field('belongsto', array(
-				'column' => 'security_question',
-				'foreign' => 'securityquestion'
-			)),
-			'security_answer' => Jelly::field('string', array(
-				'column' => 'security_answer'
-			)),
-			'password_reset' => Jelly::field('integer', array(
-				'column' => 'password_reset'
-			)),
-			'links' => Jelly::field('text', array(
-				'column' => 'my_links'
-			)),
-			'characters' => Jelly::field('hasmany', array(
-				'foreign' => 'characters.user'
-			)),
-		));
+		if (in_array($column, static::$_properties))
+		{
+			return static::find()->where($column, $value)->get_one();
+		}
+		
+		return false;
 	}
 	
 	/**
-	 * Find a single user in the database.
+	 * Figure out what the status of a user is given their characters.
 	 *
 	 * @access	public
-	 * @param	int		the ID of the user to pull or FALSE to pull all users
-	 * @param	array 	an array of items to use in the where clause
-	 * @return	mixed	a Jelly_Collection if there are results or FALSE if there are no results
+	 * @return	mixed	a string with the status or FALSE if the user doesn't exist
 	 */
-	public static function find($id = false, array $where = array())
+	public function get_status()
 	{
-		if ( ! is_numeric($id) and $id !== false)
+		if ($this !== null)
 		{
-			throw new Kohana_Exception('ID parameter must be numerical!');
-		}
-		
-		if ($id)
-		{
-			$result = Jelly::query('user', $id)->select();
-		}
-		else
-		{
-			$result = Jelly::query('user');
-			
-			if (Arr::is_array($where) and count($where) > 0)
+			if (($this->character_id === null) or ($this->character->id == 0))
 			{
-				foreach ($where as $field => $value)
+				$status = 'inactive';
+			}
+			else
+			{
+				if (count($this->characters) > 0)
 				{
-					$result = $result->where($field, '=', $value);
+					foreach ($this->characters as $c)
+					{
+						$chars[] = $c->status;
+					}
+					
+					if (in_array('active', $chars))
+					{
+						$status = 'active';
+					}
+					elseif ( ! in_array('active', $chars) and in_array('pending', $chars))
+					{
+						$status = 'pending';
+					}
+					elseif ( ! in_array('active', $chars) and ! in_array('pending', $chars))
+					{
+						$status = 'inactive';
+					}
+				}
+				else
+				{
+					$status = 'inactive';
 				}
 			}
 			
-			$result = $result->select();
-		}
-		
-		if (count($result) > 0)
-		{
-			return $result;
+			return $status;
 		}
 		
 		return false;
 	}
 	
 	/**
-	 * Find all users in the database that match the criteria.
+	 * Create a user.
+	 *
+	 * This will create a user record, create user preference values (read from
+	 * the defaults in the user preference tale) and create empty rows for the
+	 * user dynamic form.
+	 *
+	 *     // note: this is an incomplete array
+	 *     $data = array('name' => 'John Public', 'email' => 'john@example.com');
+	 *     
+	 *     $user = Model_User::create_user($data);
 	 *
 	 * @access	public
-	 * @param	array 	an array of items to use in the where clause
-	 * @return	mixed	a Jelly_Collection if there are results or FALSE if there are no results
+	 * @param	array 	an array of data used for creation
+	 * @return	object	the created object
 	 */
-	public static function find_all(array $where = array())
+	public static function create_user(array $data)
 	{
-		$result = Jelly::query('user');
+		$record = Model_User::factory();
 		
-		if (Arr::is_array($where) and count($where) > 0)
+		foreach ($data as $key => $value)
 		{
-			foreach ($where as $field => $value)
+			$record->{$key} = $value;
+		}
+		
+		$record->save();
+		
+		/**
+		 * Create the user preferences and fill them with the default values.
+		 */
+		$prefs = Model_UserPref::find('all');
+		
+		if (count($prefs) > 0)
+		{
+			foreach ($prefs as $p)
 			{
-				$result = $result->where($field, '=', $value);
+				$pref_value_data = array(
+					'user_id' => $record->id,
+					'key' => $p->key,
+					'value' => $p->default,
+				);
+				$prefvalue = Model_UserPrefValue::create_value($pref_value_data);
 			}
 		}
 		
-		$result = $result->select();
+		/**
+		 * Fill the user rows for the dynamic form with blank data for editing later.
+		 */
+		$fields = Model_FormField::get_fields('user');
 		
-		if (count($result) > 0)
+		if (count($fields) > 0)
 		{
-			return $result;
-		}
-		
-		return false;
-	}
-	
-	/**
-	 * Pulls game master data back from the users table.
-	 *
-	 * @param	string	the type of data to pull back (all, email, id)
-	 * @return	mixed	an array of data or false if there are no GMs
-	 */
-	public function get_gm_data($type = 'all')
-	{
-		// get all the game masters
-		$query = Jelly::query('user')->where('gm', '=', 'y')->select();
-		
-		if (count($query) > 0)
-		{
-			// create an array for storing the data
-			$array = array();
-			
-			foreach ($query as $row)
+			foreach ($fields as $f)
 			{
-				switch ($type)
-				{
-					case 'all':
-						$array[] = $row;
-					break;
-					
-					case 'email':
-						$array[] = $row->email;
-					break;
-					
-					case 'id':
-						$array[] = $row->id;
-					break;
-				}
+				$user_field_data = array(
+					'form_key' => 'user',
+					'field_id' => $f->id,
+					'user_id' => $record->id,
+					'character_id' => 0,
+					'item_id' => 0,
+					'value' => '',
+					'updated_at' => Date::time(),
+				);
+				
+				Model_FormData::create_data($user_field_data);
 			}
-			
-			return $array;
 		}
 		
-		return false;
+		DBUtil::optimize_table('form_fields');
+		DBUtil::optimize_table('form_data');
+		DBUtil::optimize_table('user_prefs');
+		DBUtil::optimize_table('user_pref_values');
+		DBUtil::optimize_table('users');
+		
+		return $record;
 	}
 }

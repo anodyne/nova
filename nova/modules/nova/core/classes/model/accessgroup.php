@@ -1,34 +1,40 @@
-<?php defined('SYSPATH') or die('No direct script access.');
+<?php
 /**
  * Access Groups Model
  *
  * @package		Nova
  * @category	Models
  * @author		Anodyne Productions
- * @copyright	2010-11 Anodyne Productions
- * @since		2.0
+ * @copyright	2011 Anodyne Productions
+ * @version		3.0
  */
  
-class Model_Accessgroup extends Jelly_Model {
+class Model_AccessGroup extends Orm\Model {
 	
-	/**
-	 * Initialize the model with Jelly_Meta data
-	 *
-	 * @return	void
-	 */
-	public static function initialize(Jelly_Meta $meta)
-	{
-		$meta->table('access_groups');
-		$meta->fields(array(
-			'id' => Jelly::field('primary', array(
-				'column' => 'group_id'
-			)),
-			'name' => Jelly::field('string', array(
-				'column' => 'group_name'
-			)),
-			'order' => Jelly::field('integer', array(
-				'column' => 'group_order'
-			)),
-		));
-	}
+	public static $_table_name = 'access_groups';
+	
+	public static $_properties = array(
+		'id' => array(
+			'type' => 'int',
+			'constraint' => 6,
+			'auto_increment' => true),
+		'name' => array(
+			'type' => 'string',
+			'constraint' => 255,
+			'default' => ''),
+		'order' => array(
+			'type' => 'int',
+			'constraint' => 5,
+			'default' => 0),
+	);
+	
+	public static $_has_many = array(
+		'pages' => array(
+			'model_to' => 'Model_AccessPage',
+			'key_to' => 'group',
+			'key_from' => 'id',
+			'cascade_save' => false,
+			'cascade_delete' => false,
+		),
+	);
 }

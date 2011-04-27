@@ -1,48 +1,83 @@
-<?php defined('SYSPATH') or die('No direct script access.');
+<?php
 /**
  * Rank Model
  *
  * @package		Nova
  * @category	Models
  * @author		Anodyne Productions
- * @copyright	2010-11 Anodyne Productions
- * @since		2.0
+ * @copyright	2011 Anodyne Productions
+ * @version		3.0
  */
  
-class Model_Rank extends Jelly_Model {
+class Model_Rank extends Orm\Model {
+	
+	public static $_table_name = 'ranks_';
+	
+	public static $_properties = array(
+		'id' => array(
+			'type' => 'int',
+			'constraint' => 10,
+			'auto_increment' => true),
+		'name' => array(
+			'type' => 'string',
+			'constraint' => 255,
+			'default' => ''),
+		'short_name' => array(
+			'type' => 'string',
+			'constraint' => 20,
+			'default' => ''),
+		'image' => array(
+			'type' => 'string',
+			'constraint' => 100,
+			'default' => ''),
+		'order' => array(
+			'type' => 'int',
+			'constraint' => 5),
+		'display' => array(
+			'type' => 'tinyint',
+			'constraint' => 1,
+			'default' => 1),
+		'class' => array(
+			'type' => 'int',
+			'constraint' => 5,
+			'default' => 1),
+	);
 	
 	/**
-	 * Initialize the model with Jelly_Meta data
+	 * The init function is necessary here since the name of the ranks
+	 * table is dynamic. PHP won't allow creating an object property that's
+	 * dynamic, so we need this in order to change the table name once the
+	 * class is loaded.
 	 *
+	 * @access	public
 	 * @return	void
 	 */
-	public static function initialize(Jelly_Meta $meta)
+	public static function init()
 	{
-		$meta->table('ranks_'.Kohana::config('nova.genre'));
-		$meta->fields(array(
-			'id' => Jelly::field('primary', array(
-				'column' => 'rank_id'
-			)),
-			'name' => Jelly::field('string', array(
-				'column' => 'rank_name'
-			)),
-			'shortname' => Jelly::field('string', array(
-				'column' => 'rank_short_name',
-			)),
-			'image' => Jelly::field('string', array(
-				'column' => 'rank_image',
-			)),
-			'order' => Jelly::field('integer', array(
-				'column' => 'rank_order',
-			)),
-			'display' => Jelly::field('enum', array(
-				'column' => 'rank_display',
-				'choices' => array('y','n'),
-				'default' => 'y'
-			)),
-			'class' => Jelly::field('integer', array(
-				'column' => 'rank_class'
-			)),
+		static::$_table_name = static::$_table_name.Config::get('nova.genre');
+	}
+	
+	public static function get_ranks($class = '', $display = true)
+	{
+		if ( ! empty($class))
+		{
+			$where[] = array('class', $class);
+		}
+		
+		if ( ! empty($display))
+		{
+			$where[] = array('display', (int) $display);
+		}
+		
+		$result = static::find('all', array(
+			'where' => $where,
+			'order_by' => array(
+				array('class' => 'asc', 'order' => 'asc')
+			),
 		));
+			
+		return $result;
 	}
 }
+
+Model_Rank::init();

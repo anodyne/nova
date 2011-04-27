@@ -1,6 +1,6 @@
 <?php
 /**
- * Chain of Command Model
+ * Mission Post Authors Model
  *
  * @package		Nova
  * @category	Models
@@ -9,23 +9,23 @@
  * @version		3.0
  */
  
-class Model_Coc extends Orm\Model {
+class Model_PostAuthor extends Orm\Model {
 	
-	public static $_table_name = 'coc';
+	public static $_table_name = 'post_authors';
 	
 	public static $_properties = array(
 		'id' => array(
 			'type' => 'int',
-			'constraint' => 5,
+			'constraint' => 11,
 			'auto_increment' => true),
-		'user_id' => array(
+		'post_id' => array(
 			'type' => 'int',
 			'constraint' => 8),
 		'character_id' => array(
 			'type' => 'int',
 			'constraint' => 8),
-		'order' => array(
+		'user_id' => array(
 			'type' => 'int',
-			'constraint' => 5),
+			'constraint' => 8),
 	);
 }

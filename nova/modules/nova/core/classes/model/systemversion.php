@@ -1,51 +1,42 @@
-<?php defined('SYSPATH') or die('No direct script access.');
+<?php
 /**
  * System Versions Model
  *
  * @package		Nova
  * @category	Models
  * @author		Anodyne Productions
- * @copyright	2010-11 Anodyne Productions
- * @since		2.0
+ * @copyright	2011 Anodyne Productions
+ * @version		3.0
  */
  
-class Model_Systemversion extends Jelly_Model {
+class Model_SystemVersion extends Orm\Model {
 	
-	/**
-	 * Initialize the model with Jelly_Meta data
-	 *
-	 * @return	void
-	 */
-	public static function initialize(Jelly_Meta $meta)
-	{
-		$meta->table('system_versions');
-		$meta->fields(array(
-			'id' => Jelly::field('primary', array(
-				'column' => 'version_id'
-			)),
-			'version' => Jelly::field('string', array(
-				'column' => 'version'
-			)),
-			'major' => Jelly::field('integer', array(
-				'column' => 'version_major'
-			)),
-			'minor' => Jelly::field('integer', array(
-				'column' => 'version_minor'
-			)),
-			'update' => Jelly::field('integer', array(
-				'column' => 'version_update'
-			)),
-			'date' => Jelly::field('timestamp', array(
-				'column' => 'version_date',
-				'null' => true,
-				'default' => date::now()
-			)),
-			'launch' => Jelly::field('text', array(
-				'column' => 'version_launch',
-			)),
-			'changes' => Jelly::field('text', array(
-				'column' => 'version_changes',
-			)),
-		));
-	}
+	public static $_table_name = 'system_versions';
+	
+	public static $_properties = array(
+		'id' => array(
+			'type' => 'int',
+			'constraint' => 4,
+			'auto_increment' => true),
+		'version' => array(
+			'type' => 'string',
+			'constraint' => 25,
+			'default' => ''),
+		'major' => array(
+			'type' => 'int',
+			'constraint' => 1),
+		'minor' => array(
+			'type' => 'int',
+			'constraint' => 2),
+		'update' => array(
+			'type' => 'int',
+			'constraint' => 4),
+		'date' => array(
+			'type' => 'bigint',
+			'constraint' => 20),
+		'launch' => array(
+			'type' => 'text'),
+		'changes' => array(
+			'type' => 'text'),
+	);
 }

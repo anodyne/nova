@@ -1,50 +1,56 @@
-<?php defined('SYSPATH') or die('No direct script access.');
+<?php
 /**
  * Form Values Model
  *
  * @package		Nova
  * @category	Models
  * @author		Anodyne Productions
- * @copyright	2010-11 Anodyne Productions
- * @since		2.0
+ * @copyright	2011 Anodyne Productions
+ * @version		3.0
  */
  
-class Model_Formvalue extends Jelly_Model {
+class Model_FormValue extends Orm\Model {
 	
-	/**
-	 * Initialize the model with Jelly_Meta data
-	 *
-	 * @return	void
-	 */
-	public static function initialize(Jelly_Meta $meta)
-	{
-		$meta->table('forms_values');
-		$meta->fields(array(
-			'id' => Jelly::field('primary', array(
-				'column' => 'value_id'
-			)),
-			'field' => Jelly::field('belongsto', array(
-				'column' => 'value_field',
-				'foreign' => 'formfield'
-			)),
-			'html_name' => Jelly::field('string', array(
-				'column' => 'value_html_name'
-			)),
-			'html_value' => Jelly::field('string', array(
-				'column' => 'value_html_value'
-			)),
-			'html_id' => Jelly::field('string', array(
-				'column' => 'value_html_id'
-			)),
-			'selected' => Jelly::field('string', array(
-				'column' => 'value_selected'
-			)),
-			'content' => Jelly::field('string', array(
-				'column' => 'value_content'
-			)),
-			'order' => Jelly::field('integer', array(
-				'column' => 'value_order'
-			)),
-		));
-	}
+	public static $_table_name = 'form_values';
+	
+	public static $_properties = array(
+		'id' => array(
+			'type' => 'int',
+			'constraint' => 10,
+			'auto_increment' => true),
+		'field_id' => array(
+			'type' => 'int',
+			'constraint' => 10),
+		'html_name' => array(
+			'type' => 'string',
+			'constraint' => 100,
+			'default' => ''),
+		'html_value' => array(
+			'type' => 'string',
+			'constraint' => 100,
+			'default' => ''),
+		'html_id' => array(
+			'type' => 'string',
+			'constraint' => 100,
+			'default' => ''),
+		'selected' => array(
+			'type' => 'string',
+			'constraint' => 50,
+			'default' => ''),
+		'content' => array(
+			'type' => 'text'),
+		'order' => array(
+			'type' => 'int',
+			'constraint' => 5),
+	);
+	
+	public static $_belongs_to = array(
+		'belong_field' => array(
+			'model_to' => 'Model_FormField',
+			'key_to' => 'id',
+			'key_from' => 'field_id',
+			'cascade_save' => false,
+			'cascade_delete' => false,
+		),
+	);
 }

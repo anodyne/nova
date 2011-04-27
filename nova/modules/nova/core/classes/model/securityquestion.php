@@ -1,31 +1,35 @@
-<?php defined('SYSPATH') or die('No direct script access.');
+<?php
 /**
  * Security Questions Model
  *
  * @package		Nova
  * @category	Models
  * @author		Anodyne Productions
- * @copyright	2010-11 Anodyne Productions
- * @since		2.0
+ * @copyright	2011 Anodyne Productions
+ * @version		3.0
  */
  
-class Model_Securityquestion extends Jelly_Model {
+class Model_SecurityQuestion extends Orm\Model {
+	
+	public static $_table_name = 'security_questions';
+	
+	public static $_properties = array(
+		'id' => array(
+			'type' => 'int',
+			'constraint' => 5,
+			'auto_increment' => true),
+		'value' => array(
+			'type' => 'text'),
+	);
 	
 	/**
-	 * Initialize the model with Jelly_Meta data
+	 * Get all the security questions.
 	 *
-	 * @return	void
+	 * @access	public
+	 * @return	object	an object of all the questions
 	 */
-	public static function initialize(Jelly_Meta $meta)
+	public static function get_questions()
 	{
-		$meta->table('security_questions');
-		$meta->fields(array(
-			'id' => Jelly::field('primary', array(
-				'column' => 'question_id'
-			)),
-			'value' => Jelly::field('text', array(
-				'column' => 'question_value'
-			)),
-		));
+		return static::find('all');
 	}
 }

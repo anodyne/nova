@@ -1,6 +1,6 @@
 <?php
 /**
- * Award Model
+ * Manifest Model
  *
  * @package		Nova
  * @category	Models
@@ -9,9 +9,9 @@
  * @version		3.0
  */
  
-class Model_Award extends Orm\Model {
+class Model_Manifest extends Orm\Model {
 	
-	public static $_table_name = 'awards';
+	public static $_table_name = 'manifests';
 	
 	public static $_properties = array(
 		'id' => array(
@@ -22,22 +22,30 @@ class Model_Award extends Orm\Model {
 			'type' => 'string',
 			'constraint' => 255,
 			'default' => ''),
-		'image' => array(
-			'type' => 'string',
-			'constraint' => 100,
-			'default' => ''),
 		'order' => array(
 			'type' => 'int',
 			'constraint' => 5),
 		'desc' => array(
 			'type' => 'text'),
-		'category' => array(
-			'type' => 'enum',
-			'constraint' => "'ic','ooc','both'",
-			'default' => 'ic'),
+		'header_content' => array(
+			'type' => 'text'),
 		'display' => array(
 			'type' => 'tinyint',
 			'constraint' => 1,
 			'default' => 1),
+		'default' => array(
+			'type' => 'tinyint',
+			'constraint' => 1,
+			'default' => 0),
+	);
+	
+	public static $_has_many = array(
+		'departments' => array(
+			'model_to' => 'Model_Department',
+			'key_to' => 'manifest_id',
+			'key_from' => 'id',
+			'cascade_save' => false,
+			'cascade_delete' => false,
+		),
 	);
 }

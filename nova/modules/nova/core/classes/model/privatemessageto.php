@@ -1,50 +1,49 @@
-<?php defined('SYSPATH') or die('No direct script access.');
+<?php
 /**
  * Private Messages To Model
  *
  * @package		Nova
  * @category	Models
  * @author		Anodyne Productions
- * @copyright	2010-11 Anodyne Productions
- * @since		2.0
+ * @copyright	2011 Anodyne Productions
+ * @version		3.0
  */
  
-class Model_Privatemessageto extends Jelly_Model {
+class Model_PrivateMessageTo extends Orm\Model {
 	
-	/**
-	 * Initialize the model with Jelly_Meta data
-	 *
-	 * @return	void
-	 */
-	public static function initialize(Jelly_Meta $meta)
-	{
-		$meta->table('private_messages_to');
-		$meta->fields(array(
-			'id' => Jelly::field('primary', array(
-				'column' => 'pmto_id'
-			)),
-			'message' => Jelly::field('belongsto', array(
-				'column' => 'pmto_message',
-				'foreign' => 'privatemessage'
-			)),
-			'user' => Jelly::field('belongsto', array(
-				'column' => 'pmto_recipient_user',
-				'foreign' => 'user'
-			)),
-			'character' => Jelly::field('belongsto', array(
-				'column' => 'pmto_recipient_character',
-				'foreign' => 'character'
-			)),
-			'display' => Jelly::field('enum', array(
-				'column' => 'pmto_display',
-				'choices' => array('y', 'n'),
-				'default' => 'y'
-			)),
-			'unread' => Jelly::field('enum', array(
-				'column' => 'pmto_unread',
-				'choices' => array('y', 'n'),
-				'default' => 'y'
-			)),
-		));
-	}
+	public static $_table_name = 'private_messages_to';
+	
+	public static $_properties = array(
+		'id' => array(
+			'type' => 'bigint',
+			'constraint' => 20,
+			'auto_increment' => true),
+		'message_id' => array(
+			'type' => 'bigint',
+			'constraint' => 20),
+		'user_id' => array(
+			'type' => 'int',
+			'constraint' => 8),
+		'character_id' => array(
+			'type' => 'int',
+			'constraint' => 8),
+		'unread' => array(
+			'type' => 'tinyint',
+			'constraint' => 1,
+			'default' => 1),
+		'display' => array(
+			'type' => 'tinyint',
+			'constraint' => 1,
+			'default' => 1),
+	);
+	
+	public static $_belongs_to = array(
+		'pm' => array(
+			'model_to' => 'Model_PrivateMessage',
+			'key_to' => 'id',
+			'key_from' => 'message_id',
+			'cascade_save' => false,
+			'cascade_delete' => false,
+		),
+	);
 }

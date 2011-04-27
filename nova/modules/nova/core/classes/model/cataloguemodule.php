@@ -1,54 +1,58 @@
-<?php defined('SYSPATH') or die('No direct script access.');
+<?php
 /**
  * Module Catalogue Model
  *
  * @package		Nova
  * @category	Models
  * @author		Anodyne Productions
- * @copyright	2010-11 Anodyne Productions
- * @since		2.0
+ * @copyright	2011 Anodyne Productions
+ * @version		3.0
  */
  
-class Model_Cataloguemodule extends Jelly_Model {
+class Model_CatalogueModule extends Orm\Model {
+	
+	public static $_table_name = 'catalogue_modules';
+	
+	public static $_properties = array(
+		'id' => array(
+			'type' => 'int',
+			'constraint' => 5,
+			'auto_increment' => true),
+		'name' => array(
+			'type' => 'string',
+			'constraint' => 255,
+			'default' => ''),
+		'short_name' => array(
+			'type' => 'string',
+			'constraint' => 50,
+			'default' => ''),
+		'location' => array(
+			'type' => 'string',
+			'constraint' => 255,
+			'default' => ''),
+		'desc' => array(
+			'type' => 'text'),
+		'protected' => array(
+			'type' => 'tinyint',
+			'constraint' => 1,
+			'default' => 0),
+		'status' => array(
+			'type' => 'enum',
+			'constraint' => "'active','inactive'",
+			'default' => 'active'),
+		'credits' => array(
+			'type' => 'text'),
+	);
 	
 	/**
-	 * Initialize the model with Jelly_Meta data
+	 * Get all the modules from the catalogue.
 	 *
-	 * @return	void
+	 * @access	public
+	 * @param	string	the status of modules
+	 * @return	object	an object with the results
 	 */
-	public static function initialize(Jelly_Meta $meta)
+	public static function get_all_entries($status = 'active')
 	{
-		$meta->table('catalogue_modules');
-		$meta->name_key('shortname');
-		$meta->fields(array(
-			'id' => Jelly::field('primary', array(
-				'column' => 'module_id'
-			)),
-			'name' => Jelly::field('string', array(
-				'column' => 'module_name'
-			)),
-			'shortname' => Jelly::field('string', array(
-				'column' => 'module_short_name'
-			)),
-			'location' => Jelly::field('string', array(
-				'column' => 'module_location',
-			)),
-			'desc' => Jelly::field('text', array(
-				'column' => 'module_desc',
-			)),
-			'protected' => Jelly::field('enum', array(
-				'column' => 'module_protected',
-				'choices' => array('y','n'),
-				'default' => 'n'
-			)),
-			'status' => Jelly::field('enum', array(
-				'column' => 'module_status',
-				'choices' => array('active','inactive'),
-				'default' => 'active'
-			)),
-			'credits' => Jelly::field('text', array(
-				'column' => 'module_credits'
-			)),
-		));
+		return static::find()->where('status', $status);
 	}
 }

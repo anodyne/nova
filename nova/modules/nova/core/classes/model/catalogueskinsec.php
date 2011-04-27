@@ -1,48 +1,99 @@
-<?php defined('SYSPATH') or die('No direct script access.');
+<?php
 /**
  * Skin Section Catalogue Model
  *
  * @package		Nova
  * @category	Models
  * @author		Anodyne Productions
- * @copyright	2010-11 Anodyne Productions
- * @since		2.0
+ * @copyright	2011 Anodyne Productions
+ * @version		3.0
  */
  
-class Model_Catalogueskinsec extends Jelly_Model {
+class Model_CatalogueSkinSec extends Orm\Model {
+	
+	public static $_table_name = 'catalogue_skinsecs';
+	
+	public static $_properties = array(
+		'id' => array(
+			'type' => 'int',
+			'constraint' => 10,
+			'auto_increment' => true),
+		'section' => array(
+			'type' => 'string',
+			'constraint' => 50,
+			'default' => ''),
+		'skin' => array(
+			'type' => 'string',
+			'constraint' => 100,
+			'default' => ''),
+		'preview' => array(
+			'type' => 'string',
+			'constraint' => 50,
+			'default' => ''),
+		'status' => array(
+			'type' => 'enum',
+			'constraint' => "'active','inactive','development'",
+			'default' => 'active'),
+		'default' => array(
+			'type' => 'tinyint',
+			'constraint' => 1,
+			'default' => 0),
+	);
+	
+	public static $_belongs_to = array(
+		'skins' => array(
+			'model_to' => 'Model_CatalogueSkin',
+			'key_to' => 'location',
+			'key_from' => 'skin',
+			'cascade_save' => false,
+			'cascade_delete' => false,
+		),
+	);
 	
 	/**
-	 * Initialize the model with Jelly_Meta data
+	 * Get the default skin section catalogue item.
 	 *
-	 * @return	void
+	 * @access	public
+	 * @param	string	the section to pull
+	 * @return	object	the catalogue object
 	 */
-	public static function initialize(Jelly_Meta $meta)
+	public static function get_default($section)
 	{
-		$meta->table('catalogue_skinsecs');
-		$meta->fields(array(
-			'id' => Jelly::field('primary', array(
-				'column' => 'skinsec_id'
-			)),
-			'section' => Jelly::field('string', array(
-				'column' => 'skinsec_section'
-			)),
-			'skin' => Jelly::field('belongsto', array(
-				'column' => 'skinsec_skin',
-				'foreign' => 'catalogueskin.location'
-			)),
-			'image' => Jelly::field('string', array(
-				'column' => 'skinsec_image_preview'
-			)),
-			'status' => Jelly::field('enum', array(
-				'column' => 'skinsec_status',
-				'choices' => array('active','inactive','development'),
-				'default' => 'active'
-			)),
-			'default' => Jelly::field('enum', array(
-				'column' => 'skinsec_default',
-				'choices' => array('y','n'),
-				'default' => 'n'
-			)),
+		return static::find('first', array(
+			'where' => array(
+				array('skinsec_default', 1),
+				array('skinsec_section', $section),
+			)
 		));
+	}
+	
+	/**
+	 * Create a catalogue item.
+	 *
+	 *     Model_CatalogueSkinSec::create_item($data);
+	 *
+	 * @access	public
+	 * @param	mixed	an array or object of data
+	 * @return	object	the newly created item
+	 */
+	public static function create_item($data)
+	{
+		$item = static::factory();
+		
+		foreach ($data as $key => $value)
+		{
+			if (is_array($data))
+			{
+				$item->{$key} = $data[$key];
+			}
+			else
+			{
+				$item->{$key} = $data->{$key};
+			}
+		}
+		
+		$item->save();
+		
+		return $item;
 	}
 }

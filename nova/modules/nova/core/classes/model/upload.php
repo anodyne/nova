@@ -1,50 +1,42 @@
-<?php defined('SYSPATH') or die('No direct script access.');
+<?php
 /**
  * Uploads Model
  *
  * @package		Nova
  * @category	Models
  * @author		Anodyne Productions
- * @copyright	2010-11 Anodyne Productions
- * @since		2.0
+ * @copyright	2011 Anodyne Productions
+ * @version		3.0
  */
  
-class Model_Upload extends Jelly_Model {
+class Model_Upload extends Orm\Model {
 	
-	/**
-	 * Initialize the model with Jelly_Meta data
-	 *
-	 * @return	void
-	 */
-	public static function initialize(Jelly_Meta $meta)
-	{
-		$meta->fields(array(
-			'id' => Jelly::field('primary', array(
-				'column' => 'upload_id'
-			)),
-			'filename' => Jelly::field('text', array(
-				'column' => 'upload_filename'
-			)),
-			'mime' => Jelly::field('string', array(
-				'column' => 'upload_mime_type'
-			)),
-			'resource' => Jelly::field('string', array(
-				'column' => 'upload_resource_type'
-			)),
-			'user' => Jelly::field('belongsto', array(
-				'column' => 'upload_user',
-				'foreign' => 'user'
-			)),
-			'ip' => Jelly::field('string', array(
-				'column' => 'upload_ip'
-			)),
-			'date' => Jelly::field('timestamp', array(
-				'column' => 'upload_date',
-				'auto_now_create' => true,
-				'auto_now_update' => false,
-				'null' => true,
-				'default' => date::now()
-			)),
-		));
-	}
+	public static $_table_name = 'uploads';
+	
+	public static $_properties = array(
+		'id' => array(
+			'type' => 'bigint',
+			'constraint' => 20,
+			'auto_increment' => true),
+		'filename' => array(
+			'type' => 'text'),
+		'mime_type' => array(
+			'type' => 'string',
+			'constraint' => 255,
+			'default' => ''),
+		'resource_type' => array(
+			'type' => 'string',
+			'constraint' => 100,
+			'default' => ''),
+		'user_id' => array(
+			'type' => 'int',
+			'constraint' => 8),
+		'ip_address' => array(
+			'type' => 'string',
+			'constraint' => 16,
+			'default' => ''),
+		'date' => array(
+			'type' => 'bigint',
+			'constraint' => 20),
+	);
 }

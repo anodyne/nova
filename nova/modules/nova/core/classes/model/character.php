@@ -1,116 +1,166 @@
-<?php defined('SYSPATH') or die('No direct script access.');
+<?php
 /**
  * Character Model
  *
  * @package		Nova
  * @category	Models
  * @author		Anodyne Productions
- * @copyright	2010-11 Anodyne Productions
- * @since		2.0
+ * @copyright	2011 Anodyne Productions
+ * @version		3.0
  */
  
-class Model_Character extends Jelly_Model {
+class Model_Character extends Orm\Model {
+	
+	public static $_table_name = 'characters';
+	
+	public static $_properties = array(
+		'id' => array(
+			'type' => 'int',
+			'constraint' => 8,
+			'auto_increment' => true),
+		'user_id' => array(
+			'type' => 'int',
+			'constraint' => 8),
+		'first_name' => array(
+			'type' => 'string',
+			'constraint' => 255,
+			'default' => ''),
+		'middle_name' => array(
+			'type' => 'string',
+			'constraint' => 255,
+			'default' => ''),
+		'last_name' => array(
+			'type' => 'string',
+			'constraint' => 255,
+			'default' => ''),
+		'suffix' => array(
+			'type' => 'string',
+			'constraint' => 50,
+			'default' => ''),
+		'status' => array(
+			'type' => 'enum',
+			'constraint' => "'active','inactive','pending','archived'",
+			'default' => 'pending'),
+		'activated' => array(
+			'type' => 'bigint',
+			'constraint' => 20),
+		'deactivated' => array(
+			'type' => 'bigint',
+			'constraint' => 20),
+		'rank_id' => array(
+			'type' => 'int',
+			'constraint' => 10,
+			'default' => 1),
+		'position1_id' => array(
+			'type' => 'int',
+			'constraint' => 10,
+			'default' => 1),
+		'position2_id' => array(
+			'type' => 'int',
+			'constraint' => 10),
+		'last_post' => array(
+			'type' => 'bigint',
+			'constraint' => 20),
+		'updated_at' => array(
+			'type' => 'bigint',
+			'constraint' => 20),
+	);
+	
+	public static $_belongs_to = array(
+		'user' => array(
+			'model_to' => 'Model_User',
+			'key_to' => 'id',
+			'key_from' => 'user_id',
+			'cascade_save' => false,
+			'cascade_delete' => false,
+		),
+	);
+	
+	public static $_has_many = array(
+		'logs' => array(
+			'model_to' => 'Model_PersonalLog',
+			'key_to' => 'character_id',
+			'key_from' => 'id',
+			'cascade_save' => false,
+			'cascade_delete' => false,
+		),
+		'news' => array(
+			'model_to' => 'Model_News',
+			'key_to' => 'character_id',
+			'key_from' => 'id',
+			'cascade_save' => false,
+			'cascade_delete' => false,
+		),
+	);
 	
 	/**
-	 * Initialize the model with Jelly_Meta data
+	 * Get all characters from the database.
 	 *
-	 * @return	void
+	 * @access	public
+	 * @param	string	the status of characters to pull back
+	 * @return	object	an object of characters
 	 */
-	public static function initialize(Jelly_Meta $meta)
+	public static function get_characters($scope = 'active')
 	{
-		$meta->fields(array(
-			'id' => Jelly::field('primary', array(
-				'column' => 'charid'
-			)),
-			'user' => Jelly::field('belongsto', array(
-				'column' => 'user',
-				'foreign' => 'user'
-			)),
-			'fname' => Jelly::field('string', array(
-				'column' => 'first_name',
-			)),
-			'mname' => Jelly::field('string', array(
-				'column' => 'middle_name',
-			)),
-			'lname' => Jelly::field('string', array(
-				'column' => 'last_name',
-			)),
-			'suffix' => Jelly::field('string', array(
-				'column' => 'suffix'
-			)),
-			'status' => Jelly::field('enum', array(
-				'column' => 'status',
-				'choices' => array('active','inactive','pending','archived'),
-				'default' => 'pending'
-			)),
-			'activate' => Jelly::field('timestamp', array(
-				'column' => 'date_activate',
-				'auto_now_create' => false,
-				'auto_now_update' => false,
-				'null' => true,
-				'default' => date::now()
-			)),
-			'deactivate' => Jelly::field('timestamp', array(
-				'column' => 'date_deactivate',
-				'auto_now_create' => false,
-				'auto_now_update' => false,
-				'null' => true,
-				'default' => date::now()
-			)),
-			'rank' => Jelly::field('belongsto', array(
-				'column' => 'rank',
-				'foreign' => 'rank'
-			)),
-			'position1' => Jelly::field('belongsto', array(
-				'column' => 'position_1',
-				'foreign' => 'position'
-			)),
-			'position2' => Jelly::field('belongsto', array(
-				'column' => 'position_2',
-				'foreign' => 'position'
-			)),
-			'last_post' => Jelly::field('timestamp', array(
-				'auto_now_create' => false,
-				'auto_now_update' => false,
-				'null' => true,
-				'default' => date::now()
-			)),
-			'last_update' => Jelly::field('timestamp', array(
-				'auto_now_create' => false,
-				'auto_now_update' => true,
-				'null' => true,
-				'default' => date::now()
-			))
-		));
+		switch ($scope)
+		{
+			case 'active':
+			default:
+				$result = static::find('all', array(
+					'where' => array('status', 'active')
+				));
+			break;
+			
+			case 'inactive':
+				$result = static::find('all', array(
+					'where' => array('status', 'inactive')
+				));
+			break;
+			
+			case 'pending':
+				$result = static::find('all', array(
+					'where' => array('status', 'pending')
+				));
+			break;
+			
+			case 'npc':
+				# TODO: is this right?
+				$result = static::find('all', array(
+					'where' => array(
+						array('user', 0),
+						array('status', 'active')
+					),
+				));
+			break;
+			
+			case '':
+				$result = static::find('all');
+			break;
+		}
+		
+		return $result;
 	}
 	
 	/**
-	 * Prints out the name of the character name
+	 * Create a character.
 	 *
-	 * @param	boolean	whether to print the rank
-	 * @param	boolean	whether to use the short rank name
-	 * @param	boolean	whether to show the middle name
-	 * @return 	string	the character name
+	 * @access	public
+	 * @param	array 	an array of data used for creation
+	 * @return	object	the created object
 	 */
-	public function print_name($rank = true, $shortrank = false, $mname = false)
+	public static function create_character(array $data)
 	{
-		$array = array(
-			($rank === true)
-				? ($shortrank === true) ? $this->rank->shortname : $this->rank->name
-				: false,
-			$this->fname,
-			($mname === true) ? $this->mname : false,
-			$this->lname,
-		);
+		$record = Model_Character::factory();
 		
-		foreach ($array as $key => $value)
+		foreach ($data as $key => $value)
 		{
-			if (empty($value))
-			{
-				unset($array[$key]);
-			}
+			$record->{$key} = $value;
 		}
 		
-		return implode(' ', $array);
+		$record->save();
+		
+		DBUtil::optimize_table('characters');
+		
+		return $record;
 	}
 }

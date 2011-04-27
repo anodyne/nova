@@ -1,59 +1,43 @@
-<?php defined('SYSPATH') or die('No direct script access.');
+<?php
 /**
  * Awards Queue Model
  *
  * @package		Nova
  * @category	Models
  * @author		Anodyne Productions
- * @copyright	2010-11 Anodyne Productions
- * @since		2.0
+ * @copyright	2011 Anodyne Productions
+ * @version		3.0
  */
  
-class Model_Awardqueue extends Jelly_Model {
+class Model_AwardQueue extends Orm\Model {
 	
-	/**
-	 * Initialize the model with Jelly_Meta data
-	 *
-	 * @return	void
-	 */
-	public static function initialize(Jelly_Meta $meta)
-	{
-		$meta->table('awards_queue');
-		$meta->fields(array(
-			'id' => Jelly::field('primary', array(
-				'column' => 'queue_id'
-			)),
-			'user' => Jelly::field('belongsto', array(
-				'column' => 'queue_receive_user',
-				'foreign' => 'user'
-			)),
-			'character' => Jelly::field('belongsto', array(
-				'column' => 'queue_receive_character',
-				'foreign' => 'character'
-			)),
-			'nominated' => Jelly::field('belongsto', array(
-				'column' => 'queue_nominate',
-				'foreign' => 'user'
-			)),
-			'award' => Jelly::field('belongsto', array(
-				'column' => 'queue_award',
-				'foreign' => 'award'
-			)),
-			'reason' => Jelly::field('text', array(
-				'column' => 'queue_reason'
-			)),
-			'status' => Jelly::field('enum', array(
-				'column' => 'queue_status',
-				'choices' => array('pending', 'accepted', 'rejected'),
-				'default' => 'pending'
-			)),
-			'date' => Jelly::field('timestamp', array(
-				'column' => 'queue_date',
-				'auto_now_create' => true,
-				'auto_now_update' => false,
-				'null' => true,
-				'default' => date::now()
-			)),
-		));
-	}
+	public static $_table_name = 'awards_queue';
+	
+	public static $_properties = array(
+		'id' => array(
+			'type' => 'int',
+			'constraint' => 8,
+			'auto_increment' => true),
+		'receive_character_id' => array(
+			'type' => 'int',
+			'constraint' => 8),
+		'receive_user_id' => array(
+			'type' => 'int',
+			'constraint' => 8),
+		'nominate_character_id' => array(
+			'type' => 'int',
+			'constraint' => 8),
+		'award_id' => array(
+			'type' => 'int',
+			'constraint' => 5),
+		'reason' => array(
+			'type' => 'text'),
+		'status' => array(
+			'type' => 'enum',
+			'constraint' => "'pending','accepted','rejected'",
+			'default' => 'pending'),
+		'date' => array(
+			'type' => 'bigint',
+			'constraint' => 20),
+	);
 }

@@ -1,75 +1,73 @@
-<?php defined('SYSPATH') or die('No direct script access.');
+<?php
 /**
  * Missions Model
  *
  * @package		Nova
  * @category	Models
  * @author		Anodyne Productions
- * @copyright	2010-11 Anodyne Productions
- * @since		2.0
+ * @copyright	2011 Anodyne Productions
+ * @version		3.0
  */
  
-class Model_Mission extends Jelly_Model {
+class Model_Mission extends Orm\Model {
 	
-	/**
-	 * Initialize the model with Jelly_Meta data
-	 *
-	 * @return	void
-	 */
-	public static function initialize(Jelly_Meta $meta)
-	{
-		$meta->fields(array(
-			'id' => Jelly::field('primary', array(
-				'column' => 'mission_id'
-			)),
-			'title' => Jelly::field('string', array(
-				'column' => 'mission_title'
-			)),
-			'images' => Jelly::field('text', array(
-				'column' => 'mission_images'
-			)),
-			'order' => Jelly::field('integer', array(
-				'column' => 'mission_order'
-			)),
-			'group' => Jelly::field('belongsto', array(
-				'column' => 'mission_group',
-				'foreign' => 'missiongroup'
-			)),
-			'status' => Jelly::field('enum', array(
-				'column' => 'mission_status',
-				'choices' => array('upcoming','current','completed'),
-				'default' => 'upcoming'
-			)),
-			'start' => Jelly::field('timestamp', array(
-				'column' => 'mission_start',
-				'auto_now_create' => false,
-				'auto_now_update' => false,
-				'null' => true
-			)),
-			'end' => Jelly::field('timestamp', array(
-				'column' => 'mission_end',
-				'auto_now_create' => false,
-				'auto_now_update' => false,
-				'null' => true
-			)),
-			'desc' => Jelly::field('text', array(
-				'column' => 'mission_desc'
-			)),
-			'summary' => Jelly::field('text', array(
-				'column' => 'mission_summary'
-			)),
-			'notes' => Jelly::field('text', array(
-				'column' => 'mission_notes'
-			)),
-			'notes_update' => Jelly::field('timestamp', array(
-				'column' => 'mission_notes_updated',
-				'auto_now_create' => false,
-				'auto_now_update' => false,
-				'null' => true
-			)),
-			'posts' => Jelly::field('hasmany', array(
-				'foreign' => 'posts.post_mission'
-			)),
-		));
-	}
+	public static $_table_name = 'missions';
+	
+	public static $_properties = array(
+		'id' => array(
+			'type' => 'int',
+			'constraint' => 8,
+			'auto_increment' => true),
+		'title' => array(
+			'type' => 'string',
+			'constraint' => 255,
+			'default' => ''),
+		'images' => array(
+			'type' => 'text'),
+		'order' => array(
+			'type' => 'int',
+			'constraint' => 5),
+		'group_id' => array(
+			'type' => 'int',
+			'constraint' => 5),
+		'status' => array(
+			'type' => 'enum',
+			'constraint' => "'upcoming','current','completed'",
+			'default' => 'upcoming'),
+		'start' => array(
+			'type' => 'bigint',
+			'constraint' => 20),
+		'end' => array(
+			'type' => 'bigint',
+			'constraint' => 20),
+		'desc' => array(
+			'type' => 'text'),
+		'summary' => array(
+			'type' => 'text'),
+		'notes' => array(
+			'type' => 'text'),
+		'notes_updated' => array(
+			'type' => 'bigint',
+			'constraint' => 20),
+	);
+	
+	public static $_belongs_to = array(
+		'group' => array(
+			'model_to' => 'Model_MissionGroup',
+			'key_to' => 'id',
+			'key_from' => 'group_id',
+			'cascade_save' => false,
+			'cascade_delete' => false,
+		),
+	);
+	
+	public static $_has_many = array(
+		'posts' => array(
+			'model_to' => 'Model_Post',
+			'key_to' => 'mission_id',
+			'key_from' => 'id',
+			'cascade_save' => false,
+			'cascade_delete' => false,
+		),
+	);
 }

@@ -1,47 +1,54 @@
-<?php defined('SYSPATH') or die('No direct script access.');
+<?php
 /**
  * Specs Model
  *
  * @package		Nova
  * @category	Models
  * @author		Anodyne Productions
- * @copyright	2010-11 Anodyne Productions
- * @since		2.0
+ * @copyright	2011 Anodyne Productions
+ * @version		3.0
  */
  
-class Model_Spec extends Jelly_Model {
+class Model_Spec extends Orm\Model {
 	
-	/**
-	 * Initialize the model with Jelly_Meta data
-	 *
-	 * @return	void
-	 */
-	public static function initialize(Jelly_Meta $meta)
-	{
-		$meta->fields(array(
-			'id' => Jelly::field('primary', array(
-				'column' => 'specs_id'
-			)),
-			'name' => Jelly::field('string', array(
-				'column' => 'specs_name'
-			)),
-			'order' => Jelly::field('integer', array(
-				'column' => 'specs_order'
-			)),
-			'display' => Jelly::field('enum', array(
-				'column' => 'specs_display',
-				'choices' => array('y','n'),
-				'default' => 'y'
-			)),
-			'images' => Jelly::field('text', array(
-				'column' => 'specs_images',
-			)),
-			'summary' => Jelly::field('text', array(
-				'column' => 'specs_summary',
-			)),
-			'touritems' => Jelly::field('hasmany', array(
-				'foreign' => 'tour.specitem'
-			)),
-		));
-	}
+	public static $_table_name = 'specs';
+	
+	public static $_properties = array(
+		'id' => array(
+			'type' => 'int',
+			'constraint' => 5,
+			'auto_increment' => true),
+		'name' => array(
+			'type' => 'string',
+			'constraint' => 255,
+			'default' => ''),
+		'order' => array(
+			'type' => 'int',
+			'constraint' => 5),
+		'display' => array(
+			'type' => 'tinyint',
+			'constraint' => 1,
+			'default' => 1),
+		'images' => array(
+			'type' => 'text'),
+		'summary' => array(
+			'type' => 'text'),
+	);
+	
+	public static $_has_many = array(
+		'tour' => array(
+			'model_to' => 'Model_Tour',
+			'key_to' => 'spec_id',
+			'key_from' => 'id',
+			'cascade_save' => false,
+			'cascade_delete' => false,
+		),
+		'decks' => array(
+			'model_to' => 'Model_TourDeck',
+			'key_to' => 'spec_id',
+			'key_from' => 'id',
+			'cascade_save' => false,
+			'cascade_delete' => false,
+		),
+	);
 }

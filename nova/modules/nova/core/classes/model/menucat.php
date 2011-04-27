@@ -1,6 +1,6 @@
 <?php
 /**
- * User Preferences Model
+ * Menu Category Model
  *
  * @package		Nova
  * @category	Models
@@ -9,24 +9,29 @@
  * @version		3.0
  */
  
-class Model_UserPref extends Orm\Model {
+class Model_MenuCat extends Orm\Model {
 	
-	public static $_table_name = 'user_prefs';
+	public static $_table_name = 'menu_categories';
 	
 	public static $_properties = array(
 		'id' => array(
 			'type' => 'int',
 			'constraint' => 5,
 			'auto_increment' => true),
-		'key' => array(
+		'order' => array(
+			'type' => 'int',
+			'constraint' => 5),
+		'category' => array(
 			'type' => 'string',
-			'constraint' => 100,
+			'constraint' => 20,
 			'default' => ''),
-		'label' => array(
+		'name' => array(
 			'type' => 'string',
 			'constraint' => 255,
 			'default' => ''),
-		'default' => array(
-			'type' => 'text'),
+		'type' => array(
+			'type' => 'enum',
+			'constraint' => "'sub','adminsub'",
+			'default' => 'sub'),
 	);
 }

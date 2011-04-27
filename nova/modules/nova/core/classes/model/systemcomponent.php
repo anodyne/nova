@@ -1,40 +1,34 @@
-<?php defined('SYSPATH') or die('No direct script access.');
+<?php
 /**
  * System Versions Model
  *
  * @package		Nova
  * @category	Models
  * @author		Anodyne Productions
- * @copyright	2010-11 Anodyne Productions
- * @since		2.0
+ * @copyright	2011 Anodyne Productions
+ * @version		3.0
  */
  
-class Model_Systemcomponent extends Jelly_Model {
+class Model_SystemComponent extends Orm\Model {
 	
-	/**
-	 * Initialize the model with Jelly_Meta data
-	 *
-	 * @return	void
-	 */
-	public static function initialize(Jelly_Meta $meta)
-	{
-		$meta->table('system_components');
-		$meta->fields(array(
-			'id' => Jelly::field('primary', array(
-				'column' => 'comp_id'
-			)),
-			'name' => Jelly::field('string', array(
-				'column' => 'comp_name'
-			)),
-			'version' => Jelly::field('string', array(
-				'column' => 'comp_version'
-			)),
-			'url' => Jelly::field('string', array(
-				'column' => 'comp_url'
-			)),
-			'desc' => Jelly::field('text', array(
-				'column' => 'comp_desc'
-			)),
-		));
-	}
+	public static $_table_name = 'system_components';
+	
+	public static $_properties = array(
+		'id' => array(
+			'type' => 'int',
+			'constraint' => 4,
+			'auto_increment' => true),
+		'name' => array(
+			'type' => 'string',
+			'constraint' => 255,
+			'default' => ''),
+		'version' => array(
+			'type' => 'string',
+			'constraint' => 25,
+			'default' => ''),
+		'url' => array(
+			'type' => 'text'),
+		'desc' => array(
+			'type' => 'text'),
+	);
 }

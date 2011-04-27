@@ -1,36 +1,40 @@
-<?php defined('SYSPATH') or die('No direct script access.');
+<?php
 /**
  * News Categories Model
  *
  * @package		Nova
  * @category	Models
  * @author		Anodyne Productions
- * @copyright	2010-11 Anodyne Productions
- * @since		2.0
+ * @copyright	2011 Anodyne Productions
+ * @version		3.0
  */
  
-class Model_Newscategory extends Jelly_Model {
+class Model_NewsCategory extends Orm\Model {
 	
-	/**
-	 * Initialize the model with Jelly_Meta data
-	 *
-	 * @return	void
-	 */
-	public static function initialize(Jelly_Meta $meta)
-	{
-		$meta->table('news_categories');
-		$meta->fields(array(
-			'id' => Jelly::field('primary', array(
-				'column' => 'newscat_id'
-			)),
-			'name' => Jelly::field('string', array(
-				'column' => 'newscat_name'
-			)),
-			'display' => Jelly::field('enum', array(
-				'column' => 'newscat_display',
-				'choices' => array('y', 'n'),
-				'default' => 'y'
-			)),
-		));
-	}
+	public static $_table_name = 'news_categories';
+	
+	public static $_properties = array(
+		'id' => array(
+			'type' => 'int',
+			'constraint' => 5,
+			'auto_increment' => true),
+		'name' => array(
+			'type' => 'string',
+			'constraint' => 255,
+			'default' => ''),
+		'display' => array(
+			'type' => 'tinyint',
+			'constraint' => 1,
+			'default' => 1),
+	);
+	
+	public static $_has_many = array(
+		'newsitems' => array(
+			'model_to' => 'Model_News',
+			'key_to' => 'category_id',
+			'key_from' => 'id',
+			'cascade_save' => false,
+			'cascade_delete' => false,
+		),
+	);
 }

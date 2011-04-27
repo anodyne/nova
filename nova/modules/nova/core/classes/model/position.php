@@ -1,54 +1,108 @@
-<?php defined('SYSPATH') or die('No direct script access.');
+<?php
 /**
  * Position Model
  *
  * @package		Nova
  * @category	Models
  * @author		Anodyne Productions
- * @copyright	2010-11 Anodyne Productions
- * @since		2.0
+ * @copyright	2011 Anodyne Productions
+ * @version		3.0
  */
  
-class Model_Position extends Jelly_Model {
+class Model_Position extends Orm\Model {
+	
+	public static $_table_name = 'positions_';
+	
+	public static $_properties = array(
+		'id' => array(
+			'type' => 'int',
+			'constraint' => 10,
+			'auto_increment' => true),
+		'name' => array(
+			'type' => 'string',
+			'constraint' => 255,
+			'default' => ''),
+		'desc' => array(
+			'type' => 'text'),
+		'dept_id' => array(
+			'type' => 'int',
+			'constraint' => 10),
+		'order' => array(
+			'type' => 'int',
+			'constraint' => 5),
+		'open' => array(
+			'type' => 'int',
+			'constraint' => 5),
+		'display' => array(
+			'type' => 'tinyint',
+			'constraint' => 1,
+			'default' => 1),
+		'type' => array(
+			'type' => 'enum',
+			'constraint' => "'senior','officer','enlisted','other'",
+			'default' => 'officer'),
+	);
+	
+	public static $_belongs_to = array(
+		'dept' => array(
+			'model_to' => 'Model_Department',
+			'key_to' => 'id',
+			'key_from' => 'dept_id',
+			'cascade_save' => false,
+			'cascade_delete' => false,
+		),
+	);
 	
 	/**
-	 * Initialize the model with Jelly_Meta data
+	 * Get positions based on criteria passed to the method.
 	 *
+	 * @access	public
+	 * @param	string	the scope of the positions to pull (all, open)
+	 * @param	int		the department to pull (works for all scopes)
+	 * @param	bool	whether to show displayed positions or not (null for both)
+	 * @return	object	an object with the results
+	 */
+	public static function get_positions($scope = 'all', $dept = null, $display = true)
+	{
+		$query = static::find();
+		
+		if ( ! empty($display))
+		{
+			$query->where('display', (int) $display);
+		}
+		
+		switch ($scope)
+		{
+			case 'open':
+				$query->where('open', '>', 0);
+			break;
+		}
+		
+		if ( ! empty($dept) and is_numeric($dept))
+		{
+			$query->where('dept_id', $dept);
+		}
+		
+		// we should always be using the dept and position order to order the results
+		$query->order_by('dept_id', 'asc');
+		$query->order_by('order', 'asc');
+		
+		return $query->get();
+	}
+
+	/**
+	 * The init function is necessary here since the name of the positions
+	 * table is dynamic. PHP won't allow creating an object property that's
+	 * dynamic, so we need this in order to change the table name once the
+	 * class is loaded.
+	 *
+	 * @access	public
 	 * @return	void
 	 */
-	public static function initialize(Jelly_Meta $meta)
+	public static function init()
 	{
-		$meta->table('positions_'.Kohana::config('nova.genre'));
-		$meta->fields(array(
-			'id' => Jelly::field('primary', array(
-				'column' => 'pos_id'
-			)),
-			'name' => Jelly::field('string', array(
-				'column' => 'pos_name'
-			)),
-			'desc' => Jelly::field('text', array(
-				'column' => 'pos_desc',
-			)),
-			'dept' => Jelly::field('belongsto', array(
-				'column' => 'pos_dept',
-				'foreign' => 'department'
-			)),
-			'order' => Jelly::field('integer', array(
-				'column' => 'pos_order',
-			)),
-			'open' => Jelly::field('integer', array(
-				'column' => 'pos_open',
-			)),
-			'display' => Jelly::field('enum', array(
-				'column' => 'pos_display',
-				'choices' => array('y','n'),
-				'default' => 'y'
-			)),
-			'type' => Jelly::field('enum', array(
-				'column' => 'pos_type',
-				'choices' => array('senior','officer','enlisted','other'),
-				'default' => 'officer'
-			))
-		));
+		static::$_table_name = static::$_table_name.Config::get('nova.genre');
 	}
 }
+
+Model_Position::init();

@@ -1,37 +1,44 @@
-<?php defined('SYSPATH') or die('No direct script access.');
+<?php
 /**
  * Tour Decks Model
  *
  * @package		Nova
  * @category	Models
  * @author		Anodyne Productions
- * @copyright	2010-11 Anodyne Productions
- * @since		2.0
+ * @copyright	2011 Anodyne Productions
+ * @version		3.0
  */
  
-class Model_Tourdeck extends Jelly_Model {
+class Model_TourDeck extends Orm\Model {
 	
-	/**
-	 * Initialize the model with Jelly_Meta data
-	 *
-	 * @return	void
-	 */
-	public static function initialize(Jelly_Meta $meta)
-	{
-		$meta->table('tour_decks');
-		$meta->fields(array(
-			'id' => Jelly::field('primary', array(
-				'column' => 'deck_id'
-			)),
-			'name' => Jelly::field('string', array(
-				'column' => 'deck_name'
-			)),
-			'order' => Jelly::field('integer', array(
-				'column' => 'deck_order'
-			)),
-			'content' => Jelly::field('text', array(
-				'column' => 'deck_content',
-			)),
-		));
-	}
+	public static $_table_name = 'tour_decks';
+	
+	public static $_properties = array(
+		'id' => array(
+			'type' => 'int',
+			'constraint' => 10,
+			'auto_increment' => true),
+		'name' => array(
+			'type' => 'string',
+			'constraint' => 255,
+			'default' => ''),
+		'order' => array(
+			'type' => 'int',
+			'constraint' => 5),
+		'content' => array(
+			'type' => 'text'),
+		'spec_id' => array(
+			'type' => 'int',
+			'constraint' => 5),
+	);
+	
+	public static $_belongs_to = array(
+		'spec' => array(
+			'model_to' => 'Model_Spec',
+			'key_to' => 'id',
+			'key_from' => 'spec_id',
+			'cascade_save' => false,
+			'cascade_delete' => false,
+		),
+	);
 }

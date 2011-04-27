@@ -1,81 +1,93 @@
-<?php defined('SYSPATH') or die('No direct script access.');
+<?php
 /**
  * Form Fields Model
  *
  * @package		Nova
  * @category	Models
  * @author		Anodyne Productions
- * @copyright	2010-11 Anodyne Productions
- * @since		2.0
+ * @copyright	2011 Anodyne Productions
+ * @version		3.0
  */
  
-class Model_Formfield extends Jelly_Model {
+class Model_FormField extends Orm\Model {
+	
+	public static $_table_name = 'form_fields';
+	
+	public static $_properties = array(
+		'id' => array(
+			'type' => 'int',
+			'constraint' => 10,
+			'auto_increment' => true),
+		'form_key' => array(
+			'type' => 'string',
+			'constraint' => 20,
+			'default' => ''),
+		'section_id' => array(
+			'type' => 'int',
+			'constraint' => 10),
+		'type' => array(
+			'type' => 'string',
+			'constraint' => 50,
+			'default' => 'text'),
+		'html_name' => array(
+			'type' => 'string',
+			'constraint' => 100,
+			'default' => ''),
+		'html_id' => array(
+			'type' => 'string',
+			'constraint' => 100,
+			'default' => ''),
+		'html_class' => array(
+			'type' => 'text'),
+		'html_rows' => array(
+			'type' => 'int',
+			'constraint' => 3,
+			'default' => 5),
+		'selected' => array(
+			'type' => 'string',
+			'constraint' => 50,
+			'default' => ''),
+		'value' => array(
+			'type' => 'string',
+			'constraint' => 255,
+			'default' => ''),
+		'label' => array(
+			'type' => 'string',
+			'constraint' => 255,
+			'default' => ''),
+		'placeholder' => array(
+			'type' => 'TEXT'),
+		'order' => array(
+			'type' => 'int',
+			'constraint' => 5),
+		'display' => array(
+			'type' => 'tinyint',
+			'constraint' => 1,
+			'default' => 1),
+		'updated_at' => array(
+			'type' => 'bigint',
+			'constraint' => 20),
+	);
+	
+	public static $_has_many = array(
+		'values' => array(
+			'model_to' => 'Model_FormValue',
+			'key_to' => 'field_id',
+			'key_from' => 'id',
+			'cascade_save' => false,
+			'cascade_delete' => false,
+		),
+	);
 	
 	/**
-	 * Initialize the model with Jelly_Meta data
+	 * Get the fields for a specific form.
 	 *
-	 * @return	void
+	 * @access	public
+	 * @param	string	the form key to use
+	 * @return	object	the form fields object
 	 */
-	public static function initialize(Jelly_Meta $meta)
+	public static function get_fields($key)
 	{
-		$meta->table('forms_fields');
-		$meta->fields(array(
-			'id' => Jelly::field('primary', array(
-				'column' => 'field_id'
-			)),
-			'form' => Jelly::field('belongsto', array(
-				'column' => 'field_form',
-				'foreign' => 'form.key'
-			)),
-			'section' => Jelly::field('belongsto', array(
-				'column' => 'field_section',
-				'foreign' => 'formsection'
-			)),
-			'type' => Jelly::field('string', array(
-				'column' => 'field_type'
-			)),
-			'html_name' => Jelly::field('string', array(
-				'column' => 'field_html_name'
-			)),
-			'html_id' => Jelly::field('string', array(
-				'column' => 'field_html_id'
-			)),
-			'html_class' => Jelly::field('text', array(
-				'column' => 'field_html_class'
-			)),
-			'html_rows' => Jelly::field('integer', array(
-				'column' => 'field_html_rows'
-			)),
-			'selected' => Jelly::field('string', array(
-				'column' => 'field_selected'
-			)),
-			'value' => Jelly::field('string', array(
-				'column' => 'field_value'
-			)),
-			'label' => Jelly::field('string', array(
-				'column' => 'field_label'
-			)),
-			'placeholder' => Jelly::field('text', array(
-				'column' => 'field_placeholder'
-			)),
-			'order' => Jelly::field('integer', array(
-				'column' => 'field_order'
-			)),
-			'display' => Jelly::field('enum', array(
-				'column' => 'field_display',
-				'choices' => array('y','n'),
-				'default' => 'y'
-			)),
-			'last_update' => Jelly::field('timestamp', array(
-				'column' => 'field_last_update',
-				'auto_now_create' => false,
-				'auto_now_update' => true,
-				'null' => true,
-				'default' => date::now()
-			)),
-			'values' => Jelly::field('hasmany', array(
-				'foreign' => 'formvalue.field'
-			)),
-		));
+		return static::find()->where('form_key', $key)->get();
 	}
 }

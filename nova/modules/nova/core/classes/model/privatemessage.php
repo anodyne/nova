@@ -1,57 +1,51 @@
-<?php defined('SYSPATH') or die('No direct script access.');
+<?php
 /**
  * Private Messages Model
  *
  * @package		Nova
  * @category	Models
  * @author		Anodyne Productions
- * @copyright	2010-11 Anodyne Productions
- * @since		2.0
+ * @copyright	2011 Anodyne Productions
+ * @version		3.0
  */
  
-class Model_Privatemessage extends Jelly_Model {
+class Model_PrivateMessage extends Orm\Model {
 	
-	/**
-	 * Initialize the model with Jelly_Meta data
-	 *
-	 * @return	void
-	 */
-	public static function initialize(Jelly_Meta $meta)
-	{
-		$meta->table('private_messages');
-		$meta->fields(array(
-			'id' => Jelly::field('primary', array(
-				'column' => 'privmsgs_id'
-			)),
-			'user' => Jelly::field('belongsto', array(
-				'column' => 'privmsgs_author_user',
-				'foreign' => 'user'
-			)),
-			'character' => Jelly::field('belongsto', array(
-				'column' => 'privmsgs_author_character',
-				'foreign' => 'character'
-			)),
-			'date' => Jelly::field('timestamp', array(
-				'column' => 'privmsgs_date',
-				'auto_now_create' => true,
-				'auto_now_update' => false,
-				'null' => true,
-				'default' => date::now()
-			)),
-			'subject' => Jelly::field('string', array(
-				'column' => 'privmsgs_subject'
-			)),
-			'content' => Jelly::field('text', array(
-				'column' => 'privmsgs_content'
-			)),
-			'display' => Jelly::field('enum', array(
-				'column' => 'privmsgs_author_display',
-				'choices' => array('y', 'n'),
-				'default' => 'y'
-			)),
-			'to' => Jelly::field('hasmany', array(
-				'foreign' => 'privatemessageto.message'
-			)),
-		));
-	}
+	public static $_table_name = 'private_messages';
+	
+	public static $_properties = array(
+		'id' => array(
+			'type' => 'bigint',
+			'constraint' => 20,
+			'auto_increment' => true),
+		'user_id' => array(
+			'type' => 'int',
+			'constraint' => 8),
+		'character_id' => array(
+			'type' => 'int',
+			'constraint' => 8),
+		'date' => array(
+			'type' => 'bigint',
+			'constraint' => 20),
+		'subject' => array(
+			'type' => 'string',
+			'constraint' => 255,
+			'default' => ''),
+		'content' => array(
+			'type' => 'text'),
+		'author_display' => array(
+			'type' => 'tinyint',
+			'constraint' => 1,
+			'default' => 1),
+	);
+	
+	public static $_has_many = array(
+		'messages' => array(
+			'model_to' => 'Model_PrivateMessageTo',
+			'key_to' => 'message_id',
+			'key_from' => 'id',
+			'cascade_save' => false,
+			'cascade_delete' => false,
+		),
+	);
 }

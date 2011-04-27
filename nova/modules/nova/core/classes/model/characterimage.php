@@ -1,55 +1,40 @@
-<?php defined('SYSPATH') or die('No direct script access.');
+<?php
 /**
  * Character Images Model
  *
  * @package		Nova
  * @category	Models
  * @author		Anodyne Productions
- * @copyright	2010-11 Anodyne Productions
- * @since		2.0
+ * @copyright	2011 Anodyne Productions
+ * @version		3.0
  */
  
-class Model_Characterimage extends Jelly_Model {
+class Model_CharacterImage extends Orm\Model {
 	
-	/**
-	 * Initialize the model with Jelly_Meta data
-	 *
-	 * @return	void
-	 */
-	public static function initialize(Jelly_Meta $meta)
-	{
-		$meta->table('characters_images');
-		$meta->fields(array(
-			'id' => Jelly::field('primary', array(
-				'column' => 'charimageid'
-			)),
-			'user' => Jelly::field('belongsto', array(
-				'column' => 'user',
-				'foreign' => 'user'
-			)),
-			'character' => Jelly::field('belongsto', array(
-				'column' => 'character',
-				'foreign' => 'character'
-			)),
-			'image' => Jelly::field('string', array(
-				'column' => 'image'
-			)),
-			'primary' => Jelly::field('enum', array(
-				'column' => 'primary_image',
-				'choices' => array('y', 'n'),
-				'default' => 'n'
-			)),
-			'created_by' => Jelly::field('belongsto', array(
-				'column' => 'created_by',
-				'foreign' => 'user'
-			)),
-			'created_at' => Jelly::field('timestamp', array(
-				'column' => 'created_at',
-				'auto_now_create' => true,
-				'auto_now_update' => false,
-				'null' => true,
-				'default' => date::now()
-			)),
-		));
-	}
+	public static $_table_name = 'characters_images';
+	
+	public static $_properties = array(
+		'id' => array(
+			'type' => 'bigint',
+			'constraint' => 20,
+			'auto_increment' => true),
+		'user_id' => array(
+			'type' => 'int',
+			'constraint' => 8),
+		'character_id' => array(
+			'type' => 'int',
+			'constraint' => 8),
+		'image' => array(
+			'type' => 'text'),
+		'primary_image' => array(
+			'type' => 'tinyint',
+			'constraint' => 1,
+			'default' => 0),
+		'created_by' => array(
+			'type' => 'int',
+			'constraint' => 8),
+		'created_at' => array(
+			'type' => 'bigint',
+			'constraint' => 20),
+	);
 }

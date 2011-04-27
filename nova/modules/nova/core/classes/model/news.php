@@ -1,71 +1,99 @@
-<?php defined('SYSPATH') or die('No direct script access.');
+<?php
 /**
  * News Model
  *
  * @package		Nova
  * @category	Models
  * @author		Anodyne Productions
- * @copyright	2010-11 Anodyne Productions
- * @since		2.0
+ * @copyright	2011 Anodyne Productions
+ * @version		3.0
  */
  
-class Model_News extends Jelly_Model {
+class Model_News extends Orm\Model {
+	
+	public static $_table_name = 'news';
+	
+	public static $_properties = array(
+		'id' => array(
+			'type' => 'int',
+			'constraint' => 8,
+			'auto_increment' => true),
+		'title' => array(
+			'type' => 'string',
+			'constraint' => 255,
+			'default' => ''),
+		'user_id' => array(
+			'type' => 'int',
+			'constraint' => 8),
+		'character_id' => array(
+			'type' => 'int',
+			'constraint' => 8),
+		'category_id' => array(
+			'type' => 'int',
+			'constraint' => 5),
+		'date' => array(
+			'type' => 'bigint',
+			'constraint' => 20),
+		'content' => array(
+			'type' => 'text'),
+		'status' => array(
+			'type' => 'enum',
+			'constraint' => "'activated','saved','pending'",
+			'default' => 'activated'),
+		'private' => array(
+			'type' => 'tinyint',
+			'constraint' => 1,
+			'default' => 0),
+		'tags' => array(
+			'type' => 'text'),
+		'updated_at' => array(
+			'type' => 'bigint',
+			'constraint' => 20,
+			'default' => 0),
+	);
+	
+	public static $_belongs_to = array(
+		'category' => array(
+			'model_to' => 'Model_NewsCategory',
+			'key_to' => 'id',
+			'key_from' => 'category_id',
+			'cascade_save' => false,
+			'cascade_delete' => false,
+		),
+		'character' => array(
+			'model_to' => 'Model_Character',
+			'key_to' => 'id',
+			'key_from' => 'character_id',
+			'cascade_save' => false,
+			'cascade_delete' => false,
+		),
+		'user' => array(
+			'model_to' => 'Model_User',
+			'key_to' => 'id',
+			'key_from' => 'user_id',
+			'cascade_save' => false,
+			'cascade_delete' => false,
+		),
+	);
 	
 	/**
-	 * Initialize the model with Jelly_Meta data
+	 * Get all the comments for a news item.
 	 *
-	 * @return	void
+	 *     $news = Model_News::find(1);
+	 *     $comments = $news->comments();
+	 *
+	 * @access	public
+	 * @param	string	the status of items to retrieve
+	 * @return	object	an object with all the comments
 	 */
-	public static function initialize(Jelly_Meta $meta)
+	public function comments($status = 'activated')
 	{
-		$meta->table('news');
-		$meta->fields(array(
-			'id' => Jelly::field('primary', array(
-				'column' => 'news_id'
-			)),
-			'title' => Jelly::field('string', array(
-				'column' => 'news_title'
-			)),
-			'author_user' => Jelly::field('belongsto', array(
-				'column' => 'news_author_user',
-				'foreign' => 'user'
-			)),
-			'author_character' => Jelly::field('belongsto', array(
-				'column' => 'news_author_character',
-				'foreign' => 'character'
-			)),
-			'category' => Jelly::field('hasone', array(
-				'column' => 'news_cat',
-				'foreign' => 'newscategory.newscat_id'
-			)),
-			'date' => Jelly::field('timestamp', array(
-				'column' => 'news_date',
-				'auto_now_create' => false,
-				'auto_now_update' => false,
-				'null' => true,
-				'default' => date::now()
-			)),
-			'content' => Jelly::field('text', array(
-				'column' => 'news_content'
-			)),
-			'status' => Jelly::field('enum', array(
-				'column' => 'news_status',
-				'choices' => array('activated', 'saved', 'pending')
-			)),
-			'private' => Jelly::field('enum', array(
-				'column' => 'news_private',
-				'choices' => array('y', 'n')
-			)),
-			'tags' => Jelly::field('text', array(
-				'column' => 'news_tags'
-			)),
-			'last_update' => Jelly::field('timestamp', array(
-				'column' => 'news_last_update',
-				'auto_now_create' => false,
-				'auto_now_update' => true,
-				'null' => true,
-				'default' => date::now()
-			)),
+		return static::find('all', array(
+			'where' => array(
+				array('type', 'news'),
+				array('status', $status),
+				array('item_id', $this->id)
+			),
 		));
 	}
 }

@@ -1,79 +1,87 @@
-<?php defined('SYSPATH') or die('No direct script access.');
+<?php
 /**
  * Menu Model
  *
  * @package		Nova
  * @category	Models
  * @author		Anodyne Productions
- * @copyright	2010-11 Anodyne Productions
- * @since		2.0
+ * @copyright	2011 Anodyne Productions
+ * @version		3.0
  */
  
-class Model_Menu extends Jelly_Model {
+class Model_Menu extends Orm\Model {
+	
+	public static $_table_name = 'menu_items';
+	
+	public static $_properties = array(
+		'id' => array(
+			'type' => 'int',
+			'constraint' => 8,
+			'auto_increment' => true),
+		'name' => array(
+			'type' => 'string',
+			'constraint' => 255,
+			'default' => ''),
+		'group' => array(
+			'type' => 'int',
+			'constraint' => 4),
+		'order' => array(
+			'type' => 'int',
+			'constraint' => 5),
+		'url' => array(
+			'type' => 'text'),
+		'url_target' => array(
+			'type' => 'enum',
+			'constraint' => "'onsite','offsite'",
+			'default' => 'onsite'),
+		'needs_login' => array(
+			'type' => 'enum',
+			'constraint' => "'y','n','none'",
+			'default' => 'none'),
+		'use_access' => array(
+			'type' => 'tinyint',
+			'constraint' => 1,
+			'default' => 0),
+		'access' => array(
+			'type' => 'string',
+			'constraint' => 255,
+			'default' => ''),
+		'access_level' => array(
+			'type' => 'int',
+			'constraint' => 4,
+			'default' => '0'),
+		'type' => array(
+			'type' => 'enum',
+			'constraint' => "'main','sub','adminsub'",
+			'default' => 'main'),
+		'category' => array(
+			'type' => 'string',
+			'constraint' => 20,
+			'default' => ''),
+		'display' => array(
+			'type' => 'tinyint',
+			'constraint' => 1,
+			'default' => 1),
+		'sim_type' => array(
+			'type' => 'int',
+			'constraint' => 5),
+	);
 	
 	/**
-	 * Initialize the model with Jelly_Meta data
+	 * Get a user from the database based on something other than their ID.
 	 *
-	 * @return	void
+	 * @access	public
+	 * @param	string	the column to use
+	 * @param	mixed	the value to use
+	 * @return	object	a user object
 	 */
-	public static function initialize(Jelly_Meta $meta)
+	public static function get_menu_item($column, $value)
 	{
-		$meta->table('menu_items');
-		$meta->fields(array(
-			'id' => Jelly::field('primary', array(
-				'column' => 'menu_id'
-			)),
-			'name' => Jelly::field('string', array(
-				'column' => 'menu_name'
-			)),
-			'group' => Jelly::field('integer', array(
-				'column' => 'menu_group'
-			)),
-			'order' => Jelly::field('integer', array(
-				'column' => 'menu_order'
-			)),
-			'link' => Jelly::field('text', array(
-				'column' => 'menu_link'
-			)),
-			'linktype' => Jelly::field('enum', array(
-				'column' => 'menu_link_type',
-				'choices' => array('onsite','offsite'),
-				'default' => 'onsite'
-			)),
-			'login' => Jelly::field('enum', array(
-				'column' => 'menu_need_login',
-				'choices' => array('y','n','none'),
-				'default' => 'none'
-			)),
-			'useaccess' => Jelly::field('enum', array(
-				'column' => 'menu_use_access',
-				'choices' => array('y','n'),
-				'default' => 'n'
-			)),
-			'access' => Jelly::field('string', array(
-				'column' => 'menu_access'
-			)),
-			'level' => Jelly::field('integer', array(
-				'column' => 'menu_access_level'
-			)),
-			'type' => Jelly::field('enum', array(
-				'column' => 'menu_type',
-				'choices' => array('main','sub','adminsub'),
-				'default' => 'main'
-			)),
-			'cat' => Jelly::field('belongsto', array(
-				'column' => 'menu_cat',
-				'foreign' => 'menu_categories.menucat_menu_cat'
-			)),
-			'display' => Jelly::field('enum', array(
-				'column' => 'menu_display',
-				'choices' => array('y','n'),
-				'default' => 'y'
-			)),
-			'simtype' => Jelly::field('belongsto', array(
-				'column' => 'menu_sim_type',
-				'foreign' => 'simtype'
-			)),
-		));
+		if (in_array($column, static::$_properties))
+		{
+			return static::find()->where($column, $value)->get_one();
+		}
+		
+		return false;
 	}
 }

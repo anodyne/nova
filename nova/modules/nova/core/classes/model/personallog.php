@@ -1,66 +1,84 @@
-<?php defined('SYSPATH') or die('No direct script access.');
+<?php
 /**
  * Personal Logs Model
  *
  * @package		Nova
  * @category	Models
  * @author		Anodyne Productions
- * @copyright	2010-11 Anodyne Productions
- * @since		2.0
+ * @copyright	2011 Anodyne Productions
+ * @version		3.0
  */
  
-class Model_Personallog extends Jelly_Model {
+class Model_PersonalLog extends Orm\Model {
+	
+	public static $_table_name = 'personal_logs';
+	
+	public static $_properties = array(
+		'id' => array(
+			'type' => 'int',
+			'constraint' => 5,
+			'auto_increment' => true),
+		'title' => array(
+			'type' => 'string',
+			'constraint' => 255,
+			'default' => ''),
+		'user_id' => array(
+			'type' => 'int',
+			'constraint' => 8),
+		'character_id' => array(
+			'type' => 'int',
+			'constraint' => 8),
+		'content' => array(
+			'type' => 'text'),
+		'date' => array(
+			'type' => 'bigint',
+			'constraint' => 20),
+		'status' => array(
+			'type' => 'enum',
+			'constraint' => "'activated','saved','pending'",
+			'default' => 'activated'),
+		'tags' => array(
+			'type' => 'text'),
+		'updated_at' => array(
+			'type' => 'bigint',
+			'constraint' => 20),
+	);
+	
+	public static $_belongs_to = array(
+		'character' => array(
+			'model_to' => 'Model_Character',
+			'key_to' => 'id',
+			'key_from' => 'character_id',
+			'cascade_save' => false,
+			'cascade_delete' => false,
+		),
+		'user' => array(
+			'model_to' => 'Model_User',
+			'key_to' => 'id',
+			'key_from' => 'user_id',
+			'cascade_save' => false,
+			'cascade_delete' => false,
+		),
+	);
 	
 	/**
-	 * Initialize the model with Jelly_Meta data
+	 * Get all the comments for a personal log.
 	 *
-	 * @return	void
+	 *     $log = Model_PersonalLog::find(1);
+	 *     $comments = $log->comments();
+	 *
+	 * @access	public
+	 * @param	string	the status of items to retrieve
+	 * @return	object	an object with all the comments
 	 */
-	public static function initialize(Jelly_Meta $meta)
+	public function comments($status = 'activated')
 	{
-		$meta->table('personal_logs');
-		$meta->fields(array(
-			'id' => Jelly::field('primary', array(
-				'column' => 'log_id'
-			)),
-			'title' => Jelly::field('string', array(
-				'column' => 'log_title'
-			)),
-			'author_user' => Jelly::field('belongsto', array(
-				'column' => 'log_author_user',
-				'foreign' => 'user'
-			)),
-			'author_character' => Jelly::field('belongsto', array(
-				'column' => 'log_author_character',
-				'foreign' => 'character'
-			)),
-			'date' => Jelly::field('timestamp', array(
-				'column' => 'log_date',
-				'auto_now_create' => false,
-				'auto_now_update' => false,
-				'null' => true,
-				'default' => date::now()
-			)),
-			'content' => Jelly::field('text', array(
-				'column' => 'log_content'
-			)),
-			'status' => Jelly::field('enum', array(
-				'column' => 'log_status',
-				'choices' => array('activated', 'saved', 'pending')
-			)),
-			'tags' => Jelly::field('text', array(
-				'column' => 'log_tags'
-			)),
-			'last_update' => Jelly::field('timestamp', array(
-				'column' => 'log_last_update',
-				'auto_now_create' => false,
-				'auto_now_update' => true,
-				'null' => true,
-				'default' => date::now()
-			)),
-			'comments' => Jelly::field('hasmany', array(
-				'foreign' => 'personallogcomment.lcomment_log'
-			))
+		return static::find('all', array(
+			'where' => array(
+				array('type', 'log'),
+				array('status', $status),
+				array('item_id', $this->id)
+			),
 		));
 	}
 }

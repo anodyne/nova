@@ -1,48 +1,61 @@
-<?php defined('SYSPATH') or die('No direct script access.');
+<?php
 /**
  * Widgets Catalogue Model
  *
  * @package		Nova
  * @category	Models
  * @author		Anodyne Productions
- * @copyright	2010-11 Anodyne Productions
- * @since		2.0
+ * @copyright	2011 Anodyne Productions
+ * @version		3.0
  */
  
-class Model_Cataloguewidget extends Jelly_Model {
+class Model_CatalogueWidget extends Orm\Model {
+	
+	public static $_table_name = 'catalogue_widgets';
+	
+	public static $_properties = array(
+		'id' => array(
+			'type' => 'int',
+			'constraint' => 5,
+			'auto_increment' => true),
+		'name' => array(
+			'type' => 'string',
+			'constraint' => 255,
+			'default' => ''),
+		'location' => array(
+			'type' => 'string',
+			'constraint' => 255,
+			'default' => ''),
+		'page' => array(
+			'type' => 'string',
+			'constraint' => 100,
+			'default' => ''),
+		'zone' => array(
+			'type' => 'int',
+			'constraint' => 3),
+		'status' => array(
+			'type' => 'enum',
+			'constraint' => "'active','inactive','development'",
+			'default' => 'active'),
+		'credits' => array(
+			'type' => 'text'),
+	);
 	
 	/**
-	 * Initialize the model with Jelly_Meta data
+	 * Get all items from the catalogue.
 	 *
-	 * @return	void
+	 * @access	public
+	 * @param	string	the status to pull
+	 * @return	object	an object of results
 	 */
-	public static function initialize(Jelly_Meta $meta)
+	public static function get_all_items($status = 'active')
 	{
-		$meta->table('catalogue_widgets');
-		$meta->fields(array(
-			'id' => Jelly::field('primary', array(
-				'column' => 'widget_id'
-			)),
-			'name' => Jelly::field('string', array(
-				'column' => 'widget_name'
-			)),
-			'location' => Jelly::field('string', array(
-				'column' => 'widget_location'
-			)),
-			'page' => Jelly::field('string', array(
-				'column' => 'widget_page'
-			)),
-			'zone' => Jelly::field('integer', array(
-				'column' => 'widget_zone'
-			)),
-			'status' => Jelly::field('enum', array(
-				'column' => 'widget_status',
-				'choices' => array('active', 'inactive', 'development'),
-				'default' => 'active'
-			)),
-			'credits' => Jelly::field('text', array(
-				'column' => 'widget_credits'
-			)),
-		));
+		$status_where = ( ! empty($status)) ? array('status', $status) : array();
+		
+		$result = static::find()
+			->where($status_where)
+			->get();
+			
+		return $result;
 	}
 }

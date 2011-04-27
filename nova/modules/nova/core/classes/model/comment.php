@@ -1,56 +1,44 @@
-<?php defined('SYSPATH') or die('No direct script access.');
+<?php
 /**
  * Comments Model
  *
  * @package		Nova
  * @category	Models
  * @author		Anodyne Productions
- * @copyright	2010-11 Anodyne Productions
- * @since		2.0
+ * @copyright	2011 Anodyne Productions
+ * @version		3.0
  */
  
-class Model_Comment extends Jelly_Model {
+class Model_Comment extends Orm\Model {
 	
-	/**
-	 * Initialize the model with Jelly_Meta data
-	 *
-	 * @return	void
-	 */
-	public static function initialize(Jelly_Meta $meta)
-	{
-		$meta->fields(array(
-			'id' => Jelly::field('primary', array(
-				'column' => 'comment_id'
-			)),
-			'author_user' => Jelly::field('hasone', array(
-				'column' => 'comment_author_user',
-				'foreign' => 'user'
-			)),
-			'author_character' => Jelly::field('hasone', array(
-				'column' => 'comment_author_character',
-				'foreign' => 'character'
-			)),
-			'type' => Jelly::field('string', array(
-				'column' => 'comment_type',
-			)),
-			'item' => Jelly::field('integer', array(
-				'column' => 'comment_item_id',
-			)),
-			'content' => Jelly::field('text', array(
-				'column' => 'comment_content'
-			)),
-			'date' => Jelly::field('timestamp', array(
-				'column' => 'comment_date',
-				'auto_now_create' => true,
-				'auto_now_update' => false,
-				'null' => true,
-				'default' => date::now()
-			)),
-			'status' => Jelly::field('enum', array(
-				'column' => 'comment_status',
-				'choices' => array('activated', 'pending'),
-				'default' => 'activated'
-			)),
-		));
-	}
+	public static $_table_name = 'comments';
+	
+	public static $_properties = array(
+		'id' => array(
+			'type' => 'int',
+			'constraint' => 10,
+			'auto_increment' => true),
+		'user_id' => array(
+			'type' => 'int',
+			'constraint' => 8),
+		'character_id' => array(
+			'type' => 'int',
+			'constraint' => 8),
+		'type' => array(
+			'type' => 'string',
+			'constraint' => 100,
+			'default' => ''),
+		'item_id' => array(
+			'type' => 'int',
+			'constraint' => 8),
+		'content' => array(
+			'type' => 'text'),
+		'status' => array(
+			'type' => 'enum',
+			'constraint' => "'activated','pending'",
+			'default' => 'activated'),
+		'date' => array(
+			'type' => 'bigint',
+			'constraint' => 20),
+	);
 }
