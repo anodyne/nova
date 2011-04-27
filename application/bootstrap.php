@@ -104,6 +104,7 @@ Kohana::modules(array(
 	'i18n'			=> MODPATH.'third_party/i18n',
 	'cache'			=> MODPATH.'kohana/cache',
 	'email'			=> MODPATH.'third_party/email',
+	'api'			=> MODPATH.'nova/api',
 	));
 
 /**
