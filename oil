@@ -1,0 +1,48 @@
+<?php
+/**
+ * Set all the paths
+ */
+$application	= 'application';
+$modules		= 'nova';
+$system			= 'nova/core';
+$extensions 	= $application.'/extensions';
+
+/**
+ * Set error reporting and display errors settings.  You will want to change these when in production.
+ */
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
+/**
+ * Website docroot
+ */
+define('DOCROOT', realpath(dirname(__FILE__)).DIRECTORY_SEPARATOR);
+
+// Define the absolute paths for configured directories
+define('APPPATH', realpath(DOCROOT.$application).DIRECTORY_SEPARATOR);
+define('MODPATH', realpath(DOCROOT.$modules).DIRECTORY_SEPARATOR);
+define('SYSPATH', realpath(DOCROOT.$system).DIRECTORY_SEPARATOR);
+define('EXTPATH', realpath(DOCROOT.$extensions).DIRECTORY_SEPARATOR);
+
+// Define the names of the configured directories
+define('APPFOLDER', $application);
+define('MODFOLDER', $modules);
+define('SYSFOLDER', $system);
+define('EXTFOLDER', $extensions);
+
+define('EXT', '.php');
+
+// Clean up the configuration vars
+unset($application, $modules, $system);
+
+// Boot the app
+require_once APPPATH.'bootstrap.php';
+
+$module_list = array_merge(Kohana::modules(), array(MODPATH.'modules/oil'));
+
+Kohana::modules($module_list);
+
+// Fire up the command line interfact
+Command::init($_SERVER['argv']);
+
+echo PHP_EOL;
