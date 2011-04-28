@@ -13,7 +13,7 @@ $application = 'application';
  *
  * @see  http://kohanaframework.org/guide/about.install#modules
  */
-$modules = 'nova/modules';
+$modules = 'nova';
 
 /**
  * The directory in which the Kohana resources are located. The system
@@ -21,7 +21,7 @@ $modules = 'nova/modules';
  *
  * @see  http://kohanaframework.org/guide/about.install#system
  */
-$system = 'nova/system';
+$system = 'nova/core';
 
 /**
  * The directory in which the application modules are located.

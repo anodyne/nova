@@ -88,23 +88,37 @@ Kohana::$config->attach(new Config_File);
  * if anything is added to the modules array, we need to verify everything
  * is working properly with modules
  */
-Kohana::modules(array(
+/*Kohana::modules(array(
 	'override'		=> EXTPATH.'override',
 	'thresher'		=> MODPATH.'nova/thresher',
 	'veritas'		=> MODPATH.'nova/veritas',
-	//'install'		=> MODPATH.'nova/install',
-	//'update'		=> MODPATH.'nova/update',
 	'setup'			=> MODPATH.'nova/setup',
 	'assets'		=> MODPATH.'assets',
 	'dbforge'		=> MODPATH.'nova/dbforge',
 	'nova'			=> MODPATH.'nova/core',
 	'database'		=> MODPATH.'kohana/database',
-	'jelly'			=> MODPATH.'third_party/jelly',
+	'fusion'		=> MODPATH.'third_party/fusion',
 	'htmlpurifier'	=> MODPATH.'third_party/purifier',
 	'i18n'			=> MODPATH.'third_party/i18n',
 	'cache'			=> MODPATH.'kohana/cache',
 	'email'			=> MODPATH.'third_party/email',
 	'api'			=> MODPATH.'nova/api',
+	));
+*/	
+Kohana::modules(array(
+	'override'		=> EXTPATH.'override',
+	'thresher'		=> MODPATH.'app/modules/thresher',
+	'veritas'		=> MODPATH.'app/modules/veritas',
+	'setup'			=> MODPATH.'app/modules/setup',
+	'assets'		=> MODPATH.'modules/assets',
+	'nova'			=> MODPATH.'app',
+	'database'		=> MODPATH.'core/modules/database',
+	'fusion'		=> MODPATH.'modules/fusion',
+	'htmlpurifier'	=> MODPATH.'modules/purifier',
+	'i18n'			=> MODPATH.'modules/i18n',
+	'cache'			=> MODPATH.'core/modules/cache',
+	'email'			=> MODPATH.'modules/email',
+	'api'			=> MODPATH.'app/modules/api',
 	));
 
 /**
