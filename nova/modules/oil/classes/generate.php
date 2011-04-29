@@ -1,45 +1,125 @@
 <?php
-/**
- * Oil is a Kohana port of Fuel's Oil utility.
- *
- * @package		Oil
- * @category	Classes
- * @author		Fuel Development Team
- * @copyright	2010 - 2011 Fuel Development Team
- * @version		1.0
- */
 
-class Generate {
+class Generate extends Oil_Generate {
 	
-	public static $create_folders = array();
-	public static $create_files = array();
-
-	public static $scaffolding = false;
-
-	private static $_default_constraints = array(
-		'varchar' => 255,
-		'char' => 255,
-		'int' => 11
-	);
-
-	public static function controller($args, $build = true)
+	/**
+	 * Nova adds the ability to Oil to generate extensions. This will create a
+	 * directory in the APPPATH/extensions directory with the name provided.
+	 * Included in this process is the creation of the directory structure as
+	 * well as a blank controller and view file as well as the extension init
+	 * file.
+	 *
+	 *     php oil generate extension NAME
+	 *
+	 * @access	public
+	 * @uses	Generate::extension_controller
+	 * @uses	Generate::extension_views
+	 * @return	void
+	 */
+	public static function extension($args)
 	{
 		$args = self::_clear_args($args);
 		$singular = strtolower(array_shift($args));
 		$actions = $args;
 		
-		$filename = trim(str_replace(array('_', '-'), DS, $singular), DS);
+		// make sure the name is right
+		$name = Inflector::underscore(trim($singular));
+		
+		// build the structure
+		if ( ! is_dir(EXTPATH.$name))
+		{
+			mkdir(EXTPATH.$name, 0777);
+			
+			if (is_dir(EXTPATH.$name))
+			{
+				Cli::write('Extension directory created.');
+				
+				// create the classes directory
+				mkdir(EXTPATH.$name.'/classes', 0777);
+				mkdir(EXTPATH.$name.'/classes/controller', 0777);
+				
+				if (is_dir(EXTPATH.$name.'/classes') and is_dir(EXTPATH.$name.'/classes/controller'))
+				{
+					Cli::write('Class directory created.');
+				}
+				
+				// create the views directory
+				mkdir(EXTPATH.$name.'/views', 0777);
+				mkdir(EXTPATH.$name.'/views/components', 0777);
+				mkdir(EXTPATH.$name.'/views/components/pages', 0777);
+				mkdir(EXTPATH.$name.'/views/components/js', 0777);
+				mkdir(EXTPATH.$name.'/views/design', 0777);
+				mkdir(EXTPATH.$name.'/views/design/images', 0777);
+				
+				if (is_dir(EXTPATH.$name.'/views') and is_dir(EXTPATH.$name.'/views/components') and is_dir(EXTPATH.$name.'/views/components/pages')
+						and is_dir(EXTPATH.$name.'/views/components/js') and is_dir(EXTPATH.$name.'/views/design')
+						and is_dir(EXTPATH.$name.'/views/design/images'))
+				{
+					Cli::write('Views directory created.');
+				}
+				
+				// create the extension controller and views
+				static::_extension_controller(array($name, 'index'));
+				
+				// create the init file
+				$filename = EXTPATH.$name.'/init.php';
+				$handle = fopen($filename, 'w');
+				$contents = "<?php
 
-		$filepath = APPPATH.'classes/controller/'.$filename.'.php';
+// the init file is used for creating extension-specific routes and other work as the extensioni is loaded by Kohana
+";
+				fwrite($handle, $contents);
+				fclose($handle);
+				
+				if (file_exists($filename))
+				{
+					Cli::write('Extension init file created.');
+				}
+			}
+			else
+			{
+				Cli::write('Could not create the '.$name.' directory. You will need to create your extension file structure manually.', 'red');
+			}
+		}
+		else
+		{
+			Cli::write('There is already an extensions directory named '.$name.', please choose another name.', 'red');
+		}
+	}
+	
+	/**
+	 * Nova adds the ability to create extension controllers to Oil. This method
+	 * cannot be called directly from the command line.
+	 *
+	 * @access	protected
+	 * @return	void
+	 */
+	protected static function _extension_controller($args, $build = true)
+	{
+		$args = self::_clear_args($args);
+		$singular = strtolower(array_shift($args));
+		$actions = $args;
+		
+		// store the original name so we don't accidentally create multiple extensions
+		$singular_original = $singular;
+		
+		// pull out all the underscores and camel-case the controller name
+		$singular = str_replace('_', ' ', $singular);
+		$singular = Inflector::camelize($singular);
+		$singular = ucfirst($singular);
+		
+		$filename = trim(str_replace(array('_', '-'), DIRECTORY_SEPARATOR, strtolower($singular)), DIRECTORY_SEPARATOR);
 
+		$filepath = EXTPATH.$singular_original.'/classes/controller/'.$filename.'.php';
+		
 		// Uppercase each part of the class name and remove hyphens
-		$class_name = Inflector::classify($plural);
-
+		$class_name = Inflector::classify($singular);
+		
 		// Stick "blogs" to the start of the array
-		array_unshift($args, $singular);
+		array_unshift($args, $singular_original);
 
 		// Create views folder and each view file
-		static::views($args, false);
+		static::_extension_views($args, false);
 
 		$actions or $actions = array('index');
 
@@ -49,8 +129,7 @@ class Generate {
 			$action_str .= '
 	public function action_'.$action.'()
 	{
-		$this->template->title = \'' . Inflector::humanize($singular) .' &raquo; ' . Inflector::humanize($action) . '\';
-		$this->template->content = View::factory(\''.$singular .'/' . $action .'\');
+		// Your code goes here...
 	}'.PHP_EOL;
 		}
 
@@ -58,81 +137,42 @@ class Generate {
 		$controller = <<<CONTROLLER
 <?php
 
-class Controller_{$class_name} extends Controller_Template {
+class Controller_{$class_name} extends Controller_Nova_Base {
 {$action_str}
 }
 
-/* End of file $filename.php */
+// End of file $filename.php
 CONTROLLER;
 
 		// Write controller
 		static::create($filepath, $controller, 'controller');
 		$build and static::build();
 	}
-
-	public static function model($args, $build = true)
-	{
-		$singular = strtolower(array_shift($args));
-
-		if (empty($args))
-		{
-			throw new Kohana_Exception('No fields have been provided, the model will not know how to build the table.');
-		}
-
-		$plural = Inflector::pluralize($singular);
-		
-		$filename = trim(str_replace(array('_', '-'), DS, $singular), DS);
-
-		$filepath = APPPATH . 'classes/model/'.$filename.'.php';
-
-		// Uppercase each part of the class name and remove hyphens
-		$class_name = Inflector::classify($plural);
-
-		$contents = '';
-		if ( ! Cli::option('no-timestamps', false))
-		{
-			$contents = <<<CONTENTS
-
-	protected static \$_observers = array(
-		'Fusion_Observer_CreatedAt' => array('before_insert'),
-		'Fusion_Observer_UpdatedAt' => array('before_save'),
-	);
-
-CONTENTS;
-		}
-
-		$model = <<<MODEL
-<?php
-
-class Model_{$class_name} extends Model {{$contents}}
-
-/* End of file $filename.php */
-MODEL;
-
-		// Build the model
-		static::create($filepath, $model, 'model');
-
-		if ( ! empty($args))
-		{
-			array_unshift($args, 'create_'.$plural);
-			static::migration($args, false);
-		}
-
-		else
-		{
-			throw new Kohana_Exception('Not enough arguments to create this migration.');
-		}
-
-		$build and static::build();
-	}
-
-	public static function views($args, $build = true)
+	
+	/**
+	 * Nova adds the ability to create extension views from Oil. This method
+	 * cannot be called directly from the command line.
+	 *
+	 * @access	protected
+	 * @return	void
+	 */
+	protected static function _extension_views($args, $build = true)
 	{
 		$args = self::_clear_args($args);
 		$controller = strtolower(array_shift($args));
 		$controller_title = Inflector::humanize($controller);
+		
+		// store the original controller name
+		$controller_original = $controller;
+		
+		// pull out all the underscores and camel-case the controller name
+		$controller = str_replace('_', ' ', $controller);
+		$controller = ucfirst(Inflector::camelize($controller));
+		
+		// store a lower-cased version of the controller name
+		$controller_lower = strtolower($controller);
 
-		$view_dir = APPPATH.'views/'.trim(str_replace(array('_', '-'), DS, $controller), DS).DS;
+		$view_dir = EXTPATH.$controller_original.'/views/components/pages/'.trim(str_replace(array('_', '-'), DIRECTORY_SEPARATOR, $controller_lower), DIRECTORY_SEPARATOR).DIRECTORY_SEPARATOR;
 
 		$args or $args = array('index');
 
@@ -157,345 +197,5 @@ VIEW;
 		}
 
 		$build and static::build();
-	}
-
-	public static function migration($args, $build = true)
-	{
-		// Get the migration name
-		$migration_name = strtolower(str_replace('-', '_', array_shift($args)));
-
-		// Check if a migration with this name already exists
-		if (count($duplicates = glob(APPPATH."migrations/*_{$migration_name}*")) > 0)
-		{
-			// Don't override a file
-			if (Cli::option('s', Cli::option('skip')) === true)
-			{
-				return;
-			}
-
-			// Tear up the file path and name to get the last duplicate
-			$file_name = pathinfo(end($duplicates), PATHINFO_FILENAME);
-
-			// Override the (most recent) migration with the same name by using its number
-			if (Cli::option('f', Cli::option('force')) === true)
-			{
-				list($number) = explode('_', $file_name);
-			}
-
-			// Name clashes but this is done by hand. Assume they know what they're doing and just increment the file
-			elseif (static::$scaffolding === false)
-			{
-				// Increment the name of this
-				$migration_name = Str::increment(substr($file_name, 4), 2);
-			}
-		}
-
-		// See if the action exists
-		$methods = get_class_methods('Generate_Migration_Actions');
-
-		// For empty migrations that dont have actions
-		$migration = array('', '');
-
-		// Loop through the actions and act on a matching action appropriately
-		foreach ($methods as $method_name)
-		{
-			// If the miration name starts with the name of the action method
-			if (substr($migration_name, 0, strlen($method_name)) === $method_name)
-			{
-				/**
-				 *	Create an array of the subject the migration is about
-				 *
-				 *	- In a migration named 'create_users' the subject is 'users' since thats what we want to create
-				 *		So it would be the second object in the array
-				 *			array(false, 'users')
-				 *
-				 *	- In a migration named 'add_name_to_users' the object is 'name' and the subject is 'users'.
-				 *		So again 'users' would be the second object, but 'name' would be the first
-				 *			array('name', 'users')
-				 *
-				 */
-				$subjects = array(false, false);
-				$matches = explode('_', str_replace($method_name . '_', '', $migration_name));
-
-				// create_{table}
-				if (count($matches) == 1)
-				{
-					$subjects = array(false, $matches[0]);
-				}
-
-				// add_{field}_to_{table}
-				else if (count($matches) == 3 && $matches[1] == 'to')
-				{
-					$subjects = array($matches[0], $matches[2]);
-				}
-
-				// create_{table} (with underscores in table name)
-				else if (count($matches) !== 0)
-				{
-					$subjects = array(false, implode('_', $matches));
-				}
-
-				// There is no subject here so just carry on with a normal empty migration
-				else
-				{
-					break;
-				}
-
-				// We always pass in fields to a migration, so lets sort them out here.
-				$fields = array();
-				foreach ($args as $field)
-				{
-					$field_array = array();
-
-					// Each paramater for a field is seperated by the : character
-					$parts = explode(":", $field);
-
-					// We must have the 'name:type' if nothing else!
-					if (count($parts) >= 2)
-					{
-						$field_array['name'] = array_shift($parts);
-						foreach ($parts as $part_i => $part)
-						{
-							preg_match('/([a-z0-9_-]+)(?:\[([a-z0-9]+)\])?/i', $part, $part_matches);
-							array_shift($part_matches);
-
-							if (count($part_matches) < 1)
-							{
-								// Move onto the next part, something is wrong here...
-								continue;
-							}
-
-							$option_name = ''; // This is the name of the option to be passed to the action in a field
-							$option = $part_matches;
-
-							// The first option always has to be the field type
-							if ($part_i == 0)
-							{
-								$option_name = 'type';
-								$type = $option[0];
-								if ($type === 'string')
-								{
-									$type = 'varchar';
-								}
-								else if ($type === 'integer')
-								{
-									$type = 'int';
-								}
-
-								if ( ! in_array($type, array('text', 'blob', 'datetime', 'date', 'timestamp', 'time')))
-								{
-									if ( ! isset($option[1]) || $option[1] == NULL)
-									{
-										if (isset(self::$_default_constraints[$type]))
-										{
-											$field_array['constraint'] = self::$_default_constraints[$type];
-										}
-									}
-									else
-									{
-										$field_array['constraint'] = (int) $option[1];
-									}
-								}
-								$option = $type;
-							}
-							else
-							{
-								// This allows you to put any number of :option or :option[val] into your field and these will...
-								// ... always be passed through to the action making it really easy to add extra options for a field
-								$option_name = array_shift($option);
-								if (count($option) > 0)
-								{
-									$option = $option[0];
-								}
-								else
-								{
-									$option = true;
-								}
-							}
-
-							$field_array[$option_name] = $option;
-
-						}
-						$fields[] = $field_array;
-					}
-					else
-					{
-						// Invalid field passed in
-						continue;
-					}
-				}
-
-				// Call the magic action which returns an array($up, $down) for the migration
-				$migration = call_user_func("Generate_Migration_Actions::{$method_name}", $subjects, $fields);
-			}
-		}
-
-		// Build the migration
-		list($up, $down)=$migration;
-
-		$migration_name = ucfirst(strtolower($migration_name));
-
-		$migration = <<<MIGRATION
-<?php
-
-class {$migration_name} {
-
-	public function up()
-	{
-{$up}
-	}
-
-	public function down()
-	{
-{$down}
-	}
-}
-MIGRATION;
-
-		$number = isset($number) ? $number : static::_find_migration_number();
-		$filepath = APPPATH . 'migrations/'.$number.'_' . strtolower($migration_name) . '.php';
-
-		static::create($filepath, $migration, 'migration');
-
-		$build and static::build();
-	}
-
-	public static function help()
-	{
-		$output = <<<HELP
-Usage:
-  php oil [g|generate] [controller|model|migration|scaffold|views] [options]
-
-Runtime options:
-  -f, [--force]    # Overwrite files that already exist
-  -s, [--skip]     # Skip files that already exist
-
-Description:
-  The 'oil' command can be used to generate MVC components, database migrations
-  and run specific tasks.
-
-Examples:
-  php oil generate controller <controllername> [<action1> |<action2> |..]
-  php oil g model <modelname> [<fieldname1>:<type1> |<fieldname2>:<type2> |..]
-  php oil g migration <migrationname> [<fieldname1>:<type1> |<fieldname2>:<type2> |..]
-  php oil g scaffold <modelname> [<fieldname1>:<type1> |<fieldname2>:<type2> |..]
-  php oil g scaffold/template_subfolder <modelname> [<fieldname1>:<type1> |<fieldname2>:<type2> |..]
-
-Note that the next two lines are equivalent:
-  php oil g scaffold <modelname> ...
-  php oil g scaffold/default <modelname> ...
-
-Documentation:
-  http://fuelphp.com/docs/packages/oil/generate.html
-HELP;
-
-		Cli::write($output);
-	}
-
-	public static function create($filepath, $contents, $type = 'file')
-	{
-		$directory = dirname($filepath);
-		is_dir($directory) or static::$create_folders[] = $directory;
-
-		// Check if a file exists then work out how to react
-		if (file_exists($filepath))
-		{
-			// Don't override a file
-			if (Cli::option('s', Cli::option('skip')) === true)
-			{
-				// Don't bother trying to make this, carry on camping
-				return;
-			}
-
-			// If we aren't skipping it, tell em to use -f
-			if (Cli::option('f', Cli::option('force')) === null)
-			{
-				throw new Kohana_Exception($filepath .' already exists, use -f or --force to override.');
-				exit;
-			}
-		}
-
-		static::$create_files[] = array(
-			'path' => $filepath,
-			'contents' => $contents,
-			'type' => $type
-		);
-	}
-
-
-	public static function build()
-	{
-		foreach (static::$create_folders as $folder)
-		{
-			is_dir($folder) or mkdir($folder, 0755, TRUE);
-		}
-
-		foreach (static::$create_files as $file)
-		{
-			Cli::write("\tCreating {$file['type']}: {$file['path']}", 'green');
-
-			if ( ! $handle = @fopen($file['path'], 'w+'))
-			{
-				throw new Kohana_Exception('Cannot open file: '. $file['path']);
-			}
-
-			$result = @fwrite($handle, $file['contents']);
-
-			// Write $somecontent to our opened file.
-			if ($result === FALSE)
-			{
-				throw new Kohana_Exception('Cannot write to file: '. $file['path']);
-			}
-
-			@fclose($handle);
-
-			@chmod($file['path'], 0666);
-		}
-
-		return $result;
-	}
-
-	// Helper methods
-
-	private static function _find_migration_number()
-	{
-		$glob = glob(APPPATH .'migrations/*_*.php');
-		list($last) = explode('_', basename(end($glob)));
-
-		return str_pad($last + 1, 3, '0', STR_PAD_LEFT);
-	}
-
-	private static function _update_current_version($version)
-	{
-		if (file_exists($app_path = APPPATH.'config'.DS.'migrations.php'))
-		{
-			$contents = file_get_contents($app_path);
-		}
-		elseif (file_exists($core_path = COREPATH.'config'.DS.'migrations.php'))
-		{
-			$contents = file_get_contents($core_path);
-		}
-		else
-		{
-			throw new Kohana_Exception('Config file core/config/migrations.php');
-			exit;
-		}
-
-		$contents = preg_replace("#('version'[ \t]+=>)[ \t]+([0-9]+),#i", "$1 $version,", $contents);
-
-		static::create($app_path, $contents, 'config');
-	}
-
-	private static function _clear_args($actions = array())
-	{
- 		foreach ($actions as $key => $action)
-		{
-			if (substr($action, 0, 1) === '-')
-			{
-				unset($actions[$key]);
-			}
-		}
-
-		return $actions;
 	}
 }

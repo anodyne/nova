@@ -1,21 +1,16 @@
 <?php
+/**
+ * Oil is a Kohana port of Fuel's Oil utility.
+ *
+ * @package		Oil
+ * @category	Classes
+ * @author		Fuel Development Team
+ * @copyright	2010 - 2011 Fuel Development Team
+ * @version		1.0
+ */
 
-class Command extends Oil_Command {
+class Oil_Command {
 	
-	/**
-	 * Nova adds the ability to generate extensions from the command line and
-	 * print out the Kohana, Nova, Thresher and Mako version numbers.
-	 *
-	 * In addition, for the time being, Nova removes the ability to generate
-	 * scaffolding, migrations and views and removes the ability to run unit
-	 * tests as well as pull packages from Github. Some of these functions may
-	 * be added to the Oil port in the future.
-	 *
-	 *     php oil generate extension NAME
-	 *
-	 * @access	public
-	 * @return	void
-	 */
 	public static function init($args)
 	{
 		// Remove flag options from the main argument list
@@ -59,18 +54,15 @@ class Command extends Oil_Command {
 					{
 						case 'controller':
 						case 'model':
-						//case 'views':
-						//case 'migration':
-						case 'extension':
+						case 'views':
+						case 'migration':
 							call_user_func('Generate::'.$action, array_slice($args, 3));
 						break;
-						
-						/*
+
 						case 'scaffold':
 							call_user_func('Scaffold::generate', array_slice($args, 3), $subfolder);
 						break;
-						*/
-						
+
 						default:
 							Generate::help();
 					}
@@ -95,8 +87,7 @@ class Command extends Oil_Command {
 
 					call_user_func('Refine::run', $task, array_slice($args, 3));
 				break;
-				
-				/*
+
 				case 'p':
 				case 'package':
 
@@ -140,15 +131,7 @@ class Command extends Oil_Command {
 					passthru($command);
 
 				break;
-				*/
-				
-				case 'version':
-					Cli::write('Kohana: ' . Kohana::VERSION . ' (' . Kohana::CODENAME . ')');
-					Cli::write('Nova: '.Kohana::config('nova.app_version_full'));
-					Cli::write('Thresher: '.Kohana::config('nova.wiki_version_full'));
-					Cli::write('Mako: '.Kohana::config('nova.forum_version_full'));
-				break;
-				
+
 				default:
 
 					static::help();
@@ -161,22 +144,13 @@ class Command extends Oil_Command {
 			Cli::beep();
 		}
 	}
-	
-	/**
-	 * Nova changes the help message to take in to account some of the changes
-	 * made to Oil.
-	 *
-	 *     php oil
-	 *
-	 * @access	public
-	 * @return	string
-	 */
+
 	public static function help()
 	{
 		echo <<<HELP
 
 Usage:
-  php oil [console|generate|help|refine]
+  php oil [console|generate|help|test|package]
 
 Runtime options:
   -f, [--force]    # Overwrite files that already exist
@@ -184,8 +158,11 @@ Runtime options:
   -q, [--quiet]    # Supress status output
 
 Description:
-  The 'oil' command can be used in several ways to facilitate quick development,
-  help with testing your application and for running Tasks.
+  The 'oil' command can be used in several ways to facilitate quick development, help with
+  testing your application and for running Tasks.
+
+Documentation:
+  http://fuelphp.com/docs/packages/oil/intro.html
 
 HELP;
 

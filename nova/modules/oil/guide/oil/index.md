@@ -4,9 +4,8 @@ The Oil utility is a special package command that can be used in several ways to
 
 Oil is an optional command line utility designed to help speed up development by providing several functions:
 
-* Generate - Build MVC components, migrations and entire scaffolding.
-* Refine - Run tasks such as migrate and your own custom ones.
-* Package - Install, update and remove packages.
+* Generate - Build MVC components.
+* Refine - Run tasks.
 * Console - Test your code in real time using an interactive shell.
 
 Each of these commands works in a different way to achieve different things, but before getting into them it's best to make sure you are in the correct folder and oil is available and running.

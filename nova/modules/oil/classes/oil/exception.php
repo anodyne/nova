@@ -9,7 +9,7 @@
  * @version		1.0
  */
 
-class Exception extends Kohana_Exception {
+class Oil_Exception extends Kohana_Exception {
 
 //	public function __toString()
 //	{
