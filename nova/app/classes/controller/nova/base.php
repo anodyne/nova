@@ -6,7 +6,7 @@
  * @category	Controllers
  * @author		Anodyne Productions
  * @copyright	2011 Anodyne Productions
- * @since		3.0
+ * @version		3.0
  */
 
 abstract class Controller_Nova_Base extends Controller_Template {

@@ -25,7 +25,7 @@ class Controller_Nova_Main extends Controller_Nova_Base {
 		$this->settingsArray = array_merge($this->settingsArray, $additionalSettings);
 		
 		// pull the settings and put them into the options object
-		$this->options = Model_Setting::find_all($this->settingsArray);
+		$this->options = Model_Settings::get_settings($this->settingsArray);
 		
 		// set the variables
 		$this->skin		= $this->session->get('skin_main', $this->options->skin_main);
@@ -67,7 +67,13 @@ class Controller_Nova_Main extends Controller_Nova_Base {
 		$this->template->layout->navsub->widget3	= false;
 		
 		$this->template->layout->footer				= View::factory(Location::file('footer', $this->skin, 'partials'));
-		$this->template->layout->footer->extra 		= Model_Message::find('footer');
+		$this->template->layout->footer->extra 		= Model_Messages::get_message('footer');
+	}
+	
+	public function after()
+	{
+		// send the response
+		$this->response->body($this->template);
 	}
 	
 	public function action_index()
@@ -97,390 +103,35 @@ class Controller_Nova_Main extends Controller_Nova_Base {
 		
 		// content
 		$this->template->title.= ucfirst(___("main"));
-		$data->header = Model_Message::find('welcome_head');
-		$data->message = Model_Message::find('welcome_msg');
-		
-		// send the response
-		$this->response->body($this->template);
+		$data->header = Model_Messages::get_message('welcome_head');
+		$data->message = Model_Messages::get_message('welcome_msg');
 	}
-	/*
-	public function action_contact()
-	{
-		if (isset($_POST['submit']))
-		{
-			// clear the errors (if there are any)
-			$this->session->delete('errors');
-			
-			// set the validation rules
-			$validate = Validate::factory($_POST)
-				->rule('email', 'not_empty')
-				->rule('email', 'email')
-				->rule('name', 'not_empty')
-				->rule('subject', 'not_empty')
-				->rule('message', 'not_empty');
-			
-			// run the check to make sure everything is validated like it should be
-			if ($validate->check())
-			{
-				// set the data for the email
-				$emaildata = new stdClass;
-				$emaildata->name = trim(Security::xss_clean($_POST['name']));
-				$emaildata->email = trim(Security::xss_clean($_POST['email']));
-				$emaildata->subject = trim(Security::xss_clean($_POST['subject']));
-				$emaildata->message = trim(Security::xss_clean($_POST['message']));
-				$emaildata->cc = trim(Security::xss_clean($_POST['ccme']));
-				
-				// send the email
-				$email = $this->_email('contact', $emaildata);
-				
-				// set the flash message
-				$this->template->layout->flash = Submit::show_flash( (int) $email, ___("your information"), ___("submitted"), $this->skin, 'main');
-			}
-			else
-			{
-				// set the errors
-				$this->session->set('errors', $validate->errors('register'));
-			}
-		}
-		
-		// create a new content view
-		$this->template->layout->content = View::factory(Location::view('main_contact', $this->skin, 'main', 'pages'));
-		
-		// assign the object a shorter variable to use in the method
-		$data = $this->template->layout->content;
-		
-		// content
-		$this->template->title.= ucwords(___("contact us"));
-		$data->header = ucwords(___("contact us"));
-		$data->message = Jelly::query('message', 'contact')->limit(1)->select()->value;
-		
-		// fields
-		$data->inputs = array(
-			'name' => array(
-				'id' => 'name'),
-			'email' => array(
-				'type' => 'email',
-				'id' => 'email'),
-			'subject' => array(
-				'id' => 'subject'),
-			'message' => array(
-				'id' => 'message',
-				'rows' => 12),
-			'submit' => array(
-				'type' => 'submit',
-				'class' => 'btn-main',
-				'id' => 'submit'),
-		);
-		
-		// images
-		$data->images = array(
-			'error' => array(
-				'src' => Location::image($this->images['main.error'], $this->skin, 'main', 'image'),
-				'attr' => array(
-					'alt' => '!',
-					'class' => 'inline-image-left')),
-		);
-		
-		// set the validation errors
-		$data->errors = ($this->session->get('errors')) ? $this->session->get('errors') : false;
-		
-		// send the response
-		$this->request->response = $this->template;
-	}
-	*/
+	
 	public function action_credits()
 	{
 		// create a new content view
 		$this->template->layout->content = View::factory(Location::view('main_credits', $this->skin, 'pages'));
 		
 		// assign the object a shorter variable to use in the method
-		$data = $this->template->layout->content;
+		$this->data = $this->template->layout->content;
 		
 		// content
 		$this->template->title.= ucwords(___("site credits"));
-		$data->header = ucwords(___("site credits"));
+		$this->data->header = ucwords(___("site credits"));
 		
 		// non-editable credits
-		$credits_perm = Model_Message::find('credits_perm');
-		$credits_perm.= "\r\n\r\n".Jelly::query('catalogueskinsec')->defaultskin('main')->select()->skin->credits;
-		$credits_perm.= "\r\n\r\n".Jelly::query('cataloguerank', $this->rank)->limit(1)->select()->credits;
+		$credits_perm = Model_Messages::get_message('credits_perm');
+		$credits_perm.= "\r\n\r\n".Model_CatalogueSkinSec::get_default('main')->skins->credits;
+		$credits_perm.= "\r\n\r\n".Model_CatalogueRank::get_default()->credits;
 		
 		// credits
-		$data->credits_perm = nl2br($credits_perm);
-		$data->credits = Model_Message::find('credits');
+		$this->data->credits_perm = nl2br($credits_perm);
+		$this->data->credits = Model_Messages::get_message('credits');
 		
 		// should we show an edit link?
-		$data->edit = (Auth::is_logged_in() and Auth::check_access('site/messages', false)) ? true : false;
+		$this->data->edit = (Auth::is_logged_in() and Auth::check_access('site/messages', false)) ? true : false;
 		
 		# TODO: remove this after the site messages management stuff is done
-		$data->edit = false;
-		
-		// send the response
-		$this->response->body($this->template);
+		$this->data->edit = false;
 	}
-	
-	public function action_test()
-	{
-		$user = Model_User::find(1);
-		
-		echo Debug::vars($user->get_status());
-		exit();
-	}
-	/*
-	public function join()
-	{
-		# code...
-	}
-	
-	public function action_news()
-	{
-		// create a new content view
-		$this->template->layout->content = View::factory(Location::view('main_news', $this->skin, 'main', 'pages'));
-		
-		// create the javascript view
-		$this->template->javascript = View::factory(Location::view('main_news_js', $this->skin, 'main', 'js'));
-		
-		// assign the object a shorter variable to use in the method
-		$data = $this->template->layout->content;
-		
-		// get all the news items
-		$news = Jelly::query('news')->where('status', '=', 'activated')->order_by('date', 'desc');
-		
-		// if the user isn't logged in, only pull public news items
-		( ! Auth::is_logged_in()) ? $news->where('private', '=', 'n') : false;
-		
-		// run the query
-		$news = $news->select();
-		
-		// make sure there are news items
-		if (count($news) > 0)
-		{
-			// set the variable being used by the news items
-			$data->news = false;
-			
-			// send the timezone to the view
-			$data->timezone = $this->timezone;
-			
-			// loop through all the items and pass them to the view
-			foreach ($news as $n)
-			{
-				$data->news[$n->id] = $n;
-			}
-		}
-		
-		// get the categories
-		$cats = Jelly::query('newscategory')->select();
-		
-		// make sure there are news categories
-		if (count($cats) > 0)
-		{
-			// set the variables being used by the news categories
-			$data->categories = false;
-			$data->lastcategory = false;
-			
-			// set the counter
-			$i = 0;
-			
-			// loop through all the categories and pass them to the view
-			foreach ($cats as $c)
-			{
-				// increment the count
-				++$i;
-				
-				$data->categories[$c->id] = $c;
-				
-				$data->lastcategory[$c->id] = (count($cats) == $i) ? true : false;
-			}
-		}
-		
-		// content
-		$this->template->title.= ucwords(___("news"));
-		$data->header = ucwords(___("news"));
-		
-		// send the response
-		$this->request->response = $this->template;
-	}
-	
-	public function action_viewnews($id = null)
-	{
-		# TODO: need to handle comment moderation
-		
-		// sanitize the id
-		$id = ( ! is_numeric($id)) ? false : $id;
-		
-		// create a new content view
-		$this->template->layout->content = View::factory(Location::view('main_viewnews', $this->skin, 'main', 'pages'));
-		
-		// assign the object a shorter variable to use in the method
-		$data = $this->template->layout->content;
-		
-		if (isset($_POST['submit']))
-		{
-			// additional pieces of info that need to go on the end of the POST array
-			$additional = array(
-				'author_user' => $this->session->get('userid', 1),
-				'author_character' => $this->session->get('main_char', 1),
-				'news' => $id
-			);
-			
-			// what comes off the POST array
-			$pop = array('submit');
-			
-			// submit the comment
-			$submit = Submit::create($_POST, 'newscomment', $additional, $pop);
-			
-			// show the appropriate flash message
-			$this->template->layout->flash_message = Submit::show_flash($submit, ___('label.comment'), ___('action.added'), $this->skin, 'main');
-		}
-		
-		// grab the news item referenced in the url
-		$news = Jelly::query('news', $id)->limit(1)->select();
-		
-		// figure out what the previous item is
-		$prev = Jelly::query('news')->where('id', '<', $id)->order_by('id', 'desc')->limit(1);
-			
-		( ! Auth::is_logged_in()) ? $prev->where('private', '=', 'n') : false;
-		
-		$prev = $prev->select();
-		
-		// figure out what the next item is
-		$next = Jelly::query('news')->where('id', '>', $id)->order_by('id', 'desc')->limit(1);
-			
-		( ! Auth::is_logged_in()) ? $next->where('private', '=', 'n') : false;
-		
-		$next = $next->select();
-		
-		if (count($news) > 0)
-		{
-			// grab the news object
-			$data->news = $news;
-			
-			// build the prev/next items
-			$data->prev = $prev->id;
-			$data->next = $next->id;
-			
-			// build the images portion of the object
-			$data->images = array(
-				'rss' => array(
-					'src' => Location::image($this->images['main.rss'], $this->skin, 'main', 'image'),
-					'attr' => array(
-						'alt' => ___('abbr.rss'),
-						'class' => '')),
-				'prev' => array(
-					'src' => Location::image($this->images['main.previous'], $this->skin, 'main', 'image'),
-					'attr' => array(
-						'alt' => ___('word.previous'),
-						'title' => ucfirst(___('word.previous')),
-						'class' => '')),
-				'next' => array(
-					'src' => Location::image($this->images['main.next'], $this->skin, 'main', 'image'),
-					'attr' => array(
-						'alt' => ___('word.next'),
-						'title' => ucfirst(___('word.next')),
-						'class' => '')),
-				'comment'	=> array(),
-			);
-			
-			// figure out if they're allowed to manage news items
-			$data->edit = false;
-			
-			if (Auth::check_access('manage/news', false))
-			{
-				$level = Auth::get_access_level('manage/news');
-				
-				$data->edit = ($level == 2 or ($level == 1 and ($news->news_author_user == $this->session->get('userid')))) ? true : false;
-			}
-			
-			// make sure they're logged in if it's a private news item
-			if ($news->private == 'y' and ! Auth::is_logged_in())
-			{
-				$this->template->title.= ucwords(___('action.view').' '.___('global.news_item'));
-				$data->header = ___('error.header');
-				$data->headerclass = ' error';
-				$data->message = '<p class="fontMedium">'.___('error.private_news', array(':news' => ___('global.news_item'),':users' => ___('global.users'))).'</p>';
-			}
-			else
-			{
-				$this->template->title.= ucwords(___('action.view').' '.___('global.news_item')).' - '. $news->title;
-				$data->header = $news->title;
-				$data->headerclass = null;
-				$data->message = null;
-			}
-		}
-		else
-		{
-			$this->template->title.= ucwords(___('action.view').' '.___('global.news_item'));
-			$data->header = ___('error.header');
-			$data->headerclass = ' error';
-			$data->message = '<p class="fontMedium">'.___('error.not_found', array(':item' => ___('global.news_item'))).'</p>';
-		}
-		
-		// build the controls for the comment box
-		$data->inputs = array(
-			'content' => array(
-				'name' => 'content',
-				'value' => '',
-				'attr' => array(
-					'id' => 'ncomment_content',
-					'placeholder' => ___('phrase.enter_your_comment', array(':item' => ___('global.news_item'))),
-					'rows' => 6)),
-		);
-		
-		$data->buttons = array(
-			'submit' => array(
-				'name' => 'submit',
-				'value' => ucfirst(___('action.submit')),
-				'attr' => array(
-					'type' => 'submit',
-					'class' => 'button-main')),
-		);
-	}
-	
-	protected function _email($type, $data)
-	{
-		// set the email variable that'll be returned
-		$email = false;
-		
-		// make sure system email is turned on
-		if ($this->options->system_email == 'on')
-		{
-			// set up the mailer
-			$mailer = Email::setup_mailer();
-			
-			// create a new message
-			$message = Email::setup_message();
-			
-			switch ($type)
-			{
-				case 'contact':
-					// data for the view files
-					$view = new stdClass;
-					$view->subject = ___("Site Contact from :name", array(':name' => $data->name));
-					$view->content = $data->message;
-					
-					// set the html version
-					$html = View::factory(Location::view('main_contact_em_html', $this->skin, 'main', 'email'), $view);
-					
-					// set the text version
-					$text = View::factory(Location::view('main_contact_em_text', $this->skin, 'main', 'email'), $view);
-					
-					// figure out who gets the email
-					$to = implode(',', Jelly::factory('user')->get_gm_data('email'));
-					
-					// set the message data
-					$message->setSubject($this->options->email_subject.' '.$view->subject);
-					$message->setFrom(array($data->email => $data->name));
-					$message->setTo($to);
-					$message->setBody($html->render(), 'text/html');
-					$message->addPart($text->render(), 'text/plain');
-				break;
-			}
-			
-			// send the message
-			$email = $mailer->send($message);
-		}
-		
-		return $email;
-	}
-	*/
 }
