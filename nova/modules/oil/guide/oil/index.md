@@ -12,8 +12,11 @@ Each of these commands works in a different way to achieve different things, but
 
 ```
 $ cd Sites/nova
-$ php oil -v
+$ php oil version
 Kohana: 3.1.2 (Hirondelle)
+Nova: 3.0m3
+Thresher: Release 3
+Mako: Release 1
 ```
 
 ## Inline help
@@ -24,7 +27,7 @@ Oil contains its own basic documentation which can be found by typing the comman
 $ php oil help
 
 Usage:
-  php oil [console|generate|help|test|package]
+  php oil [console|generate|help|refine]
 
 Runtime options:
   -f, [--force]    # Overwrite files that already exist
@@ -32,11 +35,8 @@ Runtime options:
   -q, [--quiet]    # Suppress status output
 
 Description:
-  The 'oil' command can be used in several ways to facilitate quick development, help with
-  testing your application and for running Tasks.
-
-Documentation:
-  http://fuelphp.com/docs/packages/oil/intro.html
+  The 'oil' command can be used in several ways to facilitate quick development,
+  help with testing your application and for running Tasks.
 ```
 
 Each of these commands has its own help section which can be found by typing:
