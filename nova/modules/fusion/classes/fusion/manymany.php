@@ -176,6 +176,7 @@ class Fusion_ManyMany extends Fusion_Relation {
 				$this->name.' is invalid.');
 		}
 		$original_model_ids === null and $original_model_ids = array();
+		$del_rels = $original_model_ids;
 
 		foreach ($models_to as $key => $model_to)
 		{
@@ -191,7 +192,7 @@ class Fusion_ManyMany extends Fusion_Relation {
 			}
 
 			$current_model_id = $model_to ? $model_to->implode_pk($model_to) : null;
-
+			
 			// Check if the model was already assigned, if not INSERT relationships:
 			if ( ! in_array($current_model_id, $original_model_ids))
 			{
@@ -211,11 +212,12 @@ class Fusion_ManyMany extends Fusion_Relation {
 				}
 
 				\DB::insert($this->table_through)->set($ids)->execute();
+				$original_model_ids[] = $current_model_id; // prevents inserting it a second time
 			}
 			else
 			{
-				// unset current model from from array
-				unset($original_model_ids[array_search($current_model_id, $original_model_ids)]);
+				// unset current model from from array of new relations
+				unset($del_rels[array_search($current_model_id, $original_model_ids)]);
 			}
 
 			// ensure correct pk assignment
@@ -233,8 +235,8 @@ class Fusion_ManyMany extends Fusion_Relation {
 			}
 		}
 
-		// If any original ids are left they are no longer assigned, DELETE the relationships:
-		foreach ($original_model_ids as $original_model_id)
+		// If any ids are left in $del_rels they are no longer assigned, DELETE the relationships:
+		foreach ($del_rels as $original_model_id)
 		{
 			$query = DB::delete($this->table_through);
 
