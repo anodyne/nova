@@ -73,12 +73,12 @@ abstract class Nova_Menu {
 		$userid = $session->get('userid');
 		
 		// get the menu items
-		$items = Jelly::query('menu')
-			->where('type', '=', 'main')
-			->where('display', '=', 'y')
+		$items = Model_Menu::find()
+			->where('type', 'main')
+			->where('display', 1)
 			->order_by('group', 'asc')
 			->order_by('order', 'asc')
-			->select();
+			->get();
 		
 		if ($items)
 		{
@@ -124,13 +124,13 @@ abstract class Nova_Menu {
 		$userid = $session->get('userid');
 		
 		// get the menu items
-		$items = Jelly::query('menu')
-			->where('type', '=', 'sub')
-			->where('cat', '=', $cat)
-			->where('display', '=', 'y')
+		$items = Model_Menu::find()
+			->where('type', 'sub')
+			->where('category', $cat)
+			->where('display', 1)
 			->order_by('group', 'asc')
 			->order_by('order', 'asc')
-			->select();
+			->get();
 		
 		if ($items)
 		{
@@ -269,26 +269,28 @@ abstract class Nova_Menu {
 						
 						foreach ($value['menu'] as $item)
 						{
-							if ($item->group != 0 and $item->order == 0)
+							if ($item->group != 0 and $item->menu_order == 0)
 							{
 								$output.= '<li class="spacer"></li>';
 							}
 							
-							if ($item->linktype == 'offsite')
+							if ($item->url_target == 'offsite')
 							{
 								$target = ' target="_blank"';
-								$link = $item->link;
+								$link = $item->url;
 							}
 							else
 							{
 								$target = null;
-								$link = url::site($item->link);
+								$link = url::site($item->url);
 							}
 							
 							$access = Auth::check_access($item->access, false);
 							$level = Auth::get_access_level($item->access);
 							
-							if (($item->useaccess == 'y' and $access === true and ($item->level > 0 and $level >= $item->level or $item->level == 0)) or $item->useaccess == 'n')
+							if (($item->use_access == 'y' and $access === true and 
+									($item->level > 0 and $level >= $item->level or $item->level == 0)) 
+									or $item->use_access == 'n')
 							{
 								$output.= '<li><a href="' . $link .'"' . $target . '><span>' . $item->name . '</span></a></li>';
 							}
@@ -305,14 +307,18 @@ abstract class Nova_Menu {
 				{
 					$display = false;
 		
-					if (($item->login == 'y' and Auth::is_logged_in()) or ($item->login == 'n' and ! Auth::is_logged_in()) or $item->login == 'none')
+					if (($item->needs_login == 'y' and Auth::is_logged_in()) 
+							or ($item->needs_login == 'n' and ! Auth::is_logged_in()) 
+							or $item->needs_login == 'none')
 					{
-						if ($item->login == 'y')
+						if ($item->needs_login == 'y')
 						{
 							$access = Auth::check_access($item->access, false);
 							$level = Auth::get_access_level($item->access);
 		
-							if (($item->useaccess == 'y' and $access === true and ($item->level > 0 and $level >= $item->level or $item->level == 0)) or $item->useaccess == 'n')
+							if (($item->use_access == 'y' and $access === true and 
+									($item->level > 0 and $level >= $item->level or $item->level == 0)) 
+									or $item->use_access == 'n')
 							{
 								$display = true;
 							}
@@ -329,10 +335,10 @@ abstract class Nova_Menu {
 						
 						$class = array();
 		
-						if ($item->linktype == 'onsite')
+						if ($item->url_target == 'onsite')
 						{
 							$uri = explode('/', Request::current()->uri());
-							$cur = explode('/', $item->link);
+							$cur = explode('/', $item->url);
 							
 							if ($uri[0] == $cur[0])
 							{
@@ -340,12 +346,12 @@ abstract class Nova_Menu {
 							}
 							
 							$target = null;
-							$url = url::site($item->link);
+							$url = Url::site($item->url);
 						}
 						else
 						{
 							$target = ' target="_blank"';
-							$url = $item->link;
+							$url = $item->url;
 						}
 		
 						// create a string from the array of classes
@@ -367,25 +373,29 @@ abstract class Nova_Menu {
 						$output.= '<li class="spacer"></li>';
 					}
 	
-					if ($item->linktype == 'offsite')
+					if ($item->url_target == 'offsite')
 					{
 						$target = ' target="_blank"';
-						$link = $item->link;
+						$link = $item->url;
 					}
 					else
 					{
 						$target = null;
-						$link = url::site($item->link);
+						$link = Url::site($item->url);
 					}
 	
-					if (($item->login == 'y' and Auth::is_logged_in()) or ($item->login == 'n' and ! Auth::is_logged_in()) or $item->login == 'none')
+					if (($item->needs_login == 'y' and Auth::is_logged_in()) 
+							or ($item->needs_login == 'n' and ! Auth::is_logged_in()) 
+							or $item->needs_login == 'none')
 					{
-						if ($item->login == 'y')
+						if ($item->needs_login == 'y')
 						{
 							$access = Auth::check_access($item->access, false);
 							$level = Auth::get_access_level($item->access);
 	
-							if (($item->useaccess == 'y' and $access === true and ($item->level > 0 and $level >= $item->level or $item->level == 0)) or $item->useaccess == 'n')
+							if (($item->use_access == 'y' and $access === true and 
+									($item->level > 0 and $level >= $item->level or $item->level == 0)) 
+									or $item->use_access == 'n')
 							{
 								$display = true;
 							}
