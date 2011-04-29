@@ -642,17 +642,17 @@ return array
 			$classes = get_declared_classes();
 			
 			// if sfYaml hasn't been loaded, then load it
-			if ( ! in_array('sfYaml', $classes))
+			if ( ! in_array('Spyc', $classes))
 			{
 				// find the sfYAML library
-				$path = Kohana::find_file('vendor', 'sfYaml/sfYaml');
+				$path = Kohana::find_file('vendor', 'spyc/spyc');
 				
 				// load the sfYAML library
 				Kohana::load($path);
 			}
 			
 			// load the YAML data into an array
-			$content = sfYaml::load(Kohana::config('nova.version_info'));
+			$content = Spyc::YAMLLoad(Kohana::config('nova.version_info'));
 			
 			try {
 				// get the system information
