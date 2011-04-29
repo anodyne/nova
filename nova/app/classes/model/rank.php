@@ -54,7 +54,7 @@ class Model_Rank extends Model {
 	 */
 	public static function init()
 	{
-		static::$_table_name = static::$_table_name.Config::get('nova.genre');
+		static::$_table_name = static::$_table_name.Kohana::config('nova.genre');
 	}
 	
 	public static function get_ranks($class = '', $display = true)

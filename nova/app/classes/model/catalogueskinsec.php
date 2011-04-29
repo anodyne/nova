@@ -61,8 +61,8 @@ class Model_CatalogueSkinSec extends Model {
 	{
 		return static::find('first', array(
 			'where' => array(
-				array('skinsec_default', 1),
-				array('skinsec_section', $section),
+				array('default', 1),
+				array('section', $section),
 			)
 		));
 	}

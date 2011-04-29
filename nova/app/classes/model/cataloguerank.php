@@ -65,7 +65,7 @@ class Model_CatalogueRank extends Model {
 	 */
 	public static function init()
 	{
-		static::$_properties['genre']['default'] = Config::get('nova.genre');
+		static::$_properties['genre']['default'] = Kohana::config('nova.genre');
 	}
 	
 	/**
@@ -100,9 +100,9 @@ class Model_CatalogueRank extends Model {
 	 */
 	public static function get_default($value_only = false)
 	{
-		$result = static::find('first', array(
-			'where' => array('default', 1)
-		));
+		$result = static::find()
+			->where(array('default', 1))
+			->get_one();
 		
 		if ($value_only)
 		{
