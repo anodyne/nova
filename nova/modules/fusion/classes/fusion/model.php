@@ -1169,7 +1169,7 @@ class Fusion_Model implements ArrayAccess, Iterator {
 			}
 			else
 			{
-				$array[$name] = $rel->to_array();
+				$array[$name] = is_null($rel) ? null : $rel->to_array();
 			}
 		}
 
