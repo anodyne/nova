@@ -2382,7 +2382,7 @@ $sim_type = array(
 $system_components = array(
 	array(
 		'comp_name' => 'Kohana',
-		'comp_version' => '3.0.8',
+		'comp_version' => '3.1.3',
 		'comp_url' => 'http://kohanaframework.org/',
 		'comp_desc' => 'Kohana is an elegant HMVC PHP5 framework that provides a rich set of components for building web applications. It requires very little configuration, fully supports UTF-8 and I18N, and provides many of the tools that a developer needs within a highly flexible system. The integrated class auto-loading, cascading filesystem, highly consistent API, and easy integration with vendor libraries make it viable for any project, large or small.'),
 	array(
