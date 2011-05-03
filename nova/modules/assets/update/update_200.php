@@ -190,15 +190,15 @@ $this->db->update('system_components', array('comp_version' => '1.5'));
 
 // update the jquery version info
 $this->db->where('comp_name', 'jQuery');
-$this->db->update('system_components', array('comp_version' => '1.5.2'));
+$this->db->update('system_components', array('comp_version' => '1.6'));
 
 // update the jquery ui version info
 $this->db->where('comp_name', 'jQuery UI');
-$this->db->update('system_components', array('comp_version' => '1.8.11'));
+$this->db->update('system_components', array('comp_version' => '1.8.12'));
 
 // update the jquery prettyphoto info
 $this->db->where('comp_name', 'prettyPhoto');
-$this->db->update('system_components', array('comp_version' => '3.1'));
+$this->db->update('system_components', array('comp_version' => '3.1.2'));
 
 // update the markItUp! info
 $this->db->where('comp_name', 'markItUp!');

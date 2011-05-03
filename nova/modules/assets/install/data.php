@@ -2240,12 +2240,12 @@ $system_components = array(
 		'comp_url' => 'http://www.williamsconcepts.com/ci/codeigniter/libraries/template/index.html'),
 	array(
 		'comp_name' => 'jQuery',
-		'comp_version' => '1.5.2',
+		'comp_version' => '1.6',
 		'comp_url' => 'http://www.jquery.com/',
 		'comp_desc' => 'jQuery is a lightweight JavaScript library that emphasizes interaction between JavaScript and HTML.'),
 	array(
 		'comp_name' => 'jQuery UI',
-		'comp_version' => '1.8.11',
+		'comp_version' => '1.8.12',
 		'comp_url' => 'http://jqueryui.com/',
 		'comp_desc' => 'jQuery UI is a lightweight, easily customizable interface library for the jQuery Javascript library.'),
 	array(
