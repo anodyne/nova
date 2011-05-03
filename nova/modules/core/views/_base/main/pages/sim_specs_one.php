@@ -6,7 +6,9 @@
 
 <?php echo text_output($header, 'h1', 'page-head');?>
 
-<p><?php echo anchor('sim/specs', $label['back'], array('class' => 'bold'));?></p>
+<?php if ($count > 1): ?>
+	<p><?php echo anchor('sim/specs', $label['back'], array('class' => 'bold'));?></p>
+<?php endif;?>
 
 <?php echo text_output($label['summary'], 'h2', 'page-subhead');?>
 <?php echo text_output($summary);?><br />

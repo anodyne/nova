@@ -134,6 +134,20 @@ abstract class Nova_specs_model extends Model {
 		return $query;
 	}
 	
+	/**
+	 * Count all specification items.
+	 *
+	 * @access	public
+	 * @since	2.0
+	 * @return	int		the number of items
+	 */
+	public function count_spec_items()
+	{
+		$this->db->from('specs');
+		
+		return $this->db->count_all_results();
+	}
+	
 	public function add_spec_field($data = '')
 	{
 		$query = $this->db->insert('specs_fields', $data);

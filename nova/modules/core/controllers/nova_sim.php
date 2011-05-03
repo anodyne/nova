@@ -1234,7 +1234,7 @@ abstract class Nova_sim extends Nova_controller_main {
 		Template::render();
 	}
 	
-	function specs()
+	public function specs($id = false)
 	{
 		// load the models
 		$this->load->model('specs_model', 'specs');
@@ -1242,12 +1242,28 @@ abstract class Nova_sim extends Nova_controller_main {
 		// grab the title
 		$title = ucfirst(lang('global_specifications'));
 		
-		// set the variables
-		$id = $this->uri->segment(3, FALSE, TRUE);
+		// some sanity checks
+		$id = ( ! is_numeric($id)) ? false : $id;
 		
-		if ($id === FALSE)
+		// count the number of spec items
+		$count = $this->specs->count_spec_items();
+		$data['count'] = $count;
+		
+		if ($count == 1)
 		{
-			// run the methods
+			// get the specs
+			$specs = $this->specs->get_spec_items();
+			
+			// pull back only the first row
+			$row = $specs->row();
+			
+			// set the ID
+			$id = $row->specs_id;
+		}
+		
+		if ($id === false)
+		{
+			// get the specs
 			$specs = $this->specs->get_spec_items();
 			
 			if ($specs->num_rows() > 0)
@@ -1274,7 +1290,7 @@ abstract class Nova_sim extends Nova_controller_main {
 			// run the methods
 			$item = $this->specs->get_spec_item($id);
 			
-			if ($item !== FALSE)
+			if ($item !== false)
 			{
 				// set the data being sent to the view
 				$data['name'] = $item->specs_name;
@@ -1320,7 +1336,7 @@ abstract class Nova_sim extends Nova_controller_main {
 								// grab the data for the fields
 								$item = $this->specs->get_field_data($id, $field->field_id);
 								
-								if ($item !== FALSE && !empty($item->data_value))
+								if ($item !== false and ! empty($item->data_value))
 								{
 									$data['sections'][$sec->section_id]['title'] = $sec->section_name;
 									
@@ -1357,8 +1373,8 @@ abstract class Nova_sim extends Nova_controller_main {
 			}
 		}
 		
-		$data['edit_valid'] = (Auth::is_logged_in() and Auth::check_access('manage/specs', FALSE)) ? true : false;
-		$data['edit_valid_form'] = (Auth::is_logged_in() and Auth::check_access('site/specsform', FALSE)) ? true : false;
+		$data['edit_valid'] = (Auth::is_logged_in() and Auth::check_access('manage/specs', false)) ? true : false;
+		$data['edit_valid_form'] = (Auth::is_logged_in() and Auth::check_access('site/specsform', false)) ? true : false;
 		
 		$data['label'] = array(
 			'back' => LARROW .' '. ucfirst(lang('actions_back')) .' '. lang('labels_to') .' '. ucwords(lang('global_specs')),
