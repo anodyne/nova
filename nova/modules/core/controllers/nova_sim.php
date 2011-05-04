@@ -198,6 +198,25 @@ abstract class Nova_sim extends Nova_controller_main {
 		$this->load->model('tour_model', 'tour');
 		$this->load->model('specs_model', 'specs');
 		
+		// a sanity check
+		$item = ( ! is_numeric($item)) ? false : $item;
+		
+		// count the number of spec items
+		$count = $this->tour->count_deck_items();
+		$data['count'] = $count;
+		
+		if ($count == 1)
+		{
+			// get the specs
+			$deck = $this->tour->get_decks();
+			
+			// pull back only the first row
+			$row = $deck->row();
+			
+			// set the ID
+			$item = $row->deck_item;
+		}
+		
 		if ($item)
 		{
 			// run the methods

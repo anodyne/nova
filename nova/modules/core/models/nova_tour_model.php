@@ -132,6 +132,23 @@ abstract class Nova_tour_model extends Model {
 		return $query;
 	}
 	
+	/**
+	 * Find the number of unique deck items in the database.
+	 *
+	 * @access	public
+	 * @since	2.0
+	 * @return	int		the number of deck items
+	 */
+	public function count_deck_items()
+	{
+		$this->db->from('tour_decks');
+		$this->db->group_by('deck_item');
+		
+		$query = $this->db->get();
+		
+		return $query->num_rows();
+	}
+	
 	public function add_deck($data = '')
 	{
 		$query = $this->db->insert('tour_decks', $data);

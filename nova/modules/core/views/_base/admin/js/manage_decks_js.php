@@ -79,7 +79,7 @@
 			$.ajax({
 				beforeSend: function(){
 					$('#loading').show();
-					$('#add').attr('disabled', 'disabled');
+					$('#add').prop({disabled: true});
 				},
 				type: "POST",
 				url: "<?php echo site_url('ajax/add_deck');?>",
@@ -89,7 +89,7 @@
 				},
 				complete: function(){
 					$('#loading').hide();
-					$('#add').attr('disabled', '');
+					$('#add').prop({disabled: false});
 				}
 			});
 			
