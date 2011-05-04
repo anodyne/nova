@@ -197,11 +197,14 @@ abstract class Nova_login extends Controller {
 				'name' => 'email',
 				'id' => 'email',
 				'autocomplete' => 'off',
-				'tabindex' => 1),
+				'tabindex' => 1,
+				'placeholder' => ucfirst(lang('labels_email_address')),
+				'type' => 'email'),
 			'password' => array(
 				'name' => 'password',
 				'id' => 'password',
-				'tabindex' => 2),
+				'tabindex' => 2,
+				'placeholder' => ucfirst(lang('labels_password'))),
 			'remember_me' => array(
 				'name' => 'remember',
 				'id' => 'remember',
