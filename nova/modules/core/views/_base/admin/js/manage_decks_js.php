@@ -28,7 +28,7 @@
 			$.ajax({
 				beforeSend: function(){
 					$('#loading').show();
-					$('#update').attr('disabled', 'disabled');
+					$('#update').prop({ disabled: true });
 				},
 				type: "POST",
 				url: "<?php echo site_url('ajax/save_deck');?>",
@@ -39,7 +39,7 @@
 				},
 				complete: function(){
 					$('#loading').hide();
-					$('#update').attr('disabled', '');
+					$('#update').prop({ disabled: false });
 				}
 			});
 			

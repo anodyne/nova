@@ -19,7 +19,7 @@
 			$('#recipients').append('<span class="' + user + '"><a href="#" id="remove_recipient" class="image" myID="' + user + '" myName="' + name + '"><?php echo $remove;?></a>' + name + '<br /></span>');
 			
 			/* hide the option so it can't be selected again */
-			$("#recip option[value='" + user + "']").attr('disabled', 'yes');
+			$("#recip option[value='" + user + "']").prop({ disabled: true });
 			
 			return false;
 		});
@@ -37,7 +37,7 @@
 			$('#recipients span.' + user).remove();
 			
 			/* show the option again */
-			$("#recip option[value='" + user + "']").attr('disabled', '');
+			$("#recip option[value='" + user + "']").prop({ disabled: false });
 			
 			return false;
 		});
@@ -45,7 +45,7 @@
 		<?php if (isset($replyall)): ?>
 			<?php foreach ($replyall as $r): ?>
 				/* hide the option so it can't be selected again */
-				$("#recip option[value='<?php echo $r;?>']").attr('disabled', 'yes');
+				$("#recip option[value='<?php echo $r;?>']").prop({ disabled: true });
 			<?php endforeach; ?>
 		<?php endif; ?>
 	});

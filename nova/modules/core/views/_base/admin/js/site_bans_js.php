@@ -16,12 +16,12 @@
 			
 			if (selected == '1')
 			{
-				$('#ban_email').attr('disabled', '').val('');
+				$('#ban_email').prop({ disabled: false }).val('');
 			}
 				
 			if (selected == '2')
 			{
-				$('#ban_email').attr('disabled', 'disabled').val('');
+				$('#ban_email').prop({ disabled: true }).val('');
 				$('#ban_ip').focus();
 			}
 		});

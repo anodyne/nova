@@ -47,7 +47,7 @@
 				
 				$('#authors').append('<span class="' + user + '"><a href="#" id="remove_author" class="image" myID="' + user + '" myName="' + name + '"><?php echo $remove;?></a>' + name + '<br /></span>');
 				
-				$("#all option[value='" + user + "']").attr('disabled', 'yes');
+				$("#all option[value='" + user + "']").prop({ disabled: true });
 			}
 			
 			return false;
@@ -63,7 +63,7 @@
 			
 			$('#authors span.' + user).remove();
 			
-			$("#all option[value='" + user + "']").attr('disabled', '');
+			$("#all option[value='" + user + "']").prop({ disabled: false });
 			
 			return false;
 		});

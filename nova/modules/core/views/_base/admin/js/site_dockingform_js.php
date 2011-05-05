@@ -40,7 +40,7 @@
 			$.ajax({
 				beforeSend: function(){
 					$('#loading_update').show();
-					$('#update').attr('disabled', 'disabled');
+					$('#update').prop({ disabled: true });
 				},
 				type: "POST",
 				url: "<?php echo site_url('ajax/save_docking_field_value');?>",
@@ -51,7 +51,7 @@
 				},
 				complete: function(){
 					$('#loading_update').hide();
-					$('#update').attr('disabled', '');
+					$('#update').prop({ disabled: false });
 				}
 			});
 			
@@ -89,7 +89,7 @@
 			$.ajax({
 				beforeSend: function(){
 					$('#loading_add').show();
-					$('#add').attr('disabled', 'disabled');
+					$('#add').prop({ disabled: true });
 				},
 				type: "POST",
 				url: "<?php echo site_url('ajax/add_docking_field_value');?>",
@@ -99,7 +99,7 @@
 				},
 				complete: function(){
 					$('#loading_add').hide();
-					$('#add').attr('disabled', '');
+					$('#add').prop({ disabled: false });
 				}
 			});
 			

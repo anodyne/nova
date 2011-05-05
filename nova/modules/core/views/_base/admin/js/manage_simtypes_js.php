@@ -21,7 +21,7 @@
 			
 			$('#loading').ajaxStart(function(){
 				$(this).show();
-				$('#update').attr('disabled', 'disabled');
+				$('#update').prop({ disabled: true });
 			});
 			
 			$.ajax({
@@ -36,7 +36,7 @@
 			
 			$('#loading').ajaxStop(function(){
 				$(this).hide();
-				$('#update').attr('disabled', '');
+				$('#update').prop({ disabled: false });
 			});
 			
 			return false;
@@ -71,7 +71,7 @@
 			
 			$('#loading').ajaxStart(function(){
 				$(this).show();
-				$('#add').attr('disabled', 'disabled');
+				$('#add').prop({ disabled: true });
 			});
 			
 			$.ajax({
@@ -85,7 +85,7 @@
 			
 			$('#loading').ajaxStop(function(){
 				$(this).hide();
-				$('#add').attr('disabled', '');
+				$('#add').prop({ disabled: false });
 			});
 			
 			return false;

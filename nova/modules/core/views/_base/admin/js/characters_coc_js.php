@@ -18,7 +18,7 @@
 			$.ajax({
 				beforeSend: function(){
 					$('#loading').show();
-					$('#update').attr('disabled', 'disabled');
+					$('#update').prop({ disabled: true });
 				},
 				type: "POST",
 				url: "<?php echo site_url('ajax/save_coc');?>",
@@ -29,7 +29,7 @@
 				},
 				complete: function(){
 					$('#loading').hide();
-					$('#update').attr('disabled', '');
+					$('#update').prop({ disabled: false });
 				}
 			});
 			
@@ -73,7 +73,7 @@
 				$.ajax({
 					beforeSend: function(){
 						$('#loading').show();
-						$('#add').attr('disabled', 'disabled');
+						$('#add').prop({ disabled: true });
 					},
 					type: "POST",
 					url: "<?php echo site_url('ajax/add_coc_entry');?>",
@@ -90,7 +90,7 @@
 					complete: function(){
 						$('#coc_' + id).fadeIn('slow', function(){
 							$('#loading').hide();
-							$('#add').attr('disabled', '');
+							$('#add').prop({ disabled: false });
 						});
 					}
 				});

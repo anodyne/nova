@@ -33,7 +33,7 @@
 				
 				$('#authors').append('<span class="' + user + '"><a href="#" id="remove_author" class="image" myID="' + user + '" myName="' + name + '"><?php echo $remove;?></a>' + name + '<br /></span>');
 				
-				$("#all option[value='" + user + "']").attr('disabled', 'yes');
+				$("#all option[value='" + user + "']").prop({ disabled: true });
 			}
 			
 			return false;
@@ -52,14 +52,14 @@
 			$('#authors span.' + user).remove();
 			
 			/* show the option again */
-			$("#all option[value='" + user + "']").attr('disabled', '');
+			$("#all option[value='" + user + "']").prop({ disabled: false });
 			
 			return false;
 		});
 		
 		<?php if (isset($replyall)): ?>
 			<?php foreach ($replyall as $r): ?>
-				$("#all option[value='<?php echo $r;?>']").attr('disabled', 'yes');
+				$("#all option[value='<?php echo $r;?>']").prop({ disabled: true });
 			<?php endforeach; ?>
 		<?php endif; ?>
 		
