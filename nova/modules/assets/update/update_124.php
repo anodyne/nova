@@ -19,9 +19,30 @@ $system_versions = array(
 	'version_major'		=> 2,
 	'version_minor'		=> 0,
 	'version_update'	=> 0,
-	'version_date'		=> 1292889600,
+	'version_date'		=> 1308949200,
 	'version_launch'	=> "You've spoken and we've listened. The feedback we constantly get about Nova is that it's great, but it's difficult to update. Nova 2 is all about fixing that very issue. With a brand new file structure, Nova 2 has never been easier to update (simply delete one folder and replace it with one from the zip archive). In addition, Nova 2 adds new functionality to the system to help admins manage their RPG. Nova 2 is smarter than before, tracking who did and who didn't participate in a post. If someone didn't add anything to the post, they'll automatically be removed before it's posted (this feature can be turned on and off from Site Settings). In addition, Thresher has gotten a much needed boost from R1 to R2 which adds new page management and page viewing interfaces and a new category selection process that allows admins to add categories on the fly. More information about these features and everything else in Nova 2 (plus a full changelog) can be found at AnodyneDocs. This update is recommended for all users.",
-	'version_changes'	=> ""
+	'version_changes'	=> "* added the message.php file to handle notification of bans, a missing "nova" directory and incompatible PHP version
+* added new process to write the database config file for you
+* added the ability to upgrade SMS Database entries to Thresher wiki pages
+* added the ability for textareas to "grow" as more text is added like Facebook
+* updated seamless substitution to be able to override email view files
+* updated Thresher with a new way to create and manage categories when working on a wiki page
+* updated Thresher with a completely new user experience for managing wiki pages
+* updated Thresher with a brand new interface for viewing wiki pages
+* updated the upload instructions to include the maximum file size and maximum image dimensions from the config file for reference
+* updated to jquery version 1.6
+* updated to jquery version 1.8.12
+* updated to uniform version 1.7.5
+* updated to prettyPhoto version 3.1.2
+* updated to qTip2
+* refactored the location helper into a full-blown class with static methods
+* refactored the upgrade process to mirror what was created for nova 3
+* removed the banned.php file
+* removed the rss model since it isn't necessary any more
+* fixed bug with seamless substitution of images where they wouldn't work when they were in the _base_override directory
+* fixed bug with private messages where RE: and FWD: would constantly be added to message, now Nova will make sure it's only added once
+* fixed bug with private messages where the person sending the message would be on the recipient list, so any message they sent would show up in their inbox as well
+* fixed bug where the join form could be submitted without an email address or password"
 );
 
 $system_info = array(
