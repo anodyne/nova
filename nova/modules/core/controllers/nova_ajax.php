@@ -2804,7 +2804,7 @@ abstract class Nova_ajax extends Controller {
 		$this->load->model('ranks_model', 'ranks');
 		
 		// figure out the skin
-		$skin = $this->session->userdata('skin_admin');
+		$current_skin = $this->session->userdata('skin_admin');
 		
 		switch ($type)
 		{
@@ -2921,7 +2921,7 @@ abstract class Nova_ajax extends Controller {
 		// data being sent to the facebox
 		$data['header'] = $head;
 		
-		$this->_regions['content'] = Location::ajax($view, $skin, 'admin', $data);
+		$this->_regions['content'] = Location::ajax($view, $current_skin, 'admin', $data);
 		$this->_regions['controls'] = form_button($data['inputs']['submit']).form_close();
 		
 		Template::assign($this->_regions);
@@ -5039,7 +5039,7 @@ abstract class Nova_ajax extends Controller {
 		$this->load->model('ranks_model', 'ranks');
 		
 		// figure out the skin
-		$skin = $this->session->userdata('skin_admin');
+		$current_skin = $this->session->userdata('skin_admin');
 		
 		switch ($type)
 		{
@@ -5238,7 +5238,7 @@ abstract class Nova_ajax extends Controller {
 			'yes' => ucfirst(lang('labels_yes')),
 		);
 		
-		$this->_regions['content'] = Location::ajax($view, $skin, 'admin', $data);
+		$this->_regions['content'] = Location::ajax($view, $current_skin, 'admin', $data);
 		$this->_regions['controls'] = form_button($data['inputs']['submit']).form_close();
 		
 		Template::assign($this->_regions);
