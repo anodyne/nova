@@ -1,6 +1,6 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 /**
- * Update Nova from 1.2.x to 2.0
+ * Update Nova from 1.2.4 to 2.0
  */
 $system_versions	= null;
 $system_info		= null;
@@ -20,7 +20,7 @@ $system_versions = array(
 	'version_minor'		=> 0,
 	'version_update'	=> 0,
 	'version_date'		=> 1292889600,
-	'version_launch'	=> "You've spoken and we've listened. The feedback we constantly get about Nova is that it's great, but it's difficult to update. Nova 2 is all about fixing that very issue. With a brand new file structure, Nova 2 has never been easier to update (simply delete one folder and replace it with one from the zip archive). In addition, Nova 2 adds new functionality to the system to help admins manage their RPG. [...] More information about these features and a full changelog can be found at AnodyneDocs. This update is recommended for all users.",
+	'version_launch'	=> "You've spoken and we've listened. The feedback we constantly get about Nova is that it's great, but it's difficult to update. Nova 2 is all about fixing that very issue. With a brand new file structure, Nova 2 has never been easier to update (simply delete one folder and replace it with one from the zip archive). In addition, Nova 2 adds new functionality to the system to help admins manage their RPG. Nova 2 is smarter than before, tracking who did and who didn't participate in a post. If someone didn't add anything to the post, they'll automatically be removed before it's posted (this feature can be turned on and off from Site Settings). In addition, Thresher has gotten a much needed boost from R1 to R2 which adds new page management and page viewing interfaces and a new category selection process that allows admins to add categories on the fly. More information about these features and everything else in Nova 2 (plus a full changelog) can be found at AnodyneDocs. This update is recommended for all users.",
 	'version_changes'	=> ""
 );
 
@@ -229,3 +229,107 @@ $this->db->insert('settings', $additem);
 $this->db->where('page_url', 'wiki/page');
 $this->db->where('page_level', 3);
 $this->db->update('access_pages', array('page_desc' => "Can create, delete and edit all wiki pages (including system pages), including viewing history and reverting to previous drafts. Level 3 permissions can bypass all access restrictions on a wiki page."));
+
+/**
+ * Thresher system pages.
+ */
+$data = array(
+	array(
+		'draft' => array(
+			'draft_title' => 'Welcome to Thresher',
+			'draft_author_user' => 0,
+			'draft_author_character' => 0,
+			'draft_summary' => "This is the main wiki system page.",
+			'draft_content' => "<p>Welcome to Thresher R2. Thresher is Nova's built-in mini-wiki to help your RPG collaborate and share information easily. You can change this message by editing the system page from the Wiki Page Management page.</p>",
+			'draft_created_at' => now()),
+		'page' => array(
+			'page_created_at' => now(),
+			'page_created_by_user' => 0,
+			'page_created_by_character' => 0,
+			'page_comments' => 'closed',
+			'page_type' => 'system',
+			'page_key' => 'index'),
+	),
+	array(
+		'draft' => array(
+			'draft_title' => 'Create Wiki Page',
+			'draft_author_user' => 0,
+			'draft_author_character' => 0,
+			'draft_summary' => "",
+			'draft_content' => "",
+			'draft_created_at' => now()),
+		'page' => array(
+			'page_created_at' => now(),
+			'page_created_by_user' => 0,
+			'page_created_by_character' => 0,
+			'page_comments' => 'closed',
+			'page_type' => 'system',
+			'page_key' => 'create'),
+	),
+	array(
+		'draft' => array(
+			'draft_title' => 'Edit Wiki Page',
+			'draft_author_user' => 0,
+			'draft_author_character' => 0,
+			'draft_summary' => "",
+			'draft_content' => "",
+			'draft_created_at' => now()),
+		'page' => array(
+			'page_created_at' => now(),
+			'page_created_by_user' => 0,
+			'page_created_by_character' => 0,
+			'page_comments' => 'closed',
+			'page_type' => 'system',
+			'page_key' => 'edit'),
+	),
+	array(
+		'draft' => array(
+			'draft_title' => 'Wiki Categories',
+			'draft_author_user' => 0,
+			'draft_author_character' => 0,
+			'draft_summary' => "Categories in Thresher allow pages to be broken up in to different subject matters and categorized in a way that makes sense. Below is the complete list of categories. Clicking on one of the categories will show all pages associated with that category.",
+			'draft_content' => "",
+			'draft_created_at' => now()),
+		'page' => array(
+			'page_created_at' => now(),
+			'page_created_by_user' => 0,
+			'page_created_by_character' => 0,
+			'page_comments' => 'closed',
+			'page_type' => 'system',
+			'page_key' => 'categories'),
+	),
+	array(
+		'draft' => array(
+			'draft_title' => 'Wiki Category Page',
+			'draft_author_user' => 0,
+			'draft_author_character' => 0,
+			'draft_summary' => "",
+			'draft_content' => "",
+			'draft_created_at' => now()),
+		'page' => array(
+			'page_created_at' => now(),
+			'page_created_by_user' => 0,
+			'page_created_by_character' => 0,
+			'page_comments' => 'closed',
+			'page_type' => 'system',
+			'page_key' => 'category'),
+	),
+);
+
+foreach ($data as $key => $value)
+{
+	// insert the draft
+	$this->db->insert('wiki_drafts', $value['draft']);
+	$draftID = $this->db->insert_id();
+	
+	// update the page record
+	$value['page']['page_draft'] = $draftID;
+	
+	// insert the page
+	$this->db->insert('wiki_pages', $value['page']);
+	$pageID = $this->db->insert_id();
+	
+	// update the draft record
+	$this->db->where('draft_id', $draftID);
+	$this->db->update('wiki_drafts', array('draft_page' => $pageID));
+}
