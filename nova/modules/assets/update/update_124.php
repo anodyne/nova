@@ -21,10 +21,10 @@ $system_versions = array(
 	'version_update'	=> 0,
 	'version_date'		=> 1308949200,
 	'version_launch'	=> "You've spoken and we've listened. The feedback we constantly get about Nova is that it's great, but it's difficult to update. Nova 2 is all about fixing that very issue. With a brand new file structure, Nova 2 has never been easier to update (simply delete one folder and replace it with one from the zip archive). In addition, Nova 2 adds new functionality to the system to help admins manage their RPG. Nova 2 is smarter than before, tracking who did and who didn't participate in a post. If someone didn't add anything to the post, they'll automatically be removed before it's posted (this feature can be turned on and off from Site Settings). In addition, Thresher has gotten a much needed boost from R1 to R2 which adds new page management and page viewing interfaces and a new category selection process that allows admins to add categories on the fly. More information about these features and everything else in Nova 2 (plus a full changelog) can be found at AnodyneDocs. This update is recommended for all users.",
-	'version_changes'	=> "* added the message.php file to handle notification of bans, a missing "nova" directory and incompatible PHP version
+	'version_changes'	=> "* added the message.php file to handle notification of bans, a missing \"nova\" directory and incompatible PHP version
 * added new process to write the database config file for you
 * added the ability to upgrade SMS Database entries to Thresher wiki pages
-* added the ability for textareas to "grow" as more text is added like Facebook
+* added the ability for textareas to \"grow\" as more text is added like Facebook
 * updated seamless substitution to be able to override email view files
 * updated Thresher with a new way to create and manage categories when working on a wiki page
 * updated Thresher with a completely new user experience for managing wiki pages
@@ -78,6 +78,36 @@ $system_info = array(
 | );
 |---------------------------------------------------------------
 */
+
+$add_tables = array(
+	'wiki_restrictions' => array(
+		'id' => 'restr_id',
+		'fields' => 'fields_wiki_restrictions'),
+);
+
+$fields_wiki_restrictions = array(
+	'restr_id' => array(
+		'type' => 'INT',
+		'constraint' => 10,
+		'auto_increment' => TRUE),
+	'restr_page' => array(
+		'type' => 'INT',
+		'constraint' => 10),
+	'restr_created_at' => array(
+		'type' => 'BIGINT',
+		'constraint' => 20),
+	'restr_created_by' => array(
+		'type' => 'INT',
+		'constraint' => 8),
+	'restr_updated_at' => array(
+		'type' => 'BIGINT',
+		'constraint' => 20),
+	'restr_updated_by' => array(
+		'type' => 'INT',
+		'constraint' => 8),
+	'restrictions' => array(
+		'type' => 'TEXT'),
+);
 
 if ($add_tables !== null)
 {
