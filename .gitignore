@@ -18,11 +18,11 @@ application/assets/images/missions/
 application/assets/images/tour/
 !application/assets/images/tour/index.html
 
-application/views/quixly/
-application/views/apollo/
-application/views/lcars/
-application/views/rocket/
-application/views/carbon/
+application/views/
+!application/views/default/
+!application/views/titan/
+!application/views/_base_override
+!application/views/index.html
 
 *~
 *.bak
