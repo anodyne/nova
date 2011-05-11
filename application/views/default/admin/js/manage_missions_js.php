@@ -1,6 +1,6 @@
 <?php $string = random_string('alnum', 8);?>
 
-<?php $image = base_url() . img_location('calendar-day.png', $this->skin, 'admin');?>
+<?php $image = base_url().Location::img('calendar-day.png', $this->skin, 'admin');?>
 
 <link rel="stylesheet" type="text/css" href="<?php echo base_url() . MODFOLDER;?>/assets/js/css/jquery.ui.datepicker.css" />
 
