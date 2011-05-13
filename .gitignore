@@ -1,28 +1,16 @@
+application/assets/images/awards/
+application/assets/images/characters/
+application/assets/images/missions/
+application/assets/images/tour/
 application/cache/
-!application/cache/index.html
+application/logs/
+application/views/
 
 application/config/database.php
 
-application/logs/
-!application/logs/index.html
-
-application/assets/images/awards/
-!application/assets/images/awards/index.html
-
-application/assets/images/characters/
-!application/assets/images/characters/index.html
-
-application/assets/images/missions/
-!application/assets/images/missions/index.html
-
-application/assets/images/tour/
-!application/assets/images/tour/index.html
-
-application/views/
 !application/views/default/
 !application/views/titan/
 !application/views/_base_override
-!application/views/index.html
 
 *~
 *.bak
