@@ -19,6 +19,16 @@ class Fusion_Model implements ArrayAccess, Iterator {
 	 * @var  string  table name to overwrite assumption
 	 */
 	// protected static $_table_name;
+	
+	/**
+	 * @var  array  array of object properties
+	 */
+	// protected static $_properties;
+	
+	/**
+ 	 * @var  array  array of observer classes to use
+ 	 */
+	// protected static $_observers;
 
 	/**
 	 * @var  array  relationship properties
@@ -82,16 +92,18 @@ class Fusion_Model implements ArrayAccess, Iterator {
 	{
 		$class = get_called_class();
 
-		// Table name set in Model
-		if (property_exists($class, '_table_name'))
-		{
-			return static::$_table_name;
-		}
-
 		// Table name unknown
 		if ( ! array_key_exists($class, static::$_table_names_cached))
 		{
-			static::$_table_names_cached[$class] = Inflector::tableize($class);
+			// Table name set in Model
+			if (property_exists($class, '_table_name'))
+			{
+				static::$_table_names_cached[$class] = static::$_table_name;
+			}
+			else
+			{
+				static::$_table_names_cached[$class] = Inflector::tableize($class);
+			}
 		}
 
 		return static::$_table_names_cached[$class];
