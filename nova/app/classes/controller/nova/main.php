@@ -135,12 +135,14 @@ class Controller_Nova_Main extends Controller_Nova_Base {
 		$this->data->edit = false;
 	}
 
-public function action_test()
-{
-    // checking a POST
-    if (HTTP_Request::POST == $this->request->method())
-    {
-        // do something
-    }
-}
+	public function action_test()
+	{
+		/*// checking a POST
+		if (HTTP_Request::POST == $this->request->method())
+		{
+			// do something
+		}
+		*/
+		Event::trigger('post_execute');
+	}
 }
