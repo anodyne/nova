@@ -6,33 +6,22 @@ Thumbs.db
 application/config/database.php
 
 application/assets/images/awards/
-!application/assets/images/awards/.gitkeep
-
 application/assets/images/characters/
-!application/assets/images/characters/.gitkeep
-
 application/assets/images/missions/
-!application/assets/images/missions/.gitkeep
-
 application/assets/images/specs/
-!application/assets/images/specs/.gitkeep
-
 application/assets/images/tour/
-!application/assets/images/tour/.gitkeep
-
 application/cache/
-!application/cache/.gitkeep
-
 application/logs/
-!application/logs/.gitkeep
+application/views/
 
-application/views/apollo/
-application/views/quixly/
-application/views/rocket/
-application/views/lcars/
-application/views/lcars_red/
-application/views/carbon/
-application/views/bloom/
-application/views/fresh/
+!application/assets/images/awards/.gitkeep
+!application/assets/images/characters/.gitkeep
+!application/assets/images/missions/.gitkeep
+!application/assets/images/specs/.gitkeep
+!application/assets/images/tour/.gitkeep
+!application/cache/.gitkeep
+!application/logs/.gitkeep
+!application/beta/
+!application/default/
 
 application/assets/common/ds9/
