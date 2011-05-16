@@ -7,8 +7,8 @@
  * @package		Nova
  * @category	Classes
  * @author		Anodyne Productions
- * @copyright	2010-11 Anodyne Productions
- * @since		3.0
+ * @copyright	2011 Anodyne Productions
+ * @version		3.0
  */
 
 abstract class Nova_Date extends Kohana_Date {
@@ -28,8 +28,7 @@ abstract class Nova_Date extends Kohana_Date {
 	 * @access	public
 	 * @uses	Session::instance
 	 * @uses	Session::get
-	 * @uses	Jelly::query
-	 * @param	integer	the UNIX timestamp to convert
+	 * @param	int		the UNIX timestamp to convert
 	 * @param	string	a PHP date() formatted string for the format of the date
 	 * @return	string	the formatted date string
 	 */
@@ -41,11 +40,11 @@ abstract class Nova_Date extends Kohana_Date {
 		// only get the date format from the database if an override isn't specified
 		if ($format === null)
 		{
-			$format = Jelly::query('setting', 'date_format')->limit(1)->select()->value;
+			$format = Model_Settings::get_settings('date_format');
 		}
 		
 		// get the default timezone from the database
-		$tz = Jelly::query('setting', 'timezone')->limit(1)->select()->value;
+		$tz = Model_Settings::get_settings('timezone');
 		
 		// set the timezone
 		$timezone = $session->get('timezone', $tz);
@@ -65,7 +64,7 @@ abstract class Nova_Date extends Kohana_Date {
 	 *
 	 * @access	public
 	 * @param	string	the timezone to use when creating the new datetime object
-	 * @return	integer	the UNIX timestamp of the current time
+	 * @return	int		the UNIX timestamp of the current time
 	 */
 	public static function now($timezone = 'GMT')
 	{
