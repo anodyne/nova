@@ -121,18 +121,18 @@ require APPPATH.'bootstrap'.EXT;
  * Execute the main request. A source of the URI can be passed, eg: $_SERVER['PATH_INFO'].
  * If no source is specified, the URI will be automatically detected.
  */
-Events::event('preCreate');
+Event::trigger('pre_create');
 $request = Request::factory();
-Events::event('postCreate');
+Event::trigger('post_create');
 
-Events::event('preExecute');
+Event::trigger('pre_execute');
 $response = $request->execute();
-Events::event('postExecute');
+Event::trigger('post_execute');
 
-Events::event('preHeaders');
+Event::trigger('pre_headers');
 $response->send_headers();
-Events::event('postHeaders');
+Event::trigger('post_headers');
 
-Events::event('preResponse');
+Event::trigger('pre_response');
 echo $response->body();
-Events::event('postResponse');
+Event::trigger('post_response');

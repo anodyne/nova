@@ -7,11 +7,96 @@
  * @package		Nova
  * @category	Hooks
  * @author		Anodyne Productions
- * @copyright	2010-11 Anodyne Productions
- * @since		3.0
+ * @copyright	2011 Anodyne Productions
+ * @version		3.0
  */
 
 abstract class Nova_Hooks {
+	
+	/**
+	 * Execute the calls on each event from the config file.
+	 *
+	 * @access	private
+	 * @param	string	the name of the event to get the calls for
+	 * @return	void
+	 */
+	private static function _execute_calls($event)
+	{
+		// get the event calls
+		$calls = Kohana::config('event.event_calls.'.$event);
+		
+		// loop through the calls and execute them
+		foreach ($calls as $c)
+		{
+			call_user_func($c);
+		}
+	}
+	
+	/**
+	 * Pre-create event.
+	 */
+	public static function pre_create()
+	{
+		static::_execute_calls('pre_create');
+	}
+	
+	/**
+	 * Post-create event.
+	 */
+	public static function post_create()
+	{
+		static::_execute_calls('post_create');
+	}
+	
+	/**
+	 * Pre-execute event.
+	 */
+	public static function pre_execute()
+	{
+		static::_execute_calls('pre_execute');
+	}
+	
+	/**
+	 * Post-execute event.
+	 */
+	public static function post_execute()
+	{
+		static::_execute_calls('post_execute');
+	}
+	
+	/**
+	 * Pre-headers event.
+	 */
+	public static function pre_headers()
+	{
+		static::_execute_calls('pre_headers');
+	}
+	
+	/**
+	 * Post-headers event.
+	 */
+	public static function post_headers()
+	{
+		static::_execute_calls('post_headers');
+	}
+	
+	/**
+	 * Pre-response event.
+	 */
+	public static function pre_response()
+	{
+		static::_execute_calls('pre_response');
+	}
+	
+	/**
+	 * Post-response event.
+	 */
+	public static function post_reponse()
+	{
+		static::_execute_calls('post_response');
+	}
+	
+	// --------------------------------------------------------------------
 	
 	/**
 	 * The bans hook goes through the database list of level 2 bans and then gets
@@ -41,12 +126,14 @@ abstract class Nova_Hooks {
 		$notallowed = array(
 			'Internet Explorer'	=> 8,
 			'Safari'			=> 5,
-			'Firefox'			=> 3,
-			'Chrome'			=> 4,
+			'Firefox'			=> 4,
+			'Chrome'			=> 8,
 		);
 		
+		// get the browser
 		$browser = Request::user_agent('browser');
 		
+		// get the browser version
 		$version = Request::user_agent('version');
 		
 		if (isset($notallowed[$browser]))
@@ -54,8 +141,8 @@ abstract class Nova_Hooks {
 			// if the version requirements don't line up, redirect them
 			if (version_compare($version, $notallowed[$browser], '<'))
 			{
-				header('Location:'.url::base().'browser.php?b='.$browser.'&v='.$version.'&pv='.$notallowed[$browser]);
-				exit();
+				header('Location:'.Url::base().'browser.php?b='.$browser.'&v='.$version.'&pv='.$notallowed[$browser]);
+				exit;
 			}
 		}
 	}
@@ -75,7 +162,6 @@ abstract class Nova_Hooks {
 	 * @uses	Session::instance
 	 * @uses	Session::get
 	 * @uses	Auth::is_type
-	 * @uses	Jelly::query
 	 * @return	void
 	 */
 	public static function maintenance()
@@ -95,7 +181,7 @@ abstract class Nova_Hooks {
 			if ( ! in_array($request->controller(), $ignore))
 			{
 				// get the maintenance setting
-				$maint = Jelly::query('setting', 'maintenance')->limit(1)->select()->value;
+				$maint = Model_Settings::get_settings('maintenance');
 				
 				if ($maint == 'on' and $request->controller() != 'login')
 				{
@@ -110,15 +196,12 @@ abstract class Nova_Hooks {
 	}
 	
 	/**
-	 * The module hook pulls information from the database (if the system is installed)
-	 * about which modules to load. If the system isn't installed, it will manually
-	 * load the upgrade and userguide modules so they can be used to view the user
-	 * guide or upgrade from SMS.
+	 * The module hook pulls information from the database (if the system is
+	 * installed) about which modules to load.
 	 *
 	 * @access	public
 	 * @uses	Utility::install_status
 	 * @uses	Kohana::modules
-	 * @uses	Jelly::query
 	 * @return	void
 	 */
 	public static function modules()
@@ -129,10 +212,12 @@ abstract class Nova_Hooks {
 		if ($installed)
 		{
 			// grab all of the modules out of the database
-			$dbmodules = Jelly::query('cataloguemodule')->where('status', '=', 'active')->select();
+			$dbmodules = Model_CatalogueModule::get_all_entries();
 			
 			if (count($dbmodules) > 0)
 			{
+				$addmodules = array();
+				
 				foreach ($dbmodules as $m)
 				{
 					$addmodules[$m->shortname] = EXTPATH.$m->location;
@@ -156,32 +241,6 @@ abstract class Nova_Hooks {
 				// set the new list of modules
 				Kohana::modules($newmodules);
 			}
-		}
-		else
-		{
-			// add the upgrade and userguide modules manually if the system isn't installed
-			$addmodules = array(
-				'upgrade' 	=> MODPATH.'nova/upgrade',
-				'userguide'	=> MODPATH.'kohana/userguide'
-			);
-			
-			// get all the modules
-			$allmodules = Kohana::modules();
-			
-			// find the numeric index of the core module
-			$coreposition = array_search('nova', array_keys($allmodules));
-				
-			// grab all of the modules BEFORE the core module
-			$startmodules = array_slice($allmodules, 0, $coreposition);
-			
-			// grab all of the modules AFTER (and including) the core module
-			$endmodules = array_slice($allmodules, $coreposition);
-			
-			// merge the list of modules from the database with the beginning and end core modules
-			$newmodules = array_merge($startmodules, $addmodules, $endmodules);
-			
-			// set the new list of modules
-			Kohana::modules($newmodules);
 		}
 	}
 }
