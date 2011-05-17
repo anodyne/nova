@@ -31,7 +31,7 @@ $system_versions = array(
 * updated Thresher with a brand new interface for viewing wiki pages
 * updated the upload instructions to include the maximum file size and maximum image dimensions from the config file for reference
 * updated to jquery version 1.6.1
-* updated to jquery version 1.8.12
+* updated to jquery version 1.8.13
 * updated to uniform version 1.7.5
 * updated to prettyPhoto version 3.1.2
 * updated to qTip2
@@ -245,7 +245,7 @@ $this->db->update('system_components', array('comp_version' => '1.6.1'));
 
 // update the jquery ui version info
 $this->db->where('comp_name', 'jQuery UI');
-$this->db->update('system_components', array('comp_version' => '1.8.12'));
+$this->db->update('system_components', array('comp_version' => '1.8.13'));
 
 // update the jquery prettyphoto info
 $this->db->where('comp_name', 'prettyPhoto');

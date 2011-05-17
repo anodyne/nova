@@ -2245,7 +2245,7 @@ $system_components = array(
 		'comp_desc' => 'jQuery is a lightweight JavaScript library that emphasizes interaction between JavaScript and HTML.'),
 	array(
 		'comp_name' => 'jQuery UI',
-		'comp_version' => '1.8.12',
+		'comp_version' => '1.8.13',
 		'comp_url' => 'http://jqueryui.com/',
 		'comp_desc' => 'jQuery UI is a lightweight, easily customizable interface library for the jQuery Javascript library.'),
 	array(
@@ -2688,7 +2688,7 @@ $system_versions = array(
 * updated Thresher with a brand new interface for viewing wiki pages
 * updated the upload instructions to include the maximum file size and maximum image dimensions from the config file for reference
 * updated to jquery version 1.6
-* updated to jquery version 1.8.12
+* updated to jquery version 1.8.13
 * updated to uniform version 1.7.5
 * updated to prettyPhoto version 3.1.2
 * updated to qTip2
