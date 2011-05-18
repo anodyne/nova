@@ -46,21 +46,24 @@ class Nova_controller_wiki extends Controller {
 		}
 		
 		$this->load->database();
-		$this->load->library('session');
-		$this->load->library('thresher');
-		$this->load->model('settings_model', 'settings');
-		$this->load->model('messages_model', 'msgs');
 		$this->load->model('system_model', 'sys');
-		$this->load->model('characters_model', 'char');
-		$this->load->model('users_model', 'user');
-		$this->load->model('wiki_model', 'wiki');
 		
+		// check to see if the system is installed
 		$installed = $this->sys->check_install_status();
 		
 		if ( ! $installed)
 		{
 			redirect('install/index', 'refresh');
 		}
+		
+		// these need to be loaded after the install check to prevent errors
+		$this->load->library('session');
+		$this->load->library('thresher');
+		$this->load->model('settings_model', 'settings');
+		$this->load->model('messages_model', 'msgs');
+		$this->load->model('characters_model', 'char');
+		$this->load->model('users_model', 'user');
+		$this->load->model('wiki_model', 'wiki');
 		
 		Auth::is_logged_in();
 		
