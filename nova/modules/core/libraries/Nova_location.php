@@ -110,7 +110,7 @@ abstract class Nova_location {
 	 */
 	public static function email($view, $type = 'html')
 	{
-		if (is_file(APPPATH.'views/_base_override/emails/'.$type.'/'.$file.EXT))
+		if (is_file(APPPATH.'views/_base_override/emails/'.$type.'/'.$view.EXT))
 		{
 			return '_base_override/emails/'.$type.'/'.$view;
 		}
