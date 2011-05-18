@@ -3464,7 +3464,7 @@ abstract class Nova_site extends Nova_controller_admin {
 				case 'add':
 					$label = $this->input->post('message_label', true);
 					$key = $this->input->post('message_key', true);
-					$content = $this->input->post('message_content', true);
+					$content = $this->input->post('message_content');
 					$type = $this->input->post('message_type', true);
 					
 					if (empty($label) || empty($key) || empty($content) || empty($type))
@@ -3569,11 +3569,11 @@ abstract class Nova_site extends Nova_controller_admin {
 				case 'edit':
 					$label = $this->input->post('message_label', true);
 					$key = $this->input->post('message_key', true);
-					$content = $this->input->post('message_content', true);
+					$content = $this->input->post('message_content');
 					$type = $this->input->post('message_type', true);
 					$old_key = $this->input->post('old_key', true);
 					
-					if (empty($label) || empty($key) || empty($content) || empty($type))
+					if (empty($label) or empty($key) or empty($type))
 					{
 						$message = sprintf(
 							lang('flash_empty_fields'),
