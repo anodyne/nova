@@ -12,6 +12,7 @@ Anodyne Production's next-generation RPG management system combines popular feat
 * added new process to write the database config file for you
 * added the ability to upgrade SMS Database entries to Thresher wiki pages
 * added the ability for textareas to "grow" as more text is added like Facebook
+* added the ability for site messages to have previously disallowed HTML tags (like embed, iframe, etc.) for embedding media assets from YouTube and Vimeo
 * updated seamless substitution to be able to override email view files
 * updated Thresher with a new way to create and manage categories when working on a wiki page
 * updated Thresher with a completely new user experience for managing wiki pages
