@@ -26,7 +26,7 @@ abstract class Nova_main extends Nova_controller_main {
 		
 		$news = $this->news->get_news_items(5, $this->session->userdata('userid'));
 		
-		if ($news->num_rows() > 0 && $this->options['show_news'] == 'y')
+		if ($news->num_rows() > 0 and $this->options['show_news'] == 'y')
 		{
 			$i = 1;
 			$datestring = $this->options['date_format'];
@@ -40,7 +40,7 @@ abstract class Nova_main extends Nova_controller_main {
 				$data['news'][$i]['content'] = $row->news_content;
 				$data['news'][$i]['date'] = mdate($datestring, $date);
 				$data['news'][$i]['category'] = $row->newscat_name;
-				$data['news'][$i]['author'] = $this->char->get_character_name($row->news_author_character, TRUE);
+				$data['news'][$i]['author'] = $this->char->get_character_name($row->news_author_character, true);
 				
 				++$i;
 			}
@@ -92,7 +92,7 @@ abstract class Nova_main extends Nova_controller_main {
 			
 			if ($this->form_validation->run())
 			{
-				$email = ($this->options['system_email'] == 'on') ? $this->_email('contact', $array) : FALSE;
+				$email = ($this->options['system_email'] == 'on') ? $this->_email('contact', $array) : false;
 				
 				if ( ! $email)
 				{
@@ -193,7 +193,7 @@ abstract class Nova_main extends Nova_controller_main {
 		$data['msg_credits_perm'].= "\r\n\r\n". $skin_info->skin_credits;
 		$data['msg_credits_perm'].= "\r\n\r\n". $rank_info;
 		
-		$data['edit_valid'] = (Auth::is_logged_in() && Auth::check_access('site/messages', false)) ? true : false;
+		$data['edit_valid'] = (Auth::is_logged_in() and Auth::check_access('site/messages', false)) ? true : false;
 		
 		$data['label'] = array(
 			'edit' => '[ '. ucfirst(lang('actions_edit')) .' ]',
@@ -214,31 +214,31 @@ abstract class Nova_main extends Nova_controller_main {
 		$this->load->model('ranks_model', 'ranks');
 		$this->load->helper('utility');
 		
-		$agree = $this->input->post('agree', TRUE);
-		$submit = $this->input->post('submit', TRUE);
-		$selected_pos = $this->input->post('position', TRUE);
+		$agree = $this->input->post('agree', true);
+		$submit = $this->input->post('submit', true);
+		$selected_pos = $this->input->post('position', true);
 		
-		$data['selected_position'] = (is_numeric($selected_pos) && $selected_pos > 0) ? $selected_pos : 0;
+		$data['selected_position'] = (is_numeric($selected_pos) and $selected_pos > 0) ? $selected_pos : 0;
 		$desc = $this->pos->get_position($data['selected_position'], 'pos_desc');
-		$data['pos_desc'] = ($desc !== FALSE) ? $desc : FALSE;
+		$data['pos_desc'] = ($desc !== false) ? $desc : false;
 		
-		if ($submit != FALSE)
+		if ($submit !== false)
 		{
 			// user POST variables
-			$email = $this->input->post('email', TRUE);
-			$real_name = $this->input->post('name',TRUE);
-			$im = $this->input->post('instant_message', TRUE);
-			$dob = $this->input->post('date_of_birth', TRUE);
-			$password = $this->input->post('password', TRUE);
+			$email = $this->input->post('email', true);
+			$real_name = $this->input->post('name',true);
+			$im = $this->input->post('instant_message', true);
+			$dob = $this->input->post('date_of_birth', true);
+			$password = $this->input->post('password', true);
 			
 			// character POST variables
-			$first_name = $this->input->post('first_name',TRUE);
-			$middle_name = $this->input->post('middle_name', TRUE);
-			$last_name = $this->input->post('last_name', TRUE);
-			$suffix = $this->input->post('suffix',TRUE);
-			$position = $this->input->post('position_1',TRUE);
+			$first_name = $this->input->post('first_name',true);
+			$middle_name = $this->input->post('middle_name', true);
+			$last_name = $this->input->post('last_name', true);
+			$suffix = $this->input->post('suffix',true);
+			$position = $this->input->post('position_1',true);
 			
-			if ($position == 0 || $first_name == '' || empty($password) || empty($email))
+			if ($position == 0 or $first_name == '' or empty($password) or empty($email))
 			{
 				$message = sprintf(
 					lang('flash_empty_fields'),
@@ -256,7 +256,7 @@ abstract class Nova_main extends Nova_controller_main {
 				$ban['ip'] = $this->sys->get_item('bans', 'ban_ip', $this->input->ip_address());
 				$ban['email'] = $this->sys->get_item('bans', 'ban_email', $email);
 				
-				if ($ban['ip'] !== FALSE || $ban['email'] !== FALSE)
+				if ($ban['ip'] !== false or $ban['email'] !== false)
 				{
 					$message = sprintf(
 						lang('text_ban_join'),
@@ -275,7 +275,7 @@ abstract class Nova_main extends Nova_controller_main {
 					// grab the user id
 					$check_user = $this->user->check_email($email);
 					
-					if ($check_user === FALSE)
+					if ($check_user === false)
 					{
 						// build the users data array
 						$user_array = array(
@@ -300,7 +300,7 @@ abstract class Nova_main extends Nova_controller_main {
 					}
 					
 					// set the user id
-					$user = ($check_user === FALSE) ? $user_id : $check_user;
+					$user = ($check_user === false) ? $user_id : $check_user;
 					
 					// build the characters data array
 					$character_array = array(
@@ -318,7 +318,7 @@ abstract class Nova_main extends Nova_controller_main {
 					$character_id = $this->db->insert_id();
 					
 					// update the main character if this is their first app
-					if ($check_user === FALSE)
+					if ($check_user === false)
 					{
 						$main_char = array('main_char' => $character_id);
 						$update_main = $this->user->update_user($user, $main_char);
@@ -363,7 +363,7 @@ abstract class Nova_main extends Nova_controller_main {
 						}
 					}
 					
-					if ($character < 1 && $users < 1)
+					if ($character < 1 and $users < 1)
 					{
 						$message = sprintf(
 							lang('flash_failure'),
@@ -384,7 +384,7 @@ abstract class Nova_main extends Nova_controller_main {
 						);
 						
 						// execute the email method
-						$email_user = ($this->options['system_email'] == 'on') ? $this->_email('join_user', $user_data) : FALSE;
+						$email_user = ($this->options['system_email'] == 'on') ? $this->_email('join_user', $user_data) : false;
 						
 						$gm_data = array(
 							'email' => $email,
@@ -396,7 +396,7 @@ abstract class Nova_main extends Nova_controller_main {
 						);
 						
 						// execute the email method
-						$email_gm = ($this->options['system_email'] == 'on') ? $this->_email('join_gm', $gm_data) : FALSE;
+						$email_gm = ($this->options['system_email'] == 'on') ? $this->_email('join_gm', $gm_data) : false;
 						
 						$message = sprintf(
 							lang('flash_success'),
@@ -421,11 +421,11 @@ abstract class Nova_main extends Nova_controller_main {
 			$this->_regions['flash_message'] = Location::view('flash', $this->skin, 'main', $flash);
 		}
 		
-		if ($agree == FALSE && $submit == FALSE)
+		if ($agree == false and $submit == false)
 		{
 			$data['msg'] = $this->msgs->get_message('join_disclaimer');
 			
-			if ($this->uri->segment(3) != FALSE)
+			if ($this->uri->segment(3) != false)
 			{
 				$data['position'] = $this->uri->segment(3);
 			}
@@ -484,9 +484,9 @@ abstract class Nova_main extends Nova_controller_main {
 								break;
 									
 								case 'select':
-									$value = FALSE;
-									$values = FALSE;
-									$input = FALSE;
+									$value = false;
+									$values = false;
+									$input = false;
 								
 									$values = $this->char->get_bio_values($field->field_id);
 									
@@ -619,7 +619,7 @@ abstract class Nova_main extends Nova_controller_main {
 		$this->load->model('news_model', 'news');
 		$this->load->helper('text');
 		
-		$category = $this->uri->segment(3, 0, TRUE);
+		$category = $this->uri->segment(3, 0, true);
 		
 		// grab the data from the models
 		$news = $this->news->get_category_news($category, $this->session->userdata('userid'));
@@ -666,7 +666,7 @@ abstract class Nova_main extends Nova_controller_main {
 				$data['news'][$i]['date'] = mdate($datestring, $date);
 				$data['news'][$i]['cat_id'] = $row->news_cat;
 				$data['news'][$i]['category'] = $row->newscat_name;
-				$data['news'][$i]['author'] = $this->char->get_character_name($row->news_author_character, TRUE);
+				$data['news'][$i]['author'] = $this->char->get_character_name($row->news_author_character, true);
 				$data['news'][$i]['comment_count'] = $this->news->count_news_comments($row->news_id);
 				
 				++$i;
@@ -709,9 +709,9 @@ abstract class Nova_main extends Nova_controller_main {
 	{
 		$this->load->model('news_model', 'news');
 		
-		$id = $this->uri->segment(3, FALSE, TRUE);
+		$id = $this->uri->segment(3, false, true);
 		
-		if (Auth::is_logged_in() && isset($_POST['submit']))
+		if (Auth::is_logged_in() and isset($_POST['submit']))
 		{
 			$comment_text = $this->input->post('comment_text');
 			
@@ -753,7 +753,7 @@ abstract class Nova_main extends Nova_controller_main {
 							'comment' => $comment_text);
 						
 						// send the email
-						$email = ($this->options['system_email'] == 'on') ? $this->_email('news_comment_pending', $email_data) : FALSE;
+						$email = ($this->options['system_email'] == 'on') ? $this->_email('news_comment_pending', $email_data) : false;
 					}
 					else
 					{
@@ -772,7 +772,7 @@ abstract class Nova_main extends Nova_controller_main {
 								'comment' => $comment_text);
 							
 							// send the email
-							$email = ($this->options['system_email'] == 'on') ? $this->_email('news_comment', $email_data) : FALSE;
+							$email = ($this->options['system_email'] == 'on') ? $this->_email('news_comment', $email_data) : false;
 						}
 					}
 				}
@@ -805,7 +805,7 @@ abstract class Nova_main extends Nova_controller_main {
 		// set the date format
 		$datestring = $this->options['date_format'];
 		
-		if ($row !== FALSE)
+		if ($row !== false)
 		{
 			// set the date
 			$date = gmt_to_local($row->news_date, $this->timezone, $this->dst);
@@ -825,29 +825,29 @@ abstract class Nova_main extends Nova_controller_main {
 			$data['title'] = $row->news_title;
 			$data['content'] = $row->news_content;
 			$data['date'] = mdate($datestring, $date);
-			$data['author'] = $this->char->get_character_name($row->news_author_character, TRUE);
+			$data['author'] = $this->char->get_character_name($row->news_author_character, true);
 			$data['category'] = $row->newscat_name;
 			$data['tags'] = $row->news_tags;
 			$data['news_id'] = $id;
 			$data['private'] = $row->news_private;
 			
 			// determine if they can edit the log
-			if (Auth::is_logged_in() === TRUE && ( (Auth::get_access_level('manage/news') == 2) ||
-				(Auth::get_access_level('manage/news') == 1 && $this->session->userdata('userid') == $row->news_author_user)))
+			if (Auth::is_logged_in() === true and ( (Auth::get_access_level('manage/news') == 2) or
+				(Auth::get_access_level('manage/news') == 1 and $this->session->userdata('userid') == $row->news_author_user)))
 			{
-				$data['edit_valid'] = TRUE;
+				$data['edit_valid'] = true;
 			}
 			else
 			{
-				$data['edit_valid'] = FALSE;
+				$data['edit_valid'] = false;
 			}
 			
-			if ($next !== FALSE)
+			if ($next !== false)
 			{
 				$data['next'] = $next;
 			}
 			
-			if ($prev !== FALSE)
+			if ($prev !== false)
 			{
 				$data['prev'] = $prev;
 			}
@@ -897,7 +897,7 @@ abstract class Nova_main extends Nova_controller_main {
 		}
 		else
 		{
-			if ($id === FALSE)
+			if ($id === false)
 			{
 				$data['title'] = lang('error_title_invalid_id');
 				$data['msg_error'] = lang('error_msg_news_id_numeric');
@@ -924,7 +924,7 @@ abstract class Nova_main extends Nova_controller_main {
 			{
 				$date = gmt_to_local($c->ncomment_date, $this->timezone, $this->dst);
 				
-				$data['comments'][$i]['author'] = $this->char->get_character_name($c->ncomment_author_character, TRUE);
+				$data['comments'][$i]['author'] = $this->char->get_character_name($c->ncomment_author_character, true);
 				$data['comments'][$i]['content'] = $c->ncomment_content;
 				$data['comments'][$i]['date'] = mdate($datestring, $date);
 				
@@ -985,7 +985,7 @@ abstract class Nova_main extends Nova_controller_main {
 				$loc = Location::email('main_contact', $this->email->mailtype);
 				
 				// parse the message
-				$message = $this->parser->parse($loc, $email_data, TRUE);
+				$message = $this->parser->parse($loc, $email_data, true);
 				
 				// get the game masters
 				$gm = $this->user->get_gm_emails();
@@ -1028,7 +1028,7 @@ abstract class Nova_main extends Nova_controller_main {
 				$loc = Location::email('main_news_comment', $this->email->mailtype);
 				
 				// parse the message
-				$message = $this->parser->parse($loc, $email_data, TRUE);
+				$message = $this->parser->parse($loc, $email_data, true);
 				
 				// set the parameters for sending the email
 				$this->email->from($from, $name);
@@ -1067,7 +1067,7 @@ abstract class Nova_main extends Nova_controller_main {
 				$loc = Location::email('comment_pending', $this->email->mailtype);
 				
 				// parse the message
-				$message = $this->parser->parse($loc, $email_data, TRUE);
+				$message = $this->parser->parse($loc, $email_data, true);
 				
 				// set the parameters for sending the email
 				$this->email->from($from, $name);
@@ -1096,7 +1096,7 @@ abstract class Nova_main extends Nova_controller_main {
 				$loc = Location::email('main_join_user', $this->email->mailtype);
 				
 				// parse the message
-				$message = $this->parser->parse($loc, $email_data, TRUE);
+				$message = $this->parser->parse($loc, $email_data, true);
 				
 				// set the parameters for sending the email
 				$this->email->from($this->options['default_email_address'], $this->options['default_email_name']);
@@ -1184,7 +1184,7 @@ abstract class Nova_main extends Nova_controller_main {
 				$em_loc = Location::email('main_join_gm', $this->email->mailtype);
 				
 				// parse the message
-				$message = $this->parser->parse($em_loc, $email_data, TRUE);
+				$message = $this->parser->parse($em_loc, $email_data, true);
 				
 				// get the game masters email addresses
 				$gm = $this->user->get_gm_emails();
