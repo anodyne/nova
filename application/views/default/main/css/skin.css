@@ -522,7 +522,7 @@ input.button-main[disabled]:hover {
 |---------------------------------------------------------------
 */
 #comments p, #news_blocks p, .post_info {
-	background-color: #f5f8f9;
+	background-color: #f7f7f7;
 	border: 1px solid #ccc;
 }
 
