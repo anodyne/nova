@@ -8,7 +8,7 @@
 <?php echo text_output($header, 'h1', 'page-head');?>
 
 <?php if ($this->options['system_email'] == 'on'): ?>
-	<?php echo text_output($msg);?><br />
+	<?php echo text_output($msg);?>
 	
 	<?php echo form_open('main/contact');?>
 		<p>
