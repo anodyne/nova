@@ -145,3 +145,26 @@ function _after()
 }
 
 //------------------------------------------------------------------------------
+
+/**
+ * Writes information passed to the function to a file.
+ *
+ * @param	string	the text to write to the file
+ * @return	void
+ */
+function write_to_file($content)
+{
+    $file = MODPATH.'assets/debug/output.txt';
+    
+    // open the file
+    $handle = fopen($file, 'a');
+    
+    // write the contents to the file
+    fwrite($handle, "\r\n\r\n");
+    fwrite($handle, $content);
+    
+    // close the file
+    fclose($handle);
+}
+
+//------------------------------------------------------------------------------
