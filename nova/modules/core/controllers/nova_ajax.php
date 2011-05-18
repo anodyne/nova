@@ -6123,6 +6123,8 @@ abstract class Nova_ajax extends Controller {
 	
 	public function edit_site_message()
 	{
+		$this->load->model('messages_model', 'msgs');
+		
 		$head = sprintf(
 			lang('fbx_head'),
 			ucwords(lang('actions_edit')),
