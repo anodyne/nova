@@ -27,7 +27,7 @@ class Controller_Nova_Login extends Controller_Nova_Base {
 		$this->settingsArray = array_merge($this->settingsArray, $additionalSettings);
 		
 		// pull the settings and put them into the options object
-		$this->options = Model_Setting::find_all($this->settingsArray);
+		$this->options = Model_Settings::get_settings($this->settingsArray);
 		
 		// set the variables
 		$this->skin		= $this->options->skin_login;
@@ -61,7 +61,7 @@ class Controller_Nova_Login extends Controller_Nova_Base {
 		$data = $this->template->layout->content;
 		
 		// grab the UID
-		$uid = Jelly::query('system', 1)->select()->uid;
+		$uid = Model_System::get_uid();
 		
 		// is the session data for a lockout available?
 		$lockout = $this->session->get('nova_'.$uid.'_lockout_time');
