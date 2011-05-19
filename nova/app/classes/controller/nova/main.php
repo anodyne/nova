@@ -1,4 +1,4 @@
-<?php defined('SYSPATH') or die('No direct script access.');
+<?php
 /**
  * Main Controller
  *
@@ -6,7 +6,6 @@
  * @category	Controllers
  * @author		Anodyne Productions
  * @copyright	2011 Anodyne Productions
- * @since		3.0
  */
 
 class Controller_Nova_Main extends Controller_Nova_Base {
@@ -31,7 +30,7 @@ class Controller_Nova_Main extends Controller_Nova_Base {
 		$this->skin		= $this->session->get('skin_main', $this->options->skin_main);
 		$this->rank		= $this->session->get('display_rank', $this->options->display_rank);
 		$this->timezone	= $this->session->get('timezone', $this->options->timezone);
-		$this->dst		= $this->session->get('dst', $this->options->daylight_savings);
+		$this->dst		= $this->session->get('dst', (bool) $this->options->daylight_savings);
 		
 		// set the values to be passed to the views
 		$vars = array(
@@ -70,54 +69,36 @@ class Controller_Nova_Main extends Controller_Nova_Base {
 		$this->template->layout->footer->extra 		= Model_Messages::get_message('footer');
 	}
 	
-	public function after()
-	{
-		// send the response
-		$this->response->body($this->template);
-	}
-	
 	public function action_index()
 	{
 		// create a new content view
-		$this->template->layout->content = View::factory(Location::view('main_index', $this->skin, 'pages'));
+		$this->_data = View::factory(Location::view('main_index', $this->skin, 'pages'));
 		
-		// assign the object a shorter variable to use in the method
-		$data = $this->template->layout->content;
-		
-		# TODO: when widgets are worked on, this will need to uncommented
 		// get all of the widgets for the page
-		//$widgets = Jelly::query('cataloguewidget')->where('page', '=', 'main/index')->select();
-		$widgets = array();
-		
-		// set the widgets array
-		$data->widgets = array();
+		$widgets = Model_CatalogueWidget::get_all_items();
 		
 		if (count($widgets) > 0)
 		{
 			// loop through the widgets and pass the info to the view
 			foreach ($widgets as $w)
 			{
-				$data->widgets[$w->zone] = $w;
+				$widgets[$w->zone] = $w;
 			}
 		}
 		
+		// pass the widgets along
+		$this->_data->widgets = $widgets;
+		
 		// content
-		$this->template->title.= ucfirst(___("main"));
-		$data->header = Model_Messages::get_message('welcome_head');
-		$data->message = Model_Messages::get_message('welcome_msg');
+		$this->_data->title = ucfirst(___("main"));
+		$this->_data->header = Model_Messages::get_message('welcome_head');
+		$this->_data->message = Model_Messages::get_message('welcome_msg');
 	}
 	
 	public function action_credits()
 	{
 		// create a new content view
-		$this->template->layout->content = View::factory(Location::view('main_credits', $this->skin, 'pages'));
-		
-		// assign the object a shorter variable to use in the method
-		$this->data = $this->template->layout->content;
-		
-		// content
-		$this->template->title.= ucwords(___("site credits"));
-		$this->data->header = ucwords(___("site credits"));
+		$this->_data = View::factory(Location::view('main_credits', $this->skin, 'pages'));
 		
 		// non-editable credits
 		$credits_perm = Model_Messages::get_message('credits_perm');
@@ -125,24 +106,26 @@ class Controller_Nova_Main extends Controller_Nova_Base {
 		$credits_perm.= "\r\n\r\n".Model_CatalogueRank::get_default()->credits;
 		
 		// credits
-		$this->data->credits_perm = nl2br($credits_perm);
-		$this->data->credits = Model_Messages::get_message('credits');
+		$this->_data->credits_perm = nl2br($credits_perm);
+		$this->_data->credits = Model_Messages::get_message('credits');
 		
 		// should we show an edit link?
-		$this->data->edit = (Auth::is_logged_in() and Auth::check_access('site/messages', false)) ? true : false;
+		$this->_data->edit = (Auth::is_logged_in() and Auth::check_access('site/messages', false)) ? true : false;
 		
 		# TODO: remove this after the site messages management stuff is done
-		$this->data->edit = false;
+		$this->_data->edit = false;
+		
+		// content
+		$this->_data->title = ucwords(___("site credits"));
+		$this->_data->header = ucwords(___("site credits"));
 	}
 
 	public function action_test()
 	{
-		/*// checking a POST
+		// checking a POST
 		if (HTTP_Request::POST == $this->request->method())
 		{
 			// do something
 		}
-		*/
-		Event::trigger('post_execute');
 	}
 }
