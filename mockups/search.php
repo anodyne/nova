@@ -74,10 +74,8 @@ switch ($type)
 					}
 				}
 				
-				
-				
-				$chars = "SELECT a.userid, a.name, a.email, b.first_name, b.last_name FROM nova_users AS a, nova_characters AS b ";
-				$chars.= "WHERE (b.first_name LIKE '%$query%' OR b.last_name LIKE '%$query%') AND a.userid = b.user";
+				$chars = "SELECT a.id, a.name, a.email, b.first_name, b.last_name FROM nova_users AS a, nova_characters AS b ";
+				$chars.= "WHERE (b.first_name LIKE '%$query%' OR b.last_name LIKE '%$query%') AND a.id = b.user_id";
 				$charsR = mysql_query($chars);
 				$charsA = array();
 				

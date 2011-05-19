@@ -4,7 +4,7 @@
 		<meta charset="utf-8">
 		<title>users/index</title>
 		
-		<link rel="stylesheet" href="../nova/modules/nova/core/views/design/style.css">
+		<link rel="stylesheet" href="../nova/app/views/design/style.css">
 		
 		<script type="text/javascript" src="../nova/modules/assets/js/jquery.js"></script>
 		<script type="text/javascript">
