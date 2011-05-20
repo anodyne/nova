@@ -45,9 +45,9 @@
 			</tbody>
 		</table><br />
 		<?php else: ?>
-			<?php echo text_output($label['nospecs'], 'h4', 'orange');?>
+			<?php echo text_output($label['nospecs_all'], 'h4', 'orange');?>
 		<?php endif; ?>
 	<?php endforeach; ?>
 <?php else: ?>
-	<?php echo text_output($label['nospecs'], 'h3', 'orange');?>
+	<?php echo text_output($label['nospecs_all'], 'h3', 'orange');?>
 <?php endif; ?>
