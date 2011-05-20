@@ -12,27 +12,27 @@
 abstract class Nova_login extends Controller {
 	
 	/**
-	 * The options array that stores all the settings from the database
+	 * @var	array 	The options array that stores all the settings from the database
 	 */
 	public $options;
 	
 	/**
-	 * The current skin
+	 * @var	string	The current skin
 	 */
 	public $skin;
 	
 	/**
-	 * The current timezone
+	 * @var	string	The current timezone
 	 */
 	public $timezone;
 	
 	/**
-	 * The current daylight savings time setting
+	 * @var	bool	The current daylight savings time setting
 	 */
 	public $dst;
 	
 	/**
-	 * Variable to store all the information about template regions
+	 * @var	array 	Variable to store all the information about template regions
 	 */
 	protected $_regions = array();
 	
@@ -46,17 +46,20 @@ abstract class Nova_login extends Controller {
 		}
 		
 		$this->load->database();
-		$this->load->library('session');
-		$this->load->model('settings_model', 'settings');
 		$this->load->model('system_model', 'sys');
-		$this->load->model('users_model', 'user');
 		
+		// check to see if the system is installed
 		$installed = $this->sys->check_install_status();
 		
 		if ( ! $installed)
 		{
 			redirect('install/index', 'refresh');
 		}
+		
+		// these need to be called in later to prevent errors from being thrown
+		$this->load->library('session');
+		$this->load->model('settings_model', 'settings');
+		$this->load->model('users_model', 'user');
 		
 		// an array of items to pull from the settings table
 		$settings_array = array(
@@ -123,7 +126,7 @@ abstract class Nova_login extends Controller {
 		$email_flash = $this->session->flashdata('email');
 		
 		// if there's something in the flashdata, let's check how many times they've tried
-		if ($email_flash !== FALSE)
+		if ($email_flash !== false)
 		{
 			$attempt_num = $this->sys->count_login_attempts($email_flash);
 		}
@@ -132,7 +135,7 @@ abstract class Nova_login extends Controller {
 		$attempt = $this->sys->get_last_login_attempt($this->input->ip_address(), 'login_ip');
 		
 		// make sure we only show this error if they've reached the allowed login attempts
-		if ($attempt !== FALSE && $attempt_num >= Auth::$allowed_login_attempts)
+		if ($attempt !== false and $attempt_num >= Auth::$allowed_login_attempts)
 		{
 			$timeframe = now() - $attempt->login_time;
 			$timeframe_mins = $timeframe / 60;
@@ -146,9 +149,9 @@ abstract class Nova_login extends Controller {
 					sprintf(
 						lang('error_last_login_time'),
 						$timeframe_mins,
-						($timeframe_mins > 0 && $timeframe_mins < 2) ? lang('time_minute') : lang('time_minutes'),
+						($timeframe_mins > 0 and $timeframe_mins < 2) ? lang('time_minute') : lang('time_minutes'),
 						ceil((30 - $timeframe_mins)),
-						((30 - $timeframe_mins) > 0 && (30 - $timeframe_mins) < 2) ? lang('time_minute') : lang('time_minutes')
+						((30 - $timeframe_mins) > 0 and (30 - $timeframe_mins) < 2) ? lang('time_minute') : lang('time_minutes')
 					)
 				);
 				$flash['message'] = text_output($message);
@@ -308,9 +311,9 @@ abstract class Nova_login extends Controller {
 		
 		if (isset($_POST['submit']))
 		{
-			$email = $this->input->post('email', TRUE);
-			$question = $this->input->post('question', TRUE);
-			$answer = $this->input->post('answer', TRUE);
+			$email = $this->input->post('email', true);
+			$question = $this->input->post('question', true);
+			$answer = $this->input->post('answer', true);
 			
 			$info = $this->user->get_user_details_by_email($email);
 			
