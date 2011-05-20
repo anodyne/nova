@@ -18,6 +18,8 @@ Anodyne Production's next-generation RPG management system combines popular feat
 * updated Thresher with a completely new user experience for managing wiki pages
 * updated Thresher with a brand new interface for viewing wiki pages
 * updated the upload instructions to include the maximum file size and maximum image dimensions from the config file for reference
+* updated the deck listing page (sim/decks) to not use a table which makes for a much cleaner layout
+* updated the deck listing page (sim/decks) to have a menu of decks for quickly moving to a deck item without having to scroll (handy for sim with lots of decks)
 * updated to jquery version 1.6.1
 * updated to jquery version 1.8.13
 * updated to uniform version 1.7.5
