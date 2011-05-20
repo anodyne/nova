@@ -7,3 +7,12 @@
 * Rename from Crew Awards to Awards
 * Categories should actually be called type
 * Add the ability to create actual categories to sort awards by different types (level 1, level 2, battle awards, exploration awards, etc.)
+
+## Specs
+
+* Specs needs to be completely overhauled to be more flexible
+* Specs should be separated in to tabs
+    * Specs
+    * Deck listing
+    * Tour items
+    * Related items (shuttles, etc.)
