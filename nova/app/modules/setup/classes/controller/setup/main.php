@@ -187,7 +187,7 @@ class Controller_Setup_Main extends Controller_Template {
 		$this->template->layout->content = View::factory('components/pages/setup/main_config');
 		
 		// create a new js view
-		$this->template->javascript = View::factory('components/pages/setup/main_config_js');
+		$this->template->javascript = View::factory('components/js/setup/main_config_js');
 		
 		// assign the object a shorter variable to use in the method
 		$data = $this->template->layout->content;
@@ -195,9 +195,9 @@ class Controller_Setup_Main extends Controller_Template {
 		// pass the step over to the view file
 		$data->step = $step;
 		
-		if ( ! file_exists(MODPATH.'assets/database/db.mysql'.EXT))
+		if ( ! file_exists(MODPATH.'modules/assets/database/db.mysql'.EXT))
 		{
-			$data->message = ___('setup.config.text.noconfig', array(':modules' => MODFOLDER, ':ext' => EXT));
+			$data->message = ___('setup.config.text.noconfig', array(':modules' => MODFOLDER.'/modules', ':ext' => EXT));
 		}
 		else
 		{
@@ -216,7 +216,7 @@ class Controller_Setup_Main extends Controller_Template {
 					switch ($step)
 					{
 						case 0:
-							$data->message = ___('setup.config.text.step0', array(':modules' => MODFOLDER, ':appfolder' => APPFOLDER));
+							$data->message = ___('setup.config.text.step0', array(':modules' => MODFOLDER.'/modules', ':appfolder' => APPFOLDER));
 							
 							// build the next step button
 							$next = array(
