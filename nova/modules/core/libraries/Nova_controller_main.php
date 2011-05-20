@@ -6,38 +6,38 @@
  * @category	Library
  * @author		Anodyne Productions
  * @copyright	2011 Anodyne Productions
- * @version		2.0
+ * @since		2.0
  */
 
 class Nova_controller_main extends Controller {
 	
 	/**
-	 * The options array that stores all the settings from the database
+	 * @var	array 	The options array that stores all the settings from the database
 	 */
 	public $options;
 	
 	/**
-	 * The current skin
+	 * @var	string	The current skin
 	 */
 	public $skin;
 	
 	/**
-	 * The current rank set
+	 * @var string	The current rank set
 	 */
 	public $rank;
 	
 	/**
-	 * The current timezone
+	 * @var	string	The current timezone
 	 */
 	public $timezone;
 	
 	/**
-	 * The current daylight savings time setting
+	 * @var	bool	The current daylight savings time setting
 	 */
 	public $dst;
 	
 	/**
-	 * Variable to store all the information about template regions
+	 * @var	array 	Variable to store all the information about template regions
 	 */
 	protected $_regions = array();
 	
@@ -68,6 +68,7 @@ class Nova_controller_main extends Controller {
 		$this->load->model('characters_model', 'char');
 		$this->load->model('users_model', 'user');
 		
+		// are we logged in?
 		Auth::is_logged_in();
 		
 		// these are the options we want to pull for all main pagesg
