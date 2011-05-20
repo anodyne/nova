@@ -20,12 +20,12 @@ require MODPATH.'core/libraries/Nova_REST_Controller'.EXT;
 abstract class Nova_api extends Nova_REST_Controller {
 	
 	/**
-	 * The version of the API.
+	 * @var	string	The version of the API.
 	 */
 	public $_api_version = '1.0.0';
 	
 	/**
-	 * The date format.
+	 * @var	string	The date format.
 	 */
 	public $_date_format = '%j %M %Y %G:%i';
 	
@@ -33,7 +33,7 @@ abstract class Nova_api extends Nova_REST_Controller {
 	 * Get information about the API.
 	 *
 	 * @access	public
-	 * @since	1.0
+	 * @return	object	a response object with content and a response code
 	 */
 	public function info_get()
 	{
@@ -54,11 +54,6 @@ abstract class Nova_api extends Nova_REST_Controller {
 		$this->response($output, 200);
 	}
 	
-	public function info_put()
-	{
-		$this->response(null, 200);
-	}
-	
 	/**
 	 * Get a specific character from the database. Due to the nature of Nova's
 	 * dynamic character data, no data from outside of the characters table is
@@ -70,7 +65,7 @@ abstract class Nova_api extends Nova_REST_Controller {
 	 *     index.php/api/character/id/1/format/json
 	 *
 	 * @access	public
-	 * @since	1.0
+	 * @return	object	a response object with content and a response code
 	 */
 	public function character_get()
 	{
@@ -126,7 +121,7 @@ abstract class Nova_api extends Nova_REST_Controller {
 	 *     index.php/api/characters/status/pending/format/json
 	 *
 	 * @access	public
-	 * @since	1.0
+	 * @return	object	a response object with content and a response code
 	 */
 	public function characters_get()
 	{
@@ -178,7 +173,7 @@ abstract class Nova_api extends Nova_REST_Controller {
 	 *     index.php/api/log/1/format/json
 	 *
 	 * @access	public
-	 * @since	1.0
+	 * @return	object	a response object with content and a response code
 	 */
 	public function log_get()
 	{
@@ -238,7 +233,7 @@ abstract class Nova_api extends Nova_REST_Controller {
 	 *     index.php/api/logs/format/json
 	 *
 	 * @access	public
-	 * @since	1.0
+	 * @return	object	a response object with content and a response code
 	 */
 	public function logs_get()
 	{
@@ -316,7 +311,7 @@ abstract class Nova_api extends Nova_REST_Controller {
 	 *     index.php/api/mission/format/json
 	 *
 	 * @access	public
-	 * @since	1.0
+	 * @return	object	a response object with content and a response code
 	 */
 	public function mission_get()
 	{
@@ -354,7 +349,7 @@ abstract class Nova_api extends Nova_REST_Controller {
 	 *     index.php/api/news/id/1/format/json
 	 *
 	 * @access	public
-	 * @since	1.0
+	 * @return	object	a response object with content and a response code
 	 */
 	public function news_get()
 	{
@@ -422,7 +417,7 @@ abstract class Nova_api extends Nova_REST_Controller {
 	 *     index.php/api/allnews/format/json
 	 *
 	 * @access	public
-	 * @since	1.0
+	 * @return	object	a response object with content and a response code
 	 */
 	public function allnews_get()
 	{
@@ -504,7 +499,7 @@ abstract class Nova_api extends Nova_REST_Controller {
 	 *     index.php/api/missionpost/1/format/json
 	 *
 	 * @access	public
-	 * @since	1.0
+	 * @return	object	a response object with content and a response code
 	 */
 	public function missionpost_get()
 	{
@@ -565,7 +560,7 @@ abstract class Nova_api extends Nova_REST_Controller {
 	 *     index.php/api/missionposts/format/json
 	 *
 	 * @access	public
-	 * @since	1.0
+	 * @return	object	a response object with content and a response code
 	 */
 	public function missionposts_get()
 	{
@@ -648,7 +643,7 @@ abstract class Nova_api extends Nova_REST_Controller {
 	 *     index.php/api/user/id/1/format/json
 	 *
 	 * @access	private
-	 * @since	1.0
+	 * @return	object	a response object with content and a response code
 	 */
 	private function user_get()
 	{
@@ -725,7 +720,7 @@ abstract class Nova_api extends Nova_REST_Controller {
 	 *     index.php/api/users/status/pending/format/json
 	 *
 	 * @access	private
-	 * @since	1.0
+	 * @return	object	a response object with content and a response code
 	 */
 	private function users_get()
 	{
