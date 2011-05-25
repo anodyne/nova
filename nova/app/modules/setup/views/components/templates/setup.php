@@ -15,7 +15,7 @@
 		</div>
 		
 		<div id="loaded" class="UITheme">
-			<?php if ($request->action() == 'step' and $request->parameter('id') > 0): ?>
+			<?php if ($request->action() == 'step' and $request->param('id') > 0): ?>
 				<div id="amount">
 					<span id="percent">0%</span>
 					<div id="progress-container">
