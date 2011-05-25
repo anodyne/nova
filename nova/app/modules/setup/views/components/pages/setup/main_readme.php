@@ -56,7 +56,7 @@
 	<ul class="square">
 		<li>A webserver with <strong>at least</strong> 15MB of disk space</li>
 		<li>A MySQL database</li>
-		<li>An installation of <strong>Nova 2.0 or higher</strong></li>
+		<li>An installation of either <strong>Nova 1.2.4</strong> or <strong>Nova 2.0 or higher</strong></li>
 	</ul>
 	
 	<p class="fontMedium bold"><a href="<?php echo Url::site('setup/update/index');?>">Check for updates &raquo;</a></p>
