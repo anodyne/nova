@@ -294,4 +294,29 @@ class Model_User extends Model {
 		
 		return $record;
 	}
+	
+	/**
+	 * Update a user.
+	 *
+	 * @access	public
+	 * @param	int		the user ID to update
+	 * @param	array 	a data array to use for updating the record
+	 * @return	object	the user object of the updated user
+	 */
+	public static function update_user($user, array $data)
+	{
+		// get the user
+		$record = static::find($user);
+		
+		// loop through the data array and make the changes
+		foreach ($data as $key => $value)
+		{
+			$record->$key = $value;
+		}
+		
+		// save the record
+		$record->save();
+		
+		return $record;
+	}
 }
