@@ -9,6 +9,8 @@
  * @version		3.0
  */
  
+# TODO: need to remove the Kohana::$environment check around the login redirect
+
 class Controller_Setup_Main extends Controller_Template {
 	
 	public function before()
@@ -16,7 +18,7 @@ class Controller_Setup_Main extends Controller_Template {
 		parent::before();
 		
 		// make sure the database config file exists
-		if ( ! file_exists(APPPATH.'config/database'.EXT))
+		if ( ! file_exists(APPPATH.'config/database.php'))
 		{
 			if ($this->request->action() != 'config')
 			{
@@ -53,8 +55,11 @@ class Controller_Setup_Main extends Controller_Template {
 				}
 				else
 				{
-					// no session? send them away
-					$this->request->redirect('login/error/1');
+					if (Kohana::$environment !== Kohana::DEVELOPMENT)
+					{
+						// no session? send them away
+						$this->request->redirect('login/error/1');
+					}
 				}
 			}
 		}
@@ -195,13 +200,13 @@ class Controller_Setup_Main extends Controller_Template {
 		// pass the step over to the view file
 		$data->step = $step;
 		
-		if ( ! file_exists(MODPATH.'modules/assets/database/db.mysql'.EXT))
+		if ( ! file_exists(MODPATH.'app/modules/setup/assets/db.mysql.php'))
 		{
-			$data->message = ___('setup.config.text.noconfig', array(':modules' => MODFOLDER.'/modules', ':ext' => EXT));
+			$data->message = ___('setup.config.text.noconfig', array(':modules' => MODFOLDER.'/modules', ':ext' => '.php'));
 		}
 		else
 		{
-			if (file_exists(APPPATH.'config/database'.EXT))
+			if (file_exists(APPPATH.'config/database.php'))
 			{
 				$data->message = ___('setup.config.text.exists', array(':appfolder' => APPFOLDER));
 			}
@@ -352,7 +357,7 @@ class Controller_Setup_Main extends Controller_Template {
 							$check = array_intersect($disabled, $need);
 							
 							// pull in the mysql file
-							$file = file(MODPATH.'modules/assets/database/db.mysql'.EXT);
+							$file = file(MODPATH.'app/modules/setup/assets/db.mysql.php');
 							
 							if (is_array($file))
 							{
@@ -421,7 +426,7 @@ return array
 								chmod(APPPATH.'config', 0777);
 								
 								// open the file
-								$handle = fopen(APPPATH.'config/database'.EXT, 'w');
+								$handle = fopen(APPPATH.'config/database.php', 'w');
 								
 								// figure out if the write was successful
 								$write = false;
@@ -437,7 +442,7 @@ return array
 								
 								try {
 									// try to chmod the file to the proper permissions
-									chmod(APPPATH.'config/database'.EXT, 0666);
+									chmod(APPPATH.'config/database.php', 0666);
 								} catch (Exception $e) {
 									// get an instance of the log class
 									$log = Kohana_Log::instance();
@@ -473,7 +478,7 @@ return array
 								{
 									$data->code = $code;
 								
-									$data->message = ___('setup.config.text.step3nowrite', array(':ext' => EXT, ':appfolder' => APPFOLDER));
+									$data->message = ___('setup.config.text.step3nowrite', array(':ext' => '.php', ':appfolder' => APPFOLDER));
 									
 									// build the next step button
 									$next = array(
@@ -492,7 +497,7 @@ return array
 							{
 								$data->code = $code;
 								
-								$data->message = ___('setup.config.text.step3nowrite', array(':ext' => EXT, ':appfolder' => APPFOLDER));
+								$data->message = ___('setup.config.text.step3nowrite', array(':ext' => '.php', ':appfolder' => APPFOLDER));
 								
 								// build the next step button
 								$next = array(
