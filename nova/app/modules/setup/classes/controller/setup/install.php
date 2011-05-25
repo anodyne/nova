@@ -1,4 +1,4 @@
-<?php defined('SYSPATH') or die('No direct script access.');
+<?php
 /**
  * Install Controller
  *
@@ -9,6 +9,8 @@
  * @version		3.0
  */
 
+# TODO: remove the environment check around the login redirect
+
 class Controller_Setup_Install extends Controller_Template {
 	
 	public function before()
@@ -16,14 +18,14 @@ class Controller_Setup_Install extends Controller_Template {
 		parent::before();
 		
 		// make sure the database config file exists
-		if ( ! file_exists(APPPATH.'config/database'.EXT))
+		if ( ! file_exists(APPPATH.'config/database.php'))
 		{
-			$this->request->redirect('setup/config');
+			$this->request->redirect('setup/main/config');
 		}
 		else
 		{
 			// you're allowed to go to these segments if the system isn't installed
-			$safesegs = array('step', 'index', 'main');
+			$safesegs = array('step', 'main', 'test');
 			
 			// you need to be logged in for these pages
 			$protectedsegs = array('changedb', 'genre', 'remove');
@@ -37,7 +39,7 @@ class Controller_Setup_Install extends Controller_Template {
 			// make sure the system is installed
 			if (count($db->list_tables($db->table_prefix().'%')) < $tables and ! (in_array($this->request->action(), $safesegs)))
 			{
-				$this->request->redirect('install/index');
+				$this->request->redirect('setup/main/index');
 			}
 			
 			// if the system is installed, make sure the user is logged in and a sysadmin
@@ -62,8 +64,11 @@ class Controller_Setup_Install extends Controller_Template {
 					}
 					else
 					{
-						// no session? send them away
-						$this->request->redirect('login/error/1');
+						if (Kohana::$environment !== Kohana::DEVELOPMENT)
+						{
+							// no session? send them away
+							$this->request->redirect('login/error/1');
+						}
 					}
 				}
 			}
@@ -73,32 +78,21 @@ class Controller_Setup_Install extends Controller_Template {
 		i18n::lang('en-us');
 		
 		// set the shell
-		$this->template = View::factory(Location::file('install', null, 'structure'));
+		$this->template = View::factory(Location::file('setup', null, 'structure'));
 		
 		// set the variables in the template
 		$this->template->title 				= Kohana::config('nova.app_name').' :: ';
 		$this->template->javascript			= false;
-		$this->template->layout				= View::factory(Location::file('install', null, 'templates'));
+		$this->template->layout				= View::factory(Location::file('setup', null, 'templates'));
 		$this->template->layout->label		= false;
 		$this->template->layout->flash		= false;
 		$this->template->layout->controls	= false;
 		$this->template->layout->content	= false;
 	}
 	
-	public function action_index()
+	public function after()
 	{
-		// create a new content view
-		$this->template->layout->content = View::factory(Location::view('install_index'));
-		
-		// assign the object a shorter variable to use in the method
-		$data = $this->template->layout->content;
-		
-		// figure out if the system is installed or not
-		$data->installed = Utility::install_status();
-		
-		// content
-		$this->template->title.= ucwords(___('install center'));
-		$this->template->layout->label = ucwords(___('install center'));
+		parent::after();
 		
 		// send the response
 		$this->response->body($this->template);
@@ -468,25 +462,25 @@ class Controller_Setup_Install extends Controller_Template {
 			$allowed = false;
 			
 			// show the flash message
-			$this->template->layout->flash = View::factory('install/pages/flash');
+			$this->template->layout->flash = View::factory('components/pages/flash');
 			$this->template->layout->flash->status = 'error';
-			$this->template->layout->flash->message = ___('install.error.no_genre', array(':path' => APPFOLDER.'/config/nova'.EXT));
+			$this->template->layout->flash->message = ___('setup.error.no_genre', array(':path' => APPFOLDER.'/config/nova.php'));
 		}
 		
 		switch ($step)
 		{
 			case 0:
 				// create a new content view
-				$this->template->layout->content = View::factory(Location::view('install_step0'));
+				$this->template->layout->content = View::factory('components/pages/install/step0');
 				
 				// create a new js view
-				$this->template->javascript = View::factory(Location::view('install_step0_js', null, 'js'));
+				$this->template->javascript = View::factory('components/js/install/step0_js');
 				
 				// assign the object a shorter variable to use in the method
 				$data = $this->template->layout->content;
 				
 				// make sure the proper message is displayed
-				$data->message = nl2br(___('install.step0.instructions'));
+				$data->message = nl2br(___('setup.install.step0.instructions'));
 				
 				// content
 				$this->template->title.= ___('Install Nova');
@@ -502,20 +496,20 @@ class Controller_Setup_Install extends Controller_Template {
 					);
 					
 					// build the next step control
-					$this->template->layout->controls = form::open('install/step/1').form::button('next', ___('Start Install'), $next).form::close();
+					$this->template->layout->controls = form::open('setup/install/step/1').form::button('next', ___('Start Install'), $next).form::close();
 				}
 				
 			break;
 				
 			case 1:
-				if (isset($_POST['next']))
+				if (HTTP_Request::POST == $this->request->method())
 				{
 					// update the character set
 					$dbconfig = Kohana::config('database');
 					$db->set_charset($dbconfig['default']['charset']);
 					
 					// pull in the field information
-					include_once MODPATH.'nova/install/assets/fields'.EXT;
+					include_once MODPATH.'app/modules/setup/assets/install/fields.php';
 					
 					foreach ($data as $key => $value)
 					{
@@ -540,7 +534,7 @@ class Controller_Setup_Install extends Controller_Template {
 					$data = null;
 					
 					// pull in the basic data
-					include_once MODPATH.'nova/install/assets/data'.EXT;
+					include_once MODPATH.'app/modules/setup/assets/install/data.php';
 					
 					$insert = array();
 					
@@ -548,7 +542,7 @@ class Controller_Setup_Install extends Controller_Template {
 					{
 						foreach ($$value as $k => $v)
 						{
-							$sql = db::insert($value)
+							$sql = Db::insert($value)
 								->columns(array_keys($v))
 								->values(array_values($v))
 								->compile($db);
@@ -564,7 +558,7 @@ class Controller_Setup_Install extends Controller_Template {
 					$data = null;
 					
 					// pull in the genre data
-					include_once MODPATH.'nova/install/assets/genres/'.strtolower(Kohana::config('nova.genre')).EXT;
+					include_once MODPATH.'app/modules/setup/assets/install/genres/'.strtolower(Kohana::config('nova.genre')).'.php';
 					
 					$genre = array();
 					
@@ -572,7 +566,7 @@ class Controller_Setup_Install extends Controller_Template {
 					{
 						foreach ($$value_d as $k => $v)
 						{
-							$sql = db::insert($key_d)
+							$sql = Db::insert($key_d)
 								->columns(array_keys($v))
 								->values(array_values($v))
 								->compile($db);
@@ -590,7 +584,7 @@ class Controller_Setup_Install extends Controller_Template {
 						$data = null;
 						
 						// pull in the development test data
-						include_once MODPATH.'nova/install/assets/dev'.EXT;
+						include_once MODPATH.'app/modules/setup/assets/install/dev.php';
 						
 						$insert = array();
 						
@@ -598,7 +592,7 @@ class Controller_Setup_Install extends Controller_Template {
 						{
 							foreach ($$value as $k => $v)
 							{
-								$sql = db::insert($value)
+								$sql = Db::insert($value)
 									->columns(array_keys($v))
 									->values(array_values($v))
 									->compile($db);
@@ -613,16 +607,16 @@ class Controller_Setup_Install extends Controller_Template {
 				$tables = $db->list_tables();
 				
 				// create a new content view
-				$this->template->layout->content = View::factory(Location::view('install_step1'));
+				$this->template->layout->content = View::factory('components/pages/install/step1');
 				
 				// create a new js view
-				$this->template->javascript = View::factory(Location::view('install_step1_js', null, 'js'));
+				$this->template->javascript = View::factory('components/js/install/step1_js');
 				
 				// assign the object a shorter variable to use in the method
 				$data = $this->template->layout->content;
 				
 				// get the questions from the db
-				$questions = Jelly::query('securityquestion')->select();
+				$questions = Model_SecurityQuestion::get_questions();
 				
 				// set the questions variable
 				$data->questions = array('' => ___('Please Select One'));
@@ -640,30 +634,27 @@ class Controller_Setup_Install extends Controller_Template {
 				
 				// make sure the proper message is displayed
 				$data->message = ($data->errors === false)
-					? (count($tables) < Kohana::config('nova.app_db_tables')) ? ___('install.step1.failure') : __('install.step1.success')
-					: __('step1.errors');
+					? (count($tables) < Kohana::config('nova.app_db_tables')) ? ___('setup.install.step1.failure') : ___('setup.install.step1.success')
+					: ___('step1.errors');
 				
 				// set the loading image
 				$data->loading = array(
-					'src' => MODFOLDER.'/nova/install/views/design/images/loading-circle-large.gif',
+					'src' => MODFOLDER.'/app/modules/setup/views/design/images/loading-circle-large.gif',
 					'attr' => array(
 						'class' => 'image',
 						'alt' => ''),
 				);
 				
-				// get the default rank set
-				$rankdefault = Jelly::query('setting', 'display_rank')->limit(1)->select()->value;
+				// get the default rank object
+				$catalogue = Model_CatalogueRanks::get_default();
 				
-				// grab the rank catalogue
-				$catalogue = Jelly::query('cataloguerank')->where('location', '=', $rankdefault)->limit(1)->select();
+				// find out where the location of the default rank catalogue item is
+				$rankdefault = $catalogue->location;
 				
 				// pull the rank record
-				$rank = Jelly::query('rank', $session->get('rank', 1))->select();
-				
-				# FIXME: what's going on with this?
+				$rank = Model_Rank::find($session->get('rank', 1));
 				
 				$data->default_rank = array(
-					//'src' => Location::image($rank->image.$catalogue->extension, null, $catalogue->location, 'rank'),
 					'src' => APPFOLDER.'/assets/common/'.Kohana::config('nova.genre').'/ranks/'.$rankdefault.'/'.$rank->image.$catalogue->extension,
 					'attr' => array(
 						'class' => 'image',
@@ -684,11 +675,11 @@ class Controller_Setup_Install extends Controller_Template {
 				// build the next step control
 				$this->template->layout->controls = (count($tables) < Kohana::config('nova.app_db_tables')) 
 					? false 
-					: form::button('next', ___('Next Step'), $next).form::close();
+					: Form::button('next', ___('Next Step'), $next).Form::close();
 			break;
 				
 			case 2:
-				if (isset($_POST['next']))
+				if (HTTP_Request::POST == $this->request->method())
 				{
 					$validate = Validation::factory($_POST)
 						->rule('email', 'not_empty', array(':value'))
@@ -716,93 +707,58 @@ class Controller_Setup_Install extends Controller_Template {
 						$position = trim(Security::xss_clean($_POST['position']));
 						$rank = trim(Security::xss_clean($_POST['rank']));
 						
+						// an array of settings to update
+						$settings = array(
+							'sim_name' => $simname,
+							'email_subject' => '['.$simname.']',
+							'default_email_address' => 'donotreply@'.strtolower($simname),
+							'default_email_name' => $simname
+						);
+						
 						// update the settings
-						Jelly::query('setting')
-							->where('key', '=', 'sim_name')
-							->limit(1)
-							->set(array('value' => $simname))
-							->update();
-							
-						Jelly::query('setting')
-							->where('key', '=', 'email_subject')
-							->limit(1)
-							->set(array('value' => '['.$simname.']'))
-							->update();
-							
-						Jelly::query('setting')
-							->where('key', '=', 'default_email_address')
-							->limit(1)
-							->set(array('value' => 'donotreply@'.strtolower($simname)))
-							->update();
-							
-						Jelly::query('setting')
-							->where('key', '=', 'default_email_name')
-							->limit(1)
-							->set(array('value' => $simname))
-							->update();
+						Model_Settings::update_settings($settings);
+						
+						// an array of data for creating the user
+						$userinfo = array(
+							'status' => 'active',
+							'name' => $name,
+							'email' => $email,
+							'password' => Auth::hash($password),
+							'role' => 1,
+							'sysadmin' => (int) true,
+							'gm' => (int) true,
+							'webmaster' => (int) true,
+							'skin_main' => Model_CatalogueSkinSec::get_default('main')->skin,
+							'skin_admin' => Model_CatalogueSkinSec::get_default('admin')->skin,
+							'rank' => Model_CatalogueRank::get_default(),
+							'security_question' => $question,
+							'security_answer' => sha1($answer),
+						);
 						
 						// create the user
-						$crUser = Jelly::factory('user')
-							->set(array(
-								'status' => 'active',
-								'name' => $name,
-								'email' => $email,
-								'password' => Auth::hash($password),
-								'role' => 1,
-								'sysadmin' => 'y',
-								'gm' => 'y',
-								'webmaster' => 'y',
-								'skin_main' => Jelly::query('catalogueskinsec')->defaultskin('main')->limit(1)->select()->skin->location,
-								'skin_wiki' => Jelly::query('catalogueskinsec')->defaultskin('wiki')->limit(1)->select()->skin->location,
-								'skin_admin' => Jelly::query('catalogueskinsec')->defaultskin('admin')->limit(1)->select()->skin->location,
-								'rank' => Jelly::query('cataloguerank')->defaultrank()->limit(1)->select()->location,
-								'security_question' => $question,
-								'security_answer' => sha1($answer),
-							))
-							->save();
+						$crUser = Model_User::create_user($userinfo);
+						
+						// an array of data for creating the character
+						$characterinfo = array(
+							'user' => $crUser->id,
+							'fname' => $first_name,
+							'lname' => $last_name,
+							'position1' => $position,
+							'rank' => $rank,
+							'status' => 'active',
+							'activate' => Date::now(),
+						);
 						
 						// create the character
-						$crCharacter = Jelly::factory('character')
-							->set(array(
-								'user' => $crUser->id,
-								'fname' => $first_name,
-								'lname' => $last_name,
-								'position1' => $position,
-								'rank' => $rank,
-								'status' => 'active',
-								'activate' => date::now(),
-							))
-							->save();
+						$crCharacter = Model_Character::create_character($characterinfo);
 						
 						// update the user with the character info
-						Jelly::query('user', $crUser->id)->set(array('main_char' => $crCharacter->id))->update();
-						
-						// get the preferences
-						$prefs = Jelly::query('userpref')->select();
-						
-						// loop through and create the preferences for the user
-						foreach ($prefs as $p)
-						{
-							$prefvalues = Jelly::factory('userprefvalue')
-								->set(array(
-									'user' => $crUser->id,
-									'key' => $p->key,
-									'value' => $p->default
-								))
-								->save();
-						}
+						Model_User::update_user($crUser->id, array('character_id' => $crCharacter->id));
 						
 						// do the quick installs
 						Utility::install_rank();
 						Utility::install_skin();
 						Utility::install_widget();
-						
-						// deactivate the upgrade module
-						Jelly::query('cataloguemodule')
-							->where('shortname', '=', 'upgrade')
-							->limit(1)
-							->set(array('status' => 'inactive'))
-							->update();
 						
 						// do the registration
 						$this->_register();
@@ -823,15 +779,15 @@ class Controller_Setup_Install extends Controller_Template {
 						$session->set('errors', $validate->errors('register'));
 						
 						// redirect back to step 1
-						$this->request->redirect('install/step/1');
+						$this->request->redirect('setup/install/step/1');
 					}
 				}
 				
 				// create a new content view
-				$this->template->layout->content = View::factory(Location::view('install_step2'));
+				$this->template->layout->content = View::factory('components/pages/install/step2');
 				
 				// create a new js view
-				$this->template->javascript = View::factory(Location::view('install_step2_js', null, 'js'));
+				$this->template->javascript = View::factory('components/js/install/step2_js');
 				
 				// assign the object a shorter variable to use in the method
 				$data = $this->template->layout->content;
@@ -851,13 +807,18 @@ class Controller_Setup_Install extends Controller_Template {
 				);
 				
 				// build the next step control
-				$this->template->layout->controls = form::open('main/index').form::button('next', ___('Finish'), $next).form::close();
+				$this->template->layout->controls = Form::open('main/index').Form::button('next', ___('Finish'), $next).Form::close();
 				
 			break;
 		}
 		
-		// send the response
-		$this->response->body($this->template);
+		$this->template->layout->image = Html::image(MODFOLDER.'/app/modules/setup/views/design/images/wand-24x24.png', array('id' => 'title-image'));
+	}
+	
+	public function action_test()
+	{
+		echo Debug::vars(Model_User::update_user(10, array()));
+		exit;
 	}
 	
 	private function _register()
