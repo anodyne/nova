@@ -374,8 +374,7 @@ button[disabled], button:hover[disabled], button:active[disabled] {
 
 .flash-message {
 	margin: 0 0 1em 0;
-	padding: .2em 0;
-	line-height: 1.3;
+	padding: .3em;
 	font-weight: bold;
 	font-size: .9em;
 	border-radius: 3px;
@@ -390,34 +389,54 @@ button[disabled], button:hover[disabled], button:active[disabled] {
 .flash-message p {
 	margin: 0;
 	padding: 3px 5px;
-	line-height: 1.4 !important;
 }
 .flash-success {
+	background: #d6f0d1;
+	background: -moz-linear-gradient(top, #d6f0d1 0%, #ccecc5 100%);
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#d6f0d1), color-stop(100%,#ccecc5));
+	background: -webkit-linear-gradient(top, #d6f0d1 0%,#ccecc5 100%);
+	background: -o-linear-gradient(top, #d6f0d1 0%,#ccecc5 100%);
+	background: -ms-linear-gradient(top, #d6f0d1 0%,#ccecc5 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#D6F0D1', endColorstr='#CCECC5',GradientType=0 );
+	background: linear-gradient(top, #d6f0d1 0%,#ccecc5 100%);
 	border: 1px solid #a4c897;
-	border-top: 1px solid rgba(255, 255, 255, .7);
-	background: #ccecc5 url(images/install-btn-bg.png) repeat-x top left;
 	color: #376b0e;
-	box-shadow: 0 -1px 0 #a4c897;
-	-moz-box-shadow: 0 -1px 0 #a4c897;
-	-webkit-box-shadow: 0 -1px 0 #a4c897;
+	text-shadow: 0 1px 0 rgba(255, 255, 255, .4);
+	box-shadow: inset 0 1px 0 rgba(255, 255, 255, .6);
+	-moz-box-shadow: inset 0 1px 0 rgba(255, 255, 255, .6);
+	-webkit-box-shadow: inset 0 1px 0 rgba(255, 255, 255, .6);
 }
 .flash-error {
+	background: #f25757;
+	background: -moz-linear-gradient(top, #f25757 0%, #ef2d2d 100%);
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#f25757), color-stop(100%,#ef2d2d));
+	background: -webkit-linear-gradient(top, #f25757 0%,#ef2d2d 100%);
+	background: -o-linear-gradient(top, #f25757 0%,#ef2d2d 100%);
+	background: -ms-linear-gradient(top, #f25757 0%,#ef2d2d 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#F25757', endColorstr='#EF2D2D',GradientType=0 );
+	background: linear-gradient(top, #f25757 0%,#ef2d2d 100%);
 	border: 1px solid #cd0a0a; 
-	border-top: 1px solid rgba(255, 255, 255, .6);
-	background: #ef2d2d url(images/install-btn-bg.png) repeat-x top left;
 	color: #fff;
-	box-shadow: 0 -1px 0 #cd0a0a;
-	-moz-box-shadow: 0 -1px 0 #cd0a0a;
-	-webkit-box-shadow: 0 -1px 0 #cd0a0a;
+	text-shadow: 0 1px 1px rgba(0, 0, 0, .4);
+	box-shadow: inset 0 1px 0 rgba(255, 255, 255, .3);
+	-moz-box-shadow: inset 0 1px 0 rgba(255, 255, 255, .3);
+	-webkit-box-shadow: inset 0 1px 0 rgba(255, 255, 255, .3);
 }
 .flash-info {
+	background: #fff2a5;
+	background: -moz-linear-gradient(top, #fff2a5 0%, #ffef8f 100%);
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#fff2a5), color-stop(100%,#ffef8f));
+	background: -webkit-linear-gradient(top, #fff2a5 0%,#ffef8f 100%);
+	background: -o-linear-gradient(top, #fff2a5 0%,#ffef8f 100%);
+	background: -ms-linear-gradient(top, #fff2a5 0%,#ffef8f 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#FFF2A5', endColorstr='#FFEF8F',GradientType=0 );
+	background: linear-gradient(top, #fff2a5 0%,#ffef8f 100%);
 	border: 1px solid #f9dd34;
-	border-top: 1px solid rgba(255, 255, 255, .6);
-	background: #ffef8f url(images/install-btn-bg.png) repeat-x top left;
 	color: #363636;
-	box-shadow: 0 -1px 0 #f9dd34;
-	-moz-box-shadow: 0 -1px 0 #f9dd34;
-	-webkit-box-shadow: 0 -1px 0 #f9dd34;
+	text-shadow: 0 1px 0 rgba(255, 255, 255, .4);
+	box-shadow: inset 0 1px 0 rgba(255, 255, 255, .6);
+	-moz-box-shadow: inset 0 1px 0 rgba(255, 255, 255, .6);
+	-webkit-box-shadow: inset 0 1px 0 rgba(255, 255, 255, .6);
 }
 
 .hidden { display: none !important; }
