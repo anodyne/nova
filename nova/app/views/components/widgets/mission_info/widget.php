@@ -1,5 +1,5 @@
 <?php
-
+/*
 $missions = Jelly::query('mission')
 	->where('status', '=', 'current')
 	->select();
@@ -25,5 +25,5 @@ if (count($missions) > 0):
 else:
 	echo '<h3 class="warning">'.__("No mission information found").'</h3>';
 endif;
-
+*/
 ?>

@@ -1,5 +1,5 @@
 <?php
-
+/*
 $news = Jelly::query('news')
 	->where('status', '=', 'activated')
 	->order_by('date', 'desc')
@@ -28,5 +28,5 @@ if (count($news) > 0):
 else:
 	echo '<h3 class="warning">'.__("error.not_found", array(':item' => __("news items"))).'</h3>';
 endif;
-
+*/
 ?>
