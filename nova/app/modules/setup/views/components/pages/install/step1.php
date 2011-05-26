@@ -1,6 +1,6 @@
 <p><?php echo $message;?></p>
 
-<hr />
+<hr>
 
 <?php $session = Session::instance();?>
 <?php echo form::open('setup/install/step/2');?>
@@ -22,7 +22,7 @@
 			<kbd>Your Email Address</kbd>
 			<?php if ($errors !== false and array_key_exists('email', $errors)): ?>
 				<p class="bold error">
-					<?php echo Html::image(Location::image('exclamation-red.png', null, 'setup', 'image'), array('class' => 'inline-image-left'));?>
+					<?php echo Html::image(MODFOLDER.'/app/modules/setup/views/design/images/exclamation-red.png', array('class' => 'inline-image-left'));?>
 					<?php echo ucfirst($errors['email']);?>
 				</p>
 			<?php endif;?>
@@ -32,7 +32,7 @@
 			<kbd>Your Password</kbd>
 			<?php if ($errors !== false and array_key_exists('password', $errors)): ?>
 				<p class="bold error">
-					<?php echo Html::image(Location::image('exclamation-red.png', null, 'setup', 'image'), array('class' => 'inline-image-left'));?>
+					<?php echo Html::image(MODFOLDER.'/app/modules/setup/views/design/images/exclamation-red.png', array('class' => 'inline-image-left'));?>
 					<?php echo ucfirst($errors['password']);?>
 				</p>
 			<?php endif;?>
@@ -42,7 +42,7 @@
 			<kbd>Confirm Your Password</kbd>
 			<?php if ($errors !== false and array_key_exists('password_confirm', $errors)): ?>
 				<p class="bold error">
-					<?php echo Html::image(Location::image('exclamation-red.png', null, 'setup', 'image'), array('class' => 'inline-image-left'));?>
+					<?php echo Html::image(MODFOLDER.'/app/modules/setup/views/design/images/exclamation-red.png', array('class' => 'inline-image-left'));?>
 					<?php echo ucfirst($errors['password_confirm']);?>
 				</p>
 			<?php endif;?>
@@ -52,7 +52,7 @@
 			<kbd>Your Security Question</kbd>
 			<?php if ($errors !== false and array_key_exists('security_question', $errors)): ?>
 				<p class="bold error">
-					<?php echo Html::image(Location::image('exclamation-red.png', null, 'setup', 'image'), array('class' => 'inline-image-left'));?>
+					<?php echo Html::image(MODFOLDER.'/app/modules/setup/views/design/images/exclamation-red.png', array('class' => 'inline-image-left'));?>
 					<?php echo ucfirst($errors['security_question']);?>
 				</p>
 			<?php endif;?>
@@ -62,11 +62,11 @@
 			<kbd>Your Security Answer</kbd>
 			<?php if ($errors !== false and array_key_exists('security_answer', $errors)): ?>
 				<p class="bold error">
-					<?php echo Html::image(Location::image('exclamation-red.png', null, 'setup', 'image'), array('class' => 'inline-image-left'));?>
+					<?php echo Html::image(MODFOLDER.'/app/modules/setup/views/design/images/exclamation-red.png', array('class' => 'inline-image-left'));?>
 					<?php echo ucfirst($errors['security_answer']);?>
 				</p>
 			<?php endif;?>
-			<span class="fontSmall subtle">Remember your answer exactly as you typed it. Security answers are case-sensitive!');?></span><br>
+			<span class="fontSmall subtle">Remember your answer exactly as you typed it. Security answers are case-sensitive!</span><br>
 			<?php echo Form::input('security_answer', $session->get('security_answer', ''));?>
 		</p>
 	</div><br />

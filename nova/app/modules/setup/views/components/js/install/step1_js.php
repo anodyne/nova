@@ -18,7 +18,7 @@
 					$('#loading_update').show();
 				},
 				type: "POST",
-				url: "<?php echo url::site('ajax/info_show_position_desc');?>",
+				url: "<?php echo Url::site('ajax/info_show_position_desc');?>",
 				data: { position: id },
 				success: function(data){
 					$('#position_desc').html('');
@@ -45,7 +45,7 @@
 					$('#loading_update_rank').show();
 				},
 				type: "POST",
-				url: "<?php echo url::site('ajax/info_show_rank_image');?>",
+				url: "<?php echo Url::site('ajax/info_show_rank_image');?>",
 				data: send,
 				success: function(data){
 					$('#rank_img').html('');
