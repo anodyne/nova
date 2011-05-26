@@ -1,32 +1,28 @@
-<?php defined('SYSPATH') or die('No direct script access.');
+<?php
 /**
- * Wiki Categories Model
+ * Wiki Category Model
  *
  * @package		Thresher
  * @category	Models
  * @author		Anodyne Productions
+ * @copyright	2011 Anodyne Productions
+ * @version		3.0
  */
  
-class Model_Wikicategory extends Jelly_Model {
+class Model_WikiCategory extends Model {
 	
-	/**
-	 * Initialize the model with Jelly_Meta data
-	 *
-	 * @return	void
-	 */
-	public static function initialize(Jelly_Meta $meta)
-	{
-		$meta->table('wiki_categories');
-		$meta->fields(array(
-			'id' => Jelly::field('primary', array(
-				'column' => 'wikicat_id'
-			)),
-			'name' => Jelly::field('string', array(
-				'column' => 'wikicat_name'
-			)),
-			'desc' => Jelly::field('text', array(
-				'column' => 'wikicat_desc'
-			)),
-		));
-	}
+	public static $_table_name = 'wiki_categories';
+	
+	public static $_properties = array(
+		'id' => array(
+			'type' => 'int',
+			'constraint' => 8,
+			'auto_increment' => true),
+		'name' => array(
+			'type' => 'string',
+			'constraint' => 100,
+			'default' => ''),
+		'desc' => array(
+			'type' => 'text'),
+	);
 }

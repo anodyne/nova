@@ -1,66 +1,45 @@
-<?php defined('SYSPATH') or die('No direct script access.');
+<?php
 /**
- * Wiki Pages Model
+ * Wiki Page Model
  *
  * @package		Thresher
  * @category	Models
  * @author		Anodyne Productions
+ * @copyright	2011 Anodyne Productions
+ * @version		3.0
  */
  
-class Model_Wikipage extends Jelly_Model {
+class Model_WikiPage extends Model {
 	
-	/**
-	 * Initialize the model with Jelly_Meta data
-	 *
-	 * @return	void
-	 */
-	public static function initialize(Jelly_Meta $meta)
-	{
-		$meta->table('wiki_pages');
-		$meta->fields(array(
-			'id' => Jelly::field('primary', array(
-				'column' => 'page_id'
-			)),
-			'draft' => Jelly::field('belongsto', array(
-				'column' => 'page_draft',
-				'foreign' => 'wikidraft'
-			)),
-			'created_at' => Jelly::field('timestamp', array(
-				'column' => 'page_created_at',
-				'auto_now_create' => true,
-				'auto_now_update' => false,
-				'null' => true,
-				'default' => date::now()
-			)),
-			'created_by_user' => Jelly::field('belongsto', array(
-				'column' => 'page_created_by_user',
-				'foreign' => 'user'
-			)),
-			'created_by_character' => Jelly::field('belongsto', array(
-				'column' => 'page_created_by_character',
-				'foreign' => 'character'
-			)),
-			'updated_at' => Jelly::field('timestamp', array(
-				'column' => 'page_updated_at',
-				'auto_now_create' => false,
-				'auto_now_update' => true,
-				'null' => true,
-				'default' => date::now()
-			)),
-			'updated_by_user' => Jelly::field('belongsto', array(
-				'column' => 'page_updated_by_user',
-				'foreign' => 'user'
-			)),
-			'updated_by_character' => Jelly::field('belongsto', array(
-				'column' => 'page_updated_by_character',
-				'foreign' => 'character'
-			)),
-			'page_comments' => Jelly::field('text', array(
-				'column' => 'page_comments',
-			)),
-			'comments' => Jelly::field('hasmany', array(
-				'foreign' => 'wikicomment.wcomment_page'
-			))
-		));
-	}
+	public static $_table_name = 'wiki_pages';
+	
+	public static $_properties = array(
+		'id' => array(
+			'type' => 'int',
+			'constraint' => 11,
+			'auto_increment' => true),
+		'draft_id' => array(
+			'type' => 'int',
+			'constraint' => 11),
+		'created_at' => array(
+			'type' => 'bigint',
+			'constraint' => 20),
+		'created_by_user' => array(
+			'type' => 'int',
+			'constraint' => 8),
+		'created_by_character' => array(
+			'type' => 'int',
+			'constraint' => 8),
+		'updated_at' => array(
+			'type' => 'bigint',
+			'constraint' => 20),
+		'updated_by_user' => array(
+			'type' => 'int',
+			'constraint' => 8),
+		'updated_by_character' => array(
+			'type' => 'int',
+			'constraint' => 8),
+		'comments' => array(
+			'type' => 'text'),
+	);
 }
