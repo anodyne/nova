@@ -53,8 +53,6 @@ class Oil_Refine {
 
 		require $file;
 
-		$task = '\\Nova\\Tasks\\'.$task;
-
 		$new_task = new $task;
 
 		// The help option hs been called, so call help instead
