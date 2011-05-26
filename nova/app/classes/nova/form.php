@@ -330,11 +330,10 @@ abstract class Nova_Form extends Kohana_Form {
 	 * A select menu that includes all of the postions from the database based
 	 * on the parameters passed to the method.
 	 *
-	 *     echo form::select_position('positions', 8, array('id' => 'positions'), 'open');
+	 *     echo Form::select_position('positions', 8, array('id' => 'positions'), 'open');
 	 *
 	 * @access	public
 	 * @uses	Form::select
-	 * @uses	Jelly::query
 	 * @param	string	the name of the select menu
 	 * @param	array 	an array of selected items
 	 * @param	array	any extra attributes to be added to the select menu
@@ -348,25 +347,20 @@ abstract class Nova_Form extends Kohana_Form {
 		// grab the positions
 		if ($type == 'open')
 		{
-			$positions = Jelly::query('position')->open()->order_by('dept', 'asc')->order_by('order', 'asc');
+			$positions = Model_Position::get_positions('open');
 		}
 		elseif (is_numeric($type))
 		{
-			$positions = Jelly::query('position')->where('dept', '=', $type)->order_by('order', 'asc');
+			$positions = Model_Position::get_positions('all', $type);
 		}
 		else
 		{
-			$positions = Jelly::query('position')->order_by('order', 'asc');
+			$positions = Model_Position::get_positions();
 		}
-		
-		// set the display parameter
-		( ! empty($display)) ? $positions->where('display', '=', $display) : false;
-		
-		$positions = $positions->select();
 		
 		if (count($positions) > 0)
 		{
-			$options[0] = ___('phrase.please_choose_one');
+			$options[0] = ___('Please Choose One');
 			
 			$valid = false;
 			
@@ -374,7 +368,7 @@ abstract class Nova_Form extends Kohana_Form {
 			{
 				if (($dept_type == 'playing' and $pos->dept->type == 'playing') or
 						($dept_type == 'nonplaying' and $pos->dept->type == 'nonplaying') or
-						$pos->dept->display == 'y')
+						(bool) $pos->dept->display === true)
 				{
 					if ($type == 'all' or $type == 'open')
 					{
@@ -397,11 +391,10 @@ abstract class Nova_Form extends Kohana_Form {
 	 * A select menu that includes all of the ranks from the database based on
 	 * the parameters passed to the method.
 	 *
-	 *     echo form::select_rank('ranks', 3, array('id' => 'ranks'));
+	 *     echo Form::select_rank('ranks', 3, array('id' => 'ranks'));
 	 *
 	 * @access	public
 	 * @uses	Form::select
-	 * @uses	Jelly::query
 	 * @param	string	the name of the select menu
 	 * @param	array 	an array of selected items
 	 * @param	array	any extra attributes to add to the select menu
@@ -410,11 +403,7 @@ abstract class Nova_Form extends Kohana_Form {
 	public static function select_rank($name, $selected = array(), $extra = null)
 	{
 		// grab the ranks
-		$ranks = Jelly::query('rank')
-			->where('display', '=', 'y')
-			->order_by('class', 'asc')
-			->order_by('order', 'asc')
-			->select();
+		$ranks = Model_Rank::get_ranks();
 		
 		if (count($ranks) > 0)
 		{

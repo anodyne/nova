@@ -107,8 +107,6 @@ abstract class Nova_Utility {
 	 *
 	 * @access	public
 	 * @uses	Kohana::config
-	 * @uses	Jelly::query
-	 * @uses	Jelly::factory
 	 * @param	string	the location of a specific rank set to install
 	 * @return	void
 	 */
@@ -120,7 +118,7 @@ abstract class Nova_Utility {
 			$dir = self::directory_map(APPPATH.'assets/common/'.Kohana::config('nova.genre').'/ranks/', true);
 			
 			// get all the rank sets locations
-			$ranks = Jelly::query('cataloguerank')->where('genre', '=', Kohana::config('nova.genre'))->select();
+			$ranks = Model_CatalogueRank::get_all_items();
 			
 			if (count($ranks) > 0)
 			{
@@ -145,20 +143,12 @@ abstract class Nova_Utility {
 					// make sure the file exists first
 					if (file_exists($file))
 					{
+						// get the contents and decode the JSON
 						$content = file_get_contents($file);
 						$data = json_decode($content);
 						
-						Jelly::factory('cataloguerank')
-							->set(array(
-								'name'		=> $data->name,
-								'location'	=> $data->location,
-								'credits'	=> $data->credits,
-								'preview'	=> $data->preview,
-								'blank'		=> $data->blank,
-								'extension'	=> $data->extension,
-								'genre'		=> $data->genre
-							))
-							->save();
+						// create the item
+						Model_CatalogueRank::create_item($data);
 					}
 				}
 			}
@@ -175,17 +165,8 @@ abstract class Nova_Utility {
 				$content = file_get_contents($file);
 				$data = json_decode($content);
 				
-				Jelly::factory('cataloguerank')
-					->set(array(
-						'name'		=> $data->name,
-						'location'	=> $data->location,
-						'credits'	=> $data->credits,
-						'preview'	=> $data->preview,
-						'blank'		=> $data->blank,
-						'extension'	=> $data->extension,
-						'genre'		=> $data->genre
-					))
-					->save();
+				// create the item
+				Model_CatalogueRank::create_item($data);
 			}
 		}
 	}
@@ -199,8 +180,6 @@ abstract class Nova_Utility {
 	 *     Utility::install_skin('location');
 	 *
 	 * @access	public
-	 * @uses	Jelly::query
-	 * @uses	Jelly::factory
 	 * @param	string	the location of a skin to install
 	 * @return	void
 	 */
@@ -212,7 +191,7 @@ abstract class Nova_Utility {
 			$dir = self::directory_map(APPPATH.'views/', true);
 			
 			// get all the skin catalogue items
-			$skins = Jelly::query('catalogueskin')->select();
+			$skins = Model_CatalogueSkin::get_all_items();
 			
 			if (count($skins) > 0)
 			{
@@ -255,28 +234,29 @@ abstract class Nova_Utility {
 						$content = file_get_contents($file);
 						$data = json_decode($content);
 						
-						// add the skin to the database
-						Jelly::factory('catalogueskin')
-							->set(array(
-								'name' => $data->name,
-								'location' => $data->location,
-								'credits' => $data->credits,
-								'version' => $data->version
-							))
-							->save();
+						$data_skin = array(
+							'name' => $data->name,
+							'location' => $data->location,
+							'credits' => $data->credits,
+							'version' => $data->version
+						);
+						
+						// create the skin
+						Model_CatalogueSkin::create_item($data_skin);
 						
 						// go through and add the sections
 						foreach ($data->sections as $v)
 						{
-							Jelly::factory('catalogueskinsec')
-								->set(array(
-									'section' => $v->type,
-									'skin' => $data->location,
-									'preview' => $v->preview,
-									'status' => 'active',
-									'default' => 'n'
-								))
-								->save();
+							$data_section = array(
+								'section' => $v->type,
+								'skin' => $data->location,
+								'preview' => $v->preview,
+								'status' => 'active',
+								'default' => 0
+							);
+							
+							// create the section
+							Model_CatalogueSkinSec::create_item($data_section);
 						}
 					}
 				}
@@ -294,28 +274,29 @@ abstract class Nova_Utility {
 				$content = file_get_contents($file);
 				$data = json_decode($content);
 				
-				// add the skin to the database
-				Jelly::factory('catalogueskin')
-					->set(array(
-						'name' => $data->name,
-						'location' => $data->location,
-						'credits' => $data->credits,
-						'version' => $data->version
-					))
-					->save();
+				$data_skin = array(
+					'name' => $data->name,
+					'location' => $data->location,
+					'credits' => $data->credits,
+					'version' => $data->version
+				);
+				
+				// create the skin
+				Model_CatalogueSkin::create_item($data_skin);
 				
 				// go through and add the sections
 				foreach ($data->sections as $v)
 				{
-					Jelly::factory('catalogueskinsec')
-						->set(array(
-							'section' => $v->type,
-							'skin' => $data->location,
-							'preview' => $v->preview,
-							'status' => 'active',
-							'default' => 'n'
-						))
-						->save();
+					$data_section = array(
+						'section' => $v->type,
+						'skin' => $data->location,
+						'preview' => $v->preview,
+						'status' => 'active',
+						'default' => 0
+					);
+					
+					// create the section
+					Model_CatalogueSkinSec::create_item($data_section);
 				}
 			}
 		}
@@ -383,10 +364,10 @@ abstract class Nova_Utility {
 		if ($location === null)
 		{
 			// get the directory listing
-			$dir = self::directory_map(MODPATH.'nova/core/views/components/widgets/', true);
+			$dir = self::directory_map(MODPATH.'app/views/components/widgets/', true);
 			
 			// get all the installed widgets
-			$widgets = Jelly::query('cataloguewidget')->select();
+			$widgets = Model_CatalogueWidget::get_all_items();
 			
 			if (count($widgets) > 0)
 			{
@@ -407,7 +388,7 @@ abstract class Nova_Utility {
 			foreach ($dir as $key => $value)
 			{
 				// assign our path to a variable
-				$file = MODPATH.'nova/core/views/components/widgets/'.$value.'/widget.json';
+				$file = MODPATH.'app/views/components/widgets/'.$value.'/widget.json';
 				
 				// make sure the file exists first
 				if (file_exists($file))
@@ -416,24 +397,24 @@ abstract class Nova_Utility {
 					$content = file_get_contents($file);
 					$data = json_decode($content);
 					
-					// add the item to the database
-					Jelly::factory('cataloguewidget')
-						->set(array(
-							'name'		=> $data->name,
-							'location'	=> $data->location,
-							'page'		=> $data->page,
-							'zone'		=> $data->zone,
-							'status'	=> 'active',
-							'credits'	=> $data->credits
-						))
-						->save();
+					$data_widget = array(
+						'name'		=> $data->name,
+						'location'	=> $data->location,
+						'page'		=> $data->page,
+						'zone'		=> $data->zone,
+						'status'	=> 'active',
+						'credits'	=> $data->credits
+					);
+					
+					// create the item
+					Model_CatalogueWidget::create_item($data_widget);
 				}
 			}
 		}
 		else
 		{
 			// assign our path to a variable
-			$file = MODPATH.'nova/core/views/components/widgets/'.$location.'/widget.json';
+			$file = MODPATH.'app/views/components/widgets/'.$location.'/widget.json';
 			
 			// make sure the file exists first
 			if (file_exists($file))
@@ -442,17 +423,17 @@ abstract class Nova_Utility {
 				$content = file_get_contents($file);
 				$data = json_decode($content);
 				
-				// add the item to the database
-				Jelly::factory('cataloguewidget')
-					->set(array(
-						'name'		=> $data->name,
-						'location'	=> $data->location,
-						'page'		=> $data->page,
-						'zone'		=> $data->zone,
-						'status'	=> 'active',
-						'credits'	=> $data->credits
-					))
-					->save();
+				$data_widget = array(
+					'name'		=> $data->name,
+					'location'	=> $data->location,
+					'page'		=> $data->page,
+					'zone'		=> $data->zone,
+					'status'	=> 'active',
+					'credits'	=> $data->credits
+				);
+				
+				// create the item
+				Model_CatalogueWidget::create_item($data_widget);
 			}
 		}
 	}
