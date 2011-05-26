@@ -513,8 +513,11 @@ class Controller_Setup_Install extends Controller_Template {
 					
 					foreach ($data as $key => $value)
 					{
-						DBForge::add_field($$value['fields']);
-						DBForge::add_key($value['id'], true);
+						$fieldID = (isset($value['id'])) ? $value['id'] : 'id';
+						$fieldName = (isset($value['fields'])) ? $value['fields'] : 'fields_'.$key;
+						
+						DBForge::add_field($$fieldName);
+						DBForge::add_key($fieldID, true);
 						
 						if (isset($value['index']))
 						{
@@ -635,7 +638,7 @@ class Controller_Setup_Install extends Controller_Template {
 				// make sure the proper message is displayed
 				$data->message = ($data->errors === false)
 					? (count($tables) < Kohana::config('nova.app_db_tables')) ? ___('setup.install.step1.failure') : ___('setup.install.step1.success')
-					: ___('step1.errors');
+					: ___('setup.install.step1.errors');
 				
 				// set the loading image
 				$data->loading = array(
@@ -646,7 +649,7 @@ class Controller_Setup_Install extends Controller_Template {
 				);
 				
 				// get the default rank object
-				$catalogue = Model_CatalogueRanks::get_default();
+				$catalogue = Model_CatalogueRank::get_default();
 				
 				// find out where the location of the default rank catalogue item is
 				$rankdefault = $catalogue->location;
@@ -712,7 +715,7 @@ class Controller_Setup_Install extends Controller_Template {
 							'sim_name' => $simname,
 							'email_subject' => '['.$simname.']',
 							'default_email_address' => 'donotreply@'.strtolower($simname),
-							'default_email_name' => $simname
+							'default_email_name' => $simname,
 						);
 						
 						// update the settings
@@ -720,17 +723,16 @@ class Controller_Setup_Install extends Controller_Template {
 						
 						// an array of data for creating the user
 						$userinfo = array(
-							'status' => 'active',
 							'name' => $name,
 							'email' => $email,
 							'password' => Auth::hash($password),
-							'role' => 1,
-							'sysadmin' => (int) true,
-							'gm' => (int) true,
-							'webmaster' => (int) true,
+							'role_id' => 1,
+							'is_sysadmin' => (int) true,
+							'is_game_master' => (int) true,
+							'is_webmaster' => (int) true,
 							'skin_main' => Model_CatalogueSkinSec::get_default('main')->skin,
 							'skin_admin' => Model_CatalogueSkinSec::get_default('admin')->skin,
-							'rank' => Model_CatalogueRank::get_default(),
+							'display_rank' => Model_CatalogueRank::get_default(true),
 							'security_question' => $question,
 							'security_answer' => sha1($answer),
 						);
@@ -740,13 +742,13 @@ class Controller_Setup_Install extends Controller_Template {
 						
 						// an array of data for creating the character
 						$characterinfo = array(
-							'user' => $crUser->id,
-							'fname' => $first_name,
-							'lname' => $last_name,
-							'position1' => $position,
-							'rank' => $rank,
+							'user_id' => $crUser->id,
+							'first_name' => $first_name,
+							'last_name' => $last_name,
+							'position1_id' => $position,
+							'rank_id' => $rank,
 							'status' => 'active',
-							'activate' => Date::now(),
+							'activated' => Date::now(),
 						);
 						
 						// create the character
@@ -793,7 +795,7 @@ class Controller_Setup_Install extends Controller_Template {
 				$data = $this->template->layout->content;
 				
 				// make sure the proper message is displayed
-				$data->message = ___('install.step2.instructions');
+				$data->message = ___('setup.install.step2.instructions');
 				
 				// content
 				$this->template->title.= ___('Nova Installed!');
