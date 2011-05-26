@@ -97,10 +97,7 @@ class Model_Settings extends Model {
 	{
 		foreach ($data as $key => $value)
 		{
-			$record = static::find('first', array(
-				'where' => array('key', $key),
-			));
-			
+			$record = static::find()->where('key', $key)->get_one();
 			$record->value = $value;
 			$record->save();
 		}

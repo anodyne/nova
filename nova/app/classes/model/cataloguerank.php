@@ -78,7 +78,7 @@ class Model_CatalogueRank extends Model {
 	 */
 	public static function get_all_items($status = 'active', $limit_to_genre = true)
 	{
-		$genre_where = ($limit_to_genre) ? array('genre', Config::get('nova.genre')) : array();
+		$genre_where = ($limit_to_genre) ? array('genre', Kohana::config('nova.genre')) : array();
 		$status_where = ( ! empty($status)) ? array('status', $status) : array();
 		
 		$result = static::find()
@@ -106,7 +106,7 @@ class Model_CatalogueRank extends Model {
 		
 		if ($value_only)
 		{
-			$result->location;
+			return $result->location;
 		}
 		
 		return $result;
@@ -124,9 +124,7 @@ class Model_CatalogueRank extends Model {
 	 */
 	public static function get_item($item, $identifier = 'location')
 	{
-		$result = static::find('first', array(
-			'where' => array($identifier, $item)
-		));
+		$result = static::find()->where($identifier, $item)->get_one();
 		
 		return $result;
 	}

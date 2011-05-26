@@ -159,7 +159,7 @@ class Model_Character extends Model {
 		
 		$record->save();
 		
-		DBUtil::optimize_table('characters');
+		DBForge::optimize('characters');
 		
 		return $record;
 	}

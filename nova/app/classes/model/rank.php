@@ -16,7 +16,7 @@ class Model_Rank extends Model {
 	public static $_properties = array(
 		'id' => array(
 			'type' => 'int',
-			'constraint' => 10,
+			'constraint' => 11,
 			'auto_increment' => true),
 		'name' => array(
 			'type' => 'string',
@@ -44,20 +44,14 @@ class Model_Rank extends Model {
 	);
 	
 	/**
-	 * The init function is necessary here since the name of the ranks
-	 * table is dynamic. PHP won't allow creating an object property that's
-	 * dynamic, so we need this in order to change the table name once the
-	 * class is loaded.
+	 * Get all of the ranks.
 	 *
 	 * @access	public
-	 * @return	void
+	 * @param	int		the class ID
+	 * @param	mixed	pull ranks that should be displayed (null to pull everything)
+	 * @return	object	an object of the rank results
 	 */
-	public static function init()
-	{
-		static::$_table_name = static::$_table_name.Kohana::config('nova.genre');
-	}
-	
-	public static function get_ranks($class = '', $display = true)
+	public static function get_ranks($class = null, $display = true)
 	{
 		if ( ! empty($class))
 		{
@@ -77,6 +71,20 @@ class Model_Rank extends Model {
 		));
 			
 		return $result;
+	}
+	
+	/**
+	 * The init function is necessary here since the name of the ranks
+	 * table is dynamic. PHP won't allow creating an object property that's
+	 * dynamic, so we need this in order to change the table name once the
+	 * class is loaded.
+	 *
+	 * @access	public
+	 * @return	void
+	 */
+	public static function init()
+	{
+		static::$_table_name = static::$_table_name.Kohana::config('nova.genre');
 	}
 }
 

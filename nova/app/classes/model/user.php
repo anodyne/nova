@@ -279,18 +279,18 @@ class Model_User extends Model {
 					'character_id' => 0,
 					'item_id' => 0,
 					'value' => '',
-					'updated_at' => Date::time(),
+					'updated_at' => Date::now(),
 				);
 				
 				Model_FormData::create_data($user_field_data);
 			}
 		}
 		
-		DBUtil::optimize_table('form_fields');
-		DBUtil::optimize_table('form_data');
-		DBUtil::optimize_table('user_prefs');
-		DBUtil::optimize_table('user_pref_values');
-		DBUtil::optimize_table('users');
+		DBForge::optimize('form_fields');
+		DBForge::optimize('form_data');
+		DBForge::optimize('user_prefs');
+		DBForge::optimize('user_pref_values');
+		DBForge::optimize('users');
 		
 		return $record;
 	}
