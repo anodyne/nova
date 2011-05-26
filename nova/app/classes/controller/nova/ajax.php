@@ -16,7 +16,7 @@ class Controller_Nova_Ajax extends Controller_Nova_Base {
 		parent::before();
 		
 		// pull the settings and put them into the options object
-		$this->options = Jelly::query('setting')->get_settings($this->settingsArray);
+		$this->options = Model_Settings::get_settings($this->settingsArray);
 		
 		// set the variables
 		$this->rank		= $this->session->get('display_rank', $this->options->display_rank);
@@ -24,11 +24,19 @@ class Controller_Nova_Ajax extends Controller_Nova_Base {
 		$this->dst		= $this->session->get('dst', $this->options->daylight_savings);
 		
 		// set the shell
-		$this->template = View::factory('_common/layouts/ajax', array('skin' => $this->skin, 'sec' => 'main'));
+		$this->template = View::factory(Location::file('ajax', null, 'structure'));
 		
 		// set the variables in the template
 		$this->template->content = false;
 	}
+	
+	/**
+	 * Because we extend Controller_Nova_Base, we have to blank out the after
+	 * method otherwise an exception will be thrown. This means that for methods
+	 * that need to output to the template, we'll have to do all that work in
+	 * the actual method instead of relying on it to magically work.
+	 */
+	public function after() {}
 	
 	public function action_info_show_position_desc()
 	{
@@ -40,7 +48,7 @@ class Controller_Nova_Ajax extends Controller_Nova_Base {
 		$position = (is_numeric($position)) ? $position : false;
 		
 		// grab the position details
-		$item = Jelly::query('position', $position)->select();
+		$item = Model_Position::find($position);
 		
 		// set the output
 		$output = (count($item) > 0) ? $item->desc : false;
@@ -61,15 +69,15 @@ class Controller_Nova_Ajax extends Controller_Nova_Base {
 		$rank = (is_numeric($rank)) ? $rank : false;
 		
 		// grab the rank catalogue
-		$catalogue = Jelly::query('cataloguerank')->where('location', '=', $location)->limit(1)->select();
+		$catalogue = Model_CatalogueRank::get_item($location);
 		
 		// pull the rank record
-		$rank = Jelly::query('rank', $rank)->select();
+		$rank = Model_Rank::find($rank);
 		
 		// set the output
 		$output = (count($rank) > 0) ? Location::image($rank->image.$catalogue->extension, null, $location, 'rank') : false;
 		
-		echo html::image($output);
+		echo Html::image($output);
 	}
 	
 	public function action_install_field()
