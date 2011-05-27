@@ -34,10 +34,10 @@ foreach ($tourarray as $key => $value)
 $specshash = md5(implode('', array_keys($specsarray)));
 $tourhash = md5(implode('', array_keys($tourarray)));
 
-?><script type="text/javascript" src="<?php echo url::base().MODFOLDER;?>/assets/js/jquery.ajaxq.js"></script>
-<script type="text/javascript" src="<?php echo url::base().MODFOLDER;?>/assets/js/jquery.tipTip.js"></script>
+?><script type="text/javascript" src="<?php echo Url::base().MODFOLDER;?>/assets/js/jquery.ajaxq.js"></script>
+<script type="text/javascript" src="<?php echo Url::base().MODFOLDER;?>/assets/js/jquery.tipTip.js"></script>
 
-<link rel="stylesheet" href="<?php echo url::base().MODFOLDER;?>/assets/css/jquery.tipTip.css" />
+<link rel="stylesheet" href="<?php echo Url::base().MODFOLDER;?>/assets/css/jquery.tipTip.css" />
 
 <script type="text/javascript">
 	$(document).ready(function(){
@@ -112,7 +112,7 @@ $tourhash = md5(implode('', array_keys($tourarray)));
 						$('table tbody tr:eq(0) td:eq(1) .loading').removeClass('hidden');
 					},
 					type: "POST",
-					url: "<?php echo url::site('upgradeajax/upgrade_characters');?>",
+					url: "<?php echo Url::site('smsajax/upgrade_characters');?>",
 					data: send,
 					dataType: 'json',
 					success: function(data){
@@ -152,7 +152,7 @@ $tourhash = md5(implode('', array_keys($tourarray)));
 						$('table tbody tr:eq(1) td:eq(1) .loading').removeClass('hidden');
 					},
 					type: "POST",
-					url: "<?php echo url::site('upgradeajax/upgrade_awards');?>",
+					url: "<?php echo Url::site('smsajax/upgrade_awards');?>",
 					data: send,
 					dataType: 'json',
 					success: function(data){
@@ -184,7 +184,7 @@ $tourhash = md5(implode('', array_keys($tourarray)));
 						$('table tbody tr:eq(2) td:eq(1) .loading').removeClass('hidden');
 					},
 					type: "POST",
-					url: "<?php echo url::site('upgradeajax/upgrade_settings');?>",
+					url: "<?php echo Url::site('smsajax/upgrade_settings');?>",
 					data: send,
 					dataType: 'json',
 					success: function(data){
@@ -224,7 +224,7 @@ $tourhash = md5(implode('', array_keys($tourarray)));
 						$('table tbody tr:eq(3) td:eq(1) .loading').removeClass('hidden');
 					},
 					type: "POST",
-					url: "<?php echo url::site('upgradeajax/upgrade_logs');?>",
+					url: "<?php echo Url::site('smsajax/upgrade_logs');?>",
 					data: send,
 					dataType: 'json',
 					success: function(data){
@@ -264,7 +264,7 @@ $tourhash = md5(implode('', array_keys($tourarray)));
 						$('table tbody tr:eq(4) td:eq(1) .loading').removeClass('hidden');
 					},
 					type: "POST",
-					url: "<?php echo url::site('upgradeajax/upgrade_news');?>",
+					url: "<?php echo Url::site('smsajax/upgrade_news');?>",
 					data: send,
 					dataType: 'json',
 					success: function(data){
@@ -304,7 +304,7 @@ $tourhash = md5(implode('', array_keys($tourarray)));
 						$('table tbody tr:eq(5) td:eq(1) .loading').removeClass('hidden');
 					},
 					type: "POST",
-					url: "<?php echo url::site('upgradeajax/upgrade_missions');?>",
+					url: "<?php echo Url::site('smsajax/upgrade_missions');?>",
 					data: send,
 					dataType: 'json',
 					success: function(data){
@@ -344,7 +344,7 @@ $tourhash = md5(implode('', array_keys($tourarray)));
 						$('table tbody tr:eq(6) td:eq(1) .loading').removeClass('hidden');
 					},
 					type: "POST",
-					url: "<?php echo url::site('upgradeajax/upgrade_specs');?>",
+					url: "<?php echo Url::site('smsajax/upgrade_specs');?>",
 					data: send,
 					dataType: 'json',
 					success: function(data){
@@ -384,7 +384,7 @@ $tourhash = md5(implode('', array_keys($tourarray)));
 						$('table tbody tr:eq(7) td:eq(1) .loading').removeClass('hidden');
 					},
 					type: "POST",
-					url: "<?php echo url::site('upgradeajax/upgrade_tour');?>",
+					url: "<?php echo Url::site('smsajax/upgrade_tour');?>",
 					data: send,
 					dataType: 'json',
 					success: function(data){
