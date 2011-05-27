@@ -10,6 +10,8 @@ Anodyne Production's next-generation RPG management system combines popular feat
 
 * added the 1.2.5 update file
 * fixed bug where specification data wouldn't get added to the table for old items if a new field was added
+* fixed bug where deactivated users would retain their account flags (sysadmin, game master, etc) and wouldn't have their access role changed
+* fixed bug where reactivated users wouldn't have a reasonable access role
 
 ## Version History
 
@@ -18,7 +20,7 @@ Anodyne Production's next-generation RPG management system combines popular feat
 		<th>Version</th><th>Release Date</th>
 	</tr>
 	<tr>
-		<td>1.2.5</td><td>-</td>
+		<td>1.2.5</td><td>24 June 2011</td>
 	</tr>
 	<tr>
 		<td>1.2.4</td><td>24 January 2011</td>
