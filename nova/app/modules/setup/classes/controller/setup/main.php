@@ -1,4 +1,4 @@
-<?php
+<?php defined('SYSPATH') or die('No direct script access.');
 /**
  * Main setup controller
  *
@@ -167,11 +167,29 @@ class Controller_Setup_Main extends Controller_Template {
 		}
 		else
 		{
-			/**
-			 * The database is empty which means the only thing we can do
-			 * is a fresh install of Nova 3.
-			 */
-			$data->option = 1;
+			// find out if there are any SMS tables in the database
+			$sms = DB::query(Database::SELECT, "SHOW TABLES like 'sms_%'")->execute()->count();
+			
+			if ($sms > 0)
+			{
+				// now that we know SMS is here, find out the version
+				$smsversion = DB::query(Database::SELECT, "SELECT * FROM sms_system WHERE sysid = 1")
+					->as_object()
+					->execute()
+					->current()
+					->sysVersion;
+				
+				// if we don't have 2.6.9 or higher, we can't do the upgrade
+				$data->option = (version_compare($smsversion, '2.6.9', '<')) ? 6 : 5;
+			}
+			else
+			{
+				/**
+				 * The database is empty which means the only thing we can do
+				 * is a fresh install of Nova 3.
+				 */
+				$data->option = 1;
+			}
 		}
 		
 		// content
