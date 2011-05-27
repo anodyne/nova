@@ -82,5 +82,14 @@ return array(
 				'instructions' => "I bet you were expecting more steps, huh? Sorry to disappoint you, but Nova is installed and ready to use. Head on over to your site now to check it out and start using your Nova site.",
 			),
 		),
+		
+		/**
+		 * SMS upgrade.
+		 */
+		'sms' => array(
+			'step0' => array(
+				'instructions' => "Alright, time to get started! Like SMS, Nova 3 is a dynamic, database-driven web system which means, you guessed it, I need to install the Nova-specific database pieces now and then upgrade most of your SMS data to the newer Nova 3 format. Start to finish, the upgrade should only take a few minutes to complete and then you'll be on your way. If you have questions, you can refer to the readme that came in the Nova zip archive, check out the <a href='http://docs.anodyne-productions.com' target='_blank'>user guide</a> or drop in to our <a href='http://forums.anodyne-productions.com' target='_blank'>forums</a>.\r\n\r\nTime to get started now...",
+			),
+		),
 	),
 );
