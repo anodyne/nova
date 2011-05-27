@@ -144,6 +144,14 @@ class Model_Character extends Model {
 	/**
 	 * Create a character.
 	 *
+	 * This will create a character record and create empty rows for the
+	 * character dynamic form.
+	 *
+	 *     // note: this is an incomplete array
+	 *     $data = array('first_name' => 'John', 'last_name' => 'Public');
+	 *     
+	 *     $character = Model_Character::create_character($data);
+	 *
 	 * @access	public
 	 * @param	array 	an array of data used for creation
 	 * @return	object	the created object
@@ -159,7 +167,32 @@ class Model_Character extends Model {
 		
 		$record->save();
 		
+		/**
+		 * Fill the character rows for the dynamic form with blank data for editing later.
+		 */
+		$fields = Model_FormField::get_fields('bio');
+		
+		if (count($fields) > 0)
+		{
+			foreach ($fields as $f)
+			{
+				$character_field_data = array(
+					'form_key' => 'bio',
+					'field_id' => $f->id,
+					'user_id' => 0,
+					'character_id' => $record->id,
+					'item_id' => 0,
+					'value' => '',
+					'updated_at' => Date::now(),
+				);
+				
+				Model_FormData::create_data($character_field_data);
+			}
+		}
+		
 		DBForge::optimize('characters');
+		DBForge::optimize('form_fields');
+		DBForge::optimize('form_data');
 		
 		return $record;
 	}
