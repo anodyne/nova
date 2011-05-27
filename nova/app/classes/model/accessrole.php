@@ -37,4 +37,13 @@ class Model_AccessRole extends Model {
 			'cascade_delete' => false,
 		),
 	);
+	
+	/**
+	 * Constants for the default access levels.
+	 */
+	const SYSADMIN = 1;
+	const ADMIN = 2;
+	const POWERUSER = 3;
+	const STANDARD = 4;
+	const INACTIVE = 5;
 }
