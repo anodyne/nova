@@ -695,6 +695,16 @@ $form_fields = array(
 		'order' => 4),
 	array(
 		'form_key' => 'bio',
+		'section_id' => 4,
+		'type' => 'textarea',
+		'html_name' => 'languages',
+		'html_id' => 'languages',
+		'html_rows' => 2,
+		'label' => 'Languages',
+		'placeholder' => 'Enter your character\'s known languages here',
+		'order' => 5),
+	array(
+		'form_key' => 'bio',
 		'section_id' => 5,
 		'type' => 'textarea',
 		'html_name' => 'history',
