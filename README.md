@@ -33,6 +33,8 @@ Anodyne Production's next-generation RPG management system combines popular feat
 * fixed bug with private messages where RE: and FWD: would constantly be added to message, now Nova will make sure it's only added once
 * fixed bug with private messages where the person sending the message would be on the recipient list, so any message they sent would show up in their inbox as well
 * fixed bug where the join form could be submitted without an email address or password
+* fixed bug where users who were deactivated kept their account flags (sysadmin, game master, etc.) and their access role
+* fixed bug where users who were reactivated didn't have their access role set to Standard User
 
 ## Version History
 
