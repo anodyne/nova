@@ -66,7 +66,7 @@ class Controller_Nova_Main extends Controller_Nova_Base {
 		$this->template->layout->navsub->widget3	= false;
 		
 		$this->template->layout->footer				= View::factory(Location::file('footer', $this->skin, 'partials'));
-		$this->template->layout->footer->extra 		= Model_Messages::get_message('footer');
+		$this->template->layout->footer->extra 		= Model_SiteContent::get_message('footer');
 	}
 	
 	public function action_index()
@@ -91,8 +91,8 @@ class Controller_Nova_Main extends Controller_Nova_Base {
 		
 		// content
 		$this->_data->title = ucfirst(___("main"));
-		$this->_data->header = Model_Messages::get_message('welcome_head');
-		$this->_data->message = Model_Messages::get_message('welcome_msg');
+		$this->_data->header = Model_SiteContent::get_message('welcome_head');
+		$this->_data->message = Model_SiteContent::get_message('welcome_msg');
 	}
 	
 	public function action_credits()
@@ -101,13 +101,13 @@ class Controller_Nova_Main extends Controller_Nova_Base {
 		$this->_data = View::factory(Location::view('main_credits', $this->skin, 'pages'));
 		
 		// non-editable credits
-		$credits_perm = Model_Messages::get_message('credits_perm');
+		$credits_perm = Model_SiteContent::get_message('credits_perm');
 		$credits_perm.= "\r\n\r\n".Model_CatalogueSkinSec::get_default('main')->skins->credits;
 		$credits_perm.= "\r\n\r\n".Model_CatalogueRank::get_default()->credits;
 		
 		// credits
 		$this->_data->credits_perm = nl2br($credits_perm);
-		$this->_data->credits = Model_Messages::get_message('credits');
+		$this->_data->credits = Model_SiteContent::get_message('credits');
 		
 		// should we show an edit link?
 		$this->_data->edit = (Auth::is_logged_in() and Auth::check_access('site/messages', false)) ? true : false;
