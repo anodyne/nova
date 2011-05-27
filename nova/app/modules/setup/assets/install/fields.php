@@ -33,6 +33,7 @@ $data = array(
 	'menu_items' => array(),
 	'menu_categories' => array(),
 	'messages' => array(),
+	'message_recipients' => array(),
 	'missions' => array(),
 	'mission_groups' => array(),
 	'moderation' => array(),
@@ -42,13 +43,12 @@ $data = array(
 	'positions_'.$_genre => array('fields' => 'fields_positions'),
 	'posts' => array(),
 	'post_authors' => array(),
-	'private_messages' => array(),
-	'private_messages_to' => array(),
 	'ranks_'.$_genre => array('fields' => 'fields_ranks'),
 	'security_questions' => array(),
 	'sessions' => array('id' => 'session_id', 'index' => array('last_active')),
 	'settings' => array(),
 	'sim_types' => array(),
+	'site_contents' => array(),
 	'specs' => array(),
 	'system_info' => array(),
 	'system_components' => array(),
@@ -368,12 +368,22 @@ $fields_menu_categories = array(
 );
 
 $fields_messages = array(
-	'id' => array('type' => 'INT', 'constraint' => 8, 'auto_increment' => true),
-	'key' => array('type' => 'VARCHAR', 'constraint' => 255, 'default' => ''),
-	'label' => array('type' => 'VARCHAR', 'constraint' => 255, 'default' => ''),
+	'id' => array('type' => 'BIGINT', 'constraint' => 20, 'auto_increment' => true),
+	'user_id' => array('type' => 'INT', 'constraint' => 8),
+	'character_id' => array('type' => 'INT', 'constraint' => 8),
+	'date' => array('type' => 'BIGINT', 'constraint' => 20),
+	'subject' => array('type' => 'VARCHAR', 'constraint' => 255, 'default' => ''),
 	'content' => array('type' => 'TEXT'),
-	'type' => array('type' => 'ENUM', 'constraint' => "'title','message','other'", 'default' => 'message'),
-	'protected' => array('type' => 'TINYINT', 'constraint' => 1, 'default' => 0),
+	'author_display' => array('type' => 'TINYINT', 'constraint' => 1, 'default' => 1),
+);
+
+$fields_message_recipients = array(
+	'id' => array('type' => 'BIGINT', 'constraint' => 20, 'auto_increment' => true),
+	'message_id' => array('type' => 'BIGINT', 'constraint' => 20),
+	'user_id' => array('type' => 'INT', 'constraint' => 8),
+	'character_id' => array('type' => 'INT', 'constraint' => 8),
+	'unread' => array('type' => 'TINYINT', 'constraint' => 1, 'default' => 1),
+	'display' => array('type' => 'TINYINT', 'constraint' => 1, 'default' => 1),
 );
 
 $fields_missions = array(
@@ -472,27 +482,8 @@ $fields_post_authors = array(
 	'user_id' => array('type' => 'INT', 'constraint' => 8),
 );
 
-$fields_private_messages = array(
-	'id' => array('type' => 'BIGINT', 'constraint' => 20, 'auto_increment' => true),
-	'user_id' => array('type' => 'INT', 'constraint' => 8),
-	'character_id' => array('type' => 'INT', 'constraint' => 8),
-	'date' => array('type' => 'BIGINT', 'constraint' => 20),
-	'subject' => array('type' => 'VARCHAR', 'constraint' => 255, 'default' => ''),
-	'content' => array('type' => 'TEXT'),
-	'author_display' => array('type' => 'TINYINT', 'constraint' => 1, 'default' => 1),
-);
-
-$fields_private_messages_to = array(
-	'id' => array('type' => 'BIGINT', 'constraint' => 20, 'auto_increment' => true),
-	'message_id' => array('type' => 'BIGINT', 'constraint' => 20),
-	'user_id' => array('type' => 'INT', 'constraint' => 8),
-	'character_id' => array('type' => 'INT', 'constraint' => 8),
-	'unread' => array('type' => 'TINYINT', 'constraint' => 1, 'default' => 1),
-	'display' => array('type' => 'TINYINT', 'constraint' => 1, 'default' => 1),
-);
-
 $fields_ranks = array(
-	'id' => array('type' => 'INT', 'constraint' => 10, 'auto_increment' => true),
+	'id' => array('type' => 'INT', 'constraint' => 11, 'auto_increment' => true),
 	'name' => array('type' => 'VARCHAR', 'constraint' => 255, 'default' => ''),
 	'short_name' => array('type' => 'VARCHAR', 'constraint' => 20, 'default' => ''),
 	'image' => array('type' => 'VARCHAR', 'constraint' => 100, 'default' => ''),
@@ -523,6 +514,15 @@ $fields_settings = array(
 $fields_sim_types = array(
 	'id' => array('type' => 'INT', 'constraint' => 5, 'auto_increment' => true),
 	'name' => array('type' => 'VARCHAR', 'constraint' => 255, 'default' => ''),
+);
+
+$fields_site_contents = array(
+	'id' => array('type' => 'INT', 'constraint' => 8, 'auto_increment' => true),
+	'key' => array('type' => 'VARCHAR', 'constraint' => 255, 'default' => ''),
+	'label' => array('type' => 'VARCHAR', 'constraint' => 255, 'default' => ''),
+	'content' => array('type' => 'TEXT'),
+	'type' => array('type' => 'ENUM', 'constraint' => "'title','message','other'", 'default' => 'message'),
+	'protected' => array('type' => 'TINYINT', 'constraint' => 1, 'default' => 0),
 );
 
 $fields_specs = array(
