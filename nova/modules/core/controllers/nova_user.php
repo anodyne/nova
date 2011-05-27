@@ -115,6 +115,16 @@ abstract class Nova_user extends Nova_controller_admin {
 						
 						// update the user prefs to all be no
 						$this->user->update_all_user_prefs($id);
+						
+						/**
+						 * If a user is being deactivated, we need to make sure
+						 * we change their access role to deactivated and that
+						 * they aren't a system admin, game master or webmaster.
+						 */
+						$array['is_sysadmin'] = 'n';
+						$array['is_game_master'] = 'n';
+						$array['is_webmaster'] = 'n';
+						$array['access_role'] = 5;
 					}
 
 					if ($old_status == 'inactive' and $array['status'] != 'inactive')
