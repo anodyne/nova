@@ -37,4 +37,27 @@ class Model_CharacterImage extends Model {
 			'type' => 'bigint',
 			'constraint' => 20),
 	);
+	
+	/**
+	 * Create a character image.
+	 *
+	 * @access	public
+	 * @param	array 	an array of data used for creation
+	 * @return	object	the created object
+	 */
+	public static function create_character(array $data)
+	{
+		$record = Model_CharacterImage::factory();
+		
+		foreach ($data as $key => $value)
+		{
+			$record->{$key} = $value;
+		}
+		
+		$record->save();
+		
+		DBForge::optimize('character_images');
+		
+		return $record;
+	}
 }
