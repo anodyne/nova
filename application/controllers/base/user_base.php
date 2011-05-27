@@ -5,9 +5,12 @@
 |---------------------------------------------------------------
 |
 | File: controllers/user_base.php
-| System Version: 1.2
+| System Version: 1.2.5
 |
-| Changes: fixed bug where an error was thrown on the all users page
+| Changes: fixed bug where an error was thrown on the all users page; fixed bug
+|	where deactivated users retained their account flags (sysadmin, game master
+|	etc.) and their access role and reactivated users weren't set to a reasonable
+|	access role
 |
 */
 
@@ -195,11 +198,22 @@ class User_base extends Controller {
 						
 						// update the user prefs to all be no
 						$this->user->update_all_user_prefs($id);
+						
+						/**
+						 * If a user is being deactivated, we need to make sure
+						 * we change their access role to deactivated and that
+						 * they aren't a system admin, game master or webmaster.
+						 */
+						$array['is_sysadmin'] = 'n';
+						$array['is_game_master'] = 'n';
+						$array['is_webmaster'] = 'n';
+						$array['access_role'] = 5;
 					}
 
 					if ($old_status == 'inactive' && $array['status'] != 'inactive')
 					{
 						$array['leave_date'] = NULL;
+						$array['access_role'] = 4;
 						
 						// update the user prefs to all be yes
 						$this->user->update_all_user_prefs($id, 'y');
