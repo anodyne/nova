@@ -17,6 +17,12 @@
 		</a>
 	<?php endif;?>
 	
+	<?php if ($option == 5): ?>
+		<a href="http://docs.anodyne-productions.com/index.php/nova/overview/upgrade" target="_blank" class="install-secoptions">
+			<span class="secoptions-guide">Read the SMS Upgrade Guide</span>
+		</a>
+	<?php endif;?>
+	
 	<a href="<?php echo Url::site('setup/main/verify');?>" class="install-secoptions">
 		<span class="secoptions-verify">Verify my server can run Nova</span>
 	</a>
