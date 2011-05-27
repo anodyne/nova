@@ -1,4 +1,4 @@
-<?php
+<?php defined('SYSPATH') or die('No direct script access.');
 /**
  * Install Controller
  *
@@ -545,7 +545,7 @@ class Controller_Setup_Install extends Controller_Template {
 					{
 						foreach ($$value as $k => $v)
 						{
-							$sql = Db::insert($value)
+							$sql = DB::insert($value)
 								->columns(array_keys($v))
 								->values(array_values($v))
 								->compile($db);
@@ -569,7 +569,7 @@ class Controller_Setup_Install extends Controller_Template {
 					{
 						foreach ($$value_d as $k => $v)
 						{
-							$sql = Db::insert($key_d)
+							$sql = DB::insert($key_d)
 								->columns(array_keys($v))
 								->values(array_values($v))
 								->compile($db);
@@ -595,7 +595,7 @@ class Controller_Setup_Install extends Controller_Template {
 						{
 							foreach ($$value as $k => $v)
 							{
-								$sql = Db::insert($value)
+								$sql = DB::insert($value)
 									->columns(array_keys($v))
 									->values(array_values($v))
 									->compile($db);
