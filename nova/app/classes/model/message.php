@@ -1,6 +1,6 @@
 <?php
 /**
- * Private Messages Model
+ * Messages Model
  *
  * @package		Nova
  * @category	Models
@@ -9,9 +9,9 @@
  * @version		3.0
  */
  
-class Model_PrivateMessage extends Model {
+class Model_Message extends Model {
 	
-	public static $_table_name = 'private_messages';
+	public static $_table_name = 'messages';
 	
 	public static $_properties = array(
 		'id' => array(
@@ -41,7 +41,7 @@ class Model_PrivateMessage extends Model {
 	
 	public static $_has_many = array(
 		'messages' => array(
-			'model_to' => 'Model_PrivateMessageTo',
+			'model_to' => 'Model_MessageRecipient',
 			'key_to' => 'message_id',
 			'key_from' => 'id',
 			'cascade_save' => false,
