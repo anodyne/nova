@@ -726,7 +726,7 @@ class Controller_Setup_Install extends Controller_Template {
 							'name' => $name,
 							'email' => $email,
 							'password' => Auth::hash($password),
-							'role_id' => 1,
+							'role_id' => Model_AccessRole::SYSADMIN,
 							'is_sysadmin' => (int) true,
 							'is_game_master' => (int) true,
 							'is_webmaster' => (int) true,
@@ -735,6 +735,7 @@ class Controller_Setup_Install extends Controller_Template {
 							'display_rank' => Model_CatalogueRank::get_default(true),
 							'security_question' => $question,
 							'security_answer' => sha1($answer),
+							'join_date' => Date::now(),
 						);
 						
 						// create the user
@@ -817,12 +818,6 @@ class Controller_Setup_Install extends Controller_Template {
 		$this->template->layout->image = Html::image(MODFOLDER.'/app/modules/setup/views/design/images/wand-24x24.png', array('id' => 'title-image'));
 	}
 	
-	public function action_test()
-	{
-		echo Debug::vars(Model_User::update_user(10, array()));
-		exit;
-	}
-	
 	private function _register()
 	{
 		require_once Kohana::find_file('vendor', 'swiftmailer/lib/swift_required');
@@ -832,10 +827,10 @@ class Controller_Setup_Install extends Controller_Template {
 		$request = array(
 			Kohana::config('nova.app_name'),
 			Kohana::config('nova.app_version_full'),
-			url::site(),
+			Url::site(),
 			$_SERVER['REMOTE_ADDR'],
 			$_SERVER['SERVER_ADDR'],
-			phpversion(),
+			PHP_VERSION,
 			'install',
 			Kohana::config('nova.genre'),
 		);
