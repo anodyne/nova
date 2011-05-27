@@ -1,12 +1,11 @@
 <?php defined('SYSPATH') or die('No direct script access.');
 /**
- * Ajax Controller
+ * SMS Upgrade Ajax Controller
  *
  * @package		Nova
  * @category	Controllers
  * @author		Anodyne Productions
- * @copyright	2010-11 Anodyne Productions
- * @since		2.0
+ * @copyright	2011 Anodyne Productions
  */
 
 class Controller_Setup_Smsajax extends Controller_Template {
@@ -43,26 +42,26 @@ class Controller_Setup_Smsajax extends Controller_Template {
 			// rename the fields
 			$fields = array(
 				'awardid' => array(
-					'name' => 'award_id',
+					'name' => 'id',
 					'type' => 'INT',
 					'constraint' => 5),
 				'awardName' => array(
-					'name' => 'award_name',
+					'name' => 'name',
 					'type' => 'VARCHAR',
 					'constraint' => 255),
 				'awardImage' => array(
-					'name' => 'award_image',
+					'name' => 'image',
 					'type' => 'VARCHAR',
 					'constraint' => 100),
 				'awardOrder' => array(
-					'name' => 'award_order',
+					'name' => 'order',
 					'type' => 'INT',
 					'constraint' => 5),
 				'awardDesc' => array(
-					'name' => 'award_desc',
+					'name' => 'desc',
 					'type' => 'TEXT'),
 				'awardCat' => array(
-					'name' => 'award_cat',
+					'name' => 'category',
 					'type' => 'ENUM',
 					'constraint' => "'ic','ooc','both'",
 					'default' => 'ic'),
@@ -73,20 +72,20 @@ class Controller_Setup_Smsajax extends Controller_Template {
 			
 			// add the award_display column
 			$add = array(
-				'award_display' => array(
-					'type' => 'ENUM',
-					'constraint' => "'y','n'",
-					'default' => 'y')
+				'display' => array(
+					'type' => 'TINYINT',
+					'constraint' => 1,
+					'default' => 1)
 			);
 			
 			// do the add action
 			DBForge::add_column('awards', $add);
 			
 			// make award_id auto increment and the primary key
-			$this->db->query(null, "ALTER TABLE ".$this->db->table_prefix()."awards MODIFY COLUMN `award_id` INT(5) auto_increment primary key", true);
+			$this->db->query(null, "ALTER TABLE ".$this->db->table_prefix()."awards MODIFY COLUMN `id` INT(5) auto_increment primary key", true);
 			
 			// get the number of records in the new table
-			$count_new = Jelly::query('award')->count();
+			$count_new = Model_Award::find('all')->count();
 			
 			if ($count_new == $count_old)
 			{
@@ -99,7 +98,7 @@ class Controller_Setup_Smsajax extends Controller_Template {
 			{
 				$retval = array(
 					'code' => 0,
-					'message' => __("Not all of the awards were transferred to the Nova format")
+					'message' => "Not all of the awards were transferred to the Nova 3 format"
 				);
 			}
 			
@@ -118,9 +117,6 @@ class Controller_Setup_Smsajax extends Controller_Template {
 	
 	public function action_upgrade_characters()
 	{
-		// change the user model to prevent null values
-		Jelly::meta('user')->field('join')->auto_now_create = false;
-		
 		try {
 			// get the characters
 			$result = $this->db->query(Database::SELECT, 'SELECT * FROM sms_crew', true);
@@ -130,21 +126,6 @@ class Controller_Setup_Smsajax extends Controller_Template {
 			
 			// an array of character IDs
 			$charIDs = array('' => 0);
-			
-			// add the languages field
-			$lang = Jelly::factory('formfield')
-				->set(array(
-					'type' => 'text',
-					'html_name' => 'languages',
-					'html_id' => 'languages',
-					'html_rows' => 0,
-					'value' => '',
-					'section' => 1,
-					'order' => 4,
-					'form' => 'bio',
-					'label' => 'Languages'
-				))
-				->save();
 			
 			// create an empty users array
 			$users = array();
@@ -157,24 +138,23 @@ class Controller_Setup_Smsajax extends Controller_Template {
 					$users[$r->email] = array(
 						'name'				=> $r->realName,
 						'email'				=> $r->email,
-						'join'				=> false,
-						'leave'				=> $r->leaveDate,
-						'status'			=> ($r->crewType != 'active' and $r->crewType != 'pending') ? 'inactive' : $r->crewType,
+						'join_date'			=> false,
+						'leave_date'		=> $r->leaveDate,
 						'password_reset'	=> 1,
-						'role'				=> 4,
+						'role_id'			=> Model_AccessRole::STANDARD,
 					);
 					
-					if ( ! isset($users[$r->email]['main_char']))
+					if ( ! isset($users[$r->email]['character_id']))
 					{
 						// if we haven't set the main charcter yet, set it now
-						$users[$r->email]['main_char'] = $r->crewid;
+						$users[$r->email]['character_id'] = $r->crewid;
 					}
 					else
 					{
 						if ($r->crewType == 'active')
 						{
 							// if the main character has been set but the current character is active, use that
-							$users[$r->email]['main_char'] = $c->crewid;
+							$users[$r->email]['character_id'] = $c->crewid;
 						}
 					}
 					
@@ -192,10 +172,10 @@ class Controller_Setup_Smsajax extends Controller_Template {
 						}
 					}
 					
-					if ($users[$r->email]['join'] === false)
+					if ($users[$r->email]['join_date'] === false)
 					{
 						// if the join date isn't set yet, set it
-						$users[$r->email]['join'] = $r->joinDate;
+						$users[$r->email]['join_date'] = $r->joinDate;
 					}
 				}
 			}
@@ -206,28 +186,13 @@ class Controller_Setup_Smsajax extends Controller_Template {
 			foreach ($users as $u)
 			{
 				// create the user
-				$useraction = Jelly::factory('user')->set($u)->save();
+				$useraction = Model_User::create_user($u);
 				
 				// store whether or not the save worked
-				$saved['users'][] = $useraction->saved();
+				$saved['users'][] = (bool) is_object($useraction);
 				
 				// optimize the table
 				DBForge::optimize('users');
-				
-				// get the preferences
-				$prefs = Jelly::query('userpref')->select();
-				
-				// loop through and create the preferences for the user
-				foreach ($prefs as $p)
-				{
-					$prefvalues = Jelly::factory('userprefvalue')
-						->set(array(
-							'user' => $useraction->id(),
-							'key' => $p->key,
-							'value' => $p->default
-						))
-						->save();
-				}
 				
 				// keeping track of user ids
 				$charIDs[$u['email']] = $useraction->id();
@@ -241,39 +206,44 @@ class Controller_Setup_Smsajax extends Controller_Template {
 				// make sure the fields array is empty
 				$fields = false;
 				
+				// the array of character info
+				$characterinfo = array(
+					'id' => $c->crewid,
+					'user_id' => ( ! empty($c->email)) ? $charIDs[$c->email] : null,
+					'first_name' => $c->firstName,
+					'middle_name' => $c->middleName,
+					'last_name' => $c->lastName,
+					'status' => ($c->crewType == 'npc') ? 'active' : $c->crewType,
+					'activated' => $c->joinDate,
+					'deactivated' => $c->leaveDate,
+					'rank_id' => $c->rankid,
+					'position1_id' => $c->positionid,
+					'position2_id' => $c->positionid2,
+					'last_post' => $c->lastPost,
+					'updated_at' => Date::now(),
+				);
+				
 				// create the character
-				$characteraction = Jelly::factory('character')
-					->set(array(
-						'id' => $c->crewid,
-						'user' => ( ! empty($c->email)) ? $charIDs[$c->email] : null,
-						'fname' => $c->firstName,
-						'mname' => $c->middleName,
-						'lname' => $c->lastName,
-						'status' => ($c->crewType == 'npc') ? 'active' : $c->crewType,
-						'activate' => $c->joinDate,
-						'deactivate' => $c->leaveDate,
-						'rank' => $c->rankid,
-						'position1' => $c->positionid,
-						'position2' => $c->positionid2,
-						'last_post' => $c->lastPost
-					))
-					->save();
+				$characteraction = Model_Character::create_character($characterinfo);
 				
 				// store whether or not the save worked
-				$saved['characters'][] = $characteraction->saved();
+				$saved['characters'][] = (bool) is_object($characteraction);
 				
 				// explode the images string
 				$images = explode(',', $c->image);
 				
 				foreach ($images as $i)
 				{
-					$item = Jelly::factory('characterimage')
-						->set(array(
-							'user' => ( ! empty($c->email)) ? $charIDs[$c->email] : null,
-							'character' => $c->crewid,
-							'image' => $i
-						))
-						->save();
+					// the information for the record
+					$imageinfo = array(
+						'user_id' => ( ! empty($c->email)) ? $charIDs[$c->email] : null,
+						'character_id' => $c->crewid,
+						'image' => $i,
+						'created_at' => Date::now(),
+					);
+					
+					// create the record
+					$item = Model_CharacterImage::create_image($imageinfo);
 				}
 				
 				// optimize the table
@@ -299,30 +269,13 @@ class Controller_Setup_Smsajax extends Controller_Template {
 					16 	=> $c->strengths,
 					17 	=> $c->ambitions,
 					18 	=> $c->hobbies,
-					19 	=> $c->history,
-					20 	=> $c->serviceRecord,
-					$lang->id() => $c->languages,
+					19	=> $c->languages,
+					20 	=> $c->history,
+					21 	=> $c->serviceRecord,
 				);
 				
-				foreach ($fields as $field => $value)
-				{
-					// insert the character data
-					$fieldata = Jelly::factory('formdata')
-						->set(array(
-							'form' => 'bio',
-							'character' => $characteraction->id(),
-							'user' => ( ! empty($c->email)) ? $charIDs[$c->email] : null,
-							'field' => $field,
-							'value' => $value
-						))
-						->save();
-						
-					// store whether or not the save worked
-					$saved['formdata'][] = $fieldata->saved();
-				}
-				
-				// optimize the table
-				DBForge::optimize('forms_data');
+				// update the character data
+				$saved['formdata'][] = Model_Character::update_character_data($characteraction->id, $fields);
 			}
 			
 			// set the count variables
@@ -343,7 +296,7 @@ class Controller_Setup_Smsajax extends Controller_Template {
 				{
 					$retval = array(
 						'code' => 2,
-						'message' => __("Your characters and character data were upgraded, but not all users were upgraded")
+						'message' => "Your characters and character data were upgraded, but not all users were upgraded"
 					);
 				}
 				
@@ -351,7 +304,7 @@ class Controller_Setup_Smsajax extends Controller_Template {
 				{
 					$retval = array(
 						'code' => 2,
-						'message' => __("Your character data was upgraded, but not all users or characters were upgraded")
+						'message' => "Your character data was upgraded, but not all users or characters were upgraded"
 					);
 				}
 				
@@ -359,7 +312,7 @@ class Controller_Setup_Smsajax extends Controller_Template {
 				{
 					$retval = array(
 						'code' => 2,
-						'message' => __("Your users and character data was upgraded, but not all characters were upgraded")
+						'message' => "Your users and character data was upgraded, but not all characters were upgraded"
 					);
 				}
 				
@@ -367,7 +320,7 @@ class Controller_Setup_Smsajax extends Controller_Template {
 				{
 					$retval = array(
 						'code' => 2,
-						'message' => __("Your users and characters were upgraded, but not all character data was upgraded")
+						'message' => "Your users and characters were upgraded, but not all character data was upgraded"
 					);
 				}
 				
@@ -375,7 +328,7 @@ class Controller_Setup_Smsajax extends Controller_Template {
 				{
 					$retval = array(
 						'code' => 2,
-						'message' => __("Your characters were upgraded, but not all users or character data were upgraded")
+						'message' => "Your characters were upgraded, but not all users or character data were upgraded"
 					);
 				}
 				
@@ -383,7 +336,7 @@ class Controller_Setup_Smsajax extends Controller_Template {
 				{
 					$retval = array(
 						'code' => 2,
-						'message' => __("Your users were upgraded, but not all characters or character data were upgraded")
+						'message' => "Your users were upgraded, but not all characters or character data were upgraded"
 					);
 				}
 				
@@ -391,7 +344,7 @@ class Controller_Setup_Smsajax extends Controller_Template {
 				{
 					$retval = array(
 						'code' => 0,
-						'message' => __("Your users, characters and character data could not be updated")
+						'message' => "Your users, characters and character data could not be updated"
 					);
 				}
 			}
