@@ -24,11 +24,11 @@ $data = array(
 	'form_values',
 	'menu_categories',
 	'menu_items',
-	'messages',
 	'news_categories',
 	'security_questions',
 	'settings',
 	'sim_types',
+	'site_contents',
 	'system_components',
 	'system_info',
 	'system_versions',
@@ -2095,101 +2095,6 @@ $menu_items = array(
 			'access' => 'report/versions'),*/
 );
 
-$messages = array(
-	array(
-		'key' => 'welcome_msg',
-		'label' => 'Welcome Page Message',
-		'content' => "Define your welcome message and welcome page header through the Site Messages page.",
-		'type' => 'message'),
-	array(
-		'key' => 'sim',
-		'label' => 'Sim Message',
-		'content' => "Define your sim message through the Site Messages page.",
-		'type' => 'message'),
-	array(
-		'key' => 'wiki_main',
-		'label' => 'Wiki Main Page Message',
-		'content' => "Welcome to Thresher Release 1, Anodyne's integrated mini-wiki included with Nova. You can change this message through the Site Messages page.",
-		'type' => 'message'),
-	array(
-		'key' => 'credits_perm',
-		'label' => 'Permanent Credits',
-		'content' => "Nova 3 has been developed on the elegant HMVC PHP5 framework <a href='http://www.http://kohanaframework.org/' target='_blank'>Kohana 3</a>.\r\n\r\nMany of the icons used throughout Nova were created by <a href='http://http://p.yusukekamiyamane.com/'>Yusuke Kamiyamane</a> as part of the Fugue icon set.",
-		'protected' => 1,
-		'type' => 'message'),
-	array(
-		'key' => 'credits',
-		'label' => 'Credits',
-		'content' => "Define your site credits through the Site Messages page.",
-		'type' => 'message'),
-	array(
-		'key' => 'footer',
-		'label' => 'Additional Footer Information',
-		'content' => "New to Nova 3 is the ability to add additional information to the footer, like important credits or even banner exchanges, without having to edit any files. Just plug your code into the 'Additional Footer Information' site message!",
-		'type' => 'message'),
-	array(
-		'key' => 'contact',
-		'label' => 'Contact Page Message',
-		'content' => "Have a question about the sim? Need to get in touch with the game master? Use the form below to drop us a message with your question or comment and we'll get back to you as soon as possible.",
-		'type' => 'message'),
-	array(
-		'key' => 'join_disclaimer',
-		'label' => 'Join Disclaimer',
-		'content' => "Members are expected to follow the rules and regulations of both the sim and fleet at all times, both in character and out of character. By continuing, you affirm that you will sim in a proper and adequate manner. Members who choose to make ultra short posts, post very infrequently, or post posts with explicit content (above PG-13) will be removed immediately, and by continuing, you agree to this. In addition, in compliance with the Children's Online Privacy Protection Act of 1998 (COPPA), we do not accept players under the age of 13.  Any players found to be under the age of 13 will be immediately removed without question.  By agreeing to these terms, you are also saying that you are above the age of 13.",
-		'type' => 'other'),
-	array(
-		'key' => 'join_instructions',
-		'label' => 'Join Instructions',
-		'content' => "Define your join instructions through the Site Message page.",
-		'type' => 'message'),
-	array(
-		'key' => 'join_post',
-		'label' => 'Join Sample Post',
-		'content' => "Define your join sample post through the Site Message page.",
-		'type' => 'other'),
-	array(
-		'key' => 'accept_message',
-		'label' => 'User Acceptance Email',
-		'content' => "Define your user acceptance message through the Site Message page.",
-		'type' => 'other'),
-	array(
-		'key' => 'reject_message',
-		'label' => 'User Rejection Message',
-		'content' => "Define your user rejection message through the Site Messages page.",
-		'type' => 'other'),
-	array(
-		'key' => 'docking_accept_message',
-		'label' => 'Docking Acceptance Email',
-		'content' => "Define your docking acceptance message through the Site Message page.",
-		'type' => 'other'),
-	array(
-		'key' => 'docking_reject_message',
-		'label' => 'Docking Rejection Message',
-		'content' => "Define your docking rejection message through the Site Messages page.",
-		'type' => 'other'),
-	array(
-		'key' => 'contact',
-		'label' => 'Contact Instructions',
-		'content' => 'Please use the form below to contact the sim with questions. You can choose to email the game master, the command staff, or the webmaster with your questions and/or comments.',
-		'type' => 'message'),
-	
-	array(
-		'key' => 'welcome_head',
-		'label' => 'Welcome Header',
-		'content' => "Welcome to Nova!",
-		'type' => 'title'),
-	array(
-		'key' => 'main_credits_title',
-		'label' => 'Site Credits Header',
-		'content' => 'Site Credits',
-		'type' => 'title'),
-	array(
-		'key' => 'main_join_title',
-		'label' => 'Join Page Header',
-		'content' => 'Join',
-		'type' => 'title'),
-);
-
 $news_categories = array(
 	array('name' => 'General News'),
 	array('name' => 'Out of Character'),
@@ -2336,6 +2241,101 @@ $sim_types = array(
 	array('name' => 'organization')
 );
 
+$site_contents = array(
+	array(
+		'key' => 'welcome_msg',
+		'label' => 'Welcome Page Message',
+		'content' => "Define your welcome message and welcome page header through the Site Messages page.",
+		'type' => 'message'),
+	array(
+		'key' => 'sim',
+		'label' => 'Sim Message',
+		'content' => "Define your sim message through the Site Messages page.",
+		'type' => 'message'),
+	array(
+		'key' => 'wiki_main',
+		'label' => 'Wiki Main Page Message',
+		'content' => "Welcome to Thresher Release 1, Anodyne's integrated mini-wiki included with Nova. You can change this message through the Site Messages page.",
+		'type' => 'message'),
+	array(
+		'key' => 'credits_perm',
+		'label' => 'Permanent Credits',
+		'content' => "Nova 3 has been developed on the elegant HMVC PHP5 framework <a href='http://www.http://kohanaframework.org/' target='_blank'>Kohana 3</a>.\r\n\r\nMany of the icons used throughout Nova were created by <a href='http://http://p.yusukekamiyamane.com/'>Yusuke Kamiyamane</a> as part of the Fugue icon set.",
+		'protected' => 1,
+		'type' => 'message'),
+	array(
+		'key' => 'credits',
+		'label' => 'Credits',
+		'content' => "Define your site credits through the Site Messages page.",
+		'type' => 'message'),
+	array(
+		'key' => 'footer',
+		'label' => 'Additional Footer Information',
+		'content' => "New to Nova 3 is the ability to add additional information to the footer, like important credits or even banner exchanges, without having to edit any files. Just plug your code into the 'Additional Footer Information' site message!",
+		'type' => 'message'),
+	array(
+		'key' => 'contact',
+		'label' => 'Contact Page Message',
+		'content' => "Have a question about the sim? Need to get in touch with the game master? Use the form below to drop us a message with your question or comment and we'll get back to you as soon as possible.",
+		'type' => 'message'),
+	array(
+		'key' => 'join_disclaimer',
+		'label' => 'Join Disclaimer',
+		'content' => "Members are expected to follow the rules and regulations of both the sim and fleet at all times, both in character and out of character. By continuing, you affirm that you will sim in a proper and adequate manner. Members who choose to make ultra short posts, post very infrequently, or post posts with explicit content (above PG-13) will be removed immediately, and by continuing, you agree to this. In addition, in compliance with the Children's Online Privacy Protection Act of 1998 (COPPA), we do not accept players under the age of 13.  Any players found to be under the age of 13 will be immediately removed without question.  By agreeing to these terms, you are also saying that you are above the age of 13.",
+		'type' => 'other'),
+	array(
+		'key' => 'join_instructions',
+		'label' => 'Join Instructions',
+		'content' => "Define your join instructions through the Site Message page.",
+		'type' => 'message'),
+	array(
+		'key' => 'join_post',
+		'label' => 'Join Sample Post',
+		'content' => "Define your join sample post through the Site Message page.",
+		'type' => 'other'),
+	array(
+		'key' => 'accept_message',
+		'label' => 'User Acceptance Email',
+		'content' => "Define your user acceptance message through the Site Message page.",
+		'type' => 'other'),
+	array(
+		'key' => 'reject_message',
+		'label' => 'User Rejection Message',
+		'content' => "Define your user rejection message through the Site Messages page.",
+		'type' => 'other'),
+	array(
+		'key' => 'docking_accept_message',
+		'label' => 'Docking Acceptance Email',
+		'content' => "Define your docking acceptance message through the Site Message page.",
+		'type' => 'other'),
+	array(
+		'key' => 'docking_reject_message',
+		'label' => 'Docking Rejection Message',
+		'content' => "Define your docking rejection message through the Site Messages page.",
+		'type' => 'other'),
+	array(
+		'key' => 'contact',
+		'label' => 'Contact Instructions',
+		'content' => 'Please use the form below to contact the sim with questions. You can choose to email the game master, the command staff, or the webmaster with your questions and/or comments.',
+		'type' => 'message'),
+	
+	array(
+		'key' => 'welcome_head',
+		'label' => 'Welcome Header',
+		'content' => "Welcome to Nova!",
+		'type' => 'title'),
+	array(
+		'key' => 'main_credits_title',
+		'label' => 'Site Credits Header',
+		'content' => 'Site Credits',
+		'type' => 'title'),
+	array(
+		'key' => 'main_join_title',
+		'label' => 'Join Page Header',
+		'content' => 'Join',
+		'type' => 'title'),
+);
+
 $system_components = array(
 	array(
 		'name' => 'Kohana',
@@ -2435,29 +2435,29 @@ $system_info = array(
 
 $system_versions = array(
 	array(
-		'version' => '1.0.0',
-		'major' => '1',
-		'minor' => '0',
-		'update' => '0',
-		'date' => 1271393940,
+		'version' 	=> '1.0.0',
+		'major' 	=> '1',
+		'minor' 	=> '0',
+		'update' 	=> '0',
+		'date' 		=> 1271393940,
 		'launch'	=> 'Nova 1.0 is the first release of the next generation RPG management software from Anodyne Productions.',
 		'changes'	=> "* Initial release"),
 	array(
-		'version' => '1.0.1',
-		'major' => '1',
-		'minor' => '0',
-		'update' => '1',
-		'date' => 1271424600,
+		'version' 	=> '1.0.1',
+		'major' 	=> '1',
+		'minor' 	=> '0',
+		'update' 	=> '1',
+		'date' 		=> 1271424600,
 		'launch'	=> 'Nova 1.0.1 is a maintenance release that fixes two important issues with Nova 1.0. The release fixes a bug where the upgrade process did not create a necessary field in the missions table as well as two issues with installations oh PHP4 servers. This update is recommended for all users who have upgraded from SMS and/or are running on a PHP4 server.',
 		'changes'	=> "* fixed bug in the upgrade process where a database field wasn't added to the table
 * fixed bug where models couldn't be autoloaded because Base4 doesn't extend MY_Loader
 * fixed error that was thrown because the date_default_timezone_set function doesn't exist in PHP before version 5.1"),
 	array(
-		'version' => '1.0.2',
-		'major' => '1',
-		'minor' => '0',
-		'update' => '2',
-		'date' => 1271817000,
+		'version' 	=> '1.0.2',
+		'major' 	=> '1',
+		'minor' 	=> '0',
+		'update' 	=> '2',
+		'date' 		=> 1271817000,
 		'launch'	=> 'Nova 1.0.2 is a maintenance release that fixes a majority of the outstanding issues with Nova 1.0, including: login issues, post display issues and bug with posting mission entries. See the changelog after updating for a complete list of changes. This update is recommended for all users.',
 		'changes'	=> "* added the 1.0.2 update file
 * added the MY\_Input library to add a call to a text cleanup function after filtering for XSS
@@ -2499,12 +2499,12 @@ $system_versions = array(
 * fixed a presentational bug in login error #6
 * fixed bug where the mission dropdown wasn't properly populated when viewing a saved post"),
 	array(
-		'version' => '1.0.3',
-		'major' => '1',
-		'minor' => '0',
-		'update' => '3',
-		'date' => 1272321000,
-		'launch'	=> "Nova 1.0.3 is the third maintainance release for Nova 1.0 and continues to fix issues with the system. Included in this release are fixes for errors being thrown throughout the system, several bugs with Thresher, changes to the update center to allow users to update even if they can't get the update information from the Anodyne server, NPC removal issues, updates to the user removal process and much more. A full changelog can be found on AnodyneDocs or from the System and Versions report once Nova has been updated. This update is recommended for all users.",
+		'version' 	=> '1.0.3',
+		'major' 	=> '1',
+		'minor' 	=> '0',
+		'update' 	=> '3',
+		'date' 		=> 1272321000,
+		'launch'	=> "Nova 1.0.3 is the third maintenance release for Nova 1.0 and continues to fix issues with the system. Included in this release are fixes for errors being thrown throughout the system, several bugs with Thresher, changes to the update center to allow users to update even if they can't get the update information from the Anodyne server, NPC removal issues, updates to the user removal process and much more. A full changelog can be found on AnodyneDocs or from the System and Versions report once Nova has been updated. This update is recommended for all users.",
 		'changes'	=> "* added the 1.0.3 update file
 * updated the install data
     * menu items
@@ -2535,12 +2535,12 @@ $system_versions = array(
 * fixed error thrown for missing option parameters
 * fixed error thrown during accepting/rejecting a docked ship application"),
 	array(
-		'version' => '1.0.4',
-		'major' => '1',
-		'minor' => '0',
-		'update' => '4',
-		'date' => 1273705200,
-		'launch'	=> "Nova 1.0.4 is the fourth maintainance release for Nova 1.0 and continues to fix issues with the system. Included in this release are fixes for errors being thrown throughout the system, bugs with emails not being sent out on some servers, user access errors and filtering text before going into the database. A full changelog can be found on AnodyneDocs or from the System and Versions report once Nova has been updated. This update is recommended for all users.",
+		'version' 	=> '1.0.4',
+		'major' 	=> '1',
+		'minor' 	=> '0',
+		'update' 	=> '4',
+		'date' 		=> 1273705200,
+		'launch'	=> "Nova 1.0.4 is the fourth maintenance release for Nova 1.0 and continues to fix issues with the system. Included in this release are fixes for errors being thrown throughout the system, bugs with emails not being sent out on some servers, user access errors and filtering text before going into the database. A full changelog can be found on AnodyneDocs or from the System and Versions report once Nova has been updated. This update is recommended for all users.",
 		'changes'	=> "* added the 1.0.4 update file
 * added the MY\_Email library file
 * updated the version update files to make sure the values get reset at the start of every file
@@ -2558,21 +2558,252 @@ $system_versions = array(
 * fixed bug with the manage bio page where positions were updated when they shouldn't be
 * fixed bug where the status change request email wasn't populated properly"),
 	array(
-		'version' => '1.0.5',
-		'major' => '1',
-		'minor' => '0',
-		'update' => '5',
-		'date' => 1273705200,
-		'launch'	=> "Nova 1.0.5 is the fifth maintainance release for Nova 1.0 and continues to fix issues with the system. Included in this release are fixes for errors being thrown throughout the system, bugs with emails not being sent out on some servers, user access errors and filtering text before going into the database. A full changelog can be found on AnodyneDocs or from the System and Versions report once Nova has been updated. This update is recommended for all users.",
-		'changes'	=> ""),
+		'version' 	=> '1.0.5',
+		'major' 	=> '1',
+		'minor' 	=> '0',
+		'update' 	=> '5',
+		'date' 		=> 1275865200,
+		'launch'	=> "Nova 1.0.5 is the fifth maintenance release for Nova 1.0 and continues to fix issues with the system. Included in this release are fixes for errors being thrown throughout the system, a bug that wouldn't allow unlinked NPCs to use newly created bio fields, a security issue with the docking form and more. A full changelog can be found on AnodyneDocs or from the System and Versions report once Nova has been updated. This update is recommended for all users.",
+		'changes'	=> "* added the 1.0.5 update file
+* fixed errors after upgrade on the characters management page
+* fixed error after upgrade on the npc management page
+* fixed errors thrown when editing a wiki page
+* fixed bug in the positions dropdown menu where hidden departments' positions were still shown
+* fixed bug where a wrong variable was using in a model method
+* fixed security issue where docking request data wasn't filtered for xss attacks
+* fixed bugs with the email sent to GMs when a docking request is submitted
+* fixed error thrown when updating a user to be inactive
+* fixed bug we weren't doing any sanity checking on the type of variable we needed when handling character deactivation
+* fixed errors thrown when rejecting a docking request
+* fixed bug where unlinked NPCs wouldn't be able to use newly created fields
+* fixed bug where site options didn't allow skin admins to select in development skins
+* fixed bug where join instructions weren't displayed"),
 	array(
-		'version' => '2.0.0',
-		'major' => '2',
-		'minor' => '0',
-		'update' => '0',
-		'date' => date::now(),
-		'launch'	=> "Nova 2 is a development release for the second generation of Anodyne's Nova RPG management software. Bugs should be reported to the Anodyne forums.",
-		'changes'	=> ""),
+		'version' 	=> '1.0.6',
+		'major' 	=> '1',
+		'minor' 	=> '0',
+		'update' 	=> '6',
+		'date' 		=> 1279148400,
+		'launch'	=> "Nova 1.0.6 is the sixth and final maintenance release for Nova 1.0 and continues to fix issues with the system. Included in this release are fixes for errors being thrown throughout the system, a critical CodeIgniter security bug, several bugs with character management, a bug with user management and setting email preferences, updates to the jQuery UI library and other plugins and more. A full changelog can be found on AnodyneDocs or from the System and Versions report once Nova has been updated. This update is recommended for all users. Additionally, active testing is underway for Nova 1.1 that will add several new features to the system and will be available later this summer.",
+		'changes'	=> "* added the 1.0.6 update file
+* updated the character bio management page to show a loader until everything has finished loading to help with load time
+* updated jquery ui to version 1.8.2
+* updated the auth library to remove some debug code since the autologin bug seems to have been solved
+* updated the index page to turn down the error reporting (fatal errors and database errors will still be shown)
+* updated the select menu on the write PM page to separate active and inactive characters
+* updated colorbox to version 1.3.8
+* updated the characters model to include a method for inserting promotion records
+* updated the language file with a new item (_labels\_from_)
+* updated the users model with a new method for removing user preference values
+* updated CI's core upload class to fixing a security hole
+* fixed error thrown when posting a comment on a mission post
+* fixed error thrown when attempting to delete a character
+* fixed error thrown during step 2 of the update process for some users
+* fixed error thrown when there's only one mission image set on the mission detail page
+* fixed error thrown when there's only one tour image set on the tour detail page
+* fixed error thrown when there's only one character image set on the character bio page
+* fixed bug where acceptance and rejection messages were sent without any changes an admin made
+* fixed bug where changing a character's state to and from active wouldn't set the open slots of their position(s)
+* fixed bug where the position dropdowns when creating a character showed all positions instead of open positions
+* fixed bug where rank history information wasn't being populated correctly
+* fixed bug where turning off update notification still attempted to run the check (before running in to another check)
+* fixed bug where a user's email preferences remained active even after the user was set to inactive
+* fixed bug where a user's email preferences weren't deleted when the user was deleted"),
+	array(
+		'version' 	=> '1.1.0',
+		'major' 	=> '1',
+		'minor' 	=> '1',
+		'update' 	=> '0',
+		'date' 		=> 1283635800,
+		'launch'	=> "Nova 1.1 is the first update to Nova that adds additional features to the system. Included in this release is the ability to create multiple specification items and to associate tour items with specific specification items as well as bug fixes (a bug where editing existing tour items wouldn't update the current item, but the first item). A full changelog can be found on AnodyneDocs or from the System and Versions report once Nova has been updated. This update is recommended for all users.",
+		'changes'	=> "* added the 1.1 update file
+* added the ability to have multiple specification items
+* added the ability to associate tour items with a specification item
+* added the fancybox plugin
+* added the jquery reflection plugin
+* added _specitem\_select_ language item in the text\_lang file
+* added _specitem\_empty\_fields_ lanuage item in the text\_lang file
+* removed the colorbox plugin
+* removed the reflection.js plugin
+* updated the system to use the new jquery reflection plugin instead of reflection.js
+* updated the image upload system to be able to handle spec images as well
+* updated the specifications model with new methods for handling spec items
+* updated the mission groups listing with a style fix
+* updated jquery ui to version 1.8.4
+* fixed bug where ordered and unordered lists weren't properly styled in Thresher
+* fixed bug in mission group pages where missions didn't respect the mission order that was set for them
+* fixed bug where the private message dropdown didn't populate with an author when replying to a message
+* fixed bug where mission post next/previous links could be wrong under certain circumstances
+* fixed bug where news item next/previous links could be wrong under certain circumstances
+* fixed bug where personal log next/previous links could be wrong under certain circumstances
+* fixed bug where the command staff, game master and webmaster get email methods pulled all users, not just active users
+* fixed error thrown with an undefined class method when deleting uploaded items"),
+	array(
+		'version' 	=> '1.1.1',
+		'major' 	=> '1',
+		'minor' 	=> '1',
+		'update' 	=> '1',
+		'date' 		=> 1285628400,
+		'launch'	=> "Nova 1.1.1 is a maintenance update addressing several outstanding issues with Nova 1.1. This update to Nova bumps the jQuery UI to version 1.8.5 and fixes an issue with tour item display when there are no general tour items available. In addition, we've taken steps to address a bug where CodeIgniter wouldn't be able to load the template files and would throw an error. Finally, a presentation issue with skins with a dashboard panel trigger has been fixed as well. A full changelog can be found on AnodyneDocs or from the System and Versions report once Nova has been updated. This update is recommended for all users.",
+		'changes'	=> "* added the 1.1.1 update file
+* updated the comments in the login controller
+* updated jquery ui to version 1.8.5
+* updated markitup plugin to version 1.1.8
+* fixed bug where nova wouldn't display if the template file couldn't be found
+* fixed bug where the general tour items category would be shown even if there weren't any general tour items
+* fixed bug where skins with dashboard handles were showing bullets and having weird spacing issues"),
+	array(
+		'version' 	=> '1.1.2',
+		'major' 	=> '1',
+		'minor' 	=> '1',
+		'update' 	=> '2',
+		'date' 		=> 1287097200,
+		'launch'	=> "Nova 1.1.2 is a maintenance update addressing several issues with Nova 1.1. This update fixes issues with Quick Install, an error thrown when updating a user profile and usability issues with the character picking process with writing and managing mission posts. A full changelog can be found on AnodyneDocs or from the System and Versions report once Nova has been updated. This update is recommended for all users.",
+		'changes'	=> "* added the 1.1.2 update file
+* updated the form helper to extend the form\_dropdown function
+* updated the write/missionpost and manage/posts pages to take saved/activated posts in to account for the author selection dropdown (thanks to Patrick for helping with this)
+* fixed bug with the add author selection in manage/posts and write/missionpost (thanks to Patrick for this fix)
+* fixed bug where nova would try to update a user's profile with a field that doesn't exist
+* fixed bug where, under very strange circumstances, quick install wouldn't work the way it's supposed to"),
+	array(
+		'version' 	=> '1.2.0',
+		'major' 	=> '1',
+		'minor' 	=> '2',
+		'update' 	=> '0',
+		'date' 		=> 1292889600,
+		'launch'	=> "Nova 1.2 is the second major update to Nova 1 and add new functionality to the system to help admin run their RPG even better. In addition to patching nearly two dozen bugs from Nova 1.0 and 1.1, version 1.2 adds ban controls for dealing with pesky users, deck listing improvements, contact page improvements and multiple manifests. More information about these features and a full changelog can be found at AnodyneDocs. This update is recommended for all users.",
+		'changes'	=> "* added the 1.2 update file
+* added the ability to ban users from applying or even getting to the site
+* added a page that level 2 bans are redirected to
+* added the validation error image to the assets directory
+* added the assignment image to the admin \_base directory
+* added prettyPhoto jquery plugin to replace fancybox
+* removed fancybox jquery plugin
+* updated the applications report to show email address and IP address of the user who applied
+* updated the email sent to the game master from the join form to show the IP address of the applicant
+* updated the contact form to be simpler and use proper form validation
+* updated the departments model with methods for handling multiple manifests
+* updated codeigniter to version 1.7.3
+* updated jquery to version 1.4.4
+* updated jquery ui to version 1.8.7
+* updated markItUp! plugin to version 1.1.9
+* updated the autoload config item to not try and autoload the input library since CI loads it by default
+* updated the user model with a method to pull user information based on characters in the database
+* updated department management with a better interface for working with departments
+* updated position management to split departments out by manifest
+* updated the write controller to check for whether a user has a character associated with their account and if they don't redirct them to an error page
+* updated some of the model methods to correct for situations where the user or character ID might not be present and throw errors
+* updated the basic and dev install data to fix a typo
+* updated the language files
+    * [base\_lang] added _labels\_ban_
+    * [base\_lang] added _labels\_bans_
+    * [base\_lang] added _labels\_ipaddr_
+    * [base\_lang] added _labels\_header_
+    * [base\_lang] added _labels\_listings_
+    * [base\_lang] added _labels\_manifests_
+    * [base\_lang] added _labels\_refresh_
+    * [base\_lang] added _labels\_unassigned_
+    * [base\_lang] added _misc\_level1\_only_
+    * [email\_lang] updated _email\_content\_private\_message_
+    * [error\_lang] added _error\_wcp\_1_
+    * [text\_lang] added _text\_bans_
+    * [text\_lang] added _text\_ban\_join_
+    * [text\_lang] added _text\_manifest\_delete\_departments_
+    * [text\_lang] added _text\_manifest_
+    * [text\_lang] added _text\_manifest\_assign_
+    * [text\_lang] added _text\_duplicate\_dept_
+    * [text\_lang] updated _text\_manage\_depts_
+* fixed bug where users without an active character would be shown in the activity warning panel on the ACP
+* fixed bug where the sample post in the join application email was just a massive wall of text
+* fixed bug where the specifications weren't properly upgraded during the sms upgrade process
+* fixed bug with a missing closing tag on the create characters page
+* fixed bug where timezone menu in site/settings pulled the wrong value to populate the field with
+* fixed bug where the join page was pulling an image from the wrong location
+* fixed spacing bug in access role management
+* fixed spacing bug in news item management
+* fixed spacing bug in log management
+* fixed spacing bug in post management
+* fixed spacing bug in department management
+* fixed some errors being thrown throughout the system
+* fixed bug where the flash message view couldn't be overridden with seamless substitution
+* fixed bug where post emails were sent out with the user's primary character name attached even if the primary character wasn't associated with the post
+* fixed bug where the private message email didn't contain the content of the private message
+* fixed some errors thrown through the system when a user without a character tried moving through the system
+* fixed bug where personal logs don't have the right date when they're saved first
+* fixed bug where pending users would appear in the dropdown of potential recipients for a PM
+* fixed bug where changing a dynamic form field from text/textarea to dropdown wouldn't trigger the dropdown values section to open, rendering the field pretty much useless"),
+	array(
+		'version' 	=> '1.2.1',
+		'major' 	=> '1',
+		'minor' 	=> '2',
+		'update' 	=> '1',
+		'date' 		=> 1293121800,
+		'launch'	=> "Nova 1.2.1 is the first maintenance release for Nova 1.2 and addresses several bugs discovered after the initial release of the new version. Bugs fixed in this release include a bug where positions would disappear after being updated and errors thrown throughout the system. More information about these features and a full changelog can be found at AnodyneDocs. This update is recommended for all users.",
+		'changes'	=> "* added the 1.2.1 update file
+* fixed bug where positions would disappear when being updated
+* fixed errors thrown when trying to update character images when there aren't any images present
+* fixed error thrown from the RSS feed"),
+	array(
+		'version' 	=> '1.2.2',
+		'major' 	=> '1',
+		'minor' 	=> '2',
+		'update' 	=> '2',
+		'date' 		=> 1293759000,
+		'launch'	=> "Nova 1.2.2 is the second maintenance release for Nova 1.2 and two bugs discovered after the release of Nova 1.2.1. Bugs fixed in this release include a bug where sub departments couldn't be managed from the department management page and a bug with the display of post authors in emails. More information about these features and a full changelog can be found at AnodyneDocs. This update is recommended for all users.",
+		'changes'	=> "* added the 1.2.2 update file
+* fixed bug where sub departments couldn't be managed from the department management page
+* fixed bug where post emails sent out didn't display the authors properly
+* fixed bug in the 1.1.2 to 1.2 update file that would cause access issues"),
+	array(
+		'version'	=> '1.2.3',
+		'major'		=> 1,
+		'minor'		=> 2,
+		'update'	=> 3,
+		'date'		=> 1294185600,
+		'launch'	=> "Nova 1.2.3 is the third maintenance release for Nova 1.2 and fixes a bug with handling deck listings with multiple specification items. More information about these features and a full changelog can be found at AnodyneDocs. This update is recommended for all users.",
+		'changes'	=> "* added the 1.2.3 update file
+* fixed bug with handling deck listings and multiple specification items"),
+	array(
+		'version'	=> '1.2.4',
+		'major'		=> 1,
+		'minor'		=> 2,
+		'update'	=> 4,
+		'date'		=> 1296000000,
+		'launch'	=> "Nova 1.2.4 is the fourth maintenance release for Nova 1.2 and fixes bugs with inaccurate mission post counts (thanks to Jordan for finding this issue), the acceptance email sent out to users and a manifest issue in Internet Explorer 7. More information about these features and a full changelog can be found at AnodyneDocs. This update is recommended for all users.",
+		'changes'	=> "* added the 1.2.4 update file
+* updated the jquery ui to version 1.8.9
+* fixed bug where nova wasn't accurately counting mission posts
+* fixed bug where the user acceptance email was CCed to more people than it needed to be
+* fixed bug where IE7 choked on the manifest"),
+	array(
+		'version'	=> '2.0.0',
+		'major'		=> 2,
+		'minor'		=> 0,
+		'update'	=> 0,
+		'date'		=> 1308949200,
+		'launch'	=> "You've spoken and we've listened. The feedback we constantly get about Nova is that it's great, but it's difficult to update. Nova 2 is all about fixing that very issue. With a brand new file structure, Nova 2 has never been easier to update (simply delete one folder and replace it with one from the zip archive). In addition, Nova 2 adds new functionality to the system to help admins manage their RPG. Nova 2 is smarter than before, tracking who did and who didn't participate in a post. If someone didn't add anything to the post, they'll automatically be removed before it's posted (this feature can be turned on and off from Site Settings). In addition, Thresher has gotten a much needed boost from R1 to R2 which adds new page management and page viewing interfaces and a new category selection process that allows admins to add categories on the fly. More information about these features and everything else in Nova 2 (plus a full changelog) can be found at AnodyneDocs. This update is recommended for all users.",
+		'changes'	=> "* added the message.php file to handle notification of bans, a missing \"nova\" directory and incompatible PHP version
+* added new process to write the database config file for you
+* added the ability to upgrade SMS Database entries to Thresher wiki pages
+* added the ability for textareas to \"grow\" as more text is added like Facebook
+* updated seamless substitution to be able to override email view files
+* updated Thresher with a new way to create and manage categories when working on a wiki page
+* updated Thresher with a completely new user experience for managing wiki pages
+* updated Thresher with a brand new interface for viewing wiki pages
+* updated the upload instructions to include the maximum file size and maximum image dimensions from the config file for reference
+* updated to jquery version 1.6
+* updated to jquery version 1.8.13
+* updated to uniform version 1.7.5
+* updated to prettyPhoto version 3.1.2
+* updated to qTip2
+* refactored the location helper into a full-blown class with static methods
+* refactored the upgrade process to mirror what was created for nova 3
+* removed the banned.php file
+* removed the rss model since it isn't necessary any more
+* fixed bug with seamless substitution of images where they wouldn't work when they were in the _base_override directory
+* fixed bug with private messages where RE: and FWD: would constantly be added to message, now Nova will make sure it's only added once
+* fixed bug with private messages where the person sending the message would be on the recipient list, so any message they sent would show up in their inbox as well
+* fixed bug where the join form could be submitted without an email address or password"),
 );
 
 $user_prefs = array(
