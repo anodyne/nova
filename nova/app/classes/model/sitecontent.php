@@ -1,6 +1,6 @@
 <?php
 /**
- * Messages Model
+ * Site Content Model
  *
  * @package		Nova
  * @category	Models
@@ -9,9 +9,9 @@
  * @version		3.0
  */
  
-class Model_Messages extends Model {
+class Model_SiteContent extends Model {
 	
-	public static $_table_name = 'messages';
+	public static $_table_name = 'site_contents';
 	
 	public static $_properties = array(
 		'id' => array(
@@ -41,8 +41,8 @@ class Model_Messages extends Model {
 	/**
 	 * Get a specific message from the database.
 	 *
-	 *     Model_Messages::get_message('welcome_msg');
-	 *     Model_Messages::get_message('welcome_msg', false);
+	 *     Model_SiteContent::get_message('welcome_msg');
+	 *     Model_SiteContent::get_message('welcome_msg', false);
 	 *
 	 * @access	public
 	 * @param	string	the key of the message to get
