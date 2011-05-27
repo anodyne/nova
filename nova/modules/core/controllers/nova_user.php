@@ -133,6 +133,9 @@ abstract class Nova_user extends Nova_controller_admin {
 						
 						// update the user prefs to all be yes
 						$this->user->update_all_user_prefs($id, 'y');
+						
+						// we're reactivating them, so make sure they have the standard access role
+						$array['access_role'] = 4;
 					}
 				}
 				
