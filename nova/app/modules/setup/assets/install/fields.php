@@ -465,8 +465,6 @@ $fields_posts = array(
 	'location' => array('type' => 'VARCHAR', 'constraint' => 255, 'default' => ''),
 	'timeline' => array('type' => 'VARCHAR', 'constraint' => 255, 'default' => ''),
 	'date' => array('type' => 'BIGINT', 'constraint' => 20),
-	'authors' => array('type' => 'TEXT'),
-	'authors_users' => array('type' => 'TEXT'),
 	'mission_id' => array('type' => 'INT', 'constraint' => 8),
 	'saved_user_id' => array('type' => 'INT'),
 	'status' => array('type' => 'ENUM', 'constraint' => "'activated','saved','pending'", 'default' => 'activated'),
