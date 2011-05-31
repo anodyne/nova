@@ -93,6 +93,19 @@ class Model_Character extends Model {
 		),
 	);
 	
+	public static $_many_many = array(
+		'posts' => array(
+			'model_to' => 'Model_Post',
+			'key_to' => 'id',
+			'key_from' => 'id',
+			'key_through_from' => 'character_id',
+			'key_through_to' => 'post_id',
+			'table_through' => 'post_authors',
+			'cascade_save' => false,
+			'cascade_delete' => false,
+		),
+	);
+	
 	/**
 	 * Get all characters from the database.
 	 *
@@ -158,14 +171,7 @@ class Model_Character extends Model {
 	 */
 	public static function create_character(array $data)
 	{
-		$record = Model_Character::factory();
-		
-		foreach ($data as $key => $value)
-		{
-			$record->{$key} = $value;
-		}
-		
-		$record->save();
+		$record = static::create_item($data);
 		
 		/**
 		 * Fill the character rows for the dynamic form with blank data for editing later.

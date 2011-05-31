@@ -152,6 +152,19 @@ class Model_User extends Model {
 		),
 	);
 	
+	public static $_many_many = array(
+		'posts' => array(
+			'model_to' => 'Model_Post',
+			'key_to' => 'id',
+			'key_from' => 'id',
+			'key_through_from' => 'user_id',
+			'key_through_to' => 'post_id',
+			'table_through' => 'post_authors',
+			'cascade_save' => false,
+			'cascade_delete' => false,
+		),
+	);
+	
 	/**
 	 * Get a user from the database based on something other than their ID.
 	 *
@@ -236,14 +249,7 @@ class Model_User extends Model {
 	 */
 	public static function create_user(array $data)
 	{
-		$record = Model_User::factory();
-		
-		foreach ($data as $key => $value)
-		{
-			$record->{$key} = $value;
-		}
-		
-		$record->save();
+		$record = static::create_item($data);
 		
 		/**
 		 * Create the user preferences and fill them with the default values.
@@ -299,24 +305,45 @@ class Model_User extends Model {
 	 * Update a user.
 	 *
 	 * @access	public
-	 * @param	int		the user ID to update
+	 * @param	int		the user ID to update, if nothing is provided, it will update all users
 	 * @param	array 	a data array to use for updating the record
 	 * @return	object	the user object of the updated user
 	 */
 	public static function update_user($user, array $data)
 	{
-		// get the user
-		$record = static::find($user);
-		
-		// loop through the data array and make the changes
-		foreach ($data as $key => $value)
+		if ($user !== null)
 		{
-			$record->$key = $value;
+			// get the user
+			$record = static::find($user);
+			
+			// loop through the data array and make the changes
+			foreach ($data as $key => $value)
+			{
+				$record->$key = $value;
+			}
+			
+			// save the record
+			$record->save();
+			
+			return $record;
 		}
-		
-		// save the record
-		$record->save();
-		
-		return $record;
+		else
+		{
+			// pull everything from the table
+			$records = static::find('all');
+			
+			// loop through all the records
+			foreach ($records as $r)
+			{
+				// loop through the data and make the changes
+				foreach ($data as $key => $value)
+				{
+					$r->$key = $value;
+				}
+				
+				// save the record
+				$r->save();
+			}
+		}
 	}
 }

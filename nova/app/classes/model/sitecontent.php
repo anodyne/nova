@@ -60,4 +60,25 @@ class Model_SiteContent extends Model {
 		
 		return $query;
 	}
+	
+	/**
+	 * Update site content.
+	 *
+	 * You can also pass a larger array with multiple values to the method to
+	 * update multiple settings at the same time. The data array just needs to
+	 * stay in the (setting key) => (setting value) format.
+	 *
+	 * @access	public
+	 * @param	array 	the data array for updating the site content
+	 * @return	void
+	 */
+	public static function update_messages(array $data)
+	{
+		foreach ($data as $key => $value)
+		{
+			$record = static::find()->where('key', $key)->get_one();
+			$record->value = $value;
+			$record->save();
+		}
+	}
 }

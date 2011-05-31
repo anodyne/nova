@@ -38,14 +38,7 @@ class Model_UserPrefValue extends Model {
 	 */
 	public static function create_value(array $data)
 	{
-		$record = Model_UserPrefValue::factory();
-		
-		foreach ($data as $key => $value)
-		{
-			$record->{$key} = $value;
-		}
-		
-		$record->save();
+		$record = static::create_item($data);
 		
 		return $record;
 	}

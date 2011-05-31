@@ -51,4 +51,43 @@ class Model_Spec extends Model {
 			'cascade_delete' => false,
 		),
 	);
+	
+	/**
+	 * Create a spec item.
+	 *
+	 *     Model_Spec::create_item($data);
+	 *
+	 * @access	public
+	 * @param	mixed	an array or object of data
+	 * @return	object	the newly created item
+	 */
+	public static function create_item($data)
+	{
+		$item = static::create_item($data);
+		
+		/**
+		 * Fill the rows for the dynamic form with blank data for editing later.
+		 */
+		$fields = Model_FormField::get_fields('specs');
+		
+		if (count($fields) > 0)
+		{
+			foreach ($fields as $f)
+			{
+				$field_data = array(
+					'form_key' => 'specs',
+					'field_id' => $f->id,
+					'user_id' => 0,
+					'character_id' => 0,
+					'item_id' => $item->id,
+					'value' => '',
+					'updated_at' => Date::now(),
+				);
+				
+				Model_FormData::create_data($field_data);
+			}
+		}
+		
+		return $item;
+	}
 }

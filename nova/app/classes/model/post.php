@@ -33,10 +33,6 @@ class Model_Post extends Model {
 		'date' => array(
 			'type' => 'bigint',
 			'constraint' => 20),
-		'authors' => array(
-			'type' => 'text'),
-		'authors_users' => array(
-			'type' => 'text'),
 		'mission_id' => array(
 			'type' => 'int',
 			'constraint' => 8),
@@ -61,6 +57,29 @@ class Model_Post extends Model {
 			'model_to' => 'Model_Mission',
 			'key_to' => 'id',
 			'key_from' => 'mission_id',
+			'cascade_save' => false,
+			'cascade_delete' => false,
+		),
+	);
+	
+	public static $_many_many = array(
+		'authors_users' => array(
+			'model_to' => 'Model_User',
+			'key_to' => 'id',
+			'key_from' => 'id',
+			'key_through_from' => 'post_id',
+			'key_through_to' => 'user_id',
+			'table_through' => 'post_authors',
+			'cascade_save' => false,
+			'cascade_delete' => false,
+		),
+		'authors_characters' => array(
+			'model_to' => 'Model_Character',
+			'key_to' => 'id',
+			'key_from' => 'id',
+			'key_through_from' => 'post_id',
+			'key_through_to' => 'character_id',
+			'table_through' => 'post_authors',
 			'cascade_save' => false,
 			'cascade_delete' => false,
 		),

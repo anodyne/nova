@@ -95,18 +95,8 @@ class Model_LoginAttempts extends Model {
 	 * @param	array 	an array of data to put in to the database
 	 * @return	void
 	 */
-	public static function create_user_attempt(array $data)
+	public static function create_attempt(array $data)
 	{
-		$attempt = Model_LoginAttempts::factory();
-		
-		foreach ($data as $key => $value)
-		{
-			if (in_array($key, static::$_properties))
-			{
-				$attempt->{$key} = $value;
-			}
-		}
-		
-		$attempt->save();
+		static::create_item($data);
 	}
 }
