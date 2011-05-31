@@ -61,4 +61,57 @@ class Model_FormData extends Model {
 		
 		return $record;
 	}
+	
+	/**
+	 * Update data in the data table.
+	 *
+	 * @access	public
+	 * @param	string	the form to update
+	 * @param	int		the ID to udpate
+	 * @param	array 	a data array of information to update
+	 * @return	bool	whether it was successful or not
+	 */
+	public static function update_data($type, $id, array $data)
+	{
+		$results = array();
+		
+		// figure out what field we need to use
+		switch ($type)
+		{
+			case 'bio':
+				$field = 'character_id'
+			break;
+			
+			case 'user':
+				$field = 'user_id'
+			break;
+			
+			default:
+				$field = 'item_id'
+			break;
+		}
+		
+		// loop through the data array and make the changes
+		foreach ($data as $key => $value)
+		{
+			// get the record
+			$record = static::find()->where('field_id', $key)->where($field, $id)->get_one();
+			
+			// update the values
+			$record->value = $value;
+			$record->updated_at = Date::now();
+			$retval = $record->save();
+			
+			$results[] = ($retval !== false) ? true : $retval;
+		}
+		
+		DBForge::optimize('form_data');
+		
+		if (in_array(false, $results))
+		{
+			return false;
+		}
+		
+		return true;
+	}
 }

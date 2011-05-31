@@ -196,40 +196,4 @@ class Model_Character extends Model {
 		
 		return $record;
 	}
-	
-	/**
-	 * Update the dynamic character data.
-	 *
-	 * @access	public
-	 * @param	int		the character ID to udpate
-	 * @param	array 	a data array of information to update
-	 * @return	bool	whether it was successful or not
-	 */
-	public static function update_character_data($id, array $data)
-	{
-		$results = array();
-		
-		// loop through the data array and make the changes
-		foreach ($data as $key => $value)
-		{
-			// get the record
-			$record = static::find()->where('field_id', $key)->where('character_id', $id)->get_one();
-			
-			// update the values
-			$record->value = $value;
-			$record->updated_at = Date::now();
-			$retval = $record->save();
-			
-			$results[] = ($retval !== false) ? true : $retval;
-		}
-		
-		DBForge::optimize('form_data');
-		
-		if (in_array(false, $results))
-		{
-			return false;
-		}
-		
-		return true;
-	}
 }
