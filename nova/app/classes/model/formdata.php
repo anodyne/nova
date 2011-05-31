@@ -79,15 +79,15 @@ class Model_FormData extends Model {
 		switch ($type)
 		{
 			case 'bio':
-				$field = 'character_id'
+				$field = 'character_id';
 			break;
 			
 			case 'user':
-				$field = 'user_id'
+				$field = 'user_id';
 			break;
 			
 			default:
-				$field = 'item_id'
+				$field = 'item_id';
 			break;
 		}
 		
