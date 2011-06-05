@@ -182,6 +182,7 @@ abstract class Nova_wiki extends Nova_controller_wiki {
 	 *
 	 * @since	2.0
 	 * @param	integer	the error code
+	 * @return	void
 	 */
 	public function error($code = 0)
 	{

@@ -74,13 +74,13 @@ abstract class Nova_search extends Nova_controller_main {
 		$this->load->helper('inflector');
 		
 		// set the search POST value to a variable
-		$search = $this->input->post('search', TRUE);
+		$search = $this->input->post('search', true);
 		
-		if ($search != FALSE)
+		if ($search != false)
 		{
-			$type = $this->input->post('type', TRUE);
-			$component = $this->input->post('component', TRUE);
-			$input = $this->input->post('input', TRUE);
+			$type = $this->input->post('type', true);
+			$component = $this->input->post('component', true);
+			$input = $this->input->post('input', true);
 			
 			switch ($type)
 			{
@@ -186,9 +186,9 @@ abstract class Nova_search extends Nova_controller_main {
 						break;
 						case 'wiki':
 							$page = $this->wiki->get_page($item->draft_page);
-							$row = ($page->num_rows() > 0) ? $page->row() : FALSE;
+							$row = ($page->num_rows() > 0) ? $page->row() : false;
 							
-							if ($row !== FALSE)
+							if ($row !== false)
 							{
 								$data['results'][$i]['content'] = $row->draft_content;
 								$data['results'][$i]['link'] = anchor('wiki/view/page/'. $item->draft_page, $row->draft_title);

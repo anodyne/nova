@@ -9,6 +9,9 @@
  * @version		2.0
  */
 
+# FIXME: manage/awards doesn't have a message saying there aren't any awards in the system
+# FIXME: manage/missiongroups doesn't have a message saying there aren't any groups in the system
+
 require_once MODPATH.'core/libraries/Nova_controller_admin'.EXT;
 
 abstract class Nova_manage extends Nova_controller_admin {

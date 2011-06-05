@@ -18,6 +18,8 @@ Anodyne Production's next-generation RPG management system combines popular feat
 * updated Thresher with a completely new user experience for managing wiki pages
 * updated Thresher with a brand new interface for viewing wiki pages
 * updated the upload instructions to include the maximum file size and maximum image dimensions from the config file for reference
+* updated the deck listing page (sim/decks) to not use a table which makes for a much cleaner layout
+* updated the deck listing page (sim/decks) to have a menu of decks for quickly moving to a deck item without having to scroll (handy for sim with lots of decks)
 * updated to jquery version 1.6.1
 * updated to jquery version 1.8.13
 * updated to uniform version 1.7.5
@@ -32,6 +34,8 @@ Anodyne Production's next-generation RPG management system combines popular feat
 * fixed bug with private messages where RE: and FWD: would constantly be added to message, now Nova will make sure it's only added once
 * fixed bug with private messages where the person sending the message would be on the recipient list, so any message they sent would show up in their inbox as well
 * fixed bug where the join form could be submitted without an email address or password
+* fixed bug where users who were deactivated kept their account flags (sysadmin, game master, etc.) and their access role
+* fixed bug where users who were reactivated didn't have their access role set to Standard User
 
 ## Version History
 

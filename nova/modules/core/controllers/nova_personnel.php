@@ -144,9 +144,9 @@ abstract class Nova_personnel extends Nova_controller_main {
 											);
 												
 											// get the character name and rank
-											$name = $this->char->get_character_name($char->charid, TRUE);
+											$name = $this->char->get_character_name($char->charid, true);
 											
-											if ($char->crew_type == 'active' && empty($char->user))
+											if ($char->crew_type == 'active' and empty($char->user))
 											{
 												// don't do anything
 											}
@@ -233,9 +233,9 @@ abstract class Nova_personnel extends Nova_controller_main {
 									);
 									
 									// get the character name and rank
-									$name = $this->char->get_character_name($char->charid, TRUE);
+									$name = $this->char->get_character_name($char->charid, true);
 									
-									if ($char->crew_type == 'active' && empty($char->user))
+									if ($char->crew_type == 'active' and empty($char->user))
 									{
 										// don't do anything
 									}
@@ -298,7 +298,7 @@ abstract class Nova_personnel extends Nova_controller_main {
 		Template::render();
 	}
 
-	function coc()
+	public function coc()
 	{
 		// load the models
 		$this->load->model('ranks_model', 'ranks');
@@ -311,7 +311,7 @@ abstract class Nova_personnel extends Nova_controller_main {
 		{
 			foreach ($query->result() as $item)
 			{
-				$loa = (!empty($item->user)) ? $this->user->get_loa($item->user) : 0;
+				$loa = ( ! empty($item->user)) ? $this->user->get_loa($item->user) : 0;
 				
 				// set the color
 				$color = '';
@@ -339,7 +339,7 @@ abstract class Nova_personnel extends Nova_controller_main {
 						'class' => 'image')
 				);
 				
-				if ($item->crew_type == 'active' && empty($item->user))
+				if ($item->crew_type == 'active' and empty($item->user))
 				{
 					// don't do anything
 				}
@@ -347,7 +347,7 @@ abstract class Nova_personnel extends Nova_controller_main {
 				{
 					// data being passed to the view
 					$data['coc'][$item->charid]['id'] = $item->charid;
-					$data['coc'][$item->charid]['name'] = $this->char->get_character_name($item->charid, TRUE);
+					$data['coc'][$item->charid]['name'] = $this->char->get_character_name($item->charid, true);
 					$data['coc'][$item->charid]['position'] = $item->pos_name;
 					$data['coc'][$item->charid]['img_rank'] = $images['rank'];
 					$data['coc'][$item->charid]['img_bio'] = $images['bio'];
@@ -377,7 +377,7 @@ abstract class Nova_personnel extends Nova_controller_main {
 		Template::render();
 	}
 	
-	function character()
+	public function character($id = false)
 	{
 		// load the models
 		$this->load->model('ranks_model', 'ranks');
@@ -385,14 +385,15 @@ abstract class Nova_personnel extends Nova_controller_main {
 		$this->load->model('posts_model', 'posts');
 		$this->load->model('personallogs_model', 'logs');
 		$this->load->model('awards_model', 'awards');
+		$this->load->helper('utility');
 		
-		// set the variables
-		$id = $this->uri->segment(3, FALSE, TRUE);
+		// sanity check
+		$id = (is_numeric($id)) ? $id : false;
 		
 		// grab the character info
 		$character = $this->char->get_character($id);
 		
-		if ($character !== FALSE)
+		if ($character !== false)
 		{
 			$data['postcount'] = $this->posts->count_character_posts($id);
 			$data['logcount'] = $this->logs->count_character_logs($id);
@@ -406,15 +407,10 @@ abstract class Nova_personnel extends Nova_controller_main {
 				'suffix' => $character->suffix
 			);
 			
-			foreach ($name_array as $key => $value)
-			{
-				if (empty($value))
-				{
-					unset($name_array[$key]);
-				}
-			}
+			// parse the name out
+			$name = parse_name($name_array);
 			
-			$name = implode(' ', $name_array);
+			// get the rank name
 			$rank = $this->ranks->get_rank($character->rank, 'rank_name');
 			
 			// set the character info
@@ -447,7 +443,7 @@ abstract class Nova_personnel extends Nova_controller_main {
 				$images = explode(',', $character->images);
 				$images_count = count($images);
 				
-				$src = (strstr($images[0], 'http://') !== FALSE)
+				$src = (strstr($images[0], 'http://') !== false)
 					? $images[0]
 					: base_url().Location::asset('images/characters', trim($images[0]));
 				
@@ -464,7 +460,7 @@ abstract class Nova_personnel extends Nova_controller_main {
 				
 				for ($i=1; $i < $images_count; $i++)
 				{
-					$src = (strstr($images[$i], 'http://') !== FALSE)
+					$src = (strstr($images[$i], 'http://') !== false)
 						? trim($images[$i])
 						: base_url().Location::asset('images/characters', trim($images[$i]));
 					
@@ -509,7 +505,7 @@ abstract class Nova_personnel extends Nova_controller_main {
 						foreach ($fields->result() as $field)
 						{
 							$data['fields'][$sec->section_id][$j]['label'] = $field->field_label_page;
-							$data['fields'][$sec->section_id][$j]['value'] = FALSE;
+							$data['fields'][$sec->section_id][$j]['value'] = false;
 							
 							$info = $this->char->get_field_data($field->field_id, $id);
 							
@@ -559,64 +555,50 @@ abstract class Nova_personnel extends Nova_controller_main {
 		{
 			$data['edit_valid_form'] = (Auth::check_access('site/bioform', false)) ? true : false;
 			
-			if (Auth::check_access('characters/bio', FALSE) === TRUE)
+			if (Auth::check_access('characters/bio', false) === true)
 			{
 				if (Auth::get_access_level('characters/bio') == 3)
 				{
-					$data['edit_valid'] = TRUE;
+					$data['edit_valid'] = true;
 				}
 				elseif (Auth::get_access_level('characters/bio') == 2)
 				{
 					$characters = $this->char->get_user_characters($this->session->userdata('userid'), '', 'array');
 					
-					if (in_array($id, $characters) || $character->crew_type == 'npc')
-					{
-						$data['edit_valid'] = TRUE;
-					}
-					else
-					{
-						$data['edit_valid'] = FALSE;
-					}
+					$data['edit_valid'] = (in_array($id, $characters) or $character->crew_type == 'npc')
+						? true
+						: false;
 				}
 				elseif (Auth::get_access_level('characters/bio') == 1)
 				{
 					$characters = $this->char->get_user_characters($this->session->userdata('userid'), '', 'array');
 					
-					if (in_array($id, $characters))
-					{
-						$data['edit_valid'] = TRUE;
-					}
-					else
-					{
-						$data['edit_valid'] = FALSE;
-					}
+					$data['edit_valid'] = in_array($id, $characters);
 				}
 				else
 				{
-					$data['edit_valid'] = FALSE;
+					$data['edit_valid'] = false;
 				}
 			}
 			else
 			{
-				$data['edit_valid'] = FALSE;
+				$data['edit_valid'] = false;
 			}
 		}
 		else
 		{
-			$data['edit_valid'] = FALSE;
-			$data['edit_valid_form'] = FALSE;
+			$data['edit_valid'] = false;
+			$data['edit_valid_form'] = false;
 		}
 		
 		$data['label'] = array(
 			'edit' => '[ '. ucwords(lang('actions_edit') .' '. lang('global_character')) .' ]',
-			'edit_form' => '[ '. ucwords(lang('actions_edit') .' '. lang('labels_biography') .' '. 
-				lang('labels_form')) .' ]',
+			'edit_form' => '[ '.ucwords(lang('actions_edit').' '.lang('labels_biography').' '.lang('labels_form')) .' ]',
 			'gallery' => lang('open_gallery'),
 			'view_all_posts' => ucwords(lang('actions_viewall') .' '. lang('global_posts') .' '. RARROW),
 			'view_all_logs' => ucwords(lang('actions_viewall') .' '. lang('global_personallogs') .' '. RARROW),
 			'view_all_awards' => ucwords(lang('actions_viewall') .' '. lang('global_awards') .' '. RARROW),
-			'view_user' => ucwords(lang('actions_view') .' '. lang('global_user') .' '.
-				lang('labels_info') .' '. RARROW),
+			'view_user' => ucwords(lang('actions_view').' '.lang('global_user').' '.lang('labels_info') .' '. RARROW),
 		);
 		
 		$this->_regions['content'] = Location::view('personnel_character', $this->skin, 'main', $data);
@@ -627,13 +609,13 @@ abstract class Nova_personnel extends Nova_controller_main {
 		Template::render();
 	}
 	
-	function user()
+	public function user($user = false)
 	{
-		Auth::is_logged_in(TRUE);
+		Auth::is_logged_in(true);
 		
 		// set the variables
-		$user = $this->uri->segment(3, FALSE, TRUE);
-		$js_data['tab'] = $this->uri->segment(4, 0, TRUE);
+		$user = (is_numeric($user)) ? $user : false;
+		$js_data['tab'] = $this->uri->segment(4, 0, true);
 		
 		// load the resources
 		$this->load->model('ranks_model', 'ranks');
@@ -654,7 +636,7 @@ abstract class Nova_personnel extends Nova_controller_main {
 		// set the datestring
 		$datestring = $this->options['date_format'];
 		
-		if ($row !== FALSE)
+		if ($row !== false)
 		{
 			// calculate the timezone difference
 			$pl_timezone = timezones($row->timezone);
@@ -674,7 +656,7 @@ abstract class Nova_personnel extends Nova_controller_main {
 			else
 			{
 				$data['timezone_span'] = abs($diff_timezone);
-				$data['timezone_span'].= (!is_numeric(substr($diff_timezone, 0, 1))) ? ' '. lang('time_hours_ahead') : ' '. lang('time_hours_behind');
+				$data['timezone_span'].= ( ! is_numeric(substr($diff_timezone, 0, 1))) ? ' '. lang('time_hours_ahead') : ' '. lang('time_hours_behind');
 			}
 			
 			// set the data for the view
@@ -742,13 +724,13 @@ abstract class Nova_personnel extends Nova_controller_main {
 			|---------------------------------------------------------------
 			*/
 			
-			$data['rank_history'] = FALSE;
+			$data['rank_history'] = false;
 			
 			if ($rankhistory->num_rows() > 0)
 			{
 				foreach ($rankhistory->result() as $rank)
 				{
-					$data['rank_history'][$rank->prom_char]['name'] = $this->char->get_character_name($rank->prom_char, TRUE);
+					$data['rank_history'][$rank->prom_char]['name'] = $this->char->get_character_name($rank->prom_char, true);
 					$data['rank_history'][$rank->prom_char]['history'][] = array(
 						'old_order' => $rank->prom_old_order,
 						'old_rank' => $rank->prom_old_rank,
@@ -790,7 +772,7 @@ abstract class Nova_personnel extends Nova_controller_main {
 			// calculate the time in weeks
 			$total_time = now() - $row->join_date;
 			$days = $total_time / 86400;
-			$weeks = ($days >= 7) ? $days / 7 : FALSE;
+			$weeks = ($days >= 7) ? $days / 7 : false;
 			$time = round($weeks);
 			
 			// send the data to the view
@@ -830,7 +812,7 @@ abstract class Nova_personnel extends Nova_controller_main {
 					$data['logs'][$i]['title'] = $l->log_title;
 					$data['logs'][$i]['log_id'] = $l->log_id;
 					$data['logs'][$i]['date'] = mdate($datestring, gmt_to_local($l->log_date, $this->timezone, $this->dst));
-					$data['logs'][$i]['author'] = $this->char->get_character_name($l->log_author_character, TRUE);
+					$data['logs'][$i]['author'] = $this->char->get_character_name($l->log_author_character, true);
 					
 					++$i;
 				}
@@ -853,7 +835,7 @@ abstract class Nova_personnel extends Nova_controller_main {
 					$data['awards'][$i]['award_id'] = $a->awardrec_award;
 					$data['awards'][$i]['reason'] = $a->awardrec_reason;
 					$data['awards'][$i]['given'] = mdate($datestring, gmt_to_local($a->awardrec_date, $this->timezone, $this->dst));
-					$data['awards'][$i]['name'] = (empty($a->awardrec_character)) ? $row->name : $this->char->get_character_name($a->awardrec_character, TRUE);
+					$data['awards'][$i]['name'] = (empty($a->awardrec_character)) ? $row->name : $this->char->get_character_name($a->awardrec_character, true);
 					
 					++$i;
 				}
@@ -871,21 +853,21 @@ abstract class Nova_personnel extends Nova_controller_main {
 			$this->_regions['title'].= lang('error_pagetitle');
 		}
 		
-		if (Auth::is_logged_in() === TRUE)
+		if (Auth::is_logged_in() === true)
 		{
-			if (Auth::check_access('user/account', FALSE) === TRUE && 
-				Auth::get_access_level('user/account') == 1 && $user == $this->session->userdata('userid'))
+			if (Auth::check_access('user/account', false) === true and 
+				Auth::get_access_level('user/account') == 1 and $user == $this->session->userdata('userid'))
 			{
-				$data['edit_valid'] = TRUE;
+				$data['edit_valid'] = true;
 			}
-			elseif (Auth::check_access('user/account', FALSE) === TRUE && 
+			elseif (Auth::check_access('user/account', false) === true and 
 				Auth::get_access_level('user/account') == 2)
 			{
-				$data['edit_valid'] = TRUE;
+				$data['edit_valid'] = true;
 			}
 			else
 			{
-				$data['edit_valid'] = FALSE;
+				$data['edit_valid'] = false;
 			}
 		}
 		
@@ -938,30 +920,26 @@ abstract class Nova_personnel extends Nova_controller_main {
 			'to' => lang('labels_to'),
 			'totallogs' => ucwords(lang('labels_total') .' '. lang('global_personallogs')),
 			'totalposts' => ucwords(lang('labels_total') .' '. lang('global_missionposts')),
-			'viewawards' => ucwords(lang('actions_view') .' '. lang('global_user') .' '.
-				lang('global_awards') .' '. RARROW),
-			'viewlogs' => ucwords(lang('actions_view') .' '. lang('global_user') .' '.
-				lang('global_logs') .' '. RARROW),
-			'viewposts' => ucwords(lang('actions_view') .' '. lang('global_user') .' '.
-				lang('global_posts') .' '. RARROW),
+			'viewawards' => ucwords(lang('actions_view').' '.lang('global_user').' '.lang('global_awards') .' '. RARROW),
+			'viewlogs' => ucwords(lang('actions_view').' '.lang('global_user').' '.lang('global_logs') .' '. RARROW),
+			'viewposts' => ucwords(lang('actions_view').' '.lang('global_user').' '.lang('global_posts') .' '. RARROW),
 		);
 		
 		$this->_regions['content'] = Location::view('personnel_user', $this->skin, 'main', $data);
-		$this->_regions['javascript'] = Location::js('personnel_user_js', $this->skin, 'main');
+		$this->_regions['javascript'] = Location::js('personnel_user_js', $this->skin, 'main', $js_data);
 		
 		Template::assign($this->_regions);
 		
 		Template::render();
 	}
 	
-	function viewawards()
+	public function viewawards($type = 'default', $id = false)
 	{
-		// define some variables
-		$type = $this->uri->segment(3, 'default');
-		$id = $this->uri->segment(4, FALSE, TRUE);
-		
 		// load the models
 		$this->load->model('awards_model', 'awards');
+		
+		// sanity check
+		$id = (is_numeric($id)) ? $id : false;
 		
 		switch ($type)
 		{
@@ -970,7 +948,7 @@ abstract class Nova_personnel extends Nova_controller_main {
 				$item = $this->user->get_user($id);
 				$data['user'] = $id;
 
-				if ($item !== FALSE)
+				if ($item !== false)
 				{
 					// get the awards info
 					$awards = $this->awards->get_awards_for_id($id, 'user');
@@ -994,13 +972,13 @@ abstract class Nova_personnel extends Nova_controller_main {
 							
 							if ($row->awardrec_character >= 1)
 							{
-								$data['char'][$row->awardrec_character]['character'] = $this->char->get_character_name($row->awardrec_character, TRUE);
+								$data['char'][$row->awardrec_character]['character'] = $this->char->get_character_name($row->awardrec_character, true);
 								$data['char'][$row->awardrec_character]['awards'][$i]['award_id'] = $row->award_id;
 								$data['char'][$row->awardrec_character]['awards'][$i]['award'] = $row->award_name;
 								$data['char'][$row->awardrec_character]['awards'][$i]['date'] = mdate($datestring, $date);
 								$data['char'][$row->awardrec_character]['awards'][$i]['reason'] = $row->awardrec_reason;
 								$data['char'][$row->awardrec_character]['awards'][$i]['img'] = $award_img;
-								$data['char'][$row->awardrec_character]['awards'][$i]['nom'] = $this->char->get_character_name($row->awardrec_nominated_by, TRUE);
+								$data['char'][$row->awardrec_character]['awards'][$i]['nom'] = $this->char->get_character_name($row->awardrec_nominated_by, true);
 							}
 							else
 							{
@@ -1009,7 +987,7 @@ abstract class Nova_personnel extends Nova_controller_main {
 								$data['awards'][$i]['date'] = mdate($datestring, $date);
 								$data['awards'][$i]['reason'] = $row->awardrec_reason;
 								$data['awards'][$i]['img'] = $award_img;
-								$data['awards'][$i]['nom'] = $this->char->get_character_name($row->awardrec_nominated_by, TRUE);
+								$data['awards'][$i]['nom'] = $this->char->get_character_name($row->awardrec_nominated_by, true);
 							}
 							
 							++$i;
@@ -1037,7 +1015,7 @@ abstract class Nova_personnel extends Nova_controller_main {
 				// run the model methods
 				$char_row = $this->char->get_character($id);
 
-				if ($char_row !== FALSE)
+				if ($char_row !== false)
 				{
 					// get the awards info
 					$awards = $this->awards->get_awards_for_id($id);
@@ -1064,7 +1042,7 @@ abstract class Nova_personnel extends Nova_controller_main {
 							$data['awards'][$i]['date'] = mdate($datestring, $date);
 							$data['awards'][$i]['reason'] = $row->awardrec_reason;
 							$data['awards'][$i]['img'] = $award_img;
-							$data['awards'][$i]['nom'] = $this->char->get_character_name($row->awardrec_nominated_by, TRUE);
+							$data['awards'][$i]['nom'] = $this->char->get_character_name($row->awardrec_nominated_by, true);
 
 							++$i;
 						}
@@ -1117,18 +1095,17 @@ abstract class Nova_personnel extends Nova_controller_main {
 		Template::render();
 	}
 	
-	function viewlogs()
+	public function viewlogs($type = 'default', $id = false)
 	{
-		// set the variables
-		$type = $this->uri->segment(3, 'default');
-		$id = $this->uri->segment(4, FALSE, TRUE);
-		$data = FALSE;
-		
-		// load the models
+		// load the resources
 		$this->load->model('personallogs_model', 'logs');
-		
-		// load the helpers
 		$this->load->helper('text');
+		
+		// sanity check
+		$id = (is_numeric($id)) ? $id : false;
+		
+		// set the data variable
+		$data = false;
 		
 		switch ($type)
 		{
@@ -1137,7 +1114,7 @@ abstract class Nova_personnel extends Nova_controller_main {
 				$row = $this->user->get_user($id);
 				$data['user'] = $id;
 				
-				if ($row !== FALSE)
+				if ($row !== false)
 				{
 					// get the user's characters
 					$characters = $this->char->get_user_characters($row->userid, 'active', 'array');
@@ -1145,7 +1122,7 @@ abstract class Nova_personnel extends Nova_controller_main {
 					foreach ($characters as $char)
 					{
 						// set the character name info
-						$data['char'][$char]['character'] = $this->char->get_character_name($char, TRUE);
+						$data['char'][$char]['character'] = $this->char->get_character_name($char, true);
 						
 						// grab all the character posts
 						$logs = $this->logs->get_character_logs($char);
@@ -1163,11 +1140,11 @@ abstract class Nova_personnel extends Nova_controller_main {
 								$data['char'][$char]['logs'][$log->log_id]['date'] = mdate($datestring, $date);
 								$data['char'][$char]['logs'][$log->log_id]['content'] = $log->log_content;
 							}
-							
-							// other data used by the template
-							$data['header'] = ucwords(lang('actions_view') .' '. lang('global_personallogs')) .' - '. $row->name;
 						}
 					}
+					
+					// other data used by the template
+					$data['header'] = ucwords(lang('actions_view') .' '. lang('global_personallogs')) .' - '. $row->name;
 				}
 				else
 				{
@@ -1181,7 +1158,7 @@ abstract class Nova_personnel extends Nova_controller_main {
 				// run the model methods
 				$char_check = $this->char->get_character($id);
 
-				if ($char_check !== FALSE)
+				if ($char_check !== false)
 				{
 					$logs = $this->logs->get_character_logs($id);
 
@@ -1219,15 +1196,13 @@ abstract class Nova_personnel extends Nova_controller_main {
 			break;
 			
 			default:
-				// set the data used by the view
 				$data['header'] = lang('error_head_general');
 				$data['msg_error'] = lang('error_msg_no_log_type');
 			break;
 		}
 		
 		$data['label'] = array(
-			'addcomment' => ucfirst(lang('actions_add')) .' '. lang('labels_a') .' '.
-				lang('labels_comment'),
+			'addcomment' => ucfirst(lang('actions_add')).' '.lang('labels_a').' '.lang('labels_comment'),
 			'backchar' => LARROW .' '. ucfirst(lang('actions_back')) .' '. lang('labels_to') .' '.
 				ucwords(lang('global_character') .' '. lang('labels_bio')),
 			'backuser' => LARROW .' '. ucfirst(lang('actions_back')) .' '. lang('labels_to') .' '.
@@ -1253,16 +1228,17 @@ abstract class Nova_personnel extends Nova_controller_main {
 		Template::render();
 	}
 	
-	function viewposts()
+	public function viewposts($type = 'default', $id = false)
 	{
-		// set the variables
-		$type = $this->uri->segment(3, 'default');
-		$id = $this->uri->segment(4, FALSE, TRUE);
-		$data = FALSE;
-		
 		// load the models
 		$this->load->model('posts_model', 'posts');
 		$this->load->model('missions_model', 'mis');
+		
+		// sanity check
+		$id = (is_numeric($id)) ? $id : false;
+		
+		// set the data variable
+		$data = false;
 		
 		switch ($type)
 		{
@@ -1271,7 +1247,7 @@ abstract class Nova_personnel extends Nova_controller_main {
 				$row = $this->user->get_user($id);
 				$data['user'] = $id;
 				
-				if ($row !== FALSE)
+				if ($row !== false)
 				{
 					// get the user's characters
 					$characters = $this->char->get_user_characters($row->userid, 'active', 'array');
@@ -1279,7 +1255,7 @@ abstract class Nova_personnel extends Nova_controller_main {
 					foreach ($characters as $char)
 					{
 						// set the character name info
-						$data['char'][$char]['character'] = $this->char->get_character_name($char, TRUE);
+						$data['char'][$char]['character'] = $this->char->get_character_name($char, true);
 						
 						// grab all the character posts
 						$posts = $this->posts->get_character_posts($char);
@@ -1298,15 +1274,14 @@ abstract class Nova_personnel extends Nova_controller_main {
 								$data['char'][$char]['posts'][$post->post_id]['mission'] = $this->mis->get_mission($post->post_mission, 'mission_title');
 								$data['char'][$char]['posts'][$post->post_id]['mission_id'] = $post->post_mission;
 							}
-							
-							// other data used by the template
-							$data['header'] = ucwords(lang('actions_view') .' '. lang('global_missionposts')) .' - '. $row->name;
 						}
 					}
+					
+					// other data used by the template
+					$data['header'] = ucwords(lang('actions_view') .' '. lang('global_missionposts')) .' - '. $row->name;
 				}
 				else
 				{
-					// set the header
 					$data['header'] = lang('error_title_invalid_user');
 					$data['msg_error'] = lang('error_msg_invalid_user');
 				}
@@ -1316,7 +1291,7 @@ abstract class Nova_personnel extends Nova_controller_main {
 				// run the model methods
 				$char_check = $this->char->get_character($id);
 
-				if ($char_check !== FALSE)
+				if ($char_check !== false)
 				{
 					$posts = $this->posts->get_character_posts($id);
 
@@ -1355,7 +1330,6 @@ abstract class Nova_personnel extends Nova_controller_main {
 			break;
 			
 			default:
-				// set the data used by the view
 				$data['header'] = lang('error_head_general');
 				$data['msg_error'] = lang('error_msg_no_post_type');
 			break;

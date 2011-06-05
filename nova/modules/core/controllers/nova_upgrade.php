@@ -12,12 +12,12 @@
 abstract class Nova_upgrade extends Controller {
 	
 	/**
-	 * Is the system installed?
+	 * @var	bool	Is the system installed?
 	 */
 	public $installed = false;
 	
 	/**
-	 * Variable to store all the information about template regions
+	 * @var	array 	Variable to store all the information about template regions
 	 */
 	protected $_regions = array();
 	

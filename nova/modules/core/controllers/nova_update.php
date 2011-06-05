@@ -12,22 +12,22 @@
 abstract class Nova_update extends Controller {
 	
 	/**
-	 * Is the system installed?
+	 * @var	bool	Is the system installed?
 	 */
 	public $installed = false;
 	
 	/**
-	 * The version of the system
+	 * @var	string	The version of the system
 	 */
 	public $version;
 	
 	/**
-	 * The options array that stores all the settings from the database
+	 * @var	array 	The options array that stores all the settings from the database
 	 */
 	public $options;
 	
 	/**
-	 * Variable to store all the information about template regions
+	 * @var	array 	Variable to store all the information about template regions
 	 */
 	protected $_regions = array();
 	
@@ -47,6 +47,7 @@ abstract class Nova_update extends Controller {
 		$this->lang->load('install');
 		$this->lang->load('app', $this->session->userdata('language'));
 		
+		// set the version
 		$this->version = APP_VERSION_MAJOR.'.'.APP_VERSION_MINOR.'.'.APP_VERSION_UPDATE;
 		
 		// an array of items to pull from the settings table
@@ -473,8 +474,6 @@ abstract class Nova_update extends Controller {
 		Template::render();
 	}
 
-	# TODO: fix styles for the verify table header
-	
 	public function verify()
 	{
 		$this->load->helper('utility');

@@ -12,12 +12,12 @@
 abstract class Nova_install extends Controller {
 	
 	/**
-	 * Is the system installed?
+	 * @var	bool	Is the system installed?
 	 */
 	public $installed = false;
 	
 	/**
-	 * Variable to store all the information about template regions
+	 * @var	array 	Variable to store all the information about template regions
 	 */
 	protected $_regions = array();
 	
@@ -1102,7 +1102,7 @@ abstract class Nova_install extends Controller {
 		Template::render();
 	}
 	
-	function step($step = 1)
+	public function step($step = 1)
 	{
 		// change the time limit to make sure we don't return any fatal errors
 		set_time_limit(0);
@@ -1637,8 +1637,6 @@ abstract class Nova_install extends Controller {
 		Template::render();
 	}
 	
-	# TODO: fix styles for the verify table header
-	
 	public function verify()
 	{
 		$this->load->helper('utility');
@@ -1667,38 +1665,6 @@ abstract class Nova_install extends Controller {
 		Template::assign($this->_regions);
 		
 		Template::render();
-	}
-	
-	/**
-	 * Uninstall the system
-	 *
-	 * @access	private
-	 * @return	void
-	 */
-	private function _destroy_data()
-	{
-		$this->load->dbforge();
-		
-		$tables = $this->db->list_tables();
-		
-		$prefix_len = strlen($this->db->dbprefix);
-		
-		foreach ($tables as $key => $value)
-		{
-			if (substr($value, 0, $prefix_len) != $this->db->dbprefix)
-			{
-				unset($fields[$key]);
-			}
-			else
-			{
-				$fields[$key] = substr_replace($value, '', 0, $prefix_len);
-			}
-		}
-		
-		foreach ($tables as $v)
-		{
-			$this->dbforge->drop_table($v);
-		}
 	}
 	
 	/**
@@ -1849,6 +1815,38 @@ abstract class Nova_install extends Controller {
 					$this->sys->add_skin_section($section);
 				}
 			}
+		}
+	}
+	
+	/**
+	 * Uninstall the system
+	 *
+	 * @access	private
+	 * @return	void
+	 */
+	private function _destroy_data()
+	{
+		$this->load->dbforge();
+		
+		$tables = $this->db->list_tables();
+		
+		$prefix_len = strlen($this->db->dbprefix);
+		
+		foreach ($tables as $key => $value)
+		{
+			if (substr($value, 0, $prefix_len) != $this->db->dbprefix)
+			{
+				unset($fields[$key]);
+			}
+			else
+			{
+				$fields[$key] = substr_replace($value, '', 0, $prefix_len);
+			}
+		}
+		
+		foreach ($tables as $v)
+		{
+			$this->dbforge->drop_table($v);
 		}
 	}
 	

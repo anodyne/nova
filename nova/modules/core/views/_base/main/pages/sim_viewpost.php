@@ -60,7 +60,7 @@
 
 <p><?php echo anchor('feed/posts', img($images['feed']), array('class' => 'image'));?></p>
 
-<?php if ($this->auth->is_logged_in() === TRUE): ?>
+<?php if (Auth::is_logged_in()): ?>
 	<p class="bold">
 		<a href="#" id="add_comment" myID="<?php echo $post_id;?>" rel="facebox" class="image">
 			<?php echo img($images['comment']) .' '. $label['addcomment'];?>

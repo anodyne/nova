@@ -12,12 +12,12 @@
 abstract class Nova_feed extends Controller {
 	
 	/**
-	 * The options array that stores all the settings from the database
+	 * @var	array 	The options array that stores all the settings from the database
 	 */
 	public $options;
 	
 	/**
-	 * Variable to store all the information about template regions
+	 * @var	array 	Variable to store all the information about template regions
 	 */
 	protected $_regions = array();
 	
@@ -65,7 +65,7 @@ abstract class Nova_feed extends Controller {
 	/**
 	 * RSS feed for personal logs
 	 *
-	 * @since	1.0
+	 * @access	public
 	 * @return	void
 	 */
 	public function logs()
@@ -110,7 +110,7 @@ abstract class Nova_feed extends Controller {
 	/**
 	 * RSS feed for news items (private news items are not included)
 	 *
-	 * @since	1.0
+	 * @access	public
 	 * @return	void
 	 */
 	public function news()
@@ -156,7 +156,7 @@ abstract class Nova_feed extends Controller {
 	/**
 	 * RSS feed for mission entries
 	 *
-	 * @since	1.0
+	 * @access	public
 	 * @return	void
 	 */
 	public function posts()
@@ -215,6 +215,7 @@ abstract class Nova_feed extends Controller {
 	/**
 	 * RSS feed for created or updated wiki pages
 	 *
+	 * @access	public
 	 * @since	2.0
 	 * @return	void
 	 */
