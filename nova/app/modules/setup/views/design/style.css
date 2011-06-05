@@ -96,6 +96,7 @@ h4 { font-size: 120%; }
 
 h1, h2, h3, h4 { font-weight: bold; }
 
+.fontMedium { font-size: 110%; }
 .fontSmall { font-size: 85%; }
 
 .bold { font-weight: bold; }
@@ -139,7 +140,11 @@ th, td {
 	padding: 4px;
 	vertical-align: middle;
 }
-th { border-right: 1px solid #bbb; }
+th {
+	border-right: 1px solid #bbb;
+	font-weight: bold;
+	font-size: 110%;
+}
 
 .alt { background-color: #e5e5e5; }
 
@@ -540,3 +545,5 @@ pre {
 	-moz-border-radius: 3px;
 }
 code { font-family: "consolas", courier, monaco, monospace; }
+
+.align-center { text-align: center; }
