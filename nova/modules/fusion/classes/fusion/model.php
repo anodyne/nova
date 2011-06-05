@@ -412,7 +412,7 @@ class Fusion_Model implements ArrayAccess, Iterator {
 		// God knows, complain
 		else
 		{
-			throw new Kohana_Exception('Invalid method call.  Method '.$method.' does not exist.', 0);
+			throw new Kohana_Exception('Invalid method call. Method '.$method.' does not exist.');
 		}
 
 		$where = $or_where = array();
@@ -656,7 +656,7 @@ class Fusion_Model implements ArrayAccess, Iterator {
 
 		if (in_array($property, static::primary_key()) and $this->{$property} !== null)
 		{
-			throw new Kohana_Exception('Primary key cannot be changed.');
+			//throw new Kohana_Exception('Primary key cannot be changed.');
 		}
 		if (array_key_exists($property, static::properties()))
 		{
