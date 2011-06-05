@@ -61,7 +61,7 @@ class Model_Spec extends Model {
 	 * @param	mixed	an array or object of data
 	 * @return	object	the newly created item
 	 */
-	public static function create_item($data)
+	public static function create_spec($data)
 	{
 		$item = static::create_item($data);
 		
