@@ -77,7 +77,7 @@ class Model_SiteContent extends Model {
 		foreach ($data as $key => $value)
 		{
 			$record = static::find()->where('key', $key)->get_one();
-			$record->value = $value;
+			$record->content = $value;
 			$record->save();
 		}
 	}
