@@ -23,6 +23,7 @@ Anodyne Production's next-generation RPG management system combines popular feat
 * updated to uniform version 1.7.5
 * updated to prettyPhoto version 3.1.2
 * updated to qTip2
+* updated the database to not use a default value for a character's rank to avoid confusion when dealing with pending characters
 * refactored the location helper into a full-blown class with static methods
 * refactored the upgrade process to mirror what was created for nova 3
 * removed the banned.php file

@@ -205,6 +205,16 @@ if ($add_column !== null)
 |---------------------------------------------------------------
 */
 
+$modify_column = array(
+	'characters' => array(
+		'rank' => array(
+			'name' => 'rank',
+			'type' => 'INT',
+			'constraint' => 10,
+			'default' => NULL)
+	)
+);
+
 if ($modify_column !== null)
 {
 	foreach ($modify_column as $key => $value)
