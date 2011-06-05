@@ -29,7 +29,7 @@ class Controller_Setup_Sms extends Controller_Template {
 			$db = Database::instance();
 			
 			// get the number of tables
-			$tables = Kohana::config('novasys.app_db_tables');
+			$tables = Kohana::config('nova.app_db_tables');
 			
 			// we're upgrading from sms, so make sure the system isn't installed
 			if ($this->request->action() != 'step' and (count($db->list_tables($db->table_prefix().'%')) == $tables))
@@ -45,7 +45,7 @@ class Controller_Setup_Sms extends Controller_Template {
 		$this->template = View::factory(Location::file('setup', null, 'structure'));
 		
 		// set the variables in the template
-		$this->template->title 					= Kohana::config('novasys.app_name').' :: ';
+		$this->template->title 					= Kohana::config('nova.app_name').' :: ';
 		$this->template->javascript				= false;
 		$this->template->layout					= View::factory(Location::file('setup', null, 'templates'));
 		$this->template->layout->label			= false;
@@ -110,7 +110,7 @@ class Controller_Setup_Sms extends Controller_Template {
 					);
 					
 					// build the next step control
-					$this->template->layout->controls = Form::open('setup/upgrade/step/1').Form::button('next', 'Start Upgrade', $next).Form::close();
+					$this->template->layout->controls = Form::open('setup/sms/step/1').Form::button('next', 'Start Upgrade', $next).Form::close();
 				}
 			break;
 				
@@ -255,28 +255,28 @@ class Controller_Setup_Sms extends Controller_Template {
 				);
 				
 				// build the next step control
-				$this->template->layout->controls = (count($tables) < Kohana::config('novasys.app_db_tables'))
+				$this->template->layout->controls = (count($tables) < Kohana::config('nova.app_db_tables'))
 					? false 
 					: Form::button('next', 'Upgrade', $next).Form::close();
 			break;
 				
 			case 2:
 				// create a new content view
-				$this->template->layout->content = View::factory(Location::view('upgrade_step2'));
+				$this->template->layout->content = View::factory('components/pages/sms/step2');
+				
+				// create the javascript view
+				$this->template->javascript = View::factory('components/js/sms/step2_js');
 				
 				// assign the object a shorter variable to use in the method
 				$data = $this->template->layout->content;
 				
 				// content
-				$this->template->title.= __('Cleaning Up Data');
-				$this->template->layout->label = __('Cleaning Up Data');
-				
-				// create the javascript view
-				$this->template->javascript = View::factory(Location::view('upgrade_step2_js', null, 'js'));
+				$this->template->title.= 'Cleaning Up Data';
+				$this->template->layout->label = 'Cleaning Up Data';
 				
 				// set the loading image
 				$data->loading = array(
-					'src' => MODFOLDER.'/nova/upgrade/views/design/images/loading-circle-large.gif',
+					'src' => MODFOLDER.'/app/modules/setup/views/design/images/loading-circle-large.gif',
 					'attr' => array(
 						'class' => 'image'),
 				);
@@ -289,18 +289,21 @@ class Controller_Setup_Sms extends Controller_Template {
 				);
 				
 				// build the next step control
-				$this->template->layout->controls = form::button('next', __('Run'), $next).form::close();
+				$this->template->layout->controls = Form::button('next', 'Run', $next).Form::close();
 			break;
 				
 			case 3:
-				if (isset($_POST['submit']))
+				if (HTTP_Request::POST == $this->request->method())
 				{
 					// do the registration
 					$this->_register();
 				}
 				
 				// create a new content view
-				$this->template->layout->content = View::factory(Location::view('upgrade_step3'));
+				$this->template->layout->content = View::factory('components/pages/sms/step3');
+				
+				// create the javascript view
+				$this->template->javascript = View::factory('components/js/sms/step3_js');
 				
 				// assign the object a shorter variable to use in the method
 				$data = $this->template->layout->content;
@@ -309,23 +312,23 @@ class Controller_Setup_Sms extends Controller_Template {
 				$data->options = array();
 				
 				// get all active users
-				$all = Jelly::query('user')->where('status', '=', 'active')->select();
+				$all = Model_User::find('all');
 				
 				foreach ($all as $a)
 				{
-					$data->options[$a->id] = $a->name.' ('.$a->email.')';
+					if ($a->get_status == 'active')
+					{
+						$data->options[$a->id] = $a->name.' ('.$a->email.')';
+					}
 				}
 				
 				// content
-				$this->template->title.= __('Passwords and Admin Rights');
-				$this->template->layout->label = __('Passwords and Admin Rights');
-				
-				// create the javascript view
-				$this->template->javascript = View::factory(Location::view('upgrade_step3_js', null, 'js'));
+				$this->template->title.= 'Passwords and Admin Rights';
+				$this->template->layout->label = 'Passwords and Admin Rights';
 				
 				// set the loading image
 				$data->loading = array(
-					'src' => MODFOLDER.'/nova/upgrade/views/design/images/loading-circle-large.gif',
+					'src' => MODFOLDER.'/app/modules/setup/views/design/images/loading-circle-large.gif',
 					'attr' => array(
 						'class' => 'image'),
 				);
@@ -338,7 +341,7 @@ class Controller_Setup_Sms extends Controller_Template {
 				);
 				
 				// build the next step control
-				$this->template->layout->controls = form::button('next', __('Finalize'), $next).form::close();
+				$this->template->layout->controls = Form::button('next', 'Finalize', $next).Form::close();
 			break;
 		}
 		
@@ -360,8 +363,8 @@ class Controller_Setup_Sms extends Controller_Template {
 			
 			// build the data we need
 			$request = array(
-				Kohana::config('novasys.app_name'),
-				Kohana::config('novasys.app_version_full'),
+				Kohana::config('nova.app_name'),
+				Kohana::config('nova.app_version_full'),
 				url::site(),
 				$_SERVER['REMOTE_ADDR'],
 				$_SERVER['SERVER_ADDR'],

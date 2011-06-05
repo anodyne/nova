@@ -1,7 +1,7 @@
-<script type="text/javascript" src="<?php echo url::base().MODFOLDER;?>/assets/js/jquery.ajaxq.js"></script>
-<script type="text/javascript" src="<?php echo url::base().MODFOLDER;?>/assets/js/jquery.tipTip.js"></script>
+<script type="text/javascript" src="<?php echo Url::base().MODFOLDER;?>/modules/assets/js/jquery.ajaxq.js"></script>
+<script type="text/javascript" src="<?php echo Url::base().MODFOLDER;?>/modules/assets/js/jquery.tipTip.js"></script>
 
-<link rel="stylesheet" href="<?php echo url::base().MODFOLDER;?>/assets/css/jquery.tipTip.css" />
+<link rel="stylesheet" href="<?php echo Url::base().MODFOLDER;?>/modules/assets/css/jquery.tipTip.css" />
 
 <script type="text/javascript">
 	$(document).ready(function(){
@@ -32,7 +32,7 @@
 					$('.loading-password').removeClass('hidden');
 				},
 				type: "POST",
-				url: "<?php echo url::site('upgradeajax/upgrade_final_password');?>",
+				url: "<?php echo Url::site('setup/smsajax/upgrade_final_password');?>",
 				data: { password: password },
 				dataType: 'json',
 				success: function(data){
@@ -62,7 +62,7 @@
 					$('.loading-admins').removeClass('hidden');
 				},
 				type: "POST",
-				url: "<?php echo url::site('upgradeajax/upgrade_final_roles');?>",
+				url: "<?php echo Url::site('setup/smsajax/upgrade_final_roles');?>",
 				data: { roles: roles },
 				dataType: 'json',
 				success: function(data){
@@ -88,8 +88,8 @@
 				$('#percent').text($('#progress').progressbar('option', 'value') + '%');
 				
 				// change the button and text
-				$('.lower .control button').attr('id', 'next').html('<?php echo __("Your Site");?>');
-				$('.lower .control-text').html('<?php echo __("Go to your upgraded Nova site now");?>');
+				$('.lower .control button').attr('id', 'next').html('Your Site');
+				$('.lower .control-text').html('Go to your upgraded Nova site now');
 			});
 			
 			return false;
