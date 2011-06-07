@@ -920,7 +920,11 @@ $fields_mission_groups = array(
 		'type' => 'INT',
 		'constraint' => 5),
 	'misgroup_desc' => array(
-		'type' => 'TEXT')
+		'type' => 'TEXT'),
+	'misgroup_parent' => array(
+		'type' => 'INT',
+		'constraint' => 5,
+		'default' => 0),
 );
 
 $fields_missions = array(

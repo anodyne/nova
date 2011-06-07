@@ -180,6 +180,12 @@ $add_column = array(
 	'posts' => array(
 		'post_participants' => array(
 			'type' => 'TEXT'),
+	),
+	'mission_groups' => array(
+		'misgroup_parent' => array(
+			'type' => 'INT',
+			'constraint' => 5,
+			'default' => 0),
 	)
 );
 
