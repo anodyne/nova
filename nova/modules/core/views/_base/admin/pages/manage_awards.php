@@ -1,8 +1,6 @@
 <?php echo text_output($header, 'h1', 'page-head');?>
 
-<p class="bold">
-	<?php echo anchor('manage/awards/add', img($images['add']) .' '. $label['addaward'], array('class' => 'image'));?>
-</p><br />
+<p class="bold"><?php echo anchor('manage/awards/add', img($images['add']) .' '. $label['addaward'], array('class' => 'image'));?></p><br>
 
 <?php if (isset($awards)): ?>
 	<table class="table100 zebra">
@@ -23,4 +21,6 @@
 		<?php endforeach;?>
 		</tbody>
 	</table>
+<?php else: ?>
+	<?php echo text_output($label['noawards'], 'h3', 'orange');?>
 <?php endif;?>

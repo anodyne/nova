@@ -18,9 +18,22 @@ abstract class Nova_missions_model extends Model {
 		$this->load->dbutil();
 	}
 	
-	public function get_all_mission_groups()
+	/**
+	 * Get all mission groups.
+	 *
+	 * @access	public
+	 * @param	int		the mission group parent ID, empty for all groups
+	 * @return	object
+	 */
+	public function get_all_mission_groups($parent = 0)
 	{
 		$this->db->from('mission_groups');
+		
+		if (is_numeric($parent))
+		{
+			$this->db->where('misgroup_parent', $parent);
+		}
+		
 		$this->db->order_by('misgroup_order', 'asc');
 		
 		$query = $this->db->get();
@@ -177,8 +190,21 @@ abstract class Nova_missions_model extends Model {
 		return $query;
 	}
 	
+	/**
+	 * Delete a mission group, making sure to update the missions table so that
+	 * we don't have any orphan missions.
+	 *
+	 * @access	public
+	 * @uses	Missions_model::update_mission
+	 * @param	int		the mission group ID
+	 * @return	int		the number of affected rows
+	 */
 	public function delete_mission_group($id = '')
 	{
+		// update all missions that are part of the group
+		$this->update_mission(null, array('mission_group' => 0), array('mission_group' => $id));
+		
+		// delete the mission group
 		$query = $this->db->delete('mission_groups', array('misgroup_id' => $id));
 		
 		$this->dbutil->optimize_table('mission_groups');

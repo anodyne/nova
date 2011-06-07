@@ -1416,6 +1416,72 @@ abstract class Nova_ajax extends Controller {
 		}
 	}
 	
+	public function add_mission_group()
+	{
+		// load the resources
+		$this->load->model('missions_model', 'mis');
+		
+		$head = sprintf(
+			lang('fbx_head'),
+			ucwords(lang('actions_add')),
+			ucwords(lang('global_mission').' '.lang('labels_group'))
+		);
+		
+		// data being sent to the facebox
+		$data['header'] = $head;
+		
+		$groups = $this->mis->get_all_mission_groups();
+		
+		if ($groups->num_rows() > 0)
+		{
+			$groups_select[0] = ucwords(lang('labels_no').' '.lang('labels_parent').' '.lang('global_mission').' '.lang('labels_group'));
+			
+			foreach ($groups->result() as $g)
+			{
+				$groups_select[$g->misgroup_id] = $g->misgroup_name;
+			}
+		}
+		
+		// input parameters
+		$data['inputs'] = array(
+			'name' => array(
+				'name' => 'misgroup_name',
+				'class' => 'hud'),
+			'parent' => (isset($groups_select)) ? $groups_select : false,
+			'order' => array(
+				'name' => 'misgroup_order',
+				'class' => 'small hud'),
+			'desc' => array(
+				'name' => 'misgroup_desc',
+				'class' => 'hud',
+				'rows' => 5),
+			'submit' => array(
+				'type' => 'submit',
+				'class' => 'hud_button',
+				'name' => 'submit',
+				'value' => 'submit',
+				'id' => 'addMission',
+				'content' => ucwords(lang('actions_submit')))
+		);
+		
+		$data['label'] = array(
+			'name' => ucfirst(lang('labels_name')),
+			'parent' => ucwords(lang('labels_parent').' '.lang('global_mission').' '.lang('labels_group')),
+			'order' => ucfirst(lang('labels_order')),
+			'desc' => ucfirst(lang('labels_desc')),
+		);
+		
+		// figure out the skin
+		$skin = $this->session->userdata('skin_admin');
+		
+		$this->_regions['content'] = Location::ajax('add_mission_group', $skin, 'admin', $data);
+		$this->_regions['controls'] = form_button($data['inputs']['submit']).form_close();
+		
+		Template::assign($this->_regions);
+		
+		Template::render();
+	}
+	
 	public function add_position()
 	{
 		// load the resources
@@ -3748,6 +3814,50 @@ abstract class Nova_ajax extends Controller {
 		}
 	}
 	
+	public function del_mission_group()
+	{
+		// load the resources
+		$this->load->model('missions_model', 'mis');
+		
+		$head = sprintf(
+			lang('fbx_head'),
+			ucwords(lang('actions_delete')),
+			ucwords(lang('global_mission').' '.lang('labels_group'))
+		);
+		
+		// data being sent to the facebox
+		$data['header'] = $head;
+		$data['id'] = $this->uri->segment(3, 0, true);
+		
+		$item = $this->mis->get_mission_group($data['id'], array('misgroup_name'));
+		
+		$data['text'] = sprintf(
+			lang('fbx_content_del_entry'),
+			lang('global_mission').' '.lang('labels_group'),
+			$item['misgroup_name']
+		);
+		
+		// input parameters
+		$data['inputs'] = array(
+			'submit' => array(
+				'type' => 'submit',
+				'class' => 'hud_button',
+				'name' => 'submit',
+				'value' => 'submit',
+				'content' => ucwords(lang('actions_submit')))
+		);
+		
+		// figure out the skin
+		$skin = $this->session->userdata('skin_admin');
+		
+		$this->_regions['content'] = Location::ajax('del_mission_group', $skin, 'admin', $data);
+		$this->_regions['controls'] = form_button($data['inputs']['submit']).form_close();
+		
+		Template::assign($this->_regions);
+		
+		Template::render();
+	}
+	
 	public function del_news()
 	{
 		// load the resources
@@ -5987,6 +6097,79 @@ abstract class Nova_ajax extends Controller {
 		$skin = $this->session->userdata('skin_admin');
 		
 		$this->_regions['content'] = Location::ajax('edit_menu_item', $skin, 'admin', $data);
+		$this->_regions['controls'] = form_button($data['inputs']['submit']).form_close();
+		
+		Template::assign($this->_regions);
+		
+		Template::render();
+	}
+	
+	public function edit_mission_group()
+	{
+		// load the resources
+		$this->load->model('missions_model', 'mis');
+		
+		$head = sprintf(
+			lang('fbx_head'),
+			ucwords(lang('actions_edit')),
+			ucwords(lang('global_mission').' '.lang('labels_group'))
+		);
+		
+		// data being sent to the facebox
+		$data['header'] = $head;
+		$data['id'] = $this->uri->segment(3, 0, true);
+		
+		$item = $this->mis->get_mission_group($data['id']);
+		
+		$groups = $this->mis->get_all_mission_groups();
+		
+		if ($groups->num_rows() > 0)
+		{
+			$groups_select[0] = ucwords(lang('labels_no').' '.lang('labels_parent').' '.lang('global_mission').' '.lang('labels_group'));
+			
+			foreach ($groups->result() as $g)
+			{
+				$groups_select[$g->misgroup_id] = $g->misgroup_name;
+			}
+		}
+		
+		// input parameters
+		$data['inputs'] = array(
+			'name' => array(
+				'name' => 'misgroup_name',
+				'class' => 'hud',
+				'value' => $item->misgroup_name),
+			'parent' => (isset($groups_select)) ? $groups_select : false,
+			'parent_value' => $item->misgroup_parent,
+			'order' => array(
+				'name' => 'misgroup_order',
+				'class' => 'small hud',
+				'value' => $item->misgroup_order),
+			'desc' => array(
+				'name' => 'misgroup_desc',
+				'class' => 'hud',
+				'rows' => 5,
+				'value' => $item->misgroup_desc),
+			'submit' => array(
+				'type' => 'submit',
+				'class' => 'hud_button',
+				'name' => 'submit',
+				'value' => 'submit',
+				'id' => 'addMission',
+				'content' => ucwords(lang('actions_submit')))
+		);
+		
+		$data['label'] = array(
+			'name' => ucfirst(lang('labels_name')),
+			'parent' => ucwords(lang('labels_parent').' '.lang('global_mission').' '.lang('labels_group')),
+			'order' => ucfirst(lang('labels_order')),
+			'desc' => ucfirst(lang('labels_desc')),
+		);
+		
+		// figure out the skin
+		$skin = $this->session->userdata('skin_admin');
+		
+		$this->_regions['content'] = Location::ajax('edit_mission_group', $skin, 'admin', $data);
 		$this->_regions['controls'] = form_button($data['inputs']['submit']).form_close();
 		
 		Template::assign($this->_regions);

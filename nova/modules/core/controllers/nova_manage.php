@@ -9,9 +9,6 @@
  * @version		2.0
  */
 
-# FIXME: manage/awards doesn't have a message saying there aren't any awards in the system
-# FIXME: manage/missiongroups doesn't have a message saying there aren't any groups in the system
-
 require_once MODPATH.'core/libraries/Nova_controller_admin'.EXT;
 
 abstract class Nova_manage extends Nova_controller_admin {
@@ -305,6 +302,7 @@ abstract class Nova_manage extends Nova_controller_admin {
 			'on' => ucfirst(lang('labels_on')),
 			'off' => ucfirst(lang('labels_off')),
 			'upload' => ucwords(lang('actions_upload') .' '. lang('labels_images') .' '. RARROW),
+			'noawards' => sprintf(lang('error_not_found'), lang('global_awards')),
 		);
 		
 		$this->_regions['content'] = Location::view($view_loc, $this->skin, 'admin', $data);
@@ -1940,46 +1938,59 @@ abstract class Nova_manage extends Nova_controller_admin {
 						$flash['message'] = text_output($message);
 					}
 				break;
+				
+				case 'delete':
+					$id = $this->input->post('id', true);
+					$id = (is_numeric($id)) ? $id : false;
+					
+					$delete = $this->mis->delete_mission_group($id);
+					
+					if ($delete > 0)
+					{
+						$message = sprintf(
+							lang('flash_success'),
+							ucfirst(lang('global_mission') .' '. lang('labels_group')),
+							lang('actions_deleted'),
+							''
+						);
+
+						$flash['status'] = 'success';
+						$flash['message'] = text_output($message);
+					}
+					else
+					{
+						$message = sprintf(
+							lang('flash_failure'),
+							ucfirst(lang('global_mission') .' '. lang('labels_group')),
+							lang('actions_deleted'),
+							''
+						);
+
+						$flash['status'] = 'error';
+						$flash['message'] = text_output($message);
+					}
+				break;
 					
 				case 'edit':
-					$array = array();
-					$delete = (isset($_POST['delete'])) ? $_POST['delete'] : array();
-					$update = 0;
+					$id = $this->input->post('id', true);
+					$id = (is_numeric($id)) ? $id : false;
 					
 					foreach ($_POST as $key => $value)
 					{
-						$loc = strpos($key, '_');
-						
-						if ($loc !== false)
-						{
-							$loc_pos = substr($key, 0, $loc);
-							
-							if ( ! in_array($loc_pos, $delete))
-							{ // if the item is being deleted don't add it to the update array
-								$new_key = 'misgroup_'. substr($key, ($loc+1));
-								$array[$loc_pos][$new_key] = $value;
-							}
-						}
+						$update_array[$key] = $value;
 					}
 					
-					foreach ($array as $a => $b)
-					{
-						$update += $this->mis->update_mission_group($a, $b);
-					}
+					unset($update_array['submit']);
+					unset($update_array['id']);
 					
-					foreach ($delete as $del)
-					{
-						$delete = $this->mis->delete_mission_group($del);
-						
-						$array = array('mission_group' => null);
-						$this->mis->update_mission('', $array, array('mission_group' => $del));
-					}
+					// insert the record
+					$update = $this->mis->update_mission_group($id, $update_array);
 					
 					if ($update > 0)
 					{
 						$message = sprintf(
-							lang('flash_success_plural'),
-							ucfirst(lang('global_mission') .' '. lang('labels_groups')),
+							lang('flash_success'),
+							ucfirst(lang('global_mission') .' '. lang('labels_group')),
 							lang('actions_updated'),
 							''
 						);
@@ -1990,8 +2001,8 @@ abstract class Nova_manage extends Nova_controller_admin {
 					else
 					{
 						$message = sprintf(
-							lang('flash_failure_plural'),
-							ucfirst(lang('global_mission') .' '. lang('labels_groups')),
+							lang('flash_failure'),
+							ucfirst(lang('global_mission') .' '. lang('labels_group')),
 							lang('actions_updated'),
 							''
 						);
@@ -2015,22 +2026,23 @@ abstract class Nova_manage extends Nova_controller_admin {
 			{
 				$data['groups'][$g->misgroup_id] = array(
 					'id' => $g->misgroup_id,
-					'name' => array(
-						'name' => $g->misgroup_id .'_name',
-						'value' => $g->misgroup_name),
-					'delete' => array(
-						'id' => $g->misgroup_id .'_id',
-						'name' => 'delete[]',
-						'value' => $g->misgroup_id),
-					'order' => array(
-						'name' => $g->misgroup_id .'_order',
-						'value' => $g->misgroup_order,
-						'class' => 'small'),
-					'desc' => array(
-						'name' => $g->misgroup_id .'_desc',
-						'value' => $g->misgroup_desc,
-						'rows' => 3),
+					'name' => $g->misgroup_name,
+					'desc' => $g->misgroup_desc,
 				);
+				
+				$subgroups = $this->mis->get_all_mission_groups($g->misgroup_id);
+				
+				if ($subgroups->num_rows() > 0)
+				{
+					foreach ($subgroups->result() as $s)
+					{
+						$data['groups'][$g->misgroup_id]['children'][$s->misgroup_id] = array(
+							'id' => $s->misgroup_id,
+							'name' => $s->misgroup_name,
+							'desc' => $s->misgroup_desc,
+						);
+					}
+				}
 			}
 		}
 		
@@ -2064,6 +2076,18 @@ abstract class Nova_manage extends Nova_controller_admin {
 				'src' => Location::img('icon-add.png', $this->skin, 'admin'),
 				'alt' => '',
 				'class' => 'inline_img_left'),
+			'delete' => array(
+				'src' => Location::img('icon-delete.png', $this->skin, 'admin'),
+				'alt' => lang('actions_delete'),
+				'title' => ucfirst(lang('actions_delete'))),
+			'edit' => array(
+				'src' => Location::img('icon-edit.png', $this->skin, 'admin'),
+				'alt' => lang('actions_edit'),
+				'title' => ucfirst(lang('actions_edit'))),
+			'view' => array(
+				'src' => Location::img('icon-view.png', $this->skin, 'admin'),
+				'alt' => lang('actions_view'),
+				'title' => ucfirst(lang('actions_view'))),
 		);
 		
 		$data['label'] = array(
@@ -2072,6 +2096,8 @@ abstract class Nova_manage extends Nova_controller_admin {
 			'delete' => ucfirst(lang('actions_delete')),
 			'order' => ucfirst(lang('labels_order')),
 			'desc' => ucfirst(lang('labels_desc')),
+			'parent' => ucwords(lang('labels_parent').' '.lang('global_mission').' '.lang('labels_group')),
+			'nogroups' => sprintf(lang('error_not_found'), lang('global_mission').' '.lang('labels_groups')),
 		);
 		
 		$this->_regions['content'] = Location::view('manage_missiongroups', $this->skin, 'admin', $data);
@@ -2343,11 +2369,21 @@ abstract class Nova_manage extends Nova_controller_admin {
 			
 			if ($groups->num_rows() > 0)
 			{
-				$data['groups'][0] = ucwords(lang('labels_please') .' '. lang('actions_choose')) .' '. lang('labels_a') .' '. ucfirst(lang('labels_group'));
+				$data['groups'][0] = ucwords(lang('labels_no') .' '. lang('global_mission') .' '. lang('labels_group'));
 				
 				foreach ($groups->result() as $g)
 				{
 					$data['groups'][$g->misgroup_id] = $g->misgroup_name;
+					
+					$subgroup = $this->mis->get_all_mission_groups($g->misgroup_id);
+					
+					if ($subgroup->num_rows() > 0)
+					{
+						foreach ($subgroup->result() as $s)
+						{
+							$data['groups'][$s->misgroup_id] = $s->misgroup_name.' ('.$g->misgroup_name.')';
+						}
+					}
 				}
 			}
 			

@@ -2,63 +2,42 @@
 
 <?php echo text_output($text);?>
 
-<p class="bold">
-	<a href="#" id="add" class="image"><?php echo img($images['add']) .' '. $label['addgroup'];?></a>
-</p>
-
-<div id="add_group" class="info-full hidden">
-	<?php echo form_open('manage/missiongroups/add');?>
-		<p>
-			<kbd><?php echo $label['name'];?></kbd>
-			<input type="text" name="misgroup_name" />
-		</p>
-		<p>
-			<kbd><?php echo $label['order'];?></kbd>
-			<input type="text" class="small" name="misgroup_order" value="99" />
-		</p>
-		<p>
-			<kbd><?php echo $label['desc'];?></kbd>
-			<textarea name="misgroup_desc" rows="3"></textarea>
-		</p>
-		<p><?php echo form_button($buttons['add']);?></p>
-	<?php echo form_close();?>
-</div>
+<p class="bold"><a href="#" rel="facebox" myAction="add" class="image"><?php echo img($images['add']) .' '. $label['addgroup'];?></a></p>
 
 <?php if (isset($groups)): ?>
-	<br /><hr /><br />
-	
-	<div class="zebra">
-	<?php echo form_open('manage/missiongroups/edit');?>
-	
-		<?php foreach ($groups as $g): ?>
-			<div id="<?php echo $g['id'];?>" class="padding_p5_0_p5_0">
-				<table class="table100">
+	<table class="table100 zebra">
+		<tbody>
+			<?php foreach ($groups as $g): ?>
+			<tr>
+				<td colspan="2" class="bold col-30pct"><?php echo $g['name'];?></td>
+				<td><?php echo text_output($g['desc']);?></td>
+				<td class="col_100 align_right">
+					<?php echo anchor('sim/missions/group/'. $g['id'], img($images['view']), array('class' => 'image'));?>
+					&nbsp;
+					<a href="#" myAction="delete" myID="<?php echo $g['id'];?>" rel="facebox" class="image"><?php echo img($images['delete']);?></a>
+					&nbsp;
+					<a href="#" myAction="edit" myID="<?php echo $g['id'];?>" rel="facebox" class="image"><?php echo img($images['edit']);?></a>
+				</td>
+			</tr>
+				<?php if (isset($g['children'])): ?>
+					<?php foreach ($g['children'] as $g): ?>
 					<tr>
-						<td>
-							<?php echo text_output($label['name'], 'span', 'bold');?><br />
-							<?php echo form_input($g['name']);?>
-						</td>
-						<td class="col_150">
-							<?php echo text_output($label['order'], 'span', 'bold');?><br />
-							<?php echo form_input($g['order']);?>
-						</td>
-						<td rowspan="2" class="align_right align_middle col_100">
-							<strong><?php echo form_label($label['delete'], $g['id'] .'_id');?>?</strong>
-							<?php echo form_checkbox($g['delete']);?>
+						<td class="col-30"></td>
+						<td class="bold col-30pct"><?php echo $g['name'];?></td>
+						<td><?php echo text_output($g['desc']);?></td>
+						<td class="col_100 align_right">
+							<?php echo anchor('sim/missions/group/'. $g['id'], img($images['view']), array('class' => 'image'));?>
+							&nbsp;
+							<a href="#" myAction="delete" myID="<?php echo $g['id'];?>" rel="facebox" class="image"><?php echo img($images['delete']);?></a>
+							&nbsp;
+							<a href="#" myAction="edit" myID="<?php echo $g['id'];?>" rel="facebox" class="image"><?php echo img($images['edit']);?></a>
 						</td>
 					</tr>
-					<tr>
-						<td colspan="2">
-							<?php echo text_output($label['desc'], 'span', 'bold');?><br />
-							<?php echo form_textarea($g['desc']);?>
-						</td>
-					</tr>
-				</table>
-			</div>
-		<?php endforeach;?>
-		
-		<br />
-		<?php echo form_button($buttons['update']);?>
-	<?php echo form_close();?>
-	</div>
+					<?php endforeach;?>
+				<?php endif;?>
+			<?php endforeach;?>
+		</tbody>
+	</table>
+<?php else: ?>
+	<?php echo text_output($label['nogroups'], 'h3', 'orange');?>
 <?php endif;?>
