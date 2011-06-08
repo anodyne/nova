@@ -1093,7 +1093,7 @@ abstract class Nova_sim extends Nova_controller_main {
 							);
 							
 							// count the current mission
-							$count = $this->mis->get_mission_where(array('mission_group' => $g->misgroup_id));
+							$count_missions = $this->mis->get_mission_where(array('mission_group' => $g->misgroup_id));
 							
 							// pull the missions for the parent group
 							$missions_parent = $this->mis->get_all_missions('', $g->misgroup_id);
@@ -1122,7 +1122,7 @@ abstract class Nova_sim extends Nova_controller_main {
 							{
 								foreach ($subgroup->result() as $s)
 								{
-									$count += $this->mis->get_mission_where(array('mission_group' => $s->misgroup_id));
+									$count_missions += $this->mis->get_mission_where(array('mission_group' => $s->misgroup_id));
 									
 									$data['groups'][$g->misgroup_id]['subgroups'][$s->misgroup_id] = array(
 										'id' => $s->misgroup_id,
@@ -1154,7 +1154,7 @@ abstract class Nova_sim extends Nova_controller_main {
 							}
 							
 							// send the final count to the view
-							$data['groups'][$g->misgroup_id]['count']['missions'] = $count;
+							$data['groups'][$g->misgroup_id]['count']['missions'] = $count_missions;
 						}
 					}
 					
