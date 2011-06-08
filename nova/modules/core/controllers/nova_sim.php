@@ -1108,7 +1108,7 @@ abstract class Nova_sim extends Nova_controller_main {
 										'id' => $misP->mission_id,
 										'title' => $misP->mission_title,
 										'desc' => $misP->mission_desc,
-										'count' => $count,
+										'count' => ($misP->mission_status == 'upcoming') ? '&mdash;' : $count,
 									);
 									
 									$data['groups'][$g->misgroup_id]['count']['posts'] = $data['groups'][$g->misgroup_id]['count']['posts'] + $count;
@@ -1144,7 +1144,7 @@ abstract class Nova_sim extends Nova_controller_main {
 												'title' => $misC->mission_title,
 												'desc' => $misC->mission_desc,
 												'group' => $s->misgroup_name,
-												'count' => $count,
+												'count' => ($misC->mission_status == 'upcoming') ? '&mdash;' : $count,
 											);
 											
 											$data['groups'][$g->misgroup_id]['count']['posts'] = $data['groups'][$g->misgroup_id]['count']['posts'] + $count;
