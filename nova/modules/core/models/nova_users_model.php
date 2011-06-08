@@ -407,6 +407,24 @@ abstract class Nova_users_model extends Model {
 		return $query;
 	}
 	
+	/**
+	 * Pull all of a user's LOA records.
+	 *
+	 * @since	2.0
+	 * @access	public
+	 * @param	int		the user ID
+	 * @return	object	the object with all the data
+	 */
+	public function get_user_loa_records($id)
+	{
+		$this->db->from('user_loa');
+		$this->db->where('loa_user', $id);
+		
+		$query = $this->db->get();
+		
+		return $query;
+	}
+	
 	public function get_userid($character = '')
 	{
 		$query = $this->db->get_where('characters', array('charid' => $character));
