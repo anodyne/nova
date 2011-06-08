@@ -41,13 +41,26 @@ abstract class Nova_missions_model extends Model {
 		return $query;
 	}
 	
-	public function get_all_missions($status = '')
+	/**
+	 * Get all missions.
+	 *
+	 * @access	public
+	 * @param	string	the status of missions to pull
+	 * @param	int		the group ID to pull mission for
+	 * @return	object	an object with the data
+	 */
+	public function get_all_missions($status = '', $group = '')
 	{
 		$this->db->from('missions');
 		
 		if ( ! empty($status))
 		{
 			$this->db->where('mission_status', $status);
+		}
+		
+		if ( ! empty($group))
+		{
+			$this->db->where('mission_group', $group);
 		}
 		
 		$this->db->order_by('mission_order', 'asc');
@@ -130,6 +143,26 @@ abstract class Nova_missions_model extends Model {
 		}
 		
 		return $query;
+	}
+	
+	/**
+	 * Count missions groups.
+	 *
+	 * @since	2.0
+	 * @access	public
+	 * @param	int		the parent group ID to use
+	 * @return	int		the count of mission groups
+	 */
+	public function count_mission_groups($id = '')
+	{
+		$this->db->from('mission_groups');
+		
+		if ( ! empty($id))
+		{
+			$this->db->where('misgroup_parent', $id);
+		}
+		
+		return $this->db->count_all_results();
 	}
 	
 	public function add_mission($data = '')
