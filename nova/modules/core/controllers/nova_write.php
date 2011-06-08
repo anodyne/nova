@@ -73,7 +73,9 @@ abstract class Nova_write extends Nova_controller_admin {
 			$i = 1;
 			foreach ($posts_saved->result() as $p)
 			{
-				$data['posts_saved'][$i]['title'] = $p->post_title;
+				$data['posts_saved'][$i]['title'] = ( ! empty($p->post_title)) 
+					? $p->post_title 
+					: '<em>[[ '.strtoupper(lang('labels_no').' '.lang('labels_title')).' ]]</em>';
 				$data['posts_saved'][$i]['post_id'] = $p->post_id;
 				$data['posts_saved'][$i]['date'] = mdate($datestring, gmt_to_local($p->post_date, $this->timezone, $this->dst));
 				$data['posts_saved'][$i]['authors'] = $this->char->get_authors($p->post_authors);
@@ -90,7 +92,9 @@ abstract class Nova_write extends Nova_controller_admin {
 			$i = 1;
 			foreach ($logs_saved->result() as $l)
 			{
-				$data['logs_saved'][$i]['title'] = $l->log_title;
+				$data['logs_saved'][$i]['title'] = ( ! empty($l->log_title)) 
+					? $l->log_title 
+					: '<em>[[ '.strtoupper(lang('labels_no').' '.lang('labels_title')).' ]]</em>';
 				$data['logs_saved'][$i]['log_id'] = $l->log_id;
 				$data['logs_saved'][$i]['date'] = mdate($datestring, gmt_to_local($l->log_date, $this->timezone, $this->dst));
 				$data['logs_saved'][$i]['author'] = $this->char->get_character_name($l->log_author_character, true);
@@ -104,7 +108,9 @@ abstract class Nova_write extends Nova_controller_admin {
 			$i = 1;
 			foreach ($news_saved->result() as $n)
 			{
-				$data['news_saved'][$i]['title'] = $n->news_title;
+				$data['news_saved'][$i]['title'] = ( ! empty($n->news_title)) 
+					? $n->news_title
+					: '<em>[[ '.strtoupper(lang('labels_no').' '.lang('labels_title')).' ]]</em>';
 				$data['news_saved'][$i]['news_id'] = $n->news_id;
 				$data['news_saved'][$i]['category'] = $n->newscat_name;
 				$data['news_saved'][$i]['date'] = mdate($datestring, gmt_to_local($n->news_date, $this->timezone, $this->dst));
@@ -134,7 +140,9 @@ abstract class Nova_write extends Nova_controller_admin {
 			$i = 1;
 			foreach ($posts->result() as $p)
 			{
-				$data['posts'][$i]['title'] = $p->post_title;
+				$data['posts'][$i]['title'] = ( ! empty($p->post_title)) 
+					? $p->post_title
+					: '<em>[[ '.strtoupper(lang('labels_no').' '.lang('labels_title')).' ]]</em>';
 				$data['posts'][$i]['post_id'] = $p->post_id;
 				$data['posts'][$i]['date'] = mdate($datestring, gmt_to_local($p->post_date, $this->timezone, $this->dst));
 				$data['posts'][$i]['authors'] = $this->char->get_authors($p->post_authors);
@@ -150,7 +158,9 @@ abstract class Nova_write extends Nova_controller_admin {
 			$i = 1;
 			foreach ($logs->result() as $l)
 			{
-				$data['logs'][$i]['title'] = $l->log_title;
+				$data['logs'][$i]['title'] = ( ! empty($l->log_title)) 
+					? $l->log_title
+					: '<em>[[ '.strtoupper(lang('labels_no').' '.lang('labels_title')).' ]]</em>';
 				$data['logs'][$i]['log_id'] = $l->log_id;
 				$data['logs'][$i]['date'] = mdate($datestring, gmt_to_local($l->log_date, $this->timezone, $this->dst));
 				$data['logs'][$i]['author'] = $this->char->get_character_name($l->log_author_character, true);
@@ -164,7 +174,9 @@ abstract class Nova_write extends Nova_controller_admin {
 			$i = 1;
 			foreach ($news->result() as $n)
 			{
-				$data['news'][$i]['title'] = $n->news_title;
+				$data['news'][$i]['title'] = ( ! empty($n->news_title)) 
+					? $n->news_title
+					: '<em>[[ '.strtoupper(lang('labels_no').' '.lang('labels_title')).' ]]</em>';
 				$data['news'][$i]['news_id'] = $n->news_id;
 				$data['news'][$i]['category'] = $n->newscat_name;
 				$data['news'][$i]['date'] = mdate($datestring, gmt_to_local($n->news_date, $this->timezone, $this->dst));
@@ -189,7 +201,9 @@ abstract class Nova_write extends Nova_controller_admin {
 			$i = 1;
 			foreach ($posts_all->result() as $p)
 			{
-				$data['posts_all'][$i]['title'] = $p->post_title;
+				$data['posts_all'][$i]['title'] = ( ! empty($p->post_title)) 
+					? $p->post_title
+					: '<em>[[ '.strtoupper(lang('labels_no').' '.lang('labels_title')).' ]]</em>';
 				$data['posts_all'][$i]['post_id'] = $p->post_id;
 				$data['posts_all'][$i]['date'] = mdate($datestring, gmt_to_local($p->post_date, $this->timezone, $this->dst));
 				$data['posts_all'][$i]['authors'] = $this->char->get_authors($p->post_authors);
@@ -205,7 +219,9 @@ abstract class Nova_write extends Nova_controller_admin {
 			$i = 1;
 			foreach ($logs_all->result() as $l)
 			{
-				$data['logs_all'][$i]['title'] = $l->log_title;
+				$data['logs_all'][$i]['title'] = ( ! empty($l->log_title)) 
+					? $l->log_title
+					: '<em>[[ '.strtoupper(lang('labels_no').' '.lang('labels_title')).' ]]</em>';
 				$data['logs_all'][$i]['log_id'] = $l->log_id;
 				$data['logs_all'][$i]['date'] = mdate($datestring, gmt_to_local($l->log_date, $this->timezone, $this->dst));
 				$data['logs_all'][$i]['author'] = $this->char->get_character_name($l->log_author_character, true);
@@ -219,7 +235,9 @@ abstract class Nova_write extends Nova_controller_admin {
 			$i = 1;
 			foreach ($news_all->result() as $n)
 			{
-				$data['news_all'][$i]['title'] = $n->news_title;
+				$data['news_all'][$i]['title'] = ( ! empty($n->news_title)) 
+					? $n->news_title
+					: '<em>[[ '.strtoupper(lang('labels_no').' '.lang('labels_title')).' ]]</em>';
 				$data['news_all'][$i]['news_id'] = $n->news_id;
 				$data['news_all'][$i]['category'] = $n->newscat_name;
 				$data['news_all'][$i]['author'] = $this->char->get_character_name($n->news_author_character, true);
