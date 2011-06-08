@@ -1424,7 +1424,7 @@ abstract class Nova_ajax extends Controller {
 		$head = sprintf(
 			lang('fbx_head'),
 			ucwords(lang('actions_add')),
-			ucwords(lang('global_mission').' '.lang('labels_group'))
+			ucwords(lang('global_missiongroup'))
 		);
 		
 		// data being sent to the facebox
@@ -1434,7 +1434,7 @@ abstract class Nova_ajax extends Controller {
 		
 		if ($groups->num_rows() > 0)
 		{
-			$groups_select[0] = ucwords(lang('labels_no').' '.lang('labels_parent').' '.lang('global_mission').' '.lang('labels_group'));
+			$groups_select[0] = ucwords(lang('labels_no').' '.lang('labels_parent').' '.lang('global_missiongroup'));
 			
 			foreach ($groups->result() as $g)
 			{
@@ -1466,7 +1466,7 @@ abstract class Nova_ajax extends Controller {
 		
 		$data['label'] = array(
 			'name' => ucfirst(lang('labels_name')),
-			'parent' => ucwords(lang('labels_parent').' '.lang('global_mission').' '.lang('labels_group')),
+			'parent' => ucwords(lang('labels_parent').' '.lang('global_missiongroup')),
 			'order' => ucfirst(lang('labels_order')),
 			'desc' => ucfirst(lang('labels_desc')),
 		);
@@ -3822,7 +3822,7 @@ abstract class Nova_ajax extends Controller {
 		$head = sprintf(
 			lang('fbx_head'),
 			ucwords(lang('actions_delete')),
-			ucwords(lang('global_mission').' '.lang('labels_group'))
+			ucwords(lang('global_missiongroup'))
 		);
 		
 		// data being sent to the facebox
@@ -3833,7 +3833,7 @@ abstract class Nova_ajax extends Controller {
 		
 		$data['text'] = sprintf(
 			lang('fbx_content_del_entry'),
-			lang('global_mission').' '.lang('labels_group'),
+			lang('global_missiongroup'),
 			$item['misgroup_name']
 		);
 		
@@ -6112,7 +6112,7 @@ abstract class Nova_ajax extends Controller {
 		$head = sprintf(
 			lang('fbx_head'),
 			ucwords(lang('actions_edit')),
-			ucwords(lang('global_mission').' '.lang('labels_group'))
+			ucwords(lang('global_missiongroup'))
 		);
 		
 		// data being sent to the facebox
@@ -6125,7 +6125,7 @@ abstract class Nova_ajax extends Controller {
 		
 		if ($groups->num_rows() > 0)
 		{
-			$groups_select[0] = ucwords(lang('labels_no').' '.lang('labels_parent').' '.lang('global_mission').' '.lang('labels_group'));
+			$groups_select[0] = ucwords(lang('labels_no').' '.lang('labels_parent').' '.lang('global_missiongroup'));
 			
 			foreach ($groups->result() as $g)
 			{
@@ -6161,7 +6161,7 @@ abstract class Nova_ajax extends Controller {
 		
 		$data['label'] = array(
 			'name' => ucfirst(lang('labels_name')),
-			'parent' => ucwords(lang('labels_parent').' '.lang('global_mission').' '.lang('labels_group')),
+			'parent' => ucwords(lang('labels_parent').' '.lang('global_missiongroup')),
 			'order' => ucfirst(lang('labels_order')),
 			'desc' => ucfirst(lang('labels_desc')),
 		);

@@ -1158,7 +1158,7 @@ abstract class Nova_sim extends Nova_controller_main {
 						}
 					}
 					
-					$title = ucwords(lang('global_mission') .' '. lang('labels_groups'));
+					$title = ucwords(lang('global_missiongroups'));
 					$data['header'] = $title;
 					
 					// figure out where the view should be coming from
@@ -1224,12 +1224,12 @@ abstract class Nova_sim extends Nova_controller_main {
 							ksort($data['group']['missions']);
 						}
 						
-						$title = ucwords(lang('global_mission') .' '. lang('labels_group') .' - '. $group->misgroup_name);
+						$title = ucwords(lang('global_missiongroup').' - '.$group->misgroup_name);
 						$data['header'] = $group->misgroup_name;
 					}
 					else
 					{
-						$title = ucwords(lang('global_mission') .' '. lang('labels_group'));
+						$title = ucwords(lang('global_missiongroup'));
 						$data['header'] = $title;
 					}
 					
@@ -1298,27 +1298,26 @@ abstract class Nova_sim extends Nova_controller_main {
 		}
 		
 		$data['label'] += array(
-			'backgroups' => LARROW .' '. ucwords(lang('actions_back')) .' '. lang('labels_to') .' '.
-				ucwords(lang('global_mission') .' '. lang('labels_groups')),
+			'backgroups' => LARROW.' '.ucwords(lang('actions_back')).' '.lang('labels_to').' '.ucwords(lang('global_missiongroups')),
 			'basicinfo' => ucwords(lang('labels_basic') .' '. lang('labels_info')),
 			'by' => lang('labels_by'),
 			'count' => ucwords(lang('global_post') .' '. lang('labels_count')) .':',
 			'count_missions' => ucfirst(lang('global_missions')) .':',
-			'count_groups' => ucwords(lang('global_mission').' '.lang('labels_groups')) .':',
+			'count_groups' => ucwords(lang('global_missiongroups')) .':',
 			'count_posts' => ucfirst(lang('global_posts')) .':',
 			'count_posts_group' => ucwords(lang('labels_group') .' '. lang('global_post') .' '. lang('labels_count')) .':',
 			'date_end' => ucwords(lang('status_end') .' '. lang('labels_date')),
 			'date_start' => ucwords(lang('status_start') .' '. lang('labels_date')),
 			'desc' => ucfirst(lang('labels_desc')),
 			'edit' => '[ '. ucfirst(lang('actions_edit')) .' ]',
-			'group' => ucwords(lang('global_mission') .' '. lang('labels_group')),
+			'group' => ucwords(lang('global_missiongroup')),
 			'included' => ucwords(lang('labels_included') .' '. lang('global_missions')),
-			'included_groups' => ucwords(lang('labels_included') .' '. lang('global_mission').' '.lang('labels_groups')),
+			'included_groups' => ucwords(lang('labels_included') .' '. lang('global_missiongroups')),
 			'location' => ucfirst(lang('labels_location')),
 			'mission' => ucfirst(lang('global_mission')),
 			'missions' => LARROW.' '.ucwords(lang('actions_back')).' '.lang('labels_to').' '.ucwords(lang('global_missions')),
-			'nogroup' => sprintf(lang('error_not_found'), lang('global_mission') .' '. lang('labels_group')),
-			'nogroups' => sprintf(lang('error_not_found'), lang('global_mission') .' '. lang('labels_groups')),
+			'nogroup' => sprintf(lang('error_not_found'), lang('global_missiongroup')),
+			'nogroups' => sprintf(lang('error_not_found'), lang('global_missiongroups')),
 			'nomissions' => lang('error_no_missions'),
 			'noposts' => lang('error_no_posts'),
 			'nosummary' => lang('error_no_mission_summary'),

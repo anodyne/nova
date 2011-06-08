@@ -30,7 +30,7 @@
 				<?php endif;?>
 				
 				<?php if (isset($g['missions'])): ?>
-					<h3 class="page-subhead">Included Missions</h3>
+					<h3 class="page-subhead"><?php echo $label['included'];?></h3>
 					<div class="indent-left">
 						<ul>
 						<?php foreach ($g['missions'] as $m): ?>
@@ -50,7 +50,7 @@
 				<?php endif;?>
 				
 				<?php if (isset($g['subgroups'])): ?>
-					<h3 class="page-subhead">Included Groups</h3>
+					<h3 class="page-subhead"><?php echo $label['included_groups'];?></h3>
 					<div class="indent-left">
 						<ul>
 						<?php foreach ($g['subgroups'] as $s): ?>

@@ -1917,7 +1917,7 @@ abstract class Nova_manage extends Nova_controller_admin {
 					{
 						$message = sprintf(
 							lang('flash_success'),
-							ucfirst(lang('global_mission') .' '. lang('labels_group')),
+							ucfirst(lang('global_missiongroup')),
 							lang('actions_created'),
 							''
 						);
@@ -1929,7 +1929,7 @@ abstract class Nova_manage extends Nova_controller_admin {
 					{
 						$message = sprintf(
 							lang('flash_failure'),
-							ucfirst(lang('global_mission') .' '. lang('labels_group')),
+							ucfirst(lang('global_missiongroup')),
 							lang('actions_created'),
 							''
 						);
@@ -1949,7 +1949,7 @@ abstract class Nova_manage extends Nova_controller_admin {
 					{
 						$message = sprintf(
 							lang('flash_success'),
-							ucfirst(lang('global_mission') .' '. lang('labels_group')),
+							ucfirst(lang('global_missiongroup')),
 							lang('actions_deleted'),
 							''
 						);
@@ -1961,7 +1961,7 @@ abstract class Nova_manage extends Nova_controller_admin {
 					{
 						$message = sprintf(
 							lang('flash_failure'),
-							ucfirst(lang('global_mission') .' '. lang('labels_group')),
+							ucfirst(lang('global_missiongroup')),
 							lang('actions_deleted'),
 							''
 						);
@@ -1990,7 +1990,7 @@ abstract class Nova_manage extends Nova_controller_admin {
 					{
 						$message = sprintf(
 							lang('flash_success'),
-							ucfirst(lang('global_mission') .' '. lang('labels_group')),
+							ucfirst(lang('global_missiongroup')),
 							lang('actions_updated'),
 							''
 						);
@@ -2002,7 +2002,7 @@ abstract class Nova_manage extends Nova_controller_admin {
 					{
 						$message = sprintf(
 							lang('flash_failure'),
-							ucfirst(lang('global_mission') .' '. lang('labels_group')),
+							ucfirst(lang('global_missiongroup')),
 							lang('actions_updated'),
 							''
 						);
@@ -2046,7 +2046,7 @@ abstract class Nova_manage extends Nova_controller_admin {
 			}
 		}
 		
-		$data['header'] = ucwords(lang('actions_manage') .' '. lang('global_mission') .' '. lang('labels_groups'));
+		$data['header'] = ucwords(lang('actions_manage') .' '. lang('global_missiongroups'));
 		$data['text'] = sprintf(
 			lang('text_mission_groups'),
 			ucfirst(lang('global_mission')),
@@ -2091,13 +2091,13 @@ abstract class Nova_manage extends Nova_controller_admin {
 		);
 		
 		$data['label'] = array(
-			'addgroup' => ucwords(lang('actions_add') .' '. lang('global_mission') .' '. lang('labels_group') .' '. RARROW),
+			'addgroup' => ucwords(lang('actions_add') .' '. lang('global_missiongroup') .' '. RARROW),
 			'name' => ucfirst(lang('labels_name')),
 			'delete' => ucfirst(lang('actions_delete')),
 			'order' => ucfirst(lang('labels_order')),
 			'desc' => ucfirst(lang('labels_desc')),
-			'parent' => ucwords(lang('labels_parent').' '.lang('global_mission').' '.lang('labels_group')),
-			'nogroups' => sprintf(lang('error_not_found'), lang('global_mission').' '.lang('labels_groups')),
+			'parent' => ucwords(lang('labels_parent').' '.lang('global_missiongroup')),
+			'nogroups' => sprintf(lang('error_not_found'), lang('global_missiongroups')),
 		);
 		
 		$this->_regions['content'] = Location::view('manage_missiongroups', $this->skin, 'admin', $data);
@@ -2369,7 +2369,7 @@ abstract class Nova_manage extends Nova_controller_admin {
 			
 			if ($groups->num_rows() > 0)
 			{
-				$data['groups'][0] = ucwords(lang('labels_no') .' '. lang('global_mission') .' '. lang('labels_group'));
+				$data['groups'][0] = ucwords(lang('labels_no') .' '. lang('global_missiongroup'));
 				
 				foreach ($groups->result() as $g)
 				{
@@ -2507,9 +2507,9 @@ abstract class Nova_manage extends Nova_controller_admin {
 			'on' => ucfirst(lang('labels_on')),
 			'off' => ucfirst(lang('labels_off')),
 			'upload' => ucwords(lang('actions_upload') .' '. lang('labels_images') .' '. RARROW),
-			'group' => ucwords(lang('global_mission') .' '. lang('labels_group')),
-			'nogroups' => sprintf(lang('error_not_found'), lang('global_mission') .' '. lang('labels_groups')),
-			'managegroups' => '[ '. ucwords(lang('actions_manage') .' '. lang('global_mission') .' '. lang('labels_groups')) .' ]',
+			'group' => ucwords(lang('global_missiongroup')),
+			'nogroups' => sprintf(lang('error_not_found'), lang('global_missiongroups')),
+			'managegroups' => '[ '. ucwords(lang('actions_manage') .' '. lang('global_missiongroups')) .' ]',
 			'images_later' => sprintf(lang('add_images_later'), lang('global_mission')),
 		);
 		
