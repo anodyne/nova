@@ -2,3 +2,6 @@
   * Verify upgrade from SMS
   * Verify the fresh install
   * Verify seaQuest genre
+  * LCARS skin
+  * LCARS-Red skin
+  * Mod for status alert changing the LCARS skin
