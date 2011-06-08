@@ -954,6 +954,7 @@ abstract class Nova_sim extends Nova_controller_main {
 		// sanity check
 		$id = (is_numeric($id)) ? $id : false;
 		
+		// create the empty labels array
 		$data['label'] = array();
 		
 		// get the title
@@ -1084,8 +1085,76 @@ abstract class Nova_sim extends Nova_controller_main {
 								'id' => $g->misgroup_id,
 								'name' => $g->misgroup_name,
 								'desc' => $g->misgroup_desc,
-								'count' => $this->mis->get_mission_where(array('mission_group' => $g->misgroup_id))
+								'count' => array(
+									'missions' => $this->mis->get_mission_where(array('mission_group' => $g->misgroup_id)),
+									'groups' => $this->mis->count_mission_groups($g->misgroup_id),
+									'posts' => 0,
+								),
 							);
+							
+							// count the current mission
+							$count = $this->mis->get_mission_where(array('mission_group' => $g->misgroup_id));
+							
+							// pull the missions for the parent group
+							$missions_parent = $this->mis->get_all_missions('', $g->misgroup_id);
+							
+							if ($missions_parent->num_rows() > 0)
+							{
+								foreach ($missions_parent->result() as $misP)
+								{
+									$count = $this->posts->count_mission_posts($misP->mission_id, $this->options['post_count_format']);
+									
+									$data['groups'][$g->misgroup_id]['missions'][$misP->mission_id] = array(
+										'id' => $misP->mission_id,
+										'title' => $misP->mission_title,
+										'desc' => $misP->mission_desc,
+										'count' => $count,
+									);
+									
+									$data['groups'][$g->misgroup_id]['count']['posts'] = $data['groups'][$g->misgroup_id]['count']['posts'] + $count;
+								}
+							}
+							
+							// pull the sub groups
+							$subgroup = $this->mis->get_all_mission_groups($g->misgroup_id);
+							
+							if ($subgroup->num_rows() > 0)
+							{
+								foreach ($subgroup->result() as $s)
+								{
+									$count += $this->mis->get_mission_where(array('mission_group' => $s->misgroup_id));
+									
+									$data['groups'][$g->misgroup_id]['subgroups'][$s->misgroup_id] = array(
+										'id' => $s->misgroup_id,
+										'name' => $s->misgroup_name,
+										'desc' => $s->misgroup_desc,
+									);
+									
+									// pull the missions for the parent group
+									$missions_children = $this->mis->get_all_missions('', $s->misgroup_id);
+									
+									if ($missions_children->num_rows() > 0)
+									{
+										foreach ($missions_children->result() as $misC)
+										{
+											$count = $this->posts->count_mission_posts($misC->mission_id, $this->options['post_count_format']);
+											
+											$data['groups'][$g->misgroup_id]['missions'][$misC->mission_id] = array(
+												'id' => $misC->mission_id,
+												'title' => $misC->mission_title,
+												'desc' => $misC->mission_desc,
+												'group' => $s->misgroup_name,
+												'count' => $count,
+											);
+											
+											$data['groups'][$g->misgroup_id]['count']['posts'] = $data['groups'][$g->misgroup_id]['count']['posts'] + $count;
+										}
+									}
+								}
+							}
+							
+							// send the final count to the view
+							$data['groups'][$g->misgroup_id]['count']['missions'] = $count;
 						}
 					}
 					
@@ -1110,6 +1179,24 @@ abstract class Nova_sim extends Nova_controller_main {
 							'desc' => $group->misgroup_desc,
 							'posts' => 0
 						);
+						
+						$subgroups = $this->mis->get_all_mission_groups($group->misgroup_id);
+						
+						if ($subgroups->num_rows() > 0)
+						{
+							foreach ($subgroups->result() as $s)
+							{
+								$data['group']['subgroups'][$s->misgroup_id] = array(
+									'id' => $s->misgroup_id,
+									'name' => $s->misgroup_name,
+									'desc' => $s->misgroup_desc,
+									'count' => array(
+										'missions' => $this->mis->get_mission_where(array('mission_group' => $s->misgroup_id)),
+										'posts' => 0,
+									),
+								);
+							}
+						}
 						
 						$missions = $this->mis->get_mission_where(array('mission_group' => $group->misgroup_id), 'full');
 						
@@ -1217,6 +1304,8 @@ abstract class Nova_sim extends Nova_controller_main {
 			'by' => lang('labels_by'),
 			'count' => ucwords(lang('global_post') .' '. lang('labels_count')) .':',
 			'count_missions' => ucfirst(lang('global_missions')) .':',
+			'count_groups' => ucwords(lang('global_mission').' '.lang('labels_groups')) .':',
+			'count_posts' => ucfirst(lang('global_posts')) .':',
 			'count_posts_group' => ucwords(lang('labels_group') .' '. lang('global_post') .' '. lang('labels_count')) .':',
 			'date_end' => ucwords(lang('status_end') .' '. lang('labels_date')),
 			'date_start' => ucwords(lang('status_start') .' '. lang('labels_date')),
@@ -1224,6 +1313,7 @@ abstract class Nova_sim extends Nova_controller_main {
 			'edit' => '[ '. ucfirst(lang('actions_edit')) .' ]',
 			'group' => ucwords(lang('global_mission') .' '. lang('labels_group')),
 			'included' => ucwords(lang('labels_included') .' '. lang('global_missions')),
+			'included_groups' => ucwords(lang('labels_included') .' '. lang('global_mission').' '.lang('labels_groups')),
 			'location' => ucfirst(lang('labels_location')),
 			'mission' => ucfirst(lang('global_mission')),
 			'missions' => LARROW.' '.ucwords(lang('actions_back')).' '.lang('labels_to').' '.ucwords(lang('global_missions')),
