@@ -29,7 +29,7 @@
 				
 				<?php echo form_dropdown('authors', $all, $key['all'], 'id = "all"', $to);?>
 				&nbsp;
-				<a href="#" id="add_author" class="fontSmall"><?php echo $label['addauthor'];?></a>
+				<a href="#" id="add_author" class="fontSmall image"><?php echo img($images['add']);?></a>
 				<input type="hidden" name="to" id="authors_hidden" value="<?php echo $to;?>" />
 				<p id="authors">
 					<?php if (isset($recipient_list)): ?>

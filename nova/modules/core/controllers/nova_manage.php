@@ -3555,8 +3555,14 @@ abstract class Nova_manage extends Nova_controller_admin {
 							$label = ucwords(lang('abbr_npcs'));
 						}
 						
+						// if it's a linked NPC, show the main character that owns the NPC
+						$add = ($a->crew_type == 'npc' and $a->user > 0)
+							? " (".ucfirst(lang('labels_linked').' '.lang('labels_to').' ').
+								$this->char->get_character_name($this->user->get_main_character($a->user), true).")"
+							: false;
+						
 						// toss them in the array
-						$data['all'][$label][$a->charid] = $this->char->get_character_name($a->charid, true);
+						$data['all'][$label][$a->charid] = $this->char->get_character_name($a->charid, true).$add;
 					}
 				}
 			}
@@ -3639,6 +3645,13 @@ abstract class Nova_manage extends Nova_controller_admin {
 					'name' => 'submit',
 					'value' => 'update',
 					'content' => ucfirst(lang('actions_update'))),
+			);
+			
+			$data['images'] = array(
+				'add' => array(
+					'src' => Location::img('icon-add.png', $this->skin, 'admin'),
+					'class' => 'image fontSmall',
+					'alt' => lang('actions_add') .' '. lang('labels_author')),
 			);
 			
 			$data['header'] = ucwords(lang('actions_edit') .' '. lang('global_missionpost'));

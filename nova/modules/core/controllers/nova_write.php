@@ -903,8 +903,13 @@ abstract class Nova_write extends Nova_controller_admin {
 					}
 				}
 				
+				// if it's a linked NPC, show the main character that owns the NPC
+				$add = ($label == ucwords(lang('labels_linked') .' '. lang('abbr_npcs')))
+					? " (".ucfirst(lang('labels_linked').' '.lang('labels_to').' ').$this->char->get_character_name($this->user->get_main_character($a->user), true).")"
+					: false;
+				
 				// toss them in the array
-				$allchars[$label][$a->charid] = $this->char->get_character_name($a->charid, true);
+				$allchars[$label][$a->charid] = $this->char->get_character_name($a->charid, true).$add;
 			}
 			
 			$data['all'] = array(
@@ -1099,6 +1104,13 @@ abstract class Nova_write extends Nova_controller_admin {
 		$data['header'] = ucwords(lang('actions_write') .' '. lang('global_missionpost'));
 		
 		$data['form_action'] = ($id !== false) ? 'write/missionpost/'. $id : 'write/missionpost';
+		
+		$data['images'] = array(
+			'add' => array(
+				'src' => Location::img('icon-add.png', $this->skin, 'admin'),
+				'class' => 'image fontSmall',
+				'alt' => lang('actions_add') .' '. lang('labels_author')),
+		);
 		
 		$data['label'] = array(
 			'addauthor' => ucwords(lang('actions_add') .' '. lang('labels_author')),
