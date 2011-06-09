@@ -31,6 +31,7 @@ Anodyne Production's next-generation RPG management system combines popular feat
 * updated the missions model to allow group missions to be pulled from the get_all_missions method
 * updated the missions model with a method to count mission groups
 * updated the users model with a method to pull all of a users' LOA records
+* updated the mission post writing page to show who owns a linked NPC
 * refactored the location helper into a full-blown class with static methods
 * refactored the upgrade process to mirror what was created for nova 3
 * removed the banned.php file
