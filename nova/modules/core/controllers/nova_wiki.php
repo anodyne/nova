@@ -1385,7 +1385,9 @@ abstract class Nova_wiki extends Nova_controller_wiki {
 				
 				$data['page'] = array(
 					'content' => $this->thresher->parse($p->draft_content),
-					'created' => $this->char->get_character_name($p->page_created_by_character, true),
+					'created' => ($p->page_created_by_character != 0) 
+						? $this->char->get_character_name($p->page_created_by_character, true)
+						: ucfirst(lang('labels_system')),
 					'updated' => ( ! empty($p->page_updated_by_character)) ? $this->char->get_character_name($p->page_updated_by_character, true) : false,
 					'created_date' => mdate($datestring, $created),
 					'updated_date' => mdate($datestring, $updated),
@@ -1435,7 +1437,9 @@ abstract class Nova_wiki extends Nova_controller_wiki {
 						'draft' => $d->draft_id,
 						'title' => $d->draft_title,
 						'content' => $this->thresher->parse($d->draft_content),
-						'created' => $this->char->get_character_name($d->draft_author_character),
+						'created' => ($d->draft_author_character != 0) 
+							? $this->char->get_character_name($d->draft_author_character) 
+							: ucfirst(lang('labels_system')),
 						'created_date' => mdate($datestring, $created),
 						'old_id' => ( ! empty($d->draft_id_old)) ? $d->draft_id_old : false,
 						'page' => $d->draft_page,
@@ -1525,7 +1529,7 @@ abstract class Nova_wiki extends Nova_controller_wiki {
 		);
 		
 		$this->_regions['content'] = Location::view($view_loc, $this->skin, 'wiki', $data);
-		$this->_regions['javascript'] = Location::js('wiki_view_js', $this->skin, 'wiki');
+		$this->_regions['javascript'] = Location::js('wiki_view_js', $this->skin, 'wiki', $js_data);
 		$this->_regions['title'].= ucfirst(lang('global_wiki')).' - '.$data['header'];
 		
 		Template::assign($this->_regions);
