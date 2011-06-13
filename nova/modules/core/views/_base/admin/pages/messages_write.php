@@ -7,7 +7,7 @@
 		<kbd><?php echo $label['to'];?></kbd>
 		<?php echo form_dropdown('recipients', $characters, $key, 'id = "recip"');?>
 		&nbsp;
-		<a href="#" id="add_recipient" class="fontSmall"><?php echo $label['add'];?></a>
+		<a href="#" id="add_recipient" class="fontSmall image"><?php echo img($images['add']);?></a>
 		<input type="hidden" name="to" id="to_hidden" value="<?php echo $to;?>" />
 		<p id="recipients">
 			<?php if (isset($recipient_list)): ?>
