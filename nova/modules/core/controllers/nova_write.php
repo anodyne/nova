@@ -1020,7 +1020,7 @@ abstract class Nova_write extends Nova_controller_admin {
 				'value' => $title),
 			'content' => array(
 				'name' => 'content',
-				'id' => 'content',
+				'id' => 'content-textarea',
 				'rows' => 20,
 				'value' => $content),
 			'tags' => array(
@@ -1498,7 +1498,7 @@ abstract class Nova_write extends Nova_controller_admin {
 				'value' => $title),
 			'content' => array(
 				'name' => 'content',
-				'id' => 'content',
+				'id' => 'content-textarea',
 				'rows' => 20,
 				'value' => $content),
 			'tags' => array(
@@ -1971,7 +1971,7 @@ abstract class Nova_write extends Nova_controller_admin {
 				'value' => $title),
 			'content' => array(
 				'name' => 'content',
-				'id' => 'content',
+				'id' => 'content-textarea',
 				'rows' => 20,
 				'value' => $content),
 			'tags' => array(

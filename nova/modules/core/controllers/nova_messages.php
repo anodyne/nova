@@ -518,7 +518,7 @@ abstract class Nova_messages extends Nova_controller_admin {
 				'value' => $subject),
 			'message' => array(
 				'name' => 'message',
-				'id' => 'message',
+				'id' => 'message-textarea',
 				'rows' => 20,
 				'value' => $message),
 			'submit' => array(
@@ -707,6 +707,13 @@ abstract class Nova_messages extends Nova_controller_admin {
 				$data['header'] = ucwords(lang('actions_write') .' '. lang('global_privatemessage'));
 			break;
 		}
+		
+		$data['images'] = array(
+			'add' => array(
+				'src' => Location::img('icon-add.png', $this->skin, 'admin'),
+				'class' => 'image fontSmall',
+				'alt' => lang('actions_add') .' '. lang('labels_author')),
+		);
 		
 		$data['label'] = array(
 			'add' => ucwords(lang('actions_add') .' '. lang('labels_recipient')),

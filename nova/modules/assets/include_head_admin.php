@@ -27,7 +27,7 @@ $uiTheme = ( ! is_file(APPPATH .'views/'.$current_skin.'/admin/css/jquery.ui.the
 			@import url('<?php echo $faceboxcss;?>');
 			@import url('<?php echo $uiTheme;?>');
 			
-			#content, #message { max-height: 650px; }
+			#content-textarea, #message-textarea { max-height: 650px; }
 		</style>
 		
 		<script type="text/javascript" src="<?php echo base_url().MODFOLDER.'/assets/js/jquery.js';?>"></script>
