@@ -8,6 +8,6 @@
 			return confirm('<?php echo lang('confirm_post_newsitem');?>');
 		});
 		
-		$('#content').elastic();
+		$('#content-textarea').elastic();
 	});
 </script>

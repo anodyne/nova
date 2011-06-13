@@ -1804,7 +1804,7 @@ abstract class Nova_manage extends Nova_controller_admin {
 					'value' => $row->log_title),
 				'content' => array(
 					'name' => 'log_content',
-					'id' => 'content',
+					'id' => 'content-textarea',
 					'rows' => 20,
 					'value' => $row->log_content),
 				'tags' => array(
@@ -2787,7 +2787,7 @@ abstract class Nova_manage extends Nova_controller_admin {
 					'value' => $row->news_title),
 				'content' => array(
 					'name' => 'news_content',
-					'id' => 'content',
+					'id' => 'content-textarea',
 					'rows' => 20,
 					'value' => $row->news_content),
 				'tags' => array(
@@ -3607,7 +3607,7 @@ abstract class Nova_manage extends Nova_controller_admin {
 					'value' => $row->post_title),
 				'content' => array(
 					'name' => 'post_content',
-					'id' => 'content',
+					'id' => 'content-textarea',
 					'rows' => 20,
 					'value' => $row->post_content),
 				'tags' => array(

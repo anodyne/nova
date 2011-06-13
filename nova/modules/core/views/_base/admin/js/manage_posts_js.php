@@ -7,7 +7,7 @@
 		
 		$('table.zebra tbody > tr:nth-child(odd)').addClass('alt');
 		
-		$('#content').elastic();
+		$('#content-textarea').elastic();
 		
 		$("a[rel*=facebox]").click(function() {
 			var page = $(this).attr('myPage');

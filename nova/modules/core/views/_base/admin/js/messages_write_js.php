@@ -1,6 +1,6 @@
 <script type="text/javascript">
 	$(document).ready(function() {
-		$('#message').elastic();
+		$('#message-textarea').elastic();
 		
 		$('a#add_recipient').click(function() {
 			var user = $('#recip').val();
