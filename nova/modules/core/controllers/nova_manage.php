@@ -3669,7 +3669,8 @@ abstract class Nova_manage extends Nova_controller_admin {
 				'tags' => ucfirst(lang('labels_tags')),
 				'tags_inst' => ucfirst(lang('tags_separated')),
 				'addauthor' => ucwords(lang('actions_add') .' '. lang('labels_author')),
-				'authors' => ucfirst(lang('labels_authors'))
+				'authors' => ucfirst(lang('labels_authors')),
+				'date' => ucfirst(lang('labels_date')),
 			);
 			
 			// figure out where the view should be coming from
@@ -5711,6 +5712,7 @@ abstract class Nova_manage extends Nova_controller_admin {
 	    	'mission' => ucfirst(lang('global_mission')),
 	    	'by' => lang('labels_by'),
 	    	'category' => ucfirst(lang('labels_category')) .':',
+	    	'date' => ucfirst(lang('labels_date')),
 	    	'header_posts' => ucwords($status .' '. lang('global_missionposts')),
 	    	'header_logs' => ucwords($status .' '. lang('global_personallogs')),
 	    	'header_news' => ucwords($status .' '. lang('global_newsitems')),

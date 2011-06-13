@@ -10,10 +10,10 @@
 				<td>
 					<strong><?php echo $e['title'];?></strong><br />
 					<span class="fontSmall gray">
-						<?php echo $label['by'] .' '. $e['author'];?>
+						<?php echo $label['by'] .' '. $e['author'];?><br />
+						<strong><?php echo $label['date'];?>:</strong> <?php echo $e['date'];?>
 					</span>
 				</td>
-				<td class="col_200 align_center fontSmall"><?php echo $e['date'];?></td>
 				<td class="col_150 align_right">
 					<?php echo anchor('sim/viewlog/'. $e['id'], img($images['view']), array('class' => 'image'));?>
 					&nbsp;

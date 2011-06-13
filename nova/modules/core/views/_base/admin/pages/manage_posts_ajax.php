@@ -12,11 +12,10 @@
 					<span class="fontSmall gray">
 						<?php echo $label['by'] .' '. $e['author'];?><br />
 						
-						<strong><?php echo $label['mission'];?>:</strong>
-						<?php echo $e['mission'];?>
+						<strong><?php echo $label['mission'];?>:</strong> <?php echo $e['mission'];?><br />
+						<strong><?php echo $label['date'];?>:</strong> <?php echo $e['date'];?>
 					</span>
 				</td>
-				<td class="col_200 align_center fontSmall"><?php echo $e['date'];?></td>
 				<td class="col_150 align_right">
 					<?php echo anchor('sim/viewpost/'. $e['id'], img($images['view']), array('class' => 'image'));?>
 					&nbsp;
