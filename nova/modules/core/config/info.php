@@ -20,6 +20,6 @@ define('APP_DATA_SRC', 'basic');
 define('APP_DATA_DEV', false);
 
 /* figure out if the request is an ajax request */
-define('IS_AJAX', isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest');
+define('IS_AJAX', isset($_SERVER['HTTP_X_REQUESTED_WITH']) and strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest');
 
 /* CI_VERSION is available as a constant and is defined in ./nova/codeigniter/codeigniter/CodeIgniter.php */
