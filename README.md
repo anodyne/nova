@@ -8,6 +8,7 @@ Anodyne Production's next-generation RPG management system combines popular feat
 
 ## Changes in 2.0
 
+* brand new file structure that further separates the nova core from user modifications and makes updating infinitely easier
 * added the message.php file to handle notification of bans, a missing "nova" directory and incompatible PHP version
 * added new process to write the database config file for you
 * added the ability to upgrade SMS Database entries to Thresher wiki pages
@@ -32,6 +33,7 @@ Anodyne Production's next-generation RPG management system combines popular feat
 * updated the missions model with a method to count mission groups
 * updated the users model with a method to pull all of a users' LOA records
 * updated the mission post writing page to show who owns a linked NPC
+* updated the skin catalogue to allow removing an entire skin (with sections) and letting admins choose which skin users will be updated to for each section
 * refactored the location helper into a full-blown class with static methods
 * refactored the upgrade process to mirror what was created for nova 3
 * removed the banned.php file
@@ -50,7 +52,7 @@ Anodyne Production's next-generation RPG management system combines popular feat
 		<th>Version</th><th>Release Date</th>
 	</tr>
 	<tr>
-		<td>2.0</td><td>24 June 2011</td>
+		<td>2.0</td><td>-</td>
 	</tr>
 	<tr>
 		<td>1.2.4</td><td>25 January 2011</td>
