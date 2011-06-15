@@ -2917,7 +2917,38 @@ abstract class Nova_ajax extends Controller {
 				// figure out where the view should come from
 				$view = 'del_catalogue_skins';
 				
+				// get the skin info
 				$item = $this->sys->get_skin_info($data['id'], 'skin_id');
+				
+				// get the skin sections (if they exist)
+				$sections = $this->sys->get_skin_sections($item->skin_location, null);
+				
+				if ($sections->num_rows() > 0)
+				{
+					foreach ($sections->result() as $s)
+					{
+						if ($s->skinsec_section != 'login')
+						{
+							$data['sections'][$s->skinsec_section][$s->skinsec_skin] = $item->skin_name.' ('.ucfirst($s->skinsec_section).')';
+							
+							// get the skins for the section
+							$skins = $this->sys->get_skins_by_section($s->skinsec_section);
+							
+							if ($skins !== false)
+							{
+								foreach ($skins as $skin)
+								{
+									$data['skins'][$s->skinsec_section][$skin->skin_location] = $skin->skin_name;
+								}
+							}
+							
+							$data['default'][$s->skinsec_section] = $this->sys->get_skinsec_default($s->skinsec_section);
+						}
+					}
+				}
+				
+				// set the old skin for reference
+				$data['old_skin'] = $item->skin_location;
 				
 				$head = sprintf(
 					lang('fbx_head'),
@@ -2927,7 +2958,8 @@ abstract class Nova_ajax extends Controller {
 				
 				$data['text'] = sprintf(
 					lang('fbx_content_del_catalogue_skin'),
-					$item->skin_name
+					$item->skin_name,
+					($sections->num_rows() > 0) ? lang('fbx_content_del_catalogue_skin_wsections') : ''
 				);
 				
 				$data['inputs'] = array(

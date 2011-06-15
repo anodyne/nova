@@ -369,6 +369,32 @@ abstract class Nova_system_model extends Model {
 		return $row;
 	}
 	
+	/**
+	 * Pull all of the skins for a given section.
+	 *
+	 * @access	public
+	 * @since	2.0
+	 * @param	string	the section
+	 * @return	mixed	an array of result objects or FALSE if there are no results
+	 */
+	public function get_skins_by_section($section)
+	{
+		$query = $this->db->get_where('catalogue_skinsecs', array('skinsec_section' => $section));
+		
+		if ($query->num_rows() > 0)
+		{
+			foreach ($query->result() as $row)
+			{
+				$skin = $this->get_skin_info($row->skinsec_skin);
+				$sections[] = $skin;
+			}
+			
+			return $sections;
+		}
+		
+		return false;
+	}
+	
 	public function get_system_info()
 	{
 		$query = $this->db->get_where('system_info', array('sys_id' => 1));

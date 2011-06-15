@@ -1518,42 +1518,70 @@ abstract class Nova_site extends Nova_controller_admin {
 							$id = $this->input->post('id', true);
 							$id = (is_numeric($id)) ? $id : false;
 							
-							$info = $this->sys->get_skin_info($id, 'skin_id');
-							$sections = $this->sys->get_skin_sections($info->skin_location);
+							// the old skin
+							$old_skin = (isset($_POST['old_skin'])) ? $_POST['old_skin'] : false;
 							
-							if ($sections->num_rows() > 0)
+							// grab the sections if they came through
+							$sec['main'] = (isset($_POST['change_main'])) ? $_POST['change_main'] : false;
+							$sec['wiki'] = (isset($_POST['change_wiki'])) ? $_POST['change_wiki'] : false;
+							$sec['admin'] = (isset($_POST['change_admin'])) ? $_POST['change_admin'] : false;
+							
+							if ($sec['main'] !== false)
 							{
-								$flash['status'] = 'error';
-								$flash['message'] = lang_output('flash_error_skin_sections');
+								// set the user data
+								$user_data = array('skin_main' => $sec['main']);
+								$user_where = array('skin_main' => $old_skin);
+								
+								// update the users
+								$update = $this->user->update_all_users($user_data, $user_where);
+							}
+							
+							if ($sec['wiki'] !== false)
+							{
+								// set the user data
+								$user_data = array('skin_wiki' => $sec['wiki']);
+								$user_where = array('skin_wiki' => $old_skin);
+								
+								// update the users
+								$update = $this->user->update_all_users($user_data, $user_where);
+							}
+							
+							if ($sec['admin'] !== false)
+							{
+								// set the user data
+								$user_data = array('skin_admin' => $sec['admin']);
+								$user_where = array('skin_admin' => $old_skin);
+								
+								// update the users
+								$update = $this->user->update_all_users($user_data, $user_where);
+							}
+							
+							// delete the skin
+							$delete = $this->sys->delete_skin($id);
+									
+							if ($delete > 0)
+							{
+								$message = sprintf(
+									lang('flash_success'),
+									ucfirst(lang('labels_skin')),
+									lang('actions_removed'),
+									''
+								);
+		
+								$flash['status'] = 'success';
+								$flash['message'] = text_output($message);
 							}
 							else
-							{						
-								$delete = $this->sys->delete_skin($id);
-										
-								if ($delete > 0)
-								{
-									$message = sprintf(
-										lang('flash_success'),
-										ucfirst(lang('labels_skin')),
-										lang('actions_removed'),
-										''
-									);
-			
-									$flash['status'] = 'success';
-									$flash['message'] = text_output($message);
-								}
-								else
-								{
-									$message = sprintf(
-										lang('flash_failure'),
-										ucfirst(lang('labels_skin')),
-										lang('actions_removed'),
-										''
-									);
-			
-									$flash['status'] = 'error';
-									$flash['message'] = text_output($message);
-								}
+							{
+								$message = sprintf(
+									lang('flash_failure'),
+									ucfirst(lang('labels_skin')),
+									lang('actions_removed'),
+									''
+								);
+		
+								$flash['status'] = 'error';
+								$flash['message'] = text_output($message);
 							}
 						break;
 							
