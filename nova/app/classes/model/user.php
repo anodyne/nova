@@ -183,9 +183,9 @@ class Model_User extends Model {
 	 * @param	mixed	the value to use
 	 * @return	object	a user object
 	 */
-	public static function get_user($column, $value)
+	public static function get($column, $value)
 	{
-		if (in_array($column, static::$_properties))
+		if (array_key_exists($column, static::$_properties))
 		{
 			return static::find()->where($column, $value)->get_one();
 		}
