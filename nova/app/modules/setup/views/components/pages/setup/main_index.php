@@ -1,24 +1,24 @@
 <?php if ($option <= 6): ?>
 	<p>Before we begin, here are a few things you should check out. Make sure you've read and understand the guide for the action you're about to do!</p>
 	
-	<a href="http://docs.anodyne-productions.com/index.php/nova/overview/install" target="_blank" class="install-secoptions">
+	<a href="http://docs.anodyne-productions.com/index.php/nova3/start/install" target="_blank" class="install-secoptions">
 		<span class="secoptions-guide">Read the Install Guide</span>
 	</a>
 	
 	<?php if ($option == 2): ?>
-		<a href="http://docs.anodyne-productions.com/index.php/nova/overview/upgrade" target="_blank" class="install-secoptions">
+		<a href="http://docs.anodyne-productions.com/index.php/nova3/start/upgrade/nova2" target="_blank" class="install-secoptions">
 			<span class="secoptions-guide">Read the Nova 2 Upgrade Guide</span>
 		</a>
 	<?php endif;?>
 	
 	<?php if ($option == 3): ?>
-		<a href="http://docs.anodyne-productions.com/index.php/nova/overview/upgrade" target="_blank" class="install-secoptions">
+		<a href="http://docs.anodyne-productions.com/index.php/nova3/start/upgrade/nova1" target="_blank" class="install-secoptions">
 			<span class="secoptions-guide">Read the Nova 1 Upgrade Guide</span>
 		</a>
 	<?php endif;?>
 	
 	<?php if ($option == 5): ?>
-		<a href="http://docs.anodyne-productions.com/index.php/nova/overview/upgrade" target="_blank" class="install-secoptions">
+		<a href="http://docs.anodyne-productions.com/index.php/nova3/start/upgrade/sms" target="_blank" class="install-secoptions">
 			<span class="secoptions-guide">Read the SMS Upgrade Guide</span>
 		</a>
 	<?php endif;?>
@@ -27,7 +27,7 @@
 		<span class="secoptions-verify">Verify my server can run Nova</span>
 	</a>
 	
-	<a href="http://docs.anodyne-productions.com/index.php/nova/tour" target="_blank" class="install-secoptions">
+	<a href="http://docs.anodyne-productions.com/index.php/nova3/tour" target="_blank" class="install-secoptions">
 		<span class="secoptions-tour">Take a tour of Nova</span>
 	</a>
 	
