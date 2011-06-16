@@ -55,10 +55,7 @@ class Controller_Nova_Login extends Controller_Nova_Base {
 	public function action_index()
 	{
 		// create a new content view
-		$this->template->layout->content = View::factory(Location::view('login_index', $this->skin, 'pages'));
-		
-		// assign the object a shorter variable to use in the method
-		$data = $this->template->layout->content;
+		$this->_data = View::factory(Location::view('login_index', $this->skin, 'pages'));
 		
 		// grab the UID
 		$uid = Model_System::get_uid();
@@ -78,18 +75,18 @@ class Controller_Nova_Login extends Controller_Nova_Base {
 				// find out how much time is left
 				$timeleft = Auth::$lockout_time - $timeframe;
 				
-				$this->template->layout->flash = View::factory(Location::view('flash', $this->skin, 'login', 'pages'));
-				$this->template->layout->flash->status = 'error';
-				$this->template->layout->flash->message = __("You've attempted to log in more times than the system allows. You must wait :minutes minutes before attempting to log in again! :extra", array(':minutes' => round(ceil($timeleft/60), 0), ':extra' => ''));
+				$this->_data->flash = View::factory(Location::view('flash', $this->skin, 'login', 'pages'));
+				$this->_data->flash->status = 'error';
+				$this->_data->flash->message = __("You've attempted to log in more times than the system allows. You must wait :minutes minutes before attempting to log in again! :extra", array(':minutes' => round(ceil($timeleft/60), 0), ':extra' => ''));
 			}
 		}
 		
 		// content
-		$this->template->title.= ucwords(__("log in"));
-		$data->header = ucwords(__("log in"));
+		$this->_data->title = ucwords(__("log in"));
+		$this->_data->header = ucwords(__("log in"));
 		
 		// inputs
-		$data->inputs = array(
+		$this->_data->inputs = array(
 			'button' => array(
 				'class' => 'btn-main'),
 			'email' => array(
@@ -101,14 +98,11 @@ class Controller_Nova_Login extends Controller_Nova_Base {
 			'remember' => array(
 				'id' => 'remember'),
 		);
-		
-		// send the response
-		$this->response->body($this->template);
 	}
 	
 	public function action_check()
 	{
-		if (isset($_POST['submit']))
+		if (HTTP_Request::POST == $this->request->method())
 		{
 			// grab the POST data
 			$email = trim(Security::xss_clean($_POST['email']));
@@ -125,56 +119,48 @@ class Controller_Nova_Login extends Controller_Nova_Base {
 			}
 			
 			// create a new content view
-			$this->template->layout->content = View::factory(Location::view('login_success', $this->skin, 'pages'));
+			$this->_data = View::factory(Location::view('login_success', $this->skin, 'pages'));
 			
 			// set the redirect
-			$this->template->redirect = array('time' => 5, 'url' => url::site('admin/index'));
-			
-			// assign the object a shorter variable to use in the method
-			$data = $this->template->layout->content;
+			$this->_data->redirect = array('time' => 5, 'url' => Url::site('admin/index'));
 			
 			// set the content
-			$data->header = ucwords(__("logging in"));
+			$this->_data->title = ucwords(__("logging in"));
+			$this->_data->header = ucwords(__("logging in"));
 		}
 		else
 		{
 			// if they didn't come from the right place, send them back
 			$this->request->redirect('login/index');
 		}
-		
-		// send the response
-		$this->response->body($this->template);
 	}
 	
 	public function action_error($error = 0)
 	{
 		// create a new content view
-		$this->template->layout->content = View::factory(Location::view('login_error', $this->skin, 'pages'));
-		
-		// assign the object a shorter variable to use in the method
-		$data = $this->template->layout->content;
+		$this->_data = View::factory(Location::view('login_error', $this->skin, 'pages'));
 		
 		// content
-		$this->template->title.= ucfirst(__("error"));
-		$data->header = ucfirst(__("error"));
+		$this->_data->title = ucfirst(__("error"));
+		$this->_data->header = ucfirst(__("error"));
 		
 		// set the error message
 		switch ($error)
 		{
 			case 1:
-				$data->message = __("You must log in to continue!");
+				$this->_data->message = __("You must log in to continue!");
 			break;
 			
 			case 2:
-				$data->message = __(":email not found, please try again.", array(':email' => ucfirst(__("email address"))));
+				$this->_data->message = __(":email not found, please try again.", array(':email' => ucfirst(__("email address"))));
 			break;
 			
 			case 3:
-				$data->message = __("Your :password doesn't match our records, please try again.", array(':password' => __("password")));
+				$this->_data->message = __("Your :password doesn't match our records, please try again.", array(':password' => __("password")));
 			break;
 			
 			case 4:
-				$data->message = __("Multiple accounts found with your :email. Please contact the :gm to resolve this issue.", 
+				$this->_data->message = __("Multiple accounts found with your :email. Please contact the :gm to resolve this issue.", 
 					array(':email' => __("email address"), ':gm' => __("game master")));
 			break;
 			
@@ -183,17 +169,14 @@ class Controller_Nova_Login extends Controller_Nova_Base {
 			break;
 			
 			case 6:
-				$data->message = __("You've attempted to log in more times than the system allows. You must wait :minutes minutes before attempting to log in again! :extra", array(':minutes' => (Auth::$lockout_time/60), ':extra' => ''));
+				$this->_data->message = __("You've attempted to log in more times than the system allows. You must wait :minutes minutes before attempting to log in again! :extra", array(':minutes' => (Auth::$lockout_time/60), ':extra' => ''));
 			break;
 			
 			case 7:
-				$data->message = __("Your account is currently under review. You will not be allowed to log in until your application has been accepted. Please contact the :gm if you have questions.",
+				$this->_data->message = __("Your account is currently under review. You will not be allowed to log in until your application has been accepted. Please contact the :gm if you have questions.",
 					array(':gm' => __("game master")));
 			break;
 		}
-		
-		// send the response
-		$this->response->body($this->template);
 	}
 	
 	public function action_logout()
@@ -202,20 +185,14 @@ class Controller_Nova_Login extends Controller_Nova_Base {
 		Auth::logout();
 		
 		// create a new content view
-		$this->template->layout->content = View::factory(Location::view('login_logout', $this->skin, 'pages'));
+		$this->_data = View::factory(Location::view('login_logout', $this->skin, 'pages'));
 		
 		// set the redirect
-		$this->template->_redirect = array('time' => 5, 'url' => url::site('main/index'));
-		
-		// assign the object a shorter variable to use in the method
-		$data = $this->template->layout->content;
+		$this->_data->redirect = array('time' => 5, 'url' => Url::site('main/index'));
 		
 		// content
-		$this->template->title.= ucfirst(__("logout"));
-		$data->header = ucwords(__("logging out"));
-		
-		// send the response
-		$this->response->body($this->template);
+		$this->_data->title = ucfirst(__("logout"));
+		$this->_data->header = ucwords(__("logging out"));
 	}
 	
 	public function action_maintenance()
@@ -234,9 +211,14 @@ class Controller_Nova_Login extends Controller_Nova_Base {
 		}
 	}
 	
+	# TODO: needs to be updated
+	
 	public function action_reset()
 	{
-		if (isset($_POST['submit']))
+		// create a new content view
+		$this->_data = View::factory(Location::view('login_reset', $this->skin, 'pages'));
+		
+		if (HTTP_Request::POST == $this->request->method())
 		{
 			// set the variables
 			$email		= trim(Security::xss_clean($_POST['email']));
@@ -244,15 +226,12 @@ class Controller_Nova_Login extends Controller_Nova_Base {
 			$answer		= trim(Security::xss_clean($_POST['answer']));
 			
 			// get the user details
-			$info = Jelly::query('user')->where('email', '=', $email)->select();
+			$user = Model_User::get('email', $email);
 			
-			if (count($info) == 1)
+			if (count($user) == 1)
 			{
-				// grab the user object
-				$user = $info->current();
-				
 				// make sure the security question matches
-				if ($user->security_question->id == $question)
+				if ($user->security_question == $question)
 				{
 					// make sure the security answer matches
 					if (sha1($answer) == $user->security_answer)
@@ -262,11 +241,11 @@ class Controller_Nova_Login extends Controller_Nova_Base {
 						
 						// update the user's record
 						$user->password = Auth::hash($newpass);
-						$user->password_reset = 1;
-						$user->save();
+						$user->password_reset = (int) true;
+						$saved = $user->save();
 						
 						// make sure the record was saved
-						if ($user->saved())
+						if ($saved !== false)
 						{
 							// set the data for the email
 							$emaildata = new stdClass;
@@ -279,81 +258,73 @@ class Controller_Nova_Login extends Controller_Nova_Base {
 							$email = $this->_email('reset', $emaildata);
 							
 							// set the flash message
-							$this->template->layout->flash = View::factory(Location::view('flash', $this->skin, 'login', 'pages'));
-							$this->template->layout->flash->status = 'success';
-							$this->template->layout->flash->message = __("Your password was successfully reset. Make sure you change your password to something you can remember when you log in.");
+							$this->_data->flash = View::factory(Location::view('flash', $this->skin, 'login', 'pages'));
+							$this->_data->flash->status = 'success';
+							$this->_data->flash->message = __("Your password was successfully reset. Make sure you change your password to something you can remember when you log in.");
 						}
 						else
 						{
-							$this->template->layout->flash = View::factory(Location::view('flash', $this->skin, 'login', 'pages'));
-							$this->template->layout->flash->status = 'error';
-							$this->template->layout->flash->message = __("Your password wasn't reset. Please try again. If the problem persists, please contact the system administrator.");
+							$this->_data->flash = View::factory(Location::view('flash', $this->skin, 'login', 'pages'));
+							$this->_data->flash->status = 'error';
+							$this->_data->flash->message = __("Your password wasn't reset. Please try again. If the problem persists, please contact the system administrator.");
 						}
 					}
 					else
 					{
-						$this->template->layout->flash = View::factory(Location::view('flash', $this->skin, 'login', 'pages'));
-						$this->template->layout->flash->status = 'error';
-						$this->template->layout->flash->message = __("The security answer you provided doesn't match our records. Please try again. Remember that you have to type your security answer exactly as you did when you set it.");
+						$this->_data->flash = View::factory(Location::view('flash', $this->skin, 'login', 'pages'));
+						$this->_data->flash->status = 'error';
+						$this->_data->flash->message = __("The security answer you provided doesn't match our records. Please try again. Remember that you have to type your security answer exactly as you did when you set it.");
 					}
 				}
 				else
 				{
-					$this->template->layout->flash = View::factory(Location::view('flash', $this->skin, 'login', 'pages'));
-					$this->template->layout->flash->status = 'error';
-					$this->template->layout->flash->message = __("The security question you selected doesn't match our records. Please try again.");
+					$this->_data->flash = View::factory(Location::view('flash', $this->skin, 'login', 'pages'));
+					$this->_data->flash->status = 'error';
+					$this->_data->flash->message = __("The security question you selected doesn't match our records. Please try again.");
 				}
 			}
 			elseif (count($info) > 1)
 			{
-				$this->template->layout->flash = View::factory(Location::view('flash', $this->skin, 'login', 'pages'));
-				$this->template->layout->flash->status = 'error';
-				$this->template->layout->flash->message = __("Multiple accounts found with your :email. Please contact the :gm to resolve this issue.", 
+				$this->_data->flash = View::factory(Location::view('flash', $this->skin, 'login', 'pages'));
+				$this->_data->flash->status = 'error';
+				$this->_data->flash->message = __("Multiple accounts found with your :email. Please contact the :gm to resolve this issue.", 
 					array(':email' => __("email address"), ':gm' => __("game master")));
 			}
 			elseif (count($info) < 1)
 			{
-				$this->template->layout->flash = View::factory(Location::view('flash', $this->skin, 'login', 'pages'));
-				$this->template->layout->flash->status = 'error';
-				$this->template->layout->flash->message = __(":email not found, please try again.", array(':email' => ucfirst(__("email address"))));
+				$this->_data->flash = View::factory(Location::view('flash', $this->skin, 'login', 'pages'));
+				$this->_data->flash->status = 'error';
+				$this->_data->flash->message = __(":email not found, please try again.", array(':email' => ucfirst(__("email address"))));
 			}
 		}
 		
-		// create a new content view
-		$this->template->layout->content = View::factory(Location::view('login_reset', $this->skin, 'pages'));
-		
-		// assign the object a shorter variable to use in the method
-		$data = $this->template->layout->content;
-		
 		// set the title
-		$this->template->title.= ucwords(__("reset password"));
-		
-		// set the header
-		$data->header = ucwords(__("reset password"));
+		$this->_data->title = ucwords(__("reset password"));
+		$this->_data->header = ucwords(__("reset password"));
 		
 		// set the page as enabled
-		$data->enabled = true;
+		$this->_data->enabled = true;
 		
 		if ($this->options->system_email == 'off')
 		{
 			// set the message
-			$data->message = __("System email has been disabled by the system administrator and this form cannot be submitted.");
-			$data->message_class = 'fontMedium warning';
+			$this->_data->message = __("System email has been disabled by the system administrator and this form cannot be submitted.");
+			$this->_data->message_class = 'fontMedium warning';
 			
 			// disabled
-			$data->enabled = false;
+			$this->_data->enabled = false;
 		}
 		else
 		{
 			// set the message
-			$data->message = __("Don't worry, forgetting your password happens to the best of us. Using the fields below, you can request a new password. Simply enter your email address and the security question you set up for your account then your answer to the question. Once I've got that information, I'll be able to reset your password and email you your new one. The first time you log in to the system, you'll be prompted to change your password to something you can remember.");
-			$data->message_class = false;
+			$this->_data->message = __("Don't worry, forgetting your password happens to the best of us. Using the fields below, you can request a new password. Simply enter your email address and the security question you set up for your account then your answer to the question. Once I've got that information, I'll be able to reset your password and email you your new one. The first time you log in to the system, you'll be prompted to change your password to something you can remember.");
+			$this->_data->message_class = false;
 			
 			// get the security questions
-			$questions = Jelly::query('securityquestion')->select();
+			$questions = Model_SecurityQuestion::get_questions();
 			
 			// set the initial question
-			$data->questions = array(
+			$this->_data->questions = array(
 				0 => ucfirst(__("Please select your security question"))
 			);
 			
@@ -362,21 +333,18 @@ class Controller_Nova_Login extends Controller_Nova_Base {
 			{
 				foreach ($questions as $q)
 				{
-					$data->questions[$q->id] = $q->value;
+					$this->_data->questions[$q->id] = $q->value;
 				}
 			}
 			
 			// set the button options
-			$data->button = array(
+			$this->_data->button = array(
 				'submit' => array(
 					'type' => 'submit',
 					'class' => 'btn-main',
 					'id' => 'submit'),
 			);
 		}
-		
-		// send the response
-		$this->response->body($this->template);
 	}
 	
 	protected function _email($type, $data)
