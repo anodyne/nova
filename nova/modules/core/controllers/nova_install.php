@@ -1862,7 +1862,7 @@ abstract class Nova_install extends Controller {
 		$this->load->library('email');
 		
 		// set up the server and method for the request
-		$this->xmlrpc->server('http://www.anodyne-productions.com/index.php/utility/do_registration', 80);
+		$this->xmlrpc->server('http://register.anodyne-productions.com/index.php/utility/do_registration', 80);
 		$this->xmlrpc->method('Do_Registration');
 		
 		// build the request
