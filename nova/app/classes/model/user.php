@@ -128,6 +128,16 @@ class Model_User extends Model {
 		),
 	);
 	
+	public static $_has_one = array(
+		'character' => array(
+			'model_to' => 'Model_Character',
+			'key_to' => 'id',
+			'key_from' => 'character_id',
+			'cascade_save' => false,
+			'cascade_delete' => false,
+		),
+	);
+	
 	public static $_has_many = array(
 		'characters' => array(
 			'model_to' => 'Model_Character',
