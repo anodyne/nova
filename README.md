@@ -55,6 +55,9 @@ Anodyne Production's next-generation RPG management system combines popular feat
 		<td>2.0</td><td>-</td>
 	</tr>
 	<tr>
+		<td>1.2.5</td><td>16 June 2011</td>
+	</tr>
+	<tr>
 		<td>1.2.4</td><td>25 January 2011</td>
 	</tr>
 	<tr>
