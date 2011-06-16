@@ -1,11 +1,9 @@
-* Merge branch 'hotfix-1.2.4' into support-1.2
-* updated the install and update files for the 1.2.4 release
-* updated the install data and 1.2.4 update file
-* updated the jquery ui to version 1.8.9 (1.8.8 introduced a bug that was quickly fixed)
-* updated the install data and 1.2.4 update file
-* updated the jquery ui to version 1.8.8
-* fixed bug where IE7 choked on the manifest because of an extra comma (really IE? a comma?)
-* updated the update files and readme
-* updated the version information
-* fixed bug where the user acceptance email was being CCed to more people than necessary
-* fixed bug where nova wasn't counting mission posts correctly
+* changed the registration code to point to a new sub-domain on the AP site
+* updated the readme
+* updated the install and update files for the 1.2.5 release
+* fixed bugs where deactivated users retained their account flags (sysadmin, game master, etc) and reactivated users didn't have a reasonable access role
+* updated the readme
+* updated the gitignore file
+* attempting to nail down the illegal operand fatal error that keeps sneaking up because of corrupt session data
+* updating the various version and config files for a new release
+* fixed bug where old specification items wouldn't accept the values of new fields because there wasn't a field in the data table to start with
