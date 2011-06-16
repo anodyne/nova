@@ -57,7 +57,7 @@ class Model_Tour extends Model {
 	 * @param	mixed	an array or object of data
 	 * @return	object	the newly created item
 	 */
-	public static function create_item($data)
+	public static function create_tour_item($data)
 	{
 		$item = static::create_item($data);
 		
