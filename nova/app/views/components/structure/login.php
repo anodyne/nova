@@ -12,22 +12,22 @@
 			<meta http-equiv="refresh" content="<?php echo $redirect['time'];?>;url=<?php echo $redirect['url'];?>">
 		<?php endif;?>
 		
-		<?php if (is_file(APPPATH.'views/'.$skin.'/design/style.login.css')): ?>
-			<?php echo html::style(APPFOLDER.'/views/'.$skin.'/design/style.login.css');?>
-		<?php else: ?>
-			<?php echo html::style(MODFOLDER.'/nova/core/views/design/style.login.css');?>
-			
-			<?php if (is_file(APPPATH.'views/'.$skin.'/design/custom.login.css')): ?>
-				<?php echo html::style(APPFOLDER.'/views/'.$skin.'/design/custom.login.css');?>
-			<?php endif;?>
-		<?php endif;?>
-		
 		<!--[if lt IE 9]>
 		<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
 		<![endif]-->
 		
-		<?php echo html::script(MODFOLDER.'/assets/js/jquery.js');?>
+		<?php echo Html::script(MODFOLDER.'/modules/assets/js/jquery.js');?>
 		<?php echo $javascript;?>
+		
+		<?php if (is_file(APPPATH.'views/'.$skin.'/design/style.login.css')): ?>
+			<?php echo Html::style(APPFOLDER.'/views/'.$skin.'/design/style.login.css');?>
+		<?php else: ?>
+			<?php echo Html::style(MODFOLDER.'/app/views/design/style.login.css');?>
+			
+			<?php if (is_file(APPPATH.'views/'.$skin.'/design/custom.login.css')): ?>
+				<?php echo Html::style(APPFOLDER.'/views/'.$skin.'/design/custom.login.css');?>
+			<?php endif;?>
+		<?php endif;?>
 	</head>
 	<body>
 		<?php echo $layout;?>
