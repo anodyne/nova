@@ -9,9 +9,9 @@
 	
 	<div class="content">
 		<div id="loading" class="hidden">
-			<img src="<?php echo Url::base().MODFOLDER;?>/app/modules/setup/views/design/images/loading-circle-large.gif" alt="">
+			<img src="<?php echo Url::base().MODFOLDER;?>/app/modules/setup/views/design/images/loading.gif" alt="">
 			<br />
-			<strong><?php echo ucfirst(___('processing'));?>...</strong>
+			<strong>Processing...</strong>
 		</div>
 		
 		<div id="loaded" class="UITheme">

@@ -17,7 +17,7 @@
 					<span class="failure hidden">
 						<?php echo html::image(MODFOLDER.'/app/modules/setup/views/design/images/exclamation-red.png', array('class' => 'tiptip', 'title' => ''));?>
 					</span>
-					<span class="loading hidden"><?php echo html::image(MODFOLDER.'/app/modules/setup/views/design/images/loading-circle-large.gif');?></span>
+					<span class="loading hidden"><?php echo html::image(MODFOLDER.'/app/modules/setup/views/design/images/loading.gif');?></span>
 				</td>
 			</tr>
 			<tr>
@@ -27,7 +27,7 @@
 					<span class="failure hidden">
 						<?php echo html::image(MODFOLDER.'/app/modules/setup/views/design/images/exclamation-red.png', array('class' => 'tiptip', 'title' => ''));?>
 					</span>
-					<span class="loading hidden"><?php echo html::image(MODFOLDER.'/app/modules/setup/views/design/images/loading-circle-large.gif');?></span>
+					<span class="loading hidden"><?php echo html::image(MODFOLDER.'/app/modules/setup/views/design/images/loading.gif');?></span>
 				</td>
 			</tr>
 			<tr>
@@ -40,7 +40,7 @@
 					<span class="warning hidden">
 						<?php echo html::image(MODFOLDER.'/app/modules/setup/views/design/images/exclamation.png', array('class' => 'tiptip', 'title' => ''));?>
 					</span>
-					<span class="loading hidden"><?php echo html::image(MODFOLDER.'/app/modules/setup/views/design/images/loading-circle-large.gif');?></span>
+					<span class="loading hidden"><?php echo html::image(MODFOLDER.'/app/modules/setup/views/design/images/loading.gif');?></span>
 				</td>
 			</tr>
 			<tr>
@@ -50,7 +50,7 @@
 					<span class="failure hidden">
 						<?php echo html::image(MODFOLDER.'/app/modules/setup/views/design/images/exclamation-red.png', array('class' => 'tiptip', 'title' => ''));?>
 					</span>
-					<span class="loading hidden"><?php echo html::image(MODFOLDER.'/app/modules/setup/views/design/images/loading-circle-large.gif');?></span>
+					<span class="loading hidden"><?php echo html::image(MODFOLDER.'/app/modules/setup/views/design/images/loading.gif');?></span>
 				</td>
 			</tr>
 			<tr>
@@ -60,7 +60,7 @@
 					<span class="failure hidden">
 						<?php echo html::image(MODFOLDER.'/app/modules/setup/views/design/images/exclamation-red.png', array('class' => 'tiptip', 'title' => ''));?>
 					</span>
-					<span class="loading hidden"><?php echo html::image(MODFOLDER.'/app/modules/setup/views/design/images/loading-circle-large.gif');?></span>
+					<span class="loading hidden"><?php echo html::image(MODFOLDER.'/app/modules/setup/views/design/images/loading.gif');?></span>
 				</td>
 			</tr>
 			<tr>
@@ -70,7 +70,7 @@
 					<span class="failure hidden">
 						<?php echo html::image(MODFOLDER.'/app/modules/setup/views/design/images/exclamation-red.png', array('class' => 'tiptip', 'title' => ''));?>
 					</span>
-					<span class="loading hidden"><?php echo html::image(MODFOLDER.'/app/modules/setup/views/design/images/loading-circle-large.gif');?></span>
+					<span class="loading hidden"><?php echo html::image(MODFOLDER.'/app/modules/setup/views/design/images/loading.gif');?></span>
 				</td>
 			</tr>
 			<tr>
@@ -83,7 +83,7 @@
 					<span class="warning hidden">
 						<?php echo html::image(MODFOLDER.'/app/modules/setup/views/design/images/exclamation.png', array('class' => 'tiptip', 'title' => ''));?>
 					</span>
-					<span class="loading hidden"><?php echo html::image(MODFOLDER.'/app/modules/setup/views/design/images/loading-circle-large.gif');?></span>
+					<span class="loading hidden"><?php echo html::image(MODFOLDER.'/app/modules/setup/views/design/images/loading.gif');?></span>
 				</td>
 			</tr>
 		</tbody>

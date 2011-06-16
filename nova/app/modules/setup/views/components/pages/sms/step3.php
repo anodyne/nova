@@ -12,7 +12,7 @@
 	<p>
 		<?php echo Form::input('password', 'default');?> &nbsp;
 		
-		<span class="hidden loading-password"><?php echo Html::image(MODFOLDER.'/app/modules/setup/views/design/images/loading-circle-large.gif');?></span>
+		<span class="hidden loading-password"><?php echo Html::image(MODFOLDER.'/app/modules/setup/views/design/images/loading.gif');?></span>
 		
 		<span class="hidden error-password">
 			<?php echo Html::image(MODFOLDER.'/app/modules/setup/views/design/images/exclamation-red.png', array('class' => 'tiptip', 'title' => ''));?>
@@ -30,9 +30,9 @@
 	<p>Nova uses a role-based system for determining permissions, but since it's incompatible with SMS, you'll need to select the people who should have system administrator privileges. It's best to keep this list as limited as possible right now. You'll be able to add or remove people from roles once Nova is installed. To select multiple users, hold down control and click on the users you want to have system administrator rights.</p>
 	
 	<p>
-		<?php echo Form::select('admins', $options, null, array('multiple' => 'multiple', 'size' => 10));?> &nbsp;
+		<?php echo Form::select('admins', $options, null, array('multiple' => 'multiple', 'size' => 10, 'style' => 'width:500px'));?> &nbsp;
 		
-		<span class="hidden loading-admins"><?php echo Html::image(MODFOLDER.'/app/modules/setup/views/design/images/loading-circle-large.gif');?></span>
+		<span class="hidden loading-admins"><?php echo Html::image(MODFOLDER.'/app/modules/setup/views/design/images/loading.gif');?></span>
 		
 		<span class="hidden error-admins">
 			<?php echo Html::image(MODFOLDER.'/app/modules/setup/views/design/images/exclamation-red.png', array('class' => 'tiptip', 'title' => ''));?>

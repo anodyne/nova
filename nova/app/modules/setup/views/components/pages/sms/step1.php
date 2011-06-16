@@ -20,9 +20,9 @@
 						<?php echo Html::image(MODFOLDER.'/app/modules/setup/views/design/images/exclamation-red.png', array('class' => 'tiptip', 'title' => ''));?>
 					</span>
 					<span class="warning hidden">
-						<?php echo Html::image(MODFOLDER.'/app/modules/setup/views/design/images/loading-circle-large.gif');?>
+						<?php echo Html::image(MODFOLDER.'/app/modules/setup/views/design/images/loading.gif');?>
 					</span>
-					<span class="loading hidden"><?php echo Html::image(MODFOLDER.'/app/modules/setup/views/design/images/loading-circle-large.gif');?></span>
+					<span class="loading hidden"><?php echo Html::image(MODFOLDER.'/app/modules/setup/views/design/images/loading.gif');?></span>
 				</td>
 				<td class="align-center"><?php echo Form::radio('upgrade_characters_users', 1, true);?></td>
 				<td class="align-center"><?php echo Form::radio('upgrade_characters_users', 0);?></td>
@@ -34,7 +34,7 @@
 					<span class="failure hidden">
 						<?php echo Html::image(MODFOLDER.'/app/modules/setup/views/design/images/exclamation-red.png', array('class' => 'tiptip', 'title' => ''));?>
 					</span>
-					<span class="loading hidden"><?php echo Html::image(MODFOLDER.'/app/modules/setup/views/design/images/loading-circle-large.gif');?></span>
+					<span class="loading hidden"><?php echo Html::image(MODFOLDER.'/app/modules/setup/views/design/images/loading.gif');?></span>
 				</td>
 				<td class="align-center"><?php echo Form::radio('upgrade_awards', 1, true);?></td>
 				<td class="align-center"><?php echo Form::radio('upgrade_awards', 0);?></td>
@@ -47,9 +47,9 @@
 						<?php echo Html::image(MODFOLDER.'/app/modules/setup/views/design/images/exclamation-red.png', array('class' => 'tiptip', 'title' => ''));?>
 					</span>
 					<span class="warning hidden">
-						<?php echo Html::image(MODFOLDER.'/app/modules/setup/views/design/images/loading-circle-large.gif');?>
+						<?php echo Html::image(MODFOLDER.'/app/modules/setup/views/design/images/loading.gif');?>
 					</span>
-					<span class="loading hidden"><?php echo Html::image(MODFOLDER.'/app/modules/setup/views/design/images/loading-circle-large.gif');?></span>
+					<span class="loading hidden"><?php echo Html::image(MODFOLDER.'/app/modules/setup/views/design/images/loading.gif');?></span>
 				</td>
 				<td class="align-center"><?php echo Form::radio('upgrade_settings', 1, true);?></td>
 				<td class="align-center"><?php echo Form::radio('upgrade_settings', 0);?></td>
@@ -62,9 +62,9 @@
 						<?php echo Html::image(MODFOLDER.'/app/modules/setup/views/design/images/exclamation-red.png', array('class' => 'tiptip', 'title' => ''));?>
 					</span>
 					<span class="warning hidden">
-						<?php echo Html::image(MODFOLDER.'/app/modules/setup/views/design/images/loading-circle-large.gif');?>
+						<?php echo Html::image(MODFOLDER.'/app/modules/setup/views/design/images/loading.gif');?>
 					</span>
-					<span class="loading hidden"><?php echo Html::image(MODFOLDER.'/app/modules/setup/views/design/images/loading-circle-large.gif');?></span>
+					<span class="loading hidden"><?php echo Html::image(MODFOLDER.'/app/modules/setup/views/design/images/loading.gif');?></span>
 				</td>
 				<td class="align-center"><?php echo Form::radio('upgrade_logs', 1, true);?></td>
 				<td class="align-center"><?php echo Form::radio('upgrade_logs', 0);?></td>
@@ -77,9 +77,9 @@
 						<?php echo Html::image(MODFOLDER.'/app/modules/setup/views/design/images/exclamation-red.png', array('class' => 'tiptip', 'title' => ''));?>
 					</span>
 					<span class="warning hidden">
-						<?php echo Html::image(MODFOLDER.'/app/modules/setup/views/design/images/loading-circle-large.gif');?>
+						<?php echo Html::image(MODFOLDER.'/app/modules/setup/views/design/images/loading.gif');?>
 					</span>
-					<span class="loading hidden"><?php echo Html::image(MODFOLDER.'/app/modules/setup/views/design/images/loading-circle-large.gif');?></span>
+					<span class="loading hidden"><?php echo Html::image(MODFOLDER.'/app/modules/setup/views/design/images/loading.gif');?></span>
 				</td>
 				<td class="align-center"><?php echo Form::radio('upgrade_news', 1, true);?></td>
 				<td class="align-center"><?php echo Form::radio('upgrade_news', 0);?></td>
@@ -92,9 +92,9 @@
 						<?php echo Html::image(MODFOLDER.'/app/modules/setup/views/design/images/exclamation-red.png', array('class' => 'tiptip', 'title' => ''));?>
 					</span>
 					<span class="warning hidden">
-						<?php echo Html::image(MODFOLDER.'/app/modules/setup/views/design/images/loading-circle-large.gif');?>
+						<?php echo Html::image(MODFOLDER.'/app/modules/setup/views/design/images/loading.gif');?>
 					</span>
-					<span class="loading hidden"><?php echo Html::image(MODFOLDER.'/app/modules/setup/views/design/images/loading-circle-large.gif');?></span>
+					<span class="loading hidden"><?php echo Html::image(MODFOLDER.'/app/modules/setup/views/design/images/loading.gif');?></span>
 				</td>
 				<td class="align-center"><?php echo Form::radio('upgrade_missions', 1, true);?></td>
 				<td class="align-center"><?php echo Form::radio('upgrade_missions', 0);?></td>
@@ -107,9 +107,9 @@
 						<?php echo Html::image(MODFOLDER.'/app/modules/setup/views/design/images/exclamation-red.png', array('class' => 'tiptip', 'title' => ''));?>
 					</span>
 					<span class="warning hidden">
-						<?php echo Html::image(MODFOLDER.'/app/modules/setup/views/design/images/loading-circle-large.gif');?>
+						<?php echo Html::image(MODFOLDER.'/app/modules/setup/views/design/images/loading.gif');?>
 					</span>
-					<span class="loading hidden"><?php echo Html::image(MODFOLDER.'/app/modules/setup/views/design/images/loading-circle-large.gif');?></span>
+					<span class="loading hidden"><?php echo Html::image(MODFOLDER.'/app/modules/setup/views/design/images/loading.gif');?></span>
 				</td>
 				<td class="align-center"><?php echo Form::radio('upgrade_specs', 1, true);?></td>
 				<td class="align-center"><?php echo Form::radio('upgrade_specs', 0);?></td>
@@ -122,9 +122,9 @@
 						<?php echo Html::image(MODFOLDER.'/app/modules/setup/views/design/images/exclamation-red.png', array('class' => 'tiptip', 'title' => ''));?>
 					</span>
 					<span class="warning hidden">
-						<?php echo Html::image(MODFOLDER.'/app/modules/setup/views/design/images/loading-circle-large.gif');?>
+						<?php echo Html::image(MODFOLDER.'/app/modules/setup/views/design/images/loading.gif');?>
 					</span>
-					<span class="loading hidden"><?php echo Html::image(MODFOLDER.'/app/modules/setup/views/design/images/loading-circle-large.gif');?></span>
+					<span class="loading hidden"><?php echo Html::image(MODFOLDER.'/app/modules/setup/views/design/images/loading.gif');?></span>
 				</td>
 				<td class="align-center"><?php echo Form::radio('upgrade_tour', 1, true);?></td>
 				<td class="align-center"><?php echo Form::radio('upgrade_tour', 0);?></td>
