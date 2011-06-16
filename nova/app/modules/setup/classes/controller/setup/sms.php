@@ -238,7 +238,7 @@ class Controller_Setup_Sms extends Controller_Template {
 				
 				// set the loading image
 				$data->loading = array(
-					'src' => MODFOLDER.'/app/modules/setup/views/design/images/loading-circle-large.gif',
+					'src' => MODFOLDER.'/app/modules/setup/views/design/images/loading.gif',
 					'attr' => array(
 						'class' => 'image'),
 				);
@@ -276,7 +276,7 @@ class Controller_Setup_Sms extends Controller_Template {
 				
 				// set the loading image
 				$data->loading = array(
-					'src' => MODFOLDER.'/app/modules/setup/views/design/images/loading-circle-large.gif',
+					'src' => MODFOLDER.'/app/modules/setup/views/design/images/loading.gif',
 					'attr' => array(
 						'class' => 'image'),
 				);
@@ -312,11 +312,11 @@ class Controller_Setup_Sms extends Controller_Template {
 				$data->options = array();
 				
 				// get all active users
-				$all = Model_User::find('all');
+				$all = Model_User::find('all', array('related' => array('characters')));
 				
 				foreach ($all as $a)
 				{
-					if ($a->get_status == 'active')
+					if ($a->get_status() == 'active')
 					{
 						$data->options[$a->id] = $a->name.' ('.$a->email.')';
 					}
@@ -328,7 +328,7 @@ class Controller_Setup_Sms extends Controller_Template {
 				
 				// set the loading image
 				$data->loading = array(
-					'src' => MODFOLDER.'/app/modules/setup/views/design/images/loading-circle-large.gif',
+					'src' => MODFOLDER.'/app/modules/setup/views/design/images/loading.gif',
 					'attr' => array(
 						'class' => 'image'),
 				);

@@ -384,7 +384,7 @@ class Controller_Setup_Smsajax extends Controller_Template {
 			Model_User::update_user(null, array('password' => $new_password));
 			
 			// find out how many users don't have the right password
-			Model_User::find()->where('password', '!=', $new_password)->count();
+			$count = Model_User::find()->where('password', '!=', $new_password)->count();
 			
 			// pull all the users
 			$users = Model_User::find('all');
@@ -398,20 +398,21 @@ class Controller_Setup_Smsajax extends Controller_Template {
 				}
 			}
 			
-			// get the addresses into the right format
-			$email_string = implode(',', $emails);
-			
 			// get the settings
 			$settings = Model_Settings::get_settings(array('sim_name', 'default_email_address', 'default_email_name'));
 			
+			# TODO: need to remove these comments for the final release
+			
+			/*
 			// set up the content
 			$content = "The ".$settings->sim_name." has just upgraded from SMS to Nova 3. As part of the upgrade process, your password needed to be reset. You'll log in to the ".$settings->sim_name." site with the password '".$password."' (without the single quotes). The first time you log in, you'll be prompted to change your password. Do not reply to this automatically generated email. If you have questions, please contact your game master.";
 			
 			// send an email out to the entire crew with the new password
 			$email = Email::factory($content)
-				->to($email_string)
+				->to($emails)
 				->from($settings->default_email_address, $settings->default_email_name)
 				->send();
+			*/
 			
 			if ($count > 0)
 			{
@@ -1317,16 +1318,16 @@ class Controller_Setup_Smsajax extends Controller_Template {
 					'display' => ($r->tourDisplay == 'y') ? (int) true : (int) false,
 					'summary' => $r->tourSummary,
 					'images' => $images,
-					'specitem' => 1,
+					'spec_id' => 1,
 				);
 				
 				// create the tour item
-				$item = Model_Tour::create_item($tour);
+				$item = Model_Tour::create_tour_item($tour);
 				
 				// an array of data with the info for updating tour data
 				$tourdata = array(
-					47 => $r->tourLocation,
-					48 => $r->tourDesc,
+					48 => $r->tourLocation,
+					49 => $r->tourDesc,
 				);
 				
 				// update the data
@@ -1613,19 +1614,34 @@ class Controller_Setup_Smsajax extends Controller_Template {
 			
 			foreach ($posts as $p)
 			{
-				// grab the authors and put them into an array
-				$authors = explode(',', $p->authors);
+				/**
+				 * Grab the authors from the table (we need to do it this way because 
+				 * there's no reason to be adding a field we're just going to be using 
+				 * here to the ORM)
+				 */
+				$post_item = $this->db->query(Database::SELECT, "SELECT authors FROM `".$this->db->table_prefix()."posts` WHERE id = ".$p->id)
+					->current();
+				
+				// make the authors listing an array
+				$authors = explode(',', $post_item['authors']);
 				
 				foreach ($authors as $a)
 				{
-					$through = array(
-						'post_id' => $p->id,
-						'character_id' => $a,
-						'user_id' => Model_Character::find($a)->user->id,
-					);
+					// get the character
+					$char = Model_Character::find($a);
 					
-					// add the record to the table
-					Model_PostAuthor::create_item($through);
+					if ($char !== null)
+					{
+						// build the information that's going into the post_authors table
+						$through = array(
+							'post_id' => $p->id,
+							'character_id' => $a,
+							'user_id' => ($a === 0 or $a === null or $char->user === null) ? 0 : $char->user->id,
+						);
+						
+						// add the record to the table
+						Model_PostAuthor::create_item($through);
+					}
 				}
 			}
 			
