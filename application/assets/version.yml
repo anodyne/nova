@@ -4,6 +4,6 @@ version_minor: 2
 version_update: 5
 severity: minor
 notes: |
-  Nova 1.2.5 is the fifth maintenance release for Nova 1.2 and fixes a bug where old specification items would hold the value of a new field when they were updated. More information about these features and a full changelog can be found at AnodyneDocs. This update is recommended for all users.
-date: 25 January 2011
+  Nova 1.2.5 is the fifth maintenance release for Nova 1.2 and fixes a bug where old specification items would hold the value of a new field when they were updated. Additionally, several bugs related to activating and deactivating users have been fixed as well. More information about these features and a full changelog can be found at AnodyneDocs. This update is recommended for all users.
+date: 16 June 2011
 link: http://www.anodyne-productions.com

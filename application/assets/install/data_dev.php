@@ -5,7 +5,7 @@
 |---------------------------------------------------------------
 |
 | File: assets/install/install_data_dev.php
-| System Version: 1.2.4
+| System Version: 1.2.5
 |
 | Data file that includes all the data being inserted into the
 | database after creating the tables.
@@ -3843,7 +3843,7 @@ $system_info = array(
 		'sys_install_date' => now(),
 		'sys_version_major' => 1,
 		'sys_version_minor' => 2,
-		'sys_version_update' => 4)
+		'sys_version_update' => 5)
 );
 
 $system_versions = array(
@@ -4188,6 +4188,17 @@ $system_versions = array(
 * fixed bug where nova wasn't accurately counting mission posts
 * fixed bug where the user acceptance email was CCed to more people than it needed to be
 * fixed bug where IE7 choked on the manifest"),
+	array(
+		'version'			=> '1.2.5',
+		'version_major'		=> 1,
+		'version_minor'		=> 2,
+		'version_update'	=> 5,
+		'version_date'		=> 1308265200,
+		'version_launch'	=> "Nova 1.2.5 is the fifth maintenance release for Nova 1.2 and fixes a bug where old specification items would hold the value of a new field when they were updated. Additionally, several bugs related to activating and deactivating users have been fixed as well. More information about these features and a full changelog can be found at AnodyneDocs. This update is recommended for all users.",
+		'version_changes'	=> "* added the 1.2.5 update file
+* fixed bug where specification data wouldn't get added to the table for old items if a new field was added
+* fixed bug where deactivated users would retain their account flags (sysadmin, game master, etc) and wouldn't have their access role changed
+* fixed bug where reactivated users wouldn't have a reasonable access role"),
 );
 
 $tour = array(
