@@ -537,7 +537,6 @@ abstract class Nova_Auth {
 		// set the session data
 		self::$_session->set('userid', $user->id);
 		self::$_session->set('skin_main', $user->skin_main);
-		self::$_session->set('skin_wiki', $user->skin_wiki);
 		self::$_session->set('skin_admin', $user->skin_admin);
 		self::$_session->set('display_rank', $user->display_rank);
 		self::$_session->set('language', $user->language);
@@ -620,29 +619,26 @@ abstract class Nova_Auth {
 		$password = self::hash($password);
 		
 		// get the user record
-		$login = Model_User::get_user('email', $email);
+		$user = Model_User::get('email', $email);
 		
-		if (count($login) == 0)
+		if ($user == false)
 		{
 			// email doesn't exist
 			$retval = 2;
 		}
-		elseif (count($login) > 1)
+		elseif (count($user) > 1)
 		{
 			// more than one account found - contact the GM
 			$retval = 4;
 		}
 		else
 		{
-			// assign the object to a variable
-			$person = $login;
-			
 			// make sure the password checks out
-			$retval = ($person->password == $password) ? 0 : 3;
+			$retval = ($user->password == $password) ? 0 : 3;
 			
 			if ($retval == 0 and $object === true)
 			{
-				return $person;
+				return $user;
 			}
 		}
 		
