@@ -217,12 +217,12 @@ class Controller_Setup_Sms extends Controller_Template {
 							}
 						}
 					}
+					
+					// do the quick installs
+					Utility::install_rank();
+					Utility::install_skin();
+					Utility::install_widget();
 				}
-				
-				// do the quick installs
-				Utility::install_rank();
-				Utility::install_skin();
-				Utility::install_widget();
 				
 				// get the number of tables
 				$tables = $db->list_tables($db->table_prefix().'%');
