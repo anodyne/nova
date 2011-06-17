@@ -165,7 +165,7 @@
 			</div>
 			
 			<div id="all" class="hidden">
-				<p><em>Done searching? Head <a href="#" rel="change_user_view" id="show_actives">back</a> to the active characters.</em></p>
+				<p><em>Done searching? Head <a href="#" rel="change_user_view" id="show_actives">back</a> to the list of active users.</em></p>
 				
 				<p>Find any user by typing their name, email address or any characters linked to their account.</p>
 				
