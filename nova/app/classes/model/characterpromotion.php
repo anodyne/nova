@@ -11,7 +11,7 @@
  
 class Model_CharacterPromotion extends Model {
 	
-	public static $_table_name = 'characters_promotions';
+	public static $_table_name = 'character_promotions';
 	
 	public static $_properties = array(
 		'id' => array(
