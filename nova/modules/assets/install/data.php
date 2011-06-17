@@ -2672,6 +2672,17 @@ $system_versions = array(
 * fixed bug where the user acceptance email was CCed to more people than it needed to be
 * fixed bug where IE7 choked on the manifest"),
 	array(
+		'version'			=> '1.2.5',
+		'version_major'		=> 1,
+		'version_minor'		=> 2,
+		'version_update'	=> 5,
+		'version_date'		=> 1308265200,
+		'version_launch'	=> "Nova 1.2.5 is the fifth maintenance release for Nova 1.2 and fixes a bug where old specification items would hold the value of a new field when they were updated. Additionally, several bugs related to activating and deactivating users have been fixed as well. More information about these features and a full changelog can be found at AnodyneDocs. This update is recommended for all users.",
+		'version_changes'	=> "* added the 1.2.5 update file
+* fixed bug where specification data wouldn't get added to the table for old items if a new field was added
+* fixed bug where deactivated users would retain their account flags (sysadmin, game master, etc) and wouldn't have their access role changed
+* fixed bug where reactivated users wouldn't have a reasonable access role"),
+	array(
 		'version'			=> '2.0.0',
 		'version_major'		=> 2,
 		'version_minor'		=> 0,
