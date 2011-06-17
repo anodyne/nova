@@ -685,9 +685,6 @@ class Controller_Setup_Smsajax extends Controller_Template {
 					'name' => 'id',
 					'type' => 'INT',
 					'constraint' => 8),
-				'postAuthor' => array(
-					'name' => 'authors',
-					'type' => 'TEXT'),
 				'postPosted' => array(
 					'name' => 'date',
 					'type' => 'BIGINT',
@@ -723,6 +720,9 @@ class Controller_Setup_Smsajax extends Controller_Template {
 					'name' => 'saved_user_id',
 					'type' => 'INT',
 					'constraint' => 11),
+				'postAuthor' => array(
+					'name' => 'authors',
+					'type' => 'TEXT'),
 			);
 			
 			// do the modifications
@@ -730,8 +730,6 @@ class Controller_Setup_Smsajax extends Controller_Template {
 			
 			// add the other fields
 			$add = array(
-				'authors_users' => array(
-					'type' => 'TEXT'),
 				'tags' => array(
 					'type' => 'TEXT'),
 				'updated_at' => array(
@@ -1647,6 +1645,9 @@ class Controller_Setup_Smsajax extends Controller_Template {
 			
 			if ( ! in_array(false, $saved))
 			{
+				// since we know this was successful, we're going to remove the columns we don't need
+				DBForge::drop_column('posts', 'authors');
+				
 				$retval = array(
 					'code' => 1,
 					'message' => ''
