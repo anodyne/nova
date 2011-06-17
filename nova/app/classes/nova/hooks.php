@@ -175,10 +175,11 @@ abstract class Nova_Hooks {
 			// get an instance of the session object
 			$session = Session::instance();
 			
-			// figure out which controllers to ignore
-			$ignore = array('install', 'update', 'upgrade', 'upgradeajax', 'login');
+			// figure out which directories and controllers to ignore
+			$ignore_dirs = array('setup');
+			$ignore_controllers = array('login');
 			
-			if ( ! in_array($request->controller(), $ignore))
+			if ( ! in_array($request->directory(), $ignore_dirs) and ! in_array($request->controller(), $ignore_controllers))
 			{
 				// get the maintenance setting
 				$maint = Model_Settings::get_settings('maintenance');
