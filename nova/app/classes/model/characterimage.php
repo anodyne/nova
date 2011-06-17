@@ -11,7 +11,7 @@
  
 class Model_CharacterImage extends Model {
 	
-	public static $_table_name = 'characters_images';
+	public static $_table_name = 'character_images';
 	
 	public static $_properties = array(
 		'id' => array(
