@@ -1,15 +1,14 @@
 <?php defined('SYSPATH') or die('No direct script access.');
 /**
- * Ajax Controller
+ * Nova 1 Upgrade Ajax Controller
  *
  * @package		Nova
  * @category	Controllers
  * @author		Anodyne Productions
- * @copyright	2010-11 Anodyne Productions
- * @since		2.0
+ * @copyright	2011 Anodyne Productions
  */
 
-class Controller_Setup_Smsajax extends Controller_Template {
+class Controller_Setup_Nova1ajax extends Controller_Template {
 	
 	public $db;
 	
@@ -18,7 +17,7 @@ class Controller_Setup_Smsajax extends Controller_Template {
 		parent::before();
 		
 		// set the shell
-		$this->template = View::factory(Location::file('ajax', null, 'templates'));
+		$this->template = View::factory(Location::file('ajax', null, 'structure'));
 		
 		// set the variables in the template
 		$this->template->content = false;
@@ -27,6 +26,9 @@ class Controller_Setup_Smsajax extends Controller_Template {
 		$this->db = Database::instance();
 	}
 	
+	/**
+	 * Upgrade the awards.
+	 */
 	public function action_upgrade_awards()
 	{
 		// start by getting a count of the number of items in the awards table
@@ -43,26 +45,26 @@ class Controller_Setup_Smsajax extends Controller_Template {
 			// rename the fields
 			$fields = array(
 				'awardid' => array(
-					'name' => 'award_id',
+					'name' => 'id',
 					'type' => 'INT',
 					'constraint' => 5),
 				'awardName' => array(
-					'name' => 'award_name',
+					'name' => 'name',
 					'type' => 'VARCHAR',
 					'constraint' => 255),
 				'awardImage' => array(
-					'name' => 'award_image',
+					'name' => 'image',
 					'type' => 'VARCHAR',
 					'constraint' => 100),
 				'awardOrder' => array(
-					'name' => 'award_order',
+					'name' => 'order',
 					'type' => 'INT',
 					'constraint' => 5),
 				'awardDesc' => array(
-					'name' => 'award_desc',
+					'name' => 'desc',
 					'type' => 'TEXT'),
 				'awardCat' => array(
-					'name' => 'award_cat',
+					'name' => 'category',
 					'type' => 'ENUM',
 					'constraint' => "'ic','ooc','both'",
 					'default' => 'ic'),
@@ -73,20 +75,20 @@ class Controller_Setup_Smsajax extends Controller_Template {
 			
 			// add the award_display column
 			$add = array(
-				'award_display' => array(
-					'type' => 'ENUM',
-					'constraint' => "'y','n'",
-					'default' => 'y')
+				'display' => array(
+					'type' => 'TINYINT',
+					'constraint' => 1,
+					'default' => 1)
 			);
 			
 			// do the add action
 			DBForge::add_column('awards', $add);
 			
 			// make award_id auto increment and the primary key
-			$this->db->query(null, "ALTER TABLE ".$this->db->table_prefix()."awards MODIFY COLUMN `award_id` INT(5) auto_increment primary key", true);
+			$this->db->query(null, "ALTER TABLE ".$this->db->table_prefix()."awards MODIFY COLUMN `id` INT(5) auto_increment primary key", true);
 			
 			// get the number of records in the new table
-			$count_new = Jelly::query('award')->count();
+			$count_new = Model_Award::count();
 			
 			if ($count_new == $count_old)
 			{
@@ -99,14 +101,12 @@ class Controller_Setup_Smsajax extends Controller_Template {
 			{
 				$retval = array(
 					'code' => 0,
-					'message' => __("Not all of the awards were transferred to the Nova format")
+					'message' => "Not all of the awards were transferred to the Nova 3 format"
 				);
 			}
 			
-			// optmize the tables
 			DBForge::optimize('awards');
 		} catch (Exception $e) {
-			// catch the exception
 			$retval = array(
 				'code' => 0,
 				'message' => 'ERROR: '.$e->getMessage().' - line '.$e->getLine().' of '.$e->getFile()
@@ -116,303 +116,36 @@ class Controller_Setup_Smsajax extends Controller_Template {
 		echo json_encode($retval);
 	}
 	
+	/**
+	 * Upgrade the characters and users.
+	 */
 	public function action_upgrade_characters()
 	{
-		// change the user model to prevent null values
-		Jelly::meta('user')->field('join')->auto_now_create = false;
+		// characters
+		$retval['characters'] = $this->_upgrade_characters();
 		
-		try {
-			// get the characters
-			$result = $this->db->query(Database::SELECT, 'SELECT * FROM sms_crew', true);
-			
-			// the user array
-			$userarray = array();
-			
-			// an array of character IDs
-			$charIDs = array('' => 0);
-			
-			// add the languages field
-			$lang = Jelly::factory('formfield')
-				->set(array(
-					'type' => 'text',
-					'html_name' => 'languages',
-					'html_id' => 'languages',
-					'html_rows' => 0,
-					'value' => '',
-					'section' => 1,
-					'order' => 4,
-					'form' => 'bio',
-					'label' => 'Languages'
-				))
-				->save();
-			
-			// create an empty users array
-			$users = array();
-			
-			foreach ($result as $r)
-			{
-				if ( ! empty($r->email))
-				{
-					// build the array with user information
-					$users[$r->email] = array(
-						'name'				=> $r->realName,
-						'email'				=> $r->email,
-						'join'				=> false,
-						'leave'				=> $r->leaveDate,
-						'status'			=> ($r->crewType != 'active' and $r->crewType != 'pending') ? 'inactive' : $r->crewType,
-						'password_reset'	=> 1,
-						'role'				=> 4,
-					);
-					
-					if ( ! isset($users[$r->email]['main_char']))
-					{
-						// if we haven't set the main charcter yet, set it now
-						$users[$r->email]['main_char'] = $r->crewid;
-					}
-					else
-					{
-						if ($r->crewType == 'active')
-						{
-							// if the main character has been set but the current character is active, use that
-							$users[$r->email]['main_char'] = $c->crewid;
-						}
-					}
-					
-					if ( ! isset($users['last_post']))
-					{
-						// drop the latest post date in if it isn't set
-						$users[$r->email]['last_post'] = $r->lastPost;
-					}
-					else
-					{
-						if ($r->crewType == 'active')
-						{
-							// if the latest post is set, but the current character is active, use that
-							$users[$r->email]['last_post'] = $r->lastPost;
-						}
-					}
-					
-					if ($users[$r->email]['join'] === false)
-					{
-						// if the join date isn't set yet, set it
-						$users[$r->email]['join'] = $r->joinDate;
-					}
-				}
-			}
-			
-			// create an empty array for checking users
-			$saved = array();
-			
-			foreach ($users as $u)
-			{
-				// create the user
-				$useraction = Jelly::factory('user')->set($u)->save();
-				
-				// store whether or not the save worked
-				$saved['users'][] = $useraction->saved();
-				
-				// optimize the table
-				DBForge::optimize('users');
-				
-				// get the preferences
-				$prefs = Jelly::query('userpref')->select();
-				
-				// loop through and create the preferences for the user
-				foreach ($prefs as $p)
-				{
-					$prefvalues = Jelly::factory('userprefvalue')
-						->set(array(
-							'user' => $useraction->id(),
-							'key' => $p->key,
-							'value' => $p->default
-						))
-						->save();
-				}
-				
-				// keeping track of user ids
-				$charIDs[$u['email']] = $useraction->id();
-			}
-			
-			// pause the script
-			sleep(1);
-			
-			foreach ($result as $c)
-			{
-				// make sure the fields array is empty
-				$fields = false;
-				
-				// create the character
-				$characteraction = Jelly::factory('character')
-					->set(array(
-						'id' => $c->crewid,
-						'user' => ( ! empty($c->email)) ? $charIDs[$c->email] : null,
-						'fname' => $c->firstName,
-						'mname' => $c->middleName,
-						'lname' => $c->lastName,
-						'status' => ($c->crewType == 'npc') ? 'active' : $c->crewType,
-						'activate' => $c->joinDate,
-						'deactivate' => $c->leaveDate,
-						'rank' => $c->rankid,
-						'position1' => $c->positionid,
-						'position2' => $c->positionid2,
-						'last_post' => $c->lastPost
-					))
-					->save();
-				
-				// store whether or not the save worked
-				$saved['characters'][] = $characteraction->saved();
-				
-				// explode the images string
-				$images = explode(',', $c->image);
-				
-				foreach ($images as $i)
-				{
-					$item = Jelly::factory('characterimage')
-						->set(array(
-							'user' => ( ! empty($c->email)) ? $charIDs[$c->email] : null,
-							'character' => $c->crewid,
-							'image' => $i
-						))
-						->save();
-				}
-				
-				// optimize the table
-				DBForge::optimize('characters');
-				
-				// create the array that stores all the character information
-				$fields = array(
-					1 	=> $c->gender,
-					2 	=> $c->species,
-					3 	=> $c->age,
-					4 	=> $c->heightFeet."' ".$c->heightInches.'"',
-					5 	=> $c->weight.' lbs',
-					6 	=> $c->hairColor,
-					7 	=> $c->eyeColor,
-					8 	=> $c->physicalDesc,
-					9 	=> $c->spouse,
-					10 	=> $c->children,
-					11 	=> $c->father,
-					12 	=> $c->mother,
-					13 	=> $c->brothers."\r\n\r\n".$c->sisters,
-					14 	=> $c->otherFamily,
-					15 	=> $c->personalityOverview,
-					16 	=> $c->strengths,
-					17 	=> $c->ambitions,
-					18 	=> $c->hobbies,
-					19 	=> $c->history,
-					20 	=> $c->serviceRecord,
-					$lang->id() => $c->languages,
-				);
-				
-				foreach ($fields as $field => $value)
-				{
-					// insert the character data
-					$fieldata = Jelly::factory('formdata')
-						->set(array(
-							'form' => 'bio',
-							'character' => $characteraction->id(),
-							'user' => ( ! empty($c->email)) ? $charIDs[$c->email] : null,
-							'field' => $field,
-							'value' => $value
-						))
-						->save();
-						
-					// store whether or not the save worked
-					$saved['formdata'][] = $fieldata->saved();
-				}
-				
-				// optimize the table
-				DBForge::optimize('forms_data');
-			}
-			
-			// set the count variables
-			$count_users = (in_array(false, $saved['users'])) ? false : true;
-			$count_characters = (in_array(false, $saved['characters'])) ? false : true;
-			$count_formdata = (in_array(false, $saved['formdata'])) ? false : true;
-			
-			if ($count_users === true and $count_characters === true and $count_formdata === true)
-			{
-				$retval = array(
-					'code' => 1,
-					'message' => ''
-				);
-			}
-			else
-			{
-				if ($count_users === false and $count_characters === true and $count_formdata === true)
-				{
-					$retval = array(
-						'code' => 2,
-						'message' => __("Your characters and character data were upgraded, but not all users were upgraded")
-					);
-				}
-				
-				if ($count_users === false and $count_characters === false and $count_formdata === true)
-				{
-					$retval = array(
-						'code' => 2,
-						'message' => __("Your character data was upgraded, but not all users or characters were upgraded")
-					);
-				}
-				
-				if ($count_users === true and $count_characters === false and $count_formdata === true)
-				{
-					$retval = array(
-						'code' => 2,
-						'message' => __("Your users and character data was upgraded, but not all characters were upgraded")
-					);
-				}
-				
-				if ($count_users === true and $count_characters === true and $count_formdata === false)
-				{
-					$retval = array(
-						'code' => 2,
-						'message' => __("Your users and characters were upgraded, but not all character data was upgraded")
-					);
-				}
-				
-				if ($count_users === false and $count_characters === true and $count_formdata === false)
-				{
-					$retval = array(
-						'code' => 2,
-						'message' => __("Your characters were upgraded, but not all users or character data were upgraded")
-					);
-				}
-				
-				if ($count_users === true and $count_characters === false and $count_formdata === false)
-				{
-					$retval = array(
-						'code' => 2,
-						'message' => __("Your users were upgraded, but not all characters or character data were upgraded")
-					);
-				}
-				
-				if ($count_users === false and $count_characters === false and $count_formdata === false)
-				{
-					$retval = array(
-						'code' => 0,
-						'message' => __("Your users, characters and character data could not be updated")
-					);
-				}
-			}
-			
-			// optmize the tables
-			DBForge::optimize('characters');
-			DBForge::optimize('users');
-			DBForge::optimize('forms_data');
-			DBForge::optimize('forms_fields');
-			DBForge::optimize('user_prefs_values');
-		} catch (Exception $e) {
-			// catch the exception
-			$retval = array(
-				'code' => 0,
-				'message' => 'ERROR: '.$e->getMessage().' - line '.$e->getLine().' of '.$e->getFile()
-			);
-		}
+		// chain of command
+		$retval['coc'] = $this->_upgrade_coc();
+		
+		// promotions
+		$retval['promotions'] = $this->_upgrade_character_promotions();
+		
+		// dynamic form
+		
+		// applications
+		$retval['applications'] = $this->_upgrade_applications();
+		
+		// users
+		
+		// user LOAs
+		$retval['user_loas'] = $this->_upgrade_user_loa();
 		
 		echo json_encode($retval);
 	}
 	
+	/**
+	 * Take the password the admin chose and make sure every user has that password.
+	 */
 	public function action_upgrade_final_password()
 	{
 		// grab the password
@@ -420,19 +153,47 @@ class Controller_Setup_Smsajax extends Controller_Template {
 		
 		try {
 			// hash the password
-			$password = Auth::hash($password);
+			$new_password = Auth::hash($password);
 			
 			// update everyone
-			Jelly::query('user')->set(array('password' => $password))->update();
+			Model_User::update_user(null, array('password' => $new_password));
 			
 			// find out how many users don't have the right password
-			$count = Jelly::query('user')->where('password', '!=', $password)->count();
+			$count = Model_User::find()->where('password', '!=', $new_password)->count();
+			
+			// pull all the users
+			$users = Model_User::find('all');
+			
+			// loop through and get all the email addresses
+			foreach ($users as $u)
+			{
+				if ($u->get_status() == 'active')
+				{
+					$emails[] = $u->email;
+				}
+			}
+			
+			// get the settings
+			$settings = Model_Settings::get_settings(array('sim_name', 'default_email_address', 'default_email_name'));
+			
+			# TODO: need to remove these comments for the final release
+			
+			/*
+			// set up the content
+			$content = "The ".$settings->sim_name." has just upgraded from SMS to Nova 3. As part of the upgrade process, your password needed to be reset. You'll log in to the ".$settings->sim_name." site with the password '".$password."' (without the single quotes). The first time you log in, you'll be prompted to change your password. Do not reply to this automatically generated email. If you have questions, please contact your game master.";
+			
+			// send an email out to the entire crew with the new password
+			$email = Email::factory($content)
+				->to($emails)
+				->from($settings->default_email_address, $settings->default_email_name)
+				->send();
+			*/
 			
 			if ($count > 0)
 			{
 				$retval = array(
 					'code' => 0,
-					'message' => __("Not all of your users' passwords were updated")
+					'message' => "Not all of your users' passwords were updated"
 				);
 			}
 			else
@@ -443,7 +204,6 @@ class Controller_Setup_Smsajax extends Controller_Template {
 				);
 			}
 			
-			// optmize the tables
 			DBForge::optimize('users');
 		} catch (Exception $e) {
 			$retval = array(
@@ -455,6 +215,9 @@ class Controller_Setup_Smsajax extends Controller_Template {
 		echo json_encode($retval);
 	}
 	
+	/**
+	 * Set the users who the admin selected to have system administrator privileges.
+	 */
 	public function action_upgrade_final_roles()
 	{
 		// grab the user IDs that should have the sys admin role
@@ -466,22 +229,22 @@ class Controller_Setup_Smsajax extends Controller_Template {
 			
 			foreach ($roles as $r)
 			{
-				$user = Jelly::factory('user', $r)->set(array('role' => 1))->save();
-				$saved[] = $user->saved();
+				$user = Model_User::update_user($r, array('role_id' => 1));
+				$saved[] = (is_object($user)) ? true : false;
 			}
 			
 			if ( ! in_array(true, $saved))
 			{
 				$retval = array(
 					'code' => 0,
-					'message' => __("None of your administrators were set")
+					'message' => "None of your administrators were set"
 				);
 			}
 			elseif (in_array(false, $saved) and in_array(true, $saved))
 			{
 				$retval = array(
 					'code' => 0,
-					'message' => __("Some of your administrators were set, but others were not")
+					'message' => "Some of your administrators were set, but others were not"
 				);
 			}
 			else
@@ -492,7 +255,6 @@ class Controller_Setup_Smsajax extends Controller_Template {
 				);
 			}
 			
-			// optmize the tables
 			DBForge::optimize('users');
 		} catch (Exception $e) {
 			$retval = array(
@@ -504,6 +266,9 @@ class Controller_Setup_Smsajax extends Controller_Template {
 		echo json_encode($retval);
 	}
 	
+	/**
+	 * Upgrade the personal logs from SMS to Nova.
+	 */
 	public function action_upgrade_logs()
 	{
 		// get the number of logs in the sms table
@@ -520,27 +285,27 @@ class Controller_Setup_Smsajax extends Controller_Template {
 			// rename the fields to appropriate names
 			$fields = array(
 				'logid' => array(
-					'name' => 'log_id',
+					'name' => 'id',
 					'type' => 'INT',
 					'constraint' => 5),
 				'logAuthor' => array(
-					'name' => 'log_author_character',
+					'name' => 'character_id',
 					'type' => 'INT',
 					'constraint' => 8),
 				'logPosted' => array(
-					'name' => 'log_date',
+					'name' => 'date',
 					'type' => 'BIGINT',
 					'constraint' => 20),
 				'logTitle' => array(
-					'name' => 'log_title',
+					'name' => 'title',
 					'type' => 'VARCHAR',
 					'constraint' => 255,
 					'default' => 'upcoming'),
 				'logContent' => array(
-					'name' => 'log_content',
+					'name' => 'content',
 					'type' => 'TEXT'),
 				'logStatus' => array(
-					'name' => 'log_status',
+					'name' => 'status',
 					'type' => 'ENUM',
 					'constraint' => "'activated','saved','pending'",
 					'default' => 'activated'),
@@ -551,12 +316,12 @@ class Controller_Setup_Smsajax extends Controller_Template {
 			
 			// add the other columns
 			$add = array(
-				'log_author_user' => array(
+				'user_id' => array(
 					'type' => 'INT',
 					'constraint' => 8),
-				'log_tags' => array(
+				'tags' => array(
 					'type' => 'TEXT'),
-				'log_last_update' => array(
+				'updated_at' => array(
 					'type' => 'BIGINT',
 					'constraint' => 20)
 			);
@@ -565,40 +330,35 @@ class Controller_Setup_Smsajax extends Controller_Template {
 			DBForge::add_column('personal_logs', $add);
 			
 			// make sure the auto increment and primary key are right
-			$this->db->query(null, "ALTER TABLE ".$this->db->table_prefix()."personal_logs MODIFY COLUMN `log_id` INT(5) auto_increment primary key", true);
+			$this->db->query(null, "ALTER TABLE ".$this->db->table_prefix()."personal_logs MODIFY COLUMN `id` INT(5) auto_increment primary key", true);
 			
 			// get the new count of logs
-			$count_new = Jelly::query('personallog')->count();
+			$count_new = Model_PersonalLog::count();
 			
 			if ($count_new == 0)
 			{
-				// catch the exception
 				$retval = array(
 					'code' => 0,
-					'message' => __("None of your personal logs were able to be upgraded")
+					'message' => "None of your personal logs were able to be upgraded"
 				);
 			}
 			elseif ($count_new > 0 and $count_new != $count_old)
 			{
-				// catch the exception
 				$retval = array(
 					'code' => 2,
-					'message' => __("Some of your personal logs were upgraded, but some where unable to be upgraded")
+					'message' => "Some of your personal logs were upgraded, but some where unable to be upgraded"
 				);
 			}
 			else
 			{
-				// catch the exception
 				$retval = array(
 					'code' => 1,
 					'message' => ''
 				);
 			}
 			
-			// optmize the tables
 			DBForge::optimize('personal_logs');
 		} catch (Exception $e) {
-			// catch the exception
 			$retval = array(
 				'code' => 0,
 				'message' => 'ERROR: '.$e->getMessage().' - line '.$e->getLine().' of '.$e->getFile()
@@ -608,6 +368,9 @@ class Controller_Setup_Smsajax extends Controller_Template {
 		echo json_encode($retval);
 	}
 	
+	/**
+	 * Upgrade the missions and posts from the SMS format to Nova.
+	 */
 	public function action_upgrade_missions()
 	{
 		// get the number of news items in the sms table
@@ -628,41 +391,41 @@ class Controller_Setup_Smsajax extends Controller_Template {
 			// rename the fields to appropriate names
 			$fields = array(
 				'missionid' => array(
-					'name' => 'mission_id',
+					'name' => 'id',
 					'type' => 'INT',
 					'constraint' => 8),
 				'missionOrder' => array(
-					'name' => 'mission_order',
+					'name' => 'order',
 					'type' => 'INT',
 					'constraint' => 5),
 				'missionTitle' => array(
-					'name' => 'mission_title',
+					'name' => 'title',
 					'type' => 'VARCHAR',
 					'constraint' => 255),
 				'missionImage' => array(
-					'name' => 'mission_images',
+					'name' => 'images',
 					'type' => 'TEXT'),
 				'missionStatus' => array(
-					'name' => 'mission_status',
+					'name' => 'status',
 					'type' => 'ENUM',
 					'constraint' => "'upcoming','current','completed'",
 					'default' => 'upcoming'),
 				'missionStart' => array(
-					'name' => 'mission_start',
+					'name' => 'start',
 					'type' => 'BIGINT',
 					'constraint' => 20),
 				'missionEnd' => array(
-					'name' => 'mission_end',
+					'name' => 'end',
 					'type' => 'BIGINT',
 					'constraint' => 20),
 				'missionDesc' => array(
-					'name' => 'mission_desc',
+					'name' => 'desc',
 					'type' => 'TEXT'),
 				'missionSummary' => array(
-					'name' => 'mission_summary',
+					'name' => 'summary',
 					'type' => 'TEXT'),
 				'missionNotes' => array(
-					'name' => 'mission_notes',
+					'name' => 'notes',
 					'type' => 'TEXT'),
 			);
 			
@@ -671,10 +434,10 @@ class Controller_Setup_Smsajax extends Controller_Template {
 			
 			// add the other fields
 			$add = array(
-				'mission_notes_updated' => array(
+				'notes_updated' => array(
 					'type' => 'BIGINT',
 					'constraint' => 20),
-				'mission_group' => array(
+				'group_id' => array(
 					'type' => 'INT',
 					'constraint' => 5)
 			);
@@ -683,7 +446,7 @@ class Controller_Setup_Smsajax extends Controller_Template {
 			DBForge::add_column('missions', $add);
 			
 			// make sure the auto increment and primary key are right
-			$this->db->query(null, 'ALTER TABLE '.$this->db->table_prefix().'missions MODIFY COLUMN `mission_id` INT(8) auto_increment primary key', true);
+			$this->db->query(null, 'ALTER TABLE '.$this->db->table_prefix().'missions MODIFY COLUMN `id` INT(8) auto_increment primary key', true);
 			
 			// drop the nova version of the table
 			DBForge::drop_table('posts');
@@ -694,47 +457,47 @@ class Controller_Setup_Smsajax extends Controller_Template {
 			// rename the fields to appropriate names
 			$fields = array(
 				'postid' => array(
-					'name' => 'post_id',
+					'name' => 'id',
 					'type' => 'INT',
 					'constraint' => 8),
-				'postAuthor' => array(
-					'name' => 'post_authors',
-					'type' => 'TEXT'),
 				'postPosted' => array(
-					'name' => 'post_date',
+					'name' => 'date',
 					'type' => 'BIGINT',
 					'constraint' => 20),
 				'postTitle' => array(
-					'name' => 'post_title',
+					'name' => 'title',
 					'type' => 'VARCHAR',
 					'constraint' => 255,
 					'default' => ''),
 				'postContent' => array(
-					'name' => 'post_content',
+					'name' => 'content',
 					'type' => 'TEXT'),
 				'postStatus' => array(
-					'name' => 'post_status',
+					'name' => 'status',
 					'type' => 'ENUM',
 					'constraint' => "'activated','saved','pending'",
 					'default' => 'activated'),
 				'postLocation' => array(
-					'name' => 'post_location',
+					'name' => 'location',
 					'type' => 'VARCHAR',
 					'constraint' => 255,
 					'default' => ''),
 				'postTimeline' => array(
-					'name' => 'post_timeline',
+					'name' => 'timeline',
 					'type' => 'VARCHAR',
 					'constraint' => 255,
 					'default' => ''),
 				'postMission' => array(
-					'name' => 'post_mission',
+					'name' => 'mission_id',
 					'type' => 'INT',
 					'constraint' => 8),
 				'postSave' => array(
-					'name' => 'post_saved',
+					'name' => 'saved_user_id',
 					'type' => 'INT',
 					'constraint' => 11),
+				'postAuthor' => array(
+					'name' => 'authors',
+					'type' => 'TEXT'),
 			);
 			
 			// do the modifications
@@ -742,11 +505,9 @@ class Controller_Setup_Smsajax extends Controller_Template {
 			
 			// add the other fields
 			$add = array(
-				'post_authors_users' => array(
+				'tags' => array(
 					'type' => 'TEXT'),
-				'post_tags' => array(
-					'type' => 'TEXT'),
-				'post_last_update' => array(
+				'updated_at' => array(
 					'type' => 'BIGINT',
 					'constraint' => 20)
 			);
@@ -758,40 +519,35 @@ class Controller_Setup_Smsajax extends Controller_Template {
 			DBForge::drop_column('posts', 'postTag');
 			
 			// make sure the auto increment and primary key are correct
-			$this->db->query(null, 'ALTER TABLE '.$this->db->table_prefix().'posts MODIFY COLUMN `post_id` INT(8) auto_increment primary key', true);
+			$this->db->query(null, 'ALTER TABLE '.$this->db->table_prefix().'posts MODIFY COLUMN `id` INT(8) auto_increment primary key', true);
 			
 			// count the missions
-			$count_missions_new = Jelly::query('mission')->count();
+			$count_missions_new = Model_Mission::count();
 			
 			// count the posts
-			$count_posts_new = Jelly::query('post')->count();
+			$count_posts_new = Model_Post::count();
 			
 			if ($count_missions_new == 0 and $count_posts_new == 0)
 			{
-				// catch the exception
 				$retval = array(
 					'code' => 0,
-					'message' => __("None of your missions or mission posts were able to be upgraded")
+					'message' => "None of your missions or mission posts were able to be upgraded"
 				);
 			}
 			elseif ($count_missions_new > 0 and $count_posts_new == 0)
 			{
 				if ($count_missions_new != $count_missions_old)
 				{
-					// catch the exception
 					$retval = array(
 						'code' => 2,
-						'message' => __(":new of :old missions were upgraded, but your mission posts were not", 
-							array(':old' => $count_missions_old, ':new' => $count_missions_new)
-						),
+						'message' => "$count_missions_new of $count_missions_old missions were upgraded, but your mission posts were not", 
 					);
 				}
 				else
 				{
-					// catch the exception
 					$retval = array(
 						'code' => 2,
-						'message' => __("Your missions were upgraded, but your mission posts were not")
+						'message' => "Your missions were upgraded, but your mission posts were not"
 					);
 				}
 			}
@@ -799,20 +555,16 @@ class Controller_Setup_Smsajax extends Controller_Template {
 			{
 				if ($count_posts_new != $count_posts_old)
 				{
-					// catch the exception
 					$retval = array(
 						'code' => 2,
-						'message' => __(":new of :old mission posts were upgraded, but your missions were not",
-							array(':old' => $count_posts_old, ':new' => $count_posts_new)
-						),
+						'message' => "$count_posts_new of $count_posts_old mission posts were upgraded, but your missions were not",
 					);
 				}
 				else
 				{
-					// catch the exception
 					$retval = array(
 						'code' => 2,
-						'message' => __("Your mission posts were upgraded, but your missions were not")
+						'message' => "Your mission posts were upgraded, but your missions were not"
 					);
 				}
 			}
@@ -820,7 +572,6 @@ class Controller_Setup_Smsajax extends Controller_Template {
 			{
 				if ($count_missions_new == $count_missions_old and $count_posts_new == $count_posts_old)
 				{
-					// catch the exception
 					$retval = array(
 						'code' => 1,
 						'message' => ''
@@ -828,41 +579,30 @@ class Controller_Setup_Smsajax extends Controller_Template {
 				}
 				elseif ($count_missions_new == $count_missions_old and $count_posts_new != $count_posts_old)
 				{
-					// catch the exception
 					$retval = array(
 						'code' => 2,
-						'message' => __("All of your missions and :new of :old mission posts were upgraded",
-							array(':old' => $count_posts_old, ':new' => $count_posts_new)
-						),
+						'message' => "All of your missions and $count_posts_new of $count_posts_old mission posts were upgraded",
 					);
 				}
 				elseif ($count_missions_new != $count_missions_old and $count_posts_new == $count_posts_old)
 				{
-					// catch the exception
 					$retval = array(
 						'code' => 2,
-						'message' => __("All of your mission posts and :new of :old missions were upgraded",
-							array(':old' => $count_missions_old, ':new' => $count_missions_new)
-						),
+						'message' => "All of your mission posts and $count_missions_new of $count_missions_old missions were upgraded",
 					);
 				}
 				elseif ($count_missions_new != $count_missions_old and $count_posts_new != $count_posts_old)
 				{
-					// catch the exception
 					$retval = array(
 						'code' => 2,
-						'message' => __(":new_mis of :old_mis missions and :new_posts of :old_posts mission posts were upgraded", 
-							array(':old_posts' => $count_posts_old, ':new_posts' => $count_posts_new, ':new_mis' => $count_missions_new, ':old_mis' => $count_missions_old)
-						),
+						'message' => "$count_missions_new of $count_missions_old missions and $count_posts_new of $count_posts_old mission posts were upgraded",
 					);
 				}
 			}
 			
-			// optmize the tables
 			DBForge::optimize('missions');
 			DBForge::optimize('posts');
 		} catch (Exception $e) {
-			// catch the exception
 			$retval = array(
 				'code' => 0,
 				'message' => 'ERROR: '.$e->getMessage().' - line '.$e->getLine().' of '.$e->getFile()
@@ -872,6 +612,9 @@ class Controller_Setup_Smsajax extends Controller_Template {
 		echo json_encode($retval);
 	}
 	
+	/**
+	 * Upgrade the news items and categories from SMS to Nova.
+	 */
 	public function action_upgrade_news()
 	{
 		// get the number of news items in the sms table
@@ -893,18 +636,18 @@ class Controller_Setup_Smsajax extends Controller_Template {
 			// rename the fields to appropriate names
 			$fields = array(
 				'catid' => array(
-					'name' => 'newscat_id',
+					'name' => 'id',
 					'type' => 'INT',
 					'constraint' => 5),
 				'catName' => array(
-					'name' => 'newscat_name',
+					'name' => 'name',
 					'type' => 'VARCHAR',
 					'constraint' => 255),
 				'catVisible' => array(
-					'name' => 'newscat_display',
-					'type' => 'ENUM',
-					'constraint' => "'y','n'",
-					'default' => 'y'),
+					'name' => 'display',
+					'type' => 'TINYINT',
+					'constraint' => 1,
+					'default' => 1),
 			);
 			
 			// do the modifications
@@ -914,7 +657,7 @@ class Controller_Setup_Smsajax extends Controller_Template {
 			DBForge::drop_column('news_categories', 'catUserLevel');
 			
 			// make sure the auto increment and primary id are correct
-			$this->db->query(null, "ALTER TABLE ".$this->db->table_prefix()."news_categories MODIFY COLUMN `newscat_id` INT(5) auto_increment primary key", true);
+			$this->db->query(null, "ALTER TABLE ".$this->db->table_prefix()."news_categories MODIFY COLUMN `id` INT(5) auto_increment primary key", true);
 			
 			// copy the sms version of the table along with all its data
 			$this->db->query(null, "CREATE TABLE ".$this->db->table_prefix()."news SELECT * FROM sms_news", true);
@@ -922,36 +665,36 @@ class Controller_Setup_Smsajax extends Controller_Template {
 			// rename the fields to appropriate names
 			$fields = array(
 				'newsid' => array(
-					'name' => 'news_id',
+					'name' => 'id',
 					'type' => 'INT',
 					'constraint' => 8),
 				'newsCat' => array(
-					'name' => 'news_cat',
+					'name' => 'category_id',
 					'type' => 'INT',
 					'constraint' => 3),
 				'newsAuthor' => array(
-					'name' => 'news_author_character',
+					'name' => 'character_id',
 					'type' => 'INT',
 					'constraint' => 8),
 				'newsPosted' => array(
-					'name' => 'news_date',
+					'name' => 'date',
 					'type' => 'BIGINT',
 					'constraint' => 20),
 				'newsTitle' => array(
-					'name' => 'news_title',
+					'name' => 'title',
 					'type' => 'VARCHAR',
 					'constraint' => 255,
 					'default' => 'upcoming'),
 				'newsContent' => array(
-					'name' => 'news_content',
+					'name' => 'content',
 					'type' => 'TEXT'),
 				'newsStatus' => array(
-					'name' => 'news_status',
+					'name' => 'status',
 					'type' => 'ENUM',
 					'constraint' => "'activated','saved','pending'",
 					'default' => 'activated'),
 				'newsPrivate' => array(
-					'name' => 'news_private',
+					'name' => 'private',
 					'type' => 'ENUM',
 					'constraint' => "'y','n'",
 					'default' => 'n'),
@@ -960,56 +703,73 @@ class Controller_Setup_Smsajax extends Controller_Template {
 			// do the modifications
 			DBForge::modify_column('news', $fields);
 			
-			// add the missing columns
+			// add the user_id column
 			$add = array(
-				'news_author_user' => array(
+				'user_id' => array(
 					'type' => 'INT',
 					'constraint' => 8),
-				'news_tags' => array(
+				'tags' => array(
 					'type' => 'TEXT'),
-				'news_last_update' => array(
+				'updated_at' => array(
 					'type' => 'BIGINT',
 					'constraint' => 20)
 			);
 			
-			// do the modifications
+			// do the add action
 			DBForge::add_column('news', $add);
 			
+			// get all the news items
+			$private = Model_News::find('all');
+			
+			// loop through all the records and make sure the private column is correct
+			foreach ($private as $p)
+			{
+				$p->private = ($p->private == 'y') ? (int) true : (int) false;
+				$p->save();
+			}
+			
+			// rename the fields to appropriate names
+			$fields = array(
+				'private' => array(
+					'name' => 'private',
+					'type' => 'TINYINT',
+					'constraint' => 1,
+					'default' => 0),
+			);
+			
+			// do the modifications
+			DBForge::modify_column('news', $fields);
+			
 			// make sure the auto increment and primary key are right
-			$this->db->query(null, "ALTER TABLE ".$this->db->table_prefix()."news MODIFY COLUMN `news_id` INT(8) auto_increment primary key", true);
+			$this->db->query(null, "ALTER TABLE ".$this->db->table_prefix()."news MODIFY COLUMN `id` INT(8) auto_increment primary key", true);
 			
 			// count the news items
-			$count_news_new = Jelly::query('news')->count();
+			$count_news_new = Model_News::count();
 			
 			// count the news categories
-			$count_cats_new = Jelly::query('newscategory')->count();
+			$count_cats_new = Model_NewsCategory::count();
 			
 			if ($count_news_new == 0 and $count_cats_new == 0)
 			{
-				// catch the exception
 				$retval = array(
 					'code' => 0,
-					'message' => __("None of your news categories or news item were able to be upgraded")
+					'message' => "None of your news categories or news item were able to be upgraded"
 				);
 			}
 			elseif ($count_news_new > 0 and $count_cats_new == 0)
 			{
 				if ($count_news_new != $count_news_old)
 				{
-					// catch the exception
 					$retval = array(
 						'code' => 2,
-						'message' => __(":new of :old news items were upgraded, but your news categories were not",
-							array(':old' => $count_news_old, ':new' => $count_news_new)
-						),
+						'message' => "$count_news_new of $count_news_old news items were upgraded, but your news categories were not",
 					);
 				}
 				else
 				{
-					// catch the exception
 					$retval = array(
 						'code' => 2,
-						'message' => __("Your news items were upgraded, but your news categories were not")
+						'message' => "Your news items were upgraded, but your news categories were not"
 					);
 				}
 			}
@@ -1017,20 +777,16 @@ class Controller_Setup_Smsajax extends Controller_Template {
 			{
 				if ($count_cats_new != $count_cats_old)
 				{
-					// catch the exception
 					$retval = array(
 						'code' => 2,
-						'message' => __(":new of :old news categories were upgraded, but your news items were not",
-							array(':old' => $count_cats_old, ':new' => $count_cats_new)
-						),
+						'message' => "$count_cats_new of $count_cats_old news categories were upgraded, but your news items were not",
 					);
 				}
 				else
 				{
-					// catch the exception
 					$retval = array(
 						'code' => 2,
-						'message' => __("Your news categories were upgraded, but your news items were not")
+						'message' => "Your news categories were upgraded, but your news items were not"
 					);
 				}
 			}
@@ -1038,7 +794,6 @@ class Controller_Setup_Smsajax extends Controller_Template {
 			{
 				if ($count_news_new == $count_news_old and $count_cats_new == $count_cats_old)
 				{
-					// catch the exception
 					$retval = array(
 						'code' => 1,
 						'message' => ''
@@ -1046,41 +801,30 @@ class Controller_Setup_Smsajax extends Controller_Template {
 				}
 				elseif ($count_news_new == $count_news_old and $count_cats_new != $count_cats_old)
 				{
-					// catch the exception
 					$retval = array(
 						'code' => 2,
-						'message' => __("All of your news items and :new of :old news categories were upgraded",
-							array(':old' => $count_cats_old, ':new' => $count_cats_new)
-						),
+						'message' => "All of your news items and $count_cats_new of $count_cats_old news categories were upgraded",
 					);
 				}
 				elseif ($count_news_new != $count_news_old and $count_cats_new == $count_cats_old)
 				{
-					// catch the exception
 					$retval = array(
 						'code' => 2,
-						'message' => __("All of your news categories and :new of :old news items were upgraded",
-							array(':old' => $count_news_old, ':new' => $count_news_new)
-						),
+						'message' => "All of your news categories and $count_news_new of $count_news_old news items were upgraded",
 					);
 				}
 				elseif ($count_news_new != $count_news_old and $count_cats_new != $count_cats_old)
 				{
-					// catch the exception
 					$retval = array(
 						'code' => 2,
-						'message' => __(":new_news of :old_news news items and :new_cats of :old_cats news categories were upgraded", 
-							array(':old_cats' => $count_cats_old, ':new_cats' => $count_cats_new, ':new_news' => $count_news_new, ':old_news' => $count_news_old)
-						),
+						'message' => "$count_news_new of $count_news_old news items and $count_cats_new of $count_cats_old news categories were upgraded", 
 					);
 				}
 			}
 			
-			// optmize the tables
 			DBForge::optimize('news');
 			DBForge::optimize('news_categories');
 		} catch (Exception $e) {
-			// catch the exception
 			$retval = array(
 				'code' => 0,
 				'message' => 'ERROR: '.$e->getMessage().' - line '.$e->getLine().' of '.$e->getFile()
@@ -1090,6 +834,9 @@ class Controller_Setup_Smsajax extends Controller_Template {
 		echo json_encode($retval);
 	}
 	
+	/**
+	 * Do the quick install for ranks and skins.
+	 */
 	public function action_upgrade_quick_install()
 	{
 		try {
@@ -1099,21 +846,6 @@ class Controller_Setup_Smsajax extends Controller_Template {
 			
 			// get the directory listing for the genre
 			$dir = Utility::directory_map(APPPATH.'assets/common/'.Kohana::config('nova.genre').'/ranks/', true);
-			
-			// set the items to be pulled out of the listing
-			$pop = array('index.html');
-			
-			// remove unwanted items
-			foreach ($pop as $value)
-			{
-				// find the item in the directory listing
-				$key = array_search($value, $dir);
-				
-				if ($key !== false)
-				{
-					unset($dir[$key]);
-				}
-			}
 			
 			// get the count of ranks
 			$dir_ranks = count($dir);
@@ -1128,11 +860,7 @@ class Controller_Setup_Smsajax extends Controller_Template {
 			// get the listing of the directory
 			$dir = Utility::directory_map(APPPATH.'views/', true);
 			
-			// create an array of items to remove
-			$pop = array('index.html');
-			
 			# TODO: remove this after the application directory has been cleaned out
-			$pop[] = '_base';
 			$pop[] = 'template.php';
 			
 			// remove the items
@@ -1151,10 +879,10 @@ class Controller_Setup_Smsajax extends Controller_Template {
 			$dir_skins = count($dir);
 			
 			// get the catalogue count for ranks
-			$db_ranks = Jelly::query('cataloguerank')->count();
+			$db_ranks = count(Model_CatalogueRank::get_all_items());
 			
 			// get the catalogue count for skins
-			$db_skins = Jelly::query('catalogueskin')->count();
+			$db_skins = count(Model_CatalogueSkin::get_all_items());
 
 			if ($dir_ranks == $db_ranks and $dir_skins == $db_skins)
 			{
@@ -1167,25 +895,24 @@ class Controller_Setup_Smsajax extends Controller_Template {
 			{
 				$retval = array(
 					'code' => 2,
-					'message' => __("Your skins were installed but not all of your rank sets were installed. Please try to install your ranks sets manually from the rank catalogue page.")
+					'message' => "Your skins were installed but not all of your rank sets were installed. Please try to install your ranks sets manually from the rank catalogue page."
 				);
 			}
 			elseif ($dir_ranks == $db_ranks and $dir_skins != $db_skins)
 			{
 				$retval = array(
 					'code' => 2,
-					'message' => __("Your rank sets were installed but not all of your skins were installed. Please try to install your skins manually from the skin catalogue page.")
+					'message' => "Your rank sets were installed but not all of your skins were installed. Please try to install your skins manually from the skin catalogue page."
 				);
 			}
 			elseif ($dir_ranks != $db_ranks and $dir_skins != $db_skins)
 			{
 				$retval = array(
 					'code' => 0,
-					'message' => __("Additional ranks and skins were not installed. Please try to do so manually from the catalogue pages.")
+					'message' => "Additional ranks and skins were not installed. Please try to do so manually from the catalogue pages."
 				);
 			}
 			
-			// optmize the tables
 			DBForge::optimize('catalogue_ranks');
 			DBForge::optimize('catalogue_skins');
 			DBForge::optimize('catalogue_skinsecs');
@@ -1199,6 +926,9 @@ class Controller_Setup_Smsajax extends Controller_Template {
 		echo json_encode($retval);
 	}
 	
+	/**
+	 * Upgrade the settings and site content (messages) from SMS to Nova.
+	 */
 	public function action_upgrade_settings()
 	{
 		// figure out what the name of the settings table is
@@ -1211,429 +941,109 @@ class Controller_Setup_Smsajax extends Controller_Template {
 			$result = $this->db->query(Database::SELECT, "SELECT * FROM sms_globals WHERE globalid = 1", true);
 		}
 		
-		// create arrays for checking to see if everything was saved
-		$settings = array();
-		$messages = array();
-		
 		foreach ($result as $r)
 		{
-			// sim name
-			$item = Jelly::query('setting', 'sim_name')->limit(1)->select();
-			$item->value = $r->shipPrefix.' '.$r->shipName.' '.$r->shipRegistry;
-			$item->save();
-			$settings[] = $item->saved();
-			
-			// sim year
-			$item = Jelly::query('setting', 'sim_year')->limit(1)->select();
-			$item->value = $r->simmYear;
-			$item->save();
-			$settings[] = $item->saved();
-			
-			// posting requirement
-			$item = Jelly::query('setting', 'post_count')->limit(1)->select();
-			$item->value = ($r->jpCount == 'y') ? 'multiple' : 'single';
-			$item->save();
-			$settings[] = $item->saved();
-			
-			// email subject
-			$item = Jelly::query('setting', 'email_subject')->limit(1)->select();
-			$item->value = $r->emailSubject;
-			$item->save();
-			$settings[] = $item->saved();
+			$settings = array(
+				'sim_name' => $r->shipPrefix.' '.$r->shipName.' '.$r->shipRegistry,
+				'sim_year' => $r->simmYear,
+				'post_count_format' => ($r->jpCount == 'y') ? 'multiple' : 'single',
+				'email_subject' => $r->emailSubject
+			);
 		}
+		
+		// save the settings
+		Model_Settings::update_settings($settings);
 		
 		// get the messages
 		$result = $this->db->query(Database::SELECT, "SELECT * FROM sms_messages WHERE messageid = 1", true);
 		
 		foreach ($result as $r)
 		{
-			// welcome message
-			$item = Jelly::query('message', 'welcome_msg')->limit(1)->select();
-			$item->value = $r->welcomeMessage;
-			$item->save();
-			$messages[] = $item->saved();
-			
-			// sim message
-			$item = Jelly::query('message', 'sim')->limit(1)->select();
-			$item->value = $r->simmMessage;
-			$item->save();
-			$messages[] = $item->saved();
-			
-			// join disclaimer
-			$item = Jelly::query('message', 'join_disclaimer')->limit(1)->select();
-			$item->value = $r->joinDisclaimer;
-			$item->save();
-			$messages[] = $item->saved();
-			
-			// acceptance message
-			$item = Jelly::query('message', 'accept_message')->limit(1)->select();
-			$item->value = $r->acceptMessage;
-			$item->save();
-			$messages[] = $item->saved();
-			
-			// rejection message
-			$item = Jelly::query('message', 'reject_message')->limit(1)->select();
-			$item->value = $r->rejectMessage;
-			$item->save();
-			$messages[] = $item->saved();
-			
-			// join post
-			$item = Jelly::query('message', 'join_post')->limit(1)->select();
-			$item->value = $r->samplePostQuestion;
-			$item->save();
-			$messages[] = $item->saved();
+			$messages = array(
+				'welcome_msg' => $r->welcomeMessage,
+				'sim' => $r->simmMessage,
+				'join_disclaimer' => $r->joinDisclaimer,
+				'accept_message' => $r->acceptMessage,
+				'reject_message' => $r->rejectMessage,
+				'join_post' => $r->samplePostQuestion,
+			);
 		}
+		
+		// save the messages
+		Model_SiteContent::update_messages($messages);
 		
 		// optmize the tables
 		DBForge::optimize('settings');
-		DBForge::optimize('messages');
+		DBForge::optimize('site_content');
 		
-		// check to see if everything worked
-		$settings_count = (in_array(false, $settings)) ? false : true;
-		$messages_count = (in_array(false, $messages)) ? false : true;
-		
-		if ($settings_count === true and $messages_count === true)
-		{
-			$retval = array(
-				'code' => 1,
-				'message' => ''
-			);
-		}
-		else
-		{
-			if ($settings_count === true and $messages_count === false)
-			{
-				$retval['code'] = 2;
-				$retval['message'] = __("All of your settings were upgraded, but some of your messages couldn't be upgraded");
-			}
-			
-			if ($settings_count === false and $messages_count === true)
-			{
-				$retval['code'] = 2;
-				$retval['message'] = __("All of your messages were upgraded, but some of your settings couldn't be upgraded");
-			}
-			
-			if ($settings_count === false and $messages_count === false)
-			{
-				$retval['code'] = 0;
-				$retval['message'] = __("None of your settings or messages could be upgraded");
-			}
-		}
+		$retval = array(
+			'code' => 1,
+			'message' => ''
+		);
 		
 		echo json_encode($retval);
 	}
 	
+	/**
+	 * Upgrade the specs from SMS to Nova.
+	 */
 	public function action_upgrade_specs()
 	{
 		try {
 			// get the specs from the sms table
 			$result = $this->db->query(Database::SELECT, 'SELECT * FROM sms_specs WHERE specid = 1', true);
 			
+			// set the data for the new spec item
+			$specitem = array(
+				'name' => Model_Settings::get_settings('sim_name'),
+				'order' => 0
+			);
+			
 			// create the spec item
-			Jelly::factory('spec')
-				->set(array(
-					'name' => Jelly::query('setting', 'sim_name')->limit(1)->select()->value,
-					'order' => 0,
-				))
-				->save();
+			$item = Model_Spec::create_spec($specitem);
 			
-			// create an empty array for validating the specs upgrade
-			$specs = array();
-			
+			// loop through the results and build the array for updating the data
 			foreach ($result as $r)
 			{
-				// ship class
-				$item = Jelly::factory('formdata')
-					->set(array(
-						'field' => 23,
-						'value' => $r->shipClass,
-						'item' => 1,
-						'form' => 'specs'
-					))
-					->save();
-				$specs[] = $item->saved();
-				
-				// ship role
-				$item = Jelly::factory('formdata')
-					->set(array(
-						'field' => 24,
-						'value' => $r->shipRole,
-						'item' => 1,
-						'form' => 'specs'
-					))
-					->save();
-				$specs[] = $item->saved();
-				
-				// duration
-				$item = Jelly::factory('formdata')
-					->set(array(
-						'field' => 25,
-						'value' => $r->duration,
-						'item' => 1,
-						'form' => 'specs'
-					))
-					->save();
-				$specs[] = $item->saved();
-				
-				// refit
-				$item = Jelly::factory('formdata')
-					->set(array(
-						'field' => 26,
-						'value' => $r->refit.' '.$r->refitUnit,
-						'item' => 1,
-						'form' => 'specs'
-					))
-					->save();
-				$specs[] = $item->saved();
-				
-				// resupply
-				$item = Jelly::factory('formdata')
-					->set(array(
-						'field' => 27,
-						'value' => $r->resupply.' '.$r->resupplyUnit,
-						'item' => 1,
-						'form' => 'specs'
-					))
-					->save();
-				$specs[] = $item->saved();
-				
-				// length
-				$item = Jelly::factory('formdata')
-					->set(array(
-						'field' => 28,
-						'value' => $r->length,
-						'item' => 1,
-						'form' => 'specs'
-					))
-					->save();
-				$specs[] = $item->saved();
-				
-				// width
-				$item = Jelly::factory('formdata')
-					->set(array(
-						'field' => 29,
-						'value' => $r->width,
-						'item' => 1,
-						'form' => 'specs'
-					))
-					->save();
-				$specs[] = $item->saved();
-				
-				// height
-				$item = Jelly::factory('formdata')
-					->set(array(
-						'field' => 30,
-						'value' => $r->height,
-						'item' => 1,
-						'form' => 'specs'
-					))
-					->save();
-				$specs[] = $item->saved();
-				
-				// decks
-				$item = Jelly::factory('formdata')
-					->set(array(
-						'field' => 31,
-						'value' => $r->decks,
-						'item' => 1,
-						'form' => 'specs'
-					))
-					->save();
-				$specs[] = $item->saved();
-				
-				// officers
-				$item = Jelly::factory('formdata')
-					->set(array(
-						'field' => 32,
-						'value' => $r->complimentOfficers,
-						'item' => 1,
-						'form' => 'specs'
-					))
-					->save();
-				$specs[] = $item->saved();
-				
-				// enlisted
-				$item = Jelly::factory('formdata')
-					->set(array(
-						'field' => 33,
-						'value' => $r->complimentEnlisted,
-						'item' => 1,
-						'form' => 'specs'
-					))
-					->save();
-				$specs[] = $item->saved();
-				
-				// marines
-				$item = Jelly::factory('formdata')
-					->set(array(
-						'field' => 34,
-						'value' => $r->complimentMarines,
-						'item' => 1,
-						'form' => 'specs'
-					))
-					->save();
-				$specs[] = $item->saved();
-				
-				// civilians
-				$item = Jelly::factory('formdata')
-					->set(array(
-						'field' => 35,
-						'value' => $r->complimentCivilians,
-						'item' => 1,
-						'form' => 'specs'
-					))
-					->save();
-				$specs[] = $item->saved();
-				
-				// emergency compliment
-				$item = Jelly::factory('formdata')
-					->set(array(
-						'field' => 36,
-						'value' => $r->complimentEmergency,
-						'item' => 1,
-						'form' => 'specs'
-					))
-					->save();
-				$specs[] = $item->saved();
-				
-				// warp cruise
-				$item = Jelly::factory('formdata')
-					->set(array(
-						'field' => 37,
-						'value' => $r->warpCruise,
-						'item' => 1,
-						'form' => 'specs'
-					))
-					->save();
-				$specs[] = $item->saved();
-				
-				// warp max cruise
-				$item = Jelly::factory('formdata')
-					->set(array(
-						'field' => 38,
-						'value' => $r->warpMaxCruise.' '.$r->warpMaxTime,
-						'item' => 1,
-						'form' => 'specs'
-					))
-					->save();
-				$specs[] = $item->saved();
-				
-				// warp emergency
-				$item = Jelly::factory('formdata')
-					->set(array(
-						'field' => 39,
-						'value' => $r->warpEmergency.' '.$r->warpEmergencyTime,
-						'item' => 1,
-						'form' => 'specs'
-					))
-					->save();
-				$specs[] = $item->saved();
-				
-				// defensive
-				$item = Jelly::factory('formdata')
-					->set(array(
-						'field' => 40,
-						'value' => $r->shields."\r\n\r\n".$r->defensive,
-						'item' => 1,
-						'form' => 'specs'
-					))
-					->save();
-				$specs[] = $item->saved();
-				
-				// weapons
-				$item = Jelly::factory('formdata')
-					->set(array(
-						'field' => 41,
-						'value' => $r->phasers."\r\n\r\n".$r->torpedoLaunchers,
-						'item' => 1,
-						'form' => 'specs'
-					))
-					->save();
-				$specs[] = $item->saved();
-				
-				// armament
-				$item = Jelly::factory('formdata')
-					->set(array(
-						'field' => 42,
-						'value' => $r->torpedoCompliment,
-						'item' => 1,
-						'form' => 'specs'
-					))
-					->save();
-				$specs[] = $item->saved();
-				
-				// number of shuttlebays
-				$item = Jelly::factory('formdata')
-					->set(array(
-						'field' => 43,
-						'value' => $r->shuttlebays,
-						'item' => 1,
-						'form' => 'specs'
-					))
-					->save();
-				$specs[] = $item->saved();
-				
-				// shuttles
-				$item = Jelly::factory('formdata')
-					->set(array(
-						'field' => 44,
-						'value' => $r->shuttles,
-						'item' => 1,
-						'form' => 'specs'
-					))
-					->save();
-				$specs[] = $item->saved();
-				
-				// number of fighters
-				$item = Jelly::factory('formdata')
-					->set(array(
-						'field' => 45,
-						'value' => $r->fighters,
-						'item' => 1,
-						'form' => 'specs'
-					))
-					->save();
-				$specs[] = $item->saved();
-				
-				// number of runabouts
-				$item = Jelly::factory('formdata')
-					->set(array(
-						'field' => 46,
-						'value' => $r->runabouts,
-						'item' => 1,
-						'form' => 'specs'
-					))
-					->save();
-				$specs[] = $item->saved();
-			}
-			
-			if (in_array(false, $specs) and ! in_array(true, $specs))
-			{
-				$retval = array(
-					'code' => 0,
-					'message' => __("Your specifications were not upgraded")
-				);
-			}
-			elseif (in_array(false, $specs) and in_array(true, $specs))
-			{
-				$retval = array(
-					'code' => 2,
-					'message' => __("Some of your specifications were upgraded, but others were not")
-				);
-			}
-			else
-			{
-				$retval = array(
-					'code' => 1,
-					'message' => ''
+				$specsdata = array(
+					24 => $r->shipClass,
+					25 => $r->shipRole,
+					26 => $r->duration,
+					27 => $r->refit.' '.$r->refitUnit,
+					28 => $r->resupply.' '.$r->resupplyUnit,
+					29 => $r->length,
+					30 => $r->width,
+					31 => $r->height,
+					32 => $r->decks,
+					33 => $r->complimentOfficers,
+					34 => $r->complimentEnlisted,
+					35 => $r->complimentMarines,
+					36 => $r->complimentCivilians,
+					37 => $r->complimentEmergency,
+					38 => $r->warpCruise,
+					39 => $r->warpMaxCruise.' '.$r->warpMaxTime,
+					40 => $r->warpEmergency.' '.$r->warpEmergencyTime,
+					41 => $r->shields."\r\n\r\n".$r->defensive,
+					42 => $r->phasers."\r\n\r\n".$r->torpedoLaunchers,
+					43 => $r->torpedoCompliment,
+					44 => $r->shuttlebays,
+					45 => $r->shuttles,
+					46 => $r->fighters,
+					47 => $r->runabouts,
 				);
 			}
 			
-			// optmize the tables
+			// update the dynamic data
+			Model_FormData::update_data('specs', $item->id, $specsdata);
+			
+			$retval = array(
+				'code' => 1,
+				'message' => ''
+			);
+			
 			DBForge::optimize('specs');
-			DBForge::optimize('forms_data');
+			DBForge::optimize('form_data');
 		} catch (Exception $e) {
-			// catch the exception
 			$retval = array(
 				'code' => 0,
 				'message' => 'ERROR: '.$e->getMessage().' - line '.$e->getLine().' of '.$e->getFile()
@@ -1643,14 +1053,14 @@ class Controller_Setup_Smsajax extends Controller_Template {
 		echo json_encode($retval);
 	}
 	
+	/**
+	 * Upgrade the tour items from SMS to Nova.
+	 */
 	public function action_upgrade_tour()
 	{
 		try {
 			// get the tour items
 			$result = $this->db->query(Database::SELECT, 'SELECT * FROM sms_tour', true);
-			
-			// create an array for validating
-			$tour = array();
 			
 			foreach ($result as $r)
 			{
@@ -1674,66 +1084,37 @@ class Controller_Setup_Smsajax extends Controller_Template {
 				// make the images array a string
 				$images = implode(',', $images);
 				
-				$item = Jelly::factory('tour')
-					->set(array(
-						'name' => $r->tourName,
-						'order' => $r->tourOrder,
-						'display' => $r->tourDisplay,
-						'summary' => $r->tourSummary,
-						'images' => $images,
-						'specitem' => 1
-					))
-					->save();
-				$tour[] = $item->saved();
+				// an array of data with the info for creating a tour item
+				$tour = array(
+					'name' => $r->tourName,
+					'order' => $r->tourOrder,
+					'display' => ($r->tourDisplay == 'y') ? (int) true : (int) false,
+					'summary' => $r->tourSummary,
+					'images' => $images,
+					'spec_id' => 1,
+				);
 				
-				$dataitem = Jelly::factory('formdata')
-					->set(array(
-						'field' => 47,
-						'value' => $r->tourLocation,
-						'item' => $item->id(),
-						'form' => 'tour'
-					))
-					->save();
-				$tour[] = $dataitem->saved();
+				// create the tour item
+				$item = Model_Tour::create_tour_item($tour);
 				
-				$dataitem = Jelly::factory('formdata')
-					->set(array(
-						'field' => 48,
-						'value' => $r->tourDesc,
-						'item' => $item->id(),
-						'form' => 'tour'
-					))
-					->save();
-				$tour[] = $dataitem->saved();
+				// an array of data with the info for updating tour data
+				$tourdata = array(
+					48 => $r->tourLocation,
+					49 => $r->tourDesc,
+				);
+				
+				// update the data
+				Model_FormData::update_data('tour', $item->id, $tourdata);
 			}
 			
-			if (in_array(false, $tour) and ! in_array(true, $tour))
-			{
-				$retval = array(
-					'code' => 0,
-					'message' => __("Your tour items were not upgraded")
-				);
-			}
-			elseif (in_array(false, $tour) and in_array(true, $tour))
-			{
-				$retval = array(
-					'code' => 2,
-					'message' => __("Some of your tour items were upgraded, but others were not")
-				);
-			}
-			else
-			{
-				$retval = array(
-					'code' => 1,
-					'message' => ''
-				);
-			}
+			$retval = array(
+				'code' => 1,
+				'message' => ''
+			);
 			
-			// optmize the tables
 			DBForge::optimize('tour');
-			DBForge::optimize('forms_data');
+			DBForge::optimize('form_data');
 		} catch (Exception $e) {
-			// catch the exception
 			$retval = array(
 				'code' => 0,
 				'message' => 'ERROR: '.$e->getMessage().' - line '.$e->getLine().' of '.$e->getFile()
@@ -1743,11 +1124,11 @@ class Controller_Setup_Smsajax extends Controller_Template {
 		echo json_encode($retval);
 	}
 	
+	/**
+	 * Take the awards from the old crew table and put it into the awards_received table.
+	 */
 	public function action_upgrade_user_awards()
 	{
-		// change the awards received model to prevent null values
-		Jelly::meta('awardrec')->field('date')->auto_now_create = false;
-		
 		try {
 			// get the crew from the sms table
 			$result = $this->db->query(Database::SELECT, 'SELECT * FROM sms_crew', true);
@@ -1757,7 +1138,7 @@ class Controller_Setup_Smsajax extends Controller_Template {
 			
 			foreach ($result as $c)
 			{
-				$user = Jelly::query('character', $c->crewid)->select()->user;
+				$user = Model_Character::find($c->crewid)->user;
 				
 				if ( ! empty($c->awards))
 				{
@@ -1769,29 +1150,30 @@ class Controller_Setup_Smsajax extends Controller_Template {
 						{
 							$x = explode('|', $a);
 							
-							$awardaction = Jelly::factory('awardrec')
-								->set(array(
-									'character' => $c->crewid,
-									'user' => $user->id,
-									'award' => $x[0],
-									'date' => $x[1],
-									'reason' => $x[2]
-								))
-								->save();
-							$saved[] = $awardaction->saved();
+							// set the data to be put into the database
+							$awarddata = array(
+								'receive_character_id' => $c->crewid,
+								'receive_user_id' => $user->id,
+								'award_id' => $x[0],
+								'date' => $x[1],
+								'reason' => $x[2]
+							);
 						}
 						else
 						{
-							$awardaction = Jelly::factory('awardrec')
-								->set(array(
-									'character' => $c->crewid,
-									'user' => $user->id,
-									'award' => $a,
-									'date' => null
-								))
-								->save();
-							$saved[] = $awardaction->saved();
+							// set the data to be put into the database
+							$awarddata = array(
+								'receive_character_id' => $c->crewid,
+								'receive_user_id' => $user->id,
+								'award_id' => $a,
+								'date' => null
+							);
 						}
+						
+						// create the item
+						$item = Model_AwardRec::create_item($awarddata);
+						
+						$saved[] = (is_object($item)) ? true : false;
 					}
 				}
 			}
@@ -1800,14 +1182,14 @@ class Controller_Setup_Smsajax extends Controller_Template {
 			{
 				$retval = array(
 					'code' => 0,
-					'message' => __("Your given awards could not be upgraded")
+					'message' => "Your given awards could not be upgraded"
 				);
 			}
 			elseif (in_array(true, $saved) and in_array(false, $saved))
 			{
 				$retval = array(
 					'code' => 2,
-					'message' => __("All of your given awards could not be upgraded")
+					'message' => "All of your given awards could not be upgraded"
 				);
 			}
 			else
@@ -1818,7 +1200,6 @@ class Controller_Setup_Smsajax extends Controller_Template {
 				);
 			}
 			
-			// optmize the tables
 			DBForge::optimize('awards_received');
 		} catch (Exception $e) {
 			$retval = array(
@@ -1830,30 +1211,32 @@ class Controller_Setup_Smsajax extends Controller_Template {
 		echo json_encode($retval);
 	}
 	
+	/**
+	 * Update all the users to make sure they have proper defaults.
+	 */
 	public function action_upgrade_user_defaults()
 	{
 		try {
 			// get the total number of users
-			$users = Jelly::query('user')->count();
+			$users = Model_User::count();
 			
 			// get the total number of characters
-			$characters = Jelly::query('character')->count();
+			$characters = Model_Character::count();
 			
 			if ($users > 0 and $characters > 0)
 			{
 				// pull the defaults for skins and ranks
 				$defaults = array(
-					'skin_main'		=> Jelly::query('catalogueskinsec')->defaultskin('main')->select()->skin->location,
-					'skin_admin'	=> Jelly::query('catalogueskinsec')->defaultskin('admin')->select()->skin->location,
-					'skin_wiki'		=> Jelly::query('catalogueskinsec')->defaultskin('wiki')->select()->skin->location,
-					'rank'			=> Jelly::query('cataloguerank')->defaultrank()->select()->location,
-					'links'			=> '',
-					'language'		=> 'en-us',
-					'dst'			=> 0,
+					'skin_main'			=> Model_CatalogueSkinSec::get_default('main')->skins->location,
+					'skin_admin'		=> Model_CatalogueSkinSec::get_default('admin')->skins->location,
+					'display_rank'		=> Model_CatalogueRank::get_default(true),
+					'my_links'			=> '',
+					'language'			=> 'en-us',
+					'daylight_savings'	=> (int) false,
 				);
 				
 				// update all users
-				Jelly::query('user')->set($defaults)->update();
+				Model_User::update_user(null, $defaults);
 				
 				$retval = array(
 					'code' => 1,
@@ -1864,11 +1247,10 @@ class Controller_Setup_Smsajax extends Controller_Template {
 			{
 				$retval = array(
 					'code' => 0,
-					'message' => __("User defaults could not be upgraded")
+					'message' => "User defaults could not be upgraded"
 				);
 			}
 			
-			// optmize the tables
 			DBForge::optimize('characters');
 			DBForge::optimize('users');
 		} catch (Exception $e) {
@@ -1881,6 +1263,9 @@ class Controller_Setup_Smsajax extends Controller_Template {
 		echo json_encode($retval);
 	}
 	
+	/**
+	 * Upgrade the user_id field in the personal logs table.
+	 */
 	public function action_upgrade_user_logs()
 	{
 		try {
@@ -1889,26 +1274,29 @@ class Controller_Setup_Smsajax extends Controller_Template {
 			
 			foreach ($result as $c)
 			{
-				$user = Jelly::query('character', $c->crewid)->select()->user;
+				$user = Model_Character::find($c->crewid)->user;
 				
 				if ( ! is_null($user) and $user->id > 0)
 				{
-					// update the personal logs
-					$logs = Jelly::query('personallog')
-						->where('author_character', '=', $c->crewid)
-						->set(array('author_user' => $user->id))
-						->update();
+					// get all of a character's logs
+					$logs = Model_PersonalLog::find()->where('character_id', $c->crewid)->get();
+					
+					foreach ($logs as $l)
+					{
+						$l->user_id = $user->id;
+						$l->save();
+					}
 				}
 			}
 			
 			// count the number of personal logs that don't have a user (there shouldn't be any)
-			$blank = Jelly::query('personallog')->where('author_user', '=', '')->count();
+			$blank = Model_PersonalLog::find()->where('user_id', '')->count();
 			
 			if ($blank > 0)
 			{
 				$retval = array(
 					'code' => 0,
-					'message' => __("Some of your personal logs could not be upgraded and as a result, may not be associated with some users properly")
+					'message' => "Some of your personal logs could not be upgraded and as a result, may not be associated with some users properly"
 				);
 			}
 			else
@@ -1919,7 +1307,6 @@ class Controller_Setup_Smsajax extends Controller_Template {
 				);
 			}
 			
-			// optmize the tables
 			DBForge::optimize('personal_logs');
 		} catch (Exception $e) {
 			$retval = array(
@@ -1931,6 +1318,9 @@ class Controller_Setup_Smsajax extends Controller_Template {
 		echo json_encode($retval);
 	}
 	
+	/**
+	 * Upgrade the user_id field in the news table.
+	 */
 	public function action_upgrade_user_news()
 	{
 		try {
@@ -1939,26 +1329,29 @@ class Controller_Setup_Smsajax extends Controller_Template {
 			
 			foreach ($result as $c)
 			{
-				$user = Jelly::query('character', $c->crewid)->select()->user;
+				$user = Model_Character::find($c->crewid)->user;
 				
 				if ( ! is_null($user) and $user->id > 0)
 				{
-					// update the news items
-					$news = Jelly::query('news')
-						->where('author_character', '=', $c->crewid)
-						->set(array('author_user' => $user->id))
-						->update();
+					// get all of a character's logs
+					$news = Model_News::find()->where('character_id', $c->crewid)->get();
+					
+					foreach ($news as $n)
+					{
+						$n->user_id = $user->id;
+						$n->save();
+					}
 				}
 			}
 			
 			// count the number of news items without a user (there shouldn't be any)
-			$blank = Jelly::query('news')->where('author_user', '=', '')->count();
+			$blank = Model_News::find()->where('user_id', '')->count();
 			
 			if ($blank > 0)
 			{
 				$retval = array(
 					'code' => 0,
-					'message' => __("Some of your news items could not be upgraded and as a result, may not be associated with some users properly")
+					'message' => "Some of your news items could not be upgraded and as a result, may not be associated with some users properly"
 				);
 			}
 			else
@@ -1969,7 +1362,6 @@ class Controller_Setup_Smsajax extends Controller_Template {
 				);
 			}
 			
-			// optmize the tables
 			DBForge::optimize('news');
 		} catch (Exception $e) {
 			$retval = array(
@@ -1981,49 +1373,56 @@ class Controller_Setup_Smsajax extends Controller_Template {
 		echo json_encode($retval);
 	}
 	
+	/**
+	 * Go through the posts table and add records for the post_authors through table.
+	 */
 	public function action_upgrade_user_posts()
 	{
 		try {
 			// get all the posts
-			$posts = Jelly::query('post')->select();
+			$posts = Model_Post::find('all');
 			
 			// set a temp array to collect saves
 			$saved = array();
 			
 			foreach ($posts as $p)
 			{
-				// grab the authors and put them into an array
-				$authors = explode(',', $p->authors);
+				/**
+				 * Grab the authors from the table (we need to do it this way because 
+				 * there's no reason to be adding a field we're just going to be using 
+				 * here to the ORM)
+				 */
+				$post_item = $this->db->query(Database::SELECT, "SELECT authors FROM `".$this->db->table_prefix()."posts` WHERE id = ".$p->id)
+					->current();
 				
-				// make sure we have an array
-				$array = array();
+				// make the authors listing an array
+				$authors = explode(',', $post_item['authors']);
 				
 				foreach ($authors as $a)
 				{
-					if ($a > 0)
-					{
-						// get the user id
-						$user = Jelly::query('character', $a)->select()->user;
+					// get the character
+					$char = Model_Character::find($a);
 					
-						if ( ! is_null($user) and ! in_array($user->id, $array))
-						{
-							$array[] = $user->id;
-						}
+					if ($char !== null)
+					{
+						// build the information that's going into the post_authors table
+						$through = array(
+							'post_id' => $p->id,
+							'character_id' => $a,
+							'user_id' => ($a === 0 or $a === null or $char->user === null) ? 0 : $char->user->id,
+						);
+						
+						// add the record to the table
+						Model_PostAuthor::create_item($through);
 					}
 				}
-				
-				// create a string from the array
-				$users = implode(',', $array);
-				
-				// update the post
-				$post = Jelly::factory('post', $p->id)
-					->set(array('author_users' => $users))
-					->save();
-				$saved[] = $post->saved();
 			}
 			
 			if ( ! in_array(false, $saved))
 			{
+				// since we know this was successful, we're going to remove the columns we don't need
+				DBForge::drop_column('posts', 'authors');
+				
 				$retval = array(
 					'code' => 1,
 					'message' => ''
@@ -2033,12 +1432,12 @@ class Controller_Setup_Smsajax extends Controller_Template {
 			{
 				$retval = array(
 					'code' => 0,
-					'message' => __("Not all of your mission posts could be upgraded")
+					'message' => "Not all of your mission posts could be upgraded"
 				);
 			}
 			
-			// optmize the tables
 			DBForge::optimize('posts');
+			DBForge::optimize('post_authors');
 		} catch (Exception $e) {
 			$retval = array(
 				'code' => 0,
@@ -2049,15 +1448,61 @@ class Controller_Setup_Smsajax extends Controller_Template {
 		echo json_encode($retval);
 	}
 	
+	/**
+	 * Update the welcome page title.
+	 */
 	public function action_upgrade_welcome()
 	{
 		try {
-			// update the welcome page header
-			$msg = Jelly::query('message', 'welcome_head')->limit(1)->select();
-			$msg->value = 'Welcome to the '.Jelly::query('setting', 'sim_name')->limit(1)->select()->value.'!';
-			$msg->save();
+			// do the update
+			Model_SiteContent::update_messages(array('welcome_head' => "Welcome to the ".Model_Settings::get_settings('sim_name')."!"));
 			
-			if ($msg->saved())
+			$retval = array(
+				'code' => 1,
+				'message' => ''
+			);
+			
+			DBForge::optimize('site_contents');
+		} catch (Exception $e) {
+			$retval = array(
+				'code' => 0,
+				'message' => 'ERROR: '.$e->getMessage().' - line '.$e->getLine().' of '.$e->getFile()
+			);
+		}
+		
+		echo json_encode($retval);
+	}
+	
+	private function _upgrade_applications()
+	{
+		try {
+			$result = $this->db->query(Database::SELECT, "SELECT * FROM nova1_applications", true);
+			$count_old= $result->count();
+			
+			if (count($result) > 0)
+			{
+				foreach ($result as $r)
+				{
+					$data = array(
+						'email'				=> $r->app_email,
+						'ip_address'		=> $r->app_ip,
+						'user_id'			=> $r->app_user,
+						'user_name'			=> $r->app_user_name,
+						'character_id'		=> $r->app_character,
+						'character_name'	=> $r->app_character_name,
+						'position'			=> $r->app_position,
+						'date'				=> $r->app_date,
+						'action'			=> $r->app_action,
+						'message'			=> $r->app_message,
+					);
+					
+					Model_Application::create_item($data);
+				}
+			}
+			
+			$count_new = Model_Application::count();
+			
+			if ($count_new == $count_old)
 			{
 				$retval = array(
 					'code' => 1,
@@ -2068,12 +1513,11 @@ class Controller_Setup_Smsajax extends Controller_Template {
 			{
 				$retval = array(
 					'code' => 0,
-					'message' => __("Your welcome message couldn't be upgraded, please do so manually")
+					'message' => "The applications could not be properly upgraded."
 				);
 			}
 			
-			// optmize the tables
-			DBForge::optimize('messages');
+			DBForge::optimize('applications');
 		} catch (Exception $e) {
 			$retval = array(
 				'code' => 0,
@@ -2081,6 +1525,471 @@ class Controller_Setup_Smsajax extends Controller_Template {
 			);
 		}
 		
-		echo json_encode($retval);
+		return $retval;
+	}
+	
+	private function _upgrade_character_form()
+	{
+		# code...
+	}
+	
+	private function _upgrade_character_promotions()
+	{
+		try {
+			$result = $this->db->query(Database::SELECT, "SELECT * FROM nova1_characters_promotions", true);
+			$count_old= $result->count();
+			
+			if (count($result) > 0)
+			{
+				foreach ($result as $r)
+				{
+					$data = array(
+						'user_id'		=> $r->prom_user,
+						'character_id'	=> $r->prom_char,
+						'old_order'		=> $r->prom_old_order,
+						'old_rank'		=> $r->prom_old_rank,
+						'new_order'		=> $r->prom_new_order,
+						'new_rank'		=> $r->prom_new_rank,
+						'date'			=> $r->prom_date,
+					);
+					
+					Model_CharacterPromotion::create_item($data);
+				}
+			}
+			
+			$count_new = Model_CharacterPromotion::count();
+			
+			if ($count_new == $count_old)
+			{
+				$retval = array(
+					'code' => 1,
+					'message' => ''
+				);
+			}
+			else
+			{
+				$retval = array(
+					'code' => 0,
+					'message' => "The character promotion records could not be properly upgraded."
+				);
+			}
+			
+			DBForge::optimize('character_promotions');
+		} catch (Exception $e) {
+			$retval = array(
+				'code' => 0,
+				'message' => 'ERROR: '.$e->getMessage().' - line '.$e->getLine().' of '.$e->getFile()
+			);
+		}
+		
+		return $retval;
+	}
+	
+	private function _upgrade_characters()
+	{
+		$c = $this->db->query(Database::SELECT, "SELECT charid FROM nova1_characters", true);
+		$count_old = $c->count();
+		
+		DBForge::drop_table('characters');
+		
+		try {
+			$this->db->query(null, "CREATE TABLE ".$this->db->table_prefix()."characters SELECT * FROM nova1_characters", true);
+			
+			$fields = array(
+				'charid' => array(
+					'name' => 'id',
+					'type' => 'INT',
+					'constraint' => 8),
+				'user' => array(
+					'name' => 'user_id',
+					'type' => 'INT',
+					'constraint' => 8),
+				'first_name' => array(
+					'name' => 'first_name',
+					'type' => 'VARCHAR',
+					'constraint' => 50),
+				'middle_name' => array(
+					'name' => 'middle_name',
+					'type' => 'VARCHAR',
+					'constraint' => 50),
+				'last_name' => array(
+					'name' => 'last_name',
+					'type' => 'VARCHAR',
+					'constraint' => 50),
+				'suffix' => array(
+					'name' => 'suffix',
+					'type' => 'VARCHAR',
+					'constraint' => 50),
+				'crew_type' => array(
+					'name' => 'status',
+					'type' => 'ENUM',
+					'constraint' => "'active','inactive','pending','archived'",
+					'default' => 'pending'),
+				'date_activate' => array(
+					'name' => 'activated',
+					'type' => 'BIGINT',
+					'constraint' => 20),
+				'date_deactivate' => array(
+					'name' => 'deactivated',
+					'type' => 'BIGINT',
+					'constraint' => 20),
+				'rank' => array(
+					'name' => 'rank_id',
+					'type' => 'INT',
+					'constraint' => 10),
+				'position_1' => array(
+					'name' => 'position1_id',
+					'type' => 'INT',
+					'constraint' => 10),
+				'position_2' => array(
+					'name' => 'position2_id',
+					'type' => 'INT',
+					'constraint' => 10),
+				'last_post' => array(
+					'name' => 'last_post',
+					'type' => 'BIGINT',
+					'constraint' => 20),
+			);
+			
+			DBForge::modify_column('characters', $fields);
+			
+			$add = array(
+				'updated_at' => array(
+					'type' => 'BIGINT',
+					'constraint' => 20)
+			);
+			
+			DBForge::add_column('characters', $add);
+			
+			$count_new = Model_Character::count();
+			
+			if ($count_new == $count_old)
+			{
+				$retval = array(
+					'code' => 1,
+					'message' => ''
+				);
+			}
+			else
+			{
+				$retval = array(
+					'code' => 0,
+					'message' => "Not all of the characters were transferred to the Nova 3 format"
+				);
+			}
+			
+			DBForge::optimize('awards');
+		} catch (Exception $e) {
+			$retval = array(
+				'code' => 0,
+				'message' => 'ERROR: '.$e->getMessage().' - line '.$e->getLine().' of '.$e->getFile()
+			);
+		}
+		
+		return $retval;
+	}
+	
+	private function _upgrade_coc()
+	{
+		$c = $this->db->query(Database::SELECT, "SELECT coc_id FROM nova1_coc", true);
+		$count_old = $c->count();
+		
+		DBForge::drop_table('coc');
+		
+		try {
+			$this->db->query(null, "CREATE TABLE ".$this->db->table_prefix()."coc SELECT * FROM nova1_coc", true);
+			
+			$fields = array(
+				'coc_id' => array(
+					'name' => 'id',
+					'type' => 'INT',
+					'constraint' => 5),
+				'coc_crew' => array(
+					'name' => 'character_id',
+					'type' => 'INT',
+					'constraint' => 8),
+				'coc_order' => array(
+					'name' => 'order',
+					'type' => 'INT',
+					'constraint' => 5),
+			);
+			
+			DBForge::modify_column('coc', $fields);
+			
+			$add = array(
+				'user_id' => array(
+					'type' => 'INT',
+					'constraint' => 8)
+			);
+			
+			DBForge::add_column('coc', $add);
+			
+			$all = Model_Coc::find('all');
+			
+			if (count($all) > 0)
+			{
+				foreach ($all as $a)
+				{
+					$char = Model_Character::find($a->character_id);
+					
+					if ($char !== null)
+					{
+						$a->user_id = ($char->user === 0 or $char->user === null) ? 0 : $char->user->id;
+						$a->save();
+					}
+				}
+			}
+			
+			$count_new = Model_Coc::count();
+			
+			if ($count_new == $count_old)
+			{
+				$retval = array(
+					'code' => 1,
+					'message' => ''
+				);
+			}
+			else
+			{
+				$retval = array(
+					'code' => 0,
+					'message' => "The chain of command could not be properly upgraded."
+				);
+			}
+			
+			DBForge::optimize('coc');
+		} catch (Exception $e) {
+			$retval = array(
+				'code' => 0,
+				'message' => 'ERROR: '.$e->getMessage().' - line '.$e->getLine().' of '.$e->getFile()
+			);
+		}
+		
+		return $retval;
+	}
+	
+	private function _upgrade_user_loa()
+	{
+		try {
+			$result = $this->db->query(Database::SELECT, "SELECT * FROM nova1_user_loa", true);
+			$count_old= $result->count();
+			
+			if (count($result) > 0)
+			{
+				foreach ($result as $r)
+				{
+					$data = array(
+						'user_id'	=> $r->loa_user,
+						'start'		=> $r->loa_start_date,
+						'end'		=> $r->loa_end_date,
+						'duration'	=> $r->loa_duration,
+						'reason'	=> $r->loa_reason,
+						'type'		=> $r->loa_type,
+					);
+					
+					Model_UserLoa::create_item($data);
+				}
+			}
+			
+			$count_new = Model_UserLoa::count();
+			
+			if ($count_new == $count_old)
+			{
+				$retval = array(
+					'code' => 1,
+					'message' => ''
+				);
+			}
+			else
+			{
+				$retval = array(
+					'code' => 0,
+					'message' => "The LOA records could not be properly upgraded."
+				);
+			}
+			
+			DBForge::optimize('user_loas');
+		} catch (Exception $e) {
+			$retval = array(
+				'code' => 0,
+				'message' => 'ERROR: '.$e->getMessage().' - line '.$e->getLine().' of '.$e->getFile()
+			);
+		}
+		
+		return $retval;
+	}
+	
+	private function _upgrade_users()
+	{
+		$c = $this->db->query(Database::SELECT, "SELECT userid FROM nova1_users", true);
+		$count_old = $c->count();
+		
+		DBForge::drop_table('users');
+		
+		try {
+			$this->db->query(null, "CREATE TABLE ".$this->db->table_prefix()."users SELECT * FROM nova1_users", true);
+			
+			$fields = array(
+				'userid' => array(
+					'name' => 'id',
+					'type' => 'INT',
+					'constraint' => 8),
+				'name' => array(
+					'name' => 'name',
+					'type' => 'VARCHAR',
+					'constraint' => 255),
+				'email' => array(
+					'name' => 'email',
+					'type' => 'VARCHAR',
+					'constraint' => 100),
+				'password' => array(
+					'name' => 'password',
+					'type' => 'VARCHAR',
+					'constraint' => 40),
+				'date_of_birth' => array(
+					'name' => 'date_of_birth',
+					'type' => 'VARCHAR',
+					'constraint' => 50),
+				'main_char' => array(
+					'name' => 'character_id',
+					'type' => 'INT',
+					'constraint' => 8),
+				'access_role' => array(
+					'name' => 'role_id',
+					'type' => 'INT',
+					'constraint' => 5),
+				'is_sysadmin' => array(
+					'name' => 'is_sysadmin',
+					'type' => 'ENUM',
+					'constraint' => "'y','n'"),
+				'is_game_master' => array(
+					'name' => 'is_game_master',
+					'type' => 'ENUM',
+					'constraint' => "'y','n'"),
+				'is_webmaster' => array(
+					'name' => 'is_webmaster',
+					'type' => 'ENUM',
+					'constraint' => "'y','n'"),
+				'is_firstlaunch' => array(
+					'name' => 'is_firstlaunch',
+					'type' => 'ENUM',
+					'constraint' => "'y','n'"),
+				'timezone' => array(
+					'name' => 'timezone',
+					'type' => 'VARCHAR',
+					'constraint' => 5),
+				'daylight_savings' => array(
+					'name' => 'daylight_savings',
+					'type' => 'VARCHAR',
+					'constraint' => 1),
+				'language' => array(
+					'name' => 'language',
+					'type' => 'VARCHAR',
+					'constraint' => 50),
+				'join_date' => array(
+					'name' => 'join_date',
+					'type' => 'BIGINT',
+					'constraint' => 20),
+				'leave_date' => array(
+					'name' => 'leave_date',
+					'type' => 'BIGINT',
+					'constraint' => 20),
+				'last_post' => array(
+					'name' => 'last_post',
+					'type' => 'BIGINT',
+					'constraint' => 20),
+				'last_login' => array(
+					'name' => 'last_login',
+					'type' => 'BIGINT',
+					'constraint' => 20),
+				'loa' => array(
+					'name' => 'loa',
+					'type' => 'ENUM',
+					'constraint' => "'active','loa','eloa'"),
+				'display_rank' => array(
+					'name' => 'display_rank',
+					'type' => 'VARCHAR',
+					'constraint' => 100),
+				'skin_main' => array(
+					'name' => 'skin_main',
+					'type' => 'VARCHAR',
+					'constraint' => 100),
+				'skin_admin' => array(
+					'name' => 'skin_admin',
+					'type' => 'VARCHAR',
+					'constraint' => 100),
+				'security_question' => array(
+					'name' => 'security_question',
+					'type' => 'INT',
+					'constraint' => 5),
+				'security_answer' => array(
+					'name' => 'security_answer',
+					'type' => 'VARCHAR',
+					'constraint' => 40),
+				'password_reset' => array(
+					'name' => 'password_reset',
+					'type' => 'TINYINT',
+					'constraint' => 1),
+				'my_links' => array(
+					'name' => 'my_links',
+					'type' => 'TEXT'),
+				'last_update' => array(
+					'name' => 'updated_at',
+					'type' => 'BIGINT',
+					'constraint' => 20),
+			);
+			
+			DBForge::modify_column('characters', $fields);
+			
+			$add = array(
+				'email_format' => array(
+					'type' => 'VARCHAR',
+					'constraint' => 4)
+			);
+			
+			DBForge::add_column('characters', $add);
+			
+			$drop = array(
+				'status',
+				'instant_message',
+				'skin_wiki',
+				'location',
+				'interests',
+				'bio',
+				'moderate_posts',
+				'moderate_logs',
+				'moderate_news',
+				'moderate_post_comments',
+				'moderate_log_comments',
+				'moderate_news_comments',
+				'moderate_wiki_comments'
+			);
+			
+			$count_new = Model_Character::count();
+			
+			if ($count_new == $count_old)
+			{
+				$retval = array(
+					'code' => 1,
+					'message' => ''
+				);
+			}
+			else
+			{
+				$retval = array(
+					'code' => 0,
+					'message' => "Not all of the characters were transferred to the Nova 3 format"
+				);
+			}
+			
+			DBForge::optimize('awards');
+		} catch (Exception $e) {
+			$retval = array(
+				'code' => 0,
+				'message' => 'ERROR: '.$e->getMessage().' - line '.$e->getLine().' of '.$e->getFile()
+			);
+		}
+		
+		return $retval;
 	}
 }

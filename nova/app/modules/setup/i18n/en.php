@@ -91,5 +91,17 @@ return array(
 				'instructions' => "Alright, time to get started! Like SMS, Nova 3 is a dynamic, database-driven web system which means, you guessed it, I need to install the Nova-specific database pieces now and then upgrade most of your SMS data to the newer Nova 3 format. Start to finish, the upgrade should only take a few minutes to complete and then you'll be on your way. If you have questions, you can refer to the readme that came in the Nova zip archive, check out the <a href='http://docs.anodyne-productions.com' target='_blank'>user guide</a> or drop in to our <a href='http://forums.anodyne-productions.com' target='_blank'>forums</a>.\r\n\r\nTime to get started now...",
 			),
 		),
+		
+		/**
+		 * Nova 1 upgrade.
+		 */
+		'nova1' => array(
+			'step0' => array(
+				'instructions' => "Alright, time to get started! Like Nova 1, Nova 3 is a dynamic, database-driven web system which means, you guessed it, I need to install the Nova-specific database pieces now and then upgrade most of your Nova data to the newer Nova 3 format. Start to finish, the upgrade should only take a few minutes to complete and then you'll be on your way. If you have questions, you can refer to the readme that came in the Nova zip archive, check out the <a href='http://docs.anodyne-productions.com' target='_blank'>user guide</a> or drop in to our <a href='http://forums.anodyne-productions.com' target='_blank'>forums</a>.\r\n\r\nTime to get started now...",
+			),
+			'step1' => array(
+				'instructions' => "The first thing I needed to do was to rename all of your Nova 1 tables. This allows me to migrate your Nova 1 data to Nova 3 without modifying the original data, so you'll have a copy of the original data in case anything happens. Now that all of your tables have been renamed, it's time to install Nova 3 and start migrating your data over.",
+			),
+		),
 	),
 );

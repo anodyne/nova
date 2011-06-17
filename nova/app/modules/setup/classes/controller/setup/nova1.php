@@ -9,76 +9,55 @@
  * @version		3.0
  */
 
-class Controller_Setup_Sms extends Controller_Template {
+class Controller_Setup_Nova1 extends Controller_Template {
 	
 	public function before()
 	{
 		parent::before();
 		
 		// make sure the database config file exists
-		if ( ! file_exists(APPPATH.'config/database'.EXT))
+		if ( ! file_exists(APPPATH.'config/database.php'))
 		{
-			$this->request->redirect('setup/config');
+			$this->request->redirect('setup/main/config');
 		}
 		else
 		{
 			// you're allowed to go to these segments if the system isn't installed
-			$safesegs = array('step', 'index', 'verify', 'readme');
+			$safesegs = array('step');
 			
 			// get an instance of the database
 			$db = Database::instance();
 			
 			// get the number of tables
-			$tables = Kohana::config('novasys.app_db_tables');
+			$tables = Kohana::config('nova.app_db_tables');
 			
 			// we're upgrading from sms, so make sure the system isn't installed
 			if ($this->request->action() != 'step' and (count($db->list_tables($db->table_prefix().'%')) == $tables))
 			{
-				$this->request->redirect('install/index');
+				$this->request->redirect('setup/main/index');
 			}
 		}
 		
 		// set the locale
-		i18n::lang('en-us');
+		I18n::lang('en-us');
 		
 		// set the shell
-		$this->template = View::factory(Location::file('upgrade', null, 'structure'));
+		$this->template = View::factory(Location::file('setup', null, 'structure'));
 		
 		// set the variables in the template
-		$this->template->title 					= Kohana::config('novasys.app_name').' :: ';
+		$this->template->title 					= Kohana::config('nova.app_name').' :: ';
 		$this->template->javascript				= false;
-		$this->template->layout					= View::factory(Location::file('upgrade', null, 'templates'));
+		$this->template->layout					= View::factory(Location::file('setup', null, 'templates'));
 		$this->template->layout->label			= false;
 		$this->template->layout->flash			= false;
 		$this->template->layout->controls		= false;
 	}
 	
-	public function action_index()
-	{
-		// nova must be installed in the same database where sms is
-		if (count(Database::instance()->list_tables('sms_%')) == 0)
-		{
-			$this->template->layout->flash = View::factory(Location::view('flash'));
-			$this->template->layout->flash->status = 'error';
-			$this->template->layout->flash->message = __('Nova 3 must be installed in the same database as SMS.');
-		}
-		
-		// create a new content view
-		$this->template->layout->content = View::factory(Location::view('upgrade_index'));
-		
-		// assign the object a shorter variable to use in the method
-		$data = $this->template->layout->content;
-		
-		// figure out if the system is installed or not
-		$data->installed = Utility::install_status();
-		
-		// content
-		$this->template->title.= __('Upgrade Center');
-		$this->template->layout->label = __('Upgrade Center');
-		
-		// send the response
-		$this->request->response = $this->template;
-	}
+	/**
+	 * 1 - change the table prefix from whatever it is to nova1_
+	 * 2 - install nova 3
+	 * 3 - move the data over from nova 1 similar to how we do in the sms upgrade
+	 */
 	
 	public function action_step($step = 0)
 	{
@@ -103,29 +82,29 @@ class Controller_Setup_Sms extends Controller_Template {
 			$allowed = false;
 			
 			// show the flash message
-			$this->template->layout->flash = View::factory(Location::view('flash'));
+			$this->template->layout->flash = View::factory('components/pages/flash');
 			$this->template->layout->flash->status = 'error';
-			$this->template->layout->flash->message = __('step.error_no_genre', array(':path' => APPFOLDER.'/config/nova'.EXT));
+			$this->template->layout->flash->message = ___('setup.error.no_genre', array(':path' => APPFOLDER.'/config/nova.php'));
 		}
 		
 		switch ($step)
 		{
 			case 0:
 				// create a new content view
-				$this->template->layout->content = View::factory(Location::view('upgrade_step0'));
+				$this->template->layout->content = View::factory('components/pages/nova1/step0');
+				
+				// create the javascript view
+				$this->template->javascript = View::factory('components/js/nova1/step0_js');
 				
 				// assign the object a shorter variable to use in the method
 				$data = $this->template->layout->content;
 				
 				// make sure the proper message is displayed
-				$data->message = nl2br(__('step0.inst'));
+				$data->message = nl2br(___('setup.nova1.step0.instructions'));
 				
 				// content
-				$this->template->title.= __('Upgrade to Nova');
-				$this->template->layout->label = __('Getting Started');
-				
-				// create the javascript view
-				$this->template->javascript = View::factory(Location::view('upgrade_step0_js', null, 'js'));
+				$this->template->title.= 'Upgrading to Nova 3';
+				$this->template->layout->label = 'Upgrading to Nova 3';
 				
 				if ($allowed === true)
 				{
@@ -137,24 +116,76 @@ class Controller_Setup_Sms extends Controller_Template {
 					);
 					
 					// build the next step control
-					$this->template->layout->controls = form::open('upgrade/step/1').form::button('next', __('Start Upgrade'), $next).form::close();
+					$this->template->layout->controls = Form::open('setup/nova1/step/1').Form::button('next', 'Start Upgrade', $next).Form::close();
 				}
 			break;
-				
+			
 			case 1:
-				if (isset($_POST['next']))
+				if (HTTP_Request::POST == $this->request->method())
+				{
+					// get the tables that are part of nova
+					$tables = $db->list_tables($db->table_prefix().'%');
+					
+					if (count($tables) > 0)
+					{
+						foreach ($tables as $table)
+						{
+							// set the new table name
+							$newtable = '`nova1_'.str_replace($db->table_prefix(), '', $table).'`';
+							
+							// build the sql statement
+							$sql = "ALTER TABLE `".$table."` RENAME TO ".$newtable;
+							
+							// run the query
+							$db->query(null, $sql);
+						}
+					}
+				}
+				
+				// create a new content view
+				$this->template->layout->content = View::factory('components/pages/nova1/step1');
+				
+				// create the javascript view
+				$this->template->javascript = View::factory('components/js/nova1/step1_js');
+				
+				// assign the object a shorter variable to use in the method
+				$data = $this->template->layout->content;
+				
+				// make sure the proper message is displayed
+				$data->message = nl2br(___('setup.nova1.step1.instructions'));
+				
+				// content
+				$this->template->title.= 'Upgrading to Nova 3';
+				$this->template->layout->label = 'Upgrading to Nova 3';
+				
+				// build the next step button
+				$next = array(
+					'type' => 'submit',
+					'class' => 'btn-main',
+					'id' => 'next',
+				);
+				
+				// build the next step control
+				$this->template->layout->controls = Form::open('setup/nova1/step/2').Form::button('next', 'Continue Upgrade', $next).Form::close();
+			break;
+				
+			case 2:
+				if (HTTP_Request::POST == $this->request->method())
 				{
 					// update the character set
 					$dbconfig = Kohana::config('database');
 					$db->set_charset($dbconfig['default']['charset']);
 					
 					// pull in the field information
-					include_once MODPATH.'nova/install/assets/fields'.EXT;
+					include_once MODPATH.'app/modules/setup/assets/install/fields.php';
 					
 					foreach ($data as $key => $value)
 					{
-						DBForge::add_field($$value['fields']);
-						DBForge::add_key($value['id'], true);
+						$fieldID = (isset($value['id'])) ? $value['id'] : 'id';
+						$fieldName = (isset($value['fields'])) ? $value['fields'] : 'fields_'.$key;
+						
+						DBForge::add_field($$fieldName);
+						DBForge::add_key($fieldID, true);
 						
 						if (isset($value['index']))
 						{
@@ -174,7 +205,7 @@ class Controller_Setup_Sms extends Controller_Template {
 					$data = null;
 					
 					// pull in the basic data
-					include_once MODPATH.'nova/install/assets/data'.EXT;
+					include_once MODPATH.'app/modules/setup/assets/install/data.php';
 					
 					$insert = array();
 					
@@ -182,7 +213,7 @@ class Controller_Setup_Sms extends Controller_Template {
 					{
 						foreach ($$value as $k => $v)
 						{
-							$sql = db::insert($value)
+							$sql = DB::insert($value)
 								->columns(array_keys($v))
 								->values(array_values($v))
 								->compile($db);
@@ -198,7 +229,7 @@ class Controller_Setup_Sms extends Controller_Template {
 					$data = null;
 					
 					// pull in the genre data
-					include_once MODPATH.'nova/install/assets/genres/'.strtolower(Kohana::config('nova.genre')).EXT;
+					include_once MODPATH.'app/modules/setup/assets/install/genres/'.strtolower(Kohana::config('nova.genre')).'.php';
 					
 					$genre = array();
 					
@@ -206,7 +237,7 @@ class Controller_Setup_Sms extends Controller_Template {
 					{
 						foreach ($$value_d as $k => $v)
 						{
-							$sql = db::insert($key_d)
+							$sql = DB::insert($key_d)
 								->columns(array_keys($v))
 								->values(array_values($v))
 								->compile($db);
@@ -224,7 +255,7 @@ class Controller_Setup_Sms extends Controller_Template {
 						$data = null;
 						
 						// pull in the development test data
-						include_once MODPATH.'nova/install/assets/dev'.EXT;
+						include_once MODPATH.'app/modules/setup/assets/install/dev.php';
 						
 						$insert = array();
 						
@@ -232,7 +263,7 @@ class Controller_Setup_Sms extends Controller_Template {
 						{
 							foreach ($$value as $k => $v)
 							{
-								$sql = db::insert($value)
+								$sql = DB::insert($value)
 									->columns(array_keys($v))
 									->values(array_values($v))
 									->compile($db);
@@ -241,35 +272,35 @@ class Controller_Setup_Sms extends Controller_Template {
 							}
 						}
 					}
+					
+					// do the quick installs
+					Utility::install_rank();
+					Utility::install_skin();
+					Utility::install_widget();
 				}
-				
-				// do the quick installs
-				Utility::install_rank();
-				Utility::install_skin();
-				Utility::install_widget();
 				
 				// get the number of tables
 				$tables = $db->list_tables($db->table_prefix().'%');
 				
 				// create a new content view
-				$this->template->layout->content = View::factory(Location::view('upgrade_step1'));
+				$this->template->layout->content = View::factory('components/pages/nova1/step2');
+				
+				// create the javascript view
+				$this->template->javascript = View::factory('components/js/nova1/step2_js');
 				
 				// assign the object a shorter variable to use in the method
 				$data = $this->template->layout->content;
 				
 				// set the loading image
 				$data->loading = array(
-					'src' => MODFOLDER.'/nova/upgrade/views/design/images/loading-circle-large.gif',
+					'src' => MODFOLDER.'/app/modules/setup/views/design/images/loading.gif',
 					'attr' => array(
 						'class' => 'image'),
 				);
 				
 				// content
-				$this->template->title.= __('Upgrading to Nova');
-				$this->template->layout->label = __('Upgrading to Nova');
-				
-				// create the javascript view
-				$this->template->javascript = View::factory(Location::view('upgrade_step1_js', null, 'js'));
+				$this->template->title.= 'Upgrading to Nova 3';
+				$this->template->layout->label = 'Upgrading to Nova 3';
 				
 				// build the next step button
 				$next = array(
@@ -279,12 +310,12 @@ class Controller_Setup_Sms extends Controller_Template {
 				);
 				
 				// build the next step control
-				$this->template->layout->controls = (count($tables) < Kohana::config('novasys.app_db_tables'))
+				$this->template->layout->controls = (count($tables) < Kohana::config('nova.app_db_tables'))
 					? false 
-					: form::button('next', __('Upgrade'), $next).form::close();
+					: Form::button('next', 'Upgrade', $next).Form::close();
 			break;
 				
-			case 2:
+			case 3:
 				// create a new content view
 				$this->template->layout->content = View::factory(Location::view('upgrade_step2'));
 				
@@ -316,7 +347,7 @@ class Controller_Setup_Sms extends Controller_Template {
 				$this->template->layout->controls = form::button('next', __('Run'), $next).form::close();
 			break;
 				
-			case 3:
+			case 4:
 				if (isset($_POST['submit']))
 				{
 					// do the registration
@@ -365,6 +396,8 @@ class Controller_Setup_Sms extends Controller_Template {
 				$this->template->layout->controls = form::button('next', __('Finalize'), $next).form::close();
 			break;
 		}
+		
+		$this->template->layout->image = Html::image(MODFOLDER.'/app/modules/setup/views/design/images/wand-24x24.png', array('id' => 'title-image'));
 		
 		// send the response
 		$this->request->response = $this->template;
