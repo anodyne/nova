@@ -91,6 +91,13 @@ class Model_Character extends Model {
 			'cascade_save' => false,
 			'cascade_delete' => false,
 		),
+		'promotions' => array(
+			'model_to' => 'Model_CharacterPromotion',
+			'key_to' => 'character_id',
+			'key_from' => 'id',
+			'cascade_save' => false,
+			'cascade_delete' => false,
+		),
 	);
 	
 	public static $_many_many = array(
