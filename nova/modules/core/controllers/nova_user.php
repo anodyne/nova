@@ -11,6 +11,8 @@
 
 require_once MODPATH.'core/libraries/Nova_controller_admin'.EXT;
 
+# TODO: need an easy way to reset a user's password as an admin
+
 abstract class Nova_user extends Nova_controller_admin {
 	
 	public function __construct()
@@ -25,6 +27,8 @@ abstract class Nova_user extends Nova_controller_admin {
 		$level = Auth::get_access_level();
 		$id = $this->session->userdata('userid');
 		$id = ($level == 2) ? $this->uri->segment(3, $id, true) : $id;
+		
+		$this->load->model('positions_model', 'pos');
 		
 		if (isset($_POST['submit']))
 		{
@@ -233,6 +237,107 @@ abstract class Nova_user extends Nova_controller_admin {
 				// set the flash message
 				$this->_regions['flash_message'] = Location::view('flash', $this->skin, 'admin', $flash);
 			}
+			
+			if ($this->uri->segment(4) == 'deactivate' and $level == 2)
+			{
+				// grab the user out of the POST array
+				$user = $this->input->post('id', true);
+				
+				// get all the user's active characters
+				$characters = $this->char->get_user_characters($user, 'active');
+				
+				if ($characters->num_rows() > 0)
+				{
+					foreach ($characters->result() as $c)
+					{
+						// update the character record
+						$this->char->update_character($c->charid, array('crew_type' => 'inactive', 'date_deactivate' => now()));
+						
+						// update the positions table
+						$this->pos->update_open_slots($c->position_1, 'remove_crew');
+						$this->pos->update_open_slots($c->position_2, 'remove_crew');
+					}
+				}
+				
+				// update the user record
+				$useraction = $this->user->update_user($user, array(
+					'status' => 'inactive',
+					'access_role' => 5,
+					'is_sysadmin' => 'n',
+					'is_game_master' => 'n',
+					'is_webmaster' => 'n',
+					'is_firstlaunch' => 'n',
+					'leave_date' => now(),
+					'loa' => 'active',
+					'last_update' => now()));
+				
+				$message = sprintf(
+					($useraction > 0) ? lang('flash_success') : lang('flash_failure'),
+					ucfirst(lang('global_user')),
+					lang('actions_deactivated'),
+					''
+				);
+
+				$flash['status'] = ($useraction > 0) ? 'success' : 'error';
+				$flash['message'] = text_output($message);
+				
+				// set the flash message
+				$this->_regions['flash_message'] = Location::view('flash', $this->skin, 'admin', $flash);
+			}
+			
+			if ($this->uri->segment(4) == 'activate' and $level == 2)
+			{
+				// grab the user out of the POST array
+				$user = $this->input->post('id', true);
+				$characters = $this->input->post('characters', true);
+				
+				if (count($characters) > 0)
+				{
+					foreach ($characters as $c)
+					{
+						// get the character
+						$character = $this->char->get_character($c);
+						
+						$update_array = array(
+							'crew_type' => 'active',
+							'date_deactivate' => null,
+						);
+						
+						// update the positions table
+						$this->pos->update_open_slots($character->position_1, 'add_crew');
+						$this->pos->update_open_slots($character->position_2, 'add_crew');
+						
+						// update the character record
+						$this->char->update_character($c, $update_array);
+					}
+				}
+				
+				// update the user record
+				$useraction = $this->user->update_user($user, array(
+					'status' => 'active',
+					'access_role' => 4,
+					'is_sysadmin' => 'n',
+					'is_game_master' => 'n',
+					'is_webmaster' => 'n',
+					'is_firstlaunch' => 'n',
+					'leave_date' => null,
+					'loa' => 'active',
+					'password_reset' => 1,
+					'last_update' => now()));
+				
+				$message = sprintf(
+					($useraction > 0) ? lang('flash_success') : lang('flash_failure'),
+					ucfirst(lang('global_user')),
+					lang('actions_activated'),
+					''
+				);
+
+				$flash['status'] = ($useraction > 0) ? 'success' : 'error';
+				$flash['message'] = text_output($message);
+				
+				// set the flash message
+				$this->_regions['flash_message'] = Location::view('flash', $this->skin, 'admin', $flash);
+			}
 		}
 		
 		// load the resources
@@ -400,6 +505,20 @@ abstract class Nova_user extends Nova_controller_admin {
 					'value' => 'n',
 					'checked' => ($details->moderate_wiki_comments == 'n') ? true : false),
 			);
+			
+			$data['button'] = array(
+				'user_status' => array(
+					'type' => 'submit',
+					'class' => 'button-sec',
+					'name' => 'submit',
+					'value' => 'submit',
+					'id' => ($details->status == 'active') ? 'user-deactivate' : 'user-activate',
+					'myid' => $id,
+					'content' => ($details->status == 'active') 
+						? ucwords(lang('actions_deactivate').' '.lang('global_user'))
+						: ucwords(lang('actions_activate').' '.lang('global_user'))
+					),
+			);
 		}
 		
 		$prefs = $this->sys->get_preferences();
@@ -524,13 +643,13 @@ abstract class Nova_user extends Nova_controller_admin {
 			'secanswer' => ucwords(lang('labels_security') .' '. lang('labels_answer')),
 			'secquestion' => ucwords(lang('labels_security') .' '. lang('labels_question')),
 			'sectext' => lang('text_security_question'),
-			'status' => ucfirst(lang('labels_status')),
+			'status' => ucwords(lang('abbr_loa').' '.lang('labels_status')),
 			'sysadmin' => ucwords(lang('global_sysadmin')),
 			'text_credentials_1' => lang('text_user_credential_confirm_1'),
 			'text_credentials_2' => lang('text_user_credential_confirm_2'),
 			'datetime' => ucwords(lang('time_dates') .' '. AMP .' '. lang('labels_times')),
 			'timezone' => ucfirst(lang('labels_timezone')),
-			'type' => ucwords(lang('global_user') .' '. lang('labels_type')),
+			'type' => ucwords(lang('global_user') .' '. lang('labels_status')),
 			'webmaster' => ucfirst(lang('global_webmaster')),
 			'yes' => ucfirst(lang('labels_yes')),
 		);

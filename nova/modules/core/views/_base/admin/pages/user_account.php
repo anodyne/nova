@@ -100,8 +100,7 @@
 					</p>
 					<p>
 						<kbd><?php echo $label['type'];?></kbd>
-						<?php echo form_dropdown('status', $values['status'], $inputs['status']);?>
-						<?php echo form_hidden('status_old', $inputs['status']);?>
+						<?php echo form_button($button['user_status']);?>
 					</p>
 					<p>
 						<kbd><?php echo $label['status'];?></kbd>
