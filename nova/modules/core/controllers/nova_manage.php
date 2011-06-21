@@ -1616,6 +1616,7 @@ abstract class Nova_manage extends Nova_controller_admin {
 	public function logs($section = 'activated', $offset = 0)
 	{
 		Auth::check_access();
+		$level = Auth::get_access_level();
 		
 		$this->load->model('personallogs_model', 'logs');
 		
@@ -1631,51 +1632,41 @@ abstract class Nova_manage extends Nova_controller_admin {
 			switch ($this->uri->segment(5))
 			{
 				case 'approve':
-					$id = $this->input->post('id', true);
-					$id = (is_numeric($id)) ? $id : false;
-					
-					// set the array data
-					$approve_array = array('log_status' => 'activated');
-					
-					// approve the post
-					$approve = $this->logs->update_log($id, $approve_array);
-					
-					if ($approve > 0)
+					if ($level == 2)
 					{
+						$id = $this->input->post('id', true);
+						$id = (is_numeric($id)) ? $id : false;
+						
+						// set the array data
+						$approve_array = array('log_status' => 'activated');
+						
+						// approve the post
+						$approve = $this->logs->update_log($id, $approve_array);
+						
 						$message = sprintf(
-							lang('flash_success'),
+							($approve > 0) ? lang('flash_success') : lang('flash_failure'),
 							ucfirst(lang('global_personallog')),
 							lang('actions_approved'),
 							''
 						);
-
-						$flash['status'] = 'success';
+						$flash['status'] = ($approve > 0) ? 'success' : 'error';
 						$flash['message'] = text_output($message);
 						
-						// grab the post details
-						$row = $this->logs->get_log($id);
-						
-						// set the array of data for the email
-						$email_data = array(
-							'author' => $row->log_author_character,
-							'title' => $row->log_title,
-							'content' => $row->log_content
-						);
-						
-						// send the email
-						$email = ($this->options['system_email'] == 'on') ? $this->_email('log', $email_data) : false;
-					}
-					else
-					{
-						$message = sprintf(
-							lang('flash_failure'),
-							ucfirst(lang('global_personallog')),
-							lang('actions_approved'),
-							''
-						);
-
-						$flash['status'] = 'error';
-						$flash['message'] = text_output($message);
+						if ($approve > 0)
+						{
+							// grab the post details
+							$row = $this->logs->get_log($id);
+							
+							// set the array of data for the email
+							$email_data = array(
+								'author' => $row->log_author_character,
+								'title' => $row->log_title,
+								'content' => $row->log_content
+							);
+							
+							// send the email
+							$email = ($this->options['system_email'] == 'on') ? $this->_email('log', $email_data) : false;
+						}
 					}
 				break;
 					
@@ -1683,30 +1674,21 @@ abstract class Nova_manage extends Nova_controller_admin {
 					$id = $this->input->post('id', true);
 					$id = (is_numeric($id)) ? $id : false;
 					
-					$delete = $this->logs->delete_log($id);
+					// get the log we're trying to delete
+					$item = $this->logs->get_log($id);
 					
-					if ($delete > 0)
+					// make sure the user is allowed to be deleting the log
+					if (($level == 1 and ($item->log_author_user == $this->session->userdata('userid'))) or $level == 2)
 					{
+						$delete = $this->logs->delete_log($id);
+						
 						$message = sprintf(
-							lang('flash_success'),
+							($delete > 0) ? lang('flash_success') : lang('flash_failure'),
 							ucfirst(lang('global_personallog')),
 							lang('actions_deleted'),
 							''
 						);
-
-						$flash['status'] = 'success';
-						$flash['message'] = text_output($message);
-					}
-					else
-					{
-						$message = sprintf(
-							lang('flash_failure'),
-							ucfirst(lang('global_personallog')),
-							lang('actions_deleted'),
-							''
-						);
-
-						$flash['status'] = 'error';
+						$flash['status'] = ($delete > 0) ? 'success' : 'error';
 						$flash['message'] = text_output($message);
 					}
 				break;
@@ -1714,40 +1696,31 @@ abstract class Nova_manage extends Nova_controller_admin {
 				case 'update':
 					$id = $this->uri->segment(4, 0, true);
 					
-					$update_array = array(
-						'log_title' => $this->input->post('log_title', true),
-						'log_tags' => $this->input->post('log_tags', true),
-						'log_content' => $this->input->post('log_content', true),
-						'log_status' => $this->input->post('log_status', true),
-						'log_author_user' => $this->user->get_userid($this->input->post('log_author')),
-						'log_author_character' => $this->input->post('log_author', true),
-						'log_last_update' => now()
-					);
+					// get the log we're trying to delete
+					$item = $this->logs->get_log($id);
 					
-					$update = $this->logs->update_log($id, $update_array);
-					
-					if ($update > 0)
+					// make sure the user is allowed to be deleting the log
+					if (($level == 1 and ($item->log_author_user == $this->session->userdata('userid'))) or $level == 2)
 					{
+						$update_array = array(
+							'log_title' => $this->input->post('log_title', true),
+							'log_tags' => $this->input->post('log_tags', true),
+							'log_content' => $this->input->post('log_content', true),
+							'log_status' => $this->input->post('log_status', true),
+							'log_author_user' => $this->user->get_userid($this->input->post('log_author')),
+							'log_author_character' => $this->input->post('log_author', true),
+							'log_last_update' => now()
+						);
+						
+						$update = $this->logs->update_log($id, $update_array);
+						
 						$message = sprintf(
-							lang('flash_success'),
+							($update > 0) ? lang('flash_success') : lang('flash_failure'),
 							ucfirst(lang('global_personallog')),
 							lang('actions_updated'),
 							''
 						);
-
-						$flash['status'] = 'success';
-						$flash['message'] = text_output($message);
-					}
-					else
-					{
-						$message = sprintf(
-							lang('flash_failure'),
-							ucfirst(lang('global_personallog')),
-							lang('actions_updated'),
-							''
-						);
-
-						$flash['status'] = 'error';
+						$flash['status'] = ($update > 0) ? 'success' : 'error';
 						$flash['message'] = text_output($message);
 					}
 				break;
@@ -1765,7 +1738,7 @@ abstract class Nova_manage extends Nova_controller_admin {
 			// grab the post data
 			$row = $this->logs->get_log($id);
 			
-			if (Auth::get_access_level() < 2)
+			if ($level < 2)
 			{
 				if ($this->session->userdata('userid') != $row->log_author_user or $row->log_status == 'pending')
 				{
@@ -2600,6 +2573,7 @@ abstract class Nova_manage extends Nova_controller_admin {
 	public function news($section = 'activated', $offset = 0)
 	{
 		Auth::check_access();
+		$level = Auth::get_access_level();
 		
 		$this->load->model('news_model', 'news');
 		
@@ -2615,52 +2589,42 @@ abstract class Nova_manage extends Nova_controller_admin {
 			switch ($this->uri->segment(5))
 			{
 				case 'approve':
-					$id = $this->input->post('id', true);
-					$id = (is_numeric($id)) ? $id : false;
-					
-					// set the array data
-					$approve_array = array('news_status' => 'activated');
-					
-					// approve the post
-					$approve = $this->news->update_news_item($id, $approve_array);
-					
-					if ($approve > 0)
+					if ($level == 2)
 					{
+						$id = $this->input->post('id', true);
+						$id = (is_numeric($id)) ? $id : false;
+						
+						// set the array data
+						$approve_array = array('news_status' => 'activated');
+						
+						// approve the post
+						$approve = $this->news->update_news_item($id, $approve_array);
+						
 						$message = sprintf(
-							lang('flash_success'),
+							($approve > 0) ? lang('flash_success') : lang('flash_failure'),
 							ucfirst(lang('global_newsitem')),
 							lang('actions_approved'),
 							''
 						);
-
-						$flash['status'] = 'success';
+						$flash['status'] = ($approve > 0) ? 'success' : 'error';
 						$flash['message'] = text_output($message);
 						
-						// grab the post details
-						$row = $this->news->get_news_item($id);
-						
-						// set the array of data for the email
-						$email_data = array(
-							'author' => $row->news_author_character,
-							'title' => $row->news_title,
-							'category' => $this->news->get_news_category($row->news_cat, 'newscat_name'),
-							'content' => $row->news_content
-						);
-						
-						// send the email
-						$email = ($this->options['system_email'] == 'on') ? $this->_email('news', $email_data) : false;
-					}
-					else
-					{
-						$message = sprintf(
-							lang('flash_failure'),
-							ucfirst(lang('global_personallog')),
-							lang('actions_approved'),
-							''
-						);
-
-						$flash['status'] = 'error';
-						$flash['message'] = text_output($message);
+						if ($approve > 0)
+						{
+							// grab the post details
+							$row = $this->news->get_news_item($id);
+							
+							// set the array of data for the email
+							$email_data = array(
+								'author' => $row->news_author_character,
+								'title' => $row->news_title,
+								'category' => $this->news->get_news_category($row->news_cat, 'newscat_name'),
+								'content' => $row->news_content
+							);
+							
+							// send the email
+							$email = ($this->options['system_email'] == 'on') ? $this->_email('news', $email_data) : false;
+						}
 					}
 				break;
 					
@@ -2668,30 +2632,20 @@ abstract class Nova_manage extends Nova_controller_admin {
 					$id = $this->input->post('id', true);
 					$id = (is_numeric($id)) ? $id : false;
 					
-					$delete = $this->news->delete_news_item($id);
+					// get the news item
+					$item = $this->news->get_news_item($id);
 					
-					if ($delete > 0)
+					if (($level == 1 and ($item->news_author_user == $this->session->userdata('userid'))) or $level == 2)
 					{
+						$delete = $this->news->delete_news_item($id);
+						
 						$message = sprintf(
-							lang('flash_success'),
+							($delete > 0) ? lang('flash_success') : lang('flash_failure'),
 							ucfirst(lang('global_newsitem')),
 							lang('actions_deleted'),
 							''
 						);
-
-						$flash['status'] = 'success';
-						$flash['message'] = text_output($message);
-					}
-					else
-					{
-						$message = sprintf(
-							lang('flash_failure'),
-							ucfirst(lang('global_newsitem')),
-							lang('actions_deleted'),
-							''
-						);
-
-						$flash['status'] = 'error';
+						$flash['status'] = ($delete > 0) ? 'success' : 'error';
 						$flash['message'] = text_output($message);
 					}
 				break;
@@ -2699,42 +2653,32 @@ abstract class Nova_manage extends Nova_controller_admin {
 				case 'update':
 					$id = $this->uri->segment(4, 0, true);
 					
-					$update_array = array(
-						'news_title' => $this->input->post('news_title', true),
-						'news_tags' => $this->input->post('news_tags', true),
-						'news_content' => $this->input->post('news_content', true),
-						'news_author_character' => $this->input->post('news_author', true),
-						'news_author_user' => $this->user->get_userid($this->input->post('news_author')),
-						'news_status' => $this->input->post('news_status', true),
-						'news_cat' => $this->input->post('news_cat', true),
-						'news_private' => $this->input->post('news_private', true),
-						'news_last_update' => now()
-					);
+					// get the news item
+					$item = $this->news->get_news_item($id);
 					
-					$update = $this->news->update_news_item($id, $update_array);
-					
-					if ($update > 0)
+					if (($level == 1 and ($item->news_author_user == $this->session->userdata('userid'))) or $level == 2)
 					{
+						$update_array = array(
+							'news_title' => $this->input->post('news_title', true),
+							'news_tags' => $this->input->post('news_tags', true),
+							'news_content' => $this->input->post('news_content', true),
+							'news_author_character' => $this->input->post('news_author', true),
+							'news_author_user' => $this->user->get_userid($this->input->post('news_author')),
+							'news_status' => $this->input->post('news_status', true),
+							'news_cat' => $this->input->post('news_cat', true),
+							'news_private' => $this->input->post('news_private', true),
+							'news_last_update' => now()
+						);
+						
+						$update = $this->news->update_news_item($id, $update_array);
+						
 						$message = sprintf(
-							lang('flash_success'),
+							($update > 0) ? lang('flash_success') : lang('flash_failure'),
 							ucfirst(lang('global_newsitem')),
 							lang('actions_updated'),
 							''
 						);
-
-						$flash['status'] = 'success';
-						$flash['message'] = text_output($message);
-					}
-					else
-					{
-						$message = sprintf(
-							lang('flash_failure'),
-							ucfirst(lang('global_newsitem')),
-							lang('actions_updated'),
-							''
-						);
-
-						$flash['status'] = 'error';
+						$flash['status'] = ($update > 0) ? 'success' : 'error';
 						$flash['message'] = text_output($message);
 					}
 				break;
@@ -2753,7 +2697,7 @@ abstract class Nova_manage extends Nova_controller_admin {
 			$row = $this->news->get_news_item($id);
 			$cats = $this->news->get_news_categories();
 			
-			if (Auth::get_access_level() < 2)
+			if ($level < 2)
 			{
 				if ($this->session->userdata('userid') != $row->news_author_user or $row->news_status == 'pending')
 				{
@@ -3328,6 +3272,7 @@ abstract class Nova_manage extends Nova_controller_admin {
 	public function posts()
 	{
 		Auth::check_access();
+		$level = Auth::get_access_level();
 		
 		$this->load->model('posts_model', 'posts');
 		$this->load->model('missions_model', 'mis');
@@ -3341,54 +3286,57 @@ abstract class Nova_manage extends Nova_controller_admin {
 			switch ($this->uri->segment(5))
 			{
 				case 'approve':
-					$id = $this->input->post('id', true);
-					$id = (is_numeric($id)) ? $id : false;
-					
-					// set the array data
-					$approve_array = array('post_status' => 'activated');
-					
-					// approve the post
-					$approve = $this->posts->update_post($id, $approve_array);
-					
-					if ($approve > 0)
+					if ($level == 2)
 					{
-						$message = sprintf(
-							lang('flash_success'),
-							ucfirst(lang('global_missionpost')),
-							lang('actions_approved'),
-							''
-						);
-
-						$flash['status'] = 'success';
-						$flash['message'] = text_output($message);
+						$id = $this->input->post('id', true);
+						$id = (is_numeric($id)) ? $id : false;
 						
-						// grab the post details
-						$row = $this->posts->get_post($id);
+						// set the array data
+						$approve_array = array('post_status' => 'activated');
 						
-						// set the array of data for the email
-						$email_data = array(
-							'authors' => $row->post_authors,
-							'title' => $row->post_title,
-							'timeline' => $row->post_timeline,
-							'location' => $row->post_location,
-							'content' => $row->post_content,
-							'mission' => $this->mis->get_mission($row->post_mission, 'mission_title')
-						);
+						// approve the post
+						$approve = $this->posts->update_post($id, $approve_array);
 						
-						// send the email
-						$email = ($this->options['system_email'] == 'on') ? $this->_email('post', $email_data) : false;
-					}
-					else
-					{
-						$message = sprintf(
-							lang('flash_failure'),
-							ucfirst(lang('global_missionpost')),
-							lang('actions_approved'),
-							''
-						);
-
-						$flash['status'] = 'error';
-						$flash['message'] = text_output($message);
+						if ($approve > 0)
+						{
+							$message = sprintf(
+								lang('flash_success'),
+								ucfirst(lang('global_missionpost')),
+								lang('actions_approved'),
+								''
+							);
+	
+							$flash['status'] = 'success';
+							$flash['message'] = text_output($message);
+							
+							// grab the post details
+							$row = $this->posts->get_post($id);
+							
+							// set the array of data for the email
+							$email_data = array(
+								'authors' => $row->post_authors,
+								'title' => $row->post_title,
+								'timeline' => $row->post_timeline,
+								'location' => $row->post_location,
+								'content' => $row->post_content,
+								'mission' => $this->mis->get_mission($row->post_mission, 'mission_title')
+							);
+							
+							// send the email
+							$email = ($this->options['system_email'] == 'on') ? $this->_email('post', $email_data) : false;
+						}
+						else
+						{
+							$message = sprintf(
+								lang('flash_failure'),
+								ucfirst(lang('global_missionpost')),
+								lang('actions_approved'),
+								''
+							);
+	
+							$flash['status'] = 'error';
+							$flash['message'] = text_output($message);
+						}
 					}
 				break;
 					
