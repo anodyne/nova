@@ -6,3 +6,4 @@
   * LCARS-Red skin
   * Mod for status alert changing the LCARS skin
   * Change debug level from 3 to 1 before release
+  * Secure the Ajax methods

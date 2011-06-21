@@ -15,6 +15,7 @@ Anodyne Production's next-generation RPG management system combines popular feat
 * added the ability for textareas to "grow" as more text is added like Facebook
 * added the ability for site messages to have previously disallowed HTML tags (like embed, iframe, etc.) for embedding media assets from YouTube and Vimeo
 * added the ability to nest mission groups one level deep
+* added the ability for someone with level 2 admin rights to reset someone's password (the new password will be emailed to the user and they'll be prompted to reset the password the next time they log in)
 * updated seamless substitution to be able to override email view files
 * updated Thresher with a new way to create and manage categories when working on a wiki page
 * updated Thresher with a completely new user experience for managing wiki pages
@@ -34,6 +35,9 @@ Anodyne Production's next-generation RPG management system combines popular feat
 * updated the users model with a method to pull all of a users' LOA records
 * updated the mission post writing page to show who owns a linked NPC
 * updated the skin catalogue to allow removing an entire skin (with sections) and letting admins choose which skin users will be updated to for each section
+* updated the user account page to make activating and deactivating users a lot easier
+* updated the user account page so that when deactivating a user, it will also deactivate all active characters associated with that user account
+* updated the user account page so that when activating a user, it will prompt the admin about which of the user's inactive character should be reactivated
 * refactored the location helper into a full-blown class with static methods
 * refactored the upgrade process to mirror what was created for nova 3
 * removed the banned.php file
