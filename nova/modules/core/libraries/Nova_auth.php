@@ -76,26 +76,38 @@ abstract class Nova_auth {
 		return TRUE;
 	}
 	
+	/**
+	 * Get a user's access level for the URI passed to the method.
+	 *
+	 * @access	public
+	 * @param	string	the URI
+	 * @return	mixed	the access level or FALSE if there is no level
+	 */
 	public static function get_access_level($uri = '')
 	{
 		// get an instance of CI
 		$ci =& get_instance();
 		
-		if (empty($uri))
+		// make sure we have a URI to work with
+		$uri = (empty($uri)) ? $ci->uri->segment(1).'/'.$ci->uri->segment(2) : $uri;
+		
+		// obviously you need to be logged in to have an access level
+		if (self::is_logged_in())
 		{
-			$uri = $ci->uri->segment(1) .'/'. $ci->uri->segment(2);
+			// grab the access stuff from the session
+			$session = $ci->session->userdata('access');
+			
+			// split out the segments
+			$segments = (is_array($uri)) ? $uri[1] .'/'. $uri[2] : $uri;
+			
+			// find the URI in the access array if it's there
+			if (array_key_exists($segments, $session))
+			{
+				return $session[$segments];
+			}
 		}
 		
-		$session = $ci->session->userdata('access');
-			
-		$segments = (is_array($uri)) ? $uri[1] .'/'. $uri[2] : $uri;
-			
-		if (array_key_exists($segments, $session))
-		{
-			return $session[$segments];
-		}
-		
-		return FALSE;
+		return false;
 	}
 	
 	public static function hash($string = '')
