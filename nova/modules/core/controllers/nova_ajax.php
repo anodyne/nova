@@ -9,6 +9,8 @@
  * @version		2.0
  */
 
+#TODO: need to secure all of these methods!
+
 abstract class Nova_ajax extends Controller {
 	
 	/**
@@ -7925,159 +7927,177 @@ abstract class Nova_ajax extends Controller {
 	
 	public function user_activate($id)
 	{
-		// load the models
-		$this->load->model('users_model', 'user');
-		$this->load->model('characters_model', 'char');
-		$this->load->model('ranks_model', 'rank');
-		$this->load->model('positions_model', 'pos');
-		$this->load->helper('utility');
+		$allowed = Auth::check_access('user/account', false);
+		$level = Auth::get_access_level('user/account');
 		
-		// sanity check
-		$id = (is_numeric($id)) ? $id : false;
-		
-		$head = sprintf(
-			lang('fbx_head'),
-			ucwords(lang('actions_activate')),
-			ucwords(lang('global_user'))
-		);
-		
-		// get the user
-		$item = $this->user->get_user($id);
-		
-		// get all characters associated with the user
-		$characters = $this->char->get_user_characters($id, 'inactive');
-		
-		if ($characters->num_rows() > 0)
+		if ($allowed and $level == 2)
 		{
-			foreach ($characters->result() as $c)
+			// load the models
+			$this->load->model('users_model', 'user');
+			$this->load->model('characters_model', 'char');
+			$this->load->model('ranks_model', 'rank');
+			$this->load->model('positions_model', 'pos');
+			$this->load->helper('utility');
+			
+			// sanity check
+			$id = (is_numeric($id)) ? $id : false;
+			
+			$head = sprintf(
+				lang('fbx_head'),
+				ucwords(lang('actions_activate')),
+				ucwords(lang('global_user'))
+			);
+			
+			// get the user
+			$item = $this->user->get_user($id);
+			
+			// get all characters associated with the user
+			$characters = $this->char->get_user_characters($id, 'inactive');
+			
+			if ($characters->num_rows() > 0)
 			{
-				$data['characters'][$c->charid] = parse_name(array(
-					$this->rank->get_rank($c->rank, 'rank_name'),
-					$c->first_name,
-					$c->last_name)).' - '.$this->pos->get_position($c->position_1, 'pos_name');
+				foreach ($characters->result() as $c)
+				{
+					$data['characters'][$c->charid] = parse_name(array(
+						$this->rank->get_rank($c->rank, 'rank_name'),
+						$c->first_name,
+						$c->last_name)).' - '.$this->pos->get_position($c->position_1, 'pos_name');
+				}
 			}
+			
+			// data being sent to the facebox
+			$data['header'] = $head;
+			$data['id'] = $id;
+			$data['text'] = sprintf(
+				lang('fbx_content_user_activate'),
+				$item->name,
+				$item->email,
+				lang('global_characters'),
+				lang('global_user')
+			);
+			$data['primarychar'] = $item->main_char;
+			
+			$button = array(
+				'type' => 'submit',
+				'class' => 'hud_button',
+				'name' => 'submit',
+				'value' => 'submit',
+				'content' => ucwords(lang('actions_submit'))
+			);
+			
+			// figure out the skin
+			$skin = $this->session->userdata('skin_admin');
+			
+			$this->_regions['content'] = Location::ajax('user_activate', $skin, 'admin', $data);
+			$this->_regions['controls'] = form_button($button).form_close();
+			
+			Template::assign($this->_regions);
+			
+			Template::render();
 		}
-		
-		// data being sent to the facebox
-		$data['header'] = $head;
-		$data['id'] = $id;
-		$data['text'] = sprintf(
-			lang('fbx_content_user_activate'),
-			$item->name,
-			$item->email,
-			lang('global_characters'),
-			lang('global_user')
-		);
-		$data['primarychar'] = $item->main_char;
-		
-		$button = array(
-			'type' => 'submit',
-			'class' => 'hud_button',
-			'name' => 'submit',
-			'value' => 'submit',
-			'content' => ucwords(lang('actions_submit'))
-		);
-		
-		// figure out the skin
-		$skin = $this->session->userdata('skin_admin');
-		
-		$this->_regions['content'] = Location::ajax('user_activate', $skin, 'admin', $data);
-		$this->_regions['controls'] = form_button($button).form_close();
-		
-		Template::assign($this->_regions);
-		
-		Template::render();
 	}
 	
 	public function user_deactivate($id)
 	{
-		// load the models
-		$this->load->model('users_model', 'user');
+		$allowed = Auth::check_access('user/account', false);
+		$level = Auth::get_access_level('user/account');
 		
-		// sanity check
-		$id = (is_numeric($id)) ? $id : false;
-		
-		$head = sprintf(
-			lang('fbx_head'),
-			ucwords(lang('actions_deactivate')),
-			ucwords(lang('global_user'))
-		);
-		
-		$item = $this->user->get_user($id);
-		
-		// data being sent to the facebox
-		$data['header'] = $head;
-		$data['id'] = $id;
-		$data['text'] = sprintf(
-			lang('fbx_content_user_deactivate'),
-			$item->name,
-			$item->email,
-			lang('global_characters')
-		);
-		
-		$button = array(
-			'type' => 'submit',
-			'class' => 'hud_button',
-			'name' => 'submit',
-			'value' => 'submit',
-			'content' => ucwords(lang('actions_submit'))
-		);
-		
-		// figure out the skin
-		$skin = $this->session->userdata('skin_admin');
-		
-		$this->_regions['content'] = Location::ajax('user_deactivate', $skin, 'admin', $data);
-		$this->_regions['controls'] = form_button($button).form_close();
-		
-		Template::assign($this->_regions);
-		
-		Template::render();
+		if ($allowed and $level == 2)
+		{
+			// load the models
+			$this->load->model('users_model', 'user');
+			
+			// sanity check
+			$id = (is_numeric($id)) ? $id : false;
+			
+			$head = sprintf(
+				lang('fbx_head'),
+				ucwords(lang('actions_deactivate')),
+				ucwords(lang('global_user'))
+			);
+			
+			$item = $this->user->get_user($id);
+			
+			// data being sent to the facebox
+			$data['header'] = $head;
+			$data['id'] = $id;
+			$data['text'] = sprintf(
+				lang('fbx_content_user_deactivate'),
+				$item->name,
+				$item->email,
+				lang('global_characters')
+			);
+			
+			$button = array(
+				'type' => 'submit',
+				'class' => 'hud_button',
+				'name' => 'submit',
+				'value' => 'submit',
+				'content' => ucwords(lang('actions_submit'))
+			);
+			
+			// figure out the skin
+			$skin = $this->session->userdata('skin_admin');
+			
+			$this->_regions['content'] = Location::ajax('user_deactivate', $skin, 'admin', $data);
+			$this->_regions['controls'] = form_button($button).form_close();
+			
+			Template::assign($this->_regions);
+			
+			Template::render();
+		}
 	}
 	
 	public function user_password_reset($id)
 	{
-		// load the models
-		$this->load->model('users_model', 'user');
+		$allowed = Auth::check_access('user/account', false);
+		$level = Auth::get_access_level('user/account');
 		
-		// sanity check
-		$id = (is_numeric($id)) ? $id : false;
-		
-		$head = sprintf(
-			lang('fbx_head'),
-			ucwords(lang('actions_reset')),
-			ucwords(lang('labels_password'))
-		);
-		
-		// get the user details
-		$item = $this->user->get_user($id);
-		
-		// data being sent to the facebox
-		$data['header'] = $head;
-		$data['id'] = $id;
-		$data['text'] = sprintf(
-			lang('fbx_content_user_password_reset'),
-			$item->name,
-			$item->email,
-			lang('global_user')
-		);
-		
-		$button = array(
-			'type' => 'submit',
-			'class' => 'hud_button',
-			'name' => 'submit',
-			'value' => 'submit',
-			'content' => ucwords(lang('actions_submit'))
-		);
-		
-		// figure out the skin
-		$skin = $this->session->userdata('skin_admin');
-		
-		$this->_regions['content'] = Location::ajax('user_password_reset', $skin, 'admin', $data);
-		$this->_regions['controls'] = form_button($button).form_close();
-		
-		Template::assign($this->_regions);
-		
-		Template::render();
+		if ($allowed and $level == 2)
+		{
+			// load the models
+			$this->load->model('users_model', 'user');
+			
+			// sanity check
+			$id = (is_numeric($id)) ? $id : false;
+			
+			$head = sprintf(
+				lang('fbx_head'),
+				ucwords(lang('actions_reset')),
+				ucwords(lang('labels_password'))
+			);
+			
+			// get the user details
+			$item = $this->user->get_user($id);
+			
+			// data being sent to the facebox
+			$data['header'] = $head;
+			$data['id'] = $id;
+			$data['text'] = sprintf(
+				lang('fbx_content_user_password_reset'),
+				$item->name,
+				$item->email,
+				lang('global_user')
+			);
+			
+			$button = array(
+				'type' => 'submit',
+				'class' => 'hud_button',
+				'name' => 'submit',
+				'value' => 'submit',
+				'content' => ucwords(lang('actions_submit'))
+			);
+			
+			// figure out the skin
+			$skin = $this->session->userdata('skin_admin');
+			
+			$this->_regions['content'] = Location::ajax('user_password_reset', $skin, 'admin', $data);
+			$this->_regions['controls'] = form_button($button).form_close();
+			
+			Template::assign($this->_regions);
+			
+			Template::render();
+		}
 	}
 	
 	public function whats_new()
