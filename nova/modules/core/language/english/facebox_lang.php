@@ -68,3 +68,4 @@ $lang['fbx_content_draft_cleanup'] = "Like most wiki software, Thresher stores e
 
 $lang['fbx_content_user_deactivate'] = "Are you sure you want to deactivate <strong>%s (%s)</strong>? Deactivating this user will prevent them from logging in and participating in the game. Additionally, any %s associated with this account will be deactivated. Click Submit to the continue.";
 $lang['fbx_content_user_activate'] = "Are you sure you want to activate <strong>%s (%s)</strong>? Activating this user will allow them to log in and participate in the game. You can select from the %s associated with this %s account to activate along with the user below. Please make your selections and click Submit to the continue.";
+$lang['fbx_content_user_password_reset'] = "Are you sure you want to reset the password for <strong>%s (%s)</strong>? The %s will be emailed a new password and prompted to change their password next time they log in. Click Submit to continue.";

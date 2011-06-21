@@ -11,8 +11,6 @@
 
 require_once MODPATH.'core/libraries/Nova_controller_admin'.EXT;
 
-# TODO: need an easy way to reset a user's password as an admin
-
 abstract class Nova_user extends Nova_controller_admin {
 	
 	public function __construct()
@@ -29,6 +27,8 @@ abstract class Nova_user extends Nova_controller_admin {
 		$id = ($level == 2) ? $this->uri->segment(3, $id, true) : $id;
 		
 		$this->load->model('positions_model', 'pos');
+		
+		$data['my_user'] = ($id == $this->session->userdata('userid'));
 		
 		if (isset($_POST['submit']))
 		{
@@ -338,6 +338,52 @@ abstract class Nova_user extends Nova_controller_admin {
 				// set the flash message
 				$this->_regions['flash_message'] = Location::view('flash', $this->skin, 'admin', $flash);
 			}
+			
+			if ($this->uri->segment(4) == 'resetpassword' and $level == 2)
+			{
+				// grab the user out of the POST array
+				$user = $this->input->post('id', true);
+				
+				// get the user details
+				$item = $this->user->get_user($user);
+				
+				if ($item !== false)
+				{
+					// generate a password
+					$new_password = random_string('alnum', 8);
+					
+					$array = array(
+						'password_reset' => 1,
+						'password' => Auth::hash($new_password)
+					);
+					
+					// update the user record
+					$update = $this->user->update_user($user, $array);
+					
+					$emdata = array(
+						'email' => $item->email,
+						'id' => $user,
+						'password' => $new_password,
+						'name' => $item->name
+					);
+					
+					// send the email
+					$email = ($this->options['system_email'] == 'on') ? $this->_email('reset', $emdata) : false;
+				}
+				
+				$message = sprintf(
+					($update > 0) ? lang('flash_success') : lang('flash_failure'),
+					ucfirst(lang('global_user').' '.lang('labels_password')),
+					lang('actions_reset'),
+					''
+				);
+
+				$flash['status'] = ($update > 0) ? 'success' : 'error';
+				$flash['message'] = text_output($message);
+				
+				// set the flash message
+				$this->_regions['flash_message'] = Location::view('flash', $this->skin, 'admin', $flash);
+			}
 		}
 		
 		// load the resources
@@ -509,7 +555,7 @@ abstract class Nova_user extends Nova_controller_admin {
 			$data['button'] = array(
 				'user_status' => array(
 					'type' => 'submit',
-					'class' => 'button-sec',
+					'class' => 'button-main',
 					'name' => 'submit',
 					'value' => 'submit',
 					'id' => ($details->status == 'active') ? 'user-deactivate' : 'user-activate',
@@ -518,6 +564,14 @@ abstract class Nova_user extends Nova_controller_admin {
 						? ucwords(lang('actions_deactivate').' '.lang('global_user'))
 						: ucwords(lang('actions_activate').' '.lang('global_user'))
 					),
+				'password_reset' => array(
+					'type' => 'submit',
+					'class' => 'button-main',
+					'name' => 'submit',
+					'value' => 'submit',
+					'id' => 'reset-password',
+					'myid' => $id,
+					'content' => ucwords(lang('actions_reset').' '.lang('time_now'))),
 			);
 		}
 		
@@ -639,6 +693,7 @@ abstract class Nova_user extends Nova_controller_admin {
 			'no' => ucfirst(lang('labels_no')),
 			'password' => ucfirst(lang('labels_password')),
 			'usersettings' => ucwords(lang('global_user') .' '. lang('labels_settings')),
+			'reset_password' => ucwords(lang('actions_reset').' '.lang('labels_password')),
 			'role' => ucwords(lang('labels_access') .' '. lang('labels_role')),
 			'secanswer' => ucwords(lang('labels_security') .' '. lang('labels_answer')),
 			'secquestion' => ucwords(lang('labels_security') .' '. lang('labels_question')),
@@ -652,6 +707,7 @@ abstract class Nova_user extends Nova_controller_admin {
 			'type' => ucwords(lang('global_user') .' '. lang('labels_status')),
 			'webmaster' => ucfirst(lang('global_webmaster')),
 			'yes' => ucfirst(lang('labels_yes')),
+			'your_user' => sprintf(lang('account_your_user'), lang('global_user')),
 		);
 		
 		$this->_regions['content'] = Location::view('user_account', $this->skin, 'admin', $data);
@@ -2026,6 +2082,32 @@ abstract class Nova_user extends Nova_controller_admin {
 				$this->email->subject($this->options['email_subject'] .' '. $subject);
 				$this->email->message($message);
 			break;
+			
+			case 'reset':
+				$content = sprintf(
+					lang('email_content_password_reset'),
+					$data['password'],
+					site_url('login/index')
+				);
+				
+				$email_data = array(
+					'email_subject' => lang('email_subject_password_reset'),
+					'email_from' => ucfirst(lang('time_from')) .': '. $data['name'] .' - '. $data['email'],
+					'email_content' => nl2br($content)
+				);
+				
+				// where should the email be coming from
+				$em_loc = Location::email('reset_password', $this->email->mailtype);
+				
+				// parse the message
+				$message = $this->parser->parse($em_loc, $email_data, true);
+				
+				// set the parameters for sending the email
+				$this->email->from($data['email'], $data['name']);
+				$this->email->to($data['email']);
+				$this->email->subject($this->options['email_subject'] .' '. $email_data['email_subject']);
+				$this->email->message($message);
+			break;
 				
 			case 'status':
 				// set some variables
@@ -2070,7 +2152,7 @@ abstract class Nova_user extends Nova_controller_admin {
 		}
 		
 		// send the email
-		$email = $this->email->send();
+		//$email = $this->email->send();
 		
 		return $email;
 	}

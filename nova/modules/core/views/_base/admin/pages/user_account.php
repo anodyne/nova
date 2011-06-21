@@ -4,6 +4,19 @@
 
 <p><?php echo link_to_if($level == 2, 'user/characterlink/'. $inputs['id'], img($images['user']) .' '. $label['characters'], array('class' => 'bold image'));?></p>
 
+<?php if ($level == 2 and ! $my_user):?>
+	<p>
+		<kbd><?php echo $label['reset_password'];?></kbd>
+		<?php echo form_button($button['password_reset']);?>
+	</p>
+	<p>
+		<kbd><?php echo $label['type'];?></kbd>
+		<?php echo form_button($button['user_status']);?>
+	</p>
+<?php else: ?>
+	<?php echo text_output($label['your_user'], 'h4', 'blue');?>
+<?php endif;?>
+
 <?php echo form_open('user/account/'. $inputs['id']);?>
 	<div id="tabs">
 		<ul>

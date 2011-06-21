@@ -29,5 +29,18 @@
 			
 			return false;
 		});
+		
+		$('#reset-password').click(function(){
+			var id = $(this).attr('myid');
+			var location = '<?php echo site_url("ajax/user_password_reset");?>/' + id + '/<?php echo $string;?>';
+			
+			$.facebox(function(){
+				$.get(location, function(data){
+					$.facebox(data);
+				});
+			});
+			
+			return false;
+		});
 	});
 </script>

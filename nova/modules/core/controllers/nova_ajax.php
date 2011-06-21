@@ -8034,6 +8034,52 @@ abstract class Nova_ajax extends Controller {
 		Template::render();
 	}
 	
+	public function user_password_reset($id)
+	{
+		// load the models
+		$this->load->model('users_model', 'user');
+		
+		// sanity check
+		$id = (is_numeric($id)) ? $id : false;
+		
+		$head = sprintf(
+			lang('fbx_head'),
+			ucwords(lang('actions_reset')),
+			ucwords(lang('labels_password'))
+		);
+		
+		// get the user details
+		$item = $this->user->get_user($id);
+		
+		// data being sent to the facebox
+		$data['header'] = $head;
+		$data['id'] = $id;
+		$data['text'] = sprintf(
+			lang('fbx_content_user_password_reset'),
+			$item->name,
+			$item->email,
+			lang('global_user')
+		);
+		
+		$button = array(
+			'type' => 'submit',
+			'class' => 'hud_button',
+			'name' => 'submit',
+			'value' => 'submit',
+			'content' => ucwords(lang('actions_submit'))
+		);
+		
+		// figure out the skin
+		$skin = $this->session->userdata('skin_admin');
+		
+		$this->_regions['content'] = Location::ajax('user_password_reset', $skin, 'admin', $data);
+		$this->_regions['controls'] = form_button($button).form_close();
+		
+		Template::assign($this->_regions);
+		
+		Template::render();
+	}
+	
 	public function whats_new()
 	{
 		// load the resources
