@@ -1556,6 +1556,9 @@ abstract class Nova_site extends Nova_controller_admin {
 								$update = $this->user->update_all_users($user_data, $user_where);
 							}
 							
+							// delete the skin sections
+							$section_delete = $this->sys->delete_skin_section($old_skin, 'skinsec_skin');
+							
 							// delete the skin
 							$delete = $this->sys->delete_skin($id);
 									

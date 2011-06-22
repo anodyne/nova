@@ -648,9 +648,9 @@ abstract class Nova_system_model extends Model {
 		return $query;
 	}
 	
-	public function delete_skin_section($id = '')
+	public function delete_skin_section($id = '', $identifier = 'skinsec_id')
 	{
-		$query = $this->db->delete('catalogue_skinsecs', array('skinsec_id' => $id));
+		$query = $this->db->delete('catalogue_skinsecs', array($identifier => $id));
 		
 		$this->dbutil->optimize_table('catalogue_skinsecs');
 		
