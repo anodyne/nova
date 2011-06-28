@@ -179,6 +179,7 @@ abstract class Nova_wiki extends Nova_controller_wiki {
 	 *
 	 * 1 - This is a restricted wiki page that you are not authorized to view
 	 * 2 - This draft is associated with a restricted wiki page that you are not authorized to view
+	 * 3 - You do not have permissions to view old drafts
 	 *
 	 * @since	2.0
 	 * @param	integer	the error code
@@ -1151,9 +1152,11 @@ abstract class Nova_wiki extends Nova_controller_wiki {
 	{
 		// check to see if they have access
 		$access = (Auth::is_logged_in()) ? Auth::check_access('wiki/page', false) : false;
+		$data['access'] = $access;
 		
 		// get the access level
 		$level = (Auth::is_logged_in()) ? Auth::get_access_level('wiki/page') : false;
+		$data['level'] = $level;
 		
 		// sanity check
 		$id = (is_numeric($id)) ? $id : false;
@@ -1248,73 +1251,80 @@ abstract class Nova_wiki extends Nova_controller_wiki {
 		
 		if ($type == 'draft')
 		{
-			// grab the information about the page
-			$draft = $this->wiki->get_draft($id);
-			
-			// get the draft object
-			$d = ($draft->num_rows() > 0) ? $draft->row() : false;
-			
-			if ($d !== false)
+			if ($access)
 			{
-				// check page restrictions
-				$restrict = $this->wiki->get_page_restrictions($d->draft_page);
+				// grab the information about the page
+				$draft = $this->wiki->get_draft($id);
 				
-				if ($restrict->num_rows() > 0)
+				// get the draft object
+				$d = ($draft->num_rows() > 0) ? $draft->row() : false;
+				
+				if ($d !== false)
 				{
-					// get the row that contains the data
-					$r = $restrict->row();
+					// check page restrictions
+					$restrict = $this->wiki->get_page_restrictions($d->draft_page);
 					
-					// make an array of the restrictions
-					$allowed = explode(',', $r->restrictions);
-					
-					if ($level < 3)
+					if ($restrict->num_rows() > 0)
 					{
-						if ( ! Auth::is_logged_in() || ! in_array($this->session->userdata('role'), $allowed))
+						// get the row that contains the data
+						$r = $restrict->row();
+						
+						// make an array of the restrictions
+						$allowed = explode(',', $r->restrictions);
+						
+						if ($level < 3)
 						{
-							redirect('wiki/error/2');
+							if ( ! Auth::is_logged_in() || ! in_array($this->session->userdata('role'), $allowed))
+							{
+								redirect('wiki/error/2');
+							}
 						}
 					}
-				}
-				
-				// set the date
-				$created = gmt_to_local($d->draft_created_at, $this->timezone, $this->dst);
-				
-				$data['header'] = ucfirst(lang('labels_draft')) .' - '. $d->draft_title;
-				
-				$count = substr_count($d->draft_categories, ',');
-				
-				if ($count === 0 && empty($d->draft_categories))
-				{
-					$string = sprintf(
-						lang('error_not_found'),
-						lang('labels_categories')
-					);
-				}
-				else
-				{
-					$categories = explode(',', $d->draft_categories);
 					
-					foreach ($categories as $c)
+					// set the date
+					$created = gmt_to_local($d->draft_created_at, $this->timezone, $this->dst);
+					
+					$data['header'] = ucfirst(lang('labels_draft')) .' - '. $d->draft_title;
+					
+					$count = substr_count($d->draft_categories, ',');
+					
+					if ($count === 0 && empty($d->draft_categories))
 					{
-						$name = $this->wiki->get_category($c, 'wikicat_name');
+						$string = sprintf(
+							lang('error_not_found'),
+							lang('labels_categories')
+						);
+					}
+					else
+					{
+						$categories = explode(',', $d->draft_categories);
 						
-						$cat[] = anchor('wiki/category/'. $c, $name);
+						foreach ($categories as $c)
+						{
+							$name = $this->wiki->get_category($c, 'wikicat_name');
+							
+							$cat[] = anchor('wiki/category/'. $c, $name);
+						}
+						
+						$string = implode(' | ', $cat);
 					}
 					
-					$string = implode(' | ', $cat);
+					$data['draft'] = array(
+						'content' => $this->thresher->parse($d->draft_content),
+						'created' => $this->char->get_character_name($d->draft_author_character, true),
+						'created_date' => mdate($datestring, $created),
+						'page' => $d->draft_page,
+						'categories' => $string,
+					);
 				}
 				
-				$data['draft'] = array(
-					'content' => $this->thresher->parse($d->draft_content),
-					'created' => $this->char->get_character_name($d->draft_author_character, true),
-					'created_date' => mdate($datestring, $created),
-					'page' => $d->draft_page,
-					'categories' => $string,
-				);
+				// set the view location
+				$view_loc = 'wiki_view_draft';
 			}
-			
-			// set the view location
-			$view_loc = 'wiki_view_draft';
+			else
+			{
+				redirect('wiki/error/3');
+			}
 		}
 		else
 		{

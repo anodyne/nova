@@ -107,3 +107,4 @@ $lang['error_illegal_post'] = 'Your entry was not posted because you are not a m
 
 $lang['error_wiki_1'] = "The wiki page you attempted to view is a restricted page that you are not authorized to view. If you believe you've received this message in error, please contact the %s.";
 $lang['error_wiki_2'] = "The wiki page draft you attempted to view is associated with a restricted wiki page which you are not authorized to view. If you believe you've received this message in error, please contact the %s.";
+$lang['error_wiki_3'] = "You are not authorized to view page drafts. If you believe you've received this message in error, please contact the %s.";
