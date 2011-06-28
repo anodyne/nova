@@ -170,7 +170,8 @@ a:hover {
 |---------------------------------------------------------------
 */
 input[type=text],
-input[type=password] {
+input[type=password],
+input[type=email] {
 	border: 1px solid #333;
 	color: #888;
 	background: #000;
@@ -182,7 +183,8 @@ input[type=password] {
 	-webkit-border-radius: 2px;
 }
 input[type=text]:focus,
-input[type=password]:focus {
+input[type=password]:focus,
+input[type=email]:focus {
 	color: #eee;
 	border: 1px solid #444;
 	background: #080808;
