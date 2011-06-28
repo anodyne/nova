@@ -138,6 +138,58 @@
 			return false;
 		});
 		
+		$('#char-activate').click(function(){
+			var id = $(this).attr('myid');
+			var location = '<?php echo site_url("ajax/character_activate");?>/' + id + '/<?php echo $string;?>';
+			
+			$.facebox(function(){
+				$.get(location, function(data){
+					$.facebox(data);
+				});
+			});
+			
+			return false;
+		});
+		
+		$('#char-deactivate').click(function(){
+			var id = $(this).attr('myid');
+			var location = '<?php echo site_url("ajax/user_activate");?>/' + id + '/<?php echo $string;?>';
+			
+			$.facebox(function(){
+				$.get(location, function(data){
+					$.facebox(data);
+				});
+			});
+			
+			return false;
+		});
+		
+		$('#char-npc').click(function(){
+			var id = $(this).attr('myid');
+			var location = '<?php echo site_url("ajax/user_activate");?>/' + id + '/<?php echo $string;?>';
+			
+			$.facebox(function(){
+				$.get(location, function(data){
+					$.facebox(data);
+				});
+			});
+			
+			return false;
+		});
+		
+		$('#char-playingchar').click(function(){
+			var id = $(this).attr('myid');
+			var location = '<?php echo site_url("ajax/user_activate");?>/' + id + '/<?php echo $string;?>';
+			
+			$.facebox(function(){
+				$.get(location, function(data){
+					$.facebox(data);
+				});
+			});
+			
+			return false;
+		});
+		
 		$('#loading').hide();
 		$('#loaded').removeClass('hidden');
 	});

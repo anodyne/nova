@@ -6,6 +6,28 @@
 </div>
 
 <div id="loaded" class="hidden">
+	<?php if ($level == 3 and $inputs['crew_type'] != 'pending'): ?>
+		<p>
+			<kbd><?php echo $label['change'];?></kbd>
+			
+			<?php if ($inputs['crew_type'] == 'inactive'): ?>
+				<?php echo form_button($button['activate']);?>
+			<?php endif;?>
+			
+			<?php if ($inputs['crew_type'] == 'active'): ?>
+				<?php echo form_button($button['deactivate']);?>
+			<?php endif;?>
+			
+			<?php if ($inputs['crew_type'] != 'npc'): ?>
+				<?php echo form_button($button['npc']);?>
+			<?php endif;?>
+			
+			<?php if ($inputs['crew_type'] == 'npc'): ?>
+				<?php echo form_button($button['playing']);?>
+			<?php endif;?>
+		</p><br />
+	<?php endif;?>
+	
 	<div id="tabs">
 			<ul>
 				<li><a href="#one"><span><?php echo $label['character'];?></span></a></li>
@@ -39,14 +61,6 @@
 				</p><br />
 				
 				<?php if ($level >= 2): ?>
-					<?php if ($level == 3): ?>
-						<p>
-							<kbd><?php echo $label['type'];?></kbd>
-							<?php echo form_dropdown('crew_type', $values['crew_type'], $inputs['crew_type']);?>
-							<?php echo form_hidden('old_crew_type', $inputs['crew_type']);?>
-						</p>
-					<?php endif;?>
-					
 					<?php if (($level == 2 && $inputs['crew_type'] == 'npc') || $level == 3): ?>
 						<p>
 							<kbd><?php echo $label['position1'];?></kbd>

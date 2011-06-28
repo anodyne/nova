@@ -967,6 +967,45 @@ abstract class Nova_characters extends Nova_controller_admin {
 			$this->_regions['flash_message'] = Location::view('flash', $this->skin, 'admin', $flash);
 		}
 		
+		if (isset($_POST['submit']))
+		{
+			if ($this->uri->segment(4) == 'activate' and $level == 3)
+			{
+				// we'll always be doing this from an inactive character
+				
+				// need to provide an option for which user the character is assocated with
+				
+				// need to provide an option to reactivate the user in the event the user is inactive as well
+			}
+			
+			if ($this->uri->segment(4) == 'deactivate' and $level == 3)
+			{
+				// we'll always be doing this from an active character
+				
+				// need to provide a check for other active characters and if there are none, offer to deactivate the user
+				
+				// if the character is a main character for someone, need to offer a dropdown of other characters to make the main character
+			}
+			
+			if ($this->uri->segment(4) == 'makenpc' and $level == 3)
+			{
+				// we'll be coming from both active and inactive characters
+				
+				// if this is someone's main character, we need to offer them the option to set a new main character
+				
+				// if doing this makes someone not have a character, we need to offer to deactivate the user
+			}
+			
+			if ($this->uri->segment(4) == 'makeplaying' and $level == 3)
+			{
+				// we'll always be doing this from an npc
+				
+				// need to provide an option to make the character someone's main character
+				
+				// if we're making the npc a character assocated with a user who is inactive, we need to reactivate the user
+			}
+		}
+		
 		// grab the character info
 		$char = $this->char->get_character($id);
 		
@@ -1155,6 +1194,38 @@ abstract class Nova_characters extends Nova_controller_admin {
 				'id' => 'update',
 				'rel' => $data['id'],
 				'content' => ucwords(lang('actions_update'))),
+			'activate' => array(
+				'type' => 'submit',
+				'class' => 'button-main',
+				'name' => 'submit',
+				'value' => 'submit',
+				'id' => 'char-activate',
+				'myid' => $id,
+				'content' => ucwords(lang('actions_activate').' '.lang('global_character'))),
+			'deactivate' => array(
+				'type' => 'submit',
+				'class' => 'button-main',
+				'name' => 'submit',
+				'value' => 'submit',
+				'id' => 'char-deactivate',
+				'myid' => $id,
+				'content' => ucwords(lang('actions_deactivate').' '.lang('global_character'))),
+			'npc' => array(
+				'type' => 'submit',
+				'class' => 'button-main',
+				'name' => 'submit',
+				'value' => 'submit',
+				'id' => 'char-npc',
+				'myid' => $id,
+				'content' => ucwords(lang('actions_make').' '.strtoupper(lang('abbr_npc')))),
+			'playing' => array(
+				'type' => 'submit',
+				'class' => 'button-main',
+				'name' => 'submit',
+				'value' => 'submit',
+				'id' => 'char-playingchar',
+				'myid' => $id,
+				'content' => ucwords(lang('actions_make').' '.lang('status_playing').' '.lang('global_character'))),
 		);
 		
 		$data['images'] = array(
@@ -1191,6 +1262,7 @@ abstract class Nova_characters extends Nova_controller_admin {
 			'type_inactive' => ucwords(lang('status_inactive') .' '. lang('global_characters')),
 			'type_npc' => ucwords(lang('status_nonplaying') .' '. lang('global_characters')),
 			'upload' => ucwords(lang('actions_upload') .' '. lang('labels_images') .' '. RARROW),
+			'change' => ucwords(lang('actions_change').' '.lang('global_character').' '.lang('labels_status')),
 		);
 		
 		$js_data['rankloc'] = $this->rank;

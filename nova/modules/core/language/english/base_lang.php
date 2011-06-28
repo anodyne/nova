@@ -108,6 +108,7 @@ $lang['order_third']			= 'third';
 $lang['order_fourth']			= 'fourth';
 $lang['order_last']				= 'last';
 $lang['order_middle']			= 'middle';
+$lang['order_primary']			= 'primary';
 
 /*
 |---------------------------------------------------------------
@@ -244,6 +245,7 @@ $lang['actions_joined']			= 'joined';
 $lang['actions_loading']		= 'loading';
 $lang['actions_login']			= 'login';
 $lang['actions_logout']			= 'logout';
+$lang['actions_make']			= 'make';
 $lang['actions_manage']			= 'manage';
 $lang['actions_managed']		= 'managed';
 $lang['actions_moderate']		= 'moderate';

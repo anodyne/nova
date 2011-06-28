@@ -2762,6 +2762,118 @@ abstract class Nova_ajax extends Controller {
 		}
 	}
 	
+	public function character_activate($id)
+	{
+		// we'll always be doing this from an inactive character
+		
+		// need to provide an option for which user the character is assocated with
+		
+		// need to provide an option to reactivate the user in the event the user is inactive as well
+		
+		$allowed = Auth::check_access('characters/bio', false);
+		$level = Auth::get_access_level('characters/bio');
+		
+		if ($allowed and $level == 3)
+		{
+			// load the models
+			$this->load->model('users_model', 'user');
+			$this->load->model('characters_model', 'char');
+			$this->load->model('ranks_model', 'rank');
+			$this->load->model('positions_model', 'pos');
+			$this->load->helper('utility');
+			
+			// sanity check
+			$id = (is_numeric($id)) ? $id : false;
+			
+			$head = sprintf(
+				lang('fbx_head'),
+				ucwords(lang('actions_activate')),
+				ucwords(lang('global_character'))
+			);
+			
+			// get the character
+			$char = $this->char->get_character($id);
+			
+			// get the user
+			$user = $this->user->get_user($char->user);
+			
+			// get all active users (used for the user dropdown)
+			$users = $this->user->get_users(null);
+			
+			if ($users->num_rows() > 0)
+			{
+				foreach ($users->result() as $u)
+				{
+					$data['users'][$u->userid] = $u->name.' ('.$u->email.')';
+				}
+			}
+			
+			// data being sent to the facebox
+			$data['header'] = $head;
+			$data['id'] = $id;
+			$data['text'] = sprintf(
+				lang('fbx_content_character_activate'),
+				parse_name(array($this->rank->get_rank($char->rank, 'rank_name'), $char->first_name, $char->last_name)),
+				lang('global_character'),
+				lang('global_user'),
+				lang('global_character'),
+				lang('global_character'),
+				lang('global_character'),
+				lang('global_character'),
+				lang('global_user')
+			);
+			$data['current_user'] = $char->user;
+			$data['active_user'] = ($user->status != 'active') ? false : true;
+			$data['label']['make_primary'] = ucwords(lang('actions_make').' '.lang('order_primary').' '.lang('global_character'));
+			$data['label']['activate_user'] = ucwords(lang('actions_activate').' '.lang('global_user'));
+			
+			$button = array(
+				'type' => 'submit',
+				'class' => 'hud_button',
+				'name' => 'submit',
+				'value' => 'submit',
+				'content' => ucwords(lang('actions_submit'))
+			);
+			
+			// figure out the skin
+			$skin = $this->session->userdata('skin_admin');
+			
+			$this->_regions['content'] = Location::ajax('character_activate', $skin, 'admin', $data);
+			$this->_regions['controls'] = form_button($button).form_close();
+			
+			Template::assign($this->_regions);
+			
+			Template::render();
+		}
+	}
+	
+	public function character_deactivate($id)
+	{
+		// we'll always be doing this from an active character
+		
+		// need to provide a check for other active characters and if there are none, offer to deactivate the user
+		
+		// if the character is a main character for someone, need to offer a dropdown of other characters to make the main character
+	}
+	
+	public function character_npc($id)
+	{
+		// we'll be coming from both active and inactive characters
+		
+		// if this is someone's main character, we need to offer them the option to set a new main character
+		
+		// if doing this makes someone not have a character, we need to offer to deactivate the user
+	}
+	
+	public function charcter_playing_character($value='')
+	{
+		// we'll always be doing this from an npc
+		
+		// need to provide an option to make the character someone's main character
+		
+		// if we're making the npc a character assocated with a user who is inactive, we need to reactivate the user
+	}
+	
 	public function del_award()
 	{
 		$allowed = Auth::check_access('manage/awards', false);
