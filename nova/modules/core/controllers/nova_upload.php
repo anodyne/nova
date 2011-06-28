@@ -17,6 +17,8 @@ abstract class Nova_upload extends Nova_controller_admin {
 	{
 		parent::__construct();
 		
+		// load the resources
+		$this->load->library('upload');
 		$this->config->load('upload');
 	}
 	
@@ -376,9 +378,6 @@ abstract class Nova_upload extends Nova_controller_admin {
 	
 	protected function _do_upload($data)
 	{
-		// load the resources
-		$this->load->library('upload');
-		
 		switch ($data['type'])
 		{
 			case 'award':
