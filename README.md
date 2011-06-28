@@ -48,6 +48,7 @@ Anodyne Production's next-generation RPG management system combines popular feat
 * fixed bug where the join form could be submitted without an email address or password
 * fixed bug where users who were deactivated kept their account flags (sysadmin, game master, etc.) and their access role
 * fixed bug where users who were reactivated didn't have their access role set to Standard User
+* fixed several potential security issues
 
 ## Version History
 
