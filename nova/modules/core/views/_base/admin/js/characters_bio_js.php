@@ -153,7 +153,7 @@
 		
 		$('#char-deactivate').click(function(){
 			var id = $(this).attr('myid');
-			var location = '<?php echo site_url("ajax/user_activate");?>/' + id + '/<?php echo $string;?>';
+			var location = '<?php echo site_url("ajax/character_deactivate");?>/' + id + '/<?php echo $string;?>';
 			
 			$.facebox(function(){
 				$.get(location, function(data){
@@ -166,7 +166,7 @@
 		
 		$('#char-npc').click(function(){
 			var id = $(this).attr('myid');
-			var location = '<?php echo site_url("ajax/user_activate");?>/' + id + '/<?php echo $string;?>';
+			var location = '<?php echo site_url("ajax/character_npc");?>/' + id + '/<?php echo $string;?>';
 			
 			$.facebox(function(){
 				$.get(location, function(data){
@@ -179,7 +179,7 @@
 		
 		$('#char-playingchar').click(function(){
 			var id = $(this).attr('myid');
-			var location = '<?php echo site_url("ajax/user_activate");?>/' + id + '/<?php echo $string;?>';
+			var location = '<?php echo site_url("ajax/charcter_playing_character");?>/' + id + '/<?php echo $string;?>';
 			
 			$.facebox(function(){
 				$.get(location, function(data){
