@@ -10,7 +10,13 @@
  */
 
 abstract class Nova_access_model extends Model {
-
+	
+	const SYSADMIN	= 1;
+	const ADMIN		= 2;
+	const POWERUSER	= 3;
+	const STANDARD	= 4;
+	const INACTIVE	= 5;
+	
 	public function __construct()
 	{
 		parent::Model();
