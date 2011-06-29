@@ -21,16 +21,20 @@
 	</div>
 <?php endif;?>
 
-<?php if ($access): ?>
+<?php if (Auth::is_logged_in()): ?>
 	<div id="tabs">
 		<ul>
 			<li><a href="#one"><?php echo img($images['page']);?></a></li>
-			<li><a href="#two"><?php echo img($images['history']);?></a></li>
+			
+			<?php if ($access): ?>
+				<li><a href="#two"><?php echo img($images['history']);?></a></li>
+			<?php endif;?>
+			
 			<li><a href="#three"><?php echo img($images['comments']);?></a></li>
 		</ul>
-		
-		<div id="one">
 <?php endif;?>
+
+		<div id="one">
 			<p class="fontSmall gray bold">
 				<?php echo ucfirst($label['created']) .' '. $label['by'] .' '. $page['created'] .' '. $label['on'] .' '. $page['created_date'];?>
 			</p>
@@ -41,9 +45,10 @@
 			<div class="info-full fontSmall">
 				<p><?php echo text_output($label['categories'], 'strong') .' '. $page['categories'];?></p>
 			</div>
-<?php if ($access): ?>
 		</div>
-	
+		
+<?php if (Auth::is_logged_in()): ?>
+	<?php if ($access): ?>
 		<div id="two">
 			<?php echo text_output($label['history'], 'h2', 'page-subhead');?>
 			
@@ -78,7 +83,8 @@
 				<?php echo text_output($label['nohistory'], 'h3', 'orange');?>
 			<?php endif;?>
 		</div>
-		
+	<?php endif;?>
+	
 		<div id="three">
 			<?php echo text_output($label['comments'], 'h2', 'page-subhead');?>
 			
