@@ -14,7 +14,7 @@
 		<?php endif;?>
 		<p><?php echo form_dropdown('user', $users, $current_user, 'class="hud"');?></p>
 		<p>
-			<?php echo form_checkbox('primary', 1, false, 'class="hud" id="primary"');?>
+			<?php echo form_checkbox('primary', 1, $maincharacter, 'class="hud" id="primary"');?>
 			<?php echo form_label($label['make_primary'], 'primary');?>
 		</p>
 	<?php endif;?>

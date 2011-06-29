@@ -705,7 +705,8 @@ abstract class Nova_characters extends Nova_controller_admin {
 		$id = (is_numeric($id)) ? $id : false;
 		
 		// grab the access level
-		$data['level'] = Auth::get_access_level();
+		$level = Auth::get_access_level();
+		$data['level'] = $level;
 		
 		if ( ! $id and count($this->session->userdata('characters')) > 1)
 		{
@@ -720,7 +721,7 @@ abstract class Nova_characters extends Nova_controller_admin {
 		
 		$allowed = false;
 		
-		switch ($data['level'])
+		switch ($level)
 		{
 			case 1:
 				$allowed = (in_array($id, $this->session->userdata('characters'))) ? true : false;
@@ -748,262 +749,372 @@ abstract class Nova_characters extends Nova_controller_admin {
 		// load the resources
 		$this->load->model('positions_model', 'pos');
 		$this->load->model('ranks_model', 'ranks');
+		$this->load->model('access_model', 'access');
 		$this->load->helper('directory');
 		
 		if (isset($_POST['submit']))
 		{
-			// get the user ID and figure out if it should be null or not
-			$user = $this->char->get_character($id, array('user', 'crew_type'));
-			$p = (empty($user['user'])) ? null : $user['user'];
-			
-			foreach ($_POST as $key => $value)
+			switch ($this->uri->segment(4))
 			{
-				if (is_numeric($key))
-				{
-					// build the array
-					$array['fields'][$key] = array(
-						'data_field' => $key,
-						'data_char' => $data['id'],
-						'data_user' => $p,
-						'data_value' => $value,
-						'data_updated' => now()
-					);
-				}
-				else
-				{
-					$array['character'][$key] = $value;
-				}
-			}
-			
-			// get rid of the submit button
-			unset($array['character']['submit']);
-			
-			if ($data['level'] >= 2)
-			{
-				$position1_old = $array['character']['position_1_old'];
-				$position2_old = $array['character']['position_2_old'];
-				$rank_old = $array['character']['rank_old'];
-				
-				// get rid of the submit button data and old position refs
-				unset($array['character']['position_1_old']);
-				unset($array['character']['position_2_old']);
-				unset($array['character']['rank_old']);
-				
-				if ($data['level'] == 3)
-				{
-					$crew_type_old = $array['character']['old_crew_type'];
-					unset($array['character']['old_crew_type']);
+				default:
+					// get the user ID and figure out if it should be null or not
+					$user = $this->char->get_character($id, array('user', 'crew_type'));
+					$p = (empty($user['user'])) ? null : $user['user'];
 					
-					if ($array['character']['crew_type'] == 'inactive' and $user['crew_type'] != 'inactive')
+					foreach ($_POST as $key => $value)
 					{
-						$array['character']['date_deactivate'] = now();
-					}
-					
-					if ($array['character']['crew_type'] != 'inactive' and $user['crew_type'] == 'inactive')
-					{
-						$array['character']['date_deactivate'] = null;
-					}
-				}
-				
-				if ($array['character']['rank'] != $rank_old)
-				{
-					$oldR = $this->ranks->get_rank($rank_old, array('rank_order', 'rank_name'));
-					$newR = $this->ranks->get_rank($array['character']['rank'], array('rank_order', 'rank_name'));
-					
-					$promotion = array(
-						'prom_char' => $data['id'],
-						'prom_user' => $this->char->get_character($data['id'], 'user'),
-						'prom_date' => now(),
-						'prom_old_order' => $oldR['rank_order'],
-						'prom_old_rank' => $oldR['rank_name'],
-						'prom_new_order' => $newR['rank_order'],
-						'prom_new_rank' => $newR['rank_name'],
-					);
-					
-					$prom = $this->char->create_promotion_record($promotion);
-				}
-			}
-			
-			// update the characters table
-			$update = $this->char->update_character($data['id'], $array['character']);
-			
-			foreach ($array['fields'] as $k => $v)
-			{
-				$update += $this->char->update_character_data($k, $data['id'], $v);
-			}
-			
-			if ($update > 0)
-			{
-				$message = sprintf(
-					lang('flash_success'),
-					ucfirst(lang('global_character')),
-					lang('actions_updated'),
-					''
-				);
-
-				$flash['status'] = 'success';
-				$flash['message'] = text_output($message);
-				
-				if ($data['level'] == 3)
-				{
-					if ($array['character']['crew_type'] != $crew_type_old)
-					{
-						if ($crew_type_old == 'active' and ($array['character']['crew_type'] == 'inactive' or $array['character']['crew_type'] == 'npc'))
+						if (is_numeric($key))
 						{
-							$pos1 = $this->pos->get_position($array['character']['position_1']);
-							$pos2 = $this->pos->get_position($array['character']['position_2']);
+							// build the array
+							$array['fields'][$key] = array(
+								'data_field' => $key,
+								'data_char' => $data['id'],
+								'data_user' => $p,
+								'data_value' => $value,
+								'data_updated' => now()
+							);
+						}
+						else
+						{
+							$array['character'][$key] = $value;
+						}
+					}
+					
+					// get rid of the submit button
+					unset($array['character']['submit']);
+					
+					if ($data['level'] >= 2)
+					{
+						$position1_old = $array['character']['position_1_old'];
+						$position2_old = $array['character']['position_2_old'];
+						$rank_old = $array['character']['rank_old'];
+						
+						// get rid of the submit button data and old position refs
+						unset($array['character']['position_1_old']);
+						unset($array['character']['position_2_old']);
+						unset($array['character']['rank_old']);
+						
+						if ($data['level'] == 3)
+						{
+							$crew_type_old = $array['character']['old_crew_type'];
+							unset($array['character']['old_crew_type']);
 							
-							if ($pos1 !== false)
+							if ($array['character']['crew_type'] == 'inactive' and $user['crew_type'] != 'inactive')
 							{
-								// build the update array
-								$position_update['new'] = array('pos_open' => $pos1->pos_open + 1);
-								
-								// update the new position
-								$posupdate = $this->pos->update_position($array['character']['position_1'], $position_update['new']);
+								$array['character']['date_deactivate'] = now();
 							}
 							
-							if ($pos2 !== false)
+							if ($array['character']['crew_type'] != 'inactive' and $user['crew_type'] == 'inactive')
 							{
-								// build the update array
-								$position_update['new'] = array('pos_open' => $pos2->pos_open + 1);
-								
-								// update the new position
-								$posupdate = $this->pos->update_position($array['character']['position_2'], $position_update['new']);
+								$array['character']['date_deactivate'] = null;
 							}
 						}
 						
-						if (($crew_type_old == 'inactive' or $crew_type_old == 'npc') and $array['character']['crew_type'] == 'active')
+						if ($array['character']['rank'] != $rank_old)
 						{
-							$pos1 = $this->pos->get_position($array['character']['position_1']);
-							$pos2 = $this->pos->get_position($array['character']['position_2']);
+							$oldR = $this->ranks->get_rank($rank_old, array('rank_order', 'rank_name'));
+							$newR = $this->ranks->get_rank($array['character']['rank'], array('rank_order', 'rank_name'));
 							
-							if ($pos1 !== false)
-							{
-								// build the update array
-								$position_update['new'] = array('pos_open' => ($pos1->pos_open == 0) ? 0 : ($pos1->pos_open - 1));
-								
-								// update the new position
-								$posupdate = $this->pos->update_position($array['character']['position_1'], $position_update['new']);
-							}
+							$promotion = array(
+								'prom_char' => $data['id'],
+								'prom_user' => $this->char->get_character($data['id'], 'user'),
+								'prom_date' => now(),
+								'prom_old_order' => $oldR['rank_order'],
+								'prom_old_rank' => $oldR['rank_name'],
+								'prom_new_order' => $newR['rank_order'],
+								'prom_new_rank' => $newR['rank_name'],
+							);
 							
-							if ($pos2 !== false)
-							{
-								// build the update array
-								$position_update['new'] = array('pos_open' => ($pos2->pos_open == 0) ? 0 : ($pos2->pos_open - 1));
-								
-								// update the new position
-								$posupdate = $this->pos->update_position($array['character']['position_2'], $position_update['new']);
-							}
+							$prom = $this->char->create_promotion_record($promotion);
 						}
 					}
 					
-					if ($array['character']['crew_type'] == 'active' or $array['character']['crew_type'] == 'pending')
+					// update the characters table
+					$update = $this->char->update_character($data['id'], $array['character']);
+					
+					foreach ($array['fields'] as $k => $v)
 					{
-						// update the positions
-						if ($array['character']['position_1'] != $position1_old)
-						{
-							$posnew = $this->pos->get_position($array['character']['position_1']);
-							$posold = $this->pos->get_position($position1_old);
-							
-							if ($posnew !== false)
-							{
-								// build the update array
-								$position_update['new'] = array('pos_open' => ($posnew->pos_open == 0) ? 0 : ($posnew->pos_open - 1));
-								
-								// update the new position
-								$posnew_update = $this->pos->update_position($array['character']['position_1'], $position_update['new']);
-							}
-							
-							if ($posold !== false)
-							{
-								// build the update array
-								$position_update['old'] = array('pos_open' => $posold->pos_open + 1);
-								
-								// update the new position
-								$posold_update = $this->pos->update_position($position1_old, $position_update['old']);
-							}
-						}
+						$update += $this->char->update_character_data($k, $data['id'], $v);
+					}
+					
+					if ($update > 0)
+					{
+						$message = sprintf(
+							lang('flash_success'),
+							ucfirst(lang('global_character')),
+							lang('actions_updated'),
+							''
+						);
+		
+						$flash['status'] = 'success';
+						$flash['message'] = text_output($message);
 						
-						if ($array['character']['position_2'] != $position2_old)
+						if ($data['level'] == 3)
 						{
-							$posnew = $this->pos->get_position($array['character']['position_2']);
-							$posold = $this->pos->get_position($position2_old);
-							
-							if ($posnew !== false)
+							if ($array['character']['crew_type'] != $crew_type_old)
 							{
-								// build the update array
-								$position_update['new'] = array('pos_open' => ($posnew->pos_open == 0) ? 0 : ($posnew->pos_open - 1));
+								if ($crew_type_old == 'active' and ($array['character']['crew_type'] == 'inactive' or $array['character']['crew_type'] == 'npc'))
+								{
+									$pos1 = $this->pos->get_position($array['character']['position_1']);
+									$pos2 = $this->pos->get_position($array['character']['position_2']);
+									
+									if ($pos1 !== false)
+									{
+										// build the update array
+										$position_update['new'] = array('pos_open' => $pos1->pos_open + 1);
+										
+										// update the new position
+										$posupdate = $this->pos->update_position($array['character']['position_1'], $position_update['new']);
+									}
+									
+									if ($pos2 !== false)
+									{
+										// build the update array
+										$position_update['new'] = array('pos_open' => $pos2->pos_open + 1);
+										
+										// update the new position
+										$posupdate = $this->pos->update_position($array['character']['position_2'], $position_update['new']);
+									}
+								}
 								
-								// update the new position
-								$posnew_update = $this->pos->update_position($array['character']['position_2'], $position_update['new']);
+								if (($crew_type_old == 'inactive' or $crew_type_old == 'npc') and $array['character']['crew_type'] == 'active')
+								{
+									$pos1 = $this->pos->get_position($array['character']['position_1']);
+									$pos2 = $this->pos->get_position($array['character']['position_2']);
+									
+									if ($pos1 !== false)
+									{
+										// build the update array
+										$position_update['new'] = array('pos_open' => ($pos1->pos_open == 0) ? 0 : ($pos1->pos_open - 1));
+										
+										// update the new position
+										$posupdate = $this->pos->update_position($array['character']['position_1'], $position_update['new']);
+									}
+									
+									if ($pos2 !== false)
+									{
+										// build the update array
+										$position_update['new'] = array('pos_open' => ($pos2->pos_open == 0) ? 0 : ($pos2->pos_open - 1));
+										
+										// update the new position
+										$posupdate = $this->pos->update_position($array['character']['position_2'], $position_update['new']);
+									}
+								}
 							}
 							
-							if ($posold !== false)
+							if ($array['character']['crew_type'] == 'active' or $array['character']['crew_type'] == 'pending')
 							{
-								// build the update array
-								$position_update['old'] = array('pos_open' => $posold->pos_open + 1);
+								// update the positions
+								if ($array['character']['position_1'] != $position1_old)
+								{
+									$posnew = $this->pos->get_position($array['character']['position_1']);
+									$posold = $this->pos->get_position($position1_old);
+									
+									if ($posnew !== false)
+									{
+										// build the update array
+										$position_update['new'] = array('pos_open' => ($posnew->pos_open == 0) ? 0 : ($posnew->pos_open - 1));
+										
+										// update the new position
+										$posnew_update = $this->pos->update_position($array['character']['position_1'], $position_update['new']);
+									}
+									
+									if ($posold !== false)
+									{
+										// build the update array
+										$position_update['old'] = array('pos_open' => $posold->pos_open + 1);
+										
+										// update the new position
+										$posold_update = $this->pos->update_position($position1_old, $position_update['old']);
+									}
+								}
 								
-								// update the new position
-								$posold_update = $this->pos->update_position($position2_old, $position_update['old']);
+								if ($array['character']['position_2'] != $position2_old)
+								{
+									$posnew = $this->pos->get_position($array['character']['position_2']);
+									$posold = $this->pos->get_position($position2_old);
+									
+									if ($posnew !== false)
+									{
+										// build the update array
+										$position_update['new'] = array('pos_open' => ($posnew->pos_open == 0) ? 0 : ($posnew->pos_open - 1));
+										
+										// update the new position
+										$posnew_update = $this->pos->update_position($array['character']['position_2'], $position_update['new']);
+									}
+									
+									if ($posold !== false)
+									{
+										// build the update array
+										$position_update['old'] = array('pos_open' => $posold->pos_open + 1);
+										
+										// update the new position
+										$posold_update = $this->pos->update_position($position2_old, $position_update['old']);
+									}
+								}
 							}
 						}
 					}
-				}
-			}
-			else
-			{
-				$message = sprintf(
-					lang('flash_failure'),
-					ucfirst(lang('global_character')),
-					lang('actions_updated'),
-					''
-				);
-
-				$flash['status'] = 'error';
-				$flash['message'] = text_output($message);
+					else
+					{
+						$message = sprintf(
+							lang('flash_failure'),
+							ucfirst(lang('global_character')),
+							lang('actions_updated'),
+							''
+						);
+		
+						$flash['status'] = 'error';
+						$flash['message'] = text_output($message);
+					}
+				break;
+				
+				case 'activate':
+					if ($level == 3)
+					{
+						// get the variables we'll be using
+						$user = (isset($_POST['user'])) ? $_POST['user'] : false;
+						$activate = (isset($_POST['activate_user'])) ? (bool) $this->input->post('activate_user') : false;
+						$primary = (isset($_POST['primary'])) ? (bool) $this->input->post('primary', true) : false;
+						
+						// get the character
+						$c = $this->char->get_character($id);
+						
+						if ($activate)
+						{
+							$user_update_data['status'] = 'active';
+							$user_update_data['leave_date'] = null;
+							$user_update_data['access_role'] = Access_Model::STANDARD;
+							$user_update_data['last_update'] = now();
+						}
+						
+						if ($primary)
+						{
+							$user_update_data['main_char'] = $id;
+							$user_update_data['last_update'] = now();
+						}
+						
+						// build the data for updating the character
+						$character_update_data = array(
+							'user' => $user,
+							'crew_type' => 'active',
+							'date_deactivate' => null,
+						);
+						
+						// update the position listings
+						$this->pos->update_open_slots($c->position_1, 'add_crew');
+						
+						if ($c->position_2 > 0 and $c->position_2 !== null)
+						{
+							$this->pos->update_open_slots($c->position_2, 'add_crew');
+						}
+						
+						if (isset($user_update_data))
+						{
+							// update the user
+							$update_user = $this->user->update_user($user, $user_update_data);
+						}
+						
+						// update the character
+						$update_char = $this->char->update_character($id, $character_update_data);
+						
+						$message = sprintf(
+							($update_char > 0) ? lang('flash_success') : lang('flash_failure'),
+							ucfirst(lang('global_character')),
+							lang('actions_activated'),
+							''
+						);
+						$flash['status'] = ($update_char > 0) ? 'success' : 'error';
+						$flash['message'] = text_output($message);
+					}
+				break;
+				
+				case 'deactivate':
+					if ($level == 3)
+					{
+						// get the variables we'll be using
+						$maincharacter = (isset($_POST['main_character'])) ? $_POST['main_character'] : false;
+						$deactivate = (isset($_POST['deactivate_user'])) ? (bool) $this->input->post('deactivate_user') : false;
+						
+						// get the character
+						$c = $this->char->get_character($id);
+						
+						if ($deactivate)
+						{
+							$user_update_data['status'] = 'inactive';
+							$user_update_data['leave_date'] = now();
+							$user_update_data['access_role'] = Access_Model::INACTIVE;
+							$user_update_data['last_update'] = now();
+						}
+						
+						if ($maincharacter)
+						{
+							$user_update_data['main_char'] = $maincharacter;
+							$user_update_data['last_update'] = now();
+						}
+						
+						// build the data for updating the character
+						$character_update_data = array(
+							'crew_type' => 'inactive',
+							'date_deactivate' => now(),
+						);
+						
+						// update the position listings
+						$this->pos->update_open_slots($c->position_1, 'remove_crew');
+						
+						if ($c->position_2 > 0 and $c->position_2 !== null)
+						{
+							$this->pos->update_open_slots($c->position_2, 'remove_crew');
+						}
+						
+						if (isset($user_update_data))
+						{
+							// update the user
+							$update_user = $this->user->update_user($c->user, $user_update_data);
+						}
+						
+						// update the character
+						$update_char = $this->char->update_character($id, $character_update_data);
+						
+						$message = sprintf(
+							($update_char > 0) ? lang('flash_success') : lang('flash_failure'),
+							ucfirst(lang('global_character')),
+							lang('actions_deactivated'),
+							''
+						);
+						$flash['status'] = ($update_char > 0) ? 'success' : 'error';
+						$flash['message'] = text_output($message);
+					}
+				break;
+				
+				case 'makenpc':
+					if ($level == 3)
+					{
+						// we'll be coming from both active and inactive characters
+						
+						// if this is someone's main character, we need to offer them the option to set a new main character
+						
+						// if doing this makes someone not have a character, we need to offer to deactivate the user
+						
+						// need to have an option to clear out the user association
+					}
+				break;
+				
+				case 'makeplaying':
+					if ($level == 3)
+					{
+						// we'll always be doing this from an npc
+						
+						// need to provide an option to make the character someone's main character
+						
+						// if we're making the npc a character assocated with a user who is inactive, we need to reactivate the user
+					}
+				break;
 			}
 			
 			// set the flash message
 			$this->_regions['flash_message'] = Location::view('flash', $this->skin, 'admin', $flash);
-		}
-		
-		if (isset($_POST['submit']))
-		{
-			if ($this->uri->segment(4) == 'activate' and $level == 3)
-			{
-				// we'll always be doing this from an inactive character
-				
-				// need to provide an option for which user the character is assocated with
-				
-				// need to provide an option to reactivate the user in the event the user is inactive as well
-			}
 			
-			if ($this->uri->segment(4) == 'deactivate' and $level == 3)
-			{
-				// we'll always be doing this from an active character
-				
-				// need to provide a check for other active characters and if there are none, offer to deactivate the user
-				
-				// if the character is a main character for someone, need to offer a dropdown of other characters to make the main character
-			}
-			
-			if ($this->uri->segment(4) == 'makenpc' and $level == 3)
-			{
-				// we'll be coming from both active and inactive characters
-				
-				// if this is someone's main character, we need to offer them the option to set a new main character
-				
-				// if doing this makes someone not have a character, we need to offer to deactivate the user
-			}
-			
-			if ($this->uri->segment(4) == 'makeplaying' and $level == 3)
-			{
-				// we'll always be doing this from an npc
-				
-				// need to provide an option to make the character someone's main character
-				
-				// if we're making the npc a character assocated with a user who is inactive, we need to reactivate the user
-			}
 		}
 		
 		// grab the character info
