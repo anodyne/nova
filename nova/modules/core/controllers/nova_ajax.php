@@ -2943,7 +2943,7 @@ abstract class Nova_ajax extends Controller {
 		// if doing this makes someone not have a character, we need to offer to deactivate the user
 	}
 	
-	public function charcter_playing_character($value='')
+	public function charcter_playing_character($id)
 	{
 		// we'll always be doing this from an npc
 		
