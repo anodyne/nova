@@ -2936,11 +2936,88 @@ abstract class Nova_ajax extends Controller {
 	
 	public function character_npc($id)
 	{
-		// we'll be coming from both active and inactive characters
+		$allowed = Auth::check_access('characters/bio', false);
+		$level = Auth::get_access_level('characters/bio');
 		
-		// if this is someone's main character, we need to offer them the option to set a new main character
-		
-		// if doing this makes someone not have a character, we need to offer to deactivate the user
+		if ($allowed and $level == 3)
+		{
+			// load the models
+			$this->load->model('users_model', 'user');
+			$this->load->model('characters_model', 'char');
+			$this->load->model('ranks_model', 'rank');
+			$this->load->model('positions_model', 'pos');
+			$this->load->helper('utility');
+			
+			// sanity check
+			$id = (is_numeric($id)) ? $id : false;
+			
+			$head = sprintf(
+				lang('fbx_head'),
+				ucwords(lang('actions_change')),
+				ucfirst(lang('global_character')).' '.lang('labels_to').' '.strtoupper(lang('abbr_npc'))
+			);
+			
+			// get the character
+			$char = $this->char->get_character($id);
+			
+			// get the user
+			$user = $this->user->get_user($char->user);
+			
+			// get all active characters for the user
+			$characters = $this->char->get_user_characters($char->user, 'active', 'array');
+			
+			if (count($characters) > 1)
+			{
+				foreach ($characters as $c)
+				{
+					if ($c != $id)
+					{
+						$data['characters'][$c] = $this->char->get_character_name($c, true);
+					}
+				}
+			}
+			
+			// data being sent to the facebox
+			$data['header'] = $head;
+			$data['id'] = $id;
+			$data['text'] = sprintf(
+				lang('fbx_content_character_npc'),
+				parse_name(array($this->rank->get_rank($char->rank, 'rank_name'), $char->first_name, $char->last_name)),
+				lang('status_nonplaying'),
+				lang('global_character'),
+				lang('global_user'),
+				lang('global_character'),
+				lang('global_character'),
+				lang('global_character'),
+				lang('global_user'),
+				lang('global_user'),
+				lang('global_character'),
+				lang('global_character'),
+				lang('global_user'),
+				lang('global_character')
+			);
+			$data['has_characters'] = (count($characters) > 1);
+			$data['label']['deactivate_user'] = ucwords(lang('actions_deactivate').' '.lang('global_user'));
+			$data['label']['remove_user'] = ucwords(lang('actions_remove').' '.lang('global_user').' '.lang('labels_association'));
+			
+			$button = array(
+				'type' => 'submit',
+				'class' => 'hud_button',
+				'name' => 'submit',
+				'value' => 'submit',
+				'content' => ucwords(lang('actions_submit'))
+			);
+			
+			// figure out the skin
+			$skin = $this->session->userdata('skin_admin');
+			
+			$this->_regions['content'] = Location::ajax('character_npc', $skin, 'admin', $data);
+			$this->_regions['controls'] = form_button($button).form_close();
+			
+			Template::assign($this->_regions);
+			
+			Template::render();
+		}
 	}
 	
 	public function charcter_playing_character($id)

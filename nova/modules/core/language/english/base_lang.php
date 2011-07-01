@@ -319,6 +319,7 @@ $lang['labels_appearance'] 		= 'appearance';
 $lang['labels_application']		= 'application';
 $lang['labels_applications']	= 'applications';
 $lang['labels_area']			= 'area';
+$lang['labels_association']		= 'association';
 $lang['labels_author']			= 'author';
 $lang['labels_authors']			= 'authors';
 $lang['labels_available']		= 'available';

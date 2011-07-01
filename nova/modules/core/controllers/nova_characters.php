@@ -1090,13 +1090,62 @@ abstract class Nova_characters extends Nova_controller_admin {
 				case 'makenpc':
 					if ($level == 3)
 					{
-						// we'll be coming from both active and inactive characters
+						// get the variables we'll be using
+						$maincharacter = (isset($_POST['main_character'])) ? $_POST['main_character'] : false;
+						$deactivate = (isset($_POST['deactivate_user'])) ? (bool) $this->input->post('deactivate_user') : false;
+						$assoc = (isset($_POST['remove_user'])) ? (bool) $this->input->post('remove_user') : false;
 						
-						// if this is someone's main character, we need to offer them the option to set a new main character
+						// get the character
+						$c = $this->char->get_character($id);
 						
-						// if doing this makes someone not have a character, we need to offer to deactivate the user
+						if ($deactivate)
+						{
+							$user_update_data['status'] = 'inactive';
+							$user_update_data['leave_date'] = now();
+							$user_update_data['access_role'] = Access_Model::INACTIVE;
+							$user_update_data['last_update'] = now();
+						}
 						
-						// need to have an option to clear out the user association
+						if ($maincharacter)
+						{
+							$user_update_data['main_char'] = $maincharacter;
+							$user_update_data['last_update'] = now();
+						}
+						
+						if ($assoc)
+						{
+							$character_update_data['user'] = null;
+							$user_update_data['main_char'] = null;
+						}
+						
+						// build the data for updating the character
+						$character_update_data['crew_type'] = 'npc';
+						
+						// update the position listings
+						$this->pos->update_open_slots($c->position_1, 'remove_crew');
+						
+						if ($c->position_2 > 0 and $c->position_2 !== null)
+						{
+							$this->pos->update_open_slots($c->position_2, 'remove_crew');
+						}
+						
+						if (isset($user_update_data))
+						{
+							// update the user
+							$update_user = $this->user->update_user($c->user, $user_update_data);
+						}
+						
+						// update the character
+						$update_char = $this->char->update_character($id, $character_update_data);
+						
+						$message = sprintf(
+							($update_char > 0) ? lang('flash_success') : lang('flash_failure'),
+							ucfirst(lang('global_character')),
+							lang('actions_updated'),
+							''
+						);
+						$flash['status'] = ($update_char > 0) ? 'success' : 'error';
+						$flash['message'] = text_output($message);
 					}
 				break;
 				
