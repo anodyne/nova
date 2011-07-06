@@ -70,8 +70,17 @@ $lang['fbx_content_user_deactivate'] = "Are you sure you want to deactivate <str
 $lang['fbx_content_user_activate'] = "Are you sure you want to activate <strong>%s (%s)</strong>? Activating this user will allow them to log in and participate in the game. You can select from the %s associated with this %s account to activate along with the user below. Please make your selections and click Submit to the continue.";
 $lang['fbx_content_user_password_reset'] = "Are you sure you want to reset the password for <strong>%s (%s)</strong>? The %s will be emailed a new password and prompted to change their password next time they log in. Click Submit to continue.";
 
-$lang['fbx_content_character_activate'] = "Are you sure you want to activate <strong>%s</strong>? Activating this %s will make them part of the active crew and appear on the manifest. You can select the %s to associate this %s with and if it should be the primary %s (if you choose to make this the primary %s, the current primary %s will still be associated with the %s). Please make your selections and click Submit to continue.";
+$lang['fbx_content_character_selections'] = "Please make your selections and click Submit to continue.";
 
-$lang['fbx_content_character_deactivate'] = "Are you sure you want to deactivate <strong>%s</strong>? Deactivating this %s will remove them from the active crew. If the %s associated with this %s doesn't have any more active %s, you will be able to deactivate the %s as well. If this %s is the main %s for a %s, you will need to select a new main %s. Please make your selections and click Submit to continue.";
+$lang['fbx_content_character_activate'] = "Are you sure you want to activate <strong>%s</strong>? Activating this %s will make them part of the active crew and appear on the manifest.\r\n\r\nYou can select the %s to associate this %s with and if it should be the primary %s (if you choose to make this the primary %s, the current primary %s will still be associated with the %s). %s";
 
-$lang['fbx_content_character_npc'] = "Are you sure you want to change <strong>%s</strong> to be a %s %s? If necessary, you can remove the %s association for this %s. Additionally, if this %s is the only active %s for this %s, you can deactivate the %s. If this %s is the main %s for a %s, you will need to select a new main %s. Please make your selections and click Submit to continue.";
+$lang['fbx_content_character_deactivate'] = "Are you sure you want to deactivate <strong>%s</strong>? Deactivating this %s will remove them from the active crew. %s %s %s %s";
+$lang['fbx_content_character_deactivate_userdeac'] = "This action will remove all active %s from the %s. You can deactivate the %s by selecting the checkbox below.";
+$lang['fbx_content_character_deactivate_newmainchar'] = "This %s is the primary %s for the %s and you will need to choose a new primary %s for the %s from the dropdown menu.";
+
+$lang['fbx_content_character_npc'] = "Are you sure you want to change <strong>%s</strong> to be a %s %s? %s %s %s %s";
+$lang['fbx_content_character_npc_removeuser'] = "You can remove the %s association for this %s by selecting the checkbox below.";
+$lang['fbx_content_character_npc_deacuser'] = "If this %s is the only active %s for this %s, you can deactivate the %s.";
+$lang['fbx_content_character_npc_newmain'] = "Because this %s is the main %s for a %s, you will need to select a new main %s.";
+
+$lang['fbx_content_character_playing'] = "Are you sure you want to change <strong>%s</strong> to be a %s %s?\r\n\r\nYou can change the %s this %s is associated with (if the %s you select is inactive, they will be reactivated). You can also set this %s to be the new main %s for the %s you select. %s";
