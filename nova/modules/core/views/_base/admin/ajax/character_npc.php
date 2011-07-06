@@ -17,6 +17,6 @@
 		</p>
 	<?php endif;?>
 	
-	<?php if (isset($characters)): ?>
+	<?php if (isset($characters) and $is_main_character): ?>
 		<p><?php echo form_dropdown('main_character', $characters, null, 'class="hud"');?></p>
 	<?php endif;?>
