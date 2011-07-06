@@ -304,7 +304,7 @@ class Kohana_Email {
 	 */
 	public function return_path($email)
 	{
-		$this->_message->setReplyPath($email);
+		$this->_message->setReturnPath($email);
 
 		return $this;
 	}
