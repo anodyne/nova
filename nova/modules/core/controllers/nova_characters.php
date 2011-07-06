@@ -1152,18 +1152,65 @@ abstract class Nova_characters extends Nova_controller_admin {
 				case 'makeplaying':
 					if ($level == 3)
 					{
-						// we'll always be doing this from an npc
+						// get the variables we'll be using
+						$maincharacter = (isset($_POST['main_character'])) ? $_POST['main_character'] : false;
+						$user = (isset($_POST['user'])) ? $this->input->post('user') : false;
 						
-						// need to provide an option to make the character someone's main character
+						// get the character
+						$c = $this->char->get_character($id);
 						
-						// if we're making the npc a character assocated with a user who is inactive, we need to reactivate the user
+						// get the user we're going to
+						$u = $this->user->get_user($user);
+						
+						if ($u->status == 'inactive')
+						{
+							$user_update_data['status'] = 'active';
+							$user_update_data['leave_date'] = null;
+							$user_update_data['last_update'] = now();
+							$user_update_data['access_role'] = Access_Model::STANDARD;
+						}
+						
+						if ($maincharacter)
+						{
+							$user_update_data['main_char'] = $id;
+							$user_update_data['last_update'] = now();
+						}
+						
+						// build the data for updating the character
+						$character_update_data['crew_type'] = 'active';
+						$character_update_data['user'] = $user;
+						
+						// update the position listings
+						$this->pos->update_open_slots($c->position_1, 'add_crew');
+						
+						if ($c->position_2 > 0 and $c->position_2 !== null)
+						{
+							$this->pos->update_open_slots($c->position_2, 'add_crew');
+						}
+						
+						if (isset($user_update_data))
+						{
+							// update the user
+							$update_user = $this->user->update_user($user, $user_update_data);
+						}
+						
+						// update the character
+						$update_char = $this->char->update_character($id, $character_update_data);
+						
+						$message = sprintf(
+							($update_char > 0) ? lang('flash_success') : lang('flash_failure'),
+							ucfirst(lang('global_character')),
+							lang('actions_updated'),
+							''
+						);
+						$flash['status'] = ($update_char > 0) ? 'success' : 'error';
+						$flash['message'] = text_output($message);
 					}
 				break;
 			}
 			
 			// set the flash message
 			$this->_regions['flash_message'] = Location::view('flash', $this->skin, 'admin', $flash);
-			
 		}
 		
 		// grab the character info
