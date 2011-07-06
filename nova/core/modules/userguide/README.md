@@ -38,21 +38,34 @@ Just submit a [bug report](http://dev.kohanaframework.org/projects/userguide3/is
 
 ### If you know git:
 
-**Short version**: Create a ticket on redmine for your changes, fork the module whose docs you wish to improve (e.g. `git://github.com/kohana/orm.git` or `git://github.com/kohana/core.git`), checkout the appropriate branch, make changes, and then send a pull request with the ticket number.
+**Bluehawk's forks all have a `docs` branch.  Please do all work in that branch.**
+
+To make pulling all the docs branches easier, the "docs" branch of [http://github.com/bluehawk/kohana](http://github.com/bluehawk/kohana) contains git submodule links to all the other "docs" branches, so you can clone that to easily get all the docs.  The main Kohana docs are in [http://github.com/bluehawk/core/tree/docs/guide/kohana/], and docs for each module are in each module in the guide folder. (Again, make sure you are in the `docs` branch.)
+
+**Short version**: Fork bluehawk's fork of the module whose docs you wish to improve (e.g. `git://github.com/bluehawk/orm.git` or `git://github.com/bluehawk/core.git`), checkout the `docs` branch, make changes, and then send bluehawk a pull request.
 
 **Long version:**  (This still assumes you at least know your way around git, especially how submodules work.)
 
- 1. Create a ticket on redmine for your changes.
+ 1. Fork the specific repo you want to contribute to on github. (For example go to http://github.com/bluehawk/core and click the fork button.)
 
- 2. Fork the specific repo you want to contribute to on github. (For example go to http://github.com/kohana/core and click the fork button.)
+ 1. To make pulling the new userguide changes easier, I have created a branch of `kohana` called `docs` which contains git submodules of all the other doc branchs.  You can either manually add my remotes to your existing kohana repo, or create a new kohana install from mine by doing these commands:
+	
+		git clone git://github.com/bluehawk/kohana
+		
+		# Get the docs branch
+		git checkout origin/docs
+		
+		# Fetch the system folder and all the modules
+		git submodule init
+		git submodule update
 
- 3. Now go into the repo of the area of docs you want to contribute to and add your forked repo as a new remote, and push to it.
+ 1. Now go into the repo of the area of docs you want to contribute to and add your forked repo as a new remote, and push to it.
  
 		cd system
 		
-		# make sure we are up to date
-		git checkout 3.1/develop
-		git pull
+		# make sure we are up to date with the docs branch
+		git merge origin/docs
+		(if this fails or you can't commit later type "git checkout -b docs" to create a local docs branch)
 		
 		# add your repository as a new remote
 		git remote add <your name> git@github.com:<your name>/core.git
@@ -61,9 +74,9 @@ Just submit a [bug report](http://dev.kohanaframework.org/projects/userguide3/is
 		
 		# now commit the changes and push to your repo
 		git commit
-		git push <your name> 3.1/develop
+		git push <your name> docs
 
- 4. Send a pull request on github containing the ticket number, and update the ticket with a link to the pull request.
+ 1. Send a pull request on github.
 
 
 # What the userguide adds to markdown:
@@ -96,7 +109,7 @@ You can make links to the api browser by wrapping any class name in brackets.  Y
 
 If you want to have parameters, only put the brackets around the class and function (not the params), and put a backslash in front of the opening parenthesis. 
 
-	[Kohana::config]\('foobar','baz')
+	[Kohana::$config]\('foobar','baz')
 
 ### Including Views
 
