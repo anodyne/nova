@@ -1368,6 +1368,7 @@ abstract class Nova_install extends Controller {
 				$this->load->model('positions_model', 'pos');
 				$this->load->model('ranks_model', 'ranks');
 				$this->load->model('settings_model', 'settings');
+				$this->load->model('access_model', 'access');
 				
 				if ($submit !== false)
 				{
@@ -1379,7 +1380,7 @@ abstract class Nova_install extends Controller {
 						'email'				=> $this->input->post('email', true),
 						'password'			=> Auth::hash($this->input->post('password', true)),
 						'date_of_birth'		=> $this->input->post('dob', true),
-						'access_role'		=> 1,
+						'access_role'		=> Access_Model::SYSADMIN,
 						'is_sysadmin'		=> 'y',
 						'is_game_master'	=> 'y',
 						'is_webmaster'		=> 'y',

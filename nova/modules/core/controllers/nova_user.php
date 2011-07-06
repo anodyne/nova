@@ -27,6 +27,7 @@ abstract class Nova_user extends Nova_controller_admin {
 		$id = ($level == 2) ? $this->uri->segment(3, $id, true) : $id;
 		
 		$this->load->model('positions_model', 'pos');
+		$this->load->model('access_model', 'access');
 		
 		$data['my_user'] = ($id == $this->session->userdata('userid'));
 		
@@ -128,7 +129,7 @@ abstract class Nova_user extends Nova_controller_admin {
 						$array['is_sysadmin'] = 'n';
 						$array['is_game_master'] = 'n';
 						$array['is_webmaster'] = 'n';
-						$array['access_role'] = 5;
+						$array['access_role'] = Access_Model::INACTIVE;
 					}
 
 					if ($old_status == 'inactive' and $array['status'] != 'inactive')
@@ -139,7 +140,7 @@ abstract class Nova_user extends Nova_controller_admin {
 						$this->user->update_all_user_prefs($id, 'y');
 						
 						// we're reactivating them, so make sure they have the standard access role
-						$array['access_role'] = 4;
+						$array['access_role'] = Access_Model::STANDARD;
 					}
 				}
 				
@@ -262,7 +263,7 @@ abstract class Nova_user extends Nova_controller_admin {
 				// update the user record
 				$useraction = $this->user->update_user($user, array(
 					'status' => 'inactive',
-					'access_role' => 5,
+					'access_role' => Access_Model::INACTIVE,
 					'is_sysadmin' => 'n',
 					'is_game_master' => 'n',
 					'is_webmaster' => 'n',
@@ -315,7 +316,7 @@ abstract class Nova_user extends Nova_controller_admin {
 				// update the user record
 				$useraction = $this->user->update_user($user, array(
 					'status' => 'active',
-					'access_role' => 4,
+					'access_role' => Access_Model::STANDARD,
 					'is_sysadmin' => 'n',
 					'is_game_master' => 'n',
 					'is_webmaster' => 'n',
