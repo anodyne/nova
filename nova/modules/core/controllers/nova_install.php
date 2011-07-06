@@ -352,12 +352,13 @@ abstract class Nova_install extends Controller {
 				case 'change':
 					$this->load->dbforge();
 					
+					// get the genre
 					$file = $this->input->post('genre', true);
 					
-					$under = strpos($file, '_');
-					$selected_genre = strtolower(substr($file, 0, $under));
+					// drop the .php extension off
+					$selected_genre = strtolower(substr($file, 0, -4));
 					
-					include_once MODPATH.'assets/install/fields'.EXT;
+					include_once MODPATH.'assets/install/fields.php';
 					
 					$tables = array(
 						'departments_'. $selected_genre => array(
@@ -375,7 +376,7 @@ abstract class Nova_install extends Controller {
 					{
 						$this->dbforge->add_field($value['fields']);
 						$this->dbforge->add_key($value['id'], true);
-						$this->dbforge->create_table($key, true);
+						$verify[$key] = $this->dbforge->create_table($key, true);
 					}
 					
 					include_once MODPATH.'assets/install/genres/'.$file;
@@ -425,7 +426,7 @@ abstract class Nova_install extends Controller {
 						$this->load->helper('directory');
 						
 						// grab the files from the directory
-						$genre_files = directory_map(APPPATH.'assets/install/genres/', true);
+						$genre_files = directory_map(MODPATH.'assets/install/genres/', true);
 						
 						// grab the genre and find out it's length
 						$genre = strtolower(GENRE);
