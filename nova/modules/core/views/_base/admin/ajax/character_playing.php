@@ -2,21 +2,14 @@
 
 <?php echo text_output($text);?>
 
-<?php echo form_open('characters/bio/'.$id.'/makenpc');?>
+<?php echo form_open('characters/bio/'.$id.'/makeplaying');?>
 	<?php echo form_hidden('id', $id);?>
 	
+	<?php if (isset($users)): ?>
+		<p><?php echo form_dropdown('user', $users, $user, 'class="hud"');?></p>
+	<?php endif;?>
+	
 	<p>
-		<?php echo form_checkbox('remove_user', 1, false, 'class="hud" id="remove_user"');?>
-		<?php echo form_label($label['remove_user'], 'remove_user');?>
+		<?php echo form_checkbox('main_character', 1, false, 'class="hud" id="main_character"');?>
+		<?php echo form_label($label['main_character'], 'main_character');?>
 	</p>
-	
-	<?php if ( ! $has_characters): ?>
-		<p>
-			<?php echo form_checkbox('deactivate_user', 1, true, 'class="hud" id="deactivate_user"');?>
-			<?php echo form_label($label['deactivate_user'], 'deactivate_user');?>
-		</p>
-	<?php endif;?>
-	
-	<?php if (isset($characters)): ?>
-		<p><?php echo form_dropdown('main_character', $characters, null, 'class="hud"');?></p>
-	<?php endif;?>
