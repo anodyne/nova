@@ -72,6 +72,11 @@ Kohana::init(array(
 ));
 
 /**
+ * Set the default language
+ */
+I18n::lang('en-us');
+
+/**
  * Attach the file write to logging. Multiple writers are supported.
  */
 Kohana::$log->attach(new Log_File(APPPATH.'logs'));
@@ -87,24 +92,7 @@ Kohana::$config->attach(new Config_File);
  * NOTE: the array_slice in Hooks::modules should be working right, but
  * if anything is added to the modules array, we need to verify everything
  * is working properly with modules
- */
-/*Kohana::modules(array(
-	'override'		=> EXTPATH.'override',
-	'thresher'		=> MODPATH.'nova/thresher',
-	'veritas'		=> MODPATH.'nova/veritas',
-	'setup'			=> MODPATH.'nova/setup',
-	'assets'		=> MODPATH.'assets',
-	'dbforge'		=> MODPATH.'nova/dbforge',
-	'nova'			=> MODPATH.'nova/core',
-	'database'		=> MODPATH.'kohana/database',
-	'fusion'		=> MODPATH.'third_party/fusion',
-	'htmlpurifier'	=> MODPATH.'third_party/purifier',
-	'i18n'			=> MODPATH.'third_party/i18n',
-	'cache'			=> MODPATH.'kohana/cache',
-	'email'			=> MODPATH.'third_party/email',
-	'api'			=> MODPATH.'nova/api',
-	));
-*/	
+ */	
 Kohana::modules(array(
 	'override'		=> EXTPATH.'override',
 	'thresher'		=> MODPATH.'app/modules/thresher',
@@ -120,11 +108,6 @@ Kohana::modules(array(
 	'email'			=> MODPATH.'modules/email',
 	'api'			=> MODPATH.'app/modules/api',
 	));
-
-/**
- * Set the default language
- */
-I18n::lang('en-us');
 
 // set the Kohana environment
 Kohana::$environment = Kohana::$config->load('nova.environment');
