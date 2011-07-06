@@ -15,18 +15,23 @@
  */
 class Kohana_RequestTest extends Unittest_TestCase
 {
+	protected $_inital_request;
+
+	public function setUp()
+	{
+		parent::setUp();
+		$this->_initial_request = Request::$initial;
+		Request::$initial = new Request('/');
+	}
+
+	public function tearDown()
+	{
+		Request::$initial = $this->_initial_request;
+		parent::tearDown();
+	}
+
 	public function test_initial()
 	{
-		$original = array(
-			'Kohana::$is_cli' => Kohana::$is_cli,
-			'Request::$initial' => Request::$initial,
-			'Request::$client_ip' => Request::$client_ip,
-			'Request::$user_agent' => Request::$user_agent,
-			'_SERVER' => $_SERVER,
-			'_GET' => $_GET,
-			'_POST' => $_POST,
-		);
-
 		$this->setEnvironment(array(
 			'Kohana::$is_cli' => FALSE,
 			'Request::$initial' => NULL,
@@ -53,7 +58,7 @@ class Kohana_RequestTest extends Unittest_TestCase
 
 		$this->assertEquals(Request::$user_agent, 'whatever (Mozilla 5.0/compatible)');
 
-		$this->assertEquals($request->protocol(), 'http');
+		$this->assertEquals($request->protocol(), 'HTTP/1.1');
 
 		$this->assertEquals($request->referrer(), 'http://example.com/');
 
@@ -62,8 +67,6 @@ class Kohana_RequestTest extends Unittest_TestCase
 		$this->assertEquals($request->query(), array());
 
 		$this->assertEquals($request->post(), array());
-
-		$this->setEnvironment($original);
 	}
 
 	/**
@@ -83,6 +86,7 @@ class Kohana_RequestTest extends Unittest_TestCase
 		);
 
 		$request = new Request('http://www.google.com/');
+		$request->execute();
 	}
 
 	/**
@@ -131,7 +135,7 @@ class Kohana_RequestTest extends Unittest_TestCase
 	{
 		$request = Request::factory($uri);
 
-		$this->assertInstanceOf($client_class, $request->get_client());
+		$this->assertInstanceOf($client_class, $request->client());
 	}
 
 	/**
@@ -284,17 +288,15 @@ class Kohana_RequestTest extends Unittest_TestCase
 		return array(
 			array(
 				'foo/bar',
-				array(),
 				'http',
 				TRUE,
 				'http://localhost/kohana/foo/bar'
 			),
 			array(
 				'foo',
-				array('action' => 'bar'),
 				'http',
 				TRUE,
-				'http://localhost/kohana/foo/bar'
+				'http://localhost/kohana/foo'
 			),
 		);
 	}
@@ -310,8 +312,13 @@ class Kohana_RequestTest extends Unittest_TestCase
 	 * @param string $protocol the protocol to use
 	 * @param array $expected The string we expect
 	 */
-	public function test_url($uri, $params, $protocol, $is_cli, $expected)
+	public function test_url($uri, $protocol, $is_cli, $expected)
 	{
+		if ( ! isset($_SERVER['argc']))
+		{
+			$_SERVER['argc'] = 1;
+		}
+
 		$this->setEnvironment(array(
 			'Kohana::$base_url'  => '/kohana/',
 			'_SERVER'            => array('HTTP_HOST' => 'localhost', 'argc' => $_SERVER['argc']),
@@ -319,132 +326,7 @@ class Kohana_RequestTest extends Unittest_TestCase
 			'Kohana::$is_cli'    => $is_cli,
 		));
 
-		$this->assertEquals(Request::factory($uri)->url($params, $protocol), $expected);
-	}
-
-	/**
-	 * Tests that request caching works
-	 *
-	 * @return null
-	 */
-	public function test_cache()
-	{
-		/**
-		 * Sets up a mock cache object, asserts that:
-		 *
-		 *  1. The cache set() method gets called
-		 *  2. The cache get() method will return the response above when called
-		 */
-		$cache = $this->getMock('Cache_File', array('get', 'set'), array(), 'Cache');
-		$cache->expects($this->once())
-			->method('set');
-
-		$foo = Request::factory('', $cache);
-		$response = $foo->create_response(TRUE);
-
-		$response->headers('Cache-Control', 'max-age=100');
-		$foo->response($response);
-		$foo->execute();
-
-		/**
-		 * Set up a mock response object to test with
-		 */
-		$response = $this->getMock('Response');
-		$response->expects($this->any())
-			->method('body')
-			->will($this->returnValue('Foo'));
-
-		$cache->expects($this->any())
-			->method('get')
-			->will($this->returnValue($response));
-
-		$foo = Request::factory('', $cache)->execute();
-		$this->assertSame('Foo', $foo->body());
-	}
-
-	/**
-	 * Data provider for test_set_cache
-	 *
-	 * @return array
-	 */
-	public function provider_set_cache()
-	{
-		return array(
-			array(
-				array('cache-control' => 'no-cache'),
-				array('no-cache' => NULL),
-				FALSE,
-			),
-			array(
-				array('cache-control' => 'no-store'),
-				array('no-store' => NULL),
-				FALSE,
-			),
-			array(
-				array('cache-control' => 'max-age=100'),
-				array('max-age' => '100'),
-				TRUE
-			),
-			array(
-				array('cache-control' => 'private'),
-				array('private' => NULL),
-				FALSE
-			),
-			array(
-				array('cache-control' => 'private, max-age=100'),
-				array('private' => NULL, 'max-age' => '100'),
-				FALSE
-			),
-			array(
-				array('cache-control' => 'private, s-maxage=100'),
-				array('private' => NULL, 's-maxage' => '100'),
-				TRUE
-			),
-			array(
-				array(
-					'expires' => date('m/d/Y', strtotime('-1 day')),
-				),
-				array(),
-				FALSE
-			),
-			array(
-				array(
-					'expires' => date('m/d/Y', strtotime('+1 day')),
-				),
-				array(),
-				TRUE
-			),
-			array(
-				array(),
-				array(),
-				TRUE
-			),
-		);
-	}
-
-	/**
-	 * Tests the set_cache() method
-	 *
-	 * @test
-	 * @dataProvider provider_set_cache
-	 *
-	 * @return null
-	 */
-	public function test_set_cache($headers, $cache_control, $expected)
-	{
-		/**
-		 * Set up a mock response object to test with
-		 */
-		$response = $this->getMock('Response');
-		$response->expects($this->any())
-			->method('parse_cache_control')
-			->will($this->returnValue($cache_control));
-		$response->expects($this->any())
-			->method('headers')
-			->will($this->returnValue($headers));
-
-		$request = new Request_Client_Internal;
-		$this->assertEquals($request->set_cache($response), $expected);
+		$this->assertEquals(Request::factory($uri)->url($protocol), $expected);
 	}
 
 	/**
@@ -456,16 +338,16 @@ class Kohana_RequestTest extends Unittest_TestCase
 	{
 		return array(
 			array(
-				'http',
-				'http',
+				'http/1.1',
+				'HTTP/1.1',
 			),
 			array(
-				'FTP',
 				'ftp',
+				'FTP',
 			),
 			array(
-				'hTTps',
-				'https',
+				'hTTp/1.0',
+				'HTTP/1.0',
 			),
 		);
 	}
@@ -485,7 +367,7 @@ class Kohana_RequestTest extends Unittest_TestCase
 		$result = $request->protocol($protocol);
 
 		// Test the set value
-		$this->assertSame($request->protocol(), $expected);
+		$this->assertSame($expected, $request->protocol());
 
 		// Test the return value
 		$this->assertTrue($request instanceof $result);
@@ -546,7 +428,7 @@ class Kohana_RequestTest extends Unittest_TestCase
 	public function provider_uri_only_trimed_on_internal()
 	{
 		$old_request = Request::$initial;
-		Request::$initial = new Request('foo/bar');
+		Request::$initial = new Request(TRUE);
 
 		$result = array(
 			array(
@@ -564,6 +446,14 @@ class Kohana_RequestTest extends Unittest_TestCase
 			array(
 				new Request('foo/bar'),
 				'foo/bar'
+			),
+			array(
+				new Request('/'),
+				'/'
+			),
+			array(
+				new Request(''),
+				'/'
 			)
 		);
 
@@ -606,22 +496,6 @@ class Kohana_RequestTest extends Unittest_TestCase
 			)
 		);
 
-		if (extension_loaded('http'))
-		{
-			$provider[] = array(
-				array(
-					'proxyhost'         => 'http://localhost:8080',
-					'proxytype'         => HTTP_PROXY_HTTP,
-					'redirect'          => 2
-				),
-				array(
-					'proxyhost'         => 'http://localhost:8080',
-					'proxytype'         => HTTP_PROXY_HTTP,
-					'redirect'          => 2
-				)
-			);
-		}
-
 		return $provider;
 	}
 
@@ -637,11 +511,10 @@ class Kohana_RequestTest extends Unittest_TestCase
 	 */
 	public function test_options_set_to_external_client($settings, $expected)
 	{
-		$request = Request::factory('http://www.kohanaframework.org');
-		$request_client = $request->get_client();
+		$request_client = Request_Client_External::factory(array(), 'Request_Client_Curl');
 
 		// Test for empty array
-		$this->assertSame($request_client->options(), array());
+		$this->assertSame(array(), $request_client->options());
 
 		// Test that set works as expected
 		$this->assertSame($request_client->options($settings), $request_client);
@@ -705,20 +578,20 @@ class Kohana_RequestTest extends Unittest_TestCase
 	{
 		return array(
 			array(
-				new Request('foo/bar'),
+				Request::factory(),
 				array(
 					'content-type'  => 'application/x-www-form-urlencoded',
 					'x-test-header' => 'foo'
 				),
-				"content-type: application/x-www-form-urlencoded\r\nx-test-header: foo\r\n\n"
+				"Content-Type: application/x-www-form-urlencoded\r\nX-Test-Header: foo\r\n\r\n"
 			),
 			array(
-				new Request('foo/bar'),
+				Request::factory(),
 				array(
 					'content-type'  => 'application/json',
 					'x-powered-by'  => 'kohana'
 				),
-				"content-type: application/json\r\nx-powered-by: kohana\r\n\n"
+				"Content-Type: application/json\r\nX-Powered-By: kohana\r\n\r\n"
 			)
 		);
 	}
@@ -805,5 +678,45 @@ class Kohana_RequestTest extends Unittest_TestCase
 		}
 
 		$this->assertSame($expected, $request->query());
+	}
+
+	/**
+	 * Provides data for test_client
+	 *
+	 * @return  array
+	 */
+	public function provider_client()
+	{
+		$internal_client = new Request_Client_Internal;
+		$external_client = new Request_Client_Stream;
+
+		return array(
+			array(
+				new Request('http://kohanaframework.org'),
+				$internal_client,
+				$internal_client
+			),
+			array(
+				new Request('foo/bar'),
+				$external_client,
+				$external_client
+			)
+		);
+	}
+
+	/**
+	 * Tests the getter/setter for request client
+	 * 
+	 * @dataProvider provider_client
+	 *
+	 * @param   Request $request 
+	 * @param   Request_Client $client 
+	 * @param   Request_Client $expected 
+	 * @return  void
+	 */
+	public function test_client(Request $request, Request_Client $client, Request_Client $expected)
+	{
+		$request->client($client);
+		$this->assertSame($expected, $request->client());
 	}
 } // End Kohana_RequestTest

@@ -233,6 +233,22 @@ class Kohana_Text {
 	}
 
 	/**
+	 * Uppercase words that are not separated by spaces, using a custom
+	 * delimiter or the default.
+	 * 
+	 *      $str = Text::ucfirst('content-type'); // returns "Content-Type" 
+	 *
+	 * @param   string    word to transform
+	 * @param   string    delemiter to use
+	 * @return  string
+	 */
+	public static function ucfirst($word, $delimiter = '-')
+	{
+		// Put the keys back the Case-Convention expected
+		return implode($delimiter, array_map('ucfirst', explode($delimiter, $word)));
+	}
+
+	/**
 	 * Reduces multiple slashes in a string to single slashes.
 	 *
 	 *     $str = Text::reduce_slashes('foo//bar/baz'); // "foo/bar/baz"
@@ -346,7 +362,7 @@ class Kohana_Text {
 	public static function auto_link_urls($text)
 	{
 		// Find and replace all http/https/ftp/ftps links that are not part of an existing html anchor
-		$text = preg_replace_callback('~\b(?<!href="|">)(?:ht|f)tps?://\S+(?:/|\b)~i', 'Text::_auto_link_urls_callback1', $text);
+		$text = preg_replace_callback('~\b(?<!href="|">)(?:ht|f)tps?://[^<\s]+(?:/|\b)~i', 'Text::_auto_link_urls_callback1', $text);
 
 		// Find and replace all naked www.links.com (without http://)
 		return preg_replace_callback('~\b(?<!://|">)www(?:\.[a-z0-9][-a-z0-9]*+)+\.[a-z]{2,6}\b~i', 'Text::_auto_link_urls_callback2', $text);

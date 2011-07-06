@@ -32,7 +32,7 @@ abstract class Kohana_Session {
 	 * @param   string   type of session (native, cookie, etc)
 	 * @param   string   session identifier
 	 * @return  Session
-	 * @uses    Kohana::config
+	 * @uses    Kohana::$config
 	 */
 	public static function instance($type = NULL, $id = NULL)
 	{
@@ -45,7 +45,7 @@ abstract class Kohana_Session {
 		if ( ! isset(Session::$instances[$type]))
 		{
 			// Load the configuration for this type
-			$config = Kohana::config('session')->get($type);
+			$config = Kohana::$config->load('session')->get($type);
 
 			// Set the session class name
 			$class = 'Session_'.ucfirst($type);
@@ -316,13 +316,14 @@ abstract class Kohana_Session {
 			}
 			else
 			{
-				Kohana::$log->add(Log::ERROR, 'Error reading session data: '.$id);
+				// Ignore these, session is valid, likely no data though.
 			}
 		}
 		catch (Exception $e)
 		{
-			// Ignore all reading errors, but log them
-			Kohana::$log->add(Log::ERROR, 'Error reading session data: '.$id);
+			// Error reading the session, usually
+			// a corrupt session.
+			throw new Session_Exception('Error reading session data.', NULL, Session_Exception::SESSION_CORRUPT);
 		}
 
 		if (is_array($data))
@@ -403,6 +404,27 @@ abstract class Kohana_Session {
 	}
 
 	/**
+	 * Restart the session.
+	 *
+	 *     $success = $session->restart();
+	 *
+	 * @return  boolean
+	 */
+	public function restart()
+	{
+		if ($this->_destroyed === FALSE)
+		{
+			// Wipe out the current session.
+			$this->destroy();
+		}
+	
+		// Allow the new session to be saved
+		$this->_destroyed = FALSE;
+
+		return $this->_restart();
+	}
+
+	/**
 	 * Loads the raw session data string and returns it.
 	 *
 	 * @param   string   session id
@@ -430,5 +452,12 @@ abstract class Kohana_Session {
 	 * @return  boolean
 	 */
 	abstract protected function _destroy();
+
+	/**
+	 * Restarts the current session.
+	 *
+	 * @return  boolean
+	 */
+	abstract protected function _restart();
 
 } // End Session

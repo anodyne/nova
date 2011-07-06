@@ -1,5 +1,40 @@
 # Migrating from 3.0.x
 
+## Config
+
+The configuration system has been rewritten to make it more flexible.  The majority of the public API should
+still operate in the same way, however the one major change is the transition from using `Kohana::config()` to
+`Kohana::$config->load()`, where `Kohana::$config` is an instance of `Config`.
+
+`Config::load()` works almost identically to `Kohana::config()`, e.g.:
+
+	Kohana::$config->load('dot.notation')
+	Kohana::$config->load('dot')->notation
+
+A simple find/replace for `Kohana::config`/`Kohana::$config->load` within your project should fix this.
+
+The terminology for config sources has also changed.  Pre 3.2 config was loaded from "Config Readers" which both
+read and wrote config.  In 3.2 there are **Config Readers** and **Config Writers**, both of which are a type of 
+**Config Source**.
+
+A **Config Reader** is implemented by implementing the `Kohana_Config_Reader` interface; similarly a **Config Writer**
+is implemented by implementing the `Kohana_Config_Writer` interface.
+
+e.g. for Database:
+
+	class Kohana_Config_Database_Reader implements Kohana_Config_Reader
+	class Kohana_Config_Database_Writer extends Kohana_Config_Database_Reader implements Kohana_Config_Writer
+
+Although not enforced, the convention is that writers extend config readers.
+
+To help maintain backwards compatability when loading config sources empty classes are provided for the db/file sources
+which extends the source's reader/writer.
+
+e.g.
+
+	class Kohana_Config_File extends Kohana_Config_File_Reader
+	class Kohana_Config_Database extends Kohana_Config_Database_Writer
+
 ## Request/Response
 
 The request class has been split into a request and response class. To set the response body, you used to do:
@@ -18,6 +53,56 @@ Some properties that existed in the request class have been converted into metho
 	- Request::$uri -> Request::uri()
 
 Request::instance() has been replaced by Request::current() and Request::initial(). Normally you'll want to use Request::current(), but if you are sure you want the *original* request (when running hmvc requests), use Request::initial().
+
+### External requests in Kohana 3.2
+
+In Kohana 3.2, `Request_Client_External` now has three separate drivers to handle external requests;
+
+ - `Request_Client_Curl` is the default driver, using the PHP Curl extension
+ - `Request_Client_HTTP` uses the PECL HTTP extension
+ - `Request_Client_Stream` uses streams native to PHP and requires no extensions. However this method is slower than the alternatives.
+
+Unless otherwise specified, `Request_Client_Curl` will be used for all external requests. This can be changed for all external requests, or for individual requests.
+
+To set an external driver across all requests, add the following to the `application/bootstrap.php` file;
+
+    // Set all external requests to use PECL HTTP
+    Request_Client_External::$client = 'Request_Client_HTTP';
+
+Alternatively it is possible to set a specific client to an individual Request.
+
+    // Set the Stream client to an individual request and
+    // Execute
+    $response = Request::factory('http://kohanaframework.org')
+        ->client(new Request_Client_Stream)
+        ->execute();
+
+### HTTP cache control in 3.2
+
+Kohana 3.1 introduced HTTP cache control, providing RFC 2616 fully complient transparent caching of responses. Kohana 3.2 builds on this moving all caching logic out of `Request_Client` into `HTTP_Cache`.
+
+[!!] HTTP Cache requires the Cache module to be enabled in all versions of Kohana!
+
+In Kohana 3.1, HTTP caching is enabled doing the following;
+
+    // Apply cache to a request
+    $request = Request::factory('foo/bar', Cache::instance('memcache'));
+
+    // In controller, ensure response sets cache control,
+    // this will cache the response for one hour
+    $this->response->headers('cache-control', 
+        'public, max-age=3600');
+
+In Kohana 3.2, HTTP caching is enabled slightly differently;
+
+    // Apply cache to request
+    $request = Request::factory('foo/bar',
+        HTTP_Cache::factory(array(), 'memcache'));
+
+    // In controller, ensure response sets cache control,
+    // this will cache the response for one hour
+    $this->response->headers('cache-control', 
+        'public, max-age=3600');
 
 ## Validation
 
