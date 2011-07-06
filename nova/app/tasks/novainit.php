@@ -84,7 +84,7 @@ HELP;
 		$path = MODPATH.'app/modules/setup/assets/install/';
 		
 		// set the version number
-		$version = Kohana::config('nova.app_version_full');
+		$version = Kohana::$config->load('nova.app_version_full');
 		
 		// check to see if the install file exists and if it does, back it up
 		if (file_exists($path.'fields.php'))
@@ -264,7 +264,7 @@ HELP;
 		// build the content
 		$content = '<?php
 
-$_genre = strtolower(Kohana::config(\'nova.genre\'));
+$_genre = strtolower(Kohana::$config->load(\'nova.genre\'));
 
 '.$data.'
 '.$fields;

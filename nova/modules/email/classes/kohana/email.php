@@ -28,7 +28,7 @@ class Kohana_Email {
 		if ( ! Email::$_mailer)
 		{
 			// Load email configuration, make sure minimum defaults are set
-			$config = Kohana::config('email')->as_array() + array(
+			$config = Kohana::$config->load('email')->as_array() + array(
 				'driver'  => 'native',
 				'options' => array(),
 			);

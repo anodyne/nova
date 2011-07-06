@@ -13,7 +13,7 @@ class Kodoc extends Kohana_Kodoc
 
 		foreach ($classes as $class)
 		{
-			$exceptions = explode(',', Kohana::config('userguide.api_prefix_ignore'));
+			$exceptions = explode(',', Kohana::$config->load('userguide.api_prefix_ignore'));
 			
 			foreach ($exceptions as $e)
 			{

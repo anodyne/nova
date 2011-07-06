@@ -29,7 +29,7 @@ class Controller_Setup_Sms extends Controller_Template {
 			$db = Database::instance();
 			
 			// get the number of tables
-			$tables = Kohana::config('novasys.app_db_tables');
+			$tables = Kohana::$config->load('novasys.app_db_tables');
 			
 			// we're upgrading from sms, so make sure the system isn't installed
 			if ($this->request->action() != 'step' and (count($db->list_tables($db->table_prefix().'%')) == $tables))
@@ -45,7 +45,7 @@ class Controller_Setup_Sms extends Controller_Template {
 		$this->template = View::factory(Location::file('upgrade', null, 'structure'));
 		
 		// set the variables in the template
-		$this->template->title 					= Kohana::config('novasys.app_name').' :: ';
+		$this->template->title 					= Kohana::$config->load('novasys.app_name').' :: ';
 		$this->template->javascript				= false;
 		$this->template->layout					= View::factory(Location::file('upgrade', null, 'templates'));
 		$this->template->layout->label			= false;
@@ -97,7 +97,7 @@ class Controller_Setup_Sms extends Controller_Template {
 		// is installation allowed?
 		$allowed = true;
 		
-		if (Kohana::config('nova.genre') == '')
+		if (Kohana::$config->load('nova.genre') == '')
 		{
 			// installation not allowed
 			$allowed = false;
@@ -145,7 +145,7 @@ class Controller_Setup_Sms extends Controller_Template {
 				if (isset($_POST['next']))
 				{
 					// update the character set
-					$dbconfig = Kohana::config('database');
+					$dbconfig = Kohana::$config->load('database');
 					$db->set_charset($dbconfig['default']['charset']);
 					
 					// pull in the field information
@@ -198,7 +198,7 @@ class Controller_Setup_Sms extends Controller_Template {
 					$data = null;
 					
 					// pull in the genre data
-					include_once MODPATH.'nova/install/assets/genres/'.strtolower(Kohana::config('nova.genre')).EXT;
+					include_once MODPATH.'nova/install/assets/genres/'.strtolower(Kohana::$config->load('nova.genre')).EXT;
 					
 					$genre = array();
 					
@@ -215,7 +215,7 @@ class Controller_Setup_Sms extends Controller_Template {
 						}
 					}
 					
-					if (Kohana::config('install.dev'))
+					if (Kohana::$config->load('install.dev'))
 					{
 						// pause the script for a second
 						sleep(1);
@@ -279,7 +279,7 @@ class Controller_Setup_Sms extends Controller_Template {
 				);
 				
 				// build the next step control
-				$this->template->layout->controls = (count($tables) < Kohana::config('novasys.app_db_tables'))
+				$this->template->layout->controls = (count($tables) < Kohana::$config->load('novasys.app_db_tables'))
 					? false 
 					: form::button('next', __('Upgrade'), $next).form::close();
 			break;
@@ -382,14 +382,14 @@ class Controller_Setup_Sms extends Controller_Template {
 			
 			// build the data we need
 			$request = array(
-				Kohana::config('novasys.app_name'),
-				Kohana::config('novasys.app_version_full'),
+				Kohana::$config->load('novasys.app_name'),
+				Kohana::$config->load('novasys.app_version_full'),
 				url::site(),
 				$_SERVER['REMOTE_ADDR'],
 				$_SERVER['SERVER_ADDR'],
 				phpversion(),
 				'upgrade',
-				Kohana::config('nova.genre'),
+				Kohana::$config->load('nova.genre'),
 			);
 			
 			$insert = "INSERT INTO www_installs (product, version, url, ip_client, ip_server, php, type, date, genre) VALUES (%s, %s, %s, %s, %s, %s, %s, %d, %s);";

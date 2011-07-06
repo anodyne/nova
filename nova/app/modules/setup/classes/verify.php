@@ -20,7 +20,7 @@ class Verify {
 	public static function server()
 	{
 		// grab the database config
-		$dbconf = Kohana::config('database.default');
+		$dbconf = Kohana::$config->load('database.default');
 		
 		// grab the database version
 		$version = DB::query(Database::SELECT, 'SELECT version() AS ver')->execute()->current();

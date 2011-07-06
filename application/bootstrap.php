@@ -127,7 +127,7 @@ Kohana::modules(array(
 I18n::lang('en-us');
 
 // set the Kohana environment
-Kohana::$environment = Kohana::config('nova.environment');
+Kohana::$environment = Kohana::$config->load('nova.environment');
 
 /**
  * Set Kohana::$environment if $_ENV['KOHANA_ENV'] has been supplied.

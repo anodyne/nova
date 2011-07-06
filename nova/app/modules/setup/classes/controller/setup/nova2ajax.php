@@ -1098,7 +1098,7 @@ class Controller_Setup_Smsajax extends Controller_Template {
 			Utility::install_skin();
 			
 			// get the directory listing for the genre
-			$dir = Utility::directory_map(APPPATH.'assets/common/'.Kohana::config('nova.genre').'/ranks/', true);
+			$dir = Utility::directory_map(APPPATH.'assets/common/'.Kohana::$config->load('nova.genre').'/ranks/', true);
 			
 			// set the items to be pulled out of the listing
 			$pop = array('index.html');

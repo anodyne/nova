@@ -31,7 +31,7 @@ class Controller_Setup_Main extends Controller_Template {
 			$db = Database::instance();
 			
 			// get the number of tables
-			$tables = Kohana::config('nova.app_db_tables');
+			$tables = Kohana::$config->load('nova.app_db_tables');
 			
 			# FIXME: hmm ... i'm pretty sure this would fail in the event that nova 1 or 2 are installed
 			
@@ -71,7 +71,7 @@ class Controller_Setup_Main extends Controller_Template {
 		$this->template = View::factory(Location::file('setup', null, 'structure'));
 		
 		// set the variables in the template
-		$this->template->title 				= Kohana::config('nova.app_name').' :: ';
+		$this->template->title 				= Kohana::$config->load('nova.app_name').' :: ';
 		$this->template->javascript			= false;
 		$this->template->layout				= View::factory(Location::file('setup', null, 'templates'));
 		$this->template->layout->label		= false;
@@ -675,7 +675,7 @@ return array
 			}
 			
 			// load the YAML data into an array
-			$content = Spyc::YAMLLoad(Kohana::config('nova.version_info'));
+			$content = Spyc::YAMLLoad(Kohana::$config->load('nova.version_info'));
 			
 			try {
 				// get the system information

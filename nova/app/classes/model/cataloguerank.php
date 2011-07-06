@@ -65,7 +65,7 @@ class Model_CatalogueRank extends Model {
 	 */
 	public static function init()
 	{
-		static::$_properties['genre']['default'] = Kohana::config('nova.genre');
+		static::$_properties['genre']['default'] = Kohana::$config->load('nova.genre');
 	}
 	
 	/**
@@ -78,7 +78,7 @@ class Model_CatalogueRank extends Model {
 	 */
 	public static function get_all_items($status = 'active', $limit_to_genre = true)
 	{
-		$genre_where = ($limit_to_genre) ? array('genre', Kohana::config('nova.genre')) : array();
+		$genre_where = ($limit_to_genre) ? array('genre', Kohana::$config->load('nova.genre')) : array();
 		$status_where = ( ! empty($status)) ? array('status', $status) : array();
 		
 		$result = static::find()

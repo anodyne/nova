@@ -4,9 +4,9 @@
 		<title><?php echo $title;?></title>
 		
 		<meta charset="utf-8" />
-		<meta name="description" content="<?php echo Kohana::config('nova.meta_desc');?>" />
-		<meta name="keywords" content="<?php echo Kohana::config('nova.meta_keywords');?>" />
-		<meta name="author" content="<?php echo Kohana::config('nova.meta_author');?>" />
+		<meta name="description" content="<?php echo Kohana::$config->load('nova.meta_desc');?>" />
+		<meta name="keywords" content="<?php echo Kohana::$config->load('nova.meta_keywords');?>" />
+		<meta name="author" content="<?php echo Kohana::$config->load('nova.meta_author');?>" />
 		
 		<?php if (isset($_redirect)): echo $_redirect; endif;?>
 		

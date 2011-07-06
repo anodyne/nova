@@ -144,9 +144,9 @@ class Command extends Oil_Command {
 				
 				case 'version':
 					Cli::write('Kohana: ' . Kohana::VERSION . ' (' . Kohana::CODENAME . ')');
-					Cli::write('Nova: '.Kohana::config('nova.app_version_full'));
-					Cli::write('Thresher: '.Kohana::config('nova.wiki_version_full'));
-					Cli::write('Mako: '.Kohana::config('nova.forum_version_full'));
+					Cli::write('Nova: '.Kohana::$config->load('nova.app_version_full'));
+					Cli::write('Thresher: '.Kohana::$config->load('nova.wiki_version_full'));
+					Cli::write('Mako: '.Kohana::$config->load('nova.forum_version_full'));
 				break;
 				
 				default:

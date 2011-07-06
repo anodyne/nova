@@ -1,6 +1,6 @@
 <?php
 
-$_genre = strtolower(Kohana::config('nova.genre'));
+$_genre = strtolower(Kohana::$config->load('nova.genre'));
 
 $data = array(
 	'access_groups' => array(),

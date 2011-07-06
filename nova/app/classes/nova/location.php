@@ -49,7 +49,7 @@ abstract class Nova_Location {
 	 *     echo Location::image('feed.png', 'default', 'main', 'image');
 	 *
 	 * @access	public
-	 * @uses	Kohana::config
+	 * @uses	Kohana::$config->load
 	 * @param	string	the image to find
 	 * @param	string	the skin to look in
 	 * @param	string	the section to look in
@@ -123,7 +123,7 @@ abstract class Nova_Location {
 			break;
 				
 			case 'rank':
-				return APPFOLDER.'/assets/common/'.Kohana::config('nova.genre').'/ranks/'.$section.'/'.$image;
+				return APPFOLDER.'/assets/common/'.Kohana::$config->load('nova.genre').'/ranks/'.$section.'/'.$image;
 			break;
 		}
 		

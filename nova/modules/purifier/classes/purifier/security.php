@@ -30,7 +30,7 @@ class Purifier_Security extends Kohana_Security {
 	{
 		if ( ! Security::$htmlpurifier)
 		{
-			if (Kohana::config('purifier.preload'))
+			if (Kohana::$config->load('purifier.preload'))
 			{
 				// Load the all of HTML Purifier right now.
 				// This increases performance with a slight hit to memory usage.
@@ -43,7 +43,7 @@ class Purifier_Security extends Kohana_Security {
 			// Create a new configuration object
 			$config = HTMLPurifier_Config::createDefault();
 
-			if (is_array($settings = Kohana::config('purifier.settings')))
+			if (is_array($settings = Kohana::$config->load('purifier.settings')))
 			{
 				// Load the settings
 				$config->loadArray($settings);

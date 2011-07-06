@@ -225,7 +225,7 @@ abstract class Nova_Form extends Kohana_Form {
 					'order_by' => array(
 						'dept_order' => 'asc'),
 				);
-				$depts = $mCore->get_all('departments_'.Kohana::config('nova.genre'), $args);
+				$depts = $mCore->get_all('departments_'.Kohana::$config->load('nova.genre'), $args);
 		
 				if ($depts)
 				{
@@ -258,7 +258,7 @@ abstract class Nova_Form extends Kohana_Form {
 							'order_by' => array(
 								'dept_order' => 'asc'),
 						);
-						$subd = $mCore->get_all('departments_'.Kohana::config('nova.genre'), $args);
+						$subd = $mCore->get_all('departments_'.Kohana::$config->load('nova.genre'), $args);
 						
 						if ($subd)
 						{
@@ -293,7 +293,7 @@ abstract class Nova_Form extends Kohana_Form {
 					'order_by' => array(
 						'dept_order' => 'asc'),
 				);
-				$depts = $mCore->get_all('departments_'.Kohana::config('nova.genre'), $args);
+				$depts = $mCore->get_all('departments_'.Kohana::$config->load('nova.genre'), $args);
 		
 				if ($depts)
 				{

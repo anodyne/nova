@@ -16,7 +16,7 @@
 		<tbody>
 		<?php foreach ($genres as $key => $g): ?>
 			<tr>
-				<?php if (Kohana::config('nova.genre') == $key): ?>
+				<?php if (Kohana::$config->load('nova.genre') == $key): ?>
 					<td class="col-25 fontSmall success bold"><?php echo strtoupper($key);?></td>
 				<?php else: ?>
 					<td class="col-25 fontSmall subtle"><?php echo strtoupper($key);?></td>
@@ -27,7 +27,7 @@
 					<strong class="error<?php if ($g['installed']){ echo ' hidden'; }?>"><?php echo ucwords(__('not installed'));?></strong>
 				</td>
 				<td class="col-150 align-center">
-					<?php if ($key != Kohana::config('nova.genre')): ?>
+					<?php if ($key != Kohana::$config->load('nova.genre')): ?>
 						<button myGenre="<?php echo $key;?>" class="do-uninstall button-small<?php if ( ! $g['installed']){ echo ' hidden'; }?>"><?php echo ucfirst(__('uninstall'));?></button>
 					<?php endif;?>
 					<button myGenre="<?php echo $key;?>" class="do-install button-small<?php if ($g['installed']){ echo ' hidden'; }?>"><?php echo ucfirst(__('install'));?></button>
@@ -38,7 +38,7 @@
 		
 		<?php foreach ($additional as $key => $a): ?>
 			<tr>
-				<?php if (Kohana::config('nova.genre') == $key): ?>
+				<?php if (Kohana::$config->load('nova.genre') == $key): ?>
 					<td class="col-25 fontSmall success bold"><?php echo strtoupper($key);?></td>
 				<?php else: ?>
 					<td class="col-25 fontSmall subtle"><?php echo strtoupper($key);?></td>
@@ -49,7 +49,7 @@
 					<strong class="error<?php if ($a['installed']){ echo ' hidden'; }?>"><?php echo ucfirst(__('not installed'));?></strong>
 				</td>
 				<td class="col-150 align-center">
-					<?php if ($key != Kohana::config('nova.genre')): ?>
+					<?php if ($key != Kohana::$config->load('nova.genre')): ?>
 						<button myGenre="<?php echo $key;?>" class="do-uninstall button-small<?php if ( ! $a['installed']){ echo ' hidden'; }?>"><?php echo ucfirst(__('uninstall'));?></button>
 					<?php endif;?>
 					<button myGenre="<?php echo $key;?>" class="do-install button-small<?php if ($a['installed']){ echo ' hidden'; }?>"><?php echo ucfirst(__('install'));?></button>

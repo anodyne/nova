@@ -40,11 +40,11 @@ abstract class Controller_Rest extends Controller {
 	{
 		parent::before();
 
-		if (Kohana::config('rest.auth') == 'basic')
+		if (Kohana::$config->load('rest.auth') == 'basic')
 		{
 			$this->_prepare_basic_auth();
 		}
-		elseif (Kohana::config('rest.auth') == 'digest')
+		elseif (Kohana::$config->load('rest.auth') == 'digest')
 		{
 			$this->_prepare_digest_auth();
 		}
@@ -148,7 +148,7 @@ abstract class Controller_Rest extends Controller {
 		}
 
 		// Otherwise, check the HTTP_ACCEPT (if it exists and we are allowed)
-		if (Kohana::config('rest.ignore_http_accept') === false and \Input::server('HTTP_ACCEPT'))
+		if (Kohana::$config->load('rest.ignore_http_accept') === false and \Input::server('HTTP_ACCEPT'))
 		{
 			// Check all formats against the HTTP_ACCEPT header
 			foreach (array_keys($this->_supported_formats) as $format)
@@ -235,7 +235,7 @@ abstract class Controller_Rest extends Controller {
 			return false;
 		}
 
-		$valid_logins = & Kohana::config('rest.valid_logins');
+		$valid_logins = & Kohana::$config->load('rest.valid_logins');
 
 		if (!array_key_exists($username, $valid_logins))
 		{
@@ -334,13 +334,13 @@ abstract class Controller_Rest extends Controller {
 		header('HTTP/1.0 401 Unauthorized');
 		header('HTTP/1.1 401 Unauthorized');
 
-		if (Kohana::config('rest.auth') == 'basic')
+		if (Kohana::$config->load('rest.auth') == 'basic')
 		{
-			header('WWW-Authenticate: Basic realm="' . Kohana::config('rest.realm') . '"');
+			header('WWW-Authenticate: Basic realm="' . Kohana::$config->load('rest.realm') . '"');
 		}
-		elseif (Kohana::config('rest.auth') == 'digest')
+		elseif (Kohana::$config->load('rest.auth') == 'digest')
 		{
-			header('WWW-Authenticate: Digest realm="' . Kohana::config('rest.realm') . '" qop="auth" nonce="' . $nonce . '" opaque="' . md5(Kohana::config('rest.realm')) . '"');
+			header('WWW-Authenticate: Digest realm="' . Kohana::$config->load('rest.realm') . '" qop="auth" nonce="' . $nonce . '" opaque="' . md5(Kohana::$config->load('rest.realm')) . '"');
 		}
 
 		exit('Not authorized.');

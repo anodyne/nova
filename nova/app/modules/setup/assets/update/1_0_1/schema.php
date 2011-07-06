@@ -104,7 +104,7 @@ $add_column = array(
 		'rankcat_genre' => array(
 			'type' => 'VARCHAR',
 			'constraint' => 10,
-			'default' => Kohana::config('nova.genre'))
+			'default' => Kohana::$config->load('nova.genre'))
 	)
 );
 

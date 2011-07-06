@@ -101,7 +101,7 @@ class Model_Position extends Model {
 	 */
 	public static function init()
 	{
-		static::$_table_name = static::$_table_name.Kohana::config('nova.genre');
+		static::$_table_name = static::$_table_name.Kohana::$config->load('nova.genre');
 	}
 }
 

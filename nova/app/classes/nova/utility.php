@@ -106,7 +106,7 @@ abstract class Nova_Utility {
 	 *     Utility::install_rank('location');
 	 *
 	 * @access	public
-	 * @uses	Kohana::config
+	 * @uses	Kohana::$config->load
 	 * @param	string	the location of a specific rank set to install
 	 * @return	void
 	 */
@@ -115,7 +115,7 @@ abstract class Nova_Utility {
 		if ($location === null)
 		{
 			// get the directory listing for the genre
-			$dir = self::directory_map(APPPATH.'assets/common/'.Kohana::config('nova.genre').'/ranks/', true);
+			$dir = self::directory_map(APPPATH.'assets/common/'.Kohana::$config->load('nova.genre').'/ranks/', true);
 			
 			// get all the rank sets locations
 			$ranks = Model_CatalogueRank::get_all_items();
@@ -138,7 +138,7 @@ abstract class Nova_Utility {
 				foreach ($dir as $key => $value)
 				{
 					// assign our path to a variable
-					$file = APPPATH.'assets/common/'.Kohana::config('nova.genre').'/ranks/'.$value.'/rank.json';
+					$file = APPPATH.'assets/common/'.Kohana::$config->load('nova.genre').'/ranks/'.$value.'/rank.json';
 					
 					// make sure the file exists first
 					if (file_exists($file))
@@ -156,7 +156,7 @@ abstract class Nova_Utility {
 		else
 		{
 			// assign our path to a variable
-			$file = APPPATH.'assets/common/'.Kohana::config('nova.genre').'/ranks/'.$location.'/rank.json';
+			$file = APPPATH.'assets/common/'.Kohana::$config->load('nova.genre').'/ranks/'.$location.'/rank.json';
 			
 			// make sure the file exists first
 			if (file_exists($file))
@@ -311,7 +311,7 @@ abstract class Nova_Utility {
 	 * @uses	Request::initial
 	 * @uses	Request::controller
 	 * @uses	Request::redirect
-	 * @uses	Kohana::config
+	 * @uses	Kohana::$config->load
 	 * @uses	Database::instance
 	 * @uses	Database::list_tables
 	 * @return	bool	is the system installed?
@@ -333,7 +333,7 @@ abstract class Nova_Utility {
 		else
 		{
 			// get the database config
-			$dbconf = Kohana::config('database.default');
+			$dbconf = Kohana::$config->load('database.default');
 			
 			// get an array of the tables in the system
 			$tables = Database::instance()->list_tables($dbconf['table_prefix'].'%');
@@ -442,14 +442,14 @@ abstract class Nova_Utility {
 	 * Verifies that the server can run Nova.
 	 *
 	 * @access	public
-	 * @uses	Kohana::config
+	 * @uses	Kohana::$config->load
 	 * @uses	Db::query
 	 * @return	mixed	an array if there are any warnings or failures or false if everything checks out
 	 */
 	public static function verify_server()
 	{
 		// grab the database config
-		$dbconf = Kohana::config('database.default');
+		$dbconf = Kohana::$config->load('database.default');
 		
 		// grab the database version
 		$version = db::query(Database::SELECT, 'SELECT version() AS ver')->execute()->current();

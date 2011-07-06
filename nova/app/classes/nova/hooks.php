@@ -23,7 +23,7 @@ abstract class Nova_Hooks {
 	private static function _execute_calls($event)
 	{
 		// get the event calls
-		$calls = Kohana::config('event.event_calls.'.$event);
+		$calls = Kohana::$config->load('event.event_calls.'.$event);
 		
 		// loop through the calls and execute them
 		foreach ($calls as $c)

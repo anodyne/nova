@@ -75,7 +75,7 @@ abstract class Nova_DBForge {
 		self::$db = Database::instance();
 		
 		// get the database configuration
-		self::$dbconfig = Kohana::config('database.default');
+		self::$dbconfig = Kohana::$config->load('database.default');
 	}
 	
 	/**

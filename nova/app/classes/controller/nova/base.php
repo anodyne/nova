@@ -90,7 +90,7 @@ abstract class Controller_Nova_Base extends Controller_Template {
 		I18n::lang($this->session->get('language', 'en-us'));
 		
 		// set the cache driver
-		Cache::$default = Kohana::config('cache.driver');
+		Cache::$default = Kohana::$config->load('cache.driver');
 		
 		// these are the setting items we need to pull for this controller
 		$this->settingsArray = array(

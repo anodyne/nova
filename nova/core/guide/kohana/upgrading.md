@@ -3,15 +3,15 @@
 ## Config
 
 The configuration system has been rewritten to make it more flexible.  The majority of the public API should
-still operate in the same way, however the one major change is the transition from using `Kohana::config()` to
+still operate in the same way, however the one major change is the transition from using `Kohana::$config->load()` to
 `Kohana::$config->load()`, where `Kohana::$config` is an instance of `Config`.
 
-`Config::load()` works almost identically to `Kohana::config()`, e.g.:
+`Config::load()` works almost identically to `Kohana::$config->load()`, e.g.:
 
 	Kohana::$config->load('dot.notation')
 	Kohana::$config->load('dot')->notation
 
-A simple find/replace for `Kohana::config`/`Kohana::$config->load` within your project should fix this.
+A simple find/replace for `Kohana::$config->load`/`Kohana::$config->load` within your project should fix this.
 
 The terminology for config sources has also changed.  Pre 3.2 config was loaded from "Config Readers" which both
 read and wrote config.  In 3.2 there are **Config Readers** and **Config Writers**, both of which are a type of 

@@ -17,7 +17,7 @@ $character_id_constraint	= 8;
 $date_type					= 'BIGINT';
 $date_constraint			= 20;
 
-$_genre						= strtolower(Kohana::config('nova.genre'));
+$_genre						= strtolower(Kohana::$config->load('nova.genre'));
 
 /**
  * The master array has the name, primary key and name of the array

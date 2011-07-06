@@ -30,7 +30,7 @@ abstract class Nova_Event {
 	public static function init()
 	{
 		// get the events from the config file
-		$config_events = Kohana::config('event');
+		$config_events = Kohana::$config->load('event');
 		
 		// loop through the events and register them
 		foreach ($config_events as $event => $callback)

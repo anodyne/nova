@@ -349,7 +349,7 @@ class Controller_Setup_Updateajax extends Controller_Template {
 			$savedCOC = array();
 			
 			// get the db prefix
-			$dbconfig = Kohana::config('database.default');
+			$dbconfig = Kohana::$config->load('database.default');
 			
 			// clear out the tables
 			$this->db->query(null, "TRUNCATE TABLE ".$dbconfig['table_prefix']."characters", true);
@@ -996,7 +996,7 @@ class Controller_Setup_Updateajax extends Controller_Template {
 			$savedNewsCom = array();
 			
 			// get the db prefix
-			$dbconfig = Kohana::config('database.default');
+			$dbconfig = Kohana::$config->load('database.default');
 			
 			// clear out the tables
 			$this->db->query(null, "TRUNCATE TABLE ".$dbconfig['table_prefix']."news_categories", true);

@@ -63,7 +63,7 @@ class Kohana_Ftp {
 	public static function factory( $config = "default" )
 	{
 		$ftp = new FTP();
-		$file = Kohana::config("ftp");
+		$file = Kohana::$config->load("ftp");
 		if ( isset( $file->$config ) )
 		{
 			$ftp->config = $file->$config;
