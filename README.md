@@ -40,6 +40,11 @@ Anodyne Production's next-generation RPG management system combines popular feat
 * updated the user account page so that when activating a user, it will prompt the admin about which of the user's inactive character should be reactivated
 * updated thresher so that users who don't have level 1 wiki page access can't see wiki page history
 * updated thresher so that only users who are logged in can see comments on a wiki page
+* updated the character bio page so admins can activate an inactive character (and all related actions) with the push of a button
+* updated the character bio page so admins can deactivate an active character (and all related actions) with the push of a button
+* updated the character bio page so admins can make an NPC an active character (and all related actions) with the push of a button
+* updated the character bio page so admins can make a character an NPC (and all related actions) with the push of a button
+* updated the access role model with constants for the default access levels
 * refactored the location helper into a full-blown class with static methods
 * refactored the upgrade process to mirror what was created for nova 3
 * removed the banned.php file
