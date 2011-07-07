@@ -6,9 +6,9 @@
 	<div class="wrapper">
 		<nav>
 			<ul>
-				<li><a href="<?php echo url::site('login/index');?>"><span><?php echo ucwords(___('log in'));?></span></a></li>
-				<li><a href="<?php echo url::site('login/reset');?>"><span><?php echo ucwords(___('reset password'));?></span></a></li>
-				<li><a href="<?php echo url::site('main/index');?>"><span><?php echo ___('Back to Site');?></span></a></li>
+				<li><a href="<?php echo Url::site('login/index');?>"><span><?php echo ucwords(___('log in'));?></span></a></li>
+				<li><a href="<?php echo Url::site('login/reset');?>"><span><?php echo ucwords(___('reset password'));?></span></a></li>
+				<li><a href="<?php echo Url::site('main/index');?>"><span><?php echo ___('Back to Site');?></span></a></li>
 			</ul>
 		</nav>
 		
@@ -23,10 +23,10 @@
 			<?php echo $content;?>
 			
 			<div style="clear:both;">&nbsp;</div>
-			
-			<footer>
-				Powered by <strong>Nova</strong> from <a href="http://www.anodyne-productions.com" target="_blank">Anodyne Productions</a>
-			</footer>
 		</div>
+		
+		<footer>
+			Powered by <strong>Nova</strong> from <a href="http://www.anodyne-productions.com" target="_blank">Anodyne Productions</a>
+		</footer>
 	</div>
 </section>

@@ -25,10 +25,10 @@
 			<?php echo $ajax;?>
 			
 			<div style="clear:both;">&nbsp;</div>
-			
-			<footer>
-				<?php echo $footer;?>
-			</footer>
 		</div>
+		
+		<footer>
+			<?php echo $footer;?>
+		</footer>
 	</div>
 </section>
