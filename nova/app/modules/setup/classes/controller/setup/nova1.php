@@ -59,7 +59,7 @@ class Controller_Setup_Nova1 extends Controller_Template {
 	 * 3 - move the data over from nova 1 similar to how we do in the sms upgrade
 	 */
 	
-	public function action_step($step = 0)
+	public function action_step()
 	{
 		// make sure the script doesn't time out
 		set_time_limit(0);
@@ -87,7 +87,7 @@ class Controller_Setup_Nova1 extends Controller_Template {
 			$this->template->layout->flash->message = ___('setup.error.no_genre', array(':path' => APPFOLDER.'/config/nova.php'));
 		}
 		
-		switch ($step)
+		switch ($this->request->param('id'))
 		{
 			case 0:
 				// create a new content view

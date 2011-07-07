@@ -53,7 +53,7 @@ class Controller_Setup_Sms extends Controller_Template {
 		$this->template->layout->controls		= false;
 	}
 	
-	public function action_step($step = 0)
+	public function action_step()
 	{
 		// make sure the script doesn't time out
 		set_time_limit(0);
@@ -81,7 +81,7 @@ class Controller_Setup_Sms extends Controller_Template {
 			$this->template->layout->flash->message = ___('setup.error.no_genre', array(':path' => APPFOLDER.'/config/nova.php'));
 		}
 		
-		switch ($step)
+		switch ($this->request->param('id'))
 		{
 			case 0:
 				// create a new content view

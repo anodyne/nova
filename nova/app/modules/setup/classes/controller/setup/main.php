@@ -198,7 +198,7 @@ class Controller_Setup_Main extends Controller_Template {
 		$this->template->layout->label = 'Nova Setup';
 	}
 	
-	public function action_config($step = 0)
+	public function action_config()
 	{
 		// make sure the script doesn't time out
 		set_time_limit(0);
@@ -216,7 +216,7 @@ class Controller_Setup_Main extends Controller_Template {
 		$data = $this->template->layout->content;
 		
 		// pass the step over to the view file
-		$data->step = $step;
+		$data->step = $this->request->param('id');
 		
 		if ( ! file_exists(MODPATH.'app/modules/setup/assets/db.mysql.php'))
 		{
@@ -236,7 +236,7 @@ class Controller_Setup_Main extends Controller_Template {
 				}
 				else
 				{
-					switch ($step)
+					switch ($this->request->param('id'))
 					{
 						case 0:
 							$data->message = ___('setup.config.text.step0', array(':modules' => MODFOLDER.'/modules', ':appfolder' => APPFOLDER));
