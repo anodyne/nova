@@ -19,9 +19,9 @@
 		<![endif]-->
 		
 		<script type="text/javascript" src="<?php echo Url::base().MODFOLDER;?>/modules/assets/js/jquery.js"></script>
-		<script type="text/javascript" src="<?php echo Url::base().MODFOLDER;?>/modules/assets/js/jquery.ui.core.min.js"></script>
-		<script type="text/javascript" src="<?php echo Url::base().MODFOLDER;?>/modules/assets/js/jquery.ui.widget.min.js"></script>
-		<script type="text/javascript" src="<?php echo Url::base().MODFOLDER;?>/modules/assets/js/jquery.ui.progressbar.min.js"></script>
+		<script type="text/javascript" src="<?php echo Url::base().MODFOLDER;?>/modules/assets/js/ui/jquery.ui.core.min.js"></script>
+		<script type="text/javascript" src="<?php echo Url::base().MODFOLDER;?>/modules/assets/js/ui/jquery.ui.widget.min.js"></script>
+		<script type="text/javascript" src="<?php echo Url::base().MODFOLDER;?>/modules/assets/js/ui/jquery.ui.progressbar.min.js"></script>
 		
 		<?php echo $javascript;?>
 	</head>
