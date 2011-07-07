@@ -72,11 +72,6 @@ Kohana::init(array(
 ));
 
 /**
- * Set the default language
- */
-I18n::lang('en-us');
-
-/**
  * Attach the file write to logging. Multiple writers are supported.
  */
 Kohana::$log->attach(new Log_File(APPPATH.'logs'));
@@ -119,6 +114,11 @@ if (getenv('KOHANA_ENV') !== FALSE)
 {
 	Kohana::$environment = getenv('KOHANA_ENV');
 }
+
+/**
+ * Set the default language
+ */
+I18n::lang('en-us');
 
 /**
  * Set the exception handler
