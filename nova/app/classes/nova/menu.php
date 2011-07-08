@@ -44,6 +44,10 @@ abstract class Nova_Menu {
 				$menu = ($cache->get('menu_adminsub')) ? $cache->get('menu_adminsub') : self::_build_sub_admin($cat);
 			break;
 			
+			case 'adminsidebar':
+				$menu = self::_build_sub_admin_sidebar();
+			break;
+			
 			default:
 				$menu = false;
 			break;
@@ -240,6 +244,35 @@ abstract class Nova_Menu {
 		return false;
 	}
 	
+	private static function _build_sub_admin_sidebar()
+	{
+		// grab the session
+		$session = Session::instance();
+		
+		// get the user id from the session
+		$userid = $session->get('userid');
+		
+		// get the menu items
+		$items = Model_MenuCat::find()
+			->where('type', 'adminsub')
+			->get();
+		
+		if ($items)
+		{
+			foreach ($items as $item)
+			{
+				$data[$item->order] = $item;
+			}
+			
+			// render the final output
+			$final = self::_render('adminsidebar', $data);
+			
+			return $final;
+		}
+		
+		return false;
+	}
+	
 	/**
 	 * Render the specified menu.
 	 *
@@ -260,6 +293,35 @@ abstract class Nova_Menu {
 		
 		switch ($type)
 		{
+			case 'adminsidebar':
+				foreach ($data as $k => $item)
+				{
+					// set the link to the landing page
+					$link = Url::site($item->landing_page);
+					
+					// grab the current URI and throw it into an array
+					$uri = explode('/', Request::current()->uri());
+					
+					// empty array of classes to add
+					$class = array();
+					
+					// figure out which key of the array to use
+					$key = (int) (count($uri) >= 3);
+					
+					if ($uri[$key] == $item->category)
+					{
+						$class[] = 'active';
+					}
+					
+					// set the class string
+					$class_string = implode(' ', $class);
+					
+					// set the output
+					$output.= '<li><a href="'.$link.'" rel="'.$item->category.'" class="'.$class_string.'">';
+					$output.= '<span class="navicn navicn-'.$item->category.'"></span>'.$item->name.'</a></li>';
+				}
+			break;
+			
 			case 'adminsub':
 				foreach ($data as $key => $value)
 				{
@@ -299,7 +361,6 @@ abstract class Nova_Menu {
 						$output.= '<li class="spacer"></li>';
 					}
 				}
-				
 			break;
 				
 			case 'main':
@@ -360,7 +421,6 @@ abstract class Nova_Menu {
 						$output.= '<a href="'. $url .'"'. $target .' class="'. $class_string .'"><span>'. $item->name .'</span></a></li>';
 					}
 				}
-				
 			break;
 				
 			case 'sub':
@@ -411,7 +471,6 @@ abstract class Nova_Menu {
 						$output.= '<li><a href="' . $link .'"' . $target . '><span>' . $item->name . '</span></a></li>';
 					}
 				}
-			
 			break;
 		}
 		
