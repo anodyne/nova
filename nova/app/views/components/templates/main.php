@@ -1,5 +1,5 @@
 <noscript>
-	<div class="system_warning"><?php echo __("You need to have Javascript turned on to use all of Nova 2's features.");?></div>
+	<div class="system_warning"><?php echo __("You need to have Javascript turned on to use all of Nova 3's features.");?></div>
 </noscript>
 
 <?php echo $panel;?>
