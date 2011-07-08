@@ -46,12 +46,31 @@
 					clearTimeout($(this).data("delay").todo);
 					return $(this).data("delay").leavepage;
 				});
+				
+				$('#section-nav-trigger').click(function(){
+					var visible = $('#section-nav').is(':visible');
+					
+					if (visible)
+						$('#section-nav').fadeOut('fast');
+					else {
+						$.ajax({
+							type: "POST",
+							url: "http://localhost/git/nova/mockups/admin-menu.php",
+							data: {section: 'write'},
+							dataType: 'html',
+							success: function(data){
+								$('#section-nav').html(data).fadeIn('fast');
+							}
+						});
+					}
+				});
 			});
 			
 			// if the escape key is pressed, close the menu
 			$(document).keyup(function(event){
 				if (event.keyCode == 27) {
 					$('#subnav-popup').fadeOut('fast');
+					$('#section-nav').fadeOut('fast');
 				}
 			});
 		</script>
@@ -63,14 +82,14 @@
 			<section>
 				<div id="sidebar">
 					<ul>
-						<li><a href="#" rel="admin" class="active"><img src="images/admin/nav-main.png"><br>main</a></li>
-						<li><a href="#" rel="write"><img src="images/admin/nav-write.png"><br>write</a></li>
-						<li><a href="#" rel="messages"><img src="images/admin/nav-messages.png"><br>messages</a></li>
-						<li><a href="#" rel="site"><img src="images/admin/nav-site.png"><br>site</a></li>
-						<li><a href="#" rel="manage"><img src="images/admin/nav-manage.png"><br>manage</a></li>
-						<li><a href="#" rel="characters"><img src="images/admin/nav-characters.png"><br>characters</a></li>
-						<li><a href="#" rel="user"><img src="images/admin/nav-users.png"><br>users</a></li>
-						<li><a href="#" rel="report"><img src="images/admin/nav-reports.png"><br>reports</a></li>
+						<li><a href="#" rel="admin"><span class="navicn navicn-admin"></span>main</a></li>
+						<li><a href="#" rel="write" class="active"><span class="navicn navicn-write"></span>write</a></li>
+						<li><a href="#" rel="messages"><span class="navicn navicn-messages"></span>messages</a></li>
+						<li><a href="#" rel="site"><span class="navicn navicn-site"></span>site</a></li>
+						<li><a href="#" rel="manage"><span class="navicn navicn-manage"></span>manage</a></li>
+						<li><a href="#" rel="characters"><span class="navicn navicn-characters"></span>characters</a></li>
+						<li><a href="#" rel="user"><span class="navicn navicn-users"></span>users</a></li>
+						<li><a href="#" rel="report"><span class="navicn navicn-reports"></span>reports</a></li>
 					</ul>
 				</div>
 				
@@ -78,12 +97,15 @@
 				
 				<div id="content">
 					<div class="inner">
-						<h1>Control Panel</h1>
+						<div id="section-nav-trigger">Writing Control Panel <div class="arrow"></div></div>
+						<div id="section-nav"></div>
+						
+						<h1>Writing Control Panel</h1>
 					</div>
 				</div>
 			</section>
 		</div>
 		
-		<footer>Powered by Nova</footer>
+		<footer>Powered by Nova from Anodyne Productions</footer>
 	</body>
 </html>
