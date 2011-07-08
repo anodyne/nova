@@ -33,5 +33,7 @@ class Model_MenuCat extends Model {
 			'type' => 'enum',
 			'constraint' => "'sub','adminsub'",
 			'default' => 'sub'),
+		'landing_page' => array(
+			'type' => 'text'),
 	);
 }
