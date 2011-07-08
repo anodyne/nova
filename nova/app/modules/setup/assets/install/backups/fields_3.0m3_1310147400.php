@@ -16,8 +16,8 @@ $data = array(
 	'catalogue_skinsecs' => array(),
 	'catalogue_widgets' => array(),
 	'characters' => array(),
-	'character_images' => array(),
-	'character_promotions' => array(),
+	'characters_images' => array(),
+	'characters_promotions' => array(),
 	'coc' => array(),
 	'comments' => array(),
 	'departments_'.$_genre => array('fields' => 'fields_departments'),
@@ -200,7 +200,7 @@ $fields_characters = array(
 	'updated_at' => array('type' => 'BIGINT', 'constraint' => 20),
 );
 
-$fields_character_images = array(
+$fields_characters_images = array(
 	'id' => array('type' => 'BIGINT', 'constraint' => 20, 'auto_increment' => true),
 	'user_id' => array('type' => 'INT', 'constraint' => 8),
 	'character_id' => array('type' => 'INT', 'constraint' => 8),
@@ -210,7 +210,7 @@ $fields_character_images = array(
 	'created_at' => array('type' => 'BIGINT', 'constraint' => 20),
 );
 
-$fields_character_promotions = array(
+$fields_characters_promotions = array(
 	'id' => array('type' => 'BIGINT', 'constraint' => 20, 'auto_increment' => true),
 	'user_id' => array('type' => 'INT', 'constraint' => 8),
 	'character_id' => array('type' => 'INT', 'constraint' => 8),
@@ -365,7 +365,6 @@ $fields_menu_categories = array(
 	'category' => array('type' => 'VARCHAR', 'constraint' => 20, 'default' => ''),
 	'name' => array('type' => 'VARCHAR', 'constraint' => 255, 'default' => ''),
 	'type' => array('type' => 'ENUM', 'constraint' => "'sub','adminsub'", 'default' => 'sub'),
-	'landing_page' => array('type' => 'TEXT'),
 );
 
 $fields_messages = array(
