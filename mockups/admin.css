@@ -165,6 +165,7 @@ a.active .navicn { background-position: center -60px; }
 	border-color: transparent;
 	border-width: 0 0 0 10px;
 	-moz-border-image: url(images/admin/shadow.png) 0 0 0 10 stretch;
+	-webkit-border-image: url(images/admin/shadow.png) 0 0 0 10 stretch;
 	border-radius: 0 4px 4px 0;
 	-moz-border-radius: 0 4px 4px 0;
 }
@@ -226,6 +227,7 @@ h1 {
 
 footer {
 	position: relative;
+	padding: 0 0 2em 0;
 	text-align: center;
 	font-size: 80%;
 	font-weight: bold;

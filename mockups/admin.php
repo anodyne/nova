@@ -97,7 +97,7 @@
 				
 				<div id="content">
 					<div class="inner">
-						<div id="section-nav-trigger">Writing Control Panel <div class="arrow"></div></div>
+						<div id="section-nav-trigger"><div class="arrow"></div>Writing Control Panel</div>
 						<div id="section-nav"></div>
 						
 						<h1>Writing Control Panel</h1>
