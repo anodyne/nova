@@ -14,7 +14,7 @@
 		
 		<div id="content">
 			<div class="inner">
-				<div id="section-nav-trigger">Control Panel <div class="arrow"></div></div>
+				<div id="section-nav-trigger"><div class="arrow"></div>Control Panel</div>
 				<div id="section-nav"></div>
 				
 				<?php echo $flash;?>
