@@ -102,9 +102,17 @@ a.active .navicn { background-position: center -60px; }
 
 #subnav-popup {
 	top: 0;
-	left: 130px;
+	left: 140px;
+	border: 2px solid #999 !important;
 	border-radius: 4px;
 	-moz-border-radius: 4px;
+}
+#subnav-popup-arrow {
+	float: left;
+	margin: 0 0 0 -17px;
+	height: 32px;
+	width: 15px;
+	background: transparent url(images/admin/popup-arrow-left.png) no-repeat top left;
 }
 #section-nav {
 	top: 55px;

@@ -36,7 +36,8 @@
 								data: {section: sec},
 								dataType: 'html',
 								success: function(data){
-									$('#subnav-popup').html(data).css('top', relative).fadeIn('fast');
+									$('#subnav-popup-content').html(data);
+									$('#subnav-popup').css('top', relative).fadeIn('fast');
 								}
 							});
 					}, delay)});
@@ -93,7 +94,10 @@
 					</ul>
 				</div>
 				
-				<div id="subnav-popup"></div>
+				<div id="subnav-popup">
+					<div id="subnav-popup-arrow"></div>
+					<div id="subnav-popup-content"></div>
+				</div>
 				
 				<div id="content">
 					<div class="inner">
