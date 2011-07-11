@@ -10,7 +10,10 @@
 	<section>
 		<div id="sidebar"><?php echo $navmain;?></div>
 		
-		<div id="subnav-popup"></div>
+		<div id="subnav-popup">
+			<div id="subnav-popup-arrow"></div>
+			<div id="subnav-popup-content"></div>
+		</div>
 		
 		<div id="content">
 			<div class="inner">
