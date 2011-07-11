@@ -13,7 +13,7 @@
 		<kbd><?php echo $label['type'];?></kbd>
 		<?php echo form_button($button['user_status']);?>
 	</p>
-<?php else: ?>
+<?php elseif ($level == 2 and $my_user): ?>
 	<?php echo text_output($label['your_user'], 'h4', 'blue');?>
 <?php endif;?>
 
