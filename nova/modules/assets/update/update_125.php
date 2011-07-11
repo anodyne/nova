@@ -271,11 +271,11 @@ $this->db->update('system_components', array('comp_version' => '1.5'));
 
 // update the jquery version info
 $this->db->where('comp_name', 'jQuery');
-$this->db->update('system_components', array('comp_version' => '1.6.1'));
+$this->db->update('system_components', array('comp_version' => '1.6.2'));
 
 // update the jquery ui version info
 $this->db->where('comp_name', 'jQuery UI');
-$this->db->update('system_components', array('comp_version' => '1.8.13'));
+$this->db->update('system_components', array('comp_version' => '1.8.14'));
 
 // update the jquery prettyphoto info
 $this->db->where('comp_name', 'prettyPhoto');
