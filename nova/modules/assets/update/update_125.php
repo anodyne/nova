@@ -289,6 +289,10 @@ $this->db->update('system_components', array('comp_version' => '1.1.10'));
 $this->db->where('comp_name', 'Thresher');
 $this->db->update('system_components', array('comp_version' => 'Release 2'));
 
+// update the upload images menu item
+$this->db->where('menu_link', 'upload/index');
+$this->db->update('menu_items', array('menu_use_access' => 'y', 'menu_access' => 'upload/index'));
+
 // add the elastic plugin to the list of components
 $additem = array(
 	'comp_name' => 'Elastic',
