@@ -82,6 +82,7 @@ abstract class Nova_install extends Controller {
 			'title_remove' => lang('install_options_remove_title'),
 			'title_upd' => lang('install_options_upd_title'),
 			'title_upg' => lang('install_options_upg_title'),
+			'title_site' => lang('global_back_site'),
 		);
 		
 		$data['installed'] = $this->installed;

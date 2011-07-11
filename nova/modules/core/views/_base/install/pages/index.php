@@ -32,4 +32,8 @@
 		<span><?php echo $label['title_remove'];?></span>
 		<em><?php echo $label['text_remove'];?></em>
 	</a>
+	
+	<a href="<?php echo site_url('main/index');?>" class="install-options">
+		<span><?php echo $label['title_site'];?></span>
+	</a>
 <?php endif;?>

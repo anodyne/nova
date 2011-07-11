@@ -49,6 +49,7 @@ $lang['global_finalize']		= 'Finalize';
 
 $lang['global_readme_title'] 	= 'Readme';
 $lang['global_more_options']	= 'More Options';
+$lang['global_back_site']		= 'Back to Site';
 
 /**
  * Setup config
