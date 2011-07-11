@@ -128,7 +128,7 @@
 		<div id="three">
 			<?php echo text_output($image_instructions);?>
 			
-			<p><?php echo anchor('upload/index', img($images['upload']) .' '. $label['upload'], array('class' => 'image fontMedium bold'));?></p>
+			<p><?php echo link_to_if(Auth::check_access('upload/index', false), 'upload/index', img($images['upload']) .' '. $label['upload'], array('class' => 'image fontMedium bold'));?></p>
 			
 			<ul id="list-grid">
 			<?php if (is_array($inputs['images']) && count($inputs['images']) > 0): ?>
