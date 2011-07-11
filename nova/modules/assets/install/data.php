@@ -1489,7 +1489,8 @@ $menu_items = array(
 		'menu_sim_type' => 1,
 		'menu_type' => 'adminsub',
 		'menu_cat' => 'manage',
-		'menu_use_access' => 'n'),
+		'menu_use_access' => 'y',
+		'menu_access' => 'upload/index'),
 	array(
 		'menu_name' => 'Manage Uploads',
 		'menu_group' => 3,
