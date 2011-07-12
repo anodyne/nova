@@ -5,7 +5,7 @@
 |---------------------------------------------------------------
 |
 | File: assets/install/install_data_dev.php
-| System Version: 1.2.5
+| System Version: 1.2.6
 |
 | Data file that includes all the data being inserted into the
 | database after creating the tables.
@@ -4199,6 +4199,14 @@ $system_versions = array(
 * fixed bug where specification data wouldn't get added to the table for old items if a new field was added
 * fixed bug where deactivated users would retain their account flags (sysadmin, game master, etc) and wouldn't have their access role changed
 * fixed bug where reactivated users wouldn't have a reasonable access role"),
+	array(
+		'version'			=> '1.2.6',
+		'version_major'		=> 1,
+		'version_minor'		=> 2,
+		'version_update'	=> 6,
+		'version_date'		=> 1308265200,
+		'version_launch'	=> "Nova 1.2.6 is the sixth maintenance release for Nova 1.2 and fixes a major security issue. This update is highly recommended for all users.",
+		'version_changes'	=> "* fixed some major security issues"),
 );
 
 $tour = array(
