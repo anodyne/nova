@@ -4,20 +4,20 @@ Anodyne Production's next-generation RPG management system combines popular feat
 
 ## Current Version
 
-1.2.5
+1.2.6
 
-## Changes in 1.2.5
+## Changes in 1.2.6
 
-* added the 1.2.5 update file
-* fixed bug where specification data wouldn't get added to the table for old items if a new field was added
-* fixed bug where deactivated users would retain their account flags (sysadmin, game master, etc) and wouldn't have their access role changed
-* fixed bug where reactivated users wouldn't have a reasonable access role
+* fixed some major security issues
 
 ## Version History
 
 <table>
 	<tr>
 		<th>Version</th><th>Release Date</th>
+	</tr>
+	<tr>
+		<td>1.2.6</td><td>-</td>
 	</tr>
 	<tr>
 		<td>1.2.5</td><td>16 June 2011</td>
