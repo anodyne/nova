@@ -1,6 +1,6 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 /**
- * Update Nova from 1.2.5 to 2.0
+ * Update Nova from 1.2.6 to 2.0
  */
 $system_versions	= null;
 $system_info		= null;
