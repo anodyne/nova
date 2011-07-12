@@ -39,7 +39,7 @@
 <?php else: ?>
 	<?php echo text_output($label['nonews'], 'h3', 'orange');?>
 	
-	<?php if ($this->auth->is_logged_in()): ?>
+	<?php if (Auth::is_logged_in()): ?>
 		<?php echo text_output($label['createnews'], 'p', 'bold gray');?>
 	<?php endif;?>
 <?php endif;?>

@@ -1,4 +1,4 @@
-<?php if ($private == 'y' && $this->auth->is_logged_in() === FALSE): ?>
+<?php if ($private == 'y' and Auth::is_logged_in() === FALSE): ?>
 	<?php echo text_output($label['error_pagetitle'], 'h1', 'red');?>
 	<?php echo text_output($label['error_private_news'], 'h4');?>
 <?php else: ?>
@@ -53,7 +53,7 @@
 	
 	<p><?php echo anchor('feed/news', img($images['feed']), array('class' => 'image'));?></p>
 	
-	<?php if ($this->auth->is_logged_in() === TRUE): ?>
+	<?php if (Auth::is_logged_in()): ?>
 		<p class="bold">
 			<a href="#" id="add_comment" rel="facebox" myID="<?php echo $news_id;?>" class="image">
 				<?php echo img($images['comment']) .' '. $label['addcomment'];?>

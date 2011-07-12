@@ -5,7 +5,7 @@
 <?php echo form_open('manage/logs/edit/'. $id .'/update');?>
 	<p>
 		<kbd><?php echo $label['status'];?></kbd>
-		<?php if ($this->auth->get_access_level() == 2): ?>
+		<?php if (Auth::get_access_level() == 2): ?>
 			<?php echo form_dropdown('log_status', $status, $inputs['status']);?>
 		<?php else: ?>
 			<?php echo text_output(ucfirst($inputs['status']), ''); ?>
@@ -15,7 +15,7 @@
 	
 	<p>
 		<kbd><?php echo $label['author'];?></kbd>
-		<?php if ($this->auth->get_access_level() == 2): ?>
+		<?php if (Auth::get_access_level() == 2): ?>
 			<?php echo form_dropdown('log_author', $all, $inputs['author']);?>
 		<?php else: ?>
 			<?php echo text_output($inputs['character'], ''); ?>

@@ -2,7 +2,7 @@
 
 <?php echo text_output($text);?>
 
-<?php if ($this->auth->check_access('site/specsform', FALSE) !== FALSE): ?>
+<?php if (Auth::check_access('site/specsform', false)): ?>
 	<p class="bold">
 		<?php echo anchor('site/specsform', img($images['form']) .' '. $label['form'], array('class' => 'image'));?>
 	</p>

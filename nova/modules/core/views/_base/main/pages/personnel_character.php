@@ -45,7 +45,7 @@
 	
 	<?php echo table_row_spacer(3, 10);?>
 	
-	<?php if ($this->auth->is_logged_in() === TRUE && !is_null($character['user'])): ?>
+	<?php if (Auth::is_logged_in() and ! is_null($character['user'])): ?>
 	<tr>
 		<td colspan="2"></td>
 		<td>

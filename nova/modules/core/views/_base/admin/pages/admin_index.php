@@ -21,7 +21,7 @@
 					<div class="count ui-state-highlight"><?php echo $notifycount;?></div>
 				<?php endif;?><?php echo $label['mynotify'];?></span></a></li>
 				
-				<?php if ($this->auth->is_gamemaster($this->session->userdata('userid')) === TRUE && $activitycount > 0): ?>
+				<?php if (Auth::is_gamemaster($this->session->userdata('userid')) and $activitycount > 0): ?>
 					<li><a href="#" id="activity"><span>
 						<div class="count ui-state-highlight"><?php echo $activitycount;?></div>
 						<?php echo $label['activity'];?></span></a></li>

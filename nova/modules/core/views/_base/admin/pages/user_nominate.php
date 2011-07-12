@@ -3,7 +3,7 @@
 <?php echo text_output($text);?>
 <br />
 
-<?php if ($this->auth->get_access_level('user/nominate') > 1): ?>
+<?php if (Auth::get_access_level('user/nominate') > 1): ?>
 	<div id="tabs">
 		<ul>
 			<li><a href="#one"><span><?php echo $label['nominate'];?></span></a></li>
@@ -37,7 +37,7 @@
 				<?php echo text_output($label['noawards'], 'h3', 'orange');?>
 			<?php endif;?>
 		
-<?php if ($this->auth->get_access_level('user/nominate') > 1): ?>
+<?php if (Auth::get_access_level('user/nominate') > 1): ?>
 		</div>
 		
 		<div id="two">

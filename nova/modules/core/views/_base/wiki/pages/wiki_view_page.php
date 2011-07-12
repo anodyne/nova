@@ -70,7 +70,7 @@
 								<?php endif;?>
 							</td>
 							
-							<?php if ($this->auth->is_logged_in()): ?>
+							<?php if (Auth::is_logged_in()): ?>
 								<td class="col_75 align_right">
 									<?php echo anchor('wiki/view/draft/'. $h['draft'], img($images['view']), array('class' => 'image'));?>
 								</td>

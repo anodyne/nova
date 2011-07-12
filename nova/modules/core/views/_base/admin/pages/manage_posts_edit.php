@@ -5,7 +5,7 @@
 <?php echo form_open('manage/posts/edit/'. $id .'/update');?>
 	<p>
 		<kbd><?php echo $label['status'];?></kbd>
-		<?php if ($this->auth->get_access_level() == 2): ?>
+		<?php if (Auth::get_access_level() == 2): ?>
 			<?php echo form_dropdown('post_status', $status, $inputs['status']);?>
 		<?php else: ?>
 			<?php echo text_output(ucfirst($inputs['status']), ''); ?>
@@ -30,7 +30,7 @@
 	
 	<p>
 		<kbd><?php echo $label['mission'];?></kbd>
-		<?php if ($this->auth->get_access_level() == 2): ?>
+		<?php if (Auth::get_access_level() == 2): ?>
 			<?php echo form_dropdown('post_mission', $missions, $inputs['mission']);?>
 		<?php else: ?>
 			<?php echo text_output(ucfirst($inputs['mission_name']), ''); ?>

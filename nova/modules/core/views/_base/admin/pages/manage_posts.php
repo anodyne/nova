@@ -5,7 +5,7 @@
 		<li><a href="#one"><span><?php echo $label['activated'];?></span></a></li>
 		<li><a href="#two"><span><?php echo $label['saved'];?></span></a></li>
 		
-		<?php if ($this->auth->get_access_level('manage/posts') == 2): ?>
+		<?php if (Auth::get_access_level('manage/posts') == 2): ?>
 			<li><a href="#three"><span><?php echo $label['pending'];?></span></a></li>
 		<?php endif;?>
 	</ul>
@@ -18,7 +18,7 @@
 		<?php echo $saved;?>
 	</div>
 	
-	<?php if ($this->auth->get_access_level('manage/posts') == 2): ?>
+	<?php if (Auth::get_access_level('manage/posts') == 2): ?>
 		<div id="three">
 			<?php echo $pending;?>
 		</div>
