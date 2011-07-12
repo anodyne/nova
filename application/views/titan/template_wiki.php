@@ -110,7 +110,7 @@ echo "<?xml version='1.0' encoding='UTF-8'?>\r\n";
 				<div id="head">
 					<div class="head_content">
 						<div class="panel-controls">
-							<?php if ($this->auth->is_logged_in()): ?>
+							<?php if (Auth::is_logged_in()): ?>
 								<?php echo panel_inbox(TRUE, TRUE, FALSE, '(x)', img($panel['inbox']));?> &nbsp;&nbsp;
 								<?php echo panel_writing(TRUE, TRUE, FALSE, '(x)', img($panel['writing']));?> &nbsp;&nbsp;
 								<?php echo panel_dashboard(FALSE, img($panel['dashboard']));?>
