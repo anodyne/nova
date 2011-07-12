@@ -9,8 +9,6 @@
  * @version		2.0
  */
 
-#TODO: need to secure all of these methods!
-
 abstract class Nova_ajax extends Controller {
 	
 	/**
