@@ -143,7 +143,7 @@ echo "<?xml version='1.0' encoding='UTF-8'?>\r\n";
 			<div class="system_warning"><?php echo lang_output('text_javascript_off', '');?></div>
 		</noscript>
 		
-		<?php if ($this->auth->is_logged_in()): ?>
+		<?php if (Auth::is_logged_in()): ?>
 			<!-- USER PANEL -->
 			<div id="panel" class="hidden">
 				<div class="panel-body">
@@ -170,7 +170,7 @@ echo "<?xml version='1.0' encoding='UTF-8'?>\r\n";
 			<div id="body">
 				<div id="upper-body">
 					<div class="signin-container">
-						<?php if (!$this->auth->is_logged_in()): ?>
+						<?php if ( ! Auth::is_logged_in()): ?>
 							<div class="signin-panel corner-upper-left corner-lower-left corner-lower-right">
 								<?php echo form_open('login/check_login');?>
 									<p>
@@ -200,7 +200,7 @@ echo "<?xml version='1.0' encoding='UTF-8'?>\r\n";
 							<a href="<?php echo site_url('login/logout');?>" class="signin corner-upper-left corner-upper-right corner-lower-left corner-lower-right"><?php echo ucfirst(lang('actions_logout'));?></a>
 							
 							<div class="logged-in-controls">
-								<?php if ($this->auth->is_logged_in()): ?>
+								<?php if (Auth::is_logged_in()): ?>
 									<?php echo panel_inbox(TRUE, TRUE, FALSE, '(x)', img($panel['inbox']));?> &nbsp;
 									<?php echo panel_writing(TRUE, TRUE, FALSE, '(x)', img($panel['writing']));?> &nbsp;
 									<?php echo panel_dashboard(FALSE, img($panel['dashboard']));?>
