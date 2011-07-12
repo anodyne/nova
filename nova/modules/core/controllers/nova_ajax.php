@@ -732,9 +732,10 @@ abstract class Nova_ajax extends Controller {
 	
 	public function add_comment_wiki()
 	{
-		$allowed = Auth::is_logged_in();
+		$allowed = Auth::check_access('wiki/page', false);
+		$level = Auth::get_access_level('wiki/page');
 		
-		if ($allowed)
+		if ($allowed and $level >= 1)
 		{
 			$head = sprintf(
 				lang('fbx_head'),
@@ -4654,7 +4655,7 @@ abstract class Nova_ajax extends Controller {
 	
 	public function del_npc()
 	{
-		$allowed = Auth::check_access('manage/npcs', false);
+		$allowed = Auth::check_access('characters/npcs', false);
 		
 		if ($allowed)
 		{
