@@ -1,14 +1,14 @@
 <?php echo text_output($header, 'h1', 'page-head');?>
 
-<?php if ($this->auth->check_access('write/missionpost', FALSE) === TRUE): ?>
+<?php if (Auth::check_access('write/missionpost', false)): ?>
 	<p><?php echo anchor('write/missionpost', img($images['post']) .' '. $label['write_post'], array('class' => 'image bold'));?></p>
 <?php endif; ?>
 
-<?php if ($this->auth->check_access('write/personallog', FALSE) === TRUE): ?>
+<?php if (Auth::check_access('write/personallog', false)): ?>
 	<p><?php echo anchor('write/personallog', img($images['log']) .' '. $label['write_log'], array('class' => 'image bold'));?></p>
 <?php endif; ?>
 
-<?php if ($this->auth->check_access('write/newsitem', FALSE) === TRUE): ?>
+<?php if (Auth::check_access('write/newsitem', false)): ?>
 	<p><?php echo anchor('write/newsitem', img($images['news']) .' '. $label['write_news'], array('class' => 'image bold'));?></p>
 <?php endif; ?>
 
@@ -134,7 +134,7 @@
 				</tbody>
 			</table>
 			<p class="bold">
-				<?php echo anchor('personnel/viewposts/p/'. $this->session->userdata('userid'), $label['view_user_posts']);?>
+				<?php echo anchor('personnel/viewposts/u/'. $this->session->userdata('userid'), $label['view_user_posts']);?>
 			</p><br />
 		<?php else: ?>
 			<?php echo text_output($label['no_posts'], 'h3', 'orange');?>
@@ -164,7 +164,7 @@
 				</tbody>
 			</table>
 			<p class="bold">
-				<?php echo anchor('personnel/viewlogs/p/'. $this->session->userdata('userid'), $label['view_user_logs']);?>
+				<?php echo anchor('personnel/viewlogs/u/'. $this->session->userdata('userid'), $label['view_user_logs']);?>
 			</p><br />
 		<?php else: ?>
 			<?php echo text_output($label['no_logs'], 'h3', 'orange');?>
