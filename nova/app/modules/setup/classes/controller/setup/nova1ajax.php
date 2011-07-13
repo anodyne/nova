@@ -131,11 +131,13 @@ class Controller_Setup_Nova1ajax extends Controller_Template {
 		$retval['promotions'] = $this->_upgrade_character_promotions();
 		
 		// dynamic form
+		$retval['form'] = $this->_upgrade_character_form();
 		
 		// applications
 		$retval['applications'] = $this->_upgrade_applications();
 		
 		// users
+		$retval['users'] = $this->_upgrade_users();
 		
 		// user LOAs
 		$retval['user_loas'] = $this->_upgrade_user_loa();
@@ -1530,7 +1532,230 @@ class Controller_Setup_Nova1ajax extends Controller_Template {
 	
 	private function _upgrade_character_form()
 	{
-		# code...
+		try {
+			/**
+			 * Bio Tabs
+			 */
+			 
+			// clear out the existing the tabs
+			$this->db->query(Database::DELETE, "DELETE FROM `".$this->db->table_prefix()."form_tabs` WHERE `form_key` = 'bio'", true);
+			
+			// pull the tabs from n1
+			$result = $this->db->query(Database::SELECT, "SELECT * FROM `nova1_characters_tabs`", true);
+			
+			if (count($result) > 0)
+			{
+				$tabs = array();
+				
+				foreach ($result as $r)
+				{
+					$data = array(
+						'form_key' 	=> 'bio',
+						'name' 		=> $r->tab_name,
+						'link_id' 	=> $r->tab_link_id,
+						'order' 	=> $r->tab_order,
+						'display' 	=> (int) true
+					);
+					
+					// create the tab record
+					$item = Model_FormTab::create_item($data);
+					
+					// track the old and new IDs
+					$tabs[$r->tab_id] = $item->id;
+				}
+			}
+			
+			/**
+			 * Bio Sections
+			 */
+			 
+			// clear out the existing sections
+			$this->db->query(Database::DELETE, "DELETE FROM `".$this->db->table_prefix()."form_sections` WHERE `form_key` = 'bio'", true);
+			
+			// pull the sections from n1
+			$result = $this->db->query(Database::SELECT, "SELECT * FROM `nova1_characters_sections`", true);
+			
+			if (count($result) > 0)
+			{
+				$sections = array();
+				
+				foreach ($result as $r)
+				{
+					$data = array(
+						'form_key' 	=> 'bio',
+						'tab_id' 	=> $tabs[$r->section_tab],
+						'name' 		=> $r->section_name,
+						'order' 	=> $r->section_order
+					);
+					
+					// create the section record
+					$item = Model_FormSection::create_item($data);
+					
+					// track the old and new IDs
+					$sections[$r->section_id] = $item->id;
+				}
+			}
+			
+			/**
+			 * Bio Fields
+			 */
+			
+			// clear out the existing fields
+			$this->db->query(Database::DELETE, "DELETE FROM `".$this->db->table_prefix()."form_fields` WHERE `form_key` = 'bio'", true);
+			
+			// pull the fields from n1
+			$result = $this->db->query(Database::SELECT, "SELECT * FROM `nova1_characters_fields`", true);
+			
+			if (count($result) > 0)
+			{
+				$fields = array();
+				
+				foreach ($result as $r)
+				{
+					$data = array(
+						'form_key' 		=> 'bio',
+						'section_id' 	=> $sections[$r->field_section],
+						'type' 			=> $r->field_type,
+						'html_name' 	=> $r->field_name,
+						'html_id' 		=> $r->field_fid,
+						'html_class' 	=> $r->field_class,
+						'html_rows' 	=> $r->field_rows,
+						'selected' 		=> '',
+						'value' 		=> $r->field_value,
+						'label' 		=> $r->field_label_page,
+						'placeholder' 	=> '',
+						'order' 		=> $r->field_order,
+						'display' 		=> ($r->field_display == 'y') ? 1 : 0,
+						'updated_at' 	=> Date::now(),
+					);
+					
+					// create the field record
+					$item = Model_FormField::create_item($data);
+					
+					// track the old and new IDs
+					$fields[$r->field_id] = $item->id;
+				}
+			}
+			
+			/**
+			 * Bio Field Values
+			 */
+			
+			// clear out the existing values
+			$this->db->query(Database::DELETE, "TRUNCATE TABLE `".$this->db->table_prefix()."form_values`", true);
+			
+			// pull the values from n1
+			$result = $this->db->query(Database::SELECT, "SELECT * FROM `nova1_characters_values`", true);
+			
+			if (count($result) > 0)
+			{
+				$values = array();
+				
+				foreach ($result as $r)
+				{
+					$data = array(
+						'field_id' 		=> $fields[$r->value_field],
+						'html_name' 	=> '',
+						'html_value' 	=> $r->value_field_value,
+						'html_id' 		=> '',
+						'selected' 		=> $r->value_selected,
+						'content' 		=> $r->value_content,
+						'order' 		=> $r->value_order,
+					);
+					
+					// create the value record
+					$item = Model_FormValue::create_item($data);
+					
+					// track the old and new IDs
+					$values[$r->value_id] = $item->id;
+				}
+			}
+			
+			/**
+			 * Bio Field Data
+			 */
+			
+			// clear out the existing data
+			$this->db->query(Database::DELETE, "DELETE FROM `".$this->db->table_prefix()."form_data` WHERE `form_key` = 'bio'", true);
+			
+			// pull the data from n1
+			$result = $this->db->query(Database::SELECT, "SELECT * FROM `nova1_characters_data`", true);
+			
+			if (count($result) > 0)
+			{
+				foreach ($result as $r)
+				{
+					$data = array(
+						'form_key' 		=> 'bio',
+						'field_id' 		=> $fields[$r->data_field],
+						'user_id' 		=> $r->data_user,
+						'character_id' 	=> $r->data_char,
+						'item_id' 		=> null,
+						'value' 		=> $r->data_value,
+						'updated_at' 	=> Date::now(),
+					);
+					
+					// create the data record
+					Model_FormData::create_item($data);
+				}
+			}
+			
+			/**
+			 * User Information
+			 */
+			 
+			$result = $this->db->query(Database::SELECT, "SELECT * FROM `nova1_users`", true);
+			
+			if (count($result) > 0)
+			{
+				foreach ($result as $r)
+				{
+					$data = array(
+						'location' => array(
+							'form_key' 		=> 'user',
+							'field_id' 		=> 50,
+							'user_id' 		=> $r->userid,
+							'character_id' 	=> null,
+							'item_id' 		=> null,
+							'value' 		=> $r->location,
+							'updated_at' 	=> Date::now()),
+						'interests' => array(
+							'form_key' 		=> 'user',
+							'field_id' 		=> 51,
+							'user_id' 		=> $r->userid,
+							'character_id'	=> null,
+							'item_id'		=> null,
+							'value'			=> $r->interests,
+							'updated_at'	=> Date::now()),
+						'bio' => array(
+							'form_key'		=> 'user',
+							'field_id'		=> 52,
+							'user_id'		=> $r->userid,
+							'character_id'	=> null,
+							'item_id'		=> null,
+							'value'			=> $r->bio,
+							'updated_at'	=> Date::now()),
+					);
+					
+					// insert the records
+					Model_FormData::create_item($data['location']);
+					Model_FormData::create_item($data['interests']);
+					Model_FormData::create_item($data['bio']);
+				}
+			}
+			
+			$retval = array(
+				'code' => 1,
+				'message' => ''
+			);
+		} catch (Exception $e) {
+			$retval = array(
+				'code' => 0,
+				'message' => 'ERROR: '.$e->getMessage().' - line '.$e->getLine().' of '.$e->getFile()
+			);
+		}
+		
+		echo json_encode($retval);
 	}
 	
 	private function _upgrade_character_promotions()
@@ -1678,7 +1903,7 @@ class Controller_Setup_Nova1ajax extends Controller_Template {
 				);
 			}
 			
-			DBForge::optimize('awards');
+			DBForge::optimize('characters');
 		} catch (Exception $e) {
 			$retval = array(
 				'code' => 0,
@@ -1768,10 +1993,424 @@ class Controller_Setup_Nova1ajax extends Controller_Template {
 		return $retval;
 	}
 	
+	private function _upgrade_docking_form()
+	{
+		try {
+			/**
+			 * Docking Sections
+			 */
+			 
+			// clear out the existing sections
+			$this->db->query(Database::DELETE, "DELETE FROM `".$this->db->table_prefix()."form_sections` WHERE `form_key` = 'docking'", true);
+			
+			// pull the sections from n1
+			$result = $this->db->query(Database::SELECT, "SELECT * FROM `nova1_docking_sections`", true);
+			
+			if (count($result) > 0)
+			{
+				$sections = array();
+				
+				foreach ($result as $r)
+				{
+					$data = array(
+						'form_key' 	=> 'docking',
+						'name' 		=> $r->section_name,
+						'order' 	=> $r->section_order
+					);
+					
+					// create the section record
+					$item = Model_FormSection::create_item($data);
+					
+					// track the old and new IDs
+					$sections[$r->section_id] = $item->id;
+				}
+			}
+			
+			/**
+			 * Docking Fields
+			 */
+			
+			// clear out the existing fields
+			$this->db->query(Database::DELETE, "DELETE FROM `".$this->db->table_prefix()."form_fields` WHERE `form_key` = 'docking'", true);
+			
+			// pull the fields from n1
+			$result = $this->db->query(Database::SELECT, "SELECT * FROM `nova1_docking_fields`", true);
+			
+			if (count($result) > 0)
+			{
+				$fields = array();
+				
+				foreach ($result as $r)
+				{
+					$data = array(
+						'form_key' 		=> 'docking',
+						'section_id' 	=> $sections[$r->field_section],
+						'type' 			=> $r->field_type,
+						'html_name' 	=> $r->field_name,
+						'html_id' 		=> $r->field_fid,
+						'html_class' 	=> $r->field_class,
+						'html_rows' 	=> $r->field_rows,
+						'selected' 		=> '',
+						'value' 		=> $r->field_value,
+						'label' 		=> $r->field_label_page,
+						'placeholder' 	=> '',
+						'order' 		=> $r->field_order,
+						'display' 		=> ($r->field_display == 'y') ? 1 : 0,
+						'updated_at' 	=> Date::now(),
+					);
+					
+					// create the field record
+					$item = Model_FormField::create_item($data);
+					
+					// track the old and new IDs
+					$fields[$r->field_id] = $item->id;
+				}
+			}
+			
+			/**
+			 * Docking Field Values
+			 */
+			
+			// pull the values from n1
+			$result = $this->db->query(Database::SELECT, "SELECT * FROM `nova1_docking_values`", true);
+			
+			if (count($result) > 0)
+			{
+				$values = array();
+				
+				foreach ($result as $r)
+				{
+					$data = array(
+						'field_id' 		=> $fields[$r->value_field],
+						'html_name' 	=> '',
+						'html_value' 	=> $r->value_field_value,
+						'html_id' 		=> '',
+						'selected' 		=> $r->value_selected,
+						'content' 		=> $r->value_content,
+						'order' 		=> $r->value_order,
+					);
+					
+					// create the value record
+					$item = Model_FormValue::create_item($data);
+					
+					// track the old and new IDs
+					$values[$r->value_id] = $item->id;
+				}
+			}
+			
+			/**
+			 * Docking Field Data
+			 */
+			
+			// clear out the existing data
+			$this->db->query(Database::DELETE, "DELETE FROM `".$this->db->table_prefix()."form_data` WHERE `form_key` = 'docking'", true);
+			
+			// pull the data from n1
+			$result = $this->db->query(Database::SELECT, "SELECT * FROM `nova1_docking_data`", true);
+			
+			if (count($result) > 0)
+			{
+				foreach ($result as $r)
+				{
+					$data = array(
+						'form_key' 		=> 'docking',
+						'field_id' 		=> $fields[$r->data_field],
+						'user_id' 		=> null,
+						'character_id' 	=> null,
+						'item_id' 		=> $r->data_docking_item,
+						'value' 		=> $r->data_value,
+						'updated_at' 	=> Date::now(),
+					);
+					
+					// create the data record
+					Model_FormData::create_item($data);
+				}
+			}
+			
+			$retval = array(
+				'code' => 1,
+				'message' => ''
+			);
+		} catch (Exception $e) {
+			$retval = array(
+				'code' => 0,
+				'message' => 'ERROR: '.$e->getMessage().' - line '.$e->getLine().' of '.$e->getFile()
+			);
+		}
+		
+		echo json_encode($retval);
+	}
+	
+	private function _upgrade_specs_form()
+	{
+		try {
+			/**
+			 * Specs Sections
+			 */
+			 
+			// clear out the existing sections
+			$this->db->query(Database::DELETE, "DELETE FROM `".$this->db->table_prefix()."form_sections` WHERE `form_key` = 'specs'", true);
+			
+			// pull the sections from n1
+			$result = $this->db->query(Database::SELECT, "SELECT * FROM `nova1_specs_sections`", true);
+			
+			if (count($result) > 0)
+			{
+				$sections = array();
+				
+				foreach ($result as $r)
+				{
+					$data = array(
+						'form_key' 	=> 'specs',
+						'name' 		=> $r->section_name,
+						'order' 	=> $r->section_order
+					);
+					
+					// create the section record
+					$item = Model_FormSection::create_item($data);
+					
+					// track the old and new IDs
+					$sections[$r->section_id] = $item->id;
+				}
+			}
+			
+			/**
+			 * Specs Fields
+			 */
+			
+			// clear out the existing fields
+			$this->db->query(Database::DELETE, "DELETE FROM `".$this->db->table_prefix()."form_fields` WHERE `form_key` = 'specs'", true);
+			
+			// pull the fields from n1
+			$result = $this->db->query(Database::SELECT, "SELECT * FROM `nova1_specs_fields`", true);
+			
+			if (count($result) > 0)
+			{
+				$fields = array();
+				
+				foreach ($result as $r)
+				{
+					$data = array(
+						'form_key' 		=> 'specs',
+						'section_id' 	=> $sections[$r->field_section],
+						'type' 			=> $r->field_type,
+						'html_name' 	=> $r->field_name,
+						'html_id' 		=> $r->field_fid,
+						'html_class' 	=> $r->field_class,
+						'html_rows' 	=> $r->field_rows,
+						'selected' 		=> '',
+						'value' 		=> $r->field_value,
+						'label' 		=> $r->field_label_page,
+						'placeholder' 	=> '',
+						'order' 		=> $r->field_order,
+						'display' 		=> ($r->field_display == 'y') ? 1 : 0,
+						'updated_at' 	=> Date::now(),
+					);
+					
+					// create the field record
+					$item = Model_FormField::create_item($data);
+					
+					// track the old and new IDs
+					$fields[$r->field_id] = $item->id;
+				}
+			}
+			
+			/**
+			 * Specs Field Values
+			 */
+			
+			// pull the values from n1
+			$result = $this->db->query(Database::SELECT, "SELECT * FROM `nova1_specs_values`", true);
+			
+			if (count($result) > 0)
+			{
+				$values = array();
+				
+				foreach ($result as $r)
+				{
+					$data = array(
+						'field_id' 		=> $fields[$r->value_field],
+						'html_name' 	=> '',
+						'html_value' 	=> $r->value_field_value,
+						'html_id' 		=> '',
+						'selected' 		=> $r->value_selected,
+						'content' 		=> $r->value_content,
+						'order' 		=> $r->value_order,
+					);
+					
+					// create the value record
+					$item = Model_FormValue::create_item($data);
+					
+					// track the old and new IDs
+					$values[$r->value_id] = $item->id;
+				}
+			}
+			
+			/**
+			 * Specs Field Data
+			 */
+			
+			// clear out the existing data
+			$this->db->query(Database::DELETE, "DELETE FROM `".$this->db->table_prefix()."form_data` WHERE `form_key` = 'specs'", true);
+			
+			// pull the data from n1
+			$result = $this->db->query(Database::SELECT, "SELECT * FROM `nova1_specs_data`", true);
+			
+			if (count($result) > 0)
+			{
+				foreach ($result as $r)
+				{
+					$data = array(
+						'form_key' 		=> 'specs',
+						'field_id' 		=> $fields[$r->data_field],
+						'user_id' 		=> null,
+						'character_id' 	=> null,
+						'item_id' 		=> 1,
+						'value' 		=> $r->data_value,
+						'updated_at' 	=> Date::now(),
+					);
+					
+					// create the data record
+					Model_FormData::create_item($data);
+				}
+			}
+			
+			$retval = array(
+				'code' => 1,
+				'message' => ''
+			);
+		} catch (Exception $e) {
+			$retval = array(
+				'code' => 0,
+				'message' => 'ERROR: '.$e->getMessage().' - line '.$e->getLine().' of '.$e->getFile()
+			);
+		}
+		
+		echo json_encode($retval);
+	}
+	
+	private function _upgrade_tour_form()
+	{
+		try {
+			/**
+			 * Tour Fields
+			 */
+			
+			// clear out the existing fields
+			$this->db->query(Database::DELETE, "DELETE FROM `".$this->db->table_prefix()."form_fields` WHERE `form_key` = 'tour'", true);
+			
+			// pull the fields from n1
+			$result = $this->db->query(Database::SELECT, "SELECT * FROM `nova1_tour_fields`", true);
+			
+			if (count($result) > 0)
+			{
+				$fields = array();
+				
+				foreach ($result as $r)
+				{
+					$data = array(
+						'form_key' 		=> 'tour',
+						'section_id' 	=> null,
+						'type' 			=> $r->field_type,
+						'html_name' 	=> $r->field_name,
+						'html_id' 		=> $r->field_fid,
+						'html_class' 	=> $r->field_class,
+						'html_rows' 	=> $r->field_rows,
+						'selected' 		=> '',
+						'value' 		=> $r->field_value,
+						'label' 		=> $r->field_label_page,
+						'placeholder' 	=> '',
+						'order' 		=> $r->field_order,
+						'display' 		=> ($r->field_display == 'y') ? 1 : 0,
+						'updated_at' 	=> Date::now(),
+					);
+					
+					// create the field record
+					$item = Model_FormField::create_item($data);
+					
+					// track the old and new IDs
+					$fields[$r->field_id] = $item->id;
+				}
+			}
+			
+			/**
+			 * Tour Field Values
+			 */
+			
+			// pull the values from n1
+			$result = $this->db->query(Database::SELECT, "SELECT * FROM `nova1_tour_values`", true);
+			
+			if (count($result) > 0)
+			{
+				$values = array();
+				
+				foreach ($result as $r)
+				{
+					$data = array(
+						'field_id' 		=> $fields[$r->value_field],
+						'html_name' 	=> '',
+						'html_value' 	=> $r->value_field_value,
+						'html_id' 		=> '',
+						'selected' 		=> $r->value_selected,
+						'content' 		=> $r->value_content,
+						'order' 		=> $r->value_order,
+					);
+					
+					// create the value record
+					$item = Model_FormValue::create_item($data);
+					
+					// track the old and new IDs
+					$values[$r->value_id] = $item->id;
+				}
+			}
+			
+			/**
+			 * Tour Field Data
+			 */
+			
+			// clear out the existing data
+			$this->db->query(Database::DELETE, "DELETE FROM `".$this->db->table_prefix()."form_data` WHERE `form_key` = 'tour'", true);
+			
+			// pull the data from n1
+			$result = $this->db->query(Database::SELECT, "SELECT * FROM `nova1_tour_data`", true);
+			
+			if (count($result) > 0)
+			{
+				foreach ($result as $r)
+				{
+					$data = array(
+						'form_key' 		=> 'tour',
+						'field_id' 		=> $fields[$r->data_field],
+						'user_id' 		=> null,
+						'character_id' 	=> null,
+						'item_id' 		=> $r->data_tour_item,
+						'value' 		=> $r->data_value,
+						'updated_at' 	=> Date::now(),
+					);
+					
+					// create the data record
+					Model_FormData::create_item($data);
+				}
+			}
+			
+			$retval = array(
+				'code' => 1,
+				'message' => ''
+			);
+		} catch (Exception $e) {
+			$retval = array(
+				'code' => 0,
+				'message' => 'ERROR: '.$e->getMessage().' - line '.$e->getLine().' of '.$e->getFile()
+			);
+		}
+		
+		echo json_encode($retval);
+	}
+	
 	private function _upgrade_user_loa()
 	{
 		try {
-			$result = $this->db->query(Database::SELECT, "SELECT * FROM nova1_user_loa", true);
+			$result = $this->db->query(Database::SELECT, "SELECT * FROM `nova1_user_loa`", true);
 			$count_old= $result->count();
 			
 			if (count($result) > 0)
@@ -1821,14 +2460,17 @@ class Controller_Setup_Nova1ajax extends Controller_Template {
 	
 	private function _upgrade_users()
 	{
-		$c = $this->db->query(Database::SELECT, "SELECT userid FROM nova1_users", true);
+		$c = $this->db->query(Database::SELECT, "SELECT userid FROM `nova1_users`", true);
 		$count_old = $c->count();
 		
 		DBForge::drop_table('users');
 		
 		try {
-			$this->db->query(null, "CREATE TABLE ".$this->db->table_prefix()."users SELECT * FROM nova1_users", true);
+			$this->db->query(null, "CREATE TABLE `".$this->db->table_prefix()."users` SELECT * FROM `nova1_users`", true);
 			
+			/**
+			 * Update the schema with all the changes.
+			 */
 			$fields = array(
 				'userid' => array(
 					'name' => 'id',
@@ -1860,20 +2502,16 @@ class Controller_Setup_Nova1ajax extends Controller_Template {
 					'constraint' => 5),
 				'is_sysadmin' => array(
 					'name' => 'is_sysadmin',
-					'type' => 'ENUM',
-					'constraint' => "'y','n'"),
+					'type' => 'TEXT'),
 				'is_game_master' => array(
 					'name' => 'is_game_master',
-					'type' => 'ENUM',
-					'constraint' => "'y','n'"),
+					'type' => 'TEXT'),
 				'is_webmaster' => array(
 					'name' => 'is_webmaster',
-					'type' => 'ENUM',
-					'constraint' => "'y','n'"),
+					'type' => 'TEXT'),
 				'is_firstlaunch' => array(
 					'name' => 'is_firstlaunch',
-					'type' => 'ENUM',
-					'constraint' => "'y','n'"),
+					'type' => 'TEXT'),
 				'timezone' => array(
 					'name' => 'timezone',
 					'type' => 'VARCHAR',
@@ -1938,17 +2576,119 @@ class Controller_Setup_Nova1ajax extends Controller_Template {
 					'type' => 'BIGINT',
 					'constraint' => 20),
 			);
+			DBForge::modify_column('users', $fields);
 			
-			DBForge::modify_column('characters', $fields);
-			
+			/**
+			 * Add the email format field for figuring out which emails should
+			 * be sent.
+			 */
 			$add = array(
 				'email_format' => array(
 					'type' => 'VARCHAR',
 					'constraint' => 4)
 			);
+			DBForge::add_column('users', $add);
 			
-			DBForge::add_column('characters', $add);
+			/**
+			 * Pull all the users and loop through to set the new moderation
+			 * and make changes to some of the data to reflect the new changes
+			 * to the schema.
+			 */
+			$all = $this->db->query(Database::SELECT, "SELECT * FROM `".$this->db->table_prefix()."users`", true);
 			
+			if (count($all) > 0)
+			{
+				foreach ($all as $user)
+				{
+					if ($user->moderate_posts == 'y')
+					{
+						Model_Moderation::create_item(array(
+							'user_id' => $user->userid,
+							'character_id' => null,
+							'type' => 'posts',
+							'date' => Date::now()
+						));
+					}
+					
+					if ($user->moderate_logs== 'y')
+					{
+						Model_Moderation::create_item(array(
+							'user_id' => $user->userid,
+							'character_id' => null,
+							'type' => 'logs',
+							'date' => Date::now()
+						));
+					}
+					
+					if ($user->moderate_news == 'y')
+					{
+						Model_Moderation::create_item(array(
+							'user_id' => $user->userid,
+							'character_id' => null,
+							'type' => 'news',
+							'date' => Date::now()
+						));
+					}
+					
+					if ($user->moderate_post_comments == 'y')
+					{
+						Model_Moderation::create_item(array(
+							'user_id' => $user->userid,
+							'character_id' => null,
+							'type' => 'post_comments',
+							'date' => Date::now()
+						));
+					}
+					
+					if ($user->moderate_log_comments == 'y')
+					{
+						Model_Moderation::create_item(array(
+							'user_id' => $user->userid,
+							'character_id' => null,
+							'type' => 'log_comments',
+							'date' => Date::now()
+						));
+					}
+					
+					if ($user->moderate_news_comments == 'y')
+					{
+						Model_Moderation::create_item(array(
+							'user_id' => $user->userid,
+							'character_id' => null,
+							'type' => 'news_comments',
+							'date' => Date::now()
+						));
+					}
+					
+					if ($user->moderate_wiki_comments == 'y')
+					{
+						Model_Moderation::create_item(array(
+							'user_id' => $user->userid,
+							'character_id' => null,
+							'type' => 'wiki_comments',
+							'date' => Date::now()
+						));
+					}
+					
+					$u = Model_User::find($user->id);
+					$u->role_id = Model_AccessRole::STANDARD;
+					$u->language = 'en-us';
+					$u->email_format = 'html';
+					$u->is_sysadmin = (int) ($user->is_sysadmin == 'y');
+					$u->is_game_master = (int) ($user->is_game_master == 'y');
+					$u->is_webmaster = (int) ($user->is_webmaster == 'y');
+					$u->is_firstlaunch = (int) true;
+					$u->updated_at = Date::now();
+					$u->save();
+				}
+			}
+			
+			/**
+			 * Drop these columns. Status isn't needed any more because we determine
+			 * that dynamically. The wiki template is being pulled in to the main
+			 * template. Location, interests and bio are now dynamic user fields.
+			 * Moderation is handled in its own table. Instant message is going away.
+			 */
 			$drop = array(
 				'status',
 				'instant_message',
@@ -1964,8 +2704,34 @@ class Controller_Setup_Nova1ajax extends Controller_Template {
 				'moderate_news_comments',
 				'moderate_wiki_comments'
 			);
+			DBForge::drop_column('users', $add);
 			
-			$count_new = Model_Character::count();
+			/**
+			 * We need to do a second round of modifications after updating users
+			 * with the new TINYINT fields.
+			 */
+			$fields = array(
+				'is_sysadmin' => array(
+					'name' => 'is_sysadmin',
+					'type' => 'TINYINT',
+					'constraint' => 1),
+				'is_game_master' => array(
+					'name' => 'is_game_master',
+					'type' => 'TINYINT',
+					'constraint' => 1),
+				'is_webmaster' => array(
+					'name' => 'is_webmaster',
+					'type' => 'TINYINT',
+					'constraint' => 1),
+				'is_firstlaunch' => array(
+					'name' => 'is_firstlaunch',
+					'type' => 'TINYINT',
+					'constraint' => 1),
+			);
+			DBForge::modify_column('users', $fields);
+			
+			// get the user count
+			$count_new = Model_User::count();
 			
 			if ($count_new == $count_old)
 			{
@@ -1982,7 +2748,7 @@ class Controller_Setup_Nova1ajax extends Controller_Template {
 				);
 			}
 			
-			DBForge::optimize('awards');
+			DBForge::optimize('users');
 		} catch (Exception $e) {
 			$retval = array(
 				'code' => 0,
@@ -1991,5 +2757,10 @@ class Controller_Setup_Nova1ajax extends Controller_Template {
 		}
 		
 		return $retval;
+	}
+	
+	public function action_upgrade()
+	{
+		$this->_upgrade_users();
 	}
 }
