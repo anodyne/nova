@@ -1,9 +1,23 @@
 <?php defined('SYSPATH') or die('No direct script access.');
 
-Route::set('manage hmvc', 'admin/manage/forms(/<id>)')
+Route::set('admin/manage/data', 'admin/manage/data(/<action>(/<id>))')
+	->defaults(array( 
+		'directory' => 'manage',
+		'controller' => 'data',
+		'action' => 'index'
+	));
+	
+Route::set('admin/manage/forms', 'admin/manage/forms(/<action>(/<id>))')
 	->defaults(array( 
 		'directory' => 'manage',
 		'controller' => 'forms',
+		'action' => 'index'
+	));
+	
+Route::set('admin/manage/site', 'admin/manage/site(/<action>(/<id>))')
+	->defaults(array( 
+		'directory' => 'manage',
+		'controller' => 'site',
 		'action' => 'index'
 	));
 	
@@ -25,12 +39,5 @@ Route::set('admin/characters', 'admin/characters(/<action>(/<id>))')
 	->defaults(array( 
 		'directory' => 'admin', 
 		'controller' => 'characters', 
-		'action' => 'index'
-	));
-
-Route::set('admin/site', 'admin/site(/<action>(/<id>))')
-	->defaults(array( 
-		'directory' => 'admin', 
-		'controller' => 'site', 
 		'action' => 'index'
 	));

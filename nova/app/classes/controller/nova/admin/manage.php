@@ -1,12 +1,11 @@
 <?php defined('SYSPATH') or die('No direct script access.');
 /**
- * Admin Controller
+ * Manage Controller
  *
  * @package		Nova
  * @category	Controllers
  * @author		Anodyne Productions
  * @copyright	2011 Anodyne Productions
- * @since		2.0
  */
 
 class Controller_Nova_Admin_Manage extends Controller_Nova_Base {
@@ -67,45 +66,13 @@ class Controller_Nova_Admin_Manage extends Controller_Nova_Base {
 	public function action_index()
 	{
 		// create a new content view
-		$this->template->layout->content = "This is the management page";
+		$this->_data = View::factory(Location::view('admin_index', $this->skin, 'pages'));
 		
-		// create the javascript view
-		//$this->template->javascript = View::factory(Location::view('admin_index_js', $this->skin, 'admin', 'js'));
-		
-		// assign the object a shorter variable to use in the method
-		$data = $this->template->layout->content;
+		$this->_data->reset = false;
 		
 		// content
-		$this->template->title.= ucfirst(__("admin"));
-		//$data->header = Jelly::query('message', 'welcome_head')->limit(1)->select()->value;
-		//$data->message = Jelly::query('message', 'welcome_msg')->limit(1)->select()->value;
-		
-		// send the response
-		$this->request->response = $this->template;
-	}
-	
-	public function action_foo()
-	{
-		// create a new content view
-		$this->template->layout->content = "This is the management foo page";
-		
-		// create the javascript view
-		//$this->template->javascript = View::factory(Location::view('admin_index_js', $this->skin, 'admin', 'js'));
-		
-		// assign the object a shorter variable to use in the method
-		$data = $this->template->layout->content;
-		
-		// content
-		$this->template->title.= ucfirst(__("admin"));
-		//$data->header = Jelly::query('message', 'welcome_head')->limit(1)->select()->value;
-		//$data->message = Jelly::query('message', 'welcome_msg')->limit(1)->select()->value;
-		
-		// send the response
-		$this->request->response = $this->template;
-	}
-	
-	public function action_forms()
-	{
-		echo 'foo';
+		$this->_data->title = 'Manage';
+		$this->_data->header = 'Manage';
+		$this->_data->message = 'Manage';
 	}
 }
