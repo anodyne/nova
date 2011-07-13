@@ -400,6 +400,8 @@ class Kohana_ValidTest extends Unittest_TestCase
 			array('foo@bar.sub.com', FALSE, TRUE),
 			array('foo+asd@bar.sub.com', FALSE, TRUE),
 			array('foo.asd@bar.sub.com', FALSE, TRUE),
+			// RFC says 254 length max #4011
+			array(Text::random(NULL, 200).'@'.Text::random(NULL, 50).'.com', FALSE, FALSE),
 			// Empty test
 			array('', TRUE, FALSE),
 			array(NULL, TRUE, FALSE),

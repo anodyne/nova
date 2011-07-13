@@ -67,7 +67,7 @@ class Kohana_Valid {
 	 * Checks that a field is exactly the right length.
 	 *
 	 * @param   string   value
-	 * @param   integer  exact length required
+	 * @param   integer|array  exact length required, or array of valid lengths
 	 * @return  boolean
 	 */
 	public static function exact_length($value, $length)
@@ -109,6 +109,11 @@ class Kohana_Valid {
 	 */
 	public static function email($email, $strict = FALSE)
 	{
+		if (UTF8::strlen($email) > 254)
+		{
+			return FALSE;
+		}
+
 		if ($strict === TRUE)
 		{
 			$qtext = '[^\\x0d\\x22\\x5c\\x80-\\xff]';
@@ -237,7 +242,7 @@ class Kohana_Valid {
 	 * @param   integer       credit card number
 	 * @param   string|array  card type, or an array of card types
 	 * @return  boolean
-	 * @uses    Validate::luhn
+	 * @uses    Valid::luhn
 	 */
 	public static function credit_card($number, $type = NULL)
 	{
