@@ -71,7 +71,7 @@ class Model_User extends Model {
 		'language' => array(
 			'type' => 'string',
 			'constraint' => 50,
-			'default' => 'english'),
+			'default' => 'en-us'),
 		'join_date' => array(
 			'type' => 'bigint',
 			'constraint' => 20),
