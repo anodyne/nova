@@ -323,8 +323,8 @@ class Controller_Setup_Nova1 extends Controller_Template {
 				$data = $this->template->layout->content;
 				
 				// content
-				$this->template->title.= __('Cleaning Up Data');
-				$this->template->layout->label = __('Cleaning Up Data');
+				$this->template->title.= 'Cleaning Up Data';
+				$this->template->layout->label = 'Cleaning Up Data';
 				
 				// create the javascript view
 				$this->template->javascript = View::factory(Location::view('upgrade_step2_js', null, 'js'));
@@ -344,7 +344,7 @@ class Controller_Setup_Nova1 extends Controller_Template {
 				);
 				
 				// build the next step control
-				$this->template->layout->controls = form::button('next', __('Run'), $next).form::close();
+				$this->template->layout->controls = Form::button('next', 'Run', $next).Form::close();
 			break;
 				
 			case 4:
