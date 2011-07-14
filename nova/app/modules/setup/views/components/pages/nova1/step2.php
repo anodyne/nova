@@ -13,42 +13,42 @@
 		</thead>
 		<tbody>
 			<tr>
-				<td class="fontMedium bold">Characters &amp; Users</td>
+				<td>
+					<strong class="fontMedium">Characters &amp; Users</strong>
+					<strong class="fontSmall errors hidden error"><br><span class="errors-content"></span></strong>
+				</td>
 				<td class="col-30 align-center">
 					<span class="success hidden"><?php echo Html::image(MODFOLDER.'/app/modules/setup/views/design/images/tick-circle.png');?></span>
-					<span class="failure hidden">
-						<?php echo Html::image(MODFOLDER.'/app/modules/setup/views/design/images/exclamation-red.png', array('class' => 'tiptip', 'title' => ''));?>
-					</span>
-					<span class="warning hidden">
-						<?php echo Html::image(MODFOLDER.'/app/modules/setup/views/design/images/loading.gif');?>
-					</span>
+					<span class="failure hidden"><?php echo Html::image(MODFOLDER.'/app/modules/setup/views/design/images/exclamation-red.png');?></span>
+					<span class="warning hidden"><?php echo Html::image(MODFOLDER.'/app/modules/setup/views/design/images/exclamation.png');?></span>
 					<span class="loading hidden"><?php echo Html::image(MODFOLDER.'/app/modules/setup/views/design/images/loading.gif');?></span>
 				</td>
 				<td class="align-center"><?php echo Form::radio('upgrade_characters_users', 1, true);?></td>
 				<td class="align-center"><?php echo Form::radio('upgrade_characters_users', 0);?></td>
 			</tr>
 			<tr>
-				<td class="fontMedium bold">Awards</td>
+				<td>
+					<strong class="fontMedium">Awards</strong>
+					<strong class="fontSmall errors hidden error"><br><span class="errors-content"></span></strong>
+				</td>
 				<td class="col-30 align-center">
 					<span class="success hidden"><?php echo Html::image(MODFOLDER.'/app/modules/setup/views/design/images/tick-circle.png');?></span>
-					<span class="failure hidden">
-						<?php echo Html::image(MODFOLDER.'/app/modules/setup/views/design/images/exclamation-red.png', array('class' => 'tiptip', 'title' => ''));?>
-					</span>
+					<span class="failure hidden"><?php echo Html::image(MODFOLDER.'/app/modules/setup/views/design/images/exclamation-red.png');?></span>
+					<span class="warning hidden"><?php echo Html::image(MODFOLDER.'/app/modules/setup/views/design/images/exclamation.png');?></span>
 					<span class="loading hidden"><?php echo Html::image(MODFOLDER.'/app/modules/setup/views/design/images/loading.gif');?></span>
 				</td>
 				<td class="align-center"><?php echo Form::radio('upgrade_awards', 1, true);?></td>
 				<td class="align-center"><?php echo Form::radio('upgrade_awards', 0);?></td>
 			</tr>
 			<tr>
-				<td class="fontMedium bold">System Settings &amp; Messages</td>
+				<td>
+					<strong class="fontMedium">System Settings &amp; Messages</strong>
+					<strong class="fontSmall errors hidden error"><br><span class="errors-content"></span></strong>
+				</td>
 				<td class="col-30 align-center">
 					<span class="success hidden"><?php echo Html::image(MODFOLDER.'/app/modules/setup/views/design/images/tick-circle.png');?></span>
-					<span class="failure hidden">
-						<?php echo Html::image(MODFOLDER.'/app/modules/setup/views/design/images/exclamation-red.png', array('class' => 'tiptip', 'title' => ''));?>
-					</span>
-					<span class="warning hidden">
-						<?php echo Html::image(MODFOLDER.'/app/modules/setup/views/design/images/loading.gif');?>
-					</span>
+					<span class="failure hidden"><?php echo Html::image(MODFOLDER.'/app/modules/setup/views/design/images/exclamation-red.png');?></span>
+					<span class="warning hidden"><?php echo Html::image(MODFOLDER.'/app/modules/setup/views/design/images/exclamation.png');?></span>
 					<span class="loading hidden"><?php echo Html::image(MODFOLDER.'/app/modules/setup/views/design/images/loading.gif');?></span>
 				</td>
 				<td class="align-center"><?php echo Form::radio('upgrade_settings', 1, true);?></td>

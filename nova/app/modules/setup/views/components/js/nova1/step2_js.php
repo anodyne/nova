@@ -1,8 +1,4 @@
 <script type="text/javascript" src="<?php echo Url::base().MODFOLDER;?>/modules/assets/js/jquery.ajaxq.js"></script>
-<script type="text/javascript" src="<?php echo Url::base().MODFOLDER;?>/modules/assets/js/jquery.tipTip.js"></script>
-
-<link rel="stylesheet" href="<?php echo Url::base().MODFOLDER;?>/modules/assets/css/jquery.tipTip.css" />
-
 <script type="text/javascript">
 	$(document).ready(function(){
 		$("#progress").progressbar({ value: 40 });
@@ -46,11 +42,6 @@
 		});
 		
 		$('#start').live('click', function(){
-			var tipOpts = {
-				defaultPosition: 'right',
-				edgeOffset: 8
-			}
-			
 			// characters and users
 			if ($('input[name=upgrade_characters_users]:checked').val() == 1)
 			{
@@ -74,18 +65,14 @@
 						else if (data.code == 0)
 						{
 							$('table tbody tr:eq(0) td:eq(1) .failure').removeClass('hidden');
-							$('table tbody tr:eq(0) td:eq(1) .failure img').attr('title', function(){
-								return data.message
-							});
-							$('.tiptip').tipTip(tipOpts);
+							$('table tbody tr:eq(0) td:eq(0) .errors .errors-content').html(data.message);
+							$('table tbody tr:eq(0) td:eq(0) .errors').removeClass('hidden');
 						}
 						else if (data.code == 2)
 						{
 							$('table tbody tr:eq(0) td:eq(1) .warning').removeClass('hidden');
-							$('table tbody tr:eq(0) td:eq(1) .warning img').attr('title', function(){
-								return data.message
-							});
-							$('.tiptip').tipTip(tipOpts);
+							$('table tbody tr:eq(0) td:eq(0) .errors .errors-content').html(data.message);
+							$('table tbody tr:eq(0) td:eq(0) .errors').removeClass('hidden');
 						}
 					}
 				});
@@ -101,7 +88,7 @@
 						$('table tbody tr:eq(1) td:eq(1) .loading').removeClass('hidden');
 					},
 					type: "POST",
-					url: "<?php echo Url::site('setup/smsajax/upgrade_awards');?>",
+					url: "<?php echo Url::site('setup/nova1ajax/upgrade_awards');?>",
 					data: send,
 					dataType: 'json',
 					success: function(data){
@@ -114,10 +101,8 @@
 						else if (data.code == 0)
 						{
 							$('table tbody tr:eq(1) td:eq(1) .failure').removeClass('hidden');
-							$('table tbody tr:eq(1) td:eq(1) .failure img').attr('title', function(){
-								return data.message
-							});
-							$('.tiptip').tipTip(tipOpts);
+							$('table tbody tr:eq(1) td:eq(0) .errors .errors-content').html(data.message);
+							$('table tbody tr:eq(1) td:eq(0) .errors').removeClass('hidden');
 						}
 					}
 				});
@@ -133,7 +118,7 @@
 						$('table tbody tr:eq(2) td:eq(1) .loading').removeClass('hidden');
 					},
 					type: "POST",
-					url: "<?php echo Url::site('setup/smsajax/upgrade_settings');?>",
+					url: "<?php echo Url::site('setup/nova1ajax/upgrade_settings');?>",
 					data: send,
 					dataType: 'json',
 					success: function(data){
@@ -146,18 +131,14 @@
 						else if (data.code == 0)
 						{
 							$('table tbody tr:eq(2) td:eq(1) .failure').removeClass('hidden');
-							$('table tbody tr:eq(2) td:eq(1) .failure img').attr('title', function(){
-								return data.message
-							});
-							$('.tiptip').tipTip(tipOpts);
+							$('table tbody tr:eq(2) td:eq(0) .errors .errors-content').html(data.message);
+							$('table tbody tr:eq(2) td:eq(0) .errors').removeClass('hidden');
 						}
 						else if (data.code == 2)
 						{
 							$('table tbody tr:eq(2) td:eq(1) .warning').removeClass('hidden');
-							$('table tbody tr:eq(2) td:eq(1) .warning img').attr('title', function(){
-								return data.message
-							});
-							$('.tiptip').tipTip(tipOpts);
+							$('table tbody tr:eq(2) td:eq(0) .errors .errors-content').html(data.message);
+							$('table tbody tr:eq(2) td:eq(0) .errors').removeClass('hidden');
 						}
 					}
 				});

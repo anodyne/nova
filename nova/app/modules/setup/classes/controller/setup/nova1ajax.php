@@ -32,65 +32,166 @@ class Controller_Setup_Nova1ajax extends Controller_Template {
 	public function action_upgrade_awards()
 	{
 		// start by getting a count of the number of items in the awards table
-		$c = $this->db->query(Database::SELECT, "SELECT awardid FROM sms_awards", true);
+		$c = $this->db->query(Database::SELECT, "SELECT award_id FROM `nova1_awards`", true);
 		$count_old = $c->count();
 		
-		// drop the nova version of the table
+		// drop the nova version of the tables
 		DBForge::drop_table('awards');
+		DBForge::drop_table('awards_queue');
+		DBForge::drop_table('awards_received');
 		
 		try {
 			// copy the sms version of the table along with all its data
-			$this->db->query(null, "CREATE TABLE ".$this->db->table_prefix()."awards SELECT * FROM sms_awards", true);
+			$this->db->query(null, "CREATE TABLE ".$this->db->table_prefix()."awards SELECT * FROM `nova1_awards`", true);
 			
 			// rename the fields
 			$fields = array(
-				'awardid' => array(
+				'award_id' => array(
 					'name' => 'id',
 					'type' => 'INT',
 					'constraint' => 5),
-				'awardName' => array(
+				'award_name' => array(
 					'name' => 'name',
 					'type' => 'VARCHAR',
 					'constraint' => 255),
-				'awardImage' => array(
+				'award_image' => array(
 					'name' => 'image',
 					'type' => 'VARCHAR',
 					'constraint' => 100),
-				'awardOrder' => array(
+				'award_order' => array(
 					'name' => 'order',
 					'type' => 'INT',
 					'constraint' => 5),
-				'awardDesc' => array(
+				'award_desc' => array(
 					'name' => 'desc',
 					'type' => 'TEXT'),
-				'awardCat' => array(
+				'award_cat' => array(
 					'name' => 'category',
 					'type' => 'ENUM',
 					'constraint' => "'ic','ooc','both'",
 					'default' => 'ic'),
+				'award_display' => array(
+					'name' => 'display',
+					'type' => 'TEXT'),
 			);
 			
 			// modify the columns
 			DBForge::modify_column('awards', $fields);
 			
-			// add the award_display column
-			$add = array(
-				'display' => array(
-					'type' => 'TINYINT',
-					'constraint' => 1,
-					'default' => 1)
-			);
-			
-			// do the add action
-			DBForge::add_column('awards', $add);
-			
 			// make award_id auto increment and the primary key
 			$this->db->query(null, "ALTER TABLE ".$this->db->table_prefix()."awards MODIFY COLUMN `id` INT(5) auto_increment primary key", true);
+			
+			// get all the awards
+			$awards = Model_Award::find('all');
+			
+			if (count($awards) > 0)
+			{
+				foreach ($awards as $award)
+				{
+					$a = Model_Award::find($award->id);
+					$a->display = (int) ($a->display == 'y');
+					$a->save();
+				}
+			}
+			
+			// now that we've changed the display stuff, change the schema
+			$fields = array(
+				'display' => array(
+					'name' => 'display',
+					'type' => 'TINYINT',
+					'constraint' => 1,
+					'default' => 1),
+			);
+			DBForge::modify_column('awards', $fields);
+			
+			/**
+			 * Award Nominations
+			 */
+			$this->db->query(null, "CREATE TABLE ".$this->db->table_prefix()."awards_queue SELECT * FROM `nova1_awards_queue`", true);
+			$fields = array(
+				'queue_id' => array(
+					'name' => 'id',
+					'type' => 'INT',
+					'constraint' => 8),
+				'queue_receive_character' => array(
+					'name' => 'receive_character_id',
+					'type' => 'INT',
+					'constraint' => 8),
+				'queue_receive_user' => array(
+					'name' => 'receive_user_id',
+					'type' => 'INT',
+					'constraint' => 8),
+				'queue_nominate' => array(
+					'name' => 'nominate_character_id',
+					'type' => 'INT',
+					'constraint' => 8),
+				'queue_award' => array(
+					'name' => 'award_id',
+					'type' => 'INT',
+					'constraint' => 5),
+				'queue_reason' => array(
+					'name' => 'reason',
+					'type' => 'TEXT'),
+				'queue_status' => array(
+					'name' => 'status',
+					'type' => 'ENUM',
+					'constraint' => "'pending','accepted','rejected'",
+					'default' => 'pending'),
+				'queue_date' => array(
+					'name' => 'date',
+					'type' => 'BIGINT',
+					'constraint' => 20),
+			);
+			DBForge::modify_column('awards_queue', $fields);
+			$this->db->query(null, "ALTER TABLE ".$this->db->table_prefix()."awards_queue MODIFY COLUMN `id` INT(8) auto_increment primary key", true);
+			
+			/**
+			 * Received Awards
+			 */
+			$this->db->query(null, "CREATE TABLE ".$this->db->table_prefix()."awards_received SELECT * FROM `nova1_awards_received`", true);
+			$fields = array(
+				'awardrec_id' => array(
+					'name' => 'id',
+					'type' => 'INT',
+					'constraint' => 8),
+				'awardrec_character' => array(
+					'name' => 'receive_character_id',
+					'type' => 'INT',
+					'constraint' => 8),
+				'awardrec_user' => array(
+					'name' => 'receive_user_id',
+					'type' => 'INT',
+					'constraint' => 8),
+				'awardrec_nominated_by' => array(
+					'name' => 'nominate_character_id',
+					'type' => 'INT',
+					'constraint' => 8),
+				'awardrec_award' => array(
+					'name' => 'award_id',
+					'type' => 'INT',
+					'constraint' => 5),
+				'awardrec_reason' => array(
+					'name' => 'reason',
+					'type' => 'TEXT'),
+				'awardrec_date' => array(
+					'name' => 'date',
+					'type' => 'BIGINT',
+					'constraint' => 20),
+			);
+			DBForge::modify_column('awards_received', $fields);
+			$this->db->query(null, "ALTER TABLE ".$this->db->table_prefix()."awards_received MODIFY COLUMN `id` INT(8) auto_increment primary key", true);
 			
 			// get the number of records in the new table
 			$count_new = Model_Award::count();
 			
-			if ($count_new == $count_old)
+			if ($count_new == 0)
+			{
+				$retval = array(
+					'code' => 0,
+					'message' => "Awards were not migrated"
+				);
+			}
+			elseif ($count_new == $count_old)
 			{
 				$retval = array(
 					'code' => 1,
@@ -100,12 +201,14 @@ class Controller_Setup_Nova1ajax extends Controller_Template {
 			else
 			{
 				$retval = array(
-					'code' => 0,
-					'message' => "Not all of the awards were transferred to the Nova 3 format"
+					'code' => 2,
+					'message' => "All awards were not properly migrated"
 				);
 			}
 			
 			DBForge::optimize('awards');
+			DBForge::optimize('awards_queue');
+			DBForge::optimize('awards_received');
 		} catch (Exception $e) {
 			$retval = array(
 				'code' => 0,
@@ -121,96 +224,75 @@ class Controller_Setup_Nova1ajax extends Controller_Template {
 	 */
 	public function action_upgrade_characters()
 	{
+		// set up some holding arrays
+		$codes = array();
+		$messages = array();
+		
 		// characters
-		$retval['characters'] = $this->_upgrade_characters();
+		$characters = $this->_upgrade_characters();
+		$codes['characters'] = $characters['code'];
+		$messages['characters'] = $characters['message'];
 		
 		// chain of command
-		$retval['coc'] = $this->_upgrade_coc();
+		$coc = $this->_upgrade_coc();
+		$codes['coc'] = $coc['code'];
+		$messages['coc'] = $coc['message'];
 		
 		// promotions
-		$retval['promotions'] = $this->_upgrade_character_promotions();
+		$promotions = $this->_upgrade_character_promotions();
+		$codes['promotions'] = $promotions['code'];
+		$messages['promotions'] = $promotions['message'];
 		
 		// dynamic form
-		$retval['form'] = $this->_upgrade_character_form();
+		$form = $this->_upgrade_character_form();
+		$codes['form'] = $form['code'];
+		$messages['form'] = $form['message'];
 		
 		// applications
-		$retval['applications'] = $this->_upgrade_applications();
+		$applications = $this->_upgrade_applications();
+		$codes['applications'] = $applications['code'];
+		$messages['applications'] = $applications['message'];
 		
 		// users
-		$retval['users'] = $this->_upgrade_users();
+		$users = $this->_upgrade_users();
+		$codes['users'] = $users['code'];
+		$messages['users'] = $users['message'];
 		
 		// user LOAs
-		$retval['user_loas'] = $this->_upgrade_user_loa();
+		$user_loas = $this->_upgrade_user_loa();
+		$codes['user_loas'] = $user_loas['code'];
+		$messages['user_loas'] = $user_loas['message'];
 		
-		echo json_encode($retval);
-	}
-	
-	/**
-	 * Take the password the admin chose and make sure every user has that password.
-	 */
-	public function action_upgrade_final_password()
-	{
-		// grab the password
-		$password = $_POST['password'];
-		
-		try {
-			// hash the password
-			$new_password = Auth::hash($password);
-			
-			// update everyone
-			Model_User::update_user(null, array('password' => $new_password));
-			
-			// find out how many users don't have the right password
-			$count = Model_User::find()->where('password', '!=', $new_password)->count();
-			
-			// pull all the users
-			$users = Model_User::find('all');
-			
-			// loop through and get all the email addresses
-			foreach ($users as $u)
+		if ( ! in_array(1, $codes))
+		{
+			$retval = array(
+				'code' => 0,
+				'message' => "There was a problem with the upgrade and none of your data could be migrated."
+			);
+		}
+		elseif (in_array(1, $codes) and in_array(0, $codes))
+		{
+			foreach ($codes as $key => $c)
 			{
-				if ($u->get_status() == 'active')
+				if ($c == 1)
 				{
-					$emails[] = $u->email;
+					unset($codes[$key]);
 				}
 			}
 			
-			// get the settings
-			$settings = Model_Settings::get_settings(array('sim_name', 'default_email_address', 'default_email_name'));
+			// get an array of just the error messages we need
+			$errors = array_intersect_key($messages, $codes);
 			
-			# TODO: need to remove these comments for the final release
-			
-			/*
-			// set up the content
-			$content = "The ".$settings->sim_name." has just upgraded from SMS to Nova 3. As part of the upgrade process, your password needed to be reset. You'll log in to the ".$settings->sim_name." site with the password '".$password."' (without the single quotes). The first time you log in, you'll be prompted to change your password. Do not reply to this automatically generated email. If you have questions, please contact your game master.";
-			
-			// send an email out to the entire crew with the new password
-			$email = Email::factory($content)
-				->to($emails)
-				->from($settings->default_email_address, $settings->default_email_name)
-				->send();
-			*/
-			
-			if ($count > 0)
-			{
-				$retval = array(
-					'code' => 0,
-					'message' => "Not all of your users' passwords were updated"
-				);
-			}
-			else
-			{
-				$retval = array(
-					'code' => 1,
-					'message' => ''
-				);
-			}
-			
-			DBForge::optimize('users');
-		} catch (Exception $e) {
 			$retval = array(
-				'code' => 0,
-				'message' => 'ERROR: '.$e->getMessage().' - line '.$e->getLine().' of '.$e->getFile()
+				'code' => 2,
+				'message' => implode('. ', $errors)
+			);
+		}
+		else
+		{
+			$retval = array(
+				'code' => 1,
+				'message' => ''
 			);
 		}
 		
@@ -933,55 +1015,204 @@ class Controller_Setup_Nova1ajax extends Controller_Template {
 	 */
 	public function action_upgrade_settings()
 	{
-		// figure out what the name of the settings table is
-		if (count($this->db->list_tables('sms_settings')) > 0)
-		{
-			$result = $this->db->query(Database::SELECT, "SELECT * FROM sms_settings WHERE globalid = 1", true);
-		}
-		else
-		{
-			$result = $this->db->query(Database::SELECT, "SELECT * FROM sms_globals WHERE globalid = 1", true);
-		}
+		$c = $this->db->query(Database::SELECT, "SELECT setting_id FROM `nova1_settings`", true);
+		$count_settings_old = $c->count();
 		
-		foreach ($result as $r)
-		{
-			$settings = array(
-				'sim_name' => $r->shipPrefix.' '.$r->shipName.' '.$r->shipRegistry,
-				'sim_year' => $r->simmYear,
-				'post_count_format' => ($r->jpCount == 'y') ? 'multiple' : 'single',
-				'email_subject' => $r->emailSubject
+		$c = $this->db->query(Database::SELECT, "SELECT message_id FROM `nova1_messages`", true);
+		$count_messages_old = $c->count();
+		
+		// drop the nova version of the table
+		DBForge::drop_table('settings');
+		DBForge::drop_table('site_contents');
+		
+		try {
+			// copy the sms version of the table along with all its data
+			$this->db->query(null, "CREATE TABLE ".$this->db->table_prefix()."settings SELECT * FROM `nova1_settings`", true);
+			
+			// rename the fields
+			$fields = array(
+				'setting_id' => array(
+					'name' => 'id',
+					'type' => 'INT',
+					'constraint' => 5),
+				'setting_key' => array(
+					'name' => 'key',
+					'type' => 'VARCHAR',
+					'constraint' => 100,
+					'default' => ''),
+				'setting_value' => array(
+					'name' => 'value',
+					'type' => 'TEXT'),
+				'setting_label' => array(
+					'name' => 'label',
+					'type' => 'VARCHAR',
+					'constraint' => 255,
+					'default' => ''),
+				'setting_user_created' => array(
+					'name' => 'user_created',
+					'type' => 'TEXT'),
+			);
+			
+			// modify the columns
+			DBForge::modify_column('settings', $fields);
+			
+			// make award_id auto increment and the primary key
+			$this->db->query(null, "ALTER TABLE ".$this->db->table_prefix()."settings MODIFY COLUMN `id` INT(5) auto_increment primary key", true);
+			
+			// get all the awards
+			$settings = Model_Settings::find('all');
+			
+			if (count($settings) > 0)
+			{
+				foreach ($settings as $setting)
+				{
+					$s = Model_Settings::find($setting->id);
+					
+					switch ($setting->key)
+					{
+						case 'skin_wiki':
+						case 'allowed_chars_playing':
+						case 'allowed_chars_npc':
+							$s->delete();
+						break;
+						
+						case 'maintenance':
+						case 'daylight_savings':
+							$s->value = (int) false;
+							$s->user_created = (int) ($s->user_created == 'y');
+							$s->save();
+						break;
+						
+						case 'system_email':
+							$s->value = (int) true;
+							$s->user_created = (int) ($s->user_created == 'y');
+							$s->save();
+						break;
+						
+						case 'timezone':
+							$s->value = 'UTC';
+							$s->user_created = (int) ($s->user_created == 'y');
+							$s->save();
+						break;
+						
+						case 'show_news':
+						case 'use_mission_notes':
+							$s->value = (int) ($s->value == 'y');
+							$s->user_created = (int) ($s->user_created == 'y');
+							$s->save();
+						break;
+						
+						default:
+							$s->user_created = (int) ($s->user_created == 'y');
+							$s->save();
+						break;
+					}
+				}
+			}
+			
+			// now that we've changed the display stuff, change the schema
+			$fields = array(
+				'user_created' => array(
+					'name' => 'user_created',
+					'type' => 'TINYINT',
+					'constraint' => 1,
+					'default' => 1),
+			);
+			DBForge::modify_column('settings', $fields);
+			
+			// get the number of records in the new table
+			$count_settings_new = Model_Settings::count();
+			
+			/**
+			 * Messages
+			 */
+			// copy the sms version of the table along with all its data
+			$this->db->query(null, "CREATE TABLE ".$this->db->table_prefix()."site_contents SELECT * FROM `nova1_messages`", true);
+			
+			// rename the fields
+			$fields = array(
+				'message_id' => array(
+					'name' => 'id',
+					'type' => 'INT',
+					'constraint' => 8),
+				'message_key' => array(
+					'name' => 'key',
+					'type' => 'VARCHAR',
+					'constraint' => 255,
+					'default' => ''),
+				'message_content' => array(
+					'name' => 'content',
+					'type' => 'TEXT'),
+				'message_label' => array(
+					'name' => 'label',
+					'type' => 'VARCHAR',
+					'constraint' => 255,
+					'default' => ''),
+				'message_type' => array(
+					'name' => 'type',
+					'type' => 'ENUM',
+					'constraint' => "'title','message','other'",
+					'default' => 'message'),
+				'message_protected' => array(
+					'name' => 'protected',
+					'type' => 'TEXT'),
+			);
+			
+			// modify the columns
+			DBForge::modify_column('site_contents', $fields);
+			
+			// make award_id auto increment and the primary key
+			$this->db->query(null, "ALTER TABLE ".$this->db->table_prefix()."site_contents MODIFY COLUMN `id` INT(8) auto_increment primary key", true);
+			
+			// get all the awards
+			$contents = Model_SiteContent::find('all');
+			
+			if (count($contents) > 0)
+			{
+				foreach ($contents as $content)
+				{
+					$c = Model_SiteContent::find($content->id);
+					$c->protected = (int) ($c->protected == 'y');
+					$c->save();
+				}
+			}
+			
+			// now that we've changed the display stuff, change the schema
+			$fields = array(
+				'protected' => array(
+					'name' => 'protected',
+					'type' => 'TINYINT',
+					'constraint' => 1,
+					'default' => 1),
+			);
+			DBForge::modify_column('site_contents', $fields);
+			
+			// get the number of records in the new table
+			$count_messages_new = Model_SiteContent::count();
+			
+			if ($count_settings_new == ($count_settings_old - 3) and $count_messages_old == $count_messages_new)
+			{
+				$retval = array(
+					'code' => 1,
+					'message' => ''
+				);
+			}
+			else
+			{
+				$retval = array(
+					'code' => 2,
+					'message' => "Not all of your settings and site content (messages) were properly migrated"
+				);
+			}
+			
+			DBForge::optimize('settings');
+			DBForge::optimize('site_contents');
+		} catch (Exception $e) {
+			$retval = array(
+				'code' => 0,
+				'message' => 'ERROR: '.$e->getMessage().' - line '.$e->getLine().' of '.$e->getFile()
 			);
 		}
-		
-		// save the settings
-		Model_Settings::update_settings($settings);
-		
-		// get the messages
-		$result = $this->db->query(Database::SELECT, "SELECT * FROM sms_messages WHERE messageid = 1", true);
-		
-		foreach ($result as $r)
-		{
-			$messages = array(
-				'welcome_msg' => $r->welcomeMessage,
-				'sim' => $r->simmMessage,
-				'join_disclaimer' => $r->joinDisclaimer,
-				'accept_message' => $r->acceptMessage,
-				'reject_message' => $r->rejectMessage,
-				'join_post' => $r->samplePostQuestion,
-			);
-		}
-		
-		// save the messages
-		Model_SiteContent::update_messages($messages);
-		
-		// optmize the tables
-		DBForge::optimize('settings');
-		DBForge::optimize('site_content');
-		
-		$retval = array(
-			'code' => 1,
-			'message' => ''
-		);
 		
 		echo json_encode($retval);
 	}
@@ -1127,93 +1358,6 @@ class Controller_Setup_Nova1ajax extends Controller_Template {
 	}
 	
 	/**
-	 * Take the awards from the old crew table and put it into the awards_received table.
-	 */
-	public function action_upgrade_user_awards()
-	{
-		try {
-			// get the crew from the sms table
-			$result = $this->db->query(Database::SELECT, 'SELECT * FROM sms_crew', true);
-			
-			// create an array for saved entries
-			$saved = array();
-			
-			foreach ($result as $c)
-			{
-				$user = Model_Character::find($c->crewid)->user;
-				
-				if ( ! empty($c->awards))
-				{
-					$awards = explode(';', $c->awards);
-					
-					foreach ($awards as $a)
-					{
-						if (strstr($a, '|') !== false)
-						{
-							$x = explode('|', $a);
-							
-							// set the data to be put into the database
-							$awarddata = array(
-								'receive_character_id' => $c->crewid,
-								'receive_user_id' => $user->id,
-								'award_id' => $x[0],
-								'date' => $x[1],
-								'reason' => $x[2]
-							);
-						}
-						else
-						{
-							// set the data to be put into the database
-							$awarddata = array(
-								'receive_character_id' => $c->crewid,
-								'receive_user_id' => $user->id,
-								'award_id' => $a,
-								'date' => null
-							);
-						}
-						
-						// create the item
-						$item = Model_AwardRec::create_item($awarddata);
-						
-						$saved[] = (is_object($item)) ? true : false;
-					}
-				}
-			}
-			
-			if ( ! in_array(true, $saved))
-			{
-				$retval = array(
-					'code' => 0,
-					'message' => "Your given awards could not be upgraded"
-				);
-			}
-			elseif (in_array(true, $saved) and in_array(false, $saved))
-			{
-				$retval = array(
-					'code' => 2,
-					'message' => "All of your given awards could not be upgraded"
-				);
-			}
-			else
-			{
-				$retval = array(
-					'code' => 1,
-					'message' => ''
-				);
-			}
-			
-			DBForge::optimize('awards_received');
-		} catch (Exception $e) {
-			$retval = array(
-				'code' => 0,
-				'message' => 'ERROR: '.$e->getMessage().' - line '.$e->getLine().' of '.$e->getFile()
-			);
-		}
-		
-		echo json_encode($retval);
-	}
-	
-	/**
 	 * Update all the users to make sure they have proper defaults.
 	 */
 	public function action_upgrade_user_defaults()
@@ -1255,191 +1399,6 @@ class Controller_Setup_Nova1ajax extends Controller_Template {
 			
 			DBForge::optimize('characters');
 			DBForge::optimize('users');
-		} catch (Exception $e) {
-			$retval = array(
-				'code' => 0,
-				'message' => 'ERROR: '.$e->getMessage().' - line '.$e->getLine().' of '.$e->getFile()
-			);
-		}
-		
-		echo json_encode($retval);
-	}
-	
-	/**
-	 * Upgrade the user_id field in the personal logs table.
-	 */
-	public function action_upgrade_user_logs()
-	{
-		try {
-			// get the crew from the sms table
-			$result = $this->db->query(Database::SELECT, 'SELECT * FROM sms_crew', true);
-			
-			foreach ($result as $c)
-			{
-				$user = Model_Character::find($c->crewid)->user;
-				
-				if ( ! is_null($user) and $user->id > 0)
-				{
-					// get all of a character's logs
-					$logs = Model_PersonalLog::find()->where('character_id', $c->crewid)->get();
-					
-					foreach ($logs as $l)
-					{
-						$l->user_id = $user->id;
-						$l->save();
-					}
-				}
-			}
-			
-			// count the number of personal logs that don't have a user (there shouldn't be any)
-			$blank = Model_PersonalLog::find()->where('user_id', '')->count();
-			
-			if ($blank > 0)
-			{
-				$retval = array(
-					'code' => 0,
-					'message' => "Some of your personal logs could not be upgraded and as a result, may not be associated with some users properly"
-				);
-			}
-			else
-			{
-				$retval = array(
-					'code' => 1,
-					'message' => ''
-				);
-			}
-			
-			DBForge::optimize('personal_logs');
-		} catch (Exception $e) {
-			$retval = array(
-				'code' => 0,
-				'message' => 'ERROR: '.$e->getMessage().' - line '.$e->getLine().' of '.$e->getFile()
-			);
-		}
-		
-		echo json_encode($retval);
-	}
-	
-	/**
-	 * Upgrade the user_id field in the news table.
-	 */
-	public function action_upgrade_user_news()
-	{
-		try {
-			// get the crew from the sms table
-			$result = $this->db->query(Database::SELECT, 'SELECT * FROM sms_crew', true);
-			
-			foreach ($result as $c)
-			{
-				$user = Model_Character::find($c->crewid)->user;
-				
-				if ( ! is_null($user) and $user->id > 0)
-				{
-					// get all of a character's logs
-					$news = Model_News::find()->where('character_id', $c->crewid)->get();
-					
-					foreach ($news as $n)
-					{
-						$n->user_id = $user->id;
-						$n->save();
-					}
-				}
-			}
-			
-			// count the number of news items without a user (there shouldn't be any)
-			$blank = Model_News::find()->where('user_id', '')->count();
-			
-			if ($blank > 0)
-			{
-				$retval = array(
-					'code' => 0,
-					'message' => "Some of your news items could not be upgraded and as a result, may not be associated with some users properly"
-				);
-			}
-			else
-			{
-				$retval = array(
-					'code' => 1,
-					'message' => ''
-				);
-			}
-			
-			DBForge::optimize('news');
-		} catch (Exception $e) {
-			$retval = array(
-				'code' => 0,
-				'message' => 'ERROR: '.$e->getMessage().' - line '.$e->getLine().' of '.$e->getFile()
-			);
-		}
-		
-		echo json_encode($retval);
-	}
-	
-	/**
-	 * Go through the posts table and add records for the post_authors through table.
-	 */
-	public function action_upgrade_user_posts()
-	{
-		try {
-			// get all the posts
-			$posts = Model_Post::find('all');
-			
-			// set a temp array to collect saves
-			$saved = array();
-			
-			foreach ($posts as $p)
-			{
-				/**
-				 * Grab the authors from the table (we need to do it this way because 
-				 * there's no reason to be adding a field we're just going to be using 
-				 * here to the ORM)
-				 */
-				$post_item = $this->db->query(Database::SELECT, "SELECT authors FROM `".$this->db->table_prefix()."posts` WHERE id = ".$p->id)
-					->current();
-				
-				// make the authors listing an array
-				$authors = explode(',', $post_item['authors']);
-				
-				foreach ($authors as $a)
-				{
-					// get the character
-					$char = Model_Character::find($a);
-					
-					if ($char !== null)
-					{
-						// build the information that's going into the post_authors table
-						$through = array(
-							'post_id' => $p->id,
-							'character_id' => $a,
-							'user_id' => ($a === 0 or $a === null or $char->user === null) ? 0 : $char->user->id,
-						);
-						
-						// add the record to the table
-						Model_PostAuthor::create_item($through);
-					}
-				}
-			}
-			
-			if ( ! in_array(false, $saved))
-			{
-				// since we know this was successful, we're going to remove the columns we don't need
-				DBForge::drop_column('posts', 'authors');
-				
-				$retval = array(
-					'code' => 1,
-					'message' => ''
-				);
-			}
-			else
-			{
-				$retval = array(
-					'code' => 0,
-					'message' => "Not all of your mission posts could be upgraded"
-				);
-			}
-			
-			DBForge::optimize('posts');
-			DBForge::optimize('post_authors');
 		} catch (Exception $e) {
 			$retval = array(
 				'code' => 0,
@@ -1511,11 +1470,18 @@ class Controller_Setup_Nova1ajax extends Controller_Template {
 					'message' => ''
 				);
 			}
-			else
+			elseif ($count_new == 0)
 			{
 				$retval = array(
 					'code' => 0,
-					'message' => "The applications could not be properly upgraded."
+					'message' => "Application records were not migrated"
+				);
+			}
+			else
+			{
+				$retval = array(
+					'code' => 2,
+					'message' => "Not all application records could be properly migrated"
 				);
 			}
 			
@@ -1532,6 +1498,21 @@ class Controller_Setup_Nova1ajax extends Controller_Template {
 	
 	private function _upgrade_character_form()
 	{
+		$c = $this->db->query(Database::SELECT, "SELECT tab_id FROM `nova1_characters_tabs`", true);
+		$count_tabs_old = $c->count();
+		
+		$c = $this->db->query(Database::SELECT, "SELECT section_id FROM `nova1_characters_sections`", true);
+		$count_sections_old = $c->count();
+		
+		$c = $this->db->query(Database::SELECT, "SELECT field_id FROM `nova1_characters_fields`", true);
+		$count_fields_old = $c->count();
+		
+		$c = $this->db->query(Database::SELECT, "SELECT value_id FROM `nova1_characters_values`", true);
+		$count_values_old = $c->count();
+		
+		$c = $this->db->query(Database::SELECT, "SELECT data_id FROM `nova1_characters_data`", true);
+		$count_data_old = $c->count();
+		
 		try {
 			/**
 			 * Bio Tabs
@@ -1744,10 +1725,28 @@ class Controller_Setup_Nova1ajax extends Controller_Template {
 				}
 			}
 			
-			$retval = array(
-				'code' => 1,
-				'message' => ''
-			);
+			// check the new counts
+			$count_tabs_new = Model_FormTab::count(array('where' => array('form_key' => 'bio')));
+			$count_sections_new = Model_FormSection::count(array('where' => array('form_key' => 'bio')));
+			$count_fields_new = Model_FormField::count(array('where' => array('form_key' => 'bio')));
+			$count_values_new = Model_FormValue::count();
+			$count_data_new = Model_FormData::count(array('where' => array('form_key' => 'bio')));
+			
+			if ($count_tabs_old == $count_tabs_new and $count_sections_old == $count_sections_new and $count_fields_old == $count_fields_new
+					and $count_values_old == $count_values_new and $count_data_old == $count_data_new)
+			{
+				$retval = array(
+					'code' => 1,
+					'message' => ''
+				);
+			}
+			else
+			{
+				$retval = array(
+					'code' => 0,
+					'message' => "Bio form information could not be properly migrated"
+				);
+			}
 		} catch (Exception $e) {
 			$retval = array(
 				'code' => 0,
@@ -1755,7 +1754,7 @@ class Controller_Setup_Nova1ajax extends Controller_Template {
 			);
 		}
 		
-		echo json_encode($retval);
+		return $retval;
 	}
 	
 	private function _upgrade_character_promotions()
@@ -1791,11 +1790,18 @@ class Controller_Setup_Nova1ajax extends Controller_Template {
 					'message' => ''
 				);
 			}
-			else
+			elseif ($count_new == 0)
 			{
 				$retval = array(
 					'code' => 0,
-					'message' => "The character promotion records could not be properly upgraded."
+					'message' => "Character promotion records were not migrated"
+				);
+			}
+			else
+			{
+				$retval = array(
+					'code' => 2,
+					'message' => "Not all character promotion records could be properly migrated"
 				);
 			}
 			
@@ -1895,11 +1901,18 @@ class Controller_Setup_Nova1ajax extends Controller_Template {
 					'message' => ''
 				);
 			}
-			else
+			elseif ($count_new == 0)
 			{
 				$retval = array(
 					'code' => 0,
-					'message' => "Not all of the characters were transferred to the Nova 3 format"
+					'message' => "Characters were not migrated"
+				);
+			}
+			else
+			{
+				$retval = array(
+					'code' => 2,
+					'message' => "Not all characters could be properly migrated"
 				);
 			}
 			
@@ -1922,7 +1935,7 @@ class Controller_Setup_Nova1ajax extends Controller_Template {
 		DBForge::drop_table('coc');
 		
 		try {
-			$this->db->query(null, "CREATE TABLE ".$this->db->table_prefix()."coc SELECT * FROM nova1_coc", true);
+			$this->db->query(null, "CREATE TABLE ".$this->db->table_prefix()."coc SELECT * FROM `nova1_coc`", true);
 			
 			$fields = array(
 				'coc_id' => array(
@@ -1974,11 +1987,18 @@ class Controller_Setup_Nova1ajax extends Controller_Template {
 					'message' => ''
 				);
 			}
-			else
+			elseif ($count_new == 0)
 			{
 				$retval = array(
 					'code' => 0,
-					'message' => "The chain of command could not be properly upgraded."
+					'message' => "Chain of command could not be properly migrated"
+				);
+			}
+			else
+			{
+				$retval = array(
+					'code' => 2,
+					'message' => "The entire chain of command could not be properly migrated"
 				);
 			}
 			
@@ -2139,6 +2159,117 @@ class Controller_Setup_Nova1ajax extends Controller_Template {
 		}
 		
 		echo json_encode($retval);
+	}
+	
+	private function _upgrade_settings()
+	{
+		$c = $this->db->query(Database::SELECT, "SELECT setting_id FROM `nova1_settings`", true);
+		$count_settings_old = $c->count();
+		
+		$c = $this->db->query(Database::SELECT, "SELECT message_id FROM `nova1_messages`", true);
+		$count_messages_old = $c->count();
+		
+		// drop the nova version of the table
+		DBForge::drop_table('settings');
+		DBForge::drop_table('message');
+		
+		try {
+			// copy the sms version of the table along with all its data
+			$this->db->query(null, "CREATE TABLE ".$this->db->table_prefix()."settings SELECT * FROM `nova1_settings`", true);
+			
+			// rename the fields
+			$fields = array(
+				'setting_id' => array(
+					'name' => 'id',
+					'type' => 'INT',
+					'constraint' => 5),
+				'setting_key' => array(
+					'name' => 'key',
+					'type' => 'VARCHAR',
+					'constraint' => 100,
+					'default' => ''),
+				'setting_value' => array(
+					'name' => 'value',
+					'type' => 'TEXT'),
+				'setting_label' => array(
+					'name' => 'label',
+					'type' => 'VARCHAR',
+					'constraint' => 255,
+					'default' => ''),
+				'setting_user_created' => array(
+					'name' => 'user_created',
+					'type' => 'TEXT'),
+			);
+			
+			// modify the columns
+			DBForge::modify_column('settings', $fields);
+			
+			// make award_id auto increment and the primary key
+			$this->db->query(null, "ALTER TABLE ".$this->db->table_prefix()."settings MODIFY COLUMN `id` INT(5) auto_increment primary key", true);
+			
+			// get all the awards
+			$settings = Model_Settings::find('all');
+			
+			if (count($settings) > 0)
+			{
+				foreach ($settings as $setting)
+				{
+					$s = Model_Settings::find($setting->id);
+					$s->user_created = (int) ($s->user_created == 'y');
+					$s->save();
+				}
+			}
+			
+			// now that we've changed the display stuff, change the schema
+			$fields = array(
+				'user_created' => array(
+					'name' => 'user_created',
+					'type' => 'TINYINT',
+					'constraint' => 1,
+					'default' => 1),
+			);
+			DBForge::modify_column('settings', $fields);
+			
+			// get the number of records in the new table
+			$count_settings_new = Model_Settings::count();
+			
+			/**
+			 * Messages
+			 */
+			
+			if ($count_new == 0)
+			{
+				$retval = array(
+					'code' => 0,
+					'message' => "Awards were not migrated"
+				);
+			}
+			elseif ($count_new == $count_old)
+			{
+				$retval = array(
+					'code' => 1,
+					'message' => ''
+				);
+			}
+			else
+			{
+				$retval = array(
+					'code' => 2,
+					'message' => "All awards were not properly migrated"
+				);
+			}
+			
+			DBForge::optimize('awards');
+			DBForge::optimize('awards_queue');
+			DBForge::optimize('awards_received');
+		} catch (Exception $e) {
+			$retval = array(
+				'code' => 0,
+				'message' => 'ERROR: '.$e->getMessage().' - line '.$e->getLine().' of '.$e->getFile()
+			);
+		}
+		
+		return $retval;
 	}
 	
 	private function _upgrade_specs_form()
@@ -2439,11 +2570,18 @@ class Controller_Setup_Nova1ajax extends Controller_Template {
 					'message' => ''
 				);
 			}
-			else
+			elseif ($count_new == 0)
 			{
 				$retval = array(
 					'code' => 0,
-					'message' => "The LOA records could not be properly upgraded."
+					'message' => "LOA records could not be properly migrated"
+				);
+			}
+			else
+			{
+				$retval = array(
+					'code' => 2,
+					'message' => "Not all LOA records could be properly migrated"
 				);
 			}
 			
@@ -2704,7 +2842,11 @@ class Controller_Setup_Nova1ajax extends Controller_Template {
 				'moderate_news_comments',
 				'moderate_wiki_comments'
 			);
-			DBForge::drop_column('users', $add);
+			
+			foreach ($drop as $d)
+			{
+				DBForge::drop_column('users', $d);
+			}
 			
 			/**
 			 * We need to do a second round of modifications after updating users
@@ -2740,11 +2882,18 @@ class Controller_Setup_Nova1ajax extends Controller_Template {
 					'message' => ''
 				);
 			}
-			else
+			elseif ($count_new == 0)
 			{
 				$retval = array(
 					'code' => 0,
-					'message' => "Not all of the characters were transferred to the Nova 3 format"
+					'message' => "Users were not migrated"
+				);
+			}
+			else
+			{
+				$retval = array(
+					'code' => 2,
+					'message' => "Not all users could be properly migrated"
 				);
 			}
 			
@@ -2761,6 +2910,6 @@ class Controller_Setup_Nova1ajax extends Controller_Template {
 	
 	public function action_upgrade()
 	{
-		$this->_upgrade_users();
+		echo Model_FormTab::count(array('where' => array('form_key' => 'bio')));
 	}
 }
