@@ -18,6 +18,10 @@ class Model_FormValue extends Model {
 			'type' => 'int',
 			'constraint' => 10,
 			'auto_increment' => true),
+		'form_key' => array(
+			'type' => 'string',
+			'constraint' => 20,
+			'default' => ''),
 		'field_id' => array(
 			'type' => 'int',
 			'constraint' => 10),
