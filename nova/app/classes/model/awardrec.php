@@ -24,7 +24,7 @@ class Model_AwardRec extends Model {
 		'receive_user_id' => array(
 			'type' => 'int',
 			'constraint' => 8),
-		'nominate_user_id' => array(
+		'nominate_character_id' => array(
 			'type' => 'int',
 			'constraint' => 8),
 		'award_id' => array(
