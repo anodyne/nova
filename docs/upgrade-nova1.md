@@ -3,8 +3,11 @@
 * access_roles
 * applications
 * awards
+	* migrated
 * awards_queue
+	* migrated
 * awards_received
+	* migrated
 * catalogue_ranks
 * catalogue_skins
 * catalogue_skinsecs
@@ -40,7 +43,8 @@
 * menu_categories
 * menu_items
 * messages
-	* rename to SITE_CONTENT
+	* rename to SITE_CONTENTS
+	* migrated
 * missions
 * mission_groups
 * news
@@ -62,6 +66,8 @@
 * ranks
 * security_questions
 * sessions
+* settings
+	* migrated
 * sim_type
 * specs_data
 	* migrate to FORM_DATA
