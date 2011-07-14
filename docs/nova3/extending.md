@@ -4,7 +4,7 @@
 
 In Nova 1, we introduced seamless substitution as a way to extend the Nova core without ever touching the core files. This had the primary advantage of allowing people's changes to remain intact through an update. Unfortunately, if you wanted to replace a page, it involved copying and pasting a lot of code that didn't really matter. Code duplication is always a bad thing. Really, the majority of people just wanted to change a few things, not make massive changes to how something worked. This fact isn't lost on us and with the tools available to us in Nova 3, we've been able to squarely address that issue and eliminate the majority of the code people have to put in their extended controller methods.
 
-The first advantage of this is making it more clear what you've changed in your extended version. That's particularly important if you're troubleshooting a problem with what you've changed.
+The first advantage of this is making it more clear what you've changed in your extended version. That's particularly important if you're troubleshooting a problem with a page you've changed.
 
 Second, it eliminates the need to comb through a lot of code you don't need or don't understand to change something relatively simple.
 
