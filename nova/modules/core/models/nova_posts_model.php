@@ -115,7 +115,7 @@ abstract class Nova_posts_model extends Model {
 		}
 		else
 		{
-			$string = "(post_authors LIKE '%,$character' OR post_authors LIKE '$character,%' OR post_authors = '%,$character,%' OR post_authors = $character)";
+			$string = "(post_authors LIKE '%,$character' OR post_authors LIKE '$character,%' OR post_authors LIKE '%,$character,%' OR post_authors = $character)";
 			
 			$this->db->where("$string", null);
 		}
