@@ -21,6 +21,10 @@
 		
 		<div class="content">
 			<?php echo $flash;?>
+			
+			<h1 class="page-head"><?php echo $header;?></h1>
+			<p><?php echo $message;?></p>
+			
 			<?php echo $content;?>
 			<?php echo $ajax;?>
 			

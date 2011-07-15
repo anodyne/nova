@@ -32,6 +32,11 @@ class Controller_Nova_Main extends Controller_Nova_Base {
 		$this->timezone	= $this->session->get('timezone', $this->options->timezone);
 		$this->dst		= $this->session->get('dst', (bool) $this->options->daylight_savings);
 		
+		// pull titles, headers and content from the database and cache it
+		$this->_headers		= Model_SiteContent::get_section_content('header', $this->request->controller());
+		$this->_messages	= Model_SiteContent::get_section_content('message', $this->request->controller());
+		$this->_titles		= Model_SiteContent::get_section_content('title', $this->request->controller());
+		
 		// set the values to be passed to the views
 		$vars = array(
 			'skin' => $this->skin,
@@ -52,6 +57,8 @@ class Controller_Nova_Main extends Controller_Nova_Base {
 		$this->template->layout->ajax 				= false;
 		$this->template->layout->flash				= false;
 		$this->template->layout->content			= false;
+		$this->template->layout->header				= false;
+		$this->template->layout->message			= false;
 		
 		$this->template->layout->panel				= View::factory(Location::file('panel', $this->skin, 'partials'));
 		$this->template->layout->panel->panel1		= false;
@@ -90,9 +97,17 @@ class Controller_Nova_Main extends Controller_Nova_Base {
 		$this->_data->widgets = $widgets;
 		
 		// content
-		$this->_data->title = ucfirst(___("main"));
-		$this->_data->header = Model_SiteContent::get_message('welcome_head');
-		$this->_data->message = Model_SiteContent::get_message('welcome_msg');
+		$this->_data->title = (array_key_exists($this->request->action(), $this->_titles)) 
+			? $this->_titles[$this->request->action()] 
+			: ucfirst(___("main"));
+			
+		$this->_data->header = (array_key_exists($this->request->action(), $this->_headers)) 
+			? $this->_headers[$this->request->action()] 
+			: null;
+			
+		$this->_data->message = (array_key_exists($this->request->action(), $this->_messages)) 
+			? $this->_messages[$this->request->action()] 
+			: null;
 	}
 	
 	public function action_credits()
@@ -107,7 +122,6 @@ class Controller_Nova_Main extends Controller_Nova_Base {
 		
 		// credits
 		$this->_data->credits_perm = nl2br($credits_perm);
-		$this->_data->credits = Model_SiteContent::get_message('credits');
 		
 		// should we show an edit link?
 		$this->_data->edit = (Auth::is_logged_in() and Auth::check_access('site/messages', false)) ? true : false;
@@ -116,8 +130,17 @@ class Controller_Nova_Main extends Controller_Nova_Base {
 		$this->_data->edit = false;
 		
 		// content
-		$this->_data->title = ucwords(___("site credits"));
-		$this->_data->header = ucwords(___("site credits"));
+		$this->_data->title = (array_key_exists($this->request->action(), $this->_titles)) 
+			? $this->_titles[$this->request->action()] 
+			: ucwords(___("site credits"));
+			
+		$this->_data->header = (array_key_exists($this->request->action(), $this->_headers)) 
+			? $this->_headers[$this->request->action()] 
+			: ucwords(___("site credits"));
+			
+		$this->_data->message = (array_key_exists($this->request->action(), $this->_messages)) 
+			? $this->_messages[$this->request->action()] 
+			: null;
 	}
 
 	public function action_test()

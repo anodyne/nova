@@ -1,45 +1,8 @@
 <script type="text/javascript">
 	$(document).ready(function(){
 		$('#widgets').tabs();
-		
-		$('.contenteditable').click(function(){
-			$(".contenteditable").freshereditor({
-				toolbar_selector: ".toolbar",
-				toolbar_buttons: ".contenteditable-buttons",
-				excludes: [
-					'removeFormat',
-					'insertheading4',
-					'strikethrough',
-					'superscript',
-					'subscript',
-					'justifyleft',
-					'justifyright',
-					'justifyfull',
-					'justifycenter',
-					'backcolor',
-					'FontSize',
-					'code',
-					'blockquote'
-				]
-			});
-			$(".contenteditable").freshereditor("edit", true);
-		});
 	});
 </script>
-
-<h1 class="page-head"><?php echo $header;?></h1>
-
-<?php if ( ! Auth::check_access('site/messages', false)): ?>
-	<div class="toolbar"></div>
-	<div class="fresheditor-toolbar-buttons">
-		<button class="btn-main">Save</button>
-		<button class="btn-main">Discard</button>
-	</div>
-	<div class="contenteditable" contenteditable="true"><?php echo $message;?></div>
-<?php else: ?>
-	<?php echo $message;?>
-<?php endif;?>
-<br>
 
 <?php if (isset($widgets)): ?>
 	<div id="widgets">
