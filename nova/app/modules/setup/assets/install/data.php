@@ -1343,7 +1343,7 @@ $menu_items = array(
 		'type' => 'sub',
 		'category' => 'personnel'),
 	array(
-		'name' => 'Crew Awards',
+		'name' => 'Awards',
 		'group' => 0,
 		'order' => 2,
 		'url' => 'sim/awards',
@@ -2261,10 +2261,42 @@ $sim_types = array(
 
 $site_contents = array(
 	array(
-		'key' => 'welcome_msg',
-		'label' => 'Welcome Page Message',
+		'key' => 'welcome_header',
+		'label' => 'Main Page Header',
+		'content' => "Welcome to Nova!",
+		'type' => 'header',
+		'section' => 'main',
+		'page' => 'index'),
+	array(
+		'key' => 'welcome_message',
+		'label' => 'Main Page Message',
 		'content' => "Define your welcome message and welcome page header through the Site Messages page.",
-		'type' => 'message'),
+		'type' => 'message',
+		'section' => 'main',
+		'page' => 'index'),
+	array(
+		'key' => 'main_credits_title',
+		'label' => 'Site Credits Header',
+		'content' => 'Site Credits',
+		'type' => 'header',
+		'section' => 'main',
+		'page' => 'credits'),
+	array(
+		'key' => 'credits',
+		'label' => 'Credits',
+		'content' => "Define your site credits through the Site Messages page.",
+		'type' => 'message',
+		'section' => 'main',
+		'page' => 'credits'),	
+		
+		
+		
+		
+		
+		
+		
+		
+		
 	array(
 		'key' => 'sim',
 		'label' => 'Sim Message',
@@ -2336,17 +2368,6 @@ $site_contents = array(
 		'label' => 'Contact Instructions',
 		'content' => 'Please use the form below to contact the sim with questions. You can choose to email the game master, the command staff, or the webmaster with your questions and/or comments.',
 		'type' => 'message'),
-	
-	array(
-		'key' => 'welcome_head',
-		'label' => 'Welcome Header',
-		'content' => "Welcome to Nova!",
-		'type' => 'title'),
-	array(
-		'key' => 'main_credits_title',
-		'label' => 'Site Credits Header',
-		'content' => 'Site Credits',
-		'type' => 'title'),
 	array(
 		'key' => 'main_join_title',
 		'label' => 'Join Page Header',

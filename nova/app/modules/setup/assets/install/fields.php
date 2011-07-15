@@ -10,6 +10,7 @@ $data = array(
 	'awards' => array(),
 	'awards_queue' => array(),
 	'awards_received' => array(),
+	'bans' => array(),
 	'catalogue_modules' => array(),
 	'catalogue_ranks' => array(),
 	'catalogue_skins' => array(),
@@ -126,10 +127,19 @@ $fields_awards_received = array(
 	'id' => array('type' => 'INT', 'constraint' => 8, 'auto_increment' => true),
 	'receive_character_id' => array('type' => 'INT', 'constraint' => 8),
 	'receive_user_id' => array('type' => 'INT', 'constraint' => 8),
-	'nominate_user_id' => array('type' => 'INT', 'constraint' => 8),
+	'nominate_character_id' => array('type' => 'INT', 'constraint' => 8),
 	'award_id' => array('type' => 'INT', 'constraint' => 5),
 	'date' => array('type' => 'BIGINT', 'constraint' => 20),
 	'reason' => array('type' => 'TEXT'),
+);
+
+$fields_bans = array(
+	'id' => array('type' => 'INT', 'constraint' => 5, 'auto_increment' => true),
+	'level' => array('type' => 'TINYINT', 'constraint' => 1, 'default' => 1),
+	'ip_address' => array('type' => 'VARCHAR', 'constraint' => 16, 'default' => ''),
+	'email' => array('type' => 'VARCHAR', 'constraint' => 100, 'default' => ''),
+	'reason' => array('type' => 'TEXT'),
+	'date' => array('type' => 'BIGINT', 'constraint' => 20),
 );
 
 $fields_catalogue_modules = array(
@@ -316,6 +326,7 @@ $fields_form_tabs = array(
 
 $fields_form_values = array(
 	'id' => array('type' => 'INT', 'constraint' => 10, 'auto_increment' => true),
+	'form_key' => array('type' => 'VARCHAR', 'constraint' => 20, 'default' => ''),
 	'field_id' => array('type' => 'INT', 'constraint' => 10),
 	'html_name' => array('type' => 'VARCHAR', 'constraint' => 100, 'default' => ''),
 	'html_value' => array('type' => 'VARCHAR', 'constraint' => 100, 'default' => ''),
@@ -520,7 +531,9 @@ $fields_site_contents = array(
 	'key' => array('type' => 'VARCHAR', 'constraint' => 255, 'default' => ''),
 	'label' => array('type' => 'VARCHAR', 'constraint' => 255, 'default' => ''),
 	'content' => array('type' => 'TEXT'),
-	'type' => array('type' => 'ENUM', 'constraint' => "'title','message','other'", 'default' => 'message'),
+	'type' => array('type' => 'ENUM', 'constraint' => "'title','header','message','other'", 'default' => 'message'),
+	'section' => array('type' => 'VARCHAR', 'constraint' => 50, 'default' => ''),
+	'page' => array('type' => 'VARCHAR', 'constraint' => 100, 'default' => ''),
 	'protected' => array('type' => 'TINYINT', 'constraint' => 1, 'default' => 0),
 );
 
@@ -606,7 +619,7 @@ $fields_users = array(
 	'timezone' => array('type' => 'VARCHAR', 'constraint' => 5, 'default' => 'UTC'),
 	'daylight_savings' => array('type' => 'TINYINT', 'constraint' => 1, 'default' => 0),
 	'email_format' => array('type' => 'VARCHAR', 'constraint' => 4, 'default' => 'html'),
-	'language' => array('type' => 'VARCHAR', 'constraint' => 50, 'default' => 'english'),
+	'language' => array('type' => 'VARCHAR', 'constraint' => 50, 'default' => 'en-us'),
 	'join_date' => array('type' => 'BIGINT', 'constraint' => 20),
 	'leave_date' => array('type' => 'BIGINT', 'constraint' => 20),
 	'last_post' => array('type' => 'BIGINT', 'constraint' => 20),
