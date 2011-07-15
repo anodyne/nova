@@ -30,8 +30,16 @@ class Model_SiteContent extends Model {
 			'type' => 'text'),
 		'type' => array(
 			'type' => 'enum',
-			'constraint' => "'title','message','other'",
+			'constraint' => "'title','header','message','other'",
 			'default' => 'message'),
+		'section' => array(
+			'type' => 'string',
+			'constraint' => 50,
+			'default' => ''),
+		'page' => array(
+			'type' => 'string',
+			'constraint' => 100,
+			'default' => ''),
 		'protected' => array(
 			'type' => 'tinyint',
 			'constraint' => 1,
@@ -59,6 +67,47 @@ class Model_SiteContent extends Model {
 		}
 		
 		return $query;
+	}
+	
+	/**
+	 * Get all of the content for a section from the database.
+	 *
+	 * @access	public
+	 * @param	string	the type of message to pull
+	 * @param	string	the section to pull for
+	 * @return	array 	an array of values
+	 */
+	public static function get_section_content($type, $section)
+	{
+		// get an instance of the cache module
+		$cache = Cache::instance();
+		
+		if ($cache->get('content_'.$type.'_'.$section))
+		{
+			return $cache->get('content_'.$type.'_'.$section);
+		}
+		else
+		{
+			$query = static::find()
+				->where('type', $type)
+				->where('section', $section)
+				->get();
+				
+			if (count($query) > 0)
+			{
+				foreach ($query as $row)
+				{
+					$array[$row->page] = $row->content;
+				}
+				
+				// cache the information
+				$cache->set('content_'.$type.'_'.$section, $array);
+				
+				return $array;
+			}
+			
+			return array();
+		}
 	}
 	
 	/**
