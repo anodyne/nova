@@ -78,9 +78,10 @@ abstract class Nova_posts_model extends Model {
 	 * @param	mixed	either the character ID or an array of character IDs
 	 * @param	int		the number of records to limit the result to
 	 * @param	string	the status to pull
+	 * @param	int		the offset
 	 * @return	object	the result object
 	 */
-	public function get_character_posts($character = '', $limit = 0, $status = 'activated')
+	public function get_character_posts($character = '', $limit = 0, $status = 'activated', $offset = 0)
 	{
 		$this->db->from('posts');
 		
@@ -124,7 +125,7 @@ abstract class Nova_posts_model extends Model {
 		
 		if ($limit > 0)
 		{
-			$this->db->limit($limit);
+			$this->db->limit($limit, $offset);
 		}
 		
 		$query = $this->db->get();

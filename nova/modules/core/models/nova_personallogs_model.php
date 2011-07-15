@@ -25,9 +25,10 @@ abstract class Nova_personallogs_model extends Model {
 	 * @param	mixed	either a character ID or an array of character IDs
 	 * @param	int		the number of records to limit the result to
 	 * @param	string	the status
+	 * @param	int		the offset
 	 * @return	object	result object
 	 */
-	public function get_character_logs($id = '', $limit = 0, $status = 'activated')
+	public function get_character_logs($id = '', $limit = 0, $status = 'activated', $offset = 0)
 	{
 		$this->db->from('personallogs');
 		
@@ -62,7 +63,7 @@ abstract class Nova_personallogs_model extends Model {
 		
 		if ($limit > 0)
 		{
-			$this->db->limit($limit);
+			$this->db->limit($limit, $offset);
 		}
 		
 		$query = $this->db->get();
