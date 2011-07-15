@@ -42,7 +42,7 @@
 			</tr>
 			<tr>
 				<td>
-					<strong class="fontMedium">System Settings &amp; Messages</strong>
+					<strong class="fontMedium">System Settings, Messages &amp; Bans</strong>
 					<strong class="fontSmall errors hidden error"><br><span class="errors-content"></span></strong>
 				</td>
 				<td class="col-30 align-center">

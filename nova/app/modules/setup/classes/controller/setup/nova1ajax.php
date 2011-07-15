@@ -1011,7 +1011,7 @@ class Controller_Setup_Nova1ajax extends Controller_Template {
 	}
 	
 	/**
-	 * Upgrade the settings and site content (messages) from SMS to Nova.
+	 * Upgrade the settings, site content (messages) and bans.
 	 */
 	public function action_upgrade_settings()
 	{
@@ -1021,9 +1021,13 @@ class Controller_Setup_Nova1ajax extends Controller_Template {
 		$c = $this->db->query(Database::SELECT, "SELECT message_id FROM `nova1_messages`", true);
 		$count_messages_old = $c->count();
 		
+		$c = $this->db->query(Database::SELECT, "SELECT ban_id FROM `nova1_bans`", true);
+		$count_bans_old = $c->count();
+		
 		// drop the nova version of the table
 		DBForge::drop_table('settings');
 		DBForge::drop_table('site_contents');
+		DBForge::drop_table('bans');
 		
 		try {
 			// copy the sms version of the table along with all its data
@@ -1190,7 +1194,52 @@ class Controller_Setup_Nova1ajax extends Controller_Template {
 			// get the number of records in the new table
 			$count_messages_new = Model_SiteContent::count();
 			
-			if ($count_settings_new == ($count_settings_old - 3) and $count_messages_old == $count_messages_new)
+			/**
+			 * Bans
+			 */
+			// copy the sms version of the table along with all its data
+			$this->db->query(null, "CREATE TABLE ".$this->db->table_prefix()."bans SELECT * FROM `nova1_bans`", true);
+			
+			// rename the fields
+			$fields = array(
+				'ban_id' => array(
+					'name' => 'id',
+					'type' => 'INT',
+					'constraint' => 5),
+				'ban_level' => array(
+					'name' => 'level',
+					'type' => 'TINYINT',
+					'constraint' => 1,
+					'default' => 1),
+				'ban_ip' => array(
+					'name' => 'ip_address',
+					'type' => 'VARCHAR',
+					'constraint' => 16,
+					'default' => ''),
+				'ban_email' => array(
+					'name' => 'email',
+					'type' => 'VARCHAR',
+					'constraint' => 100,
+					'default' => ''),
+				'ban_reason' => array(
+					'name' => 'reason',
+					'type' => 'TEXT'),
+				'ban_date' => array(
+					'name' => 'date',
+					'type' => 'BIGINT',
+					'constraint' => 20),
+			);
+			
+			// modify the columns
+			DBForge::modify_column('bans', $fields);
+			
+			// make award_id auto increment and the primary key
+			$this->db->query(null, "ALTER TABLE ".$this->db->table_prefix()."bans MODIFY COLUMN `id` INT(5) auto_increment primary key", true);
+			
+			// get the number of records in the new table
+			$count_bans_new = Model_Ban::count();
+			
+			if ($count_settings_new == ($count_settings_old - 3) and $count_messages_old == $count_messages_new and $count_bans_old == $count_bans_new)
 			{
 				$retval = array(
 					'code' => 1,
