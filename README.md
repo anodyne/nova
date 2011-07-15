@@ -9,6 +9,8 @@ Anodyne Production's next-generation RPG management system combines popular feat
 ## Changes in 1.2.6
 
 * fixed some major security issues
+* fixed a bug where the writing control panel included several wrong links
+* fixed a bug where nova wouldn't accurately pull character posts
 
 ## Version History
 
@@ -17,7 +19,7 @@ Anodyne Production's next-generation RPG management system combines popular feat
 		<th>Version</th><th>Release Date</th>
 	</tr>
 	<tr>
-		<td>1.2.6</td><td>-</td>
+		<td>1.2.6</td><td>15 July 2011</td>
 	</tr>
 	<tr>
 		<td>1.2.5</td><td>16 June 2011</td>
