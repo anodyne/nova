@@ -4,6 +4,6 @@ version_minor: 2
 version_update: 6
 severity: critical
 notes: |
-  Nova 1.2.6 is the sixth maintenance release for Nova 1.2 and fixes a potentially major security issue. This update is highly recommended for all users.
-date: 16 June 2011
+  Nova 1.2.6 is the sixth maintenance release for Nova 1.2 and fixes a potentially major security issue as well as issues related to the writing control panel and pulling character posts. This update is critical and highly recommended for all users.
+date: 15 July 2011
 link: http://www.anodyne-productions.com
