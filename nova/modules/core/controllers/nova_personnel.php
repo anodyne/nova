@@ -1095,14 +1095,16 @@ abstract class Nova_personnel extends Nova_controller_main {
 		Template::render();
 	}
 	
-	public function viewlogs($type = 'default', $id = false)
+	public function viewlogs($type = 'default', $id = false, $offset = 0)
 	{
 		// load the resources
+		$this->load->library('pagination');
 		$this->load->model('personallogs_model', 'logs');
 		$this->load->helper('text');
 		
-		// sanity check
+		// sanity checks
 		$id = (is_numeric($id)) ? $id : false;
+		$offset = (is_numeric($offset)) ? $offset : 0;
 		
 		// set the data variable
 		$data = false;
@@ -1160,7 +1162,21 @@ abstract class Nova_personnel extends Nova_controller_main {
 
 				if ($char_check !== false)
 				{
-					$logs = $this->logs->get_character_logs($id);
+					// set the pagination config
+					$config['base_url'] = site_url('personnel/viewlogs/c/'.$id);
+					$config['total_rows'] = $this->logs->count_character_logs($id);
+					$config['uri_segment'] = 5;
+					$config['per_page'] = $this->options['list_logs_num'];
+					$config['full_tag_open'] = '<p class="fontMedium">';
+					$config['full_tag_close'] = '</p>';
+				
+					// initialize the pagination library
+					$this->pagination->initialize($config);
+					
+					// create the page links
+					$data['pagination'] = $this->pagination->create_links('logs');
+					
+					$logs = $this->logs->get_character_logs($id, $config['per_page'], 'activated', $offset);
 
 					if ($logs->num_rows() > 0)
 					{
@@ -1179,6 +1195,25 @@ abstract class Nova_personnel extends Nova_controller_main {
 						// other data used by the template
 						$data['header'] = $this->msgs->get_message('personnel_logs_title') . $this->char->get_character_name($id);
 						$data['charid'] = $id;
+						
+						if ($config['total_rows'] < $this->options['list_logs_num'])
+						{
+							$data['display'] = sprintf(
+								lang('text_display_x_of_y'),
+								$config['total_rows'],
+								$config['total_rows'],
+								lang('global_personallogs')
+							);
+						}
+						else
+						{
+							$data['display'] = sprintf(
+								lang('text_display_x_of_y'),
+								$this->options['list_logs_num'],
+								$config['total_rows'],
+								lang('global_personallogs')
+							);
+						}
 					}
 					else
 					{
@@ -1228,14 +1263,16 @@ abstract class Nova_personnel extends Nova_controller_main {
 		Template::render();
 	}
 	
-	public function viewposts($type = 'default', $id = false)
+	public function viewposts($type = 'default', $id = false, $offset = 0)
 	{
-		// load the models
+		// load the resources
+		$this->load->library('pagination');
 		$this->load->model('posts_model', 'posts');
 		$this->load->model('missions_model', 'mis');
 		
-		// sanity check
+		// sanity checks
 		$id = (is_numeric($id)) ? $id : false;
+		$offset = (is_numeric($offset)) ? $offset : 0;
 		
 		// set the data variable
 		$data = false;
@@ -1293,7 +1330,21 @@ abstract class Nova_personnel extends Nova_controller_main {
 
 				if ($char_check !== false)
 				{
-					$posts = $this->posts->get_character_posts($id);
+					// set the pagination config
+					$config['base_url'] = site_url('personnel/viewposts/c/'.$id);
+					$config['total_rows'] = $this->posts->count_character_posts($id);
+					$config['uri_segment'] = 5;
+					$config['per_page'] = $this->options['list_posts_num'];
+					$config['full_tag_open'] = '<p class="fontMedium">';
+					$config['full_tag_close'] = '</p>';
+				
+					// initialize the pagination library
+					$this->pagination->initialize($config);
+					
+					// create the page links
+					$data['pagination'] = $this->pagination->create_links('posts');
+					
+					$posts = $this->posts->get_character_posts($id, $config['per_page'], 'activated', $offset);
 
 					if ($posts->num_rows() > 0)
 					{
@@ -1313,6 +1364,25 @@ abstract class Nova_personnel extends Nova_controller_main {
 						// other data used by the template
 						$data['header'] = $this->msgs->get_message('personnel_posts_title') . $this->char->get_character_name($id);
 						$data['charid'] = $id;
+						
+						if ($config['total_rows'] < $this->options['list_posts_num'])
+						{
+							$data['display'] = sprintf(
+								lang('text_display_x_of_y'),
+								$config['total_rows'],
+								$config['total_rows'],
+								lang('global_missionposts')
+							);
+						}
+						else
+						{
+							$data['display'] = sprintf(
+								lang('text_display_x_of_y'),
+								$this->options['list_logs_num'],
+								$config['total_rows'],
+								lang('global_missionposts')
+							);
+						}
 					}
 					else
 					{

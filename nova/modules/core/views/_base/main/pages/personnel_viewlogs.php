@@ -6,6 +6,11 @@
 
 <?php if (isset($logs)): ?>
 	<p class="bold"><?php echo anchor('personnel/character/' . $charid, $label['backchar']);?></p>
+	
+	<?php echo text_output($display, 'p', 'gray italic bold');?>
+	
+	<?php echo $pagination;?>
+	
 	<table class="zebra table100">
 		<thead>
 			<tr>
@@ -30,6 +35,8 @@
 		<?php endforeach; ?>
 		</tbody>
 	</table>
+	
+	<?php echo $pagination;?>
 <?php elseif (isset($char)): ?>
 	<p class="bold"><?php echo anchor('personnel/user/' . $user .'/4', $label['backuser']);?></p>
 	<?php foreach ($char as $c): ?>
