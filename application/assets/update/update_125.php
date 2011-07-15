@@ -25,9 +25,11 @@ $system_versions = array(
 	'version_major'		=> 1,
 	'version_minor'		=> 2,
 	'version_update'	=> 6,
-	'version_date'		=> 1308265200,
-	'version_launch'	=> "Nova 1.2.6 is the sixth maintenance release for Nova 1.2 and fixes a potentially major security issue. This update is critical and highly recommended for all users.",
-	'version_changes'	=> "* fixed some major security issues"
+	'version_date'		=> 1310763600,
+	'version_launch'	=> "Nova 1.2.6 is the sixth maintenance release for Nova 1.2 and fixes a potentially major security issue as well as issues related to the writing control panel and pulling character posts. This update is critical and highly recommended for all users.",
+	'version_changes'	=> "* fixed some major security issues
+* fixed a bug where the writing control panel included several wrong links
+* fixed a bug where nova wouldn't accurately pull character posts"
 );
 
 $system_info = array(
