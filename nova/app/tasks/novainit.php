@@ -292,6 +292,7 @@ $_genre = strtolower(Kohana::$config->load(\'nova.genre\'));
 			'Model_Award' => array(),
 			'Model_AwardQueue' => array(),
 			'Model_AwardRec' => array(),
+			'Model_Ban' => array(),
 			'Model_CatalogueModule' => array(),
 			'Model_CatalogueRank' => array(),
 			'Model_CatalogueSkin' => array(),
