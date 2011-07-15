@@ -20,3 +20,8 @@
     * Deck listing
     * Tour items
     * Related items (shuttles, etc.)
+    
+## Catalogues
+
+* If a skin has default sections in it, you shouldn't be able to remove or deactivate it
+* Move setting skin defaults into the catalogue instead of Site Settings (?)
