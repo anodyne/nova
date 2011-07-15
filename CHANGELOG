@@ -1,11 +1,10 @@
-* Merge branch 'hotfix-1.2.4' into support-1.2
-* updated the install and update files for the 1.2.4 release
-* updated the install data and 1.2.4 update file
-* updated the jquery ui to version 1.8.9 (1.8.8 introduced a bug that was quickly fixed)
-* updated the install data and 1.2.4 update file
-* updated the jquery ui to version 1.8.8
-* fixed bug where IE7 choked on the manifest because of an extra comma (really IE? a comma?)
-* updated the update files and readme
-* updated the version information
-* fixed bug where the user acceptance email was being CCed to more people than necessary
-* fixed bug where nova wasn't counting mission posts correctly
+* updating the install data
+* updating the version info
+* updated the local version file
+* updated the readme
+* updated the install and update files
+* fixed a bug where nova wouldn't accurately pull character posts
+* fixed bug where the writing control panel pointed to a couple wrong URLs
+* updated the readme
+* updated the install and update files
+* updates to the ajax controller
