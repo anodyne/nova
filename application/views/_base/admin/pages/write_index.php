@@ -134,7 +134,7 @@
 				</tbody>
 			</table>
 			<p class="bold">
-				<?php echo anchor('personnel/viewposts/p/'. $this->session->userdata('userid'), $label['view_user_posts']);?>
+				<?php echo anchor('personnel/viewposts/u/'. $this->session->userdata('userid'), $label['view_user_posts']);?>
 			</p><br />
 		<?php else: ?>
 			<?php echo text_output($label['no_posts'], 'h3', 'orange');?>
@@ -164,7 +164,7 @@
 				</tbody>
 			</table>
 			<p class="bold">
-				<?php echo anchor('personnel/viewlogs/p/'. $this->session->userdata('userid'), $label['view_user_logs']);?>
+				<?php echo anchor('personnel/viewlogs/u/'. $this->session->userdata('userid'), $label['view_user_logs']);?>
 			</p><br />
 		<?php else: ?>
 			<?php echo text_output($label['no_logs'], 'h3', 'orange');?>
