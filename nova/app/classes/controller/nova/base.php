@@ -61,6 +61,21 @@ abstract class Controller_Nova_Base extends Controller_Template {
 	protected $_data;
 	
 	/**
+	 * @var	array 	An array of headers that can be used by the pages.
+	 */
+	protected $_headers = array();
+	
+	/**
+	 * @var	array 	An array of messages that can be used by the pages.
+	 */
+	protected $_messages = array();
+	
+	/**
+	 * @var	array 	An array of titles that can be used by the pages.
+	 */
+	protected $_titles = array();
+	
+	/**
 	 * The before method handles setting up the controller before any action
 	 * methods are called.
 	 *
@@ -123,6 +138,8 @@ abstract class Controller_Nova_Base extends Controller_Template {
 		
 		// set the final template data
 		$this->template->title.= $this->_data->title;
+		$this->template->layout->header = $this->_data->header;
+		$this->template->layout->message = $this->_data->message;
 		
 		// send the response
 		$this->response->body($this->template);
