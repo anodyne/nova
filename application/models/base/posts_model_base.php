@@ -5,12 +5,13 @@
 |---------------------------------------------------------------
 |
 | File: models/posts_model_base.php
-| System Version: 1.2.4
+| System Version: 1.2.6
 |
 | Changes: updated some of the methods to avoid situations where
 |	errors could be thrown if a character or user ID wasn't present;
 |	added a parameter to count_mission_posts to query based on the
-|	status of mission posts
+|	status of mission posts; fixed bug where nova wouldn't accurately
+|	pull character posts
 |
 | Model used to access the posts and posts comments tables.
 |
@@ -122,7 +123,7 @@ class Posts_model_base extends Model {
 		}
 		else
 		{
-			$string = "(post_authors LIKE '%,$character' OR post_authors LIKE '$character,%' OR post_authors = '%,$character,%' OR post_authors = $character)";
+			$string = "(post_authors LIKE '%,$character' OR post_authors LIKE '$character,%' OR post_authors LIKE '%,$character,%' OR post_authors = $character)";
 			
 			$this->db->where("$string", NULL);
 		}
