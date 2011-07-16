@@ -1,11 +1,11 @@
-<?php
+<?php defined('SYSPATH') or die('No direct script access.');
 /**
  * Base Controller
  *
  * The base controller is used by every single controller in the system and
  * finalizes setting the system up prior to controller action execution. In
  * addition, the base controller ensures that some classes and variables are
- * always availabl in the controllers.
+ * always available in the controllers.
  *
  * @package		Nova
  * @category	Controllers
@@ -107,7 +107,7 @@ abstract class Controller_Nova_Base extends Controller_Template {
 		// set the cache driver
 		Cache::$default = Kohana::$config->load('cache.driver');
 		
-		// these are the setting items we need to pull for this controller
+		// these are the settings we pull for every controller
 		$this->settingsArray = array(
 			'display_rank',
 			'timezone',

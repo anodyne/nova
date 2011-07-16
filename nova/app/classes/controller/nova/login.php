@@ -6,7 +6,6 @@
  * @category	Controllers
  * @author		Anodyne Productions
  * @copyright	2011 Anodyne Productions
- * @since		3.0
  */
 
 class Controller_Nova_Login extends Controller_Nova_Base {
@@ -15,7 +14,7 @@ class Controller_Nova_Login extends Controller_Nova_Base {
 	{
 		parent::before();
 		
-		// pull these additional setting keys that'll be available in every method
+		// pull these additional settings
 		$additionalSettings = array(
 			'skin_login',
 			'default_email_name',

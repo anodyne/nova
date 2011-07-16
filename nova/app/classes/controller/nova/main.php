@@ -1,4 +1,4 @@
-<?php
+<?php defined('SYSPATH') or die('No direct script access.');
 /**
  * Main Controller
  *
@@ -14,7 +14,7 @@ class Controller_Nova_Main extends Controller_Nova_Base {
 	{
 		parent::before();
 		
-		// pull these additional setting keys that'll be available in every method
+		// pull these additional settings
 		$additionalSettings = array(
 			'skin_main',
 			'email_subject',
@@ -32,22 +32,22 @@ class Controller_Nova_Main extends Controller_Nova_Base {
 		$this->timezone	= $this->session->get('timezone', $this->options->timezone);
 		$this->dst		= $this->session->get('dst', (bool) $this->options->daylight_savings);
 		
-		// pull titles, headers and content from the database and cache it
+		// pull titles, headers and content for the controller
 		$this->_headers		= Model_SiteContent::get_section_content('header', $this->request->controller());
 		$this->_messages	= Model_SiteContent::get_section_content('message', $this->request->controller());
 		$this->_titles		= Model_SiteContent::get_section_content('title', $this->request->controller());
 		
-		// set the values to be passed to the views
+		// setup the image index
+		$this->images = Utility::get_image_index($this->skin);
+		
+		// set the values to be passed to the template
 		$vars = array(
 			'skin' => $this->skin,
 			'sec' => 'main'
 		);
 		
-		// set the shell
+		// set the structure file
 		$this->template = View::factory(Location::file('main', $this->skin, 'structure'), $vars);
-		
-		// grab the image index
-		$this->images = Utility::get_image_index($this->skin);
 		
 		// set the variables in the template
 		$this->template->title 						= $this->options->sim_name.' :: ';
@@ -93,10 +93,10 @@ class Controller_Nova_Main extends Controller_Nova_Base {
 			}
 		}
 		
-		// pass the widgets along
+		// pass the widgets to the view
 		$this->_data->widgets = $widgets;
 		
-		// content
+		// title, header and message content
 		$this->_data->title = (array_key_exists($this->request->action(), $this->_titles)) 
 			? $this->_titles[$this->request->action()] 
 			: ucfirst(___("main"));
@@ -123,13 +123,13 @@ class Controller_Nova_Main extends Controller_Nova_Base {
 		// credits
 		$this->_data->credits_perm = nl2br($credits_perm);
 		
+		# TODO: need to figure out what we're going to do with these kinds of edit links
+		
 		// should we show an edit link?
 		$this->_data->edit = (Auth::is_logged_in() and Auth::check_access('site/messages', false)) ? true : false;
-		
-		# TODO: remove this after the site messages management stuff is done
 		$this->_data->edit = false;
 		
-		// content
+		// title, header and message content
 		$this->_data->title = (array_key_exists($this->request->action(), $this->_titles)) 
 			? $this->_titles[$this->request->action()] 
 			: ucwords(___("site credits"));
