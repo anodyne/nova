@@ -142,6 +142,17 @@ class Controller_Nova_Main extends Controller_Nova_Base {
 			? $this->_messages[$this->request->action()] 
 			: null;
 	}
+	
+	public function action_components()
+	{
+		// create a new content view
+		$this->_data = View::factory(Location::view('main_components', $this->skin, 'pages'));
+		
+		// title, header and message content
+		$this->_data->title = 'Components';
+		$this->_data->header = 'Components';
+		$this->_data->message = null;
+	}
 
 	public function action_test()
 	{
