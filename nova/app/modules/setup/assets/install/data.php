@@ -2321,7 +2321,7 @@ $site_contents = array(
 	array(
 		'key' => 'footer',
 		'label' => 'Additional Footer Information',
-		'content' => "New to Nova 3 is the ability to add additional information to the footer, like important credits or even banner exchanges, without having to edit any files. Just plug your code into the 'Additional Footer Information' site message!",
+		'content' => "New to Nova 3 is the ability to add additional information to the footer, like banner exchanges, without having to edit any files. Just plug your code/message into the 'Additional Footer Information' site content item!",
 		'type' => 'message'),
 	array(
 		'key' => 'contact',
