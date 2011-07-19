@@ -19,7 +19,7 @@
 			<?php echo $navsub;?>
 		</nav>
 		
-		<div class="content">
+		<div id="content">
 			<?php echo $flash;?>
 			
 			<h1 class="page-head"><?php echo $header;?></h1>
