@@ -39,6 +39,21 @@
 <h2 class="page-subhead">Form Fields</h2>
 
 <p>
+	<kbd>Small Text Field</kbd>
+	<input type="text" class="small" placeholder="Text goes here">
+</p>
+
+<p>
+	<kbd>Medium Text Field</kbd>
+	<input type="text" class="medium" placeholder="Text goes here">
+</p>
+
+<p>
+	<kbd>Medium-Large Text Field</kbd>
+	<input type="text" class="medium-large" placeholder="Text goes here">
+</p>
+
+<p>
 	<kbd>Text Field</kbd>
 	<input type="text" placeholder="Text goes here">
 </p>
@@ -46,11 +61,6 @@
 <p>
 	<kbd>Email Field</kbd>
 	<input type="email" placeholder="Email Address">
-</p>
-
-<p>
-	<kbd>Search Field</kbd>
-	<input type="search" placeholder="Search">
 </p>
 
 <p>
