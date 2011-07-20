@@ -59,6 +59,7 @@ Anodyne Production's next-generation RPG management system combines popular feat
 * fixed bug where users who were reactivated didn't have their access role set to Standard User
 * fixed bug where inactive users were shown a link to upload an image even though they don't have permissions to upload images
 * fixed several potential security issues
+* fixed bug where positions weren't properly updated when deleting an active character
 
 ## Version History
 

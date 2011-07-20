@@ -81,6 +81,23 @@ abstract class Nova_characters extends Nova_controller_admin {
 								$newchars = $characters;
 							}
 							
+							if ($userid['crew_type'] == 'active')
+							{
+								// get the character
+								$char = $this->char->get_character($id);
+								
+								// update the slots
+								if ($char->position_1 !== null and $char->position_1 > 0)
+								{
+									$this->pos->update_open_slots($char->position_1, 'remove_crew');
+								}
+								
+								if ($char->position_2 !== null and $char->position_2 > 0)
+								{
+									$this->pos->update_open_slots($char->position_2, 'remove_crew');
+								}
+							}
+							
 							// set the array to update the users table
 							$update_array = array('main_char' => ($main == $id) ? $newmain : $main);
 							
