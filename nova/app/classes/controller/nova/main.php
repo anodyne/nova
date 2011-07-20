@@ -73,7 +73,7 @@ class Controller_Nova_Main extends Controller_Nova_Base {
 		$this->template->layout->navsub->widget3	= false;
 		
 		$this->template->layout->footer				= View::factory(Location::file('footer', $this->skin, 'partials'));
-		$this->template->layout->footer->extra 		= Model_SiteContent::get_message('footer');
+		$this->template->layout->footer->extra 		= Model_SiteContent::get_content('footer');
 	}
 	
 	public function action_index()
@@ -116,7 +116,7 @@ class Controller_Nova_Main extends Controller_Nova_Base {
 		$this->_data = View::factory(Location::view('main_credits', $this->skin, 'pages'));
 		
 		// non-editable credits
-		$credits_perm = Model_SiteContent::get_message('credits_perm');
+		$credits_perm = Model_SiteContent::get_content('credits_perm');
 		$credits_perm.= "\r\n\r\n".Model_CatalogueSkinSec::get_default('main')->skins->credits;
 		$credits_perm.= "\r\n\r\n".Model_CatalogueRank::get_default()->credits;
 		
