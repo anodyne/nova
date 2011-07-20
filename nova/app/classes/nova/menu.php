@@ -33,11 +33,11 @@ abstract class Nova_Menu {
 		switch ($type)
 		{
 			case 'main':
-				$menu = ($cache->get('menu_main')) ? $cache->get('menu_main') : self::_build_main();
+				$menu = self::_build_main();
 			break;
 				
 			case 'sub':
-				$menu = ($cache->get('menu_sub')) ? $cache->get('menu_sub') : self::_build_sub($cat);
+				$menu = ($cache->get('menu_sub_'.$cat)) ? $cache->get('menu_sub_'.$cat) : self::_build_sub($cat);
 			break;
 				
 			case 'adminsub':
@@ -59,16 +59,12 @@ abstract class Nova_Menu {
 	/**
 	 * Build Nova's main menu.
 	 *
-	 * @access	private
+	 * @access	protected
 	 * @uses	Session::instance
 	 * @uses	Session::get
-	 * @uses	Jelly::query
-	 * @uses	Cache::instance
-	 * @uses	Cache::get
-	 * @uses	Cache::set
 	 * @return	mixed	the menu to output or false if there are no menu items
 	 */
-	private static function _build_main()
+	protected static function _build_main()
 	{
 		// grab the session
 		$session = Session::instance();
@@ -79,7 +75,7 @@ abstract class Nova_Menu {
 		// get the menu items
 		$items = Model_Menu::find()
 			->where('type', 'main')
-			->where('display', 1)
+			->where('display', (int) true)
 			->order_by('group', 'asc')
 			->order_by('order', 'asc')
 			->get();
@@ -94,12 +90,6 @@ abstract class Nova_Menu {
 			// render the final output
 			$final = self::_render('main', $data);
 			
-			// if the main menu isn't cached, cache it
-			if ( ! Cache::instance()->get('menu_main'))
-			{
-				Cache::instance()->set('menu_main', $final);
-			}
-			
 			return $final;
 		}
 		
@@ -109,17 +99,16 @@ abstract class Nova_Menu {
 	/**
 	 * Build Nova's sub navigation menu.
 	 *
-	 * @access	private
+	 * @access	protected
 	 * @uses	Session::instance
 	 * @uses	Session::get
-	 * @uses	Jelly::query
 	 * @uses	Cache::instance
 	 * @uses	Cache::get
 	 * @uses	Cache::set
 	 * @param	string	the category of sub navigation to pull
 	 * @return	mixed	the menu to output or false if there are no menu items
 	 */
-	private static function _build_sub($cat)
+	protected static function _build_sub($cat)
 	{
 		// grab the session
 		$session = Session::instance();
@@ -131,7 +120,7 @@ abstract class Nova_Menu {
 		$items = Model_Menu::find()
 			->where('type', 'sub')
 			->where('category', $cat)
-			->where('display', 1)
+			->where('display', (int) true)
 			->order_by('group', 'asc')
 			->order_by('order', 'asc')
 			->get();
@@ -147,9 +136,9 @@ abstract class Nova_Menu {
 			$final = self::_render('sub', $data);
 			
 			// if the sub menu isn't cached, cache it
-			if ( ! Cache::instance()->get('menu_sub'))
+			if ( ! Cache::instance()->get('menu_sub_'.$cat))
 			{
-				Cache::instance()->set('menu_sub', $final);
+				Cache::instance()->set('menu_sub_'.$cat, $final);
 			}
 			
 			return $final;
@@ -161,7 +150,7 @@ abstract class Nova_Menu {
 	/**
 	 * Build Nova's admin sub navigation menu.
 	 *
-	 * @access	private
+	 * @access	protected
 	 * @uses	Session::instance
 	 * @uses	Session::get
 	 * @uses	Jelly::query
@@ -171,7 +160,7 @@ abstract class Nova_Menu {
 	 * @param	string	the category admin sub navigation to pull
 	 * @return	mixed	the menu to output or false if there are no menu items
 	 */
-	private static function _build_sub_admin($cat)
+	protected static function _build_sub_admin($cat)
 	{
 		// grab the session
 		$session = Session::instance();
@@ -244,7 +233,15 @@ abstract class Nova_Menu {
 		return false;
 	}
 	
-	private static function _build_sub_admin_sidebar()
+	/**
+	 * Build Nova's admin sidebar.
+	 *
+	 * @access	protected
+	 * @uses	Session::instance
+	 * @uses	Session::get
+	 * @return	mixed	the menu to output or false if there are no menu items
+	 */
+	protected static function _build_sub_admin_sidebar()
 	{
 		// grab the session
 		$session = Session::instance();
@@ -253,9 +250,7 @@ abstract class Nova_Menu {
 		$userid = $session->get('userid');
 		
 		// get the menu items
-		$items = Model_MenuCat::find()
-			->where('type', 'adminsub')
-			->get();
+		$items = Model_MenuCat::find()->where('type', 'adminsub')->get();
 		
 		if ($items)
 		{
@@ -276,7 +271,7 @@ abstract class Nova_Menu {
 	/**
 	 * Render the specified menu.
 	 *
-	 * @access	private
+	 * @access	protected
 	 * @uses	Auth::check_access
 	 * @uses	Auth::get_access_level
 	 * @uses	Auth::is_logged_in
@@ -287,7 +282,7 @@ abstract class Nova_Menu {
 	 * @param	mixed	the data to use for the menu render
 	 * @return	string	the menu output
 	 */
-	private static function _render($type = '', $data = '')
+	protected static function _render($type = '', $data = '')
 	{
 		$output = '<ul>';
 		
