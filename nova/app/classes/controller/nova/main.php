@@ -27,18 +27,14 @@ class Controller_Nova_Main extends Controller_Nova_Base {
 		$this->options = Model_Settings::get_settings($this->settingsArray);
 		
 		// set the variables
-		$this->skin		= $this->session->get('skin_main', $this->options->skin_main);
-		$this->rank		= $this->session->get('display_rank', $this->options->display_rank);
-		$this->timezone	= $this->session->get('timezone', $this->options->timezone);
-		$this->dst		= $this->session->get('dst', (bool) $this->options->daylight_savings);
-		
-		// pull titles, headers and content for the controller
+		$this->skin			= $this->session->get('skin_main', $this->options->skin_main);
+		$this->rank			= $this->session->get('display_rank', $this->options->display_rank);
+		$this->timezone		= $this->session->get('timezone', $this->options->timezone);
+		$this->dst			= $this->session->get('dst', (bool) $this->options->daylight_savings);
 		$this->_headers		= Model_SiteContent::get_section_content('header', $this->request->controller());
 		$this->_messages	= Model_SiteContent::get_section_content('message', $this->request->controller());
 		$this->_titles		= Model_SiteContent::get_section_content('title', $this->request->controller());
-		
-		// setup the image index
-		$this->images = Utility::get_image_index($this->skin);
+		$this->images		= Utility::get_image_index($this->skin);
 		
 		// set the values to be passed to the template
 		$vars = array(
