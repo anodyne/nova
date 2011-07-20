@@ -1261,7 +1261,7 @@ $menu_items = array(
 		'category' => 'main',
 		'needs_login' => 'y'),
 	array(
-		'name' => 'Login',
+		'name' => 'Log In',
 		'group' => 0,
 		'order' => 6,
 		'url' => 'login/index',
@@ -1269,7 +1269,7 @@ $menu_items = array(
 		'category' => 'main',
 		'needs_login' => 'n'),
 	array(
-		'name' => 'Logout',
+		'name' => 'Log Out',
 		'group' => 0,
 		'order' => 7,
 		'url' => 'login/logout',
