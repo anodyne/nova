@@ -47,17 +47,17 @@ class Model_SiteContent extends Model {
 	);
 	
 	/**
-	 * Get a specific message from the database.
+	 * Get a specific piece of content from the database.
 	 *
-	 *     Model_SiteContent::get_message('welcome_msg');
-	 *     Model_SiteContent::get_message('welcome_msg', false);
+	 *     Model_SiteContent::get_content('welcome_msg');
+	 *     Model_SiteContent::get_content('welcome_msg', false);
 	 *
 	 * @access	public
-	 * @param	string	the key of the message to get
+	 * @param	string	the key of the content to get
 	 * @param	boolean	whether to pull only the value or the full object
 	 * @return	mixed	a string if $value_only is TRUE, else an object
 	 */
-	public static function get_message($key, $value_only = true)
+	public static function get_content($key, $value_only = true)
 	{
 		$query = static::find()->where('key', $key)->get_one();
 		
