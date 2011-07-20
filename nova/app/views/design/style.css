@@ -29,8 +29,7 @@ header {
 header ul {
 	margin: 0;
 	padding: 0;
-	height: 80px;
-	
+	height: 75px;
 	list-style: none;
 }
 header ul li a {
@@ -38,13 +37,17 @@ header ul li a {
 	margin: 0 30px 0 0;
 	float: left;
 	line-height: 75px;
-	
 	text-decoration: none;
 	font-size: 140%;
 	font-weight: bold;
-	color: #666;
+	color: #999;
 }
 header ul li a:hover { color: #333; }
+header ul li a.active {
+	padding: 1px 0 0 0;
+	background: transparent url(images/main/nav-main-active.png) no-repeat center bottom;
+	color: #333;
+}
 
 /**
  * Styles for the user panel
@@ -165,38 +168,61 @@ a.image, a.image:hover {
 kbd {
 	display: block;
 	margin: 0 0 5px 0;
-	
-	font: bold 115% helvetica, arial, sans-serif;
+	font: bold 120% helvetica, arial, sans-serif;
 }
 
 input[type=text],
 input[type=password],
 input[type=email],
-input[type=search],
 select,
 textarea {
 	margin: 0;
 	padding: 5px;
-	width: 325px;
-	
-	border: 1px solid #bfbfbf;
+	width: 350px;
+	border-bottom: 1px solid #d0d0d0;
+	border-top: 1px solid #a8a8a8;
+	border-left: 1px solid #bcbcbc;
+	border-right: 1px solid #bcbcbc;
+	background: #fefefe;
+	background: -moz-linear-gradient(top, #fefefe 0%, #f3f3f3 100%);
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#fefefe), color-stop(100%,#f3f3f3));
+	background: -webkit-linear-gradient(top, #fefefe 0%,#f3f3f3 100%);
+	background: -o-linear-gradient(top, #fefefe 0%,#f3f3f3 100%);
+	background: -ms-linear-gradient(top, #fefefe 0%,#f3f3f3 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fefefe', endColorstr='#f3f3f3',GradientType=0 );
+	background: linear-gradient(top, #fefefe 0%,#f3f3f3 100%);
 	font-size: 110%;
 	font-family: helvetica, arial, sans-serif;
-	color: #666;
-	background: #fcfcfc;
-	
+	color: #888;
 	border-radius: 2px;
 	-moz-border-radius: 2px;
+	box-shadow: inset 0 1px 1px #e3e3e3, 0 1px 0 #f6f6f6;
+	-moz-box-shadow: inset 0 1px 1px #e3e3e3, 0 1px 0 #f6f6f6;
+	-webkit-box-shadow: inset 0 1px 1px #e3e3e3, 0 1px 0 #f6f6f6;
+}
+
+input[type=text]:focus,
+input[type=password]:focus,
+input[type=email]:focus,
+select:hover,
+textarea:focus {
+	outline: 0;
+	border-bottom: 1px solid #008bda;
+	border-top: 1px solid #008bda;
+	border-left: 1px solid #008edc;
+	border-right: 1px solid #008edc;
+	background: #fff;
+	color: #555;
+	box-shadow: 0 0 3px #a7cef3;
+	-moz-box-shadow: 0 0 3px #a7cef3;
+	-webkit-box-shadow: 0 0 3px #a7cef3;
 }
 
 textarea { width: 99%; }
 
-select:focus,
-select:hover { outline: 0; }
-
-.small { width: 75px; }
-.medium { width: 150px; }
-.medium-large { width: 250px; }
+input[type=text].small { width: 100px; }
+input[type=text].medium { width: 150px; }
+input[type=text].medium-large { width: 250px; }
 
 /**
  * Styles for buttons in the system

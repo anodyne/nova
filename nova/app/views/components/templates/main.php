@@ -1,5 +1,5 @@
 <noscript>
-	<div class="system_warning"><?php echo __("You need to have Javascript turned on to use all of Nova 3's features.");?></div>
+	<div class="system_warning"><?php echo ___("You need to have Javascript turned on to use all of Nova 3's features.");?></div>
 </noscript>
 
 <?php echo $panel;?>
@@ -7,7 +7,7 @@
 <header>
 	<div class="wrapper">
 		<div class="nav-main">
-			<img src="<?php echo Url::base().MODFOLDER;?>/app/views/design/images/menu-nova.png" class="float-right">
+			<img src="<?php echo Url::base().MODFOLDER;?>/app/views/design/images/main/nova.png" class="float-right">
 			<?php echo $navmain;?>
 		</div>
 	</div>
