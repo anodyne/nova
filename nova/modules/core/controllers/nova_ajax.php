@@ -7704,6 +7704,61 @@ abstract class Nova_ajax extends Controller {
 		}
 	}
 	
+	public function info_check_post_lock()
+	{
+		// load the resources
+		$this->load->model('posts_model', 'posts');
+		
+		// set the variables
+		$post = $this->input->post('post', true);
+		$user = $this->input->post('user', true);
+		$time = $this->input->post('time', true);
+		$content = $this->input->post('content', true);
+		
+		// get the post
+		$item = $this->posts->get_post($post);
+		
+		// get the hash of the content from the db
+		$db_hash = md5($item->post_content);
+		
+		// get the hash of the content from the POST
+		$post_hash = md5($content);
+		
+		// get the difference between how many minutes since the lock was active
+		$diff = now() - $time;
+		$diff = ($diff / 60);
+		$diff = floor($diff);
+		
+		if ($post_hash == $db_hash)
+		{
+			$this->posts->update_post_lock($post, null, false);
+			
+			$retval = 0;
+		}
+		else
+		{
+			if ($this->session->userdata('post_lock_'.$post) !== false)
+			{
+				// last time we checked, this was the hash
+				$last_post_hash = $this->session->userdata('post_lock_'.$post);
+				
+				// the post hasn't changed since our last check, but it is different from the db
+				if ($last_post_hash == $post_hash)
+				{
+					$this->posts->update_post_lock($post, null, false);
+					
+					$retval = 2;
+				}
+			}
+			
+			$this->posts->update_post_lock($post, $this->session->userdata('userid'));
+			
+			$retval = 1;
+		}
+		
+		echo $retval;
+	}
+	
 	public function info_format_date()
 	{
 		$format = $this->input->post('format', true);

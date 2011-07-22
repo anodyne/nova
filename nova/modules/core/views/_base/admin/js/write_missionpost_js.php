@@ -1,6 +1,26 @@
 <?php $string = random_string('alnum', 8);?>
 
 <script type="text/javascript">
+	function checkLock() {
+		var send = {
+			user: "<?php echo $this->session->userdata('userid');?>",
+			post: "<?php echo $this->uri->segment(3);?>",
+			time: "<?php echo now();?>",
+			content: $('#content-textarea').val()
+		};
+		
+		$.ajax({
+			type: "POST",
+			url: "<?php echo site_url('ajax/info_check_post_lock');?>",
+			data: send,
+			success: function(data){
+				
+				if (data == 0)
+					window.location = "<?php echo site_url('write/index');?>";
+			}
+		});
+	}
+	
 	$(document).ready(function(){
 		$('#toggle_notes').click(function(){
 			$('.notes_content').slideToggle('fast');
@@ -81,6 +101,11 @@
 					data: { title: title, desc: desc, option: option }
 				});
 			});
+		<?php endif;?>
+		
+		<?php if ($this->uri->segment(3)): ?>
+			// check the post lock
+			setInterval("checkLock()", 10000);
 		<?php endif;?>
 	});
 </script>

@@ -1175,6 +1175,12 @@ $fields_posts = array(
 		'default' => 0),
 	'post_participants' => array(
 		'type' => 'TEXT'),
+	'post_lock_user' => array(
+		'type' => $user_id_type,
+		'constriant' => $user_id_constraint),
+	'post_lock_date' => array(
+		'type' => $date_type,
+		'constraint' => $date_constraint),
 );
 
 $fields_posts_comments = array(

@@ -322,6 +322,24 @@ abstract class Nova_write extends Nova_controller_admin {
 		$this->load->model('posts_model', 'posts');
 		$this->load->model('missions_model', 'mis');
 		
+		if ( ! isset($_POST['submit']) and $id)
+		{
+			// get the post
+			$postitem = $this->posts->get_post($id);
+			
+			// if there isn't a lock, create one
+			if ($postitem->post_lock_user === null and $postitem->post_lock_date === null)
+			{
+				$this->posts->update_post_lock($id, $this->session->userdata('userid'));
+				
+				$data['locked'] = false;
+			}
+			else
+			{
+				$data['locked'] = true;
+			}
+		}
+		
 		if ($this->options['system_email'] == 'off')
 		{
 			$flash['status'] = 'info';
