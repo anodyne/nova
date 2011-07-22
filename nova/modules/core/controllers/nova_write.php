@@ -33,6 +33,14 @@ abstract class Nova_write extends Nova_controller_admin {
 		$this->load->model('news_model', 'news');
 		$this->load->model('missions_model', 'mis');
 		
+		$this->session->unset_userdata('post_lock_1');
+		
+		$this->posts->update_post_lock(1, null, false);
+		
+		echo '<pre>';
+		print_r($this->session->all_userdata());
+		echo '</pre>';
+		
 		// set the variables
 		$js_data['tab'] = 0;
 		

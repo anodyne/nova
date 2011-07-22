@@ -5,17 +5,17 @@
 		var send = {
 			user: "<?php echo $this->session->userdata('userid');?>",
 			post: "<?php echo $this->uri->segment(3);?>",
-			time: "<?php echo now();?>",
 			content: $('#content-textarea').val()
-		};
+		}
 		
 		$.ajax({
 			type: "POST",
 			url: "<?php echo site_url('ajax/info_check_post_lock');?>",
 			data: send,
 			success: function(data){
+				console.log(data);
 				
-				if (data == 0)
+				if (data == 1 || data == 2)
 					window.location = "<?php echo site_url('write/index');?>";
 			}
 		});
@@ -103,8 +103,8 @@
 			});
 		<?php endif;?>
 		
+		// check the post lock ONLY if we're editing a post
 		<?php if ($this->uri->segment(3)): ?>
-			// check the post lock
 			setInterval("checkLock()", 10000);
 		<?php endif;?>
 	});

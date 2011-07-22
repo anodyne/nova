@@ -7712,8 +7712,9 @@ abstract class Nova_ajax extends Controller {
 		// set the variables
 		$post = $this->input->post('post', true);
 		$user = $this->input->post('user', true);
-		$time = $this->input->post('time', true);
+		$time = now();
 		$content = $this->input->post('content', true);
+		$user = $this->session->userdata('userid');
 		
 		// get the post
 		$item = $this->posts->get_post($post);
@@ -7725,35 +7726,114 @@ abstract class Nova_ajax extends Controller {
 		$post_hash = md5($content);
 		
 		// get the difference between how many minutes since the lock was active
-		$diff = now() - $time;
+		$diff = now() - $item->post_lock_date;
 		$diff = ($diff / 60);
 		$diff = floor($diff);
 		
-		if ($post_hash == $db_hash)
+		if ($diff > 0)
 		{
-			$this->posts->update_post_lock($post, null, false);
-			
-			$retval = 0;
-		}
-		else
-		{
-			if ($this->session->userdata('post_lock_'.$post) !== false)
+			if ($user == $item->post_lock_user)
 			{
-				// last time we checked, this was the hash
-				$last_post_hash = $this->session->userdata('post_lock_'.$post);
-				
-				// the post hasn't changed since our last check, but it is different from the db
-				if ($last_post_hash == $post_hash)
+				/**
+				 * CODE 1
+				 *
+				 * There haven't been any changes to the post since the initial
+				 * lock was granted. Release the lock and send the code back to
+				 * the view to redirect to the Writing Control Panel.
+				 */
+				if ($post_hash == $db_hash)
 				{
 					$this->posts->update_post_lock($post, null, false);
 					
-					$retval = 2;
+					$retval = 1;
+				}
+				
+				if ($post_hash != $db_hash)
+				{
+					if ($this->session->userdata('post_lock_'.$post))
+					{
+						/**
+						 * CODE 2
+						 *
+						 * Changes have been made that differ from the content from
+						 * the database, but the post is the same as it was 5 minutes
+						 * ago. Auto-save the post content (but don't change the saved
+						 * author information or send an email), release then lock then
+						 * send the code back to the view to redirect back to the
+						 * Writing Control Panel.
+						 */
+						if ($post_hash == $this->session->userdata('post_lock_'.$post))
+						{
+							// auto-save the content
+							$data = array(
+								'post_content' => $content,
+								'post_lock_user' => null,
+								'post_lock_date' => null
+							);
+							
+							// update the post
+							$this->posts->update_post($post, $data);
+							
+							// remove the session data
+							$this->session->unset_userdata('post_lock_'.$post);
+							
+							// the code
+							$retval = 2;
+						}
+						
+						/**
+						 * CODE 3
+						 *
+						 * Changes have been made that differ from the content from
+						 * the database and the post is different from the check 5
+						 * minutes ago. Store a hash of the content in the session
+						 * (or update what's already there), renew the lock and send
+						 * the code back to the view to do nothing and let the user
+						 * continue working.
+						 */
+						if ($post_hash != $this->session->userdata('post_lock_'.$post))
+						{
+							// set the session data
+							$this->session->set_userdata('post_lock_'.$post, $post_hash);
+							
+							// update the lock
+							$this->posts->update_post_lock($post, $this->session->userdata('userid'));
+							
+							// the code
+							$retval = 3;
+						}
+					}
+					
+					/**
+					 * CODE 4
+					 *
+					 * Changes have been made that differ from the content from
+					 * the database and no session variable exists that's storing
+					 * the hash of the previous check. Send the hash of the content
+					 * to the session, renew the lock and send the code back to 
+					 * the view to do nothing and let the user continue working.
+					 */
+					if ( ! $this->session->userdata('post_lock_'.$post))
+					{
+						// set the session data
+						$this->session->set_userdata('post_lock_'.$post, $post_hash);
+						
+						// update the lock
+						$this->posts->update_post_lock($post, $this->session->userdata('userid'));
+						
+						// the code
+						$retval = 4;
+					}
 				}
 			}
-			
-			$this->posts->update_post_lock($post, $this->session->userdata('userid'));
-			
-			$retval = 1;
+			else
+			{
+				# code for handling post locks when the user isn't the one who owns the lock
+			}
+		}
+		else
+		{
+			$retval = 0;
 		}
 		
 		echo $retval;
