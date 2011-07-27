@@ -5,17 +5,8 @@
 <?php echo form_open('messages/write');?>
 	<p>
 		<kbd><?php echo $label['to'];?></kbd>
-		<?php echo form_dropdown('recipients', $characters, $key, 'id = "recip"');?>
-		&nbsp;
-		<a href="#" id="add_recipient" class="fontSmall image"><?php echo img($images['add']);?></a>
-		<input type="hidden" name="to" id="to_hidden" value="<?php echo $to;?>" />
-		<p id="recipients">
-			<?php if (isset($recipient_list)): ?>
-				<?php foreach ($recipient_list as $r): ?>
-					<?php echo $r ."\r\n";?>
-				<?php endforeach; ?>
-			<?php endif; ?>
-		</p>
+		<span id="chosen-incompat" class="gray fontSmall bold hidden"><?php echo $label['chosen_incompat'];?><br /><br /></span>
+		<?php echo form_multiselect('recipients[]', $characters, $recipient_list, 'id="recip" class="chosen" title="'.$label['select'].'"');?>
 	</p>
 	
 	<p>
@@ -34,7 +25,7 @@
 <?php if (isset($previous)): ?>
 	<div id="comments">
 		<p>
-			<strong><?php echo $label['on'] .' '. $previous['date'] .' '.  $previous['from'] .' '. $label['wrote'];?></strong>
+			<strong><?php echo $label['on'].' '.$previous['date'].' '. $previous['from'].' '.$label['wrote'];?></strong>
 			<br /><br />
 			<?php echo text_output($previous['content'], '');?>
 		</p>

@@ -19,6 +19,9 @@ abstract class Nova_messages extends Nova_controller_admin {
 		
 		// load the PM model
 		$this->load->model('privmsgs_model', 'pm');
+		
+		// load the user agent library
+		$this->load->library('user_agent');
 	}
 	
 	public function index()
@@ -423,7 +426,7 @@ abstract class Nova_messages extends Nova_controller_admin {
 				$this->sys->optimize_table('privmsgs');
 				
 				// create an array of who the PM is going to
-				$recipients = explode(',', $to);
+				$recipients = $this->input->post('recipients', true);
 				
 				foreach ($recipients as $value)
 				{
@@ -486,7 +489,7 @@ abstract class Nova_messages extends Nova_controller_admin {
 		
 		if ($characters->num_rows() > 0)
 		{
-			$data['characters'][0] = ucfirst(lang('actions_select')) .' '. lang('labels_a') .' '. ucfirst(lang('labels_recipient'));
+			//$data['characters'][0] = ucfirst(lang('actions_select')) .' '. lang('labels_a') .' '. ucfirst(lang('labels_recipient'));
 			
 			// we do this to make sure active characters are on top
 			$data['characters'][ucwords(lang('status_active') .' '. lang('global_characters'))] = array();
@@ -529,15 +532,6 @@ abstract class Nova_messages extends Nova_controller_admin {
 				'content' => ucwords(lang('actions_submit')))
 		);
 		
-		$remove = array(
-			'src' => Location::img('minus-circle.png', $this->skin, 'admin'),
-			'class' => 'image fontSmall inline_img_left',
-			'alt' => ucfirst(lang('actions_remove'))
-		);
-		
-		// prep the data for sending to the js view
-		$js_data['remove'] = img($remove);
-		
 		// get the data if it is not a new PM
 		$info = ($action !== false) ? $this->pm->get_message($id) : false;
 		$row = ($info !== false and $info->num_rows() > 0) ? $info->row() : false;
@@ -553,12 +547,11 @@ abstract class Nova_messages extends Nova_controller_admin {
 			}
 		}
 		
+		$data['recipient_list'] = array();
+		
 		switch ($action)
 		{
 			case 'reply':
-				// set the hidden TO field
-				$data['to'] = 0;
-				
 				// is the RE: tag in the subject already?
 				$pos = strpos($row->privmsgs_subject, lang('abbr_reply'));
 				
@@ -594,12 +587,9 @@ abstract class Nova_messages extends Nova_controller_admin {
 				}
 				
 				// set the key
-				$data['key'] = $key;
-					
-				$this->load->helper('debug');
+				$data['recipient_list'] = $key;
 				
-				$data['header'] = ucfirst(lang('actions_reply')) .' '. lang('labels_to') 
-					.' '. ucwords(lang('global_privatemessage'));
+				$data['header'] = ucfirst(lang('actions_reply')).' '.lang('labels_to').' '.ucwords(lang('global_privatemessage'));
 				
 				$date = gmt_to_local($row->privmsgs_date, $this->timezone, $this->dst);
 				
@@ -622,26 +612,7 @@ abstract class Nova_messages extends Nova_controller_admin {
 				}
 				
 				// set the hidden TO field
-				$data['to'] = implode(',', $recipient_list) .','. $row->privmsgs_author_user;
-				
-				// send an array to the js view for disabling items in the list
-				$js_data['replyall'] = explode(',', $data['to']);
-				
-				// set the recipients list
-				$to_array = explode(',', $data['to']);
-				
-				$i = 1;
-				foreach ($to_array as $value)
-				{
-					$to_name = $this->char->get_character_name($this->user->get_main_character($value), true);
-					
-					$data['recipient_list'][$i] = '<span class="'. $value .'">';
-					$data['recipient_list'][$i].= '<a href="#" id="remove_recipient" class="image" myID="'. $value .'" myName="'.  $to_name .'">';
-					$data['recipient_list'][$i].= img($remove) .'</a>';
-					$data['recipient_list'][$i].= $to_name .'<br /></span>';
-					
-					++$i;
-				}
+				$data['recipient_list'] = implode(',', $recipient_list).','.$row->privmsgs_author_user;
 				
 				// is the RE: tag in the subject already?
 				$pos = strpos($row->privmsgs_subject, lang('abbr_reply'));
@@ -685,7 +656,7 @@ abstract class Nova_messages extends Nova_controller_admin {
 				$data['inputs']['message']['value'] = "\r\n\r\n\r\n==========\r\n\r\n";
 				$data['inputs']['message']['value'].= ucfirst(lang('time_from')) .': ';
 				$data['inputs']['message']['value'].= $this->char->get_character_name($row->privmsgs_author_character, true);
-				$data['inputs']['message']['value'].= "\r\n". ucfirst(lang('labels_to')) .': '. $to;
+				$data['inputs']['message']['value'].= "\r\n". ucfirst(lang('labels_to')).': '.str_replace(' &amp; ', ', ', $to);
 				$data['inputs']['message']['value'].= "\r\n". ucfirst(lang('labels_on')) .' ';
 				$data['inputs']['message']['value'].= mdate($this->options['date_format'], $date);
 				$data['inputs']['message']['value'].= "\r\n\r\n". $row->privmsgs_content;
@@ -708,26 +679,20 @@ abstract class Nova_messages extends Nova_controller_admin {
 			break;
 		}
 		
-		$data['images'] = array(
-			'add' => array(
-				'src' => Location::img('icon-add.png', $this->skin, 'admin'),
-				'class' => 'image fontSmall',
-				'alt' => lang('actions_add') .' '. lang('labels_author')),
-		);
-		
 		$data['label'] = array(
 			'add' => ucwords(lang('actions_add') .' '. lang('labels_recipient')),
-			'inbox' => LARROW .' '. ucfirst(lang('actions_back')) .' '. lang('labels_to') .' '.
-				ucfirst(lang('labels_inbox')),
+			'inbox' => LARROW.' '.ucfirst(lang('actions_back')).' '.lang('labels_to').' '.ucfirst(lang('labels_inbox')),
 			'message' => ucfirst(lang('labels_message')),
 			'on' => ucfirst(lang('labels_on')),
 			'subject' => ucfirst(lang('labels_subject')),
 			'to' => ucfirst(lang('labels_to')),
 			'wrote' => lang('actions_wrote') .':',
+			'select' => ucwords(lang('labels_please').' '.lang('actions_select')).' '.lang('labels_the').' '.ucfirst(lang('labels_recipients')),
+			'chosen_incompat' => lang('chosen_incompat'),
 		);
 		
 		$this->_regions['content'] = Location::view('messages_write', $this->skin, 'admin', $data);
-		$this->_regions['javascript'] = Location::js('messages_write_js', $this->skin, 'admin', $js_data);
+		$this->_regions['javascript'] = Location::js('messages_write_js', $this->skin, 'admin');
 		$this->_regions['title'].= $data['header'];
 		
 		Template::assign($this->_regions);
