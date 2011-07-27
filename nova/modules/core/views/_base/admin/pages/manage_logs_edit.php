@@ -11,12 +11,12 @@
 			<?php echo text_output(ucfirst($inputs['status']), ''); ?>
 			<?php echo form_hidden('log_status', $inputs['status']);?>
 		<?php endif; ?>
-	</p><br />
+	</p>
 	
 	<p>
 		<kbd><?php echo $label['author'];?></kbd>
 		<?php if (Auth::get_access_level() == 2): ?>
-			<?php echo form_dropdown('log_author', $all, $inputs['author']);?>
+			<?php echo form_dropdown('log_author', $all, $inputs['author'], 'class="chosen"');?>
 		<?php else: ?>
 			<?php echo text_output($inputs['character'], ''); ?>
 			<?php echo form_hidden('log_author', $inputs['author']);?>
