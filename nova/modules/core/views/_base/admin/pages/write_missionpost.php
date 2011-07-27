@@ -26,6 +26,7 @@
 		<?php if (isset($all_characters) and is_array($all_characters)): ?>
 			<p>
 				<kbd><?php echo $label['authors'];?></kbd>
+				<span id="chosen-incompat" class="gray fontSmall bold hidden"><?php echo $label['chosen_incompat'];?><br /><br /></span>
 				<?php echo form_multiselect('authors[]', $all_characters, $authors_selected, 'id="all" class="chosen" title="'.$label['select'].'"');?>
 			</p>
 		<?php endif;?>
