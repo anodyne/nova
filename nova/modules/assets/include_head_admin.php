@@ -29,6 +29,7 @@ $chosencss = ( ! is_file(APPPATH .'views/'.$current_skin.'/admin/css/jquery.chos
 			@import url('<?php echo base_url().MODFOLDER;?>/assets/js/css/jquery.ui.core.css');
 			@import url('<?php echo $faceboxcss;?>');
 			@import url('<?php echo $uiTheme;?>');
+			@import url('<?php echo base_url().MODFOLDER;?>/assets/js/css/jquery.chosen.structure.css');
 			
 			#content-textarea, #message-textarea { max-height: 650px; }
 		</style>
