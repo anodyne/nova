@@ -16,6 +16,9 @@ abstract class Nova_manage extends Nova_controller_admin {
 	public function __construct()
 	{
 		parent::__construct();
+		
+		// load the user agent library
+		$this->load->library('user_agent');
 	}
 
 	public function awards($action = false, $award = false)
@@ -1819,6 +1822,9 @@ abstract class Nova_manage extends Nova_controller_admin {
 			);
 			
 			$js_data['tab'] = 0;
+			
+			// figure out where the view should be coming from
+			$view_loc = 'manage_logs_edit';
 		}
 		else
 		{
@@ -1853,9 +1859,12 @@ abstract class Nova_manage extends Nova_controller_admin {
 			);
 			
 			$data['header'] = ucwords(lang('actions_manage') .' '. lang('global_personallogs'));
+			
+			// figure out where the view should be coming from
+			$view_loc = 'manage_logs';
 		}
 		
-		$this->_regions['content'] = Location::view('manage_logs', $this->skin, 'admin', $data);
+		$this->_regions['content'] = Location::view($view_loc, $this->skin, 'admin', $data);
 		$this->_regions['javascript'] = Location::js('manage_logs_js', $this->skin, 'admin', $js_data);
 		$this->_regions['title'].= $data['header'];
 		
