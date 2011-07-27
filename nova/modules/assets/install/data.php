@@ -2319,6 +2319,11 @@ $system_components = array(
 		'comp_version' => '1.7.5',
 		'comp_desc' => "Uniform masks your standard form controls with custom themed controls. It works in sync with your real form elements to ensure accessibility and compatibility.",
 		'comp_url' => 'http://github.com/pixelmatrix/uniform'),
+	array(
+		'comp_name' => 'Chosen',
+		'comp_version' => '',
+		'comp_desc' => "Chosen is a JavaScript plugin that makes long, unwieldy select boxes much more user-friendly.",
+		'comp_url' => 'http://harvesthq.github.com/chosen/'),
 );
 
 $system_info = array(

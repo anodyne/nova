@@ -302,6 +302,15 @@ $additem = array(
 );
 $this->db->insert('system_components', $additem);
 
+// add the chosen plugin to the list of components
+$additem = array(
+	'comp_name' => 'Chosen',
+	'comp_version' => '',
+	'comp_desc' => "Chosen is a JavaScript plugin that makes long, unwieldy select boxes much more user-friendly.",
+	'comp_url' => 'http://harvesthq.github.com/chosen/'
+);
+$this->db->insert('system_components', $additem);
+
 // add the use_post_participants setting
 $additem = array(
 	'setting_key' => 'use_post_participants',

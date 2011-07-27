@@ -4,7 +4,7 @@
 	<p>
 		<kbd><?php echo $label['author'];?></kbd>
 		<?php if (isset($characters)): ?>
-			<?php echo form_dropdown('author', $characters, $key);?>
+			<?php echo form_dropdown('author', $characters, $key, 'class="chosen"');?>
 		<?php else: ?>
 			<?php echo text_output($character['name'], ''); ?>
 			<?php echo form_hidden('author', $character['id']);?>

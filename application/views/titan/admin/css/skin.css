@@ -53,8 +53,6 @@ body > #wrap {
 	
 	border-radius: 0 0 10px 10px;
 	-moz-border-radius: 0 0 10px 10px;
-	-webkit-border-bottom-left-radius: 10px;
-	-webkit-border-bottom-right-radius: 10px;
 }
 #head .head_content {
 	height: 58px;
@@ -116,7 +114,7 @@ body > #wrap {
 	color: #1a467b;
 	text-shadow: 1px 1px 1px rgba(255, 255, 255, .7);
 	border-left: 1px solid #bbd5f6;
-	boder-right: 1px solid #bbd5f6;
+	border-right: 1px solid #bbd5f6;
 	border-left: 1px solid rgba(255, 255, 255, .3);
 	border-right: 1px solid rgba(255, 255, 255, .3);
 	border-bottom: 0;
@@ -136,8 +134,6 @@ body > #wrap {
 	
 	border-radius: 10px 10px 0 0;
 	-moz-border-radius: 10px 10px 0 0;
-	-webkit-border-top-left-radius: 10px;
-	-webkit-border-top-right-radius: 10px;
 }
 
 .nav-sub {
@@ -205,8 +201,6 @@ body > #wrap {
 	
 	border-radius: 10px 10px 0 0;
 	-moz-border-radius: 10px 10px 0 0;
-	-webkit-border-top-left-radius: 10px;
-	-webkit-border-top-right-radius: 10px;
 }
 
 /*
@@ -248,7 +242,6 @@ input[type=password] {
 	
 	border-radius: 2px;
 	-moz-border-radius: 2px;
-	-webkit-border-radius: 2px;
 }
 input[type=text]:focus,
 input[type=password]:focus {
@@ -266,7 +259,6 @@ textarea {
 	
 	border-radius: 2px;
 	-moz-border-radius: 2px;
-	-webkit-border-radius: 2px;
 }
 textarea:focus {
 	color: #eee;
@@ -282,7 +274,6 @@ select {
 	
 	border-radius: 2px;
 	-moz-border-radius: 2px;
-	-webkit-border-radius: 2px;
 }
 select:focus,
 select:hover {
@@ -324,7 +315,6 @@ th {
 button {
 	border-radius: 25px;
 	-moz-border-radius: 25px;
-	-webkit-border-radius: 25px;
 	
 	font-weight: bold;
 	font-size: 105%;
@@ -414,7 +404,6 @@ input.button-main[disabled]:hover {
     
     border-radius: 3px;
     -moz-border-radius: 3px;
-    -webkit-border-radius: 3px;
 }
 
 .border-1 { border: 1px solid #111; }
@@ -446,7 +435,6 @@ ol.roman { list-style: upper-roman; }
 	
 	border-radius: 5px;
 	-moz-border-radius: 5px;
-	-webkit-border-radius: 5px;
 }
 .flash-success {
 	border: 1px solid #108500;
@@ -490,17 +478,15 @@ hr {
 	border: 1px solid #333;
 	background: #111;
 	
-	-moz-border-radius-topleft: 4px;
-	-moz-border-radius-topright: 4px;
-	-webkit-border-top-left-radius: 4px;
-	-webkit-border-top-right-radius: 4px;
+	border-radius: 4px 4px 0 0;
+	-moz-border-radius: 4px 4px 0 0;
 }
 .panel {
 	background: #000;
 	border-left: 1px solid #333;
 	
-	-moz-border-radius-topright: 4px;
-	-webkit-border-top-right-radius: 4px;
+	border-radius: 0 4px 0 4px;
+	-moz-border-radius: 0 4px 0 4px;
 }
 #panelmenu { list-style: none; }
 #panelmenu li a {
@@ -536,18 +522,16 @@ hr {
 	border: 1px solid #333;
 	border-top: none;
 	
-	-moz-border-radius-bottomleft: 4px;
-	-moz-border-radius-bottomright: 4px;
-	-webkit-border-bottom-left-radius: 4px;
-	-webkit-border-bottom-right-radius: 4px;
+	border-radius: 0 0 4px 4px;
+	-moz-border-radius: 0 0 4px 4px;
 }
 
 .count {
 	font-weight: bold;
 	font-size: 90%;
 	
+	border-radius: 12px;
 	-moz-border-radius: 12px;
-	-webkit-border-radius: 12px;
 }
 
 table.acp {
@@ -629,7 +613,5 @@ table.acp {
 	
 	border-radius: 0 0 6px 6px;
 	-moz-border-radius: 0 0 6px 6px;
-	-webkit-border-bottom-left-radius: 6px;
-	-webkit-border-bottom-right-radius: 6px;
 }
 .panel-controls a:hover { border: 0; }

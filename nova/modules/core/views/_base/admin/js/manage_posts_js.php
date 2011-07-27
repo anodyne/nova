@@ -2,6 +2,17 @@
 
 <script type="text/javascript">
 	$(document).ready(function(){
+		
+		// using the CI user agent library instead of jquery's $.browser since the latter is deprecated
+		var browser = "<?php echo $this->agent->browser();?>";
+		var version = parseFloat("<?php echo $this->agent->version();?>");
+		
+		// check to see if we should be using the Chosen plugin
+		if (browser == 'Internet Explorer' && version < 8)
+			$('#chosen-incompat').show();
+		else
+			$('.chosen').chosen();
+			
 		$('#tabs').tabs();
 		$('#tabs').tabs('select', <?php echo $tab;?>);
 		
@@ -27,43 +38,6 @@
 					$.facebox(data);
 				});
 			});
-			
-			return false;
-		});
-		
-		$('a#add_author').click(function() {
-			var user = $('#all').val();
-			var hidden = $('#authors_hidden').val();
-			var name = $("option[value='" + user + "']").html();
-			
-			if (user != 0 && $("#all option[value='" + user + "']").is(':disabled') == false)
-			{
-				if (hidden == 0)
-				{
-					hidden = '';
-				}
-				
-				$('#authors_hidden').val(hidden + ',' + user + ',');
-				
-				$('#authors').append('<span class="' + user + '"><a href="#" id="remove_author" class="image" myID="' + user + '" myName="' + name + '"><?php echo $remove;?></a>' + name + '<br /></span>');
-				
-				$("#all option[value='" + user + "']").prop({ disabled: true });
-			}
-			
-			return false;
-		});
-		
-		$('a#remove_author').live('click', function(event) {
-			var user = $(this).attr('myID');
-			var name = $(this).attr('myName');
-			var hidden = $('#authors_hidden').val();
-			var new_hidden = hidden.replace(user, "");
-			
-			$('#authors_hidden').val(new_hidden);
-			
-			$('#authors span.' + user).remove();
-			
-			$("#all option[value='" + user + "']").prop({ disabled: false });
 			
 			return false;
 		});

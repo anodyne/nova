@@ -16,6 +16,9 @@ abstract class Nova_manage extends Nova_controller_admin {
 	public function __construct()
 	{
 		parent::__construct();
+		
+		// load the user agent library
+		$this->load->library('user_agent');
 	}
 
 	public function awards($action = false, $award = false)
@@ -1819,6 +1822,9 @@ abstract class Nova_manage extends Nova_controller_admin {
 			);
 			
 			$js_data['tab'] = 0;
+			
+			// figure out where the view should be coming from
+			$view_loc = 'manage_logs_edit';
 		}
 		else
 		{
@@ -1853,9 +1859,12 @@ abstract class Nova_manage extends Nova_controller_admin {
 			);
 			
 			$data['header'] = ucwords(lang('actions_manage') .' '. lang('global_personallogs'));
+			
+			// figure out where the view should be coming from
+			$view_loc = 'manage_logs';
 		}
 		
-		$this->_regions['content'] = Location::view('manage_logs', $this->skin, 'admin', $data);
+		$this->_regions['content'] = Location::view($view_loc, $this->skin, 'admin', $data);
 		$this->_regions['javascript'] = Location::js('manage_logs_js', $this->skin, 'admin', $js_data);
 		$this->_regions['title'].= $data['header'];
 		
@@ -3386,13 +3395,13 @@ abstract class Nova_manage extends Nova_controller_admin {
 						'post_last_update' => now(),
 					);
 					
-					$to = explode(',', $_POST['to']);
+					$authors = $this->input->post('authors', true);
 					
-					foreach ($to as $a => $b)
+					foreach ($authors as $a => $b)
 					{
 						if (empty($b))
 						{
-							unset($to[$a]);
+							unset($authors[$a]);
 						}
 						
 						// get the user ID
@@ -3410,10 +3419,10 @@ abstract class Nova_manage extends Nova_controller_admin {
 						}
 					}
 					
-					$authors = implode(',', $to);
+					$authors = implode(',', $authors);
 					$authors_users = implode(',', $users);
 					
-					$update_array['post_authors'] = $this->input->xss_clean($authors);
+					$update_array['post_authors'] = $authors;
 					$update_array['post_authors_users'] = $authors_users;
 					
 					$update = $this->posts->update_post($id, $update_array);
@@ -3487,65 +3496,83 @@ abstract class Nova_manage extends Nova_controller_admin {
 			
 			if ($all->num_rows() > 0)
 			{
-				$data['all'][0] = ucwords(lang('labels_please') .' '. lang('actions_select')
-					.' '. lang('labels_an') .' '. lang('labels_author'));
-				
 				foreach ($all->result() as $a)
 				{
-					if ($a->crew_type == 'active' or $a->crew_type == 'npc')
+					if (in_array($a->charid, $this->session->userdata('characters')))
 					{
-						if ($a->crew_type == 'active')
-						{
-							$label = ucwords(lang('status_playing') .' '. lang('global_characters'));
-						}
-						else
-						{
-							$label = ucwords(lang('abbr_npcs'));
-						}
-						
-						// if it's a linked NPC, show the main character that owns the NPC
-						$add = ($a->crew_type == 'npc' and $a->user > 0)
-							? " (".ucfirst(lang('labels_linked').' '.lang('labels_to').' ').
-								$this->char->get_character_name($this->user->get_main_character($a->user), true).")"
-							: false;
-						
-						// toss them in the array
-						$data['all'][$label][$a->charid] = $this->char->get_character_name($a->charid, true).$add;
+						$label = ucwords(lang('labels_my') .' '. lang('global_characters'));
 					}
+					else
+					{
+						if ($a->crew_type == 'active' or $a->crew_type == 'npc')
+						{
+							if ($a->crew_type == 'active' and !in_array($a->charid, $this->session->userdata('characters')))
+							{
+								$label = ucwords(lang('status_playing') .' '. lang('global_characters'));
+							}
+							else
+							{
+								if ($a->user > 0)
+								{
+									$label = ucwords(lang('labels_linked') .' '. lang('abbr_npcs'));
+								}
+								else
+								{
+									$label = ucwords(lang('labels_unlinked') .' '. lang('abbr_npcs'));
+								}
+							}
+						}
+					}
+					
+					// if it's a linked NPC, show the main character that owns the NPC
+					$add = ($label == ucwords(lang('labels_linked') .' '. lang('abbr_npcs')))
+						? " (".ucfirst(lang('labels_linked').' '.lang('labels_to').' ').$this->char->get_character_name($this->user->get_main_character($a->user), true).")"
+						: false;
+					
+					// toss them in the array
+					$allchars[$label][$a->charid] = $this->char->get_character_name($a->charid, true).$add;
+				}
+				
+				$data['all_characters'] = array();
+				
+				$key = ucwords(lang('labels_my') .' '. lang('global_characters'));
+				if (isset($allchars[$key]))
+				{
+					$data['all_characters'][$key] = $allchars[$key];
+				}
+				
+				$key = ucwords(lang('status_playing') .' '. lang('global_characters'));
+				if (isset($allchars[$key]))
+				{
+					$data['all_characters'][$key] = $allchars[$key];
+				}
+				
+				$key = ucwords(lang('labels_linked') .' '. lang('abbr_npcs'));
+				if (isset($allchars[$key]))
+				{
+					$data['all_characters'][$key] = $allchars[$key];
+				}
+				
+				$key = ucwords(lang('labels_unlinked') .' '. lang('abbr_npcs'));
+				if (isset($allchars[$key]))
+				{
+					$data['all_characters'][$key] = $allchars[$key];
 				}
 			}
-			
-			// build the remove image
-			$remove = array(
-				'src' => Location::img('minus-circle.png', $this->skin, 'admin'),
-				'class' => 'image fontSmall inline_img_left',
-				'alt' => ucfirst(lang('actions_remove'))
-			);
+			else
+			{
+				$data['all_characters'] = false;
+			}
 			
 			// prep the data for sending to the js view
-			$js_data['remove'] = img($remove);
 			$js_data['tab'] = 0;
+			
+			$data['authors_selected'] = array();
 			
 			if ($row !== false)
 			{
-				// set the hidden TO field
-				$data['to'] = $row->post_authors;
-				
-				// set the recipients list
-				$to_array = explode(',', $data['to']);
-				
-				$i = 1;
-				foreach ($to_array as $value)
-				{
-					$to_name = $this->char->get_character_name($value, true);
-					
-					$data['recipient_list'][$i] = '<span class="'. $value .'">';
-					$data['recipient_list'][$i].= '<a href="#" id="remove_author" class="image" myID="'. $value .'" myName="'.  $to_name .'">';
-					$data['recipient_list'][$i].= img($remove) .'</a>';
-					$data['recipient_list'][$i].= $to_name .'<br /></span>';
-					
-					++$i;
-				}
+				// set the list of selected authors
+				$data['authors_selected'] = explode(',', $row->post_authors);
 			}
 			
 			// set the data used by the view
@@ -3595,13 +3622,6 @@ abstract class Nova_manage extends Nova_controller_admin {
 					'content' => ucfirst(lang('actions_update'))),
 			);
 			
-			$data['images'] = array(
-				'add' => array(
-					'src' => Location::img('icon-add.png', $this->skin, 'admin'),
-					'class' => 'image fontSmall',
-					'alt' => lang('actions_add') .' '. lang('labels_author')),
-			);
-			
 			$data['header'] = ucwords(lang('actions_edit') .' '. lang('global_missionpost'));
 			$data['id'] = $id;
 			
@@ -3619,6 +3639,8 @@ abstract class Nova_manage extends Nova_controller_admin {
 				'addauthor' => ucwords(lang('actions_add') .' '. lang('labels_author')),
 				'authors' => ucfirst(lang('labels_authors')),
 				'date' => ucfirst(lang('labels_date')),
+				'chosen_incompat' => lang('chosen_incompat'),
+				'select' => ucwords(lang('labels_please').' '.lang('actions_select')).' '.lang('labels_the').' '.ucfirst(lang('labels_authors')),
 			);
 			
 			// figure out where the view should be coming from
