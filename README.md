@@ -62,6 +62,7 @@ Anodyne Production's next-generation RPG management system combines popular feat
 * fixed several potential security issues
 * fixed bug where positions weren't properly updated when deleting an active character
 * fixed some Pulsar styling issues in IE9
+* fixed some Titan styling issues in IE9
 
 ## Version History
 
