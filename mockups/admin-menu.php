@@ -3,7 +3,7 @@
 $dbhost = "localhost";
 $dbuser = "nova";
 $dbpass = "";
-$dbname = "nova3_upgrade_nova1";
+$dbname = "nova2_install";
 
 $conn = mysql_connect($dbhost, $dbuser, $dbpass) or die ('Error connecting to mysql');
 mysql_select_db($dbname);
