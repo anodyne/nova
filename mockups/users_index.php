@@ -21,7 +21,9 @@
 				};
 			})();
 			
-			$(function(){
+			$(document).ready(function(){
+				$('table.zebra tbody > tr:nth-child(odd)').addClass('alt');
+				
 				var wait = 600;
 				
 				$("#sidebar a").mousedown(function(e){
@@ -78,10 +80,6 @@
 						});
 					}
 				});
-			});
-			
-			$(document).ready(function(){
-				$('table.zebra tbody > tr:nth-child(odd)').addClass('alt');
 				
 				$('[rel=change_user_view]').click(function(){
 					var view = $(this).attr('id');
@@ -166,6 +164,18 @@
 						});
 					}, 500);
 				});
+				
+				$('.add-switch').click(function(){
+					var item = $(this).attr('rel');
+					$('#add-' + item).fadeIn();
+					return false;
+				});
+				
+				$('.add-cancel').click(function(){
+					var item = $(this).attr('rel');
+					$('#add-' + item).fadeOut();
+					return false;
+				});
 			});
 			
 			// if the escape key is pressed, close the menu
@@ -187,7 +197,7 @@
 		
 		<div class="wrapper">
 			<section>
-				<div id="sidebar">
+				<div id="navbar">
 					<ul>
 						<li><a href="#" rel="admin"><span class="navicn navicn-admin"></span>main</a></li>
 						<li><a href="#" rel="write"><span class="navicn navicn-write"></span>write</a></li>
@@ -214,7 +224,15 @@
 					</h1>
 					
 					<div class="inner">
-						<div class="callout">
+						<p>
+							<button rel="user" class="btn-main add-switch">Add User</button>
+							&nbsp;
+							<button rel="character" class="btn-main add-switch">Add Character to User</button>
+						</p>
+						
+						<div id="add-user" class="callout hidden">
+							<div class="float-right"><a href="#" rel="user" class="add-cancel">Cancel</a></div>
+							
 							<h2 class="page-subhead">Add User</h2>
 							
 							<p>You can add a new user to the system by entering their name and email address and clicking submit. During creation, a password will be generated for the user and emailed to them along with the rest of their information.</p>
@@ -235,7 +253,9 @@
 							</table>
 						</div>
 						
-						<div class="callout">
+						<div id="add-character" class="callout hidden">
+							<div class="float-right"><a href="#" rel="character" class="add-cancel">Cancel</a></div>
+							
 							<h2 class="page-subhead">Add Character to User Account</h2>
 							
 							<p>You can add characters to a user's account by entering the user name or email address and entering the name of the character. During creation, the user will be emailed to notify them of the new character associated with their account.</p>

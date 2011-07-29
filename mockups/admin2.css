@@ -2,12 +2,8 @@ body {
 	background: #d3d3d3 url(images/admin/body-bg.jpg) repeat top left;
 }
 
-header {
-	border-color: #ccc;
-}
-header h1 {
-	line-height: 75px;
-}
+header { border-color: #ccc; }
+header h1 { line-height: 75px; }
 
 section {
 	position: relative;
@@ -20,7 +16,7 @@ section {
 	-webkit-box-shadow: 0 3px 9px rgba(0, 0, 0, .6);
 }
 
-#sidebar {
+#navbar {
 	position: relative;
 	width: 100%;
 	height: 70px;
@@ -28,17 +24,17 @@ section {
 	border-radius: 4px 4px 0 0;
 	-moz-border-radius: 4px 4px 0 0;
 }
-#sidebar ul {
+#navbar ul {
 	list-style: none;
 	margin: 0;
 	padding: 0;
 }
-#sidebar ul li {
+#navbar ul li {
 	float: left;
 	width: 12.5%;
 	text-align: center;
 }
-#sidebar ul li a {
+#navbar ul li a {
 	position: relative;
 	display: block;
 	padding: 8px 0;
@@ -57,13 +53,12 @@ section {
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#eeeeee', endColorstr='#e3e3e3',GradientType=0 );
 	background: linear-gradient(top, #eeeeee 0%,#e3e3e3 100%);
 }
-#sidebar ul li a:hover { color: #777; }
-#sidebar ul li a.active {
+#navbar ul li a:hover { color: #777; }
+#navbar ul li a.active {
 	z-index: 2000;
 	padding-bottom: 9px;
 	color: #237fd7;
 	border-bottom: none;
-	
 	background: #ffffff;
 	background: -moz-linear-gradient(top, #ffffff 0%, #f5f5f5 100%);
 	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(100%,#f5f5f5));
@@ -74,13 +69,13 @@ section {
 	background: linear-gradient(top, #ffffff 0%,#f5f5f5 100%);
 }
 
-#sidebar ul li:first-child,
-#sidebar ul li:first-child a {
+#navbar ul li:first-child,
+#navbar ul li:first-child a {
 	border-radius: 4px 0 0 0;
 	-moz-border-radius: 4px 0 0 0;
 }
-#sidebar ul li:last-child,
-#sidebar ul li:last-child a {
+#navbar ul li:last-child,
+#navbar ul li:last-child a {
 	border-right: none;
 	border-radius: 0 4px 0 0;
 	-moz-border-radius: 0 4px 0 0;
@@ -98,14 +93,14 @@ section {
 a:hover .navicn { background-position: center -30px; }
 a.active .navicn { background-position: center -60px; }
 
-.navicn-admin { background-image: url(images/admin/nav-admin.png); }
-.navicn-write { background-image: url(images/admin/nav-write.png); }
-.navicn-messages { background-image: url(images/admin/nav-messages.png); }
-.navicn-site { background-image: url(images/admin/nav-site.png); }
-.navicn-manage { background-image: url(images/admin/nav-manage.png); }
-.navicn-characters { background-image: url(images/admin/nav-characters.png); }
-.navicn-users { background-image: url(images/admin/nav-users.png); }
-.navicn-reports { background-image: url(images/admin/nav-reports.png); }
+.navicn-admin		{ background-image: url(images/admin/nav-admin.png); }
+.navicn-write		{ background-image: url(images/admin/nav-write.png); }
+.navicn-messages	{ background-image: url(images/admin/nav-messages.png); }
+.navicn-site		{ background-image: url(images/admin/nav-site.png); }
+.navicn-manage		{ background-image: url(images/admin/nav-manage.png); }
+.navicn-characters	{ background-image: url(images/admin/nav-characters.png); }
+.navicn-users		{ background-image: url(images/admin/nav-users.png); }
+.navicn-reports		{ background-image: url(images/admin/nav-reports.png); }
 
 #subnav-popup {
 	top: 0;
@@ -265,13 +260,10 @@ p { margin: 0 0 14px 0; }
 .callout {
 	padding: 1em;
 	margin: 1em 0 2em 0;
-	
 	background: #f3f3f3;
 	border: 1px solid #ccc;
-	
 	border-radius: 3px;
 	-moz-border-radius: 3px;
-	
 	box-shadow: 0 1px 4px rgba(0, 0, 0, .15);
 	-moz-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 1), 0 1px 2px rgba(0, 0, 0, .1);
 	-webkit-box-shadow: 0 1px 4px rgba(0, 0, 0, .15);

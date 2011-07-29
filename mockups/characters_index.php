@@ -2,7 +2,7 @@
 <html>
 	<head>
 		<meta charset="utf-8">
-		<title>Nova 3 :: Admin Control Panel</title>
+		<title>Nova 3 :: Characters</title>
 		
 		<link rel="stylesheet" href="../nova/app/views/design/style.css">
 		<link rel="stylesheet" href="admin2.css">
@@ -13,8 +13,8 @@
 		
 		<script type="text/javascript" src="../nova/modules/assets/js/jquery.js"></script>
 		<script type="text/javascript">
-			$(function(){
-				var menuDelay = 600;
+			$(document).ready(function(){
+				var wait = 600;
 				
 				$("#sidebar a").mousedown(function(e){
 					var that = $(this);
@@ -27,10 +27,10 @@
 						return;
 					}
 					
-					$(this).data("menuDelay", {
+					$(this).data("wait", {
 						"leavepage": true,
 						"todo": setTimeout(function(){
-							that.data("menuDelay").leavepage = false;
+							that.data("wait").leavepage = false;
 							
 							// hide everything first
 							$('#subnav-popup').fadeOut('fast');
@@ -45,12 +45,12 @@
 									$('#subnav-popup').css('top', relative).fadeIn('fast');
 								}
 							});
-					}, menuDelay)});
+					}, wait)});
 					
 					return false;
 				}).click(function(){
-					clearTimeout($(this).data("menuDelay").todo);
-					return $(this).data("menuDelay").leavepage;
+					clearTimeout($(this).data("wait").todo);
+					return $(this).data("wait").leavepage;
 				});
 				
 				$('#section-nav-trigger').click(function(){
@@ -62,13 +62,25 @@
 						$.ajax({
 							type: "POST",
 							url: "http://localhost/nova/mockups/admin-menu.php",
-							data: {section: 'write'},
+							data: {section: 'user'},
 							dataType: 'html',
 							success: function(data){
 								$('#section-nav').html(data).fadeIn('fast');
 							}
 						});
 					}
+				});
+				
+				$('.add-switch').click(function(){
+					var item = $(this).attr('rel');
+					$('#add-' + item).fadeIn();
+					return false;
+				});
+				
+				$('.add-cancel').click(function(){
+					var item = $(this).attr('rel');
+					$('#add-' + item).fadeOut();
+					return false;
 				});
 			});
 			
@@ -94,11 +106,11 @@
 				<div id="navbar">
 					<ul>
 						<li><a href="#" rel="admin"><span class="navicn navicn-admin"></span>main</a></li>
-						<li><a href="#" rel="write" class="active"><span class="navicn navicn-write"></span>write</a></li>
+						<li><a href="#" rel="write"><span class="navicn navicn-write"></span>write</a></li>
 						<li><a href="#" rel="messages"><span class="navicn navicn-messages"></span>messages</a></li>
 						<li><a href="#" rel="site"><span class="navicn navicn-site"></span>site</a></li>
 						<li><a href="#" rel="manage"><span class="navicn navicn-manage"></span>manage</a></li>
-						<li><a href="#" rel="characters"><span class="navicn navicn-characters"></span>characters</a></li>
+						<li><a href="#" rel="characters" class="active"><span class="navicn navicn-characters"></span>characters</a></li>
 						<li><a href="#" rel="user"><span class="navicn navicn-users"></span>users</a></li>
 						<li><a href="#" rel="report"><span class="navicn navicn-reports"></span>reports</a></li>
 					</ul>
@@ -111,14 +123,47 @@
 				
 				<div id="content">
 					<h1 class="page-head">
-						<div id="section-nav-trigger"><div class="arrow"></div>Writing Control Panel</div>
+						<div id="section-nav-trigger"><div class="arrow"></div>Characters</div>
 						<div id="section-nav"></div>
 						
-						Writing Control Panel
+						Character Management
 					</h1>
 					
 					<div class="inner">
-						Content
+						<p><button rel="character" class="btn-main add-switch">Add Character</button></p>
+						
+						<div id="add-character" class="callout hidden">
+							<div class="float-right"><a href="#" rel="character" class="add-cancel">Cancel</a></div>
+							
+							<h2 class="page-subhead">Add Character</h2>
+							
+							<p>You can add a new character to the system by entering their name, position and rank.</p>
+							
+							<table class="tableAuto">
+								<tbody>
+									<tr>
+										<td><kbd>Name</kbd></td>
+										<td><kbd>Position</kbd></td>
+										<td><kbd>Rank</kbd></td>
+										<td></td>
+									</tr>
+									<tr>
+										<td><input type="text" name="name" placeholder="Name"></td>
+										<td>
+											<select>
+												<option value="">Select a Position</option>
+											</select>
+										</td>
+										<td>
+											<select>
+												<option value="">Select a Rank</option>
+											</select>
+										</td>
+										<td><button class="btn-main">Submit</button></td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
 					</div>
 				</div>
 			</section>

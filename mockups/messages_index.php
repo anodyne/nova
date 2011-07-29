@@ -149,7 +149,7 @@ $messages = array(
 		
 		<div class="wrapper">
 			<section>
-				<div id="sidebar">
+				<div id="navbar">
 					<ul>
 						<li><a href="#" rel="admin"><span class="navicn navicn-admin"></span>main</a></li>
 						<li><a href="#" rel="write"><span class="navicn navicn-write"></span>write</a></li>
