@@ -257,6 +257,8 @@ h1 {
 	background: linear-gradient(top, #f5f5f5 0%,#ececec 100%);
 }
 
+p { margin: 0 0 14px 0; }
+
 /**
  * Styles for the callouts
  */
@@ -279,7 +281,7 @@ h1 {
  * Styles for the inbox
  */
 #inbox {
-	margin: -1em;
+	margin: 0 -1em -1em -1em;
 	height: 600px;
 	border-top: 1px solid #ccc;
 }
@@ -287,9 +289,11 @@ h1 {
 #inbox .msg-list {
 	float: left;
 	width: 40%;
-	height: 590px;
+	height: 600px;
 	overflow: auto;
 	color: #777;
+	border-radius: 0 0 0 4px;
+	-moz-border-radius: 0 0 0 4px;
 }
 #inbox .msg-list strong { color: #111; }
 #inbox .msg-list a {
@@ -309,38 +313,60 @@ h1 {
 #inbox .msg-list-item-icons {
 	float: left;
 	display: block;
-	width: 35px;
+	width: 16px;
 	height: 16px;
-	padding: 15px 0;
+	padding: 3px 0;
 }
 #inbox .msg-list-item-date {
 	float: right;
 	display: block;
 	width: 95px;
-	height: 46px;
-	line-height: 46px;
 	text-align: right;
 }
-#inbox .msg-list-item-content {
-	margin: 0 100px 0 40px;
-	height: 46px;
+#inbox .msg-list-item-author {
+	margin: 0 100px 0 26px;
+	font-weight: bold;
+	color: #000;
+}
+#inbox .msg-list-item-subject {
+	margin: 0 0 0 27px;
 }
 
 #inbox .msg-content {
 	float: right;
 	width: 60%;
-	height: 590px;
+	height: 600px;
 	overflow: auto;
+	border-radius: 0 0 4px 0;
+	-moz-border-radius: 0 0 4px 0;
 }
 #inbox .msg-content .msg-content-info {
 	position: relative;
-	display: block;
 	padding: .5em 1em;
 	background: #eee;
 	border-bottom: 1px solid #ccc;
 }
 #inbox .msg-content .msg-content-body {
 	position: relative;
-	display: block;
 	padding: 0 2em;
 }
+#inbox .msg-content .msg-content-body p {
+	margin: 12px 0;
+}
+
+#inbox .msg-content .msg-content-select {
+	height: 100%;
+	width: 100%;
+	background: #eee url(images/admin/inbox-select.jpg) no-repeat top left;
+	box-shadow: inset 1px 0 0 #ccc;
+	-moz-box-shadow: inset 1px 0 0 #ccc;
+	-webkit-box-shadow: inset 1px 0 0 #ccc;
+}
+
+.inbox-selected { background: #466bd7; }
+.inbox-selected .msg-list-item-author,
+.inbox-selected .msg-list-item-subject {
+	color: #fff !important;
+	text-shadow: 0 1px 1px rgba(0, 0, 0, .4);
+}
+.inbox-selected .msg-list-item-date { color: #b0c1ec !important; }

@@ -1,4 +1,23 @@
-<!DOCTYPE html>
+<?php
+
+$messages = array(
+	0 => array(
+		'author' => 'Jack Sparrow',
+		'subject' => 'Ahoy!',
+		'recipients' => 'Captain Barbossa, Me',
+		'status' => 'unread',
+		'date' => '02/01/2011',
+		'content' => "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam pharetra auctor ante, vel dictum velit congue et. Etiam sit amet tellus risus. Aliquam sem leo, tempor eget adipiscing non, rhoncus a nunc. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Sed euismod, nulla in condimentum tristique, dolor risus adipiscing risus, eget lobortis tortor nulla fringilla magna. Praesent et lacus et odio feugiat auctor et vitae erat. Phasellus dictum purus eu quam varius et lacinia elit mattis. Fusce sodales metus a dui tempor ac aliquam libero vehicula. Morbi semper leo a erat malesuada ac sollicitudin libero dictum. Phasellus ultrices leo at ligula tincidunt non congue dolor pellentesque. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p><p>In hac habitasse platea dictumst. Maecenas malesuada feugiat libero vel sollicitudin. Cras in augue id justo commodo dignissim nec tincidunt lorem. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Nulla accumsan, lacus sed ultrices tempor, augue nisi vehicula turpis, ac eleifend quam lectus fermentum odio. Aenean ut felis lacus, vitae elementum orci. Proin eu pharetra justo. Phasellus aliquam tortor quis purus sollicitudin nec tempor velit dapibus. Duis sodales laoreet orci, quis porttitor felis accumsan quis. Proin accumsan, eros sit amet tempor vestibulum, velit lorem sodales ligula, eu porta orci est ut mi. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.</p>"),
+	1 => array(
+		'author' => 'Starbuck',
+		'subject' => 'Frakking Awesome',
+		'recipients' => 'Me',
+		'status' => 'unread',
+		'date' => '01/01/2011',
+		'content' => "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam pharetra auctor ante, vel dictum velit congue et. Etiam sit amet tellus risus. Aliquam sem leo, tempor eget adipiscing non, rhoncus a nunc. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Sed euismod, nulla in condimentum tristique, dolor risus adipiscing risus, eget lobortis tortor nulla fringilla magna. Praesent et lacus et odio feugiat auctor et vitae erat. Phasellus dictum purus eu quam varius et lacinia elit mattis. Fusce sodales metus a dui tempor ac aliquam libero vehicula. Morbi semper leo a erat malesuada ac sollicitudin libero dictum. Phasellus ultrices leo at ligula tincidunt non congue dolor pellentesque. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p><p>In hac habitasse platea dictumst. Maecenas malesuada feugiat libero vel sollicitudin. Cras in augue id justo commodo dignissim nec tincidunt lorem. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Nulla accumsan, lacus sed ultrices tempor, augue nisi vehicula turpis, ac eleifend quam lectus fermentum odio. Aenean ut felis lacus, vitae elementum orci. Proin eu pharetra justo. Phasellus aliquam tortor quis purus sollicitudin nec tempor velit dapibus. Duis sodales laoreet orci, quis porttitor felis accumsan quis. Proin accumsan, eros sit amet tempor vestibulum, velit lorem sodales ligula, eu porta orci est ut mi. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.</p>"),
+);
+
+?><!DOCTYPE html>
 <html>
 	<head>
 		<meta charset="utf-8">
@@ -13,15 +32,19 @@
 		
 		<script type="text/javascript" src="../nova/modules/assets/js/jquery.js"></script>
 		<script type="text/javascript">
-			var delay = (function(){
-				var timer = 0;
-				return function(callback, ms){
-					clearTimeout (timer);
-					timer = setTimeout(callback, ms);
-				};
-			})();
-			
-			$(function(){
+			$(document).ready(function(){
+				$('ul.zebra > li:nth-child(odd)').addClass('alt');
+				
+				$('#add').click(function(){
+					$('#compose').fadeIn();
+					return false;
+				});
+				
+				$('#add-cancel').click(function(){
+					$('#compose').fadeOut();
+					return false;
+				});
+				
 				var wait = 600;
 				
 				$("#sidebar a").mousedown(function(e){
@@ -78,94 +101,32 @@
 						});
 					}
 				});
-			});
-			
-			$(document).ready(function(){
-				$('table.zebra tbody > tr:nth-child(odd)').addClass('alt');
-				$('ul.zebra > li:nth-child(odd)').addClass('alt');
 				
-				$('[rel=change_user_view]').click(function(){
-					var view = $(this).attr('id');
+				$('.msg-list-item').click(function(){
+					var key = $(this).attr('id');
+					var obj = <?php echo json_encode($messages);?>;
 					
-					if (view == 'show_all')
-					{
-						$('#actives').fadeOut('fast', function(){
-							$('#all').fadeIn('fast');
-						});
-					}
-					else
-					{
-						$('#all').fadeOut('fast', function(){
-							$('#actives').fadeIn('fast');
-						});
-					}
+					// info
+					$('#info-subject').html(obj[key].subject);
+					$('#info-from').html(obj[key].author);
+					$('#info-to').html(obj[key].recipients);
+					$('#info-sent').html(obj[key].date);
+					$('.msg-content-info').removeClass('hidden');
+					
+					// content
+					$('#content-body').html(obj[key].content);
+					$('.msg-content-body').removeClass('hidden');
+					
+					// de-select others
+					$('.msg-list ul li').each(function(){
+						if ($(this).hasClass('inbox-selected'))
+							$(this).removeClass('inbox-selected');
+					});
+					
+					// select
+					$(this).parent().addClass('inbox-selected');
 					
 					return false;
-				});
-				
-				$("#users").keyup(function(){
-					delay(function(){
-						$.ajax({
-							beforeSend: function(){
-								$('#no-results').hide();
-								$('#results').hide();
-								
-								$('#results-name').hide();
-								$('#results-name ul').empty();
-								
-								$('#results-email').hide();
-								$('#results-email ul').empty();
-								
-								$('#results-characters').hide();
-								$('#results-characters ul').empty();
-								
-								$('.search-indicator').show();
-							},
-							url: 'search.php',
-							type: 'GET',
-							dataType: 'json',
-							data: { query: $('#users').val(), type: 'results' },
-							success: function(data){
-								$('.search-indicator').hide();
-								
-								if ( ! $.isEmptyObject(data))
-								{
-									if ( ! $.isEmptyObject(data.name))
-									{
-										$.each(data.name, function(key, value){
-											$('#results-name ul').append('<li>' + value.name + '</li>');
-										});
-										
-										$('#results-name').show();
-									}
-									
-									if ( ! $.isEmptyObject(data.email))
-									{
-										$.each(data.email, function(key, value){
-											$('#results-email ul').append('<li>' + value.name + ' (' + value.email + ')' + '</li>');
-										});
-										
-										$('#results-email').show();
-									}
-									
-									if ( ! $.isEmptyObject(data.characters))
-									{
-										$.each(data.characters, function(key, value){
-											$('#results-characters ul').append('<li>' + value.name + ' (' + value.fname + ' ' + value.lname + ')' + '</li>');
-										});
-										
-										$('#results-characters').show();
-									}
-									
-									$('#results').show();
-								}
-								else
-								{
-									$('#no-results').show();
-								}
-							}
-						});
-					}, 500);
 				});
 			});
 			
@@ -215,9 +176,11 @@
 					</h1>
 					
 					<div class="inner">
-						<p><button class="btn-main">New Message</button></p>
+						<p><button id="add" class="btn-main">New Message</button></p>
 						
-						<div class="callout">
+						<div id="compose" class="callout hidden">
+							<div class="float-right"><a href="#" id="add-cancel">Cancel</a></div>
+							
 							<h2 class="page-subhead">Compose New Message</h2>
 							
 							<p><input type="text" placeholder="Choose Recipients"></p>
@@ -229,145 +192,30 @@
 						<div id="inbox">
 							<div class="msg-list">
 								<ul class="zebra">
-									<li><a href="#">
+								<?php foreach ($messages as $id => $m): ?>
+									<li><a href="#" class="msg-list-item" id="<?php echo $id;?>">
 										<div class="msg-list-item-icons">
-											<img src="images/admin/unread.png" alt="">
+											<?php if ($m['status'] == 'unread'): ?>
+												<img src="images/admin/unread.png" alt="">
+											<?php endif;?>
 										</div>
-										<div class="msg-list-item-date">01/01/2011</div>
-										<div class="msg-list-item-content">
-											<strong>John Smith</strong><br>
-											Subject Line
-										</div>
+										<div class="msg-list-item-date"><?php echo $m['date'];?></div>
+										<div class="msg-list-item-author"><?php echo $m['author'];?></div>
+										<div class="msg-list-item-subject"><?php echo $m['subject'];?></div>
 									</a></li>
-									<li><a href="#">
-										<div class="msg-list-item-icons">
-											<img src="images/admin/reply.png" alt="">
-										</div>
-										<div class="msg-list-item-date">01/01/2011</div>
-										<div class="msg-list-item-content">
-											<strong>Jane Doe</strong><br>
-											Subject Line #2
-										</div>
-									</a></li>
-									<li><a href="#">
-										<div class="msg-list-item-icons">
-											<img src="images/admin/replyall.png" alt="">
-										</div>
-										<div class="msg-list-item-date">01/01/2011</div>
-										<div class="msg-list-item-content">
-											<strong>Jane Doe</strong><br>
-											Subject Line #3
-										</div>
-									</a></li>
-									<li><a href="#">
-										<div class="msg-list-item-icons">
-											<img src="images/admin/forward.png" alt="">
-										</div>
-										<div class="msg-list-item-date">01/01/2011</div>
-										<div class="msg-list-item-content">
-											<strong>Jane Doe</strong><br>
-											Subject Line #4
-										</div>
-									</a></li>
-									<li><a href="#">
-										<div class="msg-list-item-icons"></div>
-										<div class="msg-list-item-date">01/01/2011</div>
-										<div class="msg-list-item-content">
-											<strong>Jane Doe</strong><br>
-											Subject Line #5
-										</div>
-									</a></li>
-									<li><a href="#">
-										<div class="msg-list-item-icons"></div>
-										<div class="msg-list-item-date">01/01/2011</div>
-										<div class="msg-list-item-content">
-											<strong>Jane Doe</strong><br>
-											Subject Line #5
-										</div>
-									</a></li>
-									<li><a href="#">
-										<div class="msg-list-item-icons"></div>
-										<div class="msg-list-item-date">01/01/2011</div>
-										<div class="msg-list-item-content">
-											<strong>Jane Doe</strong><br>
-											Subject Line #5
-										</div>
-									</a></li>
-									<li><a href="#">
-										<div class="msg-list-item-icons"></div>
-										<div class="msg-list-item-date">01/01/2011</div>
-										<div class="msg-list-item-content">
-											<strong>Jane Doe</strong><br>
-											Subject Line #5
-										</div>
-									</a></li>
-									<li><a href="#">
-										<div class="msg-list-item-icons"></div>
-										<div class="msg-list-item-date">01/01/2011</div>
-										<div class="msg-list-item-content">
-											<strong>Jane Doe</strong><br>
-											Subject Line #5
-										</div>
-									</a></li>
-									<li><a href="#">
-										<div class="msg-list-item-icons"></div>
-										<div class="msg-list-item-date">01/01/2011</div>
-										<div class="msg-list-item-content">
-											<strong>Jane Doe</strong><br>
-											Subject Line #5
-										</div>
-									</a></li>
-									<li><a href="#">
-										<div class="msg-list-item-icons"></div>
-										<div class="msg-list-item-date">01/01/2011</div>
-										<div class="msg-list-item-content">
-											<strong>Jane Doe</strong><br>
-											Subject Line #5
-										</div>
-									</a></li>
-									<li><a href="#">
-										<div class="msg-list-item-icons"></div>
-										<div class="msg-list-item-date">01/01/2011</div>
-										<div class="msg-list-item-content">
-											<strong>Jane Doe</strong><br>
-											Subject Line #5
-										</div>
-									</a></li>
-									<li><a href="#">
-										<div class="msg-list-item-icons"></div>
-										<div class="msg-list-item-date">01/01/2011</div>
-										<div class="msg-list-item-content">
-											<strong>Jane Doe</strong><br>
-											Subject Line #5
-										</div>
-									</a></li>
-									<li><a href="#">
-										<div class="msg-list-item-icons"></div>
-										<div class="msg-list-item-date">01/01/2011</div>
-										<div class="msg-list-item-content">
-											<strong>Jane Doe</strong><br>
-											Subject Line #5
-										</div>
-									</a></li>
-									<li><a href="#">
-										<div class="msg-list-item-icons"></div>
-										<div class="msg-list-item-date">01/01/2011</div>
-										<div class="msg-list-item-content">
-											<strong>Jane Doe</strong><br>
-											Subject Line #5
-										</div>
-									</a></li>
+								<?php endforeach;?>
 								</ul>
 							</div>
 							
 							<div class="msg-content">
-								<div class="msg-content-info">
-									<h3>Subject Line</h3>
-									<p><strong class="subtle">From:</strong> Jane Doe</p>
-									<p><strong class="subtle">To:</strong> Me, Jack Sparrow, The Dude</p>
-									<p><strong class="subtle">Sent:</strong> 01/01/2011</p>
+								<div class="msg-content-info hidden">
+									<h3 id="info-subject"></h3>
+									<p><strong class="subtle">From:</strong> <span id="info-from"></span></p>
+									<p><strong class="subtle">To:</strong> <span id="info-to"></span></p>
+									<p><strong class="subtle">Sent:</strong> <span id="info-sent"></span></p>
 									
 									<p>
+										<button class="float-right btn-dest">Delete</button>
 										<button class="btn-sec">Reply</button>
 										&nbsp;
 										<button class="btn-sec">Reply All</button>
@@ -376,10 +224,8 @@
 									</p>
 								</div>
 								
-								<div class="msg-content-body">
-									<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam pharetra auctor ante, vel dictum velit congue et. Etiam sit amet tellus risus. Aliquam sem leo, tempor eget adipiscing non, rhoncus a nunc. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Sed euismod, nulla in condimentum tristique, dolor risus adipiscing risus, eget lobortis tortor nulla fringilla magna. Praesent et lacus et odio feugiat auctor et vitae erat. Phasellus dictum purus eu quam varius et lacinia elit mattis. Fusce sodales metus a dui tempor ac aliquam libero vehicula. Morbi semper leo a erat malesuada ac sollicitudin libero dictum. Phasellus ultrices leo at ligula tincidunt non congue dolor pellentesque. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-
-									<p>In hac habitasse platea dictumst. Maecenas malesuada feugiat libero vel sollicitudin. Cras in augue id justo commodo dignissim nec tincidunt lorem. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Nulla accumsan, lacus sed ultrices tempor, augue nisi vehicula turpis, ac eleifend quam lectus fermentum odio. Aenean ut felis lacus, vitae elementum orci. Proin eu pharetra justo. Phasellus aliquam tortor quis purus sollicitudin nec tempor velit dapibus. Duis sodales laoreet orci, quis porttitor felis accumsan quis. Proin accumsan, eros sit amet tempor vestibulum, velit lorem sodales ligula, eu porta orci est ut mi. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.</p>
+								<div class="msg-content-body hidden">
+									<span id="content-body"></span>
 									<br>
 									
 									<div class="callout">
