@@ -98,7 +98,7 @@ if ( ! function_exists('whos_online'))
 			foreach ($online as $value)
 			{
 				$char = $ci->user->get_main_character($value);
-				$array[$value] = $ci->char->get_character_name($char, TRUE);
+				$array[$value] = $ci->char->get_character_name($char, false);
 			}
 			
 			$string = implode(', ', $array);
