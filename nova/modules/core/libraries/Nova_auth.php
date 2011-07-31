@@ -101,7 +101,7 @@ abstract class Nova_auth {
 			$segments = (is_array($uri)) ? $uri[1] .'/'. $uri[2] : $uri;
 			
 			// find the URI in the access array if it's there
-			if (array_key_exists($segments, $session))
+			if (is_array($session) and array_key_exists($segments, $session))
 			{
 				return $session[$segments];
 			}
