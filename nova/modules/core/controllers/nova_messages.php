@@ -382,32 +382,22 @@ abstract class Nova_messages extends Nova_controller_admin {
 			// define the POST variables
 			$subject = $this->input->post('subject', true);
 			$message = $this->input->post('message', true);
-			$author = $this->input->post('recipients', true);
-			$authors = $this->input->post('to', true);
+			$recipients = $this->input->post('recipients', true);
 			
-			if ($author == 0 and $authors == 0)
+			if ( ! is_array($recipients) and count($recipients) == 0)
 			{
 				$flash['status'] = 'error';
 				$flash['message'] = lang_output('flash_privmsgs_no_recipient');
 			}
 			else
 			{
-				// put the authors into an array
-				$authors_array = explode(',', $authors);
-				
-				foreach ($authors_array as $key => $value)
+				foreach ($recipients as $key => $value)
 				{
 					if ( ! is_numeric($value) || $value < 1)
 					{
-						unset($authors_array[$key]);
+						unset($recipients[$key]);
 					}
 				}
-				
-				// count the authors
-				$authors_count = count($authors_array);
-				
-				// see which author set to use
-				$to = ($authors_count == 0) ? $author : implode(',', $authors_array);
 				
 				$insert_array = array(
 					'privmsgs_author_user' => $this->session->userdata('userid'),
@@ -424,9 +414,6 @@ abstract class Nova_messages extends Nova_controller_admin {
 				$msgid = $this->db->insert_id();
 				
 				$this->sys->optimize_table('privmsgs');
-				
-				// create an array of who the PM is going to
-				$recipients = $this->input->post('recipients', true);
 				
 				foreach ($recipients as $value)
 				{
@@ -455,7 +442,7 @@ abstract class Nova_messages extends Nova_controller_admin {
 					$email_data = array(
 						'author' => $this->session->userdata('main_char'),
 						'subject' => $subject,
-						'to' => $to,
+						'to' => implode(',', $recipients),
 						'message' => $message
 					);
 					
@@ -489,8 +476,6 @@ abstract class Nova_messages extends Nova_controller_admin {
 		
 		if ($characters->num_rows() > 0)
 		{
-			//$data['characters'][0] = ucfirst(lang('actions_select')) .' '. lang('labels_a') .' '. ucfirst(lang('labels_recipient'));
-			
 			// we do this to make sure active characters are on top
 			$data['characters'][ucwords(lang('status_active') .' '. lang('global_characters'))] = array();
 			$data['characters'][ucwords(lang('status_inactive') .' '. lang('global_characters'))] = array();
