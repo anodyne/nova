@@ -544,8 +544,8 @@ abstract class Nova_personnel extends Nova_controller_main {
 		else
 		{
 			// set the header
-			$data['header'] = lang('error_title_invalid_char');
-			$data['msg_error'] = lang_output('error_msg_invalid_char');
+			$data['header'] = sprintf(lang('error_title_invalid_char'), lang('global_character'));
+			$data['msg_error'] = sprintf(lang('error_msg_invalid_char'), lang('global_character'));
 			
 			// set the title
 			$this->_regions['title'].= lang('error_pagetitle');
@@ -846,8 +846,8 @@ abstract class Nova_personnel extends Nova_controller_main {
 		else
 		{
 			// set the header
-			$data['header'] = lang('error_title_invalid_user');
-			$data['msg_error'] = lang('error_msg_invalid_user');
+			$data['header'] = sprintf(lang('error_title_invalid_user'), lang('global_user'));
+			$data['msg_error'] = sprintf(lang('error_msg_invalid_user'), lang('global_user'));
 			
 			// set the title
 			$this->_regions['title'].= lang('error_pagetitle');
@@ -899,13 +899,13 @@ abstract class Nova_personnel extends Nova_controller_main {
 			'mission' => ucfirst(lang('global_mission')),
 			'missionposts' => ucwords(lang('global_missionposts')),
 			'name' => ucfirst(lang('labels_name')),
-			'noawards' => lang('error_no_awards'),
+			'noawards' => sprintf(lang('error_not_found'), lang('global_awards')),
 			'nologin' => lang('error_no_last_login'),
-			'nologs' => lang('error_no_logs'),
+			'nologs' => sprintf(lang('error_not_found'), lang('global_personallogs')),
 			'none' => ucfirst(lang('labels_none')),
 			'nopost' => lang('error_no_last_post'),
-			'noposts' => lang('error_no_posts'),
-			'norankhistory' => lang('error_no_rank_history'),
+			'noposts' => sprintf(lang('error_not_found'), lang('global_missionposts')),
+			'norankhistory' => sprintf(lang('error_not_found'), lang('global_rank').' '.lang('labels_history')),
 			'npcs' => lang('abbr_npcs'),
 			'personallogs' => ucwords(lang('global_personallogs')),
 			'perweek' => lang('time_per_week'),
@@ -1000,14 +1000,14 @@ abstract class Nova_personnel extends Nova_controller_main {
 					{
 						// set the data used by the view
 						$data['header'] = ucwords(lang('actions_view') .' '. lang('global_awards')) .' - '. $name;
-						$data['msg_error'] = lang('error_no_awards');
+						$data['msg_error'] = sprintf(lang('error_not_found'), lang('global_awards'));
 					}
 				}
 				else
 				{
 					// set the data used by the view
 					$data['header'] = lang('error_title_invalid_id');
-					$data['msg_error'] = lang('error_msg_invalid_user');
+					$data['msg_error'] = sprintf(lang('error_msg_invalid_user'), lang('global_user'));
 				}
 			break;
 			
@@ -1055,21 +1055,21 @@ abstract class Nova_personnel extends Nova_controller_main {
 					{
 						// set the data used by the view
 						$data['header'] = ucwords(lang('actions_view') .' '. lang('global_awards')) .' - '. $name;
-						$data['msg_error'] = lang('error_no_awards');
+						$data['msg_error'] = sprintf(lang('error_not_found'), lang('global_awards'));
 					}
 				}
 				else
 				{
 					// set the data used by the view
 					$data['header'] = lang('error_title_invalid_id');
-					$data['msg_error'] = lang('error_msg_invalid_char');
+					$data['msg_error'] = sprintf(lang('error_msg_invalid_char'), lang('global_character'));
 				}
 			break;
 				
 			default:
 				// set the data used by the view
 				$data['header'] = lang('error_head_general');
-				$data['msg_error'] = lang('error_msg_no_award_type');
+				$data['msg_error'] = sprintf(lang('error_msg_no_award_type'), lang('global_character'), lang('global_user'));
 			break;
 		}
 		
@@ -1151,8 +1151,8 @@ abstract class Nova_personnel extends Nova_controller_main {
 				else
 				{
 					// set the header
-					$data['header'] = lang('error_title_invalid_user');
-					$data['msg_error'] = lang('error_msg_invalid_user');
+					$data['header'] = sprintf(lang('error_title_invalid_user'), lang('global_user'));
+					$data['msg_error'] = sprintf(lang('error_msg_invalid_user'), lang('global_user'));
 				}
 			break;
 				
@@ -1219,20 +1219,20 @@ abstract class Nova_personnel extends Nova_controller_main {
 					{
 						// other data used by the template
 						$data['header'] = ucwords(lang('actions_view') .' '. lang('global_personallogs')) .' - '. $this->char->get_character_name($id);
-						$data['msg_error'] = lang('error_no_logs');
+						$data['msg_error'] = sprintf(lang('error_not_found'), lang('global_personallogs'));
 					}
 				}
 				else
 				{
 					// set the header
-					$data['header'] = lang('error_title_invalid_char');
-					$data['msg_error'] = lang('error_msg_invalid_char');
+					$data['header'] = sprintf(lang('error_title_invalid_char'), lang('global_character'));
+					$data['msg_error'] = sprintf(lang('error_msg_invalid_char'), lang('global_character'));
 				}
 			break;
 			
 			default:
 				$data['header'] = lang('error_head_general');
-				$data['msg_error'] = lang('error_msg_no_log_type');
+				$data['msg_error'] = sprintf(lang('error_msg_no_log_type'), lang('global_character'), lang('global_user'));
 			break;
 		}
 		
@@ -1246,7 +1246,7 @@ abstract class Nova_personnel extends Nova_controller_main {
 			'by' => lang('labels_by'),
 			'comments' => ucfirst(lang('labels_comments')),
 			'edited' => ucfirst(lang('actions_edited') .' '. lang('labels_on')),
-			'nologs' => lang('error_no_logs'),
+			'nologs' => sprintf(lang('error_not_found'), lang('global_personallogs')),
 			'on' => lang('labels_on'),
 			'posted' => ucfirst(lang('actions_posted') .' '. lang('labels_on')),
 			'tags' => ucfirst(lang('labels_tags')) .':',
@@ -1319,8 +1319,8 @@ abstract class Nova_personnel extends Nova_controller_main {
 				}
 				else
 				{
-					$data['header'] = lang('error_title_invalid_user');
-					$data['msg_error'] = lang('error_msg_invalid_user');
+					$data['header'] = sprintf(lang('error_title_invalid_user'), lang('global_user'));
+					$data['msg_error'] = sprintf(lang('error_msg_invalid_user'), lang('global_user'));
 				}
 			break;
 				
@@ -1388,20 +1388,20 @@ abstract class Nova_personnel extends Nova_controller_main {
 					{
 						// other data used by the template
 						$data['header'] = ucwords(lang('actions_view') .' '. lang('global_missionposts')) .' - '. $this->char->get_character_name($id);
-						$data['msg_error'] = lang('error_no_posts');
+						$data['msg_error'] = sprintf(lang('error_not_found'), lang('global_missionposts'));
 					}
 				}
 				else
 				{
 					// set the header
-					$data['header'] = lang('error_title_invalid_char');
-					$data['msg_error'] = lang('error_msg_invalid_char');
+					$data['header'] = sprintf(lang('error_title_invalid_char'), lang('global_character'));
+					$data['msg_error'] = sprintf(lang('error_msg_invalid_char'), lang('global_character'));
 				}
 			break;
 			
 			default:
 				$data['header'] = lang('error_head_general');
-				$data['msg_error'] = lang('error_msg_no_post_type');
+				$data['msg_error'] = sprintf(lang('error_msg_no_post_type'), lang('global_character'), lang('global_user'));
 			break;
 		}
 		
@@ -1411,7 +1411,7 @@ abstract class Nova_personnel extends Nova_controller_main {
 			'backuser' => LARROW .' '. ucfirst(lang('actions_back')) .' '. lang('labels_to') .' '.
 				ucwords(lang('global_user') .' '. lang('labels_bio')),
 			'mission' => ucfirst(lang('global_mission')),
-			'noposts' => lang('error_no_posts'),
+			'noposts' => sprintf(lang('error_not_found'), lang('global_missionposts')),
 			'on' => lang('labels_on'),
 			'title' => ucfirst(lang('labels_title')),
 			'view_post' => ucwords(lang('actions_view') .' '. lang('global_post')),

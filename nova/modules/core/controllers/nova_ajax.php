@@ -7738,6 +7738,10 @@ abstract class Nova_ajax extends Controller {
 				$role->role_name
 			);
 			
+			$data['label'] = array(
+				'notfound' => sprintf(lang('error_not_found'), lang('global_users')),
+			);
+			
 			$users = $this->access->get_users_with_role($data['id']);
 			
 			if (is_array($users))

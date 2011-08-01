@@ -151,7 +151,7 @@ abstract class Nova_sim extends Nova_controller_main {
 				else
 				{
 					$data['awardees_count'] = '0 '. lang('labels_times');
-					$data['msg_error'] = lang('error_msg_no_awardees');
+					$data['msg_error'] = sprintf(lang('error_msg_no_awardees'), lang('global_award'));
 				}
 				
 				// other data used by the template
@@ -179,7 +179,7 @@ abstract class Nova_sim extends Nova_controller_main {
 			'category' => ucwords(lang('labels_category')) .':',
 			'details' => ucfirst(lang('labels_details')),
 			'edit' => '[ '. ucfirst(lang('actions_edit')) .' ]',
-			'noawards' => ucfirst(lang('error_no_awards')),
+			'noawards' => sprintf(lang('error_not_found'), lang('global_awards')),
 		);
 		
 		$this->_regions['content'] = Location::view($view_loc, $this->skin, 'main', $data);
@@ -262,7 +262,7 @@ abstract class Nova_sim extends Nova_controller_main {
 		
 		$data['label'] = array(
 			'edit' => '[ '. ucfirst(lang('actions_edit')) .' ]',
-			'nodecks' => lang('error_no_decks'),
+			'nodecks' => sprintf(lang('error_not_found'), lang('global_deck').' '.lang('labels_listing')),
 		);
 		
 		$this->_regions['content'] = Location::view('sim_decks', $this->skin, 'main', $data);
@@ -342,7 +342,7 @@ abstract class Nova_sim extends Nova_controller_main {
 		else
 		{
 			$data['header'] = $title;
-			$data['msg_error'] = lang('error_msg_no_depts');
+			$data['msg_error'] = sprintf(lang('error_not_found'), lang('global_departments'));
 		}
 		
 		$data['edit_valid_dept'] = (Auth::is_logged_in() and Auth::check_access('manage/depts', false)) ? true : false;
@@ -792,7 +792,7 @@ abstract class Nova_sim extends Nova_controller_main {
 		
 		$data['label'] = array(
 			'author' => ucfirst(lang('labels_author')),
-			'nologs' => lang('error_no_logs'),
+			'nologs' => sprintf(lang('error_not_found'), lang('global_personallogs')),
 			'on' => lang('labels_on'),
 			'title' => ucfirst(lang('labels_title')),
 		);
@@ -933,7 +933,7 @@ abstract class Nova_sim extends Nova_controller_main {
 			'by' => lang('labels_by'),
 			'date' => ucfirst(lang('labels_date')),
 			'mission' => ucfirst(lang('global_mission')) .':',
-			'noposts' => lang('error_no_posts'),
+			'noposts' => sprintf(lang('error_not_found'), lang('global_missionposts')),
 			'title' => ucfirst(lang('labels_title')),
 		);
 		
@@ -1064,7 +1064,7 @@ abstract class Nova_sim extends Nova_controller_main {
 					
 						// set the data for the view
 						$data['header'] = lang('error_head_not_found');
-						$data['msg_error'] = lang('error_msg_no_mission');
+						$data['msg_error'] = sprintf(lang('error_msg_no_mission'), lang('global_mission'));
 						
 						// set the page title
 						$this->_regions['title'].= lang('error_pagetitle');
@@ -1318,9 +1318,9 @@ abstract class Nova_sim extends Nova_controller_main {
 			'missions' => LARROW.' '.ucwords(lang('actions_back')).' '.lang('labels_to').' '.ucwords(lang('global_missions')),
 			'nogroup' => sprintf(lang('error_not_found'), lang('global_missiongroup')),
 			'nogroups' => sprintf(lang('error_not_found'), lang('global_missiongroups')),
-			'nomissions' => lang('error_no_missions'),
-			'noposts' => lang('error_no_posts'),
-			'nosummary' => lang('error_no_mission_summary'),
+			'nomissions' => sprintf(lang('error_not_found'), lang('global_missions')),
+			'noposts' => sprintf(lang('error_not_found'), lang('global_missionposts')),
+			'nosummary' => sprintf(lang('error_not_found'), lang('global_mission').' '.lang('labels_summary')),
 			'open_gallery' => lang('open_gallery'),
 			'partof' => ucfirst(lang('labels_part') .' '. lang('labels_of')),
 			'posts' => ucfirst(lang('global_posts')),
@@ -1488,7 +1488,7 @@ abstract class Nova_sim extends Nova_controller_main {
 			'edit_form' => '[ '. ucwords(lang('actions_edit') .' '. lang('global_specs') .' '. lang('labels_form')) .' ]',
 			'info' => ucwords(lang('labels_addtl_info')),
 			'name' => ucfirst(lang('labels_name')),
-			'nospecs_all' => lang('error_no_specs'),
+			'nospecs_all' => sprintf(lang('error_not_found'), lang('global_specifications')),
 			'opengallery' => lang('open_gallery'),
 			'summary' => ucfirst(lang('labels_summary')),
 		);
@@ -1768,7 +1768,7 @@ abstract class Nova_sim extends Nova_controller_main {
 			'edit_form' => '[ '.ucwords(lang('actions_edit').' '.lang('global_tour').' '.lang('labels_form')) .' ]',
 			'info' => ucwords(lang('labels_addtl_info')),
 			'name' => ucfirst(lang('labels_name')),
-			'notour_all' => lang('error_no_tour_all'),
+			'notour_all' => sprintf(lang('error_not_found'), lang('global_touritems')),
 			'opengallery' => lang('open_gallery'),
 			'summary' => ucfirst(lang('labels_summary')),
 			'viewspec' => ucwords(lang('actions_view').' '.lang('global_specifications').' '.RARROW),

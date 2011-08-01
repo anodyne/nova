@@ -1528,7 +1528,7 @@ abstract class Nova_user extends Nova_controller_admin {
 			'noawards' => sprintf(lang('error_not_found'), lang('global_awards')),
 			'nominate' => ucfirst(lang('actions_nominate')),
 			'nominatequeue' => ucwords(lang('labels_nomination') .' '. lang('labels_queue')),
-			'nonominations' => lang('error_no_award_nominations'),
+			'nonominations' => sprintf(lang('error_not_found'), lang('global_award').' '.lang('labels_nominations')),
 			'on' => lang('labels_on'),
 			'reason' => ucfirst(lang('labels_reason')),
 		);

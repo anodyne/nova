@@ -2480,7 +2480,7 @@ abstract class Nova_manage extends Nova_controller_admin {
 			'current' => ucwords(lang('status_current') .' '. lang('global_missions')),
 			'upcoming' => ucwords(lang('status_upcoming') .' '. lang('global_missions')),
 			'completed' => ucwords(lang('status_completed') .' '. lang('global_missions')),
-			'error' => lang('error_no_missions'),
+			'error' => sprintf(lang('error_not_found'), lang('global_missions')),
 			'add' => ucwords(lang('actions_add') .' '. lang('global_mission')) .' '. RARROW,
 			'posts' => ucfirst(lang('global_posts')) .': ',
 			'info' => ucfirst(lang('labels_info')),
