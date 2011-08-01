@@ -24,8 +24,12 @@
 				<td>
 					<strong><?php echo $value['award'];?></strong><br />
 					<em class="fontSmall">
-						<?php echo $label['awarded'] .' '. $value['date'];?><br />
-						<?php echo $label['nominatedby'] .' '. $value['nom'];?>
+						<?php echo $label['awarded'] .' '. $value['date'];?>
+						
+						<?php if ( ! empty($value['nom'])): ?>
+							<br />
+							<?php echo $label['nominatedby'] .' '. $value['nom'];?>
+						<?php endif;?>
 					</em>
 				</td>
 				<td class="col_50pct"><?php echo text_output($value['reason'], '');?></td>
@@ -48,8 +52,12 @@
 				<td>
 					<strong><?php echo $b['award'];?></strong><br />
 					<em class="fontSmall">
-						<?php echo $label['awarded'] .' '. $b['date'];?><br />
-						<?php echo $label['nominatedby'] .' '. $b['nom'];?>
+						<?php echo $label['awarded'] .' '. $b['date'];?>
+						
+						<?php if ( ! empty($b['nom'])): ?>
+							<br />
+							<?php echo $label['nominatedby'] .' '. $b['nom'];?>
+						<?php endif;?>
 					</em>
 				</td>
 				<td class="col_50pct"><?php echo text_output($b['reason'], '');?></td>
