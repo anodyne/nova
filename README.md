@@ -63,6 +63,7 @@ Anodyne Production's next-generation RPG management system combines popular feat
 * fixed bug where positions weren't properly updated when deleting an active character
 * fixed some Pulsar styling issues in IE9
 * fixed some Titan styling issues in IE9
+* fixed bug where the nominated by line was shown when viewing character/user awards even if there was no nominee (only an issue when upgrading from SMS)
 
 ## Version History
 
