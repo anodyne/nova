@@ -115,11 +115,11 @@ abstract class Nova_manage extends Nova_controller_admin {
 					{
 						if (substr($key, 0, 6) == 'award_')
 						{
-							$award[$key] = $value;
+							$award_data[$key] = $value;
 						}
 					}
 					
-					$update = $this->awards->update_award($id, $award);
+					$update = $this->awards->update_award($id, $award_data);
 					
 					if ($update > 0)
 					{
