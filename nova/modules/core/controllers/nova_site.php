@@ -1387,7 +1387,7 @@ abstract class Nova_site extends Nova_controller_admin {
 			'install_ranks' => ucwords(lang('actions_install') .' '. lang('global_rank') .' '. lang('labels_sets')),
 			'location' => ucfirst(lang('labels_location') .':'),
 			'name' => ucfirst(lang('labels_name')),
-			'no_ranks' => lang('error_no_catalogue_ranks'),
+			'no_ranks' => sprintf(lang('error_not_found'), lang('global_ranks')),
 			'quick_install' => sprintf(lang('text_quick_install'), lang('global_ranks'), lang('global_ranks')),
 			'status' => ucfirst(lang('labels_status')),
 		);
@@ -1937,7 +1937,7 @@ abstract class Nova_site extends Nova_controller_admin {
 			'install' => ucfirst(lang('actions_install')),
 			'install_skins' => ucwords(lang('actions_install') .' '. lang('labels_skins')),
 			'location' => ucfirst(lang('labels_location') .':'),
-			'no_skins' => lang('error_no_catalogue_skins'),
+			'no_skins' => sprintf(lang('error_not_found'), lang('labels_skins')),
 			'quick_install' => sprintf(lang('text_quick_install'), lang('labels_skins'), lang('labels_skins')),
 		);
 		
@@ -3469,7 +3469,7 @@ abstract class Nova_site extends Nova_controller_admin {
 			'location' => ucfirst(lang('labels_location') .':'),
 			'menus' => ucwords(lang('actions_manage') .' '. lang('labels_menu') .' '. lang('labels_items') .' '. RARROW),
 			'name' => ucfirst(lang('labels_name')),
-			'no_skins' => lang('error_no_catalogue_skins'),
+			'no_skins' => sprintf(lang('error_not_found'), lang('labels_skins')),
 		);
 		
 		$this->_regions['content'] = Location::view('site_menucats', $this->skin, 'admin', $data);
@@ -3732,7 +3732,7 @@ abstract class Nova_site extends Nova_controller_admin {
 			'key' => ucfirst(lang('labels_key') .':'),
 			'messages' => ucfirst(lang('labels_messages')),
 			'name' => ucfirst(lang('labels_name')),
-			'no_messages' => lang('error_no_messages'),
+			'no_messages' => sprintf(lang('error_not_found'), lang('labels_site').' '.lang('labels_messages')),
 			'other' => ucfirst(lang('labels_other')),
 			'titles' => ucwords(lang('labels_page') .' '. lang('labels_titles')),
 		);
@@ -6555,7 +6555,7 @@ abstract class Nova_site extends Nova_controller_admin {
 			'delete' => ucfirst(lang('actions_delete')),
 			'edit' => ucfirst(lang('actions_edit')),
 			'name' => ucfirst(lang('labels_name')),
-			'no_settings' => lang('error_no_user_settings'),
+			'no_settings' => sprintf(lang('error_not_found'), lang('global_user').'-'.lang('actions_created').' '.lang('labels_settings')),
 		);
 		
 		$data['header'] = ucwords(lang('labels_user') .'-'. ucfirst(lang('actions_created')) .' '. lang('labels_settings'));

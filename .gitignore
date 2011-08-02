@@ -1,3 +1,5 @@
+# Nova
+
 application/assets/images/awards/
 application/assets/images/characters/
 application/assets/images/missions/
@@ -9,15 +11,28 @@ application/views/
 
 application/config/database.php
 
-!application/views/default/
-!application/views/titan/
-!application/views/_base_override
-
-*~
-*.bak
-Thumbs.db
-.DS_Store
+!application/views/default/*
+!application/views/titan/*
+!application/views/_base_override/*
 
 application/assets/common/ds9/
 
 nova/app/
+
+# General
+*~
+*.bak
+
+# Windows-specific ignores
+Thumbs.db
+Desktop.ini
+
+# Mac-specific ignores
+.DS_Store
+Icon?
+._*
+.Spotlight-V100
+.Trashes
+*.tmproj
+*.tmproject
+tmtags

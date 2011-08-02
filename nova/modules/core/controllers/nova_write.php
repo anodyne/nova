@@ -21,6 +21,9 @@ abstract class Nova_write extends Nova_controller_admin {
 		{
 			redirect('write/error/1');
 		}
+		
+		// load the user agent library
+		$this->load->library('user_agent');
 	}
 	
 	public function index()
@@ -265,9 +268,9 @@ abstract class Nova_write extends Nova_controller_admin {
 			'mission' => ucfirst(lang('global_mission') .':'),
 			'missionposts' => ucwords(lang('global_missionposts')),
 			'newsitems' => ucwords(lang('global_newsitems')),
-			'no_logs' => lang('error_no_logs'),
-			'no_news' => lang('error_no_news'),
-			'no_posts' => lang('error_no_posts'),
+			'no_logs' => sprintf(lang('error_not_found'), lang('global_personallogs')),
+			'no_news' => sprintf(lang('error_not_found'), lang('global_newsitems')),
+			'no_posts' => sprintf(lang('error_not_found'), lang('global_missionposts')),
 			'personallogs' => ucwords(lang('global_personallogs')),
 			'recent' => ucwords(lang('labels_my') .' '. lang('status_recent') .' '. lang('labels_entries')),
 			'saved' => ucwords(lang('labels_my') .' '. lang('status_saved') .' '. lang('labels_entries')),
@@ -379,9 +382,7 @@ abstract class Nova_write extends Nova_controller_admin {
 			$mission = $this->input->post('mission', true);
 			$timeline = $this->input->post('timeline', true);
 			$location = $this->input->post('location', true);
-			
 			$authors = $this->input->post('authors', true);
-			$authors_list = $this->input->post('to', true);
 			
 			$action = strtolower($this->input->post('submit', true));
 			$status = false;
@@ -390,7 +391,7 @@ abstract class Nova_write extends Nova_controller_admin {
 			
 			if ($this->uri->segment(3) != 'missionCreate')
 			{
-				if ($authors == '0' and $authors_list == '0')
+				if (empty($authors))
 				{
 					$flash['status'] = 'error';
 					$flash['message'] = lang_output('flash_missionposts_no_author');
@@ -399,21 +400,13 @@ abstract class Nova_write extends Nova_controller_admin {
 				}
 				else
 				{
-					if ($authors_list == "0")
-					{
-						$authors_list = $authors;
-					}
-					
-					// put the authors into an array
-					$author_array_final = explode(',', $authors_list);
-					
 					$users = array();
 					
-					foreach ($author_array_final as $key => $value)
+					foreach ($authors as $key => $value)
 					{
 						if ( ! is_numeric($value) or $value < 1)
 						{
-							unset($author_array_final[$key]);
+							unset($authors[$key]);
 						}
 						
 						// get the user ID
@@ -435,7 +428,7 @@ abstract class Nova_write extends Nova_controller_admin {
 					$users = array_unique($users);
 					
 					// set the authors string
-					$authors_string = implode(',', $author_array_final);
+					$authors_string = implode(',', $authors);
 					$users_string = implode(',', $users);
 					
 					// make sure the person posting is actually part of the post
@@ -642,7 +635,7 @@ abstract class Nova_write extends Nova_controller_admin {
 								$this->_regions['_redirect'] = Template::add_redirect('write/missionpost/'.$insert_id);
 							}
 							
-							if (count($author_array_final) > 1)
+							if (count($authors) > 1)
 							{
 								// set the array of data for the email
 								$email_data = array(
@@ -938,50 +931,41 @@ abstract class Nova_write extends Nova_controller_admin {
 				$allchars[$label][$a->charid] = $this->char->get_character_name($a->charid, true).$add;
 			}
 			
-			$data['all'] = array(
-				0 => ucwords(lang('labels_please') .' '. lang('actions_select') .' '. lang('labels_an') .' '. lang('labels_author')),
-			);
+			$data['all_characters'] = array();
 			
 			$key = ucwords(lang('labels_my') .' '. lang('global_characters'));
 			if (isset($allchars[$key]))
 			{
-				$data['all'][$key] = $allchars[$key];
+				$data['all_characters'][$key] = $allchars[$key];
 			}
 			
 			$key = ucwords(lang('status_playing') .' '. lang('global_characters'));
 			if (isset($allchars[$key]))
 			{
-				$data['all'][$key] = $allchars[$key];
+				$data['all_characters'][$key] = $allchars[$key];
 			}
 			
 			$key = ucwords(lang('labels_linked') .' '. lang('abbr_npcs'));
 			if (isset($allchars[$key]))
 			{
-				$data['all'][$key] = $allchars[$key];
+				$data['all_characters'][$key] = $allchars[$key];
 			}
 			
 			$key = ucwords(lang('labels_unlinked') .' '. lang('abbr_npcs'));
 			if (isset($allchars[$key]))
 			{
-				$data['all'][$key] = $allchars[$key];
+				$data['all_characters'][$key] = $allchars[$key];
 			}
 		}
 		else
 		{
-			$data['all'] = false;
+			$data['all_characters'] = false;
 		}
-		
-		$remove = array(
-			'src' => Location::img('minus-circle.png', $this->skin, 'admin'),
-			'class' => 'image fontSmall inline_img_left',
-			'alt' => ucfirst(lang('actions_remove'))
-		);
-		
-		// prep the data for sending to the js view
-		$js_data['remove'] = img($remove);
 		
 		// get the post
 		$row = ($id !== false) ? $this->posts->get_post($id) : false;
+		
+		$data['authors_selected'] = array();
 		
 		if ($row !== false)
 		{
@@ -1009,27 +993,8 @@ abstract class Nova_write extends Nova_controller_admin {
 				redirect('admin/error/5');
 			}
 			
-			// set the hidden TO field
-			$data['to'] = $row->post_authors;
-			
-			// send an array to the js view for disabling items in the list
-			$js_data['replyall'] = explode(',', $data['to']);
-			
-			// set the recipients list
-			$to_array = explode(',', $data['to']);
-			
-			$i = 1;
-			foreach ($to_array as $value)
-			{
-				$to_name = $this->char->get_character_name($value, true);
-				
-				$data['recipient_list'][$i] = '<span class="'. $value .'">';
-				$data['recipient_list'][$i].= '<a href="#" id="remove_author" class="image" myID="'. $value .'" myName="'.  $to_name .'">';
-				$data['recipient_list'][$i].= img($remove) .'</a>';
-				$data['recipient_list'][$i].= $to_name .'<br /></span>';
-				
-				++$i;
-			}
+			// set the list of selected authors
+			$data['authors_selected'] = explode(',', $row->post_authors);
 			
 			// fill the content in
 			$title = $row->post_title;
@@ -1127,16 +1092,9 @@ abstract class Nova_write extends Nova_controller_admin {
 			anchor('manage/missions', lang('global_mission'))
 		);
 		
-		$data['header'] = ucwords(lang('actions_write') .' '. lang('global_missionpost'));
+		$data['header'] = ucwords(lang('actions_write').' '.lang('global_missionpost'));
 		
-		$data['form_action'] = ($id !== false) ? 'write/missionpost/'. $id : 'write/missionpost';
-		
-		$data['images'] = array(
-			'add' => array(
-				'src' => Location::img('icon-add.png', $this->skin, 'admin'),
-				'class' => 'image fontSmall',
-				'alt' => lang('actions_add') .' '. lang('labels_author')),
-		);
+		$data['form_action'] = ($id !== false) ? 'write/missionpost/'.$id : 'write/missionpost';
 		
 		$data['label'] = array(
 			'addauthor' => ucwords(lang('actions_add') .' '. lang('labels_author')),
@@ -1153,6 +1111,8 @@ abstract class Nova_write extends Nova_controller_admin {
 			'tags_sep' => lang('tags_separated'),
 			'timeline' => ucfirst(lang('labels_timeline')),
 			'title' => ucfirst(lang('labels_title')),
+			'select' => ucwords(lang('labels_please').' '.lang('actions_select')).' '.lang('labels_the').' '.ucfirst(lang('labels_authors')),
+			'chosen_incompat' => lang('chosen_incompat'),
 		);
 		
 		$this->_regions['content'] = Location::view('write_missionpost', $this->skin, 'admin', $data);
@@ -1927,8 +1887,8 @@ abstract class Nova_write extends Nova_controller_admin {
 		
 		if (count($char) > 1)
 		{
-			$data['characters'][0] = ucwords(lang('labels_please') .' '. lang('actions_select')
-				.' '. lang('labels_an') .' '. lang('labels_author'));
+			$data['characters'][0] = ucwords(lang('labels_please').' '.lang('actions_select'))
+				.' '.lang('labels_an').' '.ucfirst(lang('labels_author'));
 			
 			foreach ($char as $item)
 			{
@@ -2036,6 +1996,7 @@ abstract class Nova_write extends Nova_controller_admin {
 			'tags' => ucwords(lang('labels_tags')),
 			'tags_sep' => lang('tags_separated'),
 			'title' => ucwords(lang('labels_title')),
+			'select' => ucwords(lang('labels_please').' '.lang('actions_select')).' '.lang('labels_an').' '.ucfirst(lang('labels_author')),
 		);
 		
 		$this->_regions['content'] = Location::view('write_personallog', $this->skin, 'admin', $data);

@@ -20,12 +20,16 @@ $faceboxcss = ( ! is_file(APPPATH.'views/'.$current_skin.'/admin/css/jquery.face
 $uiTheme = ( ! is_file(APPPATH .'views/'.$current_skin.'/admin/css/jquery.ui.theme.css'))
 	? base_url().MODFOLDER.'/assets/js/css/jquery.ui.theme.css'
 	: base_url().APPFOLDER.'/views/'.$current_skin.'/admin/css/jquery.ui.theme.css';
-
+	
+$chosencss = ( ! is_file(APPPATH .'views/'.$current_skin.'/admin/css/jquery.chosen.css'))
+	? base_url().MODFOLDER.'/assets/js/css/jquery.chosen.css'
+	: base_url().APPFOLDER.'/views/'.$current_skin.'/admin/css/jquery.chosen.css';
 
 ?><style type="text/css">
 			@import url('<?php echo base_url().MODFOLDER;?>/assets/js/css/jquery.ui.core.css');
 			@import url('<?php echo $faceboxcss;?>');
 			@import url('<?php echo $uiTheme;?>');
+			@import url('<?php echo base_url().MODFOLDER;?>/assets/js/css/jquery.chosen.structure.css');
 			
 			#content-textarea, #message-textarea { max-height: 650px; }
 		</style>
@@ -92,6 +96,15 @@ $uiTheme = ( ! is_file(APPPATH .'views/'.$current_skin.'/admin/css/jquery.ui.the
 					name: 'qtip',
 					dependencies: {
 						css: ['<?php echo base_url() . MODFOLDER;?>/assets/js/css/jquery.qtip.css']
+					},
+					cache: true
+				});
+				
+				$.lazy({					
+					src: '<?php echo base_url().MODFOLDER;?>/assets/js/jquery.chosen.min.js',
+					name: 'chosen',
+					dependencies: {
+						css: ['<?php echo $chosencss;?>']
 					},
 					cache: true
 				});

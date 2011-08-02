@@ -155,31 +155,34 @@ abstract class Nova_user extends Nova_controller_admin {
 				
 				if ($update > 0)
 				{
-					if ($array['loa'] != $old_loa)
+					if ($level == 2)
 					{
-						$loa = $this->user->get_last_loa($user, true);
+						if ($array['loa'] != $old_loa)
+						{
+							$loa = $this->user->get_last_loa($user, true);
 				
-						if ($loa->num_rows() > 0)
-						{
-							$row = $loa->row();
-							
-							$loa_array = array('loa_end_date' => now());
-							
-							$this->user->update_loa_record($row->loa_id, $loa_array);
-						}
-						else
-						{
-							if ($array['loa'] != 'active')
+							if ($loa->num_rows() > 0)
 							{
-								$loa_array = array(
-									'loa_user' => $user,
-									'loa_start_date' => now(),
-									'loa_type' => $array['loa'],
-									'loa_duration' => '',
-									'loa_reason' => ''
-								);
+								$row = $loa->row();
+							
+								$loa_array = array('loa_end_date' => now());
+							
+								$this->user->update_loa_record($row->loa_id, $loa_array);
+							}
+							else
+							{
+								if ($array['loa'] != 'active')
+								{
+									$loa_array = array(
+										'loa_user' => $user,
+										'loa_start_date' => now(),
+										'loa_type' => $array['loa'],
+										'loa_duration' => '',
+										'loa_reason' => ''
+									);
 								
-								$this->user->create_loa_record($loa_array);
+									$this->user->create_loa_record($loa_array);
+								}
 							}
 						}
 					}
@@ -1525,7 +1528,7 @@ abstract class Nova_user extends Nova_controller_admin {
 			'noawards' => sprintf(lang('error_not_found'), lang('global_awards')),
 			'nominate' => ucfirst(lang('actions_nominate')),
 			'nominatequeue' => ucwords(lang('labels_nomination') .' '. lang('labels_queue')),
-			'nonominations' => lang('error_no_award_nominations'),
+			'nonominations' => sprintf(lang('error_not_found'), lang('global_award').' '.lang('labels_nominations')),
 			'on' => lang('labels_on'),
 			'reason' => ucfirst(lang('labels_reason')),
 		);
@@ -2153,7 +2156,7 @@ abstract class Nova_user extends Nova_controller_admin {
 		}
 		
 		// send the email
-		//$email = $this->email->send();
+		$email = $this->email->send();
 		
 		return $email;
 	}

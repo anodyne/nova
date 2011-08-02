@@ -23,28 +23,18 @@
 	<?php endif; ?>
 
 	<?php echo form_open($form_action);?>
-		<?php if (isset($all) && is_array($all)): ?>
+		<?php if (isset($all_characters) and is_array($all_characters)): ?>
 			<p>
 				<kbd><?php echo $label['authors'];?></kbd>
-				
-				<?php echo form_dropdown('authors', $all, $key['all'], 'id = "all"', $to);?>
-				&nbsp;
-				<a href="#" id="add_author" class="fontSmall image"><?php echo img($images['add']);?></a>
-				<input type="hidden" name="to" id="authors_hidden" value="<?php echo $to;?>" />
-				<p id="authors">
-					<?php if (isset($recipient_list)): ?>
-						<?php foreach ($recipient_list as $r): ?>
-							<?php echo $r ."\r\n";?>
-						<?php endforeach; ?>
-					<?php endif; ?>
-				</p>
-			</p><br />
+				<span id="chosen-incompat" class="gray fontSmall bold hidden"><?php echo $label['chosen_incompat'];?><br /><br /></span>
+				<?php echo form_multiselect('authors[]', $all_characters, $authors_selected, 'id="all" class="chosen" title="'.$label['select'].'"');?>
+			</p>
 		<?php endif;?>
 		
 		<p>
 			<kbd><?php echo $label['mission'];?></kbd>
 			<?php if (isset($missions)): ?>
-				<?php echo form_dropdown('mission', $missions, $inputs['mission']);?>
+				<?php echo form_dropdown('mission', $missions, $inputs['mission'], 'class="chosen"');?>
 			<?php else: ?>
 				<?php echo anchor('sim/missions/id/'. $mission['id'], $mission['title']); ?>
 				<?php echo form_hidden('mission', $mission['id']);?>
@@ -82,7 +72,7 @@
 			&nbsp;
 			<?php echo form_button($inputs['save']);?>
 		
-			<?php if ($this->uri->segment(3) !== FALSE): ?>
+			<?php if ($this->uri->segment(3) !== false): ?>
 				&nbsp;
 				<?php echo form_button($inputs['delete']);?>
 			<?php endif; ?>

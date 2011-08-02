@@ -11,27 +11,20 @@
 			<?php echo text_output(ucfirst($inputs['status']), ''); ?>
 			<?php echo form_hidden('post_status', $inputs['status']);?>
 		<?php endif;?>
-	</p><br />
+	</p>
 	
-	<p>
-		<kbd><?php echo $label['authors'];?></kbd>
-		<?php echo form_dropdown('other_authors', $all, '', 'id = "all"', $to);?>
-		&nbsp;
-		<a href="#" id="add_author" class="fontSmall image"><?php echo img($images['add']);?></a>
-		<input type="hidden" name="to" id="authors_hidden" value="<?php echo $to;?>" />
-		<p id="authors">
-			<?php if (isset($recipient_list)): ?>
-				<?php foreach ($recipient_list as $r): ?>
-					<?php echo $r ."\r\n";?>
-				<?php endforeach; ?>
-			<?php endif; ?>
+	<?php if (isset($all_characters) and is_array($all_characters)): ?>
+		<p>
+			<kbd><?php echo $label['authors'];?></kbd>
+			<span id="chosen-incompat" class="gray fontSmall bold hidden"><?php echo $label['chosen_incompat'];?><br /><br /></span>
+			<?php echo form_multiselect('authors[]', $all_characters, $authors_selected, 'id="all" class="chosen" title="'.$label['select'].'"');?>
 		</p>
-	</p><br />
+	<?php endif;?>
 	
 	<p>
 		<kbd><?php echo $label['mission'];?></kbd>
 		<?php if (Auth::get_access_level() == 2): ?>
-			<?php echo form_dropdown('post_mission', $missions, $inputs['mission']);?>
+			<?php echo form_dropdown('post_mission', $missions, $inputs['mission'], 'class="chosen"');?>
 		<?php else: ?>
 			<?php echo text_output(ucfirst($inputs['mission_name']), ''); ?>
 			<?php echo form_hidden('post_mission', $inputs['mission']);?>

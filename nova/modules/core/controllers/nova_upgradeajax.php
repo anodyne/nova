@@ -807,7 +807,9 @@ abstract class Nova_upgradeajax extends Controller {
 					'type' => 'TEXT'),
 				'post_last_update' => array(
 					'type' => 'BIGINT',
-					'constraint' => 20)
+					'constraint' => 20),
+				'post_participants' => array(
+					'type' => 'TEXT')
 			);
 			
 			// do the modifications

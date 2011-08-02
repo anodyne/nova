@@ -19,6 +19,9 @@ abstract class Nova_messages extends Nova_controller_admin {
 		
 		// load the PM model
 		$this->load->model('privmsgs_model', 'pm');
+		
+		// load the user agent library
+		$this->load->library('user_agent');
 	}
 	
 	public function index()
@@ -237,8 +240,8 @@ abstract class Nova_messages extends Nova_controller_admin {
 			'from' => ucfirst(lang('time_from')),
 			'inbox' => ucwords(lang('labels_inbox')),
 			'loading' => ucfirst(lang('actions_loading')) .'...',
-			'no_inbox' => lang('error_no_inbox'),
-			'no_outbox' => lang('error_no_outbox'),
+			'no_inbox' => sprintf(lang('error_not_found'), lang('global_privatemessages')),
+			'no_outbox' => sprintf(lang('error_not_found'), lang('actions_sent').' '.lang('global_privatemessages')),
 			'sent' => ucwords(lang('actions_sent') .' '. lang('labels_messages')),			
 			'subject' => ucfirst(lang('labels_subject')),
 			'to' => ucfirst(lang('labels_to')),
@@ -379,32 +382,22 @@ abstract class Nova_messages extends Nova_controller_admin {
 			// define the POST variables
 			$subject = $this->input->post('subject', true);
 			$message = $this->input->post('message', true);
-			$author = $this->input->post('recipients', true);
-			$authors = $this->input->post('to', true);
+			$recipients = $this->input->post('recipients', true);
 			
-			if ($author == 0 and $authors == 0)
+			if ( ! is_array($recipients) and count($recipients) == 0)
 			{
 				$flash['status'] = 'error';
 				$flash['message'] = lang_output('flash_privmsgs_no_recipient');
 			}
 			else
 			{
-				// put the authors into an array
-				$authors_array = explode(',', $authors);
-				
-				foreach ($authors_array as $key => $value)
+				foreach ($recipients as $key => $value)
 				{
 					if ( ! is_numeric($value) || $value < 1)
 					{
-						unset($authors_array[$key]);
+						unset($recipients[$key]);
 					}
 				}
-				
-				// count the authors
-				$authors_count = count($authors_array);
-				
-				// see which author set to use
-				$to = ($authors_count == 0) ? $author : implode(',', $authors_array);
 				
 				$insert_array = array(
 					'privmsgs_author_user' => $this->session->userdata('userid'),
@@ -421,9 +414,6 @@ abstract class Nova_messages extends Nova_controller_admin {
 				$msgid = $this->db->insert_id();
 				
 				$this->sys->optimize_table('privmsgs');
-				
-				// create an array of who the PM is going to
-				$recipients = explode(',', $to);
 				
 				foreach ($recipients as $value)
 				{
@@ -452,7 +442,7 @@ abstract class Nova_messages extends Nova_controller_admin {
 					$email_data = array(
 						'author' => $this->session->userdata('main_char'),
 						'subject' => $subject,
-						'to' => $to,
+						'to' => implode(',', $recipients),
 						'message' => $message
 					);
 					
@@ -486,8 +476,6 @@ abstract class Nova_messages extends Nova_controller_admin {
 		
 		if ($characters->num_rows() > 0)
 		{
-			$data['characters'][0] = ucfirst(lang('actions_select')) .' '. lang('labels_a') .' '. ucfirst(lang('labels_recipient'));
-			
 			// we do this to make sure active characters are on top
 			$data['characters'][ucwords(lang('status_active') .' '. lang('global_characters'))] = array();
 			$data['characters'][ucwords(lang('status_inactive') .' '. lang('global_characters'))] = array();
@@ -529,15 +517,6 @@ abstract class Nova_messages extends Nova_controller_admin {
 				'content' => ucwords(lang('actions_submit')))
 		);
 		
-		$remove = array(
-			'src' => Location::img('minus-circle.png', $this->skin, 'admin'),
-			'class' => 'image fontSmall inline_img_left',
-			'alt' => ucfirst(lang('actions_remove'))
-		);
-		
-		// prep the data for sending to the js view
-		$js_data['remove'] = img($remove);
-		
 		// get the data if it is not a new PM
 		$info = ($action !== false) ? $this->pm->get_message($id) : false;
 		$row = ($info !== false and $info->num_rows() > 0) ? $info->row() : false;
@@ -553,12 +532,11 @@ abstract class Nova_messages extends Nova_controller_admin {
 			}
 		}
 		
+		$data['recipient_list'] = array();
+		
 		switch ($action)
 		{
 			case 'reply':
-				// set the hidden TO field
-				$data['to'] = 0;
-				
 				// is the RE: tag in the subject already?
 				$pos = strpos($row->privmsgs_subject, lang('abbr_reply'));
 				
@@ -594,12 +572,9 @@ abstract class Nova_messages extends Nova_controller_admin {
 				}
 				
 				// set the key
-				$data['key'] = $key;
-					
-				$this->load->helper('debug');
+				$data['recipient_list'] = $key;
 				
-				$data['header'] = ucfirst(lang('actions_reply')) .' '. lang('labels_to') 
-					.' '. ucwords(lang('global_privatemessage'));
+				$data['header'] = ucfirst(lang('actions_reply')).' '.lang('labels_to').' '.ucwords(lang('global_privatemessage'));
 				
 				$date = gmt_to_local($row->privmsgs_date, $this->timezone, $this->dst);
 				
@@ -622,26 +597,7 @@ abstract class Nova_messages extends Nova_controller_admin {
 				}
 				
 				// set the hidden TO field
-				$data['to'] = implode(',', $recipient_list) .','. $row->privmsgs_author_user;
-				
-				// send an array to the js view for disabling items in the list
-				$js_data['replyall'] = explode(',', $data['to']);
-				
-				// set the recipients list
-				$to_array = explode(',', $data['to']);
-				
-				$i = 1;
-				foreach ($to_array as $value)
-				{
-					$to_name = $this->char->get_character_name($this->user->get_main_character($value), true);
-					
-					$data['recipient_list'][$i] = '<span class="'. $value .'">';
-					$data['recipient_list'][$i].= '<a href="#" id="remove_recipient" class="image" myID="'. $value .'" myName="'.  $to_name .'">';
-					$data['recipient_list'][$i].= img($remove) .'</a>';
-					$data['recipient_list'][$i].= $to_name .'<br /></span>';
-					
-					++$i;
-				}
+				$data['recipient_list'] = implode(',', $recipient_list).','.$row->privmsgs_author_user;
 				
 				// is the RE: tag in the subject already?
 				$pos = strpos($row->privmsgs_subject, lang('abbr_reply'));
@@ -685,7 +641,7 @@ abstract class Nova_messages extends Nova_controller_admin {
 				$data['inputs']['message']['value'] = "\r\n\r\n\r\n==========\r\n\r\n";
 				$data['inputs']['message']['value'].= ucfirst(lang('time_from')) .': ';
 				$data['inputs']['message']['value'].= $this->char->get_character_name($row->privmsgs_author_character, true);
-				$data['inputs']['message']['value'].= "\r\n". ucfirst(lang('labels_to')) .': '. $to;
+				$data['inputs']['message']['value'].= "\r\n". ucfirst(lang('labels_to')).': '.str_replace(' &amp; ', ', ', $to);
 				$data['inputs']['message']['value'].= "\r\n". ucfirst(lang('labels_on')) .' ';
 				$data['inputs']['message']['value'].= mdate($this->options['date_format'], $date);
 				$data['inputs']['message']['value'].= "\r\n\r\n". $row->privmsgs_content;
@@ -708,26 +664,20 @@ abstract class Nova_messages extends Nova_controller_admin {
 			break;
 		}
 		
-		$data['images'] = array(
-			'add' => array(
-				'src' => Location::img('icon-add.png', $this->skin, 'admin'),
-				'class' => 'image fontSmall',
-				'alt' => lang('actions_add') .' '. lang('labels_author')),
-		);
-		
 		$data['label'] = array(
 			'add' => ucwords(lang('actions_add') .' '. lang('labels_recipient')),
-			'inbox' => LARROW .' '. ucfirst(lang('actions_back')) .' '. lang('labels_to') .' '.
-				ucfirst(lang('labels_inbox')),
+			'inbox' => LARROW.' '.ucfirst(lang('actions_back')).' '.lang('labels_to').' '.ucfirst(lang('labels_inbox')),
 			'message' => ucfirst(lang('labels_message')),
 			'on' => ucfirst(lang('labels_on')),
 			'subject' => ucfirst(lang('labels_subject')),
 			'to' => ucfirst(lang('labels_to')),
 			'wrote' => lang('actions_wrote') .':',
+			'select' => ucwords(lang('labels_please').' '.lang('actions_select')).' '.lang('labels_the').' '.ucfirst(lang('labels_recipients')),
+			'chosen_incompat' => lang('chosen_incompat'),
 		);
 		
 		$this->_regions['content'] = Location::view('messages_write', $this->skin, 'admin', $data);
-		$this->_regions['javascript'] = Location::js('messages_write_js', $this->skin, 'admin', $js_data);
+		$this->_regions['javascript'] = Location::js('messages_write_js', $this->skin, 'admin');
 		$this->_regions['title'].= $data['header'];
 		
 		Template::assign($this->_regions);

@@ -471,6 +471,7 @@ $lang['labels_question']		= 'question';
 $lang['labels_queue']			= 'queue';
 $lang['labels_reason'] 			= 'reason';
 $lang['labels_recipient']		= 'recipient';
+$lang['labels_recipients']		= 'recipients';
 $lang['labels_records']			= 'records';
 $lang['labels_refresh']			= 'refresh';
 $lang['labels_request']			= 'request';

@@ -54,7 +54,6 @@ body {
 	
 	border-radius: 6px;
 	-moz-border-radius: 6px;
-	-webkit-border-radius: 6px;
 }
 
 #upper-body {
@@ -65,8 +64,6 @@ body {
 	
 	border-radius: 6px 6px 0 0;
 	-moz-border-radius: 6px 6px 0 0;
-	-webkit-border-top-left-radius: 6px;
-	-webkit-border-top-right-radius: 6px;
 }
 
 .content {
@@ -82,7 +79,6 @@ body {
 	
 	border-radius: 0 0 6px 0;
 	-moz-border-radius: 0 0 6px 0;
-	-webkit-border-bottom-right-radius: 6px;
 }
 
 /*
@@ -123,8 +119,6 @@ body {
 	
 	border-radius: 4px 4px 0 0;
 	-moz-border-radius: 4px 4px 0 0;
-	-webkit-border-top-left-radius: 4px;
-	-webkit-border-top-right-radius: 4px;
 }
 #menu .nav-main ul li a span {}
 #menu .nav-main ul li a:hover {
@@ -245,7 +239,6 @@ body {
 	
 	border-radius: 3px;
 	-moz-border-radius: 3px;
-	-webkit-border-radius: 3px;
 }
 .signin-panel a {
 	border: 0;
@@ -256,20 +249,20 @@ body {
 }
 
 .corner-upper-left {
+	border-top-left-radius: 3px;
 	-moz-border-radius-topleft: 3px;
-	-webkit-border-top-left-radius: 3px;
 }
 .corner-upper-right {
+	border-top-right-radius: 3px;
 	-moz-border-radius-topright: 3px;
-	-webkit-border-top-right-radius: 3px;
 }
 .corner-lower-left {
+	border-bottom-left-radius: 3px;
 	-moz-border-radius-bottomleft: 3px;
-	-webkit-border-bottom-left-radius: 3px;
 }
 .corner-lower-right {
+	border-bottom-right-radius: 3px;
 	-moz-border-radius-bottomright: 3px;
-	-webkit-border-bottom-right-radius: 3px;
 }
 
 /*
@@ -288,8 +281,6 @@ body {
 	
 	border-radius: 0 0 6px 6px;
 	-moz-border-radius: 0 0 6px 6px;
-	-webkit-border-bottom-left-radius: 6px;
-	-webkit-border-bottom-right-radius: 6px;
 }
 
 /*
@@ -341,7 +332,6 @@ input[type=password] {
 	
 	border-radius: 2px;
 	-moz-border-radius: 2px;
-	-webkit-border-radius: 2px;
 }
 input[type=text]:focus,
 input[type=password]:focus {
@@ -357,7 +347,6 @@ textarea {
 	
 	border-radius: 2px;
 	-moz-border-radius: 2px;
-	-webkit-border-radius: 2px;
 }
 textarea:focus {
 	color: #444;
@@ -372,7 +361,6 @@ select {
 	
 	border-radius: 2px;
 	-moz-border-radius: 2px;
-	-webkit-border-radius: 2px;
 }
 select:focus,
 select:hover {
@@ -413,7 +401,6 @@ th {
 button {
 	border-radius: 3px;
 	-moz-border-radius: 3px;
-	-webkit-border-radius: 3px;
 	
 	font-weight: bold;
 	font-family: "lucida grande", verdana, arial, sans-serif;
@@ -546,7 +533,6 @@ ul.none, ol.none { list-style: none; }
 	
 	border-radius: 4px;
 	-moz-border-radius: 4px;
-	-webkit-border-radius: 4px;
 }
 .flash-success {
 	border: 1px solid #a4c897;
@@ -620,7 +606,6 @@ hr {
 	
 	border-radius: 6px;
 	-moz-border-radius: 6px;
-	-webkit-border-radius: 6px;
 	
 	box-shadow: 2px 2px 4px rgba(0, 0, 0, .3);
 	-moz-box-shadow: 2px 2px 4px rgba(0, 0, 0, .3);

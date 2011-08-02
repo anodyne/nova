@@ -7,5 +7,5 @@
 		<strong><?php echo $l;?></strong><br />
 	<?php endforeach;?>
 <?php else: ?>
-	<?php echo lang_output('error_no_users', 'h4', 'orange');?>
+	<h4 class="orange"><?php echo $label['notfound'];?></h4>
 <?php endif;?>
