@@ -36,14 +36,6 @@ abstract class Nova_write extends Nova_controller_admin {
 		$this->load->model('news_model', 'news');
 		$this->load->model('missions_model', 'mis');
 		
-		$this->session->unset_userdata('post_lock_1');
-		
-		$this->posts->update_post_lock(1, null, false);
-		
-		echo '<pre>';
-		print_r($this->session->all_userdata());
-		echo '</pre>';
-		
 		// set the variables
 		$js_data['tab'] = 0;
 		
@@ -332,24 +324,6 @@ abstract class Nova_write extends Nova_controller_admin {
 		// load the resources
 		$this->load->model('posts_model', 'posts');
 		$this->load->model('missions_model', 'mis');
-		
-		if ( ! isset($_POST['submit']) and $id)
-		{
-			// get the post
-			$postitem = $this->posts->get_post($id);
-			
-			// if there isn't a lock, create one
-			if ($postitem->post_lock_user === null and $postitem->post_lock_date === null)
-			{
-				$this->posts->update_post_lock($id, $this->session->userdata('userid'));
-				
-				$data['locked'] = false;
-			}
-			else
-			{
-				$data['locked'] = true;
-			}
-		}
 		
 		if ($this->options['system_email'] == 'off')
 		{
