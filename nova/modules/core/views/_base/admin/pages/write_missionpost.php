@@ -21,61 +21,104 @@
 			</div>
 		</div>
 	<?php endif; ?>
-
-	<?php echo form_open($form_action);?>
-		<?php if (isset($all_characters) and is_array($all_characters)): ?>
+	
+	<div id="editable">
+		<?php echo form_open($form_action, array('id' => 'writepost'));?>
+			<?php if (isset($all_characters) and is_array($all_characters)): ?>
+				<p>
+					<kbd><?php echo $label['authors'];?></kbd>
+					<span id="chosen-incompat" class="gray fontSmall bold hidden"><?php echo $label['chosen_incompat'];?><br /><br /></span>
+					<?php echo form_multiselect('authors[]', $all_characters, $authors_selected, 'id="all" class="chosen" title="'.$label['select'].'"');?>
+				</p>
+			<?php endif;?>
+			
 			<p>
-				<kbd><?php echo $label['authors'];?></kbd>
-				<span id="chosen-incompat" class="gray fontSmall bold hidden"><?php echo $label['chosen_incompat'];?><br /><br /></span>
-				<?php echo form_multiselect('authors[]', $all_characters, $authors_selected, 'id="all" class="chosen" title="'.$label['select'].'"');?>
+				<kbd><?php echo $label['mission'];?></kbd>
+				<?php if (isset($missions)): ?>
+					<?php echo form_dropdown('mission', $missions, $inputs['mission'], 'class="chosen"');?>
+				<?php else: ?>
+					<?php echo anchor('sim/missions/id/'. $mission['id'], $mission['title']); ?>
+					<?php echo form_hidden('mission', $mission['id']);?>
+				<?php endif; ?>
 			</p>
-		<?php endif;?>
+			
+			<p>
+				<kbd><?php echo $label['title'];?></kbd>
+				<?php echo form_input($inputs['title']);?>
+			</p>
+			
+			<p>
+				<kbd><?php echo $label['location'];?></kbd>
+				<?php echo form_input($inputs['location']);?>
+			</p>
+			
+			<p>
+				<kbd><?php echo $label['timeline'];?></kbd>
+				<?php echo form_input($inputs['timeline']);?>
+			</p>
+			
+			<p>
+				<kbd><?php echo $label['content'];?></kbd>
+				<?php echo form_textarea($inputs['content']);?>
+			</p>
+			
+			<p>
+				<kbd><?php echo $label['tags'];?></kbd>
+				<?php echo text_output($label['tags_sep'], 'span', 'fontSmall gray bold');?><br />
+				<?php echo form_input($inputs['tags']);?>
+			</p><br />
+			
+			<p>
+				<?php echo form_button($inputs['post']);?>
+				&nbsp;
+				<?php echo form_button($inputs['save']);?>
+			
+				<?php if ($this->uri->segment(3) !== false): ?>
+					&nbsp;
+					<?php echo form_button($inputs['delete']);?>
+				<?php endif; ?>
+			</p>
+		<?php echo form_close();?>
+	</div>
+	
+	<div id="readonly" class="hidden">
+		<p>
+			<kbd><?php echo $label['authors'];?></kbd>
+			<?php echo $this->char->get_authors(implode(',', $authors_selected));?>
+		</p>
 		
 		<p>
 			<kbd><?php echo $label['mission'];?></kbd>
 			<?php if (isset($missions)): ?>
-				<?php echo form_dropdown('mission', $missions, $inputs['mission'], 'class="chosen"');?>
+				<?php echo anchor('sim/missions/id/'.$inputs['mission'], $this->mis->get_mission($inputs['mission'], 'mission_title'));?>
 			<?php else: ?>
 				<?php echo anchor('sim/missions/id/'. $mission['id'], $mission['title']); ?>
-				<?php echo form_hidden('mission', $mission['id']);?>
 			<?php endif; ?>
 		</p>
 		
 		<p>
 			<kbd><?php echo $label['title'];?></kbd>
-			<?php echo form_input($inputs['title']);?>
+			<?php echo $inputs['title']['value'];?>
 		</p>
 		
 		<p>
 			<kbd><?php echo $label['location'];?></kbd>
-			<?php echo form_input($inputs['location']);?>
+			<?php echo $inputs['location']['value'];?>
 		</p>
 		
 		<p>
 			<kbd><?php echo $label['timeline'];?></kbd>
-			<?php echo form_input($inputs['timeline']);?>
+			<?php echo $inputs['timeline']['value'];?>
 		</p>
 		
 		<p>
 			<kbd><?php echo $label['content'];?></kbd>
-			<?php echo form_textarea($inputs['content']);?>
+			<?php echo nl2br($inputs['content']['value']);?>
 		</p>
 		
 		<p>
 			<kbd><?php echo $label['tags'];?></kbd>
-			<?php echo text_output($label['tags_sep'], 'span', 'fontSmall gray bold');?><br />
-			<?php echo form_input($inputs['tags']);?>
-		</p><br />
-		
-		<p>
-			<?php echo form_button($inputs['post']);?>
-			&nbsp;
-			<?php echo form_button($inputs['save']);?>
-		
-			<?php if ($this->uri->segment(3) !== false): ?>
-				&nbsp;
-				<?php echo form_button($inputs['delete']);?>
-			<?php endif; ?>
+			<?php echo $inputs['tags']['value'];?>
 		</p>
-	<?php echo form_close();?>
+	</div>
 <?php endif;?>

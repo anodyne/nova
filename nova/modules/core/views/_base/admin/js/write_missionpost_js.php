@@ -3,7 +3,6 @@
 <script type="text/javascript">
 	function checkLock() {
 		var send = {
-			user: "<?php echo $this->session->userdata('userid');?>",
 			post: "<?php echo $this->uri->segment(3);?>",
 			content: $('#content-textarea').val()
 		}
@@ -13,10 +12,19 @@
 			url: "<?php echo site_url('ajax/info_check_post_lock');?>",
 			data: send,
 			success: function(data){
-				console.log(data);
+				$('#readonly').hide();
+				$('#editable').show();
 				
 				if (data == 1 || data == 2)
+				{
 					window.location = "<?php echo site_url('write/index');?>";
+				}
+				else if (data == 6)
+				{
+					$('#editable').hide();
+					$('#readonly').show();
+				}
+					
 			}
 		});
 	}
@@ -70,7 +78,11 @@
 		
 		// check the post lock ONLY if we're editing a post
 		<?php if ($this->uri->segment(3)): ?>
-			setInterval("checkLock()", 10000);
+			// run the check as soon as we get here
+			checkLock();
+			
+			// now start the normal timer
+			setInterval("checkLock()", 300000);
 		<?php endif;?>
 	});
 </script>
