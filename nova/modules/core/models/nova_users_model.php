@@ -343,7 +343,7 @@ abstract class Nova_users_model extends Model {
 				{
 					$item = unserialize($row->user_data);
 				
-					$array[] = $item['userid'];
+					$array[] = (isset($item['userid'])) ? $item['userid'] : false;
 				}
 			}
 		}
