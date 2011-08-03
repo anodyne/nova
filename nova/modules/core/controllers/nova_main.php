@@ -899,12 +899,12 @@ abstract class Nova_main extends Nova_controller_main {
 		{
 			if ($id === false)
 			{
-				$data['title'] = lang('error_title_invalid_id');
+				$data['header'] = lang('error_title_invalid_id');
 				$data['msg_error'] = sprintf(lang('error_msg_news_id_numeric'), ucfirst(lang('global_newsitem')));
 			}
-			elseif ($query->num_rows() == 0)
+			elseif ( ! $row)
 			{
-				$data['title'] = lang('error_title_id_not_found');
+				$data['header'] = lang('error_title_id_not_found');
 				$data['msg_error'] = sprintf(lang('error_msg_news_not_found'), lang('global_newsitem'));
 			}
 			
