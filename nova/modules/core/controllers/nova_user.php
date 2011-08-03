@@ -215,7 +215,7 @@ abstract class Nova_user extends Nova_controller_admin {
 							$c_data = array(
 								'password' => array(
 									'name'   => $uid .'[password]',
-									'value'  => Auth::hash($password),
+									'value'  => $array['password'],
 									'expire' => '1209600',
 									'prefix' => 'nova_')
 							);
