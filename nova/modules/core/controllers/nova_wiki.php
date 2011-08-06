@@ -767,7 +767,7 @@ abstract class Nova_wiki extends Nova_controller_wiki {
 					// optimize the table
 					$this->sys->optimize_table('wiki_pages');
 					
-					$categories = explode(',', $_POST['categories']);
+					$categories = (isset($_POST['categories'])) ? explode(',', $_POST['categories']) : array();
 					
 					foreach ($categories as $key => $c)
 					{
@@ -828,7 +828,7 @@ abstract class Nova_wiki extends Nova_controller_wiki {
 				break;
 					
 				case 'edit':
-					$categories = explode(',', $_POST['categories']);
+					$categories = (isset($_POST['categories'])) ? explode(',', $_POST['categories']) : array();
 					
 					foreach ($categories as $key => $c)
 					{
