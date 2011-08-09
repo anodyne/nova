@@ -612,7 +612,19 @@ abstract class Nova_characters_model extends Model {
 	{
 		$this->db->where('data_field', $field);
 		$this->db->where('data_char', $character);
-		$query = $this->db->update('characters_data', $data);
+		
+		// get the record first
+		$find = $this->db->get('characters_data');
+		
+		// if there isn't a record, create it
+		if ($find->num_rows() == 0)
+		{
+			$query = $this->create_character_data($data);
+		}
+		else
+		{
+			$query = $this->db->update('characters_data', $data);
+		}
 		
 		$this->dbutil->optimize_table('characters_data');
 		
