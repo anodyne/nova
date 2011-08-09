@@ -693,7 +693,7 @@ abstract class Nova_main extends Nova_controller_main {
 			'author' => ucfirst(lang('labels_author')) .':',
 			'posted_on' => ucfirst(lang('actions_posted') .' '. lang('labels_on')) .':',
 			'loading' => ucfirst(lang('actions_loading')),
-			'nonews' => sprintf(lang('error_not_found'), lang('global_newsitems')),
+			'nonews' => lang('error_msg_no_news'),
 		);
 		
 		$this->_regions['content'] = Location::view('main_news', $this->skin, 'main', $data);
@@ -900,12 +900,12 @@ abstract class Nova_main extends Nova_controller_main {
 			if ($id === false)
 			{
 				$data['header'] = lang('error_title_invalid_id');
-				$data['msg_error'] = sprintf(lang('error_msg_news_id_numeric'), ucfirst(lang('global_newsitem')));
+				$data['msg_error'] = lang('error_msg_news_id_numeric');
 			}
 			elseif ( ! $row)
 			{
 				$data['header'] = lang('error_title_id_not_found');
-				$data['msg_error'] = sprintf(lang('error_msg_news_not_found'), lang('global_newsitem'));
+				$data['msg_error'] = lang('error_msg_news_not_found');
 			}
 			
 			// figure out where the view should be coming from
@@ -943,7 +943,7 @@ abstract class Nova_main extends Nova_controller_main {
 			'on' => lang('labels_on'),
 			'edited' => ucfirst(lang('actions_edited')),
 			'error_pagetitle' => lang('error_pagetitle'),
-			'error_private_news' => sprintf(lang('error_private_news'), lang('global_newsitem')),
+			'error_private_news' => lang('error_private_news'),
 			'edit' => '[ '. ucfirst(lang('actions_edit')) .' ]',
 		);
 		
