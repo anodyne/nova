@@ -61,7 +61,7 @@
 				</p><br />
 				
 				<?php if ($level >= 2): ?>
-					<?php if (($level == 2 && $inputs['crew_type'] == 'npc') || $level == 3): ?>
+					<?php if (($level == 2 and $inputs['crew_type'] == 'npc') or $level == 3): ?>
 						<p>
 							<kbd><?php echo $label['position1'];?></kbd>
 							<?php echo form_dropdown_position('position_1', $inputs['position1_id'], 'id="position1"', 'all');?>
