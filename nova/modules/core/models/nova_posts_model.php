@@ -658,6 +658,30 @@ abstract class Nova_posts_model extends Model {
 		return $query;
 	}
 	
+	/**
+	 * Update a post lock.
+	 *
+	 * @access	public
+	 * @since	2.0
+	 * @param	int		the post ID
+	 * @param	int		the user ID
+	 * @param	bool	retain the lock?
+	 */
+	public function update_post_lock($post, $user, $retain_lock = true)
+	{
+		$data = array(
+			'post_lock_user' => $user,
+			'post_lock_date' => ($retain_lock) ? now() : null
+		);
+		
+		$this->db->where('post_id', $post);
+		$query = $this->db->update('posts', $data);
+		
+		$this->dbutil->optimize_table('posts');
+		
+		return $query;
+	}
+	
 	public function delete_post($id = '')
 	{
 		$comments = $this->db->get_where('posts_comments', array('pcomment_post' => $id));

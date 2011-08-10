@@ -1,6 +1,34 @@
 <?php $string = random_string('alnum', 8);?>
 
 <script type="text/javascript">
+	function checkLock() {
+		var send = {
+			post: "<?php echo $this->uri->segment(3);?>",
+			content: $('#content-textarea').val()
+		}
+		
+		$.ajax({
+			type: "POST",
+			url: "<?php echo site_url('ajax/info_check_post_lock');?>",
+			data: send,
+			success: function(data){
+				$('#readonly').hide();
+				$('#editable').show();
+				
+				if (data == 1 || data == 2)
+				{
+					window.location = "<?php echo site_url('write/index');?>";
+				}
+				else if (data == 6)
+				{
+					$('#editable').hide();
+					$('#readonly').show();
+				}
+					
+			}
+		});
+	}
+	
 	$(document).ready(function(){
 		
 		// using the CI user agent library instead of jquery's $.browser since the latter is deprecated
@@ -46,6 +74,15 @@
 					data: { title: title, desc: desc, option: option }
 				});
 			});
+		<?php endif;?>
+		
+		// check the post lock ONLY if we're editing a post
+		<?php if ($this->uri->segment(3)): ?>
+			// run the check as soon as we get here
+			checkLock();
+			
+			// now start the normal timer
+			setInterval("checkLock()", 300000);
 		<?php endif;?>
 	});
 </script>

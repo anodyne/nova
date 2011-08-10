@@ -194,6 +194,12 @@ $add_column = array(
 	'posts' => array(
 		'post_participants' => array(
 			'type' => 'TEXT'),
+		'post_lock_user' => array(
+			'type' => 'INT',
+			'constraint' => 8),
+		'post_lock_date' => array(
+			'type' => 'BIGINT',
+			'constraint' => 20),
 	),
 	'mission_groups' => array(
 		'misgroup_parent' => array(
