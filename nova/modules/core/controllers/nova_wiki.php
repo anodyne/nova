@@ -586,7 +586,7 @@ abstract class Nova_wiki extends Nova_controller_wiki {
 							
 							$update = $this->wiki->update_page($page, $update_array);
 							
-							if ($insert > 0 && $update > 0)
+							if ($insert > 0 and $update > 0)
 							{
 								$message = sprintf(
 									lang('flash_success'),
@@ -1167,7 +1167,7 @@ abstract class Nova_wiki extends Nova_controller_wiki {
 		// load the library and pass the config items in
 		$this->load->library('thresher', $c);
 		
-		if (isset($_POST['submit']) && Auth::is_logged_in())
+		if (isset($_POST['submit']) and Auth::is_logged_in())
 		{
 			if ($action == 'comment')
 			{
@@ -1274,7 +1274,7 @@ abstract class Nova_wiki extends Nova_controller_wiki {
 						
 						if ($level < 3)
 						{
-							if ( ! Auth::is_logged_in() || ! in_array($this->session->userdata('role'), $allowed))
+							if ( ! Auth::is_logged_in() or ! in_array($this->session->userdata('role'), $allowed))
 							{
 								redirect('wiki/error/2');
 							}
@@ -1288,7 +1288,7 @@ abstract class Nova_wiki extends Nova_controller_wiki {
 					
 					$count = substr_count($d->draft_categories, ',');
 					
-					if ($count === 0 && empty($d->draft_categories))
+					if ($count === 0 and empty($d->draft_categories))
 					{
 						$string = sprintf(
 							lang('error_not_found'),
@@ -1341,7 +1341,7 @@ abstract class Nova_wiki extends Nova_controller_wiki {
 				
 				if ($level < 3)
 				{
-					if ( ! Auth::is_logged_in() || ! in_array($this->session->userdata('role'), $allowed))
+					if ( ! Auth::is_logged_in() or ! in_array($this->session->userdata('role'), $allowed))
 					{
 						redirect('wiki/error/1');
 					}
@@ -1359,6 +1359,10 @@ abstract class Nova_wiki extends Nova_controller_wiki {
 			// grab the information about the page
 			$page = $this->wiki->get_page($id);
 			
+			// empty variables to catch errors
+			$data['header'] = '';
+			$data['page'] = array();
+			
 			if ($page->num_rows() > 0)
 			{
 				// get the row
@@ -1372,7 +1376,7 @@ abstract class Nova_wiki extends Nova_controller_wiki {
 
 				$count = substr_count($p->draft_categories, ',');
 				
-				if ($count === 0 && empty($p->draft_categories))
+				if ($count === 0 and empty($p->draft_categories))
 				{
 					$string = sprintf(
 						lang('error_not_found'),
@@ -1411,7 +1415,7 @@ abstract class Nova_wiki extends Nova_controller_wiki {
 			
 			if (Auth::is_logged_in())
 			{
-				if ($level == 3 || $level == 2 || ($level == 1 && ($p->page_created_by_user == $this->session->userdata('userid'))))
+				if ($level == 3 or $level == 2 or ($level == 1 and ($p->page_created_by_user == $this->session->userdata('userid'))))
 				{
 					$data['edit'] = true;
 				}
