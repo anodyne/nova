@@ -103,7 +103,7 @@ abstract class Nova_upload extends Nova_controller_admin {
 			$this->config->item('max_size'),
 			$this->config->item('max_width'),
 			$this->config->item('max_height'),
-			(Auth::check_access('upload/manage')) ? sprintf(lang('text_upload_admin'), APPFOLDER) : ''
+			(Auth::check_access('upload/manage', false)) ? sprintf(lang('text_upload_admin'), APPFOLDER) : ''
 		);
 		
 		$data['label'] = array(
