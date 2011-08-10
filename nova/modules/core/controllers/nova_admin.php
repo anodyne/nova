@@ -154,7 +154,7 @@ abstract class Nova_admin extends Nova_controller_admin {
 			'saved_logs'		=> $this->logs->count_user_logs($this->session->userdata('userid'), 'saved'),
 			'saved_news' 		=> $this->news->count_user_news($this->session->userdata('userid'), 'saved'),
 			'unread_pms' 		=> $this->pm->count_unread_pms($this->session->userdata('userid')),
-			'pending_users' 	=> $this->char->count_characters('pending', ''),
+			'pending_users' 	=> (Auth::check_access('characters/index', false)) ? $this->char->count_characters('pending', '') : 0,
 			'pending_posts' 	=> $this->posts->count_all_posts('', 'pending'),
 			'pending_logs' 		=> $this->logs->count_all_logs('pending'),
 			'pending_news' 		=> $this->news->count_news_items('pending'),
@@ -163,7 +163,7 @@ abstract class Nova_admin extends Nova_controller_admin {
 			'pending_docked' 	=> $this->docking->count_docked_items('pending'),
 		);
 		
-		if (is_array($this->session->userdata('characters')) && count($this->session->userdata('characters')) > 0)
+		if (is_array($this->session->userdata('characters')) and count($this->session->userdata('characters')) > 0)
 		{
 			$data['notification']['saved_posts'] = $this->posts->count_character_posts($this->session->userdata('characters'), 'saved');
 		}
@@ -428,9 +428,9 @@ abstract class Nova_admin extends Nova_controller_admin {
 			'last_login' => ucwords(lang('order_last') .' '. lang('actions_login')) .':',
 			'activity' => ucfirst(lang('labels_activity')),
 			'milestones' => ucfirst(lang('labels_milestones')),
-			'noposts' => sprintf(lang('error_not_found'), lang('global_missionposts')),
-			'nologs' => sprintf(lang('error_not_found'), lang('global_personallogs')),
-			'nonews' => sprintf(lang('error_not_found'), lang('global_newsitems')),
+			'noposts' => lang('error_no_posts'),
+			'nologs' => lang('error_no_logs'),
+			'nonews' => lang('error_no_news'),
 			'update' => ucwords(APP_NAME .' '. lang('actions_update')),
 			'getupdate' => ucfirst(lang('actions_get') .' '. lang('labels_the') .' '. lang('actions_update')) .' '. RARROW,
 			'runupdate' => ucfirst(lang('actions_run') .' '. lang('labels_the') .' '. lang('actions_update')) .' '. RARROW,
