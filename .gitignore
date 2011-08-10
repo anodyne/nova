@@ -16,6 +16,7 @@ application/config/database.php
 !application/views/_base_override/*
 
 application/assets/common/ds9/
+application/assets/common/ent/
 
 nova/app/
 
