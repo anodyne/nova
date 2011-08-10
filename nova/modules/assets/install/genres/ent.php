@@ -5,9 +5,10 @@
 |---------------------------------------------------------------
 |
 | File: assets/install_data_ent.php
-| System Version: 1.2
+| System Version: 2.0
 |
 | Genre data compiled by Moss (Anodyne forums)
+| Corrections noted by Vorn Krace (Anodyne forums)
 |
 */
 
@@ -70,7 +71,12 @@ $depts = array(
 		'dept_name' => 'MACO Detachment',
 		'dept_desc' => "When the standard security detail is not enough, MACOs come in and clean up; the MACO detachment is a powerful tactical addition to any ship, responsible for partaking in personal combat from sniping to melee.",
 		'dept_order' => 7,
-		'dept_manifest' => 1)
+		'dept_manifest' => 1),
+	array(
+		'dept_name' => 'Civilians',
+		'dept_desc' => "Civilians play an important role in Starfleet. Many civilian specialists across a number of fields work on occasion with Starfleet personnel as a Mission Specialist. In other cases, extra ship and station duties, such as running the ship's lounge, are outsourced to a civilian contract.",
+		'dept_order' => 8,
+		'dept_manifest' => 1),
 );
 
 $ranks = array(
@@ -115,7 +121,7 @@ $ranks = array(
 		'rank_name' => 'General',
 		'rank_short_name' => 'GEN',
 		'rank_image' => 'maco-a4',
-		'rank_order' => 1,
+		'rank_order' => 0,
 		'rank_class' => 4),
 		
 	array(
@@ -140,7 +146,7 @@ $ranks = array(
 		'rank_name' => 'Lieutenant General',
 		'rank_short_name' => 'LTGEN',
 		'rank_image' => 'maco-a3',
-		'rank_order' => 2,
+		'rank_order' => 1,
 		'rank_class' => 4),
 		
 	array(
@@ -165,13 +171,13 @@ $ranks = array(
 		'rank_name' => 'Major General',
 		'rank_short_name' => 'MAJGEN',
 		'rank_image' => 'maco-a2',
-		'rank_order' => 3,
+		'rank_order' => 2,
 		'rank_class' => 4),
 	array(
 		'rank_name' => 'Admiral',
 		'rank_short_name' => 'ADM',
 		'rank_image' => 'v-o8',
-		'rank_order' => 3,
+		'rank_order' => 0,
 		'rank_class' => 5),
 		
 	array(
@@ -196,13 +202,13 @@ $ranks = array(
 		'rank_name' => 'Brigadier General',
 		'rank_short_name' => 'BGEN',
 		'rank_image' => 'maco-a1',
-		'rank_order' => 4,
+		'rank_order' => 3,
 		'rank_class' => 4),
 	array(
 		'rank_name' => 'Captain',
 		'rank_short_name' => 'CAPT',
 		'rank_image' => 'v-o7',
-		'rank_order' => 4,
+		'rank_order' => 1,
 		'rank_class' => 5),
 		
 	array(
@@ -227,13 +233,13 @@ $ranks = array(
 		'rank_name' => 'Colonel',
 		'rank_short_name' => 'COL',
 		'rank_image' => 'maco-o6',
-		'rank_order' => 5,
+		'rank_order' => 4,
 		'rank_class' => 4),
 	array(
 		'rank_name' => 'Commander',
 		'rank_short_name' => 'CMDR',
 		'rank_image' => 'v-o6',
-		'rank_order' => 5,
+		'rank_order' => 2,
 		'rank_class' => 5),
 	
 	array(
@@ -258,13 +264,13 @@ $ranks = array(
 		'rank_name' => 'Lieutenant Colonel',
 		'rank_short_name' => 'LTCOL',
 		'rank_image' => 'maco-o5',
-		'rank_order' => 6,
+		'rank_order' => 5,
 		'rank_class' => 4),
 	array(
 		'rank_name' => 'Sub-Commander',
 		'rank_short_name' => 'SCMDR',
 		'rank_image' => 'v-o5',
-		'rank_order' => 6,
+		'rank_order' => 3,
 		'rank_class' => 5),
 		
 	array(
@@ -289,13 +295,13 @@ $ranks = array(
 		'rank_name' => 'Major',
 		'rank_short_name' => 'MAJ',
 		'rank_image' => 'maco-o4',
-		'rank_order' => 7,
+		'rank_order' => 6,
 		'rank_class' => 4),
 	array(
 		'rank_name' => 'Major',
 		'rank_short_name' => 'MAJ',
 		'rank_image' => 'v-o4',
-		'rank_order' => 7,
+		'rank_order' => 4,
 		'rank_class' => 5),
 		
 	array(
@@ -320,13 +326,13 @@ $ranks = array(
 		'rank_name' => 'Captain',
 		'rank_short_name' => 'CAPT',
 		'rank_image' => 'maco-o3',
-		'rank_order' => 8,
+		'rank_order' => 7,
 		'rank_class' => 4),
 	array(
 		'rank_name' => 'Lieutenant',
 		'rank_short_name' => 'LT',
 		'rank_image' => 'v-o3',
-		'rank_order' => 8,
+		'rank_order' => 5,
 		'rank_class' => 5),
 		
 	array(
@@ -351,13 +357,13 @@ $ranks = array(
 		'rank_name' => '1st Lieutenant',
 		'rank_short_name' => '1LT',
 		'rank_image' => 'maco-o2',
-		'rank_order' => 9,
+		'rank_order' => 8,
 		'rank_class' => 4),
 	array(
 		'rank_name' => 'Sub-Lieutenant',
 		'rank_short_name' => 'SLT',
 		'rank_image' => 'v-o2',
-		'rank_order' => 9,
+		'rank_order' => 6,
 		'rank_class' => 5),
 		
 	array(
@@ -382,13 +388,13 @@ $ranks = array(
 		'rank_name' => '2nd Lieutenant',
 		'rank_short_name' => '2LT',
 		'rank_image' => 'maco-o1',
-		'rank_order' => 10,
+		'rank_order' => 9,
 		'rank_class' => 4),
 	array(
 		'rank_name' => 'Uhlan',
 		'rank_short_name' => 'UHL',
 		'rank_image' => 'v-o1',
-		'rank_order' => 10,
+		'rank_order' => 7,
 		'rank_class' => 5),
 		
 	array(
@@ -413,7 +419,7 @@ $ranks = array(
 		'rank_name' => 'Chief Warrant Officer',
 		'rank_short_name' => 'CWO',
 		'rank_image' => 'maco-w2',
-		'rank_order' => 11,
+		'rank_order' => 10,
 		'rank_class' => 4),
 		
 	array(
@@ -438,7 +444,7 @@ $ranks = array(
 		'rank_name' => 'Warrant Officer',
 		'rank_short_name' => 'WO',
 		'rank_image' => 'maco-w1',
-		'rank_order' => 12,
+		'rank_order' => 11,
 		'rank_class' => 4),
 		
 	array(
@@ -463,7 +469,7 @@ $ranks = array(
 		'rank_name' => 'Sergeant Major',
 		'rank_short_name' => 'SGTMAJ',
 		'rank_image' => 'maco-e9',
-		'rank_order' => 13,
+		'rank_order' => 12,
 		'rank_class' => 4),
 		
 	array(
@@ -488,7 +494,7 @@ $ranks = array(
 		'rank_name' => 'Master Sergeant',
 		'rank_short_name' => 'MSGT',
 		'rank_image' => 'maco-e8',
-		'rank_order' => 14,
+		'rank_order' => 13,
 		'rank_class' => 4),
 		
 	array(
@@ -513,7 +519,7 @@ $ranks = array(
 		'rank_name' => 'Gunnery Sergeant',
 		'rank_short_name' => 'GYSGT',
 		'rank_image' => 'maco-e7',
-		'rank_order' => 15,
+		'rank_order' => 14,
 		'rank_class' => 4),
 		
 	array(
@@ -538,7 +544,7 @@ $ranks = array(
 		'rank_name' => 'Staff Sergeant',
 		'rank_short_name' => 'SSGT',
 		'rank_image' => 'maco-e6',
-		'rank_order' => 16,
+		'rank_order' => 15,
 		'rank_class' => 4),
 		
 	array(
@@ -563,7 +569,7 @@ $ranks = array(
 		'rank_name' => 'Sergeant',
 		'rank_short_name' => 'SGT',
 		'rank_image' => 'maco-e5',
-		'rank_order' => 17,
+		'rank_order' => 16,
 		'rank_class' => 4),
 		
 	array(
@@ -588,7 +594,7 @@ $ranks = array(
 		'rank_name' => 'Corporal',
 		'rank_short_name' => 'CPL',
 		'rank_image' => 'maco-e4',
-		'rank_order' => 18,
+		'rank_order' => 17,
 		'rank_class' => 4),
 		
 	array(
@@ -613,7 +619,7 @@ $ranks = array(
 		'rank_name' => 'Lance Corporal',
 		'rank_short_name' => 'LCPL',
 		'rank_image' => 'maco-e3',
-		'rank_order' => 19,
+		'rank_order' => 18,
 		'rank_class' => 4),
 		
 	array(
@@ -638,7 +644,7 @@ $ranks = array(
 		'rank_name' => 'Private 1st Class',
 		'rank_short_name' => 'PFC',
 		'rank_image' => 'maco-e2',
-		'rank_order' => 20,
+		'rank_order' => 19,
 		'rank_class' => 4),
 		
 	array(
@@ -663,35 +669,35 @@ $ranks = array(
 		'rank_name' => 'Private',
 		'rank_short_name' => 'PVT',
 		'rank_image' => 'maco-e1',
+		'rank_order' => 20,
+		'rank_class' => 4),
+		
+	array(
+		'rank_name' => 'Cadet Senior Grade',
+		'rank_short_name' => 'CDT(SR)',
+		'rank_image' => 'c4',
+		'rank_order' => 22,
+		'rank_display' => 'n',
+		'rank_class' => 1),
+	array(
+		'rank_name' => 'Cadet Senior Grade',
+		'rank_short_name' => 'CDT(SR)',
+		'rank_image' => 'c4',
+		'rank_order' => 22,
+		'rank_display' => 'n',
+		'rank_class' => 2),
+	array(
+		'rank_name' => 'Cadet Senior Grade',
+		'rank_short_name' => 'CDT(SR)',
+		'rank_image' => 'c4',
+		'rank_order' => 22,
+		'rank_display' => 'n',
+		'rank_class' => 3),
+	array(
+		'rank_name' => 'Cadet Senior Grade',
+		'rank_short_name' => 'CDT(SR)',
+		'rank_image' => 'c4',
 		'rank_order' => 21,
-		'rank_class' => 4),
-		
-	array(
-		'rank_name' => 'Cadet Senior Grade',
-		'rank_short_name' => 'CDT(SR)',
-		'rank_image' => 'c4',
-		'rank_order' => 22,
-		'rank_display' => 'n',
-		'rank_class' => 1),
-	array(
-		'rank_name' => 'Cadet Senior Grade',
-		'rank_short_name' => 'CDT(SR)',
-		'rank_image' => 'c4',
-		'rank_order' => 22,
-		'rank_display' => 'n',
-		'rank_class' => 2),
-	array(
-		'rank_name' => 'Cadet Senior Grade',
-		'rank_short_name' => 'CDT(SR)',
-		'rank_image' => 'c4',
-		'rank_order' => 22,
-		'rank_display' => 'n',
-		'rank_class' => 3),
-	array(
-		'rank_name' => 'Cadet Senior Grade',
-		'rank_short_name' => 'CDT(SR)',
-		'rank_image' => 'c4',
-		'rank_order' => 22,
 		'rank_display' => 'n',
 		'rank_class' => 4),
 		
@@ -720,40 +726,40 @@ $ranks = array(
 		'rank_name' => 'Cadet Junior Grade',
 		'rank_short_name' => 'CDT(JR)',
 		'rank_image' => 'c3',
+		'rank_order' => 22,
+		'rank_display' => 'n',
+		'rank_class' => 4),
+		
+	array(
+		'rank_name' => 'Cadet Sophomore Grade',
+		'rank_short_name' => 'CDT(SO)',
+		'rank_image' => 'c2',
+		'rank_order' => 24,
+		'rank_display' => 'n',
+		'rank_class' => 1),
+	array(
+		'rank_name' => 'Cadet Sophomore Grade',
+		'rank_short_name' => 'CDT(SO)',
+		'rank_image' => 'c2',
+		'rank_order' => 24,
+		'rank_display' => 'n',
+		'rank_class' => 2),
+	array(
+		'rank_name' => 'Cadet Sophomore Grade',
+		'rank_short_name' => 'CDT(SO)',
+		'rank_image' => 'c2',
+		'rank_order' => 24,
+		'rank_display' => 'n',
+		'rank_class' => 3),
+	array(
+		'rank_name' => 'Cadet Sophomore Grade',
+		'rank_short_name' => 'CDT(SO)',
+		'rank_image' => 'c2',
 		'rank_order' => 23,
 		'rank_display' => 'n',
 		'rank_class' => 4),
 		
 	array(
-		'rank_name' => 'Cadet Sophomore Grade',
-		'rank_short_name' => 'CDT(SO)',
-		'rank_image' => 'c2',
-		'rank_order' => 24,
-		'rank_display' => 'n',
-		'rank_class' => 1),
-	array(
-		'rank_name' => 'Cadet Sophomore Grade',
-		'rank_short_name' => 'CDT(SO)',
-		'rank_image' => 'c2',
-		'rank_order' => 24,
-		'rank_display' => 'n',
-		'rank_class' => 2),
-	array(
-		'rank_name' => 'Cadet Sophomore Grade',
-		'rank_short_name' => 'CDT(SO)',
-		'rank_image' => 'c2',
-		'rank_order' => 24,
-		'rank_display' => 'n',
-		'rank_class' => 3),
-	array(
-		'rank_name' => 'Cadet Sophomore Grade',
-		'rank_short_name' => 'CDT(SO)',
-		'rank_image' => 'c2',
-		'rank_order' => 24,
-		'rank_display' => 'n',
-		'rank_class' => 4),
-		
-	array(
 		'rank_name' => 'Cadet Freshman Grade',
 		'rank_short_name' => 'CDT(FR)',
 		'rank_image' => 'c1',
@@ -778,7 +784,7 @@ $ranks = array(
 		'rank_name' => 'Cadet Freshman Grade',
 		'rank_short_name' => 'CDT(FR)',
 		'rank_image' => 'c1',
-		'rank_order' => 25,
+		'rank_order' => 24,
 		'rank_display' => 'n',
 		'rank_class' => 4),
 		
@@ -804,13 +810,13 @@ $ranks = array(
 		'rank_name' => '',
 		'rank_short_name' => '',
 		'rank_image' => 'maco-blank',
-		'rank_order' => 26,
+		'rank_order' => 25,
 		'rank_class' => 4),
 	array(
 		'rank_name' => '',
 		'rank_short_name' => '',
 		'rank_image' => 'v-blank',
-		'rank_order' => 26,
+		'rank_order' => 8,
 		'rank_class' => 5)
 );
 
@@ -971,31 +977,38 @@ $positions = array(
 		'pos_type' => 'officer'),
 	array(
 		'pos_name' => 'MACO Commanding Officer',
-		'pos_desc' => "Responsible for maintaining and upgrading the universal translator, controls the intercom and responsible for coordinating communications with other ships, stations or colonies/planets.",
+		'pos_desc' => "The MACO Commanding Officer is responsible for all the MACO personnel assigned to the ship/facility. S/he is in required to take command of any special ground operations and lease such actions with security. The MACOs could be called the 23rd century commandos.\r\n\r\nThe CO can range from a Second Lieutenant on a small ship to a Lieutenant Colonel on a large facility or colony. Charged with the training, condition and tactical leadership of the MACO compliment, they are a member of the senior staff.\r\n\r\nAnswers to the Commanding Officer of the ship/facility.",
 		'pos_dept' => 8,
 		'pos_order' => 0,
 		'pos_open' => 1,
 		'pos_type' => 'senior'),
 	array(
 		'pos_name' => 'MACO Executive Officer',
-		'pos_desc' => "Responsible for maintaining and upgrading the universal translator, controls the intercom and responsible for coordinating communications with other ships, stations or colonies/planets.",
+		'pos_desc' => "The Executive Officer of the MACOs, works like any Asst. Department head, removing some of the work load from the MACO CO and if the need arises taking on the role of MACO CO. S/he oversees the regular duties of the MACOs, from regular drills to equipment training, assignment and supply request to the ship/facilities Materials Officer.\r\n\r\nAnswers to the MACO Commanding Officer.",
 		'pos_dept' => 8,
 		'pos_order' => 1,
 		'pos_open' => 1,
 		'pos_type' => 'officer'),
 	array(
 		'pos_name' => 'First Sergeant',
-		'pos_desc' => "Responsible for maintaining and upgrading the universal translator, controls the intercom and responsible for coordinating communications with other ships, stations or colonies/planets.",
+		'pos_desc' => "The First Sergeant is the highest ranked Enlisted MACO. S/He is in charge of all of the MACO enlisted affairs in the detachment. They assist the Company or Detachment Commander as their Executive Officer would. They act as a bridge, closing the gap between the NCO\'s and the Officers.\r\n\r\nAnswers To MACO Commanding Officer.",
 		'pos_dept' => 8,
 		'pos_order' => 5,
 		'pos_open' => 1,
 		'pos_type' => 'enlisted'),
 	array(
 		'pos_name' => 'MACO',
-		'pos_desc' => "Responsible for maintaining and upgrading the universal translator, controls the intercom and responsible for coordinating communications with other ships, stations or colonies/planets.",
+		'pos_desc' => "Serving within a squad, the MACO is trained in a variety of means of combat, from melee to ranged projectile to sniping.",
 		'pos_dept' => 8,
 		'pos_order' => 10,
 		'pos_open' => 10,
+		'pos_type' => 'enlisted'),
+	array(
+		'pos_name' => 'Chef',
+		'pos_desc' => "Responsible for preparing all meals served in the Mess Hall and for the food during any diplomatic functions that may be held onboard.",
+		'pos_dept' => 9,
+		'pos_order' => 0,
+		'pos_open' => 1,
 		'pos_type' => 'enlisted')
 );
 
