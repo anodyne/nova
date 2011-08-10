@@ -1070,6 +1070,13 @@ abstract class Nova_write extends Nova_controller_admin {
 		
 		$data['form_action'] = ($id !== false) ? 'write/missionpost/'.$id : 'write/missionpost';
 		
+		$data['images'] = array(
+			'excl' => array(
+				'src' => Location::img('exclamation-32.png', $this->skin, 'admin'),
+				'alt' => '',
+			),
+		);
+		
 		$data['label'] = array(
 			'addauthor' => ucwords(lang('actions_add') .' '. lang('labels_author')),
 			'authors' => ucfirst(lang('labels_authors')),
@@ -1087,6 +1094,7 @@ abstract class Nova_write extends Nova_controller_admin {
 			'title' => ucfirst(lang('labels_title')),
 			'select' => ucwords(lang('labels_please').' '.lang('actions_select')).' '.lang('labels_the').' '.ucfirst(lang('labels_authors')),
 			'chosen_incompat' => lang('chosen_incompat'),
+			'locked' => sprintf(lang('post_locked'), lang('global_missionpost'), lang('global_user')),
 		);
 		
 		$this->_regions['content'] = Location::view('write_missionpost', $this->skin, 'admin', $data);

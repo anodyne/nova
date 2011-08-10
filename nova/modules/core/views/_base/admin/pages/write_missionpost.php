@@ -1,6 +1,6 @@
 <?php echo text_output($header, 'h1', 'page-head');?>
 
-<?php if (isset($missions) && $missions === FALSE): ?>
+<?php if (isset($missions) and $missions === false): ?>
 	<?php echo text_output($label['no_mission'], 'p', 'bold');?>
 <?php else: ?>
 	<?php if ($this->options['use_mission_notes'] == 'y'): ?>
@@ -81,7 +81,12 @@
 		<?php echo form_close();?>
 	</div>
 	
-	<div id="readonly" class="hidden">
+	<div id="readonly" class="">
+		<div id="notes">
+			<p class="float_left"><?php echo img($images['excl']);?>&nbsp;&nbsp;</p>
+			<?php echo text_output($label['locked'], 'h4');?>
+		</div>
+		
 		<p>
 			<kbd><?php echo $label['authors'];?></kbd>
 			<?php echo $this->char->get_authors(implode(',', $authors_selected));?>
