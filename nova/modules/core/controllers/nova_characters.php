@@ -2004,7 +2004,6 @@ abstract class Nova_characters extends Nova_controller_admin {
 				$name = array(
 					($a->crew_type != 'pending') ? $this->ranks->get_rank($a->rank, 'rank_name') : '',
 					$a->first_name,
-					$a->middle_name,
 					$a->last_name,
 					$a->suffix
 				);

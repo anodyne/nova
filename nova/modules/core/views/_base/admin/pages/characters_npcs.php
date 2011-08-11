@@ -20,7 +20,7 @@
 					<tbody>
 					<?php foreach ($c['chars'] as $i): ?>
 						<tr>
-							<td class="col_40pct">
+							<td>
 								<strong><?php echo $i['name'];?></strong><br />
 								
 								<span class="fontSmall gray">
@@ -31,7 +31,7 @@
 									<?php endif;?>
 								</span>
 							</td>
-							<td class="col_100 align_right">
+							<td class="col_150 align_right">
 								<?php if (!empty($i['pid']) && $levelcheck['account'] == 2): ?>
 									<?php echo anchor('user/account/'. $i['pid'], img($images['account']), array('class' => 'image'));?>
 									&nbsp;
