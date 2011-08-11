@@ -610,11 +610,11 @@ abstract class Nova_characters_model extends Model {
 	
 	public function update_character_data($field = '', $character = '', $data = '')
 	{
+		// find the record first
+		$this->db->from('characters_data');
 		$this->db->where('data_field', $field);
 		$this->db->where('data_char', $character);
-		
-		// get the record first
-		$find = $this->db->get('characters_data');
+		$find = $this->db->get();
 		
 		// if there isn't a record, create it
 		if ($find->num_rows() == 0)
@@ -623,6 +623,8 @@ abstract class Nova_characters_model extends Model {
 		}
 		else
 		{
+			$this->db->where('data_field', $field);
+			$this->db->where('data_char', $character);
 			$query = $this->db->update('characters_data', $data);
 		}
 		
