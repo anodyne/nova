@@ -28,7 +28,7 @@
 							<tbody>
 							<?php foreach ($c['chars']['active'] as $i): ?>
 								<tr>
-									<td class="col_40pct">
+									<td>
 										<strong><?php echo $i['name'];?></strong><br />
 										
 										<?php if (empty($i['uid'])): ?>
@@ -37,7 +37,7 @@
 										
 										<?php echo text_output($i['position_1'], 'span', 'fontSmall gray');?>
 									</td>
-									<td class="col_100 align_right">
+									<td class="col_150 align_right">
 										<?php if (!empty($i['uid']) && $levelcheck['account'] == 2): ?>
 											<?php echo anchor('user/account/'. $i['uid'], img($images['account']), array('class' => 'image'));?>
 											&nbsp;
@@ -78,7 +78,7 @@
 							<tbody>
 							<?php foreach ($c['chars']['inactive'] as $i): ?>
 								<tr>
-									<td class="col_40pct">
+									<td>
 										<strong><?php echo $i['name'];?></strong><br />
 										<span class="fontSmall gray"><?php echo $i['position_1'];?></span>
 									</td>
@@ -116,7 +116,7 @@
 							<tbody>
 							<?php foreach ($c['chars']['pending'] as $i): ?>
 								<tr>
-									<td class="col_40pct">
+									<td>
 										<?php if ($i['pstatus'] == 'pending'): ?>
 											<?php echo img($images['new']);?>
 										<?php endif;?>

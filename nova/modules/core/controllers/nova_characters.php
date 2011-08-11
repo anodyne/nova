@@ -346,7 +346,6 @@ abstract class Nova_characters extends Nova_controller_admin {
 					$name = array(
 						($a->crew_type != 'pending') ? $this->ranks->get_rank($a->rank, 'rank_name') : '',
 						$a->first_name,
-						$a->middle_name,
 						$a->last_name,
 						$a->suffix
 					);
@@ -697,8 +696,8 @@ abstract class Nova_characters extends Nova_controller_admin {
 			'given' => ucfirst(lang('actions_given') .' '. lang('labels_on')),
 			'inactive' => ucwords(lang('status_inactive') .' '. lang('global_characters')),
 			'ic' => ucwords(lang('labels_ic') .' '. lang('global_awards')),
-			'no_awards' => sprintf(lang('error_not_found'), lang('global_awards')),
-			'no_awards_to_give' => sprintf(lang('error_no_awards_to_give'), lang('global_awards'), lang('global_character')),
+			'no_awards' => lang('error_no_awards'),
+			'no_awards_to_give' => lang('error_no_awards_to_give'),
 			'nochars' => ucfirst(lang('labels_no') .' '. lang('global_characters') .' '. lang('labels_to') .' '. lang('labels_display')),
 			'npc' => ucwords(lang('status_nonplaying') .' '. lang('global_characters')),
 			'ooc' => ucwords(lang('labels_ooc') .' '. lang('global_awards')),
@@ -769,9 +768,6 @@ abstract class Nova_characters extends Nova_controller_admin {
 		$this->load->model('access_model', 'access');
 		$this->load->helper('directory');
 		
-		// grab the character info
-		$char = $this->char->get_character($id);
-		
 		if (isset($_POST['submit']))
 		{
 			switch ($this->uri->segment(4))
@@ -803,7 +799,7 @@ abstract class Nova_characters extends Nova_controller_admin {
 					// get rid of the submit button
 					unset($array['character']['submit']);
 					
-					if (($level == 2 and $char->crew_type == 'npc') or $level == 3)
+					if ($data['level'] >= 2)
 					{
 						$position1_old = $array['character']['position_1_old'];
 						$position2_old = $array['character']['position_2_old'];
@@ -813,6 +809,22 @@ abstract class Nova_characters extends Nova_controller_admin {
 						unset($array['character']['position_1_old']);
 						unset($array['character']['position_2_old']);
 						unset($array['character']['rank_old']);
+						
+						if ($data['level'] == 3)
+						{
+							$crew_type_old = $array['character']['old_crew_type'];
+							unset($array['character']['old_crew_type']);
+							
+							if ($array['character']['crew_type'] == 'inactive' and $user['crew_type'] != 'inactive')
+							{
+								$array['character']['date_deactivate'] = now();
+							}
+							
+							if ($array['character']['crew_type'] != 'inactive' and $user['crew_type'] == 'inactive')
+							{
+								$array['character']['date_deactivate'] = null;
+							}
+						}
 						
 						if ($array['character']['rank'] != $rank_old)
 						{
@@ -841,14 +853,136 @@ abstract class Nova_characters extends Nova_controller_admin {
 						$update += $this->char->update_character_data($k, $data['id'], $v);
 					}
 					
-					$message = sprintf(
-						($update > 0) ? lang('flash_success') : lang('flash_failure'),
-						ucfirst(lang('global_character')),
-						lang('actions_updated'),
-						''
-					);
-					$flash['status'] = ($update > 0) ? 'success' : 'error';
-					$flash['message'] = text_output($message);
+					if ($update > 0)
+					{
+						$message = sprintf(
+							lang('flash_success'),
+							ucfirst(lang('global_character')),
+							lang('actions_updated'),
+							''
+						);
+		
+						$flash['status'] = 'success';
+						$flash['message'] = text_output($message);
+						
+						if ($data['level'] == 3)
+						{
+							if ($array['character']['crew_type'] != $crew_type_old)
+							{
+								if ($crew_type_old == 'active' and ($array['character']['crew_type'] == 'inactive' or $array['character']['crew_type'] == 'npc'))
+								{
+									$pos1 = $this->pos->get_position($array['character']['position_1']);
+									$pos2 = $this->pos->get_position($array['character']['position_2']);
+									
+									if ($pos1 !== false)
+									{
+										// build the update array
+										$position_update['new'] = array('pos_open' => $pos1->pos_open + 1);
+										
+										// update the new position
+										$posupdate = $this->pos->update_position($array['character']['position_1'], $position_update['new']);
+									}
+									
+									if ($pos2 !== false)
+									{
+										// build the update array
+										$position_update['new'] = array('pos_open' => $pos2->pos_open + 1);
+										
+										// update the new position
+										$posupdate = $this->pos->update_position($array['character']['position_2'], $position_update['new']);
+									}
+								}
+								
+								if (($crew_type_old == 'inactive' or $crew_type_old == 'npc') and $array['character']['crew_type'] == 'active')
+								{
+									$pos1 = $this->pos->get_position($array['character']['position_1']);
+									$pos2 = $this->pos->get_position($array['character']['position_2']);
+									
+									if ($pos1 !== false)
+									{
+										// build the update array
+										$position_update['new'] = array('pos_open' => ($pos1->pos_open == 0) ? 0 : ($pos1->pos_open - 1));
+										
+										// update the new position
+										$posupdate = $this->pos->update_position($array['character']['position_1'], $position_update['new']);
+									}
+									
+									if ($pos2 !== false)
+									{
+										// build the update array
+										$position_update['new'] = array('pos_open' => ($pos2->pos_open == 0) ? 0 : ($pos2->pos_open - 1));
+										
+										// update the new position
+										$posupdate = $this->pos->update_position($array['character']['position_2'], $position_update['new']);
+									}
+								}
+							}
+							
+							if ($array['character']['crew_type'] == 'active' or $array['character']['crew_type'] == 'pending')
+							{
+								// update the positions
+								if ($array['character']['position_1'] != $position1_old)
+								{
+									$posnew = $this->pos->get_position($array['character']['position_1']);
+									$posold = $this->pos->get_position($position1_old);
+									
+									if ($posnew !== false)
+									{
+										// build the update array
+										$position_update['new'] = array('pos_open' => ($posnew->pos_open == 0) ? 0 : ($posnew->pos_open - 1));
+										
+										// update the new position
+										$posnew_update = $this->pos->update_position($array['character']['position_1'], $position_update['new']);
+									}
+									
+									if ($posold !== false)
+									{
+										// build the update array
+										$position_update['old'] = array('pos_open' => $posold->pos_open + 1);
+										
+										// update the new position
+										$posold_update = $this->pos->update_position($position1_old, $position_update['old']);
+									}
+								}
+								
+								if ($array['character']['position_2'] != $position2_old)
+								{
+									$posnew = $this->pos->get_position($array['character']['position_2']);
+									$posold = $this->pos->get_position($position2_old);
+									
+									if ($posnew !== false)
+									{
+										// build the update array
+										$position_update['new'] = array('pos_open' => ($posnew->pos_open == 0) ? 0 : ($posnew->pos_open - 1));
+										
+										// update the new position
+										$posnew_update = $this->pos->update_position($array['character']['position_2'], $position_update['new']);
+									}
+									
+									if ($posold !== false)
+									{
+										// build the update array
+										$position_update['old'] = array('pos_open' => $posold->pos_open + 1);
+										
+										// update the new position
+										$posold_update = $this->pos->update_position($position2_old, $position_update['old']);
+									}
+								}
+							}
+						}
+					}
+					else
+					{
+						$message = sprintf(
+							lang('flash_failure'),
+							ucfirst(lang('global_character')),
+							lang('actions_updated'),
+							''
+						);
+		
+						$flash['status'] = 'error';
+						$flash['message'] = text_output($message);
+					}
 				break;
 				
 				case 'activate':
@@ -1094,6 +1228,9 @@ abstract class Nova_characters extends Nova_controller_admin {
 			// set the flash message
 			$this->_regions['flash_message'] = Location::view('flash', $this->skin, 'admin', $flash);
 		}
+		
+		// grab the character info
+		$char = $this->char->get_character($id);
 		
 		// grab the join fields
 		$sections = $this->char->get_bio_sections();
