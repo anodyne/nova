@@ -1120,9 +1120,9 @@ abstract class Nova_personnel extends Nova_controller_main {
 			'award' => ucfirst(lang('global_award')),
 			'awarded' => ucfirst(lang('actions_awarded')),
 			'awards' => ucfirst(lang('global_awards')),
-			'backchar' => ucfirst(lang('actions_back')) .' '. lang('labels_to') .' '.
+			'backchar' => LARROW.' '.ucfirst(lang('actions_back')) .' '. lang('labels_to') .' '.
 				ucwords(lang('global_character') .' '. lang('labels_bio')),
-			'backuser' => ucfirst(lang('actions_back')) .' '. lang('labels_to') .' '.
+			'backuser' => LARROW.' '.ucfirst(lang('actions_back')) .' '. lang('labels_to') .' '.
 				ucwords(lang('global_user') .' '. lang('labels_bio')),
 			'nominatedby' => ucfirst(lang('actions_nominated') .' '. lang('labels_by')),
 			'ooc' => ucwords(lang('labels_ooc')),
