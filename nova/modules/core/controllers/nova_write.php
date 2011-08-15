@@ -861,7 +861,7 @@ abstract class Nova_write extends Nova_controller_admin {
 		}
 		
 		// grab all the characters
-		$all = $this->char->get_all_characters('user_npc');
+		$all = $this->char->get_all_characters('user_npc', array('rank' => 'asc'));
 		
 		// get the current missions
 		$missions = $this->mis->get_all_missions('current');
