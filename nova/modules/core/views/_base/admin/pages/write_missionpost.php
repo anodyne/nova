@@ -81,7 +81,7 @@
 		<?php echo form_close();?>
 	</div>
 	
-	<div id="readonly" class="">
+	<div id="readonly" class="hidden">
 		<div id="notes">
 			<p class="float_left"><?php echo img($images['excl']);?>&nbsp;&nbsp;</p>
 			<?php echo text_output($label['locked'], 'h4');?>
