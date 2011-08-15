@@ -476,26 +476,12 @@ abstract class Nova_messages extends Nova_controller_admin {
 		
 		if ($characters->num_rows() > 0)
 		{
-			// we do this to make sure active characters are on top
-			$data['characters'][ucwords(lang('status_active') .' '. lang('global_characters'))] = array();
-			$data['characters'][ucwords(lang('status_inactive') .' '. lang('global_characters'))] = array();
-			
 			foreach ($characters->result() as $item)
 			{
-				if ($item->status != 'pending')
+				if ($item->crew_type == 'active')
 				{
-					$type = ($item->status == 'active')
-						? ucwords(lang('status_active') .' '. lang('global_characters')) 
-						: ucwords(lang('status_inactive') .' '. lang('global_characters'));
-						
-					$data['characters'][$type][$item->userid] = $this->char->get_character_name($item->main_char, true);
+					$data['characters'][$item->userid] = $this->char->get_character_name($item->main_char, true);
 				}
-			}
-			
-			// make sure there's something in the inactive section
-			if (count($data['characters'][ucwords(lang('status_inactive') .' '. lang('global_characters'))]) == 0)
-			{
-				unset($data['characters'][ucwords(lang('status_inactive') .' '. lang('global_characters'))]);
 			}
 		}
 		
