@@ -5,9 +5,6 @@
 
 <script type="text/javascript">
 	$(document).ready(function(){
-		$("#progress").progressbar({ value: 80 });
-		$('#percent').text($('#progress').progressbar('option', 'value') + '%');
-		
 		$('#next').click(function(){
 			$('.lower').fadeOut('fast');
 			$('#loaded').fadeOut('fast', function(){
@@ -84,10 +81,6 @@
 			});
 			
 			$('#progress').ajaxStop(function(){
-				$("#progress").progressbar({ value: 100 });
-				$('#percent').text($('#progress').progressbar('option', 'value') + '%');
-				
-				// change the button and text
 				$('.lower .control button').attr('id', 'next').html('Your Site');
 				$('.lower .control-text').html('Go to your upgraded Nova site now');
 			});

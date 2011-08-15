@@ -5,9 +5,6 @@
 
 <script type="text/javascript">
 	$(document).ready(function(){
-		$("#progress").progressbar({ value: 60 });
-		$('#percent').text($('#progress').progressbar('option', 'value') + '%');
-		
 		$('#next').click(function(){
 			$('.lower').fadeOut('fast');
 			$('#loaded').fadeOut('fast', function(){
@@ -231,10 +228,6 @@
 			});
 			
 			$('#progress').ajaxStop(function(){
-				$("#progress").progressbar({ value: 80 });
-				$('#percent').text($('#progress').progressbar('option', 'value') + '%');
-				
-				// change the button and text
 				$('.lower .control button').attr('id', 'next').html('Next Step');
 				$('.lower .control-text').html('Move on to the final step of the upgrade process.');
 			});

@@ -34,6 +34,7 @@
 	<hr>
 	
 	<a href="<?php echo Url::site('setup/install/step');?>" class="install-options">
+		<div class="arrow"></div>
 		<span>Fresh Install</span>
 		<em>Get up and running with a fresh install of Nova 3 in only a few minutes!</em>
 	</a>

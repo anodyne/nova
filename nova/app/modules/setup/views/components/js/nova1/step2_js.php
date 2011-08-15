@@ -1,9 +1,6 @@
 <script type="text/javascript" src="<?php echo Url::base().MODFOLDER;?>/modules/assets/js/jquery.ajaxq.js"></script>
 <script type="text/javascript">
 	$(document).ready(function(){
-		$("#progress").progressbar({ value: 40 });
-		$('#percent').text($('#progress').progressbar('option', 'value') + '%');
-		
 		$('table.zebra tbody > tr:nth-child(odd)').addClass('alt');
 		
 		$('#next').live('click', function(){
@@ -345,10 +342,6 @@
 			}
 			
 			$('#progress').ajaxStop(function(){
-				$("#progress").progressbar({ value: 60 });
-				$('#percent').text($('#progress').progressbar('option', 'value') + '%');
-				
-				// change the button and text
 				$('.lower .control button').attr('id', 'next').html('Next Step');
 				$('.lower .control-text').html('Move on to the next step of the upgrade process.');
 			});
