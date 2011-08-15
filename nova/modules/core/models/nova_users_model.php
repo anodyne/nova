@@ -302,7 +302,9 @@ abstract class Nova_users_model extends Model {
 	public function get_main_characters()
 	{
 		$this->db->from('users');
+		$this->db->join('characters', 'characters.user = users.userid');
 		$this->db->where('main_char >', 0);
+		$this->db->order_by('characters.rank', 'asc');
 		
 		$query = $this->db->get();
 		
