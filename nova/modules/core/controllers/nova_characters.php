@@ -799,7 +799,10 @@ abstract class Nova_characters extends Nova_controller_admin {
 					// get rid of the submit button
 					unset($array['character']['submit']);
 					
-					if ($data['level'] >= 2)
+					// get the character record
+					$c = $this->char->get_character($id);
+					
+					if (($level == 2 and $c->crew_type == 'npc') or $level == 3)
 					{
 						$position1_old = $array['character']['position_1_old'];
 						$position2_old = $array['character']['position_2_old'];
@@ -809,22 +812,6 @@ abstract class Nova_characters extends Nova_controller_admin {
 						unset($array['character']['position_1_old']);
 						unset($array['character']['position_2_old']);
 						unset($array['character']['rank_old']);
-						
-						if ($data['level'] == 3)
-						{
-							$crew_type_old = $array['character']['old_crew_type'];
-							unset($array['character']['old_crew_type']);
-							
-							if ($array['character']['crew_type'] == 'inactive' and $user['crew_type'] != 'inactive')
-							{
-								$array['character']['date_deactivate'] = now();
-							}
-							
-							if ($array['character']['crew_type'] != 'inactive' and $user['crew_type'] == 'inactive')
-							{
-								$array['character']['date_deactivate'] = null;
-							}
-						}
 						
 						if ($array['character']['rank'] != $rank_old)
 						{
@@ -843,6 +830,26 @@ abstract class Nova_characters extends Nova_controller_admin {
 							
 							$prom = $this->char->create_promotion_record($promotion);
 						}
+						
+						if ($level == 3)
+						{
+							if ($c->crew_type == 'active')
+							{
+								// if we've assigned a new position, update the open slots
+								if ($array['character']['position_1'] != $position1_old)
+								{
+									$this->pos->update_open_slots($array['character']['position_1'], 'add_crew');
+									$this->pos->update_open_slots($position1_old, 'remove_crew');
+								}
+								
+								// if we've assigned a new position, update the open slots
+								if ($array['character']['position_2'] != $position2_old)
+								{
+									$this->pos->update_open_slots($array['character']['position_2'], 'add_crew');
+									$this->pos->update_open_slots($position2_old, 'remove_crew');
+								}
+							}
+						}
 					}
 					
 					// update the characters table
@@ -853,136 +860,14 @@ abstract class Nova_characters extends Nova_controller_admin {
 						$update += $this->char->update_character_data($k, $data['id'], $v);
 					}
 					
-					if ($update > 0)
-					{
-						$message = sprintf(
-							lang('flash_success'),
-							ucfirst(lang('global_character')),
-							lang('actions_updated'),
-							''
-						);
-		
-						$flash['status'] = 'success';
-						$flash['message'] = text_output($message);
-						
-						if ($data['level'] == 3)
-						{
-							if ($array['character']['crew_type'] != $crew_type_old)
-							{
-								if ($crew_type_old == 'active' and ($array['character']['crew_type'] == 'inactive' or $array['character']['crew_type'] == 'npc'))
-								{
-									$pos1 = $this->pos->get_position($array['character']['position_1']);
-									$pos2 = $this->pos->get_position($array['character']['position_2']);
-									
-									if ($pos1 !== false)
-									{
-										// build the update array
-										$position_update['new'] = array('pos_open' => $pos1->pos_open + 1);
-										
-										// update the new position
-										$posupdate = $this->pos->update_position($array['character']['position_1'], $position_update['new']);
-									}
-									
-									if ($pos2 !== false)
-									{
-										// build the update array
-										$position_update['new'] = array('pos_open' => $pos2->pos_open + 1);
-										
-										// update the new position
-										$posupdate = $this->pos->update_position($array['character']['position_2'], $position_update['new']);
-									}
-								}
-								
-								if (($crew_type_old == 'inactive' or $crew_type_old == 'npc') and $array['character']['crew_type'] == 'active')
-								{
-									$pos1 = $this->pos->get_position($array['character']['position_1']);
-									$pos2 = $this->pos->get_position($array['character']['position_2']);
-									
-									if ($pos1 !== false)
-									{
-										// build the update array
-										$position_update['new'] = array('pos_open' => ($pos1->pos_open == 0) ? 0 : ($pos1->pos_open - 1));
-										
-										// update the new position
-										$posupdate = $this->pos->update_position($array['character']['position_1'], $position_update['new']);
-									}
-									
-									if ($pos2 !== false)
-									{
-										// build the update array
-										$position_update['new'] = array('pos_open' => ($pos2->pos_open == 0) ? 0 : ($pos2->pos_open - 1));
-										
-										// update the new position
-										$posupdate = $this->pos->update_position($array['character']['position_2'], $position_update['new']);
-									}
-								}
-							}
-							
-							if ($array['character']['crew_type'] == 'active' or $array['character']['crew_type'] == 'pending')
-							{
-								// update the positions
-								if ($array['character']['position_1'] != $position1_old)
-								{
-									$posnew = $this->pos->get_position($array['character']['position_1']);
-									$posold = $this->pos->get_position($position1_old);
-									
-									if ($posnew !== false)
-									{
-										// build the update array
-										$position_update['new'] = array('pos_open' => ($posnew->pos_open == 0) ? 0 : ($posnew->pos_open - 1));
-										
-										// update the new position
-										$posnew_update = $this->pos->update_position($array['character']['position_1'], $position_update['new']);
-									}
-									
-									if ($posold !== false)
-									{
-										// build the update array
-										$position_update['old'] = array('pos_open' => $posold->pos_open + 1);
-										
-										// update the new position
-										$posold_update = $this->pos->update_position($position1_old, $position_update['old']);
-									}
-								}
-								
-								if ($array['character']['position_2'] != $position2_old)
-								{
-									$posnew = $this->pos->get_position($array['character']['position_2']);
-									$posold = $this->pos->get_position($position2_old);
-									
-									if ($posnew !== false)
-									{
-										// build the update array
-										$position_update['new'] = array('pos_open' => ($posnew->pos_open == 0) ? 0 : ($posnew->pos_open - 1));
-										
-										// update the new position
-										$posnew_update = $this->pos->update_position($array['character']['position_2'], $position_update['new']);
-									}
-									
-									if ($posold !== false)
-									{
-										// build the update array
-										$position_update['old'] = array('pos_open' => $posold->pos_open + 1);
-										
-										// update the new position
-										$posold_update = $this->pos->update_position($position2_old, $position_update['old']);
-									}
-								}
-							}
-						}
-					}
-					else
-					{
-						$message = sprintf(
-							lang('flash_failure'),
-							ucfirst(lang('global_character')),
-							lang('actions_updated'),
-							''
-						);
-		
-						$flash['status'] = 'error';
-						$flash['message'] = text_output($message);
-					}
+					$message = sprintf(
+						($update > 0) ? lang('flash_success') : lang('flash_failure'),
+						ucfirst(lang('global_character')),
+						lang('actions_updated'),
+						''
+					);
+					$flash['status'] = ($update > 0) ? 'success' : 'error';
+					$flash['message'] = text_output($message);
 				break;
 				
 				case 'activate':
@@ -1339,10 +1224,10 @@ abstract class Nova_characters extends Nova_controller_admin {
 			'position1_desc' => ($pos1 !== false) ? $pos1->pos_desc : '',
 			'position2_desc' => ($pos2 !== false) ? $pos2->pos_desc : '',
 			'rank_id' => $char->rank,
-			'rank_name' => $rank->rank_name,
+			'rank_name' => ($rank !== false) ? $rank->rank_name : '',
 			'rank' => array(
-				'src' => Location::rank($this->rank, $rank->rank_image, $rankcat->rankcat_extension),
-				'alt' => $rank->rank_name,
+				'src' => ($rank !== false) ? Location::rank($this->rank, $rank->rank_image, $rankcat->rankcat_extension) : '',
+				'alt' => ($rank !== false) ? $rank->rank_name : '',
 				'class' => 'image'),
 			'crew_type' => $char->crew_type,
 			'images' => ( ! empty($char->images)) ? explode(',', $char->images) : '',
