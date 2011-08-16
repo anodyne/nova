@@ -49,7 +49,7 @@
 						$('table tbody tr:eq(0) td:eq(1) .loading').removeClass('hidden');
 					},
 					type: "POST",
-					url: "<?php echo Url::site('setup/nova1ajax/upgrade_characters');?>",
+					url: "<?php echo Url::site('setup/upgradeajax/upgrade_characters');?>",
 					data: send,
 					dataType: 'json',
 					success: function(data){
@@ -85,7 +85,7 @@
 						$('table tbody tr:eq(1) td:eq(1) .loading').removeClass('hidden');
 					},
 					type: "POST",
-					url: "<?php echo Url::site('setup/nova1ajax/upgrade_awards');?>",
+					url: "<?php echo Url::site('setup/upgradeajax/upgrade_awards');?>",
 					data: send,
 					dataType: 'json',
 					success: function(data){
@@ -115,7 +115,7 @@
 						$('table tbody tr:eq(2) td:eq(1) .loading').removeClass('hidden');
 					},
 					type: "POST",
-					url: "<?php echo Url::site('setup/nova1ajax/upgrade_settings');?>",
+					url: "<?php echo Url::site('setup/upgradeajax/upgrade_settings');?>",
 					data: send,
 					dataType: 'json',
 					success: function(data){

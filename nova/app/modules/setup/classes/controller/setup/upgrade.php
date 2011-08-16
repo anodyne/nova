@@ -50,13 +50,13 @@ class Controller_Setup_Upgrade extends Controller_Template {
 		$this->template->layout->label			= false;
 		$this->template->layout->flash			= false;
 		$this->template->layout->controls		= false;
-		$this->template->layout->steps			= View::factory(Location::file('setup_nova1', null, 'partials'));
+		$this->template->layout->steps			= View::factory(Location::file('setup_upgrade', null, 'partials'));
 	}
 	
 	/**
-	 * 1 - change the table prefix from whatever it is to nova1_
+	 * 1 - change the table prefix from whatever it is to nova2_
 	 * 2 - install nova 3
-	 * 3 - move the data over from nova 1 similar to how we do in the sms upgrade
+	 * 3 - move the data over from nova 2
 	 */
 	
 	public function action_step()
@@ -91,16 +91,16 @@ class Controller_Setup_Upgrade extends Controller_Template {
 		{
 			case 0:
 				// create a new content view
-				$this->template->layout->content = View::factory('components/pages/nova1/step0');
+				$this->template->layout->content = View::factory('components/pages/upgrade/step0');
 				
 				// create the javascript view
-				$this->template->javascript = View::factory('components/js/nova1/step0_js');
+				$this->template->javascript = View::factory('components/js/upgrade/step0_js');
 				
 				// assign the object a shorter variable to use in the method
 				$data = $this->template->layout->content;
 				
 				// make sure the proper message is displayed
-				$data->message = nl2br(___('setup.nova1.step0.instructions'));
+				$data->message = nl2br(___('setup.upgrade.step0.instructions'));
 				
 				// content
 				$this->template->title.= 'Upgrading to Nova 3';
@@ -116,7 +116,7 @@ class Controller_Setup_Upgrade extends Controller_Template {
 					);
 					
 					// build the next step control
-					$this->template->layout->controls = Form::open('setup/nova1/step/1').Form::button('next', 'Start Upgrade', $next).Form::close();
+					$this->template->layout->controls = Form::open('setup/upgrade/step/1').Form::button('next', 'Start Upgrade', $next).Form::close();
 				}
 			break;
 			
@@ -131,7 +131,7 @@ class Controller_Setup_Upgrade extends Controller_Template {
 						foreach ($tables as $table)
 						{
 							// set the new table name
-							$newtable = '`nova1_'.str_replace($db->table_prefix(), '', $table).'`';
+							$newtable = '`nova2_'.str_replace($db->table_prefix(), '', $table).'`';
 							
 							// build the sql statement
 							$sql = "ALTER TABLE `".$table."` RENAME TO ".$newtable;
@@ -143,16 +143,16 @@ class Controller_Setup_Upgrade extends Controller_Template {
 				}
 				
 				// create a new content view
-				$this->template->layout->content = View::factory('components/pages/nova1/step1');
+				$this->template->layout->content = View::factory('components/pages/upgrade/step1');
 				
 				// create the javascript view
-				$this->template->javascript = View::factory('components/js/nova1/step1_js');
+				$this->template->javascript = View::factory('components/js/upgrade/step1_js');
 				
 				// assign the object a shorter variable to use in the method
 				$data = $this->template->layout->content;
 				
 				// make sure the proper message is displayed
-				$data->message = nl2br(___('setup.nova1.step1.instructions'));
+				$data->message = nl2br(___('setup.upgrade.step1.instructions'));
 				
 				// content
 				$this->template->title.= 'Upgrading to Nova 3';
@@ -166,7 +166,7 @@ class Controller_Setup_Upgrade extends Controller_Template {
 				);
 				
 				// build the next step control
-				$this->template->layout->controls = Form::open('setup/nova1/step/2').Form::button('next', 'Continue Upgrade', $next).Form::close();
+				$this->template->layout->controls = Form::open('setup/upgrade/step/2').Form::button('next', 'Continue Upgrade', $next).Form::close();
 			break;
 				
 			case 2:
@@ -283,10 +283,10 @@ class Controller_Setup_Upgrade extends Controller_Template {
 				$tables = $db->list_tables($db->table_prefix().'%');
 				
 				// create a new content view
-				$this->template->layout->content = View::factory('components/pages/nova1/step2');
+				$this->template->layout->content = View::factory('components/pages/upgrade/step2');
 				
 				// create the javascript view
-				$this->template->javascript = View::factory('components/js/nova1/step2_js');
+				$this->template->javascript = View::factory('components/js/upgrade/step2_js');
 				
 				// assign the object a shorter variable to use in the method
 				$data = $this->template->layout->content;

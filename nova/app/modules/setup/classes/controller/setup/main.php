@@ -47,7 +47,7 @@ class Controller_Setup_Main extends Controller_Template {
 					$sysadmin = Auth::is_type('sysadmin', $session->get('userid'));
 					
 					// if they aren't, send them away
-					if ($sysadmin === false)
+					if ( ! $sysadmin)
 					{
 						$this->request->redirect('login/error/1');
 					}

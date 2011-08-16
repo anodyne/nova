@@ -75,7 +75,7 @@ class Controller_Setup_Install extends Controller_Template {
 		}
 		
 		// set the locale
-		i18n::lang('en-us');
+		I18n::lang('en-us');
 		
 		// set the shell
 		$this->template = View::factory(Location::file('setup', null, 'structure'));
@@ -102,10 +102,10 @@ class Controller_Setup_Install extends Controller_Template {
 	public function action_changedb($view = 'main')
 	{
 		// create a new content view
-		$this->template->layout->content = View::factory(Location::view('install_changedb'));
+		$this->template->layout->content = View::factory('components/pages/install/changedb');
 		
 		// create a new js view
-		$this->template->javascript = View::factory(Location::view('install_changedb_js', null, 'js'));
+		$this->template->javascript = View::factory('components/js/install/changedb_js');
 		
 		// assign the object a shorter variable to use in the method
 		$data = $this->template->layout->content;
@@ -113,7 +113,7 @@ class Controller_Setup_Install extends Controller_Template {
 		// build the images
 		$data->images = array(
 			'loading' => array(
-				'src' => MODFOLDER.'/nova/install/views/design/images/loading-circle-large.gif',
+				'src' => MODFOLDER.'/app/modules/setup/views/design/images/loading.gif',
 				'attr' => array(
 					'alt' => ___('processing'),
 					'class' => '')),

@@ -92,10 +92,9 @@ $fields_access_roles = array(
 $fields_applications = array(
 	'id' => array('type' => 'INT', 'constraint' => 10, 'auto_increment' => true),
 	'email' => array('type' => 'VARCHAR', 'constraint' => 255, 'default' => ''),
-	'ip_address' => array('type' => 'VARCHAR', 'constraint' => 16, 'default' => ''),
-	'user_id' => array('type' => 'INT', 'constraint' => 8),
+	'user' => array('type' => 'INT', 'constraint' => 8),
 	'user_name' => array('type' => 'VARCHAR', 'constraint' => 255, 'default' => ''),
-	'character_id' => array('type' => 'INT', 'constraint' => 8),
+	'character' => array('type' => 'INT', 'constraint' => 8),
 	'character_name' => array('type' => 'TEXT'),
 	'position' => array('type' => 'VARCHAR', 'constraint' => 255, 'default' => ''),
 	'date' => array('type' => 'BIGINT', 'constraint' => 20),

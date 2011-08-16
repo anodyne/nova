@@ -2,7 +2,7 @@
 
 <hr>
 
-<?php echo Form::open('setup/sms/step/3');?>
+<?php echo Form::open('setup/upgrade/step/4');?>
 	<table class="table100 zebra">
 		<thead>
 			<tr>

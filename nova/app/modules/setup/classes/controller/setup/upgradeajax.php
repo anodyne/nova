@@ -32,7 +32,7 @@ class Controller_Setup_Upgradeajax extends Controller_Template {
 	public function action_upgrade_awards()
 	{
 		// start by getting a count of the number of items in the awards table
-		$c = $this->db->query(Database::SELECT, "SELECT award_id FROM `nova1_awards`", true);
+		$c = $this->db->query(Database::SELECT, "SELECT award_id FROM `nova2_awards`", true);
 		$count_old = $c->count();
 		
 		// drop the nova version of the tables
@@ -42,7 +42,7 @@ class Controller_Setup_Upgradeajax extends Controller_Template {
 		
 		try {
 			// copy the sms version of the table along with all its data
-			$this->db->query(null, "CREATE TABLE ".$this->db->table_prefix()."awards SELECT * FROM `nova1_awards`", true);
+			$this->db->query(null, "CREATE TABLE ".$this->db->table_prefix()."awards SELECT * FROM `nova2_awards`", true);
 			
 			// rename the fields
 			$fields = array(
@@ -107,7 +107,7 @@ class Controller_Setup_Upgradeajax extends Controller_Template {
 			/**
 			 * Award Nominations
 			 */
-			$this->db->query(null, "CREATE TABLE ".$this->db->table_prefix()."awards_queue SELECT * FROM `nova1_awards_queue`", true);
+			$this->db->query(null, "CREATE TABLE ".$this->db->table_prefix()."awards_queue SELECT * FROM `nova2_awards_queue`", true);
 			$fields = array(
 				'queue_id' => array(
 					'name' => 'id',
@@ -148,7 +148,7 @@ class Controller_Setup_Upgradeajax extends Controller_Template {
 			/**
 			 * Received Awards
 			 */
-			$this->db->query(null, "CREATE TABLE ".$this->db->table_prefix()."awards_received SELECT * FROM `nova1_awards_received`", true);
+			$this->db->query(null, "CREATE TABLE ".$this->db->table_prefix()."awards_received SELECT * FROM `nova2_awards_received`", true);
 			$fields = array(
 				'awardrec_id' => array(
 					'name' => 'id',
@@ -593,6 +593,14 @@ class Controller_Setup_Upgradeajax extends Controller_Template {
 					'type' => 'TEXT'),
 				'updated_at' => array(
 					'type' => 'BIGINT',
+					'constraint' => 20),
+				'participants' => array(
+					'type' => 'TEXT'),
+				'updated_at' => array(
+					'type' => 'BIGINT',
+					'constraint' => 20),
+				'updated_at' => array(
+					'type' => 'BIGINT',
 					'constraint' => 20)
 			);
 			
@@ -1015,13 +1023,13 @@ class Controller_Setup_Upgradeajax extends Controller_Template {
 	 */
 	public function action_upgrade_settings()
 	{
-		$c = $this->db->query(Database::SELECT, "SELECT setting_id FROM `nova1_settings`", true);
+		$c = $this->db->query(Database::SELECT, "SELECT setting_id FROM `nova2_settings`", true);
 		$count_settings_old = $c->count();
 		
-		$c = $this->db->query(Database::SELECT, "SELECT message_id FROM `nova1_messages`", true);
+		$c = $this->db->query(Database::SELECT, "SELECT message_id FROM `nova2_messages`", true);
 		$count_messages_old = $c->count();
 		
-		$c = $this->db->query(Database::SELECT, "SELECT ban_id FROM `nova1_bans`", true);
+		$c = $this->db->query(Database::SELECT, "SELECT ban_id FROM `nova2_bans`", true);
 		$count_bans_old = $c->count();
 		
 		// drop the nova version of the table
@@ -1031,7 +1039,7 @@ class Controller_Setup_Upgradeajax extends Controller_Template {
 		
 		try {
 			// copy the sms version of the table along with all its data
-			$this->db->query(null, "CREATE TABLE ".$this->db->table_prefix()."settings SELECT * FROM `nova1_settings`", true);
+			$this->db->query(null, "CREATE TABLE ".$this->db->table_prefix()."settings SELECT * FROM `nova2_settings`", true);
 			
 			// rename the fields
 			$fields = array(
@@ -1131,7 +1139,7 @@ class Controller_Setup_Upgradeajax extends Controller_Template {
 			 * Messages
 			 */
 			// copy the sms version of the table along with all its data
-			$this->db->query(null, "CREATE TABLE ".$this->db->table_prefix()."site_contents SELECT * FROM `nova1_messages`", true);
+			$this->db->query(null, "CREATE TABLE ".$this->db->table_prefix()."site_contents SELECT * FROM `nova2_messages`", true);
 			
 			// rename the fields
 			$fields = array(
@@ -1198,7 +1206,7 @@ class Controller_Setup_Upgradeajax extends Controller_Template {
 			 * Bans
 			 */
 			// copy the sms version of the table along with all its data
-			$this->db->query(null, "CREATE TABLE ".$this->db->table_prefix()."bans SELECT * FROM `nova1_bans`", true);
+			$this->db->query(null, "CREATE TABLE ".$this->db->table_prefix()."bans SELECT * FROM `nova2_bans`", true);
 			
 			// rename the fields
 			$fields = array(
@@ -1486,7 +1494,7 @@ class Controller_Setup_Upgradeajax extends Controller_Template {
 	private function _upgrade_applications()
 	{
 		try {
-			$result = $this->db->query(Database::SELECT, "SELECT * FROM nova1_applications", true);
+			$result = $this->db->query(Database::SELECT, "SELECT * FROM nova2_applications", true);
 			$count_old= $result->count();
 			
 			if (count($result) > 0)
@@ -1533,8 +1541,6 @@ class Controller_Setup_Upgradeajax extends Controller_Template {
 					'message' => "Not all application records could be properly migrated"
 				);
 			}
-			
-			DBForge::optimize('applications');
 		} catch (Exception $e) {
 			$retval = array(
 				'code' => 0,
@@ -1542,24 +1548,26 @@ class Controller_Setup_Upgradeajax extends Controller_Template {
 			);
 		}
 		
+		DBForge::optimize('applications');
+		
 		return $retval;
 	}
 	
 	private function _upgrade_character_form()
 	{
-		$c = $this->db->query(Database::SELECT, "SELECT tab_id FROM `nova1_characters_tabs`", true);
+		$c = $this->db->query(Database::SELECT, "SELECT tab_id FROM `nova2_characters_tabs`", true);
 		$count_tabs_old = $c->count();
 		
-		$c = $this->db->query(Database::SELECT, "SELECT section_id FROM `nova1_characters_sections`", true);
+		$c = $this->db->query(Database::SELECT, "SELECT section_id FROM `nova2_characters_sections`", true);
 		$count_sections_old = $c->count();
 		
-		$c = $this->db->query(Database::SELECT, "SELECT field_id FROM `nova1_characters_fields`", true);
+		$c = $this->db->query(Database::SELECT, "SELECT field_id FROM `nova2_characters_fields`", true);
 		$count_fields_old = $c->count();
 		
-		$c = $this->db->query(Database::SELECT, "SELECT value_id FROM `nova1_characters_values`", true);
+		$c = $this->db->query(Database::SELECT, "SELECT value_id FROM `nova2_characters_values`", true);
 		$count_values_old = $c->count();
 		
-		$c = $this->db->query(Database::SELECT, "SELECT data_id FROM `nova1_characters_data`", true);
+		$c = $this->db->query(Database::SELECT, "SELECT data_id FROM `nova2_characters_data`", true);
 		$count_data_old = $c->count();
 		
 		try {
@@ -1571,7 +1579,7 @@ class Controller_Setup_Upgradeajax extends Controller_Template {
 			$this->db->query(Database::DELETE, "DELETE FROM `".$this->db->table_prefix()."form_tabs` WHERE `form_key` = 'bio'", true);
 			
 			// pull the tabs from n1
-			$result = $this->db->query(Database::SELECT, "SELECT * FROM `nova1_characters_tabs`", true);
+			$result = $this->db->query(Database::SELECT, "SELECT * FROM `nova2_characters_tabs`", true);
 			
 			if (count($result) > 0)
 			{
@@ -1603,7 +1611,7 @@ class Controller_Setup_Upgradeajax extends Controller_Template {
 			$this->db->query(Database::DELETE, "DELETE FROM `".$this->db->table_prefix()."form_sections` WHERE `form_key` = 'bio'", true);
 			
 			// pull the sections from n1
-			$result = $this->db->query(Database::SELECT, "SELECT * FROM `nova1_characters_sections`", true);
+			$result = $this->db->query(Database::SELECT, "SELECT * FROM `nova2_characters_sections`", true);
 			
 			if (count($result) > 0)
 			{
@@ -1634,7 +1642,7 @@ class Controller_Setup_Upgradeajax extends Controller_Template {
 			$this->db->query(Database::DELETE, "DELETE FROM `".$this->db->table_prefix()."form_fields` WHERE `form_key` = 'bio'", true);
 			
 			// pull the fields from n1
-			$result = $this->db->query(Database::SELECT, "SELECT * FROM `nova1_characters_fields`", true);
+			$result = $this->db->query(Database::SELECT, "SELECT * FROM `nova2_characters_fields`", true);
 			
 			if (count($result) > 0)
 			{
@@ -1675,7 +1683,7 @@ class Controller_Setup_Upgradeajax extends Controller_Template {
 			$this->db->query(Database::DELETE, "TRUNCATE TABLE `".$this->db->table_prefix()."form_values`", true);
 			
 			// pull the values from n1
-			$result = $this->db->query(Database::SELECT, "SELECT * FROM `nova1_characters_values`", true);
+			$result = $this->db->query(Database::SELECT, "SELECT * FROM `nova2_characters_values`", true);
 			
 			if (count($result) > 0)
 			{
@@ -1709,7 +1717,7 @@ class Controller_Setup_Upgradeajax extends Controller_Template {
 			$this->db->query(Database::DELETE, "DELETE FROM `".$this->db->table_prefix()."form_data` WHERE `form_key` = 'bio'", true);
 			
 			// pull the data from n1
-			$result = $this->db->query(Database::SELECT, "SELECT * FROM `nova1_characters_data`", true);
+			$result = $this->db->query(Database::SELECT, "SELECT * FROM `nova2_characters_data`", true);
 			
 			if (count($result) > 0)
 			{
@@ -1734,7 +1742,7 @@ class Controller_Setup_Upgradeajax extends Controller_Template {
 			 * User Information
 			 */
 			 
-			$result = $this->db->query(Database::SELECT, "SELECT * FROM `nova1_users`", true);
+			$result = $this->db->query(Database::SELECT, "SELECT * FROM `nova2_users`", true);
 			
 			if (count($result) > 0)
 			{
@@ -1809,7 +1817,7 @@ class Controller_Setup_Upgradeajax extends Controller_Template {
 	private function _upgrade_character_promotions()
 	{
 		try {
-			$result = $this->db->query(Database::SELECT, "SELECT * FROM nova1_characters_promotions", true);
+			$result = $this->db->query(Database::SELECT, "SELECT * FROM nova2_characters_promotions", true);
 			$count_old= $result->count();
 			
 			if (count($result) > 0)
@@ -1867,13 +1875,13 @@ class Controller_Setup_Upgradeajax extends Controller_Template {
 	
 	private function _upgrade_characters()
 	{
-		$c = $this->db->query(Database::SELECT, "SELECT charid FROM nova1_characters", true);
+		$c = $this->db->query(Database::SELECT, "SELECT charid FROM nova2_characters", true);
 		$count_old = $c->count();
 		
 		DBForge::drop_table('characters');
 		
 		try {
-			$this->db->query(null, "CREATE TABLE ".$this->db->table_prefix()."characters SELECT * FROM nova1_characters", true);
+			$this->db->query(null, "CREATE TABLE ".$this->db->table_prefix()."characters SELECT * FROM nova2_characters", true);
 			
 			$fields = array(
 				'charid' => array(
@@ -1964,8 +1972,6 @@ class Controller_Setup_Upgradeajax extends Controller_Template {
 					'message' => "Not all characters could be properly migrated"
 				);
 			}
-			
-			DBForge::optimize('characters');
 		} catch (Exception $e) {
 			$retval = array(
 				'code' => 0,
@@ -1973,18 +1979,20 @@ class Controller_Setup_Upgradeajax extends Controller_Template {
 			);
 		}
 		
+		DBForge::optimize('characters');
+		
 		return $retval;
 	}
 	
 	private function _upgrade_coc()
 	{
-		$c = $this->db->query(Database::SELECT, "SELECT coc_id FROM nova1_coc", true);
+		$c = $this->db->query(Database::SELECT, "SELECT coc_id FROM nova2_coc", true);
 		$count_old = $c->count();
 		
 		DBForge::drop_table('coc');
 		
 		try {
-			$this->db->query(null, "CREATE TABLE ".$this->db->table_prefix()."coc SELECT * FROM `nova1_coc`", true);
+			$this->db->query(null, "CREATE TABLE ".$this->db->table_prefix()."coc SELECT * FROM `nova2_coc`", true);
 			
 			$fields = array(
 				'coc_id' => array(
@@ -2073,7 +2081,7 @@ class Controller_Setup_Upgradeajax extends Controller_Template {
 			$this->db->query(Database::DELETE, "DELETE FROM `".$this->db->table_prefix()."form_sections` WHERE `form_key` = 'docking'", true);
 			
 			// pull the sections from n1
-			$result = $this->db->query(Database::SELECT, "SELECT * FROM `nova1_docking_sections`", true);
+			$result = $this->db->query(Database::SELECT, "SELECT * FROM `nova2_docking_sections`", true);
 			
 			if (count($result) > 0)
 			{
@@ -2103,7 +2111,7 @@ class Controller_Setup_Upgradeajax extends Controller_Template {
 			$this->db->query(Database::DELETE, "DELETE FROM `".$this->db->table_prefix()."form_fields` WHERE `form_key` = 'docking'", true);
 			
 			// pull the fields from n1
-			$result = $this->db->query(Database::SELECT, "SELECT * FROM `nova1_docking_fields`", true);
+			$result = $this->db->query(Database::SELECT, "SELECT * FROM `nova2_docking_fields`", true);
 			
 			if (count($result) > 0)
 			{
@@ -2141,7 +2149,7 @@ class Controller_Setup_Upgradeajax extends Controller_Template {
 			 */
 			
 			// pull the values from n1
-			$result = $this->db->query(Database::SELECT, "SELECT * FROM `nova1_docking_values`", true);
+			$result = $this->db->query(Database::SELECT, "SELECT * FROM `nova2_docking_values`", true);
 			
 			if (count($result) > 0)
 			{
@@ -2175,7 +2183,7 @@ class Controller_Setup_Upgradeajax extends Controller_Template {
 			$this->db->query(Database::DELETE, "DELETE FROM `".$this->db->table_prefix()."form_data` WHERE `form_key` = 'docking'", true);
 			
 			// pull the data from n1
-			$result = $this->db->query(Database::SELECT, "SELECT * FROM `nova1_docking_data`", true);
+			$result = $this->db->query(Database::SELECT, "SELECT * FROM `nova2_docking_data`", true);
 			
 			if (count($result) > 0)
 			{
@@ -2212,10 +2220,10 @@ class Controller_Setup_Upgradeajax extends Controller_Template {
 	
 	private function _upgrade_settings()
 	{
-		$c = $this->db->query(Database::SELECT, "SELECT setting_id FROM `nova1_settings`", true);
+		$c = $this->db->query(Database::SELECT, "SELECT setting_id FROM `nova2_settings`", true);
 		$count_settings_old = $c->count();
 		
-		$c = $this->db->query(Database::SELECT, "SELECT message_id FROM `nova1_messages`", true);
+		$c = $this->db->query(Database::SELECT, "SELECT message_id FROM `nova2_messages`", true);
 		$count_messages_old = $c->count();
 		
 		// drop the nova version of the table
@@ -2224,7 +2232,7 @@ class Controller_Setup_Upgradeajax extends Controller_Template {
 		
 		try {
 			// copy the sms version of the table along with all its data
-			$this->db->query(null, "CREATE TABLE ".$this->db->table_prefix()."settings SELECT * FROM `nova1_settings`", true);
+			$this->db->query(null, "CREATE TABLE ".$this->db->table_prefix()."settings SELECT * FROM `nova2_settings`", true);
 			
 			// rename the fields
 			$fields = array(
@@ -2332,7 +2340,7 @@ class Controller_Setup_Upgradeajax extends Controller_Template {
 			$this->db->query(Database::DELETE, "DELETE FROM `".$this->db->table_prefix()."form_sections` WHERE `form_key` = 'specs'", true);
 			
 			// pull the sections from n1
-			$result = $this->db->query(Database::SELECT, "SELECT * FROM `nova1_specs_sections`", true);
+			$result = $this->db->query(Database::SELECT, "SELECT * FROM `nova2_specs_sections`", true);
 			
 			if (count($result) > 0)
 			{
@@ -2362,7 +2370,7 @@ class Controller_Setup_Upgradeajax extends Controller_Template {
 			$this->db->query(Database::DELETE, "DELETE FROM `".$this->db->table_prefix()."form_fields` WHERE `form_key` = 'specs'", true);
 			
 			// pull the fields from n1
-			$result = $this->db->query(Database::SELECT, "SELECT * FROM `nova1_specs_fields`", true);
+			$result = $this->db->query(Database::SELECT, "SELECT * FROM `nova2_specs_fields`", true);
 			
 			if (count($result) > 0)
 			{
@@ -2400,7 +2408,7 @@ class Controller_Setup_Upgradeajax extends Controller_Template {
 			 */
 			
 			// pull the values from n1
-			$result = $this->db->query(Database::SELECT, "SELECT * FROM `nova1_specs_values`", true);
+			$result = $this->db->query(Database::SELECT, "SELECT * FROM `nova2_specs_values`", true);
 			
 			if (count($result) > 0)
 			{
@@ -2434,7 +2442,7 @@ class Controller_Setup_Upgradeajax extends Controller_Template {
 			$this->db->query(Database::DELETE, "DELETE FROM `".$this->db->table_prefix()."form_data` WHERE `form_key` = 'specs'", true);
 			
 			// pull the data from n1
-			$result = $this->db->query(Database::SELECT, "SELECT * FROM `nova1_specs_data`", true);
+			$result = $this->db->query(Database::SELECT, "SELECT * FROM `nova2_specs_data`", true);
 			
 			if (count($result) > 0)
 			{
@@ -2480,7 +2488,7 @@ class Controller_Setup_Upgradeajax extends Controller_Template {
 			$this->db->query(Database::DELETE, "DELETE FROM `".$this->db->table_prefix()."form_fields` WHERE `form_key` = 'tour'", true);
 			
 			// pull the fields from n1
-			$result = $this->db->query(Database::SELECT, "SELECT * FROM `nova1_tour_fields`", true);
+			$result = $this->db->query(Database::SELECT, "SELECT * FROM `nova2_tour_fields`", true);
 			
 			if (count($result) > 0)
 			{
@@ -2518,7 +2526,7 @@ class Controller_Setup_Upgradeajax extends Controller_Template {
 			 */
 			
 			// pull the values from n1
-			$result = $this->db->query(Database::SELECT, "SELECT * FROM `nova1_tour_values`", true);
+			$result = $this->db->query(Database::SELECT, "SELECT * FROM `nova2_tour_values`", true);
 			
 			if (count($result) > 0)
 			{
@@ -2552,7 +2560,7 @@ class Controller_Setup_Upgradeajax extends Controller_Template {
 			$this->db->query(Database::DELETE, "DELETE FROM `".$this->db->table_prefix()."form_data` WHERE `form_key` = 'tour'", true);
 			
 			// pull the data from n1
-			$result = $this->db->query(Database::SELECT, "SELECT * FROM `nova1_tour_data`", true);
+			$result = $this->db->query(Database::SELECT, "SELECT * FROM `nova2_tour_data`", true);
 			
 			if (count($result) > 0)
 			{
@@ -2590,7 +2598,7 @@ class Controller_Setup_Upgradeajax extends Controller_Template {
 	private function _upgrade_user_loa()
 	{
 		try {
-			$result = $this->db->query(Database::SELECT, "SELECT * FROM `nova1_user_loa`", true);
+			$result = $this->db->query(Database::SELECT, "SELECT * FROM `nova2_user_loa`", true);
 			$count_old= $result->count();
 			
 			if (count($result) > 0)
@@ -2647,13 +2655,13 @@ class Controller_Setup_Upgradeajax extends Controller_Template {
 	
 	private function _upgrade_users()
 	{
-		$c = $this->db->query(Database::SELECT, "SELECT userid FROM `nova1_users`", true);
+		$c = $this->db->query(Database::SELECT, "SELECT userid FROM `nova2_users`", true);
 		$count_old = $c->count();
 		
 		DBForge::drop_table('users');
 		
 		try {
-			$this->db->query(null, "CREATE TABLE `".$this->db->table_prefix()."users` SELECT * FROM `nova1_users`", true);
+			$this->db->query(null, "CREATE TABLE `".$this->db->table_prefix()."users` SELECT * FROM `nova2_users`", true);
 			
 			/**
 			 * Update the schema with all the changes.
