@@ -126,8 +126,27 @@ class Model_SiteContent extends Model {
 		foreach ($data as $key => $value)
 		{
 			$record = static::find()->where('key', $key)->get_one();
+			
+			// track what we need to clear and re-cache
+			$clear[$record->section][] = $record->type;
+			
 			$record->content = $value;
 			$record->save();
+		}
+		
+		// get an instance of the cache module
+		$cache = Cache::instance();
+		
+		foreach ($clear as $section => $type)
+		{
+			foreach ($type as $t)
+			{
+				// delete the cache
+				$cache->delete('content_'.$t.'_'.$section);
+				
+				// now grab that content again (which will automatically re-cache everything)
+				static::get_section_content($t, $section);
+			}
 		}
 	}
 }
