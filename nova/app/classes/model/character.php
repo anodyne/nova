@@ -209,4 +209,30 @@ class Model_Character extends Model {
 		
 		return $record;
 	}
+	
+	public function name($include_rank = true, $short_rank = false)
+	{
+		// get the rank
+		$rank = Model_Rank::find($this->rank_id);
+		
+		$pieces = array(
+			($include_rank) 
+				? ($short_rank) 
+					? $rank->short_name 
+					: $rank->name 
+				: '',
+			$this->first_name,
+			$this->last_name
+		);
+		
+		foreach ($pieces as $key => $p)
+		{
+			if (empty($p))
+			{
+				unset($pieces[$key]);
+			}
+		}
+		
+		return implode(' ', $pieces);
+	}
 }
