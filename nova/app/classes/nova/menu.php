@@ -7,7 +7,6 @@
  * @category	Classes
  * @author		Anodyne Productions
  * @copyright	2010-11 Anodyne Productions
- * @since		3.0
  */
 
 abstract class Nova_Menu {
@@ -393,7 +392,7 @@ abstract class Nova_Menu {
 		
 						if ($item->url_target == 'onsite')
 						{
-							$uri = explode('/', Request::current()->uri());
+							$uri = (Request::current()->uri() == '/') ? array(0 => 'main') : explode('/', Request::current()->uri());
 							$cur = explode('/', $item->url);
 							
 							if ($uri[0] == $cur[0])
