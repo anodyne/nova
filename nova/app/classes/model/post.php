@@ -50,6 +50,14 @@ class Model_Post extends Model {
 		'updated_at' => array(
 			'type' => 'bigint',
 			'constraint' => 20),
+		'participants' => array(
+			'type' => 'text'),
+		'lock_user_id' => array(
+			'type' => 'int',
+			'constraint' => 8),
+		'lock_date' => array(
+			'type' => 'bigint',
+			'constraint' => 20),
 	);
 	
 	public static $_belongs_to = array(
