@@ -6,7 +6,6 @@
  * @category	Controllers
  * @author		Anodyne Productions
  * @copyright	2011 Anodyne Productions
- * @version		3.0
  */
  
 # TODO: need to remove the Kohana::$environment check around the login redirect
@@ -91,7 +90,7 @@ class Controller_Setup_Main extends Controller_Template {
 	public function action_index()
 	{
 		// create a new content view
-		$this->template->layout->content = View::factory('components/pages/setup/main_index');
+		$this->template->layout->content = View::factory('components/pages/setup/index');
 		
 		// assign the object a shorter variable to use in the method
 		$data = $this->template->layout->content;
@@ -117,7 +116,7 @@ class Controller_Setup_Main extends Controller_Template {
 					/**
 					 * Nova is installed and an update is available.
 					 */
-					$data->option = 7;
+					$data->option = 5;
 				}
 				else
 				{
@@ -125,7 +124,7 @@ class Controller_Setup_Main extends Controller_Template {
 					 * Nova is installed and there are no updates available. Show the
 					 * admin the list of utilities they can use.
 					 */
-					$data->option = 8;
+					$data->option = 6;
 				}
 			} catch (Exception $e) {
 				// get the table prefix
@@ -141,28 +140,9 @@ class Controller_Setup_Main extends Controller_Template {
 				/**
 				 * 1 if by land, 2 if by sea. I mean, 2 if we're coming from
 				 * 2.x and 3 if we're coming from 1.x. If we're coming from 1.x,
-				 * it HAS to be at least 1.2.4.
+				 * they have to do an upgrade to Nova 2 first and then to Nova 3.
 				 */
 				$data->option = ($version == 2) ? 2 : 3;
-				
-				if ($version == 2)
-				{
-					$data->option = 2;
-				}
-				elseif ($version == 3)
-				{
-					// full nova 1 version
-					$fullversion = $version->sys_version_major.'.'.$version->sys_version_minor.'.'.$version->sys_version_update;
-					
-					// assume we're running at least 1.2.4
-					$data->option = 3;
-					
-					// unless we aren't running 1.2.4, then they'll need to do that update first
-					if (version_compare($fullversion, '1.2.4', '<'))
-					{
-						$data->option = 4;
-					}
-				}
 			}
 		}
 		else
@@ -172,15 +152,13 @@ class Controller_Setup_Main extends Controller_Template {
 			
 			if ($sms > 0)
 			{
-				// now that we know SMS is here, find out the version
-				$smsversion = DB::query(Database::SELECT, "SELECT * FROM sms_system WHERE sysid = 1")
-					->as_object()
-					->execute()
-					->current()
-					->sysVersion;
-				
-				// if we don't have 2.6.9 or higher, we can't do the upgrade
-				$data->option = (version_compare($smsversion, '2.6.9', '<')) ? 6 : 5;
+				/**
+				 * The database has a version of SMS in it and doesn't have
+				 * any Nova tables which means they're trying to upgrade from
+				 * SMS which we don't support. They'll need to upgrade to Nova 2
+				 * first and then do the Nova 3 upgrade.
+				 */
+				$data->option = 4;
 			}
 			else
 			{
@@ -207,10 +185,10 @@ class Controller_Setup_Main extends Controller_Template {
 		$session = Session::instance();
 		
 		// create a new content view
-		$this->template->layout->content = View::factory('components/pages/setup/main_config');
+		$this->template->layout->content = View::factory('components/pages/setup/config');
 		
 		// create a new js view
-		$this->template->javascript = View::factory('components/js/setup/main_config_js');
+		$this->template->javascript = View::factory('components/js/setup/config_js');
 		
 		// assign the object a shorter variable to use in the method
 		$data = $this->template->layout->content;
@@ -603,10 +581,10 @@ return array
 	public function action_readme()
 	{
 		// create a new content view
-		$this->template->layout->content = View::factory('components/pages/setup/main_readme');
+		$this->template->layout->content = View::factory('components/pages/setup/readme');
 		
 		// create a new js view
-		$this->template->javascript = View::factory('components/js/setup/main_readme_js');
+		$this->template->javascript = View::factory('components/js/setup/readme_js');
 		
 		// assign the object a shorter variable to use in the method
 		$data = $this->template->layout->content;
@@ -630,7 +608,7 @@ return array
 	public function action_verify()
 	{
 		// create a new content view
-		$this->template->layout->content = View::factory('components/pages/setup/main_verify');
+		$this->template->layout->content = View::factory('components/pages/setup/verify');
 		
 		// assign the object a shorter variable to use in the method
 		$data = $this->template->layout->content;

@@ -88,6 +88,7 @@ class Controller_Setup_Install extends Controller_Template {
 		$this->template->layout->flash		= false;
 		$this->template->layout->controls	= false;
 		$this->template->layout->content	= false;
+		$this->template->layout->steps		= View::factory(Location::file('setup_install', null, 'partials'));
 	}
 	
 	public function after()
@@ -642,7 +643,7 @@ class Controller_Setup_Install extends Controller_Template {
 				
 				// set the loading image
 				$data->loading = array(
-					'src' => MODFOLDER.'/app/modules/setup/views/design/images/loading-circle-large.gif',
+					'src' => MODFOLDER.'/app/modules/setup/views/design/images/loading.gif',
 					'attr' => array(
 						'class' => 'image',
 						'alt' => ''),

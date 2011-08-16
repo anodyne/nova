@@ -230,13 +230,8 @@
 				}
 			});
 			
-			$('#progress').ajaxStop(function(){
-				$("#progress").progressbar({ value: 75 });
-				$('#percent').text($('#progress').progressbar('option', 'value') + '%');
-				
-				// change the button and text
-				$('.lower .control button').attr('id', 'next').html('Next Step');
-				$('.lower .control-text').html('Move on to the final step of the upgrade process.');
+			$('#start').ajaxStop(function(){
+				$(this).attr('id', 'next').html('Next Step');
 			});
 			
 			return false;

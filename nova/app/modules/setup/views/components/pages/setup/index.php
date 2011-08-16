@@ -1,4 +1,4 @@
-<?php if ($option <= 6): ?>
+<?php if ($option <= 4): ?>
 	<p>Before we begin, here are a few things you should check out. Make sure you've read and understand the guide for the action you're about to do!</p>
 	
 	<a href="http://docs.anodyne-productions.com/index.php/nova3/start/install" target="_blank" class="install-secoptions">
@@ -6,20 +6,8 @@
 	</a>
 	
 	<?php if ($option == 2): ?>
-		<a href="http://docs.anodyne-productions.com/index.php/nova3/start/upgrade/nova2" target="_blank" class="install-secoptions">
-			<span class="secoptions-guide">Read the Nova 2 Upgrade Guide</span>
-		</a>
-	<?php endif;?>
-	
-	<?php if ($option == 3): ?>
-		<a href="http://docs.anodyne-productions.com/index.php/nova3/start/upgrade/nova1" target="_blank" class="install-secoptions">
-			<span class="secoptions-guide">Read the Nova 1 Upgrade Guide</span>
-		</a>
-	<?php endif;?>
-	
-	<?php if ($option == 5): ?>
-		<a href="http://docs.anodyne-productions.com/index.php/nova3/start/upgrade/sms" target="_blank" class="install-secoptions">
-			<span class="secoptions-guide">Read the SMS Upgrade Guide</span>
+		<a href="http://docs.anodyne-productions.com/index.php/nova3/start/upgrade" target="_blank" class="install-secoptions">
+			<span class="secoptions-guide">Read the Upgrade Guide</span>
 		</a>
 	<?php endif;?>
 	
@@ -34,35 +22,24 @@
 	<hr>
 	
 	<a href="<?php echo Url::site('setup/install/step');?>" class="install-options">
-		<div class="arrow"></div>
 		<span>Fresh Install</span>
 		<em>Get up and running with a fresh install of Nova 3 in only a few minutes!</em>
 	</a>
 	
 	<?php if ($option == 2): ?>
-		<a href="<?php echo Url::site('setup/nova2/step');?>" class="install-options">
+		<a href="<?php echo Url::site('setup/upgrade/step');?>" class="install-options">
 			<span>Upgrade from Nova 2</span>
 			<em>Upgrade your Nova 2 information to the newer Nova 3 format.</em>
 		</a>
 	<?php elseif ($option == 3): ?>
-		<a href="<?php echo Url::site('setup/nova1/step');?>" class="install-options">
-			<span>Upgrade from Nova 1</span>
-			<em>Upgrade your Nova 1 information to the newer Nova 3 format.</em>
-		</a>
-	<?php elseif ($option == 4): ?>
-		<strong class="error">You have an older version of Nova and need to update to at least version 1.2.4 in order to upgrade to Nova 3.</strong>
+		<strong class="error">Uh-oh! I noticed you're running a version of Nova 1. Unfortunately, I can't upgrade you from Nova 1 to Nova 3. First, you'll need to upgrade from Nova 1 to Nova 2 and then I'll be able to do the Nova 3 upgrade.</strong>
 	<?php endif;?>
 	
-	<?php if ($option == 5): ?>
-		<a href="<?php echo Url::site('setup/sms/step');?>" class="install-options">
-			<span>Upgrade from SMS 2</span>
-			<em>Upgrade your SMS information to the newer Nova 3 format.</em>
-		</a>
-	<?php elseif ($option == 6): ?>
-		<strong class="error">You have an older version of SMS and need to update to at least version 2.6.9 in order to upgrade to Nova 3.</strong>
+	<?php if ($option == 4): ?>
+		<strong class="error">Uh-oh! I noticed you're running a version of SMS 2. Unfortunately, I can't upgrade you from SMS 2 to Nova 3. First, you'll need to upgrade from SMS 2 to Nova 2 and then I'll be able to do the Nova 3 upgrade.</strong>
 	<?php endif;?>
-<?php elseif ($option > 6): ?>
-	<?php if ($option == 7): ?>
+<?php elseif ($option > 4): ?>
+	<?php if ($option == 5): ?>
 		<p>Before we begin, here are a few things you should check out. Make sure you've read and understand the guide for the action you're about to do!</p>
 		
 		<a href="http://docs.anodyne-productions.com/index.php/nova/overview/upgrade" target="_blank" class="install-secoptions">
@@ -85,7 +62,7 @@
 		</a>
 	<?php endif;?>
 	
-	<?php if ($option == 8): ?>
+	<?php if ($option == 6): ?>
 		<a href="<?php echo Url::site('setup/install/genre');?>" class="install-options">
 			<span>The Genre Panel</span>
 			<em>Use Nova's flexibile genre system to change your game's genre. <strong>Note:</strong> You'll have to make manual changes to 

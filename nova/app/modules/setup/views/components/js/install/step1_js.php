@@ -15,7 +15,7 @@
 			
 			$.ajax({
 				beforeSend: function(){
-					$('#loading_update').show();
+					$('#loading_update').removeClass('hidden');
 				},
 				type: "POST",
 				url: "<?php echo Url::site('ajax/info_show_position_desc');?>",
@@ -25,7 +25,7 @@
 					$('#position_desc').append(data);
 				},
 				complete: function(){
-					$('#loading_update').hide();
+					$('#loading_update').addClass('hidden');
 				}
 			});
 			
@@ -42,7 +42,7 @@
 			
 			$.ajax({
 				beforeSend: function(){
-					$('#loading_update_rank').show();
+					$('#loading_update_rank').removeClass('hidden');
 				},
 				type: "POST",
 				url: "<?php echo Url::site('ajax/info_show_rank_image');?>",
@@ -52,7 +52,7 @@
 					$('#rank_img').append(data);
 				},
 				complete: function(){
-					$('#loading_update_rank').hide();
+					$('#loading_update_rank').addClass('hidden');
 				}
 			});
 			

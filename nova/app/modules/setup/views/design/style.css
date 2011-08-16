@@ -246,13 +246,6 @@ kbd {
 	font-size: 1em;
 	font-style: normal;
 }
-.install-options .arrow {
-	float: right;
-	height: 24px;
-	width: 24px;
-	margin: 15px 0 0 0;
-	background: transparent url(images/install-options-hover.png) no-repeat top left;
-}
 .install-options:hover {
 	border: 1px solid #20559a !important;
 	background: #52a8e8;
@@ -272,7 +265,6 @@ kbd {
 	color: #fff !important;
 	text-shadow: 0 1px 1px rgba(0, 0, 0, .35) !important;
 }
-.install-options:hover .arrow { display: inherit; }
 
 .install-secoptions {
 	padding: .5em;

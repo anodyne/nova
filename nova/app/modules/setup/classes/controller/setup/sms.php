@@ -51,6 +51,7 @@ class Controller_Setup_Sms extends Controller_Template {
 		$this->template->layout->label			= false;
 		$this->template->layout->flash			= false;
 		$this->template->layout->controls		= false;
+		$this->template->layout->steps			= View::factory(Location::file('setup_sms', null, 'partials'));
 	}
 	
 	public function action_step()

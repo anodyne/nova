@@ -1185,7 +1185,7 @@ class Controller_Setup_Smsajax extends Controller_Template {
 		foreach ($result as $r)
 		{
 			$messages = array(
-				'welcome_msg' => $r->welcomeMessage,
+				'welcome_message' => $r->welcomeMessage,
 				'sim' => $r->simmMessage,
 				'join_disclaimer' => $r->joinDisclaimer,
 				'accept_message' => $r->acceptMessage,
@@ -1680,7 +1680,7 @@ class Controller_Setup_Smsajax extends Controller_Template {
 	{
 		try {
 			// do the update
-			Model_SiteContent::update_messages(array('welcome_head' => "Welcome to the ".Model_Settings::get_settings('sim_name')."!"));
+			Model_SiteContent::update_messages(array('welcome_header' => "Welcome to the ".Model_Settings::get_settings('sim_name')."!"));
 			
 			$retval = array(
 				'code' => 1,

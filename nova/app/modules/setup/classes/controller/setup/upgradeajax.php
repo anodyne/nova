@@ -8,7 +8,7 @@
  * @copyright	2011 Anodyne Productions
  */
 
-class Controller_Setup_Nova1ajax extends Controller_Template {
+class Controller_Setup_Upgradeajax extends Controller_Template {
 	
 	public $db;
 	
