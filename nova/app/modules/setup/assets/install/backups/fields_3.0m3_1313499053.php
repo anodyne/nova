@@ -483,9 +483,6 @@ $fields_posts = array(
 	'content' => array('type' => 'TEXT'),
 	'tags' => array('type' => 'TEXT'),
 	'updated_at' => array('type' => 'BIGINT', 'constraint' => 20),
-	'participants' => array('type' => 'TEXT'),
-	'lock_user_id' => array('type' => 'INT', 'constraint' => 8),
-	'lock_date' => array('type' => 'BIGINT', 'constraint' => 20),
 );
 
 $fields_post_authors = array(
