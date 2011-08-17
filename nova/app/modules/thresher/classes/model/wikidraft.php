@@ -43,7 +43,7 @@ class Model_WikiDraft extends Model {
 			'constraint' => 20),
 		'categories' => array(
 			'type' => 'text'),
-		'changed_comments' => array(
+		'change_comments' => array(
 			'type' => 'text'),
 	);
 }
