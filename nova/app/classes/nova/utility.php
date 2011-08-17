@@ -319,7 +319,7 @@ abstract class Nova_Utility {
 	public static function install_status()
 	{
 		// make sure the database config file is there first
-		if ( ! file_exists(APPPATH.'config/database'.EXT))
+		if ( ! file_exists(APPPATH.'config/database.php'))
 		{
 			// get an instance of the request
 			$request = Request::initial();
@@ -339,7 +339,7 @@ abstract class Nova_Utility {
 			$tables = Database::instance()->list_tables($dbconf['table_prefix'].'%');
 			
 			// make sure there aren't any tables in there
-			$retval = (count($tables) > 0) ? true : false;
+			$retval = (count($tables) == Kohana::$config->load('nova.app_db_tables'));
 			
 			return $retval;
 		}
