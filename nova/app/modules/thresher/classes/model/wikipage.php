@@ -40,6 +40,16 @@ class Model_WikiPage extends Model {
 			'type' => 'int',
 			'constraint' => 8),
 		'comments' => array(
-			'type' => 'text'),
+			'type' => 'tinyint',
+			'constraint' => 1,
+			'default' => 1),
+		'type' => array(
+			'type' => 'enum',
+			'constraint' => "'standard','system'",
+			'default' => 'standard'),
+		'key' => array(
+			'type' => 'string',
+			'constraint' => 100,
+			'default' => ''),
 	);
 }
