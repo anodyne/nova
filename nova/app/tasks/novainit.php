@@ -359,6 +359,7 @@ $_genre = strtolower(Kohana::$config->load(\'nova.genre\'));
 			'Model_WikiCategory' => array(),
 			'Model_WikiDraft' => array(),
 			'Model_WikiPage' => array(),
+			'Model_WikiRestriction' => array(),
 			
 			/*
 			Forum models go here
