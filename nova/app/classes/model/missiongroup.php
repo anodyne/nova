@@ -27,6 +27,9 @@ class Model_MissionGroup extends Model {
 			'constraint' => 5),
 		'desc' => array(
 			'type' => 'text'),
+		'parent_id' => array(
+			'type' => 'int',
+			'constraint' => 5),
 	);
 	
 	public static $_has_many = array(
