@@ -88,7 +88,7 @@ class Model_News extends Model {
 	 */
 	public function comments($status = 'activated')
 	{
-		return static::find('all', array(
+		return Model_Comment::find('all', array(
 			'where' => array(
 				array('type', 'news'),
 				array('status', $status),
