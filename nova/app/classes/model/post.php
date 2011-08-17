@@ -105,12 +105,46 @@ class Model_Post extends Model {
 	 */
 	public function comments($status = 'activated')
 	{
-		return static::find('all', array(
+		return Model_Comment::find('all', array(
 			'where' => array(
 				array('type', 'post'),
 				array('status', $status),
 				array('item_id', $this->id)
 			),
 		));
+	}
+	
+	/**
+	 * Display the authors for a mission post.
+	 *
+	 *     $post = Model_Post::find(1);
+	 *     echo $post->display_authors();
+	 *
+	 * @access	public
+	 * @param	string	the type of authors to display (characters, users)
+	 * @return	string	the string of authors
+	 */
+	public function display_authors($type = 'characters')
+	{
+		$output = array();
+		
+		switch ($type)
+		{
+			case 'characters':
+				foreach ($this->authors_characters as $a)
+				{
+					$output[] = $a->name();
+				}
+			break;
+			
+			case 'users':
+				foreach ($this->authors_users as $a)
+				{
+					$output[] = $a->name;
+				}
+			break;
+		}
+		
+		return implode(' &amp; ', $output);
 	}
 }
