@@ -167,7 +167,7 @@ abstract class Nova_Hooks {
 	public static function maintenance()
 	{
 		// if the config file isn't set
-		if (file_exists(APPPATH.'config/database'.EXT) and Utility::install_status())
+		if (file_exists(APPPATH.'config/database.php') and Utility::install_status())
 		{
 			// get an instance of the request object
 			$request = Request::initial();
