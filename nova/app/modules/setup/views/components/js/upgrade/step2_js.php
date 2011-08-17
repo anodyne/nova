@@ -151,7 +151,7 @@
 						$('table tbody tr:eq(3) td:eq(1) .loading').removeClass('hidden');
 					},
 					type: "POST",
-					url: "<?php echo Url::site('setup/smsajax/upgrade_logs');?>",
+					url: "<?php echo Url::site('setup/upgradeajax/upgrade_logs');?>",
 					data: send,
 					dataType: 'json',
 					success: function(data){
@@ -164,18 +164,14 @@
 						else if (data.code == 0)
 						{
 							$('table tbody tr:eq(3) td:eq(1) .failure').removeClass('hidden');
-							$('table tbody tr:eq(3) td:eq(1) .failure img').attr('title', function(){
-								return data.message
-							});
-							$('.tiptip').tipTip(tipOpts);
+							$('table tbody tr:eq(3) td:eq(0) .errors .errors-content').html(data.message);
+							$('table tbody tr:eq(3) td:eq(0) .errors').removeClass('hidden');
 						}
 						else if (data.code == 2)
 						{
 							$('table tbody tr:eq(3) td:eq(1) .warning').removeClass('hidden');
-							$('table tbody tr:eq(3) td:eq(1) .warning img').attr('title', function(){
-								return data.message
-							});
-							$('.tiptip').tipTip(tipOpts);
+							$('table tbody tr:eq(3) td:eq(0) .errors .errors-content').html(data.message);
+							$('table tbody tr:eq(3) td:eq(0) .errors').removeClass('hidden');
 						}
 					}
 				});
@@ -191,7 +187,7 @@
 						$('table tbody tr:eq(4) td:eq(1) .loading').removeClass('hidden');
 					},
 					type: "POST",
-					url: "<?php echo Url::site('setup/smsajax/upgrade_news');?>",
+					url: "<?php echo Url::site('setup/upgradeajax/upgrade_news');?>",
 					data: send,
 					dataType: 'json',
 					success: function(data){
@@ -204,18 +200,14 @@
 						else if (data.code == 0)
 						{
 							$('table tbody tr:eq(4) td:eq(1) .failure').removeClass('hidden');
-							$('table tbody tr:eq(4) td:eq(1) .failure img').attr('title', function(){
-								return data.message
-							});
-							$('.tiptip').tipTip(tipOpts);
+							$('table tbody tr:eq(4) td:eq(0) .errors .errors-content').html(data.message);
+							$('table tbody tr:eq(4) td:eq(0) .errors').removeClass('hidden');
 						}
 						else if (data.code == 2)
 						{
 							$('table tbody tr:eq(4) td:eq(1) .warning').removeClass('hidden');
-							$('table tbody tr:eq(4) td:eq(1) .warning img').attr('title', function(){
-								return data.message
-							});
-							$('.tiptip').tipTip(tipOpts);
+							$('table tbody tr:eq(4) td:eq(0) .errors .errors-content').html(data.message);
+							$('table tbody tr:eq(4) td:eq(0) .errors').removeClass('hidden');
 						}
 					}
 				});
@@ -231,7 +223,7 @@
 						$('table tbody tr:eq(5) td:eq(1) .loading').removeClass('hidden');
 					},
 					type: "POST",
-					url: "<?php echo Url::site('setup/smsajax/upgrade_missions');?>",
+					url: "<?php echo Url::site('setup/upgradeajax/upgrade_missions');?>",
 					data: send,
 					dataType: 'json',
 					success: function(data){
@@ -244,18 +236,14 @@
 						else if (data.code == 0)
 						{
 							$('table tbody tr:eq(5) td:eq(1) .failure').removeClass('hidden');
-							$('table tbody tr:eq(5) td:eq(1) .failure img').attr('title', function(){
-								return data.message
-							});
-							$('.tiptip').tipTip(tipOpts);
+							$('table tbody tr:eq(5) td:eq(0) .errors .errors-content').html(data.message);
+							$('table tbody tr:eq(5) td:eq(0) .errors').removeClass('hidden');
 						}
 						else if (data.code == 2)
 						{
 							$('table tbody tr:eq(5) td:eq(1) .warning').removeClass('hidden');
-							$('table tbody tr:eq(5) td:eq(1) .warning img').attr('title', function(){
-								return data.message
-							});
-							$('.tiptip').tipTip(tipOpts);
+							$('table tbody tr:eq(5) td:eq(0) .errors .errors-content').html(data.message);
+							$('table tbody tr:eq(5) td:eq(0) .errors').removeClass('hidden');
 						}
 					}
 				});
@@ -271,7 +259,7 @@
 						$('table tbody tr:eq(6) td:eq(1) .loading').removeClass('hidden');
 					},
 					type: "POST",
-					url: "<?php echo Url::site('setup/smsajax/upgrade_specs');?>",
+					url: "<?php echo Url::site('setup/upgradeajax/upgrade_specs');?>",
 					data: send,
 					dataType: 'json',
 					success: function(data){
@@ -284,18 +272,14 @@
 						else if (data.code == 0)
 						{
 							$('table tbody tr:eq(6) td:eq(1) .failure').removeClass('hidden');
-							$('table tbody tr:eq(6) td:eq(1) .failure img').attr('title', function(){
-								return data.message
-							});
-							$('.tiptip').tipTip(tipOpts);
+							$('table tbody tr:eq(6) td:eq(0) .errors .errors-content').html(data.message);
+							$('table tbody tr:eq(6) td:eq(0) .errors').removeClass('hidden');
 						}
 						else if (data.code == 2)
 						{
 							$('table tbody tr:eq(6) td:eq(1) .warning').removeClass('hidden');
-							$('table tbody tr:eq(6) td:eq(1) .warning img').attr('title', function(){
-								return data.message
-							});
-							$('.tiptip').tipTip(tipOpts);
+							$('table tbody tr:eq(6) td:eq(0) .errors .errors-content').html(data.message);
+							$('table tbody tr:eq(6) td:eq(0) .errors').removeClass('hidden');
 						}
 					}
 				});
@@ -311,7 +295,7 @@
 						$('table tbody tr:eq(7) td:eq(1) .loading').removeClass('hidden');
 					},
 					type: "POST",
-					url: "<?php echo Url::site('setup/smsajax/upgrade_tour');?>",
+					url: "<?php echo Url::site('setup/upgradeajax/upgrade_tour');?>",
 					data: send,
 					dataType: 'json',
 					success: function(data){
@@ -324,27 +308,166 @@
 						else if (data.code == 0)
 						{
 							$('table tbody tr:eq(7) td:eq(1) .failure').removeClass('hidden');
-							$('table tbody tr:eq(7) td:eq(1) .failure img').attr('title', function(){
-								return data.message
-							});
-							$('.tiptip').tipTip(tipOpts);
+							$('table tbody tr:eq(7) td:eq(0) .errors .errors-content').html(data.message);
+							$('table tbody tr:eq(7) td:eq(0) .errors').removeClass('hidden');
 						}
 						else if (data.code == 2)
 						{
 							$('table tbody tr:eq(7) td:eq(1) .warning').removeClass('hidden');
-							$('table tbody tr:eq(7) td:eq(1) .warning img').attr('title', function(){
-								return data.message
-							});
-							$('.tiptip').tipTip(tipOpts);
+							$('table tbody tr:eq(7) td:eq(0) .errors .errors-content').html(data.message);
+							$('table tbody tr:eq(7) td:eq(0) .errors').removeClass('hidden');
 						}
 					}
 				});
 			}
 			
-			$('#progress').ajaxStop(function(){
-				$('.lower .control button').attr('id', 'next').html('Next Step');
-				$('.lower .control-text').html('Move on to the next step of the upgrade process.');
-			});
+			// docking items
+			if ($('input[name=upgrade_docking]:checked').val() == 1)
+			{
+				var send;
+				
+				$.ajaxq('queue', {
+					beforeSend: function(){
+						$('table tbody tr:eq(8) td:eq(1) .loading').removeClass('hidden');
+					},
+					type: "POST",
+					url: "<?php echo Url::site('setup/upgradeajax/upgrade_docking');?>",
+					data: send,
+					dataType: 'json',
+					success: function(data){
+						$('table tbody tr:eq(8) td:eq(1) .loading').addClass('hidden');
+						
+						if (data.code == 1)
+						{
+							$('table tbody tr:eq(8) td:eq(1) .success').removeClass('hidden');
+						}
+						else if (data.code == 0)
+						{
+							$('table tbody tr:eq(8) td:eq(1) .failure').removeClass('hidden');
+							$('table tbody tr:eq(8) td:eq(0) .errors .errors-content').html(data.message);
+							$('table tbody tr:eq(8) td:eq(0) .errors').removeClass('hidden');
+						}
+						else if (data.code == 2)
+						{
+							$('table tbody tr:eq(8) td:eq(1) .warning').removeClass('hidden');
+							$('table tbody tr:eq(8) td:eq(0) .errors .errors-content').html(data.message);
+							$('table tbody tr:eq(8) td:eq(0) .errors').removeClass('hidden');
+						}
+					}
+				});
+			}
+			
+			// wiki pages
+			if ($('input[name=upgrade_wiki]:checked').val() == 1)
+			{
+				var send;
+				
+				$.ajaxq('queue', {
+					beforeSend: function(){
+						$('table tbody tr:eq(9) td:eq(1) .loading').removeClass('hidden');
+					},
+					type: "POST",
+					url: "<?php echo Url::site('setup/upgradeajax/upgrade_wiki');?>",
+					data: send,
+					dataType: 'json',
+					success: function(data){
+						$('table tbody tr:eq(9) td:eq(1) .loading').addClass('hidden');
+						
+						if (data.code == 1)
+						{
+							$('table tbody tr:eq(9) td:eq(1) .success').removeClass('hidden');
+						}
+						else if (data.code == 0)
+						{
+							$('table tbody tr:eq(9) td:eq(1) .failure').removeClass('hidden');
+							$('table tbody tr:eq(9) td:eq(0) .errors .errors-content').html(data.message);
+							$('table tbody tr:eq(9) td:eq(0) .errors').removeClass('hidden');
+						}
+						else if (data.code == 2)
+						{
+							$('table tbody tr:eq(9) td:eq(1) .warning').removeClass('hidden');
+							$('table tbody tr:eq(9) td:eq(0) .errors .errors-content').html(data.message);
+							$('table tbody tr:eq(9) td:eq(0) .errors').removeClass('hidden');
+						}
+					}
+				});
+			}
+			
+			// uploads
+			if ($('input[name=upgrade_uploads]:checked').val() == 1)
+			{
+				var send;
+				
+				$.ajaxq('queue', {
+					beforeSend: function(){
+						$('table tbody tr:eq(10) td:eq(1) .loading').removeClass('hidden');
+					},
+					type: "POST",
+					url: "<?php echo Url::site('setup/upgradeajax/upgrade_uploads');?>",
+					data: send,
+					dataType: 'json',
+					success: function(data){
+						$('table tbody tr:eq(10) td:eq(1) .loading').addClass('hidden');
+						
+						if (data.code == 1)
+						{
+							$('table tbody tr:eq(10) td:eq(1) .success').removeClass('hidden');
+						}
+						else if (data.code == 0)
+						{
+							$('table tbody tr:eq(10) td:eq(1) .failure').removeClass('hidden');
+							$('table tbody tr:eq(10) td:eq(0) .errors .errors-content').html(data.message);
+							$('table tbody tr:eq(10) td:eq(0) .errors').removeClass('hidden');
+						}
+						else if (data.code == 2)
+						{
+							$('table tbody tr:eq(10) td:eq(1) .warning').removeClass('hidden');
+							$('table tbody tr:eq(10) td:eq(0) .errors .errors-content').html(data.message);
+							$('table tbody tr:eq(10) td:eq(0) .errors').removeClass('hidden');
+						}
+					}
+				});
+			}
+			
+			// private messages
+			if ($('input[name=upgrade_pm]:checked').val() == 1)
+			{
+				var send;
+				
+				$.ajaxq('queue', {
+					beforeSend: function(){
+						$('table tbody tr:eq(11) td:eq(1) .loading').removeClass('hidden');
+					},
+					type: "POST",
+					url: "<?php echo Url::site('setup/upgradeajax/upgrade_private_messages');?>",
+					data: send,
+					dataType: 'json',
+					success: function(data){
+						$('table tbody tr:eq(11) td:eq(1) .loading').addClass('hidden');
+						
+						if (data.code == 1)
+						{
+							$('table tbody tr:eq(11) td:eq(1) .success').removeClass('hidden');
+						}
+						else if (data.code == 0)
+						{
+							$('table tbody tr:eq(11) td:eq(1) .failure').removeClass('hidden');
+							$('table tbody tr:eq(11) td:eq(0) .errors .errors-content').html(data.message);
+							$('table tbody tr:eq(11) td:eq(0) .errors').removeClass('hidden');
+						}
+						else if (data.code == 2)
+						{
+							$('table tbody tr:eq(11) td:eq(1) .warning').removeClass('hidden');
+							$('table tbody tr:eq(11) td:eq(0) .errors .errors-content').html(data.message);
+							$('table tbody tr:eq(11) td:eq(0) .errors').removeClass('hidden');
+						}
+					}
+				});
+			}
+			
+			$('#start').ajaxStop(function(){
+				$(this).attr('id', 'next').html('Next Step');
+ 			});
 			
 			return false;
 		});

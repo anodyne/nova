@@ -17,11 +17,9 @@ class Controller_Setup_Test extends Controller {
 	
 	public function action_index()
 	{
-		//$output = Model_Character::find(356);
-		$output = Model_User::find(2);
+		$x = Model_Spec::find('first');
 		
-		//echo Debug::vars($output->name(), $output->name(false), $output->name(true, true), $output->user->get_status());
-		echo Debug::vars($output->characters);
+		echo Debug::vars($x->desc);
 		exit;
 	}
 }

@@ -96,7 +96,7 @@ class Controller_Setup_Main extends Controller_Template {
 		$data = $this->template->layout->content;
 		
 		// do some checks to see what we should show
-		$installed = Utility::install_status();
+		$installed = count(Database::instance()->list_tables(Database::instance()->table_prefix().'%')) > 0;
 		$update = ($installed) ? $this->_check_for_updates() : false;
 		
 		if ($installed)
@@ -614,9 +614,9 @@ return array
 		$data = $this->template->layout->content;
 		
 		// the verification table
-		$data->verify = Verify::server();
+		$data->verify = Setup::verify_server();
 		
-		if ($data->verify === false or ! isset($data->verify['failure']))
+		if ( ! $data->verify or ! isset($data->verify['failure']))
 		{
 			// build the next step button
 			$next = array(
@@ -629,7 +629,6 @@ return array
 			$this->template->layout->controls = Form::open('setup/main/index').Form::button('install', 'Back to Setup', $next).Form::close();
 		}
 		
-		// content
 		$this->template->title.= 'Verify Server Requirements';
 		$this->template->layout->image = Html::image(MODFOLDER.'/app/modules/setup/views/design/images/tick-24x24.png', array('id' => 'title-image'));
 		$this->template->layout->label = 'Verify Server Requirements';

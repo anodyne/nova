@@ -505,110 +505,12 @@ class Controller_Setup_Install extends Controller_Template {
 			case 1:
 				if (HTTP_Request::POST == $this->request->method())
 				{
-					// update the character set
-					$dbconfig = Kohana::$config->load('database');
-					$db->set_charset($dbconfig['default']['charset']);
-					
-					// pull in the field information
-					include_once MODPATH.'app/modules/setup/assets/install/fields.php';
-					
-					foreach ($data as $key => $value)
-					{
-						$fieldID = (isset($value['id'])) ? $value['id'] : 'id';
-						$fieldName = (isset($value['fields'])) ? $value['fields'] : 'fields_'.$key;
-						
-						DBForge::add_field($$fieldName);
-						DBForge::add_key($fieldID, true);
-						
-						if (isset($value['index']))
-						{
-							foreach ($value['index'] as $index)
-							{
-								DBForge::add_key($index);
-							}
-						}
-						
-						DBForge::create_table($key, true);
-					}
-					
-					// pause the script for a second
-					sleep(1);
-					
-					// wipe out the data from inserting the tables
-					$data = null;
-					
-					// pull in the basic data
-					include_once MODPATH.'app/modules/setup/assets/install/data.php';
-					
-					$insert = array();
-					
-					foreach ($data as $value)
-					{
-						foreach ($$value as $k => $v)
-						{
-							$sql = DB::insert($value)
-								->columns(array_keys($v))
-								->values(array_values($v))
-								->compile($db);
-								
-							$insert[$value] = $db->query(Database::INSERT, $sql, true);
-						}
-					}
-					
-					// pause the script for a second
-					sleep(1);
-					
-					// wipe out the data from insert the data
-					$data = null;
-					
-					// pull in the genre data
-					include_once MODPATH.'app/modules/setup/assets/install/genres/'.strtolower(Kohana::$config->load('nova.genre')).'.php';
-					
-					$genre = array();
-					
-					foreach ($data as $key_d => $value_d)
-					{
-						foreach ($$value_d as $k => $v)
-						{
-							$sql = DB::insert($key_d)
-								->columns(array_keys($v))
-								->values(array_values($v))
-								->compile($db);
-								
-							$genre[$key_d] = $db->query(Database::INSERT, $sql, true);
-						}
-					}
-					
-					if (Kohana::$config->load('install.dev'))
-					{
-						// pause the script for a second
-						sleep(1);
-						
-						// wipe out the data from insert the data
-						$data = null;
-						
-						// pull in the development test data
-						include_once MODPATH.'app/modules/setup/assets/install/dev.php';
-						
-						$insert = array();
-						
-						foreach ($data as $value)
-						{
-							foreach ($$value as $k => $v)
-							{
-								$sql = DB::insert($value)
-									->columns(array_keys($v))
-									->values(array_values($v))
-									->compile($db);
-									
-								$insert[$value] = $db->query(Database::INSERT, $sql, true);
-							}
-						}
-					}
+					// do the install
+					Setup::install();
 				}
 				
 				// get the number of tables
-				$tables = $db->list_tables();
+				$tables = $db->list_tables($db->table_prefix().'%');
 				
 				// create a new content view
 				$this->template->layout->content = View::factory('components/pages/install/step1');
@@ -623,7 +525,7 @@ class Controller_Setup_Install extends Controller_Template {
 				$questions = Model_SecurityQuestion::get_questions();
 				
 				// set the questions variable
-				$data->questions = array('' => ___('Please Select One'));
+				$data->questions = array('' => 'Please Select One');
 				
 				if (count($questions) > 0)
 				{
@@ -637,7 +539,7 @@ class Controller_Setup_Install extends Controller_Template {
 				$data->errors = ($session->get('errors')) ? $session->get('errors') : false;
 				
 				// make sure the proper message is displayed
-				$data->message = ($data->errors === false)
+				$data->message = ( ! $data->errors)
 					? (count($tables) < Kohana::$config->load('nova.app_db_tables')) ? ___('setup.install.step1.failure') : ___('setup.install.step1.success')
 					: ___('setup.install.step1.errors');
 				
@@ -759,13 +661,8 @@ class Controller_Setup_Install extends Controller_Template {
 						// update the user with the character info
 						Model_User::update_user($crUser->id, array('character_id' => $crCharacter->id));
 						
-						// do the quick installs
-						Utility::install_rank();
-						Utility::install_skin();
-						Utility::install_widget();
-						
 						// do the registration
-						$this->_register();
+						Setup::register('install');
 					}
 					else
 					{
@@ -817,43 +714,5 @@ class Controller_Setup_Install extends Controller_Template {
 		}
 		
 		$this->template->layout->image = Html::image(MODFOLDER.'/app/modules/setup/views/design/images/wand-24x24.png', array('id' => 'title-image'));
-	}
-	
-	private function _register()
-	{
-		require_once Kohana::find_file('vendor', 'swiftmailer/lib/swift_required');
-		
-		$db = Database::instance();
-		
-		$request = array(
-			Kohana::$config->load('nova.app_name'),
-			Kohana::$config->load('nova.app_version_full'),
-			Url::site(),
-			$_SERVER['REMOTE_ADDR'],
-			$_SERVER['SERVER_ADDR'],
-			PHP_VERSION,
-			'install',
-			Kohana::$config->load('nova.genre'),
-		);
-		
-		$insert = "INSERT INTO www_installs (product, version, url, ip_client, ip_server, php, type, date, genre) VALUES (%s, %s, %s, %s, %s, %s, %s, %d, %s);";
-		
-		$data['message'] = sprintf(
-			$insert,
-			$db->escape($request[0]),
-			$db->escape($request[1]),
-			$db->escape($request[2]),
-			$db->escape($request[3]),
-			$db->escape($request[4]),
-			$db->escape($request[5]),
-			$db->escape($request[6]),
-			$db->escape($request[7]),
-			$db->escape(date::now())
-		);
-		
-		//$email = Email::install_register($data);
-		$email = false;
-		
-		return $email;
 	}
 }
