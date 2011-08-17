@@ -26,6 +26,6 @@ return array(
 	'version_info' => MODPATH.'app/modules/setup/assets/update/version.yaml',
 	//'version_info' => 'http://www.anodyne-productions.com/feeds/version_nova.yaml',
 	
-	'app_db_tables' => 61,
+	'app_db_tables' => 62,
 	'environment' => Kohana::DEVELOPMENT,
 );
