@@ -64,7 +64,6 @@ $data = array(
 	'wiki_categories' => array(),
 	'wiki_drafts' => array(),
 	'wiki_pages' => array(),
-	'wiki_restrictions' => array(),
 );
 
 
@@ -165,7 +164,7 @@ $fields_catalogue_ranks = array(
 	'status' => array('type' => 'ENUM', 'constraint' => "'active','inactive','development'", 'default' => 'active'),
 	'credits' => array('type' => 'TEXT'),
 	'default' => array('type' => 'TINYINT', 'constraint' => 1, 'default' => 0),
-	'genre' => array('type' => 'VARCHAR', 'constraint' => 10, 'default' => 'ds9'),
+	'genre' => array('type' => 'VARCHAR', 'constraint' => 10, 'default' => 'bsg'),
 );
 
 $fields_catalogue_skins = array(
@@ -420,7 +419,6 @@ $fields_mission_groups = array(
 	'name' => array('type' => 'VARCHAR', 'constraint' => 255, 'default' => ''),
 	'order' => array('type' => 'INT', 'constraint' => 5),
 	'desc' => array('type' => 'TEXT'),
-	'parent_id' => array('type' => 'INT', 'constraint' => 5),
 );
 
 $fields_moderation = array(
@@ -597,7 +595,7 @@ $fields_tour_decks = array(
 	'name' => array('type' => 'VARCHAR', 'constraint' => 255, 'default' => ''),
 	'order' => array('type' => 'INT', 'constraint' => 5),
 	'content' => array('type' => 'TEXT'),
-	'tour_id' => array('type' => 'INT', 'constraint' => 5),
+	'spec_id' => array('type' => 'INT', 'constraint' => 5),
 );
 
 $fields_uploads = array(
@@ -682,7 +680,7 @@ $fields_wiki_drafts = array(
 	'page_id' => array('type' => 'INT', 'constraint' => 11),
 	'created_at' => array('type' => 'BIGINT', 'constraint' => 20),
 	'categories' => array('type' => 'TEXT'),
-	'change_comments' => array('type' => 'TEXT'),
+	'changed_comments' => array('type' => 'TEXT'),
 );
 
 $fields_wiki_pages = array(
@@ -694,18 +692,6 @@ $fields_wiki_pages = array(
 	'updated_at' => array('type' => 'BIGINT', 'constraint' => 20),
 	'updated_by_user' => array('type' => 'INT', 'constraint' => 8),
 	'updated_by_character' => array('type' => 'INT', 'constraint' => 8),
-	'comments' => array('type' => 'TINYINT', 'constraint' => 1, 'default' => 1),
-	'type' => array('type' => 'ENUM', 'constraint' => "'standard','system'", 'default' => 'standard'),
-	'key' => array('type' => 'VARCHAR', 'constraint' => 100, 'default' => ''),
-);
-
-$fields_wiki_restrictions = array(
-	'id' => array('type' => 'INT', 'constraint' => 11, 'auto_increment' => true),
-	'page_id' => array('type' => 'INT', 'constraint' => 11),
-	'created_at' => array('type' => 'BIGINT', 'constraint' => 20),
-	'created_by' => array('type' => 'INT', 'constraint' => 8),
-	'updated_at' => array('type' => 'BIGINT', 'constraint' => 20),
-	'updated_by' => array('type' => 'INT', 'constraint' => 8),
-	'restrictions' => array('type' => 'TEXT'),
+	'comments' => array('type' => 'TEXT'),
 );
 

@@ -706,6 +706,6 @@ $fields_wiki_restrictions = array(
 	'created_by' => array('type' => 'INT', 'constraint' => 8),
 	'updated_at' => array('type' => 'BIGINT', 'constraint' => 20),
 	'updated_by' => array('type' => 'INT', 'constraint' => 8),
-	'restrictions' => array('type' => 'TEXT'),
+	'comments' => array('type' => 'TEXT'),
 );
 
