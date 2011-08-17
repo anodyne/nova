@@ -6,7 +6,6 @@
  * @category	Models
  * @author		Anodyne Productions
  * @copyright	2011 Anodyne Productions
- * @version		3.0
  */
  
 class Model_TourDeck extends Model {
@@ -27,16 +26,16 @@ class Model_TourDeck extends Model {
 			'constraint' => 5),
 		'content' => array(
 			'type' => 'text'),
-		'spec_id' => array(
+		'tour_id' => array(
 			'type' => 'int',
 			'constraint' => 5),
 	);
 	
 	public static $_belongs_to = array(
-		'spec' => array(
-			'model_to' => 'Model_Spec',
+		'tour' => array(
+			'model_to' => 'Model_Tour',
 			'key_to' => 'id',
-			'key_from' => 'spec_id',
+			'key_from' => 'tour_id',
 			'cascade_save' => false,
 			'cascade_delete' => false,
 		),
