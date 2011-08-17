@@ -12,7 +12,7 @@ return array(
 	 *
 	 * THIS VARIABLE NEEDS TO BE LOWERCASED!
 	 */
-	'genre' => 'bsg',
+	'genre' => 'ds9',
 	
 	/**
 	 * Meta Data
