@@ -388,7 +388,7 @@ $fields_messages = array(
 	'date' => array('type' => 'BIGINT', 'constraint' => 20),
 	'subject' => array('type' => 'VARCHAR', 'constraint' => 255, 'default' => ''),
 	'content' => array('type' => 'TEXT'),
-	'author_display' => array('type' => 'TINYINT', 'constraint' => 1, 'default' => 1),
+	'display' => array('type' => 'TINYINT', 'constraint' => 1, 'default' => 1),
 );
 
 $fields_message_recipients = array(
