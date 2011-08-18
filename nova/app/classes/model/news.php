@@ -48,8 +48,7 @@ class Model_News extends Model {
 			'type' => 'text'),
 		'updated_at' => array(
 			'type' => 'bigint',
-			'constraint' => 20,
-			'default' => 0),
+			'constraint' => 20),
 	);
 	
 	public static $_belongs_to = array(
