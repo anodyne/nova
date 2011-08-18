@@ -33,7 +33,7 @@ class Model_Message extends Model {
 			'default' => ''),
 		'content' => array(
 			'type' => 'text'),
-		'author_display' => array(
+		'display' => array(
 			'type' => 'tinyint',
 			'constraint' => 1,
 			'default' => 1),
