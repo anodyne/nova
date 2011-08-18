@@ -384,7 +384,7 @@ abstract class Nova_messages extends Nova_controller_admin {
 			$message = $this->input->post('message', true);
 			$recipients = $this->input->post('recipients', true);
 			
-			if ( ! is_array($recipients) and count($recipients) == 0)
+			if ( ! $recipients or ( ! is_array($recipients) and count($recipients) == 0))
 			{
 				$flash['status'] = 'error';
 				$flash['message'] = lang_output('flash_privmsgs_no_recipient');
