@@ -605,6 +605,90 @@ return array
 		$this->template->layout->label = 'Nova Readme';
 	}
 	
+	# TODO: remove this before final release
+	
+	public function action_schema()
+	{
+		// make sure the script doesn't time out
+		set_time_limit(0);
+		
+		// create a new content view
+		$this->template->layout->content = View::factory('components/pages/setup/schema');
+		
+		// create a new js view
+		$this->template->javascript = View::factory('components/js/setup/schema_js');
+		
+		// assign the object a shorter variable to use in the method
+		$data = $this->template->layout->content;
+		
+		// set up the fresh install connection
+		$freshconfig = array(
+			'type' => 'mysql',
+			'table_prefix' => 'nova_',
+			'connection' => array(
+				'hostname' => 'localhost',
+				'username' => 'nova',
+				'password' => '',
+				'database' => 'nova3_install',
+			),
+		);
+		
+		// get an instance of the database
+		$fresh = Database::instance('fresh', $freshconfig);
+		
+		// set up the upgrade connection
+		$upgradeconfig = array(
+			'type' => 'mysql',
+			'table_prefix' => 'nova_',
+			'connection' => array(
+				'hostname' => 'localhost',
+				'username' => 'nova',
+				'password' => '',
+				'database' => 'nova3_upgrade',
+			),
+		);
+		
+		// get an instance of the database
+		$upgrade = Database::instance('upgrade', $upgradeconfig);
+		
+		// which fields are we keeping?
+		$keep = array('ordinal_position');
+		
+		$data->fresh = new stdClass;
+		$data->fresh->tables = $fresh->list_tables($fresh->table_prefix().'%');
+		
+		foreach ($data->fresh->tables as $table)
+		{
+			$col1 = $fresh->list_columns($table, null, false);
+			$data->fresh->raw_columns[$table] = $col1;
+			$data->fresh->columns[$table] = md5(serialize($col1));
+		}
+		
+		$data->upgrade = new stdClass;
+		$data->upgrade->tables = $upgrade->list_tables($upgrade->table_prefix().'%');
+		
+		foreach ($data->upgrade->tables as $table)
+		{
+			$cols2 = $upgrade->list_columns($table, null, false);
+			$data->upgrade->raw_columns[$table] = $cols2;
+			$data->upgrade->columns[$table] = md5(serialize($cols2));
+		}
+		
+		// build the next step button
+		$next = array(
+			'type' => 'submit',
+			'class' => 'btn-main',
+			'id' => 'install',
+		);
+		
+		// build the next step control
+		$this->template->layout->controls = Form::open('setup/main/index').Form::button('install', 'Back to Setup', $next).Form::close();
+		
+		$this->template->title.= 'Schema Verification';
+		$this->template->layout->image = Html::image(MODFOLDER.'/app/modules/setup/views/design/images/tick-24x24.png', array('id' => 'title-image'));
+		$this->template->layout->label = 'Schema Verification';
+	}
+	
 	public function action_verify()
 	{
 		// create a new content view
