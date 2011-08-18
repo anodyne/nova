@@ -243,25 +243,8 @@ class Controller_Setup_Upgrade extends Controller_Template {
 				// create a new content view
 				$this->template->layout->content = View::factory('components/pages/upgrade/step4');
 				
-				// create the javascript view
-				$this->template->javascript = View::factory('components/js/upgrade/step4_js');
-				
 				// assign the object a shorter variable to use in the method
 				$data = $this->template->layout->content;
-				
-				// an empty array for user info
-				$data->options = array();
-				
-				// get all active users
-				$all = Model_User::find('all');
-				
-				foreach ($all as $a)
-				{
-					if ($a->get_status() == 'active')
-					{
-						$data->options[$a->id] = $a->name.' ('.$a->email.')';
-					}
-				}
 				
 				// set the loading image
 				$data->loading = array(
@@ -269,16 +252,6 @@ class Controller_Setup_Upgrade extends Controller_Template {
 					'attr' => array(
 						'class' => 'image'),
 				);
-				
-				// build the next step button
-				$next = array(
-					'type' => 'submit',
-					'class' => 'btn-main',
-					'id' => 'start',
-				);
-				
-				// build the next step control
-				$this->template->layout->controls = Form::button('next', 'Finalize', $next).Form::close();
 			break;
 		}
 		

@@ -1,9 +1,6 @@
 <?php $request = Request::current();?>
 
 <?php if ($request->param('id') == 0): ?>
-	<!-- step 4 -->
-	<div class="step"></div>
-	
 	<!-- step 3 -->
 	<div class="step"></div>
 	
@@ -15,9 +12,6 @@
 <?php endif;?>
 
 <?php if ($request->param('id') == 1): ?>
-	<!-- step 4 -->
-	<div class="step"></div>
-	
 	<!-- step 3 -->
 	<div class="step"></div>
 	
@@ -29,9 +23,6 @@
 <?php endif;?>
 
 <?php if ($request->param('id') == 2): ?>
-	<!-- step 4 -->
-	<div class="step"></div>
-	
 	<!-- step 3 -->
 	<div class="step"></div>
 	
@@ -43,9 +34,6 @@
 <?php endif;?>
 
 <?php if ($request->param('id') == 3): ?>
-	<!-- step 4 -->
-	<div class="step"></div>
-	
 	<!-- step 3 -->
 	<div class="step step-active"></div>
 	
@@ -57,9 +45,6 @@
 <?php endif;?>
 
 <?php if ($request->param('id') == 4): ?>
-	<!-- step 4 -->
-	<div class="step step-active"></div>
-	
 	<!-- step 3 -->
 	<div class="step step-complete"></div>
 	

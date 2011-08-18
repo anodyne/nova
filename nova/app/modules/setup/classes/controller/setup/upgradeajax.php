@@ -53,6 +53,11 @@ class Controller_Setup_Upgradeajax extends Controller_Template {
 		$codes['promotions'] = $promotions['code'];
 		$messages['promotions'] = $promotions['message'];
 		
+		// images
+		$images = $this->_upgrade_character_images();
+		$codes['images'] = $images['code'];
+		$messages['images'] = $images['message'];
+		
 		// dynamic form
 		$form = $this->_upgrade_character_form();
 		$codes['form'] = $form['code'];
@@ -136,11 +141,13 @@ class Controller_Setup_Upgradeajax extends Controller_Template {
 				'award_name' => array(
 					'name' => 'name',
 					'type' => 'VARCHAR',
-					'constraint' => 255),
+					'constraint' => 255,
+					'default' => ''),
 				'award_image' => array(
 					'name' => 'image',
 					'type' => 'VARCHAR',
-					'constraint' => 100),
+					'constraint' => 100,
+					'default' => ''),
 				'award_order' => array(
 					'name' => 'order',
 					'type' => 'INT',
@@ -160,9 +167,6 @@ class Controller_Setup_Upgradeajax extends Controller_Template {
 			
 			// modify the columns
 			DBForge::modify_column('awards', $fields);
-			
-			// make award_id auto increment and the primary key
-			$this->db->query(null, "ALTER TABLE ".$this->db->table_prefix()."awards MODIFY COLUMN `id` INT(5) auto_increment primary key", true);
 			
 			// get all the awards
 			$awards = Model_Award::find('all');
@@ -226,7 +230,6 @@ class Controller_Setup_Upgradeajax extends Controller_Template {
 					'constraint' => 20),
 			);
 			DBForge::modify_column('awards_queue', $fields);
-			$this->db->query(null, "ALTER TABLE ".$this->db->table_prefix()."awards_queue MODIFY COLUMN `id` INT(8) auto_increment primary key", true);
 			
 			/**
 			 * Received Awards
@@ -262,6 +265,9 @@ class Controller_Setup_Upgradeajax extends Controller_Template {
 					'constraint' => 20),
 			);
 			DBForge::modify_column('awards_received', $fields);
+			
+			$this->db->query(null, "ALTER TABLE ".$this->db->table_prefix()."awards MODIFY COLUMN `id` INT(5) auto_increment primary key", true);
+			$this->db->query(null, "ALTER TABLE ".$this->db->table_prefix()."awards_queue MODIFY COLUMN `id` INT(8) auto_increment primary key", true);
 			$this->db->query(null, "ALTER TABLE ".$this->db->table_prefix()."awards_received MODIFY COLUMN `id` INT(8) auto_increment primary key", true);
 			
 			// get the number of records in the new table
@@ -306,6 +312,7 @@ class Controller_Setup_Upgradeajax extends Controller_Template {
 	 * Migrate site settings, site messages (to site contents) and bans.
 	 *
 	 * @todo 	need to figure out how we're going to populate the section and page fields in the site_contents table
+	 * @todo 	do the welcome page header update here instead of doing in its own section
 	 */
 	public function action_upgrade_settings()
 	{
@@ -463,10 +470,12 @@ class Controller_Setup_Upgradeajax extends Controller_Template {
 			$add = array(
 				'section' => array(
 					'type' => 'VARCHAR',
-					'constraint' => 50),
+					'constraint' => 50,
+					'default' => ''),
 				'page' => array(
 					'type' => 'VARCHAR',
-					'constraint' => 100),
+					'constraint' => 100,
+					'default' => ''),
 			);
 			DBForge::add_column('site_contents', $add);
 			
@@ -492,7 +501,7 @@ class Controller_Setup_Upgradeajax extends Controller_Template {
 					'name' => 'protected',
 					'type' => 'TINYINT',
 					'constraint' => 1,
-					'default' => 1),
+					'default' => 0),
 			);
 			DBForge::modify_column('site_contents', $fields);
 			
@@ -613,7 +622,7 @@ class Controller_Setup_Upgradeajax extends Controller_Template {
 					'name' => 'title',
 					'type' => 'VARCHAR',
 					'constraint' => 255,
-					'default' => 'upcoming'),
+					'default' => ''),
 				'log_content' => array(
 					'name' => 'content',
 					'type' => 'TEXT'),
@@ -724,7 +733,8 @@ class Controller_Setup_Upgradeajax extends Controller_Template {
 				'newscat_name' => array(
 					'name' => 'name',
 					'type' => 'VARCHAR',
-					'constraint' => 255),
+					'constraint' => 255,
+					'default' => ''),
 				'newscat_display' => array(
 					'name' => 'display',
 					'type' => 'TEXT'),
@@ -774,7 +784,7 @@ class Controller_Setup_Upgradeajax extends Controller_Template {
 				'news_cat' => array(
 					'name' => 'category_id',
 					'type' => 'INT',
-					'constraint' => 3),
+					'constraint' => 5),
 				'news_author_character' => array(
 					'name' => 'character_id',
 					'type' => 'INT',
@@ -791,7 +801,7 @@ class Controller_Setup_Upgradeajax extends Controller_Template {
 					'name' => 'title',
 					'type' => 'VARCHAR',
 					'constraint' => 255,
-					'default' => 'upcoming'),
+					'default' => ''),
 				'news_content' => array(
 					'name' => 'content',
 					'type' => 'TEXT'),
@@ -934,7 +944,8 @@ class Controller_Setup_Upgradeajax extends Controller_Template {
 				'mission_title' => array(
 					'name' => 'title',
 					'type' => 'VARCHAR',
-					'constraint' => 255),
+					'constraint' => 255,
+					'default' => ''),
 				'mission_images' => array(
 					'name' => 'images',
 					'type' => 'TEXT'),
@@ -994,7 +1005,8 @@ class Controller_Setup_Upgradeajax extends Controller_Template {
 				'misgroup_name' => array(
 					'name' => 'name',
 					'type' => 'VARCHAR',
-					'constraint' => 255),
+					'constraint' => 255,
+					'default' => ''),
 				'misgroup_order' => array(
 					'name' => 'order',
 					'type' => 'INT',
@@ -1086,49 +1098,6 @@ class Controller_Setup_Upgradeajax extends Controller_Template {
 			
 			// do the modifications
 			DBForge::modify_column('posts', $fields);
-			
-			// get all the posts
-			$posts = Model_Post::find('all');
-
-			// set a temp array to collect saves
-			$saved = array();
-
-			foreach ($posts as $p)
-			{
-				/**
-				 * Grab the authors from the table (we need to do it this way because 
-				 * there's no reason to be adding a field we're just going to be using 
-				 * here to the ORM)
-				 */
-				$post_item = $this->db->query(Database::SELECT, "SELECT post_authors FROM `".$this->db->table_prefix()."posts` WHERE id = ".$p->id)
-					->current();
-
-				// make the authors listing an array
-				$authors = explode(',', $post_item['post_authors']);
-
-				foreach ($authors as $a)
-				{
-					// get the character
-					$char = Model_Character::find($a);
-
-					if ($char !== null)
-					{
-						// build the information that's going into the post_authors table
-						$through = array(
-							'post_id' => $p->id,
-							'character_id' => $a,
-							'user_id' => ($a === 0 or $a === null or $char->user === null) ? 0 : $char->user->id,
-						);
-
-						// add the record to the table
-						Model_PostAuthor::create_item($through);
-					}
-				}
-			}
-			
-			// drop the unnecessary columns
-			DBForge::drop_column('posts', 'post_authors');
-			DBForge::drop_column('posts', 'post_authors_users');
 			
 			// make sure the auto increment and primary key are correct
 			$this->db->query(null, 'ALTER TABLE '.$this->db->table_prefix().'posts MODIFY COLUMN `id` INT(8) auto_increment primary key', true);
@@ -1277,7 +1246,8 @@ class Controller_Setup_Upgradeajax extends Controller_Template {
 				'specs_name' => array(
 					'name' => 'name',
 					'type' => 'VARCHAR',
-					'constraint' => 255),
+					'constraint' => 255,
+					'default' => ''),
 				'specs_order' => array(
 					'name' => 'order',
 					'type' => 'INT',
@@ -1388,7 +1358,8 @@ class Controller_Setup_Upgradeajax extends Controller_Template {
 				'tour_name' => array(
 					'name' => 'name',
 					'type' => 'VARCHAR',
-					'constraint' => 255),
+					'constraint' => 255,
+					'default' => ''),
 				'tour_order' => array(
 					'name' => 'order',
 					'type' => 'INT',
@@ -1448,11 +1419,12 @@ class Controller_Setup_Upgradeajax extends Controller_Template {
 				'deck_id' => array(
 					'name' => 'id',
 					'type' => 'INT',
-					'constraint' => 5),
+					'constraint' => 10),
 				'deck_name' => array(
 					'name' => 'name',
 					'type' => 'VARCHAR',
-					'constraint' => 255),
+					'constraint' => 255,
+					'default' => ''),
 				'deck_order' => array(
 					'name' => 'order',
 					'type' => 'INT',
@@ -1470,7 +1442,7 @@ class Controller_Setup_Upgradeajax extends Controller_Template {
 			DBForge::modify_column('tour_decks', $fields);
 			
 			// make sure the auto increment and primary key are right
-			$this->db->query(null, 'ALTER TABLE '.$this->db->table_prefix().'tour_decks MODIFY COLUMN `id` INT(5) auto_increment primary key', true);
+			$this->db->query(null, 'ALTER TABLE '.$this->db->table_prefix().'tour_decks MODIFY COLUMN `id` INT(10) auto_increment primary key', true);
 			
 			/**
 			 * Tour Form
@@ -1651,7 +1623,8 @@ class Controller_Setup_Upgradeajax extends Controller_Template {
 				'wikicat_name' => array(
 					'name' => 'name',
 					'type' => 'VARCHAR',
-					'constraint' => 100),
+					'constraint' => 100,
+					'default' => ''),
 				'wikicat_desc' => array(
 					'name' => 'desc',
 					'type' => 'TEXT'),
@@ -1793,12 +1766,14 @@ class Controller_Setup_Upgradeajax extends Controller_Template {
 					'type' => 'TEXT'),
 				'page_type' => array(
 					'name' => 'type',
-					'type' => 'INT',
-					'constraint' => 11),
+					'type' => 'ENUM',
+					'constraint' => "'standard','system'",
+					'default' => 'standard'),
 				'page_key' => array(
 					'name' => 'key',
-					'type' => 'BIGINT',
-					'constraint' => 20),
+					'type' => 'VARCHAR',
+					'constraint' => 100,
+					'default' => ''),
 			);
 			
 			// do the modification
@@ -1866,7 +1841,7 @@ class Controller_Setup_Upgradeajax extends Controller_Template {
 					'type' => 'INT',
 					'constraint' => 8),
 				'restrictions' => array(
-					'name' => 'content',
+					'name' => 'restrictions',
 					'type' => 'TEXT'),
 			);
 			
@@ -1916,43 +1891,76 @@ class Controller_Setup_Upgradeajax extends Controller_Template {
 		echo json_encode($retval);
 	}
 	
+	/**
+	 * Migrate image uploads.
+	 */
 	public function action_upgrade_uploads()
 	{
-		# code...
-	}
-	
-	public function action_upgrade_private_messages()
-	{
-		# code...
-	}
-	
-	public function action_upgrade_final_roles()
-	{
-		// grab the user IDs that should have the sys admin role
-		$roles = $_POST['roles'];
+		$c = $this->db->query(Database::SELECT, "SELECT upload_id FROM `nova2_uploads`", true);
+		$count_old = $c->count();
 		
 		try {
-			// temporary array
-			$saved = array();
+			// drop the nova version of the table
+			DBForge::drop_table('uploads');
 			
-			foreach ($roles as $r)
-			{
-				$user = Model_User::update_user($r, array('role_id' => 1));
-				$saved[] = (is_object($user)) ? true : false;
-			}
+			// copy the sms version of the table along with all its data
+			$this->db->query(null, 'CREATE TABLE '.$this->db->table_prefix().'uploads SELECT * FROM `nova2_uploads`', true);
 			
-			if ( ! in_array(true, $saved))
+			// rename the fields to appropriate names
+			$fields = array(
+				'upload_id' => array(
+					'name' => 'id',
+					'type' => 'BIGINT',
+					'constraint' => 20),
+				'upload_filename' => array(
+					'name' => 'filename',
+					'type' => 'TEXT'),
+				'upload_mime_type' => array(
+					'name' => 'mime_type',
+					'type' => 'VARCHAR',
+					'constraint' => 255,
+					'default' => ''),
+				'upload_resource_type' => array(
+					'name' => 'resource_type',
+					'type' => 'VARCHAR',
+					'constraint' => 100,
+					'default' => ''),
+				'upload_user' => array(
+					'name' => 'user_id',
+					'type' => 'INT',
+					'constraint' => 8),
+				'upload_ip' => array(
+					'name' => 'ip_address',
+					'type' => 'VARCHAR',
+					'constraint' => 16,
+					'default' => ''),
+				'upload_date' => array(
+					'name' => 'date',
+					'type' => 'BIGINT',
+					'constraint' => 20),
+			);
+			
+			// do the modification
+			DBForge::modify_column('uploads', $fields);
+			
+			// make sure the auto increment and primary key are right
+			$this->db->query(null, 'ALTER TABLE '.$this->db->table_prefix().'uploads MODIFY COLUMN `id` BIGINT(20) auto_increment primary key', true);
+			
+			// get a count of the specs
+			$count_new = Model_Upload::count();
+			
+			if ($count_new == 0)
 			{
 				$retval = array(
 					'code' => 0,
-					'message' => "None of your administrators were set"
+					'message' => "Uploads were not migrated"
 				);
 			}
-			elseif (in_array(false, $saved) and in_array(true, $saved))
+			elseif ($count_new > 0 and $count_new != $count_old)
 			{
 				$retval = array(
-					'code' => 0,
-					'message' => "Some of your administrators were set, but others were not"
+					'code' => 2,
+					'message' => "All uploads were not properly migrated"
 				);
 			}
 			else
@@ -1962,14 +1970,217 @@ class Controller_Setup_Upgradeajax extends Controller_Template {
 					'message' => ''
 				);
 			}
-			
-			DBForge::optimize('users');
 		} catch (Exception $e) {
 			$retval = array(
 				'code' => 0,
 				'message' => 'ERROR: '.$e->getMessage().' - line '.$e->getLine().' of '.$e->getFile()
 			);
 		}
+		
+		DBForge::optimize('uploads');
+		
+		echo json_encode($retval);
+	}
+	
+	/**
+	 * Migrate private messages and private message recipients records.
+	 */
+	public function action_upgrade_private_messages()
+	{
+		$c = $this->db->query(Database::SELECT, "SELECT privmsgs_id FROM `nova2_privmsgs`", true);
+		$count_old_msgs = $c->count();
+		
+		$c = $this->db->query(Database::SELECT, "SELECT pmto_id FROM `nova2_privmsgs_to`", true);
+		$count_old_to = $c->count();
+		
+		try {
+			/**
+			 * Private Messages
+			 */
+			// drop the nova version of the table
+			DBForge::drop_table('messages');
+			
+			// copy the sms version of the table along with all its data
+			$this->db->query(null, 'CREATE TABLE '.$this->db->table_prefix().'messages SELECT * FROM `nova2_privmsgs`', true);
+			
+			// rename the fields to appropriate names
+			$fields = array(
+				'privmsgs_id' => array(
+					'name' => 'id',
+					'type' => 'BIGINT',
+					'constraint' => 20),
+				'privmsgs_author_user' => array(
+					'name' => 'user_id',
+					'type' => 'INT',
+					'constraint' => 8),
+				'privmsgs_author_character' => array(
+					'name' => 'character_id',
+					'type' => 'INT',
+					'constraint' => 8),
+				'privmsgs_date' => array(
+					'name' => 'date',
+					'type' => 'BIGINT',
+					'constraint' => 20),
+				'privmsgs_subject' => array(
+					'name' => 'subject',
+					'type' => 'VARCHAR',
+					'constraint' => 255,
+					'default' => ''),
+				'privmsgs_content' => array(
+					'name' => 'content',
+					'type' => 'TEXT'),
+				'privmsgs_author_display' => array(
+					'name' => 'display',
+					'type' => 'TEXT'),
+			);
+			
+			// do the modification
+			DBForge::modify_column('messages', $fields);
+			
+			// make sure the auto increment and primary key are right
+			$this->db->query(null, 'ALTER TABLE '.$this->db->table_prefix().'messages MODIFY COLUMN `id` BIGINT(20) auto_increment primary key', true);
+			
+			// get all the awards
+			$messages = Model_Message::find('all');
+			
+			if (count($messages) > 0)
+			{
+				foreach ($messages as $message)
+				{
+					$m = Model_Message::find($message->id);
+					$m->display = (int) ($m->display == 'y');
+					$m->save();
+				}
+			}
+			
+			// now that we've changed the display stuff, change the schema
+			$fields = array(
+				'display' => array(
+					'name' => 'display',
+					'type' => 'TINYINT',
+					'constraint' => 1,
+					'default' => 1),
+			);
+			DBForge::modify_column('messages', $fields);
+			
+			/**
+			 * Private Messages To
+			 */
+			// drop the nova version of the table
+			DBForge::drop_table('message_recipients');
+			
+			// copy the sms version of the table along with all its data
+			$this->db->query(null, 'CREATE TABLE '.$this->db->table_prefix().'message_recipients SELECT * FROM `nova2_privmsgs_to`', true);
+			
+			// rename the fields to appropriate names
+			$fields = array(
+				'pmto_id' => array(
+					'name' => 'id',
+					'type' => 'BIGINT',
+					'constraint' => 20),
+				'pmto_message' => array(
+					'name' => 'message_id',
+					'type' => 'BIGINT',
+					'constraint' => 20),
+				'pmto_recipient_user' => array(
+					'name' => 'user_id',
+					'type' => 'INT',
+					'constraint' => 8),
+				'pmto_recipient_character' => array(
+					'name' => 'character_id',
+					'type' => 'INT',
+					'constraint' => 8),
+				'pmto_unread' => array(
+					'name' => 'unread',
+					'type' => 'TEXT'),
+				'pmto_display' => array(
+					'name' => 'display',
+					'type' => 'TEXT'),
+			);
+			
+			// do the modification
+			DBForge::modify_column('message_recipients', $fields);
+			
+			// make sure the auto increment and primary key are right
+			$this->db->query(null, 'ALTER TABLE '.$this->db->table_prefix().'message_recipients MODIFY COLUMN `id` BIGINT(20) auto_increment primary key', true);
+			
+			// get all the awards
+			$messages = Model_MessageRecipient::find('all');
+			
+			if (count($messages) > 0)
+			{
+				foreach ($messages as $message)
+				{
+					$m = Model_MessageRecipient::find($message->id);
+					$m->unread = (int) ($m->unread == 'y');
+					$m->display = (int) ($m->display == 'y');
+					$m->save();
+				}
+			}
+			
+			// now that we've changed the display stuff, change the schema
+			$fields = array(
+				'unread' => array(
+					'name' => 'unread',
+					'type' => 'TINYINT',
+					'constraint' => 1,
+					'default' => 1),
+				'display' => array(
+					'name' => 'display',
+					'type' => 'TINYINT',
+					'constraint' => 1,
+					'default' => 1),
+			);
+			DBForge::modify_column('message_recipients', $fields);
+			
+			// get a count
+			$count_new_msgs = Model_Message::count();
+			$count_new_to = Model_MessageRecipient::count();
+			
+			if ($count_new_msgs == 0 and $count_new_to == 0)
+			{
+				$retval = array(
+					'code' => 0,
+					'message' => "Private messages were not migrated"
+				);
+			}
+			elseif (($count_new_msgs > 0 and $count_new_msgs != $count_old_msgs) and $count_new_to == 0)
+			{
+				$retval = array(
+					'code' => 2,
+					'message' => "All private messages were not migrated"
+				);
+			}
+			elseif ($count_new_msgs == 0 and ($count_new_to > 0 and $count_new_to != $count_old_to))
+			{
+				$retval = array(
+					'code' => 2,
+					'message' => "All private messages were not migrated"
+				);
+			}
+			elseif (($count_new_msgs > 0 and $count_new_msgs != $count_old_msgs) and ($count_new_to > 0 and $count_new_to != $count_old_to))
+			{
+				$retval = array(
+					'code' => 2,
+					'message' => "All private messages were not migrated"
+				);
+			}
+			else
+			{
+				$retval = array(
+					'code' => 1,
+					'message' => ''
+				);
+			}
+		} catch (Exception $e) {
+			$retval = array(
+				'code' => 0,
+				'message' => 'ERROR: '.$e->getMessage().' - line '.$e->getLine().' of '.$e->getFile()
+			);
+		}
+		
+		DBForge::optimize('messages');
+		DBForge::optimize('message_recipients');
 		
 		echo json_encode($retval);
 	}
@@ -1993,6 +2204,7 @@ class Controller_Setup_Upgradeajax extends Controller_Template {
 					'my_links'			=> '',
 					'language'			=> 'en-us',
 					'daylight_savings'	=> (int) false,
+					'role_id'			=> Model_AccessRole::STANDARD,
 				);
 				
 				// update all users
@@ -2007,12 +2219,9 @@ class Controller_Setup_Upgradeajax extends Controller_Template {
 			{
 				$retval = array(
 					'code' => 0,
-					'message' => "User defaults could not be upgraded"
+					'message' => "User defaults could not be migrated"
 				);
 			}
-			
-			DBForge::optimize('characters');
-			DBForge::optimize('users');
 		} catch (Exception $e) {
 			$retval = array(
 				'code' => 0,
@@ -2020,27 +2229,126 @@ class Controller_Setup_Upgradeajax extends Controller_Template {
 			);
 		}
 		
+		DBForge::optimize('characters');
+		DBForge::optimize('users');
+		
 		echo json_encode($retval);
 	}
 	
-	public function action_upgrade_welcome()
+	public function action_upgrade_author_structure()
 	{
 		try {
-			// do the update
-			Model_SiteContent::update_messages(array('welcome_head' => "Welcome to the ".Model_Settings::get_settings('sim_name')."!"));
+			// get all the posts
+			$posts = Model_Post::find('all');
+
+			// set a temp array to collect saves
+			$saved = array();
+
+			foreach ($posts as $p)
+			{
+				/**
+				 * Grab the authors from the table (we need to do it this way because 
+				 * there's no reason to be adding a field we're just going to be using 
+				 * here to the ORM)
+				 */
+				$post_item = $this->db->query(Database::SELECT, "SELECT post_authors FROM `".$this->db->table_prefix()."posts` WHERE id = ".$p->id)
+					->current();
+
+				// make the authors listing an array
+				$authors = explode(',', $post_item['post_authors']);
+
+				foreach ($authors as $a)
+				{
+					// get the character
+					$char = Model_Character::find($a);
+
+					if ($char !== null)
+					{
+						// build the information that's going into the post_authors table
+						$through = array(
+							'post_id' => $p->id,
+							'character_id' => $a,
+							'user_id' => ($a === 0 or $a === null or $char->user === null) ? 0 : $char->user->id,
+						);
+
+						// add the record to the table
+						Model_PostAuthor::create_item($through);
+					}
+				}
+			}
+			
+			// drop the unnecessary columns
+			DBForge::drop_column('posts', 'post_authors');
+			DBForge::drop_column('posts', 'post_authors_users');
 			
 			$retval = array(
 				'code' => 1,
 				'message' => ''
 			);
-			
-			DBForge::optimize('site_contents');
 		} catch (Exception $e) {
 			$retval = array(
 				'code' => 0,
 				'message' => 'ERROR: '.$e->getMessage().' - line '.$e->getLine().' of '.$e->getFile()
 			);
 		}
+		
+		DBForge::optimize('posts');
+		DBForge::optimize('post_authors');
+		
+		echo json_encode($retval);
+	}
+	
+	public function action_upgrade_sysadmin()
+	{
+		// find the ID of the system administrator role
+		$c = $this->db->query(Database::SELECT, "SELECT * FROM `nova2_access_roles` WHERE role_name = 'System Administrator'", true)->current();
+		$sysadmin = $c->role_id;
+		
+		// find all the users with those permissions
+		$users = Model_User::find()->where('is_sysadmin', 1);
+		
+		if (count($users) > 0)
+		{
+			foreach ($users as $user)
+			{
+				$u = Model_User::find($user->id);
+				$u->role_id = Model_AccessRole::SYSADMIN;
+				$u->save();
+			}
+		}
+		
+		$retval = array(
+			'code' => 1,
+			'message' => ''
+		);
+		
+		echo json_encode($retval);
+	}
+	
+	public function action_upgrade_reorg_schema()
+	{
+		$this->db->query(null, "ALTER TABLE ".$this->db->table_prefix()."awards CHANGE COLUMN `name` `name` VARCHAR(255) NULL DEFAULT '' AFTER `id`, CHANGE COLUMN `image` `image` VARCHAR(100) NULL DEFAULT '' AFTER `name`", true);
+		
+		$this->db->query(null, "ALTER TABLE ".$this->db->table_prefix()."awards_received CHANGE COLUMN `receive_character_id` `receive_character_id` INT(8) NULL DEFAULT NULL AFTER `id`", true);
+		
+		$this->db->query(null, "ALTER TABLE ".$this->db->table_prefix()."coc CHANGE COLUMN `user_id` `user_id` INT(8) NULL DEFAULT NULL AFTER `id`", true);
+		
+		$this->db->query(null, "ALTER TABLE ".$this->db->table_prefix()."missions CHANGE COLUMN `images` `images` TEXT NULL AFTER `title`, CHANGE COLUMN `order` `order` INT(5) NULL DEFAULT NULL AFTER `images`, CHANGE COLUMN `group_id` `group_id` INT(5) NULL DEFAULT NULL AFTER `order`, CHANGE COLUMN `status` `status` ENUM('upcoming','current','completed') NULL DEFAULT 'upcoming' AFTER `group_id`, CHANGE COLUMN `desc` `desc` TEXT NULL AFTER `end`", true);
+		
+		$this->db->query(null, "ALTER TABLE ".$this->db->table_prefix()."news CHANGE COLUMN `title` `title` VARCHAR(255) NULL DEFAULT '' AFTER `id`, CHANGE COLUMN `user_id` `user_id` INT(8) NULL DEFAULT NULL AFTER `title`, CHANGE COLUMN `category_id` `category_id` INT(5) NULL DEFAULT NULL AFTER `character_id`", true);
+		
+		$this->db->query(null, "ALTER TABLE ".$this->db->table_prefix()."personal_logs CHANGE COLUMN `user_id` `user_id` INT(8) NULL DEFAULT NULL AFTER `title`, CHANGE COLUMN `content` `content` TEXT NULL AFTER `character_id`", true);
+		
+		$this->db->query(null, "ALTER TABLE ".$this->db->table_prefix()."posts CHANGE COLUMN `location` `location` VARCHAR(255) NULL DEFAULT '' AFTER `title`, CHANGE COLUMN `timeline` `timeline` VARCHAR(255) NULL DEFAULT '' AFTER `location`, CHANGE COLUMN `date` `date` BIGINT(20) NULL DEFAULT NULL AFTER `timeline`, CHANGE COLUMN `saved_user_id` `saved_user_id` INT(11) NULL DEFAULT NULL AFTER `mission_id`, CHANGE COLUMN `status` `status` ENUM('activated','saved','pending') NULL DEFAULT 'activated' AFTER `saved_user_id`", true);
+		
+		$this->db->query(null, "ALTER TABLE ".$this->db->table_prefix()."site_contents CHANGE COLUMN `section` `section` VARCHAR(50) NULL DEFAULT '' AFTER `type`, CHANGE COLUMN `page` `page` VARCHAR(100) NULL DEFAULT '' AFTER `section`", true);
+		
+		$this->db->query(null, "ALTER TABLE ".$this->db->table_prefix()."users CHANGE COLUMN `email_format` `email_format` VARCHAR(4) NULL DEFAULT 'html' AFTER `daylight_savings`", true);
+		
+		$retval = array(
+			'code' => 1,
+			'message' => ''
+		);
 		
 		echo json_encode($retval);
 	}
@@ -2368,6 +2676,58 @@ class Controller_Setup_Upgradeajax extends Controller_Template {
 		return $retval;
 	}
 	
+	private function _upgrade_character_images()
+	{
+		try {
+			// get all the characters
+			$chars = Model_Character::find('all');
+			
+			if (count($chars) > 0)
+			{
+				foreach ($chars as $char)
+				{
+					$c = Model_Character::find($char->id);
+					
+					if ( ! empty($c->images))
+					{
+						// make the images an array
+						$images = explode(',', $c->images);
+						
+						if (is_array($images))
+						{
+							foreach ($images as $i)
+							{
+								$data = array(
+									'user_id' => ($c->user === 0 or $c->user === null) ? 0 : $c->user->id,
+									'character_id' => $c->id,
+									'image' => $i,
+									'created_at' => Date::now()
+								);
+							}
+						}
+					}
+				}
+			}
+			
+			DBForge::drop_column('characters', 'images');
+			
+			$retval = array(
+				'code' => 1,
+				'message' => ''
+			);
+		} catch (Exception $e) {
+			$retval = array(
+				'code' => 0,
+				'message' => 'ERROR: '.$e->getMessage().' - line '.$e->getLine().' of '.$e->getFile()
+			);
+		}
+		
+		DBForge::optimize('characters');
+		DBForge::optimize('character_images');
+		
+		return $retval;
+	}
+	
 	private function _upgrade_character_promotions()
 	{
 		try {
@@ -2449,19 +2809,23 @@ class Controller_Setup_Upgradeajax extends Controller_Template {
 				'first_name' => array(
 					'name' => 'first_name',
 					'type' => 'VARCHAR',
-					'constraint' => 50),
+					'constraint' => 255,
+					'default' => ''),
 				'middle_name' => array(
 					'name' => 'middle_name',
 					'type' => 'VARCHAR',
-					'constraint' => 50),
+					'constraint' => 255,
+					'default' => ''),
 				'last_name' => array(
 					'name' => 'last_name',
 					'type' => 'VARCHAR',
-					'constraint' => 50),
+					'constraint' => 255,
+					'default' => ''),
 				'suffix' => array(
 					'name' => 'suffix',
 					'type' => 'VARCHAR',
-					'constraint' => 50),
+					'constraint' => 50,
+					'default' => ''),
 				'crew_type' => array(
 					'name' => 'status',
 					'type' => 'ENUM',
@@ -2478,11 +2842,13 @@ class Controller_Setup_Upgradeajax extends Controller_Template {
 				'rank' => array(
 					'name' => 'rank_id',
 					'type' => 'INT',
-					'constraint' => 10),
+					'constraint' => 10,
+					'default' => 1),
 				'position_1' => array(
 					'name' => 'position1_id',
 					'type' => 'INT',
-					'constraint' => 10),
+					'constraint' => 10,
+					'default' => 1),
 				'position_2' => array(
 					'name' => 'position2_id',
 					'type' => 'INT',
@@ -2502,6 +2868,8 @@ class Controller_Setup_Upgradeajax extends Controller_Template {
 			);
 			
 			DBForge::add_column('characters', $add);
+			
+			$this->db->query(null, 'ALTER TABLE '.$this->db->table_prefix().'characters MODIFY COLUMN `id` INT(8) auto_increment primary key', true);
 			
 			$count_new = Model_Character::count();
 			
@@ -2588,6 +2956,8 @@ class Controller_Setup_Upgradeajax extends Controller_Template {
 					}
 				}
 			}
+			
+			$this->db->query(null, 'ALTER TABLE '.$this->db->table_prefix().'coc MODIFY COLUMN `id` INT(5) auto_increment primary key', true);
 			
 			$count_new = Model_Coc::count();
 			
@@ -3232,19 +3602,23 @@ class Controller_Setup_Upgradeajax extends Controller_Template {
 				'name' => array(
 					'name' => 'name',
 					'type' => 'VARCHAR',
-					'constraint' => 255),
+					'constraint' => 255,
+					'default' => ''),
 				'email' => array(
 					'name' => 'email',
 					'type' => 'VARCHAR',
-					'constraint' => 100),
+					'constraint' => 100,
+					'default' => ''),
 				'password' => array(
 					'name' => 'password',
 					'type' => 'VARCHAR',
-					'constraint' => 40),
+					'constraint' => 40,
+					'default' => ''),
 				'date_of_birth' => array(
 					'name' => 'date_of_birth',
 					'type' => 'VARCHAR',
-					'constraint' => 50),
+					'constraint' => 50,
+					'default' => ''),
 				'main_char' => array(
 					'name' => 'character_id',
 					'type' => 'INT',
@@ -3268,15 +3642,18 @@ class Controller_Setup_Upgradeajax extends Controller_Template {
 				'timezone' => array(
 					'name' => 'timezone',
 					'type' => 'VARCHAR',
-					'constraint' => 5),
+					'constraint' => 5,
+					'default' => 'UTC'),
 				'daylight_savings' => array(
 					'name' => 'daylight_savings',
-					'type' => 'VARCHAR',
-					'constraint' => 1),
+					'type' => 'TINYINT',
+					'constraint' => 1,
+					'default' => 0),
 				'language' => array(
 					'name' => 'language',
 					'type' => 'VARCHAR',
-					'constraint' => 50),
+					'constraint' => 50,
+					'default' => 'en-us'),
 				'join_date' => array(
 					'name' => 'join_date',
 					'type' => 'BIGINT',
@@ -3296,19 +3673,23 @@ class Controller_Setup_Upgradeajax extends Controller_Template {
 				'loa' => array(
 					'name' => 'loa',
 					'type' => 'ENUM',
-					'constraint' => "'active','loa','eloa'"),
+					'constraint' => "'active','loa','eloa'",
+					'default' => 'active'),
 				'display_rank' => array(
 					'name' => 'display_rank',
 					'type' => 'VARCHAR',
-					'constraint' => 100),
+					'constraint' => 100,
+					'default' => 'default'),
 				'skin_main' => array(
 					'name' => 'skin_main',
 					'type' => 'VARCHAR',
-					'constraint' => 100),
+					'constraint' => 255,
+					'default' => 'default'),
 				'skin_admin' => array(
 					'name' => 'skin_admin',
 					'type' => 'VARCHAR',
-					'constraint' => 100),
+					'constraint' => 255,
+					'default' => 'default'),
 				'security_question' => array(
 					'name' => 'security_question',
 					'type' => 'INT',
@@ -3316,11 +3697,13 @@ class Controller_Setup_Upgradeajax extends Controller_Template {
 				'security_answer' => array(
 					'name' => 'security_answer',
 					'type' => 'VARCHAR',
-					'constraint' => 40),
+					'constraint' => 40,
+					'default' => ''),
 				'password_reset' => array(
 					'name' => 'password_reset',
 					'type' => 'TINYINT',
-					'constraint' => 1),
+					'constraint' => 1,
+					'default' => 0),
 				'my_links' => array(
 					'name' => 'my_links',
 					'type' => 'TEXT'),
@@ -3338,7 +3721,8 @@ class Controller_Setup_Upgradeajax extends Controller_Template {
 			$add = array(
 				'email_format' => array(
 					'type' => 'VARCHAR',
-					'constraint' => 4)
+					'constraint' => 4,
+					'default' => 'html')
 			);
 			DBForge::add_column('users', $add);
 			
@@ -3471,21 +3855,27 @@ class Controller_Setup_Upgradeajax extends Controller_Template {
 				'is_sysadmin' => array(
 					'name' => 'is_sysadmin',
 					'type' => 'TINYINT',
-					'constraint' => 1),
+					'constraint' => 1,
+					'default' => 0),
 				'is_game_master' => array(
 					'name' => 'is_game_master',
 					'type' => 'TINYINT',
-					'constraint' => 1),
+					'constraint' => 1,
+					'default' => 0),
 				'is_webmaster' => array(
 					'name' => 'is_webmaster',
 					'type' => 'TINYINT',
-					'constraint' => 1),
+					'constraint' => 1,
+					'default' => 0),
 				'is_firstlaunch' => array(
 					'name' => 'is_firstlaunch',
 					'type' => 'TINYINT',
-					'constraint' => 1),
+					'constraint' => 1,
+					'default' => 1),
 			);
 			DBForge::modify_column('users', $fields);
+			
+			$this->db->query(null, 'ALTER TABLE '.$this->db->table_prefix().'users MODIFY COLUMN `id` INT(8) auto_increment primary key', true);
 			
 			// get the user count
 			$count_new = Model_User::count();
