@@ -313,6 +313,7 @@ class Controller_Setup_Upgradeajax extends Controller_Template {
 	 *
 	 * @todo 	need to figure out how we're going to populate the section and page fields in the site_contents table
 	 * @todo 	do the welcome page header update here instead of doing in its own section
+	 * @todo 	need to bring over the UID from the old system table otherwise passwords will break
 	 */
 	public function action_upgrade_settings()
 	{
