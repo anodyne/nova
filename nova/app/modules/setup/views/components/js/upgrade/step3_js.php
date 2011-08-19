@@ -137,6 +137,37 @@
 				}
 			});
 			
+			// cache site content
+			$.ajaxq('queue', {
+				beforeSend: function(){
+					$('table tbody tr:eq(4) td:eq(1) .loading').removeClass('hidden');
+				},
+				type: "POST",
+				url: "<?php echo Url::site('setup/upgradeajax/upgrade_cache_content');?>",
+				data: send,
+				dataType: 'json',
+				success: function(data){
+					$('table tbody tr:eq(4) td:eq(1) .loading').addClass('hidden');
+					
+					if (data.code == 1)
+					{
+						$('table tbody tr:eq(4) td:eq(1) .success').removeClass('hidden');
+					}
+					else if (data.code == 0)
+					{
+						$('table tbody tr:eq(4) td:eq(1) .failure').removeClass('hidden');
+						$('table tbody tr:eq(4) td:eq(0) .errors .errors-content').html(data.message);
+						$('table tbody tr:eq(4) td:eq(0) .errors').removeClass('hidden');
+					}
+					else if (data.code == 2)
+					{
+						$('table tbody tr:eq(4) td:eq(1) .warning').removeClass('hidden');
+						$('table tbody tr:eq(4) td:eq(0) .errors .errors-content').html(data.message);
+						$('table tbody tr:eq(4) td:eq(0) .errors').removeClass('hidden');
+					}
+				}
+			});
+			
 			$('#start').ajaxStop(function(){
 				$(this).attr('id', 'next').html('Next Step');
  			});

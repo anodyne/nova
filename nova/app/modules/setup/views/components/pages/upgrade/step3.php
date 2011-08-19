@@ -58,5 +58,17 @@
 					<span class="loading hidden"><?php echo Html::image(MODFOLDER.'/app/modules/setup/views/design/images/loading.gif');?></span>
 				</td>
 			</tr>
+			<tr>
+				<td>
+					<strong class="fontMedium">Cache Site Content</strong>
+					<strong class="fontSmall errors hidden error"><br><span class="errors-content"></span></strong>
+				</td>
+				<td class="col-30 align-center">
+					<span class="success hidden"><?php echo Html::image(MODFOLDER.'/app/modules/setup/views/design/images/tick-circle.png');?></span>
+					<span class="failure hidden"><?php echo Html::image(MODFOLDER.'/app/modules/setup/views/design/images/exclamation-red.png');?></span>
+					<span class="warning hidden"><?php echo Html::image(MODFOLDER.'/app/modules/setup/views/design/images/exclamation.png');?></span>
+					<span class="loading hidden"><?php echo Html::image(MODFOLDER.'/app/modules/setup/views/design/images/loading.gif');?></span>
+				</td>
+			</tr>
 		</tbody>
 	</table>
