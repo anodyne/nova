@@ -2261,83 +2261,64 @@ $sim_types = array(
 
 $site_contents = array(
 	array(
-		'key' => 'welcome_header',
+		'key' => 'main_index_header',
 		'label' => 'Main Page Header',
 		'content' => "Welcome to Nova!",
 		'type' => 'header',
 		'section' => 'main',
 		'page' => 'index'),
 	array(
-		'key' => 'welcome_message',
+		'key' => 'main_index_message',
 		'label' => 'Main Page Message',
 		'content' => "Define your welcome message and welcome page header through the Site Messages page.",
 		'type' => 'message',
 		'section' => 'main',
 		'page' => 'index'),
 	array(
-		'key' => 'main_credits_title',
+		'key' => 'main_credits_header',
 		'label' => 'Site Credits Header',
 		'content' => 'Site Credits',
 		'type' => 'header',
 		'section' => 'main',
 		'page' => 'credits'),
 	array(
-		'key' => 'credits',
+		'key' => 'main_credits_message',
 		'label' => 'Credits',
 		'content' => "Define your site credits through the Site Messages page.",
 		'type' => 'message',
 		'section' => 'main',
 		'page' => 'credits'),	
-		
-		
-		
-		
-		
-		
-		
-		
-		
 	array(
-		'key' => 'sim',
+		'key' => 'sim_index_message',
 		'label' => 'Sim Message',
 		'content' => "Define your sim message through the Site Messages page.",
-		'type' => 'message'),
+		'type' => 'message',
+		'section' => 'sim',
+		'page' => 'index'),
 	array(
-		'key' => 'wiki_main',
-		'label' => 'Wiki Main Page Message',
-		'content' => "Welcome to Thresher Release 1, Anodyne's integrated mini-wiki included with Nova. You can change this message through the Site Messages page.",
-		'type' => 'message'),
+		'key' => 'sim_index_header',
+		'label' => 'Sim Header',
+		'content' => "The Sim",
+		'type' => 'header',
+		'section' => 'sim',
+		'page' => 'index'),
+		
 	array(
 		'key' => 'credits_perm',
 		'label' => 'Permanent Credits',
 		'content' => "Nova 3 has been developed on the elegant HMVC PHP5 framework <a href='http://www.http://kohanaframework.org/' target='_blank'>Kohana 3</a>.\r\n\r\nMany of the icons used throughout Nova were created by <a href='http://http://p.yusukekamiyamane.com/'>Yusuke Kamiyamane</a> as part of the Fugue icon set.",
 		'protected' => 1,
-		'type' => 'message'),
-	array(
-		'key' => 'credits',
-		'label' => 'Credits',
-		'content' => "Define your site credits through the Site Messages page.",
-		'type' => 'message'),
+		'type' => 'other'),
 	array(
 		'key' => 'footer',
 		'label' => 'Additional Footer Information',
 		'content' => "New to Nova 3 is the ability to add additional information to the footer, like banner exchanges, without having to edit any files. Just plug your code/message into the 'Additional Footer Information' site content item!",
-		'type' => 'message'),
-	array(
-		'key' => 'contact',
-		'label' => 'Contact Page Message',
-		'content' => "Have a question about the sim? Need to get in touch with the game master? Use the form below to drop us a message with your question or comment and we'll get back to you as soon as possible.",
-		'type' => 'message'),
+		'type' => 'other'),
 	array(
 		'key' => 'join_disclaimer',
 		'label' => 'Join Disclaimer',
 		'content' => "Members are expected to follow the rules and regulations of both the sim and fleet at all times, both in character and out of character. By continuing, you affirm that you will sim in a proper and adequate manner. Members who choose to make ultra short posts, post very infrequently, or post posts with explicit content (above PG-13) will be removed immediately, and by continuing, you agree to this. In addition, in compliance with the Children's Online Privacy Protection Act of 1998 (COPPA), we do not accept players under the age of 13.  Any players found to be under the age of 13 will be immediately removed without question.  By agreeing to these terms, you are also saying that you are above the age of 13.",
 		'type' => 'other'),
-	array(
-		'key' => 'join_instructions',
-		'label' => 'Join Instructions',
-		'content' => "Define your join instructions through the Site Message page.",
-		'type' => 'message'),
 	array(
 		'key' => 'join_post',
 		'label' => 'Join Sample Post',
@@ -2363,16 +2344,6 @@ $site_contents = array(
 		'label' => 'Docking Rejection Message',
 		'content' => "Define your docking rejection message through the Site Messages page.",
 		'type' => 'other'),
-	array(
-		'key' => 'contact',
-		'label' => 'Contact Instructions',
-		'content' => 'Please use the form below to contact the sim with questions. You can choose to email the game master, the command staff, or the webmaster with your questions and/or comments.',
-		'type' => 'message'),
-	array(
-		'key' => 'main_join_title',
-		'label' => 'Join Page Header',
-		'content' => 'Join',
-		'type' => 'title'),
 );
 
 $system_components = array(
