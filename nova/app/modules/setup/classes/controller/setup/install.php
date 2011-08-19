@@ -255,23 +255,19 @@ class Controller_Setup_Install extends Controller_Template {
 	public function action_genre()
 	{
 		// create a new content view
-		$this->template->layout->content = View::factory(Location::view('install_genre'));
+		$this->template->layout->content = View::factory('components/pages/install/genre');
 		
 		// create a new js view
-		$this->template->javascript = View::factory(Location::view('install_genre_js', null, 'js'));
+		$this->template->javascript = View::factory('components/js/install/genre_js');
 		
 		// assign the object a shorter variable to use in the method
 		$data = $this->template->layout->content;
 	
 		// set the message
-		$data->message = __('genre.message', array(':path' => APPFOLDER.'/config/nova'.EXT));
+		$data->message = ___('setup.genre.message', array(':path' => APPFOLDER.'/config/nova.php'));
 		
 		// map the genres directory
-		$map = Utility::directory_map(MODPATH.'nova/install/assets/genres/');
-		
-		// clear out the index file
-		$indexkey = array_search('index.html', $map);
-		unset($map[$indexkey]);
+		$map = Utility::directory_map(MODPATH.'app/modules/setup/assets/install/genres/');
 		
 		// get the genre info
 		$info = (array) Kohana::$config->load('genreinfo');
@@ -308,18 +304,16 @@ class Controller_Setup_Install extends Controller_Template {
 		// set the loading image
 		$data->images = array(
 			'loading' => array(
-				'src' => MODFOLDER.'/nova/install/design/images/loading-circle-large.gif',
+				'src' => MODFOLDER.'/app/modules/setup/design/images/loading.gif',
 				'attr' => array(
-					'alt' => __('processing'),
+					'alt' => ___('processing'),
 					'class' => '')),
 		);
 		
 		// content
-		$this->template->title.= __('The Genre Panel');
-		$this->template->layout->label = __('The Genre Panel');
-		
-		// send the response
-		$this->response->body($this->template);
+		$this->template->title.= 'The Genre Panel';
+		$this->template->layout->image = Html::image(MODFOLDER.'/app/modules/setup/views/design/images/pencil-24x24.png', array('id' => 'title-image'));
+		$this->template->layout->label = 'The Genre Panel';
 	}
 	
 	/**

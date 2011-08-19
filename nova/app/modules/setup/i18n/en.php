@@ -94,5 +94,9 @@ return array(
 				'instructions' => "That was easy!\r\n\r\nThe first thing I needed to do was to rename all of your Nova 2 tables with a new prefix. Why? Doing this allows me to migrate your data to Nova 3 without modifying the original data. If something bad happens, you'll still have a copy of the original information.\r\n\r\nNow that all of your tables have been renamed, it's time to install Nova 3 and start migrating your data over.",
 			),
 		),
+		
+		'genre' => array(
+			'message' => "Welcome to the Genre Panel. From here, you can see the status of genres and either install or uninstall genres as needed. Make sure you use great caution when removing genres as it can cause the entire system to break. The only limitation you have is that you cannot uninstall the current genre. If you want to uninstall the current genre, you'll need to change your Nova config file (<code>:path</code>), save and upload the file, then come back here to uninstall that genre.",
+		),
 	),
 );

@@ -120,6 +120,7 @@ h1, h2, h3, h4 { font-weight: bold; }
 .error { color: #c00; }
 .warning { color: orange; }
 .subtle { color: #777; }
+.success { color:#008000; }
 
 strong { font-weight: bold; }
 
@@ -418,6 +419,39 @@ button, input[type=button] {
 	box-shadow: inset 0 0 6px 3px #1657b5, 0 1px 0 0 #fff;
 	-moz-box-shadow: inset 0 0 6px 3px #1657b5, 0 1px 0 0 #fff;
 	-webkit-box-shadow: inset 0 0 6px 3px #1657b5, 0 1px 0 0 #fff;
+}
+
+.btn-sec {
+	margin: 0;
+	padding: 3px 20px;
+	border: 1px solid #888;
+	color: #626262;
+	text-shadow: 0 1px 0 #ebebeb;
+	font-size: .85em;
+	background: #ffffff;
+	background: -moz-linear-gradient(top, #ffffff 0%, #e1e1e1 50%, #d8d8d8 51%, #e6e6e6 100%);
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(50%,#e1e1e1), color-stop(51%,#d8d8d8), color-stop(100%,#e6e6e6));
+	background: -webkit-linear-gradient(top, #ffffff 0%,#e1e1e1 50%,#d8d8d8 51%,#e6e6e6 100%);
+	background: -o-linear-gradient(top, #ffffff 0%,#e1e1e1 50%,#d8d8d8 51%,#e6e6e6 100%);
+	background: -ms-linear-gradient(top, #ffffff 0%,#e1e1e1 50%,#d8d8d8 51%,#e6e6e6 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#e6e6e6',GradientType=0 );
+	background: linear-gradient(top, #ffffff 0%,#e1e1e1 50%,#d8d8d8 51%,#e6e6e6 100%);
+	-webkit-background-clip: padding-box;
+	border-radius: 2px;
+	-moz-border-radius: 2px;
+}
+.btn-sec:hover {
+	background: #eeeeee;
+	background: -moz-linear-gradient(top, #eeeeee 0%, #d1d1d1 50%, #c8c8c8 51%, #d6d6d6 100%);
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#eeeeee), color-stop(50%,#d1d1d1), color-stop(51%,#c8c8c8), color-stop(100%,#d6d6d6));
+	background: -webkit-linear-gradient(top, #eeeeee 0%,#d1d1d1 50%,#c8c8c8 51%,#d6d6d6 100%);
+	background: -o-linear-gradient(top, #eeeeee 0%,#d1d1d1 50%,#c8c8c8 51%,#d6d6d6 100%);
+	background: -ms-linear-gradient(top, #eeeeee 0%,#d1d1d1 50%,#c8c8c8 51%,#d6d6d6 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#eeeeee', endColorstr='#d6d6d6',GradientType=0 );
+	background: linear-gradient(top, #eeeeee 0%,#d1d1d1 50%,#c8c8c8 51%,#d6d6d6 100%);
+	cursor: pointer;
+	color: #525252;
+	border-color: #777;
 }
 
 button[disabled], button:hover[disabled], button:active[disabled] {

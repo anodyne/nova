@@ -19,7 +19,7 @@
 					$th.next('span').removeClass('hidden');
 				},
 				type: "POST",
-				url: "<?php echo url::site('ajax/install_genre');?>",
+				url: "<?php echo Url::site('setup/installajax/install_genre');?>",
 				data: send,
 				success: function(data){
 					// hide the loader
@@ -62,7 +62,7 @@
 					$th.next('span').removeClass('hidden');
 				},
 				type: "POST",
-				url: "<?php echo url::site('ajax/uninstall_genre');?>",
+				url: "<?php echo url::site('setup/installajax/uninstall_genre');?>",
 				data: send,
 				success: function(data){
 					// hide the loader
