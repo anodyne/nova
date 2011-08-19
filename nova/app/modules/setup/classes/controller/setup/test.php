@@ -17,9 +17,24 @@ class Controller_Setup_Test extends Controller {
 	
 	public function action_index()
 	{
-		$x = Model_Spec::find('first');
+		$uid = DB::query(Database::SELECT, "SELECT * FROM `nova2_system_info` WHERE sys_id = 1")
+			->as_object()
+			->execute()
+			->current()
+			->sys_uid;
+			
+		$sys = Model_System::find('first');
 		
-		echo Debug::vars($x->desc);
+		echo Debug::vars($uid, $sys->uid);
+		
+		if (count($sys) > 0)
+		{
+			$sys->uid = $uid;
+			$sys->save();
+		}
+		
+		echo Debug::vars($sys->uid);
+		
 		exit;
 	}
 }
