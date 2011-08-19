@@ -310,208 +310,189 @@ class Controller_Setup_Upgradeajax extends Controller_Template {
 	
 	/**
 	 * Migrate site settings, site messages (to site contents) and bans.
-	 *
-	 * @todo 	need to figure out how we're going to populate the section and page fields in the site_contents table
-	 * @todo 	do the welcome page header update here instead of doing in its own section
-	 * @todo 	need to bring over the UID from the old system table otherwise passwords will break
 	 */
 	public function action_upgrade_settings()
 	{
-		$c = $this->db->query(Database::SELECT, "SELECT setting_id FROM `nova2_settings`", true);
-		$count_settings_old = $c->count();
-		
-		$c = $this->db->query(Database::SELECT, "SELECT message_id FROM `nova2_messages`", true);
-		$count_messages_old = $c->count();
-		
-		$c = $this->db->query(Database::SELECT, "SELECT ban_id FROM `nova2_bans`", true);
-		$count_bans_old = $c->count();
-		
-		// drop the tables
-		DBForge::drop_table('settings');
-		DBForge::drop_table('site_contents');
-		DBForge::drop_table('bans');
-		
 		try {
-			// copy the table along with all its data
-			$this->db->query(null, "CREATE TABLE ".$this->db->table_prefix()."settings SELECT * FROM `nova2_settings`", true);
-			
-			// rename the fields
-			$fields = array(
-				'setting_id' => array(
-					'name' => 'id',
-					'type' => 'INT',
-					'constraint' => 5),
-				'setting_key' => array(
-					'name' => 'key',
-					'type' => 'VARCHAR',
-					'constraint' => 100,
-					'default' => ''),
-				'setting_value' => array(
-					'name' => 'value',
-					'type' => 'TEXT'),
-				'setting_label' => array(
-					'name' => 'label',
-					'type' => 'VARCHAR',
-					'constraint' => 255,
-					'default' => ''),
-				'setting_user_created' => array(
-					'name' => 'user_created',
-					'type' => 'TEXT'),
-			);
-			
-			// modify the columns
-			DBForge::modify_column('settings', $fields);
-			
-			// make award_id auto increment and the primary key
-			$this->db->query(null, "ALTER TABLE ".$this->db->table_prefix()."settings MODIFY COLUMN `id` INT(5) auto_increment primary key", true);
-			
-			// get all the awards
-			$settings = Model_Settings::find('all');
+			/**
+			 * System Settings
+			 */
+			$settings = $this->db->query(Database::SELECT, "SELECT * FROM `nova2_settings` ORDER BY setting_id ASC", true);
 			
 			if (count($settings) > 0)
 			{
-				foreach ($settings as $setting)
+				foreach ($settings as $s)
 				{
-					$s = Model_Settings::find($setting->id);
-					
-					switch ($setting->key)
+					switch ($s->setting_key)
 					{
-						case 'skin_wiki':
-						case 'allowed_chars_playing':
-						case 'allowed_chars_npc':
-							$s->delete();
+						case 'sim_name':
+						case 'sim_year':
+						case 'sim_type':
+						case 'bio_num_awards':
+						case 'list_logs_num':
+						case 'list_posts_num':
+						case 'updates':
+						case 'post_count_format':
+						case 'default_email_address':
+						case 'posting_requirement':
+							$new = Model_Settings::get_settings($s->setting_key, false);
+							$new->value = $s->setting_value;
+							$new->save();
 						break;
 						
-						case 'maintenance':
-						case 'daylight_savings':
-							$s->value = (int) false;
-							$s->user_created = (int) ($s->user_created == 'y');
-							$s->save();
-						break;
-						
-						case 'system_email':
-							$s->value = (int) true;
-							$s->user_created = (int) ($s->user_created == 'y');
-							$s->save();
-						break;
-						
-						case 'timezone':
-							$s->value = 'UTC';
-							$s->user_created = (int) ($s->user_created == 'y');
-							$s->save();
+						case 'email_subject':
+						case 'default_email_name':
+							$start = ($s->setting_key == 'email_subject') ? '[' : '';
+							$end = ($s->setting_key == 'email_subject') ? ']' : '';
+							
+							$new = Model_Settings::get_settings($s->setting_key, false);
+							$new->value = $start.Model_Settings::get_settings('sim_name').$end;
+							$new->save();
 						break;
 						
 						case 'show_news':
 						case 'use_mission_notes':
-							$s->value = (int) ($s->value == 'y');
-							$s->user_created = (int) ($s->user_created == 'y');
-							$s->save();
+						case 'use_sample_post':
+							$new = Model_Settings::get_settings($s->setting_key, false);
+							$new->value = (int) true;
+							$new->save();
+						break;
+						
+						case 'maintenance':
+						case 'skin_main':
+						case 'skin_admin':
+						case 'skin_wiki':
+						case 'display_rank':
+						case 'allowed_chars_playing':
+						case 'allowed_chars_npc':
+						case 'timezone':
+						case 'daylight_savings':
+						case 'date_format':
+						case 'manifest_defaults':
+						case 'online_timespan':
+						case 'use_post_participants':
+						case 'system_email':
+							// do nothing with these items
 						break;
 						
 						default:
-							$s->user_created = (int) ($s->user_created == 'y');
-							$s->save();
+							// build an array of user-created setting data
+							$new_data = array(
+								'key' => $s->setting_key,
+								'value' => $s->setting_value,
+								'label' => $s->setting_label,
+								'user_created' => (int) true
+							);
+							
+							// add the user-created data to the settings table
+							Model_Settings::create_item($new_data);
 						break;
 					}
 				}
 			}
 			
-			// now that we've changed the display stuff, change the schema
-			$fields = array(
-				'user_created' => array(
-					'name' => 'user_created',
-					'type' => 'TINYINT',
-					'constraint' => 1,
-					'default' => 1),
-			);
-			DBForge::modify_column('settings', $fields);
-			
-			// get the number of records in the new table
-			$count_settings_new = Model_Settings::count();
-			
 			/**
-			 * Messages
+			 * Site Contents
 			 */
-			// copy the table along with all its data
-			$this->db->query(null, "CREATE TABLE ".$this->db->table_prefix()."site_contents SELECT * FROM `nova2_messages`", true);
+			$messages = $this->db->query(Database::SELECT, "SELECT * FROM `nova2_messages` ORDER BY message_id ASC", true);
 			
-			// rename the fields
-			$fields = array(
-				'message_id' => array(
-					'name' => 'id',
-					'type' => 'INT',
-					'constraint' => 8),
-				'message_key' => array(
-					'name' => 'key',
-					'type' => 'VARCHAR',
-					'constraint' => 255,
-					'default' => ''),
-				'message_content' => array(
-					'name' => 'content',
-					'type' => 'TEXT'),
-				'message_label' => array(
-					'name' => 'label',
-					'type' => 'VARCHAR',
-					'constraint' => 255,
-					'default' => ''),
-				'message_type' => array(
-					'name' => 'type',
-					'type' => 'ENUM',
-					'constraint' => "'title','header','message','other'",
-					'default' => 'message'),
-				'message_protected' => array(
-					'name' => 'protected',
-					'type' => 'TEXT'),
-			);
-			
-			// modify the columns
-			DBForge::modify_column('site_contents', $fields);
-			
-			// add the new columns
-			$add = array(
-				'section' => array(
-					'type' => 'VARCHAR',
-					'constraint' => 50,
-					'default' => ''),
-				'page' => array(
-					'type' => 'VARCHAR',
-					'constraint' => 100,
-					'default' => ''),
-			);
-			DBForge::add_column('site_contents', $add);
-			
-			// make award_id auto increment and the primary key
-			$this->db->query(null, "ALTER TABLE ".$this->db->table_prefix()."site_contents MODIFY COLUMN `id` INT(8) auto_increment primary key", true);
-			
-			// get all the awards
-			$contents = Model_SiteContent::find('all');
-			
-			if (count($contents) > 0)
+			if (count($messages) > 0)
 			{
-				foreach ($contents as $content)
+				foreach ($messages as $m)
 				{
-					$c = Model_SiteContent::find($content->id);
-					$c->protected = (int) ($c->protected == 'y');
-					$c->save();
+					switch ($m->message_key)
+					{
+						case 'welcome_msg':
+							$new = Model_SiteContent::get_content('main_index_message', false);
+							$new->content = $m->message_content;
+							$new->save();
+						break;
+						
+						case 'welcome_head':
+							$new = Model_SiteContent::get_content('main_index_header', false);
+							$new->content = $m->message_content;
+							$new->save();
+						break;
+						
+						case 'join_instructions':
+							if ( ! empty($m->message_content))
+							{
+								$new_data = array(
+									'key' => 'main_join_message',
+									'content' => $m->message_content,
+									'label' => $m->message_label,
+									'type' => 'message',
+									'section' => 'main',
+									'page' => 'join',
+								);
+								Model_SiteContent::create_item($new_data);
+							}
+						break;
+						
+						case 'contact':
+							if ( ! empty($m->message_content))
+							{
+								$new_data = array(
+									'key' => 'main_contact_message',
+									'content' => $m->message_content,
+									'label' => $m->message_label,
+									'type' => 'message',
+									'section' => 'main',
+									'page' => 'contact',
+								);
+								Model_SiteContent::create_item($new_data);
+							}
+						break;
+						
+						case 'credits':
+							$new = Model_SiteContent::get_content('main_credits_message', false);
+							$new->content = $m->message_content;
+							$new->save();
+						break;
+						
+						case 'sim':
+							$new = Model_SiteContent::get_content('sim_index_message', false);
+							$new->content = $m->message_content;
+							$new->save();
+						break;
+						
+						case 'join_disclaimer':
+						case 'join_post':
+						case 'accept_message':
+						case 'reject_message':
+						case 'docking_accept_message':
+						case 'docking_reject_message':
+							$new = Model_SiteContent::get_content($m->message_key, false);
+							$new->content = $m->message_content;
+							$new->save();
+						break;
+						
+						case 'wiki_main':
+						case 'credits_perm':
+						case 'main_credits_title':
+						case 'main_join_title':
+							// don't do anything with these items
+						break;
+						
+						default:
+							$new_data = array(
+								'key' => $m->message_key,
+								'content' => $m->message_content,
+								'label' => $m->message_label,
+								'type' => $m->message_type,
+							);
+							Model_SiteContent::create_item($new_data);
+						break;
+					}
 				}
 			}
-			
-			// now that we've changed the display stuff, change the schema
-			$fields = array(
-				'protected' => array(
-					'name' => 'protected',
-					'type' => 'TINYINT',
-					'constraint' => 1,
-					'default' => 0),
-			);
-			DBForge::modify_column('site_contents', $fields);
-			
-			// get the number of records in the new table
-			$count_messages_new = Model_SiteContent::count();
 			
 			/**
 			 * Bans
 			 */
+			// drop the tables
+			DBForge::drop_table('bans');
+			
 			// copy the table along with all its data
 			$this->db->query(null, "CREATE TABLE ".$this->db->table_prefix()."bans SELECT * FROM `nova2_bans`", true);
 			
@@ -551,26 +532,27 @@ class Controller_Setup_Upgradeajax extends Controller_Template {
 			// make award_id auto increment and the primary key
 			$this->db->query(null, "ALTER TABLE ".$this->db->table_prefix()."bans MODIFY COLUMN `id` INT(5) auto_increment primary key", true);
 			
-			// get the number of records in the new table
-			$count_bans_new = Model_Ban::count();
-			
 			/**
-			 * We need to remove 3 setting items since they've been eliminated.
+			 * System UID - need to do this so that passwords don't break
 			 */
-			if ($count_settings_new == ($count_settings_old - 3) and $count_messages_old == $count_messages_new and $count_bans_old == $count_bans_new)
+			$uid = DB::query(Database::SELECT, "SELECT * FROM `nova2_system_info` WHERE sys_id = 1")
+				->as_object()
+				->execute()
+				->current()
+				->sys_uid;
+				
+			$sys = Model_System::find('first');
+			
+			if (count($sys) > 0)
 			{
-				$retval = array(
-					'code' => 1,
-					'message' => ''
-				);
+				$sys->uid = $uid;
+				$sys->save();
 			}
-			else
-			{
-				$retval = array(
-					'code' => 2,
-					'message' => "Not all of your settings, site content (messages) and bans were properly migrated"
-				);
-			}
+			
+			$retval = array(
+				'code' => 1,
+				'message' => ''
+			);
 		} catch (Exception $e) {
 			$retval = array(
 				'code' => 0,
@@ -2345,6 +2327,43 @@ class Controller_Setup_Upgradeajax extends Controller_Template {
 		$this->db->query(null, "ALTER TABLE ".$this->db->table_prefix()."site_contents CHANGE COLUMN `section` `section` VARCHAR(50) NULL DEFAULT '' AFTER `type`, CHANGE COLUMN `page` `page` VARCHAR(100) NULL DEFAULT '' AFTER `section`", true);
 		
 		$this->db->query(null, "ALTER TABLE ".$this->db->table_prefix()."users CHANGE COLUMN `email_format` `email_format` VARCHAR(4) NULL DEFAULT 'html' AFTER `daylight_savings`", true);
+		
+		$retval = array(
+			'code' => 1,
+			'message' => ''
+		);
+		
+		echo json_encode($retval);
+	}
+	
+	/**
+	 * @todo 	need to make sure this is updated with all the different sections we end up creating
+	 */
+	public function action_upgrade_cache_content()
+	{
+		// get an instance of the cache module
+		$cache = Cache::instance();
+		
+		// clear the entire cache
+		$cache->delete_all();
+		
+		// cache the headers
+		Model_SiteContent::get_section_content('header', 'main');
+		Model_SiteContent::get_section_content('header', 'sim');
+		Model_SiteContent::get_section_content('header', 'personnel');
+		Model_SiteContent::get_section_content('header', 'search');
+		
+		// cache the titles
+		Model_SiteContent::get_section_content('title', 'main');
+		Model_SiteContent::get_section_content('title', 'sim');
+		Model_SiteContent::get_section_content('title', 'personnel');
+		Model_SiteContent::get_section_content('title', 'search');
+		
+		// cache the messages
+		Model_SiteContent::get_section_content('message', 'main');
+		Model_SiteContent::get_section_content('message', 'sim');
+		Model_SiteContent::get_section_content('message', 'personnel');
+		Model_SiteContent::get_section_content('message', 'search');
 		
 		$retval = array(
 			'code' => 1,
