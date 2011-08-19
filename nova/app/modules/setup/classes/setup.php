@@ -127,6 +127,30 @@ class Setup {
 		Utility::install_rank();
 		Utility::install_skin();
 		Utility::install_widget();
+		
+		// get an instance of the cache module
+		$cache = Cache::instance();
+		
+		// clear the entire cache
+		$cache->delete_all();
+		
+		// cache the headers
+		Model_SiteContent::get_section_content('header', 'main');
+		Model_SiteContent::get_section_content('header', 'sim');
+		Model_SiteContent::get_section_content('header', 'personnel');
+		Model_SiteContent::get_section_content('header', 'search');
+		
+		// cache the titles
+		Model_SiteContent::get_section_content('title', 'main');
+		Model_SiteContent::get_section_content('title', 'sim');
+		Model_SiteContent::get_section_content('title', 'personnel');
+		Model_SiteContent::get_section_content('title', 'search');
+		
+		// cache the messages
+		Model_SiteContent::get_section_content('message', 'main');
+		Model_SiteContent::get_section_content('message', 'sim');
+		Model_SiteContent::get_section_content('message', 'personnel');
+		Model_SiteContent::get_section_content('message', 'search');
 	}
 	
 	/**
