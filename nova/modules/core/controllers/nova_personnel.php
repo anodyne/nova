@@ -609,13 +609,42 @@ abstract class Nova_personnel extends Nova_controller_main {
 		Template::render();
 	}
 	
-	public function user($user = false)
+	public function user($user = false, $tab = 'basic')
 	{
 		Auth::is_logged_in(true);
 		
+		// figure out the tab
+		switch ($tab)
+		{
+			case 'basic':
+			default:
+				$tabcode = 0;
+			break;
+			
+			case 'stats':
+				$tabcode = 1;
+			break;
+			
+			case 'characters':
+				$tabcode = 2;
+			break;
+			
+			case 'rankhistory':
+				$tabcode = 3;
+			break;
+			
+			case 'posting':
+				$tabcode = 4;
+			break;
+			
+			case 'awards':
+				$tabcode = 5;
+			break;
+		}
+		
 		// set the variables
 		$user = (is_numeric($user)) ? $user : false;
-		$js_data['tab'] = $this->uri->segment(4, 0, true);
+		$js_data['tab'] = $tabcode;
 		
 		// load the resources
 		$this->load->model('ranks_model', 'ranks');
@@ -631,7 +660,6 @@ abstract class Nova_personnel extends Nova_controller_main {
 			'inactive' => $this->char->get_user_characters($user, 'inactive'),
 			'npcs' => $this->char->get_user_characters($user, 'npc')
 		);
-		$rankhistory = $this->char->get_rank_history($user);
 		
 		// set the datestring
 		$datestring = $this->options['date_format'];
@@ -663,11 +691,9 @@ abstract class Nova_personnel extends Nova_controller_main {
 			$data['header'] = ucwords(lang('global_user') .' '. lang('labels_info')) .' - '. $row->name;
 			$data['userid'] = $user;
 			
-			/*
-			|---------------------------------------------------------------
-			| BASIC INFO
-			|---------------------------------------------------------------
-			*/
+			/**
+			 * Basic Info
+			 */
 			
 			$data['name'] = $row->name;
 			$data['email'] = $row->email;
@@ -677,75 +703,18 @@ abstract class Nova_personnel extends Nova_controller_main {
 			$data['im'] = explode("\n", $row->instant_message);
 			$data['bio'] = $row->bio;
 			
-			/*
-			|---------------------------------------------------------------
-			| CHARACTER INFO
-			|---------------------------------------------------------------
-			*/
-			
-			foreach ($charinfo as $key => $value)
+			// make sure we have an accurate array of IM values
+			foreach ($data['im'] as $key => $value)
 			{
-				foreach ($charinfo[$key]->result() as $k => $v)
+				if (empty($value))
 				{
-					// build an array of the rank, first name, and last name
-					$name = array(
-						'rank' => $this->ranks->get_rank($v->rank, 'rank_name'),
-						'first' => $v->first_name,
-						'last' => $v->last_name
-					);
-					
-					foreach ($name as $a => $b)
-					{
-						if (empty($b))
-						{
-							unset($name[$a]);
-						}
-					}
-					
-					// implode the array into a string
-					$name_string = implode(' ', $name);
-					
-					// set the character values
-					$data['characters'][$key][$v->charid]['id'] = $v->charid;
-					$data['characters'][$key][$v->charid]['name'] = $name_string;
-					
-					if ($key == 'active')
-					{
-						$date = gmt_to_local($v->date_activate, $this->timezone, $this->dst);
-						$data['characters'][$key][$v->charid]['active_date'] = mdate($datestring, $date);
-						$data['characters'][$key][$v->charid]['active_time'] = timespan($v->date_activate);
-					}
+					unset($data['im'][$key]);
 				}
 			}
 			
-			/*
-			|---------------------------------------------------------------
-			| RANK HISTORY
-			|---------------------------------------------------------------
-			*/
-			
-			$data['rank_history'] = false;
-			
-			if ($rankhistory->num_rows() > 0)
-			{
-				foreach ($rankhistory->result() as $rank)
-				{
-					$data['rank_history'][$rank->prom_char]['name'] = $this->char->get_character_name($rank->prom_char, true);
-					$data['rank_history'][$rank->prom_char]['history'][] = array(
-						'old_order' => $rank->prom_old_order,
-						'old_rank' => $rank->prom_old_rank,
-						'new_order' => $rank->prom_new_order,
-						'new_rank' => $rank->prom_new_rank,
-						'date' => mdate($datestring, $rank->prom_date),
-					);
-				}
-			}
-			
-			/*
-			|---------------------------------------------------------------
-			| STATS
-			|---------------------------------------------------------------
-			*/
+			/**
+			 * Stats
+			 */
 			
 			// get all of the user's active characters
 			$all_active_characters = $this->char->get_user_characters($user);
@@ -788,9 +757,7 @@ abstract class Nova_personnel extends Nova_controller_main {
 				$final_deactivate = $temp_deactivate[0];
 			}
 			
-			//$data['join_date_time'] = timespan($row->join_date, now());
 			$data['join_date_time'] = timespan($final_activate, $final_deactivate);
-			//$data['join_date'] = mdate($datestring, gmt_to_local($row->join_date, $this->timezone, $this->dst));
 			$data['join_date'] = mdate($datestring, gmt_to_local($final_activate, $this->timezone, $this->dst));
 			
 			if ( ! empty($row->last_post))
@@ -822,11 +789,73 @@ abstract class Nova_personnel extends Nova_controller_main {
 			$data['avg_posts'] = ($weeks > 0) ? round($data['post_count'] / $weeks, 2) : 0;
 			$data['avg_logs'] = ($weeks > 0) ? round($data['log_count'] / $weeks, 2) : 0;
 			
-			/*
-			|---------------------------------------------------------------
-			| POSTING INFO
-			|---------------------------------------------------------------
-			*/
+			/**
+			 * Character Info
+			 */
+			
+			foreach ($charinfo as $key => $value)
+			{
+				foreach ($charinfo[$key]->result() as $k => $v)
+				{
+					// build an array of the rank, first name, and last name
+					$name = array(
+						'rank' => $this->ranks->get_rank($v->rank, 'rank_name'),
+						'first' => $v->first_name,
+						'last' => $v->last_name
+					);
+					
+					foreach ($name as $a => $b)
+					{
+						if (empty($b))
+						{
+							unset($name[$a]);
+						}
+					}
+					
+					// implode the array into a string
+					$name_string = implode(' ', $name);
+					
+					// set the character values
+					$data['characters'][$key][$v->charid]['id'] = $v->charid;
+					$data['characters'][$key][$v->charid]['name'] = $name_string;
+					
+					if ($key == 'active')
+					{
+						$date = gmt_to_local($v->date_activate, $this->timezone, $this->dst);
+						$data['characters'][$key][$v->charid]['active_date'] = mdate($datestring, $date);
+						$data['characters'][$key][$v->charid]['active_time'] = timespan($v->date_activate);
+					}
+				}
+			}
+			
+			/**
+			 * Rank History
+			 */
+			
+			// get the rank history
+			$rankhistory = $this->char->get_rank_history($user);
+			
+			// array for storing the results
+			$data['rank_history'] = array();
+			
+			if ($rankhistory->num_rows() > 0)
+			{
+				foreach ($rankhistory->result() as $rank)
+				{
+					$data['rank_history'][$rank->prom_char]['name'] = $this->char->get_character_name($rank->prom_char, true);
+					$data['rank_history'][$rank->prom_char]['history'][] = array(
+						'old_order' => $rank->prom_old_order,
+						'old_rank' => $rank->prom_old_rank,
+						'new_order' => $rank->prom_new_order,
+						'new_rank' => $rank->prom_new_rank,
+						'date' => mdate($datestring, gmt_to_local($rank->prom_date, $this->timezone, $this->dst)),
+					);
+				}
+			}
+			
+			/**
+			 * Posting Info
+			 */
 			
 			$posts = $this->posts->get_character_posts($characters, 5);
 			$logs = $this->logs->get_character_logs($characters, 5);
@@ -861,11 +890,9 @@ abstract class Nova_personnel extends Nova_controller_main {
 				}
 			}
 			
-			/*
-			|---------------------------------------------------------------
-			| AWARDS
-			|---------------------------------------------------------------
-			*/
+			/**
+			 * Awards
+			 */
 			
 			$awards = $this->awards->get_user_awards($user);
 			
@@ -896,15 +923,14 @@ abstract class Nova_personnel extends Nova_controller_main {
 			$this->_regions['title'].= lang('error_pagetitle');
 		}
 		
-		if (Auth::is_logged_in() === true)
+		if (Auth::is_logged_in())
 		{
-			if (Auth::check_access('user/account', false) === true and 
+			if (Auth::check_access('user/account', false) and 
 				Auth::get_access_level('user/account') == 1 and $user == $this->session->userdata('userid'))
 			{
 				$data['edit_valid'] = true;
 			}
-			elseif (Auth::check_access('user/account', false) === true and 
-				Auth::get_access_level('user/account') == 2)
+			elseif (Auth::check_access('user/account', false) and Auth::get_access_level('user/account') == 2)
 			{
 				$data['edit_valid'] = true;
 			}
@@ -915,57 +941,57 @@ abstract class Nova_personnel extends Nova_controller_main {
 		}
 		
 		$data['label'] = array(
-			'activechars' => ucwords(lang('status_active') .' '. lang('global_characters')),
-			'activefor' => ucfirst(lang('status_active') .' '. lang('labels_for')),
+			'activechars' => ucwords(lang('status_active').' '.lang('global_characters')),
+			'activefor' => ucfirst(lang('status_active').' '.lang('labels_for')),
 			'ago' => lang('time_ago'),
-			'average' => ucfirst(lang('labels_average')) .':',
+			'average' => ucfirst(lang('labels_average')).':',
 			'award' => ucfirst(lang('global_award')),
 			'awards' => ucfirst(lang('global_awards')),
-			'basicinfo' => ucwords(lang('labels_basic') .' '. lang('labels_info')),
+			'basicinfo' => ucwords(lang('labels_basic').' '.lang('labels_info')),
 			'bio' => ucfirst(lang('labels_biography')),
 			'by' => ucfirst(lang('labels_by')),
-			'charinfo' => ucwords(lang('global_character') .' '. lang('labels_info')),
+			'charinfo' => ucwords(lang('global_character').' '.lang('labels_info')),
 			'date' => ucfirst(lang('labels_date')),
-			'demoted' => ucfirst(lang('actions_demoted') .' '. lang('labels_from')),
+			'demoted' => ucfirst(lang('actions_demoted').' '.lang('labels_from')),
 			'dob' => lang('labels_dob'),
-			'edit' => '[ '. ucwords(lang('actions_edit') .' '. lang('global_user')) .' ]',
+			'edit' => '[ '.ucwords(lang('actions_edit').' '.lang('global_user')).' ]',
 			'email' => ucwords(lang('labels_email_address')),
 			'from' => lang('labels_from'),
 			'im' => ucwords(lang('labels_im')),
-			'inactivechars' => ucwords(lang('status_inactive') .' '. 
-				lang('global_characters')),
+			'inactivechars' => ucwords(lang('status_inactive').' '.lang('global_characters')),
 			'interests' => ucfirst(lang('labels_interests')),
 			'joined' => ucfirst(lang('actions_joined')),
-			'lastlogin' => ucwords(lang('order_last') .' '. lang('actions_login')),
-			'lastpost' => ucwords(lang('order_last') .' '. lang('global_post')),
+			'lastlogin' => ucwords(lang('order_last').' '.lang('actions_login')),
+			'lastpost' => ucwords(lang('order_last').' '.lang('global_post')),
 			'location' => ucfirst(lang('labels_location')),
 			'mission' => ucfirst(lang('global_mission')),
 			'missionposts' => ucwords(lang('global_missionposts')),
 			'name' => ucfirst(lang('labels_name')),
-			'noawards' => lang('error_no_awards'),
-			'nologin' => lang('error_no_last_login'),
-			'nologs' => lang('error_no_logs'),
+			'noawards' => sprintf(lang('error_not_found'), lang('global_awards')),
+			'nologin' => sprintf(lang('error_not_found'), lang('order_last').' '.lang('actions_login')),
+			'nologs' => sprintf(lang('error_not_found'), lang('global_personallogs')),
 			'none' => ucfirst(lang('labels_none')),
-			'nopost' => lang('error_no_last_post'),
-			'noposts' => lang('error_no_posts'),
-			'norankhistory' => lang('error_no_rank_history'),
+			'nobasic' => sprintf(lang('error_not_found'), lang('labels_basic').' '.lang('labels_info')),
+			'nopost' => sprintf(lang('error_not_found'), lang('order_last').' '.lang('global_post')),
+			'noposts' => sprintf(lang('error_not_found'), lang('global_missionposts')),
+			'norankhistory' => sprintf(lang('error_not_found'), lang('global_rank').' '.lang('labels_history')),
 			'npcs' => lang('abbr_npcs'),
 			'personallogs' => ucwords(lang('global_personallogs')),
 			'perweek' => lang('time_per_week'),
-			'postinginfo' => ucwords(lang('labels_posting') .' '. lang('labels_info')),
-			'promoted' => ucfirst(lang('actions_promoted') .' '. lang('labels_to')),
-			'rankhistory' => ucwords(lang('global_rank') .' '. lang('labels_history')),				
+			'postinginfo' => ucwords(lang('labels_posting').' '.lang('labels_info')),
+			'promoted' => ucfirst(lang('actions_promoted').' '.lang('labels_to')),
+			'rankhistory' => ucwords(lang('global_rank').' '.lang('labels_history')),				
 			'reason' => ucfirst(lang('labels_reason')),
-			'receivedby' => ucfirst(lang('actions_received') .' '. lang('labels_by')),
+			'receivedby' => ucfirst(lang('actions_received').' '.lang('labels_by')),
 			'stats' => ucfirst(lang('labels_stats')),
 			'timezone' => ucfirst(lang('labels_timezone')),
 			'title' => ucfirst(lang('labels_title')),
 			'to' => lang('labels_to'),
-			'totallogs' => ucwords(lang('labels_total') .' '. lang('global_personallogs')),
-			'totalposts' => ucwords(lang('labels_total') .' '. lang('global_missionposts')),
-			'viewawards' => ucwords(lang('actions_view').' '.lang('global_user').' '.lang('global_awards') .' '. RARROW),
-			'viewlogs' => ucwords(lang('actions_view').' '.lang('global_user').' '.lang('global_logs') .' '. RARROW),
-			'viewposts' => ucwords(lang('actions_view').' '.lang('global_user').' '.lang('global_posts') .' '. RARROW),
+			'totallogs' => ucwords(lang('labels_total').' '.lang('global_personallogs')),
+			'totalposts' => ucwords(lang('labels_total').' '.lang('global_missionposts')),
+			'viewawards' => ucwords(lang('actions_view').' '.lang('global_user').' '.lang('global_awards').' '.RARROW),
+			'viewlogs' => ucwords(lang('actions_view').' '.lang('global_user').' '.lang('global_logs').' '.RARROW),
+			'viewposts' => ucwords(lang('actions_view').' '.lang('global_user').' '.lang('global_posts').' '.RARROW),
 		);
 		
 		$this->_regions['content'] = Location::view('personnel_user', $this->skin, 'main', $data);
