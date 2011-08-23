@@ -119,7 +119,7 @@ h1, h2, h3, h4 { font-weight: bold; }
 
 .error { color: #c00; }
 .warning { color: orange; }
-.subtle { color: #777; }
+.subtle { color: #999; }
 .success { color:#008000; }
 
 strong { font-weight: bold; }
@@ -175,7 +175,8 @@ th {
 input[type=text],
 input[type=password],
 input[type=email],
-select {
+select,
+textarea {
 	margin: 5px 25px 0 0;
 	padding: 6px;
 	width: 250px;
@@ -203,7 +204,8 @@ select {
 input[type=text]:focus,
 input[type=password]:focus,
 input[type=email]:focus,
-select:hover {
+select:hover,
+textarea:focus {
 	border-bottom: 1px solid #008bda;
 	border-top: 1px solid #008bda;
 	border-left: 1px solid #008edc;
@@ -218,6 +220,8 @@ select {
 	padding: 3px;
 	min-width: 300px;
 }
+textarea { width: 85%; }
+textarea.query { font-family: "consolas", courier, monaco, monospace; }
 kbd {
 	display: block;
 	font-weight: bold;
@@ -424,7 +428,7 @@ button, input[type=button] {
 .btn-sec {
 	margin: 0;
 	padding: 3px 20px;
-	border: 1px solid #888;
+	border: 1px solid #bbb;
 	color: #626262;
 	text-shadow: 0 1px 0 #ebebeb;
 	font-size: .85em;
@@ -451,7 +455,7 @@ button, input[type=button] {
 	background: linear-gradient(top, #eeeeee 0%,#d1d1d1 50%,#c8c8c8 51%,#d6d6d6 100%);
 	cursor: pointer;
 	color: #525252;
-	border-color: #777;
+	border-color: #999;
 }
 
 button[disabled], button:hover[disabled], button:active[disabled] {
