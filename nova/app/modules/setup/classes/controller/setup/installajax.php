@@ -31,12 +31,6 @@ class Controller_Setup_Installajax extends Controller_Template {
 	
 	public function action_install_field()
 	{
-		// we don't need the template, just the output from the method
-		$this->template = null;
-
-		// initialize the forge
-		$forge = new DBForge;
-
 		// grab the fields
 		$table = trim(Security::xss_clean($_POST['table']));
 		$name = trim(Security::xss_clean($_POST['name']));
@@ -59,21 +53,16 @@ class Controller_Setup_Installajax extends Controller_Template {
 
 		// add the column to the table
 		DBForge::add_column($table, $field);
-
-		if (count($this->db->list_columns($table, '%'.$name.'%')) > 0)
-		{
-			echo '1';
-		}
-		else
-		{
-			echo '0';
-		}
+		
+		$retval = (count($this->db->list_columns($table, '%'.$name.'%')) > 0) ? array('code' => 1) : array('code' => 0);
+		
+		echo json_encode($retval);
 	}
 
 	public function action_install_genre()
 	{
 		// we don't need the template, just the output from the method
-		$this->template = null;
+		//$this->template = null;
 
 		// grab the genre variable
 		$genre = trim(Security::xss_clean($_POST['genre']));
@@ -84,13 +73,13 @@ class Controller_Setup_Installajax extends Controller_Template {
 		// build an array of genre tables that need to be added
 		$tables = array(
 			'departments_'.$genre => array(
-				'id' => 'dept_id',
+				'id' => 'id',
 				'fields' => $fields_departments),
 			'positions_'.$genre => array(
-				'id' => 'pos_id',
+				'id' => 'id',
 				'fields' => $fields_positions),
 			'ranks_'.$genre => array(
-				'id' => 'rank_id',
+				'id' => 'id',
 				'fields' => $fields_ranks),
 		);
 
@@ -116,27 +105,21 @@ class Controller_Setup_Installajax extends Controller_Template {
 				$sql = DB::insert($key)
 					->columns(array_keys($v))
 					->values(array_values($v))
-					->compile($db);
+					->compile($this->db);
 
 				$insert[$key] = $this->db->query(Database::INSERT, $sql, true);
 			}
 		}
-
-		if (count($this->db->list_tables('%_'.$genre)) > 0)
-		{
-			echo '1';
-		}
-		else
-		{
-			echo '0';
-		}
+		
+		$retval = (count($this->db->list_tables('%_'.$genre)) > 0)
+			? array('code' => 1, 'message' => '')
+			: array('code' => 0, 'message' => 'Could not install the requested genre');
+		
+		echo json_encode($retval);
 	}
 
 	public function action_install_query()
 	{
-		// we don't need the template, just the output from the method
-		$this->template = null;
-
 		// grab an instance of the database
 		$db = Database::instance();
 
@@ -150,52 +133,48 @@ class Controller_Setup_Installajax extends Controller_Template {
 		{
 			try {
 				$result = $db->query(Database::INSERT, $query, true);
-				$return = ($result[1] > 0) ? '1' : '2';
+				$return = ($result[1] > 0) ? 1 : 2;
 			} catch (Exception $e) {
-				$return = '0';
+				$return = 0;
 			}
 		}
 		elseif (strtolower($queryarray[0]) == 'update')
 		{
 			try {
 				$result = $db->query(Database::UPDATE, $query, true);
-				$return = ($result > 0) ? '1' : '2';
+				$return = ($result > 0) ? 1 : 2;
 			} catch (Exception $e) {
-				$return = '0';
+				$return = 0;
 			}
 		}
 		elseif (strtolower($queryarray[0]) == 'delete')
 		{
 			try {
 				$result = $db->query(Database::DELETE, $query, true);
-				$return = ($result > 0) ? '1' : '2';
+				$return = ($result > 0) ? 1 : 2;
 			} catch (Exception $e) {
-				$return = '0';
+				$return = 0;
 			}
 		}
 		else
 		{
 			try {
 				$result = $db->query(null, $query, true);
-				echo '3';
+				$return = 3;
 			} catch (Exception $e) {
-				$return = '0';
+				$return = 0;
 			}
 		}
+		
+		$retval = array('code' => $return);
 
-		echo $return;
+		echo json_encode($retval);
 	}
 
 	public function action_install_table()
 	{
-		// we don't need the template, just the output from the method
-		$this->template = null;
-
 		// grab an instance of the database
 		$db = Database::instance();
-
-		// initialize the forge
-		$forge = new DBForge;
 
 		// grab the genre variable
 		$table = trim(Security::xss_clean($_POST['table']));
@@ -205,22 +184,14 @@ class Controller_Setup_Installajax extends Controller_Template {
 
 		// add the table
 		DBForge::create_table($table, true);
-
-		if (count($db->list_tables('%_'.$table)) > 0)
-		{
-			echo '1';
-		}
-		else
-		{
-			echo '0';
-		}
+		
+		$retval = (count($db->list_tables('%_'.$table)) > 0) ? array('code' => 1) : array('code' => 0);
+		
+		echo json_encode($retval);
 	}
 
 	public function action_uninstall_genre()
 	{
-		// we don't need the template, just the output from the method
-		$this->template = null;
-
 		// grab the genre variable
 		$genre = trim(Security::xss_clean($_POST['genre']));
 
@@ -228,14 +199,11 @@ class Controller_Setup_Installajax extends Controller_Template {
 		DBForge::drop_table('departments_'.$genre);
 		DBForge::drop_table('positions_'.$genre);
 		DBForge::drop_table('ranks_'.$genre);
-
-		if (count($this->db->list_tables('%_'.$genre)) > 0)
-		{
-			echo '0';
-		}
-		else
-		{
-			echo '1';
-		}
+		
+		$retval = (count($this->db->list_tables('%_'.$genre)) > 0)
+			? array('code' => 0, 'message' => 'Could not uninstall the requested genre')
+			: array('code' => 1, 'message' => '');
+		
+		echo json_encode($retval);
 	}
 }
