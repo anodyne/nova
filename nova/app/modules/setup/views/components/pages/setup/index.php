@@ -62,7 +62,7 @@
 		</a>
 	<?php endif;?>
 	
-	<?php if ($option == 6): ?>
+	<?php if ($option > 4): ?>
 		<a href="<?php echo Url::site('setup/install/genre');?>" class="install-options">
 			<span>The Genre Panel</span>
 			<em>Use Nova's flexibile genre system to change your game's genre. <strong>Note:</strong> You'll have to make manual changes to 

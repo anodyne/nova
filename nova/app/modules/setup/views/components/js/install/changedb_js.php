@@ -3,9 +3,8 @@
 		$('table.zebra tbody > tr:nth-child(odd)').addClass('alt');
 		
 		$('#table').live('click', function(){
-			var table = $('input[name=table_name]').val();
 			var send = {
-				table: table
+				table: $('input[name=table_name]').val()
 			};
 			
 			$.ajax({
@@ -16,20 +15,17 @@
 					$('.error-table').addClass('hidden');
 				},
 				type: "POST",
-				url: "<?php echo url::site('ajax/install_table');?>",
+				url: "<?php echo url::site('setup/installajax/install_table');?>",
 				data: send,
+				dataType: 'json',
 				success: function(data){
 					// hide the loader
 					$('.loading-table').addClass('hidden');
 					
-					if (data == "1")
-					{
+					if (data.code == 1)
 						$('.success-table').removeClass('hidden');
-					}
 					else
-					{
 						$('.error-table').removeClass('hidden');
-					}
 				}
 			});
 			
@@ -103,17 +99,12 @@
 		});
 		
 		$('#field').live('click', function(){
-			var table = $('select[name=table_name] option:selected').val();
-			var field_name = $('input[name=field_name]').val();
-			var field_type = $('select[name=field_type] option:selected').val();
-			var field_constraint = $('input[name=field_constraint]').val();
-			var field_default = $('input[name=field_default]').val();
 			var send = {
-				table: table,
-				name: field_name,
-				type: field_type,
-				constraint: field_constraint,
-				def: field_default
+				table: $('select[name=table_name] option:selected').val(),
+				name: $('input[name=field_name]').val(),
+				type: $('select[name=field_type] option:selected').val(),
+				constraint: $('input[name=field_constraint]').val(),
+				def: $('input[name=field_default]').val()
 			};
 			
 			$.ajax({
@@ -124,20 +115,17 @@
 					$('.error-field').addClass('hidden');
 				},
 				type: "POST",
-				url: "<?php echo url::site('ajax/install_field');?>",
+				url: "<?php echo url::site('setup/installajax/install_field');?>",
 				data: send,
+				dataType: 'json',
 				success: function(data){
 					// hide the loader
 					$('.loading-field').addClass('hidden');
 					
-					if (data == "1")
-					{
+					if (data.code == 1)
 						$('.success-field').removeClass('hidden');
-					}
 					else
-					{
 						$('.error-field').removeClass('hidden');
-					}
 				}
 			});
 			
@@ -145,10 +133,7 @@
 		});
 		
 		$('#query').live('click', function(){
-			var query = $('textarea[name=query]').val();
-			var send = {
-				query: query
-			};
+			var send = { query: $('textarea[name=query]').val() };
 			
 			$.ajax({
 				beforeSend: function(){
@@ -160,28 +145,21 @@
 					$('.special-query').addClass('hidden');
 				},
 				type: "POST",
-				url: "<?php echo url::site('ajax/install_query');?>",
+				url: "<?php echo url::site('setup/installajax/install_query');?>",
 				data: send,
+				dataType: 'json',
 				success: function(data){
 					// hide the loader
 					$('.loading-query').addClass('hidden');
 					
-					if (data == "0")
-					{
+					if (data.code == 0)
 						$('.error-query').removeClass('hidden');
-					}
-					else if (data == "1")
-					{
+					else if (data.code == 1)
 						$('.success-query').removeClass('hidden');
-					}
-					else if (data == "2")
-					{
+					else if (data.code == 2)
 						$('.warning-query').removeClass('hidden');
-					}
-					else if (data == "3")
-					{
+					else if (data.code == 3)
 						$('.special-query').removeClass('hidden');
-					}
 				}
 			});
 			
