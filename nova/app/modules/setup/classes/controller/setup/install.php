@@ -99,7 +99,7 @@ class Controller_Setup_Install extends Controller_Template {
 		$this->response->body($this->template);
 	}
 	
-	public function action_changedb($view = 'main')
+	public function action_changedb()
 	{
 		// create a new content view
 		$this->template->layout->content = View::factory('components/pages/install/changedb');
@@ -115,21 +115,19 @@ class Controller_Setup_Install extends Controller_Template {
 			'loading' => array(
 				'src' => MODFOLDER.'/app/modules/setup/views/design/images/loading.gif',
 				'attr' => array(
-					'alt' => ___('processing'),
+					'alt' => 'processing',
 					'class' => '')),
 		);
 		
 		// show the back button?
 		$showbutton = false;
 		
-		switch ($view)
+		switch ($this->request->param('id'))
 		{
 			case 'table':
-				// set the header
-				$data->header = ___('change.title.addtable');
-				
-				// set the message
-				$data->message = ___("change.text.addtable");
+				// set the content
+				$title = 'Add a Database Table';
+				$data->message = ___('setup.change.table');
 				
 				// build the button attributes
 				$next = array(
@@ -139,15 +137,13 @@ class Controller_Setup_Install extends Controller_Template {
 				);
 				
 				// build the next step control
-				$this->template->layout->controls = form::button('back', ucwords(__(':create table', array(':create' => ___('create')))), $next);
+				$this->template->layout->controls = Form::button('back', 'Create Table', $next);
 			break;
 				
 			case 'field':
-				// set the header
-				$data->header = ___('change.title.addfield');
-				
-				// set the message
-				$data->message = ___('change.text.addfield');
+				// set the content
+				$title = 'Add a Database Field';
+				$data->message = ___('setup.change.field');
 				
 				// set up the options
 				$data->options = array();
@@ -188,16 +184,14 @@ class Controller_Setup_Install extends Controller_Template {
 				);
 				
 				// build the next step control
-				$this->template->layout->controls = form::button('back', ucwords(___(':create field', array(':create' => ___('create')))), $next);
+				$this->template->layout->controls = Form::button('back', 'Create Field', $next);
 				
 			break;
 				
 			case 'query':
-				// set the header
-				$data->header = ___('change.title.runquery');
-				
-				// set the message
-				$data->message = ___('change.text.runquery');
+				// set the content
+				$title = 'Run a MySQL Query';
+				$data->message = ___('setup.change.query');
 				
 				// build the button attributes
 				$next = array(
@@ -207,13 +201,14 @@ class Controller_Setup_Install extends Controller_Template {
 				);
 				
 				// build the next step control
-				$this->template->layout->controls = form::button('back', ucwords(___('run query')), $next);
+				$this->template->layout->controls = Form::button('back', 'Run Query', $next);
 				
 			break;
 			
 			default:
-				// set the message
-				$data->message = ___('change.text.default');
+				// set the content
+				$title = 'Change Database';
+				$data->message = ___('setup.change.default');
 				
 				// build the button attributes
 				$next = array(
@@ -223,17 +218,11 @@ class Controller_Setup_Install extends Controller_Template {
 				);
 				
 				// build the next step control
-				$this->template->layout->controls = form::open('install/index').
-					form::button('back', ucwords(___('install center')), $next).
-					form::close();
+				$this->template->layout->controls = Form::open('setup/main/index').Form::button('back', 'Setup Center', $next).Form::close();
 			break;
 		}
 		
-		// content
-		$this->template->title.= ___('change.title.default');
-		$this->template->layout->label = ___('change.title.default');
-		
-		if ($showbutton === true)
+		if ($showbutton)
 		{
 			// build the button attributes
 			$next = array(
@@ -248,8 +237,10 @@ class Controller_Setup_Install extends Controller_Template {
 				form::close();
 		}
 		
-		// send the response
-		$this->response->body($this->template);
+		// content
+		$this->template->title.= $title;
+		$this->template->layout->image = Html::image(MODFOLDER.'/app/modules/setup/views/design/images/database-24x24.png', array('id' => 'title-image'));
+		$this->template->layout->label = $title;
 	}
 	
 	public function action_genre()
@@ -262,9 +253,6 @@ class Controller_Setup_Install extends Controller_Template {
 		
 		// assign the object a shorter variable to use in the method
 		$data = $this->template->layout->content;
-	
-		// set the message
-		$data->message = ___('setup.genre.message', array(':path' => APPFOLDER.'/config/nova.php'));
 		
 		// map the genres directory
 		$map = Utility::directory_map(MODPATH.'app/modules/setup/assets/install/genres/');
@@ -275,8 +263,8 @@ class Controller_Setup_Install extends Controller_Template {
 		foreach ($map as $key => $m)
 		{
 			// drop the extension off
-			$length = strlen(EXT);
-			$value = str_replace(EXT, '', $m);
+			$length = strlen('.php');
+			$value = str_replace('.php', '', $m);
 			
 			if (array_key_exists($value, $info))
 			{
@@ -304,67 +292,40 @@ class Controller_Setup_Install extends Controller_Template {
 		// set the loading image
 		$data->images = array(
 			'loading' => array(
-				'src' => MODFOLDER.'/app/modules/setup/design/images/loading.gif',
+				'src' => MODFOLDER.'/app/modules/setup/views/design/images/loading.gif',
 				'attr' => array(
-					'alt' => ___('processing'),
+					'alt' => 'processing',
+					'class' => '')),
+			'installed' => array(
+				'src' => MODFOLDER.'/app/modules/setup/views/design/images/tick-circle.png',
+				'attr' => array(
+					'alt' => 'installed',
+					'class' => '')),
+			'notinstalled' => array(
+				'src' => MODFOLDER.'/app/modules/setup/views/design/images/exclamation-red.png',
+				'attr' => array(
+					'alt' => 'not installed',
 					'class' => '')),
 		);
 		
 		// content
 		$this->template->title.= 'The Genre Panel';
-		$this->template->layout->image = Html::image(MODFOLDER.'/app/modules/setup/views/design/images/pencil-24x24.png', array('id' => 'title-image'));
+		$this->template->layout->image = Html::image(MODFOLDER.'/app/modules/setup/views/design/images/switch-24x24.png', array('id' => 'title-image'));
 		$this->template->layout->label = 'The Genre Panel';
-	}
-	
-	/**
-	 * The install/main page can display several errors depending on the situation.
-	 * The following errors have been built in to the install/main page:
-	 *
-	 *     0 - no errors
-	 *     1 - the system is already installed
-	 *     2 - you must be a system administrator to update the genre
-	 */
-	public function action_main($error = 0)
-	{
-		// create a new content view
-		$this->template->layout->content = View::factory(Location::view('install_main'));
-		
-		// create a new js view
-		$this->template->javascript = View::factory(Location::view('install_main_js', null, 'js'));
-		
-		// assign the object a shorter variable to use in the method
-		$data = $this->template->layout->content;
-		
-		// figure out if the system is installed or not
-		$data->installed = Utility::install_status();
-		
-		if ((is_numeric($error) and $error > 0))
-		{
-			$this->template->layout->flash = View::factory('install/pages/flash');
-			$this->template->layout->flash->status = ($error == 1) ? 'info' : 'error';
-			$this->template->layout->flash->message = ___('install.error.error_'.$error);
-		}
-		
-		// content
-		$this->template->title.= ___('Installation Center');
-		$this->template->layout->label = ___('Installation Center');
-		
-		// send the response
-		$this->response->body($this->template);
 	}
 	
 	public function action_remove()
 	{
 		// create a new content view
-		$this->template->layout->content = View::factory(Location::view('install_remove'));
+		$this->template->layout->content = View::factory('components/pages/install/remove');
 		
 		// create a new js view
-		$this->template->javascript = View::factory(Location::view('install_remove_js', null, 'js'));
+		$this->template->javascript = View::factory('components/js/install/remove_js');
 		
 		// assign the object a shorter variable to use in the method
 		$data = $this->template->layout->content;
 		
-		if (isset($_POST['submit']))
+		if (HTTP_Request::POST == $this->request->method())
 		{
 			// grab an instance of the database
 			$db = Database::instance();
@@ -373,47 +334,67 @@ class Controller_Setup_Install extends Controller_Template {
 			$dbconf = Kohana::$config->load('database.default');
 			
 			// get an array of the tables
-			$tables = $db->list_tables();
+			$tables = $db->list_tables($db->table_prefix().'%');
 			
-			// get the prefix length
-			$prefix_len = strlen($dbconf['table_prefix']);
-			
-			// go through all the tables to find out if its part of the system or not
-			foreach ($tables as $key => $value)
+			// uninstall the system
+			if (is_array($tables) and count($tables) > 0)
 			{
-				if (substr($value, 0, $prefix_len) != $dbconf['table_prefix'])
+				foreach ($tables as $v)
 				{
-					unset($tables[$key]);
+					DBForge::drop_table($v);
+				}
+				
+				$new_tables = $db->list_tables($db->table_prefix().'%');
+				
+				if (is_array($new_tables) and count($new_tables) == 0)
+				{
+					// set the failure message
+					$data->message = ___('setup.remove.success');
+					
+					$url = 'setup/main/index';
+					$text = 'Setup Center';
 				}
 				else
 				{
-					$tables[$key] = substr_replace($value, '', 0, $prefix_len);
+					// set the failure message
+					$data->message = ___('setup.remove.failure');
+					
+					$url = 'setup/install/remove';
+					$text = 'Try Again';
 				}
+				
+				
+				
+				// build the button attributes
+				$next = array(
+					'type' => 'submit',
+					'class' => 'btn-main',
+					'id' => 'install',
+				);
+				
+				// build the next step control
+				$this->template->layout->controls = Form::open($url).Form::button('install', $text, $next).Form::close();
 			}
-			
-			// loop through and uninstall the system
-			foreach ($tables as $v)
+			else
 			{
-				DBForge::drop_table($v);
+				// set the failure message
+				$data->message = ___('setup.remove.no_tables');
+				
+				// build the button attributes
+				$next = array(
+					'type' => 'submit',
+					'class' => 'btn-main',
+					'id' => 'install',
+				);
+				
+				// build the next step control
+				$this->template->layout->controls = Form::open('setup/main/index').Form::button('install', 'Setup Center', $next).Form::close();
 			}
-			
-			// set the failure message
-			$data->message = ___('install.remove.success');
-			
-			// build the button attributes
-			$next = array(
-				'type' => 'submit',
-				'class' => 'btn-main',
-				'id' => 'install',
-			);
-			
-			// build the next step control
-			$this->template->layout->controls = form::open('install/index').form::button('install', ___('Install Center'), $next).form::close();
 		}
 		else
 		{
 			// set the instructions
-			$data->message = ___('install.remove.message');
+			$data->message = ___('setup.remove.instructions');
 			
 			// build the button attributes
 			$next = array(
@@ -423,15 +404,13 @@ class Controller_Setup_Install extends Controller_Template {
 			);
 			
 			// build the next step control
-			$this->template->layout->controls = form::open('install/remove').form::button('submit', ___('Uninstall'), $next).form::close();
+			$this->template->layout->controls = Form::open('setup/install/remove').Form::button('submit', 'Uninstall', $next).Form::close();
 		}
 		
 		// content
-		$this->template->title.= ___('Uninstall Nova');
-		$this->template->layout->label = ___('Uninstall Nova');
-		
-		// send the response
-		$this->response->body($this->template);
+		$this->template->title.= 'Uninstall Nova 3';
+		$this->template->layout->image = Html::image(MODFOLDER.'/app/modules/setup/views/design/images/bin-24x24.png', array('id' => 'title-image'));
+		$this->template->layout->label = 'Uninstall Nova 3';
 	}
 	
 	public function action_step()
