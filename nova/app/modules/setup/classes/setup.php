@@ -12,6 +12,66 @@
 class Setup {
 	
 	/**
+	 * Check for updates to the system.
+	 *
+	 * 0 - no updates
+	 * 1 - major update (3.0 => 4.0)
+	 * 2 - minor update (3.0 => 3.1)
+	 * 3 - incremental update (3.0.1 => 3.0.2)
+	 * 4 - beta releases
+	 *
+	 * @access	public
+	 * @return 	mixed	false if there are no updates, an object with information if there are
+	 */
+	public static function check_for_updates()
+	{
+		// grab the update setting
+		$pref = Model_Settings::get_settings('updates');
+		
+		if (ini_get('allow_url_fopen'))
+		{
+			// get the list of classes that have been loaded
+			$classes = get_declared_classes();
+			
+			// if Spyc hasn't been loaded, then load it
+			if ( ! in_array('Spyc', $classes))
+			{
+				// find the Spyc library
+				$path = Kohana::find_file('vendor', 'spyc/spyc');
+				
+				// load the Spyc library
+				Kohana::load($path);
+			}
+			
+			// load the YAML data into an array
+			$content = Spyc::YAMLLoad(Kohana::$config->load('nova.version_info'));
+			
+			// dump the info from the server into an object ($US = Update Server)
+			$US = (object) $content;
+			
+			// get the system information
+			$sys = Model_System::find('first');
+			
+			// build the system version string
+			$sysversion = $sys->version_major.'.'.$sys->version_minor.'.'.$sys->version_update;
+			
+			// check the version in the system versus what's coming from the update server
+			if (version_compare($sysversion, $US->version, '<'))
+			{
+				// if the admin wants to see these specific updates, pass the object along
+				if ($US->severity <= $pref)
+				{
+					return $US;
+				}
+				
+				return false;
+			}
+		}
+		
+		return false;
+	}
+	
+	/**
 	 * Install the system.
 	 *
 	 * @access	public
