@@ -127,7 +127,7 @@ abstract class Nova_Hooks {
 			'Internet Explorer'	=> 8,
 			'Safari'			=> 5,
 			'Firefox'			=> 4,
-			'Chrome'			=> 8,
+			'Chrome'			=> 10,
 		);
 		
 		// get the browser
@@ -141,7 +141,7 @@ abstract class Nova_Hooks {
 			// if the version requirements don't line up, redirect them
 			if (version_compare($version, $notallowed[$browser], '<'))
 			{
-				header('Location:'.Url::base().'browser.php?b='.$browser.'&v='.$version.'&pv='.$notallowed[$browser]);
+				header('Location:'.Url::base().'message.php?type=browser');
 				exit;
 			}
 		}
