@@ -97,7 +97,7 @@ class Controller_Setup_Main extends Controller_Template {
 		
 		// do some checks to see what we should show
 		$installed = count(Database::instance()->list_tables(Database::instance()->table_prefix().'%')) > 0;
-		$update = ($installed) ? $this->_check_for_updates() : false;
+		$update = ($installed) ? Setup::check_for_updates() : false;
 		
 		if ($installed)
 		{
@@ -716,47 +716,5 @@ return array
 		$this->template->title.= 'Verify Server Requirements';
 		$this->template->layout->image = Html::image(MODFOLDER.'/app/modules/setup/views/design/images/tick-24x24.png', array('id' => 'title-image'));
 		$this->template->layout->label = 'Verify Server Requirements';
-	}
-	
-	protected function _check_for_updates()
-	{
-		if (ini_get('allow_url_fopen'))
-		{
-			// get the list of classes that have been loaded
-			$classes = get_declared_classes();
-			
-			// if sfYaml hasn't been loaded, then load it
-			if ( ! in_array('Spyc', $classes))
-			{
-				// find the sfYAML library
-				$path = Kohana::find_file('vendor', 'spyc/spyc');
-				
-				// load the sfYAML library
-				Kohana::load($path);
-			}
-			
-			// load the YAML data into an array
-			$content = Spyc::YAMLLoad(Kohana::$config->load('nova.version_info'));
-			
-			try {
-				// get the system information
-				$system = Model_System::find('first');
-				
-				return $system->version_major;
-			} catch (Exception $e) {
-				// get the prefix
-				$prefix = Database::instance()->table_prefix();
-				
-				// query the database for the version info
-				$system = DB::query(Database::SELECT, "SELECT * FROM ${prefix}system_info WHERE sys_id = 1")
-					->as_object()
-					->execute()
-					->current();
-				
-				return $system->sys_version_major;
-			}
-		}
-		
-		return false;
 	}
 }
