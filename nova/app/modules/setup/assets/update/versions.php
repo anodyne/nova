@@ -2,11 +2,10 @@
 /**
  * File containing all the version the system can be updated from
  *
- * @package		Update
+ * @package		Setup
  * @author		Anodyne Productions
  */
 
 $version_array = array(
-	'100', '101', '102', '103', '104', '105', '106', '110',
-	'200'
+	'301'
 );
