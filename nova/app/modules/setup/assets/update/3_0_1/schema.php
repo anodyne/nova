@@ -2,9 +2,9 @@
 /**
  * File that handles all schema changes to the database.
  *
- * 1.0.1 => 1.0.2
+ * 3.0.0 => 3.0.1
  *
- * @package		Update
+ * @package		Setup
  * @author		Anodyne Productions
  */
 
@@ -99,15 +99,6 @@ if ( ! is_null($rename_tables))
 |---------------------------------------------------------------
 */
 
-$add_column = array(
-	'catalogue_ranks' => array(
-		'rankcat_genre' => array(
-			'type' => 'VARCHAR',
-			'constraint' => 10,
-			'default' => Kohana::$config->load('nova.genre'))
-	)
-);
-
 if ( ! is_null($add_column))
 {
 	foreach ($add_column as $key => $value)
@@ -129,63 +120,6 @@ if ( ! is_null($add_column))
 | );
 |---------------------------------------------------------------
 */
-
-$modify_column = array(
-	'missions' => array(
-		'mission_title' => array(
-			'name' => 'mission_title',
-			'type' => 'VARCHAR',
-			'constraint' => 255)
-	),
-	'news_categories' => array(
-		'newscat_name' => array(
-			'name' => 'newscat_name',
-			'type' => 'VARCHAR',
-			'constraint' => 255)
-	),
-	'news' => array(
-		'news_author_character' => array(
-			'name' => 'news_author_character',
-			'type' => 'INT',
-			'constraint' => 8),
-		'news_author_user' => array(
-			'name' => 'news_author_user',
-			'type' => 'INT',
-			'constraint' => 8),
-		'news_title' => array(
-			'name' => 'news_title',
-			'type' => 'VARCHAR',
-			'constraint' => 255)
-	),
-	'personallogs' => array(
-		'log_author_character' => array(
-			'name' => 'log_author_character',
-			'type' => 'INT',
-			'constraint' => 8),
-		'log_author_user' => array(
-			'name' => 'log_author_user',
-			'type' => 'INT',
-			'constraint' => 8),
-		'log_title' => array(
-			'name' => 'log_title',
-			'type' => 'VARCHAR',
-			'constraint' => 255)
-	),
-	'posts' => array(
-		'post_title' => array(
-			'name' => 'post_title',
-			'type' => 'VARCHAR',
-			'constraint' => 255),
-		'post_location' => array(
-			'name' => 'post_location',
-			'type' => 'VARCHAR',
-			'constraint' => 255),
-		'post_timeline' => array(
-			'name' => 'post_timeline',
-			'type' => 'VARCHAR',
-			'constraint' => 255)
-	)
-);
 
 if ( ! is_null($modify_column))
 {

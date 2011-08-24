@@ -2,9 +2,9 @@
 /**
  * File that handles all data changes to the database.
  *
- * 2.0.0 => 2.0.1
+ * 3.0.0 => 3.0.1
  *
- * @package		Update
+ * @package		Setup
  * @author		Anodyne Productions
  */
 
@@ -15,8 +15,8 @@ $system_info		= null;
  * Build the data used by the system for version info
  */
 $system_versions = array(
-	'version'	=> '2.0.1',
-	'major'		=> 2,
+	'version'	=> '3.0.1',
+	'major'		=> 3,
 	'minor'		=> 0,
 	'update'	=> 1,
 	'date'		=> 1273705200,
@@ -25,8 +25,8 @@ $system_versions = array(
 );
 
 $system_info = array(
-	'last_update'		=> date::now(),
-	'version_major'		=> 2,
+	'last_update'		=> Date::now(),
+	'version_major'		=> 3,
 	'version_minor'		=> 0,
 	'version_update'	=> 1
 );
@@ -34,4 +34,10 @@ $system_info = array(
 /**
  * Add the system version info to the database
  */
-Jelly::factory('systemversion')->set($system_versions)->save();
+Model_SystemVersion::create_item($system_versions);
+
+/**
+ * Clear out the variables
+ */
+$system_versions	= null;
+$system_info		= null;
