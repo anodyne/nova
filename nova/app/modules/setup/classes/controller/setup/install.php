@@ -2,11 +2,10 @@
 /**
  * Install Controller
  *
- * @package		Install
+ * @package		Setup
  * @category	Controllers
  * @author		Anodyne Productions
  * @copyright	2011 Anodyne Productions
- * @version		3.0
  */
 
 # TODO: remove the environment check around the login redirect

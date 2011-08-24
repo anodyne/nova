@@ -2,7 +2,7 @@
 /**
  * Upgrade Controller
  *
- * @package		Upgrade
+ * @package		Setup
  * @category	Controllers
  * @author		Anodyne Productions
  * @copyright	2011 Anodyne Productions
