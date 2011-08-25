@@ -95,27 +95,38 @@ class Controller_Setup_Update extends Controller_Template {
 		$this->response->body($this->template);
 	}
 	
-	public function action_check()
+	public function action_index()
 	{
+		// find Markdown
+		$path = Kohana::find_file('vendor', 'markdown/markdown');
+		
+		// load Markdown
+		Kohana::load($path);
+		
 		// create a new content view
-		$this->template->layout->content = View::factory('components/pages/update/check');
+		$this->template->layout->content = View::factory('components/pages/update/index');
 		
 		// assign the object a shorter variable to use in the method
 		$data = $this->template->layout->content;
 		
+		// pull the version info from the db
+		$ver = Model_System::find('first');
+		
+		// build the version information
+		$version = $ver->version_major.'.'.$ver->version_minor.'.'.$ver->version_update;
+		
 		// check for updates
 		$check = Setup::check_for_updates();
 		
+		$allow_update = true;
+		
 		if ($check)
 		{
-			// pull the version info from the db
-			$ver = Model_System::find('first');
-			
-			// build the version information
-			$version = $ver->version_major.'.'.$ver->version_minor.'.'.$ver->version_update;
-			
 			// pull a map of the update dirs
 			$map = Utility::directory_map(MODPATH.'app/modules/setup/assets/update/', true);
+			
+			// an empty array to prevent exception
+			$data->changes = array();
 			
 			foreach ($map as $key => $loc)
 			{
@@ -123,9 +134,12 @@ class Controller_Setup_Update extends Controller_Template {
 				
 				if (version_compare($location, $version, '>') and version_compare($location, $check->version, '<='))
 				{
-					$updates[] = $loc;
+					$data->changes[$loc] = Markdown(file_get_contents(MODPATH.'app/modules/setup/assets/update/'.$loc.'/changes.md'));
 				}
 			}
+			
+			// sort the array of update notes to make sure the newest are first
+			krsort($data->changes);
 			
 			// send the entire object with the details over to the view
 			$data->check = $check;
@@ -137,6 +151,33 @@ class Controller_Setup_Update extends Controller_Template {
 		{
 			// set the message
 			$data->message = "There are no updates available for Nova 3.";
+			
+			// append to the message under some circumstances
+			if (version_compare($version, Kohana::$config->load('nova.app_version_full'), '>'))
+			{
+				$data->message.= " I have, however, noticed that your files are running an older version of Nova than your database. I'm not sure how that happened, but you'll need to download the files from the Anodyne site again and upload them to your server.";
+				
+				$allow_update = false;
+			}
+			elseif (version_compare($version, Kohana::$config->load('nova.app_version_full'), '<'))
+			{
+				$data->message.= " I have, however, noticed that your files are running a newer version of Nova than your database. You'll need to run the update script in order to complete the update process.";
+				
+				$allow_update = true;
+			}
+		}
+		
+		if ($allow_update)
+		{
+			// build the next step button
+			$next = array(
+				'type' => 'submit',
+				'class' => 'btn-main',
+				'id' => 'next',
+			);
+			
+			// build the next step control
+			$this->template->layout->controls = Form::open('setup/update/step').Form::button('next', 'Start Update', $next).Form::close();
 		}
 		
 		// content
@@ -145,38 +186,22 @@ class Controller_Setup_Update extends Controller_Template {
 		$this->template->layout->label = 'Check for Updates';
 	}
 	
-	public function action_step($step = 0)
+	public function action_step()
 	{
 		// make sure the script doesn't time out
 		set_time_limit(0);
 		
-		// figure out if they're coming from a nova 1 installation
-		$ver = Jelly::query('system', 1)->select();
-		
-		// if they're coming from a nova 1 install, send them to the other update page
-		if ($ver->version_major == 1)
-		{
-			$this->request->redirect('update/nova1');
-		}
-		
-		switch ($step)
+		switch ($this->request->param('id'))
 		{
 			case 0:
 				// create a new content view
-				$this->template->layout->content = View::factory(Location::view('update_step0'));
+				$this->template->layout->content = View::factory('components/pages/update/step0');
+				
+				// create the javascript view
+				$this->template->javascript = View::factory('components/js/update/step0_js');
 				
 				// assign the object a shorter variable to use in the method
 				$data = $this->template->layout->content;
-				
-				// make sure the proper message is displayed
-				$data->message = nl2br(__('update0.message'));
-				
-				// content
-				$this->template->title.= __('Update Nova');
-				$this->template->layout->label = __('Getting Started');
-				
-				// create the javascript view
-				$this->template->javascript = View::factory(Location::view('update_step0_js', null, 'js'));
 				
 				// build the next step button
 				$next = array(
@@ -186,17 +211,20 @@ class Controller_Setup_Update extends Controller_Template {
 				);
 				
 				// build the next step control
-				$this->template->layout->controls = form::open('update/step/1').form::button('next', __('Start Update'), $next).form::close();
+				$this->template->layout->controls = Form::open('setup/update/step/1').Form::button('next', 'Start Update', $next).Form::close();
 			break;
 				
 			case 1:
-				if (isset($_POST['next']))
+				if (HTTP_Request::POST == $this->request->method())
 				{
+					// get the system info
+					$ver = Model_System::find('first');
+					
 					// build the version string
 					$version = $ver->version_major.$ver->version_minor.$ver->version_update;
 					
 					// get the directory listing
-					$dir = Utility::directory_map(MODFOLDER.'/nova/update/assets', true);
+					$dir = Utility::directory_map(MODFOLDER.'/app/modules/setup/assets', true);
 					
 					if (is_array($dir))
 					{
@@ -222,7 +250,7 @@ class Controller_Setup_Update extends Controller_Template {
 					else
 					{
 						// pull in the versions file
-						include_once MODPATH.'nova/update/assets/versions'.EXT;
+						include_once MODPATH.'app/modules/setup/assets/versions.php';
 						
 						// make sure we're not doing more work than we need to
 						foreach ($version_array as $k => $v)
@@ -238,42 +266,34 @@ class Controller_Setup_Update extends Controller_Template {
 					foreach ($dir as $d)
 					{
 						// make the schema changes
-						include_once(MODPATH.'nova/update/assets/'.$d.'/schema'.EXT);
+						include_once(MODPATH.'app/modules/setup/assets/'.$d.'/schema.php');
 						
 						// make the data changes
-						include_once(MODPATH.'nova/update/assets/'.$d.'/data'.EXT);
+						include_once(MODPATH.'app/modules/setup/assets/'.$d.'/data.php');
 						
 						// pause the script for a second
 						sleep(1);
 					}
 					
 					// update the system info
-					$info = Jelly::factory('system');
-					$info->last_update = $system_info['last_update'];
-					$info->version_major = $system_info['version_major'];
-					$info->version_minor = $system_info['version_minor'];
-					$info->version_update = $system_info['version_update'];
-					$info->save(1);
+					$ver->last_update = $system_info['last_update'];
+					$ver->version_major = $system_info['version_major'];
+					$ver->version_minor = $system_info['version_minor'];
+					$ver->version_update = $system_info['version_update'];
+					$ver->save();
 					
 					// do the registration
-					$this->_register();
+					Setup::register('update');
 				}
 				
 				// create a new content view
-				$this->template->layout->content = View::factory(Location::view('update_step1'));
+				$this->template->layout->content = View::factory('components/pages/update/step1');
+				
+				// create the javascript view
+				$this->template->javascript = View::factory('components/js/update/step1_js');
 				
 				// assign the object a shorter variable to use in the method
 				$data = $this->template->layout->content;
-				
-				// make sure the proper message is displayed
-				$data->message = nl2br(__('update1.message'));
-				
-				// content
-				$this->template->title.= __('Update Nova');
-				$this->template->layout->label = __('Finishing Up');
-				
-				// create the javascript view
-				$this->template->javascript = View::factory(Location::view('update_step1_js', null, 'js'));
 				
 				// build the next step button
 				$next = array(
@@ -283,11 +303,13 @@ class Controller_Setup_Update extends Controller_Template {
 				);
 				
 				// build the next step control
-				$this->template->layout->controls = form::open('main/index').form::button('next', __('Back to Site'), $next).form::close();
+				$this->template->layout->controls = Form::open('main/index').Form::button('next', 'Back to Site', $next).Form::close();
 			break;
 		}
 		
-		// send the response
-		$this->request->response = $this->template;
+		// content
+		$this->template->title.= 'Update Nova';
+		$this->template->layout->image = Html::image(MODFOLDER.'/app/modules/setup/views/design/images/wand-24x24.png', array('id' => 'title-image'));
+		$this->template->layout->label = 'Update Nova';
 	}
 }
