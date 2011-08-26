@@ -6,7 +6,6 @@
  * @category	Controller
  * @author		Anodyne Productions
  * @copyright	2011 Anodyne Productions
- * @version		2.0
  */
 
 require_once MODPATH.'core/libraries/Nova_controller_admin'.EXT;
