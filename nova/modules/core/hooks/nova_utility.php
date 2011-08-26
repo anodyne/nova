@@ -5,8 +5,7 @@
  * @package		Nova
  * @category	Hook
  * @author		Anodyne Productions
- * @copyright	2010-11 Anodyne Productions
- * @version		2.0
+ * @copyright	2011 Anodyne Productions
  */
 
 abstract class Nova_utility {
