@@ -2,7 +2,7 @@
 /**
  * The language file used by the Setup module.
  *
- * @package		Nova
+ * @package		Setup
  * @category	I18n
  * @author		Anodyne Productions
  * @copyright	2011 Anodyne Productions
