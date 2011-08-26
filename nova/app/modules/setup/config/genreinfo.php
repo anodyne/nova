@@ -1,4 +1,15 @@
 <?php defined('SYSPATH') or die('No direct script access.');
+/**
+ * Genre info config file.
+ *
+ * This file controls the display of the genres available throughout
+ * the setup module to ensure no typos or mistakes are being made.
+ *
+ * @package		Setup
+ * @category	Config
+ * @author		Anodyne Productions
+ * @copyright	2011 Anodyne Productions
+ */
 
 return array(
 	'baj'	=> "Star Trek: Bajorans",
