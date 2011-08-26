@@ -125,6 +125,16 @@ class Controller_Setup_Update extends Controller_Template {
 			// pull a map of the update dirs
 			$map = Utility::directory_map(MODPATH.'app/modules/setup/assets/update/', true);
 			
+			// on some systems, we may not be able to map automatically
+			if ( ! is_array($map))
+			{
+				// pull in the versions file
+				include_once MODPATH.'app/modules/setup/assets/versions.php';
+				
+				// assign the versions to the proper variable
+				$map = $versions_array;
+			}
+			
 			// an empty array to prevent exception
 			$data->changes = array();
 			
@@ -223,55 +233,45 @@ class Controller_Setup_Update extends Controller_Template {
 					// build the version string
 					$version = $ver->version_major.$ver->version_minor.$ver->version_update;
 					
-					// get the directory listing
-					$dir = Utility::directory_map(MODFOLDER.'/app/modules/setup/assets', true);
+					// pull a map of the update dirs
+					$map = Utility::directory_map(MODPATH.'app/modules/setup/assets/update/', true);
 					
-					if (is_array($dir))
-					{
-						// make sure we only have the items we absolutely need from the directory listing
-						foreach ($dir as $key => $value)
-						{
-							// make sure the index.html and versions files aren't in the array
-							if ($value == 'index.html' or $value == 'versions.php' or $value == 'version.yaml')
-							{
-								unset($dir[$key]);
-							}
-							else
-							{
-								$file = str_replace('_', '', $value);
-								
-								if ($file < $version)
-								{
-									unset($dir[$key]);
-								}
-							}
-						}
-					}
-					else
+					// on some systems, we may not be able to map automatically
+					if ( ! is_array($map))
 					{
 						// pull in the versions file
 						include_once MODPATH.'app/modules/setup/assets/versions.php';
 						
-						// make sure we're not doing more work than we need to
-						foreach ($version_array as $k => $v)
+						// assign the versions to the proper variable
+						$map = $versions_array;
+					}
+					
+					// an array for holding the stuff we're updating
+					$updates = array();
+					
+					foreach ($map as $key => $loc)
+					{
+						$location = str_replace('_', '.', $loc);
+						
+						if (version_compare($location, $version, '>') and version_compare($location, $check->version, '<='))
 						{
-							if ($v < $version)
-							{
-								unset($version_array[$k]);
-							}
+							$updates[] = $loc;
 						}
 					}
 					
-					// loop through the final listing and do the updates
-					foreach ($dir as $d)
+					// sort the array to make sure we're doing the updates in the right order
+					sort($updates);
+					
+					// loop through the array and make the changes
+					foreach ($updates as $u)
 					{
-						// make the schema changes
-						include_once(MODPATH.'app/modules/setup/assets/'.$d.'/schema.php');
+						// do the schema changes
+						include_once MODPATH.'app/modules/setup/assets/update/'.$u.'/schema.php';
 						
-						// make the data changes
-						include_once(MODPATH.'app/modules/setup/assets/'.$d.'/data.php');
+						// do the data changes
+						include_once MODPATH.'app/modules/setup/assets/update/'.$u.'/data.php';
 						
-						// pause the script for a second
+						// pause
 						sleep(1);
 					}
 					
