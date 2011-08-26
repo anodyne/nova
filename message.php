@@ -46,30 +46,21 @@ switch ($type)
 				color: #444;
 				font: 75%/1.5 "lucida grande", verdana, arial, sans-serif;
 			}
-			
 			#container {
 				width: 650px;
 				margin: 5em auto;
 				padding: 0 1em;
-				
 				border: 1px solid #aaa;
 				background: #ddd;
 				background: -moz-linear-gradient(center top, #eee 20%, #ddd 100%);
 				background: -webkit-gradient(linear, left top, left bottom, color-stop(.2, #eee), color-stop(1, #ddd));
-				
-				border-radius: 4px;
-				-moz-border-radius: 4px;
-				
+				border-radius: 3px;
+				-moz-border-radius: 3px;
 				box-shadow: inset 0 1px 0 rgba(255, 255, 255, .55), 0 2px 7px rgba(0, 0, 0, .2);
 				-moz-box-shadow: inset 0 1px 0 rgba(255, 255, 255, .55), 0 2px 7px rgba(0, 0, 0, .2);
 				-webkit-box-shadow: inset 0 1px 0 rgba(255, 255, 255, .55), 0 2px 7px rgba(0, 0, 0, .2);
 			}
-			#container h1 {
-				padding: 0 0 0 45px;
-				
-				background: transparent url('exclamation.png') no-repeat center left;
-				text-shadow: 0 1px 0 rgba(255, 255, 255, .55);
-			}
+			#container h1 { text-shadow: 0 1px 0 rgba(255, 255, 255, .55); }
 			#container p {
 				color: #555;
 				font-size: 1.2em;
@@ -77,7 +68,6 @@ switch ($type)
 			}
 			#container a { color: #000; }
 			#container a:hover { color: #06c; }
-			
 			.error { color: #c00; }
 			.notice { color: #406ceb; }
 		</style>
