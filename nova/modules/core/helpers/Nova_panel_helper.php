@@ -2,10 +2,10 @@
 /**
  * CodeIgniter Panel Helpers
  *
- * @package		CodeIgniter
- * @subpackage	Helpers
- * @category	Helpers
- * @author		David VanScott
+ * @package		Nova
+ * @category	Helper
+ * @author		Anodyne Productions
+ * @copyright	2011 Anodyne Productions
  */
 
 // ------------------------------------------------------------------------
