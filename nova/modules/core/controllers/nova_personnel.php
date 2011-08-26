@@ -6,7 +6,6 @@
  * @category	Controller
  * @author		Anodyne Productions
  * @copyright	2011 Anodyne Productions
- * @version		2.0
  */
 
 require_once MODPATH.'core/libraries/Nova_controller_main'.EXT;
@@ -99,13 +98,8 @@ abstract class Nova_personnel extends Nova_controller_main {
 									$data['depts'][$dept]['sub'][$a]['pos'][$b]['open'] = $pos->pos_open;
 									$data['depts'][$dept]['sub'][$a]['pos'][$b]['blank_img'] = $blank_img;
 									
-									$order = array(
-										'position_1' => 'desc',
-										'position_2' => 'desc',
-										'rank' => 'asc'
-									);
 									// get any characters in a position in a sub dept
-									$characters = $this->char->get_characters_for_position($pos->pos_id, $order);
+									$characters = $this->char->get_characters_for_position($pos->pos_id, array('rank' => 'asc'));
 							
 									if ($characters->num_rows() > 0)
 									{
@@ -186,14 +180,8 @@ abstract class Nova_personnel extends Nova_controller_main {
 							$data['depts'][$dept]['pos'][$b]['open'] = $pos->pos_open;
 							$data['depts'][$dept]['pos'][$b]['blank_img'] = $blank_img;
 							
-							$order = array(
-								'position_1' => 'desc',
-								'position_2' => 'desc',
-								'rank' => 'asc'
-							);
-							
 							// get any characters in a position in the dept
-							$characters = $this->char->get_characters_for_position($pos->pos_id, $order);
+							$characters = $this->char->get_characters_for_position($pos->pos_id, array('rank' => 'asc'));
 							
 							if ($characters->num_rows() > 0)
 							{
