@@ -6,7 +6,6 @@
  * @category	Model
  * @author		Anodyne Productions
  * @copyright	2011 Anodyne Productions
- * @version		2.0
  */
 
 abstract class Nova_missions_model extends Model {

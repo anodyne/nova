@@ -6,11 +6,6 @@
  * @category	Model
  * @author		Anodyne Productions
  * @copyright	2011 Anodyne Productions
- * @version		2.0
- *
- * Updated the get_drafts method to allow for pulling all drafts in the
- * the database instead of just one page, updated the search method to
- * only pull back results that are standard pages and a latest draft
  */
 
 abstract class Nova_wiki_model extends Model {
