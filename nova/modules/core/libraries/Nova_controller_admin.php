@@ -6,7 +6,6 @@
  * @category	Library
  * @author		Anodyne Productions
  * @copyright	2011 Anodyne Productions
- * @since		2.0
  */
  
 class Nova_controller_admin extends Controller {

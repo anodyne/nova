@@ -11,7 +11,6 @@
  * @category	Library
  * @author		Anodyne Productions
  * @copyright	2011 Anodyne Productions
- * @version		2.0
  */
 
 abstract class Nova_location {
