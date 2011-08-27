@@ -25,3 +25,17 @@
 
 * If a skin has default sections in it, you shouldn't be able to remove or deactivate it
 * Move setting skin defaults into the catalogue instead of Site Settings (?)
+
+## Site Content
+
+* Page titles, headers and content will all be stored in the database and then cached by section so that we can use that content throughout the system without putting a ton of stress on the database with constant calls.
+* When any site content is changed, we'll delete the cache and re-cache it automatically.
+* Using Kohana's caching system, we'll be able to cache all sub navigation menus for fewer calls to the database.
+* When a menu item is updated, we'll delete the cache and re-cache it automatically.
+
+## Access
+
+* There will be 4 access roles provided by default: system administrator, power user, standard user, inactive user. They will be protected so they can't be deleted and will have constants for their IDs in the access role model.
+* A warning will be shown when duplicating the system administrator role that it contains a lot of power and caution should be used.
+* Need to be able to lock a player out of being able to get a lock on a post (maybe through moderation?)
+* When logging in, Nova will check a user's status and if their status is INACTIVE, it will automatically set the access roles to the INACTIVE role instead of whatever role is stored in the database for them.
