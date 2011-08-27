@@ -1548,14 +1548,14 @@ $positions = array(
 		'pos_type' => 'officer'),
 	
 	array(
-		'pos_name' => 'Chief Security/Tactial Officer',
+		'pos_name' => 'Chief Security/Tactical Officer',
 		'pos_desc' => "The Chief Security Officer is called Chief of Security. Her/his duty is to ensure the safety of ship and crew. Some take it as their personal duty to protect the Commanding Officer/Executive Officer on away teams. She/he is also responsible for people under arrest and the safety of guests, liked or not.  S/he also is a department head and a member of the senior staff, responsible for all the crew members in her/his department and duty rosters. Security could be called the 24th century police force.\r\n\r\nThe Chief of Security role can also be combined with the Chief Tactical Officer position.",
 		'pos_dept' => 4,
 		'pos_order' => 0,
 		'pos_open' => 1,
 		'pos_type' => 'senior'),
 	array(
-		'pos_name' => 'Assistant Chief Security/Tactial Officer',
+		'pos_name' => 'Assistant Chief Security/Tactical Officer',
 		'pos_desc' => "The Assistant Chief Security Officer is sometimes called Deputy of Security. S/he assists the Chief of Security in the daily work; in issues regarding Security and any administrative matters.  If required the Deputy must be able to take command of the Security department.",
 		'pos_dept' => 4,
 		'pos_order' => 1,
