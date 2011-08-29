@@ -37,7 +37,13 @@
 							<?php if ($p['saved'] != $this->session->userdata('main_char')): ?>
 								<?php echo img($images['new']);?>
 							<?php endif; ?>
+							
 							<?php echo anchor('write/missionpost/'. $p['post_id'], $p['title'], array('class' => 'bold'));?><br />
+							
+							<?php if ($p['locked']): ?>
+								<span class="fontSmall blue bold"><?php echo $label['locked'];?></span><br />
+							<?php endif;?>
+							
 							<span class="fontSmall gray">
 								<?php echo $label['by'] .' '. $p['authors'];?><br />
 								<strong><?php echo $label['mission'];?></strong>
