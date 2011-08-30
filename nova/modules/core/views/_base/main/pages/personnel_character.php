@@ -32,57 +32,59 @@
 	</div>
 <?php endif; ?>
 
-<table class="table560px" cellpadding="3">
-	<?php foreach ($character_info as $a): ?>
-		<?php if (!empty($a['value'])): ?>
-			<tr>
-				<td class="cell-label"><?php echo $a['label'];?></td>
-				<td class="cell-spacer"></td>
-				<td><?php echo $a['value'];?></td>
-			</tr>
+<?php if (isset($character_info)): ?>
+	<table class="table560px" cellpadding="3">
+		<?php foreach ($character_info as $a): ?>
+			<?php if (!empty($a['value'])): ?>
+				<tr>
+					<td class="cell-label"><?php echo $a['label'];?></td>
+					<td class="cell-spacer"></td>
+					<td><?php echo $a['value'];?></td>
+				</tr>
+			<?php endif; ?>
+		<?php endforeach; ?>
+		
+		<?php echo table_row_spacer(3, 10);?>
+		
+		<?php if (Auth::is_logged_in() and ! is_null($character['user'])): ?>
+		<tr>
+			<td colspan="2"></td>
+			<td>
+				<?php echo anchor('personnel/user/'. $character['user'], $label['view_user'], array('class' => 'bold'));?>
+			</td>
+		</tr>
 		<?php endif; ?>
-	<?php endforeach; ?>
-	
-	<?php echo table_row_spacer(3, 10);?>
-	
-	<?php if (Auth::is_logged_in() and ! is_null($character['user'])): ?>
-	<tr>
-		<td colspan="2"></td>
-		<td>
-			<?php echo anchor('personnel/user/'. $character['user'], $label['view_user'], array('class' => 'bold'));?>
-		</td>
-	</tr>
-	<?php endif; ?>
-	
-	<?php echo table_row_spacer(3, 10);?>
-	
-	<?php if ($postcount > 0): ?>
-		<tr>
-			<td colspan="2"></td>
-			<td>
-				<?php echo anchor('personnel/viewposts/c/'. $character['id'], $label['view_all_posts'], array('class' => 'bold'));?>
-			</td>
-		</tr>
-	<?php endif;?>
-	
-	<?php if ($logcount > 0): ?>
-		<tr>
-			<td colspan="2"></td>
-			<td>
-				<?php echo anchor('personnel/viewlogs/c/'. $character['id'], $label['view_all_logs'], array('class' => 'bold'));?>
-			</td>
-		</tr>
-	<?php endif;?>
-	
-	<?php if ($awardcount > 0): ?>
-		<tr>
-			<td colspan="2"></td>
-			<td>
-				<?php echo anchor('personnel/viewawards/c/'. $character['id'], $label['view_all_awards'], array('class' => 'bold'));?>
-			</td>
-		</tr>
-	<?php endif;?>
-</table>
+		
+		<?php echo table_row_spacer(3, 10);?>
+		
+		<?php if ($postcount > 0): ?>
+			<tr>
+				<td colspan="2"></td>
+				<td>
+					<?php echo anchor('personnel/viewposts/c/'. $character['id'], $label['view_all_posts'], array('class' => 'bold'));?>
+				</td>
+			</tr>
+		<?php endif;?>
+		
+		<?php if ($logcount > 0): ?>
+			<tr>
+				<td colspan="2"></td>
+				<td>
+					<?php echo anchor('personnel/viewlogs/c/'. $character['id'], $label['view_all_logs'], array('class' => 'bold'));?>
+				</td>
+			</tr>
+		<?php endif;?>
+		
+		<?php if ($awardcount > 0): ?>
+			<tr>
+				<td colspan="2"></td>
+				<td>
+					<?php echo anchor('personnel/viewawards/c/'. $character['id'], $label['view_all_awards'], array('class' => 'bold'));?>
+				</td>
+			</tr>
+		<?php endif;?>
+	</table>
+<?php endif;?>
 
 <?php if (isset($tabs)): ?>
 	<div id="tabs">
