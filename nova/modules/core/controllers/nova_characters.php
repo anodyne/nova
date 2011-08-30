@@ -1896,20 +1896,7 @@ abstract class Nova_characters extends Nova_controller_admin {
 				{
 					$cdept = $dept;
 				}
-				elseif ($level == 2)
-				{
-					$pos = $this->pos->get_position($a->position_1);
-					
-					if (array_key_exists($pos->pos_dept, $data['characters']) === false)
-					{
-						$cdept = $this->pos->get_position($a->position_2, 'pos_dept');
-					}
-					else
-					{
-						$cdept = $pos->pos_dept;
-					}
-				}
-				elseif ($level == 3)
+				else
 				{
 					$pos = $this->pos->get_position($a->position_1);
 					
