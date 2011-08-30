@@ -455,7 +455,7 @@ abstract class Nova_write extends Nova_controller_admin {
 										$flash['status'] = 'success';
 										$flash['message'] = text_output($message);
 										
-										if (count($author_array_final) > 1)
+										if (count($authors) > 1)
 										{
 											// set the array of data for the email
 											$email_data = array(
