@@ -93,54 +93,8 @@ abstract class Nova_user extends Nova_controller_admin {
 				if ($level == 2)
 				{
 					$old_loa = $array['loa_old'];
-					$old_status = $array['status_old'];
 					
 					unset($array['loa_old']);
-					unset($array['status_old']);
-					
-					if ($old_status != 'inactive' and $array['status'] == 'inactive')
-					{
-						$array['leave_date'] = now();
-
-						$characters = $this->char->get_user_characters($id, 'active', 'array');
-
-						if (is_array($characters) and count($characters) > 0)
-						{
-							// update all the users' active characters to inactive
-							foreach ($characters as $c)
-							{
-								$char_array = array(
-									'crew_type' => 'inactive',
-									'date_deactivate' => now()
-								);
-								$this->char->update_character($c, $char_array);
-							}
-						}
-						
-						// update the user prefs to all be no
-						$this->user->update_all_user_prefs($id);
-						
-						/**
-						 * If a user is being deactivated, we need to make sure
-						 * we change their access role to deactivated and that
-						 * they aren't a system admin, game master or webmaster.
-						 */
-						$array['is_sysadmin'] = 'n';
-						$array['is_game_master'] = 'n';
-						$array['is_webmaster'] = 'n';
-						$array['access_role'] = Access_Model::INACTIVE;
-					}
-
-					if ($old_status == 'inactive' and $array['status'] != 'inactive')
-					{
-						$array['leave_date'] = null;
-						
-						// update the user prefs to all be yes
-						$this->user->update_all_user_prefs($id, 'y');
-						
-						// we're reactivating them, so make sure they have the standard access role
-						$array['access_role'] = Access_Model::STANDARD;
-					}
 				}
 				
 				if ($user == $this->session->userdata('userid'))
@@ -197,7 +151,7 @@ abstract class Nova_user extends Nova_controller_admin {
 					$flash['message'] = text_output($message);
 					
 					// if a user is updating their own password, update the cookie if it exists
-					if ($user == $this->session->userdata('userid'))
+					if ($user == $this->session->userdata('userid') and isset($array['password']))
 					{
 						// load the cookie helper
 						$this->load->helper('cookie');
