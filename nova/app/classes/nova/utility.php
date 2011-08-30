@@ -339,7 +339,7 @@ abstract class Nova_Utility {
 			$tables = Database::instance()->list_tables($dbconf['table_prefix'].'%');
 			
 			// make sure there aren't any tables in there
-			$retval = (count($tables) == Kohana::$config->load('nova.app_db_tables'));
+			$retval = (count($tables) >= Kohana::$config->load('nova.app_db_tables'));
 			
 			return $retval;
 		}
