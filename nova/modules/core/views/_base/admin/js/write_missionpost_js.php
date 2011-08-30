@@ -54,8 +54,6 @@
 			return confirm('<?php echo lang('confirm_post_missionpost');?>');
 		});
 		
-		$('#content-textarea').elastic();
-		
 		<?php if ($missionCount == 0 and $authorized): ?>
 			$.facebox(function(){
 				$.get('<?php echo site_url('ajax/add_mission');?>/<?php echo $string;?>', function(data) {

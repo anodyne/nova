@@ -12,7 +12,6 @@ Anodyne Production's next-generation RPG management system combines popular feat
 * added the message.php file to handle notification of bans, a missing "nova" directory and incompatible PHP version
 * added new process to write the database config file for you
 * added the ability to upgrade SMS Database entries to Thresher wiki pages
-* added the ability for textareas to "grow" as more text is added like Facebook
 * added the ability for site messages to have previously disallowed HTML tags (like embed, iframe, etc.) for embedding media assets from YouTube and Vimeo
 * added the ability to nest mission groups one level deep
 * added the ability for someone with level 2 admin rights to reset someone's password (the new password will be emailed to the user and they'll be prompted to reset the password the next time they log in)

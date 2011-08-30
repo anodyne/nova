@@ -10,7 +10,5 @@
 			$('#chosen-incompat').show();
 		else
 			$('.chosen').chosen();
-			
-		$('#message-textarea').elastic();
 	});
 </script>

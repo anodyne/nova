@@ -3,14 +3,9 @@
  * Admin Header
  *
  * @package		Nova
- * @category	Include
+ * @category	Assets
  * @author		Anodyne Productions
- * @copyright	2010-11 Anodyne Productions
- * @version		2.0
- *
- * Updated the lazy load with the jquery.elastic plugin, added the max-height
- * attribute to the style tag, cleaned up the file to use the lazy load a little
- * more than we were
+ * @copyright	2011 Anodyne Productions
  */
 
 $faceboxcss = ( ! is_file(APPPATH.'views/'.$current_skin.'/admin/css/jquery.facebox.css'))
@@ -30,8 +25,6 @@ $chosencss = ( ! is_file(APPPATH .'views/'.$current_skin.'/admin/css/jquery.chos
 			@import url('<?php echo $faceboxcss;?>');
 			@import url('<?php echo $uiTheme;?>');
 			@import url('<?php echo base_url().MODFOLDER;?>/assets/js/css/jquery.chosen.structure.css');
-			
-			#content-textarea, #message-textarea { max-height: 650px; }
 		</style>
 		
 		<script type="text/javascript" src="<?php echo base_url().MODFOLDER.'/assets/js/jquery.js';?>"></script>
@@ -82,12 +75,6 @@ $chosencss = ( ! is_file(APPPATH .'views/'.$current_skin.'/admin/css/jquery.chos
 					dependencies: {
 						css: ['<?php echo base_url() . MODFOLDER;?>/assets/js/css/jquery.ui.accordion.css']
 					},
-					cache: true
-				});
-				
-				$.lazy({					
-					src: '<?php echo base_url() . MODFOLDER;?>/assets/js/jquery.elastic.js',
-					name: 'elastic',
 					cache: true
 				});
 				

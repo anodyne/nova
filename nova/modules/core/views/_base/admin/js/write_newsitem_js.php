@@ -7,7 +7,5 @@
 		$('#submitPost').click(function(){
 			return confirm('<?php echo lang('confirm_post_newsitem');?>');
 		});
-		
-		$('#content-textarea').elastic();
 	});
 </script>
