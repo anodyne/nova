@@ -3,10 +3,9 @@
  * Login Header
  *
  * @package		Nova
- * @category	Include
+ * @category	Assets
  * @author		Anodyne Productions
- * @copyright	2010-11 Anodyne Productions
- * @version		2.0
+ * @copyright	2011 Anodyne Productions
  */
 ?><script type="text/javascript" src="<?php echo base_url().MODFOLDER.'/assets/js/jquery.js';?>"></script>
 		<script type="text/javascript" src="<?php echo base_url().MODFOLDER.'/assets/js/jquery.countdown.js';?>"></script>

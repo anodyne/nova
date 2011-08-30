@@ -3,10 +3,9 @@
  * Wiki Header
  *
  * @package		Nova
- * @category	Include
+ * @category	Assets
  * @author		Anodyne Productions
- * @copyright	2010-11 Anodyne Productions
- * @version		2.0
+ * @copyright	2011 Anodyne Productions
  */
 
 // pull in the config file
