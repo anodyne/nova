@@ -15,7 +15,6 @@
  * @category	Classes
  * @author		Anodyne Productions
  * @copyright	2011 Anodyne Productions
- * @version		3.0
  */
  
 abstract class Nova_Auth {
@@ -543,7 +542,7 @@ abstract class Nova_Auth {
 		self::$_session->set('dst', $user->daylight_savings);
 		self::$_session->set('mainchar', $user->character->id);
 		self::$_session->set('characters', $chars);
-		self::$_session->set('access', self::_set_access($user->role_id));
+		self::$_session->set('access', ($user->get_status() == 'inactive') ? Model_AccessRole::INACTIVE : self::_set_access($user->role_id));
 		self::$_session->set('my_links', $links);
 		self::$_session->set('status', $user->get_status());
 		
