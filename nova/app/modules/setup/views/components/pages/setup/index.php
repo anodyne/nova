@@ -77,8 +77,7 @@
 		
 		<a href="<?php echo Url::site('setup/install/remove');?>" class="install-options">
 			<span>Uninstall Nova</span>
-			<em>If you want to start over, you can remove all of your current Nova data. <strong>Warning:</strong> This action is permanent 
-				and cannot be undone!</em>
+			<em>Sometimes you just need a fresh start. Nova's uninstallation utility to will let you start from scratch. <strong>Warning:</strong> This action is permanent and cannot be undone!</em>
 		</a>
 	<?php endif;?>
 <?php endif;?>
