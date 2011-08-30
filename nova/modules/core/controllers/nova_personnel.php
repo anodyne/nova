@@ -381,6 +381,10 @@ abstract class Nova_personnel extends Nova_controller_main {
 		// grab the character info
 		$character = $this->char->get_character($id);
 		
+		$data['postcount'] = 0;
+		$data['logcount'] = 0;
+		$data['awardcount'] = 0;
+		
 		if ($character !== false)
 		{
 			$data['postcount'] = $this->posts->count_character_posts($id);
