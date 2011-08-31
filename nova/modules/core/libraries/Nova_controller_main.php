@@ -84,7 +84,6 @@ class Nova_controller_main extends Controller {
 			'default_email_address',
 			'email_subject',
 			'system_email',
-			'manifest_defaults',
 			'list_logs_num',
 			'list_posts_num',
 			'post_count_format',

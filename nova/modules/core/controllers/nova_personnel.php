@@ -46,8 +46,11 @@ abstract class Nova_personnel extends Nova_controller_main {
 				}
 			}
 			
-			// get the content for the top of the manifest
-			$data['manifest_header'] = $this->dept->get_manifest($manifest, 'manifest_header_content');
+			// get the manifest details (MD)
+			$MD = $this->dept->get_manifest($manifest);
+			
+			// pull the content for the header
+			$data['manifest_header'] = $MD->manifest_header_content;
 			
 			// run the methods
 			$this->db->where('dept_manifest', $manifest);
@@ -251,7 +254,7 @@ abstract class Nova_personnel extends Nova_controller_main {
 		// set the javascript data
 		$js_data = array(
 			'display' => $this->uri->rsegment(3),
-			'manifest_defaults' => $this->options['manifest_defaults']);
+			'manifest_defaults' => $MD->manifest_view);
 		
 		// set the data being sent to the view
 		$data['display'] = $this->uri->rsegment(3, 'crew');

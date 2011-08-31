@@ -6,7 +6,6 @@
  * @category	Install
  * @author		Anodyne Productions
  * @copyright	2011 Anodyne Productions
- * @version		2.0
  */
 
 /*
@@ -733,7 +732,8 @@ $manifests = array(
 		'manifest_header_content' => "Update your manifest header content from the manifest management page.",
 		'manifest_order' => 0,
 		'manifest_display' => 'y',
-		'manifest_default' => 'y'),
+		'manifest_default' => 'y',
+		'manifest_view' => "$('tr.active').show();,$('tr.npc').show();"),
 );
 
 $menu_categories = array(

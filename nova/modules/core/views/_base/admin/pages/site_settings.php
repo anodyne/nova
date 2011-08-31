@@ -215,10 +215,6 @@
 					<?php echo form_radio($inputs['post_count_single']);?>
 					<?php echo form_label($label['count_single'], 'post_count_single');?>
 				</p>
-				<p>
-					<kbd><?php echo $label['manifest'];?></kbd>
-					<?php echo form_dropdown('manifest_defaults', $values['manifest'], $default['manifest']);?>
-				</p>
 			</div>
 			
 			<br />

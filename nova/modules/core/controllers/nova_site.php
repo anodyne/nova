@@ -2904,6 +2904,23 @@ abstract class Nova_site extends Nova_controller_admin {
 					'content' => ucwords(lang('actions_submit'))),
 			);
 			
+			$data['values']['manifest'] = array(
+				"" => ucfirst(lang('labels_none')),
+				"$('tr.active').show();" => ucwords(lang('status_active') .' '. lang('global_characters') .' '. 
+					lang('labels_only')),
+				"$('tr.npc').show();" => ucwords(lang('abbr_npcs') .' '. lang('labels_only')),
+				"$('tr.open').show();" => ucwords(lang('status_open') .' '. lang('global_positions') .' '. 
+					lang('labels_only')),
+				"$('tr.past').show();" => ucwords(lang('status_inactive') .' '. lang('global_characters') .' '. 
+					lang('labels_only')),
+				"$('tr.active').show();,$('tr.npc').show();" => ucwords(lang('status_active') .' '. 					lang('global_characters') .' &amp; '. lang('abbr_npcs')),
+				"$('tr.active').show();,$('tr.npc').show();,$('tr.open').show();" => ucwords(lang('status_active') .' '. 
+					lang('global_characters') .', '. lang('abbr_npcs') .' &amp; '. lang('status_open') .' '.
+					lang('global_positions')),
+				"$('tr.npc').show();,$('tr.open').show();" => ucwords(lang('abbr_npcs') .' &amp; '. lang('status_open') .' '.
+					lang('global_positions')),
+			);
+			
 			$data['text'] = sprintf(
 				lang('text_manifest'),
 				ucfirst(lang('labels_site').' '.lang('labels_manifests')),
@@ -2957,6 +2974,7 @@ abstract class Nova_site extends Nova_controller_admin {
 			'manifest_header' => ucwords(lang('labels_manifest').' '.lang('labels_header').' '.lang('labels_content')),
 			'manifest_name' => ucwords(lang('labels_manifest').' '.lang('labels_name')),
 			'manifest_order' => ucwords(lang('labels_manifest').' '.lang('labels_order')),
+			'manifest_view' => ucwords(lang('labels_manifest').' '.lang('labels_default').' '.lang('actions_view')),
 			'off' => strtoupper(lang('labels_off')),
 			'refresh' => ucwords(lang('labels_refresh').' '.lang('labels_page')),
 			'sitemanifests' => ucwords(lang('labels_site').' '.lang('labels_manifests')),
@@ -4893,25 +4911,6 @@ abstract class Nova_site extends Nova_controller_admin {
 			$data['default']['skin_admin'] = $setting['skin_admin'];
 			$data['default']['skin_wiki'] = $setting['skin_wiki'];
 			$data['default']['skin_login'] = $setting['skin_login'];
-			
-			$data['values']['manifest'] = array(
-				"" => ucfirst(lang('labels_none')),
-				"$('tr.active').show();" => ucwords(lang('status_active') .' '. lang('global_characters') .' '. 
-					lang('labels_only')),
-				"$('tr.npc').show();" => ucwords(lang('abbr_npcs') .' '. lang('labels_only')),
-				"$('tr.open').show();" => ucwords(lang('status_open') .' '. lang('global_positions') .' '. 
-					lang('labels_only')),
-				"$('tr.past').show();" => ucwords(lang('status_inactive') .' '. lang('global_characters') .' '. 
-					lang('labels_only')),
-				"$('tr.active').show();,$('tr.npc').show();" => ucwords(lang('status_active') .' '. 					lang('global_characters') .' &amp; '. lang('abbr_npcs')),
-				"$('tr.active').show();,$('tr.npc').show();,$('tr.open').show();" => ucwords(lang('status_active') .' '. 
-					lang('global_characters') .', '. lang('abbr_npcs') .' &amp; '. lang('status_open') .' '.
-					lang('global_positions')),
-				"$('tr.npc').show();,$('tr.open').show();" => ucwords(lang('abbr_npcs') .' &amp; '. lang('status_open') .' '.
-					lang('global_positions')),
-			);
-			
-			$data['default']['manifest'] = $setting['manifest_defaults'];
 		}
 		
 		/*

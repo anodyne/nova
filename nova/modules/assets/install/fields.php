@@ -6,7 +6,6 @@
  * @category	Install
  * @author		Anodyne Productions
  * @copyright	2011 Anodyne Productions
- * @version		2.0
  */
 
 $user_id_type				= 'INT';
@@ -803,6 +802,8 @@ $fields_manifests = array(
 		'type' => 'ENUM',
 		'constraint' => "'y','n'",
 		'default' => 'n'),
+	'manifest_view' => array(
+		'type' => 'TEXT'),
 );
 
 $fields_menu_categories = array(

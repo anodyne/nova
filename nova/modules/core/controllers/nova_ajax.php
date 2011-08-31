@@ -6737,6 +6737,7 @@ abstract class Nova_ajax extends Controller {
 					'class' => 'hud',
 					'value' => 'n',
 					'checked' => ($item->manifest_default == 'n') ? true : false),
+				'view' => $item->manifest_view,
 				'submit' => array(
 					'type' => 'submit',
 					'class' => 'hud_button',
@@ -6745,12 +6746,30 @@ abstract class Nova_ajax extends Controller {
 					'content' => ucwords(lang('actions_submit'))),
 			);
 			
+			$data['values']['manifest'] = array(
+				"" => ucfirst(lang('labels_none')),
+				"$('tr.active').show();" => ucwords(lang('status_active') .' '. lang('global_characters') .' '. 
+					lang('labels_only')),
+				"$('tr.npc').show();" => ucwords(lang('abbr_npcs') .' '. lang('labels_only')),
+				"$('tr.open').show();" => ucwords(lang('status_open') .' '. lang('global_positions') .' '. 
+					lang('labels_only')),
+				"$('tr.past').show();" => ucwords(lang('status_inactive') .' '. lang('global_characters') .' '. 
+					lang('labels_only')),
+				"$('tr.active').show();,$('tr.npc').show();" => ucwords(lang('status_active') .' '. 					lang('global_characters') .' &amp; '. lang('abbr_npcs')),
+				"$('tr.active').show();,$('tr.npc').show();,$('tr.open').show();" => ucwords(lang('status_active') .' '. 
+					lang('global_characters') .', '. lang('abbr_npcs') .' &amp; '. lang('status_open') .' '.
+					lang('global_positions')),
+				"$('tr.npc').show();,$('tr.open').show();" => ucwords(lang('abbr_npcs') .' &amp; '. lang('status_open') .' '.
+					lang('global_positions')),
+			);
+			
 			$data['label'] = array(
 				'default' => ucwords(lang('labels_default').' '.lang('labels_manifest')),
 				'desc' => ucfirst(lang('labels_desc')),
 				'display' => ucfirst(lang('labels_display')),
 				'header' => ucwords(lang('labels_header').' '.lang('labels_content')),
-				'name' => ucwords(lang('labels_manifest').' '.lang('labels_name')),
+				'name' => ucwords(lang('labels_name')),
+				'view' => ucwords(lang('labels_default').' '.lang('actions_view')),
 				'no' => ucfirst(lang('labels_no')),
 				'off' => ucfirst(lang('labels_off')),
 				'on' => ucfirst(lang('labels_on')),

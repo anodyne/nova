@@ -23,6 +23,10 @@
 			<kbd><?php echo $label['manifest_header'];?></kbd>
 			<?php echo form_textarea($inputs['header']);?>
 		</p>
+		<p>
+			<kbd><?php echo $label['manifest_view'];?></kbd>
+			<?php echo form_dropdown('manifest_view', $values['manifest'], '');?>
+		</p>
 		<p><?php echo form_button($inputs['button']);?></p>
 	<?php echo form_close();?>
 </div>
