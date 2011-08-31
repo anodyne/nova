@@ -5,6 +5,7 @@
 		<title>Nova 3 :: Users</title>
 		
 		<link rel="stylesheet" href="../nova/app/views/design/style.css">
+		<link rel="stylesheet" href="bootstrap.css">
 		<link rel="stylesheet" href="admin2.css">
 		
 		<!--[if lt IE 9]>
@@ -12,6 +13,7 @@
 		<![endif]-->
 		
 		<script type="text/javascript" src="../nova/modules/assets/js/jquery.js"></script>
+		<script type="text/javascript" src="assets/jquery.tablesorter.min.js"></script>
 		<script type="text/javascript">
 			var delay = (function(){
 				var timer = 0;
@@ -22,7 +24,7 @@
 			})();
 			
 			$(document).ready(function(){
-				$('table.zebra tbody > tr:nth-child(odd)').addClass('alt');
+				$("table#users-active").tablesorter();
 				
 				var wait = 600;
 				
@@ -279,55 +281,62 @@
 						<div id="actives">
 							<p><em>Didn't find the user you were looking for? You can <a href="#" rel="change_user_view" id="show_all">find</a> any user in the system instead.</em></p>
 							
-							<table class="zebra">
+							<table class="zebra-striped" id="users-active">
+								<thead>
+									<tr>
+										<th class="red">Name</th>
+										<th class="red">Email Address</th>
+										<th class="red"></th>
+									</tr>
+								</thead>
 								<tbody>
 									<tr class="height-40">
-										<td>First Last</td>
+										<td>First Last 1</td>
 										<td>first.last@example.com</td>
 										<td class="col-50 align-center"><img src="images/admin/actions.png"></td>
 									</tr>
 									<tr class="height-40">
-										<td>First Last</td>
+										<td>First Last 3</td>
 										<td>first.last@example.com</td>
 										<td class="col-50 align-center"><img src="images/admin/actions.png"></td>
 									</tr>
 									<tr class="height-40">
-										<td>First Last</td>
+										<td>First Last 2</td>
 										<td>first.last@example.com</td>
 										<td class="col-50 align-center"><img src="images/admin/actions.png"></td>
 									</tr>
 									<tr class="height-40">
-										<td>First Last</td>
+										<td>First Last 4</td>
 										<td>first.last@example.com</td>
 										<td class="col-50 align-center"><img src="images/admin/actions.png"></td>
 									</tr>
 									<tr class="height-40">
-										<td>First Last</td>
+										<td>First Last 5</td>
 										<td>first.last@example.com</td>
 										<td class="col-50 align-center"><img src="images/admin/actions.png"></td>
 									</tr>
 									<tr class="height-40">
-										<td>First Last</td>
+										<td>First Last 7</td>
 										<td>first.last@example.com</td>
 										<td class="col-50 align-center"><img src="images/admin/actions.png"></td>
 									</tr>
 									<tr class="height-40">
-										<td>First Last</td>
+										<td>First Last 6</td>
 										<td>first.last@example.com</td>
 										<td class="col-50 align-center"><img src="images/admin/actions.png"></td>
 									</tr>
 									<tr class="height-40">
-										<td>First Last</td>
+										<td>First Last 8</td>
 										<td>first.last@example.com</td>
 										<td class="col-50 align-center"><img src="images/admin/actions.png"></td>
 									</tr>
 									<tr class="height-40">
-										<td>First Last</td>
+										<td>First Last 10</td>
 										<td>first.last@example.com</td>
 										<td class="col-50 align-center"><img src="images/admin/actions.png"></td>
 									</tr>
 									<tr class="height-40">
-										<td>First Last</td>
+										<td>First Last 9</td>
 										<td>first.last@example.com</td>
 										<td class="col-50 align-center"><img src="images/admin/actions.png"></td>
 									</tr>
