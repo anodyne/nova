@@ -311,36 +311,7 @@ abstract class Nova_input extends CI_Input {
 
 		log_message('debug', "XSS Filtering completed");
 		
-		$str = $this->_cleanup_text($str);
-		
 		return $str;
-	}
-
-	// --------------------------------------------------------------------
-	
-	/**
-	* Cleanup Text
-	*
-	* Filters out illegal MS Word characters
-	*
-	* @access	public
-	* @param	string
-	* @return	string
-	*/
-	
-	function _cleanup_text($src = '')
-	{
-		$badContent = array("&nbsp;");
-		
-		$src = trim(str_replace($badContent, " ", $src));
-		
-		$theBad = array("“","”","‘","’","…","—","–");
-		$theGood = array("\"","\"","'","'","...","-","-");
-		$src = str_replace($theBad, $theGood, $src);
-		
-		$src = preg_replace('/[^(\x20-\x7F)\x0A]*/','', $src);
-		
-		return $src;
 	}
 	
 	/**
