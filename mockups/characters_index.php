@@ -5,6 +5,7 @@
 		<title>Nova 3 :: Characters</title>
 		
 		<link rel="stylesheet" href="../nova/app/views/design/style.css">
+		<link rel="stylesheet" href="bootstrap.css">
 		<link rel="stylesheet" href="admin2.css">
 		
 		<!--[if lt IE 9]>
@@ -12,9 +13,12 @@
 		<![endif]-->
 		
 		<script type="text/javascript" src="../nova/modules/assets/js/jquery.js"></script>
+		<script type="text/javascript" src="assets/jquery.tablesorter.min.js"></script>
 		<script type="text/javascript">
 			$(document).ready(function(){
 				var wait = 600;
+				
+				$("table#characters-active").tablesorter();
 				
 				$("#sidebar a").mousedown(function(e){
 					var that = $(this);
@@ -164,6 +168,40 @@
 								</tbody>
 							</table>
 						</div>
+						
+						<table class="zebra-striped" id="characters-active">
+							<thead>
+								<tr>
+									<th class="red">Name</th>
+									<th class="red">Position</th>
+									<th class="red {sorter: false}"></th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr class="height-40">
+									<td>
+										Alex Diaz<br>
+										<span class="fontSmall subtle">Captain</span>
+									</td>
+									<td>
+										Commanding Officer<br>
+										<span class="fontSmall subtle">Manifest Name</span>
+									</td>
+									<td class="col-50 align-center"><img src="images/admin/actions.png"></td>
+								</tr>
+								<tr class="height-40">
+									<td>
+										Chalasirta Hy'Qiin<br>
+										<span class="fontSmall subtle">Commander</span>
+									</td>
+									<td>
+										Executive Officer<br>
+										<span class="fontSmall subtle">Manifest Name</span>
+									</td>
+									<td class="col-50 align-center"><img src="images/admin/actions.png"></td>
+								</tr>
+							</tbody>
+						</table>
 					</div>
 				</div>
 			</section>

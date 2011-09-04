@@ -1,0 +1,41 @@
+.action-btn-container {
+	position: relative;
+}
+
+.action-btn-menu ul {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+.action-btn-menu ul li {
+	margin: 0;
+	padding: 0;
+}
+.action-btn-menu ul li a {}
+.action-btn-menu ul li a:hover {}
+
+.btn-action {
+	position: relative;
+	padding: 2px;
+	z-index: 10;
+	border-color: transparent;
+	background: transparent;
+}
+.btn-action .icon {
+	height: 22px;
+	width: 22px;
+	background: transparent url(images/admin/actions.png) no-repeat top left;
+}
+.btn-action:hover {
+	border-color: #ccc;
+	background: #eee;
+}
+.btn-action:hover .icon, .btn-action-active .icon, .btn-action-active:hover .icon {
+	background-position: 0 -22px;
+}
+
+.btn-action-active, .btn-action-active:hover {
+	border-color: #ccc;
+	background: #eee;
+	border-left-color: transparent;
+}

@@ -181,7 +181,7 @@ a.active .navicn { background-position: center -60px; }
 	clear: both;
 	margin: 0;
 }
-#content .inner {
+#content > .inner {
 	margin: 0;
 	padding: 1em;
 }

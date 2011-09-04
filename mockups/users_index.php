@@ -7,6 +7,7 @@
 		<link rel="stylesheet" href="../nova/app/views/design/style.css">
 		<link rel="stylesheet" href="bootstrap.css">
 		<link rel="stylesheet" href="admin2.css">
+		<link rel="stylesheet" href="actionbutton.css">
 		
 		<!--[if lt IE 9]>
 		<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
@@ -178,6 +179,19 @@
 					$('#add-' + item).fadeOut();
 					return false;
 				});
+				
+				$('.btn-action').click(function(){
+					
+					$('.action-btn-menu').hide();
+					$('.btn-action').each(function(){
+						
+						if ($(this).hasClass('btn-action-active'))
+							$(this).removeClass('btn-action-active');
+					});
+					
+					$(this).addClass('btn-action-active');
+					$(this).next('div').show();
+				});
 			});
 			
 			// if the escape key is pressed, close the menu
@@ -185,6 +199,13 @@
 				if (event.keyCode == 27) {
 					$('#subnav-popup').fadeOut('fast');
 					$('#section-nav').fadeOut('fast');
+					
+					$('.action-btn-menu').hide();
+					$('.btn-action').each(function(){
+						
+						if ($(this).hasClass('btn-action-active'))
+							$(this).removeClass('btn-action-active');
+					});
 				}
 			});
 		</script>
@@ -286,59 +307,122 @@
 									<tr>
 										<th class="red">Name</th>
 										<th class="red">Email Address</th>
-										<th class="red"></th>
+										<th class="red {sorter: false}"></th>
 									</tr>
 								</thead>
 								<tbody>
 									<tr class="height-40">
 										<td>First Last 1</td>
 										<td>first.last@example.com</td>
-										<td class="col-50 align-center"><img src="images/admin/actions.png"></td>
+										<td class="col-50 align-center">
+											<div class="action-btn-container">
+												<button class="btn-action"><div class="icon"></div></button>
+												<div class="popover left action-btn-menu">
+													<div class="arrow"></div>
+													<div class="inner">
+														<div class="content">
+															<ul>
+																<li><a href="#">Action Item 1</a></li>
+																<li><a href="#">Action Item 2</a></li>
+																<li><a href="#">Action Item 3</a></li>
+																<li><a href="#">Action Item 4</a></li>
+																<li><a href="#">Action Item 5</a></li>
+															</ul>
+														</div>
+													</div>
+												</div>
+											</div>
+										</td>
 									</tr>
 									<tr class="height-40">
 										<td>First Last 3</td>
 										<td>first.last@example.com</td>
-										<td class="col-50 align-center"><img src="images/admin/actions.png"></td>
+										<td class="col-50 align-center">
+											<div class="action-btn-container">
+												<button class="btn-action"><div class="icon"></div></button>
+												<div class="action-btn-menu" id="2"></div>
+											</div>
+										</td>
 									</tr>
 									<tr class="height-40">
 										<td>First Last 2</td>
 										<td>first.last@example.com</td>
-										<td class="col-50 align-center"><img src="images/admin/actions.png"></td>
+										<td class="col-50 align-center">
+											<div class="action-btn-container">
+												<button class="btn-action"><div class="icon"></div></button>
+												<div class="action-btn-menu" id="3"></div>
+											</div>
+										</td>
 									</tr>
 									<tr class="height-40">
 										<td>First Last 4</td>
 										<td>first.last@example.com</td>
-										<td class="col-50 align-center"><img src="images/admin/actions.png"></td>
+										<td class="col-50 align-center">
+											<div class="action-btn-container">
+												<button class="btn-action"><div class="icon"></div></button>
+												<div class="action-btn-menu" id="4"></div>
+											</div>
+										</td>
 									</tr>
 									<tr class="height-40">
 										<td>First Last 5</td>
 										<td>first.last@example.com</td>
-										<td class="col-50 align-center"><img src="images/admin/actions.png"></td>
+										<td class="col-50 align-center">
+											<div class="action-btn-container">
+												<button class="btn-action"><div class="icon"></div></button>
+												<div class="action-btn-menu" id="5"></div>
+											</div>
+										</td>
 									</tr>
 									<tr class="height-40">
 										<td>First Last 7</td>
 										<td>first.last@example.com</td>
-										<td class="col-50 align-center"><img src="images/admin/actions.png"></td>
+										<td class="col-50 align-center">
+											<div class="action-btn-container">
+												<button class="btn-action"><div class="icon"></div></button>
+												<div class="action-btn-menu" id="6"></div>
+											</div>
+										</td>
 									</tr>
 									<tr class="height-40">
 										<td>First Last 6</td>
 										<td>first.last@example.com</td>
-										<td class="col-50 align-center"><img src="images/admin/actions.png"></td>
+										<td class="col-50 align-center">
+											<div class="action-btn-container">
+												<button class="btn-action"><div class="icon"></div></button>
+												<div class="action-btn-menu" id="7"></div>
+											</div>
+										</td>
 									</tr>
 									<tr class="height-40">
 										<td>First Last 8</td>
 										<td>first.last@example.com</td>
-										<td class="col-50 align-center"><img src="images/admin/actions.png"></td>
+										<td class="col-50 align-center">
+											<div class="action-btn-container">
+												<button class="btn-action"><div class="icon"></div></button>
+												<div class="action-btn-menu" id="8"></div>
+											</div>
+										</td>
 									</tr>
 									<tr class="height-40">
 										<td>First Last 10</td>
 										<td>first.last@example.com</td>
-										<td class="col-50 align-center"><img src="images/admin/actions.png"></td>
+										<td class="col-50 align-center">
+											<div class="action-btn-container">
+												<button class="btn-action"><div class="icon"></div></button>
+												<div class="action-btn-menu" id="9"></div>
+											</div>
+										</td>
 									</tr>
 									<tr class="height-40">
 										<td>First Last 9</td>
 										<td>first.last@example.com</td>
-										<td class="col-50 align-center"><img src="images/admin/actions.png"></td>
+										<td class="col-50 align-center">
+											<div class="action-btn-container">
+												<button class="btn-action"><div class="icon"></div></button>
+												<div class="action-btn-menu" id="10"></div>
+											</div>
+										</td>
 									</tr>
 								</tbody>
 							</table>
