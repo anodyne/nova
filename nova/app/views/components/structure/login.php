@@ -19,6 +19,16 @@
 		<?php echo Html::script(MODFOLDER.'/modules/assets/js/jquery.js');?>
 		<?php echo $javascript;?>
 		
+		<?php if (is_file(APPPATH.'views/'.$skin.'/design/style.css')): ?>
+			<?php echo Html::style(APPFOLDER.'/views/'.$skin.'/design/style.css');?>
+		<?php else: ?>
+			<?php echo Html::style(MODFOLDER.'/app/views/design/style.css');?>
+			
+			<?php if (is_file(APPPATH.'views/'.$skin.'/design/custom.css')): ?>
+				<?php echo Html::style(APPFOLDER.'/views/'.$skin.'/design/custom.css');?>
+			<?php endif;?>
+		<?php endif;?>
+		
 		<?php if (is_file(APPPATH.'views/'.$skin.'/design/style.login.css')): ?>
 			<?php echo Html::style(APPFOLDER.'/views/'.$skin.'/design/style.login.css');?>
 		<?php else: ?>

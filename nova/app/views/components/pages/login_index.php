@@ -4,11 +4,7 @@
 	});
 </script>
 
-<h1 class="page-head"><?php echo $header;?></h1>
-
-<p><?php echo __("Placeholder text for the main login page.");?></p>
-
-<hr/>
+<br>
 
 <?php echo form::open('login/check');?>
 	<p>

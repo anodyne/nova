@@ -19,7 +19,7 @@ class Controller_Nova_Login extends Controller_Nova_Base {
 			'skin_login',
 			'default_email_name',
 			'default_email_address',
-			'email_subject'
+			'email_subject',
 		);
 		
 		// merge the settings arrays
@@ -29,26 +29,30 @@ class Controller_Nova_Login extends Controller_Nova_Base {
 		$this->options = Model_Settings::get_settings($this->settingsArray);
 		
 		// set the variables
-		$this->skin		= $this->options->skin_login;
-		$this->timezone	= $this->options->timezone;
-		$this->dst		= $this->options->daylight_savings;
+		$this->skin			= $this->session->get('skin_login', $this->options->skin_login);
+		$this->timezone		= $this->session->get('timezone', $this->options->timezone);
+		$this->dst			= $this->session->get('dst', (bool) $this->options->daylight_savings);
 		
-		// set the values to be passed to the views
+		// set the values to be passed to the template
 		$vars = array(
 			'skin'	=> $this->skin,
 			'sec'	=> 'login',
 			'name'	=> $this->options->sim_name,
 		);
 		
-		// set the shell
+		// set the structure file
 		$this->template = View::factory(Location::file('login', $this->skin, 'structure'), $vars);
 		
 		// set the variables in the template
-		$this->template->title 				= $this->options->sim_name.' :: ';
-		$this->template->javascript			= false;
-		$this->template->layout				= View::factory(Location::file('login', $this->skin, 'templates'), $vars);
-		$this->template->layout->flash		= false;
-		$this->template->layout->content	= false;
+		$this->template->title 						= $this->options->sim_name.' :: ';
+		$this->template->javascript					= false;
+		$this->template->layout						= View::factory(Location::file('login', $this->skin, 'templates'), $vars);
+		$this->template->layout->navmain 			= Menu::build('main', 'main');
+		$this->template->layout->ajax 				= false;
+		$this->template->layout->flash				= false;
+		$this->template->layout->content			= false;
+		$this->template->layout->header				= false;
+		$this->template->layout->message			= false;
 	}
 	
 	public function action_index()
@@ -80,16 +84,13 @@ class Controller_Nova_Login extends Controller_Nova_Base {
 			}
 		}
 		
-		// content
-		$this->_data->title = ucwords(__("log in"));
-		$this->_data->header = ucwords(__("log in"));
-		
 		// inputs
 		$this->_data->inputs = array(
 			'button' => array(
 				'class' => 'btn-main'),
 			'email' => array(
 				'id' => 'email',
+				'type' => 'email',
 				'placeholder' => ucwords(__("email address"))),
 			'password' => array(
 				'id' => 'password',
@@ -97,6 +98,11 @@ class Controller_Nova_Login extends Controller_Nova_Base {
 			'remember' => array(
 				'id' => 'remember'),
 		);
+		
+		// title, header and message content
+		$this->_data->title = 'Log In';
+		$this->_data->header = 'Log In';
+		$this->_data->message = null;
 	}
 	
 	public function action_check()

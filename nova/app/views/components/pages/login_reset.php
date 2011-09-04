@@ -1,14 +1,10 @@
-<h1 class="page-head"><?php echo $header;?></h1>
-
-<p class="<?php echo $message_class;?>"><?php echo $message;?></p>
-
 <?php if ($enabled === true): ?>
-	<hr />
+	<br>
 	
 	<?php echo form::open('login/reset');?>
 		<p>
 			<kbd><?php echo ucwords(__('email address'));?></kbd>
-			<?php echo form::input('email');?>
+			<?php echo form::input('email', false, array('type' => 'email'));?>
 		</p>
 		<p>
 			<kbd><?php echo ucwords(__('security question'));?></kbd>

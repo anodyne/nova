@@ -4,29 +4,35 @@
 
 <header>
 	<div class="wrapper">
-		<nav>
+		<div class="nav-main">
+			<img src="<?php echo Url::base().MODFOLDER;?>/app/views/design/images/main/nova.png" class="float-right">
 			<ul>
 				<li><a href="<?php echo Url::site('login/index');?>"><span><?php echo ucwords(___('log in'));?></span></a></li>
 				<li><a href="<?php echo Url::site('login/reset');?>"><span><?php echo ucwords(___('reset password'));?></span></a></li>
 				<li><a href="<?php echo Url::site('main/index');?>"><span><?php echo ___('Back to Site');?></span></a></li>
 			</ul>
-		</nav>
-		
-		<div class="name"><?php echo $name;?></div>
+		</div>
 	</div>
 </header>
 
 <section>
 	<div class="wrapper">
-		<div class="content">
+		<div id="content">
 			<?php echo $flash;?>
+			
+			<h1 class="page-head"><?php echo $header;?></h1>
+			<p><?php echo $message;?></p>
+			
 			<?php echo $content;?>
 			
 			<div style="clear:both;">&nbsp;</div>
 		</div>
 		
 		<footer>
-			Powered by <strong>Nova</strong> from <a href="http://www.anodyne-productions.com" target="_blank">Anodyne Productions</a>
+			<div class="footer-content">
+				<div class="float-right">&copy; <?php echo date('Y');?> <a href="http://www.anodyne-productions.com" target="_blank">Anodyne Productions</a></div>
+				Powered by Nova
+			</div>
 		</footer>
 	</div>
 </section>
