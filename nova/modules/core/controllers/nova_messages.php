@@ -526,7 +526,7 @@ abstract class Nova_messages extends Nova_controller_admin {
 				$pos = strpos($row->privmsgs_subject, lang('abbr_reply'));
 				
 				// make sure the subject is set right
-				$subj = ($pos === false) ? lang('abbr_reply').': '.$row->privmsgs_subject : $row->privmsgs_subject;
+				$subj = ( ! $pos) ? lang('abbr_reply').': '.$row->privmsgs_subject : $row->privmsgs_subject;
 				
 				// set the subject value
 				$data['inputs']['subject']['value'] = $subj;
@@ -534,27 +534,8 @@ abstract class Nova_messages extends Nova_controller_admin {
 				// set the user
 				$selected = $row->privmsgs_author_user;
 				
-				// set the arrays
-				$active = array();
-				$inactive = array();
-				
-				if (isset($data['characters'][ucwords(lang('status_active') .' '. lang('global_characters'))]))
-				{
-					$active = $data['characters'][ucwords(lang('status_active') .' '. lang('global_characters'))];
-				}
-				
-				if (isset($data['characters'][ucwords(lang('status_inactive') .' '. lang('global_characters'))]))
-				{
-					$inactive = $data['characters'][ucwords(lang('status_inactive') .' '. lang('global_characters'))];
-				}
-				
 				// grab the key for the array
-				$key = (array_key_exists($selected, $active)) ? $selected : 0;
-				
-				if ($key == 0)
-				{
-					$key = (array_key_exists($selected, $inactive)) ? $selected : 0;
-				}
+				$key = (array_key_exists($selected, $data['characters'])) ? $selected : 0;
 				
 				// set the key
 				$data['recipient_list'] = $key;
@@ -588,7 +569,7 @@ abstract class Nova_messages extends Nova_controller_admin {
 				$pos = strpos($row->privmsgs_subject, lang('abbr_reply'));
 				
 				// make sure the subject is set right
-				$subj = ($pos === false) ? lang('abbr_reply').': '.$row->privmsgs_subject : $row->privmsgs_subject;
+				$subj = ( ! $pos) ? lang('abbr_reply').': '.$row->privmsgs_subject : $row->privmsgs_subject;
 				
 				// set the subject value
 				$data['inputs']['subject']['value'] = $subj;
