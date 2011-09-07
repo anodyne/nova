@@ -170,6 +170,7 @@ $lang['specitem_empty_fields'] = "If you don't want to display a field, you can 
 $lang['account_your_user'] = "This is your %s account. Take care when editing your account as changes to it can affect your access to the system.";
 $lang['chosen_incompat'] = "To select multiple authors, hold down the Control key and click on each name";
 $lang['post_locked'] = "This %s is locked for editing. The lock will be released after 5 minutes or after the current %s saves their changes.";
+$lang['post_locked_gen'] = "Indicates a %s is locked for editing. The lock will be released after 5 minutes or after the current %s saves their changes.";
 
 /*
 |---------------------------------------------------------------

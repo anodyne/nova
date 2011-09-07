@@ -23,6 +23,8 @@ $lang['fbx_change_password_text'] = "You have recently reset your password. Befo
 
 $lang['fbx_content_info_users_with_role'] = "The following users have been granted the <strong>%s</strong> access role:";
 
+$lang['fbx_content_info_release_post_lock'] = "The lock on the %s <strong>%s</strong> has been released. Click OK to continue.";
+
 $lang['fbx_content_add_site_message'] = 'Using the form below you can create new messages that you will be able to manually put in to your own pages or replace existing messages. You must have all 3 fields below. The key is used to reference the message. It should be short and simple and contain no spaces. The label is how it will appear in the Site Messages page.';
 $lang['fbx_content_add_user_setting'] = "Using the form below you can create new system settings that can be inserted into your own created pages or supplement Nova's settings by extending the system core. A label and key are required. At this time, user-created settings are only editable through a simple text field.";
 $lang['fbx_content_add_bio_field'] = "Using the form below you can create new field to be used on the bio and join pages. If you select dropdown menu as the type, you can specify the values of the dropdown at the bottom of this box.";
