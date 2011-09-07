@@ -7908,6 +7908,58 @@ abstract class Nova_ajax extends Controller {
 		}
 	}
 	
+	public function info_release_post_lock($id = false)
+	{
+		$allowed = Auth::check_access('manage/posts', false);
+		$level = Auth::get_access_level('manage/posts');
+		
+		if ($allowed and $level == 2)
+		{
+			// load the resources
+			$this->load->model('posts_model', 'posts');
+			
+			// get the post
+			$post = $this->posts->get_post($id);
+			
+			// update the lock
+			$this->posts->update_post_lock($id, null, false);
+			
+			$head = sprintf(
+				lang('fbx_head'),
+				ucwords(lang('actions_release')),
+				ucwords(lang('global_post').' '.lang('labels_lock'))
+			);
+			
+			// data being sent to the facebox
+			$data['header'] = $head;
+			$data['text'] = sprintf(
+				lang('fbx_content_info_release_post_lock'),
+				lang('global_missionpost'),
+				($post) ? $post->post_title : ''
+			);
+			
+			// input parameters
+			$data['inputs'] = array(
+				'submit' => array(
+					'type' => 'submit',
+					'class' => 'hud_button',
+					'name' => 'submit',
+					'value' => 'submit',
+					'content' => ucwords(lang('abbr_ok')))
+			);
+			
+			// figure out the skin
+			$skin = $this->session->userdata('skin_admin');
+			
+			$this->_regions['content'] = Location::ajax('info_release_post_lock', $skin, 'admin', $data);
+			$this->_regions['controls'] = form_button($data['inputs']['submit']).form_close();
+			
+			Template::assign($this->_regions);
+			
+			Template::render();
+		}
+	}
+	
 	public function info_format_date()
 	{
 		$format = $this->input->post('format', true);

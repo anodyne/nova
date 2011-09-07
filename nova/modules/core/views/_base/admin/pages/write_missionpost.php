@@ -82,10 +82,12 @@
 	</div>
 	
 	<div id="readonly" class="hidden">
-		<div id="notes">
-			<p class="float_left"><?php echo img($images['excl']);?>&nbsp;&nbsp;</p>
-			<?php echo text_output($label['locked'], 'h4');?>
-		</div>
+		<?php if ($inputs['locked']): ?>
+			<div id="notes">
+				<p class="float_left"><?php echo img($images['excl']);?>&nbsp;&nbsp;</p>
+				<?php echo text_output($label['locked'], 'h4');?>
+			</div>
+		<?php endif;?>
 		
 		<p>
 			<kbd><?php echo $label['authors'];?></kbd>

@@ -75,12 +75,17 @@
 		<?php endif;?>
 		
 		// check the post lock ONLY if we're editing a post
-		<?php if ($this->uri->segment(3)): ?>
+		<?php if ($this->uri->segment(3) and $this->uri->segment(4) != 'view'): ?>
 			// run the check as soon as we get here
 			checkLock();
 			
 			// now start the normal timer
 			setInterval("checkLock()", 300000);
+		<?php endif;?>
+		
+		<?php if ($this->uri->segment(4) == 'view'): ?>
+			$('#editable').hide();
+			$('#readonly').show();
 		<?php endif;?>
 	});
 </script>
