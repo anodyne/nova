@@ -1360,7 +1360,6 @@ abstract class Nova_wiki extends Nova_controller_wiki {
 			
 			// empty variables to catch errors
 			$data['header'] = '';
-			$data['page'] = array();
 			
 			if ($page->num_rows() > 0)
 			{
@@ -1531,9 +1530,17 @@ abstract class Nova_wiki extends Nova_controller_wiki {
 				lang('error_not_found'),
 				lang('labels_comments')
 			),
+			'nodraft' => sprintf(
+				lang('error_not_found'),
+				lang('labels_page') .' '. lang('labels_draft')
+			),
 			'nohistory' => sprintf(
 				lang('error_not_found'),
 				lang('labels_page') .' '. lang('labels_history')
+			),
+			'nopage' => sprintf(
+				lang('error_not_found'),
+				lang('labels_page')
 			),
 			'on' => lang('labels_on'),
 			'page' => ucfirst(lang('labels_page')),
