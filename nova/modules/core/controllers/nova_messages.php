@@ -522,11 +522,11 @@ abstract class Nova_messages extends Nova_controller_admin {
 		switch ($action)
 		{
 			case 'reply':
-				// is the RE: tag in the subject already?
-				$pos = strpos($row->privmsgs_subject, lang('abbr_reply'));
+				// how many times does the RE: string appear in the subject?
+				$re_count = substr_count($row->privmsgs_subject, lang('abbr_reply'));
 				
 				// make sure the subject is set right
-				$subj = ( ! $pos) ? lang('abbr_reply').': '.$row->privmsgs_subject : $row->privmsgs_subject;
+				$subj = ($re_count == 0) ? lang('abbr_reply').': '.$row->privmsgs_subject : $row->privmsgs_subject;
 				
 				// set the subject value
 				$data['inputs']['subject']['value'] = $subj;
@@ -565,11 +565,11 @@ abstract class Nova_messages extends Nova_controller_admin {
 				// set the hidden TO field
 				$data['recipient_list'] = implode(',', $recipient_list).','.$row->privmsgs_author_user;
 				
-				// is the RE: tag in the subject already?
-				$pos = strpos($row->privmsgs_subject, lang('abbr_reply'));
+				// how many times does the RE: string appear in the subject?
+				$re_count = substr_count($row->privmsgs_subject, lang('abbr_reply'));
 				
 				// make sure the subject is set right
-				$subj = ( ! $pos) ? lang('abbr_reply').': '.$row->privmsgs_subject : $row->privmsgs_subject;
+				$subj = ($re_count == 0) ? lang('abbr_reply').': '.$row->privmsgs_subject : $row->privmsgs_subject;
 				
 				// set the subject value
 				$data['inputs']['subject']['value'] = $subj;
@@ -612,11 +612,11 @@ abstract class Nova_messages extends Nova_controller_admin {
 				$data['inputs']['message']['value'].= mdate($this->options['date_format'], $date);
 				$data['inputs']['message']['value'].= "\r\n\r\n". $row->privmsgs_content;
 				
-				// is the FWD: tag in the subject already?
-				$pos = strpos($row->privmsgs_subject, lang('abbr_forward'));
+				// how many times does the FWD: string appear in the subject?
+				$re_count = substr_count($row->privmsgs_subject, lang('abbr_forward'));
 				
 				// make sure the subject is set right
-				$subj = ($pos === false) ? lang('abbr_forward').': '.$row->privmsgs_subject : $row->privmsgs_subject;
+				$subj = ($re_count == 0) ? lang('abbr_forward').': '.$row->privmsgs_subject : $row->privmsgs_subject;
 				
 				// set the subject value
 				$data['inputs']['subject']['value'] = $subj;
