@@ -1103,10 +1103,12 @@ abstract class Nova_write extends Nova_controller_admin {
 		$data['label'] = array(
 			'addauthor' => ucwords(lang('actions_add') .' '. lang('labels_author')),
 			'authors' => ucfirst(lang('labels_authors')),
+			'back_wcp' => LARROW.' '.ucfirst(lang('actions_back')).' '.lang('labels_to').' '.ucwords(lang('labels_writing').' '.lang('labels_control').' '.lang('labels_panel')),
 			'content' => ucfirst(lang('labels_content')),
 			'location' => ucfirst(lang('labels_location')),
 			'mission' => ucfirst(lang('global_mission')),
 			'mission_notes' => ucwords(lang('global_mission') .' '. lang('labels_notes')),
+			'more_edits' => ucwords(lang('actions_keep').' '.lang('actions_editing')).' '.RARROW,
 			'myauthor' => ucwords(lang('labels_my') .' '. lang('labels_author')),
 			'no_mission' => $nomission,
 			'otherauthors' => ucwords(lang('labels_other') .' '. lang('labels_authors')),
