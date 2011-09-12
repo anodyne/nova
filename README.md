@@ -25,7 +25,7 @@ Anodyne Production's next-generation RPG management system combines popular feat
 * updated the deck listing page (sim/decks) to not use a table which makes for a much cleaner layout
 * updated the deck listing page (sim/decks) to have a menu of decks for quickly moving to a deck item without having to scroll (handy for sim with lots of decks)
 * updated to jquery version 1.6.2
-* updated to jquery version 1.8.15
+* updated to jquery version 1.8.16
 * updated to uniform version 1.7.5
 * updated to prettyPhoto version 3.1.2
 * updated to qTip2
