@@ -418,8 +418,17 @@ return array
 							
 							if (count($check) == 0)
 							{
-								// make sure the config directory has the proper permissions
-								chmod(APPPATH.'config', 0777);
+								try {
+									// try to chmod the config directory to the proper permissions
+									chmod(APPPATH.'config', 0777);
+								} catch (Exception $e) {
+									// add the message
+									Kohana::$log->add(Log::ERROR, 
+										'Could not change file permissions of the config directory to 0777. Please do so manually.');
+									
+									// write the message to the log file
+									Kohana::$log->write();
+								}
 								
 								// open the file
 								$handle = fopen(APPPATH.'config/database.php', 'w');
@@ -440,14 +449,12 @@ return array
 									// try to chmod the file to the proper permissions
 									chmod(APPPATH.'config/database.php', 0666);
 								} catch (Exception $e) {
-									// get an instance of the log class
-									$log = Kohana_Log::instance();
-									
 									// add the message
-									$log->add('error', 'Could not change file permissions of the database configuration file to 0666. Please do so manually.');
+									Kohana::$log->add(Log::ERROR, 
+										'Could not change file permissions of the database configuration file to 0666. Please do so manually.');
 									
 									// write the message to the log file
-									$log->write();
+									Kohana::$log->write();
 								}
 								
 								if ($write !== false)
