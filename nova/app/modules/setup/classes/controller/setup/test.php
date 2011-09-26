@@ -37,4 +37,11 @@ class Controller_Setup_Test extends Controller {
 		
 		exit;
 	}
+	
+	public function action_test()
+	{
+		$dir = Utility::directory_map(APPPATH.'assets/common/'.Kohana::$config->load('nova.genre').'/ranks/', true);
+		
+		echo Debug::dump($dir);
+	}
 }
