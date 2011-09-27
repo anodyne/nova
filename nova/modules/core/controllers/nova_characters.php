@@ -171,14 +171,18 @@ abstract class Nova_characters extends Nova_controller_admin {
 						// grab the info about the position
 						$pos = $this->pos->get_position($c_update['position_1']);
 						
-						// set the proper number of open slots
-						$open = ($pos->pos_open > 0) ? $pos->pos_open - 1 : 0;
-						
-						// make sure we're setting the new pos_open field
-						$position_update = array('pos_open' => $open);
-						
-						// update the number of open slots for the position
-						$pos_update = $this->pos->update_position($c_update['position_1'], $position_update);
+						// only update the slots if there's a legit position
+						if ($pos !== false)
+						{
+							// set the proper number of open slots
+							$open = ($pos->pos_open > 0) ? $pos->pos_open - 1 : 0;
+							
+							// make sure we're setting the new pos_open field
+							$position_update = array('pos_open' => $open);
+							
+							// update the number of open slots for the position
+							$pos_update = $this->pos->update_position($c_update['position_1'], $position_update);
+						}
 						
 						// set the arguments for the message
 						$args = array(
