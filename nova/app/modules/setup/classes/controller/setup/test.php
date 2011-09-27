@@ -40,8 +40,20 @@ class Controller_Setup_Test extends Controller {
 	
 	public function action_test()
 	{
-		$dir = Utility::directory_map(APPPATH.'assets/common/'.Kohana::$config->load('nova.genre').'/ranks/', true);
+		//$dir = Utility::directory_map(APPPATH.'assets/common/'.Kohana::$config->load('nova.genre').'/ranks/', true);
+		//$dir = Utility::directory_list(APPPATH.'assets/common/'.Kohana::$config->load('nova.genre').'/ranks/');
+	}
+	
+	public function action_dir()
+	{
+		$dir = new DirectoryIterator(APPPATH.'assets/common/'.Kohana::$config->load('nova.genre').'/ranks/');
 		
-		echo Debug::dump($dir);
+		foreach ($dir as $fileinfo) {
+			
+			if ( ! $fileinfo->isDot() and $fileinfo->getType() == 'dir')
+			{
+				echo $fileinfo->getFilename().'<br>';
+			}
+		}
 	}
 }
