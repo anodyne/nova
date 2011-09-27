@@ -1413,7 +1413,7 @@ abstract class Nova_wiki extends Nova_controller_wiki {
 			
 			if (Auth::is_logged_in())
 			{
-				if ($level == 3 or $level == 2 or ($level == 1 and ($p->page_created_by_user == $this->session->userdata('userid'))))
+				if ($level == 3 or $level == 2 or ($level == 1 and (is_object($p) and $p->page_created_by_user == $this->session->userdata('userid'))))
 				{
 					$data['edit'] = true;
 				}
