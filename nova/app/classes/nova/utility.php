@@ -13,6 +13,51 @@
 abstract class Nova_Utility {
 	
 	/**
+	 * Reads the directory path specified i nthe first parameter and builds an
+	 * array representation of it and its contained files.
+	 *
+	 *     $list = Utility::directory_list('./mydirectory/');
+	 *
+	 * @access	public
+	 * @param	string		the directory path to read
+	 * @param	string		a comma-separated string of types to include (dir, file, link)
+	 * @return	array		an array of the contents of the directory
+	 */
+	public static function directory_list($source_dir, $included_types = 'dir, file')
+	{
+		// get a new directory object
+		$dir = new DirectoryIterator($source_dir);
+		
+		// figure out what types to include
+		if ( ! empty($included_types))
+		{
+			// create an array of types
+			$types = explode(',', $included_types);
+			
+			// clean up the types array
+			foreach ($types as $key => $value)
+			{
+				$types[$key] = trim($value);
+			}
+			
+			// create an empty array of the contents
+			$list = array();
+			
+			foreach ($dir as $info)
+			{
+				if ( ! $info->isDot() and in_array($info->getType(), $types))
+				{
+					$list[] = $info->getFilename();
+				}
+			}
+			
+			return $list;
+		}
+		
+		return false;
+	}
+	
+	/**
 	 * Reads the directory path specified in the first parameter and builds an
 	 * array representation of it and its contained files.
 	 *
