@@ -1043,7 +1043,7 @@ abstract class Nova_write extends Nova_controller_admin {
 				'value' => 'delete',
 				'id' => 'submitDelete',
 				'content' => ucwords(lang('actions_delete'))),
-			'locked' => ($row->post_lock_user !== null and $row->post_lock_date !== null),
+			'locked' => ($row !== false and $row->post_lock_user !== null and $row->post_lock_date !== null),
 		);
 		
 		if ($missions->num_rows() > 0)
