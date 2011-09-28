@@ -60,6 +60,7 @@ Anodyne Production's next-generation RPG management system combines popular feat
 * fixed bug where users who were deactivated kept their account flags (sysadmin, game master, etc.) and their access role
 * fixed bug where users who were reactivated didn't have their access role set to Standard User
 * fixed bug where inactive users were shown a link to upload an image even though they don't have permissions to upload images
+* fixed bug where password could be reset for a user if they didn't have a security question chosen
 * fixed several potential security issues
 * fixed bug where positions weren't properly updated when deleting an active character
 * fixed some Pulsar styling issues in IE9
