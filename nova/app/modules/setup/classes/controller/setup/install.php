@@ -254,7 +254,7 @@ class Controller_Setup_Install extends Controller_Template {
 		$data = $this->template->layout->content;
 		
 		// map the genres directory
-		$map = Utility::directory_map(MODPATH.'app/modules/setup/assets/install/genres/');
+		$map = Utility::directory_list(MODPATH.'app/modules/setup/assets/install/genres/');
 		
 		// get the genre info
 		$info = (array) Kohana::$config->load('genreinfo');

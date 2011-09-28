@@ -7,7 +7,6 @@
  * @category	Classes
  * @author		Anodyne Productions
  * @copyright	2010-11 Anodyne Productions
- * @since		3.0
  */
 
 abstract class Nova_Utility {
@@ -15,6 +14,8 @@ abstract class Nova_Utility {
 	/**
 	 * Reads the directory path specified i nthe first parameter and builds an
 	 * array representation of it and its contained files.
+	 *
+	 * __This method does not support recursive reading into sub-directories.__
 	 *
 	 *     $list = Utility::directory_list('./mydirectory/');
 	 *
@@ -160,7 +161,7 @@ abstract class Nova_Utility {
 		if ($location === null)
 		{
 			// get the directory listing for the genre
-			$dir = self::directory_map(APPPATH.'assets/common/'.Kohana::$config->load('nova.genre').'/ranks/', true);
+			$dir = self::directory_list(APPPATH.'assets/common/'.Kohana::$config->load('nova.genre').'/ranks/');
 			
 			// get all the rank sets locations
 			$ranks = Model_CatalogueRank::get_all_items();
@@ -233,7 +234,7 @@ abstract class Nova_Utility {
 		if ($location === null)
 		{
 			// get the listing of the directory
-			$dir = self::directory_map(APPPATH.'views/', true);
+			$dir = self::directory_list(APPPATH.'views/');
 			
 			// get all the skin catalogue items
 			$skins = Model_CatalogueSkin::get_all_items();
@@ -409,7 +410,7 @@ abstract class Nova_Utility {
 		if ($location === null)
 		{
 			// get the directory listing
-			$dir = self::directory_map(MODPATH.'app/views/components/widgets/', true);
+			$dir = self::directory_list(MODPATH.'app/views/components/widgets/');
 			
 			// get all the installed widgets
 			$widgets = Model_CatalogueWidget::get_all_items();

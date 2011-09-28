@@ -123,7 +123,7 @@ class Controller_Setup_Update extends Controller_Template {
 		if ($check)
 		{
 			// pull a map of the update dirs
-			$map = Utility::directory_map(MODPATH.'app/modules/setup/assets/update/', true);
+			$map = Utility::directory_list(MODPATH.'app/modules/setup/assets/update/');
 			
 			// on some systems, we may not be able to map automatically
 			if ( ! is_array($map))
@@ -234,7 +234,7 @@ class Controller_Setup_Update extends Controller_Template {
 					$version = $ver->version_major.$ver->version_minor.$ver->version_update;
 					
 					// pull a map of the update dirs
-					$map = Utility::directory_map(MODPATH.'app/modules/setup/assets/update/', true);
+					$map = Utility::directory_map(MODPATH.'app/modules/setup/assets/update/');
 					
 					// on some systems, we may not be able to map automatically
 					if ( ! is_array($map))
