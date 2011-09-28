@@ -586,6 +586,7 @@ $lang['flash_reset_error_3'] = 'The answer you provided is wrong. Your answer mu
 $lang['flash_reset_error_4'] = 'We have found more than one account with your email address. Please contact the game master to resolve this issue before continuing.';
 $lang['flash_reset_success'] = 'Your password has been successfully reset. You will receive an email shortly with your new password and you will be prompted to reset your password next time you log in.';
 $lang['flash_reset_fail'] = 'Password reset failed! Please try again. If the problem persists, please contact the game master';
+$lang['flash_reset_no_question'] = 'You must select a security question and provide an answer to reset your password. If you have not done so yet, please contact the game master to assist you.';
 
 $lang['flash_system_email_off'] = 'System email has been disabled. You will be able to submit this form, but its data will not be emailed to the appropriate parties!';
 $lang['flash_system_email_off_disabled'] = 'System email has been disabled and you cannot submit this form.';

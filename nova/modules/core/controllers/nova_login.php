@@ -314,52 +314,60 @@ abstract class Nova_login extends Controller {
 			$question = $this->input->post('question', true);
 			$answer = $this->input->post('answer', true);
 			
-			$info = $this->user->get_user_details_by_email($email);
-			
-			if ($info->num_rows() == 1)
+			if ($question == "0")
 			{
-				// grab the row info
-				$row = $info->row();
+				$flash['status'] = 'error';
+				$flash['message'] = lang_output('flash_reset_no_question');
+			}
+			else
+			{
+				$info = $this->user->get_user_details_by_email($email);
 				
-				if ($row->security_question == $question)
+				if ($info->num_rows() == 1)
 				{
-					if (sha1($answer) == $row->security_answer)
+					// grab the row info
+					$row = $info->row();
+					
+					if ($row->security_question == $question)
 					{
-						// execute the reset and send the email
-						$reset = $this->_reset($email);
-						
-						if ($reset == 0)
+						if (sha1($answer) == $row->security_answer)
 						{
-							$flash['status'] = 'error';
-							$flash['message'] = lang_output('flash_reset_fail');
+							// execute the reset and send the email
+							$reset = $this->_reset($email);
+							
+							if ($reset == 0)
+							{
+								$flash['status'] = 'error';
+								$flash['message'] = lang_output('flash_reset_fail');
+							}
+							else
+							{
+								$flash['status'] = 'success';
+								$flash['message'] = lang_output('flash_reset_success');
+							}
 						}
 						else
 						{
-							$flash['status'] = 'success';
-							$flash['message'] = lang_output('flash_reset_success');
+							$flash['status'] = 'error';
+							$flash['message'] = lang_output('flash_reset_error_3');
 						}
 					}
 					else
 					{
 						$flash['status'] = 'error';
-						$flash['message'] = lang_output('flash_reset_error_3');
+						$flash['message'] = lang_output('flash_reset_error_2');
 					}
 				}
-				else
+				elseif ($info->num_rows() > 1)
 				{
 					$flash['status'] = 'error';
-					$flash['message'] = lang_output('flash_reset_error_2');
+					$flash['message'] = lang_output('flash_reset_error_4');
 				}
-			}
-			elseif ($info->num_rows() > 1)
-			{
-				$flash['status'] = 'error';
-				$flash['message'] = lang_output('flash_reset_error_4');
-			}
-			elseif ($info->num_rows() < 1)
-			{
-				$flash['status'] = 'error';
-				$flash['message'] = lang_output('flash_reset_error_1');
+				elseif ($info->num_rows() < 1)
+				{
+					$flash['status'] = 'error';
+					$flash['message'] = lang_output('flash_reset_error_1');
+				}
 			}
 			
 			$this->_regions['flash_message'] = Location::view('flash', $this->skin, 'login', $flash);
