@@ -275,6 +275,10 @@ if ($drop_column !== null)
  * Data to insert/update/delete
  */
 
+// update the CI version info
+$this->db->where('comp_name', 'CodeIgniter');
+$this->db->update('system_components', array('comp_version' => '2.0.3'));
+
 // update the lazy version info
 $this->db->where('comp_name', 'Lazy');
 $this->db->update('system_components', array('comp_version' => '1.5'));
