@@ -8,7 +8,7 @@
  * @copyright	2011 Anodyne Productions
  */
 
-abstract class Nova_ajax extends Controller {
+abstract class Nova_ajax extends CI_Controller {
 	
 	/**
 	 * Variable to store all the information about template regions

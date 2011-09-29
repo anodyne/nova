@@ -8,7 +8,7 @@
  * @copyright	2011 Anodyne Productions
  */
 
-require_once MODPATH.'core/libraries/Nova_controller_admin'.EXT;
+require_once MODPATH.'core/libraries/Nova_controller_admin.php';
 
 abstract class Nova_site extends Nova_controller_admin {
 	
@@ -1863,7 +1863,7 @@ abstract class Nova_site extends Nova_controller_admin {
 		}
 		
 		// create an array of items that shouldn't be included in the dir listing
-		$pop = array('_base_override', 'index.html', 'template'.EXT);
+		$pop = array('_base_override', 'index.html', 'template.php');
 		
 		// make sure the items aren't in the listing
 		foreach ($pop as $value)

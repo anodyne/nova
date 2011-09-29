@@ -8,7 +8,7 @@
  * @copyright	2011 Anodyne Productions
  */
 
-abstract class Nova_install extends Controller {
+abstract class Nova_install extends CI_Controller {
 	
 	/**
 	 * @var	bool	Is the system installed?
@@ -24,12 +24,15 @@ abstract class Nova_install extends Controller {
 	{
 		parent::__construct();
 		
-		if ( ! file_exists(APPPATH.'config/database'.EXT) and $this->uri->segment(2) != 'setupconfig')
+		// load the nova core module
+		$this->load->module('core', 'nova', MODPATH);
+		
+		if ( ! file_exists(APPPATH.'config/database.php') and $this->uri->segment(2) != 'setupconfig')
 		{
 			redirect('install/setupconfig');
 		}
 		
-		if (file_exists(APPPATH.'config/database'.EXT) and $this->uri->segment(2) != 'setupconfig')
+		if (file_exists(APPPATH.'config/database.php') and $this->uri->segment(2) != 'setupconfig')
 		{
 			$this->load->database();
 			$this->load->model('system_model', 'sys');
@@ -45,7 +48,8 @@ abstract class Nova_install extends Controller {
 		}
 		
 		// load the install language file
-		$this->lang->load('install');
+		$this->lang->load('app');
+		$this->nova->lang('install');
 		
 		// set the template file
 		Template::$file = '_base/template_install';
@@ -700,16 +704,16 @@ abstract class Nova_install extends Controller {
 		// pass the step over to the view file
 		$data['step'] = $step;
 		
-		if ( ! file_exists(MODPATH.'assets/database/db.mysql'.EXT))
+		if ( ! file_exists(MODPATH.'assets/database/db.mysql.php'))
 		{
 			$data['message'] = sprintf(
 				lang('setup.text.no_config'),
-				MODFOLDER.'/assets/database/db.mysql'.EXT
+				MODFOLDER.'/assets/database/db.mysql.php'
 			);
 		}
 		else
 		{
-			if (file_exists(APPPATH.'config/database'.EXT) and $this->uri->segment(3) != 4)
+			if (file_exists(APPPATH.'config/database.php') and $this->uri->segment(3) != 4)
 			{
 				$data['message'] = sprintf(
 					lang('setup.text.config_exists'),
@@ -732,7 +736,7 @@ abstract class Nova_install extends Controller {
 						case 0:
 							$data['message'] = sprintf(
 								lang('setup.text.step0'),
-								MODFOLDER.'/assets/database/db.mysql'.EXT,
+								MODFOLDER.'/assets/database/db.mysql.php',
 								APPFOLDER.'/config'
 							);
 							
@@ -875,7 +879,7 @@ abstract class Nova_install extends Controller {
 							$check = array_intersect($disabled, $need);
 							
 							// pull in the mysql file
-							$file = file(MODPATH.'assets/database/db.mysql'.EXT);
+							$file = file(MODPATH.'assets/database/db.mysql.php');
 							
 							if (is_array($file))
 							{
@@ -940,7 +944,7 @@ abstract class Nova_install extends Controller {
 								chmod(APPPATH.'config', 0777);
 								
 								// open the file
-								$handle = fopen(APPPATH.'config/database'.EXT, 'w');
+								$handle = fopen(APPPATH.'config/database.php', 'w');
 								
 								// figure out if the write was successful
 								$write = false;
@@ -955,7 +959,7 @@ abstract class Nova_install extends Controller {
 								fclose($handle);
 								
 								try {
-									chmod(APPPATH.'config/database'.EXT, 0666);
+									chmod(APPPATH.'config/database.php', 0666);
 								} catch (Exception $e) {
 									log_message('error', 'Could not change file permissions for the database configuration file to 0666. Please do so manually.');
 								}
@@ -1125,7 +1129,7 @@ abstract class Nova_install extends Controller {
 				$charset = $this->sys->update_database_charset();
 				
 				// pull in the install fields asset file
-				include_once MODPATH.'assets/install/fields'.EXT;
+				include_once MODPATH.'assets/install/fields.php';
 				
 				// create an array for storing the results of the creation process
 				$table = array();
@@ -1174,7 +1178,7 @@ abstract class Nova_install extends Controller {
 				
 			case 2:
 				// pull in the install data asset file
-				include_once MODPATH.'assets/install/data'.EXT;
+				include_once MODPATH.'assets/install/data.php';
 				
 				$insert = array();
 				
@@ -1189,7 +1193,7 @@ abstract class Nova_install extends Controller {
 				if (APP_DATA_DEV !== false)
 				{
 					// pull in the dev data
-					include_once MODPATH.'assets/install/dev'.EXT;
+					include_once MODPATH.'assets/install/dev.php';
 					
 					foreach ($data as $value)
 					{
@@ -1246,7 +1250,7 @@ abstract class Nova_install extends Controller {
 				
 			case 3:
 				// pull in the install genre data asset file
-				include_once MODPATH.'assets/install/genres/'.GENRE.EXT;
+				include_once MODPATH.'assets/install/genres/'.GENRE.'.php';
 				
 				$genre = array();
 				
@@ -1718,7 +1722,7 @@ abstract class Nova_install extends Controller {
 				if (file_exists(APPPATH.'assets/common/'.GENRE.'/ranks/'.$value.'/rank.yml'))
 				{
 					// get the contents of the file
-					$contents = file_get_contents(APPPATH.'assets/common/'.GENRE.'/ranks/'.$selection.'/rank.yml');
+					$contents = file_get_contents(APPPATH.'assets/common/'.GENRE.'/ranks/'.$value.'/rank.yml');
 					
 					// parse the contents of the yaml file
 					$array = yayparser($contents);

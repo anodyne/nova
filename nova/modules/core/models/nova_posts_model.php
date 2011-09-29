@@ -8,7 +8,7 @@
  * @copyright	2011 Anodyne Productions
  */
 
-abstract class Nova_posts_model extends Model {
+abstract class Nova_posts_model extends CI_Model {
 
 	public function __construct()
 	{

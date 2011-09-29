@@ -8,7 +8,7 @@
  * @copyright	2011 Anodyne Productions
  */
 
-require_once MODPATH.'core/libraries/Nova_controller_wiki'.EXT;
+require_once MODPATH.'core/libraries/Nova_controller_wiki.php';
 
 abstract class Nova_wiki extends Nova_controller_wiki {
 	

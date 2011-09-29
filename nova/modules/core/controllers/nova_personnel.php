@@ -8,7 +8,7 @@
  * @copyright	2011 Anodyne Productions
  */
 
-require_once MODPATH.'core/libraries/Nova_controller_main'.EXT;
+require_once MODPATH.'core/libraries/Nova_controller_main.php';
 
 abstract class Nova_personnel extends Nova_controller_main {
 	

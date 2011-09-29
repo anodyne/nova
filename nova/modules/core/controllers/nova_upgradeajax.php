@@ -8,7 +8,7 @@
  * @copyright	2011 Anodyne Productions
  */
 
-abstract class Nova_upgradeajax extends Controller {
+abstract class Nova_upgradeajax extends CI_Controller {
 	
 	public function __construct()
 	{

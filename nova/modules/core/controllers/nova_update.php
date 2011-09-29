@@ -8,7 +8,7 @@
  * @copyright	2011 Anodyne Productions
  */
 
-abstract class Nova_update extends Controller {
+abstract class Nova_update extends CI_Controller {
 	
 	/**
 	 * @var	bool	Is the system installed?
@@ -34,7 +34,10 @@ abstract class Nova_update extends Controller {
 	{
 		parent::__construct();
 		
-		if ( ! file_exists(APPPATH.'config/database'.EXT))
+		// load the nova core module
+		$this->load->module('core', 'nova', MODPATH);
+		
+		if ( ! file_exists(APPPATH.'config/database.php'))
 		{
 			redirect('install/setupconfig');
 		}
@@ -417,7 +420,7 @@ abstract class Nova_update extends Controller {
 				}
 				else
 				{
-					include_once(MODPATH.'assets/update/versions'.EXT);
+					include_once(MODPATH.'assets/update/versions.php');
 					
 					foreach ($version_array as $k => $v)
 					{
@@ -429,7 +432,7 @@ abstract class Nova_update extends Controller {
 					
 					foreach ($version_array as $value)
 					{
-						include_once(MODPATH.'assets/update/update_' .$value.EXT);
+						include_once(MODPATH.'assets/update/update_' .$value.'.php');
 						
 						sleep(1);
 					}

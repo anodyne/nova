@@ -8,7 +8,7 @@
  * @copyright	2011 Anodyne Productions
  */
 
-abstract class Nova_upgrade extends Controller {
+abstract class Nova_upgrade extends CI_Controller {
 	
 	/**
 	 * @var	bool	Is the system installed?
@@ -24,7 +24,10 @@ abstract class Nova_upgrade extends Controller {
 	{
 		parent::__construct();
 		
-		if ( ! file_exists(APPPATH.'config/database'.EXT))
+		// load the nova core module
+		$this->load->module('core', 'nova', MODPATH);
+		
+		if ( ! file_exists(APPPATH.'config/database.php'))
 		{
 			redirect('install/setupconfig');
 		}
@@ -32,7 +35,7 @@ abstract class Nova_upgrade extends Controller {
 		$this->load->database();
 		$this->load->model('settings_model', 'settings');
 		$this->load->model('system_model', 'sys');
-		$this->lang->load('install');
+		$this->nova->lang('install');
 		$this->lang->load('app');
 		
 		$this->installed = $this->sys->check_install_status();
@@ -258,7 +261,7 @@ abstract class Nova_upgrade extends Controller {
 					$this->sys->update_database_charset();
 					
 					// pull in the field information
-					include_once MODPATH.'assets/install/fields'.EXT;
+					include_once MODPATH.'assets/install/fields.php';
 					
 					foreach ($data as $key => $value)
 					{
@@ -283,7 +286,7 @@ abstract class Nova_upgrade extends Controller {
 					$data = null;
 					
 					// pull in the basic data
-					include_once MODPATH.'assets/install/data'.EXT;
+					include_once MODPATH.'assets/install/data.php';
 					
 					$insert = array();
 					
@@ -302,7 +305,7 @@ abstract class Nova_upgrade extends Controller {
 					$data = null;
 					
 					// pull in the genre data
-					include_once MODPATH.'assets/install/genres/'.GENRE.EXT;
+					include_once MODPATH.'assets/install/genres/'.GENRE.'.php';
 					
 					$genre = array();
 					
@@ -323,7 +326,7 @@ abstract class Nova_upgrade extends Controller {
 						$data = null;
 						
 						// pull in the development test data
-						include_once MODPATH.'assets/install/dev'.EXT;
+						include_once MODPATH.'assets/install/dev.php';
 						
 						$insert = array();
 						

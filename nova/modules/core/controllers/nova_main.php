@@ -8,7 +8,7 @@
  * @copyright	2011 Anodyne Productions
  */
 
-require_once MODPATH.'core/libraries/Nova_controller_main'.EXT;
+require_once MODPATH.'core/libraries/Nova_controller_main.php';
 
 abstract class Nova_main extends Nova_controller_main {
 	
@@ -692,7 +692,7 @@ abstract class Nova_main extends Nova_controller_main {
 			'author' => ucfirst(lang('labels_author')) .':',
 			'posted_on' => ucfirst(lang('actions_posted') .' '. lang('labels_on')) .':',
 			'loading' => ucfirst(lang('actions_loading')),
-			'nonews' => lang('error_msg_no_news'),
+			'nonews' => sprintf(lang('error_not_found'), lang('global_newsitems')),
 		);
 		
 		$this->_regions['content'] = Location::view('main_news', $this->skin, 'main', $data);

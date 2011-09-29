@@ -8,7 +8,7 @@
  * @copyright	2011 Anodyne Productions
  */
 
-class Nova_controller_main extends Controller {
+class Nova_controller_main extends CI_Controller {
 	
 	/**
 	 * @var	array 	The options array that stores all the settings from the database
@@ -44,7 +44,10 @@ class Nova_controller_main extends Controller {
 	{
 		parent::__construct();
 		
-		if ( ! file_exists(APPPATH.'config/database'.EXT))
+		// load the nova core module
+		$this->load->module('core', 'nova', MODPATH);
+		
+		if ( ! file_exists(APPPATH.'config/database.php'))
 		{
 			redirect('install/setupconfig');
 		}
@@ -101,7 +104,7 @@ class Nova_controller_main extends Controller {
 		// if the user is logged in, reset the values
 		if (Auth::is_logged_in())
 		{
-			$this->skin = (file_exists(APPPATH.'views/'.$this->session->userdata('skin_main').'/template_main'.EXT))
+			$this->skin = (file_exists(APPPATH.'views/'.$this->session->userdata('skin_main').'/template_main.php'))
 				? $this->session->userdata('skin_main')
 				: $this->skin;
 			$this->rank = $this->session->userdata('display_rank');

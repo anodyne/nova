@@ -1,5 +1,7 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
+$autoload['packages'] = array(APPPATH.'third_party');
+
 $autoload['libraries'] = array(
 	'template',
 	'menu',
@@ -17,8 +19,6 @@ $autoload['helper'] = array(
 	'form',
 	'string'
 );
-
-$autoload['plugin'] = array();
 
 $autoload['config'] = array('nova');
 

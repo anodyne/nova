@@ -212,6 +212,11 @@ abstract class Nova_template
 	{		
 		$ci =& get_instance();
 		
+		if (substr(self::$file, 0, 5) == '_base')
+		{
+			return $ci->nova->view(self::$data['directory'].self::$file, self::$data, $return, self::$data['module']);
+		}
+		
 		return $ci->load->view(self::$data['directory'].self::$file, self::$data, $return, self::$data['module']);
 	}
 }

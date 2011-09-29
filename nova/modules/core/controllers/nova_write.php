@@ -8,7 +8,7 @@
  * @copyright	2011 Anodyne Productions
  */
 
-require_once MODPATH.'core/libraries/Nova_controller_admin'.EXT;
+require_once MODPATH.'core/libraries/Nova_controller_admin.php';
 
 abstract class Nova_write extends Nova_controller_admin {
 	

@@ -39,11 +39,11 @@ abstract class Nova_location {
 			$obj->view = $view;
 			$obj->sec = $section;
 			
-			if (is_file(APPPATH.'views/'.$skin.'/'.$section.'/ajax/'.$view.EXT))
+			if (is_file(APPPATH.'views/'.$skin.'/'.$section.'/ajax/'.$view.'.php'))
 			{
 				$obj->skin = $skin;
 			}
-			elseif (is_file(APPPATH.'views/_base_override/'.$section.'/ajax/'.$view.EXT))
+			elseif (is_file(APPPATH.'views/_base_override/'.$section.'/ajax/'.$view.'.php'))
 			{
 				$obj->skin = '_base_override';
 			}
@@ -57,7 +57,14 @@ abstract class Nova_location {
 		
 		if ($data !== null)
 		{
-			return $ci->load->view($location, $data, true);
+			if ($obj->skin == '_base')
+			{
+				return $ci->nova->view($location, $data, true);
+			}
+			else
+			{
+				return $ci->load->view($location, $data, true);
+			}
 		}
 		
 		return $location;
@@ -109,7 +116,7 @@ abstract class Nova_location {
 	 */
 	public static function email($view, $type = 'html')
 	{
-		if (is_file(APPPATH.'views/_base_override/emails/'.$type.'/'.$view.EXT))
+		if (is_file(APPPATH.'views/_base_override/emails/'.$type.'/'.$view.'.php'))
 		{
 			return '_base_override/emails/'.$type.'/'.$view;
 		}
@@ -167,11 +174,11 @@ abstract class Nova_location {
 		$obj->file = $file;
 		$obj->sec = $section;
 		
-		if (is_file(APPPATH.'views/'.$skin.'/'.$section.'/js/'.$file.EXT))
+		if (is_file(APPPATH.'views/'.$skin.'/'.$section.'/js/'.$file.'.php'))
 		{
 			$obj->skin = $skin;
 		}
-		elseif (is_file(APPPATH.'views/_base_override/'.$section.'/js/'.$file.EXT))
+		elseif (is_file(APPPATH.'views/_base_override/'.$section.'/js/'.$file.'.php'))
 		{
 			$obj->skin = '_base_override';
 		}
@@ -181,6 +188,11 @@ abstract class Nova_location {
 		}
 		
 		$location = $obj->skin.'/'.$obj->sec.'/js/'.$obj->file;
+		
+		if ($obj->skin == '_base')
+		{
+			return $ci->nova->view($location, $data, true);
+		}
 		
 		return $ci->load->view($location, $data, true);
 	}
@@ -224,11 +236,11 @@ abstract class Nova_location {
 			$obj->view = $view;
 			$obj->sec = $section;
 			
-			if (is_file(APPPATH.'views/'.$skin.'/'.$section.'/pages/'.$view.EXT))
+			if (is_file(APPPATH.'views/'.$skin.'/'.$section.'/pages/'.$view.'.php'))
 			{
 				$obj->skin = $skin;
 			}
-			elseif (is_file(APPPATH.'views/_base_override/'.$section.'/pages/'.$view.EXT))
+			elseif (is_file(APPPATH.'views/_base_override/'.$section.'/pages/'.$view.'.php'))
 			{
 				$obj->skin = '_base_override';
 			}
@@ -242,7 +254,14 @@ abstract class Nova_location {
 		
 		if ($data !== null)
 		{
-			return $ci->load->view($location, $data, true);
+			if ($obj->skin == '_base')
+			{
+				return $ci->nova->view($location, $data, true);
+			}
+			else
+			{
+				return $ci->load->view($location, $data, true);
+			}
 		}
 		
 		return $location;
