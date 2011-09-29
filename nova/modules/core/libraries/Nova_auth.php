@@ -36,43 +36,43 @@ abstract class Nova_auth {
 			$uri = $ci->uri->segment(1) .'/'. $ci->uri->segment(2);
 		}
 		
-		if ($partial === TRUE)
+		if ($partial)
 		{
 			$array = explode('/', $uri);
 			$uri = $array[0];
 		}
 		
-		if ($partial === FALSE)
+		if ( ! $partial)
 		{
 			$access = $ci->session->userdata('access');
-			$access = ($access === FALSE) ? array() : $access;
+			$access = ( ! $access) ? array() : $access;
 			
 			if ( ! array_key_exists($uri, $access))
 			{
-				if ($redirect === TRUE)
+				if ($redirect)
 				{
 					$ci->session->set_flashdata('referer', $uri);
 					
 					redirect('admin/error/1');
 				}
 				
-				return FALSE;
+				return false;
 			}
 		}
 		else
 		{
 			foreach ($ci->session->userdata('access') as $a => $b)
 			{
-				if (strpos($a, $uri) !== FALSE)
+				if (strpos($a, $uri) !== false)
 				{
-					return TRUE;
+					return true;
 				}
 				
-				return FALSE;
+				return false;
 			}
 		}
 		
-		return TRUE;
+		return true;
 	}
 	
 	/**
@@ -139,34 +139,34 @@ abstract class Nova_auth {
 		
 		$gm = $ci->user->get_user($user, 'is_game_master');
 		
-		$retval = ($gm == 'y') ? TRUE : FALSE;
+		$retval = ($gm == 'y');
 		
 		return $retval;
 	}
 	
-	public static function is_logged_in($redirect = FALSE)
+	public static function is_logged_in($redirect = false)
 	{
 		// get an instance of CI
 		$ci =& get_instance();
 		
-		if ($ci->session->userdata('userid') === FALSE)
+		if ( ! $ci->session->userdata('userid'))
 		{
 			$auto = self::_autologin();
 			
-			if ($auto !== FALSE)
+			if ($auto)
 			{
-				return TRUE;
+				return true;
 			}
 			
-			if ($redirect === TRUE)
+			if ($redirect)
 			{
 				redirect('login/index/error/1');
 			}
 			
-			return FALSE;
+			return false;
 		}
 		
-		return TRUE;
+		return true;
 	}
 	
 	public static function is_sysadmin($user = '')
@@ -179,7 +179,7 @@ abstract class Nova_auth {
 		
 		$admin = $ci->user->get_user($user, 'is_sysadmin');
 		
-		$retval = ($admin == 'y') ? TRUE : FALSE;
+		$retval = ($admin == 'y');
 		
 		return $retval;
 	}
@@ -194,7 +194,7 @@ abstract class Nova_auth {
 		
 		$web = $ci->user->get_user($user, 'is_webmaster');
 		
-		$retval = ($web == 'y') ? TRUE : FALSE;
+		$retval = ($web == 'y');
 		
 		return $retval;
 	}
@@ -231,7 +231,7 @@ abstract class Nova_auth {
 		
 		$attempts = self::_check_login_attempts($email);
 		
-		if ($attempts === FALSE)
+		if ( ! $attempts)
 		{
 			$retval = 6;
 			return $retval;
@@ -257,7 +257,7 @@ abstract class Nova_auth {
 			
 			if ($person->password == $password)
 			{
-				if ($maintenance == 'on' && $person->is_sysadmin == 'n')
+				if ($maintenance == 'on' and $person->is_sysadmin == 'n')
 				{
 					// maintenance mode active
 					$retval = 5;
@@ -382,7 +382,7 @@ abstract class Nova_auth {
 		
 		if ($attempts < self::$allowed_login_attempts)
 		{
-			return TRUE;
+			return true;
 		}
 		else
 		{
@@ -395,12 +395,10 @@ abstract class Nova_auth {
 				// clear the login attempts if there are any
 				$ci->sys->delete_login_attempts($email);
 					
-				return TRUE;
+				return true;
 			}
-			else
-			{
-				return FALSE;
-			}
+			
+			return false;
 		}
 	}
 	
@@ -419,9 +417,9 @@ abstract class Nova_auth {
 		$uid = $ci->sys->get_nova_uid();
 		
 		// get the cookie
-		$cookie = get_cookie('nova_'. $uid, TRUE);
+		$cookie = get_cookie('nova_'. $uid, true);
 		
-		if ($cookie !== FALSE)
+		if ($cookie)
 		{
 			$login = self::login($cookie['email'], $cookie['password'], null, true);
 			
