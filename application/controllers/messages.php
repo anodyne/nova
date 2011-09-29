@@ -1,6 +1,6 @@
 <?php
 
-require_once MODPATH.'core/controllers/nova_messages'.EXT;
+require_once MODPATH.'core/controllers/nova_messages.php';
 
 class Messages extends Nova_messages {
 

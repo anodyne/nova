@@ -10,4 +10,4 @@
 |
 */
 
-require_once MODPATH.'core/config/nova_hooks'.EXT;
+require_once MODPATH.'core/config/nova_hooks.php';

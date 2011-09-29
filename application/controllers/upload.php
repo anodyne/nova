@@ -1,6 +1,6 @@
 <?php
 
-require_once MODPATH.'core/controllers/nova_upload'.EXT;
+require_once MODPATH.'core/controllers/nova_upload.php';
 
 class Upload extends Nova_upload {
 

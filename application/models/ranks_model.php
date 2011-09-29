@@ -1,6 +1,6 @@
 <?php
 
-require_once MODPATH.'core/models/nova_ranks_model'.EXT;
+require_once MODPATH.'core/models/nova_ranks_model.php';
 
 class Ranks_model extends Nova_ranks_model {
 

@@ -1,6 +1,6 @@
 <?php
 
-require_once MODPATH.'core/models/nova_docking_model'.EXT;
+require_once MODPATH.'core/models/nova_docking_model.php';
 
 class Docking_model extends Nova_docking_model {
 

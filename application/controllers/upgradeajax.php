@@ -1,6 +1,6 @@
 <?php
 
-require_once MODPATH.'core/controllers/nova_upgradeajax'.EXT;
+require_once MODPATH.'core/controllers/nova_upgradeajax.php';
 
 class Upgradeajax extends Nova_upgradeajax {
 	

@@ -1,6 +1,6 @@
 <?php
 
-require_once MODPATH.'core/controllers/nova_site'.EXT;
+require_once MODPATH.'core/controllers/nova_site.php';
 
 class Site extends Nova_site {
 

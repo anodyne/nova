@@ -1,6 +1,6 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-require_once MODPATH.'core/hooks/nova_utility'.EXT;
+require_once MODPATH.'core/hooks/nova_utility.php';
 
 class Utility extends Nova_utility {
 	

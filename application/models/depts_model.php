@@ -1,6 +1,6 @@
 <?php
 
-require_once MODPATH.'core/models/nova_depts_model'.EXT;
+require_once MODPATH.'core/models/nova_depts_model.php';
 
 class Depts_model extends Nova_depts_model {
 

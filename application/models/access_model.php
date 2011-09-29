@@ -1,6 +1,6 @@
 <?php
 
-require_once MODPATH.'core/models/nova_access_model'.EXT;
+require_once MODPATH.'core/models/nova_access_model.php';
 
 class Access_model extends Nova_access_model {
 

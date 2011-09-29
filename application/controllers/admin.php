@@ -1,6 +1,6 @@
 <?php
 
-require_once MODPATH.'core/controllers/nova_admin'.EXT;
+require_once MODPATH.'core/controllers/nova_admin.php';
 
 class Admin extends Nova_admin {
 

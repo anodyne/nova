@@ -1,6 +1,6 @@
 <?php
 
-require_once MODPATH.'core/controllers/nova_characters'.EXT;
+require_once MODPATH.'core/controllers/nova_characters.php';
 
 class Characters extends Nova_characters {
 

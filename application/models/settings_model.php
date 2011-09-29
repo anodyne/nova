@@ -1,6 +1,6 @@
 <?php
 
-require_once MODPATH.'core/models/nova_settings_model'.EXT;
+require_once MODPATH.'core/models/nova_settings_model.php';
 
 class Settings_model extends Nova_settings_model {
 

@@ -27,6 +27,6 @@
  * @link		http://codeigniter.com/user_guide/libraries/input.html
  */
 
-require_once MODPATH.'core/libraries/Nova_input'.EXT;
+require_once MODPATH.'core/core/Nova_input.php';
 
 class My_Input extends Nova_Input {}

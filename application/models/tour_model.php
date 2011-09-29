@@ -1,6 +1,6 @@
 <?php
 
-require_once MODPATH.'core/models/nova_tour_model'.EXT;
+require_once MODPATH.'core/models/nova_tour_model.php';
 
 class Tour_model extends Nova_tour_model {
 

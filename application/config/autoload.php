@@ -27,4 +27,4 @@
 |
 */
 
-require_once MODPATH.'core/config/nova_autoload'.EXT;
+require_once MODPATH.'core/config/nova_autoload.php';

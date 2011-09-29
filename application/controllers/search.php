@@ -1,6 +1,6 @@
 <?php
 
-require_once MODPATH.'core/controllers/nova_search'.EXT;
+require_once MODPATH.'core/controllers/nova_search.php';
 
 class Search extends Nova_search {
 	
