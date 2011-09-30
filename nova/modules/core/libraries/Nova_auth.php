@@ -209,9 +209,9 @@ abstract class Nova_auth {
 		$ci->load->model('system_model', 'sys');
 		
 		// xss clean of the data coming in
-		$email = $ci->input->xss_clean($email);
-		$password = $ci->input->xss_clean($password);
-		$remember = $ci->input->xss_clean($remember);
+		$email = $ci->security->xss_clean($email);
+		$password = $ci->security->xss_clean($password);
+		$remember = $ci->security->xss_clean($remember);
 		
 		// set the variables
 		$retval = 0;

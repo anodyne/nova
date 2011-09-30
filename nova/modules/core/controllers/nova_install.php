@@ -619,8 +619,8 @@ abstract class Nova_install extends CI_Controller {
 		if (isset($_POST['submit']))
 		{
 			// set the POST variables
-			$email = trim($this->input->xss_clean($_POST['email']));
-			$password = trim($this->input->xss_clean($_POST['password']));
+			$email = trim($this->security->xss_clean($_POST['email']));
+			$password = trim($this->security->xss_clean($_POST['password']));
 			
 			// verify their email/password combo is right
 			$verify = Auth::verify($email, $password);
@@ -777,11 +777,11 @@ abstract class Nova_install extends CI_Controller {
 						
 						case 2:
 							// set the variables to use
-							$dbName		= trim($this->input->xss_clean($_POST['dbName']));
-							$dbUser		= trim($this->input->xss_clean($_POST['dbUser']));
-							$dbPass		= trim($this->input->xss_clean($_POST['dbPass']));
-							$dbHost		= trim($this->input->xss_clean($_POST['dbHost']));
-							$prefix		= trim($this->input->xss_clean($_POST['prefix']));
+							$dbName		= trim($this->security->xss_clean($_POST['dbName']));
+							$dbUser		= trim($this->security->xss_clean($_POST['dbUser']));
+							$dbPass		= trim($this->security->xss_clean($_POST['dbPass']));
+							$dbHost		= trim($this->security->xss_clean($_POST['dbHost']));
+							$prefix		= trim($this->security->xss_clean($_POST['prefix']));
 							
 							// set the session variables
 							$this->session->set_userdata('dbName', $dbName);

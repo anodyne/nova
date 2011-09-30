@@ -28,7 +28,7 @@ abstract class Nova_site extends Nova_controller_admin {
 				case 'add':
 					foreach ($_POST as $key => $value)
 					{
-						$insert_array[$key] = $this->input->xss_clean($value);
+						$insert_array[$key] = $this->security->xss_clean($value);
 					}
 					
 					// pop unnecessary items off the array
@@ -201,7 +201,7 @@ abstract class Nova_site extends Nova_controller_admin {
 				case 'add':
 					foreach ($_POST as $key => $value)
 					{
-						$insert_array[$key] = $this->input->xss_clean($value);
+						$insert_array[$key] = $this->security->xss_clean($value);
 					}
 					
 					// pull the items off the array
@@ -328,7 +328,7 @@ abstract class Nova_site extends Nova_controller_admin {
 				case 'edit':
 					foreach ($_POST as $key => $value)
 					{
-						$update_array[$key] = $this->input->xss_clean($value);
+						$update_array[$key] = $this->security->xss_clean($value);
 					}
 					
 					// set the ID
@@ -1963,7 +1963,7 @@ abstract class Nova_site extends Nova_controller_admin {
 				case 'add':
 					foreach ($_POST as $key => $value)
 					{
-						$insert_array[$key] = $this->input->xss_clean($value);
+						$insert_array[$key] = $this->security->xss_clean($value);
 					}
 					
 					$select = $insert_array['select_values'];
@@ -2080,7 +2080,7 @@ abstract class Nova_site extends Nova_controller_admin {
 				case 'edit':
 					foreach ($_POST as $key => $value)
 					{
-						$update_array[$key] = $this->input->xss_clean($value);
+						$update_array[$key] = $this->security->xss_clean($value);
 					}
 					
 					$id = $update_array['field_id'];
@@ -2119,7 +2119,7 @@ abstract class Nova_site extends Nova_controller_admin {
 				case 'editval':
 					foreach ($_POST as $key => $value)
 					{
-						$update_array[$key] = $this->input->xss_clean($value);
+						$update_array[$key] = $this->security->xss_clean($value);
 					}
 					
 					$id = $update_array['id'];
@@ -2441,7 +2441,7 @@ abstract class Nova_site extends Nova_controller_admin {
 				case 'add':
 					foreach ($_POST as $key => $value)
 					{
-						$insert_array[$key] = $this->input->xss_clean($value);
+						$insert_array[$key] = $this->security->xss_clean($value);
 					}
 					
 					unset($insert_array['submit']);
@@ -2510,7 +2510,7 @@ abstract class Nova_site extends Nova_controller_admin {
 				case 'edit':
 					foreach ($_POST as $key => $value)
 					{
-						$update_array[$key] = $this->input->xss_clean($value);
+						$update_array[$key] = $this->security->xss_clean($value);
 					}
 					
 					$id = $update_array['id'];
@@ -2621,7 +2621,7 @@ abstract class Nova_site extends Nova_controller_admin {
 					// dynamically assign the POST variables to the insert array
 					foreach ($_POST as $key => $value)
 					{
-						$insert_array[$key] = $this->input->xss_clean($value);
+						$insert_array[$key] = $this->security->xss_clean($value);
 					}
 					
 					// pop off the button
@@ -2761,7 +2761,7 @@ abstract class Nova_site extends Nova_controller_admin {
 					// dynamically assign the POST variables to the insert array
 					foreach ($_POST as $key => $value)
 					{
-						$update_array[$key] = $this->input->xss_clean($value);
+						$update_array[$key] = $this->security->xss_clean($value);
 					}
 					
 					// pop off the button
@@ -4580,7 +4580,7 @@ abstract class Nova_site extends Nova_controller_admin {
 			{
 				if ( ! in_array($key, $key_exceptions))
 				{
-					$update_array['setting_value'] = $this->input->xss_clean($value);
+					$update_array['setting_value'] = $this->security->xss_clean($value);
 					
 					$update = $this->settings->update_setting($key, $update_array);
 					

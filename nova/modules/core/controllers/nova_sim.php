@@ -528,7 +528,7 @@ abstract class Nova_sim extends Nova_controller_main {
 				{
 					if ( ! is_numeric($key))
 					{
-						$insert_array[$key] = $this->input->xss_clean($value);
+						$insert_array[$key] = $this->security->xss_clean($value);
 					}
 				}
 				
