@@ -984,7 +984,7 @@ abstract class Nova_main extends Nova_controller_main {
 				$loc = Location::email('main_contact', $this->email->mailtype);
 				
 				// parse the message
-				$message = $this->parser->parse($loc, $email_data, true);
+				$message = $this->parser->parse_string($loc, $email_data, true);
 				
 				// get the game masters
 				$gm = $this->user->get_gm_emails();
@@ -1027,7 +1027,7 @@ abstract class Nova_main extends Nova_controller_main {
 				$loc = Location::email('main_news_comment', $this->email->mailtype);
 				
 				// parse the message
-				$message = $this->parser->parse($loc, $email_data, true);
+				$message = $this->parser->parse_string($loc, $email_data, true);
 				
 				// set the parameters for sending the email
 				$this->email->from($from, $name);
@@ -1066,7 +1066,7 @@ abstract class Nova_main extends Nova_controller_main {
 				$loc = Location::email('comment_pending', $this->email->mailtype);
 				
 				// parse the message
-				$message = $this->parser->parse($loc, $email_data, true);
+				$message = $this->parser->parse_string($loc, $email_data, true);
 				
 				// set the parameters for sending the email
 				$this->email->from($from, $name);
@@ -1095,7 +1095,7 @@ abstract class Nova_main extends Nova_controller_main {
 				$loc = Location::email('main_join_user', $this->email->mailtype);
 				
 				// parse the message
-				$message = $this->parser->parse($loc, $email_data, true);
+				$message = $this->parser->parse_string($loc, $email_data, true);
 				
 				// set the parameters for sending the email
 				$this->email->from($this->options['default_email_address'], $this->options['default_email_name']);
@@ -1183,7 +1183,7 @@ abstract class Nova_main extends Nova_controller_main {
 				$em_loc = Location::email('main_join_gm', $this->email->mailtype);
 				
 				// parse the message
-				$message = $this->parser->parse($em_loc, $email_data, true);
+				$message = $this->parser->parse_string($em_loc, $email_data, true);
 				
 				// get the game masters email addresses
 				$gm = $this->user->get_gm_emails();

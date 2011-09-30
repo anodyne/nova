@@ -456,7 +456,7 @@ abstract class Nova_login extends CI_Controller {
 				$em_loc = Location::email('reset_password', $this->email->mailtype);
 				
 				// parse the message
-				$message = $this->parser->parse($em_loc, $email_data, true);
+				$message = $this->parser->parse_string($em_loc, $email_data, true);
 				
 				// set the parameters for sending the email
 				$this->email->from($data['email'], $data['name']);

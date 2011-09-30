@@ -2058,7 +2058,7 @@ abstract class Nova_characters extends Nova_controller_admin {
 				
 				$em_loc = Location::email('character_action', $this->email->mailtype);
 				
-				$message = $this->parser->parse($em_loc, $email_data, true);
+				$message = $this->parser->parse_string($em_loc, $email_data, true);
 				
 				$this->email->from($data['email'], $data['name']);
 				$this->email->to($data['email']);
@@ -2078,7 +2078,7 @@ abstract class Nova_characters extends Nova_controller_admin {
 				
 				$em_loc = Location::email('character_action', $this->email->mailtype);
 				
-				$message = $this->parser->parse($em_loc, $email_data, true);
+				$message = $this->parser->parse_string($em_loc, $email_data, true);
 				
 				$this->email->from($data['email'], $data['name']);
 				$this->email->to($data['email']);
@@ -2164,7 +2164,7 @@ abstract class Nova_characters extends Nova_controller_admin {
 				$em_loc = Location::email('main_join_gm', $this->email->mailtype);
 				
 				// parse the message
-				$message = $this->parser->parse($em_loc, $email_data, true);
+				$message = $this->parser->parse_string($em_loc, $email_data, true);
 				
 				// get the game masters email addresses
 				$gm = $this->user->get_gm_emails();

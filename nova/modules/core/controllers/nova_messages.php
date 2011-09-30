@@ -715,7 +715,7 @@ abstract class Nova_messages extends Nova_controller_admin {
 		$em_loc = Location::email('messages_new', $this->email->mailtype);
 		
 		// parse the message
-		$message = $this->parser->parse($em_loc, $email_data, true);
+		$message = $this->parser->parse_string($em_loc, $email_data, true);
 		
 		// for use by the email library
 		$to = implode(',', $emails);

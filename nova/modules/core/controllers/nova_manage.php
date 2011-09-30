@@ -4814,7 +4814,6 @@ abstract class Nova_manage extends Nova_controller_admin {
 	{
 		// load the resources
 		$this->load->library('pagination');
-		$this->load->library('parser');
 		$this->load->helper('text');
 		
 		switch ($type)
@@ -5038,10 +5037,7 @@ abstract class Nova_manage extends Nova_controller_admin {
 	    );
 	    
 	    // figure out where the view is coming from
-	    $loc = Location::view('manage_comments_ajax', $this->skin, 'admin');
-	    
-	    // parse the message
-		$message = $this->parser->parse($loc, $data, true);
+	    $message = Location::view('manage_comments_ajax', $this->skin, 'admin', $data);
 
 	    return $message;
 	}
@@ -5080,7 +5076,7 @@ abstract class Nova_manage extends Nova_controller_admin {
 				$em_loc = Location::email('write_newsitem', $this->email->mailtype);
 				
 				// parse the message
-				$message = $this->parser->parse($em_loc, $email_data, true);
+				$message = $this->parser->parse_string($em_loc, $email_data, true);
 				
 				// get the email addresses
 				$emails = $this->user->get_crew_emails(true, 'email_news_items');
@@ -5118,7 +5114,7 @@ abstract class Nova_manage extends Nova_controller_admin {
 				$em_loc = Location::email('write_personallog', $this->email->mailtype);
 				
 				// parse the message
-				$message = $this->parser->parse($em_loc, $email_data, true);
+				$message = $this->parser->parse_string($em_loc, $email_data, true);
 				
 				// get the email addresses
 				$emails = $this->user->get_crew_emails(true, 'email_personal_logs');
@@ -5176,7 +5172,7 @@ abstract class Nova_manage extends Nova_controller_admin {
 				$em_loc = Location::email('write_missionpost', $this->email->mailtype);
 				
 				// parse the message
-				$message = $this->parser->parse($em_loc, $email_data, true);
+				$message = $this->parser->parse_string($em_loc, $email_data, true);
 				
 				// get the email addresses
 				$emails = $this->user->get_crew_emails(true, 'email_mission_posts');
@@ -5219,7 +5215,7 @@ abstract class Nova_manage extends Nova_controller_admin {
 				$em_loc = Location::email('sim_log_comment', $this->email->mailtype);
 				
 				// parse the message
-				$message = $this->parser->parse($em_loc, $email_data, true);
+				$message = $this->parser->parse_string($em_loc, $email_data, true);
 				
 				// set the parameters for sending the email
 				$this->email->from($from, $name);
@@ -5256,7 +5252,7 @@ abstract class Nova_manage extends Nova_controller_admin {
 				$em_loc = Location::email('main_news_comment', $this->email->mailtype);
 				
 				// parse the message
-				$message = $this->parser->parse($em_loc, $email_data, true);
+				$message = $this->parser->parse_string($em_loc, $email_data, true);
 				
 				// set the parameters for sending the email
 				$this->email->from($from, $name);
@@ -5303,7 +5299,7 @@ abstract class Nova_manage extends Nova_controller_admin {
 				
 				$em_loc = Location::email('sim_post_comment', $this->email->mailtype);
 				
-				$message = $this->parser->parse($em_loc, $email_data, true);
+				$message = $this->parser->parse_string($em_loc, $email_data, true);
 				
 				$this->email->from($from, $name);
 				$this->email->to($to);
@@ -5355,7 +5351,7 @@ abstract class Nova_manage extends Nova_controller_admin {
 				$em_loc = Location::email('wiki_comment', $this->email->mailtype);
 				
 				// parse the message
-				$message = $this->parser->parse($em_loc, $email_data, true);
+				$message = $this->parser->parse_string($em_loc, $email_data, true);
 				
 				// set the parameters for sending the email
 				$this->email->from($from, $name);
@@ -5375,7 +5371,7 @@ abstract class Nova_manage extends Nova_controller_admin {
 				
 				$em_loc = Location::email('docked_action', $this->email->mailtype);
 				
-				$message = $this->parser->parse($em_loc, $email_data, true);
+				$message = $this->parser->parse_string($em_loc, $email_data, true);
 				
 				$this->email->from($this->options['default_email_address'], $this->options['sim_name']);
 				$this->email->to($data['email']);
@@ -5395,7 +5391,7 @@ abstract class Nova_manage extends Nova_controller_admin {
 				
 				$em_loc = Location::email('docked_action', $this->email->mailtype);
 				
-				$message = $this->parser->parse($em_loc, $email_data, true);
+				$message = $this->parser->parse_string($em_loc, $email_data, true);
 				
 				$this->email->from($this->options['default_email_address'], $this->options['sim_name']);
 				$this->email->to($data['email']);
@@ -5415,7 +5411,6 @@ abstract class Nova_manage extends Nova_controller_admin {
 	{
 		// load the resources
 		$this->load->library('pagination');
-		$this->load->library('parser');
 		
 		switch ($section)
 		{
@@ -5513,7 +5508,7 @@ abstract class Nova_manage extends Nova_controller_admin {
 			    );
 				
 				// figure out where the view is coming from
-	    		$loc = Location::view('manage_posts_ajax', $this->skin, 'admin');
+	    		$loc = 'manage_posts_ajax';
 			break;
 				
 			case 'logs':
@@ -5591,7 +5586,7 @@ abstract class Nova_manage extends Nova_controller_admin {
 			    );
 				
 				// figure out where the view is coming from
-	    		$loc = Location::view('manage_logs_ajax', $this->skin, 'admin');
+	    		$loc = 'manage_logs_ajax';
 	    	break;
 				
 			case 'news':
@@ -5673,7 +5668,7 @@ abstract class Nova_manage extends Nova_controller_admin {
 			    );
 				
 				// figure out where the view is coming from
-	    		$loc = Location::view('manage_news_ajax', $this->skin, 'admin');
+	    		$loc = 'manage_news_ajax';
 			break;
 		}
 		
@@ -5694,7 +5689,7 @@ abstract class Nova_manage extends Nova_controller_admin {
 	    );
 	    
 	    // parse the message
-		$message = $this->parser->parse($loc, $data, true);
+		$message = Location::view($loc, $this->skin, 'admin', $data);
 
 	    return $message;
 	}

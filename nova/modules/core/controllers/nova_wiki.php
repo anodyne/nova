@@ -1608,7 +1608,7 @@ abstract class Nova_wiki extends Nova_controller_wiki {
 				$em_loc = Location::email('wiki_comment', $this->email->mailtype);
 				
 				// parse the message
-				$message = $this->parser->parse($em_loc, $email_data, true);
+				$message = $this->parser->parse_string($em_loc, $email_data, true);
 				
 				// set the parameters for sending the email
 				$this->email->from($from, $name);
@@ -1641,7 +1641,7 @@ abstract class Nova_wiki extends Nova_controller_wiki {
 				$em_loc = Location::email('comment_pending', $this->email->mailtype);
 				
 				// parse the message
-				$message = $this->parser->parse($em_loc, $email_data, true);
+				$message = $this->parser->parse_string($em_loc, $email_data, true);
 				
 				// set the parameters for sending the email
 				$this->email->from($from, $name);

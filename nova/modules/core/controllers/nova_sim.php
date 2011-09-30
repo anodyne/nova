@@ -2269,7 +2269,7 @@ abstract class Nova_sim extends Nova_controller_main {
 				$em_loc = Location::email('sim_log_comment', $this->email->mailtype);
 				
 				// parse the message
-				$message = $this->parser->parse($em_loc, $email_data, true);
+				$message = $this->parser->parse_string($em_loc, $email_data, true);
 				
 				// set the parameters for sending the email
 				$this->email->from($from, $name);
@@ -2308,7 +2308,7 @@ abstract class Nova_sim extends Nova_controller_main {
 				$em_loc = Location::email('comment_pending', $this->email->mailtype);
 				
 				// parse the message
-				$message = $this->parser->parse($em_loc, $email_data, true);
+				$message = $this->parser->parse_string($em_loc, $email_data, true);
 				
 				// set the parameters for sending the email
 				$this->email->from($from, $name);
@@ -2366,7 +2366,7 @@ abstract class Nova_sim extends Nova_controller_main {
 				$em_loc = Location::email('sim_post_comment', $this->email->mailtype);
 				
 				// parse the message
-				$message = $this->parser->parse($em_loc, $email_data, true);
+				$message = $this->parser->parse_string($em_loc, $email_data, true);
 				
 				// set the parameters for sending the email
 				$this->email->from($from, $name);
@@ -2405,7 +2405,7 @@ abstract class Nova_sim extends Nova_controller_main {
 				$em_loc = Location::email('comment_pending', $this->email->mailtype);
 				
 				// parse the message
-				$message = $this->parser->parse($em_loc, $email_data, true);
+				$message = $this->parser->parse_string($em_loc, $email_data, true);
 				
 				// set the parameters for sending the email
 				$this->email->from($from, $name);
@@ -2432,7 +2432,7 @@ abstract class Nova_sim extends Nova_controller_main {
 				$em_loc = Location::email('sim_docking_user', $this->email->mailtype);
 				
 				// parse the message
-				$message = $this->parser->parse($em_loc, $email_data, true);
+				$message = $this->parser->parse_string($em_loc, $email_data, true);
 				
 				// set the parameters for sending the email
 				$this->email->from($this->options['default_email_address'], $this->options['default_email_name']);
@@ -2507,7 +2507,7 @@ abstract class Nova_sim extends Nova_controller_main {
 						$em_loc = Location::email('sim_docking_gm', $this->email->mailtype);
 					
 						// parse the message
-						$message = $this->parser->parse($em_loc, $email_data, true);
+						$message = $this->parser->parse_string($em_loc, $email_data, true);
 					
 						// get the game masters email addresses
 						$gm = $this->user->get_gm_emails();

@@ -2049,7 +2049,7 @@ abstract class Nova_write extends Nova_controller_admin {
 				$em_loc = Location::email('write_newsitem', $this->email->mailtype);
 				
 				// parse the message
-				$message = $this->parser->parse($em_loc, $email_data, true);
+				$message = $this->parser->parse_string($em_loc, $email_data, true);
 				
 				// get the email addresses
 				$emails = $this->user->get_crew_emails(true, 'email_news_items');
@@ -2092,7 +2092,7 @@ abstract class Nova_write extends Nova_controller_admin {
 				$em_loc = Location::email('entry_pending', $this->email->mailtype);
 
 				// parse the message
-				$message = $this->parser->parse($em_loc, $email_data, true);
+				$message = $this->parser->parse_string($em_loc, $email_data, true);
 
 				// get the email addresses
 				$emails = $this->user->get_crew_emails(true, 'email_news_items');
@@ -2130,7 +2130,7 @@ abstract class Nova_write extends Nova_controller_admin {
 				$em_loc = Location::email('write_personallog', $this->email->mailtype);
 				
 				// parse the message
-				$message = $this->parser->parse($em_loc, $email_data, true);
+				$message = $this->parser->parse_string($em_loc, $email_data, true);
 				
 				// get the email addresses
 				$emails = $this->user->get_crew_emails(true, 'email_personal_logs');
@@ -2174,7 +2174,7 @@ abstract class Nova_write extends Nova_controller_admin {
 				$em_loc = Location::email('entry_pending', $this->email->mailtype);
 
 				// parse the message
-				$message = $this->parser->parse($em_loc, $email_data, true);
+				$message = $this->parser->parse_string($em_loc, $email_data, true);
 
 				// get the email addresses
 				$to = implode(',', $this->user->get_emails_with_access('manage/logs', 2));
@@ -2226,7 +2226,7 @@ abstract class Nova_write extends Nova_controller_admin {
 				$em_loc = Location::email('write_missionpost', $this->email->mailtype);
 				
 				// parse the message
-				$message = $this->parser->parse($em_loc, $email_data, true);
+				$message = $this->parser->parse_string($em_loc, $email_data, true);
 				
 				// get the email addresses
 				$emails = $this->user->get_crew_emails(true, 'email_mission_posts');
@@ -2274,7 +2274,7 @@ abstract class Nova_write extends Nova_controller_admin {
 				$em_loc = Location::email('write_missionpost_deleted', $this->email->mailtype);
 
 				// parse the message
-				$message = $this->parser->parse($em_loc, $email_data, true);
+				$message = $this->parser->parse_string($em_loc, $email_data, true);
 
 				// get the email addresses
 				$emails = $this->char->get_character_emails($data['authors']);
@@ -2341,7 +2341,7 @@ abstract class Nova_write extends Nova_controller_admin {
 				$em_loc = Location::email('entry_pending', $this->email->mailtype);
 
 				// parse the message
-				$message = $this->parser->parse($em_loc, $email_data, true);
+				$message = $this->parser->parse_string($em_loc, $email_data, true);
 
 				// get the email addresses
 				$to = implode(',', $this->user->get_emails_with_access('manage/posts', 2));
@@ -2395,7 +2395,7 @@ abstract class Nova_write extends Nova_controller_admin {
 				$em_loc = Location::email('write_missionpost_saved', $this->email->mailtype);
 				
 				// parse the message
-				$message = $this->parser->parse($em_loc, $email_data, true);
+				$message = $this->parser->parse_string($em_loc, $email_data, true);
 				
 				// get the email addresses
 				$emails = $this->char->get_character_emails($data['authors']);
