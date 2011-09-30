@@ -540,8 +540,8 @@ abstract class Nova_write extends Nova_controller_admin {
 									'post_mission' => $mission,
 									'post_saved' => $this->session->userdata('main_char'),
 									'post_participants' => $participants,
-									'post_lock_user' => null,
-									'post_lock_date' => null,
+									'post_lock_user' => 0,
+									'post_lock_date' => 0,
 								);
 								
 								$update = $this->posts->update_post($id, $update_array);
@@ -587,8 +587,8 @@ abstract class Nova_write extends Nova_controller_admin {
 									'post_mission' => $mission,
 									'post_saved' => $this->session->userdata('main_char'),
 									'post_participants' => $participants,
-									'post_lock_user' => null,
-									'post_lock_date' => null,
+									'post_lock_user' => 0,
+									'post_lock_date' => 0,
 								);
 								
 								$insert = $this->posts->create_mission_entry($insert_array);
@@ -722,8 +722,8 @@ abstract class Nova_write extends Nova_controller_admin {
 									'post_location' => $location,
 									'post_mission' => $mission,
 									'post_saved' => $this->session->userdata('main_char'),
-									'post_lock_user' => null,
-									'post_lock_date' => null,
+									'post_lock_user' => 0,
+									'post_lock_date' => 0,
 								);
 								
 								$update = $this->posts->update_post($id, $update_array);
@@ -799,8 +799,8 @@ abstract class Nova_write extends Nova_controller_admin {
 									'post_timeline' => $timeline,
 									'post_location' => $location,
 									'post_mission' => $mission,
-									'post_lock_user' => null,
-									'post_lock_date' => null,
+									'post_lock_user' => 0,
+									'post_lock_date' => 0,
 								);
 								
 								$insert = $this->posts->create_mission_entry($insert_array);

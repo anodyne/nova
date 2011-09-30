@@ -670,7 +670,7 @@ abstract class Nova_posts_model extends CI_Model {
 	{
 		$data = array(
 			'post_lock_user' => $user,
-			'post_lock_date' => ($retain_lock) ? now() : null
+			'post_lock_date' => ($retain_lock) ? now() : 0
 		);
 		
 		$this->db->where('post_id', $post);

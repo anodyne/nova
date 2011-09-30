@@ -7751,7 +7751,7 @@ abstract class Nova_ajax extends CI_Controller {
 			
 			if ($item->post_lock_user !== $user)
 			{
-				if ($item->post_lock_user === null)
+				if ($item->post_lock_user === 0)
 				{
 					/**
 					 * CODE 5
@@ -7820,7 +7820,7 @@ abstract class Nova_ajax extends CI_Controller {
 				 */
 				if ($post_hash == $db_hash)
 				{
-					$this->posts->update_post_lock($post, null, false);
+					$this->posts->update_post_lock($post, 0, false);
 					
 					$retval = 1;
 				}
@@ -7844,8 +7844,8 @@ abstract class Nova_ajax extends CI_Controller {
 							// auto-save the content
 							$data = array(
 								'post_content' => $content,
-								'post_lock_user' => null,
-								'post_lock_date' => null
+								'post_lock_user' => 0,
+								'post_lock_date' => 0
 							);
 							
 							// update the post
