@@ -8,6 +8,12 @@
  * @copyright	2011 Anodyne Productions
  */
 
+/**
+ * Create the sessions index
+ */
+$sess_table = $this->db->dbprefix('sessions');
+$this->db->query("CREATE INDEX last_activity_idx ON $sess_table(last_activity)");
+
 /*
 |---------------------------------------------------------------
 | Data array with the table/array names being used.

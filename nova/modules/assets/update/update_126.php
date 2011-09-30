@@ -242,7 +242,14 @@ $modify_column = array(
 			'type' => 'INT',
 			'constraint' => 10,
 			'default' => NULL)
-	)
+	),
+	'sessions' => array(
+		'user_agent' => array(
+			'name' => 'user_agent',
+			'type' => 'VARCHAR',
+			'constraint' => 120,
+			'default' => '')
+	),
 );
 
 if ($modify_column !== null)
@@ -270,6 +277,12 @@ if ($drop_column !== null)
 		$this->dbforge->drop_column($key, $value[0]);
 	}
 }
+
+/**
+ * Create the sessions index
+ */
+$sess_table = $this->db->dbprefix('sessions');
+$this->db->query("CREATE INDEX last_activity_idx ON $sess_table(last_activity)");
 
 /**
  * Data to insert/update/delete
