@@ -157,7 +157,7 @@ $lang['info_post_count_format'] = 'Nova allows GMs to count posts in one of two 
 
 $lang['tags_separated'] = 'Separate tags by commas';
 $lang['whats_this'] = '[What is this?]';
-$lang['online_now'] = 'who'. RSQUO .'s online now';
+$lang['online_now'] = "who's online now";
 $lang['open_gallery'] = 'Click the image to open the gallery';
 $lang['text_create_news'] = "You can create a %s from the %s.";
 $lang['wiki_reverted'] = "Reverted to a previous draft of the page.";
