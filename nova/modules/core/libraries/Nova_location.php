@@ -116,12 +116,18 @@ abstract class Nova_location {
 	 */
 	public static function email($view, $type = 'html')
 	{
+		// get an instance of the CI super object
+		$ci =& get_instance();
+		
+		// load the core
+		$ci->load->module('core', 'nova', MODPATH);
+		
 		if (is_file(APPPATH.'views/_base_override/emails/'.$type.'/'.$view.'.php'))
 		{
-			return '_base_override/emails/'.$type.'/'.$view;
+			return $ci->load->view('_base_override/emails/'.$type.'/'.$view, null, true);
 		}
 		
-		return '_base/emails/'.$type.'/'.$view;
+		return $ci->nova->view('_base/emails/'.$type.'/'.$view, null, true);
 	}
 	
 	/**
