@@ -50,7 +50,7 @@ abstract class Nova_characters_model extends CI_Model {
 				
 			case 'no_user':
 				$this->db->where('user', NULL);
-				$this->db->orwhere('user', 0);
+				$this->db->or_where('user', 0);
 			break;
 				
 			case 'all':
