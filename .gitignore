@@ -12,6 +12,7 @@ application/assets/images/specs/
 application/assets/images/tour/
 application/cache/
 application/logs/
+application/modules/
 application/views/
 
 !application/assets/images/awards/.gitkeep
