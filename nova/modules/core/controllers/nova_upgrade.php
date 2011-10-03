@@ -522,7 +522,7 @@ abstract class Nova_upgrade extends CI_Controller {
 			{
 				if (file_exists(APPPATH .'assets/common/'. GENRE .'/ranks/'. $value .'/rank.yml'))
 				{
-					$contents = file_get_contents(APPPATH .'assets/common/'. GENRE .'/ranks/'. $selection .'/rank.yml');
+					$contents = file_get_contents(APPPATH .'assets/common/'. GENRE .'/ranks/'. $value .'/rank.yml');
 					
 					$array = yayparser($contents);
 					
