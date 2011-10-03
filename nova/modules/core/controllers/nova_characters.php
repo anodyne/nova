@@ -1527,7 +1527,7 @@ abstract class Nova_characters extends Nova_controller_admin {
 			}
 			
 			// create the fields in the data table
-			$create = $this->char->create_character_data_fields($cid, null);
+			$create = $this->char->create_character_data_fields($cid);
 			
 			foreach ($array['fields'] as $k => $v)
 			{

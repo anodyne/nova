@@ -503,7 +503,7 @@ abstract class Nova_characters_model extends CI_Model {
 		return $query;
 	}
 	
-	public function create_character_data_fields($character = '', $user = '')
+	public function create_character_data_fields($character = 0, $user = 0)
 	{
 		$get = $this->db->get_where('characters_fields', array('field_display' => 'y'));
 		
