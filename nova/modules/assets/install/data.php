@@ -1958,6 +1958,14 @@ $settings = array(
 		'setting_value' => 'y',
 		'setting_user_created' => 'n'),
 	array(
+		'setting_key' => 'show_logs',
+		'setting_value' => 'y',
+		'setting_user_created' => 'n'),
+	array(
+		'setting_key' => 'show_posts',
+		'setting_value' => 'y',
+		'setting_user_created' => 'n'),
+	array(
 		'setting_key' => 'post_count_format',
 		'setting_value' => 'multiple',
 		'setting_user_created' => 'n'),

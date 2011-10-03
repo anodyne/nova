@@ -189,6 +189,22 @@
 					<?php echo form_label($label['no'], 'show_news_n');?>
 				</p>
 				<p>
+					<kbd><?php echo $label['logs_show'];?></kbd>
+					<?php echo form_radio($inputs['show_logs_y']);?>
+					<?php echo form_label($label['yes'], 'show_logs_y');?>
+					
+					<?php echo form_radio($inputs['show_logs_n']);?>
+					<?php echo form_label($label['no'], 'show_logs_n');?>
+				</p>
+				<p>
+					<kbd><?php echo $label['posts_show'];?></kbd>
+					<?php echo form_radio($inputs['show_posts_y']);?>
+					<?php echo form_label($label['yes'], 'show_posts_y');?>
+					
+					<?php echo form_radio($inputs['show_posts_n']);?>
+					<?php echo form_label($label['no'], 'show_posts_n');?>
+				</p>
+				<p>
 					<kbd><?php echo $label['use_notes'];?></kbd>
 					<?php echo form_radio($inputs['use_mission_notes_y']);?>
 					<?php echo form_label($label['yes'], 'use_mission_notes_y');?>

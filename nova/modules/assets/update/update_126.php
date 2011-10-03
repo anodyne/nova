@@ -285,6 +285,20 @@ $sess_table = $this->db->dbprefix('sessions');
 $this->db->query("CREATE INDEX last_activity_idx ON $sess_table(last_activity)");
 
 /**
+ * Add the new settings fields
+ */
+$this->db->insert('settings', array(
+	'setting_key' => 'show_logs',
+	'setting_value' => 'y',
+	'setting_user_created' => 'n'
+));
+$this->db->insert('settings', array(
+	'setting_key' => 'show_posts',
+	'setting_value' => 'y',
+	'setting_user_created' => 'n'
+));
+
+/**
  * Data to insert/update/delete
  */
 

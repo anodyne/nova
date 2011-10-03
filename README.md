@@ -17,6 +17,7 @@ Anodyne Production's next-generation RPG management system combines popular feat
 * added the ability for someone with level 2 admin rights to reset someone's password (the new password will be emailed to the user and they'll be prompted to reset the password the next time they log in)
 * added the jQuery Chosen plugin for easier selection of mission post and private message authors (IE 8 and higher, all other browsers)
 * added post locking to prevent changes from being overwritten while users are working on joint posts
+* added the ability to show latest personal logs and missions posts on the main page (admins can select any combination of news, logs and posts)
 * updated seamless substitution to be able to override email view files
 * updated Thresher with a new way to create and manage categories when working on a wiki page
 * updated Thresher with a completely new user experience for managing wiki pages

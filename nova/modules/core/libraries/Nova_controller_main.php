@@ -82,6 +82,8 @@ class Nova_controller_main extends CI_Controller {
 			'sim_name',
 			'date_format',
 			'show_news',
+			'show_logs',
+			'show_posts',
 			'use_sample_post',
 			'default_email_name',
 			'default_email_address',
