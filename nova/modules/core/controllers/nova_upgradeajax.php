@@ -810,7 +810,13 @@ abstract class Nova_upgradeajax extends CI_Controller {
 					'type' => 'BIGINT',
 					'constraint' => 20),
 				'post_participants' => array(
-					'type' => 'TEXT')
+					'type' => 'TEXT'),
+				'post_lock_user' => array(
+					'type' => 'INT',
+					'constraint' => 8),
+				'post_lock_date' => array(
+					'type' => 'BIGINT',
+					'constraint' => 20)
 			);
 			
 			// do the modifications
