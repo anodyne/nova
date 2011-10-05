@@ -101,7 +101,7 @@ abstract class Nova_write extends Nova_controller_admin {
 				$data['posts_saved'][$i]['mission'] = $this->mis->get_mission($p->post_mission, 'mission_title');
 				$data['posts_saved'][$i]['mission_id'] = $p->post_mission;
 				$data['posts_saved'][$i]['saved'] = $p->post_saved;
-				$data['posts_saved'][$i]['locked'] = ($p->post_lock_user !== null and $p->post_lock_date !== null);
+				$data['posts_saved'][$i]['locked'] = ((int) $p->post_lock_user !== 0 and (int) $p->post_lock_date !== 0);
 				
 				++$i;
 			}
