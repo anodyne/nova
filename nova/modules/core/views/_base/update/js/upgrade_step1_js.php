@@ -9,7 +9,7 @@ $tourhash = md5(implode('', array_keys($tourarray))); // 781e5e245d69b566979b86e
 ?><script type="text/javascript" src="<?php echo base_url().MODFOLDER;?>/assets/js/jquery.ajaxq.js"></script>
 <script type="text/javascript" src="<?php echo base_url().MODFOLDER;?>/assets/js/jquery.tipTip.js"></script>
 
-<link rel="stylesheet" href="<?php echo base_url().MODFOLDER;?>/assets/css/jquery.tipTip.css" />
+<link rel="stylesheet" href="<?php echo base_url().MODFOLDER;?>/assets/js/css/jquery.tipTip.css" />
 
 <script type="text/javascript">
 	$(document).ready(function(){
