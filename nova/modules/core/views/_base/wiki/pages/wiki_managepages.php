@@ -66,10 +66,10 @@
 						</ul>
 					</div>
 					<?php if ($p['type'] == 'system'): ?>
-						<span class="label-system"><?php echo $label['system'];?></span>
+						<span class="label-system" rel="popover" data-original-title="<?php echo $label['system_label_help_title'];?>" data-content="<?php echo $label['system_label_help'];?>"><?php echo $label['system'];?></span>
 					<?php endif;?>
 					<?php if ($p['restrictions'] !== FALSE): ?>
-						<span class="label-restrict"><?php echo $label['restrict'];?></span>
+						<span class="label-restrict" rel="popover" data-original-title="<?php echo $label['restrict_label_help_title'];?>" data-content="<?php echo $label['restrict_label_help'];?>"><?php echo $label['restrict'];?></span>
 					<?php endif;?>
 					<strong class="fontMedium"><?php echo $p['title'];?></strong>
 				</div>

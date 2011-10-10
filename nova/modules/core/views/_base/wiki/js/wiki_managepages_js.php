@@ -175,5 +175,11 @@
 			
 			return false;
 		});
+		
+		$('[rel=popover]').popover({
+			animate: false,
+			live: true,
+			offset: 2
+		});
 	});
 </script>

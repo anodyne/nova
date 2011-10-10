@@ -206,3 +206,9 @@ $lang['wiki_search_results'] = "%s search results also take in to account differ
 $lang['wiki_add_categories'] = "Please add some %s.";
 
 $lang['wiki_add_categories_supp'] = "Type the %s name and click on the [+] button.";
+
+$lang['wiki_system_page_help_title'] = 'What is a System Page?';
+$lang['wiki_system_label_help'] = "A system page is a wiki entry that's used in core Thresher pages. System pages allow you to change the content of a core Thresher page without needing to edit any files.";
+
+$lang['wiki_restrict_page_help_title'] = 'What is a Restricted Page?';
+$lang['wiki_restrict_label_help'] = "A restricted page is a wiki page that can only be viewed by certain access roles. To see the restrictions and change them, click on the lock icon.";

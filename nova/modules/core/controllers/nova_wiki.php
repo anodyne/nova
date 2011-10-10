@@ -725,10 +725,14 @@ abstract class Nova_wiki extends Nova_controller_wiki {
 			'on' => lang('labels_on'),
 			'pages' => ucfirst(lang('labels_pages')),
 			'restrict'=> ucfirst(lang('labels_restricted')),
+			'restrict_label_help'=> lang('wiki_restrict_label_help'),
+			'restrict_label_help_title' => lang('wiki_restrict_page_help_title'),
 			'show' => ucwords(lang('actions_show').' '.lang('labels_filters')),
 			'show_all' => ucfirst(lang('labels_all')),
 			'show_std' => ucfirst(lang('labels_standard')),
 			'system' => ucfirst(lang('labels_system')),
+			'system_label_help' => lang('wiki_system_label_help'),
+			'system_label_help_title' => lang('wiki_system_page_help_title'),
 			'updated' => ucfirst(lang('order_last').' '.lang('actions_updated').' '.lang('labels_by')),
 		);
 		
