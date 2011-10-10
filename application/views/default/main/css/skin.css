@@ -50,8 +50,8 @@ header .wrapper {
 	background: #f0f0f0;
 	border: 1px solid #a2b89b;
 	border-top: none;
-	-moz-border-radius: 0 0 6px 6px;
-	border-radius: 0 0 6px 6px;
+	-moz-border-radius: 0 0 3px 3px;
+	border-radius: 0 0 3px 3px;
 }
 
 .content {
@@ -62,8 +62,8 @@ header .wrapper {
 	border: 1px solid #ccc;
 	border-top: 0;
 	border-left: 0;
-	-moz-border-radius: 0 0 6px 0;
-	border-radius: 0 0 6px 0;
+	-moz-border-radius: 0 0 3px 0;
+	border-radius: 0 0 3px 0;
 }
 
 /*
@@ -255,8 +255,8 @@ footer {
 	text-align: center;
 	font-size: .9em;
 	color: #888;
-	-moz-border-radius: 0 0 6px 6px;
-	border-radius: 0 0 6px 6px;
+	-moz-border-radius: 0 0 3px 3px;
+	border-radius: 0 0 3px 3px;
 }
 
 /*
@@ -303,27 +303,39 @@ a.edit:hover {
 */
 input[type=text],
 input[type=password],
+input[type=email],
 textarea,
 select {
-	border: 1px solid #d5d5d5;
-	color: #777;
+	border-bottom: 1px solid #d0d0d0;
+	border-top: 1px solid #a8a8a8;
+	border-left: 1px solid #bcbcbc;
+	border-right: 1px solid #bcbcbc;
+	background: #fefefe;
+	background: -moz-linear-gradient(top, #fefefe 0%, #f3f3f3 100%);
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#fefefe), color-stop(100%,#f3f3f3));
+	background: -webkit-linear-gradient(top, #fefefe 0%,#f3f3f3 100%);
+	background: -o-linear-gradient(top, #fefefe 0%,#f3f3f3 100%);
+	background: -ms-linear-gradient(top, #fefefe 0%,#f3f3f3 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fefefe', endColorstr='#f3f3f3',GradientType=0 );
+	background: linear-gradient(top, #fefefe 0%,#f3f3f3 100%);
+	font-size: 1.1em;
 	font-family: "lucida grande", verdana, arial, sans-serif;
-	font-size: 1.2em;
+	color: #999;
 	-moz-border-radius: 3px;
 	border-radius: 3px 3px 3px 3px;
+	-moz-box-shadow: inset 0 1px 1px #e3e3e3, 0 1px 0 #f6f6f6;
+	-webkit-box-shadow: inset 0 1px 1px #e3e3e3, 0 1px 0 #f6f6f6;
+	box-shadow: inset 0 1px 1px #e3e3e3, 0 1px 0 #f6f6f6;
 }
-
-textarea {
-	font-size: 1em;
-}
-
 input[type=text]:focus,
 input[type=password]:focus,
+input[type=email]:focus,
 textarea:focus,
 select:hover,
 select:focus {
-	color: #444;
-	border: 1px solid #bbb;
+	border: 1px solid #a8b3a3;
+	background: #fff;
+	color: #555;
 }
 
 kbd {
