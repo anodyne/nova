@@ -3,14 +3,15 @@
 | RESET
 |---------------------------------------------------------------
 */
-html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outline:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td,article,aside,canvas,details,embed,figure,figcaption,footer,header,hgroup,menu,nav,output,ruby,section,summary,time,mark,audio,video{margin:0;padding:0;border:0;font-size:100%;font:inherit;vertical-align:baseline}article,aside,details,figcaption,figure,footer,header,hgroup,menu,nav,section{display:block}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}table{border-collapse:collapse;border-spacing:0}
 
 /*
 |---------------------------------------------------------------
-| HEADING STYLES
+| HEADINGS
 |---------------------------------------------------------------
 */
 h1, h2, h3, h4, p { margin: 8px 0; }
+h1, h2, h3, h4 { font-weight: bold; }
 
 h1 { font-size: 200%; }
 h2 { font-size: 150%; }
@@ -19,7 +20,7 @@ h4 { font-size: 117%; }
 
 p {
 	font-size: 100%;
-	line-height: 1.5;
+	line-height: 1.6;
 	padding: 0 0 8px 0;
 }
 
@@ -68,7 +69,7 @@ input[type=text],
 input[type=password],
 input[type=email] {
 	margin: 0;
-	padding: 3px;
+	padding: 5px;
 	width: 265px;
 }
 input.small     	{ width: 50px; }
@@ -80,6 +81,11 @@ select {
 	padding: 3px;
 }
 select:focus, select:hover { outline: 0; }
+
+kbd {
+	display: block;
+	margin: 0 0 5px 0;
+}
 
 /*
 |---------------------------------------------------------------
@@ -118,21 +124,12 @@ td.align_center { text-align: center; }
 | BUTTONS
 |---------------------------------------------------------------
 */
-button {
-	height: 25px;
-	padding: 0 15px 2px 15px;
+button.button-main,
+input.button-main {
+	display: block;
+	width: 100%;
+	padding: 10px 30px;
 	outline: 0 !important;
-}
-
-button.button-small {
-	height: 20px !important;
-	padding: 0 0 1px 6px !important;
-	outline: 0 !important;
-}
-
-input.button-main, input.button-sec {
-	height: 25px;
-	padding: 0 15px;
 }
 
 /*
@@ -174,13 +171,7 @@ ul.none {
 |---------------------------------------------------------------
 */
 .flash_message {
-	margin: 10px auto;
-	line-height: 1;
-	width: 100%;
-	
-	border-radius: 3px;
-	-moz-border-radius: 3px;
-	-webkit-border-radius: 3px;
+	margin: 0 0 5px 0;
 }
 .flash_message p {
 	margin: 0;
