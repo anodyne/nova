@@ -66,9 +66,10 @@ a.image, a.image:hover {
 |---------------------------------------------------------------
 */
 input[type=text],
-input[type=password] {
+input[type=password],
+input[type=email] {
 	margin: 0;
-	padding: 3px;
+	padding: 5px;
 	width: 275px;
 }
 input.small     	{ width: 50px; }
