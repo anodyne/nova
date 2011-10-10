@@ -851,7 +851,7 @@ $menu_items = array(
 		'menu_cat' => 'main',
 		'menu_need_login' => 'y'),
 	array(
-		'menu_name' => 'Login',
+		'menu_name' => 'Log In',
 		'menu_group' => 0,
 		'menu_order' => 6,
 		'menu_link' => 'login/index',
@@ -859,7 +859,7 @@ $menu_items = array(
 		'menu_cat' => 'main',
 		'menu_need_login' => 'n'),
 	array(
-		'menu_name' => 'Logout',
+		'menu_name' => 'Log Out',
 		'menu_group' => 0,
 		'menu_order' => 7,
 		'menu_link' => 'login/logout',
