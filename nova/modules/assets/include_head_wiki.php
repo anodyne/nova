@@ -54,15 +54,6 @@ $uiTheme = ( ! is_file(APPPATH .'views/'.$current_skin.'/wiki/css/jquery.ui.them
 				});
 				
 				$.lazy({
-					src: '<?php echo base_url() . MODFOLDER;?>/assets/js/jquery.qtip.js',
-					name: 'qtip',
-					dependencies: {
-						css: ['<?php echo base_url() . MODFOLDER;?>/assets/js/css/jquery.qtip.css']
-					},
-					cache: true
-				});
-				
-				$.lazy({
 					src: '<?php echo base_url() . MODFOLDER;?>/assets/js/bootstrap-twipsy.js',
 					name: 'twipsy',
 					dependencies: {
