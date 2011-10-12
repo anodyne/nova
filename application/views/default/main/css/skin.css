@@ -363,6 +363,7 @@ tr.alt td, tr.light_gray { background-color: #f3f3f3; }
 th {
 	text-align: center;
 	font-size: 1.2em;
+	font-weight: bold;
 }
 
 /*
