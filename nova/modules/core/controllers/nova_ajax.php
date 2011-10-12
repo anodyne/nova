@@ -1624,6 +1624,17 @@ abstract class Nova_ajax extends CI_Controller {
 					'id' => 'display_n',
 					'class' => 'hud',
 					'value' => 'n'),
+				'top_y' => array(
+					'name' => 'pos_top_open',
+					'id' => 'top_y',
+					'class' => 'hud',
+					'value' => 'y'),
+				'top_n' => array(
+					'name' => 'pos_top_open',
+					'id' => 'top_n',
+					'class' => 'hud',
+					'value' => 'n',
+					'checked' => true),
 				'submit' => array(
 					'type' => 'submit',
 					'class' => 'hud_button',
@@ -1668,7 +1679,10 @@ abstract class Nova_ajax extends CI_Controller {
 				'display' => ucfirst(lang('labels_display')),
 				'on' => ucfirst(lang('labels_on')),
 				'off' => ucfirst(lang('labels_off')),
-				'order' => ucfirst(lang('labels_order'))
+				'yes' => ucfirst(lang('labels_yes')),
+				'no' => ucfirst(lang('labels_no')),
+				'order' => ucfirst(lang('labels_order')),
+				'top' => ucwords(lang('labels_top').' '.lang('status_open').' '.lang('global_position'))
 			);
 			
 			// figure out the skin

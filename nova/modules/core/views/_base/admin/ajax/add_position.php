@@ -24,6 +24,14 @@
 				<td><?php echo form_input($inputs['open']);?></td>
 			</tr>
 			<tr>
+				<td class="cell-label"><?php echo $label['top'];?></td>
+				<td class="cell-spacer"></td>
+				<td>
+					<?php echo form_radio($inputs['top_y']) .' '. form_label($label['yes'], 'top_y');?>
+					<?php echo form_radio($inputs['top_n']) .' '. form_label($label['no'], 'top_n');?>
+				</td>
+			</tr>
+			<tr>
 				<td class="cell-label"><?php echo $label['order'];?></td>
 				<td class="cell-spacer"></td>
 				<td><?php echo form_input($inputs['order']);?></td>
