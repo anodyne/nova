@@ -50,9 +50,9 @@ $link = array(
 		<?php echo $javascript;?>
 	</head>
 	<body>
+		<h1 id="name"><?php echo $this->options['sim_name'];?></h1>
 		<section>
 			<div class="wrapper">
-				<!-- PAGE CONTENT -->
 				<div class="content">
 					<?php echo $flash_message;?>
 					<?php echo $content;?>
