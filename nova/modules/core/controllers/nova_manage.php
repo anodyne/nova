@@ -3052,6 +3052,7 @@ abstract class Nova_manage extends Nova_controller_admin {
 						'pos_display' => $this->input->post('pos_display', true),
 						'pos_open' => $this->input->post('pos_open', true),
 						'pos_desc' => $this->input->post('pos_desc', true),
+						'pos_top_open' => $this->input->post('pos_top_open', true),
 					);
 					
 					// insert the record
@@ -3219,6 +3220,7 @@ abstract class Nova_manage extends Nova_controller_admin {
 				);
 				
 				$data['positions'][$p->pos_id]['id'] = $p->pos_id;
+				$data['positions'][$p->pos_id]['name'] = $p->pos_name;
 				$data['positions'][$p->pos_id]['open'] = $p->pos_open;
 				$data['positions'][$p->pos_id]['display'] = $p->pos_display;
 				$data['positions'][$p->pos_id]['dept'] = $p->pos_dept;
@@ -3238,8 +3240,7 @@ abstract class Nova_manage extends Nova_controller_admin {
 		$data['g_dept'] = $g_dept;
 		
 		$data['label'] = array(
-			'add_position' => ucwords(lang('actions_add') .' '.
-				lang('global_position') .' '. RARROW),
+			'add_position' => ucwords(lang('actions_add').' '.lang('global_position') .' '. RARROW),
 			'name' => ucfirst(lang('labels_name')),
 			'open' => ucwords(lang('status_open') .' '. lang('labels_slots')),
 			'delete' => ucfirst(lang('actions_delete')),
@@ -3249,7 +3250,8 @@ abstract class Nova_manage extends Nova_controller_admin {
 			'desc' => ucfirst(lang('labels_desc')),
 			'dept' => ucfirst(lang('global_department')),
 			'depts' => ucfirst(lang('global_departments')),
-			'more' => ucfirst(lang('labels_more'))
+			'more' => ucfirst(lang('labels_more')),
+			'top' => ucwords(lang('labels_top').' '.lang('status_open').' '.lang('global_position')),
 		);
 		
 		$data['images'] = array(
