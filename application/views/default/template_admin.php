@@ -1,38 +1,22 @@
 <?php
-/*
-|---------------------------------------------------------------
-| TEMPLATE - ADMIN
-|---------------------------------------------------------------
-|
-| File: application/views/default/template_admin.php
-| Skin Version: 1.0
-|
-| Admin layout file used by the default skin.
-|
-| $sec options are: main, wiki, admin, login
-| $css can be anything you want (with a .css extension of course)
-|
-*/
 
-$sec = 'admin'; /* set the section of the system */
-$css = 'main.css'; /* the name of the main css file */
+$sec = 'admin';
+$css = 'main.css';
 
-$path_raw = dirname(__FILE__); /* absolute path of the current file */
-$path = explode('/', $path_raw); /* explode the string into an array */
+$path = explode('/', dirname(__FILE__));
 
+// Windows servers user back slashes, so we have to capture for that
 if (count($path) <= 1)
-{ /* Windows servers use back slashes, so we have to capture for that */
-	$path = explode('\\', $path_raw);
-}
+	$path = explode('\\', dirname(__FILE__));
 
-$pcount = count($path); /* count the number of keys in the array */
-$skin_loc = $pcount -1; /* create the first element used */
+$pcount = count($path);
+$skin_loc = $pcount -1;
 $current_skin = $path[$skin_loc];
 
-/* set the final style location */
-$style_loc = APPFOLDER . '/views/' . $current_skin . '/' . $sec . '/css/' . $css;
+// set the final style location
+$style_loc = APPFOLDER.'/views/'.$current_skin.'/'.$sec.'/css/'. $css;
 
-/* set up the link tag parameters */
+// set up the link tag parameters
 $link = array(
 	'href'	=> 	$style_loc,
 	'rel'	=> 	'stylesheet',
@@ -41,15 +25,14 @@ $link = array(
 	'charset'	=> 'utf-8'
 );
 
+// load the panel helper
 $this->load->helper('panel');
 
+// set up the locations of the icons
 $panel = array(
-	'inbox' => array(
-		'src' => APPFOLDER .'/views/'. $current_skin .'/'. $sec .'/images/panel-mail.png'),
-	'writing' => array(
-		'src' => APPFOLDER .'/views/'. $current_skin .'/'. $sec .'/images/panel-writing.png'),
-	'dashboard' => array(
-		'src' => APPFOLDER .'/views/'. $current_skin .'/'. $sec .'/images/panel-dashboard.png'),
+	'inbox'		=> array('src' => APPFOLDER.'/views/'.$current_skin.'/'.$sec.'/images/panel-mail.png'),
+	'writing'	=> array('src' => APPFOLDER.'/views/'.$current_skin.'/'.$sec.'/images/panel-writing.png'),
+	'dashboard'	=> array('src' => APPFOLDER.'/views/'.$current_skin.'/'.$sec.'/images/panel-dashboard.png'),
 );
 
 $button_login = array(
@@ -57,29 +40,28 @@ $button_login = array(
 	'value' => 'submit',
 	'type' => 'submit',
 	'name' => 'submit',
-	'content' => ucfirst(lang('actions_login'))
+	'content' => ucwords(lang('actions_login'))
 );
 
-echo "<?xml version='1.0' encoding='UTF-8'?>\r\n";
-
-?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+?><!DOCTYPE html>
+<html lang="en">
 	<head>
+		<meta charset="utf-8">
 		<title><?php echo $title;?></title>
 		
-		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
-		<meta name="language" content="en" />
 		<meta name="description" content="<?php echo $this->config->item('meta_desc');?>" />
 		<meta name="keywords" content="<?php echo $this->config->item('meta_keywords');?>" />
 		<meta name="author" content="<?php echo $this->config->item('meta_author');?>" />
 		
 		<?php echo $_redirect;?>
 		
-		<!-- STYLESHEETS -->
-		<?php echo link_tag($link); ?>
+		<?php echo link_tag($link);?>
 		
-		<!-- JAVASCRIPT FILES -->
-		<?php include_once($this->config->item('include_head_admin')); ?>
+		<!--[if lt IE 9]>
+		<script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
+		<![endif]-->
+		
+		<?php include_once($this->config->item('include_head_admin'));?>
 		
 		<script type="text/javascript" src="<?php echo base_url() . APPFOLDER;?>/views/<?php echo $current_skin;?>/jquery.blockUI.js"></script>
 		
@@ -90,19 +72,8 @@ echo "<?xml version='1.0' encoding='UTF-8'?>\r\n";
 				$('body').click(function(event){
 					if (! $(event.target).closest('div').hasClass('signin-panel'))
 					{
-						$('.signin-panel').hide();
-						$('a#signin').addClass('corner-lower-left').addClass('corner-lower-right').removeClass('signin-active');
-						
 						$.unblockUI();
 					}
-				});
-				
-				$('a#signin').click(function(e){
-					$('.signin-panel').toggle();
-					$('a#signin').toggleClass('corner-lower-left').toggleClass('corner-lower-right').toggleClass('signin-active');
-					$('.signin-panel input:first').focus();
-					
-					return false;
 				});
 				
 				$('a#userpanel').unbind('click').click(function(){
@@ -121,30 +92,25 @@ echo "<?xml version='1.0' encoding='UTF-8'?>\r\n";
 					
 					return false;
 				});
+				
+				// make sure the control panel item is always shown as active
+				$('a:contains("Control Panel")').addClass('active');
 			});
 			
-			/* if the escape key is pressed, close the menu */
+			// if the escape key is pressed, close the menu
 			$(document).keyup(function(event){
 				if (event.keyCode == 27) {
-					$('.signin-panel').hide();
-					$('a#signin').addClass('corner-lower-left').addClass('corner-lower-right').removeClass('signin-active');
-					
 					$.unblockUI();
 				}
 			});
 		</script>
 	</head>
-<?php if (lang('rtl') === TRUE): ?>
-	<body class="rtl">
-<?php else: ?>
 	<body>
-<?php endif;?>
 		<noscript>
 			<div class="system_warning"><?php echo lang_output('text_javascript_off', '');?></div>
 		</noscript>
 		
 		<?php if (Auth::is_logged_in()): ?>
-			<!-- USER PANEL -->
 			<div id="panel" class="hidden">
 				<div class="panel-body">
 					<table class="table100">
@@ -160,70 +126,38 @@ echo "<?xml version='1.0' encoding='UTF-8'?>\r\n";
 					</table>
 				</div>
 			</div>
-		<?php endif; ?>
+		<?php endif;?>
 		
-		<!-- HEAD -->
-		<div id="head"></div>
-		
-		<!-- BODY -->
-		<div class="wrapper">
-			<div id="body">
-				<div id="upper-body">
-					<div class="signin-container">
-						<?php if ( ! Auth::is_logged_in()): ?>
-							<div class="signin-panel corner-upper-left corner-lower-left corner-lower-right">
-								<?php echo form_open('login/check_login');?>
-									<p>
-										<?php echo ucfirst(lang('labels_email'));?><br />
-										<input type="text" name="email" class="signin-panel-input" />
-									</p>
-							
-									<p>
-										<?php echo ucfirst(lang('labels_password'));?><br />
-										<input type="password" name="password" class="signin-panel-input">
-									</p>
-							
-									<p>
-										<?php echo form_button($button_login);?>
-										&nbsp;&nbsp;
-										<input id="remember" type="checkbox" name="remember" value="yes" />
-										<label for="remember"><?php echo ucfirst(lang('actions_remember') .' '. lang('labels_me'));?></label>
-									</p>
-							
-									<p><?php echo anchor('login/reset_password', lang('login_forgot'));?></p>
-								<?php echo form_close();?>
-							</div>
-							<a href="<?php echo site_url('login/index');?>" id="signin" class="signin corner-upper-left corner-upper-right corner-lower-left corner-lower-right"><?php echo ucfirst(lang('actions_login'));?></a>
-							
-							<div class="logged-in-controls"></div>
-						<?php else: ?>
-							<a href="<?php echo site_url('login/logout');?>" class="signin corner-upper-left corner-upper-right corner-lower-left corner-lower-right"><?php echo ucfirst(lang('actions_logout'));?></a>
-							
-							<div class="logged-in-controls">
-								<?php if (Auth::is_logged_in()): ?>
-									<?php echo panel_inbox(TRUE, TRUE, FALSE, '(x)', img($panel['inbox']));?> &nbsp;
-									<?php echo panel_writing(TRUE, TRUE, FALSE, '(x)', img($panel['writing']));?> &nbsp;
-									<?php echo panel_dashboard(FALSE, img($panel['dashboard']));?>
-								<?php endif;?>
-							</div>
+		<header>
+			<div class="wrapper">
+				<div class="signin-container">
+					<a href="<?php echo site_url('login/logout');?>" class="signin corner-upper-left corner-upper-right corner-lower-left corner-lower-right"><?php echo ucfirst(lang('actions_logout'));?></a>
+					
+					<div class="logged-in-controls">
+						<?php if (Auth::is_logged_in()): ?>
+							<?php echo panel_inbox(true, true, false, '(x)', img($panel['inbox']));?> &nbsp;
+							<?php echo panel_writing(true, true, false, '(x)', img($panel['writing']));?> &nbsp;
+							<?php echo panel_dashboard(false, img($panel['dashboard']));?>
 						<?php endif;?>
 					</div>
+				</div>
+			
+				<div style="clear:both;"></div>
 				
-					<div style="clear:both;"></div>
-					
-					<div id="menu">
-						<div class="nav-main">
-							<?php echo $nav_main;?>
-						</div>
+				<div id="menu">
+					<div class="nav-main">
+						<?php echo $nav_main;?>
 					</div>
 				</div>
-				
-				<!-- SUB NAVIGATION -->
+			</div>
+		</header>
+		
+		<div class="wrapper">
+			<div id="body">
 				<div class="nav-sub">
 					<?php echo $nav_sub;?>
 				</div>
 			
-				<!-- PAGE CONTENT -->
 				<div class="content">
 					<?php echo $flash_message;?>
 					<?php echo $content;?>
@@ -232,11 +166,10 @@ echo "<?xml version='1.0' encoding='UTF-8'?>\r\n";
 					<div style="clear:both;"></div>
 				</div>
 				
-				<!-- FOOTER -->
-				<div id="footer">
+				<footer>
 					Powered by <strong><?php echo APP_NAME;?></strong> from <a href="http://www.anodyne-productions.com" target="_blank">Anodyne Productions</a> | 
 					<?php echo anchor('main/credits', 'Site Credits');?>
-				</div>
+				</footer>
 			</div>
 		</div>
 	</body>
