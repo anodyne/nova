@@ -18,6 +18,8 @@ Anodyne Production's next-generation RPG management system combines popular feat
 * added the jQuery Chosen plugin for easier selection of mission post and private message authors (IE 8 and higher, all other browsers)
 * added post locking to prevent changes from being overwritten while users are working on joint posts
 * added the ability to show latest personal logs and missions posts on the main page (admins can select any combination of news, logs and posts)
+* added the ability to set top open positions (from position management) that will be shown at the top of each manifest
+* added some of the Bootstrap by Twitter (version 1.3) CSS and JS components (Twipsy and Popover)
 * updated seamless substitution to be able to override email view files
 * updated Thresher with a new way to create and manage categories when working on a wiki page
 * updated Thresher with a completely new user experience for managing wiki pages
