@@ -266,6 +266,7 @@ abstract class Nova_write extends Nova_controller_admin {
 		
 		$data['label'] = array(
 			'all' => ucwords(lang('labels_all') .' '. lang('status_recent') .' '. lang('labels_entries')),
+			'authors' => ucfirst(lang('labels_authors')),
 			'by' => lang('labels_by'),
 			'category' => ucfirst(lang('labels_category') .':'),
 			'date' => ucfirst(lang('labels_date')),
