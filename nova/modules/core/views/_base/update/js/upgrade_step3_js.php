@@ -1,7 +1,6 @@
 <script type="text/javascript" src="<?php echo base_url().MODFOLDER;?>/assets/js/jquery.ajaxq.js"></script>
-<script type="text/javascript" src="<?php echo base_url().MODFOLDER;?>/assets/js/jquery.tipTip.js"></script>
-
-<link rel="stylesheet" href="<?php echo base_url().MODFOLDER;?>/assets/js/css/jquery.tipTip.css" />
+<script type="text/javascript" src="<?php echo base_url().MODFOLDER;?>/assets/js/bootstrap-twipsy.js"></script>
+<link rel="stylesheet" href="<?php echo base_url().MODFOLDER;?>/assets/js/css/bootstrap-twipsy.css" />
 
 <script type="text/javascript">
 	$(document).ready(function(){
@@ -18,7 +17,7 @@
 		$('#start').live('click', function(){
 			var send;
 			
-			var tipOpts = {
+			var twipsyOptions = {
 				defaultPosition: 'right',
 				edgeOffset: 8
 			}
@@ -48,7 +47,7 @@
 						$('.failure-password img').attr('title', function(){
 							return data.message
 						});
-						$('.tiptip').tipTip(tipOpts);
+						$('.tiptip').twipsy(twipsyOptions);
 					}
 				}
 			});
@@ -78,7 +77,7 @@
 						$('.failure-admin img').attr('title', function(){
 							return data.message
 						});
-						$('.tiptip').tipTip(tipOpts);
+						$('.tiptip').twipsy(twipsyOptions);
 					}
 				}
 			});

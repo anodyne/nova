@@ -28,7 +28,7 @@
 						<tr>
 					<?php endif;?>
 							
-							<td>
+							<td class="col_30pct">
 								<div class="inline_img_left">
 									<?php echo form_checkbox('page_'. $page['id'], $page['id'], $page['checked'], 'id="page_'. $page['id'] .'"');?>
 								</div>
@@ -37,7 +37,7 @@
 									<span class="fontSmall gray">
 										<?php echo $page['url'];?>
 										<?php if (!empty($page['desc'])): ?>
-											<a href="#" rel="tooltip" tooltip="<?php echo $page['desc'];?>">[?]</a>
+											<a href="#" rel="tooltip" title="<?php echo $page['desc'];?>">[?]</a>
 										<?php endif;?>
 									</span>
 								</label>
@@ -45,7 +45,7 @@
 							
 							<?php if($i == (count($group['pages']) - 1)): ?>
 								<?php while (($i + 1) % 3 != 0): ?>
-									<td>&nbsp;</td>
+									<td class="col_30pct">&nbsp;</td>
 									<?php $i++;?>
 								<?php endwhile; ?>
 							<?php endif;?>
