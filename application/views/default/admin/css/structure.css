@@ -176,8 +176,7 @@ button.button-signin {
 }
 
 button.button-small {
-	height: 20px !important;
-	padding: 0 0 1px 6px !important;
+	padding: 1px 3px;
 	outline: 0 !important;
 }
 

@@ -281,7 +281,7 @@ footer {
 .red	{ color: #c00; }
 .orange	{ color: #e99e1c; }
 .green	{ color: #008000; }
-.blue	{ color: lightblue; }
+.blue	{ color: #406ceb; }
 
 /*
 |---------------------------------------------------------------
@@ -450,11 +450,8 @@ button.button-signin {
 }
 
 button.button-small {
-	border: 1px solid #ccc;
-	background: #eee url('../images/gradient-soft-30.png') repeat-x top left;
 	color: #777;
-	font-weight: normal !important;
-	font-size: 90%;
+	font-weight: normal;
 }
 button.button-small:hover {
 	border: 1px solid #bbb;
@@ -610,6 +607,9 @@ hr {
 .activity-border { border-right: 1px solid #ddd; }
 
 .logged-in-controls a { border: 0; }
+
+strong { font-weight: bold; }
+em { font-style: italic; }
 
 /*
 |---------------------------------------------------------------

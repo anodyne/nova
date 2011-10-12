@@ -133,7 +133,7 @@
 	border-right: 1px solid #dedede;
 	font-size: .9em;
 	text-shadow: 0 1px 0 #fbfbfb;
-	-moz-border-radius:0px;
+	-moz-border-radius: 0px;
 	border-radius: 0px 0px 0px 0px;
 }
 .subtabs .ui-tabs-nav li:first-child a {
