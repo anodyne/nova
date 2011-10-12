@@ -229,6 +229,9 @@ header .wrapper {
 	border: 1px solid #a8b3a3 !important;
 	-moz-border-radius: 3px;
 	border-radius: 3px 3px 3px 3px;
+	-moz-box-shadow: 0 1px 0 rgba(255, 255, 255, .5);
+	-webkit-box-shadow: 0 1px 0 rgba(255, 255, 255, .5);
+	box-shadow: 0 1px 0 rgba(255, 255, 255, .5);
 }
 .signin-panel input[type=text]:focus,
 .signin-panel input[type=password]:focus {
