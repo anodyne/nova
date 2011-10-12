@@ -19,7 +19,7 @@
  * ========================================================== */
 
 
-!function( $ ) {
+(function( $ ) {
 
  /* CSS TRANSITION SUPPORT (https://gist.github.com/373874)
   * ======================================================= */
@@ -90,8 +90,7 @@
 
         actualWidth = $tip[0].offsetWidth
         actualHeight = $tip[0].offsetHeight
-
-        placement = maybeCall(this.options.placement, this, [ $tip[0], this.$element[0] ])
+        placement = _.maybeCall(this.options.placement, this.$element[0])
 
         switch (placement) {
           case 'below':
@@ -194,9 +193,14 @@
  /* TWIPSY PRIVATE METHODS
   * ====================== */
 
-   function maybeCall ( thing, ctx, args ) {
-     return typeof thing == 'function' ? thing.apply(ctx, args) : thing
+   var _ = {
+
+     maybeCall: function ( thing, ctx ) {
+       return (typeof thing == 'function') ? (thing.call(ctx)) : thing
+     }
+
    }
+
 
  /* TWIPSY PLUGIN DEFINITION
   * ======================== */
@@ -300,4 +304,4 @@
     return $.metadata ? $.extend({}, options, $(ele).metadata()) : options
   }
 
-}( window.jQuery || window.ender );
+})( window.jQuery || window.ender )

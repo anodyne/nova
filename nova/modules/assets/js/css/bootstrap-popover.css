@@ -87,3 +87,11 @@
   margin: 0;
   text-align: left;
 }
+.popover .content {
+	width: auto;
+	border-right: none;
+	border-bottom: none;
+}
+.popover .content p {
+	margin: 0 0 10px 0;
+}
