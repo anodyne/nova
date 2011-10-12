@@ -29,19 +29,19 @@
 			{
 				$(this).attr('curAction', 'less');
 				$('#tr_' + pid).slideDown();
-				$(this).html('<span class="ui-icon ui-icon-triangle-1-n float_right"></span><span class="text"><?php echo ucwords($this->lang->line('labels_less'));?></span>&nbsp;');
+				$(this).html('<span class="text"><?php echo ucwords($this->lang->line('labels_less'));?></span>');
 			}
 			else if (action == 'less')
 			{
 				$(this).attr('curAction', 'more');
 				$('#tr_' + pid).slideUp();
-				$(this).html('<span class="ui-icon ui-icon-triangle-1-s float_right"></span><span class="text"><?php echo ucwords($this->lang->line('labels_more'));?></span>&nbsp;');
+				$(this).html('<span class="text"><?php echo ucwords($this->lang->line('labels_more'));?></span>');
 			}
 			
 			return false;
 		});
 		
-		$("a[rel*=facebox]").click(function() {
+		$("a[rel=facebox]").click(function() {
 			var id = $(this).attr('myID');
 			var location = '<?php echo site_url('ajax/add_position');?>/' + id + '/<?php echo $string;?>';
 			
