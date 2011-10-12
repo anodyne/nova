@@ -529,6 +529,7 @@ $lang['labels_timezone']		= 'timezone';
 $lang['labels_title'] 			= 'title';
 $lang['labels_titles'] 			= 'titles';
 $lang['labels_to'] 				= 'to';
+$lang['labels_top'] 			= 'top';
 $lang['labels_total'] 			= 'total';
 $lang['labels_totals'] 			= 'totals';
 $lang['labels_type'] 			= 'type';
