@@ -1129,7 +1129,11 @@ $fields_positions = array(
 	'pos_type' => array(
 		'type' => 'ENUM',
 		'constraint' => "'senior','officer','enlisted','other'",
-		'default' => 'officer')
+		'default' => 'officer'),
+	'pos_top_open' => array(
+		'type' => 'ENUM',
+		'constraint' => "'y','n'",
+		'default' => 'n')
 );
 
 $fields_posts = array(

@@ -210,7 +210,13 @@ $add_column = array(
 	'manifests' => array(
 		'manifest_view' => array(
 			'type' => 'TEXT'),
-	)
+	),
+	'positions_'.GENRE => array(
+		'pos_top_open' => array(
+			'type' => 'ENUM',
+			'constraint' => "'y','n'",
+			'default' => 'n')
+	),
 );
 
 if ($add_column !== null)
@@ -474,4 +480,36 @@ foreach ($data as $key => $value)
 	// update the draft record
 	$this->db->where('draft_id', $draftID);
 	$this->db->update('wiki_drafts', array('draft_page' => $pageID));
+}
+
+/**
+ * need to take in to account that some sims may have
+ * more than one genre installed, so we need to do the
+ * positions table update for all the genres so that
+ * nova doesn't break in the even they change their genre
+ */
+
+// get all the tables
+$tables = $this->db->list_tables();
+
+// grab the db table prefix
+$prefix = $this->db->dbprefix;
+
+// count the characters in the prefix and add "positions_" to it
+$prefixChars = strlen($prefix);
+$totalChars = $prefixChars + 10;
+
+foreach ($tables as $key => $value)
+{
+	if (substr($value, 0, $totalChars) == $prefix.'positions_' and $value != $prefix.'positions_'.GENRE)
+	{
+		// the key used for the add column array
+		$t = 'positions_'.GENRE;
+		
+		// the table name minus the prefix
+		$table = str_replace($prefix, '', $value);
+		
+		// add the column to all of the department tables
+		$this->dbforge->add_column($table, $add_column[$t]);
+	}
 }
