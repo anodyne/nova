@@ -395,7 +395,9 @@ th {
 | BUTTONS
 |---------------------------------------------------------------
 */
-button {
+button,
+input.button-main,
+input.button-sec {
 	font-weight: bold;
 	font-family: "lucida grande", verdana, arial, sans-serif;
 	color: #888;
@@ -415,7 +417,8 @@ button {
 }
 
 button.button-main:hover,
-button.button-signin:hover {
+button.button-signin:hover,
+input.button-main:hover {
 	border-color: #76896e;
 	color: #fff;
 	text-shadow: 0 1px 1px rgba(0, 0, 0, .4);
@@ -429,10 +432,12 @@ button.button-signin:hover {
 	background: linear-gradient(top, #a7b4a2 0%,#879880 50%,#778b70 51%,#778b70 100%);
 }
 
-button.button-sec {
+button.button-sec,
+input.button-sec {
 	font-weight: normal;
 }
-button.button-sec:hover {
+button.button-sec:hover,
+input.button-sec:hover {
 	border-color: #fbcb09;
 	color: #c77405;
 	background: #fefae5;
@@ -454,35 +459,16 @@ button.button-small {
 	font-weight: normal;
 }
 button.button-small:hover {
-	border: 1px solid #bbb;
-	background: #eee url('../images/gradient-soft-50.png') repeat-x top left;
 	color: #555;
-}
-
-input.button-main {
-	background: #e5e5e5 url('../images/gradient-soft-50.png') repeat-x top left;
-	color: #888;
-	border: 1px solid #d0d0d0;
-	font-weight: bold;
-	font-size: 120%;
-}
-input.button-main:hover {
-	border: 1px solid #76896e;
-	background: #4a6440 url('../images/menu-bg-active.png') repeat-x center left;
-	color: #fff;
-}
-
-input.button-sec {
-	background: #e5e5e5 url('../images/gradient-soft-50.png') repeat-x top left;
-	color: #888;
-	border: 1px solid #d0d0d0;
-	font-size: 100%;
-	font-weight: normal;
-}
-input.button-sec:hover {
-	border: 1px solid #fbcb09;
-	background: #fdf5ce url('../images/gradient-soft-50.png') repeat-x center left;
-	color: #c77405;
+	border: 1px solid #aaa;
+	background: #e5e5e5;
+	background: -moz-linear-gradient(top, #e5e5e5 0%, #d5d5d5 50%, #d8e1e7 50%, #c5c5c5 51%, #e5e5e5 100%);
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#e5e5e5), color-stop(50%,#d5d5d5), color-stop(50%,#d8e1e7), color-stop(51%,#c5c5c5), color-stop(100%,#e5e5e5));
+	background: -webkit-linear-gradient(top, #e5e5e5 0%,#d5d5d5 50%,#d8e1e7 50%,#c5c5c5 51%,#e5e5e5 100%);
+	background: -o-linear-gradient(top, #e5e5e5 0%,#d5d5d5 50%,#d8e1e7 50%,#c5c5c5 51%,#e5e5e5 100%);
+	background: -ms-linear-gradient(top, #e5e5e5 0%,#d5d5d5 50%,#d8e1e7 50%,#c5c5c5 51%,#e5e5e5 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#e5e5e5', endColorstr='#e5e5e5',GradientType=0 );
+	background: linear-gradient(top, #e5e5e5 0%,#d5d5d5 50%,#d8e1e7 50%,#c5c5c5 51%,#e5e5e5 100%);
 }
 
 button[disabled],
@@ -491,12 +477,22 @@ input.button-main[disabled],
 input.button-main[disabled]:hover {
 	opacity: .65;
 	filter:alpha(opacity='70');
-	
-	background: #e5e5e5 url('../images/gradient-soft-50.png') repeat-x top left;
+	font-weight: bold;
+	font-family: "lucida grande", verdana, arial, sans-serif;
 	color: #888;
-	border: 1px solid #c0c0c0;
-	text-shadow: 0px 1px 0px rgba(255, 255, 255, .55);
-	font-size: 100%;
+	border: 1px solid #d0d0d0;
+	text-shadow: 0 1px 0 rgba(255, 255, 255, .55);
+	font-size: 1.5em;
+	background: #f2f2f2;
+	background: -moz-linear-gradient(top, #f2f2f2 0%, #e5e5e5 100%);
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#f2f2f2), color-stop(100%,#e5e5e5));
+	background: -webkit-linear-gradient(top, #f2f2f2 0%,#e5e5e5 100%);
+	background: -o-linear-gradient(top, #f2f2f2 0%,#e5e5e5 100%);
+	background: -ms-linear-gradient(top, #f2f2f2 0%,#e5e5e5 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f2f2f2', endColorstr='#e5e5e5',GradientType=0 );
+	background: linear-gradient(top, #f2f2f2 0%,#e5e5e5 100%);
+	-moz-border-radius: 3px;
+	border-radius: 3px 3px 3px 3px;
 }
 
 /*
