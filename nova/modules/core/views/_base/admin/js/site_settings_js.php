@@ -33,17 +33,11 @@
 			alert('<?php echo $this->lang->line('alert_sys_email_off');?>');
 		});
 		
-		$('a[rel=tooltip]').each(function(){
-			$(this).qtip({
-				content: $(this).attr('tooltip'),
-				position: {
-					my: 'bottom left',
-					at: 'top right'
-				},
-				style: { 
-					classes: 'ui-tooltip-shadow ui-tooltip-dark ui-tooltip-rounded'
-				}
-			});
+		$('[rel=tooltip]').twipsy({
+			animate: false,
+			offset: 5,
+			placement: 'right',
+			html: true
 		});
 		
 		$('select.skins').each(function(){

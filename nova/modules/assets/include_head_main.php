@@ -45,11 +45,11 @@ $uiTheme = ( ! is_file(APPPATH .'views/'.$current_skin.'/main/css/jquery.ui.them
 					cache: true
 				});
 				
-				$.lazy({					
-					src: '<?php echo base_url() . MODFOLDER;?>/assets/js/jquery.qtip.js',
-					name: 'qtip',
+				$.lazy({
+					src: '<?php echo base_url() . MODFOLDER;?>/assets/js/bootstrap-twipsy.js',
+					name: 'twipsy',
 					dependencies: {
-						css: ['<?php echo base_url() . MODFOLDER;?>/assets/js/css/jquery.qtip.css']
+						css: ['<?php echo base_url() . MODFOLDER;?>/assets/js/css/bootstrap-twipsy.css']
 					},
 					cache: true
 				});

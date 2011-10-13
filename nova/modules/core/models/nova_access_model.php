@@ -8,7 +8,7 @@
  * @copyright	2011 Anodyne Productions
  */
 
-abstract class Nova_access_model extends Model {
+abstract class Nova_access_model extends CI_Model {
 	
 	const SYSADMIN	= 1;
 	const ADMIN		= 2;
@@ -18,7 +18,7 @@ abstract class Nova_access_model extends Model {
 	
 	public function __construct()
 	{
-		parent::Model();
+		parent::__construct();
 		
 		$this->load->dbutil();
 	}

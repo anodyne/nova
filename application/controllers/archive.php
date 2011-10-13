@@ -1,6 +1,6 @@
 <?php
 
-require_once MODPATH.'core/controllers/nova_archive'.EXT;
+require_once MODPATH.'core/controllers/nova_archive.php';
 
 class Archive extends Nova_archive {
 

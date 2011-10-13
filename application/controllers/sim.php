@@ -1,6 +1,6 @@
 <?php
 
-require_once MODPATH.'core/controllers/nova_sim'.EXT;
+require_once MODPATH.'core/controllers/nova_sim.php';
 
 class Sim extends Nova_sim {
 	

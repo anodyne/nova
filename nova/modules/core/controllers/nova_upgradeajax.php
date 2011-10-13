@@ -8,7 +8,7 @@
  * @copyright	2011 Anodyne Productions
  */
 
-abstract class Nova_upgradeajax extends Controller {
+abstract class Nova_upgradeajax extends CI_Controller {
 	
 	public function __construct()
 	{
@@ -229,7 +229,7 @@ abstract class Nova_upgradeajax extends Controller {
 				
 				$charValues = array(
 					'charid' => $c->crewid,
-					'user' => ( ! empty($c->email)) ? $charIDs[$c->email] : null,
+					'user' => ( ! empty($c->email)) ? $charIDs[$c->email] : 0,
 					'first_name' => $c->firstName,
 					'middle_name' => $c->middleName,
 					'last_name' => $c->lastName,
@@ -278,7 +278,7 @@ abstract class Nova_upgradeajax extends Controller {
 					$fieldValues = array(
 						'data_field' => $field,
 						'data_char' => $c->crewid,
-						'data_user' => ( ! empty($c->email)) ? $charIDs[$c->email] : null,
+						'data_user' => ( ! empty($c->email)) ? $charIDs[$c->email] : 0,
 						'data_value' => $value,
 						'data_updated' => now()
 					);
@@ -810,7 +810,13 @@ abstract class Nova_upgradeajax extends Controller {
 					'type' => 'BIGINT',
 					'constraint' => 20),
 				'post_participants' => array(
-					'type' => 'TEXT')
+					'type' => 'TEXT'),
+				'post_lock_user' => array(
+					'type' => 'INT',
+					'constraint' => 8),
+				'post_lock_date' => array(
+					'type' => 'BIGINT',
+					'constraint' => 20)
 			);
 			
 			// do the modifications
@@ -1606,7 +1612,7 @@ abstract class Nova_upgradeajax extends Controller {
 								'awardrec_character' => $c->crewid,
 								'awardrec_user' => $user,
 								'awardrec_award' => $a,
-								'awardrec_date' => null
+								'awardrec_date' => 0
 							);
 							$saved[] = $this->award->add_nominated_award($awardaction);
 						}
@@ -1704,7 +1710,7 @@ abstract class Nova_upgradeajax extends Controller {
 	public function upgrade_user_logs()
 	{
 		$this->load->model('characters_model', 'char');
-		$this->load->model('personallogs_model', 'log');
+		$this->load->model('personallogs_model', 'logs');
 		
 		try {
 			// get the crew from the sms table
@@ -1716,7 +1722,7 @@ abstract class Nova_upgradeajax extends Controller {
 				
 				if ( ! is_null($user) and $user > 0)
 				{
-					$logs = $this->log->update_log($c->crewid, array('log_author_user' => $user), 'log_author_character');
+					$logs = $this->logs->update_log($c->crewid, array('log_author_user' => $user), 'log_author_character');
 				}
 			}
 			

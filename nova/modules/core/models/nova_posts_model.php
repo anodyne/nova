@@ -8,7 +8,7 @@
  * @copyright	2011 Anodyne Productions
  */
 
-abstract class Nova_posts_model extends Model {
+abstract class Nova_posts_model extends CI_Model {
 
 	public function __construct()
 	{
@@ -670,7 +670,7 @@ abstract class Nova_posts_model extends Model {
 	{
 		$data = array(
 			'post_lock_user' => $user,
-			'post_lock_date' => ($retain_lock) ? now() : null
+			'post_lock_date' => ($retain_lock) ? now() : 0
 		);
 		
 		$this->db->where('post_id', $post);

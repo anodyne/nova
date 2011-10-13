@@ -8,7 +8,7 @@
  * @copyright	2011 Anodyne Productions
  */
 
-require_once MODPATH.'core/libraries/Nova_controller_admin'.EXT;
+require_once MODPATH.'core/libraries/Nova_controller_admin.php';
 
 abstract class Nova_messages extends Nova_controller_admin {
 	
@@ -553,6 +553,9 @@ abstract class Nova_messages extends Nova_controller_admin {
 			break;
 			
 			case 'replyall':
+				// add the author to the recipients list
+				$recipient_list[] = $row->privmsgs_author_user;
+				
 				// find if the current user is listed in the recipient list
 				$key = array_search($this->session->userdata('userid'), $recipient_list);
 				
@@ -563,7 +566,7 @@ abstract class Nova_messages extends Nova_controller_admin {
 				}
 				
 				// set the hidden TO field
-				$data['recipient_list'] = implode(',', $recipient_list).','.$row->privmsgs_author_user;
+				$data['recipient_list'] = $recipient_list;
 				
 				// how many times does the RE: string appear in the subject?
 				$re_count = substr_count($row->privmsgs_subject, lang('abbr_reply'));
@@ -715,7 +718,7 @@ abstract class Nova_messages extends Nova_controller_admin {
 		$em_loc = Location::email('messages_new', $this->email->mailtype);
 		
 		// parse the message
-		$message = $this->parser->parse($em_loc, $email_data, true);
+		$message = $this->parser->parse_string($em_loc, $email_data, true);
 		
 		// for use by the email library
 		$to = implode(',', $emails);

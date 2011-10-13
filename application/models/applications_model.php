@@ -1,6 +1,6 @@
 <?php
 
-require_once MODPATH.'core/models/nova_applications_model'.EXT;
+require_once MODPATH.'core/models/nova_applications_model.php';
 
 class Applications_model extends Nova_applications_model {
 

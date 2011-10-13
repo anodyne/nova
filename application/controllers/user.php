@@ -1,6 +1,6 @@
 <?php
 
-require_once MODPATH.'core/controllers/nova_user'.EXT;
+require_once MODPATH.'core/controllers/nova_user.php';
 
 class User extends Nova_user {
 

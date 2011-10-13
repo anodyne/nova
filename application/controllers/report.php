@@ -1,6 +1,6 @@
 <?php
 
-require_once MODPATH.'core/controllers/nova_report'.EXT;
+require_once MODPATH.'core/controllers/nova_report.php';
 
 class Report extends Nova_report {
 

@@ -45,7 +45,7 @@
 								<?php echo anchor('write/missionpost/'. $p['post_id'], $p['title'], array('class' => 'bold'));?>
 								
 								<span class="fontSmall gray">
-									<a href="#" rel="tooltip" class="image" tooltip="<?php echo $p['authors'];?>"><?php echo img($images['authors']);?></a><br />
+									<a href="#" rel="popover" class="image" title="<?php echo $label['authors'];?>" data-content="<?php echo $p['authors'];?>"><?php echo img($images['authors']);?></a><br />
 									
 									<strong><?php echo $label['mission'];?></strong>
 									<?php echo anchor('sim/missions/id/'. $p['mission_id'], $p['mission']);?><br />

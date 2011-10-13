@@ -30,7 +30,7 @@
 						<?php echo $page['name'];?>
 						<?php if (!empty($page['desc'])): ?>
 							<span class="fontSmall">
-								<a href="#" rel="tooltip" tooltip="<?php echo $page['desc'];?>">[?]</a>
+								<a href="#" rel="tooltip" title="<?php echo $page['desc'];?>">[?]</a>
 							</span>
 						<?php endif;?>
 					</td>

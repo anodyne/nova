@@ -1,6 +1,6 @@
 <?php
 
-require_once MODPATH.'core/controllers/nova_personnel'.EXT;
+require_once MODPATH.'core/controllers/nova_personnel.php';
 
 class Personnel extends Nova_personnel {
 

@@ -8,11 +8,11 @@
  * @copyright	2011 Anodyne Productions
  */
 
-abstract class Nova_positions_model extends Model {
+abstract class Nova_positions_model extends CI_Model {
 
 	public function __construct()
 	{
-		parent::Model();
+		parent::__construct();
 		
 		$this->load->dbutil();
 	}
@@ -67,11 +67,26 @@ abstract class Nova_positions_model extends Model {
 		return false;
 	}
 	
-	public function get_open_positions($display = 'y')
+	/**
+	 * Get a list of all open positions.
+	 *
+	 * @since	2.0
+	 * @access	public
+	 * @param	string	whether to show displayed positions or not
+	 * @param	bool	whether to just show top positions
+	 * @return	object	a result object
+	 */
+	public function get_open_positions($display = 'y', $top_positions = false)
 	{
 		$this->db->from('positions_'. GENRE);
 		$this->db->where('pos_open >', 0);
 		$this->db->where('pos_display', $display);
+		
+		if ($top_positions)
+		{
+			$this->db->where('pos_top_open', 'y');
+		}
+		
 		$this->db->order_by('pos_dept', 'asc');
 		$this->db->order_by('pos_order', 'asc');
 		

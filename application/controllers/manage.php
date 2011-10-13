@@ -1,6 +1,6 @@
 <?php
 
-require_once MODPATH.'core/controllers/nova_manage'.EXT;
+require_once MODPATH.'core/controllers/nova_manage.php';
 
 class Manage extends Nova_manage {
 

@@ -90,7 +90,7 @@
 				<p>
 					<kbd>
 						<?php echo $label['online'];?>&nbsp;
-						<a href="#" rel="tooltip" class="fontTiny image" tooltip="<?php echo $label['tt_online_timespan'];?>"><?php echo img($images['help']);?></a>
+						<a href="#" rel="tooltip" class="fontTiny image" title="<?php echo $label['tt_online_timespan'];?>"><?php echo img($images['help']);?></a>
 					</kbd>
 					<?php echo form_input($inputs['online_timespan']);?>
 					<span class="gray"><?php echo $label['minutes'];?>
@@ -98,7 +98,7 @@
 				<p>
 					<kbd>
 						<?php echo $label['requirement'];?>&nbsp;
-						<a href="#" rel="tooltip" class="fontTiny image" tooltip="<?php echo $label['tt_posting_requirement'];?>"><?php echo img($images['help']);?></a>
+						<a href="#" rel="tooltip" class="fontTiny image" title="<?php echo $label['tt_posting_requirement'];?>"><?php echo img($images['help']);?></a>
 					</kbd>
 					<?php echo form_input($inputs['posting_req']);?>
 					<span class="gray"><?php echo $label['days'];?>
@@ -106,7 +106,7 @@
 				<p>
 					<kbd>
 						<?php echo $label['posts_participants'];?>&nbsp;
-						<a href="#" rel="tooltip" class="fontTiny image" tooltip="<?php echo $label['tt_posting_participants'];?>"><?php echo img($images['help']);?></a>
+						<a href="#" rel="tooltip" class="fontTiny image" title="<?php echo $label['tt_posting_participants'];?>"><?php echo img($images['help']);?></a>
 					</kbd>
 					<?php echo form_radio($inputs['participants_y']) .' '. form_label($label['yes'], 'participants_y');?>
 					<?php echo form_radio($inputs['participants_n']) .' '. form_label($label['no'], 'participants_n');?>
@@ -189,6 +189,22 @@
 					<?php echo form_label($label['no'], 'show_news_n');?>
 				</p>
 				<p>
+					<kbd><?php echo $label['logs_show'];?></kbd>
+					<?php echo form_radio($inputs['show_logs_y']);?>
+					<?php echo form_label($label['yes'], 'show_logs_y');?>
+					
+					<?php echo form_radio($inputs['show_logs_n']);?>
+					<?php echo form_label($label['no'], 'show_logs_n');?>
+				</p>
+				<p>
+					<kbd><?php echo $label['posts_show'];?></kbd>
+					<?php echo form_radio($inputs['show_posts_y']);?>
+					<?php echo form_label($label['yes'], 'show_posts_y');?>
+					
+					<?php echo form_radio($inputs['show_posts_n']);?>
+					<?php echo form_label($label['no'], 'show_posts_n');?>
+				</p>
+				<p>
 					<kbd><?php echo $label['use_notes'];?></kbd>
 					<?php echo form_radio($inputs['use_mission_notes_y']);?>
 					<?php echo form_label($label['yes'], 'use_mission_notes_y');?>
@@ -207,7 +223,7 @@
 				<p>
 					<kbd>
 						<?php echo $label['count_format'];?>&nbsp;
-						<a href="#" rel="tooltip" class="fontTiny image" tooltip="<?php echo $label['tt_post_count'];?>"><?php echo img($images['help']);?></a>
+						<a href="#" rel="tooltip" class="fontTiny image" title="<?php echo $label['tt_post_count'];?>"><?php echo img($images['help']);?></a>
 					</kbd>
 					<?php echo form_radio($inputs['post_count_multi']);?>
 					<?php echo form_label($label['count_multiple'], 'post_count_multi');?>

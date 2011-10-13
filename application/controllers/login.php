@@ -1,6 +1,6 @@
 <?php
 
-require_once MODPATH.'core/controllers/nova_login'.EXT;
+require_once MODPATH.'core/controllers/nova_login.php';
 
 class Login extends Nova_login {
 	

@@ -4,7 +4,7 @@
 	$(document).ready(function(){
 		$('table.zebra tbody > tr:nth-child(odd)').addClass('alt');
 		
-		$("a[rel*=facebox]").click(function(){
+		$("[rel=facebox]").click(function(){
 			var id = $(this).attr('myID');
 			var action = $(this).attr('myAction');
 			
@@ -26,17 +26,10 @@
 			return false;
 		});
 		
-		$('a[rel=tooltip]').each(function(){
-			$(this).qtip({
-				content: $(this).attr('tooltip'),
-				position: {
-					my: 'bottom left',
-					at: 'top right'
-				},
-				style: { 
-					classes: 'ui-tooltip-shadow ui-tooltip-dark ui-tooltip-rounded'
-				}
-			});
+		$('[rel=tooltip]').twipsy({
+			animate: false,
+			offset: 5,
+			placement: 'right'
 		});
 	});
 </script>

@@ -8,7 +8,7 @@
  * @copyright	2011 Anodyne Productions
  */
 
-require_once MODPATH.'core/libraries/Nova_controller_admin'.EXT;
+require_once MODPATH.'core/libraries/Nova_controller_admin.php';
 
 abstract class Nova_write extends Nova_controller_admin {
 	
@@ -101,7 +101,7 @@ abstract class Nova_write extends Nova_controller_admin {
 				$data['posts_saved'][$i]['mission'] = $this->mis->get_mission($p->post_mission, 'mission_title');
 				$data['posts_saved'][$i]['mission_id'] = $p->post_mission;
 				$data['posts_saved'][$i]['saved'] = $p->post_saved;
-				$data['posts_saved'][$i]['locked'] = ($p->post_lock_user !== null and $p->post_lock_date !== null);
+				$data['posts_saved'][$i]['locked'] = ((int) $p->post_lock_user !== 0 and (int) $p->post_lock_date !== 0);
 				
 				++$i;
 			}
@@ -266,6 +266,7 @@ abstract class Nova_write extends Nova_controller_admin {
 		
 		$data['label'] = array(
 			'all' => ucwords(lang('labels_all') .' '. lang('status_recent') .' '. lang('labels_entries')),
+			'authors' => ucfirst(lang('labels_authors')),
 			'by' => lang('labels_by'),
 			'category' => ucfirst(lang('labels_category') .':'),
 			'date' => ucfirst(lang('labels_date')),
@@ -540,8 +541,8 @@ abstract class Nova_write extends Nova_controller_admin {
 									'post_mission' => $mission,
 									'post_saved' => $this->session->userdata('main_char'),
 									'post_participants' => $participants,
-									'post_lock_user' => null,
-									'post_lock_date' => null,
+									'post_lock_user' => 0,
+									'post_lock_date' => 0,
 								);
 								
 								$update = $this->posts->update_post($id, $update_array);
@@ -587,8 +588,8 @@ abstract class Nova_write extends Nova_controller_admin {
 									'post_mission' => $mission,
 									'post_saved' => $this->session->userdata('main_char'),
 									'post_participants' => $participants,
-									'post_lock_user' => null,
-									'post_lock_date' => null,
+									'post_lock_user' => 0,
+									'post_lock_date' => 0,
 								);
 								
 								$insert = $this->posts->create_mission_entry($insert_array);
@@ -722,8 +723,8 @@ abstract class Nova_write extends Nova_controller_admin {
 									'post_location' => $location,
 									'post_mission' => $mission,
 									'post_saved' => $this->session->userdata('main_char'),
-									'post_lock_user' => null,
-									'post_lock_date' => null,
+									'post_lock_user' => 0,
+									'post_lock_date' => 0,
 								);
 								
 								$update = $this->posts->update_post($id, $update_array);
@@ -799,8 +800,8 @@ abstract class Nova_write extends Nova_controller_admin {
 									'post_timeline' => $timeline,
 									'post_location' => $location,
 									'post_mission' => $mission,
-									'post_lock_user' => null,
-									'post_lock_date' => null,
+									'post_lock_user' => 0,
+									'post_lock_date' => 0,
 								);
 								
 								$insert = $this->posts->create_mission_entry($insert_array);
@@ -2049,7 +2050,7 @@ abstract class Nova_write extends Nova_controller_admin {
 				$em_loc = Location::email('write_newsitem', $this->email->mailtype);
 				
 				// parse the message
-				$message = $this->parser->parse($em_loc, $email_data, true);
+				$message = $this->parser->parse_string($em_loc, $email_data, true);
 				
 				// get the email addresses
 				$emails = $this->user->get_crew_emails(true, 'email_news_items');
@@ -2092,7 +2093,7 @@ abstract class Nova_write extends Nova_controller_admin {
 				$em_loc = Location::email('entry_pending', $this->email->mailtype);
 
 				// parse the message
-				$message = $this->parser->parse($em_loc, $email_data, true);
+				$message = $this->parser->parse_string($em_loc, $email_data, true);
 
 				// get the email addresses
 				$emails = $this->user->get_crew_emails(true, 'email_news_items');
@@ -2130,7 +2131,7 @@ abstract class Nova_write extends Nova_controller_admin {
 				$em_loc = Location::email('write_personallog', $this->email->mailtype);
 				
 				// parse the message
-				$message = $this->parser->parse($em_loc, $email_data, true);
+				$message = $this->parser->parse_string($em_loc, $email_data, true);
 				
 				// get the email addresses
 				$emails = $this->user->get_crew_emails(true, 'email_personal_logs');
@@ -2174,7 +2175,7 @@ abstract class Nova_write extends Nova_controller_admin {
 				$em_loc = Location::email('entry_pending', $this->email->mailtype);
 
 				// parse the message
-				$message = $this->parser->parse($em_loc, $email_data, true);
+				$message = $this->parser->parse_string($em_loc, $email_data, true);
 
 				// get the email addresses
 				$to = implode(',', $this->user->get_emails_with_access('manage/logs', 2));
@@ -2226,7 +2227,7 @@ abstract class Nova_write extends Nova_controller_admin {
 				$em_loc = Location::email('write_missionpost', $this->email->mailtype);
 				
 				// parse the message
-				$message = $this->parser->parse($em_loc, $email_data, true);
+				$message = $this->parser->parse_string($em_loc, $email_data, true);
 				
 				// get the email addresses
 				$emails = $this->user->get_crew_emails(true, 'email_mission_posts');
@@ -2274,7 +2275,7 @@ abstract class Nova_write extends Nova_controller_admin {
 				$em_loc = Location::email('write_missionpost_deleted', $this->email->mailtype);
 
 				// parse the message
-				$message = $this->parser->parse($em_loc, $email_data, true);
+				$message = $this->parser->parse_string($em_loc, $email_data, true);
 
 				// get the email addresses
 				$emails = $this->char->get_character_emails($data['authors']);
@@ -2341,7 +2342,7 @@ abstract class Nova_write extends Nova_controller_admin {
 				$em_loc = Location::email('entry_pending', $this->email->mailtype);
 
 				// parse the message
-				$message = $this->parser->parse($em_loc, $email_data, true);
+				$message = $this->parser->parse_string($em_loc, $email_data, true);
 
 				// get the email addresses
 				$to = implode(',', $this->user->get_emails_with_access('manage/posts', 2));
@@ -2395,7 +2396,7 @@ abstract class Nova_write extends Nova_controller_admin {
 				$em_loc = Location::email('write_missionpost_saved', $this->email->mailtype);
 				
 				// parse the message
-				$message = $this->parser->parse($em_loc, $email_data, true);
+				$message = $this->parser->parse_string($em_loc, $email_data, true);
 				
 				// get the email addresses
 				$emails = $this->char->get_character_emails($data['authors']);

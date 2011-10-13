@@ -17,6 +17,9 @@ Anodyne Production's next-generation RPG management system combines popular feat
 * added the ability for someone with level 2 admin rights to reset someone's password (the new password will be emailed to the user and they'll be prompted to reset the password the next time they log in)
 * added the jQuery Chosen plugin for easier selection of mission post and private message authors (IE 8 and higher, all other browsers)
 * added post locking to prevent changes from being overwritten while users are working on joint posts
+* added the ability to show latest personal logs and missions posts on the main page (admins can select any combination of news, logs and posts)
+* added the ability to set top open positions (from position management) that will be shown at the top of each manifest
+* added some of the Bootstrap by Twitter (version 1.3) CSS and JS components (Twipsy and Popover)
 * updated seamless substitution to be able to override email view files
 * updated Thresher with a new way to create and manage categories when working on a wiki page
 * updated Thresher with a completely new user experience for managing wiki pages
@@ -24,6 +27,7 @@ Anodyne Production's next-generation RPG management system combines popular feat
 * updated the upload instructions to include the maximum file size and maximum image dimensions from the config file for reference
 * updated the deck listing page (sim/decks) to not use a table which makes for a much cleaner layout
 * updated the deck listing page (sim/decks) to have a menu of decks for quickly moving to a deck item without having to scroll (handy for sim with lots of decks)
+* updated to codeigniter 2.0.3
 * updated to jquery version 1.6.4
 * updated to jquery version 1.8.16
 * updated to uniform version 1.7.5
@@ -49,6 +53,7 @@ Anodyne Production's next-generation RPG management system combines popular feat
 * updated the view character posts page to use pagination
 * updated the view character logs page to use pagination
 * updated the site manifests to store the default view for a manifest instead of site settings
+* updated the Pulsar skin with a refreshed look and feel
 * refactored the location helper into a full-blown class with static methods
 * refactored the upgrade process to mirror what was created for nova 3
 * removed the banned.php file

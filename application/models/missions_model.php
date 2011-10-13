@@ -1,6 +1,6 @@
 <?php
 
-require_once MODPATH.'core/models/nova_missions_model'.EXT;
+require_once MODPATH.'core/models/nova_missions_model.php';
 
 class Missions_model extends Nova_missions_model {
 

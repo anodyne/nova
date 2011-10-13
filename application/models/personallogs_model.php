@@ -1,6 +1,6 @@
 <?php
 
-require_once MODPATH.'core/models/nova_personallogs_model'.EXT;
+require_once MODPATH.'core/models/nova_personallogs_model.php';
 
 class Personallogs_model extends Nova_personallogs_model {
 

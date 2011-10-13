@@ -1,6 +1,6 @@
 <?php
 
-require_once MODPATH.'core/models/nova_users_model'.EXT;
+require_once MODPATH.'core/models/nova_users_model.php';
 
 class Users_model extends Nova_users_model {
 

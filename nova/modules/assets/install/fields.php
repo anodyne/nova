@@ -1129,7 +1129,11 @@ $fields_positions = array(
 	'pos_type' => array(
 		'type' => 'ENUM',
 		'constraint' => "'senior','officer','enlisted','other'",
-		'default' => 'officer')
+		'default' => 'officer'),
+	'pos_top_open' => array(
+		'type' => 'ENUM',
+		'constraint' => "'y','n'",
+		'default' => 'n')
 );
 
 $fields_posts = array(
@@ -1330,7 +1334,7 @@ $fields_sessions = array(
 		'default' => '0'),
 	'user_agent' => array(
 		'type' => 'VARCHAR',
-		'constraint' => 50,
+		'constraint' => 120,
 		'default' => ''),
 	'last_activity' => array(
 		'type' => $date_type,

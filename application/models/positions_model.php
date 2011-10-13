@@ -1,6 +1,6 @@
 <?php
 
-require_once MODPATH.'core/models/nova_positions_model'.EXT;
+require_once MODPATH.'core/models/nova_positions_model.php';
 
 class Positions_model extends Nova_positions_model {
 

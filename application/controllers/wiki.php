@@ -1,6 +1,6 @@
 <?php
 
-require_once MODPATH.'core/controllers/nova_wiki'.EXT;
+require_once MODPATH.'core/controllers/nova_wiki.php';
 
 class Wiki extends Nova_wiki {
 

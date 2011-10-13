@@ -32,13 +32,13 @@ abstract class Nova_utility {
 			
 			$installed = $ci->sys->check_install_status();
 			
-			if ($installed === true and $ci->db->table_exists('bans'))
+			if ($installed and $ci->db->table_exists('bans'))
 			{
-				$bans = $ci->sys->get_bans(2, FALSE);
+				$bans = $ci->sys->get_bans(2, false);
 			
 				if (in_array($ci->input->ip_address(), $bans))
 				{
-					if ($ci->uri->segment(1) != 'main' && $ci->uri->segment(2) != 'contact')
+					if ($ci->uri->segment(1) != 'main' and $ci->uri->segment(2) != 'contact')
 					{
 						header('Location:'.base_url().'message.php?type=banned');
 					}
@@ -59,7 +59,7 @@ abstract class Nova_utility {
 		
 		$ci->load->library('user_agent');
 		
-		if ($ci->agent->browser() == 'Internet Explorer' && $ci->agent->version() < 7)
+		if ($ci->agent->browser() == 'Internet Explorer' and $ci->agent->version() < 7)
 		{
 			header('Location:'.base_url().'message.php?type=browser');
 		}
@@ -84,17 +84,17 @@ abstract class Nova_utility {
 			
 			if ( ! in_array($ci->uri->segment(1), $ignore))
 			{
-				if ($ci->settings->get_setting('maintenance') == 'on' && $ci->uri->segment(1) != 'login')
+				if ($ci->settings->get_setting('maintenance') == 'on' and $ci->uri->segment(1) != 'login')
 				{
 					$sysadmin = $ci->auth->is_sysadmin($ci->session->userdata('userid'));
 					
-					if ($sysadmin === FALSE)
+					if ( ! $sysadmin)
 					{
 						$view = Location::view('maintenance', $ci->settings->get_setting('skin_login'), 'login');
 						
 						if (file_exists(APPPATH .'views/'. $view .'.php'))
 						{
-							$data = $ci->load->view($view, '', TRUE);
+							$data = $ci->load->view($view, '', true);
 							
 							echo $data;
 							exit();

@@ -8,7 +8,7 @@
  * @copyright	2011 Anodyne Productions
  */
 
-abstract class Nova_login extends Controller {
+abstract class Nova_login extends CI_Controller {
 	
 	/**
 	 * @var	array 	The options array that stores all the settings from the database
@@ -39,7 +39,10 @@ abstract class Nova_login extends Controller {
 	{
 		parent::__construct();
 		
-		if ( ! file_exists(APPPATH.'config/database'.EXT))
+		// load the nova core module
+		$this->load->module('core', 'nova', MODPATH);
+		
+		if ( ! file_exists(APPPATH.'config/database.php'))
 		{
 			redirect('install/setupconfig');
 		}
@@ -453,7 +456,7 @@ abstract class Nova_login extends Controller {
 				$em_loc = Location::email('reset_password', $this->email->mailtype);
 				
 				// parse the message
-				$message = $this->parser->parse($em_loc, $email_data, true);
+				$message = $this->parser->parse_string($em_loc, $email_data, true);
 				
 				// set the parameters for sending the email
 				$this->email->from($data['email'], $data['name']);

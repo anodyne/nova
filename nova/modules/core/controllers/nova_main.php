@@ -8,7 +8,7 @@
  * @copyright	2011 Anodyne Productions
  */
 
-require_once MODPATH.'core/libraries/Nova_controller_main'.EXT;
+require_once MODPATH.'core/libraries/Nova_controller_main.php';
 
 abstract class Nova_main extends Nova_controller_main {
 	
@@ -21,27 +21,21 @@ abstract class Nova_main extends Nova_controller_main {
 
 	public function index()
 	{
-		$this->load->model('news_model', 'news');
+		// should we show the news?
+		$data['lists']['news'] = ($this->options['show_news'] == 'y') ? self::_show_news() : false;
 		
-		$news = $this->news->get_news_items(5, $this->session->userdata('userid'));
+		// should we show personal logs?
+		$data['lists']['logs'] = ($this->options['show_logs'] == 'y') ? self::_show_logs() : false;
 		
-		if ($news->num_rows() > 0 and $this->options['show_news'] == 'y')
+		// should we show mission posts?
+		$data['lists']['posts'] = ($this->options['show_posts'] == 'y') ? self::_show_posts() : false;
+		
+		// make sure only real content is in the set of lists
+		foreach ($data['lists'] as $key => $list)
 		{
-			$i = 1;
-			$datestring = $this->options['date_format'];
-			
-			foreach ($news->result() as $row)
+			if ($list === false)
 			{
-				$date = gmt_to_local($row->news_date, $this->timezone, $this->dst);
-				
-				$data['news'][$i]['id'] = $row->news_id;
-				$data['news'][$i]['title'] = $row->news_title;
-				$data['news'][$i]['content'] = $row->news_content;
-				$data['news'][$i]['date'] = mdate($datestring, $date);
-				$data['news'][$i]['category'] = $row->newscat_name;
-				$data['news'][$i]['author'] = $this->char->get_character_name($row->news_author_character, true);
-				
-				++$i;
+				unset($data['lists'][$key]);
 			}
 		}
 		
@@ -51,10 +45,13 @@ abstract class Nova_main extends Nova_controller_main {
 		
 		// labels
 		$data['label'] = array(
-			'news' => ucwords(lang('status_latest') .' '. lang('global_news')),
+			'logs' => ucwords(lang('status_latest') .' '. lang('global_personallogs')),
+			'news' => ucwords(lang('status_latest') .' '. lang('global_newsitems')),
+			'posts' => ucwords(lang('status_latest') .' '. lang('global_missionposts')),
 			'posted' => ucfirst(lang('actions_posted') .' '. lang('labels_on')),
 			'by' => lang('labels_by'),
 			'in' => lang('labels_in'),
+			'mission' => ucfirst(lang('global_mission')),
 		);
 		
 		$this->_regions['content'] = Location::view('main_index', $this->skin, 'main', $data);
@@ -692,7 +689,7 @@ abstract class Nova_main extends Nova_controller_main {
 			'author' => ucfirst(lang('labels_author')) .':',
 			'posted_on' => ucfirst(lang('actions_posted') .' '. lang('labels_on')) .':',
 			'loading' => ucfirst(lang('actions_loading')),
-			'nonews' => lang('error_msg_no_news'),
+			'nonews' => sprintf(lang('error_not_found'), lang('global_newsitems')),
 		);
 		
 		$this->_regions['content'] = Location::view('main_news', $this->skin, 'main', $data);
@@ -984,7 +981,7 @@ abstract class Nova_main extends Nova_controller_main {
 				$loc = Location::email('main_contact', $this->email->mailtype);
 				
 				// parse the message
-				$message = $this->parser->parse($loc, $email_data, true);
+				$message = $this->parser->parse_string($loc, $email_data, true);
 				
 				// get the game masters
 				$gm = $this->user->get_gm_emails();
@@ -1027,7 +1024,7 @@ abstract class Nova_main extends Nova_controller_main {
 				$loc = Location::email('main_news_comment', $this->email->mailtype);
 				
 				// parse the message
-				$message = $this->parser->parse($loc, $email_data, true);
+				$message = $this->parser->parse_string($loc, $email_data, true);
 				
 				// set the parameters for sending the email
 				$this->email->from($from, $name);
@@ -1066,7 +1063,7 @@ abstract class Nova_main extends Nova_controller_main {
 				$loc = Location::email('comment_pending', $this->email->mailtype);
 				
 				// parse the message
-				$message = $this->parser->parse($loc, $email_data, true);
+				$message = $this->parser->parse_string($loc, $email_data, true);
 				
 				// set the parameters for sending the email
 				$this->email->from($from, $name);
@@ -1095,7 +1092,7 @@ abstract class Nova_main extends Nova_controller_main {
 				$loc = Location::email('main_join_user', $this->email->mailtype);
 				
 				// parse the message
-				$message = $this->parser->parse($loc, $email_data, true);
+				$message = $this->parser->parse_string($loc, $email_data, true);
 				
 				// set the parameters for sending the email
 				$this->email->from($this->options['default_email_address'], $this->options['default_email_name']);
@@ -1183,7 +1180,7 @@ abstract class Nova_main extends Nova_controller_main {
 				$em_loc = Location::email('main_join_gm', $this->email->mailtype);
 				
 				// parse the message
-				$message = $this->parser->parse($em_loc, $email_data, true);
+				$message = $this->parser->parse_string($em_loc, $email_data, true);
 				
 				// get the game masters email addresses
 				$gm = $this->user->get_gm_emails();
@@ -1202,5 +1199,110 @@ abstract class Nova_main extends Nova_controller_main {
 		$email = $this->email->send();
 		
 		return $email;
+	}
+	
+	protected function _show_logs()
+	{
+		// load the personal logs model
+		$this->load->model('personallogs_model', 'logs');
+		
+		// load the text helper
+		$this->load->helper('text');
+		
+		// fetch the last 5 personal logs
+		$logs = $this->logs->get_log_list(5);
+		
+		if ($logs->num_rows() > 0)
+		{
+			$i = 1;
+			$datestring = $this->options['date_format'];
+			
+			foreach ($logs->result() as $row)
+			{
+				$date = gmt_to_local($row->log_date, $this->timezone, $this->dst);
+				
+				$items[$i]['id'] = $row->log_id;
+				$items[$i]['title'] = $row->log_title;
+				$items[$i]['content'] = word_limiter(strip_tags($row->log_content, '<br><br/><br />'), 50);
+				$items[$i]['date'] = mdate($datestring, $date);
+				$items[$i]['author'] = $this->char->get_character_name($row->log_author_character, true);
+				
+				++$i;
+			}
+			
+			return $items;
+		}
+		
+		return false;
+	}
+	
+	protected function _show_news()
+	{
+		// load the news model
+		$this->load->model('news_model', 'news');
+		
+		// fetch the last 5 news items
+		$news = $this->news->get_news_items(5, $this->session->userdata('userid'));
+		
+		if ($news->num_rows() > 0)
+		{
+			$i = 1;
+			$datestring = $this->options['date_format'];
+			
+			foreach ($news->result() as $row)
+			{
+				$date = gmt_to_local($row->news_date, $this->timezone, $this->dst);
+				
+				$items[$i]['id'] = $row->news_id;
+				$items[$i]['title'] = $row->news_title;
+				$items[$i]['content'] = $row->news_content;
+				$items[$i]['date'] = mdate($datestring, $date);
+				$items[$i]['category'] = $row->newscat_name;
+				$items[$i]['author'] = $this->char->get_character_name($row->news_author_character, true);
+				
+				++$i;
+			}
+			
+			return $items;
+		}
+		
+		return false;
+	}
+	
+	protected function _show_posts()
+	{
+		// load the missions and posts models
+		$this->load->model('missions_model', 'mis');
+		$this->load->model('posts_model', 'posts');
+		
+		// load the text helper
+		$this->load->helper('text');
+		
+		// fetch the last 5 posts
+		$posts = $this->posts->get_post_list('', 'desc', 5, 0, 'activated');
+		
+		if ($posts->num_rows() > 0)
+		{
+			$i = 1;
+			$datestring = $this->options['date_format'];
+			
+			foreach ($posts->result() as $row)
+			{
+				$date = gmt_to_local($row->post_date, $this->timezone, $this->dst);
+				
+				$items[$i]['id'] = $row->post_id;
+				$items[$i]['title'] = $row->post_title;
+				$items[$i]['content'] = word_limiter(strip_tags($row->post_content, '<br><br/><br />'), 50);
+				$items[$i]['date'] = mdate($datestring, $date);
+				$items[$i]['authors'] = $this->char->get_authors($row->post_authors);
+				$items[$i]['mission'] = anchor('sim/missions/id/'.$row->post_mission, $this->mis->get_mission($row->post_mission, 'mission_title'));
+				
+				++$i;
+			}
+			
+			return $items;
+		}
+		
+		return false;
 	}
 }

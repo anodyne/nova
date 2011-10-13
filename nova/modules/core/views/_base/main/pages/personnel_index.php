@@ -11,7 +11,7 @@
 			<strong><?php echo $label['manifests'];?> &mdash;</strong>
 			<?php $i = 1;?>
 			<?php foreach ($manifests as $m): ?>
-				<?php echo anchor('personnel/index/'.$m['id'], $m['name'], array('rel' => 'tooltip', 'tooltip' => $m['desc']));?>
+				<?php echo anchor('personnel/index/'.$m['id'], $m['name'], array('rel' => 'tooltip', 'title' => $m['desc']));?>
 				<?php if ($i < count($manifests)): ?>
 					&middot;
 				<?php endif;?>
@@ -39,13 +39,37 @@
 			<?php endif; ?>
 			<?php echo anchor('#', $label['npcs'], array('id' => 'toggle_npc'));?>
 	</div>
+	
+	<?php if (isset($top)): ?>
+		<div id="top-open" class="hidden">
+			<br />
+			<h2 class="page-subhead"><?php echo $label['top_positions'];?></h2>
+			
+			<table class="table100" cellpadding="3" border="0">
+				<tbody>
+					<?php foreach ($top as $t): ?>
+						<tr class="fontSmall">
+							<td class="col_15"></td>
+							<td class="col_150"><?php echo img($t['blank_img']);?></td>
+							<td>
+								<strong class="fontMedium"><?php echo $t['name'];?></strong><br />
+								<?php echo anchor('main/join/'. $t['id'], $label['apply']);?>
+							</td>
+							<td></td>
+							<td class="col_75"></td>
+						</tr>
+					<?php endforeach;?>
+				</tbody>
+			</table>
+		</div>
+	<?php endif;?>
 
 	<?php if (isset($depts)): ?>
-		<br /><table class="table100" cellpadding="3" border="0">
+		<br /><table class="" cellpadding="3" border="0">
 		
 		<?php foreach ($depts as $dept): ?>
 			<tr>
-				<td colspan="6"><h3><?php echo $dept['name'];?></h3></td>
+				<td colspan="5"><h3><?php echo $dept['name'];?></h3></td>
 			</tr>
 		
 			<?php if (isset($dept['pos'])): ?>
@@ -61,10 +85,10 @@
 					
 							<tr class="fontSmall hidden <?php echo $char['crew_type'] . $display;?>">
 								<td class="col_15"></td>
-								<td colspan="2" class="bold col_260"><?php echo $pos['name'];?></td>
-								<td class="col_150 align_center"><?php echo img($char['rank_img']);?></td>
-								<td class="col_260 bold">
-									<?php echo $char['name'];?>
+								<td class="col_150"><?php echo img($char['rank_img']);?></td>
+								<td>
+									<strong class="fontMedium"><?php echo $char['name'];?></strong><br />
+									<?php echo $pos['name'];?>
 									
 									<?php if ($char['crew_type'] == 'npc'): ?>
 										<br /><?php echo text_output($label['npc'], 'span', 'gray');?>
@@ -72,6 +96,7 @@
 										<br /><?php echo text_output($label['inactive'], 'span', 'gray');?>
 									<?php endif; ?>
 								</td>
+								<td></td>
 								<td class="col_75 align_right">
 									<?php echo anchor('personnel/character/'. $char['char_id'], img($char['combadge']), array('class' => 'bold image'));?>
 								</td>
@@ -82,9 +107,12 @@
 					<?php if ($pos['open'] > 0 && $dept['type'] == 'playing'): ?>
 						<tr class="open fontSmall hidden">
 							<td class="col_15"></td>
-							<td colspan="2" class="bold col_260"><?php echo $pos['name'];?></td>
-							<td class="col_150 align_center"><?php echo img($pos['blank_img']);?></td>
-							<td class="col_260 bold"><?php echo anchor('main/join/'. $pos['pos_id'], $label['apply']);?></td>
+							<td class="col_150"><?php echo img($pos['blank_img']);?></td>
+							<td>
+								<strong class="fontMedium"><?php echo $pos['name'];?></strong><br />
+								<?php echo anchor('main/join/'. $pos['pos_id'], $label['apply']);?>
+							</td>
+							<td></td>
 							<td class="col_75"></td>
 						</tr>
 					<?php endif; ?>
@@ -96,7 +124,7 @@
 				<?php foreach ($dept['sub'] as $sub): ?>
 					<tr>
 						<td class="col_15"></td>
-						<td colspan="5"><h4><?php echo $sub['name'];?></h4></td>
+						<td colspan="4"><h4><?php echo $sub['name'];?></h4></td>
 					</tr>
 				
 					<?php if (isset($sub['pos'])): ?>
@@ -113,10 +141,10 @@
 									<tr class="fontSmall hidden <?php echo $char['crew_type'] . $display;?>">
 										<td class="col_15"></td>
 										<td class="col_15"></td>
-										<td class="bold col_245"><?php echo $spos['name'];?></td>
-										<td class="col_150 align_center"><?php echo img($char['rank_img']);?></td>
-										<td class="col_260 bold">
-											<?php echo $char['name'];?>
+										<td class="col_150"><?php echo img($char['rank_img']);?></td>
+										<td>
+											<strong class="fontMedium"><?php echo $char['name'];?></strong><br />
+											<?php echo $spos['name'];?>
 											
 											<?php if ($char['crew_type'] == 'npc'): ?>
 												<br /><?php echo text_output($label['npc'], 'span', 'gray');?>
@@ -135,9 +163,11 @@
 								<tr class="open fontSmall hidden">
 									<td class="col_15"></td>
 									<td class="col_15"></td>
-									<td class="bold col_245"><?php echo $spos['name'];?></td>
-									<td class="col_150 align_center"><?php echo img($spos['blank_img']);?></td>
-									<td class="col_260 bold"><?php echo anchor('main/join/'. $spos['pos_id'], $label['apply']);?></td>
+									<td class="col_150"><?php echo img($spos['blank_img']);?></td>
+									<td>
+										<strong class="fontMedium"><?php echo $spos['name'];?></strong><br />
+										<?php echo anchor('main/join/'. $spos['pos_id'], $label['apply']);?>
+									</td>
 									<td class="col_75"></td>
 								</tr>
 							<?php endif; ?>

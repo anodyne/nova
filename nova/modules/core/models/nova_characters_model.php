@@ -8,11 +8,11 @@
  * @copyright	2011 Anodyne Productions
  */
 
-abstract class Nova_characters_model extends Model {
+abstract class Nova_characters_model extends CI_Model {
 
 	public function __construct()
 	{
-		parent::Model();
+		parent::__construct();
 		
 		$this->load->dbutil();
 	}
@@ -50,7 +50,7 @@ abstract class Nova_characters_model extends Model {
 				
 			case 'no_user':
 				$this->db->where('user', NULL);
-				$this->db->orwhere('user', 0);
+				$this->db->or_where('user', 0);
 			break;
 				
 			case 'all':
@@ -503,7 +503,7 @@ abstract class Nova_characters_model extends Model {
 		return $query;
 	}
 	
-	public function create_character_data_fields($character = '', $user = '')
+	public function create_character_data_fields($character = 0, $user = 0)
 	{
 		$get = $this->db->get_where('characters_fields', array('field_display' => 'y'));
 		

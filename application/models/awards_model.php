@@ -1,6 +1,6 @@
 <?php
 
-require_once MODPATH.'core/models/nova_awards_model'.EXT;
+require_once MODPATH.'core/models/nova_awards_model.php';
 
 class Awards_model extends Nova_awards_model {
 

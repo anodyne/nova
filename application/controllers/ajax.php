@@ -1,6 +1,6 @@
 <?php
 
-require_once MODPATH.'core/controllers/nova_ajax'.EXT;
+require_once MODPATH.'core/controllers/nova_ajax.php';
 
 class Ajax extends Nova_ajax {
 	

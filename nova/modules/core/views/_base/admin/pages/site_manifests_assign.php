@@ -33,7 +33,7 @@
 		<div mid="0" class="droppable info-full">
 		<?php if (isset($unassigned)): ?>
 			<?php foreach ($unassigned as $id => $d): ?>
-				<span class="draggable ui-widget-header" did="<?php echo $id;?>" rel="tooltip" tooltip="<?php echo $d['desc'];?>"><?php echo $d['name'];?></span>
+				<span class="draggable ui-widget-header" did="<?php echo $id;?>" rel="tooltip" title="<?php echo $d['desc'];?>"><?php echo $d['name'];?></span>
 			<?php endforeach;?>
 		<?php endif;?>
 		</div>
@@ -50,7 +50,7 @@
 				<div mid="<?php echo $id;?>" class="droppable info-full">
 				<?php if (isset($m['depts'])): ?>
 					<?php foreach ($m['depts'] as $i => $dept): ?>
-						<span class="draggable ui-widget-header" did="<?php echo $i;?>" rel="tooltip" tooltip="<?php echo $dept['desc'];?>"><?php echo $dept['name'];?></span>
+						<span class="draggable ui-widget-header" did="<?php echo $i;?>" rel="tooltip" title="<?php echo $dept['desc'];?>"><?php echo $dept['name'];?></span>
 					<?php endforeach;?>
 				<?php endif;?>
 				</div>

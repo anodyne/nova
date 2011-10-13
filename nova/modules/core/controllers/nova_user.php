@@ -8,7 +8,7 @@
  * @copyright	2011 Anodyne Productions
  */
 
-require_once MODPATH.'core/libraries/Nova_controller_admin'.EXT;
+require_once MODPATH.'core/libraries/Nova_controller_admin.php';
 
 abstract class Nova_user extends Nova_controller_admin {
 	
@@ -2028,7 +2028,7 @@ abstract class Nova_user extends Nova_controller_admin {
 				$em_loc = Location::email('user_nominate', $this->email->mailtype);
 				
 				// parse the message
-				$message = $this->parser->parse($em_loc, $email_data, true);
+				$message = $this->parser->parse_string($em_loc, $email_data, true);
 				
 				// make a string of email addresses
 				$to = implode(',', $this->user->get_emails_with_access('user/nominate', 2));
@@ -2057,7 +2057,7 @@ abstract class Nova_user extends Nova_controller_admin {
 				$em_loc = Location::email('reset_password', $this->email->mailtype);
 				
 				// parse the message
-				$message = $this->parser->parse($em_loc, $email_data, true);
+				$message = $this->parser->parse_string($em_loc, $email_data, true);
 				
 				// set the parameters for sending the email
 				$this->email->from($data['email'], $data['name']);
@@ -2095,7 +2095,7 @@ abstract class Nova_user extends Nova_controller_admin {
 				$em_loc = Location::email('user_status_change', $this->email->mailtype);
 				
 				// parse the message
-				$message = $this->parser->parse($em_loc, $email_data, false);
+				$message = $this->parser->parse_string($em_loc, $email_data, false);
 				
 				// make a string of email addresses
 				$to = implode(',', $this->user->get_gm_emails());

@@ -7,17 +7,10 @@
 		
 		$('table.zebra tbody > tr:nth-child(odd)').addClass('alt');
 		
-		$('a[rel=tooltip]').each(function(){
-			$(this).qtip({
-				content: $(this).attr('tooltip'),
-				position: {
-					my: 'bottom left',
-					at: 'top right'
-				},
-				style: { 
-					classes: 'ui-tooltip-shadow ui-tooltip-dark ui-tooltip-rounded'
-				}
-			});
+		$('[rel=popover]').popover({
+			animate: false,
+			offset: 5,
+			placement: 'right'
 		});
 		
 		$("a[rel=facebox]").click(function() {

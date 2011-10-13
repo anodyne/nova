@@ -8,7 +8,7 @@
  * @copyright	2011 Anodyne Productions
  */
 
-require_once MODPATH.'core/libraries/Nova_controller_main'.EXT;
+require_once MODPATH.'core/libraries/Nova_controller_main.php';
 
 abstract class Nova_personnel extends Nova_controller_main {
 	
@@ -251,6 +251,22 @@ abstract class Nova_personnel extends Nova_controller_main {
 			}
 		}
 		
+		// pull the top open positions
+		$top = $this->pos->get_open_positions('y', true);
+		
+		if ($top->num_rows() > 0)
+		{
+			foreach ($top->result() as $t)
+			{
+				$data['top'][$t->pos_id] = array(
+					'name' => $t->pos_name,
+					'id' => $t->pos_id,
+					'dept' => $this->dept->get_dept($t->pos_dept, 'dept_name'),
+					'blank_img' => $blank_img
+				);
+			}
+		}
+		
 		// set the javascript data
 		$js_data = array(
 			'display' => $this->uri->rsegment(3),
@@ -272,12 +288,13 @@ abstract class Nova_personnel extends Nova_controller_main {
 			'show' => ucfirst(lang('actions_show')),
 			'toggle' => ucfirst(lang('actions_toggle')),
 			'npcs' => lang('abbr_npcs'),
-			'loading' => lang('actions_loading'),
+			'loading' => ucfirst(lang('actions_loading')),
 			'inactive' => ucfirst(lang('status_inactive')),
 			'apply' => ucwords(lang('global_position') .' '. lang('status_open') .' '. NDASH
 				.' '. lang('actions_apply') .' '. lang('time_now')),
 			'npc' => lang('abbr_npc'),
 			'manifests' => ucwords(lang('labels_site').' '.lang('labels_manifests')),
+			'top_positions' => ucwords(lang('labels_top').' '.lang('status_open').' '.lang('global_positions')),
 		);
 		
 		$this->_regions['content'] = Location::view('personnel_index', $this->skin, 'main', $data);

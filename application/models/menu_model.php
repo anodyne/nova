@@ -1,6 +1,6 @@
 <?php
 
-require_once MODPATH.'core/models/nova_menu_model'.EXT;
+require_once MODPATH.'core/models/nova_menu_model.php';
 
 class Menu_model extends Nova_menu_model {
 

@@ -8,7 +8,7 @@
  * @copyright	2011 Anodyne Productions
  */
 
-require_once MODPATH.'core/libraries/Nova_controller_admin'.EXT;
+require_once MODPATH.'core/libraries/Nova_controller_admin.php';
 
 abstract class Nova_site extends Nova_controller_admin {
 	
@@ -28,7 +28,7 @@ abstract class Nova_site extends Nova_controller_admin {
 				case 'add':
 					foreach ($_POST as $key => $value)
 					{
-						$insert_array[$key] = $this->input->xss_clean($value);
+						$insert_array[$key] = $this->security->xss_clean($value);
 					}
 					
 					// pop unnecessary items off the array
@@ -201,7 +201,7 @@ abstract class Nova_site extends Nova_controller_admin {
 				case 'add':
 					foreach ($_POST as $key => $value)
 					{
-						$insert_array[$key] = $this->input->xss_clean($value);
+						$insert_array[$key] = $this->security->xss_clean($value);
 					}
 					
 					// pull the items off the array
@@ -328,7 +328,7 @@ abstract class Nova_site extends Nova_controller_admin {
 				case 'edit':
 					foreach ($_POST as $key => $value)
 					{
-						$update_array[$key] = $this->input->xss_clean($value);
+						$update_array[$key] = $this->security->xss_clean($value);
 					}
 					
 					// set the ID
@@ -1863,7 +1863,7 @@ abstract class Nova_site extends Nova_controller_admin {
 		}
 		
 		// create an array of items that shouldn't be included in the dir listing
-		$pop = array('_base_override', 'index.html', 'template'.EXT);
+		$pop = array('_base_override', 'index.html', 'template.php');
 		
 		// make sure the items aren't in the listing
 		foreach ($pop as $value)
@@ -1963,7 +1963,7 @@ abstract class Nova_site extends Nova_controller_admin {
 				case 'add':
 					foreach ($_POST as $key => $value)
 					{
-						$insert_array[$key] = $this->input->xss_clean($value);
+						$insert_array[$key] = $this->security->xss_clean($value);
 					}
 					
 					$select = $insert_array['select_values'];
@@ -2080,7 +2080,7 @@ abstract class Nova_site extends Nova_controller_admin {
 				case 'edit':
 					foreach ($_POST as $key => $value)
 					{
-						$update_array[$key] = $this->input->xss_clean($value);
+						$update_array[$key] = $this->security->xss_clean($value);
 					}
 					
 					$id = $update_array['field_id'];
@@ -2119,7 +2119,7 @@ abstract class Nova_site extends Nova_controller_admin {
 				case 'editval':
 					foreach ($_POST as $key => $value)
 					{
-						$update_array[$key] = $this->input->xss_clean($value);
+						$update_array[$key] = $this->security->xss_clean($value);
 					}
 					
 					$id = $update_array['id'];
@@ -2441,7 +2441,7 @@ abstract class Nova_site extends Nova_controller_admin {
 				case 'add':
 					foreach ($_POST as $key => $value)
 					{
-						$insert_array[$key] = $this->input->xss_clean($value);
+						$insert_array[$key] = $this->security->xss_clean($value);
 					}
 					
 					unset($insert_array['submit']);
@@ -2510,7 +2510,7 @@ abstract class Nova_site extends Nova_controller_admin {
 				case 'edit':
 					foreach ($_POST as $key => $value)
 					{
-						$update_array[$key] = $this->input->xss_clean($value);
+						$update_array[$key] = $this->security->xss_clean($value);
 					}
 					
 					$id = $update_array['id'];
@@ -2621,7 +2621,7 @@ abstract class Nova_site extends Nova_controller_admin {
 					// dynamically assign the POST variables to the insert array
 					foreach ($_POST as $key => $value)
 					{
-						$insert_array[$key] = $this->input->xss_clean($value);
+						$insert_array[$key] = $this->security->xss_clean($value);
 					}
 					
 					// pop off the button
@@ -2761,7 +2761,7 @@ abstract class Nova_site extends Nova_controller_admin {
 					// dynamically assign the POST variables to the insert array
 					foreach ($_POST as $key => $value)
 					{
-						$update_array[$key] = $this->input->xss_clean($value);
+						$update_array[$key] = $this->security->xss_clean($value);
 					}
 					
 					// pop off the button
@@ -4580,7 +4580,7 @@ abstract class Nova_site extends Nova_controller_admin {
 			{
 				if ( ! in_array($key, $key_exceptions))
 				{
-					$update_array['setting_value'] = $this->input->xss_clean($value);
+					$update_array['setting_value'] = $this->security->xss_clean($value);
 					
 					$update = $this->settings->update_setting($key, $update_array);
 					
@@ -4875,6 +4875,26 @@ abstract class Nova_site extends Nova_controller_admin {
 					'id' => 'show_news_n',
 					'value' => 'n',
 					'checked' => ($setting['show_news'] == 'n') ? true : false),
+				'show_logs_y' => array(
+					'name' => 'show_logs',
+					'id' => 'show_logs_y',
+					'value' => 'y',
+					'checked' => ($setting['show_logs'] == 'y') ? true : false),
+				'show_logs_n' => array(
+					'name' => 'show_logs',
+					'id' => 'show_logs_n',
+					'value' => 'n',
+					'checked' => ($setting['show_logs'] == 'n') ? true : false),
+				'show_posts_y' => array(
+					'name' => 'show_posts',
+					'id' => 'show_posts_y',
+					'value' => 'y',
+					'checked' => ($setting['show_posts'] == 'y') ? true : false),
+				'show_posts_n' => array(
+					'name' => 'show_posts',
+					'id' => 'show_posts_n',
+					'value' => 'n',
+					'checked' => ($setting['show_posts'] == 'n') ? true : false),
 				'use_mission_notes_y' => array(
 					'name' => 'use_mission_notes',
 					'id' => 'use_mission_notes_y',
@@ -4968,7 +4988,11 @@ abstract class Nova_site extends Nova_controller_admin {
 			'manifest' => ucwords(lang('labels_default') .' '. lang('labels_manifest') .' '. lang('labels_display')),
 			'minutes' => lang('time_minutes'),
 			'name' => ucwords(lang('global_sim') .' '. lang('labels_name')),
+			'logs_show' => ucwords(lang('actions_show') .' '. lang('global_personallogs')) .' '. lang('labels_on') .' '.
+				ucwords(lang('labels_main') .' '. lang('labels_page')),
 			'news_show' => ucwords(lang('actions_show') .' '. lang('global_news')) .' '. lang('labels_on') .' '.
+				ucwords(lang('labels_main') .' '. lang('labels_page')),
+			'posts_show' => ucwords(lang('actions_show') .' '. lang('global_missionposts')) .' '. lang('labels_on') .' '.
 				ucwords(lang('labels_main') .' '. lang('labels_page')),
 			'no' => ucfirst(lang('labels_no')),
 			'off' => ucfirst(lang('labels_off')),

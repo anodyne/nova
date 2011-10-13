@@ -36,6 +36,7 @@ if(isset($display))
 		$('#all').click(function() {
 			$('tr.inactive').hide();
 			$('tr.open').hide();
+			$('#top-open').hide();
 			
 			$('tr.active').show();
 			$('tr.npc').show();
@@ -46,6 +47,7 @@ if(isset($display))
 			$('tr.inactive').hide();
 			$('tr.npc').hide();
 			$('tr.open').hide();
+			$('#top-open').hide();
 			
 			$('tr.active').show();
 			return false;
@@ -55,6 +57,7 @@ if(isset($display))
 			$('tr.inactive').hide();
 			$('tr.active').hide();
 			$('tr.open').hide();
+			$('#top-open').hide();
 			
 			$('tr.npc').show();
 			return false;
@@ -64,6 +67,7 @@ if(isset($display))
 			$('tr.active').hide();
 			$('tr.npc').hide();
 			$('tr.open').hide();
+			$('#top-open').hide();
 			
 			$('tr.inactive').show();
 			return false;
@@ -75,6 +79,7 @@ if(isset($display))
 			$('tr.inactive').hide();
 			
 			$('tr.open').show();
+			$('#top-open').show();
 			return false;
 		});
 		
@@ -88,17 +93,10 @@ if(isset($display))
 			return false;
 		});
 		
-		$('[rel=tooltip]').each(function(){
-			$(this).qtip({
-				content: $(this).attr('tooltip'),
-				position: {
-					my: 'bottom left',
-					at: 'top right'
-				},
-				style: { 
-					classes: 'ui-tooltip-shadow ui-tooltip-dark ui-tooltip-rounded'
-				}
-			});
+		$('[rel=tooltip]').twipsy({
+			animate: false,
+			offset: 5,
+			placement: 'right'
 		});
 		
 		$('#loader').hide(); /* hide the loader */

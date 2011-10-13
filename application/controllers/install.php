@@ -1,6 +1,6 @@
 <?php
 
-require_once MODPATH.'core/controllers/nova_install'.EXT;
+require_once MODPATH.'core/controllers/nova_install.php';
 
 class Install extends Nova_install {
 

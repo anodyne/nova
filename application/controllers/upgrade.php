@@ -1,6 +1,6 @@
 <?php
 
-require_once MODPATH.'core/controllers/nova_upgrade'.EXT;
+require_once MODPATH.'core/controllers/nova_upgrade.php';
 
 class Upgrade extends Nova_upgrade {
 	

@@ -342,7 +342,8 @@ if ( ! function_exists('verify_server'))
 	function verify_server()
 	{
 		$ci =& get_instance();
-		$ci->lang->load('install');
+		$ci->load->module('core', 'nova', MODPATH);
+		$ci->nova->lang('install');
 		
 		// build the specs array
 		$specs = array(

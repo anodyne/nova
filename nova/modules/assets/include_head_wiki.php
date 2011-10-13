@@ -54,10 +54,23 @@ $uiTheme = ( ! is_file(APPPATH .'views/'.$current_skin.'/wiki/css/jquery.ui.them
 				});
 				
 				$.lazy({
-					src: '<?php echo base_url() . MODFOLDER;?>/assets/js/jquery.qtip.js',
-					name: 'qtip',
+					src: '<?php echo base_url() . MODFOLDER;?>/assets/js/bootstrap-twipsy.js',
+					name: 'twipsy',
 					dependencies: {
-						css: ['<?php echo base_url() . MODFOLDER;?>/assets/js/css/jquery.qtip.css']
+						css: ['<?php echo base_url() . MODFOLDER;?>/assets/js/css/bootstrap-twipsy.css']
+					},
+					cache: true
+				});
+				
+				$.lazy({
+					src: '<?php echo base_url() . MODFOLDER;?>/assets/js/bootstrap-popover.js',
+					name: 'popover',
+					dependencies: {
+						js: ['<?php echo base_url() . MODFOLDER;?>/assets/js/bootstrap-twipsy.js'],
+						css: [
+							'<?php echo base_url() . MODFOLDER;?>/assets/js/css/bootstrap-twipsy.css',
+							'<?php echo base_url() . MODFOLDER;?>/assets/js/css/bootstrap-popover.css'
+						]
 					},
 					cache: true
 				});

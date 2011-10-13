@@ -1,6 +1,6 @@
 <?php
 
-require_once MODPATH.'core/models/nova_privmsgs_model'.EXT;
+require_once MODPATH.'core/models/nova_privmsgs_model.php';
 
 class Privmsgs_model extends Nova_privmsgs_model {
 

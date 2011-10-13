@@ -1,6 +1,6 @@
 <?php
 
-require_once MODPATH.'core/models/nova_news_model'.EXT;
+require_once MODPATH.'core/models/nova_news_model.php';
 
 class News_model extends Nova_news_model {
 

@@ -1,6 +1,6 @@
 <?php
 
-require_once MODPATH.'core/models/nova_messages_model'.EXT;
+require_once MODPATH.'core/models/nova_messages_model.php';
 
 class Messages_model extends Nova_messages_model {
 

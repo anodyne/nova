@@ -15,7 +15,7 @@
 $language = basename(dirname(__FILE__));
 
 // include the base language file
-include_once MODPATH.'core/language/'.$language.'/base_lang'.EXT;
+include_once MODPATH.'core/language/'.$language.'/base_lang.php';
 
 /*
  * Your language array keys go here in the following format:

@@ -8,11 +8,11 @@
  * @copyright	2011 Anodyne Productions
  */
 
-abstract class Nova_news_model extends Model {
+abstract class Nova_news_model extends CI_Model {
 
 	public function __construct()
 	{
-		parent::Model();
+		parent::__construct();
 		
 		$this->load->dbutil();
 	}
