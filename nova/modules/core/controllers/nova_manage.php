@@ -3035,6 +3035,7 @@ abstract class Nova_manage extends Nova_controller_admin {
 		// load the resources
 		$this->load->model('positions_model', 'pos');
 		$this->load->model('depts_model', 'dept');
+		$this->load->library('parser');
 		
 		// set the variables
 		$g_dept = $this->uri->segment(3, 1, true);
@@ -3188,11 +3189,26 @@ abstract class Nova_manage extends Nova_controller_admin {
 						'id' => $p->pos_id .'_name',
 						'value' => $p->pos_name
 					),
+					'delete' => array(
+						'name' => 'delete[]',
+						'id' => $p->pos_id .'_id',
+						'value' => $p->pos_id
+					),
+				);
+				
+				$additional_data = array(
+					'id' => $p->pos_id,
+					'dept' => $p->pos_dept,
 					'desc' => array(
 						'name' => $p->pos_id .'_desc',
 						'id' => $p->pos_id .'_desc',
 						'value' => $p->pos_desc,
 						'rows' => 4
+					),
+					'display' => $p->pos_display,
+					'display_options' => array(
+						'y' => ucwords(lang('labels_yes')),
+						'n' => ucwords(lang('labels_no')),
 					),
 					'order' => array(
 						'name' => $p->pos_id .'_order',
@@ -3200,31 +3216,44 @@ abstract class Nova_manage extends Nova_controller_admin {
 						'value' => $p->pos_order,
 						'class' => 'small'
 					),
-					'delete' => array(
-						'name' => 'delete[]',
-						'id' => $p->pos_id .'_id',
-						'value' => $p->pos_id
-					)
+					'type' => $p->pos_type,
+					'type_options' => array(
+						'senior' => ucwords(lang('labels_senior')),
+						'officer' => ucwords(lang('labels_officer')),
+						'enlisted' => ucwords(lang('labels_enlisted')),
+						'other' => ucwords(lang('labels_other')),
+					),
+					'submit' => array(
+						'type' => 'submit',
+						'class' => 'button-main',
+						'name' => 'submit',
+						'value' => 'submit',
+						'content' => ucwords(lang('actions_submit'))
+					),
+					'label' => array(
+						'dept' => ucfirst(lang('global_department')),
+						'desc' => ucfirst(lang('labels_desc')),
+						'display' => ucfirst(lang('labels_display')),
+						'order' => ucfirst(lang('labels_order')),
+						'type' => ucfirst(lang('labels_type')),
+					),
 				);
 				
-				$data['values']['position'][$p->pos_id]['display'] = array(
+				// the additional information view
+				$loc = Location::view('manage_positions_additional', $this->skin, 'admin', $additional_data);
+				
+				// parse the content and make sure it uses single quotes
+				$data['additional'][$p->pos_id] = str_replace('"', "'", $this->parser->parse_string($loc, $additional_data, true));
+				
+				$data['values']['top_open'] = array(
 					'y' => ucwords(lang('labels_yes')),
 					'n' => ucwords(lang('labels_no')),
-				);
-				
-				$data['values']['position'][$p->pos_id]['type'] = array(
-					'senior' => ucwords(lang('labels_senior')),
-					'officer' => ucwords(lang('labels_officer')),
-					'enlisted' => ucwords(lang('labels_enlisted')),
-					'other' => ucwords(lang('labels_other')),
 				);
 				
 				$data['positions'][$p->pos_id]['id'] = $p->pos_id;
 				$data['positions'][$p->pos_id]['name'] = $p->pos_name;
 				$data['positions'][$p->pos_id]['open'] = $p->pos_open;
-				$data['positions'][$p->pos_id]['display'] = $p->pos_display;
-				$data['positions'][$p->pos_id]['dept'] = $p->pos_dept;
-				$data['positions'][$p->pos_id]['type'] = $p->pos_type;
+				$data['positions'][$p->pos_id]['top_open'] = $p->pos_top_open;
 			}
 		}
 				
@@ -3244,14 +3273,9 @@ abstract class Nova_manage extends Nova_controller_admin {
 			'name' => ucfirst(lang('labels_name')),
 			'open' => ucwords(lang('status_open') .' '. lang('labels_slots')),
 			'delete' => ucfirst(lang('actions_delete')),
-			'order' => ucfirst(lang('labels_order')),
-			'display' => ucfirst(lang('labels_display')),
-			'type' => ucfirst(lang('labels_type')),
-			'desc' => ucfirst(lang('labels_desc')),
-			'dept' => ucfirst(lang('global_department')),
 			'depts' => ucfirst(lang('global_departments')),
 			'more' => ucfirst(lang('labels_more')),
-			'top' => ucwords(lang('labels_top').' '.lang('status_open').' '.lang('global_position')),
+			'top_open' => ucwords(lang('labels_top').' '.lang('status_open').' '.lang('global_position')),
 		);
 		
 		$data['images'] = array(

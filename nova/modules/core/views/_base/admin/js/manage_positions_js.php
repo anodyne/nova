@@ -1,5 +1,9 @@
 <?php $string = random_string('alnum', 8);?>
 
+<style>
+.popover .inner { width: 550px !important; }
+</style>
+
 <script type="text/javascript">
 	$(document).ready(function(){
 		$('div.zebra div:nth-child(odd)').addClass('alt');
@@ -21,26 +25,6 @@
 			});
 		});
 		
-		$('button.button-small').click(function(){
-			var pid = $(this).attr('id');
-			var action = $(this).attr('curAction');
-			
-			if (action == 'more')
-			{
-				$(this).attr('curAction', 'less');
-				$('#tr_' + pid).slideDown();
-				$(this).html('<span class="text"><?php echo ucwords($this->lang->line('labels_less'));?></span>');
-			}
-			else if (action == 'less')
-			{
-				$(this).attr('curAction', 'more');
-				$('#tr_' + pid).slideUp();
-				$(this).html('<span class="text"><?php echo ucwords($this->lang->line('labels_more'));?></span>');
-			}
-			
-			return false;
-		});
-		
 		$("a[rel=facebox]").click(function() {
 			var id = $(this).attr('myID');
 			var location = '<?php echo site_url('ajax/add_position');?>/' + id + '/<?php echo $string;?>';
@@ -52,6 +36,37 @@
 			});
 			
 			return false;
+		});
+		
+		$('[rel=popover]').popover({
+			trigger: 'manual',
+			animate: false,
+			placement: 'left',
+			offset: 5,
+			html: true
+		}).click(function(e){
+			
+			// prevent the default action
+			e.preventDefault();
+			
+			// hide all existing popovers
+			$('[rel=popover]').each(function(){
+				$(this).popover('hide');
+			});
+			
+			// show the popover
+			$(this).popover('show');
+		});
+		
+		$('.close-popover').live('click', function(e){
+			
+			// prevent the default action
+			e.preventDefault();
+			
+			// hide all existing popovers
+			$('[rel=popover]').each(function(){
+				$(this).popover('hide');
+			});
 		});
 	});
 </script>

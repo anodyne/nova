@@ -3,7 +3,7 @@
 <?php echo text_output($text);?>
 
 <div class="info-full">
-	<?php echo text_output($label['depts'], 'h4');?>
+	<?php echo text_output($label['depts'], 'h3');?>
 	
 	<?php if (isset($depts)): ?>
 		<?php foreach ($depts as $d): ?>
@@ -30,7 +30,7 @@
 	</a>
 </p>
 
-<br /> <hr /> <br />
+<br />
 
 <?php if (isset($positions)): ?>
 	<?php echo text_output($deptnames[$g_dept], 'h2');?>
@@ -41,9 +41,11 @@
 			<div id="<?php echo $p['id'];?>" class="padding_p5_0_p5_0">
 				<table class="table100">
 					<tr>
-						<td class="col_40pct"><?php echo text_output($label['name'], 'span', 'bold');?></td>
+						<td><?php echo text_output($label['name'], 'span', 'bold');?></td>
 						<td class="col_5"></td>
-						<td class="col_40pct slider_control UITheme">
+						<td><?php echo text_output($label['top_open'], 'span', 'bold');?></td>
+						<td class="col_5"></td>
+						<td class="col_30pct slider_control UITheme">
 							<strong><?php echo $label['open'];?>:</strong>
 							<span id="<?php echo $p['id'];?>_amount"><?php echo $p['open'];?></span>
 							<input type="hidden" name="<?php echo $p['id'];?>_open" id="<?php echo $p['id'];?>_open" value="<?php echo $p['open'];?>" />
@@ -51,55 +53,21 @@
 						<td></td>
 					</tr>
 					<tr>
-						<td class="col_40pct"><?php echo form_input($inputs['position'][$p['id']]['name']);?></td>
+						<td><?php echo form_input($inputs['position'][$p['id']]['name']);?></td>
 						<td class="col_5"></td>
-						<td class="col_40pct slider_control UITheme">
+						<td><?php echo form_dropdown($p['id'].'_top_open', $values['top_open'], $p['top_open']);?></td>
+						<td class="col_5"></td>
+						<td class="slider_control UITheme">
 							<div id="<?php echo $p['id'];?>" class="slider"><?php echo $p['open'];?></div>
 						</td>
 						<td class="align_right align_middle">
 							<strong><?php echo form_label($label['delete'], $p['id'] .'_id');?>?</strong>
-							<?php echo form_checkbox($inputs['position'][$p['id']]['delete']);?></td>
+							<?php echo form_checkbox($inputs['position'][$p['id']]['delete']);?>
+						</td>
 					</tr>
-				</table>
-				
-				<div id="tr_<?php echo $p['id'];?>" class="hidden">
-					<table class="table100">
-						<tr>
-							<td class="align_top">
-								<strong><?php echo $label['order'];?></strong><br />
-								<?php echo form_input($inputs['position'][$p['id']]['order']);?>
-							</td>
-							<td class="align_top">
-								<strong><?php echo $label['display'];?></strong><br />
-								<?php echo form_dropdown($p['id'] .'_display', $values['position'][$p['id']]['display'], $p['display']);?>
-							</td>
-							<td class="align_top">
-								<strong><?php echo $label['type'];?></strong><br />
-								<?php echo form_dropdown($p['id'] .'_type', $values['position'][$p['id']]['type'], $p['type']);?>
-							</td>
-							<td class="col_5" rowspan="2"></td>
-							<td class="align_top" rowspan="2">
-								<strong><?php echo $label['desc'];?></strong><br />
-								<?php echo form_textarea($inputs['position'][$p['id']]['desc']);?>
-							</td>
-							<td class="col_5" rowspan="2"></td>
-						</tr>
-						<tr>
-							<td colspan="2">
-								<strong><?php echo $label['dept'];?></strong><br />
-								<?php echo form_dropdown_dept($p['id'] .'_dept', $p['dept']);?>
-							</td>
-						</tr>
-					</table>
-				</div>
-				
-				<table class="table100"
 					<tr>
-						<td class="align_right fontSmall UITheme">
-							<button class="button-small" curAction="more" id="<?php echo $p['id'];?>">
-								<span class="ui-icon ui-icon-triangle-1-s float_right"></span>
-								<span class="text"><?php echo $label['more'];?></span>&nbsp;
-							</button>
+						<td colspan="6" class="align_right fontSmall">
+							<button class="button-small" rel="popover" title="<?php echo $inputs['position'][$p['id']]['name']['value'];?>" data-content="<?php echo $additional[$p['id']];?>"><span class="text"><?php echo $label['more'];?></span></button>
 						</td>
 					</tr>
 				</table>
