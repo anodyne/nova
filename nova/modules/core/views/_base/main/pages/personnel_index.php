@@ -50,12 +50,12 @@
 					<?php foreach ($top as $t): ?>
 						<tr class="fontSmall">
 							<td class="col_15"></td>
-							<td colspan="2" class="bold col_260">
-								<?php echo $t['name'];?>
-								<br /><span class="gray nobold"><?php echo $t['dept'];?></span>
+							<td class="col_150"><?php echo img($t['blank_img']);?></td>
+							<td>
+								<strong class="fontMedium"><?php echo $t['name'];?></strong><br />
+								<?php echo anchor('main/join/'. $t['id'], $label['apply']);?>
 							</td>
-							<td class="col_150 align_center"><?php echo img($t['blank_img']);?></td>
-							<td class="col_260 bold"><?php echo anchor('main/join/'.$t['id'], $label['apply']);?></td>
+							<td></td>
 							<td class="col_75"></td>
 						</tr>
 					<?php endforeach;?>
