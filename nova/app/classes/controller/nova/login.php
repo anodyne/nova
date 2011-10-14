@@ -87,7 +87,7 @@ class Controller_Nova_Login extends Controller_Nova_Base {
 		// inputs
 		$this->_data->inputs = array(
 			'button' => array(
-				'class' => 'btn-main'),
+				'class' => 'login-control-submit hidden'),
 			'email' => array(
 				'id' => 'email',
 				'type' => 'email',
