@@ -1,18 +1,4 @@
 <?php
-/*
-|---------------------------------------------------------------
-| TEMPLATE - MAIN
-|---------------------------------------------------------------
-|
-| File: application/views/titan/template_main.php
-| Skin Version: 1.0
-|
-| Main layout file used by the titan skin.
-|
-| $sec options are: main, wiki, admin, login
-| $css can be anything you want (with a .css extension of course)
-|
-*/
 
 $sec = 'main'; /* set the section of the system */
 $css = 'main.css'; /* the name of the main css file */
@@ -53,15 +39,12 @@ $panel = array(
 		'src' => APPFOLDER .'/views/'. $current_skin .'/'. $sec .'/images/panel-dashboard.png'),
 );
 
-echo "<?xml version='1.0' encoding='UTF-8'?>\r\n";
-
-?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+?><!DOCTYPE html>
+<html lang="en">
 	<head>
+		<meta charset="utf-8">
 		<title><?php echo $title;?></title>
 		
-		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
-		<meta name="language" content="en" />
 		<meta name="description" content="<?php echo $this->config->item('meta_desc');?>" />
 		<meta name="keywords" content="<?php echo $this->config->item('meta_keywords');?>" />
 		<meta name="author" content="<?php echo $this->config->item('meta_author');?>" />
@@ -69,10 +52,14 @@ echo "<?xml version='1.0' encoding='UTF-8'?>\r\n";
 		<?php echo $_redirect;?>
 		
 		<!-- STYLESHEETS -->
-		<?php echo link_tag($link); ?>
+		<?php echo link_tag($link);?>
+		
+		<!--[if lt IE 9]>
+		<script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
+		<![endif]-->
 		
 		<!-- JAVASCRIPT FILES -->
-		<?php include_once($this->config->item('include_head_main')); ?>
+		<?php include_once($this->config->item('include_head_main'));?>
 		
 		<?php echo $javascript;?>
 	</head>
@@ -159,10 +146,10 @@ echo "<?xml version='1.0' encoding='UTF-8'?>\r\n";
 		
 		<!-- FOOTER -->
 		<div class="wrapper">
-			<div id="footer">
+			<footer>
 				Powered by <strong><?php echo APP_NAME;?></strong> from <a href="http://www.anodyne-productions.com" target="_blank">Anodyne Productions</a> | 
 				<?php echo anchor('main/credits', 'Site Credits');?>
-			</div>
+			</footer>
 		</div>
 	</body>
 </html>

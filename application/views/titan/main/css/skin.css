@@ -6,12 +6,9 @@
 html, body, #wrap { height: 100%; }
 
 body {
-	margin: 0;
-	padding: 0;
-	
 	background: #000;
 	color: #ccc;
-	font: 75%/1.5 "lucida grande", verdana, arial, sans-serif;
+	font: 75%/1.6 "lucida grande", verdana, arial, sans-serif;
 	text-align: center;
 }
 
@@ -26,7 +23,6 @@ body {
 	max-width: 1280px;
 	padding: 0 60px;
 	margin: 0 auto;
-	
 	text-align: left;
 }
 
@@ -46,19 +42,23 @@ body > #wrap {
 	margin: 0;
 	padding: 0;
 	height: 120px;
-	
-	background: #202020 url('../images/gradient-head.png') repeat-x top left;
 	color: #fff;
 	border: 1px solid #444;
 	border-top: 0;
-	
-	border-radius: 0 0 10px 10px;
+	background: #636363;
+	background: -moz-linear-gradient(top, #636363 0%, #202020 100%);
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#636363), color-stop(100%,#202020));
+	background: -webkit-linear-gradient(top, #636363 0%,#202020 100%);
+	background: -o-linear-gradient(top, #636363 0%,#202020 100%);
+	background: -ms-linear-gradient(top, #636363 0%,#202020 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#636363', endColorstr='#202020',GradientType=0 );
+	background: linear-gradient(top, #636363 0%,#202020 100%);
 	-moz-border-radius: 0 0 10px 10px;
+	border-radius: 0 0 10px 10px;
 }
 #head .head_content {
 	height: 58px;
 	padding: .5em 1em;
-	
 	font-weight: bold;
 }
 #head .head_content h1 {
@@ -75,22 +75,25 @@ body > #wrap {
 #menu {
 	height: 32px;
 	line-height: 32px;
-	
-	background: #3c76bd url('../images/gradient-menu.png') repeat-x 0 0;
+	margin: 0 -1px;
 	border-top: 1px solid #aed2ff;
 	border-bottom: 1px solid #122338;
-	border-bottom: 1px solid rgba(0, 0, 0, .7);
 	font-size: 110%;
-	
-	box-shadow: 0 2px 4px rgba(0, 0, 0, .45);
-	-moz-box-shadow: 0 2px 4px rgba(0, 0, 0, .45);
-	-webkit-box-shadow: 0 2px 4px rgba(0, 0, 0, .45);
+	background: #8aadd7;
+	background: -moz-linear-gradient(top, #8aadd7 0%, #5185c4 50%, #3c76bd 51%, #3c76bd 100%);
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#8aadd7), color-stop(50%,#5185c4), color-stop(51%,#3c76bd), color-stop(100%,#3c76bd));
+	background: -webkit-linear-gradient(top, #8aadd7 0%,#5185c4 50%,#3c76bd 51%,#3c76bd 100%);
+	background: -o-linear-gradient(top, #8aadd7 0%,#5185c4 50%,#3c76bd 51%,#3c76bd 100%);
+	background: -ms-linear-gradient(top, #8aadd7 0%,#5185c4 50%,#3c76bd 51%,#3c76bd 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#8aadd7', endColorstr='#3c76bd',GradientType=0 );
+	background: linear-gradient(top, #8aadd7 0%,#5185c4 50%,#3c76bd 51%,#3c76bd 100%);
+	-moz-box-shadow: 0 0 4px rgba(0, 0, 0, .75);
+	-webkit-box-shadow: 0 0 4px rgba(0, 0, 0, .75);
+	box-shadow: 0 0 4px rgba(0, 0, 0, .75);
 }
-#menu .nav-main {}
 #menu .nav-main ul {
 	margin: 0 5px;
 	padding: 0;
-	
 	list-style-type: none;
 }
 #menu .nav-main ul li {
@@ -100,25 +103,29 @@ body > #wrap {
 }
 #menu .nav-main ul li a {
 	display: block;
-	
+	padding: 0 12px;
 	text-decoration: none;
-	color: #eee;
+	color: #fff;
 	font-weight: bold;
 	border-left: 1px solid transparent;
 	border-right: 1px solid transparent;
-	text-shadow: 1px 1px 1px rgba(0, 0, 0, .3);
+	text-shadow: 0 1px 1px rgba(0, 0, 0, .4);
 }
-#menu .nav-main ul li a span { padding: 12px; }
 #menu .nav-main ul li a:hover,
 #menu .nav-main ul li a.active {
-	background: #5f9de9 url('../images/gradient-menu-active.png') repeat-x top left;
 	color: #1a467b;
-	text-shadow: 1px 1px 1px rgba(255, 255, 255, .7);
-	border-left: 1px solid #bbd5f6;
-	boder-right: 1px solid #bbd5f6;
+	text-shadow: 0 1px 0 rgba(255, 255, 255, .3);
 	border-left: 1px solid rgba(255, 255, 255, .3);
 	border-right: 1px solid rgba(255, 255, 255, .3);
-	border-bottom: 0;
+	border-bottom: none;
+	background: #cfe2f8;
+	background: -moz-linear-gradient(top, #cfe2f8 0%, #7eb0ed 50%, #5f9de9 51%, #5f9de9 100%);
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#cfe2f8), color-stop(50%,#7eb0ed), color-stop(51%,#5f9de9), color-stop(100%,#5f9de9));
+	background: -webkit-linear-gradient(top, #cfe2f8 0%,#7eb0ed 50%,#5f9de9 51%,#5f9de9 100%);
+	background: -o-linear-gradient(top, #cfe2f8 0%,#7eb0ed 50%,#5f9de9 51%,#5f9de9 100%);
+	background: -ms-linear-gradient(top, #cfe2f8 0%,#7eb0ed 50%,#5f9de9 51%,#5f9de9 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#cfe2f8', endColorstr='#5f9de9',GradientType=0 );
+	background: linear-gradient(top, #cfe2f8 0%,#7eb0ed 50%,#5f9de9 51%,#5f9de9 100%);
 }
 
 /*
@@ -130,26 +137,31 @@ body > #wrap {
 	position: relative;
 	margin: 2em 0;
 	padding: .5em 1em 0 1em;
-	
-	background: #000 url('../images/gradient-body.png') repeat-x 0 0;
-	
-	border-radius: 10px 10px 0 0;
+	background: #262626;
+	background: -moz-linear-gradient(top, #262626 0%, #000000 25%);
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#262626), color-stop(25%,#000000));
+	background: -webkit-linear-gradient(top, #262626 0%,#000000 25%);
+	background: -o-linear-gradient(top, #262626 0%,#000000 25%);
+	background: -ms-linear-gradient(top, #262626 0%,#000000 25%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#262626', endColorstr='#000000',GradientType=0 );
+	background: linear-gradient(top, #262626 0%,#000000 25%);
 	-moz-border-radius: 10px 10px 0 0;
+	border-radius: 10px 10px 0 0;
+	-moz-box-shadow: inset 0 1px 0 rgba(255, 255, 255, .2);
+	-webkit-box-shadow: inset 0 1px 0 rgba(255, 255, 255, .2);
+	box-shadow: inset 0 1px 0 rgba(255, 255, 255, .2);
 }
 
 .nav-sub {
 	float: right;
 	width: 160px;
 	margin: 0 0 10px 0;
-	
 	text-align: right;
 	font-size: 95%;
-	border-left: 1px solid #000;
 }
 .nav-sub ul {
 	margin: 0;
 	padding: 0;
-	
 	list-style: none;
 }
 .nav-sub ul li {
@@ -159,20 +171,18 @@ body > #wrap {
 }
 .nav-sub ul li a {
 	display: block;
-	
 	text-decoration: none;
 	font-weight: bold;
 }
 .nav-sub ul li a span { padding: 2px 5px; }
 .nav-sub ul li.spacer {
 	height: 12px;
-	
 	border: none;
 }
 
 .content {
 	margin-right: 210px;
-	line-height: 1.4;
+	line-height: 1.6;
 }
 
 /*
@@ -180,7 +190,7 @@ body > #wrap {
 | FOOTER STYLES
 |---------------------------------------------------------------
 */
-#footer {
+footer {
 	position: relative;
 	margin: -35px auto 0 auto !important;
 	height: 35px;
@@ -204,7 +214,10 @@ body > #wrap {
 | FONT COLOR CLASSES
 |---------------------------------------------------------------
 */
-.page-head 		{ color: #f3b907; }
+.page-head {
+	color: #f3b907;
+	text-shadow: 0 1px 1px rgba(0, 0, 0, 1);
+}
 .page-subhead	{ color: #bbd5f6; }
 
 .gray	{ color: #777; }
