@@ -13,7 +13,7 @@
 			<?php $count = count($d['items']);?>
 			<?php $i = 1;?>
 			<?php foreach ($d['items'] as $key => $value): ?>
-				<?php echo anchor('manage/positions/'. $key, $value);?>
+				<nobr><?php echo anchor('manage/positions/'.$key, $value['name'], array('rel' => 'twipsy', 'title' => $value['desc']));?></nobr>
 				<?php if ($i != $count): ?>
 					&middot;
 				<?php endif;?>

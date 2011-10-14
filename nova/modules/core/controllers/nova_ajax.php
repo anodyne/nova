@@ -8876,6 +8876,30 @@ abstract class Nova_ajax extends CI_Controller {
 		}
 	}
 	
+	public function save_position()
+	{
+		$allowed = Auth::check_access('manage/positions', false);
+		
+		if (IS_AJAX and $allowed)
+		{
+			// set the variables
+			$id = $this->security->xss_clean($_POST['id']);
+			$update = array(
+				'pos_order' => $this->security->xss_clean($_POST['order']),
+				'pos_dept' => $this->security->xss_clean($_POST['dept']),
+				'pos_display' => $this->security->xss_clean($_POST['display']),
+				'pos_type' => $this->security->xss_clean($_POST['type']),
+				'pos_desc' => $this->security->xss_clean($_POST['desc']),
+			);
+			
+			// load the resources
+			$this->load->model('positions_model', 'pos');
+			
+			// update the position
+			$this->pos->update_position($id, $update);
+		}
+	}
+	
 	public function save_spec_field_value()
 	{
 		$allowed = Auth::check_access('site/specsform', false);

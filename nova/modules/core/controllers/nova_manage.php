@@ -3148,7 +3148,7 @@ abstract class Nova_manage extends Nova_controller_admin {
 		}
 		
 		// get the positions for the current department
-		$positions = $this->pos->get_dept_positions($g_dept, null);
+		$positions = $this->pos->get_dept_positions($g_dept, '');
 		
 		// get all the departments
 		$departments = $this->dept->get_all_depts('asc', null);
@@ -3162,7 +3162,10 @@ abstract class Nova_manage extends Nova_controller_admin {
 					: ucwords(lang('labels_unassigned').' '.lang('global_departments'));
 					
 				$data['depts'][$d->dept_manifest]['name'] = $name;
-				$data['depts'][$d->dept_manifest]['items'][$d->dept_id] = $d->dept_name;
+				$data['depts'][$d->dept_manifest]['items'][$d->dept_id] = array(
+					'name' => $d->dept_name,
+					'desc' => $d->dept_desc,
+				);
 				
 				$data['deptnames'][$d->dept_id] = $d->dept_name;
 				
@@ -3200,8 +3203,8 @@ abstract class Nova_manage extends Nova_controller_admin {
 					'id' => $p->pos_id,
 					'dept' => $p->pos_dept,
 					'desc' => array(
-						'name' => $p->pos_id .'_desc',
-						'id' => $p->pos_id .'_desc',
+						'name' => 'desc',
+						'id' => $p->pos_id.'_desc',
 						'value' => $p->pos_desc,
 						'rows' => 4
 					),
@@ -3211,8 +3214,8 @@ abstract class Nova_manage extends Nova_controller_admin {
 						'n' => ucwords(lang('labels_no')),
 					),
 					'order' => array(
-						'name' => $p->pos_id .'_order',
-						'id' => $p->pos_id .'_order',
+						'name' => 'order',
+						'id' => $p->pos_id.'_order',
 						'value' => $p->pos_order,
 						'class' => 'small'
 					),
@@ -3226,7 +3229,8 @@ abstract class Nova_manage extends Nova_controller_admin {
 					'submit' => array(
 						'type' => 'submit',
 						'class' => 'button-main',
-						'name' => 'submit',
+						'name' => 'additional',
+						'id' => $p->pos_id,
 						'value' => 'submit',
 						'content' => ucwords(lang('actions_submit'))
 					),
@@ -3294,8 +3298,15 @@ abstract class Nova_manage extends Nova_controller_admin {
 				'content' => ucwords(lang('actions_update')))
 		);
 		
+		$js_data['position_update_text'] = sprintf(
+			lang('flash_success'),
+			ucfirst(lang('global_position')),
+			lang('actions_updated'),
+			''
+		);
+		
 		$this->_regions['content'] = Location::view('manage_positions', $this->skin, 'admin', $data);
-		$this->_regions['javascript'] = Location::js('manage_positions_js', $this->skin, 'admin');
+		$this->_regions['javascript'] = Location::js('manage_positions_js', $this->skin, 'admin', $js_data);
 		$this->_regions['title'].= $data['header'];
 		
 		Template::assign($this->_regions);
