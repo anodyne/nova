@@ -33,7 +33,6 @@ Anodyne Production's next-generation RPG management system combines popular feat
 * updated to jquery version 1.8.16
 * updated to uniform version 1.7.5
 * updated to prettyPhoto version 3.1.2
-* updated to qTip2
 * updated the database to not use a default value for a character's rank to avoid confusion when dealing with pending characters
 * updated the UI for listing mission groups to provide more information and look a lot better
 * updated the missions model to allow group missions to be pulled from the get_all_missions method
@@ -59,6 +58,7 @@ Anodyne Production's next-generation RPG management system combines popular feat
 * refactored the upgrade process to mirror what was created for nova 3
 * removed the banned.php file
 * removed the rss model since it isn't necessary any more
+* removed the qtip plugin
 * fixed bug with seamless substitution of images where they wouldn't work when they were in the _base_override directory
 * fixed bug with private messages where RE: and FWD: would constantly be added to message, now Nova will make sure it's only added once
 * fixed bug with private messages where the person sending the message would be on the recipient list, so any message they sent would show up in their inbox as well
