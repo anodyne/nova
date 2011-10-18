@@ -357,6 +357,27 @@ $additem = array(
 );
 $this->db->insert('settings', $additem);
 
+// add the rules menu item
+$menu = array(
+	'menu_name' => 'Rules',
+	'menu_group' => 0,
+	'menu_order' => 10,
+	'menu_link' => 'main/rules',
+	'menu_sim_type' => 1,
+	'menu_type' => 'sub',
+	'menu_cat' => 'main'
+);
+$this->db->insert('menu_items', $menu);
+
+// add the rules message
+$msg = array(
+	'message_key' => 'rules',
+	'message_label' => 'Rules Message',
+	'message_content' => "Define your sim's rules through the Site Messages page.",
+	'message_type' => 'message'
+);
+$this->db->insert('messages', $msg);
+
 // update the level 3 wiki page item
 $this->db->where('page_url', 'wiki/page');
 $this->db->where('page_level', 3);

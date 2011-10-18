@@ -908,9 +908,17 @@ $menu_items = array(
 		'menu_type' => 'sub',
 		'menu_cat' => 'main'),
 	array(
-		'menu_name' => 'Search',
+		'menu_name' => 'Rules',
 		'menu_group' => 0,
 		'menu_order' => 5,
+		'menu_link' => 'main/rules',
+		'menu_sim_type' => 1,
+		'menu_type' => 'sub',
+		'menu_cat' => 'main'),
+	array(
+		'menu_name' => 'Search',
+		'menu_group' => 0,
+		'menu_order' => 6,
 		'menu_link' => 'search/index',
 		'menu_sim_type' => 1,
 		'menu_type' => 'sub',
@@ -1729,6 +1737,11 @@ $messages = array(
 		'message_key' => 'welcome_msg',
 		'message_label' => 'Welcome Page Message',
 		'message_content' => "Define your welcome message and welcome page header through the Site Messages page.",
+		'message_type' => 'message'),
+	array(
+		'message_key' => 'rules',
+		'message_label' => 'Rules Message',
+		'message_content' => "Define your sim's rules through the Site Messages page.",
 		'message_type' => 'message'),
 	array(
 		'message_key' => 'sim',

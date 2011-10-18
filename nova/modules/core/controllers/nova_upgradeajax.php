@@ -1275,6 +1275,9 @@ abstract class Nova_upgradeajax extends CI_Controller {
 			
 			$value = array('message_content' => $r->samplePostQuestion);
 			$messages[] = $this->msgs->update_message($value, 'join_post');
+			
+			$value = array('message_content' => $r->rules);
+			$messages[] = $this->msgs->update_message($value, 'rules');
 		}
 		
 		// optmize the tables

@@ -701,6 +701,20 @@ abstract class Nova_main extends Nova_controller_main {
 		Template::render();
 	}
 	
+	public function rules()
+	{
+		// header and message
+		$data['header'] = ucfirst(lang('labels_rules'));
+		$data['message'] = $this->msgs->get_message('rules');
+		
+		$this->_regions['content'] = Location::view('main_rules', $this->skin, 'main', $data);
+		$this->_regions['title'].= ucfirst(lang('labels_rules'));
+		
+		Template::assign($this->_regions);
+		
+		Template::render();
+	}
+	
 	public function viewnews()
 	{
 		$this->load->model('news_model', 'news');

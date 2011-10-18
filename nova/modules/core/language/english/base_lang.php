@@ -489,6 +489,7 @@ $lang['labels_result']			= 'result';
 $lang['labels_results']			= 'results';
 $lang['labels_role']			= 'role';
 $lang['labels_roles']			= 'roles';
+$lang['labels_rules']			= 'rules';
 $lang['labels_sample_post'] 	= 'sample post';
 $lang['labels_section']			= 'section';
 $lang['labels_sections']		= 'sections';
