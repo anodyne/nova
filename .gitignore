@@ -18,6 +18,7 @@ application/config/database.php
 
 application/assets/common/ds9/
 application/assets/common/ent/
+application/assets/common/sto/
 
 nova/app/
 
