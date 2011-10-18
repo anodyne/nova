@@ -538,7 +538,7 @@ abstract class Nova_system_model extends CI_Model {
 		return $query;
 	}
 	
-	public function update_my_links($id = '', $status = 'active', $items = '83')
+	public function update_my_links($id = '', $status = 'active', $items = '84')
 	{
 		$update = array('my_links' => $items);
 		
