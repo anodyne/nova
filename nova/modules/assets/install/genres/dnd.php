@@ -1,28 +1,14 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
-/*
-|---------------------------------------------------------------
-| INSTALL - GENRE DATA (DND)
-|---------------------------------------------------------------
-|
-| File: assets/install_data_dnd.php
-| System Version: 1.2
-|
-| Genre data compiled by Wade Duerkes
-|
-*/
-
-/*
-|---------------------------------------------------------------
-| Genre Variables
-|---------------------------------------------------------------
-*/
+/**
+ * Install Genre - DND
+ *
+ * @package		Nova
+ * @category	Genre
+ * @author		Wade Duerkes
+ */
+ 
 $g = 'dnd';
 
-/*
-|---------------------------------------------------------------
-| Genre Table Data (DND)
-|---------------------------------------------------------------
-*/
 $data = array(
 	'departments_'. $g 	=> 'depts',
 	'ranks_'. $g		=> 'ranks',
@@ -710,11 +696,8 @@ $catalogue_ranks = array(
 	array(
 		'rankcat_name' => 'Standard Ranks',
 		'rankcat_location' => 'default',
-		'rankcat_credits' => "The Dungeons and Dragons rank used in Nova were created by David VanScott with assistance from Wade Duerkes. Please do not copy or modify the images.",
+		'rankcat_credits' => "The rank sets used in Nova were created by Anodyne Productions with assistance from Wade Duerkes. Please do not copy or modify the images.",
 		'rankcat_default' => 'y',
 		'rankcat_url' => 'http://anodyne-productions.com/',
 		'rankcat_genre' => $g),
 );
-
-/* End of file install_data_dnd.php */
-/* Location: ./application/assets/install/install_data_dnd.php */

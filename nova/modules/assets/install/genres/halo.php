@@ -1,28 +1,14 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
-/*
-|---------------------------------------------------------------
-| INSTALL - GENRE DATA (HALO)
-|---------------------------------------------------------------
-|
-| File: assets/install_data_halo.php
-| System Version: 1.2
-|
-| Data asset file for the HALO genre.
-|
-*/
-
-/*
-|---------------------------------------------------------------
-| Genre Variables
-|---------------------------------------------------------------
-*/
+/**
+ * Install Genre - HALO
+ *
+ * @package		Nova
+ * @category	Genre
+ * @author		Anodyne Productions
+ */
+ 
 $g = 'halo';
 
-/*
-|---------------------------------------------------------------
-| Genre Table Data (HALO)
-|---------------------------------------------------------------
-*/
 $data = array(
 	'departments_'. $g 	=> 'depts',
 	'ranks_'. $g		=> 'ranks',
@@ -44,6 +30,3 @@ $ranks= array(
 		'rank_class' => 0),
 );
 $positions = array();
-
-/* End of file install_data_halo.php */
-/* Location: ./application/assets/install/install_data_halo.php */

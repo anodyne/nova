@@ -1,28 +1,14 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
-/*
-|---------------------------------------------------------------
-| INSTALL - GENRE DATA (ST:DS9)
-|---------------------------------------------------------------
-|
-| File: assets/install_data_ds9.php
-| System Version: 2.0
-|
-| Genre data compiled by David VanScott
-|
-*/
+/**
+ * Install Genre - DS9
+ *
+ * @package		Nova
+ * @category	Genre
+ * @author		Anodyne Productions
+ */
 
-/*
-|---------------------------------------------------------------
-| Genre Variables
-|---------------------------------------------------------------
-*/
 $g = 'ds9';
 
-/*
-|---------------------------------------------------------------
-| Genre Table Data (ST:DS9)
-|---------------------------------------------------------------
-*/
 $data = array(
 	'departments_'. $g 	=> 'depts',
 	'ranks_'. $g		=> 'ranks',
@@ -2920,13 +2906,10 @@ $positions = array(
 
 $catalogue_ranks = array(
 	array(
-		'rankcat_name' => 'DS9 Duty Uniform',
+		'rankcat_name' => 'Duty Uniform',
 		'rankcat_location' => 'default',
-		'rankcat_credits' => "The Deep Space Nine rank sets used in Nova were created by Kuro-chan of Kuro-RPG. The ranksets can be found at <a href='http://www.kuro-rpg.net' target='_blank''>Kuro-RPG</a>. Please do not copy or modify the images.",
+		'rankcat_credits' => "The rank sets used in Nova were created by Kuro-chan of Kuro-RPG. The ranksets can be found at <a href='http://www.kuro-rpg.net' target='_blank''>Kuro-RPG</a>. Please do not copy or modify the images.",
 		'rankcat_default' => 'y',
 		'rankcat_url' => 'http://www.kuro-rpg.net/',
 		'rankcat_genre' => $g),
 );
-
-/* End of file install_genre_ds9.php */
-/* Location: ./application/assets/install/install_genre_ds9.php */

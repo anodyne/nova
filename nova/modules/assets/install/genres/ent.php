@@ -1,29 +1,15 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
-/*
-|---------------------------------------------------------------
-| INSTALL - GENRE DATA (ST:ENT)
-|---------------------------------------------------------------
-|
-| File: assets/install_data_ent.php
-| System Version: 2.0
-|
-| Genre data compiled by Moss (Anodyne forums)
-| Corrections noted by Vorn Krace (Anodyne forums)
-|
-*/
-
-/*
-|---------------------------------------------------------------
-| Genre Variables
-|---------------------------------------------------------------
-*/
+/**
+ * Install Genre - ENT
+ *
+ * @package		Nova
+ * @category	Genre
+ * @author		Moss (Anodyne forums)
+ * @author		Vorn Krace (Anodyne forums)
+ */
+ 
 $g = 'ent';
 
-/*
-|---------------------------------------------------------------
-| Genre Table Data (ST:ENT)
-|---------------------------------------------------------------
-*/
 $data = array(
 	'departments_'. $g 	=> 'depts',
 	'ranks_'. $g		=> 'ranks',
@@ -1157,10 +1143,7 @@ $catalogue_ranks = array(
 	array(
 		'rankcat_name' => 'Duty Uniform',
 		'rankcat_location' => 'default',
-		'rankcat_credits' => "The Enterprise rank sets used in Nova were created by Kuro-chan of Kuro-RPG. The ranksets can be found at <a href='http://www.kuro-rpg.net' target='_blank''>Kuro-RPG</a>. Please do not copy or modify the images.",
+		'rankcat_credits' => "The rank sets used in Nova were created by Kuro-chan of Kuro-RPG. The ranksets can be found at <a href='http://www.kuro-rpg.net' target='_blank''>Kuro-RPG</a>. Please do not copy or modify the images.",
 		'rankcat_default' => 'y',
 		'rankcat_genre' => $g)
 );
-
-/* End of file install_data_ent.php */
-/* Location: ./application/assets/install/install_data_ent.php */

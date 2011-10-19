@@ -1,26 +1,14 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
-/*
-|---------------------------------------------------------------
-| INSTALL - GENRE DATA (BLANK)
-|---------------------------------------------------------------
-|
-| File: assets/install_data_blank.php
-| System Version: 1.2
-|
-*/
-
-/*
-|---------------------------------------------------------------
-| Genre Variables
-|---------------------------------------------------------------
-*/
+/**
+ * Install Genre - BLANK
+ *
+ * @package		Nova
+ * @category	Genre
+ * @author		Anodyne Productions
+ */
+ 
 $g = 'blk';
 
-/*
-|---------------------------------------------------------------
-| Genre Table Data (BSG)
-|---------------------------------------------------------------
-*/
 $data = array(
 	'departments_'. $g 	=> 'depts',
 	'ranks_'. $g		=> 'ranks',
@@ -64,6 +52,3 @@ $catalogue_ranks = array(
 		'rankcat_url' => '',
 		'rankcat_genre' => $g),
 );
-
-/* End of file install_data_blank.php */
-/* Location: ./application/assets/install/install_data_blank.php */

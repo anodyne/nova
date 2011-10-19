@@ -1,28 +1,14 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
-/*
-|---------------------------------------------------------------
-| INSTALL - GENRE DATA (ST:BAJ)
-|---------------------------------------------------------------
-|
-| File: assets/install_data_baj.php
-| System Version: 1.2
-|
-| Genre data compiled by David VanScott
-|
-*/
-
-/*
-|---------------------------------------------------------------
-| Genre Variables
-|---------------------------------------------------------------
-*/
+/**
+ * Install Genre - BAJ
+ *
+ * @package		Nova
+ * @category	Genre
+ * @author		Anodyne Productions
+ */
+ 
 $g = 'baj';
 
-/*
-|---------------------------------------------------------------
-| Genre Table Data (ST:BAJ)
-|---------------------------------------------------------------
-*/
 $data = array(
 	'departments_'. $g 	=> 'depts',
 	'ranks_'. $g		=> 'ranks',
@@ -864,11 +850,8 @@ $catalogue_ranks = array(
 	array(
 		'rankcat_name' => 'Duty Uniform',
 		'rankcat_location' => 'default',
-		'rankcat_credits' => "The Bajoran rank set was created by Kuro-chan of Kuro-RPG. The rankset (and others) can be found at <a href='http://www.kuro-rpg.net' target='_blank'>Kuro-RPG</a>. Please do not copy or modify the images.",
+		'rankcat_credits' => "The rank set was created by Kuro-chan of Kuro-RPG. The rankset (and others) can be found at <a href='http://www.kuro-rpg.net' target='_blank'>Kuro-RPG</a>. Please do not copy or modify the images.",
 		'rankcat_default' => 'y',
 		'rankcat_url' => 'http://www.kuro-rpg.net/',
 		'rankcat_genre' => $g)
 );
-
-/* End of file install_data_baj.php */
-/* Location: ./application/assets/install/install_data_baj.php */

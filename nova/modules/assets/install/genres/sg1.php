@@ -1,28 +1,14 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
-/*
-|---------------------------------------------------------------
-| INSTALL - GENRE DATA (SG1)
-|---------------------------------------------------------------
-|
-| File: assets/install_data_sg1.php
-| System Version: 1.2
-|
-| Data asset file for the STARGATE SG-1 genre.
-|
-*/
-
-/*
-|---------------------------------------------------------------
-| Genre Variables
-|---------------------------------------------------------------
-*/
+/**
+ * Install Genre - SG1
+ *
+ * @package		Nova
+ * @category	Genre
+ * @author		Anodyne Productions
+ */
+ 
 $g = 'sg1';
 
-/*
-|---------------------------------------------------------------
-| Genre Table Data (SGA)
-|---------------------------------------------------------------
-*/
 $data = array(
 	'departments_'. $g 	=> 'depts',
 	'ranks_'. $g		=> 'ranks',
@@ -725,11 +711,8 @@ $catalogue_ranks = array(
 	array(
 		'rankcat_name' => 'U.S. Military',
 		'rankcat_location' => 'default',
-		'rankcat_credits' => "The Stargate ranks used in Nova are the US Military sets created by James Arnhem. The rankset can be found at <a href='http://www.kuro-rpg.net' target='_blank'>Kuro-RPG</a>. Please do not copy or modify the images.",
+		'rankcat_credits' => "The rank sets used in Nova are the US Military sets created by James Arnhem. The rankset can be found at <a href='http://www.kuro-rpg.net' target='_blank'>Kuro-RPG</a>. Please do not copy or modify the images.",
 		'rankcat_default' => 'y',
 		'rankcat_url' => 'http://www.kuro-rpg.net/',
 		'rankcat_genre' => $g)
 );
-
-/* End of file install_data_sg1.php */
-/* Location: ./application/assets/install/install_data_sg1.php */

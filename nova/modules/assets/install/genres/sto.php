@@ -1,26 +1,14 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
-/*
-|---------------------------------------------------------------
-| INSTALL - GENRE DATA (ST:Online)
-|---------------------------------------------------------------
-|
-| File: assets/install/genres/sto_data.php
-| System Version: 2.0
-|
-*/
-
-/*
-|---------------------------------------------------------------
-| Genre Variables
-|---------------------------------------------------------------
-*/
+/**
+ * Install Genre - STO
+ *
+ * @package		Nova
+ * @category	Genre
+ * @author		Anodyne Productions
+ */
+ 
 $g = 'sto';
 
-/*
-|---------------------------------------------------------------
-| Genre Table Data (ST:Online)
-|---------------------------------------------------------------
-*/
 $data = array(
 	'departments_'. $g 	=> 'depts',
 	'ranks_'. $g		=> 'ranks',
@@ -2301,11 +2289,8 @@ $catalogue_ranks = array(
 	array(
 		'rankcat_name' => 'Duty Uniform',
 		'rankcat_location' => 'default',
-		'rankcat_credits' => "The Star Trek Online rank sets used in Nova were created by Kuro-chan of Kuro-RPG. The ranksets can be found at <a href='http://www.kuro-rpg.net' target='_blank''>Kuro-RPG</a>. Please do not copy or modify the images.",
+		'rankcat_credits' => "The rank sets used in Nova were created by Kuro-chan of Kuro-RPG. The ranksets can be found at <a href='http://www.kuro-rpg.net' target='_blank''>Kuro-RPG</a>. Please do not copy or modify the images.",
 		'rankcat_default' => 'y',
 		'rankcat_url' => 'http://www.kuro-rpg.net/',
 		'rankcat_genre' => $g),
 );
-
-/* End of file sto_data.php */
-/* Location: ./application/assets/install/genres/sto_data.php */

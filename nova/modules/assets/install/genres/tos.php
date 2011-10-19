@@ -1,26 +1,14 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
-/*
-|---------------------------------------------------------------
-| INSTALL - GENRE DATA (ST:TOS)
-|---------------------------------------------------------------
-|
-| File: assets/install_data_tos.php
-| System Version: 2.0
-|
-*/
-
-/*
-|---------------------------------------------------------------
-| Genre Variables
-|---------------------------------------------------------------
-*/
+/**
+ * Install Genre - TOS
+ *
+ * @package		Nova
+ * @category	Genre
+ * @author		Anodyne Productions
+ */
+ 
 $g = 'tos';
 
-/*
-|---------------------------------------------------------------
-| Genre Table Data (ST:TOS)
-|---------------------------------------------------------------
-*/
 $data = array(
 	'departments_'. $g 	=> 'depts',
 	'ranks_'. $g		=> 'ranks',
@@ -829,10 +817,7 @@ $catalogue_ranks = array(
 	array(
 		'rankcat_name' => 'Duty Uniform',
 		'rankcat_location' => 'default',
-		'rankcat_credits' => "The Original Series rank sets used in Nova were created by Kuro-chan of Kuro-RPG. The ranksets can be found at <a href='http://www.kuro-rpg.net' target='_blank''>Kuro-RPG</a>. Please do not copy or modify the images.",
+		'rankcat_credits' => "The rank sets used in Nova were created by Kuro-chan of Kuro-RPG. The ranksets can be found at <a href='http://www.kuro-rpg.net' target='_blank''>Kuro-RPG</a>. Please do not copy or modify the images.",
 		'rankcat_default' => 'y',
 		'rankcat_genre' => $g)
 );
-
-/* End of file install_data_tos.php */
-/* Location: ./application/assets/install/install_data_tos.php */

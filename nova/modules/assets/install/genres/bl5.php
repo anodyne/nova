@@ -1,29 +1,14 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
-/*
-|---------------------------------------------------------------
-| INSTALL - GENRE DATA (ST:BL5)
-|---------------------------------------------------------------
-|
-| File: assets/install_data_bl5.php
-| System Version: 1.2
-|
-| Genre data compiled by Rycon (Anodyne forums)
-|
-
-*/
-
-/*
-|---------------------------------------------------------------
-| Genre Variables
-|---------------------------------------------------------------
-*/
+/**
+ * Install Genre - BL5
+ *
+ * @package		Nova
+ * @category	Genre
+ * @author		Rycon (Anodyne forums)
+ */
+ 
 $g = 'bl5';
 
-/*
-|---------------------------------------------------------------
-| Genre Table Data (BL5)
-|---------------------------------------------------------------
-*/
 $data = array(
 	'departments_'. $g 	=> 'depts',
 	'ranks_'. $g		=> 'ranks',
@@ -871,11 +856,8 @@ $catalogue_ranks = array(
 	array(
 		'rankcat_name' => 'Duty Uniform',
 		'rankcat_location' => 'default',
-		'rankcat_credits' => "The Babylon 5 rank sets used in Nova were created by Kuro-chan of Kuro-RPG. The ranksets can be found at <a href='http://www.kuro-rpg.net' target='_blank''>Kuro-RPG</a>. Please do not copy or modify the images.",
+		'rankcat_credits' => "The rank sets used in Nova were created by Kuro-chan of Kuro-RPG. The ranksets can be found at <a href='http://www.kuro-rpg.net' target='_blank''>Kuro-RPG</a>. Please do not copy or modify the images.",
 		'rankcat_default' => 'y',
 		'rankcat_url' => 'http://www.kuro-rpg.net/',
 		'rankcat_genre' => $g)
 );
-
-/* End of file install_data_bl5.php */
-/* Location: ./application/assets/install/install_data_bl5.php */

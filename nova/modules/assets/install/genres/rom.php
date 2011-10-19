@@ -1,28 +1,14 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
-/*
-|---------------------------------------------------------------
-| INSTALL - GENRE DATA (ST:ROM)
-|---------------------------------------------------------------
-|
-| File: assets/install_data_rom.php
-| System Version: 1.2
-|
-| Genre data compiled by Hasahnaithiau Nghymru
-|
-*/
-
-/*
-|---------------------------------------------------------------
-| Genre Variables
-|---------------------------------------------------------------
-*/
+/**
+ * Install Genre - ROM
+ *
+ * @package		Nova
+ * @category	Genre
+ * @author		Hasahnaithiau Nghymru
+ */
+ 
 $g = 'rom';
 
-/*
-|---------------------------------------------------------------
-| Genre Table Data (ST:ROM)
-|---------------------------------------------------------------
-*/
 $data = array(
 	'departments_'. $g 	=> 'depts',
 	'ranks_'. $g		=> 'ranks',
@@ -682,13 +668,10 @@ $positions = array(
 
 $catalogue_ranks = array(
 	array(
-		'rankcat_name' => 'Duty Uniform (Nemesis)',
+		'rankcat_name' => 'Duty Uniform',
 		'rankcat_location' => 'default',
-		'rankcat_credits' => "The Romulan rank sets was created by Kuro-chan of Kuro-RPG. The rankset (and others) can be found at <a href='http://www.kuro-rpg.net' target='_blank'>Kuro-RPG</a>. Please do not copy or modify the images.",
+		'rankcat_credits' => "The rank sets was created by Kuro-chan of Kuro-RPG. The rankset (and others) can be found at <a href='http://www.kuro-rpg.net' target='_blank'>Kuro-RPG</a>. Please do not copy or modify the images.",
 		'rankcat_default' => 'y',
 		'rankcat_url' => 'http://www.kuro-rpg.net/',
 		'rankcat_genre' => $g)
 );
-
-/* End of file install_data_rom.php */
-/* Location: ./application/assets/install/install_data_rom.php */

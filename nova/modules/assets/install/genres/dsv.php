@@ -1,21 +1,15 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 /**
- * Genre install data for seaQuest DSV genre.
+ * Install Genre - DSV
  *
  * @package		Nova
- * @category	Install
- * @copyright	2011 Anodyne Productions
+ * @category	Genre
+ * @author		Anodyne Productions
  * @since		2.0
  */
-
-/**
- * genre variable
- */
+ 
 $g = 'dsv';
 
-/**
- * genre table data
- */
 $data = array(
 	'departments_'. $g 	=> 'depts',
 	'ranks_'. $g		=> 'ranks',
@@ -1021,7 +1015,7 @@ $catalogue_ranks = array(
 	array(
 		'rankcat_name' => 'Duty Uniform',
 		'rankcat_location' => 'default',
-		'rankcat_credits' => "The seaQuest DSV rank set used in Nova were created by Anodyne Productions from the Beneath the Sea font. Please do not copy or modify the images.",
+		'rankcat_credits' => "The rank sets used in Nova were created by Anodyne Productions from the Beneath the Sea font. Please do not copy or modify the images.",
 		'rankcat_default' => 'y',
 		'rankcat_url' => 'http://xtras.anodyne-productions.com/',
 		'rankcat_genre' => $g),

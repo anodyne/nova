@@ -1,30 +1,14 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
-/*
-|---------------------------------------------------------------
-| INSTALL - GENRE DATA (AND)
-|---------------------------------------------------------------
-|
-| File: assets/install_data_and.php
-| System Version: 1.2
-|
-| Genre data compiled by Moss (Anodyne forums) and David VanScott
-|
-*/
-
-# TODO: figure out the rank image names
-
-/*
-|---------------------------------------------------------------
-| Genre Variables
-|---------------------------------------------------------------
-*/
+/**
+ * Install Genre - AND
+ *
+ * @package		Nova
+ * @category	Genre
+ * @author		Moss (Anodyne forums)
+ */
+ 
 $g = 'and';
 
-/*
-|---------------------------------------------------------------
-| Genre Table Data (AND)
-|---------------------------------------------------------------
-*/
 $data = array(
 	'departments_'. $g 	=> 'depts',
 	'ranks_'. $g		=> 'ranks',
@@ -505,12 +489,10 @@ $positions = array(
 
 $catalogue_ranks = array(
 	array(
-		'rankcat_name' => 'Duty Ranks',
+		'rankcat_name' => 'Duty Uniform',
 		'rankcat_location' => 'default',
 		'rankcat_credits' => "The Andromeda Duty rank set was created by Fedhog of Kuro-RPG. The rankset can be found at <a href='http://www.kuro-rpg.net' target='_blank'>Kuro-RPG</a>. Please do not copy or modify the images.",
 		'rankcat_default' => 'y',
-		'rankcat_url' => 'http://www.kuro-rpg.net/')
+		'rankcat_url' => 'http://www.kuro-rpg.net/',
+		'rankcat_genre' => $g)
 );
-
-/* End of file install_data_and.php */
-/* Location: ./application/assets/install/install_data_and.php */
