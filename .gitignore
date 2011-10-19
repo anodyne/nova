@@ -16,9 +16,7 @@ application/config/database.php
 !application/views/titan/*
 !application/views/_base_override/*
 
-application/assets/common/ds9/
-application/assets/common/ent/
-application/assets/common/sto/
+application/assets/common/*
 
 nova/app/
 
