@@ -98,6 +98,18 @@ $ranks = array(
 		'rank_image' => 't-a5',
 		'rank_order' => 0,
 		'rank_class' => 3),
+	array(
+		'rank_name' => 'Field Marshal',
+		'rank_short_name' => 'FMSL',
+		'rank_image' => 'maco-a5',
+		'rank_order' => 0,
+		'rank_class' => 4),
+	array(
+		'rank_name' => 'Fleet Admiral',
+		'rank_short_name' => 'FADM',
+		'rank_image' => 'g-a5',
+		'rank_order' => 0,
+		'rank_class' => 5),
 		
 	array(
 		'rank_name' => 'Admiral',
@@ -121,8 +133,14 @@ $ranks = array(
 		'rank_name' => 'General',
 		'rank_short_name' => 'GEN',
 		'rank_image' => 'maco-a4',
-		'rank_order' => 0,
+		'rank_order' => 1,
 		'rank_class' => 4),
+	array(
+		'rank_name' => 'Admiral',
+		'rank_short_name' => 'ADM',
+		'rank_image' => 'g-a4',
+		'rank_order' => 1,
+		'rank_class' => 5),
 		
 	array(
 		'rank_name' => 'Vice-Admiral',
@@ -146,8 +164,14 @@ $ranks = array(
 		'rank_name' => 'Lieutenant General',
 		'rank_short_name' => 'LTGEN',
 		'rank_image' => 'maco-a3',
-		'rank_order' => 1,
+		'rank_order' => 2,
 		'rank_class' => 4),
+	array(
+		'rank_name' => 'Vice-Admiral',
+		'rank_short_name' => 'VADM',
+		'rank_image' => 'g-a3',
+		'rank_order' => 2,
+		'rank_class' => 5),
 		
 	array(
 		'rank_name' => 'Rear-Admiral',
@@ -171,14 +195,20 @@ $ranks = array(
 		'rank_name' => 'Major General',
 		'rank_short_name' => 'MAJGEN',
 		'rank_image' => 'maco-a2',
-		'rank_order' => 2,
+		'rank_order' => 3,
 		'rank_class' => 4),
+	array(
+		'rank_name' => 'Rear-Admiral',
+		'rank_short_name' => 'RADM',
+		'rank_image' => 'g-a2',
+		'rank_order' => 3,
+		'rank_class' => 5),
 	array(
 		'rank_name' => 'Admiral',
 		'rank_short_name' => 'ADM',
 		'rank_image' => 'v-o8',
 		'rank_order' => 0,
-		'rank_class' => 5),
+		'rank_class' => 6),
 		
 	array(
 		'rank_name' => 'Commodore',
@@ -202,14 +232,20 @@ $ranks = array(
 		'rank_name' => 'Brigadier General',
 		'rank_short_name' => 'BGEN',
 		'rank_image' => 'maco-a1',
-		'rank_order' => 3,
+		'rank_order' => 4,
 		'rank_class' => 4),
+	array(
+		'rank_name' => 'Commodore',
+		'rank_short_name' => 'COM',
+		'rank_image' => 'g-a1',
+		'rank_order' => 4,
+		'rank_class' => 5),
 	array(
 		'rank_name' => 'Captain',
 		'rank_short_name' => 'CAPT',
 		'rank_image' => 'v-o7',
 		'rank_order' => 1,
-		'rank_class' => 5),
+		'rank_class' => 6),
 		
 	array(
 		'rank_name' => 'Captain',
@@ -233,14 +269,20 @@ $ranks = array(
 		'rank_name' => 'Colonel',
 		'rank_short_name' => 'COL',
 		'rank_image' => 'maco-o6',
-		'rank_order' => 4,
+		'rank_order' => 5,
 		'rank_class' => 4),
+	array(
+		'rank_name' => 'Captain',
+		'rank_short_name' => 'CAPT',
+		'rank_image' => 'g-o6',
+		'rank_order' => 5,
+		'rank_class' => 5),
 	array(
 		'rank_name' => 'Commander',
 		'rank_short_name' => 'CMDR',
 		'rank_image' => 'v-o6',
 		'rank_order' => 2,
-		'rank_class' => 5),
+		'rank_class' => 6),
 	
 	array(
 		'rank_name' => 'Commander',
@@ -264,14 +306,20 @@ $ranks = array(
 		'rank_name' => 'Lieutenant Colonel',
 		'rank_short_name' => 'LTCOL',
 		'rank_image' => 'maco-o5',
-		'rank_order' => 5,
+		'rank_order' => 6,
 		'rank_class' => 4),
+	array(
+		'rank_name' => 'Commander',
+		'rank_short_name' => 'CMDR',
+		'rank_image' => 'g-o5',
+		'rank_order' => 6,
+		'rank_class' => 5),
 	array(
 		'rank_name' => 'Sub-Commander',
 		'rank_short_name' => 'SCMDR',
 		'rank_image' => 'v-o5',
 		'rank_order' => 3,
-		'rank_class' => 5),
+		'rank_class' => 6),
 		
 	array(
 		'rank_name' => 'Lieutenant Commander',
@@ -295,14 +343,20 @@ $ranks = array(
 		'rank_name' => 'Major',
 		'rank_short_name' => 'MAJ',
 		'rank_image' => 'maco-o4',
-		'rank_order' => 6,
+		'rank_order' => 7,
 		'rank_class' => 4),
+	array(
+		'rank_name' => 'Lieutenant Commander',
+		'rank_short_name' => 'LTCMDR',
+		'rank_image' => 'g-o4',
+		'rank_order' => 7,
+		'rank_class' => 5),
 	array(
 		'rank_name' => 'Major',
 		'rank_short_name' => 'MAJ',
 		'rank_image' => 'v-o4',
 		'rank_order' => 4,
-		'rank_class' => 5),
+		'rank_class' => 6),
 		
 	array(
 		'rank_name' => 'Lieutenant',
@@ -326,14 +380,20 @@ $ranks = array(
 		'rank_name' => 'Captain',
 		'rank_short_name' => 'CAPT',
 		'rank_image' => 'maco-o3',
-		'rank_order' => 7,
+		'rank_order' => 8,
 		'rank_class' => 4),
+	array(
+		'rank_name' => 'Lieutenant',
+		'rank_short_name' => 'LT',
+		'rank_image' => 'g-o3',
+		'rank_order' => 8,
+		'rank_class' => 5),
 	array(
 		'rank_name' => 'Lieutenant',
 		'rank_short_name' => 'LT',
 		'rank_image' => 'v-o3',
 		'rank_order' => 5,
-		'rank_class' => 5),
+		'rank_class' => 6),
 		
 	array(
 		'rank_name' => 'Lieutenant JG',
@@ -357,14 +417,20 @@ $ranks = array(
 		'rank_name' => '1st Lieutenant',
 		'rank_short_name' => '1LT',
 		'rank_image' => 'maco-o2',
-		'rank_order' => 8,
+		'rank_order' => 9,
 		'rank_class' => 4),
+	array(
+		'rank_name' => 'Lieutenant JG',
+		'rank_short_name' => 'LT(JG)',
+		'rank_image' => 'g-o2',
+		'rank_order' => 9,
+		'rank_class' => 5),
 	array(
 		'rank_name' => 'Sub-Lieutenant',
 		'rank_short_name' => 'SLT',
 		'rank_image' => 'v-o2',
 		'rank_order' => 6,
-		'rank_class' => 5),
+		'rank_class' => 6),
 		
 	array(
 		'rank_name' => 'Ensign',
@@ -388,57 +454,38 @@ $ranks = array(
 		'rank_name' => '2nd Lieutenant',
 		'rank_short_name' => '2LT',
 		'rank_image' => 'maco-o1',
-		'rank_order' => 9,
+		'rank_order' => 10,
 		'rank_class' => 4),
+	array(
+		'rank_name' => 'Ensign',
+		'rank_short_name' => 'ENS',
+		'rank_image' => 'g-o1',
+		'rank_order' => 10,
+		'rank_class' => 5),
 	array(
 		'rank_name' => 'Uhlan',
 		'rank_short_name' => 'UHL',
 		'rank_image' => 'v-o1',
 		'rank_order' => 7,
-		'rank_class' => 5),
-		
-	array(
-		'rank_name' => 'Chief Warrant Officer',
-		'rank_short_name' => 'CWO',
-		'rank_image' => 'y-w2',
-		'rank_order' => 11,
-		'rank_class' => 1),
-	array(
-		'rank_name' => 'Chief Warrant Officer',
-		'rank_short_name' => 'CWO',
-		'rank_image' => 'r-w2',
-		'rank_order' => 11,
-		'rank_class' => 2),
-	array(
-		'rank_name' => 'Chief Warrant Officer',
-		'rank_short_name' => 'CWO',
-		'rank_image' => 't-w2',
-		'rank_order' => 11,
-		'rank_class' => 3),
-	array(
-		'rank_name' => 'Chief Warrant Officer',
-		'rank_short_name' => 'CWO',
-		'rank_image' => 'maco-w2',
-		'rank_order' => 10,
-		'rank_class' => 4),
+		'rank_class' => 6),
 		
 	array(
 		'rank_name' => 'Warrant Officer',
 		'rank_short_name' => 'WO',
 		'rank_image' => 'y-w1',
-		'rank_order' => 12,
+		'rank_order' => 11,
 		'rank_class' => 1),
 	array(
 		'rank_name' => 'Warrant Officer',
 		'rank_short_name' => 'WO',
 		'rank_image' => 'r-w1',
-		'rank_order' => 12,
+		'rank_order' => 11,
 		'rank_class' => 2),
 	array(
 		'rank_name' => 'Warrant Officer',
 		'rank_short_name' => 'WO',
 		'rank_image' => 't-w1',
-		'rank_order' => 12,
+		'rank_order' => 11,
 		'rank_class' => 3),
 	array(
 		'rank_name' => 'Warrant Officer',
@@ -446,24 +493,30 @@ $ranks = array(
 		'rank_image' => 'maco-w1',
 		'rank_order' => 11,
 		'rank_class' => 4),
+	array(
+		'rank_name' => 'Warrant Officer',
+		'rank_short_name' => 'WO',
+		'rank_image' => 'g-w1',
+		'rank_order' => 11,
+		'rank_class' => 5),
 		
 	array(
 		'rank_name' => 'Master Chief Petty Officer',
 		'rank_short_name' => 'MCPO',
 		'rank_image' => 'y-e9',
-		'rank_order' => 13,
+		'rank_order' => 12,
 		'rank_class' => 1),
 	array(
 		'rank_name' => 'Master Chief Petty Officer',
 		'rank_short_name' => 'MCPO',
 		'rank_image' => 'r-e9',
-		'rank_order' => 13,
+		'rank_order' => 12,
 		'rank_class' => 2),
 	array(
 		'rank_name' => 'Master Chief Petty Officer',
 		'rank_short_name' => 'MCPO',
 		'rank_image' => 't-e9',
-		'rank_order' => 13,
+		'rank_order' => 12,
 		'rank_class' => 3),
 	array(
 		'rank_name' => 'Sergeant Major',
@@ -471,24 +524,30 @@ $ranks = array(
 		'rank_image' => 'maco-e9',
 		'rank_order' => 12,
 		'rank_class' => 4),
+	array(
+		'rank_name' => 'Master Chief Petty Officer',
+		'rank_short_name' => 'MCPO',
+		'rank_image' => 'g-e9',
+		'rank_order' => 12,
+		'rank_class' => 5),
 		
 	array(
 		'rank_name' => 'Senior Chief Petty Officer',
 		'rank_short_name' => 'SCPO',
 		'rank_image' => 'y-e8',
-		'rank_order' => 14,
+		'rank_order' => 13,
 		'rank_class' => 1),
 	array(
 		'rank_name' => 'Senior Chief Petty Officer',
 		'rank_short_name' => 'SCPO',
 		'rank_image' => 'r-e8',
-		'rank_order' => 14,
+		'rank_order' => 13,
 		'rank_class' => 2),
 	array(
 		'rank_name' => 'Senior Chief Petty Officer',
 		'rank_short_name' => 'SCPO',
 		'rank_image' => 't-e8',
-		'rank_order' => 14,
+		'rank_order' => 13,
 		'rank_class' => 3),
 	array(
 		'rank_name' => 'Master Sergeant',
@@ -496,24 +555,30 @@ $ranks = array(
 		'rank_image' => 'maco-e8',
 		'rank_order' => 13,
 		'rank_class' => 4),
+	array(
+		'rank_name' => 'Senior Chief Petty Officer',
+		'rank_short_name' => 'SCPO',
+		'rank_image' => 'g-e8',
+		'rank_order' => 13,
+		'rank_class' => 5),
 		
 	array(
 		'rank_name' => 'Chief Petty Officer',
 		'rank_short_name' => 'CPO',
 		'rank_image' => 'y-e7',
-		'rank_order' => 15,
+		'rank_order' => 14,
 		'rank_class' => 1),
 	array(
 		'rank_name' => 'Chief Petty Officer',
 		'rank_short_name' => 'CPO',
 		'rank_image' => 'r-e7',
-		'rank_order' => 15,
+		'rank_order' => 14,
 		'rank_class' => 2),
 	array(
 		'rank_name' => 'Chief Petty Officer',
 		'rank_short_name' => 'CPO',
 		'rank_image' => 't-e7',
-		'rank_order' => 15,
+		'rank_order' => 14,
 		'rank_class' => 3),
 	array(
 		'rank_name' => 'Gunnery Sergeant',
@@ -521,24 +586,30 @@ $ranks = array(
 		'rank_image' => 'maco-e7',
 		'rank_order' => 14,
 		'rank_class' => 4),
+	array(
+		'rank_name' => 'Chief Petty Officer',
+		'rank_short_name' => 'CPO',
+		'rank_image' => 'g-e7',
+		'rank_order' => 14,
+		'rank_class' => 5),
 		
 	array(
 		'rank_name' => 'Petty Officer, 1st Class',
 		'rank_short_name' => 'PO1',
 		'rank_image' => 'y-e6',
-		'rank_order' => 16,
+		'rank_order' => 15,
 		'rank_class' => 1),
 	array(
 		'rank_name' => 'Petty Officer, 1st Class',
 		'rank_short_name' => 'PO1',
 		'rank_image' => 'r-e6',
-		'rank_order' => 16,
+		'rank_order' => 15,
 		'rank_class' => 2),
 	array(
 		'rank_name' => 'Petty Officer, 1st Class',
 		'rank_short_name' => 'PO1',
 		'rank_image' => 't-e6',
-		'rank_order' => 16,
+		'rank_order' => 15,
 		'rank_class' => 3),
 	array(
 		'rank_name' => 'Staff Sergeant',
@@ -546,24 +617,30 @@ $ranks = array(
 		'rank_image' => 'maco-e6',
 		'rank_order' => 15,
 		'rank_class' => 4),
+	array(
+		'rank_name' => 'Petty Officer, 1st Class',
+		'rank_short_name' => 'PO1',
+		'rank_image' => 'g-e6',
+		'rank_order' => 15,
+		'rank_class' => 5),
 		
 	array(
 		'rank_name' => 'Petty Officer, 2nd Class',
 		'rank_short_name' => 'PO2',
 		'rank_image' => 'y-e5',
-		'rank_order' => 17,
+		'rank_order' => 16,
 		'rank_class' => 1),
 	array(
 		'rank_name' => 'Petty Officer, 2nd Class',
 		'rank_short_name' => 'PO2',
 		'rank_image' => 'r-e5',
-		'rank_order' => 17,
+		'rank_order' => 16,
 		'rank_class' => 2),
 	array(
 		'rank_name' => 'Petty Officer, 2nd Class',
 		'rank_short_name' => 'PO2',
 		'rank_image' => 't-e5',
-		'rank_order' => 17,
+		'rank_order' => 16,
 		'rank_class' => 3),
 	array(
 		'rank_name' => 'Sergeant',
@@ -571,24 +648,30 @@ $ranks = array(
 		'rank_image' => 'maco-e5',
 		'rank_order' => 16,
 		'rank_class' => 4),
+	array(
+		'rank_name' => 'Petty Officer, 2nd Class',
+		'rank_short_name' => 'PO2',
+		'rank_image' => 'g-e5',
+		'rank_order' => 16,
+		'rank_class' => 5),
 		
 	array(
 		'rank_name' => 'Petty Officer, 3rd Class',
 		'rank_short_name' => 'PO3',
 		'rank_image' => 'y-e4',
-		'rank_order' => 18,
+		'rank_order' => 17,
 		'rank_class' => 1),
 	array(
 		'rank_name' => 'Petty Officer, 3rd Class',
 		'rank_short_name' => 'PO3',
 		'rank_image' => 'r-e4',
-		'rank_order' => 18,
+		'rank_order' => 17,
 		'rank_class' => 2),
 	array(
 		'rank_name' => 'Petty Officer, 3rd Class',
 		'rank_short_name' => 'PO3',
 		'rank_image' => 't-e4',
-		'rank_order' => 18,
+		'rank_order' => 17,
 		'rank_class' => 3),
 	array(
 		'rank_name' => 'Corporal',
@@ -596,24 +679,30 @@ $ranks = array(
 		'rank_image' => 'maco-e4',
 		'rank_order' => 17,
 		'rank_class' => 4),
+	array(
+		'rank_name' => 'Petty Officer, 3rd Class',
+		'rank_short_name' => 'PO3',
+		'rank_image' => 'g-e4',
+		'rank_order' => 17,
+		'rank_class' => 5),
 		
 	array(
 		'rank_name' => 'Crewman',
 		'rank_short_name' => 'CN',
 		'rank_image' => 'y-e3',
-		'rank_order' => 19,
+		'rank_order' => 18,
 		'rank_class' => 1),
 	array(
 		'rank_name' => 'Crewman',
 		'rank_short_name' => 'CN',
 		'rank_image' => 'r-e3',
-		'rank_order' => 19,
+		'rank_order' => 18,
 		'rank_class' => 2),
 	array(
 		'rank_name' => 'Crewman',
 		'rank_short_name' => 'CN',
 		'rank_image' => 't-e3',
-		'rank_order' => 19,
+		'rank_order' => 18,
 		'rank_class' => 3),
 	array(
 		'rank_name' => 'Lance Corporal',
@@ -621,24 +710,30 @@ $ranks = array(
 		'rank_image' => 'maco-e3',
 		'rank_order' => 18,
 		'rank_class' => 4),
+	array(
+		'rank_name' => 'Crewman',
+		'rank_short_name' => 'CN',
+		'rank_image' => 'g-e3',
+		'rank_order' => 18,
+		'rank_class' => 5),
 		
 	array(
 		'rank_name' => 'Crewman Apprentice',
 		'rank_short_name' => 'CA',
 		'rank_image' => 'y-e2',
-		'rank_order' => 20,
+		'rank_order' => 19,
 		'rank_class' => 1),
 	array(
 		'rank_name' => 'Crewman Apprentice',
 		'rank_short_name' => 'CA',
 		'rank_image' => 'r-e2',
-		'rank_order' => 20,
+		'rank_order' => 19,
 		'rank_class' => 2),
 	array(
 		'rank_name' => 'Crewman Apprentice',
 		'rank_short_name' => 'CA',
 		'rank_image' => 't-e2',
-		'rank_order' => 20,
+		'rank_order' => 19,
 		'rank_class' => 3),
 	array(
 		'rank_name' => 'Private 1st Class',
@@ -646,24 +741,30 @@ $ranks = array(
 		'rank_image' => 'maco-e2',
 		'rank_order' => 19,
 		'rank_class' => 4),
+	array(
+		'rank_name' => 'Crewman Apprentice',
+		'rank_short_name' => 'CA',
+		'rank_image' => 'g-e2',
+		'rank_order' => 19,
+		'rank_class' => 5),
 		
 	array(
 		'rank_name' => 'Crewman Recruit',
 		'rank_short_name' => 'CR',
 		'rank_image' => 'y-e1',
-		'rank_order' => 21,
+		'rank_order' => 20,
 		'rank_class' => 1),
 	array(
 		'rank_name' => 'Crewman Recruit',
 		'rank_short_name' => 'CR',
 		'rank_image' => 'r-e1',
-		'rank_order' => 21,
+		'rank_order' => 20,
 		'rank_class' => 2),
 	array(
 		'rank_name' => 'Crewman Recruit',
 		'rank_short_name' => 'CR',
 		'rank_image' => 't-e1',
-		'rank_order' => 21,
+		'rank_order' => 20,
 		'rank_class' => 3),
 	array(
 		'rank_name' => 'Private',
@@ -671,26 +772,32 @@ $ranks = array(
 		'rank_image' => 'maco-e1',
 		'rank_order' => 20,
 		'rank_class' => 4),
+	array(
+		'rank_name' => 'Crewman Recruit',
+		'rank_short_name' => 'CR',
+		'rank_image' => 'g-e1',
+		'rank_order' => 20,
+		'rank_class' => 5),
 		
 	array(
 		'rank_name' => 'Cadet Senior Grade',
 		'rank_short_name' => 'CDT(SR)',
 		'rank_image' => 'c4',
-		'rank_order' => 22,
+		'rank_order' => 21,
 		'rank_display' => 'n',
 		'rank_class' => 1),
 	array(
 		'rank_name' => 'Cadet Senior Grade',
 		'rank_short_name' => 'CDT(SR)',
 		'rank_image' => 'c4',
-		'rank_order' => 22,
+		'rank_order' => 21,
 		'rank_display' => 'n',
 		'rank_class' => 2),
 	array(
 		'rank_name' => 'Cadet Senior Grade',
 		'rank_short_name' => 'CDT(SR)',
 		'rank_image' => 'c4',
-		'rank_order' => 22,
+		'rank_order' => 21,
 		'rank_display' => 'n',
 		'rank_class' => 3),
 	array(
@@ -700,26 +807,33 @@ $ranks = array(
 		'rank_order' => 21,
 		'rank_display' => 'n',
 		'rank_class' => 4),
+	array(
+		'rank_name' => 'Cadet Senior Grade',
+		'rank_short_name' => 'CDT(SR)',
+		'rank_image' => 'c4',
+		'rank_order' => 21,
+		'rank_display' => 'n',
+		'rank_class' => 5),
 		
 	array(
 		'rank_name' => 'Cadet Junior Grade',
 		'rank_short_name' => 'CDT(JR)',
 		'rank_image' => 'c3',
-		'rank_order' => 23,
+		'rank_order' => 22,
 		'rank_display' => 'n',
 		'rank_class' => 1),
 	array(
 		'rank_name' => 'Cadet Junior Grade',
 		'rank_short_name' => 'CDT(JR)',
 		'rank_image' => 'c3',
-		'rank_order' => 23,
+		'rank_order' => 22,
 		'rank_display' => 'n',
 		'rank_class' => 2),
 	array(
 		'rank_name' => 'Cadet Junior Grade',
 		'rank_short_name' => 'CDT(JR)',
 		'rank_image' => 'c3',
-		'rank_order' => 23,
+		'rank_order' => 22,
 		'rank_display' => 'n',
 		'rank_class' => 3),
 	array(
@@ -729,26 +843,33 @@ $ranks = array(
 		'rank_order' => 22,
 		'rank_display' => 'n',
 		'rank_class' => 4),
+	array(
+		'rank_name' => 'Cadet Junior Grade',
+		'rank_short_name' => 'CDT(JR)',
+		'rank_image' => 'c3',
+		'rank_order' => 22,
+		'rank_display' => 'n',
+		'rank_class' => 5),
 		
 	array(
 		'rank_name' => 'Cadet Sophomore Grade',
 		'rank_short_name' => 'CDT(SO)',
 		'rank_image' => 'c2',
-		'rank_order' => 24,
+		'rank_order' => 23,
 		'rank_display' => 'n',
 		'rank_class' => 1),
 	array(
 		'rank_name' => 'Cadet Sophomore Grade',
 		'rank_short_name' => 'CDT(SO)',
 		'rank_image' => 'c2',
-		'rank_order' => 24,
+		'rank_order' => 23,
 		'rank_display' => 'n',
 		'rank_class' => 2),
 	array(
 		'rank_name' => 'Cadet Sophomore Grade',
 		'rank_short_name' => 'CDT(SO)',
 		'rank_image' => 'c2',
-		'rank_order' => 24,
+		'rank_order' => 23,
 		'rank_display' => 'n',
 		'rank_class' => 3),
 	array(
@@ -758,26 +879,33 @@ $ranks = array(
 		'rank_order' => 23,
 		'rank_display' => 'n',
 		'rank_class' => 4),
+	array(
+		'rank_name' => 'Cadet Sophomore Grade',
+		'rank_short_name' => 'CDT(SO)',
+		'rank_image' => 'c2',
+		'rank_order' => 23,
+		'rank_display' => 'n',
+		'rank_class' => 5),
 		
 	array(
 		'rank_name' => 'Cadet Freshman Grade',
 		'rank_short_name' => 'CDT(FR)',
 		'rank_image' => 'c1',
-		'rank_order' => 25,
+		'rank_order' => 24,
 		'rank_display' => 'n',
 		'rank_class' => 1),
 	array(
 		'rank_name' => 'Cadet Freshman Grade',
 		'rank_short_name' => 'CDT(FR)',
 		'rank_image' => 'c1',
-		'rank_order' => 25,
+		'rank_order' => 24,
 		'rank_display' => 'n',
 		'rank_class' => 2),
 	array(
 		'rank_name' => 'Cadet Freshman Grade',
 		'rank_short_name' => 'CDT(FR)',
 		'rank_image' => 'c1',
-		'rank_order' => 25,
+		'rank_order' => 24,
 		'rank_display' => 'n',
 		'rank_class' => 3),
 	array(
@@ -787,24 +915,31 @@ $ranks = array(
 		'rank_order' => 24,
 		'rank_display' => 'n',
 		'rank_class' => 4),
+	array(
+		'rank_name' => 'Cadet Freshman Grade',
+		'rank_short_name' => 'CDT(FR)',
+		'rank_image' => 'c1',
+		'rank_order' => 24,
+		'rank_display' => 'n',
+		'rank_class' => 5),
 		
 	array(
 		'rank_name' => '',
 		'rank_short_name' => '',
 		'rank_image' => 'y-blank',
-		'rank_order' => 26,
+		'rank_order' => 25,
 		'rank_class' => 1),
 	array(
 		'rank_name' => '',
 		'rank_short_name' => '',
 		'rank_image' => 'r-blank',
-		'rank_order' => 26,
+		'rank_order' => 25,
 		'rank_class' => 2),
 	array(
 		'rank_name' => '',
 		'rank_short_name' => '',
 		'rank_image' => 't-blank',
-		'rank_order' => 26,
+		'rank_order' => 25,
 		'rank_class' => 3),
 	array(
 		'rank_name' => '',
@@ -815,9 +950,15 @@ $ranks = array(
 	array(
 		'rank_name' => '',
 		'rank_short_name' => '',
+		'rank_image' => 'g-blank',
+		'rank_order' => 25,
+		'rank_class' => 5),
+	array(
+		'rank_name' => '',
+		'rank_short_name' => '',
 		'rank_image' => 'v-blank',
 		'rank_order' => 8,
-		'rank_class' => 5)
+		'rank_class' => 6)
 );
 
 $positions = array(
