@@ -114,7 +114,10 @@ abstract class Controller_Nova_Base extends Controller_Template {
 			'daylight_savings',
 			'date_format',
 			'sim_name',
-			'system_email'
+			'system_email',
+			'meta_description',
+			'meta_keywords',
+			'meta_author',
 		);
 		
 		// make the data variable an object
