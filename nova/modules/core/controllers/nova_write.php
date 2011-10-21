@@ -1044,7 +1044,7 @@ abstract class Nova_write extends Nova_controller_admin {
 				'value' => 'delete',
 				'id' => 'submitDelete',
 				'content' => ucwords(lang('actions_delete'))),
-			'locked' => ($row !== false and $row->post_lock_user !== null and $row->post_lock_date !== null),
+			'locked' => ($row !== false and (int) $row->post_lock_user !== 0 and (int) $row->post_lock_date !== 0),
 		);
 		
 		if ($missions->num_rows() > 0)
@@ -1104,7 +1104,7 @@ abstract class Nova_write extends Nova_controller_admin {
 		$data['label'] = array(
 			'addauthor' => ucwords(lang('actions_add') .' '. lang('labels_author')),
 			'authors' => ucfirst(lang('labels_authors')),
-			'back_wcp' => LARROW.' '.ucfirst(lang('actions_back')).' '.lang('labels_to').' '.ucwords(lang('labels_writing').' '.lang('labels_control').' '.lang('labels_panel')),
+			'back_wcp' => LARROW.' '.ucfirst(lang('actions_back')).' '.lang('labels_to').' '.ucwords(lang('labels_writing').' '.lang('labels_controlpanel')),
 			'content' => ucfirst(lang('labels_content')),
 			'location' => ucfirst(lang('labels_location')),
 			'mission' => ucfirst(lang('global_mission')),
