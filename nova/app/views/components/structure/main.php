@@ -4,9 +4,9 @@
 		<meta charset="utf-8">
 		<title><?php echo $title;?></title>
 		
-		<meta name="description" content="<?php echo Kohana::$config->load('nova.meta_desc');?>">
-		<meta name="keywords" content="<?php echo Kohana::$config->load('nova.meta_keywords');?>">
-		<meta name="author" content="<?php echo Kohana::$config->load('nova.meta_author');?>">
+		<meta name="description" content="<?php echo $meta_desc;?>">
+		<meta name="keywords" content="<?php echo $meta_keywords;?>">
+		<meta name="author" content="<?php echo $meta_author;?>">
 		
 		<?php if (isset($_redirect)): echo $_redirect; endif;?>
 		
@@ -22,15 +22,6 @@
 		<![endif]-->
 		
 		<?php echo Html::script(MODFOLDER.'/modules/assets/js/jquery.js');?>
-		<?php echo Html::script(MODFOLDER.'/modules/assets/js/ui/jquery.ui.core.min.js');?>
-		<?php echo Html::script(MODFOLDER.'/modules/assets/js/ui/jquery.ui.widget.min.js');?>
-		<?php echo Html::script(MODFOLDER.'/modules/assets/js/ui/jquery.ui.tabs.min.js');?>
-		
-		<?php echo Html::script(MODFOLDER.'/modules/assets/js/contenteditable/shortcut.js');?>
-		<?php echo Html::script(MODFOLDER.'/modules/assets/js/contenteditable/farbtastic/farbtastic.js');?>
-		<?php echo Html::script(MODFOLDER.'/modules/assets/js/contenteditable/freshereditor.js');?>
-		<?php echo Html::style(MODFOLDER.'/modules/assets/js/contenteditable/freshereditor.css');?>
-		<?php echo Html::style(MODFOLDER.'/modules/assets/js/contenteditable/farbtastic/farbtastic.css');?>
 		
 		<?php echo $javascript;?>
 		

@@ -38,8 +38,11 @@ class Controller_Nova_Main extends Controller_Nova_Base {
 		
 		// set the values to be passed to the template
 		$vars = array(
-			'skin' => $this->skin,
-			'sec' => 'main'
+			'skin'			=> $this->skin,
+			'sec'			=> 'main',
+			'meta_desc'		=> $this->options->meta_description,
+			'meta_keywords'	=> $this->options->meta_keywords,
+			'meta_author'	=> $this->options->meta_author,
 		);
 		
 		// set the structure file
