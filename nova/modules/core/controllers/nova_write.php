@@ -72,9 +72,16 @@ abstract class Nova_write extends Nova_controller_admin {
 				'src' => Location::img('lock-unlock.png', $this->skin, 'admin'),
 				'class' => 'image',
 				'alt' => ''),
+			'comments' => array(
+				'src' => Location::img('balloons-box.png', $this->skin, 'admin'),
+				'class' => 'image',
+				'alt' => ''),
 		);
 		
 		$datestring = $this->options['date_format'];
+		
+		// set the 30 day threshold
+		$day_threshold = now() - (86400 * 30);
 		
 		/*
 		|---------------------------------------------------------------
@@ -164,6 +171,15 @@ abstract class Nova_write extends Nova_controller_admin {
 				$data['posts'][$i]['mission'] = $this->mis->get_mission($p->post_mission, 'mission_title');
 				$data['posts'][$i]['mission_id'] = $p->post_mission;
 				
+				// get all the comments for the post
+				$comments = $this->posts->get_post_comments($p->post_id, 'activated', 'pcomment_date', 'desc');
+				
+				// we only need the latest one to figure recent comments
+				$row = ($comments->num_rows() > 0) ? $comments->row() : false;
+				
+				// figure out whether there have been recent comments
+				$data['posts'][$i]['has_recent_comments'] = ( ! $row or $row->pcomment_date < $day_threshold) ? false : true;
+				
 				++$i;
 			}
 		}
@@ -180,6 +196,15 @@ abstract class Nova_write extends Nova_controller_admin {
 				$data['logs'][$i]['date'] = mdate($datestring, gmt_to_local($l->log_date, $this->timezone, $this->dst));
 				$data['logs'][$i]['author'] = $this->char->get_character_name($l->log_author_character, true);
 				
+				// get all the comments for the log
+				$comments = $this->logs->get_log_comments($l->log_id, 'activated', 'lcomment_date', 'desc');
+				
+				// we only need the latest one to figure recent comments
+				$row = ($comments->num_rows() > 0) ? $comments->row() : false;
+				
+				// figure out whether there have been recent comments
+				$data['logs'][$i]['has_recent_comments'] = ( ! $row or $row->lcomment_date < $day_threshold) ? false : true;
+				
 				++$i;
 			}
 		}
@@ -195,6 +220,15 @@ abstract class Nova_write extends Nova_controller_admin {
 				$data['news'][$i]['news_id'] = $n->news_id;
 				$data['news'][$i]['category'] = $n->newscat_name;
 				$data['news'][$i]['date'] = mdate($datestring, gmt_to_local($n->news_date, $this->timezone, $this->dst));
+				
+				// get all the comments for the news item
+				$comments = $this->news->get_news_comments($n->news_id, 'activated', 'ncomment_date', 'desc');
+				
+				// we only need the latest one to figure recent comments
+				$row = ($comments->num_rows() > 0) ? $comments->row() : false;
+				
+				// figure out whether there have been recent comments
+				$data['news'][$i]['has_recent_comments'] = ( ! $row or $row->ncomment_date < $day_threshold) ? false : true;
 				
 				++$i;
 			}
@@ -225,6 +259,15 @@ abstract class Nova_write extends Nova_controller_admin {
 				$data['posts_all'][$i]['mission'] = $this->mis->get_mission($p->post_mission, 'mission_title');
 				$data['posts_all'][$i]['mission_id'] = $p->post_mission;
 				
+				// get all the comments for the post
+				$comments = $this->posts->get_post_comments($p->post_id, 'activated', 'pcomment_date', 'desc');
+				
+				// we only need the latest one to figure recent comments
+				$row = ($comments->num_rows() > 0) ? $comments->row() : false;
+				
+				// figure out whether there have been recent comments
+				$data['posts_all'][$i]['has_recent_comments'] = ( ! $row or $row->pcomment_date < $day_threshold) ? false : true;
+				
 				++$i;
 			}
 		}
@@ -240,6 +283,15 @@ abstract class Nova_write extends Nova_controller_admin {
 				$data['logs_all'][$i]['log_id'] = $l->log_id;
 				$data['logs_all'][$i]['date'] = mdate($datestring, gmt_to_local($l->log_date, $this->timezone, $this->dst));
 				$data['logs_all'][$i]['author'] = $this->char->get_character_name($l->log_author_character, true);
+				
+				// get all the comments for the log
+				$comments = $this->logs->get_log_comments($l->log_id, 'activated', 'lcomment_date', 'desc');
+				
+				// we only need the latest one to figure recent comments
+				$row = ($comments->num_rows() > 0) ? $comments->row() : false;
+				
+				// figure out whether there have been recent comments
+				$data['logs_all'][$i]['has_recent_comments'] = ( ! $row or $row->lcomment_date < $day_threshold) ? false : true;
 				
 				++$i;
 			}
@@ -257,6 +309,15 @@ abstract class Nova_write extends Nova_controller_admin {
 				$data['news_all'][$i]['category'] = $n->newscat_name;
 				$data['news_all'][$i]['author'] = $this->char->get_character_name($n->news_author_character, true);
 				$data['news_all'][$i]['date'] = mdate($datestring, gmt_to_local($n->news_date, $this->timezone, $this->dst));
+				
+				// get all the comments for the news item
+				$comments = $this->news->get_news_comments($n->news_id, 'activated', 'ncomment_date', 'desc');
+				
+				// we only need the latest one to figure recent comments
+				$row = ($comments->num_rows() > 0) ? $comments->row() : false;
+				
+				// figure out whether there have been recent comments
+				$data['news_all'][$i]['has_recent_comments'] = ( ! $row or $row->ncomment_date < $day_threshold) ? false : true;
 				
 				++$i;
 			}
@@ -280,6 +341,7 @@ abstract class Nova_write extends Nova_controller_admin {
 			'no_posts' => sprintf(lang('error_not_found'), lang('global_missionposts')),
 			'personallogs' => ucwords(lang('global_personallogs')),
 			'recent' => ucwords(lang('labels_my') .' '. lang('status_recent') .' '. lang('labels_entries')),
+			'recent_comments' => sprintf(lang('recent_comments'), lang('labels_comments')),
 			'saved' => ucwords(lang('labels_my') .' '. lang('status_saved') .' '. lang('labels_entries')),
 			'title' => ucfirst(lang('labels_title')),
 			'view_all_posts' => ucwords(lang('actions_viewall') .' '. lang('global_posts') .' '. RARROW),

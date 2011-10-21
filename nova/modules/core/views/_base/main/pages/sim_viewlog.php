@@ -56,8 +56,8 @@
 	</p>
 <?php endif; ?>
 
-<?php if (isset($comments) && is_array($comments)): ?>
-	<h2 class="gray"><?php echo $label['comments'] . ' (' . $comment_count . ')';?></h2>
+<?php if (isset($comments) and is_array($comments)): ?>
+	<a name="comments"></a><h2 class="gray"><?php echo $label['comments'] . ' (' . $comment_count . ')';?></h2>
 	
 	<div id="comments">
 	<?php foreach ($comments as $value): ?>

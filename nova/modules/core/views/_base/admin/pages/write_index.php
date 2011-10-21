@@ -135,7 +135,7 @@
 					<table class="table100 zebra">
 						<thead>
 							<tr>
-								<th><?php echo $label['title'];?></th>
+								<th colspan="2"><?php echo $label['title'];?></th>
 								<th><?php echo $label['date'];?></th>
 							</tr>
 						</thead>
@@ -150,6 +150,11 @@
 										<strong><?php echo $label['mission'];?></strong>
 										<?php echo anchor('sim/missions/id/'. $p['mission_id'], $p['mission']);?>
 									</span>
+								</td>
+								<td class="col_30 align_center">
+									<?php if ($p['has_recent_comments']): ?>
+										<a href="<?php echo site_url('sim/viewpost/'.$p['post_id'].'#comments');?>" rel="tooltip" class="image" title="<?php echo $label['recent_comments'];?>"><?php echo img($images['comments']);?></a>
+									<?php endif;?>
 								</td>
 								<td class="col_30pct align_center fontSmall"><?php echo $p['date'];?></td>
 						<?php endforeach;?>
@@ -168,7 +173,7 @@
 					<table class="table100 zebra">
 						<thead>
 							<tr>
-								<th><?php echo $label['title'];?></th>
+								<th colspan="2"><?php echo $label['title'];?></th>
 								<th><?php echo $label['date'];?></th>
 							</tr>
 						</thead>
@@ -181,6 +186,11 @@
 									<span class="fontSmall gray">
 										<?php echo $label['by'] .' '. $l['author'];?>
 									</span>
+								</td>
+								<td class="col_30 align_center">
+									<?php if ($l['has_recent_comments']): ?>
+										<a href="<?php echo site_url('sim/viewlog/'.$l['log_id'].'#comments');?>" rel="tooltip" class="image" title="<?php echo $label['recent_comments'];?>"><?php echo img($images['comments']);?></a>
+									<?php endif;?>
 								</td>
 								<td class="col_30pct align_center fontSmall"><?php echo $l['date'];?></td>
 						<?php endforeach;?>
@@ -199,7 +209,7 @@
 					<table class="table100 zebra">
 						<thead>
 							<tr>
-								<th><?php echo $label['title'];?></th>
+								<th colspan="2"><?php echo $label['title'];?></th>
 								<th><?php echo $label['date'];?></th>
 							</tr>
 						</thead>
@@ -212,6 +222,11 @@
 									<span class="fontSmall gray">
 										<strong><?php echo $label['category'] .'</strong> '. $n['category'];?>
 									</span>
+								</td>
+								<td class="col_30 align_center">
+									<?php if ($n['has_recent_comments']): ?>
+										<a href="<?php echo site_url('main/viewnews/'.$n['news_id'].'#comments');?>" rel="tooltip" class="image" title="<?php echo $label['recent_comments'];?>"><?php echo img($images['comments']);?></a>
+									<?php endif;?>
 								</td>
 								<td class="col_30pct align_center fontSmall"><?php echo $n['date'];?></td>
 						<?php endforeach;?>
@@ -237,7 +252,7 @@
 					<table class="table100 zebra">
 						<thead>
 							<tr>
-								<th><?php echo $label['title'];?></th>
+								<th colspan="2"><?php echo $label['title'];?></th>
 								<th><?php echo $label['date'];?></th>
 							</tr>
 						</thead>
@@ -252,6 +267,11 @@
 										<strong><?php echo $label['mission'];?></strong>
 										<?php echo anchor('sim/missions/id/'. $p['mission_id'], $p['mission']);?>
 									</span>
+								</td>
+								<td class="col_30 align_center">
+									<?php if ($p['has_recent_comments']): ?>
+										<a href="<?php echo site_url('sim/viewpost/'.$p['post_id'].'#comments');?>" rel="tooltip" class="image" title="<?php echo $label['recent_comments'];?>"><?php echo img($images['comments']);?></a>
+									<?php endif;?>
 								</td>
 								<td class="col_30pct align_center fontSmall"><?php echo $p['date'];?></td>
 						<?php endforeach;?>
@@ -268,7 +288,7 @@
 					<table class="table100 zebra">
 						<thead>
 							<tr>
-								<th><?php echo $label['title'];?></th>
+								<th colspan="2"><?php echo $label['title'];?></th>
 								<th><?php echo $label['date'];?></th>
 							</tr>
 						</thead>
@@ -281,6 +301,11 @@
 									<span class="fontSmall gray">
 										<?php echo $label['by'] .' '. $l['author'];?>
 									</span>
+								</td>
+								<td class="col_30 align_center">
+									<?php if ($l['has_recent_comments']): ?>
+										<a href="<?php echo site_url('sim/viewlog/'.$l['log_id'].'#comments');?>" rel="tooltip" class="image" title="<?php echo $label['recent_comments'];?>"><?php echo img($images['comments']);?></a>
+									<?php endif;?>
 								</td>
 								<td class="col_30pct align_center fontSmall"><?php echo $l['date'];?></td>
 						<?php endforeach;?>
@@ -297,7 +322,7 @@
 					<table class="table100 zebra">
 						<thead>
 							<tr>
-								<th><?php echo $label['title'];?></th>
+								<th colspan="2"><?php echo $label['title'];?></th>
 								<th><?php echo $label['date'];?></th>
 							</tr>
 						</thead>
@@ -311,6 +336,11 @@
 										<?php echo $label['by'] .' '. $n['author'];?><br />
 										<strong><?php echo $label['category'] .'</strong> '. $n['category'];?>
 									</span>
+								</td>
+								<td class="col_30 align_center">
+									<?php if ($n['has_recent_comments']): ?>
+										<a href="<?php echo site_url('main/viewnews/'.$n['news_id'].'#comments');?>" rel="tooltip" class="image" title="<?php echo $label['recent_comments'];?>"><?php echo img($images['comments']);?></a>
+									<?php endif;?>
 								</td>
 								<td class="col_30pct align_center fontSmall"><?php echo $n['date'];?></td>
 						<?php endforeach;?>

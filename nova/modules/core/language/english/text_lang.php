@@ -171,6 +171,7 @@ $lang['account_your_user'] = "This is your %s account. Take care when editing yo
 $lang['chosen_incompat'] = "To select multiple authors, hold down the Control key and click on each name";
 $lang['post_locked'] = "This %s is locked for editing. The lock will be released after 5 minutes or after the current %s saves their changes.";
 $lang['post_locked_gen'] = "Indicates a %s is locked for editing. The lock will be released after 5 minutes or after the current %s saves their changes.";
+$lang['recent_comments'] = "There have been %s made on this entry in the last 30 days.";
 
 /*
 |---------------------------------------------------------------
