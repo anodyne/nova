@@ -2246,6 +2246,26 @@ $settings = array(
 		'key' => 'posting_requirement',
 		'value' => 14,
 		'user_created' => 0),
+	array(
+		'key' => 'login_attempts',
+		'value' => 5,
+		'user_created' => 0),
+	array(
+		'key' => 'login_lockout_time',
+		'value' => 30,
+		'user_created' => 0),
+	array(
+		'key' => 'meta_description',
+		'value' => "Anodyne Productions' premier online RPG management software",
+		'user_created' => 0),
+	array(
+		'key' => 'meta_keywords',
+		'value' => "nova, rpg management, anodyne, rpg, sms",
+		'user_created' => 0),
+	array(
+		'key' => 'meta_author',
+		'value' => "Anodyne Productions",
+		'user_created' => 0),
 );
 
 $sim_types = array(
