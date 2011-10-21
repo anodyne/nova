@@ -13,11 +13,6 @@
 			placement: 'right'
 		});
 		
-		$('[rel=twipsy]').twipsy({
-			animate: false,
-			offset: 5
-		});
-		
 		$("a[rel=facebox]").click(function() {
 			var action = $(this).attr('myAction');
 			var id = $(this).attr('myID');

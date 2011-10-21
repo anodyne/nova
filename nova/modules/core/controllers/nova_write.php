@@ -102,9 +102,6 @@ abstract class Nova_write extends Nova_controller_admin {
 				$data['posts_saved'][$i]['mission_id'] = $p->post_mission;
 				$data['posts_saved'][$i]['saved'] = $p->post_saved;
 				$data['posts_saved'][$i]['locked'] = ((int) $p->post_lock_user !== 0 and (int) $p->post_lock_date !== 0);
-				$data['posts_saved'][$i]['lock_owner'] = ((int) $p->post_lock_user !== 0 and (int) $p->post_lock_date !== 0)
-					? $this->char->get_character_name($this->user->get_main_character($p->post_lock_user))
-					: null;
 				
 				++$i;
 			}
@@ -274,7 +271,6 @@ abstract class Nova_write extends Nova_controller_admin {
 			'category' => ucfirst(lang('labels_category') .':'),
 			'date' => ucfirst(lang('labels_date')),
 			'locked' => sprintf(lang('post_locked_gen'), lang('global_missionpost'), lang('global_user')),
-			'locked_owned' => ucfirst(lang('labels_locked').' '.lang('labels_by').' '),
 			'mission' => ucfirst(lang('global_mission') .':'),
 			'missionposts' => ucwords(lang('global_missionposts')),
 			'newsitems' => ucwords(lang('global_newsitems')),
