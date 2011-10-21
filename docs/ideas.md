@@ -39,3 +39,17 @@
 * A warning will be shown when duplicating the system administrator role that it contains a lot of power and caution should be used.
 * Need to be able to lock a player out of being able to get a lock on a post (maybe through moderation?)
 * When logging in, Nova will check a user's status and if their status is INACTIVE, it will automatically set the access roles to the INACTIVE role instead of whatever role is stored in the database for them.
+
+## Framework
+
+* Use Bootstrap for as many components as possible to get rid of the bulk of jQuery UI.
+
+## Settings
+
+* Set the login attempts through Site Settings.
+* Set the login lockout period through Site Settings (set in minutes, calculates to seconds in the Auth class).
+* Set the template meta data through Site Settings.
+
+## Users
+
+* Clear a user's login lockout.
