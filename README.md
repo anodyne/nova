@@ -54,6 +54,7 @@ Anodyne Production's next-generation RPG management system combines popular feat
 * updated the view character logs page to use pagination
 * updated the site manifests to store the default view for a manifest instead of site settings
 * updated the Pulsar skin with a refreshed look and feel
+* updated the writing control panel to show a notification for any entries that have been commented on in the last 30 days
 * refactored the location helper into a full-blown class with static methods
 * refactored the upgrade process to mirror what was created for nova 3
 * removed the banned.php file
