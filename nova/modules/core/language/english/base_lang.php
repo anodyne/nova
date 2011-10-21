@@ -420,6 +420,7 @@ $lang['labels_listing']			= 'listing';
 $lang['labels_listings']		= 'listings';
 $lang['labels_location'] 		= 'location';
 $lang['labels_lock'] 			= 'lock';
+$lang['labels_locked'] 			= 'locked';
 $lang['labels_login']			= 'login';
 $lang['labels_main'] 			= 'main';
 $lang['labels_maintanance']		= 'maintanance';
