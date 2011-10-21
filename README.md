@@ -8,7 +8,7 @@ Anodyne Production's next-generation RPG management system combines popular feat
 
 ## Changes in 2.0
 
-* brand new file structure that further separates the nova core from user modifications and makes updating infinitely easier
+* brand new file structure that further separates the Nova core from user modifications and makes updating infinitely easier
 * added the message.php file to handle notification of bans, a missing "nova" directory and incompatible PHP version
 * added new process to write the database config file for you
 * added the ability to upgrade SMS Database entries to Thresher wiki pages
