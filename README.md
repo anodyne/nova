@@ -6,6 +6,12 @@ Anodyne Production's next-generation RPG management system combines popular feat
 
 2.0-beta
 
+## Bug Tracker
+
+Have a bug? Please create an issue here on GitHub!
+
+https://github.com/anodyne/nova/issues
+
 ## Version History
 
 <table>
