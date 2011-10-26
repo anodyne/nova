@@ -26,7 +26,7 @@
     * Making a character an NPC (and all related actions) can now be done with the push of a button.
 * When viewing a character's posts, the entries will be paginated to help with load times and usability.
 * When viewing a character's logs, the entries will be paginated to help with load times and usability.
-* Site manifests can now store default view information so that different manifests can have different view settings. (This is now handled through Site Manifest management instead of Site Settings.) ([#157]((https://github.com/anodyne/nova/issues/157))
+* Site manifests can now store default view information so that different manifests can have different view settings. (This is now handled through Site Manifest management instead of Site Settings.) ([#157](https://github.com/anodyne/nova/issues/157))
 * Gave the Pulsar skin a refreshed look and feel.
 * The Writing Control Panel now shows a notification for any entires that have been commented on in the last 30 days (along with a link to the comments section of the entry).
 * The manifest has been reorganized (for the first time ever) with a slightly different look.
