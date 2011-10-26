@@ -31,6 +31,7 @@
 * Site manifests can now store default view information so that different manifests can have different view settings. (This is now handled through Site Manifest management instead of Site Settings.)
 * Gave the Pulsar skin a refreshed look and feel.
 * The Writing Control Panel now shows a notification for any entires that have been commented on in the last 30 days (along with a link to the comments section of the entry).
+* The manifest has been reorganized (for the first time ever) with a slightly different look.
 
 ### The Nova Core
 
