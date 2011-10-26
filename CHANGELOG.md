@@ -9,12 +9,12 @@
 * Admins now have the option of showing the latest personal logs and mission posts on the main page. (Admins will be able to select any combination of news, logs and posts.)
 * Admins now have the option of setting the top open positions (from Position Management) that will be shown at the top of each manifest (not manifest-specific).
 * Added a rules page to the main section that can be updated from the Site Messages page.
-* The instructions on the upload page now include the maximum file size and maximum image dimensions (pulled from the upload config file) for reference to anyone uploading images. (#143)
+* The instructions on the upload page now include the maximum file size and maximum image dimensions (pulled from the upload config file) for reference to anyone uploading images. ([#143](https://github.com/anodyne/nova/issues/143))
 * The deck listing page now uses a table-less layout for a cleaner look.
 * The deck listing page now has a menu of decks at the top of the page for quickly moving to a deck item without having to scroll. (We think RPGs with a lot of decks are going to love this!)
 * Overhauled the user interface for mission groups to provide more information (and look a lot better too).
 * When composing a mission post, the dropdown will now show who owns a linked NPC.
-* When composing a mission post, personal log or private message, users only have to start typing a name and the options will be narrowed down for them. (#23)
+* When composing a mission post, personal log or private message, users only have to start typing a name and the options will be narrowed down for them. ([#23](https://github.com/anodyne/nova/issues/23))
 * The skin catalogue now allows removing an entire skin (with sections) and letting admins choose which skin users will beupdated to for each section.
 * The user account page now has options to make activating and deactivating users a lot easier.
     * When deactivating a user, all active characters associated with that account with also be deactivated.
@@ -26,7 +26,7 @@
     * Making a character an NPC (and all related actions) can now be done with the push of a button.
 * When viewing a character's posts, the entries will be paginated to help with load times and usability.
 * When viewing a character's logs, the entries will be paginated to help with load times and usability.
-* Site manifests can now store default view information so that different manifests can have different view settings. (This is now handled through Site Manifest management instead of Site Settings.) (#157)
+* Site manifests can now store default view information so that different manifests can have different view settings. (This is now handled through Site Manifest management instead of Site Settings.) ([#157]((https://github.com/anodyne/nova/issues/157))
 * Gave the Pulsar skin a refreshed look and feel.
 * The Writing Control Panel now shows a notification for any entires that have been commented on in the last 30 days (along with a link to the comments section of the entry).
 * The manifest has been reorganized (for the first time ever) with a slightly different look.
@@ -46,7 +46,7 @@
 * Removed the qTip plugin. (Please use the Bootstrap Twipsy plugin instead.)
 * Changed the `banned.php` file to `message.php` that now contains notifications of Level 2 bans, a missing `nova` directory and incompatible PHP version information.
 * Seamless substitution can now be used to override email view files from the `_base_override` directory.
-* Added seaQuest DSV as a genre option. (#144)
+* Added seaQuest DSV as a genre option. ([#144](https://github.com/anodyne/nova/issues/144))
 * Changed the Location helper into a library with static methods (`Location::view` instead of `view_location`).
 * Removed the RSS model. (It isn't necessary since most of the calls were duplicated in the appropriate post type models.)
 * Added constants to the Access model for the default access roles.
@@ -60,24 +60,24 @@
 
 ### Thresher
 
-* Changed the way users manage categories when creating and editing a wiki page. (#137)
-* Users with the proper permissions can now create categories when creating and editing a wiki page. (#64)
+* Changed the way users manage categories when creating and editing a wiki page. ([#137](https://github.com/anodyne/nova/issues/137))
+* Users with the proper permissions can now create categories when creating and editing a wiki page. ([#64](https://github.com/anodyne/nova/issues/64))
 * If there are no categories set in Thresher and the user has the proper permissions, they will be prompted to create some new categories when creating and editing a wiki page.
-* Changed the user experience for managing wiki pages that puts more controls at the user's disposal and simplifies the entire page. (#141)
+* Changed the user experience for managing wiki pages that puts more controls at the user's disposal and simplifies the entire page. ([#141](https://github.com/anodyne/nova/issues/141))
 * Changed the user interface for viewing wiki pages to make it simpler.
 * Users must have Level 1 wiki page access to see the page history now.
 * Only users who are logged in can see comments on a wiki page.
-* Added system pages to Thresher that allow some of the system pages to have their content changed like a normal wiki page. (#123)
+* Added system pages to Thresher that allow some of the system pages to have their content changed like a normal wiki page. ([#123](https://github.com/anodyne/nova/issues/123))
 * Users can now search Thresher from the main Thresher page.
 * Fixed several bugs with the listing of Thresher search results.
 * Removed the recently changed and recently updated listings from the main Thresher page.
 * Users can now subscribe to an RSS feed for created wiki pages as well as updated wiki pages.
-* Admins can now restrict access to a wiki page based on access role. (#11, #12)
+* Admins can now restrict access to a wiki page based on access role. ([#11](https://github.com/anodyne/nova/issues/11), [#12](https://github.com/anodyne/nova/issues/12))
 
 ### Bug Fixes
 
 * Seamless substitution of images wouldn't work when the images were in the `_base_override` directory.
-* The `RE:` and `FWD:` tags would be added to private message subjects when replying and forwarding indefinitely until there was no space left for the actual subject line. Now, Nova will make sure it's only added once. (#158)
+* The `RE:` and `FWD:` tags would be added to private message subjects when replying and forwarding indefinitely until there was no space left for the actual subject line. Now, Nova will make sure it's only added once. ([#158](https://github.com/anodyne/nova/issues/158))
 * When replying to a private message, the author of the message would be added to the recipient list, so any message they send would also show up in their inbox as well. (This behavior can be duplicated by manually adding themselves to the recipients list.)
 * The join form could be submitted without an email address or password.
 * Users who were deactivated kept their account flags (system administrator, game master, webmaster) and their access role. Now, all account flags and access roles are changed on deactivation.
@@ -89,10 +89,10 @@
 * Pulsar styling issues in Internet Explorer 9.
 * Titan styling issues in Internet Explorer 9.
 * When viewing character or user award, the "Nominated By" line was shown even if there was no nomineed. (This is only an issue for RPGs who upgraded from SMS.)
-* The Enterprise-era (ENT) genre install file had several issues and typos. (#155)
-* The database automatically set a default rank for pending users potentially resulting in some confusion as to why a pending user already has a rank. (#148)
-* If there is only one specification item, the list of items would be dispalyed instead of automatically sending the user to the only specification item. (#146)
-* If there is only one specification item, the list of decks would be dispalyed instead of automatically sending the user to the only deck listing. (#147)
+* The Enterprise-era (ENT) genre install file had several issues and typos. ([#155](https://github.com/anodyne/nova/issues/155))
+* The database automatically set a default rank for pending users potentially resulting in some confusion as to why a pending user already has a rank. ([#148](https://github.com/anodyne/nova/issues/148))
+* If there is only one specification item, the list of items would be dispalyed instead of automatically sending the user to the only specification item. ([#146](https://github.com/anodyne/nova/issues/146))
+* If there is only one specification item, the list of decks would be dispalyed instead of automatically sending the user to the only deck listing. ([#147](https://github.com/anodyne/nova/issues/147))
 
 ## 1.2.6 (15 July 2011)
 
