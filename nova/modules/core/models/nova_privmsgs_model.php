@@ -43,7 +43,16 @@ abstract class Nova_privmsgs_model extends CI_Model {
 		return $query;
 	}
 	
-	public function get_message_recipients($id = '')
+	/**
+	 * Get an array of message recipients.
+	 *
+	 * @access	public
+	 * @version	2.0
+	 * @param	int		the message ID
+	 * @param	string	whether to pull back user or character IDs
+	 * @return	array 	an array of IDs (false if there are none)
+	 */
+	public function get_message_recipients($id = '', $return = 'user')
 	{
 		$query = $this->db->get_where('privmsgs_to', array('pmto_message' => $id));
 		
@@ -51,7 +60,7 @@ abstract class Nova_privmsgs_model extends CI_Model {
 		{
 			foreach ($query->result() as $row)
 			{
-				$array[] = $row->pmto_recipient_user;
+				$array[] = ($return == 'user') ? $row->pmto_recipient_user : $row->pmto_recipient_character;
 			}
 			
 			return $array;
