@@ -12,8 +12,23 @@
 			stripeRowClass: ['alt', '']
 		});
 		
+		$('table.outbox_search tbody tr').quicksearch({
+			position: 'append',
+			attached: 'div.search_outbox',
+			labelText: '',
+			inputText: '<?php echo ucwords(lang("actions_search") ." ". lang("actions_sent") ." ". lang("labels_messages"));?>',
+			loaderText: '',
+			stripeRowClass: ['alt', '']
+		});
+		
+		/* check all items in the inbox */
 		$('#inbox_check_all').click(function(){
 			$("div.inbox input[type='checkbox']").attr('checked', $('#inbox_check_all').is(':checked'));
+		});
+		
+		/* check all items in the outbox */
+		$('#outbox_check_all').click(function(){
+			$("div.outbox input[type='checkbox']").attr('checked', $('#outbox_check_all').is(':checked'));
 		});
 		
 		$('#loading').hide();

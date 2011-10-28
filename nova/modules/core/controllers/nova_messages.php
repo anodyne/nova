@@ -23,11 +23,249 @@ abstract class Nova_messages extends Nova_controller_admin {
 		$this->load->library('user_agent');
 	}
 	
-	public function index()
+	public function index($offset = 0)
 	{
 		Auth::check_access();
 		
 		// load the resources
+		$this->load->library('pagination');
+		$this->load->helper('text');
+		
+		if (isset($_POST['inbox']))
+		{
+			if (isset($_POST['inbox']))
+			{
+				$update_count = 0;
+				
+				foreach ($_POST as $k => $v)
+				{
+					if (substr($k, 0, 6) == 'inbox_')
+					{
+						$update_array = array(
+							'pmto_display' => 'n',
+							'pmto_unread' => 'n'
+						);
+						
+						$update = $this->pm->update_to_message($v, $this->session->userdata('userid'), $update_array);
+						
+						if ($update > 0)
+						{
+							$update_count++;
+						}
+					}
+				}
+				
+				$message = sprintf(
+					($update_count > 0) ? lang('flash_success_plural') : lang('flash_failure_plural'),
+					ucfirst(lang('global_privatemessages')),
+					lang('actions_removed'),
+					''
+				);
+				$flash['status'] = ($update_count > 0) ? 'success' : 'error';
+				$flash['message'] = text_output($message);
+				
+				// set the flash message
+				$this->_regions['flash_message'] = Location::view('flash', $this->skin, 'admin', $flash);
+			}
+		}
+		
+		$config['base_url'] = site_url('messages/index/');
+		$config['total_rows'] = $this->pm->count_pms($this->session->userdata('userid'), 'inbox');
+		$config['per_page'] = 50;
+		$config['full_tag_open'] = '<p class="fontMedium bold">';
+		$config['full_tag_close'] = '</p>';
+	
+		// initialize the pagination library
+		$this->pagination->initialize($config);
+		
+		// create the page links
+		$data['inbox_pagination'] = $this->pagination->create_links();
+		
+		// get the inbox data
+		$inbox = $this->pm->get_inbox($this->session->userdata('userid'), $config['per_page'], $offset);
+		
+		$data['header'] = ucwords(lang('global_privatemessages'));
+		
+		$data['images'] = array(
+			'write' => array(
+				'src' => Location::img('mail-message-new.png', $this->skin, 'admin'),
+				'alt' => lang('actions_write'),
+				'class' => 'image inline_img_left'),
+			'unread' => array(
+				'src' => Location::img('mail-unread.png', $this->skin, 'admin'),
+				'alt' => '*',
+				'class' => 'image'),
+			'clock' => array(
+				'src' => Location::img('clock.png', $this->skin, 'admin'),
+				'alt' => '*',
+				'class' => 'image inline_img_left'),
+			'user' => array(
+				'src' => Location::img('user.png', $this->skin, 'admin'),
+				'alt' => '*',
+				'class' => 'image inline_img_left'),
+		);
+		
+		$data['button'] = array(
+			'inbox' => array(
+				'type' => 'submit',
+				'class' => 'button-main float_right',
+				'name' => 'inbox',
+				'value' => 'remove',
+				'content' => ucwords(lang('actions_remove'))),
+		);
+		
+		if ($inbox->num_rows() > 0)
+		{
+			$datestring = $this->options['date_format'];
+			$data['inbox_check_all'] = array(
+				'name' => 'inbox_check_all',
+				'id' => 'inbox_check_all'
+			);
+			
+			foreach ($inbox->result() as $item)
+			{
+				$date = gmt_to_local($item->privmsgs_date, $this->timezone, $this->dst);
+				
+				$data['inbox'][$item->pmto_id]['id'] = $item->privmsgs_id;
+				$data['inbox'][$item->pmto_id]['author'] = $this->char->get_character_name($item->privmsgs_author_character, true);
+				$data['inbox'][$item->pmto_id]['subject'] = $item->privmsgs_subject;
+				$data['inbox'][$item->pmto_id]['date'] = mdate($datestring, $date);
+				$data['inbox'][$item->pmto_id]['unread'] = ($item->pmto_unread == 'y') ? img($data['images']['unread']) : false;
+				$data['inbox'][$item->pmto_id]['checkbox'] = array(
+					'name' => 'inbox_'. $item->pmto_id,
+					'value' => $item->pmto_id,
+					'class' => 'inbox float_right',
+					'style' => 'margin:35px 0 0 0'
+				);
+			}
+		}
+		
+		$data['loader'] = array(
+			'src' => Location::img('loading-bar.gif', $this->skin, 'admin'),
+			'alt' => lang('actions_loading'),
+		);
+		
+		$data['label'] = array(
+			'by' => lang('labels_by'),
+			'from' => ucfirst(lang('time_from')),
+			'inbox' => ucwords(lang('labels_inbox')),
+			'loading' => ucfirst(lang('actions_loading')) .'...',
+			'no_inbox' => sprintf(lang('error_not_found'), lang('global_privatemessages')),
+			'subject' => ucfirst(lang('labels_subject')),
+			'to' => ucfirst(lang('labels_to')),
+			'write' => ucwords(lang('actions_write') .' '. lang('status_new') .' '. lang('labels_message')),
+		);
+		
+		$this->_regions['content'] = Location::view('messages_index', $this->skin, 'admin', $data);
+		$this->_regions['javascript'] = Location::js('messages_index_js', $this->skin, 'admin');
+		$this->_regions['title'].= $data['header'];
+		
+		Template::assign($this->_regions);
+		
+		Template::render();
+	}
+	
+	function read($id = false)
+	{
+		Auth::check_access('messages/index');
+		
+		// sanity check
+		$id = (is_numeric($id)) ? $id : false;
+		
+		// get the message
+		$message = $this->pm->get_message($id);
+		
+		if ($message->num_rows() > 0)
+		{
+			$row = $message->row();
+			
+			// get the recipients array
+			$recips = $this->pm->get_message_recipients($row->privmsgs_id);
+			
+			// set the date format
+			$datestring = $this->options['date_format'];
+			
+			// the person trying to view must either be the author or a recipient of the PM
+			if ($row->privmsgs_author_user == $this->session->userdata('userid') or
+					in_array($this->session->userdata('userid'), $recips))
+			{
+				$date = gmt_to_local($row->privmsgs_date, $this->timezone, $this->dst);
+				
+				$data['id'] = $row->privmsgs_id;
+				$data['header'] = text_output($row->privmsgs_subject, 'h1', 'page-head');
+				$data['content'] = $row->privmsgs_content;
+				$data['date'] = mdate($datestring, $date);
+				$data['author'] = $this->char->get_character_name($row->privmsgs_author_character, true);
+				
+				foreach ($recips as $rec)
+				{
+					$array[] = $this->char->get_character_name($this->user->get_main_character($rec), true);
+				}
+				
+				$data['to'] = implode(' &amp; ', $array);
+				
+				$data['images'] = array(
+					'reply' => array(
+						'src' => Location::img('mail-reply-sender.png', $this->skin, 'admin'),
+						'alt' => '',
+						'class' => 'image inline_img_left'),
+					'reply_all' => array(
+						'src' => Location::img('mail-reply-all.png', $this->skin, 'admin'),
+						'alt' => '',
+						'class' => 'image inline_img_left'),
+					'forward' => array(
+						'src' => Location::img('mail-forward.png', $this->skin, 'admin'),
+						'alt' => '',
+						'class' => 'image inline_img_left')
+				);
+				
+				if (in_array($this->session->userdata('userid'), $recips))
+				{
+					$update_array = array('pmto_unread' => 'n');
+					$update = $this->pm->update_message($id, $this->session->userdata('userid'), $update_array);
+				}
+				
+				// set the title
+				$title = ucwords(lang('global_privatemessage')) .' - '.  $row->privmsgs_subject;
+			}
+			else
+			{
+				redirect('admin/error/2');
+			}
+		}
+		else
+		{
+			$data['header'] = lang_output('error_title_id_not_found', 'h1', 'red');
+			$data['msg'] = lang('error_no_pm');
+			
+			$title = lang('error_pagetitle');
+		}
+		
+		$data['label'] = array(
+			'by' => lang('labels_by'),
+			'forward' => ucfirst(lang('actions_forward')),
+			'inbox' => LARROW .' '. ucfirst(lang('actions_back')) .' '. lang('labels_to') 
+				.' '. ucfirst(lang('labels_inbox')),
+			'reply' => ucfirst(lang('actions_reply')),
+			'replyall' => ucfirst(lang('actions_reply')) .' '. lang('labels_to') .' '. ucfirst(lang('labels_all')),
+			'sent' => ucfirst(lang('actions_sent') .' '. lang('labels_on')),
+			'to' => ucfirst(lang('labels_to')) .':',
+		);
+		
+		$this->_regions['content'] = Location::view('messages_read', $this->skin, 'admin', $data);
+		$this->_regions['title'].= $title;
+		
+		Template::assign($this->_regions);
+		
+		Template::render();
+	}
+	
+	public function sent($offset)
+	{
+		Auth::check_access('messages/index');
+		
+		// load the resources
+		$this->load->library('pagination');
 		$this->load->helper('text');
 		
 		if (isset($_POST['inbox']) or isset($_POST['outbox']))
@@ -129,9 +367,41 @@ abstract class Nova_messages extends Nova_controller_admin {
 			$this->_regions['flash_message'] = Location::view('flash', $this->skin, 'admin', $flash);
 		}
 		
-		// run the methods
-		$inbox = $this->pm->get_inbox($this->session->userdata('userid'));
-		$outbox = $this->pm->get_outbox($this->session->userdata('userid'));
+		/**
+		 * Inbox
+		 */
+		$config['base_url'] = site_url('messages/index/inbox/');
+		$config['total_rows'] = $this->pm->count_pms($this->session->userdata('userid'), 'inbox');
+		$config['per_page'] = 5;
+		$config['full_tag_open'] = '<p class="fontMedium bold">';
+		$config['full_tag_close'] = '</p>';
+	
+		// initialize the pagination library
+		$this->pagination->initialize($config);
+		
+		// create the page links
+		$data['inbox_pagination'] = $this->pagination->create_links();
+		
+		// get the inbox data
+		$inbox = $this->pm->get_inbox($this->session->userdata('userid'), $config['per_page'], $offset);
+		
+		/**
+		 * Sent Messages
+		 */
+		$config['base_url'] = site_url('messages/index/sent/');
+		$config['total_rows'] = $this->pm->count_pms($this->session->userdata('userid'), 'sent');
+		$config['per_page'] = 50;
+		$config['full_tag_open'] = '<p class="fontMedium bold">';
+		$config['full_tag_close'] = '</p>';
+	
+		// initialize the pagination library
+		$this->pagination->initialize($config);
+		
+		// create the page links
+		$data['outbox_pagination'] = $this->pagination->create_links();
+		
+		// get the outbox data
+		$outbox = $this->pm->get_outbox($this->session->userdata('userid'), $config['per_page'], $offset);
 		
 		$data['header'] = ucwords(lang('global_privatemessages'));
 		
@@ -250,101 +520,6 @@ abstract class Nova_messages extends Nova_controller_admin {
 		$this->_regions['content'] = Location::view('messages_index', $this->skin, 'admin', $data);
 		$this->_regions['javascript'] = Location::js('messages_index_js', $this->skin, 'admin', $js_data);
 		$this->_regions['title'].= $data['header'];
-		
-		Template::assign($this->_regions);
-		
-		Template::render();
-	}
-	
-	function read($id = false)
-	{
-		Auth::check_access('messages/index');
-		
-		// sanity check
-		$id = (is_numeric($id)) ? $id : false;
-		
-		// get the message
-		$message = $this->pm->get_message($id);
-		
-		if ($message->num_rows() > 0)
-		{
-			$row = $message->row();
-			
-			// get the recipients array
-			$recips = $this->pm->get_message_recipients($row->privmsgs_id);
-			
-			// set the date format
-			$datestring = $this->options['date_format'];
-			
-			// the person trying to view must either be the author or a recipient of the PM
-			if ($row->privmsgs_author_user == $this->session->userdata('userid') or
-					in_array($this->session->userdata('userid'), $recips))
-			{
-				$date = gmt_to_local($row->privmsgs_date, $this->timezone, $this->dst);
-				
-				$data['id'] = $row->privmsgs_id;
-				$data['header'] = text_output($row->privmsgs_subject, 'h1', 'page-head');
-				$data['content'] = $row->privmsgs_content;
-				$data['date'] = mdate($datestring, $date);
-				$data['author'] = $this->char->get_character_name($row->privmsgs_author_character, true);
-				
-				foreach ($recips as $rec)
-				{
-					$array[] = $this->char->get_character_name($this->user->get_main_character($rec), true);
-				}
-				
-				$data['to'] = implode(' &amp; ', $array);
-				
-				$data['images'] = array(
-					'reply' => array(
-						'src' => Location::img('mail-reply-sender.png', $this->skin, 'admin'),
-						'alt' => '',
-						'class' => 'image inline_img_left'),
-					'reply_all' => array(
-						'src' => Location::img('mail-reply-all.png', $this->skin, 'admin'),
-						'alt' => '',
-						'class' => 'image inline_img_left'),
-					'forward' => array(
-						'src' => Location::img('mail-forward.png', $this->skin, 'admin'),
-						'alt' => '',
-						'class' => 'image inline_img_left')
-				);
-				
-				if (in_array($this->session->userdata('userid'), $recips))
-				{
-					$update_array = array('pmto_unread' => 'n');
-					$update = $this->pm->update_message($id, $this->session->userdata('userid'), $update_array);
-				}
-				
-				// set the title
-				$title = ucwords(lang('global_privatemessage')) .' - '.  $row->privmsgs_subject;
-			}
-			else
-			{
-				redirect('admin/error/2');
-			}
-		}
-		else
-		{
-			$data['header'] = lang_output('error_title_id_not_found', 'h1', 'red');
-			$data['msg'] = lang('error_no_pm');
-			
-			$title = lang('error_pagetitle');
-		}
-		
-		$data['label'] = array(
-			'by' => lang('labels_by'),
-			'forward' => ucfirst(lang('actions_forward')),
-			'inbox' => LARROW .' '. ucfirst(lang('actions_back')) .' '. lang('labels_to') 
-				.' '. ucfirst(lang('labels_inbox')),
-			'reply' => ucfirst(lang('actions_reply')),
-			'replyall' => ucfirst(lang('actions_reply')) .' '. lang('labels_to') .' '. ucfirst(lang('labels_all')),
-			'sent' => ucfirst(lang('actions_sent') .' '. lang('labels_on')),
-			'to' => ucfirst(lang('labels_to')) .':',
-		);
-		
-		$this->_regions['content'] = Location::view('messages_read', $this->skin, 'admin', $data);
-		$this->_regions['title'].= $title;
 		
 		Template::assign($this->_regions);
 		
