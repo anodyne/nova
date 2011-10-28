@@ -15,10 +15,10 @@
 		$('[rel=popover]').popover({
 			animate: false,
 			offset: 5,
-			placement: 'top'
+			placement: 'right'
 		});
 		
-		$("a[rel=facebox]").click(function() {
+		$("[rel=facebox]").click(function() {
 			var action = $(this).attr('myAction');
 			var id = $(this).attr('myID');
 			
