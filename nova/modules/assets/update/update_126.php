@@ -340,6 +340,10 @@ $this->db->update('system_components', array('comp_version' => 'Release 2'));
 $this->db->where('menu_link', 'upload/index');
 $this->db->update('menu_items', array('menu_use_access' => 'y', 'menu_access' => 'upload/index'));
 
+// update the sent messages menu item
+$this->db->where('menu_name', 'Sent Messages');
+$this->db->update('menu_items', array('menu_link' => 'messages/sent'));
+
 // add the chosen plugin to the list of components
 $additem = array(
 	'comp_name' => 'Chosen',
