@@ -727,7 +727,6 @@ abstract class Nova_personnel extends Nova_controller_main {
 			/**
 			 * Stats
 			 */
-			
 			// get all of the user's active characters
 			$all_active_characters = $this->char->get_user_characters($user);
 			
@@ -752,7 +751,7 @@ abstract class Nova_personnel extends Nova_controller_main {
 			}
 			
 			// figure out what the final deactivation date should be
-			if ($all_active_characters->num_rows() > 0)
+			if ($all_active_characters->num_rows() == 0)
 			{
 				$final_deactivate = now();
 			}
