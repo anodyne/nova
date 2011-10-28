@@ -71,7 +71,7 @@ abstract class Nova_messages extends Nova_controller_admin {
 		
 		$config['base_url'] = site_url('messages/index/');
 		$config['total_rows'] = $this->pm->count_pms($this->session->userdata('userid'), 'inbox');
-		$config['per_page'] = 50;
+		$config['per_page'] = 25;
 		$config['full_tag_open'] = '<p class="fontMedium bold">';
 		$config['full_tag_close'] = '</p>';
 	
@@ -103,12 +103,16 @@ abstract class Nova_messages extends Nova_controller_admin {
 				'src' => Location::img('user.png', $this->skin, 'admin'),
 				'alt' => '*',
 				'class' => 'image inline_img_left'),
+			'preview' => array(
+				'src' => Location::img('magnifier-medium.png', $this->skin, 'admin'),
+				'alt' => '[?]',
+				'class' => 'image'),
 		);
 		
 		$data['button'] = array(
 			'inbox' => array(
 				'type' => 'submit',
-				'class' => 'button-main float_right',
+				'class' => 'button-sec',
 				'name' => 'inbox',
 				'value' => 'remove',
 				'content' => ucwords(lang('actions_remove'))),
@@ -131,11 +135,11 @@ abstract class Nova_messages extends Nova_controller_admin {
 				$data['inbox'][$item->pmto_id]['subject'] = $item->privmsgs_subject;
 				$data['inbox'][$item->pmto_id]['date'] = mdate($datestring, $date);
 				$data['inbox'][$item->pmto_id]['unread'] = ($item->pmto_unread == 'y') ? img($data['images']['unread']) : false;
+				$data['inbox'][$item->pmto_id]['preview'] = nl2br(strip_tags(word_limiter($item->privmsgs_content, 100)));
 				$data['inbox'][$item->pmto_id]['checkbox'] = array(
 					'name' => 'inbox_'. $item->pmto_id,
 					'value' => $item->pmto_id,
-					'class' => 'inbox float_right',
-					'style' => 'margin:35px 0 0 0'
+					'class' => 'inbox',
 				);
 			}
 		}
@@ -146,13 +150,10 @@ abstract class Nova_messages extends Nova_controller_admin {
 		);
 		
 		$data['label'] = array(
-			'by' => lang('labels_by'),
-			'from' => ucfirst(lang('time_from')),
 			'inbox' => ucwords(lang('labels_inbox')),
 			'loading' => ucfirst(lang('actions_loading')) .'...',
+			'message_preview' => ucwords(lang('labels_message').' '.lang('labels_preview')),
 			'no_inbox' => sprintf(lang('error_not_found'), lang('global_privatemessages')),
-			'subject' => ucfirst(lang('labels_subject')),
-			'to' => ucfirst(lang('labels_to')),
 			'write' => ucwords(lang('actions_write') .' '. lang('status_new') .' '. lang('labels_message')),
 		);
 		
