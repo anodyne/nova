@@ -104,7 +104,7 @@ abstract class Nova_messages extends Nova_controller_admin {
 				'alt' => '*',
 				'class' => 'image inline_img_left'),
 			'preview' => array(
-				'src' => Location::img('magnifier-small.png', $this->skin, 'admin'),
+				'src' => Location::img('magnifier-medium.png', $this->skin, 'admin'),
 				'alt' => '[?]',
 				'class' => 'image'),
 		);
