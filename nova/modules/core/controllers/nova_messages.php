@@ -135,7 +135,7 @@ abstract class Nova_messages extends Nova_controller_admin {
 				$data['inbox'][$item->pmto_id]['subject'] = $item->privmsgs_subject;
 				$data['inbox'][$item->pmto_id]['date'] = mdate($datestring, $date);
 				$data['inbox'][$item->pmto_id]['unread'] = ($item->pmto_unread == 'y') ? img($data['images']['unread']) : false;
-				$data['inbox'][$item->pmto_id]['preview'] = nl2br(strip_tags(word_limiter($item->privmsgs_content, 100)));
+				$data['inbox'][$item->pmto_id]['preview'] = nl2br(htmlspecialchars(strip_tags(word_limiter($item->privmsgs_content, 100))));
 				$data['inbox'][$item->pmto_id]['checkbox'] = array(
 					'name' => 'inbox_'. $item->pmto_id,
 					'value' => $item->pmto_id,
@@ -371,7 +371,7 @@ abstract class Nova_messages extends Nova_controller_admin {
 				$data['outbox'][$item->privmsgs_id]['recipients'] = $recipients;
 				$data['outbox'][$item->privmsgs_id]['subject'] = $item->privmsgs_subject;
 				$data['outbox'][$item->privmsgs_id]['date'] = mdate($datestring, $date);
-				$data['outbox'][$item->privmsgs_id]['preview'] = nl2br(strip_tags(word_limiter($item->privmsgs_content, 100)));
+				$data['outbox'][$item->privmsgs_id]['preview'] = nl2br(htmlspecialchars(strip_tags(word_limiter($item->privmsgs_content, 100))));
 				$data['outbox'][$item->privmsgs_id]['checkbox'] = array(
 					'name' => 'outbox_'. $item->privmsgs_id,
 					'value' => $item->privmsgs_id,
