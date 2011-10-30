@@ -30,6 +30,8 @@
 * Gave the Pulsar skin a refreshed look and feel.
 * The Writing Control Panel now shows a notification for any entires that have been commented on in the last 30 days (along with a link to the comments section of the entry).
 * The manifest has been reorganized (for the first time ever) with a slightly different look.
+* The email sent to the game master when a user applies now goes to anyone who can approve or reject character applications.
+* Acceptance and rejection emails now CC in anyone who can approve or reject character applications.
 
 ### The Nova Core
 
