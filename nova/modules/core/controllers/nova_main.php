@@ -1196,9 +1196,6 @@ abstract class Nova_main extends Nova_controller_main {
 				// parse the message
 				$message = $this->parser->parse_string($em_loc, $email_data, true);
 				
-				// get the game masters email addresses
-				$gm = $this->user->get_gm_emails();
-				
 				// set the TO variable
 				$to = implode(',', $this->user->get_emails_with_access('characters/index'));
 				
