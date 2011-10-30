@@ -13,13 +13,13 @@ $lang['text_im_instructions'] = 'Put each IM handle on its own line';
 
 $lang['text_image_select'] = "Click on a link or image to add the image to the %s.";
 
-$lang['text_upload_image'] = 'You can upload images to the server for use in your bios, award images, tour images or mission images. Select the type of image you'. RSQUO .'re uploading and the image and click upload. Currently, uploaded images can be no more than %dKB in size and cannot be larger than %dx%d.%s';
+$lang['text_upload_image'] = "You can upload images to the server for use in your bios, award images, tour images or mission images. Select the type of image you're uploading and the image and click upload. Currently, uploaded images can be no more than %dKB in size and cannot be larger than %dx%d.%s";
 
-$lang['text_upload_admin'] = " Upload settings can be changed from the <code class='fontMedium'>%s/config/upload.php</code> file.";
+$lang['text_upload_admin'] = " Upload settings can be changed from the <nobr><code>%s/config/upload.php</code></nobr> file.";
 
 $lang['text_manage_decks'] = "You can change the order of your %s listing by dragging the blocks below into the order you want and clicking Update. If you would like to add a %s to the end of the list, simply type its name and click Add. If you want to edit the item, click on the text in the block. To remove a %s from the listing, click the close icon on its block.";
 
-$lang['text_manage_positions'] = "%s are the heart and soul of Nova". RSQUO ."s character system and from here, you can update the %s available. We". RSQUO ."ve worked hard to move the things you don". RSQUO ."t need out of the way, so we only show the most used elements: the name and open slots (edited through a simple slider from 0 to 50). You can update those elements, or if you want to edit the rest of the %s entry, you can click on the More button to see the rest of the information. Once you have updated all the %s you want, you can click Update to run the update for all the %s on the page.\r\n\r\n<strong class='red'>Deleting and updating positions will affect characters. Proceed with caution!</strong>";
+$lang['text_manage_positions'] = "%s are the heart and soul of Nova's character system and from here, you can update the %s available. We've worked hard to move the things you don't need out of the way, so we only show the most used elements: the name and open slots (edited through a simple slider from 0 to 50). You can update those elements, or if you want to edit the rest of the %s entry, you can click on the More button to see the rest of the information. Once you have updated all the %s you want, you can click Update to run the update for all the %s on the page.\r\n\r\n<strong class='red'>Deleting and updating positions will affect characters. Proceed with caution!</strong>";
 
 $lang['text_manage_depts'] = "From here, you can create, update and delete the %s available to put your %s into. If you would like to copy a %s and its %s for use in another manifest, you can use the duplicate button. <strong>Once you've duplicated a %s, you should change the description to make it clear which manifest it's associated with.</strong>\r\n\r\n<strong class='red'>Deleting and updating %s will affect %s and %s. Proceed with caution!</strong>";
 $lang['text_manage_dept_reassign'] = "If you want to reassign these %s to be parent level elements, please select none.";
@@ -39,18 +39,18 @@ $lang['text_security_question'] = 'Remember your security answer exactly as you 
 
 $lang['text_loa_request'] = 'Use the form below to notify the game master of any leave of absence you need to take from the game. When you come back from your LOA, remember to change your status here again.';
 
-$lang['text_preferences'] = 'Nova includes a wide array of options for which emails the system will send you. Change your email preferences below by checking/unchecking the boxes you do/don&rsquo;t want to receive.';
+$lang['text_preferences'] = "Nova includes a wide array of options for which emails the system will send you. Change your email preferences below by checking/unchecking the boxes you do/don't want to receive.";
 
 $lang['text_logout'] = 'You must logout and log back in for your changes to be applied.';
 $lang['text_logout_alt'] = 'In order for these changes to be applied the user must log out and log back in.';
 
 $lang['text_link_characters'] = "Nova provides the ability for a single %s to be associated with multiple %s. From this page, you can link %s with a %s account. To add or remove a %s, click on the respective icon. If you want to change the main %s for a %s, click on the star next to the %s name. <strong>All changes require the %s to log out and log back in for the changes to be applied.</strong>";
 
-$lang['text_award_nomination'] = "Using the fields below, select the %s and %s as well as a short reason why you". RSQUO ."re nominating them. Your submission will be sent to the command staff for their review and approval.";
+$lang['text_award_nomination'] = "Using the fields below, select the %s and %s as well as a short reason why you're nominating them. Your submission will be sent to the command staff for their review and approval.";
 
 $lang['text_leave_blank'] = "To help us combat spam from this page, please leave the field below blank.\r\nIf the field is filled in, the form will not submit.";
 
-$lang['text_manage_uploads'] = "Nova provides the ability for users to upload character images, awards, mission images and tour images to the server through an easy-to-use interface. From here, you can manage the uploads available in the system. Removing uploads will delete the record from the database and Nova will attempt to delete the file from the server. You will be notified if Nova can". RSQUO ."t delete the file and you need to delete it manually.";
+$lang['text_manage_uploads'] = "Nova provides the ability for users to upload character images, awards, mission images and tour images to the server through an easy-to-use interface. From here, you can manage the uploads available in the system. Removing uploads will delete the record from the database and Nova will attempt to delete the file from the server. You will be notified if Nova can't delete the file and you need to delete it manually.";
 
 $lang['text_file_not_deleted'] = "While the record has been removed from the database there was a problem deleting the selected file(s) from the server. Please manually remove the files from the server.";
 
@@ -74,7 +74,7 @@ $lang['text_stats_avg'] = "&dagger; Averages are calculated by taking the number
 $lang['text_stats_pace'] = "&Dagger; Pace is determined by dividing the number of posts in a month by the number of elapsed days, then multiplying by the number of days in a given month.  Actual end of the month numbers may vary.";
 $lang['text_search_results'] = 'Your search returned the following %d %s.';
 $lang['text_sim_dockingrequest'] = "Use the form below to request to dock with the sim. Your request will be emailed to the game master and they will make a decision in the next few days and notify you whether your request has been accepted or rejected.";
-$lang['text_javascript_off'] = 'You must turn Javascript ON to use all of Nova'. RSQUO .'s features!';
+$lang['text_javascript_off'] = "You must turn Javascript ON to use all of Nova's features!";
 $lang['text_display_x_of_y'] = 'Displaying %d of %d %s';
 $lang['text_add_new_message'] = "Use the fields below to change any of the messages throughout the site. You can also add a new message and manually plug it in anywhere in Nova.";
 $lang['text_add_new_setting'] = 'Nova gives game masters and admins the ability to create their own settings to be used throughout the system. Once a setting is created, it can be added to user-created page or extended core pages and changed through the Site Settings page. At this time, user-created settings can only be edited through a simple text field and you will not have the ability to create a setting that uses a radio button, textarea, or dropdown menu.';

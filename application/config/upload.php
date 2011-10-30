@@ -9,7 +9,7 @@
 */
 
 $config['upload_path'] 		= './assets/images/';
-$config['allowed_types'] 	= 'gif|jpg|jpeg|png|bmp';
+$config['allowed_types'] 	= 'gif|jpg|jpeg|png';
 $config['overwrite']		= FALSE;
 $config['max_size']			= '500';
 $config['max_width']		= '1024';
