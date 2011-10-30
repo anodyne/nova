@@ -260,7 +260,7 @@ abstract class Nova_location {
 		
 		if ($data !== null)
 		{
-			if ($skin == '_base')
+			if ($obj->skin == '_base')
 			{
 				return $ci->nova->view($location, $data, true);
 			}
