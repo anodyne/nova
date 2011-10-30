@@ -1,10 +1,6 @@
 # Nova
 
-application/assets/images/awards/
-application/assets/images/characters/
-application/assets/images/missions/
-application/assets/images/specs/
-application/assets/images/tour/
+application/assets/images/*/
 application/cache/
 application/logs/
 application/modules/
