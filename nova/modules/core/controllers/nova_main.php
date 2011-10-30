@@ -1200,7 +1200,7 @@ abstract class Nova_main extends Nova_controller_main {
 				$gm = $this->user->get_gm_emails();
 				
 				// set the TO variable
-				$to = implode(',', $gm);
+				$to = implode(',', $this->user->get_emails_with_access('characters/index'));
 				
 				// set the parameters for sending the email
 				$this->email->from($data['email'], $data['name']);

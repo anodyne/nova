@@ -2048,7 +2048,7 @@ abstract class Nova_characters extends Nova_controller_admin {
 		switch ($type)
 		{
 			case 'accept':
-				$cc = implode(',', $this->user->get_gm_emails());
+				$cc = implode(',', $this->user->get_emails_with_access('characters/index'));
 				
 				$email_data = array(
 					'email_subject' => lang('email_subject_character_approved') .' - '. $data['character'],
@@ -2068,7 +2068,7 @@ abstract class Nova_characters extends Nova_controller_admin {
 			break;
 				
 			case 'reject':
-				$cc = implode(',', $this->user->get_gm_emails());
+				$cc = implode(',', $this->user->get_emails_with_access('characters/index'));
 				
 				$email_data = array(
 					'email_subject' => lang('email_subject_character_rejected') .' - '. $data['character'],
@@ -2170,7 +2170,7 @@ abstract class Nova_characters extends Nova_controller_admin {
 				$gm = $this->user->get_gm_emails();
 				
 				// set the TO variable
-				$to = implode(',', $gm);
+				$to = implode(',', $this->user->get_emails_with_access('characters/index'));
 				
 				// set the parameters for sending the email
 				$this->email->from($data['email'], $data['name']);
