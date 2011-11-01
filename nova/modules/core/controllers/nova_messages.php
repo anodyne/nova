@@ -144,6 +144,20 @@ abstract class Nova_messages extends Nova_controller_admin {
 			}
 		}
 		
+		$data['inputs'] = array(
+			'submit' => array(
+				'type' => 'submit',
+				'class' => 'button-main',
+				'name' => 'submit',
+				'value' => 'search',
+				'id' => 'submitSearch',
+				'content' => ucfirst(lang('actions_search'))),
+			'search' => array(
+				'name' => 'search_terms',
+				'id' => 'search_terms',
+				'placeholder' => ucfirst(lang('actions_search').'...')),
+		);
+		
 		$data['loader'] = array(
 			'src' => Location::img('loading-bar.gif', $this->skin, 'admin'),
 			'alt' => lang('actions_loading'),
@@ -154,6 +168,8 @@ abstract class Nova_messages extends Nova_controller_admin {
 			'loading' => ucfirst(lang('actions_loading')) .'...',
 			'message_preview' => ucwords(lang('labels_message').' '.lang('labels_preview')),
 			'no_inbox' => sprintf(lang('error_not_found'), lang('global_privatemessages')),
+			'search' => ucfirst(lang('actions_search')),
+			'sent' => ucwords(lang('actions_sent').' '.lang('labels_messages').' '.RARROW),
 			'write' => ucwords(lang('actions_write') .' '. lang('status_new') .' '. lang('labels_message')),
 		);
 		
@@ -255,6 +271,51 @@ abstract class Nova_messages extends Nova_controller_admin {
 		
 		$this->_regions['content'] = Location::view('messages_read', $this->skin, 'admin', $data);
 		$this->_regions['title'].= $title;
+		
+		Template::assign($this->_regions);
+		
+		Template::render();
+	}
+	
+	public function search()
+	{
+		if (isset($_POST['submit']))
+		{
+			// get the POST values
+			$term = $this->input->post('search_term', true);
+			
+			// run the search
+			$data['results'] = $this->pm->search_private_messages($this->session->userdata('userid'), $term);
+		}
+		else
+		{
+			# code...
+		}
+		
+		$data['inputs'] = array(
+			'submit' => array(
+				'type' => 'submit',
+				'class' => 'button-main',
+				'name' => 'submit',
+				'value' => 'search',
+				'id' => 'submitSearch',
+				'content' => ucfirst(lang('actions_search'))),
+			'search' => array(
+				'name' => 'search_terms',
+				'id' => 'search_terms',
+				'placeholder' => ucfirst(lang('actions_search').'...')),
+		);
+		
+		$data['label'] = array(
+			'back' => LARROW.' '.ucfirst(lang('actions_back')).' '.lang('labels_to').' '.ucfirst(lang('labels_inbox')),
+			'no_results' => sprintf(lang('error_not_found'), lang('actions_search').' '.lang('labels_results')),
+		);
+		
+		// set the header
+		$data['header'] = ucwords(lang('actions_search').' '.lang('labels_results'));
+		
+		$this->_regions['content'] = Location::view('messages_search_results', $this->skin, 'admin', $data);
+		$this->_regions['title'].= $data['header'];
 		
 		Template::assign($this->_regions);
 		
@@ -380,15 +441,31 @@ abstract class Nova_messages extends Nova_controller_admin {
 			}
 		}
 		
+		$data['inputs'] = array(
+			'submit' => array(
+				'type' => 'submit',
+				'class' => 'button-main',
+				'name' => 'submit',
+				'value' => 'search',
+				'id' => 'submitSearch',
+				'content' => ucfirst(lang('actions_search'))),
+			'search' => array(
+				'name' => 'search_terms',
+				'id' => 'search_terms',
+				'placeholder' => ucfirst(lang('actions_search').'...')),
+		);
+		
 		$data['loader'] = array(
 			'src' => Location::img('loading-bar.gif', $this->skin, 'admin'),
 			'alt' => lang('actions_loading'),
 		);
 		
 		$data['label'] = array(
+			'inbox' => ucwords(lang('labels_inbox').' '.RARROW),
 			'loading' => ucfirst(lang('actions_loading')) .'...',
 			'message_preview' => ucwords(lang('labels_message').' '.lang('labels_preview')),
 			'no_outbox' => sprintf(lang('error_not_found'), lang('global_privatemessages')),
+			'search' => ucfirst(lang('actions_search')),
 			'write' => ucwords(lang('actions_write') .' '. lang('status_new') .' '. lang('labels_message')),
 		);
 		

@@ -175,4 +175,40 @@ abstract class Nova_privmsgs_model extends CI_Model {
 		
 		return $query;
 	}
+	
+	/**
+	 * Search through the private messages.
+	 *
+	 * @access	public
+	 * @since	2.0
+	 * @param	int		the user ID
+	 * @param	string	the search term
+	 * @return	array 	an array of result objects with the results
+	 */
+	public function search_private_messages($user, $term)
+	{
+		$sent = $this->db->from('privmsgs')
+			->where('privmsgs_author_user', $user)
+			->where('privmsgs_author_display', 'y')
+			->where("(privmsgs_content LIKE '%$term%' OR privmsgs_subject LIKE '%$term%')")
+			->order_by('privmsgs_date', 'desc')
+			->get();
+			
+		$received = $this->db->from('privmsgs_to')
+			->join('privmsgs', 'privmsgs.privmsgs_id = privmsgs_to.pmto_message')
+			->where('pmto_recipient_user', $user)
+			->where('pmto_display', 'y')
+			->where("(privmsgs_content LIKE '%$term%' OR privmsgs_subject LIKE '%$term%')")
+			->order_by('privmsgs_date', 'desc')
+			->get();
+			
+		$retval = array(
+			'sent'				=> ($sent->num_rows() > 0) ? $sent->result() : false,
+			'sent_count'		=> $sent->num_rows(),
+			'received'			=> ($received->num_rows() > 0) ? $received->result() : false,
+			'received_count'	=> $received->num_rows(),
+		);
+		
+		return $retval;
+	}
 }
