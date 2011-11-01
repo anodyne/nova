@@ -32,6 +32,9 @@
 * The manifest has been reorganized (for the first time ever) with a slightly different look.
 * The email sent to the game master when a user applies now goes to anyone who can approve or reject character applications.
 * Acceptance and rejection emails now CC in anyone who can approve or reject character applications.
+* Users can now search within their sent and received private messages.
+* Private messages have now been split in to separate inbox and sent message pages. This will help improve performance since the page doesn't have to load all the messages at once then split them off in to tabs.
+* Private messages in the inbox and sent messages list are now paginated.
 
 ### The Nova Core
 
