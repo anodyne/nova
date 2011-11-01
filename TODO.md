@@ -1,9 +1,5 @@
 * Verification
 	* Updating from Nova 1
-	* Upgrading from SMS
-	* Fresh install
-	* seaQuest DSV genre
-	* Author selection changes
 * Skinning
 	* LCARS skin
 	* LCARS-Red skin
