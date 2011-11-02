@@ -1,3 +1,5 @@
+<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');?>
+
 <p class="float_right"><a href="#" id="search-trigger" class="image"><?php echo img($images['search']);?></a></p>
 <?php echo text_output($header, 'h1', 'page-head');?>
 

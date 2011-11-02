@@ -1,3 +1,5 @@
+<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');?>
+
 <?php if (isset($draft)): ?>
 	<?php echo text_output($header, 'h1', 'page-head');?>
 	

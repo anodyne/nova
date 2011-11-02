@@ -1,3 +1,5 @@
+<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');?>
+
 <table class="table100 zebra">
 	<tbody>
 	<?php foreach ($drafts as $d): ?>

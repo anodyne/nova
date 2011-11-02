@@ -1,3 +1,5 @@
+<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');?>
+
 <?php if (isset($roles)): ?>
 	<?php echo text_output($label['roles'], 'h3');?>
 	
