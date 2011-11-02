@@ -1,3 +1,5 @@
+<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');?>
+
 <?php echo text_output($header, 'h1', 'page-head');?>
 
 <p><?php echo link_to_if($edit_valid, 'manage/awards', $label['edit'], array('class' => 'edit fontSmall bold'));?></p>

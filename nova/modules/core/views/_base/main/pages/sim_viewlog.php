@@ -1,3 +1,5 @@
+<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');?>
+
 <?php if (isset($next) || isset($prev)): ?>
 	<div class="float_right">
 		<?php if (isset($prev)): ?>

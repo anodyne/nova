@@ -1,3 +1,5 @@
+<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');?>
+
 <?php if ($private == 'y' and Auth::is_logged_in() === FALSE): ?>
 	<?php echo text_output($label['error_pagetitle'], 'h1', 'red');?>
 	<?php echo text_output($label['error_private_news'], 'h4');?>

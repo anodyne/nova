@@ -1,4 +1,4 @@
-<?php
+<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
 /* strip out the comma from the string */
 $manifest_default_values = str_replace(',', '', $manifest_defaults);

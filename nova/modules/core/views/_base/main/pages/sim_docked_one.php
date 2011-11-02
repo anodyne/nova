@@ -1,3 +1,5 @@
+<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');?>
+
 <?php echo text_output($header, 'h1', 'page-head');?>
 
 <p><?php echo anchor('sim/docked', $label['back'], array('class' => 'bold'));?></p><br />

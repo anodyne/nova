@@ -1,3 +1,5 @@
+<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');?>
+
 <style>
 	.post_info { width: auto; margin: 0 0 2em 0; border-top: none; }
 	.group-info { margin: 8px 0 0 0; }

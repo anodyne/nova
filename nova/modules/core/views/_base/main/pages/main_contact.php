@@ -1,3 +1,5 @@
+<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');?>
+
 <style type="text/css">
 	.error-icon {
 		margin-left: 1px;

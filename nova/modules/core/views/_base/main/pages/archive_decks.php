@@ -1,3 +1,5 @@
+<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');?>
+
 <?php echo text_output($header, 'h1', 'page-head');?>
 
 <p class="bold fontMedium"><?php echo anchor('archive/index', LARROW .' Back to Archive Index');?></p>

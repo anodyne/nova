@@ -1,3 +1,5 @@
+<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');?>
+
 <style type="text/css">
 	a.image { display: inline-block; }
 	a.image span { padding: 0px; display: inline-block; }
