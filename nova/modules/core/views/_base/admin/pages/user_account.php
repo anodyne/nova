@@ -1,3 +1,5 @@
+<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');?>
+
 <?php echo text_output($header, 'h1', 'page-head');?>
 
 <p><?php echo anchor('user/options', img($images['display']) .' '. $label['display'], array('class' => 'bold image'));?></p>

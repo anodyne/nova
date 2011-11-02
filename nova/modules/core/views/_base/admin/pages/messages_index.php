@@ -1,3 +1,5 @@
+<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');?>
+
 <div class="float_right">
 	<br />
 	<?php echo form_open('messages/search');?>

@@ -1,3 +1,5 @@
+<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');?>
+
 <div id="loader" class="align_center">
 	<?php echo img($images['loading']);?><br />
 	<?php echo text_output($label['loading'], 'span', 'fontSmall bold gray');?>

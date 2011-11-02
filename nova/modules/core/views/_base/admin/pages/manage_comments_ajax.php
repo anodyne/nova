@@ -1,3 +1,5 @@
+<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');?>
+
 <?php echo text_output($label[$subheader], 'h2', 'page-subhead');?>
 
 <?php if (isset($entries)): ?>

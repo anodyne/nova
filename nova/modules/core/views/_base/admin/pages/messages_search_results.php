@@ -1,3 +1,5 @@
+<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');?>
+
 <h1 class="page-head"><?php echo $header;?></h1>
 
 <p class="fontMedium bold"><a href="<?php echo site_url('messages/index');?>"><?php echo $label['back'];?></a></p>
