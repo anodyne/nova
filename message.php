@@ -54,11 +54,11 @@ switch ($type)
 				background: #ddd;
 				background: -moz-linear-gradient(center top, #eee 20%, #ddd 100%);
 				background: -webkit-gradient(linear, left top, left bottom, color-stop(.2, #eee), color-stop(1, #ddd));
-				border-radius: 3px;
 				-moz-border-radius: 3px;
-				box-shadow: inset 0 1px 0 rgba(255, 255, 255, .55), 0 2px 7px rgba(0, 0, 0, .2);
+				border-radius: 3px 3px 3px 3px;
 				-moz-box-shadow: inset 0 1px 0 rgba(255, 255, 255, .55), 0 2px 7px rgba(0, 0, 0, .2);
 				-webkit-box-shadow: inset 0 1px 0 rgba(255, 255, 255, .55), 0 2px 7px rgba(0, 0, 0, .2);
+				box-shadow: inset 0 1px 0 rgba(255, 255, 255, .55), 0 2px 7px rgba(0, 0, 0, .2);
 			}
 			#container h1 { text-shadow: 0 1px 0 rgba(255, 255, 255, .55); }
 			#container p {
