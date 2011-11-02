@@ -1,3 +1,5 @@
+<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');?>
+
 <?php if ($step == 0): ?>
 	<?php echo $message;?>
 <?php elseif ($step == 1): ?>

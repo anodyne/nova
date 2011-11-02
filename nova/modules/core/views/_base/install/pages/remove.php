@@ -1,3 +1,5 @@
+<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');?>
+
 <?php echo form_open('install/remove');?>
 	<p>
 		<kbd><?php echo $label['email'];?></kbd>

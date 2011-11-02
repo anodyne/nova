@@ -1,3 +1,5 @@
+<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');?>
+
 <?php echo lang_output('install_index_options_firststeps', 'h3');?>
 
 <ul>
