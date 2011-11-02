@@ -1,3 +1,5 @@
+<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');?>
+
 <?php if (isset($panel_characters) && is_array($panel_characters)): ?>
 
 	<?php echo text_output($label['characters'], 'h4');?>

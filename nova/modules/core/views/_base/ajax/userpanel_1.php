@@ -1,3 +1,5 @@
+<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');?>
+
 <?php echo text_output($name, 'h4');?>
 
 <ul class="padding1 fontSmall">
