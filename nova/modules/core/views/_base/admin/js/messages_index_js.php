@@ -1,3 +1,5 @@
+<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');?>
+
 <style>
 .popover .inner { width: 550px !important; }
 </style>

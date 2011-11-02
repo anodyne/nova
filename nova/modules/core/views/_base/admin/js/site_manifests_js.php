@@ -1,3 +1,5 @@
+<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');?>
+
 <?php $string = random_string('alnum', 8);?>
 
 <script type="text/javascript" src="<?php echo base_url().MODFOLDER;?>/assets/js/jquery.ui.mouse.min.js"></script>
