@@ -1,3 +1,5 @@
+<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');?>
+
 <?php if (isset($entries)): ?>
 	<?php foreach($entries as $entry): ?>
 		<item>

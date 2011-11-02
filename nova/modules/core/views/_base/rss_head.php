@@ -1,3 +1,5 @@
+<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');?>
+
 <title><?php echo $rss_feed_name; ?></title>
 
 <link><?php echo $rss_feed_url; ?></link>
