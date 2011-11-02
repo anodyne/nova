@@ -232,16 +232,17 @@ abstract class Nova_location {
 	{
 		$ci =& get_instance();
 		
+		$obj = new stdClass;
+		$obj->view = $view;
+		$obj->sec = $section;
+		$obj->skin = '_base';
+		
 		if ($skin === null and $section === null)
 		{
 			$location = $view;
 		}
 		else
 		{
-			$obj = new stdClass;
-			$obj->view = $view;
-			$obj->sec = $section;
-			
 			if (is_file(APPPATH.'views/'.$skin.'/'.$section.'/pages/'.$view.'.php'))
 			{
 				$obj->skin = $skin;
@@ -249,10 +250,6 @@ abstract class Nova_location {
 			elseif (is_file(APPPATH.'views/_base_override/'.$section.'/pages/'.$view.'.php'))
 			{
 				$obj->skin = '_base_override';
-			}
-			else
-			{
-				$obj->skin = '_base';
 			}
 			
 			$location = $obj->skin.'/'.$obj->sec.'/pages/'.$obj->view;
