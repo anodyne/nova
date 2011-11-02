@@ -1,3 +1,5 @@
+<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');?>
+
 <?php echo text_output($label['intro'], 'p', 'fontMedium');?>
 
 <?php if ($this->uri->segment(3) == 'full'): ?>

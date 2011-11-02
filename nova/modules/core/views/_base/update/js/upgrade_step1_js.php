@@ -1,4 +1,4 @@
-<?php
+<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
 $specsarray = $this->sys->list_table_columns('sms_specs');
 $tourarray = $this->sys->list_table_columns('sms_tour');

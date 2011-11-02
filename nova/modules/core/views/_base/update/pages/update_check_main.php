@@ -1,3 +1,5 @@
+<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');?>
+
 <?php if ($label['notes'] > ''): ?>
 	<?php echo text_output($label['whatsnew'], 'h2');?>
 	<?php echo text_output($label['notes'], 'p', 'fontMedium');?>

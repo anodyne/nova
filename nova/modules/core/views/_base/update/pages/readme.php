@@ -1,3 +1,5 @@
+<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');?>
+
 <h2>Server Requirements</h2>
 
 <ul class="square">
