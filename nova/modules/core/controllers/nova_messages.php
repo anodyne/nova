@@ -213,6 +213,7 @@ abstract class Nova_messages extends Nova_controller_admin {
 				$data['content'] = $row->privmsgs_content;
 				$data['date'] = mdate($datestring, $date);
 				$data['author'] = $this->char->get_character_name($row->privmsgs_author_character, true);
+				$data['to_count'] = count($recips);
 				
 				foreach ($recips as $rec)
 				{
