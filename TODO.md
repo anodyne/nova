@@ -1,13 +1,37 @@
-* Verification
-	* Updating from Nova 1
-* Skinning
-	* LCARS skin
-	* LCARS-Red skin
-	* Update Redmond skin with admin changes
-	* Update Lightness skin with admin changes
-	* Update Sunny skin with admin changes
-	* Update Beta skin with admin changes
-* MODs/Utilities
-	* Mod for status alert changing the LCARS skin
-* TODO
-	* Change debug level from 3 to 1
+# Nova 2 Launch
+
+## Nova 2
+
+* Verify updating from Nova 1 to Nova 2
+* Verify upgrading from SMS 2 to Nova 2
+* Verify fresh install
+* Set production debug level
+
+## Nova 2 Extras
+
+* LCARS skin
+* LCARS-Red skin
+* Update Redmond with admin changes
+* Update Lightness with admin changes
+* Update Sunny with admin changes
+* Update Beta with admin changes
+* Update Titan with refreshed look
+* MOD for status alert changing the LCARS skins
+
+## Anodyne Assets
+
+* __AnodyneDocs__
+    * Nova 2 libraries
+    * Nova 2 helpers
+* __AnodyneXtras__
+    * Build out site
+    * Fill with content
+* __Forums__
+    * Migrate from phpBB
+* __Main Site__
+    * Test new registration process
+    * Hook up contact form
+    * Verify content
+* __Nova Site__
+    * Screenshots of Nova 2
+    * Verify content
