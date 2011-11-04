@@ -35,6 +35,8 @@
 * Users can now search within their sent and received private messages.
 * Private messages have now been split in to separate inbox and sent message pages. This will help improve performance since the page doesn't have to load all the messages at once then split them off in to tabs.
 * Private messages in the inbox and sent messages list are now paginated.
+* The Reply to All link when reading a private message is only displayed if there's more than one recipient.
+* The Reply, Reply to All and Forward options when reading a private message are now displayed above and below the private message.
 
 ### The Nova Core
 
