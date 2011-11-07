@@ -20,9 +20,6 @@
 
 ## Anodyne Assets
 
-* __AnodyneDocs__
-    * Nova 2 libraries
-    * Nova 2 helpers
 * __AnodyneXtras__
     * Build out site
     * Fill with content
