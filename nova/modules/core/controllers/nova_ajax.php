@@ -9052,7 +9052,7 @@ abstract class Nova_ajax extends CI_Controller {
 			$this->load->model('specs_model', 'specs');
 			
 			// fire the character update event
-			$this->specs->update_spec_item($id, array('spec_images' => $imageStr));
+			$this->specs->update_spec_item($id, array('specs_images' => $imageStr));
 		}
 	}
 	
