@@ -6,7 +6,7 @@
 
 <script type="text/javascript">
 	$(document).ready(function(){
-		$("a[rel*=facebox]").live('click', function() {
+		$(document).on('click', '[rel=facebox]', function(){
 			var id = $(this).attr('myID');
 			var action = $(this).attr('myAction');
 			
@@ -147,7 +147,7 @@
 			return false;
 		});
 		
-		$('#submit').live('click', function(){
+		$(document).on('click', '#submit', function(){
 			var item = $(this).attr('rel');
 			var roles = [];
 			

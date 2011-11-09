@@ -63,7 +63,7 @@
 				});
 			});
 			
-			$('#addMission').live('click', function(){
+			$(document).on('click', '#addMission', function(){
 				var title = $('#addMissionTitle').val();
 				var desc = $('#addMissionDesc').val();
 				var option = $('#addMissionOption').val();

@@ -33,6 +33,8 @@
 		var $tabs = $('#tabs').tabs();
 		$tabs.tabs('select', <?php echo $tab;?>);
 		
+		$('.subtabs').tabs();
+		
 		var $date = $('.datepick').datepicker({
 			numberOfMonths: 2,
 			showButtonPanel: true,
@@ -84,7 +86,7 @@
 			return false;
 		});
 		
-		$('#update').live('click', function(){
+		$(document).on('click', '#update', function(){
 			var list = $('#list-grid').sortable('serialize');
 			
 			$.ajax({
@@ -102,7 +104,7 @@
 			return false;
 		});
 		
-		$('.upload-close').live('click', function(){
+		$(document).on('click', '.upload-close', function(){
 			var image = $(this).attr('remove');
 			var index = $(this).parent().index();
 			

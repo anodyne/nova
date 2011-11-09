@@ -18,7 +18,7 @@
 		
 		$('table.zebra tbody > tr:nth-child(odd)').addClass('alt');
 		
-		$('#start').live('click', function(){
+		$(document).on('click', '#start', function(){
 			var send;
 			
 			var twipsyOptions = {

@@ -65,7 +65,7 @@
 			$(this).popover('show');
 		});
 		
-		$('.close-popover').live('click', function(e){
+		$(document).on('click', '.close-popover', function(e){
 			
 			// prevent the default action
 			e.preventDefault();
@@ -76,7 +76,7 @@
 			});
 		});
 		
-		$('[name=additional]').live('click', function(){
+		$(document).on('click', '[name=additional]', function(){
 			var id = $(this).attr('id');
 			var send = {
 				'id': id,

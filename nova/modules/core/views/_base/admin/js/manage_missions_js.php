@@ -63,7 +63,7 @@
 			return false;
 		});
 		
-		$('#update').live('click', function(){
+		$(document).on('click', '#update', function(){
 			var list = $('#list-grid').sortable('serialize');
 			
 			$.ajax({
@@ -81,7 +81,7 @@
 			return false;
 		});
 		
-		$('.upload-close').live('click', function(){
+		$(document).on('click', '.upload-close', function(){
 			var image = $(this).attr('remove');
 			var index = $(this).parent().index();
 			

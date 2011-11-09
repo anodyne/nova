@@ -20,7 +20,7 @@ $tourhash = md5(implode('', array_keys($tourarray))); // 781e5e245d69b566979b86e
 		
 		$('table.zebra tbody > tr:nth-child(odd)').addClass('alt');
 		
-		$('#next').live('click', function(){
+		$(document).on('click', '#next', function(){
 			$('.lower').fadeOut('fast');
 			$('#loaded').fadeOut('fast', function(){
 				$('#loading').removeClass('hidden');
@@ -67,7 +67,7 @@ $tourhash = md5(implode('', array_keys($tourarray))); // 781e5e245d69b566979b86e
 			}
 		});
 		
-		$('#start').live('click', function(){
+		$(document).on('click', '#start', function(){
 			var twipsyOptions = {
 				animate: false,
 				placement: 'right',

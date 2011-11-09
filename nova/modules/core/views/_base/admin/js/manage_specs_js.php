@@ -10,6 +10,8 @@
 	$(document).ready(function(){
 		$('#tabs').tabs();
 		
+		$('.subtabs').tabs();
+		
 		$('table.zebra tbody > tr:nth-child(odd)').addClass('alt');
 		
 		$('#list-grid').sortable({
@@ -34,7 +36,7 @@
 			return false;
 		});
 		
-		$('#update').live('click', function(){
+		$(document).on('click', '#update', function(){
 			var list = $('#list-grid').sortable('serialize');
 			
 			$.ajax({
@@ -52,7 +54,7 @@
 			return false;
 		});
 		
-		$('.upload-close').live('click', function(){
+		$(document).on('click', '.upload-close', function(){
 			var image = $(this).attr('remove');
 			var index = $(this).parent().index();
 			

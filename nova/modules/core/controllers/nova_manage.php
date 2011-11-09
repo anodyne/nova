@@ -2492,6 +2492,8 @@ abstract class Nova_manage extends Nova_controller_admin {
 			'nogroups' => sprintf(lang('error_not_found'), lang('global_missiongroups')),
 			'managegroups' => '[ '. ucwords(lang('actions_manage') .' '. lang('global_missiongroups')) .' ]',
 			'images_later' => sprintf(lang('add_images_later'), lang('global_mission')),
+			'available_images' => ucwords(lang('labels_available').' '.lang('labels_images')),
+			'mission_images' => ucwords(lang('global_mission').' '.lang('labels_images')),
 		);
 		
 		$data['values'] = array(
@@ -4366,6 +4368,8 @@ abstract class Nova_manage extends Nova_controller_admin {
 			'back' => LARROW .' '. ucfirst(lang('actions_back')) .' '. lang('labels_to') .' '. ucwords(lang('global_specification') .' '. lang('labels_items')),
 			'images_later' => sprintf(lang('add_images_later'), lang('global_specification') .' '. lang('labels_item')),
 			'specitem_empty_fields' => lang('specitem_empty_fields'),
+			'available_images' => ucwords(lang('labels_available').' '.lang('labels_images')),
+			'spec_images' => ucwords(lang('global_specification').' '.lang('labels_item').' '.lang('labels_images')),
 		);
 		
 		$data['buttons'] = array(
@@ -4811,6 +4815,8 @@ abstract class Nova_manage extends Nova_controller_admin {
 			'back' => LARROW .' '. ucfirst(lang('actions_back')) .' '. lang('labels_to') .' '. ucwords(lang('global_touritems')),
 			'images_later' => sprintf(lang('add_images_later'), lang('global_touritem')),
 			'specitem_select' => lang('specitem_select'),
+			'available_images' => ucwords(lang('labels_available').' '.lang('labels_images')),
+			'tour_images' => ucwords(lang('global_touritem').' '.lang('labels_images')),
 		);
 		
 		$data['buttons'] = array(

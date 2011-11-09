@@ -23,7 +23,7 @@
 		});
 		$('#list').disableSelection();
 		
-		$('#update').live('click', function(){
+		$(document).on('click', '#update', function(){
 			var parent = $(this).parent().attr('class');
 			var list = $('#list').sortable('serialize');
 			
@@ -48,7 +48,7 @@
 			return false;
 		});
 		
-		$('.remove').live("click", function(){
+		$(document).on('click', '.remove', function(){
 			var parent = $(this).parent().parent().parent().parent().attr('class');
 			var id = $(this).attr('id');
 			
@@ -71,7 +71,7 @@
 			return false;
 		});
 		
-		$('#add').live('click', function(){
+		$(document).on('click', '#add', function(){
 			var parent = $(this).parent().parent().attr('class');
 			var send = {
 				deck: $('#deck').val(),
@@ -88,6 +88,7 @@
 				data: send,
 				success: function(data){
 					$('#list').append(data).fadeIn('slow');
+					$('#update_button_div').show();
 				},
 				complete: function(){
 					$('#loading').hide();

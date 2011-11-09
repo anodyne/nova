@@ -41,7 +41,7 @@
 			return false;
 		});
 		
-		$('.tag').live('click', function(){
+		$(document).on('click', '.tag', function(){
 			var id = $(this).attr('id');
 			var cats = $('[name=categories]').val();
 			

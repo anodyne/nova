@@ -44,7 +44,7 @@
 			return false;
 		});
 		
-		$('.remove').live("click", function(){
+		$(document).on('click', '.remove', function(){
 			var parent = $(this).parent().parent().parent().parent().attr('class');
 			var id = $(this).attr('id');
 			

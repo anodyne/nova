@@ -57,53 +57,62 @@
 			<?php endforeach;?>
 		<?php endif;?>
 		
+		<br />
+		<?php echo form_hidden('id', $id);?>
+		<?php echo form_button($buttons['submit']);?>
+		
+		<?php echo form_close();?>
+		
 <?php if ($id !== FALSE): ?>
 	</div>
 	
 	<div id="two">
-		<?php echo text_output($image_instructions);?>
-		
 		<p><?php echo anchor('upload/index', img($images['upload']) .' '. $label['upload'], array('class' => 'image fontMedium bold'));?></p>
 		
-		<ul id="list-grid">
-		<?php if (is_array($inputs['images']) && count($inputs['images']) > 0): ?>
-			<?php foreach ($inputs['images'] as $i): ?>
-				<?php $image = array('src' => base_url().Location::asset('images/tour', $i), 'width' => 130);?>
-				<li id="img_<?php echo str_replace('.', '\\.', $i);?>"><a href="#" class="image upload-close" remove="<?php echo str_replace('.', '\\.', $i);?>">x</a><?php echo img($image);?></li>
-			<?php endforeach;?>
-		<?php endif;?>
-		</ul>
-		
-		<div style="clear:both;"></div><br />
-		
-		<?php echo form_button($buttons['update']);?> &nbsp;&nbsp; <span id="loading_upload_update" class="hidden"><?php echo img($images['loading']);?></span>
-		
-		<?php if (isset($directory)): ?>
-			<hr />
+		<div class="subtabs">
+			<ul>
+				<li><a href="#five"><span><?php echo $label['tour_images'];?></span></a></li>
+				<li><a href="#six"><span><?php echo $label['available_images'];?></span></a></li>
+			</ul>
 			
-			<table class="zebra">
-				<tbody>
-				<?php foreach ($directory as $d): ?>
-					<tr>
-						<td class="cell-label"><?php echo $d['file'];?></td>
-						<td class="cell-spacer"></td>
-						<td><?php echo img($d['image']);?></td>
-						<td class="cell-spacer"></td>
-						<td><?php echo form_button($buttons['use']);?></td>
-					</tr>
-				<?php endforeach;?>
-				</tbody>
-			</table>
-		<?php endif;?>
+			<div id="five">
+				<p>
+					<?php echo form_button($buttons['update']);?> &nbsp;&nbsp;
+					<span id="loading_upload_update" class="hidden"><?php echo img($images['loading']);?></span>
+				</p><br />
+				
+				<ul id="list-grid">
+				<?php if (is_array($inputs['images']) && count($inputs['images']) > 0): ?>
+					<?php foreach ($inputs['images'] as $i): ?>
+						<?php $image = array('src' => base_url().Location::asset('images/tour', $i), 'width' => 130);?>
+						<li id="img_<?php echo str_replace('.', '\\.', $i);?>"><a href="#" class="image upload-close" remove="<?php echo str_replace('.', '\\.', $i);?>">x</a><?php echo img($image);?></li>
+					<?php endforeach;?>
+				<?php endif;?>
+				</ul>
+			</div>
+			
+			<div id="six">
+				<?php if (isset($directory)): ?>
+					<br />
+					<table class="zebra">
+						<tbody>
+						<?php foreach ($directory as $d): ?>
+							<tr>
+								<td class="cell-label"><?php echo $d['file'];?></td>
+								<td class="cell-spacer"></td>
+								<td><?php echo img($d['image']);?></td>
+								<td class="cell-spacer"></td>
+								<td><?php echo form_button($buttons['use']);?></td>
+							</tr>
+						<?php endforeach;?>
+						</tbody>
+					</table>
+				<?php endif;?>
+			</div>
+		</div>
 	</div>
 <?php endif;?>
-	
-	<br />
-	<?php echo form_hidden('id', $id);?>
-	<?php echo form_button($buttons['submit']);?>
-	
-	<?php echo form_close();?>
-	
+
 <?php if ($id !== FALSE): ?>
 	</div>
 <?php endif;?>

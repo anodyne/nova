@@ -13,7 +13,7 @@
 			$('.submit-div').show();
 		}
 		
-		$('#update').live('click', function(){
+		$(document).on('click', '#update', function(){
 			var parent = $(this).parent().parent().attr('class');
 			var list = $('#list').sortable('serialize');
 			
@@ -38,7 +38,7 @@
 			return false;
 		});
 		
-		$('.remove').live("click", function(){
+		$(document).on('click', '.remove', function(){
 			var parent = $(this).parent().parent().parent().attr('class');
 			var id = $(this).attr('id');
 			
@@ -65,7 +65,7 @@
 			return false;
 		});
 		
-		$('#add').live('click', function(){
+		$(document).on('click', '#add', function(){
 			var parent = $(this).parent().parent().attr('class');
 			var id = $('#crew option:selected').val();
 			var user = $('#crew option:selected').html();

@@ -2,7 +2,7 @@
 
 <script type="text/javascript" charset="utf-8">
 	$(document).ready(function(){
-		$('#install').live('click', function(){
+		$(document).on('click', '#install', function(){
 			$('#container .lower').fadeOut('fast');
 			$('#loaded').fadeOut('fast', function(){
 				$('#loading').removeClass('hidden');

@@ -15,7 +15,6 @@
 	
 	<div class="fontSmall gray loader bold">
 		&nbsp;
-		
 		<div id="loading" class="hidden">
 			<?php echo img($loading);?><br />
 			<?php echo $label['processing'];?>
@@ -32,18 +31,20 @@
 	</div><br />
 	
 	<hr /><br />
-
-	<?php if (isset($decks)): ?>
-		<ul id="list" class="UITheme">
+	
+	<ul id="list" class="UITheme">
+		<?php if (isset($decks)): ?>
 			<?php foreach ($decks as $key => $value): ?>
 				<li class="ui-state-default" id="decks_<?php echo $key;?>">
 					<div class="float_right"><a href="#" class="remove image" name="remove" id="<?php echo $key;?>">x</a></div>
 					<a href="#" rel="facebox" class="image" myID="<?php echo $key;?>"><?php echo $value;?></a>
 				</li>
 			<?php endforeach; ?>
-		</ul>
-		
+		<?php endif;?>
+	</ul>
+	
+	<div id="update_button_div" class="<?php if ( ! isset($decks)): echo 'hidden'; endif;?>">
 		<br />
 		<?php echo form_button($buttons['submit']);?>
-	<?php endif;?>
+	</div>
 <?php endif;?>

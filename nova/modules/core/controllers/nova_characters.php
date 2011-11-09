@@ -1374,6 +1374,8 @@ abstract class Nova_characters extends Nova_controller_admin {
 			'type_npc' => ucwords(lang('status_nonplaying') .' '. lang('global_characters')),
 			'upload' => ucwords(lang('actions_upload') .' '. lang('labels_images') .' '. RARROW),
 			'change' => ucwords(lang('actions_change').' '.lang('global_character').' '.lang('labels_status')),
+			'available_images' => ucwords(lang('labels_available').' '.lang('labels_images')),
+			'character_images' => ucwords(lang('global_character').' '.lang('labels_images')),
 		);
 		
 		$js_data['rankloc'] = $this->rank;
