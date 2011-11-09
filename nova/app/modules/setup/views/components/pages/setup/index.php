@@ -11,10 +11,6 @@
 		</a>
 	<?php endif;?>
 	
-	<a href="<?php echo Url::site('setup/main/verify');?>" class="install-secoptions">
-		<span class="secoptions-verify">Verify my server can run Nova</span>
-	</a>
-	
 	<a href="http://docs.anodyne-productions.com/index.php/nova3/tour" target="_blank" class="install-secoptions">
 		<span class="secoptions-tour">Take a tour of Nova</span>
 	</a>
@@ -44,10 +40,6 @@
 		
 		<a href="http://docs.anodyne-productions.com/index.php/nova/overview/upgrade" target="_blank" class="install-secoptions">
 			<span class="secoptions-guide">Read the Update Guide</span>
-		</a>
-		
-		<a href="<?php echo Url::site('setup/main/verify');?>" class="install-secoptions">
-			<span class="secoptions-verify">Verify my server can run Nova</span>
 		</a>
 		
 		<a href="http://docs.anodyne-productions.com/index.php/nova/tour" target="_blank" class="install-secoptions">

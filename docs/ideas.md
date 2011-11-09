@@ -53,3 +53,8 @@
 ## Users
 
 * Clear a user's login lockout.
+
+## Manifest
+
+* Like SharePoint list views, you should be able to create different "views" for the manifest and be able to set criteria for those views. This would allow users to create different views for different manifests to show what they want.
+* Views should be able to pull any information from the character and user sets of data.

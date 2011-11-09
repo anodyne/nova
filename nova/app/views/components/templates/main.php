@@ -13,26 +13,26 @@
 	</div>
 </header>
 
-<section>
-	<div class="wrapper">
-		<nav>
-			<?php echo $navsub;?>
-		</nav>
-		
-		<div id="content">
-			<?php echo $flash;?>
-			
-			<h1 class="page-head"><?php echo $header;?></h1>
-			<p><?php echo $message;?></p>
-			
-			<?php echo $content;?>
-			<?php echo $ajax;?>
-			
-			<div style="clear:both;">&nbsp;</div>
-		</div>
-		
-		<footer>
-			<?php echo $footer;?>
-		</footer>
+<div class="container-fluid">
+	<div class="sidebar">
+		<?php echo $navsub;?>
 	</div>
-</section>
+	
+	<div class="content">
+		<?php echo $flash;?>
+		
+		<h1><?php echo $header;?></h1>
+		<p><?php echo $message;?></p>
+		
+		<?php echo $content;?>
+		<?php echo $ajax;?>
+		
+		<div style="clear:both;">&nbsp;</div>
+	</div>
+</div>
+
+<div class="wrapper">
+	<footer>
+		<?php echo $footer;?>
+	</footer>
+</div>

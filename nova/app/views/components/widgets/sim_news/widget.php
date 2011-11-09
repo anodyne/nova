@@ -1,32 +1,8 @@
-<?php
-/*
-$news = Jelly::query('news')
-	->where('status', '=', 'activated')
-	->order_by('date', 'desc')
-	->limit(5);
-	
-( ! Auth::is_logged_in()) ? $news->where('private', '=', 'n') : false;
+<p>Every single thing we're doing in Nova 3 is prefaced with two questions:</p>
 
-$news = $news->select();
+<ul>
+	<li>Will this make Nova smarter?</li>
+	<li>Will this make Nova better?</li>
+</ul>
 
-if (count($news) > 0):
-	foreach ($news as $n):
-	
-?>
-
-		<h4><?php echo html::anchor('main/viewnews/'.$n->id, $n->title);?></h4>
-		<span class="subtle fontSmall">
-			<strong><?php echo ucfirst(__("author"));?>:</strong> <?php echo $n->author_character->print_name();?><br />
-			<strong><?php echo ucfirst(__("category"));?>:</strong> <?php echo $n->category->name;?><br />
-			<?php echo Date::mdate($n->date);?>
-		</span>
-		<p><?php echo Text::limit_words($n->content, 50, '...');?></p>
-		
-<?php
-
-	endforeach;
-else:
-	echo '<h3 class="warning">'.__("error.not_found", array(':item' => __("news items"))).'</h3>';
-endif;
-*/
-?>
+<p>If the answer is no to either of those questions, it doesn't happen. Ultimately, our goal is to make a better product that makes it easier than ever to manage your game. Everything from fine-grained control of meta data to storing every page title, page header and page introduction message in the database for easy editing is designed to make Nova smarter and better.</p>

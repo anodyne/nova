@@ -11,20 +11,39 @@
 
 abstract class Nova_Menu {
 	
+	public static function classic($type, $cat)
+	{
+		return self::_classic($type, $cat);
+	}
+	
+	public static function dropdown($type)
+	{
+		switch ($type)
+		{
+			case 'main':
+				$menu = self::_dropdown_main();
+			break;
+			
+			case 'admin':
+				$menu = self::_dropdown_admin();
+			break;
+		}
+		
+		return $menu;
+	}
+	
 	/**
 	 * The only entry point into the class. This method will call one of the
 	 * private methods to do all the heavy lifting of generating the menus.
 	 *
-	 *     echo Menu::build('sub', 'personnel');
-	 *
-	 * @access	public
+	 * @access	protected
 	 * @uses	Cache::instance
 	 * @uses	Cache::get
 	 * @param	string	the type of menu to build (main, sub, adminsub)
 	 * @param	string	the category of menu to build
 	 * @return 	mixed	an unordered list with all the menu items or false if an invalid type is supplied
 	 */
-	public static function build($type, $cat)
+	protected static function _classic($type, $cat)
 	{
 		// get an instance of the cache module
 		$cache = Cache::instance();
@@ -53,6 +72,54 @@ abstract class Nova_Menu {
 		}
 		
 		return $menu;
+	}
+	
+	protected static function _dropdown_main()
+	{
+		// grab the session
+		$session = Session::instance();
+		
+		// get the user id from the session
+		$userid = $session->get('userid');
+		
+		// get the menu items
+		$items = Model_Menu::find()
+			->where('type', 'main')
+			->where('display', (int) true)
+			->order_by('group', 'asc')
+			->order_by('order', 'asc')
+			->get();
+		
+		if ($items)
+		{
+			return self::_render('main_dropdown', $items);
+		}
+		
+		return false;
+	}
+	
+	protected static function _dropdown_admin()
+	{
+		// grab the session
+		$session = Session::instance();
+		
+		// get the user id from the session
+		$userid = $session->get('userid');
+		
+		// get the menu items
+		$items = Model_Menu::find()
+			->where('type', 'main')
+			->where('display', (int) true)
+			->order_by('group', 'asc')
+			->order_by('order', 'asc')
+			->get();
+		
+		if ($items)
+		{
+			return self::_render('main_dropdown', $items);
+		}
+		
+		return false;
 	}
 	
 	/**
@@ -107,7 +174,7 @@ abstract class Nova_Menu {
 	 * @param	string	the category of sub navigation to pull
 	 * @return	mixed	the menu to output or false if there are no menu items
 	 */
-	protected static function _build_sub($cat)
+	protected static function _build_sub($cat, $render = true)
 	{
 		// grab the session
 		$session = Session::instance();
@@ -131,16 +198,21 @@ abstract class Nova_Menu {
 				$data[$item->order] = $item;
 			}
 			
-			// render the final output
-			$final = self::_render('sub', $data);
-			
-			// if the sub menu isn't cached, cache it
-			if ( ! Cache::instance()->get('menu_sub_'.$cat))
+			if ($render)
 			{
-				Cache::instance()->set('menu_sub_'.$cat, $final);
+				// render the final output
+				$final = self::_render('sub', $data);
+				
+				// if the sub menu isn't cached, cache it
+				if ( ! Cache::instance()->get('menu_sub_'.$cat))
+				{
+					Cache::instance()->set('menu_sub_'.$cat, $final);
+				}
+				
+				return $final;
 			}
 			
-			return $final;
+			return $data;
 		}
 		
 		return false;
@@ -281,13 +353,13 @@ abstract class Nova_Menu {
 	 * @param	mixed	the data to use for the menu render
 	 * @return	string	the menu output
 	 */
-	protected static function _render($type = '', $data = '')
+	protected static function _render($type, $data)
 	{
-		$output = '<ul>';
-		
 		switch ($type)
 		{
 			case 'adminsidebar':
+				$output = '<ul>';
+				
 				foreach ($data as $k => $item)
 				{
 					// set the link to the landing page
@@ -314,9 +386,13 @@ abstract class Nova_Menu {
 					$output.= '<li><a href="'.$link.'" rel="'.$item->category.'" class="'.$class_string.'">';
 					$output.= '<span class="navicn navicn-'.$item->category.'"></span>'.$item->name.'</a></li>';
 				}
+				
+				$output.= '</ul>';
 			break;
 			
 			case 'adminsub':
+				$output = '<ul>';
+				
 				foreach ($data as $key => $value)
 				{
 					if (isset($value['menu']) and count($value['menu']) > 0)
@@ -355,9 +431,13 @@ abstract class Nova_Menu {
 						$output.= '<li class="spacer"></li>';
 					}
 				}
+				
+				$output.= '</ul>';
 			break;
 				
 			case 'main':
+				$output = '<ul>';
+				
 				foreach ($data as $k => $item)
 				{
 					$display = false;
@@ -415,9 +495,13 @@ abstract class Nova_Menu {
 						$output.= '<a href="'. $url .'"'. $target .' class="'. $class_string .'"><span>'. $item->name .'</span></a></li>';
 					}
 				}
+				
+				$output.= '</ul>';
 			break;
 				
 			case 'sub':
+				$output = '<ul>';
+				
 				foreach ($data as $item)
 				{
 					$display = false;
@@ -465,10 +549,143 @@ abstract class Nova_Menu {
 						$output.= '<li><a href="' . $link .'"' . $target . '><span>' . $item->name . '</span></a></li>';
 					}
 				}
+				
+				$output.= '</ul>';
+			break;
+			
+			case 'sub_dropdown':
+				$output = '<ul class="dropdown-menu">';
+				
+				foreach ($data as $item)
+				{
+					$display = false;
+	
+					if ($item->group != 0 and $item->order == 0)
+					{
+						$output.= '<li class="divider"></li>';
+					}
+	
+					if ($item->url_target == 'offsite')
+					{
+						$target = ' target="_blank"';
+						$link = $item->url;
+					}
+					else
+					{
+						$target = null;
+						$link = Url::site($item->url);
+					}
+	
+					if (($item->needs_login == 'y' and Auth::is_logged_in()) 
+							or ($item->needs_login == 'n' and ! Auth::is_logged_in()) 
+							or $item->needs_login == 'none')
+					{
+						if ($item->needs_login == 'y')
+						{
+							$access = Auth::check_access($item->access, false);
+							$level = Auth::get_access_level($item->access);
+	
+							if (($item->use_access == 'y' and $access === true and 
+									($item->level > 0 and $level >= $item->level or $item->level == 0)) 
+									or $item->use_access == 'n')
+							{
+								$display = true;
+							}
+						}
+						else
+						{
+							$display = true;
+						}
+					}
+	
+					if ($display === true)
+					{
+						$output.= '<li><a href="' . $link .'"' . $target . '><span>' . $item->name . '</span></a></li>';
+					}
+				}
+				
+				$output.= '</ul>';
+			break;
+			
+			case 'main_dropdown':
+				$output = '<ul>';
+				
+				foreach ($data as $item)
+				{
+					$display = false;
+		
+					if (($item->needs_login == 'y' and Auth::is_logged_in()) 
+							or ($item->needs_login == 'n' and ! Auth::is_logged_in()) 
+							or $item->needs_login == 'none')
+					{
+						if ($item->needs_login == 'y')
+						{
+							$access = Auth::check_access($item->access, false);
+							$level = Auth::get_access_level($item->access);
+		
+							if (($item->use_access == 'y' and $access === true and 
+									($item->level > 0 and $level >= $item->level or $item->level == 0)) 
+									or $item->use_access == 'n')
+							{
+								$display = true;
+							}
+						}
+						else
+						{
+							$display = true;
+						}
+					}
+					
+					// get the menu items
+					$subs = self::_build_sub($item->category, false);
+		
+					if ($display === true)
+					{
+						$output.= ($subs) ? '<li class="dropdown" data-dropdown="dropdown">' : '<li>';
+						
+						$class = array();
+		
+						if ($item->url_target == 'onsite')
+						{
+							$uri = (Request::current()->uri() == '/') ? array(0 => 'main') : explode('/', Request::current()->uri());
+							$cur = explode('/', $item->url);
+							
+							if ($uri[0] == $cur[0])
+							{
+								$class[] = 'active';
+							}
+							
+							if ($subs)
+							{
+								$class[] = 'dropdown-toggle';
+							}
+							
+							$target = null;
+							$url = Url::site($item->url);
+						}
+						else
+						{
+							$target = ' target="_blank"';
+							$url = $item->url;
+						}
+		
+						// create a string from the array of classes
+						$class_string = implode(' ', $class);
+		
+						$output.= '<a href="'. $url .'"'. $target .' class="'. $class_string .'"><span>'. $item->name .'</span></a>';
+						
+						if ($subs)
+						{
+							$output.= self::_render('sub_dropdown', $subs);
+						}
+						
+						$output.= '</li>';
+					}
+				}
+				
+				$output.= '</ul>';
 			break;
 		}
-		
-		$output.= '</ul>';
 		
 		return $output;
 	}

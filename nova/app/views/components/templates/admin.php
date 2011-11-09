@@ -1,33 +1,38 @@
 <noscript>
-	<div class="system_warning"><?php echo __("You need to have Javascript turned on to use all of Nova 3's features.");?></div>
+	<div class="system_warning"><?php echo ___("You need to have Javascript turned on to use all of Nova 3's features.");?></div>
 </noscript>
 
 <?php echo $panel;?>
 
-<div id="container">
-	<header>Name Goes Here</header>
+<header>
+	<div class="wrapper">
+		<div class="nav-main">
+			<img src="<?php echo Url::base().MODFOLDER;?>/app/views/design/images/main/nova.png" class="float-right">
+			<?php echo $navmain;?>
+		</div>
+	</div>
+</header>
+
+<div class="container-fluid">
+	<div class="sidebar">
+		<?php echo $navsub;?>
+	</div>
 	
-	<section>
-		<div id="sidebar"><?php echo $navmain;?></div>
+	<div class="content">
+		<?php echo $flash;?>
 		
-		<div id="subnav-popup">
-			<div id="subnav-popup-arrow"></div>
-			<div id="subnav-popup-content"></div>
-		</div>
+		<h1><?php echo $header;?></h1>
+		<p><?php echo $message;?></p>
 		
-		<div id="content">
-			<div class="inner">
-				<div id="section-nav-trigger"><div class="arrow"></div>Control Panel</div>
-				<div id="section-nav"></div>
-				
-				<?php echo $flash;?>
-				<?php echo $content;?>
-				<?php echo $ajax;?>
-				
-				<div style="clear:both;">&nbsp;</div>
-			</div>
-		</div>
-	</section>
+		<?php echo $content;?>
+		<?php echo $ajax;?>
+		
+		<div style="clear:both;">&nbsp;</div>
+	</div>
 </div>
 
-<footer><?php echo $footer;?></footer>
+<div class="wrapper">
+	<footer>
+		<?php echo $footer;?>
+	</footer>
+</div>

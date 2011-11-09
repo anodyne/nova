@@ -695,33 +695,4 @@ return array
 		$this->template->layout->image = Html::image(MODFOLDER.'/app/modules/setup/views/design/images/tick-24x24.png', array('id' => 'title-image'));
 		$this->template->layout->label = 'Schema Verification';
 	}
-	
-	public function action_verify()
-	{
-		// create a new content view
-		$this->template->layout->content = View::factory('components/pages/setup/verify');
-		
-		// assign the object a shorter variable to use in the method
-		$data = $this->template->layout->content;
-		
-		// the verification table
-		$data->verify = Setup::verify_server();
-		
-		if ( ! $data->verify or ! isset($data->verify['failure']))
-		{
-			// build the next step button
-			$next = array(
-				'type' => 'submit',
-				'class' => 'btn-main',
-				'id' => 'install',
-			);
-			
-			// build the next step control
-			$this->template->layout->controls = Form::open('setup/main/index').Form::button('install', 'Back to Setup', $next).Form::close();
-		}
-		
-		$this->template->title.= 'Verify Server Requirements';
-		$this->template->layout->image = Html::image(MODFOLDER.'/app/modules/setup/views/design/images/tick-24x24.png', array('id' => 'title-image'));
-		$this->template->layout->label = 'Verify Server Requirements';
-	}
 }

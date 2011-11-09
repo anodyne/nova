@@ -231,17 +231,19 @@ kbd {
 	text-shadow: 0 1px 0 rgba(255, 255, 255, .8);
 }
 
-.install-options {
+.install-options,
+.install-secoptions {
 	margin: 1em 0;
 	padding: .5em;
 	display: block;
 	color: #888 !important;
 	text-decoration: none;
 	border: 1px solid transparent !important;
-	border-radius: 2px;
 	-moz-border-radius: 2px;
+	border-radius: 2px 2px 2px 2px;
 }
-.install-options span {
+.install-options span,
+.install-sectionoptions span {
 	font-size: 1.65em;
 	text-shadow: 0 1px 0 rgba(255, 255, 255, 1);
 }
@@ -251,42 +253,7 @@ kbd {
 	font-size: 1em;
 	font-style: normal;
 }
-.install-options:hover {
-	border: 1px solid #20559a !important;
-	background: #52a8e8;
-	background: -moz-linear-gradient(top, #52a8e8 0%, #377ad0 100%);
-	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#52a8e8), color-stop(100%,#377ad0));
-	background: -webkit-linear-gradient(top, #52a8e8 0%,#377ad0 100%);
-	background: -o-linear-gradient(top, #52a8e8 0%,#377ad0 100%);
-	background: -ms-linear-gradient(top, #52a8e8 0%,#377ad0 100%);
-	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#52a8e8', endColorstr='#377ad0',GradientType=0 );
-	background: linear-gradient(top, #52a8e8 0%,#377ad0 100%);
-	box-shadow: inset 0 1px 0 rgba(255, 255, 255, .3);
-	-moz-box-shadow: inset 0 1px 0 rgba(255, 255, 255, .3);
-	-webkit-box-shadow: inset 0 1px 0 rgba(255, 255, 255, .3);
-}
-.install-options:hover span,
-.install-options:hover em {
-	color: #fff !important;
-	text-shadow: 0 1px 1px rgba(0, 0, 0, .35) !important;
-}
-
-.install-secoptions {
-	padding: .5em;
-	display: block;
-	width: 350px;
-	color: #888 !important;
-	text-decoration: none;
-	border: 1px solid transparent !important;
-	border-radius: 2px;
-	-moz-border-radius: 2px;
-}
-.install-secoptions span {
-	padding: 0 0 0 28px;
-	background-color: transparent;
-	font-size: 1em;
-	text-shadow: 0px 1px 1px rgba(255, 255, 255, 1);
-}
+.install-options:hover,
 .install-secoptions:hover {
 	color: #555 !important;
 	border: 1px solid #bbb !important;
@@ -298,9 +265,21 @@ kbd {
 	background: -ms-linear-gradient(top, #ececec 0%,#dddddd 100%);
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ececec', endColorstr='#dddddd',GradientType=0 );
 	background: linear-gradient(top, #ececec 0%,#dddddd 100%);
-	box-shadow: inset 0 1px 1px rgba(255, 255, 255, .6), inset 0 0 0 transparent, -1px 1px 1px rgba(255, 255, 255, .6);
 	-moz-box-shadow: inset 0 1px 1px rgba(255, 255, 255, .6), inset 0 0 0 transparent, -1px 1px 1px rgba(255, 255, 255, .6);
 	-webkit-box-shadow: inset 0 1px 1px rgba(255, 255, 255, .6), inset 0 0 0 transparent, -1px 1px 1px rgba(255, 255, 255, .6);
+	box-shadow: inset 0 1px 1px rgba(255, 255, 255, .6), inset 0 0 0 transparent, -1px 1px 1px rgba(255, 255, 255, .6);
+}
+
+.install-secoptions {
+	margin: .2em 0;
+	padding: .5em;
+	display: block;
+	width: 350px;
+}
+.install-secoptions span {
+	padding: 0 0 0 28px;
+	background-color: transparent;
+	font-size: 1em;
 }
 .install-secoptions:hover span { background-position: 0 -17px; }
 .secoptions-tour {

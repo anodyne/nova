@@ -1,29 +1,3 @@
-<?php
-/*
-$missions = Jelly::query('mission')
-	->where('status', '=', 'current')
-	->select();
+<p>In Nova 3, we're introducing widgets as a way to display the information you want on your main page. Nova 3 will come standard with a bunch of widgets for you to use, but creating new ones is as easy as writing a little HTML and PHP and using QuickInstall to add it to the system!</p>
 
-if (count($missions) > 0):
-	foreach ($missions as $m):
-	
-?>
-
-		<h4><?php echo html::anchor('sim/mission/'.$m->id, $m->title);?></h4>
-		
-		<?php if ( ! empty($m->group->name)): ?>
-			<p class="subtle fontSmall bold">
-				<?php echo ucfirst(__('label.in')).' '.$m->group->name;?>
-			</p>
-		<?php endif;?>
-		
-		<p><?php echo nl2br($m->desc);?></p>
-		
-<?php
-
-	endforeach;
-else:
-	echo '<h3 class="warning">'.__("No mission information found").'</h3>';
-endif;
-*/
-?>
+<p>There are 4 widget "zones" on the main page. You can have 3 widgets in these spaces and one below the menu. Setting up your widgets is as simple as selecting them from a menu. Only want 2 widgets? Just add the first two widgets and leave the third blank. Nova knows what to do from there!</p>

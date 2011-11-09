@@ -52,7 +52,8 @@ class Controller_Nova_Main extends Controller_Nova_Base {
 		$this->template->title 						= $this->options->sim_name.' :: ';
 		$this->template->javascript					= false;
 		$this->template->layout						= View::factory(Location::file('main', $this->skin, 'templates'), $vars);
-		$this->template->layout->navmain 			= Menu::build('main', 'main');
+		$this->template->layout->navmain 			= Menu::classic('main', 'main');
+		//$this->template->layout->navmain_dropdown 	= Menu::dropdown('main');
 		$this->template->layout->ajax 				= false;
 		$this->template->layout->flash				= false;
 		$this->template->layout->content			= false;
@@ -66,7 +67,7 @@ class Controller_Nova_Main extends Controller_Nova_Base {
 		$this->template->layout->panel->workflow	= false;
 		
 		$this->template->layout->navsub 			= View::factory(Location::file('navsub', $this->skin, 'partials'));
-		$this->template->layout->navsub->menu		= Menu::build('sub', 'main');
+		$this->template->layout->navsub->menu		= Menu::classic('sub', 'main');
 		$this->template->layout->navsub->widget1	= false;
 		$this->template->layout->navsub->widget2	= false;
 		$this->template->layout->navsub->widget3	= false;
@@ -78,7 +79,7 @@ class Controller_Nova_Main extends Controller_Nova_Base {
 	public function action_index()
 	{
 		// create a new content view
-		$this->_data = View::factory(Location::view('main_index', $this->skin, 'pages'));
+		$this->_data = View::factory(Location::view('main/index', $this->skin, 'pages'));
 		
 		// get all of the widgets for the page
 		$widgets = Model_CatalogueWidget::get_all_items();
@@ -112,7 +113,7 @@ class Controller_Nova_Main extends Controller_Nova_Base {
 	public function action_credits()
 	{
 		// create a new content view
-		$this->_data = View::factory(Location::view('main_credits', $this->skin, 'pages'));
+		$this->_data = View::factory(Location::view('main/credits', $this->skin, 'pages'));
 		
 		// non-editable credits
 		$credits_perm = Model_SiteContent::get_content('credits_perm');
@@ -145,7 +146,7 @@ class Controller_Nova_Main extends Controller_Nova_Base {
 	public function action_components()
 	{
 		// create a new content view
-		$this->_data = View::factory(Location::view('main_components', $this->skin, 'pages'));
+		$this->_data = View::factory(Location::view('main/components', $this->skin, 'pages'));
 		
 		// title, header and message content
 		$this->_data->title = 'Components';
@@ -160,5 +161,8 @@ class Controller_Nova_Main extends Controller_Nova_Base {
 		{
 			// do something
 		}
+		
+		//echo Debug::vars(Menu::dropdown());
+		echo Menu::dropdown();
 	}
 }

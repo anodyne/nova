@@ -35,9 +35,12 @@ class Controller_Nova_Login extends Controller_Nova_Base {
 		
 		// set the values to be passed to the template
 		$vars = array(
-			'skin'	=> $this->skin,
-			'sec'	=> 'login',
-			'name'	=> $this->options->sim_name,
+			'skin'			=> $this->skin,
+			'sec'			=> 'login',
+			'name'			=> $this->options->sim_name,
+			'meta_desc'		=> $this->options->meta_description,
+			'meta_keywords'	=> $this->options->meta_keywords,
+			'meta_author'	=> $this->options->meta_author,
 		);
 		
 		// set the structure file
@@ -47,7 +50,7 @@ class Controller_Nova_Login extends Controller_Nova_Base {
 		$this->template->title 						= $this->options->sim_name.' :: ';
 		$this->template->javascript					= false;
 		$this->template->layout						= View::factory(Location::file('login', $this->skin, 'templates'), $vars);
-		$this->template->layout->navmain 			= Menu::build('main', 'main');
+		$this->template->layout->navmain 			= Menu::classic('main', 'main');
 		$this->template->layout->ajax 				= false;
 		$this->template->layout->flash				= false;
 		$this->template->layout->content			= false;
@@ -58,7 +61,7 @@ class Controller_Nova_Login extends Controller_Nova_Base {
 	public function action_index()
 	{
 		// create a new content view
-		$this->_data = View::factory(Location::view('login_index', $this->skin, 'pages'));
+		$this->_data = View::factory(Location::view('login/index', $this->skin, 'pages'));
 		
 		// grab the UID
 		$uid = Model_System::get_uid();
@@ -124,7 +127,7 @@ class Controller_Nova_Login extends Controller_Nova_Base {
 			}
 			
 			// create a new content view
-			$this->_data = View::factory(Location::view('login_success', $this->skin, 'pages'));
+			$this->_data = View::factory(Location::view('login/success', $this->skin, 'pages'));
 			
 			// set the redirect
 			$this->_data->redirect = array('time' => 5, 'url' => Url::site('admin/index'));
@@ -143,7 +146,7 @@ class Controller_Nova_Login extends Controller_Nova_Base {
 	public function action_error($error = 0)
 	{
 		// create a new content view
-		$this->_data = View::factory(Location::view('login_error', $this->skin, 'pages'));
+		$this->_data = View::factory(Location::view('login/error', $this->skin, 'pages'));
 		
 		// content
 		$this->_data->title = ucfirst(__("error"));
@@ -190,7 +193,7 @@ class Controller_Nova_Login extends Controller_Nova_Base {
 		Auth::logout();
 		
 		// create a new content view
-		$this->_data = View::factory(Location::view('login_logout', $this->skin, 'pages'));
+		$this->_data = View::factory(Location::view('login/logout', $this->skin, 'pages'));
 		
 		// set the redirect
 		$this->_data->redirect = array('time' => 5, 'url' => Url::site('main/index'));
@@ -221,7 +224,7 @@ class Controller_Nova_Login extends Controller_Nova_Base {
 	public function action_reset()
 	{
 		// create a new content view
-		$this->_data = View::factory(Location::view('login_reset', $this->skin, 'pages'));
+		$this->_data = View::factory(Location::view('login/reset', $this->skin, 'pages'));
 		
 		if (HTTP_Request::POST == $this->request->method())
 		{

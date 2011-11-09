@@ -140,9 +140,9 @@ abstract class Controller_Nova_Base extends Controller_Template {
 		$this->template->layout->content = $this->_data;
 		
 		// set the final template data
-		$this->template->title.= $this->_data->title;
-		$this->template->layout->header = $this->_data->header;
-		$this->template->layout->message = $this->_data->message;
+		$this->template->title.= (isset($this->_data->title)) ? $this->_data->title : null;
+		$this->template->layout->header = (isset($this->_data->header)) ? $this->_data->header : null;
+		$this->template->layout->message = (isset($this->_data->message)) ? $this->_data->message : null;
 		
 		// send the response
 		$this->response->body($this->template);

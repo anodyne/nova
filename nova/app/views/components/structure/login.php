@@ -4,20 +4,22 @@
 		<meta charset="utf-8">
 		<title><?php echo $title;?></title>
 		
-		<meta name="description" content="<?php echo Kohana::$config->load('nova.meta_desc');?>">
-		<meta name="keywords" content="<?php echo Kohana::$config->load('nova.meta_keywords');?>">
-		<meta name="author" content="<?php echo Kohana::$config->load('nova.meta_author');?>">
+		<meta name="description" content="<?php echo $meta_desc;?>">
+		<meta name="keywords" content="<?php echo $meta_keywords;?>">
+		<meta name="author" content="<?php echo $meta_author;?>">
 		
-		<?php if (isset($redirect)): ?>
-			<meta http-equiv="refresh" content="<?php echo $redirect['time'];?>;url=<?php echo $redirect['url'];?>">
-		<?php endif;?>
+		<?php if (isset($_redirect)): echo $_redirect; endif;?>
 		
 		<!--[if lt IE 9]>
 		<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
 		<![endif]-->
 		
 		<?php echo Html::script(MODFOLDER.'/modules/assets/js/jquery.js');?>
+		<?php echo Html::script(MODFOLDER.'/modules/assets/js/bootstrap/bootstrap-dropdown.js');?>
+		
 		<?php echo $javascript;?>
+		
+		<link rel="stylesheet" href="<?php echo Url::base().MODFOLDER;?>/app/views/design/bootstrap.min.css">
 		
 		<?php if (is_file(APPPATH.'views/'.$skin.'/design/style.css')): ?>
 			<?php echo Html::style(APPFOLDER.'/views/'.$skin.'/design/style.css');?>
