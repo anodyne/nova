@@ -5,6 +5,8 @@
 ## Dynamic Forms
 
 * Add a field to the database that admins can write help content in. If that field isn't empty, display a question mark icon that when hovered over, shows the help information.
+* Proper validation on all fields.
+* Fields that only admins can see and edit.
 
 ## Awards
 
@@ -53,8 +55,20 @@
 ## Users
 
 * Clear a user's login lockout.
+* Admins should be able to clear a user's login lockouts.
 
 ## Manifest
 
 * Like SharePoint list views, you should be able to create different "views" for the manifest and be able to set criteria for those views. This would allow users to create different views for different manifests to show what they want.
 * Views should be able to pull any information from the character and user sets of data.
+
+## Application Review System
+
+* When an application is received, it's thrown in to a review system where approved users can comment on an application and ultimately vote YES, NO or NO DECISION on the application.
+* Rules can be set for applications.
+    * If an application is received for any departments, add User A to the review process.
+    * If an application is received for Departent A, add User B to the review process.
+    * If a rule has no users, the state of the rule needs to be changed to INACTIVE so that it won't be triggered by an application.
+    * If User A is on LOA or ELOA, they shouldn't be added to the review process.
+    * When a user is deactivated, they need to be removed from all rules.
+* Does this mean we can't ever delete characters or users? Without it, there would be no access to the history of applications. (If not, we might be able to store an application as XML and then when they're accepted, move them in to the database.)
