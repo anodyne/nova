@@ -46,10 +46,10 @@
 * Updated to jQuery 1.7.
 * Updated to jQuery UI 1.8.16.
 * Updated to jQuery Uniform 1.7.5.
-* Updated to jQuery prettyPhoto 3.1.2.
+* Updated to jQuery prettyPhoto 3.1.3.
 * Added the jQuery Chosen plugin.
-* Added the Bootstrap by Twitter Twipsy plugin (version 1.3).
-* Added the Bootstrap by Twitter Popover plugin (version 1.3).
+* Added the Bootstrap by Twitter Twipsy plugin (version 1.4).
+* Added the Bootstrap by Twitter Popover plugin (version 1.4).
 * Removed the qTip plugin. (Please use the Bootstrap Twipsy plugin instead.)
 * Changed the `banned.php` file to `message.php` that now contains notifications of Level 2 bans, a missing `nova` directory and incompatible PHP version information.
 * Seamless substitution can now be used to override email view files from the `_base_override` directory.
