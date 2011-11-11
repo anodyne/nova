@@ -44,8 +44,8 @@
   height: 0;
 }
 .popover .inner {
-  background-color: #000000;
-  background-color: rgba(0, 0, 0, 0.8);
+  background: #000000;
+  background: rgba(0, 0, 0, 0.8);
   padding: 3px;
   overflow: hidden;
   width: 280px;
