@@ -326,7 +326,7 @@ $this->db->update('system_components', array('comp_version' => '1.8.16'));
 
 // update the jquery prettyphoto info
 $this->db->where('comp_name', 'prettyPhoto');
-$this->db->update('system_components', array('comp_version' => '3.1.2'));
+$this->db->update('system_components', array('comp_version' => '3.1.3'));
 
 // update the markItUp! info
 $this->db->where('comp_name', 'markItUp!');
@@ -335,6 +335,25 @@ $this->db->update('system_components', array('comp_version' => '1.1.10'));
 // update the thresher info
 $this->db->where('comp_name', 'Thresher');
 $this->db->update('system_components', array('comp_version' => 'Release 2'));
+
+// update the template library info
+$this->db->where('comp_name', 'Template Library');
+$this->db->update('system_components', array(
+	'comp_version' => '',
+	'comp_desc' => "Simple template engine designed by wiredesignz to work with Modular CI.",
+	'comp_url' => 'http://codeigniter.com/forums/viewthread/67028/'
+));
+
+// remove the qTip plugin
+$this->db->delete('system_components', array('comp_name' => 'qTip'));
+
+// add the bootstrap component
+$this->db->insert('system_components', array(
+	'comp_name' => 'Bootstrap, from Twitter',
+	'comp_version' => '1.4.0',
+	'comp_desc' => "Bootstrap is a toolkit from Twitter designed to kickstart development of webapps and sites. It includes base CSS and HTML for typography, forms, buttons, tables, grids, navigation, and more.",
+	'comp_url' => 'http://twitter.github.com/bootstrap/'
+));
 
 // update the upload images menu item
 $this->db->where('menu_link', 'upload/index');

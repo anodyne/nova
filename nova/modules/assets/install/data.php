@@ -2263,9 +2263,9 @@ $system_components = array(
 		'comp_desc' => "Thresher is Anodyne Productions' integrated mini-wiki for Nova."),
 	array(
 		'comp_name' => 'Template Library',
-		'comp_version' => '1.4.1',
-		'comp_desc' => "The Template library, written for the CodeIgniter PHP-framework, is a wrapper for CI's View implementation. Template is a reaction to the numerous questions from the CI community regarding how one would display multiple views for one controller, and how to embed \"views within views\" in a standardized fashion. In addition, Template provides extra Views loading capabilities, the ability to utilize any template parser (like Smarty), and shortcuts for including CSS, JavaScript, and other common elements in your final rendered HTML.",
-		'comp_url' => 'http://www.williamsconcepts.com/ci/codeigniter/libraries/template/index.html'),
+		'comp_version' => '',
+		'comp_desc' => "Simple template engine designed by wiredesignz to work with Modular CI.",
+		'comp_url' => 'http://codeigniter.com/forums/viewthread/67028/'),
 	array(
 		'comp_name' => 'jQuery',
 		'comp_version' => '1.7',
@@ -2278,7 +2278,7 @@ $system_components = array(
 		'comp_desc' => 'jQuery UI is a lightweight, easily customizable interface library for the jQuery Javascript library.'),
 	array(
 		'comp_name' => 'prettyPhoto',
-		'comp_version' => '3.1.2',
+		'comp_version' => '3.1.3',
 		'comp_desc' => "prettyPhoto is a jQuery lightbox clone. Not only does it support images, it also support for videos, flash, YouTube, iframes. It's a full blown media lightbox.",
 		'comp_url' => 'http://www.no-margin-for-errors.com/projects/prettyphoto-jquery-lightbox-clone/'),
 	array(
@@ -2291,11 +2291,6 @@ $system_components = array(
 		'comp_version' => '0.0.1',
 		'comp_desc' => "AjaxQ is a jQuery plugin that implements an AJAX request queueing mechanism.",
 		'comp_url' => 'http://plugins.jquery.com/project/ajaxq'),
-	array(
-		'comp_name' => 'qTip',
-		'comp_version' => '2.0-pre',
-		'comp_desc' => "qTip2 is an advanced tooltip plugin for the ever popular jQuery JavaScript framework. Built from the ground up to be user friendly, yet feature rich, qTip2 provides you with tonnes of features like rounded corners and speech bubble tips, and best of all... it's completely free under the MIT license!",
-		'comp_url' => 'http://craigsworks.com/projects/qtip2/'),
 	array(
 		'comp_name' => 'Lazy',
 		'comp_version' => '1.5',
@@ -2346,6 +2341,11 @@ $system_components = array(
 		'comp_version' => '',
 		'comp_desc' => "Chosen is a JavaScript plugin that makes long, unwieldy select boxes much more user-friendly.",
 		'comp_url' => 'http://harvesthq.github.com/chosen/'),
+	array(
+		'comp_name' => 'Bootstrap, from Twitter',
+		'comp_version' => '1.4.0',
+		'comp_desc' => "Bootstrap is a toolkit from Twitter designed to kickstart development of webapps and sites. It includes base CSS and HTML for typography, forms, buttons, tables, grids, navigation, and more.",
+		'comp_url' => 'http://twitter.github.com/bootstrap/'),
 );
 
 $system_info = array(
