@@ -24,7 +24,7 @@
     * Build out site
     * Fill with content
 * __Forums__
-    * Migrate from phpBB
+    * New theme
 * __Main Site__
     * Test new registration process
     * Hook up contact form
