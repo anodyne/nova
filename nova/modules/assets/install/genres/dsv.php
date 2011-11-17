@@ -787,7 +787,7 @@ $positions = array(
 		'pos_type' => 'officer'),
 	array(
 		'pos_name' => 'Navigator',
-		'pos_desc' => "Navigators aboard UEO vessels are responsible for understanding undersea topography and safely navigating around underwater mountain ranges and other potentially hazardous areas of the oceans. Navigators must be oceanographic experts and thorough understand the use (and dangers) of thermal layers in the ocean as well as any other potential dangers in order to safely navigate the ship to where the Commanding and Executive Officers order."
+		'pos_desc' => "Navigators aboard UEO vessels are responsible for understanding undersea topography and safely navigating around underwater mountain ranges and other potentially hazardous areas of the oceans. Navigators must be oceanographic experts and thorough understand the use (and dangers) of thermal layers in the ocean as well as any other potential dangers in order to safely navigate the ship to where the Commanding and Executive Officers order.",
 		'pos_dept' => 2,
 		'pos_order' => 2,
 		'pos_open' => 5,
