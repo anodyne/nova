@@ -424,7 +424,7 @@ abstract class Nova_messages extends Nova_controller_admin {
 				$recipients_array = $this->pm->get_message_recipients($item->privmsgs_id, 'character');
 				
 				// make it a string
-				$recipients_string = implode(',', $recipients_array);
+				$recipients_string = (is_array($recipients_array)) ? implode(',', $recipients_array) : false;
 				
 				// get the list of characters
 				$recipients = $this->char->get_authors($recipients_string);
