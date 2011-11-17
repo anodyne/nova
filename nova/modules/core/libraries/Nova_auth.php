@@ -207,6 +207,7 @@ abstract class Nova_auth {
 		// load the resources
 		$ci->load->model('users_model', 'user');
 		$ci->load->model('system_model', 'sys');
+		$ci->load->model('settings_model', 'settings');
 		
 		// xss clean of the data coming in
 		$email = $ci->security->xss_clean($email);
