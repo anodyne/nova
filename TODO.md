@@ -27,8 +27,7 @@
     * New theme
 * __Main Site__
     * Test new registration process
-    * Hook up contact form
-    * Verify content
+    * Test contact form
 * __Nova Site__
     * Screenshots of Nova 2
     * Verify content
