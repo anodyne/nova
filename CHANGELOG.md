@@ -40,7 +40,7 @@
 
 ### The Nova Core
 
-* Moved to CodeIgniter 2.0.3 (was previously 1.7.3).
+* Moved to CodeIgniter 2.1 (was previously 1.7.3).
 * Moved to a brand new file structure that further removes the Nova Core from any changes an admin might be making.
 * Added __experimental__ module support.
 * Updated to jQuery 1.7.1.

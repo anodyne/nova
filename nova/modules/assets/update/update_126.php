@@ -310,7 +310,7 @@ $this->db->insert('settings', array(
 
 // update the CI version info
 $this->db->where('comp_name', 'CodeIgniter');
-$this->db->update('system_components', array('comp_version' => '2.0.3'));
+$this->db->update('system_components', array('comp_version' => '2.1.0'));
 
 // update the lazy version info
 $this->db->where('comp_name', 'Lazy');
