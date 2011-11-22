@@ -2268,7 +2268,7 @@ $system_components = array(
 		'comp_url' => 'http://codeigniter.com/forums/viewthread/67028/'),
 	array(
 		'comp_name' => 'jQuery',
-		'comp_version' => '1.7',
+		'comp_version' => '1.7.1',
 		'comp_url' => 'http://www.jquery.com/',
 		'comp_desc' => 'jQuery is a lightweight JavaScript library that emphasizes interaction between JavaScript and HTML.'),
 	array(

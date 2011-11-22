@@ -43,7 +43,7 @@
 * Moved to CodeIgniter 2.0.3 (was previously 1.7.3).
 * Moved to a brand new file structure that further removes the Nova Core from any changes an admin might be making.
 * Added __experimental__ module support.
-* Updated to jQuery 1.7.
+* Updated to jQuery 1.7.1.
 * Updated to jQuery UI 1.8.16.
 * Updated to jQuery Uniform 1.7.5.
 * Updated to jQuery prettyPhoto 3.1.3.

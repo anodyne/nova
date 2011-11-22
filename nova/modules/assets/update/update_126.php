@@ -318,7 +318,7 @@ $this->db->update('system_components', array('comp_version' => '1.5'));
 
 // update the jquery version info
 $this->db->where('comp_name', 'jQuery');
-$this->db->update('system_components', array('comp_version' => '1.7'));
+$this->db->update('system_components', array('comp_version' => '1.7.1'));
 
 // update the jquery ui version info
 $this->db->where('comp_name', 'jQuery UI');
