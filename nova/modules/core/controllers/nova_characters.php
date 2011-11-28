@@ -825,10 +825,10 @@ abstract class Nova_characters extends Nova_controller_admin {
 								'prom_char' => $data['id'],
 								'prom_user' => $this->char->get_character($data['id'], 'user'),
 								'prom_date' => now(),
-								'prom_old_order' => $oldR['rank_order'],
-								'prom_old_rank' => $oldR['rank_name'],
-								'prom_new_order' => $newR['rank_order'],
-								'prom_new_rank' => $newR['rank_name'],
+								'prom_old_order' => ($oldR['rank_order'] === null) ? 0 : $oldR['rank_order'],
+								'prom_old_rank' => ($oldR['rank_name'] === null) ? '' : $oldR['rank_name'],
+								'prom_new_order' => ($newR['rank_order'] === null) ? 0 : $newR['rank_order'],
+								'prom_new_rank' => ($newR['rank_name'] === null) ? '' : $newR['rank_name'],
 							);
 							
 							$prom = $this->char->create_promotion_record($promotion);
