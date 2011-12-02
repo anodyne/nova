@@ -611,7 +611,7 @@ abstract class Nova_update extends CI_Controller {
 		$this->load->library('email');
 		
 		// set up the server and method for the request
-		$this->xmlrpc->server('http://register.anodyne-productions.com/index.php/utility/do_registration', 80);
+		$this->xmlrpc->server(REGISTER, 80);
 		$this->xmlrpc->method('Do_Registration');
 		
 		// build the request
