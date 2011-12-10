@@ -2034,7 +2034,7 @@ abstract class Nova_user extends Nova_controller_admin {
 				$to = implode(',', $this->user->get_emails_with_access('user/nominate', 2));
 				
 				// set the parameters for sending the email
-				$this->email->from($from_email, $from_name);
+				$this->email->from(Util::email_sender(), $from_name);
 				$this->email->to($to);
 				$this->email->subject($this->options['email_subject'] .' '. $subject);
 				$this->email->message($message);
@@ -2060,7 +2060,7 @@ abstract class Nova_user extends Nova_controller_admin {
 				$message = $this->parser->parse_string($em_loc, $email_data, true);
 				
 				// set the parameters for sending the email
-				$this->email->from($data['email'], $data['name']);
+				$this->email->from(Util::email_sender(), $data['name']);
 				$this->email->to($data['email']);
 				$this->email->subject($this->options['email_subject'] .' '. $email_data['email_subject']);
 				$this->email->message($message);
@@ -2101,7 +2101,7 @@ abstract class Nova_user extends Nova_controller_admin {
 				$to = implode(',', $this->user->get_gm_emails());
 				
 				// set the parameters for sending the email
-				$this->email->from($from_email, $from_name);
+				$this->email->from(Util::email_sender(), $from_name);
 				$this->email->to($to);
 				$this->email->subject($this->options['email_subject'] .' '. $subject);
 				$this->email->message($message);

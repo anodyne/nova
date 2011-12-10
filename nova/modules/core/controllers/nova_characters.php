@@ -2062,7 +2062,7 @@ abstract class Nova_characters extends Nova_controller_admin {
 				
 				$message = $this->parser->parse_string($em_loc, $email_data, true);
 				
-				$this->email->from($data['email'], $data['name']);
+				$this->email->from(Util::email_sender(), $data['name']);
 				$this->email->to($data['email']);
 				$this->email->cc($cc);
 				$this->email->subject($this->options['email_subject'] .' '. $email_data['email_subject']);
@@ -2082,7 +2082,7 @@ abstract class Nova_characters extends Nova_controller_admin {
 				
 				$message = $this->parser->parse_string($em_loc, $email_data, true);
 				
-				$this->email->from($data['email'], $data['name']);
+				$this->email->from(Util::email_sender(), $data['name']);
 				$this->email->to($data['email']);
 				$this->email->cc($cc);
 				$this->email->subject($this->options['email_subject'] .' '. $email_data['email_subject']);
@@ -2175,7 +2175,7 @@ abstract class Nova_characters extends Nova_controller_admin {
 				$to = implode(',', $this->user->get_emails_with_access('characters/index'));
 				
 				// set the parameters for sending the email
-				$this->email->from($data['email'], $data['name']);
+				$this->email->from(Util::email_sender(), $data['name']);
 				$this->email->to($to);
 				$this->email->subject($this->options['email_subject'] .' '. $email_data['email_subject']);
 				$this->email->message($message);

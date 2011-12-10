@@ -459,7 +459,7 @@ abstract class Nova_login extends CI_Controller {
 				$message = $this->parser->parse_string($em_loc, $email_data, true);
 				
 				// set the parameters for sending the email
-				$this->email->from($data['email'], $data['name']);
+				$this->email->from(Util::email_sender(), $data['name']);
 				$this->email->to($data['email']);
 				$this->email->subject($this->options['email_subject'] .' '. $email_data['email_subject']);
 				$this->email->message($message);

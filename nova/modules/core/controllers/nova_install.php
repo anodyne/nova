@@ -1912,7 +1912,7 @@ abstract class Nova_install extends CI_Controller {
 				$this->db->escape(now())
 			);
 			
-			$this->email->from('nova.registration@example.com');
+			$this->email->from(Util::email_sender());
 			$this->email->to('anodyne.nova@gmail.com');
 			$this->email->subject('Nova Registration');
 			$this->email->message($message);
@@ -1973,7 +1973,7 @@ abstract class Nova_install extends CI_Controller {
 			$this->db->escape(now())
 		);
 		
-		$this->email->from('nova.survey@example.com');
+		$this->email->from(Util::email_sender());
 		$this->email->to('anodyne.nova@gmail.com');
 		$this->email->subject('Nova 2 Survey');
 		$this->email->message($message);

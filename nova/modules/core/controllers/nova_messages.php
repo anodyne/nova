@@ -852,7 +852,7 @@ abstract class Nova_messages extends Nova_controller_admin {
 		$to = implode(',', $emails);
 		
 		// set the parameters for sending the email
-		$this->email->from($from_email, $from_name);
+		$this->email->from(Util::email_sender(), $from_name);
 		$this->email->to($to);
 		$this->email->subject($subject);
 		$this->email->message($message);
