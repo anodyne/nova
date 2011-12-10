@@ -10,6 +10,11 @@
 
 abstract class Nova_util {
 	
+	public function email_sender()
+	{
+		return 'donotreply@'.$_SERVER['HTTP_HOST'];
+	}
+	
 	/**
 	 * Uses the rank.yml file to quickly install a rank set. If no value is
 	 * passed to the method then the method will attempt to find all uninstalled
