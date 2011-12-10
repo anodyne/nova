@@ -10,8 +10,31 @@
 
 abstract class Nova_util {
 	
+	/**
+	 * Sets up a more valid email sender for Nova's emails to avoid some hosts
+	 * marking Nova emails as spam. If there's a value in the default_email_address
+	 * field in Site Settings, it'll use that, otherwise it'll use nova@{domain}.
+	 *
+	 * @access	public
+	 * @return 	string	the email address to use
+	 */
 	public function email_sender()
 	{
+		// get an instance of the CI object
+		$ci =& get_instance();
+		
+		// load the settings model
+		$ci->load->model('settings_model', 'settings');
+		
+		// grab the default email address
+		$default = $ci->settings->get_setting('default_email_address');
+		
+		// if there's something in the default email address, use that
+		if ( ! empty($default))
+		{
+			return $default;
+		}
+		
 		return 'nova@'.preg_replace('#^www\.#', '', strtolower($_SERVER['SERVER_NAME']));
 	}
 	
