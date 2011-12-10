@@ -12,7 +12,7 @@ abstract class Nova_util {
 	
 	public function email_sender()
 	{
-		return 'donotreply@'.$_SERVER['HTTP_HOST'];
+		return 'nova@'.preg_replace('#^www\.#', '', strtolower($_SERVER['SERVER_NAME']));
 	}
 	
 	/**
