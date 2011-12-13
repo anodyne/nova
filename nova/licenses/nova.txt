@@ -1,4 +1,4 @@
-Copyright (c) 2010-11, Anodyne Productions
+Copyright (c) 2010-12, Anodyne Productions
 All rights reserved.
 
 This license is a legal agreement between you and Anodyne Productions for
@@ -6,30 +6,21 @@ the use of Nova Software (the "Software").  By obtaining the Software you
 agree to comply with the terms and conditions of this license.
 
 PERMITTED USE
-You are permitted to use, display, modify, and distribute the Software and
-its documentation for any purpose, provided that the following conditions
-are met:
+Redistribution and use in source and binary forms, with or without modification,
+are permitted provided that the following conditions are met:
 
-1. Products or serviced derived from the Software may not be used for monetary
-   gain without prior written consent from Anodyne Productions. This includes,
-   but is not limited to: selling support, skins, modifications, or services.
-   
-2. Redistribution of the complete Software or Software components are allowed
-   through both official and third-party outlets provided that all conditions
-   of the license are met.
-   
-3. Redistributions in binary form (complete or component) must reproduce the 
-   above copyright notice in the documentation and/or other materials provided
-   with the distribution.
+1. Redistributions of source code must retain the above copyright notice, this
+   list of conditions and the disclaimer of warranty.
 
-4. Any files that have been modified must carry notices stating the nature
-   of the change and the names of those who changed them.
+2. Redistributions in binary form must reproduce the above copyright notice, this
+   list of conditions and the disclaimer of warranty in the documentation and/or
+   other materials provided with the distribution.
 
-5. Products derived from the Software may not be called "Nova", "SMS",
-   or "Anodyne", nor may "Nova", "SMS", or "Anodyne" appear in their name,
-   without prior written permission from Anodyne Productions.
+3. Neither the names of Anodyne nor any of its products nor the names of its 
+   contributors may be used to endorse or promote products derived from this software 
+   without specific prior written permission.
    
-6. All conditions of the CodeIgniter licence must be properly met and the
+4. All conditions of the CodeIgniter licence must be properly met and the
    CodeIgniter license cannot be removed under any circumstances.
 
 INDEMNITY
