@@ -86,6 +86,7 @@ echo "<?xml version='1.0' encoding='UTF-8'?>\r\n";
 		</script>
 	</head>
 	<body>
+		<div class="test"></div>
 		<div id="wrap">
 			<noscript>
 				<span class="UITheme">

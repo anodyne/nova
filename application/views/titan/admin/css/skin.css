@@ -36,6 +36,15 @@ body > #wrap {
 	min-height: 100%;
 }
 
+.test {
+	height: 200px;
+	width: 960px;
+	margin: 0 auto 1em auto;
+	background: transparent url(../images/header-bg.jpg) no-repeat center center;
+	border-bottom-left-radius: 100px 250px;
+	border-bottom-right-radius: 100px 250px;
+}
+
 /*
 |---------------------------------------------------------------
 | HEAD

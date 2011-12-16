@@ -1,156 +1,73 @@
-/* Caution! Ensure accessibility in print and other media types... */
-@media projection, screen { /* Use class for showing/hiding tab content */
-    .ui-tabs-hide {
-        display: none;
-    }
+.ui-tabs {
+	position: relative;
+	padding: .2em;
+	zoom: 1;
 }
 
-/* Hide useless elements in print layouts... */
-@media print {
-    .ui-tabs-nav {
-        display: none;
-    }
+.ui-tabs .ui-tabs-nav {
+	margin: 0;
+	padding: 0;
+	height: 30px;
 }
-
-#tabs {
+.ui-tabs .ui-tabs-nav li {
+	list-style: none;
 	float: left;
-	width: 100%;
-	margin: 1em 0;
+	position: relative;
+	margin: 0 5px 0 0;
+	padding: 0;
+	border-bottom: 0 !important;
+	white-space: nowrap;
+}
+.ui-tabs .ui-tabs-nav li a {
+	float: left;
+	padding: 0 1em;
+	height: 30px;
+	line-height: 30px;
+	background: transparent;
+	border: none;
+	font-weight: bold;
+	color: #999;
+	text-shadow: 0 -1px 0 rgba(0, 0, 0, .4);
+	text-decoration: none;
+	-moz-border-radius: 3px 3px 0 0;
+	border-radius: 3px 3px 0 0;
 }
 
-#one, #two, #three, #four, #five,
-#six, #seven, #eight, #nine, #ten { clear: left; }
-
-/* Skin */
-.ui-tabs-nav {
-    margin: 0;
-    padding: 0;
-    
-    list-style: none;
-}
-.ui-tabs-nav:after { /* clearing without presentational markup, IE gets extra treatment */
-    display: block;
-    clear: both;
-    content: " ";
-}
-.ui-tabs-nav li {
-    float: left;
-    margin: 0 3px 0 0;
-    min-width: 84px; /* be nice to Opera */
-}
-.ui-tabs-nav a, .ui-tabs-nav a span {
-    display: block;
-    padding: 0 15px;
-}
-.ui-tabs-nav a {
-    position: relative;
-    z-index: 2;
-    padding-left: 0;
-    line-height: 1.4;
-    
-    font-size: 92%;
-    font-weight: bold;
-    text-align: center;
-    text-decoration: none;
-    white-space: nowrap; /* required in IE 6 */
-    border-top: 1px solid #444;
-    border-left: 1px solid #444;
-    border-right: 1px solid #444;
-    border-bottom: 0;
-    background: #222;
-    color: #eee;
-    
-    -moz-border-radius-topleft: 6px;
-    -moz-border-radius-topright: 6px;
-    -webkit-border-top-left-radius: 6px;
-    -webkit-border-top-right-radius: 6px;
-}
-.ui-tabs-nav .ui-tabs-selected {}
-.ui-tabs-nav .ui-tabs-selected a, .ui-tabs-nav .ui-tabs-selected a:hover {
-    outline: 0; /* prevent dotted border in Firefox */
-    
-	background: #1b6cae;
+.ui-tabs .ui-tabs-nav li a:hover {
 	color: #fff;
-	border-top: 1px solid #1b6cae;
-	border-left: 1px solid #1b6cae;
-	border-right: 1px solid #1b6cae;
-	border-bottom: 0;
-	
-	-moz-border-radius-topleft: 4px;
-    -moz-border-radius-topright: 4px;
-    -webkit-border-top-left-radius: 4px;
-    -webkit-border-top-right-radius: 4px;
-}
-.ui-tabs-nav a:hover, .ui-tabs-nav a:active {
-    outline: 0; /* prevent dotted border in Firefox */
-    
-    background-color: #fccd40;
-	color: #222;
-	border-top: 1px solid #f3b907;
-	border-left: 1px solid #f3b907;
-	border-right: 1px solid #f3b907;
+	text-shadow: 0 1px 1px rgba(0, 0, 0, .75);
 }
 
-.ui-tabs-disabled a {
-    outline: 0; /* prevent dotted border in Firefox */
-    
-    background-color: #ccc;
-    color: #1b1b1b;
+.ui-tabs .ui-tabs-nav li.ui-tabs-selected a {
+	background: #4d93dd;
+	background: -moz-linear-gradient(top, #4d93dd 0%, #215a88 100%);
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#4d93dd), color-stop(100%,#215a88));
+	background: -webkit-linear-gradient(top, #4d93dd 0%,#215a88 100%);
+	background: -o-linear-gradient(top, #4d93dd 0%,#215a88 100%);
+	background: -ms-linear-gradient(top, #4d93dd 0%,#215a88 100%);
+	background: linear-gradient(top, #4d93dd 0%,#215a88 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#4d93dd', endColorstr='#215a88',GradientType=0 );
+	color: #fff;
+	text-shadow: 0 1px 1px rgba(0, 0, 0, .3);
+	-moz-box-shadow: inset 0 1px 0 rgba(255, 255, 255, .3);
+	-webkit-box-shadow:inset 0 1px 0 rgba(255, 255, 255, .3);
+	box-shadow: inset 0 1px 0 rgba(255, 255, 255, .3);
 }
-.ui-tabs-disabled a:hover {
-    outline: 0; /* prevent dotted border in Firefox */
-    
-    background-color: #ccc;
-    color: #1b1b1b;
+
+.ui-tabs .ui-tabs-nav li.ui-tabs-selected a,
+.ui-tabs .ui-tabs-nav li.ui-state-disabled a,
+.ui-tabs .ui-tabs-nav li.ui-state-processing a { cursor: text; }
+
+.ui-tabs .ui-tabs-nav li a,
+.ui-tabs.ui-tabs-collapsible .ui-tabs-nav li.ui-tabs-selected a { cursor: pointer; }
+
+.ui-tabs .ui-tabs-panel {
+	display: block;
+	padding: .5em;
+	clear: left;
+	border-width: 0;
+	border-top: 2px solid #215a88;
+    background: #404248 url(../images/body-bg.jpg) repeat top left;
 }
 
-.ui-tabs-nav a,
-.ui-tabs-nav .ui-tabs-disabled a:hover,
-.ui-tabs-nav .ui-tabs-disabled a:focus,
-.ui-tabs-nav .ui-tabs-disabled a:active {}
-
-.ui-tabs-nav a span {
-    width: 64px; /* IE 6 treats width as min-width */
-    min-width: 64px;
-    height: 21px; /* IE 6 treats height as min-height */
-    min-height: 21px;
-    padding-top: 4px;
-    padding-right: 0;
-}
-*>.ui-tabs-nav a span { /* hide from IE 6 */
-    width: auto;
-    height: auto;
-}
-.ui-tabs-nav .ui-tabs-selected a span { padding-top: 4px; }
-
-.ui-tabs-nav .ui-tabs-selected a span, 
-.ui-tabs-nav a:hover span,
-.ui-tabs-nav a:focus span,
-.ui-tabs-nav a:active span {}
-
-.ui-tabs-nav a span,
-.ui-tabs-nav .ui-tabs-disabled a:hover span,
-.ui-tabs-nav .ui-tabs-disabled a:focus span,
-.ui-tabs-nav .ui-tabs-disabled a:active span {}
-
-.ui-tabs-nav .ui-tabs-selected a:link,
-.ui-tabs-nav .ui-tabs-selected a:visited,
-.ui-tabs-nav .ui-tabs-disabled a:link,
-.ui-tabs-nav .ui-tabs-disabled a:visited { cursor: pointer; }
-
-.ui-tabs-nav a:hover,
-.ui-tabs-nav a:focus,
-.ui-tabs-nav a:active { cursor: pointer; }
-
-.ui-tabs-nav .ui-tabs-disabled { opacity: .4; }
-.ui-tabs-panel {
-    padding: .5em 8px;
-    
-    border-top: 3px solid #1b6cae;
-    background: #000; /* declare background color for container to avoid distorted fonts in IE while fading */
-}
-.ui-tabs-loading em {
-    padding: 0 0 0 20px;
-    
-    background: url(../images/loading.gif) no-repeat 0 50%;
-}
+.ui-tabs .ui-tabs-hide { display: none !important; }
