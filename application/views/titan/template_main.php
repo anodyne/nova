@@ -73,6 +73,11 @@ $panel = array(
 		<?php echo $javascript;?>
 	</head>
 	<body>
+		<noscript>
+			<span class="UITheme">
+				<div class="system_warning ui-state-error"><?php echo lang_output('text_javascript_off', '');?></div>
+			</span>
+		</noscript>
 		<div id="container">
 			<div id="menu">
 				<div class="nav-main"><?php echo $nav_main;?></div>
@@ -123,30 +128,6 @@ $panel = array(
 					
 					<div style="clear:both;">&nbsp;</div>
 				</div>
-			</div>
-		</div>
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		<div id="wrap">
-			<noscript>
-				<span class="UITheme">
-					<div class="system_warning ui-state-error"><?php echo lang_output('text_javascript_off', '');?></div>
-				</span>
-			</noscript>
-			
-			<!-- BODY -->
-			<div class="wrapper">
-				
 			</div>
 		</div>
 		
