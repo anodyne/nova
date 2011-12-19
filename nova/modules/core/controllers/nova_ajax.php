@@ -9465,7 +9465,7 @@ abstract class Nova_ajax extends CI_Controller {
 			$head = sprintf(
 				lang('fbx_head'),
 				ucwords(lang('actions_cleanup')),
-				ucwords(lang('labels_wiki').' '.lang('labels_drafts'))
+				ucwords(lang('global_wiki').' '.lang('labels_drafts'))
 			);
 			
 			// data being sent to the facebox
