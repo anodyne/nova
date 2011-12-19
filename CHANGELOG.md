@@ -28,6 +28,7 @@
 * When viewing a character's logs, the entries will be paginated to help with load times and usability.
 * Site manifests can now store default view information so that different manifests can have different view settings. (This is now handled through Site Manifest management instead of Site Settings.) ([#157](https://github.com/anodyne/nova/issues/157))
 * Gave the Pulsar skin a refreshed look and feel.
+* Gave the Titan skin a refreshed look and feel. (If you're interested in changing the header image, please see Titan's README.md file for instructions.)
 * The Writing Control Panel now shows a notification for any entires that have been commented on in the last 30 days (along with a link to the comments section of the entry).
 * The manifest has been reorganized (for the first time ever) with a slightly different look.
 * The email sent to the game master when a user applies now goes to anyone who can approve or reject character applications.
