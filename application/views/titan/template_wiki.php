@@ -1,18 +1,4 @@
 <?php
-/*
-|---------------------------------------------------------------
-| TEMPLATE - WIKI
-|---------------------------------------------------------------
-|
-| File: application/views/titan/template_wiki.php
-| Skin Version: 1.1
-|
-| Wiki layout file used by the titan skin.
-|
-| $sec options are: main, wiki, admin, login
-| $css can be anything you want (with a .css extension of course)
-|
-*/
 
 $sec = 'wiki'; /* set the section of the system */
 $css = 'main.css'; /* the name of the main css file */
@@ -55,39 +41,64 @@ $panel = array(
 
 echo "<?xml version='1.0' encoding='UTF-8'?>\r\n";
 
-?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+?><!DOCTYPE html>
+<html lang="en">
 	<head>
+		<meta charset="utf-8">
 		<title><?php echo $title;?></title>
 		
-		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
-		<meta name="language" content="en" />
-		<meta name="description" content="<?php echo $this->config->item('meta_desc');?>" />
-		<meta name="keywords" content="<?php echo $this->config->item('meta_keywords');?>" />
-		<meta name="author" content="<?php echo $this->config->item('meta_author');?>" />
+		<meta name="description" content="<?php echo $this->config->item('meta_desc');?>">
+		<meta name="keywords" content="<?php echo $this->config->item('meta_keywords');?>">
+		<meta name="author" content="<?php echo $this->config->item('meta_author');?>">
 		
 		<?php echo $_redirect;?>
 		
-		<?php include_once($this->config->item('include_head_wiki')); ?>
-		
 		<!-- STYLESHEETS -->
-		<?php echo link_tag($link); ?>
+		<?php echo link_tag($link);?>
+		
+		<!--[if lt IE 9]>
+		<script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
+		<![endif]-->
 		
 		<!-- JAVASCRIPT FILES -->
+		<?php include_once($this->config->item('include_head_wiki'));?>
+		
+		<script type="text/javascript">
+			$(document).ready(function(){
+				$('#userpanel').click(function(){
+					$('#panel').slideToggle();
+					return false;
+				});
+			});
+		</script>
+		
 		<?php echo $javascript;?>
 	</head>
 	<body>
-		<div id="wrap">
-			<noscript>
-				<span class="UITheme">
-					<div class="system_warning ui-state-error"><?php echo lang_output('text_javascript_off', '');?></div>
-				</span>
-			</noscript>
+		<noscript>
+			<span class="UITheme">
+				<div class="system_warning ui-state-error"><?php echo lang_output('text_javascript_off', '');?></div>
+			</span>
+		</noscript>
+		<div id="container">
+			<div id="menu">
+				<div class="nav-main"><?php echo $nav_main;?></div>
+				
+				<div class="panel-controls">
+					<?php if (Auth::is_logged_in()): ?>
+						<?php echo panel_inbox(TRUE, TRUE, FALSE, '(x)', img($panel['inbox']));?> &nbsp;&nbsp;
+						<?php echo panel_writing(TRUE, TRUE, FALSE, '(x)', img($panel['writing']));?> &nbsp;&nbsp;
+						<?php echo panel_dashboard(FALSE, img($panel['dashboard']));?>
+					<?php else: ?>
+						<strong><?php echo anchor('login/index', ucfirst(lang('actions_login')), array('class' => 'login-text'));?></strong>
+					<?php endif;?>
+				</div>
+			</div>
 			
-			<?php if ($this->session->userdata('userid') !== FALSE): ?>
-				<!-- USER PANEL -->
-				<div class="wrapper">
-					<div id="panel" class="UITheme">
+			<header>
+				<?php if (Auth::is_logged_in()): ?>
+					<!-- USER PANEL -->
+					<div id="panel" class="hidden">
 						<div class="panel-body">
 							<table class="table100">
 								<tbody>
@@ -102,68 +113,32 @@ echo "<?xml version='1.0' encoding='UTF-8'?>\r\n";
 							</table>
 						</div>
 					</div>
-				</div>
-			<?php endif; ?>
+				<?php endif; ?>
+			</header>
 			
-			<!-- HEAD -->
-			<div class="wrapper">
-				<div id="head">
-					<div class="head_content">
-						<div class="panel-controls">
-							<?php if (Auth::is_logged_in()): ?>
-								<?php echo panel_inbox(TRUE, TRUE, FALSE, '(x)', img($panel['inbox']));?> &nbsp;&nbsp;
-								<?php echo panel_writing(TRUE, TRUE, FALSE, '(x)', img($panel['writing']));?> &nbsp;&nbsp;
-								<?php echo panel_dashboard(FALSE, img($panel['dashboard']));?>
-							<?php else: ?>
-								<strong><?php echo anchor('login/index', ucfirst(lang('actions_login')), array('class' => 'login-text'));?></strong>
-							<?php endif;?>
-						</div>
-						
-						<div class="float_left">
-							<?php if (file_exists(APPPATH .'views/'. $current_skin .'/'. $sec .'/images/genres/'. GENRE .'.png')): ?>
-								<?php echo img(APPFOLDER .'/views/'. $current_skin .'/'. $sec .'/images/genres/'. GENRE .'.png');?>
-							<?php else: ?>
-								<?php echo img(APPFOLDER .'/views/'. $current_skin .'/'. $sec .'/images/genres/blank.png');?>
-							<?php endif;?>
-						</div>
-						
-						<h1><?php echo $this->options['sim_name'];?></h1>
-					</div>
-					
-					<div id="menu">
-						<div class="nav-main">
-							<?php echo $nav_main;?>
-						</div>
-					</div>
+			<div id="body">
+				<!-- SUB NAVIGATION -->
+				<div class="nav-sub">
+					<?php echo $nav_sub;?>
 				</div>
-			</div>
-			
-			<!-- BODY -->
-			<div class="wrapper">
-				<div id="body">
-					<!-- SUB NAVIGATION -->
-					<div class="nav-sub">
-						<?php echo $nav_sub;?>
-					</div>
+				
+				<!-- PAGE CONTENT -->
+				<div class="content">
+					<?php echo $flash_message;?>
+					<?php echo $content;?>
+					<?php echo $ajax;?>
 					
-					<!-- PAGE CONTENT -->
-					<div class="content">
-						<?php echo $flash_message;?>
-						<?php echo $content;?>
-						<?php echo $ajax;?>
-						
-						<div style="clear:both;">&nbsp;</div>
-					</div>
+					<div style="clear:both;">&nbsp;</div>
 				</div>
 			</div>
 		</div>
 		
 		<!-- FOOTER -->
 		<div class="wrapper">
-			<div id="footer">
+			<footer>
 				Powered by <strong><?php echo APP_NAME;?></strong> from <a href="http://www.anodyne-productions.com" target="_blank">Anodyne Productions</a> | 
 				<?php echo anchor('main/credits', 'Site Credits');?>
-			</div>
+			</footer>
 		</div>
 	</body>
 </html>
