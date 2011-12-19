@@ -1,16 +1,14 @@
 div.chzn-container input {
-	background: #000;
-	background: -webkit-gradient(linear, left bottom, left top, color-stop(0.85, #111), color-stop(0.99, #000));
-	background: -moz-linear-gradient(center bottom, #111 85%, #000 99%);
-	border: 1px solid #333;
-	font-family: sans-serif;
-	font-size: 1em;
+	border: 1px solid #1f2124;
+	color: #9FA4A8;
+	font-family: "lucida grande", verdana, arial, sans-serif;
+	text-shadow: 0 1px 1px rgba(0, 0, 0, .3);
+	background: #2b2e31;
 	-moz-border-radius: 3px;
-	-webkit-border-radius: 3px;
-	-o-border-radius: 3px;
-	-ms-border-radius: 3px;
-	-khtml-border-radius: 3px;
-	border-radius: 3px;
+	border-radius: 3px 3px 3px 3px;
+	-moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .2), 0 1px 0 rgba(255, 255, 255, .1);
+	-webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .2), 0 1px 0 rgba(255, 255, 255, .1);
+	box-shadow: inset 0 1px 1px rgba(0, 0, 0, .2), 0 1px 0 rgba(255, 255, 255, .1);
 }
 div.chzn-container textarea:focus {
 	border-color: #058cf5;
@@ -19,89 +17,101 @@ div.chzn-container textarea:focus {
 	box-shadow: 0px 0px 3px #aaa;
 }
 
+/**
+ * Styles for the dropdown container in single selects
+ */
 div.chzn-container div.chzn-drop {
-	background: #000;
-	border: 1px solid #333;
-	border-width: 0 1px 1px;
-	-webkit-box-shadow: 0px 4px 5px rgba(0, 0, 0, 0.15);
-	-moz-box-shadow: 0px 4px 5px rgba(0, 0, 0, 0.15);
-	box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.15);
 	z-index: 20;
-	border-radius: 0 0 2px 2px;
-	-moz-border-radius: 0 0 2px 2px;
+	background: #2b2e31;
+	border: 1px solid #222;
+	text-shadow: 0 1px 1px rgba(0, 0, 0, .3);
+	-moz-box-shadow: inset 0 1px 2px rgba(0, 0, 0, .3), 0 1px 0 rgba(255, 255, 255, .1);
+	-webkit-box-shadow: inset 0 1px 2px rgba(0, 0, 0, .3), 0 1px 0 rgba(255, 255, 255, .1);
+	box-shadow: inset 0 1px 2px rgba(0, 0, 0, .3), 0 1px 0 rgba(255, 255, 255, .1);
+
 }
 div.chzn-container-single div.chzn-drop {
-	-moz-border-radius: 0 0 4px 4px;
-	-webkit-border-radius: 0 0 4px 4px;
-	-o-border-radius: 0 0 4px 4px;
-	-ms-border-radius: 0 0 4px 4px;
-	-khtml-border-radius: 0 0 4px 4px;
-	border-radius: 0 0 4px 4px;
+	-moz-border-radius: 0 0 3px 3px;
+	border-radius: 0 0 3px 3px;
 }
 
-/* SINGLE */
+/**
+ * Styles for the single selects
+ */
 div.chzn-container a.chzn-single {
-	background: #000;
-	background-image: -webkit-gradient(linear, left bottom, left top, color-stop(0, #000), color-stop(0.5, #111));
-	background-image: -moz-linear-gradient(center bottom, #000 0%, #111 50%);
-	border: 1px solid #333;
-	-moz-border-radius: 4px;
-	-webkit-border-radius: 4px;
-	-o-border-radius: 4px;
-	-ms-border-radius: 4px;
-	-khtml-border-radius: 4px;
-	border-radius: 4px;
-	color: #888;
 	text-decoration: none;
+	border: 1px solid #1f2124;
+	color: #9FA4A8;
+	font-family: "lucida grande", verdana, arial, sans-serif;
+	font-size: 1.1em;
+	text-shadow: 0 1px 1px rgba(0, 0, 0, .3);
+	background: #2b2e31;
+	-moz-border-radius: 3px;
+	border-radius: 3px 3px 3px 3px;
+	-moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .2), 0 1px 0 rgba(255, 255, 255, .1);
+	-webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .2), 0 1px 0 rgba(255, 255, 255, .1);
+	box-shadow: inset 0 1px 1px rgba(0, 0, 0, .2), 0 1px 0 rgba(255, 255, 255, .1);
 }
+
+/**
+ * Styles for the arrow dropdown for the single selects
+ */
 div.chzn-container a.chzn-single div {
-	-moz-border-radius-topright: 4px;
-	-webkit-border-top-right-radius: 4px;
-	-o-border-top-right-radius: 4px;
-	-ms-border-top-right-radius: 4px;
-	-khtml-border-top-right-radius: 4px;
-	border-top-right-radius: 4px;
-	-moz-border-radius-bottomright: 4px;
-	-webkit-border-bottom-right-radius: 4px;
-	-o-border-bottom-right-radius: 4px;
-	-ms-border-bottom-right-radius: 4px;
-	-khtml-border-bottom-right-radius: 4px;
-	border-bottom-right-radius: 4px;
-	background: #ccc;
-	background-image: -webkit-gradient(linear, left bottom, left top, color-stop(0, #111), color-stop(0.6, #000));
-	background-image: -moz-linear-gradient(center bottom, #000 0%, #111 60%);
+	background: transparent;
 }
+
+/**
+ * Arrow for the dropdown for single selects
+ */
 div.chzn-container a.chzn-single div b {
 	background: url(../images/chosen-sprite.png) no-repeat 0 1px;
 }
+
+/**
+ * Text field in the dropdown for single selects
+ */
 div.chzn-container div.chzn-search input {
-	background: url(../images/chosen-sprite.png) no-repeat 97% -35px, #ffffff;
-	background: url(../images/chosen-sprite.png) no-repeat 97% -35px, -webkit-gradient(linear, left bottom, left top, color-stop(0.85, #000), color-stop(0.99, #111));
-	background: url(../images/chosen-sprite.png) no-repeat 97% -35px, -moz-linear-gradient(center bottom, #000 85%, #111 99%);
-	-moz-border-radius: 0px;
-	-webkit-border-radius: 0px;
-	-o-border-radius: 0px;
-	-ms-border-radius: 0px;
-	-khtml-border-radius: 0px;
-	border-radius: 0px;
+	background: #1e2122;
+	border: 1px solid #111;
+	text-shadow: 0 1px 1px rgba(0, 0, 0, .3);
+	-moz-border-radius: 3px;
+	border-radius: 3px 3px 3px 3px;
+	-moz-box-shadow: inset 0 1px 2px rgba(0, 0, 0, .3), 0 1px 0 rgba(255, 255, 255, .1);
+	-webkit-box-shadow: inset 0 1px 2px rgba(0, 0, 0, .3), 0 1px 0 rgba(255, 255, 255, .1);
+	box-shadow: inset 0 1px 2px rgba(0, 0, 0, .3), 0 1px 0 rgba(255, 255, 255, .1);
+
 }
 
-/* Multi */
+/**
+ * Styles for the multi selects
+ */
 div.chzn-container ul.chzn-choices {
-	background: #000;
-	border: 1px solid #333;
-	color: #777;
+	border: 1px solid #1f2124;
+	color: #9FA4A8;
 	font-family: "lucida grande", verdana, arial, sans-serif;
-	font-size: 1.2em;
-	border-radius: 2px;
-	-moz-border-radius: 2px;
+	font-size: 1.1em;
+	text-shadow: 0 1px 1px rgba(0, 0, 0, .3);
+	background: #2b2e31;
+	-moz-border-radius: 3px;
+	border-radius: 3px 3px 3px 3px;
+	-moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .2), 0 1px 0 rgba(255, 255, 255, .1);
+	-webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .2), 0 1px 0 rgba(255, 255, 255, .1);
+	box-shadow: inset 0 1px 1px rgba(0, 0, 0, .2), 0 1px 0 rgba(255, 255, 255, .1);
 }
+
+/**
+ * No idea...
+ */
 div.chzn-container ul.chzn-choices:focus {
 	border-color: #058cf5;
 	-moz-box-shadow: 0px 0px 5px #999;
 	-webkit-box-shadow: 0px 0px 5px #999;
 	box-shadow: 0px 0px 5px #999;
 }
+
+/**
+ * No idea...
+ */
 div.chzn-container ul.chzn-choices li.search-field input {
 	color: #666;
 	background: transparent !important;
@@ -110,6 +120,10 @@ div.chzn-container ul.chzn-choices li.search-field input {
 	-moz-box-shadow: none;
 	box-shadow: none;
 }
+
+/**
+ * No idea...
+ */
 div.chzn-container ul.chzn-choices li.search-field input.default {
 	color: #999;
 }
