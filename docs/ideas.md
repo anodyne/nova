@@ -1,12 +1,13 @@
 ## Join Page
 
-* A user should be asked for their email address first. Once they've filled that in, an Ajax call should check to see if that email address exists in the system. If it does, it won't show the name and password fields since those fields are obviously going to be ignored. If the email address doesn't exist in the system, it will show the name and password fields so they can fill them out.
+* A user should be asked for their email address first. Once they've filled that in, an Ajax call should check to see if that email address exists in the system. If it does, it won't show any of the user information fields since they'll be ignored anyway. If the email address doesn't exist in the system, it will show the user information fields so they can fill them out.
 
 ## Dynamic Forms
 
 * Add a field to the database that admins can write help content in. If that field isn't empty, display a question mark icon that when hovered over, shows the help information.
 * Proper validation on all fields.
 * Fields that only admins can see and edit.
+* Dynamic user information form.
 
 ## Awards
 
@@ -27,6 +28,7 @@
 
 * If a skin has default sections in it, you shouldn't be able to remove or deactivate it
 * Move setting skin defaults into the catalogue instead of Site Settings (?)
+* Need to research if there's an easy way to provide real multiple rank sets
 
 ## Site Content
 
@@ -54,8 +56,7 @@
 
 ## Users
 
-* Clear a user's login lockout.
-* Admins should be able to clear a user's login lockouts.
+* Admins should be able to clear a user's login lockout from inside the system.
 
 ## Manifest
 
@@ -72,3 +73,21 @@
     * If User A is on LOA or ELOA, they shouldn't be added to the review process.
     * When a user is deactivated, they need to be removed from all rules.
 * Does this mean we can't ever delete characters or users? Without it, there would be no access to the history of applications. (If not, we might be able to store an application as XML and then when they're accepted, move them in to the database.)
+
+## Thresher Release 3
+
+* Need to brainstorm if it's possible to have content pages stored in Thresher and available through normal URLs as an easy way for people to create content pages in the flow of the rest of the system.
+* Move Thresher to its own module.
+
+## Mako Release 1
+
+* Threads can be marked as posting threads so that Nova's counting systems can count those posts in reporting features.
+* Threads and sections can be marked as public or private. If they're set to private, only authenticated users can see them (much like private news items).
+* Polls. I know we originally said no polls, but they could come in really handy.
+    * Polls can be marked as public answer or private answer.
+        * If a poll is marked as public answer, once a user replies, their answer will be posted by their name.
+        * If a poll is marked as private answer, their answer will not be displayed, even to admins.
+
+## Reporting
+
+* Need to rethink reporting in Nova 3.
