@@ -15,7 +15,6 @@
 * Update Lightness with admin changes
 * Update Sunny with admin changes
 * Update Beta with admin changes
-* Update Titan with refreshed look
 * MOD for status alert changing the LCARS skins
 
 ## Anodyne Assets
