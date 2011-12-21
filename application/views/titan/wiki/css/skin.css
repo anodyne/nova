@@ -5,9 +5,19 @@ body {
 	text-align: center;
 }
 
-#container {
+#container-top {
 	width: 950px;
 	margin: 2em auto 1em auto;
+	text-align: left;
+	-moz-border-radius: 3px;
+	border-radius: 3px 3px 3px 3px;
+}
+
+#container-bottom {
+	min-width: 950px;
+	max-width: 1280px;
+	padding: 0 45px;
+	margin: 0 auto;
 	text-align: left;
 	-moz-border-radius: 3px;
 	border-radius: 3px 3px 3px 3px;
