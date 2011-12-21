@@ -78,7 +78,7 @@ $panel = array(
 				<div class="system_warning ui-state-error"><?php echo lang_output('text_javascript_off', '');?></div>
 			</span>
 		</noscript>
-		<div id="container">
+		<div id="container-top">
 			<div id="menu">
 				<div class="nav-main"><?php echo $nav_main;?></div>
 				
@@ -113,7 +113,9 @@ $panel = array(
 					</div>
 				<?php endif; ?>
 			</header>
-			
+		</div>
+		
+		<div id="container-bottom">
 			<div id="body">
 				<!-- SUB NAVIGATION -->
 				<div class="nav-sub">
