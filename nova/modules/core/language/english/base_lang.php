@@ -280,6 +280,7 @@ $lang['actions_run']			= 'run';
 $lang['actions_save']			= 'save';
 $lang['actions_saved']			= 'saved';
 $lang['actions_search']			= 'search';
+$lang['actions_seeall']			= 'see all';
 $lang['actions_select']			= 'select';
 $lang['actions_send']			= 'send';
 $lang['actions_sent']			= 'sent';

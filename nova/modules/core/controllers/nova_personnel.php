@@ -392,6 +392,7 @@ abstract class Nova_personnel extends Nova_controller_main {
 		$this->load->model('positions_model', 'pos');
 		$this->load->model('posts_model', 'posts');
 		$this->load->model('personallogs_model', 'logs');
+		$this->load->model('news_model', 'news');
 		$this->load->model('awards_model', 'awards');
 		$this->load->helper('utility');
 		
@@ -409,7 +410,10 @@ abstract class Nova_personnel extends Nova_controller_main {
 		{
 			$data['postcount'] = $this->posts->count_character_posts($id);
 			$data['logcount'] = $this->logs->count_character_logs($id);
+			$data['newscount'] = $this->news->count_character_news($id);
 			$data['awardcount'] = $this->awards->count_character_awards($id);
+			
+			$data['last_post'] = mdate($this->options['date_format'], gmt_to_local($character->last_post, $this->timezone, $this->dst));
 			
 			// set the name items into an array
 			$name_array = array(
@@ -421,6 +425,7 @@ abstract class Nova_personnel extends Nova_controller_main {
 			
 			// parse the name out
 			$name = parse_name($name_array);
+			$abbr_name = parse_name(array('first_name' => $character->first_name, 'last_name' => $character->last_name));
 			
 			// get the rank name
 			$rank = $this->ranks->get_rank($character->rank, 'rank_name');
@@ -463,8 +468,10 @@ abstract class Nova_personnel extends Nova_controller_main {
 				$data['character']['image'] = array(
 					'src' => $src,
 					'alt' => $name,
-					'class' => 'image reflect',
-					'height' => 150
+					//'class' => 'image reflect',
+					'class' => 'image',
+					//'height' => 150
+					'width' => 200
 				);
 				
 				// creating the empty array
@@ -483,6 +490,16 @@ abstract class Nova_personnel extends Nova_controller_main {
 						'class' => 'image'
 					);
 				}
+			}
+			else
+			{
+				// set the image
+				$data['character']['noavatar'] = array(
+					'src' => Location::img('no-avatar.png', $this->skin, 'main'),
+					'alt' => '',
+					'class' => 'image',
+					'width' => 200
+				);
 			}
 						
 			// get the bio tabs
@@ -549,15 +566,15 @@ abstract class Nova_personnel extends Nova_controller_main {
 			}
 			
 			// set the header
-			$data['header'] = ucfirst(lang('labels_biography')) .' - '. $rank .' '. $name;
+			$data['header'] = $rank.' '.$abbr_name;
 			
-			$this->_regions['title'].= ucfirst(lang('labels_biography')).' - '.$name;
+			$this->_regions['title'].= ucfirst(lang('labels_biography')).' - '.$abbr_name;
 		}
 		else
 		{
 			// set the header
-			$data['header'] = lang('error_title_invalid_char');
-			$data['msg_error'] = lang_output('error_msg_invalid_char');
+			$data['header'] = sprintf(lang('error_title_invalid_char'), ucfirst(lang('global_character')));
+			$data['msg_error'] = sprintf(lang_output('error_msg_invalid_char'), lang('global_character'));
 			
 			// set the title
 			$this->_regions['title'].= lang('error_pagetitle');
@@ -604,13 +621,19 @@ abstract class Nova_personnel extends Nova_controller_main {
 		}
 		
 		$data['label'] = array(
-			'edit' => '[ '. ucwords(lang('actions_edit') .' '. lang('global_character')) .' ]',
-			'edit_form' => '[ '.ucwords(lang('actions_edit').' '.lang('labels_biography').' '.lang('labels_form')) .' ]',
-			'gallery' => lang('open_gallery'),
-			'view_all_posts' => ucwords(lang('actions_viewall') .' '. lang('global_posts') .' '. RARROW),
-			'view_all_logs' => ucwords(lang('actions_viewall') .' '. lang('global_personallogs') .' '. RARROW),
-			'view_all_awards' => ucwords(lang('actions_viewall') .' '. lang('global_awards') .' '. RARROW),
-			'view_user' => ucwords(lang('actions_view').' '.lang('global_user').' '.lang('labels_info') .' '. RARROW),
+			'edit' => ucwords(lang('actions_edit').' '.lang('global_character')),
+			'view_all_posts' => ucwords(lang('actions_seeall') .' '. lang('global_missionposts')),
+			'view_all_logs' => ucwords(lang('actions_seeall') .' '. lang('global_personallogs')),
+			'view_all_awards' => ucwords(lang('actions_seeall') .' '. lang('global_awards')),
+			'view_all_images' => ucwords(lang('actions_seeall') .' '. lang('labels_images')),
+			'view_user' => ucwords(lang('global_user').' '.lang('labels_info')),
+			'mission_posts' => ucwords(lang('global_missionposts')),
+			'personal_logs' => ucwords(lang('global_personallogs')),
+			'news_items' => ucwords(lang('global_newsitems')),
+			'comments' => ucwords(lang('labels_comments')),
+			'last_post' => ucwords(lang('order_last').' '.lang('global_post')),
+			'stats' => ucfirst(lang('labels_stats')),
+			'back_manifest' => LARROW.' '.ucfirst(lang('actions_back')).' '.lang('labels_to').' '.ucfirst(lang('labels_manifest')),
 		);
 		
 		$this->_regions['content'] = Location::view('personnel_character', $this->skin, 'main', $data);
