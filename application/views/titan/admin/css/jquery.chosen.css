@@ -128,14 +128,21 @@ div.chzn-container ul.chzn-choices li.search-field input.default {
 	color: #999;
 }
 div.chzn-container ul.chzn-choices li.search-choice {
+	padding-top: 4px;
+	padding-bottom: 4px;
 	-moz-border-radius: 3px;
 	-webkit-border-radius: 3px;
 	border-radius: 3px;
-	background: #222;
-	background-image: -webkit-gradient(linear, left bottom, left top, color-stop(0, #111), color-stop(0.7, #222));
-	background-image: -moz-linear-gradient(center bottom, #111 0%, #222 70%);
-	color: #aaa;
-	border: 1px solid #333;
+	background: #484848;
+	background: -moz-linear-gradient(top, #484848 0%, #303030 100%);
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#484848), color-stop(100%,#303030));
+	background: -webkit-linear-gradient(top, #484848 0%,#303030 100%);
+	background: -o-linear-gradient(top, #484848 0%,#303030 100%);
+	background: -ms-linear-gradient(top, #484848 0%,#303030 100%);
+	background: linear-gradient(top, #484848 0%,#303030 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#484848', endColorstr='#303030',GradientType=0 );
+	color: #999;
+	border: 1px solid #181818;
 }
 div.chzn-container ul.chzn-choices li.search-choice.search-choice-focus {
 	background: #d4d4d4;
@@ -147,7 +154,7 @@ div.chzn-container ul.chzn-choices li.search-choice a.search-choice-close {
 
 /* Results */
 div.chzn-container-multi ul.chzn-results {
-	background: #080808;
+	background: #2b2e31;
 }
 div.chzn-container-multi ul.chzn-results li {
 	border-left: 0px !important;
