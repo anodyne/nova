@@ -68,7 +68,7 @@ input[type=text],
 input[type=password],
 input[type=email] {
 	margin: 0;
-	padding: 3px;
+	padding: 5px;
 	width: 325px;
 }
 input.small     	{ width: 50px; }
@@ -124,8 +124,7 @@ td.align_center { text-align: center; }
 |---------------------------------------------------------------
 */
 button {
-	height: 25px;
-	padding: 0 10px 1px 10px;
+	padding: 5px 25px;
 	outline: 0 !important;
 }
 
@@ -173,7 +172,8 @@ ul.none {
 |---------------------------------------------------------------
 */
 .flash_message {
-	margin: 0 auto 10px auto;
+	margin: 0 0 5px 0;
+	padding: .3em 0;
 	line-height: 1;
 }
 .flash_message p {

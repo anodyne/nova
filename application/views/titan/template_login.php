@@ -41,18 +41,15 @@ $link = array(
 	'charset'	=> 'utf-8'
 );
 
-echo "<?xml version='1.0' encoding='UTF-8'?>\r\n";
-
-?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+?><!DOCTYPE html>
+<html lang="en">
 	<head>
+		<meta charset="utf-8">
 		<title><?php echo $title;?></title>
 		
-		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
-		<meta name="language" content="en" />
-		<meta name="description" content="<?php echo $this->config->item('meta_desc');?>" />
-		<meta name="keywords" content="<?php echo $this->config->item('meta_keywords');?>" />
-		<meta name="author" content="<?php echo $this->config->item('meta_author');?>" />
+		<meta name="description" content="<?php echo $this->config->item('meta_desc');?>">
+		<meta name="keywords" content="<?php echo $this->config->item('meta_keywords');?>">
+		<meta name="author" content="<?php echo $this->config->item('meta_author');?>">
 		
 		<?php echo $_redirect;?>
 		
@@ -67,7 +64,6 @@ echo "<?xml version='1.0' encoding='UTF-8'?>\r\n";
 	<body>
 		<div id="container">
 			<div id="head">
-				<div class="head-top"></div>
 				<div id="menu">
 					<div class="nav-main">
 						<ul>
