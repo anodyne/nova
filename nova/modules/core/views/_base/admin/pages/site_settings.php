@@ -146,6 +146,8 @@
 		<?php echo form_open('site/settings/2');?>
 			<?php echo text_output($label['header_skins'], 'h2', 'page-subhead');?>
 			
+			<?php echo text_output($label['skins_text']);?>
+			
 			<div class="indent-left">
 				<p>
 					<kbd><?php echo $label['skin_main'];?></kbd>

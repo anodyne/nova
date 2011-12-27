@@ -135,6 +135,10 @@ $lang['text_manifest_delete_departments'] = " There was a problem reassigning th
 
 $lang['text_duplicate_dept'] = "You are about to duplicate the <strong>%s</strong> %s. Doing so will copy the %s information as well as all of the %s. Click %s to continue.";
 
+$lang['text_skins_global'] = "These options control the skins for the site when a user is not logged in (also the reason you cannot change the admin section skin). If you want to change the skin you see when you're logged in, use the <a href='%s'>Site Options</a> page.";
+
+$lang['text_skins_user'] = "These options control the skins for the site when you are logged in. If you want to change the skin that visitors who are not logged in see, you will need to use the <a href='%s'>Site Settings</a> page.";
+
 /*
 |---------------------------------------------------------------
 | INFORMATIONAL MESSAGES

@@ -5009,6 +5009,7 @@ abstract class Nova_site extends Nova_controller_admin {
 			'skin_login' => ucwords(lang('actions_login') .' '. lang('labels_page')),
 			'skin_main' => ucwords(lang('labels_main') .' '. lang('labels_site')),
 			'skin_wiki' => ucfirst(lang('global_wiki')),
+			'skins_text' => sprintf(lang('text_skins_global'), site_url('user/options')),
 			'sysemail' => ucwords(lang('labels_system') .' '. lang('labels_email')),
 			'system' => ucwords(lang('labels_system') .'/'. ucfirst(lang('labels_email'))),
 			'timezone' => ucfirst(lang('labels_timezone')),

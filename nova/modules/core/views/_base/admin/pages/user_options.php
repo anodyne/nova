@@ -10,6 +10,10 @@
 	</ul>
 	
 	<div id="one">
+		<?php if (Auth::check_access('site/settings', false)): ?>
+			<?php echo text_output($label['skins_text']);?><br>
+		<?php endif;?>
+		
 		<?php echo form_open('user/options/skins');?>
 			<p>
 				<kbd><?php echo $label['skin_main'];?></kbd>

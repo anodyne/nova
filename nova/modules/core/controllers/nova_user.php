@@ -1830,6 +1830,7 @@ abstract class Nova_user extends Nova_controller_admin {
 			'skin_admin' => ucwords(lang('labels_admin') .' '. lang('labels_site')),
 			'skin_main' => ucwords(lang('labels_main') .' '. lang('labels_site')),
 			'skin_wiki' => ucfirst(lang('global_wiki')),
+			'skins_text' => sprintf(lang('text_skins_user'), site_url('site/settings')),
 		);
 		
 		$this->_regions['content'] = Location::view('user_options', $this->skin, 'admin', $data);
