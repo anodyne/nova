@@ -1124,7 +1124,7 @@ abstract class Nova_main extends Nova_controller_main {
 					'email_subject' => lang('email_subject_join_gm'),
 					'email_from' => ucfirst(lang('time_from')) .': '. $data['name'] .' - '. $data['email'],
 					'email_content' => nl2br(lang('email_content_join_gm')),
-					'basic_title' => lang('tabs_user_basic'),
+					'basic_title' => ucwords(lang('labels_basic').' '.lang('labels_info')),
 				);
 				
 				// build the user data array
