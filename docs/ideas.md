@@ -36,6 +36,7 @@
 * When any site content is changed, we'll delete the cache and re-cache it automatically.
 * Using Kohana's caching system, we'll be able to cache all sub navigation menus for fewer calls to the database.
 * When a menu item is updated, we'll delete the cache and re-cache it automatically.
+* Move the user menu options to a dropdown in the header.
 
 ## Access
 
@@ -88,6 +89,12 @@
         * If a poll is marked as public answer, once a user replies, their answer will be posted by their name.
         * If a poll is marked as private answer, their answer will not be displayed, even to admins.
 
-## Reporting
+## Report Center
 
-* Need to rethink reporting in Nova 3.
+* Like manifest views, it'd be awesome to be able to admins tons of options for creating their own reports based on what they want.
+
+## Skinning
+
+* Get rid of the float-right and float-left classes. Use pull-right and pull-left (respectively) instead.
+* Build default skins with LESS for more consistency. We should also provide the option of download the development versions of skins that will have the LESS files in case advanced skin developers want to use LESS.
+* Use Bootstrap's scaffolding in the first-party skins.
