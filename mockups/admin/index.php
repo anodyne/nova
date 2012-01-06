@@ -13,6 +13,7 @@ $page = (isset($_GET['page'])) ? $_GET['page'] : 'default';
 		
 		<script type="text/javascript" src="../../nova/modules/assets/js/jquery-1.7.1.min.js"></script>
 		<script type="text/javascript" src="../assets/bootstrap-transition.js"></script>
+		<script type="text/javascript" src="../assets/bootstrap-tab.js"></script>
 		<script type="text/javascript" src="../assets/bootstrap-dropdown.js"></script>
 		<script type="text/javascript" src="../assets/bootstrap-twipsy.js"></script>
 		
