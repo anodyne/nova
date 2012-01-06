@@ -1,29 +1,32 @@
-*~
-*.bak
-Thumbs.db
-.DS_Store
+# Nova
 
-application/config/database.php
-
-application/assets/images/awards/
-application/assets/images/characters/
-application/assets/images/missions/
-application/assets/images/specs/
-application/assets/images/tour/
+application/assets/images/*/
 application/cache/
 application/logs/
 application/modules/
 application/views/
 
-!application/assets/images/awards/.gitkeep
-!application/assets/images/characters/.gitkeep
-!application/assets/images/missions/.gitkeep
-!application/assets/images/specs/.gitkeep
-!application/assets/images/tour/.gitkeep
-!application/cache/.gitkeep
-!application/logs/.gitkeep
-!application/beta/
-!application/default/
+application/config/database.php
 
-application/assets/common/ds9/
-application/assets/common/ent/
+!application/views/default/*
+!application/views/beta/*
+
+application/assets/common/*
+
+# General
+*~
+*.bak
+
+# Windows-specific ignores
+Thumbs.db
+Desktop.ini
+
+# Mac-specific ignores
+.DS_Store
+Icon?
+._*
+.Spotlight-V100
+.Trashes
+*.tmproj
+*.tmproject
+tmtags
