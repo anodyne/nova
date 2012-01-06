@@ -19,10 +19,10 @@
 				<td class="col-30 align-center">
 					<span class="success hidden"><?php echo img(MODFOLDER.'/core/views/_base/update/images/tick-circle.png');?></span>
 					<span class="failure hidden">
-						<?php echo img(MODFOLDER.'/core/views/_base/update/images/exclamation-red.png', array('class' => 'tiptip', 'title' => ''));?>
+						<?php echo img(array('src' => MODFOLDER.'/core/views/_base/update/images/exclamation-red.png', 'class' => 'tiptip', 'title' => ''));?>
 					</span>
 					<span class="warning hidden">
-						<?php echo img(MODFOLDER.'/core/views/_base/update/images/exclamation.png', array('class' => 'tiptip', 'title' => ''));?>
+						<?php echo img(array('src' => MODFOLDER.'/core/views/_base/update/images/exclamation.png', 'class' => 'tiptip', 'title' => ''));?>
 					</span>
 					<span class="loading hidden"><?php echo img(MODFOLDER.'/core/views/_base/update/images/loading-circle-large.gif');?></span>
 				</td>
@@ -34,7 +34,7 @@
 				<td class="col-30 align-center">
 					<span class="success hidden"><?php echo img(MODFOLDER.'/core/views/_base/update/images/tick-circle.png');?></span>
 					<span class="failure hidden">
-						<?php echo img(MODFOLDER.'/core/views/_base/update/images/exclamation-red.png', array('class' => 'tiptip', 'title' => ''));?>
+						<?php echo img(array('src' => MODFOLDER.'/core/views/_base/update/images/exclamation-red.png', 'class' => 'tiptip', 'title' => ''));?>
 					</span>
 					<span class="loading hidden"><?php echo img(MODFOLDER.'/core/views/_base/update/images/loading-circle-large.gif');?></span>
 				</td>
@@ -46,10 +46,10 @@
 				<td class="col-30 align-center">
 					<span class="success hidden"><?php echo img(MODFOLDER.'/core/views/_base/update/images/tick-circle.png');?></span>
 					<span class="failure hidden">
-						<?php echo img(MODFOLDER.'/core/views/_base/update/images/exclamation-red.png', array('class' => 'tiptip', 'title' => ''));?>
+						<?php echo img(array('src' => MODFOLDER.'/core/views/_base/update/images/exclamation-red.png', 'class' => 'tiptip', 'title' => ''));?>
 					</span>
 					<span class="warning hidden">
-						<?php echo img(MODFOLDER.'/core/views/_base/update/images/exclamation.png', array('class' => 'tiptip', 'title' => ''));?>
+						<?php echo img(array('src' => MODFOLDER.'/core/views/_base/update/images/exclamation.png', 'class' => 'tiptip', 'title' => ''));?>
 					</span>
 					<span class="loading hidden"><?php echo img(MODFOLDER.'/core/views/_base/update/images/loading-circle-large.gif');?></span>
 				</td>
@@ -61,10 +61,10 @@
 				<td class="col-30 align-center">
 					<span class="success hidden"><?php echo img(MODFOLDER.'/core/views/_base/update/images/tick-circle.png');?></span>
 					<span class="failure hidden">
-						<?php echo img(MODFOLDER.'/core/views/_base/update/images/exclamation-red.png', array('class' => 'tiptip', 'title' => ''));?>
+						<?php echo img(array('src' => MODFOLDER.'/core/views/_base/update/images/exclamation-red.png', 'class' => 'tiptip', 'title' => ''));?>
 					</span>
 					<span class="warning hidden">
-						<?php echo img(MODFOLDER.'/core/views/_base/update/images/exclamation.png', array('class' => 'tiptip', 'title' => ''));?>
+						<?php echo img(array('src' => MODFOLDER.'/core/views/_base/update/images/exclamation.png', 'class' => 'tiptip', 'title' => ''));?>
 					</span>
 					<span class="loading hidden"><?php echo img(MODFOLDER.'/core/views/_base/update/images/loading-circle-large.gif');?></span>
 				</td>
@@ -76,10 +76,10 @@
 				<td class="col-30 align-center">
 					<span class="success hidden"><?php echo img(MODFOLDER.'/core/views/_base/update/images/tick-circle.png');?></span>
 					<span class="failure hidden">
-						<?php echo img(MODFOLDER.'/core/views/_base/update/images/exclamation-red.png', array('class' => 'tiptip', 'title' => ''));?>
+						<?php echo img(array('src' => MODFOLDER.'/core/views/_base/update/images/exclamation-red.png', 'class' => 'tiptip', 'title' => ''));?>
 					</span>
 					<span class="warning hidden">
-						<?php echo img(MODFOLDER.'/core/views/_base/update/images/exclamation.png', array('class' => 'tiptip', 'title' => ''));?>
+						<?php echo img(array('src' => MODFOLDER.'/core/views/_base/update/images/exclamation.png', 'class' => 'tiptip', 'title' => ''));?>
 					</span>
 					<span class="loading hidden"><?php echo img(MODFOLDER.'/core/views/_base/update/images/loading-circle-large.gif');?></span>
 				</td>
@@ -91,10 +91,10 @@
 				<td class="col-30 align-center">
 					<span class="success hidden"><?php echo img(MODFOLDER.'/core/views/_base/update/images/tick-circle.png');?></span>
 					<span class="failure hidden">
-						<?php echo img(MODFOLDER.'/core/views/_base/update/images/exclamation-red.png', array('class' => 'tiptip', 'title' => ''));?>
+						<?php echo img(array('src' => MODFOLDER.'/core/views/_base/update/images/exclamation-red.png', 'class' => 'tiptip', 'title' => ''));?>
 					</span>
 					<span class="warning hidden">
-						<?php echo img(MODFOLDER.'/core/views/_base/update/images/exclamation.png', array('class' => 'tiptip', 'title' => ''));?>
+						<?php echo img(array('src' => MODFOLDER.'/core/views/_base/update/images/exclamation.png', 'class' => 'tiptip', 'title' => ''));?>
 					</span>
 					<span class="loading hidden"><?php echo img(MODFOLDER.'/core/views/_base/update/images/loading-circle-large.gif');?></span>
 				</td>
@@ -106,10 +106,10 @@
 				<td class="col-30 align-center">
 					<span class="success hidden"><?php echo img(MODFOLDER.'/core/views/_base/update/images/tick-circle.png');?></span>
 					<span class="failure hidden">
-						<?php echo img(MODFOLDER.'/core/views/_base/update/images/exclamation-red.png', array('class' => 'tiptip', 'title' => ''));?>
+						<?php echo img(array('src' => MODFOLDER.'/core/views/_base/update/images/exclamation-red.png', 'class' => 'tiptip', 'title' => ''));?>
 					</span>
 					<span class="warning hidden">
-						<?php echo img(MODFOLDER.'/core/views/_base/update/images/exclamation.png', array('class' => 'tiptip', 'title' => ''));?>
+						<?php echo img(array('src' => MODFOLDER.'/core/views/_base/update/images/exclamation.png', 'class' => 'tiptip', 'title' => ''));?>
 					</span>
 					<span class="loading hidden"><?php echo img(MODFOLDER.'/core/views/_base/update/images/loading-circle-large.gif');?></span>
 				</td>
@@ -121,10 +121,10 @@
 				<td class="col-30 align-center">
 					<span class="success hidden"><?php echo img(MODFOLDER.'/core/views/_base/update/images/tick-circle.png');?></span>
 					<span class="failure hidden">
-						<?php echo img(MODFOLDER.'/core/views/_base/update/images/exclamation-red.png', array('class' => 'tiptip', 'title' => ''));?>
+						<?php echo img(array('src' => MODFOLDER.'/core/views/_base/update/images/exclamation-red.png', 'class' => 'tiptip', 'title' => ''));?>
 					</span>
 					<span class="warning hidden">
-						<?php echo img(MODFOLDER.'/core/views/_base/update/images/exclamation.png', array('class' => 'tiptip', 'title' => ''));?>
+						<?php echo img(array('src' => MODFOLDER.'/core/views/_base/update/images/exclamation.png', 'class' => 'tiptip', 'title' => ''));?>
 					</span>
 					<span class="loading hidden"><?php echo img(MODFOLDER.'/core/views/_base/update/images/loading-circle-large.gif');?></span>
 				</td>
@@ -136,10 +136,10 @@
 				<td class="col-30 align-center">
 					<span class="success hidden"><?php echo img(MODFOLDER.'/core/views/_base/update/images/tick-circle.png');?></span>
 					<span class="failure hidden">
-						<?php echo img(MODFOLDER.'/core/views/_base/update/images/exclamation-red.png', array('class' => 'tiptip', 'title' => ''));?>
+						<?php echo img(array('src' => MODFOLDER.'/core/views/_base/update/images/exclamation-red.png', 'class' => 'tiptip', 'title' => ''));?>
 					</span>
 					<span class="warning hidden">
-						<?php echo img(MODFOLDER.'/core/views/_base/update/images/exclamation.png', array('class' => 'tiptip', 'title' => ''));?>
+						<?php echo img(array('src' => MODFOLDER.'/core/views/_base/update/images/exclamation.png', 'class' => 'tiptip', 'title' => ''));?>
 					</span>
 					<span class="loading hidden"><?php echo img(MODFOLDER.'/core/views/_base/update/images/loading-circle-large.gif');?></span>
 				</td>

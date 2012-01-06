@@ -20,8 +20,9 @@
 			var send;
 			
 			var twipsyOptions = {
-				defaultPosition: 'right',
-				edgeOffset: 8
+				placement: 'right',
+				offset: 5,
+				animate: false
 			}
 			
 			// get the password
