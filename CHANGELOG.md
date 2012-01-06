@@ -38,6 +38,7 @@
 * Private messages in the inbox and sent messages list are now paginated.
 * The Reply to All link when reading a private message is only displayed if there's more than one recipient.
 * The Reply, Reply to All and Forward options when reading a private message are now displayed above and below the private message.
+* An all-new redesigned character bio page provides a better, cleaner user experience.
 
 ### The Nova Core
 
