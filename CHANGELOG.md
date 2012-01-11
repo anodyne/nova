@@ -46,9 +46,10 @@
 * Moved to a brand new file structure that further removes the Nova Core from any changes an admin might be making.
 * Added __experimental__ module support.
 * Updated to jQuery 1.7.1.
-* Updated to jQuery UI 1.8.16.
+* Updated to jQuery UI 1.8.17.
 * Updated to jQuery Uniform 1.7.5.
 * Updated to jQuery prettyPhoto 3.1.3.
+* Updated to markItUp! 1.1.12.
 * Added the jQuery Chosen plugin.
 * Added the Bootstrap by Twitter Twipsy plugin (version 1.4).
 * Added the Bootstrap by Twitter Popover plugin (version 1.4).
