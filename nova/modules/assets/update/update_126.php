@@ -322,7 +322,7 @@ $this->db->update('system_components', array('comp_version' => '1.7.1'));
 
 // update the jquery ui version info
 $this->db->where('comp_name', 'jQuery UI');
-$this->db->update('system_components', array('comp_version' => '1.8.16'));
+$this->db->update('system_components', array('comp_version' => '1.8.17'));
 
 // update the jquery prettyphoto info
 $this->db->where('comp_name', 'prettyPhoto');
@@ -330,7 +330,7 @@ $this->db->update('system_components', array('comp_version' => '3.1.3'));
 
 // update the markItUp! info
 $this->db->where('comp_name', 'markItUp!');
-$this->db->update('system_components', array('comp_version' => '1.1.10'));
+$this->db->update('system_components', array('comp_version' => '1.1.12'));
 
 // update the thresher info
 $this->db->where('comp_name', 'Thresher');

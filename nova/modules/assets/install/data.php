@@ -2273,7 +2273,7 @@ $system_components = array(
 		'comp_desc' => 'jQuery is a lightweight JavaScript library that emphasizes interaction between JavaScript and HTML.'),
 	array(
 		'comp_name' => 'jQuery UI',
-		'comp_version' => '1.8.16',
+		'comp_version' => '1.8.17',
 		'comp_url' => 'http://jqueryui.com/',
 		'comp_desc' => 'jQuery UI is a lightweight, easily customizable interface library for the jQuery Javascript library.'),
 	array(
@@ -2308,7 +2308,7 @@ $system_components = array(
 		'comp_url' => 'http://rikrikrik.com/jquery/quicksearch/'),
 	array(
 		'comp_name' => 'markItUp!',
-		'comp_version' => '1.1.10',
+		'comp_version' => '1.1.12',
 		'comp_desc' => "markItUp! is a JavaScript plugin built on the jQuery library that allows you to turn any textarea into a markup editor.",
 		'comp_url' => 'http://markitup.jaysalvat.com/home/'),
 	array(
