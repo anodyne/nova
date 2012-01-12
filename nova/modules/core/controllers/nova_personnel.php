@@ -404,6 +404,7 @@ abstract class Nova_personnel extends Nova_controller_main {
 		
 		$data['postcount'] = 0;
 		$data['logcount'] = 0;
+		$data['newscount'] = 0;
 		$data['awardcount'] = 0;
 		
 		if ($character !== false)
