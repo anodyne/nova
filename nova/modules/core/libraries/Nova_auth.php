@@ -420,14 +420,14 @@ abstract class Nova_auth {
 		// get the cookie
 		$cookie = get_cookie('nova_'. $uid, true);
 		
-		if ($cookie)
+		if ($cookie !== false and is_array($cookie))
 		{
 			$login = self::login($cookie['email'], $cookie['password'], null, true);
 			
 			return $login;
 		}
 		
-		return FALSE;
+		return false;
 	}
 	
 	protected static function _destroy_cookie()
