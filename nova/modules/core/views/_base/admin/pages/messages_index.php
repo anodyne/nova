@@ -16,6 +16,11 @@
 
 <div id="loaded" class="hidden">
 	<p><?php echo anchor('messages/write', img($images['write']).$label['write'], array('class' => 'image bold'));?></p>
+	<p>
+		<a href="#" id="mark_read" data-user="<?php echo $this->session->userdata('userid');?>" class="image bold">
+			<?php echo img($images['read']).' '.$label['mark_read'];?>
+		</a>
+	</p>
 	
 	<?php if ( ! isset($inbox)): ?>
 		<?php echo text_output($label['no_inbox'], 'h3', 'orange');?>

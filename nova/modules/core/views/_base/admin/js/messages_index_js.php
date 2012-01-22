@@ -1,4 +1,5 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');?>
+<?php $string = random_string('alnum', 8);?>
 
 <style>
 .popover .inner { width: 550px !important; }
@@ -17,6 +18,18 @@
 		
 		$('#inbox_check_all').click(function(){
 			$("input[type='checkbox']").attr('checked', $('#inbox_check_all').is(':checked'));
+		});
+		
+		$('#mark_read').click(function(){
+			$.ajax({
+				type: "POST",
+				url: "<?php echo site_url('ajax/update_mark_messages_as_read');?>/" + $(this).data('user') + "/<?php echo $string;?>",
+				success: function(data){
+					window.location.reload(true);
+				}
+			});
+			
+			return false;
 		});
 		
 		$('#loading').hide();

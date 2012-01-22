@@ -9214,6 +9214,35 @@ abstract class Nova_ajax extends CI_Controller {
 		}
 	}
 	
+	public function update_mark_messages_as_read($user)
+	{
+		$allowed = Auth::check_access('messages/index', false);
+		
+		if ($allowed)
+		{
+			// load the models
+			$this->load->model('privmsgs_model', 'pm');
+			
+			// sanity check
+			$user = (is_numeric($user)) ? $user : false;
+			
+			if ($user !== false)
+			{
+				// get all of the unread message IDs
+				$unread = $this->pm->get_unread_messages($user);
+			
+				if ($unread !== false)
+				{
+					// loop through the IDs and mark them as read
+					foreach ($unread as $u)
+					{
+						$this->pm->update_message($u, $user, array('pmto_unread' => 'n'));
+					}
+				}
+			}
+		}
+	}
+	
 	public function user_activate($id)
 	{
 		$allowed = Auth::check_access('user/account', false);

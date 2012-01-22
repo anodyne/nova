@@ -88,6 +88,36 @@ abstract class Nova_privmsgs_model extends CI_Model {
 	}
 	
 	/**
+	 * Get the unread messages for a specific user.
+	 *
+	 * @access	public
+	 * @version	2.0
+	 * @param	int		the user to pull messages for
+	 * @return 	mixed	false if there are no unread messages, an array of message IDs if there are
+	 */
+	public function get_unread_messages($user)
+	{
+		$this->db->from('privmsgs_to')
+			->where('pmto_recipient_user', $user)
+			->where('pmto_unread', 'y');
+		$query = $this->db->get();
+		
+		if ($query->num_rows() > 0)
+		{
+			$unread = array();
+			
+			foreach ($query->result() as $row)
+			{
+				$unread[] = $row->pmto_message;
+			}
+			
+			return $unread;
+		}
+		
+		return false;
+	}
+	
+	/**
 	 * Count private messages
 	 *
 	 * @access	public

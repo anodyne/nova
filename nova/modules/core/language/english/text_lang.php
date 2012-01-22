@@ -176,6 +176,7 @@ $lang['chosen_incompat'] = "To select multiple authors, hold down the Control ke
 $lang['post_locked'] = "This %s is locked for editing. The lock will be released after 5 minutes or after the current %s saves their changes.";
 $lang['post_locked_gen'] = "Indicates a %s is locked for editing. The lock will be released after 5 minutes or after the current %s saves their changes.";
 $lang['recent_comments'] = "There have been %s made on this entry in the last 30 days.";
+$lang['mark_as_read'] = "Mark All as Read";
 
 /*
 |---------------------------------------------------------------

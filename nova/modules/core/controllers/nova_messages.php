@@ -91,6 +91,10 @@ abstract class Nova_messages extends Nova_controller_admin {
 				'src' => Location::img('mail-message-new.png', $this->skin, 'admin'),
 				'alt' => lang('actions_write'),
 				'class' => 'image inline_img_left'),
+			'read' => array(
+				'src' => Location::img('icon-check.png', $this->skin, 'admin'),
+				'alt' => lang('mark_as_read'),
+				'class' => 'image inline_img_left'),
 			'unread' => array(
 				'src' => Location::img('mail-unread.png', $this->skin, 'admin'),
 				'alt' => '*',
@@ -168,6 +172,7 @@ abstract class Nova_messages extends Nova_controller_admin {
 			'loading' => ucfirst(lang('actions_loading')) .'...',
 			'message_preview' => ucwords(lang('labels_message').' '.lang('labels_preview')),
 			'no_inbox' => sprintf(lang('error_not_found'), lang('global_privatemessages')),
+			'mark_read' => lang('mark_as_read'),
 			'search' => ucfirst(lang('actions_search')),
 			'sent' => ucwords(lang('actions_sent').' '.lang('labels_messages').' '.RARROW),
 			'write' => ucwords(lang('actions_write') .' '. lang('status_new') .' '. lang('labels_message')),
