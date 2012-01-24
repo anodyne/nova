@@ -15,16 +15,16 @@ $page = (isset($_GET['page'])) ? $_GET['page'] : 'default';
 		<script type="text/javascript" src="../assets/bootstrap-transition.js"></script>
 		<script type="text/javascript" src="../assets/bootstrap-tab.js"></script>
 		<script type="text/javascript" src="../assets/bootstrap-dropdown.js"></script>
-		<script type="text/javascript" src="../assets/bootstrap-twipsy.js"></script>
+		<script type="text/javascript" src="../assets/bootstrap-tooltip.js"></script>
 		
 		<script type="text/javascript">
 			$(document).ready(function(){
-				$('[rel*="twipsy"]').twipsy();
+				$('[rel*="twipsy"]').tooltip();
 			});
 		</script>
 	</head>
 	<body>
-		<div class="navbar">
+		<div class="navbar navbar-static">
 			<div class="navbar-inner">
 				<div class="container">
 					<a href="?page=default" class="brand">Control Panel</a>
@@ -36,7 +36,7 @@ $page = (isset($_GET['page'])) ? $_GET['page'] : 'default';
 						<li><a href="?page=reports">Report Center</a></li>
 					</ul>
 					
-					<ul class="nav secondary-nav">
+					<ul class="nav pull-right">
 						<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="label warning">5</span> DVS</a>
 							<ul class="dropdown-menu">
 								<li><a href="#">My Account</a></li>
@@ -58,7 +58,27 @@ $page = (isset($_GET['page'])) ? $_GET['page'] : 'default';
 		</div>
 		
 		<div class="container">
-			<div class="content"><?php include 'page.'.$page.'.php';?></div>
+			<div class="content">
+				<div class="row">
+					<div class="span3">
+						<nav class="nav-sub">
+							<ul class="nav list">
+								<?php include 'nav.'.$page.'.php';?>
+							</ul>
+						</nav>
+					</div>
+					
+					<div class="span9">
+						<div class="row">
+							<div class="span9">
+								<section>
+									<?php include 'page.'.$page.'.php';?>
+								</section>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
 		</div>
 	</body>
 </html>
