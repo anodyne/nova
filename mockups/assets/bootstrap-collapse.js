@@ -2,7 +2,7 @@
  * bootstrap-collapsible.js v2.0.0
  * http://twitter.github.com/bootstrap/javascript.html#collapsible
  * =============================================================
- * Copyright 2011 Twitter, Inc.
+ * Copyright 2012 Twitter, Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -125,9 +125,8 @@
   $(function () {
     $('body').on('click.collapse.data-api', '[data-toggle=collapse]', function ( e ) {
       var $this = $(this)
-        , target = $this.attr('data-target') || $this.attr('href')
+        , target = $this.attr('data-target') || e.preventDefault() || $this.attr('href')
         , option = $(target).data('collapse') ? 'toggle' : $this.data()
-      e.preventDefault()
       $(target).collapse(option)
     })
   })
