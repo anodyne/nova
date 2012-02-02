@@ -46,7 +46,7 @@ abstract class Nova_update extends CI_Controller {
 		$this->load->library('session');
 		$this->load->model('settings_model', 'settings');
 		$this->load->model('system_model', 'sys');
-		$this->lang->load('install');
+		$this->nova->lang('install');
 		$this->lang->load('app', $this->session->userdata('language'));
 		
 		// set the version
