@@ -247,7 +247,7 @@ $modify_column = array(
 			'name' => 'rank',
 			'type' => 'INT',
 			'constraint' => 10,
-			'default' => NULL)
+			'default' => 0)
 	),
 	'sessions' => array(
 		'user_agent' => array(
