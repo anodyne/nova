@@ -9,6 +9,20 @@
 * Fields that only admins can see and edit.
 * Dynamic user information form.
 
+## Form Builder
+
+* Much like Wufoo, Nova really needs a form builder that will help admins creating their forms.
+* Drag fields around to re-order.
+* Drag fields on to the form to add.
+* Click on a field to see all its properties and change them.
+* Form options including intro text.
+
+## Posting
+
+* The ability to manually re-order posts, logs, and announcements.
+    * http://www.foliotek.com/devblog/make-table-rows-sortable-using-jquery-ui-sortable/
+* Re-name news items to announcements.
+
 ## Awards
 
 * Rename from Crew Awards to Awards
