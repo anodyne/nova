@@ -1,6 +1,6 @@
 # Changelog
 
-## v2.0
+## v2.0 (04 February 2012)
 
 * Site Messages can now contain previously disallowed HTML tags (like `embed`, `iframe`, etc) for adding media from YouTube and Vimeo to site messages (like the welcome message) without needing to use seamless substitution.
 * Mission groups can now be added inside other mission groups (nesting only allowed one level deep).
@@ -106,6 +106,7 @@
 * The database automatically set a default rank for pending users potentially resulting in some confusion as to why a pending user already has a rank. ([#148](https://github.com/anodyne/nova/issues/148))
 * If there is only one specification item, the list of items would be dispalyed instead of automatically sending the user to the only specification item. ([#146](https://github.com/anodyne/nova/issues/146))
 * If there is only one specification item, the list of decks would be dispalyed instead of automatically sending the user to the only deck listing. ([#147](https://github.com/anodyne/nova/issues/147))
+* During fresh installs, the user ID constraint wasn't consistent with the rest of the user ID fields throughout the system.
 
 ## 1.2.6 (15 July 2011)
 
