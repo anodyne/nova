@@ -11,7 +11,7 @@
 	
 	<ul id="options" class="fontLarge none">
 		<li>
-			<a href="http://docs.anodyne-productions.com/index.php/nova/tour" target="_blank">
+			<a href="http://docs.anodyne-productions.com/index.php/nova1/tour/index" target="_blank">
 				<span class="icon ui-icon ui-icon-search"></span>
 				<?php echo $label['options_tour'];?>
 			</a>
@@ -29,7 +29,7 @@
 			</a>
 		</li>
 		<li>
-			<a href="http://docs.anodyne-productions.com/index.php/nova/overview/install" target="_blank">
+			<a href="http://docs.anodyne-productions.com/index.php/nova2/start/install" target="_blank">
 				<span class="icon ui-icon ui-icon-bookmark"></span>
 				<?php echo $label['options_guide'];?>
 			</a>

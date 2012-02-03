@@ -7,7 +7,7 @@
 
 	<ul id="options" class="fontLarge none">
 		<li>
-			<a href="http://docs.anodyne-productions.com/index.php/nova/tour" target="_blank">
+			<a href="http://docs.anodyne-productions.com/index.php/nova1/tour/index" target="_blank">
 				<?php echo $label['options_tour'];?>
 			</a>
 		</li>
@@ -22,7 +22,7 @@
 			</a>
 		</li>
 		<li>
-			<a href="http://docs.anodyne-productions.com/index.php/nova/overview/upgrade" target="_blank">
+			<a href="http://docs.anodyne-productions.com/index.php/nova2/start/sms" target="_blank">
 				<?php echo $label['options_guide'];?>
 			</a>
 		</li>
