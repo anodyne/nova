@@ -248,7 +248,7 @@ abstract class Nova_user extends Nova_controller_admin {
 				$user = $this->input->post('id', true);
 				$characters = $this->input->post('characters', true);
 				
-				if (count($characters) > 0)
+				if ($characters !== false and count($characters) > 0)
 				{
 					foreach ($characters as $c)
 					{
