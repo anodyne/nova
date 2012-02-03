@@ -41,7 +41,7 @@
 								<?php endif;?>
 								
 								<?php if ($p['locked']): ?>
-									<?php echo img($images['lock']);?>
+									<?php echo img(array('src' => $images['lock']['src'], 'class' => $images['lock']['class'], 'alt' => $images['lock']['alt'], 'rel' => 'tooltip', 'title' => $p['lock_owner']));?>
 								<?php endif;?>
 								
 								<?php echo anchor('write/missionpost/'. $p['post_id'], $p['title'], array('class' => 'bold'));?>

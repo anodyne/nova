@@ -99,6 +99,19 @@ abstract class Nova_write extends Nova_controller_admin {
 			$i = 1;
 			foreach ($posts_saved->result() as $p)
 			{
+				if ((int) $p->post_lock_user !== 0 and (int) $p->post_lock_date !== 0)
+				{
+					// figure out how long it's been since the lock was opened
+					$secsSinceLock = now() - $p->post_lock_date;
+					$timeSinceLock = floor($secsSinceLock / 60);
+					
+					// if it's been 10 minutes and the lock is still in place, clear it
+					if ($timeSinceLock >= 10)
+					{
+						$this->posts->update_post_lock($p->post_id, 0, false);
+					}
+				}
+				
 				$data['posts_saved'][$i]['title'] = ( ! empty($p->post_title)) 
 					? $p->post_title 
 					: '<em>[[ '.strtoupper(lang('labels_no').' '.lang('labels_title')).' ]]</em>';
@@ -109,6 +122,47 @@ abstract class Nova_write extends Nova_controller_admin {
 				$data['posts_saved'][$i]['mission_id'] = $p->post_mission;
 				$data['posts_saved'][$i]['saved'] = $p->post_saved;
 				$data['posts_saved'][$i]['locked'] = ((int) $p->post_lock_user !== 0 and (int) $p->post_lock_date !== 0);
+				
+				if ((int) $p->post_lock_user !== 0 and (int) $p->post_lock_date !== 0)
+				{
+					// get an array of authors
+					$authors = explode(',', $p->post_authors);
+					
+					// if there is a lock, get that user's characters
+					$authorChars = $this->char->get_user_characters($p->post_lock_user, 'active', 'array');
+					
+					// get the author's main character
+					$authorMainChar = $this->user->get_main_character($p->post_lock_user);
+					
+					// get the character IDs that are the same between the 2 arrays
+					$diff = array_intersect($authorChars, $authors);
+					
+					if (in_array($authorMainChar, $diff))
+					{
+						$lockOwner = $this->char->get_character_name($authorMainChar);
+					}
+					else
+					{
+						// move the pointer to the beginning of the array
+						reset($diff);
+						
+						// grab the first character
+						$lockOwner = $this->char->get_character_name(current($diff));
+					}
+					
+					// figure out how long it's been since the lock was opened
+					$secsSinceLock = now() - $p->post_lock_date;
+					$timeSinceLock = $secsSinceLock / 60;
+					$timeSinceLock = ($timeSinceLock >= 1) ? floor($timeSinceLock) : ceil($timeSinceLock);
+					
+					// load the date language file
+					$this->lang->load('date');
+					
+					// figure out what the plurality should be
+					$minutesPlurality = ($timeSinceLock == 1) ? strtolower(lang('date_minute')) : strtolower(lang('date_minutes'));
+					
+					$data['posts_saved'][$i]['lock_owner'] = sprintf(lang('post_lock_owner'), $lockOwner, $timeSinceLock, $minutesPlurality);
+				}
 				
 				++$i;
 			}
