@@ -116,7 +116,8 @@ $system_versions = array(
 * The database automatically set a default rank for pending users potentially resulting in some confusion as to why a pending user already has a rank. ([#148](https://github.com/anodyne/nova/issues/148))
 * If there is only one specification item, the list of items would be dispalyed instead of automatically sending the user to the only specification item. ([#146](https://github.com/anodyne/nova/issues/146))
 * If there is only one specification item, the list of decks would be dispalyed instead of automatically sending the user to the only deck listing. ([#147](https://github.com/anodyne/nova/issues/147))
-* During fresh installs, the user ID constraint wasn't consistent with the rest of the user ID fields throughout the system."
+* During fresh installs, the user ID constraint wasn't consistent with the rest of the user ID fields throughout the system.
+* Under some circumstances, users could edit posts they weren't even a part of. (Thanks to evshell18 on the Anodyne forums for pointing this out and getting the ball rolling on a fix.)"
 );
 
 $system_info = array(
