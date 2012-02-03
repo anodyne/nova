@@ -3504,13 +3504,16 @@ abstract class Nova_manage extends Nova_controller_admin {
 			// grab the post data
 			$row = $this->posts->get_post($id);
 			
-			if (Auth::get_access_level() < 2)
+			if ((int) Auth::get_access_level() < 2)
 			{
 				$valid = array();
 				
 				foreach ($this->session->userdata('characters') as $check)
 				{
-					if (strstr($row->post_authors, $check) === false)
+					// make an array of the post authors
+					$authors = explode(',', $row->post_authors);
+					
+					if ( ! in_array($check, $authors))
 					{
 						$valid[] = false;
 					}
@@ -5467,7 +5470,9 @@ abstract class Nova_manage extends Nova_controller_admin {
 				$config['full_tag_open'] = '<p class="fontMedium bold">';
 				$config['full_tag_close'] = '</p>';
 				
-				$posts = $this->posts->get_post_list('', 'desc', $config['per_page'], $offset, $status);
+				$posts = (int) Auth::get_access_level('manage/posts') == 1
+					? $this->posts->get_character_posts($this->session->userdata('characters'), $config['per_page'], $status, $offset)
+					: $this->posts->get_post_list('', 'desc', $config['per_page'], $offset, $status);
 				
 				$data['entries'] = null;
 				
@@ -5477,49 +5482,21 @@ abstract class Nova_manage extends Nova_controller_admin {
 					
 					foreach ($posts->result() as $p)
 					{
-						if (Auth::get_access_level('manage/posts') == 1)
-						{
-							$valid = array();
-							
-							foreach ($this->session->userdata('characters') as $c)
-							{
-								if (strstr($p->post_authors, $c))
-								{
-									$valid[] = true;
-								}
-								else
-								{
-									$valid[] = false;
-								}
-							}
-							
-							if (in_array(true, $valid))
-							{
-								$date = gmt_to_local($p->post_date, $this->timezone, $this->dst);
-								
-								$data['entries'][$p->post_id]['id'] = $p->post_id;
-								$data['entries'][$p->post_id]['title'] = $p->post_title;
-								$data['entries'][$p->post_id]['author'] = $this->char->get_authors($p->post_authors, true);
-								$data['entries'][$p->post_id]['date'] = mdate($datestring, $date);
-								$data['entries'][$p->post_id]['mission'] = $this->mis->get_mission($p->post_mission, 'mission_title');
-								$data['entries'][$p->post_id]['status'] = $p->post_status;
-							}
-						}
-						elseif (Auth::get_access_level('manage/posts') == 2)
-						{
-							$date = gmt_to_local($p->post_date, $this->timezone, $this->dst);
-							
-							$data['entries'][$p->post_id]['id'] = $p->post_id;
-							$data['entries'][$p->post_id]['title'] = $p->post_title;
-							$data['entries'][$p->post_id]['author'] = $this->char->get_authors($p->post_authors, true);
-							$data['entries'][$p->post_id]['date'] = mdate($datestring, $date);
-							$data['entries'][$p->post_id]['mission'] = $this->mis->get_mission($p->post_mission, 'mission_title');
-							$data['entries'][$p->post_id]['status'] = $p->post_status;
-						}
+						$date = gmt_to_local($p->post_date, $this->timezone, $this->dst);
+						
+						$data['entries'][$p->post_id]['id'] = $p->post_id;
+						$data['entries'][$p->post_id]['title'] = $p->post_title;
+						$data['entries'][$p->post_id]['author'] = $this->char->get_authors($p->post_authors, true);
+						$data['entries'][$p->post_id]['date'] = mdate($datestring, $date);
+						$data['entries'][$p->post_id]['mission'] = $this->mis->get_mission($p->post_mission, 'mission_title');
+						$data['entries'][$p->post_id]['status'] = $p->post_status;
 					}
 				}
-		
-				$config['total_rows'] = $this->posts->count_all_posts('', $status);
+				
+				// make sure we're calculating the number of rows correctly
+				$config['total_rows'] = ((int) Auth::get_access_level('manage/posts') == 1)
+					? $this->posts->count_character_posts($this->session->userdata('characters'), $status)
+					: $this->posts->count_all_posts('', $status);
 				
 			    // initialize the pagination library
 				$this->pagination->initialize($config);
