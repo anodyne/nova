@@ -340,7 +340,7 @@ abstract class Nova_admin extends Nova_controller_admin {
 		if (Auth::is_sysadmin($this->session->userdata('userid')) && $this->options['updates'] != 'none')
 		{
 			// load the install file
-			$this->lang->load('install', $this->session->userdata('language'));
+			$this->nova->load('install', $this->session->userdata('language'));
 			
 			// grab the ignore version
 			$ignore = $this->sys->get_item('system_info', 'sys_id', 1, 'sys_version_ignore');
