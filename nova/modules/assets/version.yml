@@ -5,5 +5,5 @@ version_update: 0
 severity: major
 notes: |
   While not what we originally envisioned for Nova 2, this major release is a stepping stone to Anodyne's next generation RPG management software. Our focus with Nova 2 has been on encapsulating the Nova core even more to insulate admins from the laborious task of updating the system. With a brand new file structure, you'll find that Nova 2 separates your code from our code in ways that Nova 1 can't compare to. In addition, Thresher gets a long-awaited refresh that includes page restrictions, a brand new page management user experience, draft cleanup and much more. More information about Nova 2 and a full changelog can be found at AnodyneDocs. This update is recommended for all users.
-date: 24 June 2011
+date: 04 February 2012
 link: http://www.anodyne-productions.com/nova/index.php
