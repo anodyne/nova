@@ -2354,7 +2354,7 @@ $system_info = array(
 		'sys_install_date' => now(),
 		'sys_version_major' => 2,
 		'sys_version_minor' => 0,
-		'sys_version_update' => 0)
+		'sys_version_update' => 1)
 );
 
 $system_versions = array(
@@ -2814,6 +2814,15 @@ $system_versions = array(
 * If there is only one specification item, the list of decks would be dispalyed instead of automatically sending the user to the only deck listing. ([#147](https://github.com/anodyne/nova/issues/147))
 * During fresh installs, the user ID constraint wasn't consistent with the rest of the user ID fields throughout the system.
 * Under some circumstances, users could edit posts they weren't even a part of. (Thanks to evshell18 on the Anodyne forums for pointing this out and getting the ball rolling on a fix.)"),
+	array(
+		'version'			=> '2.0.1',
+		'version_major'		=> 2,
+		'version_minor'		=> 0,
+		'version_update'	=> 1,
+		'version_date'		=> 1328388452,
+		'version_launch'	=> "Nova 2.0.1 addresses several minor issues discovered after the 2.0 code was frozen for release. Systems getting an error about not being able to load a language file and minor display issues are addressed in this release.",
+		'version_changes'	=> "* If the user's screen isn't wide enough, the tooltip on the Writing Control Panel that displays the post lock information can slide partially out of view.
+* Nova tried to load a language file through an object that couldn't see it, resulting in an error thrown about the file not being found.")
 );
 
 $tour_fields = array(

@@ -1,5 +1,12 @@
 # Changelog
 
+## v2.0.1 (04 February 2012)
+
+### Bug Fixes
+
+* If the user's screen isn't wide enough, the tooltip on the Writing Control Panel that displays the post lock information can slide partially out of view.
+* Nova tried to load a language file through an object that couldn't see it, resulting in an error thrown about the file not being found.
+
 ## v2.0 (04 February 2012)
 
 * Site Messages can now contain previously disallowed HTML tags (like `embed`, `iframe`, etc) for adding media from YouTube and Vimeo to site messages (like the welcome message) without needing to use seamless substitution.
