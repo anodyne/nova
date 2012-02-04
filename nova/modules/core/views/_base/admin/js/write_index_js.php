@@ -11,7 +11,8 @@
 		
 		$('[rel=tooltip]').twipsy({
 			animate: false,
-			offset: 5
+			offset: 5,
+			placement: 'right'
 		});
 		
 		$('[rel=popover]').popover({
