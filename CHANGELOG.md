@@ -5,6 +5,7 @@
 ### Bug Fixes
 
 * Under some (strange) circumstances, Nova could throw errors from the Ajax controller.
+* A typo in the language string on the reset password page when the security question you select doesn't match what's in the database.
 
 ## v2.0.1 (04 February 2012)
 
