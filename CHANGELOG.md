@@ -1,5 +1,11 @@
 # Changelog
 
+## v2.0.2
+
+### Bug Fixes
+
+* Under some (strange) circumstances, Nova could throw errors from the Ajax controller.
+
 ## v2.0.1 (04 February 2012)
 
 ### Bug Fixes
