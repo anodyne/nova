@@ -6217,6 +6217,11 @@ abstract class Nova_ajax extends CI_Controller {
 					$data['default']['skin'] = $item->skinsec_skin;
 				}
 			break;
+			
+			default:
+				$header = '';
+				$view = '';
+			break;
 		}
 		
 		// data being sent to the facebox
