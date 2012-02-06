@@ -142,7 +142,6 @@
 							
 									<tr class="fontSmall hidden <?php echo $char['crew_type'] . $display;?>">
 										<td class="col_15"></td>
-										<td class="col_15"></td>
 										<td class="col_150"><?php echo img($char['rank_img']);?></td>
 										<td>
 											<strong class="fontMedium"><?php echo $char['name'];?></strong><br />
@@ -154,6 +153,7 @@
 												<br /><?php echo text_output($label['inactive'], 'span', 'gray');?>
 											<?php endif; ?>
 										</td>
+										<td></td>
 										<td class="col_75 align_right">
 											<?php echo anchor('personnel/character/'. $char['char_id'], img($char['combadge']), array('class' => 'bold image'));?>
 										</td>
