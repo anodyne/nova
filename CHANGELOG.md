@@ -8,6 +8,7 @@
 * A typo in the language string on the reset password page when the security question you select doesn't match what's in the database.
 * If a user has multiple playing characters assigned to them, the milestones listing would display their main character name for every playing character they had assigned to them instead of just displaying it once.
 * The new manifest layout had some display issues when using sub departments. ([#168](https://github.com/anodyne/nova/issues/168))
+* The Who's Online listing displayed random spaces and commas.
 
 ## v2.0.1 (04 February 2012)
 
