@@ -1,22 +1,24 @@
 # Changelog
 
-## v2.0.2
+## 2.0.2 (09 February 2012)
 
 ### Bug Fixes
 
 * Under some (strange) circumstances, Nova could throw errors from the Ajax controller.
 * A typo in the language string on the reset password page when the security question you select doesn't match what's in the database.
 * If a user has multiple playing characters assigned to them, the milestones listing would display their main character name for every playing character they had assigned to them instead of just displaying it once.
-* The new manifest layout had some display issues when using sub departments. ([#168](https://github.com/anodyne/nova/issues/168))
+* The new manifest layout has some display issues when using sub departments. ([#168](https://github.com/anodyne/nova/issues/168))
+* When updating the content of a deck, the submit process went back to the select screen instead of staying on the current item's page.
+* When deleting specification items, if there are decks associated with that spec item, they're orphaned and not deleted.
 
-## v2.0.1 (04 February 2012)
+## 2.0.1 (04 February 2012)
 
 ### Bug Fixes
 
 * If the user's screen isn't wide enough, the tooltip on the Writing Control Panel that displays the post lock information can slide partially out of view.
 * Nova tried to load a language file through an object that couldn't see it, resulting in an error thrown about the file not being found.
 
-## v2.0 (04 February 2012)
+## 2.0 (04 February 2012)
 
 * Site Messages can now contain previously disallowed HTML tags (like `embed`, `iframe`, etc) for adding media from YouTube and Vimeo to site messages (like the welcome message) without needing to use seamless substitution.
 * Mission groups can now be added inside other mission groups (nesting only allowed one level deep).
@@ -223,12 +225,12 @@
 
 ## 1.1.2 (14 October 2010)
 
-### Nova COre
+### Nova Core
 
 * Instead of duplicating code, Nova's form helper now extends the dropdown functions.
 * When writing or editing a mission post, we now take the author list in to account in the author selection dropdown. (Thanks to Patric for helping with this.)
 
-## Bug Fixes
+### Bug Fixes
 
 * Addressed an issue when adding an author when creating or editing a mission post. (Thanks to Patric for this fix.)
 * Nova would try to update a user's profile with a field that doesn't exist.
