@@ -2,7 +2,7 @@
 
 <?php echo text_output($header, 'h2');?>
 
-<?php echo form_open('manage/decks');?>
+<?php echo form_open('manage/decks/'.$inputs['item']);?>
 	<table class="table100">
 		<tbody>
 			<tr>
