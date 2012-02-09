@@ -23,7 +23,8 @@
 		});
 		
 		$("a[rel^='prettyPhoto']").prettyPhoto({
-			theme: 'dark_rounded'
+			theme: 'dark_rounded',
+			social_tools: '<div class="pp_social"></div>'
 		});
 		
 		$('select.skins').change(function(){

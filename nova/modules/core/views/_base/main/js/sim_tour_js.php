@@ -6,7 +6,8 @@
 		$('table.zebra-even tbody > tr:nth-child(even)').addClass('alt');
 		
 		$("a[rel^='prettyPhoto']").prettyPhoto({
-			theme: 'dark_rounded'
+			theme: 'dark_rounded',
+			social_tools: '<div class="pp_social"></div>'
 		});
 	});
 </script>
