@@ -10,6 +10,7 @@
 * The new manifest layout has some display issues when using sub departments. ([#168](https://github.com/anodyne/nova/issues/168))
 * When updating the content of a deck, the submit process went back to the select screen instead of staying on the current item's page.
 * When deleting specification items, if there are decks associated with that spec item, they're orphaned and not deleted.
+* The Who's Online listing displayed random spaces and commas.
 
 ## 2.0.1 (04 February 2012)
 
