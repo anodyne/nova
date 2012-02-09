@@ -99,7 +99,9 @@ abstract class Nova_write extends Nova_controller_admin {
 			$i = 1;
 			foreach ($posts_saved->result() as $p)
 			{
-				if ((int) $p->post_lock_user !== 0 and (int) $p->post_lock_date !== 0)
+				if (( (int) $p->post_lock_user !== 0 and (int) $p->post_lock_date !== 0) 
+						or ( (int) $p->post_lock_user == 0 and (int) $p->post_lock_date !== 0) 
+						or ( (int) $p->post_lock_user !== 0 and (int) $p->post_lock_date == 0))
 				{
 					// figure out how long it's been since the lock was opened
 					$secsSinceLock = now() - $p->post_lock_date;
@@ -121,9 +123,9 @@ abstract class Nova_write extends Nova_controller_admin {
 				$data['posts_saved'][$i]['mission'] = $this->mis->get_mission($p->post_mission, 'mission_title');
 				$data['posts_saved'][$i]['mission_id'] = $p->post_mission;
 				$data['posts_saved'][$i]['saved'] = $p->post_saved;
-				$data['posts_saved'][$i]['locked'] = ((int) $p->post_lock_user !== 0 and (int) $p->post_lock_date !== 0);
+				$data['posts_saved'][$i]['locked'] = ( (int) $p->post_lock_user !== 0 and (int) $p->post_lock_date !== 0);
 				
-				if ((int) $p->post_lock_user !== 0 and (int) $p->post_lock_date !== 0)
+				if ( (int) $p->post_lock_user !== 0 and (int) $p->post_lock_date !== 0)
 				{
 					// get an array of authors
 					$authors = explode(',', $p->post_authors);

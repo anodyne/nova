@@ -7941,7 +7941,7 @@ abstract class Nova_ajax extends CI_Controller {
 			$post = $this->posts->get_post($id);
 			
 			// update the lock
-			$this->posts->update_post_lock($id, null, false);
+			$this->posts->update_post_lock($id, 0, false);
 			
 			$head = sprintf(
 				lang('fbx_head'),
