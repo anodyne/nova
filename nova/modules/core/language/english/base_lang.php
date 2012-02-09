@@ -585,7 +585,7 @@ $lang['flash_empty_fields'] = "You must complete %s in order to %s a %s. Please 
 $lang['flash_duplicate_key'] = "Your %s key is a duplicate of an existing key. Please create a unique key and try again.";
 
 $lang['flash_reset_error_1'] = 'Email address not found, please try again.';
-$lang['flash_reset_error_2'] = 'The security question you selected does match the security question we have on file for you, please try again.';
+$lang['flash_reset_error_2'] = 'The security question you selected does not match the security question we have on file for you, please try again.';
 $lang['flash_reset_error_3'] = 'The answer you provided is wrong. Your answer must be identical to the answer you provided originally. Please try again.';
 $lang['flash_reset_error_4'] = 'We have found more than one account with your email address. Please contact the game master to resolve this issue before continuing.';
 $lang['flash_reset_success'] = 'Your password has been successfully reset. You will receive an email shortly with your new password and you will be prompted to reset your password next time you log in.';

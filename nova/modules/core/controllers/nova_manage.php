@@ -3998,6 +3998,7 @@ abstract class Nova_manage extends Nova_controller_admin {
 		
 		// load the resources
 		$this->load->model('specs_model', 'specs');
+		$this->load->model('tour_model', 'tour');
 		
 		// set the variables
 		$action = $this->uri->segment(3);
@@ -4068,7 +4069,11 @@ abstract class Nova_manage extends Nova_controller_admin {
 					$id = $this->input->post('id', true);
 					$id = (is_numeric($id)) ? $id : false;
 					
+					// delete the spec item
 					$delete = $this->specs->delete_spec_item($id);
+					
+					// delete any decks for that item
+					$decks = $this->tour->delete_deck($id, true);
 					
 					if ($delete > 0)
 					{

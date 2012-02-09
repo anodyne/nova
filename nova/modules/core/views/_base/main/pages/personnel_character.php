@@ -19,17 +19,15 @@
 	<?php if (isset($character)): ?>
 		<div class="span4">
 			<?php if (isset($character['image']['src'])): ?>
-				<div id="gallery">
-					<p><a href="<?php echo $character['image']['src'];?>" class="image" rel="prettyPhoto[gallery]"><?php echo img($character['image']);?></a></p>
-				</div>
-				
-				<div class="hidden">
+				<ul class="gallery">
+					<li><a href="<?php echo $character['image']['src'];?>" class="image" rel="prettyPhoto[gallery]"><?php echo img($character['image']);?></a></li>
+					
 					<?php if (count($character['image_array']) > 0): ?>
 						<?php foreach ($character['image_array'] as $image): ?>
-							<a href="<?php echo $image['src'];?>" class="image" rel="prettyPhoto[gallery]"><?php echo img($image);?></a>
+							<li class="hidden"><a href="<?php echo $image['src'];?>" class="image" rel="prettyPhoto[gallery]"><?php echo img($image);?></a></li>
 						<?php endforeach; ?>
 					<?php endif; ?>
-				</div>
+				</ul>
 			<?php else: ?>
 				<div id="gallery">
 					<p><?php echo img($character['noavatar']);?></p>
@@ -37,10 +35,6 @@
 			<?php endif;?>
 			
 			<ul>
-				<?php if (isset($character['image']['src'])): ?>
-					<li><a href="<?php echo $character['image']['src'];?>" rel="prettyPhoto[gallery]"><?php echo $label['view_all_images'];?></a></li>
-				<?php endif;?>
-				
 				<?php if ($postcount > 0): ?>
 					<li><?php echo anchor('personnel/viewposts/c/'.$character['id'], $label['view_all_posts']);?></li>
 				<?php endif;?>

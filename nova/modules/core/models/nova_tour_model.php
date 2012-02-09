@@ -236,9 +236,16 @@ abstract class Nova_tour_model extends CI_Model {
 		return $query;
 	}
 	
-	public function delete_deck($id = '')
+	public function delete_deck($id = '', $delete_all = false)
 	{
-		$query = $this->db->delete('tour_decks', array('deck_id' => $id));
+		if ($delete_all === false)
+		{
+			$query = $this->db->delete('tour_decks', array('deck_id' => $id));
+		}
+		else
+		{
+			$query = $this->db->delete('tour_decks', array('deck_item' => $id));
+		}
 		
 		$this->dbutil->optimize_table('tour_decks');
 		

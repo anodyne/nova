@@ -469,9 +469,7 @@ abstract class Nova_personnel extends Nova_controller_main {
 				$data['character']['image'] = array(
 					'src' => $src,
 					'alt' => $name,
-					//'class' => 'image reflect',
 					'class' => 'image',
-					//'height' => 150
 					'width' => 200
 				);
 				

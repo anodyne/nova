@@ -188,7 +188,7 @@ abstract class Nova_admin extends Nova_controller_admin {
 		|---------------------------------------------------------------
 		*/
 		
-		$all = $this->user->get_users_from_characters();
+		$all = $this->user->get_users();
 		
 		$now = now();
 		$threshold = $now - ($this->options['posting_requirement'] * 86400);
@@ -196,16 +196,16 @@ abstract class Nova_admin extends Nova_controller_admin {
 		// set activity as an empty array to avoid errors
 		$data['activity'] = array();
 		
-		if ($all !== FALSE)
+		if ($all->num_rows() > 0)
 		{
-			foreach ($all as $a)
+			foreach ($all->result() as $a)
 			{
 				if ($threshold > $a->last_post)
 				{
 					$data['activity'][$a->userid] = array(
 						'post' => ( ! empty($a->last_post)) ? $a->last_post : lang('error_no_last_post'),
 						'login' => ( ! empty($a->last_login)) ? $a->last_login : lang('error_no_last_login'),
-						'name' => $this->char->get_character_name($a->main_char, TRUE)
+						'name' => $this->char->get_character_name($a->main_char, true)
 					);
 				}
 				
@@ -237,7 +237,7 @@ abstract class Nova_admin extends Nova_controller_admin {
 				if ($time <= 12)
 				{
 					$data['milestones'][] = array(
-						'name' => $this->char->get_character_name($m['char'], TRUE),
+						'name' => $this->char->get_character_name($m['char'], true),
 						'months' => floor($time),
 						'years' => 0,
 						'timespan' => timespan($m['join'], $now)
@@ -251,7 +251,7 @@ abstract class Nova_admin extends Nova_controller_admin {
 					$months = floor($time - $subt);
 					
 					$data['milestones'][] = array(
-						'name' => $this->char->get_character_name($m['char'], TRUE),
+						'name' => $this->char->get_character_name($m['char'], true),
 						'months' => $months,
 						'years' => $years,
 						'timespan' => timespan($m['join'], $now)
@@ -261,7 +261,7 @@ abstract class Nova_admin extends Nova_controller_admin {
 			
 			foreach ($data['milestones'] as $k => $v)
 			{
-				if ( ($v['years'] == 0 && $v['months'] != 6) || ($v['years'] > 0 && $v['months'] > 0) )
+				if ( ($v['years'] == 0 and $v['months'] != 6) or ($v['years'] > 0 and $v['months'] > 0) )
 				{
 					unset($data['milestones'][$k]);
 				}
