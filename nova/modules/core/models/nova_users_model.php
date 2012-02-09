@@ -340,7 +340,7 @@ abstract class Nova_users_model extends CI_Model {
 		{
 			foreach ($query->result() as $row)
 			{
-				if ( ! is_null($row->user_data))
+				if ( ! is_null($row->user_data) and ! empty($row->user_data))
 				{
 					$item = unserialize($row->user_data);
 				
