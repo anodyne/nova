@@ -168,7 +168,10 @@ abstract class Nova_template
 	 * @return	 string	 the rendered template
 	 */
 	public static function render($return = FALSE) 
-	{		
+	{
+		// get an instance of CI
+		$ci =& get_instance();
+		
 		$out = '';
 		ob_start();
 
@@ -193,6 +196,12 @@ abstract class Nova_template
 		
 		$buffer = ob_get_contents();
 		@ob_end_clean();
+		
+		$elapsed = $ci->benchmark->elapsed_time('total_execution_time_start', 'total_execution_time_end');
+		$memory	 = ( ! function_exists('memory_get_usage')) ? '0' : round(memory_get_usage()/1024/1024, 2).'MB';
+		
+		$buffer = str_replace('{elapsed_time}', $elapsed, $buffer);
+		$buffer = str_replace('{memory_usage}', $memory, $buffer);
 		
 		if ($return)
 		{
