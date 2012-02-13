@@ -112,3 +112,8 @@
 * Get rid of the float-right and float-left classes. Use pull-right and pull-left (respectively) instead.
 * Build default skins with LESS for more consistency. We should also provide the option of download the development versions of skins that will have the LESS files in case advanced skin developers want to use LESS.
 * Use Bootstrap's scaffolding in the first-party skins.
+
+## Database
+
+* Remove the Nova version history table.
+* Remove the Nova components table.
