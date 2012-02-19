@@ -5,6 +5,7 @@
 ### Bug Fixes
 
 * Benchmarking psuedo-variables are not handled properly because of the fact the Template library doesn't not use the Output library for sending content to the browser.
+* When saving posts with the Post Participants feature turned off, Nova would throw errors about a database field not accepting NULL values.
 
 ## 2.0.2 (09 February 2012)
 
