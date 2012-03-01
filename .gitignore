@@ -16,6 +16,8 @@ application/assets/common/*
 # General
 *~
 *.bak
+*.sublime-project
+*.sublime-workspace
 
 # Windows-specific ignores
 Thumbs.db
