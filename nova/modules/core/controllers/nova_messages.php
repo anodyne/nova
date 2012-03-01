@@ -178,7 +178,16 @@ abstract class Nova_messages extends Nova_controller_admin {
 			'write' => ucwords(lang('actions_write') .' '. lang('status_new') .' '. lang('labels_message')),
 		);
 		
-		$this->_regions['content'] = Location::view('messages_index', $this->skin, 'admin', $data);
+		if ($this->agent->is_mobile() and ! $this->agent->is_mobile('ipad'))
+		{
+			Template::$file = '_mobile/template';
+			$this->_regions['content'] = Location::view('messages_index', '_mobile', 'admin', $data);
+		}
+		else
+		{
+			$this->_regions['content'] = Location::view('messages_index', $this->skin, 'admin', $data);
+		}
+		
 		$this->_regions['javascript'] = Location::js('messages_index_js', $this->skin, 'admin');
 		$this->_regions['title'].= $data['header'];
 		
