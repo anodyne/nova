@@ -11,7 +11,7 @@
 		</div>
 		
 		<div class="tabbable">
-			<ul class="tabs">
+			<ul class="nav nav-tabs">
 				<li class="active"><a href="#general" data-toggle="tab">General Info</a></li>
 				<li><a href="#system" data-toggle="tab">System Settings</a></li>
 				<li><a href="#appearance" data-toggle="tab">Appearance</a></li>
@@ -54,7 +54,7 @@
 				</div>
 				
 				<div id="appearance" class="tab-pane">
-					<ul class="pills">
+					<ul class="nav nav-pills">
 						<li class="active"><a href="#app-gen" data-toggle="pill">General</a></li>
 						<li><a href="#app-skinsranks" data-toggle="pill">Skins &amp; Ranks</a></li>
 						<li><a href="#app-widgets" data-toggle="pill">Widgets</a></li>
@@ -93,7 +93,7 @@
 				</div>
 				
 				<div id="skin" class="tab-pane">
-					<ul class="pills">
+					<ul class="nav nav-pills">
 						<li class="active"><a href="#skin-gen" data-toggle="pill">General</a></li>
 						<li><a href="#skin-footer" data-toggle="pill">Footer</a></li>
 						<li><a href="#skin-metadata" data-toggle="pill">Meta Data</a></li>

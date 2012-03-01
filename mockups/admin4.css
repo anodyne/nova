@@ -1,0 +1,10 @@
+.navbar {
+	margin-bottom: 0;
+}
+.navbar-inner {
+	border-radius: 0 0 0 0;
+}
+
+.navbar .brand {
+	color: #000;
+}

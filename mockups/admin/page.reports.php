@@ -7,7 +7,7 @@
 		<div class="well">
 			<h3>This Month</h3><br>
 			
-			<table class="striped-table bordered-table">
+			<table class="table table-striped table-bordered">
 				<tbody>
 					<tr>
 						<td><strong>Users</strong></td>
@@ -38,7 +38,7 @@
 		<div class="well">
 			<h3>Last Month</h3><br>
 			
-			<table class="striped-table bordered-table">
+			<table class="table table-striped table-bordered">
 				<tbody>
 					<tr>
 						<td><strong>Users</strong></td>
@@ -70,8 +70,8 @@
 	<div class="span6">
 		<div class="well">
 			<div class="pull-right btn-group">
-				<a href="#" class="btn small">Email</a>
-				<a href="#" class="btn small">View</a>
+				<a href="#" class="btn btn-small">Email</a>
+				<a href="#" class="btn btn-small">View</a>
 			</div>
 			<h3>Activity</h3>
 			<p>Content</p>
@@ -81,8 +81,8 @@
 	<div class="span6">
 		<div class="well">
 			<div class="pull-right btn-group">
-				<a href="#" class="btn small">Email</a>
-				<a href="#" class="btn small">View</a>
+				<a href="#" class="btn btn-small">Email</a>
+				<a href="#" class="btn btn-small">View</a>
 			</div>
 			<h3>Post Counts</h3>
 			<p>Content</p>
@@ -94,13 +94,13 @@
 	<div class="span6">
 		<div class="well">
 			<div class="pull-right btn-group">
-				<a href="#" class="btn small" rel="twipsy" title="Announce a user's milestone">Announce</a>
-				<a href="#" class="btn small">Email</a>
-				<a href="#" class="btn small">View</a>
+				<a href="#" class="btn btn-small" rel="twipsy" title="Announce a user's milestone">Announce</a>
+				<a href="#" class="btn btn-small">Email</a>
+				<a href="#" class="btn tn-small">View</a>
 			</div>
 			<h3>Milestones</h3><br>
 			
-			<table class="striped-table bordered-table">
+			<table class="table table-striped table-bordered">
 				<tbody>
 					<tr>
 						<td><strong>John Q. Public</strong></td>

@@ -2,6 +2,13 @@ html, body {
 	background: #eee;
 }
 
+.navbar {
+	margin-bottom: 0;
+}
+.navbar-inner {
+	border-radius: 0 0 0 0;
+}
+
 .dropdown-toggle .label,
 .dropdown-menu li a .label {
 	padding: 2px 6px 2px 5px;

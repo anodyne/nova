@@ -30,7 +30,7 @@ $page = (isset($_GET['page'])) ? $_GET['page'] : 'default';
 					<a href="?page=default" class="brand">Control Panel</a>
 					
 					<ul class="nav">
-						<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Write</a>
+						<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Write <b class="caret"></b></a>
 							<ul class="dropdown-menu">
 								<li><a href="#">Writing Panel</a></li>
 								<li class="divider"></li>
@@ -39,14 +39,14 @@ $page = (isset($_GET['page'])) ? $_GET['page'] : 'default';
 								<li><a href="#">News Item</a></li>
 							</ul>
 						</li>
-						<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Manage</a>
+						<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Manage <b class="caret"></b></a>
 							<ul class="dropdown-menu">
 								<li><a href="?page=manage">Forms</a></li>
 								<li><a href="?page=manage">Site</a></li>
 								<li><a href="?page=manage">Data</a></li>
 							</ul>
 						</li>
-						<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Characters &amp; Users</a>
+						<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Characters &amp; Users <b class="caret"></b></a>
 							<ul class="dropdown-menu">
 								<li><a href="?page=users">All Users</a></li>
 								<li class="divider"></li>
@@ -58,15 +58,15 @@ $page = (isset($_GET['page'])) ? $_GET['page'] : 'default';
 						<li><a href="?page=reports">Report Center</a></li>
 					</ul>
 					
-					<ul class="nav secondary-nav">
-						<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="label warning">5</span> DVS</a>
+					<ul class="nav pull-right">
+						<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="label label-warning">5</span> DVS <b class="caret"></b></a>
 							<ul class="dropdown-menu">
 								<li><a href="#">My Account</a></li>
 								<li><a href="#">Preferences</a></li>
 								<li><a href="#">My Characters</a></li>
 								<li class="divider"></li>
-								<li><a href="#"><span class="label important">2</span> Messages</a></li>
-								<li><a href="#"><span class="label warning">3</span> Writing</a></li>
+								<li><a href="#"><span class="label label-important">2</span> Messages</a></li>
+								<li><a href="#"><span class="label label-warning">3</span> Writing</a></li>
 								<li class="divider"></li>
 								<li><a href="#">Request LOA</a></li>
 								<li><a href="#">Nominate for Award</a></li>
