@@ -2354,7 +2354,7 @@ $system_info = array(
 		'sys_install_date' => now(),
 		'sys_version_major' => 2,
 		'sys_version_minor' => 0,
-		'sys_version_update' => 2)
+		'sys_version_update' => 3)
 );
 
 $system_versions = array(
@@ -2840,6 +2840,16 @@ $system_versions = array(
 * When deleting specification items, if there are decks associated with that spec item, they're orphaned and not deleted.
 * The Who's Online listing displayed random spaces and commas.
 * Character image galleries duplicated the primary image."),
+	array(
+		'version'			=> '2.0.3',
+		'version_major'		=> 2,
+		'version_minor'		=> 0,
+		'version_update'	=> 3,
+		'version_date'		=> 1330646400,
+		'version_launch'	=> "Nova 2.0.3 addresses an issue with benchmarking psuedo-variables (elapsed time and memory consumption) that are caused by the Template engine not using the Output class. In addition, the jQuery UI has been updated to version 1.8.18.",
+		'version_changes'	=> "* Updated jQuery UI to version 1.8.18.
+* Benchmarking psuedo-variables are not handled properly because of the fact the Template library doesn't use the Output library for sending content to the browser.
+* When saving posts with the Post Participants feature turned off, Nova would throw errors about a database field not accepting NULL values."),
 );
 
 $tour_fields = array(

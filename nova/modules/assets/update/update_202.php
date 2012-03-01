@@ -22,7 +22,8 @@ $system_versions = array(
 	'version_date'		=> 1330646400,
 	'version_launch'	=> "Nova 2.0.3 addresses an issue with benchmarking psuedo-variables (elapsed time and memory consumption) that are caused by the Template engine not using the Output class. In addition, the jQuery UI has been updated to version 1.8.18.",
 	'version_changes'	=> "* Updated jQuery UI to version 1.8.18.
-* Benchmarking psuedo-variables are not handled properly because of the fact the Template library doesn't use the Output library for sending content to the browser."
+* Benchmarking psuedo-variables are not handled properly because of the fact the Template library doesn't use the Output library for sending content to the browser.
+* When saving posts with the Post Participants feature turned off, Nova would throw errors about a database field not accepting NULL values."
 );
 
 $system_info = array(

@@ -628,6 +628,9 @@ abstract class Nova_write extends Nova_controller_admin {
 						break;
 							
 						case 'save':
+							// set the participants field to be blank by default
+							$participants = '';
+							
 							if ($this->options['use_post_participants'] == 'y')
 							{
 								if ($id)
@@ -782,6 +785,9 @@ abstract class Nova_write extends Nova_controller_admin {
 						case 'post':
 							// check the moderation status
 							$status = $this->user->checking_moderation('post', $authors_string);
+							
+							// set the participants field to be blank
+							$participants = '';
 							
 							if ($this->options['use_post_participants'] == 'y')
 							{
