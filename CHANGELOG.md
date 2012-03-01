@@ -1,6 +1,6 @@
 # Changelog
 
-## 2.0.3
+## 2.0.3 (01 March 2012)
 
 ### Nova Core
 
@@ -8,7 +8,7 @@
 
 ### Bug Fixes
 
-* Benchmarking psuedo-variables are not handled properly because of the fact the Template library doesn't not use the Output library for sending content to the browser.
+* Benchmarking psuedo-variables are not handled properly because of the fact the Template library doesn't use the Output library for sending content to the browser.
 
 ## 2.0.2 (09 February 2012)
 
