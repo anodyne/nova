@@ -19,6 +19,8 @@ nova/app/
 # General
 *~
 *.bak
+*.sublime-project
+*.sublime-workspace
 
 # Windows-specific ignores
 Thumbs.db

@@ -1,9 +1,9 @@
-version: 2.0.2
+version: 2.0.3
 version_major: 2
 version_minor: 0
-version_update: 2
+version_update: 3
 severity: minor
 notes: |
-  Nova 2.0.2 addresses several display issues, errors thrown throughout the system, typos, orphaned data, and other minor issues. In addition, tweaks have been made to post locking and the image modal windows throughout Nova.
-date: 09 February 2012
+  Nova 2.0.3 addresses an issue with benchmarking psuedo-variables (elapsed time and memory consumption) that are caused by the Template engine not using the Output class. In addition, the jQuery UI has been updated to version 1.8.18.
+date: 01 March 2012
 link: http://www.anodyne-productions.com/nova/index.php
