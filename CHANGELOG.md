@@ -2,6 +2,10 @@
 
 ## 2.0.3
 
+### Nova Core
+
+* Updated jQuery UI to version 1.8.18.
+
 ### Bug Fixes
 
 * Benchmarking psuedo-variables are not handled properly because of the fact the Template library doesn't not use the Output library for sending content to the browser.
