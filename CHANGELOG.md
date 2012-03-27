@@ -1,5 +1,16 @@
 # Changelog
 
+## 2.0.4
+
+### Nova Core
+
+* Updated jQuery to version 1.7.2
+
+### Bug Fixes
+
+* Join timespan always showed as a user joining "1 Second ago" no matter when they joined.
+* Nova's `timespan_short` helper was missing the word "ago" when the time was less than an hour.
+
 ## 2.0.3 (01 March 2012)
 
 ### Nova Core
