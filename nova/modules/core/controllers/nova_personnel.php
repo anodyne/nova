@@ -749,39 +749,57 @@ abstract class Nova_personnel extends Nova_controller_main {
 			/**
 			 * Stats
 			 */
+			
 			// get all of the user's active characters
 			$all_active_characters = $this->char->get_user_characters($user);
 			
 			// get all of the user's inactive characters
 			$all_inactive_characters = $this->char->get_user_characters($user, 'inactive');
+
+			// create a holding variable
+			$temp_activate = array();
 			
-			if ($all_active_characters->num_rows() > 0 or $all_inactive_characters->num_rows() > 0)
+			// get the activation dates for the active characters
+			if ($all_active_characters->num_rows() > 0)
 			{
 				foreach ($all_active_characters->result() as $active)
 				{
 					$temp_activate[] = $active->date_activate;
 				}
-				
+			}
+
+			// get the activation dates for the inactive characters
+			if ($all_inactive_characters->num_rows() > 0)
+			{
 				foreach ($all_inactive_characters->result() as $inactive)
 				{
 					$temp_activate[] = $inactive->date_activate;
 				}
-				
+			}
+
+			if (count($temp_activate) > 0)
+			{
+				// sort the activation array
 				sort($temp_activate);
 				
+				// use the first item in the array as the final activation time
 				$final_activate = $temp_activate[0];
 			}
-			
+
 			// figure out what the final deactivation date should be
 			if ($all_active_characters->num_rows() == 0)
 			{
-				$final_deactivate = now();
+				$final_deactivate[] = now();
 			}
 			else
 			{
 				foreach ($all_active_characters->result() as $active)
 				{
-					$temp_deactivate[] = $active->date_deactivate;
+					$date = $active->date_deactivate;
+
+					$temp_deactivate[] = ( (int) $date === 0 or $date === null)
+						? now()
+						: $active->date_deactivate;
 				}
 				
 				// now that we have a list of deactivation dates, let's use the latest one
@@ -789,19 +807,22 @@ abstract class Nova_personnel extends Nova_controller_main {
 				
 				$final_deactivate = $temp_deactivate[0];
 			}
+
+			var_dump('Final Activated: '.$final_activate);
+			var_dump('Final Deactivated: '.$final_deactivate);
 			
-			$data['join_date_time'] = timespan($final_activate, $final_deactivate);
+			$data['join_date_time'] = timespan_short($final_activate, $final_deactivate);
 			$data['join_date'] = mdate($datestring, gmt_to_local($final_activate, $this->timezone, $this->dst));
 			
 			if ( ! empty($row->last_post))
 			{
-				$data['last_post_time'] = timespan($row->last_post, now());
+				$data['last_post_time'] = timespan_short($row->last_post, now());
 				$data['last_post'] = mdate($datestring, gmt_to_local($row->last_post, $this->timezone, $this->dst));
 			}
 			
 			if ( ! empty($row->last_login))
 			{
-				$data['last_login_time'] = timespan($row->last_login, now());
+				$data['last_login_time'] = timespan_short($row->last_login, now());
 				$data['last_login'] = mdate($datestring, gmt_to_local($row->last_login, $this->timezone, $this->dst));
 			}
 			

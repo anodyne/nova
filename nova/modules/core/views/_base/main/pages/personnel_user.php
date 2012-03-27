@@ -81,13 +81,13 @@
 			<br>
 			<p>
 				<kbd><?php echo $label['joined'];?></kbd>
-				<?php echo $join_date_time .' '. $label['ago'];?>
+				<?php echo $join_date_time;?>
 				<span class="fontSmall gray">(<?php echo $join_date;?>)</span>
 			</p>
 			<p>
 				<kbd><?php echo $label['lastlogin'];?></kbd>
 				<?php if (isset($last_login_time)): ?>
-					<?php echo $last_login_time .' '. $label['ago'];?>
+					<?php echo $last_login_time;?>
 					<span class="fontSmall gray">(<?php echo $last_login;?>)</span>
 				<?php else: ?>
 					<?php echo text_output($label['nologin'], 'span', 'orange bold');?>
@@ -96,7 +96,7 @@
 			<p>
 				<kbd><?php echo $label['lastpost'];?></kbd>
 				<?php if (isset($last_post_time)): ?>
-					<?php echo $last_post_time .' '. $label['ago'];?>
+					<?php echo $last_post_time;?>
 					<span class="fontSmall gray">(<?php echo $last_post;?>)</span>
 				<?php else: ?>
 					<?php echo text_output($label['nopost'], 'span', 'orange bold');?>

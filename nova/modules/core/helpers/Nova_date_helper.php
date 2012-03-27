@@ -128,7 +128,7 @@ if ( ! function_exists('timespan_short'))
 			}
 			else
 			{
-				return ucwords($CI->lang->line('labels_less') .' '. $CI->lang->line('labels_than')) . ' 1 '. $CI->lang->line('date_hour');
+				return ucfirst($CI->lang->line('labels_less')) .' '. $CI->lang->line('labels_than') . ' 1 '. strtolower($CI->lang->line('date_hour')).' '.$CI->lang->line('time_ago');
 			}
 		
 			$minutes = floor($seconds / 60);
