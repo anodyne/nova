@@ -8,6 +8,7 @@
 * Remove the `system_components` and `system_versions` tables from the database. There's really no reason to be maintaining these lists in Nova. Instead, users who are interested in Nova's components and version history should visit AnodyneDocs.
 * Remove the What's New page for the reasons specified above.
 * Update the Version Information page to reflect the database changes.
+* Update the post, log, and news creation pages to give a description of what tags are meant to be used for.
 
 ### Bug Fixes
 
