@@ -5,7 +5,7 @@
  * @package		Nova
  * @category	Model
  * @author		Anodyne Productions
- * @copyright	2011 Anodyne Productions
+ * @copyright	2012 Anodyne Productions
  */
 
 abstract class Nova_privmsgs_model extends CI_Model {
@@ -151,17 +151,6 @@ abstract class Nova_privmsgs_model extends CI_Model {
 		}
 		
 		return $this->db->count_all_results();
-	}
-	
-	/**
-	 * Count unread private messages. This is an alias to count_pms.
-	 *
-	 * @deprecated
-	 * @access	public
-	 */
-	public function count_unread_pms($id = '')
-	{
-		return $this->count_pms($id, 'unread');
 	}
 	
 	public function insert_pm_recipients($data = '')
