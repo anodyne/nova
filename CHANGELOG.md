@@ -1,5 +1,14 @@
 # Changelog
 
+## 2.1.0
+
+### Nova Core
+
+* Remove the `count_unread_pms` method from the private messages model. (This method was deprecated in Nova 2.0.)
+* Remove the `system_components` and `system_versions` tables from the database. There's really no reason to be maintaining these lists in Nova. Instead, users who are interested in Nova's components and version history should visit AnodyneDocs.
+* Remove the What's New page for the reasons specified above.
+* Update the Version Information page to reflect the database changes.
+
 ## 2.0.4
 
 ### Nova Core
