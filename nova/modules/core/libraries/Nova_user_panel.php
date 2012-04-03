@@ -28,7 +28,7 @@ abstract class Nova_user_panel {
 		
 		// run the methods
 		$user = $this->_ci->user->get_user($this->_ci->session->userdata('userid'));
-		$count = $this->_ci->pm->count_unread_pms($this->_ci->session->userdata('userid'));
+		$count = $this->_ci->pm->count_pms($this->_ci->session->userdata('userid'), 'unread');
 		
 		$data['count'] = ($count > 0) ? ' <strong>('. $count .')</strong>' : false;
 		$data['name'] = ($user !== false) ? $user->name : '';
@@ -96,7 +96,7 @@ abstract class Nova_user_panel {
 		$this->_ci->load->model('personallogs_model', 'logs');
 		$this->_ci->load->model('news_model', 'news');
 		
-		$data['unreadpm'] = $this->_ci->pm->count_unread_pms($this->_ci->session->userdata('userid'));
+		$data['unreadpm'] = $this->_ci->pm->count_pms($this->_ci->session->userdata('userid'), 'unread');
 		$data['unreadpm_icon'] = ($data['unreadpm'] > 0) ? 'green' : 'gray';
 		
 		if (is_array($this->_ci->session->userdata('characters')) and count($this->_ci->session->userdata('characters')) > 0)
@@ -167,7 +167,7 @@ abstract class Nova_user_panel {
 	{
 		$this->_ci->load->model('privmsgs_model', 'pm');
 		
-		$unread = $this->_ci->pm->count_unread_pms($this->_ci->session->userdata('userid'));
+		$unread = $this->_ci->pm->count_pms($this->_ci->session->userdata('userid'), 'unread');
 		
 		$icons = array(
 			'green' => array(

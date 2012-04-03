@@ -152,7 +152,7 @@ abstract class Nova_admin extends Nova_controller_admin {
 		$data['notification'] = array(
 			'saved_logs'		=> $this->logs->count_user_logs($this->session->userdata('userid'), 'saved'),
 			'saved_news' 		=> $this->news->count_user_news($this->session->userdata('userid'), 'saved'),
-			'unread_pms' 		=> $this->pm->count_unread_pms($this->session->userdata('userid')),
+			'unread_pms' 		=> $this->pm->count_pms($this->session->userdata('userid'), 'unread'),
 			'pending_users' 	=> (Auth::check_access('characters/index', false)) ? $this->char->count_characters('pending', '') : 0,
 			'pending_posts' 	=> $this->posts->count_all_posts('', 'pending'),
 			'pending_logs' 		=> $this->logs->count_all_logs('pending'),
