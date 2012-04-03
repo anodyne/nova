@@ -469,40 +469,6 @@ abstract class Nova_admin extends Nova_controller_admin {
 		Template::render();
 	}
 	
-	public function whatsnew()
-	{
-		// pull in the markdown parser
-		include_once APPPATH.'libraries/Thresher_Markdown.php';
-		
-		// build the array of pieces we need
-		$version_pieces = array(
-			'sys_version_major',
-			'sys_version_minor',
-			'sys_version_update'
-		);
-		
-		// get the current version
-		$version = $this->sys->get_item('system_info', 'sys_id', 1, $version_pieces);
-		
-		// put the version into a string
-		$version_str = implode('.', $version);
-		
-		// grab the what's new information
-		$item = $this->sys->get_item('system_versions', 'version', $version_str);
-		
-		// data to be used by the view
-		$data['whats_new'] = $item->version_launch;
-		$data['full_changes'] = Markdown($item->version_changes);
-		$data['header'] = lang('head_admin_whatsnew');
-		
-		$this->_regions['content'] = Location::view('whats_new', $this->skin, 'admin', $data);
-		$this->_regions['title'].= lang('head_admin_whatsnew');
-		
-		Template::assign($this->_regions);
-		
-		Template::render();
-	}
-	
 	protected function _check_version()
 	{
 		if (ini_get('allow_url_fopen'))

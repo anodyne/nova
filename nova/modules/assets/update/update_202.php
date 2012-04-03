@@ -2,30 +2,17 @@
 /**
  * Update Nova from 2.0.2 to 2.0.3
  */
-$system_versions	= null;
-$system_info		= null;
-$add_tables			= null;
-$drop_tables		= null;
-$rename_tables		= null;
-$add_column			= null;
-$modify_column		= null;
-$drop_column		= null;
+$system_info	= null;
+$add_tables		= null;
+$drop_tables	= null;
+$rename_tables	= null;
+$add_column		= null;
+$modify_column	= null;
+$drop_column	= null;
 
 /**
  * Version info for the database
  */
-$system_versions = array(
-	'version'			=> '2.0.3',
-	'version_major'		=> 2,
-	'version_minor'		=> 0,
-	'version_update'	=> 3,
-	'version_date'		=> 1330646400,
-	'version_launch'	=> "Nova 2.0.3 addresses an issue with benchmarking psuedo-variables (elapsed time and memory consumption) that are caused by the Template engine not using the Output class. In addition, the jQuery UI has been updated to version 1.8.18.",
-	'version_changes'	=> "* Updated jQuery UI to version 1.8.18.
-* Benchmarking psuedo-variables are not handled properly because of the fact the Template library doesn't use the Output library for sending content to the browser.
-* When saving posts with the Post Participants feature turned off, Nova would throw errors about a database field not accepting NULL values."
-);
-
 $system_info = array(
 	'sys_last_update'		=> now(),
 	'sys_version_major'		=> 2,
@@ -164,7 +151,3 @@ if ($drop_column !== null)
 		$this->dbforge->drop_column($key, $value[0]);
 	}
 }
-
-// update the jquery ui version info
-$this->db->where('comp_name', 'jQuery UI');
-$this->db->update('system_components', array('comp_version' => '1.8.18'));

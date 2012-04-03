@@ -5,33 +5,19 @@
 |---------------------------------------------------------------
 */
 
-$system_versions	= NULL;
-$system_info		= NULL;
-$add_tables			= NULL;
-$drop_tables		= NULL;
-$rename_tables		= NULL;
-$add_column			= NULL;
-$modify_column		= NULL;
-$drop_column		= NULL;
+$system_info	= NULL;
+$add_tables		= NULL;
+$drop_tables	= NULL;
+$rename_tables	= NULL;
+$add_column		= NULL;
+$modify_column	= NULL;
+$drop_column	= NULL;
 
 /*
 |---------------------------------------------------------------
 | VERSION INFO FOR THE DATABASE
 |---------------------------------------------------------------
 */
-
-$system_versions = array(
-	'version'			=> '1.2.1',
-	'version_major'		=> 1,
-	'version_minor'		=> 2,
-	'version_update'	=> 1,
-	'version_date'		=> 1293121800,
-	'version_launch'	=> "Nova 1.2.1 is the first maintenance release for Nova 1.2 and addresses several bugs discovered after the initial release of the new version. Bugs fixed in this release include a bug where positions would disappear after being updated and errors thrown throughout the system. More information about these features and a full changelog can be found at AnodyneDocs. This update is recommended for all users.",
-	'version_changes'	=> "* added the 1.2.1 update file
-* fixed bug where positions would disappear when being updated
-* fixed errors thrown when trying to update character images when there aren't any images present
-* fixed error thrown from the RSS feed"
-);
 
 $system_info = array(
 	'sys_last_update'		=> now(),
@@ -177,8 +163,6 @@ if (!is_null($drop_column))
 | DATA TO INSERT/UPDATE/DELETE
 |---------------------------------------------------------------
 */
-
-
 
 /* End of file update_120.php */
 /* Location: ./application/assets/update/update_120.php */

@@ -712,9 +712,6 @@ abstract class Nova_report extends Nova_controller_admin {
 	
 	public function versions()
 	{
-		// pull in the markdown parser
-		include_once APPPATH.'libraries/Thresher_Markdown.php';
-		
 		$ver = $this->sys->get_item('system_info', 'sys_id', 1);
 		
 		$data['version'] = array(
@@ -722,38 +719,6 @@ abstract class Nova_report extends Nova_controller_admin {
 			'ci' => CI_VERSION,
 			'database' => $ver->sys_version_major .'.'. $ver->sys_version_minor .'.'. $ver->sys_version_update
 		);
-		
-		// grab all system version
-		$versions = $this->sys->get_all_system_versions();
-		
-		if ($versions->num_rows() > 0)
-		{
-			foreach ($versions->result() as $v)
-			{
-				$key = $v->version_major .'.'. $v->version_minor;
-				
-				$data['versions'][$key][$v->version] = array(
-					'version' => $v->version,
-					'changes' => Markdown($v->version_changes)
-				);
-			}
-		}
-		
-		// grab all system components
-		$comp = $this->sys->get_all_system_components();
-		
-		if ($comp->num_rows() > 0)
-		{
-			foreach ($comp->result() as $c)
-			{
-				$data['comp'][] = array(
-					'name' => $c->comp_name,
-					'version' => $c->comp_version,
-					'url' => $c->comp_url,
-					'desc' => $c->comp_desc
-				);
-			}
-		}
 		
 		$data['header'] = lang('head_report_system');
 		
@@ -773,10 +738,11 @@ abstract class Nova_report extends Nova_controller_admin {
 			'version_db' => ucwords(lang('labels_database') .' '. lang('labels_version')) .': ',
 			'version_files' => ucwords(lang('labels_files') .' '. lang('labels_version')) .': ',
 			'versions' => ucwords(lang('labels_version') .' '. lang('labels_history')),
+			'versions_redirect' => lang('versions_redirect'),
+			'components_redirect' => lang('components_redirect'),
 		);
 		
 		$this->_regions['content'] = Location::view('report_system', $this->skin, 'admin', $data);
-		$this->_regions['javascript'] = Location::js('report_system_js', $this->skin, 'admin');
 		$this->_regions['title'].= $data['header'];
 		
 		Template::assign($this->_regions);

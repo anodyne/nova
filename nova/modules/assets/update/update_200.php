@@ -2,29 +2,17 @@
 /**
  * Update Nova from 2.0 to 2.0.1
  */
-$system_versions	= null;
-$system_info		= null;
-$add_tables			= null;
-$drop_tables		= null;
-$rename_tables		= null;
-$add_column			= null;
-$modify_column		= null;
-$drop_column		= null;
+$system_info	= null;
+$add_tables		= null;
+$drop_tables	= null;
+$rename_tables	= null;
+$add_column		= null;
+$modify_column	= null;
+$drop_column	= null;
 
 /**
  * Version info for the database
  */
-$system_versions = array(
-		'version'			=> '2.0.1',
-		'version_major'		=> 2,
-		'version_minor'		=> 0,
-		'version_update'	=> 1,
-		'version_date'		=> 1328388452,
-		'version_launch'	=> "Nova 2.0.1 addresses several minor issues discovered after the 2.0 code was frozen for release. Systems getting an error about not being able to load a language file and minor display issues are addressed in this release.",
-		'version_changes'	=> "* If the user's screen isn't wide enough, the tooltip on the Writing Control Panel that displays the post lock information can slide partially out of view.
-* Nova tried to load a language file through an object that couldn't see it, resulting in an error thrown about the file not being found."
-);
-
 $system_info = array(
 	'sys_last_update'		=> now(),
 	'sys_version_major'		=> 2,

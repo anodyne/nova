@@ -2,30 +2,17 @@
 /**
  * Update Nova from 1.2.5 to 1.2.6
  */
-$system_versions	= null;
-$system_info		= null;
-$add_tables			= null;
-$drop_tables		= null;
-$rename_tables		= null;
-$add_column			= null;
-$modify_column		= null;
-$drop_column		= null;
+$system_info	= null;
+$add_tables		= null;
+$drop_tables	= null;
+$rename_tables	= null;
+$add_column		= null;
+$modify_column	= null;
+$drop_column	= null;
 
 /**
  * Version info for the database
  */
-$system_versions = array(
-	'version'			=> '1.2.6',
-	'version_major'		=> 1,
-	'version_minor'		=> 2,
-	'version_update'	=> 6,
-	'version_date'		=> 1310763600,
-	'version_launch'	=> "Nova 1.2.6 is the sixth maintenance release for Nova 1.2 and fixes a potentially major security issue as well as issues related to the writing control panel and pulling character posts. This update is critical and highly recommended for all users.",
-	'version_changes'	=> "* fixed some major security issues
-* fixed a bug where the writing control panel included several wrong links
-* fixed a bug where nova wouldn't accurately pull character posts"
-);
-
 $system_info = array(
 	'sys_last_update'		=> now(),
 	'sys_version_major'		=> 1,

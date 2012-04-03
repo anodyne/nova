@@ -2,37 +2,17 @@
 /**
  * Update Nova from 2.0.1 to 2.0.2
  */
-$system_versions	= null;
-$system_info		= null;
-$add_tables			= null;
-$drop_tables		= null;
-$rename_tables		= null;
-$add_column			= null;
-$modify_column		= null;
-$drop_column		= null;
+$system_info	= null;
+$add_tables		= null;
+$drop_tables	= null;
+$rename_tables	= null;
+$add_column		= null;
+$modify_column	= null;
+$drop_column	= null;
 
 /**
  * Version info for the database
  */
-$system_versions = array(
-	'version'			=> '2.0.2',
-	'version_major'		=> 2,
-	'version_minor'		=> 0,
-	'version_update'	=> 2,
-	'version_date'		=> 1328745600,
-	'version_launch'	=> "Nova 2.0.2 addresses several issues throughout the system related to display issues, errors, typos, and orphaned data. In addition, some tweaks have been made to post locking as well as the modal image pop ups.",
-	'version_changes'	=> "* Removed the social interaction tools from prettyPhoto image modals. ([#169](https://github.com/anodyne/nova/issues/169))
-* Added some code to try and make the mission post locking auto-release a little smarter.
-* Under some (strange) circumstances, Nova could throw errors from the Ajax controller.
-* A typo in the language string on the reset password page when the security question you select doesn't match what's in the database.
-* If a user has multiple playing characters assigned to them, the milestones listing would display their main character name for every playing character they had assigned to them instead of just displaying it once.
-* The new manifest layout has some display issues when using sub departments. ([#168](https://github.com/anodyne/nova/issues/168))
-* When updating the content of a deck, the submit process went back to the select screen instead of staying on the current item's page.
-* When deleting specification items, if there are decks associated with that spec item, they're orphaned and not deleted.
-* The Who's Online listing displayed random spaces and commas.
-* Character image galleries duplicated the primary image."
-);
-
 $system_info = array(
 	'sys_last_update'		=> now(),
 	'sys_version_major'		=> 2,

@@ -178,6 +178,8 @@ $lang['post_locked_gen'] = "Indicates a %s is locked for editing. The lock will 
 $lang['post_lock_owner'] = "Locked for editing by %s (%s %s ago)";
 $lang['recent_comments'] = "There have been %s made on this entry in the last 30 days.";
 $lang['mark_as_read'] = "Mark All as Read";
+$lang['versions_redirect'] = "For a full version history of Nova, please visit <a href='http://docs.anodyne-productions.com/index.php/nova2/overview/index' target='_blank'>AnodyneDocs</a>.";
+$lang['components_redirect'] = "For a full listing of third-party components and plugins in Nova, please visit <a href='http://docs.anodyne-productions.com/index.php/nova2/overview/index' target='_blank'>AnodyneDocs</a>.";
 
 /*
 |---------------------------------------------------------------

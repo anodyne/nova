@@ -5,32 +5,19 @@
 |---------------------------------------------------------------
 */
 
-$system_versions	= NULL;
-$system_info		= NULL;
-$add_tables			= NULL;
-$drop_tables		= NULL;
-$rename_tables		= NULL;
-$add_column			= NULL;
-$modify_column		= NULL;
-$drop_column		= NULL;
+$system_info	= NULL;
+$add_tables		= NULL;
+$drop_tables	= NULL;
+$rename_tables	= NULL;
+$add_column		= NULL;
+$modify_column	= NULL;
+$drop_column	= NULL;
 
 /*
 |---------------------------------------------------------------
 | VERSION INFO FOR THE DATABASE
 |---------------------------------------------------------------
 */
-
-$system_versions = array(
-	'version'			=> '1.0.1',
-	'version_major'		=> 1,
-	'version_minor'		=> 0,
-	'version_update'	=> 1,
-	'version_date'		=> 1271393940,
-	'version_launch'	=> 'Nova 1.0.1 is a maintenance release that fixes two important issues with Nova 1.0. The release fixes a bug where the upgrade process did not create a necessary field in the missions table as well as two issues with installations oh PHP4 servers. This update is recommended for all users who have upgraded from SMS and/or are running on a PHP4 server.',
-	'version_changes'	=> "* fixed bug in the upgrade process where a database field wasn't added to the table
-* fixed bug where models couldn't be autoloaded because Base4 doesn't extend MY_Loader
-* fixed error that was thrown because the date_default_timezone_set function doesn't exist in PHP before version 5.1"
-);
 
 $system_info = array(
 	'sys_last_update'		=> now(),
@@ -187,10 +174,6 @@ if (!is_null($drop_column))
 | DATA TO INSERT/UPDATE/DELETE
 |---------------------------------------------------------------
 */
-
-/* add system version info */
-$this->load->model('system_model', 'sys');
-$this->sys->add_system_version($system_versions);
 
 /* End of file update_100.php */
 /* Location: ./application/assets/update/update_100.php */

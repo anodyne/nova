@@ -2,28 +2,17 @@
 /**
  * Update Nova from 2.0.3 to 2.0.4
  */
-$system_versions	= null;
-$system_info		= null;
-$add_tables			= null;
-$drop_tables		= null;
-$rename_tables		= null;
-$add_column			= null;
-$modify_column		= null;
-$drop_column		= null;
+$system_info	= null;
+$add_tables		= null;
+$drop_tables	= null;
+$rename_tables	= null;
+$add_column		= null;
+$modify_column	= null;
+$drop_column	= null;
 
 /**
  * Version info for the database
  */
-$system_versions = array(
-	'version'			=> '2.0.4',
-	'version_major'		=> 2,
-	'version_minor'		=> 0,
-	'version_update'	=> 4,
-	'version_date'		=> 1330646400,
-	'version_launch'	=> "Nova 2.0.4 addresses an issue with the user profiles showing the wrong timespan information regardless of when the user joined. In addition, jQuery has been updated to version 1.7.2.",
-	'version_changes'	=> ""
-);
-
 $system_info = array(
 	'sys_last_update'		=> now(),
 	'sys_version_major'		=> 2,
@@ -162,7 +151,3 @@ if ($drop_column !== null)
 		$this->dbforge->drop_column($key, $value[0]);
 	}
 }
-
-// update the jquery ui version info
-$this->db->where('comp_name', 'jQuery');
-$this->db->update('system_components', array('comp_version' => '1.7.2'));

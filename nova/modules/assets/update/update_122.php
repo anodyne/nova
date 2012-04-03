@@ -5,31 +5,19 @@
 |---------------------------------------------------------------
 */
 
-$system_versions	= NULL;
-$system_info		= NULL;
-$add_tables			= NULL;
-$drop_tables		= NULL;
-$rename_tables		= NULL;
-$add_column			= NULL;
-$modify_column		= NULL;
-$drop_column		= NULL;
+$system_info	= NULL;
+$add_tables		= NULL;
+$drop_tables	= NULL;
+$rename_tables	= NULL;
+$add_column		= NULL;
+$modify_column	= NULL;
+$drop_column	= NULL;
 
 /*
 |---------------------------------------------------------------
 | VERSION INFO FOR THE DATABASE
 |---------------------------------------------------------------
 */
-
-$system_versions = array(
-	'version'			=> '1.2.3',
-	'version_major'		=> 1,
-	'version_minor'		=> 2,
-	'version_update'	=> 3,
-	'version_date'		=> 1294185600,
-	'version_launch'	=> "Nova 1.2.3 is the third maintenance release for Nova 1.2 and fixes a bug with handling deck listings with multiple specification items. More information about these features and a full changelog can be found at AnodyneDocs. This update is recommended for all users.",
-	'version_changes'	=> "* added the 1.2.3 update file
-* fixed bug with handling deck listings and multiple specification items"
-);
 
 $system_info = array(
 	'sys_last_update'		=> now(),
@@ -175,8 +163,6 @@ if ( ! is_null($drop_column))
 | DATA TO INSERT/UPDATE/DELETE
 |---------------------------------------------------------------
 */
-
-
 
 /* End of file update_122.php */
 /* Location: ./application/assets/update/update_122.php */

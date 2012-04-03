@@ -9423,47 +9423,6 @@ abstract class Nova_ajax extends CI_Controller {
 		}
 	}
 	
-	public function whats_new()
-	{
-		// load the resources
-		$this->load->model('users_model', 'user');
-		
-		// build the array of pieces we need
-		$version_pieces = array(
-			'sys_version_major',
-			'sys_version_minor',
-			'sys_version_update'
-		);
-		
-		// get the current version
-		$version = $this->sys->get_item('system_info', 'sys_id', 1, $version_pieces);
-		
-		// put the version into a string
-		$version_str = implode('.', $version);
-		
-		// grab the user info
-		$person = $this->user->get_user($this->session->userdata('userid'), 'is_firstlaunch');
-		
-		// grab the what's new information
-		$data['whats_new'] = $this->sys->get_item('system_versions', 'version', $version_str, 'version_launch');
-		
-		$data['header'] = lang('head_admin_whatsnew');
-		
-		if ($person == 1)
-		{
-			$this->user->update_first_launch($this->session->userdata('userid'));
-		}
-		
-		// figure out the skin
-		$skin = $this->session->userdata('skin_admin');
-		
-		$this->_regions['content'] = Location::ajax('whats_new', $skin, 'admin', $data);
-		
-		Template::assign($this->_regions);
-		
-		Template::render();
-	}
-	
 	public function wiki_create_category()
 	{
 		$allowed = Auth::check_access('wiki/categories', false);

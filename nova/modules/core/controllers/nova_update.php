@@ -438,8 +438,6 @@ abstract class Nova_update extends CI_Controller {
 					}
 				}
 				
-				$this->sys->update_system_info($system_info);
-				
 				$this->_register();
 				
 				// update the users to be first launch
@@ -450,7 +448,7 @@ abstract class Nova_update extends CI_Controller {
 				$data['label'] = array(
 					'text' => sprintf(
 						lang('upd_step2_success'),
-						$system_versions['version']
+						$system_info['sys_version_major'].$system_info['sys_version_minor'].$system_info['sys_version_update']
 					),
 					'back' => lang('upd_step2_site')
 				);

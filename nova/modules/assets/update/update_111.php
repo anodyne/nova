@@ -5,35 +5,19 @@
 |---------------------------------------------------------------
 */
 
-$system_versions	= NULL;
-$system_info		= NULL;
-$add_tables			= NULL;
-$drop_tables		= NULL;
-$rename_tables		= NULL;
-$add_column			= NULL;
-$modify_column		= NULL;
-$drop_column		= NULL;
+$system_info	= NULL;
+$add_tables		= NULL;
+$drop_tables	= NULL;
+$rename_tables	= NULL;
+$add_column		= NULL;
+$modify_column	= NULL;
+$drop_column	= NULL;
 
 /*
 |---------------------------------------------------------------
 | VERSION INFO FOR THE DATABASE
 |---------------------------------------------------------------
 */
-
-$system_versions = array(
-	'version'			=> '1.1.2',
-	'version_major'		=> 1,
-	'version_minor'		=> 1,
-	'version_update'	=> 2,
-	'version_date'		=> 1287097200,
-	'version_launch'	=> "Nova 1.1.2 is a maintenance update addressing several issues with Nova 1.1. This update fixes issues with Quick Install, an error thrown when updating a user profile and usability issues with the character picking process with writing and managing mission posts. A full changelog can be found on AnodyneDocs or from the System and Versions report once Nova has been updated. This update is recommended for all users.",
-	'version_changes'	=> "* added the 1.1.2 update file
-* updated the form helper to extend the form\_dropdown function
-* updated the write/missionpost and manage/posts pages to take saved/activated posts in to account for the author selection dropdown (thanks to Patrick for helping with this)
-* fixed bug with the add author selection in manage/posts and write/missionpost (thanks to Patrick for this fix)
-* fixed bug where nova would try to update a user's profile with a field that doesn't exist
-* fixed bug where, under very strange circumstances, quick install wouldn't work the way it's supposed to"
-);
 
 $system_info = array(
 	'sys_last_update'		=> now(),
@@ -179,12 +163,6 @@ if (!is_null($drop_column))
 | DATA TO INSERT/UPDATE/DELETE
 |---------------------------------------------------------------
 */
-
-/**
- * add the system version info
- */
-$this->load->model('system_model', 'sys');
-$this->sys->add_system_version($system_versions);
 
 /* End of file update_111.php */
 /* Location: ./application/assets/update/update_111.php */

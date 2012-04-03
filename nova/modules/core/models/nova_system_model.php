@@ -48,6 +48,9 @@ abstract class Nova_system_model extends CI_Model {
 		return $query;
 	}
 	
+	/**
+	 * @deprecated
+	 */
 	public function get_all_system_components()
 	{
 		$this->db->from('system_components');
@@ -58,6 +61,9 @@ abstract class Nova_system_model extends CI_Model {
 		return $query;
 	}
 	
+	/**
+	 * @deprecated
+	 */
 	public function get_all_system_versions()
 	{
 		$this->db->from('system_versions');
@@ -513,6 +519,9 @@ abstract class Nova_system_model extends CI_Model {
 		return $query;
 	}
 	
+	/**
+	 * @deprecated
+	 */
 	public function add_system_version($data = '')
 	{
 		$query = $this->db->insert('system_versions', $data);

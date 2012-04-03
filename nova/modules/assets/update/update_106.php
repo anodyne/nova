@@ -5,51 +5,19 @@
 |---------------------------------------------------------------
 */
 
-$system_versions	= NULL;
-$system_info		= NULL;
-$add_tables			= NULL;
-$drop_tables		= NULL;
-$rename_tables		= NULL;
-$add_column			= NULL;
-$modify_column		= NULL;
-$drop_column		= NULL;
+$system_info	= NULL;
+$add_tables		= NULL;
+$drop_tables	= NULL;
+$rename_tables	= NULL;
+$add_column		= NULL;
+$modify_column	= NULL;
+$drop_column	= NULL;
 
 /*
 |---------------------------------------------------------------
 | VERSION INFO FOR THE DATABASE
 |---------------------------------------------------------------
 */
-
-$system_versions = array(
-	'version'			=> '1.1.0',
-	'version_major'		=> 1,
-	'version_minor'		=> 1,
-	'version_update'	=> 0,
-	'version_date'		=> 1283635800,
-	'version_launch'	=> "Nova 1.1 is the first update to Nova that adds additional features to the system. Included in this release is the ability to create multiple specification items and to associate tour items with specific specification items as well as bug fixes (a bug where editing existing tour items wouldn't update the current item, but the first item). A full changelog can be found on AnodyneDocs or from the System and Versions report once Nova has been updated. This update is recommended for all users.",
-	'version_changes'	=> "* added the 1.1 update file
-* added the ability to have multiple specification items
-* added the ability to associate tour items with a specification item
-* added the fancybox plugin
-* added the jquery reflection plugin
-* added _specitem\_select_ language item in the text\_lang file
-* added _specitem\_empty\_fields_ lanuage item in the text\_lang file
-* removed the colorbox plugin
-* removed the reflection.js plugin
-* updated the system to use the new jquery reflection plugin instead of reflection.js
-* updated the image upload system to be able to handle spec images as well
-* updated the specifications model with new methods for handling spec items
-* updated the mission groups listing with a style fix
-* updated jquery ui to version 1.8.4
-* fixed bug where ordered and unordered lists weren't properly styled in Thresher
-* fixed bug in mission group pages where missions didn't respect the mission order that was set for them
-* fixed bug where the private message dropdown didn't populate with an author when replying to a message
-* fixed bug where mission post next/previous links could be wrong under certain circumstances
-* fixed bug where news item next/previous links could be wrong under certain circumstances
-* fixed bug where personal log next/previous links could be wrong under certain circumstances
-* fixed bug where the command staff, game master and webmaster get email methods pulled all users, not just active users
-* fixed error thrown with an undefined class method when deleting uploaded items"
-);
 
 $system_info = array(
 	'sys_last_update'		=> now(),
@@ -259,47 +227,6 @@ if ($specs->num_rows() > 0)
 	);
 	$this->db->insert('specs', $specitem);
 }
-
-/**
- * remove the colorbox plugin from the list of components
- */
-$this->db->where('comp_name', 'jQuery ColorBox');
-$this->db->delete('system_components');
-
-/**
- * add the fancybox plugin to the list of components
- */
-$additem = array(
-	'comp_name' => 'FancyBox',
-	'comp_version' => '1.3.1',
-	'comp_desc' => "FancyBox is a tool for displaying images, HTML content and multi-media in a Mac-style 'lightbox' that floats overtop of web page. 
-It was built using the jQuery library and is licensed under both MIT and GPL licenses.",
-	'comp_url' => 'http://fancybox.net/home'
-);
-$this->db->insert('system_components', $additem);
-
-/**
- * update the reflection plugin info
- */
-$this->db->where('comp_name', 'Reflection.js');
-$this->db->update('system_components', array(
-	'comp_name'		=> 'jQuery Reflection',
-	'comp_version'	=> '1.0.3',
-	'comp_desc'		=> "This is an improved version of the reflection.js script rewritten for the jQuery Javascript library. It allows you to add instantaneous reflection effects to your images in modern browsers, in less than 2 KB.",
-	'comp_url'		=> 'http://www.digitalia.be/software/reflectionjs-for-jquery'
-));
-
-/**
- * update the jquery ui version info
- */
-$this->db->where('comp_name', 'jQuery UI');
-$this->db->update('system_components', array('comp_version' => '1.8.4'));
-
-/**
- * add the system version info
- */
-$this->load->model('system_model', 'sys');
-$this->sys->add_system_version($system_versions);
 
 /* End of file update_106.php */
 /* Location: ./application/assets/update/update_106.php */

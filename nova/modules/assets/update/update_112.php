@@ -5,89 +5,19 @@
 |---------------------------------------------------------------
 */
 
-$system_versions	= NULL;
-$system_info		= NULL;
-$add_tables			= NULL;
-$drop_tables		= NULL;
-$rename_tables		= NULL;
-$add_column			= NULL;
-$modify_column		= NULL;
-$drop_column		= NULL;
+$system_info	= NULL;
+$add_tables		= NULL;
+$drop_tables	= NULL;
+$rename_tables	= NULL;
+$add_column		= NULL;
+$modify_column	= NULL;
+$drop_column	= NULL;
 
 /*
 |---------------------------------------------------------------
 | VERSION INFO FOR THE DATABASE
 |---------------------------------------------------------------
 */
-
-$system_versions = array(
-	'version'			=> '1.2.0',
-	'version_major'		=> 1,
-	'version_minor'		=> 2,
-	'version_update'	=> 0,
-	'version_date'		=> 1292889600,
-	'version_launch'	=> "Nova 1.2 is the second major update to Nova 1 and add new functionality to the system to help admin run their RPG even better. In addition to patching nearly two dozen bugs from Nova 1.0 and 1.1, version 1.2 adds ban controls for dealing with pesky users, deck listing improvements, contact page improvements and multiple manifests. More information about these features and a full changelog can be found at AnodyneDocs. This update is recommended for all users.",
-	'version_changes'	=> "* added the 1.2 update file
-* added the ability to ban users from applying or even getting to the site
-* added a page that level 2 bans are redirected to
-* added the validation error image to the assets directory
-* added the assignment image to the admin \_base directory
-* added prettyPhoto jquery plugin to replace fancybox
-* removed fancybox jquery plugin
-* updated the applications report to show email address and IP address of the user who applied
-* updated the email sent to the game master from the join form to show the IP address of the applicant
-* updated the contact form to be simpler and use proper form validation
-* updated the departments model with methods for handling multiple manifests
-* updated codeigniter to version 1.7.3
-* updated jquery to version 1.4.4
-* updated jquery ui to version 1.8.7
-* updated markItUp! plugin to version 1.1.9
-* updated the autoload config item to not try and autoload the input library since CI loads it by default
-* updated the user model with a method to pull user information based on characters in the database
-* updated department management with a better interface for working with departments
-* updated position management to split departments out by manifest
-* updated the write controller to check for whether a user has a character associated with their account and if they don't redirct them to an error page
-* updated some of the model methods to correct for situations where the user or character ID might not be present and throw errors
-* updated the basic and dev install data to fix a typo
-* updated the language files
-    * [base\_lang] added _labels\_ban_
-    * [base\_lang] added _labels\_bans_
-    * [base\_lang] added _labels\_ipaddr_
-    * [base\_lang] added _labels\_header_
-    * [base\_lang] added _labels\_listings_
-    * [base\_lang] added _labels\_manifests_
-    * [base\_lang] added _labels\_refresh_
-    * [base\_lang] added _labels\_unassigned_
-    * [base\_lang] added _misc\_level1\_only_
-    * [email\_lang] updated _email\_content\_private\_message_
-    * [error\_lang] added _error\_wcp\_1_
-    * [text\_lang] added _text\_bans_
-    * [text\_lang] added _text\_ban\_join_
-    * [text\_lang] added _text\_manifest\_delete\_departments_
-    * [text\_lang] added _text\_manifest_
-    * [text\_lang] added _text\_manifest\_assign_
-    * [text\_lang] added _text\_duplicate\_dept_
-    * [text\_lang] updated _text\_manage\_depts_
-* fixed bug where users without an active character would be shown in the activity warning panel on the ACP
-* fixed bug where the sample post in the join application email was just a massive wall of text
-* fixed bug where the specifications weren't properly upgraded during the sms upgrade process
-* fixed bug with a missing closing tag on the create characters page
-* fixed bug where timezone menu in site/settings pulled the wrong value to populate the field with
-* fixed bug where the join page was pulling an image from the wrong location
-* fixed spacing bug in access role management
-* fixed spacing bug in news item management
-* fixed spacing bug in log management
-* fixed spacing bug in post management
-* fixed spacing bug in department management
-* fixed some errors being thrown throughout the system
-* fixed bug where the flash message view couldn't be overridden with seamless substitution
-* fixed bug where post emails were sent out with the user's primary character name attached even if the primary character wasn't associated with the post
-* fixed bug where the private message email didn't contain the content of the private message
-* fixed some errors thrown through the system when a user without a character tried moving through the system
-* fixed bug where personal logs don't have the right date when they're saved first
-* fixed bug where pending users would appear in the dropdown of potential recipients for a PM
-* fixed bug where changing a dynamic form field from text/textarea to dropdown wouldn't trigger the dropdown values section to open, rendering the field pretty much useless"
-);
 
 $system_info = array(
 	'sys_last_update'		=> now(),
@@ -311,47 +241,6 @@ if (!is_null($drop_column))
 */
 
 /**
- * update the jquery version info
- */
-$this->db->where('comp_name', 'CodeIgniter');
-$this->db->update('system_components', array('comp_version' => '1.7.3'));
-
-/**
- * update the jquery version info
- */
-$this->db->where('comp_name', 'jQuery');
-$this->db->update('system_components', array('comp_version' => '1.4.4'));
-
-/**
- * update the jquery ui version info
- */
-$this->db->where('comp_name', 'jQuery UI');
-$this->db->update('system_components', array('comp_version' => '1.8.7'));
-
-/**
- * update the markItUp! version info
- */
-$this->db->where('comp_name', 'markItUp!');
-$this->db->update('system_components', array('comp_version' => '1.1.9'));
-
-/**
- * remove the fancybox plugin from the list of components
- */
-$this->db->where('comp_name', 'FancyBox');
-$this->db->delete('system_components');
-
-/**
- * add the prettyPhoto plugin to the list of components
- */
-$additem = array(
-	'comp_name' => 'prettyPhoto',
-	'comp_version' => '3.0.1',
-	'comp_desc' => "prettyPhoto is a jQuery lightbox clone. Not only does it support images, it also support for videos, flash, YouTube, iframes. It's a full blown media lightbox.",
-	'comp_url' => 'http://www.no-margin-for-errors.com/projects/prettyphoto-jquery-lightbox-clone/'
-);
-$this->db->insert('system_components', $additem);
-
-/**
  * add the new access page information
  */
 $page = array(
@@ -438,12 +327,6 @@ $deptid = $this->db->insert_id();
  */
 $this->db->where('dept_manifest', 0);
 $this->db->update('departments_'.GENRE, array('dept_manifest' => $deptid));
-
-/**
- * add the system version info
- */
-$this->load->model('system_model', 'sys');
-$this->sys->add_system_version($system_versions);
 
 /**
  * need to take in to account that some sims may have

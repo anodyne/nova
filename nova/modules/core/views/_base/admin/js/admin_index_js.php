@@ -5,13 +5,10 @@ $location = FALSE;
 
 $string = random_string('alnum', 8);
 
+// if they need to reset their password, show them the right facebox
 if ($password_reset == 1)
-{ /* if they need to reset their password, show them the right facebox */
+{
 	$location = site_url('ajax/change_password/'. $this->session->userdata('userid') .'/'. $string);
-}
-elseif ($first_launch == 1)
-{ /* if it is the first launch since an update */
-	$location = site_url('ajax/whats_new/'. $string);
 }
 
 ?><script type="text/javascript">

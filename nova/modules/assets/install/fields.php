@@ -5,7 +5,7 @@
  * @package		Nova
  * @category	Install
  * @author		Anodyne Productions
- * @copyright	2011 Anodyne Productions
+ * @copyright	2012 Anodyne Productions
  */
 
 $user_id_type				= 'INT';
@@ -72,9 +72,7 @@ $data = array(
 	'specs_fields'				=> array('id' => 'field_id', 'fields' => 'fields_specs_fields'),
 	'specs_sections'			=> array('id' => 'section_id', 'fields' => 'fields_specs_sections'),
 	'specs_values'				=> array('id' => 'value_id', 'fields' => 'fields_specs_values'),
-	'system_components'			=> array('id' => 'comp_id', 'fields' => 'fields_system_components'),
 	'system_info'				=> array('id' => 'sys_id', 'fields' => 'fields_system_info'),
-	'system_versions'			=> array('id' => 'version_id', 'fields' => 'fields_system_versions'),
 	'tour'						=> array('id' => 'tour_id', 'fields' => 'fields_tour'),
 	'tour_data'					=> array('id' => 'data_id', 'fields' => 'fields_tour_data'),
 	'tour_fields'				=> array('id' => 'field_id', 'fields' => 'fields_tour_fields'),
@@ -1481,27 +1479,6 @@ $fields_specs_values = array(
 		'constraint' => 5)
 );
 
-$fields_system_components = array(
-	'comp_id' => array(
-		'type' => 'INT',
-		'constraint' => 4,
-		'auto_increment' => TRUE),
-	'comp_name' => array(
-		'type' => 'VARCHAR',
-		'constraint' => 255,
-		'default' => ''),
-	'comp_version' => array(
-		'type' => 'VARCHAR',
-		'constraint' => 25,
-		'default' => ''),
-	'comp_url' => array(
-		'type' => 'VARCHAR',
-		'constraint' => 255,
-		'default' => ''),
-	'comp_desc' => array(
-		'type' => 'TEXT')
-);
-
 $fields_system_info = array(
 	'sys_id' => array(
 		'type' => 'INT',
@@ -1530,51 +1507,6 @@ $fields_system_info = array(
 		'type' => 'VARCHAR',
 		'constraint' => 20,
 		'default' => ''),
-);
-
-$fields_system_mods = array(
-	'mod_id' => array(
-		'type' => 'INT',
-		'constraint' => 8,
-		'auto_increment' => TRUE),
-	'mod_name' => array(
-		'type' => 'VARCHAR',
-		'constraint' => 255,
-		'default' => ''),
-	'mod_desc' => array(
-		'type' => 'TEXT'),
-	'mod_status' => array(
-		'type' => 'ENUM',
-		'constraint' => "'installed','uninstalled','inactive'",
-		'default' => 'installed')
-);
-
-$fields_system_versions = array(
-	'version_id' => array(
-		'type' => 'INT',
-		'constraint' => 4,
-		'auto_increment' => TRUE),
-	'version' => array(
-		'type' => 'VARCHAR',
-		'constraint' => 25,
-		'default' => ''),
-	'version_major' => array(
-		'type' => 'INT',
-		'constraint' => 1,
-		'default' => '1'),
-	'version_minor' => array(
-		'type' => 'INT',
-		'constraint' => 2),
-	'version_update' => array(
-		'type' => 'INT',
-		'constraint' => 4),
-	'version_date' => array(
-		'type' => $date_type,
-		'constraint' => $date_constraint),
-	'version_launch' => array(
-		'type' => 'TEXT'),
-	'version_changes' => array(
-		'type' => 'TEXT')
 );
 
 $fields_tour = array(
