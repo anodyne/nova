@@ -5,7 +5,7 @@
  * @package		Nova
  * @category	Controller
  * @author		Anodyne Productions
- * @copyright	2011 Anodyne Productions
+ * @copyright	2012 Anodyne Productions
  */
 
 abstract class Nova_update extends CI_Controller {
@@ -62,6 +62,9 @@ abstract class Nova_update extends CI_Controller {
 		
 		// grab the settings
 		$this->options = $this->settings->get_settings($settings_array);
+
+		// check if nova is installed
+		$this->installed = $this->sys->check_install_status();
 		
 		// set the template file
 		Template::$file = '_base/template_update';
@@ -84,7 +87,7 @@ abstract class Nova_update extends CI_Controller {
 	public function index()
 	{
 		$code = 0;
-		
+
 		// check for errors
 		$code = ( ! $this->installed) ? 1 : $code;
 		$code = ($this->options['maintenance'] == 'off') ? 2 : $code;
