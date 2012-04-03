@@ -27,6 +27,7 @@
 		<kbd><?php echo $label['tags'];?></kbd>
 		<?php echo text_output($label['tags_sep'], 'span', 'fontSmall gray bold');?><br />
 		<?php echo form_input($inputs['tags']);?>
+		<?php echo img($images['help']);?>
 	</p><br />
 	
 	<p>

@@ -9,5 +9,11 @@
 		$('#submitPost').click(function(){
 			return confirm('<?php echo lang('confirm_post_newsitem');?>');
 		});
+
+		$('[rel=tooltip]').twipsy({
+			animate: false,
+			offset: 5,
+			placement: 'right'
+		});
 	});
 </script>

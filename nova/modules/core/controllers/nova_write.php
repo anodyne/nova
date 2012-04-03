@@ -1232,6 +1232,13 @@ abstract class Nova_write extends Nova_controller_admin {
 				'src' => Location::img('exclamation-32.png', $this->skin, 'admin'),
 				'alt' => '',
 			),
+			'help' => array(
+				'src' => Location::img('help.png', $this->skin, 'admin'),
+				'alt' => '',
+				'class' => 'image',
+				'rel' => 'tooltip',
+				'title' => lang('tags_explain'),
+			),
 		);
 		
 		$data['label'] = array(
@@ -1673,6 +1680,16 @@ abstract class Nova_write extends Nova_controller_admin {
 		$data['header'] = ucwords(lang('actions_write') .' '. lang('global_newsitem'));
 		
 		$data['form_action'] = ($id !== false) ? 'write/newsitem/'. $id : 'write/newsitem';
+
+		$data['images'] = array(
+			'help' => array(
+				'src' => Location::img('help.png', $this->skin, 'admin'),
+				'alt' => '',
+				'class' => 'image',
+				'rel' => 'tooltip',
+				'title' => lang('tags_explain'),
+			),
+		);
 		
 		$data['label'] = array(
 			'author' => ucfirst(lang('labels_author')),
@@ -2130,6 +2147,16 @@ abstract class Nova_write extends Nova_controller_admin {
 		$data['header'] = ucwords(lang('actions_write') .' '. lang('global_personallog'));
 		
 		$data['form_action'] = ($id !== false) ? 'write/personallog/'. $id : 'write/personallog';
+
+		$data['images'] = array(
+			'help' => array(
+				'src' => Location::img('help.png', $this->skin, 'admin'),
+				'alt' => '',
+				'class' => 'image',
+				'rel' => 'tooltip',
+				'title' => lang('tags_explain'),
+			),
+		);
 		
 		$data['label'] = array(
 			'author' => ucwords(lang('labels_author')),

@@ -47,6 +47,12 @@
 			$('.notes_content').slideToggle('fast');
 			return false;
 		});
+
+		$('[rel=tooltip]').twipsy({
+			animate: false,
+			offset: 5,
+			placement: 'right'
+		});
 		
 		$('#submitDelete').click(function(){
 			return confirm('<?php echo lang('confirm_delete_missionpost');?>');
