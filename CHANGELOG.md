@@ -9,6 +9,10 @@
 * Remove the What's New page for the reasons specified above.
 * Update the Version Information page to reflect the database changes.
 
+### Bug Fixes
+
+* The update page would always throw an error that it couldn't find Nova installed in the current database.
+
 ## 2.0.4
 
 ### Nova Core
