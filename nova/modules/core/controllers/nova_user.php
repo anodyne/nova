@@ -1965,7 +1965,21 @@ abstract class Nova_user extends Nova_controller_admin {
 			'text' => lang('text_loa_request'),
 		);
 		
-		$this->_regions['content'] = Location::view('user_status', $this->skin, 'admin', $data);
+		if ($this->agent->is_mobile() and ! $this->agent->is_mobile('ipad'))
+		{
+			Template::$file = '_mobile/template';
+			$this->_regions['content'] = Location::view('user_status', '_mobile', 'admin', $data);
+			
+			if (isset($flash))
+			{
+				$this->_regions['flash_message'] = Location::view('flash', '_mobile', 'admin', $flash);
+			}
+		}
+		else
+		{
+			$this->_regions['content'] = Location::view('user_status', $this->skin, 'admin', $data);
+		}
+		
 		$this->_regions['title'].= $data['header'];
 		
 		Template::assign($this->_regions);
