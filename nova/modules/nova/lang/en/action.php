@@ -1,6 +1,8 @@
 <?php
 
 return array(
+	'close' => 'close',
+	
 	'delete' => 'delete',
 	
 	'edit' => 'edit',

@@ -12,6 +12,9 @@ return array(
 
 	'field' => "field",
 	'for' => "for",
+	'form' => "form",
+
+	'horizontal' => "horizontal",
 
 	'loa' => "LOA",
 	'loa_full' => "Leave of Absence",
@@ -19,7 +22,10 @@ return array(
 	'message' => "message",
 	'my' => "my :thing",
 
+	'name' => "name",
 	'notification' => "notification",
+
+	'orientation' => "orientation",
 	
 	'password' => "password",
 	'preference' => "preference",
@@ -27,6 +33,8 @@ return array(
 	'section' => "section",
 
 	'tab' => "tab",
+
+	'vertical' => "vertical",
 
 	'writing' => "writing",
 );
