@@ -84,3 +84,20 @@ Nova is made up of a wide range of plugins and components to help make it what i
     * Site: http://www.appelsiini.net/projects/jeditable
     * Location
         * nova/modules/assets/js/jquery.jeditable.min.js
+* Bootstrap Scripting
+    * Version: 2.0
+    * Site: http://nikku.github.com/jquery-bootstrap-scripting/
+    * Location
+        * nova/modules/assets/js/jquery.dialog2.js
+        * nova/modules/assets/js/jquery.dialog2.helpers.js
+        * nova/modules/assets/js/jquery.controls.js
+        * nova/modules/assets/js/jquery.form.js
+* Lazy
+    * Version: 1.5
+    * Site: http://unwrongest.com/projects/lazy/
+    * Location
+        * nova/modules/assets/js/jquery.lazy.js
+* AjaxQ
+    * Version: 0.0.1
+    * Location
+        * nova/modules/assets/js/jquery.ajaxq.js
