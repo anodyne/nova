@@ -1,23 +1,21 @@
 # Nova
 
-application/assets/images/*/
-application/cache/
-application/logs/
-application/modules/
-application/views/
+app/cache/
+app/logs/
+app/views/
 
-application/config/database.php
+#app/assets/images/*/
+#!app/views/default/*
+#!app/views/titan/*
+#app/assets/common/*
 
-!application/views/default/*
-!application/views/beta/*
-
-application/assets/common/*
+nova.sublime-project
+nova.sublime-workspace
 
 # General
 *~
 *.bak
-*.sublime-project
-*.sublime-workspace
+.htaccess
 
 # Windows-specific ignores
 Thumbs.db
