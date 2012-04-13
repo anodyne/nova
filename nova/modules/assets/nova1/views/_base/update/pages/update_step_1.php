@@ -1,1 +1,0 @@
-<?php echo text_output($label['text']);?>

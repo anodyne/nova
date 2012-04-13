@@ -1,3 +1,0 @@
-<p>In Nova 3, we're introducing widgets as a way to display the information you want on your main page. Nova 3 will come standard with a bunch of widgets for you to use, but creating new ones is as easy as writing a little HTML and PHP and using QuickInstall to add it to the system!</p>
-
-<p>There are 4 widget "zones" on the main page. You can have 3 widgets in these spaces and one below the menu. Setting up your widgets is as simple as selecting them from a menu. Only want 2 widgets? Just add the first two widgets and leave the third blank. Nova knows what to do from there!</p>

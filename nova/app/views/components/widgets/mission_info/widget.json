@@ -1,8 +1,0 @@
-{
-	"name": "Mission Info",
-	"location": "mission_info",
-	"page": "main/index",
-	"zone": 1,
-	"credits": "The Mission Info widget was created by Anodyne Productions. Modifications to this widget are permitted so long as the original credits stay intact.",
-	"version": "1.0"
-}

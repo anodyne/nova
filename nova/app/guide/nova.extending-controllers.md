@@ -1,1 +1,0 @@
-# Extending Nova's Controllers
