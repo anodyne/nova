@@ -25,8 +25,8 @@
      */
     var __DIALOG_HTML = "<div class='modal'>" + 
         "<div class='modal-header'>" +
-        "<h3></h3><span class='loader'></span>" + 
         "<a href='#' class='close'></a>" + 
+        "<h3></h3><span class='loader'></span>" + 
         "</div>" + 
         "<div class='modal-body'>" + 
         "</div>" + 
