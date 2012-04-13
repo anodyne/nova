@@ -21,6 +21,15 @@ class Controller_Ajax_Update extends \Controller
 		
 		// go out and load then merge the nova config files
 		\Config::load('nova', true, false, true);
+
+		// load the language files
+		\Lang::load('app');
+		\Lang::load('nova::base');
+		\Lang::load('nova::event', 'event');
+		\Lang::load('nova::email', 'email');
+		\Lang::load('nova::action', 'action');
+		\Lang::load('nova::short', 'short');
+		\Lang::load('nova::status', 'status');
 	}
 	
 	public function after($response)
@@ -61,5 +70,44 @@ class Controller_Ajax_Update extends \Controller
 				echo \Markdown::parse($content);
 			}
 		}
+	}
+
+	public function action_form($key = '')
+	{
+		if (\Sentry::check() and \Sentry::user()->has_access('form.edit'))
+		{
+			// get the form
+			$form = \Model_Form::get_form($key);
+
+			if ($form !== false)
+			{
+				$data = array(
+					'name' => $form->name,
+					'orientation' => $form->orientation,
+					'id' => $form->id,
+
+					'values' => array(
+						'vertical' => ucfirst(__('vertical')),
+						'horizontal' => ucfirst(__('horizontal'))
+					),
+				);
+
+				echo \View::forge(\Location::file('update/form', 'default', 'ajax'), $data);
+			}
+		}
+	}
+
+	/**
+	 * Protected methods for outputting information.
+	 */
+	
+	protected function _flash_success($item)
+	{
+		return '<p class="alert alert-success">'.__('short.flash_success', array('thing' => ucfirst(__($item)))).'</p>';
+	}
+
+	protected function _modal_close()
+	{
+		return '<div class="form-actions"><button class="close-dialog">'.ucfirst(__('action.close')).'</button></div>';
 	}
 }

@@ -258,7 +258,7 @@ class Nav
 
 		foreach (static::$_data_sub as $item)
 		{
-			if ($item->order === 0 and $item->group !== 0)
+			if ($item->order == 0 and $item->group != 0)
 			{
 				$output.= '<li class="divider">';
 			}
@@ -350,9 +350,9 @@ class Nav
 			$total = $writing_count + $message_count;
 
 			// figure out what the classes should be
-			$total_class = ($total === 0) ? '' : ' label-warning';
-			$writing_class = ($writing_count === 0) ? '' : ' label-warning';
-			$message_class = ($message_count === 0) ? '' : ' label-important';
+			$total_class = ($total == 0) ? '' : ' label-warning';
+			$writing_class = ($writing_count == 0) ? '' : ' label-warning';
+			$message_class = ($message_count == 0) ? '' : ' label-important';
 
 			// figure out the outputs
 			$writing_output = ($writing_count > 0) ? '<span class="label'.$writing_class.'">'.$writing_count.'</span> ' : false;
@@ -384,7 +384,7 @@ class Nav
 						'name' => $message_output.ucfirst(\Inflector::pluralize(__('message'))),
 						'url' => 'admin/messages'),
 					array(
-						'name' => $writing_output.ucfirst(\Inflector::pluralize(__('writing'))),
+						'name' => $writing_output.ucfirst(__('writing')),
 						'url' => 'admin/writing'),
 				),
 				3 => array(
@@ -413,12 +413,12 @@ class Nav
 			}
 
 			$output.= $user->get('name');
-			$output.= '<b class="caret"></b></a>';
+			$output.= ' <b class="caret"></b></a>';
 			$output.= '<ul class="dropdown-menu">';
 
 			foreach ($usernav as $key => $section)
 			{
-				if ($key !== 0)
+				if ($key != 0)
 				{
 					$output.= '<li class="divider"></li>';
 				}

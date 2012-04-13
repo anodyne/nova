@@ -21,6 +21,23 @@ class Controller_Admin_Form extends Controller_Base_Admin
 	public function action_index()
 	{
 		$this->_view = 'admin/form/index';
+		$this->_js_view = 'admin/form/index_js';
+
+		if (\Sentry::user()->has_access('form.edit') and \Input::method() == 'POST')
+		{
+			// get the id
+			$id = trim(\Security::xss_clean($_POST['id']));
+
+			// update the form
+			\Model_Form::update_item($id, $_POST);
+
+			# TODO: need to figure out how to see if the update was successful or not
+
+			$this->_flash[] = array(
+				'status' => 'success',
+				'message' => __('short.flash_success', array('thing' => ucfirst(__('form')))),
+			);
+		}
 
 		// grab all the forms from the database
 		$this->_data->forms = \Model_Form::find('all');

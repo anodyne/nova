@@ -7,6 +7,7 @@
 		<div class="container">
 			<a href="#" class="brand">Nova 3</a>
 			<?php echo $navmain;?>
+			<?php echo $navuser;?>
 		</div>
 	</div>
 </div>

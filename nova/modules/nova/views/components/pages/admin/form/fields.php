@@ -1,11 +1,11 @@
 <?php if ($tabs !== false): ?>
 	<?php foreach ($tabs as $t): ?>
-		<h2>Tab: <?php echo $t->name;?></h2>
+		<h2><?php echo ucfirst(__('tab'));?>: <?php echo $t->name;?></h2>
 		<div class="well">
 			<?php if (array_key_exists($t->id, $sections)): ?>
 				<?php foreach ($sections[$t->id] as $s): ?>
 					<fieldset>
-						<legend>Section: <?php echo $s->name;?></legend>
+						<legend><?php echo ucfirst(__('section'));?>: <?php echo $s->name;?></legend>
 
 						<?php if (array_key_exists($s->id, $fields)): ?>
 							<table>
@@ -44,7 +44,7 @@
 	<?php if ($sections !== false): ?>
 		<?php foreach ($sections as $s): ?>
 			<fieldset>
-				<legend>Section: <?php echo $s->name;?></legend>
+				<legend><?php echo ucfirst(__('section'));?>: <?php echo $s->name;?></legend>
 
 				<?php if (array_key_exists($s->id, $fields)): ?>
 					<table>

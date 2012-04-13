@@ -85,7 +85,7 @@ class Model extends \Orm\Model
 	 * @param	array 	the array of data to update with
 	 * @return	object	the updated item
 	 */
-	public static function update_item($id, array $data)
+	public static function update_item($id, array $data, $filter = true)
 	{
 		if ($id !== null)
 		{
@@ -95,7 +95,15 @@ class Model extends \Orm\Model
 			// loop through the data array and make the changes
 			foreach ($data as $key => $value)
 			{
-				$record->$key = $value;
+				if ($key != 'id')
+				{
+					if ($filter === true)
+					{
+						$value = trim(\Security::xss_clean($value));
+					}
+
+					$record->$key = $value;
+				}
 			}
 			
 			// save the record

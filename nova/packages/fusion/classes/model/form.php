@@ -33,4 +33,9 @@ class Model_Form extends \Model {
 			'constraint' => 50,
 			'default' => 'vertical'),
 	);
+
+	public static function get_form($key)
+	{
+		return static::find()->where('key', $key)->get_one();
+	}
 }

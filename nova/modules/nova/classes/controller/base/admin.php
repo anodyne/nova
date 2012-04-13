@@ -62,6 +62,7 @@ abstract class Controller_Base_Admin extends Controller_Base_Core
 		$this->template->javascript					= false;
 		$this->template->layout						= \View::forge(\Location::file('admin', $this->skin, 'templates'), $vars);
 		$this->template->layout->navmain 			= \Nav::display('dropdown', 'admin', false);
+		$this->template->layout->navuser 			= \Nav::display('user', false, false);
 		$this->template->layout->ajax 				= false;
 		$this->template->layout->flash				= false;
 		$this->template->layout->content			= false;

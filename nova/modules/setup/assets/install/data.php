@@ -973,7 +973,8 @@ $navigation = array(
 		'group' => 0,
 		'order' => 0,
 		'url' => 'admin/index',
-		'type' => 'admin'),
+		'type' => 'admin',
+		'category' => 'admin'),
 	array(
 		'name' => 'Messages',
 		'group' => 0,
@@ -1066,6 +1067,30 @@ $navigation = array(
 		'type' => 'adminsub',
 		'category' => 'messages',
 		'access' => 'messages|read|0'),
+	array(
+		'name' => 'Site',
+		'group' => 0,
+		'order' => 0,
+		'url' => 'admin/site/index',
+		'type' => 'adminsub',
+		'category' => 'manage',
+		'access' => 'settings|read|0'),
+	array(
+		'name' => 'Data',
+		'group' => 1,
+		'order' => 0,
+		'url' => 'admin/data/index',
+		'type' => 'adminsub',
+		'category' => 'manage',
+		'access' => 'rank|read|0'),
+	array(
+		'name' => 'Forms',
+		'group' => 2,
+		'order' => 0,
+		'url' => 'admin/form/index',
+		'type' => 'adminsub',
+		'category' => 'manage',
+		'access' => 'form|read|0'),
 	/*	
 	array(
 		'name' => 'Settings',

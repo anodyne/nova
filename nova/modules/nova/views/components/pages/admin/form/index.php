@@ -6,6 +6,7 @@
 			<div class="thumbnail">
 				<div class="caption">
 					<div class="btn-group pull-right">
+						<a href="#" class="btn btn-small edit-form" data-key="<?php echo $form->key;?>"><?php echo ucfirst(__('action.edit'));?></a>
 						<a href="<?php echo Uri::create('admin/form/fields/'.$form->key);?>" class="btn btn-small"><?php echo ucfirst(Inflector::pluralize(__('field')));?></a>
 						<a href="<?php echo Uri::create('admin/form/tabs/'.$form->key);?>" class="btn btn-small"><?php echo ucfirst(Inflector::pluralize(__('tab')));?></a>
 						<a href="<?php echo Uri::create('admin/form/sections/'.$form->key);?>" class="btn btn-small"><?php echo ucfirst(Inflector::pluralize(__('section')));?></a>
