@@ -72,6 +72,27 @@ class Controller_Ajax_Update extends \Controller
 		}
 	}
 
+	public function action_field_order()
+	{
+		if (\Sentry::check() and \Sentry::user()->has_access('form.edit'))
+		{
+			// get and sanitize the input
+			$fields = \Security::xss_clean($_POST['field']);
+
+			foreach ($fields as $key => $value)
+			{
+				// get the field record
+				$record = \Model_Form_Field::find($value);
+
+				// update the order
+				$record->order = ($key + 1);
+
+				// save the record
+				$record->save();
+			}
+		}
+	}
+
 	public function action_form($key = '')
 	{
 		if (\Sentry::check() and \Sentry::user()->has_access('form.edit'))

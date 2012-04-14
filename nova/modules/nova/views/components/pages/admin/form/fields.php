@@ -8,11 +8,11 @@
 						<legend><?php echo ucfirst(__('section'));?>: <?php echo $s->name;?></legend>
 
 						<?php if (array_key_exists($s->id, $fields)): ?>
-							<table>
-								<tbody>
+							<table class="sort">
+								<tbody class="sort-body">
 								<?php foreach ($fields[$s->id] as $f): ?>
-									<tr>
-										<td class="span10 control-group">
+									<tr id="field_<?php echo $f->id;?>">
+										<td class="span9 control-group">
 											<label class="control-label"><?php echo $f->label;?></label>
 											<div class="controls">
 												<?php if ($f->type == 'text'): ?>
@@ -26,10 +26,11 @@
 												<?php endif;?>
 											</div>
 										</td>
-										<td class="span2">
+										<td class="span2 btn-group">
 											<a href="<?php echo Uri::create('admin/form/fields/'.$f->form_key.'/'.$f->id);?>" class="btn btn-mini tooltip-top" title="<?php echo ucfirst(__('action.edit')).' '.$f->label;?>"><?php echo ucfirst(__('action.edit'));?></a>
 											<a href="<?php echo Uri::create('admin/form/fields/'.$f->form_key.'/'.$f->id);?>" class="btn btn-mini tooltip-top" title="<?php echo ucfirst(__('action.delete')).' '.$f->label;?>"><?php echo ucfirst(__('action.delete'));?></a>
 										</td>
+										<td class="span1 reorder"></td>
 									</tr>
 								<?php endforeach;?>
 								</tbody>

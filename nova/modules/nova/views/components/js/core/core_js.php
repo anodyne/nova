@@ -4,6 +4,7 @@
 <script type="text/javascript" src="<?php echo Uri::base(false);?>nova/modules/assets/js/bootstrap-tooltip.js"></script>
 <script type="text/javascript" src="<?php echo Uri::base(false);?>nova/modules/assets/js/bootstrap-dropdown.js"></script>
 <script type="text/javascript" src="<?php echo Uri::base(false);?>nova/modules/assets/js/bootstrap-alert.js"></script>
+<script type="text/javascript" src="<?php echo Uri::base(false);?>nova/modules/assets/js/bootstrap-tab.js"></script>
 <script type="text/javascript">
 	$(document).ready(function(){
 		

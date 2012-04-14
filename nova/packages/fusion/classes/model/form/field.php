@@ -113,7 +113,7 @@ class Model_Form_Field extends \Model {
 			// loop through the values and put them in the right format
 			foreach ($this->values as $val)
 			{
-				$items[$val->html_value] = $val->content;
+				$items[$val->value] = $val->content;
 			}
 		}
 

@@ -48,6 +48,7 @@ class Controller_Admin_Form extends Controller_Base_Admin
 	public function action_fields($key, $id = false)
 	{
 		$this->_view = 'admin/form/fields';
+		$this->_js_view = 'admin/form/fields_js';
 
 		if ($id === false)
 		{
