@@ -23,3 +23,5 @@
 ## General
 
 * Nova now allows admins with the proper privileges to edit page headers and page messages right from the page in question. Just click on the content, make your changes, then click Save. Admins can also go to the Site Content management page and make changes from there as well. (Page titles can only be edited from the Site Content management page.)
+* The Chain of Command feature has been removed from the Nova core and shifted to a first-party module. More information about this will be available in the future.
+* The Docking feature has been removed from the Nova core and shifted to a first-party module. More information about this will be available in the future.
