@@ -1652,6 +1652,27 @@ $site_contents = array(
 		'type' => 'header',
 		'section' => 'form',
 		'page' => 'index'),
+	array(
+		'key' => 'admin_form_fields_header',
+		'label' => 'Form Field Management Header',
+		'content' => "Manage Form Fields",
+		'type' => 'header',
+		'section' => 'form',
+		'page' => 'fields'),
+	array(
+		'key' => 'admin_form_sections_header',
+		'label' => 'Form Section Management Header',
+		'content' => "Manage Form Sections",
+		'type' => 'header',
+		'section' => 'form',
+		'page' => 'sections'),
+	array(
+		'key' => 'admin_form_tabs_header',
+		'label' => 'Form Tab Management Header',
+		'content' => "Manage Form Tabs",
+		'type' => 'header',
+		'section' => 'form',
+		'page' => 'tabs'),
 
 	/**
 	 * Page Titles
@@ -1719,6 +1740,27 @@ $site_contents = array(
 		'type' => 'title',
 		'section' => 'form',
 		'page' => 'index'),
+	array(
+		'key' => 'admin_form_fields_title',
+		'label' => 'Form Field Management Page Title',
+		'content' => "Manage Form Fields",
+		'type' => 'title',
+		'section' => 'form',
+		'page' => 'fields'),
+	array(
+		'key' => 'admin_form_sections_title',
+		'label' => 'Form Section Management Page Title',
+		'content' => "Manage Form Sections",
+		'type' => 'title',
+		'section' => 'form',
+		'page' => 'sections'),
+	array(
+		'key' => 'admin_form_tabs_title',
+		'label' => 'Form Tab Management Page Title',
+		'content' => "Manage Form Tabs",
+		'type' => 'title',
+		'section' => 'form',
+		'page' => 'tabs'),
 
 	/**
 	 * Messages
@@ -1767,6 +1809,27 @@ $site_contents = array(
 		'type' => 'message',
 		'section' => 'admin',
 		'page' => 'index'),
+	array(
+		'key' => 'admin_form_fields_message',
+		'label' => 'Form Field Management Message',
+		'content' => "Using the options below, you can manage your form's fields, including editing existing fields, deleting existing fields, adding new fields, and reordering fields into another order (to do so, simply click and drag on the icon on the right).",
+		'type' => 'message',
+		'section' => 'form',
+		'page' => 'fields'),
+	array(
+		'key' => 'admin_form_sections_message',
+		'label' => 'Form Section Management Message',
+		'content' => "",
+		'type' => 'message',
+		'section' => 'form',
+		'page' => 'sections'),
+	array(
+		'key' => 'admin_form_tabs_message',
+		'label' => 'Form Tab Management Message',
+		'content' => "",
+		'type' => 'message',
+		'section' => 'form',
+		'page' => 'tabs'),
 
 	/**
 	 * Other Messages
