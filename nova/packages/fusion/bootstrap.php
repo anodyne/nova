@@ -66,7 +66,6 @@ Autoloader::add_classes(array(
 	'Fusion\\Model_Form_Value'				=> __DIR__.'/classes/model/form/value.php',
 	
 	'Fusion\\Model_Manifest'				=> __DIR__.'/classes/model/manifest.php',
-	//'Fusion\\Model_MenuCat'					=> __DIR__.'/classes/model/menucat.php',
 	'Fusion\\Model_Message'					=> __DIR__.'/classes/model/message.php',
 	'Fusion\\Model_MessageRecipient'		=> __DIR__.'/classes/model/messagerecipient.php',
 	'Fusion\\Model_Mission'					=> __DIR__.'/classes/model/mission.php',
@@ -99,4 +98,9 @@ Autoloader::add_classes(array(
 	'Fusion\\Model_Wiki_Draft'				=> __DIR__.'/classes/model/wiki/draft.php',
 	'Fusion\\Model_Wiki_Page'				=> __DIR__.'/classes/model/wiki/page.php',
 	'Fusion\\Model_Wiki_Restriction'		=> __DIR__.'/classes/model/wiki/restriction.php',
+
+	/**
+	 * Observers
+	 */
+	'Fusion\\Observer_Form_Field'			=> __DIR__.'/classes/observer/form/field.php',
 ));

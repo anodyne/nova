@@ -20,6 +20,8 @@ class Controller_Admin_Form extends Controller_Base_Admin
 	
 	public function action_index()
 	{
+		\Sentry::allowed('form.read', true);
+
 		$this->_view = 'admin/form/index';
 		$this->_js_view = 'admin/form/index_js';
 
@@ -35,7 +37,7 @@ class Controller_Admin_Form extends Controller_Base_Admin
 
 			$this->_flash[] = array(
 				'status' => 'success',
-				'message' => __('short.flash_success', array('thing' => ucfirst(__('form')))),
+				'message' => __('short.flash_success', array('thing' => ucfirst(__('form')), 'action' => __('action.updated'))),
 			);
 		}
 
@@ -47,8 +49,51 @@ class Controller_Admin_Form extends Controller_Base_Admin
 
 	public function action_fields($key, $id = false)
 	{
+		\Sentry::allowed('form.edit', true);
+
 		$this->_view = 'admin/form/fields';
 		$this->_js_view = 'admin/form/fields_js';
+
+		if (\Input::method() == 'POST')
+		{
+			// get the action
+			$action = trim(\Security::xss_clean(\Input::post('action')));
+
+			// get the ID from the POST
+			$field_id = trim(\Security::xss_clean(\Input::post('id')));
+
+			if (\Sentry::user()->has_access('form.delete') and $action == 'delete')
+			{
+				// get the field
+				$field = \Model_Form_Field::find($field_id);
+
+				// delete the field (with transactions)
+				$field->delete(null, true);
+
+				# TODO: need to figure out how to see if the delete was successful or not
+
+				$this->_flash[] = array(
+					'status' => 'success',
+					'message' => __('short.flash_success', array('thing' => ucfirst(__('field')), 'action' => __('action.deleted'))),
+				);
+			}
+
+			if (\Sentry::user()->has_access('form.edit') and $action == 'create')
+			{
+				// get the field
+				$field = \Model_Form_Field::find($field_id);
+
+				// delete the field (with transactions)
+				$field->delete(null, true);
+
+				# TODO: need to figure out how to see if the delete was successful or not
+
+				$this->_flash[] = array(
+					'status' => 'success',
+					'message' => __('short.flash_success', array('thing' => ucfirst(__('field')), 'action' => __('action.added'))),
+				);
+			}
+		}
 
 		if ($id === false)
 		{
@@ -107,6 +152,23 @@ class Controller_Admin_Form extends Controller_Base_Admin
 						$this->_data->fields[] = $field;
 					}
 				}
+			}
+		}
+		else
+		{
+			$this->_view = 'admin/form/fields_action';
+
+			if ($id == 0)
+			{
+				// create a new field
+			}
+			else
+			{
+				// get the field
+				$this->_data->field = \Model_Form_Field::find($id);
+
+				// get the sections
+				$this->_data->sections = \Model_Form_Section::get_sections($key);
 			}
 		}
 

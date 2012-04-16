@@ -43,6 +43,11 @@ class Model_Form_Data extends \Model {
 			'constraint' => 20,
 			'null' => true),
 	);
+
+	public static function get_data($field)
+	{
+		return static::find()->where('field_id', $field)->get();
+	}
 	
 	/**
 	 * Create data for a single field in the data table.

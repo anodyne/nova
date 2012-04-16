@@ -56,4 +56,21 @@ class Model_Form_Section extends \Model {
 			'cascade_delete' => false,
 		),
 	);
+
+	public static function get_sections($key)
+	{
+		$items = static::find()->where('form_key', $key)->order_by('name', 'asc')->get();
+
+		$sections = array();
+
+		if (count($items) > 0)
+		{
+			foreach ($items as $sec)
+			{
+				$sections[$sec->id] = $sec->name;
+			}
+		}
+
+		return $sections;
+	}
 }

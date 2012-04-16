@@ -75,7 +75,10 @@ class Model_Form_Field extends \Model {
 			'constraint' => 20,
 			'null' => true),
 	);
-
+	
+	/**
+	 * Relationships
+	 */
 	public static $_belongs_to = array(
 		'section' => array(
 			'model_to' => '\\Model_Form_Section',
@@ -97,7 +100,16 @@ class Model_Form_Field extends \Model {
 	);
 
 	/**
-	 * Get the values for the current field.
+	 * Observers
+	 */
+	protected static $_observers = array(
+		'\\Form_Field' => array(
+			'events' => array('before_delete')
+		),
+	);
+
+	/**
+	 * Get any values for the current field.
 	 *
 	 * @api
 	 * @return	array

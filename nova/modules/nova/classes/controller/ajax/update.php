@@ -40,6 +40,12 @@ class Controller_Ajax_Update extends \Controller
 		return $this->response;
 	}
 
+	/**
+	 * Updates the site content table when an admin uses jEditable to edit
+	 * some site content outside of the control panel.
+	 *
+	 * @return	string
+	 */
 	public function action_content_save()
 	{
 		if (\Sentry::check() and \Sentry::user()->has_access('content.update'))
@@ -72,6 +78,11 @@ class Controller_Ajax_Update extends \Controller
 		}
 	}
 
+	/**
+	 * Updates the form field order when the sort function stops.
+	 *
+	 * @return	void
+	 */
 	public function action_field_order()
 	{
 		if (\Sentry::check() and \Sentry::user()->has_access('form.edit'))
@@ -93,6 +104,12 @@ class Controller_Ajax_Update extends \Controller
 		}
 	}
 
+	/**
+	 * Shows the modal dialog for updating a form.
+	 *
+	 * @param	string	the form key used to figure out which form to edit
+	 * @return	View
+	 */
 	public function action_form($key = '')
 	{
 		if (\Sentry::check() and \Sentry::user()->has_access('form.edit'))
@@ -119,16 +136,28 @@ class Controller_Ajax_Update extends \Controller
 	}
 
 	/**
-	 * Protected methods for outputting information.
+	 * Updates the form field value order when the sort function stops.
+	 *
+	 * @return	void
 	 */
-	
-	protected function _flash_success($item)
+	public function action_value_order()
 	{
-		return '<p class="alert alert-success">'.__('short.flash_success', array('thing' => ucfirst(__($item)))).'</p>';
-	}
+		if (\Sentry::check() and \Sentry::user()->has_access('form.edit'))
+		{
+			// get and sanitize the input
+			$values = \Security::xss_clean($_POST['value']);
 
-	protected function _modal_close()
-	{
-		return '<div class="form-actions"><button class="close-dialog">'.ucfirst(__('action.close')).'</button></div>';
+			foreach ($values as $key => $value)
+			{
+				// get the field record
+				$record = \Model_Form_Value::find($value);
+
+				// update the order
+				$record->order = ($key + 1);
+
+				// save the record
+				$record->save();
+			}
+		}
 	}
 }
