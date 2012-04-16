@@ -635,4 +635,55 @@ class Sentry
 	{
 		return static::group_exists($role);
 	}
+
+	/**
+	 * Check if a user is allowed to access a page.
+	 *
+	 * @api
+	 * @param	mixed	an access key or an array of keys
+	 * @param	bool	should they be redirected
+	 * @return	bool
+	 */
+	public static function allowed($key, $redirect = false)
+	{
+		// check the login
+		if (static::check() === false and $redirect === true)
+		{
+			\Response::redirect('login/index/'.\Login\Controller_Login::NOT_LOGGED_IN);
+		}
+		else
+		{
+			// get the current user
+			$user = \Sentry::user();
+
+			// if we have a simple string, make it an array
+			if ( ! is_array($key))
+			{
+				$key = array($key);
+			}
+
+			// create a temp array
+			$allowed = array();
+
+			// loop through the array and see if they have access
+			foreach ($key as $k)
+			{
+				$allowed[] = $user->has_access($k);
+			}
+
+			if ($redirect === true)
+			{
+				if ( ! in_array(true, $allowed))
+				{
+					\Response::redirect('admin/error/'.\Nova\Controller_Admin::NOT_ALLOWED);
+				}
+
+				return true;
+			}
+			
+			return (in_array(true, $allowed));
+		}
+
+		return false;
+	}
 }
