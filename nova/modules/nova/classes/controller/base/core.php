@@ -146,6 +146,7 @@ abstract class Controller_Base_Core extends \Controller_Template
 		\Lang::load('nova::action', 'action');
 		\Lang::load('nova::short', 'short');
 		\Lang::load('nova::status', 'status');
+		\Lang::load('nova::sitecontent', 'sitecontent');
 		
 		// these are the settings we pull for every controller
 		$this->_settings_setup = array(
