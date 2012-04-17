@@ -56,6 +56,11 @@ class Model_Spec extends \Model {
 			'cascade_delete' => false,
 		),
 	);
+
+	public static function get_items()
+	{
+		return static::find('all');
+	}
 	
 	/**
 	 * Create a spec item.

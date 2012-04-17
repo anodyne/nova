@@ -137,19 +137,19 @@ class Model_Character extends \Model {
 			case 'active':
 			default:
 				$result = static::find('all', array(
-					'where' => array('status', 'active')
+					'where' => array('status' => 'active')
 				));
 			break;
 			
 			case 'inactive':
 				$result = static::find('all', array(
-					'where' => array('status', 'inactive')
+					'where' => array('status' => 'inactive')
 				));
 			break;
 			
 			case 'pending':
 				$result = static::find('all', array(
-					'where' => array('status', 'pending')
+					'where' => array('status' => 'pending')
 				));
 			break;
 			
@@ -157,8 +157,8 @@ class Model_Character extends \Model {
 				# TODO: is this right?
 				$result = static::find('all', array(
 					'where' => array(
-						array('user', 0),
-						array('status', 'active')
+						array('user' => 0),
+						array('status' => 'active')
 					),
 				));
 			break;

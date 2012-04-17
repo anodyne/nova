@@ -28,13 +28,16 @@ class Model_Form_Data extends \Model {
 			'constraint' => 20),
 		'user_id' => array(
 			'type' => 'int',
-			'constraint' => 11),
+			'constraint' => 11,
+			'null' => true),
 		'character_id' => array(
 			'type' => 'string',
-			'constraint' => 11),
+			'constraint' => 11,
+			'null' => true),
 		'item_id' => array(
 			'type' => 'int',
-			'constraint' => 11),
+			'constraint' => 11,
+			'null' => true),
 		'value' => array(
 			'type' => 'text',
 			'null' => true),
@@ -52,7 +55,7 @@ class Model_Form_Data extends \Model {
 	/**
 	 * Create data for a single field in the data table.
 	 *
-	 * @access	public
+	 * @api
 	 * @param	array 	the data array to use for creation
 	 * @return	object	the created object
 	 */
@@ -73,7 +76,7 @@ class Model_Form_Data extends \Model {
 	/**
 	 * Update data in the data table.
 	 *
-	 * @access	public
+	 * @api
 	 * @param	string	the form to update
 	 * @param	int		the ID to udpate
 	 * @param	array 	a data array of information to update

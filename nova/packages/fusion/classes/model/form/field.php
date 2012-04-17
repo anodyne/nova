@@ -104,26 +104,33 @@ class Model_Form_Field extends \Model {
 	 */
 	protected static $_observers = array(
 		'\\Form_Field' => array(
-			'events' => array('before_delete')
+			'events' => array('before_delete', 'after_insert')
+		),
+		'\\Orm\\Observer_UpdatedAt' => array(
+			'events' => array('before_save')
 		),
 	);
 
 	/**
-	 * Get any values for the current field.
+	 * Get any values for the current field. This is only used for
+	 * select menus.
 	 *
 	 * @api
 	 * @return	array
 	 */
 	public function get_values()
 	{
+		// get the values
+		$values = \Model_Form_Value::get_values($this->id);
+
 		// start with an empty array
 		$items = array();
 
 		// make sure we have values for this field
-		if ($this->values !== null)
+		if (count($values) > 0)
 		{
 			// loop through the values and put them in the right format
-			foreach ($this->values as $val)
+			foreach ($values as $val)
 			{
 				$items[$val->value] = $val->content;
 			}

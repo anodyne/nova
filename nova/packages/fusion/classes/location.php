@@ -121,7 +121,7 @@ class Location
 	public static function image($image, $skin, $section, $return = 'image', $attr = array())
 	{
 		// find the path to the image
-		$path = Location::_find_image('image', $image, $skin, $section);
+		$path = static::_find_image('image', $image, $skin, $section);
 		
 		if ($return == 'image')
 		{
@@ -209,14 +209,14 @@ class Location
 			case 'image':
 				if (is_file(APPPATH."views/{$args[2]}/design/images/{$args[1]}"))
 				{
-					return "views/{$skin}/design/images/{$args[1]}";
+					return "app/views/{$skin}/design/images/{$args[1]}";
 				}
 				elseif (is_file(APPPATH."modules/override/views/design/images/{$args[1]}"))
 				{
-					return "override::views/design/images/{$args[1]}";
+					return "app/modules/override/views/design/images/{$args[1]}";
 				}
 				
-				return "nova::views/design/images/{$args[1]}";
+				return "nova/modules/nova/views/design/images/{$args[1]}";
 			break;
 			
 			case 'rank':

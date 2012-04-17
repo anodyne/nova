@@ -6,6 +6,7 @@
  * @subpackage	Fusion
  * @category	Observer
  * @author		Anodyne Productions
+ * @copyright	2012 Anodyne Productions
  */
 
 namespace Fusion;
@@ -44,6 +45,103 @@ class Observer_Form_Field extends \Orm\Observer
 				// delete the data
 				$val->delete();
 			}
+		}
+	}
+
+	/**
+	 * When a field is created, we need to loop through the various pieces and
+	 * make sure that data records are added.
+	 *
+	 * @param	Model	the model being acted on
+	 * @return	void
+	 */
+	public function after_insert(\Model $model)
+	{
+		// what should be in the data?
+		$data = array(
+			'form_key' => $model->form_key,
+			'field_id' => $model->id,
+			'value' => '',
+			'updated_at' => time(),
+		);
+
+		switch ($model->form_key)
+		{
+			case 'bio':
+				// get all the active characters
+				$characters = \Model_Character::get_characters();
+
+				if (count($characters) > 0)
+				{
+					foreach ($characters as $c)
+					{
+						// add the IDs
+						$data['character_id'] = $c->id;
+						$data['user_id'] = 0;
+						$data['item_id'] = 0;
+
+						// create the data
+						\Model_Form_Data::create_data($data);
+					}
+				}
+			break;
+
+			case 'user':
+				// get all the active users
+				$users = \Model_User::get_users();
+
+				if (count($users) > 0)
+				{
+					foreach ($users as $u)
+					{
+						// add the IDs
+						$data['user_id'] = $u->id;
+						$data['character_id'] = 0;
+						$data['item_id'] = 0;
+
+						// create the data
+						\Model_Form_Data::create_data($data);
+					}
+				}
+			break;
+
+			case 'tour':
+				// get all the tour items
+				$tour = \Model_Tour::get_items();
+
+				if (count($tour) > 0)
+				{
+					foreach ($tour as $t)
+					{
+						// add the IDs
+						$data['item_id'] = $t->id;
+						$data['user_id'] = 0;
+						$data['character_id'] = 0;
+
+						// create the data
+						\Model_Form_Data::create_data($data);
+					}
+				}
+			break;
+
+			case 'specs':
+				// get all the specification items
+				$specs = \Model_Spec::get_items();
+
+				if (count($specs) > 0)
+				{
+					foreach ($specs as $s)
+					{
+						// add the IDs
+						$data['item_id'] = $s->id;
+						$data['user_id'] = 0;
+						$data['character_id'] = 0;
+
+						// create the data
+						\Model_Form_Data::create_data($data);
+					}
+				}
+			break;
 		}
 	}
 }

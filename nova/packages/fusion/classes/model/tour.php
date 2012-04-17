@@ -53,6 +53,11 @@ class Model_Tour extends \Model {
 			'cascade_delete' => false,
 		),
 	);
+
+	public static function get_items()
+	{
+		return static::find('all');
+	}
 	
 	/**
 	 * Create a tour item.

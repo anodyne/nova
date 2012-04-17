@@ -1,5 +1,8 @@
 <br>
-<p><a href="<?php echo Uri::create('admin/form/fields/'.Uri::segment(4).'/0');?>" class="btn"><i class="icon-plus"></i> Add Field</a></p>
+<div class="btn-group">
+	<a href="<?php echo Uri::create('admin/form/index');?>" class="btn tooltip-top" title="<?php echo lang('all forms', 2);?>"><i class="icon-chevron-left icon-75"></i></a>
+	<a href="<?php echo Uri::create('admin/form/fields/'.Uri::segment(4).'/0');?>" class="btn tooltip-top" title="<?php echo lang('action.add field', 2);?>"><i class="icon-plus icon-75"></i></a>
+</div>
 <br>
 
 <?php if ($tabs !== false): ?>
@@ -31,14 +34,14 @@
 												<?php echo Form::textarea(array('name' => $f->html_name, 'class' => $f->html_class, 'id' => $f->html_id, 'placeholder' => $f->placeholder, 'value' => $f->value, 'rows' => $f->html_rows));?>
 											<?php elseif ($f->type == 'select'): ?>
 												<?php echo Form::select($f->html_name, $f->value, $f->get_values(), array('class' => $f->html_class, 'id' => $f->html_id));?>
-											<?php else: ?>
-												Not done yet.
 											<?php endif;?>
 										</div>
 									</td>
-									<td class="span2 btn-group">
-										<a href="<?php echo Uri::create('admin/form/fields/'.$f->form_key.'/'.$f->id);?>" class="btn btn-mini tooltip-top" title="<?php echo ucfirst(__('action.edit')).' '.$f->label;?>"><?php echo ucfirst(__('action.edit'));?></a>
-										<a href="<?php echo Uri::create('admin/form/fields/'.$f->form_key);?>" class="btn btn-mini tooltip-top field-action" title="<?php echo ucfirst(__('action.delete')).' '.$f->label;?>" data-action="delete" data-id="<?php echo $f->id;?>"><?php echo ucfirst(__('action.delete'));?></a>
+									<td class="span2">
+										<div class="btn-group">
+											<a href="<?php echo Uri::create('admin/form/fields/'.$f->form_key.'/'.$f->id);?>" class="btn btn-mini tooltip-top" title="<?php echo lang('action.edit', 1).' '.$f->label;?>"><i class="icon-pencil icon-75"></i></a>
+											<a href="<?php echo Uri::create('admin/form/fields/'.$f->form_key);?>" class="btn btn-mini tooltip-top field-action" title="<?php echo lang('action.delete', 1).' '.$f->label;?>" data-action="delete" data-id="<?php echo $f->id;?>"><i class="icon-remove icon-75"></i></a>
+										</div>
 									</td>
 									<td class="span1 reorder"></td>
 								</tr>
@@ -63,7 +66,7 @@
 						<tbody class="sort-body">
 						<?php foreach ($fields[$s->id] as $f): ?>
 							<tr id="field_<?php echo $f->id;?>">
-								<td class="span10 control-group">
+								<td class="span9 control-group">
 									<label class="control-label"><?php echo $f->label;?></label>
 									<div class="controls">
 										<?php if ($f->type == 'text'): ?>
@@ -72,15 +75,16 @@
 											<?php echo Form::textarea(array('name' => $f->html_name, 'class' => $f->html_class, 'id' => $f->html_id, 'placeholder' => $f->placeholder, 'value' => $f->value, 'rows' => $f->html_rows));?>
 										<?php elseif ($f->type == 'select'): ?>
 											<?php echo Form::select($f->html_name, $f->value, $f->get_values(), array('class' => $f->html_class, 'id' => $f->html_id));?>
-										<?php else: ?>
-											Not done yet.
 										<?php endif;?>
 									</div>
 								</td>
 								<td class="span2">
-									<a href="<?php echo Uri::create('admin/form/fields/'.$f->form_key.'/'.$f->id);?>" class="btn btn-mini tooltip-top" title="<?php echo ucfirst(__('action.edit')).' '.$f->label;?>"><?php echo ucfirst(__('action.edit'));?></a>
-									<a href="<?php echo Uri::create('admin/form/fields/'.$f->form_key);?>" class="btn btn-mini tooltip-top field-action" title="<?php echo ucfirst(__('action.delete')).' '.$f->label;?>" data-action="delete" data-id="<?php echo $f->id;?>"><?php echo ucfirst(__('action.delete'));?></a>
+									<div class="btn-group">
+										<a href="<?php echo Uri::create('admin/form/fields/'.$f->form_key.'/'.$f->id);?>" class="btn btn-mini tooltip-top" title="<?php echo lang('action.edit', 1).' '.$f->label;?>"><i class="icon-pencil icon-75"></i></a>
+										<a href="<?php echo Uri::create('admin/form/fields/'.$f->form_key);?>" class="btn btn-mini tooltip-top field-action" title="<?php echo lang('action.delete', 1).' '.$f->label;?>" data-action="delete" data-id="<?php echo $f->id;?>"><i class="icon-remove icon-75"></i></a>
+									</div>
 								</td>
+								<td class="span1 reorder"></td>
 							</tr>
 						<?php endforeach;?>
 						</tbody>
@@ -94,7 +98,7 @@
 				<tbody class="sort-body">
 				<?php foreach ($fields as $f): ?>
 					<tr id="field_<?php echo $f->id;?>">
-						<td class="span10 control-group">
+						<td class="span9 control-group">
 							<label class="control-label"><?php echo $f->label;?></label>
 							<div class="controls">
 								<?php if ($f->type == 'text'): ?>
@@ -103,15 +107,16 @@
 									<?php echo Form::textarea(array('name' => $f->html_name, 'class' => $f->html_class, 'id' => $f->html_id, 'placeholder' => $f->placeholder, 'value' => $f->value, 'rows' => $f->html_rows));?>
 								<?php elseif ($f->type == 'select'): ?>
 									<?php echo Form::select($f->html_name, $f->value, $f->get_values(), array('class' => $f->html_class, 'id' => $f->html_id));?>
-								<?php else: ?>
-									Not done yet.
 								<?php endif;?>
 							</div>
 						</td>
 						<td class="span2">
-							<a href="<?php echo Uri::create('admin/form/fields/'.$f->form_key.'/'.$f->id);?>" class="btn btn-mini tooltip-top" title="<?php echo ucfirst(__('action.edit')).' '.$f->label;?>"><?php echo ucfirst(__('action.edit'));?></a>
-							<a href="<?php echo Uri::create('admin/form/fields/'.$f->form_key);?>" class="btn btn-mini tooltip-top field-action" title="<?php echo ucfirst(__('action.delete')).' '.$f->label;?>" data-action="delete" data-id="<?php echo $f->id;?>"><?php echo ucfirst(__('action.delete'));?></a>
+							<div class="btn-group">
+								<a href="<?php echo Uri::create('admin/form/fields/'.$f->form_key.'/'.$f->id);?>" class="btn btn-mini tooltip-top" title="<?php echo lang('action.edit', 1).' '.$f->label;?>"><i class="icon-pencil icon-75"></i></a>
+								<a href="<?php echo Uri::create('admin/form/fields/'.$f->form_key);?>" class="btn btn-mini tooltip-top field-action" title="<?php echo lang('action.delete', 1).' '.$f->label;?>" data-action="delete" data-id="<?php echo $f->id;?>"><i class="icon-remove icon-75"></i></a>
+							</div>
 						</td>
+						<td class="span1 reorder"></td>
 					</tr>
 				<?php endforeach;?>
 				</tbody>

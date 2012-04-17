@@ -37,13 +37,18 @@ class Controller_Admin_Form extends Controller_Base_Admin
 
 			$this->_flash[] = array(
 				'status' => 'success',
-				'message' => __('short.flash_success', array('thing' => ucfirst(__('form')), 'action' => __('action.updated'))),
+				'message' => lang('short.flash.success|form|action.updated', 1),
 			);
 		}
 
 		// grab all the forms from the database
 		$this->_data->forms = \Model_Form::find('all');
-		
+
+		// set up the images
+		$this->_data->images = array(
+			'action' => \Location::image($this->images['settings'], $this->skin, 'admin'),
+		);
+
 		return;
 	}
 
@@ -74,27 +79,87 @@ class Controller_Admin_Form extends Controller_Base_Admin
 
 				$this->_flash[] = array(
 					'status' => 'success',
-					'message' => __('short.flash_success', array('thing' => ucfirst(__('field')), 'action' => __('action.deleted'))),
+					'message' => lang('short.flash.success|field|action.deleted', 1),
 				);
 			}
 
-			if (\Sentry::user()->has_access('form.edit') and $action == 'create')
+			if (\Sentry::user()->has_access('form.edit') and $action == 'add')
+			{
+				// get an instance of the field object
+				$item = \Model_Form_Field::forge();
+
+				// get the POST
+				$post = $_POST;
+
+				// drop the items we don't need
+				unset($post['action']);
+
+				// loop through the POST and create the properties
+				foreach ($post as $key => $value)
+				{
+					$item->{$key} = trim(\Security::xss_clean($value));
+				}
+
+				// save the record
+				$record = $item->save();
+
+				// figure out what flash message to show
+				if ($record)
+				{
+					$this->_flash[] = array(
+						'status' => 'success',
+						'message' => lang('short.flash.success|field|action.added', 1),
+					);
+				}
+				else
+				{
+					$this->_flash[] = array(
+						'status' => 'danger',
+						'message' => lang('short.flash.failure|field|action.creation', 1),
+					);
+				}
+			}
+
+			if (\Sentry::user()->has_access('form.edit') and $action == 'update')
 			{
 				// get the field
-				$field = \Model_Form_Field::find($field_id);
+				$item = \Model_Form_Field::find($id);
 
-				// delete the field (with transactions)
-				$field->delete(null, true);
+				// get the POST
+				$post = $_POST;
 
-				# TODO: need to figure out how to see if the delete was successful or not
+				// drop the items we don't need
+				unset($post['action']);
+				unset($post['value-add-content']);
 
-				$this->_flash[] = array(
-					'status' => 'success',
-					'message' => __('short.flash_success', array('thing' => ucfirst(__('field')), 'action' => __('action.added'))),
-				);
+				// loop through the POST and create the properties
+				foreach ($post as $key => $value)
+				{
+					$item->{$key} = trim(\Security::xss_clean($value));
+				}
+
+				// save the record
+				$record = $item->save();
+
+				// figure out what flash message to show
+				if ($record)
+				{
+					$this->_flash[] = array(
+						'status' => 'success',
+						'message' => lang('short.flash.success|field|action.updated', 1),
+					);
+				}
+				else
+				{
+					$this->_flash[] = array(
+						'status' => 'danger',
+						'message' => lang('short.flash.failure|field|action.update', 1),
+					);
+				}
 			}
 		}
 
+		// no ID, show all the fields
 		if ($id === false)
 		{
 			// set up the variables
@@ -153,22 +218,64 @@ class Controller_Admin_Form extends Controller_Base_Admin
 					}
 				}
 			}
+
+			// manually set the header, footer, and message
+			$this->_headers['fields'] = lang('action.manage form fields', 2);
+			$this->_titles['fields'] = lang('action.manage form fields', 2);
+			$this->_messages['fields'] = lang('action.manage form fields', 2);
 		}
 		else
 		{
 			$this->_view = 'admin/form/fields_action';
 
+			// get the forms
+			$this->_data->forms = \Model_Form::get_forms();
+
+			// get the sections
+			$this->_data->sections = \Model_Form_Section::get_sections($key);
+
+			// set the types
+			$this->_data->types = array(
+				'text' => lang('text_field', 2),
+				'textarea' => lang('text_area', 2),
+				'select' => lang('dropdown', 2),
+			);
+
+			// ID 0 means a new field, anything else edits an existing field
 			if ($id == 0)
 			{
-				// create a new field
+				// get the field
+				$this->_data->field = false;
+
+				// set the action
+				$this->_data->action = 'add';
+
+				// manually set the header, footer, and message
+				$this->_headers['fields'] = lang('action.create status.new form field', 2);
+				$this->_titles['fields'] = lang('action.create status.new form field', 2);
+				$this->_messages['fields'] = lang('action.create status.new form field', 2);
 			}
 			else
 			{
 				// get the field
 				$this->_data->field = \Model_Form_Field::find($id);
 
-				// get the sections
-				$this->_data->sections = \Model_Form_Section::get_sections($key);
+				// if we don't have a field, redirect to the creation screen
+				if ($this->_data->field === null)
+				{
+					$this->response->redirect('admin/form/fields/'.$key.'/0');
+				}
+
+				// get the field values
+				$this->_data->values = \Model_Form_Value::get_values($id);
+
+				// set the action
+				$this->_data->action = 'update';
+
+				// manually set the header, footer, and message
+				$this->_headers['fields'] = lang('action.update form field', 2);
+				$this->_titles['fields'] = lang('action.update form field', 2);
+				$this->_messages['fields'] = lang('action.update form field', 2);
 			}
 		}
 

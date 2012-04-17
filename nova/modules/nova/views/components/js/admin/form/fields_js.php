@@ -5,6 +5,25 @@
 <script type="text/javascript">
 	$(document).ready(function(){
 
+		// show the first tab
+		$('.nav-tabs a:first').tab('show');
+
+		// when creating a new field, we have next/previous buttons for moving between tabs
+		$(document).on('click', '.next-tab', function(){
+			$('.nav-tabs a[href="#html"]').tab('show');
+			$(this).removeClass('next-tab').addClass('prev-tab').text('<?php echo lang("previous", 1);?>');
+
+			return false;
+		});
+
+		// when creating a new field, we have next/previous buttons for moving between tabs
+		$(document).on('click', '.prev-tab', function(){
+			$('.nav-tabs a[href="#general"]').tab('show');
+			$(this).removeClass('prev-tab').addClass('next-tab').text('<?php echo lang("next", 1);?>');
+
+			return false;
+		});
+
 		// this fixes the issue where the row being dragged is compacted.
 		var fixHelper = function(e, ui){
 			ui.children().each(function(){
@@ -28,7 +47,7 @@
 		}).disableSelection();
 
 		// makes the value list sortable and updates when the sort stops
-    	$('.sort-value tbody.sort-body').sortable({
+		$('.sort-value tbody.sort-body').sortable({
 			helper: fixHelper,
 			stop: function(event, ui){
 				
@@ -40,22 +59,127 @@
 			}
 		}).disableSelection();
 
-    	$('.field-action').click(function(){
-    		var action = $(this).data('action');
-    		var id = $(this).data('id');
+		// what action to take when a field action is clicked
+		$(document).on('click', '.field-action', function(){
+			var doaction = $(this).data('action');
+			var id = $(this).data('id');
 
-    		if (action == 'delete')
-    		{
-	    		$('<div/>').dialog2({
-					title: "<?php echo ucwords(__('short.delete', array('thing' => __('field'))));?>",
+			if (doaction == 'delete')
+			{
+				$('<div/>').dialog2({
+					title: "<?php echo lang('action.delete field', 2);?>",
 					content: "<?php echo Uri::create('ajax/delete/field');?>/" + id
 				});
-	    	}
+			}
 
-    		return false;
-    	});
+			return false;
+		});
 
-    	// show the first tab
-    	$('.nav-tabs a:first').tab('show');
+		// what action to take when a value action is clicked
+		$(document).on('click', '.value-action', function(){
+			var doaction = $(this).data('action');
+			var id = $(this).data('id');
+			var parent = $(this).closest('tr');
+
+			if (doaction == 'delete')
+			{
+				$.ajax({
+					type: 'POST',
+					url: "<?php echo Uri::create('ajax/delete/field_value');?>",
+					data: { id: id },
+					success: function(){
+						parent.fadeOut();
+					}
+				});
+			}
+
+			if (doaction == 'update')
+			{
+				$('<div/>').dialog2({
+					title: "<?php echo lang('action.edit value', 2);?>",
+					content: "<?php echo Uri::create('ajax/update/field_value');?>/" + id
+				});
+			}
+
+			if (doaction == 'add')
+			{
+				var send = {
+					content: $('[name="value-add-content"]').val(),
+					field: '<?php echo Uri::segment(5);?>'
+				}
+
+				if ($('.sort-value tbody tr').length == 1 && $('.sort-value tbody tr:nth-child(1) td').length == 1)
+				{
+					// there are no values in the database
+					send.order = 1;
+				}
+				else if ($('.sort-value tbody tr').length == 1 && $('.sort-value tbody tr:nth-child(1) td').length > 1)
+				{
+					// there is already 1 value in the database
+					send.order = 2;
+				}
+				else
+				{
+					// there's more than 1 value in the database
+					send.order = $('.sort-value tbody tr').length + 1;
+				}
+
+				$.ajax({
+					type: 'POST',
+					url: "<?php echo Uri::create('ajax/add/field_value');?>",
+					data: send,
+					dataType: 'html',
+					success: function(data){
+
+						if ($('.sort-value tbody tr').length == 1 && $('.sort-value tbody tr:nth-child(1) td').length == 1)
+						{
+							// if there's only 1 record AND only one column in the row, replace everything
+							$('.sort-value .sort-body').html(data);
+						}
+						else
+						{
+							// all other times, we'll append to the end of the table
+							$('.sort-value .sort-body').append(data);
+						}
+
+						// finally, reset the add field to be blank
+						$('[name="value-add-content"]').val('');
+					}
+				});
+			}
+
+			return false;
+		});
+
+		// determine the actions when the type dropdown changes
+		$('[name="type"]').change(function(){
+
+			// find the selected value
+			var type = $('[name="type"] option:selected').val();
+
+			if (type == 'text')
+			{
+				$('.field-rows').hide();
+				$('.field-placeholder').show();
+				$('.field-value').show();
+				$('.help-values').hide();
+			}
+
+			if (type == 'textarea')
+			{
+				$('.field-rows').show();
+				$('.field-placeholder').show();
+				$('.field-value').show();
+				$('.help-values').hide();
+			}
+
+			if (type == 'select')
+			{
+				$('.field-rows').hide();
+				$('.field-placeholder').hide();
+				$('.field-value').hide();
+				$('.help-values').show();
+			}
+		});
 	});
 </script>

@@ -13,3 +13,7 @@
 .icon-75 {
 	opacity: 0.75;
 }
+
+.input-append .add-on, .input-append .btn {
+	margin-bottom: 9px;
+}

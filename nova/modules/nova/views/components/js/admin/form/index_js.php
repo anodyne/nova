@@ -5,7 +5,7 @@
 			var key = $(this).data('key');
 
 			$('<div/>').dialog2({
-				title: "<?php echo ucwords(__('short.edit', array('thing' => __('form'))));?>",
+				title: "<?php echo lang('action.edit form', 2);?>",
 				content: "<?php echo Uri::create('ajax/update/form');?>/" + key
 			});
 

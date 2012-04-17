@@ -1809,27 +1809,6 @@ $site_contents = array(
 		'type' => 'message',
 		'section' => 'admin',
 		'page' => 'index'),
-	array(
-		'key' => 'admin_form_fields_message',
-		'label' => 'Form Field Management Message',
-		'content' => "Using the options below, you can manage your form's fields, including editing existing fields, deleting existing fields, adding new fields, and reordering fields into another order (to do so, simply click and drag on the icon on the right).",
-		'type' => 'message',
-		'section' => 'form',
-		'page' => 'fields'),
-	array(
-		'key' => 'admin_form_sections_message',
-		'label' => 'Form Section Management Message',
-		'content' => "",
-		'type' => 'message',
-		'section' => 'form',
-		'page' => 'sections'),
-	array(
-		'key' => 'admin_form_tabs_message',
-		'label' => 'Form Tab Management Message',
-		'content' => "",
-		'type' => 'message',
-		'section' => 'form',
-		'page' => 'tabs'),
 
 	/**
 	 * Other Messages

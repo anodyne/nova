@@ -1,9 +1,8 @@
-<p><?php echo __('short.delete_confirm', array('object' => __('field'), 'name' => $name));?></p>
+<p><?php echo lang('short.delete_confirm|field|'.$name);?></p>
 
 <form method="post">
 	<div class="form-actions">
-		<button class="btn close-dialog"><?php echo ucfirst(__('action.cancel'));?></button>
-		<button class="btn btn-primary"><?php echo ucfirst(__('action.submit'));?></button>
+		<button class="btn btn-primary"><?php echo lang('action.submit', 1);?></button>
 		<?php echo Form::hidden('id', $id);?>
 		<?php echo Form::hidden('action', 'delete');?>
 	</div>

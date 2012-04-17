@@ -38,4 +38,21 @@ class Model_Form extends \Model {
 	{
 		return static::find()->where('key', $key)->get_one();
 	}
+
+	public static function get_forms()
+	{
+		$items = static::find('all');
+
+		$records = array();
+
+		if (count($items) > 0)
+		{
+			foreach ($items as $item)
+			{
+				$records[$item->key] = $item->name;
+			}
+		}
+
+		return $records;
+	}
 }
