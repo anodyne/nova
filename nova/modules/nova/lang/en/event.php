@@ -7,10 +7,10 @@ return array(
 	),
 
 	'setup' => array(
-		'installed' => "System installed with version :version",
-		'updated' => "System was updated to :version",
-		'upgraded' => "System was upgraded from :product 2 to :product :version",
-		'genre_installed' => "Genre :genre was installed",
-		'genre_uninstalled' => "Genre :genre was uninstalled",
+		'installed' => "System installed with version :0",
+		'updated' => "System was updated to :0",
+		'upgraded' => "System was upgraded from :0 2 to :1 :version",
+		'genre_installed' => "Genre :0 was installed",
+		'genre_uninstalled' => "Genre :0 was uninstalled",
 	),
 );
