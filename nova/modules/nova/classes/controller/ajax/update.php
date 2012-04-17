@@ -10,36 +10,8 @@
 
 namespace Nova;
 
-class Controller_Ajax_Update extends \Controller
+class Controller_Ajax_Update extends Controller_Base_Ajax
 {
-	public function before()
-	{
-		parent::before();
-
-		// manually add the nova module to the paths
-		\Finder::instance()->add_path(\Fuel::add_module('nova'));
-		
-		// go out and load then merge the nova config files
-		\Config::load('nova', true, false, true);
-
-		// load the language files
-		\Lang::load('app');
-		\Lang::load('nova::base');
-		\Lang::load('nova::event', 'event');
-		\Lang::load('nova::email', 'email');
-		\Lang::load('nova::action', 'action');
-		\Lang::load('nova::short', 'short');
-		\Lang::load('nova::status', 'status');
-	}
-	
-	public function after($response)
-	{
-		parent::after($response);
-		
-		// return the response object
-		return $this->response;
-	}
-
 	/**
 	 * Updates the site content table when an admin uses jEditable to edit
 	 * some site content outside of the control panel.
@@ -105,6 +77,32 @@ class Controller_Ajax_Update extends \Controller
 	}
 
 	/**
+	 * Updates the form field order when the sort function stops.
+	 *
+	 * @return	void
+	 */
+	public function action_field_value()
+	{
+		if (\Sentry::check() and \Sentry::user()->has_access('form.edit'))
+		{
+			// get the values
+			$id = \Security::xss_clean(\Input::post('id'));
+			$content = \Security::xss_clean(\Input::post('content'));
+			$value = \Security::xss_clean(\Input::post('value'));
+
+			// get the value record
+			$record = \Model_Form_Value::find($id);
+
+			// update the record
+			$record->content = $content;
+			$record->value = $value;
+
+			// save the record
+			$record->save();
+		}
+	}
+
+	/**
 	 * Shows the modal dialog for updating a form.
 	 *
 	 * @param	string	the form key used to figure out which form to edit
@@ -125,8 +123,8 @@ class Controller_Ajax_Update extends \Controller
 					'id' => $form->id,
 
 					'values' => array(
-						'vertical' => ucfirst(__('vertical')),
-						'horizontal' => ucfirst(__('horizontal'))
+						'vertical' => lang('vertical', 1),
+						'horizontal' => lang('horizontal', 1)
 					),
 				);
 

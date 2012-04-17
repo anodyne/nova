@@ -10,27 +10,8 @@
 
 namespace Nova;
 
-class Controller_Ajax_Info extends \Controller
+class Controller_Ajax_Info extends Controller_Base_Ajax
 {
-	public function before()
-	{
-		parent::before();
-
-		// manually add the nova module to the paths
-		\Finder::instance()->add_path(\Fuel::add_module('nova'));
-		
-		// go out and load then merge the nova config files
-		\Config::load('nova', true, false, true);
-	}
-	
-	public function after($response)
-	{
-		parent::after($response);
-		
-		// return the response object
-		return $this->response;
-	}
-
 	public function action_position_desc()
 	{
 		// set the POST variable
