@@ -101,3 +101,24 @@ Nova is made up of a wide range of plugins and components to help make it what i
     * Version: 0.0.1
     * Location
         * nova/modules/assets/js/jquery.ajaxq.js
+* jQuery UI
+    * Version: 1.8.19
+    * Site: http://jqueryui.com
+    * Location:
+        * nova/modules/assets/js/jquery.ui.accordion.min.js
+        * nova/modules/assets/js/jquery.ui.autocomplete.min.js
+        * nova/modules/assets/js/jquery.ui.button.min.js
+        * nova/modules/assets/js/jquery.ui.core.min.js
+        * nova/modules/assets/js/jquery.ui.datepicker.min.js
+        * nova/modules/assets/js/jquery.ui.dialog.min.js
+        * nova/modules/assets/js/jquery.ui.draggable.min.js
+        * nova/modules/assets/js/jquery.ui.droppable.min.js
+        * nova/modules/assets/js/jquery.ui.mouse.min.js
+        * nova/modules/assets/js/jquery.ui.position.min.js
+        * nova/modules/assets/js/jquery.ui.progressbar.min.js
+        * nova/modules/assets/js/jquery.ui.resizable.min.js
+        * nova/modules/assets/js/jquery.ui.selectable.min.js
+        * nova/modules/assets/js/jquery.ui.slider.min.js
+        * nova/modules/assets/js/jquery.ui.sortable.min.js
+        * nova/modules/assets/js/jquery.ui.tabs.min.js
+        * nova/modules/assets/js/jquery.ui.widget.min.js
