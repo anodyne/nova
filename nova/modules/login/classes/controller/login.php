@@ -23,7 +23,7 @@ class Controller_Login extends Controller_Base_Login
 	const NO_PASS 			= 5;
 	const WRONG_EMAIL_PASS	= 6;
 	const SUSPEND_START		= 7;
-	const SUSPECT_DURING	= 8;
+	const SUSPEND_DURING	= 8;
 	const UNKNOWN			= 9;
 	const PASS_RESET 		= 10;
 	const NOT_ADMIN			= 11;
@@ -49,7 +49,7 @@ class Controller_Login extends Controller_Base_Login
 		{
 			$this->_flash[] = array(
 				'status' => 'warning',
-				'message' => __('login.error.locked_out'),
+				'message' => lang('error.login.locked_out'),
 			);
 
 			// now we're locked out
@@ -81,32 +81,32 @@ class Controller_Login extends Controller_Base_Login
 				{
 					case self::WRONG_EMAIL:
 						$error_status = 'danger';
-						$error_message = __('login.error.error_'.$error, array('url' => \Uri::create('main/contact')));
+						$error_message = lang("error.login.error_$error|[".\Uri::create('main/contact')."]");
 					break;
 
 					case self::WRONG_PASS:
 						$error_status = 'danger';
-						$error_message = __('login.error.error_'.$error, array('url' => \Uri::create('login/reset')));
+						$error_message = lang("error.login.error_$error|[".\Uri::create('login/reset')."]");
 					break;
 
-					case self::SUSPECT_DURING:
+					case self::SUSPEND_DURING:
 						$error_status = 'warning';
-						$error_message = __('login.error.error_'.$error, array('time' => \Model_Settings::get_settings('login_lockout_time')));
+						$error_message = lang("error.login.error_$error|[".\Model_Settings::get_settings('login_lockout_time')."]");
 					break;
 
 					case self::SUSPEND_START:
 						$error_status = 'danger';
-						$error_message = __('login.error.error_'.$error, array('time' => \Model_Settings::get_settings('login_lockout_time')));
+						$error_message = lang("error.login.error_$error|[".\Model_Settings::get_settings('login_lockout_time')."]");
 					break;
 
 					case self::PASS_RESET:
 						$error_status = 'info';
-						$error_message = __('login.error.error_'.$error);
+						$error_message = lang("error.login.error_$error");
 					break;
 					
 					default:
 						$error_status = 'danger';
-						$error_message = __('login.error.error_'.$error);
+						$error_message = lang("error.login.error_$error");
 					break;
 				}
 
@@ -130,7 +130,7 @@ class Controller_Login extends Controller_Base_Login
 		\Sentry::logout();
 
 		// manually set the logout message
-		$this->_data->message = __('login.logout', array('main_url' => \Uri::create('main/index'), 'login_url' => \Uri::create('login/index')));
+		$this->_data->message = lang("short.login.logout|[".\Uri::create('main/index')."]|[".\Uri::create('login/index')."]");
 
 		return;
 	}
@@ -167,13 +167,13 @@ class Controller_Login extends Controller_Base_Login
 					$link = \Uri::create('login/reset_confirm/'.$reset['link']);
 
 					// parse the content for the message
-					$email_content = sprintf(__('login.content.password_reset'), $link);
+					$email_content = lang("email.content.password_reset|[$link]");
 
 					// set up the email
 					$email = \Email::forge();
 					$email->from($this->options->email_address, $this->options->email_name)
 						->to($address)
-						->subject($this->options->email_subject.' '.__('login.subject.password_reset'))
+						->subject($this->options->email_subject.' '.lang('email.subject.password_reset'))
 						->body($email_content);
 
 					try
@@ -183,21 +183,21 @@ class Controller_Login extends Controller_Base_Login
 
 						$this->_flash[] = array(
 							'status' => 'success',
-							'message' => __('login.flash.reset_success')
+							'message' => lang('short.login.reset_success')
 						);
 					}
 					catch(\EmailValidationFailedException $e)
 					{
 						$this->_flash[] = array(
 							'status' => 'danger',
-							'message' => __('login.flash.validation_failed')
+							'message' => lang('error.email.validation_failed')
 						);
 					}
 					catch(\EmailSendingFailedException $e)
 					{
 						$this->_flash[] = array(
 							'status' => 'danger',
-							'message' => __('login.flash.could_not_send')
+							'message' => lang('error.email.could_not_send')
 						);
 					}
 				}
@@ -205,7 +205,7 @@ class Controller_Login extends Controller_Base_Login
 				{
 					$this->_flash[] = array(
 						'status' => 'danger',
-						'message' => __('login.flash.reset_failed')
+						'message' => lang('error.login.reset_failed')
 					);
 				}
 			}
@@ -213,7 +213,7 @@ class Controller_Login extends Controller_Base_Login
 			{
 				$this->_flash[] = array(
 					'status' => 'danger',
-					'message' => __('login.flash.auth_exception')
+					'message' => lang('error.login.auth_exception')
 				);
 			}
 		}
@@ -247,7 +247,7 @@ class Controller_Login extends Controller_Base_Login
 				{
 					$this->_flash[] = array(
 						'status' => 'danger',
-						'message' => __('login.flash.confirmation_failed')
+						'message' => lang('email.flash.confirmation_failed')
 					);
 				}
 			}
@@ -255,7 +255,7 @@ class Controller_Login extends Controller_Base_Login
 			{
 				$this->_flash[] = array(
 					'status' => 'danger',
-					'message' => __('login.flash.auth_exception')
+					'message' => lang('email.flash.auth_exception')
 				);
 			}
 		}
