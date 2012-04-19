@@ -4,6 +4,7 @@
  * A space indicates a new lang item
  * A pipe (|) indicates new arguments
  * A tilde (~) indicates new lang items within arguments
+ * Wrapping in brackets ([]) indicates a variable that shouldn't be parsed
  */
 if ( ! function_exists('lang'))
 {
@@ -33,22 +34,33 @@ if ( ! function_exists('lang'))
 			{
 				foreach ($args as $key => $a)
 				{
-					// see if there's a space in the argument
-					$arg_pieces = explode('~', $a);
-
 					// create a holding array for the sub pieces
 					$subpiece = array();
-
-					if (count($arg_pieces) > 1)
+					
+					// looks for a string wrapped in brackets and prints it as is
+					if (preg_match("/\[[^]]+\]/i", $a))
 					{
-						foreach ($arg_pieces as $x)
-						{
-							$subpiece[] = __($x);
-						}
+						$a = substr_replace($a, '', 0, 1);
+						$a = substr_replace($a, '', -1, 1);
+
+						$subpiece[] = $a;
 					}
 					else
 					{
-						$subpiece[] = __($a);
+						// see if there's a space in the argument
+						$arg_pieces = explode('~', $a);
+
+						if (count($arg_pieces) > 1)
+						{
+							foreach ($arg_pieces as $x)
+							{
+								$subpiece[] = __($x);
+							}
+						}
+						else
+						{
+							$subpiece[] = __($a);
+						}
 					}
 
 					// update the argument
