@@ -27,9 +27,6 @@ abstract class Controller_Base_Login extends \Nova\Controller_Base_Core
 
 		// change the fallback module
 		$this->_module_fallback = 'login';
-
-		// load the login language file
-		\Lang::load('login', 'login');
 		
 		// pull these additional settings
 		$additional_settings = array(
