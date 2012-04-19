@@ -13,6 +13,8 @@ return array(
 
 	'forgot_password' => "Forgot your password? Don't worry, it happens to the best of us!",
 
+	'refresh' => "Please refresh the page to view your changes.",
+
 	'error' => array(
 		'not_found' => "No :0 found",
 	),
@@ -20,10 +22,21 @@ return array(
 	'fields' => array(
 		'value_creation' => "Dropdown menu values can be added once you've created the field.",
 		'field_order' => "Field order can also be changed by dragging and dropping the fields on the previous page.",
+		'values_dropdown_only' => "You can only move values from one dropdown menu to another.",
+		'values_content' => "The content is what will appear to the user in the dropdown menu.",
+		'values_value' => "The value is what will be stored in the database and appear on the page.",
+		'values_order' => "The order of the values can also be changed by dragging and dropping the values on the previous page.",
+		'section_update_fields' => "Select the new section you would like any fields in the :0 section to be moved to.",
 	),
 
 	'flash' => array(
 		'failure' => ":0 :1 failed, please try again.",
 		'success' => ":0 :1!",
+	),
+
+	'login' => array(
+		'reset_success' => "Your password reset was accepted. You'll receive an email shortly with a confirmation link. Once you've confirmed your password reset, your new password will be active.",
+
+		'logout' => "You have successfully logged out. You can return to the <a href=':0'>main page</a> or <a href=':1'>log in</a> again.",
 	),
 );

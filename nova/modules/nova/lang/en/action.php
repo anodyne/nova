@@ -10,6 +10,7 @@ return array(
 	'close' => 'close',
 	'create' => 'create',
 	'creation' => 'creation',
+	'confirm' => 'confirm',
 	
 	'delete' => 'delete',
 	'deleted' => 'deleted',
@@ -24,6 +25,7 @@ return array(
 	'nominate' => 'nominate',
 
 	'request' => 'request',
+	'reset' => 'reset',
 
 	'submit' => 'submit',
 

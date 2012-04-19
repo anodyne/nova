@@ -59,12 +59,14 @@ return array(
 
 	'section' => "section",
 	'sections' => "sections",
+	'site' => "site",
 
 	'tab' => "tab",
 	'tabs' => "tabs",
 	'type' => "type",
 	'text_field' => 'text field',
 	'text_area' => 'text area',
+	'to' => 'to',
 
 	'vertical' => "vertical",
 	'value' => 'value',
