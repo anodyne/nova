@@ -3,79 +3,93 @@
 /**
  * A space indicates a new lang item
  * A pipe (|) indicates new arguments
- * A tilde (~) indicates new lang items within arguments
- * Wrapping in brackets ([]) indicates a variable that shouldn't be parsed
+ * Wrapping in brackets ([]) indicates something that shouldn't be parsed
  */
 if ( ! function_exists('lang'))
 {
-	function lang($string, $capitalize = 0)
+	function lang($str, $capitalize = 0)
 	{
-		// explode the string into an array
-		$pieces = explode(' ', $string);
+		// break the string into pieces
+		$pieces = preg_split('/(\[\[.*?\]\])/', $str, null, PREG_SPLIT_NO_EMPTY|PREG_SPLIT_DELIM_CAPTURE);
 
-		// an empty array for storing the pieces
-		$output = '';
-
-		foreach ($pieces as $p)
+		// loop through the pieces
+		foreach ($pieces as $key => $p)
 		{
-			// explode for arguments
-			$args = explode('|', $p);
+			// start by trimming the value
+			$p = trim($p);
 
-			// get the main piece
-			$main = $args[0];
-
-			// now remove the main piece
-			unset($args[0]);
-
-			// reset the values
-			$args = array_values($args);
-
-			if (count($args) > 0)
+			if (substr($p, 0, 2) == '[[')
 			{
-				foreach ($args as $key => $a)
-				{
-					// create a holding array for the sub pieces
-					$subpiece = array();
-					
-					// looks for a string wrapped in brackets and prints it as is
-					if (preg_match("/\[[^]]+\]/i", $a))
-					{
-						$a = substr_replace($a, '', 0, 1);
-						$a = substr_replace($a, '', -1, 1);
+				// clean up the string (removes the double brackets on either end)
+				$p = preg_replace("/^.*\[\[([^)]*)\]\].*$/", '$1', $str);
 
-						$subpiece[] = $a;
+				// break the string at the pipe
+				$args = explode('|', $p);
+
+				// the first element is the base
+				$base = $args[0];
+
+				// remove the first item now
+				unset($args[0]);
+
+				// loop through the arguments now
+				foreach ($args as $arg)
+				{
+					// are we protecting this string?
+					if (preg_match('/(\{\{.*?\}\})/', $arg) > 0)
+					{
+						// clean up the fragment (removes the double braces on either end)
+						$arg = preg_replace("/^.*\{\{([^)]*)\}\}.*$/", '$1', $arg);
+
+						$arg_output[] = $arg;
 					}
 					else
 					{
-						// see if there's a space in the argument
-						$arg_pieces = explode('~', $a);
+						// break at the space
+						$fragments = explode(' ', $arg);
 
-						if (count($arg_pieces) > 1)
+						$frag_output = array();
+
+						// loop through the spaced pieces
+						foreach ($fragments as $frag)
 						{
-							foreach ($arg_pieces as $x)
-							{
-								$subpiece[] = __($x);
-							}
+							$frag_output[] = __($frag);
 						}
-						else
-						{
-							$subpiece[] = __($a);
-						}
+
+						$arg_output[] = implode(' ', $frag_output);
 					}
-
-					// update the argument
-					$args[$key] = implode(' ', $subpiece);
 				}
 
-				$output[] = __($main, $args);
+				$output[] = __($base, $arg_output);
 			}
 			else
 			{
-				$output[] = __($main);
+				// are we protecting this string?
+				if (preg_match('/(\{\{.*?\}\})/', $p) > 0)
+				{
+					// clean up the fragment (removes the double braces on either end)
+					$p = preg_replace("/^.*\{\{([^)]*)\}\}.*$/", '$1', $p);
+
+					$output[] = $p;
+				}
+				else
+				{
+					// break at the space
+					$fragments = explode(' ', $p);
+
+					$frag_output = array();
+
+					// loop through the spaced pieces
+					foreach ($fragments as $frag)
+					{
+						$frag_output[] = __($frag);
+					}
+
+					$output[] = implode(' ', $frag_output);
+				}
 			}
 		}
 
-		// implode the array back to a string
 		$final = implode(' ', $output);
 
 		switch ($capitalize)
