@@ -73,32 +73,77 @@ class Controller_Ajax_Update extends Controller_Base_Ajax
 				// save the record
 				$record->save();
 			}
+
+			\SystemEvent::add('user', '[[event.form_update|{{'.$key.'}}]]');
 		}
 	}
 
 	/**
-	 * Updates the form field order when the sort function stops.
+	 * Updates the value for a dropdown menu.
 	 *
-	 * @return	void
+	 * @return	View/string
 	 */
-	public function action_field_value()
+	public function action_field_value($id)
 	{
 		if (\Sentry::check() and \Sentry::user()->has_access('form.edit'))
 		{
-			// get the values
-			$id = \Security::xss_clean(\Input::post('id'));
-			$content = \Security::xss_clean(\Input::post('content'));
-			$value = \Security::xss_clean(\Input::post('value'));
+			if (\Input::method() == 'POST')
+			{
+				// get the value
+				$value = \Model_Form_Value::find($id);
 
-			// get the value record
-			$record = \Model_Form_Value::find($id);
+				// get the POST
+				$post = $_POST;
 
-			// update the record
-			$record->content = $content;
-			$record->value = $value;
+				// remove the items we don't want
+				unset($post['id']);
 
-			// save the record
-			$record->save();
+				// loop through and update the values
+				foreach ($post as $k => $v)
+				{
+					$value->{$k} = \Security::xss_clean($v);
+				}
+
+				// save the record
+				$value->save();
+
+				\SystemEvent::add('user', '[[event.form_update|{{'.$key.'}}]]');
+
+				echo '<h1>'.lang('action.edit value', 2).'</h1>';
+				echo '<p class="alert alert-success">'.lang('short.flash.success|value|action.updated', 1).' '.lang('short.refresh').'</p>';
+			}
+			else
+			{
+				// get the value
+				$value = \Model_Form_Value::find($id);
+
+				if ($value !== false)
+				{
+					$data = array(
+						'id' => $value->id,
+						'field' => $value->field_id,
+						'content' => $value->content,
+						'value' => $value->value,
+						'order' => $value->order,
+					);
+
+					// get the fields
+					$fields = \Model_Form_Field::find_form_items($value->field->form_key);
+
+					if (count($fields) > 0)
+					{
+						foreach ($fields as $f)
+						{
+							if ($f->type == 'select')
+							{
+								$data['fields'][$f->id] = $f->label;
+							}
+						}
+					}
+
+					echo \View::forge(\Location::file('update/form_value', 'default', 'ajax'), $data);
+				}
+			}
 		}
 	}
 
@@ -134,6 +179,62 @@ class Controller_Ajax_Update extends Controller_Base_Ajax
 	}
 
 	/**
+	 * Updates the form section order when the sort function stops.
+	 *
+	 * @return	void
+	 */
+	public function action_section_order()
+	{
+		if (\Sentry::check() and \Sentry::user()->has_access('form.edit'))
+		{
+			// get and sanitize the input
+			$sections = \Security::xss_clean($_POST['section']);
+
+			foreach ($sections as $key => $value)
+			{
+				// get the field record
+				$record = \Model_Form_Section::find($value);
+
+				// update the order
+				$record->order = ($key + 1);
+
+				// save the record
+				$record->save();
+			}
+
+			\SystemEvent::add('user', '[[event.form_update|{{'.$key.'}}]]');
+		}
+	}
+
+	/**
+	 * Updates the form tab order when the sort function stops.
+	 *
+	 * @return	void
+	 */
+	public function action_tab_order()
+	{
+		if (\Sentry::check() and \Sentry::user()->has_access('form.edit'))
+		{
+			// get and sanitize the input
+			$tabs = \Security::xss_clean($_POST['tab']);
+
+			foreach ($tabs as $key => $value)
+			{
+				// get the tab record
+				$record = \Model_Form_Tab::find($value);
+
+				// update the order
+				$record->order = ($key + 1);
+
+				// save the record
+				$record->save();
+			}
+
+			\SystemEvent::add('user', '[[event.form_update|{{'.$key.'}}]]');
+		}
+	}
+
+	/**
 	 * Updates the form field value order when the sort function stops.
 	 *
 	 * @return	void
@@ -156,6 +257,8 @@ class Controller_Ajax_Update extends Controller_Base_Ajax
 				// save the record
 				$record->save();
 			}
+
+			\SystemEvent::add('user', '[[event.form_update|{{'.$key.'}}]]');
 		}
 	}
 }

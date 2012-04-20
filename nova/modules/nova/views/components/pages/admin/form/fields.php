@@ -1,7 +1,14 @@
 <br>
-<div class="btn-group">
-	<a href="<?php echo Uri::create('admin/form/index');?>" class="btn tooltip-top" title="<?php echo lang('all forms', 2);?>"><i class="icon-chevron-left icon-75"></i></a>
-	<a href="<?php echo Uri::create('admin/form/fields/'.Uri::segment(4).'/0');?>" class="btn tooltip-top" title="<?php echo lang('action.add field', 2);?>"><i class="icon-plus icon-75"></i></a>
+<div class="btn-toolbar">
+	<div class="btn-group">
+		<a href="<?php echo Uri::create('admin/form/index');?>" class="btn tooltip-top" title="<?php echo lang('all forms', 1);?>"><i class="icon-chevron-left icon-75"></i></a>
+		<a href="<?php echo Uri::create('admin/form/fields/'.Uri::segment(4).'/0');?>" class="btn tooltip-top" title="<?php echo lang('action.add field', 1);?>"><i class="icon-plus icon-75"></i></a>
+	</div>
+
+	<div class="btn-group">
+		<a href="<?php echo Uri::create('admin/form/tabs/'.Uri::segment(4));?>" class="btn tooltip-top" title="<?php echo lang('action.edit tabs', 1);?>"><?php echo $images['tabs'];?></a>
+		<a href="<?php echo Uri::create('admin/form/sections/'.Uri::segment(4));?>" class="btn tooltip-top" title="<?php echo lang('action.edit sections', 1);?>"><?php echo $images['sections'];?></a>
+	</div>
 </div>
 <br>
 
@@ -21,7 +28,7 @@
 					<legend><?php echo $s->name;?></legend>
 
 					<?php if (array_key_exists($s->id, $fields)): ?>
-						<table class="span12 sort-field">
+						<table width="100%" class="table-striped sort-field">
 							<tbody class="sort-body">
 							<?php foreach ($fields[$s->id] as $f): ?>
 								<tr id="field_<?php echo $f->id;?>">
@@ -40,7 +47,9 @@
 									<td class="span2">
 										<div class="btn-group">
 											<a href="<?php echo Uri::create('admin/form/fields/'.$f->form_key.'/'.$f->id);?>" class="btn btn-mini tooltip-top" title="<?php echo lang('action.edit', 1).' '.$f->label;?>"><i class="icon-pencil icon-75"></i></a>
-											<a href="<?php echo Uri::create('admin/form/fields/'.$f->form_key);?>" class="btn btn-mini tooltip-top field-action" title="<?php echo lang('action.delete', 1).' '.$f->label;?>" data-action="delete" data-id="<?php echo $f->id;?>"><i class="icon-remove icon-75"></i></a>
+											<?php if (Sentry::user()->has_access('form.delete')): ?>
+												<a href="<?php echo Uri::create('admin/form/fields/'.$f->form_key);?>" class="btn btn-mini tooltip-top field-action" title="<?php echo lang('action.delete', 1).' '.$f->label;?>" data-action="delete" data-id="<?php echo $f->id;?>"><i class="icon-remove icon-75"></i></a>
+											<?php endif;?>
 										</div>
 									</td>
 									<td class="span1 reorder"></td>
@@ -62,7 +71,7 @@
 				<legend><?php echo $s->name;?></legend>
 
 				<?php if (array_key_exists($s->id, $fields)): ?>
-					<table class="span12 sort-field">
+					<table width="100%" class="table-striped sort-field">
 						<tbody class="sort-body">
 						<?php foreach ($fields[$s->id] as $f): ?>
 							<tr id="field_<?php echo $f->id;?>">
@@ -81,7 +90,9 @@
 								<td class="span2">
 									<div class="btn-group">
 										<a href="<?php echo Uri::create('admin/form/fields/'.$f->form_key.'/'.$f->id);?>" class="btn btn-mini tooltip-top" title="<?php echo lang('action.edit', 1).' '.$f->label;?>"><i class="icon-pencil icon-75"></i></a>
-										<a href="<?php echo Uri::create('admin/form/fields/'.$f->form_key);?>" class="btn btn-mini tooltip-top field-action" title="<?php echo lang('action.delete', 1).' '.$f->label;?>" data-action="delete" data-id="<?php echo $f->id;?>"><i class="icon-remove icon-75"></i></a>
+										<?php if (Sentry::user()->has_access('form.delete')): ?>
+											<a href="<?php echo Uri::create('admin/form/fields/'.$f->form_key);?>" class="btn btn-mini tooltip-top field-action" title="<?php echo lang('action.delete', 1).' '.$f->label;?>" data-action="delete" data-id="<?php echo $f->id;?>"><i class="icon-remove icon-75"></i></a>
+										<?php endif;?>
 									</div>
 								</td>
 								<td class="span1 reorder"></td>
@@ -94,7 +105,7 @@
 		<?php endforeach;?>
 	<?php else: ?>
 		<?php if ($fields !== false): ?>
-			<table class="span12 sort-field">
+			<table width="100%" class="table-striped sort-field">
 				<tbody class="sort-body">
 				<?php foreach ($fields as $f): ?>
 					<tr id="field_<?php echo $f->id;?>">
@@ -113,7 +124,9 @@
 						<td class="span2">
 							<div class="btn-group">
 								<a href="<?php echo Uri::create('admin/form/fields/'.$f->form_key.'/'.$f->id);?>" class="btn btn-mini tooltip-top" title="<?php echo lang('action.edit', 1).' '.$f->label;?>"><i class="icon-pencil icon-75"></i></a>
-								<a href="<?php echo Uri::create('admin/form/fields/'.$f->form_key);?>" class="btn btn-mini tooltip-top field-action" title="<?php echo lang('action.delete', 1).' '.$f->label;?>" data-action="delete" data-id="<?php echo $f->id;?>"><i class="icon-remove icon-75"></i></a>
+								<?php if (Sentry::user()->has_access('form.delete')): ?>
+									<a href="<?php echo Uri::create('admin/form/fields/'.$f->form_key);?>" class="btn btn-mini tooltip-top field-action" title="<?php echo lang('action.delete', 1).' '.$f->label;?>" data-action="delete" data-id="<?php echo $f->id;?>"><i class="icon-remove icon-75"></i></a>
+								<?php endif;?>
 							</div>
 						</td>
 						<td class="span1 reorder"></td>
@@ -121,6 +134,8 @@
 				<?php endforeach;?>
 				</tbody>
 			</table>
+		<?php else: ?>
+			<p class="alert"><?php echo lang('[[error.not_found|form fields]]', 1);?></p>
 		<?php endif;?>
 	<?php endif;?>
 <?php endif;?>

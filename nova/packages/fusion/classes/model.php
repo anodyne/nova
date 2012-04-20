@@ -3,7 +3,7 @@
  * Model class
  *
  * @package		Nova
- * @subpackage	ORM
+ * @subpackage	Fusion
  * @category	Class
  * @author		Anodyne Productions
  * @copyright	2012 Anodyne Productions
@@ -18,27 +18,55 @@ class Model extends \Orm\Model
 	 *
 	 * @api
 	 * @param	mixed	an array or object of data
-	 * @return	object	the newly created item
+	 * @param	bool	should the object be returned?
+	 * @return	mixed	a boolean by default, or the object
 	 */
-	public static function create_item($data)
+	public static function create_item($data, $return_object = false, $filter = true)
 	{
+		// create a forge
 		$item = static::forge();
 		
+		// loop through the data and add it to the item
 		foreach ($data as $key => $value)
 		{
-			if (is_array($data))
+			if ($key != 'id' and array_key_exists($key, static::$_properties))
 			{
-				$item->{$key} = $data[$key];
-			}
-			else
-			{
-				$item->{$key} = $data->{$key};
+				if (is_array($data))
+				{
+					if ($filter)
+					{
+						$item->{$key} = trim(\Security::xss_clean($data[$key]));
+					}
+					else
+					{
+						$item->{$key} = $data[$key];
+					}
+				}
+				else
+				{
+					if ($filter)
+					{
+						$item->{$key} = trim(\Security::xss_clean($data->{$key}));
+					}
+					else
+					{
+						$item->{$key} = $data->{$key};
+					}
+				}
 			}
 		}
 		
-		$item->save();
+		if ($item->save())
+		{
+			if ($return_object)
+			{
+				return $item;
+			}
+
+			return true;
+		}
 		
-		return $item;
+		return false;
 	}
 	
 	/**
@@ -83,51 +111,67 @@ class Model extends \Orm\Model
 	 * @api
 	 * @param	mixed	a specific ID to update or NULL to update everything
 	 * @param	array 	the array of data to update with
-	 * @return	object	the updated item
+	 * @param	bool	should the data be run through the XSS filter
+	 * @return	bool
 	 */
-	public static function update_item($id, array $data, $filter = true)
+	public static function update_item($id, array $data, $return_object = false, $filter = true)
 	{
 		if ($id !== null)
 		{
 			// get the item
-			$record = static::find($id);
+			$item = static::find($id);
 			
 			// loop through the data array and make the changes
 			foreach ($data as $key => $value)
 			{
-				if ($key != 'id')
+				if ($key != 'id' and array_key_exists($key, static::$_properties))
 				{
-					if ($filter === true)
+					if ($filter)
 					{
 						$value = trim(\Security::xss_clean($value));
 					}
 
-					$record->$key = $value;
+					$item->{$key} = $value;
 				}
 			}
 			
-			// save the record
-			$record->save();
-			
-			return $record;
+			// save the item
+			if ($item->save())
+			{
+				if ($return_object)
+				{
+					return $item;
+				}
+
+				return true;
+			}
+
+			return false;
 		}
 		else
 		{
 			// pull everything from the table
-			$records = static::find('all');
+			$items = static::find('all');
 			
-			// loop through all the records
-			foreach ($records as $r)
+			// loop through all the items
+			foreach ($items as $item)
 			{
 				// loop through the data and make the changes
 				foreach ($data as $key => $value)
 				{
-					$r->$key = $value;
+					if ($filter)
+					{
+						$value = trim(\Security::xss_clean($value));
+					}
+
+					$item->{$key} = $value;
 				}
 				
-				// save the record
-				$r->save();
+				// save the item
+				$item->save();
 			}
+
+			return true;
 		}
 	}
 	
@@ -135,23 +179,33 @@ class Model extends \Orm\Model
 	 * Delete an item in the table based on the arguments passed to the method.
 	 *
 	 * @api
-	 * @param	array	the data to use to find the item
-	 * @return	object	an object
+	 * @param	mixed	the data to use to find the item
+	 * @return	bool
 	 */
-	public static function delete_item(array $args)
+	public static function delete_item($args)
 	{
-		$record = static::find();
+		$item = static::find();
 		
-		foreach ($args as $column => $value)
+		if (is_array($args))
 		{
-			if (array_key_exists($column, static::$_properties))
+			foreach ($args as $column => $value)
 			{
-				$record->where($column, $value);
+				if (array_key_exists($column, static::$_properties))
+				{
+					$item->where($column, $value);
+				}
 			}
 		}
+		else
+		{
+			$item->where('id', $args);
+		}
+
+		if ($item->delete(null, true))
+		{
+			return true;
+		}
 		
-		$result = $record->delete();
-		
-		return $result;
+		return false;
 	}
 }

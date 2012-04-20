@@ -103,4 +103,6 @@ Autoloader::add_classes(array(
 	 * Observers
 	 */
 	'Fusion\\Observer_Form_Field'			=> __DIR__.'/classes/observer/form/field.php',
+	'Fusion\\Observer_Form_Section'			=> __DIR__.'/classes/observer/form/section.php',
+	'Fusion\\Observer_Form_Tab'				=> __DIR__.'/classes/observer/form/tab.php',
 ));

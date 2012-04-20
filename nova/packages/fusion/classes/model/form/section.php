@@ -37,6 +37,9 @@ class Model_Form_Section extends \Model {
 			'null' => true),
 	);
 
+	/**
+	 * Relationships
+	 */
 	public static $_belongs_to = array(
 		'tab' => array(
 			'model_to' => '\\Model_Form_Tab',
@@ -54,6 +57,15 @@ class Model_Form_Section extends \Model {
 			'key_from' => 'id',
 			'cascade_save' => false,
 			'cascade_delete' => false,
+		),
+	);
+
+	/**
+	 * Observers
+	 */
+	protected static $_observers = array(
+		'\\Form_Section' => array(
+			'events' => array('after_insert')
 		),
 	);
 

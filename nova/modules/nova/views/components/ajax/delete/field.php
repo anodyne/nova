@@ -1,4 +1,4 @@
-<p><?php echo lang('short.delete_confirm|field|'.$name);?></p>
+<p><?php echo lang('[[short.delete_confirm|field|{{'.$name.'}}]]');?></p>
 
 <form method="post">
 	<div class="form-actions">

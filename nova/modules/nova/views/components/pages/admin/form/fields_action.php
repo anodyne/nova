@@ -15,7 +15,7 @@ function field($obj, $property, $default = false)
 <?php if (is_numeric(Uri::segment(5))): ?>
 	<br>
 	<div class="btn-group">
-		<a href="<?php echo Uri::create('admin/form/fields/'.Uri::segment(4));?>" class="btn tooltip-top" title="<?php echo lang('action.back', 1);?>"><i class="icon-chevron-left icon-75"></i></a>
+		<a href="<?php echo Uri::create('admin/form/fields/'.Uri::segment(4));?>" class="btn tooltip-top" title="<?php echo lang('action.back to fields', 1);?>"><i class="icon-chevron-left icon-75"></i></a>
 	</div>
 <?php endif;?>
 
@@ -26,14 +26,14 @@ function field($obj, $property, $default = false)
 	<li<?php if (field($field, 'type') != 'select' or Uri::segment(5) == 0){ echo ' class="hide"';}?>><a href="#values" data-toggle="tab"><?php echo lang('values', 1);?></a></li>
 </ul>
 
-<form method="post">
+<form method="post" action="<?php echo Uri::create('admin/form/fields/'.Uri::segment(4));?>">
 	<div class="tab-content">
 		<div class="tab-pane active" id="general">
 			<div class="control-group">
 				<label class="control-label"><?php echo lang('type', 1);?></label>
 				<div class="controls">
 					<?php echo Form::select('type', field($field, 'type'), $types, array('class' => 'span3'));?>
-					<p class="help-block help-values hide"><?php echo lang('short.fields.value_creation');?></p>
+					<p class="help-block help-values hide"><?php echo lang('short.forms.value_creation');?></p>
 				</div>
 			</div>
 
@@ -57,7 +57,7 @@ function field($obj, $property, $default = false)
 				<label class="control-label"><?php echo lang('order', 1);?></label>
 				<div class="controls">
 					<?php echo Form::input(array('name' => 'order', 'value' => field($field, 'order'), 'class' => 'span1'));?>
-					<p class="help-block"><?php echo lang('short.fields.field_order');?></p>
+					<p class="help-block"><?php echo lang('short.forms.order');?></p>
 				</div>
 			</div>
 
@@ -151,7 +151,7 @@ function field($obj, $property, $default = false)
 							<?php if (count($values) == 0): ?>
 								<tr>
 									<td colspan="3">
-										<strong class="muted"><?php echo lang('short.error.not_found|field~values', 1);?></strong>
+										<strong class="muted"><?php echo lang('[[error.not_found|field values]]', 1);?></strong>
 									</td>
 								</tr>
 							<?php else: ?>
@@ -180,6 +180,7 @@ function field($obj, $property, $default = false)
 		<br>
 		<?php echo Form::hidden('action', $action);?>
 		<?php echo Form::hidden('form_key', Uri::segment(4));?>
+		<?php echo Form::hidden('id', Uri::segment(5));?>
 		<button type="submit" class="btn btn-primary"><?php echo lang('action.submit', 1);?></button>
 
 		<?php if (Uri::segment(5) == 0): ?>

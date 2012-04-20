@@ -44,6 +44,9 @@ class Model_Form_Tab extends \Model {
 			'default' => 1),
 	);
 
+	/**
+	 * Relationships
+	 */
 	public static $_has_many = array(
 		'sections' => array(
 			'model_to' => '\\Model_Form_Section',
@@ -53,4 +56,30 @@ class Model_Form_Tab extends \Model {
 			'cascade_delete' => false,
 		),
 	);
+
+	/**
+	 * Observers
+	 */
+	protected static $_observers = array(
+		'\\Form_Tab' => array(
+			'events' => array('after_insert')
+		),
+	);
+
+	public static function get_tabs($key)
+	{
+		$items = static::find()->where('form_key', $key)->order_by('name', 'asc')->get();
+
+		$tabs = array();
+
+		if (count($items) > 0)
+		{
+			foreach ($items as $tab)
+			{
+				$tabs[$tab->id] = $tab->name;
+			}
+		}
+
+		return $tabs;
+	}
 }

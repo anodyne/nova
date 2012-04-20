@@ -43,6 +43,60 @@ class Controller_Ajax_Delete extends Controller_Base_Ajax
 
 			// delete it
 			$value->delete();
+
+			\SystemEvent::add('user', '[[event.form_update|{{'.$key.'}}]]');
+		}
+	}
+
+	public function action_section($id)
+	{
+		if (\Sentry::check() and \Sentry::user()->has_access('form.delete'))
+		{
+			// get the section
+			$section = \Model_Form_Section::find($id);
+
+			// get all the sections
+			$sections = \Model_Form_Section::get_sections($section->form_key);
+
+			// remove the section we are deleting
+			unset($sections[$id]);
+
+			if ($section !== null)
+			{
+				$data = array(
+					'name' => $section->name,
+					'id' => $section->id,
+					'sections' => $sections,
+				);
+
+				echo \View::forge(\Location::file('delete/section', 'default', 'ajax'), $data);
+			}
+		}
+	}
+
+	public function action_tab($id)
+	{
+		if (\Sentry::check() and \Sentry::user()->has_access('form.delete'))
+		{
+			// get the tab
+			$tab = \Model_Form_Tab::find($id);
+
+			// get all the tabs
+			$tabs = \Model_Form_Tab::get_tabs($tab->form_key);
+
+			// remove the tab we are deleting
+			unset($tabs[$id]);
+
+			if ($tab !== null)
+			{
+				$data = array(
+					'name' => $tab->name,
+					'id' => $tab->id,
+					'tabs' => $tabs,
+				);
+
+				echo \View::forge(\Location::file('delete/tab', 'default', 'ajax'), $data);
+			}
 		}
 	}
 }
