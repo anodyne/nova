@@ -33,7 +33,7 @@ class SystemEvent
 		{
 			case 'character':
 				// get the user
-				$user = \Model_User::get_user(\Sentry::user());
+				$user = \Sentry::user();
 
 				$data = array(
 					'email' => $user->email,
@@ -44,7 +44,7 @@ class SystemEvent
 
 			case 'user':
 				// get the user
-				$user = \Model_User::get_user(\Sentry::user());
+				$user = \Sentry::user();
 
 				$data = array(
 					'email' => $user->email,
@@ -57,7 +57,7 @@ class SystemEvent
 		$data = array_merge($data, array(
 			'ip' => \Input::real_ip(),
 			'created_at' => time(),
-			'content' => $content
+			'content' => lang($content)
 		));
 
 		// create the new event item
