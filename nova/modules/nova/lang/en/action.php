@@ -14,6 +14,7 @@ return array(
 	
 	'delete' => 'delete',
 	'deleted' => 'deleted',
+	'deletion' => 'deletion',
 	
 	'edit' => 'edit',
 	

@@ -1,6 +1,8 @@
 <?php
 
 return array(
+	'not_found' => "No :0 found",
+	
 	'email' => array(
 		'could_not_send' => "The email could not be sent for unknown reasons. Please contact the game master.",
 		'validation_failed' => "The email could not be sent because of a validation problem. Please make sure your information is correct and try again.",

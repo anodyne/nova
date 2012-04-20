@@ -1,6 +1,10 @@
 <?php
 
 return array(
+	'admin' => array(
+		'form_update' => "Form (:0) was updated",
+	),
+
 	'login' => array(
 		'suspend' => "User suspended for too many log in attempts",
 		'suspended' => "User is currently suspended for too many log in attempts",

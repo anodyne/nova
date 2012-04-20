@@ -27,6 +27,7 @@ class Controller_Base_Ajax extends \Controller
 		\Lang::load('nova::base');
 		\Lang::load('nova::event', 'event');
 		\Lang::load('nova::email', 'email');
+		\Lang::load('nova::error', 'error');
 		\Lang::load('nova::action', 'action');
 		\Lang::load('nova::short', 'short');
 		\Lang::load('nova::status', 'status');

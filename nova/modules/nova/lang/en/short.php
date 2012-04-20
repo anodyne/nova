@@ -15,18 +15,16 @@ return array(
 
 	'refresh' => "Please refresh the page to view your changes.",
 
-	'error' => array(
-		'not_found' => "No :0 found",
-	),
-
-	'fields' => array(
+	'forms' => array(
 		'value_creation' => "Dropdown menu values can be added once you've created the field.",
-		'field_order' => "Field order can also be changed by dragging and dropping the fields on the previous page.",
+		'order' => "The order can also be changed by dragging and dropping the items on the previous page.",
 		'values_dropdown_only' => "You can only move values from one dropdown menu to another.",
 		'values_content' => "The content is what will appear to the user in the dropdown menu.",
 		'values_value' => "The value is what will be stored in the database and appear on the page.",
 		'values_order' => "The order of the values can also be changed by dragging and dropping the values on the previous page.",
 		'section_update_fields' => "Select the new section you would like any fields in the :0 section to be moved to.",
+		'tab_update_sections' => "Select the new tab you would like any sections in the :0 tab to be moved to.",
+		'tab_link_id' => "Link IDs are used to link a tab with its content. They must be unique, one word, and simple (e.g. one, html, general).",
 	),
 
 	'flash' => array(

@@ -35,6 +35,7 @@ return array(
 	'loa_full' => "Leave of Absence",
 	'label' => 'label',
 	'labels' => 'labels',
+	'link' => 'link',
 
 	'message' => "message",
 	'my' => "my :thing",
