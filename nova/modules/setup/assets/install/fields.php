@@ -23,10 +23,8 @@ $data = array(
 	'character_images' => array(),
 	'character_positions' => array(),
 	'character_promotions' => array(),
-	'coc' => array(),
 	'comments' => array(),
 	'departments_'.$_genre => array('fields' => 'fields_departments'),
-	'docking' => array(),
 	'forms' => array(),
 	'form_data' => array(),
 	'form_fields' => array(),
@@ -265,13 +263,6 @@ $fields_character_promotions = array(
 	'date' => array('type' => 'BIGINT', 'constraint' => 20),
 );
 
-$fields_coc = array(
-	'id' => array('type' => 'INT', 'constraint' => 5, 'auto_increment' => true),
-	'user_id' => array('type' => 'INT', 'constraint' => 11),
-	'character_id' => array('type' => 'INT', 'constraint' => 11),
-	'order' => array('type' => 'INT', 'constraint' => 5, 'null' => true),
-);
-
 $fields_comments = array(
 	'id' => array('type' => 'INT', 'constraint' => 11, 'auto_increment' => true),
 	'user_id' => array('type' => 'INT', 'constraint' => 11),
@@ -294,16 +285,6 @@ $fields_departments = array(
 	'manifest_id' => array('type' => 'INT', 'constraint' => 11, 'default' => 1),
 );
 
-$fields_docking = array(
-	'id' => array('type' => 'INT', 'constraint' => 11, 'auto_increment' => true),
-	'sim_name' => array('type' => 'VARCHAR', 'constraint' => 255, 'null' => true),
-	'sim_url' => array('type' => 'TEXT', 'null' => true),
-	'gm_name' => array('type' => 'VARCHAR', 'constraint' => 255, 'null' => true),
-	'gm_email' => array('type' => 'VARCHAR', 'constraint' => 255, 'null' => true),
-	'status' => array('type' => 'ENUM', 'constraint' => "'active','inactive','pending'", 'default' => 'pending'),
-	'date' => array('type' => 'BIGINT', 'constraint' => 20),
-);
-
 $fields_forms = array(
 	'id' => array('type' => 'INT', 'constraint' => 11, 'auto_increment' => true),
 	'key' => array('type' => 'VARCHAR', 'constraint' => 20, 'null' => true),
@@ -315,9 +296,9 @@ $fields_form_data = array(
 	'id' => array('type' => 'BIGINT', 'constraint' => 20, 'auto_increment' => true),
 	'form_key' => array('type' => 'VARCHAR', 'constraint' => 20),
 	'field_id' => array('type' => 'BIGINT', 'constraint' => 20),
-	'user_id' => array('type' => 'INT', 'constraint' => 11),
-	'character_id' => array('type' => 'VARCHAR', 'constraint' => 11),
-	'item_id' => array('type' => 'INT', 'constraint' => 11),
+	'user_id' => array('type' => 'INT', 'constraint' => 11, 'null' => true),
+	'character_id' => array('type' => 'VARCHAR', 'constraint' => 11, 'null' => true),
+	'item_id' => array('type' => 'INT', 'constraint' => 11, 'null' => true),
 	'value' => array('type' => 'TEXT', 'null' => true),
 	'updated_at' => array('type' => 'BIGINT', 'constraint' => 20, 'null' => true),
 );
@@ -327,16 +308,17 @@ $fields_form_fields = array(
 	'form_key' => array('type' => 'VARCHAR', 'constraint' => 20),
 	'section_id' => array('type' => 'INT', 'constraint' => 11, 'null' => true),
 	'type' => array('type' => 'VARCHAR', 'constraint' => 50, 'default' => 'text'),
+	'label' => array('type' => 'VARCHAR', 'constraint' => 255, 'null' => true),
+	'order' => array('type' => 'INT', 'constraint' => 5, 'null' => true),
+	'display' => array('type' => 'TINYINT', 'constraint' => 1, 'default' => 1),
+	'restriction' => array('type' => 'INT', 'constraint' => 11, 'null' => true),
+	'selected' => array('type' => 'VARCHAR', 'constraint' => 50, 'null' => true),
+	'value' => array('type' => 'VARCHAR', 'constraint' => 255, 'null' => true),
 	'html_name' => array('type' => 'VARCHAR', 'constraint' => 100, 'null' => true),
 	'html_id' => array('type' => 'VARCHAR', 'constraint' => 100, 'null' => true),
 	'html_class' => array('type' => 'VARCHAR', 'constraint' => 255, 'default' => 'span4'),
 	'html_rows' => array('type' => 'INT', 'constraint' => 3, 'default' => 5),
-	'selected' => array('type' => 'VARCHAR', 'constraint' => 50, 'null' => true),
-	'value' => array('type' => 'VARCHAR', 'constraint' => 255, 'null' => true),
-	'label' => array('type' => 'VARCHAR', 'constraint' => 255, 'null' => true),
 	'placeholder' => array('type' => 'TEXT', 'null' => true),
-	'order' => array('type' => 'INT', 'constraint' => 5, 'null' => true),
-	'display' => array('type' => 'TINYINT', 'constraint' => 1, 'default' => 1),
 	'updated_at' => array('type' => 'BIGINT', 'constraint' => 20, 'null' => true),
 );
 
@@ -346,6 +328,8 @@ $fields_form_sections = array(
 	'tab_id' => array('type' => 'INT', 'constraint' => 11, 'null' => true),
 	'name' => array('type' => 'VARCHAR', 'constraint' => 255, 'null' => true),
 	'order' => array('type' => 'INT', 'constraint' => 5, 'null' => true),
+	'display' => array('type' => 'TINYINT', 'constraint' => 1, 'default' => 1),
+	'updated_at' => array('type' => 'BIGINT', 'constraint' => 20, 'null' => true),
 );
 
 $fields_form_tabs = array(
@@ -355,6 +339,7 @@ $fields_form_tabs = array(
 	'link_id' => array('type' => 'VARCHAR', 'constraint' => 20, 'null' => true),
 	'order' => array('type' => 'INT', 'constraint' => 5, 'null' => true),
 	'display' => array('type' => 'TINYINT', 'constraint' => 1, 'default' => 1),
+	'updated_at' => array('type' => 'BIGINT', 'constraint' => 20, 'null' => true),
 );
 
 $fields_form_values = array(

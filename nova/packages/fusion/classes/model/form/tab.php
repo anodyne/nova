@@ -3,7 +3,7 @@
  * Form Tabs Model
  *
  * *NOTE:* The link_id field does not reference another field in the database,
- * it is used by jQuery UI to build the clickable tab.
+ * it is used to build the clickable tab.
  *
  * @package		Nova
  * @subpackage	Fusion
@@ -42,6 +42,10 @@ class Model_Form_Tab extends \Model {
 			'type' => 'tinyint',
 			'constraint' => 1,
 			'default' => 1),
+		'updated_at' => array(
+			'type' => 'bigint',
+			'constraint' => 20,
+			'null' => true),
 	);
 
 	/**
@@ -63,6 +67,9 @@ class Model_Form_Tab extends \Model {
 	protected static $_observers = array(
 		'\\Form_Tab' => array(
 			'events' => array('after_insert')
+		),
+		'\\Orm\\Observer_UpdatedAt' => array(
+			'events' => array('before_save')
 		),
 	);
 

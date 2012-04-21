@@ -35,6 +35,14 @@ class Model_Form_Section extends \Model {
 			'type' => 'int',
 			'constraint' => 5,
 			'null' => true),
+		'display' => array(
+			'type' => 'tinyint',
+			'constraint' => 1,
+			'default' => 1),
+		'updated_at' => array(
+			'type' => 'bigint',
+			'constraint' => 20,
+			'null' => true),
 	);
 
 	/**
@@ -66,6 +74,9 @@ class Model_Form_Section extends \Model {
 	protected static $_observers = array(
 		'\\Form_Section' => array(
 			'events' => array('after_insert')
+		),
+		'\\Orm\\Observer_UpdatedAt' => array(
+			'events' => array('before_save')
 		),
 	);
 
