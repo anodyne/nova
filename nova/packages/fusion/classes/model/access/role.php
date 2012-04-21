@@ -68,7 +68,7 @@ class Model_Access_Role extends \Model {
 	/**
 	 * Get a role from the database based on something other than their ID.
 	 *
-	 * @access	public
+	 * @api
 	 * @param	string	the column to use
 	 * @param	mixed	the value to use
 	 * @return	object	a role object
@@ -81,6 +81,23 @@ class Model_Access_Role extends \Model {
 		}
 		
 		return false;
+	}
+
+	public static function get_roles()
+	{
+		$items = static::find('all');
+
+		$roles = array();
+
+		if (count($items) > 0)
+		{
+			foreach ($items as $r)
+			{
+				$roles[$r->id] = $r->name;
+			}
+		}
+
+		return $roles;
 	}
 	
 	public function get_tasks()
