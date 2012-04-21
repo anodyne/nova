@@ -237,6 +237,10 @@ class Controller_Admin_Form extends Controller_Base_Admin
 				'select' => lang('dropdown', 2),
 			);
 
+			// set the roles
+			$empty_role = array(0 => '');
+			$this->_data->roles = array_merge($empty_role, \Model_Access_Role::get_roles());
+
 			// ID 0 means a new field, anything else edits an existing field
 			if ($id == 0)
 			{

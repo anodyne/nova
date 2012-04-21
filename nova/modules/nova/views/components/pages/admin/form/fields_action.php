@@ -38,6 +38,14 @@ function field($obj, $property, $default = false)
 			</div>
 
 			<div class="control-group">
+				<label class="control-label"><?php echo lang('restrictions', 1);?></label>
+				<div class="controls">
+					<?php echo Form::select('restriction', field($field, 'restriction'), $roles, array('class' => 'span3'));?>
+					<p class="help-block"><?php echo lang('short.forms.field_restriction');?></p>
+				</div>
+			</div>
+
+			<div class="control-group">
 				<label class="control-label"><?php echo lang('label', 1);?></label>
 				<div class="controls">
 					<?php echo Form::input(array('name' => 'label', 'value' => field($field, 'label'), 'class' => 'span3'));?>
