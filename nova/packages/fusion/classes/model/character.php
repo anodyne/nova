@@ -185,10 +185,11 @@ class Model_Character extends \Model {
 	 * @api
 	 * @param	array 	an array of data used for creation
 	 * @return	object	the created object
+	 * @todo	creating data should be done in an observer
 	 */
 	public static function create_character(array $data)
 	{
-		$record = static::create_item($data);
+		$record = static::create_item($data, true);
 		
 		/**
 		 * Fill the character rows for the dynamic form with blank data for editing later.
