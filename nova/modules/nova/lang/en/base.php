@@ -57,6 +57,8 @@ return array(
 
 	'row' => 'row',
 	'rows' => 'rows',
+	'restriction' => 'restriction',
+	'restrictions' => 'restrictions',
 
 	'section' => "section",
 	'sections' => "sections",

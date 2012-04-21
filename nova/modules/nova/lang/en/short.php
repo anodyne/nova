@@ -25,6 +25,7 @@ return array(
 		'section_update_fields' => "Select the new section you would like any fields in the :0 section to be moved to.",
 		'tab_update_sections' => "Select the new tab you would like any sections in the :0 tab to be moved to.",
 		'tab_link_id' => "Link IDs are used to link a tab with its content. They must be unique, one word, and simple (e.g. one, html, general).",
+		'field_restriction' => "Fields can be restricted so only someone with the above role (or anyone who has a role that inherits the above role) can edit the data."
 	),
 
 	'flash' => array(
