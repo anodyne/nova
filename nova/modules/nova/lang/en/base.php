@@ -30,6 +30,7 @@ return array(
 	'html' => 'HTML',
 
 	'id' => 'ID',
+	'inline_help' => 'inline help',
 
 	'loa' => "LOA",
 	'loa_full' => "Leave of Absence",

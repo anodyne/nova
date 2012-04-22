@@ -42,6 +42,10 @@
 											<?php elseif ($f->type == 'select'): ?>
 												<?php echo Form::select($f->html_name, $f->value, $f->get_values(), array('class' => $f->html_class, 'id' => $f->html_id));?>
 											<?php endif;?>
+
+											<?php if ( ! empty($f->help)): ?>
+												<p class="help-block"><?php echo $f->help;?></p>
+											<?php endif;?>
 										</div>
 									</td>
 									<td class="span2">

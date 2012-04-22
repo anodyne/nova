@@ -312,6 +312,7 @@ $fields_form_fields = array(
 	'order' => array('type' => 'INT', 'constraint' => 5, 'null' => true),
 	'display' => array('type' => 'TINYINT', 'constraint' => 1, 'default' => 1),
 	'restriction' => array('type' => 'INT', 'constraint' => 11, 'null' => true),
+	'help' => array('type' => 'TEXT', 'null' => true),
 	'selected' => array('type' => 'VARCHAR', 'constraint' => 50, 'null' => true),
 	'value' => array('type' => 'VARCHAR', 'constraint' => 255, 'null' => true),
 	'html_name' => array('type' => 'VARCHAR', 'constraint' => 100, 'null' => true),

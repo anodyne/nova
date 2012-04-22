@@ -52,6 +52,13 @@ function field($obj, $property, $default = false)
 				</div>
 			</div>
 
+			<div class="control-group">
+				<label class="control-label"><?php echo lang('inline_help', 2);?></label>
+				<div class="controls">
+					<?php echo Form::textarea(array('name' => 'help', 'value' => field($field, 'help'), 'class' => 'span6'));?>
+				</div>
+			</div>
+
 			<?php if (count($sections) > 0): ?>
 				<div class="control-group">
 					<label class="control-label"><?php echo lang('section', 1);?></label>

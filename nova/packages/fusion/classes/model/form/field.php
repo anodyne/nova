@@ -47,6 +47,9 @@ class Model_Form_Field extends \Model {
 			'type' => 'int',
 			'constraint' => 11,
 			'null' => true),
+		'help' => array(
+			'type' => 'text',
+			'null' => true),
 		'selected' => array(
 			'type' => 'string',
 			'constraint' => 50,
