@@ -1,6 +1,13 @@
 <?php
 /**
- * Model class
+ * The model class is the foundation for all of Nova's models and provides core
+ * functionality that's shared across a lot of the models used in Nova,
+ * including creating a new items, updating an existing item, finding items
+ * based on criteria, and deleting items.
+ *
+ * Because these methods are the basis for the majority of CRUD operations in 
+ * Nova models, any changes to this class should be done carefully and 
+ * deliberately since they can cause wide ranging issues if not done properly.
  *
  * @package		Nova
  * @subpackage	Fusion
@@ -14,12 +21,13 @@ namespace Fusion;
 class Model extends \Orm\Model
 {	
 	/**
-	 * Create a an item.
+	 * Create an item with the data passed.
 	 *
 	 * @api
 	 * @param	mixed	an array or object of data
 	 * @param	bool	should the object be returned?
-	 * @return	mixed	a boolean by default, or the object
+	 * @param	bool	should the data be filtered?
+	 * @return	mixed
 	 */
 	public static function create_item($data, $return_object = false, $filter = true)
 	{
@@ -70,11 +78,11 @@ class Model extends \Orm\Model
 	}
 	
 	/**
-	 * Find an item in the table based on the arguments passed to the method.
+	 * Find an item in the table based on the arguments passed.
 	 *
 	 * @api
 	 * @param	array	the data to use to find the item
-	 * @return	object	an object
+	 * @return	object
 	 */
 	public static function find_item(array $args)
 	{
@@ -94,25 +102,42 @@ class Model extends \Orm\Model
 	}
 
 	/**
-	 * Find a form item.
+	 * Find a form item based on the form key.
 	 *
 	 * @api
 	 * @param	string	the form key to use
-	 * @return	object	the form object
+	 * @param	bool	pull back displayed items (true) or all items (false)
+	 * @return	object
 	 */
-	public static function find_form_items($key)
+	public static function find_form_items($key, $only_displayed = false)
 	{
-		return static::find()->where('form_key', $key)->order_by('order', 'asc')->get();
+		// get the object
+		$items = static::find();
+
+		// make sure we're pulling back the right form
+		$items->where('form_key', $key);
+
+		// should we be getting all items or just enabled ones?
+		if ($only_displayed)
+		{
+			$items->where('display', (int) true);
+		}
+
+		// order the items
+		$items->order_by('order', 'asc');
+
+		// return the object
+		return $items->get();
 	}
 	
 	/**
-	 * Update an item in the table.
+	 * Update an item in the table based on the ID and data.
 	 *
 	 * @api
 	 * @param	mixed	a specific ID to update or NULL to update everything
 	 * @param	array 	the array of data to update with
 	 * @param	bool	should the data be run through the XSS filter
-	 * @return	bool
+	 * @return	mixed
 	 */
 	public static function update_item($id, array $data, $return_object = false, $filter = true)
 	{
@@ -176,7 +201,7 @@ class Model extends \Orm\Model
 	}
 	
 	/**
-	 * Delete an item in the table based on the arguments passed to the method.
+	 * Delete an item in the table based on the arguments passed.
 	 *
 	 * @api
 	 * @param	mixed	the data to use to find the item
