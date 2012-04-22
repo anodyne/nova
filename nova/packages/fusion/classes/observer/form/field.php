@@ -1,12 +1,29 @@
 <?php
 /**
- * Form Field Observer
+ * The form field observer acts on the form field model at given times to ensure
+ * additional work on on other fields, data, values, sections, and tabs happens
+ * as it should.
  *
  * @package		Nova
  * @subpackage	Fusion
  * @category	Observer
  * @author		Anodyne Productions
  * @copyright	2012 Anodyne Productions
+ */
+
+/**
+ * TODO
+ *
+ * - When a field is deleted, check to see if the section is enabled and
+ *   if it is, if deleting the field will leave the section with no enabled
+ *   fields. If that's the case, we need to proactively disable the section.
+ *
+ * - When a field is created, check to see if the section is enabled and if
+ *   it isn't, re-enable the section.
+ *
+ * - When a field is updated, check to see if the field is enabled, and if
+ *   it is, check to see if the section is disabled. In the event the section
+ *   is disabled and the field is enabled, we need to re-enable the section.
  */
 
 namespace Fusion;

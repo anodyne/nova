@@ -1,6 +1,8 @@
 <?php
 /**
- * Form Tab Observer
+ * The form tab observer acts on the form tab model at given times to ensure
+ * additional work on on other tabs, data, values, fields, and sections happens
+ * as it should.
  *
  * @package		Nova
  * @subpackage	Fusion
@@ -16,10 +18,10 @@ class Observer_Form_Tab extends \Orm\Observer
 	/**
 	 * When a new tab is added, we need to check to see how many tabs exist
 	 * already. If there's only 1 (i.e. the one we just created) then we need to
-	 * update all of the sections for that form to move them in to the newly created
-	 * tab. If there aren't any sections either, we need to create a blank section
-	 * and move all the fields in to that section. If these steps aren't done,
-	 * we could orphan fields and sections for the form.
+	 * update all of the sections for that form to move them in to the newly
+	 * created tab. If there aren't any sections either, we need to create a 
+	 * blank section and move all the fields in to that section. If these steps 
+	 * aren't done, we could orphan fields and sections for the form.
 	 *
 	 * @param	Model	the model being acted on
 	 * @return	void

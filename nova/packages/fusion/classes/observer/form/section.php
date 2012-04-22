@@ -1,6 +1,8 @@
 <?php
 /**
- * Form Section Observer
+ * The form section observer acts on the form section model at given times to
+ * ensure additional work on on other sections, data, values, fields, and tabs
+ * happens as it should.
  *
  * @package		Nova
  * @subpackage	Fusion
@@ -9,15 +11,31 @@
  * @copyright	2012 Anodyne Productions
  */
 
+/**
+ * TODO
+ *
+ * - When a section is deleted, check to see if deleting the section will
+ *   leave the tab with no enabled sections. If that's the case, we need to
+ *   proactively disable the tab.
+ *
+ * - When a section is created, check to see if the tab is enabled and if
+ *   it isn't, re-enable the tab.
+ *
+ * - When a section is updated, check to see if the section is enabled, and if
+ *   it is, check to see if the tab is disabled. In the event the tab
+ *   is disabled and the section is enabled, we need to re-enable the tab.
+ */
+
 namespace Fusion;
 
 class Observer_Form_Section extends \Orm\Observer
 {
 	/**
-	 * When a new section is added, we need to check to see how many sections exist
-	 * already. If there's only 1 (i.e. the one we just created) then we need to
-	 * update all of the fields for that form to move them in to the newly created
-	 * section otherwise we won't have access to edit the fields any more.
+	 * When a new section is added, we need to check to see how many sections
+	 * exist already. If there's only 1 (i.e. the one we just created) then we
+	 * need to update all of the fields for that form to move them in to the
+	 * newly created section otherwise we won't have access to edit the fields
+	 * any more.
 	 *
 	 * @param	Model	the model being acted on
 	 * @return	void
