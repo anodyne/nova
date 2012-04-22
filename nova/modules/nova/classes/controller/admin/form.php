@@ -10,8 +10,6 @@
 
 namespace Nova;
 
-# Fringe Case: Someone deletes the only section in a tab and the fields move out of the tab, what should happen to the tab?
-
 class Controller_Admin_Form extends Controller_Base_Admin
 {
 	public function before()
