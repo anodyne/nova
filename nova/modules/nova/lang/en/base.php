@@ -71,6 +71,7 @@ return array(
 	'text_field' => 'text field',
 	'text_area' => 'text area',
 	'to' => 'to',
+	'this' => 'this',
 
 	'vertical' => "vertical",
 	'value' => 'value',
