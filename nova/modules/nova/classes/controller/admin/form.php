@@ -98,7 +98,7 @@ class Controller_Admin_Form extends Controller_Base_Admin
 						'message' => lang('[[short.flash.success|field|action.deleted]]', 1),
 					);
 
-					\SystemEvent::add('user', '[[event.form_update|{{'.$key.'}}]]');
+					\SystemEvent::add('user', '[[event.admin.form_update|{{'.$key.'}}]]');
 				}
 				else
 				{
