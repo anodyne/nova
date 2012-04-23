@@ -62,7 +62,7 @@ class Observer_Form_Field extends \Orm\Observer
 		 */
 		$section = \Model_Form_Section::find($model->section_id);
 
-		if ($section !== null)
+		if ($model->section_id > 0 and $section !== null)
 		{
 			if ($section->fields !== null)
 			{
