@@ -1832,10 +1832,6 @@ class Controller_Upgradeajax extends \Controller
 			{
 				$data = array(
 					'field_id' 		=> $fields[$r['value_field']],
-					'html_name' 	=> '',
-					'html_value' 	=> $r['value_field_value'],
-					'html_id' 		=> '',
-					'selected' 		=> $r['value_selected'],
 					'content' 		=> $r['value_content'],
 					'order' 		=> $r['value_order'],
 				);
@@ -2322,10 +2318,6 @@ class Controller_Upgradeajax extends \Controller
 			{
 				$data = array(
 					'field_id' 		=> $fields[$r['value_field']],
-					'html_name' 	=> '',
-					'html_value' 	=> $r['value_field_value'],
-					'html_id' 		=> '',
-					'selected' 		=> $r['value_selected'],
 					'content' 		=> $r['value_content'],
 					'order' 		=> $r['value_order'],
 				);
@@ -2468,10 +2460,6 @@ class Controller_Upgradeajax extends \Controller
 			{
 				$data = array(
 					'field_id' 		=> $fields[$r['value_field']],
-					'html_name' 	=> '',
-					'html_value' 	=> $r['value_field_value'],
-					'html_id' 		=> '',
-					'selected' 		=> $r['value_selected'],
 					'content' 		=> $r['value_content'],
 					'order' 		=> $r['value_order'],
 				);
@@ -2584,10 +2572,6 @@ class Controller_Upgradeajax extends \Controller
 			{
 				$data = array(
 					'field_id' 		=> $fields[$r['value_field']],
-					'html_name' 	=> '',
-					'html_value' 	=> $r['value_field_value'],
-					'html_id' 		=> '',
-					'selected' 		=> $r['value_selected'],
 					'content' 		=> $r['value_content'],
 					'order' 		=> $r['value_order'],
 				);
