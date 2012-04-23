@@ -15,7 +15,7 @@
 <?php if ($tabs !== false): ?>
 	<ul class="nav nav-tabs">
 	<?php foreach ($tabs as $t): ?>
-		<li><a href="#<?php echo $t->link_id;?>" data-toggle="tab"><?php echo $t->name;?></a></li>
+		<li><a href="#<?php echo $t->link_id;?>" data-toggle="tab"><?php echo $t->name;?><?php if ( (bool) $t->display === false){ echo ' ('.lang('status.inactive', 1).')';}?></a></li>
 	<?php endforeach;?>
 	</ul>
 	
@@ -27,7 +27,14 @@
 				<tbody class="sort-body">
 				<?php foreach ($sections[$t->id] as $s): ?>
 					<tr id="section_<?php echo $s->id;?>">
-						<td class="span9"><p><strong><?php echo $s->name;?></strong></p></td>
+						<td class="span9">
+							<p>
+								<strong><?php echo $s->name;?></strong>
+								<?php if ( (bool) $s->display === false): ?>
+									<span class="muted">(<?php echo lang('status.inactive', 1);?>)</span>
+								<?php endif;?>
+							</p>
+						</td>
 						<td class="span2">
 							<div class="btn-group">
 								<a href="<?php echo Uri::create('admin/form/sections/'.$s->form_key.'/'.$s->id);?>" class="btn btn-mini tooltip-top" title="<?php echo lang('action.edit', 1).' '.$s->name;?>"><i class="icon-pencil icon-75"></i></a>
@@ -51,7 +58,14 @@
 			<tbody class="sort-body">
 			<?php foreach ($sections as $s): ?>
 				<tr id="section_<?php echo $s->id;?>">
-					<td class="span9"><p><strong><?php echo $s->name;?></strong></p></td>
+					<td class="span9">
+						<p>
+							<strong><?php echo $s->name;?></strong>
+							<?php if ( (bool) $s->display === false): ?>
+								<span class="muted">(<?php echo lang('status.inactive', 1);?>)</span>
+							<?php endif;?>
+						</p>
+					</td>
 					<td class="span2">
 						<div class="btn-group">
 							<a href="<?php echo Uri::create('admin/form/sections/'.$s->form_key.'/'.$s->id);?>" class="btn btn-mini tooltip-top" title="<?php echo lang('action.edit', 1).' '.$s->name;?>"><i class="icon-pencil icon-75"></i></a>

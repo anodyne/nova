@@ -17,7 +17,14 @@
 		<tbody class="sort-body">
 		<?php foreach ($tabs as $t): ?>
 			<tr id="tab_<?php echo $t->id;?>">
-				<td class="span9"><p><strong><?php echo $t->name;?></strong></p></td>
+				<td class="span9">
+					<p>
+						<strong><?php echo $t->name;?></strong>
+						<?php if ( (bool) $t->display === false): ?>
+							<span class="muted">(<?php echo lang('status.inactive', 1);?>)</span>
+						<?php endif;?>
+					</p>
+				</td>
 				<td class="span2">
 					<div class="btn-group">
 						<a href="<?php echo Uri::create('admin/form/tabs/'.$t->form_key.'/'.$t->id);?>" class="btn btn-mini tooltip-top" title="<?php echo lang('action.edit', 1).' '.$t->name;?>"><i class="icon-pencil icon-75"></i></a>

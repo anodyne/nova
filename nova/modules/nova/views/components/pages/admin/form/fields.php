@@ -15,7 +15,7 @@
 <?php if ($tabs !== false): ?>
 	<ul class="nav nav-tabs">
 	<?php foreach ($tabs as $t): ?>
-		<li><a href="#<?php echo $t->link_id;?>" data-toggle="tab"><?php echo $t->name;?></a></li>
+		<li><a href="#<?php echo $t->link_id;?>" data-toggle="tab"><?php echo $t->name;?><?php if ( (bool) $t->display === false){ echo ' ('.lang('status.inactive', 1).')';}?></a></li>
 	<?php endforeach;?>
 	</ul>
 	
@@ -25,7 +25,7 @@
 		<?php if (array_key_exists($t->id, $sections)): ?>
 			<?php foreach ($sections[$t->id] as $s): ?>
 				<fieldset>
-					<legend><?php echo $s->name;?></legend>
+					<legend><?php echo $s->name;?><?php if ($s->display == 0){ echo ' <small>'.lang('status.inactive', 1).'</small>';}?></legend>
 
 					<?php if (array_key_exists($s->id, $fields)): ?>
 						<table width="100%" class="table-striped sort-field">
@@ -33,7 +33,12 @@
 							<?php foreach ($fields[$s->id] as $f): ?>
 								<tr id="field_<?php echo $f->id;?>">
 									<td class="span9 control-group">
-										<label class="control-label"><?php echo $f->label;?></label>
+										<label class="control-label">
+											<?php echo $f->label;?>
+											<?php if ( (bool) $f->display === false): ?>
+												<span class="muted">(<?php echo lang('status.inactive', 1);?>)</span>
+											<?php endif;?>
+										</label>
 										<div class="controls">
 											<?php if ($f->type == 'text'): ?>
 												<?php echo Form::input(array('name' => $f->html_name, 'class' => $f->html_class, 'id' => $f->html_id, 'placeholder' => $f->placeholder, 'value' => $f->value));?>
@@ -72,7 +77,7 @@
 	<?php if ($sections !== false): ?>
 		<?php foreach ($sections as $s): ?>
 			<fieldset>
-				<legend><?php echo $s->name;?></legend>
+				<legend><?php echo $s->name;?><?php if ($s->display == 0){ echo ' <small>'.lang('status.inactive', 1).'</small>';}?></legend>
 
 				<?php if (array_key_exists($s->id, $fields)): ?>
 					<table width="100%" class="table-striped sort-field">
@@ -80,7 +85,12 @@
 						<?php foreach ($fields[$s->id] as $f): ?>
 							<tr id="field_<?php echo $f->id;?>">
 								<td class="span9 control-group">
-									<label class="control-label"><?php echo $f->label;?></label>
+									<label class="control-label">
+										<?php echo $f->label;?>
+										<?php if ( (bool) $f->display === false): ?>
+											<span class="muted">(<?php echo lang('status.inactive', 1);?>)</span>
+										<?php endif;?>
+									</label>
 									<div class="controls">
 										<?php if ($f->type == 'text'): ?>
 											<?php echo Form::input(array('name' => $f->html_name, 'class' => $f->html_class, 'id' => $f->html_id, 'placeholder' => $f->placeholder, 'value' => $f->value));?>
@@ -114,7 +124,12 @@
 				<?php foreach ($fields as $f): ?>
 					<tr id="field_<?php echo $f->id;?>">
 						<td class="span9 control-group">
-							<label class="control-label"><?php echo $f->label;?></label>
+							<label class="control-label">
+								<?php echo $f->label;?>
+								<?php if ( (bool) $f->display === false): ?>
+									<span class="muted">(<?php echo lang('status.inactive', 1);?>)</span>
+								<?php endif;?>
+							</label>
 							<div class="controls">
 								<?php if ($f->type == 'text'): ?>
 									<?php echo Form::input(array('name' => $f->html_name, 'class' => $f->html_class, 'id' => $f->html_id, 'placeholder' => $f->placeholder, 'value' => $f->value));?>
