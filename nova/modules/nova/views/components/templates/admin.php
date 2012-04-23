@@ -1,8 +1,8 @@
 <noscript>
-	<div class="system_warning"><?php echo __("You need to have Javascript turned on to use all of Nova 3's features.");?></div>
+	<div class="system_warning"><?php echo lang("{{You need to have Javascript turned on to use all of Nova 3's features.}}");?></div>
 </noscript>
 
-<div class="navbar">
+<div class="navbar navbar-fixed-top">
 	<div class="navbar-inner">
 		<div class="container">
 			<a href="#" class="brand">Nova 3</a>
