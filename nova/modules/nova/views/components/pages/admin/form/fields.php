@@ -22,12 +22,12 @@
 	<div class="tab-content">
 	<?php foreach ($tabs as $t): ?>
 		<div class="tab-pane" id="<?php echo $t->link_id;?>">
-		<?php if (array_key_exists($t->id, $sections)): ?>
+		<?php if (is_array($sections) and array_key_exists($t->id, $sections)): ?>
 			<?php foreach ($sections[$t->id] as $s): ?>
 				<fieldset>
 					<legend><?php echo $s->name;?><?php if ($s->display == 0){ echo ' <small>'.lang('status.inactive', 1).'</small>';}?></legend>
 
-					<?php if (array_key_exists($s->id, $fields)): ?>
+					<?php if (is_array($fields) and array_key_exists($s->id, $fields)): ?>
 						<table width="100%" class="table-striped sort-field">
 							<tbody class="sort-body">
 							<?php foreach ($fields[$s->id] as $f): ?>
@@ -66,9 +66,13 @@
 							<?php endforeach;?>
 							</tbody>
 						</table>
+					<?php else: ?>
+						<p class="alert"><?php echo lang('[[error.not_found|fields]] for this section', 1);?></p>
 					<?php endif;?>
 				</fieldset><br>
 			<?php endforeach;?>
+		<?php else: ?>
+			<p class="alert"><?php echo lang('[[error.not_found|sections]] for this tab', 1);?></p>
 		<?php endif;?>
 		</div>
 	<?php endforeach;?>
@@ -79,7 +83,7 @@
 			<fieldset>
 				<legend><?php echo $s->name;?><?php if ($s->display == 0){ echo ' <small>'.lang('status.inactive', 1).'</small>';}?></legend>
 
-				<?php if (array_key_exists($s->id, $fields)): ?>
+				<?php if (is_array($fields) and array_key_exists($s->id, $fields)): ?>
 					<table width="100%" class="table-striped sort-field">
 						<tbody class="sort-body">
 						<?php foreach ($fields[$s->id] as $f): ?>
@@ -114,6 +118,8 @@
 						<?php endforeach;?>
 						</tbody>
 					</table>
+				<?php else: ?>
+					<p class="alert"><?php echo lang('[[error.not_found|fields]] for this section', 1);?></p>
 				<?php endif;?>
 			</fieldset>
 		<?php endforeach;?>

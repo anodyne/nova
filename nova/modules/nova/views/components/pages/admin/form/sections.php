@@ -22,7 +22,7 @@
 	<div class="tab-content">
 	<?php foreach ($tabs as $t): ?>
 		<div class="tab-pane" id="<?php echo $t->link_id;?>">
-		<?php if (array_key_exists($t->id, $sections)): ?>
+		<?php if (is_array($sections) and array_key_exists($t->id, $sections)): ?>
 			<table width="100%" class="table-striped sort-section">
 				<tbody class="sort-body">
 				<?php foreach ($sections[$t->id] as $s): ?>
@@ -48,6 +48,8 @@
 				<?php endforeach;?>
 				</tbody>
 			</table>
+		<?php else: ?>
+			<p class="alert"><?php echo lang('[[error.not_found|sections]] for this tab', 1);?></p>
 		<?php endif;?>
 		</div>
 	<?php endforeach;?>
