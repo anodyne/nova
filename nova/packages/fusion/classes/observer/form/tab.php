@@ -23,11 +23,17 @@ class Observer_Form_Tab extends \Orm\Observer
 	 * blank section and move all the fields in to that section. If these steps 
 	 * aren't done, we could orphan fields and sections for the form.
 	 *
+	 * @internal
 	 * @param	Model	the model being acted on
 	 * @return	void
 	 */
 	public function after_insert(\Model $model)
 	{
+		/**
+		 * System Event
+		 */
+		\SystemEvent::add('user', '[[event.admin.form.tab_create|{{'.$model->name.'}}|{{'.$model->form_key.'}}]]');
+
 		// what form are we updating?
 		$form = $model->form_key;
 
@@ -76,5 +82,35 @@ class Observer_Form_Tab extends \Orm\Observer
 				}
 			}
 		}
+	}
+
+	/**
+	 * When a tab is updated, create a system event.
+	 *
+	 * @internal
+	 * @param	Model	the model being acted on
+	 * @return	void
+	 */
+	public function after_update(\Model $model)
+	{
+		/**
+		 * System Event
+		 */
+		\SystemEvent::add('user', '[[event.admin.form.tab_update|{{'.$model->name.'}}|{{'.$model->form_key.'}}]]');
+	}
+
+	/**
+	 * When a tab is deleted, create a system event.
+	 *
+	 * @internal
+	 * @param	Model	the model being acted on
+	 * @return	void
+	 */
+	public function before_delete(\Model $model)
+	{
+		/**
+		 * System Event
+		 */
+		\SystemEvent::add('user', '[[event.admin.form.tab_delete|{{'.$model->name.'}}|{{'.$model->form_key.'}}]]');
 	}
 }

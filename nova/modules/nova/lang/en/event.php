@@ -2,7 +2,21 @@
 
 return array(
 	'admin' => array(
-		'form_update' => "Form (:0) was updated",
+		'form' => array(
+			'update' => "The :0 form was updated",
+
+			'field_update' => "The :0 field in the :1 form was updated",
+			'field_create' => "The :0 field was created in the :1 form",
+			'field_delete' => "The :0 field in the :1 form was deleted",
+
+			'section_update' => "The :0 section in the :1 form was updated",
+			'section_create' => "The :0 section was created in the :1 form",
+			'section_delete' => "The :0 section in the :1 form was deleted",
+
+			'tab_update' => "The :0 tab in the :1 form was updated",
+			'tab_create' => "The :0 tab was created in the :1 form",
+			'tab_delete' => "The :0 tab in the :1 form was deleted",
+		),
 	),
 
 	'login' => array(

@@ -74,7 +74,7 @@ class Controller_Ajax_Update extends Controller_Base_Ajax
 				$record->save();
 			}
 
-			\SystemEvent::add('user', '[[event.form_update|{{'.$key.'}}]]');
+			\SystemEvent::add('user', '[[event.admin.form.field_update|{{'.$record->label.'}}|{{'.$key.'}}]]');
 		}
 	}
 
@@ -107,7 +107,7 @@ class Controller_Ajax_Update extends Controller_Base_Ajax
 				// save the record
 				$value->save();
 
-				\SystemEvent::add('user', '[[event.form_update|{{'.$key.'}}]]');
+				\SystemEvent::add('user', '[[event.admin.form.field_update|{{'.$value->field->label.'}}|{{'.$key.'}}]]');
 
 				echo '<h1>'.lang('action.edit value', 2).'</h1>';
 				echo '<p class="alert alert-success">'.lang('short.flash.success|value|action.updated', 1).' '.lang('short.refresh').'</p>';
@@ -202,7 +202,7 @@ class Controller_Ajax_Update extends Controller_Base_Ajax
 				$record->save();
 			}
 
-			\SystemEvent::add('user', '[[event.form_update|{{'.$key.'}}]]');
+			\SystemEvent::add('user', '[[event.admin.form.section_update|{{'.$record->name.'}}|{{'.$key.'}}]]');
 		}
 	}
 
@@ -230,7 +230,7 @@ class Controller_Ajax_Update extends Controller_Base_Ajax
 				$record->save();
 			}
 
-			\SystemEvent::add('user', '[[event.form_update|{{'.$key.'}}]]');
+			\SystemEvent::add('user', '[[event.admin.form.tab_update|{{'.$record->name.'}}|{{'.$key.'}}]]');
 		}
 	}
 
@@ -258,7 +258,7 @@ class Controller_Ajax_Update extends Controller_Base_Ajax
 				$record->save();
 			}
 
-			\SystemEvent::add('user', '[[event.form_update|{{'.$key.'}}]]');
+			\SystemEvent::add('user', '[[event.admin.form.field_update|{{'.$record->field->label.'}}|{{'.$key.'}}]]');
 		}
 	}
 }

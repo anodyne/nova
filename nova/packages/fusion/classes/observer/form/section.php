@@ -25,6 +25,11 @@ class Observer_Form_Section extends \Orm\Observer
 	public function before_delete(\Model $model)
 	{
 		/**
+		 * System Event
+		 */
+		\SystemEvent::add('user', '[[event.admin.form.section_delete|{{'.$model->name.'}}|{{'.$model->form_key.'}}]]');
+
+		/**
 		 * Tab cleanup
 		 */
 		$tab = \Model_Form_Tab::find($model->tab_id);
@@ -85,6 +90,11 @@ class Observer_Form_Section extends \Orm\Observer
 	 */
 	public function after_insert(\Model $model)
 	{
+		/**
+		 * System Event
+		 */
+		\SystemEvent::add('user', '[[event.admin.form.section_create|{{'.$model->name.'}}|{{'.$model->form_key.'}}]]');
+
 		// what form are we updating?
 		$form = $model->form_key;
 
@@ -164,6 +174,11 @@ class Observer_Form_Section extends \Orm\Observer
 	 */
 	public function after_update(\Model $model)
 	{
+		/**
+		 * System Event
+		 */
+		\SystemEvent::add('user', '[[event.admin.form.section_update|{{'.$model->name.'}}|{{'.$model->form_key.'}}]]');
+
 		/**
 		 * Tab cleanup
 		 */

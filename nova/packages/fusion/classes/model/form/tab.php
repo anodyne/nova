@@ -66,7 +66,7 @@ class Model_Form_Tab extends \Model {
 	 */
 	protected static $_observers = array(
 		'\\Form_Tab' => array(
-			'events' => array('after_insert')
+			'events' => array('before_delete', 'after_insert', 'after_update')
 		),
 		'\\Orm\\Observer_UpdatedAt' => array(
 			'events' => array('before_save')

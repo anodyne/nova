@@ -44,7 +44,7 @@ class Controller_Ajax_Delete extends Controller_Base_Ajax
 			// delete it
 			$value->delete();
 
-			\SystemEvent::add('user', '[[event.form_update|{{'.$key.'}}]]');
+			\SystemEvent::add('user', '[[event.admin.form.field_delete|{{'.$value->label.'}}|{{'.$value->form_key.'}}]]');
 		}
 	}
 

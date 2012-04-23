@@ -32,6 +32,11 @@ class Observer_Form_Field extends \Orm\Observer
 	public function before_delete(\Model $model)
 	{
 		/**
+		 * System Event
+		 */
+		\SystemEvent::add('user', '[[event.admin.form.field_delete|{{'.$model->label.'}}|{{'.$model->form_key.'}}]]');
+
+		/**
 		 * Value cleanup
 		 */
 		if ($model->values !== null)
@@ -116,6 +121,11 @@ class Observer_Form_Field extends \Orm\Observer
 	 */
 	public function after_insert(\Model $model)
 	{
+		/**
+		 * System Event
+		 */
+		\SystemEvent::add('user', '[[event.admin.form.field_create|{{'.$model->label.'}}|{{'.$model->form_key.'}}]]');
+
 		// what should be in the data?
 		$data = array(
 			'form_key' => $model->form_key,
@@ -260,6 +270,11 @@ class Observer_Form_Field extends \Orm\Observer
 	 */
 	public function after_update(\Model $model)
 	{
+		/**
+		 * System Event
+		 */
+		\SystemEvent::add('user', '[[event.admin.form.field_update|{{'.$model->label.'}}|{{'.$model->form_key.'}}]]');
+
 		/**
 		 * Section cleanup
 		 */

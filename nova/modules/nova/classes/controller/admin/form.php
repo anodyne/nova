@@ -45,7 +45,7 @@ class Controller_Admin_Form extends Controller_Base_Admin
 					'message' => lang('[[short.flash.success|form|action.updated]]', 1),
 				);
 
-				\SystemEvent::add('user', '[[event.form_update|{{'.$entry->name.'}}]]');
+				\SystemEvent::add('user', '[[event.form.update|{{'.$entry->name.'}}]]');
 			}
 			else
 			{
@@ -97,8 +97,6 @@ class Controller_Admin_Form extends Controller_Base_Admin
 						'status' => 'success',
 						'message' => lang('[[short.flash.success|field|action.deleted]]', 1),
 					);
-
-					\SystemEvent::add('user', '[[event.admin.form_update|{{'.$key.'}}]]');
 				}
 				else
 				{
@@ -120,8 +118,6 @@ class Controller_Admin_Form extends Controller_Base_Admin
 						'status' => 'success',
 						'message' => lang('[[short.flash.success|field|action.added]]', 1),
 					);
-
-					\SystemEvent::add('user', '[[event.form_update|{{'.$key.'}}]]');
 				}
 				else
 				{
@@ -143,8 +139,6 @@ class Controller_Admin_Form extends Controller_Base_Admin
 						'status' => 'success',
 						'message' => lang('[[short.flash.success|field|action.updated]]', 1),
 					);
-
-					\SystemEvent::add('user', '[[event.form_update|{{'.$key.'}}]]');
 				}
 				else
 				{
@@ -342,8 +336,6 @@ class Controller_Admin_Form extends Controller_Base_Admin
 						'status' => 'success',
 						'message' => lang('[[short.flash.success|section|action.deleted]]', 1),
 					);
-
-					\SystemEvent::add('user', '[[event.form_update|{{'.$key.'}}]]');
 				}
 				else
 				{
@@ -365,8 +357,6 @@ class Controller_Admin_Form extends Controller_Base_Admin
 						'status' => 'success',
 						'message' => lang('[[short.flash.success|section|action.added]]', 1),
 					);
-
-					\SystemEvent::add('user', '[[event.form_update|{{'.$key.'}}]]');
 				}
 				else
 				{
@@ -388,8 +378,6 @@ class Controller_Admin_Form extends Controller_Base_Admin
 						'status' => 'success',
 						'message' => lang('[[short.flash.success|section|action.updated]]', 1),
 					);
-
-					\SystemEvent::add('user', '[[event.form_update|{{'.$key.'}}]]');
 				}
 				else
 				{
@@ -556,8 +544,6 @@ class Controller_Admin_Form extends Controller_Base_Admin
 						'status' => 'success',
 						'message' => lang('[[short.flash.success|tab|action.deleted]]', 1),
 					);
-
-					\SystemEvent::add('user', '[[event.form_update|{{'.$key.'}}]]');
 				}
 				else
 				{
@@ -579,8 +565,6 @@ class Controller_Admin_Form extends Controller_Base_Admin
 						'status' => 'success',
 						'message' => lang('[[short.flash.success|tab|action.added]]', 1),
 					);
-
-					\SystemEvent::add('user', '[[event.form_update|{{'.$key.'}}]]');
 				}
 				else
 				{
@@ -602,8 +586,6 @@ class Controller_Admin_Form extends Controller_Base_Admin
 						'status' => 'success',
 						'message' => lang('[[short.flash.success|tab|action.updated]]', 1),
 					);
-
-					\SystemEvent::add('user', '[[event.form_update|{{'.$key.'}}]]');
 				}
 				else
 				{

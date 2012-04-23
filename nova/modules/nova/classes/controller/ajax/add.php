@@ -36,6 +36,8 @@ class Controller_Ajax_Add extends Controller_Base_Ajax
 			// save the record
 			$record = $item->save();
 
+			\SystemEvent::add('user', '[[event.admin.form.field_update|{{'.$record->field->label.'}}|{{'.$record->field->form_key.'}}]]');
+
 			if ($record)
 			{
 				echo '<tr id="value_'.$item->id.'"><td>'.$item->content.'</td><td class="span2"><div class="btn-group"><a href="#" class="btn btn-mini value-action tooltip-top" title="'.lang('action.edit', 1).'" data-action="update" data-id="'.$item->id.'"><i class="icon-pencil icon-75"></i></a><a href="#" class="btn btn-mini value-action tooltip-top" title="'.lang('action.delete', 1).'" data-action="delete" data-id="'.$item->id.'"><i class="icon-remove icon-75"></i></a></div></td><td class="span1 reorder"></td></tr>';
