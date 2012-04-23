@@ -73,7 +73,7 @@ class Model_Form_Section extends \Model {
 	 */
 	protected static $_observers = array(
 		'\\Form_Section' => array(
-			'events' => array('after_insert')
+			'events' => array('before_delete', 'after_insert', 'after_update')
 		),
 		'\\Orm\\Observer_UpdatedAt' => array(
 			'events' => array('before_save')

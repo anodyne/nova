@@ -11,21 +11,6 @@
  * @copyright	2012 Anodyne Productions
  */
 
-/**
- * TODO
- *
- * - When a field is deleted, check to see if the section is enabled and
- *   if it is, if deleting the field will leave the section with no enabled
- *   fields. If that's the case, we need to proactively disable the section.
- *
- * - When a field is created, check to see if the section is enabled and if
- *   it isn't, re-enable the section.
- *
- * - When a field is updated, check to see if the field is enabled, and if
- *   it is, check to see if the section is disabled. In the event the section
- *   is disabled and the field is enabled, we need to re-enable the section.
- */
-
 namespace Fusion;
 
 class Observer_Form_Field extends \Orm\Observer
@@ -34,15 +19,21 @@ class Observer_Form_Field extends \Orm\Observer
 	 * When a field is deleted, we need to loop through and remove all data
 	 * associated with that field.
 	 *
-	 * Note: The field ID is not available after the delete has happened, so we
-	 * have to do all this work before deletion otherwise we're out of luck.
+	 * When a field is deleted, we need to loop through and remove any values
+	 * associated with that field.
 	 *
+	 * Check what deleting the field will do to the active count of fields
+	 * in a section and activate/deactivate the section accordingly.
+	 *
+	 * @internal
 	 * @param	Model	the model being acted on
 	 * @return	void
 	 */
 	public function before_delete(\Model $model)
 	{
-		// do we have values that need to be deleted?
+		/**
+		 * Value cleanup
+		 */
 		if ($model->values !== null)
 		{
 			foreach ($model->values as $val)
@@ -52,7 +43,9 @@ class Observer_Form_Field extends \Orm\Observer
 			}
 		}
 
-		// do we have data that needs to be deleted?
+		/**
+		 * Data cleanup
+		 */
 		$data = \Model_Form_Data::get_data($model->id);
 
 		if ($data !== null)
@@ -63,12 +56,61 @@ class Observer_Form_Field extends \Orm\Observer
 				$val->delete();
 			}
 		}
+
+		/**
+		 * Section cleanup
+		 */
+		$section = \Model_Form_Section::find($model->section_id);
+
+		if ($section !== null)
+		{
+			if ($section->fields !== null)
+			{
+				// loop through the fields and get the information about display
+				foreach ($section->fields as $f)
+				{
+					$active[$f->id] = (int) $f->display;
+				}
+
+				// get a count of the different values
+				$active_count = array_count_values($active);
+
+				// if there are no active fields OR the number of actives is less than 2 (the current field removal would make it 0)
+				if ( ! in_array(1, $active) 
+						or (array_key_exists(1, $active_count) and $active_count[1] < 2))
+				{
+					if ( (bool) $section->display === true)
+					{
+						// there won't be any active fields left, so disable the section
+						$section->display = (int) false;
+						
+						// save the record
+						$section->save();
+					}
+				}
+			}
+			else
+			{
+				if ( (bool) $section->display === true)
+				{
+					// there are no fields in the section, so disable it
+					$section->display = (int) false;
+					
+					// save the record
+					$section->save();
+				}
+			}
+		}
 	}
 
 	/**
 	 * When a field is created, we need to loop through the various pieces and
 	 * make sure that data records are added.
 	 *
+	 * When a field is created, we need to check the containing section to see
+	 * how we should handle activating/deactivating the section.
+	 *
+	 * @internal
 	 * @param	Model	the model being acted on
 	 * @return	void
 	 */
@@ -159,6 +201,122 @@ class Observer_Form_Field extends \Orm\Observer
 					}
 				}
 			break;
+		}
+
+		/**
+		 * Section cleanup
+		 */
+		$section = \Model_Form_Section::find($model->section_id);
+
+		if ($section !== null)
+		{
+			if ($section->fields !== null)
+			{
+				// loop through the fields and get the information about display
+				foreach ($section->fields as $f)
+				{
+					$active[$f->id] = (int) $f->display;
+				}
+
+				// get a count of the different values
+				$active_count = array_count_values($active);
+
+				// if there are no active fields OR the number of actives is more than 0
+				if (in_array(1, $active) 
+						or (array_key_exists(1, $active_count) and $active_count[1] > 0))
+				{
+					if ( (bool) $section->display === false)
+					{
+						// there won't be any active fields left, so disable the section
+						$section->display = (int) true;
+						
+						// save the record
+						$section->save();
+					}
+				}
+			}
+			else
+			{
+				if ( (bool) $section->display === true)
+				{
+					// there are no fields in the section, so disable it
+					$section->display = (int) false;
+					
+					// save the record
+					$section->save();
+				}
+			}
+		}
+	}
+
+	/**
+	 * When a field is updated, we need to grab the section and do some checks
+	 * to see if we should be activating or deactivating the section because of
+	 * the number of fields or the number of active fields.
+	 *
+	 * @internal
+	 * @param	Model	the model being acted on
+	 * @return	void
+	 */
+	public function after_update(\Model $model)
+	{
+		/**
+		 * Section cleanup
+		 */
+		$section = \Model_Form_Section::find($model->section_id);
+
+		if ($section !== null)
+		{
+			if ($section->fields !== null)
+			{
+				// loop through the fields and get the information about display
+				foreach ($section->fields as $f)
+				{
+					$active[$f->id] = (int) $f->display;
+				}
+
+				// get a count of the different values
+				$active_count = array_count_values($active);
+
+				// if there are no active fields OR the number of actives is 0
+				if ( ! in_array(1, $active) 
+						or (array_key_exists(1, $active_count) and $active_count[1] == 0))
+				{
+					// only do the update if the section is active
+					if ( (bool) $section->display === true)
+					{
+						// there won't be any active fields left, so disable the section
+						$section->display = (int) false;
+						
+						// save the record
+						$section->save();
+					}
+				}
+				else
+				{
+					// only do the update if the section is inactive
+					if ( (bool) $section->display === false)
+					{
+						// set the section to display
+						$section->display = (int) true;
+						
+						// save the record
+						$section->save();
+					}
+				}
+			}
+			else
+			{
+				// only do the update if the section is active
+				if ( (bool) $section->display === true)
+				{
+					// there are no fields in the section, so disable it
+					$section->display = (int) false;
+					
+					// save the record
+					$section->save();
+				}
+			}
 		}
 	}
 }

@@ -111,12 +111,32 @@ class Model_Form_Field extends \Model {
 	 */
 	protected static $_observers = array(
 		'\\Form_Field' => array(
-			'events' => array('before_delete', 'after_insert')
+			'events' => array('before_delete', 'after_insert', 'after_update')
 		),
 		'\\Orm\\Observer_UpdatedAt' => array(
 			'events' => array('before_save')
 		),
 	);
+
+	public static function get_fields($key, $section = null, $active = true)
+	{
+		$items = static::find();
+		$items->where('form_key', $key);
+
+		if ($section !== null)
+		{
+			$items->where('section_id', $section);
+		}
+
+		if ($active)
+		{
+			$items->where('display', (int) true);
+		}
+
+		$items->order_by('order', 'asc');
+
+		return $items->get();
+	}
 
 	/**
 	 * Get any values for the current field. This is only used for
