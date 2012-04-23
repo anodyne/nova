@@ -81,22 +81,33 @@ class Model extends \Orm\Model
 	 * Find an item in the table based on the arguments passed.
 	 *
 	 * @api
-	 * @param	array	the data to use to find the item
+	 * @param	mixed	an array of arguments or the item ID
 	 * @return	object
 	 */
-	public static function find_item(array $args)
+	public static function find_item($args)
 	{
-		$record = static::find();
-		
-		foreach ($args as $column => $value)
+		if (is_array($args))
 		{
-			if (array_key_exists($column, static::$_properties))
+			// start the find
+			$record = static::find();
+			
+			// loop through the arguments and build the where clause
+			foreach ($args as $column => $value)
 			{
-				$record->where($column, $value);
+				if (array_key_exists($column, static::$_properties))
+				{
+					$record->where($column, $value);
+				}
 			}
+			
+			// get the record
+			$result = $record->get_one();
 		}
-		
-		$result = $record->get_one();
+		else
+		{
+			// if we have an ID, just go straight to that item
+			$result = static::find($args);
+		}
 		
 		return $result;
 	}
@@ -204,15 +215,18 @@ class Model extends \Orm\Model
 	 * Delete an item in the table based on the arguments passed.
 	 *
 	 * @api
-	 * @param	mixed	the data to use to find the item
+	 * @param	mixed	an array of arguments or the item ID
 	 * @return	bool
 	 */
 	public static function delete_item($args)
 	{
-		$item = static::find();
-		
+		// if we have a list of arguments, loop through them
 		if (is_array($args))
 		{
+			// start the find
+			$item = static::find();
+
+			// loop through the arguments to build the where
 			foreach ($args as $column => $value)
 			{
 				if (array_key_exists($column, static::$_properties))
@@ -220,13 +234,18 @@ class Model extends \Orm\Model
 					$item->where($column, $value);
 				}
 			}
+
+			// get the item
+			$entry = $item->get_one();
 		}
 		else
 		{
-			$item->where('id', $args);
+			// go directly to the item
+			$entry = static::find($args);
 		}
 
-		if ($item->delete(null, true))
+		// now that we have the item, delete it
+		if ($entry->delete(null, true))
 		{
 			return true;
 		}
