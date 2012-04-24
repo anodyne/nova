@@ -371,13 +371,13 @@ class Nav
 				1 => array(
 					array(
 						'name' => ucwords(__('my', array('thing' => __('account')))),
-						'url' => 'admin/users/account'),
+						'url' => 'admin/user/edit'),
 					array(
 						'name' => ucfirst(\Inflector::pluralize(__('preference'))),
-						'url' => 'admin/users/preferences'),
+						'url' => 'admin/user/preferences'),
 					array(
 						'name' => ucwords(__('my', array('thing' => \Inflector::pluralize(__('character'))))),
-						'url' => 'admin/characters'),
+						'url' => 'admin/character/edit'),
 				),
 				2 => array(
 					array(
@@ -390,10 +390,10 @@ class Nav
 				3 => array(
 					array(
 						'name' => ucwords(__('action.request').' '.__('loa')),
-						'url' => 'admin/users/loa'),
+						'url' => 'admin/user/loa'),
 					array(
 						'name' => ucfirst(__('action.nominate')).' '.__('for').' '.ucfirst(__('award')),
-						'url' => 'admin/users/nominate'),
+						'url' => 'admin/user/nominate'),
 				),
 				4 => array(
 					array(
