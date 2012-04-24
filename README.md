@@ -8,7 +8,7 @@ Nova 3 is currently in heavy, active development and considered alpha software. 
 
 ## Current Milestone
 
-Milestone 1
+Milestone 2
 
 The milestone [roadmap](https://github.com/anodyne/nova/wiki/Nova-3-Milestones) describes in greater detail the development work going in to specific milestones.
 
