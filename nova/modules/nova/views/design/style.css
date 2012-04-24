@@ -21,3 +21,15 @@ body {
 .input-append .add-on, .input-append .btn {
 	margin-bottom: 9px;
 }
+
+.nav-tabs > .active > a, .nav-tabs > .active > a:hover {
+	outline: 0;
+}
+
+legend {
+	margin-bottom: 0;
+}
+
+label.control-label {
+	font-weight: bold;
+}
