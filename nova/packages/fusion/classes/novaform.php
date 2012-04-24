@@ -14,6 +14,88 @@ namespace Fusion;
 
 class NovaForm
 {
+	public static function build($key, $skin, $id = false)
+	{
+		// set up the variables
+		$data = new \stdClass;
+		$data->form = \Model_Form::get_form($key);
+		$data->tabs = array();
+		$data->sections = array();
+		$data->fields = array();
+		$data->data = array();
+
+		// get the form elements
+		$tabs = \Model_Form_Tab::find_form_items($key, true);
+		$sections = \Model_Form_Section::find_form_items($key, true);
+		$fields = \Model_Form_Field::find_form_items($key, true);
+		$content = \Model_Form_Data::get_data($key, $id);
+
+		/**
+		 * Tabs
+		 */
+		if (count($tabs) > 0)
+		{
+			foreach ($tabs as $tab)
+			{
+				$data->tabs[] = $tab;
+			}
+		}
+
+		/**
+		 * Sections
+		 */
+		if (count($sections) > 0)
+		{
+			foreach ($sections as $section)
+			{
+				if (count($tabs) > 0)
+				{
+					$data->sections[$section->tab_id][] = $section;
+				}
+				else
+				{
+					$data->sections[] = $section;
+				}
+			}
+		}
+
+		/**
+		 * Fields
+		 */
+		if (count($fields) > 0)
+		{
+			foreach ($fields as $field)
+			{
+				if (count($sections) > 0)
+				{
+					$data->fields[$field->section_id][] = $field;
+				}
+				else
+				{
+					$data->fields[] = $field;
+				}
+
+				$data->data[$field->id] = '';
+			}
+		}
+
+		/**
+		 * Data
+		 */
+		if (count($content) > 0)
+		{
+			foreach ($content as $c)
+			{
+				if (array_key_exists($c->field_id, $data->data))
+				{
+					$data->data[$c->field_id] = $c->value;
+				}
+			}
+		}
+
+		return \View::forge(\Location::file('form', $skin, 'partials'), $data);
+	}
+
 	/**
 	 * Builds a select menu that includes all of the positions from
 	 * the database based on the parameters passed to the method.
@@ -86,13 +168,12 @@ class NovaForm
 	 * </code>
 	 *
 	 * @api
-	 * @uses	Form::select
 	 * @param	string	the name of the select menu
-	 * @param	array 	an array of selected items
+	 * @param	mixed 	an array of selected items
 	 * @param	array	any extra attributes to add to the select menu
-	 * @return	string	a select menu from Form::select
+	 * @return	string
 	 */
-	public static function rank($name, $selected = array(), $extra = null)
+	public static function rank($name, $selected = false, $extra = null)
 	{
 		// grab the ranks
 		$ranks = \Model_Rank::get_ranks();
