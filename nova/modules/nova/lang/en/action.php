@@ -11,6 +11,7 @@ return array(
 	'create' => 'create',
 	'creation' => 'creation',
 	'confirm' => 'confirm',
+	'choose' => 'choose',
 	
 	'delete' => 'delete',
 	'deleted' => 'deleted',

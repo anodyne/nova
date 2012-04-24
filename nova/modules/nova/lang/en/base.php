@@ -9,6 +9,7 @@ return array(
 	'actions' => 'actions',
 
 	'character' => "character",
+	'characters' => "characters",
 	'cp' => "control panel",
 	'class' => 'class',
 	'content' => 'content',
@@ -23,6 +24,7 @@ return array(
 	'for' => "for",
 	'form' => "form",
 	'forms' => "forms",
+	'first' => 'first',
 
 	'general' => 'general',
 
@@ -37,9 +39,11 @@ return array(
 	'label' => 'label',
 	'labels' => 'labels',
 	'link' => 'link',
+	'last' => 'last',
 
 	'message' => "message",
 	'my' => "my :thing",
+	'middle' => 'middle',
 
 	'name' => "name",
 	'notification' => "notification",
@@ -64,6 +68,7 @@ return array(
 	'section' => "section",
 	'sections' => "sections",
 	'site' => "site",
+	'suffix' => 'suffix',
 
 	'tab' => "tab",
 	'tabs' => "tabs",
