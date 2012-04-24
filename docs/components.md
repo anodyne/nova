@@ -52,7 +52,7 @@ Nova is made up of a wide range of plugins and components to help make it what i
     * Location
         * http://code.jquery.com/jquery-1.7.2.min.js
 * Bootstrap
-    * Version: 2.0.2
+    * Version: 2.0.3
     * Site: http://twitter.github.com/bootstrap/
     * Location
         * nova/modules/assets/css/bootstrap-responsive.css
@@ -61,6 +61,8 @@ Nova is made up of a wide range of plugins and components to help make it what i
         * nova/modules/assets/css/bootstrap.min.css
         * nova/modules/assets/img/glyphicon-halflings-white.png
         * nova/modules/assets/img/glyphicon-halflings.png
+        * nova/modules/assets/js/bootstrap.js
+        * nova/modules/assets/js/bootstrap.min.js
         * nova/modules/assets/js/bootstrap-alert.js
         * nova/modules/assets/js/bootstrap-button.js
         * nova/modules/assets/js/bootstrap-carousel.js
