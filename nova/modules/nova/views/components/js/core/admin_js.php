@@ -1,7 +1,5 @@
 <?php include_once NOVAPATH.'nova/views/components/js/core/core_js.php';?>
 
-<script type="text/javascript" src="<?php echo Uri::base(false);?>nova/modules/assets/js/bootstrap-button.js"></script>
-
 <script type="text/javascript">
 	$(document).ready(function(){
 		
