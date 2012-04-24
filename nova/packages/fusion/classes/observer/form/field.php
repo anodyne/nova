@@ -51,7 +51,7 @@ class Observer_Form_Field extends \Orm\Observer
 		/**
 		 * Data cleanup
 		 */
-		$data = \Model_Form_Data::get_data($model->id);
+		$data = \Model_Form_Data::get_data('field', $model->id);
 
 		if ($data !== null)
 		{

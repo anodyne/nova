@@ -47,9 +47,32 @@ class Model_Form_Data extends \Model {
 			'null' => true),
 	);
 
-	public static function get_data($field)
+	public static function get_data($type, $id)
 	{
-		return static::find()->where('field_id', $field)->get();
+		switch ($type)
+		{
+			case 'field':
+				$field_column = 'field_id';
+			break;
+
+			case 'character':
+			case 'bio':
+				$field_column = 'character_id';
+			break;
+
+			case 'user':
+				$field_column = 'user_id';
+			break;
+
+			case 'item':
+			case 'tour':
+			case 'specs':
+			default:
+				$field_column = 'item_id';
+			break;
+		}
+		
+		return static::find()->where($field_column, $id)->get();
 	}
 	
 	/**
