@@ -5,13 +5,12 @@
 ## Dynamic Forms
 
 * Add a field to the database that admins can write help content in. If that field isn't empty, display a question mark icon that when hovered over, shows the help information.
-* Proper validation on all fields.
 * Fields that only admins can see and edit.
 * Dynamic user information form.
 
 ## Form Builder
 
-* Much like Wufoo, Nova really needs a form builder that will help admins creating their forms.
+* Much like Wufoo, Nova really needs a form builder that will help admins creating their forms. (Likely a future update.)
 * Drag fields around to re-order.
 * Drag fields on to the form to add.
 * Click on a field to see all its properties and change them.

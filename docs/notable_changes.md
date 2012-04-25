@@ -16,6 +16,16 @@
 
 * Site Settings now contains only the items that would be most frequently updated. A new Advanced Site Settings will give admins control over the full range of settings Nova has to offer.
 
+## Form Management
+
+* Each form can have its orientation set to be vertical (label on top then the field, the default) or horizontal (label to the left, field to the right).
+* Each form field can now have its own help text that will be displayed beneath the field (or next to it if the form is in horizontal orientation).
+* Adding, editing, and removing field values is a lot cleaner and more intuitive.
+* Different types of fields may hide or show options unique to that type of fields (e.g. rows with text areas).
+* Any form can have tabs now.
+* Drag-and-drop re-ordering of fields, sections, and tabs.
+* Nova will do a wide range of calculations to determine if it should disable sections and/or tabs when fields are deleted/updated. The goal is to make sure that if a section doesn't have any active fields any longer, it should automatically be disabled and then re-enabled automatically when fields are made active or added.
+
 ## Characters
 
 * Characters can now hold an unlimited number of positions.
