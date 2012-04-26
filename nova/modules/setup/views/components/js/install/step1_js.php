@@ -2,22 +2,16 @@
 <script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.9/additional-methods.min.js"></script>
 <script type="text/javascript">
 	$(document).ready(function(){
+		
 		$('#position').change(function(){
-			var id = $('#position option:selected').val();
 			
 			$.ajax({
-				beforeSend: function(){
-					$('#loading_update').removeClass('hide');
-				},
 				type: "POST",
 				url: "<?php echo Uri::create('ajax/info/position_desc');?>",
-				data: { position: id },
+				data: { position: $('#position option:selected').val() },
 				success: function(data){
 					$('#position_desc').html('');
 					$('#position_desc').append(data);
-				},
-				complete: function(){
-					$('#loading_update').addClass('hide');
 				}
 			});
 			
@@ -25,26 +19,17 @@
 		});
 		
 		$('#rank').change(function(){
-			var id = $('#rank option:selected').val();
-			var set = 'default';
-			var send = {
-				rank: id,
-				location: set
-			};
 			
 			$.ajax({
-				beforeSend: function(){
-					$('#loading_update_rank').removeClass('hide');
-				},
 				type: "POST",
 				url: "<?php echo Uri::create('ajax/info/rank_image');?>",
-				data: send,
+				data: {
+					rank: $('#rank option:selected').val(),
+					location: 'default'
+				},
 				success: function(data){
 					$('#rank_img').html('');
 					$('#rank_img').append(data);
-				},
-				complete: function(){
-					$('#loading_update_rank').addClass('hide');
 				}
 			});
 			

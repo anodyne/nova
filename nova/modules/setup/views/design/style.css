@@ -21,13 +21,14 @@ footer{padding:10px 0;text-align:center;font-size:12px;color:#888;text-shadow:0 
 h2{margin:8px 0;font-size:22px;}
 p,dt,dd,li{font-size:14px;line-height:1.6;text-shadow:0 1px 0 #fff;}
 td>p,td>.alert{margin:4px 0;}
+.font-small{font-size:12px;}
 .error{color:#c00;}
 .warning{color:orange;}
 .subtle{color:#999;}
 .success{color:#008000;}
-input[type=text],input[type=password],input[type=email],select,textarea{margin:5px 0 0 0;padding:6px;min-width:250px;border-bottom:1px solid #d0d0d0;border-top:1px solid #a8a8a8;border-left:1px solid #bcbcbc;border-right:1px solid #bcbcbc;font-size:110%;font-family:helvetica,arial,sans-serif;color:#888;background:#f3f3f3;background:-moz-linear-gradient(top, #fefefe 0%, #f3f3f3 100%);background:-webkit-gradient(linear, left top, left bottom, color-stop(0%, #fefefe), color-stop(100%, #f3f3f3));background:-webkit-linear-gradient(top, #fefefe 0%, #f3f3f3 100%);background:-o-linear-gradient(top, #fefefe 0%, #f3f3f3 100%);background:-ms-linear-gradient(top, #fefefe 0%, #f3f3f3 100%);background:linear-gradient(top, #fefefe 0%, #f3f3f3 100%);-webkit-border-radius:3px;-moz-border-radius:3px;border-radius:3px 3px 3px 3px;-webkit-box-shadow:inset 0 1px 1px #e3e3e3, 0 1px 0 #f6f6f6;-moz-box-shadow:inset 0 1px 1px #e3e3e3, 0 1px 0 #f6f6f6;box-shadow:inset 0 1px 1px #e3e3e3, 0 1px 0 #f6f6f6;}
+input[type=text],input[type=password],input[type=email],select,textarea{margin:5px 0;padding:6px;border-bottom:1px solid #d0d0d0;border-top:1px solid #a8a8a8;border-left:1px solid #bcbcbc;border-right:1px solid #bcbcbc;font-size:110%;font-family:helvetica,arial,sans-serif;color:#888;background:#f3f3f3;background:-moz-linear-gradient(top, #fefefe 0%, #f3f3f3 100%);background:-webkit-gradient(linear, left top, left bottom, color-stop(0%, #fefefe), color-stop(100%, #f3f3f3));background:-webkit-linear-gradient(top, #fefefe 0%, #f3f3f3 100%);background:-o-linear-gradient(top, #fefefe 0%, #f3f3f3 100%);background:-ms-linear-gradient(top, #fefefe 0%, #f3f3f3 100%);background:linear-gradient(top, #fefefe 0%, #f3f3f3 100%);-webkit-border-radius:3px;-moz-border-radius:3px;border-radius:3px 3px 3px 3px;-webkit-box-shadow:inset 0 1px 1px #e3e3e3, 0 1px 0 #f6f6f6;-moz-box-shadow:inset 0 1px 1px #e3e3e3, 0 1px 0 #f6f6f6;box-shadow:inset 0 1px 1px #e3e3e3, 0 1px 0 #f6f6f6;}
 input[type=text]:focus,input[type=password]:focus,input[type=email]:focus,select:hover,textarea:focus{border-bottom:1px solid #008bda;border-top:1px solid #008bda;border-left:1px solid #008edc;border-right:1px solid #008edc;background:#fff;color:#555;-webkit-box-shadow:0 0 3px #a7cef3;-moz-box-shadow:0 0 3px #a7cef3;box-shadow:0 0 3px #a7cef3;}
-select{padding:3px 6px;min-width:264px;}
+select{padding:3px 6px;}
 textarea{width:85%;}
 textarea.query{font-family:"consolas",courier,monaco,monospace;}
 .btn-alt{margin:.2em 0;padding:.5em;display:block;width:350px;color:#888 !important;text-decoration:none;border:1px solid transparent !important;-webkit-border-radius:2px;-moz-border-radius:2px;border-radius:2px 2px 2px 2px;}

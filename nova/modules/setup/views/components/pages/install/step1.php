@@ -7,7 +7,9 @@
 			
 			<div class="control-group">
 				<label class="control-label">Sim Name</label>
-				<?php echo Form::input('sim_name');?>
+				<div class="controls">
+					<?php echo Form::password(array('name' => 'sim_name', 'class' => 'span4'));?>
+				</div>
 			</div>
 		</fieldset>
 		
@@ -16,22 +18,30 @@
 			
 			<div class="control-group">
 				<label class="control-label">Your Name</label>
-				<?php echo Form::input('name');?>
+				<div class="controls">
+					<?php echo Form::input(array('name' => 'name', 'class' => 'span4'));?>
+				</div>
 			</div>
 			
 			<div class="control-group">
 				<label class="control-label">Your Email Address</label>
-				<?php echo Form::input('email', null, array('type' => 'email'));?>
+				<div class="controls">
+					<?php echo Form::input(array('name' => 'email', 'class' => 'span4', 'type' => 'email'));?>
+				</div>
 			</div>
 			
 			<div class="control-group">
 				<label class="control-label">Your Password</label>
-				<?php echo Form::password('password', null, array('id' => 'password'));?>
+				<div class="controls">
+					<?php echo Form::password(array('name' => 'password', 'class' => 'span4', 'id' => 'password'));?>
+				</div>
 			</div>
 			
 			<div class="control-group">
 				<label class="control-label">Confirm Your Password</label>
-				<?php echo Form::password('password_confirm');?>
+				<div class="controls">
+					<?php echo Form::password(array('name' => 'password_confirm', 'class' => 'span4'));?>
+				</div>
 			</div>
 		</fieldset>
 		
@@ -40,26 +50,46 @@
 			
 			<div class="control-group">
 				<label class="control-label">First Name</label>
-				<?php echo Form::input('first_name');?>
+				<div class="controls">
+					<?php echo Form::input(array('name' => 'first_name', 'class' => 'span4'));?>
+				</div>
 			</div>
 			
 			<div class="control-group">
 				<label class="control-label">Last Name</label>
-				<?php echo Form::input('last_name');?>
+				<div class="controls">
+					<?php echo Form::input(array('name' => 'last_name', 'class' => 'span4'));?>
+				</div>
 			</div>
 			
-			<div class="control-group">
-				<label class="control-label">Position</label>
-				<?php echo NovaForm::position('position', null, array('id' => 'position'));?>
-				&nbsp; <span id="loading_update" class="hide muted"><?php echo $loading;?></span>
-				<p id="position_desc" class="help-block"></p>
+			<div class="row">
+				<div class="span4">
+					<div class="control-group">
+						<label class="control-label">Position</label>
+						<div class="controls">
+							<?php echo NovaForm::position('position', null, array('id' => 'position', 'class' => 'span4'));?>
+						</div>
+					</div>
+				</div>
+				<div class="span7">
+					<p>&nbsp;</p>
+					<p id="position_desc" class="muted font-small">This is the description piece.</p>
+				</div>
 			</div>
 			
-			<div class="control-group">
-				<label class="control-label">Rank</label>
-				<?php echo NovaForm::rank('rank', null, array('id' => 'rank'));?>
-				&nbsp; <span id="loading_update_rank" class="hide muted"><?php echo $loading;?></span>
-				<p id="rank_img" class="help-block"><?php echo $default_rank;?></p>
+			<div class="row">
+				<div class="span4">
+					<div class="control-group">
+						<label class="control-label">Rank</label>
+						<div class="controls">
+							<?php echo NovaForm::rank('rank', null, array('id' => 'rank', 'class' => 'span4'));?>
+						</div>
+					</div>
+				</div>
+				<div class="span2">
+					<p>&nbsp;</p>
+					<p id="rank_img"><?php echo $default_rank;?></p>
+				</div>
 			</div>
 		</fieldset>
 <?php endif;?>
