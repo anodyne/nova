@@ -66,6 +66,7 @@ Autoloader::add_classes(array(
 	'Fusion\\Model_Form_Value'				=> __DIR__.'/classes/model/form/value.php',
 	
 	'Fusion\\Model_Manifest'				=> __DIR__.'/classes/model/manifest.php',
+	'Fusion\\Model_Media'					=> __DIR__.'/classes/model/media.php',
 	'Fusion\\Model_Message'					=> __DIR__.'/classes/model/message.php',
 	'Fusion\\Model_MessageRecipient'		=> __DIR__.'/classes/model/messagerecipient.php',
 	'Fusion\\Model_Mission'					=> __DIR__.'/classes/model/mission.php',
@@ -87,7 +88,6 @@ Autoloader::add_classes(array(
 	'Fusion\\Model_SystemEvent'				=> __DIR__.'/classes/model/systemevent.php',
 	'Fusion\\Model_Tour'					=> __DIR__.'/classes/model/tour.php',
 	'Fusion\\Model_TourDeck'				=> __DIR__.'/classes/model/tourdeck.php',
-	'Fusion\\Model_Upload'					=> __DIR__.'/classes/model/upload.php',
 	
 	'Fusion\\Model_User'					=> __DIR__.'/classes/model/user.php',
 	'Fusion\\Model_User_Loa'				=> __DIR__.'/classes/model/user/loa.php',

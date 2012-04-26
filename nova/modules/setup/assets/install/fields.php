@@ -32,6 +32,7 @@ $data = array(
 	'form_tabs' => array(),
 	'form_values' => array(),
 	'manifests' => array(),
+	'media' => array(),
 	'messages' => array(),
 	'message_recipients' => array(),
 	'missions' => array(),
@@ -52,7 +53,6 @@ $data = array(
 	'system_events' => array(),
 	'tour' => array(),
 	'tour_decks' => array(),
-	'uploads' => array(),
 	'users' => array(),
 	'user_loas' => array(),
 	'users_preferences' => array(),
@@ -361,6 +361,17 @@ $fields_manifests = array(
 	'default' => array('type' => 'TINYINT', 'constraint' => 1, 'default' => 0),
 );
 
+$fields_media = array(
+	'id' => array('type' => 'BIGINT', 'constraint' => 20, 'auto_increment' => true),
+	'filename' => array('type' => 'TEXT', 'null' => true),
+	'mime_type' => array('type' => 'VARCHAR', 'constraint' => 255, 'null' => true),
+	'resource_type' => array('type' => 'VARCHAR', 'constraint' => 100, 'null' => true),
+	'user_id' => array('type' => 'INT', 'constraint' => 11),
+	'ip_address' => array('type' => 'VARCHAR', 'constraint' => 16),
+	'created_at' => array('type' => 'BIGINT', 'constraint' => 20),
+	'updated_at' => array('type' => 'BIGINT', 'constraint' => 20, 'null' => true),
+);
+
 $fields_messages = array(
 	'id' => array('type' => 'BIGINT', 'constraint' => 20, 'auto_increment' => true),
 	'user_id' => array('type' => 'INT', 'constraint' => 11),
@@ -564,16 +575,6 @@ $fields_tour_decks = array(
 	'order' => array('type' => 'INT', 'constraint' => 5, 'null' => true),
 	'content' => array('type' => 'TEXT', 'null' => true),
 	'tour_id' => array('type' => 'INT', 'constraint' => 11, 'null' => true),
-);
-
-$fields_uploads = array(
-	'id' => array('type' => 'BIGINT', 'constraint' => 20, 'auto_increment' => true),
-	'filename' => array('type' => 'TEXT', 'null' => true),
-	'mime_type' => array('type' => 'VARCHAR', 'constraint' => 255, 'null' => true),
-	'resource_type' => array('type' => 'VARCHAR', 'constraint' => 100, 'null' => true),
-	'user_id' => array('type' => 'INT', 'constraint' => 11, 'default' => 0),
-	'ip_address' => array('type' => 'VARCHAR', 'constraint' => 16),
-	'date' => array('type' => 'BIGINT', 'constraint' => 20),
 );
 
 $fields_users = array(

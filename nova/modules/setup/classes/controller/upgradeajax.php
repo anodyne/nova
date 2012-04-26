@@ -1343,25 +1343,34 @@ class Controller_Upgradeajax extends \Controller
 		$count_old = count($c);
 		
 		// drop the table installed by the system
-		\DBUtil::drop_table('uploads');
+		\DBUtil::drop_table('media');
 		
 		// create a new table from the old data
-		\DB::query('CREATE TABLE '.\DB::table_prefix().'uploads SELECT * FROM `nova2_uploads`')->execute();
+		\DB::query('CREATE TABLE '.\DB::table_prefix().'media SELECT * FROM `nova2_uploads`')->execute();
 
 		// change the columns
-		\DB::query("ALTER TABLE ".\DB::table_prefix()."uploads CHANGE `upload_id` `id` BIGINT(20) NOT NULL")->execute();
-		\DB::query("ALTER TABLE ".\DB::table_prefix()."uploads CHANGE `upload_filename` `filename` TEXT NULL")->execute();
-		\DB::query("ALTER TABLE ".\DB::table_prefix()."uploads CHANGE `upload_mime_type` `mime_type` VARCHAR(255) NULL")->execute();
-		\DB::query("ALTER TABLE ".\DB::table_prefix()."uploads CHANGE `upload_resource_type` `resource_type` VARCHAR(100) NULL")->execute();
-		\DB::query("ALTER TABLE ".\DB::table_prefix()."uploads CHANGE `upload_user` `user_id` INT(11) NOT NULL")->execute();
-		\DB::query("ALTER TABLE ".\DB::table_prefix()."uploads CHANGE `upload_ip` `ip_address` VARCHAR(16) NOT NULL")->execute();
-		\DB::query("ALTER TABLE ".\DB::table_prefix()."uploads CHANGE `upload_date` `date` BIGINT(20) NOT NULL")->execute();
+		\DB::query("ALTER TABLE ".\DB::table_prefix()."media CHANGE `upload_id` `id` BIGINT(20) NOT NULL")->execute();
+		\DB::query("ALTER TABLE ".\DB::table_prefix()."media CHANGE `upload_filename` `filename` TEXT NULL")->execute();
+		\DB::query("ALTER TABLE ".\DB::table_prefix()."media CHANGE `upload_mime_type` `mime_type` VARCHAR(255) NULL")->execute();
+		\DB::query("ALTER TABLE ".\DB::table_prefix()."media CHANGE `upload_resource_type` `resource_type` VARCHAR(100) NULL")->execute();
+		\DB::query("ALTER TABLE ".\DB::table_prefix()."media CHANGE `upload_user` `user_id` INT(11) NOT NULL")->execute();
+		\DB::query("ALTER TABLE ".\DB::table_prefix()."media CHANGE `upload_ip` `ip_address` VARCHAR(16) NOT NULL")->execute();
+		\DB::query("ALTER TABLE ".\DB::table_prefix()."media CHANGE `upload_date` `created_at` BIGINT(20) NULL")->execute();
 		
 		// make sure the primary key is set up properly
-		\DB::query('ALTER TABLE '.\DB::table_prefix().'uploads MODIFY COLUMN `id` BIGINT(20) auto_increment primary key')->execute();
+		\DB::query('ALTER TABLE '.\DB::table_prefix().'media MODIFY COLUMN `id` BIGINT(20) auto_increment primary key')->execute();
+
+		// add the updated_at field
+		$add = array(
+			'updated_at' => array(
+				'type' => 'INT',
+				'constraint' => 20,
+				'null' => true),
+		);
+		\DBUtil::add_fields('media', $add);
 		
 		// get a count of the specs
-		$count_new = \Model_Upload::count();
+		$count_new = \Model_Media::count();
 		
 		if ($count_new == 0)
 		{

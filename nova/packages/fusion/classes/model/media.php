@@ -1,6 +1,6 @@
 <?php
 /**
- * Uploads Model
+ * Media Model
  *
  * @package		Nova
  * @subpackage	Fusion
@@ -11,9 +11,9 @@
  
 namespace Fusion;
 
-class Model_Upload extends \Model {
+class Model_Media extends \Model {
 	
-	public static $_table_name = 'uploads';
+	public static $_table_name = 'media';
 	
 	public static $_properties = array(
 		'id' => array(
@@ -33,13 +33,28 @@ class Model_Upload extends \Model {
 			'null' => true),
 		'user_id' => array(
 			'type' => 'int',
-			'constraint' => 11,
-			'default' => 0),
+			'constraint' => 11),
 		'ip_address' => array(
 			'type' => 'string',
 			'constraint' => 16),
-		'date' => array(
+		'created_at' => array(
 			'type' => 'bigint',
 			'constraint' => 20),
+		'updated_at' => array(
+			'type' => 'bigint',
+			'constraint' => 20,
+			'null' => true),
+	);
+
+	/**
+	 * Observers
+	 */
+	protected static $_observers = array(
+		'\\Orm\\Observer_CreatedAt' => array(
+			'events' => array('before_insert')
+		),
+		'\\Orm\\Observer_UpdatedAt' => array(
+			'events' => array('before_save')
+		),
 	);
 }
