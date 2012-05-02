@@ -55,7 +55,7 @@ class Model_Catalog_Module extends \Model {
 	 * @param	string	the status of modules
 	 * @return	object	an object with the results
 	 */
-	public static function get_all_entries($status = 'active')
+	public static function get_all_items($status = 'active')
 	{
 		return static::find()->where('status', $status);
 	}
