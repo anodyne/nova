@@ -201,6 +201,80 @@ class Setup
 		
 		return true;
 	}
+
+	/**
+	 * Install Nova with migrations.
+	 *
+	 * @internal
+	 * @return	bool
+	 */
+	public static function migration_install()
+	{
+		// move up to the latest migration
+		\Migrate::latest('setup', 'module');
+		
+		if (\Config::get('nova.dev_install'))
+		{
+			// pause the script for a few seconds to let the server breathe
+			sleep(5);
+			
+			// wipe out the data from inserting the data
+			unset($data);
+			
+			// load the file
+			include \Finder::search('assets/install', 'dev');
+			
+			$insert = array();
+			
+			foreach ($data as $value)
+			{
+				foreach ($$value as $k => $v)
+				{
+					// do the query
+					$result = \DB::insert($value)->set($v)->execute();
+
+					// capture whether it was successful or not
+					$insert[$value] = (is_array($result));
+				}
+			}
+			
+			if (in_array(false, $insert))
+			{
+				throw new NovaInstallException('Dev data insert failed.');
+			}
+		}
+		
+		// do the quick installs
+		\QuickInstall::rank();
+		\QuickInstall::skin();
+		\QuickInstall::widget();
+		
+		// clear the entire cache
+		\Cache::delete_all();
+		
+		// cache the headers
+		\Model_SiteContent::get_section_content('header', 'main');
+		\Model_SiteContent::get_section_content('header', 'sim');
+		\Model_SiteContent::get_section_content('header', 'personnel');
+		\Model_SiteContent::get_section_content('header', 'search');
+		\Model_SiteContent::get_section_content('header', 'login');
+		
+		// cache the titles
+		\Model_SiteContent::get_section_content('title', 'main');
+		\Model_SiteContent::get_section_content('title', 'sim');
+		\Model_SiteContent::get_section_content('title', 'personnel');
+		\Model_SiteContent::get_section_content('title', 'search');
+		\Model_SiteContent::get_section_content('title', 'login');
+		
+		// cache the messages
+		\Model_SiteContent::get_section_content('message', 'main');
+		\Model_SiteContent::get_section_content('message', 'sim');
+		\Model_SiteContent::get_section_content('message', 'personnel');
+		\Model_SiteContent::get_section_content('message', 'search');
+		\Model_SiteContent::get_section_content('message', 'login');
+		
+		return true;
+	}
 	
 	/**
 	 * Send the registration email out.
