@@ -10,11 +10,6 @@
 
 namespace Fuel\Tasks;
 
-use Cli;
-use Config;
-use Fuel;
-use Finder;
-
 class NovaInit
 {	
 	/**
@@ -24,7 +19,7 @@ class NovaInit
 	 * @param	string	the command to run
 	 * @return	void
 	 */
-	public static function run($command = 'help', $arg = 'YES')
+	public static function run($command = 'help', $arg = 'y')
 	{
 		$return = '';
 
@@ -66,14 +61,14 @@ Description:
 Options:
   help          Show help for the task
   
-  fields        Run the job that generates the schema file (YES/NO can be passed
+  fields        Run the job that generates the schema file (y/n can be passed
   	            to this as well based on whether you want the job to attempt to
   	            backup the old file first).
   	            
   backup        Run the job that generates a backup of the old schema file.
 HELP;
 
-		Cli::write($help);
+		\Cli::write($help);
 	}
 	
 	/**
@@ -90,13 +85,13 @@ HELP;
 		$path = NOVAPATH.'setup/assets/';
 		
 		// manually add the nova module to the paths
-		Finder::instance()->add_path(Fuel::add_module('nova'));
+		\Finder::instance()->add_path(\Fuel::add_module('nova'));
 		
 		// go out and load then merge the nova config files
-		Config::load('nova', true, false, true);
+		\Config::load('nova', true, false, true);
 		
 		// set the version number
-		$version = Config::get('nova.app_version_full');
+		$version = \Config::get('nova.app_version_full');
 
 		// check to see if the install file exists and if it does, back it up
 		if (file_exists($path.'install/fields.php'))
@@ -134,11 +129,11 @@ HELP;
 		// now check to see if the backup exists and print the appropriate message
 		if (file_exists($path.'backups/fields_'.$version.'.php'))
 		{
-			Cli::write('Database schema backed up successfully!', 'green');
+			\Cli::write('Database schema backed up successfully!', 'green');
 		}
 		else
 		{
-			Cli::write('Database schema back up failed!', 'red');
+			\Cli::write('Database schema back up failed!', 'red');
 		}
 	}
 	
@@ -150,9 +145,9 @@ HELP;
 	 * @param	string	should a backup be attempted? (YES/NO)
 	 * @return	string	a CLI message
 	 */
-	public static function generate_install_fields($attempt_backup = 'YES')
+	public static function generate_install_fields($attempt_backup = 'y')
 	{
-		if ($attempt_backup == 'YES')
+		if ($attempt_backup == 'y')
 		{
 			static::backup_install_fields();
 		}
@@ -304,7 +299,7 @@ HELP;
 		// build the content
 		$content = '<?php
 
-$_genre = strtolower(\Config::get(\'nova.genre\'));
+$_genre = strtolower(\\Config::get(\'nova.genre\'));
 
 '.$data.'
 '.$fields;
@@ -313,7 +308,7 @@ $_genre = strtolower(\Config::get(\'nova.genre\'));
 		file_put_contents(NOVAPATH.'setup/assets/install/fields.php', $content);
 		
 		// print out a message to the CLI
-		Cli::write('Database schema file written.');
+		\Cli::write('Database schema file written.');
 	}
 	
 	/**
