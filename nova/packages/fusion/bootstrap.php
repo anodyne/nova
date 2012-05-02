@@ -53,10 +53,8 @@ Autoloader::add_classes(array(
 	'Fusion\\Model_Character_Positions'		=> __DIR__.'/classes/model/character/positions.php',
 	'Fusion\\Model_Character_Promotion'		=> __DIR__.'/classes/model/character/promotion.php',
 	
-	'Fusion\\Model_Coc'						=> __DIR__.'/classes/model/coc.php',
 	'Fusion\\Model_Comment'					=> __DIR__.'/classes/model/comment.php',
 	'Fusion\\Model_Department'				=> __DIR__.'/classes/model/department.php',
-	'Fusion\\Model_Docking'					=> __DIR__.'/classes/model/docking.php',
 	
 	'Fusion\\Model_Form'					=> __DIR__.'/classes/model/form.php',
 	'Fusion\\Model_Form_Data'				=> __DIR__.'/classes/model/form/data.php',
@@ -78,7 +76,6 @@ Autoloader::add_classes(array(
 	'Fusion\\Model_Post'					=> __DIR__.'/classes/model/post.php',
 	'Fusion\\Model_PostAuthor'				=> __DIR__.'/classes/model/postauthor.php',
 	'Fusion\\Model_Rank'					=> __DIR__.'/classes/model/rank.php',
-	'Fusion\\Model_SecurityQuestion'		=> __DIR__.'/classes/model/securityquestion.php',
 	'Fusion\\Model_Session'					=> __DIR__.'/classes/model/session.php',
 	'Fusion\\Model_Settings'				=> __DIR__.'/classes/model/settings.php',
 	'Fusion\\Model_SimType'					=> __DIR__.'/classes/model/simtype.php',
