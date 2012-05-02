@@ -30,22 +30,9 @@ else
 			.fail {
 				color: #c00;
 			}
-			#results {
-				padding: .75em;
-				color: #fff;
-				font-size: 18px;
-				border-radius: 4px 4px 4px 4px;
-			}
-			#results.pass {
-				background: #191;
-			}
-			#results.fail {
-				background: #911;
-			}
-			#results code {
-				background: rgba(255, 255, 255, .5);
-				border: none;
-				font-size: 18px;
+			.tip {
+				cursor: help;
+				color: #08c;
 			}
 		</style>
 	</head>
@@ -57,7 +44,7 @@ else
 			
 			<div class="row">
 				<div class="span3">
-					<p>Nova 3 has been designed to work on as many servers as possible. That being said, there are still some requirements that must be met in order for Nova 3 to run. These environment tests are designed to determine if Nova 3 will run on our server. If any of these tests have failed, Nova 3 won't work and you'll need to contact your host to address the problems (except for issues of directory writability).</p>
+					<p>Nova 3 has been designed to work in as many environments as possible. That being said, there are still some requirements that must be met in order for Nova 3 to run. These environment tests are designed to determine if Nova 3 will run on your server. If any of these tests have failed, Nova 3 won't work and you'll need to contact your host to address the problems.<sup class="tip" title="Issues of directory writability can be fixed from inside an FTP client or cPanel">1</sup></p>
 				</div>
 				
 				<div class="span9">
@@ -74,15 +61,15 @@ else
 							<tr>
 								<td>PHP Version</td>
 								<?php if (version_compare(PHP_VERSION, '5.3.0', '>=')): ?>
-									<td><?php echo PHP_VERSION ?></td>
+									<td><span class="label label-success"><?php echo PHP_VERSION ?></span></td>
 								<?php else: $failed = true;?>
-									<td class="fail">Nova 3 requires PHP 5.3 or newer, you are running version <?php echo PHP_VERSION ?>.</td>
+									<td><span class="label label-important"><?php echo PHP_VERSION ?></span></td>
 								<?php endif;?>
 							</tr>
 							<tr>
 								<td>MySQL Enabled</td>
 								<?php if (function_exists('mysql_connect')): ?>
-									<td>Pass</td>
+									<td><span class="label label-success">Pass</span></td>
 								<?php else: $failed = true;?>
 									<td class="fail">FuelPHP can use the <a href="http://php.net/mysql">MySQL</a> extension to support MySQL databases.</td>
 								<?php endif;?>
@@ -97,8 +84,8 @@ else
 							</tr>
 							<tr>
 								<td>Nova Core</td>
-								<?php if (is_dir('nova/modules/nova') AND is_dir('nova/modules/setup') AND is_dir('nova/modules/assets')): ?>
-									<td><code>nova/modules/nova/</code>, <code>nova/modules/setup</code>, <code>nova/modules/assets/</code></td>
+								<?php if (is_dir('nova/modules/nova') AND is_dir('nova/modules/setup')): ?>
+									<td><code>nova/modules/nova/</code>, <code>nova/modules/setup/</code></td>
 								<?php else: $failed = true;?>
 									<td class="fail">The Nova core does not exist or is missing required directories.</td>
 								<?php endif;?>
@@ -133,9 +120,15 @@ else
 			</div>
 
 			<?php if ($failed === true): ?>
-				<p id="results" class="fail">Nova 3 will not work in your environment. Please contact your host to address these issues.</p>
+				<div class="alert alert-danger alert-block">
+					<h4 class="alert-heading">Warning!</h4>
+					<p>Nova 3 will not work in your environment. Please contact your host to address the above issues.</p>
+				</div>
 			<?php else: ?>
-				<p id="results" class="pass">Your environment passed all requirements. Please remove or rename the <code>install.php</code> file now.</p>
+				<div class="alert alert-success alert-block">
+					<h4 class="alert-heading">Success!</h4>
+					<p>Your environment passed all requirements. You should remove or rename the <code>install.php</code> file now before continuing.</p>
+				</div>
 			<?php endif;?>
 			
 			<div class="page-header">
@@ -144,7 +137,7 @@ else
 			
 			<div class="row">
 				<div class="span3">
-					<p>These options tests will determine if extensions and classes are available for use. The following extensions are not required to run Nova 3, but if enabled can provide additional functionality.</p>
+					<p>These optional tests will determine if certain extensions and classes are available for use by Nova. The following extensions are not required to run Nova 3, but if enabled can provide additional functionality.</p>
 				</div>
 				
 				<div class="span9">
@@ -159,7 +152,7 @@ else
 							<tr>
 								<td>mbstring Enabled</td>
 								<?php if (extension_loaded('mbstring')): ?>
-									<td>Pass</td>
+									<td><span class="label label-success">Pass</span></td>
 								<?php else: ?>
 									<td class="fail">The <a href="http://php.net/mbstring">mbstring</a> extension is not loaded. Nova will not have multibyte support.</td>
 								<?php endif;?>
@@ -167,7 +160,7 @@ else
 							<tr>
 								<td>mcrypt Enabled</td>
 								<?php if (extension_loaded('mcrypt')): ?>
-									<td>Pass</td>
+									<td><span class="label label-success">Pass</span></td>
 								<?php else: ?>
 									<td class="fail">The <a href="http://php.net/mcrypt">mcrypt</a> extension is not loaded. PHPSecLib will be used to emulate its functionality.</td>
 								<?php endif;?>
@@ -175,7 +168,7 @@ else
 							<tr>
 								<td>fileinfo Enabled</td>
 								<?php if (extension_loaded('fileinfo')): ?>
-									<td>Pass</td>
+									<td><span class="label label-success">Pass</span></td>
 								<?php else: ?>
 									<td class="fail">The <a href="http://us.php.net/manual/en/book.fileinfo.php">fileinfo</a> extension is not loaded. If you are running on a Windows server, additional DLLs may need to be installed in order for FileInfo to work.</td>
 								<?php endif;?>
@@ -185,5 +178,13 @@ else
 				</div>
 			</div>
 		</div>
+
+		<script type="text/javascript" src="http://code.jquery.com/jquery-1.7.2.min.js"></script>
+		<script type="text/javascript" src="nova/modules/assets/js/bootstrap.min.js"></script>
+		<script type="text/javascript">
+			$(document).ready(function(){
+				$('.tip').tooltip({ placement: 'right' });
+			});
+		</script>
 	</body>
 </html>
