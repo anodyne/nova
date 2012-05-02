@@ -20,7 +20,7 @@ The other option (and the recommended option) is to use a `custom.css` styleshee
 
 This may seem like a monstrous change, but in reality, things will be a lot simpler for making those minor modifications that most people do.
 
-## A Couple Simple Example
+## A Couple Simple Examples
 
 Let's say we want to take the default Nova 3 skin and make a few tweaks. How exactly would we do that?
 

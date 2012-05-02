@@ -6,6 +6,7 @@
     * Remove the genre assets
     * Remove anything in the app/logs directory
     * Remove anything in the app/cache directory
+    * Remove the app/config/migration.php file and replace with a clean copy
 * Run unit tests
     * Stop on fail
     * If unit tests pass, log the result and remove the tests directories
@@ -19,5 +20,6 @@
     * Run the command through oil (php oil refine novainit)
 	* Remove the field backups
 	* Remove the NovaInit task after the process is finished
+    * Remove the tasks directory (?)
 * Build the zip files for individual genres
 * Deploy the zip files to the server

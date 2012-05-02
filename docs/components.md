@@ -104,9 +104,9 @@ Nova is made up of a wide range of plugins and components to help make it what i
     * Location
         * nova/modules/assets/js/jquery.ajaxq.js
 * jQuery UI
-    * Version: 1.8.19
+    * Version: 1.8.20
     * Site: http://jqueryui.com
-    * Location:
+    * Location
         * nova/modules/assets/js/jquery.ui.accordion.min.js
         * nova/modules/assets/js/jquery.ui.autocomplete.min.js
         * nova/modules/assets/js/jquery.ui.button.min.js
