@@ -29,34 +29,33 @@ class SystemEvent
 	{
 		$data = array();
 
-		switch ($type)
+		// get the user
+		$user = \Sentry::user();
+
+		try
 		{
-			case 'character':
-				// get the user
-				$user = \Sentry::user();
+			// make sure we have a user
+			$user->get('id');
+		}
+		catch (\Sentry\SentryUserException $e)
+		{
+			// if we don't have a user, set the variable to null
+			$user = null;
+		}
 
-				$data = array(
-					'email' => $user->email,
-					'user_id' => $user->id,
-					'character_id' => $user->character->id,
-				);
-			break;
-
-			case 'user':
-				// get the user
-				$user = \Sentry::user();
-
-				$data = array(
-					'email' => $user->email,
-					'user_id' => $user->id,
-				);
-			break;
+		// character types have one extra item to capture
+		if ($type == 'character')
+		{
+			$data = array(
+				'character_id' => ($user !== null) ? $user->character->id : 0,
+			);
 		}
 
 		// merge two arrays
 		$data = array_merge($data, array(
+			'email' => ($user !== null) ? $user->email : '',
+			'user_id' => ($user !== null) ? $user->id : 0,
 			'ip' => \Input::real_ip(),
-			'created_at' => time(),
 			'content' => lang($content)
 		));
 
