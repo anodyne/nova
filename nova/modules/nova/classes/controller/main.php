@@ -100,9 +100,6 @@ abstract class Controller_Main extends Controller_Base_Main
 
 	public function action_test()
 	{
-		//echo $this->template->layout->navmain_dropdown;
-
-		//\Debug::dump(__('notifications'));
 		return;
 	}
 }
