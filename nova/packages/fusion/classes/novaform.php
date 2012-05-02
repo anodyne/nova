@@ -1,7 +1,7 @@
 <?php
 /**
- * The NovaForm class handles building some of the more complex select
- * menus found throughout Nova.
+ * The NovaForm class handles building some of the more complex form
+ * elements found throughout Nova.
  *
  * @package		Nova
  * @subpackage	Fusion
@@ -23,6 +23,7 @@ class NovaForm
 		$data->sections = array();
 		$data->fields = array();
 		$data->data = array();
+		$data->id = $id;
 
 		// get the form elements
 		$tabs = \Model_Form_Tab::find_form_items($key, true);
