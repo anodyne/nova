@@ -8,7 +8,7 @@
 			<div class="control-group">
 				<label class="control-label">Sim Name</label>
 				<div class="controls">
-					<?php echo Form::password(array('name' => 'sim_name', 'class' => 'span4'));?>
+					<?php echo Form::input(array('name' => 'sim_name', 'class' => 'span4'));?>
 				</div>
 			</div>
 		</fieldset>
