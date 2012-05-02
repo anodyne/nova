@@ -305,6 +305,11 @@ class Migrate
 			foreach (\Config::get('module_paths') as $m)
 			{
 				$files = glob($m .$name.'/'.\Config::get('migrations.folder').'*_*.php');
+
+				if (count($files))
+				{
+					break;
+				}
 			}
 		}
 		else
