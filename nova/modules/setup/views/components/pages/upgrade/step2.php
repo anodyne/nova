@@ -124,7 +124,7 @@
 				<td class="align-center"><?php echo Form::radio('upgrade_tour', 1, array('checked' => true));?></td>
 				<td class="align-center"><?php echo Form::radio('upgrade_tour', 0);?></td>
 			</tr>
-			<tr>
+			<!--<tr>
 				<td>
 					Docking Items (if applicable)
 					<p class="alert alert-danger hide"><span class="errors-content"></span></p>
@@ -137,7 +137,7 @@
 				</td>
 				<td class="align-center"><?php echo Form::radio('upgrade_docking', 1, array('checked' => true));?></td>
 				<td class="align-center"><?php echo Form::radio('upgrade_docking', 0);?></td>
-			</tr>
+			</tr>-->
 			<tr>
 				<td>
 					Wiki Pages
