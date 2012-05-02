@@ -107,7 +107,8 @@ class Controller_Install extends Controller_Base_Setup
 				if (\Input::method() == 'POST')
 				{
 					// do the install
-					Setup::install();
+					//Setup::install();
+					Setup::migration_install();
 				}
 				
 				$this->_view = 'install/step1';
