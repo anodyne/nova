@@ -37,11 +37,6 @@ class Controller_Upgradeajax extends \Controller
 		$codes['characters'] = $characters['code'];
 		$messages['characters'] = $characters['message'];
 		
-		// chain of command
-		$coc = $this->_upgrade_coc();
-		$codes['coc'] = $coc['code'];
-		$messages['coc'] = $coc['message'];
-		
 		// promotions
 		$promotions = $this->_upgrade_character_promotions();
 		$codes['promotions'] = $promotions['code'];
@@ -1724,7 +1719,7 @@ class Controller_Upgradeajax extends \Controller
 		 */
 		 
 		// clear out the existing the tabs
-		\DB::query("DELETE FROM `".\DB::table_prefix()."form_tabs` WHERE `form_key` = 'bio'")->execute();
+		\DB::query("DELETE FROM `".\DB::table_prefix()."form_tabs` WHERE `form_key` = 'character'")->execute();
 		
 		// pull the tabs from n1
 		$result = \DB::query("SELECT * FROM `nova2_characters_tabs`")->execute();
@@ -1736,7 +1731,7 @@ class Controller_Upgradeajax extends \Controller
 			foreach ($result as $r)
 			{
 				$data = array(
-					'form_key' 	=> 'bio',
+					'form_key' 	=> 'character',
 					'name' 		=> $r['tab_name'],
 					'link_id' 	=> $r['tab_link_id'],
 					'order' 	=> $r['tab_order'],
@@ -1756,7 +1751,7 @@ class Controller_Upgradeajax extends \Controller
 		 */
 		 
 		// clear out the existing sections
-		\DB::query("DELETE FROM `".\DB::table_prefix()."form_sections` WHERE `form_key` = 'bio'")->execute();
+		\DB::query("DELETE FROM `".\DB::table_prefix()."form_sections` WHERE `form_key` = 'character'")->execute();
 		
 		// pull the sections from n1
 		$result = \DB::query("SELECT * FROM `nova2_characters_sections`")->execute();
@@ -1768,7 +1763,7 @@ class Controller_Upgradeajax extends \Controller
 			foreach ($result as $r)
 			{
 				$data = array(
-					'form_key' 	=> 'bio',
+					'form_key' 	=> 'character',
 					'tab_id' 	=> $tabs[$r['section_tab']],
 					'name' 		=> $r['section_name'],
 					'order' 	=> $r['section_order']
@@ -1787,7 +1782,7 @@ class Controller_Upgradeajax extends \Controller
 		 */
 		
 		// clear out the existing fields
-		\DB::query("DELETE FROM `".\DB::table_prefix()."form_fields` WHERE `form_key` = 'bio'")->execute();
+		\DB::query("DELETE FROM `".\DB::table_prefix()."form_fields` WHERE `form_key` = 'character'")->execute();
 		
 		// pull the fields from n1
 		$result = \DB::query("SELECT * FROM `nova2_characters_fields`")->execute();
@@ -1799,7 +1794,7 @@ class Controller_Upgradeajax extends \Controller
 			foreach ($result as $r)
 			{
 				$data = array(
-					'form_key' 		=> 'bio',
+					'form_key' 		=> 'character',
 					'section_id' 	=> $sections[$r['field_section']],
 					'type' 			=> $r['field_type'],
 					'html_name' 	=> $r['field_name'],
@@ -1858,7 +1853,7 @@ class Controller_Upgradeajax extends \Controller
 		 */
 		
 		// clear out the existing data
-		\DB::query("DELETE FROM `".\DB::table_prefix()."form_data` WHERE `form_key` = 'bio'")->execute();
+		\DB::query("DELETE FROM `".\DB::table_prefix()."form_data` WHERE `form_key` = 'character'")->execute();
 		
 		// pull the data from n1
 		$result = \DB::query("SELECT * FROM `nova2_characters_data`")->execute();
@@ -1868,7 +1863,7 @@ class Controller_Upgradeajax extends \Controller
 			foreach ($result as $r)
 			{
 				$data = array(
-					'form_key' 		=> 'bio',
+					'form_key' 		=> 'character',
 					'field_id' 		=> $fields[$r['data_field']],
 					'user_id' 		=> ($r['data_user'] === null or (int) $r['data_user'] === 0) ? 0 : $r['data_user'],
 					'character_id' 	=> $r['data_char'],
@@ -1927,11 +1922,11 @@ class Controller_Upgradeajax extends \Controller
 		}
 		
 		// check the new counts
-		$count_tabs_new = \Model_Form_Tab::count(array('where' => array('form_key' => 'bio')));
-		$count_sections_new = \Model_Form_Section::count(array('where' => array('form_key' => 'bio')));
-		$count_fields_new = \Model_Form_Field::count(array('where' => array('form_key' => 'bio')));
+		$count_tabs_new = \Model_Form_Tab::count(array('where' => array('form_key' => 'character')));
+		$count_sections_new = \Model_Form_Section::count(array('where' => array('form_key' => 'character')));
+		$count_fields_new = \Model_Form_Field::count(array('where' => array('form_key' => 'character')));
 		$count_values_new = \Model_Form_Value::count();
-		$count_data_new = \Model_Form_Data::count(array('where' => array('form_key' => 'bio')));
+		$count_data_new = \Model_Form_Data::count(array('where' => array('form_key' => 'character')));
 		
 		if ($count_tabs_old == $count_tabs_new and $count_sections_old == $count_sections_new and $count_fields_old == $count_fields_new
 				and $count_values_old == $count_values_new and $count_data_old == $count_data_new)
