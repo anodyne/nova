@@ -19,6 +19,7 @@
 
 		<div class="control-group">
 			<div class="controls">
+				<br>
 				<button class="btn btn-primary"><?php echo lang('action.login', 2);?></button>
 				<a href="<?php echo Uri::create('main/index');?>" class="btn"><?php echo lang('action.back to site', 1);?></a>
 			</div>
