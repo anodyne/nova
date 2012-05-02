@@ -18,10 +18,6 @@ body {
 	opacity: 0.75;
 }
 
-.input-append .add-on, .input-append .btn {
-	margin-bottom: 9px;
-}
-
 .nav-tabs > .active > a, .nav-tabs > .active > a:hover {
 	outline: 0;
 }
