@@ -62,7 +62,7 @@ class Model_Catalog_Rank extends \Model {
 	 * dynamic, so we need this in order to change the table name once the
 	 * class is loaded.
 	 *
-	 * @access	public
+	 * @api
 	 * @return	void
 	 */
 	public static function init()
@@ -73,7 +73,7 @@ class Model_Catalog_Rank extends \Model {
 	/**
 	 * Get all items from the catalog.
 	 *
-	 * @access	public
+	 * @api
 	 * @param	string	the status to pull
 	 * @param	bool	whether to limit to the current genre or not
 	 * @return	object	an object of results
