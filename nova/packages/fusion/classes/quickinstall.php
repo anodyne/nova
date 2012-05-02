@@ -1,7 +1,7 @@
 <?php
 /**
- * The QuickInstall class provides methods for installing modules, ranks, skins, and
- * widgets into Nova's catalogs.
+ * The QuickInstall class provides methods for installing modules, ranks, skins,
+ * and widgets into Nova's catalogs.
  *
  * @package		Nova
  * @subpackage	Fusion
@@ -14,60 +14,160 @@ namespace Fusion;
 
 class QuickInstall
 {
+	/**
+	 * Install a module or loop through all the modules and install whatever
+	 * isn't already installed.
+	 *
+	 * @api
+	 * @param	string	the directory of the module to install or NULL for all modules
+	 * @return	void
+	 */
 	public static function module($location = null)
 	{
-		return true;
+		if ($location === null)
+		{
+			// get a listing of all modules
+			$dir = \File::read_dir(APPPATH.'modules');
+
+			// get all the installed modules
+			$modules = \Model_Catalog_Module::get_all_items();
+
+			if (count($modules) > 0)
+			{
+				// start by removing anything that's already installed
+				foreach ($modules as $module)
+				{
+					if (array_key_exists($module->location.DS, $dir))
+					{
+						unset($dir[$module->location.DS]);
+					}
+				}
+			}
+				
+			// loop through the directories now
+			foreach ($dir as $key => $value)
+			{
+				try
+				{
+					// get the list of files for the module's migrations
+					$moddir = \File::read_dir(APPPATH.'modules/'.$key.'migrations');
+
+					// if we have migration files, do the module install
+					if (count($moddir) > 0)
+					{
+						// clean the key
+						$clean_key = str_replace(DS, '', $key);
+
+						// run the migration
+						\Migrate::latest($clean_key, 'module');
+					}
+				}
+				catch (\Fuel\Core\InvalidPathException $e)
+				{
+					// we have no migrations to run for this module
+				}
+
+				// assign our path to a variable
+				$file = APPPATH.'modules/'.$key.'module.json';
+				
+				// make sure the QI file exists first
+				if (file_exists($file))
+				{
+					// get the contents and decode the JSON
+					$content = file_get_contents($file);
+					$data = json_decode($content);
+					
+					// create the item
+					\Model_Catalog_Module::create_item($data);
+				}
+			}
+		}
+		else
+		{
+			try
+			{
+				// get the list of files for the module's migrations
+				$dir = \File::read_dir(APPPATH.'modules/'.$location.'/migrations');
+
+				// if we have migration files, do the module install
+				if (count($dir) > 0)
+				{
+					\Migrate::latest($location, 'module');
+				}
+			}
+			catch (\Fuel\Core\InvalidPathException $e)
+			{
+				// we have no migrations to run for this module
+			}
+
+			// assign our path to a variable
+			$file = APPPATH.'modules/'.$location.'/module.json';
+			
+			// make sure the QI file exists first
+			if (file_exists($file))
+			{
+				// get the contents and decode the JSON
+				$content = file_get_contents($file);
+				$data = json_decode($content);
+				
+				// create the item
+				\Model_Catalog_Module::create_item($data);
+			}
+		}
 	}
 	
+	/**
+	 * Install a rank set or loop through all the ranks and install whatever
+	 * isn't already installed.
+	 *
+	 * @api
+	 * @param	string	the directory of the rank to install or NULL for all ranks
+	 * @return	void
+	 */
 	public static function rank($location = null)
 	{
-		return true;
-		/*
 		if ($location === null)
 		{
 			// get the directory listing for the genre
-			$dir = self::directory_list(APPPATH.'assets/common/'.Kohana::$config->load('nova.genre').'/ranks/');
-			
+			$dir = \File::read_dir(APPPATH.'assets/common/'.\Config::get('nova.genre').'/ranks/');
+
 			// get all the rank sets locations
-			$ranks = Model_Catalog_Rank::get_all_items();
-			
+			$ranks = \Model_Catalog_Rank::get_all_items();
+
 			if (count($ranks) > 0)
 			{
 				// start by removing anything that's already installed
 				foreach ($ranks as $rank)
 				{
-					// find the location in the directory listing
-					$key = array_search($rank->location, $dir);
-					
-					if ($key !== false)
+					if (array_key_exists($rank->location.DS, $dir))
 					{
-						unset($dir[$key]);
+						unset($dir[$rank->location.DS]);
 					}
 				}
+			}
 				
-				// loop through the directories now
-				foreach ($dir as $key => $value)
+			// loop through the directories now
+			foreach ($dir as $key => $value)
+			{
+				// assign our path to a variable
+				$file = APPPATH.'assets/common/'.\Config::get('nova.genre').'/ranks/'.$key.'rank.json';
+
+				// make sure the file exists first
+				if (file_exists($file))
 				{
-					// assign our path to a variable
-					$file = APPPATH.'assets/common/'.Kohana::$config->load('nova.genre').'/ranks/'.$value.'/rank.json';
-					
-					// make sure the file exists first
-					if (file_exists($file))
-					{
-						// get the contents and decode the JSON
-						$content = file_get_contents($file);
-						$data = json_decode($content);
-						
-						// create the item
-						Model_CatalogueRank::create_item($data);
-					}
+					// get the contents and decode the JSON
+					$content = file_get_contents($file);
+					$data = json_decode($content);
+
+					// create the item
+					\Model_Catalog_Rank::create_item($data);
 				}
 			}
 		}
 		else
 		{
 			// assign our path to a variable
-			$file = APPPATH.'assets/common/'.Kohana::$config->load('nova.genre').'/ranks/'.$location.'/rank.json';
+			$file = APPPATH.'assets/common/'.\Config::get('nova.genre').'/ranks/'.$location.'/rank.json';
 			
 			// make sure the file exists first
 			if (file_exists($file))
@@ -77,10 +177,9 @@ class QuickInstall
 				$data = json_decode($content);
 				
 				// create the item
-				Model_CatalogueRank::create_item($data);
+				\Model_Catalog_Rank::create_item($data);
 			}
 		}
-		*/
 	}
 	
 	public static function skin($location = null)
