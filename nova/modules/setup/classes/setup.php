@@ -171,6 +171,7 @@ class Setup
 		}
 		
 		// do the quick installs
+		\QuickInstall::module();
 		\QuickInstall::rank();
 		\QuickInstall::skin();
 		\QuickInstall::widget();
@@ -245,6 +246,7 @@ class Setup
 		}
 		
 		// do the quick installs
+		\QuickInstall::module();
 		\QuickInstall::rank();
 		\QuickInstall::skin();
 		\QuickInstall::widget();
