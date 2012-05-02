@@ -72,22 +72,22 @@ $catalog_skinsecs = array(
 
 $forms = array(
 	array(
-		'key' => 'bio',
-		'name' => 'Bio/Join Form'),
-	array(
-		'key' => 'specs',
-		'name' => 'Specifications Form'),
-	array(
-		'key' => 'tour',
-		'name' => 'Tour Form'),
+		'key' => 'character',
+		'name' => 'Character Information'),
 	array(
 		'key' => 'user',
 		'name' => 'User Information'),
+	array(
+		'key' => 'specs',
+		'name' => 'Specification Item'),
+	array(
+		'key' => 'tour',
+		'name' => 'Tour Item'),
 );
 
 $form_fields = array(
 	array(
-		'form_key' => 'bio',
+		'form_key' => 'character',
 		'section_id' => 1,
 		'type' => 'select',
 		'html_name' => 'gender',
@@ -96,7 +96,7 @@ $form_fields = array(
 		'label' => 'Gender',
 		'order' => 1),
 	array(
-		'form_key' => 'bio',
+		'form_key' => 'character',
 		'section_id' => 1,
 		'type' => 'text',
 		'html_name' => 'species',
@@ -106,7 +106,7 @@ $form_fields = array(
 		'placeholder' => 'e.g. Human',
 		'order' => 2),
 	array(
-		'form_key' => 'bio',
+		'form_key' => 'character',
 		'section_id' => 1,
 		'type' => 'text',
 		'html_name' => 'age',
@@ -117,7 +117,7 @@ $form_fields = array(
 		'placeholder' => 'Age',
 		'order' => 3),
 	array(
-		'form_key' => 'bio',
+		'form_key' => 'character',
 		'section_id' => 2,
 		'type' => 'text',
 		'html_name' => 'height',
@@ -127,7 +127,7 @@ $form_fields = array(
 		'placeholder' => 'e.g. 6\'2"',
 		'order' => 1),
 	array(
-		'form_key' => 'bio',
+		'form_key' => 'character',
 		'section_id' => 2,
 		'type' => 'text',
 		'html_name' => 'weight',
@@ -137,7 +137,7 @@ $form_fields = array(
 		'placeholder' => 'e.g. 215 lbs.',
 		'order' => 2),
 	array(
-		'form_key' => 'bio',
+		'form_key' => 'character',
 		'section_id' => 2,
 		'type' => 'text',
 		'html_name' => 'hair_color',
@@ -147,7 +147,7 @@ $form_fields = array(
 		'placeholder' => 'Hair Color',
 		'order' => 3),
 	array(
-		'form_key' => 'bio',
+		'form_key' => 'character',
 		'section_id' => 2,
 		'type' => 'text',
 		'html_name' => 'eye_color',
@@ -157,7 +157,7 @@ $form_fields = array(
 		'placeholder' => 'Eye Color',
 		'order' => 4),
 	array(
-		'form_key' => 'bio',
+		'form_key' => 'character',
 		'section_id' => 2,
 		'type' => 'textarea',
 		'html_name' => 'physical_desc',
@@ -168,7 +168,7 @@ $form_fields = array(
 		'placeholder' => 'Enter your physical description here',
 		'order' => 5),
 	array(
-		'form_key' => 'bio',
+		'form_key' => 'character',
 		'section_id' => 3,
 		'type' => 'text',
 		'html_name' => 'spouse',
@@ -178,7 +178,7 @@ $form_fields = array(
 		'placeholder' => 'Spouse',
 		'order' => 1),
 	array(
-		'form_key' => 'bio',
+		'form_key' => 'character',
 		'section_id' => 3,
 		'type' => 'textarea',
 		'html_name' => 'children',
@@ -188,7 +188,7 @@ $form_fields = array(
 		'placeholder' => 'Enter your character\'s children here',
 		'order' => 2),
 	array(
-		'form_key' => 'bio',
+		'form_key' => 'character',
 		'section_id' => 3,
 		'type' => 'text',
 		'html_name' => 'father',
@@ -198,7 +198,7 @@ $form_fields = array(
 		'placeholder' => 'Father',
 		'order' => 3),
 	array(
-		'form_key' => 'bio',
+		'form_key' => 'character',
 		'section_id' => 3,
 		'type' => 'text',
 		'html_name' => 'mother',
@@ -208,7 +208,7 @@ $form_fields = array(
 		'placeholder' => 'Mother',
 		'order' => 4),
 	array(
-		'form_key' => 'bio',
+		'form_key' => 'character',
 		'section_id' => 3,
 		'type' => 'textarea',
 		'html_name' => 'siblings',
@@ -218,7 +218,7 @@ $form_fields = array(
 		'placeholder' => 'Enter your character\'s siblings here',
 		'order' => 5),
 	array(
-		'form_key' => 'bio',
+		'form_key' => 'character',
 		'section_id' => 3,
 		'type' => 'textarea',
 		'html_name' => 'other_family',
@@ -228,7 +228,7 @@ $form_fields = array(
 		'placeholder' => 'Enter your character\'s other family here',
 		'order' => 6),
 	array(
-		'form_key' => 'bio',
+		'form_key' => 'character',
 		'section_id' => 4,
 		'type' => 'textarea',
 		'html_name' => 'personality',
@@ -239,7 +239,7 @@ $form_fields = array(
 		'placeholder' => 'Enter your character\'s general personality overview here',
 		'order' => 1),
 	array(
-		'form_key' => 'bio',
+		'form_key' => 'character',
 		'section_id' => 4,
 		'type' => 'textarea',
 		'html_name' => 'strengths',
@@ -250,7 +250,7 @@ $form_fields = array(
 		'placeholder' => 'Enter your character\'s strengths and weaknesses here',
 		'order' => 2),
 	array(
-		'form_key' => 'bio',
+		'form_key' => 'character',
 		'section_id' => 4,
 		'type' => 'textarea',
 		'html_name' => 'ambitions',
@@ -261,7 +261,7 @@ $form_fields = array(
 		'placeholder' => 'Enter your character\'s ambitions here',
 		'order' => 3),
 	array(
-		'form_key' => 'bio',
+		'form_key' => 'character',
 		'section_id' => 4,
 		'type' => 'textarea',
 		'html_name' => 'hobbies',
@@ -272,7 +272,7 @@ $form_fields = array(
 		'placeholder' => 'Enter your character\'s hobbies and interests here',
 		'order' => 4),
 	array(
-		'form_key' => 'bio',
+		'form_key' => 'character',
 		'section_id' => 4,
 		'type' => 'textarea',
 		'html_name' => 'languages',
@@ -283,7 +283,7 @@ $form_fields = array(
 		'placeholder' => 'Enter your character\'s known languages here',
 		'order' => 5),
 	array(
-		'form_key' => 'bio',
+		'form_key' => 'character',
 		'section_id' => 5,
 		'type' => 'textarea',
 		'html_name' => 'history',
@@ -294,7 +294,7 @@ $form_fields = array(
 		'placeholder' => 'Enter your character\'s personal history here',
 		'order' => 1),
 	array(
-		'form_key' => 'bio',
+		'form_key' => 'character',
 		'section_id' => 5,
 		'type' => 'textarea',
 		'html_name' => 'service_record',
@@ -602,27 +602,27 @@ $form_fields = array(
 
 $form_sections = array(
 	array(
-		'form_key' => 'bio',
+		'form_key' => 'character',
 		'tab_id' => 1,
 		'name' => 'Character Information',
 		'order' => 0),
 	array(
-		'form_key' => 'bio',
+		'form_key' => 'character',
 		'tab_id' => 1,
 		'name' => 'Physical Appearance',
 		'order' => 1),
 	array(
-		'form_key' => 'bio',
+		'form_key' => 'character',
 		'tab_id' => 1,
 		'name' => 'Family',
 		'order' => 2),
 	array(
-		'form_key' => 'bio',
+		'form_key' => 'character',
 		'tab_id' => 2,
 		'name' => 'Personality &amp; Traits',
 		'order' => 0),
 	array(
-		'form_key' => 'bio',
+		'form_key' => 'character',
 		'tab_id' => 3,
 		'name' => '',
 		'order' => 0),
@@ -654,17 +654,17 @@ $form_sections = array(
 
 $form_tabs = array(
 	array(
-		'form_key' => 'bio',
+		'form_key' => 'character',
 		'name' => 'Basic Info',
 		'link_id' => 'one',
 		'order' => 1),
 	array(
-		'form_key' => 'bio',
+		'form_key' => 'character',
 		'name' => 'Personality',
 		'link_id' => 'two',
 		'order' => 2),
 	array(
-		'form_key' => 'bio',
+		'form_key' => 'character',
 		'name' => 'History',
 		'link_id' => 'three',
 		'order' => 3),
@@ -1132,36 +1132,6 @@ $navigation = array(
 		'category' => 'site',
 		'use_access' => 1,
 		'access' => 'site/roles'),
-	array(
-		'name' => 'Bio Form',
-		'group' => 1,
-		'order' => 0,
-		'url' => 'site/bioform',
-		'sim_type' => 1,
-		'type' => 'adminsub',
-		'category' => 'site',
-		'use_access' => 1,
-		'access' => 'site/bioform'),
-	array(
-		'name' => 'Specs Form',
-		'group' => 1,
-		'order' => 1,
-		'url' => 'site/specsform',
-		'sim_type' => 1,
-		'type' => 'adminsub',
-		'category' => 'site',
-		'use_access' => 1,
-		'access' => 'site/specsform'),
-	array(
-		'name' => 'Tour Form',
-		'group' => 1,
-		'order' => 2,
-		'url' => 'site/tourform',
-		'sim_type' => 1,
-		'type' => 'adminsub',
-		'category' => 'site',
-		'use_access' => 1,
-		'access' => 'site/tourform'),
 	array(
 		'name' => 'Sim Types',
 		'group' => 2,
