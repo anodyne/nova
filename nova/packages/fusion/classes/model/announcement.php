@@ -37,7 +37,7 @@ class Model_Announcement extends \Model {
 			'type' => 'bigint',
 			'constraint' => 20),
 		'content' => array(
-			'type' => 'text'),
+			'type' => 'blob'),
 		'status' => array(
 			'type' => 'enum',
 			'constraint' => "'activated','saved','pending'",
@@ -76,6 +76,18 @@ class Model_Announcement extends \Model {
 			'key_from' => 'user_id',
 			'cascade_save' => false,
 			'cascade_delete' => false,
+		),
+	);
+
+	/**
+	 * Observers
+	 */
+	protected static $_observers = array(
+		'\\Orm\\Observer_CreatedAt' => array(
+			'events' => array('before_insert')
+		),
+		'\\Orm\\Observer_UpdatedAt' => array(
+			'events' => array('before_save')
 		),
 	);
 	
