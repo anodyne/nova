@@ -21,6 +21,9 @@ class Controller_Admin_Media extends Controller_Base_Admin
 
 	public function action_index()
 	{
+		$this->_view = 'admin/media/index';
+		$this->_js_view = 'admin/media/index_js';
+
 		if (\Input::method() == 'POST')
 		{
 			// make sure we're putting images in the right places
