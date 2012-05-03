@@ -2,6 +2,12 @@
 
 return array(
 	'admin' => array(
+		'catalog' => array(
+			'module_create' => "The :0 module was installed",
+			'module_update' => "The :0 module was updated",
+			'module_delete' => "The :0 module was uninstalled",
+		),
+
 		'form' => array(
 			'update' => "The :0 form was updated",
 

@@ -16,6 +16,7 @@ return array(
 
 	'display' => 'display',
 	'dropdown' => 'dropdown menu',
+	'desc' => 'description',
 
 	'email_address' => "email address",
 
@@ -40,10 +41,13 @@ return array(
 	'labels' => 'labels',
 	'link' => 'link',
 	'last' => 'last',
+	'location' => 'location',
 
 	'message' => "message",
 	'my' => "my :thing",
 	'middle' => 'middle',
+	'module' => 'module',
+	'modules' => 'modules',
 
 	'name' => "name",
 	'notification' => "notification",
@@ -64,6 +68,7 @@ return array(
 	'rows' => 'rows',
 	'restriction' => 'restriction',
 	'restrictions' => 'restrictions',
+	'readme' => 'readme',
 
 	'section' => "section",
 	'sections' => "sections",

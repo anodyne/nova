@@ -18,6 +18,9 @@ return array(
 	'deletion' => 'deletion',
 	
 	'edit' => 'edit',
+
+	'install' => 'install',
+	'installed' => 'installed',
 	
 	'login' => 'log in',
 	'logout' => 'logout',
@@ -33,4 +36,8 @@ return array(
 
 	'update' => 'update',
 	'updated' => 'updated',
+	'uninstall' => 'uninstall',
+	'uninstalled' => 'uninstalled',
+
+	'view' => 'view',
 );
