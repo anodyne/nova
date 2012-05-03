@@ -67,6 +67,7 @@ Autoloader::add_classes(array(
 	'Fusion\\Model_Media'					=> __DIR__.'/classes/model/media.php',
 	'Fusion\\Model_Message'					=> __DIR__.'/classes/model/message.php',
 	'Fusion\\Model_MessageRecipient'		=> __DIR__.'/classes/model/messagerecipient.php',
+	'Fusion\\Model_Migration'				=> __DIR__.'/classes/model/migration.php',
 	'Fusion\\Model_Mission'					=> __DIR__.'/classes/model/mission.php',
 	'Fusion\\Model_MissionGroup'			=> __DIR__.'/classes/model/missiongroup.php',
 	'Fusion\\Model_Moderation'				=> __DIR__.'/classes/model/moderation.php',

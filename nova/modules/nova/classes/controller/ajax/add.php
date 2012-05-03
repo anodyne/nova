@@ -44,4 +44,23 @@ class Controller_Ajax_Add extends Controller_Base_Ajax
 			}
 		}
 	}
+
+	/**
+	 * Runs the QuickInstall for a module.
+	 *
+	 * @return	void
+	 */
+	public function action_module($module)
+	{
+		if (\Sentry::check() and \Sentry::user()->has_access('catalog.create'))
+		{
+			// do the quick install
+			\QuickInstall::module($module);
+
+			\SystemEvent::add('user', '[[event.admin.catalog.module_create|{{'.$module.'}}]]');
+
+			echo '<p class="alert alert-success">'.lang('[[short.flash.success|module|action.installed]]').'</p>';
+			echo '<div class="form-actions"><button class="btn modal-close">'.lang('action.close', 1).'</button></div>';
+		}
+	}
 }

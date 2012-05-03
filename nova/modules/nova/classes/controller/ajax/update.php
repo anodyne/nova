@@ -179,6 +179,25 @@ class Controller_Ajax_Update extends Controller_Base_Ajax
 	}
 
 	/**
+	 * Runs the migrations for a module.
+	 *
+	 * @return	void
+	 */
+	public function action_module($module)
+	{
+		if (\Sentry::check() and \Sentry::user()->has_access('catalog.update'))
+		{
+			// move up to the latest migration
+			\Migrate::latest($module, 'module');
+
+			\SystemEvent::add('user', '[[event.admin.catalog.module_update|{{'.$module.'}}]]');
+
+			echo '<p class="alert alert-success">'.lang('[[short.flash.success|module|action.updated]]').'</p>';
+			echo '<div class="form-actions"><button class="btn modal-close">'.lang('action.close', 1).'</button></div>';
+		}
+	}
+
+	/**
 	 * Updates the form section order when the sort function stops.
 	 *
 	 * @return	void
