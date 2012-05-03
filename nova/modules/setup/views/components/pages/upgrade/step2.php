@@ -124,20 +124,6 @@
 				<td class="align-center"><?php echo Form::radio('upgrade_tour', 1, array('checked' => true));?></td>
 				<td class="align-center"><?php echo Form::radio('upgrade_tour', 0);?></td>
 			</tr>
-			<!--<tr>
-				<td>
-					Docking Items (if applicable)
-					<p class="alert alert-danger hide"><span class="errors-content"></span></p>
-				</td>
-				<td class="span1 align-center align-middle">
-					<span class="success hide"><?php echo Html::img('nova/modules/setup/views/design/images/tick-circle.png');?></span>
-					<span class="failure hide"><?php echo Html::img('nova/modules/setup/views/design/images/exclamation-red.png');?></span>
-					<span class="warning hide"><?php echo Html::img('nova/modules/setup/views/design/images/exclamation.png');?></span>
-					<span class="loading hide"><?php echo Html::img('nova/modules/setup/views/design/images/loading.gif');?></span>
-				</td>
-				<td class="align-center"><?php echo Form::radio('upgrade_docking', 1, array('checked' => true));?></td>
-				<td class="align-center"><?php echo Form::radio('upgrade_docking', 0);?></td>
-			</tr>-->
 			<tr>
 				<td>
 					Wiki Pages
