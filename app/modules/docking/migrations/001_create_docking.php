@@ -1,4 +1,14 @@
 <?php
+/**
+ * Creates the docking features for Nova 3.
+ *
+ * @package		Nova
+ * @subpackage	Docking
+ * @category	Migration
+ * @author		Anodyne Productions
+ * @copyright	2012 Anodyne Productions
+ * @version		3.0
+ */
 
 namespace Fuel\Migrations;
 
@@ -84,7 +94,6 @@ class Create_docking
 				'sim_type' => 3,
 				'type' => 'adminsub',
 				'category' => 'manage',
-				'use_access' => 1,
 				'access' => 'manage/docked'),
 		);
 
