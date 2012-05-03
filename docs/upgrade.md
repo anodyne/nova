@@ -4,6 +4,10 @@
 
 We recognize that many of users have been with us for years now, some as far back as SMS. The idea of upgrading all the information you've collected over years can be daunting, but our goal is to make the process of upgrading to a newer version of Nova as simple and straightforward as possible. Nova 3's new setup module was designed to be a single place for doing anything for managing your Nova installation. Using this module, we've managed to make Nova's setup process smarter than before. When you land on the module, it'll just know what to do based on the information it already has.
 
+## A Word About the Docking Feature
+
+Users who have used the docking feature in the past will probably notice its absence from Nova 3. It isn't gone completely, but we have decided to move it out of the Nova core and into a first-party module. Like ranks and skins though, modules can be installed using QuickInstall. You can download the docking module from AnodyneXtras and upload it to the `app/modules` directory. During the upgrade process, Nova will install the docking module and attempt to upgrade your Nova 2 docking items and form to the Nova 3 format.
+
 ## System Requirements
 
 We've tried hard to make sure Nova's requirements are as minimal as possible. We want everyone to be able to use Nova. That being said though, there are some requirements. Nova comes with a file called `install.php` which you can run by going to `http://yoursite/install.php`. This file will run some tests on your server to make sure you can run Nova 3. If something fails, you'll be told what failed and how to fix it (in most cases, it involves talking to your host unfortunately). If your environment passes all the tests, you'll be all set to proceed.
@@ -47,6 +51,8 @@ The third step of the process involves selecting which items you want to upgrade
 Finally, like the upgrade to Nova 1 (for those who did it), you'll need to choose a system administrator and reset the password for everyone. (This is necessary because Nova 3 moves to a higher level of encryption on passwords.) Once these steps are done, you'll be redirected to your site and be able to start making changes.
 
 Now that your upgrade is finished, you should delete any tables in your database with the `nova2_` prefix to save space on the database server. Since you backed up your database earlier, you already have a copy of that data.
+
+## Wrapping Up
 
 That's it! A few short steps is all we need to get Nova upgraded and ready to go. Make sure to check out the list of notable changes to Nova 3 and head out to explore your new Nova 3 installation.
 
