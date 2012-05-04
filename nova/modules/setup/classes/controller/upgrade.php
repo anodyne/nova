@@ -95,7 +95,7 @@ class Controller_Upgrade extends Controller_Base_Setup
 				if (\Input::method() == 'POST')
 				{
 					// do the install
-					Setup::install();
+					Setup::migration_install();
 				}
 				
 				// get the number of tables
