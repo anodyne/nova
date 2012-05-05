@@ -3533,9 +3533,6 @@ abstract class Nova_site extends Nova_controller_admin {
 						
 						if ( ! $check)
 						{
-							$content = str_replace('&', '&amp;', $content);
-							$label = str_replace('&', '&amp;', $label);
-							
 							$insert_array = array(
 								'message_key' => $key,
 								'message_label' => $label,
@@ -3635,9 +3632,6 @@ abstract class Nova_site extends Nova_controller_admin {
 					}
 					else
 					{
-						$content = str_replace('&', '&amp;', $content);
-						$label = str_replace('&', '&amp;', $label);
-							
 						$update_array = array(
 							'message_key' => $key,
 							'message_label' => $label,
