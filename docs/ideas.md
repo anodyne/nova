@@ -83,6 +83,7 @@
 * If users are logged in, they have access to a user manifest.
     * Much like the character manifest, it'll display some basic information about users in the system.
 	* Real name, email address, time in relation to the current user's timezone, link to user bio.
+* Allow users to create avatars for their account that'll be displayed next to content throughout the system.
 
 ## Manifest
 
@@ -133,3 +134,7 @@
 
 * Chain of Command
 * Docking
+
+## Characters
+
+* Allow users to create avatars for each of their characters that'll be displayed next to content throughout the system.
