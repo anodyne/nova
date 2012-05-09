@@ -27,6 +27,12 @@ return array(
 		'charset'		=> 'utf-8',
 
 		/**
+		 * Wether to encode subject and recipient names.
+		 * Requires the mbstring extension: http://www.php.net/manual/en/ref.mbstring.php
+		 */
+		'encode_headers' => true,
+
+		/**
 		 * Ecoding (8bit, base64 or quoted-printable)
 		 */
 		'encoding'		=> '8bit',
@@ -45,6 +51,11 @@ return array(
 		),
 
 		/**
+		 * Default return path
+		 */
+		'return_path'   => false,
+
+		/**
 		 * Whether to validate email addresses
 		 */
 		'validate'	=> true,
@@ -58,6 +69,11 @@ return array(
 		 * Auto generate alt body from html body
 		 */
 		'generate_alt' => true,
+
+		/**
+		 * Forces content type multipart/related to be set as multipart/mixed.
+		 */
+		'force_mixed'   => false,
 
 		/**
 		 * Wordwrap size, set to null, 0 or false to disable wordwrapping
