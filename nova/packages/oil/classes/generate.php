@@ -144,13 +144,20 @@ CONF;
 		$filepath = APPPATH.'classes'.DS.'controller'.DS.$filename.'.php';
 
 		// Uppercase each part of the class name and remove hyphens
-		$class_name = \Inflector::classify($name);
+		$class_name = \Inflector::classify($name, false);
 
 		// Stick "blog" to the start of the array
 		array_unshift($args, $filename);
 
 		// Create views folder and each view file
-		static::views($args, 'crud', false);
+		if (\Cli::option('crud'))
+		{
+			static::views($args, 'scaffolding'.DS.'crud'.DS.'views', false);
+		}
+		else
+		{
+			static::views($args, 'scaffolding'.DS.'orm'.DS.'views', false);
+		}
 
 		$actions or $actions = array('index');
 
@@ -210,36 +217,39 @@ CONTROLLER;
 
 		$contents = '';
 
-		$timestamp_properties = array();
-
-		if ( ! \Cli::option('no-timestamp'))
-		{
-			$timestamp_properties = array('created_at:int', 'updated_at:int');
-		}
-
-		// Turn foo:string into "id", "foo",
-		$properties = implode(",\n\t\t", array_map(function($field) {
-
-			// Only take valid fields
-			if (($field = strstr($field, ':', true)))
-			{
-				return "'".$field."'";
-			}
-
-		}, array_merge(array('id:int'), $args, $timestamp_properties)));
-
-		if ( ! \Cli::option('no-properties'))
-		{
-			$contents .= <<<CONTENTS
-	protected static \$_properties = array(
-		{$properties}
-	);
-
-CONTENTS;
-		}
-
 		if (\Cli::option('crud'))
 		{
+			if($created_at = \Cli::option('created-at'))
+			{
+				is_string($created_at) or $created_at = 'created_at';
+
+				$contents .= <<<CONTENTS
+
+	protected static \$_created_at = '$created_at';
+
+CONTENTS;
+			}
+
+			if($updated_at = \Cli::option('updated-at'))
+			{
+				is_string($updated_at) or $updated_at = 'updated_at';
+
+				$contents .= <<<CONTENTS
+
+	protected static \$_updated_at = '$updated_at';
+
+CONTENTS;
+			}
+
+			if(\Cli::option('mysql-timestamp'))
+			{
+				$contents .= <<<CONTENTS
+
+	protected static \$_mysql_timestamp = true;
+
+CONTENTS;
+			}
+
 			$contents .= <<<CONTENTS
 
 	protected static \$_table_name = '{$plural}';
@@ -259,16 +269,76 @@ MODEL;
 		{
 			if ( ! \Cli::option('no-timestamp'))
 			{
+				$created_at = \Cli::option('created-at', 'created_at');
+				is_string($created_at) or $created_at = 'created_at';
+				$updated_at = \Cli::option('updated-at', 'updated_at');
+				is_string($updated_at) or $updated_at = 'updated_at';
+
+				$time_type = (\Cli::option('mysql-timestamp')) ? 'timestamp' : 'int';
+
+				$timestamp_properties = array($created_at.':'.$time_type, $updated_at.':'.$time_type);
+				$args = array_merge($args, $timestamp_properties);
+			}
+
+			// Turn foo:string into "id", "foo",
+			$properties = implode(",\n\t\t", array_map(function($field) {
+
+				// Only take valid fields
+				if (($field = strstr($field, ':', true)))
+				{
+					return "'".$field."'";
+				}
+
+			}, array_merge(array('id:int'), $args)));
+
+			if ( ! \Cli::option('no-properties'))
+			{
+				$contents .= <<<CONTENTS
+	protected static \$_properties = array(
+		{$properties}
+	);
+
+CONTENTS;
+			}
+
+			if ( ! \Cli::option('no-timestamp'))
+			{
+				$mysql_timestamp = (\Cli::option('mysql-timestamp')) ? 'true' : 'false';
+
+				if(($created_at = \Cli::option('created-at')) and is_string($created_at))
+				{
+					$created_at = <<<CONTENTS
+
+			'property' => '$created_at',
+CONTENTS;
+				}
+				else
+				{
+					$created_at = '';
+				}
+
+				if(($updated_at = \Cli::option('updated-at')) and is_string($updated_at))
+				{
+					$updated_at = <<<CONTENTS
+
+			'property' => '$updated_at',
+CONTENTS;
+				}
+				else
+				{
+					$updated_at = '';
+				}
+
 				$contents .= <<<CONTENTS
 
 	protected static \$_observers = array(
 		'Orm\Observer_CreatedAt' => array(
 			'events' => array('before_insert'),
-			'mysql_timestamp' => false,
+			'mysql_timestamp' => $mysql_timestamp,$created_at
 		),
 		'Orm\Observer_UpdatedAt' => array(
 			'events' => array('before_save'),
-			'mysql_timestamp' => false,
+			'mysql_timestamp' => $mysql_timestamp,$updated_at
 		),
 	);
 CONTENTS;
@@ -288,15 +358,18 @@ MODEL;
 		// Build the model
 		static::create($filepath, $model, 'model');
 
-		if ( ! empty($args))
+		if ( ! \Cli::option('no-migration'))
 		{
-			array_unshift($args, 'create_'.$plural);
-			static::migration($args, false);
-		}
+			if ( ! empty($args))
+			{
+				array_unshift($args, 'create_'.$plural);
+				static::migration($args, false);
+			}
 
-		else
-		{
-			throw new Exception('Not enough arguments to create this migration.');
+			else
+			{
+				throw new \Exception('Not enough arguments to create this migration.');
+			}
 		}
 
 		$build and static::build();
@@ -318,7 +391,7 @@ MODEL;
 		// Add the default template if it doesnt exist
 		if ( ! file_exists($app_template = APPPATH.'views/template.php'))
 		{
-			static::create($app_template, file_get_contents(PKGPATH.'oil/views/'.$subfolder.'/template.php'), 'view');
+			static::create($app_template, file_get_contents(PKGPATH.'oil/views/scaffolding/template.php'), 'view');
 		}
 
 		foreach ($args as $action)
@@ -347,7 +420,12 @@ VIEW;
 		}
 
 		// Check if a migration with this name already exists
-		if (count($duplicates = glob(APPPATH."migrations/*_{$migration_name}*")) > 0)
+		if (($duplicates = glob(APPPATH."migrations/*_{$migration_name}*")) === false)
+		{
+			throw new Exception("Unable to read existing migrations. Do you have an 'open_basedir' defined?");
+		}
+
+		if (count($duplicates) > 0)
 		{
 			// Don't override a file
 			if (\Cli::option('s', \Cli::option('skip')) === true)
@@ -418,6 +496,15 @@ VIEW;
 					 implode('_', array_slice($matches, array_search('in', $matches)+1)),
 					 implode('_', array_slice($matches, 0, array_search('to', $matches))),
 					 implode('_', array_slice($matches, array_search('to', $matches)+1, array_search('in', $matches)-2))
+				  );
+				}
+
+				// rename_table
+				else if ($method_name == 'rename_table')
+				{
+					$subjects = array(
+					 implode('_', array_slice($matches, 0, array_search('to', $matches))),
+					 implode('_', array_slice($matches, array_search('to', $matches)+1))
 				  );
 				}
 
@@ -672,7 +759,7 @@ HELP;
 			$result = @fwrite($handle, $file['contents']);
 
 			// Write $somecontent to our opened file.
-			if ($result === FALSE)
+			if ($result === false)
 			{
 				throw new Exception('Cannot write to file: '. $file['path']);
 			}
@@ -712,7 +799,7 @@ HELP;
 		}
 		else
 		{
-			throw new Exception('Config file core/config/migrations.php');
+			throw new \Exception('Config file core/config/migrations.php');
 			exit;
 		}
 
