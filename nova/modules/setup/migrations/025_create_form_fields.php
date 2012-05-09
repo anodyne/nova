@@ -53,7 +53,7 @@ class Create_form_fields
 				'html_name' => 'age',
 				'html_id' => 'age',
 				'html_rows' => 0,
-				'html_class' => 'span2',
+				'html_class' => 'span1',
 				'label' => 'Age',
 				'placeholder' => 'Age',
 				'order' => 3),
