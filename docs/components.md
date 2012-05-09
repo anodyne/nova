@@ -5,7 +5,7 @@ Nova is made up of a wide range of plugins and components to help make it what i
 ## PHP
 
 * FuelPHP
-    * Version: 1.1
+    * Version: 1.2-RC1
     * Site: http://fuelphp.com/
     * Location
         * nova/fuel
