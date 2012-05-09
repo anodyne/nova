@@ -8,7 +8,7 @@
  * @version    1.0
  * @author     Fuel Development Team
  * @license    MIT License
- * @copyright  2010 - 2011 Fuel Development Team
+ * @copyright  2010 - 2012 Fuel Development Team
  * @link       http://fuelphp.com
  */
 
@@ -52,7 +52,7 @@ class View_Mustache extends \View
 		}
 
 		$options = array(
-			'delimiters'  => \Config::get('parser.View_Mustache.delimiters', array('{{','}}')),
+			'delimiters'  => array_values(\Config::get('parser.View_Mustache.delimiters', array('{{','}}'))),
 			'charset'     => \Config::get('parser.View_Mustache.environment.charset', 'UTF-8'),
 			'pragmas'     => \Config::get('parser.View_Mustache.environment.pragmas', array()),
 		);

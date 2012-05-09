@@ -8,7 +8,7 @@
  * @version    1.0
  * @author     Fuel Development Team
  * @license    MIT License
- * @copyright  2010 - 2011 Fuel Development Team
+ * @copyright  2010 - 2012 Fuel Development Team
  * @link       http://fuelphp.com
  */
 
@@ -33,7 +33,9 @@ class View_Twig extends \View
 	protected function process_file($file_override = false)
 	{
 		$file = $file_override ?: $this->file_name;
-		$data = $this->get_data();
+
+		$local_data  = $this->get_data('local');
+		$global_data = $this->get_data('global');
 
 		// Extract View name/extension (ex. "template.twig")
 		$view_name = pathinfo($file, PATHINFO_BASENAME);
@@ -43,9 +45,17 @@ class View_Twig extends \View
 		array_unshift($views_paths, pathinfo($file, PATHINFO_DIRNAME));
 		static::$_parser_loader = new Twig_Loader_Filesystem($views_paths);
 
+		if ( ! empty($global_data))
+		{
+			foreach ($global_data as $key => $value)
+			{
+				static::parser()->addGlobal($key, $value);
+			}
+		}
+
 		try
 		{
-			return static::parser()->loadTemplate($view_name)->render($data);
+			return static::parser()->loadTemplate($view_name)->render($local_data);
 		}
 		catch (\Exception $e)
 		{
@@ -83,6 +93,13 @@ class View_Twig extends \View
 		$twig_lexer_conf = \Config::get('parser.View_Twig.delimiters', null);
 		if (isset($twig_lexer_conf))
 		{
+			isset($twig_lexer_conf['tag_block'])
+				and $twig_lexer_conf['tag_block'] = array_values($twig_lexer_conf['tag_block']);
+			isset($twig_lexer_conf['tag_comment'])
+				and $twig_lexer_conf['tag_comment'] = array_values($twig_lexer_conf['tag_comment']);
+			isset($twig_lexer_conf['tag_variable'])
+				and $twig_lexer_conf['tag_variable'] = array_values($twig_lexer_conf['tag_variable']);
+
 			$twig_lexer = new Twig_Lexer(static::$_parser, $twig_lexer_conf);
 			static::$_parser->setLexer($twig_lexer);
 		}

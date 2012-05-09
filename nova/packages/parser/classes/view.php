@@ -8,7 +8,7 @@
  * @version    1.0
  * @author     Fuel Development Team
  * @license    MIT License
- * @copyright  2010 - 2011 Fuel Development Team
+ * @copyright  2010 - 2012 Fuel Development Team
  * @link       http://fuelphp.com
  */
 
@@ -44,20 +44,17 @@ class View extends \Fuel\Core\View
 	}
 
 	/**
-	 * This method is deprecated...use forge() instead.
+	 * Forges a new View object based on the extension
 	 *
-	 * @deprecated until 1.2
+	 * @param   string  $file         view filename
+	 * @param   array   $data         view data
+	 * @param   bool    $auto_encode  auto encode boolean, null for default
+	 * @return  object  a new view instance
 	 */
-	public static function factory($file = null, $data = null, $auto_encode = null)
-	{
-		\Log::warning('This method is deprecated.  Please use a forge() instead.', __METHOD__);
-		return static::forge($file, $data, $auto_encode);
-	}
-
 	public static function forge($file = null, $data = null, $auto_encode = null)
 	{
-		$extension  = pathinfo($file, PATHINFO_EXTENSION);
-		$class      = \Config::get('parser.extensions.'.$extension, get_called_class());
+		$extension = pathinfo($file, PATHINFO_EXTENSION);
+		$class     = \Config::get('parser.extensions.'.$extension, get_called_class());
 
 		// Only get rid of the extension if it is not an absolute file path
 		if ($file[0] !== '/' and $file[1] !== ':')
@@ -99,5 +96,3 @@ class View extends \Fuel\Core\View
 		return $view;
 	}
 }
-
-// end of file view.php
