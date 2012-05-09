@@ -6,7 +6,7 @@
  * @version		1.0
  * @author		Fuel Development Team
  * @license		MIT License
- * @copyright	2010 - 2011 Fuel Development Team
+ * @copyright	2010 - 2012 Fuel Development Team
  * @link		http://fuelphp.com
  */
 
@@ -14,7 +14,6 @@ namespace Orm;
 
 class HasMany extends Relation
 {
-
 	public function __construct($from, $name, array $config)
 	{
 		$this->name        = $name;
@@ -230,12 +229,19 @@ class HasMany extends Relation
 			}
 		}
 
-		$cascade = is_null($cascade) ? $this->cascade_delete : (bool) $cascade;
-		if ($cascade and ! empty($models_to))
+		if ( ! empty($models_to))
 		{
+			$cascade = is_null($cascade) ? $this->cascade_delete : (bool) $cascade;
 			foreach ($models_to as $m)
 			{
-				$m->delete();
+				if ($cascade)
+				{
+					$m->delete();
+				}
+				else
+				{
+					$m->is_changed() and $m->save();
+				}
 			}
 		}
 	}

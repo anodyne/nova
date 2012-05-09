@@ -6,7 +6,7 @@
  * @version		1.0
  * @author		Fuel Development Team
  * @license		MIT License
- * @copyright	2010 - 2011 Fuel Development Team
+ * @copyright	2010 - 2012 Fuel Development Team
  * @link		http://fuelphp.com
  */
 
@@ -22,8 +22,8 @@ class RecordNotFound extends \OutOfBoundsException {}
  */
 class FrozenObject extends \RuntimeException {}
 
-class Model implements \ArrayAccess, \Iterator {
-
+class Model implements \ArrayAccess, \Iterator
+{
 	/* ---------------------------------------------------------------------------
 	 * Static usage
 	 * --------------------------------------------------------------------------- */
@@ -105,17 +105,6 @@ class Model implements \ArrayAccess, \Iterator {
 		'has_many'      => 'Orm\\HasMany',
 		'many_many'     => 'Orm\\ManyMany',
 	);
-
-	/**
-	 * This method is deprecated...use forge() instead.
-	 *
-	 * @deprecated until 1.2
-	 */
-	public static function factory($data = array(), $new = true)
-	{
-		logger(\Fuel::L_WARNING, 'This method is deprecated.  Please use a forge() instead.', __METHOD__);
-		return static::forge($data, $new);
-	}
 
 	public static function forge($data = array(), $new = true, $view = null)
 	{
@@ -429,12 +418,12 @@ class Model implements \ArrayAccess, \Iterator {
 			return static::query($options);
 		}
 		// Return all that match $options array
-		elseif ($id == 'all')
+		elseif ($id === 'all')
 		{
 			return static::query($options)->get();
 		}
 		// Return first or last row that matches $options array
-		elseif ($id == 'first' or $id == 'last')
+		elseif ($id === 'first' or $id === 'last')
 		{
 			$query = static::query($options);
 
@@ -600,37 +589,42 @@ class Model implements \ArrayAccess, \Iterator {
 	/**
 	 * @var  bool  keeps track of whether it's a new object
 	 */
-	private $_is_new = true;
+	protected $_is_new = true;
 
 	/**
 	 * @var  bool  keeps to object frozen
 	 */
-	private $_frozen = false;
+	protected $_frozen = false;
 
 	/**
 	 * @var  array  keeps the current state of the object
 	 */
-	private $_data = array();
+	protected $_data = array();
 
 	/**
 	 * @var  array  keeps a copy of the object as it was retrieved from the database
 	 */
-	private $_original = array();
+	protected $_original = array();
 
 	/**
 	 * @var  array
 	 */
-	private $_data_relations = array();
+	protected $_data_relations = array();
 
 	/**
 	 * @var  array  keeps a copy of the relation ids that were originally retrieved from the database
 	 */
-	private $_original_relations = array();
+	protected $_original_relations = array();
+
+	/**
+	 * @var  array  keeps track of relations that need to be reset before saving the new ones
+	 */
+	protected $_reset_relations = array();
 
 	/**
 	 * @var  string  view name when used
 	 */
-	private $_view;
+	protected $_view;
 
 	/**
 	 * Constructor
@@ -895,6 +889,7 @@ class Model implements \ArrayAccess, \Iterator {
 		}
 		elseif (static::relations($property))
 		{
+			$this->is_fetched($property) or $this->_reset_relations[$property] = true;
 			$this->_data_relations[$property] = $value;
 		}
 		else
@@ -953,6 +948,11 @@ class Model implements \ArrayAccess, \Iterator {
 			$this->freeze();
 			foreach($this->relations() as $rel_name => $rel)
 			{
+				if (array_key_exists($rel_name, $this->_reset_relations))
+				{
+					method_exists($rel, 'delete_related') and $rel->delete_related($this);
+					unset($this->_reset_relations[$rel_name]);
+				}
 				if (array_key_exists($rel_name, $this->_data_relations))
 				{
 					$rel->save($this, $this->{$rel_name},
@@ -1240,7 +1240,7 @@ class Model implements \ArrayAccess, \Iterator {
 		{
 			if (isset($properties[$p]))
 			{
-				if ( ! isset($this->_original[$p]) or $this->{$p} !== $this->_original[$p])
+				if ( ! array_key_exists($p, $this->_original) or $this->{$p} !== $this->_original[$p])
 				{
 					return true;
 				}
@@ -1335,12 +1335,27 @@ class Model implements \ArrayAccess, \Iterator {
 					{
 						$original_pks = array_diff($original_pks, array($new_pk));
 					}
-					$diff[0][$key] += $original_pks;
+					isset($diff[0][$key]) ? $diff[0][$key] += $original_pks : $diff[0][$key] = $original_pks;
 				}
 			}
 		}
 
 		return $diff;
+	}
+
+	/***
+	 * Returns whether the given relation is fetched. If no relation is
+	 *
+	 * @return  bool
+	 */
+	public function is_fetched($relation)
+	{
+		if (static::relations($relation))
+		{
+			return array_key_exists($relation, $this->_data_relations);
+		}
+
+		return false;
 	}
 
 	/***

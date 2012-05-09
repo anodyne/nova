@@ -6,14 +6,15 @@
  * @version		1.0
  * @author		Fuel Development Team
  * @license		MIT License
- * @copyright	2010 - 2011 Fuel Development Team
+ * @copyright	2010 - 2012 Fuel Development Team
  * @link		http://fuelphp.com
  */
 
 namespace Orm;
 
 // Exception to throw when validation failed
-class ValidationFailed extends \FuelException {
+class ValidationFailed extends \FuelException
+{
 	protected $fieldset;
 
 	/**
@@ -78,7 +79,7 @@ class Observer_Validation extends Observer
 		$properties = is_object($obj) ? $obj->properties() : $class::properties();
 		foreach ($properties as $p => $settings)
 		{
-			if (in_array($p, $primary_keys))
+			if (\Arr::get($settings, 'skip', in_array($p, $primary_keys)))
 			{
 				continue;
 			}
@@ -87,13 +88,18 @@ class Observer_Validation extends Observer
 			{
 				foreach ($settings['form']['options'] as $key => $value)
 				{
-					$settings['form']['options'][$key] = \Lang::line($value) ?: $value;
+					is_array($value) or $settings['form']['options'][$key] = \Lang::get($value) ?: $value;
 				}
 			}
 
-			$label       = isset($settings['label']) ? $settings['label'] : $p;
-			$attributes  = isset($settings['form']) ? $settings['form'] : array();
-			$field       = $fieldset->add($p, $label, $attributes);
+			// field attributes can be passed in form key
+			$attributes = isset($settings['form']) ? $settings['form'] : array();
+			// label is either set in property setting, as part of form attributes or defaults to fieldname
+			$label = isset($settings['label']) ? $settings['label'] : (isset($attributes['label']) ? $attributes['label'] : $p);
+			$label = \Lang::get($label) ?: $label;
+
+			// create the field and add validation rules
+			$field = $fieldset->add($p, $label, $attributes);
 			if ( ! empty($settings['validation']))
 			{
 				foreach ($settings['validation'] as $rule => $args)
@@ -163,5 +169,3 @@ class Observer_Validation extends Observer
 		}
 	}
 }
-
-// End of file validation.php

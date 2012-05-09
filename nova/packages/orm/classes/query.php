@@ -6,7 +6,7 @@
  * @version		1.0
  * @author		Fuel Development Team
  * @license		MIT License
- * @copyright	2010 - 2011 Fuel Development Team
+ * @copyright	2010 - 2012 Fuel Development Team
  * @link		http://fuelphp.com
  */
 
@@ -14,18 +14,6 @@ namespace Orm;
 
 class Query
 {
-
-	/**
-	 * This method is deprecated...use forge() instead.
-	 *
-	 * @deprecated until 1.2
-	 */
-	public static function factory($model, $connection = null, $options = array())
-	{
-		logger(\Fuel::L_WARNING, 'This method is deprecated.  Please use a forge() instead.', __METHOD__);
-		return static::forge($model, $connection, $options);
-	}
-
 	public static function forge($model, $connection = null, $options = array())
 	{
 		return new static($model, $connection, $options);
@@ -612,6 +600,9 @@ class Query
 
 		// Get the order
 		$order_by = $this->order_by;
+
+		// create a backup for subquery
+		$order_by_backup = $order_by;
 		if ( ! empty($order_by))
 		{
 			foreach ($order_by as $key => $ob)
@@ -619,9 +610,14 @@ class Query
 				if ( ! $ob[0] instanceof \Fuel\Core\Database_Expression and strpos($ob[0], $this->alias.'.') === 0)
 				{
 					$query->order_by($type == 'select' ? $ob[0] : substr($ob[0], strlen($this->alias.'.')), $ob[1]);
+
+					// order by has been updated to Database_Query_Builder_Where instance, set it to empty to avoid duplicate entries
+					unset($order_by[$key]);
 				}
 			}
 		}
+
+
 
 		$where_backup = $this->where;
 		if ( ! empty($this->where))
@@ -695,6 +691,9 @@ class Query
 			// make current query subquery of ultimate query
 			$new_query = call_user_func_array('DB::select', $columns);
 			$query = $new_query->from(array($query, $this->alias));
+
+			// set order_by from backup
+			$order_by = $order_by_backup;
 		}
 		else
 		{

@@ -6,7 +6,7 @@
  * @version		1.0
  * @author		Fuel Development Team
  * @license		MIT License
- * @copyright	2010 - 2011 Fuel Development Team
+ * @copyright	2010 - 2012 Fuel Development Team
  * @link		http://fuelphp.com
  */
 
@@ -17,7 +17,6 @@ class InvalidContentType extends \UnexpectedValueException {}
 
 class Observer_Typing
 {
-
 	/**
 	 * @var  array  types of events to act on and whether they are pre- or post-database
 	 */
@@ -32,20 +31,21 @@ class Observer_Typing
 	 */
 	public static $type_methods = array(
 		'/^varchar/uiD' => array(
-			'before' => 'Orm\\Observer_Typing::type_string'
+			'before' => 'Orm\\Observer_Typing::type_string',
 		),
 		'/^(tiny|small|medium|big)?int(eger)?/uiD'
 			=> 'Orm\\Observer_Typing::type_integer',
 		'/^(float|double|decimal)/uiD'
 			=> 'Orm\\Observer_Typing::type_float',
 		'/^(tiny|medium|long)?text/' => array(
-			'before' => 'Orm\\Observer_Typing::type_string'
+			'before' => 'Orm\\Observer_Typing::type_string',
 		),
 		'/^set/uiD' => array(
-			'before' => 'Orm\\Observer_Typing::type_set'
+			'before' => 'Orm\\Observer_Typing::type_set_before',
+			'after' => 'Orm\\Observer_Typing::type_set_after',
 		),
 		'/^enum/uiD' => array(
-			'before' => 'Orm\\Observer_Typing::type_set'
+			'before' => 'Orm\\Observer_Typing::type_set_before',
 		),
 		'/^bool(ean)?$/uiD' => array(
 			'before' => 'Orm\\Observer_Typing::type_bool_to_int',
@@ -200,9 +200,9 @@ class Observer_Typing
 	 * @param   array
 	 * @return  string
 	 */
-	public static function type_set($var, array $settings)
+	public static function type_set_before($var, array $settings)
 	{
-		$var    = strval($var);
+		$var    = is_array($var) ? implode(',', $var) : strval($var);
 		$values = array_filter(explode(',', trim($var)));
 
 		if ($settings['data_type'] == 'enum' and count($values) > 1)
@@ -220,6 +220,17 @@ class Observer_Typing
 		}
 
 		return $var;
+	}
+
+	/**
+	 * Casts to string when necessary and checks if it's a valid value
+	 *
+	 * @param   string  value
+	 * @return  array
+	 */
+	public static function type_set_after($var)
+	{
+		return explode(',', $var);
 	}
 
 	/**
@@ -356,5 +367,3 @@ class Observer_Typing
 		return \Date::forge($var);
 	}
 }
-
-// End of file typing.php
