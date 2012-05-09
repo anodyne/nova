@@ -6,7 +6,7 @@
  * @version    1.0
  * @author     Fuel Development Team
  * @license    MIT License
- * @copyright  2010 - 2011 Fuel Development Team
+ * @copyright  2010 - 2012 Fuel Development Team
  * @link       http://fuelphp.com
  */
 
@@ -56,17 +56,6 @@ class File_Area
 		{
 			$this->basedir = realpath($this->basedir) ?: $this->basedir;
 		}
-	}
-
-	/**
-	 * This method is deprecated...use forge() instead.
-	 *
-	 * @deprecated until 1.2
-	 */
-	public static function factory(array $config = array())
-	{
-		logger(\Fuel::L_WARNING, 'This method is deprecated.  Please use a forge() instead.', __METHOD__);
-		return static::forge($config);
 	}
 
 	/**
@@ -150,32 +139,34 @@ class File_Area
 	 */
 	public function get_path($path)
 	{
+
+		$pathinfo = is_dir($path) ? array('dirname' => $path, 'extension' => null, 'basename' => '') : pathinfo($path);
+
 		// do we have a basedir, and is the path already prefixed by the basedir? then just deal with the double dots...
-		if ( ! empty($this->basedir) && substr($path, 0, strlen($this->basedir)) == $this->basedir)
+		if ( ! empty($this->basedir) && substr($pathinfo['dirname'], 0, strlen($this->basedir)) == $this->basedir)
 		{
-			$path = realpath($path);
+			$pathinfo['dirname'] = realpath($pathinfo['dirname']);
 		}
 		else
 		{
 			// attempt to get the realpath(), otherwise just use path with any double dots taken out when basedir is set (for security)
-			$path = ( ! empty($this->basedir) ? realpath($this->basedir.DS.$path) : realpath($path) )
-					?: ( ! empty($this->basedir) ? $this->basedir.DS.str_replace('..', '', $path) : $path);
+			$pathinfo['dirname'] = ( ! empty($this->basedir) ? realpath($this->basedir.DS.$pathinfo['dirname']) : realpath($pathinfo['dirname']) )
+					?: ( ! empty($this->basedir) ? $this->basedir.DS.str_replace('..', '', $pathinfo['dirname']) : $pathinfo['dirname']);
 		}
 
 		// basedir prefix is required when it is set (may cause unexpected errors when realpath doesn't work)
-		if ( ! empty($this->basedir) && substr($path, 0, strlen($this->basedir)) != $this->basedir)
+		if ( ! empty($this->basedir) && substr($pathinfo['dirname'], 0, strlen($this->basedir)) != $this->basedir)
 		{
 			throw new \OutsideAreaException('File operation not allowed: given path is outside the basedir for this area.');
 		}
 
 		// check file extension
-		$info = pathinfo($path);
-		if ( ! empty(static::$extensions) && array_key_exists($info['extension'], static::$extensions))
+		if ( ! empty(static::$extensions) && array_key_exists($pathinfo['extension'], static::$extensions))
 		{
 			throw new \FileAccessException('File operation not allowed: disallowed file extension.');
 		}
 
-		return $path;
+		return $pathinfo['dirname'].DS.$pathinfo['basename'];
 	}
 
 	/**

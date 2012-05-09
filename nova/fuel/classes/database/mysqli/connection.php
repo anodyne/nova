@@ -185,12 +185,23 @@ class Database_MySQLi_Connection extends \Database_Connection
 	public function query($type, $sql, $as_object)
 	{
 		// Make sure the database is connected
-		$this->_connection or $this->connect();
+		if ($this->_connection)
+		{
+			// Make sure the connection is still alive
+			if ( ! $this->_connection->ping())
+			{
+				throw new \Database_Exception($this->_connection->error.' [ '.$sql.' ]', $this->_connection->errno);
+			}
+		}
+		else
+		{
+			$this->connect();
+		}
 
 		if ( ! empty($this->_config['profiling']))
 		{
 			// Benchmark this query for the current instance
-			$benchmark = Profiler::start("Database ({$this->_instance})", $sql);
+			$benchmark = \Profiler::start("Database ({$this->_instance})", $sql);
 		}
 
 		if ( ! empty($this->_config['connection']['persistent']) and $this->_config['connection']['database'] !== static::$_current_databases[$this->_connection_id])
@@ -205,7 +216,7 @@ class Database_MySQLi_Connection extends \Database_Connection
 			if (isset($benchmark))
 			{
 				// This benchmark is worthless
-				Profiler::delete($benchmark);
+				\Profiler::delete($benchmark);
 			}
 
 			throw new \Database_Exception($this->_connection->error.' [ '.$sql.' ]', $this->_connection->errno);
@@ -222,7 +233,7 @@ class Database_MySQLi_Connection extends \Database_Connection
 
 		if (isset($benchmark))
 		{
-			Profiler::stop($benchmark);
+			\Profiler::stop($benchmark);
 		}
 
 		// Set the last query

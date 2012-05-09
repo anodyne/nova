@@ -6,7 +6,7 @@
  * @version    1.1
  * @author     Fuel Development Team
  * @license    MIT License
- * @copyright  2010 - 2011 Fuel Development Team
+ * @copyright  2010 - 2012 Fuel Development Team
  * @link       http://fuelphp.com
  */
 
@@ -257,7 +257,10 @@ class Finder
 		$found = array();
 		foreach ($paths as $path)
 		{
-			$found = array_merge(glob($path.$directory.'/'.$filter), $found);
+			if (($f = glob($path.$directory.DS.$filter)) !== false)
+			{
+				$found = array_merge($f, $found);
+			}
 		}
 
 		return $found;

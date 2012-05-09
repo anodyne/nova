@@ -200,7 +200,7 @@ class Image_Imagemagick extends \Image_Driver
 		if(($filetype == 'jpeg' or $filetype == 'jpg') and $this->config['quality'] != 100)
 		{
 			$quality = '"'.$this->config['quality'].'%"';
-			$this->exec('convert', $old.' -quality '.$quality.' '.strtolower($filetype).' '.$new);
+			$this->exec('convert', $old.' -quality '.$quality.' '.$new);
 		}
 		else
 		{
@@ -319,13 +319,16 @@ class Image_Imagemagick extends \Image_Driver
 	 */
 	protected function create_color($hex, $alpha)
 	{
-		export($this->create_hex_color($hex));
+		extract($this->create_hex_color($hex));
 		return "\"rgba(".$red.", ".$green.", ".$blue.", ".round($alpha / 100, 2).")\"";
 	}
 
 	public function __destruct()
 	{
-		unlink($this->image_temp);
+		if (file_exists($this->image_temp))
+		{
+			unlink($this->image_temp);
+		}
 	}
 }
 

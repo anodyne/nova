@@ -6,7 +6,7 @@
  * @version    1.0
  * @author     Fuel Development Team
  * @license    MIT License
- * @copyright  2010 - 2011 Fuel Development Team
+ * @copyright  2010 - 2012 Fuel Development Team
  * @link       http://fuelphp.com
  */
 
@@ -129,7 +129,7 @@ abstract class Session_Driver
 	 */
 	public function set($name, $value = null)
 	{
-		\Arr::set($this->data, $name, $value);
+		is_null($name) or \Arr::set($this->data, $name, $value);
 
 		return $this;
 	}
@@ -195,14 +195,18 @@ abstract class Session_Driver
 	 */
 	public function rotate($force = true)
 	{
-		// existing session. need to rotate the session id?
-		if ($force or ($this->config['rotation_time'] and $this->keys['created'] + $this->config['rotation_time'] <= $this->time->get_timestamp()))
+		// do we have a session?
+		if ( ! empty($this->keys))
 		{
-			// generate a new session id, and update the create timestamp
-			$this->keys['previous_id']	= $this->keys['session_id'];
-			$this->keys['session_id']	= $this->_new_session_id();
-			$this->keys['created'] 		= $this->time->get_timestamp();
-			$this->keys['updated']		= $this->keys['created'];
+			// existing session. need to rotate the session id?
+			if ($force or ($this->config['rotation_time'] and $this->keys['created'] + $this->config['rotation_time'] <= $this->time->get_timestamp()))
+			{
+				// generate a new session id, and update the create timestamp
+				$this->keys['previous_id']	= $this->keys['session_id'];
+				$this->keys['session_id']	= $this->_new_session_id();
+				$this->keys['created'] 		= $this->time->get_timestamp();
+				$this->keys['updated']		= $this->keys['created'];
+			}
 		}
 
 		return $this;
@@ -360,7 +364,7 @@ abstract class Session_Driver
 	public function set_config($name, $value = null)
 	{
 		if (isset($this->config[$name])) $this->config[$name] = $value;
-		
+
 		return $this;
 	}
 

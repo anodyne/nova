@@ -24,7 +24,7 @@ class Router
 	 * @param  string|array|Route  either the translation for $path, an array for verb routing or an instance of Route
 	 * @param  bool                whether to prepend the route(s) to the routes array
 	 */
-	public static function add($path, $options = null, $prepend = false)
+	public static function add($path, $options = null, $prepend = false, $case_sensitive = null)
 	{
 		if (is_array($path))
 		{
@@ -55,11 +55,11 @@ class Router
 
 		if ($prepend)
 		{
-			\Arr::prepend(static::$routes, $name, new \Route($path, $options));
+			\Arr::prepend(static::$routes, $name, new \Route($path, $options, $case_sensitive));
 			return;
 		}
 
-		static::$routes[$name] = new \Route($path, $options);
+		static::$routes[$name] = new \Route($path, $options, $case_sensitive);
 	}
 
 	/**
@@ -82,6 +82,49 @@ class Router
 		if (array_key_exists($name, static::$routes))
 		{
 			return \Uri::create(static::$routes[$name]->path, $named_params);
+		}
+	}
+
+	/**
+	 * Delete one or multiple routes
+	 *
+	 * @param  string
+	 */
+	public static function delete($path, $case_sensitive = null)
+	{
+		$case_sensitive ?: \Config::get('routing.case_sensitive', true);
+
+		// support the usual route path placeholders
+		$path = str_replace(array(
+			':any',
+			':alnum',
+			':num',
+			':alpha',
+			':segment',
+		), array(
+			'.+',
+			'[[:alnum:]]+',
+			'[[:digit:]]+',
+			'[[:alpha:]]+',
+			'[^/]*',
+		), $path);
+
+		foreach (static::$routes as $name => $route)
+		{
+			if ($case_sensitive)
+			{
+				if (preg_match('#^'.$path.'$#uD', $name))
+				{
+					unset(static::$routes[$name]);
+				}
+			}
+			else
+			{
+				if (preg_match('#^'.$path.'$#uiD', $name))
+				{
+					unset(static::$routes[$name]);
+				}
+			}
 		}
 	}
 
@@ -135,10 +178,10 @@ class Router
 		$module = false;
 
 		// First port of call: request for a module?
-		if (\Fuel::module_exists($segments[0]))
+		if (\Module::exists($segments[0]))
 		{
 			// make the module known to the autoloader
-			\Fuel::add_module($segments[0]);
+			\Module::load($segments[0]);
 			$match->module = array_shift($segments);
 			$namespace .= ucfirst($match->module).'\\';
 			$module = $match->module;
@@ -178,7 +221,7 @@ class Router
 		// Fall back for default module controllers
 		if ($module)
 		{
-			$class = $namespace.'Controller_'.$module;
+			$class = $namespace.'Controller_'.ucfirst($module);
 			if (class_exists($class))
 			{
 				return array(

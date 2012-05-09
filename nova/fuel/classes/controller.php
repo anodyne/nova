@@ -6,7 +6,7 @@
  * @version    1.0
  * @author     Fuel Development Team
  * @license    MIT License
- * @copyright  2010 - 2011 Fuel Development Team
+ * @copyright  2010 - 2012 Fuel Development Team
  * @link       http://fuelphp.com
  */
 
@@ -72,21 +72,6 @@ abstract class Controller
 	public function params()
 	{
 		return $this->request->params();
-	}
-
-	/**
-	 * Render a view and add it to the body
-	 *
-	 * @param   string     path to the view
-	 * @param   array      variables for the view
-	 * @param   bool|null  whether to use output encoding
-	 * @deprecated  until v1.2
-	 */
-	public function render($view, $data = array(), $auto_encode = null)
-	{
-		logger(\Fuel::L_WARNING, 'The response property of the controller is deprecated thus Controller::render() is of '.
-			'no use anymore. Use the render() function as an alternative for direct rendering, but it won\'t add to output.', __METHOD__);
-		$this->response->body .= \View::forge($view, $data, $auto_encode);
 	}
 }
 

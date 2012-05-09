@@ -6,7 +6,7 @@
  * @version    1.0
  * @author     Fuel Development Team
  * @license    MIT License
- * @copyright  2010 - 2011 Fuel Development Team
+ * @copyright  2010 - 2012 Fuel Development Team
  * @link       http://fuelphp.com
  */
 
@@ -57,7 +57,7 @@ class Uri
 
 	/**
 	 * Converts the current URI segments to an associative array.  If
-	 * the URI has an odd number of segments, null will be returned.
+	 * the URI has an odd number of segments, an exception will be thrown.
 	 *
 	 * @return  array|null  the array or null
 	 */
@@ -69,7 +69,7 @@ class Uri
 	/**
 	 * Returns the full uri as a string
 	 *
-	 * @return	string
+	 * @return  string
 	 */
 	public static function string()
 	{
@@ -126,9 +126,13 @@ class Uri
 			}
 		}
 
-		array_walk($variables, function ($val, $key) use (&$url) {
-			$url = str_replace(':'.$key, $val, $url);
-		});
+		array_walk(
+			$variables,
+			function ($val, $key) use (&$url)
+			{
+				$url = str_replace(':'.$key, $val, $url);
+			}
+		);
 
 		is_bool($secure) and $url = http_build_url($url, array('scheme' => $secure ? 'https' : 'http'));
 
@@ -175,16 +179,14 @@ class Uri
 
 
 	/**
-	 * @deprecated  Make protected in 1.2
 	 * @var  string  The URI string
 	 */
-	public $uri = '';
+	protected $uri = '';
 
 	/**
-	 * @deprecated  Make protected in 1.2
 	 * @var  array  The URI segments
 	 */
-	public $segments = '';
+	protected $segments = '';
 
 	/**
 	 * Construct takes a URI or detects it if none is given and generates

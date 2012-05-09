@@ -74,7 +74,7 @@ class Image_Imagick extends \Image_Driver
 		extract(parent::_watermark($filename, $position, $padding));
 		$wmimage = new \Imagick();
 		$wmimage->readImage($filename);
-		$wmimage->setImageOpacity($this->config['watermark_alpha'] / 100);
+		$wmimage->evaluateImage(\Imagick::EVALUATE_MULTIPLY, $this->config['watermark_alpha'] / 100, \Imagick::CHANNEL_ALPHA);
 		$this->imagick->compositeImage($wmimage, \Imagick::COMPOSITE_DEFAULT, $x, $y);
 	}
 
@@ -261,7 +261,7 @@ class Image_Imagick extends \Image_Driver
 	 */
 	protected function create_color($hex, $alpha)
 	{
-		export($this->create_hex_color($hex));
+		extract($this->create_hex_color($hex));
 		return new \ImagickPixel('rgba('.$red.', '.$green.', '.$blue.', '.round($alpha / 100, 2).')');
 	}
 }

@@ -6,7 +6,7 @@
  * @version    1.0
  * @author     Fuel Development Team
  * @license    MIT License
- * @copyright  2010 - 2011 Fuel Development Team
+ * @copyright  2010 - 2012 Fuel Development Team
  * @link       http://fuelphp.com
  */
 
@@ -71,17 +71,6 @@ class View
 	 * @var  Request  active request when the View was created
 	 */
 	protected $active_request;
-
-	/**
-	 * This method is deprecated...use forge() instead.
-	 *
-	 * @deprecated until 1.2
-	 */
-	public static function factory($file = null, $data = null, $auto_filter = null)
-	{
-		logger(\Fuel::L_WARNING, 'This method is deprecated.  Please use a forge() instead.', __METHOD__);
-		return static::forge($file, $data, $auto_filter);
-	}
 
 	/**
 	 * Returns a new View object. If you do not define the "file" parameter,
@@ -231,7 +220,8 @@ class View
 	 */
 	protected function process_file($file_override = false)
 	{
-		$clean_room = function($__file_name, array $__data) {
+		$clean_room = function($__file_name, array $__data)
+		{
 			extract($__data, EXTR_REFS);
 
 			// Capture the view output
@@ -263,11 +253,13 @@ class View
 	 *
 	 *     $data = $this->get_data();
 	 *
-	 * @return  array
+	 * @param   string  $scope  local/glocal/all
+	 * @return  array   view data
 	 */
-	protected function get_data()
+	protected function get_data($scope = 'all')
 	{
-		$clean_it = function ($data, $rules, $auto_filter) {
+		$clean_it = function ($data, $rules, $auto_filter)
+		{
 			foreach ($data as $key => $value)
 			{
 				$filter = array_key_exists($key, $rules) ? $rules[$key] : null;
@@ -281,12 +273,12 @@ class View
 
 		$data = array();
 
-		if ( ! empty($this->data))
+		if ( ! empty($this->data)  and ($scope === 'all' or $scope === 'local'))
 		{
 			$data += $clean_it($this->data, $this->local_filter, $this->auto_filter);
 		}
 
-		if ( ! empty(static::$global_data))
+		if ( ! empty(static::$global_data)  and ($scope === 'all' or $scope === 'global'))
 		{
 			$data += $clean_it(static::$global_data, static::$global_filter, $this->auto_filter);
 		}
@@ -530,8 +522,8 @@ class View
 	{
 		if (class_exists('Request', false))
 		{
-			$current_request = Request::active();
-			Request::active($this->active_request);
+			$current_request = \Request::active();
+			\Request::active($this->active_request);
 		}
 
 		if ($file !== null)
@@ -549,7 +541,7 @@ class View
 
 		if (class_exists('Request', false))
 		{
-			Request::active($current_request);
+			\Request::active($current_request);
 		}
 
 		return $return;

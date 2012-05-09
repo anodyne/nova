@@ -6,7 +6,7 @@
  * @version    1.0
  * @author     Fuel Development Team
  * @license    MIT License
- * @copyright  2010 - 2011 Fuel Development Team
+ * @copyright  2010 - 2012 Fuel Development Team
  * @link       http://fuelphp.com
  */
 
@@ -122,42 +122,23 @@ class Config
 			}
 			$config = static::$items[$config];
 		}
-		$content = <<<CONF
-<?php
 
-CONF;
-		$content .= 'return '.str_replace(array('  ', 'array ('), array("\t", 'array('), var_export($config, true)).";\n";
-
-		if ( ! $path = \Finder::search('config', $file, '.php'))
+		$type = pathinfo($file, PATHINFO_EXTENSION);
+		if( ! $type)
 		{
-			if ($pos = strripos($file, '::'))
-			{
-				// get the namespace path
-				if ($path = \Autoloader::namespace_path('\\'.ucfirst(substr($file, 0, $pos))))
-				{
-					// strip the namespace from the filename
-					$file = substr($file, $pos+2);
-
-					// strip the classes directory as we need the module root
-					// and construct the filename
-					$path = substr($path,0, -8).'config'.DS.$file.'.php';
-
-				}
-				else
-				{
-					// invalid namespace requested
-					return false;
-				}
-			}
-
+			$type = 'php';
+			$file .= '.'.$type;
 		}
 
-		// make sure we have a fallback
-		$path or $path = APPPATH.'config'.DS.$file.'.php';
+		$class = '\\Config_'.ucfirst($type);
 
-		$path = pathinfo($path);
+		if( ! class_exists($class, true))
+		{
+			throw new \ConfigException('Cannot save a config file of type: '.$type);
+		}
 
-		return \File::update($path['dirname'], $path['basename'], $content);
+		$driver = new $class;
+		return $driver->save($file, $config);
 	}
 
 	/**

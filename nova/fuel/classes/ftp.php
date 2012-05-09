@@ -6,7 +6,7 @@
  * @version    1.0
  * @author     Fuel Development Team
  * @license    MIT License
- * @copyright  2010 - 2011 Fuel Development Team
+ * @copyright  2010 - 2012 Fuel Development Team
  * @link       http://fuelphp.com
  */
 
@@ -37,17 +37,6 @@ class Ftp
 	protected $_passive   = true;
 	protected $_debug     = false;
 	protected $_conn_id   = false;
-
-	/**
-	 * This method is deprecated...use forge() instead.
-	 * 
-	 * @deprecated until 1.2
-	 */
-	public static function factory($config = 'default', $connect = true)
-	{
-		logger(\Fuel::L_WARNING, 'This method is deprecated.  Please use a forge() instead.', __METHOD__);
-		return static::forge($config, $connect);
-	}
 
 	/**
 	 * Returns a new Ftp object. If you do not define the "file" parameter,

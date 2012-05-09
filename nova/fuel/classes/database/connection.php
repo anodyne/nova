@@ -66,7 +66,7 @@ abstract class Database_Connection
 			}
 
 			// Set the driver class name
-			$driver = 'Fuel\\Core\\Database_'.ucfirst($config['type']).'_Connection';
+			$driver = '\\Database_' . ucfirst($config['type']) . '_Connection';
 
 			// Create the database connection instance
 			new $driver($name, $config);
@@ -240,6 +240,22 @@ abstract class Database_Connection
 		}
 
 		return false;
+	}
+
+	/**
+	 * Per connection cache controlle setter/getter
+	 *
+	 * @param   bool   $bool  wether to enable it [optional]
+	 * @return  mixed  cache boolean when getting, current instance when setting.
+	 */
+	public function caching($bool = null)
+	{
+		if (is_bool($bool))
+		{
+			$this->_config['enable_cache'] = $bool;
+			return $this;
+		}
+		return \Arr::get($this->_config, 'enable_cache', true);
 	}
 
 	/**
@@ -650,17 +666,6 @@ abstract class Database_Connection
 	 * @return  bool
 	 */
 	abstract public function in_transaction();
-
-	/**
-	 * Deprecated, does nothing now.
-	 *
-	 * @return void
-	 * @deprecated  remove in v1.2
-	 */
-	public function transactional()
-	{
-		logger(\Fuel::L_WARNING, 'This method is deprecated, it does nothing anymore.', __METHOD__);
-	}
 
 	/**
 	 * Begins a transaction on instance
