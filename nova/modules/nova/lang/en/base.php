@@ -2,17 +2,19 @@
 
 return array(
 	
-	'account' => "account",
-	'award' => "award",
-	'all' => "all",
-	'attributes' => 'attributes',
-	'actions' => 'actions',
+	'account'		=> 'account',
+	'actions'		=> 'actions',
+	'all'			=> 'all',
+	'attributes'	=> 'attributes',
+	'award'			=> 'award',
 
-	'character' => "character",
-	'characters' => "characters",
-	'cp' => "control panel",
-	'class' => 'class',
-	'content' => 'content',
+	'bio'	=> 'bio',
+
+	'character'		=> 'character',
+	'characters'	=> 'characters',
+	'class'			=> 'class',
+	'content'		=> 'content',
+	'cp'			=> 'control panel',
 
 	'display' => 'display',
 	'dropdown' => 'dropdown menu',
@@ -34,6 +36,9 @@ return array(
 
 	'id' => 'ID',
 	'inline_help' => 'inline help',
+	'info' => 'info',
+	'image' => 'image',
+	'images' => 'images',
 
 	'loa' => "LOA",
 	'loa_full' => "Leave of Absence",
@@ -48,6 +53,7 @@ return array(
 	'middle' => 'middle',
 	'module' => 'module',
 	'modules' => 'modules',
+	'more' => 'more',
 
 	'name' => "name",
 	'notification' => "notification",
@@ -57,18 +63,23 @@ return array(
 
 	'orientation' => "orientation",
 	'order' => 'order',
+	'options' => 'options',
 	
 	'password' => "password",
 	'preference' => "preference",
 	'preferences' => "preferences",
 	'previous' => "previous",
 	'placeholder' => 'placeholder',
+	'position' => 'position',
+	'positions' => 'positions',
 
 	'row' => 'row',
 	'rows' => 'rows',
 	'restriction' => 'restriction',
 	'restrictions' => 'restrictions',
 	'readme' => 'readme',
+	'rank' => 'rank',
+	'ranks' => 'ranks',
 
 	'section' => "section",
 	'sections' => "sections",
