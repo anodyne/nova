@@ -13,7 +13,7 @@
 	}
 </style>
 
-<link rel="stylesheet" href="<?php echo base_url().MODFOLDER;?>/assets/js/css/bootstrap-scaffold.css">
+<link rel="stylesheet" href="<?php echo base_url().MODFOLDER;?>/assets/js/css/bootstrap.css">
 
 <div class="row">
 	<?php if (isset($character)): ?>

@@ -49,7 +49,7 @@ $uiTheme = ( ! is_file(APPPATH .'views/'.$current_skin.'/main/css/jquery.ui.them
 					src: '<?php echo base_url() . MODFOLDER;?>/assets/js/bootstrap-twipsy.js',
 					name: 'twipsy',
 					dependencies: {
-						css: ['<?php echo base_url() . MODFOLDER;?>/assets/js/css/bootstrap-twipsy.css']
+						css: ['<?php echo base_url() . MODFOLDER;?>/assets/js/css/bootstrap.css']
 					},
 					cache: true
 				});
