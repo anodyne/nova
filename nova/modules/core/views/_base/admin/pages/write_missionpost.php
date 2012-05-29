@@ -10,8 +10,12 @@
 			<p class="float_right fontSmall">
 				<a href="#" id="toggle_notes"><strong><?php echo $label['showhide'];?></strong></a>
 			</p>
-			<?php echo text_output($label['mission_notes'], 'h3');?>
+			<?php //echo text_output($label['mission_notes'], 'h3');?>
+			<h3><?php echo $label['mission_notes'];?> <small class="gray"><?php echo $label['note_last_updated'].' '.$label['note_last_update'];?></small></h3>
 			<div class="notes_content hidden">
+				<?php if ($missionNotesUpdate === true): ?>
+					<span class="label label-warning"><?php echo $label['updated'];?></span>
+				<?php endif;?>
 				<?php if (isset($mission)): ?>
 					<?php echo text_output($mission['notes']);?>
 				<?php elseif (isset($mission_notes)): ?>

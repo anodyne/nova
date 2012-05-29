@@ -1179,9 +1179,20 @@ abstract class Nova_write extends Nova_controller_admin {
 				'content' => ucwords(lang('actions_delete'))),
 			'locked' => ($row !== false and (int) $row->post_lock_user !== 0 and (int) $row->post_lock_date !== 0),
 		);
+	
+		// set the initial note update check
+		$data['missionNotesUpdate'] = false;
+
+		// an array of note update times
+		$note_times = array();
+
+		// make sure we have something so we don't throw an error
+		$last_note_timespan = false;
 		
 		if ($missions->num_rows() > 0)
 		{
+			$hours72 = now() - (3 * 86400);
+
 			if ($missions->num_rows() > 1)
 			{
 				foreach ($missions->result() as $mission)
@@ -1189,6 +1200,15 @@ abstract class Nova_write extends Nova_controller_admin {
 					$data['missions'][$mission->mission_id] = $mission->mission_title;
 					$data['mission_notes'][$mission->mission_id]['title'] = $mission->mission_title;
 					$data['mission_notes'][$mission->mission_id]['notes'] = $mission->mission_notes;
+
+					if ($mission->mission_notes_updated >= $hours72)
+					{
+						// update the note update check
+						$data['missionNotesUpdate'] = true;
+
+						// add the time to the tracking array
+						$note_times[] = $mission->mission_notes_updated;
+					}
 				}
 				
 				$js_data['missionCount'] = $missions->num_rows();
@@ -1200,9 +1220,27 @@ abstract class Nova_write extends Nova_controller_admin {
 				$data['mission']['id'] = $row->mission_id;
 				$data['mission']['title'] = $row->mission_title;
 				$data['mission']['notes'] = $row->mission_notes;
-				
+
+				if ($row->mission_notes_updated >= $hours72)
+				{
+					// update the note update check
+					$data['missionNotesUpdate'] = true;
+
+					// add the time to the tracking array
+					$note_times[] = $mission->mission_notes_updated;
+				}
+
 				$js_data['missionCount'] = 1;
 			}
+
+			// sort the note time array
+			arsort($note_times);
+
+			// get the first item in the array
+			$last_note_update = reset($note_times);
+
+			// figure out the timespan since the last note update
+			$last_note_timespan = timespan_short($last_note_update, now());
 		}
 		else
 		{
@@ -1214,6 +1252,7 @@ abstract class Nova_write extends Nova_controller_admin {
 			$js_data['missionCount'] = 0;
 		}
 		
+		$js_data['missionNotesUpdate'] = $data['missionNotesUpdate'];
 		$js_data['authorized'] = Auth::check_access('manage/missions', false);
 		
 		$nomission = sprintf(
@@ -1261,6 +1300,9 @@ abstract class Nova_write extends Nova_controller_admin {
 			'select' => ucwords(lang('labels_please').' '.lang('actions_select')).' '.lang('labels_the').' '.ucfirst(lang('labels_authors')),
 			'chosen_incompat' => lang('chosen_incompat'),
 			'locked' => sprintf(lang('post_locked'), lang('global_missionpost'), lang('global_user')),
+			'updated' => strtoupper(lang('actions_updated')),
+			'note_last_update' => ($last_note_timespan == '') ? '&ndash;' : $last_note_timespan,
+			'note_last_updated' => ucfirst(lang('actions_updated')),
 		);
 		
 		$this->_regions['content'] = Location::view('write_missionpost', $this->skin, 'admin', $data);

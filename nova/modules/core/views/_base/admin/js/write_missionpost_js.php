@@ -2,6 +2,8 @@
 
 <?php $string = random_string('alnum', 8);?>
 
+<link rel="stylesheet" href="<?php echo base_url().MODFOLDER;?>/assets/js/css/bootstrap.css" />
+
 <script type="text/javascript">
 	function checkLock() {
 		var send = {
@@ -94,6 +96,10 @@
 		<?php if ($this->uri->segment(4) == 'view'): ?>
 			$('#editable').hide();
 			$('#readonly').show();
+		<?php endif;?>
+
+		<?php if ($missionNotesUpdate === true): ?>
+			$('.notes_content').show();
 		<?php endif;?>
 	});
 </script>
