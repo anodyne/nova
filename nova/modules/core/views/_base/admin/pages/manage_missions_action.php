@@ -67,6 +67,7 @@
 			<p>
 				<kbd><?php echo $label['notes'];?></kbd>
 				<?php echo form_textarea($inputs['notes']);?>
+				<?php echo form_hidden('mission_oldnotes', $inputs['notes']['value']);?>
 			</p>
 			
 			<br />

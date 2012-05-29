@@ -2237,8 +2237,14 @@ abstract class Nova_manage extends Nova_controller_admin {
 						}
 					}
 					
+					// check to see if we should update when the mission notes were updated
+					if ($mission['mission_oldnotes'] != $mission['mission_notes'])
+					{
+						$mission['mission_notes_updated'] = now();
+					}
+
 					unset($mission['mission_oldstatus']); // remove the old status variable
-					$mission['mission_notes_updated'] = now(); // add the mission notes updated field
+					unset($mission['mission_oldnotes']); // remove the old notes variable
 					
 					$update = $this->mis->update_mission($id, $mission);
 					
