@@ -2,6 +2,9 @@
 
 ## 2.1.0
 
+* Users are now notified when mission notes have been updated in the last 72 hours by the notes box auto-expanding when they arrive at the posting page.
+* Users are now shown when the last update to the mission notes was all the time.
+
 ### Nova Core
 
 * Remove the `count_unread_pms` method from the private messages model. (This method was deprecated in Nova 2.0.)
@@ -13,6 +16,7 @@
 ### Bug Fixes
 
 * The update page would always throw an error that it couldn't find Nova installed in the current database.
+* When a mission was updated, it was assumed mission notes updated as well. Now, there's greater precision in determining if the notes were actually updated.
 
 ## 2.0.4
 
