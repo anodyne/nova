@@ -2677,6 +2677,7 @@ abstract class Nova_ajax extends CI_Controller {
 				if ($allowed)
 				{
 					$this->load->model('docking_model', 'docking');
+					$this->load->model('messages_model', 'msgs');
 					
 					$type = lang('actions_docking') .' '. lang('labels_request');
 					
@@ -8299,6 +8300,7 @@ abstract class Nova_ajax extends CI_Controller {
 				if ($allowed)
 				{
 					$this->load->model('docking_model', 'docking');
+					$this->load->model('messages_model', 'msgs');
 					
 					$type = lang('actions_docking') .' '. lang('labels_request');
 					

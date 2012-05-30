@@ -17,6 +17,7 @@
 
 * The update page would always throw an error that it couldn't find Nova installed in the current database.
 * When a mission was updated, it was assumed mission notes updated as well. Now, there's greater precision in determining if the notes were actually updated.
+* Accepting or rejecting docking applications would throw a fatal error because the Messages model wasn't loaded before it was used.
 
 ## 2.0.4
 
