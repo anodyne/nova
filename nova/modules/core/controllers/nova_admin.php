@@ -29,7 +29,6 @@ abstract class Nova_admin extends Nova_controller_admin {
 		$this->load->model('wiki_model', 'wiki');
 		$this->load->model('docking_model', 'docking');
 		$this->load->helper('utility');
-		$this->load->library('user_agent');
 
 		if (isset($_POST['submit']))
 		{
@@ -113,38 +112,35 @@ abstract class Nova_admin extends Nova_controller_admin {
 		|---------------------------------------------------------------
 		*/
 
-		if ( ! $this->agent->is_mobile())
+		if (is_array($this->session->userdata('characters')) && count($this->session->userdata('characters')) > 0)
 		{
-			if (is_array($this->session->userdata('characters')) && count($this->session->userdata('characters')) > 0)
-			{
-				$data['posts'] = array(
-					'entries' => $this->posts->count_character_posts($this->session->userdata('characters')),
-					'comments' => $this->posts->count_user_post_comments($this->session->userdata('userid'))
-				);
-				$data['logs'] = array(
-					'entries' => $this->logs->count_character_logs($this->session->userdata('characters')),
-					'comments' => $this->logs->count_user_log_comments($this->session->userdata('userid'))
-				);
-				$data['news'] = array(
-					'entries' => $this->news->count_character_news($this->session->userdata('characters')),
-					'comments' => $this->news->count_user_news_comments($this->session->userdata('userid'))
-				);
-			}
-			else
-			{
-				$data['posts'] = array(
-					'entries' => 0,
-					'comments' => $this->posts->count_user_post_comments($this->session->userdata('userid'))
-				);
-				$data['logs'] = array(
-					'entries' => 0,
-					'comments' => $this->logs->count_user_log_comments($this->session->userdata('userid'))
-				);
-				$data['news'] = array(
-					'entries' => 0,
-					'comments' => $this->news->count_user_news_comments($this->session->userdata('userid'))
-				);
-			}
+			$data['posts'] = array(
+				'entries' => $this->posts->count_character_posts($this->session->userdata('characters')),
+				'comments' => $this->posts->count_user_post_comments($this->session->userdata('userid'))
+			);
+			$data['logs'] = array(
+				'entries' => $this->logs->count_character_logs($this->session->userdata('characters')),
+				'comments' => $this->logs->count_user_log_comments($this->session->userdata('userid'))
+			);
+			$data['news'] = array(
+				'entries' => $this->news->count_character_news($this->session->userdata('characters')),
+				'comments' => $this->news->count_user_news_comments($this->session->userdata('userid'))
+			);
+		}
+		else
+		{
+			$data['posts'] = array(
+				'entries' => 0,
+				'comments' => $this->posts->count_user_post_comments($this->session->userdata('userid'))
+			);
+			$data['logs'] = array(
+				'entries' => 0,
+				'comments' => $this->logs->count_user_log_comments($this->session->userdata('userid'))
+			);
+			$data['news'] = array(
+				'entries' => 0,
+				'comments' => $this->news->count_user_news_comments($this->session->userdata('userid'))
+			);
 		}
 
 		/*
@@ -192,40 +188,37 @@ abstract class Nova_admin extends Nova_controller_admin {
 		|---------------------------------------------------------------
 		*/
 
-		if ( ! $this->agent->is_mobile())
+		$all = $this->user->get_users();
+
+		$now = now();
+		$threshold = $now - ($this->options['posting_requirement'] * 86400);
+
+		// set activity as an empty array to avoid errors
+		$data['activity'] = array();
+
+		if ($all->num_rows() > 0)
 		{
-			$all = $this->user->get_users();
-
-			$now = now();
-			$threshold = $now - ($this->options['posting_requirement'] * 86400);
-
-			// set activity as an empty array to avoid errors
-			$data['activity'] = array();
-
-			if ($all->num_rows() > 0)
+			foreach ($all->result() as $a)
 			{
-				foreach ($all->result() as $a)
+				if ($threshold > $a->last_post)
 				{
-					if ($threshold > $a->last_post)
-					{
-						$data['activity'][$a->userid] = array(
-							'post' => ( ! empty($a->last_post)) ? $a->last_post : lang('error_no_last_post'),
-							'login' => ( ! empty($a->last_login)) ? $a->last_login : lang('error_no_last_login'),
-							'name' => $this->char->get_character_name($a->main_char, true)
-						);
-					}
-
-					$milestones[] = array(
-						'id' => $a->userid,
-						'char' => $a->main_char,
-						'join' => $a->join_date
+					$data['activity'][$a->userid] = array(
+						'post' => ( ! empty($a->last_post)) ? $a->last_post : lang('error_no_last_post'),
+						'login' => ( ! empty($a->last_login)) ? $a->last_login : lang('error_no_last_login'),
+						'name' => $this->char->get_character_name($a->main_char, true)
 					);
 				}
-			}
 
-			// set the count to zero by default
-			$data['activitycount'] = count($data['activity']);
+				$milestones[] = array(
+					'id' => $a->userid,
+					'char' => $a->main_char,
+					'join' => $a->join_date
+				);
+			}
 		}
+
+		// set the count to zero by default
+		$data['activitycount'] = count($data['activity']);
 
 		/*
 		|---------------------------------------------------------------
@@ -233,7 +226,7 @@ abstract class Nova_admin extends Nova_controller_admin {
 		|---------------------------------------------------------------
 		*/
 
-		if (isset($milestones) and ! $this->agent->is_mobile())
+		if (isset($milestones))
 		{
 			foreach ($milestones as $m)
 			{
@@ -283,59 +276,56 @@ abstract class Nova_admin extends Nova_controller_admin {
 		|---------------------------------------------------------------
 		*/
 
-		if ( ! $this->agent->is_mobile())
+		// set the datestring
+		$datestring = $this->options['date_format'];
+
+		// grab the data
+		$posts_all = $this->posts->get_post_list('', 'desc', 10, '', 'activated');
+		$logs_all = $this->logs->get_log_list(10);
+		$news_all = $this->news->get_news_items(10, $this->session->userdata('userid'));
+
+		if ($posts_all->num_rows() > 0)
 		{
-			// set the datestring
-			$datestring = $this->options['date_format'];
-
-			// grab the data
-			$posts_all = $this->posts->get_post_list('', 'desc', 10, '', 'activated');
-			$logs_all = $this->logs->get_log_list(10);
-			$news_all = $this->news->get_news_items(10, $this->session->userdata('userid'));
-
-			if ($posts_all->num_rows() > 0)
+			$i = 1;
+			foreach ($posts_all->result() as $p)
 			{
-				$i = 1;
-				foreach ($posts_all->result() as $p)
-				{
-					$data['posts_all'][$i]['title'] = $p->post_title;
-					$data['posts_all'][$i]['post_id'] = $p->post_id;
-					$data['posts_all'][$i]['date'] = mdate($datestring, gmt_to_local($p->post_date, $this->timezone, $this->dst));
-					$data['posts_all'][$i]['authors'] = $this->char->get_authors($p->post_authors);
-					$data['posts_all'][$i]['mission'] = $this->mis->get_mission($p->post_mission, 'mission_title');
-					$data['posts_all'][$i]['mission_id'] = $p->post_mission;
+				$data['posts_all'][$i]['title'] = $p->post_title;
+				$data['posts_all'][$i]['post_id'] = $p->post_id;
+				$data['posts_all'][$i]['date'] = mdate($datestring, gmt_to_local($p->post_date, $this->timezone, $this->dst));
+				$data['posts_all'][$i]['authors'] = $this->char->get_authors($p->post_authors);
+				$data['posts_all'][$i]['mission'] = $this->mis->get_mission($p->post_mission, 'mission_title');
+				$data['posts_all'][$i]['mission_id'] = $p->post_mission;
 
-					++$i;
-				}
+				++$i;
 			}
+		}
 
-			if ($logs_all->num_rows() > 0)
+		if ($logs_all->num_rows() > 0)
+		{
+			$i = 1;
+			foreach ($logs_all->result() as $l)
 			{
-				$i = 1;
-				foreach ($logs_all->result() as $l)
-				{
-					$data['logs_all'][$i]['title'] = $l->log_title;
-					$data['logs_all'][$i]['log_id'] = $l->log_id;
-					$data['logs_all'][$i]['date'] = mdate($datestring, gmt_to_local($l->log_date, $this->timezone, $this->dst));
-					$data['logs_all'][$i]['author'] = $this->char->get_character_name($l->log_author_character, TRUE);
+				$data['logs_all'][$i]['title'] = $l->log_title;
+				$data['logs_all'][$i]['log_id'] = $l->log_id;
+				$data['logs_all'][$i]['date'] = mdate($datestring, gmt_to_local($l->log_date, $this->timezone, $this->dst));
+				$data['logs_all'][$i]['author'] = $this->char->get_character_name($l->log_author_character, TRUE);
 
-					++$i;
-				}
+				++$i;
 			}
+		}
 
-			if ($news_all->num_rows() > 0)
+		if ($news_all->num_rows() > 0)
+		{
+			$i = 1;
+			foreach ($news_all->result() as $n)
 			{
-				$i = 1;
-				foreach ($news_all->result() as $n)
-				{
-					$data['news_all'][$i]['title'] = $n->news_title;
-					$data['news_all'][$i]['news_id'] = $n->news_id;
-					$data['news_all'][$i]['category'] = $n->newscat_name;
-					$data['news_all'][$i]['author'] = $this->char->get_character_name($n->news_author_character, TRUE);
-					$data['news_all'][$i]['date'] = mdate($datestring, gmt_to_local($n->news_date, $this->timezone, $this->dst));
+				$data['news_all'][$i]['title'] = $n->news_title;
+				$data['news_all'][$i]['news_id'] = $n->news_id;
+				$data['news_all'][$i]['category'] = $n->newscat_name;
+				$data['news_all'][$i]['author'] = $this->char->get_character_name($n->news_author_character, TRUE);
+				$data['news_all'][$i]['date'] = mdate($datestring, gmt_to_local($n->news_date, $this->timezone, $this->dst));
 
-					++$i;
-				}
+				++$i;
 			}
 		}
 
@@ -347,41 +337,38 @@ abstract class Nova_admin extends Nova_controller_admin {
 
 		$data['update'] = FALSE;
 
-		if ( ! $this->agent->is_mobile())
-		{		
-			if (Auth::is_sysadmin($this->session->userdata('userid')) && $this->options['updates'] != 'none')
+		if (Auth::is_sysadmin($this->session->userdata('userid')) and $this->options['updates'] != 'none')
+		{
+			// load the install file
+			$this->nova->load('install', $this->session->userdata('language'));
+
+			// grab the ignore version
+			$ignore = $this->sys->get_item('system_info', 'sys_id', 1, 'sys_version_ignore');
+
+			// go check the version
+			$check = $this->_check_version();
+
+			if (isset($check['update']['version']) && $check['update']['version'] != $ignore)
 			{
-				// load the install file
-				$this->nova->load('install', $this->session->userdata('language'));
+				$data['update']['version'] = $check['flash']['header'];
+				$data['update']['version_only'] = $check['update']['version'];
+				$data['update']['desc'] = $check['flash']['message'];
+				$data['update']['link'] = ($check['flash']['status'] == 1) ? $check['update']['link'] : site_url('update/index');
+				$data['update']['status'] = $check['flash']['status'];
 
-				// grab the ignore version
-				$ignore = $this->sys->get_item('system_info', 'sys_id', 1, 'sys_version_ignore');
-
-				// go check the version
-				$check = $this->_check_version();
-
-				if (isset($check['update']['version']) && $check['update']['version'] != $ignore)
+				switch ($check['update']['severity'])
 				{
-					$data['update']['version'] = $check['flash']['header'];
-					$data['update']['version_only'] = $check['update']['version'];
-					$data['update']['desc'] = $check['flash']['message'];
-					$data['update']['link'] = ($check['flash']['status'] == 1) ? $check['update']['link'] : site_url('update/index');
-					$data['update']['status'] = $check['flash']['status'];
+					case 'critical':
+						$data['update']['severity'] = 'red';
+					break;
 
-					switch ($check['update']['severity'])
-					{
-						case 'critical':
-							$data['update']['severity'] = 'red';
-						break;
+					case 'major':
+						$data['update']['severity'] = 'orange';
+					break;
 
-						case 'major':
-							$data['update']['severity'] = 'orange';
-						break;
-
-						case 'minor':
-							$data['update']['severity'] = 'blue';
-						break;
-					}
+					case 'minor':
+						$data['update']['severity'] = 'blue';
+					break;
 				}
 			}
 		}
@@ -469,28 +456,8 @@ abstract class Nova_admin extends Nova_controller_admin {
 			'm_write_post' => ucwords(lang('actions_write') .' '. lang('global_missionpost')),
 		);
 
-		if ($this->agent->is_mobile() and ! $this->agent->is_mobile('ipad'))
-		{
-			$data['label']['pm'] = ucwords(lang('status_unread') .' '. lang('labels_messages'));
-
-			$data['label']['p_awards'] = ucwords(lang('global_award') .' '. lang('labels_nominations'));
-			$data['label']['p_posts'] = ucwords(lang('global_missionposts'));
-			$data['label']['p_logs'] = ucwords(lang('global_personallogs'));
-			$data['label']['p_news'] = ucwords(lang('global_newsitems'));
-			$data['label']['p_docked'] = ucwords(lang('actions_docking') .' '. lang('labels_requests'));
-			$data['label']['p_users'] = ucwords(lang('global_characters'));
-			$data['label']['p_comments'] = ucwords(lang('labels_comments'));
-
-			Template::$file = '_mobile/template';
-			$this->_regions['content'] = Location::view('admin_index', '_mobile', 'admin', $data);
-			$this->_regions['javascript'] = null;
-		}
-		else
-		{
-			$this->_regions['content'] = Location::view('admin_index', $this->skin, 'admin', $data);
-			$this->_regions['javascript'] = Location::js('admin_index_js', $this->skin, 'admin', $js_data);
-		}
-
+		$this->_regions['content'] = Location::view('admin_index', $this->skin, 'admin', $data);
+		$this->_regions['javascript'] = Location::js('admin_index_js', $this->skin, 'admin', $js_data);
 		$this->_regions['title'].= lang('head_admin_index');
 
 		Template::assign($this->_regions);
