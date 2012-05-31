@@ -1,6 +1,6 @@
 # Changelog
 
-## 2.1.0
+## 2.1.0 (06 June 2012)
 
 * Users are now notified when mission notes have been updated in the last 72 hours by the notes box auto-expanding when they arrive at the posting page.
 * Users are now shown when the last update to the mission notes was all the time.
@@ -12,7 +12,7 @@
 * Remove the What's New page for the reasons specified above.
 * Update the Version Information page to reflect the database changes.
 * Update the post, log, and news creation pages to give a description of what tags are meant to be used for.
-* Update to jQuery 1.7.2.
+* Remove jQuery library from the file system. We now pull jQuery from a CDN instead of storing it locally.
 * Update to jQuery UI 1.8.20 (we now include the entire jQuery UI library for anyone who wants to use components we don't use).
 * Update to prettyPhoto 3.1.4.
 * Update to jQuery Reflection 1.1.
@@ -22,15 +22,6 @@
 * The update page would always throw an error that it couldn't find Nova installed in the current database.
 * When a mission was updated, it was assumed mission notes updated as well. Now, there's greater precision in determining if the notes were actually updated.
 * Accepting or rejecting docking applications would throw a fatal error because the Messages model wasn't loaded before it was used.
-
-## 2.0.4
-
-### Nova Core
-
-* Updated jQuery to version 1.7.2
-
-### Bug Fixes
-
 * Join timespan always showed as a user joining "1 Second ago" no matter when they joined.
 * Nova's `timespan_short` helper was missing the word "ago" when the time was less than an hour.
 
