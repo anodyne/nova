@@ -12,6 +12,10 @@
 * Remove the What's New page for the reasons specified above.
 * Update the Version Information page to reflect the database changes.
 * Update the post, log, and news creation pages to give a description of what tags are meant to be used for.
+* Update to jQuery 1.7.2.
+* Update to jQuery UI 1.8.20 (we now include the entire jQuery UI library for anyone who wants to use components we don't use).
+* Update to prettyPhoto 3.1.4.
+* Update to jQuery Reflection 1.1.
 
 ### Bug Fixes
 
