@@ -1205,10 +1205,10 @@ abstract class Nova_write extends Nova_controller_admin {
 					{
 						// update the note update check
 						$data['missionNotesUpdate'] = true;
-
-						// add the time to the tracking array
-						$note_times[] = $mission->mission_notes_updated;
 					}
+
+					// add the time to the tracking array
+					$note_times[] = $mission->mission_notes_updated;
 				}
 				
 				$js_data['missionCount'] = $missions->num_rows();
@@ -1225,10 +1225,10 @@ abstract class Nova_write extends Nova_controller_admin {
 				{
 					// update the note update check
 					$data['missionNotesUpdate'] = true;
-
-					// add the time to the tracking array
-					$note_times[] = $mission->mission_notes_updated;
 				}
+
+				// add the time to the tracking array
+				$note_times[] = $mission->mission_notes_updated;
 
 				$js_data['missionCount'] = 1;
 			}
