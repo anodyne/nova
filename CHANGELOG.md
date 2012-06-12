@@ -1,6 +1,6 @@
 # Changelog
 
-## 2.1.0 (06 June 2012)
+## 2.1.0 (14 June 2012)
 
 * Users are now notified when mission notes have been updated in the last 72 hours by the notes box auto-expanding when they arrive at the posting page.
 * Users are now shown when the last update to the mission notes was all the time.
