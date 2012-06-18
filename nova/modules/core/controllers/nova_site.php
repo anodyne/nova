@@ -3705,7 +3705,7 @@ abstract class Nova_site extends Nova_controller_admin {
 				$data['messages'][$msg->message_type][$msg->message_id]['id'] = $msg->message_id;
 				$data['messages'][$msg->message_type][$msg->message_id]['key'] = $msg->message_key;
 				$data['messages'][$msg->message_type][$msg->message_id]['label'] = $msg->message_label;
-				$data['messages'][$msg->message_type][$msg->message_id]['content'] = word_limiter($msg->message_content, 25);
+				$data['messages'][$msg->message_type][$msg->message_id]['content'] = word_limiter(strip_tags($msg->message_content, 25));
 			}
 		}
 		
