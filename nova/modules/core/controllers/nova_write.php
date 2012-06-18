@@ -1208,7 +1208,10 @@ abstract class Nova_write extends Nova_controller_admin {
 					}
 
 					// add the time to the tracking array
-					$note_times[] = $mission->mission_notes_updated;
+					if ($mission->mission_notes_updated !== null and $mission->mission_notes_updated > 0)
+					{
+						$note_times[] = $mission->mission_notes_updated;
+					}
 				}
 				
 				$js_data['missionCount'] = $missions->num_rows();
@@ -1228,7 +1231,10 @@ abstract class Nova_write extends Nova_controller_admin {
 				}
 
 				// add the time to the tracking array
-				$note_times[] = $mission->mission_notes_updated;
+				if ($row->mission_notes_updated !== null and $row->mission_notes_updated > 0)
+				{
+					$note_times[] = $row->mission_notes_updated;
+				}
 
 				$js_data['missionCount'] = 1;
 			}
@@ -1236,11 +1242,14 @@ abstract class Nova_write extends Nova_controller_admin {
 			// sort the note time array
 			arsort($note_times);
 
-			// get the first item in the array
-			$last_note_update = reset($note_times);
+			if (count($note_times) > 0)
+			{
+				// get the first item in the array
+				$last_note_update = reset($note_times);
 
-			// figure out the timespan since the last note update
-			$last_note_timespan = timespan_short($last_note_update, now());
+				// figure out the timespan since the last note update
+				$last_note_timespan = timespan_short($last_note_update, now());
+			}
 		}
 		else
 		{
@@ -1301,8 +1310,7 @@ abstract class Nova_write extends Nova_controller_admin {
 			'chosen_incompat' => lang('chosen_incompat'),
 			'locked' => sprintf(lang('post_locked'), lang('global_missionpost'), lang('global_user')),
 			'updated' => strtoupper(lang('actions_updated')),
-			'note_last_update' => ($last_note_timespan == '') ? '&ndash;' : $last_note_timespan,
-			'note_last_updated' => ucfirst(lang('actions_updated')),
+			'note_last_updated' => ($last_note_timespan !== false) ? ucfirst(lang('actions_updated')).': '.$last_note_timespan : '',
 		);
 		
 		$this->_regions['content'] = Location::view('write_missionpost', $this->skin, 'admin', $data);
