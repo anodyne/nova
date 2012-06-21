@@ -1,9 +1,9 @@
-version: 2.0.3
+version: 2.1.0
 version_major: 2
-version_minor: 0
-version_update: 3
-severity: minor
+version_minor: 1
+version_update: 0
+severity: major
 notes: |
-  Nova 2.0.3 addresses an issue with benchmarking psuedo-variables (elapsed time and memory consumption) that are caused by the Template engine not using the Output class. In addition, the jQuery UI has been updated to version 1.8.18.
-date: 01 March 2012
+  Nova 2.1 is the first major update to Nova 2 and address several minor bugs still found throughout 2.0. In addition, the mission notes feature gets a much needed update to notify players when mission notes have been updated. If the mission notes for any active mission have been updated in the last 72 hours, when a player lands on the posting page, the mission notes section will automatically be expanded. Additionally, Nova will always show when the last time the mission notes were updated so that players can see if they need to check out the notes.
+date: 22 June 2012
 link: http://www.anodyne-productions.com/nova/index.php
