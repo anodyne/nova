@@ -1,5 +1,12 @@
 # Changelog
 
+## 2.1.1 (- June 2012)
+
+### Bug Fixes
+
+* During the update process, Nova never updated the system information table with the correct version number.
+* Despite the system version and components database tables being pulled out, the What's New menu item was never removed, throwing a 404 error if someone tried to go to the page.
+
 ## 2.1.0 (26 June 2012)
 
 * Users are now notified when mission notes have been updated in the last 72 hours by the notes box auto-expanding when they arrive at the posting page.
