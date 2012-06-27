@@ -1,6 +1,6 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 /**
- * Update Nova from 2.0.3 to 2.0.4
+ * Update Nova from 2.0.3 to 2.1
  */
 $system_info	= null;
 $add_tables		= null;
@@ -16,8 +16,8 @@ $drop_column	= null;
 $system_info = array(
 	'sys_last_update'		=> now(),
 	'sys_version_major'		=> 2,
-	'sys_version_minor'		=> 0,
-	'sys_version_update'	=> 4
+	'sys_version_minor'		=> 1,
+	'sys_version_update'	=> 0
 );
 
 /*
@@ -64,6 +64,8 @@ if ($add_tables !== null)
 | $drop_tables = array('table_name');
 |---------------------------------------------------------------
 */
+
+$drop_tables = array('system_components', 'system_versions');
 
 if ($drop_tables !== null)
 {
