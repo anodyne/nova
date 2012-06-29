@@ -6,6 +6,7 @@
 
 * During the update process, Nova never updated the system information table with the correct version number.
 * Despite the system version and components database tables being pulled out, the What's New menu item was never removed, throwing a 404 error if someone tried to go to the page.
+* The Admin Control Panel's update notification panel doesn't properly display all the language strings because the proper language file wasn't loaded.
 
 ## 2.1.0 (26 June 2012)
 
