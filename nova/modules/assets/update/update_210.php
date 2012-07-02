@@ -128,6 +128,44 @@ if ($add_column !== null)
 |---------------------------------------------------------------
 */
 
+$modify_column = array(
+	'applications' => array(
+		'app_ip' => array(
+			'name' => 'app_ip',
+			'type' => 'VARCHAR',
+			'constraint' => 45,
+		),
+	),
+	'bans' => array(
+		'ban_ip' => array(
+			'name' => 'ban_ip',
+			'type' => 'VARCHAR',
+			'constraint' => 45,
+		),
+	),
+	'login_attempts' => array(
+		'login_ip' => array(
+			'name' => 'login_ip',
+			'type' => 'VARCHAR',
+			'constraint' => 45,
+		),
+	),
+	'sessions' => array(
+		'ip_address' => array(
+			'name' => 'ip_address',
+			'type' => 'VARCHAR',
+			'constraint' => 45,
+		),
+	),
+	'uploads' => array(
+		'upload_ip' => array(
+			'name' => 'upload_ip',
+			'type' => 'VARCHAR',
+			'constraint' => 45,
+		),
+	),
+);
+
 if ($modify_column !== null)
 {
 	foreach ($modify_column as $key => $value)
