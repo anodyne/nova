@@ -83,13 +83,22 @@ class Database_PDO_Connection extends \Database_Connection
 		}
 		catch (\PDOException $e)
 		{
-			throw new \Database_Exception($e->getMessage(), $e->getCode(), $e);
+			$error_code = is_numeric($e->getCode()) ? $e->getCode() : 0;
+			throw new \Database_Exception($e->getMessage(), $error_code, $e);
 		}
 
 		if ( ! empty($this->_config['charset']))
 		{
-			// Set the character set
-			$this->set_charset($this->_config['charset']);
+			// Set Charset for SQL Server connection
+			if (strtolower($this->driver_name()) == 'sqlsrv')
+			{
+				$this->_connection->setAttribute(\PDO::SQLSRV_ATTR_ENCODING, \PDO::SQLSRV_ENCODING_SYSTEM);
+			}
+			else
+			{
+				// Set the character set
+				$this->set_charset($this->_config['charset']);
+			}
 		}
 	}
 
@@ -99,6 +108,15 @@ class Database_PDO_Connection extends \Database_Connection
 		$this->_connection = null;
 
 		return true;
+	}
+
+	/**
+	 * Get the current PDO Driver name
+	 * @return string
+	 */
+	public function driver_name()
+	{
+		return $this->_connection->getAttribute(\PDO::ATTR_DRIVER_NAME);
 	}
 
 	public function set_charset($charset)
@@ -121,30 +139,36 @@ class Database_PDO_Connection extends \Database_Connection
 			$benchmark = \Profiler::start("Database ({$this->_instance})", $sql);
 		}
 
-		try
+		// run the query. if the connection is lost, try 3 times to reconnect
+		$attempts = 3;
+
+		do
 		{
 			try
 			{
 				$result = $this->_connection->query($sql);
+				break;
 			}
 			catch (\Exception $e)
 			{
-				// do a reconnect first and try again, before giving up
-				$this->connect();
-				$result = $this->_connection->query($sql);
-			}
-		}
-		catch (\Exception $e)
-		{
-			if (isset($benchmark))
-			{
-				// This benchmark is worthless
-				\Profiler::delete($benchmark);
-			}
+				if (strpos($e->getMessage(), '2006 MySQL') !== false)
+				{
+					$this->connect();
+				}
+				else
+				{
+					if (isset($benchmark))
+					{
+						// This benchmark is worthless
+						\Profiler::delete($benchmark);
+					}
 
-			// Convert the exception in a database exception
-			throw new \Database_Exception($e->getMessage().' with query: "'.$sql.'"');
+					// Convert the exception in a database exception
+					throw new \Database_Exception($e->getMessage().' with query: "'.$sql.'"');
+				}
+			}
 		}
+		while ($attempts-- > 0);
 
 		if (isset($benchmark))
 		{
@@ -206,7 +230,7 @@ class Database_PDO_Connection extends \Database_Connection
 		! is_null($like) and $like = str_replace('%', '.*', $like);
 		foreach ($result as $row)
 		{
-			if ( ! is_null($like) and preg_match($like, $row['Field'])) continue;
+			if ( ! is_null($like) and ! preg_match('#'.$like.'#', $row['Field'])) continue;
 			list($type, $length) = $this->_parse_type($row['Type']);
 
 			$column = $this->datatype($type);

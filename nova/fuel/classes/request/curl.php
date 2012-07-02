@@ -19,7 +19,6 @@ class Request_Curl extends \Request_Driver
 	 */
 	public function __construct($resource, array $options, $method = null)
 	{
-		$method and $this->set_method($method);
 
 		// check if we have libcurl available
 		if ( ! function_exists('curl_init'))
@@ -35,10 +34,7 @@ class Request_Curl extends \Request_Driver
 			$this->http_login($options['user'], $options['pass'], $options['auth']);
 		}
 
-		// we want to handle failure ourselves
-		$this->set_option('failonerror', false);
-
-		parent::__construct($resource, $options);
+		parent::__construct($resource, $options, $method);
 	}
 
 	/**

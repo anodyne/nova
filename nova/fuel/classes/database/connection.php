@@ -625,6 +625,11 @@ abstract class Database_Connection
 			// Quote the column in FUNC("ident") identifiers
 			return preg_replace('/"(.+?)"/e', '$this->quote_identifier("$1")', $value);
 		}
+		elseif (preg_match("/^'(.*)?'$/", $value))
+		{
+			// return quoted values as-is
+			return $value;
+		}
 		elseif (strpos($value, '.') !== false)
 		{
 			// Split the identifier into the individual parts
@@ -703,6 +708,8 @@ abstract class Database_Connection
 	 */
 	public function connection()
 	{
+		// Make sure the database is connected
+		$this->_connection or $this->connect();
 		return $this->_connection;
 	}
 }
