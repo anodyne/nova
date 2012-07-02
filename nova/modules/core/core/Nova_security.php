@@ -2,6 +2,8 @@
 /**
  * Extended CI Security library
  *
+ * Make sure the style tag is allowed.
+ *
  * @package		Nova
  * @category	Library
  * @author		Anodyne Productions
@@ -33,6 +35,7 @@ abstract class Nova_Security extends CI_Security {
 	 * http://ha.ckers.org/xss.html
 	 *
 	 * @param	mixed	string or array
+	 * @param 	bool
 	 * @return	string
 	 */
 	public function xss_clean($str, $is_image = FALSE)
@@ -81,7 +84,7 @@ abstract class Nova_Security extends CI_Security {
 		 */
 
 		$str = preg_replace_callback("/[a-z]+=([\'\"]).*?\\1/si", array($this, '_convert_attribute'), $str);
-	
+
 		$str = preg_replace_callback("/<\w+.*?(?=>|<|$)/si", array($this, '_decode_entity'), $str);
 
 		/*
@@ -94,7 +97,7 @@ abstract class Nova_Security extends CI_Security {
 		 *
 		 * This prevents strings like this: ja	vascript
 		 * NOTE: we deal with spaces between characters later.
-		 * NOTE: preg_replace was found to be amazingly slow here on 
+		 * NOTE: preg_replace was found to be amazingly slow here on
 		 * large blocks of data, so we use str_replace.
 		 */
 
@@ -122,8 +125,8 @@ abstract class Nova_Security extends CI_Security {
 		 */
 		if ($is_image === TRUE)
 		{
-			// Images have a tendency to have the PHP short opening and 
-			// closing tags every so often so we skip those and only 
+			// Images have a tendency to have the PHP short opening and
+			// closing tags every so often so we skip those and only
 			// do the long opening tags.
 			$str = preg_replace('/<\?(php)/i', "&lt;?\\1", $str);
 		}
@@ -139,10 +142,10 @@ abstract class Nova_Security extends CI_Security {
 		 * These words are compacted back to their correct state.
 		 */
 		$words = array(
-				'javascript', 'expression', 'vbscript', 'script', 
-				'applet', 'alert', 'document', 'write', 'cookie', 'window'
-			);
-			
+			'javascript', 'expression', 'vbscript', 'script', 'base64',
+			'applet', 'alert', 'document', 'write', 'cookie', 'window'
+		);
+
 		foreach ($words as $word)
 		{
 			$temp = '';
@@ -159,8 +162,8 @@ abstract class Nova_Security extends CI_Security {
 
 		/*
 		 * Remove disallowed Javascript in links or img tags
-		 * We used to do some version comparisons and use of stripos for PHP5, 
-		 * but it is dog slow compared to these simplified non-capturing 
+		 * We used to do some version comparisons and use of stripos for PHP5,
+		 * but it is dog slow compared to these simplified non-capturing
 		 * preg_match(), especially if the pattern exists in the string
 		 */
 		do
@@ -224,11 +227,11 @@ abstract class Nova_Security extends CI_Security {
 
 		/*
 		 * Images are Handled in a Special Way
-		 * - Essentially, we want to know that after all of the character 
-		 * conversion is done whether any unwanted, likely XSS, code was found.  
+		 * - Essentially, we want to know that after all of the character
+		 * conversion is done whether any unwanted, likely XSS, code was found.
 		 * If not, we return TRUE, as the image is clean.
-		 * However, if the string post-conversion does not matched the 
-		 * string post-removal of XSS, then it fails, as there was unwanted XSS 
+		 * However, if the string post-conversion does not matched the
+		 * string post-removal of XSS, then it fails, as there was unwanted XSS
 		 * code found and removed/changed during processing.
 		 */
 
