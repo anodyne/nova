@@ -4,6 +4,8 @@ app/cache/
 app/logs/
 app/views/
 
+application/*
+
 #app/assets/images/*/
 #!app/views/default/*
 #!app/views/titan/*
