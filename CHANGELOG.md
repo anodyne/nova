@@ -2,6 +2,10 @@
 
 ## 2.1.1 (- June 2012)
 
+### Nova Core
+
+* Update to CodeIgniter 2.1.2.
+
 ### Bug Fixes
 
 * During the update process, Nova never updated the system information table with the correct version number.
