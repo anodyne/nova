@@ -845,7 +845,15 @@ class Model implements \ArrayAccess, \Iterator
 		{
 			if ( ! array_key_exists($property, $this->_data_relations))
 			{
-				$this->_data_relations[$property] = $rel->get($this);
+				if ($this->is_new())
+				{
+					$this->_data_relations[$property] = $rel->singular ? null : array();
+				}
+				else
+				{
+					$this->_data_relations[$property] = $rel->get($this);
+				}
+				
 				$this->_update_original_relations(array($property));
 			}
 			return $this->_data_relations[$property];
@@ -1305,7 +1313,7 @@ class Model implements \ArrayAccess, \Iterator
 		{
 			if ($this->is_changed($key))
 			{
-				$diff[0][$key] = $this->_original[$key];
+				$diff[0][$key] = array_key_exists($key, $this->_original) ? $this->_original[$key] : null;
 				$diff[1][$key] = $val;
 			}
 		}
@@ -1433,7 +1441,7 @@ class Model implements \ArrayAccess, \Iterator
 	public static function set_form_fields($form, $instance = null)
 	{
 		Observer_Validation::set_fields($instance instanceof static ? $instance : get_called_class(), $form);
-		$instance and $form->repopulate($instance);
+		$instance and $form->populate($instance, true);
 	}
 
 	/**
