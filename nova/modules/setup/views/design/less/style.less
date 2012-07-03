@@ -1,6 +1,5 @@
 @import "variables.less";
 @import "mixins.less";
-@import "bootstrap-changes.less";
 
 body {
 	background: #d3d3d3 url(images/body-bg.jpg) repeat top left;
@@ -285,4 +284,37 @@ hr {
 
 legend {
 	margin-bottom: 0;
+}
+
+.btn {
+	padding: 7px 17px;
+	font-weight: bold;
+	border-color: #b2b2b2;
+	color: #747474;
+	text-shadow: 0 1px 0 rgba(255, 255, 255, .75);
+	font-size: @base-font-size;
+	
+	.background-clip;
+	.rounded;
+	.gradient(#fdfdfd, #ececed);
+	.box-shadow(~"0 1px 1px rgba(0, 0, 0, .15)");
+}
+.btn:hover {
+	color: #1975ff;
+	border-color: #74a9f4;
+	text-shadow: 0 0 5px rgba(26, 118, 255, .25);
+	
+	.gradient(#fdfdfd, #d7ebfc);
+}
+
+label.control-label {
+	margin: 10px 0 0 0;
+	font-weight: bold;
+	font-family: helvetica, arial, sans-serif;
+	font-size: 14px;
+	color: #555;
+	text-shadow: 0 1px 0 rgba(255, 255, 255, .8);
+}
+.help-block {
+	font-size: 13px;
 }
