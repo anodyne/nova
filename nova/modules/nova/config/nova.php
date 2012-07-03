@@ -24,7 +24,7 @@ return array(
 	//'version_info' => 'http://www.anodyne-productions.com/feeds/version_nova.json',
 	
 	'dev_install' => false,
-	'base_install_tables' => 59,
+	'base_install_tables' => 60,
 	
 	'environment' => \Fuel::DEVELOPMENT,
 );
