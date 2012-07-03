@@ -85,7 +85,7 @@ HELP;
 		$path = NOVAPATH.'setup/assets/';
 		
 		// manually add the nova module to the paths
-		\Finder::instance()->add_path(\Module::load('nova'));
+		\Finder::instance()->add_path(NOVAPATH.'nova');
 		
 		// go out and load then merge the nova config files
 		\Config::load('nova', true, false, true);
