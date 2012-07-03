@@ -22,5 +22,6 @@
 
 ## Skinning
 
-* Basic information skinning
+* Basic information about skinning the system
 * Tutorials for skinning Nova 3
+    * Firebug tutorial

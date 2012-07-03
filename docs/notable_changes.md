@@ -25,6 +25,7 @@
 * Any form can have tabs now.
 * Drag-and-drop re-ordering of fields, sections, and tabs.
 * Nova will do a wide range of calculations to determine if it should disable sections and/or tabs when fields are deleted/updated. The goal is to make sure that if a section doesn't have any active fields any longer, it should automatically be disabled and then re-enabled automatically when fields are made active or added.
+* Form fields can be restricted from editing based on the user's role.
 
 ## Characters
 

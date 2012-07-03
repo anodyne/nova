@@ -36,7 +36,7 @@ For anyone who's gone digging through the default Nova skin in the Nova core, yo
 
 ## Design
 
-As its name implies, the `design` directory handles everything involved with the actual design and presentation of a skin. This is the folder skin developers will most likely be spending most of their time. There are a few important things to note about the contents of this directory.
+As its name implies, the `design` directory handles everything involved with the actual design and presentation of a skin. This is the folder skin developers will likely be spending most of their time. There are a few important things to note about the contents of this directory.
 
 ### Custom.css
 
@@ -70,4 +70,4 @@ New to Nova 3 is the image index, an easy way to remap the image names used from
 
 ## Word to the Wise
 
-It's important to understand that there's no way for overridden files to be aware of changes to their parent files (in other words, the original file that was used as a template for modifying). Because of this, updates to Nova can break pages or cause functionality to be missing because Nova is using a page that doesn't have the pieces it needs. If you notice problems with your installation, the first place you should start looking is your skins and making sure the skin isn't overriding those pages and creating problems.
+It's important to understand that there's no way for overridden files to be aware of changes to their parent files (in other words, the original file that was used as a template for modifying). Because of this, updates to Nova can break pages or cause functionality to be missing because Nova is using a page that doesn't have the pieces it needs. If you notice problems with your installation, the first place you should start looking is your skins and making sure the skin isn't overriding those pages and creating problems. The easiest way to verify if it's a Nova issue or a skin issue is to change back to the default skin and see if the issue still persists.

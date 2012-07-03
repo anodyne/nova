@@ -20,7 +20,7 @@ Arguably the biggest chunk of Nova 3 development, M2 focuses on the character an
     * User bio
 * User management
 * Character management
-* Upload images
+* Image upload and management
 * Manifests and manifest views
 * Access role management
 * Request LOA

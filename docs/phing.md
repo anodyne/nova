@@ -6,20 +6,17 @@
     * Remove the genre assets
     * Remove anything in the app/logs directory
     * Remove anything in the app/cache directory
-    * Remove the app/config/migration.php file and replace with a clean copy
+    * Remove the app/config/development directory
+    * Remove the NovaInit task
 * Run unit tests
     * Stop on fail
     * If unit tests pass, log the result and remove the tests directories
-* Run DocBlox
+* Run phpDocumentor
     * Deploy the content to AnodyneDocs
     * Remove the output from the source directory
 * Move the config file in to place
     * Make sure the proper environment is set
 * Compile the LESS files into the right locations
-* Run NovaInit
-    * Run the command through oil (php oil refine novainit)
-	* Remove the field backups
-	* Remove the NovaInit task after the process is finished
-    * Remove the tasks directory (?)
+    * Make sure we have both a minified version as well as a development version
 * Build the zip files for individual genres
 * Deploy the zip files to the server

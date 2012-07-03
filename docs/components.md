@@ -5,7 +5,7 @@ Nova is made up of a wide range of plugins and components to help make it what i
 ## PHP
 
 * FuelPHP
-    * Version: 1.2-RC1
+    * Version: 1.2.1
     * Site: http://fuelphp.com/
     * Location
         * nova/fuel
@@ -13,8 +13,6 @@ Nova is made up of a wide range of plugins and components to help make it what i
         * nova/packages/oil
         * nova/packages/orm
         * nova/packages/parser
-    * Notes
-        * The hope is to release Nova 3 off of FuelPHP 2.0 but until it reaches a beta state, that's purely speculation
 * Sentry
     * Version: 1.1
     * Site: http://sentry.cartalyst.com/
@@ -52,29 +50,14 @@ Nova is made up of a wide range of plugins and components to help make it what i
     * Location
         * http://code.jquery.com/jquery-1.7.2.min.js
 * Bootstrap
-    * Version: 2.0.3
+    * Version: 2.0.4
     * Site: http://twitter.github.com/bootstrap/
     * Location
-        * nova/modules/assets/css/bootstrap-responsive.css
         * nova/modules/assets/css/bootstrap-responsive.min.css
-        * nova/modules/assets/css/bootstrap.css
         * nova/modules/assets/css/bootstrap.min.css
         * nova/modules/assets/img/glyphicon-halflings-white.png
         * nova/modules/assets/img/glyphicon-halflings.png
-        * nova/modules/assets/js/bootstrap.js
         * nova/modules/assets/js/bootstrap.min.js
-        * nova/modules/assets/js/bootstrap-alert.js
-        * nova/modules/assets/js/bootstrap-button.js
-        * nova/modules/assets/js/bootstrap-carousel.js
-        * nova/modules/assets/js/bootstrap-collapse.js
-        * nova/modules/assets/js/bootstrap-dropdown.js
-        * nova/modules/assets/js/bootstrap-modal.js
-        * nova/modules/assets/js/bootstrap-popover.js
-        * nova/modules/assets/js/bootstrap-scrollspy.js
-        * nova/modules/assets/js/bootstrap-tab.js
-        * nova/modules/assets/js/bootstrap-tooltip.js
-        * nova/modules/assets/js/bootstrap-transition.js
-        * nova/modules/assets/js/bootstrap-typeahead.js
 * jQuery Validation
     * Version: 1.9
     * Site: http://bassistance.de/jquery-plugins/jquery-plugin-validation/

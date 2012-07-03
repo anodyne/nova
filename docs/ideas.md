@@ -2,16 +2,9 @@
 
 * A user should be asked for their email address first. Once they've filled that in, an Ajax call should check to see if that email address exists in the system. If it does, it won't show any of the user information fields since they'll be ignored anyway. If the email address doesn't exist in the system, it will show the user information fields so they can fill them out.
 
-## Dynamic Forms
-
-* Add a field to the database that admins can write help content in. If that field isn't empty, display a question mark icon that when hovered over, shows the help information.
-* Fields that only admins can see and edit.
-* Dynamic user information form.
-
 ## Form Builder
 
 * Much like Wufoo, Nova really needs a form builder that will help admins creating their forms. (Likely a future update.)
-* Drag fields around to re-order.
 * Drag fields on to the form to add.
 * Click on a field to see all its properties and change them.
 * Form options including intro text.
@@ -20,7 +13,6 @@
 
 * The ability to manually re-order posts, logs, and announcements.
     * http://www.foliotek.com/devblog/make-table-rows-sortable-using-jquery-ui-sortable/
-* Re-name news items to announcements.
 * Admins can set archive locations in Site Settings for archiving sim content to an external locations
     * Specify where the post should be archived to (an email address for a Yahoo! or Google group)
 	* Specify who the entry is coming from (:author: would be marked as coming from the person who posts or you can specific a single address they all come from)
@@ -121,14 +113,8 @@
 
 ## Skinning
 
-* Get rid of the float-right and float-left classes. Use pull-right and pull-left (respectively) instead.
 * Build default skins with LESS for more consistency. We should also provide the option of download the development versions of skins that will have the LESS files in case advanced skin developers want to use LESS.
 * Use Bootstrap's scaffolding in the first-party skins.
-
-## Database
-
-* Remove the Nova version history table.
-* Remove the Nova components table.
 
 ## First-Party Modules
 

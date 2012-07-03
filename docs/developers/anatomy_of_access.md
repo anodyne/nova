@@ -4,7 +4,7 @@ Through the years, we've toyed with a wide range of access control means, workin
 
 In its earliest forms, SMS 1.2 used a simple 1-5 numerical value for access. It was simple, but if you wanted to grant someone access to another area of the system, you didn't have a lot of wiggle room. SMS 1.5 expanded that to 9 different values, so there was a wider range, but still pretty limited. In later versions of SMS 2, we moved to a system where each user had custom permissions, but doing that made it tough to make sweeping changes. As SMS 2 drew to a close, we added the option to set default levels for a few hard-coded groups. This was the beginning of a move to a more formalized access control system.
 
-Nova 1 ushered in a real role-based access system that relied on giving users a role. Those roles contained pages that dictated what a role could and couldn't do. For the majority of situations, this worked well, but it lacked true granularity that would give admins even more control over access and permissions. In Nova 3, the old access control system has been expanded to make it both more granular as well as flexible. Additionally, it provides third-party developers an easier interface to add their own permissions and use them as they see fit in their MODs.
+Nova 1 ushered in a real role-based access system that relied on giving users a role. Those roles contained pages that dictated what a role could and couldn't do. For the majority of situations, this worked well, but it lacked true granularity that would give admins even more control over access and permissions. In Nova 3, the old access control system has been expanded to make it both more granular as well as flexible. Additionally, it provides third-party developers an easier interface to add their own permissions and use them as they see fit in their mods.
 
 ## Roles
 
@@ -12,7 +12,7 @@ At the highest level, a user is assigned a single role, just like previous versi
 
 ### Inheritance
 
-The basic idea is that the the highest role inherits the majority of its tasks from lower roles. This system of inheritance means that if an admin wants to make a change for everyone, that change can be made at the lowest possible level and it will filter "up" to every role above it. Of course, admins can break that inheritance if they want, but in 99% of cases, that won't ever be necessary.
+The basic idea is that the the highest role inherits the majority of its tasks from lower roles. This system of inheritance means that if an admin wants to make a change for everyone, that change can be made at the lowest possible level and it will filter "up" to every role above it. Of course, admins can break that inheritance if they want, but in 99% of cases, that won't be necessary.
 
 ## Tasks
 
