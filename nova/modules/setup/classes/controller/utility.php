@@ -225,11 +225,11 @@ class Controller_Utility extends Controller_Base_Setup
 	}
 
 	/**
-	 * Admins can choose to uninstall Nova if they want and all of
-	 * the Nova tables will be removed. Any database tables that do
-	 * not have the table prefix defined in the database config file
-	 * will not be deleted. Additionally, there are no attempts by
-	 * Nova to delete any files during uninstall.
+	 * Admins can choose to uninstall Nova if they want and all of the Nova
+	 * tables will be removed. Any database tables that do not have the table 
+	 * prefix defined in the database config file will not be deleted. 
+	 * Additionally, there are no attempts by Nova to delete any files during 
+	 * uninstall.
 	 *
 	 * @return 	void
 	 */
@@ -251,63 +251,14 @@ class Controller_Utility extends Controller_Base_Setup
 		{
 			if (\Input::method() == 'POST')
 			{
-				// get the tables in the database
-				$tables = \DB::list_tables(\DB::table_prefix().'%');
-				
 				// uninstall the system
-				if (is_array($tables) and count($tables) > 0)
-				{
-					$drop = array();
+				Setup::uninstall();
 
-					foreach ($tables as $v)
-					{
-						// the drop table needs the table without the prefix
-						$table = str_replace(\DB::table_prefix(), '', $v);
+				// set the message that gets displayed
+				$this->_data->message = __('setup.remove.success');
 
-						try
-						{
-							// drop the table
-							\DBUtil::drop_table($table);
-
-							// mark that it was dropped
-							$drop[$v] = true;
-						}
-						catch (\Database_Exception $e)
-						{
-							$drop[$v] = false;
-						}
-					}
-
-					// remove the cache item
-					\Cache::delete('nova_system_installed');
-
-					if ( ! in_array(false, $drop))
-					{
-						// set the message that gets displayed
-						$this->_data->message = __('setup.remove.success');
-
-						// build the controls
-						$this->_data->controls = '<a href="'.\Uri::create('setup/main/index').'" class="pull-right muted">Back to Setup Center</a>';
-					}
-					else
-					{
-						// set the message that gets displayed
-						$this->_data->message = __('setup.remove.failure');
-
-						// build the controls
-						$this->_data->controls = \Form::open('setup/utility/remove').
-							\Form::button('remove', 'Try Again', array('type' => 'submit', 'class' => 'btn', 'id' => 'remove')).
-							\Form::close();
-					}
-				}
-				else
-				{
-					// set the failure message
-					$this->_data->message = __('setup.remove.no_tables');
-
-					// build the controls
-					$this->_data->controls = '<a href="'.\Uri::create('setup/main/index').'" class="pull-right muted">Back to Setup Center</a>';
-				}
+				// build the controls
+				$this->_data->controls = '<a href="'.\Uri::create('setup/main/index').'" class="pull-right muted">Back to Setup Center</a>';
 			}
 			else
 			{
