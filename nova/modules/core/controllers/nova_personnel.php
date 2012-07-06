@@ -807,9 +807,6 @@ abstract class Nova_personnel extends Nova_controller_main {
 				
 				$final_deactivate = $temp_deactivate[0];
 			}
-
-			var_dump('Final Activated: '.$final_activate);
-			var_dump('Final Deactivated: '.$final_deactivate);
 			
 			$data['join_date_time'] = timespan_short($final_activate, $final_deactivate);
 			$data['join_date'] = mdate($datestring, gmt_to_local($final_activate, $this->timezone, $this->dst));
