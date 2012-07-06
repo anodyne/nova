@@ -1602,6 +1602,13 @@ $site_contents = array(
 		'section' => 'main',
 		'page' => 'credits'),
 	array(
+		'key' => 'main_join_header',
+		'label' => 'Join Header',
+		'content' => 'Join',
+		'type' => 'header',
+		'section' => 'main',
+		'page' => 'join'),
+	array(
 		'key' => 'sim_index_header',
 		'label' => 'Sim Header',
 		'content' => "The Sim",
@@ -1690,6 +1697,13 @@ $site_contents = array(
 		'section' => 'main',
 		'page' => 'credits'),
 	array(
+		'key' => 'main_join_title',
+		'label' => 'Join Page Title',
+		'content' => 'Join',
+		'type' => 'title',
+		'section' => 'main',
+		'page' => 'join'),
+	array(
 		'key' => 'sim_index_title',
 		'label' => 'Sim Page Title',
 		'content' => "The Sim",
@@ -1765,6 +1779,20 @@ $site_contents = array(
 		'type' => 'message',
 		'section' => 'main',
 		'page' => 'credits'),
+	array(
+		'key' => 'main_join_message',
+		'label' => 'Join Message',
+		'content' => "Define your join message through the Site Messages page.",
+		'type' => 'message',
+		'section' => '',
+		'page' => ''),
+	array(
+		'key' => 'main_join_coppa_message',
+		'label' => 'COPPA Message',
+		'content' => "Members are expected to follow the rules and regulations of both the game and game's organization at all times, both in character and out of character. By continuing, you affirm you will play in a proper and adequate manner. In compliance with the Children's Online Privacy Protection Act of 1998 (COPPA), players under the age of 13 will not be accepted and any player found to be under the age of 13 will be removed immediately and without question.",
+		'type' => 'message',
+		'section' => '',
+		'page' => ''),
 	array(
 		'key' => 'sim_index_message',
 		'label' => 'Sim Message',
