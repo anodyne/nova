@@ -41,6 +41,41 @@ abstract class Controller_Main extends Controller_Base_Main
 		return;
 	}
 
+	public function action_join($position = false)
+	{
+		if (\Input::method() == 'POST')
+		{
+			$this->_view = 'main/join';
+			$this->_js_view = 'main/join_js';
+
+			if (isset($_POST['submit']))
+			{
+				// do the processing for a form submission
+			}
+
+			// set the content manually
+			$this->_data->message = \Model_SiteContent::get_content('main_join_message');
+
+			// build the character form
+			$this->_data->character = \NovaForm::build('character', $this->skin);
+
+			// build the user form
+			$this->_data->user = \NovaForm::build('user', $this->skin);
+
+			// pass the position along
+			$this->_data->position = $position;
+		}
+		else
+		{
+			$this->_view = 'main/join_coppa';
+
+			// set the content manually
+			$this->_data->message = \Model_SiteContent::get_content('main_join_coppa_message');
+		}
+
+		return;
+	}
+
 	/**
 	 * The 404 page indicates that a page could not be found.
 	 *

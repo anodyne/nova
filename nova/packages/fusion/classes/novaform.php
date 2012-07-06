@@ -19,11 +19,12 @@ class NovaForm
 		// set up the variables
 		$data = new \stdClass;
 		$data->form = \Model_Form::get_form($key);
-		$data->tabs = array();
-		$data->sections = array();
-		$data->fields = array();
+		$data->tabs = false;
+		$data->sections = false;
+		$data->fields = false;
 		$data->data = array();
 		$data->id = $id;
+		$data->skin = $skin;
 
 		// get the form elements
 		$tabs = \Model_Form_Tab::find_form_items($key, true);
@@ -36,6 +37,8 @@ class NovaForm
 		 */
 		if (count($tabs) > 0)
 		{
+			$data->tabs = array();
+
 			foreach ($tabs as $tab)
 			{
 				$data->tabs[] = $tab;
@@ -47,6 +50,8 @@ class NovaForm
 		 */
 		if (count($sections) > 0)
 		{
+			$data->sections = array();
+
 			foreach ($sections as $section)
 			{
 				if (count($tabs) > 0)
@@ -65,6 +70,8 @@ class NovaForm
 		 */
 		if (count($fields) > 0)
 		{
+			$data->fields = array();
+			
 			foreach ($fields as $field)
 			{
 				if (count($sections) > 0)

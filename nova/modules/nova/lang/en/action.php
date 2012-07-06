@@ -3,6 +3,7 @@
 return array(
 	'add' => 'add',
 	'added' => 'added',
+	'agree' => 'agree',
 
 	'back' => 'back',
 	
