@@ -119,7 +119,10 @@
 ## First-Party Modules
 
 * Chain of Command
+    * Allow a separate CoC for each manifest
+    * Drag-and-drop reordering
 * Docking
+    * Use the API to be able to show the manifest of docked ships that use Nova 3
 
 ## Characters
 
