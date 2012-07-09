@@ -25,8 +25,10 @@ class Create_roles_tasks
 			foreach ($value as $task)
 			{
 				\DB::insert('roles_tasks')
-					->columns(array('role_id', 'task_id'))
-					->values(array($key, $task))
+					->set(array(
+						'role_id' => $key,
+						'task_id' => $task
+					))
 					->execute();
 			}
 		}
