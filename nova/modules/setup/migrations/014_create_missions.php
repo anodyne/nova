@@ -20,10 +20,19 @@ class Create_missions
 			'notes' => array('type' => 'TEXT', 'null' => true),
 			'notes_updated_at' => array('type' => 'BIGINT', 'constraint' => 20, 'null' => true),
 		), array('id'));
+
+		\DBUtil::create_table('mission_groups', array(
+			'id' => array('type' => 'INT', 'constraint' => 11, 'auto_increment' => true),
+			'name' => array('type' => 'VARCHAR', 'constraint' => 255, 'null' => true),
+			'order' => array('type' => 'INT', 'constraint' => 5, 'null' => true),
+			'desc' => array('type' => 'TEXT', 'null' => true),
+			'parent_id' => array('type' => 'INT', 'constraint' => 11, 'null' => true),
+		), array('id'));
 	}
 
 	public function down()
 	{
 		\DBUtil::drop_table('missions');
+		\DBUtil::drop_table('mission_groups');
 	}
 }

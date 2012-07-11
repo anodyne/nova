@@ -15,14 +15,23 @@ class Create_applications
 			'character_id' => array('type' => 'INT', 'constraint' => 11),
 			'character_name' => array('type' => 'TEXT', 'null' => true),
 			'position' => array('type' => 'VARCHAR', 'constraint' => 255, 'null' => true),
-			'date' => array('type' => 'BIGINT', 'constraint' => 20),
 			'action' => array('type' => 'VARCHAR', 'constraint' => 100, 'null' => true),
 			'message' => array('type' => 'TEXT', 'null' => true),
+			'experience' => array('type' => 'TEXT', 'null' => true),
+			'hear_about' => array('type' => 'VARCHAR', 'constraint' => 50, 'null' => true),
+			'hear_about_details' => array('type' => 'TEXT', 'null' => true),
+			'created_at' => array('type' => 'BIGINT', 'constraint' => 20, 'null' => true),
+			'updated_at' => array('type' => 'BIGINT', 'constraint' => 20, 'null' => true),
+		), array('id'));
+
+		\DBUtil::create_table('application_rules', array(
+			'id' => array('type' => 'INT', 'constraint' => 11, 'auto_increment' => true),
 		), array('id'));
 	}
 
 	public function down()
 	{
 		\DBUtil::drop_table('applications');
+		\DBUtil::drop_table('application_rules');
 	}
 }

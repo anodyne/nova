@@ -22,10 +22,18 @@ class Create_posts
 			'lock_user_id' => array('type' => 'INT', 'constraint' => 11, 'null' => true),
 			'lock_date' => array('type' => 'BIGINT', 'constraint' => 20, 'null' => true),
 		), array('id'));
+
+		\DBUtil::create_table('post_authors', array(
+			'id' => array('type' => 'INT', 'constraint' => 11, 'auto_increment' => true),
+			'post_id' => array('type' => 'INT', 'constraint' => 11),
+			'character_id' => array('type' => 'INT', 'constraint' => 11),
+			'user_id' => array('type' => 'INT', 'constraint' => 11),
+		), array('id'));
 	}
 
 	public function down()
 	{
 		\DBUtil::drop_table('posts');
+		\DBUtil::drop_table('post_authors');
 	}
 }
