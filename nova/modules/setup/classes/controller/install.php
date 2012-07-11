@@ -113,14 +113,6 @@ class Controller_Install extends Controller_Base_Setup
 				$this->_view = 'install/step1';
 				$this->_js_view = 'install/step1_js';
 				
-				// get the number of tables
-				$tables = \DB::list_tables(\DB::table_prefix().'%');
-				
-				// make sure the proper message is displayed
-				$this->_data->message = ((count($tables) != \Config::get('nova.base_install_tables')) 
-					? __('setup.install.step1.failure') 
-					: __('setup.install.step1.success'));
-				
 				// get the default rank object
 				$catalog = \Model_Catalog_Rank::get_default();
 				
@@ -134,28 +126,10 @@ class Controller_Install extends Controller_Base_Setup
 					'image', 
 					array('class' => 'image', 'alt' => ''));
 				
-				// make sure the base install is there
-				if (count($tables) == \Config::get('nova.base_install_tables'))
-				{
-					$this->_data->allowed = true;
-					$this->_data->message = __('setup.install.step1.success');
-					$this->_data->controls = \Form::button('next', 'Next Step', array('class' => 'btn', 'type' => 'submit', 'id' => 'next')).
-						\Form::close();
-				}
-				else
-				{
-					// this ensures the form isn't shown
-					$this->_data->allowed = false;
-					
-					// change the message, controls, and header
-					$this->_data->message = __('setup.install.step1.failure');
-					$this->_data->controls = '<a href="'.\Uri::create('setup/main/index').'" class="pull-right muted">Back to the Setup Center</a>';
-					$this->_data->header->text = 'Install Failed';
-					$this->_data->header->image = 'cross-24x24.png';
-					
-					// make sure the steps "gems" aren't shown
-					$this->template->layout->steps = false;
-				}
+				$this->_data->allowed = true;
+				$this->_data->message = __('setup.install.step1.success');
+				$this->_data->controls = \Form::button('next', 'Next Step', array('class' => 'btn', 'type' => 'submit', 'id' => 'next')).
+					\Form::close();
 			break;
 
 			case 2:
