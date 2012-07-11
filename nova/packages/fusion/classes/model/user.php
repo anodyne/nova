@@ -145,6 +145,21 @@ class Model_User extends \Model {
 			'cascade_delete' => false,
 		),
 	);
+
+	/**
+	 * Observers
+	 */
+	protected static $_observers = array(
+		'\\User' => array(
+			'events' => array('after_insert')
+		),
+		'\\Orm\\Observer_CreatedAt' => array(
+			'events' => array('before_insert')
+		),
+		'\\Orm\\Observer_UpdatedAt' => array(
+			'events' => array('before_save')
+		),
+	);
 	
 	/**
 	 * Get a user from the database based on something other than their ID.
@@ -197,59 +212,6 @@ class Model_User extends \Model {
 		
 		// return the items array
 		return $prefs;
-	}
-	
-	/**
-	 * Create a user.
-	 *
-	 * This will create a user record, create user preference values (read from
-	 * the defaults in the user preference tale) and create empty rows for the
-	 * user dynamic form.
-	 *
-	 *     // note: this is an incomplete array
-	 *     $data = array('name' => 'John Public', 'email' => 'john@example.com');
-	 *     
-	 *     $user = Model_User::create_user($data);
-	 *
-	 * @api
-	 * @param	array 	an array of data used for creation
-	 * @return	object	the created object
-	 * @todo	creating form data should be done in an observer
-	 * @todo	creating user preferences should be done in an observer
-	 */
-	public static function create_user(array $data)
-	{
-		$record = static::create_item($data, true);
-		
-		/**
-		 * Create the user settings.
-		 */
-		$settings = \Model_User_Preferences::create_user_preferences($record->id);
-		
-		/**
-		 * Fill the user rows for the dynamic form with blank data for editing later.
-		 */
-		$fields = \Model_Form_Field::find_form_items('user');
-		
-		if (count($fields) > 0)
-		{
-			foreach ($fields as $f)
-			{
-				$user_field_data = array(
-					'form_key' => 'user',
-					'field_id' => $f->id,
-					'user_id' => $record->id,
-					'character_id' => 0,
-					'item_id' => 0,
-					'value' => '',
-					'updated_at' => time(),
-				);
-				
-				\Model_Form_Data::create_data($user_field_data);
-			}
-		}
-		
-		return $record;
 	}
 	
 	/**
