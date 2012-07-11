@@ -66,6 +66,9 @@ class Model_Character extends \Model {
 			'null' => true),
 	);
 	
+	/**
+	 * Relationships
+	 */
 	public static $_belongs_to = array(
 		'user' => array(
 			'model_to' => '\\Model_User',
@@ -74,6 +77,16 @@ class Model_Character extends \Model {
 			'cascade_save' => false,
 			'cascade_delete' => false,
 		),
+	);
+
+	protected static $_has_one = array(
+		'app' => array(
+			'key_from' => 'id',
+			'model_to' => '\\Model_Application',
+			'key_to' => 'character_id',
+			'cascade_save' => false,
+			'cascade_delete' => false,
+		)
 	);
 	
 	public static $_has_many = array(
@@ -120,6 +133,21 @@ class Model_Character extends \Model {
 			'key_to' => 'id',
 			'cascade_save' => false,
 			'cascade_delete' => false,
+		),
+	);
+
+	/**
+	 * Observers
+	 */
+	protected static $_observers = array(
+		'\\Character' => array(
+			'events' => array('after_insert')
+		),
+		'\\Orm\\Observer_CreatedAt' => array(
+			'events' => array('before_insert')
+		),
+		'\\Orm\\Observer_UpdatedAt' => array(
+			'events' => array('before_save')
 		),
 	);
 	
@@ -169,52 +197,6 @@ class Model_Character extends \Model {
 		}
 		
 		return $result;
-	}
-	
-	/**
-	 * Create a character.
-	 *
-	 * This will create a character record and create empty rows for the
-	 * character dynamic form.
-	 *
-	 *     // note: this is an incomplete array
-	 *     $data = array('first_name' => 'John', 'last_name' => 'Public');
-	 *     
-	 *     $character = Model_Character::create_character($data);
-	 *
-	 * @api
-	 * @param	array 	an array of data used for creation
-	 * @return	object	the created object
-	 * @todo	creating data should be done in an observer
-	 */
-	public static function create_character(array $data)
-	{
-		$record = static::create_item($data, true);
-		
-		/**
-		 * Fill the character rows for the dynamic form with blank data for editing later.
-		 */
-		$fields = \Model_Form_Field::find_form_items('bio');
-		
-		if (count($fields) > 0)
-		{
-			foreach ($fields as $f)
-			{
-				$character_field_data = array(
-					'form_key' => 'bio',
-					'field_id' => $f->id,
-					'user_id' => 0,
-					'character_id' => $record->id,
-					'item_id' => 0,
-					'value' => '',
-					'updated_at' => time(),
-				);
-				
-				\Model_Form_Data::create_data($character_field_data);
-			}
-		}
-		
-		return $record;
 	}
 	
 	public function name($include_rank = true, $short_rank = false)
