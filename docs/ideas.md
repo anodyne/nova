@@ -13,6 +13,7 @@
 
 * The ability to manually re-order posts, logs, and announcements.
     * http://www.foliotek.com/devblog/make-table-rows-sortable-using-jquery-ui-sortable/
+    * Research nested sets as a way to do this.
 * Admins can set archive locations in Site Settings for archiving sim content to an external locations
     * Specify where the post should be archived to (an email address for a Yahoo! or Google group)
 	* Specify who the entry is coming from (:author: would be marked as coming from the person who posts or you can specific a single address they all come from)
@@ -24,20 +25,11 @@
 * Rename from Crew Awards to Awards
 * Categories should actually be called type
 * Add the ability to create actual categories to sort awards by different types (level 1, level 2, battle awards, exploration awards, etc.)
-
-## Specs
-
-* Specs needs to be completely overhauled to be more flexible
-* Specs should be separated in to tabs
-    * Specs
-    * Deck listing
-    * Tour items
-    * Related items (shuttles, etc.)
     
 ## Catalogs
 
 * If a skin has default sections in it, you shouldn't be able to remove or deactivate it
-* Move setting skin defaults into the catalogue instead of Site Settings (?)
+* Move setting skin defaults into the catalog instead of Site Settings (?)
 * Need to research if there's an easy way to provide real multiple rank sets
 
 ## Site Content
@@ -68,6 +60,10 @@
 	* Specify who the entry is coming from (:author: would be marked as coming from the person who posts or you can specific a single address they all come from)
 	* Specify the subject format (available tokens are :simname:, :mission:, :title:, plus any free form text)
 	* Can be done for mission posts, personal logs, and announcements
+
+## Characters
+
+* Allow users to create avatars for each of their characters that'll be displayed next to content throughout the system.
 
 ## Users
 
@@ -109,7 +105,7 @@
 
 ## Report Center
 
-* Like manifest views, it'd be awesome to be able to admins tons of options for creating their own reports based on what they want.
+* Like manifest views, it'd be awesome to be able to give admins tons of options for creating their own reports based on what they want.
 
 ## Skinning
 
@@ -123,7 +119,10 @@
     * Drag-and-drop reordering
 * Docking
     * Use the API to be able to show the manifest of docked ships that use Nova 3
-
-## Characters
-
-* Allow users to create avatars for each of their characters that'll be displayed next to content throughout the system.
+* Tour and Specs
+    * Specs needs to be completely overhauled to be more flexible
+    * Specs should be separated in to tabs
+        * Specs
+        * Deck listing
+        * Tour items
+        * Related items (shuttles, etc.)
