@@ -60,4 +60,32 @@ class Model_Application extends \Model {
 			'type' => 'text',
 			'null' => true),
 	);
+
+	/**
+	 * Relationships
+	 */
+	public static $_belongs_to = array(
+		'character' => array(
+			'model_to' => '\\Model_Character',
+			'key_to' => 'id',
+			'key_from' => 'character_id',
+			'cascade_save' => false,
+			'cascade_delete' => false,
+		),
+	);
+
+	/**
+	 * Observers
+	 */
+	protected static $_observers = array(
+		'\\Application' => array(
+			'events' => array('after_insert')
+		),
+		'\\Orm\\Observer_CreatedAt' => array(
+			'events' => array('before_insert')
+		),
+		'\\Orm\\Observer_UpdatedAt' => array(
+			'events' => array('before_save')
+		),
+	);
 }
