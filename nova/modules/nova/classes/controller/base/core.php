@@ -175,6 +175,7 @@ abstract class Controller_Base_Core extends \Controller_Template
 		$controller_name = str_replace('admin_', '', $controller_name);
 
 		$this->_data = new \stdClass;
+		$this->_js_data = new \stdClass;
 		
 		// grab the content for the current section
 		$this->_headers		= \Model_SiteContent::get_section_content('header', $controller_name);
