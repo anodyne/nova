@@ -20,4 +20,41 @@ class Controller_Ajax_Get extends Controller_Base_Ajax
 		// load and return the content from the database
 		echo \Model_SiteContent::get_content($key);
 	}
+
+	public function action_user()
+	{
+		// get the POST array
+		$data = \Input::post();
+
+		// set the field and values
+		$field = false;
+		$value = false;
+
+		// loop through the data and set the field and value
+		foreach ($data as $k => $v)
+		{
+			$field = $k;
+			$value = $v;
+		}
+
+		// find the user
+		$user = \Model_User::find()->where($field, $value)->get_one();
+
+		if ($user)
+		{
+			echo \Format::forge($user)->to_json();
+		}
+		else
+		{
+			echo \Format::forge(array())->to_json();
+		}
+	}
+
+	public function action_user_form()
+	{
+		// get the POST data
+		$data = \Input::post();
+
+		echo \NovaForm::build('user', $data['skin'], $data['user']);
+	}
 }

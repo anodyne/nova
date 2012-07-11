@@ -48,9 +48,58 @@ abstract class Controller_Main extends Controller_Base_Main
 			$this->_view = 'main/join';
 			$this->_js_view = 'main/join_js';
 
+			// set the js data
+			$this->_js_data->skin = $this->skin;
+
 			if (isset($_POST['submit']))
 			{
-				// do the processing for a form submission
+				if (\Input::post('user.id') == '0')
+				{
+					// create the user
+					$user = \Model_User::create_item(\Input::post('user'), true);
+
+					// make sure the user ID is associated with the character
+					$_POST['character']['user_id'] = $user->id;
+				}
+				else
+				{
+					// make sure the user ID is associated with the character
+					$_POST['character']['user_id'] = \Input::post('user.id');
+				}
+
+				// create the character
+				$char = \Model_Character::create_item(\Input::post('character'), true);
+
+				// make sure we have all the app data we need
+				$appData = array_merge(\Input::post('app'), array(
+					'email' => $user->email,
+					'ip_address' => \Input::real_ip(),
+					'user_id' => $user->id,
+					'user_name' => $user->name,
+					'character_id' => $char->id,
+					'character_name' => $char->name(false, false),
+					'position' => '', # TODO: need to populate this data
+				));
+
+				// create the application
+				\Model_Application::create_item($appData);
+
+				// remove unnecessary items from the POST data
+				unset($_POST['submit']);
+				unset($_POST['user']);
+				unset($_POST['character']);
+				unset($_POST['app']);
+
+				// dump the data into the table
+				foreach (\Input::post() as $field => $value)
+				{
+					\Model_Form_Data::create_data(array(
+						'field_id' => $field,
+						'content' => $value,
+						'user_id' => $userID,
+						'character_id' => $charID,
+					));
+				}
 			}
 
 			// set the content manually
@@ -59,8 +108,8 @@ abstract class Controller_Main extends Controller_Base_Main
 			// build the character form
 			$this->_data->character = \NovaForm::build('character', $this->skin);
 
-			// build the user form
-			$this->_data->user = \NovaForm::build('user', $this->skin);
+			// build the user form (populate with data if the user is logged in)
+			$this->_data->user = \NovaForm::build('user', $this->skin, ((\Sentry::check()) ? \Sentry::user() : false));
 
 			// pass the position along
 			$this->_data->position = $position;

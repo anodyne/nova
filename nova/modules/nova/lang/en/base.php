@@ -21,6 +21,7 @@ return array(
 	'desc' => 'description',
 
 	'email_address' => "email address",
+	'experience' => 'experience',
 
 	'field' => "field",
 	'fields' => "fields",
@@ -30,6 +31,7 @@ return array(
 	'first' => 'first',
 
 	'general' => 'general',
+	'game_master' => 'game master',
 
 	'horizontal' => "horizontal",
 	'html' => 'HTML',
@@ -85,6 +87,7 @@ return array(
 	'sections' => "sections",
 	'site' => "site",
 	'suffix' => 'suffix',
+	'simming' => 'simming',
 
 	'tab' => "tab",
 	'tabs' => "tabs",
@@ -93,6 +96,8 @@ return array(
 	'text_area' => 'text area',
 	'to' => 'to',
 	'this' => 'this',
+
+	'user' => 'user',
 
 	'vertical' => "vertical",
 	'value' => 'value',

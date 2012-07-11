@@ -13,7 +13,23 @@ return array(
 
 	'forgot_password' => "Forgot your password? Don't worry, it happens to the best of us!",
 
+	'hear_about_us' => array(
+		'question' => "where did you hear about us?",
+		'detail' => "please specify",
+
+		'friend' => 'friend',
+		'member' => 'another member',
+		'org' => 'organization',
+		'ad' => 'advertisement',
+		'search' => 'internet search',
+		'other' => 'other',
+	),
+
+	'join_user_found' => "Your :0 record was found. If you're trying to apply with a new :1, you can continue to the :1 section. If you're trying to re-activate an existing :1, please contact the :2.",
+
 	'refresh' => "Please refresh the page to view your changes.",
+
+	'welcome_back' => 'welcome back!',
 
 	'forms' => array(
 		'value_creation' => "Dropdown menu values can be added once you've created the field.",
