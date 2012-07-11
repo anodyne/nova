@@ -16,6 +16,10 @@ Like the previous version, the first thing Nova will do is check for the existen
 
 After plugging the information in, Nova will attempt to connect to the database. This is an important part of the process because if something is wrong, Nova will be able to tell you immediately what's wrong so you can correct it. This eliminates putting the wrong information in and then getting cryptic error codes from the database. If you put the information in correctly, you'll be told that you can write the connection file to your server. Once that's complete, you'll be sent on to the next step in the setup process.
 
+## First and Third-Party Modules
+
+New to Nova 3 are modules. Several features that were previously integrated into the core are now first-party modules. Additionally, members of the Anodyne community have third-party modules to further expand Nova's functionality. Using QuickInstall, you can have modules installed with Nova simply by uploading them to the `app/modules` directory. Nova will recognize the QuickInstall file and install the necessary components.
+
 ## Installing
 
 Doing a fresh install of Nova 3 couldn't be much easier unless it could read your mind!
