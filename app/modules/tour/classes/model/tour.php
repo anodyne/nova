@@ -3,13 +3,13 @@
  * Tour Model
  *
  * @package		Nova
- * @subpackage	Fusion
+ * @subpackage	Tour
  * @category	Model
  * @author		Anodyne Productions
  * @copyright	2012 Anodyne Productions
  */
  
-namespace Fusion;
+namespace Tour;
 
 class Model_Tour extends \Model {
 	

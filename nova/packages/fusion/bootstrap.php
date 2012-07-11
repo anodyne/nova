@@ -81,11 +81,8 @@ Autoloader::add_classes(array(
 	'Fusion\\Model_Settings'				=> __DIR__.'/classes/model/settings.php',
 	'Fusion\\Model_SimType'					=> __DIR__.'/classes/model/simtype.php',
 	'Fusion\\Model_SiteContent'				=> __DIR__.'/classes/model/sitecontent.php',
-	'Fusion\\Model_Spec'					=> __DIR__.'/classes/model/spec.php',
 	'Fusion\\Model_System'					=> __DIR__.'/classes/model/system.php',
 	'Fusion\\Model_SystemEvent'				=> __DIR__.'/classes/model/systemevent.php',
-	'Fusion\\Model_Tour'					=> __DIR__.'/classes/model/tour.php',
-	'Fusion\\Model_TourDeck'				=> __DIR__.'/classes/model/tourdeck.php',
 	
 	'Fusion\\Model_User'					=> __DIR__.'/classes/model/user.php',
 	'Fusion\\Model_User_Loa'				=> __DIR__.'/classes/model/user/loa.php',
@@ -100,6 +97,10 @@ Autoloader::add_classes(array(
 	/**
 	 * Observers
 	 */
+	'Fusion\\Observer_Application'			=> __DIR__.'/classes/observer/application.php',
+	'Fusion\\Observer_Character'			=> __DIR__.'/classes/observer/character.php',
+	'Fusion\\Observer_User'					=> __DIR__.'/classes/observer/user.php',
+	
 	'Fusion\\Observer_Form_Field'			=> __DIR__.'/classes/observer/form/field.php',
 	'Fusion\\Observer_Form_Section'			=> __DIR__.'/classes/observer/form/section.php',
 	'Fusion\\Observer_Form_Tab'				=> __DIR__.'/classes/observer/form/tab.php',
