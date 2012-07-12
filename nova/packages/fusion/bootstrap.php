@@ -33,7 +33,11 @@ Autoloader::add_classes(array(
 	
 	'Fusion\\Model_Announcement'			=> __DIR__.'/classes/model/announcement.php',
 	'Fusion\\Model_AnnouncementCategory'	=> __DIR__.'/classes/model/announcementcategory.php',
+	
 	'Fusion\\Model_Application'				=> __DIR__.'/classes/model/application.php',
+	'Fusion\\Model_Application_Response'	=> __DIR__.'/classes/model/application/response.php',
+	'Fusion\\Model_Application_Reviewer'	=> __DIR__.'/classes/model/application/reviewer.php',
+	'Fusion\\Model_Application_Rule'		=> __DIR__.'/classes/model/application/rule.php',
 	
 	'Fusion\\Model_Award'					=> __DIR__.'/classes/model/award.php',
 	'Fusion\\Model_Award_Category'			=> __DIR__.'/classes/model/award/category.php',

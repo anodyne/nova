@@ -49,15 +49,20 @@ class Model_Application extends \Model {
 			'type' => 'string',
 			'constraint' => 255,
 			'null' => true),
-		'date' => array(
-			'type' => 'bigint',
-			'constraint' => 20),
 		'action' => array(
 			'type' => 'string',
 			'constraint' => 100,
 			'null' => true),
 		'message' => array(
 			'type' => 'text',
+			'null' => true),
+		'created_at' => array(
+			'type' => 'bigint',
+			'constraint' => 20,
+			'null' => true),
+		'updated_at' => array(
+			'type' => 'bigint',
+			'constraint' => 20,
 			'null' => true),
 	);
 
