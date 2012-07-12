@@ -60,6 +60,10 @@ class Model_Character extends \Model {
 			'type' => 'bigint',
 			'constraint' => 20,
 			'null' => true),
+		'created_at' => array(
+			'type' => 'bigint',
+			'constraint' => 20,
+			'null' => true),
 		'updated_at' => array(
 			'type' => 'bigint',
 			'constraint' => 20,

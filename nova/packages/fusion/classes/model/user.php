@@ -72,6 +72,10 @@ class Model_User extends \Model {
 			'type' => 'string',
 			'constraint' => 24,
 			'null' => true),
+		'created_at' => array(
+			'type' => 'bigint',
+			'constraint' => 20,
+			'null' => true),
 		'updated_at' => array(
 			'type' => 'bigint',
 			'constraint' => 20,
@@ -151,7 +155,7 @@ class Model_User extends \Model {
 	 */
 	protected static $_observers = array(
 		'\\User' => array(
-			'events' => array('after_insert')
+			'events' => array('after_insert', 'before_save')
 		),
 		'\\Orm\\Observer_CreatedAt' => array(
 			'events' => array('before_insert')

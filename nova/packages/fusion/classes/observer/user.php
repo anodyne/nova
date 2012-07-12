@@ -13,8 +13,20 @@
 
 namespace Fusion;
 
-class Observer_Character extends \Orm\Observer
+class Observer_User extends \Orm\Observer
 {
+	/**
+	 * Before the model is saved, we need to make sure the password
+	 * is appropriately hashed. This will happen before every save,
+	 * so if the password IS hashed, we have problems.
+	 *
+	 * @todo	need to figure out if the password is hashed and only do the hashing if it isn't
+	 */
+	public function before_save(\Model $model)
+	{
+		$model->password = \Sentry_User::password_generate($model->password);
+	}
+
 	/**
 	 * When a user is created, we need to create blank data records
 	 * to prevent errors being thrown when the user is updated and
