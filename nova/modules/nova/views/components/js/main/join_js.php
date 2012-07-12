@@ -49,7 +49,7 @@
 					$('[name="user[confirm_password]"]').closest('div.control-group').fadeOut();
 
 					// show the alert block with instructions
-					$('.alert-block').fadeIn();
+					$('#welcomeBack').fadeIn();
 
 					// go get the updated user form now
 					$.ajax({
@@ -77,11 +77,12 @@
 					$('[name="user[confirm_password]"]').closest('div.control-group').fadeIn();
 
 					// hide the alert block with instructions
-					$('.alert-block').fadeOut();
+					$('#welcomeBack').fadeOut();
 
 					// reset the user form now
 					$.ajax({
 						type: 'POST',
+						url: "<?php echo Uri::create('ajax/get/user_form');?>",
 						data: { 'skin': '<?php echo $skin;?>', 'user': 0 },
 						dataType: 'html',
 						success: function(form){

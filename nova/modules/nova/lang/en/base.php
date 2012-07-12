@@ -87,6 +87,7 @@ return array(
 	'sections' => "sections",
 	'site' => "site",
 	'suffix' => 'suffix',
+	'sim' => 'sim',
 	'simming' => 'simming',
 
 	'tab' => "tab",

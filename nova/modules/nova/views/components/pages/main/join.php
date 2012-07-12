@@ -21,11 +21,16 @@ if ( ! function_exists('joinData'))
 
 	<div class="pill-content">
 		<div id="user" class="pill-pane active">
+			<div class="alert alert-info alert-block">
+				<h4><?php echo lang('short.please_note', 2);?></h4>
+				<p><?php echo lang('[[short.join.user_info|user|name|email_address|sim]]', 1);?></p>
+			</div>
+
 			<div class="row">
 				<div id="userInfo" class="span6">
-					<div class="alert alert-info alert-block hide">
-						<h4><?php echo lang('short.welcome_back', 2);?></h4>
-						<p><?php echo lang('[[short.join_user_found|user|character|game_master]]');?></p>
+					<div class="alert alert-info alert-block hide" id="welcomeBack">
+						<h4><?php echo lang('short.join.welcome_back', 2);?></h4>
+						<p><?php echo lang('[[short.join.user_found|user|character|game_master]]');?></p>
 					</div>
 
 					<div class="control-group">
@@ -45,14 +50,14 @@ if ( ! function_exists('joinData'))
 					<div class="control-group">
 						<label class="control-label"><?php echo lang('password', 1);?></label>
 						<div class="controls">
-							<input type="text" name="user[password]" class="span4">
+							<input type="password" name="user[password]" class="span4">
 						</div>
 					</div>
 
 					<div class="control-group">
 						<label class="control-label"><?php echo lang('action.confirm password', 2);?></label>
 						<div class="controls">
-							<input type="text" name="user[confirm_password]" class="span4">
+							<input type="password" name="user[confirm_password]" class="span4">
 						</div>
 					</div>
 
@@ -92,7 +97,52 @@ if ( ! function_exists('joinData'))
 			</div>
 		</div>
 
-		<div id="character" class="pill-pane"><?php echo $character;?></div>
+		<div id="character" class="pill-pane">
+			<div class="row">
+				<div class="span6">
+					<div class="control-group">
+						<label class="control-label"><?php echo lang('first name', 2);?></label>
+						<div class="controls">
+							<input type="text" name="character[first_name]" class="span4">
+						</div>
+					</div>
+
+					<div class="control-group">
+						<label class="control-label"><?php echo lang('middle name', 2);?></label>
+						<div class="controls">
+							<input type="text" name="character[middle_name]" class="span4">
+						</div>
+					</div>
+
+					<div class="control-group">
+						<label class="control-label"><?php echo lang('last name', 2);?></label>
+						<div class="controls">
+							<input type="text" name="character[last_name]" class="span4">
+						</div>
+					</div>
+
+					<div class="control-group">
+						<label class="control-label"><?php echo lang('suffix', 1);?></label>
+						<div class="controls">
+							<input type="text" name="character[suffix]" class="span2">
+						</div>
+					</div>
+
+					<div class="control-group">
+						<label class="control-label"><?php echo lang('position', 1);?></label>
+						<div class="controls">
+							<?php echo NovaForm::position('position', array(), array('class' => 'span4'));?>
+						</div>
+					</div>
+				</div>
+
+				<div class="span6 muted"><?php echo $characterJoinHelp;?></div>
+			</div>
+
+			<hr>
+
+			<?php echo $character;?>
+		</div>
 	</div>
 
 	<div class="controls">

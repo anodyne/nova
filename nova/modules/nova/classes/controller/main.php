@@ -41,6 +41,9 @@ abstract class Controller_Main extends Controller_Base_Main
 		return;
 	}
 
+	/**
+	 * @todo	validation on certain fields
+	 */
 	public function action_join($position = false)
 	{
 		if (\Input::method() == 'POST')
@@ -70,6 +73,13 @@ abstract class Controller_Main extends Controller_Base_Main
 				// create the character
 				$char = \Model_Character::create_item(\Input::post('character'), true);
 
+				// insert the position info
+				\Model_Character_Positions::create_item(array(
+					'position_id' => \Input::post('position'),
+					'character_id' => $char->id,
+					'primary' => (\Input::post('user.id') == '0') ? 0 : 1
+				));
+
 				// make sure we have all the app data we need
 				$appData = array_merge(\Input::post('app'), array(
 					'email' => $user->email,
@@ -78,7 +88,7 @@ abstract class Controller_Main extends Controller_Base_Main
 					'user_name' => $user->name,
 					'character_id' => $char->id,
 					'character_name' => $char->name(false, false),
-					'position' => '', # TODO: need to populate this data
+					'position' => \Model_Position::find(\Input::post('position'))->name,
 				));
 
 				// create the application
@@ -89,17 +99,25 @@ abstract class Controller_Main extends Controller_Base_Main
 				unset($_POST['user']);
 				unset($_POST['character']);
 				unset($_POST['app']);
+				unset($_POST['position']);
 
 				// dump the data into the table
 				foreach (\Input::post() as $field => $value)
 				{
 					\Model_Form_Data::create_data(array(
 						'field_id' => $field,
-						'content' => $value,
-						'user_id' => $userID,
-						'character_id' => $charID,
+						'value' => $value,
+						'user_id' => $user->id,
+						'character_id' => $char->id,
+						'form_key' => \Model_Form_Field::find($field)->form_key
 					));
 				}
+
+				// set the flash message
+				$this->_flash[] = array(
+					'status' => 'success',
+					'message' => 'Application successfully submitted!',
+				);
 			}
 
 			// set the content manually
@@ -113,6 +131,9 @@ abstract class Controller_Main extends Controller_Base_Main
 
 			// pass the position along
 			$this->_data->position = $position;
+
+			// set the character join help
+			$this->_data->characterJoinHelp = \Markdown::parse(\Model_SiteContent::get_content('join_character_help'));
 		}
 		else
 		{
