@@ -21,6 +21,7 @@ class Create_users
 			'password_reset_hash' => array('type' => 'VARCHAR', 'constraint' => 24, 'null' => true),
 			'temp_password' => array('type' => 'VARCHAR', 'constraint' => 96, 'null' => true),
 			'remember_me' => array('type' => 'VARCHAR', 'constraint' => 24, 'null' => true),
+			'created_at' => array('type' => 'BIGINT', 'constraint' => 20, 'null' => true),
 			'updated_at' => array('type' => 'BIGINT', 'constraint' => 20, 'null' => true),
 			'ip_address' => array('type' => 'VARCHAR', 'constraint' => 16, 'null' => true),
 		), array('id'));

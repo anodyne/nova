@@ -18,6 +18,7 @@ class Create_characters
 			'deactivated' => array('type' => 'BIGINT', 'constraint' => 20, 'null' => true),
 			'rank_id' => array('type' => 'INT', 'constraint' => 11, 'default' => 1),
 			'last_post' => array('type' => 'BIGINT', 'constraint' => 20, 'null' => true),
+			'created_at' => array('type' => 'BIGINT', 'constraint' => 20, 'null' => true),
 			'updated_at' => array('type' => 'BIGINT', 'constraint' => 20, 'null' => true),
 		), array('id'));
 

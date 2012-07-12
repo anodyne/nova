@@ -304,6 +304,14 @@ class Create_site_contents
 				'label' => 'User Rejection Message',
 				'content' => "Define your user rejection message through the Site Content page.",
 				'type' => 'other'),
+			array(
+				'key' => 'join_character_help',
+				'label' => 'Join Character Help',
+				'content' => "__Tips for a good character application:__
+
+* Be specific. You can give too little information, but you can never give too much.
+* Be unique. No one likes interacting with a character that can do everything perfectly. Look for ways to make your character unique and to give them shortcomings and weaknesses.",
+				'type' => 'other'),
 		);
 
 		foreach ($data as $value)
