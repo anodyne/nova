@@ -22,7 +22,7 @@ class Observer_User extends \Orm\Observer
 	 *
 	 * @todo	need to figure out if the password is hashed and only do the hashing if it isn't
 	 */
-	public function before_save(\Model $model)
+	public function before_insert(\Model $model)
 	{
 		$model->password = \Sentry_User::password_generate($model->password);
 	}
