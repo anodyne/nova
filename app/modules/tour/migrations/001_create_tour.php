@@ -370,7 +370,7 @@ class Create_tour
 		{
 			foreach ($fields as $f)
 			{
-				\DB::delete('form_data')->where('field_id', $f->id)->execute()
+				\DB::delete('form_data')->where('field_id', $f->id)->execute();
 			}
 		}
 
