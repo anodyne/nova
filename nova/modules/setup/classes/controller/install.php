@@ -154,13 +154,14 @@ class Controller_Install extends Controller_Base_Setup
 					));
 					
 					// create the user
-					$crUser = \Model_User::create_user(array(
+					$crUser = \Model_User::create_item(array(
 						'name' => $name,
 						'email' => $email,
-						'password' => \Sentry_User::password_generate($password),
+						'password' => $password,
 						'role_id' => \Model_Access_Role::SYSADMIN,
 						'join_date' => time(),
-					));
+						'status' => 'active'
+					), true);
 
 					// update the user prefs
 					\Model_User_Preferences::update_user_preferences($crUser->id, array(
@@ -169,14 +170,14 @@ class Controller_Install extends Controller_Base_Setup
 					));
 					
 					// create the character
-					$crCharacter = \Model_Character::create_character(array(
+					$crCharacter = \Model_Character::create_item(array(
 						'user_id' => $crUser->id,
 						'first_name' => $first_name,
 						'last_name' => $last_name,
 						'rank_id' => $rank,
 						'status' => 'active',
 						'activated' => time(),
-					));
+					), true);
 
 					// create the position record
 					\Model_Character_Positions::create_item(array(
