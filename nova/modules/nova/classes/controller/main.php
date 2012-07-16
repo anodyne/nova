@@ -209,16 +209,17 @@ abstract class Controller_Main extends Controller_Base_Main
 
 		foreach ($sets as $s)
 		{
+			echo '<div class="container">';
 			echo '<h2>'.$s->name.'</h2>';
 
-			echo '<table>';
+			echo '<table class="table table-striped">';
 
 			foreach ($s->ranks as $r)
 			{
-				echo '<tr><td>'.$r->info->name.'</td><td>'.\Location::rank($r->base, $r->pip).'</td></tr>';
+				echo '<tr><td width="300">'.$r->info->name.'</td><td>'.\Location::rank($r->base, $r->pip).'</td></tr>';
 			}
 
-			echo '</table>';
+			echo '</table></div>';
 		}
 		
 		return;
