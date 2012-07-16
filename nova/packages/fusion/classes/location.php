@@ -181,10 +181,10 @@ class Location
 		$base = str_replace('cadet/', '', $base);
 
 		// clean up the pip
-		$pip = substr_replace($pip, '', 0, (strpos($pip, '/') + 1));
+		$pip = (strpos($pip, '/') !== false) ? substr_replace($pip, '', 0, (strpos($pip, '/') + 1)) : $pip;
 
 		// return the old rank style
-		return \Html::img("app/assets/common/$genre/ranks/".$catalog->location."/".$base."-$pip".$catalog->extension);
+		return \Html::img("app/assets/common/$genre/ranks/".$catalog->location."/".$base."-".$pip.$catalog->extension);
 	}
 	
 	/**
