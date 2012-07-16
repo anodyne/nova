@@ -1,0 +1,60 @@
+<?php
+/**
+ * Media Model
+ *
+ * @package		Nova
+ * @subpackage	Fusion
+ * @category	Model
+ * @author		Anodyne Productions
+ * @copyright	2012 Anodyne Productions
+ */
+ 
+namespace Fusion;
+
+class Model_Media extends \Model {
+	
+	public static $_table_name = 'media';
+	
+	public static $_properties = array(
+		'id' => array(
+			'type' => 'bigint',
+			'constraint' => 20,
+			'auto_increment' => true),
+		'filename' => array(
+			'type' => 'text',
+			'null' => true),
+		'mime_type' => array(
+			'type' => 'string',
+			'constraint' => 255,
+			'null' => true),
+		'resource_type' => array(
+			'type' => 'string',
+			'constraint' => 100,
+			'null' => true),
+		'user_id' => array(
+			'type' => 'int',
+			'constraint' => 11),
+		'ip_address' => array(
+			'type' => 'string',
+			'constraint' => 16),
+		'created_at' => array(
+			'type' => 'bigint',
+			'constraint' => 20),
+		'updated_at' => array(
+			'type' => 'bigint',
+			'constraint' => 20,
+			'null' => true),
+	);
+
+	/**
+	 * Observers
+	 */
+	protected static $_observers = array(
+		'\\Orm\\Observer_CreatedAt' => array(
+			'events' => array('before_insert')
+		),
+		'\\Orm\\Observer_UpdatedAt' => array(
+			'events' => array('before_save')
+		),
+	);
+}

@@ -1,0 +1,6 @@
+<p>Alright, time to get started!</p>
+
+<p>Like previous versions of Nova, Nova 3 is a dynamic, database-driven web system which means, you guessed it, I need to install the Nova-specific database pieces now and then migrate most of your Nova data to the newer Nova 3 format. Start to finish, the upgrade should only take a few minutes to complete (probably about 10 minutes depending on your Internet connection) and then you'll be on your way. Make sure you've read the <a href="#" target="_blank">upgrade guide</a> in its entirety before starting this process. If you have questions, you can check out the <a href="http://docs.anodyne-productions.com" target="_blank">user guide</a> or drop in to our <a href="http://forums.anodyne-productions.com" target="_blank">forums</a>.</p>
+<br>
+
+<p class="alert alert-info"><strong>Please note:</strong> If your host has imposed limits on the size of your database, you may not be able to upgrade to Nova 3. In order to preserve your original data, the entire database is duplicated. If you have size limits on your database, please make sure the upgrade will not put your over those limits before you begin.</p>

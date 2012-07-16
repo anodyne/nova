@@ -1,0 +1,65 @@
+<?php
+/**
+ * Widgets Catalog Model
+ *
+ * @package		Nova
+ * @subpackage	Fusion
+ * @category	Model
+ * @author		Anodyne Productions
+ * @copyright	2012 Anodyne Productions
+ */
+ 
+namespace Fusion;
+
+class Model_Catalog_Widget extends \Model {
+	
+	public static $_table_name = 'catalog_widgets';
+	
+	public static $_properties = array(
+		'id' => array(
+			'type' => 'int',
+			'constraint' => 11,
+			'auto_increment' => true),
+		'name' => array(
+			'type' => 'string',
+			'constraint' => 255,
+			'null' => true),
+		'location' => array(
+			'type' => 'string',
+			'constraint' => 255,
+			'null' => true),
+		'page' => array(
+			'type' => 'string',
+			'constraint' => 100,
+			'null' => true),
+		'zone' => array(
+			'type' => 'int',
+			'constraint' => 5,
+			'null' => true),
+		'status' => array(
+			'type' => 'enum',
+			'constraint' => "'active','inactive','development'",
+			'default' => 'active'),
+		'credits' => array(
+			'type' => 'text',
+			'null' => true),
+	);
+	
+	/**
+	 * Get all items from the catalog.
+	 *
+	 * @access	public
+	 * @param	string	the status to pull
+	 * @return	object	an object of results
+	 */
+	public static function get_all_items($status = 'active')
+	{
+		$status_where = ( ! empty($status)) ? array('status', $status) : array();
+		
+		$result = static::find()
+			->where($status_where)
+			->get();
+			
+		return $result;
+	}
+}

@@ -1,0 +1,34 @@
+# Nova
+
+app/cache/
+app/logs/
+app/views/
+
+application/*
+
+#app/assets/images/*/
+#!app/views/default/*
+#!app/views/titan/*
+#app/assets/common/*
+
+nova.sublime-project
+nova.sublime-workspace
+
+# General
+*~
+*.bak
+.htaccess
+
+# Windows-specific ignores
+Thumbs.db
+Desktop.ini
+
+# Mac-specific ignores
+.DS_Store
+Icon?
+._*
+.Spotlight-V100
+.Trashes
+*.tmproj
+*.tmproject
+tmtags
