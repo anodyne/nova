@@ -220,7 +220,7 @@ abstract class Controller_Main extends Controller_Base_Main
 
 			echo '</table>';
 		}
-
+		
 		return;
 	}
 }

@@ -13,6 +13,7 @@ $data = array(
 	'departments_'.$g 	=> 'depts',
 	'rank_info_'.$g		=> 'info',
 	'rank_sets_'.$g		=> 'sets',
+	'ranks_'.$g			=> 'ranks',
 	'positions_'.$g		=> 'positions',
 	'catalog_ranks'		=> 'catalog_ranks',
 );

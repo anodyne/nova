@@ -61,5 +61,7 @@ class Create_ranks
 		$genre = \Config::get('nova.genre');
 		
 		\DBUtil::drop_table('ranks_'.$genre);
+		\DBUtil::drop_table('rank_info_'.$genre);
+		\DBUtil::drop_table('rank_sets_'.$genre);
 	}
 }
