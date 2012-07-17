@@ -12,7 +12,7 @@ namespace Nova;
 
 class Controller_Ajax_Delete extends Controller_Base_Ajax
 {
-	public function action_field($id)
+	public function action_formfield($id)
 	{
 		if (\Sentry::check() and \Sentry::user()->has_access('form.delete'))
 		{
@@ -26,12 +26,12 @@ class Controller_Ajax_Delete extends Controller_Base_Ajax
 					'id' => $field->id,
 				);
 
-				echo \View::forge(\Location::file('delete/field', 'default', 'ajax'), $data);
+				echo \View::forge(\Location::file('delete/field', \Utility::get_skin('admin'), 'ajax'), $data);
 			}
 		}
 	}
 
-	public function action_field_value()
+	public function action_formfield_value()
 	{
 		if (\Sentry::check() and \Sentry::user()->has_access('form.edit'))
 		{
@@ -48,7 +48,7 @@ class Controller_Ajax_Delete extends Controller_Base_Ajax
 		}
 	}
 
-	public function action_section($id)
+	public function action_formsection($id)
 	{
 		if (\Sentry::check() and \Sentry::user()->has_access('form.delete'))
 		{
@@ -69,12 +69,12 @@ class Controller_Ajax_Delete extends Controller_Base_Ajax
 					'sections' => $sections,
 				);
 
-				echo \View::forge(\Location::file('delete/section', 'default', 'ajax'), $data);
+				echo \View::forge(\Location::file('delete/section', \Utility::get_skin('admin'), 'ajax'), $data);
 			}
 		}
 	}
 
-	public function action_tab($id)
+	public function action_formtab($id)
 	{
 		if (\Sentry::check() and \Sentry::user()->has_access('form.delete'))
 		{
@@ -95,7 +95,43 @@ class Controller_Ajax_Delete extends Controller_Base_Ajax
 					'tabs' => $tabs,
 				);
 
-				echo \View::forge(\Location::file('delete/tab', 'default', 'ajax'), $data);
+				echo \View::forge(\Location::file('delete/tab', \Utility::get_skin('admin'), 'ajax'), $data);
+			}
+		}
+	}
+
+	public function action_rankset($id)
+	{
+		if (\Sentry::check() and \Sentry::user()->has_access('rank.delete'))
+		{
+			// get the rank set
+			$set = \Model_Rank_Set::find($id);
+
+			if ($set !== null)
+			{
+				$data = array(
+					'name' => $set->name,
+					'id' => $set->id,
+				);
+
+				// get all the sets
+				$sets = \Model_Rank_Set::find_items(true);
+
+				// create an empty array
+				$data['sets'] = array();
+
+				if (count($sets) > 0)
+				{
+					foreach ($sets as $s)
+					{
+						if ($s->id != $id)
+						{
+							$data['sets'][$s->id] = $s->name;
+						}
+					}
+				}
+
+				echo \View::forge(\Location::file('delete/rankset', \Utility::get_skin('admin'), 'ajax'), $data);
 			}
 		}
 	}

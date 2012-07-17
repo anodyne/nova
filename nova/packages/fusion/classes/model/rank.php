@@ -69,39 +69,4 @@ class Model_Rank extends \Model {
 	{
 		static::$_table_name = static::$_table_name.\Config::get('nova.genre');
 	}
-	
-	/**
-	 * Get all of the ranks.
-	 *
-	 * @api
-	 * @param	int		the class ID
-	 * @param	mixed	pull ranks that should be displayed (null to pull everything)
-	 * @return	mixed	an object of the rank results or FALSE if there's nothing to return
-	 */
-	public static function get_ranks($class = null, $display = true)
-	{
-		// start to query the database
-		$result = static::find();
-
-		if ($class !== null)
-		{
-			$result->where('class', $class);
-		}
-		
-		if ( ! empty($display))
-		{
-			$result->where('display', (int) $display);
-		}
-
-		// make sure we order properly
-		$result->order_by('class', 'asc')->order_by('order', 'asc');
-
-		// only return an object if we have results
-		if ($result->count() > 0)
-		{
-			return $result->get();
-		}
-		
-		return false;
-	}
 }

@@ -51,11 +51,42 @@ class Controller_Ajax_Update extends Controller_Base_Ajax
 	}
 
 	/**
+	 * Shows the modal dialog for updating a form.
+	 *
+	 * @param	string	the form key used to figure out which form to edit
+	 * @return	View
+	 */
+	public function action_form($key = '')
+	{
+		if (\Sentry::check() and \Sentry::user()->has_access('form.edit'))
+		{
+			// get the form
+			$form = \Model_Form::get_form($key);
+
+			if ($form !== false)
+			{
+				$data = array(
+					'name' => $form->name,
+					'orientation' => $form->orientation,
+					'id' => $form->id,
+
+					'values' => array(
+						'vertical' => lang('vertical', 1),
+						'horizontal' => lang('horizontal', 1)
+					),
+				);
+
+				echo \View::forge(\Location::file('update/form', 'default', 'ajax'), $data);
+			}
+		}
+	}
+
+	/**
 	 * Updates the form field order when the sort function stops.
 	 *
 	 * @return	void
 	 */
-	public function action_field_order()
+	public function action_formfield_order()
 	{
 		if (\Sentry::check() and \Sentry::user()->has_access('form.edit'))
 		{
@@ -83,7 +114,7 @@ class Controller_Ajax_Update extends Controller_Base_Ajax
 	 *
 	 * @return	View/string
 	 */
-	public function action_field_value($id)
+	public function action_formfield_value($id)
 	{
 		if (\Sentry::check() and \Sentry::user()->has_access('form.edit'))
 		{
@@ -148,52 +179,30 @@ class Controller_Ajax_Update extends Controller_Base_Ajax
 	}
 
 	/**
-	 * Shows the modal dialog for updating a form.
-	 *
-	 * @param	string	the form key used to figure out which form to edit
-	 * @return	View
-	 */
-	public function action_form($key = '')
-	{
-		if (\Sentry::check() and \Sentry::user()->has_access('form.edit'))
-		{
-			// get the form
-			$form = \Model_Form::get_form($key);
-
-			if ($form !== false)
-			{
-				$data = array(
-					'name' => $form->name,
-					'orientation' => $form->orientation,
-					'id' => $form->id,
-
-					'values' => array(
-						'vertical' => lang('vertical', 1),
-						'horizontal' => lang('horizontal', 1)
-					),
-				);
-
-				echo \View::forge(\Location::file('update/form', 'default', 'ajax'), $data);
-			}
-		}
-	}
-
-	/**
-	 * Runs the migrations for a module.
+	 * Updates the form field value order when the sort function stops.
 	 *
 	 * @return	void
 	 */
-	public function action_module($module)
+	public function action_formfieldvalue_order()
 	{
-		if (\Sentry::check() and \Sentry::user()->has_access('catalog.update'))
+		if (\Sentry::check() and \Sentry::user()->has_access('form.edit'))
 		{
-			// move up to the latest migration
-			\Migrate::latest($module, 'module');
+			// get and sanitize the input
+			$values = \Security::xss_clean($_POST['value']);
 
-			\SystemEvent::add('user', '[[event.admin.catalog.module_update|{{'.$module.'}}]]');
+			foreach ($values as $key => $value)
+			{
+				// get the field record
+				$record = \Model_Form_Value::find($value);
 
-			echo '<p class="alert alert-success">'.lang('[[short.flash.success|module|action.updated]]').'</p>';
-			echo '<div class="form-actions"><button class="btn modal-close">'.lang('action.close', 1).'</button></div>';
+				// update the order
+				$record->order = ($key + 1);
+
+				// save the record
+				$record->save();
+			}
+
+			\SystemEvent::add('user', '[[event.admin.form.field_update|{{'.$record->field->label.'}}|{{'.$key.'}}]]');
 		}
 	}
 
@@ -202,7 +211,7 @@ class Controller_Ajax_Update extends Controller_Base_Ajax
 	 *
 	 * @return	void
 	 */
-	public function action_section_order()
+	public function action_formsection_order()
 	{
 		if (\Sentry::check() and \Sentry::user()->has_access('form.edit'))
 		{
@@ -230,7 +239,7 @@ class Controller_Ajax_Update extends Controller_Base_Ajax
 	 *
 	 * @return	void
 	 */
-	public function action_tab_order()
+	public function action_formtab_order()
 	{
 		if (\Sentry::check() and \Sentry::user()->has_access('form.edit'))
 		{
@@ -254,21 +263,69 @@ class Controller_Ajax_Update extends Controller_Base_Ajax
 	}
 
 	/**
-	 * Updates the form field value order when the sort function stops.
+	 * Runs the migrations for a module.
 	 *
 	 * @return	void
 	 */
-	public function action_value_order()
+	public function action_module($module)
 	{
-		if (\Sentry::check() and \Sentry::user()->has_access('form.edit'))
+		if (\Sentry::check() and \Sentry::user()->has_access('catalog.update'))
+		{
+			// move up to the latest migration
+			\Migrate::latest($module, 'module');
+
+			\SystemEvent::add('user', '[[event.admin.catalog.module_update|{{'.$module.'}}]]');
+
+			echo '<p class="alert alert-success">'.lang('[[short.flash.success|module|action.updated]]').'</p>';
+			echo '<div class="form-actions"><button class="btn modal-close">'.lang('action.close', 1).'</button></div>';
+		}
+	}
+
+	/**
+	 * Duplicate a rank set.
+	 *
+	 * @param	int		the ID of the rank set being duplicated
+	 * @return	void
+	 */
+	public function action_rankset($id)
+	{
+		if (\Sentry::check() and \Sentry::user()->has_access('rank.edit'))
+		{
+			$id = trim(\Security::xss_clean($id));
+
+			// get the rank set
+			$set = \Model_Rank_Set::find($id);
+
+			// set the data
+			$data['id'] = $id;
+
+			if ($set !== false)
+			{
+				$data['name'] = $set->name;
+				$data['order'] = $set->order;
+				$data['display'] = (int) $set->display;
+			}
+
+			echo \View::forge(\Location::file('update/rankset', \Utility::get_skin('admin'), 'ajax'), $data);
+		}
+	}
+
+	/**
+	 * Updates the rank set order when the sort function stops.
+	 *
+	 * @return	void
+	 */
+	public function action_rankset_order()
+	{
+		if (\Sentry::check() and \Sentry::user()->has_access('rank.edit'))
 		{
 			// get and sanitize the input
-			$values = \Security::xss_clean($_POST['value']);
+			$sets = \Security::xss_clean(\Input::post('set'));
 
-			foreach ($values as $key => $value)
+			foreach ($sets as $key => $value)
 			{
-				// get the field record
-				$record = \Model_Form_Value::find($value);
+				// get the set record
+				$record = \Model_Rank_Set::find($value);
 
 				// update the order
 				$record->order = ($key + 1);
@@ -276,8 +333,6 @@ class Controller_Ajax_Update extends Controller_Base_Ajax
 				// save the record
 				$record->save();
 			}
-
-			\SystemEvent::add('user', '[[event.admin.form.field_update|{{'.$record->field->label.'}}|{{'.$key.'}}]]');
 		}
 	}
 }

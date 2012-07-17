@@ -28,6 +28,10 @@ class Model_Rank_Set extends \Model {
 			'type' => 'int',
 			'constraint' => 5,
 			'null' => true),
+		'display' => array(
+			'type' => 'tinyint',
+			'constraint' => 1,
+			'default' => 1),
 	);
 
 	/**
@@ -44,6 +48,15 @@ class Model_Rank_Set extends \Model {
 	);
 
 	/**
+	 * Observers
+	 */
+	protected static $_observers = array(
+		'\\Rank_Set' => array(
+			'events' => array('before_delete', 'after_insert', 'after_update')
+		),
+	);
+
+	/**
 	 * Since the table name is appended with the genre, we can't hard-code
 	 * it in to the model. The _init method is necessary since PHP won't
 	 * allow creating an object project that's dynamic. This method changes
@@ -55,5 +68,29 @@ class Model_Rank_Set extends \Model {
 	public static function _init()
 	{
 		static::$_table_name = static::$_table_name.\Config::get('nova.genre');
+	}
+
+	/**
+	 * Returns all items from the database.
+	 *
+	 * This method overrides the default `find_items` method in the Model class.
+	 *
+	 * @api
+	 * @param	bool	whether to get only displayed items or not
+	 * @return	void
+	 */
+	public static function find_items($only_displayed = false)
+	{
+		// start the find
+		$query = static::find();
+
+		// add a where statement only if we want just displayed items
+		if ($only_displayed)
+		{
+			$query->where('display', (int) true);
+		}
+
+		// return the ordered list
+		return $query->order_by('order', 'asc')->get();
 	}
 }
