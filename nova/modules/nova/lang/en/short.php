@@ -58,4 +58,8 @@ return array(
 
 		'logout' => "You have successfully logged out. You can return to the <a href=':0'>main page</a> or <a href=':1'>log in</a> again.",
 	),
+
+	'ranks' => array(
+		'change_set' => "Select the new :0 set for any :1 currently in this :0 set.",
+	),
 );

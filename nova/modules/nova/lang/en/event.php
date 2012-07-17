@@ -23,6 +23,12 @@ return array(
 			'tab_create' => "The :0 tab was created in the :1 form",
 			'tab_delete' => "The :0 tab in the :1 form was deleted",
 		),
+
+		'ranks' => array(
+			'info' => "The :0 rank info was :1",
+			'item' => "Rank item was :0",
+			'set' => "The :0 rank set was :1",
+		),
 	),
 
 	'login' => array(

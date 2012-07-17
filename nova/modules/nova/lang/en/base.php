@@ -9,12 +9,14 @@ return array(
 	'award'			=> 'award',
 
 	'bio'	=> 'bio',
+	'base' => 'base',
 
 	'character'		=> 'character',
 	'characters'	=> 'characters',
 	'class'			=> 'class',
 	'content'		=> 'content',
 	'cp'			=> 'control panel',
+	'catalog' => 'catalog',
 
 	'display' => 'display',
 	'dropdown' => 'dropdown menu',
@@ -41,6 +43,7 @@ return array(
 	'info' => 'info',
 	'image' => 'image',
 	'images' => 'images',
+	'index' => 'index',
 
 	'loa' => "LOA",
 	'loa_full' => "Leave of Absence",
@@ -66,6 +69,8 @@ return array(
 	'orientation' => "orientation",
 	'order' => 'order',
 	'options' => 'options',
+	'on' => 'on',
+	'off' => 'off',
 	
 	'password' => "password",
 	'preference' => "preference",
@@ -89,6 +94,8 @@ return array(
 	'suffix' => 'suffix',
 	'sim' => 'sim',
 	'simming' => 'simming',
+	'set' => 'set',
+	'sets' => 'sets',
 
 	'tab' => "tab",
 	'tabs' => "tabs",
