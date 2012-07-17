@@ -108,6 +108,45 @@ class Utility
 	}
 
 	/**
+	 * Get the current rank set, whether it's the user's preference or the
+	 * system default.
+	 *
+	 * @api
+	 * @return	string
+	 */
+	public static function get_rank()
+	{
+		if (\Sentry::check())
+		{
+			$pref = \Model_User::find(\Sentry::user()->id)->get_user_preferences();
+
+			return $pref['display_rank'];
+		}
+
+		return \Model_Settings::get_settings('display_rank');
+	}
+
+	/**
+	 * Get the current skin for a given section, whether it's the user's
+	 * preference or the system default.
+	 *
+	 * @api
+	 * @param	string	the section
+	 * @return	string
+	 */
+	public static function get_skin($section)
+	{
+		if (\Sentry::check())
+		{
+			$pref = \Model_User::find(\Sentry::user()->id)->get_user_preferences();
+
+			return $pref['skin_'.$section];
+		}
+
+		return \Model_Settings::get_settings('skin_'.$section);
+	}
+
+	/**
 	 * Checks to see if the system is installed.
 	 *
 	 * If the system is installed, we'll cache the result so that subsequent 
