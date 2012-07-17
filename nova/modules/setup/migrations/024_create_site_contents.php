@@ -112,6 +112,20 @@ class Create_site_contents
 				'type' => 'header',
 				'section' => 'form',
 				'page' => 'tabs'),
+			array(
+				'key' => 'admin_ranks_index_header',
+				'label' => 'Ranks Management Header',
+				'content' => "Ranks",
+				'type' => 'header',
+				'section' => 'ranks',
+				'page' => 'index'),
+			array(
+				'key' => 'admin_ranks_sets_header',
+				'label' => 'Rank Sets Management Header',
+				'content' => "Rank Sets",
+				'type' => 'header',
+				'section' => 'ranks',
+				'page' => 'sets'),
 
 			/**
 			 * Page Titles
@@ -207,6 +221,20 @@ class Create_site_contents
 				'type' => 'title',
 				'section' => 'form',
 				'page' => 'tabs'),
+			array(
+				'key' => 'admin_ranks_index_title',
+				'label' => 'Ranks Management Page Title',
+				'content' => "Ranks",
+				'type' => 'title',
+				'section' => 'ranks',
+				'page' => 'index'),
+			array(
+				'key' => 'admin_ranks_sets_title',
+				'label' => 'Rank Sets Management Page Title',
+				'content' => "Rank Sets",
+				'type' => 'title',
+				'section' => 'ranks',
+				'page' => 'sets'),
 
 			/**
 			 * Messages
@@ -269,6 +297,13 @@ class Create_site_contents
 				'type' => 'message',
 				'section' => 'admin',
 				'page' => 'index'),
+			array(
+				'key' => 'admin_ranks_sets_message',
+				'label' => 'Manage Ranks Message',
+				'content' => "Rank sets are a simple way to organize ranks into logical groups. Every rank in the system belongs to a rank set, allowing admins to easily add new sets of ranks. Nova comes with several rank sets already, but you can easily create new sets and add ranks to them from rank management.",
+				'type' => 'message',
+				'section' => 'ranks',
+				'page' => 'sets'),
 
 			/**
 			 * Other Messages

@@ -25,6 +25,7 @@ class Create_ranks
 			'name' => array('type' => 'VARCHAR', 'constraint' => 255, 'null' => true),
 			'short_name' => array('type' => 'VARCHAR', 'constraint' => 20, 'null' => true),
 			'order' => array('type' => 'INT', 'constraint' => 5, 'null' => true),
+			'group' => array('type' => 'INT', 'constraint' => 5, 'null' => true),
 			'display' => array('type' => 'TINYINT', 'constraint' => 1, 'default' => 1),
 		), array('id'));
 
@@ -32,6 +33,7 @@ class Create_ranks
 			'id' => array('type' => 'INT', 'constraint' => 11, 'auto_increment' => true),
 			'name' => array('type' => 'VARCHAR', 'constraint' => 255, 'null' => true),
 			'order' => array('type' => 'INT', 'constraint' => 5, 'null' => true),
+			'display' => array('type' => 'TINYINT', 'constraint' => 1, 'default' => 1),
 		), array('id'));
 
 		include NOVAPATH.'setup/assets/install/genres/'.strtolower($genre).'.php';
