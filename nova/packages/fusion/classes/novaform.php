@@ -184,7 +184,7 @@ class NovaForm
 	public static function rank($name, $selected = false, $extra = null)
 	{
 		// grab the rank sets
-		$sets = \Model_Rank_Set::find('all');
+		$sets = \Model_Rank_Set::find_items(true);
 		
 		if (count($sets) > 0)
 		{
