@@ -161,9 +161,7 @@ class Location
 		$genre = \Config::get('nova.genre');
 
 		// get the rank catalog object
-		$catalog = (\Sentry::check())
-			? \Model_Catalog_Rank::get_item(\Sentry::user()->rank)
-			: \Model_Catalog_Rank::get_item(\Model_Settings::get_settings('display_rank'));
+		$catalog = \Model_Catalog_Rank::get_item(\Utility::get_rank());
 
 		if (is_dir(APPPATH."assets/common/$genre/ranks/".$catalog->location."/base") 
 				and is_dir(APPPATH."assets/common/$genre/ranks/".$catalog->location."/pips"))
