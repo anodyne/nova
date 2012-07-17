@@ -40,7 +40,7 @@
 				
 				$.ajax({
 					type: 'POST',
-					url: "<?php echo Uri::create('ajax/update/field_order');?>",
+					url: "<?php echo Uri::create('ajax/update/formfield_order');?>",
 					data: $(this).sortable('serialize')
 				});
 			}
@@ -53,7 +53,7 @@
 				
 				$.ajax({
 					type: 'POST',
-					url: "<?php echo Uri::create('ajax/update/value_order');?>",
+					url: "<?php echo Uri::create('ajax/update/formfieldvalue_order');?>",
 					data: $(this).sortable('serialize')
 				});
 			}
@@ -68,7 +68,7 @@
 			{
 				$('<div/>').dialog2({
 					title: "<?php echo lang('action.delete field', 2);?>",
-					content: "<?php echo Uri::create('ajax/delete/field');?>/" + id
+					content: "<?php echo Uri::create('ajax/delete/formfield');?>/" + id
 				});
 			}
 
@@ -85,7 +85,7 @@
 			{
 				$.ajax({
 					type: 'POST',
-					url: "<?php echo Uri::create('ajax/delete/field_value');?>",
+					url: "<?php echo Uri::create('ajax/delete/formfield_value');?>",
 					data: { id: id },
 					success: function(){
 						parent.fadeOut();
@@ -97,7 +97,7 @@
 			{
 				$('<div/>').dialog2({
 					title: "<?php echo lang('action.edit value', 2);?>",
-					content: "<?php echo Uri::create('ajax/update/field_value');?>/" + id
+					content: "<?php echo Uri::create('ajax/update/formfield_value');?>/" + id
 				});
 			}
 
@@ -126,7 +126,7 @@
 
 				$.ajax({
 					type: 'POST',
-					url: "<?php echo Uri::create('ajax/add/field_value');?>",
+					url: "<?php echo Uri::create('ajax/add/formfield_value');?>",
 					data: send,
 					dataType: 'html',
 					success: function(data){

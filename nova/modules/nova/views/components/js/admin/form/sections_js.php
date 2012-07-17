@@ -24,7 +24,7 @@
 				
 				$.ajax({
 					type: 'POST',
-					url: "<?php echo Uri::create('ajax/update/section_order');?>",
+					url: "<?php echo Uri::create('ajax/update/formsection_order');?>",
 					data: $(this).sortable('serialize')
 				});
 			}
@@ -39,7 +39,7 @@
 			{
 				$('<div/>').dialog2({
 					title: "<?php echo lang('action.delete section', 2);?>",
-					content: "<?php echo Uri::create('ajax/delete/section');?>/" + id
+					content: "<?php echo Uri::create('ajax/delete/formsection');?>/" + id
 				});
 			}
 

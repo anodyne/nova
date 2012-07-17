@@ -1,4 +1,4 @@
-<form class="ajax" method="post" action="<?php echo Uri::create('ajax/update/field_value/'.$id);?>">
+<form class="ajax" method="post" action="<?php echo Uri::create('ajax/update/formfield_value/'.$id);?>">
 	<div class="control-group">
 		<label class="control-label"><?php echo lang('content', 1);?></label>
 		<div class="controls">
