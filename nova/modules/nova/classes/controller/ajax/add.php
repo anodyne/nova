@@ -118,4 +118,27 @@ class Controller_Ajax_Add extends Controller_Base_Ajax
 			echo \View::forge(\Location::file('add/rankgroup_duplicate', \Utility::get_skin('admin'), 'ajax'), $data);
 		}
 	}
+
+	/**
+	 * Create a rank info record.
+	 *
+	 * @return	void
+	 */
+	public function action_rankinfo()
+	{
+		if (\Sentry::check() and \Sentry::user()->has_access('rank.create'))
+		{
+			// set the data
+			$data['id'] = 0;
+			$data['action'] = 'create';
+
+			$data['name'] = '';
+			$data['short_name'] = '';
+			$data['order'] = '';
+			$data['group'] = '';
+			$data['display'] = 1;
+
+			echo \View::forge(\Location::file('update/rankinfo', \Utility::get_skin('admin'), 'ajax'), $data);
+		}
+	}
 }

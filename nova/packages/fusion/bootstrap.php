@@ -114,4 +114,5 @@ Autoloader::add_classes(array(
 	'Fusion\\Observer_Form_Tab'				=> __DIR__.'/classes/observer/form/tab.php',
 
 	'Fusion\\Observer_Rank_Group'			=> __DIR__.'/classes/observer/rank/group.php',
+	'Fusion\\Observer_Rank_Info'			=> __DIR__.'/classes/observer/rank/info.php',
 ));

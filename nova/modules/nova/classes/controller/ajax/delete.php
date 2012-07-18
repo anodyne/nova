@@ -135,4 +135,42 @@ class Controller_Ajax_Delete extends Controller_Base_Ajax
 			}
 		}
 	}
+
+	public function action_rankinfo($id)
+	{
+		if (\Sentry::check() and \Sentry::user()->has_access('rank.delete'))
+		{
+			// get the rank info
+			$info = \Model_Rank_Info::find($id);
+
+			if ($info !== null)
+			{
+				$data = array(
+					'name' => $info->name,
+					'id' => $info->id,
+				);
+
+				// get all the info records
+				$infoItems = \Model_Rank_Info::find_items(true);
+
+				// create an empty array
+				$data['infos'] = array();
+
+				if (count($infoItems) > 0)
+				{
+					foreach ($infoItems as $i)
+					{
+						$group = lang('group', 1).' '.$i->group;
+
+						if ($i->id != $id)
+						{
+							$data['infos'][$group][$i->id] = $i->name;
+						}
+					}
+				}
+
+				echo \View::forge(\Location::file('delete/rankinfo', \Utility::get_skin('admin'), 'ajax'), $data);
+			}
+		}
+	}
 }

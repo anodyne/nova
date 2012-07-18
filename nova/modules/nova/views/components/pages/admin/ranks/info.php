@@ -1,38 +1,47 @@
 <br>
-<ul class="thumbnails">
-	<li class="span6">
-		<div class="thumbnail">
-			<div class="caption">
-				<a href="<?php echo Uri::create('ranks/manage');?>" class="btn pull-right"><i class="icon-chevron-right icon-50"></i></a>
-				<h3>Ranks</h3>
-			</div>
-		</div>
-	</li>
+<div class="btn-toolbar">
+	<div class="btn-group">
+		<a href="<?php echo Uri::create('admin/ranks/index');?>" class="btn tooltip-top" title="<?php echo lang('ranks index', 1);?>"><i class="icon-chevron-left icon-75"></i></a>
+		<a href="#" class="btn tooltip-top rankinfo-action" title="<?php echo lang('action.create rank info', 2);?>" data-action="create" data-id="0"><i class="icon-plus icon-75"></i></a>
+	</div>
 
-	<li class="span6">
-		<div class="thumbnail">
-			<div class="caption">
-				<a href="<?php echo Uri::create('ranks/info');?>" class="btn pull-right"><i class="icon-chevron-right icon-50"></i></a>
-				<h3>Rank Info</h3>
-			</div>
-		</div>
-	</li>
+	<div class="btn-group">
+		<a href="<?php echo Uri::create('admin/ranks/groups');?>" class="btn tooltip-top" title="<?php echo lang('action.edit rank groups', 1);?>"><?php echo $images['groups'];?></a>
+		<a href="<?php echo Uri::create('admin/ranks/manage');?>" class="btn tooltip-top" title="<?php echo lang('action.edit ranks', 1);?>"><?php echo $images['ranks'];?></a>
+	</div>
+</div>
+<br>
 
-	<li class="span6">
-		<div class="thumbnail">
-			<div class="caption">
-				<a href="<?php echo Uri::create('ranks/sets');?>" class="btn pull-right"><i class="icon-chevron-right icon-50"></i></a>
-				<h3>Rank Sets</h3>
-			</div>
-		</div>
-	</li>
+<?php if (count($info) > 0): ?>
+	<?php foreach ($info as $group => $rankinfo): ?>
+		<h3><?php echo lang('group', 1).' '.$group;?></h3>
+		<table width="100%" class="table-striped sort-rankinfo">
+			<tbody class="sort-body">
+			<?php foreach ($rankinfo as $i): ?>
+				<tr height="40" id="info_<?php echo $i->id;?>">
+					<td>
+						<?php if ( ! (bool) $i->display): ?>
+							<span class="label label-important"><?php echo lang('off', 1);?></span>
+						<?php endif;?>
+						<?php echo $i->name;?>
+					</td>
+					<td class="span2">
+						<div class="btn-toolbar">
+							<div class="btn-group">
+								<a href="#" class="btn btn-mini tooltip-top rankinfo-action" title="<?php echo lang('action.edit', 1);?>" data-action="update" data-id="<?php echo $i->id;?>"><i class="icon-pencil icon-75"></i></a>
+							</div>
 
-	<li class="span6">
-		<div class="thumbnail">
-			<div class="caption">
-				<a href="<?php echo Uri::create('catalog/ranks');?>" class="btn pull-right"><i class="icon-chevron-right icon-50"></i></a>
-				<h3 class="muted">Rank Catalog</h3>
-			</div>
-		</div>
-	</li>
-</ul>
+							<?php if (Sentry::user()->has_access('rank.delete')): ?>
+								<div class="btn-group">
+									<a href="#" class="btn btn-danger btn-mini tooltip-top rankinfo-action" title="<?php echo lang('action.delete', 1);?>" data-action="delete" data-id="<?php echo $i->id;?>"><i class="icon-remove icon-white icon-50"></i></a>
+								</div>
+							<?php endif;?>
+						</div>
+					</td>
+					<td class="span1 reorder"></td>
+				</tr>
+			<?php endforeach;?>
+			</tbody>
+		</table><br>
+	<?php endforeach;?>
+<?php endif;?>

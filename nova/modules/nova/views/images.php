@@ -5,6 +5,8 @@ return array(
 
 	'fields' => 'ui-text-field.png',
 
+	'groups' => 'zones.png',
+
 	'info' => 'information-italic.png',
 	
 	'reorder' => 'reorder-16x16.png',

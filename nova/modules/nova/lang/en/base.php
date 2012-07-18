@@ -98,6 +98,7 @@ return array(
 	'simming' => 'simming',
 	'set' => 'set',
 	'sets' => 'sets',
+	'short_name' => 'short name',
 
 	'tab' => "tab",
 	'tabs' => "tabs",

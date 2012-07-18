@@ -31,24 +31,8 @@ class Controller_Admin_Ranks extends Controller_Base_Admin
 		return;
 	}
 
-	public function action_info()
-	{
-		\Sentry::allowed('rank.read', true);
-
-		$this->_view = 'admin/ranks/info';
-		$this->_js_view = 'admin/ranks/info_js';
-	}
-
-	public function action_manage()
-	{
-		\Sentry::allowed('rank.read', true);
-
-		$this->_view = 'admin/ranks/manage';
-		$this->_js_view = 'admin/ranks/manage_js';
-	}
-
 	/**
-	 * Shows all of the rank sets as well as options to create, edit,
+	 * Shows all of the rank groups as well as options to create, edit,
 	 * delete, and duplicate a rank group.
 	 */
 	public function action_groups()
@@ -195,7 +179,7 @@ class Controller_Admin_Ranks extends Controller_Base_Admin
 						}
 						else
 						{
-							// update the rank with the new set ID
+							// update the rank with the new group ID
 							$rank->group_id = $new_group_id;
 							$rank->save();
 						}
@@ -232,5 +216,156 @@ class Controller_Admin_Ranks extends Controller_Base_Admin
 		);
 
 		return;
+	}
+
+	/**
+	 * Shows all of the rank info items as well as options to create, edit,
+	 * and delete a rank info item.
+	 */
+	public function action_info()
+	{
+		\Sentry::allowed('rank.read', true);
+
+		$this->_view = 'admin/ranks/info';
+		$this->_js_view = 'admin/ranks/info_js';
+
+		if (\Input::method() == 'POST')
+		{
+			// get the action
+			$action = trim(\Security::xss_clean(\Input::post('action')));
+
+			// get the ID from the POST
+			$info_id = trim(\Security::xss_clean(\Input::post('id')));
+
+			/**
+			 * Create a new rank info with the data provided by the user.
+			 */
+			if (\Sentry::user()->has_access('rank.create') and $action == 'create')
+			{
+				$item = \Model_Rank_Info::create_item(\Input::post());
+
+				if ($item)
+				{
+					$this->_flash[] = array(
+						'status' => 'success',
+						'message' => lang('[[short.flash.success|rank info|action.created]]', 1),
+					);
+				}
+				else
+				{
+					$this->_flash[] = array(
+						'status' => 'danger',
+						'message' => lang('[[short.flash.failure|rank info|action.creation]]', 1),
+					);
+				}
+			}
+
+			/**
+			 * Update the specified rank info with the information the user specified
+			 * in the modal pop-up.
+			 */
+			if (\Sentry::user()->has_access('rank.edit') and $action == 'update')
+			{
+				// update the field
+				$item = \Model_Rank_Info::update_item($info_id, \Input::post());
+
+				if ($item)
+				{
+					$this->_flash[] = array(
+						'status' => 'success',
+						'message' => lang('[[short.flash.success|rank info|action.updated]]', 1),
+					);
+				}
+				else
+				{
+					$this->_flash[] = array(
+						'status' => 'danger',
+						'message' => lang('[[short.flash.failure|rank info|action.update]]', 1),
+					);
+				}
+			}
+
+			/**
+			 * Delete the specified rank info and move the ranks from this info to the
+			 * info the user specified in the modal pop-up. If the user requested to
+			 * have the info's ranks deleted, that will supercede any new info ID selection.
+			 */
+			if (\Sentry::user()->has_access('rank.delete') and $action == 'delete')
+			{
+				// get the rank info record
+				$info = \Model_Rank_Info::find($info_id);
+
+				// get the new info ID
+				$new_info_id = trim(\Security::xss_clean(\Input::post('new_info')));
+
+				// are we deleting the ranks?
+				$delete_ranks = trim(\Security::xss_clean(\Input::post('delete_ranks')));
+
+				if (count($info->ranks) > 0)
+				{
+					// loop through and change the ranks
+					foreach ($info->ranks as $rank)
+					{
+						if ($delete_ranks == '1')
+						{
+							// delete the rank
+							$rank->delete();
+						}
+						else
+						{
+							// update the rank with the new info ID
+							$rank->info_id = $new_info_id;
+							$rank->save();
+						}
+					}
+				}
+
+				// delete the rank info
+				$item = \Model_Rank_Info::delete_item($info_id);
+
+				if ($item)
+				{
+					$this->_flash[] = array(
+						'status' => 'success',
+						'message' => lang('[[short.flash.success|rank info|action.deleted]]', 1),
+					);
+				}
+				else
+				{
+					$this->_flash[] = array(
+						'status' => 'danger',
+						'message' => lang('[[short.flash.failure|rank info|action.deletion]]', 1),
+					);
+				}
+			}
+		}
+
+		// get all the info records
+		$info = \Model_Rank_Info::find_items();
+
+		// create an empty holding array
+		$this->_data->info = array();
+
+		if (count($info) > 0)
+		{
+			foreach ($info as $i)
+			{
+				$this->_data->info[$i->group][] = $i;
+			}
+		}
+
+		// set up the images
+		$this->_data->images = array(
+			'groups' => \Location::image($this->images['groups'], $this->skin, 'admin'),
+			'ranks' => \Location::image($this->images['categories'], $this->skin, 'admin'),
+		);
+	}
+
+	public function action_manage()
+	{
+		\Sentry::allowed('rank.read', true);
+
+		$this->_view = 'admin/ranks/manage';
+		$this->_js_view = 'admin/ranks/manage_js';
 	}
 }

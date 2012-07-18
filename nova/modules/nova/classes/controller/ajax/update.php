@@ -335,4 +335,62 @@ class Controller_Ajax_Update extends Controller_Base_Ajax
 			}
 		}
 	}
+
+	/**
+	 * Update a rank info record.
+	 *
+	 * @param	int		the ID of the rank info being edited
+	 * @return	void
+	 */
+	public function action_rankinfo($id)
+	{
+		if (\Sentry::check() and \Sentry::user()->has_access('rank.edit'))
+		{
+			$id = trim(\Security::xss_clean($id));
+
+			// get the rank group
+			$info = \Model_Rank_Info::find($id);
+
+			// set the data
+			$data['id'] = $id;
+			$data['action'] = 'update';
+
+			if ($info !== false)
+			{
+				$data['name'] = $info->name;
+				$data['short_name'] = $info->short_name;
+				$data['order'] = $info->order;
+				$data['group'] = $info->group;
+				$data['display'] = (int) $info->display;
+			}
+
+			echo \View::forge(\Location::file('update/rankinfo', \Utility::get_skin('admin'), 'ajax'), $data);
+		}
+	}
+
+	/**
+	 * Updates the rank info order when the sort function stops.
+	 *
+	 * @return	void
+	 */
+	public function action_rankinfo_order()
+	{
+		if (\Sentry::check() and \Sentry::user()->has_access('rank.edit'))
+		{
+			// get and sanitize the input
+			$info = \Security::xss_clean(\Input::post('info'));
+
+			foreach ($info as $key => $value)
+			{
+				// get the group record
+				$record = \Model_Rank_Info::find($value);
+
+				// update the order
+				$record->order = ($key + 1);
+
+				// save the record
+				$record->save();
+			}
+		}
+	}
 }

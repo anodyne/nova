@@ -61,5 +61,7 @@ return array(
 
 	'ranks' => array(
 		'change_group' => "Select the new :0 group for any :1 currently in this :0 group.",
+		'change_info' => "Select the new :0 info item for any :1 currently using this :0 info record.",
+		'info_group_explain' => "Info groups are used solely for presentation purposes.",
 	),
 );
