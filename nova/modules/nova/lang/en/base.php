@@ -34,6 +34,8 @@ return array(
 
 	'general' => 'general',
 	'game_master' => 'game master',
+	'group' => 'group',
+	'group' => 'groups',
 
 	'horizontal' => "horizontal",
 	'html' => 'HTML',

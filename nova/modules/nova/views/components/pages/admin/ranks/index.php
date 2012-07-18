@@ -21,8 +21,8 @@
 	<li class="span6">
 		<div class="thumbnail">
 			<div class="caption">
-				<a href="<?php echo Uri::create('admin/ranks/sets');?>" class="btn pull-right"><i class="icon-chevron-right icon-50"></i></a>
-				<h3><?php echo lang('rank sets', 2);?></h3>
+				<a href="<?php echo Uri::create('admin/ranks/groups');?>" class="btn pull-right"><i class="icon-chevron-right icon-50"></i></a>
+				<h3><?php echo lang('rank groups', 2);?></h3>
 			</div>
 		</div>
 	</li>

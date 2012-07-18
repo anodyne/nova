@@ -14,45 +14,45 @@
 			return ui;
 		};
 
-		// makes the rank set list sortable and updates when the sort stops
-		$('.sort-ranksets tbody.sort-body').sortable({
+		// makes the rank group list sortable and updates when the sort stops
+		$('.sort-rankgroups tbody.sort-body').sortable({
 			helper: fixHelper,
 			stop: function(event, ui){
 				
 				$.ajax({
 					type: 'POST',
-					url: "<?php echo Uri::create('ajax/update/rankset_order');?>",
+					url: "<?php echo Uri::create('ajax/update/rankgroup_order');?>",
 					data: $(this).sortable('serialize')
 				});
 			}
 		}).disableSelection();
 
-		// what action to take when a rank set action is clicked
-		$(document).on('click', '.rankset-action', function(){
+		// what action to take when a rank group action is clicked
+		$(document).on('click', '.rankgroup-action', function(){
 			var doaction = $(this).data('action');
 			var id = $(this).data('id');
 
 			if (doaction == 'delete')
 			{
 				$('<div/>').dialog2({
-					title: "<?php echo lang('action.delete rank set', 2);?>",
-					content: "<?php echo Uri::create('ajax/delete/rankset');?>/" + id
+					title: "<?php echo lang('action.delete rank group', 2);?>",
+					content: "<?php echo Uri::create('ajax/delete/rankgroup');?>/" + id
 				});
 			}
 
 			if (doaction == 'duplicate')
 			{
 				$('<div/>').dialog2({
-					title: "<?php echo lang('action.duplicate rank set', 2);?>",
-					content: "<?php echo Uri::create('ajax/add/rankset_duplicate');?>/" + id
+					title: "<?php echo lang('action.duplicate rank group', 2);?>",
+					content: "<?php echo Uri::create('ajax/add/rankgroup_duplicate');?>/" + id
 				});
 			}
 
 			if (doaction == 'update')
 			{
 				$('<div/>').dialog2({
-					title: "<?php echo lang('action.update rank set', 2);?>",
-					content: "<?php echo Uri::create('ajax/update/rankset');?>/" + id
+					title: "<?php echo lang('action.update rank group', 2);?>",
+					content: "<?php echo Uri::create('ajax/update/rankgroup');?>/" + id
 				});
 			}
 

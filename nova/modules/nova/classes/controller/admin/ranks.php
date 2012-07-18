@@ -27,7 +27,6 @@ class Controller_Admin_Ranks extends Controller_Base_Admin
 		\Sentry::allowed('rank.read', true);
 
 		$this->_view = 'admin/ranks/index';
-		$this->_js_view = 'admin/ranks/index_js';
 
 		return;
 	}
@@ -50,14 +49,14 @@ class Controller_Admin_Ranks extends Controller_Base_Admin
 
 	/**
 	 * Shows all of the rank sets as well as options to create, edit,
-	 * delete, and duplicate a rank set.
+	 * delete, and duplicate a rank group.
 	 */
-	public function action_sets()
+	public function action_groups()
 	{
 		\Sentry::allowed('rank.read', true);
 
-		$this->_view = 'admin/ranks/sets';
-		$this->_js_view = 'admin/ranks/sets_js';
+		$this->_view = 'admin/ranks/groups';
+		$this->_js_view = 'admin/ranks/groups_js';
 
 		if (\Input::method() == 'POST')
 		{
@@ -65,52 +64,52 @@ class Controller_Admin_Ranks extends Controller_Base_Admin
 			$action = trim(\Security::xss_clean(\Input::post('action')));
 
 			// get the ID from the POST
-			$set_id = trim(\Security::xss_clean(\Input::post('id')));
+			$group_id = trim(\Security::xss_clean(\Input::post('id')));
 
 			/**
-			 * Create a new rank set with the name provided by the user.
+			 * Create a new rank group with the name provided by the user.
 			 */
 			if (\Sentry::user()->has_access('rank.create') and $action == 'create')
 			{
-				$item = \Model_Rank_Set::create_item(array(
+				$item = \Model_Rank_Group::create_item(array(
 					'name' => \Security::xss_clean(\Input::post('name')),
-					'order' => (\Model_Rank_Set::count() + 1),
+					'order' => (\Model_Rank_Group::count() + 1),
 				));
 
 				if ($item)
 				{
 					$this->_flash[] = array(
 						'status' => 'success',
-						'message' => lang('[[short.flash.success|rank set|action.created]]', 1),
+						'message' => lang('[[short.flash.success|rank group|action.created]]', 1),
 					);
 				}
 				else
 				{
 					$this->_flash[] = array(
 						'status' => 'danger',
-						'message' => lang('[[short.flash.failure|rank set|action.creation]]', 1),
+						'message' => lang('[[short.flash.failure|rank group|action.creation]]', 1),
 					);
 				}
 			}
 
 			/**
-			 * Duplicate an existing rank set and dump the rank information
-			 * from the old set into the new set with the new base the user
+			 * Duplicate an existing rank group and dump the rank information
+			 * from the old group into the new group with the new base the user
 			 * specified in the modal pop-up.
 			 */
 			if (\Sentry::user()->has_access('rank.create') and $action == 'duplicate')
 			{
-				// create the new set
-				$item = \Model_Rank_Set::create_item(array(
+				// create the new group
+				$item = \Model_Rank_Group::create_item(array(
 					'name' => trim(\Security::xss_clean(\Input::post('name'))),
-					'order' => (\Model_Rank_set::count() + 1),
+					'order' => (\Model_Rank_Group::count() + 1),
 				), true);
 
 				// grab the new base
 				$new_base = trim(\Security::xss_clean(\Input::post('base')));
 
-				// get the set we're duplicating
-				$duplicator = \Model_Rank_Set::find($set_id);
+				// get the group we're duplicating
+				$duplicator = \Model_Rank_Group::find($group_id);
 
 				if (count($duplicator->ranks) > 0)
 				{
@@ -119,7 +118,7 @@ class Controller_Admin_Ranks extends Controller_Base_Admin
 					{
 						$new = \Model_Rank::forge();
 						$new->info_id = $r->info_id;
-						$new->set_id = $item->id;
+						$new->group_id = $item->id;
 						$new->base = $new_base;
 						$new->pip = $r->pip;
 
@@ -131,63 +130,63 @@ class Controller_Admin_Ranks extends Controller_Base_Admin
 				{
 					$this->_flash[] = array(
 						'status' => 'success',
-						'message' => lang('[[short.flash.success|rank set|action.duplicated]]', 1),
+						'message' => lang('[[short.flash.success|rank group|action.duplicated]]', 1),
 					);
 				}
 				else
 				{
 					$this->_flash[] = array(
 						'status' => 'danger',
-						'message' => lang('[[short.flash.failure|rank set|action.duplication]]', 1),
+						'message' => lang('[[short.flash.failure|rank group|action.duplication]]', 1),
 					);
 				}
 			}
 
 			/**
-			 * Update the specified rank set with the information the user specified
+			 * Update the specified rank group with the information the user specified
 			 * in the modal pop-up.
 			 */
 			if (\Sentry::user()->has_access('rank.edit') and $action == 'update')
 			{
 				// update the field
-				$item = \Model_Rank_Set::update_item($set_id, \Input::post());
+				$item = \Model_Rank_Group::update_item($group_id, \Input::post());
 
 				if ($item)
 				{
 					$this->_flash[] = array(
 						'status' => 'success',
-						'message' => lang('[[short.flash.success|rank set|action.updated]]', 1),
+						'message' => lang('[[short.flash.success|rank group|action.updated]]', 1),
 					);
 				}
 				else
 				{
 					$this->_flash[] = array(
 						'status' => 'danger',
-						'message' => lang('[[short.flash.failure|rank set|action.update]]', 1),
+						'message' => lang('[[short.flash.failure|rank group|action.update]]', 1),
 					);
 				}
 			}
 
 			/**
-			 * Delete the specified rank set and move the ranks from this set to the
-			 * set the user specified in the modal pop-up. If the user requested to
-			 * have the set's ranks deleted, that will supercede any new set ID selection.
+			 * Delete the specified rank group and move the ranks from this group to the
+			 * group the user specified in the modal pop-up. If the user requested to
+			 * have the group's ranks deleted, that will supercede any new group ID selection.
 			 */
 			if (\Sentry::user()->has_access('rank.delete') and $action == 'delete')
 			{
-				// get all the ranks for the current set
-				$set = \Model_Rank_Set::find($set_id);
+				// get all the ranks for the current group
+				$group = \Model_Rank_Group::find($group_id);
 
-				// get the new set ID
-				$new_set_id = trim(\Security::xss_clean(\Input::post('new_set')));
+				// get the new group ID
+				$new_group_id = trim(\Security::xss_clean(\Input::post('new_group')));
 
 				// are we deleting the ranks?
 				$delete_ranks = trim(\Security::xss_clean(\Input::post('delete_ranks')));
 
-				if (count($set->ranks) > 0)
+				if (count($group->ranks) > 0)
 				{
 					// loop through and change the ranks
-					foreach ($set->ranks as $rank)
+					foreach ($group->ranks as $rank)
 					{
 						if ($delete_ranks == '1')
 						{
@@ -197,34 +196,34 @@ class Controller_Admin_Ranks extends Controller_Base_Admin
 						else
 						{
 							// update the rank with the new set ID
-							$rank->set_id = $new_set_id;
+							$rank->group_id = $new_group_id;
 							$rank->save();
 						}
 					}
 				}
 
-				// delete the rank set
-				$item = \Model_Rank_Set::delete_item($set_id);
+				// delete the rank group
+				$item = \Model_Rank_Group::delete_item($group_id);
 
 				if ($item)
 				{
 					$this->_flash[] = array(
 						'status' => 'success',
-						'message' => lang('[[short.flash.success|rank set|action.deleted]]', 1),
+						'message' => lang('[[short.flash.success|rank group|action.deleted]]', 1),
 					);
 				}
 				else
 				{
 					$this->_flash[] = array(
 						'status' => 'danger',
-						'message' => lang('[[short.flash.failure|rank set|action.deletion]]', 1),
+						'message' => lang('[[short.flash.failure|rank group|action.deletion]]', 1),
 					);
 				}
 			}
 		}
 
-		// get all the sets
-		$this->_data->sets = \Model_Rank_Set::find_items();
+		// get all the group
+		$this->_data->group = \Model_Rank_Group::find_items();
 
 		// set up the images
 		$this->_data->images = array(

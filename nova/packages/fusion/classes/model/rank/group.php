@@ -1,6 +1,6 @@
 <?php
 /**
- * Rank Sets Model
+ * Rank Groups Model
  *
  * @package		Nova
  * @subpackage	Fusion
@@ -11,9 +11,9 @@
  
 namespace Fusion;
 
-class Model_Rank_Set extends \Model {
+class Model_Rank_Group extends \Model {
 	
-	public static $_table_name = 'rank_sets_';
+	public static $_table_name = 'rank_groups_';
 	
 	public static $_properties = array(
 		'id' => array(
@@ -40,7 +40,7 @@ class Model_Rank_Set extends \Model {
 	public static $_has_many = array(
 		'ranks' => array(
 			'model_to' => '\\Model_Rank',
-			'key_to' => 'set_id',
+			'key_to' => 'group_id',
 			'key_from' => 'id',
 			'cascade_save' => false,
 			'cascade_delete' => false,
@@ -51,7 +51,7 @@ class Model_Rank_Set extends \Model {
 	 * Observers
 	 */
 	protected static $_observers = array(
-		'\\Rank_Set' => array(
+		'\\Rank_Group' => array(
 			'events' => array('before_delete', 'after_insert', 'after_update')
 		),
 	);

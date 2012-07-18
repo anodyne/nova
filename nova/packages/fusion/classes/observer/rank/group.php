@@ -1,6 +1,6 @@
 <?php
 /**
- * The rank set observer acts on the rank set model at given times to ensure
+ * The rank group observer acts on the rank group model at given times to ensure
  * additional work on on other ranks happens as it should.
  *
  * @package		Nova
@@ -12,7 +12,7 @@
 
 namespace Fusion;
 
-class Observer_Rank_Set extends \Orm\Observer
+class Observer_Rank_Group extends \Orm\Observer
 {
 	/**
 	 * Pre-delete observer.
@@ -26,7 +26,7 @@ class Observer_Rank_Set extends \Orm\Observer
 		/**
 		 * System Event
 		 */
-		\SystemEvent::add('user', '[[event.admin.rank.set|{{'.$model->name.'}}|action.deleted]]');
+		\SystemEvent::add('user', '[[event.admin.rank.group|{{'.$model->name.'}}|action.deleted]]');
 	}
 
 	/**
@@ -41,7 +41,7 @@ class Observer_Rank_Set extends \Orm\Observer
 		/**
 		 * System Event
 		 */
-		\SystemEvent::add('user', '[[event.admin.rank.set|{{'.$model->name.'}}|action.created]]');
+		\SystemEvent::add('user', '[[event.admin.rank.group|{{'.$model->name.'}}|action.created]]');
 	}
 
 	/**
@@ -56,6 +56,6 @@ class Observer_Rank_Set extends \Orm\Observer
 		/**
 		 * System Event
 		 */
-		\SystemEvent::add('user', '[[event.admin.rank.set|{{'.$model->name.'}}|action.updated]]');
+		\SystemEvent::add('user', '[[event.admin.rank.group|{{'.$model->name.'}}|action.updated]]');
 	}
 }

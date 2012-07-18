@@ -100,38 +100,38 @@ class Controller_Ajax_Delete extends Controller_Base_Ajax
 		}
 	}
 
-	public function action_rankset($id)
+	public function action_rankgroup($id)
 	{
 		if (\Sentry::check() and \Sentry::user()->has_access('rank.delete'))
 		{
-			// get the rank set
-			$set = \Model_Rank_Set::find($id);
+			// get the rank group
+			$group = \Model_Rank_Group::find($id);
 
-			if ($set !== null)
+			if ($group !== null)
 			{
 				$data = array(
-					'name' => $set->name,
-					'id' => $set->id,
+					'name' => $group->name,
+					'id' => $group->id,
 				);
 
-				// get all the sets
-				$sets = \Model_Rank_Set::find_items(true);
+				// get all the groups
+				$groups = \Model_Rank_Group::find_items(true);
 
 				// create an empty array
-				$data['sets'] = array();
+				$data['groups'] = array();
 
-				if (count($sets) > 0)
+				if (count($groups) > 0)
 				{
-					foreach ($sets as $s)
+					foreach ($groups as $g)
 					{
-						if ($s->id != $id)
+						if ($g->id != $id)
 						{
-							$data['sets'][$s->id] = $s->name;
+							$data['groups'][$g->id] = $g->name;
 						}
 					}
 				}
 
-				echo \View::forge(\Location::file('delete/rankset', \Utility::get_skin('admin'), 'ajax'), $data);
+				echo \View::forge(\Location::file('delete/rankgroup', \Utility::get_skin('admin'), 'ajax'), $data);
 			}
 		}
 	}

@@ -183,16 +183,16 @@ class NovaForm
 	 */
 	public static function rank($name, $selected = false, $extra = null)
 	{
-		// grab the rank sets
-		$sets = \Model_Rank_Set::find_items(true);
+		// grab the rank groups
+		$groups = \Model_Rank_Group::find_items(true);
 		
-		if (count($sets) > 0)
+		if (count($groups) > 0)
 		{
-			foreach ($sets as $s)
+			foreach ($groups as $g)
 			{
-				foreach ($s->ranks as $r)
+				foreach ($g->ranks as $r)
 				{
-					$options[$s->name][$r->id] = $r->info->name;
+					$options[$g->name][$r->id] = $r->info->name;
 				}
 			}
 

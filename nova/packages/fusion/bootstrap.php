@@ -83,7 +83,7 @@ Autoloader::add_classes(array(
 
 	'Fusion\\Model_Rank'					=> __DIR__.'/classes/model/rank.php',
 	'Fusion\\Model_Rank_Info'				=> __DIR__.'/classes/model/rank/info.php',
-	'Fusion\\Model_Rank_Set'				=> __DIR__.'/classes/model/rank/set.php',
+	'Fusion\\Model_Rank_Group'				=> __DIR__.'/classes/model/rank/group.php',
 	
 	'Fusion\\Model_Session'					=> __DIR__.'/classes/model/session.php',
 	'Fusion\\Model_Settings'				=> __DIR__.'/classes/model/settings.php',
@@ -113,5 +113,5 @@ Autoloader::add_classes(array(
 	'Fusion\\Observer_Form_Section'			=> __DIR__.'/classes/observer/form/section.php',
 	'Fusion\\Observer_Form_Tab'				=> __DIR__.'/classes/observer/form/tab.php',
 
-	'Fusion\\Observer_Rank_Set'				=> __DIR__.'/classes/observer/rank/set.php',
+	'Fusion\\Observer_Rank_Group'			=> __DIR__.'/classes/observer/rank/group.php',
 ));

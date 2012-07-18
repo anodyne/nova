@@ -205,16 +205,16 @@ abstract class Controller_Main extends Controller_Base_Main
 
 	public function action_test()
 	{
-		$sets = \Model_Rank_Set::find('all');
+		$groups = \Model_Rank_Group::find('all');
 
-		foreach ($sets as $s)
+		foreach ($groups as $g)
 		{
 			echo '<div class="container">';
-			echo '<h2>'.$s->name.'</h2>';
+			echo '<h2>'.$g->name.'</h2>';
 
 			echo '<table class="table table-striped">';
 
-			foreach ($s->ranks as $r)
+			foreach ($g->ranks as $r)
 			{
 				echo '<tr><td width="300">'.$r->info->name.'</td><td>'.\Location::rank($r->base, $r->pip).'</td></tr>';
 			}

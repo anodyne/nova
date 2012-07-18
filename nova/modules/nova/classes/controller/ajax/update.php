@@ -282,50 +282,50 @@ class Controller_Ajax_Update extends Controller_Base_Ajax
 	}
 
 	/**
-	 * Duplicate a rank set.
+	 * Duplicate a rank group.
 	 *
-	 * @param	int		the ID of the rank set being duplicated
+	 * @param	int		the ID of the rank group being duplicated
 	 * @return	void
 	 */
-	public function action_rankset($id)
+	public function action_rankgroup($id)
 	{
 		if (\Sentry::check() and \Sentry::user()->has_access('rank.edit'))
 		{
 			$id = trim(\Security::xss_clean($id));
 
-			// get the rank set
-			$set = \Model_Rank_Set::find($id);
+			// get the rank group
+			$group = \Model_Rank_Group::find($id);
 
 			// set the data
 			$data['id'] = $id;
 
-			if ($set !== false)
+			if ($group !== false)
 			{
-				$data['name'] = $set->name;
-				$data['order'] = $set->order;
-				$data['display'] = (int) $set->display;
+				$data['name'] = $group->name;
+				$data['order'] = $group->order;
+				$data['display'] = (int) $group->display;
 			}
 
-			echo \View::forge(\Location::file('update/rankset', \Utility::get_skin('admin'), 'ajax'), $data);
+			echo \View::forge(\Location::file('update/rankgroup', \Utility::get_skin('admin'), 'ajax'), $data);
 		}
 	}
 
 	/**
-	 * Updates the rank set order when the sort function stops.
+	 * Updates the rank group order when the sort function stops.
 	 *
 	 * @return	void
 	 */
-	public function action_rankset_order()
+	public function action_rankgroup_order()
 	{
 		if (\Sentry::check() and \Sentry::user()->has_access('rank.edit'))
 		{
 			// get and sanitize the input
-			$sets = \Security::xss_clean(\Input::post('set'));
+			$sets = \Security::xss_clean(\Input::post('group'));
 
 			foreach ($sets as $key => $value)
 			{
-				// get the set record
-				$record = \Model_Rank_Set::find($value);
+				// get the group record
+				$record = \Model_Rank_Group::find($value);
 
 				// update the order
 				$record->order = ($key + 1);

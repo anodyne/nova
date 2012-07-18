@@ -70,7 +70,7 @@ class Controller_Ajax_Add extends Controller_Base_Ajax
 	 * @param	int		the ID of the rank set being duplicated
 	 * @return	void
 	 */
-	public function action_rankset_duplicate($id)
+	public function action_rankgroup_duplicate($id)
 	{
 		if (\Sentry::check() and \Sentry::user()->has_access('rank.create'))
 		{
@@ -115,7 +115,7 @@ class Controller_Ajax_Add extends Controller_Base_Ajax
 				}
 			}
 
-			echo \View::forge(\Location::file('add/rankset_duplicate', \Utility::get_skin('admin'), 'ajax'), $data);
+			echo \View::forge(\Location::file('add/rankgroup_duplicate', \Utility::get_skin('admin'), 'ajax'), $data);
 		}
 	}
 }

@@ -60,6 +60,6 @@ return array(
 	),
 
 	'ranks' => array(
-		'change_set' => "Select the new :0 set for any :1 currently in this :0 set.",
+		'change_group' => "Select the new :0 group for any :1 currently in this :0 group.",
 	),
 );

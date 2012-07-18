@@ -47,10 +47,10 @@ class Model_Rank extends \Model {
 			'cascade_save' => false,
 			'cascade_delete' => false,
 		),
-		'set' => array(
-			'model_to' => '\\Model_Rank_Set',
+		'group' => array(
+			'model_to' => '\\Model_Rank_Group',
 			'key_to' => 'id',
-			'key_from' => 'set_id',
+			'key_from' => 'group_id',
 			'cascade_save' => false,
 			'cascade_delete' => false,
 		),

@@ -1,10 +1,10 @@
-<p><?php echo lang('[[short.delete_confirm|rank set|{{'.$name.'}}]]');?></p>
+<p><?php echo lang('[[short.delete_confirm|rank group|{{'.$name.'}}]]');?></p>
 
 <form method="post">
 	<br>
 	<div class="control-group">
-		<?php echo Form::select('new_set', 0, $sets, array('class' => 'span4'));?>
-		<p class="help-block"><?php echo lang('[[short.ranks.change_set|rank|ranks]]');?></p>
+		<?php echo Form::select('new_group', 0, $groups, array('class' => 'span4'));?>
+		<p class="help-block"><?php echo lang('[[short.ranks.change_group|rank|ranks]]');?></p>
 	</div>
 
 	<div class="control-group">

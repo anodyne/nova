@@ -27,7 +27,7 @@ return array(
 		'ranks' => array(
 			'info' => "The :0 rank info was :1",
 			'item' => "Rank item was :0",
-			'set' => "The :0 rank set was :1",
+			'group' => "The :0 rank group was :1",
 		),
 	),
 
