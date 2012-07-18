@@ -373,7 +373,7 @@ class Create_navigation
 				'access' => 'rank|read|0'),
 			array(
 				'name' => 'Forms',
-				'group' => 2,
+				'group' => 0,
 				'order' => 0,
 				'url' => 'admin/form/index',
 				'type' => 'adminsub',
@@ -381,7 +381,7 @@ class Create_navigation
 				'access' => 'form|read|0'),
 			array(
 				'name' => 'Ranks',
-				'group' => 3,
+				'group' => 1,
 				'order' => 0,
 				'url' => 'admin/ranks/index',
 				'type' => 'adminsub',

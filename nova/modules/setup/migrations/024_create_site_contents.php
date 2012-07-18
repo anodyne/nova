@@ -114,7 +114,7 @@ class Create_site_contents
 				'page' => 'tabs'),
 			array(
 				'key' => 'admin_ranks_index_header',
-				'label' => 'Ranks Management Header',
+				'label' => 'Ranks Index Header',
 				'content' => "Ranks",
 				'type' => 'header',
 				'section' => 'ranks',
@@ -126,6 +126,20 @@ class Create_site_contents
 				'type' => 'header',
 				'section' => 'ranks',
 				'page' => 'groups'),
+			array(
+				'key' => 'admin_ranks_info_header',
+				'label' => 'Rank Info Management Header',
+				'content' => "Rank Info",
+				'type' => 'header',
+				'section' => 'ranks',
+				'page' => 'info'),
+			array(
+				'key' => 'admin_ranks_manage_header',
+				'label' => 'Rank Management Header',
+				'content' => "Ranks",
+				'type' => 'header',
+				'section' => 'ranks',
+				'page' => 'manage'),
 
 			/**
 			 * Page Titles
@@ -223,7 +237,7 @@ class Create_site_contents
 				'page' => 'tabs'),
 			array(
 				'key' => 'admin_ranks_index_title',
-				'label' => 'Ranks Management Page Title',
+				'label' => 'Ranks Index Page Title',
 				'content' => "Ranks",
 				'type' => 'title',
 				'section' => 'ranks',
@@ -235,6 +249,20 @@ class Create_site_contents
 				'type' => 'title',
 				'section' => 'ranks',
 				'page' => 'groups'),
+			array(
+				'key' => 'admin_ranks_info_title',
+				'label' => 'Rank Info Management Page Title',
+				'content' => "Rank Info",
+				'type' => 'title',
+				'section' => 'ranks',
+				'page' => 'info'),
+			array(
+				'key' => 'admin_ranks_manage_title',
+				'label' => 'Rank Management Page Title',
+				'content' => "Ranks",
+				'type' => 'title',
+				'section' => 'ranks',
+				'page' => 'manage'),
 
 			/**
 			 * Messages
@@ -299,11 +327,25 @@ class Create_site_contents
 				'page' => 'index'),
 			array(
 				'key' => 'admin_ranks_groups_message',
-				'label' => 'Manage Ranks Message',
+				'label' => 'Manage Rank Groups Message',
 				'content' => "Rank groups are a simple way to organize ranks into logical groupings. Every rank in the system belongs to a rank group, allowing admins to easily add new groups of ranks. Nova comes with several rank groups already, but you can easily create new groups and add ranks to them from rank management.",
 				'type' => 'message',
 				'section' => 'ranks',
 				'page' => 'groups'),
+			array(
+				'key' => 'admin_ranks_info_message',
+				'label' => 'Manage Rank Info Message',
+				'content' => "Rank info contains all of the basic information about ranks that's repeated across multiple ranks, like name, short name, and order. Every rank in the system references one of the rank info records below, meaning that several ranks can be updated simultaneously by changing one of the info records. You can easily create new info records and use them with ranks or edit existing items.",
+				'type' => 'message',
+				'section' => 'ranks',
+				'page' => 'info'),
+			array(
+				'key' => 'admin_ranks_manage_message',
+				'label' => 'Manage Ranks Message',
+				'content' => "Ranks are made up of several different componets to keep things as flexible as possible. The ranks records below are composed of a rank info, a rank group, a base image, and a pip image. From here, you can change any and all of those pieces to customize your ranks to your liking.",
+				'type' => 'message',
+				'section' => 'ranks',
+				'page' => 'manage'),
 
 			/**
 			 * Other Messages
