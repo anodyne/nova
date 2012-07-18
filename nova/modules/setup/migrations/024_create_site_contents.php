@@ -120,12 +120,12 @@ class Create_site_contents
 				'section' => 'ranks',
 				'page' => 'index'),
 			array(
-				'key' => 'admin_ranks_sets_header',
-				'label' => 'Rank Sets Management Header',
-				'content' => "Rank Sets",
+				'key' => 'admin_ranks_groups_header',
+				'label' => 'Rank Groups Management Header',
+				'content' => "Rank Groups",
 				'type' => 'header',
 				'section' => 'ranks',
-				'page' => 'sets'),
+				'page' => 'groups'),
 
 			/**
 			 * Page Titles
@@ -229,12 +229,12 @@ class Create_site_contents
 				'section' => 'ranks',
 				'page' => 'index'),
 			array(
-				'key' => 'admin_ranks_sets_title',
-				'label' => 'Rank Sets Management Page Title',
-				'content' => "Rank Sets",
+				'key' => 'admin_ranks_groups_title',
+				'label' => 'Rank Groups Management Page Title',
+				'content' => "Rank Groups",
 				'type' => 'title',
 				'section' => 'ranks',
-				'page' => 'sets'),
+				'page' => 'groups'),
 
 			/**
 			 * Messages
@@ -298,12 +298,12 @@ class Create_site_contents
 				'section' => 'admin',
 				'page' => 'index'),
 			array(
-				'key' => 'admin_ranks_sets_message',
+				'key' => 'admin_ranks_groups_message',
 				'label' => 'Manage Ranks Message',
-				'content' => "Rank sets are a simple way to organize ranks into logical groups. Every rank in the system belongs to a rank set, allowing admins to easily add new sets of ranks. Nova comes with several rank sets already, but you can easily create new sets and add ranks to them from rank management.",
+				'content' => "Rank groups are a simple way to organize ranks into logical groupings. Every rank in the system belongs to a rank group, allowing admins to easily add new groups of ranks. Nova comes with several rank groups already, but you can easily create new groups and add ranks to them from rank management.",
 				'type' => 'message',
 				'section' => 'ranks',
-				'page' => 'sets'),
+				'page' => 'groups'),
 
 			/**
 			 * Other Messages

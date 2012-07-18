@@ -23,7 +23,7 @@ class Model_Rank extends \Model {
 		'info_id' => array(
 			'type' => 'int',
 			'constraint' => 11),
-		'set_id' => array(
+		'group_id' => array(
 			'type' => 'int',
 			'constraint' => 11),
 		'base' => array(

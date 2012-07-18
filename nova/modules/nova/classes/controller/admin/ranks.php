@@ -223,7 +223,7 @@ class Controller_Admin_Ranks extends Controller_Base_Admin
 		}
 
 		// get all the group
-		$this->_data->group = \Model_Rank_Group::find_items();
+		$this->_data->groups = \Model_Rank_Group::find_items();
 
 		// set up the images
 		$this->_data->images = array(
