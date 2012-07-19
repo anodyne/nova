@@ -25,6 +25,11 @@ abstract class Controller_Base_Core extends \Controller_Template
 	 * @var	array	All the image information from the image indices.
 	 */
 	public $images;
+
+	/**
+	 * @var	string	The genre.
+	 */
+	public $genre;
 	
 	/**
 	 * @var	string	The current skin.
@@ -134,6 +139,9 @@ abstract class Controller_Base_Core extends \Controller_Template
 
 		// load the nova config file
 		\Config::load('nova', 'nova');
+
+		// set the genre as a variable
+		$this->genre = \Config::get('nova.genre');
 		
 		// set the language
 		\Config::set('language', $this->session->get('language', 'en'));
