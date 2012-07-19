@@ -14,7 +14,7 @@ class Create_ranks
 
 		\DBUtil::create_table('ranks_'.$genre, array(
 			'id' => array('type' => 'INT', 'constraint' => 11, 'auto_increment' => true),
-			'info_id' => array('type' => 'INT', 'constraint' => 11),
+			'info_id' => array('type' => 'INT', 'constraint' => 11, 'null' => true),
 			'group_id' => array('type' => 'INT', 'constraint' => 11),
 			'base' => array('type' => 'VARCHAR', 'constraint' => 50, 'null' => true),
 			'pip' => array('type' => 'VARCHAR', 'constraint' => 50, 'null' => true),
