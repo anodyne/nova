@@ -53,4 +53,6 @@
 		<?php endforeach;?>
 		</tbody>
 	</table>
+<?php else: ?>
+	<p class="alert"><?php echo lang('[[error.not_found|rank groups]]');?></p>
 <?php endif;?>
