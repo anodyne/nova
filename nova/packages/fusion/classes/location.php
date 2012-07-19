@@ -172,7 +172,7 @@ class Location
 				'pip' => "width:144px; height:40px; position:relative; z-index:10; background:transparent url(".\Uri::base(false).'app/assets/common/'.$genre.'/ranks/'.$catalog->location.'/pips/'.$pip.$catalog->extension.") no-repeat top left;",
 			);
 
-			return '<div style="'.$properties['base'].'"><div style="'.$properties['pip'].'"></div></div>';
+			return '<div rel="rankBaseImage" style="'.$properties['base'].'"><div rel="rankPipImage" style="'.$properties['pip'].'"></div></div>';
 		}
 
 		// clean up the base
@@ -181,49 +181,11 @@ class Location
 		// clean up the pip
 		$pip = (strpos($pip, '/') !== false) ? substr_replace($pip, '', 0, (strpos($pip, '/') + 1)) : $pip;
 
+		// set the image name now
+		$imageName = (empty($pip)) ? $base.$catalog->extension : $base."-".$pip.$catalog->extension;
+
 		// return the old rank style
-		return \Html::img("app/assets/common/$genre/ranks/".$catalog->location."/".$base."-".$pip.$catalog->extension);
-	}
-	
-	/**
-	 * Finds and returns the path to a rank image (app/assets/common/{GENRE}/ranks).
-	 * Rank images are not part of seamless substitution since they're stored
-	 * entirely outside of the Nova core.
-	 *
-	 * <code>
-	 * Location::rank('default', 'r-06', '.png');
-	 * // extension is its own parameter since the rank catalog stores that information
-	 * </code>
-	 *
-	 * @api
-	 * @param	string	the name of the directory the rank set is stored in
-	 * @param	string	the name of the image (usually from the database)
-	 * @param	string	the extension of the rank set (usually from the database)
-	 * @param	string	what to return (image, path, abspath, urlpath)
-	 * @param	array 	an array of attributes to be used on the image
-	 * @return	string	the path to the image
-	 */
-	public static function rank_old($set, $image, $ext, $return = 'image', $attr = array())
-	{
-		// find the path to the image
-		$path = Location::_find_image('rank', $set, $image.$ext);
-		
-		if ($return == 'image')
-		{
-			return \Html::img(\Uri::base(false).$path, $attr);
-		}
-		
-		if ($return == 'urlpath')
-		{
-			return \Uri::base(false).$path;
-		}
-		
-		if ($return == 'abspath')
-		{
-			return APPPATH.$path;
-		}
-		
-		return $path;
+		return \Html::img("app/assets/common/$genre/ranks/".$catalog->location."/".$imageName);
 	}
 	
 	/**

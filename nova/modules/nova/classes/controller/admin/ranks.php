@@ -361,11 +361,262 @@ class Controller_Admin_Ranks extends Controller_Base_Admin
 		);
 	}
 
-	public function action_manage()
+	/**
+	 * @todo	should we move some of the rank image stuff into its own class?
+	 * @todo	how should we handle the multiple rank sets stuff in management?
+	 */
+	public function action_manage($id = false)
 	{
 		\Sentry::allowed('rank.read', true);
 
 		$this->_view = 'admin/ranks/manage';
 		$this->_js_view = 'admin/ranks/manage_js';
+
+		if (\Input::method() == 'POST')
+		{
+			// get the action
+			$action = trim(\Security::xss_clean(\Input::post('action')));
+
+			// get the ID from the POST
+			$rank_id = trim(\Security::xss_clean(\Input::post('id')));
+
+			/**
+			 * Create a new rank.
+			 */
+			if (\Sentry::user()->has_access('rank.create') and $action == 'create')
+			{
+				$item = \Model_Rank::create_item(\Input::post());
+
+				if ($item)
+				{
+					$this->_flash[] = array(
+						'status' => 'success',
+						'message' => lang('[[short.flash.success|rank|action.created]]', 1),
+					);
+				}
+				else
+				{
+					$this->_flash[] = array(
+						'status' => 'danger',
+						'message' => lang('[[short.flash.failure|rank|action.creation]]', 1),
+					);
+				}
+			}
+
+			/**
+			 * Update a rank.
+			 */
+			if (\Sentry::user()->has_access('rank.edit') and $action == 'update')
+			{
+				$item = \Model_Rank::update_item($rank_id, \Input::post());
+
+				if ($item)
+				{
+					$this->_flash[] = array(
+						'status' => 'success',
+						'message' => lang('[[short.flash.success|rank|action.updated]]', 1),
+					);
+				}
+				else
+				{
+					$this->_flash[] = array(
+						'status' => 'danger',
+						'message' => lang('[[short.flash.failure|rank|action.update]]', 1),
+					);
+				}
+			}
+
+			/**
+			 * Delete a rank.
+			 *
+			 * @todo	what do we need to do with characters when a rank is deleted?
+			 */
+			if (\Sentry::user()->has_access('rank.delete') and $action == 'delete')
+			{
+				$item = \Model_Rank::delete_item($rank_id);
+
+				if ($item)
+				{
+					$this->_flash[] = array(
+						'status' => 'success',
+						'message' => lang('[[short.flash.success|rank|action.deleted]]', 1),
+					);
+				}
+				else
+				{
+					$this->_flash[] = array(
+						'status' => 'danger',
+						'message' => lang('[[short.flash.failure|rank|action.deletion]]', 1),
+					);
+				}
+			}
+		}
+
+		// get the default rank
+		$default = \Model_Settings::get_settings('display_rank');
+
+		// set the path to the rank images
+		$rankPath = $this->_js_data->rankPath = "app/assets/common/$this->genre/ranks/$default/";
+
+		// get the rank extension
+		$rankExt = $this->_js_data->rankExt = \Model_Catalog_Rank::get_item($default)->extension;
+
+		if (is_numeric($id))
+		{
+			// change the view
+			$this->_view = 'admin/ranks/manage_action';
+
+			// set the action
+			$this->_data->action = ($id == 0) ? 'create' : 'update';
+
+			// get the rank record
+			$rank = $this->_data->rank = \Model_Rank::find($id);
+
+			// get the rank info records
+			$infos = \Model_Rank_Info::find_items();
+
+			// start the infos listing
+			$this->_data->infos[0] = '';
+
+			if (count($infos) > 0)
+			{
+				foreach ($infos as $i)
+				{
+					// set the group name
+					$group = lang('group', 1).' '.$i->group;
+
+					// put the info into the array
+					$this->_data->infos[$group][$i->id] = $i->name;
+				}
+			}
+
+			// get the rank group records
+			$groups = \Model_Rank_Group::find_items();
+
+			// start the groups listing
+			$this->_data->groups = array();
+
+			if (count($groups) > 0)
+			{
+				foreach ($groups as $g)
+				{
+					// put the info into the array
+					$this->_data->groups[$g->id] = $g->name;
+				}
+			}
+
+			if (is_dir(APPPATH."assets/common/$this->genre/ranks/$default/base")
+					and is_dir(APPPATH."assets/common/$this->genre/ranks/$default/pips"))
+			{
+				// read the directory for the base images
+				$bases = \File::read_dir(APPPATH."assets/common/$this->genre/ranks/$default/base");
+
+				if (is_array($bases) and count($bases) > 0)
+				{
+					// loop through the images
+					foreach ($bases as $key => $location)
+					{
+						if (is_array($location))
+						{
+							// make sure the directory separators are right
+							$key = str_replace('\\', '/', $key);
+
+							// loop through the sub directory
+							foreach ($location as $l)
+							{
+								// strip the image extension
+								$image = substr_replace($l, '', strpos($l, '.'));
+
+								// the image without extension is the value, with extension is displayed
+								$this->_data->bases[$key.$image] = \Html::img($rankPath.'base/'.$key.$l);
+							}
+						}
+						else
+						{
+							// strip the image extension
+							$image = substr_replace($location, '', strpos($location, '.'));
+
+							// the image without extension is the value, with extension is displayed
+							$this->_data->bases[$image] = \Html::img($rankPath.'base/'.$location);
+						}
+					}
+				}
+
+				// read the directory for the pip images
+				$pips = \File::read_dir(APPPATH."assets/common/$this->genre/ranks/$default/pips");
+
+				if (is_array($pips) and count($pips) > 0)
+				{
+					// set an empty pip option
+					$this->_data->pips[''] = lang('no pip', 2);
+
+					// loop through the images
+					foreach ($pips as $key => $location)
+					{
+						if (is_array($location))
+						{
+							// make sure the directory separators are right
+							$key = str_replace('\\', '/', $key);
+
+							// loop through the sub directory
+							foreach ($location as $l)
+							{
+								// strip the image extension
+								$image = substr_replace($l, '', strpos($l, '.'));
+
+								// the image without extension is the value, with extension is displayed
+								$this->_data->pips[$key.$image] = \Html::img($rankPath.'pips/'.$key.$l);
+							}
+						}
+						else
+						{
+							// strip the image extension
+							$image = substr_replace($location, '', strpos($location, '.'));
+
+							// the image without extension is the value, with extension is displayed
+							$this->_data->pips[$image] = \Html::img($rankPath.'pips/'.$location);
+						}
+					}
+				}
+			}
+			else
+			{
+				// read the directory for the pip images
+				$imgs = \File::read_dir(APPPATH."assets/common/$this->genre/ranks/$default");
+
+				if (is_array($imgs) and count($imgs) > 0)
+				{
+					// loop through the images
+					foreach ($imgs as $key => $location)
+					{
+						// strip the image extension
+						$image = substr_replace($location, '', strpos($location, '.'));
+
+						if ($image != 'preview' and $image != 'blank' and $image != 'rank')
+						{
+							// the image without extension is the value, with extension is displayed
+							$this->_data->imgs[$image] = \Html::img($rankPath.'/'.$location);
+						}
+					}
+
+					// sort the images
+					ksort($this->_data->imgs);
+				}
+			}
+
+			// set the rank preview
+			$this->_data->rankPreview = ($rank) ? \Location::rank($rank->base, $rank->pip) : false;
+		}
+		else
+		{
+			// get all the rank groups
+			$this->_data->groups = \Model_Rank_Group::find_items();
+
+			// set up the images
+			$this->_data->images = array(
+				'groups' => \Location::image($this->images['groups'], $this->skin, 'admin'),
+				'info' => \Location::image($this->images['info'], $this->skin, 'admin'),
+			);
+		}
 	}
 }

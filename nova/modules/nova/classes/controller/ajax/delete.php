@@ -100,6 +100,25 @@ class Controller_Ajax_Delete extends Controller_Base_Ajax
 		}
 	}
 
+	public function action_rank($id)
+	{
+		if (\Sentry::check() and \Sentry::user()->has_access('rank.delete'))
+		{
+			// get the rank info
+			$rank = \Model_Rank::find($id);
+
+			if ($rank !== null)
+			{
+				$data = array(
+					'name' => $rank->info->name,
+					'id' => $rank->id,
+				);
+
+				echo \View::forge(\Location::file('delete/rank', \Utility::get_skin('admin'), 'ajax'), $data);
+			}
+		}
+	}
+
 	public function action_rankgroup($id)
 	{
 		if (\Sentry::check() and \Sentry::user()->has_access('rank.delete'))

@@ -1,38 +1,60 @@
 <br>
-<ul class="thumbnails">
-	<li class="span6">
-		<div class="thumbnail">
-			<div class="caption">
-				<a href="<?php echo Uri::create('ranks/manage');?>" class="btn pull-right"><i class="icon-chevron-right icon-50"></i></a>
-				<h3>Ranks</h3>
-			</div>
-		</div>
-	</li>
+<div class="btn-toolbar">
+	<div class="btn-group">
+		<a href="<?php echo Uri::create('admin/ranks/index');?>" class="btn tooltip-top" title="<?php echo lang('ranks index', 1);?>"><i class="icon-chevron-left icon-75"></i></a>
+		<a href="<?php echo Uri::create('admin/ranks/manage/0');?>" class="btn tooltip-top" title="<?php echo lang('action.create rank', 1);?>"><i class="icon-plus icon-75"></i></a>
+	</div>
 
-	<li class="span6">
-		<div class="thumbnail">
-			<div class="caption">
-				<a href="<?php echo Uri::create('ranks/info');?>" class="btn pull-right"><i class="icon-chevron-right icon-50"></i></a>
-				<h3>Rank Info</h3>
-			</div>
-		</div>
-	</li>
+	<div class="btn-group">
+		<a href="<?php echo Uri::create('admin/ranks/info');?>" class="btn tooltip-top" title="<?php echo lang('action.edit rank info', 1);?>"><?php echo $images['info'];?></a>
+		<a href="<?php echo Uri::create('admin/ranks/groups');?>" class="btn tooltip-top" title="<?php echo lang('action.edit rank groups', 1);?>"><?php echo $images['groups'];?></a>
+	</div>
+</div>
+<br>
 
-	<li class="span6">
-		<div class="thumbnail">
-			<div class="caption">
-				<a href="<?php echo Uri::create('ranks/sets');?>" class="btn pull-right"><i class="icon-chevron-right icon-50"></i></a>
-				<h3>Rank Sets</h3>
-			</div>
-		</div>
-	</li>
+<?php if (count($groups) > 0): ?>
+	<div class="tabbable tabs-left">
+		<ul class="nav nav-tabs">
+		<?php foreach ($groups as $g): ?>
+			<li><a href="#group<?php echo $g->id;?>" data-toggle="tab"><?php echo $g->name;?></a></li>
+		<?php endforeach;?>
+		</ul>
 
-	<li class="span6">
-		<div class="thumbnail">
-			<div class="caption">
-				<a href="<?php echo Uri::create('catalog/ranks');?>" class="btn pull-right"><i class="icon-chevron-right icon-50"></i></a>
-				<h3 class="muted">Rank Catalog</h3>
+		<div class="tab-content">
+		<?php foreach ($groups as $g): ?>
+			<div id="group<?php echo $g->id;?>" class="tab-pane">
+				<?php if (count($g->ranks) > 0): ?>
+					<table class="table table-striped">
+						<tbody>
+						<?php foreach ($g->ranks as $r): ?>
+							<tr>
+								<td class="span3"><?php echo $r->info->name;?></td>
+								<td class="span3"><?php echo Location::rank($r->base, $r->pip);?></td>
+								<td class="span4"></td>
+								<td class="span2">
+									<div class="btn-toolbar">
+										<div class="btn-group">
+											<a href="<?php echo Uri::create('admin/ranks/manage/'.$r->id);?>" class="btn btn-mini tooltip-top" title="<?php echo lang('action.edit', 1);?>"><i class="icon-pencil icon-75"></i></a>
+										</div>
+
+										<?php if (Sentry::user()->has_access('rank.delete')): ?>
+											<div class="btn-group">
+												<a href="#" class="btn btn-danger btn-mini tooltip-top rank-action" title="<?php echo lang('action.delete', 1);?>" data-action="delete" data-id="<?php echo $r->id;?>"><i class="icon-remove icon-white icon-50"></i></a>
+											</div>
+										<?php endif;?>
+									</div>
+								</td>
+							</tr>
+						<?php endforeach;?>
+						</tbody>
+					</table>
+				<?php else: ?>
+					<p class="alert"><?php echo lang('[[error.not_found|ranks]]');?></p>
+				<?php endif;?>
 			</div>
+		<?php endforeach;?>
 		</div>
-	</li>
-</ul>
+	</div>
+<?php else: ?>
+	<p class="alert"><?php echo lang('[[error.not_found|rank groups]]');?></p>
+<?php endif;?>

@@ -81,6 +81,8 @@ return array(
 	'placeholder' => 'placeholder',
 	'position' => 'position',
 	'positions' => 'positions',
+	'pip' => 'pip',
+	'preview' => 'preview',
 
 	'row' => 'row',
 	'rows' => 'rows',

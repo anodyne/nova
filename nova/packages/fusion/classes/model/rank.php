@@ -22,7 +22,8 @@ class Model_Rank extends \Model {
 			'auto_increment' => true),
 		'info_id' => array(
 			'type' => 'int',
-			'constraint' => 11),
+			'constraint' => 11,
+			'null' => true),
 		'group_id' => array(
 			'type' => 'int',
 			'constraint' => 11),
@@ -53,6 +54,15 @@ class Model_Rank extends \Model {
 			'key_from' => 'group_id',
 			'cascade_save' => false,
 			'cascade_delete' => false,
+		),
+	);
+
+	/**
+	 * Observers
+	 */
+	protected static $_observers = array(
+		'\\Rank' => array(
+			'events' => array('before_delete', 'after_insert', 'after_update', 'before_save')
 		),
 	);
 

@@ -23,5 +23,14 @@ Ranks are grouped together into sets, providing an easy way to group ranks toget
 Just because there's a new rank format doesn't mean we're ignoring the old way of doing things. It's still possible to use single images (as we do for some of the genres). If you're creating a new rank set and want to use the old format, you can do so pretty easily so long as you follow a few simple rules:
 
 1. All rank images must be in the base folder without any sub-directory structure.
-2. All rank images must be named in the format of `color-grade.extension`.
+2. All rank images must be named in the format of `color-grade.extension`. The hyphen is __incredibly__ important. Make sure you use a hyphen (-) and not an underscore (\_).
 3. The color must be spelled out completely and must match the colors set up by the default rank set.
+
+## Mixing the Two Formats
+
+There will be situations where you want use an old rank format inside of the new rank format. You can do so without much work, but there are specific rules that __must__ be followed otherwise it won't work.
+
+1. Rank images must be in the `base` folder without any sub-directory structure.
+2. Rank images must be named in the format of `color_grade.extension`. The underscore is __incredibly__ important. Make sure you use an underscore (\_) and not a hyphen (-).
+3. Make sure you put the same images (with the same naming format) in all of your new format ranks.
+4. If you have old format rank sets as well, make sure you put the same images (with the same naming format) in the old format rank directories as well. 
