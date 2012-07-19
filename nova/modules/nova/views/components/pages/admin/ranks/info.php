@@ -2,7 +2,7 @@
 <div class="btn-toolbar">
 	<div class="btn-group">
 		<a href="<?php echo Uri::create('admin/ranks/index');?>" class="btn tooltip-top" title="<?php echo lang('ranks index', 1);?>"><i class="icon-chevron-left icon-75"></i></a>
-		<a href="#" class="btn tooltip-top rankinfo-action" title="<?php echo lang('action.create rank info', 2);?>" data-action="create" data-id="0"><i class="icon-plus icon-75"></i></a>
+		<a href="#" class="btn tooltip-top rankinfo-action" title="<?php echo lang('action.create rank info', 1);?>" data-action="create" data-id="0"><i class="icon-plus icon-75"></i></a>
 	</div>
 
 	<div class="btn-group">
@@ -44,4 +44,6 @@
 			</tbody>
 		</table><br>
 	<?php endforeach;?>
+<?php else: ?>
+	<p class="alert"><?php echo lang('[[error.not_found|rank info]]');?></p>
 <?php endif;?>
