@@ -272,7 +272,6 @@ class Controller_Upgradeajax extends \Controller
 					break;
 					
 					case 'use_mission_notes':
-					case 'use_sample_post':
 						$new = \Model_Settings::get_settings($s['setting_key'], false);
 						$new->value = (int) true;
 						$new->save();
@@ -296,6 +295,7 @@ class Controller_Upgradeajax extends \Controller
 					case 'list_logs_num':
 					case 'list_posts_num':
 					case 'show_news':
+					case 'use_sample_post':
 						// do nothing with these items
 					break;
 					
