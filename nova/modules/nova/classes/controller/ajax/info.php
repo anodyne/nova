@@ -40,7 +40,9 @@ class Controller_Ajax_Info extends Controller_Base_Ajax
 		$rank = \Model_Rank::find($rank);
 		
 		// set the output
-		$output = (count($rank) > 0) ? \Location::rank($rank->base, $rank->pip) : '';
+		$output = (count($rank) > 0) 
+			? \Location::rank($rank->base, $rank->pip, \Model_Catalog_Rank::get_default()->location) 
+			: '';
 		
 		echo $output;
 	}

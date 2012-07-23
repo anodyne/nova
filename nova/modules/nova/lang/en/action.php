@@ -14,6 +14,7 @@ return array(
 	'creation' => 'creation',
 	'confirm' => 'confirm',
 	'choose' => 'choose',
+	'change' => 'change',
 	
 	'delete' => 'delete',
 	'deleted' => 'deleted',

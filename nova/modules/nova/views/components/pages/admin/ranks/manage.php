@@ -9,6 +9,19 @@
 		<a href="<?php echo Uri::create('admin/ranks/info');?>" class="btn tooltip-top" title="<?php echo lang('action.edit rank info', 1);?>"><?php echo $images['info'];?></a>
 		<a href="<?php echo Uri::create('admin/ranks/groups');?>" class="btn tooltip-top" title="<?php echo lang('action.edit rank groups', 1);?>"><?php echo $images['groups'];?></a>
 	</div>
+
+	<div class="btn-group pull-right">
+		<form method="post">
+			<input type="hidden" name="action" value="changeSet">
+			<div class="control-group">
+				<div class="controls">
+					<div class="input-prepend input-append">
+						<span class="add-on font-small"><?php echo lang('action.change rank set', 2);?></span><?php echo Form::select('changeSet', $default, $sets);?><button type="submit" class="btn"><?php echo lang('action.submit', 1);?></button>
+					</div>
+				</div>
+			</div>
+		</form>
+	</div>
 </div>
 <br>
 
@@ -29,7 +42,7 @@
 						<?php foreach ($g->ranks as $r): ?>
 							<tr>
 								<td class="span3"><?php echo $r->info->name;?></td>
-								<td class="span3"><?php echo Location::rank($r->base, $r->pip);?></td>
+								<td class="span3"><?php echo Location::rank($r->base, $r->pip, $default);?></td>
 								<td class="span4"></td>
 								<td class="span2">
 									<div class="btn-toolbar">

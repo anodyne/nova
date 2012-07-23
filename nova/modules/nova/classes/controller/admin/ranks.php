@@ -362,8 +362,8 @@ class Controller_Admin_Ranks extends Controller_Base_Admin
 	}
 
 	/**
-	 * @todo	should we move some of the rank image stuff into its own class?
-	 * @todo	how should we handle the multiple rank sets stuff in management?
+	 * Shows all of the ranks as well as options to create, edit,
+	 * and delete a rank item.
 	 */
 	public function action_manage($id = false)
 	{
@@ -371,6 +371,9 @@ class Controller_Admin_Ranks extends Controller_Base_Admin
 
 		$this->_view = 'admin/ranks/manage';
 		$this->_js_view = 'admin/ranks/manage_js';
+
+		// get the default rank
+		$default = \Model_Settings::get_settings('display_rank');
 
 		if (\Input::method() == 'POST')
 		{
@@ -450,10 +453,15 @@ class Controller_Admin_Ranks extends Controller_Base_Admin
 					);
 				}
 			}
-		}
 
-		// get the default rank
-		$default = \Model_Settings::get_settings('display_rank');
+			/**
+			 * Change the rank set.
+			 */
+			if ($action == 'changeSet')
+			{
+				$default = trim(\Security::xss_clean(\Input::post('changeSet')));
+			}
+		}
 
 		// set the path to the rank images
 		$rankPath = $this->_js_data->rankPath = "app/assets/common/$this->genre/ranks/$default/";
@@ -605,10 +613,27 @@ class Controller_Admin_Ranks extends Controller_Base_Admin
 			}
 
 			// set the rank preview
-			$this->_data->rankPreview = ($rank) ? \Location::rank($rank->base, $rank->pip) : false;
+			$this->_data->rankPreview = ($rank) ? \Location::rank($rank->base, $rank->pip, $default) : false;
 		}
 		else
 		{
+			// get all the rank sets
+			$sets = \Model_Catalog_Rank::find('all');
+
+			if (count($sets) > 0)
+			{
+				foreach ($sets as $s)
+				{
+					if ($s->status == 'active')
+					{
+						$this->_data->sets[$s->location] = $s->name;
+					}
+				}
+			}
+
+			// pass the default along
+			$this->_data->default = $default;
+
 			// get all the rank groups
 			$this->_data->groups = \Model_Rank_Group::find_items();
 

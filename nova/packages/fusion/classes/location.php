@@ -147,21 +147,24 @@ class Location
 	 * entirely outside of the Nova core.
 	 *
 	 * <code>
-	 * Location::rank('red', 'o6');
+	 * Location::rank('red', 'o6', 'default');
 	 * </code>
 	 *
 	 * @api
 	 * @param	string	the name of the base image
 	 * @param	string	the name of the pip image
+	 * @param	string	the location of the rank set
 	 * @return	string
 	 */
-	public static function rank($base, $pip)
+	public static function rank($base, $pip, $location = false)
 	{
 		// get the genre
 		$genre = \Config::get('nova.genre');
 
 		// get the rank catalog object
-		$catalog = \Model_Catalog_Rank::get_item(\Utility::get_rank());
+		$catalog = ( ! $location)
+			? \Model_Catalog_Rank::get_item(\Utility::get_rank())
+			: \Model_Catalog_Rank::get_item($location);
 
 		if (is_dir(APPPATH."assets/common/$genre/ranks/".$catalog->location."/base") 
 				and is_dir(APPPATH."assets/common/$genre/ranks/".$catalog->location."/pips"))
