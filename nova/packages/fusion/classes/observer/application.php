@@ -1,8 +1,8 @@
 <?php
 /**
- * The form field observer acts on the form field model at given times to ensure
- * additional work on on other fields, data, values, sections, and tabs happens
- * as it should.
+ * The application observer is a crucial component in the Application Review
+ * Center (ARC) feature. When an application is created, the review process is
+ * automatically kicked off from here.
  *
  * @package		Nova
  * @subpackage	Fusion
@@ -16,8 +16,9 @@ namespace Fusion;
 class Observer_Application extends \Orm\Observer
 {
 	/**
-	 * When an application is created, we need to kick off the
-	 * the review process.
+	 * When an application is created, we need to kick off the the review
+	 * process by adding the decision makers and then going through all of the
+	 * active rules to dynamically add reviewers to the application.
 	 *
 	 * @internal
 	 * @param	Model	the model being acted on
@@ -28,27 +29,41 @@ class Observer_Application extends \Orm\Observer
 		/**
 		 * System Event
 		 */
-		//\SystemEvent::add('user', '[[event.admin.form.field_create|{{'.$model->label.'}}|{{'.$model->form_key.'}}]]');
+		\SystemEvent::add('user', '[[event.main.join.application|{{'.$model->user_name.'}}|position|{{'.$model->position->name.'}}|character|{{'.$model->character_name.'}}]]');
 
-		// add the decision makers to the review
+		// start the array for who will get emailed
+		$emailUsers = array();
 
 		/**
-		 * This is one of the trickier situations in Nova 3 with the new access system
-		 * and taking role inheritance into account. First, we have to find the specific
-		 * task, then we have to find out what roles that task belongs to, then check to
-		 * see if those roles are inherited anywhere. Finally, we have to find anyone who
-		 * has the roles identified. Easy to write out, tough to build and do so efficiently
-		 * and in a reusable way.
+		 * Add the decision makers to the review.
+		 *
+		 * A decision maker is anyone who has a role with the character
+		 * component level 2 create action task (character.create.2).
 		 */
+		// get the decision makers
+		$decisionMakers = \Sentry::users_with_access('character.create.2');
 
+		// add the decision makers to the review
+		foreach ($decisionMakers as $dm)
+		{
+			// add the reviewer record
+			\Model_Application_Reviewer::create_item(array(
+				'app_id' => $model->id,
+				'user_id' => $dm->id
+			));
+
+			// add the user to the email array
+			$emailUsers[$dm->id] = $dm->email;
+		}
+
+		/**
+		 * Add reviewers to an application based on the rules.
+		 */
 		// get all the active application rules
 		$rules = \Model_Application_Rule::get_items();
 
 		if (count($rules) > 0)
 		{
-			// start the array for emailing users
-			$emailUsers = array();
-
 			// loop through the rules
 			foreach ($rules as $r)
 			{

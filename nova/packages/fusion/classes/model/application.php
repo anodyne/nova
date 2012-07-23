@@ -97,11 +97,18 @@ class Model_Application extends \Model {
 			'cascade_save' => false,
 			'cascade_delete' => false,
 		),
+		'user' => array(
+			'model_to' => '\\Model_User',
+			'key_to' => 'id',
+			'key_from' => 'user_id',
+			'cascade_save' => false,
+			'cascade_delete' => false,
+		),
 	);
 
 	protected static $_has_many = array(
 		'reviewers' => array(
-			'model_to' => '\\Model_Application_Rule',
+			'model_to' => '\\Model_Application_Reviewer',
 			'key_to' => 'app_id',
 			'key_from' => 'id',
 			'cascade_save' => false,

@@ -104,6 +104,13 @@ class Model_User extends \Model {
 			'cascade_save' => false,
 			'cascade_delete' => false,
 		),
+		'app' => array(
+			'key_from' => 'id',
+			'model_to' => '\\Model_Application',
+			'key_to' => 'user_id',
+			'cascade_save' => false,
+			'cascade_delete' => false,
+		),
 	);
 	
 	public static $_has_many = array(

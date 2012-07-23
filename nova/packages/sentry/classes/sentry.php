@@ -686,4 +686,45 @@ class Sentry
 
 		return false;
 	}
+
+	/**
+	 * Get a complete list of users that have access to a specific task.
+	 *
+	 * @api
+	 * @param	string	a period-delimited string for an access task (component.action.level)
+	 * @return	array
+	 */
+	public static function users_with_access($value)
+	{
+		// get the task
+		$task = \Model_Access_Task::find_item($value);
+
+		// get any role that DIRECTLY has this task
+		$direct = $task->roles;
+
+		// get any role that INDIRECTLY has this task
+		$indirect = \Model_Access_Role::find()
+			->or_where('inherits', 'LIKE', "%,$task->id,%")
+			->or_where('inherits', 'LIKE', "$task->id,%")
+			->or_where('inherits', 'LIKE', "%,$task->id")
+			->get();
+
+		// merge the two arrays
+		$roles = array_merge($direct, $indirect);
+
+		// start the users array
+		$users = array();
+
+		// loop through each role
+		foreach ($roles as $r)
+		{
+			// now loop through the role's users
+			foreach ($r->users as $u)
+			{
+				$users[$u->id] = $u;
+			}
+		}
+
+		return $users;
+	}
 }

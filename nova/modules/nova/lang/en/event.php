@@ -36,6 +36,12 @@ return array(
 		'suspended' => "User is currently suspended for too many log in attempts",
 	),
 
+	'main' => array(
+		'join' => array(
+			'application' => ":0 applied for the :1 :2 with the :3 :4",
+		),
+	),
+
 	'setup' => array(
 		'installed' => "System installed with version :0",
 		'updated' => "System was updated to :0",
