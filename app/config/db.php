@@ -12,7 +12,7 @@ return array(
 	 * Base config, just need to set the DSN, username and password in env. config.
 	 */
 	'default' => array(
-		'type'        => 'mysql',
+		'type'        => 'mysqli',
 		'connection'  => array(
 			'persistent' => false,
 		),
