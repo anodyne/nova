@@ -28,6 +28,7 @@ return array(
 	'join' => array(
 		'user_info' => ":0 information (including :1 and :2) is only viewable by members of the :3 when they are logged in to the site. None of your information can be seen by visitors to the site or anyone who is not logged in.",
 		'user_found' => "Your :0 record was found. If you're trying to apply with a new :1, you can continue to the :1 section. If you're trying to re-activate an existing :1, please contact the :2.",
+		'user_form_reset' => 'Made a mistake? <a href="#" id="userFormReset">Reset the :0 form</a>.',
 		'welcome_back' => "welcome back!",
 	),
 

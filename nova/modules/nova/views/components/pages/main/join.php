@@ -18,6 +18,10 @@ if ( ! function_exists('joinData'))
 		<li class="active"><a href="#user" data-toggle="pill"><?php echo lang('user info', 2);?></a></li>
 		<li><a href="#characterInfo" data-toggle="pill"><?php echo lang('character info', 2);?></a></li>
 		<li><a href="#characterForm" data-toggle="pill"><?php echo lang('character bio', 2);?></a></li>
+		
+		<?php if ( ! empty($samplePostContent)): ?>
+			<li><a href="#samplePost" data-toggle="pill"><?php echo lang('sample_post', 2);?></a></li>
+		<?php endif;?>
 	</ul>
 
 	<div class="pill-content">
@@ -27,13 +31,14 @@ if ( ! function_exists('joinData'))
 				<p><?php echo lang('[[short.join.user_info|user|name|email_address|sim]]', 1);?></p>
 			</div>
 
+			<div class="alert alert-info alert-block hide" id="welcomeBack">
+				<h4><?php echo lang('short.join.welcome_back', 2);?></h4>
+				<p><?php echo lang('[[short.join.user_found|user|character|game_master]]');?></p>
+				<p><?php echo lang('[[short.join.user_form_reset|user]]');?></p>
+			</div>
+
 			<div class="row">
 				<div id="userInfo" class="span6">
-					<div class="alert alert-info alert-block hide" id="welcomeBack">
-						<h4><?php echo lang('short.join.welcome_back', 2);?></h4>
-						<p><?php echo lang('[[short.join.user_found|user|character|game_master]]');?></p>
-					</div>
-
 					<div class="control-group">
 						<label class="control-label"><?php echo lang('email_address', 2);?></label>
 						<div class="controls">
@@ -132,7 +137,8 @@ if ( ! function_exists('joinData'))
 					<div class="control-group">
 						<label class="control-label"><?php echo lang('position', 1);?></label>
 						<div class="controls">
-							<?php echo NovaForm::position('position', array(), array('class' => 'span4'));?>
+							<?php echo NovaForm::position('position', array(), array('class' => 'span4', 'id' => 'positionDrop'), 'open');?>
+							<p id="positionDesc" class="help-block"></p>
 						</div>
 					</div>
 				</div>
@@ -142,6 +148,17 @@ if ( ! function_exists('joinData'))
 		</div>
 
 		<div id="characterForm" class="pill-pane"><?php echo $character;?></div>
+
+		<?php if ( ! empty($samplePostContent)): ?>
+			<div id="samplePost" class="pill-pane">
+				<div class="control-group">
+					<label class="control-label"><?php echo $samplePostContent;?></label>
+					<div class="controls">
+						<textarea name="app[sample_post]" rows="15" class="span12"></textarea>
+					</div>
+				</div>
+			</div>
+		<?php endif;?>
 	</div>
 
 	<div class="controls">

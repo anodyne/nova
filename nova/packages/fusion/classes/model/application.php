@@ -45,7 +45,7 @@ class Model_Application extends \Model {
 		'character_name' => array(
 			'type' => 'text',
 			'null' => true),
-		'position' => array(
+		'position_id' => array(
 			'type' => 'string',
 			'constraint' => 255,
 			'null' => true),
@@ -54,6 +54,19 @@ class Model_Application extends \Model {
 			'constraint' => 100,
 			'null' => true),
 		'message' => array(
+			'type' => 'text',
+			'null' => true),
+		'experience' => array(
+			'type' => 'text',
+			'null' => true),
+		'hear_about' => array(
+			'type' => 'string',
+			'constraint' => 50,
+			'null' => true),
+		'hear_about_detail' => array(
+			'type' => 'text',
+			'null' => true),
+		'sample_post' => array(
 			'type' => 'text',
 			'null' => true),
 		'created_at' => array(
@@ -69,11 +82,28 @@ class Model_Application extends \Model {
 	/**
 	 * Relationships
 	 */
-	public static $_belongs_to = array(
+	protected static $_belongs_to = array(
 		'character' => array(
 			'model_to' => '\\Model_Character',
 			'key_to' => 'id',
 			'key_from' => 'character_id',
+			'cascade_save' => false,
+			'cascade_delete' => false,
+		),
+		'position' => array(
+			'model_to' => '\\Model_Position',
+			'key_to' => 'id',
+			'key_from' => 'position_id',
+			'cascade_save' => false,
+			'cascade_delete' => false,
+		),
+	);
+
+	protected static $_has_many = array(
+		'reviewers' => array(
+			'model_to' => '\\Model_Application_Rule',
+			'key_to' => 'app_id',
+			'key_from' => 'id',
 			'cascade_save' => false,
 			'cascade_delete' => false,
 		),

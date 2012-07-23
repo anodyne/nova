@@ -48,7 +48,10 @@ class Model_Position extends \Model {
 			'default' => 'officer'),
 	);
 	
-	public static $_belongs_to = array(
+	/**
+	 * Relationships
+	 */
+	protected static $_belongs_to = array(
 		'dept' => array(
 			'model_to' => '\\Model_Department',
 			'key_to' => 'id',
@@ -58,7 +61,17 @@ class Model_Position extends \Model {
 		),
 	);
 
-	public static $_many_many = array(
+	protected static $_has_many = array(
+		'applicants' => array(
+			'model_to' => '\\Model_Application',
+			'key_to' => 'position_id',
+			'key_from' => 'id',
+			'cascade_save' => false,
+			'cascade_delete' => false,
+		),
+	);
+
+	protected static $_many_many = array(
 		'characters' => array(
 			'key_from' => 'id',
 			'key_through_from' => 'position_id',

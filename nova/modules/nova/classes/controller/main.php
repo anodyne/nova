@@ -88,8 +88,10 @@ abstract class Controller_Main extends Controller_Base_Main
 					'user_name' => $user->name,
 					'character_id' => $char->id,
 					'character_name' => $char->name(false, false),
-					'position' => \Model_Position::find(\Input::post('position'))->name,
+					'position_id' => trim(\Security::xss_clean(\Input::post('position'))),
 				));
+
+				//\Debug::dump($appData, \Input::post('app'));
 
 				// create the application
 				\Model_Application::create_item($appData);
@@ -134,6 +136,9 @@ abstract class Controller_Main extends Controller_Base_Main
 
 			// set the character join help
 			$this->_data->characterJoinHelp = \Markdown::parse(\Model_SiteContent::get_content('join_character_help'));
+
+			// get the sample post content
+			$this->_data->samplePostContent = \Markdown::parse(\Model_SiteContent::get_content('join_sample_post'));
 		}
 		else
 		{
@@ -205,7 +210,7 @@ abstract class Controller_Main extends Controller_Base_Main
 
 	public function action_test()
 	{
-		$groups = \Model_Rank_Group::find('all');
+		/*$groups = \Model_Rank_Group::find('all');
 
 		foreach ($groups as $g)
 		{
@@ -220,7 +225,22 @@ abstract class Controller_Main extends Controller_Base_Main
 			}
 
 			echo '</table></div>';
-		}
+		}*/
+
+		$originalData = array('position' => array(2), 'user' => array(22, 91, 31));
+
+		$dataAsJson = \Format::forge($originalData)->to_json();
+
+		$dataAsArray = \Format::forge($dataAsJson, 'json')->to_array();
+
+		$dataAsObj = json_decode($dataAsJson);
+
+		\Debug::dump(
+			$originalData,
+			$dataAsJson,
+			$dataAsArray,
+			$dataAsObj
+		);
 		
 		return;
 	}

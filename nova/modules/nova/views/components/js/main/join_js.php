@@ -7,7 +7,7 @@
 	});
 	
 	// show the additional details field after where did you hear about us
-	$(document).on('change', '#hearAbout', function(){
+	$('#hearAbout').on('change', function(){
 
 		var selected = $('#hearAbout option:selected').val();
 
@@ -25,7 +25,7 @@
 	});
 
 	// check the email address entered to see if it exists
-	$(document).on('change', '#emailField', function(){
+	$('#emailField').on('change', function(){
 
 		$.ajax({
 			type: 'POST',
@@ -36,61 +36,99 @@
 				
 				if ( ! $.isEmptyObject(data))
 				{
-					// push the user's name into the name field and make it read only
-					$('[name="user[name]"]').val(data.name);
-
 					// change the user exists field
 					$('[name="user[exists]"]').val(data.id);
 
-					// hide the password field
-					$('[name="user[password]"]').closest('div.control-group').fadeOut();
+					// hide the user info
+					$('#userInfo').hide();
 
-					// hide the confirm password field
-					$('[name="user[confirm_password]"]').closest('div.control-group').fadeOut();
+					// hide the user form
+					$('#userForm').hide();
 
 					// show the alert block with instructions
 					$('#welcomeBack').fadeIn();
-
-					// go get the updated user form now
-					$.ajax({
-						type: 'POST',
-						url: "<?php echo Uri::create('ajax/get/user_form');?>",
-						data: { 'skin': '<?php echo $skin;?>', 'user': data.id },
-						dataType: 'html',
-						success: function(form){
-							$('#userForm').empty().html(form);
-						}
-					});
 				}
 				else
 				{
-					// clear any user name from the field and make sure it's editable
-					$('[name="user[name]"]').val('');
-
 					// change the user exists field
-					$('[name="user[id]"]').val('0');
+					$('[name="user[exists]"]').val(0);
 
-					// show the password field
-					$('[name="user[password]"]').closest('div.control-group').fadeIn();
+					// show the user info
+					$('#userInfo').show();
 
-					// show the confirm password field
-					$('[name="user[confirm_password]"]').closest('div.control-group').fadeIn();
+					// show the user form
+					$('#userForm').show();
 
 					// hide the alert block with instructions
 					$('#welcomeBack').fadeOut();
-
-					// reset the user form now
-					$.ajax({
-						type: 'POST',
-						url: "<?php echo Uri::create('ajax/get/user_form');?>",
-						data: { 'skin': '<?php echo $skin;?>', 'user': 0 },
-						dataType: 'html',
-						success: function(form){
-							$('#userForm').empty().html(form);
-						}
-					});
 				}
 			}
 		});
+	});
+
+	// reset the user form
+	$('#userFormReset').on('click', function(){
+
+		$.ajax({
+			type: 'POST',
+			url: "<?php echo Uri::create('ajax/get/user_form');?>",
+			data: {
+				'user': 0,
+				'skin': '<?php echo $skin;?>'
+			},
+			dataType: 'json',
+			success: function(data){
+
+				// reset the user form
+				$('#userForm').empty().html(data);
+			}
+		});
+
+		// clear the email field
+		$('[name="user[email]"]').val('');
+
+		// clear the name field
+		$('[name="user[name]"]').val('');
+
+		// clear the password field
+		$('[name="user[password]"]').val('');
+
+		// clear the confirm password field
+		$('[name="user[confirm_password]"]').val('');
+
+		// clear the simming experience field
+		$('[name="app[experience]"]').val('');
+
+		// clear the heard about us field
+		$('[name="app[hear_about]"]').val('');
+
+		// clear the heard about us detail field
+		$('[name="app[hear_about_detail]"]').val('');
+
+		// hide the alert block with instructions
+		$('#welcomeBack').hide();
+
+		// show the user info
+		$('#userInfo').show();
+
+		// show the user form
+		$('#userForm').show();
+
+		return false;
+	});
+
+	$('#positionDrop').on('change', function(){
+		
+		$.ajax({
+			type: "POST",
+			url: "<?php echo Uri::create('ajax/info/position_desc');?>",
+			data: { position: $('#positionDrop option:selected').val() },
+			success: function(data){
+				$('#positionDesc').html('');
+				$('#positionDesc').append(data);
+			}
+		});
+		
+		return false;
 	});
 </script>

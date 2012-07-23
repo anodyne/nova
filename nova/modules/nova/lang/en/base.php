@@ -101,6 +101,7 @@ return array(
 	'set' => 'set',
 	'sets' => 'sets',
 	'short_name' => 'short name',
+	'sample_post' => 'sample post',
 
 	'tab' => "tab",
 	'tabs' => "tabs",
