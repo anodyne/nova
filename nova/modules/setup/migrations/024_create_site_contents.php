@@ -367,9 +367,9 @@ class Create_site_contents
 				'content' => "Members are expected to follow the rules and regulations of both the sim and fleet at all times, both in character and out of character. By continuing, you affirm that you will sim in a proper and adequate manner. Members who choose to make ultra short posts, post very infrequently, or post posts with explicit content (above PG-13) will be removed immediately, and by continuing, you agree to this. In addition, in compliance with the Children's Online Privacy Protection Act of 1998 (COPPA), we do not accept players under the age of 13.  Any players found to be under the age of 13 will be immediately removed without question.  By agreeing to these terms, you are also saying that you are above the age of 13.",
 				'type' => 'other'),
 			array(
-				'key' => 'join_post',
+				'key' => 'join_sample_post',
 				'label' => 'Join Sample Post',
-				'content' => "Define your join sample post through the Site Content page.",
+				'content' => "Define your join sample post through the Site Content page. If you don't want to use a sample post, simply leave this blank.",
 				'type' => 'other'),
 			array(
 				'key' => 'accept_message',

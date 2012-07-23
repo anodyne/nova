@@ -89,10 +89,6 @@ class Create_settings
 				'help' => "Posts can be counted in two ways: one post no matter how many authors (single) or a post for each author (multiple)",
 				'user_created' => (int) false),
 			array(
-				'key' => 'use_sample_post',
-				'value' => 'y',
-				'user_created' => (int) false),
-			array(
 				'key' => 'use_mission_notes',
 				'value' => 'y',
 				'user_created' => (int) false),

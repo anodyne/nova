@@ -14,12 +14,13 @@ class Create_applications
 			'user_name' => array('type' => 'VARCHAR', 'constraint' => 255, 'null' => true),
 			'character_id' => array('type' => 'INT', 'constraint' => 11),
 			'character_name' => array('type' => 'TEXT', 'null' => true),
-			'position' => array('type' => 'VARCHAR', 'constraint' => 255, 'null' => true),
+			'position_id' => array('type' => 'INT', 'constraint' => 11),
 			'action' => array('type' => 'VARCHAR', 'constraint' => 100, 'null' => true),
 			'message' => array('type' => 'TEXT', 'null' => true),
 			'experience' => array('type' => 'TEXT', 'null' => true),
 			'hear_about' => array('type' => 'VARCHAR', 'constraint' => 50, 'null' => true),
-			'hear_about_details' => array('type' => 'TEXT', 'null' => true),
+			'hear_about_detail' => array('type' => 'TEXT', 'null' => true),
+			'sample_post' => array('type' => 'TEXT', 'null' => true),
 			'created_at' => array('type' => 'BIGINT', 'constraint' => 20, 'null' => true),
 			'updated_at' => array('type' => 'BIGINT', 'constraint' => 20, 'null' => true),
 		), array('id'));
@@ -43,7 +44,19 @@ class Create_applications
 			'type' => array('type' => 'VARCHAR', 'constraint' => 50, 'default' => 'all'),
 			'condition' => array('type' => 'TEXT', 'null' => true),
 			'users' => array('type' => 'TEXT', 'null' => true),
+			'status' => array('type' => 'TINYINT', 'constraint' => 1, 'default' => 1),
 		), array('id'));
+
+		$rules = array(
+			array(
+				'type' => 'all',
+				'users' => '{"position":[2]}'),
+		);
+
+		foreach ($rules as $r)
+		{
+			\Model_Application_Rule::create_item($r);
+		}
 	}
 
 	public function down()
