@@ -50,7 +50,7 @@ class Model_Department extends \Model {
 	);
 	
 	public static $_belongs_to = array(
-		'dept' => array(
+		'manifest' => array(
 			'model_to' => '\\Model_Manifest',
 			'key_to' => 'id',
 			'key_from' => 'manifest_id',

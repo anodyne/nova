@@ -117,6 +117,43 @@ class NovaForm
 	 * @param	string	the name of the select menu
 	 * @param	array 	an array of selected items
 	 * @param	array	any extra attributes to be added to the select menu
+	 * @return	string	a select menu output from Form::select
+	 */
+	public static function department($name, $selected = array(), $extra = null)
+	{
+		// grab the departments
+		$depts = \Model_Department::find('all');
+
+		if (count($depts) > 0)
+		{
+			$options[0] = '';
+			
+			$valid = false;
+			
+			foreach ($depts as $d)
+			{
+				$options[$d->manifest->name][$d->id] = $d->name;
+			}
+
+			return \Form::select($name, $selected, $options, (array) $extra);
+		}
+		
+		return false;
+	}
+
+	/**
+	 * Builds a select menu that includes all of the positions from
+	 * the database based on the parameters passed to the method.
+	 *
+	 * <code>
+	 * echo NovaForm::position('positions', 8, array('id' => 'positions', 'open'));
+	 * </code>
+	 *
+	 * @api
+	 * @uses	Form::select
+	 * @param	string	the name of the select menu
+	 * @param	array 	an array of selected items
+	 * @param	array	any extra attributes to be added to the select menu
 	 * @param	string	which positions to pull (all, open, or a department ID)
 	 * @param	string	whether to pull displayed positions or not (y,n)
 	 * @param	string	the department type to pull
@@ -194,6 +231,41 @@ class NovaForm
 				{
 					$options[$g->name][$r->id] = $r->info->name;
 				}
+			}
+
+			return \Form::select($name, $selected, $options, (array) $extra);
+		}
+		
+		return false;
+	}
+
+	/**
+	 * Builds a select menu that includes all of the positions from
+	 * the database based on the parameters passed to the method.
+	 *
+	 * <code>
+	 * echo NovaForm::position('positions', 8, array('id' => 'positions', 'open'));
+	 * </code>
+	 *
+	 * @api
+	 * @uses	Form::select
+	 * @param	string	the name of the select menu
+	 * @param	array 	an array of selected items
+	 * @param	array	any extra attributes to be added to the select menu
+	 * @return	string	a select menu output from Form::select
+	 */
+	public static function users($name, $selected = array(), $extra = null, $status = 'active')
+	{
+		// get the users
+		$users = ( ! empty($status)) ? \Model_User::get_users($status) : \Model_User::find('all');
+		
+		if (count($users) > 0)
+		{
+			$options[0] = '';
+			
+			foreach ($users as $u)
+			{
+				$options[$u->id] = $u->name;
 			}
 
 			return \Form::select($name, $selected, $options, (array) $extra);

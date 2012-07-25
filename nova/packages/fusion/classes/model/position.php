@@ -85,6 +85,15 @@ class Model_Position extends \Model {
 	);
 
 	/**
+	 * Observers
+	 */
+	protected static $_observers = array(
+		'\\Position' => array(
+			'events' => array('before_delete', 'after_insert', 'after_update')
+		),
+	);
+
+	/**
 	 * Since the table name is appended with the genre, we can't hard-code
 	 * it in to the model. The _init method is necessary since PHP won't
 	 * allow creating an object project that's dynamic. This method changes

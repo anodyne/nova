@@ -107,6 +107,7 @@ Autoloader::add_classes(array(
 	 */
 	'Fusion\\Observer_Application'			=> __DIR__.'/classes/observer/application.php',
 	'Fusion\\Observer_Character'			=> __DIR__.'/classes/observer/character.php',
+	'Fusion\\Observer_Position'				=> __DIR__.'/classes/observer/position.php',
 	'Fusion\\Observer_User'					=> __DIR__.'/classes/observer/user.php',
 	
 	'Fusion\\Observer_Form_Field'			=> __DIR__.'/classes/observer/form/field.php',
