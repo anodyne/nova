@@ -160,7 +160,12 @@ class Sentry_User implements Iterator, ArrayAccess
 			// loop through the primary role's tasks and add them
 			foreach ($role->tasks as $task)
 			{
-				$roles[$task->component][$task->action] = (int) $task->level;
+				if ((isset($roles[$task->component][$task->action]) 
+						and $roles[$task->component][$task->action] < (int) $task->level)
+						or ! isset($roles[$task->component][$task->action]))
+				{
+					$roles[$task->component][$task->action] = (int) $task->level;
+				}
 			}
 			
 			// get an array of inherited roles
@@ -178,7 +183,12 @@ class Sentry_User implements Iterator, ArrayAccess
 					// loop through the role's tasks and add them
 					foreach ($r->tasks as $t)
 					{
-						$roles[$t->component][$t->action] = (int) $t->level;
+						if ((isset($roles[$t->component][$t->action]) 
+								and $roles[$t->component][$t->action] < (int) $t->level)
+								or ! isset($roles[$t->component][$t->action]))
+						{
+							$roles[$t->component][$t->action] = (int) $t->level;
+						}
 					}
 				}
 			}
