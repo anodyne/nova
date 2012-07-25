@@ -15,6 +15,15 @@ class Create_manifests
 			'display' => array('type' => 'TINYINT', 'constraint' => 1, 'default' => 1),
 			'default' => array('type' => 'TINYINT', 'constraint' => 1, 'default' => 0),
 		), array('id'));
+
+		$data = array(
+			array(
+				'name' => 'Primary Manifest',
+				'order' => 0,
+				'desc' => "",
+				'header_content' => "You can edit the header content of this manifest from Manifest Management...",
+				'default' => 1),
+		);
 	}
 
 	public function down()

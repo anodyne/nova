@@ -383,7 +383,7 @@ class Create_navigation
 				'name' => 'Ranks',
 				'group' => 1,
 				'order' => 0,
-				'url' => 'admin/ranks/index',
+				'url' => 'admin/rank/index',
 				'type' => 'adminsub',
 				'category' => 'manage',
 				'access' => 'rank|read|0'),

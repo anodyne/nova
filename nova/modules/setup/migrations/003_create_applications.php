@@ -8,15 +8,11 @@ class Create_applications
 	{
 		\DBUtil::create_table('applications', array(
 			'id' => array('type' => 'INT', 'constraint' => 11, 'auto_increment' => true),
-			'email' => array('type' => 'VARCHAR', 'constraint' => 255, 'null' => true),
-			'ip_address' => array('type' => 'VARCHAR', 'constraint' => 16, 'null' => true),
 			'user_id' => array('type' => 'INT', 'constraint' => 11),
-			'user_name' => array('type' => 'VARCHAR', 'constraint' => 255, 'null' => true),
 			'character_id' => array('type' => 'INT', 'constraint' => 11),
-			'character_name' => array('type' => 'TEXT', 'null' => true),
 			'position_id' => array('type' => 'INT', 'constraint' => 11),
-			'action' => array('type' => 'VARCHAR', 'constraint' => 100, 'null' => true),
-			'message' => array('type' => 'TEXT', 'null' => true),
+			'status' => array('type' => 'TINYINT', 'constraint' => 1, 'default' => 1),
+			'response' => array('type' => 'TEXT', 'null' => true),
 			'experience' => array('type' => 'TEXT', 'null' => true),
 			'hear_about' => array('type' => 'VARCHAR', 'constraint' => 50, 'null' => true),
 			'hear_about_detail' => array('type' => 'TEXT', 'null' => true),
@@ -41,7 +37,7 @@ class Create_applications
 
 		\DBUtil::create_table('application_rules', array(
 			'id' => array('type' => 'INT', 'constraint' => 11, 'auto_increment' => true),
-			'type' => array('type' => 'VARCHAR', 'constraint' => 50, 'default' => 'all'),
+			'type' => array('type' => 'VARCHAR', 'constraint' => 50, 'default' => 'global'),
 			'condition' => array('type' => 'TEXT', 'null' => true),
 			'users' => array('type' => 'TEXT', 'null' => true),
 			'status' => array('type' => 'TINYINT', 'constraint' => 1, 'default' => 1),
@@ -49,7 +45,7 @@ class Create_applications
 
 		$rules = array(
 			array(
-				'type' => 'all',
+				'type' => 'global',
 				'users' => '{"position":[2]}'),
 		);
 
