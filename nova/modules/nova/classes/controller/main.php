@@ -226,8 +226,9 @@ abstract class Controller_Main extends Controller_Base_Main
 
 			echo '</table></div>';
 		}*/
-
-		$originalData = array('position' => array(2), 'user' => array(22, 91, 31));
+		/*
+		//$originalData = array('position' => array(2), 'user' => array(22, 91, 31));
+		$originalData = array('position' => array(2));
 
 		$dataAsJson = \Format::forge($originalData)->to_json();
 
@@ -239,8 +240,16 @@ abstract class Controller_Main extends Controller_Base_Main
 			$originalData,
 			$dataAsJson,
 			$dataAsArray,
-			$dataAsObj
-		);
+			$dataAsObj,
+			$dataAsObj->position[0]
+		);*/
+		
+		echo '<div class="container"><br><br>';
+		echo '<div class="btn-group">';
+		//echo '<span class="btn tooltip-top" title="No Decision"><i class="icon-minus icon-50"></i></span>';
+		echo '<span class="btn tooltip-top" title="Yay"><i class="icon-thumbs-up icon-50"></i></span>';
+		echo '<span class="btn tooltip-top" title="Nay"><i class="icon-thumbs-down icon-50"></i></span>';
+		echo '</div></div>';
 		
 		return;
 	}
