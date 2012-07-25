@@ -16,7 +16,7 @@ if ( ! function_exists('rankData'))
 if (is_numeric(Uri::segment(4))): ?>
 	<br>
 	<div class="btn-group">
-		<a href="<?php echo Uri::create('admin/ranks/manage');?>" class="btn tooltip-top" title="<?php echo lang('action.back to ranks', 1);?>"><i class="icon-chevron-left icon-75"></i></a>
+		<a href="<?php echo Uri::create('admin/rank/manage');?>" class="btn tooltip-top" title="<?php echo lang('action.back to ranks', 1);?>"><i class="icon-chevron-left icon-75"></i></a>
 	</div>
 	<br>
 <?php endif;?>
@@ -28,7 +28,7 @@ if (is_numeric(Uri::segment(4))): ?>
 				<label class="control-label"><?php echo lang('rank info', 2);?></label>
 				<div class="controls">
 					<div class="input-append">
-						<?php echo Form::select('info_id', rankData($rank, 'info_id', 0), $infos, array('class' => 'span4'));?><a href="<?php echo Uri::create('admin/ranks/info');?>" class="btn tooltip-top" title="<?php echo lang('action.edit rank info', 1);?>"><i class="icon-pencil icon-75"></i></a>
+						<?php echo Form::select('info_id', rankData($rank, 'info_id', 0), $infos, array('class' => 'span4'));?><a href="<?php echo Uri::create('admin/rank/info');?>" class="btn tooltip-top" title="<?php echo lang('action.edit rank info', 1);?>"><i class="icon-pencil icon-75"></i></a>
 					</div>
 				</div>
 			</div>
@@ -39,7 +39,7 @@ if (is_numeric(Uri::segment(4))): ?>
 				<label class="control-label"><?php echo lang('rank group', 2);?></label>
 				<div class="controls">
 					<div class="input-append">
-						<?php echo Form::select('group_id', rankData($rank, 'group_id'), $groups, array('class' => 'span4'));?><a href="<?php echo Uri::create('admin/ranks/groups');?>" class="btn tooltip-top" title="<?php echo lang('action.edit rank groups', 1);?>"><i class="icon-pencil icon-75"></i></a>
+						<?php echo Form::select('group_id', rankData($rank, 'group_id'), $groups, array('class' => 'span4'));?><a href="<?php echo Uri::create('admin/rank/groups');?>" class="btn tooltip-top" title="<?php echo lang('action.edit rank groups', 1);?>"><i class="icon-pencil icon-75"></i></a>
 					</div>
 				</div>
 			</div>

@@ -1,6 +1,6 @@
 <?php
 
-class Controller_Admin_Ranks extends Nova\Controller_Admin_Ranks
+class Controller_Admin_Rank extends Nova\Controller_Admin_Rank
 {
 	public function before()
 	{

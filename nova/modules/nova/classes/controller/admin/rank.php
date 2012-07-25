@@ -10,7 +10,7 @@
 
 namespace Nova;
 
-class Controller_Admin_Ranks extends Controller_Base_Admin
+class Controller_Admin_Rank extends Controller_Base_Admin
 {
 	public function before()
 	{
@@ -26,7 +26,7 @@ class Controller_Admin_Ranks extends Controller_Base_Admin
 	{
 		\Sentry::allowed('rank.read', true);
 
-		$this->_view = 'admin/ranks/index';
+		$this->_view = 'admin/rank/index';
 
 		return;
 	}
@@ -39,8 +39,8 @@ class Controller_Admin_Ranks extends Controller_Base_Admin
 	{
 		\Sentry::allowed('rank.read', true);
 
-		$this->_view = 'admin/ranks/groups';
-		$this->_js_view = 'admin/ranks/groups_js';
+		$this->_view = 'admin/rank/groups';
+		$this->_js_view = 'admin/rank/groups_js';
 
 		if (\Input::method() == 'POST')
 		{
@@ -226,8 +226,8 @@ class Controller_Admin_Ranks extends Controller_Base_Admin
 	{
 		\Sentry::allowed('rank.read', true);
 
-		$this->_view = 'admin/ranks/info';
-		$this->_js_view = 'admin/ranks/info_js';
+		$this->_view = 'admin/rank/info';
+		$this->_js_view = 'admin/rank/info_js';
 
 		if (\Input::method() == 'POST')
 		{
@@ -369,8 +369,8 @@ class Controller_Admin_Ranks extends Controller_Base_Admin
 	{
 		\Sentry::allowed('rank.read', true);
 
-		$this->_view = 'admin/ranks/manage';
-		$this->_js_view = 'admin/ranks/manage_js';
+		$this->_view = 'admin/rank/manage';
+		$this->_js_view = 'admin/rank/manage_js';
 
 		// get the default rank
 		$default = \Model_Settings::get_settings('display_rank');
@@ -472,7 +472,7 @@ class Controller_Admin_Ranks extends Controller_Base_Admin
 		if (is_numeric($id))
 		{
 			// change the view
-			$this->_view = 'admin/ranks/manage_action';
+			$this->_view = 'admin/rank/manage_action';
 
 			// set the action
 			$this->_data->action = ($id == 0) ? 'create' : 'update';

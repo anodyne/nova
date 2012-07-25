@@ -1,12 +1,12 @@
 <br>
 <div class="btn-toolbar">
 	<div class="btn-group">
-		<a href="<?php echo Uri::create('admin/ranks/index');?>" class="btn tooltip-top" title="<?php echo lang('ranks index', 1);?>"><i class="icon-chevron-left icon-75"></i></a>
-		<a href="<?php echo Uri::create('admin/ranks/manage/0');?>" class="btn tooltip-top" title="<?php echo lang('action.create rank', 1);?>"><i class="icon-plus icon-75"></i></a>
+		<a href="<?php echo Uri::create('admin/rank/index');?>" class="btn tooltip-top" title="<?php echo lang('ranks index', 1);?>"><i class="icon-chevron-left icon-75"></i></a>
+		<a href="<?php echo Uri::create('admin/rank/manage/0');?>" class="btn tooltip-top" title="<?php echo lang('action.create rank', 1);?>"><i class="icon-plus icon-75"></i></a>
 	</div>
 
 	<div class="btn-group">
-		<a href="<?php echo Uri::create('admin/ranks/info');?>" class="btn tooltip-top" title="<?php echo lang('action.edit rank info', 1);?>"><?php echo $images['info'];?></a>
+		<a href="<?php echo Uri::create('admin/rank/info');?>" class="btn tooltip-top" title="<?php echo lang('action.edit rank info', 1);?>"><?php echo $images['info'];?></a>
 		<a href="<?php echo Uri::create('admin/ranks/groups');?>" class="btn tooltip-top" title="<?php echo lang('action.edit rank groups', 1);?>"><?php echo $images['groups'];?></a>
 	</div>
 
@@ -47,7 +47,7 @@
 								<td class="span2">
 									<div class="btn-toolbar">
 										<div class="btn-group">
-											<a href="<?php echo Uri::create('admin/ranks/manage/'.$r->id);?>" class="btn btn-mini tooltip-top" title="<?php echo lang('action.edit', 1);?>"><i class="icon-pencil icon-75"></i></a>
+											<a href="<?php echo Uri::create('admin/rank/manage/'.$r->id);?>" class="btn btn-mini tooltip-top" title="<?php echo lang('action.edit', 1);?>"><i class="icon-pencil icon-75"></i></a>
 										</div>
 
 										<?php if (Sentry::user()->has_access('rank.delete')): ?>
