@@ -24,6 +24,8 @@ return array(
 			'tab_delete' => "The :0 tab in the :1 form was deleted",
 		),
 
+		'position' => "The :0 :1 was :2",
+
 		'ranks' => array(
 			'info' => "The :0 rank info record was :1",
 			'item' => "Rank item was :0",

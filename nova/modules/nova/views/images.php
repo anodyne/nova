@@ -10,6 +10,7 @@ return array(
 	'info' => 'information-italic.png',
 	
 	'reorder' => 'reorder-16x16.png',
+	'rules' => 'clipboard-task.png',
 	
 	'sections' => 'ui-group-box.png',
 	'settings' => 'gear-16x16.png',

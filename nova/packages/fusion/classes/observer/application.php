@@ -69,7 +69,7 @@ class Observer_Application extends \Orm\Observer
 			{
 				switch ($r->type)
 				{
-					case 'all':
+					case 'global':
 						// get the JSON object
 						$data = json_decode($r->users);
 

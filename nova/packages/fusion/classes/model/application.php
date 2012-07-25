@@ -17,6 +17,10 @@ namespace Fusion;
 
 class Model_Application extends \Model {
 	
+	public const IN_PROGRESS	= 1;
+	public const APPROVED 		= 2;
+	public const REJECTED 		= 3;
+
 	public static $_table_name = 'applications';
 	
 	public static $_properties = array(
@@ -24,36 +28,20 @@ class Model_Application extends \Model {
 			'type' => 'int',
 			'constraint' => 11,
 			'auto_increment' => true),
-		'email' => array(
-			'type' => 'string',
-			'constraint' => 255,
-			'null' => true),
-		'ip_address' => array(
-			'type' => 'string',
-			'constraint' => 16,
-			'null' => true),
 		'user_id' => array(
 			'type' => 'int',
 			'constraint' => 11),
-		'user_name' => array(
-			'type' => 'string',
-			'constraint' => 255,
-			'null' => true),
 		'character_id' => array(
 			'type' => 'int',
 			'constraint' => 11),
-		'character_name' => array(
-			'type' => 'text',
-			'null' => true),
 		'position_id' => array(
 			'type' => 'string',
-			'constraint' => 255,
-			'null' => true),
-		'action' => array(
-			'type' => 'string',
-			'constraint' => 100,
-			'null' => true),
-		'message' => array(
+			'constraint' => 255),
+		'status' => array(
+			'type' => 'tinyint',
+			'constraint' => 1,
+			'default' => 1),
+		'response' => array(
 			'type' => 'text',
 			'null' => true),
 		'experience' => array(
@@ -130,4 +118,16 @@ class Model_Application extends \Model {
 			'events' => array('before_save')
 		),
 	);
+
+	public static function find_items($only_active = true)
+	{
+		$query = static::find();
+
+		if ($only_active)
+		{
+			$query->where('status', static::IN_PROGRESS);
+		}
+
+		return $query->get();
+	}
 }

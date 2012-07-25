@@ -7,6 +7,8 @@ return array(
 	'all'			=> 'all',
 	'attributes'	=> 'attributes',
 	'award'			=> 'award',
+	'application' => 'application',
+	'applications' => 'applications',
 
 	'bio'	=> 'bio',
 	'base' => 'base',
@@ -21,6 +23,8 @@ return array(
 	'display' => 'display',
 	'dropdown' => 'dropdown menu',
 	'desc' => 'description',
+	'department' => 'department',
+	'departments' => 'departments',
 
 	'email_address' => "email address",
 	'experience' => 'experience',
@@ -36,6 +40,7 @@ return array(
 	'game_master' => 'game master',
 	'group' => 'group',
 	'groups' => 'groups',
+	'global' => 'global',
 
 	'horizontal' => "horizontal",
 	'html' => 'HTML',
@@ -46,6 +51,8 @@ return array(
 	'image' => 'image',
 	'images' => 'images',
 	'index' => 'index',
+	'is' => 'is',
+	'in' => 'in',
 
 	'loa' => "LOA",
 	'loa_full' => "Leave of Absence",
@@ -91,6 +98,10 @@ return array(
 	'readme' => 'readme',
 	'rank' => 'rank',
 	'ranks' => 'ranks',
+	'review' => 'review',
+	'reviews' => 'reviews',
+	'rule' => 'rule',
+	'rules' => 'rules',
 
 	'section' => "section",
 	'sections' => "sections",
@@ -110,8 +121,10 @@ return array(
 	'text_area' => 'text area',
 	'to' => 'to',
 	'this' => 'this',
+	'the' => 'the',
 
 	'user' => 'user',
+	'users' => 'users',
 
 	'vertical' => "vertical",
 	'value' => 'value',

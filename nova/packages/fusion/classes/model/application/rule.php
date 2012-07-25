@@ -23,7 +23,7 @@ class Model_Application_Rule extends \Model {
 		'type' => array(
 			'type' => 'string',
 			'constraint' => 50,
-			'default' => 'all'),
+			'default' => 'global'),
 		'condition' => array(
 			'type' => 'text',
 			'null' => true),
