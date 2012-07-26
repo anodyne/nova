@@ -12,7 +12,6 @@ class Create_applications
 			'character_id' => array('type' => 'INT', 'constraint' => 11),
 			'position_id' => array('type' => 'INT', 'constraint' => 11),
 			'status' => array('type' => 'TINYINT', 'constraint' => 1, 'default' => 1),
-			'response' => array('type' => 'TEXT', 'null' => true),
 			'experience' => array('type' => 'TEXT', 'null' => true),
 			'hear_about' => array('type' => 'VARCHAR', 'constraint' => 50, 'null' => true),
 			'hear_about_detail' => array('type' => 'TEXT', 'null' => true),
@@ -25,8 +24,9 @@ class Create_applications
 			'id' => array('type' => 'INT', 'constraint' => 11, 'auto_increment' => true),
 			'app_id' => array('type' => 'INT', 'constraint' => 11),
 			'user_id' => array('type' => 'INT', 'constraint' => 11),
+			'type' => array('type' => 'TINYINT', 'constraint' => 1, 'default' => 1),
 			'content' => array('type' => 'TEXT', 'null' => true),
-			'decision' => array('type' => 'TINYINT', 'constraint' => 2),
+			'created_at' => array('type' => 'BIGINT', 'constraint' => 20, 'null' => true),
 		), array('id'));
 
 		\DBUtil::create_table('application_reviewers', array(

@@ -17,9 +17,9 @@ namespace Fusion;
 
 class Model_Application extends \Model {
 	
-	public const IN_PROGRESS	= 1;
-	public const APPROVED 		= 2;
-	public const REJECTED 		= 3;
+	const IN_PROGRESS	= 1;
+	const APPROVED 		= 2;
+	const REJECTED 		= 3;
 
 	public static $_table_name = 'applications';
 	
@@ -41,9 +41,6 @@ class Model_Application extends \Model {
 			'type' => 'tinyint',
 			'constraint' => 1,
 			'default' => 1),
-		'response' => array(
-			'type' => 'text',
-			'null' => true),
 		'experience' => array(
 			'type' => 'text',
 			'null' => true),

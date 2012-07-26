@@ -13,6 +13,10 @@ namespace Fusion;
 
 class Model_Application_Response extends \Model {
 	
+	const COMMENT	= 1;
+	const VOTE 		= 2;
+	const RESPONSE	= 3;
+
 	public static $_table_name = 'application_responses';
 	
 	public static $_properties = array(
@@ -26,12 +30,13 @@ class Model_Application_Response extends \Model {
 		'user_id' => array(
 			'type' => 'int',
 			'constraint' => 11),
+		'type' => array(
+			'type' => 'tinyint',
+			'constraint' => 1,
+			'default' => 1),
 		'content' => array(
 			'type' => 'text',
 			'null' => true),
-		'decision' => array(
-			'type' => 'tinyint',
-			'constraint' => 2),
 		'created_at' => array(
 			'type' => 'bigint',
 			'constraint' => 20,
