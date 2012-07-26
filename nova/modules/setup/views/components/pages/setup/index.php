@@ -1,7 +1,9 @@
 <?php if ($option == 1): ?>
-	<p>Doing a fresh install of Nova 3 will put an empty installation of Nova into the database you specified when you set up your database connection. Using the features included in Nova 3, you'll be able to add new missions, posts, personal logs, announcements, ranks, positions, and much more.</p>
-	
+	<p>Nova 3 is a dynamic, database-driven web system which means, you guessed it, I need to install the database now. Start to finish, the installation should only take a few minutes to complete and then you'll be on your way. If you have questions, you can refer to <a href='http://docs.anodyne-productions.com' target='_blank'>AnodyneDocs</a> or drop in to our <a href='http://forums.anodyne-productions.com' target='_blank'>forums</a>.</p>
+
 	<p>The links below provide information about how to install Nova 3 as well as a brief tour of some of Nova's major features. If you have additional questions, please visit the <a href="http://forums.anodyne-productions.com" target="_blank">Anodyne forums</a> for more help.</p>
+
+	<p>Let's get started now...</p>
 	
 	<a href="#" target="_blank" class="btn-alt">
 		<span class="secoptions-guide">Nova 3 Installation Guide</span>
@@ -11,9 +13,18 @@
 		<span class="secoptions-tour">Take a tour of Nova</span>
 	</a>
 <?php elseif ($option == 2): ?>
-	<p>Since you're already running Nova 2, you can upgrade directly to Nova 3 and migrate all of your game's data to Nova 3. From start to finish, the entire process shouldn't take too long (probably around 10 minutes depending on your Internet connection). Go ahead and choose from the options below or click <strong>Start Upgrade</strong> to get going.</p>
-	
-	<p class="alert alert-info"><strong>Note:</strong> Make sure you've read the upgrade guide and have a backup of your files and database before you get started.</p>
+	<p>Like previous versions of Nova, Nova 3 is a dynamic, database-driven web system which means, you guessed it, I need to install the Nova-specific database pieces now and then migrate most of your Nova data to the newer Nova 3 format. Start to finish, the upgrade should only take a few minutes to complete (probably about 10 minutes depending on your Internet connection) and then you'll be on your way.</p>
+	<br>
+
+	<div class="alert alert-block alert-info">
+		<h4 class="alert-heading">A Few Notes Before Starting</h4>
+
+		If your host has imposed limits on the size of your database, you may not be able to upgrade to Nova 3. In order to preserve your original data, big portions of the database are duplicated. If you have size limits on your database, please make sure the upgrade will not put your over those limits before you begin.<br><br>
+
+		We've written an exhaustive <a href="#">upgrade guide</a> that walks you through the process of moving from Nova 2 to 3. Make sure you've read through that document in its entirety before attempting to upgrade your game.<br><br>
+
+		Last (but certainly not least), make sure you've backed up your Nova files and database before you get started. Files can be backed up by downloading through your FTP client to a folder on your desktop. The database will have to be backed up by exporting the database tables in phpMyAdmin (likely reachable through your cPanel). If you have questions about how to do these things, check with your host.
+	</div>
 	
 	<a href="#" target="_blank" class="btn-alt">
 		<span class="secoptions-guide">Nova 2 &rarr; Nova 3 Upgrade Guide</span>
@@ -26,6 +37,8 @@
 	<p>It isn't enough to just release powerful, easy-to-use software, you also need to maintain it. Our goal is to continually make Nova better than it was before, be it fixing bugs or adding new features. The best way to make sure you're getting the most out of Nova is to keep up with the updates that we release.</p>
 	
 	<p>The links below provide information about how to update Nova 3 as well as the changelog for Nova. If you have additional questions, please visit the <a href="http://forums.anodyne-productions.com" target="_blank">Anodyne forums</a> for more help.</p>
+
+	<p>Before you begin though, it's <strong>highly</strong> recommended that you backup both your files and your database. At Anodyne, we make sure to test all of the Nova updates before releasing them, but there is only so much we can test for. In the end, it's better to be safe rather than sorry.</p>
 	
 	<a href="#" target="_blank" class="btn-alt">
 		<span class="secoptions-guide">Nova 3 Update Guide</span>

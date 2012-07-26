@@ -33,7 +33,7 @@ class Controller_Main extends Controller_Base_Setup
 		$this->_view = 'setup/index';
 		$this->_js_view = 'setup/index_js';
 		
-		$this->_data->title = 'Nova Setup';
+		$this->_data->title = 'Setup';
 		$this->_data->header = new \stdClass;
 		$this->_data->header->text = 'Nova Setup';
 		$this->_data->header->image = 'wand-24x24.png';
@@ -51,9 +51,14 @@ class Controller_Main extends Controller_Base_Setup
 				 * Nova is installed and an update is available.
 				 */
 				$this->_data->option = 3;
-				$this->_data->controls = '<a href="'.\Uri::create('setup/update/index').'" class="btn">Start Update</a>';
-				$this->_data->controls.= '<a href="#" class="pull-right muted" rel="ignoreVersion" data-version="'.$update->version.'">Ignore this version</a>';
+				$this->_data->controls = '<a href="#" class="pull-right muted" rel="ignoreVersion" data-version="'.$update->version.'">Ignore this version</a>';
+				$this->_data->controls.= \Form::open('setup/update/index/1').
+					\Form::button('submit', 'Start Update', array('class' => 'btn', 'id' => 'next')).
+					\Form::close();
 				$this->_data->header->text = 'Update Nova 3';
+
+				// pull in the steps indicators
+				$this->template->layout->steps = \View::forge('setup::components/partials/setup_update');
 				
 				$this->_data->update = new \stdClass;
 				$this->_data->update->version = 'Nova '.$update->version;
@@ -91,13 +96,18 @@ class Controller_Main extends Controller_Base_Setup
 
 				// set the option
 				$this->_data->option = ((int) $version == 2) ? 2 : 5;
-				
+
 				// nova 2 means they can do the upgrade
 				if ($this->_data->option == 2)
 				{
-					$this->_data->controls = '<a href="'.\Uri::create('setup/upgrade/index').'" class="btn">Start Upgrade</a>';
-					$this->_data->controls.= '<a href="'.\Uri::create('setup/install/index').'" class="pull-right muted">I\'d like to do a Fresh Install instead</a>';
+					$this->_data->controls = '<a href="'.\Uri::create('setup/install/index').'" class="pull-right muted">I\'d like to do a Fresh Install instead</a>';
+					$this->_data->controls.= \Form::open('setup/upgrade/index/1').
+						\Form::button('submit', 'Start Upgrade', array('class' => 'btn', 'id' => 'next')).
+						\Form::close();
 					$this->_data->header->text = 'Upgrade From Nova 2';
+
+					// pull in the steps indicators
+					$this->template->layout->steps = \View::forge('setup::components/partials/setup_upgrade');
 				}
 				
 				// nova 1 means they can't do the upgrade
@@ -115,8 +125,13 @@ class Controller_Main extends Controller_Base_Setup
 				 * is a fresh install of Nova 3.
 				 */
 				$this->_data->option = 1;
-				$this->_data->controls = '<a href="'.\Uri::create('setup/install/index').'" class="btn">Start Install</a>';
+				$this->_data->controls = \Form::open('setup/install/index/1').
+					\Form::button('submit', 'Start Install', array('class' => 'btn', 'id' => 'next')).
+					\Form::close();
 				$this->_data->header->text = 'Install Nova 3';
+
+				// pull in the steps indicators
+				$this->template->layout->steps = \View::forge('setup::components/partials/setup_install');
 			}
 		}
 		
