@@ -52,11 +52,6 @@ class Controller_Upgradeajax extends \Controller
 		$codes['form'] = $form['code'];
 		$messages['form'] = $form['message'];
 		
-		// applications
-		$applications = $this->_upgrade_applications();
-		$codes['applications'] = $applications['code'];
-		$messages['applications'] = $applications['message'];
-		
 		// users
 		$users = $this->_upgrade_users();
 		$codes['users'] = $users['code'];
@@ -1504,64 +1499,6 @@ class Controller_Upgradeajax extends \Controller
 		}
 
 		return json_encode(array('code' => 1));
-	}
-	
-	/**
-	 * Migrate the application records from Nova 2 to Nova 3.
-	 *
-	 * @return	array
-	 */
-	private function _upgrade_applications()
-	{
-		$result = \DB::query("SELECT * FROM `nova2_applications`")->execute();
-		$count_old= count($result);
-		
-		if ($count_old > 0)
-		{
-			foreach ($result as $r)
-			{
-				$data = array(
-					'email'				=> $r['app_email'],
-					'ip_address'		=> $r['app_ip'],
-					'user_id'			=> $r['app_user'],
-					'user_name'			=> $r['app_user_name'],
-					'character_id'		=> $r['app_character'],
-					'character_name'	=> $r['app_character_name'],
-					'position'			=> $r['app_position'],
-					'date'				=> $r['app_date'],
-					'action'			=> $r['app_action'],
-					'message'			=> $r['app_message'],
-				);
-				
-				\Model_Application::create_item($data);
-			}
-		}
-		
-		$count_new = \Model_Application::count();
-		
-		if ($count_new == $count_old)
-		{
-			$retval = array(
-				'code' => 1,
-				'message' => ''
-			);
-		}
-		elseif ($count_new == 0)
-		{
-			$retval = array(
-				'code' => 0,
-				'message' => "Application records were not migrated"
-			);
-		}
-		else
-		{
-			$retval = array(
-				'code' => 2,
-				'message' => "Not all application records could be properly migrated"
-			);
-		}
-		
-		return $retval;
 	}
 
 	/**
