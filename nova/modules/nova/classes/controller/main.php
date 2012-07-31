@@ -129,7 +129,7 @@ abstract class Controller_Main extends Controller_Base_Main
 			$this->_data->character = \NovaForm::build('character', $this->skin);
 
 			// build the user form (populate with data if the user is logged in)
-			$this->_data->user = \NovaForm::build('user', $this->skin, ((\Sentry::check()) ? \Sentry::user() : false));
+			$this->_data->user = \NovaForm::build('user', $this->skin, ((\Sentry::check()) ? \Sentry::user()->id : false));
 
 			// pass the position along
 			$this->_data->position = $position;
