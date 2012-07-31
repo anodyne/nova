@@ -14,7 +14,7 @@ namespace Fusion;
 
 class NovaForm
 {
-	public static function build($key, $skin, $id = false)
+	public static function build($key, $skin, $id = false, $editable = true)
 	{
 		// set up the variables
 		$data = new \stdClass;
@@ -25,6 +25,7 @@ class NovaForm
 		$data->data = array();
 		$data->id = $id;
 		$data->skin = $skin;
+		$data->editable = $editable;
 
 		// get the form elements
 		$tabs = \Model_Form_Tab::find_form_items($key, true);
@@ -132,7 +133,14 @@ class NovaForm
 			
 			foreach ($depts as $d)
 			{
-				$options[$d->manifest->name][$d->id] = $d->name;
+				if ($d->manifest)
+				{
+					$options[$d->manifest->name][$d->id] = $d->name;
+				}
+				else
+				{
+					$options[$d->id] = $d->name;
+				}
 			}
 
 			return \Form::select($name, $selected, $options, (array) $extra);
