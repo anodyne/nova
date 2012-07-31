@@ -86,7 +86,7 @@ class Model_User extends \Model {
 			'null' => true),
 	);
 	
-	public static $_belongs_to = array(
+	protected static $_belongs_to = array(
 		'role' => array(
 			'model_to' => '\\Model_Access_Role',
 			'key_to' => 'id',
@@ -96,7 +96,7 @@ class Model_User extends \Model {
 		),
 	);
 	
-	public static $_has_one = array(
+	protected static $_has_one = array(
 		'character' => array(
 			'model_to' => '\\Model_Character',
 			'key_to' => 'id',
@@ -113,7 +113,7 @@ class Model_User extends \Model {
 		),
 	);
 	
-	public static $_has_many = array(
+	protected static $_has_many = array(
 		'characters' => array(
 			'model_to' => '\\Model_Character',
 			'key_to' => 'user_id',
@@ -144,7 +144,7 @@ class Model_User extends \Model {
 		),
 	);
 	
-	public static $_many_many = array(
+	protected static $_many_many = array(
 		'posts' => array(
 			'model_to' => '\\Model_Post',
 			'key_to' => 'id',
@@ -152,6 +152,16 @@ class Model_User extends \Model {
 			'key_through_from' => 'user_id',
 			'key_through_to' => 'post_id',
 			'table_through' => 'post_authors',
+			'cascade_save' => false,
+			'cascade_delete' => false,
+		),
+		'appReviews' => array(
+			'model_to' => '\\Model_Application',
+			'key_to' => 'id',
+			'key_from' => 'id',
+			'key_through_from' => 'user_id',
+			'key_through_to' => 'app_id',
+			'table_through' => 'application_reviewers',
 			'cascade_save' => false,
 			'cascade_delete' => false,
 		),

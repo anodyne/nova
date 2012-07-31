@@ -1,4 +1,3 @@
-<br>
 <div class="btn-group">
 	<a href="<?php echo Uri::create('admin/application/index');?>" class="btn tooltip-top" title="<?php echo lang('applications index', 1);?>"><i class="icon-chevron-left icon-75"></i></a>
 	

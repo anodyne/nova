@@ -31,7 +31,7 @@ class Model_Application_Reviewer extends \Model {
 	/**
 	 * Relationships
 	 */
-	public static $_belongs_to = array(
+	protected static $_belongs_to = array(
 		'app' => array(
 			'model_to' => '\\Model_Application',
 			'key_to' => 'id',

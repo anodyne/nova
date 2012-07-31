@@ -92,10 +92,23 @@ class Model_Application extends \Model {
 	);
 
 	protected static $_has_many = array(
-		'reviewers' => array(
-			'model_to' => '\\Model_Application_Reviewer',
+		'responses' => array(
+			'model_to' => '\\Model_Application_Response',
 			'key_to' => 'app_id',
 			'key_from' => 'id',
+			'cascade_save' => false,
+			'cascade_delete' => false,
+		),
+	);
+
+	protected static $_many_many = array(
+		'reviewers' => array(
+			'model_to' => '\\Model_User',
+			'key_to' => 'id',
+			'key_from' => 'id',
+			'key_through_from' => 'app_id',
+			'key_through_to' => 'user_id',
+			'table_through' => 'application_reviewers',
 			'cascade_save' => false,
 			'cascade_delete' => false,
 		),
@@ -126,5 +139,29 @@ class Model_Application extends \Model {
 		}
 
 		return $query->get();
+	}
+
+	public function comments()
+	{
+		return \Model_Application_Response::find()
+			->where('app_id', $this->id)
+			->where('type', \Model_Application_Response::COMMENT)
+			->order_by('created_at', 'desc')
+			->get();
+	}
+
+	public function votes($response = false)
+	{
+		$items = \Model_Application_Response::find()
+			->where('app_id', $this->id)
+			->where('type', \Model_Application_Response::VOTE)
+			->order_by('created_at', 'desc');
+
+		if ($response)
+		{
+			$items->where('content', $response);
+		}
+			
+		return $items->get();
 	}
 }

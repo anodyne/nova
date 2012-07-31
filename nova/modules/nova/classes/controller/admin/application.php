@@ -23,19 +23,86 @@ class Controller_Admin_Application extends Controller_Base_Admin
 	{
 		$this->_view = 'admin/arc/index';
 
-		// get the active reviews
-		$this->_data->reviews = \Model_Application::find_items();
+		// get the active reviews the user is involved in
+		$reviews = \Model_User::find(\Sentry::user()->id, array(
+			'related' => array(
+				'appReviews' => array(
+					'where' => array(
+						array('status', \Model_Application::IN_PROGRESS)
+					),
+				),
+			),
+		));
+
+		// pass the reviews on to the view
+		$this->_data->reviews = $reviews->appReviews;
 
 		// set up the images
 		$this->_data->images = array(
 			'rules' => \Location::image($this->images['rules'], $this->skin, 'admin'),
+			'clock' => \Location::image($this->images['clock'], $this->skin, 'admin'),
 		);
+
+		return;
+	}
+
+	public function action_history()
+	{
+		if (\Sentry::user()->has_level('character.create', 2))
+		{
+			$this->_view = 'admin/arc/history';
+			$this->_js_view = 'admin/arc/history_js';
+
+			// get all the applications
+			$applications = \Model_Application::find('all');
+
+			// make sure we have applications
+			if (count($applications) > 0)
+			{
+				// loop through the applications and group them
+				foreach ($applications as $app)
+				{
+					$this->_data->applications[$app->status][$app->id] = $app;
+				}
+			}
+		}
+		else
+		{
+			# redirect
+		}
 
 		return;
 	}
 
 	public function action_review($id)
 	{
+		$this->_view = 'admin/arc/review';
+		$this->_js_view = 'admin/arc/review_js';
+
+		if (is_numeric($id))
+		{
+			// get the application
+			$app = $this->_data->app = \Model_Application::find($id);
+
+			// loop through the responses and make sure we have a sortable key
+			foreach ($app->responses as $r)
+			{
+				$this->_data->responses[$r->created_at] = $r;
+			}
+
+			// make sure we have the responses in the right order
+			krsort($this->_data->responses);
+
+			// get the character form
+			$this->_data->characterForm = \NovaForm::build('character', $this->skin, $app->character->id, false);
+
+			// get the user form
+			$this->_data->userForm = \NovaForm::build('user', $this->skin, $app->user->id, false);
+
+			// get the sample post question
+			$this->_data->samplePost = \Markdown::parse(\Model_SiteContent::get_content('join_sample_post'));
+		}
+
 		return;
 	}
 
@@ -45,6 +112,103 @@ class Controller_Admin_Application extends Controller_Base_Admin
 
 		$this->_view = 'admin/arc/rules';
 		$this->_js_view = 'admin/arc/rules_js';
+
+		if (\Input::method() == 'POST')
+		{
+			// get the action
+			$action = trim(\Security::xss_clean(\Input::post('action')));
+
+			// get the ID from the POST
+			$rule_id = trim(\Security::xss_clean(\Input::post('id')));
+
+			/**
+			 * Need to clean up the users data if it exists.
+			 */
+			if (isset($_POST['users']))
+			{
+				// create an empty array
+				$users = array();
+
+				// loop through the users so we can make sure it's in the right format
+				foreach ($_POST['users'] as $key => $value)
+				{
+					$users[$key] = (is_array($value)) ? $value : array($value);
+				}
+
+				// update the the format of the users item
+				$_POST['users'] = json_encode($users);
+			}
+
+			/**
+			 * Create a new application rule.
+			 */
+			if (\Sentry::user()->has_level('character.create', 2) and $action == 'create')
+			{
+				$item = \Model_Application_Rule::create_item(\Input::post());
+
+				if ($item)
+				{
+					$this->_flash[] = array(
+						'status' => 'success',
+						'message' => lang('[[short.flash.success|application rule|action.created]]', 1),
+					);
+				}
+				else
+				{
+					$this->_flash[] = array(
+						'status' => 'danger',
+						'message' => lang('[[short.flash.failure|application rule|action.creation]]', 1),
+					);
+				}
+			}
+
+			/**
+			 * Update the specified application rule with the information the user specified
+			 * in the modal pop-up.
+			 */
+			if (\Sentry::user()->has_level('character.create', 2) and $action == 'update')
+			{
+				$item = \Model_Application_Rule::update_item($rule_id, \Input::post());
+
+				if ($item)
+				{
+					$this->_flash[] = array(
+						'status' => 'success',
+						'message' => lang('[[short.flash.success|application rule|action.updated]]', 1),
+					);
+				}
+				else
+				{
+					$this->_flash[] = array(
+						'status' => 'danger',
+						'message' => lang('[[short.flash.failure|application rule|action.update]]', 1),
+					);
+				}
+			}
+
+			/**
+			 * Delete the specified application rule.
+			 */
+			if (\Sentry::user()->has_level('character.create', 2) and $action == 'delete')
+			{
+				$item = \Model_Application_Rule::delete_item($rule_id);
+
+				if ($item)
+				{
+					$this->_flash[] = array(
+						'status' => 'success',
+						'message' => lang('[[short.flash.success|application rule|action.deleted]]', 1),
+					);
+				}
+				else
+				{
+					$this->_flash[] = array(
+						'status' => 'danger',
+						'message' => lang('[[short.flash.failure|application rule|action.deletion]]', 1),
+					);
+				}
+			}
+		}
 
 		if (is_numeric($id))
 		{
@@ -63,7 +227,10 @@ class Controller_Admin_Application extends Controller_Base_Admin
 		else
 		{
 			// pull all the rules
-			$this->_data->rules = \Model_Application_Rule::get_items(false);
+			$this->_data->rules = \Model_Application_Rule::find('all');
+
+			// pass data to the JS view
+			$this->_js_data->type = false;
 		}
 
 		return;

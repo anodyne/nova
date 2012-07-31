@@ -12,6 +12,25 @@ namespace Nova;
 
 class Controller_Ajax_Delete extends Controller_Base_Ajax
 {
+	public function action_apprule($id)
+	{
+		if (\Sentry::check() and \Sentry::user()->has_level('character.create', 2))
+		{
+			// get the rule
+			$rule = \Model_Application_Rule::find($id);
+
+			if ($rule !== null)
+			{
+				$data = array(
+					'type' => ($rule->type == 'dept') ? lang('department') : lang('global'),
+					'id' => $rule->id,
+				);
+
+				echo \View::forge(\Location::file('delete/apprule', \Utility::get_skin('admin'), 'ajax'), $data);
+			}
+		}
+	}
+
 	public function action_formfield($id)
 	{
 		if (\Sentry::check() and \Sentry::user()->has_access('form.delete'))

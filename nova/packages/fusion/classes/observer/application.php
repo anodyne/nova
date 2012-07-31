@@ -29,7 +29,7 @@ class Observer_Application extends \Orm\Observer
 		/**
 		 * System Event
 		 */
-		\SystemEvent::add('user', '[[event.main.join.application|{{'.$model->user_name.'}}|position|{{'.$model->position->name.'}}|character|{{'.$model->character_name.'}}]]');
+		\SystemEvent::add('user', '[[event.main.join.application|{{'.$model->user->name.'}}|position|{{'.$model->position->name.'}}|character|{{'.$model->character->first_name.' '.$model->character->last_name.'}}]]');
 
 		// start the array for who will get emailed
 		$emailUsers = array();
@@ -60,7 +60,7 @@ class Observer_Application extends \Orm\Observer
 		 * Add reviewers to an application based on the rules.
 		 */
 		// get all the active application rules
-		$rules = \Model_Application_Rule::get_items();
+		$rules = \Model_Application_Rule::find('all');
 
 		if (count($rules) > 0)
 		{

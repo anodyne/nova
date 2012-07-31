@@ -40,7 +40,7 @@ if ( ! function_exists('ruleData'))
 </div>
 <br>
 
-<form method="post">
+<form method="post" action="<?php echo Uri::create('admin/application/rules');?>">
 	<div class="control-group">
 		<label class="control-label"><?php echo lang('type', 1);?></label>
 		<div class="controls">
@@ -73,6 +73,9 @@ if ( ! function_exists('ruleData'))
 
 	<br>
 	<div class="controls">
+		<?php echo Form::hidden('action', $action);?>
+		<?php echo Form::hidden('id', Uri::segment(4));?>
+
 		<button type="submit" class="btn btn-primary"><?php echo lang('action.submit', 1);?></button>
 	</div>
 </form>

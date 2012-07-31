@@ -13,9 +13,9 @@ namespace Fusion;
 
 class Model_Application_Response extends \Model {
 	
-	const COMMENT	= 1;
-	const VOTE 		= 2;
-	const RESPONSE	= 3;
+	const COMMENT	= 1; // comment on an application
+	const VOTE 		= 2; // vote on an application
+	const RESPONSE	= 3; // the response sent to the user
 
 	public static $_table_name = 'application_responses';
 	
@@ -46,11 +46,18 @@ class Model_Application_Response extends \Model {
 	/**
 	 * Relationships
 	 */
-	public static $_belongs_to = array(
+	protected static $_belongs_to = array(
 		'app' => array(
 			'model_to' => '\\Model_Application',
 			'key_to' => 'id',
 			'key_from' => 'app_id',
+			'cascade_save' => false,
+			'cascade_delete' => false,
+		),
+		'user' => array(
+			'model_to' => '\\Model_User',
+			'key_to' => 'id',
+			'key_from' => 'user_id',
 			'cascade_save' => false,
 			'cascade_delete' => false,
 		),

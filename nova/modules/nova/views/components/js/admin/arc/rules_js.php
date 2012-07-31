@@ -30,4 +30,20 @@
 			$('#deptRule').hide();
 		}
 	});
+
+	// what action to take when a value action is clicked
+	$('.apprule-action').on('click', function(){
+		var doaction = $(this).data('action');
+		var id = $(this).data('id');
+
+		if (doaction == 'delete')
+		{
+			$('<div/>').dialog2({
+				title: "<?php echo lang('action.delete application rule', 2);?>",
+				content: "<?php echo Uri::create('ajax/delete/apprule');?>/" + id
+			});
+		}
+
+		return false;
+	});
 </script>

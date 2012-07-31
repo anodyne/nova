@@ -30,34 +30,5 @@ class Model_Application_Rule extends \Model {
 		'users' => array(
 			'type' => 'text',
 			'null' => true),
-		'status' => array(
-			'type' => 'tinyint',
-			'constraint' => 1,
-			'default' => 1),
 	);
-
-	/**
-	 * Relationships
-	 */
-	public static $_belongs_to = array(
-		'character' => array(
-			'model_to' => '\\Model_Application',
-			'key_to' => 'id',
-			'key_from' => 'app_id',
-			'cascade_save' => false,
-			'cascade_delete' => false,
-		),
-	);
-
-	public static function get_items($only_active = true)
-	{
-		$query = static::find();
-
-		if ($only_active)
-		{
-			$query->where('status', (int) true);
-		}
-
-		return $query->get();
-	}
 }
