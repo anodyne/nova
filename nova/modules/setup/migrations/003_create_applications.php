@@ -40,7 +40,6 @@ class Create_applications
 			'type' => array('type' => 'VARCHAR', 'constraint' => 50, 'default' => 'global'),
 			'condition' => array('type' => 'TEXT', 'null' => true),
 			'users' => array('type' => 'TEXT', 'null' => true),
-			'status' => array('type' => 'TINYINT', 'constraint' => 1, 'default' => 1),
 		), array('id'));
 
 		$rules = array(

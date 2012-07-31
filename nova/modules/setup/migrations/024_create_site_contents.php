@@ -154,6 +154,20 @@ class Create_site_contents
 				'type' => 'header',
 				'section' => 'application',
 				'page' => 'rules'),
+			array(
+				'key' => 'admin_arc_history_header',
+				'label' => 'ARC History Header',
+				'content' => "Application History",
+				'type' => 'header',
+				'section' => 'application',
+				'page' => 'history'),
+			array(
+				'key' => 'admin_arc_review_header',
+				'label' => 'ARC Review Header',
+				'content' => "Application Review",
+				'type' => 'header',
+				'section' => 'application',
+				'page' => 'review'),
 
 			/**
 			 * Page Titles
@@ -291,6 +305,20 @@ class Create_site_contents
 				'type' => 'title',
 				'section' => 'application',
 				'page' => 'rules'),
+			array(
+				'key' => 'admin_arc_history_title',
+				'label' => 'ARC History Page Title',
+				'content' => "Application History",
+				'type' => 'title',
+				'section' => 'application',
+				'page' => 'history'),
+			array(
+				'key' => 'admin_arc_review_title',
+				'label' => 'ARC Review Page Title',
+				'content' => "Application Review",
+				'type' => 'title',
+				'section' => 'application',
+				'page' => 'review'),
 
 			/**
 			 * Messages

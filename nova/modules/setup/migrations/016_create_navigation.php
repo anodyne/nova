@@ -387,6 +387,31 @@ class Create_navigation
 				'type' => 'adminsub',
 				'category' => 'manage',
 				'access' => 'rank|read|0'),
+
+			array(
+				'name' => 'All Characters',
+				'group' => 0,
+				'order' => 0,
+				'url' => 'admin/character/index',
+				'type' => 'adminsub',
+				'category' => 'users',
+				'access' => 'character|read|0'),
+			array(
+				'name' => 'All Users',
+				'group' => 1,
+				'order' => 0,
+				'url' => 'admin/user/index',
+				'type' => 'adminsub',
+				'category' => 'users',
+				'access' => 'user|read|0'),
+			array(
+				'name' => 'Application Review',
+				'group' => 2,
+				'order' => 0,
+				'url' => 'admin/application/index',
+				'type' => 'adminsub',
+				'category' => 'users',
+				'access' => 'character|create|1'),
 			/*	
 			array(
 				'name' => 'Settings',
