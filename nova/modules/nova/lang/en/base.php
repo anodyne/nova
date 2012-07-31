@@ -19,12 +19,16 @@ return array(
 	'content'		=> 'content',
 	'cp'			=> 'control panel',
 	'catalog' => 'catalog',
+	'comment' => 'comment',
+	'comments' => 'comments',
 
 	'display' => 'display',
 	'dropdown' => 'dropdown menu',
 	'desc' => 'description',
 	'department' => 'department',
 	'departments' => 'departments',
+	'detail' => 'detail',
+	'details' => 'details',
 
 	'email_address' => "email address",
 	'experience' => 'experience',
@@ -35,6 +39,7 @@ return array(
 	'form' => "form",
 	'forms' => "forms",
 	'first' => 'first',
+	'final' => 'final',
 
 	'general' => 'general',
 	'game_master' => 'game master',
@@ -44,6 +49,7 @@ return array(
 
 	'horizontal' => "horizontal",
 	'html' => 'HTML',
+	'history' => 'history',
 
 	'id' => 'ID',
 	'inline_help' => 'inline help',
@@ -53,7 +59,8 @@ return array(
 	'index' => 'index',
 	'is' => 'is',
 	'in' => 'in',
-
+	'inactive' => 'inactive',
+	
 	'loa' => "LOA",
 	'loa_full' => "Leave of Absence",
 	'label' => 'label',
@@ -74,6 +81,7 @@ return array(
 	'notifications' => "notifications",
 	'next' => "next",
 	'no' => 'no',
+	'new' => 'new',
 
 	'orientation' => "orientation",
 	'order' => 'order',
@@ -102,6 +110,8 @@ return array(
 	'reviews' => 'reviews',
 	'rule' => 'rule',
 	'rules' => 'rules',
+	'response' => 'response',
+	'responses' => 'responses',
 
 	'section' => "section",
 	'sections' => "sections",
@@ -129,6 +139,8 @@ return array(
 	'vertical' => "vertical",
 	'value' => 'value',
 	'values' => 'values',
+	'vote' => 'vote',
+	'votes' => 'votes',
 
 	'writing' => "writing",
 

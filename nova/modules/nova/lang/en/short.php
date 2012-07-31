@@ -3,6 +3,11 @@
 return array(
 	
 	'add' => "add :0",
+
+	'arc' => array(
+		'involved' => ":0 involved in this review:",
+		'voted' => ":0 voted :1 on this application.",
+	),
 	
 	'cancel_password_reset' => "Cancel password reset",
 
