@@ -2,6 +2,7 @@
 
 return array(
 	'categories' => 'category.png',
+	'clock' => 'clock.png',
 
 	'fields' => 'ui-text-field.png',
 
