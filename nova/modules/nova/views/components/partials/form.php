@@ -26,7 +26,7 @@ if ($tabs !== false): ?>
 		<?php if (is_array($sections) and array_key_exists($t->id, $sections)): ?>
 			<?php foreach ($sections[$t->id] as $s): ?>
 				
-				<?php echo View::forge(Location::file('forms/section', $skin, 'partials'), array('fields' => $fields, 's' => $s, 'skin' => $skin, 'data' => $data))->render();?>
+				<?php echo View::forge(Location::file('forms/section', $skin, 'partials'), array('fields' => $fields, 's' => $s, 'skin' => $skin, 'data' => $data, 'editable' => $editable))->render();?>
 
 			<?php endforeach;?>
 		<?php endif;?>
@@ -37,14 +37,14 @@ if ($tabs !== false): ?>
 	<?php if ($sections !== false): ?>
 		<?php foreach ($sections as $s): ?>
 
-			<?php echo View::forge(Location::file('forms/section', $skin, 'partials'), array('fields' => $fields, 's' => $s, 'skin' => $skin, 'data' => $data))->render();?>
+			<?php echo View::forge(Location::file('forms/section', $skin, 'partials'), array('fields' => $fields, 's' => $s, 'skin' => $skin, 'data' => $data, 'editable' => $editable))->render();?>
 			
 		<?php endforeach;?>
 	<?php else: ?>
 		<?php if ($fields !== false): ?>
 			<?php foreach ($fields as $f): ?>
 
-				<?php echo View::forge(Location::file('forms/field', $skin, 'partials'), array('f' => $f, 'data' => $data))->render();?>
+				<?php echo View::forge(Location::file('forms/field', $skin, 'partials'), array('f' => $f, 'data' => $data, 'editable' => $editable))->render();?>
 
 			<?php endforeach;?>
 		<?php endif;?>
