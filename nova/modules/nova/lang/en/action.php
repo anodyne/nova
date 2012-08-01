@@ -4,6 +4,8 @@ return array(
 	'add' => 'add',
 	'added' => 'added',
 	'agree' => 'agree',
+	'apply' => 'apply',
+	'applied' => 'applied',
 
 	'back' => 'back',
 	
