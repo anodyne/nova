@@ -1,21 +1,5 @@
-<div class="thumbnail">
-	<div class="caption">
-		<a href="#" class="btn btn-small tooltip-top pull-right" title="<?php echo lang('action.edit users on this review', 1);?>"><i class="icon-pencil icon-50"></i></a>
-
-		<h3><?php echo lang('[[short.arc.involved|users]]', 1);?></h3>
-
-		<p>
-			<?php foreach ($app->reviewers as $rev): ?>
-				<span class="label"><?php echo $rev->name;?></span>
-			<?php endforeach;?>
-		</p>
-	</div>
-</div><br>
-
 <div class="well well-small">
 	<h2><?php echo $app->character->name(false);?> <small><?php echo $app->position->name;?></small></h2>
-
-	<p><strong>Applied on:</strong> <?php echo $app->created_at;?></p>
 
 	<div class="row">
 		<div class="span6">
@@ -27,39 +11,53 @@
 
 		<div class="span4 offset1">
 			<div class="control-group">
-				<label class="control-label"><?php echo lang('short.hear_about_us.question', 2);?></label>
+				<label class="control-label"><?php echo lang('action.applied on', 2);?></label>
 				<div class="controls">
-					<p><?php echo $app->hear_about;?></p>
+					<p><?php echo Date::forge($app->created_at)->format('eu_named');?></p>
 				</div>
 			</div>
 
-			<?php if ( ! empty($app->hear_about_detail)): ?>
-				<div class="control-group">
-					<label class="control-label"><?php echo lang('detail', 1);?></label>
-					<div class="controls">
-						<p><?php echo $app->hear_about_detail;?></p>
-					</div>
+			<div class="control-group">
+				<label class="control-label"><?php echo lang('short.hear_about_us.question', 2);?></label>
+				<div class="controls">
+					<p>
+						<?php echo $app->hear_about;?>
+
+						<?php if ( ! empty($app->hear_about_detail)): ?>
+							<br>
+							<span class="muted"><?php echo $app->hear_about_detail;?></span>
+						<?php endif;?>
+					</p>
 				</div>
-			<?php endif;?>
+			</div>
 		</div>
 	</div>
+
+	<hr>
+
+	<a href="#" class="btn btn-small tooltip-top pull-right" title="<?php echo lang('action.edit users on this review', 1);?>"><i class="icon-pencil icon-50"></i></a>
+
+	<h4><?php echo lang('[[short.arc.involved|users]]', 1);?></h4>
+
+	<p>
+		<?php foreach ($app->reviewers as $rev): ?>
+			<span class="label"><?php echo $rev->name;?></span>
+		<?php endforeach;?>
+	</p>
 </div>
 
 <hr>
 
 <div class="row">
-	<div class="span10">
-		<textarea name="content" rows="5" class="span10" placeholder="Enter your comments on this application here"></textarea>
+	<div class="span11">
+		<textarea name="content" rows="5" class="span11" placeholder="Enter your comments on this application here"></textarea>
 	</div>
 
-	<div class="span2">
-		<div class="btn-group">
+	<div class="span1">
+		<div class="btn-group btn-group-vertical">
 			<a href="#" class="btn btn-small btn-success"><i class="icon-thumbs-up icon-white"></i></a>
 			<a href="#" class="btn btn-small btn-danger"><i class="icon-thumbs-down icon-white"></i></a>
-		</div><br>
-
-		<div class="btn-group">
-			<button class="btn"><?php echo lang('action.submit', 1);?></button>
+			<a href="#" class="btn btn-small"><i class="icon-chevron-right icon-50"></i></a>
 		</div>
 	</div>
 </div>
@@ -84,7 +82,27 @@
 	<div id="characterForm" class="active pill-pane"><?php echo $characterForm;?></div>
 
 	<?php if (Sentry::user()->has_level('character.create', 2)): ?>
-		<div id="userForm" class="pill-pane"><?php echo $userForm;?></div>
+		<div id="userForm" class="pill-pane">
+			<div class="row">
+				<div class="span6">
+					<div class="control-group">
+						<label class="control-label"><?php echo lang('name', 1);?></label>
+						<div class="controls">
+							<p><?php echo $app->user->name;?></p>
+						</div>
+					</div>
+
+					<div class="control-group">
+						<label class="control-label"><?php echo lang('email_address', 2);?></label>
+						<div class="controls">
+							<p><?php echo $app->user->email;?></p>
+						</div>
+					</div>
+				</div>
+
+				<div class="span6"><?php echo $userForm;?></div>
+			</div>
+		</div>
 	<?php endif;?>
 
 	<?php if ( ! empty($samplePost)): ?>
