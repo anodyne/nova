@@ -22,7 +22,7 @@
 		$('.lower').slideUp();
 
 		// show the loading graphic
-		$('.#loaded').fadeOut('fast', function(){
+		$('#loaded').fadeOut('fast', function(){
 			$('#loading').fadeIn();
 		});
 	});
