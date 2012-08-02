@@ -80,6 +80,12 @@ abstract class Controller_Main extends Controller_Base_Main
 					'primary' => (\Input::post('user.id') == '0') ? 0 : 1
 				));
 
+				// update the user with the character info if it's a new user
+				if (\Input::post('user.id') == '0')
+				{
+					\Model_User::update_item($user->id, array('character_id' => $char->id));
+				}
+
 				// make sure we have all the app data we need
 				$appData = array_merge(\Input::post('app'), array(
 					'email' => $user->email,
@@ -90,8 +96,6 @@ abstract class Controller_Main extends Controller_Base_Main
 					'character_name' => $char->name(false, false),
 					'position_id' => trim(\Security::xss_clean(\Input::post('position'))),
 				));
-
-				//\Debug::dump($appData, \Input::post('app'));
 
 				// create the application
 				\Model_Application::create_item($appData);
