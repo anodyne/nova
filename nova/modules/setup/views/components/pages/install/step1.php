@@ -67,7 +67,7 @@
 					<div class="control-group">
 						<label class="control-label">Position</label>
 						<div class="controls">
-							<?php echo NovaForm::position('position', null, array('id' => 'positionDrop', 'class' => 'span4'));?>
+							<?php echo NovaForm::position('position', null, array('id' => 'positionDrop', 'class' => 'span4'), 'open_playing', true);?>
 						</div>
 					</div>
 				</div>
@@ -82,7 +82,7 @@
 					<div class="control-group">
 						<label class="control-label">Rank</label>
 						<div class="controls">
-							<?php echo NovaForm::rank('rank', null, array('id' => 'rankDrop', 'class' => 'span4'));?>
+							<?php echo NovaForm::rank('rank', null, array('id' => 'rankDrop', 'class' => 'span4'), true);?>
 						</div>
 					</div>
 				</div>
