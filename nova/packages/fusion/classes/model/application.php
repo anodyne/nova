@@ -2,10 +2,6 @@
 /**
  * Application Model
  *
- * *NOTE:* The user, character and positions fields do not use the _id naming
- * convention because they may not necessarily be tied to the current item at
- * that ID.
- *
  * @package		Nova
  * @subpackage	Fusion
  * @category	Model
@@ -129,6 +125,13 @@ class Model_Application extends \Model {
 		),
 	);
 
+	/**
+	 * Get the application records.
+	 *
+	 * @api
+	 * @param	bool	should we get only active records?
+	 * @return	object
+	 */
 	public static function find_items($only_active = true)
 	{
 		$query = static::find();
@@ -141,6 +144,12 @@ class Model_Application extends \Model {
 		return $query->get();
 	}
 
+	/**
+	 * Get all comment records for this application.
+	 *
+	 * @api
+	 * @return	object
+	 */
 	public function comments()
 	{
 		return \Model_Application_Response::find()
@@ -150,6 +159,13 @@ class Model_Application extends \Model {
 			->get();
 	}
 
+	/**
+	 * Get all vote records for this application.
+	 *
+	 * @api
+	 * @param	string	which responses to get (yes/no/false for all)
+	 * @return	object
+	 */
 	public function votes($response = false)
 	{
 		$items = \Model_Application_Response::find()
@@ -163,5 +179,59 @@ class Model_Application extends \Model {
 		}
 			
 		return $items->get();
+	}
+
+	/**
+	 * Update the reviewers associated with this review. This involves
+	 * removing all reviewers and re-adding them.
+	 *
+	 * @api
+	 * @param	mixed	the data to use for updating reviewers
+	 * @param	bool	should an email be sent to reviewers who are new?
+	 * @return	mixed
+	 * @todo	send the email to a new reviewer
+	 */
+	public function update_reviewers($data, $email_to_new = true)
+	{
+		// make sure we have an array
+		$data = ( ! is_array($data)) ? array($data) : $data;
+
+		// get the reviewers for this application
+		$reviewers = \Model_Application_Reviewer::find()->where('app_id', $this->id)->get();
+
+		// loop through the reviewers and remove them
+		foreach ($reviewers as $r)
+		{
+			// keep a record of who was there before
+			$oldReviewers[] = $r->user_id;
+
+			// delete the reviewer
+			$r->delete();
+		}
+
+		// track who needs to get an email
+		$sendEmail = array();
+
+		// now loop through the data we have
+		foreach ($data as $d)
+		{
+			// add the reviewer
+			\Model_Application_Reviewer::create_item(array(
+				'app_id' => $this->id,
+				'user_id' => $d
+			));
+
+			// if they weren't in the old list, add them to the list for sending an email
+			if ( ! in_array($d, $oldReviewers))
+			{
+				// get the email information
+				$sendEmail[$d] = \Model_User::find($d)->email;
+			}
+		}
+
+		if ($email_to_new and count($sendEmail) > 0)
+		{
+			// send the email
+		}
 	}
 }

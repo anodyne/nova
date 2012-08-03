@@ -82,7 +82,82 @@ class Controller_Admin_Application extends Controller_Base_Admin
 		if (is_numeric($id))
 		{
 			// get the application
+			$app = \Model_Application::find($id);
+
+			if (\Input::method() == 'POST')
+			{
+				// get the action
+				$action = trim(\Security::xss_clean(\Input::post('action')));
+
+				/**
+				 * Update the reviewers associated with the review.
+				 */
+				if (\Sentry::user()->has_level('character.create', 2) and $action == 'users')
+				{
+					// get the reviewers from the POST
+					$reviewers = \Input::post('reviewUsers');
+
+					// update the reviewers
+					$app->update_reviewers($reviewers);
+
+					$this->_flash[] = array(
+						'status' => 'success',
+						'message' => lang('[[short.flash.success|reviewers|action.updated]]', 1),
+					);
+				}
+
+				/**
+				 * Make the decision for the application.
+				 */
+				if (\Sentry::user()->has_level('character.create', 2) and $action == 'decision')
+				{
+					// update the user record
+
+					// update the character record
+
+					// add the response
+					\Model_Application_Response::create_item(array(
+						'app_id' => $app->id,
+						'user_id' => \Sentry::user()->id,
+						'type' => \Model_Application_Response::RESPONSE,
+						'content' => \Input::post('message')
+					));
+
+					// send the email
+
+					// update the application status
+					$app->status = (\Input::post('decision') == 'approve')
+						? \Model_Application::APPROVED
+						: \Model_Application::REJECTED;
+					$app->save();
+				}
+			}
+
+			// get the object again (need to do this because relations may have changed)
 			$app = $this->_data->app = \Model_Application::find($id);
+
+			// create holding variables
+			$reviewerString = '';
+			$reviewerArray = array();
+
+			// loop through the reviewers
+			foreach ($app->reviewers as $reviewer)
+			{
+				// add the reviewers to a string
+				$reviewerString.= '<span class="label">'.$reviewer->name.'</span> ';
+
+				// now add them to an array
+				$reviewerArray[] = $reviewer->id;
+			}
+
+			// pass the content on
+			$this->_data->reviewerString = $reviewerString;
+			$this->_data->reviewerArray = $reviewerArray;
+
+			# FIXME: need to take in to account that the timestamp could be identical
+
+			// create an empty array for the responses
+			$this->_data->responses = array();
 
 			// loop through the responses and make sure we have a sortable key
 			foreach ($app->responses as $r)
