@@ -12,6 +12,21 @@ namespace Nova;
 
 class Controller_Ajax_Info extends Controller_Base_Ajax
 {
+	public function action_accessrole_desc()
+	{
+		// set the POST variable
+		$role = \Security::xss_clean(\Input::post('role', false));
+		$role = (is_numeric($role)) ? $role : false;
+
+		// grab the role details
+		$item = \Model_Access_Role::find($role);
+
+		// set the output
+		$output = (count($item) > 0) ? $item->desc : '';
+		
+		echo nl2br($output);
+	}
+
 	public function action_position_desc()
 	{
 		// set the POST variable
