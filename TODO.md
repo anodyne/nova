@@ -5,7 +5,6 @@
 ## Forms
 
 * Handle restricted field
-* Edit mode vs read-only mode
 
 ## Join
 
