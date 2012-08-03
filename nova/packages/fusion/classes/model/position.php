@@ -114,11 +114,14 @@ class Model_Position extends \Model {
 	 * @param	string	the scope of the positions to pull (all, open)
 	 * @param	int		the department to pull (works for all scopes)
 	 * @param	bool	whether to show displayed positions or not (null for both)
-	 * @return	object	an object with the results
+	 * @return	object
 	 */
 	public static function get_positions($scope = 'all', $dept = null, $display = true)
 	{
-		$query = static::find();
+		// grab the genre
+		$genre = \Config::get('nova.genre');
+
+		$query = static::query();
 		
 		if ( ! empty($display))
 		{
@@ -127,8 +130,28 @@ class Model_Position extends \Model {
 		
 		switch ($scope)
 		{
+			case 'all_playing':
+				$query->related('dept')->where('dept.type', 'playing');
+			break;
+
+			case 'all_nonplaying':
+				$query->related('dept')->where('dept.type', 'nonplaying');
+			break;
+
 			case 'open':
 				$query->where('open', '>', 0);
+			break;
+
+			case 'open_playing':
+				$query->related('dept')
+					->where('dept.type', 'playing')
+					->where('open', '>', 0);
+			break;
+
+			case 'open_nonplaying':
+				$query->related('dept')
+					->where('dept.type', 'nonplaying')
+					->where('open', '>', 0);
 			break;
 		}
 		
@@ -137,7 +160,7 @@ class Model_Position extends \Model {
 			$query->where('dept_id', $dept);
 		}
 		
-		// we should always be using the dept and position order to order the results
+		// we should always be using the dept and order to order the results
 		$query->order_by('dept_id', 'asc');
 		$query->order_by('order', 'asc');
 		
