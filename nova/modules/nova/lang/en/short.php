@@ -8,6 +8,8 @@ return array(
 		'admin' => array(
 			'users' => "Be careful not to remove a decision maker from the review.",
 		),
+		'add_comment' => "Enter your :0 on the :1 here",
+		'email' => "You can send an email to the applicant to request additional information or tell them about the status of their application. This email will be added to the Review History and will be viewable by all members of the review.",
 		'involved' => ":0 involved in this review",
 		'voted' => ":0 voted :1 on this application.",
 	),

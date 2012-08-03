@@ -9,7 +9,9 @@ return array(
 	'award'			=> 'award',
 	'application' => 'application',
 	'applications' => 'applications',
+	'applicant' => 'applicant',
 	'admin' => 'admin',
+	'access_role' => 'access role',
 
 	'bio'	=> 'bio',
 	'base' => 'base',
@@ -101,6 +103,8 @@ return array(
 	'positions' => 'positions',
 	'pip' => 'pip',
 	'preview' => 'preview',
+	'participant' => 'participant',
+	'participants' => 'participants',
 
 	'row' => 'row',
 	'rows' => 'rows',
@@ -150,4 +154,5 @@ return array(
 	'writing' => "writing",
 
 	'yes' => 'yes',
+	'your' => 'your',
 );

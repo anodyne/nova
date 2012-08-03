@@ -28,6 +28,7 @@ return array(
 	'duplication' => 'duplication',
 	
 	'edit' => 'edit',
+	'email' => 'email',
 
 	'install' => 'install',
 	'installed' => 'installed',
@@ -48,6 +49,7 @@ return array(
 
 	'submit' => 'submit',
 	'save' => 'save',
+	'saved' => 'saved',
 	'send' => 'send',
 
 	'update' => 'update',
