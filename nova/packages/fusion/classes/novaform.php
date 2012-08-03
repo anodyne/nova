@@ -154,7 +154,7 @@ class NovaForm
 	 * the database based on the parameters passed to the method.
 	 *
 	 * <code>
-	 * echo NovaForm::position('positions', 8, array('id' => 'positions', 'open'));
+	 * echo NovaForm::position('positions', 8, array('id' => 'positions'), 'open');
 	 * </code>
 	 *
 	 * @api
@@ -163,20 +163,18 @@ class NovaForm
 	 * @param	array 	an array of selected items
 	 * @param	array	any extra attributes to be added to the select menu
 	 * @param	string	which positions to pull (all, open, or a department ID)
-	 * @param	string	whether to pull displayed positions or not (y,n)
-	 * @param	string	the department type to pull
-	 * @return	string	a select menu output from Form::select
+	 * @param	bool	whether to show just the select menu or everything else too
+	 * @return	string
 	 */
-	public static function position($name, $selected = array(), $extra = null, $type = 'all', $display = 'y', $dept_type = '')
+	public static function position($name, $selected = array(), $extra = array(), $type = 'all', $select_only = false)
 	{
-		// grab the positions
-		if ($type == 'open')
-		{
-			$positions = \Model_Position::get_positions('open');
-		}
-		elseif (is_numeric($type))
+		if (is_numeric($type))
 		{
 			$positions = \Model_Position::get_positions('all', $type);
+		}
+		elseif (is_string($type))
+		{
+			$positions = \Model_Position::get_positions($type);
 		}
 		else
 		{
@@ -185,28 +183,43 @@ class NovaForm
 
 		if (count($positions) > 0)
 		{
+			// the first element should be blank
 			$options[0] = '';
 			
-			$valid = false;
-			
+			// loop through the positions and put them in a format we can use
 			foreach ($positions as $p)
 			{
-				if (($dept_type == 'playing' and $p->dept->type == 'playing') or
-						($dept_type == 'nonplaying' and $p->dept->type == 'nonplaying') or
-						(bool) $p->dept->display === true)
+				if ( ! is_numeric($type))
 				{
-					if ($type == 'all' or $type == 'open')
-					{
-						$options[$p->dept->name][$p->id] = $p->name;
-					}
-					else
-					{
-						$options[$p->id] = $p->name;
-					}
+					$options[$p->dept->name][$p->id] = $p->name;
+				}
+				else
+				{
+					$options[$p->id] = $p->name;
 				}
 			}
 
-			return \Form::select($name, $selected, $options, (array) $extra);
+			if ($select_only)
+			{
+				return \Form::select($name, $selected, $options, (array) $extra);
+			}
+
+			// merge the user options into what should be there
+			$extra = array_merge(array('id' => 'positionDrop', 'class' => 'span4'), (array) $extra);
+
+			// build the output
+			$output = '<div class="control-group"><label class="control-label">'.lang('position', 1).'</label><div class="controls">';
+			$output.= \Form::select($name, $selected, $options, $extra);
+			$output.= '<div id="positionDesc" class="help-block">';
+
+			if (is_numeric($selected))
+			{
+				$output.= \Markdown::parse(\Model_Position::find($selected)->desc);
+			}
+
+			$output.= '</div></div></div>';
+
+			return $output;
 		}
 		
 		return false;
@@ -224,9 +237,10 @@ class NovaForm
 	 * @param	string	the name of the select menu
 	 * @param	mixed 	an array of selected items
 	 * @param	array	any extra attributes to add to the select menu
+	 * @param	bool	whether to just show the select or everything else as well
 	 * @return	string
 	 */
-	public static function rank($name, $selected = false, $extra = null)
+	public static function rank($name, $selected = false, $extra = array(), $select_only = false)
 	{
 		// grab the rank groups
 		$groups = \Model_Rank_Group::find_items(true);
@@ -241,14 +255,85 @@ class NovaForm
 				}
 			}
 
-			return \Form::select($name, $selected, $options, (array) $extra);
+			if ($select_only)
+			{
+				return \Form::select($name, $selected, $options, (array) $extra);
+			}
+
+			// merge the user options into what should be there
+			$extra = array_merge(array('id' => 'rankDrop', 'class' => 'span4'), (array) $extra);
+
+			// build the output
+			$output = '<div class="control-group"><label class="control-label">'.lang('rank', 1).'</label><div class="controls">';
+			$output.= \Form::select($name, $selected, $options, $extra);
+			$output.= '<div id="rankImg" class="help-block"></div>';
+
+			if (is_numeric($selected))
+			{
+				// get the rank
+				$rank = \Model_Rank::find($selected);
+
+				$output.= \Location::rank($rank->base, $rank->pip);
+			}
+
+			$output.= '</div></div>';
+
+			return $output;
 		}
 		
 		return false;
 	}
 
 	/**
-	 * Builds a select menu that includes all of the positions from
+	 * Builds a select menu that includes all of the access roles from
+	 * the database based on the parameters passed to the method.
+	 *
+	 * <code>
+	 * echo NovaForm::roles('role', 3, array('id' => 'roles'));
+	 * </code>
+	 *
+	 * @api
+	 * @param	string	the name of the select menu
+	 * @param	mixed 	an array of selected items
+	 * @param	array	any extra attributes to add to the select menu
+	 * @param	bool	whether to just show the select or everything else as well
+	 * @return	string
+	 */
+	public static function roles($name, $selected = array(), $extra = array(), $select_only = false)
+	{
+		// get the access roles
+		$roles = \Model_Access_Role::get_roles();
+
+		if (count($roles) > 0)
+		{
+			if ($select_only)
+			{
+				return \Form::select($name, $selected, $roles, (array) $extra);
+			}
+
+			// merge the user options into what should be there
+			$extra = array_merge(array('id' => 'roleDrop', 'class' => 'span4'), (array) $extra);
+
+			// build the output
+			$output = '<div class="control-group"><label class="control-label">'.lang('access_role', 2).'</label><div class="controls">';
+			$output.= \Form::select($name, $selected, $roles, $extra);
+			$output.= '<div id="roleDesc" class="help-block">';
+
+			if (is_numeric($selected))
+			{
+				$output.= \Markdown::parse(\Model_Access_Role::find($selected)->desc);
+			}
+
+			$output.= '</div></div></div>';
+
+			return $output;
+		}
+
+		return false;
+	}
+
+	/**
+	 * Builds a select menu that includes all of the users from
 	 * the database based on the parameters passed to the method.
 	 *
 	 * <code>
@@ -262,7 +347,7 @@ class NovaForm
 	 * @param	array	any extra attributes to be added to the select menu
 	 * @return	string	a select menu output from Form::select
 	 */
-	public static function users($name, $selected = array(), $extra = null, $status = 'active')
+	public static function users($name, $selected = array(), $extra = array(), $status = 'active')
 	{
 		// get the users
 		$users = ( ! empty($status)) ? \Model_User::get_users($status) : \Model_User::find('all');

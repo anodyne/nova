@@ -12,4 +12,55 @@
 			placement: 'top'
 		});
 	});
+
+	// rank dropdown
+	$('#rankDrop').on('change', function(){
+		
+		$.ajax({
+			type: "POST",
+			url: "<?php echo Uri::create('ajax/info/rank_image');?>",
+			data: {
+				rank: $('#rankDrop option:selected').val(),
+				location: 'default'
+			},
+			success: function(data){
+				$('#rankImg').html('');
+				$('#rankImg').append(data);
+			}
+		});
+		
+		return false;
+	});
+
+	// position dropdown
+	$('#positionDrop').on('change', function(){
+		
+		$.ajax({
+			type: "POST",
+			url: "<?php echo Uri::create('ajax/info/position_desc');?>",
+			data: { position: $('#positionDrop option:selected').val() },
+			success: function(data){
+				$('#positionDesc').html('');
+				$('#positionDesc').append(data);
+			}
+		});
+		
+		return false;
+	});
+
+	// access role dropdown
+	$('#roleDrop').on('change', function(){
+		
+		$.ajax({
+			type: "POST",
+			url: "<?php echo Uri::create('ajax/info/accessrole_desc');?>",
+			data: { role: $('#roleDrop option:selected').val() },
+			success: function(data){
+				$('#roleDesc').html('');
+				$('#roleDesc').append(data);
+			}
+		});
+		
+		return false;
+	});
 </script>
