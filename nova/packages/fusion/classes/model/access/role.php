@@ -13,6 +13,16 @@ namespace Fusion;
 
 class Model_Access_Role extends \Model {
 	
+	/**
+	 * Constants for the default access levels.
+	 */
+	const INACTIVE		= 1;
+	const USER			= 2;
+	const ACTIVE		= 3;
+	const POWERUSER		= 4;
+	const ADMIN			= 5;
+	const SYSADMIN		= 6;
+	
 	public static $_table_name = 'roles';
 	
 	public static $_properties = array(
@@ -54,16 +64,6 @@ class Model_Access_Role extends \Model {
 			'cascade_delete' => false,
 		),
 	);
-	
-	/**
-	 * Constants for the default access levels.
-	 */
-	const INACTIVE		= 1;
-	const USER			= 2;
-	const ACTIVE		= 3;
-	const POWERUSER		= 4;
-	const ADMIN			= 5;
-	const SYSADMIN		= 6;
 	
 	/**
 	 * Get a role from the database based on something other than their ID.
