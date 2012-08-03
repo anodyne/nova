@@ -230,4 +230,9 @@ class Utility
 			}
 		}
 	}
+
+	public static function setup_email()
+	{
+		# code...
+	}
 }
