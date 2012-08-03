@@ -5,7 +5,10 @@ return array(
 	'add' => "add :0",
 
 	'arc' => array(
-		'involved' => ":0 involved in this review:",
+		'admin' => array(
+			'users' => "Be careful not to remove a decision maker from the review.",
+		),
+		'involved' => ":0 involved in this review",
 		'voted' => ":0 voted :1 on this application.",
 	),
 	

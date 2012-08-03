@@ -6,6 +6,8 @@ return array(
 	'agree' => 'agree',
 	'apply' => 'apply',
 	'applied' => 'applied',
+	'approve' => 'approve',
+	'approved' => 'approved',
 
 	'back' => 'back',
 	
@@ -39,8 +41,14 @@ return array(
 
 	'request' => 'request',
 	'reset' => 'reset',
+	'reject' => 'reject',
+	'rejected' => 'rejected',
+	'remove' => 'remove',
+	'removed' => 'removed',
 
 	'submit' => 'submit',
+	'save' => 'save',
+	'send' => 'send',
 
 	'update' => 'update',
 	'updated' => 'updated',

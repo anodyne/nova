@@ -9,6 +9,7 @@ return array(
 	'award'			=> 'award',
 	'application' => 'application',
 	'applications' => 'applications',
+	'admin' => 'admin',
 
 	'bio'	=> 'bio',
 	'base' => 'base',
@@ -29,6 +30,7 @@ return array(
 	'departments' => 'departments',
 	'detail' => 'detail',
 	'details' => 'details',
+	'decision' => 'decision',
 
 	'email_address' => "email address",
 	'experience' => 'experience',
@@ -40,6 +42,7 @@ return array(
 	'forms' => "forms",
 	'first' => 'first',
 	'final' => 'final',
+	'from' => 'from',
 
 	'general' => 'general',
 	'game_master' => 'game master',
@@ -108,6 +111,8 @@ return array(
 	'ranks' => 'ranks',
 	'review' => 'review',
 	'reviews' => 'reviews',
+	'reviewer' => 'reviewer',
+	'reviewers' => 'reviewers',
 	'rule' => 'rule',
 	'rules' => 'rules',
 	'response' => 'response',
