@@ -15,7 +15,7 @@ else
 <html lang="en">
 	<head>
 		<meta charset="utf-8">
-		<title>Nova 3 Install Tests</title>
+		<title>Nova 3 :: Environment Tests</title>
 
 		<link rel="stylesheet" href="nova/modules/assets/css/bootstrap.min.css">
 		<style>
