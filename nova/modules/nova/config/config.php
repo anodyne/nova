@@ -189,7 +189,7 @@ return array(
 			'fusion',
 			'orm',
 			'sentry',
-			'email',
+			'swiftmailer',
 		),
 
 		/**
