@@ -131,6 +131,58 @@ class Controller_Admin_Application extends Controller_Base_Admin
 						: \Model_Application::REJECTED;
 					$app->save();
 				}
+
+				/**
+				 * Vote on the application.
+				 */
+				if ($action == 'vote')
+				{
+					// update the vote
+					$app->update_vote(\Sentry::user(), \Input::post());
+
+					$this->_flash[] = array(
+						'status' => 'success',
+						'message' => lang('[[short.flash.success|vote|action.saved]]', 1),
+					);
+				}
+
+				/**
+				 * Comment on the application.
+				 */
+				if ($action == 'comment')
+				{
+					// add the comment
+					\Model_Application_Response::create_item(array(
+						'app_id' => $app->id,
+						'user_id' => \Sentry::user()->id,
+						'type' => \Model_Application_Response::COMMENT,
+						'content' => \Input::post('content')
+					));
+
+					$this->_flash[] = array(
+						'status' => 'success',
+						'message' => lang('[[short.flash.success|comment|action.added]]', 1),
+					);
+				}
+
+				/**
+				 * Email the applicant.
+				 */
+				if ($action == 'email')
+				{
+					// add the comment
+					\Model_Application_Response::create_item(array(
+						'app_id' => $app->id,
+						'user_id' => \Sentry::user()->id,
+						'type' => \Model_Application_Response::EMAIL,
+						'content' => \Input::post('content')
+					));
+
+					$this->_flash[] = array(
+						'status' => 'success',
+						'message' => lang('[[short.flash.success|action.email|action.sent]]', 1),
+					);
+				}
 			}
 
 			// get the object again (need to do this because relations may have changed)
@@ -176,6 +228,16 @@ class Controller_Admin_Application extends Controller_Base_Admin
 
 			// get the sample post question
 			$this->_data->samplePost = \Markdown::parse(\Model_SiteContent::get_content('join_sample_post'));
+
+			// get the vote information
+			$this->_data->votes = new \stdClass;
+			$this->_data->votes->all = count($app->votes());
+			$this->_data->votes->yes = count($app->votes('yes'));
+			$this->_data->votes->no = count($app->votes('no'));
+			$this->_data->votes->mine = $app->votes( (int) \Sentry::user()->id);
+
+			// get the role information
+			$this->_data->roles = array();
 		}
 
 		return;

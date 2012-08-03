@@ -160,10 +160,10 @@ class Model_Application extends \Model {
 	}
 
 	/**
-	 * Get all vote records for this application.
+	 * Get vote records for this application.
 	 *
 	 * @api
-	 * @param	string	which responses to get (yes/no/false for all)
+	 * @param	mixed	which responses to get (yes/no/false for all)
 	 * @return	object
 	 */
 	public function votes($response = false)
@@ -173,7 +173,12 @@ class Model_Application extends \Model {
 			->where('type', \Model_Application_Response::VOTE)
 			->order_by('created_at', 'desc');
 
-		if ($response)
+		if (is_numeric($response))
+		{
+			return $items->where('user_id', $response)->get_one();
+		}
+
+		if (is_string($response))
 		{
 			$items->where('content', $response);
 		}
@@ -233,5 +238,40 @@ class Model_Application extends \Model {
 		{
 			// send the email
 		}
+	}
+
+	/**
+	 * Create a new vote record if the user doesn't have one, otherwise,
+	 * update their existing record.
+	 *
+	 * @api
+	 * @param	Sentry_User		the Sentry user object
+	 * @param	array			the POST array
+	 * @return	bool
+	 */
+	public function update_vote($user, $data)
+	{
+		// get the user's vote
+		$myVote = $this->votes( (int) $user->id);
+
+		if ($myVote)
+		{
+			// update the response
+			$myVote->content = (\Arr::get($data, 'vote.yes') !== false) ? 'yes' : 'no';
+			$myVote->created_at = time();
+			$myVote->save();
+		}
+		else
+		{
+			// add the response
+			\Model_Application_Response::create_item(array(
+				'app_id' => $this->id,
+				'user_id' => $user->id,
+				'type' => \Model_Application_Response::VOTE,
+				'content' => (\Arr::get($data, 'vote.yes') !== false) ? 'yes' : 'no'
+			));
+		}
+
+		return true;
 	}
 }
