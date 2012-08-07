@@ -12,6 +12,7 @@ return array(
 	'applicant' => 'applicant',
 	'admin' => 'admin',
 	'access_role' => 'access role',
+	'active' => 'active',
 
 	'bio'	=> 'bio',
 	'base' => 'base',
@@ -105,6 +106,7 @@ return array(
 	'preview' => 'preview',
 	'participant' => 'participant',
 	'participants' => 'participants',
+	'pending' => 'pending',
 
 	'row' => 'row',
 	'rows' => 'rows',

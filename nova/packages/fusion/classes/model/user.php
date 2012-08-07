@@ -21,9 +21,9 @@ class Model_User extends \Model {
 			'constraint' => 11,
 			'auto_increment' => true),
 		'status' => array(
-			'type' => 'string',
-			'constraint' => 50,
-			'default' => 'pending'),
+			'type' => 'tinyint',
+			'constraint' => 1,
+			'default' => 1),
 		'name' => array(
 			'type' => 'string',
 			'constraint' => 255,
@@ -181,7 +181,7 @@ class Model_User extends \Model {
 			'events' => array('before_save')
 		),
 	);
-	
+
 	/**
 	 * Get a user from the database based on something other than their ID.
 	 *
@@ -207,7 +207,7 @@ class Model_User extends \Model {
 	 * @param	string	the status to pull
 	 * @return	object	a user object
 	 */
-	public static function get_users($status = 'active')
+	public static function get_users($status = \Status::ACTIVE)
 	{
 		return static::find()->where('status', $status)->get();
 	}
@@ -233,6 +233,27 @@ class Model_User extends \Model {
 		
 		// return the items array
 		return $prefs;
+	}
+
+	public function change_status($status)
+	{
+		switch ($status)
+		{
+			case 'activate':
+				$this->status = \Status::ACTIVE;
+			break;
+
+			case 'deactivate':
+				$this->status = \Status::INACTIVE;
+			break;
+
+			case 'remove':
+				$this->status = \Status::REMOVED;
+			break;
+		}
+
+		// save the user
+		$this->save();
 	}
 	
 	/**

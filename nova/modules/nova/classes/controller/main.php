@@ -248,12 +248,7 @@ abstract class Controller_Main extends Controller_Base_Main
 			$dataAsObj->position[0]
 		);*/
 		
-		echo '<div class="container"><br><br>';
-		echo '<div class="btn-group">';
-		//echo '<span class="btn tooltip-top" title="No Decision"><i class="icon-minus icon-50"></i></span>';
-		echo '<span class="btn tooltip-top" title="Yay"><i class="icon-thumbs-up icon-50"></i></span>';
-		echo '<span class="btn tooltip-top" title="Nay"><i class="icon-thumbs-down icon-50"></i></span>';
-		echo '</div></div>';
+		//\Debug::dump(\Model_User::get_users());
 		
 		return;
 	}

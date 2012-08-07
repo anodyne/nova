@@ -98,7 +98,7 @@ class Observer_Application extends \Orm\Observer
 								// loop through the characters for that position
 								foreach ($p->characters as $char)
 								{
-									if ($char->status == 'active' and $char->user !== null)
+									if ($char->status == \Status::ACTIVE and $char->user !== null)
 									{
 										// add the reviewer record
 										\Model_Application_Reviewer::create_item(array(
@@ -146,7 +146,7 @@ class Observer_Application extends \Orm\Observer
 									// loop through the characters for that position
 									foreach ($p->characters as $char)
 									{
-										if ($char->status == 'active' and $char->user !== null)
+										if ($char->status == \Status::ACTIVE and $char->user !== null)
 										{
 											// add the reviewer record
 											\Model_Application_Reviewer::create_item(array(
@@ -165,7 +165,18 @@ class Observer_Application extends \Orm\Observer
 				}
 			}
 
-			// send the email to the reviewers
+			// set up the mailer
+			$mailer = \Utility::setup_email();
+
+			// build the message
+			$message = \Swift_Message::newInstance()
+				->setSubject('Subject')
+				->setFrom(array('email address' => 'name'))
+				->setTo(array_values($emailUsers))
+				->setBody('Body', 'text/html');
+
+			// send the message
+			$send = $mailer->send($message);
 		}
 		else
 		{

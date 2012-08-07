@@ -784,4 +784,21 @@ class Sentry_User implements Iterator, ArrayAccess
 	{
 		return (\Arr::get($this->groups(), $task, false) !== false);
 	}
+
+	/**
+	 * Checks if the user has at least the given role or higher.
+	 *
+	 * @param	int		the role ID
+	 * @param	bool	should it be a strict comparison (must equal) or not (greater than or equal)
+	 * @return	bool
+	 */
+	public function has_role($role, $strict = false)
+	{
+		if ($strict)
+		{
+			return ( (int) $this->get('role_id') === (int) $role);
+		}
+
+		return ( (int) $this->get('role_id') >= (int) $role);
+	}
 }

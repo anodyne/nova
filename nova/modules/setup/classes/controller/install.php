@@ -153,7 +153,7 @@ class Controller_Install extends Controller_Base_Setup
 						'password' => $password,
 						'role_id' => \Model_Access_Role::SYSADMIN,
 						'join_date' => time(),
-						'status' => 'active'
+						'status' => \Status::ACTIVE
 					), true);
 
 					// update the user prefs
@@ -168,7 +168,7 @@ class Controller_Install extends Controller_Base_Setup
 						'first_name' => $first_name,
 						'last_name' => $last_name,
 						'rank_id' => $rank,
-						'status' => 'active',
+						'status' => \Status::ACTIVE,
 						'activated' => time(),
 					), true);
 

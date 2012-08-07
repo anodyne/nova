@@ -24,6 +24,10 @@ class Model_Character extends \Model {
 			'type' => 'int',
 			'constraint' => 11,
 			'default' => 0),
+		'status' => array(
+			'type' => 'tinyint',
+			'constraint' => 1,
+			'default' => 1),
 		'first_name' => array(
 			'type' => 'string',
 			'constraint' => 255,
@@ -40,10 +44,6 @@ class Model_Character extends \Model {
 			'type' => 'string',
 			'constraint' => 50,
 			'null' => true),
-		'status' => array(
-			'type' => 'enum',
-			'constraint' => "'active','inactive','pending','archived'",
-			'default' => 'pending'),
 		'activated' => array(
 			'type' => 'bigint',
 			'constraint' => 20,
@@ -162,26 +162,26 @@ class Model_Character extends \Model {
 	 * @param	string	the status of characters to pull back
 	 * @return	object	an object of characters
 	 */
-	public static function get_characters($scope = 'active')
+	public static function get_characters($scope = \Status::ACTIVE)
 	{
 		switch ($scope)
 		{
 			case 'active':
 			default:
 				$result = static::find('all', array(
-					'where' => array('status' => 'active')
+					'where' => array('status' => \Status::ACTIVE)
 				));
 			break;
 			
 			case 'inactive':
 				$result = static::find('all', array(
-					'where' => array('status' => 'inactive')
+					'where' => array('status' => \Status::INACTIVE)
 				));
 			break;
 			
 			case 'pending':
 				$result = static::find('all', array(
-					'where' => array('status' => 'pending')
+					'where' => array('status' => \Status::PENDING)
 				));
 			break;
 			
@@ -190,13 +190,19 @@ class Model_Character extends \Model {
 				$result = static::find('all', array(
 					'where' => array(
 						array('user' => 0),
-						array('status' => 'active')
+						array('status' => \Status::ACTIVE)
 					),
 				));
 			break;
 			
 			case '':
 				$result = static::find('all');
+
+				$result = static::find('all', array(
+					'where' => array(
+						array(array('status', '!=', \Status::REMOVED))
+					),
+				));
 			break;
 		}
 		

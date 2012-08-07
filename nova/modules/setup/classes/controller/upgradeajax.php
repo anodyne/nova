@@ -1949,7 +1949,7 @@ class Controller_Upgradeajax extends \Controller
 		\DB::query("ALTER TABLE ".\DB::table_prefix()."characters MODIFY COLUMN `id` INT(11) AUTO_INCREMENT PRIMARY KEY")->execute();
 
 		// adjust for NPCs
-		\DB::query("UPDATE ".\DB::table_prefix()."characters SET `status` = 'active' WHERE `status` = ''")->execute();
+		\DB::query("UPDATE ".\DB::table_prefix()."characters SET `status` = ".\Status::ACTIVE." WHERE `status` = ''")->execute();
 		
 		// add the new fields
 		$add = array(
@@ -1967,6 +1967,13 @@ class Controller_Upgradeajax extends \Controller
 		{
 			foreach ($characters as $c)
 			{
+				/**
+				 * Update the character.
+				 */
+				\Model_Character::update_item($c['id'], array(
+					'status' => \Status::translate_from_string($c['status']),
+				));
+
 				\Model_Character_Positions::create_item(array(
 					'character_id' => $c['id'],
 					'position_id' => $c['position_1'],
@@ -1986,6 +1993,9 @@ class Controller_Upgradeajax extends \Controller
 
 		// drop the fields we don't need any more
 		\DBUtil::drop_fields('characters', array('position_1', 'position_2'));
+
+		// adjust the status field
+		\DB::query("ALTER TABLE ".\DB::table_prefix()."characters CHANGE `status` `status` TINYINT(1) DEFAULT 1 NOT NULL")->execute();
 		
 		// count the characters in the updated table
 		$count_new = \Model_Character::count();
@@ -2396,6 +2406,7 @@ class Controller_Upgradeajax extends \Controller
 	 * Migrate the user data from Nova 2 to Nova 3.
 	 *
 	 * @return	array
+	 * @todo	need to take the new status format in to acount
 	 */
 	private function _upgrade_users()
 	{
@@ -2471,7 +2482,7 @@ class Controller_Upgradeajax extends \Controller
 				 * Update the user.
 				 */
 				\Model_User::update_user($u['userid'], array(
-					'status' => $u['status'],
+					'status' => \Status::translate_from_string($u['status']),
 					'role_id' => ($u['status'] == 'pending' or $u['status'] == 'inactive') 
 						? \Model_Access_Role::USER 
 						: \Model_Access_Role::ACTIVE,
@@ -2594,6 +2605,9 @@ class Controller_Upgradeajax extends \Controller
 			'moderate_wiki_comments',
 			'instant_message',
 		));
+
+		// change the status column now
+		\DB::query("ALTER TABLE ".\DB::table_prefix()."users CHANGE `status` `status` TINYINT(1) DEFAULT 1 NOT NULL")->execute();
 		
 		// get the user count
 		$count_new = \Model_User::count();

@@ -1,10 +1,6 @@
 ## Setup
 
-* Re-style input fields.
-
-## Forms
-
-* Handle restricted field
+* Re-style input fields
 
 ## Join
 
@@ -13,4 +9,4 @@
 
 ## Global
 
-* Need to figure out how we're going to handle date formats
+* How are we going to handle date formats?

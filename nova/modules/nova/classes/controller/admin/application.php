@@ -111,6 +111,9 @@ class Controller_Admin_Application extends Controller_Base_Admin
 				 */
 				if (\Sentry::user()->has_level('character.create', 2) and $action == 'decision')
 				{
+					// get the decision
+					$decision = \Input::post('decision');
+					
 					// update the user record
 
 					// update the character record
