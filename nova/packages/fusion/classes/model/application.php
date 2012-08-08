@@ -13,10 +13,6 @@ namespace Fusion;
 
 class Model_Application extends \Model {
 	
-	const IN_PROGRESS	= 1;
-	const APPROVED 		= 2;
-	const REJECTED 		= 3;
-
 	public static $_table_name = 'applications';
 	
 	public static $_properties = array(
@@ -36,7 +32,7 @@ class Model_Application extends \Model {
 		'status' => array(
 			'type' => 'tinyint',
 			'constraint' => 1,
-			'default' => 1),
+			'default' => \Status::IN_PROGRESS),
 		'experience' => array(
 			'type' => 'text',
 			'null' => true),
@@ -138,7 +134,7 @@ class Model_Application extends \Model {
 
 		if ($only_active)
 		{
-			$query->where('status', static::IN_PROGRESS);
+			$query->where('status', \Status::IN_PROGRESS);
 		}
 
 		return $query->get();

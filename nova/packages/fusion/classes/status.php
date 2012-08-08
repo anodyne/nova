@@ -14,6 +14,8 @@ class Status
 	const ACTIVE		= 3;
 	const REMOVED		= 4;
 	const IN_PROGRESS	= 5;
+	const APPROVED		= 6;
+	const REJECTED		= 7;
 
 	/**
 	 * Translate a status into a string.
@@ -40,6 +42,14 @@ class Status
 
 			case self::IN_PROGRESS:
 				$final = lang('in_progress');
+			break;
+
+			case self::APPROVED:
+				$final = lang('action.approved');
+			break;
+
+			case self::REJECTED:
+				$final = lang('action.rejected');
 			break;
 
 			default:
@@ -89,6 +99,16 @@ class Status
 			case 'saved':
 			case 'in progress':
 				$final = self::IN_PROGRESS;
+			break;
+
+			case 'approve':
+			case 'approved':
+				$final = self::APPROVED;
+			break;
+
+			case 'reject':
+			case 'rejected':
+				$final = self::REJECTED;
 			break;
 		}
 

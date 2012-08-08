@@ -166,4 +166,18 @@ class Model_Position extends \Model {
 		
 		return $query->get();
 	}
+
+	public function update_open_slots($character_action)
+	{
+		if ($character_action == 'add')
+		{
+			$this->open = --$this->open;
+		}
+		else
+		{
+			$this->open = ++$this->open;
+		}
+
+		$this->save();
+	}
 }

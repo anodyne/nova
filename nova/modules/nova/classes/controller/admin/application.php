@@ -115,8 +115,17 @@ class Controller_Admin_Application extends Controller_Base_Admin
 					$decision = \Input::post('decision');
 					
 					// update the user record
+					$app->user->status = ($decision == 'approve') ? \Status::ACTIVE : \Status::REMOVED;
+					$app->user->role_id = ($decision == 'approve') ? \Input::post('role') : \Model_Access_Role::INACTIVE;
+					$app->user->save();
+
+					# TODO: need to take in to account that the position could have been changed
 
 					// update the character record
+					$app->character->status = ($decision == 'approve') ? \Status::ACTIVE : \Status::REMOVED;
+					$app->character->activated = ($decision == 'approve') ? time() : 0;
+					$app->character->rank_id = ($decision == 'approve') ? \Input::post('rank') : 0;
+					$app->character->save();
 
 					// add the response
 					\Model_Application_Response::create_item(array(
@@ -126,13 +135,28 @@ class Controller_Admin_Application extends Controller_Base_Admin
 						'content' => \Input::post('message')
 					));
 
-					// send the email
-
 					// update the application status
-					$app->status = (\Input::post('decision') == 'approve')
-						? \Model_Application::APPROVED
-						: \Model_Application::REJECTED;
+					$app->status = ($decision == 'approve') ? \Status::APPROVED : \Status::REJECTED;
 					$app->save();
+
+					// set up the mailer
+					$mailer = \Utility::setup_email();
+
+					// build the message
+					$message = \Swift_Message::newInstance()
+						->setSubject('Subject')
+						->setFrom(array('email address' => 'name'))
+						->setTo(array($app->user->email => $app->user->name))
+						->setBcc('bcc')
+						->setBody('Body', 'text/html');
+
+					// send the message
+					$send = $mailer->send($message);
+
+					$this->_flash[] = array(
+						'status' => 'success',
+						'message' => lang('[[short.flash.success|vote|action.saved]]', 1),
+					);
 				}
 
 				/**

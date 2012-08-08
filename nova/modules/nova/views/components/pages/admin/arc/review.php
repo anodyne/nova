@@ -8,33 +8,37 @@
 				<?php echo $reviewerString;?>
 			</p>
 
-			<hr>
+			<?php if ($app->status == Status::IN_PROGRESS): ?>
+				<hr>
 
-			<form method="post">
-				<div class="control-group">
-					<div class="controls">
-						<textarea name="content" rows="5" class="span9" placeholder="<?php echo lang('[[short.arc.add_comment|comments|application]]');?>"></textarea>
+				<form method="post">
+					<div class="control-group">
+						<div class="controls">
+							<textarea name="content" rows="5" class="span9" placeholder="<?php echo lang('[[short.arc.add_comment|comments|application]]');?>"></textarea>
+						</div>
 					</div>
-				</div>
 
-				<div class="controls=">
-					<button class="btn btn-small"><?php echo lang('action.submit', 1);?></button>
-				</div>
+					<div class="controls=">
+						<button class="btn btn-small"><?php echo lang('action.submit', 1);?></button>
+					</div>
 
-				<?php echo Form::hidden('action', 'comment');?>
-			</form>
+					<?php echo Form::hidden('action', 'comment');?>
+				</form>
+			<?php endif;?>
 		</div>
 	</div>
 
 	<div class="span2">
-		<form method="post">
-			<div class="btn-group btn-group-vertical btn-block">
-				<button name="vote[yes]" class="btn btn-success tooltip-top" title="<?php echo lang('vote yes', 1);?>"><i class="icon-thumbs-up icon-white"></i></a>
-				<button name="vote[no]" class="btn btn-danger tooltip-top" title="<?php echo lang('vote no', 1);?>"><i class="icon-thumbs-down icon-white"></i></a>
-			</div>
+		<?php if ($app->status == Status::IN_PROGRESS): ?>
+			<form method="post">
+				<div class="btn-group btn-group-vertical btn-block">
+					<button name="vote[yes]" class="btn btn-success tooltip-top" title="<?php echo lang('vote yes', 1);?>"><i class="icon-thumbs-up icon-white"></i></a>
+					<button name="vote[no]" class="btn btn-danger tooltip-top" title="<?php echo lang('vote no', 1);?>"><i class="icon-thumbs-down icon-white"></i></a>
+				</div>
 
-			<?php echo Form::hidden('action', 'vote');?>
-		</form>
+				<?php echo Form::hidden('action', 'vote');?>
+			</form>
+		<?php endif;?>
 
 		<?php if ($votes->mine): ?>
 			<div class="control-group">
@@ -77,7 +81,7 @@
 		<li><a href="#samplePost" data-toggle="pill"><?php echo lang('sample_post', 2);?></a></li>
 	<?php endif;?>
 
-	<?php if (Sentry::user()->has_level('character.create', 2)): ?>
+	<?php if (Sentry::user()->has_level('character.create', 2) and $app->status == Status::IN_PROGRESS): ?>
 		<li><a href="#admin" data-toggle="pill"><?php echo lang('admin', 1);?></a></li>
 	<?php endif;?>
 </ul>
@@ -167,85 +171,87 @@
 			</div>
 		</div>
 
-		<div id="admin" class="pill-pane">
-			<div class="tabbable tabs-left">
-				<ul class="nav nav-tabs">
-					<li class="active"><a href="#adminUsers" data-toggle="tab"><?php echo lang('review participants', 2);?></a></li>
-					<li><a href="#adminEmail" data-toggle="tab"><?php echo lang('action.email applicant', 2);?></a></li>
-					<li><a href="#adminResponse" data-toggle="tab"><?php echo lang('final response', 2);?></a></li>
-				</ul>
+		<?php if ($app->status == Status::IN_PROGRESS): ?>
+			<div id="admin" class="pill-pane">
+				<div class="tabbable tabs-left">
+					<ul class="nav nav-tabs">
+						<li class="active"><a href="#adminUsers" data-toggle="tab"><?php echo lang('review participants', 2);?></a></li>
+						<li><a href="#adminEmail" data-toggle="tab"><?php echo lang('action.email applicant', 2);?></a></li>
+						<li><a href="#adminResponse" data-toggle="tab"><?php echo lang('final response', 2);?></a></li>
+					</ul>
 
-				<div class="tab-content">
-					<div id="adminUsers" class="tab-pane active">
-						<form method="post">
-							<div class="control-group">
-								<div class="controls">
-									<?php echo NovaForm::users('reviewUsers[]', $reviewerArray, array('class' => 'span6 chzn', 'multiple' => 'multiple'));?>
-									<p class="help-block"><?php echo lang('short.arc.admin.users');?></p>
+					<div class="tab-content">
+						<div id="adminUsers" class="tab-pane active">
+							<form method="post">
+								<div class="control-group">
+									<div class="controls">
+										<?php echo NovaForm::users('reviewUsers[]', $reviewerArray, array('class' => 'span6 chzn', 'multiple' => 'multiple'));?>
+										<p class="help-block"><?php echo lang('short.arc.admin.users');?></p>
+									</div>
 								</div>
-							</div>
 
-							<div class="controls">
-								<?php echo Form::hidden('action', 'users');?>
-
-								<button type="submit" class="btn btn-primary"><?php echo lang('action.update', 1);?></button>
-							</div>
-						</form>
-					</div>
-
-					<div id="adminEmail" class="tab-pane">
-						<p><?php echo lang('short.arc.email');?></p>
-
-						<form method="post">
-							<div class="control-group">
-								<label class="control-label"><?php echo lang('message', 1);?></label>
 								<div class="controls">
-									<textarea name="message" class="span8" rows="10"></textarea>
+									<?php echo Form::hidden('action', 'users');?>
+
+									<button type="submit" class="btn btn-primary"><?php echo lang('action.update', 1);?></button>
 								</div>
-							</div>
+							</form>
+						</div>
 
-							<div class="controls">
-								<?php echo Form::hidden('action', 'email');?>
+						<div id="adminEmail" class="tab-pane">
+							<p><?php echo lang('short.arc.email');?></p>
 
-								<button type="submit" class="btn btn-primary"><?php echo lang('action.send', 2);?></button>
-							</div>
-						</form>
-					</div>
+							<form method="post">
+								<div class="control-group">
+									<label class="control-label"><?php echo lang('message', 1);?></label>
+									<div class="controls">
+										<textarea name="message" class="span8" rows="10"></textarea>
+									</div>
+								</div>
 
-					<div id="adminResponse" class="tab-pane">
-						<form method="post">
-							<div class="control-group">
-								<label class="control-label"><?php echo lang('decision', 1);?></label>
 								<div class="controls">
-									<?php echo Form::select('decision', false, array('approve' => lang('action.approve', 1), 'reject' => lang('action.reject', 1)), array('class' => 'span2', 'id' => 'decisionDrop'));?>
+									<?php echo Form::hidden('action', 'email');?>
+
+									<button type="submit" class="btn btn-primary"><?php echo lang('action.send', 2);?></button>
 								</div>
-							</div>
+							</form>
+						</div>
 
-							<div id="approveOptions">
-								<?php echo NovaForm::position('position', $app->position->id, array(), 'open_playing');?>
+						<div id="adminResponse" class="tab-pane">
+							<form method="post">
+								<div class="control-group">
+									<label class="control-label"><?php echo lang('decision', 1);?></label>
+									<div class="controls">
+										<?php echo Form::select('decision', false, array('approve' => lang('action.approve', 1), 'reject' => lang('action.reject', 1)), array('class' => 'span2', 'id' => 'decisionDrop'));?>
+									</div>
+								</div>
 
-								<?php echo NovaForm::rank('rank');?>
+								<div id="approveOptions">
+									<?php echo NovaForm::position('position', $app->position->id, array(), 'open_playing');?>
 
-								<?php echo NovaForm::roles('role', Model_Access_Role::ACTIVE);?>
-							</div>
+									<?php echo NovaForm::rank('rank');?>
 
-							<div class="control-group">
-								<label class="control-label"><?php echo lang('message', 1);?></label>
+									<?php echo NovaForm::roles('role', Model_Access_Role::ACTIVE);?>
+								</div>
+
+								<div class="control-group">
+									<label class="control-label"><?php echo lang('message', 1);?></label>
+									<div class="controls">
+										<textarea name="message" class="span8" rows="10"><?php echo Model_SiteContent::get_content("accept_message");?></textarea>
+									</div>
+								</div>
+
 								<div class="controls">
-									<textarea name="message" class="span8" rows="10"><?php echo Model_SiteContent::get_content("accept_message");?></textarea>
+									<?php echo Form::hidden('action', 'decision');?>
+
+									<button type="submit" class="btn btn-primary"><?php echo lang('action.send response', 2);?></button>
 								</div>
-							</div>
-
-							<div class="controls">
-								<?php echo Form::hidden('action', 'decision');?>
-
-								<button type="submit" class="btn btn-primary"><?php echo lang('action.send response', 2);?></button>
-							</div>
-						</form>
+							</form>
+						</div>
 					</div>
 				</div>
 			</div>
-		</div>
+		<?php endif;?>
 	<?php endif;?>
 
 	<?php if ( ! empty($samplePost)): ?>
