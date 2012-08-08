@@ -43,10 +43,10 @@ class Model_Award extends \Model {
 			'type' => 'enum',
 			'constraint' => "'ic','ooc','both'",
 			'default' => 'ic'),
-		'display' => array(
+		'status' => array(
 			'type' => 'tinyint',
 			'constraint' => 1,
-			'default' => 1),
+			'default' => \Status::ACTIVE),
 	);
 
 	public static $_belongs_to = array(

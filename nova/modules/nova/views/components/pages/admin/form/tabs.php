@@ -20,8 +20,8 @@
 				<td class="span9">
 					<p>
 						<strong><?php echo $t->name;?></strong>
-						<?php if ( (bool) $t->display === false): ?>
-							<span class="muted">(<?php echo lang('status.inactive', 1);?>)</span>
+						<?php if ($t->status === Status::INACTIVE): ?>
+							<span class="muted">(<?php echo lang('inactive', 1);?>)</span>
 						<?php endif;?>
 					</p>
 				</td>

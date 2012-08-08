@@ -38,10 +38,10 @@ class Observer_Form_Section extends \Orm\Observer
 		{
 			if ($tab->sections !== null)
 			{
-				// loop through the sections and get the information about display
+				// loop through the sections and get the information about status
 				foreach ($tab->sections as $s)
 				{
-					$active[$s->id] = (int) $s->display;
+					$active[$s->id] = (int) $s->status;
 				}
 
 				// get a count of the different values
@@ -51,10 +51,10 @@ class Observer_Form_Section extends \Orm\Observer
 				if ( ! in_array(1, $active) 
 						or (array_key_exists(1, $active_count) and $active_count[1] < 2))
 				{
-					if ( (bool) $tab->display === true)
+					if ($tab->status === \Status::ACTIVE)
 					{
 						// there won't be any active sections left, so disable the tab
-						$tab->display = (int) false;
+						$tab->status = \Status::INACTIVE;
 						
 						// save the record
 						$tab->save();
@@ -63,10 +63,10 @@ class Observer_Form_Section extends \Orm\Observer
 			}
 			else
 			{
-				if ( (bool) $tab->display === true)
+				if ($tab->status === \Status::ACTIVE)
 				{
 					// there are no sections in the tab, so disable it
-					$tab->display = (int) false;
+					$tab->status = \Status::INACTIVE;
 					
 					// save the record
 					$tab->save();
@@ -128,10 +128,10 @@ class Observer_Form_Section extends \Orm\Observer
 		{
 			if ($tab->sections !== null)
 			{
-				// loop through the sections and get the information about display
+				// loop through the sections and get the information about status
 				foreach ($tab->sections as $s)
 				{
-					$active[$s->id] = (int) $s->display;
+					$active[$s->id] = (int) $s->status;
 				}
 
 				// get a count of the different values
@@ -141,10 +141,10 @@ class Observer_Form_Section extends \Orm\Observer
 				if (in_array(1, $active) 
 						or (array_key_exists(1, $active_count) and $active_count[1] > 0))
 				{
-					if ( (bool) $tab->display === false)
+					if ($tab->status === \Status::INACTIVE)
 					{
 						// there won't be any active sections left, so disable the tab
-						$tab->display = (int) true;
+						$tab->status = \Status::ACTIVE;
 						
 						// save the record
 						$tab->save();
@@ -153,10 +153,10 @@ class Observer_Form_Section extends \Orm\Observer
 			}
 			else
 			{
-				if ( (bool) $tab->display === true)
+				if ($tab->status === \Status::ACTIVE)
 				{
 					// there are no sections in the tab, so disable it
-					$tab->display = (int) false;
+					$tab->status = \Status::INACTIVE;
 					
 					// save the record
 					$tab->save();
@@ -188,10 +188,10 @@ class Observer_Form_Section extends \Orm\Observer
 		{
 			if ($tab->sections !== null)
 			{
-				// loop through the sections and get the information about display
+				// loop through the sections and get the information about status
 				foreach ($tab->sections as $s)
 				{
-					$active[$s->id] = (int) $s->display;
+					$active[$s->id] = (int) $s->status;
 				}
 
 				// get a count of the different values
@@ -200,10 +200,10 @@ class Observer_Form_Section extends \Orm\Observer
 				// if there are no active sections OR the number of actives is only 1
 				if ( ! in_array(1, $active) or (array_key_exists(1, $active_count) and $active_count[1] == 0))
 				{
-					if ( (bool) $tab->display === true)
+					if ($tab->status === \Status::ACTIVE)
 					{
 						// there won't be any active sections left, so disable the tab
-						$tab->display = (int) false;
+						$tab->status = \Status::INACTIVE;
 						
 						// save the record
 						$tab->save();
@@ -211,10 +211,10 @@ class Observer_Form_Section extends \Orm\Observer
 				}
 				else
 				{
-					if ( (bool) $tab->display === false)
+					if ($tab->status === \Status::INACTIVE)
 					{
 						// make sure the tab is active
-						$tab->display = (int) true;
+						$tab->status = \Status::ACTIVE;
 						
 						// save the record
 						$tab->save();
@@ -223,10 +223,10 @@ class Observer_Form_Section extends \Orm\Observer
 			}
 			else
 			{
-				if ( (bool) $tab->display === true)
+				if ($tab->status === \Status::ACTIVE)
 				{
 					// there are no sections in the tab, so disable it
-					$tab->display = (int) false;
+					$tab->status = \Status::INACTIVE;
 					
 					// save the record
 					$tab->save();

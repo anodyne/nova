@@ -41,9 +41,9 @@ class Model_Catalog_Rank extends \Model {
 			'constraint' => 5,
 			'default' => '.png'),
 		'status' => array(
-			'type' => 'enum',
-			'constraint' => "'active','inactive','development'",
-			'default' => 'active'),
+			'type' => 'tinyint',
+			'constraint' => 1,
+			'default' => \Status::ACTIVE),
 		'credits' => array(
 			'type' => 'text'),
 		'default' => array(
@@ -78,7 +78,7 @@ class Model_Catalog_Rank extends \Model {
 	 * @param	bool	whether to limit to the current genre or not
 	 * @return	object	an object of results
 	 */
-	public static function get_all_items($status = 'active', $limit_to_genre = true)
+	public static function get_all_items($status = \Status::ACTIVE, $limit_to_genre = true)
 	{
 		$genre_where = ($limit_to_genre) ? array('genre', \Config::get('nova.genre')) : array();
 		$status_where = ( ! empty($status)) ? array('status', $status) : array();

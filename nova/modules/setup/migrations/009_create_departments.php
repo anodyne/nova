@@ -13,7 +13,7 @@ class Create_departments
 			'name' => array('type' => 'VARCHAR', 'constraint' => 255, 'null' => true),
 			'desc' => array('type' => 'TEXT', 'null' => true),
 			'order' => array('type' => 'INT', 'constraint' => 5, 'null' => true),
-			'display' => array('type' => 'TINYINT', 'constraint' => 1, 'default' => 1),
+			'status' => array('type' => 'TINYINT', 'constraint' => 1, 'default' => \Status::ACTIVE),
 			'type' => array('type' => 'ENUM', 'constraint' => "'playing','nonplaying'", 'default' => 'playing'),
 			'parent_id' => array('type' => 'INT', 'constraint' => 11, 'default' => 0),
 			'manifest_id' => array('type' => 'INT', 'constraint' => 11, 'default' => 1),

@@ -15,7 +15,7 @@ class Create_positions
 			'dept_id' => array('type' => 'INT', 'constraint' => 11),
 			'order' => array('type' => 'INT', 'constraint' => 5, 'null' => true),
 			'open' => array('type' => 'INT', 'constraint' => 5, 'default' => 1),
-			'display' => array('type' => 'TINYINT', 'constraint' => 1, 'default' => 1),
+			'status' => array('type' => 'TINYINT', 'constraint' => 1, 'default' => \Status::ACTIVE),
 			'type' => array('type' => 'ENUM', 'constraint' => "'senior','officer','enlisted','other'", 'default' => 'officer'),
 		), array('id'));
 

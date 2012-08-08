@@ -303,7 +303,7 @@ class Controller_Ajax_Update extends Controller_Base_Ajax
 			{
 				$data['name'] = $group->name;
 				$data['order'] = $group->order;
-				$data['display'] = (int) $group->display;
+				$data['status'] = (int) $group->status;
 			}
 
 			echo \View::forge(\Location::file('update/rankgroup', \Utility::get_skin('admin'), 'ajax'), $data);
@@ -361,7 +361,7 @@ class Controller_Ajax_Update extends Controller_Base_Ajax
 				$data['short_name'] = $info->short_name;
 				$data['order'] = $info->order;
 				$data['group'] = $info->group;
-				$data['display'] = (int) $info->display;
+				$data['status'] = (int) $info->status;
 			}
 
 			echo \View::forge(\Location::file('update/rankinfo', \Utility::get_skin('admin'), 'ajax'), $data);

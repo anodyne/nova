@@ -13,7 +13,7 @@ class Create_personal_logs
 			'character_id' => array('type' => 'INT', 'constraint' => 11),
 			'content' => array('type' => 'TEXT', 'null' => true),
 			'date' => array('type' => 'BIGINT', 'constraint' => 20),
-			'status' => array('type' => 'ENUM', 'constraint' => "'activated','saved','pending'", 'default' => 'activated'),
+			'status' => array('type' => 'TINYINT', 'constraint' => 1, 'default' => \Status::ACTIVE),
 			'tags' => array('type' => 'TEXT', 'null' => true),
 			'updated_at' => array('type' => 'BIGINT', 'constraint' => 20, 'null' => true),
 		), array('id'));

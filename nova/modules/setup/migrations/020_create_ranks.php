@@ -24,7 +24,7 @@ class Create_ranks
 			'id' => array('type' => 'INT', 'constraint' => 11, 'auto_increment' => true),
 			'name' => array('type' => 'VARCHAR', 'constraint' => 255, 'null' => true),
 			'order' => array('type' => 'INT', 'constraint' => 5, 'null' => true),
-			'display' => array('type' => 'TINYINT', 'constraint' => 1, 'default' => 1),
+			'status' => array('type' => 'TINYINT', 'constraint' => 1, 'default' => \Status::ACTIVE),
 		), array('id'));
 
 		\DBUtil::create_table('rank_info_'.$genre, array(
@@ -33,7 +33,7 @@ class Create_ranks
 			'short_name' => array('type' => 'VARCHAR', 'constraint' => 20, 'null' => true),
 			'order' => array('type' => 'INT', 'constraint' => 5, 'null' => true),
 			'group' => array('type' => 'INT', 'constraint' => 5, 'null' => true),
-			'display' => array('type' => 'TINYINT', 'constraint' => 1, 'default' => 1),
+			'status' => array('type' => 'TINYINT', 'constraint' => 1, 'default' => \Status::ACTIVE),
 		), array('id'));
 
 		include NOVAPATH.'setup/assets/install/genres/'.strtolower($genre).'.php';

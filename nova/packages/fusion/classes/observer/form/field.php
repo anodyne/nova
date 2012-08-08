@@ -71,10 +71,10 @@ class Observer_Form_Field extends \Orm\Observer
 		{
 			if ($section->fields !== null)
 			{
-				// loop through the fields and get the information about display
+				// loop through the fields and get the information about status
 				foreach ($section->fields as $f)
 				{
-					$active[$f->id] = (int) $f->display;
+					$active[$f->id] = (int) $f->status;
 				}
 
 				// get a count of the different values
@@ -84,10 +84,10 @@ class Observer_Form_Field extends \Orm\Observer
 				if ( ! in_array(1, $active) 
 						or (array_key_exists(1, $active_count) and $active_count[1] < 2))
 				{
-					if ( (bool) $section->display === true)
+					if ($section->status === \Status::ACTIVE)
 					{
 						// there won't be any active fields left, so disable the section
-						$section->display = (int) false;
+						$section->status = \Status::INACTIVE;
 						
 						// save the record
 						$section->save();
@@ -96,10 +96,10 @@ class Observer_Form_Field extends \Orm\Observer
 			}
 			else
 			{
-				if ( (bool) $section->display === true)
+				if ($section->status === \Status::ACTIVE)
 				{
 					// there are no fields in the section, so disable it
-					$section->display = (int) false;
+					$section->status = \Status::INACTIVE;
 					
 					// save the record
 					$section->save();
@@ -222,10 +222,10 @@ class Observer_Form_Field extends \Orm\Observer
 		{
 			if ($section->fields !== null)
 			{
-				// loop through the fields and get the information about display
+				// loop through the fields and get the information about status
 				foreach ($section->fields as $f)
 				{
-					$active[$f->id] = (int) $f->display;
+					$active[$f->id] = (int) $f->status;
 				}
 
 				// get a count of the different values
@@ -235,10 +235,10 @@ class Observer_Form_Field extends \Orm\Observer
 				if (in_array(1, $active) 
 						or (array_key_exists(1, $active_count) and $active_count[1] > 0))
 				{
-					if ( (bool) $section->display === false)
+					if ($section->status === \Status::INACTIVE)
 					{
 						// there won't be any active fields left, so disable the section
-						$section->display = (int) true;
+						$section->status = \Status::ACTIVE;
 						
 						// save the record
 						$section->save();
@@ -247,10 +247,10 @@ class Observer_Form_Field extends \Orm\Observer
 			}
 			else
 			{
-				if ( (bool) $section->display === true)
+				if ($section->status === \Status::ACTIVE)
 				{
 					// there are no fields in the section, so disable it
-					$section->display = (int) false;
+					$section->status = \Status::INACTIVE;
 					
 					// save the record
 					$section->save();
@@ -284,10 +284,10 @@ class Observer_Form_Field extends \Orm\Observer
 		{
 			if ($section->fields !== null)
 			{
-				// loop through the fields and get the information about display
+				// loop through the fields and get the information about status
 				foreach ($section->fields as $f)
 				{
-					$active[$f->id] = (int) $f->display;
+					$active[$f->id] = (int) $f->status;
 				}
 
 				// get a count of the different values
@@ -298,10 +298,10 @@ class Observer_Form_Field extends \Orm\Observer
 						or (array_key_exists(1, $active_count) and $active_count[1] == 0))
 				{
 					// only do the update if the section is active
-					if ( (bool) $section->display === true)
+					if ($section->status === \Status::ACTIVE)
 					{
 						// there won't be any active fields left, so disable the section
-						$section->display = (int) false;
+						$section->status = \Status::INACTIVE;
 						
 						// save the record
 						$section->save();
@@ -310,10 +310,10 @@ class Observer_Form_Field extends \Orm\Observer
 				else
 				{
 					// only do the update if the section is inactive
-					if ( (bool) $section->display === false)
+					if ($section->status === \Status::INACTIVE)
 					{
-						// set the section to display
-						$section->display = (int) true;
+						// set the section to status
+						$section->status = \Status::ACTIVE;
 						
 						// save the record
 						$section->save();
@@ -323,10 +323,10 @@ class Observer_Form_Field extends \Orm\Observer
 			else
 			{
 				// only do the update if the section is active
-				if ( (bool) $section->display === true)
+				if ($section->status === \Status::ACTIVE)
 				{
 					// there are no fields in the section, so disable it
-					$section->display = (int) false;
+					$section->status = \Status::INACTIVE;
 					
 					// save the record
 					$section->save();

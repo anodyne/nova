@@ -17,7 +17,7 @@ class Create_navigation
 			'access' => array('type' => 'VARCHAR', 'constraint' => 255, 'null' => true),
 			'type' => array('type' => 'VARCHAR', 'constraint' => 50, 'default' => 'main'),
 			'category' => array('type' => 'VARCHAR', 'constraint' => 20, 'null' => true),
-			'display' => array('type' => 'TINYINT', 'constraint' => 1, 'default' => 1),
+			'status' => array('type' => 'TINYINT', 'constraint' => 1, 'default' => \Status::ACTIVE),
 			'sim_type' => array('type' => 'INT', 'constraint' => 5, 'default' => 1),
 		), array('id'));
 
@@ -52,7 +52,7 @@ class Create_navigation
 				'url' => 'wiki/index',
 				'sim_type' => 1,
 				'category' => 'main',
-				'display' => (int) true),
+				'status' => (int) true),
 			array(
 				'name' => 'Forums',
 				'group' => 0,
@@ -60,7 +60,7 @@ class Create_navigation
 				'url' => 'forums/index',
 				'sim_type' => 1,
 				'category' => 'main',
-				'display' => (int) true),
+				'status' => (int) true),
 			array(
 				'name' => 'Search',
 				'group' => 0,
@@ -194,7 +194,7 @@ class Create_navigation
 				'order' => 0,
 				'url' => 'wiki/index',
 				'sim_type' => 1,
-				'display' => 1,
+				'status' => 1,
 				'type' => 'sub',
 				'category' => 'wiki'),
 			array(
@@ -203,7 +203,7 @@ class Create_navigation
 				'order' => 1,
 				'url' => 'wiki/recent',
 				'sim_type' => 1,
-				'display' => 1,
+				'status' => 1,
 				'type' => 'sub',
 				'category' => 'wiki'),
 			array(
@@ -212,7 +212,7 @@ class Create_navigation
 				'order' => 2,
 				'url' => 'wiki/categories',
 				'sim_type' => 1,
-				'display' => 1,
+				'status' => 1,
 				'type' => 'sub',
 				'category' => 'wiki'),
 			array(
@@ -221,7 +221,7 @@ class Create_navigation
 				'order' => 0,
 				'url' => 'wiki/managepages',
 				'sim_type' => 1,
-				'display' => 1,
+				'status' => 1,
 				'type' => 'sub',
 				'use_access' => 1,
 				'access' => 'wiki/page',
@@ -233,7 +233,7 @@ class Create_navigation
 				'order' => 1,
 				'url' => 'wiki/managecategories',
 				'sim_type' => 1,
-				'display' => 1,
+				'status' => 1,
 				'type' => 'sub',
 				'use_access' => 1,
 				'access' => 'wiki/categories',
@@ -245,7 +245,7 @@ class Create_navigation
 				'order' => 0,
 				'url' => 'wiki/page',
 				'sim_type' => 1,
-				'display' => 1,
+				'status' => 1,
 				'type' => 'sub',
 				'use_access' => 1,
 				'access' => 'wiki/page',

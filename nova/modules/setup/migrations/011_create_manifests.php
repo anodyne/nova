@@ -12,7 +12,7 @@ class Create_manifests
 			'order' => array('type' => 'INT', 'constraint' => 5, 'null' => true),
 			'desc' => array('type' => 'TEXT', 'null' => true),
 			'header_content' => array('type' => 'TEXT', 'null' => true),
-			'display' => array('type' => 'TINYINT', 'constraint' => 1, 'default' => 1),
+			'status' => array('type' => 'TINYINT', 'constraint' => 1, 'default' => \Status::ACTIVE),
 			'default' => array('type' => 'TINYINT', 'constraint' => 1, 'default' => 0),
 		), array('id'));
 

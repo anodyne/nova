@@ -55,10 +55,10 @@ class Model_Nav extends \Model {
 			'type' => 'string',
 			'constraint' => 20,
 			'null' => true),
-		'display' => array(
+		'status' => array(
 			'type' => 'tinyint',
 			'constraint' => 1,
-			'default' => 1),
+			'default' => \Status::ACTIVE),
 		'sim_type' => array(
 			'type' => 'int',
 			'constraint' => 5,
@@ -92,7 +92,7 @@ class Model_Nav extends \Model {
 	 * @param	bool	whether to pull displayed or hidden items (null to pull everything)
 	 * @return	object
 	 */
-	public static function get_nav_items($type, $category, $display = true)
+	public static function get_nav_items($type, $category, $active = \Status::ACTIVE)
 	{
 		$query = static::find();
 
@@ -106,9 +106,9 @@ class Model_Nav extends \Model {
 			$query->where('category', $category);
 		}
 
-		if ($display !== null)
+		if ($active !== null)
 		{
-			$query->where('display', (int) $display);
+			$query->where('status', (int) $active);
 		}
 
 		// set the ordering

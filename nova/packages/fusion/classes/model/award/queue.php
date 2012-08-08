@@ -36,9 +36,9 @@ class Model_Award_Queue extends \Model {
 			'type' => 'text',
 			'null' => true),
 		'status' => array(
-			'type' => 'enum',
-			'constraint' => "'pending','accepted','rejected'",
-			'default' => 'pending'),
+			'type' => 'tinyint',
+			'constraint' => 1,
+			'default' => \Status::PENDING),
 		'date' => array(
 			'type' => 'bigint',
 			'constraint' => 20),

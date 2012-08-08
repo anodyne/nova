@@ -10,7 +10,7 @@ class Create_tour
 			'id' => array('type' => 'INT', 'constraint' => 11, 'auto_increment' => true),
 			'name' => array('type' => 'VARCHAR', 'constraint' => 255, 'null' => true),
 			'order' => array('type' => 'INT', 'constraint' => 5, 'null' => true),
-			'display' => array('type' => 'TINYINT', 'constraint' => 1, 'default' => 1),
+			'status' => array('type' => 'TINYINT', 'constraint' => 1, 'default' => \Status::ACTIVE),
 			'images' => array('type' => 'TEXT', 'null' => true),
 			'summary' => array('type' => 'TEXT', 'null' => true),
 			'spec_id' => array('type' => 'INT', 'constraint' => 11, 'null' => true),
@@ -28,7 +28,7 @@ class Create_tour
 			'id' => array('type' => 'INT', 'constraint' => 11, 'auto_increment' => true),
 			'name' => array('type' => 'VARCHAR', 'constraint' => 255, 'null' => true),
 			'order' => array('type' => 'INT', 'constraint' => 5, 'null' => true),
-			'display' => array('type' => 'TINYINT', 'constraint' => 1, 'default' => 1),
+			'status' => array('type' => 'TINYINT', 'constraint' => 1, 'default' => \Status::ACTIVE),
 			'images' => array('type' => 'TEXT', 'null' => true),
 			'summary' => array('type' => 'TEXT', 'null' => true),
 		), array('id'));

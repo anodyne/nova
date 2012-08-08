@@ -14,7 +14,7 @@ class Create_posts
 			'date' => array('type' => 'BIGINT', 'constraint' => 20),
 			'mission_id' => array('type' => 'INT', 'constraint' => 11),
 			'saved_user_id' => array('type' => 'INT', 'null' => true),
-			'status' => array('type' => 'ENUM', 'constraint' => "'activated','saved','pending'", 'default' => 'activated'),
+			'status' => array('type' => 'TINYINT', 'constraint' => 1, 'default' => \Status::ACTIVE),
 			'content' => array('type' => 'TEXT', 'null' => true),
 			'tags' => array('type' => 'TEXT', 'null' => true),
 			'updated_at' => array('type' => 'BIGINT', 'constraint' => 20, 'null' => true),

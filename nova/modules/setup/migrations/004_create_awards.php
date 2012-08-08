@@ -14,14 +14,14 @@ class Create_awards
 			'order' => array('type' => 'INT', 'constraint' => 5, 'null' => true),
 			'desc' => array('type' => 'TEXT', 'null' => true),
 			'type' => array('type' => 'ENUM', 'constraint' => "'ic','ooc','both'", 'default' => 'ic'),
-			'display' => array('type' => 'TINYINT', 'constraint' => 1, 'default' => 1),
+			'status' => array('type' => 'TINYINT', 'constraint' => 1, 'default' => \Status::ACTIVE),
 		), array('id'));
 
 		\DBUtil::create_table('awards_categories', array(
 			'id' => array('type' => 'INT', 'constraint' => 11, 'auto_increment' => true),
 			'name' => array('type' => 'VARCHAR', 'constraint' => 255, 'null' => true),
 			'desc' => array('type' => 'TEXT', 'null' => true),
-			'display' => array('type' => 'TINYINT', 'constraint' => 1, 'default' => 1),
+			'status' => array('type' => 'TINYINT', 'constraint' => 1, 'default' => \Status::ACTIVE),
 		), array('id'));
 
 		\DBUtil::create_table('awards_queue', array(
@@ -31,7 +31,7 @@ class Create_awards
 			'nominate_character_id' => array('type' => 'INT', 'constraint' => 11),
 			'award_id' => array('type' => 'INT', 'constraint' => 11),
 			'reason' => array('type' => 'TEXT', 'null' => true),
-			'status' => array('type' => 'ENUM', 'constraint' => "'pending','accepted','rejected'", 'default' => 'pending'),
+			'status' => array('type' => 'TINYINT', 'constraint' => 1, 'default' => \Status::PENDING),
 			'date' => array('type' => 'BIGINT', 'constraint' => 20),
 		), array('id'));
 

@@ -23,7 +23,7 @@ class Model_User extends \Model {
 		'status' => array(
 			'type' => 'tinyint',
 			'constraint' => 1,
-			'default' => 1),
+			'default' => \Status::ACTIVE),
 		'name' => array(
 			'type' => 'string',
 			'constraint' => 255,

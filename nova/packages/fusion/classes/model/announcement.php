@@ -39,9 +39,9 @@ class Model_Announcement extends \Model {
 		'content' => array(
 			'type' => 'blob'),
 		'status' => array(
-			'type' => 'enum',
-			'constraint' => "'activated','saved','pending'",
-			'default' => 'activated'),
+			'type' => 'tinyint',
+			'constraint' => 1,
+			'default' => \Status::ACTIVE),
 		'private' => array(
 			'type' => 'tinyint',
 			'constraint' => 1,
@@ -103,7 +103,7 @@ class Model_Announcement extends \Model {
 	 * @param	string	the status of items to retrieve
 	 * @return	object	an object with all the comments
 	 */
-	public function comments($status = 'activated')
+	public function comments($status = \Status::ACTIVE)
 	{
 		return \Model_Comment::find('all', array(
 			'where' => array(

@@ -34,10 +34,10 @@ class Model_Manifest extends \Model {
 		'header_content' => array(
 			'type' => 'text',
 			'null' => true),
-		'display' => array(
+		'status' => array(
 			'type' => 'tinyint',
 			'constraint' => 1,
-			'default' => 1),
+			'default' => \Status::ACTIVE),
 		'default' => array(
 			'type' => 'tinyint',
 			'constraint' => 1,

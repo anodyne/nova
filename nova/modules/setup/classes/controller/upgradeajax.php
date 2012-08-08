@@ -124,7 +124,7 @@ class Controller_Upgradeajax extends \Controller
 		\DB::query("ALTER TABLE ".\DB::table_prefix()."awards CHANGE `award_order` `order` INT(5) NULL")->execute();
 		\DB::query("ALTER TABLE ".\DB::table_prefix()."awards CHANGE `award_desc` `desc` TEXT NULL")->execute();
 		\DB::query("ALTER TABLE ".\DB::table_prefix()."awards CHANGE `award_cat` `type` ENUM('ic', 'ooc', 'both') DEFAULT 'ic' NOT NULL")->execute();
-		\DB::query("ALTER TABLE ".\DB::table_prefix()."awards CHANGE `award_display` `display` TEXT NULL")->execute();
+		\DB::query("ALTER TABLE ".\DB::table_prefix()."awards CHANGE `award_display` `status` TEXT NULL")->execute();
 
 		$add = array(
 			'category_id' => array(
@@ -142,16 +142,16 @@ class Controller_Upgradeajax extends \Controller
 			foreach ($awards as $award)
 			{
 				$a = \Model_Award::find($award->id);
-				$a->display = (int) ($a->display == 'y');
+				$a->status = ($a->status == 'y') ? \Status::ACTIVE : \Status::INACTIVE;
 				$a->save();
 			}
 		}
 
 		$change = array(
-			'display' => array(
+			'status' => array(
 				'type' => 'TINYINT',
 				'constraint' => 1,
-				'default' => 1),
+				'default' => \Status::ACTIVE),
 		);
 		\DBUtil::modify_fields('awards', $change);
 		
@@ -557,7 +557,7 @@ class Controller_Upgradeajax extends \Controller
 		// change the columns
 		\DB::query("ALTER TABLE ".\DB::table_prefix()."announcement_categories CHANGE `newscat_id` `id` INT(11) NOT NULL")->execute();
 		\DB::query("ALTER TABLE ".\DB::table_prefix()."announcement_categories CHANGE `newscat_name` `name` VARCHAR(255) NULL")->execute();
-		\DB::query("ALTER TABLE ".\DB::table_prefix()."announcement_categories CHANGE `newscat_display` `display` TEXT NULL")->execute();
+		\DB::query("ALTER TABLE ".\DB::table_prefix()."announcement_categories CHANGE `newscat_display` `status` TEXT NULL")->execute();
 		
 		// make sure the primary key is set up properly
 		\DB::query("ALTER TABLE ".\DB::table_prefix()."announcement_categories MODIFY COLUMN `id` INT(11) auto_increment primary key")->execute();
@@ -569,17 +569,17 @@ class Controller_Upgradeajax extends \Controller
 		{
 			foreach ($contents as $c)
 			{
-				$c->display = (int) ($c->display == 'y');
+				$c->status = ($c->status == 'y') ? \Status::ACTIVE : \Status::INACTIVE;
 				$c->save();
 			}
 		}
 		
 		// now that we've changed the display stuff, change the schema
 		$fields = array(
-			'display' => array(
+			'status' => array(
 				'type' => 'TINYINT',
 				'constraint' => 1,
-				'default' => 1),
+				'default' => \Status::ACTIVE),
 		);
 		\DBUtil::modify_fields('announcement_categories', $fields);
 		
@@ -905,7 +905,7 @@ class Controller_Upgradeajax extends \Controller
 		\DB::query("ALTER TABLE ".\DB::table_prefix()."specs CHANGE `specs_id` `id` INT(11) NOT NULL")->execute();
 		\DB::query("ALTER TABLE ".\DB::table_prefix()."specs CHANGE `specs_name` `name` VARCHAR(255) NULL")->execute();
 		\DB::query("ALTER TABLE ".\DB::table_prefix()."specs CHANGE `specs_order` `order` INT(5) NULL")->execute();
-		\DB::query("ALTER TABLE ".\DB::table_prefix()."specs CHANGE `specs_display` `display` TEXT NULL")->execute();
+		\DB::query("ALTER TABLE ".\DB::table_prefix()."specs CHANGE `specs_display` `status` TEXT NULL")->execute();
 		\DB::query("ALTER TABLE ".\DB::table_prefix()."specs CHANGE `specs_images` `images` TEXT NULL")->execute();
 		\DB::query("ALTER TABLE ".\DB::table_prefix()."specs CHANGE `specs_summary` `summary` TEXT NULL")->execute();
 
@@ -918,16 +918,16 @@ class Controller_Upgradeajax extends \Controller
 		// loop through all the records and make sure the display column is correct
 		foreach ($specs as $s)
 		{
-			$s->display = (int) ($s->display == 'y');
+			$s->status = ($s->status == 'y') ? \Status::ACTIVE : \Status::INACTIVE;
 			$s->save();
 		}
 		
 		// rename the fields to appropriate names
 		$fields = array(
-			'display' => array(
+			'status' => array(
 				'type' => 'TINYINT',
 				'constraint' => 1,
-				'default' => 1),
+				'default' => \Status::ACTIVE),
 		);
 		\DBUtil::modify_fields('specs', $fields);
 		
@@ -989,7 +989,7 @@ class Controller_Upgradeajax extends \Controller
 		\DB::query("ALTER TABLE ".\DB::table_prefix()."tour CHANGE `tour_id` `id` INT(11) NOT NULL")->execute();
 		\DB::query("ALTER TABLE ".\DB::table_prefix()."tour CHANGE `tour_name` `name` VARCHAR(255) NULL")->execute();
 		\DB::query("ALTER TABLE ".\DB::table_prefix()."tour CHANGE `tour_order` `order` INT(5) NULL")->execute();
-		\DB::query("ALTER TABLE ".\DB::table_prefix()."tour CHANGE `tour_display` `display` TEXT")->execute();
+		\DB::query("ALTER TABLE ".\DB::table_prefix()."tour CHANGE `tour_display` `status` TEXT")->execute();
 		\DB::query("ALTER TABLE ".\DB::table_prefix()."tour CHANGE `tour_images` `images` TEXT NULL")->execute();
 		\DB::query("ALTER TABLE ".\DB::table_prefix()."tour CHANGE `tour_summary` `summary` TEXT NULL")->execute();
 		\DB::query("ALTER TABLE ".\DB::table_prefix()."tour CHANGE `tour_spec_item` `spec_id` INT(11) NULL")->execute();
@@ -1003,16 +1003,16 @@ class Controller_Upgradeajax extends \Controller
 		// loop through all the records and make sure the private column is correct
 		foreach ($tour as $t)
 		{
-			$t->display = (int) ($t->display == 'y');
+			$t->status = ($t->status == 'y') ? \Status::ACTIVE : \Status::INACTIVE;
 			$t->save();
 		}
 		
 		// rename the fields to appropriate names
 		$fields = array(
-			'display' => array(
+			'status' => array(
 				'type' => 'TINYINT',
 				'constraint' => 1,
-				'default' => 1),
+				'default' => \Status::ACTIVE),
 		);
 		\DBUtil::modify_fields('tour', $fields);
 		
@@ -1340,7 +1340,7 @@ class Controller_Upgradeajax extends \Controller
 		\DB::query("ALTER TABLE ".\DB::table_prefix()."messages CHANGE `privmsgs_date` `date` BIGINT(20) NOT NULL")->execute();
 		\DB::query("ALTER TABLE ".\DB::table_prefix()."messages CHANGE `privmsgs_subject` `subject` VARCHAR(255) NULL")->execute();
 		\DB::query("ALTER TABLE ".\DB::table_prefix()."messages CHANGE `privmsgs_content` `content` TEXT NULL")->execute();
-		\DB::query("ALTER TABLE ".\DB::table_prefix()."messages CHANGE `privmsgs_author_display` `display` TEXT NULL")->execute();
+		\DB::query("ALTER TABLE ".\DB::table_prefix()."messages CHANGE `privmsgs_author_display` `status` TEXT NULL")->execute();
 		
 		// make sure the primary key is set up properly
 		\DB::query('ALTER TABLE '.\DB::table_prefix().'messages MODIFY COLUMN `id` BIGINT(20) auto_increment primary key')->execute();
@@ -1352,17 +1352,17 @@ class Controller_Upgradeajax extends \Controller
 		{
 			foreach ($messages as $m)
 			{
-				$m->display = (int) ($m->display == 'y');
+				$m->status = ($m->status == 'y') ? \Status::ACTIVE : \Status::INACTIVE;
 				$m->save();
 			}
 		}
 		
 		// now that we've changed the display stuff, change the schema
 		$fields = array(
-			'display' => array(
+			'status' => array(
 				'type' => 'TINYINT',
 				'constraint' => 1,
-				'default' => 1),
+				'default' => \Status::ACTIVE),
 		);
 		\DBUtil::modify_fields('messages', $fields);
 		
@@ -1382,7 +1382,7 @@ class Controller_Upgradeajax extends \Controller
 		\DB::query("ALTER TABLE ".\DB::table_prefix()."message_recipients CHANGE `pmto_recipient_user` `user_id` INT(11) NOT NULL")->execute();
 		\DB::query("ALTER TABLE ".\DB::table_prefix()."message_recipients CHANGE `pmto_recipient_character` `character_id` INT(11) NOT NULL")->execute();
 		\DB::query("ALTER TABLE ".\DB::table_prefix()."message_recipients CHANGE `pmto_unread` `unread` TEXT NULL")->execute();
-		\DB::query("ALTER TABLE ".\DB::table_prefix()."message_recipients CHANGE `pmto_display` `display` TEXT NULL")->execute();
+		\DB::query("ALTER TABLE ".\DB::table_prefix()."message_recipients CHANGE `pmto_display` `status` TEXT NULL")->execute();
 		
 		// make sure the primary key is set up properly
 		\DB::query('ALTER TABLE '.\DB::table_prefix().'message_recipients MODIFY COLUMN `id` BIGINT(20) auto_increment primary key')->execute();
@@ -1395,7 +1395,7 @@ class Controller_Upgradeajax extends \Controller
 			foreach ($messages as $m)
 			{
 				$m->unread = (int) ($m->unread == 'y');
-				$m->display = (int) ($m->display == 'y');
+				$m->status = ($m->status == 'y') ? \Status::ACTIVE : \Status::INACTIVE;
 				$m->save();
 			}
 		}
@@ -1406,10 +1406,10 @@ class Controller_Upgradeajax extends \Controller
 				'type' => 'TINYINT',
 				'constraint' => 1,
 				'default' => 1),
-			'display' => array(
+			'status' => array(
 				'type' => 'TINYINT',
 				'constraint' => 1,
-				'default' => 1),
+				'default' => \Status::ACTIVE),
 		);
 		\DBUtil::modify_fields('message_recipients', $fields);
 		
@@ -1595,7 +1595,7 @@ class Controller_Upgradeajax extends \Controller
 					'name' 		=> $r['tab_name'],
 					'link_id' 	=> $r['tab_link_id'],
 					'order' 	=> $r['tab_order'],
-					'display' 	=> (int) true
+					'status' 	=> \Status::ACTIVE
 				);
 				
 				// create the tab record
@@ -1666,7 +1666,7 @@ class Controller_Upgradeajax extends \Controller
 					'label' 		=> $r['field_label_page'],
 					'placeholder' 	=> '',
 					'order' 		=> $r['field_order'],
-					'display' 		=> ($r['field_display'] == 'y') ? (int) true : (int) false,
+					'status' 		=> ($r['field_display'] == 'y') ? \Status::ACTIVE : \Status::INACTIVE,
 					'updated_at' 	=> time(),
 				);
 				
@@ -2165,7 +2165,7 @@ class Controller_Upgradeajax extends \Controller
 					'label' 		=> $r['field_label_page'],
 					'placeholder' 	=> '',
 					'order' 		=> $r['field_order'],
-					'display' 		=> (int) ($r['field_display'] == 'y'),
+					'status' 		=> ($r['field_display'] == 'y') ? \Status::ACTIVE : \Status::INACTIVE,
 					'updated_at' 	=> time(),
 				);
 				
@@ -2277,7 +2277,7 @@ class Controller_Upgradeajax extends \Controller
 					'label' 		=> $r['field_label_page'],
 					'placeholder' 	=> '',
 					'order' 		=> $r['field_order'],
-					'display' 		=> ($r['field_display'] == 'y') ? (int) true : (int) false,
+					'status' 		=> ($r['field_display'] == 'y') ? \Status::ACTIVE : \Status::INACTIVE,
 					'updated_at' 	=> time(),
 				);
 				

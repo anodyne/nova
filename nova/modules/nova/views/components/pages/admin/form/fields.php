@@ -15,7 +15,7 @@
 <?php if ($tabs !== false): ?>
 	<ul class="nav nav-tabs">
 	<?php foreach ($tabs as $t): ?>
-		<li><a href="#<?php echo $t->link_id;?>" data-toggle="tab"><?php echo $t->name;?><?php if ( (bool) $t->display === false){ echo ' ('.lang('status.inactive', 1).')';}?></a></li>
+		<li><a href="#<?php echo $t->link_id;?>" data-toggle="tab"><?php echo $t->name;?><?php if ($t->status === Status::INACTIVE){ echo ' ('.lang('inactive', 1).')';}?></a></li>
 	<?php endforeach;?>
 	</ul>
 	
@@ -25,7 +25,7 @@
 		<?php if (is_array($sections) and array_key_exists($t->id, $sections)): ?>
 			<?php foreach ($sections[$t->id] as $s): ?>
 				<fieldset>
-					<legend><?php echo $s->name;?><?php if ($s->display == 0){ echo ' <small>'.lang('status.inactive', 1).'</small>';}?></legend>
+					<legend><?php echo $s->name;?><?php if ($s->status === Status::INACTIVE){ echo ' <small>'.lang('inactive', 1).'</small>';}?></legend>
 
 					<?php if (is_array($fields) and array_key_exists($s->id, $fields)): ?>
 						<table width="100%" class="table-striped sort-field">
@@ -35,8 +35,8 @@
 									<td class="span9 control-group">
 										<label class="control-label">
 											<?php echo $f->label;?>
-											<?php if ( (bool) $f->display === false): ?>
-												<span class="muted">(<?php echo lang('status.inactive', 1);?>)</span>
+											<?php if ($f->status === Status::INACTIVE): ?>
+												<span class="muted">(<?php echo lang('inactive', 1);?>)</span>
 											<?php endif;?>
 										</label>
 										<div class="controls">
@@ -81,7 +81,7 @@
 	<?php if ($sections !== false): ?>
 		<?php foreach ($sections as $s): ?>
 			<fieldset>
-				<legend><?php echo $s->name;?><?php if ($s->display == 0){ echo ' <small>'.lang('status.inactive', 1).'</small>';}?></legend>
+				<legend><?php echo $s->name;?><?php if ($s->status === Status::INACTIVE){ echo ' <small>'.lang('inactive', 1).'</small>';}?></legend>
 
 				<?php if (is_array($fields) and array_key_exists($s->id, $fields)): ?>
 					<table width="100%" class="table-striped sort-field">
@@ -91,8 +91,8 @@
 								<td class="span9 control-group">
 									<label class="control-label">
 										<?php echo $f->label;?>
-										<?php if ( (bool) $f->display === false): ?>
-											<span class="muted">(<?php echo lang('status.inactive', 1);?>)</span>
+										<?php if ($f->status === Status::INACTIVE): ?>
+											<span class="muted">(<?php echo lang('inactive', 1);?>)</span>
 										<?php endif;?>
 									</label>
 									<div class="controls">
@@ -132,8 +132,8 @@
 						<td class="span9 control-group">
 							<label class="control-label">
 								<?php echo $f->label;?>
-								<?php if ( (bool) $f->display === false): ?>
-									<span class="muted">(<?php echo lang('status.inactive', 1);?>)</span>
+								<?php if ($f->status === Status::INACTIVE): ?>
+									<span class="muted">(<?php echo lang('inactive', 1);?>)</span>
 								<?php endif;?>
 							</label>
 							<div class="controls">

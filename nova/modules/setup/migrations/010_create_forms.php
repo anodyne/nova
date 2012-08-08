@@ -45,7 +45,7 @@ class Create_forms
 			'type' => array('type' => 'VARCHAR', 'constraint' => 50, 'default' => 'text'),
 			'label' => array('type' => 'VARCHAR', 'constraint' => 255, 'null' => true),
 			'order' => array('type' => 'INT', 'constraint' => 5, 'null' => true),
-			'display' => array('type' => 'TINYINT', 'constraint' => 1, 'default' => 1),
+			'status' => array('type' => 'TINYINT', 'constraint' => 1, 'default' => \Status::ACTIVE),
 			'restriction' => array('type' => 'INT', 'constraint' => 11, 'null' => true),
 			'help' => array('type' => 'TEXT', 'null' => true),
 			'selected' => array('type' => 'VARCHAR', 'constraint' => 50, 'null' => true),
@@ -317,7 +317,7 @@ class Create_forms
 			'tab_id' => array('type' => 'INT', 'constraint' => 11, 'null' => true),
 			'name' => array('type' => 'VARCHAR', 'constraint' => 255, 'null' => true),
 			'order' => array('type' => 'INT', 'constraint' => 5, 'null' => true),
-			'display' => array('type' => 'TINYINT', 'constraint' => 1, 'default' => 1),
+			'status' => array('type' => 'TINYINT', 'constraint' => 1, 'default' => \Status::ACTIVE),
 			'updated_at' => array('type' => 'BIGINT', 'constraint' => 20, 'null' => true),
 		), array('id'));
 
@@ -360,7 +360,7 @@ class Create_forms
 			'name' => array('type' => 'VARCHAR', 'constraint' => 255, 'null' => true),
 			'link_id' => array('type' => 'VARCHAR', 'constraint' => 20, 'null' => true),
 			'order' => array('type' => 'INT', 'constraint' => 5, 'null' => true),
-			'display' => array('type' => 'TINYINT', 'constraint' => 1, 'default' => 1),
+			'status' => array('type' => 'TINYINT', 'constraint' => 1, 'default' => \Status::ACTIVE),
 			'updated_at' => array('type' => 'BIGINT', 'constraint' => 20, 'null' => true),
 		), array('id'));
 

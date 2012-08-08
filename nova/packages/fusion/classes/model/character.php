@@ -27,7 +27,7 @@ class Model_Character extends \Model {
 		'status' => array(
 			'type' => 'tinyint',
 			'constraint' => 1,
-			'default' => 1),
+			'default' => \Status::ACTIVE),
 		'first_name' => array(
 			'type' => 'string',
 			'constraint' => 255,

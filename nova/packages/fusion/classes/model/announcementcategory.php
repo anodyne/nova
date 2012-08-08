@@ -24,10 +24,10 @@ class Model_AnnouncementCategory extends \Model {
 			'type' => 'string',
 			'constraint' => 255,
 			'default' => ''),
-		'display' => array(
+		'status' => array(
 			'type' => 'tinyint',
 			'constraint' => 1,
-			'default' => 1),
+			'default' => \Status::ACTIVE),
 	);
 	
 	public static $_has_many = array(

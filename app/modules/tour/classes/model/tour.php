@@ -28,10 +28,10 @@ class Model_Tour extends \Model {
 			'type' => 'int',
 			'constraint' => 5,
 			'null' => true),
-		'display' => array(
+		'status' => array(
 			'type' => 'tinyint',
 			'constraint' => 1,
-			'default' => 1),
+			'default' => \Status::ACTIVE),
 		'images' => array(
 			'type' => 'text',
 			'null' => true),

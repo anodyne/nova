@@ -105,7 +105,7 @@ class Upgrade_nova2_tour
 							'label' 		=> $r['field_label_page'],
 							'placeholder' 	=> '',
 							'order' 		=> $r['field_order'],
-							'display' 		=> ($r['field_display'] == 'y') ? (int) true : (int) false,
+							'status' 		=> ($r['field_display'] == 'y') ? \Status::ACTIVE : \Status::INACTIVE,
 							'updated_at' 	=> time(),
 						);
 						

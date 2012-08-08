@@ -74,7 +74,7 @@ class Create_docking
 				'order' => 0,
 				'url' => 'sim/docked',
 				'sim_type' => 3,
-				'display' => 0,
+				'status' => \Status::INACTIVE,
 				'type' => 'sub',
 				'category' => 'sim'),
 			array(
@@ -83,7 +83,7 @@ class Create_docking
 				'order' => 1,
 				'url' => 'sim/dockingrequest',
 				'sim_type' => 3,
-				'display' => 0,
+				'status' => \Status::INACTIVE,
 				'type' => 'sub',
 				'category' => 'sim'),
 			array(

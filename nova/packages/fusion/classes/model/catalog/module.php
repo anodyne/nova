@@ -40,9 +40,9 @@ class Model_Catalog_Module extends \Model {
 			'constraint' => 1,
 			'default' => 0),
 		'status' => array(
-			'type' => 'enum',
-			'constraint' => "'active','inactive'",
-			'default' => 'active'),
+			'type' => 'tinyint',
+			'constraint' => 1,
+			'default' => \Status::ACTIVE),
 		'credits' => array(
 			'type' => 'text',
 			'null' => true),
@@ -55,7 +55,7 @@ class Model_Catalog_Module extends \Model {
 	 * @param	string	the status of modules
 	 * @return	object	an object with the results
 	 */
-	public static function get_all_items($status = 'active')
+	public static function get_all_items($status = \Status::ACTIVE)
 	{
 		return static::find()->where('status', $status)->get();
 	}

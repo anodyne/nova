@@ -81,18 +81,18 @@ function field($obj, $property, $default = false)
 				<div class="controls">
 					<?php if (Uri::segment(5) == 0): ?>
 						<label class="radio inline">
-							<input type="radio" name="display" value="1" checked="checked"> <?php echo lang('yes', 1);?>
+							<input type="radio" name="status" value="<?php echo Status::ACTIVE;?>" checked="checked"> <?php echo lang('yes', 1);?>
 						</label>
 						<label class="radio inline">
-							<input type="radio" name="display" value="0"> <?php echo lang('no', 1);?>
+							<input type="radio" name="status" value="<?php echo Status::INACTIVE;?>"> <?php echo lang('no', 1);?>
 						</label>
 					<?php else: ?>
 						<label class="radio inline">
-							<input type="radio" name="display" value="1"<?php if ( (int) field($field, 'display') === 1){ echo ' checked="checked"';}?>>
+							<input type="radio" name="status" value="<?php echo Status::ACTIVE;?>"<?php if ( (int) field($field, 'status') === Status::ACTIVE){ echo ' checked="checked"';}?>>
 							<?php echo lang('yes', 1);?>
 						</label>
 						<label class="radio inline">
-							<input type="radio" name="display" value="0"<?php if ( (int) field($field, 'display') === 0){ echo ' checked="checked"';}?>>
+							<input type="radio" name="status" value="<?php echo Status::INACTIVE;?>"<?php if ( (int) field($field, 'status') === Status::INACTIVE){ echo ' checked="checked"';}?>>
 							<?php echo lang('no', 1);?>
 						</label>
 					<?php endif;?>

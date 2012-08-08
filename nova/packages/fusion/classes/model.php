@@ -167,7 +167,7 @@ class Model extends \Orm\Model
 	 * @param	bool	pull back displayed items (true) or all items (false)
 	 * @return	object
 	 */
-	public static function find_form_items($key, $only_displayed = false)
+	public static function find_form_items($key, $only_active = false)
 	{
 		// get the object
 		$items = static::find();
@@ -176,9 +176,9 @@ class Model extends \Orm\Model
 		$items->where('form_key', $key);
 
 		// should we be getting all items or just enabled ones?
-		if ($only_displayed)
+		if ($only_active)
 		{
-			$items->where('display', (int) true);
+			$items->where('status', \Status::ACTIVE);
 		}
 
 		// order the items

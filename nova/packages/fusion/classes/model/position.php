@@ -38,10 +38,10 @@ class Model_Position extends \Model {
 			'type' => 'int',
 			'constraint' => 5,
 			'default' => 1),
-		'display' => array(
+		'status' => array(
 			'type' => 'tinyint',
 			'constraint' => 1,
-			'default' => 1),
+			'default' => \Status::ACTIVE),
 		'type' => array(
 			'type' => 'enum',
 			'constraint' => "'senior','officer','enlisted','other'",
@@ -116,16 +116,16 @@ class Model_Position extends \Model {
 	 * @param	bool	whether to show displayed positions or not (null for both)
 	 * @return	object
 	 */
-	public static function get_positions($scope = 'all', $dept = null, $display = true)
+	public static function get_positions($scope = 'all', $dept = null, $active = true)
 	{
 		// grab the genre
 		$genre = \Config::get('nova.genre');
 
 		$query = static::query();
 		
-		if ( ! empty($display))
+		if ( ! empty($active))
 		{
-			$query->where('display', (int) $display);
+			$query->where('status', \Status::ACTIVE);
 		}
 		
 		switch ($scope)

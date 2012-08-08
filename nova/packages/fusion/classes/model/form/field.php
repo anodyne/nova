@@ -39,10 +39,10 @@ class Model_Form_Field extends \Model {
 			'type' => 'int',
 			'constraint' => 5,
 			'null' => true),
-		'display' => array(
+		'status' => array(
 			'type' => 'tinyint',
 			'constraint' => 1,
-			'default' => 1),
+			'default' => \Status::ACTIVE),
 		'restriction' => array(
 			'type' => 'int',
 			'constraint' => 11,
@@ -130,7 +130,7 @@ class Model_Form_Field extends \Model {
 
 		if ($active)
 		{
-			$items->where('display', (int) true);
+			$items->where('status', \Status::ACTIVE);
 		}
 
 		$items->order_by('order', 'asc');

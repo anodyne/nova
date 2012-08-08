@@ -20,7 +20,7 @@
 			<?php foreach ($rankinfo as $i): ?>
 				<tr height="40" id="info_<?php echo $i->id;?>">
 					<td>
-						<?php if ( ! (bool) $i->display): ?>
+						<?php if ($i->status === Status::INACTIVE): ?>
 							<span class="label label-important"><?php echo lang('off', 1);?></span>
 						<?php endif;?>
 						<?php echo $i->name;?>

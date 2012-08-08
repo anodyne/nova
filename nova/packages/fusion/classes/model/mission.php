@@ -36,9 +36,9 @@ class Model_Mission extends \Model {
 			'constraint' => 11,
 			'null' => true),
 		'status' => array(
-			'type' => 'enum',
-			'constraint' => "'upcoming','current','completed'",
-			'default' => 'upcoming'),
+			'type' => 'tinyint',
+			'constraint' => 1,
+			'default' => \Status::PENDING),
 		'start_date' => array(
 			'type' => 'bigint',
 			'constraint' => 20,

@@ -33,10 +33,10 @@ class Model_MessageRecipient extends \Model {
 			'type' => 'tinyint',
 			'constraint' => 1,
 			'default' => 1),
-		'display' => array(
+		'status' => array(
 			'type' => 'tinyint',
 			'constraint' => 1,
-			'default' => 1),
+			'default' => \Status::ACTIVE),
 	);
 	
 	public static $_belongs_to = array(

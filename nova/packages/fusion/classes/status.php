@@ -9,10 +9,11 @@ namespace Fusion;
 
 class Status
 {
-	const PENDING	= 1;
-	const INACTIVE	= 2;
-	const ACTIVE	= 3;
-	const REMOVED	= 4;
+	const PENDING		= 1;
+	const INACTIVE		= 2;
+	const ACTIVE		= 3;
+	const REMOVED		= 4;
+	const IN_PROGRESS	= 5;
 
 	/**
 	 * Translate a status into a string.
@@ -37,6 +38,10 @@ class Status
 				$final = lang('active');
 			break;
 
+			case self::IN_PROGRESS:
+				$final = lang('in_progress');
+			break;
+
 			default:
 				$final = lang('[[error.not_found|status]]');
 			break;
@@ -58,7 +63,6 @@ class Status
 		{
 			case 'active':
 			case 'current':
-			case 'all':
 				$final = self::ACTIVE;
 			break;
 
@@ -78,6 +82,13 @@ class Status
 			case 'applied':
 			case 'waiting':
 				$final = self::PENDING;
+			break;
+
+			case 'work in progress':
+			case 'wip':
+			case 'saved':
+			case 'in progress':
+				$final = self::IN_PROGRESS;
 			break;
 		}
 

@@ -27,10 +27,10 @@ class Model_Award_Category extends \Model {
 		'desc' => array(
 			'type' => 'text',
 			'null' => true),
-		'display' => array(
+		'status' => array(
 			'type' => 'tinyint',
 			'constraint' => 1,
-			'default' => 1),
+			'default' => \Status::ACTIVE),
 	);
 
 	public static $_has_many = array(

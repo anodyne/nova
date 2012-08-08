@@ -36,10 +36,10 @@ class Model_Rank_Info extends \Model {
 			'type' => 'int',
 			'constraint' => 5,
 			'null' => true),
-		'display' => array(
+		'status' => array(
 			'type' => 'tinyint',
 			'constraint' => 1,
-			'default' => 1),
+			'default' => \Status::ACTIVE),
 	);
 
 	/**
@@ -87,15 +87,15 @@ class Model_Rank_Info extends \Model {
 	 * @param	bool	whether to get only displayed items or not
 	 * @return	void
 	 */
-	public static function find_items($only_displayed = false)
+	public static function find_items($only_active = false)
 	{
 		// start the find
 		$query = static::find();
 
 		// add a where statement only if we want just displayed items
-		if ($only_displayed)
+		if ($only_active)
 		{
-			$query->where('display', (int) true);
+			$query->where('status', \Status::ACTIVE);
 		}
 
 		// return the ordered list

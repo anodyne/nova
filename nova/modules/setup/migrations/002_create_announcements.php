@@ -14,7 +14,7 @@ class Create_announcements
 			'category_id' => array('type' => 'INT', 'constraint' => 11),
 			'date' => array('type' => 'BIGINT', 'constraint' => 20),
 			'content' => array('type' => 'BLOB'),
-			'status' => array('type' => 'ENUM', 'constraint' => "'activated','saved','pending'", 'default' => 'activated'),
+			'status' => array('type' => 'TINYINT', 'constraint' => 1, 'default' => \Status::ACTIVE),
 			'private' => array('type' => 'TINYINT', 'constraint' => 1, 'default' => 0),
 			'tags' => array('type' => 'TEXT', 'null' => true),
 			'updated_at' => array('type' => 'BIGINT', 'constraint' => 20, 'null' => true),
@@ -23,7 +23,7 @@ class Create_announcements
 		\DBUtil::create_table('announcement_categories', array(
 			'id' => array('type' => 'INT', 'constraint' => 11, 'auto_increment' => true),
 			'name' => array('type' => 'VARCHAR', 'constraint' => 255, 'default' => ''),
-			'display' => array('type' => 'TINYINT', 'constraint' => 1, 'default' => 1),
+			'status' => array('type' => 'TINYINT', 'constraint' => 1, 'default' => \Status::ACTIVE),
 		), array('id'));
 
 		$data = array(

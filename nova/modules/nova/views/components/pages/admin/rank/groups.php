@@ -29,7 +29,7 @@
 		<?php foreach ($groups as $g): ?>
 			<tr height="40" id="group_<?php echo $g->id;?>">
 				<td>
-					<?php if ( ! (bool) $g->display): ?>
+					<?php if ($g->status === Status::INACTIVE): ?>
 						<span class="label label-important"><?php echo lang('off', 1);?></span>
 					<?php endif;?>
 					<?php echo $g->name;?>

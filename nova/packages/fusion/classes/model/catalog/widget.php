@@ -37,9 +37,9 @@ class Model_Catalog_Widget extends \Model {
 			'constraint' => 5,
 			'null' => true),
 		'status' => array(
-			'type' => 'enum',
-			'constraint' => "'active','inactive','development'",
-			'default' => 'active'),
+			'type' => 'tinyint',
+			'constraint' => 1,
+			'default' => \Status::ACTIVE),
 		'credits' => array(
 			'type' => 'text',
 			'null' => true),
@@ -52,7 +52,7 @@ class Model_Catalog_Widget extends \Model {
 	 * @param	string	the status to pull
 	 * @return	object	an object of results
 	 */
-	public static function get_all_items($status = 'active')
+	public static function get_all_items($status = \Status::ACTIVE)
 	{
 		$status_where = ( ! empty($status)) ? array('status', $status) : array();
 		

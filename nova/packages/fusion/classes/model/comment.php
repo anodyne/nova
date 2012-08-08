@@ -37,9 +37,9 @@ class Model_Comment extends \Model {
 			'type' => 'text',
 			'null' => true),
 		'status' => array(
-			'type' => 'enum',
-			'constraint' => "'activated','pending'",
-			'default' => 'activated'),
+			'type' => 'tinyint',
+			'constraint' => 1,
+			'default' => \Status::ACTIVE),
 		'date' => array(
 			'type' => 'bigint',
 			'constraint' => 20),

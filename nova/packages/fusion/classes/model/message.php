@@ -36,10 +36,10 @@ class Model_Message extends \Model {
 		'content' => array(
 			'type' => 'text',
 			'null' => true),
-		'display' => array(
+		'status' => array(
 			'type' => 'tinyint',
 			'constraint' => 1,
-			'default' => 1),
+			'default' => \Status::ACTIVE),
 	);
 	
 	public static $_has_many = array(

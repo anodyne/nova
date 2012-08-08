@@ -15,7 +15,7 @@
 <?php if ($tabs !== false): ?>
 	<ul class="nav nav-tabs">
 	<?php foreach ($tabs as $t): ?>
-		<li><a href="#<?php echo $t->link_id;?>" data-toggle="tab"><?php echo $t->name;?><?php if ( (bool) $t->display === false){ echo ' ('.lang('status.inactive', 1).')';}?></a></li>
+		<li><a href="#<?php echo $t->link_id;?>" data-toggle="tab"><?php echo $t->name;?><?php if ($t->status === Status::INACTIVE){ echo ' ('.lang('inactive', 1).')';}?></a></li>
 	<?php endforeach;?>
 	</ul>
 	
@@ -30,8 +30,8 @@
 						<td class="span9">
 							<p>
 								<strong><?php echo $s->name;?></strong>
-								<?php if ( (bool) $s->display === false): ?>
-									<span class="muted">(<?php echo lang('status.inactive', 1);?>)</span>
+								<?php if ($s->status === Status::INACTIVE): ?>
+									<span class="muted">(<?php echo lang('inactive', 1);?>)</span>
 								<?php endif;?>
 							</p>
 						</td>
@@ -63,8 +63,8 @@
 					<td class="span9">
 						<p>
 							<strong><?php echo $s->name;?></strong>
-							<?php if ( (bool) $s->display === false): ?>
-								<span class="muted">(<?php echo lang('status.inactive', 1);?>)</span>
+							<?php if ($s->status === Status::INACTIVE): ?>
+								<span class="muted">(<?php echo lang('inactive', 1);?>)</span>
 							<?php endif;?>
 						</p>
 					</td>

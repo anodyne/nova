@@ -66,6 +66,7 @@ return array(
 	'is' => 'is',
 	'in' => 'in',
 	'inactive' => 'inactive',
+	'in_progress' => 'in progress',
 	
 	'loa' => "LOA",
 	'loa_full' => "Leave of Absence",

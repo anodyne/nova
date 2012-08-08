@@ -33,9 +33,9 @@ class Model_Catalog_SkinSec extends \Model {
 			'constraint' => 50,
 			'null' => true),
 		'status' => array(
-			'type' => 'enum',
-			'constraint' => "'active','inactive','development'",
-			'default' => 'active'),
+			'type' => 'tinyint',
+			'constraint' => 1,
+			'default' => \Status::ACTIVE),
 		'default' => array(
 			'type' => 'tinyint',
 			'constraint' => 1,

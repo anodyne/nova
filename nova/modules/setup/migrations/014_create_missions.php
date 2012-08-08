@@ -12,7 +12,7 @@ class Create_missions
 			'images' => array('type' => 'TEXT', 'null' => true),
 			'order' => array('type' => 'INT', 'constraint' => 5, 'null' => true),
 			'group_id' => array('type' => 'INT', 'constraint' => 11, 'null' => true),
-			'status' => array('type' => 'ENUM', 'constraint' => "'upcoming','current','completed'", 'default' => 'upcoming'),
+			'status' => array('type' => 'TINYINT', 'constraint' => 1, 'default' => \Status::PENDING),
 			'start_date' => array('type' => 'BIGINT', 'constraint' => 20, 'null' => true),
 			'end_date' => array('type' => 'BIGINT', 'constraint' => 20, 'null' => true),
 			'desc' => array('type' => 'TEXT', 'null' => true),

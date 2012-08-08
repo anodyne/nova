@@ -13,7 +13,7 @@ class Create_catalogs
 			'location' => array('type' => 'VARCHAR', 'constraint' => 255, 'null' => true),
 			'desc' => array('type' => 'TEXT', 'null' => true),
 			'protected' => array('type' => 'TINYINT', 'constraint' => 1, 'default' => 0),
-			'status' => array('type' => 'ENUM', 'constraint' => "'active','inactive'", 'default' => 'active'),
+			'status' => array('type' => 'TINYINT', 'constraint' => 1, 'default' => \Status::ACTIVE),
 			'credits' => array('type' => 'TEXT', 'null' => true),
 		), array('id'));
 
@@ -24,7 +24,7 @@ class Create_catalogs
 			'preview' => array('type' => 'VARCHAR', 'constraint' => 50, 'default' => 'preview.png'),
 			'blank' => array('type' => 'VARCHAR', 'constraint' => 50, 'default' => 'blank.png'),
 			'extension' => array('type' => 'VARCHAR', 'constraint' => 5, 'default' => '.png'),
-			'status' => array('type' => 'ENUM', 'constraint' => "'active','inactive','development'", 'default' => 'active'),
+			'status' => array('type' => 'TINYINT', 'constraint' => 1, 'default' => \Status::ACTIVE),
 			'credits' => array('type' => 'TEXT'),
 			'default' => array('type' => 'TINYINT', 'constraint' => 1, 'default' => 0),
 			'genre' => array('type' => 'VARCHAR', 'constraint' => 10, 'default' => '', 'null' => true),
@@ -56,7 +56,7 @@ class Create_catalogs
 			'section' => array('type' => 'VARCHAR', 'constraint' => 50, 'null' => true),
 			'skin' => array('type' => 'VARCHAR', 'constraint' => 100, 'null' => true),
 			'preview' => array('type' => 'VARCHAR', 'constraint' => 50, 'null' => true),
-			'status' => array('type' => 'ENUM', 'constraint' => "'active','inactive','development'", 'default' => 'active'),
+			'status' => array('type' => 'TINYINT', 'constraint' => 1, 'default' => \Status::ACTIVE),
 			'default' => array('type' => 'TINYINT', 'constraint' => 1, 'default' => 0),
 			'nav' => array('type' => 'VARCHAR', 'constraint' => 20, 'default' => 'dropdown'),
 		), array('id'));
@@ -90,7 +90,7 @@ class Create_catalogs
 			'location' => array('type' => 'VARCHAR', 'constraint' => 255, 'null' => true),
 			'page' => array('type' => 'VARCHAR', 'constraint' => 100, 'null' => true),
 			'zone' => array('type' => 'INT', 'constraint' => 5, 'null' => true),
-			'status' => array('type' => 'ENUM', 'constraint' => "'active','inactive','development'", 'default' => 'active'),
+			'status' => array('type' => 'TINYINT', 'constraint' => 1, 'default' => \Status::ACTIVE),
 			'credits' => array('type' => 'TEXT', 'null' => true),
 		), array('id'));
 	}

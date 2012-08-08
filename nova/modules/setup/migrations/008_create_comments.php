@@ -13,7 +13,7 @@ class Create_comments
 			'type' => array('type' => 'VARCHAR', 'constraint' => 100, 'null' => true),
 			'item_id' => array('type' => 'INT', 'constraint' => 11),
 			'content' => array('type' => 'TEXT', 'null' => true),
-			'status' => array('type' => 'ENUM', 'constraint' => "'activated','pending'", 'default' => 'activated'),
+			'status' => array('type' => 'TINYINT', 'constraint' => 1, 'default' => \Status::ACTIVE),
 			'date' => array('type' => 'BIGINT', 'constraint' => 20),
 		), array('id'));
 	}

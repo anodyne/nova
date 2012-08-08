@@ -13,7 +13,7 @@ class Create_messages
 			'date' => array('type' => 'BIGINT', 'constraint' => 20),
 			'subject' => array('type' => 'VARCHAR', 'constraint' => 255, 'null' => true),
 			'content' => array('type' => 'TEXT', 'null' => true),
-			'display' => array('type' => 'TINYINT', 'constraint' => 1, 'default' => 1),
+			'status' => array('type' => 'TINYINT', 'constraint' => 1, 'default' => \Status::ACTIVE),
 		), array('id'));
 
 		\DBUtil::create_table('message_recipients', array(
@@ -22,7 +22,7 @@ class Create_messages
 			'user_id' => array('type' => 'INT', 'constraint' => 11),
 			'character_id' => array('type' => 'INT', 'constraint' => 11),
 			'unread' => array('type' => 'TINYINT', 'constraint' => 1, 'default' => 1),
-			'display' => array('type' => 'TINYINT', 'constraint' => 1, 'default' => 1),
+			'status' => array('type' => 'TINYINT', 'constraint' => 1, 'default' => \Status::ACTIVE),
 		), array('id'));
 	}
 
