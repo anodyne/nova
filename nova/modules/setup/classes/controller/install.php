@@ -178,6 +178,9 @@ class Controller_Install extends Controller_Base_Setup
 						'character_id' => $crCharacter->id,
 						'primary' => (int) true
 					));
+
+					// update the position's open slots
+					\Model_Position::find($position)->update_open_slots('add');
 					
 					// update the user with the character info
 					\Model_User::update_user($crUser->id, array(
