@@ -88,7 +88,7 @@ class Model_Tour extends \Model {
 					'character_id' => 0,
 					'item_id' => $item->id,
 					'value' => '',
-					'updated_at' => Date::now(),
+					'updated_at' => time(),
 				);
 				
 				\Model_Form_Data::create_data($field_data);

@@ -182,7 +182,7 @@ class Sentry_Attempts
 			// update the record
 			$result = \Model_User_Suspend::update_item($record->id, array(
 				'attempts' => ++$this->attempts,
-				'last_attempt_at' => \Date::time(),
+				'last_attempt_at' => time(),
 			));
 		}
 		else
