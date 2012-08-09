@@ -141,7 +141,7 @@
 					<div class="control-group">
 						<label class="control-label"><?php echo lang('action.applied on', 2);?></label>
 						<div class="controls">
-							<p><?php echo Date::forge($app->created_at)->format('eu_named');?></p>
+							<p><?php echo $applied_date;?></p>
 						</div>
 					</div>
 

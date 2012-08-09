@@ -265,6 +265,12 @@ class Controller_Admin_Application extends Controller_Base_Admin
 
 			// get the role information
 			$this->_data->roles = array();
+
+			# TODO: need to add user timezone here
+			
+			// set the date the user applied on
+			$this->_data->applied_date = \Date::forge($app->created_at)
+				->format($this->options->date_format);
 		}
 
 		return;
