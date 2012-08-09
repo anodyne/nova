@@ -9,7 +9,7 @@ class Create_characters
 		\DBUtil::create_table('characters', array(
 			'id' => array('type' => 'INT', 'constraint' => 11, 'auto_increment' => true),
 			'user_id' => array('type' => 'INT', 'constraint' => 11, 'default' => 0),
-			'status' => array('type' => 'TINYINT', 'constraint' => 1, 'default' => 1),
+			'status' => array('type' => 'TINYINT', 'constraint' => 1, 'default' => \Status::PENDING),
 			'first_name' => array('type' => 'VARCHAR', 'constraint' => 255, 'null' => true),
 			'middle_name' => array('type' => 'VARCHAR', 'constraint' => 255, 'null' => true),
 			'last_name' => array('type' => 'VARCHAR', 'constraint' => 255, 'null' => true),

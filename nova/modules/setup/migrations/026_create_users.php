@@ -8,7 +8,7 @@ class Create_users
 	{
 		\DBUtil::create_table('users', array(
 			'id' => array('type' => 'INT', 'constraint' => 11, 'auto_increment' => true),
-			'status' => array('type' => 'TINYINT', 'constraint' => 1, 'default' => \Status::ACTIVE),
+			'status' => array('type' => 'TINYINT', 'constraint' => 1, 'default' => \Status::PENDING),
 			'name' => array('type' => 'VARCHAR', 'constraint' => 255, 'null' => true),
 			'email' => array('type' => 'VARCHAR', 'constraint' => 100, 'null' => true),
 			'password' => array('type' => 'VARCHAR', 'constraint' => 96, 'null' => true),
