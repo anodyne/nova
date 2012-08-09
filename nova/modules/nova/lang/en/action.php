@@ -48,6 +48,8 @@ return array(
 	'removed' => 'removed',
 
 	'submit' => 'submit',
+	'submitted' => 'submitted',
+	'submission' => 'submission',
 	'save' => 'save',
 	'saved' => 'saved',
 	'send' => 'send',

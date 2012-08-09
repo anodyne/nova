@@ -41,9 +41,6 @@ abstract class Controller_Main extends Controller_Base_Main
 		return;
 	}
 
-	/**
-	 * @todo	validation on certain fields
-	 */
 	public function action_join($position = false)
 	{
 		if (\Input::method() == 'POST')
@@ -68,6 +65,9 @@ abstract class Controller_Main extends Controller_Base_Main
 				{
 					// make sure the user ID is associated with the character
 					$_POST['character']['user_id'] = \Input::post('user.id');
+
+					// get the user
+					$user = \Model_User::find(\Input::post('user.id'));
 				}
 
 				// create the character
@@ -75,9 +75,9 @@ abstract class Controller_Main extends Controller_Base_Main
 
 				// insert the position info
 				\Model_Character_Positions::create_item(array(
-					'position_id' => \Input::post('position'),
+					'position_id' => (int) trim(\Security::xss_clean(\Input::post('position'))),
 					'character_id' => $char->id,
-					'primary' => (\Input::post('user.id') == '0') ? 0 : 1
+					'primary' => (\Input::post('user.id') == '0') ? (int) false : (int) true
 				));
 
 				// update the user with the character info if it's a new user
@@ -94,7 +94,7 @@ abstract class Controller_Main extends Controller_Base_Main
 					'user_name' => $user->name,
 					'character_id' => $char->id,
 					'character_name' => $char->name(false, false),
-					'position_id' => trim(\Security::xss_clean(\Input::post('position'))),
+					'position_id' => (int) trim(\Security::xss_clean(\Input::post('position'))),
 				));
 
 				// create the application
@@ -122,7 +122,7 @@ abstract class Controller_Main extends Controller_Base_Main
 				// set the flash message
 				$this->_flash[] = array(
 					'status' => 'success',
-					'message' => 'Application successfully submitted!',
+					'message' => lang('[[short.flash.success|application|action.submitted]]', 1),
 				);
 			}
 
@@ -142,7 +142,7 @@ abstract class Controller_Main extends Controller_Base_Main
 			$this->_data->characterJoinHelp = \Markdown::parse(\Model_SiteContent::get_content('join_character_help'));
 
 			// get the sample post content
-			$this->_data->samplePostContent = \Markdown::parse(\Model_SiteContent::get_content('join_sample_post'));
+			$this->_data->samplePostContent = \Model_SiteContent::get_content('join_sample_post');
 		}
 		else
 		{

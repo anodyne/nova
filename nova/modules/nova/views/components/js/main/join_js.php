@@ -1,9 +1,93 @@
+<script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.9/jquery.validate.min.js"></script>
+<script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.9/additional-methods.min.js"></script>
 <script type="text/javascript">
-	
 	$(document).ready(function(){
 
 		// show the first tab
 		$('.nav-tabs a:first').tab('show');
+
+		$('#joinForm').validate({
+			errorElement: 'p',
+			errorClass: 'help-block',
+			highlight: function(element, errorClass) {
+				$(element).closest('.control-group').addClass('error');
+			},
+			unhighlight: function(element, errorClass) {
+				$(element).closest('.control-group').removeClass('error');
+			},
+			errorPlacement: function(error, element) {
+				error.insertAfter(element);
+			},
+			ignore: '',
+			invalidHandler: function(form, validator){
+				// get the number of invalid fields
+				var errors = validator.numberOfInvalids();
+
+				// if we have errors
+				if (errors)
+				{
+					// loop through the invalid fields and figure out what tab should be shown
+					$.each(validator.invalid, function(field, message){
+
+						// find out what the active tab is
+						var tab = $('[name="' + field + '"]').closest('.pill-pane').attr('id');
+
+						// switch to the tab
+						$('#joinTabs a[href="#' + tab + '"]').tab('show');
+
+						// now stop
+						return;
+					});
+				}
+
+				return false;
+			},
+			rules: {
+				"user[email]": {
+					email: true,
+					required: function(){
+						if ($('[name="user[id]"]').val() == '0')
+							return true;
+						else
+							return false;
+					}
+				},
+				"user[name]": {
+					required: function(){
+						if ($('[name="user[id]"]').val() == '0')
+							return true;
+						else
+							return false;
+					}
+				},
+				"user[password]": {
+					required: function(){
+						if ($('[name="user[id]"]').val() == '0')
+							return true;
+						else
+							return false;
+					}
+				},
+				"user[confirm_password]": {
+					required: function(){
+						if ($('[name="user[id]"]').val() == '0')
+							return true;
+						else
+							return false;
+					},
+					equalTo: $('[name="user[password]"]')
+				},
+				"character[first_name]": {
+					required: true
+				},
+				"position": {
+					required: true
+				},
+				"app[sample_post]": {
+					required: true
+				}
+			}
+		});
 	});
 	
 	// show the additional details field after where did you hear about us
@@ -11,10 +95,10 @@
 
 		var selected = $('#hearAbout option:selected').val();
 
-		if (selected == '<?php echo lang('short.hear_about_us.member', 2);?>' ||
-				selected == '<?php echo lang('short.hear_about_us.org', 1);?>' ||
-				selected == '<?php echo lang('short.hear_about_us.ad', 1);?>' ||
-				selected == '<?php echo lang('short.hear_about_us.other', 1);?>')
+		if (selected == "<?php echo lang('short.hear_about_us.member', 2);?>" ||
+				selected == "<?php echo lang('short.hear_about_us.org', 1);?>" ||
+				selected == "<?php echo lang('short.hear_about_us.ad', 1);?>" ||
+				selected == "<?php echo lang('short.hear_about_us.other', 1);?>")
 		{
 			$(this).closest('div.control-group').next().slideDown();
 		}
@@ -37,7 +121,7 @@
 				if ( ! $.isEmptyObject(data))
 				{
 					// change the user exists field
-					$('[name="user[exists]"]').val(data.id);
+					$('[name="user[id]"]').val(data.id);
 
 					// hide the user info
 					$('#userInfo').hide();
@@ -51,7 +135,7 @@
 				else
 				{
 					// change the user exists field
-					$('[name="user[exists]"]').val(0);
+					$('[name="user[id]"]').val(0);
 
 					// show the user info
 					$('#userInfo').show();
@@ -114,21 +198,6 @@
 		// show the user form
 		$('#userForm').show();
 
-		return false;
-	});
-
-	$('#positionDrop').on('change', function(){
-		
-		$.ajax({
-			type: "POST",
-			url: "<?php echo Uri::create('ajax/info/position_desc');?>",
-			data: { position: $('#positionDrop option:selected').val() },
-			success: function(data){
-				$('#positionDesc').html('');
-				$('#positionDesc').append(data);
-			}
-		});
-		
 		return false;
 	});
 </script>

@@ -13,8 +13,8 @@ if ( ! function_exists('joinData'))
 	}
 }
 
-?><form method="post">
-	<ul class="nav nav-pills">
+?><form method="post" id="joinForm">
+	<ul id="joinTabs" class="nav nav-pills">
 		<li class="active"><a href="#user" data-toggle="pill"><?php echo lang('user info', 2);?></a></li>
 		<li><a href="#characterInfo" data-toggle="pill"><?php echo lang('character info', 2);?></a></li>
 		<li><a href="#characterForm" data-toggle="pill"><?php echo lang('character bio', 2);?></a></li>
@@ -95,8 +95,6 @@ if ( ! function_exists('joinData'))
 							<input type="text" name="app[hear_about_detail]" class="span5">
 						</div>
 					</div>
-
-					<input type="hidden" name="user[id]" value="0">
 				</div>
 
 				<div id="userForm" class="span6"><?php echo $user;?></div>
@@ -134,13 +132,7 @@ if ( ! function_exists('joinData'))
 						</div>
 					</div>
 
-					<div class="control-group">
-						<label class="control-label"><?php echo lang('position', 1);?></label>
-						<div class="controls">
-							<?php echo NovaForm::position('position', array(), array('class' => 'span4', 'id' => 'positionDrop'), 'open');?>
-							<p id="positionDesc" class="help-block"></p>
-						</div>
-					</div>
+					<?php echo NovaForm::position('position', array(), array(), 'open');?>
 				</div>
 
 				<div class="span6 muted"><?php echo $characterJoinHelp;?></div>
@@ -152,7 +144,7 @@ if ( ! function_exists('joinData'))
 		<?php if ( ! empty($samplePostContent)): ?>
 			<div id="samplePost" class="pill-pane">
 				<div class="control-group">
-					<label class="control-label"><?php echo $samplePostContent;?></label>
+					<label class="control-label"><?php echo Markdown::parse($samplePostContent);?></label>
 					<div class="controls">
 						<textarea name="app[sample_post]" rows="15" class="span12"></textarea>
 					</div>
@@ -162,6 +154,7 @@ if ( ! function_exists('joinData'))
 	</div>
 
 	<div class="controls">
+		<input type="hidden" name="user[id]" value="0">
 		<button class="btn btn-primary" name="submit"><?php echo lang('action.submit', 1);?></button>
 	</div>
 </form>
