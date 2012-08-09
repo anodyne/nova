@@ -1,9 +1,12 @@
 <?php $d = data($data, $f->id);?>
-<?php if ( ! $editable and ! empty($d)): ?>
+<?php if (
+	($editable and (empty($f->restriction) or Sentry::check() and Sentry::user()->has_role($f->restriction))) or
+	( ! $editable and ! empty($d))
+): ?>
 	<div class="control-group">
 		<label class="control-label"><?php echo $f->label;?></label>
 		<div class="controls">
-			<?php if ($editable and Sentry::user()->has_role($f->restriction)): ?>
+			<?php if ($editable and (empty($f->restriction) or (Sentry::check() and Sentry::user()->has_role($f->restriction)))): ?>
 				<?php if ($f->type == 'text'): ?>
 					<?php echo Form::input(array('name' => $f->id, 'class' => $f->html_class, 'id' => $f->html_id, 'placeholder' => $f->placeholder, 'value' => $d));?>
 				<?php elseif ($f->type == 'textarea'): ?>
