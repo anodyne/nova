@@ -184,7 +184,7 @@ class NovaForm
 		if (count($positions) > 0)
 		{
 			// the first element should be blank
-			$options[0] = '';
+			$options[''] = '';
 			
 			// loop through the positions and put them in a format we can use
 			foreach ($positions as $p)
