@@ -249,6 +249,10 @@ abstract class Controller_Main extends Controller_Base_Main
 		);*/
 		
 		//\Debug::dump(\Model_User::get_users());
+
+		\Debug::dump(
+			\Date::forge(null, 'America/Los_Angeles')->format($this->options->date_format)
+		);
 		
 		return;
 	}
