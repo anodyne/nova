@@ -164,7 +164,7 @@ class Observer_Application extends \Orm\Observer
 					break;
 				}
 			}
-
+			/*
 			// set up the mailer
 			$mailer = \Utility::setup_email();
 
@@ -176,7 +176,7 @@ class Observer_Application extends \Orm\Observer
 				->setBody('Body', 'text/html');
 
 			// send the message
-			$send = $mailer->send($message);
+			$send = $mailer->send($message);*/
 		}
 		else
 		{
