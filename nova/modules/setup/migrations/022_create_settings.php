@@ -77,7 +77,7 @@ class Create_settings
 				'user_created' => (int) false),
 			array(
 				'key' => 'date_format',
-				'value' => 'D M jS, Y @ g:ia',
+				'value' => '%d %B %Y',
 				'user_created' => (int) false),
 			array(
 				'key' => 'updates',
