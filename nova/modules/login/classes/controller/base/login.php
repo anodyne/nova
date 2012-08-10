@@ -41,7 +41,7 @@ abstract class Controller_Base_Login extends \Nova\Controller_Base_Core
 		
 		// set the variables
 		$this->skin			= $this->session->get('skin_login', $this->options->skin_login);
-		$this->rank			= $this->session->get('display_rank', $this->options->display_rank);
+		$this->rank			= $this->session->get('rank', $this->options->rank);
 		$this->timezone		= $this->session->get('timezone', $this->options->timezone);
 		$this->dst			= $this->session->get('dst', (bool) $this->options->daylight_savings);
 		

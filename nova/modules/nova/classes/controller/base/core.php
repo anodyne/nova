@@ -158,7 +158,7 @@ abstract class Controller_Base_Core extends \Controller_Template
 		
 		// these are the settings we pull for every controller
 		$this->_settings_setup = array(
-			'display_rank',
+			'rank',
 			'timezone',
 			'daylight_savings',
 			'date_format',

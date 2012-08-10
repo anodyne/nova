@@ -42,7 +42,7 @@ abstract class Controller_Base_Main extends Controller_Base_Core
 		
 		// set the variables
 		$this->skin			= $this->session->get('skin_main', $this->options->skin_main);
-		$this->rank			= $this->session->get('display_rank', $this->options->display_rank);
+		$this->rank			= $this->session->get('rank', $this->options->rank);
 		$this->timezone		= $this->session->get('timezone', $this->options->timezone);
 		$this->dst			= $this->session->get('dst', (bool) $this->options->daylight_savings);
 		$this->images		= \Utility::get_image_index($this->skin);

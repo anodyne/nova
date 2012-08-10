@@ -75,7 +75,7 @@ class Controller_Ajax_Add extends Controller_Base_Ajax
 		if (\Sentry::check() and \Sentry::user()->has_access('rank.create'))
 		{
 			$data['id'] = $id;
-			$data['rank'] = \Model_Settings::get_settings('display_rank');
+			$data['rank'] = \Model_Settings::get_settings('rank');
 			$data['genre'] = \Config::get('nova.genre');
 
 			// read the directory for the dropdown

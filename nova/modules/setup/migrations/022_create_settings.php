@@ -46,7 +46,7 @@ class Create_settings
 				'value' => 'default',
 				'user_created' => (int) false),
 			array(
-				'key' => 'display_rank',
+				'key' => 'rank',
 				'value' => 'default',
 				'user_created' => (int) false),
 			array(

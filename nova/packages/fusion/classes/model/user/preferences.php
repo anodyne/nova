@@ -61,8 +61,7 @@ class Model_User_Preferences extends \Model {
 			'email_format'			=> 'html',
 			'language'				=> 'en',
 			
-			# TODO: need to pull these values from the catalogu
-			'display_rank'			=> \Model_Catalog_Rank::get_default(true),
+			'rank'					=> \Model_Catalog_Rank::get_default(true),
 			'skin_main'				=> \Model_Catalog_SkinSec::get_default('main', true),
 			'skin_admin'			=> \Model_Catalog_SkinSec::get_default('admin', true),
 			

@@ -373,7 +373,7 @@ class Controller_Admin_Rank extends Controller_Base_Admin
 		$this->_js_view = 'admin/rank/manage_js';
 
 		// get the default rank
-		$default = \Model_Settings::get_settings('display_rank');
+		$default = \Model_Settings::get_settings('rank');
 
 		if (\Input::method() == 'POST')
 		{
