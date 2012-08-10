@@ -48,7 +48,7 @@ class Observer_Form_Section extends \Orm\Observer
 				$active_count = array_count_values($active);
 
 				// if there are no active sections OR the number of actives is less than 2 (the current section removal would make it 0)
-				if ( ! in_array(1, $active) 
+				if ( ! in_array(\Status::ACTIVE, $active) 
 						or (array_key_exists(1, $active_count) and $active_count[1] < 2))
 				{
 					if ($tab->status === \Status::ACTIVE)
@@ -138,7 +138,7 @@ class Observer_Form_Section extends \Orm\Observer
 				$active_count = array_count_values($active);
 
 				// if there are no active sections OR the number of actives is more than 0
-				if (in_array(1, $active) 
+				if (in_array(\Status::ACTIVE, $active) 
 						or (array_key_exists(1, $active_count) and $active_count[1] > 0))
 				{
 					if ($tab->status === \Status::INACTIVE)
@@ -198,7 +198,8 @@ class Observer_Form_Section extends \Orm\Observer
 				$active_count = array_count_values($active);
 
 				// if there are no active sections OR the number of actives is only 1
-				if ( ! in_array(1, $active) or (array_key_exists(1, $active_count) and $active_count[1] == 0))
+				if ( ! in_array(\Status::ACTIVE, $active) 
+						or (array_key_exists(1, $active_count) and $active_count[1] == 0))
 				{
 					if ($tab->status === \Status::ACTIVE)
 					{

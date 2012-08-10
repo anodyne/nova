@@ -81,7 +81,7 @@ class Observer_Form_Field extends \Orm\Observer
 				$active_count = array_count_values($active);
 
 				// if there are no active fields OR the number of actives is less than 2 (the current field removal would make it 0)
-				if ( ! in_array(1, $active) 
+				if ( ! in_array(\Status::ACTIVE, $active) 
 						or (array_key_exists(1, $active_count) and $active_count[1] < 2))
 				{
 					if ($section->status === \Status::ACTIVE)
@@ -232,7 +232,7 @@ class Observer_Form_Field extends \Orm\Observer
 				$active_count = array_count_values($active);
 
 				// if there are no active fields OR the number of actives is more than 0
-				if (in_array(1, $active) 
+				if (in_array(\Status::ACTIVE, $active) 
 						or (array_key_exists(1, $active_count) and $active_count[1] > 0))
 				{
 					if ($section->status === \Status::INACTIVE)
@@ -294,7 +294,7 @@ class Observer_Form_Field extends \Orm\Observer
 				$active_count = array_count_values($active);
 
 				// if there are no active fields OR the number of actives is 0
-				if ( ! in_array(1, $active) 
+				if ( ! in_array(\Status::ACTIVE, $active) 
 						or (array_key_exists(1, $active_count) and $active_count[1] == 0))
 				{
 					// only do the update if the section is active
