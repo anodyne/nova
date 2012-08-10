@@ -215,12 +215,12 @@ class Model_User extends \Model {
 	/**
 	 * This will retrieve a user's preferences from the database as an array.
 	 *
-	 *     $preferences = Model_User::find($id)->get_user_preferences();
+	 *     $preferences = Model_User::find($id)->get_preferences();
 	 *
 	 * @api
 	 * @return	array	an array of items
 	 */
-	public function get_user_preferences()
+	public function get_preferences($item = false)
 	{
 		// set up a blank array for storing the items
 		$prefs = array();
@@ -230,8 +230,12 @@ class Model_User extends \Model {
 		{
 			$prefs[$p->key] = $p->value;
 		}
+
+		if ($item)
+		{
+			return $prefs[$item];
+		}
 		
-		// return the items array
 		return $prefs;
 	}
 

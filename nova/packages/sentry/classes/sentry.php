@@ -264,7 +264,7 @@ class Sentry
 			// set session vars
 			Session::set('user', (int) $user->get('id'));
 			Session::set('role', $user->groups());
-			Session::set('preferences', \Model_User::find($user->get('id'))->get_user_preferences());
+			Session::set('preferences', \Model_User::find($user->get('id'))->get_preferences());
 			
 			return 0;
 		}
@@ -294,7 +294,7 @@ class Sentry
 
 		Session::set('user', $id);
 		Session::set('role', $user->get_user_role());
-		Session::set('preferences', \Model_User::find($id)->get_user_preferences());
+		Session::set('preferences', \Model_User::find($id)->get_preferences());
 		
 		return true;
 	}

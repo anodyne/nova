@@ -118,12 +118,10 @@ class Utility
 	{
 		if (\Sentry::check())
 		{
-			$pref = \Model_User::find(\Sentry::user()->id)->get_user_preferences();
-
-			return $pref['display_rank'];
+			return \Sentry::user()->get_preferences('rank');
 		}
 
-		return \Model_Settings::get_settings('display_rank');
+		return \Model_Settings::get_settings('rank');
 	}
 
 	/**
@@ -138,9 +136,7 @@ class Utility
 	{
 		if (\Sentry::check())
 		{
-			$pref = \Model_User::find(\Sentry::user()->id)->get_user_preferences();
-
-			return $pref['skin_'.$section];
+			return \Sentry::user()->get_preferences('skin_'.$section);
 		}
 
 		return \Model_Settings::get_settings('skin_'.$section);
