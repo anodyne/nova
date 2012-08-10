@@ -139,19 +139,11 @@ class Controller_Admin_Application extends Controller_Base_Admin
 					$app->status = ($decision == 'approve') ? \Status::APPROVED : \Status::REJECTED;
 					$app->save();
 
-					// set up the mailer
-					$mailer = \Utility::setup_email();
-
-					// build the message
-					$message = \Swift_Message::newInstance()
-						->setSubject('Subject')
-						->setFrom(array('email address' => 'name'))
-						->setTo(array($app->user->email => $app->user->name))
-						->setBcc('bcc')
-						->setBody('Body', 'text/html');
-
 					// send the message
-					$send = $mailer->send($message);
+					\NovaMail::send('arc_response', array(
+						'subject' => lang('email.subject.arc.response'),
+						'to' => $app->user->id,
+					));
 
 					$this->_flash[] = array(
 						'status' => 'success',
@@ -203,6 +195,12 @@ class Controller_Admin_Application extends Controller_Base_Admin
 						'user_id' => \Sentry::user()->id,
 						'type' => \Model_Application_Response::EMAIL,
 						'content' => \Input::post('content')
+					));
+
+					// send the message
+					\NovaMail::send('arc_email', array(
+						'subject' => lang('email.subject.arc.email_applicant'),
+						'to' => $app->user->id,
 					));
 
 					$this->_flash[] = array(

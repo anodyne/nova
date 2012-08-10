@@ -226,13 +226,17 @@ class Model_Application extends \Model {
 			if ( ! in_array($d, $oldReviewers))
 			{
 				// get the email information
-				$sendEmail[$d] = \Model_User::find($d)->email;
+				$sendEmail[] = $d;
 			}
 		}
 
 		if ($email_to_new and count($sendEmail) > 0)
 		{
 			// send the email
+			\NovaMail::send('arc_reviewer_add', array(
+				'subject' => lang('email.subject.arc.add_reviewer'),
+				'to' => array_values($sendEmail),
+			));
 		}
 	}
 

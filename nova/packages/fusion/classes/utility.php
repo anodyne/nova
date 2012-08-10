@@ -226,29 +226,4 @@ class Utility
 			}
 		}
 	}
-
-	public static function setup_email()
-	{
-		$type = 'smtp';
-
-		switch ($type)
-		{
-			case 'smtp':
-				$transport = \Swift_SmtpTransport::newInstance('smtp.example.org', 25)
-					->setUsername('your username')
-					->setPassword('your password');
-			break;
-
-			case 'sendmail':
-				$transport = \Swift_SendmailTransport::newInstance('/usr/sbin/sendmail -bs');
-			break;
-
-			case 'mail':
-			default:
-				$transport = \Swift_MailTransport::newInstance();
-			break;
-		}
-
-		return \Swift_Mailer::newInstance($transport);
-	}
 }

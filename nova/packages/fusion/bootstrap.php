@@ -20,6 +20,7 @@ Autoloader::add_classes(array(
 	'Fusion\\Model'							=> __DIR__.'/classes/model.php',
 	'Fusion\\Nav'							=> __DIR__.'/classes/nav.php',
 	'Fusion\\NovaForm'						=> __DIR__.'/classes/novaform.php',
+	'Fusion\\NovaMail'						=> __DIR__.'/classes/novamail.php',
 	'Fusion\\QuickInstall'					=> __DIR__.'/classes/quickinstall.php',
 	'Fusion\\Status'						=> __DIR__.'/classes/status.php',
 	'Fusion\\SystemEvent'					=> __DIR__.'/classes/systemevent.php',

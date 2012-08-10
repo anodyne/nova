@@ -164,19 +164,12 @@ class Observer_Application extends \Orm\Observer
 					break;
 				}
 			}
-			/*
-			// set up the mailer
-			$mailer = \Utility::setup_email();
-
-			// build the message
-			$message = \Swift_Message::newInstance()
-				->setSubject('Subject')
-				->setFrom(array('email address' => 'name'))
-				->setTo(array_values($emailUsers))
-				->setBody('Body', 'text/html');
-
-			// send the message
-			$send = $mailer->send($message);*/
+			
+			// send the email
+			\NovaMail::send('arc_review_start', array(
+				'subject' => lang('email.subject.arc.review_start'),
+				'to' => array_keys($emailUsers)
+			));
 		}
 		else
 		{
