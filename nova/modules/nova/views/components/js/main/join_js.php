@@ -4,8 +4,14 @@
 	$(document).ready(function(){
 
 		// show the first tab
-		$('.nav-tabs a:first').tab('show');
+		//$('.nav-tabs a:first').tab('show');
 
+		$('.nav-tabs').each(function(){
+
+			$('a:first', this).tab('show');
+		});
+
+		// validate certain fields of the join form
 		$('#joinForm').validate({
 			errorElement: 'p',
 			errorClass: 'help-block',
@@ -197,6 +203,69 @@
 
 		// show the user form
 		$('#userForm').show();
+
+		return false;
+	});
+	
+	// join navigation
+	$('.joinNavButton').on('click', function(){
+
+		// set some variables to use later
+		var direction = $(this).data('direction');
+		var activePill = {};
+
+		// find out what the active pill is
+		$('.pill-content').children().each(function(){
+
+			if ($(this).hasClass('active'))
+			{
+				activePill = $(this);
+				return;
+			}
+		});
+
+		// find the tabs in the active pill
+		var activePillTab = activePill.find('.nav');
+
+		// does the active pill have tabs?
+		var activePillHasTabs = Boolean(activePillTab.length);
+
+		// what's the next pill?
+		var pillNextStep = (direction == 'next') ? activePill.next() : activePill.prev();
+
+		if (activePillHasTabs)
+		{
+			// figure out what the active tab is
+			var currentTab = $('li.active a', activePillTab).attr('href');
+
+			// figure out what the first tab is
+			var firstTab = $('li:first-child a', activePillTab).attr('href');
+
+			// figure out what the last tab is
+			var lastTab = $('li:last-child a', activePillTab).attr('href');
+
+			// what's the next tab?
+			var tabNextStep = (direction == 'next') 
+				? activePillTab.children('.active').next().children() 
+				: activePillTab.children('.active').prev().children();
+
+			if (direction == 'next' && lastTab == currentTab)
+			{
+				$('#joinTabs a[href="#' + pillNextStep.attr('id') + '"]').tab('show');
+			}
+			else if (direction == 'prev' && firstTab == currentTab)
+			{
+				$('#joinTabs a[href="#' + pillNextStep.attr('id') + '"]').tab('show');
+			}
+			else
+			{
+				$('a[href="' + tabNextStep.attr('href') + '"]', activePillTab).tab('show');
+			}
+		}
+		else
+		{
+			$('#joinTabs a[href="#' + pillNextStep.attr('id') + '"]').tab('show');
+		}
 
 		return false;
 	});

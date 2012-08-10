@@ -14,6 +14,11 @@ if ( ! function_exists('joinData'))
 }
 
 ?><form method="post" id="joinForm">
+	<div class="btn-group pull-right">
+		<a href="#" class="btn btn-small joinNavButton tooltip-top" data-direction="prev" title="<?php echo lang('previous step', 1);?>"><i class="icon-chevron-left icon-50"></i></a>
+		<a href="#" class="btn btn-small joinNavButton tooltip-top" data-direction="next" title="<?php echo lang('next step', 1);?>"><i class="icon-chevron-right icon-50"></i></a>
+	</div>
+
 	<ul id="joinTabs" class="nav nav-pills">
 		<li class="active"><a href="#user" data-toggle="pill"><?php echo lang('user info', 2);?></a></li>
 		<li><a href="#characterInfo" data-toggle="pill"><?php echo lang('character info', 2);?></a></li>
@@ -155,6 +160,16 @@ if ( ! function_exists('joinData'))
 
 	<div class="controls">
 		<input type="hidden" name="user[id]" value="0">
-		<button class="btn btn-primary" name="submit"><?php echo lang('action.submit', 1);?></button>
+
+		<div class="btn-toolbar">
+			<div class="btn-group">
+				<button class="btn btn-primary" name="submit"><?php echo lang('action.submit', 1);?></button>
+			</div>
+
+			<div class="btn-group">
+				<a href="#" class="btn btn-small joinNavButton tooltip-top" data-direction="prev" title="<?php echo lang('previous step', 1);?>"><i class="icon-chevron-left icon-50"></i></a>
+				<a href="#" class="btn btn-small joinNavButton tooltip-top" data-direction="next" title="<?php echo lang('next step', 1);?>"><i class="icon-chevron-right icon-50"></i></a>
+			</div>
+		</div>
 	</div>
 </form>
