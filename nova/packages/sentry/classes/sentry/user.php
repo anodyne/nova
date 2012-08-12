@@ -113,7 +113,7 @@ class Sentry_User implements Iterator, ArrayAccess
 			}
 			
 			// get the user
-			$user = \Model_User::get_user($field, $id);
+			$user = \Model_User::find_user($field, $id);
 
 			// if there was a result - update user
 			if (count($user))
@@ -594,7 +594,7 @@ class Sentry_User implements Iterator, ArrayAccess
 			$field = $this->login_column;
 		}
 		
-		$result = \Model_User::get_user($field, $login);
+		$result = \Model_User::find_user($field, $login);
 
 		if ($result)
 		{

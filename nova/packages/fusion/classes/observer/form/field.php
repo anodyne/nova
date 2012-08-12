@@ -157,7 +157,7 @@ class Observer_Form_Field extends \Orm\Observer
 
 			case 'user':
 				// get all the active users
-				$users = \Model_User::get_users();
+				$users = \Model_User::find_users();
 
 				if (count($users) > 0)
 				{

@@ -178,7 +178,7 @@ class NovaMail
 			$u = \Model_User::find($user);
 
 			// break the users out based on mail format preference
-			$retval[$u->get_preferences('email_format')][] = $u->email;
+			$retval[$u->preferences('email_format')][] = $u->email;
 		}
 
 		return $retval;

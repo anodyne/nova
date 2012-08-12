@@ -347,10 +347,10 @@ class NovaForm
 	 * @param	array	any extra attributes to be added to the select menu
 	 * @return	string	a select menu output from Form::select
 	 */
-	public static function users($name, $selected = array(), $extra = array(), $status = 'active')
+	public static function users($name, $selected = array(), $extra = array(), $status = \Status::ACTIVE)
 	{
 		// get the users
-		$users = ( ! empty($status)) ? \Model_User::get_users($status) : \Model_User::find('all');
+		$users = ( ! empty($status)) ? \Model_User::find_users($status) : \Model_User::find('all');
 		
 		if (count($users) > 0)
 		{

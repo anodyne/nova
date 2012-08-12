@@ -198,7 +198,7 @@ class Sentry
 				catch(SentryUserSuspendedException $e)
 				{
 					// get the user
-					$u = \Model_User::get_user('email', $login_column_value);
+					$u = \Model_User::find_user('email', $login_column_value);
 
 					// create a system event entry
 					\SystemEvent::add($login_column_value, Input::real_ip(), $u, null, __('event.login.suspended'));
@@ -264,7 +264,7 @@ class Sentry
 			// set session vars
 			Session::set('user', (int) $user->get('id'));
 			Session::set('role', $user->groups());
-			Session::set('preferences', \Model_User::find($user->get('id'))->get_preferences());
+			Session::set('preferences', \Model_User::find($user->get('id'))->preferences());
 			
 			return 0;
 		}
@@ -294,7 +294,7 @@ class Sentry
 
 		Session::set('user', $id);
 		Session::set('role', $user->get_user_role());
-		Session::set('preferences', \Model_User::find($id)->get_preferences());
+		Session::set('preferences', \Model_User::find($id)->preferences());
 		
 		return true;
 	}

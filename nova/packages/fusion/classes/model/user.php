@@ -183,44 +183,15 @@ class Model_User extends \Model {
 	);
 
 	/**
-	 * Get a user from the database based on something other than their ID.
+	 * Get the user's preferences.
+	 *
+	 *     $preferences = Model_User::find($id)->preferences();
 	 *
 	 * @api
-	 * @param	string	the column to use
-	 * @param	mixed	the value to use
-	 * @return	object	a user object
-	 */
-	public static function get_user($column, $value)
-	{
-		if (array_key_exists($column, static::$_properties))
-		{
-			return static::find()->where($column, $value)->get_one();
-		}
-		
-		return false;
-	}
-
-	/**
-	 * Get every user from the database based on criteria.
-	 *
-	 * @api
-	 * @param	string	the status to pull
-	 * @return	object	a user object
-	 */
-	public static function get_users($status = \Status::ACTIVE)
-	{
-		return static::find()->where('status', $status)->get();
-	}
-	
-	/**
-	 * This will retrieve a user's preferences from the database as an array.
-	 *
-	 *     $preferences = Model_User::find($id)->get_preferences();
-	 *
-	 * @api
+	 * @param	string	a specific item to grab
 	 * @return	array	an array of items
 	 */
-	public function get_preferences($item = false)
+	public function preferences($item = false)
 	{
 		// set up a blank array for storing the items
 		$prefs = array();
@@ -239,7 +210,44 @@ class Model_User extends \Model {
 		return $prefs;
 	}
 
-	public function change_status($status)
+	/**
+	 * Get a single user based on something other than their ID.
+	 *
+	 * @api
+	 * @param	string	the column to use
+	 * @param	mixed	the value to use
+	 * @return	object
+	 */
+	public static function find_user($column, $value)
+	{
+		if (array_key_exists($column, static::$_properties))
+		{
+			return static::find()->where($column, $value)->get_one();
+		}
+		
+		return false;
+	}
+
+	/**
+	 * Get every user based on criteria.
+	 *
+	 * @api
+	 * @param	int		the status to pull
+	 * @return	object
+	 */
+	public static function find_users($status = \Status::ACTIVE)
+	{
+		return static::find()->where('status', $status)->get();
+	}
+	
+	/**
+	 * Update the status of the user.
+	 *
+	 * @api
+	 * @param	string	the status to change to
+	 * @return	void
+	 */
+	public function update_status($status)
 	{
 		switch ($status)
 		{

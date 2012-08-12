@@ -118,7 +118,7 @@ class Utility
 	{
 		if (\Sentry::check())
 		{
-			return \Sentry::user()->get_preferences('rank');
+			return \Sentry::user()->preferences('rank');
 		}
 
 		return \Model_Settings::get_settings('rank');
@@ -136,7 +136,7 @@ class Utility
 	{
 		if (\Sentry::check())
 		{
-			return \Sentry::user()->get_preferences('skin_'.$section);
+			return \Sentry::user()->preferences('skin_'.$section);
 		}
 
 		return \Model_Settings::get_settings('skin_'.$section);
