@@ -28,7 +28,7 @@ class Controller_Admin_Application extends Controller_Base_Admin
 			'related' => array(
 				'appReviews' => array(
 					'where' => array(
-						array('status', \Model_Application::IN_PROGRESS)
+						array('status', \Status::IN_PROGRESS)
 					),
 				),
 			),
@@ -285,15 +285,13 @@ class Controller_Admin_Application extends Controller_Base_Admin
 			$this->_data->reviewerString = $reviewerString;
 			$this->_data->reviewerArray = $reviewerArray;
 
-			# FIXME: need to take in to account that the timestamp could be identical
-
 			// create an empty array for the responses
 			$this->_data->responses = array();
 
 			// loop through the responses and make sure we have a sortable key
 			foreach ($app->responses as $r)
 			{
-				$this->_data->responses[$r->created_at] = $r;
+				$this->_data->responses[$r->id] = $r;
 			}
 
 			// make sure we have the responses in the right order
@@ -318,10 +316,8 @@ class Controller_Admin_Application extends Controller_Base_Admin
 			// get the role information
 			$this->_data->roles = array();
 
-			# TODO: need to add user timezone here
-			
 			// set the date the user applied on
-			$this->_data->applied_date = \Date::forge($app->created_at)
+			$this->_data->applied_date = \Date::forge($app->created_at, \Sentry::user()->preferences('timezone'))
 				->format($this->options->date_format);
 		}
 
@@ -371,15 +367,15 @@ class Controller_Admin_Application extends Controller_Base_Admin
 				if ($item)
 				{
 					$this->_flash[] = array(
-						'status' => 'success',
-						'message' => lang('[[short.flash.success|application rule|action.created]]', 1),
+						'status'	=> 'success',
+						'message'	=> lang('[[short.flash.success|application rule|action.created]]', 1),
 					);
 				}
 				else
 				{
 					$this->_flash[] = array(
-						'status' => 'danger',
-						'message' => lang('[[short.flash.failure|application rule|action.creation]]', 1),
+						'status'	=> 'danger',
+						'message'	=> lang('[[short.flash.failure|application rule|action.creation]]', 1),
 					);
 				}
 			}
@@ -395,15 +391,15 @@ class Controller_Admin_Application extends Controller_Base_Admin
 				if ($item)
 				{
 					$this->_flash[] = array(
-						'status' => 'success',
-						'message' => lang('[[short.flash.success|application rule|action.updated]]', 1),
+						'status'	=> 'success',
+						'message'	=> lang('[[short.flash.success|application rule|action.updated]]', 1),
 					);
 				}
 				else
 				{
 					$this->_flash[] = array(
-						'status' => 'danger',
-						'message' => lang('[[short.flash.failure|application rule|action.update]]', 1),
+						'status'	=> 'danger',
+						'message'	=> lang('[[short.flash.failure|application rule|action.update]]', 1),
 					);
 				}
 			}
@@ -418,15 +414,15 @@ class Controller_Admin_Application extends Controller_Base_Admin
 				if ($item)
 				{
 					$this->_flash[] = array(
-						'status' => 'success',
-						'message' => lang('[[short.flash.success|application rule|action.deleted]]', 1),
+						'status'	=> 'success',
+						'message'	=> lang('[[short.flash.success|application rule|action.deleted]]', 1),
 					);
 				}
 				else
 				{
 					$this->_flash[] = array(
-						'status' => 'danger',
-						'message' => lang('[[short.flash.failure|application rule|action.deletion]]', 1),
+						'status'	=> 'danger',
+						'message'	=> lang('[[short.flash.failure|application rule|action.deletion]]', 1),
 					);
 				}
 			}
