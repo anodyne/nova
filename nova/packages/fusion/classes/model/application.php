@@ -122,6 +122,27 @@ class Model_Application extends \Model {
 	);
 
 	/**
+	 * Gets the decision makers that are involved with this application.
+	 *
+	 * @api
+	 * @return	array
+	 */
+	public function find_decision_makers()
+	{
+		// get all decision makers
+		$decision_makers = array_keys(\Sentry::users_with_access('character.create.2'));
+
+		// loop through the reviewers
+		foreach ($this->reviewers as $r)
+		{
+			$review_users[] = $r->user_id;
+		}
+
+		// compare the two arrays
+		return array_intersect($decision_makers, $review_users);
+	}
+
+	/**
 	 * Get the application records.
 	 *
 	 * @api

@@ -24,76 +24,130 @@ class NovaMail
 	 */
 	public static function send($view, array $data)
 	{
-		// we have to have a `to` index otherwise things will fail
-		if ( ! array_key_exists('to', $data))
-		{
-			throw new \Exception(lang('email.error.no_to_address'));
-		}
-
-		// we have to have a `subject` index
-		if ( ! array_key_exists('to', $data))
-		{
-			throw new \Exception(lang('email.error.no_subject'));
-		}
-
-		// do we have data for the email?
-		$content = (array_key_exists('content', $data)) ? $data['content'] : false;
-
 		// get the email preferences
-		$email_prefs = \Model_Settings::get_settings(array(
+		$options = \Model_Settings::get_settings(array(
 			'email_subject',
 			'email_name',
 			'email_address',
+			'email_status'
 		));
 
-		// set up the mailer
-		$mailer = static::_setup();
+		if ($options->email_status == \Status::ACTIVE)
+		{
+			// we have to have a `to` index otherwise things will fail
+			if ( ! array_key_exists('to', $data))
+			{
+				throw new \Exception(lang('email.error.no_to_address'));
+			}
 
-		// set up the users by email format preference
-		$users = static::_split_users($data['to']);
+			// we have to have a `subject` index
+			if ( ! array_key_exists('subject', $data))
+			{
+				throw new \Exception(lang('email.error.no_subject'));
+			}
 
-		// build the basic message
-		$message = \Swift_Message::newInstance()
-			->setSubject($email_prefs['email_subject'].' '.$data['subject'])
-			->setFrom(array($email_prefs['email_address'] => $email_prefs['email_name']));
+			// do we have data for the email?
+			$content = (array_key_exists('content', $data)) ? $data['content'] : false;
 
-		// build the html message
-		$html = $message->setTo($users['html'])
-			->setBody(\View::forge(\Location::file("html/$view", false, 'email'), $content), 'text/html');
+			// set up the mailer
+			$mailer = static::setup();
 
-		// build the plain text message
-		$text = $message->setTo($users['text'])
-			->setBody(\View::forge(\Location::file("text/$view", false, 'email'), $content), 'text/plain');
+			// set up the users by email format preference
+			$to = static::_split_users($data['to']);
 
-		// send the messages
-		$send = array(
-			'html' => $mailer->send($html),
-			'text' => $mailer->send($text),
-		);
+			// build the basic message
+			$message = \Swift_Message::newInstance()
+				->setSubject($options->email_subject.' '.$data['subject'])
+				->setFrom(array($options->email_address => $options->email_name));
 
-		return $send;
+			// if there's a reply to, add it
+			if (array_key_exists('replyTo', $data))
+			{
+				$message->setReplyTo($data['replyTo']);
+			}
+
+			// build the html message
+			if (array_key_exists('html', $to))
+			{
+				$html = $message->setTo($to['html'])
+					->setBody(\View::forge(\Location::file("html/$view", false, 'email'), $content), 'text/html');
+			}
+
+			// build the plain text message
+			if (array_key_exists('text', $to))
+			{
+				$text = $message->setTo($to['text'])
+					->setBody(\View::forge(\Location::file("text/$view", false, 'email'), $content), 'text/plain');
+			}
+
+			// if there's a CC, add it
+			if (array_key_exists('cc', $data))
+			{
+				// split the users based on email format preferences
+				$cc = static::_split_users($data['cc']);
+
+				// add the CC to the emails
+				$html->setCc($cc['html']);
+				$text->setCc($cc['text']);
+			}
+
+			// if there's a BCC, add it
+			if (array_key_exists('bcc', $data))
+			{
+				// split the users based on email format preferences
+				$bcc = static::_split_users($data['bcc']);
+
+				// add the BCC to the emails
+				$html->setBcc($bcc['html']);
+				$text->setBcc($bcc['text']);
+			}
+
+			// send the messages
+			$send = array(
+				'html' => (isset($html)) ? $mailer->send($html) : false,
+				'text' => (isset($text)) ? $mailer->send($text) : false,
+			);
+
+			return $send;
+		}
+
+		return false;
 	}
 
 	/**
 	 * Setup the SwiftMailer object.
 	 *
-	 * @internal
+	 * @api
 	 * @return	Swift_Mailer
 	 */
-	protected static function _setup()
+	public static function setup()
 	{
-		$type = false;
+		// get the email config options from the database
+		$cfg = \Model_Settings::get_settings(array(
+			'email_protocol',
+			'email_smtp_server',
+			'email_smtp_port',
+			'email_smtp_encryption',
+			'email_smtp_username',
+			'email_smtp_password',
+			'email_sendmail_path',
+		));
 
-		switch ($type)
+		// set up the transport based on the protocol the user has set
+		switch ($cfg->email_protocol)
 		{
 			case 'smtp':
-				$transport = \Swift_SmtpTransport::newInstance('smtp.example.org', 25)
-					->setUsername('your username')
-					->setPassword('your password');
+				$transport = \Swift_SmtpTransport::newInstance(
+						$cfg->email_smtp_server, 
+						$cfg->email_smtp_port, 
+						$cfg->email_smtp_encryption
+					)
+					->setUsername($cfg->email_smtp_username)
+					->setPassword($cfg->email_smtp_password);
 			break;
 
 			case 'sendmail':
-				$transport = \Swift_SendmailTransport::newInstance('/usr/sbin/sendmail -bs');
+				$transport = \Swift_SendmailTransport::newInstance($cfg->email_sendmail_path);
 			break;
 
 			case 'mail':
@@ -124,7 +178,7 @@ class NovaMail
 			$u = \Model_User::find($user);
 
 			// break the users out based on mail format preference
-			$retval[$u->preferences('email_format')][] = $u->email;
+			$retval[$u->get_preferences('email_format')][] = $u->email;
 		}
 
 		return $retval;

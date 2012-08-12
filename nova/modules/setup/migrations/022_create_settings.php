@@ -50,8 +50,8 @@ class Create_settings
 				'value' => 'default',
 				'user_created' => (int) false),
 			array(
-				'key' => 'system_email',
-				'value' => 'on',
+				'key' => 'email_status',
+				'value' => \Status::ACTIVE,
 				'user_created' => (int) false),
 			array(
 				'key' => 'email_subject',
@@ -66,6 +66,35 @@ class Create_settings
 				'key' => 'email_address',
 				'value' => '',
 				'help' => "To avoid some email services marking emails from Nova as spam, use this email address to set a specific address. This defaults to an address that should prevent this issue.",
+				'user_created' => (int) false),
+			array(
+				'key' => 'email_protocol',
+				'value' => 'mail',
+				'user_created' => (int) false),
+			array(
+				'key' => 'email_smtp_server',
+				'value' => 'smtp.example.com',
+				'user_created' => (int) false),
+			array(
+				'key' => 'email_smtp_port',
+				'value' => 25,
+				'user_created' => (int) false),
+			array(
+				'key' => 'email_smtp_encryption',
+				'value' => '',
+				'help' => "Nova supports sending SMTP emails over SSL or TLS. If you aren't using encryption, leave this blank.",
+				'user_created' => (int) false),
+			array(
+				'key' => 'email_smtp_username',
+				'value' => 'username',
+				'user_created' => (int) false),
+			array(
+				'key' => 'email_smtp_password',
+				'value' => 'password',
+				'user_created' => (int) false),
+			array(
+				'key' => 'email_sendmail_path',
+				'value' => '/usr/sbin/sendmail -bs',
 				'user_created' => (int) false),
 			array(
 				'key' => 'timezone',

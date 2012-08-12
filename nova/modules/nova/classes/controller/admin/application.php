@@ -191,21 +191,49 @@ class Controller_Admin_Application extends Controller_Base_Admin
 				{
 					// add the comment
 					\Model_Application_Response::create_item(array(
-						'app_id' => $app->id,
-						'user_id' => \Sentry::user()->id,
-						'type' => \Model_Application_Response::EMAIL,
-						'content' => \Input::post('content')
+						'app_id'	=> $app->id,
+						'user_id'	=> \Sentry::user()->id,
+						'type'		=> \Model_Application_Response::EMAIL,
+						'content'	=> \Input::post('content')
 					));
 
-					// send the message
-					\NovaMail::send('arc_email', array(
-						'subject' => lang('email.subject.arc.email_applicant'),
-						'to' => $app->user->id,
+					// loop through the decision makers
+					foreach ($app->find_decision_makers() as $dm)
+					{
+						// get the user
+						$user = \Model_User::find($dm);
+
+						// build the array for sending data
+						$bcc[$user->email] = $user->name;
+					}
+
+					// get the email preferences
+					$email_prefs = \Model_Settings::get_settings(array(
+						'email_subject',
+						'email_name',
+						'email_address',
 					));
+
+					// setup the mailer
+					$mailer = \NovaMail::setup();
+
+					// build the message
+					$message = \Swift_Message::newInstance()
+						->setSubject($email_prefs->email_subject.' '.lang('email.subject.arc.email_applicant'))
+						->setFrom(array($email_prefs->email_address => $email_prefs->email_name))
+						->setTo(array($app->user->email => $app->user->name))
+						->setBcc($bcc)
+						->setReplyTo(\Sentry::user()->email)
+						->setBody(\View::forge(
+							\Location::file('html/arc_email', false, 'email'), 
+							array('message' => \Input::post('content'))), 'text/html');
+					
+					// send the email
+					$mailer->send($message);
 
 					$this->_flash[] = array(
-						'status' => 'success',
-						'message' => lang('[[short.flash.success|action.email|action.sent]]', 1),
+						'status'	=> 'success',
+						'message'	=> lang('[[short.flash.success|action.email|action.sent]]', 1),
 					);
 				}
 			}

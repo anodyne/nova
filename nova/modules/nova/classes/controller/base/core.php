@@ -166,10 +166,6 @@ abstract class Controller_Base_Core extends \Controller_Template
 			'meta_description',
 			'meta_keywords',
 			'meta_author',
-			'system_email',
-			'email_subject',
-			'email_name',
-			'email_address',
 		);
 		
 		// set up the controller name without the Controller_ prefix
