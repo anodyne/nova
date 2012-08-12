@@ -13,11 +13,6 @@
 
 namespace Fusion;
 
-/**
- * Invalid image type exception
- */
-class NovaInvalidImageTypeException extends \FuelException {}
-
 class Location
 {	
 	/**
@@ -233,7 +228,7 @@ class Location
 			break;
 			
 			default:
-				throw new NovaInvalidImageTypeException(__('Invalid image type provided. Available options are asset, image, and rank.'));
+				throw new \NovaInvalidImageTypeException(lang('error.exception.invalid_image'));
 			break;
 		}
 	}

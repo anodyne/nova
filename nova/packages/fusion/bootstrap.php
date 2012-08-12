@@ -27,6 +27,12 @@ Autoloader::add_classes(array(
 	'Fusion\\Utility'						=> __DIR__.'/classes/utility.php',
 
 	/**
+	 * Exceptions
+	 */
+	'Fusion\\NovaCSRFException'				=> __DIR__.'/classes/exceptions.php',
+	'Fusion\\NovaInvalidImageTypeException'	=> __DIR__.'/classes/exceptions.php',
+
+	/**
 	 * Models
 	 */
 	'Fusion\\Model_Access_Role'				=> __DIR__.'/classes/model/access/role.php',
