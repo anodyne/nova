@@ -1,0 +1,6 @@
+# Set the default behavior for line endings
+
+*.html text eol=lf
+*.css text eol=lf
+*.js text eol=lf
+*.php text eol=lf
