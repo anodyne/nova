@@ -142,7 +142,7 @@ class Controller_Install extends Controller_Base_Setup
 					\Model_Settings::update_settings(array(
 						'sim_name' => $simname,
 						'email_subject' => '['.$simname.']',
-						'email_address' => 'nova@'.\Uri::base(false),
+						'email_address' => 'nova@'.$_SERVER['HTTP_HOST'],
 						'email_name' => $simname,
 					));
 					
