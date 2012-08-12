@@ -23,6 +23,7 @@
 					</div>
 
 					<?php echo Form::hidden('action', 'comment');?>
+					<?php echo Form::hidden(Config::get('security.csrf_token_key'), Security::fetch_token());?>
 				</form>
 			<?php endif;?>
 		</div>
@@ -37,6 +38,7 @@
 				</div>
 
 				<?php echo Form::hidden('action', 'vote');?>
+				<?php echo Form::hidden(Config::get('security.csrf_token_key'), Security::fetch_token());?>
 			</form>
 		<?php endif;?>
 
@@ -192,6 +194,7 @@
 
 								<div class="controls">
 									<?php echo Form::hidden('action', 'users');?>
+									<?php echo Form::hidden(Config::get('security.csrf_token_key'), Security::fetch_token());?>
 
 									<button type="submit" class="btn btn-primary"><?php echo lang('action.update', 1);?></button>
 								</div>
@@ -211,6 +214,7 @@
 
 								<div class="controls">
 									<?php echo Form::hidden('action', 'email');?>
+									<?php echo Form::hidden(Config::get('security.csrf_token_key'), Security::fetch_token());?>
 
 									<button type="submit" class="btn btn-primary"><?php echo lang('action.send', 2);?></button>
 								</div>
@@ -243,6 +247,7 @@
 
 								<div class="controls">
 									<?php echo Form::hidden('action', 'decision');?>
+									<?php echo Form::hidden(Config::get('security.csrf_token_key'), Security::fetch_token());?>
 
 									<button type="submit" class="btn btn-primary"><?php echo lang('action.send response', 2);?></button>
 								</div>

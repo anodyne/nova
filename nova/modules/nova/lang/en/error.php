@@ -8,6 +8,11 @@ return array(
 		'validation_failed' => "The email could not be sent because of a validation problem. Please make sure your information is correct and try again.",
 	),
 
+	'exception' => array(
+		'invalid_image' => "Invalid image type provided. Available options are asset, image, and rank.",
+		'csrf' => "Invalid security token. This could be caused by a cross-site request forgery attack. Please try again.",
+	),
+
 	'login' => array(
 		'locked_out' => "You've attempted to log in more times than the system allows.",
 		'maintenance' => "Maintenance mode has been activated and you cannot log in. Please try again later. If you continue to get this error, please contact the game master.",

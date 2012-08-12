@@ -104,7 +104,8 @@ if (is_numeric(Uri::segment(4))): ?>
 
 	<div class="controls">
 		<button class="btn btn-primary"><?php echo lang('action.submit', 1);?></button>
-		<input type="hidden" name="id" value="<?php echo Uri::segment(4);?>">
-		<input type="hidden" name="action" value="<?php echo $action;?>">
+		<?php echo Form::hidden('id', Uri::segment(4));?>
+		<?php echo Form::hidden('action', $action);?>
+		<?php echo Form::hidden(Config::get('security.csrf_token_key'), Security::fetch_token());?>
 	</div>
 </form>

@@ -75,6 +75,7 @@ if ( ! function_exists('ruleData'))
 	<div class="controls">
 		<?php echo Form::hidden('action', $action);?>
 		<?php echo Form::hidden('id', Uri::segment(4));?>
+		<?php echo Form::hidden(Config::get('security.csrf_token_key'), Security::fetch_token());?>
 
 		<button type="submit" class="btn btn-primary"><?php echo lang('action.submit', 1);?></button>
 	</div>

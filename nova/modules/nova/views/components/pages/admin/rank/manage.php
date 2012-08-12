@@ -12,7 +12,9 @@
 
 	<div class="btn-group pull-right">
 		<form method="post">
-			<input type="hidden" name="action" value="changeSet">
+			<?php echo Form::hidden('action', 'changeSet');?>
+			<?php echo Form::hidden(Config::get('security.csrf_token_key'), Security::fetch_token());?>
+			
 			<div class="control-group">
 				<div class="controls">
 					<div class="input-prepend input-append">

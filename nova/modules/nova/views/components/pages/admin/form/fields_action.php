@@ -196,6 +196,7 @@ function field($obj, $property, $default = false)
 		<?php echo Form::hidden('action', $action);?>
 		<?php echo Form::hidden('form_key', Uri::segment(4));?>
 		<?php echo Form::hidden('id', Uri::segment(5));?>
+		<?php echo Form::hidden(Config::get('security.csrf_token_key'), Security::fetch_token());?>
 		<button type="submit" class="btn btn-primary"><?php echo lang('action.submit', 1);?></button>
 
 		<?php if (Uri::segment(5) == 0): ?>

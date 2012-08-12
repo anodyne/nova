@@ -160,6 +160,7 @@ if ( ! function_exists('joinData'))
 
 	<div class="controls">
 		<input type="hidden" name="user[id]" value="0">
+		<?php echo Form::hidden(Config::get('security.csrf_token_key'), Security::fetch_token());?>
 
 		<div class="btn-toolbar">
 			<div class="btn-group">

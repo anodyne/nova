@@ -12,7 +12,9 @@
 <br>
 
 <form method="post">
-	<input type="hidden" name="action" value="create">
+	<?php echo Form::hidden('action', 'create');?>
+	<?php echo Form::hidden(Config::get('security.csrf_token_key'), Security::fetch_token());?>
+	
 	<div class="control-group">
 		<label class="control-label"><?php echo lang('action.add rank group', 2);?></label>
 		<div class="controls">

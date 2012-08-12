@@ -86,181 +86,188 @@ class Controller_Admin_Application extends Controller_Base_Admin
 
 			if (\Input::method() == 'POST')
 			{
-				// get the action
-				$action = \Input::post('action');
-
-				/**
-				 * Update the reviewers associated with the review.
-				 */
-				if (\Sentry::user()->has_level('character.create', 2) and $action == 'users')
+				if (\Security::check_token())
 				{
-					// update the reviewers
-					$app->update_reviewers(\Input::post('reviewUsers'));
+					// get the action
+					$action = \Input::post('action');
 
-					$this->_flash[] = array(
-						'status'	=> 'success',
-						'message'	=> lang('[[short.flash.success|reviewers|action.updated]]', 1),
-					);
-				}
-
-				/**
-				 * Vote on the application.
-				 */
-				if ($action == 'vote')
-				{
-					// update the vote
-					$app->update_vote(\Sentry::user(), \Input::post());
-
-					$this->_flash[] = array(
-						'status'	=> 'success',
-						'message'	=> lang('[[short.flash.success|vote|action.saved]]', 1),
-					);
-				}
-
-				/**
-				 * Comment on the application.
-				 */
-				if ($action == 'comment')
-				{
-					// add the comment
-					\Model_Application_Response::create_item(array(
-						'app_id'	=> $app->id,
-						'user_id'	=> \Sentry::user()->id,
-						'type'		=> \Model_Application_Response::COMMENT,
-						'content'	=> \Input::post('content')
-					));
-
-					$this->_flash[] = array(
-						'status'	=> 'success',
-						'message'	=> lang('[[short.flash.success|comment|action.added]]', 1),
-					);
-				}
-
-				/**
-				 * Email the applicant.
-				 */
-				if ($action == 'email')
-				{
-					// add the comment
-					\Model_Application_Response::create_item(array(
-						'app_id'	=> $app->id,
-						'user_id'	=> \Sentry::user()->id,
-						'type'		=> \Model_Application_Response::EMAIL,
-						'content'	=> \Input::post('content')
-					));
-
-					// loop through the decision makers
-					foreach ($app->find_decision_makers() as $dm)
+					/**
+					 * Update the reviewers associated with the review.
+					 */
+					if (\Sentry::user()->has_level('character.create', 2) and $action == 'users')
 					{
-						// get the user
-						$user = \Model_User::find($dm);
+						// update the reviewers
+						$app->update_reviewers(\Input::post('reviewUsers'));
 
-						// build the array for sending data
-						$bcc[$user->email] = $user->name;
+						$this->_flash[] = array(
+							'status'	=> 'success',
+							'message'	=> lang('[[short.flash.success|reviewers|action.updated]]', 1),
+						);
 					}
 
-					// get the email preferences
-					$email_prefs = \Model_Settings::get_settings(array(
-						'email_subject',
-						'email_name',
-						'email_address',
-					));
+					/**
+					 * Vote on the application.
+					 */
+					if ($action == 'vote')
+					{
+						// update the vote
+						$app->update_vote(\Sentry::user(), \Input::post());
 
-					// setup the mailer
-					$mailer = \NovaMail::setup();
+						$this->_flash[] = array(
+							'status'	=> 'success',
+							'message'	=> lang('[[short.flash.success|vote|action.saved]]', 1),
+						);
+					}
 
-					// build the message
-					$message = \Swift_Message::newInstance()
-						->setSubject($email_prefs->email_subject.' '.lang('email.subject.arc.email_applicant'))
-						->setFrom(array($email_prefs->email_address => $email_prefs->email_name))
-						->setTo(array($app->user->email => $app->user->name))
-						->setBcc($bcc)
-						->setReplyTo(\Sentry::user()->email)
-						->setBody(\View::forge(
-							\Location::file('html/arc_email', false, 'email'), 
-							array('message' => \Input::post('content'))), 'text/html');
-					
-					// send the email
-					$mailer->send($message);
+					/**
+					 * Comment on the application.
+					 */
+					if ($action == 'comment')
+					{
+						// add the comment
+						\Model_Application_Response::create_item(array(
+							'app_id'	=> $app->id,
+							'user_id'	=> \Sentry::user()->id,
+							'type'		=> \Model_Application_Response::COMMENT,
+							'content'	=> \Input::post('content')
+						));
 
-					$this->_flash[] = array(
-						'status'	=> 'success',
-						'message'	=> lang('[[short.flash.success|action.email|action.sent]]', 1),
-					);
+						$this->_flash[] = array(
+							'status'	=> 'success',
+							'message'	=> lang('[[short.flash.success|comment|action.added]]', 1),
+						);
+					}
+
+					/**
+					 * Email the applicant.
+					 */
+					if ($action == 'email')
+					{
+						// add the comment
+						\Model_Application_Response::create_item(array(
+							'app_id'	=> $app->id,
+							'user_id'	=> \Sentry::user()->id,
+							'type'		=> \Model_Application_Response::EMAIL,
+							'content'	=> \Input::post('content')
+						));
+
+						// loop through the decision makers
+						foreach ($app->find_decision_makers() as $dm)
+						{
+							// get the user
+							$user = \Model_User::find($dm);
+
+							// build the array for sending data
+							$bcc[$user->email] = $user->name;
+						}
+
+						// get the email preferences
+						$email_prefs = \Model_Settings::get_settings(array(
+							'email_subject',
+							'email_name',
+							'email_address',
+						));
+
+						// setup the mailer
+						$mailer = \NovaMail::setup();
+
+						// build the message
+						$message = \Swift_Message::newInstance()
+							->setSubject($email_prefs->email_subject.' '.lang('email.subject.arc.email_applicant'))
+							->setFrom(array($email_prefs->email_address => $email_prefs->email_name))
+							->setTo(array($app->user->email => $app->user->name))
+							->setBcc($bcc)
+							->setReplyTo(\Sentry::user()->email)
+							->setBody(\View::forge(
+								\Location::file('html/arc_email', false, 'email'), 
+								array('message' => \Input::post('content'))), 'text/html');
+						
+						// send the email
+						$mailer->send($message);
+
+						$this->_flash[] = array(
+							'status'	=> 'success',
+							'message'	=> lang('[[short.flash.success|action.email|action.sent]]', 1),
+						);
+					}
+
+					/**
+					 * Make the decision for the application.
+					 */
+					if (\Sentry::user()->has_level('character.create', 2) and $action == 'decision')
+					{
+						// get the decision
+						$decision = \Input::post('decision');
+						
+						// update the user record
+						$app->user->status = ($decision == 'approve') ? \Status::ACTIVE : \Status::REMOVED;
+						$app->user->role_id = ($decision == 'approve') ? \Input::post('role') : \Model_Access_Role::INACTIVE;
+						$app->user->save();
+
+						// update the character record
+						$app->character->status = ($decision == 'approve') ? \Status::ACTIVE : \Status::REMOVED;
+						$app->character->activated = ($decision == 'approve') ? time() : 0;
+						$app->character->rank_id = ($decision == 'approve') ? \Input::post('rank') : 0;
+						$app->character->save();
+
+						// update the position if it was changed
+						if ($decision == 'approve' and $app->position->id != \Input::post('position'))
+						{
+							// update the position
+							$app->character->update_position(\Input::post('position'), $app->position->id);
+						}
+
+						// update the application status
+						$app->status = ($decision == 'approve') ? \Status::APPROVED : \Status::REJECTED;
+						$app->save();
+
+						// add the response
+						\Model_Application_Response::create_item(array(
+							'app_id'	=> $app->id,
+							'user_id'	=> \Sentry::user()->id,
+							'type'		=> \Model_Application_Response::RESPONSE,
+							'content'	=> $app->message_substitution(\Input::post('message'))
+						));
+
+						// get the email preferences
+						$email_prefs = \Model_Settings::get_settings(array(
+							'email_subject',
+							'email_name',
+							'email_address',
+						));
+
+						// loop through the reviewers and build the array for sending data
+						foreach ($app->reviewers as $r)
+						{
+							$bcc[$r->email] = $r->name;
+						}
+
+						// setup the mailer
+						$mailer = \NovaMail::setup();
+
+						// build the message
+						$message = \Swift_Message::newInstance()
+							->setSubject($email_prefs->email_subject.' '.lang('email.subject.arc.response'))
+							->setFrom(array($email_prefs->email_address => $email_prefs->email_name))
+							->setTo(array($app->user->email => $app->user->name))
+							->setBcc($bcc)
+							->setReplyTo(\Sentry::user()->email)
+							->setBody(\View::forge(
+								\Location::file('html/arc_response', false, 'email'), 
+								array('message' => \Input::post('message'))), 'text/html');
+						
+						// send the email
+						$mailer->send($message);
+
+						$this->_flash[] = array(
+							'status'	=> 'success',
+							'message'	=> lang('[[short.flash.success|vote|action.saved]]', 1),
+						);
+					}
 				}
-
-				/**
-				 * Make the decision for the application.
-				 */
-				if (\Sentry::user()->has_level('character.create', 2) and $action == 'decision')
+				else
 				{
-					// get the decision
-					$decision = \Input::post('decision');
-					
-					// update the user record
-					$app->user->status = ($decision == 'approve') ? \Status::ACTIVE : \Status::REMOVED;
-					$app->user->role_id = ($decision == 'approve') ? \Input::post('role') : \Model_Access_Role::INACTIVE;
-					$app->user->save();
-
-					// update the character record
-					$app->character->status = ($decision == 'approve') ? \Status::ACTIVE : \Status::REMOVED;
-					$app->character->activated = ($decision == 'approve') ? time() : 0;
-					$app->character->rank_id = ($decision == 'approve') ? \Input::post('rank') : 0;
-					$app->character->save();
-
-					// update the position if it was changed
-					if ($decision == 'approve' and $app->position->id != \Input::post('position'))
-					{
-						// update the position
-						$app->character->update_position(\Input::post('position'), $app->position->id);
-					}
-
-					// update the application status
-					$app->status = ($decision == 'approve') ? \Status::APPROVED : \Status::REJECTED;
-					$app->save();
-
-					// add the response
-					\Model_Application_Response::create_item(array(
-						'app_id'	=> $app->id,
-						'user_id'	=> \Sentry::user()->id,
-						'type'		=> \Model_Application_Response::RESPONSE,
-						'content'	=> $app->message_substitution(\Input::post('message'))
-					));
-
-					// get the email preferences
-					$email_prefs = \Model_Settings::get_settings(array(
-						'email_subject',
-						'email_name',
-						'email_address',
-					));
-
-					// loop through the reviewers and build the array for sending data
-					foreach ($app->reviewers as $r)
-					{
-						$bcc[$r->email] = $r->name;
-					}
-
-					// setup the mailer
-					$mailer = \NovaMail::setup();
-
-					// build the message
-					$message = \Swift_Message::newInstance()
-						->setSubject($email_prefs->email_subject.' '.lang('email.subject.arc.response'))
-						->setFrom(array($email_prefs->email_address => $email_prefs->email_name))
-						->setTo(array($app->user->email => $app->user->name))
-						->setBcc($bcc)
-						->setReplyTo(\Sentry::user()->email)
-						->setBody(\View::forge(
-							\Location::file('html/arc_response', false, 'email'), 
-							array('message' => \Input::post('message'))), 'text/html');
-					
-					// send the email
-					$mailer->send($message);
-
-					$this->_flash[] = array(
-						'status'	=> 'success',
-						'message'	=> lang('[[short.flash.success|vote|action.saved]]', 1),
-					);
+					throw new \NovaCSRFException(lang('error.exception.csrf'));
 				}
 			}
 
@@ -333,98 +340,105 @@ class Controller_Admin_Application extends Controller_Base_Admin
 
 		if (\Input::method() == 'POST')
 		{
-			// get the action
-			$action = \Input::post('action');
-
-			// get the ID from the POST
-			$rule_id = \Input::post('id');
-
-			/**
-			 * Need to clean up the users data if it exists.
-			 */
-			if (isset($_POST['users']))
+			if (\Security::check_token())
 			{
-				// create an empty array
-				$users = array();
+				// get the action
+				$action = \Input::post('action');
 
-				// loop through the users so we can make sure it's in the right format
-				foreach ($_POST['users'] as $key => $value)
+				// get the ID from the POST
+				$rule_id = \Input::post('id');
+
+				/**
+				 * Need to clean up the users data if it exists.
+				 */
+				if (isset($_POST['users']))
 				{
-					$users[$key] = (is_array($value)) ? $value : array($value);
+					// create an empty array
+					$users = array();
+
+					// loop through the users so we can make sure it's in the right format
+					foreach ($_POST['users'] as $key => $value)
+					{
+						$users[$key] = (is_array($value)) ? $value : array($value);
+					}
+
+					// update the the format of the users item
+					$_POST['users'] = json_encode($users);
 				}
 
-				// update the the format of the users item
-				$_POST['users'] = json_encode($users);
+				/**
+				 * Create a new application rule.
+				 */
+				if (\Sentry::user()->has_level('character.create', 2) and $action == 'create')
+				{
+					$item = \Model_Application_Rule::create_item(\Input::post());
+
+					if ($item)
+					{
+						$this->_flash[] = array(
+							'status'	=> 'success',
+							'message'	=> lang('[[short.flash.success|application rule|action.created]]', 1),
+						);
+					}
+					else
+					{
+						$this->_flash[] = array(
+							'status'	=> 'danger',
+							'message'	=> lang('[[short.flash.failure|application rule|action.creation]]', 1),
+						);
+					}
+				}
+
+				/**
+				 * Update the specified application rule with the information the user specified
+				 * in the modal pop-up.
+				 */
+				if (\Sentry::user()->has_level('character.create', 2) and $action == 'update')
+				{
+					$item = \Model_Application_Rule::update_item($rule_id, \Input::post());
+
+					if ($item)
+					{
+						$this->_flash[] = array(
+							'status'	=> 'success',
+							'message'	=> lang('[[short.flash.success|application rule|action.updated]]', 1),
+						);
+					}
+					else
+					{
+						$this->_flash[] = array(
+							'status'	=> 'danger',
+							'message'	=> lang('[[short.flash.failure|application rule|action.update]]', 1),
+						);
+					}
+				}
+
+				/**
+				 * Delete the specified application rule.
+				 */
+				if (\Sentry::user()->has_level('character.create', 2) and $action == 'delete')
+				{
+					$item = \Model_Application_Rule::delete_item($rule_id);
+
+					if ($item)
+					{
+						$this->_flash[] = array(
+							'status'	=> 'success',
+							'message'	=> lang('[[short.flash.success|application rule|action.deleted]]', 1),
+						);
+					}
+					else
+					{
+						$this->_flash[] = array(
+							'status'	=> 'danger',
+							'message'	=> lang('[[short.flash.failure|application rule|action.deletion]]', 1),
+						);
+					}
+				}
 			}
-
-			/**
-			 * Create a new application rule.
-			 */
-			if (\Sentry::user()->has_level('character.create', 2) and $action == 'create')
+			else
 			{
-				$item = \Model_Application_Rule::create_item(\Input::post());
-
-				if ($item)
-				{
-					$this->_flash[] = array(
-						'status'	=> 'success',
-						'message'	=> lang('[[short.flash.success|application rule|action.created]]', 1),
-					);
-				}
-				else
-				{
-					$this->_flash[] = array(
-						'status'	=> 'danger',
-						'message'	=> lang('[[short.flash.failure|application rule|action.creation]]', 1),
-					);
-				}
-			}
-
-			/**
-			 * Update the specified application rule with the information the user specified
-			 * in the modal pop-up.
-			 */
-			if (\Sentry::user()->has_level('character.create', 2) and $action == 'update')
-			{
-				$item = \Model_Application_Rule::update_item($rule_id, \Input::post());
-
-				if ($item)
-				{
-					$this->_flash[] = array(
-						'status'	=> 'success',
-						'message'	=> lang('[[short.flash.success|application rule|action.updated]]', 1),
-					);
-				}
-				else
-				{
-					$this->_flash[] = array(
-						'status'	=> 'danger',
-						'message'	=> lang('[[short.flash.failure|application rule|action.update]]', 1),
-					);
-				}
-			}
-
-			/**
-			 * Delete the specified application rule.
-			 */
-			if (\Sentry::user()->has_level('character.create', 2) and $action == 'delete')
-			{
-				$item = \Model_Application_Rule::delete_item($rule_id);
-
-				if ($item)
-				{
-					$this->_flash[] = array(
-						'status'	=> 'success',
-						'message'	=> lang('[[short.flash.success|application rule|action.deleted]]', 1),
-					);
-				}
-				else
-				{
-					$this->_flash[] = array(
-						'status'	=> 'danger',
-						'message'	=> lang('[[short.flash.failure|application rule|action.deletion]]', 1),
-					);
-				}
+				throw new \NovaCSRFException(lang('error.exception.csrf'));
 			}
 		}
 
