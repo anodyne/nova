@@ -40,7 +40,7 @@ class Model_Rank extends \Model {
 	/**
 	 * Relationships
 	 */
-	public static $_belongs_to = array(
+	protected static $_belongs_to = array(
 		'info' => array(
 			'model_to' => '\\Model_Rank_Info',
 			'key_to' => 'id',
@@ -55,6 +55,16 @@ class Model_Rank extends \Model {
 			'cascade_save' => false,
 			'cascade_delete' => false,
 		),
+	);
+
+	protected static $_has_many = array(
+		'characters' => array(
+			'key_from' => 'id',
+			'model_to' => '\\Model_Character',
+			'key_to' => 'rank_id',
+			'cascade_save' => false,
+			'cascade_delete' => false,
+		)
 	);
 
 	/**

@@ -73,7 +73,14 @@ class Model_Character extends \Model {
 	/**
 	 * Relationships
 	 */
-	public static $_belongs_to = array(
+	protected static $_belongs_to = array(
+		'rank' => array(
+			'model_to' => '\\Model_Rank',
+			'key_to' => 'id',
+			'key_from' => 'rank_id',
+			'cascade_save' => false,
+			'cascade_delete' => false,
+		),
 		'user' => array(
 			'model_to' => '\\Model_User',
 			'key_to' => 'id',
@@ -93,7 +100,7 @@ class Model_Character extends \Model {
 		)
 	);
 	
-	public static $_has_many = array(
+	protected static $_has_many = array(
 		'logs' => array(
 			'model_to' => '\\Model_PersonalLog',
 			'key_to' => 'character_id',
@@ -117,17 +124,7 @@ class Model_Character extends \Model {
 		),
 	);
 	
-	public static $_many_many = array(
-		'positions' => array(
-			'key_from' => 'id',
-			'key_through_from' => 'character_id',
-			'table_through' => 'character_positions',
-			'key_through_to' => 'position_id',
-			'model_to' => '\\Model_Position',
-			'key_to' => 'id',
-			'cascade_save' => false,
-			'cascade_delete' => false,
-		),
+	protected static $_many_many = array(
 		'posts' => array(
 			'key_from' => 'id',
 			'key_through_from' => 'character_id',
@@ -154,6 +151,48 @@ class Model_Character extends \Model {
 			'events' => array('before_save')
 		),
 	);
+
+	/**
+	 * Get the name of the character.
+	 *
+	 * @api
+	 * @param	bool	show the character rank?
+	 * @param	bool	use the rank short name instead of the full name?
+	 * @return	string
+	 */
+	public function name($include_rank = true, $short_rank = false)
+	{
+		$pieces = array(
+			($include_rank) 
+				? ($short_rank) 
+					? $this->rank->short_name 
+					: $this->rank->name 
+				: '',
+			$this->first_name,
+			$this->last_name
+		);
+		
+		foreach ($pieces as $key => $p)
+		{
+			if (empty($p))
+			{
+				unset($pieces[$key]);
+			}
+		}
+		
+		return implode(' ', $pieces);
+	}
+
+	/**
+	 * Get the positions for the character.
+	 *
+	 * @api
+	 * @return	object
+	 */
+	public function positions()
+	{
+		return \Model_Character_Positions::find_items($this->id);
+	}
 	
 	/**
 	 * Get all characters from the database.
@@ -162,7 +201,7 @@ class Model_Character extends \Model {
 	 * @param	string	the status of characters to pull back
 	 * @return	object	an object of characters
 	 */
-	public static function get_characters($scope = \Status::ACTIVE)
+	public static function find_characters($scope = \Status::ACTIVE)
 	{
 		switch ($scope)
 		{
@@ -208,30 +247,30 @@ class Model_Character extends \Model {
 		
 		return $result;
 	}
-	
-	public function name($include_rank = true, $short_rank = false)
+
+	/**
+	 * Update the position record.
+	 *
+	 * @api
+	 * @param	int		the new ID to use
+	 * @param	int		the old ID to use (for finding the record)
+	 * @return	void
+	 */
+	public function update_position($new_id, $old_id = false)
 	{
-		// get the rank
-		$rank = \Model_Rank::find($this->rank_id);
-		
-		$pieces = array(
-			($include_rank) 
-				? ($short_rank) 
-					? $rank->short_name 
-					: $rank->name 
-				: '',
-			$this->first_name,
-			$this->last_name
-		);
-		
-		foreach ($pieces as $key => $p)
+		// build the arguments
+		$args['character_id'] = $this->id;
+
+		if ($old_id)
 		{
-			if (empty($p))
-			{
-				unset($pieces[$key]);
-			}
+			$args['position_id'] = $old_id;
 		}
-		
-		return implode(' ', $pieces);
+
+		// get the position record
+		$position = \Model_Character_Positions::find_items($args);
+
+		// update to the new position
+		$position->position_id = $new_id;
+		$position->save();
 	}
 }

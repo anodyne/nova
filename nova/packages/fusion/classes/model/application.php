@@ -122,46 +122,6 @@ class Model_Application extends \Model {
 	);
 
 	/**
-	 * Gets the decision makers that are involved with this application.
-	 *
-	 * @api
-	 * @return	array
-	 */
-	public function find_decision_makers()
-	{
-		// get all decision makers
-		$decision_makers = array_keys(\Sentry::users_with_access('character.create.2'));
-
-		// loop through the reviewers
-		foreach ($this->reviewers as $r)
-		{
-			$review_users[] = $r->user_id;
-		}
-
-		// compare the two arrays
-		return array_intersect($decision_makers, $review_users);
-	}
-
-	/**
-	 * Get the application records.
-	 *
-	 * @api
-	 * @param	bool	should we get only active records?
-	 * @return	object
-	 */
-	public static function find_items($only_active = true)
-	{
-		$query = static::find();
-
-		if ($only_active)
-		{
-			$query->where('status', \Status::IN_PROGRESS);
-		}
-
-		return $query->get();
-	}
-
-	/**
 	 * Get all comment records for this application.
 	 *
 	 * @api
@@ -201,6 +161,76 @@ class Model_Application extends \Model {
 		}
 			
 		return $items->get();
+	}
+
+	/**
+	 * Substitute the keys for their actual values.
+	 *
+	 * @api
+	 * @param	string	the message
+	 * @return	string
+	 */
+	public function message_substitution($message)
+	{
+		// build the list of possible substitutions
+		$args = array(
+			'name'		=> $this->user->name,
+			'character'	=> $this->character->name(false),
+			'position'	=> $this->position->name,
+			'rank'		=> $this->character->rank->name,
+			'sim'		=> \Model_Settings::get_settings('sim_name'),
+		);
+
+		// loop through all the arguments and replace it if it's in the message
+		foreach ($args as $key => $value)
+		{
+			if (strpos($message, '#'. $key .'#') !== false)
+			{
+				$message = str_replace('#'. $key .'#', $value, $message);
+			}
+		}
+
+		return $message;
+	}
+
+	/**
+	 * Gets the decision makers that are involved with this application.
+	 *
+	 * @api
+	 * @return	array
+	 */
+	public function find_decision_makers()
+	{
+		// get all decision makers
+		$decision_makers = array_keys(\Sentry::users_with_access('character.create.2'));
+
+		// loop through the reviewers
+		foreach ($this->reviewers as $r)
+		{
+			$review_users[] = $r->user_id;
+		}
+
+		// compare the two arrays
+		return array_intersect($decision_makers, $review_users);
+	}
+
+	/**
+	 * Get the application records.
+	 *
+	 * @api
+	 * @param	bool	should we get only active records?
+	 * @return	object
+	 */
+	public static function find_items($only_active = true)
+	{
+		$query = static::find();
+
+		if ($only_active)
+		{
+			$query->where('status', \Status::IN_PROGRESS);
+		}
+
+		return $query->get();
 	}
 
 	/**
@@ -257,6 +287,7 @@ class Model_Application extends \Model {
 			\NovaMail::send('arc_reviewer_add', array(
 				'subject' => lang('email.subject.arc.add_reviewer'),
 				'to' => array_values($sendEmail),
+				'content' => array('message' => lang('email.content.arc.add_reviewer')),
 			));
 		}
 	}

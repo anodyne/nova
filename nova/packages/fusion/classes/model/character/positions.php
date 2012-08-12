@@ -20,10 +20,10 @@ class Model_Character_Positions extends \Model {
 			'type' => 'bigint',
 			'constraint' => 20,
 			'auto_increment' => true),
-		'position_id' => array(
+		'character_id' => array(
 			'type' => 'int',
 			'constraint' => 11),
-		'character_id' => array(
+		'position_id' => array(
 			'type' => 'int',
 			'constraint' => 11),
 		'primary' => array(
@@ -31,4 +31,31 @@ class Model_Character_Positions extends \Model {
 			'constraint' => 1,
 			'default' => 0),
 	);
+
+	/**
+	 * Get the records for character positions.
+	 *
+	 * @api
+	 * @param	mixed	the ID to use or an array of conditions
+	 * @param	string	the column to use (character_id, position_id)
+	 * @return	object
+	 */
+	public static function find_items($value, $column = 'character_id')
+	{
+		if (is_array($value))
+		{
+			// start the find
+			$query = static::find();
+
+			// loop through the array of values and build the WHERE
+			foreach ($value as $col => $val)
+			{
+				$query->where($col, $val);
+			}
+
+			return $query->get();
+		}
+
+		return static::find()->where($column, $value)->get();
+	}
 }

@@ -87,67 +87,19 @@ class Controller_Admin_Application extends Controller_Base_Admin
 			if (\Input::method() == 'POST')
 			{
 				// get the action
-				$action = trim(\Security::xss_clean(\Input::post('action')));
+				$action = \Input::post('action');
 
 				/**
 				 * Update the reviewers associated with the review.
 				 */
 				if (\Sentry::user()->has_level('character.create', 2) and $action == 'users')
 				{
-					// get the reviewers from the POST
-					$reviewers = \Input::post('reviewUsers');
-
 					// update the reviewers
-					$app->update_reviewers($reviewers);
+					$app->update_reviewers(\Input::post('reviewUsers'));
 
 					$this->_flash[] = array(
-						'status' => 'success',
-						'message' => lang('[[short.flash.success|reviewers|action.updated]]', 1),
-					);
-				}
-
-				/**
-				 * Make the decision for the application.
-				 */
-				if (\Sentry::user()->has_level('character.create', 2) and $action == 'decision')
-				{
-					// get the decision
-					$decision = \Input::post('decision');
-					
-					// update the user record
-					$app->user->status = ($decision == 'approve') ? \Status::ACTIVE : \Status::REMOVED;
-					$app->user->role_id = ($decision == 'approve') ? \Input::post('role') : \Model_Access_Role::INACTIVE;
-					$app->user->save();
-
-					# TODO: need to take in to account that the position could have been changed
-
-					// update the character record
-					$app->character->status = ($decision == 'approve') ? \Status::ACTIVE : \Status::REMOVED;
-					$app->character->activated = ($decision == 'approve') ? time() : 0;
-					$app->character->rank_id = ($decision == 'approve') ? \Input::post('rank') : 0;
-					$app->character->save();
-
-					// add the response
-					\Model_Application_Response::create_item(array(
-						'app_id' => $app->id,
-						'user_id' => \Sentry::user()->id,
-						'type' => \Model_Application_Response::RESPONSE,
-						'content' => \Input::post('message')
-					));
-
-					// update the application status
-					$app->status = ($decision == 'approve') ? \Status::APPROVED : \Status::REJECTED;
-					$app->save();
-
-					// send the message
-					\NovaMail::send('arc_response', array(
-						'subject' => lang('email.subject.arc.response'),
-						'to' => $app->user->id,
-					));
-
-					$this->_flash[] = array(
-						'status' => 'success',
-						'message' => lang('[[short.flash.success|vote|action.saved]]', 1),
+						'status'	=> 'success',
+						'message'	=> lang('[[short.flash.success|reviewers|action.updated]]', 1),
 					);
 				}
 
@@ -160,8 +112,8 @@ class Controller_Admin_Application extends Controller_Base_Admin
 					$app->update_vote(\Sentry::user(), \Input::post());
 
 					$this->_flash[] = array(
-						'status' => 'success',
-						'message' => lang('[[short.flash.success|vote|action.saved]]', 1),
+						'status'	=> 'success',
+						'message'	=> lang('[[short.flash.success|vote|action.saved]]', 1),
 					);
 				}
 
@@ -172,15 +124,15 @@ class Controller_Admin_Application extends Controller_Base_Admin
 				{
 					// add the comment
 					\Model_Application_Response::create_item(array(
-						'app_id' => $app->id,
-						'user_id' => \Sentry::user()->id,
-						'type' => \Model_Application_Response::COMMENT,
-						'content' => \Input::post('content')
+						'app_id'	=> $app->id,
+						'user_id'	=> \Sentry::user()->id,
+						'type'		=> \Model_Application_Response::COMMENT,
+						'content'	=> \Input::post('content')
 					));
 
 					$this->_flash[] = array(
-						'status' => 'success',
-						'message' => lang('[[short.flash.success|comment|action.added]]', 1),
+						'status'	=> 'success',
+						'message'	=> lang('[[short.flash.success|comment|action.added]]', 1),
 					);
 				}
 
@@ -234,6 +186,80 @@ class Controller_Admin_Application extends Controller_Base_Admin
 					$this->_flash[] = array(
 						'status'	=> 'success',
 						'message'	=> lang('[[short.flash.success|action.email|action.sent]]', 1),
+					);
+				}
+
+				/**
+				 * Make the decision for the application.
+				 */
+				if (\Sentry::user()->has_level('character.create', 2) and $action == 'decision')
+				{
+					// get the decision
+					$decision = \Input::post('decision');
+					
+					// update the user record
+					$app->user->status = ($decision == 'approve') ? \Status::ACTIVE : \Status::REMOVED;
+					$app->user->role_id = ($decision == 'approve') ? \Input::post('role') : \Model_Access_Role::INACTIVE;
+					$app->user->save();
+
+					// update the character record
+					$app->character->status = ($decision == 'approve') ? \Status::ACTIVE : \Status::REMOVED;
+					$app->character->activated = ($decision == 'approve') ? time() : 0;
+					$app->character->rank_id = ($decision == 'approve') ? \Input::post('rank') : 0;
+					$app->character->save();
+
+					// update the position if it was changed
+					if ($decision == 'approve' and $app->position->id != \Input::post('position'))
+					{
+						// update the position
+						$app->character->update_position(\Input::post('position'), $app->position->id);
+					}
+
+					// update the application status
+					$app->status = ($decision == 'approve') ? \Status::APPROVED : \Status::REJECTED;
+					$app->save();
+
+					// add the response
+					\Model_Application_Response::create_item(array(
+						'app_id'	=> $app->id,
+						'user_id'	=> \Sentry::user()->id,
+						'type'		=> \Model_Application_Response::RESPONSE,
+						'content'	=> $app->message_substitution(\Input::post('message'))
+					));
+
+					// get the email preferences
+					$email_prefs = \Model_Settings::get_settings(array(
+						'email_subject',
+						'email_name',
+						'email_address',
+					));
+
+					// loop through the reviewers and build the array for sending data
+					foreach ($app->reviewers as $r)
+					{
+						$bcc[$r->email] = $r->name;
+					}
+
+					// setup the mailer
+					$mailer = \NovaMail::setup();
+
+					// build the message
+					$message = \Swift_Message::newInstance()
+						->setSubject($email_prefs->email_subject.' '.lang('email.subject.arc.response'))
+						->setFrom(array($email_prefs->email_address => $email_prefs->email_name))
+						->setTo(array($app->user->email => $app->user->name))
+						->setBcc($bcc)
+						->setReplyTo(\Sentry::user()->email)
+						->setBody(\View::forge(
+							\Location::file('html/arc_response', false, 'email'), 
+							array('message' => \Input::post('message'))), 'text/html');
+					
+					// send the email
+					$mailer->send($message);
+
+					$this->_flash[] = array(
+						'status'	=> 'success',
+						'message'	=> lang('[[short.flash.success|vote|action.saved]]', 1),
 					);
 				}
 			}
@@ -312,10 +338,10 @@ class Controller_Admin_Application extends Controller_Base_Admin
 		if (\Input::method() == 'POST')
 		{
 			// get the action
-			$action = trim(\Security::xss_clean(\Input::post('action')));
+			$action = \Input::post('action');
 
 			// get the ID from the POST
-			$rule_id = trim(\Security::xss_clean(\Input::post('id')));
+			$rule_id = \Input::post('id');
 
 			/**
 			 * Need to clean up the users data if it exists.

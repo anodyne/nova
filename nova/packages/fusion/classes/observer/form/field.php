@@ -138,7 +138,7 @@ class Observer_Form_Field extends \Orm\Observer
 		{
 			case 'bio':
 				// get all the active characters
-				$characters = \Model_Character::get_characters();
+				$characters = \Model_Character::find_characters();
 
 				if (count($characters) > 0)
 				{

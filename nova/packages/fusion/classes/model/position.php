@@ -71,19 +71,6 @@ class Model_Position extends \Model {
 		),
 	);
 
-	protected static $_many_many = array(
-		'characters' => array(
-			'key_from' => 'id',
-			'key_through_from' => 'position_id',
-			'table_through' => 'character_positions',
-			'key_through_to' => 'character_id',
-			'model_to' => '\\Model_Character',
-			'key_to' => 'id',
-			'cascade_save' => false,
-			'cascade_delete' => false,
-		),
-	);
-
 	/**
 	 * Observers
 	 */
@@ -106,6 +93,17 @@ class Model_Position extends \Model {
 	{
 		static::$_table_name = static::$_table_name.\Config::get('nova.genre');
 	}
+
+	/**
+	 * Get all characters for this position.
+	 *
+	 * @api
+	 * @return	object
+	 */
+	public function characters()
+	{
+		return \Model_Character_Positions::find_items($this->id, 'position_id');
+	}
 	
 	/**
 	 * Get positions based on criteria passed to the method.
@@ -116,7 +114,7 @@ class Model_Position extends \Model {
 	 * @param	bool	whether to show displayed positions or not (null for both)
 	 * @return	object
 	 */
-	public static function get_positions($scope = 'all', $dept = null, $active = true)
+	public static function find_positions($scope = 'all', $dept = null, $active = true)
 	{
 		// grab the genre
 		$genre = \Config::get('nova.genre');
@@ -167,6 +165,13 @@ class Model_Position extends \Model {
 		return $query->get();
 	}
 
+	/**
+	 * Update the open slots for the position.
+	 *
+	 * @api
+	 * @param	string	the action being taken on the character (add, remove)
+	 * @return	void
+	 */
 	public function update_open_slots($character_action)
 	{
 		if ($character_action == 'add')

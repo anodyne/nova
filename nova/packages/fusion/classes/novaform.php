@@ -170,15 +170,15 @@ class NovaForm
 	{
 		if (is_numeric($type))
 		{
-			$positions = \Model_Position::get_positions('all', $type);
+			$positions = \Model_Position::find_positions('all', $type);
 		}
 		elseif (is_string($type))
 		{
-			$positions = \Model_Position::get_positions($type);
+			$positions = \Model_Position::find_positions($type);
 		}
 		else
 		{
-			$positions = \Model_Position::get_positions();
+			$positions = \Model_Position::find_positions();
 		}
 
 		if (count($positions) > 0)
