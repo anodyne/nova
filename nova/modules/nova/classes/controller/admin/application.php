@@ -19,23 +19,15 @@ class Controller_Admin_Application extends Controller_Base_Admin
 		$this->template->layout->navsub->menu = false;
 	}
 	
+	/**
+	 * Show a list of the user's currently active application reviews.
+	 */
 	public function action_index()
 	{
 		$this->_view = 'admin/arc/index';
 
-		// get the active reviews the user is involved in
-		$reviews = \Model_User::find(\Sentry::user()->id, array(
-			'related' => array(
-				'appReviews' => array(
-					'where' => array(
-						array('status', \Status::IN_PROGRESS)
-					),
-				),
-			),
-		));
-
-		// pass the reviews on to the view
-		$this->_data->reviews = $reviews->appReviews;
+		// get the reviews
+		$this->_data->reviews = \Sentry::user()->get()->find_app_reviews(\Status::IN_PROGRESS);
 
 		// set up the images
 		$this->_data->images = array(
@@ -46,34 +38,26 @@ class Controller_Admin_Application extends Controller_Base_Admin
 		return;
 	}
 
+	/**
+	 * Show a list of the history of the user's application reviews. Anyone with
+	 * character create level 2 permissions will see all applications ever submitted.
+	 */
 	public function action_history()
 	{
-		if (\Sentry::user()->has_level('character.create', 2))
-		{
-			$this->_view = 'admin/arc/history';
-			$this->_js_view = 'admin/arc/history_js';
+		$this->_view = 'admin/arc/history';
+		$this->_js_view = 'admin/arc/history_js';
 
-			// get all the applications
-			$applications = \Model_Application::find('all');
-
-			// make sure we have applications
-			if (count($applications) > 0)
-			{
-				// loop through the applications and group them
-				foreach ($applications as $app)
-				{
-					$this->_data->applications[$app->status][$app->id] = $app;
-				}
-			}
-		}
-		else
-		{
-			# redirect
-		}
+		$this->_data->applications = (\Sentry::user()->has_level('character.create', 2))
+			? \Model_Application::find('all')
+			: \Sentry::user()->get()->appReviews;
 
 		return;
 	}
 
+	/**
+	 * Review an application including admin functions to update the users on the
+	 * review, email the applicant, and make a final decision.
+	 */
 	public function action_review($id)
 	{
 		$this->_view = 'admin/arc/review';
@@ -89,7 +73,7 @@ class Controller_Admin_Application extends Controller_Base_Admin
 				if (\Security::check_token())
 				{
 					// get the action
-					$action = \Input::post('action');
+					$action = \Security::xss_clean(\Input::post('action'));
 
 					/**
 					 * Update the reviewers associated with the review.
@@ -97,7 +81,7 @@ class Controller_Admin_Application extends Controller_Base_Admin
 					if (\Sentry::user()->has_level('character.create', 2) and $action == 'users')
 					{
 						// update the reviewers
-						$app->update_reviewers(\Input::post('reviewUsers'));
+						$app->update_reviewers(\Security::xss_clean(\Input::post('reviewUsers')));
 
 						$this->_flash[] = array(
 							'status'	=> 'success',
@@ -111,7 +95,7 @@ class Controller_Admin_Application extends Controller_Base_Admin
 					if ($action == 'vote')
 					{
 						// update the vote
-						$app->update_vote(\Sentry::user(), \Input::post());
+						$app->update_vote(\Sentry::user(), \Security::xss_clean(\Input::post()));
 
 						$this->_flash[] = array(
 							'status'	=> 'success',
@@ -129,7 +113,7 @@ class Controller_Admin_Application extends Controller_Base_Admin
 							'app_id'	=> $app->id,
 							'user_id'	=> \Sentry::user()->id,
 							'type'		=> \Model_Application_Response::COMMENT,
-							'content'	=> \Input::post('content')
+							'content'	=> \Security::xss_clean(\Input::post('content'))
 						));
 
 						$this->_flash[] = array(
@@ -148,7 +132,7 @@ class Controller_Admin_Application extends Controller_Base_Admin
 							'app_id'	=> $app->id,
 							'user_id'	=> \Sentry::user()->id,
 							'type'		=> \Model_Application_Response::EMAIL,
-							'content'	=> \Input::post('content')
+							'content'	=> \Security::xss_clean(\Input::post('content'))
 						));
 
 						// loop through the decision makers
@@ -180,7 +164,7 @@ class Controller_Admin_Application extends Controller_Base_Admin
 							->setReplyTo(\Sentry::user()->email)
 							->setBody(\View::forge(
 								\Location::file('html/arc_email', false, 'email'), 
-								array('message' => \Input::post('content'))), 'text/html');
+								array('message' => \Security::xss_clean(\Input::post('content')))), 'text/html');
 						
 						// send the email
 						$mailer->send($message);
@@ -197,24 +181,32 @@ class Controller_Admin_Application extends Controller_Base_Admin
 					if (\Sentry::user()->has_level('character.create', 2) and $action == 'decision')
 					{
 						// get the decision
-						$decision = \Input::post('decision');
+						$decision = \Security::xss_clean(\Input::post('decision'));
 						
 						// update the user record
 						$app->user->status = ($decision == 'approve') ? \Status::ACTIVE : \Status::REMOVED;
-						$app->user->role_id = ($decision == 'approve') ? \Input::post('role') : \Model_Access_Role::INACTIVE;
+						$app->user->role_id = ($decision == 'approve') 
+							? \Security::xss_clean(\Input::post('role')) 
+							: \Model_Access_Role::INACTIVE;
 						$app->user->save();
 
 						// update the character record
 						$app->character->status = ($decision == 'approve') ? \Status::ACTIVE : \Status::REMOVED;
 						$app->character->activated = ($decision == 'approve') ? time() : 0;
-						$app->character->rank_id = ($decision == 'approve') ? \Input::post('rank') : 0;
+						$app->character->rank_id = ($decision == 'approve') 
+							? \Security::xss_clean(\Input::post('rank')) 
+							: 0;
 						$app->character->save();
 
 						// update the position if it was changed
-						if ($decision == 'approve' and $app->position->id != \Input::post('position'))
+						if ($decision == 'approve' and 
+								$app->position->id != \Security::xss_clean(\Input::post('position')))
 						{
 							// update the position
-							$app->character->update_position(\Input::post('position'), $app->position->id);
+							$app->character->update_position(
+								\Security::xss_clean(\Input::post('position')), 
+								$app->position->id
+							);
 						}
 
 						// update the application status
@@ -226,7 +218,7 @@ class Controller_Admin_Application extends Controller_Base_Admin
 							'app_id'	=> $app->id,
 							'user_id'	=> \Sentry::user()->id,
 							'type'		=> \Model_Application_Response::RESPONSE,
-							'content'	=> $app->message_substitution(\Input::post('message'))
+							'content'	=> $app->message_substitution(\Security::xss_clean(\Input::post('message')))
 						));
 
 						// get the email preferences
@@ -254,14 +246,14 @@ class Controller_Admin_Application extends Controller_Base_Admin
 							->setReplyTo(\Sentry::user()->email)
 							->setBody(\View::forge(
 								\Location::file('html/arc_response', false, 'email'), 
-								array('message' => \Input::post('message'))), 'text/html');
+								array('message' => \Security::xss_clean(\Input::post('message')))), 'text/html');
 						
 						// send the email
 						$mailer->send($message);
 
 						$this->_flash[] = array(
 							'status'	=> 'success',
-							'message'	=> lang('[[short.flash.success|vote|action.saved]]', 1),
+							'message'	=> lang('[[short.flash.success|final decision|action.saved]]', 1),
 						);
 					}
 				}
@@ -324,13 +316,16 @@ class Controller_Admin_Application extends Controller_Base_Admin
 			$this->_data->roles = array();
 
 			// set the date the user applied on
-			$this->_data->applied_date = \Date::forge($app->created_at, \Sentry::user()->preferences('timezone'))
+			$this->_data->applied_date = \Date::forge($app->created_at, \Sentry::user()->get()->preferences('timezone'))
 				->format($this->options->date_format);
 		}
 
 		return;
 	}
 
+	/**
+	 * Manage the application rules.
+	 */
 	public function action_rules($id = false)
 	{
 		\Sentry::allowed('character.create', true);
@@ -343,10 +338,10 @@ class Controller_Admin_Application extends Controller_Base_Admin
 			if (\Security::check_token())
 			{
 				// get the action
-				$action = \Input::post('action');
+				$action = \Security::xss_clean(\Input::post('action'));
 
 				// get the ID from the POST
-				$rule_id = \Input::post('id');
+				$rule_id = \Security::xss_clean(\Input::post('id'));
 
 				/**
 				 * Need to clean up the users data if it exists.
@@ -371,7 +366,7 @@ class Controller_Admin_Application extends Controller_Base_Admin
 				 */
 				if (\Sentry::user()->has_level('character.create', 2) and $action == 'create')
 				{
-					$item = \Model_Application_Rule::create_item(\Input::post());
+					$item = \Model_Application_Rule::create_item(\Security::xss_clean(\Input::post()));
 
 					if ($item)
 					{
@@ -395,7 +390,7 @@ class Controller_Admin_Application extends Controller_Base_Admin
 				 */
 				if (\Sentry::user()->has_level('character.create', 2) and $action == 'update')
 				{
-					$item = \Model_Application_Rule::update_item($rule_id, \Input::post());
+					$item = \Model_Application_Rule::update_item($rule_id, \Security::xss_clean(\Input::post()));
 
 					if ($item)
 					{
