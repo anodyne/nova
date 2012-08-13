@@ -177,7 +177,7 @@ class Model_Application extends \Model {
 			'name'		=> $this->user->name,
 			'character'	=> $this->character->name(false),
 			'position'	=> $this->position->name,
-			'rank'		=> $this->character->rank->name,
+			'rank'		=> $this->character->rank->info->name,
 			'sim'		=> \Model_Settings::get_settings('sim_name'),
 		);
 
