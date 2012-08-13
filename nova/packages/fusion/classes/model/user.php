@@ -211,6 +211,37 @@ class Model_User extends \Model {
 	}
 
 	/**
+	 * Get the user's application reviews.
+	 *
+	 * @api
+	 * @param	int		a specific status to pull back
+	 * @return	array
+	 */
+	public function find_app_reviews($status = false)
+	{
+		// setup the holding array
+		$reviews = array();
+
+		if ($this->appReviews)
+		{
+			// loop through the user's reviews
+			foreach ($this->appReviews as $r)
+			{
+				$reviews[$r->status][] = $r;
+			}
+
+			if ($status)
+			{
+				return $reviews[$status];
+			}
+
+			return $reviews;
+		}
+
+		return false;
+	}
+
+	/**
 	 * Get a single user based on something other than their ID.
 	 *
 	 * @api
