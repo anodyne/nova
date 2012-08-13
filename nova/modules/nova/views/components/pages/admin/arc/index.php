@@ -1,13 +1,14 @@
-<?php if (Sentry::user()->has_level('character.create', 2)): ?>
-	<div class="btn-group">
+<div class="btn-group">
+	<?php if (Sentry::user()->has_level('character.create', 2)): ?>
 		<a href="<?php echo Uri::create('admin/application/rules');?>" class="btn tooltip-top" title="<?php echo lang('action.manage rules', 1);?>"><?php echo $images['rules'];?></a>
-		<a href="<?php echo Uri::create('admin/application/history');?>" class="btn tooltip-top" title="<?php echo lang('action.view history', 1);?>"><?php echo $images['clock'];?></a>
-	</div>
-	<br>
-<?php endif;?>
+	<?php endif;?>
+	
+	<a href="<?php echo Uri::create('admin/application/history');?>" class="btn tooltip-top" title="<?php echo lang('action.view history', 1);?>"><?php echo $images['clock'];?></a>
+</div>
+<br>
 
-<?php if (count($reviews) > 0): ?>
-	<table class="table table-striped">
+<?php if ($reviews !== false): ?>
+		<table class="table table-striped">
 		<tbody>
 		<?php foreach ($reviews as $r): ?>
 			<tr>
