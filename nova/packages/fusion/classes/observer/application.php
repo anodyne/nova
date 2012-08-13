@@ -96,8 +96,11 @@ class Observer_Application extends \Orm\Observer
 								$p = \Model_Position::find($position);
 
 								// loop through the characters for that position
-								foreach ($p->characters as $char)
+								foreach ($p->characters() as $character)
 								{
+									// get the character
+									$char = \Model_Character::find($character->character_id);
+
 									if ($char->status == \Status::ACTIVE and $char->user !== null)
 									{
 										// add the reviewer record
@@ -144,8 +147,11 @@ class Observer_Application extends \Orm\Observer
 									$p = \Model_Position::find($position);
 
 									// loop through the characters for that position
-									foreach ($p->characters as $char)
+									foreach ($p->characters() as $character)
 									{
+										// get the character
+										$char = \Model_Character::find($character->character_id);
+
 										if ($char->status == \Status::ACTIVE and $char->user !== null)
 										{
 											// add the reviewer record
