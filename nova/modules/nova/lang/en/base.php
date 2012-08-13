@@ -16,6 +16,7 @@ return array(
 
 	'bio'	=> 'bio',
 	'base' => 'base',
+	'by' => 'by',
 
 	'character'		=> 'character',
 	'characters'	=> 'characters',
@@ -136,6 +137,7 @@ return array(
 	'short_name' => 'short name',
 	'sample_post' => 'sample post',
 	'step' => 'step',
+	'status' => 'status',
 
 	'tab' => "tab",
 	'tabs' => "tabs",

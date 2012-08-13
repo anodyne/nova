@@ -10,6 +10,7 @@ return array(
 	'approved' => 'approved',
 
 	'back' => 'back',
+	'ban' => 'ban',
 	
 	'cancel' => 'cancel',
 	'close' => 'close',
@@ -19,6 +20,7 @@ return array(
 	'confirm' => 'confirm',
 	'choose' => 'choose',
 	'change' => 'change',
+	'clear' => 'clear',
 	
 	'delete' => 'delete',
 	'deleted' => 'deleted',
@@ -29,6 +31,8 @@ return array(
 	
 	'edit' => 'edit',
 	'email' => 'email',
+
+	'filter' => 'filter',
 
 	'install' => 'install',
 	'installed' => 'installed',
@@ -53,6 +57,7 @@ return array(
 	'save' => 'save',
 	'saved' => 'saved',
 	'send' => 'send',
+	'show' => 'show',
 
 	'update' => 'update',
 	'updated' => 'updated',
