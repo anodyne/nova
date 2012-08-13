@@ -1,3 +1,8 @@
+<div class="btn-group">
+	<a href="<?php echo Uri::create('admin/application/index');?>" class="btn tooltip-top" title="<?php echo lang('action.back to index', 1);?>"><i class="icon-chevron-left icon-75"></i></a>
+</div>
+<br>
+
 <div class="row">
 	<div class="span10">
 		<div class="well well-small">
@@ -49,25 +54,31 @@
 			</div>
 		<?php endif;?>
 
-		<hr>
+		<?php if ($votes->yes > 0 or $votes->no > 0): ?>
+			<hr>
+		<?php endif;?>
 
-		<div class="control-group success">
-			<label class="control-label"><?php echo lang('yes', 1);?></label>
-			<p class="help-block">
-				<?php echo ceil(($votes->yes/$votes->all) * 100);?>%
-				(<?php echo $votes->yes;?>
-				<?php if ($votes->yes == 1): echo lang('vote'); else: echo lang('votes'); endif;?>)
-			</p>
-		</div>
+		<?php if ($votes->yes > 0): ?>
+			<div class="control-group success">
+				<label class="control-label"><?php echo lang('yes', 1);?></label>
+				<p class="help-block">
+					<?php echo ceil(($votes->yes/$votes->all) * 100);?>%
+					(<?php echo $votes->yes;?>
+					<?php if ($votes->yes == 1): echo lang('vote'); else: echo lang('votes'); endif;?>)
+				</p>
+			</div>
+		<?php endif;?>
 
-		<div class="control-group error">
-			<label class="control-label"><?php echo lang('no', 1);?></label>
-			<p class="help-block">
-				<?php echo floor(($votes->no/$votes->all) * 100);?>%
-				(<?php echo $votes->no;?>
-				<?php if ($votes->no == 1): echo lang('vote'); else: echo lang('votes'); endif;?>)
-			</p>
-		</div>
+		<?php if ($votes->no > 0): ?>
+			<div class="control-group error">
+				<label class="control-label"><?php echo lang('no', 1);?></label>
+				<p class="help-block">
+					<?php echo floor(($votes->no/$votes->all) * 100);?>%
+					(<?php echo $votes->no;?>
+					<?php if ($votes->no == 1): echo lang('vote'); else: echo lang('votes'); endif;?>)
+				</p>
+			</div>
+		<?php endif;?>
 	</div>
 </div>
 
