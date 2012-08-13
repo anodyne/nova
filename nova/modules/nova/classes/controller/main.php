@@ -249,9 +249,16 @@ abstract class Controller_Main extends Controller_Base_Main
 		);*/
 		
 		//\Debug::dump(\Model_User::find_users());
+		
+		$rev1 = \Model_User::find(1)->appReviews;
+		$rev2 = \Model_User::query()->related('appReviews')
+			->where('appReviews.status', \Status::IN_PROGRESS)
+			->get();
 
 		\Debug::dump(
-			\Date::forge(null, 'America/Los_Angeles')->format($this->options->date_format)
+			$rev1[3],
+			$rev1[3]->user->email
+			//$rev2
 		);
 		
 		return;
