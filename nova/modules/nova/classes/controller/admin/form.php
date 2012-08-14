@@ -32,27 +32,34 @@ class Controller_Admin_Form extends Controller_Base_Admin
 
 		if (\Sentry::user()->has_access('form.edit') and \Input::method() == 'POST')
 		{
-			// get the id
-			$id = \Security::xss_clean(\Input::post('id'));
-
-			// update the form
-			$entry = \Model_Form::update_item($id, \Input::post(), true);
-
-			if (is_object($entry))
+			if (\Security::check_token())
 			{
-				$this->_flash[] = array(
-					'status' => 'success',
-					'message' => lang('[[short.flash.success|form|action.updated]]', 1),
-				);
+				// get the id
+				$id = \Security::xss_clean(\Input::post('id'));
 
-				\SystemEvent::add('user', '[[event.form.update|{{'.$entry->name.'}}]]');
+				// update the form
+				$entry = \Model_Form::update_item($id, \Input::post(), true);
+
+				if (is_object($entry))
+				{
+					$this->_flash[] = array(
+						'status' => 'success',
+						'message' => lang('[[short.flash.success|form|action.updated]]', 1),
+					);
+
+					\SystemEvent::add('user', '[[event.form.update|{{'.$entry->name.'}}]]');
+				}
+				else
+				{
+					$this->_flash[] = array(
+						'status' => 'danger',
+						'message' => lang('[[short.flash.failure|form|action.update]]', 1),
+					);
+				}
 			}
 			else
 			{
-				$this->_flash[] = array(
-					'status' => 'danger',
-					'message' => lang('[[short.flash.failure|form|action.update]]', 1),
-				);
+				throw new \NovaCSRFException(lang('error.exception.csrf'));
 			}
 		}
 
@@ -80,73 +87,80 @@ class Controller_Admin_Form extends Controller_Base_Admin
 
 		if (\Input::method() == 'POST')
 		{
-			// get the action
-			$action = \Security::xss_clean(\Input::post('action'));
-
-			// get the ID from the POST
-			$field_id = \Security::xss_clean(\Input::post('id'));
-
-			if (\Sentry::user()->has_access('form.delete') and $action == 'delete')
+			if (\Security::check_token())
 			{
-				// delete the field
-				$item = \Model_Form_Field::delete_item($field_id);
+				// get the action
+				$action = \Security::xss_clean(\Input::post('action'));
 
-				if ($item)
+				// get the ID from the POST
+				$field_id = \Security::xss_clean(\Input::post('id'));
+
+				if (\Sentry::user()->has_access('form.delete') and $action == 'delete')
 				{
-					$this->_flash[] = array(
-						'status' => 'success',
-						'message' => lang('[[short.flash.success|field|action.deleted]]', 1),
-					);
+					// delete the field
+					$item = \Model_Form_Field::delete_item($field_id);
+
+					if ($item)
+					{
+						$this->_flash[] = array(
+							'status' => 'success',
+							'message' => lang('[[short.flash.success|field|action.deleted]]', 1),
+						);
+					}
+					else
+					{
+						$this->_flash[] = array(
+							'status' => 'danger',
+							'message' => lang('[[short.flash.failure|field|action.deletion]]', 1),
+						);
+					}
 				}
-				else
+
+				if (\Sentry::user()->has_access('form.edit') and $action == 'add')
 				{
-					$this->_flash[] = array(
-						'status' => 'danger',
-						'message' => lang('[[short.flash.failure|field|action.deletion]]', 1),
-					);
+					// add the field
+					$item = \Model_Form_Field::create_item(\Input::post());
+
+					if ($item)
+					{
+						$this->_flash[] = array(
+							'status' => 'success',
+							'message' => lang('[[short.flash.success|field|action.added]]', 1),
+						);
+					}
+					else
+					{
+						$this->_flash[] = array(
+							'status' => 'danger',
+							'message' => lang('[[short.flash.failure|field|action.creation]]', 1),
+						);
+					}
+				}
+
+				if (\Sentry::user()->has_access('form.edit') and $action == 'update')
+				{
+					// update the field
+					$item = \Model_Form_Field::update_item($field_id, \Input::post());
+
+					if ($item)
+					{
+						$this->_flash[] = array(
+							'status' => 'success',
+							'message' => lang('[[short.flash.success|field|action.updated]]', 1),
+						);
+					}
+					else
+					{
+						$this->_flash[] = array(
+							'status' => 'danger',
+							'message' => lang('[[short.flash.failure|field|action.update]]', 1),
+						);
+					}
 				}
 			}
-
-			if (\Sentry::user()->has_access('form.edit') and $action == 'add')
+			else
 			{
-				// add the field
-				$item = \Model_Form_Field::create_item(\Input::post());
-
-				if ($item)
-				{
-					$this->_flash[] = array(
-						'status' => 'success',
-						'message' => lang('[[short.flash.success|field|action.added]]', 1),
-					);
-				}
-				else
-				{
-					$this->_flash[] = array(
-						'status' => 'danger',
-						'message' => lang('[[short.flash.failure|field|action.creation]]', 1),
-					);
-				}
-			}
-
-			if (\Sentry::user()->has_access('form.edit') and $action == 'update')
-			{
-				// update the field
-				$item = \Model_Form_Field::update_item($field_id, \Input::post());
-
-				if ($item)
-				{
-					$this->_flash[] = array(
-						'status' => 'success',
-						'message' => lang('[[short.flash.success|field|action.updated]]', 1),
-					);
-				}
-				else
-				{
-					$this->_flash[] = array(
-						'status' => 'danger',
-						'message' => lang('[[short.flash.failure|field|action.update]]', 1),
-					);
-				}
+				throw new \NovaCSRFException(lang('error.exception.csrf'));
 			}
 		}
 
@@ -303,89 +317,96 @@ class Controller_Admin_Form extends Controller_Base_Admin
 
 		if (\Input::method() == 'POST')
 		{
-			// get the action
-			$action = \Security::xss_clean(\Input::post('action'));
-
-			// get the ID from the POST
-			$section_id = \Security::xss_clean(\Input::post('id'));
-
-			if (\Sentry::user()->has_access('form.delete') and $action == 'delete')
+			if (\Security::check_token())
 			{
-				// get the new section ID
-				$new_section = \Security::xss_clean(\Input::post('new_section_id'));
+				// get the action
+				$action = \Security::xss_clean(\Input::post('action'));
 
-				// get the section we're deleting
-				$section = \Model_Form_Section::find($section_id);
+				// get the ID from the POST
+				$section_id = \Security::xss_clean(\Input::post('id'));
 
-				// loop through the fields and update them
-				foreach ($section->fields as $f)
+				if (\Sentry::user()->has_access('form.delete') and $action == 'delete')
 				{
-					// update the section ID
-					$f->section_id = $new_section;
+					// get the new section ID
+					$new_section = \Security::xss_clean(\Input::post('new_section_id'));
 
-					// save the record
-					$f->save();
+					// get the section we're deleting
+					$section = \Model_Form_Section::find($section_id);
+
+					// loop through the fields and update them
+					foreach ($section->fields as $f)
+					{
+						// update the section ID
+						$f->section_id = $new_section;
+
+						// save the record
+						$f->save();
+					}
+
+					// delete the section
+					$item = \Model_Form_Section::delete_item($section_id);
+
+					if ($item)
+					{
+						$this->_flash[] = array(
+							'status' => 'success',
+							'message' => lang('[[short.flash.success|section|action.deleted]]', 1),
+						);
+					}
+					else
+					{
+						$this->_flash[] = array(
+							'status' => 'danger',
+							'message' => lang('[[short.flash.failure|section|action.deletion]]', 1),
+						);
+					}
 				}
 
-				// delete the section
-				$item = \Model_Form_Section::delete_item($section_id);
+				if (\Sentry::user()->has_access('form.edit') and $action == 'add')
+				{
+					// add the section
+					$item = \Model_Form_Section::create_item(\Input::post());
 
-				if ($item)
-				{
-					$this->_flash[] = array(
-						'status' => 'success',
-						'message' => lang('[[short.flash.success|section|action.deleted]]', 1),
-					);
+					if ($item)
+					{
+						$this->_flash[] = array(
+							'status' => 'success',
+							'message' => lang('[[short.flash.success|section|action.added]]', 1),
+						);
+					}
+					else
+					{
+						$this->_flash[] = array(
+							'status' => 'danger',
+							'message' => lang('[[short.flash.failure|section|action.creation]]', 1),
+						);
+					}
 				}
-				else
+
+				if (\Sentry::user()->has_access('form.edit') and $action == 'update')
 				{
-					$this->_flash[] = array(
-						'status' => 'danger',
-						'message' => lang('[[short.flash.failure|section|action.deletion]]', 1),
-					);
+					// update the section
+					$item = \Model_Form_Section::update_item($section_id, \Input::post());
+
+					if ($item)
+					{
+						$this->_flash[] = array(
+							'status' => 'success',
+							'message' => lang('[[short.flash.success|section|action.updated]]', 1),
+						);
+					}
+					else
+					{
+						$this->_flash[] = array(
+							'status' => 'danger',
+							'message' => lang('[[short.flash.failure|section|action.update]]', 1),
+						);
+					}
 				}
 			}
-
-			if (\Sentry::user()->has_access('form.edit') and $action == 'add')
+			else
 			{
-				// add the section
-				$item = \Model_Form_Section::create_item(\Input::post());
-
-				if ($item)
-				{
-					$this->_flash[] = array(
-						'status' => 'success',
-						'message' => lang('[[short.flash.success|section|action.added]]', 1),
-					);
-				}
-				else
-				{
-					$this->_flash[] = array(
-						'status' => 'danger',
-						'message' => lang('[[short.flash.failure|section|action.creation]]', 1),
-					);
-				}
-			}
-
-			if (\Sentry::user()->has_access('form.edit') and $action == 'update')
-			{
-				// update the section
-				$item = \Model_Form_Section::update_item($section_id, \Input::post());
-
-				if ($item)
-				{
-					$this->_flash[] = array(
-						'status' => 'success',
-						'message' => lang('[[short.flash.success|section|action.updated]]', 1),
-					);
-				}
-				else
-				{
-					$this->_flash[] = array(
-						'status' => 'danger',
-						'message' => lang('[[short.flash.failure|section|action.update]]', 1),
-					);
-				}
+				throw new \NovaCSRFException(lang('error.exception.csrf'));
 			}
 		}
 
@@ -511,89 +532,96 @@ class Controller_Admin_Form extends Controller_Base_Admin
 
 		if (\Input::method() == 'POST')
 		{
-			// get the action
-			$action = \Security::xss_clean(\Input::post('action'));
-
-			// get the ID from the POST
-			$tab_id = \Security::xss_clean(\Input::post('id'));
-
-			if (\Sentry::user()->has_access('form.delete') and $action == 'delete')
+			if (\Security::check_token())
 			{
-				// get the new tab ID
-				$new_tab = \Security::xss_clean(\Input::post('new_tab_id'));
+				// get the action
+				$action = \Security::xss_clean(\Input::post('action'));
 
-				// get the tab we're deleting
-				$tab = \Model_Form_Tab::find($tab_id);
+				// get the ID from the POST
+				$tab_id = \Security::xss_clean(\Input::post('id'));
 
-				// loop through the sections and update them
-				foreach ($tab->sections as $sec)
+				if (\Sentry::user()->has_access('form.delete') and $action == 'delete')
 				{
-					// update the tab ID
-					$sec->tab_id = $new_tab;
+					// get the new tab ID
+					$new_tab = \Security::xss_clean(\Input::post('new_tab_id'));
 
-					// save the record
-					$sec->save();
+					// get the tab we're deleting
+					$tab = \Model_Form_Tab::find($tab_id);
+
+					// loop through the sections and update them
+					foreach ($tab->sections as $sec)
+					{
+						// update the tab ID
+						$sec->tab_id = $new_tab;
+
+						// save the record
+						$sec->save();
+					}
+
+					// delete the tab
+					$item = \Model_Form_Tab::delete_item($tab_id);
+
+					if ($item)
+					{
+						$this->_flash[] = array(
+							'status' => 'success',
+							'message' => lang('[[short.flash.success|tab|action.deleted]]', 1),
+						);
+					}
+					else
+					{
+						$this->_flash[] = array(
+							'status' => 'danger',
+							'message' => lang('[[short.flash.failure|tab|action.deletion]]', 1),
+						);
+					}
 				}
 
-				// delete the tab
-				$item = \Model_Form_Tab::delete_item($tab_id);
+				if (\Sentry::user()->has_access('form.edit') and $action == 'add')
+				{
+					// add the tab
+					$item = \Model_Form_Tab::create_item(\Input::post());
 
-				if ($item)
-				{
-					$this->_flash[] = array(
-						'status' => 'success',
-						'message' => lang('[[short.flash.success|tab|action.deleted]]', 1),
-					);
+					if ($item)
+					{
+						$this->_flash[] = array(
+							'status' => 'success',
+							'message' => lang('[[short.flash.success|tab|action.added]]', 1),
+						);
+					}
+					else
+					{
+						$this->_flash[] = array(
+							'status' => 'danger',
+							'message' => lang('[[short.flash.failure|tab|action.creation]]', 1),
+						);
+					}
 				}
-				else
+
+				if (\Sentry::user()->has_access('form.edit') and $action == 'update')
 				{
-					$this->_flash[] = array(
-						'status' => 'danger',
-						'message' => lang('[[short.flash.failure|tab|action.deletion]]', 1),
-					);
+					// update the tab
+					$item = \Model_Form_Tab::update_item($tab_id, \Input::post());
+
+					if ($item)
+					{
+						$this->_flash[] = array(
+							'status' => 'success',
+							'message' => lang('[[short.flash.success|tab|action.updated]]', 1),
+						);
+					}
+					else
+					{
+						$this->_flash[] = array(
+							'status' => 'danger',
+							'message' => lang('[[short.flash.failure|tab|action.update]]', 1),
+						);
+					}
 				}
 			}
-
-			if (\Sentry::user()->has_access('form.edit') and $action == 'add')
+			else
 			{
-				// add the tab
-				$item = \Model_Form_Tab::create_item(\Input::post());
-
-				if ($item)
-				{
-					$this->_flash[] = array(
-						'status' => 'success',
-						'message' => lang('[[short.flash.success|tab|action.added]]', 1),
-					);
-				}
-				else
-				{
-					$this->_flash[] = array(
-						'status' => 'danger',
-						'message' => lang('[[short.flash.failure|tab|action.creation]]', 1),
-					);
-				}
-			}
-
-			if (\Sentry::user()->has_access('form.edit') and $action == 'update')
-			{
-				// update the tab
-				$item = \Model_Form_Tab::update_item($tab_id, \Input::post());
-
-				if ($item)
-				{
-					$this->_flash[] = array(
-						'status' => 'success',
-						'message' => lang('[[short.flash.success|tab|action.updated]]', 1),
-					);
-				}
-				else
-				{
-					$this->_flash[] = array(
-						'status' => 'danger',
-						'message' => lang('[[short.flash.failure|tab|action.update]]', 1),
-					);
-				}
+				throw new \NovaCSRFException(lang('error.exception.csrf'));
 			}
 		}
 
