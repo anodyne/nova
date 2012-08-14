@@ -45,6 +45,14 @@
 				<?php echo Form::hidden('action', 'vote');?>
 				<?php echo Form::hidden(Config::get('security.csrf_token_key'), Security::fetch_token());?>
 			</form>
+		<?php else: ?>
+			<?php if ($app->status == Status::APPROVED): ?>
+				<p class="alert alert-success">
+			<?php elseif ($app->status == Status::REJECTED): ?>
+				<p class="alert alert-danger">
+			<?php endif;?>
+
+			<strong><?php echo ucwords(Status::translate_to_string($app->status));?></strong></p>
 		<?php endif;?>
 
 		<?php if ($votes->mine): ?>
