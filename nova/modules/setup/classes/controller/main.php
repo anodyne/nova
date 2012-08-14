@@ -54,6 +54,7 @@ class Controller_Main extends Controller_Base_Setup
 				$this->_data->controls = '<a href="#" class="pull-right muted" rel="ignoreVersion" data-version="'.$update->version.'">Ignore this version</a>';
 				$this->_data->controls.= \Form::open('setup/update/index/1').
 					\Form::button('submit', 'Start Update', array('class' => 'btn', 'id' => 'next')).
+					\Form::hidden(\Config::get('security.csrf_token_key'), \Security::fetch_token()).
 					\Form::close();
 				$this->_data->header->text = 'Update Nova 3';
 
@@ -103,6 +104,7 @@ class Controller_Main extends Controller_Base_Setup
 					$this->_data->controls = '<a href="'.\Uri::create('setup/install/index').'" class="pull-right muted">I\'d like to do a Fresh Install instead</a>';
 					$this->_data->controls.= \Form::open('setup/upgrade/index/1').
 						\Form::button('submit', 'Start Upgrade', array('class' => 'btn', 'id' => 'next')).
+						\Form::hidden(\Config::get('security.csrf_token_key'), \Security::fetch_token()).
 						\Form::close();
 					$this->_data->header->text = 'Upgrade From Nova 2';
 
@@ -127,6 +129,7 @@ class Controller_Main extends Controller_Base_Setup
 				$this->_data->option = 1;
 				$this->_data->controls = \Form::open('setup/install/index/1').
 					\Form::button('submit', 'Start Install', array('class' => 'btn', 'id' => 'next')).
+					\Form::hidden(\Config::get('security.csrf_token_key'), \Security::fetch_token()).
 					\Form::close();
 				$this->_data->header->text = 'Install Nova 3';
 
@@ -164,8 +167,8 @@ class Controller_Main extends Controller_Base_Setup
 		// make sure the script doesn't time out
 		set_time_limit(0);
 		
-		// create a session instance
-		$session = \Session::instance();
+		// create a new session that uses the cookie driver instead of DB driver
+		$session = \Session::forge('cookie');
 		
 		// assign the step so the view can use it
 		$this->_data->step = $step;
@@ -199,7 +202,7 @@ class Controller_Main extends Controller_Base_Setup
 						case 0:
 							$this->_data->message = __('setup.config.text.step0', array('env' => \Fuel::$env));
 							
-							if (extension_loaded('mysql'))
+							if (extension_loaded('mysql') or class_exists('mysqli'))
 							{
 								$this->_data->controls = '<a href="'.\Uri::create('setup/main/config/1').'" class="btn">Next Step</a>';
 								
@@ -225,138 +228,165 @@ class Controller_Main extends Controller_Base_Setup
 							);
 							
 							// build the next step control
-							$this->_data->controls = \Form::button('next', 'Next Step', $next).\Form::close();
+							$this->_data->controls = \Form::button('next', 'Next Step', $next).
+								\Form::hidden(\Config::get('security.csrf_token_key'), \Security::fetch_token()).
+								\Form::close();
 						break;
 						
 						case 2:
-							// set the variables to use
-							$dbName		= trim(\Security::xss_clean(\Input::post('dbName')));
-							$dbUser		= trim(\Security::xss_clean(\Input::post('dbUser')));
-							$dbPass		= trim(\Security::xss_clean(\Input::post('dbPass')));
-							$dbHost		= trim(\Security::xss_clean(\Input::post('dbHost')));
-							$prefix		= trim(\Security::xss_clean(\Input::post('prefix')));
-							
-							// set the session variables
-							$session->set('dbName', $dbName);
-							$session->set('dbUser', $dbUser);
-							$session->set('dbPass', $dbPass);
-							$session->set('dbHost', $dbHost);
-							$session->set('prefix', $prefix);
-							
-							$dbconfig = array(
-								'type'        => 'mysql',
-								'connection'  => array(
-									'hostname'       => ''.$session->get('dbHost').'',
-									'port'           => '3306',
-									'database'       => ''.$session->get('dbName').'',
-									'username'       => ''.$session->get('dbUser').'',
-									'password'       => ''.$session->get('dbPass').'',
-									'persistent' => false,
-								),
-								'table_prefix' => ''.$session->get('prefix').'',
-								'identifier'   => '`',
-								'charset'      => 'utf8',
-								'caching'      => false,
-								'profiling'    => false,
-							);
-							
-							// get an instance of the database
-							$db = \Database_Connection::instance('custom', $dbconfig);
-							
-							try
+							if (\Input::method() == 'POST')
 							{
-								// try to list the tables
-								$db->list_tables($prefix.'%');
-								
-								// write the message
-								$this->_data->message = __('setup.config.text.step2.success');
-								
-								// write the controls
-								$this->_data->controls = '<a href="'.\Uri::create('setup/main/config/3').'" class="btn">Write Connection File</a>';
-							}
-							catch (Exception $e)
-							{
-								$msg = (string) $e->getMessage();
-								
-								if (stripos($msg, 'No such host is known') !== false)
+								if (\Security::check_token())
 								{
-									$this->_data->message = __('setup.config.text.step2.nohost');
-								}
-								elseif (stripos($msg, 'Access denied for user') !== false)
-								{
-									$this->_data->message = __('setup.config.text.step2.userpass');
-								}
-								elseif (stripos($msg, 'Unknown database') !== false)
-								{
-									$this->_data->message = __('setup.config.text.step2.dbname', array('dbname' => $dbName));
+									// set the variables to use
+									$dbName		= trim(\Security::xss_clean(\Input::post('dbName')));
+									$dbUser		= trim(\Security::xss_clean(\Input::post('dbUser')));
+									$dbPass		= trim(\Security::xss_clean(\Input::post('dbPass')));
+									$dbHost		= trim(\Security::xss_clean(\Input::post('dbHost')));
+									$prefix		= trim(\Security::xss_clean(\Input::post('prefix')));
+									
+									// set the session variables
+									$session->set('dbName', $dbName);
+									$session->set('dbUser', $dbUser);
+									$session->set('dbPass', $dbPass);
+									$session->set('dbHost', $dbHost);
+									$session->set('prefix', $prefix);
+									
+									$dbconfig = array(
+										'type'        => 'mysqli',
+										'connection'  => array(
+											'hostname'       => ''.$session->get('dbHost').'',
+											'port'           => '3306',
+											'database'       => ''.$session->get('dbName').'',
+											'username'       => ''.$session->get('dbUser').'',
+											'password'       => ''.$session->get('dbPass').'',
+											'persistent' => false,
+										),
+										'table_prefix' => ''.$session->get('prefix').'',
+										'identifier'   => '`',
+										'charset'      => 'utf8',
+										'caching'      => false,
+										'profiling'    => false,
+									);
+									
+									// get an instance of the database
+									$db = \Database_Connection::instance('custom', $dbconfig);
+									
+									try
+									{
+										// try to list the tables
+										$db->list_tables($prefix.'%');
+										
+										// write the message
+										$this->_data->message = __('setup.config.text.step2.success');
+										
+										// write the controls
+										$this->_data->controls = \Form::open('setup/main/config/3').
+											\Form::button('next', 'Write Connection File', array(
+												'type' => 'submit',
+												'class' => 'btn',
+												'id' => 'next'
+											)).
+											\Form::hidden(\Config::get('security.csrf_token_key'), \Security::fetch_token()).
+											\Form::close();
+
+									}
+									catch (Exception $e)
+									{
+										$msg = (string) $e->getMessage();
+										
+										if (stripos($msg, 'No such host is known') !== false)
+										{
+											$this->_data->message = __('setup.config.text.step2.nohost');
+										}
+										elseif (stripos($msg, 'Access denied for user') !== false)
+										{
+											$this->_data->message = __('setup.config.text.step2.userpass');
+										}
+										elseif (stripos($msg, 'Unknown database') !== false)
+										{
+											$this->_data->message = __('setup.config.text.step2.dbname', array('dbname' => $dbName));
+										}
+										else
+										{
+											$this->_data->message = __('setup.config.text.step2.gen');
+										}
+										
+										// write the controls
+										$this->_data->controls = '<a href="'.\Uri::create('setup/main/config/1').'" class="btn">Start Over</a>';
+									}
 								}
 								else
 								{
-									$this->_data->message = __('setup.config.text.step2.gen');
+									$this->_flash[] = array(
+										'status' => 'danger',
+										'message' => lang('error.csrf'),
+									);
 								}
-								
-								// write the controls
-								$this->_data->controls = '<a href="'.\Uri::create('setup/main/config/1').'" class="btn">Start Over</a>';
 							}
 						break;
 							
 						case 3:
-							// grab the disabled functions
-							$disabled = explode(',', ini_get('disable_functions'));
-							
-							// make sure everything is trimmed properly
-							foreach ($disabled as $key => $value)
+							if (\Input::method() == 'POST')
 							{
-								$disabled[$key] = trim($value);
-							}
-							
-							// what we need
-							$need = array('fopen', 'fwrite', 'file');
-							
-							// check to make sure we have what we need
-							$check = array_intersect($disabled, $need);
-							
-							// pull in the mysql file
-							$file = file(NOVAPATH.'setup/assets/db.mysql.php');
-							
-							if (is_array($file))
-							{
-								foreach ($file as $line_num => $line)
+								if (\Security::check_token())
 								{
-									switch (substr($line, 0, 9))
+									// grab the disabled functions
+									$disabled = explode(',', ini_get('disable_functions'));
+									
+									// make sure everything is trimmed properly
+									foreach ($disabled as $key => $value)
 									{
-										case "'database":
-											$file[$line_num] = str_replace("#DATABASE#", $session->get('dbName'), $line);
-										break;
-										
-										case "'username":
-											$file[$line_num] = str_replace("#USERNAME#", $session->get('dbUser'), $line);
-										break;
-										
-										case "'password":
-											$file[$line_num] = str_replace("#PASSWORD#", $session->get('dbPass'), $line);
-										break;
-										
-										case "'hostname":
-											$file[$line_num] = str_replace("#HOSTNAME#", $session->get('dbHost'), $line);
-										break;
-										
-										case "'table_pr":
-											$file[$line_num] = str_replace("#PREFIX#", $session->get('prefix'), $line);
-										break;
+										$disabled[$key] = trim($value);
 									}
-								}
-								
-								$code = false;
-								
-								foreach ($file as $value)
-								{
-									$code.= htmlentities($value);
-								}
-							}
-							else
-							{
-								$code = htmlentities("<?php
+									
+									// what we need
+									$need = array('fopen', 'fwrite', 'file');
+									
+									// check to make sure we have what we need
+									$check = array_intersect($disabled, $need);
+									
+									// pull in the mysql file
+									$file = file(NOVAPATH.'setup/assets/db.mysql.php');
+									
+									if (is_array($file))
+									{
+										foreach ($file as $line_num => $line)
+										{
+											switch (substr($line, 0, 9))
+											{
+												case "'database":
+													$file[$line_num] = str_replace("#DATABASE#", $session->get('dbName'), $line);
+												break;
+												
+												case "'username":
+													$file[$line_num] = str_replace("#USERNAME#", $session->get('dbUser'), $line);
+												break;
+												
+												case "'password":
+													$file[$line_num] = str_replace("#PASSWORD#", $session->get('dbPass'), $line);
+												break;
+												
+												case "'hostname":
+													$file[$line_num] = str_replace("#HOSTNAME#", $session->get('dbHost'), $line);
+												break;
+												
+												case "'table_pr":
+													$file[$line_num] = str_replace("#PREFIX#", $session->get('prefix'), $line);
+												break;
+											}
+										}
+										
+										$code = false;
+										
+										foreach ($file as $value)
+										{
+											$code.= htmlentities($value);
+										}
+									}
+									else
+									{
+										$code = htmlentities("<?php
 
 return array(
 'default' => array(
@@ -370,74 +400,87 @@ return array(
 'table_prefix' => '".$session->get('prefix')."',
 ),
 );");
-							}
-							
-							if (count($check) == 0)
-							{
-								try
-								{
-									// try to chmod the config directory to the proper permissions
-									chmod(APPPATH.'config/'.\Fuel::$env, 0777);
-								}
-								catch (Exception $e)
-								{
-									// add the message
-									\Log::error('Could not change file permissions of the config directory to 0777. Please do so manually.');
-								}
-								
-								// open the file
-								$handle = fopen(APPPATH.'config/'.\Fuel::$env.'/db.php', 'w');
-								
-								// figure out if the write was successful
-								$write = false;
-							
-								// write the file line by line
-								foreach ($file as $line)
-								{
-									$write = fwrite($handle, $line);
-								}
-								
-								// close the file
-								fclose($handle);
-								
-								try
-								{
-									// try to chmod the file to the proper permissions
-									chmod(APPPATH.'config/'.\Fuel::$env.'/db.php', 0666);
-								}
-								catch (Exception $e)
-								{
-									// add the message
-									\Log::error('Could not change file permissions of the database configuration file to 0666. Please do so manually.');
-								}
-								
-								if ($write !== false)
-								{
-									// set the success message
-									$this->_data->message = __('setup.config.text.step3write');
+									}
 									
-									// wipe out the session
-									$session->destroy();
+									if (count($check) == 0)
+									{
+										try
+										{
+											// try to chmod the config directory to the proper permissions
+											chmod(APPPATH.'config/'.\Fuel::$env, 0777);
+										}
+										catch (Exception $e)
+										{
+											// add the message
+											\Log::error('Could not change file permissions of the config directory to 0777. Please do so manually.');
+										}
+										
+										// open the file
+										$handle = fopen(APPPATH.'config/'.\Fuel::$env.'/db.php', 'w');
+										
+										// figure out if the write was successful
+										$write = false;
 									
-									// write the controls
-									$this->_data->controls = '<a href="'.\Uri::create('setup/main/index').'" class="btn">Setup Center</a>';
+										// write the file line by line
+										foreach ($file as $line)
+										{
+											$write = fwrite($handle, $line);
+										}
+										
+										// close the file
+										fclose($handle);
+										
+										try
+										{
+											// try to chmod the file to the proper permissions
+											chmod(APPPATH.'config/'.\Fuel::$env.'/db.php', 0666);
+										}
+										catch (Exception $e)
+										{
+											// add the message
+											\Log::error('Could not change file permissions of the database configuration file to 0666. Please do so manually.');
+										}
+										
+										if ($write !== false)
+										{
+											// set the success message
+											$this->_data->message = __('setup.config.text.step3write');
+											
+											// wipe out the session
+											$session->destroy();
+											
+											// write the controls
+											$this->_data->controls = '<a href="'.\Uri::create('setup/main/index').'" class="btn">Setup Center</a>';
+										}
+										else
+										{
+											$this->_data->code = $code;
+										
+											$this->_data->message = __('setup.config.text.step3nowrite', array(
+												'env' => \Fuel::$env)
+											);
+											
+											$this->_data->controls = '<a href="'.\Uri::create('setup/main/config/4').'" class="btn">Re-Test</a>';
+										}
+									}
+									else
+									{
+										$this->_data->code = $code;
+										
+										$this->_data->message = __('setup.config.text.step3nowrite', array(
+											'env' => \Fuel::$env)
+										);
+										
+										$this->_data->controls = '<a href="'.\Uri::create('setup/main/config/4').'" class="btn">Re-Test</a>';
+									}
 								}
 								else
 								{
-									$this->_data->code = $code;
-								
-									$this->_data->message = __('setup.config.text.step3nowrite', array('env' => \Fuel::$env));
-									
-									$this->_data->controls = '<a href="'.\Uri::create('setup/main/config/4').'" class="btn">Re-Test</a>';
+									$this->_flash[] = array(
+										'status' => 'danger',
+										'message' => lang('error.csrf'),
+									);
 								}
-							}
-							else
-							{
-								$this->_data->code = $code;
-								
-								$this->_data->message = __('setup.config.text.step3nowrite', array('env' => \Fuel::$env));
-								
-								$this->_data->controls = '<a href="'.\Uri::create('setup/main/config/4').'" class="btn">Re-Test</a>';
 							}
 						break;
 							
@@ -546,22 +589,5 @@ return array(
 		$this->_data->message = $messages[$rand];
 		
 		return;
-	}
-
-	public function action_test()
-	{
-		$array = array(
-			'version' => '3.0.1',
-			'version_major' => 3,
-			'version_minor' => 0,
-			'version_update' => 1,
-			'severity' => 3,
-			'notes' => "Nova 3.0.1 is the first maintenance release for Nova 3 and addresses several launch day issues that came up. Among the bugs fixed are a random display issue where a sparkling pink dolphin may appear on random pages. The damned thing got loose at the end of development and we couldn't capture it before release. But, we finally captured it and you shouldn't see him any more.",
-			'date' => '30 April 2010',
-			'link' => 'http://www.anodyne-productions.com/nova'
-		);
-
-		\Debug::dump(json_decode(file_get_contents(NOVAPATH.'setup/assets/update/version.json')));
-		exit;
 	}
 }

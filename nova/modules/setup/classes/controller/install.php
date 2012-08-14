@@ -98,6 +98,7 @@ class Controller_Install extends Controller_Base_Setup
 					{
 						$this->_data->controls.= \Form::open('setup/install/index/1').
 							\Form::button('next', 'Start Install', array('class' => 'btn', 'type' => 'submit', 'id' => 'next')).
+							\Form::hidden(\Config::get('security.csrf_token_key'), \Security::fetch_token()).
 							\Form::close();
 					}
 				}
@@ -106,8 +107,18 @@ class Controller_Install extends Controller_Base_Setup
 			case 1:
 				if (\Input::method() == 'POST')
 				{
-					// do the install
-					Setup::install();
+					if (\Security::check_token())
+					{
+						// do the install
+						Setup::install();
+					}
+					else
+					{
+						$this->_flash[] = array(
+							'status' => 'danger',
+							'message' => lang('error.csrf'),
+						);
+					}
 				}
 				
 				$this->_view = 'install/step1';
@@ -122,76 +133,87 @@ class Controller_Install extends Controller_Base_Setup
 				$this->_data->allowed = true;
 				$this->_data->message = __('setup.install.step1.success');
 				$this->_data->controls = \Form::button('next', 'Next Step', array('class' => 'btn', 'type' => 'submit', 'id' => 'next')).
+					\Form::hidden(\Config::get('security.csrf_token_key'), \Security::fetch_token()).
 					\Form::close();
 			break;
 
 			case 2:
 				if (\Input::method() == 'POST')
 				{
-					// get the data
-					$simname 	= \Security::xss_clean(\Input::post('sim_name'));
-					$name 		= \Security::xss_clean(\Input::post('name'));
-					$email 		= \Security::xss_clean(\Input::post('email'));
-					$password 	= \Security::xss_clean(\Input::post('password'));
-					$first_name	= \Security::xss_clean(\Input::post('first_name'));
-					$last_name	= \Security::xss_clean(\Input::post('last_name'));
-					$position 	= \Security::xss_clean(\Input::post('position'));
-					$rank 		= \Security::xss_clean(\Input::post('rank'));
-					
-					// update the settings
-					\Model_Settings::update_settings(array(
-						'sim_name' => $simname,
-						'email_subject' => '['.$simname.']',
-						'email_address' => 'nova@'.$_SERVER['HTTP_HOST'],
-						'email_name' => $simname,
-					));
-					
-					// create the user
-					$crUser = \Model_User::create_item(array(
-						'name' => $name,
-						'email' => $email,
-						'password' => $password,
-						'role_id' => \Model_Access_Role::SYSADMIN,
-						'join_date' => time(),
-						'status' => \Status::ACTIVE
-					), true);
+					if (\Security::check_token())
+					{
+						// get the data
+						$simname 	= \Security::xss_clean(\Input::post('sim_name'));
+						$name 		= \Security::xss_clean(\Input::post('name'));
+						$email 		= \Security::xss_clean(\Input::post('email'));
+						$password 	= \Security::xss_clean(\Input::post('password'));
+						$first_name	= \Security::xss_clean(\Input::post('first_name'));
+						$last_name	= \Security::xss_clean(\Input::post('last_name'));
+						$position 	= \Security::xss_clean(\Input::post('position'));
+						$rank 		= \Security::xss_clean(\Input::post('rank'));
+						
+						// update the settings
+						\Model_Settings::update_settings(array(
+							'sim_name' => $simname,
+							'email_subject' => '['.$simname.']',
+							'email_address' => 'nova@'.$_SERVER['HTTP_HOST'],
+							'email_name' => $simname,
+						));
+						
+						// create the user
+						$crUser = \Model_User::create_item(array(
+							'name' => $name,
+							'email' => $email,
+							'password' => $password,
+							'role_id' => \Model_Access_Role::SYSADMIN,
+							'join_date' => time(),
+							'status' => \Status::ACTIVE
+						), true);
 
-					// update the user prefs
-					\Model_User_Preferences::update_user_preferences($crUser->id, array(
-						'is_sysadmin' => (int) true,
-						'is_game_master' => (int) true,
-					));
-					
-					// create the character
-					$crCharacter = \Model_Character::create_item(array(
-						'user_id' => $crUser->id,
-						'first_name' => $first_name,
-						'last_name' => $last_name,
-						'rank_id' => $rank,
-						'status' => \Status::ACTIVE,
-						'activated' => time(),
-					), true);
+						// update the user prefs
+						\Model_User_Preferences::update_user_preferences($crUser->id, array(
+							'is_sysadmin' => (int) true,
+							'is_game_master' => (int) true,
+						));
+						
+						// create the character
+						$crCharacter = \Model_Character::create_item(array(
+							'user_id' => $crUser->id,
+							'first_name' => $first_name,
+							'last_name' => $last_name,
+							'rank_id' => $rank,
+							'status' => \Status::ACTIVE,
+							'activated' => time(),
+						), true);
 
-					// create the position record
-					\Model_Character_Positions::create_item(array(
-						'position_id' => $position,
-						'character_id' => $crCharacter->id,
-						'primary' => (int) true
-					));
+						// create the position record
+						\Model_Character_Positions::create_item(array(
+							'position_id' => $position,
+							'character_id' => $crCharacter->id,
+							'primary' => (int) true
+						));
 
-					// update the position's open slots
-					\Model_Position::find($position)->update_open_slots('add');
-					
-					// update the user with the character info
-					\Model_User::update_user($crUser->id, array(
-						'character_id' => $crCharacter->id
-					));
-					
-					// do the registration
-					Setup::register('install');
+						// update the position's open slots
+						\Model_Position::find($position)->update_open_slots('add');
+						
+						// update the user with the character info
+						\Model_User::update_user($crUser->id, array(
+							'character_id' => $crCharacter->id
+						));
+						
+						// do the registration
+						Setup::register('install');
 
-					// create an event
-					\SystemEvent::add(false, __('event.setup.installed', array('version' => \Config::get('nova.app_version_full'))));
+						// create an event
+						\SystemEvent::add(false, __('event.setup.installed', array('version' => \Config::get('nova.app_version_full'))));
+					}
+					else
+					{
+						$this->_flash[] = array(
+							'status' => 'danger',
+							'message' => lang('error.csrf'),
+						);
+					}
 				}
 
 				$this->_view = 'install/step2';

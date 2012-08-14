@@ -31,6 +31,7 @@ Autoloader::add_classes(array(
 	 */
 	'Fusion\\NovaCSRFException'				=> __DIR__.'/classes/exceptions.php',
 	'Fusion\\NovaInvalidImageTypeException'	=> __DIR__.'/classes/exceptions.php',
+	'Fusion\\NovaSetupException'			=> __DIR__.'/classes/exceptions.php',
 
 	/**
 	 * Models

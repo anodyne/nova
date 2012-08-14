@@ -209,7 +209,10 @@ class Controller_Admin_Rank extends Controller_Base_Admin
 			}
 			else
 			{
-				throw new \NovaCSRFException(lang('error.exception.csrf'));
+				$this->_flash[] = array(
+					'status' => 'danger',
+					'message' => lang('error.csrf'),
+				);
 			}
 		}
 
@@ -350,7 +353,10 @@ class Controller_Admin_Rank extends Controller_Base_Admin
 			}
 			else
 			{
-				throw new \NovaCSRFException(lang('error.exception.csrf'));
+				$this->_flash[] = array(
+					'status' => 'danger',
+					'message' => lang('error.csrf'),
+				);
 			}
 		}
 
@@ -480,7 +486,10 @@ class Controller_Admin_Rank extends Controller_Base_Admin
 			}
 			else
 			{
-				throw new \NovaCSRFException(lang('error.exception.csrf'));
+				$this->_flash[] = array(
+					'status' => 'danger',
+					'message' => lang('error.csrf'),
+				);
 			}
 		}
 

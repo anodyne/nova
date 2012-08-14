@@ -78,7 +78,10 @@ class Controller_Login extends Controller_Base_Login
 				}
 				else
 				{
-					throw new \NovaCSRFException(lang('error.exception.csrf'));
+					$this->_flash[] = array(
+						'status' => 'danger',
+						'message' => lang('error.csrf'),
+					);
 				}
 			}
 
@@ -228,7 +231,10 @@ class Controller_Login extends Controller_Base_Login
 			}
 			else
 			{
-				throw new \NovaCSRFException(lang('error.exception.csrf'));
+				$this->_flash[] = array(
+					'status' => 'danger',
+					'message' => lang('error.csrf'),
+				);
 			}
 		}
 
@@ -277,7 +283,10 @@ class Controller_Login extends Controller_Base_Login
 			}
 			else
 			{
-				throw new \NovaCSRFException(lang('error.exception.csrf'));
+				$this->_flash[] = array(
+					'status' => 'danger',
+					'message' => lang('error.csrf'),
+				);
 			}
 		}
 

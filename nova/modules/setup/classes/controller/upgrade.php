@@ -55,7 +55,12 @@ class Controller_Upgrade extends Controller_Base_Setup
 				if ($allowed)
 				{
 					$this->_data->controls.= \Form::open('setup/upgrade/index/1').
-						\Form::button('next', 'Start Upgrade', array('type' => 'submit', 'class' => 'btn', 'id' => 'next')).
+						\Form::button('next', 'Start Upgrade', array(
+							'type' => 'submit',
+							'class' => 'btn',
+							'id' => 'next')
+						).
+						\Form::hidden(\Config::get('security.csrf_token_key'), \Security::fetch_token()).
 						\Form::close();
 				}
 			break;
@@ -66,26 +71,41 @@ class Controller_Upgrade extends Controller_Base_Setup
 
 				if (\Input::method() == 'POST')
 				{
-					// get the tables that are part of nova
-					$tables = \DB::list_tables(\DB::table_prefix().'%');
-					
-					if (count($tables) > 0)
+					if (\Security::check_token())
 					{
-						// loop through all the tables and rename them with a nova2_ prefix
-						foreach ($tables as $table)
+						// get the tables that are part of nova
+						$tables = \DB::list_tables(\DB::table_prefix().'%');
+						
+						if (count($tables) > 0)
 						{
-							// set the new table name
-							$newtable = '`nova2_'.str_replace(\DB::table_prefix(), '', $table).'`';
-							
-							// run the query
-							\DB::query("ALTER TABLE `".$table."` RENAME TO ".$newtable)->execute();
+							// loop through all the tables and rename them with a nova2_ prefix
+							foreach ($tables as $table)
+							{
+								// set the new table name
+								$newtable = '`nova2_'.str_replace(\DB::table_prefix(), '', $table).'`';
+								
+								// run the query
+								\DB::query("ALTER TABLE `".$table."` RENAME TO ".$newtable)->execute();
+							}
 						}
 					}
-				}
+					else
+					{
+						$this->_flash[] = array(
+							'status' => 'danger',
+							'message' => lang('error.csrf'),
+						);
+					}
 
-				$this->_data->controls = \Form::open('setup/upgrade/index/2').
-					\Form::button('next', 'Continue Upgrade', array('type' => 'submit', 'class' => 'btn', 'id' => 'next')).
-					\Form::close();
+					$this->_data->controls = \Form::open('setup/upgrade/index/2').
+						\Form::button('next', 'Continue Upgrade', array(
+							'type' => 'submit',
+							'class' => 'btn',
+							'id' => 'next')
+						).
+						\Form::hidden(\Config::get('security.csrf_token_key'), \Security::fetch_token()).
+						\Form::close();
+				}
 			break;
 				
 			case 2:
@@ -94,8 +114,18 @@ class Controller_Upgrade extends Controller_Base_Setup
 
 				if (\Input::method() == 'POST')
 				{
-					// do the install
-					Setup::migration_install();
+					if (\Security::check_token())
+					{
+						// do the install
+						Setup::migration_install();
+					}
+					else
+					{
+						$this->_flash[] = array(
+							'status' => 'danger',
+							'message' => lang('error.csrf'),
+						);
+					}
 				}
 				
 				// get the number of tables
@@ -111,7 +141,9 @@ class Controller_Upgrade extends Controller_Base_Setup
 				// build the next step control
 				$this->_data->controls = (count($tables) < \Config::get('nova.app_db_tables'))
 					? false 
-					: \Form::button('next', 'Upgrade', array('type' => 'submit', 'class' => 'btn', 'id' => 'start')).\Form::close();
+					: \Form::button('next', 'Upgrade', array('type' => 'submit', 'class' => 'btn', 'id' => 'start')).
+						\Form::hidden(\Config::get('security.csrf_token_key'), \Security::fetch_token()).
+						\Form::close();
 			break;
 
 			case 3:
@@ -120,14 +152,24 @@ class Controller_Upgrade extends Controller_Base_Setup
 
 				if (\Input::method() == 'POST')
 				{
-					// do the registration
-					Setup::register('upgrade');
+					if (\Security::check_token())
+					{
+						// do the registration
+						Setup::register('upgrade');
 
-					// create an event
-					\SystemEvent::add(false, __('event.setup.upgraded', array(
-						'product' => \Config::get('nova.app_name'),
-						'version' => \Config::get('nova.app_version_full')
-					)));
+						// create an event
+						\SystemEvent::add(false, __('event.setup.upgraded', array(
+							'product' => \Config::get('nova.app_name'),
+							'version' => \Config::get('nova.app_version_full')
+						)));
+					}
+					else
+					{
+						$this->_flash[] = array(
+							'status' => 'danger',
+							'message' => lang('error.csrf'),
+						);
+					}
 				}
 				
 				// set the images
@@ -167,7 +209,13 @@ class Controller_Upgrade extends Controller_Base_Setup
 				}
 				
 				// build the next step control
-				$this->_data->controls = \Form::button('next', 'Submit', array('type' => 'submit', 'class' => 'btn', 'id' => 'start')).\Form::close();
+				$this->_data->controls = \Form::button('next', 'Submit', array(
+						'type' => 'submit',
+						'class' => 'btn',
+						'id' => 'start')
+					).
+					\Form::hidden(\Config::get('security.csrf_token_key'), \Security::fetch_token()).
+					\Form::close();
 			break;
 				
 			case 4:

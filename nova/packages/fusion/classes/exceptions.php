@@ -20,3 +20,8 @@ class NovaCSRFException extends \FuelException {}
  * Invalid image type exception
  */
 class NovaInvalidImageTypeException extends \FuelException {}
+
+/**
+ * Nova Setup Exception
+ */
+class NovaSetupException extends \FuelException {}

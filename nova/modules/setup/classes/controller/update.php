@@ -140,82 +140,93 @@ class Controller_Update extends Controller_Base_Setup
 			case 0:
 				$this->_data->controls = \Form::open('setup/update/step/1').
 					\Form::button('next', 'Start Update', array('type' => 'submit', 'class' => 'btn', 'id' => 'next')).
+					\Form::hidden(\Config::get('security.csrf_token_key'), \Security::fetch_token()).
 					\Form::close();
 			break;
 				
 			case 1:
 				if (\Input::method() == 'POST')
 				{
-					// get the system info
-					$ver = \Model_System::find('first');
-					
-					// build the version string
-					$version = $ver->version_major.$ver->version_minor.$ver->version_update;
-					
-					// pull a map of the update dirs
-					$map = \File::read_dir(NOVAPATH.'setup/assets/update');
-					
-					// on some systems, we may not be able to map automatically
-					if ( ! is_array($map))
+					if (\Security::check_token())
 					{
-						// pull in the versions file
-						include NOVAPATH.'setup/assets/versions.php';
+						// get the system info
+						$ver = \Model_System::find('first');
 						
-						// assign the versions to the proper variable
-						$map = $versions_array;
-					}
-					
-					// an array for holding the stuff we're updating
-					$updates = array();
-
-					foreach ($map as $key => $loc)
-					{
-						if (is_array($loc))
+						// build the version string
+						$version = $ver->version_major.$ver->version_minor.$ver->version_update;
+						
+						// pull a map of the update dirs
+						$map = \File::read_dir(NOVAPATH.'setup/assets/update');
+						
+						// on some systems, we may not be able to map automatically
+						if ( ! is_array($map))
 						{
-							// make sure we have a proper string for the path
-							$location = str_replace('_', '.', $key);
+							// pull in the versions file
+							include NOVAPATH.'setup/assets/versions.php';
+							
+							// assign the versions to the proper variable
+							$map = $versions_array;
+						}
+						
+						// an array for holding the stuff we're updating
+						$updates = array();
 
-							// make sure the key doesn't have a trailing slash
-							$key = ( ! is_numeric(substr($key, -1))) ? substr($key, 0, -1) : $key;
-
-							// check the version info and print the changes if there are any
-							if (version_compare($location, $version, '>') and version_compare($location, $check->version, '<='))
+						foreach ($map as $key => $loc)
+						{
+							if (is_array($loc))
 							{
-								$updates[] = $key;
+								// make sure we have a proper string for the path
+								$location = str_replace('_', '.', $key);
+
+								// make sure the key doesn't have a trailing slash
+								$key = ( ! is_numeric(substr($key, -1))) ? substr($key, 0, -1) : $key;
+
+								// check the version info and print the changes if there are any
+								if (version_compare($location, $version, '>') and version_compare($location, $check->version, '<='))
+								{
+									$updates[] = $key;
+								}
 							}
 						}
-					}
-					
-					// sort the array to make sure we're doing the updates in the right order
-					sort($updates);
-					
-					// loop through the array and make the changes
-					foreach ($updates as $u)
-					{
-						// do the schema changes
-						include NOVAPATH.'setup/assets/update/'.$u.'/schema.php';
 						
-						// do the data changes
-						include NOVAPATH.'setup/assets/update/'.$u.'/data.php';
+						// sort the array to make sure we're doing the updates in the right order
+						sort($updates);
 						
-						// pause
-						sleep(2);
-					}
-					
-					// update the system info
-					$ver->last_update = $system_info['last_update'];
-					$ver->version_major = $system_info['version_major'];
-					$ver->version_minor = $system_info['version_minor'];
-					$ver->version_update = $system_info['version_update'];
-					$ver->save();
-					
-					// do the registration
-					Setup::register('update');
+						// loop through the array and make the changes
+						foreach ($updates as $u)
+						{
+							// do the schema changes
+							include NOVAPATH.'setup/assets/update/'.$u.'/schema.php';
+							
+							// do the data changes
+							include NOVAPATH.'setup/assets/update/'.$u.'/data.php';
+							
+							// pause
+							sleep(2);
+						}
+						
+						// update the system info
+						$ver->last_update = $system_info['last_update'];
+						$ver->version_major = $system_info['version_major'];
+						$ver->version_minor = $system_info['version_minor'];
+						$ver->version_update = $system_info['version_update'];
+						$ver->save();
+						
+						// do the registration
+						Setup::register('update');
 
-					// create an event
-					\SystemEvent::add(false, __('event.setup.updated', array(
-						'version' => $system_info['version_major'].'.'.$system_info['version_minor'].'.'.$system_info['version_update']
-					)));
+						// create an event
+						\SystemEvent::add(false, __('event.setup.updated', array(
+							'version' => $system_info['version_major'].'.'.$system_info['version_minor'].'.'.$system_info['version_update']
+						)));
+					}
+					else
+					{
+						$this->_flash[] = array(
+							'status' => 'danger',
+							'message' => lang('error.csrf'),
+						);
+					}
 				}
 
 				// set the view files

@@ -56,9 +56,6 @@ class Controller_Utility extends Controller_Base_Setup
 
 		// is the system installed?
 		$installed = \Utility::installed();
-		
-		// show the back button?
-		$showbutton = false;
 
 		// build the images
 		$this->_data->images = array(
@@ -118,7 +115,12 @@ class Controller_Utility extends Controller_Base_Setup
 					);
 					
 					// build the next step control
-					$this->_data->controls = \Form::button('add', 'Create Field', array('type' => 'submit', 'class' => 'btn', 'id' => 'field'));
+					$this->_data->controls = \Form::button('add', 'Create Field', array(
+							'type' => 'submit',
+							'class' => 'btn',
+							'id' => 'field')
+						).
+						\Form::hidden(\Config::get('security.csrf_token_key'), \Security::fetch_token());
 				break;
 					
 				case 'query':
@@ -128,7 +130,12 @@ class Controller_Utility extends Controller_Base_Setup
 					$this->_data->message = __('setup.change.query');
 					
 					// build the next step control
-					$this->_data->controls = \Form::button('run', 'Run Query', array('type' => 'submit', 'class' => 'btn', 'id' => 'query'));
+					$this->_data->controls = \Form::button('run', 'Run Query', array(
+							'type' => 'submit',
+							'class' => 'btn',
+							'id' => 'query')
+						).
+						\Form::hidden(\Config::get('security.csrf_token_key'), \Security::fetch_token());
 				break;
 				
 				default:
@@ -136,21 +143,6 @@ class Controller_Utility extends Controller_Base_Setup
 					$this->_data->message = __('setup.change.default');
 					$this->_data->controls = '<a href="'.\Uri::create('setup/main').'" class="muted pull-right">Back to Setup Center</a>';
 				break;
-			}
-			
-			if ($showbutton)
-			{
-				// build the button attributes
-				$next = array(
-					'type' => 'submit',
-					'class' => 'btn-main',
-					'id' => 'back',
-				);
-				
-				// build the next step control
-				$this->template->layout->controls = form::open('install/changedb').
-					form::button('back', ___('change.back'), $next).
-					form::close();
 			}
 		}
 
@@ -251,14 +243,24 @@ class Controller_Utility extends Controller_Base_Setup
 		{
 			if (\Input::method() == 'POST')
 			{
-				// uninstall the system
-				Setup::uninstall();
+				if (\Security::check_token())
+				{
+					// uninstall the system
+					Setup::uninstall();
 
-				// set the message that gets displayed
-				$this->_data->message = __('setup.remove.success');
+					// set the message that gets displayed
+					$this->_data->message = __('setup.remove.success');
 
-				// build the controls
-				$this->_data->controls = '<a href="'.\Uri::create('setup/main/index').'" class="pull-right muted">Back to Setup Center</a>';
+					// build the controls
+					$this->_data->controls = '<a href="'.\Uri::create('setup/main/index').'" class="pull-right muted">Back to Setup Center</a>';
+				}
+				else
+				{
+					$this->_flash[] = array(
+						'status' => 'danger',
+						'message' => lang('error.csrf'),
+					);
+				}
 			}
 			else
 			{
@@ -269,6 +271,7 @@ class Controller_Utility extends Controller_Base_Setup
 				$this->_data->controls = '<a href="'.\Uri::create('setup/main/index').'" class="pull-right muted">Back to Setup Center</a>';
 				$this->_data->controls.= \Form::open('setup/utility/remove').
 					\Form::button('submit', 'Uninstall', array('type' => 'submit', 'class' => 'btn', 'id' => 'remove')).
+					\Form::hidden(\Config::get('security.csrf_token_key'), \Security::fetch_token()).
 					\Form::close();
 			}
 		}

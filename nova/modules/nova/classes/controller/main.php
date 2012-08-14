@@ -129,7 +129,10 @@ abstract class Controller_Main extends Controller_Base_Main
 				}
 				else
 				{
-					throw new \NovaCSRFException(lang('error.exception.csrf'));
+					$this->_flash[] = array(
+						'status' => 'danger',
+						'message' => lang('error.csrf'),
+					);
 				}
 			}
 
