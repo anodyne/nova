@@ -59,19 +59,26 @@ class Controller_Login extends Controller_Base_Login
 		{
 			if (\Input::method() == 'POST')
 			{
-				// grab the data from the POST and filter it
-				$email = \Security::xss_clean(\Input::post('email'));
-				$password = \Security::xss_clean(\Input::post('password'));
-
-				# TODO: should we always remember people or give them the option?
-
-				// attempt to log in
-				$error = \Sentry::login($email, $password, false);
-
-				// successful log in
-				if ($error === self::OK)
+				if (\Security::check_token())
 				{
-					$this->response->redirect('admin/index');
+					// grab the data from the POST and filter it
+					$email = \Security::xss_clean(\Input::post('email'));
+					$password = \Security::xss_clean(\Input::post('password'));
+
+					# TODO: should we always remember people or give them the option?
+
+					// attempt to log in
+					$error = \Sentry::login($email, $password, false);
+
+					// successful log in
+					if ($error === self::OK)
+					{
+						$this->response->redirect('admin/index');
+					}
+				}
+				else
+				{
+					throw new \NovaCSRFException(lang('error.exception.csrf'));
 				}
 			}
 
@@ -149,72 +156,79 @@ class Controller_Login extends Controller_Base_Login
 
 		if (\Input::method() == 'POST')
 		{
-			// grab the data from the POST and filter it
-			$email = \Security::xss_clean(\Input::post('email'));
-			$password = \Security::xss_clean(\Input::post('password'));
-
-			try
+			if (\Security::check_token())
 			{
-				// do the reset
-				$reset = \Sentry::reset_password($email, $password);
+				// grab the data from the POST and filter it
+				$email = \Security::xss_clean(\Input::post('email'));
+				$password = \Security::xss_clean(\Input::post('password'));
 
-				if ($reset)
+				try
 				{
-					// set the email address coming from the reset
-					$address = $reset['email'];
+					// do the reset
+					$reset = \Sentry::reset_password($email, $password);
 
-					// create the confirmation link
-					$link = \Uri::create('login/reset_confirm/'.$reset['link']);
-
-					// parse the content for the message
-					$email_content = lang("email.content.password_reset|[$link]");
-
-					// set up the email
-					$email = \Email::forge();
-					$email->from($this->options->email_address, $this->options->email_name)
-						->to($address)
-						->subject($this->options->email_subject.' '.lang('email.subject.password_reset'))
-						->body($email_content);
-
-					try
+					if ($reset)
 					{
-						// send the email
-						$email->send();
+						// set the email address coming from the reset
+						$address = $reset['email'];
 
-						$this->_flash[] = array(
-							'status' => 'success',
-							'message' => lang('short.login.reset_success')
-						);
+						// create the confirmation link
+						$link = \Uri::create('login/reset_confirm/'.$reset['link']);
+
+						// parse the content for the message
+						$email_content = lang("email.content.password_reset|[$link]");
+
+						// set up the email
+						$email = \Email::forge();
+						$email->from($this->options->email_address, $this->options->email_name)
+							->to($address)
+							->subject($this->options->email_subject.' '.lang('email.subject.password_reset'))
+							->body($email_content);
+
+						try
+						{
+							// send the email
+							$email->send();
+
+							$this->_flash[] = array(
+								'status' => 'success',
+								'message' => lang('short.login.reset_success')
+							);
+						}
+						catch(\EmailValidationFailedException $e)
+						{
+							$this->_flash[] = array(
+								'status' => 'danger',
+								'message' => lang('error.email.validation_failed')
+							);
+						}
+						catch(\EmailSendingFailedException $e)
+						{
+							$this->_flash[] = array(
+								'status' => 'danger',
+								'message' => lang('error.email.could_not_send')
+							);
+						}
 					}
-					catch(\EmailValidationFailedException $e)
+					else
 					{
 						$this->_flash[] = array(
 							'status' => 'danger',
-							'message' => lang('error.email.validation_failed')
-						);
-					}
-					catch(\EmailSendingFailedException $e)
-					{
-						$this->_flash[] = array(
-							'status' => 'danger',
-							'message' => lang('error.email.could_not_send')
+							'message' => lang('error.login.reset_failed')
 						);
 					}
 				}
-				else
+				catch (\SentryAuthException $e)
 				{
 					$this->_flash[] = array(
 						'status' => 'danger',
-						'message' => lang('error.login.reset_failed')
+						'message' => lang('error.login.auth_exception')
 					);
 				}
 			}
-			catch (\SentryAuthException $e)
+			else
 			{
-				$this->_flash[] = array(
-					'status' => 'danger',
-					'message' => lang('error.login.auth_exception')
-				);
+				throw new \NovaCSRFException(lang('error.exception.csrf'));
 			}
 		}
 
@@ -233,30 +247,37 @@ class Controller_Login extends Controller_Base_Login
 
 		if (\Input::method() == 'POST')
 		{
-			try
+			if (\Security::check_token())
 			{
-				// confirm password reset
-				$confirm_reset = \Sentry::reset_password_confirm(\Uri::segment(3), \Uri::segment(4));
-
-				if ($confirm_reset)
+				try
 				{
-					// redirect to the login page with a message about a successful reset
-					$this->response->redirect('login/index/'.self::PASS_RESET);
+					// confirm password reset
+					$confirm_reset = \Sentry::reset_password_confirm(\Uri::segment(3), \Uri::segment(4));
+
+					if ($confirm_reset)
+					{
+						// redirect to the login page with a message about a successful reset
+						$this->response->redirect('login/index/'.self::PASS_RESET);
+					}
+					else
+					{
+						$this->_flash[] = array(
+							'status' => 'danger',
+							'message' => lang('email.flash.confirmation_failed')
+						);
+					}
 				}
-				else
+				catch (\SentryAuthException $e)
 				{
 					$this->_flash[] = array(
 						'status' => 'danger',
-						'message' => lang('email.flash.confirmation_failed')
+						'message' => lang('email.flash.auth_exception')
 					);
 				}
 			}
-			catch (\SentryAuthException $e)
+			else
 			{
-				$this->_flash[] = array(
-					'status' => 'danger',
-					'message' => lang('email.flash.auth_exception')
-				);
+				throw new \NovaCSRFException(lang('error.exception.csrf'));
 			}
 		}
 

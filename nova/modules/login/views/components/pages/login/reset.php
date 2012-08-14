@@ -21,4 +21,5 @@
 			<button class="btn btn-primary"><?php echo lang('action.submit', 1);?></button>
 		</div>
 	</div>
+	<?php echo Form::hidden(Config::get('security.csrf_token_key'), Security::fetch_token());?>
 <?php echo Form::close();?>

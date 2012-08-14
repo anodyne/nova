@@ -24,5 +24,6 @@
 				<a href="<?php echo Uri::create('main/index');?>" class="btn"><?php echo lang('action.back to site', 1);?></a>
 			</div>
 		</div>
+		<?php echo Form::hidden(Config::get('security.csrf_token_key'), Security::fetch_token());?>
 	<?php echo Form::close();?>
 <?php endif;?>
