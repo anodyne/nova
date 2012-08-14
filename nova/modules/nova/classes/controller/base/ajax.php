@@ -30,7 +30,6 @@ class Controller_Base_Ajax extends \Controller
 		\Lang::load('nova::error', 'error');
 		\Lang::load('nova::action', 'action');
 		\Lang::load('nova::short', 'short');
-		\Lang::load('nova::status', 'status');
 		\Lang::load('nova::sitecontent', 'sitecontent');
 	}
 	
