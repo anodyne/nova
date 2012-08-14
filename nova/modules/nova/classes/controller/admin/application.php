@@ -195,7 +195,7 @@ class Controller_Admin_Application extends Controller_Base_Admin
 						$app->character->activated = ($decision == 'approve') ? time() : 0;
 						$app->character->rank_id = ($decision == 'approve') 
 							? \Security::xss_clean(\Input::post('rank')) 
-							: 0;
+							: 1;
 						$app->character->save();
 
 						// update the position if it was changed
