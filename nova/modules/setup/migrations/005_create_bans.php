@@ -12,7 +12,7 @@ class Create_bans
 			'ip_address' => array('type' => 'VARCHAR', 'constraint' => 16, 'null' => true),
 			'email' => array('type' => 'VARCHAR', 'constraint' => 100, 'null' => true),
 			'reason' => array('type' => 'TEXT', 'null' => true),
-			'date' => array('type' => 'BIGINT', 'constraint' => 20),
+			'created_at' => array('type' => 'BIGINT', 'constraint' => 20),
 		), array('id'));
 	}
 

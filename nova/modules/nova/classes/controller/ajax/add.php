@@ -13,6 +13,31 @@ namespace Nova;
 class Controller_Ajax_Add extends Controller_Base_Ajax
 {
 	/**
+	 * Ban a user.
+	 *
+	 * @return	void
+	 */
+	public function action_arc_banuser($id)
+	{
+		if (\Sentry::check() and \Sentry::user()->has_access('ban.create'))
+		{
+			// get the user
+			$user = \Model_User::find(\Security::xss_clean($id));
+
+			// create the ban
+			\Model_Ban::create_item(array(
+				'level' => 1,
+				'email' => $user->email,
+			));
+
+			\SystemEvent::add('user', '[[event.admin.arc.ban_user|{{1}}|{{'.$user->email.'}}]]');
+
+			echo '<p class="alert alert-success">'.lang('[[short.flash.success|action.ban|action.created]]', 1).'</p>';
+			echo '<div class="form-actions"><button class="btn close-dialog">'.lang('action.close', 1).'</button></div>';
+		}
+	}
+
+	/**
 	 * Add a field value to the database.
 	 *
 	 * @return	string
@@ -60,7 +85,7 @@ class Controller_Ajax_Add extends Controller_Base_Ajax
 			\SystemEvent::add('user', '[[event.admin.catalog.module_create|{{'.$module.'}}]]');
 
 			echo '<p class="alert alert-success">'.lang('[[short.flash.success|module|action.installed]]').'</p>';
-			echo '<div class="form-actions"><button class="btn modal-close">'.lang('action.close', 1).'</button></div>';
+			echo '<div class="form-actions"><button class="btn close-dialog">'.lang('action.close', 1).'</button></div>';
 		}
 	}
 

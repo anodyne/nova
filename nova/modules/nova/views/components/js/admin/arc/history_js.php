@@ -31,4 +31,28 @@
 			$('.status-<?php echo Status::REJECTED;?>').show();
 		}
 	});
+
+	$('.ban-user').on('click', function(){
+
+		var user = $(this).data('user');
+
+		$('<div/>').dialog2({
+			title: "<?php echo lang('action.ban user', 2);?>",
+			content: "<?php echo Uri::create('ajax/add/arc_banuser');?>/" + user
+		});
+
+		return false;
+	});
+
+	$('.unban-user').on('click', function(){
+
+		var user = $(this).data('user');
+
+		$('<div/>').dialog2({
+			title: "<?php echo lang('action.remove action.ban', 2);?>",
+			content: "<?php echo Uri::create('ajax/delete/arc_unbanuser');?>/" + user
+		});
+
+		return false;
+	});
 </script>

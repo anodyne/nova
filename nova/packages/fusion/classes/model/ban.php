@@ -35,8 +35,22 @@ class Model_Ban extends \Model {
 		'reason' => array(
 			'type' => 'text',
 			'null' => true),
-		'date' => array(
+		'created_at' => array(
 			'type' => 'bigint',
 			'constraint' => 20),
 	);
+
+	/**
+	 * Observers
+	 */
+	protected static $_observers = array(
+		'\\Orm\\Observer_CreatedAt' => array(
+			'events' => array('before_insert')
+		),
+	);
+
+	public static function find_items($value, $column = 'email')
+	{
+		return static::find()->where($column, $value)->get();
+	}
 }

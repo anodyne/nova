@@ -2,6 +2,11 @@
 
 return array(
 	'admin' => array(
+		'arc' => array(
+			'ban_user' => "Level :0 ban was issued against :1",
+			'unban_user' => "Ban was lifted against :0",
+		),
+
 		'catalog' => array(
 			'module_create' => "The :0 module was installed",
 			'module_update' => "The :0 module was updated",

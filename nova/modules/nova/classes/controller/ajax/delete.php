@@ -31,6 +31,28 @@ class Controller_Ajax_Delete extends Controller_Base_Ajax
 		}
 	}
 
+	/**
+	 * Un-ban a user.
+	 *
+	 * @return	void
+	 */
+	public function action_arc_unbanuser($id)
+	{
+		if (\Sentry::check() and \Sentry::user()->has_access('ban.delete'))
+		{
+			// get the user
+			$user = \Model_User::find(\Security::xss_clean($id));
+
+			// delete the ban
+			\Model_Ban::delete_item(array('email' => $user->email));
+
+			\SystemEvent::add('user', '[[event.admin.arc.unban_user|{{'.$user->email.'}}]]');
+
+			echo '<p class="alert alert-success">'.lang('[[short.flash.success|action.ban|action.removed]]', 1).'</p>';
+			echo '<div class="form-actions"><button class="btn close-dialog">'.lang('action.close', 1).'</button></div>';
+		}
+	}
+
 	public function action_formfield($id)
 	{
 		if (\Sentry::check() and \Sentry::user()->has_access('form.delete'))
