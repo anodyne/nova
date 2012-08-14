@@ -137,10 +137,11 @@ class Controller_Login extends Controller_Base_Login
 	 */
 	public function action_logout()
 	{
+		// do the log out
 		\Sentry::logout();
 
 		// manually set the logout message
-		$this->_data->message = lang("short.login.logout|[".\Uri::create('main/index')."]|[".\Uri::create('login/index')."]");
+		$this->_data->message = lang('[[short.login.logout|{{'.\Uri::create('main/index').'}}|{{'.\Uri::create('login/index').'}}]]');
 
 		return;
 	}
