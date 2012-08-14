@@ -44,165 +44,172 @@ class Controller_Admin_Rank extends Controller_Base_Admin
 
 		if (\Input::method() == 'POST')
 		{
-			// get the action
-			$action = \Security::xss_clean(\Input::post('action'));
-
-			// get the ID from the POST
-			$group_id = \Security::xss_clean(\Input::post('id'));
-
-			/**
-			 * Create a new rank group with the name provided by the user.
-			 */
-			if (\Sentry::user()->has_access('rank.create') and $action == 'create')
+			if (\Security::check_token())
 			{
-				$item = \Model_Rank_Group::create_item(array(
-					'name' => \Security::xss_clean(\Input::post('name')),
-					'order' => (\Model_Rank_Group::count() + 1),
-				));
+				// get the action
+				$action = \Security::xss_clean(\Input::post('action'));
 
-				if ($item)
+				// get the ID from the POST
+				$group_id = \Security::xss_clean(\Input::post('id'));
+
+				/**
+				 * Create a new rank group with the name provided by the user.
+				 */
+				if (\Sentry::user()->has_access('rank.create') and $action == 'create')
 				{
-					$this->_flash[] = array(
-						'status' => 'success',
-						'message' => lang('[[short.flash.success|rank group|action.created]]', 1),
-					);
-				}
-				else
-				{
-					$this->_flash[] = array(
-						'status' => 'danger',
-						'message' => lang('[[short.flash.failure|rank group|action.creation]]', 1),
-					);
-				}
-			}
+					$item = \Model_Rank_Group::create_item(array(
+						'name' => \Security::xss_clean(\Input::post('name')),
+						'order' => (\Model_Rank_Group::count() + 1),
+					));
 
-			/**
-			 * Duplicate an existing rank group and dump the rank information
-			 * from the old group into the new group with the new base the user
-			 * specified in the modal pop-up.
-			 */
-			if (\Sentry::user()->has_access('rank.create') and $action == 'duplicate')
-			{
-				// create the new group
-				$item = \Model_Rank_Group::create_item(array(
-					'name'	=> \Security::xss_clean(\Input::post('name')),
-					'order' => (\Model_Rank_Group::count() + 1),
-				), true);
-
-				// grab the new base
-				$new_base = \Security::xss_clean(\Input::post('base'));
-
-				// get the group we're duplicating
-				$duplicator = \Model_Rank_Group::find($group_id);
-
-				if (count($duplicator->ranks) > 0)
-				{
-					// loop through all the ranks and build the new ranks
-					foreach ($duplicator->ranks as $r)
+					if ($item)
 					{
-						$new = \Model_Rank::forge();
-						$new->info_id = $r->info_id;
-						$new->group_id = $item->id;
-						$new->base = $new_base;
-						$new->pip = $r->pip;
-
-						$new->save();
+						$this->_flash[] = array(
+							'status' => 'success',
+							'message' => lang('[[short.flash.success|rank group|action.created]]', 1),
+						);
+					}
+					else
+					{
+						$this->_flash[] = array(
+							'status' => 'danger',
+							'message' => lang('[[short.flash.failure|rank group|action.creation]]', 1),
+						);
 					}
 				}
 
-				if ($item)
+				/**
+				 * Duplicate an existing rank group and dump the rank information
+				 * from the old group into the new group with the new base the user
+				 * specified in the modal pop-up.
+				 */
+				if (\Sentry::user()->has_access('rank.create') and $action == 'duplicate')
 				{
-					$this->_flash[] = array(
-						'status' => 'success',
-						'message' => lang('[[short.flash.success|rank group|action.duplicated]]', 1),
-					);
-				}
-				else
-				{
-					$this->_flash[] = array(
-						'status' => 'danger',
-						'message' => lang('[[short.flash.failure|rank group|action.duplication]]', 1),
-					);
-				}
-			}
+					// create the new group
+					$item = \Model_Rank_Group::create_item(array(
+						'name'	=> \Security::xss_clean(\Input::post('name')),
+						'order' => (\Model_Rank_Group::count() + 1),
+					), true);
 
-			/**
-			 * Update the specified rank group with the information the user specified
-			 * in the modal pop-up.
-			 */
-			if (\Sentry::user()->has_access('rank.edit') and $action == 'update')
-			{
-				// update the field
-				$item = \Model_Rank_Group::update_item($group_id, \Input::post());
+					// grab the new base
+					$new_base = \Security::xss_clean(\Input::post('base'));
 
-				if ($item)
-				{
-					$this->_flash[] = array(
-						'status' => 'success',
-						'message' => lang('[[short.flash.success|rank group|action.updated]]', 1),
-					);
-				}
-				else
-				{
-					$this->_flash[] = array(
-						'status' => 'danger',
-						'message' => lang('[[short.flash.failure|rank group|action.update]]', 1),
-					);
-				}
-			}
+					// get the group we're duplicating
+					$duplicator = \Model_Rank_Group::find($group_id);
 
-			/**
-			 * Delete the specified rank group and move the ranks from this group to the
-			 * group the user specified in the modal pop-up. If the user requested to
-			 * have the group's ranks deleted, that will supercede any new group ID selection.
-			 */
-			if (\Sentry::user()->has_access('rank.delete') and $action == 'delete')
-			{
-				// get all the ranks for the current group
-				$group = \Model_Rank_Group::find($group_id);
-
-				// get the new group ID
-				$new_group_id = \Security::xss_clean(\Input::post('new_group'));
-
-				// are we deleting the ranks?
-				$delete_ranks = \Security::xss_clean(\Input::post('delete_ranks'));
-
-				if (count($group->ranks) > 0)
-				{
-					// loop through and change the ranks
-					foreach ($group->ranks as $rank)
+					if (count($duplicator->ranks) > 0)
 					{
-						if ($delete_ranks == '1')
+						// loop through all the ranks and build the new ranks
+						foreach ($duplicator->ranks as $r)
 						{
-							// delete the rank
-							$rank->delete();
+							$new = \Model_Rank::forge();
+							$new->info_id = $r->info_id;
+							$new->group_id = $item->id;
+							$new->base = $new_base;
+							$new->pip = $r->pip;
+
+							$new->save();
 						}
-						else
-						{
-							// update the rank with the new group ID
-							$rank->group_id = $new_group_id;
-							$rank->save();
-						}
+					}
+
+					if ($item)
+					{
+						$this->_flash[] = array(
+							'status' => 'success',
+							'message' => lang('[[short.flash.success|rank group|action.duplicated]]', 1),
+						);
+					}
+					else
+					{
+						$this->_flash[] = array(
+							'status' => 'danger',
+							'message' => lang('[[short.flash.failure|rank group|action.duplication]]', 1),
+						);
 					}
 				}
 
-				// delete the rank group
-				$item = \Model_Rank_Group::delete_item($group_id);
+				/**
+				 * Update the specified rank group with the information the user specified
+				 * in the modal pop-up.
+				 */
+				if (\Sentry::user()->has_access('rank.edit') and $action == 'update')
+				{
+					// update the field
+					$item = \Model_Rank_Group::update_item($group_id, \Input::post());
 
-				if ($item)
-				{
-					$this->_flash[] = array(
-						'status' => 'success',
-						'message' => lang('[[short.flash.success|rank group|action.deleted]]', 1),
-					);
+					if ($item)
+					{
+						$this->_flash[] = array(
+							'status' => 'success',
+							'message' => lang('[[short.flash.success|rank group|action.updated]]', 1),
+						);
+					}
+					else
+					{
+						$this->_flash[] = array(
+							'status' => 'danger',
+							'message' => lang('[[short.flash.failure|rank group|action.update]]', 1),
+						);
+					}
 				}
-				else
+
+				/**
+				 * Delete the specified rank group and move the ranks from this group to the
+				 * group the user specified in the modal pop-up. If the user requested to
+				 * have the group's ranks deleted, that will supercede any new group ID selection.
+				 */
+				if (\Sentry::user()->has_access('rank.delete') and $action == 'delete')
 				{
-					$this->_flash[] = array(
-						'status' => 'danger',
-						'message' => lang('[[short.flash.failure|rank group|action.deletion]]', 1),
-					);
+					// get all the ranks for the current group
+					$group = \Model_Rank_Group::find($group_id);
+
+					// get the new group ID
+					$new_group_id = \Security::xss_clean(\Input::post('new_group'));
+
+					// are we deleting the ranks?
+					$delete_ranks = \Security::xss_clean(\Input::post('delete_ranks'));
+
+					if (count($group->ranks) > 0)
+					{
+						// loop through and change the ranks
+						foreach ($group->ranks as $rank)
+						{
+							if ($delete_ranks == '1')
+							{
+								// delete the rank
+								$rank->delete();
+							}
+							else
+							{
+								// update the rank with the new group ID
+								$rank->group_id = $new_group_id;
+								$rank->save();
+							}
+						}
+					}
+
+					// delete the rank group
+					$item = \Model_Rank_Group::delete_item($group_id);
+
+					if ($item)
+					{
+						$this->_flash[] = array(
+							'status' => 'success',
+							'message' => lang('[[short.flash.success|rank group|action.deleted]]', 1),
+						);
+					}
+					else
+					{
+						$this->_flash[] = array(
+							'status' => 'danger',
+							'message' => lang('[[short.flash.failure|rank group|action.deletion]]', 1),
+						);
+					}
 				}
+			}
+			else
+			{
+				throw new \NovaCSRFException(lang('error.exception.csrf'));
 			}
 		}
 
@@ -231,112 +238,119 @@ class Controller_Admin_Rank extends Controller_Base_Admin
 
 		if (\Input::method() == 'POST')
 		{
-			// get the action
-			$action = \Security::xss_clean(\Input::post('action'));
-
-			// get the ID from the POST
-			$info_id = \Security::xss_clean(\Input::post('id'));
-
-			/**
-			 * Create a new rank info with the data provided by the user.
-			 */
-			if (\Sentry::user()->has_access('rank.create') and $action == 'create')
+			if (\Security::check_token())
 			{
-				$item = \Model_Rank_Info::create_item(\Input::post());
+				// get the action
+				$action = \Security::xss_clean(\Input::post('action'));
 
-				if ($item)
+				// get the ID from the POST
+				$info_id = \Security::xss_clean(\Input::post('id'));
+
+				/**
+				 * Create a new rank info with the data provided by the user.
+				 */
+				if (\Sentry::user()->has_access('rank.create') and $action == 'create')
 				{
-					$this->_flash[] = array(
-						'status' => 'success',
-						'message' => lang('[[short.flash.success|rank info|action.created]]', 1),
-					);
-				}
-				else
-				{
-					$this->_flash[] = array(
-						'status' => 'danger',
-						'message' => lang('[[short.flash.failure|rank info|action.creation]]', 1),
-					);
-				}
-			}
+					$item = \Model_Rank_Info::create_item(\Input::post());
 
-			/**
-			 * Update the specified rank info with the information the user specified
-			 * in the modal pop-up.
-			 */
-			if (\Sentry::user()->has_access('rank.edit') and $action == 'update')
-			{
-				// update the field
-				$item = \Model_Rank_Info::update_item($info_id, \Input::post());
-
-				if ($item)
-				{
-					$this->_flash[] = array(
-						'status' => 'success',
-						'message' => lang('[[short.flash.success|rank info|action.updated]]', 1),
-					);
-				}
-				else
-				{
-					$this->_flash[] = array(
-						'status' => 'danger',
-						'message' => lang('[[short.flash.failure|rank info|action.update]]', 1),
-					);
-				}
-			}
-
-			/**
-			 * Delete the specified rank info and move the ranks from this info to the
-			 * info the user specified in the modal pop-up. If the user requested to
-			 * have the info's ranks deleted, that will supercede any new info ID selection.
-			 */
-			if (\Sentry::user()->has_access('rank.delete') and $action == 'delete')
-			{
-				// get the rank info record
-				$info = \Model_Rank_Info::find($info_id);
-
-				// get the new info ID
-				$new_info_id = \Security::xss_clean(\Input::post('new_info'));
-
-				// are we deleting the ranks?
-				$delete_ranks = \Security::xss_clean(\Input::post('delete_ranks'));
-
-				if (count($info->ranks) > 0)
-				{
-					// loop through and change the ranks
-					foreach ($info->ranks as $rank)
+					if ($item)
 					{
-						if ($delete_ranks == '1')
-						{
-							// delete the rank
-							$rank->delete();
-						}
-						else
-						{
-							// update the rank with the new info ID
-							$rank->info_id = $new_info_id;
-							$rank->save();
-						}
+						$this->_flash[] = array(
+							'status' => 'success',
+							'message' => lang('[[short.flash.success|rank info|action.created]]', 1),
+						);
+					}
+					else
+					{
+						$this->_flash[] = array(
+							'status' => 'danger',
+							'message' => lang('[[short.flash.failure|rank info|action.creation]]', 1),
+						);
 					}
 				}
 
-				// delete the rank info
-				$item = \Model_Rank_Info::delete_item($info_id);
+				/**
+				 * Update the specified rank info with the information the user specified
+				 * in the modal pop-up.
+				 */
+				if (\Sentry::user()->has_access('rank.edit') and $action == 'update')
+				{
+					// update the field
+					$item = \Model_Rank_Info::update_item($info_id, \Input::post());
 
-				if ($item)
-				{
-					$this->_flash[] = array(
-						'status' => 'success',
-						'message' => lang('[[short.flash.success|rank info|action.deleted]]', 1),
-					);
+					if ($item)
+					{
+						$this->_flash[] = array(
+							'status' => 'success',
+							'message' => lang('[[short.flash.success|rank info|action.updated]]', 1),
+						);
+					}
+					else
+					{
+						$this->_flash[] = array(
+							'status' => 'danger',
+							'message' => lang('[[short.flash.failure|rank info|action.update]]', 1),
+						);
+					}
 				}
-				else
+
+				/**
+				 * Delete the specified rank info and move the ranks from this info to the
+				 * info the user specified in the modal pop-up. If the user requested to
+				 * have the info's ranks deleted, that will supercede any new info ID selection.
+				 */
+				if (\Sentry::user()->has_access('rank.delete') and $action == 'delete')
 				{
-					$this->_flash[] = array(
-						'status' => 'danger',
-						'message' => lang('[[short.flash.failure|rank info|action.deletion]]', 1),
-					);
+					// get the rank info record
+					$info = \Model_Rank_Info::find($info_id);
+
+					// get the new info ID
+					$new_info_id = \Security::xss_clean(\Input::post('new_info'));
+
+					// are we deleting the ranks?
+					$delete_ranks = \Security::xss_clean(\Input::post('delete_ranks'));
+
+					if (count($info->ranks) > 0)
+					{
+						// loop through and change the ranks
+						foreach ($info->ranks as $rank)
+						{
+							if ($delete_ranks == '1')
+							{
+								// delete the rank
+								$rank->delete();
+							}
+							else
+							{
+								// update the rank with the new info ID
+								$rank->info_id = $new_info_id;
+								$rank->save();
+							}
+						}
+					}
+
+					// delete the rank info
+					$item = \Model_Rank_Info::delete_item($info_id);
+
+					if ($item)
+					{
+						$this->_flash[] = array(
+							'status' => 'success',
+							'message' => lang('[[short.flash.success|rank info|action.deleted]]', 1),
+						);
+					}
+					else
+					{
+						$this->_flash[] = array(
+							'status' => 'danger',
+							'message' => lang('[[short.flash.failure|rank info|action.deletion]]', 1),
+						);
+					}
 				}
+			}
+			else
+			{
+				throw new \NovaCSRFException(lang('error.exception.csrf'));
 			}
 		}
 
@@ -377,89 +391,96 @@ class Controller_Admin_Rank extends Controller_Base_Admin
 
 		if (\Input::method() == 'POST')
 		{
-			// get the action
-			$action = \Security::xss_clean(\Input::post('action'));
-
-			// get the ID from the POST
-			$rank_id = \Security::xss_clean(\Input::post('id'));
-
-			/**
-			 * Create a new rank.
-			 */
-			if (\Sentry::user()->has_access('rank.create') and $action == 'create')
+			if (\Security::check_token())
 			{
-				$item = \Model_Rank::create_item(\Input::post());
+				// get the action
+				$action = \Security::xss_clean(\Input::post('action'));
 
-				if ($item)
+				// get the ID from the POST
+				$rank_id = \Security::xss_clean(\Input::post('id'));
+
+				/**
+				 * Create a new rank.
+				 */
+				if (\Sentry::user()->has_access('rank.create') and $action == 'create')
 				{
-					$this->_flash[] = array(
-						'status' => 'success',
-						'message' => lang('[[short.flash.success|rank|action.created]]', 1),
-					);
+					$item = \Model_Rank::create_item(\Input::post());
+
+					if ($item)
+					{
+						$this->_flash[] = array(
+							'status' => 'success',
+							'message' => lang('[[short.flash.success|rank|action.created]]', 1),
+						);
+					}
+					else
+					{
+						$this->_flash[] = array(
+							'status' => 'danger',
+							'message' => lang('[[short.flash.failure|rank|action.creation]]', 1),
+						);
+					}
 				}
-				else
+
+				/**
+				 * Update a rank.
+				 */
+				if (\Sentry::user()->has_access('rank.edit') and $action == 'update')
 				{
-					$this->_flash[] = array(
-						'status' => 'danger',
-						'message' => lang('[[short.flash.failure|rank|action.creation]]', 1),
-					);
+					$item = \Model_Rank::update_item($rank_id, \Input::post());
+
+					if ($item)
+					{
+						$this->_flash[] = array(
+							'status' => 'success',
+							'message' => lang('[[short.flash.success|rank|action.updated]]', 1),
+						);
+					}
+					else
+					{
+						$this->_flash[] = array(
+							'status' => 'danger',
+							'message' => lang('[[short.flash.failure|rank|action.update]]', 1),
+						);
+					}
+				}
+
+				/**
+				 * Delete a rank.
+				 *
+				 * @todo	what do we need to do with characters when a rank is deleted?
+				 */
+				if (\Sentry::user()->has_access('rank.delete') and $action == 'delete')
+				{
+					$item = \Model_Rank::delete_item($rank_id);
+
+					if ($item)
+					{
+						$this->_flash[] = array(
+							'status' => 'success',
+							'message' => lang('[[short.flash.success|rank|action.deleted]]', 1),
+						);
+					}
+					else
+					{
+						$this->_flash[] = array(
+							'status' => 'danger',
+							'message' => lang('[[short.flash.failure|rank|action.deletion]]', 1),
+						);
+					}
+				}
+
+				/**
+				 * Change the rank set.
+				 */
+				if ($action == 'changeSet')
+				{
+					$default = \Security::xss_clean(\Input::post('changeSet'));
 				}
 			}
-
-			/**
-			 * Update a rank.
-			 */
-			if (\Sentry::user()->has_access('rank.edit') and $action == 'update')
+			else
 			{
-				$item = \Model_Rank::update_item($rank_id, \Input::post());
-
-				if ($item)
-				{
-					$this->_flash[] = array(
-						'status' => 'success',
-						'message' => lang('[[short.flash.success|rank|action.updated]]', 1),
-					);
-				}
-				else
-				{
-					$this->_flash[] = array(
-						'status' => 'danger',
-						'message' => lang('[[short.flash.failure|rank|action.update]]', 1),
-					);
-				}
-			}
-
-			/**
-			 * Delete a rank.
-			 *
-			 * @todo	what do we need to do with characters when a rank is deleted?
-			 */
-			if (\Sentry::user()->has_access('rank.delete') and $action == 'delete')
-			{
-				$item = \Model_Rank::delete_item($rank_id);
-
-				if ($item)
-				{
-					$this->_flash[] = array(
-						'status' => 'success',
-						'message' => lang('[[short.flash.success|rank|action.deleted]]', 1),
-					);
-				}
-				else
-				{
-					$this->_flash[] = array(
-						'status' => 'danger',
-						'message' => lang('[[short.flash.failure|rank|action.deletion]]', 1),
-					);
-				}
-			}
-
-			/**
-			 * Change the rank set.
-			 */
-			if ($action == 'changeSet')
-			{
-				$default = \Security::xss_clean(\Input::post('changeSet'));
+				throw new \NovaCSRFException(lang('error.exception.csrf'));
 			}
 		}
 
