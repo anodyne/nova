@@ -12,13 +12,6 @@
 
 namespace Setup;
 
-/**
- * Nova Install Exception
- */
-class NovaInstallException extends \FuelException {}
-
-# TODO: registration email
-
 class Setup
 {
 	/**
@@ -26,7 +19,7 @@ class Setup
 	 *
 	 * @internal
 	 * @return	bool
-	 * @throws	NovaInstallException
+	 * @throws	NovaSetupException
 	 */
 	public static function install()
 	{
@@ -60,7 +53,7 @@ class Setup
 			
 			if (in_array(false, $insert))
 			{
-				throw new NovaInstallException('Dev data insert failed.');
+				throw new \NovaSetupException('Dev data insert failed.');
 			}
 		}
 		
@@ -102,7 +95,8 @@ class Setup
 	 *
 	 * @internal
 	 * @param	string	the type of registration (install, update, upgrade)
-	 * @return	bool 	whether the registration happened or not
+	 * @return	bool
+	 * @todo
 	 */
 	public static function register($type)
 	{
