@@ -53,77 +53,84 @@ abstract class Controller_Main extends Controller_Base_Main
 
 			if (\Input::post('submit') !== false)
 			{
-				if (\Input::post('user.id') == '0')
+				if (\Security::check_token())
 				{
-					// create the user
-					$user = \Model_User::create_item(\Input::post('user'), true);
+					if (\Input::post('user.id') == '0')
+					{
+						// create the user
+						$user = \Model_User::create_item(\Input::post('user'), true);
 
-					// make sure the user ID is associated with the character
-					$_POST['character']['user_id'] = $user->id;
+						// make sure the user ID is associated with the character
+						$_POST['character']['user_id'] = $user->id;
+					}
+					else
+					{
+						// make sure the user ID is associated with the character
+						$_POST['character']['user_id'] = \Input::post('user.id');
+
+						// get the user
+						$user = \Model_User::find(\Input::post('user.id'));
+					}
+
+					// create the character
+					$char = \Model_Character::create_item(\Input::post('character'), true);
+
+					// insert the position info
+					\Model_Character_Positions::create_item(array(
+						'position_id' => (int) \Security::xss_clean(\Input::post('position')),
+						'character_id' => $char->id,
+						'primary' => (\Input::post('user.id') == '0') ? (int) false : (int) true
+					));
+
+					// update the user with the character info if it's a new user
+					if (\Input::post('user.id') == '0')
+					{
+						\Model_User::update_item($user->id, array('character_id' => $char->id));
+					}
+
+					// make sure we have all the app data we need
+					$appData = array_merge(\Input::post('app'), array(
+						'email' => $user->email,
+						'ip_address' => \Input::real_ip(),
+						'user_id' => $user->id,
+						'user_name' => $user->name,
+						'character_id' => $char->id,
+						'character_name' => $char->name(false, false),
+						'position_id' => (int) \Security::xss_clean(\Input::post('position')),
+					));
+
+					// create the application
+					\Model_Application::create_item($appData);
+
+					// remove unnecessary items from the POST data
+					unset($_POST['submit']);
+					unset($_POST['user']);
+					unset($_POST['character']);
+					unset($_POST['app']);
+					unset($_POST['position']);
+
+					// dump the data into the table
+					foreach (\Input::post() as $field => $value)
+					{
+						\Model_Form_Data::create_data(array(
+							'field_id' => $field,
+							'value' => $value,
+							'user_id' => $user->id,
+							'character_id' => $char->id,
+							'form_key' => \Model_Form_Field::find($field)->form_key
+						));
+					}
+
+					// set the flash message
+					$this->_flash[] = array(
+						'status' => 'success',
+						'message' => lang('[[short.flash.success|application|action.submitted]]', 1),
+					);
 				}
 				else
 				{
-					// make sure the user ID is associated with the character
-					$_POST['character']['user_id'] = \Input::post('user.id');
-
-					// get the user
-					$user = \Model_User::find(\Input::post('user.id'));
+					throw new \NovaCSRFException(lang('error.exception.csrf'));
 				}
-
-				// create the character
-				$char = \Model_Character::create_item(\Input::post('character'), true);
-
-				// insert the position info
-				\Model_Character_Positions::create_item(array(
-					'position_id' => (int) \Security::xss_clean(\Input::post('position')),
-					'character_id' => $char->id,
-					'primary' => (\Input::post('user.id') == '0') ? (int) false : (int) true
-				));
-
-				// update the user with the character info if it's a new user
-				if (\Input::post('user.id') == '0')
-				{
-					\Model_User::update_item($user->id, array('character_id' => $char->id));
-				}
-
-				// make sure we have all the app data we need
-				$appData = array_merge(\Input::post('app'), array(
-					'email' => $user->email,
-					'ip_address' => \Input::real_ip(),
-					'user_id' => $user->id,
-					'user_name' => $user->name,
-					'character_id' => $char->id,
-					'character_name' => $char->name(false, false),
-					'position_id' => (int) \Security::xss_clean(\Input::post('position')),
-				));
-
-				// create the application
-				\Model_Application::create_item($appData);
-
-				// remove unnecessary items from the POST data
-				unset($_POST['submit']);
-				unset($_POST['user']);
-				unset($_POST['character']);
-				unset($_POST['app']);
-				unset($_POST['position']);
-
-				// dump the data into the table
-				foreach (\Input::post() as $field => $value)
-				{
-					\Model_Form_Data::create_data(array(
-						'field_id' => $field,
-						'value' => $value,
-						'user_id' => $user->id,
-						'character_id' => $char->id,
-						'form_key' => \Model_Form_Field::find($field)->form_key
-					));
-				}
-
-				// set the flash message
-				$this->_flash[] = array(
-					'status' => 'success',
-					'message' => lang('[[short.flash.success|application|action.submitted]]', 1),
-				);
 			}
 
 			// set the content manually
