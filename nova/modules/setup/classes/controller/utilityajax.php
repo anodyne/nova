@@ -29,7 +29,7 @@ class Controller_UtilityAjax extends \Controller
 	 * Add a new field to an existing Nova table.
 	 *
 	 * @internal
-	 * @return	object	a JSON object with a response code
+	 * @return	object
 	 */
 	public function action_install_field()
 	{
@@ -67,7 +67,7 @@ class Controller_UtilityAjax extends \Controller
 	 * Install a new genre into the database.
 	 *
 	 * @internal
-	 * @return	object	a JSON object with a response code (1 if successful, 0 if not)
+	 * @return	object
 	 */
 	public function action_install_genre()
 	{
@@ -146,7 +146,7 @@ class Controller_UtilityAjax extends \Controller
 	 * Execute a query against the database.
 	 *
 	 * @internal
-	 * @return	object	a JSON object with a response code
+	 * @return	object
 	 */
 	public function action_install_query()
 	{
@@ -214,7 +214,7 @@ class Controller_UtilityAjax extends \Controller
 	 * Create a table along with a simple ID field.
 	 *
 	 * @internal
-	 * @return	object	a JSON object with a response code (1 if successful, 0 if not)
+	 * @return	object
 	 */
 	public function action_install_table()
 	{
@@ -243,7 +243,7 @@ class Controller_UtilityAjax extends \Controller
 	 * Uninstall an existing genre from the database.
 	 *
 	 * @internal
-	 * @return	object	a JSON object with a response code (1 if successful, 0 if not)
+	 * @return	object
 	 */
 	public function action_uninstall_genre()
 	{
