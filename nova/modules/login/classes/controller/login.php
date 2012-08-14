@@ -60,8 +60,8 @@ class Controller_Login extends Controller_Base_Login
 			if (\Input::method() == 'POST')
 			{
 				// grab the data from the POST and filter it
-				$email = trim(\Security::xss_clean($_POST['email']));
-				$password = trim(\Security::xss_clean($_POST['password']));
+				$email = \Security::xss_clean(\Input::post('email'));
+				$password = \Security::xss_clean(\Input::post('password'));
 
 				# TODO: should we always remember people or give them the option?
 
@@ -150,8 +150,8 @@ class Controller_Login extends Controller_Base_Login
 		if (\Input::method() == 'POST')
 		{
 			// grab the data from the POST and filter it
-			$email = trim(\Security::xss_clean($_POST['email']));
-			$password = trim(\Security::xss_clean($_POST['password']));
+			$email = \Security::xss_clean(\Input::post('email'));
+			$password = \Security::xss_clean(\Input::post('password'));
 
 			try
 			{

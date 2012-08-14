@@ -34,11 +34,11 @@ class Controller_UtilityAjax extends \Controller
 	public function action_install_field()
 	{
 		// grab the fields
-		$table = trim(\Security::xss_clean($_POST['table']));
-		$name = trim(\Security::xss_clean($_POST['name']));
-		$type = trim(\Security::xss_clean($_POST['type']));
-		$constraint = trim(\Security::xss_clean($_POST['constraint']));
-		$default = trim(\Security::xss_clean($_POST['def']));
+		$table 		= \Security::xss_clean(\Input::post('table'));
+		$name 		= \Security::xss_clean(\Input::post('name'));
+		$type 		= \Security::xss_clean(\Input::post('type'));
+		$constraint	= \Security::xss_clean(\Input::post('constraint'));
+		$default 	= \Security::xss_clean(\Input::post('def'));
 
 		// build the array for creating the field
 		$field = array(
@@ -72,7 +72,7 @@ class Controller_UtilityAjax extends \Controller
 	public function action_install_genre()
 	{
 		// grab the genre variable
-		$genre = trim(\Security::xss_clean($_POST['genre']));
+		$genre = trim(\Security::xss_clean(\Input::post('genre')));
 
 		// pull in the schema data
 		include NOVAPATH.'setup/assets/install/fields.php';
@@ -151,7 +151,7 @@ class Controller_UtilityAjax extends \Controller
 	public function action_install_query()
 	{
 		// grab the fields
-		$query = trim(\Security::xss_clean($_POST['query']));
+		$query = trim(\Security::xss_clean(\Input::post('query')));
 
 		// explode the query to find out what type of query it is
 		$queryarray = explode(' ', $query);
@@ -219,7 +219,7 @@ class Controller_UtilityAjax extends \Controller
 	public function action_install_table()
 	{
 		// grab the table name
-		$table = trim(\Security::xss_clean($_POST['table']));
+		$table = trim(\Security::xss_clean(\Input::post('table')));
 
 		// add the table
 		\DBUtil::create_table(
@@ -248,7 +248,7 @@ class Controller_UtilityAjax extends \Controller
 	public function action_uninstall_genre()
 	{
 		// grab the genre variable
-		$genre = trim(\Security::xss_clean($_POST['genre']));
+		$genre = trim(\Security::xss_clean(\Input::post('genre')));
 
 		// drop the tables
 		\DBUtil::drop_table('departments_'.$genre);

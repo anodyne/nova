@@ -51,7 +51,7 @@ abstract class Controller_Main extends Controller_Base_Main
 			// set the js data
 			$this->_js_data->skin = $this->skin;
 
-			if (isset($_POST['submit']))
+			if (\Input::post('submit') !== false)
 			{
 				if (\Input::post('user.id') == '0')
 				{
@@ -75,7 +75,7 @@ abstract class Controller_Main extends Controller_Base_Main
 
 				// insert the position info
 				\Model_Character_Positions::create_item(array(
-					'position_id' => (int) trim(\Security::xss_clean(\Input::post('position'))),
+					'position_id' => (int) \Security::xss_clean(\Input::post('position')),
 					'character_id' => $char->id,
 					'primary' => (\Input::post('user.id') == '0') ? (int) false : (int) true
 				));
@@ -94,7 +94,7 @@ abstract class Controller_Main extends Controller_Base_Main
 					'user_name' => $user->name,
 					'character_id' => $char->id,
 					'character_name' => $char->name(false, false),
-					'position_id' => (int) trim(\Security::xss_clean(\Input::post('position'))),
+					'position_id' => (int) \Security::xss_clean(\Input::post('position')),
 				));
 
 				// create the application

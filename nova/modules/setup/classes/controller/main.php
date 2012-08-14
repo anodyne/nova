@@ -230,11 +230,11 @@ class Controller_Main extends Controller_Base_Setup
 						
 						case 2:
 							// set the variables to use
-							$dbName		= trim(\Security::xss_clean($_POST['dbName']));
-							$dbUser		= trim(\Security::xss_clean($_POST['dbUser']));
-							$dbPass		= trim(\Security::xss_clean($_POST['dbPass']));
-							$dbHost		= trim(\Security::xss_clean($_POST['dbHost']));
-							$prefix		= trim(\Security::xss_clean($_POST['prefix']));
+							$dbName		= trim(\Security::xss_clean(\Input::post('dbName')));
+							$dbUser		= trim(\Security::xss_clean(\Input::post('dbUser')));
+							$dbPass		= trim(\Security::xss_clean(\Input::post('dbPass')));
+							$dbHost		= trim(\Security::xss_clean(\Input::post('dbHost')));
+							$prefix		= trim(\Security::xss_clean(\Input::post('prefix')));
 							
 							// set the session variables
 							$session->set('dbName', $dbName);

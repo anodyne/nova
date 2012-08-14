@@ -33,10 +33,10 @@ class Controller_Admin_Form extends Controller_Base_Admin
 		if (\Sentry::user()->has_access('form.edit') and \Input::method() == 'POST')
 		{
 			// get the id
-			$id = trim(\Security::xss_clean($_POST['id']));
+			$id = \Security::xss_clean(\Input::post('id'));
 
 			// update the form
-			$entry = \Model_Form::update_item($id, $_POST, true);
+			$entry = \Model_Form::update_item($id, \Input::post(), true);
 
 			if (is_object($entry))
 			{
@@ -81,10 +81,10 @@ class Controller_Admin_Form extends Controller_Base_Admin
 		if (\Input::method() == 'POST')
 		{
 			// get the action
-			$action = trim(\Security::xss_clean(\Input::post('action')));
+			$action = \Security::xss_clean(\Input::post('action'));
 
 			// get the ID from the POST
-			$field_id = trim(\Security::xss_clean(\Input::post('id')));
+			$field_id = \Security::xss_clean(\Input::post('id'));
 
 			if (\Sentry::user()->has_access('form.delete') and $action == 'delete')
 			{
@@ -110,7 +110,7 @@ class Controller_Admin_Form extends Controller_Base_Admin
 			if (\Sentry::user()->has_access('form.edit') and $action == 'add')
 			{
 				// add the field
-				$item = \Model_Form_Field::create_item($_POST);
+				$item = \Model_Form_Field::create_item(\Input::post());
 
 				if ($item)
 				{
@@ -131,7 +131,7 @@ class Controller_Admin_Form extends Controller_Base_Admin
 			if (\Sentry::user()->has_access('form.edit') and $action == 'update')
 			{
 				// update the field
-				$item = \Model_Form_Field::update_item($field_id, $_POST);
+				$item = \Model_Form_Field::update_item($field_id, \Input::post());
 
 				if ($item)
 				{
@@ -304,15 +304,15 @@ class Controller_Admin_Form extends Controller_Base_Admin
 		if (\Input::method() == 'POST')
 		{
 			// get the action
-			$action = trim(\Security::xss_clean(\Input::post('action')));
+			$action = \Security::xss_clean(\Input::post('action'));
 
 			// get the ID from the POST
-			$section_id = trim(\Security::xss_clean(\Input::post('id')));
+			$section_id = \Security::xss_clean(\Input::post('id'));
 
 			if (\Sentry::user()->has_access('form.delete') and $action == 'delete')
 			{
 				// get the new section ID
-				$new_section = trim(\Security::xss_clean(\Input::post('new_section_id')));
+				$new_section = \Security::xss_clean(\Input::post('new_section_id'));
 
 				// get the section we're deleting
 				$section = \Model_Form_Section::find($section_id);
@@ -349,7 +349,7 @@ class Controller_Admin_Form extends Controller_Base_Admin
 			if (\Sentry::user()->has_access('form.edit') and $action == 'add')
 			{
 				// add the section
-				$item = \Model_Form_Section::create_item($_POST);
+				$item = \Model_Form_Section::create_item(\Input::post());
 
 				if ($item)
 				{
@@ -370,7 +370,7 @@ class Controller_Admin_Form extends Controller_Base_Admin
 			if (\Sentry::user()->has_access('form.edit') and $action == 'update')
 			{
 				// update the section
-				$item = \Model_Form_Section::update_item($section_id, $_POST);
+				$item = \Model_Form_Section::update_item($section_id, \Input::post());
 
 				if ($item)
 				{
@@ -512,15 +512,15 @@ class Controller_Admin_Form extends Controller_Base_Admin
 		if (\Input::method() == 'POST')
 		{
 			// get the action
-			$action = trim(\Security::xss_clean(\Input::post('action')));
+			$action = \Security::xss_clean(\Input::post('action'));
 
 			// get the ID from the POST
-			$tab_id = trim(\Security::xss_clean(\Input::post('id')));
+			$tab_id = \Security::xss_clean(\Input::post('id'));
 
 			if (\Sentry::user()->has_access('form.delete') and $action == 'delete')
 			{
 				// get the new tab ID
-				$new_tab = trim(\Security::xss_clean(\Input::post('new_tab_id')));
+				$new_tab = \Security::xss_clean(\Input::post('new_tab_id'));
 
 				// get the tab we're deleting
 				$tab = \Model_Form_Tab::find($tab_id);
@@ -557,7 +557,7 @@ class Controller_Admin_Form extends Controller_Base_Admin
 			if (\Sentry::user()->has_access('form.edit') and $action == 'add')
 			{
 				// add the tab
-				$item = \Model_Form_Tab::create_item($_POST);
+				$item = \Model_Form_Tab::create_item(\Input::post());
 
 				if ($item)
 				{
@@ -578,7 +578,7 @@ class Controller_Admin_Form extends Controller_Base_Admin
 			if (\Sentry::user()->has_access('form.edit') and $action == 'update')
 			{
 				// update the tab
-				$item = \Model_Form_Tab::update_item($tab_id, $_POST);
+				$item = \Model_Form_Tab::update_item($tab_id, \Input::post());
 
 				if ($item)
 				{

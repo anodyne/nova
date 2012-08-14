@@ -43,7 +43,7 @@ class Model extends \Orm\Model
 				{
 					if ($filter)
 					{
-						$item->{$key} = trim(\Security::xss_clean($data[$key]));
+						$item->{$key} = \Security::xss_clean($data[$key]);
 					}
 					else
 					{
@@ -54,7 +54,7 @@ class Model extends \Orm\Model
 				{
 					if ($filter)
 					{
-						$item->{$key} = trim(\Security::xss_clean($data->{$key}));
+						$item->{$key} = \Security::xss_clean($data->{$key});
 					}
 					else
 					{
@@ -211,7 +211,7 @@ class Model extends \Orm\Model
 				{
 					if ($filter)
 					{
-						$value = trim(\Security::xss_clean($value));
+						$value = \Security::xss_clean($value);
 					}
 
 					$item->{$key} = $value;
@@ -244,7 +244,7 @@ class Model extends \Orm\Model
 				{
 					if ($filter)
 					{
-						$value = trim(\Security::xss_clean($value));
+						$value = \Security::xss_clean($value);
 					}
 
 					$item->{$key} = $value;

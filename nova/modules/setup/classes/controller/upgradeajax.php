@@ -1464,7 +1464,7 @@ class Controller_Upgradeajax extends \Controller
 	public function action_setup_password()
 	{
 		// get the new password
-		$password = trim(\Security::xss_clean($_POST['password']));
+		$password = \Security::xss_clean(\Input::post('password'));
 
 		// hash the new password
 		$new_password = \Sentry_User::password_hash($password, \Model_System::get_uid());
@@ -1482,14 +1482,14 @@ class Controller_Upgradeajax extends \Controller
 	 */
 	public function action_setup_admins()
 	{
-		$admins = (isset($_POST['admins'])) ? $_POST['admins'] : array();
+		$admins = (\Input::post('admins') !== false) ? \Input::post('admins') : array();
 
 		if (count($admins) > 0)
 		{
 			foreach ($admins as $a)
 			{
 				// clean the content
-				$a = trim(\Security::xss_clean($a));
+				$a = \Security::xss_clean($a);
 
 				// find the user and update the record
 				$user = \Model_User::find($a);

@@ -129,14 +129,14 @@ class Controller_Install extends Controller_Base_Setup
 				if (\Input::method() == 'POST')
 				{
 					// get the data
-					$simname = trim(\Security::xss_clean($_POST['sim_name']));
-					$name = trim(\Security::xss_clean($_POST['name']));
-					$email = trim(\Security::xss_clean($_POST['email']));
-					$password = trim(\Security::xss_clean($_POST['password']));
-					$first_name = trim(\Security::xss_clean($_POST['first_name']));
-					$last_name = trim(\Security::xss_clean($_POST['last_name']));
-					$position = trim(\Security::xss_clean($_POST['position']));
-					$rank = trim(\Security::xss_clean($_POST['rank']));
+					$simname 	= \Security::xss_clean(\Input::post('sim_name'));
+					$name 		= \Security::xss_clean(\Input::post('name'));
+					$email 		= \Security::xss_clean(\Input::post('email'));
+					$password 	= \Security::xss_clean(\Input::post('password'));
+					$first_name	= \Security::xss_clean(\Input::post('first_name'));
+					$last_name	= \Security::xss_clean(\Input::post('last_name'));
+					$position 	= \Security::xss_clean(\Input::post('position'));
+					$rank 		= \Security::xss_clean(\Input::post('rank'));
 					
 					// update the settings
 					\Model_Settings::update_settings(array(

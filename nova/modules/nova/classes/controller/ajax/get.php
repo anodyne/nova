@@ -23,15 +23,12 @@ class Controller_Ajax_Get extends Controller_Base_Ajax
 
 	public function action_user()
 	{
-		// get the POST array
-		$data = \Input::post();
-
 		// set the field and values
 		$field = false;
 		$value = false;
 
 		// loop through the data and set the field and value
-		foreach ($data as $k => $v)
+		foreach (\Input::post() as $k => $v)
 		{
 			$field = $k;
 			$value = $v;
@@ -55,6 +52,10 @@ class Controller_Ajax_Get extends Controller_Base_Ajax
 		// get the POST data
 		$data = \Input::post();
 
-		echo \NovaForm::build('user', $data['skin'], $data['user']);
+		echo \NovaForm::build(
+			'user', 
+			\Security::xss_clean(\Input::post('skin')),
+			\Security::xss_clean(\Input::post('user'))
+		);
 	}
 }

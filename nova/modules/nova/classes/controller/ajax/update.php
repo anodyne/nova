@@ -23,8 +23,8 @@ class Controller_Ajax_Update extends Controller_Base_Ajax
 		if (\Sentry::check() and \Sentry::user()->has_access('content.update'))
 		{
 			// get the POST information
-			$key = trim(\Security::xss_clean(\Input::post('key')));
-			$value = trim(\Security::xss_clean(\Input::post('value')));
+			$key = \Security::xss_clean(\Input::post('key'));
+			$value = \Security::xss_clean(\Input::post('value'));
 
 			// break the key up into an array
 			$pieces = explode('_', $key);
@@ -91,7 +91,7 @@ class Controller_Ajax_Update extends Controller_Base_Ajax
 		if (\Sentry::check() and \Sentry::user()->has_access('form.edit'))
 		{
 			// get and sanitize the input
-			$fields = \Security::xss_clean($_POST['field']);
+			$fields = \Security::xss_clean(\Input::post('field'));
 
 			foreach ($fields as $key => $value)
 			{
@@ -123,14 +123,11 @@ class Controller_Ajax_Update extends Controller_Base_Ajax
 				// get the value
 				$value = \Model_Form_Value::find($id);
 
-				// get the POST
-				$post = $_POST;
-
 				// remove the items we don't want
-				unset($post['id']);
+				unset($_POST['id']);
 
 				// loop through and update the values
-				foreach ($post as $k => $v)
+				foreach (\Input::post() as $k => $v)
 				{
 					$value->{$k} = \Security::xss_clean($v);
 				}
@@ -188,7 +185,7 @@ class Controller_Ajax_Update extends Controller_Base_Ajax
 		if (\Sentry::check() and \Sentry::user()->has_access('form.edit'))
 		{
 			// get and sanitize the input
-			$values = \Security::xss_clean($_POST['value']);
+			$values = \Security::xss_clean(\Input::post('value'));
 
 			foreach ($values as $key => $value)
 			{
@@ -216,7 +213,7 @@ class Controller_Ajax_Update extends Controller_Base_Ajax
 		if (\Sentry::check() and \Sentry::user()->has_access('form.edit'))
 		{
 			// get and sanitize the input
-			$sections = \Security::xss_clean($_POST['section']);
+			$sections = \Security::xss_clean(\Input::post('section'));
 
 			foreach ($sections as $key => $value)
 			{
@@ -244,7 +241,7 @@ class Controller_Ajax_Update extends Controller_Base_Ajax
 		if (\Sentry::check() and \Sentry::user()->has_access('form.edit'))
 		{
 			// get and sanitize the input
-			$tabs = \Security::xss_clean($_POST['tab']);
+			$tabs = \Security::xss_clean(\Input::post('tab'));
 
 			foreach ($tabs as $key => $value)
 			{
@@ -291,7 +288,7 @@ class Controller_Ajax_Update extends Controller_Base_Ajax
 	{
 		if (\Sentry::check() and \Sentry::user()->has_access('rank.edit'))
 		{
-			$id = trim(\Security::xss_clean($id));
+			$id = \Security::xss_clean($id);
 
 			// get the rank group
 			$group = \Model_Rank_Group::find($id);
@@ -346,7 +343,7 @@ class Controller_Ajax_Update extends Controller_Base_Ajax
 	{
 		if (\Sentry::check() and \Sentry::user()->has_access('rank.edit'))
 		{
-			$id = trim(\Security::xss_clean($id));
+			$id = \Security::xss_clean($id);
 
 			// get the rank group
 			$info = \Model_Rank_Info::find($id);

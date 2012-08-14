@@ -19,7 +19,7 @@ class Controller_Ajax extends \Controller
 		if (\Sentry::check())
 		{
 			// get the version
-			$version = trim($_POST['version']);
+			$version = \Security::xss_clean(\Input::post('version'));
 			
 			// update the system information table with the ignore version
 			\Model_System::update_info(array('version_ignore' => $version));

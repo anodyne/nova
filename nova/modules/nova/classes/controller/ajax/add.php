@@ -22,9 +22,9 @@ class Controller_Ajax_Add extends Controller_Base_Ajax
 		if (\Sentry::check() and \Sentry::user()->has_access('form.edit'))
 		{
 			// get the values
-			$content = trim(\Security::xss_clean(\Input::post('content')));
-			$field = trim(\Security::xss_clean(\Input::post('field')));
-			$order = trim(\Security::xss_clean(\Input::post('order')));
+			$content = \Security::xss_clean(\Input::post('content'));
+			$field = \Security::xss_clean(\Input::post('field'));
+			$order = \Security::xss_clean(\Input::post('order'));
 
 			// create a new object and populate it with data
 			$item = \Model_Form_Value::forge();

@@ -45,10 +45,10 @@ class Controller_Admin_Rank extends Controller_Base_Admin
 		if (\Input::method() == 'POST')
 		{
 			// get the action
-			$action = trim(\Security::xss_clean(\Input::post('action')));
+			$action = \Security::xss_clean(\Input::post('action'));
 
 			// get the ID from the POST
-			$group_id = trim(\Security::xss_clean(\Input::post('id')));
+			$group_id = \Security::xss_clean(\Input::post('id'));
 
 			/**
 			 * Create a new rank group with the name provided by the user.
@@ -85,12 +85,12 @@ class Controller_Admin_Rank extends Controller_Base_Admin
 			{
 				// create the new group
 				$item = \Model_Rank_Group::create_item(array(
-					'name' => trim(\Security::xss_clean(\Input::post('name'))),
+					'name'	=> \Security::xss_clean(\Input::post('name')),
 					'order' => (\Model_Rank_Group::count() + 1),
 				), true);
 
 				// grab the new base
-				$new_base = trim(\Security::xss_clean(\Input::post('base')));
+				$new_base = \Security::xss_clean(\Input::post('base'));
 
 				// get the group we're duplicating
 				$duplicator = \Model_Rank_Group::find($group_id);
@@ -162,10 +162,10 @@ class Controller_Admin_Rank extends Controller_Base_Admin
 				$group = \Model_Rank_Group::find($group_id);
 
 				// get the new group ID
-				$new_group_id = trim(\Security::xss_clean(\Input::post('new_group')));
+				$new_group_id = \Security::xss_clean(\Input::post('new_group'));
 
 				// are we deleting the ranks?
-				$delete_ranks = trim(\Security::xss_clean(\Input::post('delete_ranks')));
+				$delete_ranks = \Security::xss_clean(\Input::post('delete_ranks'));
 
 				if (count($group->ranks) > 0)
 				{
@@ -232,10 +232,10 @@ class Controller_Admin_Rank extends Controller_Base_Admin
 		if (\Input::method() == 'POST')
 		{
 			// get the action
-			$action = trim(\Security::xss_clean(\Input::post('action')));
+			$action = \Security::xss_clean(\Input::post('action'));
 
 			// get the ID from the POST
-			$info_id = trim(\Security::xss_clean(\Input::post('id')));
+			$info_id = \Security::xss_clean(\Input::post('id'));
 
 			/**
 			 * Create a new rank info with the data provided by the user.
@@ -296,10 +296,10 @@ class Controller_Admin_Rank extends Controller_Base_Admin
 				$info = \Model_Rank_Info::find($info_id);
 
 				// get the new info ID
-				$new_info_id = trim(\Security::xss_clean(\Input::post('new_info')));
+				$new_info_id = \Security::xss_clean(\Input::post('new_info'));
 
 				// are we deleting the ranks?
-				$delete_ranks = trim(\Security::xss_clean(\Input::post('delete_ranks')));
+				$delete_ranks = \Security::xss_clean(\Input::post('delete_ranks'));
 
 				if (count($info->ranks) > 0)
 				{
@@ -378,10 +378,10 @@ class Controller_Admin_Rank extends Controller_Base_Admin
 		if (\Input::method() == 'POST')
 		{
 			// get the action
-			$action = trim(\Security::xss_clean(\Input::post('action')));
+			$action = \Security::xss_clean(\Input::post('action'));
 
 			// get the ID from the POST
-			$rank_id = trim(\Security::xss_clean(\Input::post('id')));
+			$rank_id = \Security::xss_clean(\Input::post('id'));
 
 			/**
 			 * Create a new rank.
@@ -459,7 +459,7 @@ class Controller_Admin_Rank extends Controller_Base_Admin
 			 */
 			if ($action == 'changeSet')
 			{
-				$default = trim(\Security::xss_clean(\Input::post('changeSet')));
+				$default = \Security::xss_clean(\Input::post('changeSet'));
 			}
 		}
 
