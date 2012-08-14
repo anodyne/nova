@@ -113,53 +113,6 @@ class Model extends \Orm\Model
 	}
 
 	/**
-	 * Find items in the table based on the arguments passed.
-	 *
-	 * @api
-	 * @param	array	an array of arguments
-	 * @param	string	the order to return the results in
-	 * @return	object
-	 */
-	public static function find_items($args = array())
-	{
-		// start the find
-		$record = static::find();
-
-		if (is_array($args) and count($args) > 0)
-		{
-			// loop through the arguments and build the where clause
-			foreach ($args as $type => $values)
-			{
-				if (method_exists($record, $type))
-				{
-					switch ($type)
-					{
-						case 'order_by':
-							if (array_key_exists($values[0], static::$_properties))
-							{
-								$record->order_by($values[0], $values[1]);
-							}
-						break;
-
-						case 'limit':
-							$record->limit($values[0]);
-						break;
-						
-						default:
-							if (array_key_exists($values[0], static::$_properties))
-							{
-								$record->{$type}($values[0], $values[1], $values[2]);
-							}
-						break;
-					}
-				}
-			}
-		}
-		
-		return $record->get();
-	}
-
-	/**
 	 * Find a form item based on the form key.
 	 *
 	 * @api
