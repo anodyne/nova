@@ -28,12 +28,12 @@
 					<td class="span2">
 						<div class="btn-toolbar">
 							<div class="btn-group">
-								<a href="#" class="btn btn-mini tooltip-top rankinfo-action" title="<?php echo lang('action.edit', 1);?>" data-action="update" data-id="<?php echo $i->id;?>"><i class="icon-pencil icon-75"></i></a>
+								<a href="#" class="btn btn-mini btn-icon tooltip-top rankinfo-action" title="<?php echo lang('action.edit', 1);?>" data-action="update" data-id="<?php echo $i->id;?>"><i class="icon-pencil icon-50"></i></a>
 							</div>
 
 							<?php if (Sentry::user()->has_access('rank.delete')): ?>
 								<div class="btn-group">
-									<a href="#" class="btn btn-danger btn-mini tooltip-top rankinfo-action" title="<?php echo lang('action.delete', 1);?>" data-action="delete" data-id="<?php echo $i->id;?>"><i class="icon-remove icon-white icon-50"></i></a>
+									<a href="#" class="btn btn-danger btn-mini btn-icon tooltip-top rankinfo-action" title="<?php echo lang('action.delete', 1);?>" data-action="delete" data-id="<?php echo $i->id;?>"><i class="icon-remove icon-white icon-50"></i></a>
 								</div>
 							<?php endif;?>
 						</div>

@@ -175,8 +175,8 @@ function field($obj, $property, $default = false)
 										<td><?php echo $v->content;?></td>
 										<td class="span2">
 											<div class="btn-group">
-												<a href="#" class="btn btn-mini value-action tooltip-top" title="<?php echo lang('action.edit', 1);?>" data-action="update" data-id="<?php echo $v->id;?>"><i class="icon-pencil icon-75"></i></a>
-												<a href="#" class="btn btn-mini value-action tooltip-top" title="<?php echo lang('action.delete', 1);?>" data-action="delete" data-id="<?php echo $v->id;?>"><i class="icon-remove icon-75"></i></a>
+												<a href="#" class="btn btn-mini btn-icon value-action tooltip-top" title="<?php echo lang('action.edit', 1);?>" data-action="update" data-id="<?php echo $v->id;?>"><i class="icon-pencil icon-50"></i></a>
+												<a href="#" class="btn btn-mini btn-icon value-action tooltip-top" title="<?php echo lang('action.delete', 1);?>" data-action="delete" data-id="<?php echo $v->id;?>"><i class="icon-remove icon-50"></i></a>
 											</div>
 										</td>
 										<td class="span1 reorder"></td>

@@ -27,9 +27,9 @@
 				</td>
 				<td class="span2">
 					<div class="btn-group">
-						<a href="<?php echo Uri::create('admin/form/tabs/'.$t->form_key.'/'.$t->id);?>" class="btn btn-mini tooltip-top" title="<?php echo lang('action.edit', 1).' '.$t->name;?>"><i class="icon-pencil icon-75"></i></a>
+						<a href="<?php echo Uri::create('admin/form/tabs/'.$t->form_key.'/'.$t->id);?>" class="btn btn-mini btn-icon tooltip-top" title="<?php echo lang('action.edit', 1).' '.$t->name;?>"><i class="icon-pencil icon-50"></i></a>
 						<?php if (Sentry::user()->has_access('form.delete')): ?>
-							<a href="<?php echo Uri::create('admin/form/tabs/'.$t->form_key);?>" class="btn btn-mini tooltip-top tab-action" title="<?php echo lang('action.delete', 1).' '.$t->name;?>" data-action="delete" data-id="<?php echo $t->id;?>"><i class="icon-remove icon-75"></i></a>
+							<a href="<?php echo Uri::create('admin/form/tabs/'.$t->form_key);?>" class="btn btn-mini btn-icon tooltip-top tab-action" title="<?php echo lang('action.delete', 1).' '.$t->name;?>" data-action="delete" data-id="<?php echo $t->id;?>"><i class="icon-remove icon-50"></i></a>
 						<?php endif;?>
 					</div>
 				</td>

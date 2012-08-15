@@ -18,6 +18,10 @@ body {
 	opacity: 0.75;
 }
 
+.btn-icon {
+	font-size: 12px !important;
+}
+
 .nav-tabs > .active > a,
 .nav-tabs > .active > a:hover,
 .btn:focus,

@@ -38,11 +38,11 @@
 					<?php if (Sentry::user()->has_level('character.create', 2)): ?>
 						<div class="btn-toolbar">
 							<div class="btn-group">
-								<a href="<?php echo Uri::create('admin/application/rules/'.$r->id);?>" class="btn btn-mini tooltip-top" title="<?php echo lang('action.edit', 1);?>"><i class="icon-pencil icon-75"></i></a>
+								<a href="<?php echo Uri::create('admin/application/rules/'.$r->id);?>" class="btn btn-mini btn-icon tooltip-top" title="<?php echo lang('action.edit', 1);?>"><i class="icon-pencil icon-50"></i></a>
 							</div>
 
 							<div class="btn-group">
-								<a href="#" class="btn btn-danger btn-mini tooltip-top apprule-action" title="<?php echo lang('action.delete', 1);?>" data-action="delete" data-id="<?php echo $r->id;?>"><i class="icon-remove icon-white icon-50"></i></a>
+								<a href="#" class="btn btn-danger btn-mini btn-icon tooltip-top apprule-action" title="<?php echo lang('action.delete', 1);?>" data-action="delete" data-id="<?php echo $r->id;?>"><i class="icon-remove icon-white icon-50"></i></a>
 							</div>
 						</div>
 					<?php endif;?>

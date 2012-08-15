@@ -28,7 +28,7 @@ if (is_numeric(Uri::segment(4))): ?>
 				<label class="control-label"><?php echo lang('rank info', 2);?></label>
 				<div class="controls">
 					<div class="input-append">
-						<?php echo Form::select('info_id', rankData($rank, 'info_id', 0), $infos, array('class' => 'span4'));?><a href="<?php echo Uri::create('admin/rank/info');?>" class="btn tooltip-top" title="<?php echo lang('action.edit rank info', 1);?>"><i class="icon-pencil icon-75"></i></a>
+						<?php echo Form::select('info_id', rankData($rank, 'info_id', 0), $infos, array('class' => 'span4'));?><a href="<?php echo Uri::create('admin/rank/info');?>" class="btn tooltip-top" title="<?php echo lang('action.edit rank info', 1);?>"><i class="icon-pencil icon-50"></i></a>
 					</div>
 				</div>
 			</div>
@@ -39,7 +39,7 @@ if (is_numeric(Uri::segment(4))): ?>
 				<label class="control-label"><?php echo lang('rank group', 2);?></label>
 				<div class="controls">
 					<div class="input-append">
-						<?php echo Form::select('group_id', rankData($rank, 'group_id'), $groups, array('class' => 'span4'));?><a href="<?php echo Uri::create('admin/rank/groups');?>" class="btn tooltip-top" title="<?php echo lang('action.edit rank groups', 1);?>"><i class="icon-pencil icon-75"></i></a>
+						<?php echo Form::select('group_id', rankData($rank, 'group_id'), $groups, array('class' => 'span4'));?><a href="<?php echo Uri::create('admin/rank/groups');?>" class="btn tooltip-top" title="<?php echo lang('action.edit rank groups', 1);?>"><i class="icon-pencil icon-50"></i></a>
 					</div>
 				</div>
 			</div>

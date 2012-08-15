@@ -52,15 +52,15 @@
 						<?php if ($r->status == Status::REJECTED): ?>
 							<div class="btn-group">
 								<?php if (Model_Ban::find_items($r->user->email)): ?>
-									<a href="#" class="btn btn-mini btn-danger tooltip-top unban-user" title="<?php echo lang('action.remove user action.ban', 1);?>" data-user="<?php echo $r->user->id;?>"><i class="icon-ban-circle icon-white icon-75"></i></a>
+									<a href="#" class="btn btn-mini btn-icon btn-danger tooltip-top unban-user" title="<?php echo lang('action.remove user action.ban', 1);?>" data-user="<?php echo $r->user->id;?>"><i class="icon-ban-circle icon-white icon-50"></i></a>
 								<?php else:?>
-									<a href="#" class="btn btn-mini btn-danger tooltip-top ban-user" title="<?php echo lang('action.ban user', 1);?>" data-user="<?php echo $r->user->id;?>"><i class="icon-ban-circle icon-white icon-75"></i></a>
+									<a href="#" class="btn btn-mini btn-icon btn-danger tooltip-top ban-user" title="<?php echo lang('action.ban user', 1);?>" data-user="<?php echo $r->user->id;?>"><i class="icon-ban-circle icon-white icon-50"></i></a>
 								<?php endif;?>
 							</div>
 						<?php endif;?>
 
 						<div class="btn-group">
-							<a href="<?php echo Uri::create('admin/application/review/'.$r->id);?>" class="btn btn-mini"><i class="icon-chevron-right icon-50"></i></a>
+							<a href="<?php echo Uri::create('admin/application/review/'.$r->id);?>" class="btn btn-mini btn-icon"><i class="icon-chevron-right icon-50"></i></a>
 						</div>
 					</div>
 				</td>
