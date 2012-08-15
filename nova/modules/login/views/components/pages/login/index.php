@@ -1,5 +1,4 @@
 <?php if ($lockout === false): ?>
-	<br>
 	<?php echo Form::open('login/index');?>
 		<div class="control-group">
 			<div class="controls">
