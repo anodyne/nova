@@ -777,7 +777,7 @@ class Sentry_User implements Iterator, ArrayAccess
 	 * Check if the user has access to the given task.
 	 *
 	 * @api
-	 * @param	string	a dot-notated string with the component and action (user.edit)
+	 * @param	string	a dot-notated string with the component and action (user.update)
 	 * @return	bool
 	 */
 	public function has_access($task)

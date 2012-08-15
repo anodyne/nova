@@ -58,7 +58,7 @@ class Controller_Ajax_Update extends Controller_Base_Ajax
 	 */
 	public function action_form($key = '')
 	{
-		if (\Sentry::check() and \Sentry::user()->has_access('form.edit'))
+		if (\Sentry::check() and \Sentry::user()->has_access('form.update'))
 		{
 			// get the form
 			$form = \Model_Form::get_form($key);
@@ -88,7 +88,7 @@ class Controller_Ajax_Update extends Controller_Base_Ajax
 	 */
 	public function action_formfield_order()
 	{
-		if (\Sentry::check() and \Sentry::user()->has_access('form.edit'))
+		if (\Sentry::check() and \Sentry::user()->has_access('form.update'))
 		{
 			// get and sanitize the input
 			$fields = \Security::xss_clean(\Input::post('field'));
@@ -116,7 +116,7 @@ class Controller_Ajax_Update extends Controller_Base_Ajax
 	 */
 	public function action_formfield_value($id)
 	{
-		if (\Sentry::check() and \Sentry::user()->has_access('form.edit'))
+		if (\Sentry::check() and \Sentry::user()->has_access('form.update'))
 		{
 			if (\Input::method() == 'POST')
 			{
@@ -182,7 +182,7 @@ class Controller_Ajax_Update extends Controller_Base_Ajax
 	 */
 	public function action_formfieldvalue_order()
 	{
-		if (\Sentry::check() and \Sentry::user()->has_access('form.edit'))
+		if (\Sentry::check() and \Sentry::user()->has_access('form.update'))
 		{
 			// get and sanitize the input
 			$values = \Security::xss_clean(\Input::post('value'));
@@ -210,7 +210,7 @@ class Controller_Ajax_Update extends Controller_Base_Ajax
 	 */
 	public function action_formsection_order()
 	{
-		if (\Sentry::check() and \Sentry::user()->has_access('form.edit'))
+		if (\Sentry::check() and \Sentry::user()->has_access('form.update'))
 		{
 			// get and sanitize the input
 			$sections = \Security::xss_clean(\Input::post('section'));
@@ -238,7 +238,7 @@ class Controller_Ajax_Update extends Controller_Base_Ajax
 	 */
 	public function action_formtab_order()
 	{
-		if (\Sentry::check() and \Sentry::user()->has_access('form.edit'))
+		if (\Sentry::check() and \Sentry::user()->has_access('form.update'))
 		{
 			// get and sanitize the input
 			$tabs = \Security::xss_clean(\Input::post('tab'));
@@ -286,7 +286,7 @@ class Controller_Ajax_Update extends Controller_Base_Ajax
 	 */
 	public function action_rankgroup($id)
 	{
-		if (\Sentry::check() and \Sentry::user()->has_access('rank.edit'))
+		if (\Sentry::check() and \Sentry::user()->has_access('rank.update'))
 		{
 			$id = \Security::xss_clean($id);
 
@@ -314,7 +314,7 @@ class Controller_Ajax_Update extends Controller_Base_Ajax
 	 */
 	public function action_rankgroup_order()
 	{
-		if (\Sentry::check() and \Sentry::user()->has_access('rank.edit'))
+		if (\Sentry::check() and \Sentry::user()->has_access('rank.update'))
 		{
 			// get and sanitize the input
 			$sets = \Security::xss_clean(\Input::post('group'));
@@ -341,7 +341,7 @@ class Controller_Ajax_Update extends Controller_Base_Ajax
 	 */
 	public function action_rankinfo($id)
 	{
-		if (\Sentry::check() and \Sentry::user()->has_access('rank.edit'))
+		if (\Sentry::check() and \Sentry::user()->has_access('rank.update'))
 		{
 			$id = \Security::xss_clean($id);
 
@@ -372,7 +372,7 @@ class Controller_Ajax_Update extends Controller_Base_Ajax
 	 */
 	public function action_rankinfo_order()
 	{
-		if (\Sentry::check() and \Sentry::user()->has_access('rank.edit'))
+		if (\Sentry::check() and \Sentry::user()->has_access('rank.update'))
 		{
 			// get and sanitize the input
 			$info = \Security::xss_clean(\Input::post('info'));

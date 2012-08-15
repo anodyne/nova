@@ -41,11 +41,11 @@ class Controller_Admin_User extends Controller_Base_Admin
 
 					// create the user
 					$user = \Model_User::create_item(array(
-						'status' 	=> \Status::INACTIVE,
+						'status' 	=> \Status::ACTIVE,
 						'name' 		=> \Security::xss_clean(\Input::post('name')),
 						'email' 	=> \Security::xss_clean(\Input::post('email')),
 						'password'	=> $password,
-						'role_id' 	=> \Model_Access_Role::USER,
+						'role_id' 	=> \Model_Access_Role::ACTIVE,
 					));
 
 					// email the user
@@ -62,7 +62,7 @@ class Controller_Admin_User extends Controller_Base_Admin
 				}
 
 				/**
-				 * Delete a user.
+				 * Remove a user.
 				 */
 				if (\Sentry::user()->has_access('user.delete') and $action == 'delete')
 				{
@@ -72,19 +72,21 @@ class Controller_Admin_User extends Controller_Base_Admin
 					// do the other options that are available when a user is "deleted"
 
 					// update the user
+					$user->role_id = \Model_Access_Role::INACTIVE;
 					$user->status = \Status::REMOVED;
+					$user->leave_date = time();
 					$user->save();
 
 					$this->_flash[] = array(
 						'status' => 'success',
-						'message' => lang('[[short.flash.success|user|action.deleted]]', 1),
+						'message' => lang('[[short.flash.success|user|action.removed]]', 1),
 					);
 				}
 
 				/**
 				 * Link a character to a user account.
 				 */
-				if (\Sentry::user()->has_level('user.edit', 2) and $action == 'link')
+				if (\Sentry::user()->has_level('user.update', 2) and $action == 'link')
 				{
 					# code...
 				}

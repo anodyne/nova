@@ -74,7 +74,7 @@ class Controller_Ajax_Delete extends Controller_Base_Ajax
 
 	public function action_formfield_value()
 	{
-		if (\Sentry::check() and \Sentry::user()->has_access('form.edit'))
+		if (\Sentry::check() and \Sentry::user()->has_access('form.update'))
 		{
 			// get the value
 			$id = \Security::xss_clean(\Input::post('id'));

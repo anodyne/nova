@@ -44,7 +44,7 @@ class Controller_Ajax_Add extends Controller_Base_Ajax
 	 */
 	public function action_formfield_value()
 	{
-		if (\Sentry::check() and \Sentry::user()->has_access('form.edit'))
+		if (\Sentry::check() and \Sentry::user()->has_access('form.update'))
 		{
 			// get the values
 			$content = \Security::xss_clean(\Input::post('content'));

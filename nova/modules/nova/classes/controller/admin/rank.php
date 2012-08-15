@@ -132,7 +132,7 @@ class Controller_Admin_Rank extends Controller_Base_Admin
 				 * Update the specified rank group with the information the user specified
 				 * in the modal pop-up.
 				 */
-				if (\Sentry::user()->has_access('rank.edit') and $action == 'update')
+				if (\Sentry::user()->has_access('rank.update') and $action == 'update')
 				{
 					// update the field
 					$item = \Model_Rank_Group::update_item($group_id, \Input::post());
@@ -276,7 +276,7 @@ class Controller_Admin_Rank extends Controller_Base_Admin
 				 * Update the specified rank info with the information the user specified
 				 * in the modal pop-up.
 				 */
-				if (\Sentry::user()->has_access('rank.edit') and $action == 'update')
+				if (\Sentry::user()->has_access('rank.update') and $action == 'update')
 				{
 					// update the field
 					$item = \Model_Rank_Info::update_item($info_id, \Input::post());
@@ -431,7 +431,7 @@ class Controller_Admin_Rank extends Controller_Base_Admin
 				/**
 				 * Update a rank.
 				 */
-				if (\Sentry::user()->has_access('rank.edit') and $action == 'update')
+				if (\Sentry::user()->has_access('rank.update') and $action == 'update')
 				{
 					$item = \Model_Rank::update_item($rank_id, \Input::post());
 

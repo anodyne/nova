@@ -120,13 +120,13 @@ class Create_roles
 				'label' => 'View All Users',
 				'help' => ''),
 			array(
-				'action' => 'edit',
+				'action' => 'update',
 				'component' => 'user',
 				'level' => 1,
 				'label' => 'Edit User (Level 1)',
 				'help' => 'Update own user account.'),
 			array(
-				'action' => 'edit',
+				'action' => 'update',
 				'component' => 'user',
 				'level' => 2,
 				'label' => 'Edit User (Level 2)',
@@ -172,19 +172,19 @@ class Create_roles
 				'label' => 'View All Characters',
 				'help' => 'See all characters.'),
 			array(
-				'action' => 'edit',
+				'action' => 'update',
 				'component' => 'character',
 				'level' => 1,
 				'label' => 'Edit Character (Level 1)',
 				'help' => 'Update own character(s) bio.'),
 			array(
-				'action' => 'edit',
+				'action' => 'update',
 				'component' => 'character',
 				'level' => 2,
 				'label' => 'Edit Character (Level 2)',
 				'help' => 'Update any non-playing character bio.'),
 			array(
-				'action' => 'edit',
+				'action' => 'update',
 				'component' => 'character',
 				'level' => 3,
 				'label' => 'Edit Character (Level 3)',
@@ -212,13 +212,13 @@ class Create_roles
 				'label' => 'View Mission Posts',
 				'help' => 'See all non-activated mission posts.'),
 			array(
-				'action' => 'edit',
+				'action' => 'update',
 				'component' => 'post',
 				'level' => 1,
 				'label' => 'Edit Post (Level 1)',
 				'help' => 'Update own mission posts.'),
 			array(
-				'action' => 'edit',
+				'action' => 'update',
 				'component' => 'post',
 				'level' => 2,
 				'label' => 'Edit Post (Level 2)',
@@ -246,13 +246,13 @@ class Create_roles
 				'label' => 'View Personal Logs',
 				'help' => 'See all non-activated personal logs.'),
 			array(
-				'action' => 'edit',
+				'action' => 'update',
 				'component' => 'log',
 				'level' => 1,
 				'label' => 'Edit Log (Level 1)',
 				'help' => 'Update own personal logs.'),
 			array(
-				'action' => 'edit',
+				'action' => 'update',
 				'component' => 'log',
 				'level' => 2,
 				'label' => 'Edit Log (Level 2)',
@@ -280,13 +280,13 @@ class Create_roles
 				'label' => 'View Announcements',
 				'help' => 'See all non-activated announcements.'),
 			array(
-				'action' => 'edit',
+				'action' => 'update',
 				'component' => 'announcement',
 				'level' => 1,
 				'label' => 'Edit Announcement (Level 1)',
 				'help' => 'Update own announcements.'),
 			array(
-				'action' => 'edit',
+				'action' => 'update',
 				'component' => 'announcement',
 				'level' => 2,
 				'label' => 'Edit Announcement (Level 2)',
@@ -314,7 +314,7 @@ class Create_roles
 				'label' => 'View All Comments',
 				'help' => 'See all non-activated comments.'),
 			array(
-				'action' => 'edit',
+				'action' => 'update',
 				'component' => 'comment',
 				'level' => 0,
 				'label' => 'Edit Comment',
@@ -370,7 +370,7 @@ class Create_roles
 				'label' => 'View All Bans',
 				'help' => ''),
 			array(
-				'action' => 'edit',
+				'action' => 'update',
 				'component' => 'ban',
 				'level' => 0,
 				'label' => 'Edit Ban',
@@ -398,7 +398,7 @@ class Create_roles
 				'label' => 'View All Positions',
 				'help' => ''),
 			array(
-				'action' => 'edit',
+				'action' => 'update',
 				'component' => 'position',
 				'level' => 0,
 				'label' => 'Edit Position',
@@ -426,7 +426,7 @@ class Create_roles
 				'label' => 'View All Ranks',
 				'help' => ''),
 			array(
-				'action' => 'edit',
+				'action' => 'update',
 				'component' => 'rank',
 				'level' => 0,
 				'label' => 'Edit Rank',
@@ -454,7 +454,7 @@ class Create_roles
 				'label' => 'View All Departments',
 				'help' => ''),
 			array(
-				'action' => 'edit',
+				'action' => 'update',
 				'component' => 'department',
 				'level' => 0,
 				'label' => 'Edit Department',
@@ -482,7 +482,7 @@ class Create_roles
 				'label' => 'View All Catalogs',
 				'help' => ''),
 			array(
-				'action' => 'edit',
+				'action' => 'update',
 				'component' => 'catalog',
 				'level' => 0,
 				'label' => 'Edit Catalog',
@@ -504,7 +504,7 @@ class Create_roles
 				'label' => 'View All Forms',
 				'help' => ''),
 			array(
-				'action' => 'edit',
+				'action' => 'update',
 				'component' => 'form',
 				'level' => 0,
 				'label' => 'Edit Form',
@@ -532,7 +532,7 @@ class Create_roles
 				'label' => 'View All Navigation',
 				'help' => ''),
 			array(
-				'action' => 'edit',
+				'action' => 'update',
 				'component' => 'nav',
 				'level' => 0,
 				'label' => 'Edit Navigation',
@@ -560,7 +560,7 @@ class Create_roles
 				'label' => 'View All Roles',
 				'help' => ''),
 			array(
-				'action' => 'edit',
+				'action' => 'update',
 				'component' => 'role',
 				'level' => 0,
 				'label' => 'Edit Role',
@@ -588,7 +588,7 @@ class Create_roles
 				'label' => 'View All Content',
 				'help' => ''),
 			array(
-				'action' => 'edit',
+				'action' => 'update',
 				'component' => 'content',
 				'level' => 0,
 				'label' => 'Edit Content',
@@ -616,7 +616,7 @@ class Create_roles
 				'label' => 'View All Settings',
 				'help' => ''),
 			array(
-				'action' => 'edit',
+				'action' => 'update',
 				'component' => 'settings',
 				'level' => 0,
 				'label' => 'Edit Setting',
@@ -644,7 +644,7 @@ class Create_roles
 				'label' => 'View All Specifications',
 				'help' => ''),
 			array(
-				'action' => 'edit',
+				'action' => 'update',
 				'component' => 'specs',
 				'level' => 0,
 				'label' => 'Edit Specification',
@@ -672,7 +672,7 @@ class Create_roles
 				'label' => 'View All Tour Items',
 				'help' => ''),
 			array(
-				'action' => 'edit',
+				'action' => 'update',
 				'component' => 'tour',
 				'level' => 0,
 				'label' => 'Edit Tour',
@@ -700,19 +700,19 @@ class Create_roles
 				'label' => 'Create Wiki Categories',
 				'help' => ''),
 			array(
-				'action' => 'edit',
+				'action' => 'update',
 				'component' => 'wiki',
 				'level' => 1,
 				'label' => 'Edit Wiki (Level 1)',
 				'help' => 'Update own wiki pages'),
 			array(
-				'action' => 'edit',
+				'action' => 'update',
 				'component' => 'wiki',
 				'level' => 2,
 				'label' => 'Edit Wiki (Level 2)',
 				'help' => 'Update and revert all wiki pages'),
 			array(
-				'action' => 'edit',
+				'action' => 'update',
 				'component' => 'wiki',
 				'level' => 3,
 				'label' => 'Edit Wiki (Level 3)',

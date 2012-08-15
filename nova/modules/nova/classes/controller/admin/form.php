@@ -30,7 +30,7 @@ class Controller_Admin_Form extends Controller_Base_Admin
 		$this->_view = 'admin/form/index';
 		$this->_js_view = 'admin/form/index_js';
 
-		if (\Sentry::user()->has_access('form.edit') and \Input::method() == 'POST')
+		if (\Sentry::user()->has_access('form.update') and \Input::method() == 'POST')
 		{
 			if (\Security::check_token())
 			{
@@ -83,7 +83,7 @@ class Controller_Admin_Form extends Controller_Base_Admin
 	 */
 	public function action_fields($key, $id = false)
 	{
-		\Sentry::allowed('form.edit', true);
+		\Sentry::allowed('form.update', true);
 
 		$this->_view = 'admin/form/fields';
 		$this->_js_view = 'admin/form/fields_js';
@@ -119,7 +119,7 @@ class Controller_Admin_Form extends Controller_Base_Admin
 					}
 				}
 
-				if (\Sentry::user()->has_access('form.edit') and $action == 'add')
+				if (\Sentry::user()->has_access('form.update') and $action == 'add')
 				{
 					// add the field
 					$item = \Model_Form_Field::create_item(\Input::post());
@@ -140,7 +140,7 @@ class Controller_Admin_Form extends Controller_Base_Admin
 					}
 				}
 
-				if (\Sentry::user()->has_access('form.edit') and $action == 'update')
+				if (\Sentry::user()->has_access('form.update') and $action == 'update')
 				{
 					// update the field
 					$item = \Model_Form_Field::update_item($field_id, \Input::post());
@@ -316,7 +316,7 @@ class Controller_Admin_Form extends Controller_Base_Admin
 	 */
 	public function action_sections($key, $id = false)
 	{
-		\Sentry::allowed('form.edit', true);
+		\Sentry::allowed('form.update', true);
 
 		$this->_view = 'admin/form/sections';
 		$this->_js_view = 'admin/form/sections_js';
@@ -368,7 +368,7 @@ class Controller_Admin_Form extends Controller_Base_Admin
 					}
 				}
 
-				if (\Sentry::user()->has_access('form.edit') and $action == 'add')
+				if (\Sentry::user()->has_access('form.update') and $action == 'add')
 				{
 					// add the section
 					$item = \Model_Form_Section::create_item(\Input::post());
@@ -389,7 +389,7 @@ class Controller_Admin_Form extends Controller_Base_Admin
 					}
 				}
 
-				if (\Sentry::user()->has_access('form.edit') and $action == 'update')
+				if (\Sentry::user()->has_access('form.update') and $action == 'update')
 				{
 					// update the section
 					$item = \Model_Form_Section::update_item($section_id, \Input::post());
@@ -534,7 +534,7 @@ class Controller_Admin_Form extends Controller_Base_Admin
 	 */
 	public function action_tabs($key, $id = false)
 	{
-		\Sentry::allowed('form.edit', true);
+		\Sentry::allowed('form.update', true);
 
 		$this->_view = 'admin/form/tabs';
 		$this->_js_view = 'admin/form/tabs_js';
@@ -586,7 +586,7 @@ class Controller_Admin_Form extends Controller_Base_Admin
 					}
 				}
 
-				if (\Sentry::user()->has_access('form.edit') and $action == 'add')
+				if (\Sentry::user()->has_access('form.update') and $action == 'add')
 				{
 					// add the tab
 					$item = \Model_Form_Tab::create_item(\Input::post());
@@ -607,7 +607,7 @@ class Controller_Admin_Form extends Controller_Base_Admin
 					}
 				}
 
-				if (\Sentry::user()->has_access('form.edit') and $action == 'update')
+				if (\Sentry::user()->has_access('form.update') and $action == 'update')
 				{
 					// update the tab
 					$item = \Model_Form_Tab::update_item($tab_id, \Input::post());

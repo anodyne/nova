@@ -31,7 +31,7 @@ class Controller_Admin_Character extends Controller_Base_Admin
 	
 	public function action_edit($id = false)
 	{
-		\Sentry::allowed('character.edit', true);
+		\Sentry::allowed('character.update', true);
 
 		$this->_view = 'admin/character/edit';
 		$this->_js_view = 'admin/character/edit_js';
