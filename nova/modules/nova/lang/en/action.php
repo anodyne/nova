@@ -58,6 +58,7 @@ return array(
 	'saved' => 'saved',
 	'send' => 'send',
 	'show' => 'show',
+	'search' => 'search',
 
 	'update' => 'update',
 	'updated' => 'updated',
