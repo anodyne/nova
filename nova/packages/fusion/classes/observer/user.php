@@ -58,13 +58,13 @@ class Observer_User extends \Orm\Observer
 			foreach ($fields as $f)
 			{
 				\Model_Form_Data::create_data(array(
-					'form_key' => 'user',
-					'field_id' => $f->id,
-					'user_id' => $model->id,
-					'character_id' => 0,
-					'item_id' => 0,
-					'value' => '',
-					'updated_at' => time(),
+					'form_key' 		=> 'user',
+					'field_id' 		=> $f->id,
+					'user_id' 		=> $model->id,
+					'character_id' 	=> 0,
+					'item_id' 		=> 0,
+					'value' 		=> '',
+					'updated_at'	=> time(),
 				));
 			}
 		}
