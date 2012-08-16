@@ -39,6 +39,8 @@ return array(
 	
 	'login' => 'log in',
 	'logout' => 'logout',
+	'link' => 'link',
+	'linked' => 'linked',
 
 	'manage' => 'manage',
 

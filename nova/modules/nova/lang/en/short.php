@@ -75,4 +75,10 @@ return array(
 		'change_info' => "Select the new :0 info item for any :1 currently using this :0 info record.",
 		'info_group_explain' => "Info groups are used solely for presentation purposes.",
 	),
+
+	'users' => array(
+		'add' => "You can add a new :0 to the system by entering their :1 and :2 and clicking submit. During creation, a :3 will be generated for the :0 and emailed to them. Once the :0 is created, you can associate :4 with their account.",
+		'done_searching' => "Done searching? Head <a href='#' rel='change_user_view' id='show_actives'>back</a> to the list of :0 :1.",
+		'remove' => "Are you sure you want to remove <strong>:0</strong>? In addition to removing :0, this will also remove all :1 associated with :0. This action is permanent and cannot be done. Are you sure you want to continue?",
+	),
 );

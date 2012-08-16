@@ -125,6 +125,8 @@ return array(
 	'rules' => 'rules',
 	'response' => 'response',
 	'responses' => 'responses',
+	'result' => 'result',
+	'results' => 'results',
 
 	'section' => "section",
 	'sections' => "sections",
