@@ -233,4 +233,23 @@ class Controller_Ajax_Delete extends Controller_Base_Ajax
 			}
 		}
 	}
+
+	public function action_user($id)
+	{
+		if (\Sentry::check() and \Sentry::user()->has_access('user.delete'))
+		{
+			// get the user info
+			$user = \Model_User::find($id);
+
+			if ($user !== null)
+			{
+				$data = array(
+					'name' => $user->name,
+					'id' => $user->id,
+				);
+
+				echo \View::forge(\Location::file('delete/user', \Utility::get_skin('admin'), 'ajax'), $data);
+			}
+		}
+	}
 }

@@ -1,17 +1,43 @@
 <script type="text/javascript">
+	var delay = (function(){
+		var timer = 0;
+		return function(callback, ms){
+			clearTimeout (timer);
+			timer = setTimeout(callback, ms);
+		};
+	})();
+
 	$(document).ready(function(){
 		
-		$('.chzn').chosen();
-
 		$('.close').click(function(){
 			
+			// get the item
 			var item = $(this).attr('rel');
+
+			// hide the item
 			$('#add-' + item).fadeOut();
+
 			return false;
 		});
 
-		$('[rel=change_user_view]').click(function(){
+		$('.add-switch').click(function(){
+			
+			// get the item
+			var item = $(this).attr('rel');
+
+			// show the item
+			$('#add-' + item).fadeIn();
+
+			return false;
+		});
+
+		$('[rel="change_user_view"]').click(function(){
+			
+			// get the view
 			var view = $(this).attr('id');
+
+			// clear the search field
+			$('#user-search').val('').text('');
 			
 			if (view == 'show_all')
 			{
@@ -29,7 +55,7 @@
 			return false;
 		});
 
-		$("#users").keyup(function(){
+		$("#user-search").keyup(function(){
 			delay(function(){
 				$.ajax({
 					beforeSend: function(){
@@ -44,22 +70,28 @@
 						
 						$('#results-characters').hide();
 						$('#results-characters ul').empty();
-						
-						$('.search-indicator').show();
+
+						$('#actives').fadeOut('fast', function(){
+							$('#all').fadeIn('fast');
+						});
 					},
-					url: 'search.php',
+					url: '<?php echo Uri::create("ajax/get/user_search");?>',
 					type: 'GET',
 					dataType: 'json',
-					data: { query: $('#users').val(), type: 'results' },
+					data: { query: $('#user-search').val() },
 					success: function(data){
-						$('.search-indicator').hide();
+
+						console.log(data);
+
+						// build the URL ahead of time
+						var url = '<?php echo Uri::create("admin/user/edit");?>/';
 						
 						if ( ! $.isEmptyObject(data))
 						{
 							if ( ! $.isEmptyObject(data.name))
 							{
 								$.each(data.name, function(key, value){
-									$('#results-name ul').append('<li>' + value.name + '</li>');
+									$('#results-name ul').append('<li><a href="' + url + value.id + '" class="btn btn-mini btn-icon"><i class="icon-pencil icon-50"></i></a>&nbsp;&nbsp;' + value.name + '</li>');
 								});
 								
 								$('#results-name').show();
@@ -68,7 +100,7 @@
 							if ( ! $.isEmptyObject(data.email))
 							{
 								$.each(data.email, function(key, value){
-									$('#results-email ul').append('<li>' + value.name + ' (' + value.email + ')' + '</li>');
+									$('#results-email ul').append('<li><a href="' + url + value.id + '" class="btn btn-mini btn-icon"><i class="icon-pencil icon-50"></i></a>&nbsp;&nbsp;' + value.name + ' (' + value.email + ')' + '</li>');
 								});
 								
 								$('#results-email').show();
@@ -77,7 +109,7 @@
 							if ( ! $.isEmptyObject(data.characters))
 							{
 								$.each(data.characters, function(key, value){
-									$('#results-characters ul').append('<li>' + value.name + ' (' + value.fname + ' ' + value.lname + ')' + '</li>');
+									$('#results-characters ul').append('<li><a href="' + url + value.id + '" class="btn btn-mini btn-icon"><i class="icon-pencil icon-50"></i></a>&nbsp;&nbsp;' + value.name + ' (' + value.fname + ' ' + value.lname + ')' + '</li>');
 								});
 								
 								$('#results-characters').show();
@@ -93,5 +125,21 @@
 				});
 			}, 500);
 		});
+	});
+
+	// what action to take when a rank group action is clicked
+	$('.user-action').on('click', function(){
+		var doaction = $(this).data('action');
+		var id = $(this).data('id');
+
+		if (doaction == 'delete')
+		{
+			$('<div/>').dialog2({
+				title: "<?php echo lang('action.delete user', 2);?>",
+				content: "<?php echo Uri::create('ajax/delete/user');?>/" + id
+			});
+		}
+
+		return false;
 	});
 </script>

@@ -58,4 +58,94 @@ class Controller_Ajax_Get extends Controller_Base_Ajax
 			\Security::xss_clean(\Input::post('user'))
 		);
 	}
+
+	public function action_user_search()
+	{
+		if (\Sentry::check())
+		{
+			// sanitize the input
+			$query = \Security::xss_clean(\Input::get('query'));
+
+			// empty array for storing the results
+			$retval = array();
+
+			if ( ! empty($query))
+			{
+				$only_search_email = (bool) preg_match('(@)', $query);
+
+				// search for any users with the email address
+				$email = \Model_User::find_item('email', "%$query%", true);
+
+				if (count($email) > 0)
+				{
+					foreach ($email as $e)
+					{
+						$retval['email'][] = array(
+							'id' => $e->id,
+							'name' => $e->name,
+							'email' => $e->email,
+						);
+					}
+				}
+				
+				if ( ! $only_search_email)
+				{
+					// search for any users with the name
+					$name = \Model_User::find_item('name', "%$query%", true);
+
+					if (count($name) > 0)
+					{
+						foreach ($name as $n)
+						{
+							$retval['name'][] = array(
+								'id' => $n->id,
+								'name' => $n->name,
+								'email' => $n->email,
+							);
+						}
+					}
+
+					// search for first names
+					$first_name = \Model_Character::find_item('first_name', "%$query%", true);
+
+					if (count($first_name) > 0)
+					{
+						foreach ($first_name as $c)
+						{
+							$retval['characters'][$c->user->id] = array(
+								'id' => $c->user->id,
+								'name' => $c->user->name,
+								'email' => $c->user->email,
+								'fname' => $c->first_name,
+								'lname' => $c->last_name,
+							);
+						}
+					}
+
+					// search for last names
+					$last_name = \Model_Character::find_item('last_name', "%$query%", true);
+
+					if (count($last_name) > 0)
+					{
+						foreach ($last_name as $c)
+						{
+							$retval['characters'][$c->user->id] = array(
+								'id' => $c->user->id,
+								'name' => $c->user->name,
+								'email' => $c->user->email,
+								'fname' => $c->first_name,
+								'lname' => $c->last_name,
+							);
+						}
+					}
+				}
+			}
+			else
+			{
+				$retval = array();
+			}
+			
+			echo json_encode($retval);
+		}
+	}
 }

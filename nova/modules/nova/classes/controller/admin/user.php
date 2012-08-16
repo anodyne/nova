@@ -21,6 +21,8 @@ class Controller_Admin_User extends Controller_Base_Admin
 	
 	public function action_index()
 	{
+		\Sentry::allowed('user.read', true);
+
 		$this->_view = 'admin/user/index';
 		$this->_js_view = 'admin/user/index_js';
 
@@ -37,7 +39,7 @@ class Controller_Admin_User extends Controller_Base_Admin
 				if (\Sentry::user()->has_access('user.create') and $action == 'create')
 				{
 					// generate a password for the user
-					$password = \Str::random();
+					$password = \Str::random('alnum', 8);
 
 					// create the user
 					$user = \Model_User::create_item(array(
@@ -46,30 +48,41 @@ class Controller_Admin_User extends Controller_Base_Admin
 						'email' 	=> \Security::xss_clean(\Input::post('email')),
 						'password'	=> $password,
 						'role_id' 	=> \Model_Access_Role::ACTIVE,
-					));
+					), true);
 
 					// email the user
-					\NovaMail::send('', array(
+					\NovaMail::send('user_add', array(
 						'to' => array($user->id),
 						'subject' => '',
-						'content' => array('password' => $password),
+						'content' => array('message' => lang('[[email.content.user.add|user|{{'.$this->options->sim_name.'}}|{{'.\Uri::base().'}}|action.login|{{'.$user->name.'}}|{{'.$password.'}}]]')),
 					));
 
-					$this->_flash[] = array(
-						'status' => 'success',
-						'message' => lang('[[short.flash.success|user|action.created]]', 1),
-					);
+					if ($user)
+					{
+						$this->_flash[] = array(
+							'status' => 'success',
+							'message' => lang('[[short.flash.success|user|action.created]]', 1),
+						);
+					}
+					else
+					{
+						$this->_flash[] = array(
+							'status' => 'danger',
+							'message' => lang('[[short.flash.failure|user|action.creation]]', 1),
+						);
+					}
 				}
 
 				/**
-				 * Remove a user.
+				 * Deletes a user. This doesn't actually delete anything since there are
+				 * far too many pieces that rely on the character and user records being there.
+				 * Instead, this simply sets the user to a status that makes sure it's never
+				 * pulled back. It also goes through and "removes" the characters as well.
 				 */
 				if (\Sentry::user()->has_access('user.delete') and $action == 'delete')
 				{
 					// get the user
 					$user = \Model_User::find(\Security::xss_clean(\Input::post('id')));
-
-					// do the other options that are available when a user is "deleted"
 
 					// update the user
 					$user->role_id = \Model_Access_Role::INACTIVE;
@@ -77,9 +90,19 @@ class Controller_Admin_User extends Controller_Base_Admin
 					$user->leave_date = time();
 					$user->save();
 
+					// deactivate all characters associated with the user
+					if (count($user->characters) > 0)
+					{
+						foreach ($user->characters as $c)
+						{
+							$c->status = \Status::REMOVED;
+							$c->save();
+						}
+					}
+
 					$this->_flash[] = array(
 						'status' => 'success',
-						'message' => lang('[[short.flash.success|user|action.removed]]', 1),
+						'message' => lang('[[short.flash.success|user|action.deleted]]', 1),
 					);
 				}
 
