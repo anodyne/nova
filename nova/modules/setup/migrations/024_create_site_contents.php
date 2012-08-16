@@ -168,6 +168,13 @@ class Create_site_contents
 				'type' => 'header',
 				'section' => 'application',
 				'page' => 'review'),
+			array(
+				'key' => 'admin_user_management_header',
+				'label' => 'User Management Header',
+				'content' => "Users",
+				'type' => 'header',
+				'section' => 'user',
+				'page' => 'index'),
 
 			/**
 			 * Page Titles
@@ -319,6 +326,13 @@ class Create_site_contents
 				'type' => 'title',
 				'section' => 'application',
 				'page' => 'review'),
+			array(
+				'key' => 'admin_user_management_title',
+				'label' => 'User Management Page Title',
+				'content' => "Users",
+				'type' => 'title',
+				'section' => 'user',
+				'page' => 'index'),
 
 			/**
 			 * Messages
