@@ -4,6 +4,15 @@
 <script type="text/javascript">
 	$(document).ready(function(){
 		
+		$.lazy({
+			src: "<?php echo Uri::base(false);?>nova/modules/assets/js/jquery.chosen.min.js",
+			name: 'chosen',
+			dependencies: {
+				css: ['<?php echo Uri::base(false);?>nova/modules/assets/css/jquery.chosen.css']
+			},
+			cache: true
+		});
+		
 		$('.tooltip-right').tooltip({
 			placement: 'right'
 		});
@@ -11,6 +20,9 @@
 		$('.tooltip-top').tooltip({
 			placement: 'top'
 		});
+
+		// initialize the chosen plugin if it's there
+		$('.chzn').chosen();
 	});
 
 	// rank dropdown
