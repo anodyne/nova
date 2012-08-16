@@ -201,7 +201,7 @@ class Nav
 				// find if the user has the proper level
 				$level = \Sentry::user()->atleast_level("$navaccess[0].$navaccess[1]", $navaccess[2]);
 
-				if ($access === false or ($access === true and $level === false))
+				if ( ! $level)
 				{
 					unset(static::$_data_sub[$key]);
 				}
@@ -297,15 +297,30 @@ class Nav
 
 				foreach ($sub as $i)
 				{
-					if ($i->order == 0 and $i->group != 0)
+					// default to allow access
+					$level = true;
+
+					if ( ! empty($i->access))
 					{
-						$output.= '<li class="divider"></li>';
+						// get the access info for the nav item
+						$navaccess = explode('|', $i->access);
+
+						// find if the user has the proper level
+						$level = \Sentry::user()->atleast_level("$navaccess[0].$navaccess[1]", $navaccess[2]);
 					}
 
-					// figure out what should be shown
-					$i_target_output = ($i->url_target == 'offsite') ? ' target="_blank"' : false;
+					if ($level)
+					{
+						if ($i->order == 0 and $i->group != 0)
+						{
+							$output.= '<li class="divider"></li>';
+						}
 
-					$output.= '<li><a href="'.\Uri::create($i->url).'"'.$target_output.'>'.$i->name.'</a></li>';
+						// figure out what should be shown
+						$i_target_output = ($i->url_target == 'offsite') ? ' target="_blank"' : false;
+
+						$output.= '<li><a href="'.\Uri::create($i->url).'"'.$target_output.'>'.$i->name.'</a></li>';
+					}
 				}
 
 				$output.= '</ul>';

@@ -94,7 +94,7 @@ class Create_docking
 				'sim_type' => 3,
 				'type' => 'adminsub',
 				'category' => 'manage',
-				'access' => 'manage/docked'),
+				'access' => 'docking|read|0'),
 		);
 
 		foreach ($navigation as $value)

@@ -411,7 +411,7 @@ class Create_navigation
 				'url' => 'admin/application/index',
 				'type' => 'adminsub',
 				'category' => 'users',
-				'access' => 'character|create|1'),
+				'access' => ''),
 			/*	
 			array(
 				'name' => 'Settings',
