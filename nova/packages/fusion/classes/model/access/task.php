@@ -55,7 +55,7 @@ class Model_Access_Task extends \Model {
 		),
 	);
 
-	public static function find_item($task)
+	public static function find_task($task)
 	{
 		// break the task up into an array
 		$taskArray = explode('.', $task);

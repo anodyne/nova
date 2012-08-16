@@ -44,10 +44,6 @@ class Model_User extends \Model {
 			'type' => 'int',
 			'constraint' => 11,
 			'default' => 0),
-		'join_date' => array(
-			'type' => 'bigint',
-			'constraint' => 20,
-			'null' => true),
 		'leave_date' => array(
 			'type' => 'bigint',
 			'constraint' => 20,
@@ -238,24 +234,6 @@ class Model_User extends \Model {
 			return $reviews;
 		}
 
-		return false;
-	}
-
-	/**
-	 * Get a single user based on something other than their ID.
-	 *
-	 * @api
-	 * @param	string	the column to use
-	 * @param	mixed	the value to use
-	 * @return	object
-	 */
-	public static function find_user($column, $value)
-	{
-		if (array_key_exists($column, static::$_properties))
-		{
-			return static::find()->where($column, $value)->get_one();
-		}
-		
 		return false;
 	}
 

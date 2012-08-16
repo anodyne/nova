@@ -245,7 +245,7 @@ class Sentry_Attempts
 		));
 
 		// get the user
-		$u = \Model_User::find_user('email', $login_column_value);
+		$u = \Model_User::find_item('email', $login_column_value);
 
 		// create an event
 		\SystemEvent::add('user', __('event.login.suspend'));

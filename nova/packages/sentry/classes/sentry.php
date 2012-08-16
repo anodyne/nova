@@ -198,7 +198,7 @@ class Sentry
 				catch(SentryUserSuspendedException $e)
 				{
 					// get the user
-					$u = \Model_User::find_user('email', $login_column_value);
+					$u = \Model_User::find_item('email', $login_column_value);
 
 					// create a system event entry
 					\SystemEvent::add($login_column_value, Input::real_ip(), $u, null, __('event.login.suspended'));
@@ -697,7 +697,7 @@ class Sentry
 	public static function users_with_access($value)
 	{
 		// get the task
-		$task = \Model_Access_Task::find_item($value);
+		$task = \Model_Access_Task::find_task($value);
 
 		// get any role that DIRECTLY has this task
 		$direct = $task->roles;

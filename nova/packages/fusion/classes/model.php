@@ -76,17 +76,19 @@ class Model extends \Orm\Model
 		
 		return false;
 	}
-	
+
 	/**
-	 * Find an item in the table based on the arguments passed.
+	 * Find a record/records in the table based on the simple arguments.
 	 *
 	 * @api
-	 * @param	mixed	an array of arguments or the item ID
+	 * @param	string	the column to use
+	 * @param	mixed	the value to use
+	 * @param	bool	is this for a search?
 	 * @return	object
 	 */
-	public static function find_item($args)
+	public static function find_item($column, $value, $search = false)
 	{
-		if (is_array($args))
+		if (is_array($column))
 		{
 			// start the find
 			$record = static::find();
@@ -101,15 +103,22 @@ class Model extends \Orm\Model
 			}
 			
 			// get the record
-			$result = $record->get_one();
+			return $record->get_one();
 		}
 		else
 		{
-			// if we have an ID, just go straight to that item
-			$result = static::find($args);
+			if (array_key_exists($column, static::$_properties))
+			{
+				if ( ! $search)
+				{
+					return static::find()->where($column, $value)->get_one();
+				}
+
+				return static::find()->where($column, 'like', $value)->get();
+			}
 		}
 		
-		return $result;
+		return false;
 	}
 
 	/**
