@@ -14,7 +14,6 @@ class Create_users
 			'password' => array('type' => 'VARCHAR', 'constraint' => 96, 'null' => true),
 			'character_id' => array('type' => 'INT', 'constraint' => 11, 'default' => 0),
 			'role_id' => array('type' => 'INT', 'constraint' => 11, 'default' => 0),
-			'join_date' => array('type' => 'BIGINT', 'constraint' => 20, 'null' => true),
 			'leave_date' => array('type' => 'BIGINT', 'constraint' => 20, 'null' => true),
 			'last_post' => array('type' => 'BIGINT', 'constraint' => 20, 'null' => true),
 			'last_login' => array('type' => 'BIGINT', 'constraint' => 20, 'null' => true),

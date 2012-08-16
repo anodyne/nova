@@ -166,7 +166,6 @@ class Controller_Install extends Controller_Base_Setup
 							'email' => $email,
 							'password' => $password,
 							'role_id' => \Model_Access_Role::SYSADMIN,
-							'join_date' => time(),
 							'status' => \Status::ACTIVE
 						), true);
 
